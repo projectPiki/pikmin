@@ -3,11 +3,6 @@
 
 static OSResetQueue ResetFunctionQueue;
 
-/*
- * --INFO--
- * Address:	801FA0C0
- * Size:	000084
- */
 void OSRegisterResetFunction(OSResetFunctionInfo* info)
 {
 	OSResetFunctionInfo* tmp;
@@ -74,11 +69,6 @@ BOOL CallResetFunctions(BOOL final)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801FA144
- * Size:	000070
- */
 static ASM Reset(register s32 resetCode)
 {
 #ifdef __MWERKS__ // clang-format off
@@ -153,11 +143,6 @@ static void KillThreads(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801FA1B4
- * Size:	000048
- */
 void __OSDoHotReset(s32 code)
 {
 	OSDisableInterrupts();
@@ -166,11 +151,6 @@ void __OSDoHotReset(s32 code)
 	Reset(code * 8);
 }
 
-/*
- * --INFO--
- * Address:	801FA1FC
- * Size:	0001B8
- */
 void OSResetSystem(int reset, u32 resetCode, BOOL forceMenu)
 {
 	BOOL rc;

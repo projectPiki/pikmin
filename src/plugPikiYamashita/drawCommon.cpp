@@ -27,11 +27,6 @@ DEFINE_PRINT("drawCommon")
 Texture* zen::NumberTex::texTable[10];
 Texture* zen::NumberTex::shadowTexTable[10];
 
-/*
- * --INFO--
- * Address:	801BF574
- * Size:	000108
- */
 zen::DrawScreen::DrawScreen(immut char* bloFileName, P2DGrafContext* grafContext, bool useAlphaMgr, bool useTexAnimMgr)
 {
 	mScreen.set(bloFileName, useAlphaMgr, useTexAnimMgr, true);
@@ -42,32 +37,17 @@ zen::DrawScreen::DrawScreen(immut char* bloFileName, P2DGrafContext* grafContext
 	}
 }
 
-/*
- * --INFO--
- * Address:	801BF67C
- * Size:	000024
- */
 void zen::DrawScreen::update()
 {
 	mScreen.update();
 }
 
-/*
- * --INFO--
- * Address:	801BF6A0
- * Size:	000050
- */
 void zen::DrawScreen::draw()
 {
 	mGrafContext->setPort();
 	mScreen.draw(0, 0, mGrafContext);
 }
 
-/*
- * --INFO--
- * Address:	801BF6F0
- * Size:	0000B4
- */
 zen::NumberTex::NumberTex()
 {
 	char texFileName[PATH_MAX];
@@ -88,11 +68,6 @@ zen::NumberTex::NumberTex()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801BF7A4
- * Size:	000118
- */
 void zen::P2DPaneLibrary::makeResident(P2DPane* pane)
 {
 	PSUTreeIterator<P2DPane> iter;
@@ -104,11 +79,6 @@ void zen::P2DPaneLibrary::makeResident(P2DPane* pane)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801BF8D8
- * Size:	0000EC
- */
 void zen::P2DPaneLibrary::setFamilyAlpha(P2DPane* pane, u8 alpha)
 {
 	PSUTreeIterator<P2DPane> iter;
@@ -121,11 +91,6 @@ void zen::P2DPaneLibrary::setFamilyAlpha(P2DPane* pane, u8 alpha)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801BF9C4
- * Size:	000030
- */
 void zen::P2DPaneLibrary::setAlpha(P2DPane* pane, u8 alpha)
 {
 	switch (pane->getTypeID()) {
@@ -159,11 +124,6 @@ void zen::P2DPaneLibrary::setMirror(P2DPane* pane, P2DMirror mirror)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801BF9F4
- * Size:	000120
- */
 void zen::P2DPaneLibrary::setFamilyMirror(P2DPane* pane, P2DMirror mirror)
 {
 	PSUTreeIterator<P2DPane> iter;
@@ -176,11 +136,6 @@ void zen::P2DPaneLibrary::setFamilyMirror(P2DPane* pane, P2DMirror mirror)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801BFB14
- * Size:	00001C
- */
 P2DPane* zen::P2DPaneLibrary::getParentPane(P2DPane* pane)
 {
 	PSUTree<P2DPane>* tree = pane->getPaneTree();
@@ -190,11 +145,6 @@ P2DPane* zen::P2DPaneLibrary::getParentPane(P2DPane* pane)
 	return nullptr;
 }
 
-/*
- * --INFO--
- * Address:	801BFB30
- * Size:	000070
- */
 void zen::P2DPaneLibrary::getWorldPos(P2DPane* pane, int* outX, int* outY)
 {
 	*outX = pane->getPosH();
@@ -221,11 +171,6 @@ void zen::P2DPaneLibrary::getWorldPos(P2DPane* pane, int* outX, int* outY)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801BFBA0
- * Size:	000124
- */
 void zen::P2DPaneLibrary::changeParent(P2DPane* pane, P2DPane* newParent)
 {
 	PSUTree<P2DPane>* tree = pane->getPaneTree();
@@ -308,11 +253,6 @@ void zen::P2DPaneLibrary::printUseTexName(immut char* bloFileName, IDelegate1<im
 	printUseTexName(&screen, delegate);
 }
 
-/*
- * --INFO--
- * Address:	801BFCC4
- * Size:	000168
- */
 zen::BalloonPane::BalloonPane(P2DPane* pane, f32 p2)
     : P2DPaneCallBack(nullptr, PANETYPE_Pane)
 {
@@ -326,11 +266,6 @@ zen::BalloonPane::BalloonPane(P2DPane* pane, f32 p2)
 	setGoalRotate();
 }
 
-/*
- * --INFO--
- * Address:	801BFE2C
- * Size:	00039C
- */
 bool zen::BalloonPane::invoke(P2DPane* pane)
 {
 	Vector3f moveDir;
@@ -370,11 +305,6 @@ bool zen::BalloonPane::invoke(P2DPane* pane)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	801C01C8
- * Size:	0000DC
- */
 void zen::BalloonPane::setGoalPos()
 {
 	Vector3f randOffset;
@@ -382,11 +312,6 @@ void zen::BalloonPane::setGoalPos()
 	mGoalPos.set(mHomePos + randOffset);
 }
 
-/*
- * --INFO--
- * Address:	801C02A4
- * Size:	00006C
- */
 void zen::BalloonPane::setGoalRotate()
 {
 	mGoalRotate = 15.0f * PI / 180.0f * (zen::Rand(2.0f) - 1.0f);

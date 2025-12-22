@@ -19,11 +19,6 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("DrawAccount")
 
-/*
- * --INFO--
- * Address:	801C1140
- * Size:	001474
- */
 zen::DrawAccount::DrawAccount()
     : DrawScreen("screen/blo/account.blo", nullptr, false, false)
 {
@@ -71,11 +66,6 @@ zen::DrawAccount::DrawAccount()
 	pane->setCallBack(new NumberPicCallBack<s16>(pane, &mData.mPelletNum, 1, false));
 }
 
-/*
- * --INFO--
- * Address:	801C25B4
- * Size:	000124
- */
 void zen::DrawAccount::update()
 {
 	if (mIsVisible) {
@@ -92,11 +82,6 @@ void zen::DrawAccount::update()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801C26D8
- * Size:	00002C
- */
 void zen::DrawAccount::draw(Graphics&)
 {
 	if (mIsVisible) {
@@ -104,11 +89,6 @@ void zen::DrawAccount::draw(Graphics&)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801C2704
- * Size:	000078
- */
 void zen::DrawAccount::start(zen::AccountData& data)
 {
 	mIsVisible   = true;

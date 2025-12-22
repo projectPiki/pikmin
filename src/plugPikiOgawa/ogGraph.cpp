@@ -29,11 +29,6 @@ static s16 LinePointY[32]                     = { 0 };
 static s16 ogawa_per_line[]                                        = { 1, 1, 2, 3, 10, 12, 12, 13, 13, 14, 19, 20, 22 };
 static u32 og_piki_lines_color[PikiColorCount] ATTRIBUTE_ALIGN(32) = { 0x00C0FFFF, 0xFF0000FF, 0xFFFF00FF };
 
-/*
- * --INFO--
- * Address:	80197F28
- * Size:	0000C4
- */
 ogGraphMgr::ogGraphMgr(P2DScreen* screen)
 {
 	mParent           = screen->search('g_sp', true);
@@ -52,11 +47,6 @@ ogGraphMgr::ogGraphMgr(P2DScreen* screen)
 	MakeData();
 }
 
-/*
- * --INFO--
- * Address:	80197FEC
- * Size:	000304
- */
 void ogGraphMgr::SetDummyLineData()
 {
 	for (int i = 0; i < 32; i++) {
@@ -81,11 +71,6 @@ void ogGraphMgr::SetDummyLineData()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801982F0
- * Size:	000320
- */
 void ogGraphMgr::MakeData()
 {
 	STACK_PAD_VAR(1);
@@ -216,11 +201,6 @@ void ogGraphMgr::MakeData()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80198610
- * Size:	00029C
- */
 static void setGraphGX(void* vertexData, int pikminColor, u8 alpha)
 {
 	u32 graphColor = og_piki_lines_color[pikminColor];
@@ -281,11 +261,6 @@ static void setGraphGX(void* vertexData, int pikminColor, u8 alpha)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801988AC
- * Size:	0000DC
- */
 void ogGraphMgr::draw(u8 a)
 {
 	//! TODO: Refactor all instances of 640 and 480 to use the screen width and height

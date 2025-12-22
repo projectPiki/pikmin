@@ -22,11 +22,6 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("kusa")
 
-/*
- * --INFO--
- * Address:	800E5DD8
- * Size:	0000A4
- */
 KusaItem::KusaItem(CreatureProp* props, Shape* shape)
     : ItemCreature(OBJTYPE_Kusa, mProps, shape)
     , mKusaCollision(0)
@@ -35,11 +30,6 @@ KusaItem::KusaItem(CreatureProp* props, Shape* shape)
 	setCreatureFlag(CF_Unk10);
 }
 
-/*
- * --INFO--
- * Address:	800E5E7C
- * Size:	000118
- */
 void KusaItem::startAI(int)
 {
 	setCreatureFlag(CF_Unk10);
@@ -62,11 +52,6 @@ void KusaItem::startAI(int)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800E5F94
- * Size:	000060
- */
 void KusaItem::doLoad(RandomAccessStream& input)
 {
 	mHealth = input.readFloat();
@@ -75,21 +60,11 @@ void KusaItem::doLoad(RandomAccessStream& input)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800E5FF4
- * Size:	000038
- */
 void KusaItem::doSave(RandomAccessStream& output)
 {
 	output.writeFloat(mHealth);
 }
 
-/*
- * --INFO--
- * Address:	800E602C
- * Size:	00001C
- */
 bool KusaItem::ignoreAtari(Creature* creature)
 {
 	if (creature->mStickTarget == this) {
@@ -99,42 +74,22 @@ bool KusaItem::ignoreAtari(Creature* creature)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800E6048
- * Size:	000008
- */
 f32 KusaItem::getSize()
 {
 	return 10.0f;
 }
 
-/*
- * --INFO--
- * Address:	800E6050
- * Size:	000008
- */
 f32 KusaItem::getiMass()
 {
 	return 0.0f;
 }
 
-/*
- * --INFO--
- * Address:	800E6058
- * Size:	000038
- */
 void KusaItem::update()
 {
 	mSRT.t = mGroundPosition;
 	ItemCreature::update();
 }
 
-/*
- * --INFO--
- * Address:	800E6090
- * Size:	000144
- */
 void KusaItem::refresh(Graphics& gfx)
 {
 	Matrix4f camMat;
@@ -152,11 +107,6 @@ void KusaItem::refresh(Graphics& gfx)
 	mCollInfo->updateInfo(gfx, false);
 }
 
-/*
- * --INFO--
- * Address:	800E61D4
- * Size:	0000D8
- */
 BoBaseItem::BoBaseItem(CreatureProp* props, Shape* shape)
     : ItemCreature(OBJTYPE_BoBase, mProps, shape)
     , mBaseCollision(0)
@@ -168,11 +118,6 @@ BoBaseItem::BoBaseItem(CreatureProp* props, Shape* shape)
 	mSeContext->setContext(this, 4);
 }
 
-/*
- * --INFO--
- * Address:	800E62AC
- * Size:	0000AC
- */
 void BoBaseItem::startAI(int)
 {
 	setCreatureFlag(CF_Unk10);
@@ -186,11 +131,6 @@ void BoBaseItem::startAI(int)
 	mEffectDuration    = 0;
 }
 
-/*
- * --INFO--
- * Address:	800E6358
- * Size:	000030
- */
 bool BoBaseItem::ignoreAtari(Creature* creature)
 {
 	if (creature->mStickTarget == this) {
@@ -204,31 +144,16 @@ bool BoBaseItem::ignoreAtari(Creature* creature)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800E6388
- * Size:	000008
- */
 f32 BoBaseItem::getSize()
 {
 	return 10.0f;
 }
 
-/*
- * --INFO--
- * Address:	800E6390
- * Size:	000008
- */
 f32 BoBaseItem::getiMass()
 {
 	return 0.0f;
 }
 
-/*
- * --INFO--
- * Address:	800E6398
- * Size:	0000B4
- */
 void BoBaseItem::update()
 {
 	if (mIsActive) {
@@ -253,11 +178,6 @@ void BoBaseItem::update()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800E644C
- * Size:	0000EC
- */
 void BoBaseItem::refresh(Graphics& gfx)
 {
 	if (mIsActive || (!mIsActive && mEffectDuration > 0)) {
@@ -274,11 +194,6 @@ void BoBaseItem::refresh(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800E6538
- * Size:	000110
- */
 bool BoBaseItem::interactBuild(immut InteractBuild& build)
 {
 	if (mStickItem) {
@@ -307,11 +222,6 @@ bool BoBaseItem::interactBuild(immut InteractBuild& build)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800E6648
- * Size:	000008
- */
 bool BoBaseItem::isAlive()
 {
 	return mIsActive;

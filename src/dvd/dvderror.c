@@ -49,11 +49,6 @@ u8 Convert(u32 error)
 	return statusCode * 30 + errorNum;
 }
 
-/*
- * --INFO--
- * Address:	802020FC
- * Size:	000158
- */
 void __DVDStoreErrorCode(u32 error)
 {
 	OSSramEx* sram;

@@ -18,11 +18,6 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("GameExit");
 
-/*
- * --INFO--
- * Address:	8005B690
- * Size:	00009C
- */
 GameExitSection::GameExitSection()
 {
 	gsys->resetHeap(2, 1);
@@ -31,11 +26,6 @@ GameExitSection::GameExitSection()
 	gsys->mAramRoot.initCore("");
 }
 
-/*
- * --INFO--
- * Address:	8005B72C
- * Size:	000050
- */
 void GameExitSection::update()
 {
 	gameflow.mNextOnePlayerSectionID = ONEPLAYER_GameSetup;

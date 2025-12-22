@@ -131,11 +131,6 @@ static u8 last_bgm_level = 0xFF;
 // forward declarations
 static BOOL Jac_UpdateBgmCrossVol(BgmControl_* control);
 
-/*
- * --INFO--
- * Address:	80018980
- * Size:	00003C
- */
 s32 Jac_BgmFrameCallback(void* a1)
 {
 	call_counter += 1;
@@ -145,11 +140,6 @@ s32 Jac_BgmFrameCallback(void* a1)
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	800189C0
- * Size:	000180
- */
 void Jac_InitBgm(void)
 {
 	u32 i;
@@ -191,22 +181,12 @@ void Jac_InitBgm(void)
 	Jac_RegisterPlayerCallback(Jac_BgmFrameCallback, 0);
 }
 
-/*
- * --INFO--
- * Address:	80018B40
- * Size:	00002C
- */
 void Jac_FadeOutBgm(u32 trackNo, u32 fade)
 {
 	fadeouttime = fade;
 	Jac_SetBgmModeFlag(trackNo, 8, 1);
 }
 
-/*
- * --INFO--
- * Address:	80018B80
- * Size:	000054
- */
 void Jac_StopBgm(u32 id)
 {
 	if (bgm[id].isActive) {
@@ -215,11 +195,6 @@ void Jac_StopBgm(u32 id)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80018BE0
- * Size:	0000A0
- */
 void Jac_ReadyBgm(u32 id)
 {
 	u32* REF_id = &id;
@@ -238,11 +213,6 @@ void Jac_ReadyBgm(u32 id)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80018C80
- * Size:	000244
- */
 void Jac_PlayBgm(u32 trackNo, u32 id)
 {
 	STACK_PAD_VAR(4);
@@ -317,11 +287,6 @@ void Jac_PlayBgm(u32 trackNo, u32 id)
 	Jac_SetProcessStatus(9);
 }
 
-/*
- * --INFO--
- * Address:	80018EE0
- * Size:	000058
- */
 BOOL Jac_ChangeBgmMode(u32 trackNo, u8 mode)
 {
 	if (mode == bgm[trackNo].currentMode) {
@@ -338,11 +303,6 @@ BOOL Jac_ChangeBgmMode(u32 trackNo, u8 mode)
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	80018F40
- * Size:	0000A8
- */
 void Jac_SetBgmModeFlag(u32 trackNo, u8 flag, u8 doSet)
 {
 	u32 x, y, z;
@@ -367,11 +327,6 @@ void Jac_SetBgmModeFlag(u32 trackNo, u8 flag, u8 doSet)
 	Jac_ChangeBgmMode(trackNo, (thisBgm->normalMixEnabled << 0) + (x) + (y) + (z));
 }
 
-/*
- * --INFO--
- * Address:	80019000
- * Size:	000124
- */
 void Jac_BgmFrameWork(void)
 {
 	if (bgm_semaphore == 0) {
@@ -410,11 +365,6 @@ void Jac_BgmFrameWork(void)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80019140
- * Size:	0000BC
- */
 void Jac_MoveBgmTrackVol(BgmControl_* control)
 {
 	seqp_* track2;
@@ -434,11 +384,6 @@ void Jac_MoveBgmTrackVol(BgmControl_* control)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80019200
- * Size:	00017C
- */
 void Jac_ChangeBgmTrackVol(BgmControl_* control)
 {
 	STACK_PAD_VAR(4);
@@ -483,11 +428,6 @@ void Jac_ChangeBgmTrackVol(BgmControl_* control)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80019380
- * Size:	00008C
- */
 static BOOL Jac_UpdateBgmCrossVol(BgmControl_* control)
 {
 	f32 a        = control->crossfade;
@@ -501,11 +441,6 @@ static BOOL Jac_UpdateBgmCrossVol(BgmControl_* control)
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	80019420
- * Size:	0000C4
- */
 void Jac_GameVolume(u8 bgmVol, u8 seVol)
 {
 	u16 tmpSeVol;
@@ -524,11 +459,6 @@ void Jac_GameVolume(u8 bgmVol, u8 seVol)
 	Jam_WritePortAppDirect(Jam_GetTrackHandle(0x20000), 0, tmpSeVol);
 }
 
-/*
- * --INFO--
- * Address:	80019500
- * Size:	0000E4
- */
 void Jac_EasyCrossFade(u8 mode, u32 fadeTime)
 {
 	u8* REF_type = &mode;
@@ -559,11 +489,6 @@ void Jac_EasyCrossFade(u8 mode, u32 fadeTime)
 	last_crossmode = mode;
 }
 
-/*
- * --INFO--
- * Address:	80019600
- * Size:	0000C8
- */
 void Jac_DemoFade(u8 type, u32 val, f32 multiplier)
 {
 	u8* REF_type  = &type;
@@ -598,21 +523,11 @@ void Jac_DemoFade(u8 type, u32 val, f32 multiplier)
 	bgm[1].crossfade = val;
 }
 
-/*
- * --INFO--
- * Address:	800196E0
- * Size:	000028
- */
 void Jac_EnterBossMode(void)
 {
 	Jac_EasyCrossFade(1, 100);
 }
 
-/*
- * --INFO--
- * Address:	80019720
- * Size:	000028
- */
 void Jac_ExitBossMode(void)
 {
 	Jac_EasyCrossFade(0, 100);

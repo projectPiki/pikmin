@@ -51,31 +51,16 @@ void Creature::startFixPosition()
 	setCreatureFlag(CF_IsPositionFixed);
 }
 
-/*
- * --INFO--
- * Address:	8008A040
- * Size:	000010
- */
 void Creature::finishFixPosition()
 {
 	resetCreatureFlag(CF_IsPositionFixed);
 }
 
-/*
- * --INFO--
- * Address:	8008A050
- * Size:	000048
- */
 bool Creature::isTerrible()
 {
 	return isTeki() || isBoss();
 }
 
-/*
- * --INFO--
- * Address:	8008A098
- * Size:	0000D8
- */
 void Creature::load(RandomAccessStream& stream, bool doLoadPosition)
 {
 	PRINT("* loading creature %s\n", ObjType::getName(mObjType));
@@ -91,11 +76,6 @@ void Creature::load(RandomAccessStream& stream, bool doLoadPosition)
 	PRINT("******** done : %d\n", stream.getPosition() - startPos);
 }
 
-/*
- * --INFO--
- * Address:	8008A170
- * Size:	0000D8
- */
 void Creature::save(RandomAccessStream& stream, bool doSavePosition)
 {
 	PRINT("* saving creature %s\n", ObjType::getName(mObjType));
@@ -111,11 +91,6 @@ void Creature::save(RandomAccessStream& stream, bool doSavePosition)
 	PRINT("******** done : %d\n", stream.getPosition() - startPos);
 }
 
-/*
- * --INFO--
- * Address:	8008A248
- * Size:	00001C
- */
 Creature* Creature::getCollidePlatformCreature()
 {
 	if (mCollPlatform) {
@@ -124,11 +99,6 @@ Creature* Creature::getCollidePlatformCreature()
 	return nullptr;
 }
 
-/*
- * --INFO--
- * Address:	8008A264
- * Size:	000044
- */
 Vector3f Creature::getCollidePlatformNormal()
 {
 	if (!mCollPlatNormal) {
@@ -137,11 +107,6 @@ Vector3f Creature::getCollidePlatformNormal()
 	return *mCollPlatNormal;
 }
 
-/*
- * --INFO--
- * Address:	8008A2A8
- * Size:	000024
- */
 bool Creature::isBoss()
 {
 	if (mObjType >= OBJTYPE_BossBegin && mObjType <= OBJTYPE_BossEnd) {
@@ -151,11 +116,6 @@ bool Creature::isBoss()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8008A2CC
- * Size:	000048
- */
 void Creature::enableStick()
 {
 	if (mCollInfo && mCollInfo->hasInfo()) {
@@ -165,11 +125,6 @@ void Creature::enableStick()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8008A314
- * Size:	000048
- */
 void Creature::disableStick()
 {
 	if (mCollInfo && mCollInfo->hasInfo()) {
@@ -179,11 +134,6 @@ void Creature::disableStick()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8008A35C
- * Size:	000070
- */
 CollPart* Creature::getNearestCollPart(immut Vector3f& p1, u32 p2)
 {
 	if (mCollInfo && mCollInfo->hasInfo()) {
@@ -192,11 +142,6 @@ CollPart* Creature::getNearestCollPart(immut Vector3f& p1, u32 p2)
 	return nullptr;
 }
 
-/*
- * --INFO--
- * Address:	8008A3CC
- * Size:	000060
- */
 CollPart* Creature::getRandomCollPart(u32 p1)
 {
 	if (mCollInfo && mCollInfo->hasInfo()) {
@@ -206,11 +151,6 @@ CollPart* Creature::getRandomCollPart(u32 p1)
 	return nullptr;
 }
 
-/*
- * --INFO--
- * Address:	8008A42C
- * Size:	0000D8
- */
 Vector3f Creature::getBoundingSphereCentre()
 {
 	if (mCollInfo && mCollInfo->hasInfo()) {
@@ -225,11 +165,6 @@ Vector3f Creature::getBoundingSphereCentre()
 	return getCentre();
 }
 
-/*
- * --INFO--
- * Address:	8008A504
- * Size:	0000B0
- */
 f32 Creature::getBoundingSphereRadius()
 {
 	if (mCollInfo && mCollInfo->hasInfo()) {
@@ -244,11 +179,6 @@ f32 Creature::getBoundingSphereRadius()
 	return getCentreSize();
 }
 
-/*
- * --INFO--
- * Address:	8008A5B4
- * Size:	000038
- */
 void Creature::playEventSound(Creature* target, int soundID)
 {
 	if (target && target->mSeContext) {
@@ -256,11 +186,6 @@ void Creature::playEventSound(Creature* target, int soundID)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8008A5EC
- * Size:	000038
- */
 void Creature::stopEventSound(Creature* target, int soundID)
 {
 	if (target && target->mSeContext) {
@@ -282,11 +207,6 @@ bool Creature::insideSphere(immut Sphere& sphere)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8008A624
- * Size:	0000F4
- */
 Vector3f Creature::getCentre()
 {
 	if (mCollInfo && mCollInfo->hasInfo()) {
@@ -303,11 +223,6 @@ Vector3f Creature::getCentre()
 	return pos;
 }
 
-/*
- * --INFO--
- * Address:	8008A718
- * Size:	000074
- */
 f32 Creature::getCentreSize()
 {
 	if (mCollInfo && mCollInfo->hasInfo()) {
@@ -319,11 +234,6 @@ f32 Creature::getCentreSize()
 	return getSize();
 }
 
-/*
- * --INFO--
- * Address:	8008A78C
- * Size:	00006C
- */
 int Creature::getStandType()
 {
 	if (!mGroundTriangle) {
@@ -355,11 +265,6 @@ int Creature::getStandType()
 	return STANDTYPE_Ground;
 }
 
-/*
- * --INFO--
- * Address:	8008A7F8
- * Size:	00005C
- */
 SearchData::SearchData()
 {
 	mSearchIteration = 0;
@@ -367,11 +272,6 @@ SearchData::SearchData()
 	mDistance = 12800.0f;
 }
 
-/*
- * --INFO--
- * Address:	8008A854
- * Size:	000020
- */
 u32 Creature::getGeneratorID()
 {
 	if (mGenerator) {
@@ -380,22 +280,12 @@ u32 Creature::getGeneratorID()
 	return 'null';
 }
 
-/*
- * --INFO--
- * Address:	8008A874
- * Size:	000028
- */
 bool Creature::stimulate(immut Interaction& interaction)
 {
 	PRINT("objType=%s creature %x got interaction %x\n", ObjType::getName(mObjType), &interaction);
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8008A89C
- * Size:	000138
- */
 bool Creature::setStateGrabbed(Creature* holder)
 {
 	if (isGrabbed()) {
@@ -419,11 +309,6 @@ bool Creature::setStateGrabbed(Creature* holder)
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8008A9D4
- * Size:	000068
- */
 void Creature::resetStateGrabbed()
 {
 	mHoldingCreature.getPtr()->mGrabbedCreature.reset();
@@ -431,11 +316,6 @@ void Creature::resetStateGrabbed()
 	PRINT("## resetStateGrabbed\n");
 }
 
-/*
- * --INFO--
- * Address:	8008AA3C
- * Size:	000048
- */
 void Creature::turnTo(immut Vector3f& targetDir)
 {
 	mFaceDirection = atan2f(targetDir.x - mSRT.t.x, targetDir.z - mSRT.t.z);
@@ -454,11 +334,6 @@ void Creature::adjustDistance(immut Vector3f& targetPos, f32 targetDist)
 	mSRT.t       = targetPos - sep;
 }
 
-/*
- * --INFO--
- * Address:	8008AA84
- * Size:	000180
- */
 void Creature::init()
 {
 	mSearchBuffer.invalidate();
@@ -505,11 +380,6 @@ void Creature::init()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8008AC04
- * Size:	000064
- */
 void Creature::init(immut Vector3f& pos)
 {
 	Creature::init();
@@ -528,22 +398,12 @@ int Creature::getAtariType()
 	return 0; // from the DLL - lol.
 }
 
-/*
- * --INFO--
- * Address:	8008AC68
- * Size:	000034
- */
 void Creature::resetPosition(immut Vector3f& pos)
 {
 	mSRT.t        = pos;
 	mLastPosition = pos;
 }
 
-/*
- * --INFO--
- * Address:	8008AC9C
- * Size:	000044
- */
 void Creature::detachGenerator()
 {
 	if (mGenerator) {
@@ -552,11 +412,6 @@ void Creature::detachGenerator()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8008ACE0
- * Size:	0001F8
- */
 void Creature::kill(bool p1)
 {
 	finishWaterEffect();
@@ -637,11 +492,6 @@ void Creature::kill(bool p1)
 	radarInfo->detachParts(this);
 }
 
-/*
- * --INFO--
- * Address:	8008AED8
- * Size:	0002C0
- */
 Creature::Creature(CreatureProp* props)
 {
 	mObjType       = OBJTYPE_INVALID;
@@ -688,11 +538,6 @@ Creature::Creature(CreatureProp* props)
 	mIsFrozen         = 0;
 }
 
-/*
- * --INFO--
- * Address:	8008B198
- * Size:	000070
- */
 void Creature::updateStatic()
 {
 	if (mSeContext) {
@@ -704,11 +549,6 @@ void Creature::updateStatic()
 	updateAI();
 }
 
-/*
- * --INFO--
- * Address:	8008B208
- * Size:	000580
- */
 void Creature::update()
 {
 	// Update sound effects
@@ -887,11 +727,6 @@ void Creature::update()
 	MATCHING_STOP_TIMER("MOVENEW");
 }
 
-/*
- * --INFO--
- * Address:	8008B788
- * Size:	0001F4
- */
 void Creature::postUpdate(int unused, f32 deltaTime)
 {
 	bool isPikiOrNavi = false;
@@ -938,11 +773,6 @@ void Creature::postUpdate(int unused, f32 deltaTime)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8008B97C
- * Size:	0000B4
- */
 void Creature::updateAI()
 {
 	if (!mHoldingCreature.isNull()) {
@@ -962,11 +792,6 @@ void Creature::updateAI()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8008BA30
- * Size:	0000F0
- */
 f32 centreDist(Creature* c1, Creature* c2)
 {
 	Vector3f sep = c1->getCentre() - c2->getCentre();
@@ -986,22 +811,12 @@ f32 sphereDistQuick(Creature* c1, Creature* c2)
 	return dist - (c1->getCentreSize() + c2->getCentreSize());
 }
 
-/*
- * --INFO--
- * Address:	8008BB20
- * Size:	00011C
- */
 f32 sphereDist(Creature* c1, Creature* c2)
 {
 	f32 dist = centreDist(c1, c2);
 	return dist - (c1->getCentreSize() + c2->getCentreSize());
 }
 
-/*
- * --INFO--
- * Address:	8008BC3C
- * Size:	0006E8
- */
 void Creature::collisionCheck(f32 _unused)
 {
 	if (!isAlive()) {
@@ -1089,11 +904,6 @@ void Creature::collisionCheck(f32 _unused)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8008C324
- * Size:	0000A0
- */
 Vector3f Creature::getCatchPos(Creature* target)
 {
 	f32 rad = 0.95f * getSize();
@@ -1103,11 +913,6 @@ Vector3f Creature::getCatchPos(Creature* target)
 	return v;
 }
 
-/*
- * --INFO--
- * Address:	8008C3C4
- * Size:	000008
- */
 bool Creature::needShadow()
 {
 	if (mObjType == OBJTYPE_Piki) {
@@ -1116,11 +921,6 @@ bool Creature::needShadow()
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8008C3CC
- * Size:	000040
- */
 f32 Creature::getShadowSize()
 {
 	return mSRT.s.x * getSize();
@@ -1145,11 +945,6 @@ void showTri(Graphics& gfx, immut Vector3f& vec, CollTriInfo* tri)
 	gfx.drawOneTri(tmpV3, nullptr, tmpV2, 3);
 }
 
-/*
- * --INFO--
- * Address:	8008C40C
- * Size:	0002B4
- */
 static void recTraceShadowTris(Graphics& gfx, immut Vector3f& vec, CollTriInfo* tri)
 {
 	showTri(gfx, vec, tri);
@@ -1196,11 +991,6 @@ void calcShadowTris(Graphics& gfx, immut Vector3f& vec, f32 rad)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8008C6C0
- * Size:	0007BC
- */
 void Creature::drawShadow(Graphics& gfx)
 {
 	if (!needShadow()) {
@@ -1289,11 +1079,6 @@ void Creature::drawShadow(Graphics& gfx)
 	MATCHING_STOP_TIMER("shadow");
 }
 
-/*
- * --INFO--
- * Address:	8008CE7C
- * Size:	000094
- */
 f32 qdist2(Creature* c1, Creature* c2)
 {
 	f32 xDiff = c1->mSRT.t.x - c2->mSRT.t.x;
@@ -1301,22 +1086,12 @@ f32 qdist2(Creature* c1, Creature* c2)
 	return std::sqrtf(SQUARE(xDiff) + SQUARE(zDiff));
 }
 
-/*
- * --INFO--
- * Address:	8008CF10
- * Size:	0000EC
- */
 f32 circleDist(Creature* c1, Creature* c2)
 {
 	f32 dist = qdist2(c1->getCentre().x, c1->getCentre().z, c2->getCentre().x, c2->getCentre().z);
 	return dist - c1->getCentreSize() - c2->getCentreSize();
 }
 
-/*
- * --INFO--
- * Address:	8008CFFC
- * Size:	000540
- */
 void Creature::moveVelocity()
 {
 	Vector3f vel(mTargetVelocity);
@@ -1369,21 +1144,11 @@ void Creature::moveVelocity()
 	mVelocity = mVelocity + vec;
 }
 
-/*
- * --INFO--
- * Address:	8008D53C
- * Size:	000008
- */
 bool Creature::getAvoid(immut Vector3f&, immut Vector3f&)
 {
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8008D544
- * Size:	00034C
- */
 void Creature::renderAtari(Graphics& gfx)
 {
 	if (mObjType != OBJTYPE_Pellet) {
@@ -1429,11 +1194,6 @@ void Creature::renderAtari(Graphics& gfx)
 	gfx.drawSphere(Vector3f(0.0f, -mGroundOffset, 0.0f), mCollisionRadius, mtx2);
 }
 
-/*
- * --INFO--
- * Address:	8008D890
- * Size:	000054
- */
 bool roughCull(Creature* p1, Creature* p2, f32 p3)
 {
 	if (AIPerf::useGrid && AIPerf::iteratorCull && p1->roughCulling(p2, p3)) {
@@ -1443,11 +1203,6 @@ bool roughCull(Creature* p1, Creature* p2, f32 p3)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8008D8E4
- * Size:	000070
- */
 void Creature::stickUpdate()
 {
 	if (mRope) {

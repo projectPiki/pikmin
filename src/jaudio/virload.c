@@ -26,11 +26,6 @@ void JV_InitHeader(immut char*)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8000E580
- * Size:	000138
- */
 BOOL JV_InitHeader_M(immut char* fileName, u8* barcData, u8* p3)
 {
 	STACK_PAD_VAR(1);
@@ -76,11 +71,6 @@ BOOL JV_InitHeader_M(immut char* fileName, u8* barcData, u8* p3)
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	8000E6C0
- * Size:	00007C
- */
 u32 JV_GetArchiveHandle(immut char* name)
 {
 	u32 i;
@@ -130,11 +120,6 @@ void JV_GetHandle(u32)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8000E740
- * Size:	000080
- */
 BarcEntry* JV_GetRealHandle(u32 handle)
 {
 	u32 i;
@@ -165,11 +150,6 @@ BarcEntry* JV_GetRealHandle(u32 handle)
 	return entry;
 }
 
-/*
- * --INFO--
- * Address:	8000E7C0
- * Size:	000034
- */
 u32 JV_CheckSize(u32 handle)
 {
 	BarcEntry* entry;
@@ -190,11 +170,6 @@ void __JV_Callback(u32)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8000E800
- * Size:	0000D0
- */
 u32 JV_LoadFile(u32 handle, u8* dst, u32 param_3, u32 length)
 {
 	BarcEntry* entry;
@@ -226,11 +201,6 @@ u32 JV_LoadFile(u32 handle, u8* dst, u32 param_3, u32 length)
 	return status;
 }
 
-/*
- * --INFO--
- * Address:	8000E8E0
- * Size:	0000E0
- */
 u32 JV_LoadFile_Async2(u32 handle, u8* dst, u32 p3, u32 length, void (*callback)(u32), u32 owner)
 {
 	static u32 first = TRUE;

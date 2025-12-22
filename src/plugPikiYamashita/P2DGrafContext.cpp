@@ -28,11 +28,6 @@ P2DGrafContext::P2DGrafContext(const PUTRect&)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801AF7AC
- * Size:	0000B4
- */
 P2DGrafContext::P2DGrafContext(int x0, int y0, int width, int height)
     : mViewportBounds(x0, y0, x0 + width, y0 + height)
     , mScissorBounds(x0, y0, x0 + width, y0 + height)
@@ -42,11 +37,6 @@ P2DGrafContext::P2DGrafContext(int x0, int y0, int width, int height)
 	setLineWidth(6);
 }
 
-/*
- * --INFO--
- * Address:	801AF860
- * Size:	0000CC
- */
 void P2DGrafContext::setPort()
 {
 	GXSetViewport(mViewportBounds.mMinX, mViewportBounds.mMinY, mViewportBounds.getWidth(), mViewportBounds.getHeight(), 0.0f, 1.0f);
@@ -54,11 +44,6 @@ void P2DGrafContext::setPort()
 	setup2D();
 }
 
-/*
- * --INFO--
- * Address:	801AF92C
- * Size:	000174
- */
 void P2DGrafContext::setup2D()
 {
 	GXClearVtxDesc();
@@ -87,11 +72,6 @@ void P2DGrafContext::setup2D()
 	GXSetCullMode(GX_CULL_NONE);
 }
 
-/*
- * --INFO--
- * Address:	801AFAA0
- * Size:	0000A0
- */
 void P2DGrafContext::setScissor()
 {
 	PUTRect bounds(0, 0, 1000, 1000);
@@ -104,32 +84,17 @@ void P2DGrafContext::setScissor()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801AFB40
- * Size:	000014
- */
 void P2DGrafContext::scissor(const PUTRect& rect)
 {
 	mScissorBounds = rect;
 }
 
-/*
- * --INFO--
- * Address:	801AFB54
- * Size:	000024
- */
 void P2DGrafContext::place(const PUTRect& position)
 {
 	mViewportBounds = position;
 	mScissorBounds  = position;
 }
 
-/*
- * --INFO--
- * Address:	801AFB78
- * Size:	0000AC
- */
 void P2DGrafContext::setColor(immut Colour& p1, immut Colour& p2, immut Colour& p3, immut Colour& p4)
 {
 	_18 = p1;
@@ -171,11 +136,6 @@ void P2DGrafContext::setColor(immut Colour& p1, immut Colour& p2, immut Colour& 
 	}
 }
 
-/*
- * --INFO--
- * Address:	801AFC24
- * Size:	00002C
- */
 void P2DGrafContext::setLineWidth(u8 width)
 {
 	mLineWidth = width;

@@ -25,11 +25,6 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("OgMemChkSection")
 
-/*
- * --INFO--
- * Address:	8018D04C
- * Size:	0009D0
- */
 zen::ogScrMemChkMgr::ogScrMemChkMgr()
 {
 	mIsDebugMode = false;
@@ -249,11 +244,6 @@ void zen::ogScrMemChkMgr::StartSub()
 	mDrawWaitCounter = 3;
 }
 
-/*
- * --INFO--
- * Address:	8018DA1C
- * Size:	000258
- */
 void zen::ogScrMemChkMgr::StatusCheck()
 {
 #if defined(VERSION_PIKIDEMO)
@@ -342,11 +332,6 @@ void zen::ogScrMemChkMgr::StatusCheck()
 	mWaitTimer = 0.0f;
 }
 
-/*
- * --INFO--
- * Address:	8018DC74
- * Size:	000044
- */
 void zen::ogScrMemChkMgr::setPCtex(TypingTextMgr* text)
 {
 	mActiveTextMgr->off();
@@ -354,11 +339,6 @@ void zen::ogScrMemChkMgr::setPCtex(TypingTextMgr* text)
 	mActiveTextMgr->start();
 }
 
-/*
- * --INFO--
- * Address:	8018DCB8
- * Size:	000038
- */
 void zen::ogScrMemChkMgr::DispYesNo(bool set)
 {
 	if (set) {
@@ -368,11 +348,6 @@ void zen::ogScrMemChkMgr::DispYesNo(bool set)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8018DCF0
- * Size:	000038
- */
 void zen::ogScrMemChkMgr::DispAcup(bool set)
 {
 	if (set) {
@@ -408,11 +383,6 @@ void zen::ogScrMemChkMgr::RepairFileStart()
 	DispYesNo(false);
 }
 
-/*
- * --INFO--
- * Address:	8018DD28
- * Size:	000224
- */
 void zen::ogScrMemChkMgr::start()
 {
 	mIsDebugMode = false;
@@ -453,11 +423,6 @@ void zen::ogScrMemChkMgr::start()
 	StatusCheck();
 }
 
-/*
- * --INFO--
- * Address:	8018DF4C
- * Size:	000190
- */
 void zen::ogScrMemChkMgr::DebugStart(int state)
 {
 	mIsDebugMode = true;
@@ -558,11 +523,6 @@ void zen::ogScrMemChkMgr::setNoCard()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8018E0DC
- * Size:	000EC4
- */
 zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 {
 	if (mStatus == Inactive) {
@@ -856,11 +816,6 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 	return mStatus;
 }
 
-/*
- * --INFO--
- * Address:	8018EFA0
- * Size:	000110
- */
 void zen::ogScrMemChkMgr::draw(Graphics& gfx)
 {
 	if (mStatus == Inactive) {
@@ -896,11 +851,6 @@ void zen::ogScrMemChkMgr::draw(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8018F0B0
- * Size:	000144
- */
 void zen::ogScrMemChkMgr::setErrorMessage()
 {
 	mNoCardTextBox->hide();

@@ -23,20 +23,10 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("searchSys")
 
-/*
- * --INFO--
- * Address:	800E2FB4
- * Size:	000004
- */
 SearchSystem::SearchSystem()
 {
 }
 
-/*
- * --INFO--
- * Address:	800E2FB8
- * Size:	00046C
- */
 void SearchSystem::update()
 {
 	if (AIPerf::loopOptimise) {
@@ -114,11 +104,6 @@ void SearchSystem::update()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800E3424
- * Size:	0007EC
- */
 void SearchSystem::updateLoopOptimised()
 {
 	for (int i = 0; i < pikiMgr->mMaxElements; i++) {
@@ -243,11 +228,6 @@ void SearchSystem::updateLoopOptimised()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800E3C10
- * Size:	000070
- */
 SearchBuffer::SearchBuffer()
 {
 	mMaxEntries     = 0;
@@ -258,11 +238,6 @@ SearchBuffer::SearchBuffer()
 	_24 = 0;
 }
 
-/*
- * --INFO--
- * Address:	800E3C80
- * Size:	0001D8
- */
 void SearchBuffer::init(SearchData* data, int p2)
 {
 	mMaxEntries = p2;
@@ -315,11 +290,6 @@ int SearchBuffer::getIndex(Creature* obj)
 	return -1;
 }
 
-/*
- * --INFO--
- * Address:	800E3E58
- * Size:	00003C
- */
 void SearchBuffer::clear()
 {
 	for (int i = 0; i < mCurrentEntries; i++) {
@@ -341,11 +311,6 @@ void SearchBuffer::reset()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800E3E94
- * Size:	000060
- */
 void SearchBuffer::invalidate()
 {
 	if (!AIPerf::insQuick) {
@@ -359,11 +324,6 @@ void SearchBuffer::invalidate()
 	_1C             = 0;
 }
 
-/*
- * --INFO--
- * Address:	800E3EF4
- * Size:	0001E8
- */
 void SearchBuffer::insertQuick(Creature* obj, f32 dist)
 {
 	if (!obj->isVisible() || !obj->isAlive()) {
@@ -395,11 +355,6 @@ void SearchBuffer::insertQuick(Creature* obj, f32 dist)
 	STACK_PAD_VAR(8);
 }
 
-/*
- * --INFO--
- * Address:	800E40DC
- * Size:	000204
- */
 void SearchBuffer::insert(Creature* creature, f32 distance)
 {
 	if (AIPerf::insQuick) {
@@ -479,11 +434,6 @@ void SearchBuffer::update()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800E42E0
- * Size:	00002C
- */
 Creature* SearchBuffer::getCreature(int id)
 {
 	if (id < 0 || id >= mCurrentEntries) {
@@ -492,31 +442,16 @@ Creature* SearchBuffer::getCreature(int id)
 	return mDataList[id].mTargetCreature.getPtr();
 }
 
-/*
- * --INFO--
- * Address:	800E430C
- * Size:	000008
- */
 int SearchBuffer::getFirst()
 {
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	800E4314
- * Size:	000008
- */
 int SearchBuffer::getNext(int i)
 {
 	return i + 1;
 }
 
-/*
- * --INFO--
- * Address:	800E431C
- * Size:	00001C
- */
 bool SearchBuffer::isDone(int i)
 {
 	if (i >= mCurrentEntries) {

@@ -18,21 +18,11 @@ DEFINE_ERROR(6)
  */
 DEFINE_PRINT("weeds")
 
-/*
- * --INFO--
- * Address:	800E467C
- * Size:	000020
- */
 bool RockGen::workable()
 {
 	return mWorkingPikis < 5;
 }
 
-/*
- * --INFO--
- * Address:	800E469C
- * Size:	000018
- */
 void RockGen::startWork()
 {
 	if (workable()) {
@@ -40,11 +30,6 @@ void RockGen::startWork()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800E46B4
- * Size:	000018
- */
 void RockGen::finishWork()
 {
 	if (mWorkingPikis > 0) {
@@ -52,21 +37,11 @@ void RockGen::finishWork()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800E46CC
- * Size:	000020
- */
 bool GrassGen::workable()
 {
 	return mWorkingPikis < 5;
 }
 
-/*
- * --INFO--
- * Address:	800E46EC
- * Size:	000018
- */
 void GrassGen::startWork()
 {
 	if (workable()) {
@@ -74,11 +49,6 @@ void GrassGen::startWork()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800E4704
- * Size:	000018
- */
 void GrassGen::finishWork()
 {
 	if (mWorkingPikis > 0) {
@@ -86,11 +56,6 @@ void GrassGen::finishWork()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800E471C
- * Size:	00025C
- */
 void RockGen::resolve()
 {
 	int max = mMaxPebbles;
@@ -117,11 +82,6 @@ void RockGen::resolve()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800E4978
- * Size:	00025C
- */
 void GrassGen::resolve()
 {
 	int max = mTotalGrassCount;
@@ -146,11 +106,6 @@ void GrassGen::resolve()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800E4BD4
- * Size:	0000A0
- */
 RockGen::RockGen(Shape* shape, CreatureProp* props)
     : ItemCreature(OBJTYPE_RockGen, props, nullptr)
 {
@@ -161,11 +116,6 @@ RockGen::RockGen(Shape* shape, CreatureProp* props)
 	mSeContext->setContext(this, 4);
 }
 
-/*
- * --INFO--
- * Address:	800E4C74
- * Size:	000284
- */
 void RockGen::create(int num, f32 radius, int)
 {
 	mPebbles       = new Pebble[num];
@@ -193,11 +143,6 @@ void RockGen::create(int num, f32 radius, int)
 	resolve();
 }
 
-/*
- * --INFO--
- * Address:	800E4F0C
- * Size:	000010
- */
 void RockGen::setSizeAndNum(f32 size, int num)
 {
 	mActivePebbles = num;
@@ -205,11 +150,6 @@ void RockGen::setSizeAndNum(f32 size, int num)
 	mSize          = size;
 }
 
-/*
- * --INFO--
- * Address:	800E4F1C
- * Size:	00005C
- */
 void RockGen::startAI(int state)
 {
 	mWorkingPikis = 0;
@@ -219,31 +159,16 @@ void RockGen::startAI(int state)
 	mGrid.updateAIGrid(mSRT.t, false);
 }
 
-/*
- * --INFO--
- * Address:	800E4F78
- * Size:	000010
- */
 void RockGen::killPebble()
 {
 	mActivePebbles--;
 }
 
-/*
- * --INFO--
- * Address:	800E4F88
- * Size:	00003C
- */
 void RockGen::doSave(RandomAccessStream& data)
 {
 	data.writeByte(mActivePebbles);
 }
 
-/*
- * --INFO--
- * Address:	800E4FC4
- * Size:	000080
- */
 void RockGen::doLoad(RandomAccessStream& data)
 {
 	mActivePebbles = data.readByte();
@@ -256,11 +181,6 @@ void RockGen::doLoad(RandomAccessStream& data)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800E5044
- * Size:	00002C
- */
 void RockGen::update()
 {
 	if (mSeContext) {
@@ -268,11 +188,6 @@ void RockGen::update()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800E5070
- * Size:	000190
- */
 void RockGen::refresh(Graphics& gfx)
 {
 	if (!gfx.mCamera->isPointVisible(mSRT.t, getSize() * 4.0f)) {
@@ -296,11 +211,6 @@ void RockGen::refresh(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800E5208
- * Size:	0000E0
- */
 Pebble* RockGen::getRandomPebble()
 {
 	if (mActivePebbles <= 0) {
@@ -324,11 +234,6 @@ Pebble* RockGen::getRandomPebble()
 	return nullptr;
 }
 
-/*
- * --INFO--
- * Address:	800E52E8
- * Size:	0000A0
- */
 GrassGen::GrassGen(Shape* shape, CreatureProp* props)
     : ItemCreature(OBJTYPE_GrassGen, props, nullptr)
 {
@@ -339,11 +244,6 @@ GrassGen::GrassGen(Shape* shape, CreatureProp* props)
 	mSeContext->setContext(this, 4);
 }
 
-/*
- * --INFO--
- * Address:	800E5388
- * Size:	000244
- */
 void GrassGen::create(int num, f32 size, int)
 {
 	mGrass           = new Grass[num];
@@ -371,11 +271,6 @@ void GrassGen::create(int num, f32 size, int)
 	resolve();
 }
 
-/*
- * --INFO--
- * Address:	800E55E0
- * Size:	000010
- */
 void GrassGen::setSizeAndNum(f32 size, int num)
 {
 	mActiveGrass     = num;
@@ -383,11 +278,6 @@ void GrassGen::setSizeAndNum(f32 size, int num)
 	mSize            = size;
 }
 
-/*
- * --INFO--
- * Address:	800E55F0
- * Size:	00005C
- */
 void GrassGen::startAI(int)
 {
 	mWorkingPikis = 0;
@@ -397,11 +287,6 @@ void GrassGen::startAI(int)
 	PRINT("++++++++ CREATE GRASS GEN +++++++\n");
 }
 
-/*
- * --INFO--
- * Address:	800E564C
- * Size:	00002C
- */
 void GrassGen::update()
 {
 	if (mSeContext) {
@@ -409,11 +294,6 @@ void GrassGen::update()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800E5678
- * Size:	000190
- */
 void GrassGen::refresh(Graphics& gfx)
 {
 	if (gfx.mCamera->isPointVisible(mSRT.t, getSize() * 4.0f)) {
@@ -433,11 +313,6 @@ void GrassGen::refresh(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800E5810
- * Size:	0000E0
- */
 Grass* GrassGen::getRandomGrass()
 {
 	if (mActiveGrass <= 0)
@@ -477,29 +352,14 @@ WeedsGen::WeedsGen(Shape* shape, CreatureProp* props)
 	mWeedShape       = shape;
 }
 
-/*
- * --INFO--
- * Address:	800E58F0
- * Size:	000004
- */
 void WeedsGen::update()
 {
 }
 
-/*
- * --INFO--
- * Address:	800E58F4
- * Size:	000004
- */
 void WeedsGen::refresh(Graphics&)
 {
 }
 
-/*
- * --INFO--
- * Address:	800E58F8
- * Size:	0001CC
- */
 void WeedsGen::startAI(int ai)
 {
 	for (int i = 0; i < mWeedsCount; i++) {
@@ -540,22 +400,12 @@ Weed::Weed()
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	800E5AC4
- * Size:	000024
- */
 void Weed::startAI(int)
 {
 	mSRT.s.set(0.1f, 0.1f, 0.1f);
 	mIsPulled = 0;
 }
 
-/*
- * --INFO--
- * Address:	800E5AE8
- * Size:	0000CC
- */
 bool Weed::interactPullout(Creature* item)
 {
 	if (!mIsPulled) {
@@ -572,11 +422,6 @@ bool Weed::interactPullout(Creature* item)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800E5BB4
- * Size:	00009C
- */
 void Weed::update()
 {
 	ItemCreature::update();
@@ -593,11 +438,6 @@ void Weed::update()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800E5C50
- * Size:	000108
- */
 void Weed::refresh(Graphics& gfx)
 {
 	mWorldMtx.makeSRT(mSRT.s, mSRT.r, mSRT.t);
@@ -610,31 +450,16 @@ void Weed::refresh(Graphics& gfx)
 	gfx.mCamera->setBoundOffset(nullptr);
 }
 
-/*
- * --INFO--
- * Address:	800E5D58
- * Size:	000014
- */
 bool Weed::isVisible()
 {
 	return mIsPulled == 0;
 }
 
-/*
- * --INFO--
- * Address:	800E5D6C
- * Size:	000008
- */
 bool Weed::isAlive()
 {
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	800E5D74
- * Size:	000014
- */
 bool Weed::isAtari()
 {
 	return mIsPulled == 0;

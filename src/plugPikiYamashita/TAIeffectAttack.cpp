@@ -20,22 +20,12 @@ DEFINE_ERROR(19)
  */
 DEFINE_PRINT("TAIeffectAttack")
 
-/*
- * --INFO--
- * Address:	801C4960
- * Size:	000038
- */
 bool EventTypeCallBack::invoke(zen::particleGenerator* ptclGen)
 {
 	mParam->mCallBackRef->ptclHitMap(ptclGen, mParam);
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	801C4998
- * Size:	0001E0
- */
 void CylinderTypeCallBack::init(TAIeffectAttackParam* param, Teki* teki, immut Vector3f& p3, Vector3f p4, f32 p5, f32 p6, f32 p7, f32 p8,
                                 TAIeffectAttackEventCallBack* eventCB)
 {
@@ -58,11 +48,6 @@ void CylinderTypeCallBack::init(TAIeffectAttackParam* param, Teki* teki, immut V
 	mParam->mState.mIsMoving = 1;
 }
 
-/*
- * --INFO--
- * Address:	801C4B78
- * Size:	00019C
- */
 void CylinderTypeCallBack::hitCheckCommon(zen::particleGenerator* ptclGen, Creature* creature)
 {
 	f32 t;
@@ -95,11 +80,6 @@ void CylinderTypeCallBack::hitCheck(zen::particleGenerator* ptclGen)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801C4D14
- * Size:	000384
- */
 bool CylinderTypeCallBack::invoke(zen::particleGenerator* ptclGen)
 {
 	mParam->mCallBackRef->playEventSound(ptclGen, mParam);
@@ -127,11 +107,6 @@ bool CylinderTypeCallBack::invoke(zen::particleGenerator* ptclGen)
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	801C5098
- * Size:	0001E8
- */
 void ConeTypeCallBack::init(TAIeffectAttackParam* param, Teki* teki, immut Vector3f& p3, Vector3f p4, f32 p5, f32 p6, f32 p7, f32 p8,
                             TAIeffectAttackEventCallBack* eventCB)
 {
@@ -159,11 +134,6 @@ void ConeTypeCallBack::init(TAIeffectAttackParam* param, Teki* teki, immut Vecto
 	mConeHalfAngle = p6;
 }
 
-/*
- * --INFO--
- * Address:	801C5280
- * Size:	000320
- */
 void ConeTypeCallBack::hitCheckCommon(zen::particleGenerator* ptclGen, Creature* creature)
 {
 	Vector3f emitPos(ptclGen->getEmitPos());
@@ -234,11 +204,6 @@ void ConeTypeCallBack::hitCheck(zen::particleGenerator* ptclGen)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801C55A0
- * Size:	000434
- */
 bool ConeTypeCallBack::invoke(zen::particleGenerator* ptclGen)
 {
 	f32 nextTime         = mParam->mCurrentTime + gsys->getFrameTime();

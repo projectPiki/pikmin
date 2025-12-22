@@ -19,11 +19,6 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT(nullptr)
 
-/*
- * --INFO--
- * Address:	80182B94
- * Size:	000080
- */
 zen::ogScrTutorialMgr::ogScrTutorialMgr()
 {
 	mMessageMgr = new ogScrMessageMgr("screen/blo/tu_base.blo");
@@ -32,11 +27,6 @@ zen::ogScrTutorialMgr::ogScrTutorialMgr()
 	mStatus = Status_Null;
 }
 
-/*
- * --INFO--
- * Address:	80182C14
- * Size:	0000BC
- */
 zen::ogScrTutorialMgr::TutorialStatus zen::ogScrTutorialMgr::update(Controller* input)
 {
 	if (mStatus == Status_Null) {
@@ -66,11 +56,6 @@ zen::ogScrTutorialMgr::TutorialStatus zen::ogScrTutorialMgr::update(Controller* 
 	return mStatus;
 }
 
-/*
- * --INFO--
- * Address:	80182CD0
- * Size:	000030
- */
 void zen::ogScrTutorialMgr::draw(Graphics& gfx)
 {
 	if (mStatus != -1) {
@@ -78,11 +63,6 @@ void zen::ogScrTutorialMgr::draw(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80182D00
- * Size:	0000E0
- */
 void zen::ogScrTutorialMgr::start(EnumTutorial state)
 {
 	int days       = 1;

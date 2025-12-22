@@ -21,11 +21,6 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("Pom");
 
-/*
- * --INFO--
- * Address:	80177DE0
- * Size:	0002B4
- */
 PomProp::PomProp()
 {
 	mCreatureProps.mFriction.mValue      = 1.0f;
@@ -33,11 +28,6 @@ PomProp::PomProp()
 	mCreatureProps.mAcceleration.mValue  = 1.0f;
 }
 
-/*
- * --INFO--
- * Address:	80178094
- * Size:	000098
- */
 Pom::Pom(CreatureProp* props)
     : Boss(props)
 {
@@ -45,21 +35,11 @@ Pom::Pom(CreatureProp* props)
 	mPomAi    = new PomAi(this);
 }
 
-/*
- * --INFO--
- * Address:	8017812C
- * Size:	000008
- */
 f32 Pom::getiMass()
 {
 	return 0.0001f;
 }
 
-/*
- * --INFO--
- * Address:	80178134
- * Size:	000050
- */
 void Pom::init(immut Vector3f&)
 {
 	mCollisionRadius        = 20.0f;
@@ -71,11 +51,6 @@ void Pom::init(immut Vector3f&)
 	mPomAi->initAI(this);
 }
 
-/*
- * --INFO--
- * Address:	80178184
- * Size:	00009C
- */
 void Pom::setColor(int color)
 {
 	mColor = color;
@@ -86,11 +61,6 @@ void Pom::setColor(int color)
 	mShapeObject->mShape->makeInstance(mDynMaterial, 0);
 }
 
-/*
- * --INFO--
- * Address:	80178220
- * Size:	00004C
- */
 void Pom::doKill()
 {
 	mIsAlive = 0;
@@ -99,32 +69,17 @@ void Pom::doKill()
 	bossMgr->kill(this);
 }
 
-/*
- * --INFO--
- * Address:	8017826C
- * Size:	000028
- */
 void Pom::exitCourse()
 {
 	mPomAi->killCallBackEffect(true);
 }
 
-/*
- * --INFO--
- * Address:	80178294
- * Size:	00004C
- */
 void Pom::update()
 {
 	doAI();
 	doAnimation();
 }
 
-/*
- * --INFO--
- * Address:	801782E0
- * Size:	0000E0
- */
 void Pom::refresh(Graphics& gfx)
 {
 	if (isAlive()) {
@@ -140,11 +95,6 @@ void Pom::refresh(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801783C0
- * Size:	000084
- */
 void Pom::drawShape(Graphics& gfx)
 {
 	if (isAlive()) {
@@ -153,21 +103,11 @@ void Pom::drawShape(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80178444
- * Size:	000024
- */
 void Pom::doAI()
 {
 	mPomAi->update();
 }
 
-/*
- * --INFO--
- * Address:	80178468
- * Size:	000044
- */
 void Pom::doAnimation()
 {
 	if (mShapeObject) {
@@ -175,11 +115,6 @@ void Pom::doAnimation()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801784AC
- * Size:	000054
- */
 void Pom::collisionCallback(immut CollEvent& event)
 {
 	if (event.mCollider->mObjType == OBJTYPE_Piki || event.mCollider->mObjType == OBJTYPE_Navi) {

@@ -19,11 +19,6 @@ DEFINE_ERROR(14)
  */
 DEFINE_PRINT("drawHiScore")
 
-/*
- * --INFO--
- * Address:	801F0A80
- * Size:	0003D8
- */
 zen::DrawHiScore::DrawHiScore()
 {
 	mMode             = MODE_Sleep;
@@ -79,11 +74,6 @@ zen::DrawHiScore::DrawHiScore()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801F0E58
- * Size:	00012C
- */
 bool zen::DrawHiScore::update(Controller* controller)
 {
 	bool res = false;
@@ -117,11 +107,6 @@ bool zen::DrawHiScore::update(Controller* controller)
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	801F0F84
- * Size:	0001B0
- */
 void zen::DrawHiScore::draw(Graphics& gfx)
 {
 	bool check = false;
@@ -155,11 +140,6 @@ void zen::DrawHiScore::draw(Graphics& gfx)
 	mAlphaWipe.draw(gfx);
 }
 
-/*
- * --INFO--
- * Address:	801F1134
- * Size:	000084
- */
 void zen::DrawHiScore::start()
 {
 	mMode = MODE_FadeIn;
@@ -168,11 +148,6 @@ void zen::DrawHiScore::start()
 	mAlphaWipe.start(0.5f, 0.25, AlphaWipe::TYPE_Reverse);
 }
 
-/*
- * --INFO--
- * Address:	801F11B8
- * Size:	00033C
- */
 void zen::DrawHiScore::rewriteNumber(P2DScreen* screen, u32 tag, int value, int digits, bool p5)
 {
 	P2DPane* pane = screen->search(tag, true);

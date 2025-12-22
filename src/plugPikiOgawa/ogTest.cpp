@@ -37,11 +37,6 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("OgTestSection")
 
-/*
- * --INFO--
- * Address:	8017D744
- * Size:	0002EC
- */
 zen::OgTestScreen::OgTestScreen()
 {
 	setName("OgTestScreen");
@@ -94,11 +89,6 @@ zen::OgTestScreen::OgTestScreen()
 	PRINT("**********************************************\n");
 }
 
-/*
- * --INFO--
- * Address:	8017DA30
- * Size:	0004DC
- */
 void zen::OgTestScreen::modeSelectSub()
 {
 	if (mController->keyClick(KBBTN_MSTICK_UP) && mSelectedMode > TESTMODE_MIN) {
@@ -273,11 +263,6 @@ void zen::OgTestScreen::modeSelectSub()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8017DF0C
- * Size:	000188
- */
 void zen::OgTestScreen::update()
 {
 	mController->update();
@@ -339,11 +324,6 @@ void zen::OgTestScreen::update()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8017E094
- * Size:	0006A8
- */
 void zen::OgTestScreen::draw(Graphics& gfx)
 {
 	gfx.setViewport(RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
@@ -452,11 +432,6 @@ void zen::OgTestScreen::draw(Graphics& gfx)
 	gfx.setLighting(false, nullptr);
 }
 
-/*
- * --INFO--
- * Address:	8017E73C
- * Size:	000094
- */
 zen::OgTestSection::OgTestSection()
 {
 	Node::init("<OgTestSection>");
@@ -465,11 +440,6 @@ zen::OgTestSection::OgTestSection()
 	flowCont._250 = 0;
 }
 
-/*
- * --INFO--
- * Address:	8017E7D0
- * Size:	000080
- */
 void zen::OgTestSection::init()
 {
 	int msgHeapSize = 0x19800;

@@ -17,11 +17,6 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("alphaWipe")
 
-/*
- * --INFO--
- * Address:	801F19D8
- * Size:	000048
- */
 zen::AlphaWipe::AlphaWipe()
 {
 	mState          = STATE_Inactive;
@@ -33,11 +28,6 @@ zen::AlphaWipe::AlphaWipe()
 	mEndColor.set(255, 255, 255, 255);
 }
 
-/*
- * --INFO--
- * Address:	801F1A20
- * Size:	00020C
- */
 void zen::AlphaWipe::update()
 {
 	if (mState == STATE_Active) {
@@ -99,11 +89,6 @@ void zen::AlphaWipe::update()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801F1C2C
- * Size:	0000E4
- */
 void zen::AlphaWipe::draw(Graphics& gfx)
 {
 	if (mState == STATE_Active) {
@@ -115,11 +100,6 @@ void zen::AlphaWipe::draw(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801F1D10
- * Size:	000050
- */
 void zen::AlphaWipe::start(f32 totalDuration, f32 delay, zen::AlphaWipe::typeFlag type)
 {
 	totalDuration *= 0.5f; // have to increase AND decrease

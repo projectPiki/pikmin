@@ -2,11 +2,6 @@
 
 BOOL gTRKBigEndian;
 
-/*
- * --INFO--
- * Address:	8021C310
- * Size:	0000D4
- */
 DSError TRKInitializeNub(void)
 {
 	DSError ret;
@@ -39,33 +34,18 @@ DSError TRKInitializeNub(void)
 	return ret;
 }
 
-/*
- * --INFO--
- * Address:	8021C3E4
- * Size:	000024
- */
 DSError TRKTerminateNub(void)
 {
 	TRKTerminateSerialHandler();
 	return DS_NoError;
 }
 
-/*
- * --INFO--
- * Address:	8021C408
- * Size:	000028
- */
 void TRKNubWelcome(void)
 {
 	TRK_board_display("MetroTRK for Dolphin v0.8");
 	return;
 }
 
-/*
- * --INFO--
- * Address:	8021C430
- * Size:	000074
- */
 BOOL TRKInitializeEndian(void)
 {
 	u8 bendian[4];

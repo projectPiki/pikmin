@@ -17,11 +17,6 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("GameCreditsSection");
 
-/*
- * --INFO--
- * Address:	8019B888
- * Size:	000094
- */
 GameCreditsSection::GameCreditsSection()
 {
 	Node::init("<GameCreditsSection>");

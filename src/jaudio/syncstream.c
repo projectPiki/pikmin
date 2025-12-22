@@ -37,22 +37,12 @@ s16 table4[16] = {
 	0, 1, 2, 3, 4, 5, 6, 7, -8, -7, -6, -5, -4, -3, -2, -1,
 };
 
-/*
- * --INFO--
- * Address:	8001BBE0
- * Size:	000038
- */
 void Stop_DirectPCM(dspch_* dspch)
 {
 	DSP_PlayStop(dspch->buffer_idx);
 	DSP_FlushChannel(dspch->buffer_idx);
 }
 
-/*
- * --INFO--
- * Address:	8001BC20
- * Size:	0000DC
- */
 void Play_DirectPCM(dspch_* dspch, s16* baseAddr, u16 loopStart, u32 length)
 {
 	DSPchannel_* buff = GetDspHandle(dspch->buffer_idx); // r3
@@ -92,41 +82,21 @@ void Get_DirectPCM_LoopRemain(DSPchannel_* channel)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8001BD00
- * Size:	00000C
- */
 u16 Get_DirectPCM_Counter(DSPchannel_* channel)
 {
 	return channel->currentPosition >> 16;
 }
 
-/*
- * --INFO--
- * Address:	8001BD20
- * Size:	000008
- */
 u32 Get_DirectPCM_Remain(DSPchannel_* channel)
 {
 	return channel->remainingLength;
 }
 
-/*
- * --INFO--
- * Address:	8001BD40
- * Size:	00003C
- */
 static void __DVDReadAsyncRetry()
 {
 	DVDReadAsyncPrio(copy->fileinfo, copy->addr, copy->length, copy->offset, copy->callback, 1);
 }
 
-/*
- * --INFO--
- * Address:	8001BD80
- * Size:	000048
- */
 static void DVDReadAsyncPrio2(DVDFileInfo* info, void* addr, s32 length, s32 offs, DVDCallback callback, s32 prio)
 {
 	copy->fileinfo = info;
@@ -139,11 +109,6 @@ static void DVDReadAsyncPrio2(DVDFileInfo* info, void* addr, s32 length, s32 off
 
 static void LoadADPCM(StreamCtrl_*, int);
 
-/*
- * --INFO--
- * Address:	8001BDE0
- * Size:	00014C
- */
 static void __LoadFin(s32 size, DVDFileInfo* fileinfo)
 {
 	StreamCtrl_* ctrl;
@@ -190,11 +155,6 @@ static void __LoadFin(s32 size, DVDFileInfo* fileinfo)
 	LoadADPCM(ctrl, 0);
 }
 
-/*
- * --INFO--
- * Address:	8001BF40
- * Size:	000190
- */
 static void LoadADPCM(StreamCtrl_* ctrl, int r28)
 {
 	u32 size;
@@ -270,11 +230,6 @@ static void LoadADPCM(StreamCtrl_* ctrl, int r28)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8001C0E0
- * Size:	000020
- */
 static void BufContInit(BufControl_* ctrl, u8 a, u8 b, u8 c, u8 d, u32 e, u32 f, u32 g)
 {
 	ctrl->state         = a;
@@ -286,11 +241,6 @@ static void BufContInit(BufControl_* ctrl, u8 a, u8 b, u8 c, u8 d, u32 e, u32 f,
 	ctrl->mLength       = g;
 }
 
-/*
- * --INFO--
- * Address:	8001C100
- * Size:	000030
- */
 void Init_StreamAudio(void)
 {
 	for (int i = 0; i < ARRAY_SIZE(SC); i++) {
@@ -311,11 +261,6 @@ void Get_StreamAudio_Handle(void)
 
 static s32 StreamAudio_Callback(void*);
 
-/*
- * --INFO--
- * Address:	8001C140
- * Size:	000318
- */
 BOOL StreamAudio_Start(u32 ctrlID, int soundId, immut char* name, int r6, int r7, StreamHeader_* header)
 {
 	StreamCtrl_* ctrl = &SC[ctrlID];
@@ -418,11 +363,6 @@ static void __StreamChgVolume(StreamCtrl_* ctrl);
 static void __StreamChgPitch(StreamCtrl_* ctrl);
 static u32 __Decode(StreamCtrl_* ctrl);
 
-/*
- * --INFO--
- * Address:	8001C460
- * Size:	0008A8
- */
 static s32 StreamAudio_Callback(void* data)
 {
 	StreamCtrl_* ctrl       = (StreamCtrl_*)data;
@@ -661,21 +601,11 @@ static s32 StreamAudio_Callback(void* data)
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	8001CD20
- * Size:	000008
- */
 void RegisterStreamCallback(StreamCallback callback)
 {
 	default_streamsync_call = callback;
 }
 
-/*
- * --INFO--
- * Address:	8001CD40
- * Size:	000194
- */
 void Jac_Decode_ADPCM(u8* src, s16* dst1, s16* dst2, u32 count, u8 arg4, s16* state)
 {
 	s16 sa = state[0];
@@ -732,11 +662,6 @@ void Jac_Decode_ADPCM(u8* src, s16* dst1, s16* dst2, u32 count, u8 arg4, s16* st
 	state[3] = sd;
 }
 
-/*
- * --INFO--
- * Address:	8001CEE0
- * Size:	0000D0
- */
 static u32 __DecodeADPCM(StreamCtrl_* ctrl)
 {
 	STACK_PAD_VAR(4);
@@ -764,11 +689,6 @@ static u32 __DecodeADPCM(StreamCtrl_* ctrl)
 	return size;
 }
 
-/*
- * --INFO--
- * Address:	8001CFC0
- * Size:	000024
- */
 static s16 Clamp16(s32 a)
 {
 	if (a >= 0x7fff) {
@@ -778,12 +698,6 @@ static s16 Clamp16(s32 a)
 	}
 	return a;
 }
-
-/*
- * --INFO--
- * Address:	8001D000
- * Size:	00019C
- */
 
 static u32 __DecodeADPCM4X(StreamCtrl_* ctrl)
 {
@@ -836,11 +750,6 @@ static u32 __DecodeADPCM4X(StreamCtrl_* ctrl)
 	return size;
 }
 
-/*
- * --INFO--
- * Address:	8001D1A0
- * Size:	000054
- */
 static u32 __Decode(StreamCtrl_* ctrl)
 {
 	u32 size;
@@ -855,11 +764,6 @@ static u32 __Decode(StreamCtrl_* ctrl)
 	return size;
 }
 
-/*
- * --INFO--
- * Address:	8001D200
- * Size:	00013C
- */
 static void __PcmToLoop(StreamCtrl_* ctrl)
 {
 	int count  = ctrl->buffCtrlMain3.usedSize;
@@ -893,11 +797,6 @@ static void __PcmToLoop(StreamCtrl_* ctrl)
 	ctrl->samplesLoaded += ctrl->buffCtrlMain3.usedSize;
 }
 
-/*
- * --INFO--
- * Address:	8001D340
- * Size:	000038
- */
 BOOL StreamSyncCheckReady(u32 ctrlID)
 {
 	StreamCtrl_* ctrl = &SC[ctrlID];
@@ -908,11 +807,6 @@ BOOL StreamSyncCheckReady(u32 ctrlID)
 	return FALSE;
 }
 
-/*
- * --INFO--
- * Address:	8001D380
- * Size:	00005C
- */
 BOOL StreamSyncCheckReadyID(u32 ctrlID, u32 r4)
 {
 	StreamCtrl_* ctrl = &SC[ctrlID];
@@ -928,11 +822,6 @@ BOOL StreamSyncCheckReadyID(u32 ctrlID, u32 r4)
 	return FALSE;
 }
 
-/*
- * --INFO--
- * Address:	8001D3E0
- * Size:	000054
- */
 BOOL StreamSyncCheckBusy(u32 ctrlID, u32 unk)
 {
 	StreamCtrl_* ctrl = &SC[ctrlID];
@@ -948,11 +837,6 @@ BOOL StreamSyncCheckBusy(u32 ctrlID, u32 unk)
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	8001D440
- * Size:	000060
- */
 int StreamSyncPlayAudio(f32 f1, u32 ctrlID, int volumeL, int volumeR)
 {
 	StreamCtrl_* ctrl = &SC[ctrlID];
@@ -972,11 +856,6 @@ int StreamSyncPlayAudio(f32 f1, u32 ctrlID, int volumeL, int volumeR)
 	return FALSE;
 }
 
-/*
- * --INFO--
- * Address:	8001D4A0
- * Size:	000050
- */
 BOOL StreamSyncStopAudio(u32 ctrlID)
 {
 	StreamCtrl_* ctrl = &SC[ctrlID];
@@ -994,11 +873,6 @@ BOOL StreamSyncStopAudio(u32 ctrlID)
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	8001D500
- * Size:	0000A8
- */
 static void __StreamChgPitch(StreamCtrl_* ctrl)
 {
 	if (ctrl->dspch[0]) {
@@ -1021,11 +895,6 @@ void StreamChgPitch(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8001D5C0
- * Size:	000124
- */
 static void __StreamChgVolume(StreamCtrl_* ctrl)
 {
 	if (ctrl->dspch[0]) {
@@ -1048,11 +917,6 @@ static void __StreamChgVolume(StreamCtrl_* ctrl)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8001D700
- * Size:	000034
- */
 void StreamChgVolume(u32 ctrlID, int volumeL, int volumeR)
 {
 	StreamCtrl_* ctrl = &SC[ctrlID];
@@ -1063,11 +927,6 @@ void StreamChgVolume(u32 ctrlID, int volumeL, int volumeR)
 	ctrl->updateFlags |= 1;
 }
 
-/*
- * --INFO--
- * Address:	8001D740
- * Size:	000034
- */
 void StreamChgMixLevel(u32 ctrlID, int mixLevelL, int mixLevelR)
 {
 	StreamCtrl_* ctrl = &SC[ctrlID];
@@ -1077,11 +936,6 @@ void StreamChgMixLevel(u32 ctrlID, int mixLevelL, int mixLevelR)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8001D780
- * Size:	000190
- */
 int StreamGetCurrentFrame(u32 streamId, u32 id2)
 {
 	StreamCtrl_* ctrl = &SC[streamId];
@@ -1108,11 +962,6 @@ int StreamGetCurrentFrame(u32 streamId, u32 id2)
 	STACK_PAD_VAR(3);
 }
 
-/*
- * --INFO--
- * Address:	8001D920
- * Size:	00003C
- */
 BOOL StreamSetDVDPause(u32 ctrlID, BOOL isPaused)
 {
 	StreamCtrl_* ctrl = &SC[ctrlID];
@@ -1138,11 +987,6 @@ void StreamCheckRemainBuffers(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8001D960
- * Size:	000028
- */
 u8 StreamCheckAudioFormat(u32 ctrlID)
 {
 	StreamCtrl_* ctrl = &SC[ctrlID];

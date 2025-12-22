@@ -12,11 +12,6 @@ s32 gWritePos;
 
 DBCommTable gDBCommTable = { NULL, NULL, NULL, NULL, NULL, NULL, NULL };
 
-/*
- * --INFO--
- * Address:	80220460
- * Size:	000088
- */
 ASM void TRKLoadContext(OSContext* ctx, u32 a)
 {
 #ifdef __MWERKS__ // clang-format off
@@ -60,22 +55,12 @@ lbl_80371C20:
 #endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address:	802204E8
- * Size:	000038
- */
 void TRKEXICallBack(__OSInterrupt param_0, OSContext* ctx)
 {
 	OSEnableScheduler();
 	TRKLoadContext(ctx, 0x500);
 }
 
-/*
- * --INFO--
- * Address:	80220520
- * Size:	0000E8
- */
 int InitMetroTRKCommTable(int hwId)
 {
 	int result;
@@ -105,62 +90,32 @@ int InitMetroTRKCommTable(int hwId)
 	return result;
 }
 
-/*
- * --INFO--
- * Address:	80220608
- * Size:	000004
- */
 void TRKUARTInterruptHandler(void)
 {
 }
 
-/*
- * --INFO--
- * Address:	8022060C
- * Size:	000040
- */
 DSError TRKInitializeIntDrivenUART(u32 param_0, u32 param_1, u32 param_2, volatile u8** param_3)
 {
 	gDBCommTable.initialize_func(param_3, TRKEXICallBack);
 	return DS_NoError;
 }
 
-/*
- * --INFO--
- * Address:	8022064C
- * Size:	000030
- */
 void EnableEXI2Interrupts(void)
 {
 	gDBCommTable.init_interrupts_func();
 }
 
-/*
- * --INFO--
- * Address:	8022067C
- * Size:	000030
- */
 int TRKPollUART(void)
 {
 	return gDBCommTable.peek_func();
 }
 
-/*
- * --INFO--
- * Address:	802206AC
- * Size:	000044
- */
 UARTError TRKReadUARTN(void* bytes, u32 length)
 {
 	int readErr = gDBCommTable.read_func(bytes, length);
 	return readErr == 0 ? 0 : -1;
 }
 
-/*
- * --INFO--
- * Address:	802206F0
- * Size:	000044
- */
 UARTError TRKWriteUARTN(const void* bytes, u32 length)
 {
 	int writeErr = gDBCommTable.write_func(bytes, length);
@@ -227,31 +182,16 @@ UARTError TRKReadUARTPoll(u8* arg0)
 	return readErr;
 }
 
-/*
- * --INFO--
- * Address:	80220734
- * Size:	000030
- */
 void ReserveEXI2Port(void)
 {
 	gDBCommTable.open_func();
 }
 
-/*
- * --INFO--
- * Address:	80220764
- * Size:	000030
- */
 void UnreserveEXI2Port(void)
 {
 	gDBCommTable.close_func();
 }
 
-/*
- * --INFO--
- * Address:	80220794
- * Size:	000024
- */
 void TRK_board_display(const char* str)
 {
 	OSReport(str);

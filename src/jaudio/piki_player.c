@@ -10,11 +10,6 @@
 
 static u32 gaya_timer;
 
-/*
- * --INFO--
- * Address:	80018120
- * Size:	0000DC
- */
 void Jac_Orima_Walk(s32 soundID, u32 p2)
 {
 	static seqp_* seqp = NULL;
@@ -42,11 +37,6 @@ void Jac_Orima_Walk(s32 soundID, u32 p2)
 /// Music manager for c-sticking/'formation' track.
 static seqp_* stick_seqp;
 
-/*
- * --INFO--
- * Address:	80018200
- * Size:	000190
- */
 void Jac_Orima_Formation(s32 stickX, s32 stickY)
 {
 	static int flag = 0;
@@ -113,11 +103,6 @@ void Jac_Orima_Formation(s32 stickX, s32 stickY)
 
 static seqp_* orima_seqp;
 
-/*
- * --INFO--
- * Address:	800183A0
- * Size:	000250
- */
 void Jac_PlayOrimaSe(u32 id)
 {
 	static u8 status          = 0;
@@ -195,11 +180,6 @@ void Jac_PlayOrimaSe(u32 id)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80018600
- * Size:	000030
- */
 void Jac_PauseOrimaSe()
 {
 	if (orima_seqp) {
@@ -207,11 +187,6 @@ void Jac_PauseOrimaSe()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80018640
- * Size:	000030
- */
 void Jac_UnPauseOrimaSe()
 {
 	if (orima_seqp) {
@@ -219,11 +194,6 @@ void Jac_UnPauseOrimaSe()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80018680
- * Size:	0000B8
- */
 void Jac_StopOrimaSe(s32 id)
 {
 	static seqp_* seqp        = NULL;
@@ -246,11 +216,6 @@ void Jac_StopOrimaSe(s32 id)
 
 static u32 pikis;
 
-/*
- * --INFO--
- * Address:	80018740
- * Size:	000078
- */
 void Jac_Piki_Number(u32 pikiNum)
 {
 	if (pikiNum >= 100) {
@@ -276,11 +241,6 @@ void Jac_Piki_Number(u32 pikiNum)
 	pikis = pikiNum;
 }
 
-/*
- * --INFO--
- * Address:	800187C0
- * Size:	0001B4
- */
 void Jac_UpdatePikiGaya()
 {
 	static seqp_* seqp;

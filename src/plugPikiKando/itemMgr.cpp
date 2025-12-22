@@ -48,11 +48,6 @@ DEFINE_PRINT("itemMgr")
 bool PikiHeadMgr::buryMode;
 ItemMgr* itemMgr;
 
-/*
- * --INFO--
- * Address:	800F2978
- * Size:	000040
- */
 bool BuildingItem::insideSafeArea(immut Vector3f& pos)
 {
 	f32 z = pos.z - mSRT.t.z;
@@ -64,11 +59,6 @@ bool BuildingItem::insideSafeArea(immut Vector3f& pos)
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	800F29B8
- * Size:	00013C
- */
 GoalItem* ItemMgr::getContainer(int color)
 {
 	if (!mMeltingPotMgr) {
@@ -89,11 +79,6 @@ GoalItem* ItemMgr::getContainer(int color)
 	return nullptr;
 }
 
-/*
- * --INFO--
- * Address:	800F2AF4
- * Size:	000144
- */
 GoalItem* ItemMgr::getNearestContainer(immut Vector3f& pos, f32 radius)
 {
 	MeltingPotMgr* mgr = mMeltingPotMgr;
@@ -117,11 +102,6 @@ GoalItem* ItemMgr::getNearestContainer(immut Vector3f& pos, f32 radius)
 	return goal;
 }
 
-/*
- * --INFO--
- * Address:	800F2C38
- * Size:	000114
- */
 UfoItem* ItemMgr::getUfo()
 {
 	Iterator iter(getMeltingPotMgr());
@@ -156,11 +136,6 @@ ItemShapeObject::ItemShapeObject(Shape* shape, immut char* objName, immut char* 
 	mShape->overrideAnim(0, &mAnimContext);
 }
 
-/*
- * --INFO--
- * Address:	800F2D4C
- * Size:	0003C0
- */
 MeltingPotMgr::MeltingPotMgr(ItemMgr* mgr)
 {
 	mItemMgr   = mgr;
@@ -175,11 +150,6 @@ MeltingPotMgr::MeltingPotMgr(ItemMgr* mgr)
 	mBoBaseShape = nullptr;
 }
 
-/*
- * --INFO--
- * Address:	800F310C
- * Size:	000160
- */
 void MeltingPotMgr::finalSetup()
 {
 	Iterator iter(this);
@@ -193,11 +163,6 @@ void MeltingPotMgr::finalSetup()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800F326C
- * Size:	000374
- */
 void MeltingPotMgr::prepare(int objType)
 {
 	switch (objType) {
@@ -230,11 +195,6 @@ void MeltingPotMgr::prepare(int objType)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800F35E0
- * Size:	0002BC
- */
 Creature* MeltingPotMgr::birth(int objType)
 {
 	Creature* creature = nullptr;
@@ -318,11 +278,6 @@ bool ItemMgr::useObjType(int type)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800F389C
- * Size:	0000F4
- */
 void ItemMgr::addUseList(int type)
 {
 	if (!useObjType(type)) {
@@ -332,11 +287,6 @@ void ItemMgr::addUseList(int type)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800F3990
- * Size:	0009D8
- */
 ItemMgr::ItemMgr()
     : PolyObjectMgr(30)
 {
@@ -402,11 +352,6 @@ void ItemMgr::showInfo()
 	PRINT("%s * size is %d\n", "GoalItem", sizeof(GoalItem));
 }
 
-/*
- * --INFO--
- * Address:	800F4368
- * Size:	000008
- */
 ItemShapeObject* ItemMgr::getPelletShapeObject(int, int)
 {
 	return nullptr;
@@ -426,11 +371,6 @@ Shape* ItemMgr::getUfoShape()
 	return nullptr;
 }
 
-/*
- * --INFO--
- * Address:	800F4370
- * Size:	00153C
- */
 void ItemMgr::initialise()
 {
 	mMeltingPotMgr = new MeltingPotMgr(this);
@@ -559,11 +499,6 @@ void ItemMgr::initialise()
 	STACK_PAD_TERNARY(mPikiHeadMgr, 1);
 }
 
-/*
- * --INFO--
- * Address:	800F58AC
- * Size:	0000C8
- */
 ItemCreature::ItemCreature(int objType, CreatureProp* props, Shape* shape)
     : AICreature(props)
 {
@@ -577,11 +512,6 @@ ItemCreature::ItemCreature(int objType, CreatureProp* props, Shape* shape)
 	mStateMachine    = nullptr;
 }
 
-/*
- * --INFO--
- * Address:	800F5974
- * Size:	000070
- */
 void ItemCreature::init(immut Vector3f& pos)
 {
 	Creature::init(pos);
@@ -593,113 +523,58 @@ void ItemCreature::init(immut Vector3f& pos)
 	_3C4 = true;
 }
 
-/*
- * --INFO--
- * Address:	800F59E4
- * Size:	000008
- */
 void ItemCreature::setMotionSpeed(f32 speed)
 {
 	mMotionSpeed = speed;
 }
 
-/*
- * --INFO--
- * Address:	800F59EC
- * Size:	000008
- */
 f32 ItemCreature::getMotionSpeed()
 {
 	return mMotionSpeed;
 }
 
-/*
- * --INFO--
- * Address:	800F59F4
- * Size:	00000C
- */
 void ItemCreature::stopMotion()
 {
 	mMotionSpeed = 0.0f;
 }
 
-/*
- * --INFO--
- * Address:	800F5A00
- * Size:	000008
- */
 f32 ItemCreature::getCurrentMotionCounter()
 {
 	return mItemAnimator.mAnimationCounter;
 }
 
-/*
- * --INFO--
- * Address:	800F5A08
- * Size:	00002C
- */
 immut char* ItemCreature::getCurrentMotionName()
 {
 	return mItemAnimator.getCurrentMotionName();
 }
 
-/*
- * --INFO--
- * Address:	800F5A34
- * Size:	000048
- */
 void ItemCreature::startMotion(int motionID)
 {
 	mItemAnimator.startMotion(PaniMotionInfo(motionID, this));
 }
 
-/*
- * --INFO--
- * Address:	800F5A7C
- * Size:	00004C
- */
 void ItemCreature::finishMotion()
 {
 	mItemAnimator.finishMotion(PaniMotionInfo(PANI_NO_MOTION, this));
 }
 
-/*
- * --INFO--
- * Address:	800F5AC8
- * Size:	000058
- */
 void ItemCreature::startMotion(int motionID, f32 frame)
 {
 	mItemAnimator.startMotion(PaniMotionInfo(motionID, this));
 	mItemAnimator.mAnimationCounter = frame;
 }
 
-/*
- * --INFO--
- * Address:	800F5B20
- * Size:	00005C
- */
 void ItemCreature::finishMotion(f32 frame)
 {
 	mItemAnimator.finishMotion(PaniMotionInfo(PANI_NO_MOTION, this));
 	mItemAnimator.mAnimationCounter = frame;
 }
 
-/*
- * --INFO--
- * Address:	800F5B7C
- * Size:	000034
- */
 void ItemCreature::doKill()
 {
 	itemMgr->kill(this);
 }
 
-/*
- * --INFO--
- * Address:	800F5BB0
- * Size:	000044
- */
 void ItemCreature::doAnimation()
 {
 	if (mItemShapeObject) {
@@ -707,11 +582,6 @@ void ItemCreature::doAnimation()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800F5BF4
- * Size:	00003C
- */
 void ItemCreature::update()
 {
 	if (mObjType == OBJTYPE_Ufo || (mObjType != OBJTYPE_Ufo && !GameCoreSection::inPause())) {
@@ -719,11 +589,6 @@ void ItemCreature::update()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800F5C30
- * Size:	000048
- */
 void ItemCreature::doAI()
 {
 	if (mStateMachine && !isCreatureFlag(CF_IsAiDisabled)) {
@@ -731,11 +596,6 @@ void ItemCreature::doAI()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800F5C78
- * Size:	000220
- */
 void ItemCreature::refresh(Graphics& gfx)
 {
 	bool isOffCamera = false;
@@ -775,11 +635,6 @@ void ItemCreature::refresh(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800F5E98
- * Size:	000074
- */
 bool ItemCreature::stimulate(immut Interaction& interaction)
 {
 	if (interaction.actCommon(this)) {
@@ -789,11 +644,6 @@ bool ItemCreature::stimulate(immut Interaction& interaction)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800F5F0C
- * Size:	000040
- */
 bool InteractBuild::actItem(ItemCreature* item) immut
 {
 	if (item->isObjType(OBJTYPE_BoBase)) {
@@ -803,11 +653,6 @@ bool InteractBuild::actItem(ItemCreature* item) immut
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800F5F4C
- * Size:	000040
- */
 bool InteractBikkuri::actItem(ItemCreature* item) immut
 {
 	if (item->isObjType(OBJTYPE_Pikihead)) {
@@ -816,11 +661,6 @@ bool InteractBikkuri::actItem(ItemCreature* item) immut
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800F5F8C
- * Size:	000034
- */
 bool InteractFlick::actItem(ItemCreature* item) immut
 {
 	if (item->isObjType(OBJTYPE_GemItem)) {
@@ -830,11 +670,6 @@ bool InteractFlick::actItem(ItemCreature* item) immut
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	800F5FC0
- * Size:	000040
- */
 bool InteractSwallow::actItem(ItemCreature* item) immut
 {
 	// why not use the inline????????????
@@ -844,11 +679,6 @@ bool InteractSwallow::actItem(ItemCreature* item) immut
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800F6000
- * Size:	000040
- */
 bool InteractPullout::actItem(ItemCreature* item) immut
 {
 	// why not use the inline????????????
@@ -859,11 +689,6 @@ bool InteractPullout::actItem(ItemCreature* item) immut
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800F6040
- * Size:	0002D4
- */
 bool InteractBomb::actItem(ItemCreature* item) immut
 {
 	if (item->isSluice()) {
@@ -923,11 +748,6 @@ bool InteractBomb::actItem(ItemCreature* item) immut
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800F6314
- * Size:	000060
- */
 void BuildingItem::playEffect(int id)
 {
 	switch (id) {
@@ -941,11 +761,6 @@ void BuildingItem::playEffect(int id)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800F6374
- * Size:	000270
- */
 bool InteractAttack::actItem(ItemCreature* item) immut
 {
 	if (item->mObjType == OBJTYPE_SluiceBomb || item->mObjType == OBJTYPE_SluiceBombHard) {
@@ -994,11 +809,6 @@ bool InteractAttack::actItem(ItemCreature* item) immut
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800F65E4
- * Size:	000144
- */
 BuildingItem::BuildingItem(int objType, CreatureProp* props, ItemShapeObject* itemShape, SimpleAI* ai)
     : ItemCreature(objType, props, nullptr)
     , mBuildCollision(0)
@@ -1008,11 +818,6 @@ BuildingItem::BuildingItem(int objType, CreatureProp* props, ItemShapeObject* it
 	mLifeGauge.mRenderStyle = LifeGauge::Wheel;
 }
 
-/*
- * --INFO--
- * Address:	800F6728
- * Size:	000064
- */
 f32 BuildingItem::getBoundingSphereRadius()
 {
 	if (mCollInfo && mCollInfo->hasInfo()) {
@@ -1025,11 +830,6 @@ f32 BuildingItem::getBoundingSphereRadius()
 	return 100.0f;
 }
 
-/*
- * --INFO--
- * Address:	800F678C
- * Size:	0001C8
- */
 void BuildingItem::startAI(int)
 {
 	mItemShapeObject->mShape->makeInstance(mDynMats, 0);
@@ -1069,11 +869,6 @@ void BuildingItem::startAI(int)
 	mLifeGauge.mOffset.set(0.0f, 0.0f, 0.0f);
 }
 
-/*
- * --INFO--
- * Address:	800F6954
- * Size:	000090
- */
 void BuildingItem::startBreakEffect()
 {
 	playEventSound(this, SEB_WALL_DOWN);
@@ -1088,11 +883,6 @@ void BuildingItem::startBreakEffect()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800F69E4
- * Size:	000060
- */
 void BuildingItem::stopBreakEffect()
 {
 	if (_3D8.mPtclGen) {
@@ -1106,11 +896,6 @@ void BuildingItem::stopBreakEffect()
 	_3E8.kill();
 }
 
-/*
- * --INFO--
- * Address:	800F6A44
- * Size:	000054
- */
 void BuildingItem::update()
 {
 	updateStatic();
@@ -1119,11 +904,6 @@ void BuildingItem::update()
 	mLifeGauge.updValue(mHealth, mMaxHealth);
 }
 
-/*
- * --INFO--
- * Address:	800F6A98
- * Size:	0001A4
- */
 void BuildingItem::refresh(Graphics& gfx)
 {
 	f32 val = 0.0f;
@@ -1164,31 +944,16 @@ void BuildingItem::refresh(Graphics& gfx)
 	mCollInfo->updateInfo(gfx, false);
 }
 
-/*
- * --INFO--
- * Address:	800F6C3C
- * Size:	000004
- */
 void BuildingItem::refresh2d(Graphics&)
 {
 }
 
-/*
- * --INFO--
- * Address:	800F6C40
- * Size:	000048
- */
 void BuildingItem::doKill()
 {
 	mPlatMgr.release();
 	ItemCreature::doKill();
 }
 
-/*
- * --INFO--
- * Address:	800F6C88
- * Size:	0000AC
- */
 void BuildingItem::doSave(RandomAccessStream& output)
 {
 	output.writeFloat(mHealth);
@@ -1199,11 +964,6 @@ void BuildingItem::doSave(RandomAccessStream& output)
 	PRINT_KANDO("\t life=%.1f maxLife=%.1f curr/num=%d/%d\n", mHealth, mMaxHealth, mCurrStage, mNumStages);
 }
 
-/*
- * --INFO--
- * Address:	800F6D34
- * Size:	00017C
- */
 void BuildingItem::doLoad(RandomAccessStream& input)
 {
 	mHealth     = input.readFloat();
@@ -1229,11 +989,6 @@ void BuildingItem::doLoad(RandomAccessStream& input)
 	PRINT_KANDO("* DONE\n");
 }
 
-/*
- * --INFO--
- * Address:	800F6EB0
- * Size:	000024
- */
 void BuildingItem::doStore(CreatureInf* info)
 {
 	info->mHealth    = mHealth;
@@ -1242,11 +997,6 @@ void BuildingItem::doStore(CreatureInf* info)
 	info->mObjInfo2  = mNumStages;
 }
 
-/*
- * --INFO--
- * Address:	800F6ED4
- * Size:	000120
- */
 void BuildingItem::doRestore(CreatureInf* info)
 {
 	startAI(0);
@@ -1278,11 +1028,6 @@ void BuildingItem::doRestore(CreatureInf* info)
 	C_SAI(this)->start(this, SluiceAI::Sluice_WaitInit);
 }
 
-/*
- * --INFO--
- * Address:	800F6FF4
- * Size:	000068
- */
 Creature* ItemMgr::birth(int objType)
 {
 	switch (objType) {
@@ -1307,11 +1052,6 @@ Creature* ItemMgr::birth(int objType)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800F705C
- * Size:	000068
- */
 void ItemMgr::refresh(Graphics& gfx)
 {
 	PolyObjectMgr::refresh(gfx);
@@ -1319,11 +1059,6 @@ void ItemMgr::refresh(Graphics& gfx)
 	mMeltingPotMgr->refresh(gfx);
 }
 
-/*
- * --INFO--
- * Address:	800F70C4
- * Size:	000204
- */
 void ItemMgr::refresh2d(Graphics& gfx)
 {
 	Iterator iterItem(this);
@@ -1339,11 +1074,6 @@ void ItemMgr::refresh2d(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800F72C8
- * Size:	000064
- */
 void ItemMgr::update()
 {
 	if (!GameCoreSection::inPause()) {
@@ -1354,11 +1084,6 @@ void ItemMgr::update()
 	mMeltingPotMgr->update();
 }
 
-/*
- * --INFO--
- * Address:	800F732C
- * Size:	000064
- */
 void ItemMgr::kill(Creature* item)
 {
 	switch (item->mObjType) {
@@ -1378,11 +1103,6 @@ void ItemMgr::kill(Creature* item)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800F7390
- * Size:	0001D8
- */
 PikiHeadMgr::PikiHeadMgr(ItemMgr* mgr)
 {
 	mItemMgr = mgr;
@@ -1393,11 +1113,6 @@ PikiHeadMgr::PikiHeadMgr(ItemMgr* mgr)
 	PRINT_KANDO("=====================================\n");
 }
 
-/*
- * --INFO--
- * Address:	800F7568
- * Size:	0000A0
- */
 Creature* PikiHeadMgr::birth()
 {
 	int totalPikis = GameStat::mapPikis;
@@ -1414,21 +1129,11 @@ Creature* PikiHeadMgr::birth()
 	return MonoObjectMgr::birth();
 }
 
-/*
- * --INFO--
- * Address:	800F7608
- * Size:	000060
- */
 Creature* PikiHeadMgr::createObject()
 {
 	return new PikiHeadItem(mPikiHeadProps, mItemMgr->mItemShapes[3], mPikiHeadAI);
 }
 
-/*
- * --INFO--
- * Address:	800F7668
- * Size:	00014C
- */
 int ItemMgr::getContainerExitCount()
 {
 	int count = 0;

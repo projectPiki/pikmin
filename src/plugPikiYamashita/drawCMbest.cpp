@@ -128,11 +128,6 @@ protected:
 };
 } // namespace zen
 
-/*
- * --INFO--
- * Address:	801EE514
- * Size:	000224
- */
 void zen::DrawCMbest::init(P2DScreen* screen)
 {
 	_04 = screen->search('best', false);
@@ -164,21 +159,11 @@ void zen::DrawCMbest::init(P2DScreen* screen)
 	setMode(MODE_Sleep);
 }
 
-/*
- * --INFO--
- * Address:	801EE778
- * Size:	000024
- */
 void zen::DrawCMbest::sleep()
 {
 	setMode(MODE_Sleep);
 }
 
-/*
- * --INFO--
- * Address:	801EE79C
- * Size:	00007C
- */
 void zen::DrawCMbest::update()
 {
 	for (int i = 0; i < _0C; i++) {
@@ -187,51 +172,26 @@ void zen::DrawCMbest::update()
 	(this->*mModeFunction)();
 }
 
-/*
- * --INFO--
- * Address:	801EE818
- * Size:	000024
- */
 void zen::DrawCMbest::appear()
 {
 	setMode(MODE_Appear);
 }
 
-/*
- * --INFO--
- * Address:	801EE83C
- * Size:	000024
- */
 void zen::DrawCMbest::wait()
 {
 	setMode(MODE_Wait);
 }
 
-/*
- * --INFO--
- * Address:	801EE860
- * Size:	000008
- */
 bool zen::DrawCMbest::modeSleep()
 {
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	801EE868
- * Size:	000008
- */
 bool zen::DrawCMbest::modeWait()
 {
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	801EE870
- * Size:	00005C
- */
 bool zen::DrawCMbest::modeAppear()
 {
 	for (int i = 0; i < _0C; i++) {
@@ -241,11 +201,6 @@ bool zen::DrawCMbest::modeAppear()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	801EE8CC
- * Size:	0001D4
- */
 void zen::DrawCMbest::setMode(zen::DrawCMbest::modeFlag mode)
 {
 	int i;

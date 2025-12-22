@@ -21,31 +21,16 @@ DEFINE_ERROR(33)
  */
 DEFINE_PRINT("P2DTextBox")
 
-/*
- * --INFO--
- * Address:	801B44AC
- * Size:	000038
- */
 void P2DTextBox::makeResident()
 {
 	mFont->makeResident();
 }
 
-/*
- * --INFO--
- * Address:	801B44E4
- * Size:	000050
- */
 void P2DTextBox::loadResource()
 {
 	mFont = new P2DFont(mFontString);
 }
 
-/*
- * --INFO--
- * Address:	801B4534
- * Size:	00020C
- */
 P2DTextBox::P2DTextBox(P2DPane* pane, RandomAccessStream* ramStream, u16 param3)
     : P2DPane(pane, ramStream, param3)
 {
@@ -85,11 +70,6 @@ P2DTextBox::P2DTextBox(P2DPane* pane, RandomAccessStream* ramStream, u16 param3)
 	mFont    = nullptr;
 }
 
-/*
- * --INFO--
- * Address:	801B4740
- * Size:	000068
- */
 void P2DTextBox::drawSelf(int param1, int param2)
 {
 	Matrix4f matrix;
@@ -97,11 +77,6 @@ void P2DTextBox::drawSelf(int param1, int param2)
 	drawSelf(param1, param2, &matrix);
 }
 
-/*
- * --INFO--
- * Address:	801B47A8
- * Size:	000198
- */
 void P2DTextBox::drawSelf(int param1, int param2, immut Matrix4f* mtx)
 {
 	if (mFont == nullptr) {

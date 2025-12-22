@@ -19,21 +19,11 @@ DEFINE_ERROR(31)
  */
 DEFINE_PRINT("P2DPrint")
 
-/*
- * --INFO--
- * Address:	801B49A4
- * Size:	000048
- */
 P2DPrint::P2DPrint(P2DFont* font, int spacing, int leading, Colour topColour, Colour bottomColour)
 {
 	private_initiate(font, spacing, leading, topColour, bottomColour);
 }
 
-/*
- * --INFO--
- * Address:	801B49EC
- * Size:	000100
- */
 void P2DPrint::private_initiate(P2DFont* font, int spacing, int leading, Colour topColour, Colour bottomColour)
 {
 	mFont        = font;
@@ -64,11 +54,6 @@ void P2DPrint::private_initiate(P2DFont* font, int spacing, int leading, Colour 
 	initchar();
 }
 
-/*
- * --INFO--
- * Address:	801B4AEC
- * Size:	000054
- */
 void P2DPrint::locate(int x, int y)
 {
 	mInitX         = x;
@@ -78,11 +63,6 @@ void P2DPrint::locate(int x, int y)
 	mCurrCharWidth = 0.0f;
 }
 
-/*
- * --INFO--
- * Address:	801B4B40
- * Size:	000028
- */
 void P2DPrint::setFontSize()
 {
 	if (mFont) {
@@ -91,11 +71,6 @@ void P2DPrint::setFontSize()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801B4B68
- * Size:	000044
- */
 void P2DPrint::initchar()
 {
 	mCharTopColour      = mFontTopColour;
@@ -108,11 +83,6 @@ void P2DPrint::initchar()
 	mCharHeight         = mFontHeight;
 }
 
-/*
- * --INFO--
- * Address:	801B4BAC
- * Size:	000250
- */
 void P2DPrint::printReturn(const char* textBuffer, int boxWidth, int boxHeight, P2DTextBoxHBinding hBind, P2DTextBoxVBinding vBind,
                            int xOffset, int yOffset)
 {
@@ -164,11 +134,6 @@ void P2DPrint::printReturn(const char* textBuffer, int boxWidth, int boxHeight, 
 	parse((u8*)textBuffer, textLen, boxWidth, xPosBuffer, size, true);
 }
 
-/*
- * --INFO--
- * Address:	801B4DFC
- * Size:	0005C8
- */
 f32 P2DPrint::parse(const u8* textBuffer, int textLen, int maxWidth, u16* outXPosBuffer, P2DPrint::TSize& textSize, bool doDraw)
 {
 	const u8* textStart = textBuffer;
@@ -312,11 +277,6 @@ f32 P2DPrint::parse(const u8* textBuffer, int textLen, int maxWidth, u16* outXPo
 	return blockHeight;
 }
 
-/*
- * --INFO--
- * Address:	801B53C4
- * Size:	000624
- */
 u16 P2DPrint::doEscapeCode(const u8** textPtr)
 {
 	const u8* inputStr = *textPtr;
@@ -428,11 +388,6 @@ u16 P2DPrint::doEscapeCode(const u8** textPtr)
 	return code;
 }
 
-/*
- * --INFO--
- * Address:	801B59E8
- * Size:	000174
- */
 void P2DPrint::doCtrlCode(int inputChar)
 {
 	switch (inputChar) {
@@ -479,11 +434,6 @@ void P2DPrint::doCtrlCode(int inputChar)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801B5B5C
- * Size:	000108
- */
 s32 P2DPrint::getNumber(const u8** strPtr, s32 defaultValue, s32 invalidValue, int base)
 {
 	const char* inputStr = (const char*)*strPtr;

@@ -28,32 +28,17 @@ NAxisAngle4f::NAxisAngle4f()
 	mAngle = 0.0f;
 }
 
-/*
- * --INFO--
- * Address:	8011BC80
- * Size:	000058
- */
 NAxisAngle4f::NAxisAngle4f(immut NVector3f& axis, f32 angle)
 {
 	construct(axis, angle);
 }
 
-/*
- * --INFO--
- * Address:	8011BCD8
- * Size:	000020
- */
 void NAxisAngle4f::construct(immut NVector3f& axis, f32 angle)
 {
 	inputAxis(axis);
 	setAngle(angle);
 }
 
-/*
- * --INFO--
- * Address:	8011BCF8
- * Size:	000080
- */
 NMatrix4f::NMatrix4f()
 {
 	input(NMatrix4f(1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f));
@@ -69,21 +54,11 @@ NMatrix4f::NMatrix4f(immut Matrix4f& mat)
 	construct(mat);
 }
 
-/*
- * --INFO--
- * Address:	8011BD78
- * Size:	000020
- */
 void NMatrix4f::construct(immut Matrix4f& mat)
 {
 	input(mat);
 }
 
-/*
- * --INFO--
- * Address:	8011BD98
- * Size:	000070
- */
 NMatrix4f::NMatrix4f(f32 x00, f32 x01, f32 x02, f32 x03, f32 x10, f32 x11, f32 x12, f32 x13, f32 x20, f32 x21, f32 x22, f32 x23, f32 x30,
                      f32 x31, f32 x32, f32 x33)
 {
@@ -141,21 +116,11 @@ void NMatrix4f::output(Mtx44 mtx) immut
 	NMathf::copyArray44(mtx, mMtx);
 }
 
-/*
- * --INFO--
- * Address:	8011BE08
- * Size:	000090
- */
 void NMatrix4f::input(immut Matrix4f& mat)
 {
 	NMathf::copyArray44(this->mMtx, mat.mMtx);
 }
 
-/*
- * --INFO--
- * Address:	8011BE98
- * Size:	00006C
- */
 void NMatrix4f::set(f32 x00, f32 x01, f32 x02, f32 x03, f32 x10, f32 x11, f32 x12, f32 x13, f32 x20, f32 x21, f32 x22, f32 x23, f32 x30,
                     f32 x31, f32 x32, f32 x33)
 {
@@ -269,11 +234,6 @@ void NMatrix4f::inputCol(int col, immut Vector3f& input, f32 trans)
 	mMtx[3][col] = trans;
 }
 
-/*
- * --INFO--
- * Address:	8011BF04
- * Size:	000024
- */
 void NMatrix4f::outputCol(int col, Vector3f& output) immut
 {
 	output.set(mMtx[0][col], mMtx[1][col], mMtx[2][col]);
@@ -342,11 +302,6 @@ void NMatrix4f::transpose()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8011BF28
- * Size:	000024
- */
 void NMatrix4f::makeIdentRow(int row)
 {
 	mMtx[row][0] = 0.0f;
@@ -377,21 +332,11 @@ NOrientation::NOrientation()
 	input(NVector3f(0.0f, 0.0f, 1.0f), NVector3f(0.0f, 1.0f, 0.0f));
 }
 
-/*
- * --INFO--
- * Address:	8011BF4C
- * Size:	000050
- */
 NOrientation::NOrientation(immut Vector3f& direction)
 {
 	construct(direction);
 }
 
-/*
- * --INFO--
- * Address:	8011BF9C
- * Size:	000078
- */
 void NOrientation::construct(immut Vector3f& direction)
 {
 	input(direction, NVector3f(0.0f, 1.0f, 0.0f));
@@ -417,11 +362,6 @@ void NOrientation::construct(immut Vector3f& direction, immut Vector3f& up)
 	input(direction, up);
 }
 
-/*
- * --INFO--
- * Address:	8011C014
- * Size:	0000D4
- */
 void NOrientation::normalize()
 {
 	if (mUpVector.isParallel(mDirection)) {
@@ -461,21 +401,11 @@ void NOrientation::outputRight(NVector3f& outRight) immut
 	outRight.cross(mDirection, mUpVector);
 }
 
-/*
- * --INFO--
- * Address:	8011C0E8
- * Size:	00004C
- */
 void NOrientation::outputLeft(NVector3f& outLeft) immut
 {
 	outLeft.cross(mUpVector, mDirection);
 }
 
-/*
- * --INFO--
- * Address:	8011C134
- * Size:	000254
- */
 void NOrientation::makeUp()
 {
 	NOrientation NRef orient = NOrientation(mDirection);
@@ -559,11 +489,6 @@ void NOrientation::println() immut
 	mUpVector.println();
 }
 
-/*
- * --INFO--
- * Address:	8011C3A4
- * Size:	00003C
- */
 NPolar3f::NPolar3f()
 {
 	set(1.0f, 0.0f, 0.0f);
@@ -609,31 +534,16 @@ void NPolar3f::construct(immut NPolar3f& other)
 	set(other.mRadius, other.mInclination, other.mAzimuth);
 }
 
-/*
- * --INFO--
- * Address:	8011C3E0
- * Size:	000030
- */
 NPolar3f::NPolar3f(immut Vector3f& point)
 {
 	construct(point);
 }
 
-/*
- * --INFO--
- * Address:	8011C410
- * Size:	000020
- */
 void NPolar3f::construct(immut Vector3f& point)
 {
 	input(point);
 }
 
-/*
- * --INFO--
- * Address:	8011C430
- * Size:	000010
- */
 void NPolar3f::set(f32 radius, f32 inclination, f32 azimuth)
 {
 	mRadius      = radius;
@@ -651,21 +561,11 @@ void NPolar3f::input(immut NPolar3f& other)
 	set(other.mRadius, other.mInclination, other.mAzimuth);
 }
 
-/*
- * --INFO--
- * Address:	8011C440
- * Size:	0000A8
- */
 void NPolar3f::input(immut Vector3f& point)
 {
 	set(point.length(), NMathF::atan2(NMathF::length(point.x, point.z), point.y), NMathF::atan2(point.x, point.z));
 }
 
-/*
- * --INFO--
- * Address:	8011C4E8
- * Size:	0000A4
- */
 void NPolar3f::output(Vector3f& point) immut
 {
 	f32 sinInc = NMathF::sin(mInclination);
@@ -817,11 +717,6 @@ void NPosture2D::outputAxisAngle(NAxisAngle4f& axisAngle)
 	axisAngle.setAngle(mDirection);
 }
 
-/*
- * --INFO--
- * Address:	8011C58C
- * Size:	000094
- */
 void NPosture2D::readData(Stream& input)
 {
 	mTranslation.read(input);
@@ -840,11 +735,6 @@ void NPosture2D::println() immut
 	PRINT_NAKATA("direction:%f\n", mDirection);
 }
 
-/*
- * --INFO--
- * Address:	8011C620
- * Size:	0000A0
- */
 NPosture3D::NPosture3D()
 {
 	mViewpoint.input(NVector3f(0.0f, 0.0f, 0.0f));
@@ -871,32 +761,17 @@ void NPosture3D::construct(immut NPosture3D& other)
 	input(other);
 }
 
-/*
- * --INFO--
- * Address:	8011C6C0
- * Size:	000070
- */
 NPosture3D::NPosture3D(immut Vector3f& view, immut Vector3f& watch)
 {
 	construct(view, watch);
 }
 
-/*
- * --INFO--
- * Address:	8011C730
- * Size:	000034
- */
 void NPosture3D::construct(immut Vector3f& view, immut Vector3f& watch)
 {
 	mViewpoint.input(view);
 	mWatchpoint.input(watch);
 }
 
-/*
- * --INFO--
- * Address:	8011C764
- * Size:	0000D4
- */
 void NPosture3D::normalize()
 {
 	NVector3f NRef dir = NVector3f();
@@ -907,11 +782,6 @@ void NPosture3D::normalize()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8011C838
- * Size:	000034
- */
 void NPosture3D::outputRelative(NVector3f& dir) immut
 {
 	dir.sub2(mWatchpoint, mViewpoint);
@@ -939,11 +809,6 @@ void NPosture3D::transform(immut NTransform3D& transform)
 	transform.transform(mWatchpoint);
 }
 
-/*
- * --INFO--
- * Address:	8011C86C
- * Size:	000064
- */
 void NPosture3D::translate(immut Vector3f& offset)
 {
 	mViewpoint.add(offset);
@@ -1101,11 +966,6 @@ f32 NPosture3D::calcDirection() immut
 	return NMathF::atan2(dir.x, dir.z);
 }
 
-/*
- * --INFO--
- * Address:	8011C8D0
- * Size:	0000C4
- */
 void NPosture3D::readData(Stream& input)
 {
 	mViewpoint.read(input);
@@ -1265,11 +1125,6 @@ void LUMatrix::construct(f32* centreVals, f32* lowerVals, f32* upperVals, int di
 	mUpper.construct(mCentreVals, mUpperVals, dim);
 }
 
-/*
- * --INFO--
- * Address:	8011C994
- * Size:	000064
- */
 void LUMatrix::setDimension(int dim)
 {
 	NSpecialMatrix::setDimension(dim);
@@ -1327,11 +1182,6 @@ void LUMatrix::println() immut
 	}
 }
 
-/*
- * --INFO--
- * Address:	8011CA00
- * Size:	000080
- */
 NTransform3D::NTransform3D()
 {
 }
@@ -1369,11 +1219,6 @@ void NTransform3D::translate(immut Vector3f& offset)
 	inputTranslation(trans);
 }
 
-/*
- * --INFO--
- * Address:	8011CB08
- * Size:	00019C
- */
 void NTransform3D::rotate(immut Vector3f& point)
 {
 	NTransform3D NRef rotation = NTransform3D();
@@ -1488,11 +1333,6 @@ void NTransform3D::rotate(immut Vector3f& point)
 	*/
 }
 
-/*
- * --INFO--
- * Address:	8011CCA4
- * Size:	00002C
- */
 void NTransform3D::transform(Vector3f& point) immut
 {
 	point.multMatrix(*this);
@@ -1549,11 +1389,6 @@ void NTransform3D::inputVector(immut Vector3f& vec)
 	inputTranslation(vec);
 }
 
-/*
- * --INFO--
- * Address:	8011CCD0
- * Size:	000024
- */
 void NTransform3D::inputAxisAngle(immut NAxisAngle4f& axisAngle)
 {
 	makeRotate(axisAngle.getAxis(), axisAngle.getAngle());
@@ -1591,11 +1426,6 @@ void NTransform3D::inputRotation(immut Matrix4f& rotMtx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8011CCF4
- * Size:	0000CC
- */
 void NTransform3D::outputRotation(Matrix4f& rotMtx) immut
 {
 	NVector3f NRef row = NVector3f();
@@ -1619,11 +1449,6 @@ void NTransform3D::inputRotation(immut NAxisAngle4f& axisAngle)
 	inputRotation(trans);
 }
 
-/*
- * --INFO--
- * Address:	8011CDC0
- * Size:	000010
- */
 NVector::NVector()
 {
 	mValues = nullptr;
@@ -1640,11 +1465,6 @@ NVector::NVector(f32* values, int size)
 	construct(values, size);
 }
 
-/*
- * --INFO--
- * Address:	8011CDD0
- * Size:	000028
- */
 void NVector::construct(f32* values, int size)
 {
 	mValues = values;
@@ -1652,11 +1472,6 @@ void NVector::construct(f32* values, int size)
 	makeZero();
 }
 
-/*
- * --INFO--
- * Address:	8011CDF8
- * Size:	000030
- */
 void NVector::makeZero()
 {
 	for (int i = 0; i < mSize; i++) {
@@ -1717,81 +1532,41 @@ void NVector3f::printVector3f(immut Vector3f& vec)
 	NVector3f(vec).print();
 }
 
-/*
- * --INFO--
- * Address:	8011CE28
- * Size:	00002C
- */
 void NVector3f::printlnVector3f(immut Vector3f& vec)
 {
 	NVector3f(vec).println();
 }
 
-/*
- * --INFO--
- * Address:	8011CE54
- * Size:	00002C
- */
 NVector3f::NVector3f()
 {
 	set(0.0f, 0.0f, 0.0f);
 }
 
-/*
- * --INFO--
- * Address:	8011CE80
- * Size:	000040
- */
 NVector3f::NVector3f(immut Vector3f& vec)
 {
 	construct(vec);
 }
 
-/*
- * --INFO--
- * Address:	8011CEC0
- * Size:	00001C
- */
 void NVector3f::construct(immut Vector3f& vec)
 {
 	set(vec.x, vec.y, vec.z);
 }
 
-/*
- * --INFO--
- * Address:	8011CEDC
- * Size:	000040
- */
 NVector3f::NVector3f(f32 x, f32 y, f32 z)
 {
 	construct(x, y, z);
 }
 
-/*
- * --INFO--
- * Address:	8011CF1C
- * Size:	000010
- */
 void NVector3f::construct(f32 x, f32 y, f32 z)
 {
 	set(x, y, z);
 }
 
-/*
- * --INFO--
- * Address:	8011CF2C
- * Size:	000040
- */
 NVector3f::NVector3f(immut Vector3f& start, immut Vector3f& end)
 {
 	construct(start, end);
 }
 
-/*
- * --INFO--
- * Address:	8011CF6C
- * Size:	000034
- */
 void NVector3f::construct(immut Vector3f& start, immut Vector3f& end)
 {
 	set(end.x - start.x, end.y - start.y, end.z - start.z);
@@ -1837,11 +1612,6 @@ bool NVector3f::isVertical(immut Vector3f& vec) immut
 	return NMathF::isZero(dot(vec));
 }
 
-/*
- * --INFO--
- * Address:	8011CFA0
- * Size:	000074
- */
 bool NVector3f::isParallel(immut Vector3f& vec) immut
 {
 	return NMathF::equals(NMathf::absolute(dot(vec)), 1.0f);
@@ -1914,11 +1684,6 @@ void NVector3f::print() immut
 	PRINT_NAKATA("(%f,%f,%f)", x, y, z);
 }
 
-/*
- * --INFO--
- * Address:	8011D014
- * Size:	000004
- */
 void NVector3f::println() immut
 {
 	PRINT_NAKATA("(%f,%f,%f)\n", x, y, z);
@@ -1936,11 +1701,6 @@ void NVector3f::normalizeByLength(f32 length)
 	z /= length;
 }
 
-/*
- * --INFO--
- * Address:	8011D018
- * Size:	0000E8
- */
 bool NVector3f::normalizeCheck()
 {
 	f32 len = length();
@@ -1954,11 +1714,6 @@ bool NVector3f::normalizeCheck()
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8011D100
- * Size:	0000DC
- */
 void NVector3f::normalize()
 {
 	f32 len = length();
@@ -2033,11 +1788,6 @@ NAlpha::NAlpha()
 	mValue  = mOffset;
 }
 
-/*
- * --INFO--
- * Address:	8011D1DC
- * Size:	00000C
- */
 void NAlpha::reset()
 {
 	mValue = mOffset;
@@ -2073,11 +1823,6 @@ f32 NAlpha::getValue(f32 input)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8011D380
- * Size:	00007C
- */
 void NAlpha::readData(Stream& input)
 {
 	mOffset = input.readFloat();

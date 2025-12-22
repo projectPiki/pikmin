@@ -32,11 +32,6 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("SnakeAi");
 
-/*
- * --INFO--
- * Address:	8015B1F0
- * Size:	0000D0
- */
 SnakeAi::SnakeAi(Snake* snake)
 {
 	mSnake           = snake;
@@ -49,11 +44,6 @@ SnakeAi::SnakeAi(Snake* snake)
 	mAttackPositions = new Vector3f[5];
 }
 
-/*
- * --INFO--
- * Address:	8015B2C0
- * Size:	00009C
- */
 void SnakeAi::initAI(Snake* snake)
 {
 	mSnake = snake;
@@ -70,11 +60,6 @@ void SnakeAi::initAI(Snake* snake)
 	mMaxSlotCount      = mSnake->mCollInfo->getSphere('slot')->getChildCount();
 }
 
-/*
- * --INFO--
- * Address:	8015B35C
- * Size:	00007C
- */
 void SnakeAi::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
@@ -96,11 +81,6 @@ void SnakeAi::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8015B3D8
- * Size:	000108
- */
 void SnakeAi::keyAction0()
 {
 	int currState = mSnake->getCurrentState();
@@ -136,11 +116,6 @@ void SnakeAi::keyAction0()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8015B4E0
- * Size:	000078
- */
 void SnakeAi::keyAction1()
 {
 	if (mSnake->getCurrentState() == SNAKEAI_Die) {
@@ -168,11 +143,6 @@ void SnakeAi::keyAction3()
 {
 }
 
-/*
- * --INFO--
- * Address:	8015B558
- * Size:	0000AC
- */
 void SnakeAi::keyLoopEnd()
 {
 	mSnake->addLoopCounter(1);
@@ -184,21 +154,11 @@ void SnakeAi::keyLoopEnd()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8015B604
- * Size:	000010
- */
 void SnakeAi::keyFinished()
 {
 	mSnake->setMotionFinish(true);
 }
 
-/*
- * --INFO--
- * Address:	8015B614
- * Size:	000044
- */
 void SnakeAi::playSound(int snakeSoundID)
 {
 	if (mSnake->mSeContext) {
@@ -288,11 +248,6 @@ void SnakeAi::setAppearPosition02()
 	mSnake->mSRT.t = appearPos;
 }
 
-/*
- * --INFO--
- * Address:	8015B658
- * Size:	000104
- */
 void SnakeAi::traceTargetPosition()
 {
 	mIsFacingTarget = false;
@@ -318,11 +273,6 @@ void SnakeAi::traceTargetPosition()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8015B75C
- * Size:	000888
- */
 void SnakeAi::setAttackPosition()
 {
 	// Calculate front and side direction vectors
@@ -392,11 +342,6 @@ void SnakeAi::setAttackPosition()
 	mAttackPositions[SNAKEATK_Left].y = mapMgr->getMinY(mAttackPositions[SNAKEATK_Left].x, mAttackPositions[SNAKEATK_Left].z, true);
 }
 
-/*
- * --INFO--
- * Address:	8015BFE4
- * Size:	000130
- */
 void SnakeAi::checkAttackTarget()
 {
 	Creature* target = nullptr;
@@ -430,11 +375,6 @@ void SnakeAi::checkAttackTarget()
 	mIsAttackAllowed = false;
 }
 
-/*
- * --INFO--
- * Address:	8015C114
- * Size:	000070
- */
 void SnakeAi::naviNudge()
 {
 	// lol at calling it a nudge when it's trying to peck your brains out
@@ -462,11 +402,6 @@ int SnakeAi::getMouthCollPart(int partNum)
 	return (mMouthSlotFlag >> partNum) & 1;
 }
 
-/*
- * --INFO--
- * Address:	8015C184
- * Size:	000164
- */
 void SnakeAi::pikiStickMouth()
 {
 	CollPart* mouth  = mSnake->mCollInfo->getSphere('slot');
@@ -490,11 +425,6 @@ void SnakeAi::pikiStickMouth()
 	mSnake->getTargetCreature()->stimulate(swallow);
 }
 
-/*
- * --INFO--
- * Address:	8015C2E8
- * Size:	000030
- */
 void SnakeAi::eatStickToMouthPiki()
 {
 	mOccupiedSlotCount = 0;
@@ -502,11 +432,6 @@ void SnakeAi::eatStickToMouthPiki()
 	mSnake->killStickToMouthPiki();
 }
 
-/*
- * --INFO--
- * Address:	8015C318
- * Size:	000298
- */
 void SnakeAi::nearNaviInAttackArea(Creature** target, f32* targetDist, int attackID)
 {
 	f32 frontDist = (mAttackDists[attackID] + mAttackLimits[attackID]) / 2.0f;
@@ -536,11 +461,6 @@ void SnakeAi::nearNaviInAttackArea(Creature** target, f32* targetDist, int attac
 	}
 }
 
-/*
- * --INFO--
- * Address:	8015C5B0
- * Size:	000298
- */
 void SnakeAi::nearPikiInAttackArea(Creature** target, f32* targetDist, int attackID)
 {
 	f32 frontDist = (mAttackDists[attackID] + mAttackLimits[attackID]) / 2.0f;
@@ -570,11 +490,6 @@ void SnakeAi::nearPikiInAttackArea(Creature** target, f32* targetDist, int attac
 	}
 }
 
-/*
- * --INFO--
- * Address:	8015C848
- * Size:	00025C
- */
 bool SnakeAi::naviInAttackArea(int attackType)
 {
 	Iterator iter(naviMgr);
@@ -601,11 +516,6 @@ bool SnakeAi::naviInAttackArea(int attackType)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8015CAA4
- * Size:	00025C
- */
 bool SnakeAi::pikiInAttackArea(int attackType)
 {
 	Iterator iter(pikiMgr);
@@ -632,11 +542,6 @@ bool SnakeAi::pikiInAttackArea(int attackType)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8015CD00
- * Size:	000414
- */
 bool SnakeAi::appearType01()
 {
 	// check for pikis first
@@ -672,11 +577,6 @@ bool SnakeAi::appearType01()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8015D114
- * Size:	0004D8
- */
 bool SnakeAi::appearType02()
 {
 	f32 perpAngle = mSnake->_3C0 + HALF_PI;
@@ -775,11 +675,6 @@ bool SnakeAi::struggleTransit()
 	return mSnake->getStickNoMouthPikiCount() > 0;
 }
 
-/*
- * --INFO--
- * Address:	8015D5EC
- * Size:	000378
- */
 bool SnakeAi::chaseNaviTransit()
 {
 	Creature* target = nullptr;
@@ -819,11 +714,6 @@ bool SnakeAi::chaseNaviTransit()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8015D964
- * Size:	000388
- */
 bool SnakeAi::chasePikiTransit()
 {
 	Creature* target = nullptr;
@@ -863,11 +753,6 @@ bool SnakeAi::chasePikiTransit()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8015DCEC
- * Size:	000208
- */
 bool SnakeAi::targetLostTransit()
 {
 	Creature* target = mSnake->getTargetCreature();
@@ -896,11 +781,6 @@ bool SnakeAi::targetLostTransit()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8015DEF4
- * Size:	00004C
- */
 bool SnakeAi::attackTransit(int attackType)
 {
 	bool res = pikiInAttackArea(attackType);
@@ -911,11 +791,6 @@ bool SnakeAi::attackTransit(int attackType)
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	8015DF40
- * Size:	000020
- */
 bool SnakeAi::collPartMaxTransit()
 {
 	if (mOccupiedSlotCount < mMaxSlotCount) {
@@ -1031,11 +906,6 @@ void SnakeAi::initChase(int nextState)
 	resultFlagOn();
 }
 
-/*
- * --INFO--
- * Address:	8015DF60
- * Size:	00018C
- */
 void SnakeAi::initAttack(int nextState, f32 frame)
 {
 	mSnake->setNextState(nextState);
@@ -1136,11 +1006,6 @@ void SnakeAi::initUnder(int nextState)
 	setUnderPosition();
 }
 
-/*
- * --INFO--
- * Address:	8015E0EC
- * Size:	0005C8
- */
 void SnakeAi::initAppear(int nextState)
 {
 	mSnake->setNextState(nextState);
@@ -1603,11 +1468,6 @@ void SnakeAi::dieState()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8015E6BC
- * Size:	0001B0
- */
 void SnakeAi::struggleState()
 {
 	if (mSnake->getLoopCounter() < C_SNAKE_PROP(mSnake).mStruggleLoopMax()) {
@@ -1696,11 +1556,6 @@ void SnakeAi::underState()
 	mSnake->addWalkTimer(gsys->getFrameTime());
 }
 
-/*
- * --INFO--
- * Address:	8015E86C
- * Size:	00143C
- */
 void SnakeAi::update()
 {
 	setEveryFrame();

@@ -73,11 +73,6 @@ struct TaiChappyLegEffectAction : public TaiJointEffectAction {
 	// TODO: members
 };
 
-/*
- * --INFO--
- * Address:	80128520
- * Size:	000084
- */
 TaiChappySoundTable::TaiChappySoundTable()
     : PaniSoundTable(8)
 {
@@ -86,11 +81,6 @@ TaiChappySoundTable::TaiChappySoundTable()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801285A4
- * Size:	0003A4
- */
 TaiChappyParameters::TaiChappyParameters()
     : TekiParameters(CHAPPYPI_COUNT, CHAPPYPF_COUNT)
 {
@@ -158,11 +148,6 @@ TaiChappyParameters::TaiChappyParameters()
 	multiP->setF(CHAPPYPF_SmashDamage, 100.0f);
 }
 
-/*
- * --INFO--
- * Address:	80128948
- * Size:	0003A0
- */
 TaiBlackChappyParameters::TaiBlackChappyParameters()
     : TekiParameters(CHAPPYPI_COUNT, CHAPPYPF_COUNT)
 {
@@ -230,11 +215,6 @@ TaiBlackChappyParameters::TaiBlackChappyParameters()
 	multiP->setF(CHAPPYPF_SmashDamage, 100.0f);
 }
 
-/*
- * --INFO--
- * Address:	80128CE8
- * Size:	000084
- */
 TaiCatfishSoundTable::TaiCatfishSoundTable()
     : PaniSoundTable(3)
 {
@@ -243,11 +223,6 @@ TaiCatfishSoundTable::TaiCatfishSoundTable()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80128D6C
- * Size:	00039C
- */
 TaiCatfishParameters::TaiCatfishParameters()
     : TekiParameters(CHAPPYPI_COUNT, CHAPPYPF_COUNT)
 {
@@ -315,11 +290,6 @@ TaiCatfishParameters::TaiCatfishParameters()
 	multiP->setF(CHAPPYPF_SmashDamage, 100.0f);
 }
 
-/*
- * --INFO--
- * Address:	80129108
- * Size:	00156C
- */
 TaiChappyStrategy::TaiChappyStrategy(TekiParameters* params)
     : TaiStrategy(CHAPPYSTATE_COUNT, CHAPPYSTATE_Unk15)
 {
@@ -577,11 +547,6 @@ TaiChappyStrategy::TaiChappyStrategy(TekiParameters* params)
 	setState(CHAPPYSTATE_Unk12, state);
 }
 
-/*
- * --INFO--
- * Address:	8012A674
- * Size:	000148
- */
 bool TaiChappyCryAction::act(Teki& teki)
 {
 	TekiAndCondition NRef cond = TekiAndCondition(&TekiTypeCondition(TEKI_Swallow),
@@ -601,11 +566,6 @@ bool TaiChappyCryAction::act(Teki& teki)
 	TekiTypeCondition(0);
 }
 
-/*
- * --INFO--
- * Address:	8012A7BC
- * Size:	000048
- */
 bool TaiChappySmashedAction::actByEvent(immut TekiEvent& event)
 {
 	if (event.mTeki->getParameterI(CHAPPYPI_SmashType) == 1) {
@@ -615,21 +575,11 @@ bool TaiChappySmashedAction::actByEvent(immut TekiEvent& event)
 	return TaiSmashedAction::actByEvent(event);
 }
 
-/*
- * --INFO--
- * Address:	8012A804
- * Size:	000058
- */
 TaiChappyLegEffectAction::TaiChappyLegEffectAction(f32 p1)
     : TaiJointEffectAction(p1, 2, 'lleg', 'rleg', 0, 0)
 {
 }
 
-/*
- * --INFO--
- * Address:	8012A85C
- * Size:	000090
- */
 void TaiChappyLegEffectAction::setType(Vector3f& effectPos, int type, int id)
 {
 	effectPos.y = mapMgr->getMinY(effectPos.x, effectPos.z, true);

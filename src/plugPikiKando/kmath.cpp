@@ -19,11 +19,6 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("kmath")
 
-/*
- * --INFO--
- * Address:	801126C4
- * Size:	00005C
- */
 bool isNan(f32 value)
 {
 	if ((u32)value == (u32)NAN) {
@@ -33,11 +28,6 @@ bool isNan(f32 value)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	80112720
- * Size:	00009C
- */
 void makePostureMatrix(immut Vector3f& col0, immut Vector3f& col1, immut Vector3f& col2, Matrix4f& mtx)
 {
 	mtx.makeIdentity();
@@ -53,11 +43,6 @@ void makePostureMatrix(immut Vector3f& col0, immut Vector3f& col1, immut Vector3
 	mtx.mMtx[2][2] = col2.z;
 }
 
-/*
- * --INFO--
- * Address:	801127BC
- * Size:	0001B0
- */
 f32 calcImpulse(immut Vector3f& relativePos, f32 mass, immut Vector3f& collisionNormal, immut Matrix4f& inertiaTensor,
                 immut Vector3f& relativeVel, immut Vector3f& separationVel)
 {
@@ -76,11 +61,6 @@ f32 calcImpulse(immut Vector3f& relativePos, f32 mass, immut Vector3f& collision
 	return tmp / (angularComponent.DP(collisionNormal) + 1.0f / mass);
 }
 
-/*
- * --INFO--
- * Address:	8011296C
- * Size:	0001C0
- */
 Vector3f CRSpline(f32 t, immut Vector3f* ctrlPts)
 {
 	f32 tSqr = t * t;
@@ -94,11 +74,6 @@ Vector3f CRSpline(f32 t, immut Vector3f* ctrlPts)
 	return outVec;
 }
 
-/*
- * --INFO--
- * Address:	80112B2C
- * Size:	0001B8
- */
 Vector3f CRSplineTangent(f32 t, immut Vector3f* ctrlPts)
 {
 	f32 tSqr = t * t;
@@ -112,11 +87,6 @@ Vector3f CRSplineTangent(f32 t, immut Vector3f* ctrlPts)
 	return outVec;
 }
 
-/*
- * --INFO--
- * Address:	80112CE4
- * Size:	00022C
- */
 Vector3f getThrowVelocity(immut Vector3f& startPos, f32 horizSpeed, immut Vector3f& targetPos, Vector3f NRef targetDir)
 {
 	Vector3f displacement = startPos - targetPos;
@@ -146,11 +116,6 @@ Vector3f getThrowVelocity(immut Vector3f& startPos, f32 horizSpeed, immut Vector
 	return throwVel;
 }
 
-/*
- * --INFO--
- * Address:	80112F10
- * Size:	000254
- */
 f32 getCameraSafeAngle(immut Vector3f& cameraPos, f32 checkDistance, f32 heightWeighting)
 {
 	f32 angleInc = QUARTER_PI;

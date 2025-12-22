@@ -23,32 +23,17 @@ bool KIO::fbCopy;
 immut char* KIO::haltMessage;
 int KIO::kontMode = 2;
 
-/*
- * --INFO--
- * Address:	80084340
- * Size:	000010
- */
 static BOOL hioEnumCallback(s32 chan)
 {
 	kio->mChannel = chan;
 	return FALSE;
 }
 
-/*
- * --INFO--
- * Address:	80084350
- * Size:	000024
- */
 static void hioCallback()
 {
 	kio->readMailbox();
 }
 
-/*
- * --INFO--
- * Address:	80084374
- * Size:	00005C
- */
 KIO::KIO()
 {
 	mIsReady      = false;
@@ -59,11 +44,6 @@ KIO::KIO()
 	haltMessage   = nullptr;
 }
 
-/*
- * --INFO--
- * Address:	800843D0
- * Size:	000074
- */
 void KIO::initialise()
 {
 	HIOEnumDevices(hioEnumCallback);
@@ -77,11 +57,6 @@ void KIO::initialise()
 	kontMode = 2;
 }
 
-/*
- * --INFO--
- * Address:	80084444
- * Size:	0000DC
- */
 void KIO::readMailbox()
 {
 	u32 mail = 0;
@@ -115,22 +90,12 @@ void KIO::readMailbox()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80084520
- * Size:	000038
- */
 void KIO::startWrite(int p1, u8* bufferStart, int bufferSize)
 {
 	mContext.set(p1, bufferStart, bufferSize);
 	writeHeader();
 }
 
-/*
- * --INFO--
- * Address:	80084558
- * Size:	000064
- */
 void KIO::writeHeader()
 {
 	if (mIsReady) {
@@ -155,11 +120,6 @@ void KIO::copyEfb(u8*, u16, u16)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	800845BC
- * Size:	00001C
- */
 void KIOContext::set(int p1, u8* bufferStart, int bufferSize)
 {
 	mBufferSize  = bufferSize;
@@ -169,11 +129,6 @@ void KIOContext::set(int p1, u8* bufferStart, int bufferSize)
 	mBufferStart = bufferStart;
 }
 
-/*
- * --INFO--
- * Address:	800845D8
- * Size:	0000E8
- */
 void KIOContext::write()
 {
 	// Check if there is data left to write

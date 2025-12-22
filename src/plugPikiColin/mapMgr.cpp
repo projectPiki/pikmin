@@ -171,11 +171,6 @@ struct MapLightMgr {
 	u32 mCurrentUpdateTick;      // _14
 };
 
-/*
- * --INFO--
- * Address:	800617C0
- * Size:	000268
- */
 void DynCollShape::createDupCollData()
 {
 	mVertexList = new Vector3f[mShape->mVertexCount];
@@ -245,11 +240,6 @@ void DynCollShape::drawAtari(Graphics& gfx)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80061A28
- * Size:	0003CC
- */
 void DynCollShape::updatePos()
 {
 	mBoundingBox.resetBound();
@@ -276,11 +266,6 @@ void DynCollShape::updatePos()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80061DF4
- * Size:	000044
- */
 void DynCollShape::jointVisible(int id, int set)
 {
 	FOREACH_NODE(Joint, mShape->mJointList[id].mParent->mChild, jnt)
@@ -289,11 +274,6 @@ void DynCollShape::jointVisible(int id, int set)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80061E38
- * Size:	000094
- */
 void DynCollShape::adjust(Creature* obj)
 {
 	obj->mPositionInShapeSpace = obj->mSRT.t;
@@ -303,22 +283,12 @@ void DynCollShape::adjust(Creature* obj)
 	obj->mLastPosition = obj->mSRT.t;
 }
 
-/*
- * --INFO--
- * Address:	80061ECC
- * Size:	000048
- */
 void DynCollShape::update()
 {
 	mTransformMtx.inverse(&mInverseMatrix);
 	mTransformMtx.makeSRT(mScale, mRotation, mPosition);
 }
 
-/*
- * --INFO--
- * Address:	80061F14
- * Size:	00003C
- */
 void DynCollShape::updateContext()
 {
 	for (int i = 0; i < mShape->mJointCount; i++) {
@@ -326,22 +296,12 @@ void DynCollShape::updateContext()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80061F50
- * Size:	000064
- */
 void DynCollShape::refresh(Graphics& gfx)
 {
 	updateContext();
 	mShape->drawshape(gfx, *gfx.mCamera, nullptr);
 }
 
-/*
- * --INFO--
- * Address:	80061FB4
- * Size:	000034
- */
 void MapObjAnimator::finishOneShot()
 {
 	mPlayState = 0;
@@ -395,11 +355,6 @@ DynMapObject::DynMapObject(MapMgr* map, MapAnimShapeObject* obj)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800621A4
- * Size:	000024
- */
 void DynMapObject::nextState()
 {
 	mState++;
@@ -408,11 +363,6 @@ void DynMapObject::nextState()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800621C8
- * Size:	00003C
- */
 void DynMapObject::touchCallback(immut Plane&, immut Vector3f&, immut Vector3f&)
 {
 	switch (mState) {
@@ -426,11 +376,6 @@ void DynMapObject::touchCallback(immut Plane&, immut Vector3f&, immut Vector3f&)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80062204
- * Size:	0001A8
- */
 void DynMapObject::update()
 {
 	switch (mState) {
@@ -468,21 +413,11 @@ void DynMapObject::update()
 	DynCollShape::update();
 }
 
-/*
- * --INFO--
- * Address:	800623AC
- * Size:	00002C
- */
 void DynMapObject::draw(Graphics& gfx)
 {
 	refresh(gfx);
 }
 
-/*
- * --INFO--
- * Address:	800623D8
- * Size:	000184
- */
 void DynMapObject::refresh(Graphics& gfx)
 {
 	Matrix4f mtx1;
@@ -507,31 +442,16 @@ void DynMapObject::refresh(Graphics& gfx)
 
 static f32 Kdl = 1.25f;
 
-/*
- * --INFO--
- * Address:	8006255C
- * Size:	000030
- */
 void DynCollObjBody::touchCallback(immut Plane& plane, immut Vector3f& a1, immut Vector3f& a2)
 {
 	mParentRigidBody->touchCallback(plane, a1, a2);
 }
 
-/*
- * --INFO--
- * Address:	8006258C
- * Size:	000030
- */
 void DynCollObjBody::applyVelocity(immut Plane& plane, immut Vector3f& a1, immut Vector3f& a2)
 {
 	mParentRigidBody->applyVelocity(plane, a1, a2);
 }
 
-/*
- * --INFO--
- * Address:	800625BC
- * Size:	0001B8
- */
 void DynObjBody::touchCallback(immut Plane& plane, immut Vector3f& p2, immut Vector3f& p3)
 {
 	if (plane.mNormal.DP(p3) < 0.0f) {
@@ -542,11 +462,6 @@ void DynObjBody::touchCallback(immut Plane& plane, immut Vector3f& p2, immut Vec
 	}
 }
 
-/*
- * --INFO--
- * Address:	80062774
- * Size:	0001B8
- */
 void DynObjBody::applyVelocity(immut Plane& plane, immut Vector3f& p2, immut Vector3f& p3)
 {
 	if (plane.mNormal.DP(p3) < 0.0f) {
@@ -557,11 +472,6 @@ void DynObjBody::applyVelocity(immut Plane& plane, immut Vector3f& p2, immut Vec
 	}
 }
 
-/*
- * --INFO--
- * Address:	8006292C
- * Size:	000868
- */
 void DynObjBody::integrate(int prevConfigIdx, int currConfigIdx, f32 timeStep)
 {
 	RigidBody::integrate(prevConfigIdx, currConfigIdx, timeStep);
@@ -576,11 +486,6 @@ void DynObjBody::integrate(int prevConfigIdx, int currConfigIdx, f32 timeStep)
 	config.mAngularVel    = config.mInertiaTensor * config.mLocalAngularVel;
 }
 
-/*
- * --INFO--
- * Address:	80063194
- * Size:	0008A8
- */
 void DynObjSeeSaw::integrate(int prevConfigIdx, int currConfigIdx, f32 timeStep)
 {
 	RigidBody::integrate(prevConfigIdx, currConfigIdx, timeStep);
@@ -600,11 +505,6 @@ void DynObjSeeSaw::integrate(int prevConfigIdx, int currConfigIdx, f32 timeStep)
 	config.mAngularVel    = config.mInertiaTensor * config.mLocalAngularVel;
 }
 
-/*
- * --INFO--
- * Address:	80063A3C
- * Size:	0000F8
- */
 void DynObjBody::initRender(int)
 {
 	mRenderTransformMtx.makeVQS(mRenderPosition, mRenderOrientation, Vector3f(1.0f, 1.0f, 1.0f));
@@ -612,11 +512,6 @@ void DynObjBody::initRender(int)
 	mCollObj->mTransformMtx = mRenderTransformMtx;
 }
 
-/*
- * --INFO--
- * Address:	80063B34
- * Size:	0003E8
- */
 void DynObjBody::applyWorldSpring(int configIdx, int attachPointIdx, immut Vector3f& p3)
 {
 	STACK_PAD_VAR(4);
@@ -636,11 +531,6 @@ void DynObjBody::applyWorldSpring(int configIdx, int attachPointIdx, immut Vecto
 	FORCE_DONT_INLINE;
 }
 
-/*
- * --INFO--
- * Address:	80063F1C
- * Size:	0001AC
- */
 void DynObjBody::render(Graphics& gfx)
 {
 	Matrix4f mtx;
@@ -657,11 +547,6 @@ void DynObjBody::render(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800640C8
- * Size:	0001E0
- */
 void DynObjBody::computeForces(int configIdx, f32 p2)
 {
 	configuration& config = mIntegrationStates[configIdx];
@@ -687,11 +572,6 @@ void DynObjBody::computeForces(int configIdx, f32 p2)
 	mAngularAccel.add(vec2);
 }
 
-/*
- * --INFO--
- * Address:	800642A8
- * Size:	000268
- */
 void DynObjBody::initBodyCollisions()
 {
 	BoundBox box;
@@ -719,11 +599,6 @@ void DynObjBody::initBodyCollisions()
 	mCollObj->mParentRigidBody = this;
 }
 
-/*
- * --INFO--
- * Address:	80064510
- * Size:	0003A4
- */
 void DynObjBody::readScript(MapMgr* map, immut char* fileName)
 {
 	RandomAccessStream* stream = gsys->openFile(fileName, true, true);
@@ -797,11 +672,6 @@ void DynObjBody::readScript(MapMgr* map, immut char* fileName)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800648B4
- * Size:	000538
- */
 void DynObjPushable::render(Graphics& gfx)
 {
 	Matrix4f mtx;
@@ -836,11 +706,6 @@ void DynObjPushable::render(Graphics& gfx)
 	DynObjBody::render(gfx);
 }
 
-/*
- * --INFO--
- * Address:	80064DEC
- * Size:	0006B0
- */
 MapMgr::MapMgr(Controller* controller)
 {
 	mController         = controller;
@@ -909,22 +774,12 @@ MapMgr::MapMgr(Controller* controller)
 	memStat->end("blurTextures");
 }
 
-/*
- * --INFO--
- * Address:	800654B4
- * Size:	000030
- */
 void MapMgr::initEffects()
 {
 	// hmm.
 	new EffectMgr;
 }
 
-/*
- * --INFO--
- * Address:	800654E4
- * Size:	0003C4
- */
 void MapMgr::initShape()
 {
 	mLightMgr = 0;
@@ -965,20 +820,10 @@ void MapMgr::initShape()
 	mResetPending = true;
 }
 
-/*
- * --INFO--
- * Address:	800658C8
- * Size:	000004
- */
 void MapMgr::createLights()
 {
 }
 
-/*
- * --INFO--
- * Address:	800658CC
- * Size:	0000FC
- */
 void MapMgr::updateSimulation()
 {
 	if (mResetPending) {
@@ -1004,11 +849,6 @@ void MapMgr::updateSimulation()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800659C8
- * Size:	0001D4
- */
 void MapMgr::update()
 {
 	updateSimulation();
@@ -1049,11 +889,6 @@ void MapMgr::update()
 	gsys->mTimer->stop("updDynPlat");
 }
 
-/*
- * --INFO--
- * Address:	80065BA4
- * Size:	0000F4
- */
 void MapMgr::preRender(Graphics& gfx)
 {
 	mVertRayCount      = 0;
@@ -1076,11 +911,6 @@ void MapMgr::preRender(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80065C98
- * Size:	00019C
- */
 void MapMgr::drawShadowCasters(Graphics& gfx)
 {
 	gfx.setFog(false);
@@ -1108,11 +938,6 @@ void MapMgr::drawShadowCasters(Graphics& gfx)
 	gfx.setFog(true);
 }
 
-/*
- * --INFO--
- * Address:	80065E34
- * Size:	000438
- */
 void MapMgr::refresh(Graphics& gfx)
 {
 	gfx.setCBlending(0);
@@ -1152,11 +977,6 @@ void MapMgr::refresh(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80066360
- * Size:	00078C
- */
 void MapMgr::showCollisions(immut Vector3f& pos)
 {
 	mDebugFocusPoint = pos;
@@ -1258,11 +1078,6 @@ bool MapMgr::closeCollTri(CollGroup*, CollTriInfo*)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80066AEC
- * Size:	000160
- */
 void MapMgr::drawXLU(Graphics& gfx)
 {
 	if (mMapShape) {
@@ -1289,11 +1104,6 @@ void MapMgr::drawXLU(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80066C4C
- * Size:	000EDC
- */
 void MapMgr::postrefresh(Graphics& gfx)
 {
 	if (mMapShape) {
@@ -1468,11 +1278,6 @@ void MapMgr::postrefresh(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80067B28
- * Size:	000270
- */
 void MapMgr::updatePos(f32 x, f32 z)
 {
 	Vector3f pos(x, 0.0f, z);
@@ -1483,21 +1288,11 @@ void MapMgr::updatePos(f32 x, f32 z)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80067D98
- * Size:	000008
- */
 f32 MapMgr::getLight(f32, f32)
 {
 	return 1.0f;
 }
 
-/*
- * --INFO--
- * Address:	80067DA0
- * Size:	000164
- */
 CollGroup* MapMgr::getCollGroupList(f32 x, f32 z, bool doCheckDynColl)
 {
 	CollGroup* collList = nullptr;
@@ -1525,11 +1320,6 @@ CollGroup* MapMgr::getCollGroupList(f32 x, f32 z, bool doCheckDynColl)
 	return collList;
 }
 
-/*
- * --INFO--
- * Address:	80067F04
- * Size:	000164
- */
 f32 MapMgr::getMinY(f32 x, f32 z, bool doCheckDynColl)
 {
 	mVertRayCount++;
@@ -1556,11 +1346,6 @@ f32 MapMgr::getMinY(f32 x, f32 z, bool doCheckDynColl)
 	return minY;
 }
 
-/*
- * --INFO--
- * Address:	80068068
- * Size:	000170
- */
 f32 MapMgr::getMaxY(f32 x, f32 z, bool doCheckDynColl)
 {
 	mVertRayCount++;
@@ -1587,11 +1372,6 @@ f32 MapMgr::getMaxY(f32 x, f32 z, bool doCheckDynColl)
 	return minY;
 }
 
-/*
- * --INFO--
- * Address:	800681D8
- * Size:	00015C
- */
 CollTriInfo* MapMgr::getCurrTri(f32 x, f32 z, bool doCheckDynColl)
 {
 	mGroundTriRayCount++;
@@ -1614,11 +1394,6 @@ CollTriInfo* MapMgr::getCurrTri(f32 x, f32 z, bool doCheckDynColl)
 	return tri;
 }
 
-/*
- * --INFO--
- * Address:	80068334
- * Size:	0002EC
- */
 f32 MapMgr::findEdgePenetration(CollTriInfo& tri, immut Vector3f* vertexList, immut Vector3f& pos, f32 rad, Vector3f& normal)
 {
 	for (int i = 0; i < 3; i++) {
@@ -1659,11 +1434,6 @@ f32 MapMgr::findEdgePenetration(CollTriInfo& tri, immut Vector3f* vertexList, im
 	return 0.0f;
 }
 
-/*
- * --INFO--
- * Address:	80068620
- * Size:	00082C
- */
 void MapMgr::recTraceMove(CollGroup* colls, MoveTrace& trace, f32 timeStep)
 {
 	f32 offset;
@@ -1787,11 +1557,6 @@ void MapMgr::recTraceMove(CollGroup* colls, MoveTrace& trace, f32 timeStep)
 	trace.mPosition = nextPos;
 }
 
-/*
- * --INFO--
- * Address:	80068E54
- * Size:	0005D0
- */
 void MapMgr::traceMove(Creature* creature, MoveTrace& trace, f32 timeStep)
 {
 	trace.mPosition.add(Vector3f(0.0f, trace.mRadius, 0.0f));
@@ -1853,11 +1618,6 @@ void MapMgr::traceMove(Creature* creature, MoveTrace& trace, f32 timeStep)
 	trace.mPosition.sub(Vector3f(0.0f, trace.mRadius, 0.0f));
 }
 
-/*
- * --INFO--
- * Address:	80069424
- * Size:	000070
- */
 Shape* MapMgr::loadPlatshape(immut char* path)
 {
 	Shape* shp       = nullptr;
@@ -1872,11 +1632,6 @@ Shape* MapMgr::loadPlatshape(immut char* path)
 	return shp;
 }
 
-/*
- * --INFO--
- * Address:	80069494
- * Size:	00009C
- */
 CreatureCollPart* MapMgr::requestCollPart(ObjCollInfo* info, Creature* obj)
 {
 	CreatureCollPart* part = new CreatureCollPart(info->mPlatShape);
@@ -1887,11 +1642,6 @@ CreatureCollPart* MapMgr::requestCollPart(ObjCollInfo* info, Creature* obj)
 	return part;
 }
 
-/*
- * --INFO--
- * Address:	80069530
- * Size:	000134
- */
 ShadowCaster::ShadowCaster()
     : CoreNode("")
 {
@@ -1907,11 +1657,6 @@ ShadowCaster::ShadowCaster()
 	mDrawer            = nullptr;
 }
 
-/*
- * --INFO--
- * Address:	80069664
- * Size:	00002C
- */
 void ShadowCaster::initShadow()
 {
 	PRINT("making shadow buffer!\n");

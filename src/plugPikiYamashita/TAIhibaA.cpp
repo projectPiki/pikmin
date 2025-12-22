@@ -199,11 +199,6 @@ protected:
 	// TODO: members
 };
 
-/*
- * --INFO--
- * Address:	801D4800
- * Size:	000084
- */
 TAIhibaASoundTable::TAIhibaASoundTable()
     : PaniSoundTable(7)
 {
@@ -212,11 +207,6 @@ TAIhibaASoundTable::TAIhibaASoundTable()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801D4884
- * Size:	0002F8
- */
 TAIhibaAParameters::TAIhibaAParameters()
     : TekiParameters(TPI_COUNT, TAIhibaAFloatParams::COUNT)
 {
@@ -281,11 +271,6 @@ TAIhibaAParameters::TAIhibaAParameters()
 	multiP->setF(TPF_SpawnVelocity, 0.0f);
 }
 
-/*
- * --INFO--
- * Address:	801D4B7C
- * Size:	0001E8
- */
 TAIhibaAStrategy::TAIhibaAStrategy()
     : YaiStrategy(TAIhibaAStateID::COUNT, TAIhibaAStateID::Init)
 {
@@ -315,11 +300,6 @@ TAIhibaAStrategy::TAIhibaAStrategy()
 	setState(TAIhibaAStateID::Attack, state);
 }
 
-/*
- * --INFO--
- * Address:	801D4D64
- * Size:	000188
- */
 void TAIhibaAStrategy::act(Teki& teki)
 {
 	teki.getPosition().set(teki.mPersonality->mNestPosition);
@@ -343,22 +323,12 @@ void TAIhibaAStrategy::act(Teki& teki)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801D4EEC
- * Size:	00003C
- */
 void TAIhibaAStrategy::draw(Teki& teki, Graphics& gfx)
 {
 	teki.getPosition().set(teki.mPersonality->mNestPosition);
 	YaiStrategy::draw(teki, gfx);
 }
 
-/*
- * --INFO--
- * Address:	801D4F28
- * Size:	0006FC
- */
 void TAIhibaAAnimation::makeDefaultAnimations()
 {
 	if (!mAnimMgr) {

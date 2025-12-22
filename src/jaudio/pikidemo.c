@@ -145,22 +145,12 @@ static DemoStatus DEMO_STATUS[DEMOID_COUNT] = {
 	{ 0, 2, 1, 0, 0, NULL },     { 0, 2, 2, 192, 0, demo113 }, { 0, 4, 2, 169, 0, demo114 },
 };
 
-/*
- * --INFO--
- * Address:	8001A0E0
- * Size:	000010
- */
 void Jac_DemoSceneInit(void)
 {
 	now_loading         = 0;
 	event_pause_counter = 0;
 }
 
-/*
- * --INFO--
- * Address:	8001A100
- * Size:	000018
- */
 static void Jac_DemoCheckFrameCall()
 {
 	BUMP_REGISTER(r3);
@@ -169,11 +159,6 @@ static void Jac_DemoCheckFrameCall()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8001A120
- * Size:	000050
- */
 void Jac_DemoEventUnPauseCheck()
 {
 	if (event_pause_counter) {
@@ -187,11 +172,6 @@ void Jac_DemoEventUnPauseCheck()
 	Jac_DemoCheckFrameCall();
 }
 
-/*
- * --INFO--
- * Address:	8001A180
- * Size:	000048
- */
 BOOL Jac_DemoCheck()
 {
 	if (demo_end_delay) {
@@ -205,11 +185,6 @@ BOOL Jac_DemoCheck()
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	8001A1E0
- * Size:	000080
- */
 BOOL Jac_DemoWalkCheck()
 {
 	if (demo_end_delay != 0) {
@@ -232,11 +207,6 @@ BOOL Jac_DemoWalkCheck()
 	return FALSE;
 }
 
-/*
- * --INFO--
- * Address:	8001A260
- * Size:	00007C
- */
 BOOL Jac_DemoCheckEvent(u8 evt)
 {
 	if (Jac_DemoCheck()) {
@@ -256,11 +226,6 @@ BOOL Jac_DemoCheckEvent(u8 evt)
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	8001A2E0
- * Size:	00016C
- */
 static void DoSequence(u32 cinID, u32 a2)
 {
 	u32 flag;
@@ -324,22 +289,12 @@ static void DoSequence(u32 cinID, u32 a2)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8001A460
- * Size:	000044
- */
 void Jac_PlayDemoSequenceDirect(u32 id)
 {
 	demo_bgm_seqp = Jam_GetTrackHandle(0x30000);
 	Jam_WritePortAppDirect(demo_bgm_seqp, 0, id);
 }
 
-/*
- * --INFO--
- * Address:	8001A4C0
- * Size:	000050
- */
 void Jac_InitDemoSystem()
 {
 	demo_seqp = Jam_GetTrackHandle(0x1000f);
@@ -349,11 +304,6 @@ void Jac_InitDemoSystem()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8001A520
- * Size:	0004F0
- */
 void Jac_StartDemo(u32 cinID)
 {
 	u32* REF_id        = &cinID;
@@ -591,11 +541,6 @@ void Jac_StartDemo(u32 cinID)
 	STACK_PAD_VAR(14);
 }
 
-/*
- * --INFO--
- * Address:	8001AA20
- * Size:	000040
- */
 void Jac_DemoSound(int id)
 {
 	STACK_PAD_VAR(1);
@@ -607,11 +552,6 @@ void Jac_DemoSound(int id)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8001AA60
- * Size:	00004C
- */
 BOOL Jac_DemoFrame(int id)
 {
 	if (current_demo_no == DEMOID_FINISHED) {
@@ -625,11 +565,6 @@ BOOL Jac_DemoFrame(int id)
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	8001AAC0
- * Size:	00007C
- */
 void Jac_BgmAnimEndRecover()
 {
 	DemoStatus* status = &DEMO_STATUS[current_demo_no];
@@ -647,11 +582,6 @@ void Jac_BgmAnimEndRecover()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8001AB40
- * Size:	00005C
- */
 void Jac_BgmAnimEndStop()
 {
 	DemoStatus* status = &DEMO_STATUS[current_demo_no];
@@ -665,11 +595,6 @@ void Jac_BgmAnimEndStop()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8001ABA0
- * Size:	0000D0
- */
 void Jac_DemoBGMForceStop()
 {
 	demo_bgm_seqp = Jam_GetTrackHandle(0x30000);
@@ -700,11 +625,6 @@ void Jac_DemoBGMForceStop()
 	current_seq_bgm = 0;
 }
 
-/*
- * --INFO--
- * Address:	8001AC80
- * Size:	000108
- */
 void __Jac_FinishDemo()
 {
 	STACK_PAD_VAR(2);
@@ -751,11 +671,6 @@ void __Jac_FinishDemo()
 	demo_seq_active = -1;
 }
 
-/*
- * --INFO--
- * Address:	8001ADA0
- * Size:	0000A8
- */
 void Jac_FinishDemo(void)
 {
 	int cinID     = current_demo_no;
@@ -790,21 +705,11 @@ void Jac_FinishDemo(void)
 	Jac_SetProcessStatus(7);
 }
 
-/*
- * --INFO--
- * Address:	8001AE60
- * Size:	000020
- */
 void Jac_FinishDemo_NoErase()
 {
 	__Jac_FinishDemo();
 }
 
-/*
- * --INFO--
- * Address:	8001AE80
- * Size:	000020
- */
 void __Loaded(u32 a)
 {
 	if ((int)(a & 0xFFFF0000) < -0x7fffffff) {
@@ -812,11 +717,6 @@ void __Loaded(u32 a)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8001AEA0
- * Size:	0001AC
- */
 void __Prepare_BGM(u32 cinID)
 {
 	int set;
@@ -909,11 +809,6 @@ void __Prepare_BGM(u32 cinID)
 	DVDT_CheckPass(0x80000000, 0, __Loaded);
 }
 
-/*
- * --INFO--
- * Address:	8001B060
- * Size:	0000A8
- */
 void Jac_PrepareDemo(u32 cinID)
 {
 	STACK_PAD_VAR(1);
@@ -955,11 +850,6 @@ void Jac_PrepareDemo(u32 cinID)
 	__Prepare_BGM(cinID);
 }
 
-/*
- * --INFO--
- * Address:	8001B120
- * Size:	0000D0
- */
 void Jac_StartPartsFindDemo(u32 p1, int p2)
 {
 	STACK_PAD_VAR(2);
@@ -993,11 +883,6 @@ void Jac_StartPartsFindDemo(u32 p1, int p2)
 	parts_find_demo_state = 1;
 }
 
-/*
- * --INFO--
- * Address:	8001B200
- * Size:	00004C
- */
 void Jac_FinishPartsFindDemo(void)
 {
 	if (parts_find_demo_state) {
@@ -1008,11 +893,6 @@ void Jac_FinishPartsFindDemo(void)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8001B260
- * Size:	000084
- */
 void Jac_StartTextDemo(int a)
 {
 	if (text_demo_state != 1 && current_demo_no == DEMOID_FINISHED) {
@@ -1029,11 +909,6 @@ void Jac_StartTextDemo(int a)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8001B300
- * Size:	000068
- */
 void Jac_FinishTextDemo(void)
 {
 	if (text_demo_state != 0 && current_demo_no == DEMOID_FINISHED) {
@@ -1048,11 +923,6 @@ void Jac_FinishTextDemo(void)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8001B380
- * Size:	000018
- */
 void Jac_SetDemoPartsID(int id)
 {
 	int* REF_id;
@@ -1061,11 +931,6 @@ void Jac_SetDemoPartsID(int id)
 	demo_parts_id = id;
 }
 
-/*
- * --INFO--
- * Address:	8001B3A0
- * Size:	000018
- */
 void Jac_SetDemoOnyons(int num)
 {
 	int* REF_num;
@@ -1074,11 +939,6 @@ void Jac_SetDemoOnyons(int num)
 	demo_onyon_num = num;
 }
 
-/*
- * --INFO--
- * Address:	8001B3C0
- * Size:	000018
- */
 void Jac_SetDemoPartsCount(int count)
 {
 	int* REF_count;

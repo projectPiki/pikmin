@@ -18,11 +18,6 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT(nullptr);
 
-/*
- * --INFO--
- * Address:	800E97AC
- * Size:	000158
- */
 UfoShapeObject::UfoShapeObject(Shape* shape)
 {
 	mAnimContexts    = new AnimContext[8];
@@ -46,11 +41,6 @@ immut char* PaniUfoAnimator::motionLabels[UfoMotion::COUNT] = {
 	"henka4a",  "henka4b", "takeoff-1", "takeoff-2", "takeoff-3", "takeoff-4", "takeoff-5", "open-close",
 };
 
-/*
- * --INFO--
- * Address:	800E992C
- * Size:	0002B0
- */
 PaniMotionTable* PaniUfoAnimator::createMotionTable()
 {
 	PaniMotionTable* table = new PaniMotionTable(UfoMotion::COUNT);
@@ -75,31 +65,16 @@ PaniMotionTable* PaniUfoAnimator::createMotionTable()
 	return table;
 }
 
-/*
- * --INFO--
- * Address:	800E9BDC
- * Size:	00003C
- */
 PaniUfoAnimator::PaniUfoAnimator()
 {
 }
 
-/*
- * --INFO--
- * Address:	800E9C18
- * Size:	00005C
- */
 UfoAnimator::UfoAnimator()
 {
 	mAnims      = new PaniUfoAnimator[8];
 	mAnimSpeeds = new f32[8];
 }
 
-/*
- * --INFO--
- * Address:	800E9C74
- * Size:	0000A4
- */
 void UfoAnimator::init(UfoShapeObject* shape, PaniMotionTable* table)
 {
 	for (int i = 0; i < 8; i++) {
@@ -109,11 +84,6 @@ void UfoAnimator::init(UfoShapeObject* shape, PaniMotionTable* table)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800E9D18
- * Size:	000038
- */
 void UfoAnimator::startMotion(int id, PaniMotionInfo* info)
 {
 	if (info) {
@@ -121,31 +91,16 @@ void UfoAnimator::startMotion(int id, PaniMotionInfo* info)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800E9D50
- * Size:	000010
- */
 void UfoAnimator::setMotionSpeed(int id, f32 speed)
 {
 	mAnimSpeeds[id] = speed;
 }
 
-/*
- * --INFO--
- * Address:	800E9D60
- * Size:	000014
- */
 int UfoAnimator::getMotionIndex(int id)
 {
 	return mAnims[id].getCurrentMotionIndex();
 }
 
-/*
- * --INFO--
- * Address:	800E9D74
- * Size:	000048
- */
 void UfoAnimator::stopAllMotions()
 {
 	for (int i = 0; i < 8; i++) {
@@ -153,11 +108,6 @@ void UfoAnimator::stopAllMotions()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800E9DBC
- * Size:	000120
- */
 void UfoAnimator::initFlagMotions(int id)
 {
 	for (int i = 1; i < 8; i++) {
@@ -188,11 +138,6 @@ void UfoAnimator::initFlagMotions(int id)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800E9EDC
- * Size:	000144
- */
 void UfoAnimator::startFlagMotions(int id)
 {
 	switch (id) {
@@ -220,22 +165,12 @@ void UfoAnimator::startFlagMotions(int id)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800EA020
- * Size:	000088
- */
 void UfoAnimator::setMotionLastFrame(int id)
 {
 	int keys                     = mAnims[id].mAnimInfo->countAKeys();
 	mAnims[id].mAnimationCounter = (f32)mAnims[id].mAnimInfo->getKeyValue(keys - 1) - 1.0f;
 }
 
-/*
- * --INFO--
- * Address:	800EA0A8
- * Size:	000080
- */
 void UfoAnimator::updateAnimation()
 {
 	for (int i = 0; i < 8; i++) {
@@ -243,11 +178,6 @@ void UfoAnimator::updateAnimation()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800EA128
- * Size:	000068
- */
 void UfoAnimator::updateContext()
 {
 	for (int i = 0; i < 8; i++) {

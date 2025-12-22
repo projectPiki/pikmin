@@ -26,11 +26,6 @@ DEFINE_PRINT("plantMgr");
 
 PlantMgr* plantMgr;
 
-/*
- * --INFO--
- * Address:	80119D3C
- * Size:	0000C8
- */
 Plant::Plant()
     : AICreature(nullptr)
 {
@@ -40,11 +35,6 @@ Plant::Plant()
 	mSearchBuffer.init(mPlantSearchData, 3);
 }
 
-/*
- * --INFO--
- * Address:	80119E04
- * Size:	000048
- */
 void Plant::startMotion(int motionID)
 {
 	mPlantAnimator.startMotion(PaniMotionInfo(motionID, this));
@@ -67,11 +57,6 @@ void Plant::reset(int plantType)
 	mStateMachine = plantMgr->mAI;
 }
 
-/*
- * --INFO--
- * Address:	80119E4C
- * Size:	0000B8
- */
 void Plant::startAI(int)
 {
 	mIsCulled = false;
@@ -87,21 +72,11 @@ void Plant::startAI(int)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80119F04
- * Size:	000038
- */
 void Plant::doAnimation()
 {
 	mPlantAnimator.animate(mMotionSpeed);
 }
 
-/*
- * --INFO--
- * Address:	80119F3C
- * Size:	0000A4
- */
 void Plant::update()
 {
 	if (mIsCulled) {
@@ -116,11 +91,6 @@ void Plant::update()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80119FE0
- * Size:	0003C0
- */
 void Plant::refresh(Graphics& gfx)
 {
 	PlantShapeObject* shape = plantMgr->mPlantShapes[mPlantType];
@@ -157,11 +127,6 @@ void Plant::refresh(Graphics& gfx)
 	mCollInfo->updateInfo(gfx, false);
 }
 
-/*
- * --INFO--
- * Address:	8011A3A0
- * Size:	000004
- */
 void Plant::doKill()
 {
 }
@@ -181,11 +146,6 @@ PlantAI::PlantAI()
 	addArrow(STATE_Touch, saiMotionDoneEvent, STATE_Wait);
 }
 
-/*
- * --INFO--
- * Address:	8011A3A4
- * Size:	0000AC
- */
 bool PlantAI::OpponentMove::satisfy(AICreature* plant)
 {
 	Creature* collider = plant->mCollidingCreature;
@@ -197,11 +157,6 @@ bool PlantAI::OpponentMove::satisfy(AICreature* plant)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8011A450
- * Size:	000094
- */
 void PlantAI::WaitInit::act(AICreature* plant)
 {
 	STACK_PAD_VAR(1);
@@ -215,11 +170,6 @@ void PlantAI::WaitInit::act(AICreature* plant)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8011A4E4
- * Size:	000064
- */
 void PlantAI::TouchInit::act(AICreature* plant)
 {
 	STACK_PAD_VAR(1);
@@ -232,11 +182,6 @@ void PlantAI::TouchInit::act(AICreature* plant)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8011A548
- * Size:	000478
- */
 PlantMgr::PlantMgr(MapMgr* mgr)
 {
 	mMapMgr = mgr;
@@ -279,11 +224,6 @@ immut char* PlantMgr::getPlantName(int plantType)
 	return plantNames[plantType];
 }
 
-/*
- * --INFO--
- * Address:	8011A9C0
- * Size:	0000EC
- */
 void PlantMgr::initialise()
 {
 	for (int i = PLANT_START; i < PLANT_COUNT; i++) {
@@ -305,21 +245,11 @@ void PlantMgr::initialise()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8011AAAC
- * Size:	0000D8
- */
 Creature* PlantMgr::createObject()
 {
 	return new Plant();
 }
 
-/*
- * --INFO--
- * Address:	8011AB84
- * Size:	000030
- */
 bool PlantMgr::usePlantType(int type)
 {
 	FOREACH_NODE(UseNode, mRootUseNode.mChild, node)
@@ -361,11 +291,6 @@ Creature* PlantMgr::birth()
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8011ABB4
- * Size:	000118
- */
 PlantShapeObject::PlantShapeObject(Shape* shape, immut char* plantName, immut char* fileName)
 {
 	mShape               = shape;
@@ -393,51 +318,26 @@ GenObjectPlant::GenObjectPlant()
 	mPlantType = PLANT_Clover;
 }
 
-/*
- * --INFO--
- * Address:	8011ACCC
- * Size:	000078
- */
 static GenObject* makeObjectPlant()
 {
 	return new GenObjectPlant();
 }
 
-/*
- * --INFO--
- * Address:	8011AD44
- * Size:	00008C
- */
 void GenObjectPlant::initialise()
 {
 	GenObjectFactory::factory->registerMember('plnt', &makeObjectPlant, "Generate PLANT", 'v0.0');
 }
 
-/*
- * --INFO--
- * Address:	8011ADD0
- * Size:	000040
- */
 void GenObjectPlant::doRead(RandomAccessStream& input)
 {
 	mPlantType = input.readInt();
 }
 
-/*
- * --INFO--
- * Address:	8011AE10
- * Size:	0000CC
- */
 void GenObjectPlant::updateUseList(Generator* gen, int)
 {
 	plantMgr->addUseList(mPlantType);
 }
 
-/*
- * --INFO--
- * Address:	8011AEDC
- * Size:	000190
- */
 Creature* GenObjectPlant::birth(BirthInfo& info)
 {
 	Creature* plant = plantMgr->birth();
@@ -458,11 +358,6 @@ Creature* GenObjectPlant::birth(BirthInfo& info)
 	return plant;
 }
 
-/*
- * --INFO--
- * Address:	8011B06C
- * Size:	00002C
- */
 void GenObjectPlant::render(Graphics&, Generator*)
 {
 	plantMgr->usePlantType(mPlantType);

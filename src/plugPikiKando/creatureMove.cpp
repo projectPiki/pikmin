@@ -27,11 +27,6 @@ DEFINE_ERROR(28)
  */
 DEFINE_PRINT("CreatureMove")
 
-/*
- * --INFO--
- * Address:	8008E2CC
- * Size:	000200
- */
 void Creature::moveRotation(f32 p1)
 {
 	if (isCreatureFlag(CF_Unk10)) {
@@ -81,11 +76,6 @@ void Creature::moveRotation(f32 p1)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8008E4CC
- * Size:	000110
- */
 void Creature::moveAttach()
 {
 	_29C = mSRT.t;
@@ -110,11 +100,6 @@ void Creature::moveAttach()
 	_29C = _29C - mSRT.t;
 }
 
-/*
- * --INFO--
- * Address:	8008E5DC
- * Size:	000D60
- */
 void Creature::moveNew(f32 deltaTime)
 {
 	if (mSRT.t.y < -2000.0f && isAlive()) {
@@ -341,11 +326,6 @@ CollTriInfo* Creature::getNextTri(CollTriInfo*, immut Vector3f&, int&)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8008F33C
- * Size:	000100
- */
 Plane* Creature::getNearestPlane(CollTriInfo* tri)
 {
 	int planeIdx = -1;
@@ -376,11 +356,6 @@ void Creature::renderCollTriInfo(Graphics&, CollTriInfo*, immut Colour&)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8008F43C
- * Size:	000588
- */
 void traceMove2(Creature* target, MoveTrace& trace, f32 p3)
 {
 	int stepMultiplier = 1;

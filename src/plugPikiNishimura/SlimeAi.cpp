@@ -25,21 +25,11 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT(nullptr);
 
-/*
- * --INFO--
- * Address:	80164B80
- * Size:	000008
- */
 SlimeAi::SlimeAi(Slime* slime)
 {
 	mSlime = slime;
 }
 
-/*
- * --INFO--
- * Address:	80164B88
- * Size:	0000A8
- */
 void SlimeAi::init(Slime* slime)
 {
 	mSlime = slime;
@@ -57,11 +47,6 @@ void SlimeAi::init(Slime* slime)
 	mMinLength                 = C_SLIME_PROP(mSlime).mNormalMinLength();
 }
 
-/*
- * --INFO--
- * Address:	80164C30
- * Size:	000014
- */
 void SlimeAi::addDamagePoint(f32 damage)
 {
 	mSlime->addDamagePoint(damage);
@@ -96,11 +81,6 @@ void SlimeAi::afterProcessing()
 	mPrevNucleusStickPikiCount = mSlime->mNucleus->mNucleusAi->mStickPikiCount;
 }
 
-/*
- * --INFO--
- * Address:	80164C44
- * Size:	000310
- */
 void SlimeAi::calcBubblePiki()
 {
 	CollPart* part = nullptr;
@@ -147,11 +127,6 @@ void SlimeAi::calcBubblePiki()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80164F54
- * Size:	0000C4
- */
 void SlimeAi::calcStickersRatio()
 {
 	mStickersRatio = 0.0f;
@@ -216,11 +191,6 @@ void SlimeAi::makeBodyThickness()
 	                       + C_SLIME_PROP(mSlime).mBodyThicknessContract() * (1.0f - elongateRatio);
 }
 
-/*
- * --INFO--
- * Address:	80165018
- * Size:	000164
- */
 void SlimeAi::playExpandingSound()
 {
 	f32 expansionRatio
@@ -250,11 +220,6 @@ void SlimeAi::playExpandingSound()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8016517C
- * Size:	00033C
- */
 void SlimeAi::calcCollisionCheck()
 {
 	mSlime->mCorePosition
@@ -282,11 +247,6 @@ void SlimeAi::calcCollisionCheck()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801654B8
- * Size:	0000E8
- */
 void SlimeAi::setLeaderNearerTarget()
 {
 	Slime* slime = mSlime;
@@ -311,11 +271,6 @@ void SlimeAi::setLeaderNearerTarget()
 	STACK_PAD_VAR(2); // this whole function is questionable.
 }
 
-/*
- * --INFO--
- * Address:	801655A0
- * Size:	000118
- */
 void SlimeAi::moveFlagCheck()
 {
 	f32 dist = mSlime->mSlimeCreatures[mSlime->mLeaderCreatureIndex]->mSRT.t.distance(
@@ -345,11 +300,6 @@ void SlimeAi::makeTargetPosition()
 	mSlime->addAnimTimer(gsys->getFrameTime());
 }
 
-/*
- * --INFO--
- * Address:	801656B8
- * Size:	000144
- */
 void SlimeAi::makeFollowerVelocity()
 {
 	SlimeCreature* follower = mSlime->mSlimeCreatures[mSlime->mFollowerCreatureIndex];
@@ -365,11 +315,6 @@ void SlimeAi::makeFollowerVelocity()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801657FC
- * Size:	000124
- */
 void SlimeAi::makeLeaderVelocity()
 {
 	SlimeCreature* leader   = mSlime->mSlimeCreatures[mSlime->mLeaderCreatureIndex];
@@ -384,11 +329,6 @@ void SlimeAi::makeLeaderVelocity()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80165920
- * Size:	0000E8
- */
 void SlimeAi::setMidPointVelocity()
 {
 	// ... this is just "do for 1 and 2" but okay
@@ -418,11 +358,6 @@ void SlimeAi::walkAllState()
 	setMidPointVelocity();
 }
 
-/*
- * --INFO--
- * Address:	80165A08
- * Size:	000104
- */
 void SlimeAi::calcContractDamage()
 {
 	f32 nucleiDist = mSlime->mCore->mSRT.t.distance(mSlime->mNucleus->mSRT.t);
@@ -442,11 +377,6 @@ void SlimeAi::calcContractDamage()
 	mContractHitType = SLIMEHIT_Small;
 }
 
-/*
- * --INFO--
- * Address:	80165B0C
- * Size:	000280
- */
 void SlimeAi::contractCoreFlickPiki()
 {
 	CollPart* corePart = mSlime->mCore->mCollInfo->getBoundingSphere();
@@ -467,11 +397,6 @@ void SlimeAi::contractCoreFlickPiki()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80165D8C
- * Size:	000280
- */
 void SlimeAi::contractSubFlickPiki()
 {
 	CollPart* nucleusPart = mSlime->mNucleus->mCollInfo->getBoundingSphere();
@@ -492,11 +417,6 @@ void SlimeAi::contractSubFlickPiki()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8016600C
- * Size:	00029C
- */
 void SlimeAi::inCaseOfContract()
 {
 	// in case of contract, pull this lever
@@ -643,11 +563,6 @@ void SlimeAi::bothEndsToAppearGoal()
 	mSlime->mSlimeCreatures[SLIMECREATURE_CoreOuter]->mVelocity       = coreVel;
 }
 
-/*
- * --INFO--
- * Address:	801662A8
- * Size:	00016C
- */
 void SlimeAi::makeTargetRandom()
 {
 	mSlime->addWalkTimer(gsys->getFrameTime());
@@ -725,11 +640,6 @@ bool SlimeAi::inSideWaitRangeTransit()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	80166414
- * Size:	000308
- */
 bool SlimeAi::chaseNaviTransit()
 {
 	Creature* target      = nullptr;
@@ -765,11 +675,6 @@ bool SlimeAi::chaseNaviTransit()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8016671C
- * Size:	00030C
- */
 bool SlimeAi::chasePikiTransit()
 {
 	Creature* target      = nullptr;
@@ -805,11 +710,6 @@ bool SlimeAi::chasePikiTransit()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	80166A28
- * Size:	000198
- */
 bool SlimeAi::targetLostTransit()
 {
 	Creature* target = mSlime->getTargetCreature();
@@ -887,11 +787,6 @@ bool SlimeAi::finishExpansionTransit()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	80166BC0
- * Size:	0002E4
- */
 bool SlimeAi::appearTransit()
 {
 	Vector3f* initPos = mSlime->getInitPosition();
@@ -931,11 +826,6 @@ bool SlimeAi::disAppearTransit()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	80166EA4
- * Size:	00053C
- */
 void SlimeAi::initDie(int nextState)
 {
 	mSlime->setNextState(nextState);
@@ -1175,11 +1065,6 @@ void SlimeAi::stayState()
 {
 }
 
-/*
- * --INFO--
- * Address:	801673E0
- * Size:	000494
- */
 void SlimeAi::appearState()
 {
 	STACK_PAD_VAR(2);
@@ -1258,11 +1143,6 @@ void SlimeAi::disAppearState()
 	mSlime->addAttackTimer(gsys->getFrameTime());
 }
 
-/*
- * --INFO--
- * Address:	80167874
- * Size:	002D88
- */
 void SlimeAi::update()
 {
 	setEveryFrame();

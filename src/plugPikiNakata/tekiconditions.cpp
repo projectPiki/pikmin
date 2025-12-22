@@ -17,11 +17,6 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("tekiconditions")
 
-/*
- * --INFO--
- * Address:	80149BC0
- * Size:	000054
- */
 bool TekiPikiStateCondition::satisfy(Creature* target) immut
 {
 	STACK_PAD_VAR(1);
@@ -33,11 +28,6 @@ bool TekiPikiStateCondition::satisfy(Creature* target) immut
 	return piki->getState() == mPikiStateID;
 }
 
-/*
- * --INFO--
- * Address:	80149C14
- * Size:	00002C
- */
 bool TekiStateCondition::satisfy(Creature* target) immut
 {
 	if (target->mObjType != OBJTYPE_Teki) {
@@ -47,11 +37,6 @@ bool TekiStateCondition::satisfy(Creature* target) immut
 	return static_cast<Teki*>(target)->mStateID == mStateID;
 }
 
-/*
- * --INFO--
- * Address:	80149C40
- * Size:	00002C
- */
 bool TekiTypeCondition::satisfy(Creature* target) immut
 {
 	if (target->mObjType != OBJTYPE_Teki) {
@@ -61,111 +46,56 @@ bool TekiTypeCondition::satisfy(Creature* target) immut
 	return static_cast<Teki*>(target)->mTekiType == mTekiType;
 }
 
-/*
- * --INFO--
- * Address:	80149C6C
- * Size:	000030
- */
 bool TekiFreeCondition::satisfy(Creature* target) immut
 {
 	return target->isFree();
 }
 
-/*
- * --INFO--
- * Address:	80149C9C
- * Size:	000014
- */
 bool TekiNaviCondition::satisfy(Creature* target) immut
 {
 	return target->mObjType == OBJTYPE_Navi;
 }
 
-/*
- * --INFO--
- * Address:	80149CB0
- * Size:	000020
- */
 bool TekiNaviPikiCondition::satisfy(Creature* target) immut
 {
 	return target->mObjType == OBJTYPE_Navi || target->mObjType == OBJTYPE_Piki;
 }
 
-/*
- * --INFO--
- * Address:	80149CD0
- * Size:	000024
- */
 bool TekiPelletCondition::satisfy(Creature* target) immut
 {
 	return BTeki::isPellet(target->mObjType);
 }
 
-/*
- * --INFO--
- * Address:	80149CF4
- * Size:	0000A8
- */
 bool TekiPositionDistanceCondition::satisfy(Creature* target) immut
 {
 	return mPosition.distance(target->getPosition()) <= mDistance;
 }
 
-/*
- * --INFO--
- * Address:	80149D9C
- * Size:	000070
- */
 bool TekiPositionCircleDistanceCondition::satisfy(Creature* target) immut
 {
 	return BTeki::calcCircleDistanceStatic(mPosition, mRadius, target->getPosition(), target->getSize()) <= 0.0f;
 }
 
-/*
- * --INFO--
- * Address:	80149E0C
- * Size:	000070
- */
 bool TekiPositionSphereDistanceCondition::satisfy(Creature* target) immut
 {
 	return BTeki::calcSphereDistanceStatic(mPosition, mRadius, target->getPosition(), target->getSize()) <= 0.0f;
 }
 
-/*
- * --INFO--
- * Address:	80149E7C
- * Size:	000014
- */
 bool TekiStickingCondition::satisfy(Creature* target) immut
 {
 	return target->getStickObject() != nullptr;
 }
 
-/*
- * --INFO--
- * Address:	80149E90
- * Size:	0000A8
- */
 bool TekiRecognitionCondition::satisfy(Creature* target) immut
 {
 	return target->isVisible() && target->isAlive() && !target->isBuried();
 }
 
-/*
- * --INFO--
- * Address:	80149F38
- * Size:	000014
- */
 bool TekiCreaturePointerCondition::satisfy(Creature* target) immut
 {
 	return mCreature == target;
 }
 
-/*
- * --INFO--
- * Address:	80149F4C
- * Size:	0000E4
- */
 bool TekiDistanceCondition::satisfy(Creature* target) immut
 {
 	if (mTeki->cullableCenter(*target, mDistance)) {
@@ -175,11 +105,6 @@ bool TekiDistanceCondition::satisfy(Creature* target) immut
 	return mTeki->calcSphereDistance(*target) <= mDistance;
 }
 
-/*
- * --INFO--
- * Address:	8014A030
- * Size:	000070
- */
 bool TekiSphereDistanceCondition::satisfy(Creature* target) immut
 {
 	STACK_PAD_VAR(1);
@@ -190,21 +115,11 @@ bool TekiSphereDistanceCondition::satisfy(Creature* target) immut
 	return sphereDist(mTeki, target) <= mDistance;
 }
 
-/*
- * --INFO--
- * Address:	8014A0A0
- * Size:	000018
- */
 bool TekiStickerCondition::satisfy(Creature* target) immut
 {
 	return target->getStickObject() == mStickTarget;
 }
 
-/*
- * --INFO--
- * Address:	8014A0B8
- * Size:	000144
- */
 bool TekiLowerRangeCondition::satisfy(Creature* target) immut
 {
 	f32 lowerRange = mTeki->getLowerRange();
@@ -215,31 +130,16 @@ bool TekiLowerRangeCondition::satisfy(Creature* target) immut
 	return mTeki->calcSphereDistance(*target) <= lowerRange;
 }
 
-/*
- * --INFO--
- * Address:	8014A1FC
- * Size:	000024
- */
 bool TekiAttackableCondition::satisfy(Creature* target) immut
 {
 	return mTeki->attackableCreature(*target);
 }
 
-/*
- * --INFO--
- * Address:	8014A220
- * Size:	000024
- */
 bool TekiVisibleCondition::satisfy(Creature* target) immut
 {
 	return mTeki->visibleCreature(*target);
 }
 
-/*
- * --INFO--
- * Address:	8014A244
- * Size:	00003C
- */
 bool TekiVisibleHeightCondition::satisfy(Creature* target) immut
 {
 	f32 visHeight = mTeki->getParameterF(TPF_VisibleHeight);
@@ -250,11 +150,6 @@ bool TekiVisibleHeightCondition::satisfy(Creature* target) immut
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8014A280
- * Size:	0000BC
- */
 bool TekiLowerCondition::satisfy(Creature* target) immut
 {
 	// fucking amazing work nakata.
@@ -262,11 +157,6 @@ bool TekiLowerCondition::satisfy(Creature* target) immut
 	return TekiAndCondition(&TekiLowerRangeCondition(mTeki), &TekiNotCondition(&TekiStickerCondition(mTeki))).satisfy(target);
 }
 
-/*
- * --INFO--
- * Address:	8014A33C
- * Size:	00005C
- */
 bool TekiAngleCondition::satisfy(Creature* target) immut
 {
 	f32 targetAngle = mTeki->calcTargetAngle(target->getPosition());

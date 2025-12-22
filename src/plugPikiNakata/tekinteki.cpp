@@ -29,11 +29,6 @@ TekiMessage::TekiMessage(int p1, NTeki* teki)
 	mTeki = teki;
 }
 
-/*
- * --INFO--
- * Address:	8014B9F8
- * Size:	000114
- */
 NTeki::NTeki()
 {
 	mParabolaEvent   = new PeveParabolaEvent();
@@ -42,11 +37,6 @@ NTeki::NTeki()
 	mSinWaveEvent    = new PeveHorizontalSinWaveEvent();
 }
 
-/*
- * --INFO--
- * Address:	8014BB0C
- * Size:	0001D4
- */
 void NTeki::sendMessage(int msg)
 {
 	PRINT_NAKATA("sendMessage:%08x:%d\n", this, msg);
@@ -63,11 +53,6 @@ void NTeki::sendMessage(int msg)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8014BCE0
- * Size:	000054
- */
 void NTeki::receiveMessage(immut TekiMessage& msg)
 {
 	eventPerformed(TekiEvent(TekiEventType::WakeUpCall, static_cast<Teki*>(this), msg.mTeki));

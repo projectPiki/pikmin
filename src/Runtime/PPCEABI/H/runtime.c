@@ -136,11 +136,6 @@ static const u32 __constants[] = {
 	0x00000000, 0x00000000, 0x41F00000, 0x00000000, 0x41E00000, 0x00000000,
 };
 
-/*
- * --INFO--
- * Address:	80214DC8
- * Size:	00005C
- */
 ASM u32 __cvt_fp2unsigned(register f64 d)
 {
 #ifdef __MWERKS__ // clang-format off
@@ -172,11 +167,6 @@ ASM u32 __cvt_fp2unsigned(register f64 d)
 #endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address:	80214E24
- * Size:	00004C
- */
 ASM static void __save_fpr(void)
 {
 #ifdef __MWERKS__ // clang-format off
@@ -231,11 +221,6 @@ void _savevr(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80214E70
- * Size:	00004C
- */
 ASM static void __restore_fpr(void) {
 #ifdef __MWERKS__ // clang-format off
 		nofralloc
@@ -386,11 +371,6 @@ void _restorevr(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80214EBC
- * Size:	0000EC
- */
 ASM void __div2u(void) {
 #ifdef __MWERKS__ // clang-format off
 		nofralloc
@@ -464,12 +444,6 @@ ASM void __div2u(void) {
 		blr
 	#endif // clang-format on
 }
-
-/*
- * --INFO--
- * Address:	80214FA8
- * Size:	000138
- */
 
 ASM void __div2i(void) {
 #ifdef __MWERKS__ // clang-format off
@@ -570,11 +544,6 @@ ASM void __div2i(void) {
 	#endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address:	802150E0
- * Size:	0000E4
- */
 ASM void __mod2u(void) {
 #ifdef __MWERKS__ // clang-format off
 		nofralloc
@@ -647,11 +616,6 @@ ASM void __mod2u(void) {
 	#endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address:	802151C4
- * Size:	00010C
- */
 ASM void __mod2i(void) {
 #ifdef __MWERKS__ // clang-format off
 		nofralloc
@@ -738,11 +702,6 @@ ASM void __mod2i(void) {
 	#endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address:	802152D0
- * Size:	000024
- */
 ASM void __shl2i(void) {
 #ifdef __MWERKS__ // clang-format off
 		nofralloc
@@ -758,11 +717,6 @@ ASM void __shl2i(void) {
 	#endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address:	802152F4
- * Size:	000024
- */
 ASM void __shr2u(void) {
 #ifdef __MWERKS__ // clang-format off
 		nofralloc
@@ -778,11 +732,6 @@ ASM void __shr2u(void) {
 	#endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address:	80215318
- * Size:	000028
- */
 ASM void __shr2i(void) {
 #ifdef __MWERKS__ // clang-format off
 		nofralloc
@@ -912,11 +861,6 @@ zero:
 #endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address:	80215340
- * Size:	0000B4
- */
 ASM void __cvt_sll_flt(void) {
 #ifdef __MWERKS__ // clang-format off
 	nofralloc
@@ -1026,11 +970,6 @@ zero:
 #endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address:	802153F4
- * Size:	0000CC
- */
 ASM void __cvt_dbl_usll(void)
 {
 #ifdef __MWERKS__ // clang-format off

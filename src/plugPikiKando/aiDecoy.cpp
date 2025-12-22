@@ -17,21 +17,11 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT(nullptr)
 
-/*
- * --INFO--
- * Address:	800B77AC
- * Size:	000054
- */
 ActDecoy::ActDecoy(Piki* piki)
     : Action(piki, true)
 {
 }
 
-/*
- * --INFO--
- * Address:	800B7800
- * Size:	000178
- */
 Creature* ActDecoy::findTeki()
 {
 	f32 minDist           = 300.0f;
@@ -76,39 +66,19 @@ Creature* ActDecoy::update()
 	return teki;
 }
 
-/*
- * --INFO--
- * Address:	800B7978
- * Size:	00005C
- */
 void ActDecoy::init(Creature* target)
 {
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Run), PaniMotionInfo(PIKIANIM_Run));
 }
 
-/*
- * --INFO--
- * Address:	800B79D4
- * Size:	000004
- */
 void ActDecoy::cleanup()
 {
 }
 
-/*
- * --INFO--
- * Address:	800B79D8
- * Size:	000004
- */
 void ActDecoy::animationKeyUpdated(immut PaniAnimKeyEvent&)
 {
 }
 
-/*
- * --INFO--
- * Address:	800B79DC
- * Size:	000514
- */
 int ActDecoy::exec()
 {
 	Creature* teki = update();

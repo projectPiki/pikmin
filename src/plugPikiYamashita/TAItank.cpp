@@ -283,11 +283,6 @@ protected:
 	// TODO: members
 };
 
-/*
- * --INFO--
- * Address:	801A35D0
- * Size:	000084
- */
 TAItankSoundTable::TAItankSoundTable()
     : PaniSoundTable(7)
 {
@@ -296,11 +291,6 @@ TAItankSoundTable::TAItankSoundTable()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801A3654
- * Size:	000364
- */
 TAItankParameters::TAItankParameters()
     : TekiParameters(TPI_COUNT, TAItankFloatParams::COUNT)
 {
@@ -374,11 +364,6 @@ TAItankParameters::TAItankParameters()
 	STACK_PAD_VAR(1);
 }
 
-/*
- * --INFO--
- * Address:	801A39B8
- * Size:	000C14
- */
 TAItankStrategy::TAItankStrategy()
     : YaiStrategy(TAItankStateID::COUNT, TAItankStateID::Unk1)
 {
@@ -529,11 +514,6 @@ TAItankStrategy::TAItankStrategy()
 	setState(TAItankStateID::Unk11, state);
 }
 
-/*
- * --INFO--
- * Address:	801A45CC
- * Size:	000120
- */
 void TAItankStrategy::act(Teki& teki)
 {
 	zen::particleGenerator* ptclGen;
@@ -561,11 +541,6 @@ void TAItankStrategy::act(Teki& teki)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801A46EC
- * Size:	0000C4
- */
 bool TAItankStrategy::interact(Teki& teki, immut TekiInteractionKey& key)
 {
 	switch (key.mInteractionType) {
@@ -586,11 +561,6 @@ bool TAItankStrategy::interact(Teki& teki, immut TekiInteractionKey& key)
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	801A47B0
- * Size:	0006FC
- */
 void TAItankAnimation::makeDefaultAnimations()
 {
 	if (!mAnimMgr) {

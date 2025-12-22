@@ -44,11 +44,6 @@ GenObjectItem::GenObjectItem()
 	sprintf(mPrintName, " ");
 }
 
-/*
- * --INFO--
- * Address:	800EE320
- * Size:	0000A8
- */
 void GenObjectItem::ramSaveParameters(RandomAccessStream& stream)
 {
 	stream.writeByte(mParameterA() + 1);
@@ -57,11 +52,6 @@ void GenObjectItem::ramSaveParameters(RandomAccessStream& stream)
 	stream.writeByte(mParameterD() & 255);
 }
 
-/*
- * --INFO--
- * Address:	800EE3C8
- * Size:	0000A8
- */
 void GenObjectItem::ramLoadParameters(RandomAccessStream& stream)
 {
 	mParameterA() = stream.readByte() - 1;
@@ -70,31 +60,16 @@ void GenObjectItem::ramLoadParameters(RandomAccessStream& stream)
 	mParameterD() = stream.readByte();
 }
 
-/*
- * --INFO--
- * Address:	800EE470
- * Size:	000158
- */
 static GenObject* makeObjectItem()
 {
 	return new GenObjectItem;
 }
 
-/*
- * --INFO--
- * Address:	800EE5C8
- * Size:	00008C
- */
 void GenObjectItem::initialise()
 {
 	GenObjectFactory::factory->registerMember('item', makeObjectItem, "アイテムを発生", 'v0.1');
 }
 
-/*
- * --INFO--
- * Address:	800EE654
- * Size:	00011C
- */
 void GenObjectItem::doRead(RandomAccessStream& stream)
 {
 	if (Generator::ramMode) {
@@ -124,11 +99,6 @@ void GenObjectItem::doRead(RandomAccessStream& stream)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800EE770
- * Size:	000100
- */
 void GenObjectItem::doWrite(RandomAccessStream& stream)
 {
 	if (Generator::ramMode) {
@@ -158,11 +128,6 @@ static void sprintID(char*, u32)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	800EE870
- * Size:	000030
- */
 void GenObjectItem::updateUseList(Generator*, int)
 {
 	if (mObjType != -1) {
@@ -170,11 +135,6 @@ void GenObjectItem::updateUseList(Generator*, int)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800EE8A0
- * Size:	000448
- */
 Creature* GenObjectItem::birth(BirthInfo& info)
 {
 

@@ -15,11 +15,6 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("OgCallBackSection")
 
-/*
- * --INFO--
- * Address:	80198D2C
- * Size:	0000EC
- */
 zen::TextColorCallBack::TextColorCallBack(P2DPane* pane)
     : P2DPaneCallBack(pane, PANETYPE_TextBox)
 {
@@ -33,11 +28,6 @@ zen::TextColorCallBack::TextColorCallBack(P2DPane* pane)
 	mTargetGradColor    = mInitialGradColor;
 }
 
-/*
- * --INFO--
- * Address:	80198E18
- * Size:	0000C4
- */
 void zen::TextColorCallBack::setTargetColor(immut Colour& tCharColor, immut Colour& tGradColor, f32 duration)
 {
 	mTargetCharColor    = tCharColor;
@@ -58,11 +48,6 @@ void zen::TextColorCallBack::setTargetColor(immut Colour& tCharColor, immut Colo
 	}
 }
 
-/*
- * --INFO--
- * Address:	80198EDC
- * Size:	000538
- */
 bool zen::TextColorCallBack::invoke(P2DPane* pane)
 {
 	if (mIsTransitionActive) {

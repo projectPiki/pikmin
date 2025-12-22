@@ -503,11 +503,6 @@ struct TitleSetupSection : public Node {
 	                              // this has two extra CoreNodes at the end in the DLL, but not in the DOL
 };
 
-/*
- * --INFO--
- * Address:	8005F890
- * Size:	000038
- */
 void TitlesMovieInterface::message(int a1, int)
 {
 	switch (a1) {
@@ -518,11 +513,6 @@ void TitlesMovieInterface::message(int a1, int)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8005F8C8
- * Size:	00087C
- */
 void TitlesSection::init()
 {
 	Node::init("<TitlesSection>");

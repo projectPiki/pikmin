@@ -18,21 +18,11 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT(nullptr);
 
-/*
- * --INFO--
- * Address:	800A6D94
- * Size:	000054
- */
 ActStone::ActStone(Piki* piki)
     : Action(piki, true)
 {
 }
 
-/*
- * --INFO--
- * Address:	800A6DE8
- * Size:	000058
- */
 void ActStone::init(Creature* creature)
 {
 	mCurrPebble = nullptr;
@@ -44,11 +34,6 @@ void ActStone::init(Creature* creature)
 	initApproach();
 }
 
-/*
- * --INFO--
- * Address:	800A6E40
- * Size:	000074
- */
 int ActStone::exec()
 {
 	if (mCurrPebble == nullptr) {
@@ -69,11 +54,6 @@ int ActStone::exec()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800A6EB4
- * Size:	00004C
- */
 void ActStone::cleanup()
 {
 	mPiki->disableFixPos();
@@ -83,11 +63,6 @@ void ActStone::cleanup()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800A6F00
- * Size:	000084
- */
 void ActStone::initApproach()
 {
 	if (mRockGen) {
@@ -101,11 +76,6 @@ void ActStone::initApproach()
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Walk), PaniMotionInfo(PIKIANIM_Walk));
 }
 
-/*
- * --INFO--
- * Address:	800A6F84
- * Size:	000190
- */
 int ActStone::exeApproach()
 {
 	if (!mCurrPebble || !mCurrPebble->isAlive()) {
@@ -126,21 +96,11 @@ int ActStone::exeApproach()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800A7114
- * Size:	00000C
- */
 void ActStone::initAdjust()
 {
 	mState = STATE_Adjust;
 }
 
-/*
- * --INFO--
- * Address:	800A7120
- * Size:	0001C4
- */
 int ActStone::exeAdjust()
 {
 	if (!mCurrPebble || !mCurrPebble->isAlive()) {
@@ -163,11 +123,6 @@ int ActStone::exeAdjust()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800A72E4
- * Size:	000094
- */
 void ActStone::initAttack()
 {
 	mState = STATE_Attack;
@@ -176,11 +131,6 @@ void ActStone::initAttack()
 	mPiki->enableFixPos();
 }
 
-/*
- * --INFO--
- * Address:	800A7378
- * Size:	000174
- */
 int ActStone::exeAttack()
 {
 	if (mCurrPebble->mHealth == 0) {
@@ -201,11 +151,6 @@ int ActStone::exeAttack()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800A74EC
- * Size:	00030C
- */
 void ActStone::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {

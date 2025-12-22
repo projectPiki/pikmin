@@ -6,11 +6,6 @@
 #define BANKP_SIZE (0x100)
 static Bank_* bankp[BANKP_SIZE];
 
-/*
- * --INFO--
- * Address:	8000BE00
- * Size:	000024
- */
 static void PTconvert(void** pointer, u32 base_address)
 {
 	if (*pointer >= (void*)base_address || *pointer == NULL) {
@@ -19,11 +14,6 @@ static void PTconvert(void** pointer, u32 base_address)
 	*pointer = *(char**)pointer + base_address;
 }
 
-/*
- * --INFO--
- * Address:	8000BE40
- * Size:	000270
- */
 Bank_* Bank_Test(u8* ibnk_address)
 {
 	u32 i, k, j;
@@ -106,11 +96,6 @@ Bank_* Bank_Test(u8* ibnk_address)
 	return startBank;
 }
 
-/*
- * --INFO--
- * Address:	8000C0C0
- * Size:	000068
- */
 static BOOL __Bank_Regist_Inner(u8* ibnk, u32 param_2, u32 param_3)
 {
 	Jac_BnkConnectTableSet(param_3, param_2);
@@ -120,11 +105,6 @@ static BOOL __Bank_Regist_Inner(u8* ibnk, u32 param_2, u32 param_3)
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	8000C140
- * Size:	000024
- */
 BOOL Bank_Regist(void* ibnk, u32 param_2)
 {
 	return __Bank_Regist_Inner((u8*)ibnk, param_2, ((Ibnk_*)ibnk)->_08);
@@ -140,11 +120,6 @@ BOOL Bank_Regist_Direct(void* ibnk, u32 param_2, u32 param_3)
 	return __Bank_Regist_Inner((u8*)ibnk, param_2, param_3);
 }
 
-/*
- * --INFO--
- * Address:	8000C180
- * Size:	00002C
- */
 void Bank_Init()
 {
 	for (int i = 0; i < BANKP_SIZE; ++i) {
@@ -152,11 +127,6 @@ void Bank_Init()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8000C1C0
- * Size:	000028
- */
 Bank_* Bank_Get(u32 index)
 {
 	if (index >= BANKP_SIZE) {

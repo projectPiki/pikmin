@@ -21,11 +21,6 @@ DEFINE_ERROR(21)
  */
 DEFINE_PRINT("TAIAattack")
 
-/*
- * --INFO--
- * Address:	801AE19C
- * Size:	00003C
- */
 void TAIAattackWorkObject::start(Teki& teki)
 {
 	TAIAreserveMotion::start(teki);
@@ -33,11 +28,6 @@ void TAIAattackWorkObject::start(Teki& teki)
 	teki.setFrameCounter(0.0f);
 }
 
-/*
- * --INFO--
- * Address:	801AE1D8
- * Size:	000254
- */
 bool TAIAattackWorkObject::act(Teki& teki)
 {
 	bool res = false;
@@ -83,11 +73,6 @@ bool TAIAattackWorkObject::act(Teki& teki)
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	801AE434
- * Size:	000124
- */
 bool TAIAattackWorkObject::attackWorkObject(Teki& teki)
 {
 	bool res        = false;
@@ -111,11 +96,6 @@ bool TAIAattackWorkObject::attackWorkObject(Teki& teki)
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	801AE564
- * Size:	000218
- */
 bool TAIAattackWorkObject::setTargetPosition(Teki& teki)
 {
 	bool res        = false;
@@ -142,11 +122,6 @@ bool TAIAattackWorkObject::setTargetPosition(Teki& teki)
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	801AE77C
- * Size:	000068
- */
 int TAIAattackWorkObject::getLastFinishedStageBridge(Bridge* bridge)
 {
 	for (int i = bridge->getStage() - 1; i >= 0; i--) {
@@ -157,22 +132,12 @@ int TAIAattackWorkObject::getLastFinishedStageBridge(Bridge* bridge)
 	return -1;
 }
 
-/*
- * --INFO--
- * Address:	801AE7E4
- * Size:	000044
- */
 void TAIAflickingAfterMotionLoop::start(Teki& teki)
 {
 	TAIAmotionLoop::start(teki);
 	teki.clearTekiOption(BTeki::TEKI_OPTION_DAMAGE_COUNTABLE);
 }
 
-/*
- * --INFO--
- * Address:	801AE828
- * Size:	00001C
- */
 bool TAIAflickingAfterMotionLoop::permitFlick(Teki& teki)
 {
 	if (teki.mCurrentAnimEvent == KEY_Action0) {
@@ -181,11 +146,6 @@ bool TAIAflickingAfterMotionLoop::permitFlick(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	801AE844
- * Size:	0000A0
- */
 bool TAIAflickingAfterMotionLoop::act(Teki& teki)
 {
 	bool res = false;
@@ -200,11 +160,6 @@ bool TAIAflickingAfterMotionLoop::act(Teki& teki)
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	801AE8E4
- * Size:	00008C
- */
 bool TAIAtargetNavi::act(Teki& teki)
 {
 	Navi* navi = naviMgr->getNavi();
@@ -216,11 +171,6 @@ bool TAIAtargetNavi::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	801AE970
- * Size:	000158
- */
 bool TAIAtargetPiki::act(Teki& teki)
 {
 	bool res = false;
@@ -238,22 +188,12 @@ bool TAIAtargetPiki::act(Teki& teki)
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	801AEAC8
- * Size:	000078
- */
 void TAIAfireBreath::start(Teki& teki)
 {
 	TAIAreserveMotion::start(teki);
 	teki.setAnimSpeed(getPreviousAnimSpeed(teki));
 }
 
-/*
- * --INFO--
- * Address:	801AEB48
- * Size:	0000D8
- */
 bool TAIAfireBreath::act(Teki& teki)
 {
 	if (TAIAreserveMotion::act(teki)) {
@@ -271,11 +211,6 @@ bool TAIAfireBreath::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	801AEC28
- * Size:	000128
- */
 bool TAIAflickCheck::act(Teki& teki)
 {
 	bool res = false;
@@ -294,11 +229,6 @@ bool TAIAflickCheck::act(Teki& teki)
 	TekiLowerCondition(nullptr);
 }
 
-/*
- * --INFO--
- * Address:	801AED58
- * Size:	000094
- */
 void TAIAflicking::start(Teki& teki)
 {
 	TAIAmotion::start(teki);
@@ -306,11 +236,6 @@ void TAIAflicking::start(Teki& teki)
 	teki.clearTekiOption(BTeki::TEKI_OPTION_DAMAGE_COUNTABLE);
 }
 
-/*
- * --INFO--
- * Address:	801AEDEC
- * Size:	000080
- */
 bool TAIAflicking::act(Teki& teki)
 {
 	bool res = false;
@@ -324,11 +249,6 @@ bool TAIAflicking::act(Teki& teki)
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	801AEE6C
- * Size:	000098
- */
 void TAIAflicking::flick(Teki& teki)
 {
 	if (teki.mCurrentAnimEvent == KEY_Action0) {
@@ -338,11 +258,6 @@ void TAIAflicking::flick(Teki& teki)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801AEF04
- * Size:	000094
- */
 void TAIAflickingReserveMotion::start(Teki& teki)
 {
 	TAIAreserveMotion::start(teki);
@@ -350,11 +265,6 @@ void TAIAflickingReserveMotion::start(Teki& teki)
 	teki.clearTekiOption(BTeki::TEKI_OPTION_DAMAGE_COUNTABLE);
 }
 
-/*
- * --INFO--
- * Address:	801AEF98
- * Size:	00009C
- */
 bool TAIAflickingReserveMotion::act(Teki& teki)
 {
 	bool res = false;
@@ -370,11 +280,6 @@ bool TAIAflickingReserveMotion::act(Teki& teki)
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	801AF034
- * Size:	000098
- */
 void TAIAflickingReserveMotion::flick(Teki& teki)
 {
 	if (teki.mCurrentAnimEvent == KEY_Action0) {
@@ -384,11 +289,6 @@ void TAIAflickingReserveMotion::flick(Teki& teki)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801AF0D4
- * Size:	000074
- */
 void TAIAbiteForKabekui::start(Teki& teki)
 {
 	TAIAreserveMotion::start(teki);
@@ -396,11 +296,6 @@ void TAIAbiteForKabekui::start(Teki& teki)
 	teki.setCreaturePointer(2, nullptr);
 }
 
-/*
- * --INFO--
- * Address:	801AF148
- * Size:	0000D0
- */
 bool TAIAbiteForKabekui::act(Teki& teki)
 {
 	bool res = false;
@@ -427,11 +322,6 @@ bool TAIAbiteForKabekui::act(Teki& teki)
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	801AF218
- * Size:	0004B4
- */
 bool TAIAbiteForKabekui::hitCheck(Teki& teki)
 {
 	bool res = false;
@@ -471,21 +361,11 @@ bool TAIAbiteForKabekui::hitCheck(Teki& teki)
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	801AF6DC
- * Size:	000020
- */
 void TAIAeatPiki::start(Teki& teki)
 {
 	TAIAreserveMotion::start(teki);
 }
 
-/*
- * --INFO--
- * Address:	801AF6FC
- * Size:	000080
- */
 bool TAIAeatPiki::act(Teki& teki)
 {
 	bool res = false;
@@ -498,11 +378,6 @@ bool TAIAeatPiki::act(Teki& teki)
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	801AF77C
- * Size:	000028
- */
 void TAIAeatPiki::eatEffect(Teki& teki)
 {
 	teki.playEventSound(&teki, SE_WALLEAT_NIP);

@@ -19,11 +19,6 @@ DEFINE_ERROR(22)
  */
 DEFINE_PRINT("aiKinoko")
 
-/*
- * --INFO--
- * Address:	800B4570
- * Size:	0000A4
- */
 ActKinoko::ActKinoko(Piki* piki)
     : Action(piki, true)
 {
@@ -31,11 +26,6 @@ ActKinoko::ActKinoko(Piki* piki)
 	mTarget.clear();
 }
 
-/*
- * --INFO--
- * Address:	800B4614
- * Size:	000080
- */
 void ActKinoko::init(Creature* creature)
 {
 	mPiki->mActionState = 0;
@@ -46,11 +36,6 @@ void ActKinoko::init(Creature* creature)
 	mState = STATE_Boid;
 }
 
-/*
- * --INFO--
- * Address:	800B4694
- * Size:	00006C
- */
 int ActKinoko::exec()
 {
 	switch (mState) {
@@ -78,11 +63,6 @@ void ActKinoko::initStick()
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Kuttuku, this), PaniMotionInfo(PIKIANIM_Kuttuku));
 }
 
-/*
- * --INFO--
- * Address:	800B4700
- * Size:	000080
- */
 int ActKinoko::exeStick()
 {
 	if (!mPiki->mStickTarget) {
@@ -114,11 +94,6 @@ void ActKinoko::initJump()
 	mPiki->mTargetVelocity = vel;
 }
 
-/*
- * --INFO--
- * Address:	800B4780
- * Size:	000128
- */
 int ActKinoko::exeJump()
 {
 	if (mPiki->mGroundTriangle) {
@@ -136,21 +111,11 @@ int ActKinoko::exeJump()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800B48A8
- * Size:	00000C
- */
 void ActKinoko::initAttack()
 {
 	mState = STATE_Attack;
 }
 
-/*
- * --INFO--
- * Address:	800B48B4
- * Size:	0001C0
- */
 int ActKinoko::exeAttack()
 {
 	Creature* target = mTarget.getPtr();
@@ -175,11 +140,6 @@ int ActKinoko::exeAttack()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800B4A74
- * Size:	000288
- */
 void ActKinoko::initBoid()
 {
 	mState           = STATE_Boid;
@@ -203,11 +163,6 @@ void ActKinoko::initBoid()
 	mPiki->playEventSound(target, SE_KINOKOPIKI_DANCE);
 }
 
-/*
- * --INFO--
- * Address:	800B4CFC
- * Size:	00085C
- */
 int ActKinoko::exeBoid()
 {
 	Creature* target = mTarget.getPtr();
@@ -284,11 +239,6 @@ int ActKinoko::exeBoid()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800B5558
- * Size:	000098
- */
 void ActKinoko::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
@@ -310,11 +260,6 @@ void ActKinoko::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 	STACK_PAD_VAR(2);
 }
 
-/*
- * --INFO--
- * Address:	800B55F0
- * Size:	000004
- */
 void ActKinoko::cleanup()
 {
 }

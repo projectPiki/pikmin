@@ -20,11 +20,6 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("drawSaveFailure")
 
-/*
- * --INFO--
- * Address:	801F3560
- * Size:	0000F4
- */
 zen::DrawSaveFailure::DrawSaveFailure()
 {
 	mSaveFailScreen   = new DrawScreen("save_x.blo", nullptr, true, true);
@@ -35,11 +30,6 @@ zen::DrawSaveFailure::DrawSaveFailure()
 	setMode(MODE_Unk0);
 }
 
-/*
- * --INFO--
- * Address:	801F3654
- * Size:	0001F0
- */
 bool zen::DrawSaveFailure::update(Controller* controller)
 {
 	bool res = false;
@@ -82,11 +72,6 @@ bool zen::DrawSaveFailure::update(Controller* controller)
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	801F3844
- * Size:	00003C
- */
 void zen::DrawSaveFailure::draw(Graphics&)
 {
 	if (mMode != MODE_Unk0) {
@@ -94,11 +79,6 @@ void zen::DrawSaveFailure::draw(Graphics&)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801F3880
- * Size:	000054
- */
 void zen::DrawSaveFailure::open(f32 p1)
 {
 	setMode(MODE_Unk1);
@@ -107,11 +87,6 @@ void zen::DrawSaveFailure::open(f32 p1)
 	mSaveFailScreen->makeResident();
 }
 
-/*
- * --INFO--
- * Address:	801F38D4
- * Size:	000098
- */
 void zen::DrawSaveFailure::setMode(zen::DrawSaveFailure::modeFlag mode)
 {
 	mMode = mode;
@@ -138,11 +113,6 @@ void zen::DrawSaveFailure::setMode(zen::DrawSaveFailure::modeFlag mode)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801F396C
- * Size:	000034
- */
 f32 zen::DrawSaveFailure::calcFrame(f32 max)
 {
 	_08 += gsys->getFrameTime();
@@ -154,11 +124,6 @@ f32 zen::DrawSaveFailure::calcFrame(f32 max)
 	return _08 / max;
 }
 
-/*
- * --INFO--
- * Address:	801F39A0
- * Size:	000098
- */
 void zen::DrawSaveFailure::init()
 {
 	setMode(MODE_Unk0);

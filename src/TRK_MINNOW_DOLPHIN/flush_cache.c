@@ -1,10 +1,5 @@
 #include "PowerPC_EABI_Support/MetroTRK/trk.h"
 
-/*
- * --INFO--
- * Address:	8021E788
- * Size:	000038
- */
 ASM void TRK_flush_cache(register void* param_1, register int param_2)
 {
 #ifdef __MWERKS__ // clang-format off

@@ -1,10 +1,5 @@
 #include "Dolphin/card.h"
 
-/*
- * --INFO--
- * Address:	8020CA64
- * Size:	0000A4
- */
 static void DeleteCallback(s32 channel, s32 result)
 {
 	CARDControl* card;
@@ -31,11 +26,6 @@ error:
 	}
 }
 
-/*
- * --INFO--
- * Address:	8020CB08
- * Size:	000128
- */
 s32 CARDFastDeleteAsync(s32 channel, s32 fileNo, CARDCallback callback)
 {
 	CARDControl* card;
@@ -74,11 +64,6 @@ s32 CARDFastDeleteAsync(s32 channel, s32 fileNo, CARDCallback callback)
 	return result;
 }
 
-/*
- * --INFO--
- * Address:	8020CC30
- * Size:	000048
- */
 s32 CARDFastDelete(s32 channel, s32 fileNo)
 {
 	s32 result = CARDFastDeleteAsync(channel, fileNo, __CARDSyncCallback);

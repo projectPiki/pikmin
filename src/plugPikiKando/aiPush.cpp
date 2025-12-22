@@ -18,11 +18,6 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("aiPush")
 
-/*
- * --INFO--
- * Address:	800BDFF0
- * Size:	0000A0
- */
 ActPush::ActPush(Piki* piki)
     : Action(piki, true)
 {
@@ -30,11 +25,6 @@ ActPush::ActPush(Piki* piki)
 	mHinderRock = nullptr;
 }
 
-/*
- * --INFO--
- * Address:	800BE090
- * Size:	000098
- */
 void ActPush::init(Creature* target)
 {
 	mPushAnimationState = 2;
@@ -66,11 +56,6 @@ bool ActPush::collideRockSurface()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800BE128
- * Size:	0000CC
- */
 int ActPush::exec()
 {
 	if (_44 == 1) {
@@ -111,11 +96,6 @@ void ActPush::initApproach()
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Run, this), PaniMotionInfo(PIKIANIM_Run));
 }
 
-/*
- * --INFO--
- * Address:	800BE1F4
- * Size:	000110
- */
 int ActPush::exeApproach()
 {
 	if (!mHinderRock) {
@@ -157,11 +137,6 @@ int ActPush::exeApproach()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800BE304
- * Size:	00013C
- */
 void ActPush::initGo()
 {
 	mState       = STATE_Go;
@@ -186,11 +161,6 @@ void ActPush::initGo()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800BE440
- * Size:	000214
- */
 int ActPush::exeGo()
 {
 	if (!mHinderRock) {
@@ -229,11 +199,6 @@ int ActPush::exeGo()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800BE654
- * Size:	0002D4
- */
 void ActPush::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
@@ -288,11 +253,6 @@ void ActPush::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800BE928
- * Size:	000038
- */
 void ActPush::cleanup()
 {
 	if (mState == STATE_Go && mHinderRock) {

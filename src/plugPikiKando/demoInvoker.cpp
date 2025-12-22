@@ -24,11 +24,6 @@ DEFINE_ERROR(13)
  */
 DEFINE_PRINT("demoInvoker");
 
-/*
- * --INFO--
- * Address:	80082818
- * Size:	0006D8
- */
 bool Navi::demoCheck()
 {
 	int stage = flowCont.mCurrentStage->mStageID;
@@ -125,11 +120,6 @@ bool Navi::demoCheck()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	80082EF0
- * Size:	00024C
- */
 void Piki::demoCheck()
 {
 	// pikmin also trigger the approach engine cutscene - can't avoid it by throwing/csticking

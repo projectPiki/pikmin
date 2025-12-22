@@ -17,11 +17,6 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("aiShoot")
 
-/*
- * --INFO--
- * Address:	800C216C
- * Size:	000120
- */
 ActShoot::ActShoot(Piki* piki)
     : AndAction(piki)
 {
@@ -33,11 +28,6 @@ ActShoot::ActShoot(Piki* piki)
 	mTargetIsPlayer = false;
 }
 
-/*
- * --INFO--
- * Address:	800C228C
- * Size:	0000B0
- */
 void ActShoot::init(Creature* target)
 {
 	if (!target) {
@@ -64,11 +54,6 @@ void ActShoot::init(Creature* target)
 	STACK_PAD_VAR(1);
 }
 
-/*
- * --INFO--
- * Address:	800C233C
- * Size:	000178
- */
 Creature* ActShoot::findTarget()
 {
 	f32 minDist           = 500.0f;
@@ -116,11 +101,6 @@ Creature* ActShoot::decideTarget()
 	return nullptr;
 }
 
-/*
- * --INFO--
- * Address:	800C24B4
- * Size:	0001CC
- */
 int ActShoot::exec()
 {
 	if (mTarget.isNull()) {
@@ -146,32 +126,17 @@ int ActShoot::exec()
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	800C2680
- * Size:	000040
- */
 void ActShoot::cleanup()
 {
 	PRINT("ActShoot cleanup\n");
 	mTarget.reset();
 }
 
-/*
- * --INFO--
- * Address:	800C26C0
- * Size:	000040
- */
 void ActShootCreature::cleanup()
 {
 	mTarget.reset();
 }
 
-/*
- * --INFO--
- * Address:	800C2700
- * Size:	0000AC
- */
 void ActShootCreature::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
@@ -189,21 +154,11 @@ void ActShootCreature::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800C27AC
- * Size:	00005C
- */
 ActShootCreature::ActShootCreature(Piki* piki)
     : Action(piki, true)
 {
 }
 
-/*
- * --INFO--
- * Address:	800C2808
- * Size:	000088
- */
 void ActShootCreature::init(Creature* target)
 {
 	mTarget.set(target);
@@ -211,11 +166,6 @@ void ActShootCreature::init(Creature* target)
 	mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 }
 
-/*
- * --INFO--
- * Address:	800C2890
- * Size:	0002DC
- */
 int ActShootCreature::exec()
 {
 	if (mState == STATE_Start) {

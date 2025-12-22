@@ -16,11 +16,6 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("menuPanelMgr")
 
-/*
- * --INFO--
- * Address:	801C94CC
- * Size:	0005AC
- */
 void zen::MenuPanelMgr::setCallBack(P2DScreen* screen, P2DPane* parent)
 {
 	int i;
@@ -37,11 +32,6 @@ void zen::MenuPanelMgr::setCallBack(P2DScreen* screen, P2DPane* parent)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801C9E2C
- * Size:	000074
- */
 bool zen::MenuPanelMgr::update()
 {
 	bool res;
@@ -66,11 +56,6 @@ bool zen::MenuPanelMgr::update()
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	801C9EA0
- * Size:	000050
- */
 bool zen::MenuPanelMgr::checkFinish()
 {
 	bool res = false;

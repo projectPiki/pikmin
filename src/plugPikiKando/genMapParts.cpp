@@ -32,32 +32,17 @@ int numParts             = 4;
 #endif
 static char* kindNames[] = { "slider", "entity", "dynamic" };
 
-/*
- * --INFO--
- * Address:	8011785C
- * Size:	0001C0
- */
 static GenObject* makeObjectMapParts()
 {
 	return new GenObjectMapParts;
 }
 
-/*
- * --INFO--
- * Address:	80117A1C
- * Size:	000090
- */
 void GenObjectMapParts::initialise(MapMgr* mgr)
 {
 	mapMgr = mgr;
 	GenObjectFactory::factory->registerMember('mpar', makeObjectMapParts, "マップパーツを発生", 'v0.0');
 }
 
-/*
- * --INFO--
- * Address:	80117AAC
- * Size:	000118
- */
 void GenObjectMapParts::doRead(RandomAccessStream& input)
 {
 	mPartKind       = input.readInt();
@@ -74,11 +59,6 @@ void GenObjectMapParts::doRead(RandomAccessStream& input)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80117BC4
- * Size:	000664
- */
 void GenObjectMapParts::render(Graphics& gfx, Generator* gen)
 {
 	Matrix4f mtx0;
@@ -146,11 +126,6 @@ void GenObjectMapParts::render(Graphics& gfx, Generator* gen)
 	gfx.setLighting(light, nullptr);
 }
 
-/*
- * --INFO--
- * Address:	80118228
- * Size:	00027C
- */
 Creature* GenObjectMapParts::birth(BirthInfo& info)
 {
 	MapParts* ent = nullptr;

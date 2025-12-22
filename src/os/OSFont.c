@@ -31,11 +31,6 @@ void GetFontSize(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801F8F24
- * Size:	000058
- */
 u16 OSGetFontEncode(void)
 {
 	static u16 fontEncode = 0xFFFF;

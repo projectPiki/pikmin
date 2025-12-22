@@ -19,11 +19,6 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("Nucleus");
 
-/*
- * --INFO--
- * Address:	8017A1AC
- * Size:	000090
- */
 NucleusProp::NucleusProp()
 {
 	mCreatureProps.mFriction.mValue      = 1.0f;
@@ -31,11 +26,6 @@ NucleusProp::NucleusProp()
 	mCreatureProps.mAcceleration.mValue  = 1.0f;
 }
 
-/*
- * --INFO--
- * Address:	8017A23C
- * Size:	000084
- */
 Nucleus::Nucleus(CreatureProp* props)
     : Boss(props)
 {
@@ -43,21 +33,11 @@ Nucleus::Nucleus(CreatureProp* props)
 	mNucleusAi = new NucleusAi(this);
 }
 
-/*
- * --INFO--
- * Address:	8017A2C0
- * Size:	000008
- */
 f32 Nucleus::getiMass()
 {
 	return 0.01f;
 }
 
-/*
- * --INFO--
- * Address:	8017A2C8
- * Size:	000060
- */
 void Nucleus::init(immut Vector3f&)
 {
 	mCollisionRadius = 20.0f;
@@ -68,11 +48,6 @@ void Nucleus::init(immut Vector3f&)
 	mNucleusAi->initAI(this);
 }
 
-/*
- * --INFO--
- * Address:	8017A328
- * Size:	000034
- */
 void Nucleus::doKill()
 {
 	setIsAlive(0);
@@ -80,30 +55,15 @@ void Nucleus::doKill()
 	bossMgr->kill(this);
 }
 
-/*
- * --INFO--
- * Address:	8017A35C
- * Size:	000004
- */
 void Nucleus::exitCourse()
 {
 }
 
-/*
- * --INFO--
- * Address:	8017A360
- * Size:	000020
- */
 void Nucleus::update()
 {
 	Creature::update();
 }
 
-/*
- * --INFO--
- * Address:	8017A380
- * Size:	000098
- */
 void Nucleus::refresh(Graphics& gfx)
 {
 	mWorldMtx.makeSRT(mSRT.s, mSRT.r, mSRT.t);
@@ -114,32 +74,17 @@ void Nucleus::refresh(Graphics& gfx)
 	mCollInfo->updateInfo(gfx, false);
 }
 
-/*
- * --INFO--
- * Address:	8017A418
- * Size:	00006C
- */
 void Nucleus::drawShape(Graphics& gfx)
 {
 	gfx.useMatrix(Matrix4f::ident, 0);
 	mShapeObject->mShape->drawshape(gfx, *gfx.mCamera, nullptr);
 }
 
-/*
- * --INFO--
- * Address:	8017A484
- * Size:	000024
- */
 void Nucleus::doAI()
 {
 	mNucleusAi->update();
 }
 
-/*
- * --INFO--
- * Address:	8017A4A8
- * Size:	000044
- */
 void Nucleus::doAnimation()
 {
 	if (mShapeObject) {

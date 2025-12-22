@@ -1,10 +1,5 @@
 #include "PSU/LinkList.h"
 
-/*
- * --INFO--
- * Address:	801B33C8
- * Size:	000018
- */
 PSUPtrLink::PSUPtrLink(void* value)
 {
 	mList   = nullptr;
@@ -13,11 +8,6 @@ PSUPtrLink::PSUPtrLink(void* value)
 	mNext   = nullptr;
 }
 
-/*
- * --INFO--
- * Address:	801B33E0
- * Size:	000060
- */
 PSUPtrLink::~PSUPtrLink()
 {
 	if (mList) {
@@ -35,11 +25,6 @@ PSUPtrList::PSUPtrList(bool)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801B3440
- * Size:	000068
- */
 PSUPtrList::~PSUPtrList()
 {
 	PSUPtrLink* link = mHead;
@@ -49,11 +34,6 @@ PSUPtrList::~PSUPtrList()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801B34A8
- * Size:	000014
- */
 void PSUPtrList::initiate()
 {
 	mHead      = nullptr;
@@ -75,11 +55,6 @@ void PSUPtrList::setFirst(PSUPtrLink* link)
 	mLinkCount    = 1;
 }
 
-/*
- * --INFO--
- * Address:	801B34BC
- * Size:	0000BC
- */
 bool PSUPtrList::append(PSUPtrLink* link)
 {
 	bool isEmpty = link->mList == nullptr;
@@ -123,11 +98,6 @@ bool PSUPtrList::insert(PSUPtrLink*, PSUPtrLink*)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801B3578
- * Size:	0000B0
- */
 bool PSUPtrList::remove(PSUPtrLink* link)
 {
 	bool isUnlinked = link->mList == this;

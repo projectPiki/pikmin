@@ -18,11 +18,6 @@ Osc_ PERC_ENV    = { 0, 1.0f, 0, 0, 1.0f, 0 };
 Osc_ OSC_ENV     = { 0, 1.0f, 0, OSC_REL, 1.0f, 0 };
 u8 polys_table[] = { 0, 1, 2, 3, 4, 5, 6, 8, 10, 12, 14, 16, 20, 24, 28, 32 };
 
-/*
- * --INFO--
- * Address:	80015140
- * Size:	000034
- */
 static u8 __GetTrigger(jc_* jc, u8 n)
 {
 	switch (n) {
@@ -35,11 +30,6 @@ static u8 __GetTrigger(jc_* jc, u8 n)
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80015180
- * Size:	000028
- */
 static f32 __Clamp01(f32 val)
 {
 	if (val < 0.0f) {
@@ -51,11 +41,6 @@ static f32 __Clamp01(f32 val)
 	return val;
 }
 
-/*
- * --INFO--
- * Address:	800151C0
- * Size:	000054
- */
 static void __Clamp01InitPan(jc_* jc)
 {
 	for (u32 i = 1; i < 3; i++) {
@@ -63,11 +48,6 @@ static void __Clamp01InitPan(jc_* jc)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80015220
- * Size:	000068
- */
 static void __DoEffect(jc_* jc, u8 id, f32 val)
 {
 	switch (id) {
@@ -89,11 +69,6 @@ static void __DoEffect(jc_* jc, u8 id, f32 val)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800152A0
- * Size:	000138
- */
 static void EffecterInit(jc_* jc, Inst_* inst)
 {
 	jc->pitchModifier            = 1.0f;
@@ -130,11 +105,6 @@ static void EffecterInit(jc_* jc, Inst_* inst)
 	__Clamp01InitPan(jc);
 }
 
-/*
- * --INFO--
- * Address:	800153E0
- * Size:	0000D0
- */
 static void EffecterInit_Perc(jc_* jc, Pmap_* pmap, u16 id)
 {
 	jc->pitchModifier            = 1.0f;
@@ -161,11 +131,6 @@ static void EffecterInit_Perc(jc_* jc, Pmap_* pmap, u16 id)
 	__Clamp01InitPan(jc);
 }
 
-/*
- * --INFO--
- * Address:	800154C0
- * Size:	00007C
- */
 static void EffecterInit_Osc(jc_* jc)
 {
 	jc->pitchModifier            = 1.0f;
@@ -183,11 +148,6 @@ static void EffecterInit_Osc(jc_* jc)
 	Bank_OscToOfs(jc->mOscillators[0], &jc->mOscBuffers[0]);
 }
 
-/*
- * --INFO--
- * Address:	80015540
- * Size:	00006C
- */
 void Effecter_Overwrite_1ShotD(jc_* jc, Osc_* osc, u32 id)
 {
 	if (id < 4) {
@@ -207,11 +167,6 @@ void Effecter_Overwrite_1Shot(jc_* jc, Osc_* osc1, Osc_* osc2)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	800155C0
- * Size:	00010C
- */
 static jc_* __Oneshot_Play_Start(jcs_* jcs, jc_* jc, u32 p3)
 {
 	BOOL play;
@@ -249,11 +204,6 @@ static jc_* __Oneshot_Play_Start(jcs_* jcs, jc_* jc, u32 p3)
 	return jc;
 }
 
-/*
- * --INFO--
- * Address:	800156E0
- * Size:	000154
- */
 static jc_* __Oneshot_GetLogicalChannel(jcs_* jcs, CtrlWave_* wave)
 {
 	if (wave && wave->sampleSrcType == NULL) {
@@ -304,11 +254,6 @@ static jc_* __Oneshot_GetLogicalChannel(jcs_* jcs, CtrlWave_* wave)
 	return chan;
 }
 
-/*
- * --INFO--
- * Address:	80015840
- * Size:	000044
- */
 Perc_* PercRead(u32 a1, u32 a2)
 {
 	Bank_* bank = Bank_Get(a1);
@@ -319,11 +264,6 @@ Perc_* PercRead(u32 a1, u32 a2)
 	return Bank_PercChange(bank, a2);
 }
 
-/*
- * --INFO--
- * Address:	800158A0
- * Size:	000044
- */
 Inst_* InstRead(u32 a1, u32 a2)
 {
 
@@ -335,33 +275,18 @@ Inst_* InstRead(u32 a1, u32 a2)
 	return Bank_InstChange(bank, a2);
 }
 
-/*
- * --INFO--
- * Address:	80015900
- * Size:	00002C
- */
 Vmap_* VmapRead(Inst_* inst, u8 a1, u8 a2)
 {
 	Vmap_* map = (Vmap_*)Bank_GetInstVmap(inst, a1, a2);
 	return !map ? NULL : map;
 }
 
-/*
- * --INFO--
- * Address:	80015940
- * Size:	000010
- */
 static void __Oneshot_WavePause(jc_* jc, u8 a)
 {
 	jc->pauseFlag = a;
 	jc->toFlush   = 1;
 }
 
-/*
- * --INFO--
- * Address:	80015960
- * Size:	00014C
- */
 static BOOL __Oneshot_StartMonoPolyCheck(jc_* jc, u32 id)
 {
 	jcs_* mgr = jc->chanMgr;
@@ -429,11 +354,6 @@ static BOOL __Oneshot_StartMonoPolyCheck(jc_* jc, u32 id)
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	80015AC0
- * Size:	0000E8
- */
 static void __Oneshot_StopMonoPolyCheck(jc_* jc, u32 id)
 {
 	jc_* chan;
@@ -475,11 +395,6 @@ static void __Oneshot_StopMonoPolyCheck(jc_* jc, u32 id)
 	STACK_PAD_VAR(2);
 }
 
-/*
- * --INFO--
- * Address:	80015BC0
- * Size:	000070
- */
 void Init_1shot(jcs_* jcs, u32 id)
 {
 	if (jcs->chanCount != 0) {
@@ -496,11 +411,6 @@ void Init_1shot(jcs_* jcs, u32 id)
 	STACK_PAD_VAR(2);
 }
 
-/*
- * --INFO--
- * Address:	80015C40
- * Size:	00003C
- */
 void Stop_1Shot(jc_* jc)
 {
 	if (jc->dspChannel == 0) {
@@ -510,11 +420,6 @@ void Stop_1Shot(jc_* jc)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80015C80
- * Size:	000040
- */
 void Stop_1Shot_R(jc_* jc, u16 id)
 {
 	if (jc->dspChannel == 0) {
@@ -525,11 +430,6 @@ void Stop_1Shot_R(jc_* jc, u16 id)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80015CC0
- * Size:	00006C
- */
 void AllStop_1Shot(jcs_* jcs)
 {
 	List_CountChannel(&jcs->freeChannels);
@@ -570,11 +470,6 @@ static BOOL Extra_Update(jc_* jc, JCSTATUS status)
 	return FALSE;
 }
 
-/*
- * --INFO--
- * Address:	80015DC0
- * Size:	000030
- */
 void SetPitchTarget_1Shot(jc_* jc, f32 pitch, u32 steps)
 {
 	if (steps == 0) {
@@ -618,11 +513,6 @@ void SetKeyTarget_1Shot(jc_* jc, u8 key, u32 steps)
 	SetPitchTarget_1Shot(jc, jc->basePitch * pitch, steps);
 }
 
-/*
- * --INFO--
- * Address:	80015EA0
- * Size:	0000C8
- */
 void Gate_1Shot(jc_* jc, u8 key, u8 velocity, s32 noteId)
 {
 	STACK_PAD_VAR(2);
@@ -654,21 +544,11 @@ void Gate_1Shot(jc_* jc, u8 key, u8 velocity, s32 noteId)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80015F80
- * Size:	000008
- */
 void UpdatePause_1Shot(jc_* jc, u8 a1)
 {
 	jc->pauseFlag = a1;
 }
 
-/*
- * --INFO--
- * Address:	80015FA0
- * Size:	000030
- */
 void UpdatePanPower_1Shot(jc_* channel, f32 leftPower, f32 rightPower, f32 centerPower, f32 v4)
 {
 	f32 val = leftPower + rightPower + centerPower;
@@ -721,11 +601,6 @@ void PrintChan(immut char* str, jc_* jc, u32 id)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80015FE0
- * Size:	0000B0
- */
 void FlushRelease_1Shot(jcs_* jcs)
 {
 	int count = List_CountChannel(&jcs->releasingChannels);
@@ -748,11 +623,6 @@ void FlushRelease_1Shot(jcs_* jcs)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800160A0
- * Size:	0001C4
- */
 static BOOL Jesus1Shot_Update(jc_* jc, JCSTATUS jstatus)
 {
 	u32 test    = FALSE;
@@ -814,11 +684,6 @@ static BOOL Jesus1Shot_Update(jc_* jc, JCSTATUS jstatus)
 	STACK_PAD_VAR(4);
 }
 
-/*
- * --INFO--
- * Address:	80016280
- * Size:	000098
- */
 u32 One_CheckInstWave(SOUNDID_ sound)
 {
 	Inst_* inst = InstRead(sound.bytes[0], sound.bytes[1]);
@@ -863,11 +728,6 @@ typedef struct testPercMap {
 	f32 _0C;
 } testPercMap;
 
-/*
- * --INFO--
- * Address:	80016320
- * Size:	00027C
- */
 jc_* Play_1shot(jcs_* jcs, SOUNDID_ sound, u32 id)
 {
 	jc_* chan;
@@ -952,11 +812,6 @@ jc_* Play_1shot(jcs_* jcs, SOUNDID_ sound, u32 id)
 	STACK_PAD_VAR(2);
 }
 
-/*
- * --INFO--
- * Address:	800165A0
- * Size:	00020C
- */
 jc_* Play_1shot_Perc(jcs_* jcs, SOUNDID_ sound, u32 id)
 {
 	jc_* chan;
@@ -1019,11 +874,6 @@ jc_* Play_1shot_Perc(jcs_* jcs, SOUNDID_ sound, u32 id)
 	STACK_PAD_VAR(10);
 }
 
-/*
- * --INFO--
- * Address:	800167C0
- * Size:	000128
- */
 jc_* Play_1shot_Osc(jcs_* jcs, SOUNDID_ sound, u32 id)
 {
 	jc_* chan;

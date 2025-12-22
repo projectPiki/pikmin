@@ -21,11 +21,6 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("Kogane");
 
-/*
- * --INFO--
- * Address:	80175A30
- * Size:	000330
- */
 KoganeProp::KoganeProp()
 {
 	mCreatureProps.mFriction.mValue      = 1.0f;
@@ -33,11 +28,6 @@ KoganeProp::KoganeProp()
 	mCreatureProps.mAcceleration.mValue  = 1.0f;
 }
 
-/*
- * --INFO--
- * Address:	80175D60
- * Size:	000084
- */
 Kogane::Kogane(CreatureProp* props)
     : Boss(props)
 {
@@ -45,21 +35,11 @@ Kogane::Kogane(CreatureProp* props)
 	mKoganeAi = new KoganeAi(this);
 }
 
-/*
- * --INFO--
- * Address:	80175DE4
- * Size:	000008
- */
 f32 Kogane::getiMass()
 {
 	return 0.1f;
 }
 
-/*
- * --INFO--
- * Address:	80175DEC
- * Size:	000054
- */
 void Kogane::init(immut Vector3f&)
 {
 	mCollisionRadius = 25.0f;
@@ -72,11 +52,6 @@ void Kogane::init(immut Vector3f&)
 	mKoganeAi->initAI(this);
 }
 
-/*
- * --INFO--
- * Address:	80175E40
- * Size:	00004C
- */
 void Kogane::doKill()
 {
 	mIsAlive = 0;
@@ -85,31 +60,16 @@ void Kogane::doKill()
 	bossMgr->kill(this);
 }
 
-/*
- * --INFO--
- * Address:	80175E8C
- * Size:	000028
- */
 void Kogane::exitCourse()
 {
 	mKoganeAi->killCallBackEffect(true);
 }
 
-/*
- * --INFO--
- * Address:	80175EB4
- * Size:	000020
- */
 void Kogane::update()
 {
 	Creature::update();
 }
 
-/*
- * --INFO--
- * Address:	80175ED4
- * Size:	000098
- */
 void Kogane::refresh(Graphics& gfx)
 {
 	mWorldMtx.makeSRT(mSRT.s, mSRT.r, mSRT.t);
@@ -120,33 +80,18 @@ void Kogane::refresh(Graphics& gfx)
 	mCollInfo->updateInfo(gfx, false);
 }
 
-/*
- * --INFO--
- * Address:	80175F6C
- * Size:	00006C
- */
 void Kogane::drawShape(Graphics& gfx)
 {
 	gfx.useMatrix(Matrix4f::ident, 0);
 	mShapeObject->mShape->drawshape(gfx, *gfx.mCamera, nullptr);
 }
 
-/*
- * --INFO--
- * Address:	80175FD8
- * Size:	000038
- */
 void Kogane::doAI()
 {
 	mKoganeAi->update();
 	mIsOnWall = 0;
 }
 
-/*
- * --INFO--
- * Address:	80176010
- * Size:	000044
- */
 void Kogane::doAnimation()
 {
 	if (mShapeObject) {
@@ -154,11 +99,6 @@ void Kogane::doAnimation()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80176054
- * Size:	000058
- */
 void Kogane::collisionCallback(immut CollEvent& event)
 {
 	if (!_3B9 && event.mCollider->mObjType == OBJTYPE_Piki && static_cast<Piki*>(event.mCollider)->getState() == PIKISTATE_Flying) {

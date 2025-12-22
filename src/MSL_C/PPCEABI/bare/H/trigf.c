@@ -13,11 +13,6 @@ f32 __four_over_pi_m1[] = { 0.0f, 0.0f, 0.0f, 0.0f };
 
 extern f32 fabsf__Ff(f32);
 
-/*
- * --INFO--
- * Address:	8021BE8C
- * Size:	000030
- */
 static void __sinit_trigf_c(void)
 {
 	__four_over_pi_m1[0] = tmp_float[0];
@@ -28,11 +23,6 @@ static void __sinit_trigf_c(void)
 
 CTORS void* const __sinit_trigf_c_reference = __sinit_trigf_c;
 
-/*
- * --INFO--
- * Address:	8021BCE8
- * Size:	0001A4
- */
 f32 sinf(f32 x)
 {
 	int n;
@@ -65,11 +55,6 @@ f32 sinf(f32 x)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8021BB54
- * Size:	000194
- */
 f32 cosf(f32 x)
 {
 	int n;
@@ -102,21 +87,11 @@ f32 cosf(f32 x)
 
 #pragma dont_inline on
 
-/*
- * --INFO--
- * Address:	8021BB34
- * Size:	000020
- */
 f32 sin__Ff(f32 x)
 {
 	return sinf(x);
 }
 
-/*
- * --INFO--
- * Address:	8021BB14
- * Size:	000020
- */
 f32 cos__Ff(f32 x)
 {
 	return cosf(x);
@@ -124,11 +99,6 @@ f32 cos__Ff(f32 x)
 
 #pragma dont_inline reset
 
-/*
- * --INFO--
- * Address:	8021BAD0
- * Size:	000044
- */
 f32 tanf(f32 x)
 {
 	return sin__Ff(x) / cos__Ff(x);

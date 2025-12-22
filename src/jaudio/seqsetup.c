@@ -24,11 +24,6 @@ static u32 BACK_P;
 static u32 GET_P;
 static u32 SEQ_REMAIN;
 
-/*
- * --INFO--
- * Address:	80013DA0
- * Size:	0000A0
- */
 void Jaq_Reset(void)
 {
 	int i;
@@ -61,11 +56,6 @@ void Jaq_GetRemainFreeTracks(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80013E40
- * Size:	000088
- */
 static BOOL BackTrack(seqp_* track)
 {
 	seqp_** REF_track;
@@ -89,11 +79,6 @@ static BOOL BackTrack(seqp_* track)
 	return FALSE;
 }
 
-/*
- * --INFO--
- * Address:	80013EE0
- * Size:	000064
- */
 static seqp_* GetNewTrack()
 {
 	seqp_* track;
@@ -115,11 +100,6 @@ static seqp_* GetNewTrack()
 	return track;
 }
 
-/*
- * --INFO--
- * Address:	80013F60
- * Size:	000048
- */
 int AllocNewRoot(seqp_* track)
 {
 	int i;
@@ -133,11 +113,6 @@ int AllocNewRoot(seqp_* track)
 	return -1;
 }
 
-/*
- * --INFO--
- * Address:	80013FC0
- * Size:	00004C
- */
 int DeAllocRoot(seqp_* track)
 {
 	int i;
@@ -151,21 +126,11 @@ int DeAllocRoot(seqp_* track)
 	return -1;
 }
 
-/*
- * --INFO--
- * Address:	80014020
- * Size:	000018
- */
 seqp_* Jaq_HandleToSeq(u32 handle)
 {
 	return rootseq[handle];
 }
 
-/*
- * --INFO--
- * Address:	80014040
- * Size:	000368
- */
 static void Init_Track(seqp_* track, u32 dataAddress, seqp_* parent)
 {
 	int i;
@@ -294,11 +259,6 @@ static void Init_Track(seqp_* track, u32 dataAddress, seqp_* parent)
 	track->isRegistered = 0;
 }
 
-/*
- * --INFO--
- * Address:	800143C0
- * Size:	0000A0
- */
 BOOL Jaq_StopSeq(s32 index)
 {
 	seqp_* track;
@@ -325,11 +285,6 @@ BOOL Jaq_StopSeq(s32 index)
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	80014460
- * Size:	000054
- */
 static void __StopSeq(seqp_* track)
 {
 	SeqUpdate(track, 0);
@@ -340,21 +295,11 @@ static void __StopSeq(seqp_* track)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800144C0
- * Size:	000024
- */
 s32 Jaq_SetSeqData(seqp_* param_1, u8* param_2, u32 param_3, u32 param_4)
 {
 	return Jaq_SetSeqData_Limit(param_1, param_2, param_3, param_4, 0);
 }
 
-/*
- * --INFO--
- * Address:	80014500
- * Size:	000170
- */
 s32 Jaq_SetSeqData_Limit(seqp_* track, u8* param_2, u32 param_3, u32 param_4, u8 param_5)
 {
 	s32 root;
@@ -408,11 +353,6 @@ s32 Jaq_SetSeqData_Limit(seqp_* track, u8* param_2, u32 param_3, u32 param_4, u8
 	return root;
 }
 
-/*
- * --INFO--
- * Address:	80014680
- * Size:	00002C
- */
 BOOL Jaq_SetBankNumber(seqp_* track, u8 bankNum)
 {
 	u8 lo;
@@ -429,11 +369,6 @@ BOOL Jaq_SetBankNumber(seqp_* track, u8 bankNum)
 
 static s32 Jaq_RootCallback(void* track);
 
-/*
- * --INFO--
- * Address:	800146C0
- * Size:	0000B4
- */
 BOOL Jaq_StartSeq(u32 param_1)
 {
 	seqp_* track;
@@ -472,11 +407,6 @@ BOOL Jaq_StartSeq(u32 param_1)
  * Bits 6-7   : Mode Flags (0 to 3)
  */
 
-/*
- * --INFO--
- * Address:	80014780
- * Size:	00014C
- */
 s32 Jaq_OpenTrack(seqp_* track, u32 flags, u32 source)
 {
 
@@ -533,11 +463,6 @@ s32 Jaq_OpenTrack(seqp_* track, u32 flags, u32 source)
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	800148E0
- * Size:	0000B4
- */
 void __AllNoteOff(seqp_* track)
 {
 	u32 i;
@@ -557,11 +482,6 @@ void __AllNoteOff(seqp_* track)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800149A0
- * Size:	000120
- */
 u32 Jaq_CloseTrack(seqp_* track)
 {
 	size_t i;

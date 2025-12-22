@@ -22,11 +22,6 @@ DEFINE_ERROR(14)
  */
 DEFINE_PRINT("drawSaveMes")
 
-/*
- * --INFO--
- * Address:	801F265C
- * Size:	000348
- */
 zen::DrawSaveMes::DrawSaveMes()
 {
 	_08 = new DrawScreen("screen/blo/cha_sav2.blo", nullptr, true, true);
@@ -64,21 +59,11 @@ zen::DrawSaveMes::DrawSaveMes()
 	setMode(MODE_Sleep);
 }
 
-/*
- * --INFO--
- * Address:	801F29A4
- * Size:	000024
- */
 void zen::DrawSaveMes::sleep()
 {
 	setMode(MODE_Sleep);
 }
 
-/*
- * --INFO--
- * Address:	801F29C8
- * Size:	000050
- */
 void zen::DrawSaveMes::mesAppear()
 {
 	_04 = 0.0f;
@@ -87,11 +72,6 @@ void zen::DrawSaveMes::mesAppear()
 	_0C->makeResident();
 }
 
-/*
- * --INFO--
- * Address:	801F2A18
- * Size:	000048
- */
 void zen::DrawSaveMes::saveFinish()
 {
 	setMode(MODE_Unk4);
@@ -99,11 +79,6 @@ void zen::DrawSaveMes::saveFinish()
 	_0C->makeResident();
 }
 
-/*
- * --INFO--
- * Address:	801F2A60
- * Size:	000024
- */
 void zen::DrawSaveMes::saveError()
 {
 	setMode(MODE_Unk7);
@@ -120,11 +95,6 @@ void zen::DrawSaveMes::hide()
 	_0C->getScreenPtr()->hide();
 }
 
-/*
- * --INFO--
- * Address:	801F2A84
- * Size:	0008A4
- */
 bool zen::DrawSaveMes::update(Controller* controller)
 {
 	bool res = false;
@@ -280,11 +250,6 @@ bool zen::DrawSaveMes::update(Controller* controller)
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	801F3328
- * Size:	000068
- */
 void zen::DrawSaveMes::draw(Graphics& gfx)
 {
 	_0C->draw();
@@ -292,11 +257,6 @@ void zen::DrawSaveMes::draw(Graphics& gfx)
 	mSaveFailure.draw(gfx);
 }
 
-/*
- * --INFO--
- * Address:	801F3390
- * Size:	0001D0
- */
 void zen::DrawSaveMes::setMode(zen::DrawSaveMes::modeFlag mode)
 {
 	mMode = mode;

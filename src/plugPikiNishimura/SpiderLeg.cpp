@@ -61,11 +61,6 @@ void SpiderLeg::setHalfDeadEffect(u32 legCollPartID, int jointIdx, int legNum)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80155A08
- * Size:	000184
- */
 void SpiderLeg::setHalfDeadFallEffect(u32 legCollPartID)
 {
 	CollPart* legPart = mSpider->mCollInfo->getSphere(legCollPartID);
@@ -90,11 +85,6 @@ void SpiderLeg::setHalfDeadFallEffect(u32 legCollPartID)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80155B8C
- * Size:	0001DC
- */
 void SpiderLeg::setDeadBombEffect(u32 legCollPartID)
 {
 	CollPart* legPart = mSpider->mCollInfo->getSphere(legCollPartID);
@@ -165,11 +155,6 @@ void SpiderLeg::setPerishEffect(u32 legCollPartID, int p2)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80155D68
- * Size:	000228
- */
 void SpiderLeg::createHalfDeadEffect()
 {
 	setHalfDeadEffect('leg1', 1, 0);
@@ -199,11 +184,6 @@ void SpiderLeg::createHalfDeadFallEffect(int idx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80155F90
- * Size:	0000C0
- */
 void SpiderLeg::createDeadBombEffect()
 {
 	setDeadBombEffect('leg1');
@@ -218,11 +198,6 @@ void SpiderLeg::createDeadBombEffect()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80156050
- * Size:	000384
- */
 void SpiderLeg::createSmallSparkEffect(int count)
 {
 	int i;
@@ -253,11 +228,6 @@ void SpiderLeg::createSmallSparkEffect(int count)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801563D4
- * Size:	0002B8
- */
 void SpiderLeg::createPerishEffect()
 {
 	setPerishEffect('leg1', 0);
@@ -266,11 +236,6 @@ void SpiderLeg::createPerishEffect()
 	setPerishEffect('leg4', 9);
 }
 
-/*
- * --INFO--
- * Address:	8015668C
- * Size:	00014C
- */
 void SpiderLeg::createRippleEffect(int legNum)
 {
 	Vector3f footPos(mJointPositions[legNum][0]);
@@ -296,11 +261,6 @@ void SpiderLeg::createRippleEffect(int legNum)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801567D8
- * Size:	0000E0
- */
 void SpiderLeg::killCallBackEffect(bool doForceFinish)
 {
 	int i;
@@ -315,11 +275,6 @@ void SpiderLeg::killCallBackEffect(bool doForceFinish)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801568B8
- * Size:	000238
- */
 void SpiderLeg::setLegScaleParam(int jointIdx)
 {
 	f32 stepTime = 1.0f / C_SPIDER_PROP(mSpider).mDeadMotionDelay();
@@ -544,11 +499,6 @@ void SpiderLeg::setLegScaleParam(int jointIdx)
 	*/
 }
 
-/*
- * --INFO--
- * Address:	80156AF0
- * Size:	000154
- */
 SpiderLeg::SpiderLeg(Spider* spider)
 {
 	mSpider                 = spider;
@@ -557,11 +507,6 @@ SpiderLeg::SpiderLeg(Spider* spider)
 	mRippleCallBacks        = new SpiderGenRippleCallBack[4];
 }
 
-/*
- * --INFO--
- * Address:	80156C98
- * Size:	000190
- */
 void SpiderLeg::init(Spider* spider)
 {
 	mSpider = spider;
@@ -586,11 +531,6 @@ void SpiderLeg::init(Spider* spider)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80156E28
- * Size:	000090
- */
 void SpiderLeg::initParm(int motionType)
 {
 	mMotionType            = (SpiderLegMotionType::Type)motionType;
@@ -615,11 +555,6 @@ void SpiderLeg::initParm(int motionType)
 	mShakeAngle       = 0.0f;
 }
 
-/*
- * --INFO--
- * Address:	80156EB8
- * Size:	000168
- */
 #pragma push
 #pragma ppc_unroll_factor_limit 1
 void SpiderLeg::setLegParameter()
@@ -645,11 +580,6 @@ void SpiderLeg::setLegParameter()
 }
 #pragma pop
 
-/*
- * --INFO--
- * Address:	80157020
- * Size:	000054
- */
 void SpiderLeg::setWalkNewParameter()
 {
 	if (!mLegMoving[0] && mLegCanMove[0] && !mMotionFinishFlag) {
@@ -661,11 +591,6 @@ void SpiderLeg::setWalkNewParameter()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80157074
- * Size:	000138
- */
 void SpiderLeg::setShakeOffNewParameter()
 {
 	if (mShakePhase < PI) {
@@ -693,11 +618,6 @@ void SpiderLeg::setShakeOffNewParameter()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801571AC
- * Size:	0001B4
- */
 void SpiderLeg::setBodyShakeNewParameter()
 {
 	if (!mBodyShakeStarted && mShakeAngle > C_SPIDER_PROP(mSpider)._434()) {
@@ -735,11 +655,6 @@ void SpiderLeg::setBodyShakeNewParameter()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80157360
- * Size:	0003A4
- */
 void SpiderLeg::setNextDirAndCent()
 {
 	if (!mLegMoving[0] && mLegCanMove[0] && !mMotionFinishFlag) {
@@ -802,11 +717,6 @@ void SpiderLeg::setNextDirAndCent()
 	STACK_PAD_VAR(2);
 }
 
-/*
- * --INFO--
- * Address:	80157704
- * Size:	0002E8
- */
 void SpiderLeg::setWalkNewPosition()
 {
 	for (int i = 0; i < 4; i++) {
@@ -874,11 +784,6 @@ void SpiderLeg::checkGroundTimer()
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801579EC
- * Size:	000168
- */
 void SpiderLeg::checkMotionRatio()
 {
 	if (mIsMoving) {
@@ -911,11 +816,6 @@ void SpiderLeg::checkMotionRatio()
 	STACK_PAD_VAR(2);
 }
 
-/*
- * --INFO--
- * Address:	80157B54
- * Size:	000168
- */
 void SpiderLeg::makeNewPosition()
 {
 	static f32 vibSpin = 0.0f;
@@ -970,11 +870,6 @@ void SpiderLeg::calcShakeOffDirection()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80157CBC
- * Size:	0001D0
- */
 void SpiderLeg::calcStickersPiki()
 {
 	int i;
@@ -1013,11 +908,6 @@ void SpiderLeg::calcShakeOff()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80157E8C
- * Size:	0002C0
- */
 void SpiderLeg::setIdealCentre(Vector3f& centre)
 {
 	if (mSpider->getCurrentState() < SPIDERAI_Start) {
@@ -1048,11 +938,6 @@ void SpiderLeg::setIdealCentre(Vector3f& centre)
 	centre.y -= 15.0f + mPikiWeightOffset;
 }
 
-/*
- * --INFO--
- * Address:	8015814C
- * Size:	00020C
- */
 void SpiderLeg::setRealCentre(immut Vector3f& centre)
 {
 	mCentreVelocity.multiply(C_SPIDER_PROP(mSpider)._3B4());
@@ -1097,11 +982,6 @@ void SpiderLeg::setCentrePosition()
 	mSpider->mSRT.t.z = mCurrentCentre.z;
 }
 
-/*
- * --INFO--
- * Address:	80158358
- * Size:	000174
- */
 void SpiderLeg::updateAnimation(const BossShapeObject* shapeObj, Graphics& gfx, Matrix4f& animMtx)
 {
 	Matrix4f mtx1;
@@ -1163,11 +1043,6 @@ void SpiderLeg::setLength()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801584CC
- * Size:	000130
- */
 void SpiderLeg::getHeight()
 {
 	for (int i = 0; i < 4; i++) {
@@ -1228,11 +1103,6 @@ void SpiderLeg::setQuatParameter()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801585FC
- * Size:	000248
- */
 void SpiderLeg::stepDamageNavi(int legNum)
 {
 	f32 heightCheck = mJointPositions[legNum][0].y + 2.0f;
@@ -1249,11 +1119,6 @@ void SpiderLeg::stepDamageNavi(int legNum)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80158844
- * Size:	000230
- */
 void SpiderLeg::stepDamagePiki(int legNum)
 {
 	Vector3f footPos(mJointPositions[legNum][0]);
@@ -1273,11 +1138,6 @@ void SpiderLeg::stepDamagePiki(int legNum)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80158A74
- * Size:	0002C4
- */
 void SpiderLeg::stepShakeOffPiki(int legNum)
 {
 	int childCount      = 0;
@@ -1306,11 +1166,6 @@ void SpiderLeg::stepShakeOffPiki(int legNum)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80158D38
- * Size:	000140
- */
 void SpiderLeg::emitOnGroundEffect(int legNum)
 {
 	if (mSpider->getMapAttribute(mJointPositions[legNum][0]) == ATTR_Water) {
@@ -1372,11 +1227,6 @@ void SpiderLeg::emitOffGroundEffect()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80158E78
- * Size:	000270
- */
 void SpiderLeg::setKneeDirection()
 {
 	f32 sinVal  = sinf(mShakePhase);
@@ -1458,11 +1308,6 @@ void SpiderLeg::calcQuatToMatrix(int legNum)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801590E8
- * Size:	000684
- */
 void SpiderLeg::create3Joint(BossShapeObject* shapeObj, Graphics& gfx)
 {
 	Vector3f vec;
@@ -1535,11 +1380,6 @@ void SpiderLeg::checkMotionFinished()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8015976C
- * Size:	0002EC
- */
 void SpiderLeg::update()
 {
 	checkGroundTimer();
@@ -1552,11 +1392,6 @@ void SpiderLeg::update()
 	setCentrePosition();
 }
 
-/*
- * --INFO--
- * Address:	80159A58
- * Size:	0006A4
- */
 void SpiderLeg::refresh(BossShapeObject* shapeObj, Graphics& gfx)
 {
 	Matrix4f animMtx;

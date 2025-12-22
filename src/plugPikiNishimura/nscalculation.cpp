@@ -35,11 +35,6 @@ void NsCalculation::calcLagrange(f32 t, const Vector3f* controlPts, Vector3f& ou
 	           + (t - 1.0f) * (controlPts[2].z * 0.5f * t);
 }
 
-/*
- * --INFO--
- * Address:	8017C388
- * Size:	00019C
- */
 void NsCalculation::calcMatrix(const Vector3f& xVec, const Vector3f& yVec, const Vector3f& zVec, const Vector3f& transVec, Matrix4f& mtx)
 {
 	Vector3f inXVec, inYVec, inZVec;
@@ -67,11 +62,6 @@ void NsCalculation::calcMatrix3f(const Vector3f&, const Vector3f&, const Vector3
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8017C524
- * Size:	0002F8
- */
 /**
  * Calculates the position of the middle joint and bottom joint based on the given parameters.
  *
@@ -144,11 +134,6 @@ int NsCalculation::calcMtxDirect(const Matrix4f&, const Matrix4f&)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8017C81C
- * Size:	00004C
- */
 void NsCalculation::calcMat4toMat3(const Matrix4f& inMtx, Matrix3f& outMtx)
 {
 	outMtx.mMtx[0][0] = inMtx.mMtx[0][0];

@@ -49,11 +49,6 @@ void KingBody::setSalivaEffect()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80172D84
- * Size:	0000DC
- */
 void KingBody::setSeedFlashEffect()
 {
 	mDamageStarCallBack->set(mKing);
@@ -69,11 +64,6 @@ void KingBody::setSeedFlashEffect()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80172E60
- * Size:	00024C
- */
 void KingBody::setEatBombEffect()
 {
 	Vector3f dir(sinf(mKing->mFaceDirection), 0.0f, cosf(mKing->mFaceDirection));
@@ -98,11 +88,6 @@ void KingBody::setEatBombEffect()
 	setSeedFlashEffect();
 }
 
-/*
- * --INFO--
- * Address:	801730AC
- * Size:	000210
- */
 void KingBody::createWaterEffect(int idx)
 {
 	effectMgr->create(EffectMgr::EFF_P_Bubbles, mFootPosList[idx], nullptr, nullptr);
@@ -133,11 +118,6 @@ void KingBody::createWaterEffect(int idx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801732BC
- * Size:	000250
- */
 void KingBody::createUfoParts()
 {
 	Pellet* ufoPart = pelletMgr->newPellet(mKing->mPelletID.mId, nullptr);
@@ -179,11 +159,6 @@ void KingBody::createUfoParts()
 	mKing->detachGenerator();
 }
 
-/*
- * --INFO--
- * Address:	8017350C
- * Size:	0000DC
- */
 void KingBody::killCallBackEffect(bool p1)
 {
 	int i;
@@ -199,11 +174,6 @@ void KingBody::killCallBackEffect(bool p1)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801735E8
- * Size:	00023C
- */
 KingBody::KingBody(King*)
 {
 	mBlendStartMatrices        = new Matrix4f[66];
@@ -216,11 +186,6 @@ KingBody::KingBody(King*)
 	mSpitPartsParticleCallBack = new KingGenSpitPartsParticleCallBack;
 }
 
-/*
- * --INFO--
- * Address:	8017385C
- * Size:	00023C
- */
 void KingBody::init(King* king)
 {
 	mKing                 = king;
@@ -243,11 +208,6 @@ void KingBody::init(King* king)
 	setSalivaEffect();
 }
 
-/*
- * --INFO--
- * Address:	80173A98
- * Size:	000028
- */
 void KingBody::initBlending(f32 blendRate)
 {
 	if (mBlendingRatio > 0.0f) {
@@ -289,11 +249,6 @@ void KingBody::checkOnGround()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80173AC0
- * Size:	0001E0
- */
 void KingBody::setVelocityFromPosition()
 {
 	if (mMoveSpeed > 0.0f) {
@@ -323,11 +278,6 @@ void KingBody::setVelocityFromPosition()
 	mKing->setOnWall(false);
 }
 
-/*
- * --INFO--
- * Address:	80173CA0
- * Size:	000140
- */
 void KingBody::emitOnGroundEffect()
 {
 	for (int i = 0; i < 2; i++) {
@@ -382,11 +332,6 @@ void KingBody::copyOnGround()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80173DE0
- * Size:	000198
- */
 void KingBody::update()
 {
 	updateBlendingRatio();
@@ -434,11 +379,6 @@ void KingBody::checkBlendingParm(Matrix4f* animMatrices)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80173F78
- * Size:	000578
- */
 void KingBody::makeBlending(Matrix4f* animMatrices)
 {
 	if (mBlendingRatio > 0.0f) {
@@ -480,11 +420,6 @@ void KingBody::makeBlending(Matrix4f* animMatrices)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801744F0
- * Size:	000230
- */
 void KingBody::copyJointPosition(immut Matrix4f* animMatrices)
 {
 	// TODO: sort out what these joints correspond to
@@ -526,11 +461,6 @@ void KingBody::returnJoint(BossShapeObject* shapeObj, Graphics& gfx, immut Matri
 	}
 }
 
-/*
- * --INFO--
- * Address:	80174720
- * Size:	000C6C
- */
 void KingBody::refresh(BossShapeObject* shapeObj, Graphics& gfx)
 {
 	Matrix4f animMatrices[66];

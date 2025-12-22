@@ -19,43 +19,23 @@ DEFINE_ERROR(10)
  */
 DEFINE_PRINT("utEffect")
 
-/*
- * --INFO--
- * Address:	80113164
- * Size:	000068
- */
 SlimeEffect::SlimeEffect()
 {
 	mEfxGen = nullptr;
 }
 
-/*
- * --INFO--
- * Address:	801131CC
- * Size:	00001C
- */
 void SlimeEffect::stop()
 {
 	if (mEfxGen)
 		mEfxGen->invisible();
 }
 
-/*
- * --INFO--
- * Address:	801131E8
- * Size:	00001C
- */
 void SlimeEffect::restart()
 {
 	if (mEfxGen)
 		mEfxGen->visible();
 }
 
-/*
- * --INFO--
- * Address:	80113204
- * Size:	000090
- */
 void SlimeEffect::emit(EffectParm& parm)
 {
 	mObj         = parm.mOwner;
@@ -66,11 +46,6 @@ void SlimeEffect::emit(EffectParm& parm)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80113294
- * Size:	00009C
- */
 bool SlimeEffect::invoke(zen::particleGenerator* gen, zen::particleMdl* mdl)
 {
 	if (mEfxGen && mdl) {
@@ -82,11 +57,6 @@ bool SlimeEffect::invoke(zen::particleGenerator* gen, zen::particleMdl* mdl)
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	80113330
- * Size:	00004C
- */
 void SlimeEffect::kill()
 {
 	if (mEfxGen) {
@@ -101,11 +71,6 @@ void SlimeEffect::kill()
 UtEffectMgr* utEffectMgr;
 KEffect** UtEffectMgr::effects;
 
-/*
- * --INFO--
- * Address:	8011337C
- * Size:	000F54
- */
 UtEffectMgr::UtEffectMgr()
 {
 	UtEffectMgr::effects = new KEffect*[KandoEffect::COUNT];
@@ -138,11 +103,6 @@ UtEffectMgr::UtEffectMgr()
 	registerEffect(KandoEffect::IdleYellowPiki, new SimpleEffect(EffectMgr::EFF_Piki_IdleYellow));
 }
 
-/*
- * --INFO--
- * Address:	801142D0
- * Size:	000010
- */
 void UtEffectMgr::registerEffect(int kEffID, KEffect* efx)
 {
 	if (kEffID < KandoEffect::START || kEffID > KandoEffect::END) {
@@ -151,11 +111,6 @@ void UtEffectMgr::registerEffect(int kEffID, KEffect* efx)
 	effects[kEffID] = efx;
 }
 
-/*
- * --INFO--
- * Address:	801142E0
- * Size:	000044
- */
 void UtEffectMgr::cast(int kEffID, EffectParm& parm)
 {
 	if (kEffID < KandoEffect::START || kEffID > KandoEffect::END) {
@@ -168,11 +123,6 @@ void UtEffectMgr::cast(int kEffID, EffectParm& parm)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80114324
- * Size:	000044
- */
 void UtEffectMgr::kill(int kEffID)
 {
 	if (kEffID < KandoEffect::START || kEffID > KandoEffect::END) {
@@ -184,22 +134,12 @@ void UtEffectMgr::kill(int kEffID)
 		eff->kill();
 }
 
-/*
- * --INFO--
- * Address:	80114368
- * Size:	000034
- */
 PermanentEffect::PermanentEffect()
 {
 	mPtclGen = nullptr;
 	mPosition.set(0.0f, 0.0f, 0.0f);
 }
 
-/*
- * --INFO--
- * Address:	8011439C
- * Size:	00008C
- */
 void PermanentEffect::init(immut Vector3f& pos, int effType)
 {
 	if (mPtclGen) {
@@ -214,11 +154,6 @@ void PermanentEffect::init(immut Vector3f& pos, int effType)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80114428
- * Size:	000034
- */
 void PermanentEffect::updatePos(immut Vector3f& pos)
 {
 	mPosition = pos;
@@ -227,11 +162,6 @@ void PermanentEffect::updatePos(immut Vector3f& pos)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8011445C
- * Size:	000080
- */
 void PermanentEffect::changeEffect(int effType)
 {
 	if (mPtclGen) {
@@ -243,11 +173,6 @@ void PermanentEffect::changeEffect(int effType)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801144DC
- * Size:	00001C
- */
 void PermanentEffect::stop()
 {
 	if (mPtclGen) {
@@ -255,11 +180,6 @@ void PermanentEffect::stop()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801144F8
- * Size:	00001C
- */
 void PermanentEffect::restart()
 {
 	if (mPtclGen) {
@@ -267,11 +187,6 @@ void PermanentEffect::restart()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80114514
- * Size:	00004C
- */
 void PermanentEffect::kill()
 {
 	if (mPtclGen) {
@@ -280,11 +195,6 @@ void PermanentEffect::kill()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80114560
- * Size:	000080
- */
 void FreeLightEffect::emit(EffectParm& parm)
 {
 	if (!mEfx) {
@@ -296,11 +206,6 @@ void FreeLightEffect::emit(EffectParm& parm)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801145E0
- * Size:	00001C
- */
 void FreeLightEffect::stop()
 {
 	if (mEfx) {
@@ -308,11 +213,6 @@ void FreeLightEffect::stop()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801145FC
- * Size:	00001C
- */
 void FreeLightEffect::restart()
 {
 	if (mEfx) {
@@ -320,11 +220,6 @@ void FreeLightEffect::restart()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80114618
- * Size:	00001C
- */
 void FreeLightEffect::setScale(f32 scale)
 {
 	if (mEfx) {
@@ -332,11 +227,6 @@ void FreeLightEffect::setScale(f32 scale)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80114634
- * Size:	00004C
- */
 void FreeLightEffect::kill()
 {
 	if (mEfx) {
@@ -345,11 +235,6 @@ void FreeLightEffect::kill()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80114680
- * Size:	000134
- */
 void RippleEffect::emit(EffectParm& parm)
 {
 	if (mEfxA) {
@@ -374,11 +259,6 @@ void RippleEffect::emit(EffectParm& parm)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801147B4
- * Size:	000094
- */
 void RippleEffect::kill()
 {
 	if (mEfxB) {
@@ -395,11 +275,6 @@ void RippleEffect::kill()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80114848
- * Size:	000034
- */
 void RippleEffect::stop()
 {
 	if (mEfxB) {
@@ -410,11 +285,6 @@ void RippleEffect::stop()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8011487C
- * Size:	000034
- */
 void RippleEffect::restart()
 {
 	if (mEfxB) {
@@ -425,11 +295,6 @@ void RippleEffect::restart()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801148B0
- * Size:	00001C
- */
 void BurnEffect::stop()
 {
 	if (mEfxA) {
@@ -437,11 +302,6 @@ void BurnEffect::stop()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801148CC
- * Size:	00001C
- */
 void BurnEffect::restart()
 {
 	if (mEfxA) {
@@ -449,11 +309,6 @@ void BurnEffect::restart()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801148E8
- * Size:	00014C
- */
 void BurnEffect::emit(EffectParm& parm)
 {
 	if (mEfxA) {
@@ -480,11 +335,6 @@ void BurnEffect::emit(EffectParm& parm)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80114A34
- * Size:	000070
- */
 void BurnEffect::kill()
 {
 	if (mEfxA) {
@@ -497,11 +347,6 @@ void BurnEffect::kill()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80114AA4
- * Size:	000008
- */
 bool BurnEffect::invoke(zen::particleGenerator*)
 {
 	return true;

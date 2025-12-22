@@ -11,11 +11,6 @@ static u8 dmabuffer[DMABUFFER_SIZE] ATTRIBUTE_ALIGN(32);
 
 static u32 global_id = 0;
 
-/*
- * --INFO--
- * Address:	8000E9C0
- * Size:	000034
- */
 static void ARAMFinish(u32 msg)
 {
 	STACK_PAD_VAR(1);
@@ -26,11 +21,6 @@ static void ARAMFinish(u32 msg)
 	OSSendMessage((OSMessageQueue*)request->owner, (OSMessage)1, OS_MESSAGE_BLOCK);
 }
 
-/*
- * --INFO--
- * Address:	8000EA00
- * Size:	0000E8
- */
 static void ARAM_TO_ARAM_DMA(u32 src, u32 dst, u32 totalSize)
 {
 	ARQRequest request;
@@ -53,11 +43,6 @@ static void ARAM_TO_ARAM_DMA(u32 src, u32 dst, u32 totalSize)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8000EB00
- * Size:	0000FC
- */
 static void DRAM_TO_DRAM_DMA(u32 src, u32 dst, u32 totalSize)
 {
 	ARQRequest request;
@@ -104,11 +89,6 @@ void Jac_CheckAlloc(jaheap_*)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8000EC00
- * Size:	000044
- */
 void Jac_InitHeap(jaheap_* heap)
 {
 	heap->startAddress     = 0;
@@ -125,11 +105,6 @@ void Jac_InitHeap(jaheap_* heap)
 	heap->nextGroupedHeap  = 0;
 }
 
-/*
- * --INFO--
- * Address:	8000EC60
- * Size:	000038
- */
 void Jac_SelfInitHeap(jaheap_* heap, u32 startAddr, u32 size, u32 memType)
 {
 	heap->startAddress     = startAddr;
@@ -146,11 +121,6 @@ void Jac_SelfInitHeap(jaheap_* heap, u32 startAddr, u32 size, u32 memType)
 	heap->nextGroupedHeap  = 0;
 }
 
-/*
- * --INFO--
- * Address:	8000ECA0
- * Size:	000100
- */
 BOOL Jac_SelfAllocHeap(jaheap_* parent, jaheap_* heap, u32 size, u32 startAddr)
 {
 	if (parent->startAddress && parent->startAddress != -1) {
@@ -198,11 +168,6 @@ BOOL Jac_SelfAllocHeap(jaheap_* parent, jaheap_* heap, u32 size, u32 startAddr)
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	8000EDA0
- * Size:	000038
- */
 BOOL Jac_SetGroupHeap(jaheap_* heapA, jaheap_* heapB)
 {
 	if (heapA->groupOwner || heapA->nextGroupedHeap) {
@@ -225,11 +190,6 @@ void Jac_CutdownHeap(jaheap_*)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8000EDE0
- * Size:	00005C
- */
 void Jac_InitMotherHeap(jaheap_* heap, u32 startAddr, u32 size, u8 memType)
 {
 	heap->startAddress     = startAddr + 0x1f & 0xffffffe0;
@@ -247,11 +207,6 @@ void Jac_InitMotherHeap(jaheap_* heap, u32 startAddr, u32 size, u8 memType)
 	heap->nextGroupedHeap  = NULL;
 }
 
-/*
- * --INFO--
- * Address:	8000EE40
- * Size:	0001B4
- */
 BOOL Jac_AllocHeap(jaheap_* heap, jaheap_* parent, u32 size)
 {
 	u32 y;
@@ -358,11 +313,6 @@ BOOL Jac_AllocHeap(jaheap_* heap, jaheap_* parent, u32 size)
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	8000F000
- * Size:	0001B0
- */
 BOOL Jac_DeleteHeap(jaheap_* heap)
 {
 	STACK_PAD_VAR(4);
@@ -447,11 +397,6 @@ BOOL Jac_DeleteHeap(jaheap_* heap)
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	8000F1C0
- * Size:	000064
- */
 static void Jac_Move_Children(jaheap_* heap, s32 flag)
 {
 	if (flag == 0) {
@@ -470,11 +415,6 @@ static void Jac_Move_Children(jaheap_* heap, s32 flag)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8000F240
- * Size:	0000C8
- */
 void Jac_GarbageCollection_St(jaheap_* heap)
 {
 	jaheap_* heap_00;
@@ -529,11 +469,6 @@ void Jac_CheckFreeHeap_Linear(jaheap_*)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8000F320
- * Size:	0000C4
- */
 void Jac_ShowHeap(jaheap_* heap, u32 flag)
 {
 	jaheap_** REF_heap = &heap;

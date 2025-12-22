@@ -28,11 +28,6 @@ void Jac_mixcopy(s16*, s16*, s16*, s32)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80005F00
- * Size:	000030
- */
 void Jac_imixcopy(s16* ta, s16* tb, s16* td, s32 s)
 {
 	for (s; s > 0; s--) {
@@ -51,11 +46,6 @@ void Jac_bcopyW(s16*, s16*, s32)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80005F40
- * Size:	00003C
- */
 void Jac_bcopyfast(u32* src, u32* dest, u32 size)
 {
 	u32 copy1, copy2, copy3, copy4;
@@ -71,11 +61,6 @@ void Jac_bcopyfast(u32* src, u32* dest, u32 size)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80005F80
- * Size:	0000FC
- */
 void Jac_bcopy(void* src, void* dest, s32 size)
 {
 	u8 alignedSrc, alignedDst;
@@ -119,11 +104,6 @@ void Jac_bcopy(void* src, void* dest, s32 size)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80006080
- * Size:	00002C
- */
 void Jac_bzerofast(u32* dest, u32 size)
 {
 	for (size = size / (4 * sizeof(u32)); size != 0; size--) {
@@ -134,11 +114,6 @@ void Jac_bzerofast(u32* dest, u32 size)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800060C0
- * Size:	0000E0
- */
 void Jac_bzero(void* dest, s32 size)
 {
 	u32* udest;

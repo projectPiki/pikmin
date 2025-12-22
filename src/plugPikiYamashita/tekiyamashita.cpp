@@ -29,11 +29,6 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("tekiyamashita")
 
-/*
- * --INFO--
- * Address:	801A30F8
- * Size:	000180
- */
 void TekiYamashita::makeTekiParameters(TekiMgr* mgr)
 {
 	mgr->mTekiParams[TEKI_Tank]     = new TAItankParameters();
@@ -50,11 +45,6 @@ void TekiYamashita::makeTekiParameters(TekiMgr* mgr)
 	mgr->mTekiParams[TEKI_Otama]    = new TAIotamaParameters();
 }
 
-/*
- * --INFO--
- * Address:	801A3278
- * Size:	00031C
- */
 void TekiYamashita::makeTekis(TekiMgr* mgr)
 {
 	STACK_PAD_VAR(1);

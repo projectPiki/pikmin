@@ -1674,11 +1674,6 @@ zen::DrawWorldMap::~DrawWorldMap()
 {
 }
 
-/*
- * --INFO--
- * Address:	801DB14C
- * Size:	00246C
- */
 zen::DrawWorldMap::DrawWorldMap()
 {
 	// SET UP EFFECTS MGR
@@ -1793,11 +1788,6 @@ zen::DrawWorldMap::DrawWorldMap()
 	mShootingStarMgr = new WorldMapShootingStarMgr();
 }
 
-/*
- * --INFO--
- * Address:	801DE714
- * Size:	000C14
- */
 bool zen::DrawWorldMap::update(Controller* controller)
 {
 	bool res = false;
@@ -1894,11 +1884,6 @@ bool zen::DrawWorldMap::update(Controller* controller)
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	801E0D38
- * Size:	000134
- */
 void zen::DrawWorldMap::draw(Graphics& gfx)
 {
 	if (mCurrentMode != DrawWorldMapMode::Diary) {
@@ -1950,11 +1935,6 @@ void zen::DrawWorldMap::setCoursePoint(zen::DrawWorldMap::startPlaceFlag placeFl
 	}
 }
 
-/*
- * --INFO--
- * Address:	801E0E6C
- * Size:	001B78
- */
 void zen::DrawWorldMap::start(zen::DrawWorldMap::startModeFlag modeFlag, zen::DrawWorldMap::startPlaceFlag placeFlag)
 {
 	mStartMode   = modeFlag;
@@ -2031,11 +2011,6 @@ void zen::DrawWorldMap::start(zen::DrawWorldMap::startModeFlag modeFlag, zen::Dr
 	mWipeMgr->open(1.0f);
 }
 
-/*
- * --INFO--
- * Address:	801E2E0C
- * Size:	00047C
- */
 bool zen::DrawWorldMap::modeStart(Controller* controller)
 {
 	bool res = false;
@@ -2077,11 +2052,6 @@ bool zen::DrawWorldMap::modeStart(Controller* controller)
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	801E3288
- * Size:	002744
- */
 bool zen::DrawWorldMap::modeAppear(Controller* controller)
 {
 	bool res = false;
@@ -2119,11 +2089,6 @@ bool zen::DrawWorldMap::modeAppear(Controller* controller)
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	801E6184
- * Size:	000868
- */
 bool zen::DrawWorldMap::modeOperation(Controller* controller)
 {
 	bool res = false;
@@ -2160,11 +2125,6 @@ bool zen::DrawWorldMap::modeOperation(Controller* controller)
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	801E69EC
- * Size:	000614
- */
 bool zen::DrawWorldMap::modeConfirm(Controller* controller)
 {
 	bool res = mConfirmMgr->update(controller);
@@ -2181,11 +2141,6 @@ bool zen::DrawWorldMap::modeConfirm(Controller* controller)
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	801E71C8
- * Size:	000154
- */
 bool zen::DrawWorldMap::modeEnd(Controller*)
 {
 	bool res = false;
@@ -2198,11 +2153,6 @@ bool zen::DrawWorldMap::modeEnd(Controller*)
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	801E731C
- * Size:	0000DC
- */
 void zen::DrawWorldMap::updateScreens()
 {
 	mWipeScreen->update();
@@ -2216,11 +2166,6 @@ void zen::DrawWorldMap::updateScreens()
 	mBackScreen->update();
 }
 
-/*
- * --INFO--
- * Address:	801E73F8
- * Size:	000124
- */
 void zen::DrawWorldMap::closeMapInfo()
 {
 	mMapImageMgr->closeMapImage();
@@ -2228,11 +2173,6 @@ void zen::DrawWorldMap::closeMapInfo()
 	mPartsInfoMgr->close();
 }
 
-/*
- * --INFO--
- * Address:	801E7728
- * Size:	000220
- */
 void zen::DrawWorldMap::openMapInfo()
 {
 	WorldMapName course = mCoursePointMgr->getSelectCourseNumber();

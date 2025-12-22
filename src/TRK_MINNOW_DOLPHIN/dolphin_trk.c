@@ -26,11 +26,6 @@ DECL_SECT(".init") void __TRK_reset()
 	__TRK_copy_vectors();
 }
 
-/*
- * --INFO--
- * Address:	8021FE60
- * Size:	000094
- */
 ASM void InitMetroTRK()
 {
 #ifdef __MWERKS__ // clang-format off
@@ -93,21 +88,11 @@ initCommTableSuccess:
 #endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address:	8021FEF4
- * Size:	000020
- */
 void EnableMetroTRKInterrupts(void)
 {
 	EnableEXI2Interrupts();
 }
 
-/*
- * --INFO--
- * Address:	8021FF14
- * Size:	000048
- */
 u32 TRKTargetTranslate(u32 param_0)
 {
 	if (param_0 >= lc_base) {
@@ -119,11 +104,6 @@ u32 TRKTargetTranslate(u32 param_0)
 	return param_0 & 0x3FFFFFFF | 0x80000000;
 }
 
-/*
- * --INFO--
- * Address:	8021FF5C
- * Size:	000060
- */
 void TRK_copy_vector(u32 offset)
 {
 	void* destPtr = (void*)TRKTargetTranslate(offset);
@@ -131,11 +111,6 @@ void TRK_copy_vector(u32 offset)
 	TRK_flush_cache(destPtr, 0x100);
 }
 
-/*
- * --INFO--
- * Address:	8021FFBC
- * Size:	000094
- */
 void __TRK_copy_vectors(void)
 {
 	int i;
@@ -150,11 +125,6 @@ void __TRK_copy_vectors(void)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80220050
- * Size:	000050
- */
 DSError TRKInitializeTarget()
 {
 	gTRKState.isStopped = TRUE;

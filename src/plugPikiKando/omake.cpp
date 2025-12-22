@@ -23,11 +23,6 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("attentionCamera")
 
-/*
- * --INFO--
- * Address:	80078DB0
- * Size:	0001E8
- */
 AttentionCamera::AttentionCamera()
 {
 	mFadeState  = 0;
@@ -63,11 +58,6 @@ void AttentionCamera::start(u32 tag, Creature* target, f32 p3, f32 p4)
 	mActiveFader->initFadeOut();
 }
 
-/*
- * --INFO--
- * Address:	80079464
- * Size:	000050
- */
 void AttentionCamera::finish()
 {
 	mTarget    = naviMgr->getNavi();
@@ -75,11 +65,6 @@ void AttentionCamera::finish()
 	mActiveFader->initFadeOut();
 }
 
-/*
- * --INFO--
- * Address:	800794B4
- * Size:	0000F0
- */
 void AttentionCamera::update()
 {
 	switch (mFadeState) {
@@ -107,11 +92,6 @@ void AttentionCamera::update()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800795B8
- * Size:	00005C
- */
 void AttentionCamera::refresh(Graphics& gfx)
 {
 	if (mFadeState == 1) {

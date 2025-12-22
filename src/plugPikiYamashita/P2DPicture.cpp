@@ -19,11 +19,6 @@ DEFINE_ERROR(35)
  */
 DEFINE_PRINT("P2DPicture")
 
-/*
- * --INFO--
- * Address:	801B18C4
- * Size:	000074
- */
 void P2DPicture::makeResident()
 {
 	for (int i = 0; i < mTextureCount; i++) {
@@ -33,11 +28,6 @@ void P2DPicture::makeResident()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801B1938
- * Size:	000058
- */
 void P2DPicture::loadResource()
 {
 	if (!mTexName) {
@@ -55,11 +45,6 @@ void P2DPicture::loadResource()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801B1990
- * Size:	0000B4
- */
 P2DPicture::~P2DPicture()
 {
 	for (int i = 0; i < mTextureCount; i++) {
@@ -81,11 +66,6 @@ P2DPicture::P2DPicture()
 	initinfo();
 }
 
-/*
- * --INFO--
- * Address:	801B1A44
- * Size:	000134
- */
 P2DPicture::P2DPicture(P2DPane* parent, RandomAccessStream* input, u16 paneType)
     : P2DPane(parent, input, paneType)
 {
@@ -107,11 +87,6 @@ P2DPicture::P2DPicture(P2DPane* parent, RandomAccessStream* input, u16 paneType)
 	initWhite();
 }
 
-/*
- * --INFO--
- * Address:	801B1B78
- * Size:	0000AC
- */
 P2DPicture::P2DPicture(Texture* texture)
 {
 	mTextures[0]  = nullptr;
@@ -124,11 +99,6 @@ P2DPicture::P2DPicture(Texture* texture)
 	initinfo();
 }
 
-/*
- * --INFO--
- * Address:	801B1C24
- * Size:	00009C
- */
 bool P2DPicture::insert(Texture* texture, u8 idx, f32)
 {
 	// only configured for a single texture
@@ -148,11 +118,6 @@ bool P2DPicture::insert(Texture* texture, u8 idx, f32)
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	801B1CC0
- * Size:	000054
- */
 void P2DPicture::initinfo()
 {
 	mPaneType = PANETYPE_Picture;
@@ -165,11 +130,6 @@ void P2DPicture::initinfo()
 	initWhite();
 }
 
-/*
- * --INFO--
- * Address:	801B1D14
- * Size:	000068
- */
 void P2DPicture::drawSelf(int x, int y)
 {
 	Matrix4f mtx;
@@ -177,11 +137,6 @@ void P2DPicture::drawSelf(int x, int y)
 	drawSelf(x, y, &mtx);
 }
 
-/*
- * --INFO--
- * Address:	801B1D7C
- * Size:	000078
- */
 void P2DPicture::drawSelf(int x, int y, immut Matrix4f* mtx)
 {
 	if (mTextures[0]) {
@@ -190,11 +145,6 @@ void P2DPicture::drawSelf(int x, int y, immut Matrix4f* mtx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801B1DF4
- * Size:	000664
- */
 void P2DPicture::drawFullSet(int x, int y, int width, int height, P2DBinding binding, P2DMirror mirror, bool tumble, P2DWrapmode wrapS,
                              P2DWrapmode wrapT, immut Matrix4f* mtx)
 {
@@ -346,11 +296,6 @@ void P2DPicture::drawOut(const PUTRect&, const PUTRect&)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801B2458
- * Size:	000234
- */
 void P2DPicture::drawTexCoord(int x, int y, int width, int height, f32 p5, f32 p6, f32 p7, f32 p8, f32 p9, f32 p10, f32 p11, f32 p12,
                               immut Matrix4f* mtx)
 {
@@ -404,11 +349,6 @@ void P2DPicture::drawTexCoord(int x, int y, int width, int height, f32 p5, f32 p
 	GXEnd();
 }
 
-/*
- * --INFO--
- * Address:	801B268C
- * Size:	0004B0
- */
 void P2DPicture::setTevMode()
 {
 	GXColor color;
@@ -816,11 +756,6 @@ void P2DPicture::setTevMode()
 	*/
 }
 
-/*
- * --INFO--
- * Address:	801B2B3C
- * Size:	000014
- */
 void P2DPicture::swap(f32& val1, f32& val2)
 {
 	f32 tmp = val1;

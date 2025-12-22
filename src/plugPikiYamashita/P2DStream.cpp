@@ -17,11 +17,6 @@ DEFINE_ERROR(21)
  */
 DEFINE_PRINT("P2DStream");
 
-/*
- * --INFO--
- * Address:	801B3274
- * Size:	0000C4
- */
 immut char* P2DStream::getResource(int dataType)
 {
 	u8 refType = mStream->readByte();
@@ -54,11 +49,6 @@ immut char* P2DStream::getResource(int dataType)
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	801B3338
- * Size:	000090
- */
 void P2DStream::align(int paddingAmount)
 {
 	int position        = mStream->getPosition();

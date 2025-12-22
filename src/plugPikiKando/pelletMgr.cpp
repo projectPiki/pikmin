@@ -70,11 +70,6 @@ static u32 _ufoIDTable[] = {
 	UFOID_UNDEF,
 };
 
-/*
- * --INFO--
- * Address:	80094B14
- * Size:	000044
- */
 int PelletMgr::getUfoIndexFromID(u32 ufoID)
 {
 	int i;
@@ -91,11 +86,6 @@ int PelletMgr::getUfoIndexFromID(u32 ufoID)
 	return i;
 }
 
-/*
- * --INFO--
- * Address:	80094B58
- * Size:	000018
- */
 u32 PelletMgr::getUfoIDFromIndex(int idx)
 {
 	if (idx >= MAX_UFO_PARTS) {
@@ -104,11 +94,6 @@ u32 PelletMgr::getUfoIDFromIndex(int idx)
 	return _ufoIDTable[idx];
 }
 
-/*
- * --INFO--
- * Address:	80094B70
- * Size:	000390
- */
 PelletConfig::PelletConfig()
     : mPelletName(this, String("new", 0), String("", 0), String("", 0), "x99", nullptr)
     , mPelletType(this, PELTYPE_Blue, 0, 0, "p00", nullptr)
@@ -133,11 +118,6 @@ PelletConfig::PelletConfig()
 	mRepairAnimJointIndex = -1;
 }
 
-/*
- * --INFO--
- * Address:	80094F00
- * Size:	000074
- */
 void PelletConfig::read(RandomAccessStream& input)
 {
 	Parameters::read(input);
@@ -163,11 +143,6 @@ NumberPel numberPellets[13] = {
 	{ PELCOLOR_NULL, NUMPEL_NULL, 'ujaa' },
 };
 
-/*
- * --INFO--
- * Address:	80094F74
- * Size:	0001C8
- */
 void PelletView::becomePellet(u32 id, Vector3f NRef pos, f32 direction)
 {
 	if (mPellet) {
@@ -205,11 +180,6 @@ void PelletView::becomePellet(u32 id, Vector3f NRef pos, f32 direction)
 	mPellet = pellet;
 }
 
-/*
- * --INFO--
- * Address:	8009513C
- * Size:	000270
- */
 Pellet::Pellet()
 {
 	mUseSpawnPosition = true;
@@ -234,22 +204,12 @@ Pellet::Pellet()
 	setTrySound(false);
 }
 
-/*
- * --INFO--
- * Address:	800953AC
- * Size:	00003C
- */
 bool Pellet::isUfoPartsID(u32 partsID)
 {
 	ID32 id(partsID);
 	return id.match('u***');
 }
 
-/*
- * --INFO--
- * Address:	800953E8
- * Size:	000090
- */
 void Pellet::startWaterEffect()
 {
 	EffectParm unused(&mSRT.t); // lol.
@@ -258,21 +218,11 @@ void Pellet::startWaterEffect()
 	UtEffectMgr::cast(KandoEffect::Bubbles, parm);
 }
 
-/*
- * --INFO--
- * Address:	80095478
- * Size:	000030
- */
 void Pellet::finishWaterEffect()
 {
 	mRippleEffect->kill();
 }
 
-/*
- * --INFO--
- * Address:	800954A8
- * Size:	000090
- */
 void Pellet::doKill()
 {
 	setTrySound(false);
@@ -287,11 +237,6 @@ void Pellet::doKill()
 	mLifeGauge.countOff();
 }
 
-/*
- * --INFO--
- * Address:	80095538
- * Size:	00001C
- */
 int Pellet::getState()
 {
 	if (mCurrentState) {
@@ -300,11 +245,6 @@ int Pellet::getState()
 	return PELSTATE_Normal;
 }
 
-/*
- * --INFO--
- * Address:	80095554
- * Size:	000038
- */
 bool Pellet::ignoreAtari(Creature* creature)
 {
 	if (creature->getStickObject() == this) {
@@ -319,21 +259,11 @@ bool Pellet::ignoreAtari(Creature* creature)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8009558C
- * Size:	000008
- */
 bool Pellet::isAlive()
 {
 	return mIsAlive;
 }
 
-/*
- * --INFO--
- * Address:	80095594
- * Size:	000048
- */
 bool Pellet::isAtari()
 {
 	int state = getState();
@@ -346,11 +276,6 @@ bool Pellet::isAtari()
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	800955DC
- * Size:	000050
- */
 bool Pellet::isVisible()
 {
 	int state = getState();
@@ -364,11 +289,6 @@ bool Pellet::isVisible()
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8009562C
- * Size:	000080
- */
 void Pellet::setTrySound(bool doSetOn)
 {
 	if (!doSetOn) {
@@ -381,11 +301,6 @@ void Pellet::setTrySound(bool doSetOn)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800956AC
- * Size:	0003A0
- */
 void Pellet::startPick()
 {
 	if (!playerState->mDemoFlags.isFlag(DEMOFLAG_Unk9)) {
@@ -450,11 +365,6 @@ void Pellet::startPick()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80095A4C
- * Size:	000080
- */
 void Pellet::finishPick()
 {
 	mCarrierCounter = 0;
@@ -467,11 +377,6 @@ void Pellet::finishPick()
 	mCarryState = 0;
 }
 
-/*
- * --INFO--
- * Address:	80095ACC
- * Size:	0000B8
- */
 void Pellet::startGoal()
 {
 	finishPick();
@@ -480,11 +385,6 @@ void Pellet::startGoal()
 	mCarryDirection.set(0.0f, 0.0f, 0.0f);
 }
 
-/*
- * --INFO--
- * Address:	80095C3C
- * Size:	00016C
- */
 void Pellet::doCarry(Creature* carryingPiki, immut Vector3f& direction, u16 carrierCount)
 {
 	if (mCarryState == 1) {
@@ -524,11 +424,6 @@ void Pellet::doCarry(Creature* carryingPiki, immut Vector3f& direction, u16 carr
 	mCarrierCount   = carrierCount;
 }
 
-/*
- * --INFO--
- * Address:	80095DA8
- * Size:	000108
- */
 f32 Pellet::getBottomRadius()
 {
 	if (mPelletView) {
@@ -566,21 +461,11 @@ f32 Pellet::getBottomRadius()
 	return getCentreSize();
 }
 
-/*
- * --INFO--
- * Address:	80095EB0
- * Size:	00001C
- */
 Vector3f Pellet::getCentre()
 {
 	return mSRT.t;
 }
 
-/*
- * --INFO--
- * Address:	80095ECC
- * Size:	000048
- */
 f32 Pellet::getCylinderHeight()
 {
 	if (mPelletView) {
@@ -589,11 +474,6 @@ f32 Pellet::getCylinderHeight()
 	return mConfig->mCarryInfoHeight();
 }
 
-/*
- * --INFO--
- * Address:	80095F14
- * Size:	000078
- */
 f32 Pellet::getSize()
 {
 	if (mPelletView) {
@@ -603,21 +483,11 @@ f32 Pellet::getSize()
 	return getBottomRadius();
 }
 
-/*
- * --INFO--
- * Address:	80095FA8
- * Size:	000008
- */
 f32 Pellet::getiMass()
 {
 	return 0.0f;
 }
 
-/*
- * --INFO--
- * Address:	80095FB0
- * Size:	0000E4
- */
 bool Pellet::startStickTeki(Creature* teki, f32 p2)
 {
 	Vector3f toEnemy = getCentre();
@@ -634,22 +504,12 @@ bool Pellet::startStickTeki(Creature* teki, f32 p2)
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	80096094
- * Size:	000094
- */
 void Pellet::endStickTeki(Creature* teki)
 {
 	finishPick();
 	teki->endStickObject();
 }
 
-/*
- * --INFO--
- * Address:	80096128
- * Size:	000174
- */
 bool Pellet::winnable(int tekiStrength)
 {
 	if (mConfig->mModelId.match('NAVI')) {
@@ -676,11 +536,6 @@ bool Pellet::winnable(int tekiStrength)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8009629C
- * Size:	000068
- */
 bool Pellet::stickSlot(int slotID)
 {
 	if (slotID != -1 && !isSlotFlag(slotID)) {
@@ -692,11 +547,6 @@ bool Pellet::stickSlot(int slotID)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	80096304
- * Size:	00005C
- */
 void Pellet::stickOffSlot(int slotID)
 {
 	if (slotID != -1 && isSlotFlag(slotID)) {
@@ -705,11 +555,6 @@ void Pellet::stickOffSlot(int slotID)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80096360
- * Size:	00006C
- */
 int Pellet::getMinFreeSlotIndex()
 {
 	for (int i = 0; i < mConfig->mCarryMaxPikis(); i++) {
@@ -721,11 +566,6 @@ int Pellet::getMinFreeSlotIndex()
 	return -1;
 }
 
-/*
- * --INFO--
- * Address:	800963CC
- * Size:	000160
- */
 int Pellet::getNearestFreeSlotIndex(immut Vector3f& pos)
 {
 	f32 minDist    = 12800.0f;
@@ -745,11 +585,6 @@ int Pellet::getNearestFreeSlotIndex(immut Vector3f& pos)
 	return nearestIdx;
 }
 
-/*
- * --INFO--
- * Address:	8009652C
- * Size:	0000D8
- */
 int Pellet::getRandomFreeSlotIndex()
 {
 	int maxCarryNum = mConfig->mCarryMaxPikis();
@@ -771,11 +606,6 @@ int Pellet::getRandomFreeSlotIndex()
 	return outIdx;
 }
 
-/*
- * --INFO--
- * Address:	80096604
- * Size:	0001A0
- */
 Vector3f Pellet::getSlotLocalPos(int slotID, f32 offset)
 {
 	f32 grabAngle;
@@ -813,11 +643,6 @@ Vector3f Pellet::getSlotLocalPos(int slotID, f32 offset)
 	return localPos;
 }
 
-/*
- * --INFO--
- * Address:	800967A4
- * Size:	000078
- */
 Vector3f Pellet::getSlotGlobalPos(int slotID, f32 offset)
 {
 	Vector3f globalPos = getSlotLocalPos(slotID, offset);
@@ -835,11 +660,6 @@ void Pellet::initSlotFlags()
 	mSlotFlags[0] = mSlotFlags[1] = mSlotFlags[2] = 0;
 }
 
-/*
- * --INFO--
- * Address:	8009681C
- * Size:	000034
- */
 void Pellet::setSlotFlag(int slotID)
 {
 	if (slotID != -2) {
@@ -848,11 +668,6 @@ void Pellet::setSlotFlag(int slotID)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80096850
- * Size:	000034
- */
 void Pellet::resetSlotFlag(int slotID)
 {
 	if (slotID != -2) {
@@ -861,11 +676,6 @@ void Pellet::resetSlotFlag(int slotID)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80096884
- * Size:	000044
- */
 bool Pellet::isSlotFlag(int slotID)
 {
 	if (slotID == -2) {
@@ -875,11 +685,6 @@ bool Pellet::isSlotFlag(int slotID)
 	return (mSlotFlags[slotID >> 5] & (1 << (slotID - 32 * (slotID >> 5)))) != 0;
 }
 
-/*
- * --INFO--
- * Address:	800968C8
- * Size:	0000E0
- */
 void Pellet::initPellet(PelletShapeObject* shapeObj, PelletConfig* config)
 {
 	mCarrierCounter = 0;
@@ -919,11 +724,6 @@ void Pellet::initPellet(PelletView* view, PelletConfig* config)
 	mCollInfo    = nullptr;
 }
 
-/*
- * --INFO--
- * Address:	800969A8
- * Size:	000044
- */
 void Pellet::startCarryMotion(f32 speed)
 {
 	mMotionSpeed = speed;
@@ -946,11 +746,6 @@ void Pellet::stopMotion()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800969F4
- * Size:	000064
- */
 void Pellet::finishMotion()
 {
 	if (mPelletView) {
@@ -960,11 +755,6 @@ void Pellet::finishMotion()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80096A5C
- * Size:	000098
- */
 void Pellet::init(immut Vector3f& pos)
 {
 	Creature::init(pos);
@@ -982,11 +772,6 @@ void Pellet::init(immut Vector3f& pos)
 	mCarryState = 0;
 }
 
-/*
- * --INFO--
- * Address:	80096AF4
- * Size:	000034
- */
 bool Pellet::isFree()
 {
 	// mSlotFlags needs to be int for resetSlotFlags, this seems to be the easier fix
@@ -996,11 +781,6 @@ bool Pellet::isFree()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	80096B28
- * Size:	000248
- */
 void Pellet::doLoad(RandomAccessStream& input)
 {
 	mUseSpawnPosition     = input.readByte();
@@ -1032,11 +812,6 @@ void Pellet::doLoad(RandomAccessStream& input)
 	mStateMachine->transit(this, PELSTATE_UfoLoad);
 }
 
-/*
- * --INFO--
- * Address:	80096D70
- * Size:	000078
- */
 void Pellet::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	if (isMotionFlag(PelletMotionFlags::UsePiston) && event.mEventType == KEY_LoopEnd && isUfoParts() && mConfig->mAnimSoundID() >= 0) {
@@ -1044,11 +819,6 @@ void Pellet::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80096DE8
- * Size:	000094
- */
 void Pellet::doSave(RandomAccessStream& output)
 {
 	output.writeByte(mUseSpawnPosition);
@@ -1057,11 +827,6 @@ void Pellet::doSave(RandomAccessStream& output)
 	output.writeFloat(mSpawnPosition.z);
 }
 
-/*
- * --INFO--
- * Address:	80096E7C
- * Size:	0003B8
- */
 void Pellet::startAI(int doSpawnScaleOff)
 {
 	mRotationQuat.fromEuler(Vector3f(0.0f, mFaceDirection, 0.0f));
@@ -1169,11 +934,6 @@ void Pellet::startAppear()
 	mStateMachine->transit(this, PELSTATE_Appear);
 }
 
-/*
- * --INFO--
- * Address:	80097234
- * Size:	000060
- */
 void Pellet::doAnimation()
 {
 	if (mShapeObject) {
@@ -1185,11 +945,6 @@ void Pellet::doAnimation()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80097298
- * Size:	000088
- */
 void Pellet::refresh(Graphics& gfx)
 {
 	int state = getState();
@@ -1206,11 +961,6 @@ void Pellet::refresh(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80097320
- * Size:	000088
- */
 void Pellet::postUpdate(int unused, f32 deltaTime)
 {
 	int state = getState();
@@ -1227,11 +977,6 @@ void Pellet::postUpdate(int unused, f32 deltaTime)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800973A8
- * Size:	00094C
- */
 void Pellet::update()
 {
 #if defined(VERSION_PIKIDEMO)
@@ -1405,22 +1150,12 @@ void Pellet::update()
 #undef ASSERT_POSITION_NOTNAN
 }
 
-/*
- * --INFO--
- * Address:	80097D34
- * Size:	000050
- */
 void Pellet::bounceCallback()
 {
 	MsgBounce msg(Vector3f(0.0f, 1.0f, 0.0f));
 	sendMsg(&msg);
 }
 
-/*
- * --INFO--
- * Address:	80097D84
- * Size:	000020
- */
 void Pellet::collisionCallback(immut CollEvent& event)
 {
 	if (isCreatureFlag(CF_AllowFixPosition) && isCreatureFlag(CF_IsPositionFixed)) {
@@ -1428,11 +1163,6 @@ void Pellet::collisionCallback(immut CollEvent& event)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80097DA4
- * Size:	000074
- */
 bool Pellet::stimulate(immut Interaction& interaction)
 {
 	if (interaction.actCommon(this)) {
@@ -1441,11 +1171,6 @@ bool Pellet::stimulate(immut Interaction& interaction)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	80097E18
- * Size:	0002F8
- */
 void Pellet::doRender(Graphics& gfx, Matrix4f& mtx)
 {
 	if (mStuckMouthPart) {
@@ -1484,11 +1209,6 @@ void Pellet::doRender(Graphics& gfx, Matrix4f& mtx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80098110
- * Size:	0001BC
- */
 void Pellet::doCreateColls(Graphics& gfx)
 {
 	STACK_PAD_VAR(2); // this is ACTUALLY from unused temps according to the DLL
@@ -1515,11 +1235,6 @@ void Pellet::doCreateColls(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800982CC
- * Size:	000064
- */
 bool InteractSwallow::actPellet(Pellet* pellet) immut
 {
 	if (pellet->getState() == PELSTATE_Swallowed) {
@@ -1530,11 +1245,6 @@ bool InteractSwallow::actPellet(Pellet* pellet) immut
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	80098330
- * Size:	000148
- */
 bool InteractKill::actPellet(Pellet* pellet) immut
 {
 	if (pellet->mStuckMouthPart) {
@@ -1550,11 +1260,6 @@ bool InteractKill::actPellet(Pellet* pellet) immut
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	80098478
- * Size:	000058
- */
 bool PelletMgr::decomposeNumberPellet(u32 id, int& color, int& type)
 {
 	// Blantant undefined behavior, as `numberPellets` contains less than 20 elements.
@@ -1568,11 +1273,6 @@ bool PelletMgr::decomposeNumberPellet(u32 id, int& color, int& type)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800984D0
- * Size:	000068
- */
 void PelletMgr::registerUfoParts()
 {
 	PRINT("BEGIN\n");
@@ -1585,11 +1285,6 @@ void PelletMgr::registerUfoParts()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80098538
- * Size:	000078
- */
 Pellet* PelletMgr::newNumberPellet(int color, int type)
 {
 	NumberPel* num = numberPellets;
@@ -1609,11 +1304,6 @@ Pellet* PelletMgr::newNumberPellet(int color, int type)
 	return nullptr;
 }
 
-/*
- * --INFO--
- * Address:	800985B0
- * Size:	000154
- */
 Pellet* PelletMgr::newPellet(u32 pelletID, PelletView* view)
 {
 	PelletConfig* config = getConfig(pelletID);
@@ -1662,11 +1352,6 @@ Pellet* PelletMgr::newPellet(u32 pelletID, PelletView* view)
 	return nullptr;
 }
 
-/*
- * --INFO--
- * Address:	80098704
- * Size:	000094
- */
 PelletShapeObject* PelletMgr::getShapeObject(u32 pelletID)
 {
 	PelletConfig* config = getConfig(pelletID);
@@ -1686,11 +1371,6 @@ PelletShapeObject* PelletMgr::getShapeObject(u32 pelletID)
 	return nullptr;
 }
 
-/*
- * --INFO--
- * Address:	80098798
- * Size:	000054
- */
 Creature* PelletMgr::createObject()
 {
 	Pellet* pellet = new Pellet();
@@ -1698,11 +1378,6 @@ Creature* PelletMgr::createObject()
 	return pellet;
 }
 
-/*
- * --INFO--
- * Address:	800987EC
- * Size:	000254
- */
 PelletMgr::PelletMgr(MapMgr* mgr)
 {
 	mUfoMotionTable = PaniPelletAnimator::createMotionTable();
@@ -1736,11 +1411,6 @@ bool PelletMgr::useShape(u32 pelletID)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	80098B04
- * Size:	0000F0
- */
 void PelletMgr::addUseList(u32 pelletID)
 {
 	if (!useShape(pelletID)) {
@@ -1750,11 +1420,6 @@ void PelletMgr::addUseList(u32 pelletID)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80098BF4
- * Size:	000054
- */
 void PelletMgr::initShapeInfos()
 {
 	mReadStage = 1;
@@ -1762,11 +1427,6 @@ void PelletMgr::initShapeInfos()
 	createShapeObjects();
 }
 
-/*
- * --INFO--
- * Address:	80098C48
- * Size:	000040
- */
 int PelletMgr::getConfigIndex(u32 pelletID)
 {
 	int idx = 0;
@@ -1781,11 +1441,6 @@ int PelletMgr::getConfigIndex(u32 pelletID)
 	return -1;
 }
 
-/*
- * --INFO--
- * Address:	80098C88
- * Size:	00009C
- */
 PelletConfig* PelletMgr::getConfigFromIdx(int idx)
 {
 	if (idx < 0 || idx >= mConfigNum) {
@@ -1815,11 +1470,6 @@ ID32 PelletMgr::getConfigIdAt(int idx)
 	return config->mModelId; // Crash inbound if you have ERRORs disabled.
 }
 
-/*
- * --INFO--
- * Address:	80098D24
- * Size:	000038
- */
 PelletConfig* PelletMgr::getConfig(u32 pelletID)
 {
 	FOREACH_NODE(CoreNode, mConfigList.mChild, node)
@@ -1833,11 +1483,6 @@ PelletConfig* PelletMgr::getConfig(u32 pelletID)
 	return nullptr;
 }
 
-/*
- * --INFO--
- * Address:	80098D5C
- * Size:	000044
- */
 void PelletMgr::read(RandomAccessStream& input)
 {
 	switch (mReadStage) {
@@ -1850,11 +1495,6 @@ void PelletMgr::read(RandomAccessStream& input)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80098DA0
- * Size:	0000BC
- */
 void PelletMgr::readConfigs(RandomAccessStream& input)
 {
 	mConfigNum = input.readInt();
@@ -1866,11 +1506,6 @@ void PelletMgr::readConfigs(RandomAccessStream& input)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80098E5C
- * Size:	0000BC
- */
 void PelletMgr::readAnimInfos(RandomAccessStream& input)
 {
 	mAnimInfoNum = input.readInt();
@@ -1882,11 +1517,6 @@ void PelletMgr::readAnimInfos(RandomAccessStream& input)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80098F18
- * Size:	0000D4
- */
 void PelletMgr::initTekiNakaParts()
 {
 	FOREACH_NODE(CoreNode, mAnimInfoList.mChild, node)
@@ -1903,11 +1533,6 @@ void PelletMgr::initTekiNakaParts()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80098FEC
- * Size:	0000DC
- */
 void PelletMgr::createShapeObjects()
 {
 	FOREACH_NODE(CoreNode, mAnimInfoList.mChild, node)
@@ -1937,11 +1562,6 @@ void PelletMgr::createShapeObjects()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800990C8
- * Size:	000210
- */
 void PelletMgr::refresh(Graphics& gfx)
 {
 	MonoObjectMgr::refresh(gfx);
@@ -1967,11 +1587,6 @@ void PelletMgr::refresh(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800992D8
- * Size:	000004
- */
 void PelletMgr::refresh2d(Graphics&)
 {
 }

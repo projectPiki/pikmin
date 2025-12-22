@@ -1,10 +1,5 @@
 #include "Dolphin/arith.h"
 
-/*
- * --INFO--
- * Address:	80215CA0
- * Size:	000010
- */
 s32 abs(s32 __x)
 {
 	if (0 <= __x) {

@@ -18,11 +18,6 @@ DEFINE_ERROR(22)
  */
 DEFINE_PRINT("drawMenuBase")
 
-/*
- * --INFO--
- * Address:	801F014C
- * Size:	000438
- */
 zen::DrawMenuBase::DrawMenuBase(immut char* bloFileName, bool useAlphaMgr, bool useTexAnimMgr)
     : DrawScreen(bloFileName, nullptr, useAlphaMgr, useTexAnimMgr)
 {
@@ -79,11 +74,6 @@ zen::DrawMenuBase::DrawMenuBase(immut char* bloFileName, bool useAlphaMgr, bool 
 	init(MODE_Sleep);
 }
 
-/*
- * --INFO--
- * Address:	801F0584
- * Size:	000070
- */
 bool zen::DrawMenuBase::update(Controller* controller)
 {
 	bool res   = false;
@@ -99,21 +89,11 @@ bool zen::DrawMenuBase::update(Controller* controller)
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	801F05F4
- * Size:	000020
- */
 void zen::DrawMenuBase::draw(Graphics&)
 {
 	DrawScreen::draw();
 }
 
-/*
- * --INFO--
- * Address:	801F0614
- * Size:	0001A0
- */
 void zen::DrawMenuBase::init(int mode)
 {
 	setModeFunc(mode);
@@ -133,11 +113,6 @@ void zen::DrawMenuBase::init(int mode)
 	setModeFunc(mode); // why are we doing this twice
 }
 
-/*
- * --INFO--
- * Address:	801F07B4
- * Size:	000034
- */
 void zen::DrawMenuBase::start()
 {
 	mCurrentHover = 0;
@@ -145,21 +120,11 @@ void zen::DrawMenuBase::start()
 	init(MODE_Operation);
 }
 
-/*
- * --INFO--
- * Address:	801F07E8
- * Size:	000008
- */
 bool zen::DrawMenuBase::modeSleep(Controller*)
 {
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	801F07F0
- * Size:	000214
- */
 bool zen::DrawMenuBase::modeOperation(Controller* controller)
 {
 	bool res = false;
@@ -206,11 +171,6 @@ bool zen::DrawMenuBase::modeOperation(Controller* controller)
 
 const int zen::DrawMenuBase::SELECT_CANCEL = -1;
 
-/*
- * --INFO--
- * Address:	801F0A04
- * Size:	00007C
- */
 void zen::DrawMenuBase::setModeFunc(int mode)
 {
 	mMode = mode;

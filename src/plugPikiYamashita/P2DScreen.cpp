@@ -21,11 +21,6 @@ DEFINE_ERROR(37)
  */
 DEFINE_PRINT("P2DScreen")
 
-/*
- * --INFO--
- * Address:	801B2B50
- * Size:	00004C
- */
 void P2DScreen::update()
 {
 	P2DPane::update();
@@ -37,20 +32,10 @@ void P2DScreen::update()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801B2B9C
- * Size:	000064
- */
 P2DScreen::~P2DScreen()
 {
 }
 
-/*
- * --INFO--
- * Address:	801B2C00
- * Size:	00012C
- */
 void P2DScreen::set(const char* bloFileName, bool useAlphaMgr, bool useTexAnimMgr, bool p4)
 {
 	char path[PATH_MAX];
@@ -91,11 +76,6 @@ void P2DScreen::set(RandomAccessStream* input)
 	makeHiearachyPanes(this, input, true, true);
 }
 
-/*
- * --INFO--
- * Address:	801B2D2C
- * Size:	0001A0
- */
 void P2DScreen::makeHiearachyPanes(P2DPane* parent, RandomAccessStream* input, bool, bool doExpandBounds)
 {
 	P2DPane* currPane = parent;
@@ -136,11 +116,6 @@ void P2DScreen::makeHiearachyPanes(P2DPane* parent, RandomAccessStream* input, b
 	}
 }
 
-/*
- * --INFO--
- * Address:	801B2ECC
- * Size:	000008
- */
 P2DPane* P2DScreen::makeUserPane(u16, P2DPane*, RandomAccessStream*)
 {
 	ERROR("There is a unknown pane in SCRN resource\n");
@@ -158,11 +133,6 @@ P2DPane* P2DScreen::stop()
 	return nullptr;
 }
 
-/*
- * --INFO--
- * Address:	801B2ED4
- * Size:	000328
- */
 void P2DScreen::draw(int x, int y, const P2DGrafContext* grafContext)
 {
 	if (grafContext) {
@@ -185,11 +155,6 @@ void P2DScreen::draw(int x, int y, const P2DGrafContext* grafContext)
 	GXSetCullMode(GX_CULL_NONE);
 }
 
-/*
- * --INFO--
- * Address:	801B31FC
- * Size:	000030
- */
 P2DPane* P2DScreen::search(u32 tag, bool p2)
 {
 	if (!tag) {
@@ -199,21 +164,11 @@ P2DPane* P2DScreen::search(u32 tag, bool p2)
 	return P2DPane::search(tag, p2);
 }
 
-/*
- * --INFO--
- * Address:	801B322C
- * Size:	000020
- */
 void P2DScreen::loadResource()
 {
 	loadChildResource();
 }
 
-/*
- * --INFO--
- * Address:	801B324C
- * Size:	000028
- */
 void P2DScreen::makeResName(const char* fileName, char* outPath)
 {
 	zen::makePathName(gsys->mBloDir, fileName, outPath);

@@ -15,11 +15,6 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT(nullptr);
 
-/*
- * --INFO--
- * Address:	801F2424
- * Size:	0001BC
- */
 void zen::makePathName(const char* directoryPath, const char* fileName, char* outputPath)
 {
 	int i, j;
@@ -40,11 +35,6 @@ void zen::makePathName(const char* directoryPath, const char* fileName, char* ou
 	outputPath[sourceLength + i] = '\0';
 }
 
-/*
- * --INFO--
- * Address:	801F25E0
- * Size:	00007C
- */
 Texture* zen::loadTexExp(const char* textureName, bool useDirectory, bool makePath)
 {
 	if (useDirectory) {

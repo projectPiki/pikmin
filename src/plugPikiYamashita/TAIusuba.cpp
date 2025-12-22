@@ -82,11 +82,6 @@ TAIusubaSoundTable::TAIusubaSoundTable()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801E9FA0
- * Size:	000294
- */
 TAIusubaParameters::TAIusubaParameters()
     : TekiParameters(TPI_COUNT, TPF_COUNT)
 {
@@ -164,11 +159,6 @@ TAIusubaStrategy::TAIusubaStrategy()
 	setState(USUBASTATE_Fly, state);
 }
 
-/*
- * --INFO--
- * Address:	801EA234
- * Size:	0006FC
- */
 void TAIusubaAnimation::makeDefaultAnimations()
 {
 	if (!mAnimMgr) {

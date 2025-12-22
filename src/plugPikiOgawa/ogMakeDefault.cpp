@@ -22,11 +22,6 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT(nullptr)
 
-/*
- * --INFO--
- * Address:	8019399C
- * Size:	000360
- */
 zen::ogScrMakeDefaultMgr::ogScrMakeDefaultMgr()
 {
 	mScreen = new P2DScreen;
@@ -62,11 +57,6 @@ zen::ogScrMakeDefaultMgr::ogScrMakeDefaultMgr()
 	mStatus     = Inactive;
 }
 
-/*
- * --INFO--
- * Address:	80193CFC
- * Size:	0000EC
- */
 void zen::ogScrMakeDefaultMgr::start()
 {
 	mStatus     = Initialising;
@@ -82,11 +72,6 @@ void zen::ogScrMakeDefaultMgr::start()
 	mActiveTypingTextMgr->transCursor(mCursorPicture);
 }
 
-/*
- * --INFO--
- * Address:	80193DE8
- * Size:	000354
- */
 zen::ogScrMakeDefaultMgr::MakeDefaultStatus zen::ogScrMakeDefaultMgr::update(Controller* input)
 {
 	if (mStatus == Inactive) {
@@ -197,11 +182,6 @@ zen::ogScrMakeDefaultMgr::MakeDefaultStatus zen::ogScrMakeDefaultMgr::update(Con
 	return mStatus;
 }
 
-/*
- * --INFO--
- * Address:	8019413C
- * Size:	0000A8
- */
 void zen::ogScrMakeDefaultMgr::draw(Graphics& gfx)
 {
 	if (mStatus != Inactive && mStatus < Success) {
@@ -212,11 +192,6 @@ void zen::ogScrMakeDefaultMgr::draw(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801941E4
- * Size:	000020
- */
 bool zen::ogScrMakeDefaultMgr::checkTypingAll()
 {
 	return mActiveTypingTextMgr->check() == TypingTextMgr::STATE_Complete ? true : false;

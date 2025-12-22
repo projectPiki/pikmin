@@ -19,11 +19,6 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("keyConfig")
 
-/*
- * --INFO--
- * Address:	800846C0
- * Size:	00004C
- */
 void KeyConfig::createInstance()
 {
 	if (!_instance) {
@@ -31,11 +26,6 @@ void KeyConfig::createInstance()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8008470C
- * Size:	0001DC
- */
 KeyConfig::KeyConfig()
 {
 	mThrowKey.set("投げ", KBBTN_A);             // 'throw'
@@ -48,11 +38,6 @@ KeyConfig::KeyConfig()
 	load("parms/", "key.bin", 1);
 }
 
-/*
- * --INFO--
- * Address:	800848E8
- * Size:	0000C0
- */
 void KeyConfig::read(RandomAccessStream& input)
 {
 	mThrowKey.read(input);
@@ -63,11 +48,6 @@ void KeyConfig::read(RandomAccessStream& input)
 	mMenuKey.read(input);
 }
 
-/*
- * --INFO--
- * Address:	800849A8
- * Size:	000040
- */
 void KeyConfig::Key::read(RandomAccessStream& input)
 {
 	mBind = input.readInt();

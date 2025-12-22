@@ -145,11 +145,6 @@ void Jac_Debug_ActionEntry(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	800175E0
- * Size:	000048
- */
 void __SetVolandPan(Portargs_* arg)
 {
 	SEvent_* evt;
@@ -162,11 +157,6 @@ void __SetVolandPan(Portargs_* arg)
 	Jam_SetExtParam(evt->pan, track, 8);
 }
 
-/*
- * --INFO--
- * Address:	80017640
- * Size:	000048
- */
 void SendToStack(SEvent_* evt)
 {
 	evt->selfRef = evt;
@@ -174,11 +164,6 @@ void SendToStack(SEvent_* evt)
 	Add_PortcmdOnce((u32*)&evt->portArgs);
 }
 
-/*
- * --INFO--
- * Address:	800176A0
- * Size:	0000EC
- */
 void Jac_InitEventSystem(void)
 {
 	seqp_* handle;
@@ -212,11 +197,6 @@ void Jac_InitEventSystem(void)
 	Jac_SetProcessStatus(11);
 }
 
-/*
- * --INFO--
- * Address:	800177A0
- * Size:	0000BC
- */
 void Jac_EventFrameCheck(void)
 {
 	u32 i, j;
@@ -248,11 +228,6 @@ void Jac_EventFrameCheck(void)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80017860
- * Size:	00013C
- */
 void Jac_UpdateCamera(struct SVector_* p1, struct SVector_* p2)
 {
 	SEvent_* event;
@@ -299,11 +274,6 @@ void Jac_UpdateCamera(struct SVector_* p1, struct SVector_* p2)
 	Jac_UpdatePikiGaya();
 }
 
-/*
- * --INFO--
- * Address:	800179A0
- * Size:	000118
- */
 int Jac_CreateEvent(u32 eventType, struct SVector_* p2)
 {
 	u32 i;
@@ -353,11 +323,6 @@ int Jac_CreateEvent(u32 eventType, struct SVector_* p2)
 	return idx;
 }
 
-/*
- * --INFO--
- * Address:	80017AC0
- * Size:	00005C
- */
 BOOL Jac_UpdateEventPosition(int idx, struct SVector_* p2)
 {
 	if (idx == -1) {
@@ -373,11 +338,6 @@ BOOL Jac_UpdateEventPosition(int idx, struct SVector_* p2)
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	80017B20
- * Size:	0002E0
- */
 BOOL Jac_PlayEventAction(int eventIdx, int actionId)
 {
 	u32 targetSlot;
@@ -508,11 +468,6 @@ BOOL Jac_PlayEventAction(int eventIdx, int actionId)
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	80017E00
- * Size:	0000BC
- */
 BOOL Jac_StopEventAction(int a1, int a2)
 {
 	u32 i;
@@ -536,11 +491,6 @@ BOOL Jac_StopEventAction(int a1, int a2)
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	80017EC0
- * Size:	000070
- */
 BOOL MML_StopEventAction(u8 idx, u8 a2, u16 a3)
 {
 	if (EVENT[idx].eventType == 0) {
@@ -553,11 +503,6 @@ BOOL MML_StopEventAction(u8 idx, u8 a2, u16 a3)
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	80017F40
- * Size:	00005C
- */
 void MML_StopEventAll(u8 idx, u16 p2)
 {
 	u32 i;
@@ -574,11 +519,6 @@ void MML_StopEventAll(u8 idx, u16 p2)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80017FA0
- * Size:	000094
- */
 BOOL Jac_DestroyEvent(s32 idx)
 {
 	u32 i;
@@ -601,11 +541,6 @@ BOOL Jac_DestroyEvent(s32 idx)
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	80018040
- * Size:	00003C
- */
 void Jac_InitAllEvent(void)
 {
 	u32 i;
@@ -624,11 +559,6 @@ void Jac_DestroyNotThisEvent(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80018080
- * Size:	000038
- */
 int Jac_CheckFreeEvents(void)
 {
 	u32 i;
@@ -642,11 +572,6 @@ int Jac_CheckFreeEvents(void)
 	return count;
 }
 
-/*
- * --INFO--
- * Address:	800180C0
- * Size:	000050
- */
 int Jac_GetActiveEvents(u32* eventIDs)
 {
 	u32 count = 0;

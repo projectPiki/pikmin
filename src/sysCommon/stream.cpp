@@ -8,11 +8,6 @@
 #include "sysNew.h"
 #endif
 
-/*
- * --INFO--
- * Address:	800250B0
- * Size:	000038
- */
 int Stream::readInt()
 {
 	int i;
@@ -20,11 +15,6 @@ int Stream::readInt()
 	return i;
 }
 
-/*
- * --INFO--
- * Address:	800250E8
- * Size:	000038
- */
 u8 Stream::readByte()
 {
 	u8 c;
@@ -32,11 +22,6 @@ u8 Stream::readByte()
 	return c;
 }
 
-/*
- * --INFO--
- * Address:	80025120
- * Size:	000038
- */
 s16 Stream::readShort()
 {
 	s16 s;
@@ -44,11 +29,6 @@ s16 Stream::readShort()
 	return s;
 }
 
-/*
- * --INFO--
- * Address:	80025158
- * Size:	000038
- */
 f32 Stream::readFloat()
 {
 	f32 f;
@@ -56,11 +36,6 @@ f32 Stream::readFloat()
 	return f;
 }
 
-/*
- * --INFO--
- * Address:	80025190
- * Size:	00007C
- */
 char* Stream::readString()
 {
 	int size = readInt();
@@ -71,22 +46,12 @@ char* Stream::readString()
 	return str;
 }
 
-/*
- * --INFO--
- * Address:	8002520C
- * Size:	000038
- */
 void Stream::readString(char* dest, int size)
 {
 	String str(dest, size);
 	readString(str);
 }
 
-/*
- * --INFO--
- * Address:	80025244
- * Size:	0000A4
- */
 void Stream::readString(String& str)
 {
 	int size = readInt();
@@ -98,11 +63,6 @@ void Stream::readString(String& str)
 	str.mString[size] = '\0';
 }
 
-/*
- * --INFO--
- * Address:	800252E8
- * Size:	000038
- */
 void Stream::writeInt(int i)
 {
 	int result = i;
@@ -112,21 +72,11 @@ void Stream::writeInt(int i)
 	write(&result, sizeof(result));
 }
 
-/*
- * --INFO--
- * Address:	80025320
- * Size:	000038
- */
 void Stream::writeByte(u8 c)
 {
 	write(&c, sizeof(u8));
 }
 
-/*
- * --INFO--
- * Address:	80025358
- * Size:	000038
- */
 void Stream::writeShort(s16 _s)
 {
 	s16 s = _s;
@@ -136,11 +86,6 @@ void Stream::writeShort(s16 _s)
 	write(&s, sizeof(s16));
 }
 
-/*
- * --INFO--
- * Address:	80025390
- * Size:	000038
- */
 void Stream::writeFloat(f32 f)
 {
 	f32 result = f;
@@ -151,11 +96,6 @@ void Stream::writeFloat(f32 f)
 	write(&result, sizeof(f32));
 }
 
-/*
- * --INFO--
- * Address:	800253C8
- * Size:	00003C
- */
 void Stream::writeString(immut char* str)
 {
 	// `String` can't decide if it wants to be owning or non-owning.
@@ -163,11 +103,6 @@ void Stream::writeString(immut char* str)
 	writeString(s);
 }
 
-/*
- * --INFO--
- * Address:	80025404
- * Size:	0000D4
- */
 void Stream::writeString(immut String& s)
 {
 	s32 length = ALIGN_NEXT(s.getLength(), 4);
@@ -206,49 +141,24 @@ void Stream::print(immut char* fmt, ...)
 // 	// UNUSED FUNCTION
 // }
 
-/*
- * --INFO--
- * Address:	800254D8
- * Size:	000004
- */
 void Stream::read(void*, int)
 {
 }
 
-/*
- * --INFO--
- * Address:	800254DC
- * Size:	000004
- */
 void Stream::write(immut void*, int)
 {
 }
 
-/*
- * --INFO--
- * Address:	800254E0
- * Size:	000008
- */
 int Stream::getPending()
 {
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	800254E8
- * Size:	000008
- */
 int Stream::getAvailable()
 {
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	800254F0
- * Size:	000004
- */
 void Stream::close()
 {
 }
@@ -295,9 +205,4 @@ void RandomAccessStream::writeTo(int p1, void*, int)
 // 	// UNUSED FUNCTION
 // }
 
-/*
- * --INFO--
- * Address:	800254F8
- * Size:	000008
- */
 // bool Stream::getClosing() { return false; }

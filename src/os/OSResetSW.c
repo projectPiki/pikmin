@@ -7,11 +7,6 @@ static BOOL LastState;
 static OSTime HoldUp;
 static OSTime HoldDown;
 
-/*
- * --INFO--
- * Address:	801FA3B4
- * Size:	0000F4
- */
 void __OSResetSWInterruptHandler(__OSInterrupt interrupt, OSContext* context)
 {
 	OSResetCallback callback;
@@ -42,11 +37,6 @@ OSResetCallback OSSetResetCallback(OSResetCallback)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801FA4A8
- * Size:	0001F4
- */
 BOOL OSGetResetSwitchState(void)
 {
 	BOOL enabled;

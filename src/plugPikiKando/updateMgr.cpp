@@ -22,22 +22,12 @@ DEFINE_ERROR(5)
  */
 DEFINE_PRINT("updateMgr");
 
-/*
- * --INFO--
- * Address:	800A5444
- * Size:	000014
- */
 UpdateContext::UpdateContext()
 {
 	mMgr          = nullptr;
 	mMgrSlotIndex = -1;
 }
 
-/*
- * --INFO--
- * Address:	800A5458
- * Size:	00004C
- */
 bool UpdateContext::updatable()
 {
 	if (!mMgr) {
@@ -51,22 +41,12 @@ bool UpdateContext::updatable()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800A54A4
- * Size:	000030
- */
 void UpdateContext::init(UpdateMgr* mgr)
 {
 	mMgr = mgr;
 	mgr->addClient(this);
 }
 
-/*
- * --INFO--
- * Address:	800A54D4
- * Size:	00004C
- */
 void UpdateContext::exit()
 {
 	if (mMgr) {
@@ -76,11 +56,6 @@ void UpdateContext::exit()
 	mIsPiki = false;
 }
 
-/*
- * --INFO--
- * Address:	800A5520
- * Size:	00001C
- */
 UpdateMgr::UpdateMgr()
 {
 	mClientSlotList       = nullptr;
@@ -90,11 +65,6 @@ UpdateMgr::UpdateMgr()
 	mCurrentIndex         = 0;
 }
 
-/*
- * --INFO--
- * Address:	800A553C
- * Size:	000024
- */
 void UpdateMgr::update()
 {
 	if (++mCurrentIndex >= mSlotCount) {
@@ -102,11 +72,6 @@ void UpdateMgr::update()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800A5560
- * Size:	000030
- */
 bool UpdateMgr::updatable(UpdateContext* client)
 {
 	if (!client) {
@@ -120,11 +85,6 @@ bool UpdateMgr::updatable(UpdateContext* client)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800A5590
- * Size:	000094
- */
 void UpdateMgr::create(int slotCount)
 {
 	mSlotCount            = slotCount;
@@ -143,11 +103,6 @@ void UpdateMgr::create(int slotCount)
 	mUnused14 = 0;
 }
 
-/*
- * --INFO--
- * Address:	800A5624
- * Size:	000090
- */
 void UpdateMgr::addClient(UpdateContext* client)
 {
 	int slotIdx       = -1;
@@ -178,11 +133,6 @@ void UpdateMgr::addClient(UpdateContext* client)
 	mClientCount++;
 }
 
-/*
- * --INFO--
- * Address:	800A56B4
- * Size:	00005C
- */
 void UpdateMgr::removeClient(UpdateContext* client)
 {
 	if (client->mMgrSlotIndex < 0 || client->mMgrSlotIndex >= mSlotCount) {

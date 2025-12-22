@@ -4,11 +4,6 @@ static struct __GXFifoObj DisplayListFifo;
 static volatile struct __GXFifoObj* OldCPUFifo;
 static struct __GXData_struct __savedGXdata;
 
-/*
- * --INFO--
- * Address:	802140E8
- * Size:	0000C8
- */
 void GXBeginDisplayList(void* list, u32 size)
 {
 	struct __GXFifoObj* CPUFifo = (struct __GXFifoObj*)GXGetCPUFifo();
@@ -35,11 +30,6 @@ void GXBeginDisplayList(void* list, u32 size)
 	GXSetCPUFifo((GXFifoObj*)&DisplayListFifo);
 }
 
-/*
- * --INFO--
- * Address:	802141B0
- * Size:	0000D4
- */
 unsigned long GXEndDisplayList(void)
 {
 	u32 ov;
@@ -74,11 +64,6 @@ unsigned long GXEndDisplayList(void)
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80214284
- * Size:	000070
- */
 void GXCallDisplayList(void* list, u32 nbytes)
 {
 	CHECK_GXBEGIN(0xEC, "GXCallDisplayList");

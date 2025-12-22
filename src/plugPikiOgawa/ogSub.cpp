@@ -33,21 +33,11 @@ static char numStrBuf[0x100]  = {};
 static char formatStr[0x100]  = {};
 static int SpecialNumber[100] = {};
 
-/*
- * --INFO--
- * Address:	8017E850
- * Size:	00002C
- */
 bool ogCheckInsCard()
 {
 	return gameflow.mMemoryCard.isCardInserted();
 }
 
-/*
- * --INFO--
- * Address:	8017E87C
- * Size:	000068
- */
 f32 calcPuruPuruScale(f32 p1)
 {
 	STACK_PAD_VAR(1);
@@ -60,22 +50,12 @@ f32 calcPuruPuruScale(f32 p1)
 	return (NMathF::cos(2.0f * TAU * val) + 1.0f) * x + 1.0f;
 }
 
-/*
- * --INFO--
- * Address:	8017E8E4
- * Size:	000174
- */
 void setNumberTag(P2DScreen* screen, u32 tag, int* valuePtr, int digit)
 {
 	P2DPane* pane = screen->search(tag, true);
 	pane->setCallBack(new NumberPicCallBack<int>(pane, valuePtr, digit, false));
 }
 
-/*
- * --INFO--
- * Address:	8017EA94
- * Size:	000064
- */
 void setTextColor(P2DTextBox* tbox, P2DPicture* pic)
 {
 	Colour white = tbox->getCharColor();
@@ -85,11 +65,6 @@ void setTextColor(P2DTextBox* tbox, P2DPicture* pic)
 	pic->setBlack(black);
 }
 
-/*
- * --INFO--
- * Address:	8017EAF8
- * Size:	000088
- */
 bool getStringCVS(char* p1, immut char* p2, s16 p3)
 {
 	s16 count = 512;
@@ -123,11 +98,6 @@ bool getStringCVS(char* p1, immut char* p2, s16 p3)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8017EB80
- * Size:	000328
- */
 PikaAlphaMgr::PikaAlphaMgr(P2DScreen* screen)
 {
 	mAlphaCount = 0;
@@ -199,11 +169,6 @@ PikaAlphaMgr::PikaAlphaMgr(P2DScreen* screen)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8017EEA8
- * Size:	00006C
- */
 void PikaAlphaMgr::start()
 {
 	mState = 0;
@@ -212,11 +177,6 @@ void PikaAlphaMgr::start()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8017EF14
- * Size:	000084
- */
 void PikaAlphaMgr::startFadeIn(f32 p1)
 {
 	mState = 1;
@@ -225,11 +185,6 @@ void PikaAlphaMgr::startFadeIn(f32 p1)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8017EF98
- * Size:	000084
- */
 void PikaAlphaMgr::startFadeOut(f32 p1)
 {
 	mState = 2;
@@ -238,11 +193,6 @@ void PikaAlphaMgr::startFadeOut(f32 p1)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8017F01C
- * Size:	000118
- */
 void PikaAlphaMgr::update()
 {
 	int i;
@@ -274,11 +224,6 @@ void PikaAlphaMgr::update()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8017F134
- * Size:	0000F0
- */
 setTenmetuAlpha::setTenmetuAlpha(P2DPicture* pic, f32 p2, f32 p3, u8 p4, u8 p5)
 {
 	mMode              = MODE_Stopped;
@@ -296,11 +241,6 @@ setTenmetuAlpha::setTenmetuAlpha(P2DPicture* pic, f32 p2, f32 p3, u8 p4, u8 p5)
 	mFadeDuration      = 1.0f;
 }
 
-/*
- * --INFO--
- * Address:	8017F224
- * Size:	0000F0
- */
 setTenmetuAlpha::setTenmetuAlpha(P2DPicture* pic, f32 p2)
 {
 	mMode              = MODE_Stopped;
@@ -318,11 +258,6 @@ setTenmetuAlpha::setTenmetuAlpha(P2DPicture* pic, f32 p2)
 	mFadeDuration      = 1.0f;
 }
 
-/*
- * --INFO--
- * Address:	8017F314
- * Size:	000368
- */
 void setTenmetuAlpha::updateColor()
 {
 	if (mColorCount > 0) {
@@ -361,11 +296,6 @@ void setTenmetuAlpha::updateColor()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8017F67C
- * Size:	000024
- */
 void setTenmetuAlpha::start()
 {
 	mCurrentColorIndex = 0;
@@ -374,11 +304,6 @@ void setTenmetuAlpha::start()
 	mMode              = MODE_Running;
 }
 
-/*
- * --INFO--
- * Address:	8017F6A0
- * Size:	000060
- */
 void setTenmetuAlpha::startFadeIn(f32 p1, f32 p2, f32 p3)
 {
 	if (mMode == MODE_Running) {
@@ -400,11 +325,6 @@ void setTenmetuAlpha::startFadeIn(f32 p1, f32 p2, f32 p3)
 	mMode              = MODE_FadeIn;
 }
 
-/*
- * --INFO--
- * Address:	8017F700
- * Size:	000048
- */
 void setTenmetuAlpha::startFadeOut(f32 p1, f32 p2, f32 p3)
 {
 	if (mMode == MODE_Stopped) {
@@ -444,11 +364,6 @@ void setTenmetuAlpha::calcAlpha(f32 p1)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8017F748
- * Size:	000358
- */
 setTenmetuAlpha::TenmetuMode setTenmetuAlpha::update()
 {
 	if (mMode == MODE_Stopped) {
@@ -492,11 +407,6 @@ setTenmetuAlpha::TenmetuMode setTenmetuAlpha::update()
 	return mMode;
 }
 
-/*
- * --INFO--
- * Address:	8017FAA0
- * Size:	000080
- */
 ogFadeMgr::ogFadeMgr(P2DPane* pane, u8 p2)
 {
 	mState        = STATUS_Idle;
@@ -510,11 +420,6 @@ ogFadeMgr::ogFadeMgr(P2DPane* pane, u8 p2)
 	setAlpha();
 }
 
-/*
- * --INFO--
- * Address:	8017FB20
- * Size:	000068
- */
 void ogFadeMgr::start(ogFadeMgr::ogFadeStatusFlag state, f32 p2)
 {
 	if (p2 == 0.0f) {
@@ -536,11 +441,6 @@ void ogFadeMgr::start(ogFadeMgr::ogFadeStatusFlag state, f32 p2)
 	setAlpha();
 }
 
-/*
- * --INFO--
- * Address:	8017FB88
- * Size:	000078
- */
 void ogFadeMgr::setAlpha()
 {
 	switch (mPaneType) {
@@ -560,11 +460,6 @@ void ogFadeMgr::setAlpha()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8017FC00
- * Size:	000140
- */
 ogFadeMgr::ogFadeStatusFlag ogFadeMgr::update()
 {
 	if (mState == STATUS_Idle) {
@@ -608,11 +503,6 @@ void movePicturePos(P2DPicture* alignPic, P2DPicture* movingPic)
 	movingPic->move(x, y);
 }
 
-/*
- * --INFO--
- * Address:	8017FD64
- * Size:	000178
- */
 ogTexAnimSubMgr::ogTexAnimSubMgr(P2DScreen* screen, P2DPicture* pic, P2DTextBox* tbox)
 {
 	char tmpStr[512];
@@ -677,11 +567,6 @@ void ogTexAnimSubMgr::update()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8017FEDC
- * Size:	0000F4
- */
 ogTexAnimMgr::ogTexAnimMgr(P2DScreen* screen)
 {
 	char buf[8];
@@ -703,11 +588,6 @@ ogTexAnimMgr::ogTexAnimMgr(P2DScreen* screen)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8017FFD0
- * Size:	00014C
- */
 void ogTexAnimMgr::update()
 {
 	for (int i = 0; i < mSubMgrCount; i++) {
@@ -715,11 +595,6 @@ void ogTexAnimMgr::update()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8018011C
- * Size:	000030
- */
 int getSpecialNumber(int idx)
 {
 	if (idx < 0 || idx > 99) {
@@ -729,11 +604,6 @@ int getSpecialNumber(int idx)
 	return SpecialNumber[idx];
 }
 
-/*
- * --INFO--
- * Address:	8018014C
- * Size:	00002C
- */
 void setSpecialNumber(int idx, int value)
 {
 	PRINT("setSpecialNumber()  @d%d = %d\n", idx, value);
@@ -744,11 +614,6 @@ void setSpecialNumber(int idx, int value)
 	SpecialNumber[idx] = value;
 }
 
-/*
- * --INFO--
- * Address:	80180178
- * Size:	000218
- */
 void cnvSpecialNumber(char* str)
 {
 	const char* tmp = str;
@@ -828,11 +693,6 @@ void cnvSpecialNumber(char* str)
 	strcpy(str, wkstr);
 }
 
-/*
- * --INFO--
- * Address:	80180390
- * Size:	000090
- */
 TypingTextMgr::TypingTextMgr(P2DTextBox* textBox)
 {
 	mTextBox = textBox;
@@ -846,11 +706,6 @@ TypingTextMgr::TypingTextMgr(P2DTextBox* textBox)
 	mCtrlTagMgr = new ogMsgCtrlTagMgr();
 }
 
-/*
- * --INFO--
- * Address:	80180420
- * Size:	000074
- */
 void TypingTextMgr::start()
 {
 	STACK_PAD_VAR(1);
@@ -863,11 +718,6 @@ void TypingTextMgr::start()
 	mTextBox->setString(mTextBuf);
 }
 
-/*
- * --INFO--
- * Address:	80180494
- * Size:	000160
- */
 ogMsgCtrlTagMgr::ogMsgCtrlTagMgr()
 {
 	P2DScreen* screen = new P2DScreen();
@@ -888,11 +738,6 @@ ogMsgCtrlTagMgr::ogMsgCtrlTagMgr()
 #endif
 }
 
-/*
- * --INFO--
- * Address:	801805F4
- * Size:	0003A8
- */
 bool ogMsgCtrlTagMgr::CheckCtrlTag(immut char* p1, s16* p2, f32* p3)
 {
 	STACK_PAD_VAR(1);
@@ -963,11 +808,6 @@ bool ogMsgCtrlTagMgr::CheckCtrlTag(immut char* p1, s16* p2, f32* p3)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8018099C
- * Size:	000104
- */
 void TypingTextMgr::update()
 {
 	if (mState == STATE_Stopped) {
@@ -999,11 +839,6 @@ void TypingTextMgr::update()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80180AA0
- * Size:	0003B4
- */
 void cnvSpecialNumberHyphen(char* str)
 {
 	const char* tmp = str;

@@ -52,11 +52,6 @@ void Jac_VolMoveStreamBGM(s32 vol, s32)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	800067E0
- * Size:	00039C
- */
 void StreamMain()
 {
 	static DVDFileInfo finfo;

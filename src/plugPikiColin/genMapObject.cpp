@@ -22,62 +22,32 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("genMapObject");
 
-/*
- * --INFO--
- * Address:	8005D0E8
- * Size:	000040
- */
 static GenObject* makeObjectMapObject()
 {
 	return new GenObjectMapObject;
 }
 
-/*
- * --INFO--
- * Address:	8005D128
- * Size:	000068
- */
 GenObjectMapObject::GenObjectMapObject()
     : GenObject('mobj', "create MAP OBJECT")
 {
 	mObjType = 0;
 }
 
-/*
- * --INFO--
- * Address:	8005D190
- * Size:	000090
- */
 void GenObjectMapObject::initialise(MapMgr* mgr)
 {
 	mapMgr = mgr;
 	GenObjectFactory::factory->registerMember('mobj', &makeObjectMapObject, "create MAP OBJECT", 'v0.0');
 }
 
-/*
- * --INFO--
- * Address:	8005D220
- * Size:	000040
- */
 void GenObjectMapObject::doRead(RandomAccessStream& input)
 {
 	mObjType = input.readInt();
 }
 
-/*
- * --INFO--
- * Address:	8005D260
- * Size:	000004
- */
 void GenObjectMapObject::render(Graphics&, Generator*)
 {
 }
 
-/*
- * --INFO--
- * Address:	8005D264
- * Size:	000008
- */
 Creature* GenObjectMapObject::birth(BirthInfo&)
 {
 	Creature* obj = nullptr;

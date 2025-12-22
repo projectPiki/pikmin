@@ -10,11 +10,6 @@ f32 atanf(f32);
 f32 _inv_sqrtf(f32);
 f32 atan__Ff(f32);
 
-/*
- * --INFO--
- * Address:	8021B9F8
- * Size:	0000D8
- */
 f32 atan2f(f32 __y, f32 __x)
 {
 	if (signbit(__x) == signbit(__y)) {
@@ -35,11 +30,6 @@ f32 atan2f(f32 __y, f32 __x)
 	return __y;
 }
 
-/*
- * --INFO--
- * Address:	8021B9B4
- * Size:	000044
- */
 f32 acosf(f32 x)
 {
 	return HALF_PI - atan__Ff(x * _inv_sqrtf(1.0f - x * x));
@@ -47,11 +37,6 @@ f32 acosf(f32 x)
 
 #pragma dont_inline on
 
-/*
- * --INFO--
- * Address:	8021B944
- * Size:	000070
- */
 f32 _inv_sqrtf(f32 x)
 {
 	const f32 _half  = .5f;
@@ -69,11 +54,6 @@ f32 _inv_sqrtf(f32 x)
 	return INFINITY;
 }
 
-/*
- * --INFO--
- * Address:	8021B924
- * Size:	000020
- */
 f32 atan__Ff(f32 x)
 {
 	return atanf(x);
@@ -81,11 +61,6 @@ f32 atan__Ff(f32 x)
 
 #pragma dont_inline reset
 
-/*
- * --INFO--
- * Address:	8021B730
- * Size:	0001F4
- */
 f32 atanf(f32 x)
 {
 	f32 z, z_square;

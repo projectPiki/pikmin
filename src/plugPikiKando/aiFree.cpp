@@ -25,11 +25,6 @@ DEFINE_PRINT("free")
 static int motions[] = { PIKIANIM_Rinbow, PIKIANIM_Akubi, PIKIANIM_Sagasu2, PIKIANIM_Chatting };
 int numMotions       = 4;
 
-/*
- * --INFO--
- * Address:	800BA600
- * Size:	0000CC
- */
 ActFree::ActFree(Piki* piki)
     : Action(piki, true)
 {
@@ -37,11 +32,6 @@ ActFree::ActFree(Piki* piki)
 	mSelectAction = new ActFreeSelect(piki);
 }
 
-/*
- * --INFO--
- * Address:	800BA6CC
- * Size:	0000D0
- */
 void ActFree::initBoid(immut Vector3f& targetPosition, f32 radius)
 {
 	mIsBoidActive   = true;
@@ -57,11 +47,6 @@ void ActFree::initBoid(immut Vector3f& targetPosition, f32 radius)
 	mBoidTimer = 3.0f;
 }
 
-/*
- * --INFO--
- * Address:	800BA79C
- * Size:	0001C4
- */
 void ActFree::exeBoid()
 {
 	Vector3f dirToTarget = mTargetPosition - mPiki->mSRT.t;
@@ -84,11 +69,6 @@ void ActFree::exeBoid()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800BA960
- * Size:	0002F4
- */
 void ActFree::init(Creature*)
 {
 	mIsBoidActive           = false;
@@ -131,11 +111,6 @@ void ActFree::init(Creature*)
 	mFixedPositionTimer = 3.0f;
 }
 
-/*
- * --INFO--
- * Address:	800BAC54
- * Size:	0000AC
- */
 void ActFree::cleanup()
 {
 	mPiki->disableFixPos();
@@ -151,20 +126,10 @@ void ActFree::cleanup()
 	GameStat::update();
 }
 
-/*
- * --INFO--
- * Address:	800BAD00
- * Size:	000004
- */
 void ActFree::animationKeyUpdated(immut PaniAnimKeyEvent&)
 {
 }
 
-/*
- * --INFO--
- * Address:	800BAD04
- * Size:	0000F0
- */
 int ActFree::exec()
 {
 	Creature* target;
@@ -197,11 +162,6 @@ int ActFree::exec()
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	800BADF4
- * Size:	0000D8
- */
 void ActFree::procCollideMsg(Piki* piki, MsgCollide* msg)
 {
 	if (mCollisionCooldownTimer > 0.0f || mIsBoidActive) {

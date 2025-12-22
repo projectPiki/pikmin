@@ -73,11 +73,6 @@ static inline void readDDF_Colour(Colour* outColour, u8*& data, u32 size)
 	data += size;
 }
 
-/*
- * --INFO--
- * Address:	8019CD0C
- * Size:	00024C
- */
 void zen::particleGenerator::init(u8* data, Texture* tex1, Texture* tex2, immut Vector3f& pos, zen::particleMdlManager* mdlMgr,
                                   zen::CallBack1<zen::particleGenerator*>* cb1,
                                   zen::CallBack2<zen::particleGenerator*, zen::particleMdl*>* cb2)
@@ -142,11 +137,6 @@ void zen::particleGenerator::init(u8* data, Texture* tex1, Texture* tex2, immut 
 	}
 }
 
-/*
- * --INFO--
- * Address:	8019CF58
- * Size:	000154
- */
 bool zen::particleGenerator::update(f32 timeStep)
 {
 	bool res = false;
@@ -185,11 +175,6 @@ bool zen::particleGenerator::update(f32 timeStep)
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	8019D0AC
- * Size:	000178
- */
 void zen::particleGenerator::draw(Graphics& gfx)
 {
 	if (mControlFlags & PTCLCTRL_Visible) {
@@ -213,11 +198,6 @@ void zen::particleGenerator::draw(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8019D224
- * Size:	000B58
- */
 void zen::particleGenerator::pmSetDDF(u8* data)
 {
 	if (!data) {
@@ -399,11 +379,6 @@ f32 zen::particleGenerator::pmIntpLinear(f32* frameThresholds, f32* values)
 	     / (frameThresholds[i] - frameThresholds[i - 1]);
 }
 
-/*
- * --INFO--
- * Address:	8019DD7C
- * Size:	0002F8
- */
 void zen::particleGenerator::SetPtclsLife()
 {
 	if (mParticleFlags & PTCLFLAG_DisableEmission) {
@@ -440,11 +415,6 @@ void zen::particleGenerator::SetPtclsLife()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8019E074
- * Size:	000F00
- */
 void zen::particleGenerator::PtclsGen(zen::particleMdl* ptcl)
 {
 	Vector3f ptclPos;
@@ -641,11 +611,6 @@ void zen::particleGenerator::PtclsGen(zen::particleMdl* ptcl)
 	ptcl->mGlobalPosition = getGPos();
 }
 
-/*
- * --INFO--
- * Address:	8019EF74
- * Size:	000754
- */
 void zen::particleGenerator::pmCalcAccel(zen::particleMdl* ptcl)
 {
 	if (mParticleFlags & PTCLFLAG_UseGravityField) {
@@ -776,11 +741,6 @@ void zen::particleGenerator::pmCalcAccel(zen::particleMdl* ptcl)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8019F6C8
- * Size:	000648
- */
 void zen::particleGenerator::UpdatePtclsStatus(f32 timeStep)
 {
 	f32 dragFactor  = mDrag - Rand(mDragJitter);
@@ -885,11 +845,6 @@ void zen::particleGenerator::UpdatePtclsStatus(f32 timeStep)
 	updatePtclChildren(timeStep);
 }
 
-/*
- * --INFO--
- * Address:	8019FD10
- * Size:	0001C4
- */
 void zen::particleGenerator::ClearPtclsStatus(Texture* tex, Texture* childTex)
 {
 	mTexture      = tex;
@@ -946,11 +901,6 @@ void zen::particleGenerator::ClearPtclsStatus(Texture* tex, Texture* childTex)
 	mOrientedNormal.set(0.0f, 1.0f, 0.0f);
 }
 
-/*
- * --INFO--
- * Address:	8019FED4
- * Size:	0001DC
- */
 void zen::particleGenerator::drawPtclBillboard(Graphics& gfx)
 {
 	gfx.useMatrix(gfx.mCamera->mLookAtMtx, 0);
@@ -975,11 +925,6 @@ void zen::particleGenerator::drawPtclBillboard(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801A00B0
- * Size:	0006A8
- */
 void zen::particleGenerator::drawPtclOriented(Graphics& gfx)
 {
 	gfx.setBlendMode(mBlendFactor, mZMode, mAnimData.mBlendMode);
@@ -1587,11 +1532,6 @@ void zen::particleGenerator::drawPtclOriented(Graphics& gfx)
 	*/
 }
 
-/*
- * --INFO--
- * Address:	801A0758
- * Size:	00003C
- */
 void zen::particleGenerator::RotAxisX(Mtx& mtx, f32& p2, f32& p3)
 {
 	mtx[1][1] = mtx[2][2] = p3;
@@ -1603,11 +1543,6 @@ void zen::particleGenerator::RotAxisX(Mtx& mtx, f32& p2, f32& p3)
 	mtx[0][0]                                     = 1.0f;
 }
 
-/*
- * --INFO--
- * Address:	801A0794
- * Size:	00003C
- */
 void zen::particleGenerator::RotAxisY(Mtx& mtx, f32& p2, f32& p3)
 {
 	mtx[0][0] = mtx[2][2] = p3;
@@ -1619,11 +1554,6 @@ void zen::particleGenerator::RotAxisY(Mtx& mtx, f32& p2, f32& p3)
 	mtx[1][1]                                     = 1.0f;
 }
 
-/*
- * --INFO--
- * Address:	801A07D0
- * Size:	00003C
- */
 void zen::particleGenerator::RotAxisZ(Mtx& mtx, f32& p2, f32& p3)
 {
 	mtx[0][0] = mtx[1][1] = p3;
@@ -1635,11 +1565,6 @@ void zen::particleGenerator::RotAxisZ(Mtx& mtx, f32& p2, f32& p3)
 	mtx[2][2]                                     = 1.0f;
 }
 
-/*
- * --INFO--
- * Address:	801A080C
- * Size:	000054
- */
 void zen::particleGenerator::RotAxisXY(Mtx& mtx, f32& p2, f32& p3)
 {
 	mtx[0][0] = mtx[1][1] = p3;
@@ -1652,11 +1577,6 @@ void zen::particleGenerator::RotAxisXY(Mtx& mtx, f32& p2, f32& p3)
 	mtx[1][0] = 0.0f;
 }
 
-/*
- * --INFO--
- * Address:	801A0860
- * Size:	00005C
- */
 void zen::particleGenerator::RotAxisXZ(Mtx& mtx, f32& p2, f32& p3)
 {
 	mtx[0][0] = mtx[2][2] = p3;
@@ -1675,11 +1595,6 @@ void zen::particleGenerator::RotAxisXZ(Mtx& mtx, f32& p2, f32& p3)
 	mtx[2][0] = 0.0f;
 }
 
-/*
- * --INFO--
- * Address:	801A08BC
- * Size:	00005C
- */
 void zen::particleGenerator::RotAxisYZ(Mtx& mtx, f32& p2, f32& p3)
 {
 	mtx[1][1] = mtx[2][2] = p3;
@@ -1698,11 +1613,6 @@ void zen::particleGenerator::RotAxisYZ(Mtx& mtx, f32& p2, f32& p3)
 	mtx[2][1] = 0.0f;
 }
 
-/*
- * --INFO--
- * Address:	801A0918
- * Size:	00008C
- */
 void zen::particleGenerator::RotAxisXYZ(Mtx& mtx, f32& p2, f32& p3)
 {
 	mtx[0][0] = mtx[2][2] = p3 * p3;
@@ -1713,11 +1623,6 @@ void zen::particleGenerator::RotAxisXYZ(Mtx& mtx, f32& p2, f32& p3)
 	mtx[2][0]             = p2 * (p2 + p3 * p3);
 }
 
-/*
- * --INFO--
- * Address:	801A09A4
- * Size:	000110
- */
 void zen::particleGenerator::updatePtclChildren(f32 timeStep)
 {
 	zenList* orig = mPtclChildListManager.getOrigin();
@@ -1744,11 +1649,6 @@ void zen::particleGenerator::updatePtclChildren(f32 timeStep)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801A0AB4
- * Size:	000148
- */
 void zen::particleGenerator::drawPtclChildren(Graphics& gfx)
 {
 	gfx.useMatrix(gfx.mCamera->mLookAtMtx, 0);
@@ -1773,11 +1673,6 @@ void zen::particleGenerator::drawPtclChildren(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801A0BFC
- * Size:	0000CC
- */
 void zen::particleGenerator::forceFinish()
 {
 	finish();
@@ -1790,11 +1685,6 @@ void zen::particleGenerator::forceFinish()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801A0CC8
- * Size:	000034
- */
 bool zen::particleGenerator::finish(zen::CallBack1<zen::particleGenerator*>* cbGen,
                                     zen::CallBack2<zen::particleGenerator*, zen::particleMdl*>* cbPtcl)
 {
@@ -1807,11 +1697,6 @@ bool zen::particleGenerator::finish(zen::CallBack1<zen::particleGenerator*>* cbG
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	801A0CFC
- * Size:	0000F0
- */
 bool zen::particleGenerator::forceFinish(zen::CallBack1<zen::particleGenerator*>* cbGen,
                                          zen::CallBack2<zen::particleGenerator*, zen::particleMdl*>* cbPtcl)
 {
@@ -1824,11 +1709,6 @@ bool zen::particleGenerator::forceFinish(zen::CallBack1<zen::particleGenerator*>
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	801A0DEC
- * Size:	000070
- */
 zen::particleMdl* zen::particleGenerator::pmGetParticle()
 {
 	zenList* ptcl = mMdlMgr->getPtcl();
@@ -1838,11 +1718,6 @@ zen::particleMdl* zen::particleGenerator::pmGetParticle()
 	return (particleMdl*)ptcl;
 }
 
-/*
- * --INFO--
- * Address:	801A0EB0
- * Size:	000074
- */
 zen::particleChildMdl* zen::particleGenerator::pmGetParticleChild()
 {
 	zenList* child = mMdlMgr->getPtclChild();

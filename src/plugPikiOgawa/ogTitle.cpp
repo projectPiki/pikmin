@@ -53,11 +53,6 @@ void zen::ogScrTitleMgr::setGamePrefs()
 	gameflow.mGamePrefs.setChildMode(mChildMode);
 }
 
-/*
- * --INFO--
- * Address:	80181090
- * Size:	0004A8
- */
 zen::ogScrTitleMgr::ogScrTitleMgr()
 {
 	mMenu1   = new DrawMenu("screen/blo/m_select.blo", false, false);
@@ -133,11 +128,6 @@ zen::ogScrTitleMgr::ogScrTitleMgr()
 	DispBarSE(false);
 }
 
-/*
- * --INFO--
- * Address:	80181538
- * Size:	0000E4
- */
 void zen::ogScrTitleMgr::start(bool hasChallenge)
 {
 	getGamePrefs();
@@ -163,11 +153,6 @@ void zen::ogScrTitleMgr::start(bool hasChallenge)
 	_9A           = 3;
 }
 
-/*
- * --INFO--
- * Address:	8018161C
- * Size:	0009F8
- */
 zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 {
 	STACK_PAD_VAR(8);
@@ -489,11 +474,6 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 	return mStatus;
 }
 
-/*
- * --INFO--
- * Address:	80182014
- * Size:	000098
- */
 void zen::ogScrTitleMgr::draw(Graphics& gfx)
 {
 	if (mStatus != Status_Null && mStatus != Status_1) {
@@ -517,11 +497,6 @@ void zen::ogScrTitleMgr::draw(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801820AC
- * Size:	0000C4
- */
 void zen::ogScrTitleMgr::StereoOnOff(bool set)
 {
 	if (mStereoMode) {
@@ -543,11 +518,6 @@ void zen::ogScrTitleMgr::StereoOnOff(bool set)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80182170
- * Size:	0000D4
- */
 void zen::ogScrTitleMgr::DispBarBGM(bool set)
 {
 	for (int i = 0; i < 10; i++) {
@@ -567,11 +537,6 @@ void zen::ogScrTitleMgr::DispBarBGM(bool set)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80182244
- * Size:	0000D4
- */
 void zen::ogScrTitleMgr::DispBarSE(bool set)
 {
 	for (int i = 0; i < 10; i++) {

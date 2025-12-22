@@ -28,11 +28,6 @@ Texture* zen::ArrowCenterCallBack::pDownTex;
 const f32 zen::WindowPaneMgr::weightPosLength  = 50.0f;
 const f32 zen::WindowPaneMgr::weightPosGravity = 9.8f;
 
-/*
- * --INFO--
- * Address:	801BA600
- * Size:	002CAC
- */
 zen::DrawContainer::DrawContainer()
     : mZenController(nullptr)
 {
@@ -137,11 +132,6 @@ zen::DrawContainer::DrawContainer()
 	mContainerTextures[2] = loadTexExp("screen/tex/p2b_c_y.bti", true, true);
 }
 
-/*
- * --INFO--
- * Address:	801BD5D4
- * Size:	0004B8
- */
 void zen::DrawContainer::start(zen::DrawContainer::containerType color, int p2, int p3, int p4, int p5, int p6, int p7)
 {
 	if (!mIsActive) {
@@ -190,11 +180,6 @@ void zen::DrawContainer::start(zen::DrawContainer::containerType color, int p2, 
 	}
 }
 
-/*
- * --INFO--
- * Address:	801BDBF0
- * Size:	000038
- */
 void zen::DrawContainer::setDispParam()
 {
 	mContainerPikiNum = mInitialContainerCount + mTransferDelta;
@@ -243,11 +228,6 @@ bool zen::DrawContainer::startStatus()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	801BDC28
- * Size:	000C20
- */
 bool zen::DrawContainer::operationStatus()
 {
 	mFrameTimer += gsys->getFrameTime() * 0.2f;
@@ -360,11 +340,6 @@ bool zen::DrawContainer::endStatus()
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	801BE848
- * Size:	00052C
- */
 bool zen::DrawContainer::update(int& p1)
 {
 	bool res = false;
@@ -398,11 +373,6 @@ bool zen::DrawContainer::update(int& p1)
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	801BF138
- * Size:	00005C
- */
 void zen::DrawContainer::draw(Graphics& gfx)
 {
 	if (mIsActive) {

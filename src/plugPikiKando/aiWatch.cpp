@@ -15,20 +15,10 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT(nullptr)
 
-/*
- * --INFO--
- * Address:	800C2C54
- * Size:	000004
- */
 void ActWatch::AnimListener::animationKeyUpdated(immut PaniAnimKeyEvent&)
 {
 }
 
-/*
- * --INFO--
- * Address:	800C2C58
- * Size:	0000C4
- */
 ActWatch::ActWatch(Piki* piki)
     : Action(piki, true)
 {
@@ -36,20 +26,10 @@ ActWatch::ActWatch(Piki* piki)
 	mListener = new AnimListener(this, piki);
 }
 
-/*
- * --INFO--
- * Address:	800C2D1C
- * Size:	000004
- */
 void ActWatch::Initialiser::initialise(Action*)
 {
 }
 
-/*
- * --INFO--
- * Address:	800C2D20
- * Size:	000148
- */
 void ActWatch::init(Creature* target)
 {
 	if (target) {
@@ -62,32 +42,17 @@ void ActWatch::init(Creature* target)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800C2E68
- * Size:	000048
- */
 void ActWatch::cleanup()
 {
 	mTarget.reset();
 	mPiki->finishLook();
 }
 
-/*
- * --INFO--
- * Address:	800C2EB0
- * Size:	000038
- */
 void ActWatch::getInfo(char* buffer)
 {
 	sprintf(buffer, "watch(%d)", mWatchRetryTimer);
 }
 
-/*
- * --INFO--
- * Address:	800C2EE8
- * Size:	00015C
- */
 int ActWatch::exec()
 {
 	Creature* target = mTarget.getPtr();

@@ -18,11 +18,6 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("baseApp");
 
-/*
- * --INFO--
- * Address:	80024DFC
- * Size:	0000D8
- */
 BaseApp::BaseApp()
 {
 	mIsReadyToDraw = FALSE;
@@ -110,11 +105,6 @@ void BaseApp::stopAgeServer()
 #endif
 }
 
-/*
- * --INFO--
- * Address:	80024EDC
- * Size:	000048
- */
 void BaseApp::softReset()
 {
 	stopAgeServer();
@@ -123,11 +113,6 @@ void BaseApp::softReset()
 	gsys->initSoftReset();
 }
 
-/*
- * --INFO--
- * Address:	80024F24
- * Size:	0000A4
- */
 BaseApp::~BaseApp()
 {
 	PRINT("default baseApp deconstructor\n");

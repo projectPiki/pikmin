@@ -15,11 +15,6 @@ DEFINE_ERROR(7)
  */
 DEFINE_PRINT("pickCreature\n")
 
-/*
- * --INFO--
- * Address:	800BD364
- * Size:	0000CC
- */
 ActPickCreature::ActPickCreature(Piki* piki)
     : AndAction(piki)
 {
@@ -29,11 +24,6 @@ ActPickCreature::ActPickCreature(Piki* piki)
 	);
 }
 
-/*
- * --INFO--
- * Address:	800BD430
- * Size:	000020
- */
 void ActPickCreature::init(Creature* target)
 {
 	ERROR("don't use this!\n"); // lol
@@ -65,22 +55,12 @@ ActDeliver::ActDeliver(Piki* piki)
 	);
 }
 
-/*
- * --INFO--
- * Address:	800BD450
- * Size:	000064
- */
 void ActDeliver::Initialiser::initialise(Action* deliverAction)
 {
 	ActDeliver* deliver = static_cast<ActDeliver*>(deliverAction);
 	deliver->mObject.set(mObject);
 }
 
-/*
- * --INFO--
- * Address:	800BD4B4
- * Size:	000084
- */
 void ActDeliver::init(Creature* target)
 {
 	AndAction::init(target);

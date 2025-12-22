@@ -38,11 +38,6 @@ DEFINE_ERROR(74)
  */
 DEFINE_PRINT("Transport")
 
-/*
- * --INFO--
- * Address:	800AEC80
- * Size:	000290
- */
 void ActTransport::turnOver()
 {
 	if (!isStickLeader()) {
@@ -111,11 +106,6 @@ int ActTransport::exeWait()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800AEF10
- * Size:	000150
- */
 bool ActTransport::isStickLeader()
 {
 	Pellet* pel = mPellet.getPtr();
@@ -135,11 +125,6 @@ bool ActTransport::isStickLeader()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800AF060
- * Size:	000190
- */
 f32 ActTransport::getCarriers()
 {
 	STACK_PAD_VAR(1);
@@ -202,11 +187,6 @@ int ActTransport::calcNumStickers()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	800AF1F0
- * Size:	0000F4
- */
 ActTransport::ActTransport(Piki* piki)
     : Action(piki, true)
 {
@@ -214,11 +194,6 @@ ActTransport::ActTransport(Piki* piki)
 	mPathIndex = -1;
 }
 
-/*
- * --INFO--
- * Address:	800AF2E4
- * Size:	000160
- */
 Pellet* ActTransport::findPellet()
 {
 	Iterator iter(pelletMgr);
@@ -242,11 +217,6 @@ Pellet* ActTransport::findPellet()
 	return closestPellet;
 }
 
-/*
- * --INFO--
- * Address:	800AF444
- * Size:	000160
- */
 void ActTransport::init(Creature* target)
 {
 	mPiki->mActionState = 1;
@@ -274,11 +244,6 @@ void ActTransport::init(Creature* target)
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Walk), PaniMotionInfo(PIKIANIM_Walk));
 }
 
-/*
- * --INFO--
- * Address:	800AF5A4
- * Size:	00004C
- */
 void ActTransport::setSlotIndex()
 {
 	Pellet* pel = mPellet.getPtr();
@@ -289,11 +254,6 @@ void ActTransport::setSlotIndex()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800AF5F0
- * Size:	000194
- */
 void ActTransport::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
@@ -340,11 +300,6 @@ void ActTransport::initJump()
 	mState             = STATE_Jump;
 }
 
-/*
- * --INFO--
- * Address:	800AF784
- * Size:	0004F0
- */
 int ActTransport::execJump()
 {
 	Pellet* pel = mPellet.getPtr();
@@ -429,11 +384,6 @@ int ActTransport::execJump()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800AFC74
- * Size:	000740
- */
 bool ActTransport::gotoLiftPos()
 {
 	Pellet* pellet = mPellet.getPtr();
@@ -556,11 +506,6 @@ bool ActTransport::gotoLiftPos()
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	800B03B4
- * Size:	000664
- */
 void ActTransport::doLift()
 {
 	Pellet* pel = mPellet.getPtr();
@@ -685,11 +630,6 @@ void ActTransport::doLift()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800B0A18
- * Size:	000168
- */
 bool ActTransport::useWaterRoute()
 {
 	Pellet* pel      = mPellet.getPtr();
@@ -716,11 +656,6 @@ bool ActTransport::useWaterRoute()
 	return onlyBlueCarry;
 }
 
-/*
- * --INFO--
- * Address:	800B0B80
- * Size:	0008B4
- */
 int ActTransport::exec()
 {
 	Pellet* pel = mPellet.getPtr();
@@ -899,11 +834,6 @@ int ActTransport::exec()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800B1434
- * Size:	0008A8
- */
 int ActTransport::moveGuruGuru()
 {
 	Pellet* pel = mPellet.getPtr();
@@ -1010,11 +940,6 @@ int ActTransport::moveGuruGuru()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800B1CDC
- * Size:	000318
- */
 void ActTransport::decideGoal(Creature* cargo)
 {
 	Pellet* pel = mPellet.getPtr();
@@ -1091,11 +1016,6 @@ void ActTransport::decideGoal(Creature* cargo)
 	STACK_PAD_VAR(1);
 }
 
-/*
- * --INFO--
- * Address:	800B1FF4
- * Size:	0001B8
- */
 void ActTransport::cleanup()
 {
 	mPiki->endStickObject();
@@ -1116,11 +1036,6 @@ void ActTransport::cleanup()
 	mPellet.reset();
 }
 
-/*
- * --INFO--
- * Address:	800B21AC
- * Size:	0001D8
- */
 Vector3f ActTransport::crGetPoint(int idx)
 {
 	if (!mGoal) {
@@ -1152,11 +1067,6 @@ Vector3f ActTransport::crGetPoint(int idx)
 	return wp->mPosition;
 }
 
-/*
- * --INFO--
- * Address:	800B2384
- * Size:	00008C
- */
 bool ActTransport::crPointOpen(int idx)
 {
 	if (idx < 0 || idx >= mNumRoutePoints) {
@@ -1191,11 +1101,6 @@ f32 ActTransport::crGetRadius(int idx)
 	return routeMgr->getWayPoint('test', mPiki->mPathBuffers[idx].mWayPointIdx)->mRadius;
 }
 
-/*
- * --INFO--
- * Address:	800B2410
- * Size:	000514
- */
 void ActTransport::crInit()
 {
 	Pellet* pel     = mPellet.getPtr();
@@ -1263,11 +1168,6 @@ void ActTransport::crInit()
 	STACK_PAD_TERNARY(mPiki, 1);
 }
 
-/*
- * --INFO--
- * Address:	800B2924
- * Size:	000080
- */
 void ActTransport::crMakeRefs()
 {
 	for (int i = 0; i < 4; i++) {
@@ -1275,11 +1175,6 @@ void ActTransport::crMakeRefs()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800B29A4
- * Size:	00032C
- */
 void ActTransport::findObstacle()
 {
 	_48              = 0;
@@ -1306,11 +1201,6 @@ void ActTransport::findObstacle()
 	STACK_PAD_INLINE(2);
 }
 
-/*
- * --INFO--
- * Address:	800B2CD0
- * Size:	00094C
- */
 bool ActTransport::crMove()
 {
 #if 0 // Seems to only exist in the DLL, and it's very repetitive.
@@ -1464,11 +1354,6 @@ bool ActTransport::crMove()
 #undef ASSERT_MVDIR_NOTNAN
 }
 
-/*
- * --INFO--
- * Address:	800B361C
- * Size:	0007C4
- */
 void ActTransport::draw(Graphics& gfx)
 {
 	if (!AIPerf::kandoOnly) {
@@ -1562,11 +1447,6 @@ void ActTransport::draw(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800B3DE0
- * Size:	0006FC
- */
 int ActTransport::moveToWayPoint()
 {
 	Pellet* pel         = mPellet.getPtr();

@@ -21,22 +21,12 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("radarInfo");
 
-/*
- * --INFO--
- * Address:	8007B564
- * Size:	0000C8
- */
 RadarInfo::RadarInfo()
 {
 	mAlivePartsList.initCore("alive");
 	mDeadPartsList.initCore("dead ");
 }
 
-/*
- * --INFO--
- * Address:	8007B62C
- * Size:	0000E8
- */
 void RadarInfo::attachParts(Creature* part)
 {
 	// check if part is already alive/attached
@@ -61,11 +51,6 @@ void RadarInfo::attachParts(Creature* part)
 	newInfo->mPart = part;
 }
 
-/*
- * --INFO--
- * Address:	8007B714
- * Size:	000070
- */
 void RadarInfo::detachParts(Creature* part)
 {
 	// find part and detach it
@@ -80,11 +65,6 @@ void RadarInfo::detachParts(Creature* part)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8007B784
- * Size:	000044
- */
 Vector3f RadarInfo::PartsInfo::getPos()
 {
 	if (mPart) {

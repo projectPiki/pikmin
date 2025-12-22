@@ -97,11 +97,6 @@ ResultFlags::FlagInfo ResultFlags::flagTable[] = {
 	{ RESFLAG_NULL, 0, 0, 0 },                                                            // END
 };
 
-/*
- * --INFO--
- * Address:	8008358C
- * Size:	0001BC
- */
 ResultFlags::ResultFlags()
 {
 	int max    = 38;
@@ -140,11 +135,6 @@ ResultFlags::ResultFlags()
 	setSeen(RESFLAG_BluePikminWaterImmunity);
 }
 
-/*
- * --INFO--
- * Address:	80083748
- * Size:	000178
- */
 void ResultFlags::initGame()
 {
 	for (int i = 0; i < mLength; i++) {
@@ -172,11 +162,6 @@ void ResultFlags::initGame()
 	setSeen(RESFLAG_BluePikminWaterImmunity);
 }
 
-/*
- * --INFO--
- * Address:	800838C0
- * Size:	0000A4
- */
 void ResultFlags::saveCard(RandomAccessStream& stream)
 {
 	int i = 0;
@@ -189,11 +174,6 @@ void ResultFlags::saveCard(RandomAccessStream& stream)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80083964
- * Size:	00009C
- */
 void ResultFlags::loadCard(RandomAccessStream& stream)
 {
 	int i = 0;
@@ -206,11 +186,6 @@ void ResultFlags::loadCard(RandomAccessStream& stream)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80083A00
- * Size:	000050
- */
 void ResultFlags::setOn(int flag)
 {
 	if (!getFlag(flag)) {
@@ -218,21 +193,11 @@ void ResultFlags::setOn(int flag)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80083A50
- * Size:	000024
- */
 void ResultFlags::setSeen(int flag)
 {
 	setFlag(flag, 2);
 }
 
-/*
- * --INFO--
- * Address:	80083A74
- * Size:	0000A0
- */
 int ResultFlags::getDayDocument(int dayIndex, int& length)
 {
 	int id = mDaysSeen[dayIndex];
@@ -259,11 +224,6 @@ int ResultFlags::getDayDocument(int dayIndex, int& length)
 	return -1;
 }
 
-/*
- * --INFO--
- * Address:	80083B14
- * Size:	000180
- */
 int ResultFlags::getDocument(int& out)
 {
 
@@ -333,11 +293,6 @@ int ResultFlags::FlagInfo::type()
 	return 600;
 }
 
-/*
- * --INFO--
- * Address:	80083C94
- * Size:	00010C
- */
 void ResultFlags::dump()
 {
 	int prev = 0;
@@ -380,11 +335,6 @@ void ResultFlags::dump()
 	PRINT("*************************************************\n");
 }
 
-/*
- * --INFO--
- * Address:	80083DA0
- * Size:	000030
- */
 u8 ResultFlags::getFlag(int index)
 {
 	int a = mScreenToTableList[index];
@@ -392,11 +342,6 @@ u8 ResultFlags::getFlag(int index)
 	return mStates[b] >> ((a - b * 4) * 2) & 3;
 }
 
-/*
- * --INFO--
- * Address:	80083DD0
- * Size:	000090
- */
 void ResultFlags::setFlag(int index, u8 flag)
 {
 	int tableIdx = mScreenToTableList[index];

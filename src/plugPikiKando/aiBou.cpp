@@ -16,11 +16,6 @@ DEFINE_ERROR(18)
  */
 DEFINE_PRINT("Bou")
 
-/*
- * --INFO--
- * Address:	800AC79C
- * Size:	00006C
- */
 ActBou::ActBou(Piki* piki)
     : Action(piki, true)
 {
@@ -28,11 +23,6 @@ ActBou::ActBou(Piki* piki)
 	mCurrActionIdx = PikiAction::NOACTION;
 }
 
-/*
- * --INFO--
- * Address:	800AC808
- * Size:	0000A8
- */
 void ActBou::init(Creature* creature)
 {
 	if (creature && creature->mObjType == OBJTYPE_Kusa) {
@@ -54,11 +44,6 @@ void ActBou::init(Creature* creature)
 	mTimeoutCounter = 120;
 }
 
-/*
- * --INFO--
- * Address:	800AC8B0
- * Size:	00004C
- */
 int ActBou::exec()
 {
 	switch (mState) {
@@ -72,11 +57,6 @@ int ActBou::exec()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800AC8FC
- * Size:	000210
- */
 int ActBou::gotoLeg()
 {
 	if (mPiki->mStickPart) {
@@ -111,11 +91,6 @@ int ActBou::gotoLeg()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800ACB0C
- * Size:	000180
- */
 void ActBou::procCollideMsg(Piki* piki, MsgCollide* msg)
 {
 	if (msg->mEvent.mCollider != mTargetStick) {
@@ -153,11 +128,6 @@ void ActBou::procCollideMsg(Piki* piki, MsgCollide* msg)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800ACC8C
- * Size:	000108
- */
 int ActBou::climb()
 {
 	if (!mPiki->mStickPart) {
@@ -175,11 +145,6 @@ int ActBou::climb()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800ACD94
- * Size:	0000A8
- */
 void ActBou::cleanup()
 {
 	mPiki->mVelocity       = mClimbDirection * 150.0f;

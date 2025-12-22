@@ -141,11 +141,6 @@ DEFINE_ERROR(13)
  */
 DEFINE_PRINT("drawCMscore")
 
-/*
- * --INFO--
- * Address:	801EDA04
- * Size:	0004E4
- */
 void zen::DrawCMscoreMgr::init(P2DScreen* screen)
 {
 	mScoreObjs = new DrawCMscoreObj[MEMORY_BEST_SCORE];
@@ -158,11 +153,6 @@ void zen::DrawCMscoreMgr::init(P2DScreen* screen)
 	mModeFunction = &modeSleep;
 }
 
-/*
- * --INFO--
- * Address:	801EDFF8
- * Size:	00007C
- */
 void zen::DrawCMscoreMgr::update()
 {
 	mEventFlag = 0;
@@ -184,11 +174,6 @@ void zen::DrawCMscoreMgr::show()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801EE074
- * Size:	00003C
- */
 void zen::DrawCMscoreMgr::hide()
 {
 	for (int i = 0; i < MEMORY_BEST_SCORE; i++) {
@@ -196,11 +181,6 @@ void zen::DrawCMscoreMgr::hide()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801EE0B0
- * Size:	000064
- */
 void zen::DrawCMscoreMgr::sleep()
 {
 	hide();
@@ -208,11 +188,6 @@ void zen::DrawCMscoreMgr::sleep()
 	mModeFunction = &modeSleep;
 }
 
-/*
- * --INFO--
- * Address:	801EE114
- * Size:	000114
- */
 void zen::DrawCMscoreMgr::appear(f32 p1)
 {
 	mMode         = MODE_Appear;
@@ -223,21 +198,11 @@ void zen::DrawCMscoreMgr::appear(f32 p1)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801EE228
- * Size:	000008
- */
 bool zen::DrawCMscoreMgr::modeSleep()
 {
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	801EE230
- * Size:	00007C
- */
 bool zen::DrawCMscoreMgr::modeAppear()
 {
 	int scoresWaiting = 0;
@@ -256,22 +221,12 @@ bool zen::DrawCMscoreMgr::modeAppear()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	801EE2AC
- * Size:	000014
- */
 bool zen::DrawCMscoreMgr::modeWait()
 {
 	mEventFlag |= 0x2;
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	801EE2C0
- * Size:	000028
- */
 void zen::DrawCMscoreMgr::setScore(int rank, int score)
 {
 	if (rank < 0 || rank >= MEMORY_BEST_SCORE) {

@@ -1,10 +1,5 @@
 #include "Dolphin/card.h"
 
-/*
- * --INFO--
- * Address:	8020BEE8
- * Size:	000130
- */
 static void CreateCallbackFat(s32 channel, s32 result)
 {
 	CARDControl* card;
@@ -52,11 +47,6 @@ error:
 	}
 }
 
-/*
- * --INFO--
- * Address:	8020C018
- * Size:	000218
- */
 s32 CARDCreateAsync(s32 channel, const char* fileName, u32 size, CARDFileInfo* fileInfo, CARDCallback callback)
 {
 	CARDControl* card;
@@ -119,11 +109,6 @@ s32 CARDCreateAsync(s32 channel, const char* fileName, u32 size, CARDFileInfo* f
 	return result;
 }
 
-/*
- * --INFO--
- * Address:	8020C230
- * Size:	000048
- */
 s32 CARDCreate(s32 channel, const char* fileName, u32 size, CARDFileInfo* fileInfo)
 {
 	s32 result = CARDCreateAsync(channel, fileName, size, fileInfo, __CARDSyncCallback);

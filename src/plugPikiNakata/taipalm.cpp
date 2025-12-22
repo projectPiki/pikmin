@@ -180,11 +180,6 @@ struct TaiPalmChangingColorAction : public TaiAction {
 	f32 mTimerRange;    // _10
 };
 
-/*
- * --INFO--
- * Address:	8013DAB4
- * Size:	000084
- */
 TaiPalmSoundTable::TaiPalmSoundTable()
     : PaniSoundTable(5)
 {
@@ -193,11 +188,6 @@ TaiPalmSoundTable::TaiPalmSoundTable()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8013DB38
- * Size:	0001F4
- */
 TaiPalmParameters::TaiPalmParameters()
     : TekiParameters(TPI_COUNT, PALMPF_COUNT)
 {
@@ -234,11 +224,6 @@ TaiPalmParameters::TaiPalmParameters()
 	multiP->setF(PALMPF_GrowingPeriod, 1.0f);
 }
 
-/*
- * --INFO--
- * Address:	8013DD2C
- * Size:	0004F0
- */
 TaiPalmStrategy::TaiPalmStrategy(TekiParameters* params)
     : TaiStrategy(PALMSTATE_COUNT, PALMSTATE_Normal)
 {
@@ -295,11 +280,6 @@ TaiPalmStrategy::TaiPalmStrategy(TekiParameters* params)
 	setState(PALMSTATE_Normal, state);
 }
 
-/*
- * --INFO--
- * Address:	8013E21C
- * Size:	0002B4
- */
 void TaiPalmStrategy::start(Teki& teki)
 {
 	TaiStrategy::start(teki);
@@ -347,22 +327,12 @@ void TaiPalmStrategy::start(Teki& teki)
 	TekiDistanceCondition(&teki, rad);
 }
 
-/*
- * --INFO--
- * Address:	8013E4D0
- * Size:	000038
- */
 void TaiPalmStrategy::draw(Teki& teki, Graphics& gfx)
 {
 	teki.inputPosition(teki.mTargetPosition);
 	TekiStrategy::draw(teki, gfx);
 }
 
-/*
- * --INFO--
- * Address:	8013E508
- * Size:	000148
- */
 void TaiPalmStrategy::createEffect(Teki& teki, int palmEffectID)
 {
 	PRINT_NAKATA("TaiPalmStrategy::createEffect:%08x:%d\n", &teki, palmEffectID);
@@ -389,11 +359,6 @@ void TaiPalmStrategy::createEffect(Teki& teki, int palmEffectID)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8013E650
- * Size:	000100
- */
 int TaiPalmStrategy::translateMotionIndex(Teki& teki, int tekiMotionIdx)
 {
 	enum PalmMotion {
@@ -457,11 +422,6 @@ int TaiPalmStrategy::translateMotionIndex(Teki& teki, int tekiMotionIdx)
 	return TekiMotion::Dead;
 }
 
-/*
- * --INFO--
- * Address:	8013E750
- * Size:	000064
- */
 void TaiPalmMotionAction::start(Teki& teki)
 {
 	TaiPalmStrategy* strat = (TaiPalmStrategy*)teki.getStrategy();
@@ -470,11 +430,6 @@ void TaiPalmMotionAction::start(Teki& teki)
 	PRINT_NAKATA("TaiPalmMotionAction::start:%08x:%d->%d\n", &teki, mMotionIdx, motionIdx);
 }
 
-/*
- * --INFO--
- * Address:	8013E7B4
- * Size:	000084
- */
 void TaiPalmDyingAction::start(Teki& teki)
 {
 	TaiPalmStrategy* strat = (TaiPalmStrategy*)teki.getStrategy();
@@ -484,11 +439,6 @@ void TaiPalmDyingAction::start(Teki& teki)
 	teki.mHealth = 0.0f;
 }
 
-/*
- * --INFO--
- * Address:	8013E838
- * Size:	000060
- */
 bool TaiPalmDyingAction::act(Teki& teki)
 {
 	if (teki.animationFinished()) {
@@ -500,11 +450,6 @@ bool TaiPalmDyingAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8013E898
- * Size:	000078
- */
 void TaiPalmDamagingAction::start(Teki& teki)
 {
 	TaiPalmStrategy* strat = (TaiPalmStrategy*)teki.getStrategy();
@@ -514,11 +459,6 @@ void TaiPalmDamagingAction::start(Teki& teki)
 	teki.makeDamaged();
 }
 
-/*
- * --INFO--
- * Address:	8013E910
- * Size:	000054
- */
 void TaiPalmGrowingAction::start(Teki& teki)
 {
 	int size = teki.getPersonalityF(TekiPersonality::FLT_Strength);
@@ -527,11 +467,6 @@ void TaiPalmGrowingAction::start(Teki& teki)
 	PRINT_NAKATA("TaiPalmGrowingAction::start:%08x:%d\n", &teki, size);
 }
 
-/*
- * --INFO--
- * Address:	8013E964
- * Size:	000068
- */
 bool TaiPalmGrowAction::act(Teki& teki)
 {
 	STACK_PAD_VAR(1);
@@ -546,11 +481,6 @@ bool TaiPalmGrowAction::act(Teki& teki)
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8013E9CC
- * Size:	000038
- */
 bool TaiPalmFlowerDamageAction::act(Teki& teki)
 {
 	if (teki.mStoredDamage <= 0.0f) {
@@ -564,22 +494,12 @@ bool TaiPalmFlowerDamageAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8013EA04
- * Size:	000034
- */
 bool TaiPalmSunflowerAction::act(Teki& teki)
 {
 	teki.turnTo(mapMgr->mDayMgr->mSunPosition);
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8013EA38
- * Size:	000064
- */
 void TaiPalmSettingPelletAction::start(Teki& teki)
 {
 	teki.mPersonality->mPelletColor = teki._3BC;
@@ -590,20 +510,10 @@ void TaiPalmSettingPelletAction::start(Teki& teki)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8013EA9C
- * Size:	000004
- */
 void TaiPalmChangingColorAction::start(Teki&)
 {
 }
 
-/*
- * --INFO--
- * Address:	8013EAA0
- * Size:	000090
- */
 bool TaiPalmChangingColorAction::act(Teki& teki)
 {
 	if (teki.getPersonalityI(TekiPersonality::INT_Parameter0) == 1) {
@@ -623,11 +533,6 @@ bool TaiPalmChangingColorAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8013EB30
- * Size:	0000A8
- */
 void TaiPalmChangingColorAction::resetTimer(Teki& teki)
 {
 	teki.mTimers[mTimerIdx] = NMathF::rateRandom(mAvgTimerValue, mTimerRange);

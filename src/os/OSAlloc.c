@@ -129,11 +129,6 @@ void DLSize(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801F67AC
- * Size:	0000FC
- */
 void* OSAllocFromHeap(OSHeapHandle heap, u32 size)
 {
 	struct Heap* hd = &HeapArray[heap];
@@ -222,11 +217,6 @@ OSHeapHandle OSSetCurrentHeap(OSHeapHandle heap)
 	return old;
 }
 
-/*
- * --INFO--
- * Address:	801F68A8
- * Size:	000070
- */
 void* OSInitAlloc(void* arenaStart, void* arenaEnd, int maxHeaps)
 {
 	u32 totalSize = maxHeaps * sizeof(struct Heap);

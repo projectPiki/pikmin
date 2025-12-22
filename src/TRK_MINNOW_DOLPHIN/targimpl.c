@@ -63,11 +63,6 @@ DSError TRKPPCAccessSpecialReg(void*, u32*, BOOL);
 
 static BOOL TRKTargetCheckStep();
 
-/*
- * --INFO--
- * Address:	8021E884
- * Size:	000008
- */
 ASM u32 __TRK_get_MSR() {
 #ifdef __MWERKS__ // clang-format off
     nofralloc
@@ -76,11 +71,6 @@ ASM u32 __TRK_get_MSR() {
 #endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address:	8021E88C
- * Size:	000008
- */
 ASM void __TRK_set_MSR(register u32 msr)
 {
 #ifdef __MWERKS__ // clang-format off
@@ -260,11 +250,6 @@ void __TRK_get_DBAT3L(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8021E894
- * Size:	000138
- */
 DSError TRKValidMemory32(const void* addr, size_t length, ValidMemoryOptions readWriteable)
 {
 	DSError err = DS_InvalidMemory; /* assume range is invalid */
@@ -342,11 +327,6 @@ DSError TRKValidMemory32(const void* addr, size_t length, ValidMemoryOptions rea
 	return err;
 }
 
-/*
- * --INFO--
- * Address:	8021E9CC
- * Size:	00003C
- */
 static ASM void TRK_ppc_memcpy(register void* dest, register const void* src, register int n, register u32 param_4, register u32 param_5) {
 #ifdef __MWERKS__ // clang-format off
 #define msr        r8
@@ -385,11 +365,6 @@ blr
 #endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address:	8021EA08
- * Size:	000164
- */
 DSError TRKTargetAccessMemory(void* data, u32 start, size_t* length, MemoryAccessOptions accessOptions, BOOL read)
 {
 	DSError error;
@@ -428,11 +403,6 @@ DSError TRKTargetAccessMemory(void* data, u32 start, size_t* length, MemoryAcces
 	return error;
 }
 
-/*
- * --INFO--
- * Address:	8021EB6C
- * Size:	00004C
- */
 DSError TRKTargetReadInstruction(void* data, u32 start)
 {
 	DSError error;
@@ -447,11 +417,6 @@ DSError TRKTargetReadInstruction(void* data, u32 start)
 	return error;
 }
 
-/*
- * --INFO--
- * Address:	8021EBB8
- * Size:	0000FC
- */
 DSError TRKTargetAccessDefault(u32 firstRegister, u32 lastRegister, TRKBuffer* b, size_t* registersLengthPtr, BOOL read)
 {
 	DSError error;
@@ -488,11 +453,6 @@ DSError TRKTargetAccessDefault(u32 firstRegister, u32 lastRegister, TRKBuffer* b
 	return error;
 }
 
-/*
- * --INFO--
- * Address:	8021ECB4
- * Size:	000148
- */
 DSError TRKTargetAccessFP(u32 firstRegister, u32 lastRegister, TRKBuffer* b, size_t* registersLengthPtr, BOOL read)
 {
 	u64 temp;
@@ -531,11 +491,6 @@ DSError TRKTargetAccessFP(u32 firstRegister, u32 lastRegister, TRKBuffer* b, siz
 	return error;
 }
 
-/*
- * --INFO--
- * Address:	8021EDFC
- * Size:	000178
- */
 DSError TRKTargetAccessExtended1(u32 firstRegister, u32 lastRegister, TRKBuffer* b, size_t* registersLengthPtr, BOOL read)
 {
 	TRKExceptionStatus tempExceptionStatus;
@@ -579,11 +534,6 @@ DSError TRKTargetAccessExtended1(u32 firstRegister, u32 lastRegister, TRKBuffer*
 	return error;
 }
 
-/*
- * --INFO--
- * Address:	8021EF74
- * Size:	00017C
- */
 DSError TRKTargetAccessExtended2(u32 firstRegister, u32 lastRegister, TRKBuffer* b, size_t* registerStorageSize, BOOL read)
 {
 	u32 value_buf[2];
@@ -637,11 +587,6 @@ DSError TRKTargetAccessExtended2(u32 firstRegister, u32 lastRegister, TRKBuffer*
 	return err;
 }
 
-/*
- * --INFO--
- * Address:	8021F0F0
- * Size:	000028
- */
 DSError TRKTargetVersions(DSVersions* versions)
 {
 	versions->kernelMajor   = 0;
@@ -651,11 +596,6 @@ DSError TRKTargetVersions(DSVersions* versions)
 	return DS_NoError;
 }
 
-/*
- * --INFO--
- * Address:	8021F118
- * Size:	0000A4
- */
 DSError TRKTargetSupportMask(u8 mask[32])
 {
 	mask[0]    = 0x7a;
@@ -695,11 +635,6 @@ DSError TRKTargetSupportMask(u8 mask[32])
 
 extern BOOL gTRKBigEndian;
 
-/*
- * --INFO--
- * Address:	8021F1BC
- * Size:	000068
- */
 DSError TRKTargetCPUType(DSCPUType* cpuType)
 {
 	cpuType->cpuMajor          = 0;
@@ -722,11 +657,6 @@ void TRKTargetCheckException(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8021F224
- * Size:	000194
- */
 ASM void TRKInterruptHandler()
 {
 #ifdef __MWERKS__ // clang-format off
@@ -837,11 +767,6 @@ L_802CF694:
 #endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address:	8021F3B8
- * Size:	00009C
- */
 ASM void TRKExceptionHandler(u16 a)
 {
 #ifdef __MWERKS__ // clang-format off
@@ -890,11 +815,6 @@ LAB_00010bb0:
 #endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address:	8021F454
- * Size:	0000B0
- */
 void TRKPostInterruptEvent(void)
 {
 	TRKEvent event;
@@ -925,11 +845,6 @@ void TRKPostInterruptEvent(void)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8021F504
- * Size:	0000C4
- */
 ASM void TRKSwapAndGo()
 {
 #ifdef __MWERKS__ // clang-format off
@@ -987,11 +902,6 @@ L_802CF930:
 #endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address:	8021F5C8
- * Size:	000054
- */
 ASM void TRKInterruptHandlerEnableInterrupts(void)
 {
 #ifdef __MWERKS__ // clang-format off
@@ -1020,11 +930,6 @@ ASM void TRKInterruptHandlerEnableInterrupts(void)
 #endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address:	8021F61C
- * Size:	000064
- */
 DSError TRKTargetInterrupt(TRKEvent* event)
 {
 	DSError error = DS_NoError;
@@ -1043,11 +948,6 @@ DSError TRKTargetInterrupt(TRKEvent* event)
 	return error;
 }
 
-/*
- * --INFO--
- * Address:	8021F680
- * Size:	000090
- */
 DSError TRKTargetAddStopInfo(TRKBuffer* buffer)
 {
 	DSError error;
@@ -1065,11 +965,6 @@ DSError TRKTargetAddStopInfo(TRKBuffer* buffer)
 	return error;
 }
 
-/*
- * --INFO--
- * Address:	8021F710
- * Size:	000088
- */
 DSError TRKTargetAddExceptionInfo(TRKBuffer* buffer)
 {
 	DSError error;
@@ -1089,11 +984,6 @@ DSError TRKTargetAddExceptionInfo(TRKBuffer* buffer)
 	return error;
 }
 
-/*
- * --INFO--
- * Address:	8021F798
- * Size:	00003C
- */
 static DSError TRKTargetEnableTrace(BOOL val)
 {
 	if (val) {
@@ -1104,11 +994,6 @@ static DSError TRKTargetEnableTrace(BOOL val)
 	return DS_NoError;
 }
 
-/*
- * --INFO--
- * Address:	8021F7D4
- * Size:	000084
- */
 static BOOL TRKTargetStepDone()
 {
 	BOOL result = TRUE;
@@ -1133,11 +1018,6 @@ static BOOL TRKTargetStepDone()
 	return result;
 }
 
-/*
- * --INFO--
- * Address:	8021F858
- * Size:	000070
- */
 static DSError TRKTargetDoStep()
 {
 	gTRKStepStatus.active = TRUE;
@@ -1151,11 +1031,6 @@ static DSError TRKTargetDoStep()
 	return DS_NoError;
 }
 
-/*
- * --INFO--
- * Address:	8021F8C8
- * Size:	000068
- */
 static BOOL TRKTargetCheckStep()
 {
 	if (gTRKStepStatus.active) {
@@ -1171,11 +1046,6 @@ static BOOL TRKTargetCheckStep()
 	return gTRKStepStatus.active;
 }
 
-/*
- * --INFO--
- * Address:	8021F930
- * Size:	000044
- */
 DSError TRKTargetSingleStep(u32 count, BOOL stepOver)
 {
 	DSError error = DS_NoError;
@@ -1191,11 +1061,6 @@ DSError TRKTargetSingleStep(u32 count, BOOL stepOver)
 	return error;
 }
 
-/*
- * --INFO--
- * Address:	8021F974
- * Size:	000048
- */
 DSError TRKTargetStepOutOfRange(u32 rangeStart, u32 rangeEnd, BOOL stepOver)
 {
 	DSError error = DS_NoError;
@@ -1214,21 +1079,11 @@ DSError TRKTargetStepOutOfRange(u32 rangeStart, u32 rangeEnd, BOOL stepOver)
 	return error;
 }
 
-/*
- * --INFO--
- * Address:	8021F9BC
- * Size:	000010
- */
 u32 TRKTargetGetPC()
 {
 	return gTRKCPUState.Default.PC;
 }
 
-/*
- * --INFO--
- * Address:	8021F9CC
- * Size:	0000F0
- */
 DSError TRKTargetSupportRequest(void)
 {
 	DSError error;
@@ -1259,11 +1114,6 @@ DSError TRKTargetSupportRequest(void)
 	return error;
 }
 
-/*
- * --INFO--
- * Address:	8021FABC
- * Size:	00003C
- */
 DSError TRKTargetFlushCache(u8 a, void* start, void* end)
 {
 	if (start < end) {
@@ -1274,42 +1124,22 @@ DSError TRKTargetFlushCache(u8 a, void* start, void* end)
 	return DS_InvalidMemory;
 }
 
-/*
- * --INFO--
- * Address:	8021FAF8
- * Size:	000010
- */
 BOOL TRKTargetStopped()
 {
 	return gTRKState.isStopped;
 }
 
-/*
- * --INFO--
- * Address:	8021FB08
- * Size:	000010
- */
 void TRKTargetSetStopped(uint stopped)
 {
 	gTRKState.isStopped = stopped;
 }
 
-/*
- * --INFO--
- * Address:	8021FB18
- * Size:	000028
- */
 u32 TRKTargetStop()
 {
 	TRKTargetSetStopped(1);
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	8021FB40
- * Size:	0000B0
- */
 DSError TRKPPCAccessSPR(void* value, u32 spr_register_num, BOOL read)
 {
 	/* Initialize instruction array with nop */
@@ -1343,11 +1173,6 @@ DSError TRKPPCAccessSPR(void* value, u32 spr_register_num, BOOL read)
 	return TRKPPCAccessSpecialReg(value, access_func, read);
 }
 
-/*
- * --INFO--
- * Address:	8021FBF0
- * Size:	000078
- */
 DSError TRKPPCAccessPairedSingleRegister(void* srcDestPtr, u32 psr, BOOL read)
 {
 	// all nop by default
@@ -1365,11 +1190,6 @@ DSError TRKPPCAccessPairedSingleRegister(void* srcDestPtr, u32 psr, BOOL read)
 #define FP_FPSCR_ACCESS 32
 #define FP_FPECR_ACCESS 33
 
-/*
- * --INFO--
- * Address:	8021FC68
- * Size:	000180
- */
 DSError TRKPPCAccessFPRegister(void* srcDestPtr, u32 fpr, BOOL read)
 {
 	DSError error = DS_NoError;
@@ -1428,11 +1248,6 @@ DSError TRKPPCAccessFPRegister(void* srcDestPtr, u32 fpr, BOOL read)
 
 #define DEBUG_VECTORREG_ACCESS 0
 
-/*
- * --INFO--
- * Address:	8021FDE8
- * Size:	000068
- */
 DSError TRKPPCAccessSpecialReg(void* value, u32* access_func, BOOL read)
 {
 	typedef void (*asm_access_type)(void*, void*);
@@ -1484,11 +1299,6 @@ DSError TRKPPCAccessSpecialReg(void* value, u32* access_func, BOOL read)
 	return DS_NoError;
 }
 
-/*
- * --INFO--
- * Address:	8021FE50
- * Size:	000010
- */
 void TRKTargetSetInputPendingPtr(void* ptr)
 {
 	gTRKState.inputPendingPtr = ptr;

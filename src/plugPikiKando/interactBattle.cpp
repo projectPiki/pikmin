@@ -27,11 +27,6 @@ DEFINE_ERROR(19)
  */
 DEFINE_PRINT("interactBattle");
 
-/*
- * --INFO--
- * Address:	8007B7C8
- * Size:	0001A0
- */
 bool InteractBomb::actPiki(Piki* piki) immut
 {
 	if (!piki->isAlive()) {
@@ -69,11 +64,6 @@ bool InteractBomb::actPiki(Piki* piki) immut
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8007B968
- * Size:	0000C0
- */
 bool InteractBury::actPiki(Piki* piki) immut
 {
 	if (!piki->isAlive()) {
@@ -93,11 +83,6 @@ bool InteractBury::actPiki(Piki* piki) immut
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8007BA28
- * Size:	00006C
- */
 bool InteractThrowAway::actPiki(Piki* piki) immut
 {
 	if (!piki->isAlive()) {
@@ -108,11 +93,6 @@ bool InteractThrowAway::actPiki(Piki* piki) immut
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8007BA94
- * Size:	000080
- */
 bool InteractChangeColor::actPiki(Piki* piki) immut
 {
 	if (!piki->isAlive()) {
@@ -124,11 +104,6 @@ bool InteractChangeColor::actPiki(Piki* piki) immut
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8007BB18
- * Size:	000074
- */
 bool InteractChangeHappa::actPiki(Piki* piki) immut
 {
 	if (!piki->isAlive()) {
@@ -139,11 +114,6 @@ bool InteractChangeHappa::actPiki(Piki* piki) immut
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8007BB90
- * Size:	000120
- */
 bool InteractSpore::actPiki(Piki* piki) immut
 {
 
@@ -173,11 +143,6 @@ bool InteractSpore::actPiki(Piki* piki) immut
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8007BCB0
- * Size:	0000B4
- */
 bool InteractBubble::actPiki(Piki* piki) immut
 {
 	if (!piki->isAlive()) {
@@ -199,11 +164,6 @@ bool InteractBubble::actPiki(Piki* piki) immut
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8007BD64
- * Size:	00007C
- */
 bool InteractFire::actPiki(Piki* piki) immut
 {
 	if (!piki->isAlive()) {
@@ -220,21 +180,11 @@ bool InteractFire::actPiki(Piki* piki) immut
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8007BDE0
- * Size:	000008
- */
 bool InteractWind::actCommon(Creature*) immut
 {
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8007BDE8
- * Size:	000108
- */
 bool InteractWind::actPiki(Piki* piki) immut
 {
 	if (!piki->isAlive()) {
@@ -265,11 +215,6 @@ bool InteractWind::actPiki(Piki* piki) immut
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8007BEF0
- * Size:	00005C
- */
 bool InteractFlick::actCommon(Creature* creature) immut
 {
 	if (creature->isStickToMouth()) {
@@ -285,11 +230,6 @@ bool InteractFlick::actCommon(Creature* creature) immut
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8007BF4C
- * Size:	0000EC
- */
 bool InteractFlick::actPiki(Piki* piki) immut
 {
 	if (!piki->isAlive()) {
@@ -318,21 +258,11 @@ bool InteractFlick::actPiki(Piki* piki) immut
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8007C038
- * Size:	000008
- */
 bool InteractSlimeAttack::actCommon(Creature*) immut
 {
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8007C040
- * Size:	00018C
- */
 int InteractAttack::getDamagePortion() immut
 {
 	if (mCollPart) {
@@ -381,11 +311,6 @@ int InteractAttack::getDamagePortion() immut
 	return -1;
 }
 
-/*
- * --INFO--
- * Address:	8007C1CC
- * Size:	000044
- */
 bool InteractAttack::actCommon(Creature* creature) immut
 {
 	if (!creature->isVisible()) {
@@ -394,11 +319,6 @@ bool InteractAttack::actCommon(Creature* creature) immut
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8007C218
- * Size:	000188
- */
 bool InteractAttack::actPiki(Piki* piki) immut
 {
 	if (!piki->isAlive()) {
@@ -436,21 +356,11 @@ bool InteractAttack::actPiki(Piki* piki) immut
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8007C3A0
- * Size:	000008
- */
 bool InteractSwallow::actCommon(Creature*) immut
 {
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8007C3A8
- * Size:	0002F0
- */
 bool InteractSwallow::actPiki(Piki* piki) immut
 {
 	if (!piki->isAlive()) {
@@ -544,11 +454,6 @@ bool InteractSwallow::actPiki(Piki* piki) immut
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8007C6A0
- * Size:	000048
- */
 bool InteractKill::actPiki(Piki* piki) immut
 {
 	if (_08 == 1) {
@@ -559,22 +464,12 @@ bool InteractKill::actPiki(Piki* piki) immut
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8007C6E8
- * Size:	00002C
- */
 bool InteractKill::actNavi(Navi* navi) immut
 {
 	navi->kill(false);
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8007C714
- * Size:	000138
- */
 bool InteractPress::actPiki(Piki* piki) immut
 {
 	if (piki->getState() == PIKISTATE_Pressed) {
@@ -604,11 +499,6 @@ bool InteractPress::actPiki(Piki* piki) immut
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8007C84C
- * Size:	000008
- */
 bool InteractFlute::actTeki(Teki*) immut
 {
 	return true;

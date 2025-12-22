@@ -23,11 +23,6 @@ void fmin(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8021B1E8
- * Size:	000080
- */
 int __fpclassifyd__Fd(f64 x)
 {
 	switch (__HI(x) & 0x7FF00000) {

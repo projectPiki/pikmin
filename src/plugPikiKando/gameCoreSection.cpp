@@ -78,21 +78,11 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("gameCoreSection")
 
-/*
- * --INFO--
- * Address:	8010CE6C
- * Size:	000040
- */
 void GameCoreSection::startTextDemo(Creature*, int textDemoID)
 {
 	gameflow.mGameInterface->message(MOVIECMD_TextDemo, textDemoID);
 }
 
-/*
- * --INFO--
- * Address:	8010CEAC
- * Size:	0000EC
- */
 void GameCoreSection::updateTextDemo()
 {
 	if (gameflow.mIsUiOverlayActive) {
@@ -122,11 +112,6 @@ void GameCoreSection::updateTextDemo()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8010CF98
- * Size:	000464
- */
 void GameCoreSection::startMovie(u32 flags, bool useMovieBackCamera)
 {
 	// Uses CinePlayerFlags
@@ -255,11 +240,6 @@ void GameCoreSection::startMovie(u32 flags, bool useMovieBackCamera)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8010D3FC
- * Size:	000254
- */
 #if defined(VERSION_PIKIDEMO)
 void GameCoreSection::endMovie()
 #else
@@ -349,11 +329,6 @@ bool GameCoreSection::hidePelletExceptSucked()
 	return gameflow.mMoviePlayer->mIsActive && !(mHideFlags & GameHideFlags::ShowPelletsExceptSucked);
 }
 
-/*
- * --INFO--
- * Address:	8010D650
- * Size:	000150
- */
 void GameCoreSection::exitDayEnd()
 {
 	int entered = 0;
@@ -376,11 +351,6 @@ void GameCoreSection::exitDayEnd()
 	PRINT("((EXITDAYEND)) ***** FORCE ENTERPIKIS %d / killed %d \n", entered, killed);
 }
 
-/*
- * --INFO--
- * Address:	8010D7A0
- * Size:	000188
- */
 void GameCoreSection::forceDayEnd()
 {
 	PRINT("*********** FORCE DAY END =====================================\n");
@@ -402,11 +372,6 @@ void GameCoreSection::forceDayEnd()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8010D928
- * Size:	00017C
- */
 void GameCoreSection::clearDeadlyPikmins()
 {
 	int killed = 0;
@@ -438,11 +403,6 @@ void GameCoreSection::clearDeadlyPikmins()
 	PRINT_GLOBAL("clearDeadlyPikmins %d", killed);
 }
 
-/*
- * --INFO--
- * Address:	8010DAA4
- * Size:	000320
- */
 void GameCoreSection::enterFreePikmins()
 {
 	if (playerState->isEnding()) {
@@ -498,11 +458,6 @@ void GameCoreSection::enterFreePikmins()
 	PRINT("enterFreePikmins %d + %d = %d" MISSING_NEWLINE, goalSafe, ufoSafe, goalSafe + ufoSafe);
 }
 
-/*
- * --INFO--
- * Address:	8010DDC4
- * Size:	000D94
- */
 void GameCoreSection::cleanupDayEnd()
 {
 	finishPause();
@@ -757,11 +712,6 @@ void GameCoreSection::cleanupDayEnd()
 	playerState->mLeftBehindPikis += GameStat::victimPikis;
 }
 
-/*
- * --INFO--
- * Address:	8010EB58
- * Size:	000130
- */
 void GameCoreSection::prepareBadEnd()
 {
 	Iterator ph_it(itemMgr->getPikiHeadMgr());
@@ -774,11 +724,6 @@ void GameCoreSection::prepareBadEnd()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8010EC88
- * Size:	000090
- */
 void GameCoreSection::exitStage()
 {
 	demoEventMgr = nullptr;
@@ -840,11 +785,6 @@ ASM void asmTest(f32, f32)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8010ED18
- * Size:	000CD4
- */
 void GameCoreSection::initStage()
 {
 	STACK_PAD_VAR(2);
@@ -1167,11 +1107,6 @@ void GameCoreSection::initStage()
 	PRINT("init stage done\n");
 }
 
-/*
- * --INFO--
- * Address:	8010F9EC
- * Size:	000460
- */
 void GameCoreSection::finalSetup()
 {
 	PRINT("======================= FINAL SETUP ==============================\n");
@@ -1256,11 +1191,6 @@ void GameCoreSection::finalSetup()
 	PRINT("====================== FINAL SETUP DONE ======================\n");
 }
 
-/*
- * --INFO--
- * Address:	8010FE4C
- * Size:	0009A4
- */
 GameCoreSection::GameCoreSection(Controller* controller, MapMgr* mgr, Camera& camera)
     : Node("gamecore")
 {
@@ -1444,11 +1374,6 @@ GameCoreSection::GameCoreSection(Controller* controller, MapMgr* mgr, Camera& ca
 	mDrawGameInfo = new zen::DrawGameInfo(!gameflow.mIsChallengeMode ? zen::DrawGameInfo::MODE_Story : zen::DrawGameInfo::MODE_Challenge);
 }
 
-/*
- * --INFO--
- * Address:	801107F0
- * Size:	0002B0
- */
 void GameCoreSection::update()
 {
 	STACK_PAD_VAR(2);
@@ -1523,21 +1448,11 @@ void GameCoreSection::update()
 	Node::update();
 }
 
-/*
- * --INFO--
- * Address:	80110AA0
- * Size:	00000C
- */
 void GameCoreSection::startContainerDemo()
 {
 	_34 = 2;
 }
 
-/*
- * --INFO--
- * Address:	80110AAC
- * Size:	000038
- */
 void GameCoreSection::startSundownWarn()
 {
 	mDoneSundownWarn = true;
@@ -1546,11 +1461,6 @@ void GameCoreSection::startSundownWarn()
 	seSystem->playSysSe(SYSSE_EVENING_ALERT);
 }
 
-/*
- * --INFO--
- * Address:	80110AE4
- * Size:	000568
- */
 void GameCoreSection::updateAI()
 {
 	STACK_PAD_VAR(2);
@@ -1684,11 +1594,6 @@ void GameCoreSection::updateAI()
 	gsys->mTimer->stop("GameCore");
 }
 
-/*
- * --INFO--
- * Address:	8011104C
- * Size:	0005A4
- */
 void GameCoreSection::draw(Graphics& gfx)
 {
 	gfx.mCamera->mProjectionMatrix = gfx.mCamera->mPerspectiveMatrix;
@@ -1807,11 +1712,6 @@ void drawRectangle(Graphics& gfx, RectArea& p2, RectArea& p3, Vector3f* p4)
 	p4->z = p2.mMaxX;
 }
 
-/*
- * --INFO--
- * Address:	801115F0
- * Size:	000260
- */
 void GameCoreSection::draw1D(Graphics& gfx)
 {
 	if (mDrawHideType == 9) {
@@ -1846,11 +1746,6 @@ void GameCoreSection::draw1D(Graphics& gfx)
 	itemMgr->refresh2d(gfx);
 }
 
-/*
- * --INFO--
- * Address:	80111850
- * Size:	0005C4
- */
 void GameCoreSection::draw2D(Graphics& gfx)
 {
 	static immut char* triNames[] = {

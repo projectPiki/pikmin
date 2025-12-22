@@ -157,21 +157,11 @@ void MovieInfo::refresh(Graphics&)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80076E34
- * Size:	0000BC
- */
 MoviePlayer::MoviePlayer()
 {
 	mCamTransitionFactor = 0.0f;
 }
 
-/*
- * --INFO--
- * Address:	80076EF0
- * Size:	0000E0
- */
 void MoviePlayer::resetMovieList()
 {
 	mPlayInfoList.initCore("playList");
@@ -185,11 +175,6 @@ void MoviePlayer::resetMovieList()
 	mIsActive = false;
 }
 
-/*
- * --INFO--
- * Address:	80076FD0
- * Size:	000090
- */
 void MoviePlayer::fixMovieList()
 {
 	while (mPlayInfoList.getChildCount()) {
@@ -218,11 +203,6 @@ MovieListInfo* MoviePlayer::findMovie(int id)
 	return movie;
 }
 
-/*
- * --INFO--
- * Address:	80077060
- * Size:	000100
- */
 void MoviePlayer::initMovie(MovieInfo* info, int)
 {
 	bool old             = gsys->mPrevAllocType; // BOOL -> bool conversion required for regalloc lol.
@@ -408,11 +388,6 @@ int MoviePlayer::translateIndex(int idx, int stage)
 	return idx;
 }
 
-/*
- * --INFO--
- * Address:	80077160
- * Size:	00049C
- */
 void MoviePlayer::startMovie(int movieIdx, int, Creature* target, immut Vector3f* pos, immut Vector3f* rot, u32 mask, bool isPlaying)
 {
 	MovieInfo* info;
@@ -540,11 +515,6 @@ void MoviePlayer::startMovie(int movieIdx, int, Creature* target, immut Vector3f
 	STACK_PAD_TERNARY(printToggle, 1);
 }
 
-/*
- * --INFO--
- * Address:	800775FC
- * Size:	000104
- */
 void MoviePlayer::sndStartMovie(MovieInfo* info)
 {
 	Jac_SetDemoPartsID(gameflow.mMovieInfoNum);
@@ -566,11 +536,6 @@ void MoviePlayer::sndStartMovie(MovieInfo* info)
 	gsys->mPrevAllocType = old;
 }
 
-/*
- * --INFO--
- * Address:	80077700
- * Size:	000124
- */
 void MoviePlayer::initMovieFlags(MovieInfo* info)
 {
 	bool doHideNavi = (info->mPlayer->mFlags & CinePlayerFlags::HideNavi) != 0;
@@ -617,11 +582,6 @@ void MoviePlayer::sndFrameMovie(MovieInfo*)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80077824
- * Size:	000064
- */
 void MoviePlayer::sndStopMovie(MovieInfo* info)
 {
 	Jac_FinishDemo();
@@ -635,11 +595,6 @@ void MoviePlayer::sndStopMovie(MovieInfo* info)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80077888
- * Size:	0003CC
- */
 void MoviePlayer::update()
 {
 	gameflow.mDemoFlags = 0;
@@ -726,11 +681,6 @@ void MoviePlayer::update()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80077C54
- * Size:	0000AC
- */
 void MoviePlayer::skipScene(int sceneSkipFlag)
 {
 	if (sceneSkipFlag == SCENESKIP_SkipAll) {
@@ -755,21 +705,11 @@ void MoviePlayer::skipScene(int sceneSkipFlag)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80077D00
- * Size:	00001C
- */
 void MoviePlayer::getLookAtPos(Vector3f& pos)
 {
 	pos.set(mLookAtPos.x, mLookAtPos.y, mLookAtPos.z);
 }
 
-/*
- * --INFO--
- * Address:	80077D1C
- * Size:	000100
- */
 bool MoviePlayer::setCamera(Graphics& gfx)
 {
 	bool res = false;
@@ -786,11 +726,6 @@ bool MoviePlayer::setCamera(Graphics& gfx)
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	80077E1C
- * Size:	000060
- */
 void MoviePlayer::addLights(Graphics& gfx)
 {
 	MovieInfo* info = (MovieInfo*)mPlayInfoList.mChild;
@@ -804,11 +739,6 @@ void MoviePlayer::addLights(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80077E7C
- * Size:	000074
- */
 void MoviePlayer::refresh(Graphics& gfx)
 {
 	gfx.setLighting(true, nullptr);

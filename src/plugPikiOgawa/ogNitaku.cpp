@@ -19,11 +19,6 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("OgNitakuSection")
 
-/*
- * --INFO--
- * Address:	80196864
- * Size:	0003E4
- */
 zen::ogNitakuMgr::ogNitakuMgr(P2DScreen* screen, P2DTextBox* text1, P2DTextBox* text2, P2DTextBox* text3, bool startYes, bool canCancel)
 {
 	mScreen          = screen;
@@ -120,11 +115,6 @@ void zen::ogNitakuMgr::InitCursor()
 	mRightCursorMgr.initScale(0.0f);
 }
 
-/*
- * --INFO--
- * Address:	80196C48
- * Size:	000168
- */
 void zen::ogNitakuMgr::start()
 {
 	mStatus    = Status_1;
@@ -144,33 +134,18 @@ void zen::ogNitakuMgr::stop()
 	InitCursor();
 }
 
-/*
- * --INFO--
- * Address:	80196DB0
- * Size:	000054
- */
 void zen::ogNitakuMgr::cursorEnable(f32 rate)
 {
 	mLeftCursorMgr.scale(1.0f, rate);
 	mRightCursorMgr.scale(1.0f, rate);
 }
 
-/*
- * --INFO--
- * Address:	80196E04
- * Size:	000054
- */
 void zen::ogNitakuMgr::cursorDisable(f32 rate)
 {
 	mLeftCursorMgr.scale(0.0f, rate);
 	mRightCursorMgr.scale(0.0f, rate);
 }
 
-/*
- * --INFO--
- * Address:	80196E58
- * Size:	000344
- */
 zen::ogNitakuMgr::NitakuStatus zen::ogNitakuMgr::update(Controller* input)
 {
 	if (mStatus == 0) {

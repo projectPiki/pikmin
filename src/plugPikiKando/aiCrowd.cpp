@@ -28,11 +28,6 @@ DEFINE_ERROR(20)
  */
 DEFINE_PRINT("aiCrowd")
 
-/*
- * --INFO--
- * Address:	800B5AAC
- * Size:	0000FC
- */
 ActCrowd::ActCrowd(Piki* piki)
     : Action(piki, true)
 {
@@ -42,32 +37,17 @@ ActCrowd::ActCrowd(Piki* piki)
 	mSelectAction = new ActBoreSelect(piki);
 }
 
-/*
- * --INFO--
- * Address:	800B5BA8
- * Size:	000008
- */
 void ActCrowd::inform(int slotID)
 {
 	mCPlateSlotID = slotID;
 }
 
-/*
- * --INFO--
- * Address:	800B5BB0
- * Size:	00002C
- */
 void ActCrowd::startSort()
 {
 	mState = STATE_Sort;
 	mSelectAction->stop();
 }
 
-/*
- * --INFO--
- * Address:	800B5BDC
- * Size:	00015C
- */
 void ActCrowd::init(Creature* target)
 {
 	mMode      = 5;
@@ -147,11 +127,6 @@ void ActCrowd::setFormed()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800B5D38
- * Size:	0000E4
- */
 void ActCrowd::procCollideMsg(Piki*, MsgCollide* msg)
 {
 	if (mState == STATE_Sort) {
@@ -172,11 +147,6 @@ void ActCrowd::procCollideMsg(Piki*, MsgCollide* msg)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800B5E1C
- * Size:	000034
- */
 void ActCrowd::procWallMsg(Piki*, MsgWall* msg)
 {
 	if (mCPlateSlotID != -1) {
@@ -185,11 +155,6 @@ void ActCrowd::procWallMsg(Piki*, MsgWall* msg)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800B5E50
- * Size:	00011C
- */
 void ActCrowd::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
 	switch (msg->mKeyEvent->mEventType) {
@@ -216,11 +181,6 @@ void ActCrowd::procAnimMsg(Piki* piki, MsgAnim* msg)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800B5F6C
- * Size:	0000FC
- */
 void ActCrowd::cleanup()
 {
 	if (mPiki->mRouteHandle) {
@@ -242,11 +202,6 @@ void ActCrowd::cleanup()
 	GameStat::update();
 }
 
-/*
- * --INFO--
- * Address:	800B6068
- * Size:	00164C
- */
 int ActCrowd::exec()
 {
 	_30   = mMode;
@@ -551,11 +506,6 @@ int ActCrowd::exec()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800B76B4
- * Size:	000058
- */
 void ActCrowd::startZawatuki()
 {
 	if (!mPiki->hasBomb()) {
@@ -564,11 +514,6 @@ void ActCrowd::startZawatuki()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800B770C
- * Size:	000004
- */
 void ActCrowd::finishZawatuki()
 {
 }

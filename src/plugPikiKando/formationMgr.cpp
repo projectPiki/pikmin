@@ -18,41 +18,21 @@ DEFINE_ERROR(8)
  */
 DEFINE_PRINT("formation")
 
-/*
- * --INFO--
- * Address:	8007DF5C
- * Size:	000010
- */
 Creature* FormationMgr::getCreature(int idx)
 {
 	return mFormMembers[idx];
 }
 
-/*
- * --INFO--
- * Address:	8007DF6C
- * Size:	000008
- */
 int FormationMgr::getFirst()
 {
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	8007DF74
- * Size:	000008
- */
 int FormationMgr::getNext(int idx)
 {
 	return idx + 1;
 }
 
-/*
- * --INFO--
- * Address:	8007DF7C
- * Size:	00001C
- */
 bool FormationMgr::isDone(int idx)
 {
 	if (idx >= mCount) {
@@ -62,11 +42,6 @@ bool FormationMgr::isDone(int idx)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8007DF98
- * Size:	0000E0
- */
 Vector3f FormPoint::getPos()
 {
 	f32 angle = mFormMgr->mRotationAngle;
@@ -76,11 +51,6 @@ Vector3f FormPoint::getPos()
 	return pos + mOffset;
 }
 
-/*
- * --INFO--
- * Address:	8007E078
- * Size:	0000A8
- */
 Vector3f FormationMgr::getLastCentre()
 {
 	f32 angle  = mRotationAngle;
@@ -125,11 +95,6 @@ FormPoint::FormPoint()
 	mOffset.set(0.0f, 0.0f, 0.0f);
 }
 
-/*
- * --INFO--
- * Address:	8007E128
- * Size:	0001E4
- */
 FormPoint* FormationMgr::getFormPoint(Creature* target)
 {
 	int replaceIdx      = -1;
@@ -175,11 +140,6 @@ FormPoint* FormationMgr::getFormPoint(Creature* target)
 	return &mFormPoints[freeIdx];
 }
 
-/*
- * --INFO--
- * Address:	8007E30C
- * Size:	0001F4
- */
 void FormationMgr::slide(Creature* target, int idx)
 {
 	int replaceIdx      = -1;
@@ -267,11 +227,6 @@ int FormationMgr::getFptIndex(FormPoint* point)
 	return -1;
 }
 
-/*
- * --INFO--
- * Address:	8007E500
- * Size:	0001A0
- */
 void FormationMgr::exit(Creature* target)
 {
 	int i;
@@ -351,11 +306,6 @@ void FormationMgr::setAngOffset(f32 offset)
 	mAngOffset = offset;
 }
 
-/*
- * --INFO--
- * Address:	8007E6A0
- * Size:	000300
- */
 void CircleArranger::arrange(FormationMgr* mgr)
 {
 	Vector3f vec(1.0f, 0.0f, 0.0f);
@@ -389,11 +339,6 @@ void CircleArranger::arrange(FormationMgr* mgr)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8007E9A0
- * Size:	0002B8
- */
 void PyramidArranger::arrange(FormationMgr* mgr)
 {
 	Vector3f vec(0.0f, 1.0f, 0.0f);
@@ -424,22 +369,12 @@ void PyramidArranger::arrange(FormationMgr* mgr)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8007EC58
- * Size:	0000EC
- */
 f32 PyramidArranger::getLength(FormationMgr* mgr)
 {
 	int count = mgr->mCount; // load bearing temp. try it.
 	return (-1.0f + std::sqrtf(count * 8.0f + 1.0f)) / 2.0f * 26.0f;
 }
 
-/*
- * --INFO--
- * Address:	8007ED44
- * Size:	00026C
- */
 void LineArranger::arrange(FormationMgr* mgr)
 {
 	Vector3f vec(1.0f, 1.0f, 1.0f);
@@ -467,11 +402,6 @@ void LineArranger::arrange(FormationMgr* mgr)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8007EFB0
- * Size:	0002FC
- */
 void WingArranger::arrange(FormationMgr* mgr)
 {
 	int a    = 0;

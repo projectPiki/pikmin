@@ -47,21 +47,11 @@ loop:
 #endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address:	801FDA14
- * Size:	000020
- */
 void __init_user(void)
 {
 	__init_cpp();
 }
 
-/*
- * --INFO--
- * Address:	801FDA34
- * Size:	000054
- */
 static void __init_cpp(void)
 {
 	voidfunctionptr* constructor;
@@ -83,11 +73,6 @@ void __fini_cpp(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801FDA88
- * Size:	000020
- */
 void _ExitProcess(void)
 {
 	PPCHalt();

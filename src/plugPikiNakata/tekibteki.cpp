@@ -60,11 +60,6 @@ DEFINE_ERROR(57)
  */
 DEFINE_PRINT("teki");
 
-/*
- * --INFO--
- * Address:	80143F5C
- * Size:	000064
- */
 void BTeki::viewStartTrembleMotion(f32 motionSpeed)
 {
 	startMotion(TekiMotion::Type5);
@@ -72,71 +67,36 @@ void BTeki::viewStartTrembleMotion(f32 motionSpeed)
 	mMotionSpeed = motionSpeed;
 }
 
-/*
- * --INFO--
- * Address:	80143FC0
- * Size:	000008
- */
 void BTeki::viewSetMotionSpeed(f32 speed)
 {
 	mMotionSpeed = speed;
 }
 
-/*
- * --INFO--
- * Address:	80143FC8
- * Size:	00002C
- */
 void BTeki::viewDoAnimation()
 {
 	doAnimation();
 }
 
-/*
- * --INFO--
- * Address:	80143FF4
- * Size:	00004C
- */
 void BTeki::viewFinishMotion()
 {
 	mTekiAnimator->finishMotion(PaniMotionInfo(PANI_NO_MOTION, this));
 }
 
-/*
- * --INFO--
- * Address:	80144040
- * Size:	00001C
- */
 Vector3f BTeki::viewGetScale()
 {
 	return mSRT.s;
 }
 
-/*
- * --INFO--
- * Address:	8014405C
- * Size:	000018
- */
 f32 BTeki::viewGetBottomRadius()
 {
 	return mTekiParams->getF(TPF_CorpseSize);
 }
 
-/*
- * --INFO--
- * Address:	80144074
- * Size:	000018
- */
 f32 BTeki::viewGetHeight()
 {
 	return mTekiParams->getF(TPF_CorpseHeight);
 }
 
-/*
- * --INFO--
- * Address:	8014408C
- * Size:	0000A4
- */
 void BTeki::viewDraw(Graphics& gfx, immut Matrix4f& mat)
 {
 	gfx.useMatrix(Matrix4f::ident, 0);
@@ -145,42 +105,22 @@ void BTeki::viewDraw(Graphics& gfx, immut Matrix4f& mat)
 	mTekiShape->mShape->drawshape(gfx, *gfx.mCamera, nullptr);
 }
 
-/*
- * --INFO--
- * Address:	80144130
- * Size:	000024
- */
 void BTeki::viewKill()
 {
 	kill(false);
 }
 
-/*
- * --INFO--
- * Address:	80144154
- * Size:	00000C
- */
 void BTeki::doStore(CreatureInf* info)
 {
 	info->mObjInfo1 = mTekiType;
 	PRINT_NAKATA("TEKI STORE *****************************************\n");
 }
 
-/*
- * --INFO--
- * Address:	80144160
- * Size:	00000C
- */
 void BTeki::doRestore(CreatureInf* info)
 {
 	mTekiType = (TekiTypes)info->mObjInfo1;
 }
 
-/*
- * --INFO--
- * Address:	8014416C
- * Size:	0000B0
- */
 TekiShapeObject::TekiShapeObject(Shape* shape)
 {
 	mShape               = shape;
@@ -190,51 +130,26 @@ TekiShapeObject::TekiShapeObject(Shape* shape)
 	mShape->overrideAnim(0, &mAnimContext);
 }
 
-/*
- * --INFO--
- * Address:	8014421C
- * Size:	000010
- */
 bool BTeki::isPellet(int objType)
 {
 	return objType == OBJTYPE_Pellet;
 }
 
-/*
- * --INFO--
- * Address:	8014422C
- * Size:	000050
- */
 f32 BTeki::calcCircleDistanceStatic(immut Vector3f& pos1, f32 rad1, immut Vector3f& pos2, f32 rad2)
 {
 	return qdist2(pos1.x, pos1.z, pos2.x, pos2.z) - rad1 - rad2;
 }
 
-/*
- * --INFO--
- * Address:	8014427C
- * Size:	000014
- */
 bool BTeki::alwaysUpdatePlatform()
 {
 	return mTekiType == TEKI_Shell;
 }
 
-/*
- * --INFO--
- * Address:	80144290
- * Size:	0000A8
- */
 f32 BTeki::calcSphereDistanceStatic(immut Vector3f& pos1, f32 rad1, immut Vector3f& pos2, f32 rad2)
 {
 	return pos1.distance(pos2) - rad1 - rad2;
 }
 
-/*
- * --INFO--
- * Address:	80144338
- * Size:	000238
- */
 bool BTeki::moveTowardStatic(immut Vector3f& currentPosition, immut Vector3f& targetPosition, f32 speed, Vector3f& output)
 {
 	NVector3f vec1(targetPosition);
@@ -254,22 +169,12 @@ bool BTeki::moveTowardStatic(immut Vector3f& currentPosition, immut Vector3f& ta
 	return (BTeki::arrivedAt(dist2, speed)) ? true : false;
 }
 
-/*
- * --INFO--
- * Address:	80144570
- * Size:	000028
- */
 bool BTeki::arrivedAt(f32 distance, f32 speed)
 {
 	f32 threshold = 2.0f * speed * NSystem::getFrameTime();
 	return distance <= threshold;
 }
 
-/*
- * --INFO--
- * Address:	80144598
- * Size:	000398
- */
 BTeki::BTeki()
     : Creature(nullptr)
 {
@@ -288,11 +193,6 @@ BTeki::BTeki()
 	mParticleGenPack        = new zen::PtclGenPack(3);
 }
 
-/*
- * --INFO--
- * Address:	80144930
- * Size:	000064
- */
 void BTeki::init(int tekiType)
 {
 	PRINT_NAKATA("Teki::init:%08x:%d\n", this, tekiType);
@@ -303,11 +203,6 @@ void BTeki::init(int tekiType)
 	Creature::init();
 }
 
-/*
- * --INFO--
- * Address:	80144994
- * Size:	000378
- */
 void BTeki::reset()
 {
 	PRINT_NAKATA("Teki::reset>:%08x\n", this);
@@ -399,11 +294,6 @@ void BTeki::reset()
 	PRINT_NAKATA("NNNNNreset:%08x:%d:%s:%f\n", this, mTekiType, TekiMgr::getTypeName(mTekiType), getCentreSize());
 }
 
-/*
- * --INFO--
- * Address:	80144D0C
- * Size:	00011C
- */
 void BTeki::prepareEffects()
 {
 	if (!effectMgr) {
@@ -446,11 +336,6 @@ void BTeki::setCorpsePartJoint(int partIdx, int jointIdx)
 	mCorpsePartJoints[partIdx] = jointIdx;
 }
 
-/*
- * --INFO--
- * Address:	80144E28
- * Size:	000080
- */
 void BTeki::startAI(int)
 {
 	TekiStrategy* strat = getStrategy();
@@ -467,11 +352,6 @@ void BTeki::startAI(int)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80144EA8
- * Size:	0000A0
- */
 void BTeki::update()
 {
 	Creature::update();
@@ -489,11 +369,6 @@ void BTeki::update()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80144F48
- * Size:	0000C8
- */
 void BTeki::doAnimation()
 {
 	STACK_PAD_VAR(1);
@@ -514,11 +389,6 @@ void BTeki::doAnimation()
 	mTekiAnimator->animate(mAnimationSpeed);
 }
 
-/*
- * --INFO--
- * Address:	80145010
- * Size:	000064
- */
 void BTeki::startMotion(int motionID)
 {
 	mTekiAnimator->startMotion(PaniMotionInfo(motionID, this));
@@ -526,11 +396,6 @@ void BTeki::startMotion(int motionID)
 	clearAnimationKeyOptions();
 }
 
-/*
- * --INFO--
- * Address:	80145074
- * Size:	000098
- */
 void BTeki::startStoppingMove()
 {
 	PRINT_NAKATA("startStoppingMove:%08x:%f,%f\n", this, mAnimationSpeed, mPreStopAnimationSpeed);
@@ -539,22 +404,12 @@ void BTeki::startStoppingMove()
 	mPreStopAnimationSpeed = mAnimationSpeed;
 }
 
-/*
- * --INFO--
- * Address:	8014510C
- * Size:	000030
- */
 void BTeki::finishStoppingMove()
 {
 	PRINT_NAKATA("finishStoppingMove:%08x:%f,%f\n", this, mAnimationSpeed, mPreStopAnimationSpeed);
 	clearTekiOption(TEKIOPT_StoppingMove);
 }
 
-/*
- * --INFO--
- * Address:	8014513C
- * Size:	0000A4
- */
 f32 BTeki::getVelocityAnimationSpeed(f32 p1)
 {
 	f32 animSpeed   = mTekiAnimator->getAnimationSpeed() / 30.0f;
@@ -567,11 +422,6 @@ f32 BTeki::getVelocityAnimationSpeed(f32 p1)
 	return scaledSpeed;
 }
 
-/*
- * --INFO--
- * Address:	801451E0
- * Size:	000080
- */
 void BTeki::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	if (event.mEventType == KEY_PlaySound) {
@@ -588,11 +438,6 @@ void BTeki::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 	setAnimationKeyOption(1 << event.mEventType);
 }
 
-/*
- * --INFO--
- * Address:	80145260
- * Size:	0001E0
- */
 void BTeki::doAI()
 {
 	STACK_PAD_VAR(2);
@@ -639,21 +484,11 @@ void BTeki::doAI()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80145440
- * Size:	00000C
- */
 void BTeki::die()
 {
 	mDeadState = 1;
 }
 
-/*
- * --INFO--
- * Address:	8014544C
- * Size:	000258
- */
 void BTeki::dieSoon()
 {
 	PRINT_NAKATA("dieSoon:%08x:\n", this);
@@ -701,11 +536,6 @@ void BTeki::dieSoon()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801456A4
- * Size:	000094
- */
 void BTeki::becomeCorpse()
 {
 	PRINT_NAKATA("BTeki::becomeCorpse:%08x\n", this);
@@ -718,11 +548,6 @@ void BTeki::becomeCorpse()
 	mParticleGenPack->finish();
 }
 
-/*
- * --INFO--
- * Address:	80145738
- * Size:	000150
- */
 void BTeki::doKill()
 {
 	PRINT_NAKATA("BTeki::doKill:%08x\n", this);
@@ -745,11 +570,6 @@ void BTeki::doKill()
 	tekiMgr->kill(this);
 }
 
-/*
- * --INFO--
- * Address:	80145888
- * Size:	000080
- */
 void BTeki::exitCourse()
 {
 	PRINT_NAKATA("BTeki::exitCourse:%08x\n", this);
@@ -763,11 +583,6 @@ void BTeki::exitCourse()
 	mParticleGenPack->forceFinish();
 }
 
-/*
- * --INFO--
- * Address:	80145908
- * Size:	0000AC
- */
 void BTeki::gravitate(f32 accel)
 {
 	f32 fTime = NSystem::getFrameTime();
@@ -782,11 +597,6 @@ void BTeki::gravitate(f32 accel)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801459B4
- * Size:	0000D4
- */
 void BTeki::updateTimers()
 {
 	f32 fTime = NSystem::getFrameTime();
@@ -800,11 +610,6 @@ void BTeki::updateTimers()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80145A88
- * Size:	000074
- */
 bool BTeki::stimulate(immut Interaction& interaction)
 {
 	if (interaction.actCommon(this)) {
@@ -813,11 +618,6 @@ bool BTeki::stimulate(immut Interaction& interaction)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	80145AFC
- * Size:	00009C
- */
 f32 BTeki::getiMass()
 {
 	f32 weight = getParameterF(TPF_Weight);
@@ -827,21 +627,11 @@ f32 BTeki::getiMass()
 	return 1.0f / (getScaleRate() * weight);
 }
 
-/*
- * --INFO--
- * Address:	80145B98
- * Size:	00002C
- */
 f32 BTeki::getTekiCollisionSize()
 {
 	return getCentreSize();
 }
 
-/*
- * --INFO--
- * Address:	80145BC4
- * Size:	000030
- */
 void BTeki::makeDamaged()
 {
 	mHealth -= mStoredDamage;
@@ -852,11 +642,6 @@ void BTeki::makeDamaged()
 	mStoredDamage = 0.0f;
 }
 
-/*
- * --INFO--
- * Address:	80145BF4
- * Size:	00004C
- */
 void BTeki::startDamageMotion(f32 period, f32 amp)
 {
 	if (timerElapsed(3)) {
@@ -865,22 +650,12 @@ void BTeki::startDamageMotion(f32 period, f32 amp)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80145C40
- * Size:	000024
- */
 void BTeki::releasePlatCollisions()
 {
 	PRINT_NAKATA("releasePlatCollisions:%08x:\n", this);
 	mPlatMgr.release();
 }
 
-/*
- * --INFO--
- * Address:	80145C64
- * Size:	000150
- */
 void BTeki::createDeadEffect()
 {
 	immut Vector3f& effectPos = getBoundingSphereCentre();
@@ -903,11 +678,6 @@ void BTeki::createDeadEffect()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80145DB4
- * Size:	0000B4
- */
 void BTeki::createSoulEffect()
 {
 	immut Vector3f& effectPos = getBoundingSphereCentre();
@@ -924,11 +694,6 @@ void BTeki::createSoulEffect()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80145E68
- * Size:	00019C
- */
 void BTeki::spawnItems()
 {
 	// spawn item
@@ -966,11 +731,6 @@ void BTeki::spawnItems()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80146004
- * Size:	0002A8
- */
 void BTeki::spawnPellets(int kind, int color, int count)
 {
 	PRINT_NAKATA("spawnPellets:%08x:%d,%d,%d\n", this, kind, color, count);
@@ -1024,11 +784,6 @@ void BTeki::spawnPellets(int kind, int color, int count)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801462AC
- * Size:	0001EC
- */
 void BTeki::spawnWaters(int count)
 {
 	PRINT_NAKATA("spawnWaters:%08x:%d\n", this, count);
@@ -1061,21 +816,11 @@ void BTeki::spawnWaters(int count)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80146498
- * Size:	000040
- */
 void BTeki::spawnCorpseParts()
 {
 	return getStrategy()->spawnCorpseParts(*static_cast<Teki*>(this));
 }
 
-/*
- * --INFO--
- * Address:	801464D8
- * Size:	0000D8
- */
 Teki* BTeki::generateTeki(int tekiType)
 {
 	Teki* teki = tekiMgr->newTeki(tekiType);
@@ -1109,21 +854,11 @@ void BTeki::outputDirectionPosition(Vector3f& outPos, f32 dist, f32 height)
 	outPos.add(offset);
 }
 
-/*
- * --INFO--
- * Address:	801465B0
- * Size:	000190
- */
 void BTeki::outputSpawnPosition(Vector3f& spawnPos)
 {
 	outputDirectionPosition(spawnPos, getParameterF(TPF_SpawnDistance), getParameterF(TPF_SpawnHeight));
 }
 
-/*
- * --INFO--
- * Address:	80146740
- * Size:	000250
- */
 Teki* BTeki::spawnTeki(int tekiType)
 {
 	Teki* teki = generateTeki(tekiType);
@@ -1144,20 +879,10 @@ Teki* BTeki::spawnTeki(int tekiType)
 	return teki;
 }
 
-/*
- * --INFO--
- * Address:	80146A10
- * Size:	000004
- */
 void BTeki::shootBall(Creature&)
 {
 }
 
-/*
- * --INFO--
- * Address:	80146A14
- * Size:	0000B4
- */
 void BTeki::dump()
 {
 	PRINT("BTeki:%s:%08x\n", TekiMgr::getTypeName(mTekiType), this);
@@ -1176,11 +901,6 @@ void BTeki::dump()
 	TekiLowerRangeCondition(static_cast<Teki*>(this));
 }
 
-/*
- * --INFO--
- * Address:	80146AC8
- * Size:	0000E8
- */
 bool BTeki::nearestAngleTarget(Creature* newTarget)
 {
 	if (!newTarget) {
@@ -1216,31 +936,16 @@ bool BTeki::nearestAngleTarget(Creature* newTarget)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	80146BB0
- * Size:	000020
- */
 bool BTeki::cullableCenter(Creature& target, f32 radius)
 {
 	return roughCull(this, &target, radius);
 }
 
-/*
- * --INFO--
- * Address:	80146BD0
- * Size:	000088
- */
 bool BTeki::cullableSphere(Creature& target, f32 radius)
 {
 	return cullableCenter(target, getBoundingSphereRadius() + target.getBoundingSphereRadius() + radius);
 }
 
-/*
- * --INFO--
- * Address:	80146C58
- * Size:	0000BC
- */
 bool BTeki::inSectorPosition(immut Vector3f& p1, f32 p2, f32 p3)
 {
 	NVector3f pos(getPosition());
@@ -1256,11 +961,6 @@ bool BTeki::inSectorPosition(immut Vector3f& p1, f32 p2, f32 p3)
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	80146D14
- * Size:	000190
- */
 bool BTeki::visibleCreature(Creature& target)
 {
 	TekiRecognitionCondition recog(static_cast<Teki*>(this));
@@ -1297,11 +997,6 @@ bool BTeki::visibleCreature(Creature& target)
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	80146EA4
- * Size:	000154
- */
 bool BTeki::separateCreature(Creature& target)
 {
 	TekiRecognitionCondition recog(static_cast<Teki*>(this));
@@ -1328,11 +1023,6 @@ bool BTeki::separateCreature(Creature& target)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	80146FF8
- * Size:	000154
- */
 bool BTeki::contactCreature(Creature& target)
 {
 	TekiRecognitionCondition recog(static_cast<Teki*>(this));
@@ -1358,11 +1048,6 @@ bool BTeki::contactCreature(Creature& target)
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8014714C
- * Size:	0001B4
- */
 bool BTeki::attackableCreature(Creature& target)
 {
 	if (target.getStickObject() == this) {
@@ -1382,11 +1067,6 @@ bool BTeki::attackableCreature(Creature& target)
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	80147300
- * Size:	0000F0
- */
 f32 BTeki::calcTargetAngle(immut Vector3f& targetPos)
 {
 	STACK_PAD_VAR(1);
@@ -1396,21 +1076,11 @@ f32 BTeki::calcTargetAngle(immut Vector3f& targetPos)
 	return NMathF::angleDifference(faceDir, targetDir);
 }
 
-/*
- * --INFO--
- * Address:	801473F0
- * Size:	0001DC
- */
 bool BTeki::moveToward(immut Vector3f& target, f32 speed)
 {
 	return moveTowardStatic(getPosition(), target, speed, mTargetVelocity);
 }
 
-/*
- * --INFO--
- * Address:	801475CC
- * Size:	0000C8
- */
 bool BTeki::turnToward(f32 targetAngle, f32 turnSpeed)
 {
 	f32 faceDir   = NMathF::roundAngle(getDirection());
@@ -1435,11 +1105,6 @@ bool BTeki::turnToward(f32 targetAngle, f32 turnSpeed)
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	80147694
- * Size:	00004C
- */
 void BTeki::rotateTeki(f32 speed)
 {
 	f32 faceDir = NMathF::roundAngle(getDirection());
@@ -1468,11 +1133,6 @@ bool BTeki::insideDirection(Vector3f&)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801476E0
- * Size:	000254
- */
 Creature* BTeki::getClosestNaviPiki(immut Condition& cond, f32* outDist)
 {
 	Creature* navi = naviMgr->getNavi();
@@ -1504,11 +1164,6 @@ Creature* BTeki::getClosestNaviPiki(immut Condition& cond, f32* outDist)
 	return result;
 }
 
-/*
- * --INFO--
- * Address:	80147934
- * Size:	0000DC
- */
 bool BTeki::attackTarget(Creature& target, f32 range, f32 damage, immut Condition& cond)
 {
 	if (!cond.satisfy(&target)) {
@@ -1524,11 +1179,6 @@ bool BTeki::attackTarget(Creature& target, f32 range, f32 damage, immut Conditio
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	80147A10
- * Size:	000108
- */
 void BTeki::outputHitCenter(Vector3f& outCenter)
 {
 	Vector3f dir;
@@ -1557,11 +1207,6 @@ bool BTeki::interactTeki(immut Interaction&, immut Condition&)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80147B18
- * Size:	00007C
- */
 bool BTeki::interactNaviPiki(immut Interaction& interaction, immut Condition& cond)
 {
 	bool navi = interactNavi(interaction, cond);
@@ -1570,11 +1215,6 @@ bool BTeki::interactNaviPiki(immut Interaction& interaction, immut Condition& co
 	return navi || piki;
 }
 
-/*
- * --INFO--
- * Address:	80147B94
- * Size:	000090
- */
 bool BTeki::interactNavi(immut Interaction& interaction, immut Condition& cond)
 {
 	bool res   = false;
@@ -1587,11 +1227,6 @@ bool BTeki::interactNavi(immut Interaction& interaction, immut Condition& cond)
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	80147C24
- * Size:	000150
- */
 bool BTeki::interactPiki(immut Interaction& interaction, immut Condition& cond)
 {
 	bool res = false;
@@ -1612,44 +1247,24 @@ bool BTeki::interactPiki(immut Interaction& interaction, immut Condition& cond)
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	80147D74
- * Size:	000034
- */
 void BTeki::flick()
 {
 	flickUpper();
 	flickLower();
 }
 
-/*
- * --INFO--
- * Address:	80147DA8
- * Size:	000044
- */
 void BTeki::flick(InteractFlick& upperFlick, InteractFlick& lowerFlick)
 {
 	flickUpper(upperFlick);
 	flickLower(lowerFlick);
 }
 
-/*
- * --INFO--
- * Address:	80147DEC
- * Size:	000068
- */
 void BTeki::flickUpper()
 {
 	InteractFlick NRef flick = InteractFlick(this, getParameterF(TPF_UpperFlickPower), 0.0f, FLICK_BACKWARDS_ANGLE);
 	flickUpper(flick);
 }
 
-/*
- * --INFO--
- * Address:	80147E54
- * Size:	0001AC
- */
 void BTeki::flickUpper(InteractFlick& flick)
 {
 	Stickers stuckList(this);
@@ -1669,11 +1284,6 @@ void BTeki::flickUpper(InteractFlick& flick)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80148000
- * Size:	000068
- */
 void BTeki::flickLower()
 {
 	InteractFlick NRef flick
@@ -1689,11 +1299,6 @@ static void fakeFunc()
 	andCond.satisfy(nullptr);
 }
 
-/*
- * --INFO--
- * Address:	80148068
- * Size:	000284
- */
 void BTeki::flickLower(InteractFlick& flick)
 {
 	TekiAndCondition andCond(
@@ -1708,11 +1313,6 @@ void BTeki::flickLower(InteractFlick& flick)
 	STACK_PAD_TERNARY(flick.mAngle, 9);
 }
 
-/*
- * --INFO--
- * Address:	801482EC
- * Size:	000174
- */
 bool BTeki::checkNaviPiki(immut Condition& cond)
 {
 	Navi* navi = naviMgr->getNavi();
@@ -1731,11 +1331,6 @@ bool BTeki::checkNaviPiki(immut Condition& cond)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	80148460
- * Size:	000148
- */
 int BTeki::countPikis(immut Condition& cond)
 {
 	int count = 0;
@@ -1769,11 +1364,6 @@ int BTeki::countTekis(immut Condition& cond)
 	return count;
 }
 
-/*
- * --INFO--
- * Address:	801485A8
- * Size:	000054
- */
 int BTeki::getFlickDamageCount(int pikiCount)
 {
 	if (pikiCount <= getParameterI(TPI_FlickPikiCount1)) {
@@ -1789,22 +1379,12 @@ int BTeki::getFlickDamageCount(int pikiCount)
 	return getParameterI(TPI_FlickDamageCount4);
 }
 
-/*
- * --INFO--
- * Address:	801485FC
- * Size:	000040
- */
 void BTeki::eventPerformed(immut TekiEvent& event)
 {
 	TekiStrategy* tekiEvent = getStrategy();
 	tekiEvent->eventPerformed(event);
 }
 
-/*
- * --INFO--
- * Address:	8014863C
- * Size:	000098
- */
 void BTeki::collisionCallback(immut CollEvent& event)
 {
 	if (!isAlive()) {
@@ -1817,11 +1397,6 @@ void BTeki::collisionCallback(immut CollEvent& event)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801486D4
- * Size:	00001C
- */
 bool BTeki::ignoreAtari(Creature* target)
 {
 	if (target->getStickObject() == this) {
@@ -1831,42 +1406,22 @@ bool BTeki::ignoreAtari(Creature* target)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	801486F0
- * Size:	000050
- */
 void BTeki::bounceCallback()
 {
 	eventPerformed(TekiEvent(TekiEventType::Ground, static_cast<Teki*>(this)));
 }
 
-/*
- * --INFO--
- * Address:	80148740
- * Size:	000050
- */
 void BTeki::wallCallback(immut Plane&, DynCollObject*)
 {
 	eventPerformed(TekiEvent(TekiEventType::Wall, static_cast<Teki*>(this)));
 }
 
-/*
- * --INFO--
- * Address:	80148790
- * Size:	000050
- */
 bool BTeki::interact(immut TekiInteractionKey& key)
 {
 	TekiStrategy* strat = getStrategy();
 	return strat->interact(*static_cast<Teki*>(this), key);
 }
 
-/*
- * --INFO--
- * Address:	801487E0
- * Size:	000148
- */
 bool BTeki::interactDefault(immut TekiInteractionKey& key)
 {
 	STACK_PAD_VAR(1);
@@ -1901,53 +1456,28 @@ bool BTeki::interactDefault(immut TekiInteractionKey& key)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	80148928
- * Size:	00000C
- */
 f32 BTeki::getGravity()
 {
 	return AIConstant::_instance->mConstants.mGravity();
 }
 
-/*
- * --INFO--
- * Address:	80148934
- * Size:	00002C
- */
 TekiStrategy* BTeki::getStrategy()
 {
 	return tekiMgr->getStrategy(mTekiType);
 }
 
-/*
- * --INFO--
- * Address:	80148960
- * Size:	000034
- */
 f32 BTeki::getSeaLevel()
 {
 	immut Vector3f& pos = getPosition();
 	return mapMgr->getMinY(pos.x, pos.z, true);
 }
 
-/*
- * --INFO--
- * Address:	80148994
- * Size:	000044
- */
 f32 BTeki::getYFromSeaLevel()
 {
 	immut Vector3f& pos = getPosition();
 	return pos.y - getSeaLevel();
 }
 
-/*
- * --INFO--
- * Address:	801489D8
- * Size:	000074
- */
 void BTeki::makePositionRoute(immut Vector3f& pos1, immut Vector3f& pos2, bool includeBlockedPaths)
 {
 	int idx2 = getTargetNearestWayPoint(pos2)->mIndex;
@@ -1955,11 +1485,6 @@ void BTeki::makePositionRoute(immut Vector3f& pos1, immut Vector3f& pos2, bool i
 	makeWayPointRoute(idx1, idx2, includeBlockedPaths);
 }
 
-/*
- * --INFO--
- * Address:	80148A4C
- * Size:	000098
- */
 void BTeki::makeWayPointRoute(int p1, int p2, bool includeBlockedPaths)
 {
 	for (int i = 0; i < mRouteWayPointMax; i++) {
@@ -1978,41 +1503,21 @@ void BTeki::makeWayPointRoute(int p1, int p2, bool includeBlockedPaths)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80148AE4
- * Size:	000034
- */
 WayPoint* BTeki::getTargetNearestWayPoint(immut Vector3f& pos)
 {
 	return routeMgr->findNearestWayPoint(mPathHandle, pos, false);
 }
 
-/*
- * --INFO--
- * Address:	80148B18
- * Size:	000034
- */
 WayPoint* BTeki::getNearestWayPoint()
 {
 	return getTargetNearestWayPoint(getPosition());
 }
 
-/*
- * --INFO--
- * Address:	80148B4C
- * Size:	000030
- */
 WayPoint* BTeki::getWayPoint(int wpIdx)
 {
 	return routeMgr->getWayPoint(mPathHandle, wpIdx);
 }
 
-/*
- * --INFO--
- * Address:	80148B7C
- * Size:	00002C
- */
 WayPoint* BTeki::getRouteWayPoint(int idx)
 {
 	if (idx < 0 || idx > mRouteWayPointMax) {
@@ -2023,21 +1528,11 @@ WayPoint* BTeki::getRouteWayPoint(int idx)
 	return mRouteWayPoints[idx];
 }
 
-/*
- * --INFO--
- * Address:	80148BA8
- * Size:	000040
- */
 void BTeki::updateLifeGauge()
 {
 	mLifeGauge.updValue(mHealth, getParameterF(TPF_Life));
 }
 
-/*
- * --INFO--
- * Address:	80148BE8
- * Size:	00006C
- */
 void BTeki::refresh(Graphics& gfx)
 {
 	if (mDeadState == 0) {
@@ -2048,11 +1543,6 @@ void BTeki::refresh(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80148C54
- * Size:	000174
- */
 void BTeki::drawDefault(Graphics& gfx)
 {
 	if (!mTekiShape) {
@@ -2087,11 +1577,6 @@ void BTeki::drawDefault(Graphics& gfx)
 	STACK_PAD_TERNARY(rad, 2);
 }
 
-/*
- * --INFO--
- * Address:	80148DC8
- * Size:	00023C
- */
 void BTeki::drawTekiShape(Graphics& gfx)
 {
 	if (!getTekiOption(TEKIOPT_ShapeVisible)) {
@@ -2142,11 +1627,6 @@ void BTeki::drawTekiShape(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80149004
- * Size:	0000B0
- */
 void BTeki::drawTekiDebugInfo(Graphics& gfx)
 {
 	TekiStrategy* strat = getStrategy();
@@ -2157,11 +1637,6 @@ void BTeki::drawTekiDebugInfo(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801490B4
- * Size:	0002C0
- */
 void BTeki::drawTekiDebugInfoDefault(Graphics& gfx)
 {
 	// don't ask why this works.
@@ -2175,11 +1650,6 @@ void BTeki::drawTekiDebugInfoDefault(Graphics& gfx)
 	teki->drawRange(gfx, teki->getPosition(), getLowerRange(), Colour(255, 0, 255, 255));
 }
 
-/*
- * --INFO--
- * Address:	80149374
- * Size:	0000F8
- */
 void BTeki::drawRange(Graphics& gfx, immut Vector3f& centre, f32 range, immut Colour& colour)
 {
 	Matrix4f mtx1;
@@ -2190,11 +1660,6 @@ void BTeki::drawRange(Graphics& gfx, immut Vector3f& centre, f32 range, immut Co
 	gfx.drawSphere(centre, range, mtx2);
 }
 
-/*
- * --INFO--
- * Address:	8014946C
- * Size:	0000F4
- */
 void BTeki::refresh2d(Graphics& gfx)
 {
 	if (mDeadState != 0 || !tekiMgr->hasModel(mTekiType) || !isVisible() || isCreatureFlag(CF_IsAICullingActive)) {
@@ -2213,11 +1678,6 @@ void BTeki::refresh2d(Graphics& gfx)
 	STACK_PAD_TERNARY(mDeadState, 1);
 }
 
-/*
- * --INFO--
- * Address:	80149560
- * Size:	000088
- */
 CollPart* BTeki::getFreeSlot()
 {
 	CollPart* mouth = mCollInfo->getSphere('slot');
@@ -2232,11 +1692,6 @@ CollPart* BTeki::getFreeSlot()
 	return nullptr;
 }
 
-/*
- * --INFO--
- * Address:	801495E8
- * Size:	000140
- */
 bool BTeki::isFreeCollPart(CollPart* part)
 {
 	Stickers stuckList(this);
@@ -2257,11 +1712,6 @@ bool BTeki::isFreeCollPart(CollPart* part)
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	80149728
- * Size:	000080
- */
 void BTeki::playTableSound(int index)
 {
 	PaniSoundTable* table = tekiMgr->getSoundTable(mTekiType);
@@ -2284,31 +1734,16 @@ void BTeki::playTableSound(int index)
 	playSound(sound->mSoundID);
 }
 
-/*
- * --INFO--
- * Address:	801497A8
- * Size:	000024
- */
 void BTeki::playSound(int soundID)
 {
 	mSeContext->playSound(soundID);
 }
 
-/*
- * --INFO--
- * Address:	801497CC
- * Size:	000024
- */
 void BTeki::stopSound(int soundID)
 {
 	mSeContext->stopSound(soundID);
 }
 
-/*
- * --INFO--
- * Address:	801497F0
- * Size:	000058
- */
 void BTeki::createTekiEffect(int effectID)
 {
 	PRINT_NAKATA("createTekiEffect:%08x,%d:%d\n", this, mTekiType, effectID);
@@ -2340,11 +1775,6 @@ void BTeki::outputWorldAnimationMatrix(Matrix4f& mtx1, int idx, immut Matrix4f& 
 	mtx2.multiplyTo(tmp, mtx1);
 }
 
-/*
- * --INFO--
- * Address:	80149848
- * Size:	0000A8
- */
 void BTeki::outputWorldAnimationPosition(Vector3f& p1, int p2, immut Matrix4f& p3)
 {
 	NMatrix4f tmp;
@@ -2352,11 +1782,6 @@ void BTeki::outputWorldAnimationPosition(Vector3f& p1, int p2, immut Matrix4f& p
 	tmp.outputCol(3, p1);
 }
 
-/*
- * --INFO--
- * Address:	801498F0
- * Size:	000044
- */
 int BTeki::getPositionMapCode(immut Vector3f& pos)
 {
 	CollTriInfo* currentTri = mapMgr->getCurrTri(pos.x, pos.z, true);
@@ -2368,21 +1793,11 @@ int BTeki::getPositionMapCode(immut Vector3f& pos)
 	return MapCode::getAttribute(currentTri);
 }
 
-/*
- * --INFO--
- * Address:	80149934
- * Size:	000048
- */
 int BTeki::getPositionMapCode()
 {
 	return getPositionMapCode(getPosition());
 }
 
-/*
- * --INFO--
- * Address:	8014997C
- * Size:	00005C
- */
 bool BTeki::inWaterTeki()
 {
 	if (getPositionMapCode() == ATTR_Water) {
@@ -2392,21 +1807,11 @@ bool BTeki::inWaterTeki()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	801499D8
- * Size:	000020
- */
 void BTeki::moveNestPosition()
 {
 	mSRT.t = mPersonality->mNestPosition;
 }
 
-/*
- * --INFO--
- * Address:	801499F8
- * Size:	000024
- */
 void BTeki::startParticleGenerator(int param_1)
 {
 	zen::particleGenerator* particleGenerator = mParticleGenerators[param_1];
@@ -2415,11 +1820,6 @@ void BTeki::startParticleGenerator(int param_1)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80149A1C
- * Size:	000024
- */
 void BTeki::stopParticleGenerator(int param_1)
 {
 	zen::particleGenerator* particleGenerator = mParticleGenerators[param_1];
@@ -2428,11 +1828,6 @@ void BTeki::stopParticleGenerator(int param_1)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80149A40
- * Size:	000030
- */
 void BTeki::setParticleGeneratorPosition(int param_1, immut Vector3f& effectPos)
 {
 	zen::particleGenerator* particleGenerator = mParticleGenerators[param_1];
@@ -2441,11 +1836,6 @@ void BTeki::setParticleGeneratorPosition(int param_1, immut Vector3f& effectPos)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80149A70
- * Size:	000030
- */
 void BTeki::setParticleGeneratorDirection(int param_1, immut Vector3f& effectDir)
 {
 	zen::particleGenerator* particleGenerator = mParticleGenerators[param_1];
@@ -2454,11 +1844,6 @@ void BTeki::setParticleGeneratorDirection(int param_1, immut Vector3f& effectDir
 	}
 }
 
-/*
- * --INFO--
- * Address:	80149AA0
- * Size:	0000E0
- */
 f32 BTeki::calcCollisionDistance(Creature& creature)
 {
 	f32 dist = qdist2(getCentre().x, getCentre().z, creature.getCentre().x, creature.getCentre().z);
@@ -2469,11 +1854,6 @@ f32 BTeki::calcCollisionDistance(Creature& creature)
 	return dist - creatureCollSize - collSize;
 }
 
-/*
- * --INFO--
- * Address:	80149B80
- * Size:	00002C
- */
 f32 BTeki::getCollisionSize()
 {
 	return getCentreSize();

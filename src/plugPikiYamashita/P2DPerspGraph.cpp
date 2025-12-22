@@ -38,11 +38,6 @@ P2DPerspGraph::P2DPerspGraph(const PUTRect& rect, f32, f32, f32)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801B0190
- * Size:	000084
- */
 P2DPerspGraph::P2DPerspGraph(int x0, int y0, int width, int height, f32 fovy, f32 nearZ, f32 farZ)
     : P2DGrafContext(x0, y0, width, height)
 {
@@ -50,11 +45,6 @@ P2DPerspGraph::P2DPerspGraph(int x0, int y0, int width, int height, f32 fovy, f3
 	mGrafType = P2DGRAF_Persp;
 }
 
-/*
- * --INFO--
- * Address:	801B0214
- * Size:	000060
- */
 void P2DPerspGraph::set(f32 fovy, f32 nearZ, f32 farZ)
 {
 	setFovy(fovy);
@@ -63,11 +53,6 @@ void P2DPerspGraph::set(f32 fovy, f32 nearZ, f32 farZ)
 	setLookat();
 }
 
-/*
- * --INFO--
- * Address:	801B0274
- * Size:	00002C
- */
 void P2DPerspGraph::setFovy(f32 fovy)
 {
 	mFovy = fovy;
@@ -89,11 +74,6 @@ void P2DPerspGraph::getMatrix(Matrix4f& mtx)
 	mtx.makePerspective(mFovy, aspectRatio, mNearClipZ, mFarClipZ); // NB: unimplemented
 }
 
-/*
- * --INFO--
- * Address:	801B02A0
- * Size:	00016C
- */
 void P2DPerspGraph::setPort()
 {
 	P2DGrafContext::setPort();
@@ -121,11 +101,6 @@ void P2DPerspGraph::setPort()
 	GXSetZMode(GX_FALSE, GX_ALWAYS, GX_FALSE);
 }
 
-/*
- * --INFO--
- * Address:	801B040C
- * Size:	000094
- */
 void P2DPerspGraph::setLookat()
 {
 	mDistance = ((f32(mViewportBounds.mMaxY) - f32(mViewportBounds.mMinY)) / 2.0f) / tanf(mFovy * PI / 360.0f);
@@ -143,11 +118,6 @@ void P2DPerspGraph::setDistance(f32 distance)
 	makeLookat();
 }
 
-/*
- * --INFO--
- * Address:	801B04A0
- * Size:	0001FC
- */
 void P2DPerspGraph::makeLookat()
 {
 	f32 halfWidth  = (f32(mViewportBounds.mMaxX) - f32(mViewportBounds.mMinX)) / 2.0f;

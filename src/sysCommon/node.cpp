@@ -20,11 +20,6 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("Node");
 
-/*
- * --INFO--
- * Address:	800405D8
- * Size:	000038
- */
 void CoreNode::add(CoreNode* toAdd)
 {
 	CoreNode* child = mChild;
@@ -47,11 +42,6 @@ void CoreNode::add(CoreNode* toAdd)
 	toAdd->mParent = this;
 }
 
-/*
- * --INFO--
- * Address:	80040610
- * Size:	000070
- */
 void CoreNode::del()
 {
 	// If there's no parent, there's nothing to delete
@@ -83,11 +73,6 @@ void CoreNode::del()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80040680
- * Size:	000020
- */
 int CoreNode::getChildCount()
 {
 	int count = 0;
@@ -98,11 +83,6 @@ int CoreNode::getChildCount()
 	return count;
 }
 
-/*
- * --INFO--
- * Address:	800406A0
- * Size:	00009C
- */
 void CoreNode::load(immut char* dirPath, immut char* fileName, u32)
 {
 	char filePath[PATH_MAX];
@@ -114,11 +94,6 @@ void CoreNode::load(immut char* dirPath, immut char* fileName, u32)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8004073C
- * Size:	000028
- */
 void Node::init(immut char* name)
 {
 	initCore(name);
@@ -126,11 +101,6 @@ void Node::init(immut char* name)
 	_1C    = -1;
 }
 
-/*
- * --INFO--
- * Address:	80040764
- * Size:	00006C
- */
 void Node::update()
 {
 	FOREACH_NODE(Node, mChild, node)
@@ -142,11 +112,6 @@ void Node::update()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800407D0
- * Size:	00005C
- */
 void Node::draw(Graphics& gfx)
 {
 	FOREACH_NODE(Node, mChild, node)
@@ -155,11 +120,6 @@ void Node::draw(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8004082C
- * Size:	00002C
- */
 void Node::render(Graphics& gfx)
 {
 	draw(gfx);
@@ -176,11 +136,6 @@ SRTNode::SRTNode(immut char* name = "<SRTNode>")
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80040858
- * Size:	00007C
- */
 void SRTNode::update()
 {
 	// this feels like it should be SRTNode, but it's not
@@ -194,11 +149,6 @@ void SRTNode::update()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800408D4
- * Size:	000064
- */
 void NodeMgr::Del(Node* node)
 {
 	mDelete = true;
@@ -243,11 +193,6 @@ CoreNode* NodeMgr::findNode(immut char*, CoreNode*)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80040938
- * Size:	00003C
- */
 NodeMgr::NodeMgr()
 {
 	mDelete = false;

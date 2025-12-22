@@ -22,11 +22,6 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("OgPauseSection")
 
-/*
- * --INFO--
- * Address:	80182318
- * Size:	000324
- */
 zen::ogScrPauseMgr::ogScrPauseMgr()
 {
 	mIsChallengeMode = false;
@@ -79,11 +74,6 @@ zen::ogScrPauseMgr::ogScrPauseMgr()
 	mBackPane2->hide();
 }
 
-/*
- * --INFO--
- * Address:	8018263C
- * Size:	00008C
- */
 void zen::ogScrPauseMgr::start(bool isChallengeMode)
 {
 	mIsChallengeMode = isChallengeMode;
@@ -102,11 +92,6 @@ void zen::ogScrPauseMgr::start(bool isChallengeMode)
 	_00         = true;
 }
 
-/*
- * --INFO--
- * Address:	801826C8
- * Size:	0003C0
- */
 zen::ogScrPauseMgr::PauseStatus zen::ogScrPauseMgr::update(Controller* controller)
 {
 	if (mState == PAUSE_NULL) {
@@ -220,11 +205,6 @@ zen::ogScrPauseMgr::PauseStatus zen::ogScrPauseMgr::update(Controller* controlle
 	return mState;
 }
 
-/*
- * --INFO--
- * Address:	80182A88
- * Size:	0000B0
- */
 void zen::ogScrPauseMgr::draw(Graphics& gfx)
 {
 	if (mState == PAUSE_NULL) {

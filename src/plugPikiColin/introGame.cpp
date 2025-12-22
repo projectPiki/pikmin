@@ -241,11 +241,6 @@ struct IntroGameSetupSection : public BaseGameSection {
 
 static IntroGameSetupSection* igss;
 
-/*
- * --INFO--
- * Address:	8005AE1C
- * Size:	000298
- */
 IntroGameSection::IntroGameSection()
 {
 	Node::init("<IntroGameSection>");

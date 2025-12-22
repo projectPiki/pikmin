@@ -26,11 +26,6 @@ immut char* Reaction::info[9] = {
 	"-", "WATCH", "ESCAPE", "CHASE", "GOTO", "PICK", "PUT", "KICK", "FORMATION",
 };
 
-/*
- * --INFO--
- * Address:	800C3AE4
- * Size:	000240
- */
 void Action::procMsg(Msg* msg)
 {
 	STACK_PAD_VAR(1);
@@ -47,11 +42,6 @@ void Action::procMsg(Msg* msg)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800C3D24
- * Size:	0000AC
- */
 void Action::Child::initialise(Creature* creature)
 {
 	if (mAction) {
@@ -71,11 +61,6 @@ void Action::Child::initialise(Creature* creature)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800C3DD0
- * Size:	000038
- */
 Action::Action(Piki* actor, bool p2)
 {
 	mPiki          = actor;
@@ -85,11 +70,6 @@ Action::Action(Piki* actor, bool p2)
 	mName          = "no name";
 }
 
-/*
- * --INFO--
- * Address:	800C3E08
- * Size:	000078
- */
 Action::~Action()
 {
 	if (mChildActions) {
@@ -98,31 +78,16 @@ Action::~Action()
 	mChildActions = nullptr;
 }
 
-/*
- * --INFO--
- * Address:	800C3F00
- * Size:	00000C
- */
 void Action::init(Creature*)
 {
 	mCurrActionIdx = PikiAction::RandomBoid;
 }
 
-/*
- * --INFO--
- * Address:	800C3F0C
- * Size:	000008
- */
 int Action::exec()
 {
 	return ACTOUT_Success;
 }
 
-/*
- * --INFO--
- * Address:	800C3F14
- * Size:	0000E0
- */
 void AndAction::init(Creature* creature)
 {
 	mCurrActionIdx = PikiAction::RandomBoid;
@@ -130,11 +95,6 @@ void AndAction::init(Creature* creature)
 	mOtherCreature = creature;
 }
 
-/*
- * --INFO--
- * Address:	800C3FF4
- * Size:	00014C
- */
 int AndAction::exec()
 {
 	Child* child = &mChildActions[mCurrActionIdx];
@@ -159,11 +119,6 @@ int AndAction::exec()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800C4140
- * Size:	0000E0
- */
 void OrAction::init(Creature* creature)
 {
 	mCurrActionIdx = PikiAction::RandomBoid;
@@ -171,11 +126,6 @@ void OrAction::init(Creature* creature)
 	mOtherCreature = creature;
 }
 
-/*
- * --INFO--
- * Address:	800C4220
- * Size:	000150
- */
 int OrAction::exec()
 {
 	Child* child = &mChildActions[mCurrActionIdx];
@@ -198,11 +148,6 @@ int OrAction::exec()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800C4370
- * Size:	000124
- */
 void Action::setChildren(int count, ...)
 {
 	mChildActions = new Child[count];
@@ -220,11 +165,6 @@ void Action::setChildren(int count, ...)
 	va_end(list);
 }
 
-/*
- * --INFO--
- * Address:	800C44A4
- * Size:	000070
- */
 void Action::cleanup()
 {
 	for (int i = 0; i < mChildCount; i++) {
@@ -233,11 +173,6 @@ void Action::cleanup()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800C4514
- * Size:	0000DC
- */
 void TopAction::MotionListener::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
@@ -248,11 +183,6 @@ void TopAction::MotionListener::animationKeyUpdated(immut PaniAnimKeyEvent& even
 	}
 }
 
-/*
- * --INFO--
- * Address:	800C45F0
- * Size:	00064C
- */
 TopAction::TopAction(Piki* piki)
     : Action(piki, false)
 {
@@ -308,20 +238,10 @@ TopAction::TopAction(Piki* piki)
 	memStat->end("topaction");
 }
 
-/*
- * --INFO--
- * Address:	800C4C3C
- * Size:	000088
- */
 TopAction::~TopAction()
 {
 }
 
-/*
- * --INFO--
- * Address:	800C4CC4
- * Size:	0000E8
- */
 void TopAction::init(Creature* creature)
 {
 	mCurrActionIdx = PikiAction::RandomBoid;
@@ -333,11 +253,6 @@ void TopAction::init(Creature* creature)
 	mIsSuspended = false;
 }
 
-/*
- * --INFO--
- * Address:	800C4DAC
- * Size:	000598
- */
 int TopAction::exec()
 {
 	if (mIsSuspended) {
@@ -453,11 +368,6 @@ int TopAction::exec()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800C5344
- * Size:	000084
- */
 void TopAction::abandon(zen::particleGenerator* particle)
 {
 	if (mCurrActionIdx != PikiAction::NOACTION) {
@@ -482,11 +392,6 @@ void TopAction::abandon(zen::particleGenerator* particle)
 	mIsSuspended   = false;
 }
 
-/*
- * --INFO--
- * Address:	800C53C8
- * Size:	00004C
- */
 bool TopAction::resumable()
 {
 	if (mCurrActionIdx != PikiAction::NOACTION) {
@@ -495,11 +400,6 @@ bool TopAction::resumable()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800C5414
- * Size:	00004C
- */
 void TopAction::resume()
 {
 	mIsSuspended = true;
@@ -510,11 +410,6 @@ void TopAction::resume()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800C5460
- * Size:	00004C
- */
 void TopAction::restart()
 {
 	mIsSuspended = false;
@@ -535,11 +430,6 @@ void TopAction::knowledgeCheck()
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	800C54AC
- * Size:	000090
- */
 TopAction::ObjBore::ObjBore()
 {
 	mCurrentCount  = 0;
@@ -622,11 +512,6 @@ void TopAction::ObjBore::update()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800C553C
- * Size:	00008C
- */
 TopAction::Boredom::Boredom()
 {
 	mCurrentBoredomCount  = 0;

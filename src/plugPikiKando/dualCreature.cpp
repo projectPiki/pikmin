@@ -20,11 +20,6 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT(nullptr);
 
-/*
- * --INFO--
- * Address:	80091EC0
- * Size:	000094
- */
 DualCreature::DualCreature()
 {
 	mIsCollisionInitialised = false;
@@ -35,22 +30,12 @@ DualCreature::DualCreature()
 	setDynamicsSimpleFixed(false);
 }
 
-/*
- * --INFO--
- * Address:	80091F54
- * Size:	000034
- */
 void DualCreature::doKill()
 {
 	DynCreature::doKill();
 	mIsCollisionInitialised = false;
 }
 
-/*
- * --INFO--
- * Address:	80091F88
- * Size:	000060
- */
 bool DualCreature::isFrontFace()
 {
 	if (mIsRealDynamics) {
@@ -62,11 +47,6 @@ bool DualCreature::isFrontFace()
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	80091FE8
- * Size:	000050
- */
 f32 DualCreature::getY()
 {
 	if (mIsRealDynamics) {
@@ -78,11 +58,6 @@ f32 DualCreature::getY()
 	return 1.0f;
 }
 
-/*
- * --INFO--
- * Address:	80092038
- * Size:	000054
- */
 bool DualCreature::onGround()
 {
 	if (mIsRealDynamics) {
@@ -115,11 +90,6 @@ void DualCreature::createCollisions(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8009208C
- * Size:	000050
- */
 void DualCreature::useRealDynamics()
 {
 	if (!mIsDynamicsSimpleFixed) {
@@ -131,11 +101,6 @@ void DualCreature::useRealDynamics()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800920DC
- * Size:	000044
- */
 void DualCreature::useSimpleDynamics()
 {
 	_43E            = true;
@@ -144,11 +109,6 @@ void DualCreature::useSimpleDynamics()
 	mAngularMomentum.set(0.0f, 0.0f, 0.0f);
 }
 
-/*
- * --INFO--
- * Address:	80092120
- * Size:	0000C4
- */
 void DualCreature::rotateY(f32 rotY)
 {
 	if (mIsRealDynamics) {
@@ -163,11 +123,6 @@ void DualCreature::rotateY(f32 rotY)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800921E4
- * Size:	000034
- */
 void DualCreature::update()
 {
 	if (mIsRealDynamics) {
@@ -177,11 +132,6 @@ void DualCreature::update()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80092218
- * Size:	00021C
- */
 void DualCreature::refresh(Graphics& gfx)
 {
 	Matrix4f mtx;
@@ -241,11 +191,6 @@ PelCreature::PelCreature(int objType, ItemShapeObject* shape, CreatureProp* prop
 	mapMgr     = mgr;
 }
 
-/*
- * --INFO--
- * Address:	80092434
- * Size:	000050
- */
 void PelCreature::init(immut Vector3f& pos)
 {
 	Creature::init(pos);
@@ -254,31 +199,16 @@ void PelCreature::init(immut Vector3f& pos)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80092484
- * Size:	000008
- */
 f32 PelCreature::getiMass()
 {
 	return 10.0f;
 }
 
-/*
- * --INFO--
- * Address:	8009248C
- * Size:	000008
- */
 bool PelCreature::isAlive()
 {
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	80092494
- * Size:	000060
- */
 void PelCreature::startAI(int)
 {
 	mCollInfo = &mItemCollInfo;
@@ -286,11 +216,6 @@ void PelCreature::startAI(int)
 	mItemAnimator.startMotion(PaniMotionInfo(0));
 }
 
-/*
- * --INFO--
- * Address:	800924F4
- * Size:	0001C8
- */
 void PelCreature::doRender(Graphics& gfx, Matrix4f& mtx)
 {
 	Navi* navi = naviMgr->getNavi();
@@ -312,11 +237,6 @@ void PelCreature::doRender(Graphics& gfx, Matrix4f& mtx)
 	mCollInfo->updateInfo(gfx, false);
 }
 
-/*
- * --INFO--
- * Address:	800926BC
- * Size:	00014C
- */
 void PelCreature::doCreateColls(Graphics& gfx)
 {
 	f32 size          = getCentreSize();

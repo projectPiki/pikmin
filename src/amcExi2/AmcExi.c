@@ -32,11 +32,6 @@ static void CompleteTransfer()
 	}
 }
 
-/*
- * --INFO--
- * Address:	802207EC
- * Size:	000244
- */
 s32 AmcEXIImm(void* buf, s32 len, u32 type, EXICallback cb)
 {
 	BOOL intrEnable;
@@ -85,11 +80,6 @@ void AmcEXIDma(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80220A30
- * Size:	000198
- */
 void AmcEXISync()
 {
 	while (exi->state & 4) {
@@ -102,11 +92,6 @@ void AmcEXISync()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80220BC8
- * Size:	000040
- */
 void AmcEXIClearInterrupts(s32 doProcessInterface, s32 doExternalInterface)
 {
 	u32 exiStat;
@@ -126,11 +111,6 @@ void AmcEXIClearInterrupts(s32 doProcessInterface, s32 doExternalInterface)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80220C08
- * Size:	00006C
- */
 void* AmcEXISetExiCallback(EXICallback cb)
 {
 	EXICallback exiCallback;
@@ -169,11 +149,6 @@ void AmcEXIDisable32MHz(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80220C74
- * Size:	000080
- */
 s32 AmcEXISelect(u32 freq)
 {
 	BOOL intrEnable;
@@ -193,11 +168,6 @@ s32 AmcEXISelect(u32 freq)
 	return 1;
 }
 
-/*
- * --INFO--
- * Address:	80220CF4
- * Size:	000068
- */
 s32 AmcEXIDeselect()
 {
 	s32 intrEnable = OSDisableInterrupts();
@@ -225,11 +195,6 @@ void AmcTCIntrruptHandler(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80220D5C
- * Size:	000050
- */
 static void AmcDebugIntHandler(__OSInterrupt intr, OSContext* context)
 {
 	EXICallback exiCallback;
@@ -241,11 +206,6 @@ static void AmcDebugIntHandler(__OSInterrupt intr, OSContext* context)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80220DAC
- * Size:	000040
- */
 void AmcEXIEnableInterrupts()
 {
 	__OSMaskInterrupts(0x8000);
@@ -253,11 +213,6 @@ void AmcEXIEnableInterrupts()
 	__OSUnmaskInterrupts(0x40);
 }
 
-/*
- * --INFO--
- * Address:	80220DEC
- * Size:	000040
- */
 void AmcEXIInit()
 {
 	memset(&Ecb, 0, sizeof(Ecb));

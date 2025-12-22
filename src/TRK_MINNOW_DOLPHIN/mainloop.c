@@ -3,32 +3,17 @@
 extern TRKEventQueue gTRKEventQueue;
 extern TRKState gTRKState;
 
-/*
- * --INFO--
- * Address:	8021BF4C
- * Size:	000028
- */
 void TRKHandleRequestEvent(TRKEvent* event)
 {
 	TRKBuffer* buffer = TRKGetBuffer(event->msgBufID);
 	TRKDispatchMessage(buffer);
 }
 
-/*
- * --INFO--
- * Address:	8021BF74
- * Size:	000020
- */
 void TRKHandleSupportEvent(TRKEvent* event)
 {
 	TRKTargetSupportRequest();
 }
 
-/*
- * --INFO--
- * Address:	8021BF94
- * Size:	00002C
- */
 void TRKIdle()
 {
 	if (TRKTargetStopped() == FALSE) {
@@ -36,11 +21,6 @@ void TRKIdle()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8021BFC0
- * Size:	0000F4
- */
 void TRKNubMainLoop(void)
 {
 	TRKEvent event;

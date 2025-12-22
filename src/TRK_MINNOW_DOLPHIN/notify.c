@@ -16,11 +16,6 @@ inline DSError TRKWaitForACK(TRKBuffer* msg, MessageCommandID cmd)
 	return DS_NoError;
 }
 
-/*
- * --INFO--
- * Address:	8021E6B0
- * Size:	0000D8
- */
 DSError TRKDoNotifyStopped(u8 cmd)
 {
 	DSError err;

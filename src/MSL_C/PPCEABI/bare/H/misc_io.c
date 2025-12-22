@@ -40,11 +40,6 @@ void perror(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80216594
- * Size:	000004
- */
 void __stdio_atexit(void)
 {
 }

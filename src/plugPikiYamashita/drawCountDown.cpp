@@ -23,11 +23,6 @@ DEFINE_PRINT("drawCountDown")
 
 const int zen::DrawCountDown::countPicsNum = 11;
 
-/*
- * --INFO--
- * Address:	801E7AB0
- * Size:	0001F8
- */
 zen::DrawCountDown::DrawCountDown()
 {
 	mScreen       = new DrawScreen("screen/blo/count.blo", nullptr, false, false);
@@ -68,11 +63,6 @@ zen::DrawCountDown::DrawCountDown()
 	mDoPlaySound = true;
 }
 
-/*
- * --INFO--
- * Address:	801E7CA8
- * Size:	000010
- */
 void zen::DrawCountDown::setRate(f32 hiddenRate, f32 fadeInRate, f32 fadeOutRate)
 {
 	if (hiddenRate + fadeInRate + fadeOutRate > 1.0f) {
@@ -84,11 +74,6 @@ void zen::DrawCountDown::setRate(f32 hiddenRate, f32 fadeInRate, f32 fadeOutRate
 	mFadeOutRate = fadeOutRate;
 }
 
-/*
- * --INFO--
- * Address:	801E7CB8
- * Size:	0001A8
- */
 void zen::DrawCountDown::init(f32 startHour, f32 endHour, f32* clockPtr)
 {
 	mTimePtr            = clockPtr;
@@ -107,11 +92,6 @@ void zen::DrawCountDown::init(f32 startHour, f32 endHour, f32* clockPtr)
 	mPrevDigit = -1;
 }
 
-/*
- * --INFO--
- * Address:	801E7E60
- * Size:	000A70
- */
 void zen::DrawCountDown::update()
 {
 	f32 time = getClock();
@@ -209,11 +189,6 @@ void zen::DrawCountDown::update()
 	mScreen->update();
 }
 
-/*
- * --INFO--
- * Address:	801E88D0
- * Size:	000030
- */
 void zen::DrawCountDown::draw(Graphics&)
 {
 	mScreen->draw();

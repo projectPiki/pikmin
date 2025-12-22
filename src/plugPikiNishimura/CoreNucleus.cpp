@@ -22,11 +22,6 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("CoreNucleus");
 
-/*
- * --INFO--
- * Address:	8017A954
- * Size:	000090
- */
 CoreNucleusProp::CoreNucleusProp()
 {
 	mCreatureProps.mFriction.mValue      = 1.0f;
@@ -34,11 +29,6 @@ CoreNucleusProp::CoreNucleusProp()
 	mCreatureProps.mAcceleration.mValue  = 1.0f;
 }
 
-/*
- * --INFO--
- * Address:	8017A9E4
- * Size:	000084
- */
 CoreNucleus::CoreNucleus(CreatureProp* props)
     : Boss(props)
 {
@@ -46,21 +36,11 @@ CoreNucleus::CoreNucleus(CreatureProp* props)
 	mCoreAi   = new CoreNucleusAi(this);
 }
 
-/*
- * --INFO--
- * Address:	8017AA68
- * Size:	000008
- */
 f32 CoreNucleus::getiMass()
 {
 	return 0.01f;
 }
 
-/*
- * --INFO--
- * Address:	8017AA70
- * Size:	000064
- */
 void CoreNucleus::init(immut Vector3f& pos)
 {
 	mCollisionRadius = 20.0f;
@@ -72,11 +52,6 @@ void CoreNucleus::init(immut Vector3f& pos)
 	mCoreAi->initAI(this);
 }
 
-/*
- * --INFO--
- * Address:	8017AAD4
- * Size:	000034
- */
 void CoreNucleus::doKill()
 {
 	mIsAlive = 0;
@@ -84,30 +59,15 @@ void CoreNucleus::doKill()
 	bossMgr->kill(this);
 }
 
-/*
- * --INFO--
- * Address:	8017AB08
- * Size:	000004
- */
 void CoreNucleus::exitCourse()
 {
 }
 
-/*
- * --INFO--
- * Address:	8017AB0C
- * Size:	000020
- */
 void CoreNucleus::update()
 {
 	Creature::update();
 }
 
-/*
- * --INFO--
- * Address:	8017AB2C
- * Size:	000098
- */
 void CoreNucleus::refresh(Graphics& gfx)
 {
 	mWorldMtx.makeSRT(mSRT.s, mSRT.r, mSRT.t);
@@ -118,32 +78,17 @@ void CoreNucleus::refresh(Graphics& gfx)
 	mCollInfo->updateInfo(gfx, false);
 }
 
-/*
- * --INFO--
- * Address:	8017ABC4
- * Size:	00006C
- */
 void CoreNucleus::drawShape(Graphics& gfx)
 {
 	gfx.useMatrix(Matrix4f::ident, 0);
 	mShapeObject->mShape->drawshape(gfx, *gfx.mCamera, nullptr);
 }
 
-/*
- * --INFO--
- * Address:	8017AC30
- * Size:	000024
- */
 void CoreNucleus::doAI()
 {
 	mCoreAi->update();
 }
 
-/*
- * --INFO--
- * Address:	8017AC54
- * Size:	000044
- */
 void CoreNucleus::doAnimation()
 {
 	if (mShapeObject) {
@@ -151,11 +96,6 @@ void CoreNucleus::doAnimation()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8017AC98
- * Size:	000054
- */
 void CoreNucleus::collisionCallback(immut CollEvent& event)
 {
 	if (event.mCollider->mObjType == OBJTYPE_Piki && static_cast<Piki*>(event.mCollider)->getState() == PIKISTATE_Flying) {

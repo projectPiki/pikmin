@@ -2,11 +2,6 @@
 
 struct DVDQueue WaitingQueue[4];
 
-/*
- * --INFO--
- * Address:	80201F04
- * Size:	000038
- */
 void __DVDClearWaitingQueue()
 {
 	int i;
@@ -19,11 +14,6 @@ void __DVDClearWaitingQueue()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80201F3C
- * Size:	000068
- */
 BOOL __DVDPushWaitingQueue(int idx, struct DVDQueue* newTail)
 {
 	BOOL intrEnabled = OSDisableInterrupts();
@@ -49,11 +39,6 @@ void PopWaitingQueuePrio(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80201FA4
- * Size:	0000A0
- */
 DVDQueue* __DVDPopWaitingQueue()
 {
 	BOOL intrEnabled = OSDisableInterrupts();
@@ -82,11 +67,6 @@ DVDQueue* __DVDPopWaitingQueue()
 	return NULL;
 }
 
-/*
- * --INFO--
- * Address:	80202044
- * Size:	000058
- */
 BOOL __DVDCheckWaitingQueue()
 {
 	BOOL intrEnabled = OSDisableInterrupts();
@@ -102,11 +82,6 @@ BOOL __DVDCheckWaitingQueue()
 	return FALSE;
 }
 
-/*
- * --INFO--
- * Address:	8020209C
- * Size:	000060
- */
 BOOL __DVDDequeueWaitingQueue(DVDQueue* queue)
 {
 	BOOL intrEnabled      = OSDisableInterrupts();

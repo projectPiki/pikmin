@@ -19,11 +19,6 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("interactEtc")
 
-/*
- * --INFO--
- * Address:	8007C9F8
- * Size:	00003C
- */
 bool InteractTalk::actPiki(Piki* piki) immut
 {
 	MsgTarget msg(mOwner);
@@ -31,11 +26,6 @@ bool InteractTalk::actPiki(Piki* piki) immut
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8007CA34
- * Size:	000104
- */
 bool InteractWarn::actPiki(Piki* piki) immut
 {
 	int state = piki->getState();

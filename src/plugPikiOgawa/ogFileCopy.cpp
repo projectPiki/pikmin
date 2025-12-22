@@ -21,11 +21,6 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("OgFileSelectSection")
 
-/*
- * --INFO--
- * Address:	8019719C
- * Size:	00010C
- */
 void zen::ogScrFileSelectMgr::setOperateMode_Copy()
 {
 	SetTitleMsg(SelectSourceFileForCopy);
@@ -65,11 +60,6 @@ void zen::ogScrFileSelectMgr::MoveCpyCursor(int id, f32 a2)
 	mCopyRightCursor.move(mCopyCursorRPosX[id], mCopyCursorRPosY[id], a2);
 }
 
-/*
- * --INFO--
- * Address:	801972A8
- * Size:	0003A8
- */
 void zen::ogScrFileSelectMgr::CopyEffectStart()
 {
 	Vector3f effPos;
@@ -102,11 +92,6 @@ void zen::ogScrFileSelectMgr::CopyEffectStart()
 	mFileCopyEffectPikminGroup->setNewtonField(attractorPos, 0.0046f, true);
 }
 
-/*
- * --INFO--
- * Address:	80197650
- * Size:	000488
- */
 void zen::ogScrFileSelectMgr::OperateCopy(Controller* input)
 {
 	if (mIsCopyCompleteMessageActive) {

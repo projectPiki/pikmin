@@ -29,11 +29,6 @@ DEFINE_PRINT("KoganeAi");
 
 static u32 koganeSE[] = { SE_KOGANE_WALK, SE_KOGANE_DAMAGE };
 
-/*
- * --INFO--
- * Address:	80176104
- * Size:	0001AC
- */
 void KoganeAi::createWaterEffect()
 {
 	effectMgr->create(EffectMgr::EFF_P_Bubbles, mKogane->mSRT.t, nullptr, nullptr);
@@ -61,32 +56,17 @@ void KoganeAi::createWaterEffect()
 	FORCE_DONT_INLINE;
 }
 
-/*
- * --INFO--
- * Address:	801762B0
- * Size:	000038
- */
 void KoganeAi::killCallBackEffect(bool p1)
 {
 	effectMgr->kill(mRippleCallBack, nullptr, p1);
 }
 
-/*
- * --INFO--
- * Address:	801762E8
- * Size:	000074
- */
 KoganeAi::KoganeAi(Kogane* kogane)
 {
 	mKogane         = kogane;
 	mRippleCallBack = new KoganeGenRippleCallBack();
 }
 
-/*
- * --INFO--
- * Address:	8017635C
- * Size:	000110
- */
 void KoganeAi::initAI(Kogane* kogane)
 {
 	mKogane = kogane;
@@ -101,11 +81,6 @@ void KoganeAi::initAI(Kogane* kogane)
 	             + NsMathF::getRand(NsLibMath<f32>::abs(C_KOGANE_PROP(mKogane).mAppearTimeMax() - C_KOGANE_PROP(mKogane).mAppearTimeMin()));
 }
 
-/*
- * --INFO--
- * Address:	8017646C
- * Size:	00007C
- */
 void KoganeAi::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
@@ -127,11 +102,6 @@ void KoganeAi::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801764E8
- * Size:	00005C
- */
 void KoganeAi::keyAction0()
 {
 	if (mKogane->getCurrentState() == 4) {
@@ -143,11 +113,6 @@ void KoganeAi::keyAction0()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80176544
- * Size:	0000A8
- */
 void KoganeAi::keyAction1()
 {
 	if (mKogane->getCurrentState() == 4) {
@@ -179,21 +144,11 @@ void KoganeAi::keyAction3()
 {
 }
 
-/*
- * --INFO--
- * Address:	801765EC
- * Size:	000014
- */
 void KoganeAi::keyLoopEnd()
 {
 	mKogane->addLoopCounter(1);
 }
 
-/*
- * --INFO--
- * Address:	80176600
- * Size:	000028
- */
 void KoganeAi::keyFinished()
 {
 	mKogane->setMotionFinish(true);
@@ -202,11 +157,6 @@ void KoganeAi::keyFinished()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80176628
- * Size:	00003C
- */
 void KoganeAi::playSound(int koganeSoundID)
 {
 	if (mKogane->mSeContext) {
@@ -225,11 +175,6 @@ void KoganeAi::setEveryFrame()
 	checkAppearTimeCounter();
 }
 
-/*
- * --INFO--
- * Address:	80176664
- * Size:	0000DC
- */
 void KoganeAi::setMapAttribute()
 {
 	int mapAttr = mKogane->getMapAttribute(mKogane->mSRT.t);
@@ -295,11 +240,6 @@ void KoganeAi::calcScaleUp()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80176740
- * Size:	0001E8
- */
 void KoganeAi::setNewTargetPosition()
 {
 	f32 angle = mKogane->mFaceDirection;
@@ -323,11 +263,6 @@ void KoganeAi::setNewTargetPosition()
 	mKogane->setTargetPosition(targetPos);
 }
 
-/*
- * --INFO--
- * Address:	80176928
- * Size:	00022C
- */
 void KoganeAi::setRouteTargetPosition()
 {
 	WayPoint* wp = routeMgr->findNearestWayPoint('test', mKogane->mSRT.t, false);
@@ -380,11 +315,6 @@ void KoganeAi::makeStopMoving()
 	mKogane->mVelocity.set(0.0f, 0.0f, 0.0f);
 }
 
-/*
- * --INFO--
- * Address:	80176B54
- * Size:	0001A8
- */
 void KoganeAi::birthItemPellet(int size)
 {
 	f32 xOffs         = -sinf(mKogane->mFaceDirection);
@@ -410,11 +340,6 @@ void KoganeAi::birthItemPellet(int size)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80176CFC
- * Size:	0001E0
- */
 void KoganeAi::birthItemWater(int numDrops, f32 p2)
 {
 	STACK_PAD_VAR(2);
@@ -450,11 +375,6 @@ void KoganeAi::birthItemWater(int numDrops, f32 p2)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80176EDC
- * Size:	0000C4
- */
 void KoganeAi::createPellet()
 {
 	mDropCount++;
@@ -514,11 +434,6 @@ bool KoganeAi::isMotionFinishTransit()
 	return mKogane->getMotionFinish();
 }
 
-/*
- * --INFO--
- * Address:	80176FA0
- * Size:	0003A0
- */
 bool KoganeAi::appearTransit()
 {
 	if (!mKogane->mIsAppear) {
@@ -683,11 +598,6 @@ void KoganeAi::initStopWalk(int nextState)
 	resultFlagOn();
 }
 
-/*
- * --INFO--
- * Address:	80177340
- * Size:	0001D4
- */
 void KoganeAi::initCreate(int nextState)
 {
 	mKogane->setNextState(nextState);
@@ -772,11 +682,6 @@ void KoganeAi::createState()
 	calcScaleUp();
 }
 
-/*
- * --INFO--
- * Address:	80177514
- * Size:	0008A4
- */
 void KoganeAi::update()
 {
 	setEveryFrame();

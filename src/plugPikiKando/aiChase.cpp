@@ -15,31 +15,16 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("aiRandomBoid") // ... no you're not
 
-/*
- * --INFO--
- * Address:	800B5688
- * Size:	00006C
- */
 ActChase::ActChase(Piki* piki)
     : Action(piki, true)
 {
 	mTarget.reset();
 }
 
-/*
- * --INFO--
- * Address:	800B56F4
- * Size:	000004
- */
 void ActChase::Initialiser::initialise(Action*)
 {
 }
 
-/*
- * --INFO--
- * Address:	800B56F8
- * Size:	0000D4
- */
 void ActChase::init(Creature* target)
 {
 	mChaseTimer = 2.0f * gsys->getRand(1.0f) + 4.0f;
@@ -47,22 +32,12 @@ void ActChase::init(Creature* target)
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Run), PaniMotionInfo(PIKIANIM_Run));
 }
 
-/*
- * --INFO--
- * Address:	800B57CC
- * Size:	000040
- */
 void ActChase::cleanup()
 {
 	Creature* target = mTarget.getPtr();
 	mTarget.reset();
 }
 
-/*
- * --INFO--
- * Address:	800B580C
- * Size:	00023C
- */
 int ActChase::exec()
 {
 	STACK_PAD_VAR(2);

@@ -99,11 +99,6 @@ struct TaiShellEatAction : public TaiAction {
 	// TODO: members
 };
 
-/*
- * --INFO--
- * Address:	80141FD0
- * Size:	000084
- */
 TaiShellSoundTable::TaiShellSoundTable()
     : PaniSoundTable(5)
 {
@@ -112,11 +107,6 @@ TaiShellSoundTable::TaiShellSoundTable()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80142054
- * Size:	00018C
- */
 TaiShellParameters::TaiShellParameters()
     : TekiParameters(SHELLPI_COUNT, SHELLPF_COUNT)
 {
@@ -147,11 +137,6 @@ TaiShellParameters::TaiShellParameters()
 	STACK_PAD_VAR(1);
 }
 
-/*
- * --INFO--
- * Address:	801421E0
- * Size:	0004F4
- */
 TaiShellStrategy::TaiShellStrategy(TekiParameters* params)
     : TaiStrategy(SHELLSTATE_COUNT, SHELLSTATE_Normal)
 {
@@ -214,11 +199,6 @@ TaiShellStrategy::TaiShellStrategy(TekiParameters* params)
 	setState(SHELLSTATE_Eat, state4);
 }
 
-/*
- * --INFO--
- * Address:	801426D4
- * Size:	00008C
- */
 void TaiShellStrategy::createEffect(Teki& teki, int p2)
 {
 	TekiStrategy::createEffect(teki, p2);
@@ -230,11 +210,6 @@ void TaiShellStrategy::createEffect(Teki& teki, int p2)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80142760
- * Size:	0001F4
- */
 void TaiShellStrategy::start(Teki& teki)
 {
 	teki.mParticleGenerators[0] = effectMgr->create(EffectMgr::EFF_Shell_Twinkle, Vector3f(0.0f, 0.0f, 0.0f), nullptr, nullptr);
@@ -274,11 +249,6 @@ void TaiShellStrategy::start(Teki& teki)
 	teki.mPersonality->mID.setID('none');
 }
 
-/*
- * --INFO--
- * Address:	80142954
- * Size:	0000D0
- */
 void TaiShellStrategy::draw(Teki& teki, Graphics& gfx)
 {
 	teki.moveNestPosition();
@@ -299,11 +269,6 @@ void TaiShellStrategy::draw(Teki& teki, Graphics& gfx)
 	STACK_PAD_VAR(1);
 }
 
-/*
- * --INFO--
- * Address:	80142A24
- * Size:	000038
- */
 bool TaiShellSetPositionAction::act(Teki& teki)
 {
 	BTeki* pearl = static_cast<BTeki*>(teki.getCreaturePointer(2));
@@ -313,11 +278,6 @@ bool TaiShellSetPositionAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	80142A5C
- * Size:	000078
- */
 void TaiShellSetPositionAction::setPosition(Teki& teki, Creature* pearl)
 {
 	NVector3f spawnPos;
@@ -326,11 +286,6 @@ void TaiShellSetPositionAction::setPosition(Teki& teki, Creature* pearl)
 	pearl->inputPosition(spawnPos);
 }
 
-/*
- * --INFO--
- * Address:	80142AD4
- * Size:	0001A8
- */
 bool TaiShellSaveItemPositionAction::act(Teki& teki)
 {
 	STACK_PAD_VAR(4);
@@ -358,11 +313,6 @@ bool TaiShellSaveItemPositionAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	80142C7C
- * Size:	000078
- */
 void TaiShellSaveItemPositionAction::setPosition(Teki& teki, Creature* item)
 {
 	NVector3f spawnPos;
@@ -371,11 +321,6 @@ void TaiShellSaveItemPositionAction::setPosition(Teki& teki, Creature* item)
 	item->inputPosition(spawnPos);
 }
 
-/*
- * --INFO--
- * Address:	80142CF4
- * Size:	000104
- */
 bool TaiShellNaviPikiInsideAction::act(Teki& teki)
 {
 	NVector3f spawnPos;
@@ -388,11 +333,6 @@ bool TaiShellNaviPikiInsideAction::act(Teki& teki)
 	TekiNotCondition(nullptr);
 }
 
-/*
- * --INFO--
- * Address:	80142DF8
- * Size:	0001D0
- */
 bool TaiShellEatAction::act(Teki& teki)
 {
 	TekiAndCondition andCond(&TekiRecognitionCondition(&teki), &TekiNotCondition(&TekiStickerCondition(&teki)));
@@ -424,11 +364,6 @@ struct TaiPearlTresureSoundAction : public TaiAction {
 	// TODO: members
 };
 
-/*
- * --INFO--
- * Address:	80142FC8
- * Size:	000084
- */
 TaiPearlSoundTable::TaiPearlSoundTable()
     : PaniSoundTable(5)
 {
@@ -437,11 +372,6 @@ TaiPearlSoundTable::TaiPearlSoundTable()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8014304C
- * Size:	000148
- */
 TaiPearlParameters::TaiPearlParameters()
     : TekiParameters(20, 50)
 {
@@ -468,11 +398,6 @@ TaiPearlParameters::TaiPearlParameters()
 	STACK_PAD_VAR(4);
 }
 
-/*
- * --INFO--
- * Address:	80143194
- * Size:	00014C
- */
 TaiRocpearlParameters::TaiRocpearlParameters()
     : TekiParameters(20, 50)
 {
@@ -499,11 +424,6 @@ TaiRocpearlParameters::TaiRocpearlParameters()
 	STACK_PAD_VAR(4);
 }
 
-/*
- * --INFO--
- * Address:	801432E0
- * Size:	00036C
- */
 TaiPearlStrategy::TaiPearlStrategy(TekiParameters*)
     : TaiStrategy(PEARLSTATE_COUNT, PEARLSTATE_Normal)
 {
@@ -545,21 +465,11 @@ TaiPearlStrategy::TaiPearlStrategy(TekiParameters*)
 	setState(PEARLSTATE_Damage, state);
 }
 
-/*
- * --INFO--
- * Address:	8014364C
- * Size:	000020
- */
 void TaiPearlStrategy::start(Teki& teki)
 {
 	TaiStrategy::start(teki);
 }
 
-/*
- * --INFO--
- * Address:	8014366C
- * Size:	000064
- */
 void TaiPearlTresureSoundAction::start(Teki& teki)
 {
 	Creature* maybeClam = teki.getCreaturePointer(0);

@@ -39,11 +39,6 @@ static inline u8 saturate(int x)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8001EC3C
- * Size:	000360
- */
 static void init_global_constants()
 {
 	int i;
@@ -75,11 +70,6 @@ static void set_border(_tagHVQData* p)
 	p->bnm = 0xFF;
 }
 
-/*
- * --INFO--
- * Address:	8001EF9C
- * Size:	00011C
- */
 static void setHVQPlaneDesc(SeqObj* obj, int id, u8 h_samp, u8 v_samp)
 {
 	HVQPlaneDesc* p = &((VideoState*)obj->ws)->pln[id];
@@ -131,11 +121,6 @@ static void setCode(BitBuffer* const str, u8* top)
 	str->shift = -1;
 }
 
-/*
- * --INFO--
- * Address:	8001F7E8
- * Size:	000040
- */
 static inline int getBit(BitBuffer* str)
 {
 	u32 value;
@@ -153,11 +138,6 @@ static inline int getBit(BitBuffer* str)
 	return value;
 }
 
-/*
- * --INFO--
- * Address:	8001F384
- * Size:	000064
- */
 static inline s16 getByte(BitBuffer* str)
 {
 	u32 value;
@@ -178,11 +158,6 @@ static inline s16 getByte(BitBuffer* str)
 	return value;
 }
 
-/*
- * --INFO--
- * Address:	8001F0B8
- * Size:	0002CC
- */
 static s16 _readTree(Tree* const dst, BitBuffer* const str)
 {
 	int _FAKE[2]; // Doesn't exist, but used to match stack alignment
@@ -231,11 +206,6 @@ static void readTree(BitBufferWithTree* const code, int is_signed, int scale)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8001F828
- * Size:	000070
- */
 static inline int decodeHuff(BitBufferWithTree* code)
 {
 	Tree* tree     = code->tree;
@@ -279,11 +249,6 @@ static inline int decodeUOvfSym(BitBufferWithTree* code, int range_max)
 	return ret;
 }
 
-/*
- * --INFO--
- * Address:	8001F3E8
- * Size:	0002C4
- */
 static void Ipic_BasisNumDec(VideoState* ws)
 {
 	s16 label;
@@ -362,11 +327,6 @@ static inline int getDeltaDC(VideoState* ws, int c, int* runln)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8001F6AC
- * Size:	00013C
- */
 static void IpicDcvDec(VideoState* ws)
 {
 	int c;
@@ -412,11 +372,6 @@ static void IpicDcvDec(VideoState* ws)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8001F898
- * Size:	0003A4
- */
 static void MakeNest(VideoState* ws, int x, int y)
 {
 	int h_block, nblocks_hb, v_block;
@@ -493,11 +448,6 @@ static void MakeNest(VideoState* ws, int x, int y)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8001FC3C
- * Size:	000198
- */
 static void WeightImBlock(u8* block, int blockWidth, u8 c, u8 u, u8 d, u8 l, u8 r)
 {
 	/*
@@ -599,11 +549,6 @@ static void dcBlock(u8* block, int blockWidth, u8 dc)
 	block += blockWidth;
 }
 
-/*
- * --INFO--
- * Address:	8001FDD4
- * Size:	000048
- */
 static void OrgBlock(VideoState* ws, u8* block, int blockWidth, int p)
 {
 	// TODO: unrolled loop?
@@ -628,11 +573,6 @@ static void OrgBlock(VideoState* ws, u8* block, int blockWidth, int p)
 	buf->ptr                     = (u8*)ptr + 16;
 }
 
-/*
- * --INFO--
- * Address:	800201EC
- * Size:	00047C
- */
 static inline s32 GetAotBasis(VideoState* ws, u8 basisOut[16], s32* pscl, u8* nestTop, int nestWidth, int p)
 {
 	u16 code;
@@ -835,11 +775,6 @@ static inline s32 GetAotBasis(VideoState* ws, u8 basisOut[16], s32* pscl, u8* ne
 	}
 }
 
-/*
- * --INFO--
- * Address:	80022700
- * Size:	0004C4
- */
 static inline s32 GetMCAotBasis(VideoState* ws, u8 basisOut[16], s32* pscl, u8* nestTop, int nestWidth, int p)
 {
 	// the only difference to GetAotBasis() seems to be the ">> 4 & 0xF"
@@ -1142,11 +1077,6 @@ static void IntraAotBlock(VideoState* ws, u8* blk, int blkWidth, u8 dcv, u8 nbas
 	}
 }
 
-/*
- * --INFO--
- * Address:	80020668
- * Size:	000144
- */
 static void IpicBlockDec(VideoState* ws, u8* block, int blockWidth, StackState* inter)
 {
 	if (inter->curr.bnm == 0) {
@@ -1171,11 +1101,6 @@ static void IpicBlockDec(VideoState* ws, u8* block, int blockWidth, StackState* 
 	inter->low++;
 }
 
-/*
- * --INFO--
- * Address:	800207AC
- * Size:	0000D4
- */
 static void IpicLineDec(VideoState* ws, u8* block, int blockWidth, StackState* inter, int lineWidth)
 {
 	int i;
@@ -1197,11 +1122,6 @@ static void IpicLineDec(VideoState* ws, u8* block, int blockWidth, StackState* i
 	inter->low += 2;
 }
 
-/*
- * --INFO--
- * Address:	80020880
- * Size:	0000DC
- */
 static void IpicPlaneDec(VideoState* ws, int p, u8* outbuf)
 {
 	StackState inter;
@@ -1233,11 +1153,6 @@ static void IpicPlaneDec(VideoState* ws, int p, u8* outbuf)
 	IpicLineDec(ws, outbuf, imgWidth, &inter, h_block);
 }
 
-/*
- * --INFO--
- * Address:	8002095C
- * Size:	00008C
- */
 static void initMCHandler(VideoState* ws, MCHandler* mch, u8* lin_top, u8* forw, u8* back)
 {
 	int i;
@@ -1620,11 +1535,6 @@ static void reset_PB_dc(VideoState* ws, MCHandler* mch)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80021A78
- * Size:	00041C
- */
 static void decode_PB_cc(VideoState* ws, MCHandler* mc, int proctype, int mcbtype)
 {
 	u8 cc;
@@ -1702,11 +1612,6 @@ static void decode_PB_cc(VideoState* ws, MCHandler* mc, int proctype, int mcbtyp
 	}
 }
 
-/*
- * --INFO--
- * Address:	80021E94
- * Size:	00086C
- */
 static void PrediAotBlock(VideoState* ws, u8* blk, u8* mblk, int blkWidth, u8 nbasis, u8* nestPtr, int nestWidth, int p, int selector)
 {
 	s32 sum[16];
@@ -1881,11 +1786,6 @@ static void PrediAotBlock(VideoState* ws, u8* blk, u8* mblk, int blkWidth, u8 nb
 	}
 }
 
-/*
- * --INFO--
- * Address:	80022BC4
- * Size:	000164
- */
 static void MCBlockDecMCNest(VideoState* ws, MCHandler* mch, int tx, int ty)
 {
 	int c, i;
@@ -1920,11 +1820,6 @@ static void MCBlockDecMCNest(VideoState* ws, MCHandler* mch, int tx, int ty)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80022D28
- * Size:	000158
- */
 static void MCBlockDecDCNest(VideoState* ws, MCHandler* mch)
 {
 	int c;
@@ -2052,11 +1947,6 @@ static int getMCBtype(BitBufferWithTree* code, RLDecoder* flag)
 	return flag->status;
 }
 
-/*
- * --INFO--
- * Address:	80022E80
- * Size:	000430
- */
 static void spread_PB_descMap(SeqObj* obj, MCHandler* mch)
 {
 	VideoState* ws = (VideoState*)obj->ws;
@@ -2083,11 +1973,6 @@ static void spread_PB_descMap(SeqObj* obj, MCHandler* mch)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800232B0
- * Size:	00043C
- */
 static void BpicPlaneDec(SeqObj* seqObj, u8* lin_top, u8* forw, u8* back)
 {
 	VideoState* ws;
@@ -2141,21 +2026,11 @@ static void BpicPlaneDec(SeqObj* seqObj, u8* lin_top, u8* forw, u8* back)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800236EC
- * Size:	000020
- */
 void HVQM4InitDecoder()
 {
 	init_global_constants();
 }
 
-/*
- * --INFO--
- * Address:	8002370C
- * Size:	000024
- */
 void HVQM4InitSeqObj(SeqObj* obj, VideoInfo* header)
 {
 	obj->frame_width  = header->width;
@@ -2164,11 +2039,6 @@ void HVQM4InitSeqObj(SeqObj* obj, VideoInfo* header)
 	obj->v_samp       = header->v_sampling_rate;
 }
 
-/*
- * --INFO--
- * Address:	80023730
- * Size:	000074
- */
 u32 HVQM4BuffSize(SeqObj* obj)
 {
 	const int nblocks_h    = obj->frame_width / 4;
@@ -2181,11 +2051,6 @@ u32 HVQM4BuffSize(SeqObj* obj)
 	return sizeof(VideoState) + (y_blocks + unblocks_v * 2) * sizeof(u16);
 }
 
-/*
- * --INFO--
- * Address:	800237A4
- * Size:	000464
- */
 void HVQM4SetBuffer(SeqObj* obj, void* buf)
 {
 	VideoState* ws;
@@ -2252,11 +2117,6 @@ void HVQM4SetBuffer(SeqObj* obj, void* buf)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80023C08
- * Size:	000510
- */
 void HVQM4DecodeIpic(SeqObj* obj, void* code, void* outbuf)
 {
 	VideoState* ws;
@@ -2307,21 +2167,11 @@ void HVQM4DecodeIpic(SeqObj* obj, void* code, void* outbuf)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80024118
- * Size:	000024
- */
 void HVQM4DecodePpic(SeqObj* obj, void* code, void* outbuf, void* ref1)
 {
 	HVQM4DecodeBpic(obj, code, outbuf, ref1, outbuf);
 }
 
-/*
- * --INFO--
- * Address:	8002413C
- * Size:	0005A8
- */
 void HVQM4DecodeBpic(SeqObj* obj, void* code, void* outbuf, void* ref2, void* ref1)
 {
 	VideoState* ws;

@@ -1,10 +1,5 @@
 #include "Dolphin/gx.h"
 
-/*
- * --INFO--
- * Address:	80213998
- * Size:	0001B4
- */
 void GXSetFog(GXFogType type, f32 startz, f32 endz, f32 nearz, f32 farz, GXColor color)
 {
 	u32 fogclr;
@@ -130,11 +125,6 @@ void GXInitFogAdjTable(GXFogAdjTable* table, u16 width, const Mtx44 projmtx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80213B4C
- * Size:	000100
- */
 void GXSetFogRangeAdj(GXBool enable, u16 center, GXFogAdjTable* table)
 {
 	u32 i;
@@ -161,11 +151,6 @@ void GXSetFogRangeAdj(GXBool enable, u16 center, GXFogAdjTable* table)
 	gx->bpSent = 1;
 }
 
-/*
- * --INFO--
- * Address:	80213C4C
- * Size:	000104
- */
 void GXSetBlendMode(GXBlendMode type, GXBlendFactor src_factor, GXBlendFactor dst_factor, GXLogicOp op)
 {
 	CHECK_GXBEGIN(0x12F, "GXSetBlendMode");
@@ -181,11 +166,6 @@ void GXSetBlendMode(GXBlendMode type, GXBlendFactor src_factor, GXBlendFactor ds
 	gx->bpSent = 1;
 }
 
-/*
- * --INFO--
- * Address:	80213D50
- * Size:	000040
- */
 void GXSetColorUpdate(GXBool update_enable)
 {
 	CHECK_GXBEGIN(0x14F, "GXSetColorUpdate");
@@ -194,11 +174,6 @@ void GXSetColorUpdate(GXBool update_enable)
 	gx->bpSent = 1;
 }
 
-/*
- * --INFO--
- * Address:	80213D90
- * Size:	000040
- */
 void GXSetAlphaUpdate(GXBool update_enable)
 {
 	CHECK_GXBEGIN(0x158, "GXSetAlphaUpdate");
@@ -207,11 +182,6 @@ void GXSetAlphaUpdate(GXBool update_enable)
 	gx->bpSent = 1;
 }
 
-/*
- * --INFO--
- * Address:	80213DD0
- * Size:	000078
- */
 void GXSetZMode(GXBool compare_enable, GXCompare func, GXBool update_enable)
 {
 	CHECK_GXBEGIN(0x170, "GXSetZMode");
@@ -222,11 +192,6 @@ void GXSetZMode(GXBool compare_enable, GXCompare func, GXBool update_enable)
 	gx->bpSent = 1;
 }
 
-/*
- * --INFO--
- * Address:	80213E48
- * Size:	000040
- */
 void GXSetZCompLoc(GXBool before_tex)
 {
 	CHECK_GXBEGIN(0x17C, "GXSetZCompLoc");
@@ -235,11 +200,6 @@ void GXSetZCompLoc(GXBool before_tex)
 	gx->bpSent = 1;
 }
 
-/*
- * --INFO--
- * Address:	80213E88
- * Size:	000110
- */
 void GXSetPixelFmt(GXPixelFmt pix_fmt, GXZFmt16 z_fmt)
 {
 	u32 oldPeCtrl;
@@ -268,11 +228,6 @@ void GXSetPixelFmt(GXPixelFmt pix_fmt, GXZFmt16 z_fmt)
 	gx->bpSent = 1;
 }
 
-/*
- * --INFO--
- * Address:	80213F98
- * Size:	000040
- */
 void GXSetDither(GXBool dither)
 {
 	CHECK_GXBEGIN(0x1CD, "GXSetDither");
@@ -281,11 +236,6 @@ void GXSetDither(GXBool dither)
 	gx->bpSent = 1;
 }
 
-/*
- * --INFO--
- * Address:	80213FD8
- * Size:	000054
- */
 void GXSetDstAlpha(GXBool enable, u8 alpha)
 {
 	CHECK_GXBEGIN(0x1E1, "GXSetDstAlpha");
@@ -295,11 +245,6 @@ void GXSetDstAlpha(GXBool enable, u8 alpha)
 	gx->bpSent = 1;
 }
 
-/*
- * --INFO--
- * Address:	8021402C
- * Size:	000038
- */
 void GXSetFieldMask(GXBool odd_mask, GXBool even_mask)
 {
 	u32 reg;
@@ -313,11 +258,6 @@ void GXSetFieldMask(GXBool odd_mask, GXBool even_mask)
 	gx->bpSent = 1;
 }
 
-/*
- * --INFO--
- * Address:	80214064
- * Size:	000080
- */
 void GXSetFieldMode(GXBool field_mode, GXBool half_aspect_ratio)
 {
 	u32 reg;

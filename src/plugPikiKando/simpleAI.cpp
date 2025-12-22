@@ -16,11 +16,6 @@ DEFINE_ERROR(7)
  */
 DEFINE_PRINT("simpleAI");
 
-/*
- * --INFO--
- * Address:	8007D26C
- * Size:	0000A4
- */
 AICreature::AICreature(CreatureProp* props)
     : Creature(props)
 {
@@ -37,11 +32,6 @@ AICreature::AICreature(CreatureProp* props)
 	clearEventFlags();
 }
 
-/*
- * --INFO--
- * Address:	8007D310
- * Size:	00006C
- */
 void AICreature::collisionCallback(immut CollEvent& event)
 {
 	Creature* collider = event.mCollider;
@@ -52,11 +42,6 @@ void AICreature::collisionCallback(immut CollEvent& event)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8007D37C
- * Size:	000060
- */
 void AICreature::bounceCallback()
 {
 	MsgBounce msg(Vector3f(0.0f, 1.0f, 0.0f));
@@ -65,11 +50,6 @@ void AICreature::bounceCallback()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8007D3DC
- * Size:	0000B4
- */
 void AICreature::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	(mObjType == OBJTYPE_Goal); // this isn't even in the DLL lol, but it's necessary
@@ -89,11 +69,6 @@ void AICreature::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8007D498
- * Size:	000030
- */
 void AICreature::clearEventFlags()
 {
 	for (int i = 0; i < mMaxEventCount; i++) {
@@ -103,11 +78,6 @@ void AICreature::clearEventFlags()
 	mCurrentEventCount = 0;
 }
 
-/*
- * --INFO--
- * Address:	8007D4C8
- * Size:	00001C
- */
 void AICreature::setEventFlag(int flagID, bool value)
 {
 	if (mCurrentEventCount < mMaxEventCount) {
@@ -135,20 +105,10 @@ bool AICreature::checkEventFlag(int flag)
 	return mEventFlags[flag];
 }
 
-/*
- * --INFO--
- * Address:	8007D4E4
- * Size:	000024
- */
 SimpleAI::SimpleAI()
 {
 }
 
-/*
- * --INFO--
- * Address:	8007D508
- * Size:	000068
- */
 void SimpleAI::procMsg(AICreature* creature, Msg* msg)
 {
 	SAIState* state = static_cast<SAIState*>(creature->getCurrState());
@@ -160,11 +120,6 @@ void SimpleAI::procMsg(AICreature* creature, Msg* msg)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8007D578
- * Size:	0000E8
- */
 void SimpleAI::addState(int stateID, int motionID, SAIAction* initAction, SAIAction* execAction, SAIAction* cleanupAction)
 {
 	SAIState* state       = new SAIState(stateID);
@@ -176,11 +131,6 @@ void SimpleAI::addState(int stateID, int motionID, SAIAction* initAction, SAIAct
 	registerState(state);
 }
 
-/*
- * --INFO--
- * Address:	8007D660
- * Size:	0000F8
- */
 SAIArrow* SimpleAI::addArrow(int p1, SAIEvent* event, int p3)
 {
 	SAIArrow* arrow = new SAIArrow(event, p3);
@@ -197,21 +147,11 @@ SAIArrow* SimpleAI::addArrow(int p1, SAIEvent* event, int p3)
 	return arrow;
 }
 
-/*
- * --INFO--
- * Address:	8007D758
- * Size:	00002C
- */
 void SimpleAI::start(AICreature* creature, int stateID)
 {
 	transit(creature, stateID);
 }
 
-/*
- * --INFO--
- * Address:	8007D86C
- * Size:	00007C
- */
 void SimpleAI::exec(AICreature* creature)
 {
 	SAIState* state = static_cast<SAIState*>(creature->getCurrState());
@@ -221,11 +161,6 @@ void SimpleAI::exec(AICreature* creature)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8007D8E8
- * Size:	0000F8
- */
 void SimpleAI::checkEvent(AICreature* creature)
 {
 	SAIState* currState = static_cast<SAIState*>(creature->getCurrState());
@@ -256,11 +191,6 @@ void SimpleAI::checkEvent(AICreature* creature)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8007D9E8
- * Size:	00010C
- */
 SAIState::SAIState(int stateID)
     : AState<AICreature>(stateID)
 {
@@ -273,11 +203,6 @@ SAIState::SAIState(int stateID)
 	mArrowCount = 0;
 }
 
-/*
- * --INFO--
- * Address:	8007DAF4
- * Size:	0000A4
- */
 void SAIState::init(AICreature* creature)
 {
 	if (mMotionIdx != PANI_NO_MOTION) {
@@ -291,11 +216,6 @@ void SAIState::init(AICreature* creature)
 	creature->clearEventFlags();
 }
 
-/*
- * --INFO--
- * Address:	8007DB9C
- * Size:	000074
- */
 void SAIState::exec(AICreature* creature)
 {
 	if (mExecAction) {
@@ -305,11 +225,6 @@ void SAIState::exec(AICreature* creature)
 	creature->clearEventFlags();
 }
 
-/*
- * --INFO--
- * Address:	8007DC10
- * Size:	0000A0
- */
 void SAIState::procMsg(AICreature* creature, Msg* msg)
 {
 	FOREACH_NODE(SAIArrow, mRootArrow.mChild, arrow)
@@ -323,11 +238,6 @@ void SAIState::procMsg(AICreature* creature, Msg* msg)
 	static_cast<SimpleAI*>(mStateMachine)->checkEvent(creature);
 }
 
-/*
- * --INFO--
- * Address:	8007DCB0
- * Size:	000038
- */
 void SAIState::cleanup(AICreature* creature)
 {
 	if (mCleanupAction) {

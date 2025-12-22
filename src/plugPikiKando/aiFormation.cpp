@@ -17,11 +17,6 @@ DEFINE_ERROR(8)
  */
 DEFINE_PRINT("aiFormation")
 
-/*
- * --INFO--
- * Address:	800B98D8
- * Size:	00032C
- */
 void ActFormation::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
@@ -68,22 +63,12 @@ void ActFormation::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800B9C04
- * Size:	00005C
- */
 ActFormation::ActFormation(Piki* piki)
     : Action(piki, true)
 {
 	mFormMgr = nullptr;
 }
 
-/*
- * --INFO--
- * Address:	800B9C60
- * Size:	000148
- */
 void ActFormation::getFormPoint()
 {
 	mPiki->mFormPoint = mFormMgr->getFormPoint(mPiki);
@@ -106,11 +91,6 @@ void ActFormation::getFormPoint()
 	mUseLastFormationPosition = false;
 }
 
-/*
- * --INFO--
- * Address:	800B9DA8
- * Size:	0000F4
- */
 void ActFormation::init(Creature* target)
 {
 	if (mPiki->isKinoko()) {
@@ -135,11 +115,6 @@ void ActFormation::init(Creature* target)
 	mIsTripping         = FALSE;
 }
 
-/*
- * --INFO--
- * Address:	800B9E9C
- * Size:	00004C
- */
 void ActFormation::cleanup()
 {
 	if (mFormMgr) {
@@ -149,11 +124,6 @@ void ActFormation::cleanup()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800B9EE8
- * Size:	0006A4
- */
 int ActFormation::exec()
 {
 	if (mIsOnFloorTripped) {

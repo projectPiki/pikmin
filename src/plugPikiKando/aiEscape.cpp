@@ -15,31 +15,16 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("aiEscape")
 
-/*
- * --INFO--
- * Address:	800B8828
- * Size:	00007C
- */
 ActEscape::ActEscape(Piki* piki)
     : Action(piki, false)
 {
 	mTarget.reset();
 }
 
-/*
- * --INFO--
- * Address:	800B88A4
- * Size:	000004
- */
 void ActEscape::Initialiser::initialise(Action*)
 {
 }
 
-/*
- * --INFO--
- * Address:	800B88A8
- * Size:	0000F8
- */
 void ActEscape::init(Creature* target)
 {
 	mEscapeTimer = (2.0f * gsys->getRand(1.0f)) + 4.0f;
@@ -50,21 +35,11 @@ void ActEscape::init(Creature* target)
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Nigeru), PaniMotionInfo(PIKIANIM_Nigeru));
 }
 
-/*
- * --INFO--
- * Address:	800B89A0
- * Size:	000040
- */
 void ActEscape::cleanup()
 {
 	mTarget.reset();
 }
 
-/*
- * --INFO--
- * Address:	800B89E0
- * Size:	0002CC
- */
 int ActEscape::exec()
 {
 	Creature* target = mTarget.getPtr();
@@ -116,11 +91,6 @@ int ActEscape::exec()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800B8CAC
- * Size:	000058
- */
 void ActEscape::getInfo(char* buf)
 {
 	sprintf(buf, "esc(%s) (%.1f,%.1f)", mState == STATE_Normal ? "NORMAL" : "AVOID", mPiki->mTargetVelocity.x, mPiki->mTargetVelocity.z);

@@ -86,11 +86,6 @@ void DispList::read(RandomAccessStream& stream)
 	stream.read(mData, mDataLength);
 }
 
-/*
- * --INFO--
- * Address:	8002A098
- * Size:	00013C
- */
 void MtxGroup::read(RandomAccessStream& stream)
 {
 	mDepLength = stream.readInt();
@@ -110,11 +105,6 @@ void MtxGroup::read(RandomAccessStream& stream)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8002A268
- * Size:	000110
- */
 void Mesh::read(RandomAccessStream& stream)
 {
 	mParentJoint      = stream.readInt();
@@ -160,11 +150,6 @@ void Joint::overrideAnim(AnimContext* anim)
 	mParentShape->mAnimOverrides[mIndex] = anim;
 }
 
-/*
- * --INFO--
- * Address:	8002A38C
- * Size:	0000A4
- */
 void Joint::recOverrideAnim(AnimContext* anim)
 {
 	for (Joint* joint = this; joint != nullptr; joint = static_cast<Joint*>(joint->mNext)) {
@@ -176,11 +161,6 @@ void Joint::recOverrideAnim(AnimContext* anim)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8002A430
- * Size:	0002DC
- */
 void Joint::read(RandomAccessStream& stream)
 {
 	// Match stack size with the original function
@@ -290,11 +270,6 @@ void Joint::render(Graphics& gfx)
 #endif
 }
 
-/*
- * --INFO--
- * Address:	8002A70C
- * Size:	00004C
- */
 void AnimContext::animate(f32 animSpeed)
 {
 	mCurrentFrame += gsys->getFrameTime() * animSpeed;
@@ -305,11 +280,6 @@ void AnimContext::animate(f32 animSpeed)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8002A758
- * Size:	0001C4
- */
 static f32 extract(f32 currTime, AnimParam& param, DataChunk& data)
 {
 	int dataSize  = (param.mFlags == 0) ? 3 : 4;
@@ -365,11 +335,6 @@ static f32 extract(f32 currTime, AnimParam& param, DataChunk& data)
 	     + (tCube * deltaSqr - 2.0f * tSqr * frameDelta + t) * start.mTangent + (tCube * deltaSqr - tSqr * frameDelta) * end.mTangent;
 }
 
-/*
- * --INFO--
- * Address:	8002A998
- * Size:	000334
- */
 CamDataInfo::CamDataInfo()
 {
 	mCamera.mNear        = 1.0f;
@@ -378,11 +343,6 @@ CamDataInfo::CamDataInfo()
 	mUseStaticCamera     = 0;
 };
 
-/*
- * --INFO--
- * Address:	8002A998
- * Size:	000334
- */
 void CamDataInfo::update(f32 currentFrame, immut Matrix4f& mtx)
 {
 	volatile f32 val1;
@@ -475,11 +435,6 @@ void CamDataInfo::update(f32 currentFrame, immut Matrix4f& mtx)
 	STACK_PAD_VAR(4);
 }
 
-/*
- * --INFO--
- * Address:	8002ACCC
- * Size:	000264
- */
 void LightDataInfo::update(f32 currentFrame)
 {
 	Vector3f vec1;
@@ -546,11 +501,6 @@ void LightDataInfo::update(f32 currentFrame)
 	STACK_PAD_VAR(3);
 }
 
-/*
- * --INFO--
- * Address:	8002AF30
- * Size:	000D4C
- */
 void SceneData::parse(CmdStream* stream)
 {
 	mCameraAnimations = nullptr;
@@ -718,11 +668,6 @@ void SceneData::parse(CmdStream* stream)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8002BD1C
- * Size:	0001F4
- */
 void SceneData::getAnimInfo(CmdStream* stream)
 {
 	while (!stream->endOfCmds() && !stream->endOfSection()) {
@@ -759,11 +704,6 @@ void SceneData::getAnimInfo(CmdStream* stream)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8002BF4C
- * Size:	000370
- */
 void AnimData::extractSRT(SRT& srt, int, AnimDataInfo* info, f32 p4)
 {
 	if (info->mFlags & AnimDataFlags::MatrixCalculated) {
@@ -828,11 +768,6 @@ void AnimData::extractSRT(SRT& srt, int, AnimDataInfo* info, f32 p4)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8002C2BC
- * Size:	000150
- */
 void AnimData::makeAnimSRT(int boneId, immut Matrix4f* parent, Matrix4f* output, AnimDataInfo* info, f32 pos)
 {
 	int frameNum = pos;
@@ -874,11 +809,6 @@ void AnimData::makeAnimSRT(int boneId, immut Matrix4f* parent, Matrix4f* output,
 	PSMTXConcat(parent->mMtx, boneTransform->mMtx, output->mMtx);
 }
 
-/*
- * --INFO--
- * Address:	8002C40C
- * Size:	00003C
- */
 void AnimData::detach()
 {
 	for (int i = 0; i < mTotalFrameCount; i++) {
@@ -896,11 +826,6 @@ void AnimData::initData()
 	mAnimInfoList = new AnimCacheInfo[mTotalFrameCount];
 }
 
-/*
- * --INFO--
- * Address:	8002C458
- * Size:	00025C
- */
 void AnimData::checkMask()
 {
 	for (int i = 0; i < mJointCount; i++) {
@@ -953,11 +878,6 @@ void AnimData::checkMask()
 	mActiveJointCount = mJointCount - staticJointCount;
 }
 
-/*
- * --INFO--
- * Address:	8002C6B4
- * Size:	0003D4
- */
 void AnimDca::read(RandomAccessStream& input)
 {
 	mJointCount      = input.readInt();
@@ -1007,11 +927,6 @@ void AnimDca::read(RandomAccessStream& input)
 	initData();
 }
 
-/*
- * --INFO--
- * Address:	8002CABC
- * Size:	000A8C
- */
 void AnimDca::parse(CmdStream* stream)
 {
 	mScaleDataBlock = mRotateDataBlock = mTranslationDataBlock = nullptr;
@@ -1151,11 +1066,6 @@ void AnimDca::parse(CmdStream* stream)
 	initData();
 }
 
-/*
- * --INFO--
- * Address:	8002D548
- * Size:	000154
- */
 void AnimDca::getAnimInfo(CmdStream* stream)
 {
 	while (!stream->endOfCmds() && !stream->endOfSection()) {
@@ -1182,11 +1092,6 @@ void AnimDca::getAnimInfo(CmdStream* stream)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8002D69C
- * Size:	00010C
- */
 AnimDck::AnimDck(BaseShape* model, int joints)
 {
 	mModel           = model;
@@ -1200,11 +1105,6 @@ AnimDck::AnimDck(BaseShape* model, int joints)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8002D7A8
- * Size:	00041C
- */
 void AnimDck::read(RandomAccessStream& stream)
 {
 	// Read the number of joints and frames
@@ -1261,11 +1161,6 @@ void AnimDck::read(RandomAccessStream& stream)
 	initData();
 }
 
-/*
- * --INFO--
- * Address:	8002DBC4
- * Size:	000CE4
- */
 void AnimDck::parse(CmdStream* stream)
 {
 	// this is all reserved for parsing Dck from a text based format which doesnt exist
@@ -1450,11 +1345,6 @@ void AnimDck::parse(CmdStream* stream)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8002E8A8
- * Size:	000154
- */
 void AnimDck::getAnimInfo(CmdStream* stream)
 {
 	while (!stream->endOfCmds() && !stream->endOfSection()) {
@@ -1477,11 +1367,6 @@ void AnimDck::getAnimInfo(CmdStream* stream)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8002E9FC
- * Size:	000220
- */
 void AnimDck::extractSRT(SRT& srt, int, AnimDataInfo* anim, f32 time)
 {
 	STACK_PAD_VAR(2);
@@ -1564,11 +1449,6 @@ void AnimDck::extractSRT(SRT& srt, int, AnimDataInfo* anim, f32 time)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8002EC1C
- * Size:	0000CC
- */
 void AnimDck::makeAnimSRT(int a, immut Matrix4f* mtx1, Matrix4f* mtx2, AnimDataInfo* anim, f32 time)
 {
 	SRT& srt = anim->mSRT;
@@ -1616,11 +1496,6 @@ void BaseShape::exportIni(RandomAccessStream& stream, bool doSkipLights)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8002ECE8
- * Size:	000364
- */
 void BaseShape::importIni(RandomAccessStream& stream)
 {
 	CmdStream* cmd = new CmdStream(&stream);
@@ -1664,11 +1539,6 @@ void BaseShape::importIni(RandomAccessStream& stream)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8002F09C
- * Size:	0000F4
- */
 void ShapeDynMaterials::animate(f32* data)
 {
 	gsys->mTimer->start("shpDynMats", true);
@@ -1697,11 +1567,6 @@ void ShapeDynMaterials::animate(f32* data)
 	gsys->mTimer->stop("shpDynMats");
 }
 
-/*
- * --INFO--
- * Address:	8002F190
- * Size:	0001E8
- */
 void ShapeDynMaterials::updateContext()
 {
 	for (int i = 0; i < mMatCount; i++) {
@@ -1725,11 +1590,6 @@ void ShapeDynMaterials::updateContext()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8002F378
- * Size:	00030C
- */
 BaseShape::BaseShape()
 {
 	mName             = "noname";
@@ -1793,11 +1653,6 @@ BaseShape::BaseShape()
 	mCollGroups    = nullptr;
 }
 
-/*
- * --INFO--
- * Address:	8002F684
- * Size:	00016C
- */
 void BaseShape::countMaterials(Joint* joint, u32 p2)
 {
 	for (int i = 0; i < mTotalMatpolyCount; i++) {
@@ -1839,11 +1694,6 @@ void BaseShape::countMaterials(Joint* joint, u32 p2)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8002F7F0
- * Size:	0000C4
- */
 void BaseShape::recTraverseMaterials(Joint* joint, IDelegate2<Joint*, u32>* delegate)
 {
 	for (Joint* jnt = joint; jnt; jnt = (Joint*)jnt->mNext) {
@@ -1855,11 +1705,6 @@ void BaseShape::recTraverseMaterials(Joint* joint, IDelegate2<Joint*, u32>* dele
 	}
 }
 
-/*
- * --INFO--
- * Address:	8002F8B4
- * Size:	000078
- */
 ShapeDynMaterials* BaseShape::instanceMaterials(int p1)
 {
 	ShapeDynMaterials* dynMats = new ShapeDynMaterials();
@@ -1867,11 +1712,6 @@ ShapeDynMaterials* BaseShape::instanceMaterials(int p1)
 	return dynMats;
 }
 
-/*
- * --INFO--
- * Address:	8002F92C
- * Size:	00030C
- */
 void BaseShape::makeInstance(ShapeDynMaterials& dynMats, int p2)
 {
 	dynMats.mShape = this;
@@ -1949,11 +1789,6 @@ void BaseShape::drawroutes(Graphics& gfx, Camera& cam)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8002FCF4
- * Size:	000778
- */
 void BaseShape::drawculled(Graphics& gfx, Camera& cam, ShapeDynMaterials* dynMats)
 {
 	immut Matrix4f* mtx = gfx.mActiveMatrix;
@@ -2008,11 +1843,6 @@ void BaseShape::drawculled(Graphics& gfx, Camera& cam, ShapeDynMaterials* dynMat
 	}
 }
 
-/*
- * --INFO--
- * Address:	8003046C
- * Size:	0001A0
- */
 void BaseShape::drawshape(Graphics& gfx, Camera& cam, ShapeDynMaterials* dynMats)
 {
 	gsys->mTimer->start("drawShape", true);
@@ -2046,11 +1876,6 @@ void BaseShape::drawshape(Graphics& gfx, Camera& cam, ShapeDynMaterials* dynMats
 	gsys->mTimer->stop("drawShape");
 }
 
-/*
- * --INFO--
- * Address:	8003060C
- * Size:	00040C
- */
 void BaseShape::resolveTextureNames()
 {
 	if (mTextureNameList) {
@@ -2110,11 +1935,6 @@ void BaseShape::skipChunk(RandomAccessStream& stream, u32 amt)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80030A74
- * Size:	0000CC
- */
 void BaseShape::recAddMatpoly(Joint* parentJoint, int f)
 {
 	FOREACH_NODE(Joint, parentJoint, currentJoint)
@@ -2136,11 +1956,6 @@ void BaseShape::recAddMatpoly(Joint* parentJoint, int f)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80030B40
- * Size:	002590
- */
 void BaseShape::read(RandomAccessStream& stream)
 {
 	u32 chunkType;
@@ -2568,11 +2383,6 @@ void BaseShape::read(RandomAccessStream& stream)
 	STACK_PAD_TERNARY(chunkType, 11);
 }
 
-/*
- * --INFO--
- * Address:	800338B8
- * Size:	000248
- */
 void BaseShape::initIni(bool p1)
 {
 	for (LightGroup* light = (LightGroup*)mLightGroup.Child(); light; light = (LightGroup*)light->mNext) {
@@ -2650,11 +2460,6 @@ void BaseShape::initIni(bool p1)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80033B00
- * Size:	000258
- */
 void BaseShape::initialise()
 {
 	STACK_PAD_VAR(1);
@@ -2885,11 +2690,6 @@ void BaseShape::initialise()
 	*/
 }
 
-/*
- * --INFO--
- * Address:	80033D58
- * Size:	000BA8
- */
 void BaseShape::createCollisions(int gridSize)
 {
 	// the DLL version has a whole section at the top doing vector nonsense which sort of got stripped?
@@ -3024,11 +2824,6 @@ void BaseShape::createCollisions(int gridSize)
 	      (heapStart - gsys->getHeap(SYSHEAP_App)->getFree()) / 1024.0f);
 }
 
-/*
- * --INFO--
- * Address:	80034900
- * Size:	000150
- */
 void BaseShape::calcBasePose(immut Matrix4f& target)
 {
 	for (int i = 0; i < mJointCount; i++) {
@@ -3045,11 +2840,6 @@ void BaseShape::calcBasePose(immut Matrix4f& target)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80034A50
- * Size:	0000E8
- */
 AnimData* BaseShape::loadDck(immut char* name, RandomAccessStream& s)
 {
 	AnimDck* pDck = new AnimDck(name);
@@ -3064,11 +2854,6 @@ AnimData* BaseShape::loadDck(immut char* name, RandomAccessStream& s)
 	return pDck;
 }
 
-/*
- * --INFO--
- * Address:	80034B38
- * Size:	0001E0
- */
 AnimData* BaseShape::importDck(immut char* name, CmdStream* cmds)
 {
 	AnimDck* data;
@@ -3092,11 +2877,6 @@ AnimData* BaseShape::importDck(immut char* name, CmdStream* cmds)
 	return data;
 }
 
-/*
- * --INFO--
- * Address:	80034D18
- * Size:	0000DC
- */
 AnimData* BaseShape::loadDca(immut char* name, RandomAccessStream& s)
 {
 	AnimDca* pDca = new AnimDca(name);
@@ -3134,11 +2914,6 @@ void BaseShape::importDca(immut char* name, CmdStream* cmds)
 	mCurrentAnimation->mData = data;
 }
 
-/*
- * --INFO--
- * Address:	80034DF4
- * Size:	0001C4
- */
 AnimData* BaseShape::loadAnimation(immut char* name, bool isRelativePath)
 {
 	RandomAccessStream* stream = gsys->openFile(name, isRelativePath, true);
@@ -3175,21 +2950,11 @@ AnimData* BaseShape::loadAnimation(immut char* name, bool isRelativePath)
 	return nullptr;
 }
 
-/*
- * --INFO--
- * Address:	80034FE8
- * Size:	000010
- */
 Matrix4f& BaseShape::getAnimMatrix(int i)
 {
 	return mAnimMatrices[i];
 }
 
-/*
- * --INFO--
- * Address:	80034FF8
- * Size:	000038
- */
 void BaseShape::backupAnimOverrides(AnimContext** animList)
 {
 	mBackupAnimOverrides = animList;
@@ -3198,11 +2963,6 @@ void BaseShape::backupAnimOverrides(AnimContext** animList)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80035030
- * Size:	000034
- */
 void BaseShape::restoreAnimOverrides()
 {
 	for (int i = 0; i < mJointCount; i++) {
@@ -3210,11 +2970,6 @@ void BaseShape::restoreAnimOverrides()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80035064
- * Size:	000094
- */
 void BaseShape::overrideAnim(int jointIdx, AnimContext* anim)
 {
 	Joint* joint = &mJointList[jointIdx];
@@ -3224,11 +2979,6 @@ void BaseShape::overrideAnim(int jointIdx, AnimContext* anim)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800350F8
- * Size:	000074
- */
 AnimFrameCacher::AnimFrameCacher(int num)
 {
 	mCache      = new AyuCache(num * 64);
@@ -3264,11 +3014,6 @@ void AnimFrameCacher::removeOldest()
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8003516C
- * Size:	0001A8
- */
 void AnimFrameCacher::cacheFrameSpace(int p1, AnimCacheInfo* info)
 {
 	u32 texSize = OSRoundDown32B(59 + 4 * p1 + 64 * p1);
@@ -3293,11 +3038,6 @@ void AnimFrameCacher::cacheFrameSpace(int p1, AnimCacheInfo* info)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80035314
- * Size:	0002E0
- */
 void BaseShape::updateAnim(Graphics& gfx, immut Matrix4f& mtx, f32* p3)
 {
 	gsys->mTimer->start("updateAnim", true);
@@ -3355,11 +3095,6 @@ void BaseShape::updateAnim(Graphics& gfx, immut Matrix4f& mtx, f32* p3)
 	gsys->mTimer->stop("updateAnim");
 }
 
-/*
- * --INFO--
- * Address:	800355F4
- * Size:	000190
- */
 void BaseShape::calcWeightedMatrices()
 {
 	for (int i = 0; i < mEnvelopeCount; i++) {
@@ -3424,11 +3159,6 @@ void BaseShape::calcWeightedMatrices()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80035784
- * Size:	000140
- */
 void BaseShape::makeNormalIndexes(u16* indices)
 {
 	for (int i = 0; i < mTotalMatpolyCount; i++) {
@@ -3473,11 +3203,6 @@ void BaseShape::makeNormalIndexes(u16* indices)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800358C4
- * Size:	0000F8
- */
 f32 BaseShape::calcJointWorldPos(Graphics& gfx, int index, Vector3f& worldPos)
 {
 	if (index == -1) {
@@ -3490,11 +3215,6 @@ f32 BaseShape::calcJointWorldPos(Graphics& gfx, int index, Vector3f& worldPos)
 	return reinterpret_cast<immut Vector3f*>(&orig)->length();
 }
 
-/*
- * --INFO--
- * Address:	800359BC
- * Size:	000060
- */
 void BaseShape::calcJointWorldDir(Graphics& gfx, int index, Vector3f& worldDir)
 {
 	if (index == -1) {

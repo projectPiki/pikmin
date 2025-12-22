@@ -54,21 +54,11 @@ immut char* files[] = {
 	"objects/hinderrock/cube10.mod", "objects/bridge/brd_long.mod",
 };
 
-/*
- * --INFO--
- * Address:	8009B104
- * Size:	000010
- */
 void HinderRock::beginPush()
 {
 	mPushingPikmin++;
 }
 
-/*
- * --INFO--
- * Address:	8009B114
- * Size:	000018
- */
 void HinderRock::endPush()
 {
 	if (mPushingPikmin) {
@@ -76,11 +66,6 @@ void HinderRock::endPush()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8009B12C
- * Size:	00010C
- */
 void WorkObjectMgr::finalSetup()
 {
 	Iterator iter(this);
@@ -103,11 +88,6 @@ WorkObject::WorkObject()
 	mSeContext->setContext(this, 4);
 }
 
-/*
- * --INFO--
- * Address:	8009B23C
- * Size:	000024
- */
 void WorkObject::doKill()
 {
 	mLifeGauge.countOff();
@@ -183,11 +163,6 @@ immut char* WorkObjectMgr::getShapeName(int type)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8009B260
- * Size:	000110
- */
 WorkObjectMgr::WorkObjectMgr()
 {
 	mItemShapes          = new Shape*[5];
@@ -198,11 +173,6 @@ WorkObjectMgr::WorkObjectMgr()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8009B3C4
- * Size:	000094
- */
 void WorkObjectMgr::loadShapes()
 {
 	for (int i = 0; i < 5; i++) {
@@ -226,11 +196,6 @@ void WorkObjectMgr::addUseList(int index)
 	mShouldThisShapeLoad[index] = true;
 }
 
-/*
- * --INFO--
- * Address:	8009B458
- * Size:	00012C
- */
 Creature* WorkObjectMgr::birth(int wObjType, int p2)
 {
 	WorkObject* object = nullptr;
@@ -261,11 +226,6 @@ Creature* WorkObjectMgr::birth(int wObjType, int p2)
 	return object;
 }
 
-/*
- * --INFO--
- * Address:	8009B584
- * Size:	000088
- */
 Creature* WorkObjectMgr::getCreature(int index)
 {
 	WorkObjectNode* node = (WorkObjectNode*)mRootNode.mChild;
@@ -279,31 +239,16 @@ Creature* WorkObjectMgr::getCreature(int index)
 	return node->mObject;
 }
 
-/*
- * --INFO--
- * Address:	8009B60C
- * Size:	000008
- */
 int WorkObjectMgr::getFirst()
 {
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	8009B614
- * Size:	000008
- */
 int WorkObjectMgr::getNext(int idx)
 {
 	return idx + 1;
 }
 
-/*
- * --INFO--
- * Address:	8009B61C
- * Size:	000044
- */
 bool WorkObjectMgr::isDone(int id)
 {
 	if (id >= mRootNode.getChildCount()) {
@@ -312,11 +257,6 @@ bool WorkObjectMgr::isDone(int id)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8009B660
- * Size:	000024
- */
 int WorkObjectMgr::getSize()
 {
 	return mRootNode.getChildCount();
@@ -340,11 +280,6 @@ GenObjectWorkObject::GenObjectWorkObject()
 	mHinderRockPosition.set(0.0f, 0.0f, 0.0f);
 }
 
-/*
- * --INFO--
- * Address:	8009B684
- * Size:	0000A0
- */
 void GenObjectWorkObject::ramSaveParameters(RandomAccessStream& data)
 {
 	data.writeByte(mDay());
@@ -353,11 +288,6 @@ void GenObjectWorkObject::ramSaveParameters(RandomAccessStream& data)
 	data.writeFloat(_48());
 }
 
-/*
- * --INFO--
- * Address:	8009B724
- * Size:	0000A0
- */
 void GenObjectWorkObject::ramLoadParameters(RandomAccessStream& data)
 {
 	mDay()  = data.readByte();
@@ -366,31 +296,16 @@ void GenObjectWorkObject::ramLoadParameters(RandomAccessStream& data)
 	_48()   = data.readFloat();
 }
 
-/*
- * --INFO--
- * Address:	8009B7C4
- * Size:	00016C
- */
 static GenObject* makeObjectWorkObject()
 {
 	return new GenObjectWorkObject;
 }
 
-/*
- * --INFO--
- * Address:	8009B930
- * Size:	00008C
- */
 void GenObjectWorkObject::initialise()
 {
 	GenObjectFactory::factory->registerMember('work', makeObjectWorkObject, "仕事オブジェクトを発生", 'v0.3');
 }
 
-/*
- * --INFO--
- * Address:	8009B9BC
- * Size:	00020C
- */
 void GenObjectWorkObject::doRead(RandomAccessStream& stream)
 {
 	if (Generator::ramMode) {
@@ -436,11 +351,6 @@ void GenObjectWorkObject::doRead(RandomAccessStream& stream)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8009BBC8
- * Size:	0001B4
- */
 void GenObjectWorkObject::doWrite(RandomAccessStream& stream)
 {
 	if (Generator::ramMode) {
@@ -470,11 +380,6 @@ void GenObjectWorkObject::doWrite(RandomAccessStream& stream)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8009BD7C
- * Size:	000020
- */
 void GenObjectWorkObject::updateUseList(Generator*, int i)
 {
 	if (mShapeType != -1) {
@@ -482,11 +387,6 @@ void GenObjectWorkObject::updateUseList(Generator*, int i)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8009BD9C
- * Size:	000180
- */
 Creature* GenObjectWorkObject::birth(BirthInfo& info)
 {
 	if (mObjectType == -1) {
@@ -520,11 +420,6 @@ Creature* GenObjectWorkObject::birth(BirthInfo& info)
 	STACK_PAD_VAR(2);
 }
 
-/*
- * --INFO--
- * Address:	8009BF1C
- * Size:	000178
- */
 HinderRock::HinderRock(Shape* shape)
 {
 	mBoxShape = shape;
@@ -537,11 +432,6 @@ HinderRock::HinderRock(Shape* shape)
 	mEfxB                  = 0;
 }
 
-/*
- * --INFO--
- * Address:	8009C094
- * Size:	000074
- */
 bool HinderRock::insideSafeArea(immut Vector3f& pos)
 {
 	Vector3f pos2 = mSRT.t;
@@ -552,11 +442,6 @@ bool HinderRock::insideSafeArea(immut Vector3f& pos)
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8009C108
- * Size:	000164
- */
 void HinderRock::doLoad(RandomAccessStream& stream)
 {
 	mState             = stream.readByte();
@@ -582,42 +467,22 @@ void HinderRock::doLoad(RandomAccessStream& stream)
 	mBuildShape->mTransformMtx = mWorldMtx;
 }
 
-/*
- * --INFO--
- * Address:	8009C26C
- * Size:	000040
- */
 void HinderRock::doSave(RandomAccessStream& stream)
 {
 	stream.writeByte(mState);
 	PRINT("\tdoSave ******** STATE = %d WIDX = %d\n", mState, mWayPoint->mIndex);
 }
 
-/*
- * --INFO--
- * Address:	8009C2AC
- * Size:	000008
- */
 f32 HinderRock::getCentreSize()
 {
 	return mCentreSize;
 }
 
-/*
- * --INFO--
- * Address:	8009C2B4
- * Size:	000014
- */
 bool HinderRock::isFinished()
 {
 	return mState == 2;
 }
 
-/*
- * --INFO--
- * Address:	8009C2C8
- * Size:	0000C8
- */
 Vector3f HinderRock::getZVector()
 {
 	Vector3f v1 = getVertex(0);
@@ -628,11 +493,6 @@ Vector3f HinderRock::getZVector()
 	return diff;
 }
 
-/*
- * --INFO--
- * Address:	8009C390
- * Size:	0000C8
- */
 Vector3f HinderRock::getXVector()
 {
 	Vector3f v1 = getVertex(0);
@@ -662,11 +522,6 @@ int HinderRock::getPlaneIndex(immut Vector3f& pos)
 	return 3;
 }
 
-/*
- * --INFO--
- * Address:	8009C458
- * Size:	0000F8
- */
 u8 HinderRock::getPlaneFlag(immut Vector3f& pos)
 {
 	u8 res = 0;
@@ -702,11 +557,6 @@ Vector3f HinderRock::getTangentPos(f32 mod)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8009C550
- * Size:	0003A8
- */
 void HinderRock::updatePlanes()
 {
 	Vector3f v0 = getVertex(0);
@@ -731,11 +581,6 @@ void HinderRock::updatePlanes()
 	mMoveSideEfxPos[1] = getVertex(1);
 }
 
-/*
- * --INFO--
- * Address:	8009C8F8
- * Size:	0000A0
- */
 Vector3f HinderRock::getVertex(int vtx)
 {
 	u32 id;
@@ -763,11 +608,6 @@ Vector3f HinderRock::getVertex(int vtx)
 	return part->mCentre;
 }
 
-/*
- * --INFO--
- * Address:	8009C998
- * Size:	000074
- */
 bool HinderRock::stimulate(immut Interaction& act)
 {
 	if (!act.actCommon(this)) {
@@ -777,11 +617,6 @@ bool HinderRock::stimulate(immut Interaction& act)
 	return act.actHinderRock(this);
 }
 
-/*
- * --INFO--
- * Address:	8009CA0C
- * Size:	000018
- */
 bool InteractPush::actHinderRock(HinderRock* obj) immut
 {
 	Vector3f unused(0.0f, 110.0f, 0.0f);
@@ -789,11 +624,6 @@ bool InteractPush::actHinderRock(HinderRock* obj) immut
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8009CA24
- * Size:	0000C0
- */
 void HinderRock::refresh(Graphics& gfx)
 {
 	Matrix4f mtx;
@@ -807,11 +637,6 @@ void HinderRock::refresh(Graphics& gfx)
 	updatePlanes();
 }
 
-/*
- * --INFO--
- * Address:	8009CAE4
- * Size:	00011C
- */
 bool HinderRock::workable(immut Vector3f& pos)
 {
 	u8 flag = getPlaneFlag(pos);
@@ -821,11 +646,6 @@ bool HinderRock::workable(immut Vector3f& pos)
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8009CC00
- * Size:	000830
- */
 void HinderRock::update()
 {
 	if (mSeContext) {
@@ -964,11 +784,6 @@ void HinderRock::update()
 	STACK_PAD_VAR(1);
 }
 
-/*
- * --INFO--
- * Address:	8009D430
- * Size:	000198
- */
 void HinderRock::startAI(int)
 {
 	mPushingPikmin   = 0;
@@ -992,11 +807,6 @@ void HinderRock::startAI(int)
 	mSRT.t.y        = mapMgr->getMinY(mSRT.t.x, mSRT.t.z, false);
 }
 
-/*
- * --INFO--
- * Address:	8009D5C8
- * Size:	000154
- */
 bool Bridge::workable(immut Vector3f& pos)
 {
 	f32 x, z;
@@ -1037,11 +847,6 @@ bool Bridge::workable(immut Vector3f& pos)
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8009D71C
- * Size:	0002C4
- */
 Bridge::Bridge(Shape* shape, bool a3)
 {
 	mDoUseJointSegments = a3;
@@ -1079,11 +884,6 @@ Bridge::Bridge(Shape* shape, bool a3)
 	mStageProgressList = new f32[mStageCount];
 }
 
-/*
- * --INFO--
- * Address:	8009D9E0
- * Size:	000074
- */
 bool Bridge::stimulate(immut Interaction& i)
 {
 	if (!i.actCommon(this)) {
@@ -1093,11 +893,6 @@ bool Bridge::stimulate(immut Interaction& i)
 	return i.actBridge(this);
 }
 
-/*
- * --INFO--
- * Address:	8009DA54
- * Size:	0000E4
- */
 void Bridge::refresh(Graphics& gfx)
 {
 	Matrix4f animMtx;
@@ -1118,11 +913,6 @@ void Bridge::refresh(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8009DB38
- * Size:	0000E0
- */
 void Bridge::update()
 {
 	if (mSeContext) {
@@ -1152,11 +942,6 @@ void Bridge::update()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8009DC18
- * Size:	000300
- */
 void Bridge::startAI(int)
 {
 	_424 = 3;
@@ -1198,11 +983,6 @@ void Bridge::startAI(int)
 	_3CC = false;
 }
 
-/*
- * --INFO--
- * Address:	8009DF18
- * Size:	00018C
- */
 void Bridge::doLoad(RandomAccessStream& data)
 {
 	bool finished = true;
@@ -1236,11 +1016,6 @@ void Bridge::doLoad(RandomAccessStream& data)
 	PRINT("_______________________________\n");
 }
 
-/*
- * --INFO--
- * Address:	8009E0A4
- * Size:	000080
- */
 void Bridge::doSave(RandomAccessStream& data)
 {
 	for (int i = 0; i < mStageCount; i++) {
@@ -1248,11 +1023,6 @@ void Bridge::doSave(RandomAccessStream& data)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8009E124
- * Size:	0000B0
- */
 bool Bridge::insideSafeArea(immut Vector3f& pos)
 {
 	Vector3f bridgePos = mSRT.t;
@@ -1264,11 +1034,6 @@ bool Bridge::insideSafeArea(immut Vector3f& pos)
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8009E1D4
- * Size:	000068
- */
 bool Bridge::isFinished()
 {
 	for (int i = 0; i < mStageCount; i++) {
@@ -1279,11 +1044,6 @@ bool Bridge::isFinished()
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8009E23C
- * Size:	000068
- */
 int Bridge::getFirstUnfinishedStage()
 {
 	for (int i = 0; i < mStageCount; i++) {
@@ -1294,11 +1054,6 @@ int Bridge::getFirstUnfinishedStage()
 	return -1;
 }
 
-/*
- * --INFO--
- * Address:	8009E2A4
- * Size:	000068
- */
 int Bridge::getFirstFinishedStage()
 {
 	for (int i = 0; i < mStageCount; i++) {
@@ -1309,11 +1064,6 @@ int Bridge::getFirstFinishedStage()
 	return -1;
 }
 
-/*
- * --INFO--
- * Address:	8009E30C
- * Size:	000040
- */
 int Bridge::getJointIndex(int id)
 {
 	if (id < 0 || id > mStageCount) {
@@ -1326,11 +1076,6 @@ int Bridge::getJointIndex(int id)
 	return _410->getChildAt(id)->mCollInfo->mJointIndex;
 }
 
-/*
- * --INFO--
- * Address:	8009E34C
- * Size:	00009C
- */
 bool Bridge::isStageFinished(int id)
 {
 	if (mDoUseJointSegments) {
@@ -1343,11 +1088,6 @@ bool Bridge::isStageFinished(int id)
 	return mBuildShape->mVisibleList[jointIdx];
 }
 
-/*
- * --INFO--
- * Address:	8009E3E8
- * Size:	0000A4
- */
 void Bridge::flatten()
 {
 	for (int i = 0; i < mStageCount; i++) {
@@ -1359,11 +1099,6 @@ void Bridge::flatten()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8009E48C
- * Size:	000128
- */
 void Bridge::dump()
 {
 	for (int i = 0; i < mStageCount; i++) {
@@ -1373,11 +1108,6 @@ void Bridge::dump()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8009E5B4
- * Size:	000394
- */
 void Bridge::setStageFinished(int stageIndex, bool isFinished)
 {
 	if (mDoUseJointSegments) {
@@ -1425,11 +1155,6 @@ void Bridge::setStageFinished(int stageIndex, bool isFinished)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8009E948
- * Size:	0000C8
- */
 Vector3f Bridge::getStagePos(int stage)
 {
 	if (mDoUseJointSegments) {
@@ -1442,11 +1167,6 @@ Vector3f Bridge::getStagePos(int stage)
 	return _410->getChildAt(stage)->mCentre;
 }
 
-/*
- * --INFO--
- * Address:	8009EA10
- * Size:	000064
- */
 f32 Bridge::getStageZ(int stage)
 {
 	f32 z = -20.0f;
@@ -1456,11 +1176,6 @@ f32 Bridge::getStageZ(int stage)
 	return z - 10.0f;
 }
 
-/*
- * --INFO--
- * Address:	8009EA74
- * Size:	0000E8
- */
 void Bridge::getBridgePos(immut Vector3f& origin, f32& xProjection, f32& zProjection)
 {
 	Vector3f diff = origin - getStartPos();
@@ -1470,11 +1185,6 @@ void Bridge::getBridgePos(immut Vector3f& origin, f32& xProjection, f32& zProjec
 	zProjection = diff.dot(getBridgeZVec());
 }
 
-/*
- * --INFO--
- * Address:	8009EB5C
- * Size:	000060
- */
 Vector3f Bridge::getBridgeZVec()
 {
 	f32 yRot = mSRT.r.y;
@@ -1482,11 +1192,6 @@ Vector3f Bridge::getBridgeZVec()
 	return zvec;
 }
 
-/*
- * --INFO--
- * Address:	8009EBBC
- * Size:	000060
- */
 Vector3f Bridge::getBridgeXVec()
 {
 	f32 yRot = mSRT.r.y;
@@ -1494,11 +1199,6 @@ Vector3f Bridge::getBridgeXVec()
 	return xvec;
 }
 
-/*
- * --INFO--
- * Address:	8009EC1C
- * Size:	0000FC
- */
 Vector3f Bridge::getStartPos()
 {
 	Vector3f pos = mSRT.t;
@@ -1506,31 +1206,16 @@ Vector3f Bridge::getStartPos()
 	return pos;
 }
 
-/*
- * --INFO--
- * Address:	8009ED18
- * Size:	000008
- */
 f32 Bridge::getStageDepth()
 {
 	return 20.0f;
 }
 
-/*
- * --INFO--
- * Address:	8009ED20
- * Size:	000008
- */
 f32 Bridge::getStageWidth()
 {
 	return 150.0f;
 }
 
-/*
- * --INFO--
- * Address:	8009ED28
- * Size:	000424
- */
 void Bridge::startStageFinished(int stageIndex, bool isFinished)
 {
 	FORCE_DONT_INLINE;
@@ -1593,11 +1278,6 @@ void Bridge::startStageFinished(int stageIndex, bool isFinished)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8009F14C
- * Size:	0000A0
- */
 bool InteractBuild::actBridge(Bridge* bridge) immut
 {
 	f32& buildProgress = bridge->mStageProgressList[mCurrentStage];
@@ -1614,11 +1294,6 @@ bool InteractBuild::actBridge(Bridge* bridge) immut
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8009F1EC
- * Size:	0002E8
- */
 bool InteractBreak::actBridge(Bridge* bridge) immut
 {
 	f32* progress = &bridge->mStageProgressList[mStageIndex];

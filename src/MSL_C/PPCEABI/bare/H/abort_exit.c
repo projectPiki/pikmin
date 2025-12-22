@@ -46,11 +46,6 @@ void __atexit(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8021553C
- * Size:	00010C
- */
 void exit(int status)
 {
 	int i;

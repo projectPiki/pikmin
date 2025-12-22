@@ -91,11 +91,6 @@ s32 CardUtilSectorSize()
 	return CardControl.mSectorSize;
 }
 
-/*
- * --INFO--
- * Address:	8004C93C
- * Size:	000104
- */
 static int DoMount(s32 channel, void* a2)
 {
 	OSLockMutex(&CardControl.mMutex2);
@@ -162,11 +157,6 @@ static int DoFormat(s32 channel)
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	8004CA40
- * Size:	0000FC
- */
 static int DoErase(s32 chan, s32 fileNo)
 {
 	CardControl.mOperationSize = 0x4000;
@@ -198,11 +188,6 @@ static int DoErase(s32 chan, s32 fileNo)
 	return CARDFreeBlocks(chan, &CardControl.mByteNotUsed, &CardControl.mFilesNotUsed);
 }
 
-/*
- * --INFO--
- * Address:	8004CB3C
- * Size:	0005CC
- */
 static int DoList(s32 chan, CardUtilDirent* dirent)
 {
 
@@ -388,11 +373,6 @@ static int DoWrite(s32 chan, s32 fileNo, void* addr, u32 length, u32 offset)
 	return res3;
 }
 
-/*
- * --INFO--
- * Address:	8004D108
- * Size:	0005AC
- */
 static int DoSave(s32 chan, CARDStat* state, void* addr)
 {
 	CARDFileInfo info;
@@ -522,11 +502,6 @@ static int DoSave(s32 chan, CARDStat* state, void* addr)
 	return CARDFreeBlocks(chan, &CardControl.mByteNotUsed, &CardControl.mFilesNotUsed);
 }
 
-/*
- * --INFO--
- * Address:	8004D6B4
- * Size:	0000B0
- */
 static int CardUtilCommand(s32 chan, s32 command, s32 file, void* addr, u32 offset, u32 length)
 {
 	OSLockMutex(&CardControl.mMutex);
@@ -554,31 +529,16 @@ static int CardUtilCommand(s32 chan, s32 command, s32 file, void* addr, u32 offs
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	8004D764
- * Size:	000010
- */
 int CardUtilResultCode()
 {
 	return CardControl.mResultCode;
 }
 
-/*
- * --INFO--
- * Address:	8004D774
- * Size:	000034
- */
 void CardUtilMount(s32 channel, void* addr)
 {
 	CardUtilCommand(channel, CARDCMD_Mount, 0, addr, 0, 0);
 }
 
-/*
- * --INFO--
- * Address:	8004D7A8
- * Size:	000034
- */
 void CardUtilUnmount(s32 channel)
 {
 	CardUtilCommand(channel, CARDCMD_Unmount, 0, nullptr, 0, 0);
@@ -604,21 +564,11 @@ void CardUtilFormat(s32)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8004D7DC
- * Size:	00001C
- */
 bool CardUtilIsCardBusy()
 {
 	return CardControl.mChannel != -1;
 }
 
-/*
- * --INFO--
- * Address:	8004D7F8
- * Size:	000040
- */
 void CardUtilIdleWhileBusy()
 {
 	while (CardControl.mChannel != -1) {
@@ -626,51 +576,26 @@ void CardUtilIdleWhileBusy()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8004D838
- * Size:	000034
- */
 void CardUtilErase(s32 channel, s32 file)
 {
 	CardUtilCommand(channel, CARDCMD_Erase, file, nullptr, 0, 0);
 }
 
-/*
- * --INFO--
- * Address:	8004D86C
- * Size:	000034
- */
 void CardUtilOpen(s32 channel, s32 file, void* addr)
 {
 	CardUtilCommand(channel, CARDCMD_Open, file, addr, 0, 0);
 }
 
-/*
- * --INFO--
- * Address:	8004D8A0
- * Size:	000034
- */
 void CardUtilSave(s32 channel, CARDStat* stat, void* addr)
 {
 	CardUtilCommand(channel, CARDCMD_Save, (int)stat, addr, 0, 0);
 }
 
-/*
- * --INFO--
- * Address:	8004D8D4
- * Size:	00003C
- */
 void CardUtilWrite(s32 channel, s32 fileNo, void* data, u32 offset, u32 size)
 {
 	CardUtilCommand(channel, CARDCMD_Write, fileNo, data, offset, size);
 }
 
-/*
- * --INFO--
- * Address:	8004D910
- * Size:	00025C
- */
 static void* CardUtilMain(void*)
 {
 	s32 res;
@@ -918,11 +843,6 @@ static void* CardUtilMain(void*)
 	*/
 }
 
-/*
- * --INFO--
- * Address:	8004DB6C
- * Size:	000094
- */
 void CardUtilInit(void* stack, u32 stackSize, s32 prio)
 {
 	OSInitMutex(&CardControl.mMutex);

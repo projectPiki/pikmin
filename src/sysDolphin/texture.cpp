@@ -25,11 +25,6 @@ static GXTexFmt gxTexFmts[TEX_FMT_COUNT] = {
 	GX_TF_RGB565, GX_TF_CMPR, GX_TF_RGB5A3, GX_TF_I4, GX_TF_I8, GX_TF_IA4, GX_TF_IA8, GX_TF_RGBA8, GX_TF_Z8,
 };
 
-/*
- * --INFO--
- * Address:	80044194
- * Size:	000070
- */
 Texture::Texture()
 {
 	_30          = 0;
@@ -50,11 +45,6 @@ void Texture::offsetGLtoGX(int, int)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80044204
- * Size:	0000D4
- */
 u8 Texture::getAlpha(int x, int y)
 {
 	switch (mTexFormat) {
@@ -154,11 +144,6 @@ u8 Texture::getRed(int, int)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	800442D8
- * Size:	000168
- */
 void Texture::read(RandomAccessStream& input)
 {
 	if (strcmp(input.mPath + (strlen(input.mPath) - 3), "txe") == 0) {
@@ -174,22 +159,12 @@ void Texture::read(RandomAccessStream& input)
 	gsys->addTexture(this, input.mPath);
 }
 
-/*
- * --INFO--
- * Address:	80044440
- * Size:	00000C
- */
 void Texture::detach()
 {
 	BUMP_REGISTER(r0);
 	_20 = -1; // needs to use r4?
 }
 
-/*
- * --INFO--
- * Address:	8004444C
- * Size:	000118
- */
 void Texture::attach()
 {
 	if (_20 != -1) {
@@ -232,11 +207,6 @@ void Texture::attach()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80044564
- * Size:	0000E4
- */
 void Texture::createBuffer(int width, int height, int texFmt, void* buf)
 {
 	mTexFormat   = texFmt;
@@ -254,11 +224,6 @@ void Texture::createBuffer(int width, int height, int texFmt, void* buf)
 	TexImg::getTileSize(mTexFormat, mTileSizeX, mTileSizeY);
 }
 
-/*
- * --INFO--
- * Address:	80044648
- * Size:	000110
- */
 void Texture::grabBuffer(int width, int height, bool doClear, bool useMIPmap)
 {
 	if (doClear) {
@@ -282,11 +247,6 @@ void Texture::grabBuffer(int width, int height, bool doClear, bool useMIPmap)
 	GXSetZMode(GX_TRUE, GX_LESS, GX_TRUE);
 }
 
-/*
- * --INFO--
- * Address:	80044758
- * Size:	000080
- */
 void Texture::decodeData(TexImg* texImg)
 {
 	mWidth     = texImg->mWidth;

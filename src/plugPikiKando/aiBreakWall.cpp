@@ -23,22 +23,12 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("aiBreakWall")
 
-/*
- * --INFO--
- * Address:	800AE13C
- * Size:	000070
- */
 ActBreakWall::ActBreakWall(Piki* piki)
     : Action(piki, true)
 {
 	setName("breakWall");
 }
 
-/*
- * --INFO--
- * Address:	800AE1AC
- * Size:	000154
- */
 void ActBreakWall::init(Creature* creature)
 {
 	mFailAttackCounter  = 0;
@@ -61,11 +51,6 @@ void ActBreakWall::init(Creature* creature)
 #endif
 }
 
-/*
- * --INFO--
- * Address:	800AE300
- * Size:	0000C4
- */
 void ActBreakWall::procCollideMsg(Piki* piki, MsgCollide* msg)
 {
 	if (piki->getState() != PIKISTATE_LookAt) {
@@ -78,11 +63,6 @@ void ActBreakWall::procCollideMsg(Piki* piki, MsgCollide* msg)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800AE3C4
- * Size:	000190
- */
 void ActBreakWall::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
@@ -115,11 +95,6 @@ void ActBreakWall::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 	STACK_PAD_VAR(1);
 }
 
-/*
- * --INFO--
- * Address:	800AE554
- * Size:	000148
- */
 int ActBreakWall::exec()
 {
 	if (!mWall || !mWall->isAlive()) {
@@ -142,11 +117,6 @@ int ActBreakWall::exec()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800AE6BC
- * Size:	0000C8
- */
 int ActBreakWall::gotoWall()
 {
 	Vector3f direction = mWall->mSRT.t - mPiki->mSRT.t;
@@ -155,11 +125,6 @@ int ActBreakWall::gotoWall()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800AE784
- * Size:	000090
- */
 void ActBreakWall::initBreakWall()
 {
 	mWorkTimer = (4.0f * gsys->getRand(1.0f));
@@ -168,11 +133,6 @@ void ActBreakWall::initBreakWall()
 	mStartAttackTime = gameflow.mWorldClock.mMinutes;
 }
 
-/*
- * --INFO--
- * Address:	800AE814
- * Size:	0000F4
- */
 void ActBreakWall::startWorkMotion()
 {
 	if (mWorkTimer == 0) {
@@ -188,11 +148,6 @@ void ActBreakWall::startWorkMotion()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800AE908
- * Size:	0002E4
- */
 int ActBreakWall::breakWall()
 {
 	if (mWorkTimer != 0) {
@@ -231,11 +186,6 @@ int ActBreakWall::breakWall()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800AEC08
- * Size:	000004
- */
 void ActBreakWall::cleanup()
 {
 }

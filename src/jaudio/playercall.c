@@ -2,11 +2,6 @@
 
 static PLAYER_CALL PLAYER_CALLLIST[16];
 
-/*
- * --INFO--
- * Address:	80007120
- * Size:	00002C
- */
 void ResetPlayerCallback()
 {
 	int i;
@@ -16,11 +11,6 @@ void ResetPlayerCallback()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80007160
- * Size:	000050
- */
 s32 Jac_CheckPlayerCallback(PlayerCallBack callback, void* arg)
 {
 	int i;
@@ -43,11 +33,6 @@ void Jac_RejectPlayerCallback(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	800071C0
- * Size:	000048
- */
 s32 Jac_RegisterDspPlayerCallback(PlayerCallBack callback, void* arg)
 {
 	s32 idx = Jac_RegisterPlayerCallback(callback, arg);
@@ -61,11 +46,6 @@ s32 Jac_RegisterDspPlayerCallback(PlayerCallBack callback, void* arg)
 	return idx;
 }
 
-/*
- * --INFO--
- * Address:	80007220
- * Size:	0000A4
- */
 s32 Jac_RegisterPlayerCallback(PlayerCallBack callback, void* arg)
 {
 	u32 i;
@@ -92,11 +72,6 @@ s32 Jac_RegisterPlayerCallback(PlayerCallBack callback, void* arg)
 	return -1;
 }
 
-/*
- * --INFO--
- * Address:	800072E0
- * Size:	00007C
- */
 void PlayerCallback()
 {
 	u32 i;
@@ -109,11 +84,6 @@ void PlayerCallback()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80007360
- * Size:	00007C
- */
 void DspPlayerCallback()
 {
 	u32 i;

@@ -13,11 +13,6 @@ const f64 digit_values[] = {
 
 static f64 ten = 10.0;
 
-/*
- * --INFO--
- * Address:	802158EC
- * Size:	0003B4
- */
 void __num2dec(const decform* f, f64 x, decimal* d)
 {
 	int sp30;
@@ -133,11 +128,6 @@ void __num2dec(const decform* f, f64 x, decimal* d)
 	d->exp = exp;
 }
 
-/*
- * --INFO--
- * Address:	80215648
- * Size:	0002A4
- */
 f64 __dec2num(const decimal* d)
 {
 	f64 num          = 0.0;

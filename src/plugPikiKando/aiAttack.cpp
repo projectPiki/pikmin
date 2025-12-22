@@ -26,11 +26,6 @@ DEFINE_ERROR(25)
  */
 DEFINE_PRINT("aiAttack")
 
-/*
- * --INFO--
- * Address:	800A82E8
- * Size:	0000C8
- */
 ActAttack::ActAttack(Piki* piki)
     : AndAction(piki)
 {
@@ -42,11 +37,6 @@ ActAttack::ActAttack(Piki* piki)
 	mTargetIsPlayer = false;
 }
 
-/*
- * --INFO--
- * Address:	800A8414
- * Size:	000150
- */
 void ActAttack::init(Creature* creature)
 {
 	if (playerState->inDayEnd()) {
@@ -100,11 +90,6 @@ void ActAttack::startLost()
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Sagasu2, this), PaniMotionInfo(PIKIANIM_Sagasu2));
 }
 
-/*
- * --INFO--
- * Address:	800A8564
- * Size:	0000FC
- */
 void ActAttack::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
@@ -127,21 +112,11 @@ void ActAttack::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800A8660
- * Size:	00000C
- */
 void ActAttack::resume()
 {
 	mHasLost = false;
 }
 
-/*
- * --INFO--
- * Address:	800A866C
- * Size:	000054
- */
 void ActAttack::restart()
 {
 	if (!mOther.isNull()) {
@@ -150,21 +125,11 @@ void ActAttack::restart()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800A86C0
- * Size:	000008
- */
 bool ActAttack::resumable()
 {
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	800A86C8
- * Size:	000008
- */
 Creature* ActAttack::findTarget()
 {
 	// yep.
@@ -214,11 +179,6 @@ Creature* ActAttack::decideTarget()
 	return nullptr;
 }
 
-/*
- * --INFO--
- * Address:	800A86D0
- * Size:	00033C
- */
 int ActAttack::exec()
 {
 	if (playerState->inDayEnd()) {
@@ -315,11 +275,6 @@ int ActAttack::exec()
 	return andRet;
 }
 
-/*
- * --INFO--
- * Address:	800A8A0C
- * Size:	000064
- */
 void ActAttack::cleanup()
 {
 	mPiki->endClimb();
@@ -329,22 +284,12 @@ void ActAttack::cleanup()
 	mPiki->_519 = false;
 }
 
-/*
- * --INFO--
- * Address:	800A8A70
- * Size:	000060
- */
 ActJumpAttack::ActJumpAttack(Piki* piki)
     : Action(piki, true)
 {
 	mTarget.clear(); // lol
 }
 
-/*
- * --INFO--
- * Address:	800A8AD0
- * Size:	0001CC
- */
 void ActJumpAttack::init(Creature* creature)
 {
 	mPiki->mActionState = 0;
@@ -399,11 +344,6 @@ f32 ActJumpAttack::getAttackSize()
 	return mTarget.getPtr()->getCentreSize();
 }
 
-/*
- * --INFO--
- * Address:	800A8C9C
- * Size:	00009C
- */
 void ActJumpAttack::procStickMsg(Piki* piki, MsgStick* msg)
 {
 	mState         = 5;
@@ -413,11 +353,6 @@ void ActJumpAttack::procStickMsg(Piki* piki, MsgStick* msg)
 	piki->mWantToStick = false;
 }
 
-/*
- * --INFO--
- * Address:	800A8D38
- * Size:	00001C
- */
 void ActJumpAttack::procBounceMsg(Piki* piki, MsgBounce* msg)
 {
 	if (mState == 1) {
@@ -426,11 +361,6 @@ void ActJumpAttack::procBounceMsg(Piki* piki, MsgBounce* msg)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800A8D54
- * Size:	000268
- */
 void ActJumpAttack::procCollideMsg(Piki* piki, MsgCollide* msg)
 {
 	// this definitely has inlines somewhere, the control flow is so wacky.
@@ -508,11 +438,6 @@ void ActJumpAttack::procCollideMsg(Piki* piki, MsgCollide* msg)
 	STACK_PAD_VAR(2);
 }
 
-/*
- * --INFO--
- * Address:	800A8FBC
- * Size:	000E6C
- */
 int ActJumpAttack::exec()
 {
 	Creature* target = mTarget.getPtr();
@@ -733,32 +658,17 @@ int ActJumpAttack::exec()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800A9E28
- * Size:	00004C
- */
 void ActJumpAttack::cleanup()
 {
 	mTarget.reset();
 	mPiki->mWantToStick = false;
 }
 
-/*
- * --INFO--
- * Address:	800A9E74
- * Size:	00002C
- */
 void ActJumpAttack::attackHit()
 {
 	mPiki->playEventSound(mTarget.getPtr(), 25);
 }
 
-/*
- * --INFO--
- * Address:	800A9EA0
- * Size:	00012C
- */
 void ActJumpAttack::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
@@ -788,11 +698,6 @@ void ActJumpAttack::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800A9FCC
- * Size:	000458
- */
 void ActJumpAttack::doClimb()
 {
 	Creature* target = mTarget.getPtr();

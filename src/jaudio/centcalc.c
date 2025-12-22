@@ -13,11 +13,6 @@ static f32 KEY_TABLE[KEY_CURVE_RESOLUTION] = {
 	1.0513030, 1.0522600, 1.0532170, 1.0541760, 1.0551350, 1.0560950, 1.0570560, 1.0580180, 1.0589809,
 };
 
-/*
- * --INFO--
- * Address:	80014BC0
- * Size:	0000CC
- */
 f32 Jam_PitchToCent(f32 basePitch, f32 scaleFactor)
 {
 	STACK_PAD_VAR(1);

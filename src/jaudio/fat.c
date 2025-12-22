@@ -26,11 +26,6 @@ static FATEntry FAT[FAT_SIZE];
 // havent figured this out yet
 static struct FATEntry fattmp[FAT_SIZE];
 
-/*
- * --INFO--
- * Address:	8000DDE0
- * Size:	000044
- */
 void Jac_FatMemory_Init(u32 size)
 {
 	fatheapptr = (u8*)OSAlloc2(size);
@@ -40,11 +35,6 @@ void Jac_FatMemory_Init(u32 size)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8000DE40
- * Size:	0000BC
- */
 void FAT_InitSystem(u8* heap, u32 size)
 {
 	u32 i;
@@ -78,11 +68,6 @@ void FAT_InitSystem(u8* heap, u32 size)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8000DF00
- * Size:	0000D4
- */
 int FAT_AllocateMemory(u32 size)
 {
 	u32 a = 0;
@@ -119,11 +104,6 @@ int FAT_AllocateMemory(u32 size)
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	8000DFE0
- * Size:	000190
- */
 int FAT_FreeMemory(u16 size)
 {
 	STACK_PAD_VAR(2);
@@ -295,11 +275,6 @@ int FAT_FreeMemory(u16 size)
 	*/
 }
 
-/*
- * --INFO--
- * Address:	8000E180
- * Size:	000048
- */
 u8* FAT_GetPointer(u16 a, u32 b)
 {
 	u32 c = b >> 12;
@@ -311,11 +286,6 @@ u8* FAT_GetPointer(u16 a, u32 b)
 	return FAT[c + FH_TO_FAT[a].startBlock].addr + b;
 }
 
-/*
- * --INFO--
- * Address:	8000E1E0
- * Size:	000034
- */
 u8 FAT_ReadByte(u16 a, u32 b)
 {
 	u8* ptr = FAT_GetPointer(a, b);
@@ -375,11 +345,6 @@ void FAT_ReadLongD(u16 a1, u32 a2)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8000E220
- * Size:	0000E0
- */
 int FAT_StoreBlock(u8* ptr, u16 a, u32 b, u32 c)
 {
 	STACK_PAD_VAR(2);

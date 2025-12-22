@@ -17,21 +17,11 @@ DEFINE_ERROR(14)
  */
 DEFINE_PRINT("drawOptionSave")
 
-/*
- * --INFO--
- * Address:	801F5500
- * Size:	00004C
- */
 zen::DrawOptionSave::DrawOptionSave()
 {
 	setMode(MODE_Sleep, nullptr);
 }
 
-/*
- * --INFO--
- * Address:	801F554C
- * Size:	000188
- */
 bool zen::DrawOptionSave::update(Controller* controller)
 {
 	bool res = false;
@@ -106,11 +96,6 @@ bool zen::DrawOptionSave::update(Controller* controller)
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	801F56D4
- * Size:	00006C
- */
 void zen::DrawOptionSave::draw(Graphics& gfx)
 {
 	if (mMode != MODE_Sleep && mMode != MODE_Unk8) {
@@ -121,11 +106,6 @@ void zen::DrawOptionSave::draw(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801F5740
- * Size:	000094
- */
 void zen::DrawOptionSave::modeCardCheck(Controller* controller)
 {
 	if (controller) {
@@ -146,31 +126,16 @@ void zen::DrawOptionSave::modeCardCheck(Controller* controller)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801F57D4
- * Size:	000028
- */
 void zen::DrawOptionSave::init()
 {
 	setMode(MODE_Sleep, nullptr);
 }
 
-/*
- * --INFO--
- * Address:	801F57FC
- * Size:	000028
- */
 void zen::DrawOptionSave::start()
 {
 	setMode(MODE_Start, nullptr);
 }
 
-/*
- * --INFO--
- * Address:	801F5824
- * Size:	000120
- */
 void zen::DrawOptionSave::setMode(u32 mode, Controller* controller)
 {
 	mMode = mode;

@@ -61,11 +61,6 @@ struct TaiMizigenNaviApprouchAction : public TaiAction {
 	// TODO: members
 };
 
-/*
- * --INFO--
- * Address:	80131F64
- * Size:	0000B0
- */
 TaiMizigenParameters::TaiMizigenParameters()
     : TekiParameters(TPI_COUNT, TPF_COUNT)
 {
@@ -80,11 +75,6 @@ TaiMizigenParameters::TaiMizigenParameters()
 	multiP->setF(TPF_SpawnVelocity, 0.0f);
 }
 
-/*
- * --INFO--
- * Address:	80132014
- * Size:	00017C
- */
 TaiMizigenStrategy::TaiMizigenStrategy(TekiParameters* params)
     : TaiStrategy(MIZIGENSTATE_COUNT, MIZIGENSTATE_Wait)
 {
@@ -106,11 +96,6 @@ TaiMizigenStrategy::TaiMizigenStrategy(TekiParameters* params)
 	setState(MIZIGENSTATE_Generate, state);
 }
 
-/*
- * --INFO--
- * Address:	80132190
- * Size:	00008C
- */
 void TaiMizigenStrategy::start(Teki& teki)
 {
 	TaiStrategy::start(teki);
@@ -120,11 +105,6 @@ void TaiMizigenStrategy::start(Teki& teki)
 	teki.clearTekiOption(BTeki::TEKI_OPTION_ATARI);
 }
 
-/*
- * --INFO--
- * Address:	8013221C
- * Size:	000164
- */
 void TaiMizigenGeneratingAction::start(Teki& teki)
 {
 	PRINT_NAKATA("TaiMizigenGeneratingAction::start:%08x\n", &teki);
@@ -150,21 +130,11 @@ void TaiMizigenGeneratingAction::start(Teki& teki)
 	PRINT_NAKATA("TaiMizigenGeneratingAction::start<%08x\n", &teki);
 }
 
-/*
- * --INFO--
- * Address:	80132380
- * Size:	000008
- */
 bool TaiMizigenGeneratingAction::act(Teki& teki)
 {
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	80132388
- * Size:	0000B8
- */
 bool TaiMizigenNaviApprouchAction::act(Teki& teki)
 {
 	if (teki.getPersonalityI(TekiPersonality::INT_Parameter0) == 0) {
@@ -310,11 +280,6 @@ struct TaiMizinkoFlyingAwayAction : public TaiAction {
 	// TODO: members
 };
 
-/*
- * --INFO--
- * Address:	80132440
- * Size:	000380
- */
 TaiMizinkoParameters::TaiMizinkoParameters()
     : TekiParameters(TPI_COUNT, MIZINKOPF_COUNT)
 {
@@ -367,11 +332,6 @@ TaiMizinkoParameters::TaiMizinkoParameters()
 	multiP->setF(MIZINKOPF_CryPeriodRandomRate, 0.3f);
 }
 
-/*
- * --INFO--
- * Address:	801327C0
- * Size:	000084
- */
 TaiMizinkoSoundTable::TaiMizinkoSoundTable()
     : PaniSoundTable(4)
 {
@@ -380,11 +340,6 @@ TaiMizinkoSoundTable::TaiMizinkoSoundTable()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80132844
- * Size:	0008B4
- */
 TaiMizinkoStrategy::TaiMizinkoStrategy(TekiParameters* params)
     : TaiStrategy(MIZINKOSTATE_COUNT, MIZINKOSTATE_Going)
 {
@@ -487,11 +442,6 @@ TaiMizinkoStrategy::TaiMizinkoStrategy(TekiParameters* params)
 	setState(MIZINKOSTATE_Dead, state);
 }
 
-/*
- * --INFO--
- * Address:	801330F8
- * Size:	0000A8
- */
 void TaiMizinkoStrategy::start(Teki& teki)
 {
 	teki.mParticleGenerators[0] = effectMgr->create(EffectMgr::EFF_Mizinko_Spawn, Vector3f(0.0f, 0.0f, 0.0f), nullptr, nullptr);
@@ -500,11 +450,6 @@ void TaiMizinkoStrategy::start(Teki& teki)
 	teki.clearTekiOption(BTeki::TEKI_OPTION_LIFE_GAUGE_VISIBLE);
 }
 
-/*
- * --INFO--
- * Address:	801331A0
- * Size:	00010C
- */
 void TaiMizinkoStrategy::draw(Teki& teki, Graphics& gfx)
 {
 	if (hasWater(teki)) { // amazing
@@ -537,21 +482,11 @@ void TaiMizinkoStrategy::draw(Teki& teki, Graphics& gfx)
 	STACK_PAD_VAR(1);
 }
 
-/*
- * --INFO--
- * Address:	801332AC
- * Size:	000014
- */
 bool TaiMizinkoStrategy::hasWater(Teki& teki)
 {
 	return teki.getCreaturePointer(2) == nullptr;
 }
 
-/*
- * --INFO--
- * Address:	801332C0
- * Size:	00007C
- */
 bool TaiMizinkoCryTimerAction::act(Teki& teki)
 {
 	if (teki.timerElapsed(mTimerIdx)) {
@@ -562,22 +497,12 @@ bool TaiMizinkoCryTimerAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8013333C
- * Size:	000050
- */
 void TaiMizinkoMovingTimerAction::start(Teki& teki)
 {
 	mTimerLength = teki.getPersonalityF(TekiPersonality::FLT_TerritoryRange) / teki.getParameterF(TPF_WalkVelocity);
 	resetTimer(teki);
 }
 
-/*
- * --INFO--
- * Address:	8013338C
- * Size:	000088
- */
 bool TaiMizinkoFadingAction::act(Teki& teki)
 {
 	f32 travelTime = teki.getPersonalityF(TekiPersonality::FLT_TerritoryRange) / teki.getParameterF(TPF_WalkVelocity);
@@ -596,11 +521,6 @@ bool TaiMizinkoFadingAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	80133414
- * Size:	0003C4
- */
 void TaiMizinkoGoingAction::start(Teki& teki)
 {
 	// why.
@@ -636,11 +556,6 @@ void TaiMizinkoGoingAction::start(Teki& teki)
 	teki.inputPosition(pos);
 }
 
-/*
- * --INFO--
- * Address:	801337D8
- * Size:	00051C
- */
 void TaiMizinkoComingAction::start(Teki& teki)
 {
 	teki.stopMove();
@@ -690,11 +605,6 @@ void TaiMizinkoComingAction::start(Teki& teki)
 	teki.inputPosition(pos);
 }
 
-/*
- * --INFO--
- * Address:	80133CF4
- * Size:	000104
- */
 bool TaiMizinkoDropWaterAction::act(Teki& teki)
 {
 	if (teki.getAnimationKeyOption(BTeki::ANIMATION_KEY_OPTION_ACTION_0)) {
@@ -716,11 +626,6 @@ bool TaiMizinkoDropWaterAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	80133DF8
- * Size:	0000A8
- */
 void TaiMizinkoWaitingAction::start(Teki& teki)
 {
 	teki.stopMove();
@@ -728,11 +633,6 @@ void TaiMizinkoWaitingAction::start(Teki& teki)
 	                     | BTeki::TEKI_OPTION_SHADOW_VISIBLE);
 }
 
-/*
- * --INFO--
- * Address:	80133EA0
- * Size:	000178
- */
 void TaiMizinkoFlyingAwayAction::start(Teki& teki)
 {
 	teki.startFlying();

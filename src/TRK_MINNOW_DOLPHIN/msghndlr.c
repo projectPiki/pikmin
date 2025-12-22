@@ -7,11 +7,6 @@ typedef struct _TRK_Msg {
 	u8 m_msg[4]; // TODO: unknown array length
 } TRK_Msg;
 
-/*
- * --INFO--
- * Address:	8021CF78
- * Size:	000098
- */
 void TRKMessageIntoReply(TRKBuffer* buffer, MessageCommandID ackCmd, DSReplyError errSentInAck)
 {
 	TRKResetBuffer(buffer, 1);
@@ -20,11 +15,6 @@ void TRKMessageIntoReply(TRKBuffer* buffer, MessageCommandID ackCmd, DSReplyErro
 	TRKAppendBuffer1_ui8(buffer, errSentInAck);
 }
 
-/*
- * --INFO--
- * Address:	8021D010
- * Size:	000050
- */
 DSError TRKSendACK(TRKBuffer* buffer)
 {
 	DSError err;
@@ -39,11 +29,6 @@ DSError TRKSendACK(TRKBuffer* buffer)
 	return err;
 }
 
-/*
- * --INFO--
- * Address:	8021D060
- * Size:	000034
- */
 DSError TRKStandardACK(TRKBuffer* buffer, MessageCommandID commandID, DSReplyError replyError)
 {
 	TRKMessageIntoReply(buffer, commandID, replyError);
@@ -60,31 +45,16 @@ void TRKDoError(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8021D094
- * Size:	000028
- */
 DSError TRKDoUnsupported(TRKBuffer* buffer)
 {
 	return TRKStandardACK(buffer, DSMSG_ReplyACK, DSREPLY_UnsupportedCommandError);
 }
 
-/*
- * --INFO--
- * Address:	8021D0BC
- * Size:	000028
- */
 DSError TRKDoConnect(TRKBuffer* buffer)
 {
 	return TRKStandardACK(buffer, DSMSG_ReplyACK, DSREPLY_NoError);
 }
 
-/*
- * --INFO--
- * Address:	8021D0E4
- * Size:	000050
- */
 DSError TRKDoDisconnect(TRKBuffer* buffer)
 {
 	DSError error = TRKStandardACK(buffer, DSMSG_ReplyACK, DSREPLY_NoError);
@@ -97,11 +67,6 @@ DSError TRKDoDisconnect(TRKBuffer* buffer)
 	return error;
 }
 
-/*
- * --INFO--
- * Address:	8021D134
- * Size:	000030
- */
 DSError TRKDoReset(TRKBuffer* buffer)
 {
 	TRKStandardACK(buffer, DSMSG_ReplyACK, DSREPLY_NoError);
@@ -109,11 +74,6 @@ DSError TRKDoReset(TRKBuffer* buffer)
 	return DS_NoError;
 }
 
-/*
- * --INFO--
- * Address:	8021D164
- * Size:	000184
- */
 DSError TRKDoVersions(TRKBuffer* buffer)
 {
 	DSError error;
@@ -141,11 +101,6 @@ DSError TRKDoVersions(TRKBuffer* buffer)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8021D2E8
- * Size:	0000DC
- */
 DSError TRKDoSupportMask(TRKBuffer* buffer)
 {
 	DSError error;
@@ -169,11 +124,6 @@ DSError TRKDoSupportMask(TRKBuffer* buffer)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8021D3C4
- * Size:	000244
- */
 DSError TRKDoCPUType(TRKBuffer* buffer)
 {
 	DSError error;
@@ -209,11 +159,6 @@ DSError TRKDoCPUType(TRKBuffer* buffer)
 		error = TRKSendACK(buffer);
 }
 
-/*
- * --INFO--
- * Address:	8021D608
- * Size:	0001E8
- */
 DSError TRKDoReadMemory(TRKBuffer* buffer)
 {
 	u8 tempBuf[0x800] ATTRIBUTE_ALIGN(32);
@@ -292,11 +237,6 @@ DSError TRKDoReadMemory(TRKBuffer* buffer)
 	return error;
 }
 
-/*
- * --INFO--
- * Address:	8021D7F0
- * Size:	0001FC
- */
 DSError TRKDoWriteMemory(TRKBuffer* buffer)
 {
 	u8 tmpBuffer[0x800] ATTRIBUTE_ALIGN(32);
@@ -378,11 +318,6 @@ DSError TRKDoWriteMemory(TRKBuffer* buffer)
 	return error;
 }
 
-/*
- * --INFO--
- * Address:	8021D9EC
- * Size:	000204
- */
 DSError TRKDoReadRegisters(TRKBuffer* buffer)
 {
 	DSMessageRegisterOptions options;
@@ -466,11 +401,6 @@ DSError TRKDoReadRegisters(TRKBuffer* buffer)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8021DBF0
- * Size:	000208
- */
 DSError TRKDoWriteRegisters(TRKBuffer* buffer)
 {
 	DSMessageRegisterOptions options;
@@ -557,11 +487,6 @@ DSError TRKDoWriteRegisters(TRKBuffer* buffer)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8021DDF8
- * Size:	000138
- */
 DSError TRKDoFlushCache(TRKBuffer* buffer)
 {
 	u32 msg_end;
@@ -612,11 +537,6 @@ DSError TRKDoFlushCache(TRKBuffer* buffer)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8021DF30
- * Size:	000064
- */
 DSError TRKDoContinue(TRKBuffer* buffer)
 {
 	DSError error;
@@ -632,11 +552,6 @@ DSError TRKDoContinue(TRKBuffer* buffer)
 		error = TRKTargetContinue();
 }
 
-/*
- * --INFO--
- * Address:	8021DF94
- * Size:	000204
- */
 DSError TRKDoStep(TRKBuffer* buffer)
 {
 	DSError error;
@@ -710,11 +625,6 @@ DSError TRKDoStep(TRKBuffer* buffer)
 		}
 }
 
-/*
- * --INFO--
- * Address:	8021E198
- * Size:	000084
- */
 DSError TRKDoStop(TRKBuffer* b)
 {
 	DSReplyError replyError;

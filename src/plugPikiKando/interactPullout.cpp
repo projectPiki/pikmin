@@ -20,21 +20,11 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("interactPullout");
 
-/*
- * --INFO--
- * Address:	8007CB38
- * Size:	000008
- */
 bool InteractPullout::actCommon(Creature*) immut
 {
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8007CB40
- * Size:	0002BC
- */
 bool InteractPullout::actPiki(Piki* piki) immut
 {
 	if (piki->getState() == PIKISTATE_Nukare) {

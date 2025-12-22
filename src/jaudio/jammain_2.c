@@ -54,11 +54,6 @@ static u32 SEQ_ARG[8];
 // predeclare this so Jam_UpdateTrackAll can use this stupid function.
 extern "C" static void OSf32tos8(f32* in, s8* out);
 
-/*
- * --INFO--
- * Address:	8000F400
- * Size:	000054
- */
 void* Jam_OfsToAddr(seqp_* track, u32 ofs)
 {
 	// TODO: What do 0, 1, and 2 mean?
@@ -72,11 +67,6 @@ void* Jam_OfsToAddr(seqp_* track, u32 ofs)
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	8000F460
- * Size:	000054
- */
 static u8 __ByteReadOfs(seqp_* track, u32 ofs)
 {
 	// TODO: What do 0, 1, and 2 mean?
@@ -90,11 +80,6 @@ static u8 __ByteReadOfs(seqp_* track, u32 ofs)
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	8000F4C0
- * Size:	000050
- */
 static u16 __WordReadOfs(seqp_* track, u32 ofs)
 {
 	u16 result;
@@ -103,11 +88,6 @@ static u16 __WordReadOfs(seqp_* track, u32 ofs)
 	return result;
 }
 
-/*
- * --INFO--
- * Address:	8000F520
- * Size:	000068
- */
 static u32 __24ReadOfs(seqp_* track, u32 ofs)
 {
 	u32 result;
@@ -117,11 +97,6 @@ static u32 __24ReadOfs(seqp_* track, u32 ofs)
 	return result;
 }
 
-/*
- * --INFO--
- * Address:	8000F5A0
- * Size:	000050
- */
 static u32 __LongReadOfs(seqp_* track, u32 ofs)
 {
 	u32 result;
@@ -130,11 +105,6 @@ static u32 __LongReadOfs(seqp_* track, u32 ofs)
 	return result;
 }
 
-/*
- * --INFO--
- * Address:	8000F600
- * Size:	000070
- */
 static u8 __ByteRead(seqp_* track)
 {
 	// TODO: What do 0, 1, and 2 mean?
@@ -148,11 +118,6 @@ static u8 __ByteRead(seqp_* track)
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	8000F680
- * Size:	000048
- */
 static u16 __WordRead(seqp_* track)
 {
 	u16 result;
@@ -161,11 +126,6 @@ static u16 __WordRead(seqp_* track)
 	return result;
 }
 
-/*
- * --INFO--
- * Address:	8000F6E0
- * Size:	00005C
- */
 static u32 __24Read(seqp_* track)
 {
 	u32 result;
@@ -189,11 +149,6 @@ static u32 __32Read(seqp_* track)
 	return result;
 }
 
-/*
- * --INFO--
- * Address:	8000F740
- * Size:	0000D0
- */
 static BOOL __ConditionCheck(seqp_* track, u8 param_2)
 {
 	BOOL result;
@@ -256,11 +211,6 @@ int Jam_SEQtimeToDSPtime(seqp_* track, s32 noteDuration, u8 velocityPercent)
 	return dspTime;
 }
 
-/*
- * --INFO--
- * Address:	8000F8C0
- * Size:	000020
- */
 u16 Extend8to16(u8 value)
 {
 	if (value & 0x80) {
@@ -269,11 +219,6 @@ u16 Extend8to16(u8 value)
 	return value;
 }
 
-/*
- * --INFO--
- * Address:	8000F8E0
- * Size:	0001A8
- */
 void Jam_WriteTimeParam(seqp_* track, u8 controlByte)
 {
 	STACK_PAD_VAR(1);
@@ -334,11 +279,6 @@ void Jam_WriteTimeParam(seqp_* track, u8 controlByte)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8000FAA0
- * Size:	0000AC
- */
 void Jam_WriteRegDirect(seqp_* track, u8 index, u16 value)
 {
 	STACK_PAD_VAR(1);
@@ -370,11 +310,6 @@ void Jam_WriteRegDirect(seqp_* track, u8 index, u16 value)
 	track->regParam.param.value = uVar1;
 }
 
-/*
- * --INFO--
- * Address:	8000FB60
- * Size:	000098
- */
 static u32 LoadTbl(seqp_* track, u32 ofs, u32 idx, u32 param_4)
 {
 	u32 result;
@@ -400,11 +335,6 @@ static u32 LoadTbl(seqp_* track, u32 ofs, u32 idx, u32 param_4)
 	return result;
 }
 
-/*
- * --INFO--
- * Address:	8000FC00
- * Size:	000484
- */
 void Jam_WriteRegParam(seqp_* track, u8 param_2)
 {
 	STACK_PAD_VAR(1);
@@ -576,11 +506,6 @@ void Jam_WriteRegParam(seqp_* track, u8 param_2)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800100A0
- * Size:	00016C
- */
 u16 Jam_ReadRegDirect(seqp_* track, u8 regIdx)
 {
 	s16 result;
@@ -639,21 +564,11 @@ u16 Jam_ReadRegDirect(seqp_* track, u8 regIdx)
 	return result;
 }
 
-/*
- * --INFO--
- * Address:	80010220
- * Size:	000048
- */
 u32 Jam_ReadRegXY(seqp_* track)
 {
 	return (Jam_ReadRegDirect(track, 4) << 16) | Jam_ReadRegDirect(track, 5);
 }
 
-/*
- * --INFO--
- * Address:	80010280
- * Size:	00005C
- */
 u32 Jam_ReadReg32(seqp_* track, u8 index)
 {
 	switch (index) {
@@ -669,11 +584,6 @@ u32 Jam_ReadReg32(seqp_* track, u8 index)
 	return Jam_ReadRegDirect(track, index);
 }
 
-/*
- * --INFO--
- * Address:	800102E0
- * Size:	000048
- */
 void Jam_WriteRegXY(seqp_* track, u32 param_2)
 {
 	Jam_WriteRegDirect(track, 4, (u16)(param_2 >> 16));
@@ -765,11 +675,6 @@ void Jam_CheckPortIndirect(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80010380
- * Size:	000078
- */
 BOOL Jam_WritePortAppDirect(seqp_* track, u32 param_2, u16 param_3)
 {
 	if (!track) {
@@ -786,11 +691,6 @@ BOOL Jam_WritePortAppDirect(seqp_* track, u32 param_2, u16 param_3)
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	80010400
- * Size:	000030
- */
 BOOL Jam_ReadPortAppDirect(seqp_* track, u32 param_2, u16* param_3)
 {
 	if (!track) {
@@ -801,11 +701,6 @@ BOOL Jam_ReadPortAppDirect(seqp_* track, u32 param_2, u16* param_3)
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	80010440
- * Size:	00006C
- */
 BOOL Jam_CheckPortAppDirect(seqp_* track, u32 param_2, u16 param_3)
 {
 	// Again with the cast to u8... what is it?
@@ -864,11 +759,6 @@ void Jam_WritePortBros(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	800104C0
- * Size:	000030
- */
 void Jam_InitRegistTrack(void)
 {
 	int i;
@@ -879,11 +769,6 @@ void Jam_InitRegistTrack(void)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80010500
- * Size:	0000A8
- */
 void Jam_RegistTrack(seqp_* track, u32 param_2)
 {
 	u32* REF_param_2;
@@ -913,11 +798,6 @@ void Jam_RegistTrack(seqp_* track, u32 param_2)
 	track->isRegistered = 1;
 }
 
-/*
- * --INFO--
- * Address:	800105C0
- * Size:	00008C
- */
 void Jam_UnRegistTrack(seqp_* track)
 {
 	size_t i;
@@ -938,11 +818,6 @@ void Jam_UnRegistTrack(seqp_* track)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80010660
- * Size:	000050
- */
 seqp_* Jam_GetTrackHandle(u32 param_1)
 {
 	size_t i;
@@ -955,11 +830,6 @@ seqp_* Jam_GetTrackHandle(u32 param_1)
 	return NULL;
 }
 
-/*
- * --INFO--
- * Address:	800106C0
- * Size:	000018
- */
 void Jam_InitExtBuffer(OuterParam_* ext)
 {
 	ext->flags       = 0;
@@ -968,11 +838,6 @@ void Jam_InitExtBuffer(OuterParam_* ext)
 	ext->refCount    = 0;
 }
 
-/*
- * --INFO--
- * Address:	800106E0
- * Size:	000038
- */
 BOOL Jam_AssignExtBuffer(seqp_* track, OuterParam_* ext)
 {
 	if (!track) {
@@ -986,11 +851,6 @@ BOOL Jam_AssignExtBuffer(seqp_* track, OuterParam_* ext)
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	80010720
- * Size:	000060
- */
 BOOL Jam_AssignExtBufferP(seqp_* track, u8 index, OuterParam_* ext)
 {
 	if (!track) {
@@ -1005,11 +865,6 @@ BOOL Jam_AssignExtBufferP(seqp_* track, u8 index, OuterParam_* ext)
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	80010780
- * Size:	000044
- */
 void Jam_SetExtFirFilterD(OuterParam_* ext, s16* param_2)
 {
 	int i;
@@ -1024,11 +879,6 @@ void Jam_SetExtFirFilterD(OuterParam_* ext, s16* param_2)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800107E0
- * Size:	0000A4
- */
 void Jam_SetExtParamD(f32 value, OuterParam_* ext, u8 updateFlags)
 {
 	f32* member;
@@ -1064,11 +914,6 @@ void Jam_SetExtParamD(f32 value, OuterParam_* ext, u8 updateFlags)
 	ext->updateFlags |= updateFlags;
 }
 
-/*
- * --INFO--
- * Address:	800108A0
- * Size:	000024
- */
 void Jam_OnExtSwitchD(OuterParam_* ext, u16 param_2)
 {
 	if (!ext) {
@@ -1078,11 +923,6 @@ void Jam_OnExtSwitchD(OuterParam_* ext, u16 param_2)
 	ext->updateFlags |= param_2;
 }
 
-/*
- * --INFO--
- * Address:	800108E0
- * Size:	000028
- */
 void Jam_OffExtSwitchD(OuterParam_* ext, u16 param_2)
 {
 	if (!ext) {
@@ -1112,11 +952,6 @@ void Jam_SetExtFirFilter(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80010920
- * Size:	00002C
- */
 void Jam_SetExtParam(f32 param_1, seqp_* track, u8 param_3)
 {
 	if (!track) {
@@ -1125,11 +960,6 @@ void Jam_SetExtParam(f32 param_1, seqp_* track, u8 param_3)
 	Jam_SetExtParamD(param_1, track->outerParams, param_3);
 }
 
-/*
- * --INFO--
- * Address:	80010960
- * Size:	00002C
- */
 void Jam_OnExtSwitch(seqp_* track, u16 param_2)
 {
 	if (!track) {
@@ -1138,11 +968,6 @@ void Jam_OnExtSwitch(seqp_* track, u16 param_2)
 	Jam_OnExtSwitchD(track->outerParams, param_2);
 }
 
-/*
- * --INFO--
- * Address:	800109A0
- * Size:	00002C
- */
 void Jam_OffExtSwitch(seqp_* track, u16 param_2)
 {
 	if (!track) {
@@ -1171,11 +996,6 @@ void Jam_SetExtFirFilterP(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	800109E0
- * Size:	000038
- */
 void Jam_SetExtParamP(f32 param_1, seqp_* track, u8 index, u8 param_4)
 {
 	if (!track) {
@@ -1184,11 +1004,6 @@ void Jam_SetExtParamP(f32 param_1, seqp_* track, u8 index, u8 param_4)
 	Jam_SetExtParamD(param_1, track->childOuterParams[index], param_4);
 }
 
-/*
- * --INFO--
- * Address:	80010A20
- * Size:	00003C
- */
 void Jam_OnExtSwitchP(seqp_* track, u8 index, u16 param_3)
 {
 	if (!track) {
@@ -1230,11 +1045,6 @@ void Jam_CheckRunningCounter(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80010A60
- * Size:	00000C
- */
 BOOL Jam_RegisterTrackCallback(TrackCallback callback)
 {
 	JAM_CALLBACK_FUNC = callback;
@@ -1251,11 +1061,6 @@ void Jam_SetTrackExtPanPower(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80010A80
- * Size:	00004C
- */
 static f32 __PanCalc(f32 param_1, f32 param_2, f32 param_3, u8 param_4)
 {
 	f32 result;
@@ -1271,11 +1076,6 @@ static f32 __PanCalc(f32 param_1, f32 param_2, f32 param_3, u8 param_4)
 	return result;
 }
 
-/*
- * --INFO--
- * Address:	80010AE0
- * Size:	000320
- */
 void Jam_UpdateTrackAll(seqp_* track)
 {
 	f32 pitchCents;
@@ -1387,11 +1187,6 @@ void Jam_UpdateTrackAll(seqp_* track)
 
 #define OS_FASTCAST_S8 (4)
 
-/*
- * --INFO--
- * Address:	80010E00
- * Size:	00000C
- */
 static void OSf32tos8(register f32* in, register s8* out)
 {
 #ifdef __MWERKS__
@@ -1402,11 +1197,6 @@ static void OSf32tos8(register f32* in, register s8* out)
 #endif
 }
 
-/*
- * --INFO--
- * Address:	80010E20
- * Size:	0004A8
- */
 void Jam_UpdateTrack(seqp_* track, u32 updateFlags)
 {
 	// A bizarre way the devs attempted to re-use some repeated AND operations in this function,
@@ -1588,11 +1378,6 @@ void Jam_UpdateTrack(seqp_* track, u32 updateFlags)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800112E0
- * Size:	000104
- */
 void Jam_UpdateTempo(seqp_* track)
 {
 	size_t i;
@@ -1616,11 +1401,6 @@ void Jam_UpdateTempo(seqp_* track)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80011400
- * Size:	0000CC
- */
 void Jam_MuteTrack(seqp_* track, u8 param_2)
 {
 	u32 i;
@@ -1655,11 +1435,6 @@ void Jam_MuteChildTracks(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	800114E0
- * Size:	00013C
- */
 void Jam_PauseTrack(seqp_* track, u8 param_2)
 {
 	size_t i;
@@ -1695,11 +1470,6 @@ void Jam_PauseTrack(seqp_* track, u8 param_2)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80011620
- * Size:	0000EC
- */
 void Jam_UnPauseTrack(seqp_* track, u8 param_2)
 {
 	size_t i;
@@ -1739,11 +1509,6 @@ void Jam_SetInterrupt(seqp_* track, u16 interrupt)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80011760
- * Size:	000090
- */
 BOOL Jam_TryInterrupt(seqp_* track)
 {
 	int i;
@@ -1767,22 +1532,12 @@ BOOL Jam_TryInterrupt(seqp_* track)
 	return FALSE;
 }
 
-/*
- * --INFO--
- * Address:	80011800
- * Size:	000038
- */
 static u32 Cmd_OpenTrack()
 {
 	Jaq_OpenTrack(SEQ_P, SEQ_ARG[0], SEQ_ARG[1]);
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80011840
- * Size:	000050
- */
 static u32 Cmd_OpenTrackBros()
 {
 	if (SEQ_P->parent) {
@@ -1793,11 +1548,6 @@ static u32 Cmd_OpenTrackBros()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	800118A0
- * Size:	00003C
- */
 static u32 Cmd_Call()
 {
 	SEQ_P->callStack[SEQ_P->callStackDepth++] = SEQ_P->programCounter;
@@ -1805,11 +1555,6 @@ static u32 Cmd_Call()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	800118E0
- * Size:	000100
- */
 static u32 Cmd_CallF()
 {
 	u8 bVar1;
@@ -1842,22 +1587,12 @@ static u32 Cmd_CallF()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	800119E0
- * Size:	000028
- */
 static u32 Cmd_Ret()
 {
 	SEQ_P->programCounter = SEQ_P->callStack[--SEQ_P->callStackDepth];
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80011A20
- * Size:	000060
- */
 static u32 Cmd_RetF()
 {
 	// But why cast it...?  And why check if it explicitly equals TRUE...?
@@ -1867,32 +1602,17 @@ static u32 Cmd_RetF()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80011A80
- * Size:	00001C
- */
 static u32 Cmd_Jmp()
 {
 	SEQ_P->programCounter = SEQ_ARG[1];
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80011AA0
- * Size:	000020
- */
 static u32 Cmd_JmpF()
 {
 	Cmd_CallF();
 }
 
-/*
- * --INFO--
- * Address:	80011AC0
- * Size:	000048
- */
 static u32 Cmd_LoopS()
 {
 	SEQ_P->callStack[SEQ_P->callStackDepth]      = SEQ_P->programCounter;
@@ -1900,11 +1620,6 @@ static u32 Cmd_LoopS()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80011B20
- * Size:	000078
- */
 static u32 Cmd_LoopE()
 {
 	u16 uVar1;
@@ -1927,11 +1642,6 @@ static u32 Cmd_LoopE()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80011BA0
- * Size:	000054
- */
 static u32 Cmd_ReadPort()
 {
 	u16 temp;
@@ -1942,11 +1652,6 @@ static u32 Cmd_ReadPort()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80011C00
- * Size:	000040
- */
 static u32 Cmd_WritePort()
 {
 	SEQ_P->trackPort[SEQ_ARG[0]].value      = SEQ_ARG[1];
@@ -1954,77 +1659,42 @@ static u32 Cmd_WritePort()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80011C40
- * Size:	000044
- */
 static u32 Cmd_CheckPortImport()
 {
 	Jam_WriteRegDirect(SEQ_P, 3, SEQ_P->trackPort[SEQ_ARG[0]].importFlag);
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80011CA0
- * Size:	000044
- */
 static u32 Cmd_CheckPortExport()
 {
 	Jam_WriteRegDirect(SEQ_P, 3, SEQ_P->trackPort[SEQ_ARG[0]].exportFlag);
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80011D00
- * Size:	00002C
- */
 static u32 Cmd_WaitReg()
 {
 	SEQ_P->waitTimer = SEQ_ARG[0];
 	return SEQ_ARG[0] ? 1 : 0;
 }
 
-/*
- * --INFO--
- * Address:	80011D40
- * Size:	000028
- */
 static u32 Cmd_ConnectName()
 {
 	SEQ_P->connectionId = SEQ_ARG[0] << 16 | SEQ_ARG[1];
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80011D80
- * Size:	000040
- */
 static u32 Cmd_ParentWritePort()
 {
 	Jam_WritePortAppDirect(SEQ_P->parent, SEQ_ARG[0] & 0x0f, SEQ_ARG[1]);
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80011DC0
- * Size:	000048
- */
 static u32 Cmd_ChildWritePort()
 {
 	Jam_WritePortAppDirect(SEQ_P->children[(SEQ_ARG[0] >> 4)], SEQ_ARG[0] & 0x0f, SEQ_ARG[1]);
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80011E20
- * Size:	000030
- */
 static u32 Cmd_SetLastNote()
 {
 	SEQ_P->lastNote = SEQ_ARG[0];
@@ -2032,44 +1702,24 @@ static u32 Cmd_SetLastNote()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80011E60
- * Size:	00001C
- */
 static u32 Cmd_TimeRelate()
 {
 	SEQ_P->timeRelationMode = SEQ_ARG[0];
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80011E80
- * Size:	000034
- */
 static u32 Cmd_SimpleOsc()
 {
 	Osc_Setup_Simple(SEQ_P, SEQ_ARG[0]);
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80011EC0
- * Size:	000038
- */
 static u32 Cmd_SimpleEnv()
 {
 	Osc_Setup_SimpleEnv(SEQ_P, SEQ_ARG[0], SEQ_ARG[1]);
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80011F00
- * Size:	000064
- */
 static u32 Cmd_SimpleADSR()
 {
 	int i;
@@ -2082,11 +1732,6 @@ static u32 Cmd_SimpleADSR()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80011F80
- * Size:	000048
- */
 static u32 Cmd_Transpose()
 {
 	SEQ_P->transpose = SEQ_ARG[0];
@@ -2098,11 +1743,6 @@ static u32 Cmd_Transpose()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80011FE0
- * Size:	000068
- */
 static u32 Cmd_CloseTrack()
 {
 	u8 index = SEQ_ARG[0];
@@ -2114,11 +1754,6 @@ static u32 Cmd_CloseTrack()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80012060
- * Size:	000038
- */
 static u32 Cmd_OutSwitch()
 {
 	if (SEQ_P->outerParams) {
@@ -2129,22 +1764,12 @@ static u32 Cmd_OutSwitch()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	800120A0
- * Size:	000034
- */
 static u32 Cmd_UpdateSync()
 {
 	Jam_UpdateTrack(SEQ_P, SEQ_ARG[0]);
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	800120E0
- * Size:	00002C
- */
 static u32 Cmd_BusConnect()
 {
 	if (SEQ_ARG[0] < 6) {
@@ -2153,22 +1778,12 @@ static u32 Cmd_BusConnect()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80012120
- * Size:	00001C
- */
 static u32 Cmd_PauseStatus()
 {
 	SEQ_P->pauseStatus = SEQ_ARG[0];
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80012140
- * Size:	000044
- */
 static u32 Cmd_SetInterrupt()
 {
 	SEQ_P->interruptEnable |= (1 << SEQ_ARG[0]);
@@ -2176,11 +1791,6 @@ static u32 Cmd_SetInterrupt()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	800121A0
- * Size:	000030
- */
 static u32 Cmd_DisInterrupt()
 {
 	u8 arg;
@@ -2190,33 +1800,18 @@ static u32 Cmd_DisInterrupt()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	800121E0
- * Size:	000014
- */
 static u32 Cmd_ClrI()
 {
 	SEQ_P->interruptActive = 0;
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80012200
- * Size:	000014
- */
 static u32 Cmd_SetI()
 {
 	SEQ_P->interruptActive = 1;
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80012220
- * Size:	00002C
- */
 static u32 Cmd_RetI()
 {
 	SEQ_P->waitTimer       = SEQ_P->savedTimer;
@@ -2225,11 +1820,6 @@ static u32 Cmd_RetI()
 	return 2;
 }
 
-/*
- * --INFO--
- * Address:	80012260
- * Size:	000034
- */
 static u32 Cmd_IntTimer()
 {
 	SEQ_P->timerCount = SEQ_ARG[0];
@@ -2238,33 +1828,18 @@ static u32 Cmd_IntTimer()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	800122A0
- * Size:	00002C
- */
 static u32 Cmd_ConnectOpen()
 {
 	Jam_RegistTrack(SEQ_P, SEQ_P->connectionId);
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	800122E0
- * Size:	000028
- */
 static u32 Cmd_ConnectClose()
 {
 	Jam_UnRegistTrack(SEQ_P);
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80012320
- * Size:	000060
- */
 static u32 Cmd_SyncCPU()
 {
 	u16 seq_arg;
@@ -2280,11 +1855,6 @@ static u32 Cmd_SyncCPU()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80012380
- * Size:	000038
- */
 static u32 Cmd_FlushAll()
 {
 	AllStop_1Shot(&SEQ_P->parentController);
@@ -2292,33 +1862,18 @@ static u32 Cmd_FlushAll()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	800123C0
- * Size:	00002C
- */
 static u32 Cmd_FlushRelease()
 {
 	FlushRelease_1Shot(&SEQ_P->parentController);
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80012400
- * Size:	00002C
- */
 static u32 Cmd_Wait3()
 {
 	SEQ_P->waitTimer = SEQ_ARG[0];
 	return SEQ_ARG[0] ? 1 : 0;
 }
 
-/*
- * --INFO--
- * Address:	80012440
- * Size:	000044
- */
 static u32 Cmd_TimeBase()
 {
 	SEQ_P->timeBase = SEQ_ARG[0];
@@ -2328,11 +1883,6 @@ static u32 Cmd_TimeBase()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	800124A0
- * Size:	000050
- */
 static u32 Cmd_Tempo()
 {
 	SEQ_P->tempo = SEQ_ARG[0];
@@ -2344,11 +1894,6 @@ static u32 Cmd_Tempo()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80012500
- * Size:	0000CC
- */
 static u32 Cmd_Finish()
 {
 	size_t i;
@@ -2373,21 +1918,11 @@ static u32 Cmd_Finish()
 	return 3;
 }
 
-/*
- * --INFO--
- * Address:	800125E0
- * Size:	000008
- */
 static u32 Cmd_Nop()
 {
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80012600
- * Size:	0000AC
- */
 static u32 Cmd_PanPowSet()
 {
 	size_t i;
@@ -2402,11 +1937,6 @@ static u32 Cmd_PanPowSet()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	800126C0
- * Size:	000094
- */
 static u32 Cmd_IIRSet()
 {
 	STACK_PAD_VAR(2);
@@ -2425,22 +1955,12 @@ static u32 Cmd_IIRSet()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80012760
- * Size:	000044
- */
 static u32 Cmd_FIRSet()
 {
 	Jam_SetExtFirFilterD(SEQ_P->outerParams, (s16*)Jam_OfsToAddr(SEQ_P, SEQ_ARG[0]));
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	800127C0
- * Size:	000050
- */
 static u32 Cmd_EXTSet()
 {
 	OuterParam_* ext;
@@ -2451,11 +1971,6 @@ static u32 Cmd_EXTSet()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80012820
- * Size:	0000C4
- */
 static u32 Cmd_PanSwSet()
 {
 	size_t i;
@@ -2474,11 +1989,6 @@ static u32 Cmd_PanSwSet()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80012900
- * Size:	000040
- */
 static u32 Cmd_OscRoute()
 {
 	u8 oscRoute;
@@ -2495,11 +2005,6 @@ static u32 Cmd_OscRoute()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80012940
- * Size:	0000A0
- */
 static u32 Cmd_IIRCutOff()
 {
 	u8 index;
@@ -2518,22 +2023,12 @@ static u32 Cmd_IIRCutOff()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	800129E0
- * Size:	000040
- */
 static u32 Cmd_OscFull()
 {
 	Osc_Setup_Full(SEQ_P, SEQ_ARG[0], SEQ_ARG[1], SEQ_ARG[2]);
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80012A20
- * Size:	000068
- */
 static u32 Cmd_CheckWave()
 {
 	SOUNDID_ soundID;
@@ -2545,11 +2040,6 @@ static u32 Cmd_CheckWave()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80012AA0
- * Size:	000204
- */
 static u32 Cmd_Printf()
 {
 	char fmtStr[0x80];
@@ -2770,11 +2260,6 @@ static CmdFunction CMDP_LIST[CMD_COUNT] = {
 	Cmd_Finish,
 };
 
-/*
- * --INFO--
- * Address:	80012CC0
- * Size:	000130
- */
 u32 Cmd_Process(seqp_* track, u8 cmd, u16 param_3)
 {
 	ArgListPair argpair;
@@ -2823,11 +2308,6 @@ u32 Cmd_Process(seqp_* track, u8 cmd, u16 param_3)
 	return function();
 }
 
-/*
- * --INFO--
- * Address:	80012E00
- * Size:	0000A8
- */
 u32 RegCmd_Process(seqp_* track, BOOL isFromRegister, u32 param_3)
 {
 	size_t i;
@@ -3291,11 +2771,6 @@ PROCESS_CHILD_TRACKS:
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80013780
- * Size:	0000A8
- */
 void SeqUpdate(seqp_* track, u32 updateFlags)
 {
 	u32 finalFlags;

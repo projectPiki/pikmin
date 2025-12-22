@@ -35,11 +35,6 @@ immut char* PaniTekiAnimator::motionLabels[TekiMotion::COUNT] = {
 	"TYPE_5",       // 14
 };
 
-/*
- * --INFO--
- * Address:	8011FC54
- * Size:	000268
- */
 PaniMotionTable* PaniTekiAnimator::createMotionTable()
 {
 	PaniMotionTable* table = new PaniMotionTable(TekiMotion::COUNT);
@@ -62,11 +57,6 @@ PaniMotionTable* PaniTekiAnimator::createMotionTable()
 	return table;
 }
 
-/*
- * --INFO--
- * Address:	8011FEBC
- * Size:	00003C
- */
 PaniTekiAnimator::PaniTekiAnimator()
 {
 }

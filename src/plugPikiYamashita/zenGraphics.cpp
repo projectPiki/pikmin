@@ -43,11 +43,6 @@ void zen::zenGraphics::setTevFillPolygon()
 	GXSetBlendMode(GX_BM_BLEND, GX_BL_SRCALPHA, GX_BL_INVSRCALPHA, GX_LO_SET);
 }
 
-/*
- * --INFO--
- * Address:	801BA13C
- * Size:	000458
- */
 void zen::DrawLifeCircle::drawLifeCircle(f32 healthRatio)
 {
 	Vector3f vecs[3];
@@ -101,11 +96,6 @@ void zen::DrawLifeCircle::drawLifeCircle(f32 healthRatio)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801BA594
- * Size:	00006C
- */
 void zen::DrawNaviLifeCircle::drawLifeCircle()
 {
 	if (naviMgr) {

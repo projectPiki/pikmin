@@ -19,21 +19,11 @@ DEFINE_ERROR(30) // Why is this one suddenly capitalized?
  */
 DEFINE_PRINT("P2DPane");
 
-/*
- * --INFO--
- * Address:	801B069C
- * Size:	000008
- */
 void P2DPane::setCallBack(P2DPaneCallBack* callback)
 {
 	mCallBack = callback;
 }
 
-/*
- * --INFO--
- * Address:	801B06A4
- * Size:	000014
- */
 void P2DPane::printTagName(bool doPrint)
 {
 	if (doPrint) {
@@ -45,11 +35,6 @@ void P2DPane::printTagName(bool doPrint)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801B06B8
- * Size:	000048
- */
 void P2DPane::drawSelf(int, int, immut Matrix4f* drawMtx)
 {
 	if (mCallBack) {
@@ -59,21 +44,11 @@ void P2DPane::drawSelf(int, int, immut Matrix4f* drawMtx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801B0700
- * Size:	000030
- */
 P2DPaneCallBackBase::P2DPaneCallBackBase(P2DPane* pane, P2DPaneType type)
 {
 	checkPaneType(pane, type);
 }
 
-/*
- * --INFO--
- * Address:	801B0730
- * Size:	000014
- */
 void P2DPaneCallBackBase::checkPaneType(P2DPane* pane, P2DPaneType type)
 {
 	if (pane && pane->getTypeID() != type) {
@@ -99,11 +74,6 @@ void P2DPane::init()
 	mPaneZ    = 0.0f;
 }
 
-/*
- * --INFO--
- * Address:	801B0744
- * Size:	000134
- */
 void P2DPane::update()
 {
 	updateSelf();
@@ -115,11 +85,6 @@ void P2DPane::update()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801B0880
- * Size:	00014C
- */
 P2DPane::P2DPane()
     : mPaneTree(this)
 {
@@ -131,11 +96,6 @@ P2DPane::P2DPane()
 	init();
 }
 
-/*
- * --INFO--
- * Address:	801B09CC
- * Size:	000168
- */
 P2DPane::P2DPane(P2DPane* parent, u16 paneType, bool, u32 tag, const PUTRect& p5)
     : mPaneTree(this)
 {
@@ -180,11 +140,6 @@ P2DPane::P2DPane(u16 paneType, u32 tag, const PUTRect& rect)
 	init();
 }
 
-/*
- * --INFO--
- * Address:	801B0B34
- * Size:	000290
- */
 P2DPane::P2DPane(P2DPane* parent, RandomAccessStream* input, u16 paneType)
     : mPaneTree(this)
 {
@@ -216,11 +171,6 @@ P2DPane::P2DPane(P2DPane* parent, RandomAccessStream* input, u16 paneType)
 	init();
 }
 
-/*
- * --INFO--
- * Address:	801B0DC4
- * Size:	0000E0
- */
 P2DPane::~P2DPane()
 {
 	PSUTree<P2DPane>* tree = getPaneTree();
@@ -230,11 +180,6 @@ P2DPane::~P2DPane()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801B0EA4
- * Size:	0004A4
- */
 void P2DPane::draw(int xOffs, int yOffs, const P2DGrafContext* grafContext, bool applyScissor)
 {
 	P2DGrafContext context(*grafContext);
@@ -291,11 +236,6 @@ void P2DPane::draw(int xOffs, int yOffs, const P2DGrafContext* grafContext, bool
 	}
 }
 
-/*
- * --INFO--
- * Address:	801B1348
- * Size:	00004C
- */
 void P2DPane::clip(const PUTRect& rect)
 {
 	PUTRect newRect = rect;
@@ -303,11 +243,6 @@ void P2DPane::clip(const PUTRect& rect)
 	mClipBounds.intersect(newRect);
 }
 
-/*
- * --INFO--
- * Address:	801B1394
- * Size:	0000A4
- */
 P2DPane* P2DPane::search(u32 tag, bool doPanicOnNull)
 {
 	if (tag == mTagName) {
@@ -330,11 +265,6 @@ P2DPane* P2DPane::search(u32 tag, bool doPanicOnNull)
 	return nullptr;
 }
 
-/*
- * --INFO--
- * Address:	801B1438
- * Size:	00025C
- */
 void P2DPane::makeMatrix(int x, int y)
 {
 	Vector3f rotAxis;
@@ -372,11 +302,6 @@ void P2DPane::setCullBack(bool isCullBack)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801B1694
- * Size:	00010C
- */
 void P2DPane::loadChildResource()
 {
 	PSUTreeIterator<P2DPane> iter(mPaneTree.getFirstChild());

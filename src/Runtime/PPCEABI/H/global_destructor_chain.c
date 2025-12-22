@@ -2,11 +2,6 @@
 
 DestructorChain* __global_destructor_chain;
 
-/*
- * --INFO--
- * Address:	802149AC
- * Size:	000018
- */
 void* __register_global_object(void* object, void* destructor, void* regmem)
 {
 	((DestructorChain*)regmem)->next       = __global_destructor_chain;
@@ -17,11 +12,6 @@ void* __register_global_object(void* object, void* destructor, void* regmem)
 	return object;
 }
 
-/*
- * --INFO--
- * Address:	80214964
- * Size:	000048
- */
 void __destroy_global_chain(void)
 {
 	DestructorChain* iter;

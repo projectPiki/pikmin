@@ -16,11 +16,6 @@ DEFINE_ERROR(14)
  */
 DEFINE_PRINT("ptclGenPack")
 
-/*
- * --INFO--
- * Address:	801DA088
- * Size:	00001C
- */
 namespace zen {
 void PtclGenPack::setPtclGenPtr(u32 idx, particleGenerator* gen)
 {
@@ -59,11 +54,6 @@ void PtclGenPack::setEmitPos(immut Vector3f& pos)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801DA0A4
- * Size:	000034
- */
 void PtclGenPack::setEmitPosPtr(immut Vector3f* posPtr)
 {
 	u32 i;
@@ -102,11 +92,6 @@ void PtclGenPack::setCallBack(zen::CallBack1<zen::particleGenerator*>*, zen::Cal
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801DA0D8
- * Size:	00003C
- */
 void PtclGenPack::startGen()
 {
 	u32 i;
@@ -119,11 +104,6 @@ void PtclGenPack::startGen()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801DA114
- * Size:	00003C
- */
 void PtclGenPack::stopGen()
 {
 	u32 i;
@@ -156,11 +136,6 @@ void PtclGenPack::stop()
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801DA150
- * Size:	000044
- */
 void PtclGenPack::finish()
 {
 	u32 i;
@@ -173,11 +148,6 @@ void PtclGenPack::finish()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801DA194
- * Size:	000078
- */
 void PtclGenPack::forceFinish()
 {
 	u32 i;
@@ -191,11 +161,6 @@ void PtclGenPack::forceFinish()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801DA20C
- * Size:	000044
- */
 bool PtclGenPack::checkStopGen()
 {
 	u32 i;

@@ -18,11 +18,6 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT(nullptr);
 
-/*
- * --INFO--
- * Address:	800409B0
- * Size:	000024
- */
 void Controller::reset(u32 playerNum)
 {
 	_3C                 = -1;
@@ -33,11 +28,6 @@ void Controller::reset(u32 playerNum)
 	mPrevInput          = 0;
 }
 
-/*
- * --INFO--
- * Address:	800409D4
- * Size:	00009C
- */
 void Controller::updateCont(u32 keyStatus)
 {
 	mPrevInput    = mCurrentInput;
@@ -68,51 +58,26 @@ void Controller::updateCont(u32 keyStatus)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80040A70
- * Size:	00002C
- */
 void Controller::update()
 {
 	gsys->mControllerMgr.updateController(this);
 }
 
-/*
- * --INFO--
- * Address:	80040A9C
- * Size:	000038
- */
 f32 Controller::getMainStickX()
 {
 	return mMainStickX / 74.0f;
 }
 
-/*
- * --INFO--
- * Address:	80040AD4
- * Size:	000038
- */
 f32 Controller::getMainStickY()
 {
 	return mMainStickY / 74.0f;
 }
 
-/*
- * --INFO--
- * Address:	80040B0C
- * Size:	000038
- */
 f32 Controller::getSubStickX()
 {
 	return mSubStickX / 74.0f;
 }
 
-/*
- * --INFO--
- * Address:	80040B44
- * Size:	000038
- */
 f32 Controller::getSubStickY()
 {
 	return mSubStickY / 74.0f;

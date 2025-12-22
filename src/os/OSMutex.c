@@ -1,10 +1,5 @@
 #include "Dolphin/os.h"
 
-/*
- * --INFO--
- * Address:	801F99B8
- * Size:	000038
- */
 void OSInitMutex(OSMutex* mutex)
 {
 	OSInitThreadQueue(&mutex->queue);
@@ -12,11 +7,6 @@ void OSInitMutex(OSMutex* mutex)
 	mutex->count  = 0;
 }
 
-/*
- * --INFO--
- * Address:	801F99F0
- * Size:	0000DC
- */
 void OSLockMutex(OSMutex* mutex)
 {
 	BOOL enabled            = OSDisableInterrupts();
@@ -43,11 +33,6 @@ void OSLockMutex(OSMutex* mutex)
 	OSRestoreInterrupts(enabled);
 }
 
-/*
- * --INFO--
- * Address:	801F9ACC
- * Size:	0000C8
- */
 void OSUnlockMutex(OSMutex* mutex)
 {
 	BOOL enabled            = OSDisableInterrupts();
@@ -65,11 +50,6 @@ void OSUnlockMutex(OSMutex* mutex)
 	OSRestoreInterrupts(enabled);
 }
 
-/*
- * --INFO--
- * Address:	801F9B94
- * Size:	000070
- */
 void __OSUnlockAllMutex(OSThread* thread)
 {
 	OSMutex* mutex;
@@ -92,21 +72,11 @@ BOOL OSTryLockMutex(OSMutex* mutex)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801F9C04
- * Size:	000020
- */
 void OSInitCond(OSCond* cond)
 {
 	OSInitThreadQueue(&cond->queue);
 }
 
-/*
- * --INFO--
- * Address:	801F9C24
- * Size:	0000D4
- */
 void OSWaitCond(OSCond* cond, OSMutex* mutex)
 {
 	BOOL enabled            = OSDisableInterrupts();
@@ -134,11 +104,6 @@ void OSWaitCond(OSCond* cond, OSMutex* mutex)
 	OSRestoreInterrupts(enabled);
 }
 
-/*
- * --INFO--
- * Address:	801F9CF8
- * Size:	000020
- */
 void OSSignalCond(OSCond* cond)
 {
 	OSWakeupThread(&cond->queue);
@@ -154,11 +119,6 @@ void IsMember(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801F9D18
- * Size:	000100
- */
 int __OSCheckMutex(OSMutex* mutex)
 {
 	OSThread* thread;
@@ -201,11 +161,6 @@ int __OSCheckMutex(OSMutex* mutex)
 	return 1;
 }
 
-/*
- * --INFO--
- * Address:	801F9E18
- * Size:	000038
- */
 int __OSCheckDeadLock(OSThread* thread)
 {
 	OSMutex* mutex = thread->mutex;
@@ -219,11 +174,6 @@ int __OSCheckDeadLock(OSThread* thread)
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	801F9E50
- * Size:	000074
- */
 int __OSCheckMutexes(OSThread* thread)
 {
 	OSMutex* mutex = thread->queueMutex.head;

@@ -6,11 +6,6 @@
 static s16 WS_V2P_TABLE[0x100];
 static s16 BNK_V2P_TABLE[0x100];
 
-/*
- * --INFO--
- * Address:	8000C860
- * Size:	0000A0
- */
 static int UpdateWave(WaveArchive_* arc, Ctrl_* ctrl, u32 base)
 {
 	u32 i = 0;
@@ -25,11 +20,6 @@ static int UpdateWave(WaveArchive_* arc, Ctrl_* ctrl, u32 base)
 	return i + base;
 }
 
-/*
- * --INFO--
- * Address:	8000C900
- * Size:	000174
- */
 static BOOL UpdateWave_Extern(WaveArchiveBank_* bank, CtrlGroup_* group, Ctrl_* ctrl)
 {
 	WaveID_* wave;
@@ -70,11 +60,6 @@ static BOOL UpdateWave_Extern(WaveArchiveBank_* bank, CtrlGroup_* group, Ctrl_* 
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	8000CA80
- * Size:	00009C
- */
 void Jac_SceneClose(WaveArchiveBank_* bank, CtrlGroup_* group, u32 id, BOOL set)
 {
 	WaveArchive_* arc;
@@ -94,11 +79,6 @@ void Jac_SceneClose(WaveArchiveBank_* bank, CtrlGroup_* group, u32 id, BOOL set)
 	STACK_PAD_VAR(2);
 }
 
-/*
- * --INFO--
- * Address:	8000CB20
- * Size:	00015C
- */
 BOOL Jac_SceneSet(WaveArchiveBank_* bank, CtrlGroup_* group, u32 id, BOOL set)
 {
 	WaveArchiveBank_** bankp = &bank;
@@ -148,11 +128,6 @@ BOOL Jac_SceneSet(WaveArchiveBank_* bank, CtrlGroup_* group, u32 id, BOOL set)
 	STACK_PAD_VAR(6);
 }
 
-/*
- * --INFO--
- * Address:	8000CC80
- * Size:	000044
- */
 static WaveID_* SearchWave(Ctrl_* ctrl, u32 flag)
 {
 	for (u32 i = 0; i < ctrl->count; i++) {
@@ -164,11 +139,6 @@ static WaveID_* SearchWave(Ctrl_* ctrl, u32 flag)
 	return NULL;
 }
 
-/*
- * --INFO--
- * Address:	8000CCE0
- * Size:	00010C
- */
 WaveID_* __GetSoundHandle(CtrlGroup_* group, u32 id, u32 id2)
 {
 	u16 wId      = id;
@@ -200,11 +170,6 @@ WaveID_* __GetSoundHandle(CtrlGroup_* group, u32 id, u32 id2)
 	return NULL;
 }
 
-/*
- * --INFO--
- * Address:	8000CE00
- * Size:	000074
- */
 WaveID_* GetSoundHandle(CtrlGroup_* group, u32 flag)
 {
 	u32* flagptr  = &flag;
@@ -230,21 +195,11 @@ WaveID_* GetSoundHandle(CtrlGroup_* group, u32 flag)
 	STACK_PAD_VAR(4);
 }
 
-/*
- * --INFO--
- * Address:	8000CE80
- * Size:	000018
- */
 u16 Jac_WsVirtualToPhysical(u16 vID)
 {
 	return WS_V2P_TABLE[vID];
 }
 
-/*
- * --INFO--
- * Address:	8000CEA0
- * Size:	000018
- */
 u16 Jac_BnkVirtualToPhysical(u16 vID)
 {
 	return BNK_V2P_TABLE[vID];
@@ -270,11 +225,6 @@ u16 Jac_WsPhysicalToVirtual(u16 ws)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8000CEC0
- * Size:	000050
- */
 void Jac_WsConnectTableSet(u32 id, u32 val)
 {
 	u32* id2 = &id;
@@ -287,11 +237,6 @@ void Jac_WsConnectTableSet(u32 id, u32 val)
 	STACK_PAD_VAR(2);
 }
 
-/*
- * --INFO--
- * Address:	8000CF20
- * Size:	000050
- */
 void Jac_BnkConnectTableSet(u32 id, u32 val)
 {
 	u32* id2 = &id;
@@ -304,11 +249,6 @@ void Jac_BnkConnectTableSet(u32 id, u32 val)
 	STACK_PAD_VAR(2);
 }
 
-/*
- * --INFO--
- * Address:	8000CF80
- * Size:	00003C
- */
 void Jac_ConnectTableInit()
 {
 	for (int i = 0; i < 0x100; i++) {

@@ -30,11 +30,6 @@ SplineInterpolator::SplineInterpolator(int size, NPool<SplineSegment>* segPool)
 	_10              = 0;
 }
 
-/*
- * --INFO--
- * Address:	8011DE60
- * Size:	00000C
- */
 void SplineInterpolator::reset()
 {
 	_10 = 0;
@@ -84,11 +79,6 @@ bool SplineInterpolator::interpolate(f32 t, NPosture3D& outPosture, bool isDirec
 	return interpolateNext(t, outPosture);
 }
 
-/*
- * --INFO--
- * Address:	8011DE6C
- * Size:	0000E0
- */
 bool SplineInterpolator::interpolateNext(f32 t, NPosture3D& outPosture)
 {
 	if (mFrameArray->getSize() == 0) {
@@ -125,11 +115,6 @@ bool SplineInterpolator::interpolateDirect(f32 t, NPosture3D& outPosture)
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	8011DF4C
- * Size:	0000F0
- */
 void SplineInterpolator::outputPosture(f32 t, NPosture3D& outPosture)
 {
 	f32 thisParam = mFrameArray->get(_10)->getParameter();
@@ -139,11 +124,6 @@ void SplineInterpolator::outputPosture(f32 t, NPosture3D& outPosture)
 	mWatchpointCurve->getSegment(_10)->outputPosition(newT, outPosture.getWatchpoint());
 }
 
-/*
- * --INFO--
- * Address:	8011E03C
- * Size:	0000BC
- */
 int SplineInterpolator::searchSegmentIndex(f32 targetParam, int startIdx)
 {
 	if (mFrameArray->getSize() < 2) {

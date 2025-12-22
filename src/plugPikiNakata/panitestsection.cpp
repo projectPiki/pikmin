@@ -37,11 +37,6 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("panitestsection")
 
-/*
- * --INFO--
- * Address:	8011FEF8
- * Size:	000554
- */
 PaniTestNode::PaniTestNode()
 {
 	setName("PaniTestNode");
@@ -125,11 +120,6 @@ PaniTestNode::PaniTestNode()
 	setTestMode(PANITEST_Teki);
 }
 
-/*
- * --INFO--
- * Address:	8012044C
- * Size:	000084
- */
 void PaniTestNode::setTestMode(int mode)
 {
 	mTestMode           = mode;
@@ -147,11 +137,6 @@ void PaniTestNode::setTestMode(int mode)
 	mMotionId = 0;
 }
 
-/*
- * --INFO--
- * Address:	801204D0
- * Size:	00048C
- */
 void PaniTestNode::update()
 {
 	mController->update();
@@ -265,11 +250,6 @@ void PaniTestNode::update()
 	STACK_PAD_VAR(2);
 }
 
-/*
- * --INFO--
- * Address:	8012095C
- * Size:	0002B4
- */
 void PaniTestNode::updatePikis()
 {
 	int i;
@@ -309,11 +289,6 @@ void PaniTestNode::updatePikis()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80120C10
- * Size:	0001BC
- */
 void PaniTestNode::updateTekis()
 {
 	mTestTekiList[mFocusTekiType]->mWorldMtx.makeSRT(mTestTekiList[mFocusTekiType]->mSRT);
@@ -338,11 +313,6 @@ void PaniTestNode::updateTekis()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80120DCC
- * Size:	00006C
- */
 void PaniTestNode::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	PRINT("animationKeyUpdated:%d\n", event.mEventType);
@@ -354,11 +324,6 @@ void PaniTestNode::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80120E38
- * Size:	000684
- */
 void PaniTestNode::draw(Graphics& gfx)
 {
 	mapMgr->preRender(gfx);
@@ -445,31 +410,16 @@ void PaniTestNode::draw(Graphics& gfx)
 	gfx.texturePrintf(gsys->mConsFont, 0, 400, "Name:%s", TekiMgr::getTypeName(mFocusTekiType));
 }
 
-/*
- * --INFO--
- * Address:	801214BC
- * Size:	000034
- */
 void PaniTestNode::drawPiki(ViewPiki* piki, Graphics& gfx)
 {
 	piki->refresh(gfx);
 }
 
-/*
- * --INFO--
- * Address:	801214F0
- * Size:	000034
- */
 void PaniTestNode::drawTeki(Teki* teki, Graphics& gfx)
 {
 	teki->refresh(gfx);
 }
 
-/*
- * --INFO--
- * Address:	80121524
- * Size:	000078
- */
 void PaniTestSection::init()
 {
 	Node::init("<PaniTestSection>");

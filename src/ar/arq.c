@@ -34,11 +34,6 @@ void __ARQPopTaskQueueHi()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80207A80
- * Size:	000100
- */
 void __ARQServiceQueueLo()
 {
 	if ((__ARQRequestPendingLo == NULL) && (__ARQRequestQueueLo)) {
@@ -72,20 +67,10 @@ void __ARQServiceQueueLo()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80207B80
- * Size:	000004
- */
 void __ARQCallbackHack(void)
 {
 }
 
-/*
- * --INFO--
- * Address:	80207B84
- * Size:	0000CC
- */
 void __ARQInterruptServiceRoutine(void)
 {
 	if (__ARQCallbackHi) {
@@ -126,11 +111,6 @@ void __ARQPushTempQueue(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80207C50
- * Size:	000068
- */
 void ARQInit()
 {
 	if (__ARQ_init_flag == TRUE) {
@@ -158,11 +138,6 @@ void ARQReset(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80207CB8
- * Size:	00015C
- */
 void ARQPostRequest(ARQRequest* task, u32 owner, u32 type, u32 priority, u32 source, u32 dest, u32 length, ARQCallback callback)
 {
 	BOOL enabled;

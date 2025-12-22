@@ -36,11 +36,6 @@ void GXSetMisc(GXMiscToken token, u32 val)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80210770
- * Size:	000068
- */
 void GXFlush(void)
 {
 	u32 i;
@@ -167,11 +162,6 @@ void GXWaitDrawDone(void)
 	OSRestoreInterrupts(enabled);
 }
 
-/*
- * --INFO--
- * Address:	802107D8
- * Size:	000080
- */
 void GXDrawDone(void)
 {
 	CHECK_GXBEGIN(515, "GXDrawDone");
@@ -179,11 +169,6 @@ void GXDrawDone(void)
 	GXWaitDrawDone();
 }
 
-/*
- * --INFO--
- * Address:	80210858
- * Size:	000024
- */
 void GXPixModeSync(void)
 {
 	CHECK_GXBEGIN(550, "GXPixModeSync");
@@ -206,11 +191,6 @@ void GXTexModeSync(void)
 	gx->bpSent = GX_FALSE;
 }
 
-/*
- * --INFO--
- * Address:	8021087C
- * Size:	000014
- */
 void GXPokeAlphaMode(GXCompare func, u8 threshold)
 {
 	u32 reg;
@@ -220,11 +200,6 @@ void GXPokeAlphaMode(GXCompare func, u8 threshold)
 	__peReg[3] = reg;
 }
 
-/*
- * --INFO--
- * Address:	80210890
- * Size:	000014
- */
 void GXPokeAlphaRead(GXAlphaReadMode mode)
 {
 	u32 reg;
@@ -236,11 +211,6 @@ void GXPokeAlphaRead(GXAlphaReadMode mode)
 	__peReg[4] = reg;
 }
 
-/*
- * --INFO--
- * Address:	802108A4
- * Size:	00001C
- */
 void GXPokeAlphaUpdate(GXBool update_enable)
 {
 	u32 reg;
@@ -251,11 +221,6 @@ void GXPokeAlphaUpdate(GXBool update_enable)
 	__peReg[1] = reg;
 }
 
-/*
- * --INFO--
- * Address:	802108C0
- * Size:	000088
- */
 void GXPokeBlendMode(GXBlendMode type, GXBlendFactor src_factor, GXBlendFactor dst_factor, GXLogicOp op)
 {
 	u32 reg;
@@ -272,11 +237,6 @@ void GXPokeBlendMode(GXBlendMode type, GXBlendFactor src_factor, GXBlendFactor d
 	__peReg[1] = reg;
 }
 
-/*
- * --INFO--
- * Address:	80210948
- * Size:	00001C
- */
 void GXPokeColorUpdate(GXBool update_enable)
 {
 	u32 reg;
@@ -287,11 +247,6 @@ void GXPokeColorUpdate(GXBool update_enable)
 	__peReg[1] = reg;
 }
 
-/*
- * --INFO--
- * Address:	80210964
- * Size:	000014
- */
 void GXPokeDstAlpha(GXBool enable, u8 alpha)
 {
 	u32 reg = 0;
@@ -302,11 +257,6 @@ void GXPokeDstAlpha(GXBool enable, u8 alpha)
 	__peReg[2] = reg;
 }
 
-/*
- * --INFO--
- * Address:	80210978
- * Size:	00001C
- */
 void GXPokeDither(GXBool dither)
 {
 	u32 reg;
@@ -317,11 +267,6 @@ void GXPokeDither(GXBool dither)
 	__peReg[1] = reg;
 }
 
-/*
- * --INFO--
- * Address:	80210994
- * Size:	000028
- */
 void GXPokeZMode(GXBool compare_enable, GXCompare func, GXBool update_enable)
 {
 	u32 reg = 0;
@@ -411,11 +356,6 @@ GXDrawSyncCallback GXSetDrawSyncCallback(GXDrawSyncCallback cb)
 	return oldcb;
 }
 
-/*
- * --INFO--
- * Address:	802109BC
- * Size:	000088
- */
 static void GXTokenInterruptHandler(__OSInterrupt interrupt, OSContext* context)
 {
 	u16 token;
@@ -452,11 +392,6 @@ GXDrawDoneCallback GXSetDrawDoneCallback(GXDrawDoneCallback cb)
 	return oldcb;
 }
 
-/*
- * --INFO--
- * Address:	80210A44
- * Size:	000084
- */
 static void GXFinishInterruptHandler(__OSInterrupt interrupt, OSContext* context)
 {
 	OSContext exceptionContext;
@@ -476,11 +411,6 @@ static void GXFinishInterruptHandler(__OSInterrupt interrupt, OSContext* context
 	OSWakeupThread(&FinishQueue);
 }
 
-/*
- * --INFO--
- * Address:	80210AC8
- * Size:	000080
- */
 void __GXPEInit(void)
 {
 	u32 reg;

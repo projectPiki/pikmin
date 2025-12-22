@@ -19,32 +19,17 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("Timers")
 
-/*
- * --INFO--
- * Address:	80040984
- * Size:	000010
- */
 void Timers::reset()
 {
 	mTimerList  = nullptr;
 	mTimerCount = 0;
 }
 
-/*
- * --INFO--
- * Address:	80040994
- * Size:	000010
- */
 void Timers::newFrame()
 {
 	mFrameCount++;
 }
 
-/*
- * --INFO--
- * Address:	800409A4
- * Size:	000004
- */
 void Timers::_start(immut char* name, bool set)
 {
 #if defined(DEVELOP) || defined(VERSION_G98E01_PIKIDEMO)
@@ -85,11 +70,6 @@ void Timers::_start(immut char* name, bool set)
 #endif
 }
 
-/*
- * --INFO--
- * Address:	800409A8
- * Size:	000004
- */
 void Timers::_stop(immut char* name)
 {
 #if defined(DEVELOP) || defined(VERSION_G98E01_PIKIDEMO)
@@ -114,11 +94,6 @@ void Timers::showTimes()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800409AC
- * Size:	000004
- */
 void Timers::draw(Graphics& gfx, Font* font)
 {
 #if defined(DEVELOP) || defined(VERSION_G98E01_PIKIDEMO)

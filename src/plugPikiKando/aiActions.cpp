@@ -18,22 +18,12 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("aiActions");
 
-/*
- * --INFO--
- * Address:	800A79F8
- * Size:	000080
- */
 ActPick::ActPick(Piki* piki)
     : Action(piki, true)
 {
 	mObject.reset();
 }
 
-/*
- * --INFO--
- * Address:	800A7A78
- * Size:	000004
- */
 void ActPick::Initialiser::initialise(Action* action)
 {
 #if 0
@@ -43,11 +33,6 @@ void ActPick::Initialiser::initialise(Action* action)
 #endif
 }
 
-/*
- * --INFO--
- * Address:	800A7A7C
- * Size:	0000D4
- */
 void ActPick::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
@@ -64,11 +49,6 @@ void ActPick::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800A7B50
- * Size:	0000B8
- */
 void ActPick::init(Creature* object)
 {
 	mIsAnimationFinished = false;
@@ -78,22 +58,12 @@ void ActPick::init(Creature* object)
 	mPiki->enableMotionBlend();
 }
 
-/*
- * --INFO--
- * Address:	800A7C08
- * Size:	000040
- */
 void ActPick::cleanup()
 {
 	Creature* obj = mObject.getPtr();
 	mObject.reset();
 }
 
-/*
- * --INFO--
- * Address:	800A7C48
- * Size:	0000B4
- */
 int ActPick::exec()
 {
 	mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
@@ -121,39 +91,19 @@ ActPut::ActPut(Piki* piki)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	800A7CFC
- * Size:	000004
- */
 void ActPut::Initialiser::initialise(Action*)
 {
 }
 
-/*
- * --INFO--
- * Address:	800A7D00
- * Size:	00000C
- */
 void ActPut::init(Creature*)
 {
 	mFailCountdownTimer = 0.5f;
 }
 
-/*
- * --INFO--
- * Address:	800A7D0C
- * Size:	000004
- */
 void ActPut::cleanup()
 {
 }
 
-/*
- * --INFO--
- * Address:	800A7D10
- * Size:	0000D8
- */
 int ActPut::exec()
 {
 	mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
@@ -176,11 +126,6 @@ int ActPut::exec()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800A7DE8
- * Size:	00006C
- */
 ActAdjust::ActAdjust(Piki* piki)
     : Action(piki, true)
 {
@@ -188,11 +133,6 @@ ActAdjust::ActAdjust(Piki* piki)
 	mAdjustDistance  = 5.0f;
 }
 
-/*
- * --INFO--
- * Address:	800A7E54
- * Size:	000014
- */
 void ActAdjust::Initialiser::initialise(Action* action)
 {
 	PRINT(" initialiser called ###################### \n");
@@ -200,11 +140,6 @@ void ActAdjust::Initialiser::initialise(Action* action)
 	static_cast<ActAdjust*>(action)->mAdjustTimeLimit = mAdjustTimeLimit;
 }
 
-/*
- * --INFO--
- * Address:	800A7E68
- * Size:	000200
- */
 void ActAdjust::init(Creature* target)
 {
 	PRINT(" act adjust init\n");
@@ -234,21 +169,11 @@ void ActAdjust::init(Creature* target)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800A8068
- * Size:	000014
- */
 void ActAdjust::cleanup()
 {
 	mPiki->resetCreatureFlag(CF_Unk11);
 }
 
-/*
- * --INFO--
- * Address:	800A807C
- * Size:	00011C
- */
 int ActAdjust::exec()
 {
 	if (mForceFail) {

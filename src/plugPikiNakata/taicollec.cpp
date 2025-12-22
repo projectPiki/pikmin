@@ -431,11 +431,6 @@ struct TaiCollecLegEffectAction : public TaiJointEffectAction {
 	// TODO: members
 };
 
-/*
- * --INFO--
- * Address:	8012AAC0
- * Size:	000084
- */
 TaiCollecSoundTable::TaiCollecSoundTable()
     : PaniSoundTable(8)
 {
@@ -444,11 +439,6 @@ TaiCollecSoundTable::TaiCollecSoundTable()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8012AB44
- * Size:	000484
- */
 TaiCollecParameters::TaiCollecParameters()
     : TekiParameters(COLLECPI_COUNT, COLLECPF_COUNT)
 {
@@ -525,11 +515,6 @@ TaiCollecParameters::TaiCollecParameters()
 	multiP->setF(COLLECPF_ImpassableDistance, 50.0f);
 }
 
-/*
- * --INFO--
- * Address:	8012AFC8
- * Size:	00179C
- */
 TaiCollecStrategy::TaiCollecStrategy(TekiParameters* params)
     : TaiStrategy(COLLECSTATE_COUNT, COLLECSTATE_Unk3)
 {
@@ -786,11 +771,6 @@ TaiCollecStrategy::TaiCollecStrategy(TekiParameters* params)
 	setState(COLLECSTATE_Unk14, state);
 }
 
-/*
- * --INFO--
- * Address:	8012C764
- * Size:	000168
- */
 void TaiCollecStrategy::start(Teki& teki)
 {
 	teki.mParticleGenerators[0] = effectMgr->create(EffectMgr::EFF_Collec_HmA, Vector3f(0.0f, 0.0f, 0.0f), nullptr, nullptr);
@@ -806,11 +786,6 @@ void TaiCollecStrategy::start(Teki& teki)
 	teki.clearTekiOption(BTeki::TEKI_OPTION_ORGANIC);
 }
 
-/*
- * --INFO--
- * Address:	8012C8CC
- * Size:	000110
- */
 void TaiCollecStrategy::draw(Teki& teki, Graphics& gfx)
 {
 	TekiStrategy::draw(teki, gfx);
@@ -852,11 +827,6 @@ void TaiCollecStrategy::outputUndergroundPosition(Teki& teki, NVector3f& outPosi
 	outPosition.add(teki.getNestPosition());
 }
 
-/*
- * --INFO--
- * Address:	8012C9DC
- * Size:	0001F0
- */
 bool TekiCollecTargetPelletCondition::satisfy(Creature* target) immut
 {
 	if (target->mObjType != OBJTYPE_Pellet) {
@@ -904,11 +874,6 @@ bool TekiCollecTargetPelletCondition::satisfy(Creature* target) immut
 	STACK_PAD_VAR(2);
 }
 
-/*
- * --INFO--
- * Address:	8012CBCC
- * Size:	000040
- */
 void TaiCollecImpassableAction::start(Teki& teki)
 {
 	if (teki.mReturnStateID == COLLECSTATE_Unk3 || teki.mReturnStateID == COLLECSTATE_Unk4 || teki.mReturnStateID == COLLECSTATE_Unk6) {
@@ -918,11 +883,6 @@ void TaiCollecImpassableAction::start(Teki& teki)
 	resetPosition(teki);
 }
 
-/*
- * --INFO--
- * Address:	8012CC0C
- * Size:	0000AC
- */
 bool TaiCollecImpassableAction::act(Teki& teki)
 {
 	f32 dist = teki.mTargetPosition.distanceXZ(teki.getPosition());
@@ -941,22 +901,12 @@ bool TaiCollecImpassableAction::act(Teki& teki)
 	STACK_PAD_VAR(2);
 }
 
-/*
- * --INFO--
- * Address:	8012CCB8
- * Size:	000030
- */
 void TaiCollecImpassableAction::resetPosition(Teki& teki)
 {
 	teki.mTargetPosition.input(teki.getPosition());
 	teki.mTimers[mTimerIdx] = mTimerLength;
 }
 
-/*
- * --INFO--
- * Address:	8012CCE8
- * Size:	000070
- */
 bool TaiCollecLetGoOfPelletAction::act(Teki& teki)
 {
 	Creature* target = teki.getCreaturePointer(2);
@@ -973,11 +923,6 @@ bool TaiCollecLetGoOfPelletAction::act(Teki& teki)
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8012CD58
- * Size:	000074
- */
 bool TaiCollecLetGoOfPelletAction::actByEvent(immut TekiEvent& event)
 {
 	Teki* teki       = event.mTeki;
@@ -995,11 +940,6 @@ bool TaiCollecLetGoOfPelletAction::actByEvent(immut TekiEvent& event)
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8012CDCC
- * Size:	000158
- */
 bool TaiCollecTargetPelletAction::act(Teki& teki)
 {
 	Creature* target = teki.getCreaturePointer(3);
@@ -1022,11 +962,6 @@ bool TaiCollecTargetPelletAction::act(Teki& teki)
 	TekiAndCondition(nullptr, nullptr);
 }
 
-/*
- * --INFO--
- * Address:	8012CF24
- * Size:	0000E0
- */
 bool TaiCollecVisibleHeightPelletLostAction::act(Teki& teki)
 {
 	Creature* target = teki.getCreaturePointer(0);
@@ -1047,11 +982,6 @@ bool TaiCollecVisibleHeightPelletLostAction::act(Teki& teki)
 	TekiVisibleHeightCondition(nullptr);
 }
 
-/*
- * --INFO--
- * Address:	8012D004
- * Size:	000064
- */
 bool TaiCollecVisibleHeightPelletLostTimerAction::act(Teki& teki)
 {
 	if (teki.timerElapsed(mTimerIdx)) {
@@ -1060,11 +990,6 @@ bool TaiCollecVisibleHeightPelletLostTimerAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8012D068
- * Size:	0000FC
- */
 bool TaiCollecPelletLostAction::act(Teki& teki)
 {
 	Creature* target = teki.getCreaturePointer(0);
@@ -1086,11 +1011,6 @@ bool TaiCollecPelletLostAction::act(Teki& teki)
 	TekiVisibleCondition(nullptr);
 }
 
-/*
- * --INFO--
- * Address:	8012D164
- * Size:	0000BC
- */
 bool TaiCollecPelletDisappearedAction::act(Teki& teki)
 {
 	Creature* target = teki.getCreaturePointer(2);
@@ -1111,11 +1031,6 @@ bool TaiCollecPelletDisappearedAction::act(Teki& teki)
 	TekiVisibleCondition(nullptr);
 }
 
-/*
- * --INFO--
- * Address:	8012D220
- * Size:	000110
- */
 bool TaiCollecHoldPelletAction::act(Teki& teki)
 {
 	Creature* target = teki.getCreaturePointer(0);
@@ -1144,54 +1059,29 @@ bool TaiCollecHoldPelletAction::act(Teki& teki)
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8012D330
- * Size:	000050
- */
 void TaiCollecCatchingAction::start(Teki& teki)
 {
 	teki.setTekiOption(BTeki::TEKI_OPTION_MANUAL_ANIMATION);
 	teki.mMotionSpeed = teki.mTekiAnimator->getAnimationSpeed();
 }
 
-/*
- * --INFO--
- * Address:	8012D380
- * Size:	000034
- */
 void TaiCollecCatchingAction::finish(Teki& teki)
 {
 	teki.clearTekiOption(BTeki::TEKI_OPTION_MANUAL_ANIMATION);
 }
 
-/*
- * --INFO--
- * Address:	8012D3B4
- * Size:	000034
- */
 void TaiCollecCarryingAction::start(Teki& teki)
 {
 	PRINT_NAKATA("TaiCollecCarryingAction::start:%08x\n", &teki);
 	teki.setTekiOption(BTeki::TEKI_OPTION_MANUAL_ANIMATION);
 }
 
-/*
- * --INFO--
- * Address:	8012D3E8
- * Size:	000034
- */
 void TaiCollecCarryingAction::finish(Teki& teki)
 {
 	PRINT_NAKATA("TaiCollecCarryingAction::finish:%08x\n", &teki);
 	teki.clearTekiOption(BTeki::TEKI_OPTION_MANUAL_ANIMATION);
 }
 
-/*
- * --INFO--
- * Address:	8012D41C
- * Size:	0000B8
- */
 bool TaiCollecCarryingAction::act(Teki& teki)
 {
 	Creature* target = teki.getCreaturePointer(2);
@@ -1208,33 +1098,18 @@ bool TaiCollecCarryingAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8012D4D4
- * Size:	000028
- */
 void TaiCollecBeingDraggedAction::start(Teki& teki)
 {
 	PRINT_NAKATA("TaiCollecBeingDraggedAction::start:%08x\n", &teki);
 	teki.startParticleGenerator(3);
 }
 
-/*
- * --INFO--
- * Address:	8012D4FC
- * Size:	000028
- */
 void TaiCollecBeingDraggedAction::finish(Teki& teki)
 {
 	PRINT_NAKATA("TaiCollecBeingDraggedAction::finish:%08x\n", &teki);
 	teki.stopParticleGenerator(3);
 }
 
-/*
- * --INFO--
- * Address:	8012D524
- * Size:	0000A0
- */
 bool TaiCollecWinCarryingAction::act(Teki& teki)
 {
 	Creature* target = teki.getCreaturePointer(2);
@@ -1252,11 +1127,6 @@ bool TaiCollecWinCarryingAction::act(Teki& teki)
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8012D5C4
- * Size:	0000A0
- */
 bool TaiCollecDefeatCarryingAction::act(Teki& teki)
 {
 	Creature* target = teki.getCreaturePointer(2);
@@ -1274,11 +1144,6 @@ bool TaiCollecDefeatCarryingAction::act(Teki& teki)
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8012D664
- * Size:	00015C
- */
 bool TaiCollecPutAction::act(Teki& teki)
 {
 	if (!teki.getCreaturePointer(2)) {
@@ -1298,11 +1163,6 @@ bool TaiCollecPutAction::act(Teki& teki)
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8012D7C0
- * Size:	0000E0
- */
 void TaiCollecPuttingPelletAction::start(Teki& teki)
 {
 	teki.setParticleGeneratorPosition(0, teki.getPosition());
@@ -1322,22 +1182,12 @@ void TaiCollecPuttingPelletAction::start(Teki& teki)
 	pellet->stimulate(InteractSwallow(&teki, teki.mCollInfo->getSphere('slot')->getChildAt(0), 0));
 }
 
-/*
- * --INFO--
- * Address:	8012D8A0
- * Size:	000040
- */
 void TaiCollecPuttingPelletAction::finish(Teki& teki)
 {
 	teki.stopParticleGenerator(0);
 	teki.stopParticleGenerator(1);
 }
 
-/*
- * --INFO--
- * Address:	8012D8E0
- * Size:	0000BC
- */
 bool TaiCollecPuttingPelletAction::act(Teki& teki)
 {
 	Creature* target = teki.getCreaturePointer(2);
@@ -1356,22 +1206,12 @@ bool TaiCollecPuttingPelletAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8012D99C
- * Size:	000044
- */
 void TaiCollecCarryingToNestAction::start(Teki& teki)
 {
 	TaiContinuousMotionAction::start(teki);
 	makePositionRoute(teki);
 }
 
-/*
- * --INFO--
- * Address:	8012D9E0
- * Size:	000214
- */
 bool TaiCollecCarryingToNestAction::act(Teki& teki)
 {
 	TaiContinuousMotionAction::act(teki);
@@ -1420,11 +1260,6 @@ bool TaiCollecCarryingToNestAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8012DBF4
- * Size:	000054
- */
 void TaiCollecCarryingToNestAction::makePositionRoute(Teki& teki)
 {
 	Creature* target = teki.getCreaturePointer(2);
@@ -1439,11 +1274,6 @@ void TaiCollecCarryingToNestAction::makePositionRoute(Teki& teki)
 	STACK_PAD_VAR(1);
 }
 
-/*
- * --INFO--
- * Address:	8012DC48
- * Size:	0000A0
- */
 bool TaiCollecRouteImpassableAction::act(Teki& teki)
 {
 	if (teki.mRouteWayPointCount == 0) {
@@ -1478,21 +1308,11 @@ bool TaiCollecRouteImpassableAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8012DCE8
- * Size:	000014
- */
 void TaiCollecRoundCarryAction::start(Teki& teki)
 {
 	teki.mTargetAngle = teki.getDirection() + NMathF::pi;
 }
 
-/*
- * --INFO--
- * Address:	8012DCFC
- * Size:	0000E8
- */
 bool TaiCollecRoundCarryAction::act(Teki& teki)
 {
 	f32 fTime = NSystem::getFrameTime();
@@ -1505,11 +1325,6 @@ bool TaiCollecRoundCarryAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8012DDE4
- * Size:	000064
- */
 bool TaiCollecPelletStartContainerizedAction::act(Teki& teki)
 {
 	Creature* target = teki.getCreaturePointer(2);
@@ -1526,11 +1341,6 @@ bool TaiCollecPelletStartContainerizedAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8012DE48
- * Size:	000058
- */
 bool TaiCollecPelletFinishContainerizedAction::act(Teki& teki)
 {
 	if (!teki.getStickObject()) {
@@ -1543,11 +1353,6 @@ bool TaiCollecPelletFinishContainerizedAction::act(Teki& teki)
 	STACK_PAD_VAR(2);
 }
 
-/*
- * --INFO--
- * Address:	8012DEA0
- * Size:	000078
- */
 bool TaiCollecDeadFallingAction::act(Teki& teki)
 {
 	if (teki.mHealth > teki.getParameterF(COLLECPF_BouncingDamage)) {
@@ -1559,11 +1364,6 @@ bool TaiCollecDeadFallingAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8012DF18
- * Size:	000050
- */
 bool TaiCollecFallingAction::act(Teki& teki)
 {
 	if (teki.getPosition().y < teki.getSeaLevel() + 10.0f) {
@@ -1572,11 +1372,6 @@ bool TaiCollecFallingAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8012DF68
- * Size:	00006C
- */
 bool TaiCollecGetOutAction::act(Teki& teki)
 {
 	STACK_PAD_VAR(1);
@@ -1587,21 +1382,11 @@ bool TaiCollecGetOutAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8012DFD4
- * Size:	000058
- */
 TaiCollecLegEffectAction::TaiCollecLegEffectAction(f32 p1)
     : TaiJointEffectAction(p1, 2, 'lleg', 'rleg', 0, 0)
 {
 }
 
-/*
- * --INFO--
- * Address:	8012E02C
- * Size:	000090
- */
 void TaiCollecLegEffectAction::setType(Vector3f& effectPos, int type, int id)
 {
 	effectPos.y = mapMgr->getMinY(effectPos.x, effectPos.z, true);
@@ -1616,11 +1401,6 @@ void TaiCollecLegEffectAction::setType(Vector3f& effectPos, int type, int id)
 	mSoundID = 112;
 }
 
-/*
- * --INFO--
- * Address:	8012E0BC
- * Size:	000088
- */
 TaiHollecParameters::TaiHollecParameters()
     : TekiParameters(TPI_COUNT, TPF_COUNT)
 {
@@ -1632,11 +1412,6 @@ TaiHollecParameters::TaiHollecParameters()
 	multiP->setF(TPF_Life, 1.0f);
 }
 
-/*
- * --INFO--
- * Address:	8012E144
- * Size:	0000C4
- */
 TaiHollecStrategy::TaiHollecStrategy(TekiParameters*)
     : TaiStrategy(HOLLECSTATE_COUNT, HOLLECSTATE_Unk0)
 {
@@ -1649,22 +1424,12 @@ TaiHollecStrategy::TaiHollecStrategy(TekiParameters*)
 	setState(HOLLECSTATE_Unk0, state);
 }
 
-/*
- * --INFO--
- * Address:	8012E208
- * Size:	000058
- */
 void TaiHollecStrategy::draw(Teki& teki, Graphics& gfx)
 {
 	teki.moveNestPosition();
 	TekiStrategy::draw(teki, gfx);
 }
 
-/*
- * --INFO--
- * Address:	8012E260
- * Size:	00008C
- */
 void TaiHollecStrategy::start(Teki& teki)
 {
 	TaiStrategy::start(teki);

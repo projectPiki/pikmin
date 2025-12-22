@@ -22,11 +22,6 @@ Matrix4f::Matrix4f(immut Mtx44 mtx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8003DDBC
- * Size:	00004C
- */
 void Matrix4f::makeIdentity()
 {
 	mMtx[0][0] = 1.0f;
@@ -112,11 +107,6 @@ void Matrix4f::makeRotate(immut Vector3f& axis, f32 angleSin, f32 angleCos)
 	mMtx[3][3] = 1.0f;
 }
 
-/*
- * --INFO--
- * Address:	8003DEC8
- * Size:	00006C
- */
 void Matrix4f::makeRotate(immut Vector3f& axis, f32 angle)
 {
 	f32 angleSin = sinf(angle);
@@ -155,11 +145,6 @@ void Matrix4f::rotate(f32, f32, f32)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8003DF34
- * Size:	0001A0
- */
 void Matrix4f::multiply(immut Matrix4f& other)
 {
 	Matrix4f result;
@@ -176,21 +161,11 @@ void Matrix4f::multiply(immut Matrix4f& other)
 	*this = result;
 }
 
-/*
- * --INFO--
- * Address:	8003E0D4
- * Size:	000020
- */
 void Matrix4f::multiplyTo(immut Matrix4f& mtxB, Matrix4f& outMtx) immut
 {
 	PSMTXConcat(mMtx, mtxB.mMtx, outMtx.mMtx);
 }
 
-/*
- * --INFO--
- * Address:	8003E0F4
- * Size:	00019C
- */
 void Matrix4f::makeSRT(immut Vector3f& scale, immut Vector3f& rotation, immut Vector3f& translation)
 {
 	STACK_PAD_VAR(6);
@@ -227,11 +202,6 @@ void Matrix4f::makeSRT(immut Vector3f& scale, immut Vector3f& rotation, immut Ve
 	mMtx[3][3] = 1.0f;
 }
 
-/*
- * --INFO--
- * Address:	8003E290
- * Size:	0001AC
- */
 void Matrix4f::makeConcatSRT(immut Matrix4f* a, Matrix4f& b, immut SRT& srt)
 {
 	STACK_PAD_VAR(6);
@@ -272,11 +242,6 @@ void Matrix4f::makeConcatSRT(immut Matrix4f* a, Matrix4f& b, immut SRT& srt)
 	PSMTXConcat(a->mMtx, b.mMtx, mMtx);
 }
 
-/*
- * --INFO--
- * Address:	8003E43C
- * Size:	000380
- */
 void Matrix4f::inverse(Matrix4f* inv)
 {
 	Matrix4f tMtx;
@@ -380,11 +345,6 @@ void Matrix4f::translate(f32, f32, f32)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8003E7BC
- * Size:	0000C4
- */
 void Matrix4f::scale(immut Vector3f& scaleVector)
 {
 	mMtx[0][0] *= scaleVector.x;
@@ -413,11 +373,6 @@ void Matrix4f::makeLookfrom(immut Vector3f&, immut Vector3f&)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8003E880
- * Size:	000300
- */
 void Matrix4f::makeLookat(immut Vector3f& cameraPos, immut Vector3f& targetPos, immut Vector3f* optionalUp)
 {
 	Vector3f forward;
@@ -447,11 +402,6 @@ void Matrix4f::makeLookat(immut Vector3f& cameraPos, immut Vector3f& targetPos, 
 	makeLookat(cameraPos, right, up, forward);
 }
 
-/*
- * --INFO--
- * Address:	8003EB80
- * Size:	000100
- */
 void Matrix4f::makeLookat(immut Vector3f& cameraPos, immut Vector3f& rightDir, immut Vector3f& upDir, immut Vector3f& backDir)
 {
 	setRow(0, rightDir);
@@ -489,11 +439,6 @@ void Matrix4f::makeReflection(Plane&)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8003EC80
- * Size:	000084
- */
 void Matrix4f::transposeTo(Matrix4f& dest)
 {
 	for (int i = 0; i < 4; i++) {
@@ -504,11 +449,6 @@ void Matrix4f::transposeTo(Matrix4f& dest)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8003ED04
- * Size:	00012C
- */
 void Matrix4f::makeVQS(immut Vector3f& translation, immut Quat& rotation, immut Vector3f& scale)
 {
 	f32 yy2 = 2.0f * rotation.v.y * rotation.v.y;

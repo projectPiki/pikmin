@@ -63,11 +63,6 @@ int PathFinder::handle2idx(u32 handle)
 	return -1;
 }
 
-/*
- * --INFO--
- * Address:	8009F5F8
- * Size:	0000B4
- */
 u32 PathFinder::findASync(PathFinder::Buffer* buf, int a, int b, bool flag)
 {
 	if (mClientCount >= mMaxClients) {
@@ -97,11 +92,6 @@ u32 PathFinder::findASync(PathFinder::Buffer* buf, int a, int b, bool flag)
 	return handle;
 }
 
-/*
- * --INFO--
- * Address:	8009F6AC
- * Size:	000088
- */
 int PathFinder::checkASync(u32 handle)
 {
 	int idx = handle2idx(handle);
@@ -124,11 +114,6 @@ int PathFinder::checkASync(u32 handle)
 	return -1;
 }
 
-/*
- * --INFO--
- * Address:	8009F734
- * Size:	0000D8
- */
 void PathFinder::releaseHandle(u32 handle)
 {
 	int idx = handle2idx(handle);
@@ -174,11 +159,6 @@ void PathFinder::updateASync()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8009F80C
- * Size:	000340
- */
 void PathFinder::updateClient(Client& client, int loops)
 {
 	while (client.mStatus == PathStatus::Searching && loops > 0) {
@@ -256,11 +236,6 @@ void PathFinder::updateClient(Client& client, int loops)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8009FB4C
- * Size:	000084
- */
 int PathFinder::findSync(WayPoint** pathWayPoints, int numWPsToFind, int startWPIdx, int destWPIdx, bool includeBlockedPaths)
 {
 	int res = findSync(mBuffer, startWPIdx, destWPIdx, includeBlockedPaths);
@@ -273,11 +248,6 @@ int PathFinder::findSync(WayPoint** pathWayPoints, int numWPsToFind, int startWP
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	8009FBD0
- * Size:	000230
- */
 int PathFinder::findSync(PathFinder::Buffer* bufferList, int startWPIdx, int destWPIdx, bool includeBlockedPaths)
 {
 	if (checkMode(PathFinderMode::AvoidWater)) {
@@ -374,21 +344,11 @@ int PathFinder::findSync(PathFinder::Buffer* bufferList, int startWPIdx, int des
 	STACK_PAD_VAR(6);
 }
 
-/*
- * --INFO--
- * Address:	8009FE00
- * Size:	000014
- */
 WayPoint* PathFinder::getWayPoint(int wpIdx)
 {
 	return &mGroup->mWayPoints[wpIdx];
 }
 
-/*
- * --INFO--
- * Address:	8009FE14
- * Size:	0001FC
- */
 int PathFinder::selectWay(PathFinder::Buffer& buf, int destWPIdx, PathFinder::Buffer* bufferList, int wpCount, bool includeBlockedPaths)
 {
 	// Return value: index of chosen direction (0-7), or -1 if no valid path
@@ -492,11 +452,6 @@ int PathFinder::selectWay(PathFinder::Buffer& buf, int destWPIdx, PathFinder::Bu
 	STACK_PAD_VAR(3);
 }
 
-/*
- * --INFO--
- * Address:	800A0010
- * Size:	000048
- */
 PathFinder* RouteMgr::getPathFinder(u32 handle)
 {
 	int idx = id2idx(handle);
@@ -507,11 +462,6 @@ PathFinder* RouteMgr::getPathFinder(u32 handle)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800A0058
- * Size:	0000B0
- */
 void RouteMgr::update()
 {
 	PathFinder* path = getPathFinder('test');
@@ -520,11 +470,6 @@ void RouteMgr::update()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800A0108
- * Size:	00004C
- */
 int RouteMgr::getNumWayPoints(u32 handle)
 {
 	int idx = id2idx(handle);
@@ -535,11 +480,6 @@ int RouteMgr::getNumWayPoints(u32 handle)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800A0154
- * Size:	0003B8
- */
 Vector3f RouteMgr::getSafePosition(u32, Vector3f& pos)
 {
 	// Determine if current position is in water
@@ -599,11 +539,6 @@ Vector3f RouteMgr::getSafePosition(u32, Vector3f& pos)
 	return pos;
 }
 
-/*
- * --INFO--
- * Address:	800A050C
- * Size:	000474
- */
 void RouteMgr::findNearestEdge(WayPoint** outNearestStart, WayPoint** outNearestEnd, u32 handle, immut Vector3f& pos, bool allowWater,
                                bool requireOpen, bool avoidDestination)
 {
@@ -683,11 +618,6 @@ void RouteMgr::findNearestEdge(WayPoint** outNearestStart, WayPoint** outNearest
 	*outNearestEnd   = bestEnd;
 }
 
-/*
- * --INFO--
- * Address:	800A0980
- * Size:	000768
- */
 void RouteMgr::findNearestEdgeAvoidOff(WayPoint** outNearestStart, WayPoint** outNearestEnd, u32 handle, immut Vector3f& pos,
                                        bool allowWater, bool requireOpen, bool avoidDestination)
 {
@@ -798,11 +728,6 @@ void RouteMgr::findNearestEdgeAvoidOff(WayPoint** outNearestStart, WayPoint** ou
 	*outNearestEnd   = bestEnd;
 }
 
-/*
- * --INFO--
- * Address:	800A10E8
- * Size:	00016C
- */
 WayPoint* RouteMgr::findNearestWayPoint(u32 handle, immut Vector3f& pos, bool excludeWater)
 {
 	int idx = id2idx(handle);
@@ -835,11 +760,6 @@ WayPoint* RouteMgr::findNearestWayPoint(u32 handle, immut Vector3f& pos, bool ex
 	return nullptr;
 }
 
-/*
- * --INFO--
- * Address:	800A1254
- * Size:	00016C
- */
 WayPoint* RouteMgr::findNearestOffWayPoint(u32 handle, immut Vector3f& pos, bool excludeWater)
 {
 	int idx = id2idx(handle);
@@ -871,11 +791,6 @@ WayPoint* RouteMgr::findNearestOffWayPoint(u32 handle, immut Vector3f& pos, bool
 	return nullptr;
 }
 
-/*
- * --INFO--
- * Address:	800A13C0
- * Size:	00017C
- */
 void RouteMgr::createOffPlane(u32 handle, Plane& plane, WayPoint* wp)
 {
 	int groupIdx = id2idx(handle);
@@ -928,11 +843,6 @@ void RouteMgr::dump(u32 handle)
 	PRINT("----------------------------------------\n");
 }
 
-/*
- * --INFO--
- * Address:	800A153C
- * Size:	00013C
- */
 WayPoint* RouteMgr::findNearestWayPointAll(u32 handle, immut Vector3f& pos)
 {
 	int idx = id2idx(handle);
@@ -957,11 +867,6 @@ WayPoint* RouteMgr::findNearestWayPointAll(u32 handle, immut Vector3f& pos)
 	return nullptr;
 }
 
-/*
- * --INFO--
- * Address:	800A1678
- * Size:	00005C
- */
 WayPoint* RouteMgr::getWayPoint(u32 handle, int wpIdx)
 {
 	int idx = id2idx(handle);
@@ -972,11 +877,6 @@ WayPoint* RouteMgr::getWayPoint(u32 handle, int wpIdx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800A16D4
- * Size:	00009C
- */
 RouteMgr::RouteMgr()
 {
 	mRouteCount    = 0;
@@ -985,22 +885,12 @@ RouteMgr::RouteMgr()
 	mRouteGroupIDs = 0;
 }
 
-/*
- * --INFO--
- * Address:	800A1770
- * Size:	000014
- */
 void WayPoint::setFlag(bool flag)
 {
 	mIsOpen              = flag;
 	mRoutePoint->mIsOpen = flag;
 }
 
-/*
- * --INFO--
- * Address:	800A1784
- * Size:	000274
- */
 void RouteMgr::construct(MapMgr* map)
 {
 	mRouteCount = map->mMapShape->mRouteGroup.getChildCount();
@@ -1059,11 +949,6 @@ void RouteMgr::construct(MapMgr* map)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800A1A0C
- * Size:	000134
- */
 void RouteMgr::initLinks()
 {
 	// this gsys stuff isn't in the DLL
@@ -1088,11 +973,6 @@ void RouteMgr::initLinks()
 	gsys->mRetraceCount  = 0;
 }
 
-/*
- * --INFO--
- * Address:	800A1B40
- * Size:	000048
- */
 int RouteMgr::id2idx(u32 id)
 {
 	if (!mRouteGroupIDs) {
@@ -1118,11 +998,6 @@ u32 RouteMgr::idx2id(int idx)
 	return mRouteGroupIDs[idx];
 }
 
-/*
- * --INFO--
- * Address:	800A1B88
- * Size:	00002C
- */
 int RouteMgr::getColinIndex(RouteGroup* group, RoutePoint* point)
 {
 	int idx               = 0;
@@ -1255,11 +1130,6 @@ int WayPoint::getLinkIndex(int idx)
 	return -1;
 }
 
-/*
- * --INFO--
- * Address:	800A1BB4
- * Size:	000090
- */
 void WayPoint::resetLinkInfos()
 {
 	for (int i = 0; i < 8; i++) {
@@ -1270,11 +1140,6 @@ void WayPoint::resetLinkInfos()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800A1C44
- * Size:	0003BC
- */
 void WayPoint::initLinkInfos()
 {
 	PathFinder::setMode(PathFinderMode::Unk2);
@@ -1375,11 +1240,6 @@ int PathFinder::findFirstStepOnyon(int, int, PathFinder::Buffer*)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	800A2000
- * Size:	000580
- */
 int PathFinder::findSyncOnyon(immut Vector3f& startPos, PathFinder::Buffer* bufferList, int startWPIdx, int goalType,
                               bool ignoreClosedWaypoints)
 {
@@ -1546,11 +1406,6 @@ int PathFinder::findSyncOnyon(immut Vector3f& startPos, PathFinder::Buffer* buff
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	800A2580
- * Size:	000264
- */
 int PathFinder::selectWayOnyon(int additionalCost, int goalType, PathFinder::Buffer& buf, int destWPIdx, PathFinder::Buffer* bufferList,
                                int visitedBufferCount, bool ignoreClosedWaypoints)
 {
@@ -1648,11 +1503,6 @@ int PathFinder::selectWayOnyon(int additionalCost, int goalType, PathFinder::Buf
 	return bestLinkIndex;
 }
 
-/*
- * --INFO--
- * Address:	800A27E4
- * Size:	00052C
- */
 int PathFinder::selectSecondBestWayOnyon(immut Vector3f& curPos, int& secondBestCost, int goalType, PathFinder::Buffer& buf, int destWPIdx,
                                          PathFinder::Buffer* bufferList, int bufIdx, bool ignoreClosedWaypoints)
 {
@@ -1791,11 +1641,6 @@ int PathFinder::selectSecondBestWayOnyon(immut Vector3f& curPos, int& secondBest
 	return secondBestLinkIndex;
 }
 
-/*
- * --INFO--
- * Address:	800A2D10
- * Size:	000134
- */
 void RouteMgr::refresh(Graphics& gfx)
 {
 	gfx.setColour(Colour(255, 255, 255, 255), true);
@@ -1809,11 +1654,6 @@ void RouteMgr::refresh(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800A2E44
- * Size:	000224
- */
 static void drawBattenPoleSpec(Graphics& gfx, immut Vector3f& pos, f32 height, immut char* labelText, immut Colour& labelColor)
 {
 	Vector3f bottom(pos);
@@ -1842,11 +1682,6 @@ static void drawBattenPoleSpec(Graphics& gfx, immut Vector3f& pos, f32 height, i
 	}
 }
 
-/*
- * --INFO--
- * Address:	800A3068
- * Size:	0003C0
- */
 void WayPoint::refresh(Graphics& gfx)
 {
 	char buf[64];

@@ -85,11 +85,6 @@ static const EffectMgr::effTypeTable unusedEffects[3] = {
  */
 DEFINE_PRINT("ufoItem")
 
-/*
- * --INFO--
- * Address:	800E7018
- * Size:	0000B4
- */
 bool UfoItem::insideSafeArea(immut Vector3f& pos)
 {
 	Vector3f diff = pos - mSRT.t;
@@ -107,11 +102,6 @@ bool UfoItem::insideSafeArea(immut Vector3f& pos)
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	800E70CC
- * Size:	000124
- */
 void UfoItem::setSpotTurn(bool set)
 {
 	Vector3f goal  = getGoalPos();
@@ -133,11 +123,6 @@ void UfoItem::setSpotTurn(bool set)
 	mShouldLightActivate = set;
 }
 
-/*
- * --INFO--
- * Address:	800E71F0
- * Size:	00014C
- */
 void UfoItem::setSpotActive(bool set)
 {
 	mShouldLightActivate = false;
@@ -172,11 +157,6 @@ void UfoItem::setSpotActive(bool set)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800E733C
- * Size:	0000B8
- */
 void UfoItem::setTroubleEffect(bool set)
 {
 	mIsTroubleFxEnabled = set;
@@ -197,11 +177,6 @@ void UfoItem::setTroubleEffect(bool set)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800E73F4
- * Size:	0000D4
- */
 void UfoItem::startTroubleEffectOne(int id)
 {
 	EffectMgr::effTypeTable ids[6] = { EffectMgr::EFF_Rocket_MkB,  EffectMgr::EFF_Rocket_MkS,  EffectMgr::EFF_Rocket_Hiba,
@@ -214,11 +189,6 @@ void UfoItem::startTroubleEffectOne(int id)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800E74C8
- * Size:	00024C
- */
 void UfoItem::updateTroubleEffect()
 {
 	if (!mIsTroubleFxEnabled) {
@@ -248,11 +218,6 @@ void UfoItem::updateTroubleEffect()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800E7714
- * Size:	00012C
- */
 void UfoItem::startConeEffect(int)
 {
 	Vector3f goal = getGoalPos();
@@ -265,11 +230,6 @@ void UfoItem::startConeEffect(int)
 	PRINT("*** UFO FUTA OPEN !!!!!!!!!!!!!!________________________________\n");
 }
 
-/*
- * --INFO--
- * Address:	800E7840
- * Size:	000024
- */
 void UfoItem::finishConeEffect()
 {
 	utEffectMgr->kill(mConeEffectId);
@@ -286,11 +246,6 @@ void UfoItem::initLevelFlag(int level)
 	mAnimator.initFlagMotions(level);
 }
 
-/*
- * --INFO--
- * Address:	800E7864
- * Size:	000158
- */
 void UfoItem::startLevelFlag(int flag)
 {
 	lightLevelFlag(flag);
@@ -309,11 +264,6 @@ void UfoItem::startLevelFlag(int flag)
 	mAnimator.startFlagMotions(flag);
 }
 
-/*
- * --INFO--
- * Address:	800E79BC
- * Size:	000078
- */
 void UfoItem::lightLevelFlag(int flag)
 {
 	f32 rate = 0.0f;
@@ -329,11 +279,6 @@ void UfoItem::lightLevelFlag(int flag)
 	FORCE_DONT_INLINE;
 }
 
-/*
- * --INFO--
- * Address:	800E7A34
- * Size:	000390
- */
 void UfoItem::setJetEffect(int level, bool doSmokeEffects)
 {
 	int i, j;
@@ -423,11 +368,6 @@ void UfoItem::setJetEffect(int level, bool doSmokeEffects)
 	mJetLevel = 0;
 }
 
-/*
- * --INFO--
- * Address:	800E7DC4
- * Size:	00001C
- */
 UfoItem::LightAnimator::LightAnimator()
 {
 	mDyn   = nullptr;
@@ -436,11 +376,6 @@ UfoItem::LightAnimator::LightAnimator()
 	mType  = 0;
 }
 
-/*
- * --INFO--
- * Address:	800E7DE0
- * Size:	000058
- */
 void UfoItem::LightAnimator::start(int id)
 {
 	mType = id;
@@ -475,33 +410,18 @@ void UfoItem::LightAnimator::update()
 	mDyn->animate(&mFrame);
 }
 
-/*
- * --INFO--
- * Address:	800E7E38
- * Size:	000064
- */
 Vector3f UfoItem::getGoalPos()
 {
 	playerState->isUfoBroken();
 	return mCollInfo->getSphere('gol1')->mCentre;
 }
 
-/*
- * --INFO--
- * Address:	800E7E9C
- * Size:	000044
- */
 f32 UfoItem::getGoalPosRadius()
 {
 	playerState->isUfoBroken();
 	return mCollInfo->getSphere('gol1')->mRadius;
 }
 
-/*
- * --INFO--
- * Address:	800E7EE0
- * Size:	000084
- */
 Vector3f UfoItem::getSuckPos()
 {
 	u32 tag = 'suc0';
@@ -511,11 +431,6 @@ Vector3f UfoItem::getSuckPos()
 	return mCollInfo->getSphere(tag)->mCentre;
 }
 
-/*
- * --INFO--
- * Address:	800E7F64
- * Size:	0000BC
- */
 void UfoItem::suckMe(Pellet* pelt)
 {
 	PRINT("UFO ** SUCK PELLET\n");
@@ -530,11 +445,6 @@ void UfoItem::suckMe(Pellet* pelt)
 	playEventSound(this, SE_UFO_PARTSIN);
 }
 
-/*
- * --INFO--
- * Address:	800E8020
- * Size:	0000AC
- */
 void UfoItem::startYozora()
 {
 	// "start night sky"
@@ -547,11 +457,6 @@ void UfoItem::startYozora()
 	PRINT("** START YOZORA\n");
 }
 
-/*
- * --INFO--
- * Address:	800E80CC
- * Size:	0000AC
- */
 void UfoItem::startGalaxy()
 {
 	mAnimator.startMotion(0, &PaniMotionInfo(UfoMotion::Wait));
@@ -563,11 +468,6 @@ void UfoItem::startGalaxy()
 	PRINT("** START GALAXY\n");
 }
 
-/*
- * --INFO--
- * Address:	800E8178
- * Size:	000130
- */
 void UfoItem::finishSuck(Pellet* pelt)
 {
 	if (!playerState->isTutorial()) {
@@ -588,11 +488,6 @@ void UfoItem::finishSuck(Pellet* pelt)
 	mAnimator.setMotionSpeed(0, 30.0f);
 }
 
-/*
- * --INFO--
- * Address:	800E82A8
- * Size:	000454
- */
 void UfoItem::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	int anim = mAnimator.getMotionIndex(0);
@@ -710,21 +605,11 @@ void UfoItem::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800E86FC
- * Size:	000008
- */
 bool UfoItem::needShadow()
 {
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800E8704
- * Size:	0001F4
- */
 UfoItem::UfoItem(CreatureProp* prop, UfoShapeObject* shape)
     : Suckable(OBJTYPE_Ufo, prop)
 {
@@ -756,21 +641,11 @@ UfoItem::UfoItem(CreatureProp* prop, UfoShapeObject* shape)
 	mDynMat             = mat;
 }
 
-/*
- * --INFO--
- * Address:	800E890C
- * Size:	000008
- */
 bool UfoItem::ignoreAtari(Creature*)
 {
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800E8914
- * Size:	0000C0
- */
 void UfoItem::startTakeoff()
 {
 	int idx        = playerState->mShipUpgradeLevel - 1;
@@ -784,11 +659,6 @@ void UfoItem::startTakeoff()
 	playerState->startSpecialMotions();
 }
 
-/*
- * --INFO--
- * Address:	800E89D4
- * Size:	0002BC
- */
 void UfoItem::startAI(int)
 {
 	mShouldLightActivate = false;
@@ -853,31 +723,16 @@ void UfoItem::startAI(int)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800E8C90
- * Size:	000008
- */
 f32 UfoItem::getSize()
 {
 	return 10.0f;
 }
 
-/*
- * --INFO--
- * Address:	800E8C98
- * Size:	000008
- */
 f32 UfoItem::getiMass()
 {
 	return 0.0f;
 }
 
-/*
- * --INFO--
- * Address:	800E8CA0
- * Size:	0000B0
- */
 bool UfoItem::accessible()
 {
 	int anim = mAnimator.getMotionIndex(0);
@@ -893,11 +748,6 @@ bool UfoItem::accessible()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800E8D50
- * Size:	000170
- */
 void UfoItem::startAccess()
 {
 	mIsMenuOpen = true;
@@ -907,11 +757,6 @@ void UfoItem::startAccess()
 	mAnimator.setMotionSpeed(0, 30.0f);
 }
 
-/*
- * --INFO--
- * Address:	800E8EC0
- * Size:	000048
- */
 void UfoItem::finishAccess()
 {
 	mIsMenuOpen = false;
@@ -919,11 +764,6 @@ void UfoItem::finishAccess()
 	mAnimator.setMotionSpeed(0, 30.0f);
 }
 
-/*
- * --INFO--
- * Address:	800E8F08
- * Size:	00006C
- */
 void UfoItem::update()
 {
 	updateTroubleEffect();
@@ -933,11 +773,6 @@ void UfoItem::update()
 	mSRT.t = mSpotlightPosition;
 }
 
-/*
- * --INFO--
- * Address:	800E8F74
- * Size:	000118
- */
 void UfoItem::setPca1Effect(bool set)
 {
 	mIsPca1FxActive = set;
@@ -955,11 +790,6 @@ void UfoItem::setPca1Effect(bool set)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800E908C
- * Size:	000118
- */
 void UfoItem::setPca2Effect(bool set)
 {
 	mIsPca2FxActive = set;
@@ -977,11 +807,6 @@ void UfoItem::setPca2Effect(bool set)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800E91A4
- * Size:	0000E4
- */
 void UfoItem::refresh(Graphics& gfx)
 {
 	Matrix4f mtx;
@@ -998,11 +823,6 @@ void UfoItem::refresh(Graphics& gfx)
 	demoDraw(gfx, &mtx);
 }
 
-/*
- * --INFO--
- * Address:	800E9288
- * Size:	000504
- */
 void UfoItem::demoDraw(Graphics& gfx, immut Matrix4f* mtx)
 {
 	for (int i = 0; i < 4; i++) {

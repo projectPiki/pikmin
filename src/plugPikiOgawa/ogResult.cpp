@@ -182,11 +182,6 @@ immut char* bloFile_Res_Table[] = {
 EnumResult dummy_blo_num_table[] = { (EnumResult)0x91, (EnumResult)0 };
 } // namespace zen
 
-/*
- * --INFO--
- * Address:	80183408
- * Size:	000DE0
- */
 void zen::ogScrResultMgr::ogScrResultMgrSub()
 {
 	mBlackScreen = new P2DScreen;
@@ -409,11 +404,6 @@ void zen::ogScrResultMgr::setEnumResultTable(EnumResult* result)
 	PRINT("OVERFLOW in setEnumResultTable()\n");
 }
 
-/*
- * --INFO--
- * Address:	801841E8
- * Size:	00017C
- */
 zen::ogScrResultMgr::ogScrResultMgr()
 {
 	playerState = nullptr;
@@ -421,22 +411,12 @@ zen::ogScrResultMgr::ogScrResultMgr()
 	ogScrResultMgrSub();
 }
 
-/*
- * --INFO--
- * Address:	80184364
- * Size:	000170
- */
 zen::ogScrResultMgr::ogScrResultMgr(EnumResult* table)
 {
 	setEnumResultTable(table);
 	ogScrResultMgrSub();
 }
 
-/*
- * --INFO--
- * Address:	801844D4
- * Size:	000744
- */
 void zen::ogScrResultMgr::start()
 {
 	if (playerState == nullptr) {
@@ -552,11 +532,6 @@ void zen::ogScrResultMgr::StartRESULT()
 	mStartWaitDelay = 6;
 }
 
-/*
- * --INFO--
- * Address:	80184C18
- * Size:	000384
- */
 zen::ogScrResultMgr::returnStatusFlag zen::ogScrResultMgr::update(Controller* input)
 {
 	if (mStatus == -1) {
@@ -665,11 +640,6 @@ zen::ogScrResultMgr::returnStatusFlag zen::ogScrResultMgr::update(Controller* in
 	STACK_PAD_VAR(2);
 }
 
-/*
- * --INFO--
- * Address:	80184F9C
- * Size:	000104
- */
 void zen::ogScrResultMgr::draw(Graphics& gfx)
 {
 	if (mStatus != Status_NULL && mStatus != Status_4) {

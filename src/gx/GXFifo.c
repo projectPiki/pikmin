@@ -85,11 +85,6 @@ static void GXBreakPointHandler(s16 interrupt, OSContext* context)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8020EB40
- * Size:	00013C
- */
 static void GXCPInterruptHandler(s16 interrupt, OSContext* context)
 {
 	gx->cpStatus = __cpReg[0];
@@ -104,11 +99,6 @@ static void GXCPInterruptHandler(s16 interrupt, OSContext* context)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8020EC7C
- * Size:	00006C
- */
 void GXInitFifoBase(GXFifoObj* fifo, void* base, u32 size)
 {
 	struct _GXFifoObjPriv* realFifo = (struct _GXFifoObjPriv*)fifo;
@@ -128,11 +118,6 @@ void GXInitFifoBase(GXFifoObj* fifo, void* base, u32 size)
 	GXInitFifoPtrs(fifo, base, base);
 }
 
-/*
- * --INFO--
- * Address:	8020ECE8
- * Size:	000070
- */
 void GXInitFifoPtrs(GXFifoObj* fifo, void* readPtr, void* writePtr)
 {
 	struct __GXFifoObj* realFifo = (struct __GXFifoObj*)fifo;
@@ -155,11 +140,6 @@ void GXInitFifoPtrs(GXFifoObj* fifo, void* readPtr, void* writePtr)
 	OSRestoreInterrupts(enabled);
 }
 
-/*
- * --INFO--
- * Address:	8020ED58
- * Size:	00000C
- */
 void GXInitFifoLimits(GXFifoObj* fifo, u32 hiWatermark, u32 loWatermark)
 {
 	struct __GXFifoObj* realFifo = (struct __GXFifoObj*)fifo;
@@ -174,11 +154,6 @@ void GXInitFifoLimits(GXFifoObj* fifo, u32 hiWatermark, u32 loWatermark)
 	realFifo->loWatermark = loWatermark;
 }
 
-/*
- * --INFO--
- * Address:	8020ED64
- * Size:	000110
- */
 void GXSetCPUFifo(GXFifoObj* fifo)
 {
 	struct __GXFifoObj* realFifo = (struct __GXFifoObj*)fifo;
@@ -218,11 +193,6 @@ void GXSetCPUFifo(GXFifoObj* fifo)
 	OSRestoreInterrupts(enabled);
 }
 
-/*
- * --INFO--
- * Address:	8020EE74
- * Size:	000178
- */
 void GXSetGPFifo(GXFifoObj* fifo)
 {
 	struct __GXFifoObj* realFifo = (struct __GXFifoObj*)fifo;
@@ -263,11 +233,6 @@ void GXSetGPFifo(GXFifoObj* fifo)
 	OSRestoreInterrupts(enabled);
 }
 
-/*
- * --INFO--
- * Address:	8020EFEC
- * Size:	000020
- */
 void GXSaveCPUFifo(GXFifoObj* fifo)
 {
 	struct __GXFifoObj* realFifo = (struct __GXFifoObj*)fifo;
@@ -289,11 +254,6 @@ void GXSaveCPUFifo(GXFifoObj* fifo)
 		fifo->count = temp;           \
 	} while (0)
 
-/*
- * --INFO--
- * Address:	8020F00C
- * Size:	0000DC
- */
 void __GXSaveCPUFifoAux(struct __GXFifoObj* realFifo)
 {
 	BOOL enabled = OSDisableInterrupts();
@@ -494,11 +454,6 @@ void GXDisableBreakPt(void)
 	OSRestoreInterrupts(enabled);
 }
 
-/*
- * --INFO--
- * Address:	8020F0E8
- * Size:	000044
- */
 void __GXFifoInit(void)
 {
 	__OSSetInterruptHandler(0x11, GXCPInterruptHandler);
@@ -507,44 +462,24 @@ void __GXFifoInit(void)
 	GXOverflowSuspendInProgress = FALSE;
 }
 
-/*
- * --INFO--
- * Address:	8020F12C
- * Size:	000028
- */
 void __GXFifoReadEnable(void)
 {
 	SET_REG_FIELD(0, gx->cpEnable, 1, 0, 1);
 	__cpReg[1] = gx->cpEnable;
 }
 
-/*
- * --INFO--
- * Address:	8020F154
- * Size:	000024
- */
 void __GXFifoReadDisable(void)
 {
 	SET_REG_FIELD(0, gx->cpEnable, 1, 0, 0);
 	__cpReg[1] = gx->cpEnable;
 }
 
-/*
- * --INFO--
- * Address:	8020F178
- * Size:	000044
- */
 void __GXFifoLink(u8 en)
 {
 	SET_REG_FIELD(0x4B0, gx->cpEnable, 1, 4, (en != 0) ? 1 : 0);
 	__cpReg[1] = gx->cpEnable;
 }
 
-/*
- * --INFO--
- * Address:	8020F1BC
- * Size:	00004C
- */
 void __GXWriteFifoIntEnable(u8 hiWatermarkEn, u8 loWatermarkEn)
 {
 	SET_REG_FIELD(0x4C6, gx->cpEnable, 1, 2, hiWatermarkEn);
@@ -552,11 +487,6 @@ void __GXWriteFifoIntEnable(u8 hiWatermarkEn, u8 loWatermarkEn)
 	__cpReg[1] = gx->cpEnable;
 }
 
-/*
- * --INFO--
- * Address:	8020F208
- * Size:	00004C
- */
 void __GXWriteFifoIntReset(u8 hiWatermarkClr, u8 loWatermarkClr)
 {
 	SET_REG_FIELD(0x4DE, gx->cpClr, 1, 0, hiWatermarkClr);
@@ -603,11 +533,6 @@ void __GXCleanGPFifo(void)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8020F254
- * Size:	00004C
- */
 OSThread* GXSetCurrentGXThread(void)
 {
 	BOOL enabled;
@@ -631,11 +556,6 @@ OSThread* GXGetCurrentGXThread(void)
 	return __GXCurrentThread;
 }
 
-/*
- * --INFO--
- * Address:	8020F2A0
- * Size:	000008
- */
 GXFifoObj* GXGetCPUFifo(void)
 {
 	return (GXFifoObj*)CPUFifo;

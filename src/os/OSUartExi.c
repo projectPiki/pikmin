@@ -2,11 +2,6 @@
 
 static u32 serEnabled = 0;
 
-/*
- * --INFO--
- * Address:	801FD7C4
- * Size:	000048
- */
 u32 InitializeUART(u32 baudRate)
 {
 	if (!(OSGetConsoleType() & OS_CONSOLE_DEVELOPMENT)) {
@@ -18,11 +13,6 @@ u32 InitializeUART(u32 baudRate)
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	801FD80C
- * Size:	000008
- */
 u32 ReadUARTN(void* bytes, u32 len)
 {
 	return 4;
@@ -52,11 +42,6 @@ static int QueueLength(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801FD814
- * Size:	000200
- */
 u32 WriteUARTN(const void* buf, u32 len)
 {
 	u32 cmd;

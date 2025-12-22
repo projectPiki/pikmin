@@ -16,11 +16,6 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT(nullptr)
 
-/*
- * --INFO--
- * Address:	8004C908
- * Size:	000034
- */
 void GameApp::renderall()
 {
 	draw((Graphics&)*gsys->mDGXGfx);

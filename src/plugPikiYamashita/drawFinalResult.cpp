@@ -21,11 +21,6 @@ DEFINE_ERROR(14)
  */
 DEFINE_PRINT("drawFinalResult")
 
-/*
- * --INFO--
- * Address:	801F3A38
- * Size:	000AC0
- */
 zen::DrawTotalScore::DrawTotalScore(zen::TotalScoreRecord* record)
 {
 	mTotalScoreRecord = record;
@@ -138,11 +133,6 @@ zen::DrawTotalScore::DrawTotalScore(zen::TotalScoreRecord* record)
 	STACK_PAD_VAR(4);
 }
 
-/*
- * --INFO--
- * Address:	801F44F8
- * Size:	0001D4
- */
 bool zen::DrawTotalScore::update(Controller* controller)
 {
 	bool res = false;
@@ -214,11 +204,6 @@ void zen::DrawTotalScore::start()
 	setMode(MODE_Start);
 }
 
-/*
- * --INFO--
- * Address:	801F46CC
- * Size:	000138
- */
 void zen::DrawTotalScore::setMode(zen::DrawTotalScore::modeFlag mode)
 {
 	mMode = mode;
@@ -274,20 +259,10 @@ void zen::DrawTotalScore::setEffect(P2DPane* pane, int effID)
 	mEffectMgr2D->create(effID, pos, nullptr, nullptr);
 }
 
-/*
- * --INFO--
- * Address:	801F4804
- * Size:	000004
- */
 void zen::DrawTotalScore::playRankInFanfare()
 {
 }
 
-/*
- * --INFO--
- * Address:	801F4808
- * Size:	0006EC
- */
 void zen::DrawTotalScore::setRankInEffect()
 {
 	if (mTotalScoreRecord->mPartsDaysRank >= 0 && mTotalScoreRecord->mPartsDaysRank < 5) {
@@ -307,11 +282,6 @@ void zen::DrawTotalScore::setRankInEffect()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801F4EF4
- * Size:	0001D4
- */
 void zen::DrawTotalScore::setRankInColor()
 {
 	Colour color;
@@ -354,21 +324,11 @@ void zen::DrawTotalScore::setRankInColor()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801F50C8
- * Size:	000070
- */
 zen::DrawFinalResult::DrawFinalResult(zen::TotalScoreRecord* record)
 {
 	mScoreScreen = new DrawTotalScore(record);
 }
 
-/*
- * --INFO--
- * Address:	801F5138
- * Size:	0001A4
- */
 bool zen::DrawFinalResult::update(Controller* controller)
 {
 	bool res = false;
@@ -444,11 +404,6 @@ bool zen::DrawFinalResult::update(Controller* controller)
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	801F52DC
- * Size:	000138
- */
 void zen::DrawFinalResult::draw(Graphics& gfx)
 {
 	switch (mMode) {
@@ -485,21 +440,11 @@ void zen::DrawFinalResult::draw(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801F5414
- * Size:	000024
- */
 void zen::DrawFinalResult::start()
 {
 	setMode(MODE_Start);
 }
 
-/*
- * --INFO--
- * Address:	801F5438
- * Size:	0000C8
- */
 void zen::DrawFinalResult::setMode(zen::DrawFinalResult::modeFlag mode)
 {
 	mMode = mode;

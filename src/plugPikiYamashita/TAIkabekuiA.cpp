@@ -132,11 +132,6 @@ protected:
 	// TODO: members
 };
 
-/*
- * --INFO--
- * Address:	801CA2A8
- * Size:	000084
- */
 TAIkabekuiASoundTable::TAIkabekuiASoundTable()
     : PaniSoundTable(3)
 {
@@ -145,11 +140,6 @@ TAIkabekuiASoundTable::TAIkabekuiASoundTable()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801CA32C
- * Size:	00036C
- */
 TAIkabekuiAParameters::TAIkabekuiAParameters()
     : TekiParameters(TPI_COUNT, TAIkabekuiAFloatParms::COUNT)
 {
@@ -220,11 +210,6 @@ TAIkabekuiAParameters::TAIkabekuiAParameters()
 	multiP->setF(TPF_RippleScale, 1.0f);
 }
 
-/*
- * --INFO--
- * Address:	801CA698
- * Size:	000A84
- */
 TAIkabekuiAStrategy::TAIkabekuiAStrategy()
     : YaiStrategy(TAIkabekuiAStateID::COUNT, TAIkabekuiAStateID::Waiting) // TODO: fix
 {
@@ -359,11 +344,6 @@ TAIkabekuiAStrategy::TAIkabekuiAStrategy()
 	STACK_PAD_VAR(2);
 }
 
-/*
- * --INFO--
- * Address:	801CB11C
- * Size:	0006FC
- */
 void TAIkabekuiAAnimation::makeDefaultAnimations()
 {
 	if (!mAnimMgr) {

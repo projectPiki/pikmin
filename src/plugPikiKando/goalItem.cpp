@@ -63,11 +63,6 @@ static void printMatrix(immut char* name, immut Matrix4f& mat)
 	PRINT("-------------------------\n");
 }
 
-/*
- * --INFO--
- * Address:	800EA714
- * Size:	000040
- */
 bool GoalItem::insideSafeArea(immut Vector3f& pos)
 {
 	Vector3f diff = pos - mSRT.t;
@@ -77,11 +72,6 @@ bool GoalItem::insideSafeArea(immut Vector3f& pos)
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	800EA754
- * Size:	000760
- */
 void GoalItem::playEffect(int id)
 {
 	switch (mItemAnimator.getCurrentMotionIndex()) {
@@ -213,11 +203,6 @@ void GoalItem::playEffect(int id)
 	STACK_PAD_TERNARY(id, 1);
 }
 
-/*
- * --INFO--
- * Address:	800EAEB4
- * Size:	0000B4
- */
 void GoalItem::setFlowEffect(bool set)
 {
 	_3E4 = set;
@@ -239,11 +224,6 @@ void GoalItem::setFlowEffect(bool set)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800EAF68
- * Size:	000178
- */
 void GoalItem::setSpotActive(bool set)
 {
 	mSpotEffectActive = set;
@@ -285,11 +265,6 @@ void GoalItem::setSpotActive(bool set)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800EB0E0
- * Size:	000058
- */
 bool GoalItem::invoke(zen::particleGenerator* efx, zen::particleMdl* mdl)
 {
 	if (mdl) {
@@ -298,22 +273,12 @@ bool GoalItem::invoke(zen::particleGenerator* efx, zen::particleMdl* mdl)
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	800EB138
- * Size:	000008
- */
 void GoalItem::setFlightLight(bool a1)
 {
 	_3EC = a1;
 	FORCE_DONT_INLINE;
 }
 
-/*
- * --INFO--
- * Address:	800EB140
- * Size:	000024
- */
 Vector3f GoalItem::getSuckPos()
 {
 	Vector3f ret = mSRT.t;
@@ -321,11 +286,6 @@ Vector3f GoalItem::getSuckPos()
 	return ret;
 }
 
-/*
- * --INFO--
- * Address:	800EB164
- * Size:	0000F4
- */
 void GoalItem::suckMe(Pellet* item)
 {
 	PelletConfig* config = item->mConfig;
@@ -350,11 +310,6 @@ void GoalItem::suckMe(Pellet* item)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800EB258
- * Size:	0000C4
- */
 void GoalItem::enterGoal(Piki* piki)
 {
 	int old = mItemAnimator.mMotionIdx;
@@ -370,11 +325,6 @@ void GoalItem::enterGoal(Piki* piki)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800EB31C
- * Size:	000020
- */
 void GoalItem::exitPikis(int pikis)
 {
 	mIsDispensingPikis = true;
@@ -382,11 +332,6 @@ void GoalItem::exitPikis(int pikis)
 	mPikiSpawnTimer = 0.0f;
 }
 
-/*
- * --INFO--
- * Address:	800EB33C
- * Size:	00027C
- */
 Piki* GoalItem::exitPiki()
 {
 	int leg = gsys->getRand(1.0f) * 3.0f;
@@ -434,21 +379,11 @@ Piki* GoalItem::exitPiki()
 	return piki;
 }
 
-/*
- * --INFO--
- * Address:	800EB5B8
- * Size:	000008
- */
 bool GoalItem::needShadow()
 {
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800EB5C0
- * Size:	000110
- */
 GoalItem::GoalItem(CreatureProp* prop, ItemShapeObject* shape1, ItemShapeObject* shape2, ItemShapeObject* shape3, SimpleAI* ai)
     : Suckable(16, prop)
 {
@@ -465,11 +400,6 @@ GoalItem::GoalItem(CreatureProp* prop, ItemShapeObject* shape1, ItemShapeObject*
 	mSuckEfx         = nullptr;
 }
 
-/*
- * --INFO--
- * Address:	800EB6D0
- * Size:	00001C
- */
 bool GoalItem::ignoreAtari(Creature* obj)
 {
 	if (obj->mObjType == OBJTYPE_GemItem) {
@@ -478,11 +408,6 @@ bool GoalItem::ignoreAtari(Creature* obj)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800EB6EC
- * Size:	000044
- */
 void GoalItem::setColorType(int type)
 {
 	if (type < PikiMinColor || type > PikiMaxColor) {
@@ -493,11 +418,6 @@ void GoalItem::setColorType(int type)
 	mItemShapeObject->mShape->makeInstance(mDynMaterial, 0);
 }
 
-/*
- * --INFO--
- * Address:	800EB730
- * Size:	00007C
- */
 void GoalItem::startTakeoff()
 {
 	setMotionSpeed(30.0f);
@@ -510,11 +430,6 @@ void GoalItem::startTakeoff()
 	setCreatureFlag(CF_IsAiDisabled);
 }
 
-/*
- * --INFO--
- * Address:	800EB7AC
- * Size:	000104
- */
 void GoalItem::startLand()
 {
 	_3CC = 0;
@@ -526,11 +441,6 @@ void GoalItem::startLand()
 	mSpotModelEff->mSRT.s.set(0.0f, 0.0f, 0.0f);
 }
 
-/*
- * --INFO--
- * Address:	800EB8B0
- * Size:	000030
- */
 void GoalItem::startConeShrink()
 {
 	mIsClosing     = true;
@@ -564,11 +474,6 @@ void GoalItem::updateConeShrink()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800EB8E0
- * Size:	000014
- */
 void GoalItem::startConeEmit()
 {
 	mIsConeEmit    = true;
@@ -602,11 +507,6 @@ void GoalItem::updateConeEmit()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800EB8F4
- * Size:	000494
- */
 void GoalItem::startAI(int)
 {
 	_3F4     = true;
@@ -677,11 +577,6 @@ void GoalItem::startAI(int)
 	mPikiSpawnTimer    = 0.0f;
 }
 
-/*
- * --INFO--
- * Address:	800EBD88
- * Size:	000074
- */
 void GoalItem::startBoot()
 {
 	_3CC = 3;
@@ -690,41 +585,21 @@ void GoalItem::startBoot()
 	playerState->setBootContainer(mOnionColour);
 }
 
-/*
- * --INFO--
- * Address:	800EBDFC
- * Size:	00002C
- */
 void GoalItem::emitPiki()
 {
 	C_SAI(this)->start(this, GoalAI::GOAL_Unk2);
 }
 
-/*
- * --INFO--
- * Address:	800EBE28
- * Size:	000008
- */
 f32 GoalItem::getSize()
 {
 	return 10.0f;
 }
 
-/*
- * --INFO--
- * Address:	800EBE30
- * Size:	000008
- */
 f32 GoalItem::getiMass()
 {
 	return 0.0f;
 }
 
-/*
- * --INFO--
- * Address:	800EBE38
- * Size:	0002D4
- */
 void GoalItem::update()
 {
 	mVelocity.set(0.0f, 0.0f, 0.0f);
@@ -768,11 +643,6 @@ void GoalItem::update()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800EC10C
- * Size:	000378
- */
 void GoalItem::refresh(Graphics& gfx)
 {
 	if (gameflow.mMoviePlayer->mIsActive && demoHideFlag & 1 << mOnionColour) {

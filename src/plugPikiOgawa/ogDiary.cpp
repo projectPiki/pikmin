@@ -32,11 +32,6 @@ static immut char** bloFiles_default_Diary[2] = { &bloFile_Res_Table[1], nullptr
 static immut char** bloFiles_Diary[2]         = { bloFile_Diary_Table, nullptr };
 }; // namespace zen
 
-/*
- * --INFO--
- * Address:	8018F1F4
- * Size:	000150
- */
 zen::ogScrDiaryMgr::ogScrDiaryMgr()
 {
 	Texture* tex = gsys->loadTexture("bigFont.bti", true);
@@ -60,11 +55,6 @@ zen::ogScrDiaryMgr::ogScrDiaryMgr()
 	mStatus         = Inactive;
 }
 
-/*
- * --INFO--
- * Address:	8018F344
- * Size:	0000FC
- */
 zen::ogScrDiaryMgr::DiaryStatus zen::ogScrDiaryMgr::update(Controller* input)
 {
 	if (mStatus == Inactive) {
@@ -91,11 +81,6 @@ zen::ogScrDiaryMgr::DiaryStatus zen::ogScrDiaryMgr::update(Controller* input)
 	return (DiaryStatus)msgState;
 }
 
-/*
- * --INFO--
- * Address:	8018F440
- * Size:	000178
- */
 void zen::ogScrDiaryMgr::draw(Graphics& gfx)
 {
 	if (mStatus == Inactive) {
@@ -116,11 +101,6 @@ void zen::ogScrDiaryMgr::draw(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8018F5B8
- * Size:	000294
- */
 void zen::ogScrDiaryMgr::start(s16 a1, s16 day)
 {
 	if (playerState) {
@@ -184,11 +164,6 @@ void zen::ogScrDiaryMgr::setDiarySpecialNumber(s16 day)
 	setSpecialNumber(5, powerup);
 }
 
-/*
- * --INFO--
- * Address:	8018F84C
- * Size:	00009C
- */
 void zen::ogScrDiaryMgr::typePage()
 {
 	mMesgMgr->setLastPageAbutton(false);
@@ -197,11 +172,6 @@ void zen::ogScrDiaryMgr::typePage()
 	mMesgMgr->move(mMessageMgrPosX, mMessageMgrPosY);
 }
 
-/*
- * --INFO--
- * Address:	8018F8E8
- * Size:	0000C8
- */
 bool zen::ogScrDiaryMgr::nextPage()
 {
 	if (mMesgMgr->getPageInfo()->mMsgSegmentCount <= 1) {
@@ -215,11 +185,6 @@ bool zen::ogScrDiaryMgr::nextPage()
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8018F9B0
- * Size:	0000A0
- */
 void zen::ogScrDiaryMgr::backPage()
 {
 	mMesgMgr->setLastPageAbutton(true);
@@ -228,11 +193,6 @@ void zen::ogScrDiaryMgr::backPage()
 	mMesgMgr->dispAll();
 }
 
-/*
- * --INFO--
- * Address:	8018FA50
- * Size:	000024
- */
 void zen::ogScrDiaryMgr::exit()
 {
 	mMesgMgr->fadeOut();
@@ -276,11 +236,6 @@ void zen::ogScrDiaryMgr::updateDiary(Controller* input)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8018FA74
- * Size:	000158
- */
 zen::ogDrawDiary::ogDrawDiary()
 {
 	mScreen = new P2DScreen();
@@ -320,11 +275,6 @@ void zen::ogDrawDiary::setOffset()
 	mDiaryMgr->getScrMsgMgr()->getBaseScreenPtr()->setOffset(mScreenCenterX, mScreenCenterY);
 }
 
-/*
- * --INFO--
- * Address:	8018FBCC
- * Size:	000298
- */
 void zen::ogDrawDiary::open(f32 a1, f32 a2, s16 day)
 {
 	mDiaryMgr->setDiarySpecialNumber(day);
@@ -353,11 +303,6 @@ void zen::ogDrawDiary::open(f32 a1, f32 a2, s16 day)
 	mEfxMgr->create(EFF2D_Unk11, pos, nullptr, nullptr);
 }
 
-/*
- * --INFO--
- * Address:	8018FE64
- * Size:	0002B8
- */
 zen::ogDrawDiary::DiaryStatus zen::ogDrawDiary::update(Controller* input)
 {
 	if (mStatus == Closed) {
@@ -423,11 +368,6 @@ void zen::ogDrawDiary::draw(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8019011C
- * Size:	000430
- */
 zen::ogDrawSelectDiary::ogDrawSelectDiary()
 {
 	mScreen = new P2DScreen;
@@ -469,11 +409,6 @@ zen::ogDrawSelectDiary::ogDrawSelectDiary()
 	setCursorAlpha();
 }
 
-/*
- * --INFO--
- * Address:	8019054C
- * Size:	0001C8
- */
 void zen::ogDrawSelectDiary::start()
 {
 	if (playerState) {
@@ -512,11 +447,6 @@ void zen::ogDrawSelectDiary::start()
 	setCursorAlpha();
 }
 
-/*
- * --INFO--
- * Address:	80190714
- * Size:	00010C
- */
 void zen::ogDrawSelectDiary::setCursorAlpha()
 {
 	P2DPane* pane = mScreen->search('root', true);
@@ -529,11 +459,6 @@ void zen::ogDrawSelectDiary::setCursorAlpha()
 	MoveCursor();
 }
 
-/*
- * --INFO--
- * Address:	80190820
- * Size:	000104
- */
 bool zen::ogDrawSelectDiary::MoveCursor()
 {
 	s16 idx = mSelectedColumnIndex + mSelectedRowIndex * 10;
@@ -553,11 +478,6 @@ bool zen::ogDrawSelectDiary::MoveCursor()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	80190924
- * Size:	000880
- */
 zen::ogDrawSelectDiary::SelectDiaryStatus zen::ogDrawSelectDiary::update(Controller* input)
 {
 	if (mStatus == Inactive) {
@@ -688,11 +608,6 @@ zen::ogDrawSelectDiary::SelectDiaryStatus zen::ogDrawSelectDiary::update(Control
 	return mStatus;
 }
 
-/*
- * --INFO--
- * Address:	801911A4
- * Size:	0000F0
- */
 void zen::ogDrawSelectDiary::draw(Graphics& gfx)
 {
 	if (mStatus == Inactive) {

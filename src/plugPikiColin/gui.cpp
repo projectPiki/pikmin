@@ -20,11 +20,6 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT(nullptr);
 
-/*
- * --INFO--
- * Address:	8005D6F8
- * Size:	0001C8
- */
 Menu::Menu(Controller* controller, Font* font, bool useCustomPosition)
 {
 	mController        = controller;
@@ -126,11 +121,6 @@ Menu::KeyEvent::KeyEvent(int eventType, int inputCode, IDelegate1<Menu&>* delega
 	mPrev = mNext = nullptr;
 }
 
-/*
- * --INFO--
- * Address:	8005D8C0
- * Size:	000094
- */
 Menu::MenuItem::MenuItem(int type, int filterIndex, char* name, IDelegate1<Menu&>* delegate)
 {
 	mIsEnabled = true;
@@ -167,11 +157,6 @@ void Menu::setOnExit(IDelegate1<Menu&>* callback)
 	mOnExitCallBack = callback;
 }
 
-/*
- * --INFO--
- * Address:	8005D954
- * Size:	0000C8
- */
 void Menu::addKeyEvent(int eventCode, int inputCode, IDelegate1<Menu&>* delegate)
 {
 	KeyEvent* key = new KeyEvent(eventCode, inputCode, delegate);
@@ -184,21 +169,11 @@ void Menu::addKeyEvent(int eventCode, int inputCode, IDelegate1<Menu&>* delegate
 	}
 }
 
-/*
- * --INFO--
- * Address:	8005DA1C
- * Size:	000004
- */
 Menu* Menu::enterOption()
 {
 	return this;
 }
 
-/*
- * --INFO--
- * Address:	8005DA20
- * Size:	000048
- */
 Menu* Menu::enterMenu(Menu* menu)
 {
 	Menu* ret = menu; // yes this is necessary
@@ -208,11 +183,6 @@ Menu* Menu::enterMenu(Menu* menu)
 	return ret;
 }
 
-/*
- * --INFO--
- * Address:	8005DA68
- * Size:	000044
- */
 Menu* Menu::exitMenu(Menu* menu)
 {
 	Menu* ret = menu;
@@ -222,11 +192,6 @@ Menu* Menu::exitMenu(Menu* menu)
 	return ret;
 }
 
-/*
- * --INFO--
- * Address:	8005DAAC
- * Size:	00002C
- */
 void Menu::open(bool p1)
 {
 	mOpeningFadeProgress = 0.0;
@@ -236,11 +201,6 @@ void Menu::open(bool p1)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8005DAD8
- * Size:	000024
- */
 void Menu::close()
 {
 	if (!mParentMenu) { // sure.
@@ -250,11 +210,6 @@ void Menu::close()
 	mState               = MenuStateType::FadeOut;
 }
 
-/*
- * --INFO--
- * Address:	8005DAFC
- * Size:	000020
- */
 void Menu::resetOptions()
 {
 	mMenuCount       = 0;
@@ -262,11 +217,6 @@ void Menu::resetOptions()
 	mLastItem->mPrev = mLastItem->mNext = mLastItem;
 }
 
-/*
- * --INFO--
- * Address:	8005DB1C
- * Size:	000194
- */
 void Menu::addOption(int p1, char* name, IDelegate1<Menu&>* delegate, bool p4)
 {
 	mFirstItem             = new MenuItem(MenuNavigationType::TopMenu, p1, name, delegate);
@@ -283,11 +233,6 @@ void Menu::addOption(int p1, char* name, IDelegate1<Menu&>* delegate, bool p4)
 	mMenuCount++;
 }
 
-/*
- * --INFO--
- * Address:	8005DCB0
- * Size:	000184
- */
 void Menu::addMenu(Menu* menu, int p2, char* name)
 {
 	mFirstItem        = new MenuItem(MenuNavigationType::SubMenu, p2, name, nullptr);
@@ -304,11 +249,6 @@ void Menu::addMenu(Menu* menu, int p2, char* name)
 	mMenuCount++;
 }
 
-/*
- * --INFO--
- * Address:	8005DE34
- * Size:	000150
- */
 bool Menu::checkNewOption()
 {
 	// If down is pressed
@@ -358,31 +298,16 @@ bool Menu::checkNewOption()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8005DF84
- * Size:	00001C
- */
 bool Menu::checkSelectKey()
 {
 	return mController->keyClick(KBBTN_A) != false;
 }
 
-/*
- * --INFO--
- * Address:	8005DFA0
- * Size:	00001C
- */
 bool Menu::checkCancelKey()
 {
 	return mController->keyClick(KBBTN_B) != false;
 }
 
-/*
- * --INFO--
- * Address:	8005DFBC
- * Size:	000258
- */
 Menu* Menu::doUpdate(bool selectItem)
 {
 	STACK_PAD_VAR(2);
@@ -459,11 +384,6 @@ Menu* Menu::doUpdate(bool selectItem)
 	return resultMenu;
 }
 
-/*
- * --INFO--
- * Address:	8005E214
- * Size:	0001FC
- */
 bool Menu::MenuItem::checkEvents(Menu* menu, int events)
 {
 	KeyEvent* event = mEventList->mNext;
@@ -527,11 +447,6 @@ bool Menu::MenuItem::checkEvents(Menu* menu, int events)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8005E410
- * Size:	00060C
- */
 void Menu::draw(Graphics& gfx, f32 fadePct)
 {
 	// Determine the maximum string width for the menu items
@@ -636,11 +551,6 @@ void Menu::draw(Graphics& gfx, f32 fadePct)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8005EA1C
- * Size:	000064
- */
 void Menu::menuCloseMenu(Menu& menu)
 {
 	menu.mNextMenu = menu.mParentMenu;

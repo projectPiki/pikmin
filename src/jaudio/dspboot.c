@@ -457,11 +457,6 @@ void DSPCall()
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80008300
- * Size:	000280
- */
 s32 __DSPCheckMXICBoot2(DSPTaskInfo2* task)
 {
 	STACK_PAD_VAR(8);
@@ -574,20 +569,10 @@ s32 __DSPCheckMXICBoot2(DSPTaskInfo2* task)
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80008580
- * Size:	000004
- */
 void DSPInit(void)
 {
 }
 
-/*
- * --INFO--
- * Address:	800085A0
- * Size:	000098
- */
 void DSPInit2(DSPTaskInfo2* task)
 {
 	BOOL enable;
@@ -611,11 +596,6 @@ void DSPInit2(DSPTaskInfo2* task)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80008640
- * Size:	000074
- */
 void DspBoot()
 {
 	// this is dumb

@@ -18,22 +18,12 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("aiRescue")
 
-/*
- * --INFO--
- * Address:	800C12E8
- * Size:	000098
- */
 ActRescue::ActRescue(Piki* piki)
     : Action(piki, true)
 {
 	setName("Rescue");
 }
 
-/*
- * --INFO--
- * Address:	800C1380
- * Size:	000044
- */
 void ActRescue::init(Creature* target)
 {
 	if (!target || !target->isPiki()) {
@@ -45,11 +35,6 @@ void ActRescue::init(Creature* target)
 	initApproach();
 }
 
-/*
- * --INFO--
- * Address:	800C13C4
- * Size:	00014C
- */
 int ActRescue::exec()
 {
 	if (!mDrowningPiki) {
@@ -98,11 +83,6 @@ int ActRescue::exec()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800C1510
- * Size:	00006C
- */
 void ActRescue::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
@@ -119,22 +99,12 @@ void ActRescue::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800C157C
- * Size:	000064
- */
 void ActRescue::initApproach()
 {
 	mState = STATE_Approach;
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Walk), PaniMotionInfo(PIKIANIM_Walk));
 }
 
-/*
- * --INFO--
- * Address:	800C15E0
- * Size:	0000E4
- */
 int ActRescue::exeApproach()
 {
 	Vector3f dir = mDrowningPiki->mSRT.t - mPiki->mSRT.t;
@@ -148,11 +118,6 @@ int ActRescue::exeApproach()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800C16C4
- * Size:	00008C
- */
 void ActRescue::initRescue()
 {
 	mState = STATE_Rescue;
@@ -161,11 +126,6 @@ void ActRescue::initRescue()
 	mGotAnimationAction = false;
 }
 
-/*
- * --INFO--
- * Address:	800C1750
- * Size:	000078
- */
 int ActRescue::exeRescue()
 {
 	mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
@@ -177,11 +137,6 @@ int ActRescue::exeRescue()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800C17C8
- * Size:	000184
- */
 void ActRescue::initGo()
 {
 	mState                = STATE_Go;
@@ -196,11 +151,6 @@ void ActRescue::initGo()
 	mRescueTargetPosition.y += 30.0f;
 }
 
-/*
- * --INFO--
- * Address:	800C194C
- * Size:	00016C
- */
 int ActRescue::exeGo()
 {
 	Vector3f offset(sinf(mPiki->mFaceDirection), 0.0f, cosf(mPiki->mFaceDirection));
@@ -218,11 +168,6 @@ int ActRescue::exeGo()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800C1AB8
- * Size:	000020
- */
 void ActRescue::initThrow()
 {
 	mState              = STATE_Throw;
@@ -232,11 +177,6 @@ void ActRescue::initThrow()
 	PRINT("INIT THROW!\n");
 }
 
-/*
- * --INFO--
- * Address:	800C1AD8
- * Size:	0002B4
- */
 int ActRescue::exeThrow()
 {
 	STACK_PAD_VAR(2);
@@ -280,11 +220,6 @@ int ActRescue::exeThrow()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800C1D8C
- * Size:	000004
- */
 void ActRescue::cleanup()
 {
 }

@@ -48,11 +48,6 @@ DemoParms::Parms::Parms()
 {
 }
 
-/*
- * --INFO--
- * Address:	80081C10
- * Size:	0005F4
- */
 DemoFlags::DemoFlags()
 {
 	demoParms         = new DemoParms;
@@ -115,11 +110,6 @@ DemoFlags::DemoFlags()
 	setFlagOnly(DEMOFLAG_UfoPartDiscoveryOffset + 4);
 }
 
-/*
- * --INFO--
- * Address:	80082204
- * Size:	000058
- */
 void DemoFlags::initGame()
 {
 	for (int i = 0; i < mFlagCount; i++) {
@@ -133,22 +123,12 @@ void DemoFlags::initGame()
 	setFlagOnly(DEMOFLAG_UfoPartDiscoveryOffset + 4);
 }
 
-/*
- * --INFO--
- * Address:	8008225C
- * Size:	000014
- */
 void DemoFlags::initCourse()
 {
 	mCurrentDemoIndex = DEMOFLAG_NULL;
 	mWaitTimer        = 0.0f;
 }
 
-/*
- * --INFO--
- * Address:	80082270
- * Size:	0000F8
- */
 void DemoFlags::update()
 {
 	if (gameflow.mMoviePlayer->mIsActive) {
@@ -183,11 +163,6 @@ void DemoFlags::update()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80082368
- * Size:	000070
- */
 void DemoFlags::saveCard(RandomAccessStream& data)
 {
 	for (int i = 0; i < mFlagCount; i++) {
@@ -195,11 +170,6 @@ void DemoFlags::saveCard(RandomAccessStream& data)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800823D8
- * Size:	000070
- */
 void DemoFlags::loadCard(RandomAccessStream& data)
 {
 	for (int i = 0; i < mFlagCount; i++) {
@@ -207,11 +177,6 @@ void DemoFlags::loadCard(RandomAccessStream& data)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80082448
- * Size:	00007C
- */
 void DemoFlags::registerDemoFlag(int index, immut char* name, u16 movieIndex, u16 a2, bool a3)
 {
 	if (mCurrentDataIndex != index) {
@@ -233,32 +198,17 @@ void DemoFlags::registerDemoFlag(int index, immut char* name, u16 movieIndex, u1
 	mCurrentDataIndex++;
 }
 
-/*
- * --INFO--
- * Address:	800824C4
- * Size:	000030
- */
 bool DemoFlags::isFlag(int index)
 {
 	return (1 << index - (index >> 3) * 8 & mStoredFlags[index >> 3]) != false;
 }
 
-/*
- * --INFO--
- * Address:	800824F4
- * Size:	000028
- */
 void DemoFlags::resetFlag(int index)
 {
 	int id = index >> 3;
 	mStoredFlags[id] &= ~(1 << index - (id * 8));
 }
 
-/*
- * --INFO--
- * Address:	8008251C
- * Size:	000234
- */
 void DemoFlags::setFlag(int index, Creature* obj)
 {
 	int id = index >> 3;
@@ -300,11 +250,6 @@ void DemoFlags::setFlag(int index, Creature* obj)
 	STACK_PAD_VAR(1);
 }
 
-/*
- * --INFO--
- * Address:	80082750
- * Size:	000030
- */
 void DemoFlags::setFlagOnly(int index)
 {
 	if (isFlag(index)) {
@@ -315,11 +260,6 @@ void DemoFlags::setFlagOnly(int index)
 	mStoredFlags[id] |= 1 << index - id * 8;
 }
 
-/*
- * --INFO--
- * Address:	80082780
- * Size:	000048
- */
 void DemoFlags::setTimer(f32 time, int index, Creature* target)
 {
 	mWaitTimer        = time;
@@ -328,11 +268,6 @@ void DemoFlags::setTimer(f32 time, int index, Creature* target)
 	mTargetCreature = target;
 }
 
-/*
- * --INFO--
- * Address:	800827C8
- * Size:	00001C
- */
 void DemoFlags::resetTimer()
 {
 	mTargetCreature   = nullptr;
@@ -340,11 +275,6 @@ void DemoFlags::resetTimer()
 	mCurrentDemoIndex = DEMOFLAG_NULL;
 }
 
-/*
- * --INFO--
- * Address:	800827E4
- * Size:	000010
- */
 DemoFlag* DemoFlags::getDemoFlag(int index)
 {
 	return mFlagDataList[index];

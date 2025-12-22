@@ -63,11 +63,6 @@ DEFINE_PRINT("aiPerf");
 
 const char* gridStrings[] = { "[grid off]", "[grid xyz]", "[grid xz]" };
 
-/*
- * --INFO--
- * Address:	800849E8
- * Size:	00002C
- */
 void AIPerf::clearCounts()
 {
 	AIPerf::drawshapeCullCnt = 0;
@@ -81,11 +76,6 @@ void AIPerf::clearCounts()
 	AIPerf::searchCnt        = 0;
 }
 
-/*
- * --INFO--
- * Address:	80084A14
- * Size:	000C20
- */
 void AIPerf::addMenu(Menu* menu)
 {
 	char* unused = new char[0x40];
@@ -161,11 +151,6 @@ void AIPerf::addMenu(Menu* menu)
 	menu->addKeyEvent(Menu::KeyEventType::Release, KBBTN_Y, new Delegate1<AIPerf, Menu&>(this, &AIPerf::fullfillPiki));
 }
 
-/*
- * --INFO--
- * Address:	80085634
- * Size:	000088
- */
 void AIPerf::toggleMoveType(Menu& menu)
 {
 	AIPerf::moveType = (AIPerf::moveType + 1) % 3;
@@ -174,33 +159,18 @@ void AIPerf::toggleMoveType(Menu& menu)
 	sprintf(menu.mCurrentItem->mName, "%s", types[AIPerf::moveType]);
 }
 
-/*
- * --INFO--
- * Address:	800856BC
- * Size:	000078
- */
 void AIPerf::toggleGeneratorMode(Menu& menu)
 {
 	AIPerf::generatorMode = AIPerf::generatorMode ? 0 : 1;
 	sprintf(menu.mCurrentItem->mName, "%s", AIPerf::generatorMode ? "Generator Mode" : "Game Mode");
 }
 
-/*
- * --INFO--
- * Address:	80085734
- * Size:	000078
- */
 void AIPerf::toggleBridge(Menu& menu)
 {
 	AIPerf::bridgeFast = AIPerf::bridgeFast ? 0 : 1;
 	sprintf(menu.mCurrentItem->mName, "%s", AIPerf::bridgeFast ? "Bridge Opt [on]" : "Bridge Opt [off]");
 }
 
-/*
- * --INFO--
- * Address:	800857AC
- * Size:	000078
- */
 void AIPerf::toggleShowRoute(Menu& menu)
 {
 	AIPerf::showRoute = AIPerf::showRoute ? 0 : 1;
@@ -218,66 +188,36 @@ void AIPerf::toggleAIGrid(Menu& menu)
 	sprintf(menu.mCurrentItem->mName, "%s", AIPerf::aiGrid ? "AI GRID [on]" : "AI GRID [off]");
 }
 
-/*
- * --INFO--
- * Address:	80085824
- * Size:	000078
- */
 void AIPerf::toggleKando(Menu& menu)
 {
 	AIPerf::kandoOnly = AIPerf::kandoOnly ? 0 : 1;
 	sprintf(menu.mCurrentItem->mName, "%s", AIPerf::kandoOnly ? "Kando Debug [on]" : "KandoDebug [off]");
 }
 
-/*
- * --INFO--
- * Address:	8008589C
- * Size:	000078
- */
 void AIPerf::toggleLOD(Menu& menu)
 {
 	AIPerf::useLOD = AIPerf::useLOD ? 0 : 1;
 	sprintf(menu.mCurrentItem->mName, "%s", AIPerf::useLOD ? "LOD [on]" : "LOD [off]");
 }
 
-/*
- * --INFO--
- * Address:	80085914
- * Size:	000078
- */
 void AIPerf::toggleColls(Menu& menu)
 {
 	AIPerf::showColls = AIPerf::showColls ? 0 : 1;
 	sprintf(menu.mCurrentItem->mName, "%s", AIPerf::showColls ? "Colls [on]" : "Colls [off]");
 }
 
-/*
- * --INFO--
- * Address:	8008598C
- * Size:	000078
- */
 void AIPerf::toggleASync(Menu& menu)
 {
 	AIPerf::useASync = AIPerf::useASync ? 0 : 1;
 	sprintf(menu.mCurrentItem->mName, "%s", AIPerf::useASync ? "ASYNC [on]" : "ASYNC [off]");
 }
 
-/*
- * --INFO--
- * Address:	80085A04
- * Size:	000078
- */
 void AIPerf::toggleInsQuick(Menu& menu)
 {
 	AIPerf::insQuick = AIPerf::insQuick ? 0 : 1;
 	sprintf(menu.mCurrentItem->mName, "%s", AIPerf::insQuick ? "Ins [Fast]" : "Ins [Slow]");
 }
 
-/*
- * --INFO--
- * Address:	80085A7C
- * Size:	000078
- */
 void AIPerf::toggleSoundDebug(Menu& menu)
 {
 	AIPerf::soundDebug = AIPerf::soundDebug ? 0 : 1;
@@ -317,11 +257,6 @@ void AIPerf::togglePsOptimise(Menu& menu)
 	sprintf(menu.mCurrentItem->mName, "%s", AIPerf::pikiMabiki ? "psOptimise [on]" : "psOptimise [off]");
 }
 
-/*
- * --INFO--
- * Address:	80085AF4
- * Size:	000078
- */
 void AIPerf::toggleCollSort(Menu& menu)
 {
 	AIPerf::useCollSort = AIPerf::useCollSort ? 0 : 1;
@@ -378,11 +313,6 @@ void AIPerf::decGridShift(Menu& menu)
 	sprintf(menu.mCurrentItem->mName, "grid shift %d", AIPerf::gridShift);
 }
 
-/*
- * --INFO--
- * Address:	80085B6C
- * Size:	00004C
- */
 void AIPerf::incOptLevel(Menu& menu)
 {
 	if (AIPerf::optLevel < 3) {
@@ -392,11 +322,6 @@ void AIPerf::incOptLevel(Menu& menu)
 	sprintf(menu.mCurrentItem->mName, "Opt Level %d", AIPerf::optLevel);
 }
 
-/*
- * --INFO--
- * Address:	80085BB8
- * Size:	00004C
- */
 void AIPerf::decOptLevel(Menu& menu)
 {
 	if (AIPerf::optLevel > 0) {
@@ -439,11 +364,6 @@ u32 ufoParts[] = {
 	UFOID_UVLamp,
 };
 
-/*
- * --INFO--
- * Address:	80085C04
- * Size:	000160
- */
 void AIPerf::incUfoLevel(Menu& menu)
 {
 	if (AIPerf::ufoLevel <= MAX_UFO_PARTS) {
@@ -480,11 +400,6 @@ void AIPerf::incUfoLevel(Menu& menu)
 	sprintf(menu.mCurrentItem->mName, "UFO Level %d", AIPerf::ufoLevel);
 }
 
-/*
- * --INFO--
- * Address:	80085D64
- * Size:	000038
- */
 void AIPerf::decUfoLevel(Menu& menu)
 {
 	sprintf(menu.mCurrentItem->mName, "UFO Level %d", AIPerf::ufoLevel);
@@ -501,11 +416,6 @@ void AIPerf::toggleUpdateSearchBuffer(Menu& menu)
 	sprintf(menu.mCurrentItem->mName, "%s", AIPerf::updateSearchBuffer ? "[upd srchbuff]" : "[don't upd srchbuff]");
 }
 
-/*
- * --INFO--
- * Address:	80085D9C
- * Size:	000170
- */
 void AIPerf::collectPikis(Menu& menu)
 {
 	Navi* navi         = naviMgr->getNavi();
@@ -547,11 +457,6 @@ void AIPerf::fullfillPiki(Menu& menu)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80085FC4
- * Size:	000114
- */
 void AIPerf::flowerPiki(Menu& menu)
 {
 	Iterator iter(pikiMgr);
@@ -562,11 +467,6 @@ void AIPerf::flowerPiki(Menu& menu)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800860D8
- * Size:	000398
- */
 void AIPerf::breakSluice(Menu& menu)
 {
 	Navi* player = naviMgr->getNavi();

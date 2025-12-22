@@ -3,11 +3,6 @@
 
 static int fragmentID = -2;
 
-/*
- * --INFO--
- * Address:	802154C0
- * Size:	000008
- */
 ASM static char* GetR2()
 {
 #ifdef __MWERKS__ // clang-format off
@@ -18,11 +13,6 @@ ASM static char* GetR2()
 }
 extern "C" {
 
-/*
- * --INFO--
- * Address:	802154FC
- * Size:	000040
- */
 void __init_cpp_exceptions(void)
 {
 	if ((s32)fragmentID == -2) {
@@ -31,11 +21,6 @@ void __init_cpp_exceptions(void)
 	}
 }
 
-/*
- * --INFO--
- * Address:	802154C8
- * Size:	000034
- */
 void __fini_cpp_exceptions(void)
 {
 	if ((s32)fragmentID != -2) {

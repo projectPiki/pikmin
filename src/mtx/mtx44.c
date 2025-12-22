@@ -33,11 +33,6 @@ void MTXFrustum(Mtx m, f32 t, f32 b, f32 l, f32 r, f32 n, f32 f)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801FDF20
- * Size:	0000D0
- */
 #if defined(VERSION_GPIP01_00)
 void C_MTXPerspective(Mtx m, f32 fovY, f32 aspect, f32 n, f32 f)
 #else
@@ -70,11 +65,6 @@ void MTXPerspective(Mtx m, f32 fovY, f32 aspect, f32 n, f32 f)
 	m[3][3] = 0.0f;
 }
 
-/*
- * --INFO--
- * Address:	801FDFF0
- * Size:	000098
- */
 #if defined(VERSION_GPIP01_00)
 void C_MTXOrtho(Mtx m, f32 t, f32 b, f32 l, f32 r, f32 n, f32 f)
 #else

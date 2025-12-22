@@ -25,11 +25,6 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("taiattackactions")
 
-/*
- * --INFO--
- * Address:	80127604
- * Size:	0000AC
- */
 bool TaiAttackableNaviPikiAction::act(Teki& teki)
 {
 	TekiAttackableCondition cond(&teki);
@@ -46,11 +41,6 @@ bool TaiAttackableNaviPikiAction::act(Teki& teki)
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	801276B0
- * Size:	00008C
- */
 bool TaiAttackableNaviAction::act(Teki& teki)
 {
 	Navi* navi = naviMgr->getNavi();
@@ -61,11 +51,6 @@ bool TaiAttackableNaviAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8012773C
- * Size:	0000B8
- */
 bool TaiAttackablePikiAction::act(Teki& teki)
 {
 	TekiAttackableCondition cond(&teki);
@@ -80,11 +65,6 @@ bool TaiAttackablePikiAction::act(Teki& teki)
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	801277F4
- * Size:	000040
- */
 void TaiAnimationSwallowingAction::start(Teki& teki)
 {
 	if (teki.getCreaturePointer(0)) {
@@ -92,11 +72,6 @@ void TaiAnimationSwallowingAction::start(Teki& teki)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80127844
- * Size:	000660
- */
 bool TaiAnimationSwallowingAction::act(Teki& teki)
 {
 	if (teki.getAnimationKeyOption(BTeki::ANIMATION_KEY_OPTION_ACTION_0)) {
@@ -202,11 +177,6 @@ bool TaiAnimationSwallowingAction::act(Teki& teki)
 	TekiNotCondition(nullptr);
 }
 
-/*
- * --INFO--
- * Address:	80127EE4
- * Size:	00012C
- */
 void TaiAnimationSwallowingAction::finish(Teki& teki)
 {
 	Stickers stuckList(&teki);
@@ -228,11 +198,6 @@ void TaiAnimationSwallowingAction::finish(Teki& teki)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80128010
- * Size:	000088
- */
 bool TaiBangingAction::actByEvent(immut TekiEvent& event)
 {
 	if (event.mEventType == TekiEventType::Entity) {
@@ -243,11 +208,6 @@ bool TaiBangingAction::actByEvent(immut TekiEvent& event)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	80128098
- * Size:	0000D4
- */
 bool TaiFlickAction::act(Teki& teki)
 {
 	int pikiCount = teki.countPikis(TekiAndCondition(&TekiRecognitionCondition(&teki), &TekiLowerRangeCondition(&teki)));
@@ -257,11 +217,6 @@ bool TaiFlickAction::act(Teki& teki)
 	TekiAndCondition(nullptr, nullptr);
 }
 
-/*
- * --INFO--
- * Address:	8012816C
- * Size:	000028
- */
 bool TaiTargetStickAction::act(Teki& teki)
 {
 	Creature* target = teki.getCreaturePointer(0);
@@ -272,32 +227,17 @@ bool TaiTargetStickAction::act(Teki& teki)
 	return target->getStickObject() == &teki;
 }
 
-/*
- * --INFO--
- * Address:	80128194
- * Size:	000044
- */
 void TaiFlickingAction::start(Teki& teki)
 {
 	TaiMotionAction::start(teki);
 	teki.clearTekiOption(BTeki::TEKI_OPTION_DAMAGE_COUNTABLE);
 }
 
-/*
- * --INFO--
- * Address:	801281D8
- * Size:	000034
- */
 void TaiFlickingAction::finish(Teki& teki)
 {
 	teki.setTekiOption(BTeki::TEKI_OPTION_DAMAGE_COUNTABLE);
 }
 
-/*
- * --INFO--
- * Address:	8012820C
- * Size:	00007C
- */
 bool TaiFlickingAction::act(Teki& teki)
 {
 	if (teki.animationFinished()) {
@@ -312,11 +252,6 @@ bool TaiFlickingAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	80128288
- * Size:	000058
- */
 bool TaiFlickingUpperAction::act(Teki& teki)
 {
 	if (teki.getAnimationKeyOption(BTeki::ANIMATION_KEY_OPTION_ACTION_0)) {

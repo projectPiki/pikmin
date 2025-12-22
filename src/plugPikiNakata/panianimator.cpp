@@ -21,42 +21,22 @@ immut char* PaniAnimator::keyNames[6] = {
 	"loop start", "loop end", "action 0", "action 1", "action 2", "action 3",
 };
 
-/*
- * --INFO--
- * Address:	8011EF58
- * Size:	000034
- */
 PaniMotionInfo::PaniMotionInfo(int motionIdx)
 {
 	init(motionIdx, nullptr);
 }
 
-/*
- * --INFO--
- * Address:	8011EF8C
- * Size:	000030
- */
 PaniMotionInfo::PaniMotionInfo(int motionIdx, PaniAnimKeyListener* listener)
 {
 	init(motionIdx, listener);
 }
 
-/*
- * --INFO--
- * Address:	8011EFBC
- * Size:	00000C
- */
 void PaniMotionInfo::init(int motionIdx, PaniAnimKeyListener* listener)
 {
 	mMotionIdx = motionIdx;
 	mListener  = listener;
 }
 
-/*
- * --INFO--
- * Address:	8011EFC8
- * Size:	000034
- */
 PaniMotion::PaniMotion(int animID)
 {
 	init(animID, 1);
@@ -73,22 +53,12 @@ PaniMotion::PaniMotion(int animID, int p2)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8011EFFC
- * Size:	00000C
- */
 void PaniMotion::init(int id, int p2)
 {
 	mAnimID   = id;
 	_UNUSED04 = p2;
 }
 
-/*
- * --INFO--
- * Address:	8011F008
- * Size:	00006C
- */
 PaniMotionTable::PaniMotionTable(int count)
 {
 	mMotionCount = count;
@@ -99,11 +69,6 @@ PaniMotionTable::PaniMotionTable(int count)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8011F074
- * Size:	00006C
- */
 PaniSoundTable::PaniSoundTable(int count)
 {
 	mSoundCount = count;
@@ -114,11 +79,6 @@ PaniSoundTable::PaniSoundTable(int count)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8011F0E0
- * Size:	000044
- */
 PaniAnimator::PaniAnimator()
 {
 	mCurrentKeyIndex  = -1;
@@ -130,11 +90,6 @@ PaniAnimator::PaniAnimator()
 	mAnimationCounter = 0.0f;
 }
 
-/*
- * --INFO--
- * Address:	8011F124
- * Size:	00006C
- */
 void PaniAnimator::init(AnimContext* context, AnimMgr* mgr, PaniMotionTable* table)
 {
 	mContext          = context;
@@ -147,21 +102,11 @@ void PaniAnimator::init(AnimContext* context, AnimMgr* mgr, PaniMotionTable* tab
 	}
 }
 
-/*
- * --INFO--
- * Address:	8011F190
- * Size:	000008
- */
 void PaniAnimator::changeContext(AnimContext* context)
 {
 	mContext = context;
 }
 
-/*
- * --INFO--
- * Address:	8011F198
- * Size:	000028
- */
 void PaniAnimator::updateContext()
 {
 	if (mAnimInfo) {
@@ -170,11 +115,6 @@ void PaniAnimator::updateContext()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8011F1C0
- * Size:	000070
- */
 void PaniAnimator::startMotion(immut PaniMotionInfo& info)
 {
 	if (mAnimInfo) {
@@ -187,11 +127,6 @@ void PaniAnimator::startMotion(immut PaniMotionInfo& info)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8011F230
- * Size:	0000B0
- */
 void PaniAnimator::finishMotion(immut PaniMotionInfo& info)
 {
 	if (!mAnimInfo) {
@@ -211,11 +146,6 @@ void PaniAnimator::finishMotion(immut PaniMotionInfo& info)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8011F2E0
- * Size:	00010C
- */
 void PaniAnimator::animate(f32 speed)
 {
 	if (!mAnimInfo) {
@@ -248,11 +178,6 @@ void PaniAnimator::animate(f32 speed)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8011F3EC
- * Size:	0000D0
- */
 void PaniAnimator::checkConstantKeys()
 {
 	if (mCurrentKeyIndex < 0) {
@@ -275,11 +200,6 @@ void PaniAnimator::checkConstantKeys()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8011F4BC
- * Size:	0001C0
- */
 void PaniAnimator::checkConstantKey(int idx)
 {
 	int type = mAnimInfo->getInfoKey(idx)->mKeyType;
@@ -317,11 +237,6 @@ void PaniAnimator::checkConstantKey(int idx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8011F67C
- * Size:	000124
- */
 void PaniAnimator::checkEventKeys(f32 startKeyframe, f32 endKeyframe)
 {
 	if (!mListener) {
@@ -350,11 +265,6 @@ void PaniAnimator::checkEventKeys(f32 startKeyframe, f32 endKeyframe)
 	STACK_PAD_TERNARY(startKeyframe, 1);
 }
 
-/*
- * --INFO--
- * Address:	8011F7A0
- * Size:	000054
- */
 void PaniAnimator::finishAnimation()
 {
 	mCurrentKeyIndex = -1;
@@ -363,11 +273,6 @@ void PaniAnimator::finishAnimation()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8011F7F4
- * Size:	0000AC
- */
 f32 PaniAnimator::getKeyValueByKeyType(int type)
 {
 	STACK_PAD_VAR(1);

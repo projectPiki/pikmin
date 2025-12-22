@@ -33,11 +33,6 @@ static as_struct as[AS_SIZE];                 // TODO: Type unknown
 
 static u32 first = TRUE;
 
-/*
- * --INFO--
- * Address:	8001B3E0
- * Size:	0000D0
- */
 void Jaf_InitSeqArchive2(immut char* barcFilepath, u8* barcData, u8* param_3)
 {
 	STACK_PAD_VAR(2);
@@ -63,11 +58,6 @@ void Jaf_InitSeqArchive2(immut char* barcFilepath, u8* barcData, u8* param_3)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8001B4C0
- * Size:	00003C
- */
 u32 Jaf_CheckSeqSize(u32 arcHandleMask)
 {
 	if (seq_archandle == -1) {
@@ -76,11 +66,6 @@ u32 Jaf_CheckSeqSize(u32 arcHandleMask)
 	return JV_CheckSize(seq_archandle | arcHandleMask);
 }
 
-/*
- * --INFO--
- * Address:	8001B500
- * Size:	000088
- */
 u32 Jaf_LoadSeq(u32 param_1, u8* param_2)
 {
 	if (seq_archandle == -1) {
@@ -96,31 +81,16 @@ u32 Jaf_LoadSeq(u32 param_1, u8* param_2)
 	return result;
 }
 
-/*
- * --INFO--
- * Address:	8001B5A0
- * Size:	00001C
- */
 void Jaf_ClearSeq(u32 index)
 {
 	seq_loadbuffer[index] = NULL;
 }
 
-/*
- * --INFO--
- * Address:	8001B5C0
- * Size:	000018
- */
 u8* Jaf_CheckSeq(u32 index)
 {
 	return seq_loadbuffer[index];
 }
 
-/*
- * --INFO--
- * Address:	8001B5E0
- * Size:	0000A0
- */
 u32 Jaf_ReadySeq(u32 param_1, u32 param_2)
 {
 	STACK_PAD_VAR(1);
@@ -141,22 +111,12 @@ u32 Jaf_ReadySeq(u32 param_1, u32 param_2)
 	return rootseqhandle[param_1];
 }
 
-/*
- * --INFO--
- * Address:	8001B680
- * Size:	000038
- */
 BOOL Jaf_PlaySeq(u32 index)
 {
 	Jaq_StartSeq(rootseqhandle[index]);
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	8001B6C0
- * Size:	000038
- */
 BOOL Jaf_StartSeq(u32 param_1, u32 param_2)
 {
 	Jaf_ReadySeq(param_1, param_2);
@@ -164,11 +124,6 @@ BOOL Jaf_StartSeq(u32 param_1, u32 param_2)
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	8001B700
- * Size:	000070
- */
 BOOL Jaf_StopSeq(u32 index)
 {
 	STACK_PAD_VAR(2);
@@ -192,11 +147,6 @@ void Jaf_GetJamHandle(u32)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8001B780
- * Size:	000014
- */
 seqp_* Jaf_HandleToSeq(u32 index)
 {
 	return &rootseq[index];
@@ -212,11 +162,6 @@ void Jaf_LoadStartFinish(u32)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8001B7A0
- * Size:	000028
- */
 static void Jaf_LoadFinish(u32 param_1)
 {
 	// Why is a (known) u32 parameter suddenly a pointer?
@@ -224,11 +169,6 @@ static void Jaf_LoadFinish(u32 param_1)
 	*(u8*)param_1                        = 0;
 }
 
-/*
- * --INFO--
- * Address:	8001B7E0
- * Size:	000124
- */
 u32 __LoadSeqA(u32 param_1, u32 param_2, u8* param_3, void (*param_4)(u32))
 {
 	u32* REF_param_1 = &param_1;
@@ -282,11 +222,6 @@ void Jaf_LoadStartSeqA(u32, u32, u8*)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8001B920
- * Size:	000034
- */
 u32 Jaf_LoadSeqA(u32 param_1, u8* param_2)
 {
 	return __LoadSeqA(0, param_1, param_2, Jaf_LoadFinish);

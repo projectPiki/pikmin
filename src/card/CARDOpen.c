@@ -1,10 +1,5 @@
 #include "Dolphin/card.h"
 
-/*
- * --INFO--
- * Address:	8020BA80
- * Size:	000068
- */
 BOOL __CARDCompareFileName(CARDDir* entry, const char* fileName)
 {
 	char* entName;
@@ -29,11 +24,6 @@ BOOL __CARDCompareFileName(CARDDir* entry, const char* fileName)
 	return FALSE;
 }
 
-/*
- * --INFO--
- * Address:	8020BAE8
- * Size:	00008C
- */
 s32 __CARDAccess(CARDDir* entry)
 {
 	if (entry->gameName[0] == 0xFF) {
@@ -48,11 +38,6 @@ s32 __CARDAccess(CARDDir* entry)
 	return CARD_RESULT_NOPERM;
 }
 
-/*
- * --INFO--
- * Address:	8020BB74
- * Size:	000030
- */
 s32 __CARDIsPublic(CARDDir* ent)
 {
 	if (ent->gameName[0] == 0xFF) {
@@ -97,11 +82,6 @@ s32 __CARDGetFileNo(CARDControl* card, const char* fileName, s32* outFileNo)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8020BBA4
- * Size:	000174
- */
 s32 CARDFastOpen(s32 channel, s32 fileNo, CARDFileInfo* fileInfo)
 {
 	CARDControl* card;
@@ -138,11 +118,6 @@ s32 CARDFastOpen(s32 channel, s32 fileNo, CARDFileInfo* fileInfo)
 	return __CARDPutControlBlock(card, result);
 }
 
-/*
- * --INFO--
- * Address:	8020BD18
- * Size:	000174
- */
 s32 CARDOpen(s32 chan, const char* fileName, CARDFileInfo* fileInfo)
 {
 	CARDControl* card;
@@ -172,11 +147,6 @@ s32 CARDOpen(s32 chan, const char* fileName, CARDFileInfo* fileInfo)
 	return __CARDPutControlBlock(card, result);
 }
 
-/*
- * --INFO--
- * Address:	8020BE8C
- * Size:	000054
- */
 s32 CARDClose(CARDFileInfo* fileInfo)
 {
 	CARDControl* card;
@@ -191,11 +161,6 @@ s32 CARDClose(CARDFileInfo* fileInfo)
 	return __CARDPutControlBlock(card, CARD_RESULT_READY);
 }
 
-/*
- * --INFO--
- * Address:	8020BEE0
- * Size:	000008
- */
 BOOL __CARDIsOpened(CARDControl* card, s32 fileNo)
 {
 	return FALSE;

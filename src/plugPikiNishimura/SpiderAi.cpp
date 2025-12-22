@@ -28,21 +28,11 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("SpiderAi");
 
-/*
- * --INFO--
- * Address:	80153840
- * Size:	000020
- */
 SpiderAi::SpiderAi(Spider* spider)
 {
 	mSpider = spider;
 }
 
-/*
- * --INFO--
- * Address:	80153860
- * Size:	0000A8
- */
 void SpiderAi::initAI(Spider* spider)
 {
 	mSpider = spider;
@@ -61,11 +51,6 @@ void SpiderAi::initAI(Spider* spider)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80153908
- * Size:	00007C
- */
 void SpiderAi::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
@@ -87,11 +72,6 @@ void SpiderAi::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80153984
- * Size:	0000A8
- */
 void SpiderAi::keyAction0()
 {
 	int currState = mSpider->getCurrentState();
@@ -109,11 +89,6 @@ void SpiderAi::keyAction0()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80153A2C
- * Size:	000020
- */
 void SpiderAi::keyAction1()
 {
 	if (mSpider->getCurrentState() == SPIDERAI_Appear) {
@@ -139,31 +114,16 @@ void SpiderAi::keyAction3()
 {
 }
 
-/*
- * --INFO--
- * Address:	80153A4C
- * Size:	000014
- */
 void SpiderAi::keyLoopEnd()
 {
 	mSpider->addLoopCounter(1);
 }
 
-/*
- * --INFO--
- * Address:	80153A60
- * Size:	000010
- */
 void SpiderAi::keyFinished()
 {
 	mSpider->setMotionFinish(true);
 }
 
-/*
- * --INFO--
- * Address:	80153A70
- * Size:	000044
- */
 void SpiderAi::playSound(int spiderSoundID)
 {
 	if (mSpider->mSeContext) {
@@ -321,11 +281,6 @@ bool SpiderAi::targetLostTransit()
 	return mSpider->targetLostTransit();
 }
 
-/*
- * --INFO--
- * Address:	80153AB4
- * Size:	0002FC
- */
 bool SpiderAi::appearTransit()
 {
 	// Trigger appearance if not already visible
@@ -473,11 +428,6 @@ void SpiderAi::initWait(int nextState)
 	mSpider->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Wait1, this));
 }
 
-/*
- * --INFO--
- * Address:	80153DB0
- * Size:	000260
- */
 void SpiderAi::dieState()
 {
 	int i;
@@ -600,11 +550,6 @@ void SpiderAi::appearState()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80154010
- * Size:	0019F8
- */
 void SpiderAi::update()
 {
 	setEveryFrame();

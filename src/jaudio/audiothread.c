@@ -35,21 +35,11 @@ static OSMessage msgbuf[AUDIOPROC_MQ_BUF_COUNT];
 static u32 audioproc_mq_init;
 static volatile int intcount;
 
-/*
- * --INFO--
- * Address:	800062C0
- * Size:	000008
- */
 void DspSyncCountClear(int count)
 {
 	intcount = count;
 }
 
-/*
- * --INFO--
- * Address:	800062E0
- * Size:	000008
- */
 int DspSyncCountCheck()
 {
 	return intcount;
@@ -65,11 +55,6 @@ void Jac_GetDacRate(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80006300
- * Size:	000044
- */
 static void DspSync()
 {
 	if (audioproc_mq_init) {
@@ -79,11 +64,6 @@ static void DspSync()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80006360
- * Size:	000050
- */
 void StopAudioThread()
 {
 	if (audioproc_mq_init) {
@@ -93,11 +73,6 @@ void StopAudioThread()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800063C0
- * Size:	000080
- */
 static void AudioSync()
 {
 	static BOOL first = TRUE;
@@ -123,11 +98,6 @@ void NeosSync()
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80006440
- * Size:	000068
- */
 static void __DspSync(__OSInterrupt interrupt, OSContext* context)
 {
 	u16 reg                       = __DSPRegs[DSP_CONTROL_STATUS];
@@ -142,11 +112,6 @@ static void __DspSync(__OSInterrupt interrupt, OSContext* context)
 	OSSetCurrentContext(context);
 }
 
-/*
- * --INFO--
- * Address:	800064C0
- * Size:	000044
- */
 static void __DspReg()
 {
 	BOOL enable = OSDisableInterrupts();
@@ -154,11 +119,6 @@ static void __DspReg()
 	OSRestoreInterrupts(enable);
 }
 
-/*
- * --INFO--
- * Address:	80006520
- * Size:	000130
- */
 static void* audioproc(void*)
 {
 	OSInitFastCast();
@@ -224,11 +184,6 @@ static void* audioproc(void*)
 #define OS_FASTCAST_S8  (4)
 #define OS_FASTCAST_S16 (5)
 
-/*
- * --INFO--
- * Address:	80006660
- * Size:	000034
- */
 static void OSInitFastCast(void)
 {
 #ifdef __MWERKS__
@@ -264,11 +219,6 @@ void SetAudioThreadPriority(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	800066A0
- * Size:	000124
- */
 void StartAudioThread(void* heap, s32 heapSize, u32 aramSize, u32 flags)
 {
 	if (priority_set == FALSE) {

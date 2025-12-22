@@ -13,11 +13,6 @@ static volatile BOOL __AR_init_flag = FALSE;
 static void __ARHandler(__OSInterrupt interrupt, OSContext* context);
 static void __ARChecksize(void);
 
-/*
- * --INFO--
- * Address:	8020690C
- * Size:	000044
- */
 ARCallback ARRegisterDMACallback(ARCallback callback)
 {
 	ARCallback oldCb;
@@ -39,11 +34,6 @@ void ARGetDMAStatus(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80206950
- * Size:	0000F0
- */
 void ARStartDMA(u32 type, u32 mainmem_addr, u32 aram_addr, u32 length)
 {
 	BOOL enabled;
@@ -96,11 +86,6 @@ void ARCheckInit(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80206A40
- * Size:	0000F4
- */
 u32 ARInit(u32* stack_index_addr, u32 num_entries)
 {
 	BOOL old;
@@ -154,11 +139,6 @@ void ARSetSize(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80206B34
- * Size:	000008
- */
 u32 ARGetBaseAddress()
 {
 	return __AR_ARAM_USR_BASE_ADDR;
@@ -174,11 +154,6 @@ void ARGetSize(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80206B3C
- * Size:	000078
- */
 void __ARHandler(__OSInterrupt interrupt, OSContext* context)
 {
 	OSContext exceptionContext;
@@ -263,11 +238,6 @@ void __ARReadDMA(u32 mmem_addr, u32 aram_addr, u32 length)
 	} while ((__DSPRegs[DSP_CONTROL_STATUS] & 0x200));
 }
 
-/*
- * --INFO--
- * Address:	80206BB4
- * Size:	000ECC
- */
 void __ARChecksize(void)
 {
 	u8 test_data_pad[63];

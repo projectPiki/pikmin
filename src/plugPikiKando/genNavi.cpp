@@ -28,40 +28,20 @@ DEFINE_PRINT("genNavi");
 // {
 // }
 
-/*
- * --INFO--
- * Address:	800F8130
- * Size:	000070
- */
 GenObject* makeObjectNavi()
 {
 	return new GenObjectNavi();
 }
 
-/*
- * --INFO--
- * Address:	800F81A0
- * Size:	00008C
- */
 void GenObjectNavi::initialise()
 {
 	GenObjectFactory::factory->registerMember('navi', &makeObjectNavi, "generate NAVI (player2)", 'v0.0');
 }
 
-/*
- * --INFO--
- * Address:	800F822C
- * Size:	000004
- */
 void GenObjectNavi::doRead(RandomAccessStream&)
 {
 }
 
-/*
- * --INFO--
- * Address:	800F8230
- * Size:	0000B8
- */
 Creature* GenObjectNavi::birth(BirthInfo& info)
 {
 	Navi* newNavi = (Navi*)naviMgr->birth();

@@ -25,11 +25,6 @@ typedef struct _ApploaderHeader {
 
 static ApploaderHeader Header ATTRIBUTE_ALIGN(32);
 
-/*
- * --INFO--
- * Address:	801F9EC4
- * Size:	000040
- */
 static ASM void Run(register u32 addr)
 {
 #ifdef __MWERKS__ // clang-format off
@@ -80,21 +75,11 @@ static void ReadApploader(DVDCommandBlock* dvdCmd, void* addr, u32 offset, u32 n
 	}
 }
 
-/*
- * --INFO--
- * Address:	801F9F04
- * Size:	00000C
- */
 static void Callback(s32 result, struct DVDCommandBlock* block)
 {
 	Prepared = TRUE;
 }
 
-/*
- * --INFO--
- * Address:	801F9F10
- * Size:	0001B0
- */
 void __OSReboot(u32 resetCode, u32 bootDol)
 {
 	OSContext exceptionContext;

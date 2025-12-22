@@ -52,11 +52,6 @@ static inline void bBoard_lerpColor(Colour* outColor, Colour* colA, f32 ratioA, 
 	outColor->a = bBoard_lerpColorComp(colA->a, ratioA, colB->a, ratioB);
 }
 
-/*
- * --INFO--
- * Address:	801A1E10
- * Size:	00009C
- */
 void zen::bBoardColourAnimData::set(u8* data)
 {
 	if (data) {
@@ -70,11 +65,6 @@ void zen::bBoardColourAnimData::set(u8* data)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801A1EAC
- * Size:	0003C0
- */
 void zen::bBoardColourAnim::update(f32 timeStep, Colour* primColor, Colour* envColor)
 {
 	f32 currThresh = (mDuration - 1) * mAnimData->mFrameThresholds[mCurrentFrame];

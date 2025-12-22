@@ -21,11 +21,6 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("Slime");
 
-/*
- * --INFO--
- * Address:	80163714
- * Size:	000578
- */
 SlimeProp::SlimeProp()
 {
 	mCreatureProps.mFriction(1.0f);
@@ -33,11 +28,6 @@ SlimeProp::SlimeProp()
 	mCreatureProps.mAcceleration(1.0f);
 }
 
-/*
- * --INFO--
- * Address:	80163C8C
- * Size:	0001D4
- */
 Slime::Slime(CreatureProp* props, BossShapeObject* shape)
     : Boss(props)
 {
@@ -58,31 +48,16 @@ Slime::Slime(CreatureProp* props, BossShapeObject* shape)
 	mSlimeBody = new SlimeBody(this);
 }
 
-/*
- * --INFO--
- * Address:	80163F08
- * Size:	00000C
- */
 f32 Slime::getCentreSize()
 {
 	return mCentreUpdater->mSize;
 }
 
-/*
- * --INFO--
- * Address:	80163F14
- * Size:	000008
- */
 f32 Slime::getiMass()
 {
 	return 0.0001f;
 }
 
-/*
- * --INFO--
- * Address:	80163F1C
- * Size:	00027C
- */
 void Slime::init(immut Vector3f& pos)
 {
 	mCollisionRadius = 20.0f;
@@ -128,11 +103,6 @@ void Slime::init(immut Vector3f& pos)
 	mCollInfo->makeTubesChild('tub1', 3);
 }
 
-/*
- * --INFO--
- * Address:	80164198
- * Size:	000034
- */
 void Slime::doKill()
 {
 	setIsAlive(0);
@@ -140,20 +110,10 @@ void Slime::doKill()
 	bossMgr->kill(this);
 }
 
-/*
- * --INFO--
- * Address:	801641CC
- * Size:	000004
- */
 void Slime::exitCourse()
 {
 }
 
-/*
- * --INFO--
- * Address:	801641D0
- * Size:	0000A4
- */
 void Slime::update()
 {
 	doAI();
@@ -167,11 +127,6 @@ void Slime::update()
 	moveNew(gsys->getFrameTime());
 }
 
-/*
- * --INFO--
- * Address:	80164274
- * Size:	0000A8
- */
 void Slime::refresh(Graphics& gfx)
 {
 	mWorldMtx.makeSRT(mSRT.s, mSRT.r, mSRT.t);
@@ -183,11 +138,6 @@ void Slime::refresh(Graphics& gfx)
 	mCollInfo->updateInfo(gfx, false);
 }
 
-/*
- * --INFO--
- * Address:	8016431C
- * Size:	0000A0
- */
 void Slime::drawShape(Graphics& gfx)
 {
 	doAnimation();
@@ -198,31 +148,16 @@ void Slime::drawShape(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801643BC
- * Size:	000024
- */
 void Slime::doAI()
 {
 	mSlimeAi->update();
 }
 
-/*
- * --INFO--
- * Address:	801643E0
- * Size:	000024
- */
 void Slime::doAnimation()
 {
 	mSlimeBody->update();
 }
 
-/*
- * --INFO--
- * Address:	80164404
- * Size:	000168
- */
 void Slime::collisionCallback(immut CollEvent& event)
 {
 	if (event.mCollider->mObjType == OBJTYPE_Piki || event.mCollider->mObjType == OBJTYPE_Navi) {

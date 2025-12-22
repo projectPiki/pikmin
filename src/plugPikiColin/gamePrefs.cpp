@@ -20,11 +20,6 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("GamePrefs")
 
-/*
- * --INFO--
- * Address:	80053C5C
- * Size:	000040
- */
 void PlayState::openStage(int stageId)
 {
 	if (stageId < STAGE_START) {
@@ -64,11 +59,6 @@ void GamePrefs::Initialise()
 }
 #endif
 
-/*
- * --INFO--
- * Address:	80053C9C
- * Size:	000040
- */
 void GamePrefs::setBgmVol(u8 vol)
 {
 	if (vol != mBgmVol) {
@@ -78,11 +68,6 @@ void GamePrefs::setBgmVol(u8 vol)
 	Jac_SetBGMVolume(mBgmVol);
 }
 
-/*
- * --INFO--
- * Address:	80053CDC
- * Size:	000040
- */
 void GamePrefs::setSfxVol(u8 vol)
 {
 	if (vol != mSfxVol) {
@@ -92,11 +77,6 @@ void GamePrefs::setSfxVol(u8 vol)
 	Jac_SetSEVolume(mSfxVol);
 }
 
-/*
- * --INFO--
- * Address:	80053D1C
- * Size:	00009C
- */
 void GamePrefs::setStereoMode(bool set)
 {
 	if (set != getStereoMode()) {
@@ -109,11 +89,6 @@ void GamePrefs::setStereoMode(bool set)
 	OSSetSoundMode(set);
 }
 
-/*
- * --INFO--
- * Address:	80053DB8
- * Size:	0000B8
- */
 void GamePrefs::setVibeMode(bool set)
 {
 	if (set != getVibeMode()) {
@@ -132,11 +107,6 @@ void GamePrefs::setVibeMode(bool set)
 	rumbleMgr->rumbleOption(set);
 }
 
-/*
- * --INFO--
- * Address:	80053E70
- * Size:	000054
- */
 #if defined(VERSION_GPIP01_00)
 #else
 void GamePrefs::setChildMode(bool set)
@@ -149,11 +119,6 @@ void GamePrefs::setChildMode(bool set)
 }
 #endif
 
-/*
- * --INFO--
- * Address:	80053EC4
- * Size:	000068
- */
 void GamePrefs::getChallengeScores(GameChalQuickInfo& info)
 {
 	for (int i = 0; i < MAX_HI_SCORES; i++) {
@@ -161,11 +126,6 @@ void GamePrefs::getChallengeScores(GameChalQuickInfo& info)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80053F2C
- * Size:	000174
- */
 void GamePrefs::checkIsHiscore(GameChalQuickInfo& info)
 {
 	info.mRank         = -1;
@@ -203,11 +163,6 @@ void GamePrefs::checkIsHiscore(GameChalQuickInfo& info)
 	getChallengeScores(info);
 }
 
-/*
- * --INFO--
- * Address:	800540A0
- * Size:	00034C
- */
 void GamePrefs::checkIsHiscore(GameQuickInfo& info)
 {
 	PRINT("checking if (%d parts/ day %d) : born %d pikis, dead %d pikis is in hiscore\n", info.mParts, info.mDay, info.mBornPikis,
@@ -269,11 +224,6 @@ void GamePrefs::checkIsHiscore(GameQuickInfo& info)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800543EC
- * Size:	000178
- */
 void GamePrefs::write(RandomAccessStream& output)
 {
 	PRINT("writing game prefs\n");
@@ -287,11 +237,6 @@ void GamePrefs::write(RandomAccessStream& output)
 	mIsChanged = false;
 }
 
-/*
- * --INFO--
- * Address:	80054564
- * Size:	0000B8
- */
 void GamePrefs::fixSoundMode()
 {
 #if defined(VERSION_PIKIDEMO)
@@ -302,11 +247,6 @@ void GamePrefs::fixSoundMode()
 	setStereoMode(OSGetSoundMode());
 }
 
-/*
- * --INFO--
- * Address:	8005461C
- * Size:	000330
- */
 void GamePrefs::read(RandomAccessStream& input)
 {
 	PRINT("reading game prefs\n");
@@ -368,11 +308,6 @@ void GamePrefs::setChildMode(int set)
 }
 #endif
 
-/*
- * --INFO--
- * Address:	8005494C
- * Size:	0000F4
- */
 void PlayState::write(RandomAccessStream& output)
 {
 	output.writeByte(mSaveStatus);
@@ -385,11 +320,6 @@ void PlayState::write(RandomAccessStream& output)
 	output.writeInt(mCourseOpenFlags);
 }
 
-/*
- * --INFO--
- * Address:	80054A40
- * Size:	0000F4
- */
 void PlayState::read(RandomAccessStream& input)
 {
 	mSaveStatus      = input.readByte();

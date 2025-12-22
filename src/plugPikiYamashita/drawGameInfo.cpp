@@ -598,11 +598,6 @@ struct MapPikminWindowCallBack : public P2DPaneCallBack {
 
 zen::GameInfo* zen::pGameInfo;
 
-/*
- * --INFO--
- * Address:	801B6338
- * Size:	001FCC
- */
 zen::DrawGameInfo::DrawGameInfo(zen::DrawGameInfo::playModeFlag playMode)
 {
 	mUpperScreenMgr = new DGIScreenMgr("screen/blo/play09.blo");
@@ -741,11 +736,6 @@ zen::DrawGameInfo::DrawGameInfo(zen::DrawGameInfo::playModeFlag playMode)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801B8580
- * Size:	000454
- */
 void zen::DrawGameInfo::update()
 {
 	mUpperScreenMgr->update();
@@ -756,11 +746,6 @@ void zen::DrawGameInfo::update()
 	STACK_PAD_VAR(6);
 }
 
-/*
- * --INFO--
- * Address:	801B89D4
- * Size:	0000F0
- */
 void zen::DrawGameInfo::draw(Graphics& gfx)
 {
 	mDamageEffect.draw(gfx);
@@ -819,11 +804,6 @@ void zen::DrawGameInfo::lowerDisplayOff()
 	mModeScreenMgr->displayOff();
 }
 
-/*
- * --INFO--
- * Address:	801B8AC4
- * Size:	00007C
- */
 void zen::DrawGameInfo::upperFrameIn(f32 p1, bool p2)
 {
 	if (p2) {
@@ -832,11 +812,6 @@ void zen::DrawGameInfo::upperFrameIn(f32 p1, bool p2)
 	mUpperScreenMgr->frameIn(p1);
 }
 
-/*
- * --INFO--
- * Address:	801B8B40
- * Size:	000080
- */
 void zen::DrawGameInfo::upperFrameOut(f32 p1, bool p2)
 {
 	if (p2) {
@@ -845,11 +820,6 @@ void zen::DrawGameInfo::upperFrameOut(f32 p1, bool p2)
 	mUpperScreenMgr->frameOut(p1);
 }
 
-/*
- * --INFO--
- * Address:	801B8BC0
- * Size:	0000B0
- */
 void zen::DrawGameInfo::lowerFrameIn(f32 p1, bool p2)
 {
 	if (p2) {
@@ -861,11 +831,6 @@ void zen::DrawGameInfo::lowerFrameIn(f32 p1, bool p2)
 	mModeScreenMgr->frameIn(p1);
 }
 
-/*
- * --INFO--
- * Address:	801B8C70
- * Size:	0000B4
- */
 void zen::DrawGameInfo::lowerFrameOut(f32 p1, bool p2)
 {
 	if (p2) {

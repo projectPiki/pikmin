@@ -104,11 +104,6 @@ int TekiMgr::typeIds[TEKI_TypeCount] = {
 	'tkn1', // 34, ? (unused enemy, crashes)
 };
 
-/*
- * --INFO--
- * Address:	8014A58C
- * Size:	00000C
- */
 void TekiMgr::initTekiMgr()
 {
 	tekiMgr = nullptr;
@@ -130,11 +125,6 @@ int TekiMgr::getTypeIndex(immut char* typeName)
 	return -1;
 }
 
-/*
- * --INFO--
- * Address:	8014A598
- * Size:	000300
- */
 TekiMgr::TekiMgr()
 {
 	PRINT_NAKATA("TekiMgr>\n");
@@ -180,11 +170,6 @@ TekiMgr::TekiMgr()
 	PRINT_NAKATA("TekiMgr<\n");
 }
 
-/*
- * --INFO--
- * Address:	8014A898
- * Size:	0001F0
- */
 void TekiMgr::startStage()
 {
 	char filename[128];
@@ -225,11 +210,6 @@ void TekiMgr::startStage()
 	PRINT_NAKATA("startStage<\n");
 }
 
-/*
- * --INFO--
- * Address:	8014AA88
- * Size:	000020
- */
 void TekiMgr::update()
 {
 	gsys->mTimer->start("teki updt", true);
@@ -237,11 +217,6 @@ void TekiMgr::update()
 	gsys->mTimer->stop("teki updt");
 }
 
-/*
- * --INFO--
- * Address:	8014AAA8
- * Size:	0000A4
- */
 void TekiMgr::refresh(Graphics& gfx)
 {
 	gsys->mTimer->start("teki draw", true);
@@ -256,11 +231,6 @@ void TekiMgr::refresh(Graphics& gfx)
 	gsys->mTimer->stop("teki draw");
 }
 
-/*
- * --INFO--
- * Address:	8014AB4C
- * Size:	00007C
- */
 Teki* TekiMgr::newTeki(int type)
 {
 	if (type < TEKI_START || type >= TEKI_TypeCount) {
@@ -277,11 +247,6 @@ Teki* TekiMgr::newTeki(int type)
 	return teki;
 }
 
-/*
- * --INFO--
- * Address:	8014ABC8
- * Size:	00010C
- */
 void TekiMgr::reset()
 {
 	PRINT_NAKATA("reset>\n");
@@ -295,61 +260,31 @@ void TekiMgr::reset()
 	PRINT_NAKATA("reset<\n");
 }
 
-/*
- * --INFO--
- * Address:	8014ACD4
- * Size:	000044
- */
 Creature* TekiMgr::createObject()
 {
 	return new Teki();
 }
 
-/*
- * --INFO--
- * Address:	8014AD18
- * Size:	000014
- */
 TekiStrategy* TekiMgr::getStrategy(int tekiType)
 {
 	return mStrategyTable->getStrategy(tekiType);
 }
 
-/*
- * --INFO--
- * Address:	8014AD2C
- * Size:	000010
- */
 TekiParameters* TekiMgr::getTekiParameters(int tekiType)
 {
 	return mTekiParams[tekiType];
 }
 
-/*
- * --INFO--
- * Address:	8014AD3C
- * Size:	000010
- */
 TekiShapeObject* TekiMgr::getTekiShapeObject(int tekiType)
 {
 	return mTekiShapes[tekiType];
 }
 
-/*
- * --INFO--
- * Address:	8014AD4C
- * Size:	000010
- */
 PaniSoundTable* TekiMgr::getSoundTable(int tekiType)
 {
 	return mTekiSoundTables[tekiType];
 }
 
-/*
- * --INFO--
- * Address:	8014AD5C
- * Size:	00011C
- */
 void TekiMgr::refresh2d(Graphics& gfx)
 {
 	Iterator iter(this);
@@ -360,11 +295,6 @@ void TekiMgr::refresh2d(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8014AE78
- * Size:	0000A8
- */
 void TekiMgr::setUsingTypeTable(bool isUsingType)
 {
 	for (int i = 0; i < TEKI_TypeCount; i++) {
@@ -382,11 +312,6 @@ void TekiMgr::setUsingType(int tekiType, bool isUsing)
 	mUsingType[tekiType] = isUsing;
 }
 
-/*
- * --INFO--
- * Address:	8014AF20
- * Size:	0000A8
- */
 void TekiMgr::setVisibleTypeTable(bool isVisibleType)
 {
 	for (int i = 0; i < TEKI_TypeCount; i++) {
@@ -394,31 +319,16 @@ void TekiMgr::setVisibleTypeTable(bool isVisibleType)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8014AFC8
- * Size:	00000C
- */
 void TekiMgr::setVisibleType(int tekiType, bool isVisible)
 {
 	mVisibleType[tekiType] = isVisible;
 }
 
-/*
- * --INFO--
- * Address:	8014AFD4
- * Size:	000070
- */
 bool TekiMgr::hasModel(int type)
 {
 	return !(type == TEKI_Mizigen || type == TEKI_Nakata1 || type == TEKI_Yamash3 || type == TEKI_Yamash4 || type == TEKI_Yamash5);
 }
 
-/*
- * --INFO--
- * Address:	8014B044
- * Size:	000054
- */
 int TekiMgr::getResultFlag(int tekiType)
 {
 	int resFlag = 0;

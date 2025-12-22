@@ -27,32 +27,17 @@ ItemBall::ItemBall(Shape* shape, CreatureProp* props)
 {
 }
 
-/*
- * --INFO--
- * Address:	800F7958
- * Size:	00003C
- */
 void ItemBall::startAI(int)
 {
 	mCollInfo = &mBallCollision;
 	mCollInfo->initInfo(mItemShape, mBallParts, mPartIDs);
 }
 
-/*
- * --INFO--
- * Address:	800F7994
- * Size:	000008
- */
 bool ItemBall::isAlive()
 {
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	800F799C
- * Size:	000008
- */
 bool ItemBall::isVisible()
 {
 	return true;
@@ -69,20 +54,10 @@ ItemObject::ItemObject(int objType, Shape* shape)
 	mObjType = (EObjType)objType;
 }
 
-/*
- * --INFO--
- * Address:	800F79A4
- * Size:	000004
- */
 void ItemObject::update()
 {
 }
 
-/*
- * --INFO--
- * Address:	800F79A8
- * Size:	00007C
- */
 BombGenItem::BombGenItem(Shape* shape)
     : ItemObject(OBJTYPE_BombGen, shape)
 {
@@ -90,21 +65,11 @@ BombGenItem::BombGenItem(Shape* shape)
 	_3CA = 1;
 }
 
-/*
- * --INFO--
- * Address:	800F7A24
- * Size:	000030
- */
 bool BombGenItem::pickable()
 {
 	return isValid();
 }
 
-/*
- * --INFO--
- * Address:	800F7A54
- * Size:	00006C
- */
 bool BombGenItem::pick()
 {
 	if (!pickable()) {
@@ -122,31 +87,16 @@ bool BombGenItem::pick()
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	800F7AC0
- * Size:	00006C
- */
 Fulcrum::Fulcrum()
     : ItemObject(OBJTYPE_Fulcrum, nullptr)
 {
 }
 
-/*
- * --INFO--
- * Address:	800F7B2C
- * Size:	00006C
- */
 NaviDemoSunsetStart::NaviDemoSunsetStart()
     : ItemObject(OBJTYPE_SunsetStart, nullptr)
 {
 }
 
-/*
- * --INFO--
- * Address:	800F7B98
- * Size:	00006C
- */
 NaviDemoSunsetGoal::NaviDemoSunsetGoal()
     : ItemObject(OBJTYPE_SunsetGoal, nullptr)
 {

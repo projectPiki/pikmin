@@ -27,11 +27,6 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("pikidoKill");
 
-/*
- * --INFO--
- * Address:	800CD950
- * Size:	000380
- */
 void Piki::doKill()
 {
 	if (mRouteHandle) {

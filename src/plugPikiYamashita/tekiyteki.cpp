@@ -20,20 +20,10 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("tekiyteki")
 
-/*
- * --INFO--
- * Address:	801A2754
- * Size:	0000F8
- */
 YTeki::YTeki()
 {
 }
 
-/*
- * --INFO--
- * Address:	801A28D0
- * Size:	000120
- */
 void YTeki::doKill()
 {
 	BTeki::doKill();
@@ -45,11 +35,6 @@ void YTeki::doKill()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801A29F0
- * Size:	000058
- */
 void YTeki::exitCourse()
 {
 	BTeki::exitCourse();
@@ -61,11 +46,6 @@ void YTeki::exitCourse()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801A2A48
- * Size:	000080
- */
 bool YTeki::isNaviWatch()
 {
 	bool res   = false;
@@ -93,21 +73,11 @@ int YTeki::getMapAttribute()
 	return attr;
 }
 
-/*
- * --INFO--
- * Address:	801A2AC8
- * Size:	000034
- */
 void YTeki::moveTowardPriorityFaceDir(immut Vector3f& p1, f32 p2)
 {
 	moveTowardPriorityFaceDir(p1, p2, getParameterF(TPF_TurnVelocity));
 }
 
-/*
- * --INFO--
- * Address:	801A2AFC
- * Size:	000150
- */
 void YTeki::moveTowardPriorityFaceDir(immut Vector3f& p1, f32 p2, f32 turnSpeed)
 {
 	STACK_PAD_VAR(4);
@@ -137,11 +107,6 @@ void YTeki::moveTowardPriorityFaceDir(immut Vector3f& p1, f32 p2, f32 turnSpeed)
 	mTargetVelocity.y = ySpeed;
 }
 
-/*
- * --INFO--
- * Address:	801A2C4C
- * Size:	0000FC
- */
 bool YTeki::turnToTarget()
 {
 	Creature* target = getCreaturePointer(0);
@@ -159,11 +124,6 @@ bool YTeki::turnToTarget()
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	801A2D48
- * Size:	000114
- */
 void YTeki::flyingStay(f32 speed)
 {
 	f32 seaLevel = getYFromSeaLevel();
@@ -181,11 +141,6 @@ void YTeki::flyingStay(f32 speed)
 	mVelocity = mTargetVelocity;
 }
 
-/*
- * --INFO--
- * Address:	801A2E5C
- * Size:	0001A4
- */
 void YTeki::killStickToMouthPiki()
 {
 	Stickers stuckList(this);
@@ -202,11 +157,6 @@ void YTeki::killStickToMouthPiki()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801A3000
- * Size:	0000C8
- */
 bool YTeki::startNewMotion(int motionIdx)
 {
 	if (mTekiAnimator->getCurrentMotionIndex() != motionIdx || mTekiAnimator->isFinished()) {

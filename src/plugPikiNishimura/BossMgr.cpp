@@ -34,11 +34,6 @@ DEFINE_PRINT("BossMgr");
 
 BossMgr* bossMgr;
 
-/*
- * --INFO--
- * Address:	8014FD88
- * Size:	00016C
- */
 Creature* BossMgr::getCreature(int bossID)
 {
 	int i, count = 0;
@@ -57,31 +52,16 @@ Creature* BossMgr::getCreature(int bossID)
 	return nullptr;
 }
 
-/*
- * --INFO--
- * Address:	8014FEF4
- * Size:	000008
- */
 int BossMgr::getFirst()
 {
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	8014FEFC
- * Size:	000008
- */
 int BossMgr::getNext(int idx)
 {
 	return idx + 1;
 }
 
-/*
- * --INFO--
- * Address:	8014FF04
- * Size:	00004C
- */
 bool BossMgr::isDone(int idx)
 {
 	if (idx >= getSize()) {
@@ -91,11 +71,6 @@ bool BossMgr::isDone(int idx)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8014FF50
- * Size:	000080
- */
 int BossMgr::getSize()
 {
 	int i, count = 0;
@@ -106,11 +81,6 @@ int BossMgr::getSize()
 	return count;
 }
 
-/*
- * --INFO--
- * Address:	8014FFD0
- * Size:	000080
- */
 int BossMgr::getMax()
 {
 	int i, max = 0;
@@ -121,11 +91,6 @@ int BossMgr::getMax()
 	return max;
 }
 
-/*
- * --INFO--
- * Address:	80150050
- * Size:	0002F4
- */
 BossMgr::BossMgr()
 {
 	mActiveBossCounts      = new int[BOSS_IDCOUNT];
@@ -149,11 +114,6 @@ BossMgr::BossMgr()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80150388
- * Size:	000018
- */
 void BossMgr::addUseCount(int bossID, int count)
 {
 	mUseCounts[bossID] += count;
@@ -179,11 +139,6 @@ int BossMgr::getUseCount(int bossID)
 	return mUseCounts[bossID];
 }
 
-/*
- * --INFO--
- * Address:	801503A0
- * Size:	0009CC
- */
 void BossMgr::constructBoss()
 {
 	mForceUpdate = true;
@@ -430,11 +385,6 @@ void BossMgr::initBoxSnake(int count)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80150D6C
- * Size:	0001B8
- */
 void BossMgr::initSlime(int count)
 {
 	for (int i = 0; i < count; i++) {
@@ -582,11 +532,6 @@ Boss* BossMgr::createBoss(int bossID)
 	return boss;
 }
 
-/*
- * --INFO--
- * Address:	80150F24
- * Size:	0004C0
- */
 void BossMgr::init(int bossID, int count)
 {
 	if (bossID >= BOSS_IDCOUNT || bossID < BOSS_IDSTART || count <= 0) {
@@ -629,11 +574,6 @@ void BossMgr::init(int bossID, int count)
 	mInitialisedBossCounts[bossID] = count;
 }
 
-/*
- * --INFO--
- * Address:	801513E4
- * Size:	000DB4
- */
 Creature* BossMgr::create(int genBossID, BirthInfo& birthInfo, GenObjectBoss* genBoss)
 {
 	Boss* boss = nullptr;
@@ -748,11 +688,6 @@ Creature* BossMgr::create(int genBossID, BirthInfo& birthInfo, GenObjectBoss* ge
 	return boss;
 }
 
-/*
- * --INFO--
- * Address:	80152198
- * Size:	0000C0
- */
 void BossMgr::kill(Creature* target)
 {
 	for (int i = BOSS_IDSTART; i < BOSS_IDCOUNT; i++) {
@@ -770,11 +705,6 @@ void BossMgr::kill(Creature* target)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80152258
- * Size:	0000B0
- */
 void BossMgr::killAll()
 {
 	CoreNode* node;
@@ -797,11 +727,6 @@ void BossMgr::killAll()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80152308
- * Size:	000110
- */
 void BossMgr::update()
 {
 	gsys->mTimer->start("boss updt", true);
@@ -835,11 +760,6 @@ void BossMgr::update()
 	gsys->mTimer->stop("boss updt");
 }
 
-/*
- * --INFO--
- * Address:	80152418
- * Size:	000158
- */
 void BossMgr::refresh(Graphics& gfx)
 {
 	gsys->mTimer->start("boss draw", true);
@@ -872,11 +792,6 @@ void BossMgr::refresh(Graphics& gfx)
 	gsys->mTimer->stop("boss draw");
 }
 
-/*
- * --INFO--
- * Address:	80152570
- * Size:	000084
- */
 void BossMgr::refresh2d(Graphics& gfx)
 {
 	for (int i = BOSS_IDSTART; i < BOSS_IDCOUNT; i++) {
@@ -889,21 +804,11 @@ void BossMgr::refresh2d(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801525F4
- * Size:	00000C
- */
 void BossMgr::finalSetup()
 {
 	mForceUpdate = true;
 }
 
-/*
- * --INFO--
- * Address:	80152600
- * Size:	000010
- */
 BossShapeObject* BossMgr::getBossShapeObject(int bossID)
 {
 	return mShapeObjects[bossID];

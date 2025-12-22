@@ -21,11 +21,6 @@ DEFINE_ERROR(7)
  */
 DEFINE_PRINT("utKando");
 
-/*
- * --INFO--
- * Address:	80116110
- * Size:	0000B0
- */
 int selectRandomly(immut Choice* choice, int num)
 {
 	f32 lower = gsys->getRand(1.0f);
@@ -39,22 +34,12 @@ int selectRandomly(immut Choice* choice, int num)
 	return choice[num - 1].mValue;
 }
 
-/*
- * --INFO--
- * Address:	801161C0
- * Size:	000010
- */
 BitFlags::BitFlags()
 {
 	mFlags = nullptr;
 	mSize  = 0;
 }
 
-/*
- * --INFO--
- * Address:	801161D0
- * Size:	000058
- */
 void BitFlags::dump()
 {
 	PRINT("bit flags : %d bytes (%d flags)\n", mSize, mEntryCount);
@@ -63,11 +48,6 @@ void BitFlags::dump()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80116228
- * Size:	000070
- */
 void BitFlags::loadCard(RandomAccessStream& stream)
 {
 	for (int i = 0; i < mSize; i++) {
@@ -75,11 +55,6 @@ void BitFlags::loadCard(RandomAccessStream& stream)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80116298
- * Size:	000070
- */
 void BitFlags::saveCard(RandomAccessStream& stream)
 {
 	for (int i = 0; i < mSize; i++) {
@@ -87,11 +62,6 @@ void BitFlags::saveCard(RandomAccessStream& stream)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80116308
- * Size:	000054
- */
 void BitFlags::create(u16 size, u8* data)
 {
 	mEntryCount = size;
@@ -103,11 +73,6 @@ void BitFlags::create(u16 size, u8* data)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8011635C
- * Size:	000028
- */
 void BitFlags::reset()
 {
 	for (int i = 0; i < mSize; i++) {
@@ -115,11 +80,6 @@ void BitFlags::reset()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80116384
- * Size:	000030
- */
 void BitFlags::setFlag(u16 flag)
 {
 	mFlags[flag >> 3] |= 1 << u16(flag - 8 * (flag >> 3));
@@ -135,32 +95,17 @@ void BitFlags::resetFlag(u16 flag)
 	mFlags[flag >> 3] &= ~(1 << u16(flag - 8 * (flag >> 3)));
 }
 
-/*
- * --INFO--
- * Address:	801163B4
- * Size:	000038
- */
 bool BitFlags::isFlag(u16 flag)
 {
 	return ((1 << u16(flag - 8 * (flag >> 3))) & mFlags[flag >> 3]) != 0;
 }
 
-/*
- * --INFO--
- * Address:	801163EC
- * Size:	00000C
- */
 LoopChecker::LoopChecker(immut char* name, f32 time)
 {
 	mLoopTimer = time;
 	mLoopName  = name;
 }
 
-/*
- * --INFO--
- * Address:	801163F8
- * Size:	000028
- */
 void LoopChecker::update()
 {
 	mLoopTimer -= gsys->getFrameTime();
@@ -170,11 +115,6 @@ void LoopChecker::update()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80116420
- * Size:	00016C
- */
 void drawBatten(Graphics& gfx, immut Vector3f& pos, f32 size)
 {
 	gfx.useMatrix(gfx.mCamera->mLookAtMtx, 0);
@@ -188,11 +128,6 @@ void drawBatten(Graphics& gfx, immut Vector3f& pos, f32 size)
 	gfx.drawLine(p2, p4);
 }
 
-/*
- * --INFO--
- * Address:	8011658C
- * Size:	000424
- */
 void drawBattenPole(Graphics& gfx, immut Vector3f& pos, f32 size, immut char* name)
 {
 	Vector3f pos2(pos);
@@ -218,11 +153,6 @@ void drawBattenPole(Graphics& gfx, immut Vector3f& pos, f32 size, immut char* na
 	}
 }
 
-/*
- * --INFO--
- * Address:	801169B0
- * Size:	00026C
- */
 void drawArrow(Graphics& gfx, immut Vector3f& p1, immut Vector3f& p2, f32 size)
 {
 	gfx.useMatrix(gfx.mCamera->mLookAtMtx, 0);
@@ -249,11 +179,6 @@ void drawArrow(Graphics& gfx, immut Vector3f& p1, immut Vector3f& p2, f32 size)
 	gfx.drawLine(pos3, pos5);
 }
 
-/*
- * --INFO--
- * Address:	80116C1C
- * Size:	0001E8
- */
 void CRSplineDraw(Graphics& gfx, int numSides, immut Vector3f* origin)
 {
 	gfx.useMatrix(gfx.mCamera->mLookAtMtx, 0);
@@ -277,11 +202,6 @@ void CRSplineDraw(Graphics& gfx, int numSides, immut Vector3f* origin)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80116E04
- * Size:	0003C0
- */
 void drawCube(Graphics& gfx, immut Vector3f& pos, f32 size)
 {
 	gfx.useMatrix(gfx.mCamera->mLookAtMtx, 0);

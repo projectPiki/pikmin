@@ -48,11 +48,6 @@ void zen::ZenQuat::GetRotate(const Quat&, Vector3f&)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8019B920
- * Size:	0001C0
- */
 f32 zen::getDistPointAndLine(Vector3f point, Vector3f lineStartPt, Vector3f lineEndPt, f32& t)
 {
 	Vector3f dirStart;
@@ -77,11 +72,6 @@ f32 zen::getDistPointAndLine(Vector3f point, Vector3f lineStartPt, Vector3f line
 	return dist;
 }
 
-/*
- * --INFO--
- * Address:	8019BAE0
- * Size:	000180
- */
 void zen::makeRotMatrix(immut Vector3f& axis, Matrix3f& rotMtx)
 {
 	Vector3f xVec;

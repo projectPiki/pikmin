@@ -16,11 +16,6 @@ DEFINE_ERROR(14)
  */
 DEFINE_PRINT(nullptr);
 
-/*
- * --INFO--
- * Address:	801A3594
- * Size:	00003C
- */
 AnimInfo* TAIanimation::addAnimation(immut char* anim)
 {
 	mAnimInfo = mAnimMgr->addAnimation(anim, true);

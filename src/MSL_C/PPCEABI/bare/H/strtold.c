@@ -29,11 +29,6 @@ enum scan_states {
 #define fetch()    (count++, (*ReadProc)(ReadProcArg, 0, __GetAChar))
 #define unfetch(c) (*ReadProc)(ReadProcArg, c, __UngetAChar)
 
-/*
- * --INFO--
- * Address:	802194B8
- * Size:	0006E4
- */
 f128 __strtold(int max_width, int (*ReadProc)(void*, int, int), void* ReadProcArg, int* chars_scanned, int* overflow)
 {
 	long double result;
@@ -275,11 +270,6 @@ void strtod(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8021942C
- * Size:	00008C
- */
 f64 atof(const char* str)
 {
 	__InStrCtrl isc;

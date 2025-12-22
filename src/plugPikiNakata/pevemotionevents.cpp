@@ -39,21 +39,11 @@ void PeveWaitEvent::makeWaitEvent(f32 waitTime)
 	makeEvent(&mTimeCondition);
 }
 
-/*
- * --INFO--
- * Address:	80125F04
- * Size:	000040
- */
 PeveAccelerationEvent::PeveAccelerationEvent()
     : PeveEvent(0)
 {
 }
 
-/*
- * --INFO--
- * Address:	80125F44
- * Size:	000014
- */
 void PeveAccelerationEvent::makeAccelerationEvent(PeveCondition* cond, NVector3fIO* posIO, NVector3fIO* velIO, NVector3fIO* accelIO)
 {
 	makeEvent(cond);
@@ -62,11 +52,6 @@ void PeveAccelerationEvent::makeAccelerationEvent(PeveCondition* cond, NVector3f
 	mAccelIO    = accelIO;
 }
 
-/*
- * --INFO--
- * Address:	80125F58
- * Size:	00017C
- */
 void PeveAccelerationEvent::update()
 {
 	PeveEvent::update();
@@ -91,20 +76,10 @@ void PeveAccelerationEvent::update()
 	mVelocityIO->input(vel);
 }
 
-/*
- * --INFO--
- * Address:	801260D4
- * Size:	000074
- */
 PeveParabolaEvent::PeveParabolaEvent()
 {
 }
 
-/*
- * --INFO--
- * Address:	80126148
- * Size:	0000B0
- */
 void PeveParabolaEvent::makeParabolaEvent(PeveCondition* cond, NVector3fIO* vecIO, NVector3f& p3, f32 maxLength, f32 p5)
 {
 	_2C.setMaxLength(maxLength);
@@ -115,11 +90,6 @@ void PeveParabolaEvent::makeParabolaEvent(PeveCondition* cond, NVector3fIO* vecI
 	makeAccelerationEvent(cond, vecIO, &_2C, &_1C);
 }
 
-/*
- * --INFO--
- * Address:	801261F8
- * Size:	000034
- */
 void PeveHorizontalSinWaveEvent::makeHorizontalSinWaveEvent(PeveCondition* cond, NVector3fIO* vecIO, NVector3f p3, f32 offset, f32 amp,
                                                             f32 startTheta, f32 angularVel)
 {
@@ -132,22 +102,12 @@ void PeveHorizontalSinWaveEvent::makeHorizontalSinWaveEvent(PeveCondition* cond,
 	mAngularVelocity = angularVel;
 }
 
-/*
- * --INFO--
- * Address:	8012622C
- * Size:	00004C
- */
 void PeveHorizontalSinWaveEvent::reset()
 {
 	PeveEvent::reset();
 	mTheta = mStartingTheta;
 }
 
-/*
- * --INFO--
- * Address:	80126278
- * Size:	000118
- */
 void PeveHorizontalSinWaveEvent::update()
 {
 	PeveEvent::update();
@@ -166,11 +126,6 @@ void PeveHorizontalSinWaveEvent::update()
 	_10->input(vec2);
 }
 
-/*
- * --INFO--
- * Address:	80126390
- * Size:	00005C
- */
 PeveCircleMoveEvent::PeveCircleMoveEvent()
     : PeveEvent(0)
 {
@@ -178,11 +133,6 @@ PeveCircleMoveEvent::PeveCircleMoveEvent()
 	mAngle = 0.0f;
 }
 
-/*
- * --INFO--
- * Address:	801263EC
- * Size:	000028
- */
 void PeveCircleMoveEvent::makeCircleMoveEvent(f32 timeLimit, NVector3fIO* vecIOA, NVector3fIO* vecIOB, f32 p4, f32 p5, f32 p6, f32 p7)
 {
 	mTimeCondition.setPeriod(timeLimit);
@@ -195,22 +145,12 @@ void PeveCircleMoveEvent::makeCircleMoveEvent(f32 timeLimit, NVector3fIO* vecIOA
 	_34 = p7;
 }
 
-/*
- * --INFO--
- * Address:	80126414
- * Size:	000050
- */
 void PeveCircleMoveEvent::reset()
 {
 	PeveEvent::reset();
 	mAngle = calcAngle();
 }
 
-/*
- * --INFO--
- * Address:	80126464
- * Size:	000134
- */
 void PeveCircleMoveEvent::update()
 {
 	PeveEvent::update();
@@ -226,11 +166,6 @@ void PeveCircleMoveEvent::update()
 	_20->input(vec1);
 }
 
-/*
- * --INFO--
- * Address:	80126598
- * Size:	0000AC
- */
 void PeveCircleMoveEvent::outputPosition(Vector3f& outPos)
 {
 	NVector3f vec1;
@@ -238,11 +173,6 @@ void PeveCircleMoveEvent::outputPosition(Vector3f& outPos)
 	outPos.set(_2C * NMathF::sin(mAngle) + vec1.x, vec1.y + _30, _2C * NMathF::cos(mAngle) + vec1.z);
 }
 
-/*
- * --INFO--
- * Address:	80126644
- * Size:	000084
- */
 f32 PeveCircleMoveEvent::calcAngle()
 {
 	NVector3f vec1;
@@ -301,21 +231,11 @@ void PeveFunctionCurveEvent::makeFunctionCurveEvent(PeveCondition* cond, NVector
 	_24       = p6;
 }
 
-/*
- * --INFO--
- * Address:	801266C8
- * Size:	00000C
- */
 void PeveFunctionCurveEvent::reset()
 {
 	_10 = _1C;
 }
 
-/*
- * --INFO--
- * Address:	801266D4
- * Size:	0000C0
- */
 void PeveFunctionCurveEvent::update()
 {
 	PeveEvent::update();
@@ -352,11 +272,6 @@ void PeveHomingPositionEvent::makeHomingPositionEvent(PeveCondition* cond, NVect
 	_18 = p4;
 }
 
-/*
- * --INFO--
- * Address:	80126794
- * Size:	000124
- */
 void PeveHomingPositionEvent::update()
 {
 	PeveEvent::update();
@@ -419,11 +334,6 @@ void PeveInterpolationEvent::makeInterpolationEvent(PeveCondition* cond, NPostur
 	mSplineInterpolator->makeSpline();
 }
 
-/*
- * --INFO--
- * Address:	801268B8
- * Size:	0000EC
- */
 void PeveInterpolationEvent::reset()
 {
 	PeveEvent::reset();
@@ -438,11 +348,6 @@ void PeveInterpolationEvent::reset()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801269A4
- * Size:	00017C
- */
 void PeveInterpolationEvent::update()
 {
 	PeveEvent::update();
@@ -489,22 +394,12 @@ void PeveMoveEvent::makeMoveEvent(NPosture3DIO* postureIO, NPosture3D& posture)
 	mPosture.input(posture);
 }
 
-/*
- * --INFO--
- * Address:	80126B20
- * Size:	00005C
- */
 void PeveMoveEvent::reset()
 {
 	PeveEvent::reset();
 	mPostureIO->input(mPosture);
 }
 
-/*
- * --INFO--
- * Address:	80126B7C
- * Size:	00009C
- */
 PeveVibrationEvent::PeveVibrationEvent()
     : PeveEvent(0)
 {
@@ -512,11 +407,6 @@ PeveVibrationEvent::PeveVibrationEvent()
 	mTimeCondition.construct(0.0f);
 }
 
-/*
- * --INFO--
- * Address:	80126C18
- * Size:	000088
- */
 void PeveVibrationEvent::makeVibrationEvent(f32 duration, NPosture3DIO* postureIO, NVector3f& up, f32 intensity, f32 frequency, f32 p6)
 {
 	mPostureIO = postureIO;
@@ -528,11 +418,6 @@ void PeveVibrationEvent::makeVibrationEvent(f32 duration, NPosture3DIO* postureI
 	mPolyFunction.mData.mValues[1] = p6;
 }
 
-/*
- * --INFO--
- * Address:	80126CA0
- * Size:	000100
- */
 void PeveVibrationEvent::update()
 {
 	PeveEvent::update();

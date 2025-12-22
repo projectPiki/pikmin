@@ -14,11 +14,6 @@
 #define CHECK_FRAC(line, frac)     ASSERTMSGLINE(line, (frac) < 32, "GXSetVtxAttrFmt: Frac value is >= 32")
 #define CHECK_LISTPTR(line, list)  ASSERTMSGLINE(line, (list) != NULL, "GXSetVtxAttrFmt: list pointer is NULL")
 
-/*
- * --INFO--
- * Address:	8020F2A8
- * Size:	000158
- */
 static void __GXXfVtxSpecs(void)
 {
 	u32 nCols = 0;
@@ -121,11 +116,6 @@ static inline void SETVCDATTR(GXAttr Attr, GXAttrType Type)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8020F400
- * Size:	000338
- */
 void GXSetVtxDesc(GXAttr attr, GXAttrType type)
 {
 	CHECK_GXBEGIN(0xCC, "GXSetVtxDesc");
@@ -141,11 +131,6 @@ void GXSetVtxDesc(GXAttr attr, GXAttrType type)
 	gx->dirtyState |= 8;
 }
 
-/*
- * --INFO--
- * Address:	8020F738
- * Size:	00035C
- */
 void GXSetVtxDescv(GXVtxDescList* attrPtr)
 {
 	CHECK_GXBEGIN(0xF5, "GXSetVtxDescv");
@@ -164,11 +149,6 @@ void GXSetVtxDescv(GXVtxDescList* attrPtr)
 	gx->dirtyState |= 8;
 }
 
-/*
- * --INFO--
- * Address:	8020FA94
- * Size:	000168
- */
 void __GXSetVCD(void)
 {
 	static u8 tbl1[] = { 0, 4, 1, 2 };
@@ -315,11 +295,6 @@ void GXGetVtxDescv(GXVtxDescList* vcd)
 	vcd[attr].mAttr = 0xFF;
 }
 
-/*
- * --INFO--
- * Address:	8020FBFC
- * Size:	00004C
- */
 void GXClearVtxDesc(void)
 {
 	CHECK_GXBEGIN(0x1D3, "GXClearVtxDesc");
@@ -401,11 +376,6 @@ static inline void SETVAT(u32* va, u32* vb, u32* vc, GXAttr attr, GXCompCnt cnt,
 	}
 }
 
-/*
- * --INFO--
- * Address:	8020FC48
- * Size:	00035C
- */
 void GXSetVtxAttrFmt(GXVtxFmt vtxfmt, GXAttr attr, GXCompCnt cnt, GXCompType type, u8 frac)
 {
 	u32* va;
@@ -424,11 +394,6 @@ void GXSetVtxAttrFmt(GXVtxFmt vtxfmt, GXAttr attr, GXCompCnt cnt, GXCompType typ
 	gx->dirtyVAT |= (u8)(1 << (u8)vtxfmt);
 }
 
-/*
- * --INFO--
- * Address:	8020FFA4
- * Size:	00037C
- */
 void GXSetVtxAttrFmtv(GXVtxFmt vtxfmt, GXVtxAttrFmtList* list)
 {
 	u32* va;
@@ -451,11 +416,6 @@ void GXSetVtxAttrFmtv(GXVtxFmt vtxfmt, GXVtxAttrFmtList* list)
 	gx->dirtyVAT |= (u8)(1 << (u8)vtxfmt);
 }
 
-/*
- * --INFO--
- * Address:	80210320
- * Size:	00009C
- */
 void __GXSetVAT(void)
 {
 	u8 i;
@@ -579,11 +539,6 @@ void GXGetVtxAttrFmtv(GXVtxFmt fmt, GXVtxAttrFmtList* vat)
 	vat->mAttr = GX_VA_NULL;
 }
 
-/*
- * --INFO--
- * Address:	802103BC
- * Size:	00008C
- */
 void GXSetArray(GXAttr attr, void* base_ptr, u8 stride)
 {
 	GXAttr cpAttr;
@@ -602,22 +557,11 @@ void GXSetArray(GXAttr attr, void* base_ptr, u8 stride)
 	GX_WRITE_SOME_REG3(8, cpAttr | 0xB0, stride, cpAttr - 12);
 }
 
-/*
- * --INFO--
- * Address:	80210448
- * Size:	000010
- */
 void GXInvalidateVtxCache(void)
 {
 	CHECK_GXBEGIN(0x368, "GXInvalidateVtxCache");
 	GX_WRITE_U8(0x48);
 }
-
-/*
- * --INFO--
- * Address:	80210458
- * Size:	0002D0
- */
 
 void GXSetTexCoordGen2(GXTexCoordID dst_coord, GXTexGenType func, GXTexGenSrc src_param, u32 mtx, GXBool normalize, u32 pt_texmtx)
 {
@@ -781,11 +725,6 @@ void GXSetTexCoordGen2(GXTexCoordID dst_coord, GXTexGenType func, GXTexGenSrc sr
 	__GXSetMatrixIndex(mtxIdAttr);
 }
 
-/*
- * --INFO--
- * Address:	80210728
- * Size:	000048
- */
 void GXSetNumTexGens(u8 nTexGens)
 {
 	CHECK_GXBEGIN(0x41B, "GXSetNumTexGens");

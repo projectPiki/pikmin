@@ -32,22 +32,12 @@ DEFINE_PRINT("viewPiki")
 PikiShapeObject* PikiShapeObject::_instances[4];
 bool PikiShapeObject::firstTime = true;
 
-/*
- * --INFO--
- * Address:	800D8894
- * Size:	000028
- */
 void PikiShapeObject::exitCourse()
 {
 	firstTime     = true;
 	_instances[0] = _instances[1] = _instances[2] = _instances[3] = nullptr;
 }
 
-/*
- * --INFO--
- * Address:	800D88BC
- * Size:	000028
- */
 void PikiShapeObject::init()
 {
 	firstTime     = true;
@@ -72,11 +62,6 @@ PikiShapeObject* PikiShapeObject::create(int index)
 	return _instances[index];
 }
 
-/*
- * --INFO--
- * Address:	800D88E4
- * Size:	00003C
- */
 AnimMgr* PikiShapeObject::getAnimMgr()
 {
 	if (firstTime) {
@@ -86,11 +71,6 @@ AnimMgr* PikiShapeObject::getAnimMgr()
 	return _instances[0]->mAnimMgr;
 }
 
-/*
- * --INFO--
- * Address:	800D8920
- * Size:	0001B4
- */
 void PikiShapeObject::initOnce()
 {
 	_instances[Blue]           = new PikiShapeObject(gameflow.loadShape("pikis/bluModel.mod", true));
@@ -108,11 +88,6 @@ void PikiShapeObject::initOnce()
 	firstTime = false;
 }
 
-/*
- * --INFO--
- * Address:	800D8AD4
- * Size:	00009C
- */
 PikiShapeObject::PikiShapeObject(Shape* shape)
 {
 	mShape               = shape;
@@ -122,21 +97,11 @@ PikiShapeObject::PikiShapeObject(Shape* shape)
 	mShape->overrideAnim(1, &mAnimatorB);
 }
 
-/*
- * --INFO--
- * Address:	800D8B70
- * Size:	000020
- */
 bool ViewPiki::isKinoko()
 {
 	return mPikiShape == PikiShapeObject::_instances[PIKI_Kinoko];
 }
 
-/*
- * --INFO--
- * Address:	800D8B90
- * Size:	000128
- */
 void ViewPiki::changeShape(int index)
 {
 	if (index == -1) {
@@ -161,11 +126,6 @@ void ViewPiki::changeShape(int index)
 	STACK_PAD_VAR(2);
 }
 
-/*
- * --INFO--
- * Address:	800D8CB8
- * Size:	000060
- */
 ViewPiki::ViewPiki(CreatureProp* prop)
     : Piki(prop)
 {
@@ -173,11 +133,6 @@ ViewPiki::ViewPiki(CreatureProp* prop)
 	mHappa     = 0;
 }
 
-/*
- * --INFO--
- * Address:	800D8D18
- * Size:	0000B4
- */
 void ViewPiki::initBirth()
 {
 	mHappaModel = nullptr;
@@ -191,11 +146,6 @@ void ViewPiki::initBirth()
 	STACK_PAD_VAR(4);
 }
 
-/*
- * --INFO--
- * Address:	800D8DCC
- * Size:	00026C
- */
 void ViewPiki::init(Shape* shp, MapMgr*, Navi* navi)
 {
 	mPikiShape  = PikiShapeObject::create(0);
@@ -225,11 +175,6 @@ void ViewPiki::init(Shape* shp, MapMgr*, Navi* navi)
 	STACK_PAD_TERNARY(_268, 1);
 }
 
-/*
- * --INFO--
- * Address:	800D9038
- * Size:	000064
- */
 void ViewPiki::setFlower(int id)
 {
 	if (!isKinoko()) {
@@ -238,20 +183,10 @@ void ViewPiki::setFlower(int id)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800D909C
- * Size:	000004
- */
 void ViewPiki::setLeaves(int)
 {
 }
 
-/*
- * --INFO--
- * Address:	800D90A0
- * Size:	00017C
- */
 void ViewPiki::postUpdate(int unused, f32 deltaTime)
 {
 	if (mMode == PikiMode::FreeMode && !pikiMgr->isUpdating(PMUPDATE_FreePiki)) {
@@ -278,11 +213,6 @@ void ViewPiki::postUpdate(int unused, f32 deltaTime)
 	STACK_PAD_VAR(2);
 }
 
-/*
- * --INFO--
- * Address:	800D921C
- * Size:	000408
- */
 void ViewPiki::update()
 {
 	if (mMode == PikiMode::FreeMode && !pikiMgr->isUpdating(PMUPDATE_FreePiki)) {
@@ -342,11 +272,6 @@ void ViewPiki::update()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800D9624
- * Size:	0000A0
- */
 void Piki::startHimaLook(immut Vector3f* pos)
 {
 	mLookatPosPtr = pos;
@@ -357,11 +282,6 @@ void Piki::startHimaLook(immut Vector3f* pos)
 	_334       = gsys->getRand(1.0f) * 3.0f + 4.0f;
 }
 
-/*
- * --INFO--
- * Address:	800D96C4
- * Size:	000018
- */
 void Piki::finishLook()
 {
 	mLookatPosPtr = nullptr;
@@ -369,11 +289,6 @@ void Piki::finishLook()
 	mIsLooking    = false;
 }
 
-/*
- * --INFO--
- * Address:	800D96DC
- * Size:	000014
- */
 bool Piki::isLooking()
 {
 	return mLookatPosPtr != nullptr;
@@ -454,11 +369,6 @@ void Piki::updateLook()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800D9A68
- * Size:	000678
- */
 void ViewPiki::demoDraw(Graphics& gfx, immut Matrix4f* mtx)
 {
 	Vector3f pos;
@@ -554,11 +464,6 @@ static void printMatrix(immut char* name, immut Matrix4f& mat)
 	PRINT("-------------------------\n");
 }
 
-/*
- * --INFO--
- * Address:	800DA0E0
- * Size:	000B48
- */
 void ViewPiki::refresh(Graphics& gfx)
 {
 	STACK_PAD_VAR(2);

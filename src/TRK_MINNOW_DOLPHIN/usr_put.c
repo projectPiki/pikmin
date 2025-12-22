@@ -50,11 +50,6 @@ void usr_puts_ram(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8021CEDC
- * Size:	000004
- */
 void usr_put_initialize(void)
 {
 }

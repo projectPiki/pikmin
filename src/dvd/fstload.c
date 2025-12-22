@@ -26,11 +26,6 @@ struct blah {
 	u32 FSTMaxLength;
 }; // diskinfo : 0x80000000;
 
-/*
- * --INFO--
- * Address:	80202254
- * Size:	0000D8
- */
 static void cb(s32 type, DVDCommandBlock* cmdBlock)
 {
 	if (type > 0) {
@@ -52,11 +47,6 @@ static void cb(s32 type, DVDCommandBlock* cmdBlock)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8020232C
- * Size:	000150
- */
 void __fstLoad(void)
 {
 	int status;

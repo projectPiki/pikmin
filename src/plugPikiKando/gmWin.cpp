@@ -53,21 +53,11 @@ void GmWin::moveHome(Vector2i&)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80111E14
- * Size:	00000C
- */
 void GmWin::open()
 {
 	mStatus = 0x1000;
 }
 
-/*
- * --INFO--
- * Address:	80111E20
- * Size:	00004C
- */
 void GmWin::close()
 {
 	if (mCloseListener) {
@@ -76,11 +66,6 @@ void GmWin::close()
 	mStatus = 0x1002;
 }
 
-/*
- * --INFO--
- * Address:	80111E6C
- * Size:	00019C
- */
 void GmWin::render(Graphics& gfx)
 {
 	RectArea area(0, 0, mWidth, mHeight);
@@ -109,11 +94,6 @@ void GmWin::doRender(Graphics&)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80112008
- * Size:	000024
- */
 void GmWin::placeCentre()
 {
 	const int centerX = mWidth >> 1;
@@ -123,21 +103,11 @@ void GmWin::placeCentre()
 	mPosY = 240 - (centerY);
 }
 
-/*
- * --INFO--
- * Address:	8011202C
- * Size:	000050
- */
 void GmWin::print(Graphics& gfx, int posX, int posY, immut char* message)
 {
 	gfx.texturePrintf(font, posX + mPosX, posY + mPosY, message);
 }
 
-/*
- * --INFO--
- * Address:	8011207C
- * Size:	000080
- */
 void GmWin::printcentre(Graphics& gfx, int posY, immut char* message)
 {
 	const int windowWidth = mWidth >> 1;
@@ -145,11 +115,6 @@ void GmWin::printcentre(Graphics& gfx, int posY, immut char* message)
 	gfx.texturePrintf(font, mPosX + windowWidth - stringWidth, posY + mPosY, message);
 }
 
-/*
- * --INFO--
- * Address:	801120FC
- * Size:	000080
- */
 void GmWin::printright(Graphics& gfx, int posY, immut char* message)
 {
 	const int windowWidth = mWidth;
@@ -157,32 +122,17 @@ void GmWin::printright(Graphics& gfx, int posY, immut char* message)
 	gfx.texturePrintf(font, mPosX + windowWidth - stringWidth - 32, posY + mPosY, message);
 }
 
-/*
- * --INFO--
- * Address:	8011217C
- * Size:	000058
- */
 void GmWin::printleft(Graphics& gfx, int posY, immut char* message)
 {
 	gfx.texturePrintf(font, 32 + mPosX, posY + mPosY, message);
 }
 
-/*
- * --INFO--
- * Address:	801121D4
- * Size:	000068
- */
 void GmWin::printStart(Graphics& gfx)
 {
 	gfx.setColour(mColourB, true);
 	gfx.setAuxColour(mAuxColourB);
 }
 
-/*
- * --INFO--
- * Address:	8011223C
- * Size:	000098
- */
 void GmWin::texture(Graphics& gfx, Texture* texture, int minX, int minY, int maxX, int maxY, RectArea area)
 {
 	minX = minX + mPosX;
@@ -191,11 +141,6 @@ void GmWin::texture(Graphics& gfx, Texture* texture, int minX, int minY, int max
 	gfx.drawRectangle(RectArea(minX, minY, minX + maxX, minY + maxY), area, nullptr);
 }
 
-/*
- * --INFO--
- * Address:	801122D4
- * Size:	0000A8
- */
 void GmWin::texturecentre(Graphics& gfx, Texture* texture, int minY, int width, int height, RectArea area)
 {
 	const int minX = mPosX + (mWidth >> 1) - (width >> 1);
@@ -204,11 +149,6 @@ void GmWin::texturecentre(Graphics& gfx, Texture* texture, int minY, int width, 
 	gfx.drawRectangle(RectArea(minX, minY, minX + width, minY + height), area, nullptr);
 }
 
-/*
- * --INFO--
- * Address:	8011237C
- * Size:	000098
- */
 void GmWin::textureleft(Graphics& gfx, Texture* texture, int minY, int width, int height, RectArea area)
 {
 	const int minX = mPosX + 32;
@@ -217,11 +157,6 @@ void GmWin::textureleft(Graphics& gfx, Texture* texture, int minY, int width, in
 	gfx.drawRectangle(RectArea(minX, minY, minX + width, minY + height), area, 0);
 }
 
-/*
- * --INFO--
- * Address:	80112414
- * Size:	0000A4
- */
 void GmWin::textureright(Graphics& gfx, Texture* texture, int minY, int width, int height, RectArea area)
 {
 	const int minX = mPosX + mWidth - width - 32;

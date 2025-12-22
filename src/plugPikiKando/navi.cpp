@@ -62,11 +62,6 @@ DEFINE_ERROR(89)
  */
 DEFINE_PRINT("navi");
 
-/*
- * --INFO--
- * Address:	800F82E8
- * Size:	00009C
- */
 void Navi::viewDraw(Graphics& gfx, immut Matrix4f& mtx)
 {
 	gfx.useMatrix(Matrix4f::ident, 0);
@@ -75,52 +70,27 @@ void Navi::viewDraw(Graphics& gfx, immut Matrix4f& mtx)
 	demoDraw(gfx, &mtx);
 }
 
-/*
- * --INFO--
- * Address:	800F8384
- * Size:	00005C
- */
 void Navi::viewStartTrembleMotion(f32)
 {
 	mNaviAnimMgr.startMotion(PaniMotionInfo(PIKIANIM_OCarry), PaniMotionInfo(PIKIANIM_OCarry));
 }
 
-/*
- * --INFO--
- * Address:	800F83E0
- * Size:	000028
- */
 void Navi::viewKill()
 {
 	mSRT.t  = mPellet->mSRT.t;
 	mPellet = nullptr;
 }
 
-/*
- * --INFO--
- * Address:	800F8408
- * Size:	000008
- */
 f32 Navi::viewGetBottomRadius()
 {
 	return 7.5f;
 }
 
-/*
- * --INFO--
- * Address:	800F8410
- * Size:	000008
- */
 f32 Navi::viewGetHeight()
 {
 	return 10.0f;
 }
 
-/*
- * --INFO--
- * Address:	800F8418
- * Size:	000028
- */
 bool Navi::isNuking()
 {
 	return mStateMachine->getCurrID(this) == NAVISTATE_Nuku;
@@ -145,11 +115,6 @@ void Navi::startMovie(bool doStopEffects)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800F84F8
- * Size:	000038
- */
 void Navi::startMovieInf()
 {
 	PRINT("************ NAVI => DEMO_INF STATE \n");
@@ -166,41 +131,21 @@ bool Navi::movieMode()
 	return (gameflow.mDemoFlags & 0x40) != 0;
 }
 
-/*
- * --INFO--
- * Address:	800F8530
- * Size:	000014
- */
 void Navi::incPlatePiki()
 {
 	mPlateMgr->mPlatePikiCount++;
 }
 
-/*
- * --INFO--
- * Address:	800F8544
- * Size:	000014
- */
 void Navi::decPlatePiki()
 {
 	mPlateMgr->mPlatePikiCount--;
 }
 
-/*
- * --INFO--
- * Address:	800F8558
- * Size:	00000C
- */
 int Navi::getPlatePikis()
 {
 	return mPlateMgr->mPlatePikiCount;
 }
 
-/*
- * --INFO--
- * Address:	800F8564
- * Size:	00000C
- */
 void Navi::startDayEnd()
 {
 	mIsDayEnd = TRUE;
@@ -272,11 +217,6 @@ void Navi::updateDayEnd(immut Vector3f& pos)
 	mVelocity.multiply(1.0f / gsys->getFrameTime());
 }
 
-/*
- * --INFO--
- * Address:	800F8980
- * Size:	000228
- */
 void Navi::enterAllPikis()
 {
 	// This has a capacity of 200 in the vanilla game for some reason.
@@ -326,11 +266,6 @@ void Navi::enterAllPikis()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800F8BA8
- * Size:	000C20
- */
 NaviProp::NaviProp()
 {
 	mCreatureProps.mFriction(1.0f);
@@ -338,11 +273,6 @@ NaviProp::NaviProp()
 	mCreatureProps.mAcceleration(0.2f);
 }
 
-/*
- * --INFO--
- * Address:	800F97C8
- * Size:	000020
- */
 bool Navi::isBuried()
 {
 	if (getCurrState()->getID() == NAVISTATE_Bury) {
@@ -351,11 +281,6 @@ bool Navi::isBuried()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800F97E8
- * Size:	000020
- */
 bool Navi::isVisible()
 {
 	if (getCurrState()->getID() == NAVISTATE_Dead) {
@@ -364,11 +289,6 @@ bool Navi::isVisible()
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	800F9808
- * Size:	000020
- */
 bool Navi::isRopable()
 {
 	if (getCurrState()->getID() == NAVISTATE_RopeExit) {
@@ -396,11 +316,6 @@ bool Navi::startDamage()
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	800F9834
- * Size:	000234
- */
 void Navi::startDamageEffect()
 {
 	CollPart* part = mCollInfo->getSphere('cent');
@@ -441,11 +356,6 @@ void Navi::startDamageEffect()
 	SeSystem::playPlayerSe(SE_DAMAGED);
 }
 
-/*
- * --INFO--
- * Address:	800F9A68
- * Size:	000120
- */
 void Navi::finishDamage()
 {
 	resetStateDamaged();
@@ -465,11 +375,6 @@ void Navi::finishDamage()
 	mDamageEfxA = mDamageEfxB = mDamageEfxC = nullptr;
 }
 
-/*
- * --INFO--
- * Address:	800F9B8C
- * Size:	000668
- */
 Navi::Navi(CreatureProp* props, int naviID)
     : Creature(props)
 {
@@ -565,11 +470,6 @@ void Navi::Locus::update()
 	_0C.y -= AIConstant::_instance->mConstants.mGravity() * time;
 }
 
-/*
- * --INFO--
- * Address:	800FA1F4
- * Size:	000054
- */
 void Navi::startKontroller()
 {
 	if (KIO::kontMode == KONT_Save) {
@@ -582,11 +482,6 @@ void Navi::startKontroller()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800FA248
- * Size:	000040
- */
 void Navi::rideUfo()
 {
 	mIsRidingUfo = true;
@@ -594,11 +489,6 @@ void Navi::rideUfo()
 	mNaviLightGlowEfx->kill();
 }
 
-/*
- * --INFO--
- * Address:	800FA288
- * Size:	000408
- */
 void Navi::reset()
 {
 	mDamageEfxA = mDamageEfxB = mDamageEfxC = nullptr;
@@ -649,21 +539,11 @@ void Navi::reset()
 	mNaviLightGlowEfx->changeEffect(EffectMgr::EFF_Navi_LightGlow);
 }
 
-/*
- * --INFO--
- * Address:	800FA690
- * Size:	00000C
- */
 f32 Navi::getSize()
 {
 	return NAVI_PROP._1FC();
 }
 
-/*
- * --INFO--
- * Address:	800FA69C
- * Size:	000048
- */
 f32 Navi::getiMass()
 {
 	int stateID = mStateMachine->getCurrID(this);
@@ -678,11 +558,6 @@ f32 Navi::getiMass()
 	return NAVI_PROP._21C();
 }
 
-/*
- * --INFO--
- * Address:	800FA6E4
- * Size:	00018C
- */
 void Navi::findNextThrowPiki()
 {
 	mNextThrowPiki = nullptr;
@@ -703,22 +578,12 @@ void Navi::findNextThrowPiki()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800FA870
- * Size:	000038
- */
 void Navi::startMotion(immut PaniMotionInfo& motion1, immut PaniMotionInfo& motion2)
 {
 	mNaviAnimMgr.startMotion(motion1, motion2);
 	mPreBlendLowerMotionID = -1;
 }
 
-/*
- * --INFO--
- * Address:	800FA8A8
- * Size:	000050
- */
 void Navi::enableMotionBlend()
 {
 	mPreBlendLowerMotionID = mNaviAnimMgr.getLowerAnimator().getCurrentMotionIndex();
@@ -736,11 +601,6 @@ bool Navi::doMotionBlend()
 	return mPreBlendLowerMotionID != -1;
 }
 
-/*
- * --INFO--
- * Address:	800FA8F8
- * Size:	0003BC
- */
 void Navi::updateWalkAnimation()
 {
 	mCollisionRadius  = NAVI_PROP._20C();
@@ -838,11 +698,6 @@ void Navi::updateWalkAnimation()
 	mMotionSpeed = speed;
 }
 
-/*
- * --INFO--
- * Address:	800FACB4
- * Size:	000034
- */
 void Navi::postUpdate(int unused, f32 deltaTime)
 {
 	if (!movieMode()) {
@@ -850,11 +705,6 @@ void Navi::postUpdate(int unused, f32 deltaTime)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800FACE8
- * Size:	000500
- */
 void Navi::update()
 {
 	if (!mGroundTriangle) {
@@ -968,11 +818,6 @@ void Navi::update()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800FB1E8
- * Size:	0001F4
- */
 void Navi::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	// sure kando.
@@ -1020,11 +865,6 @@ void Navi::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800FB3DC
- * Size:	0007C4
- */
 void Navi::callPikis(f32 radius)
 {
 	Vector3f unused = mCursorWorldPos - mSRT.t;
@@ -1144,11 +984,6 @@ void Navi::callPikis(f32 radius)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800FBBA0
- * Size:	00037C
- */
 void Navi::callDebugs(f32 radius)
 {
 	Iterator iterPiki(pikiMgr);
@@ -1312,11 +1147,6 @@ void Navi::releasePikis()
 	STACK_PAD_VAR(2);
 }
 
-/*
- * --INFO--
- * Address:	800FC6F8
- * Size:	0000C4
- */
 void Navi::doAI()
 {
 	if (gameflow.mDemoFlags & 0x40) {
@@ -1373,12 +1203,6 @@ bool Navi::insideOnyon()
 
 	return false;
 }
-
-/*
- * --INFO--
- * Address:	800FC7FC
- * Size:	000A40
- */
 
 bool Navi::procActionButton()
 {
@@ -1518,22 +1342,12 @@ bool Navi::procActionButton()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800FD23C
- * Size:	00003C
- */
 void Navi::offwallCallback(DynCollObject* wall)
 {
 	MsgOffWall msg(wall);
 	sendMsg(&msg);
 }
 
-/*
- * --INFO--
- * Address:	800FD278
- * Size:	000058
- */
 void Navi::wallCallback(immut Plane& wallPlane, DynCollObject* wallObj)
 {
 	mWallPlane   = &wallPlane;
@@ -1544,31 +1358,16 @@ void Navi::wallCallback(immut Plane& wallPlane, DynCollObject* wallObj)
 	sendMsg(&msg);
 }
 
-/*
- * --INFO--
- * Address:	800FD2D0
- * Size:	000004
- */
 void Navi::jumpCallback()
 {
 }
 
-/*
- * --INFO--
- * Address:	800FD2D4
- * Size:	00004C
- */
 bool Navi::isAtari()
 {
 	int state = mStateMachine->getCurrID(this);
 	return state != NAVISTATE_Pressed && state != NAVISTATE_Bury && state != NAVISTATE_Container;
 }
 
-/*
- * --INFO--
- * Address:	800FD320
- * Size:	00004C
- */
 bool Navi::ignoreAtari(Creature* target)
 {
 	if (target->mObjType == OBJTYPE_Piki) {
@@ -1581,22 +1380,12 @@ bool Navi::ignoreAtari(Creature* target)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800FD36C
- * Size:	000050
- */
 void Navi::bounceCallback()
 {
 	MsgBounce msg(Vector3f(0.0f, 1.0f, 0.0f));
 	sendMsg(&msg);
 }
 
-/*
- * --INFO--
- * Address:	800FD3BC
- * Size:	0001D8
- */
 void Navi::letPikiWork()
 {
 	Iterator iter(mPlateMgr);
@@ -1626,11 +1415,6 @@ void Navi::letPikiWork()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800FD594
- * Size:	000370
- */
 void Navi::collisionCallback(immut CollEvent& event)
 {
 	Creature* collider = event.mCollider;
@@ -1703,20 +1487,10 @@ void Navi::collisionCallback(immut CollEvent& event)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800FD904
- * Size:	000004
- */
 void Navi::doKill()
 {
 }
 
-/*
- * --INFO--
- * Address:	800FD908
- * Size:	0001E8
- */
 void Navi::reviseController(Vector3f& stickPos)
 {
 	f32 newMag = stickPos.length();
@@ -1752,12 +1526,6 @@ void Navi::reviseController(Vector3f& stickPos)
 
 	STACK_PAD_VAR(2);
 }
-
-/*
- * --INFO--
- * Address:	800FDAF0
- * Size:	0008FC
- */
 
 int gupper()
 {
@@ -1887,11 +1655,6 @@ void Navi::makeVelocity(bool p1)
 	Vector2f();
 }
 
-/*
- * --INFO--
- * Address:	800FE3EC
- * Size:	000858
- */
 void Navi::makeCStick(bool p1)
 {
 	f32 angle                   = NMathF::atan2(mNaviCamera->mViewXAxis.z, mNaviCamera->mViewXAxis.x);
@@ -2032,11 +1795,6 @@ void Navi::makeCStick(bool p1)
 	STACK_PAD_VAR(1);
 }
 
-/*
- * --INFO--
- * Address:	800FEC44
- * Size:	0005A8
- */
 void Navi::refresh(Graphics& gfx)
 {
 	draw(gfx);
@@ -2118,11 +1876,6 @@ void Navi::refresh(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800FF1EC
- * Size:	0000E8
- */
 void Navi::demoDraw(Graphics& gfx, immut Matrix4f* mtx)
 {
 	mShadowCaster.mSourcePosition.set(mSRT.t.x + 75.0f, mSRT.t.y + 100.0f, mSRT.t.z + 25.0f);
@@ -2134,11 +1887,6 @@ void Navi::demoDraw(Graphics& gfx, immut Matrix4f* mtx)
 	mNaviLightGlowEfx->updatePos(mNaviLightPosition);
 }
 
-/*
- * --INFO--
- * Address:	800FF2D4
- * Size:	0002D8
- */
 void Navi::draw(Graphics& gfx)
 {
 	if (isPellet()) {
@@ -2192,11 +1940,6 @@ void Navi::draw(Graphics& gfx)
 	STACK_PAD_VAR(7);
 }
 
-/*
- * --INFO--
- * Address:	800FF5AC
- * Size:	0001FC
- */
 void Navi::renderCircle(Graphics& gfx)
 {
 	f32 tmp;
@@ -2233,20 +1976,10 @@ void Navi::renderCircle(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800FF7A8
- * Size:	000004
- */
 void Navi::refresh2d(Graphics&)
 {
 }
 
-/*
- * --INFO--
- * Address:	800FF7AC
- * Size:	00003C
- */
 void Navi::sendMsg(Msg* msg)
 {
 	mStateMachine->procMsg(this, msg);
@@ -2261,11 +1994,6 @@ void Navi::procDamage(f32)
 {
 }
 
-/*
- * --INFO--
- * Address:	800FF968
- * Size:	000074
- */
 bool Navi::stimulate(immut Interaction& interaction)
 {
 	if (interaction.actCommon(this)) {
@@ -2275,11 +2003,6 @@ bool Navi::stimulate(immut Interaction& interaction)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800FF9DC
- * Size:	0000C4
- */
 bool InteractGeyzer::actNavi(Navi* navi) immut
 {
 	if (navi->isDamaged()) {
@@ -2301,11 +2024,6 @@ bool InteractGeyzer::actNavi(Navi* navi) immut
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	800FFAA0
- * Size:	0000FC
- */
 bool InteractBury::actNavi(Navi* navi) immut
 {
 	NaviState* state = navi->mStateMachine->getNaviState(navi);
@@ -2326,11 +2044,6 @@ bool InteractBury::actNavi(Navi* navi) immut
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	800FFB9C
- * Size:	000094
- */
 bool InteractWind::actNavi(Navi* navi) immut
 {
 	NaviState* state = navi->mStateMachine->getNaviState(navi);
@@ -2343,11 +2056,6 @@ bool InteractWind::actNavi(Navi* navi) immut
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	800FFC30
- * Size:	000114
- */
 bool InteractSuck::actNavi(Navi* navi) immut
 {
 	PRINT_GLOBAL("actNavi");
@@ -2385,11 +2093,6 @@ bool InteractSuck::actNavi(Navi* navi) immut
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	800FFD44
- * Size:	0001A4
- */
 bool InteractAttack::actNavi(Navi* navi) immut
 {
 	if (navi->isDamaged()) {
@@ -2416,11 +2119,6 @@ bool InteractAttack::actNavi(Navi* navi) immut
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	800FFEE8
- * Size:	000110
- */
 bool InteractPress::actNavi(Navi* navi) immut
 {
 	if (navi->isDamaged()) {
@@ -2445,11 +2143,6 @@ bool InteractPress::actNavi(Navi* navi) immut
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	800FFFF8
- * Size:	0001B8
- */
 bool InteractSwallow::actNavi(Navi* navi) immut
 {
 	PRINT("NAVI GOT SWALLOW INTERACTION !\n");
@@ -2477,11 +2170,6 @@ bool InteractSwallow::actNavi(Navi* navi) immut
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	801001B0
- * Size:	000118
- */
 bool InteractBomb::actNavi(Navi* navi) immut
 {
 	if (navi->mStateMachine->getNaviState(navi)->invincible(navi)) {
@@ -2508,22 +2196,12 @@ bool InteractBomb::actNavi(Navi* navi) immut
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	801002C8
- * Size:	000080
- */
 bool Navi::orimaDamaged()
 {
 	int state = mStateMachine->getCurrID(this);
 	return isDamaged() || state == NAVISTATE_Flick || state == NAVISTATE_Pressed || state == NAVISTATE_Stuck || state == NAVISTATE_Bury;
 }
 
-/*
- * --INFO--
- * Address:	80100348
- * Size:	000144
- */
 bool InteractFlick::actNavi(Navi* navi) immut
 {
 	if (navi->mStateMachine->getCurrID(navi) == NAVISTATE_PikiZero) {
@@ -2556,11 +2234,6 @@ bool InteractFlick::actNavi(Navi* navi) immut
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8010048C
- * Size:	0000F0
- */
 bool InteractBubble::actNavi(Navi* navi) immut
 {
 	if (navi->mStateMachine->getNaviState(navi)->invincible(navi)) {
@@ -2580,11 +2253,6 @@ bool InteractBubble::actNavi(Navi* navi) immut
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8010057C
- * Size:	0000F0
- */
 bool InteractFire::actNavi(Navi* navi) immut
 {
 	if (navi->mStateMachine->getNaviState(navi)->invincible(navi)) {
@@ -2604,11 +2272,6 @@ bool InteractFire::actNavi(Navi* navi) immut
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8010066C
- * Size:	0000C0
- */
 void Navi::dump()
 {
 	if (Piki::directDumpMode) {
@@ -2628,11 +2291,6 @@ void Navi::dump()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8010072C
- * Size:	000234
- */
 void Navi::throwPiki(Piki* piki, immut Vector3f& pos)
 {
 	f32 unused = mFaceDirection + PI;
@@ -2672,11 +2330,6 @@ void Navi::throwLocus(Vector3f&)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80100960
- * Size:	00005C
- */
 void Navi::swapMotion(immut PaniMotionInfo& motion1, immut PaniMotionInfo& motion2)
 {
 	STACK_PAD_VAR(4);
@@ -2729,22 +2382,12 @@ void Navi::renderParabola(Graphics& gfx, f32 height, f32 len)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801009BC
- * Size:	000014
- */
 void Navi::finishLook()
 {
 	mLookAtPosPtr = nullptr;
 	_2F0          = 10;
 }
 
-/*
- * --INFO--
- * Address:	801009D0
- * Size:	000340
- */
 void Navi::updateLook()
 {
 	f32 angle1;
@@ -2818,11 +2461,6 @@ void Navi::updateLook()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80100D10
- * Size:	00037C
- */
 void Navi::updateHeadMatrix()
 {
 	if (!mLookAtPosPtr && _2F0 == 0) {

@@ -19,11 +19,6 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("taijudgementactions")
 
-/*
- * --INFO--
- * Address:	8012F4CC
- * Size:	000050
- */
 bool TaiVisibleTargetAction::act(Teki& teki)
 {
 	Creature* target = teki.getCreaturePointer(0);
@@ -38,11 +33,6 @@ bool TaiVisibleTargetAction::act(Teki& teki)
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8012F51C
- * Size:	000050
- */
 bool TaiContactTargetAction::act(Teki& teki)
 {
 	Creature* target = teki.getCreaturePointer(0);
@@ -57,11 +47,6 @@ bool TaiContactTargetAction::act(Teki& teki)
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8012F56C
- * Size:	000050
- */
 bool TaiSeparateTargetAction::act(Teki& teki)
 {
 	Creature* target = teki.getCreaturePointer(0);
@@ -76,11 +61,6 @@ bool TaiSeparateTargetAction::act(Teki& teki)
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8012F5BC
- * Size:	000074
- */
 bool TaiTargetLostAction::act(Teki& teki)
 {
 	Creature* target = teki.getCreaturePointer(0);
@@ -96,31 +76,16 @@ bool TaiTargetLostAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8012F630
- * Size:	0000BC
- */
 bool TaiOutsideTerritoryAction::act(Teki& teki)
 {
 	return teki.getTerritoryDistance() > mTerritoryRadius;
 }
 
-/*
- * --INFO--
- * Address:	8012F6EC
- * Size:	0000C0
- */
 bool TaiInsideTerritoryAction::act(Teki& teki)
 {
 	return teki.getTerritoryDistance() <= mTerritoryRadius;
 }
 
-/*
- * --INFO--
- * Address:	8012F7AC
- * Size:	0000AC
- */
 bool TaiTargetVisibleNaviPikiAction::act(Teki& teki)
 {
 	Creature* naviPiki = teki.getClosestNaviPiki(TekiVisibleCondition(&teki), nullptr);
@@ -134,11 +99,6 @@ bool TaiTargetVisibleNaviPikiAction::act(Teki& teki)
 	TekiVisibleCondition(nullptr);
 }
 
-/*
- * --INFO--
- * Address:	8012F858
- * Size:	0000F0
- */
 bool TaiTargetVisibleNaviAction::act(Teki& teki)
 {
 	Creature* navi = naviMgr->findClosest(teki.getPosition(), &TekiAndCondition(&TekiVisibleCondition(&teki), &TekiNaviCondition()));
@@ -154,11 +114,6 @@ bool TaiTargetVisibleNaviAction::act(Teki& teki)
 	TekiAndCondition(nullptr, nullptr);
 }
 
-/*
- * --INFO--
- * Address:	8012F948
- * Size:	000128
- */
 bool TaiHasStickersInMouthAction::act(Teki& teki)
 {
 	Stickers stuckList(&teki);
@@ -178,11 +133,6 @@ bool TaiHasStickersInMouthAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8012FA70
- * Size:	000128
- */
 bool TaiHasStickersOnBodyAction::act(Teki& teki)
 {
 	Stickers stuckList(&teki);

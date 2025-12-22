@@ -741,11 +741,6 @@ protected:
 	// TODO: members
 };
 
-/*
- * --INFO--
- * Address:	801D624C
- * Size:	000084
- */
 TAImiurinSoundTable::TAImiurinSoundTable()
     : PaniSoundTable(3)
 {
@@ -754,11 +749,6 @@ TAImiurinSoundTable::TAImiurinSoundTable()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801D62D0
- * Size:	000404
- */
 TAImiurinParameters::TAImiurinParameters()
     : TekiParameters(TAImiurinIntParams::COUNT, TAImiurinFloatParams::COUNT)
 {
@@ -840,11 +830,6 @@ TAImiurinParameters::TAImiurinParameters()
 	multiP->setF(TPF_SpawnVelocity, 0.0f);
 }
 
-/*
- * --INFO--
- * Address:	801D66D4
- * Size:	0019CC
- */
 TAImiurinStrategy::TAImiurinStrategy()
     : YaiStrategy(TAImiurinStateID::COUNT, TAImiurinStateID::Init)
 {
@@ -1169,11 +1154,6 @@ TAImiurinStrategy::TAImiurinStrategy()
 	STACK_PAD_VAR(2);
 }
 
-/*
- * --INFO--
- * Address:	801D80A0
- * Size:	0000C4
- */
 bool TAImiurinStrategy::interact(Teki& teki, immut TekiInteractionKey& interaction)
 {
 	switch (interaction.mInteractionType) {
@@ -1194,11 +1174,6 @@ bool TAImiurinStrategy::interact(Teki& teki, immut TekiInteractionKey& interacti
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	801D8164
- * Size:	0006FC
- */
 void TAImiurinAnimation::makeDefaultAnimations()
 {
 	if (!mAnimMgr) {

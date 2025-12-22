@@ -20,11 +20,6 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("streamBufferedInput");
 
-/*
- * --INFO--
- * Address:	80025500
- * Size:	000098
- */
 void BufferedInputStream::init(Stream* stream, u8* buffer, int bufferSize)
 {
 	mPath             = StdSystem::stringDup(stream->mPath);
@@ -37,21 +32,11 @@ void BufferedInputStream::init(Stream* stream, u8* buffer, int bufferSize)
 	fillBuffer();
 }
 
-/*
- * --INFO--
- * Address:	80025598
- * Size:	0000C0
- */
 BufferedInputStream::BufferedInputStream(Stream* stream, u8* buffer, int bufferSize)
 {
 	init(stream, buffer, bufferSize);
 }
 
-/*
- * --INFO--
- * Address:	80025658
- * Size:	000088
- */
 void BufferedInputStream::fillBuffer()
 {
 	if (mRemainingBytes - mCurrentBufferPos != 0) {
@@ -68,11 +53,6 @@ void BufferedInputStream::fillBuffer()
 	mCurrentBufferPos = 0;
 }
 
-/*
- * --INFO--
- * Address:	80025724
- * Size:	000104
- */
 void BufferedInputStream::read(void* input, int size)
 {
 	u8* buf = static_cast<u8*>(input);

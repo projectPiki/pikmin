@@ -18,11 +18,6 @@ static inline void InitMutexQueue(OSMutexQueue* queue)
 	queue->head = queue->tail = NULL;
 }
 
-/*
- * --INFO--
- * Address:	801FB9AC
- * Size:	000128
- */
 void __OSThreadInit(void)
 {
 	OSThread* thread = &DefaultThread;
@@ -58,21 +53,11 @@ void __OSThreadInit(void)
 	Reschedule = 0;
 }
 
-/*
- * --INFO--
- * Address:	801FBAD4
- * Size:	000010
- */
 void OSInitThreadQueue(OSThreadQueue* threadQueue)
 {
 	threadQueue->head = threadQueue->tail = NULL;
 }
 
-/*
- * --INFO--
- * Address:	801FBAE4
- * Size:	00000C
- */
 OSThread* OSGetCurrentThread(void)
 {
 	return __OSCurrentThread;
@@ -101,11 +86,6 @@ BOOL OSIsThreadSuspended(OSThread* thread)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801FBAF0
- * Size:	000034
- */
 BOOL OSIsThreadTerminated(OSThread* thread)
 {
 	return (thread->state == OS_THREAD_STATE_MORIBUND || thread->state == OS_THREAD_STATE_NULL) ? TRUE : FALSE;
@@ -133,11 +113,6 @@ static BOOL __OSIsThreadActive(OSThread* thread)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801FBB24
- * Size:	000040
- */
 s32 OSDisableScheduler(void)
 {
 	BOOL enabled;
@@ -149,11 +124,6 @@ s32 OSDisableScheduler(void)
 	return count;
 }
 
-/*
- * --INFO--
- * Address:	801FBB64
- * Size:	000040
- */
 s32 OSEnableScheduler(void)
 {
 	BOOL enabled;
@@ -180,11 +150,6 @@ static void SetRun(OSThread* thread)
 
 #pragma dont_inline on
 
-/*
- * --INFO--
- * Address:	801FBBA4
- * Size:	000068
- */
 static void UnsetRun(OSThread* thread)
 {
 	OSThreadQueue* queue;
@@ -197,11 +162,6 @@ static void UnsetRun(OSThread* thread)
 
 #pragma dont_inline reset
 
-/*
- * --INFO--
- * Address:	801FBC0C
- * Size:	00003C
- */
 OSPriority __OSGetEffectivePriority(OSThread* thread)
 {
 	OSPriority priority;
@@ -218,11 +178,6 @@ OSPriority __OSGetEffectivePriority(OSThread* thread)
 	return priority;
 }
 
-/*
- * --INFO--
- * Address:	801FBC48
- * Size:	0001C0
- */
 static OSThread* SetEffectivePriority(OSThread* thread, OSPriority priority)
 {
 	switch (thread->state) {
@@ -271,11 +226,6 @@ static void UpdatePriority(OSThread* thread)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801FBE08
- * Size:	000050
- */
 void __OSPromoteThread(OSThread* thread, OSPriority priority)
 {
 	do {
@@ -290,11 +240,6 @@ void __OSPromoteThread(OSThread* thread, OSPriority priority)
 	} while (thread);
 }
 
-/*
- * --INFO--
- * Address:	801FBE58
- * Size:	000200
- */
 static OSThread* SelectThread(BOOL yield)
 {
 	OSContext* currentContext;
@@ -357,11 +302,6 @@ static OSThread* SelectThread(BOOL yield)
 	return nextThread;
 }
 
-/*
- * --INFO--
- * Address:	801FC058
- * Size:	000030
- */
 void __OSReschedule(void)
 {
 	if (!RunQueueHint) {
@@ -371,11 +311,6 @@ void __OSReschedule(void)
 	SelectThread(FALSE);
 }
 
-/*
- * --INFO--
- * Address:	801FC088
- * Size:	00003C
- */
 void OSYieldThread(void)
 {
 	BOOL enabled;
@@ -385,11 +320,6 @@ void OSYieldThread(void)
 	OSRestoreInterrupts(enabled);
 }
 
-/*
- * --INFO--
- * Address:	801FC0C4
- * Size:	000120
- */
 BOOL OSCreateThread(OSThread* thread, OSThreadStartFunction func, void* param, void* stack, u32 stackSize, OSPriority priority, u16 attr)
 {
 	BOOL enable;
@@ -428,11 +358,6 @@ BOOL OSCreateThread(OSThread* thread, OSThreadStartFunction func, void* param, v
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	801FC1E4
- * Size:	0000E4
- */
 void OSExitThread(void* val)
 {
 	OSThread* thread;
@@ -461,11 +386,6 @@ void OSExitThread(void* val)
 	OSRestoreInterrupts(enable);
 }
 
-/*
- * --INFO--
- * Address:	801FC2C8
- * Size:	0001BC
- */
 void OSCancelThread(OSThread* thread)
 {
 	BOOL enabled;
@@ -511,11 +431,6 @@ void OSCancelThread(OSThread* thread)
 	return;
 }
 
-/*
- * --INFO--
- * Address:	801FC484
- * Size:	000140
- */
 BOOL OSJoinThread(OSThread* thread, void** val)
 {
 	BOOL enabled = OSDisableInterrupts();
@@ -551,11 +466,6 @@ void OSDetachThread(OSThread* thread)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801FC5C4
- * Size:	000288
- */
 s32 OSResumeThread(OSThread* thread)
 {
 	BOOL enabled;
@@ -586,11 +496,6 @@ s32 OSResumeThread(OSThread* thread)
 	return suspendCount;
 }
 
-/*
- * --INFO--
- * Address:	801FC84C
- * Size:	000170
- */
 s32 OSSuspendThread(OSThread* thread)
 {
 	BOOL enabled;
@@ -623,11 +528,6 @@ s32 OSSuspendThread(OSThread* thread)
 	return suspendCount;
 }
 
-/*
- * --INFO--
- * Address:	801FC9BC
- * Size:	0000EC
- */
 void OSSleepThread(OSThreadQueue* threadQueue)
 {
 	BOOL enabled;
@@ -644,11 +544,6 @@ void OSSleepThread(OSThreadQueue* threadQueue)
 	OSRestoreInterrupts(enabled);
 }
 
-/*
- * --INFO--
- * Address:	801FCAA8
- * Size:	000104
- */
 void OSWakeupThread(OSThreadQueue* threadQueue)
 {
 	BOOL enabled;
@@ -676,11 +571,6 @@ BOOL OSSetThreadPriority(OSThread*, s32)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801FCBAC
- * Size:	000008
- */
 OSPriority OSGetThreadPriority(OSThread* thread)
 {
 	return thread->base;
@@ -706,11 +596,6 @@ OSThread* OSGetIdleFunction(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801FCBB4
- * Size:	00009C
- */
 static int CheckThreadQueue(OSThreadQueue* queue)
 {
 	OSThread* thread;
@@ -762,11 +647,6 @@ static BOOL IsMember(OSThreadQueue* queue, OSThread* thread)
 
 #define IsSuspended(suspend) (suspend > 0)
 
-/*
- * --INFO--
- * Address:	801FCC50
- * Size:	000750
- */
 s32 OSCheckActiveThreads(void)
 {
 	OSThread* thread;

@@ -18,11 +18,6 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("TAIAreaction")
 
-/*
- * --INFO--
- * Address:	801A8490
- * Size:	000050
- */
 bool TAIAhitCheckFlyingPiki::actByEvent(immut TekiEvent& event)
 {
 	if (event.mEventType == TekiEventType::Entity && event.mOther->mObjType == OBJTYPE_Piki
@@ -33,31 +28,16 @@ bool TAIAhitCheckFlyingPiki::actByEvent(immut TekiEvent& event)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	801A84E0
- * Size:	00001C
- */
 bool TAIAdeadCheck::act(Teki& teki)
 {
 	return teki.mHealth <= 0.0f;
 }
 
-/*
- * --INFO--
- * Address:	801A84FC
- * Size:	000030
- */
 void TAIAdie::start(Teki& teki)
 {
 	teki.die();
 }
 
-/*
- * --INFO--
- * Address:	801A852C
- * Size:	0000F8
- */
 void TAIAdying::start(Teki& teki)
 {
 	TAIAmotion::start(teki);
@@ -83,11 +63,6 @@ void TAIAdying::start(Teki& teki)
 	teki.releasePlatCollisions();
 }
 
-/*
- * --INFO--
- * Address:	801A8624
- * Size:	0000AC
- */
 bool TAIAdying::act(Teki& teki)
 {
 	if (teki.animationFinished()) {
@@ -110,22 +85,12 @@ bool TAIAdying::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	801A86D0
- * Size:	000044
- */
 void TAIAdyingKabekui::start(Teki& teki)
 {
 	TAIAdying::start(teki);
 	teki.finishFlying();
 }
 
-/*
- * --INFO--
- * Address:	801A8714
- * Size:	000144
- */
 bool TAIAdyingKabekui::act(Teki& teki)
 {
 	Vector3f pos(teki.getPosition());
@@ -137,21 +102,11 @@ bool TAIAdyingKabekui::act(Teki& teki)
 	return TAIAdying::act(teki);
 }
 
-/*
- * --INFO--
- * Address:	801A8858
- * Size:	000044
- */
 void TAIAdyingCrushKabekui::start(Teki& teki)
 {
 	TAIAdyingKabekui::start(teki);
 }
 
-/*
- * --INFO--
- * Address:	801A889C
- * Size:	0000E0
- */
 bool TAIAdamage::act(Teki& teki)
 {
 	if (teki.mStoredDamage <= 0.0f) {
@@ -173,11 +128,6 @@ bool TAIAdamage::act(Teki& teki)
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	801A8984
- * Size:	000048
- */
 bool TAIAinWater::act(Teki& teki)
 {
 	bool isInWater = false;
@@ -187,11 +137,6 @@ bool TAIAinWater::act(Teki& teki)
 	return isInWater;
 }
 
-/*
- * --INFO--
- * Address:	801A89CC
- * Size:	000068
- */
 bool TAIAinWater::actByEvent(immut TekiEvent& event)
 {
 	bool isWater = false;
@@ -206,11 +151,6 @@ bool TAIAinWater::actByEvent(immut TekiEvent& event)
 	return isWater;
 }
 
-/*
- * --INFO--
- * Address:	801A8A34
- * Size:	000100
- */
 bool TAIAinWaterDamage::act(Teki& teki)
 {
 	bool res = TAIAinWater::act(teki);
@@ -243,11 +183,6 @@ bool TAIAinWaterDamage::act(Teki& teki)
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	801A8B34
- * Size:	0000A8
- */
 bool TAIAinWaterDamage::actByEvent(immut TekiEvent& event)
 {
 	bool res = TAIAinWater::actByEvent(event);
@@ -259,11 +194,6 @@ bool TAIAinWaterDamage::actByEvent(immut TekiEvent& event)
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	801A8BDC
- * Size:	000050
- */
 void TAIAinWaterDamage::createEffect(Teki& teki)
 {
 	effectMgr->create(EffectMgr::EFF_P_Bubbles, teki.getPosition(), nullptr, nullptr);

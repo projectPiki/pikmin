@@ -22,11 +22,6 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("drawHurryUp")
 
-/*
- * --INFO--
- * Address:	801C049C
- * Size:	000308
- */
 zen::DrawHurryUp::DrawHurryUp()
 {
 	mMode      = MODE_Start;
@@ -52,11 +47,6 @@ zen::DrawHurryUp::DrawHurryUp()
 	initPanes();
 }
 
-/*
- * --INFO--
- * Address:	801C07A4
- * Size:	000110
- */
 void zen::DrawHurryUp::initPanes()
 {
 	mRootPane->setOffset(mRootPane->getWidth() >> 1, mRootPane->getHeight() >> 1);
@@ -75,11 +65,6 @@ void zen::DrawHurryUp::initPanes()
 	mMsgFillPane->setAlpha(0);
 }
 
-/*
- * --INFO--
- * Address:	801C08B4
- * Size:	00012C
- */
 void zen::DrawHurryUp::start(zen::DrawHurryUp::messageTypeFlag)
 {
 	mIsVisible    = true;
@@ -89,11 +74,6 @@ void zen::DrawHurryUp::start(zen::DrawHurryUp::messageTypeFlag)
 	initPanes();
 }
 
-/*
- * --INFO--
- * Address:	801C09E0
- * Size:	0001AC
- */
 void zen::DrawHurryUp::startStatus()
 {
 	mModeTimer += gsys->getFrameTime();
@@ -184,11 +164,6 @@ void zen::DrawHurryUp::brightStatus()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801C0B8C
- * Size:	0001F8
- */
 bool zen::DrawHurryUp::endStatus()
 {
 	bool res = false;
@@ -218,11 +193,6 @@ bool zen::DrawHurryUp::endStatus()
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	801C0D84
- * Size:	0002C0
- */
 bool zen::DrawHurryUp::update()
 {
 	bool res = false;
@@ -254,11 +224,6 @@ bool zen::DrawHurryUp::update()
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	801C1044
- * Size:	00005C
- */
 void zen::DrawHurryUp::draw(Graphics&)
 {
 	if (mIsVisible) {

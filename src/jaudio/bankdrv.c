@@ -7,11 +7,6 @@
 
 static u32 FORCE_RELEASE_TABLE[3] = { 5, 15, 0 };
 
-/*
- * --INFO--
- * Address:	8000CFC0
- * Size:	000030
- */
 Inst_* Bank_InstChange(Bank_* bank, volatile u32 VOLATILE_index)
 {
 	STACK_PAD_VAR(1);
@@ -41,11 +36,6 @@ Voice_* Bank_VoiceChange(Bank_* bank, volatile u32 VOLATILE_index)
 	return bank->mVoices[index];
 }
 
-/*
- * --INFO--
- * Address:	8000D000
- * Size:	000030
- */
 Perc_* Bank_PercChange(Bank_* bank, volatile u32 VOLATILE_index)
 {
 	STACK_PAD_VAR(1);
@@ -58,11 +48,6 @@ Perc_* Bank_PercChange(Bank_* bank, volatile u32 VOLATILE_index)
 	return bank->mPercs[index];
 }
 
-/*
- * --INFO--
- * Address:	8000D040
- * Size:	00005C
- */
 int Bank_GetInstKeymap(Inst_* inst, u8 param_2)
 {
 	if (!inst) {
@@ -78,11 +63,6 @@ int Bank_GetInstKeymap(Inst_* inst, u8 param_2)
 	return -1;
 }
 
-/*
- * --INFO--
- * Address:	8000D0A0
- * Size:	000090
- */
 int Bank_GetInstVmap(Inst_* inst, u8 param_2, u8 param_3)
 {
 	STACK_PAD_VAR(1);
@@ -108,11 +88,6 @@ int Bank_GetInstVmap(Inst_* inst, u8 param_2, u8 param_3)
 	return instIndex;
 }
 
-/*
- * --INFO--
- * Address:	8000D140
- * Size:	000068
- */
 Vmap_* Bank_GetPercVmap(Perc_* perc, u8 keyIdx, u8 vel)
 {
 	if (!perc) {
@@ -142,11 +117,6 @@ int Bank_GetVoiceMap(Voice_* voice, u16 id)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8000D1C0
- * Size:	000104
- */
 f32 Bank_SenseToOfs(Sense_* sensor, u8 p2)
 {
 	if (!sensor) {
@@ -167,11 +137,6 @@ f32 Bank_SenseToOfs(Sense_* sensor, u8 p2)
 	return 1.0f + (sensor->max - 1.0f) * ((f32)a / (f32)b);
 }
 
-/*
- * --INFO--
- * Address:	8000D2E0
- * Size:	000048
- */
 f32 Bank_RandToOfs(Rand_* rand)
 {
 	f32 value;
@@ -185,11 +150,6 @@ f32 Bank_RandToOfs(Rand_* rand)
 	return value;
 }
 
-/*
- * --INFO--
- * Address:	8000D340
- * Size:	0003F8
- */
 f32 Bank_OscToOfs(Osc_* osc, Oscbuf_* buf)
 {
 	f32 sub;

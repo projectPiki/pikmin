@@ -51,11 +51,6 @@ void ARAMStartDMA(u32, u32, u32, u32, s32, u32*, void (*)())
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	800061A0
- * Size:	000008
- */
 void Jac_SetAudioARAMSize(u32 size)
 {
 	SELECTED_ARAM_SIZE = size;
@@ -71,11 +66,6 @@ void ARAlloc2(u32)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	800061C0
- * Size:	000058
- */
 void* ARAllocFull(u32* outSize)
 {
 	u32 freeSize = aram_hp.length - ((int)aram_hp.current - (int)aram_hp.base);
@@ -85,11 +75,6 @@ void* ARAllocFull(u32* outSize)
 	return alloc;
 }
 
-/*
- * --INFO--
- * Address:	80006220
- * Size:	000098
- */
 void Jac_InitARAM(u32 loadAudiorom)
 {
 	volatile u32 audiorom_size;

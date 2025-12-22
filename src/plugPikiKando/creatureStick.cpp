@@ -23,11 +23,6 @@ DEFINE_ERROR(16)
  */
 DEFINE_PRINT("CreatureStick");
 
-/*
- * --INFO--
- * Address:	8008F9C4
- * Size:	000160
- */
 void Creature::interactStickers(Creature* stuckTo, immut Interaction& interaction, immut Condition* condition)
 {
 	Stickers stuckList(stuckTo);
@@ -43,22 +38,12 @@ void Creature::interactStickers(Creature* stuckTo, immut Interaction& interactio
 	}
 }
 
-/*
- * --INFO--
- * Address:	8008FB24
- * Size:	000174
- */
 void Creature::killStickers(Creature* stuckTo, immut Condition* cond, int p3)
 {
 	InteractKill kill(stuckTo, p3);
 	interactStickers(stuckTo, kill, cond);
 }
 
-/*
- * --INFO--
- * Address:	8008FED8
- * Size:	000068
- */
 void Creature::startClimb()
 {
 	if (mStickTarget && mStickPart && mStickPart->isClimbable()) {
@@ -69,21 +54,11 @@ void Creature::startClimb()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8008FF40
- * Size:	000010
- */
 void Creature::endClimb()
 {
 	resetCreatureFlag(CF_IsClimbing);
 }
 
-/*
- * --INFO--
- * Address:	8008FF50
- * Size:	000048
- */
 bool Creature::isStickToPlatform()
 {
 	if (mStickTarget) {
@@ -116,11 +91,6 @@ void Creature::adjustStickObject(immut Vector3f&)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8008FF98
- * Size:	000084
- */
 void Creature::startStickMouth(Creature* mouthOwner, CollPart* mouthPart)
 {
 	resetCreatureFlag(CF_StuckToMouth);
@@ -140,11 +110,6 @@ void Creature::startStickMouth(Creature* mouthOwner, CollPart* mouthPart)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8009001C
- * Size:	000040
- */
 void Creature::endStickMouth()
 {
 	endStickObject();
@@ -152,11 +117,6 @@ void Creature::endStickMouth()
 	resetCreatureFlag(CF_StuckToMouth);
 }
 
-/*
- * --INFO--
- * Address:	8009005C
- * Size:	000310
- */
 void Creature::startStickObjectSphere(Creature* obj, CollPart* stickPart, f32 stickDist)
 {
 	Matrix4f worldMatrix;
@@ -195,11 +155,6 @@ void Creature::startStickObjectSphere(Creature* obj, CollPart* stickPart, f32 st
 	PRINT_KANDO("StartStick SPHERE * (%.1f %.1f %.1f) \n", mAttachPosition.x, mAttachPosition.y, mAttachPosition.z);
 }
 
-/*
- * --INFO--
- * Address:	8009036C
- * Size:	00034C
- */
 void Creature::startStickObjectTube(Creature* obj, CollPart* stickPart)
 {
 	Tube tube;
@@ -248,11 +203,6 @@ void Creature::startStickObjectPellet(Pellet* pellet, int slotIdx, f32 offset)
 	mPelletStickSlot = -1;
 }
 
-/*
- * --INFO--
- * Address:	800906B8
- * Size:	0001C0
- */
 void Creature::startStickObject(Creature* obj, CollPart* stickPart, int slot, f32 p4)
 {
 	mCollPlatNormal = nullptr;
@@ -292,11 +242,6 @@ void Creature::startStickObject(Creature* obj, CollPart* stickPart, int slot, f3
 	mStickPart = nullptr;
 }
 
-/*
- * --INFO--
- * Address:	80090878
- * Size:	00006C
- */
 void Creature::endStickObject()
 {
 	if (mPelletStickSlot != -1 && mStickTarget) {
@@ -315,11 +260,6 @@ void Creature::endStickObject()
 
 const char* _standType[] = { "GROUND", "TEKIPLAT", "PLAT", "AIR" };
 
-/*
- * --INFO--
- * Address:	800908E4
- * Size:	0000F8
- */
 bool Creature::startStick(Creature* stickTarget, CollPart* stickPart)
 {
 	mStickPart = nullptr;
@@ -374,11 +314,6 @@ bool Creature::isStickLeader()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800909DC
- * Size:	0000EC
- */
 void Creature::endStick()
 {
 	mCollPlatNormal = nullptr;
@@ -414,11 +349,6 @@ void Creature::endStick()
 	mCollPlatform = nullptr;
 }
 
-/*
- * --INFO--
- * Address:	80090AC8
- * Size:	000124
- */
 bool Creature::startRope(RopeCreature* rope, f32 ropeRatio)
 {
 	mConstrainedMoveMtx.makeIdentity();
@@ -453,11 +383,6 @@ bool Creature::startRope(RopeCreature* rope, f32 ropeRatio)
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	80090BEC
- * Size:	000098
- */
 void Creature::endRope()
 {
 	if (!mRope) {
@@ -490,22 +415,12 @@ void Creature::endRope()
 	mNextRopeHolder = nullptr;
 }
 
-/*
- * --INFO--
- * Address:	80090C84
- * Size:	000058
- */
 Stickers::Stickers(Creature* owner)
 {
 	mOwner = owner;
 	calcNum();
 }
 
-/*
- * --INFO--
- * Address:	80090CDC
- * Size:	000030
- */
 void Stickers::calcNum()
 {
 	mCount          = 0;
@@ -516,11 +431,6 @@ void Stickers::calcNum()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80090D0C
- * Size:	0000CC
- */
 Creature* Stickers::getCreature(int idx)
 {
 	int startCount = mCount;
@@ -539,31 +449,16 @@ Creature* Stickers::getCreature(int idx)
 	return nullptr;
 }
 
-/*
- * --INFO--
- * Address:	80090DD8
- * Size:	000008
- */
 int Stickers::getFirst()
 {
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80090DE0
- * Size:	000008
- */
 int Stickers::getNext(int idx)
 {
 	return idx + 1;
 }
 
-/*
- * --INFO--
- * Address:	80090DE8
- * Size:	00001C
- */
 bool Stickers::isDone(int idx)
 {
 	if (idx >= mCount) {
@@ -572,11 +467,6 @@ bool Stickers::isDone(int idx)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	80090E04
- * Size:	000254
- */
 void Creature::updateStickPlatform()
 {
 	if (mCollPlatNormal && mClimbingTri) {
@@ -600,11 +490,6 @@ void Creature::updateStickPlatform()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80091058
- * Size:	0000BC
- */
 void Creature::updateStickNonPlatform()
 {
 	if (mPelletStickSlot != -1) {
@@ -628,11 +513,6 @@ void Creature::updateStickNonPlatform()
 	ERROR("mail to m\n");
 }
 
-/*
- * --INFO--
- * Address:	80091114
- * Size:	0001EC
- */
 void Creature::updateStickSphere()
 {
 	Matrix4f partMtx;
@@ -664,11 +544,6 @@ void Creature::updateStickSphere()
 	mLastPosition = mSRT.t;
 }
 
-/*
- * --INFO--
- * Address:	80091300
- * Size:	000360
- */
 void Creature::updateStickPellet()
 {
 	if (getStickObject()->mObjType != OBJTYPE_Pellet) {
@@ -716,11 +591,6 @@ void Creature::updateStickPellet()
 	STACK_PAD_VAR(1);
 }
 
-/*
- * --INFO--
- * Address:	80091660
- * Size:	0003BC
- */
 void Creature::updateStickTube()
 {
 	Tube tube;
@@ -758,11 +628,6 @@ void Creature::updateStickTube()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80091A1C
- * Size:	0004A4
- */
 void Creature::updateStickRope()
 {
 	if (!mRope) {

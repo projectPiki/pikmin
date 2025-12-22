@@ -12,12 +12,6 @@
  */
 
 /*
- * --INFO--
- * Address:	8021B4A8
- * Size:	00002C
- */
-
-/*
  * copysign(f64 x, f64 y)
  * copysign(x,y) returns a value with the magnitude of x and
  * with the sign bit of y.

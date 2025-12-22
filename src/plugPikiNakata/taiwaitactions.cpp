@@ -19,22 +19,12 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("taiwaitactions")
 
-/*
- * --INFO--
- * Address:	80143A9C
- * Size:	000070
- */
 void TaiWaitTurningAction::start(Teki& teki)
 {
 	TaiMotionAction::start(teki);
 	teki.mTargetAngle = 2.0f * NSystem::random() * NMathF::pi;
 }
 
-/*
- * --INFO--
- * Address:	80143B0C
- * Size:	0000E4
- */
 bool TaiWaitTurningAction::act(Teki& teki)
 {
 	f32 faceDir        = teki.getDirection();

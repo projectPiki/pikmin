@@ -28,31 +28,16 @@ static u8 calc_sw_table[]
 // forward declarations
 static void Cancel_WaitDSPChannel(jc_* jc);
 
-/*
- * --INFO--
- * Address:	80009400
- * Size:	000024
- */
 void Channel_SetMixerLevel(f32 mix)
 {
 	MAX_MIXERLEVEL = mix * 16384.0f;
 }
 
-/*
- * --INFO--
- * Address:	80009440
- * Size:	00000C
- */
 jcs_* Get_GlobalHandle()
 {
 	return &GLOBAL_CHANNEL;
 }
 
-/*
- * --INFO--
- * Address:	80009460
- * Size:	000020
- */
 int List_CountChannel(jc_** jc)
 {
 	jc_* chan = *jc;
@@ -99,11 +84,6 @@ void List_GlobalChannel()
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80009480
- * Size:	000070
- */
 int List_CutChannel(jc_* jc)
 {
 	jc_* chan = *jc->chanListHead;
@@ -134,11 +114,6 @@ int List_CutChannel(jc_* jc)
 	return num;
 }
 
-/*
- * --INFO--
- * Address:	80009500
- * Size:	000030
- */
 jc_* List_GetChannel(jc_** jc)
 {
 	jc_* chan = *jc;
@@ -152,11 +127,6 @@ jc_* List_GetChannel(jc_** jc)
 	return chan;
 }
 
-/*
- * --INFO--
- * Address:	80009540
- * Size:	000048
- */
 void List_AddChannelTail(jc_** jc, jc_* in)
 {
 	jc_* chan        = *jc;
@@ -180,11 +150,6 @@ void List_AddChannelTail(jc_** jc, jc_* in)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800095A0
- * Size:	000014
- */
 void List_AddChannel(jc_** jc, jc_* in)
 {
 	jc_* chan        = *jc;
@@ -193,11 +158,6 @@ void List_AddChannel(jc_** jc, jc_* in)
 	in->nextChan     = chan;
 }
 
-/*
- * --INFO--
- * Address:	800095C0
- * Size:	00009C
- */
 int FixAllocChannel(jcs_* sys, u32 size)
 {
 	jcs_** REF_sys = &sys;
@@ -220,11 +180,6 @@ int FixAllocChannel(jcs_* sys, u32 size)
 	return num;
 }
 
-/*
- * --INFO--
- * Address:	80009660
- * Size:	000060
- */
 int FixReleaseChannel(jc_* chan)
 {
 	List_AddChannel(&GLOBAL_CHANNEL.freeChannels, chan);
@@ -234,11 +189,6 @@ int FixReleaseChannel(jc_* chan)
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	800096C0
- * Size:	0000F0
- */
 int FixReleaseChannelAll(jcs_* sys)
 {
 	jc_* chan;
@@ -285,11 +235,6 @@ int FixReleaseChannelAll(jcs_* sys)
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	800097C0
- * Size:	0000EC
- */
 int FixMoveChannelAll(jcs_* sys, jcs_* sys2)
 {
 	jc_* chan;
@@ -339,11 +284,6 @@ int FixMoveChannelAll(jcs_* sys, jcs_* sys2)
 	STACK_PAD_VAR(2);
 }
 
-/*
- * --INFO--
- * Address:	800098C0
- * Size:	000070
- */
 static f32 PanCalc(const PanMatrix_* mtx1, const PanMatrix_* mtx2, u8 a)
 {
 	f32 calc = 0.0f;
@@ -365,11 +305,6 @@ static f32 PanCalc(const PanMatrix_* mtx1, const PanMatrix_* mtx2, u8 a)
 	return calc;
 }
 
-/*
- * --INFO--
- * Address:	80009940
- * Size:	000104
- */
 void InitJcs(jcs_* sys)
 {
 	sys->freeChannels      = NULL;
@@ -415,11 +350,6 @@ void InitJcs(jcs_* sys)
 	sys->panCalcTypes[2]    = 1;
 }
 
-/*
- * --INFO--
- * Address:	80009A60
- * Size:	000138
- */
 void Channel_Init(jc_* jc)
 {
 	jc->updateCallback    = NULL;
@@ -468,11 +398,6 @@ void Channel_Init(jc_* jc)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80009BA0
- * Size:	000030
- */
 static void Channel_FirstInit(jc_* jc)
 {
 	jc->dspChannel = NULL;
@@ -481,11 +406,6 @@ static void Channel_FirstInit(jc_* jc)
 	Channel_Init(jc);
 }
 
-/*
- * --INFO--
- * Address:	80009BE0
- * Size:	00007C
- */
 void InitGlobalChannel()
 {
 	jcs_* global_channel;
@@ -503,11 +423,6 @@ void InitGlobalChannel()
 	global_channel->chanCount = CHANNEL_SIZE;
 }
 
-/*
- * --INFO--
- * Address:	80009C60
- * Size:	0000D8
- */
 static void __UpdateJcToDSPInit(jc_* jc)
 {
 	int buf = jc->dspChannel->buffer_idx;
@@ -531,11 +446,6 @@ static void __UpdateJcToDSPInit(jc_* jc)
 	DSP_SetPauseFlag(buf, jc->pauseFlag);
 }
 
-/*
- * --INFO--
- * Address:	80009D40
- * Size:	0000D8
- */
 static void __UpdateJcToDSP(jc_* jc)
 {
 	u8 uVar1;
@@ -560,22 +470,12 @@ static void __UpdateJcToDSP(jc_* jc)
 	DSP_SetPauseFlag(uVar1, jc->pauseFlag);
 }
 
-/*
- * --INFO--
- * Address:	80009E20
- * Size:	000038
- */
 void UpdateJcToDSP(jc_* jc)
 {
 	__UpdateJcToDSP(jc);
 	DSP_FlushChannel(jc->dspChannel->buffer_idx);
 }
 
-/*
- * --INFO--
- * Address:	80009E60
- * Size:	000348
- */
 void UpdateEffecterParam(jc_* jc)
 {
 	f32 pan;
@@ -704,11 +604,6 @@ void UpdateEffecterParam(jc_* jc)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8000A1C0
- * Size:	000068
- */
 void DoEffectOsc(jc_* jc, u8 id, f32 val)
 {
 	switch (id) {
@@ -730,11 +625,6 @@ void DoEffectOsc(jc_* jc, u8 id, f32 val)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8000A240
- * Size:	000084
- */
 static void KillBrokenLogicalChannels(dspch_* ch)
 {
 	size_t i;
@@ -751,11 +641,6 @@ static void KillBrokenLogicalChannels(dspch_* ch)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8000A2E0
- * Size:	000384
- */
 static int CommonCallbackLogicalChannel(dspch_* ch, u32 eventType)
 {
 	u32 activeOscCount = 0;
@@ -906,11 +791,6 @@ static int CommonCallbackLogicalChannel(dspch_* ch, u32 eventType)
 	return DSPCHAN_CALLBACK_CONTINUE;
 }
 
-/*
- * --INFO--
- * Address:	8000A680
- * Size:	000078
- */
 BOOL StopLogicalChannel(jc_* jc)
 {
 	dspch_* ch = jc->dspChannel;
@@ -927,11 +807,6 @@ BOOL StopLogicalChannel(jc_* jc)
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	8000A700
- * Size:	000028
- */
 BOOL CheckLogicalChannel(jc_* jc)
 {
 	if (jc->waveData == NULL && jc->logicalChanType == 0) {
@@ -940,11 +815,6 @@ BOOL CheckLogicalChannel(jc_* jc)
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	8000A740
- * Size:	000180
- */
 BOOL PlayLogicalChannel(jc_* jc)
 {
 	if (jc->dspChannel == NULL) {
@@ -996,11 +866,6 @@ BOOL PlayLogicalChannel(jc_* jc)
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	8000A8C0
- * Size:	000074
- */
 BOOL ResetInitialVolume(jc_* jc)
 {
 	if (jc->dspChannel == NULL) {
@@ -1017,11 +882,6 @@ BOOL ResetInitialVolume(jc_* jc)
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	8000A940
- * Size:	0000B0
- */
 BOOL Add_WaitDSPChannel(jc_* jc)
 {
 	if (cur_waits == 32) {
@@ -1045,11 +905,6 @@ BOOL Add_WaitDSPChannel(jc_* jc)
 	STACK_PAD_VAR(2);
 }
 
-/*
- * --INFO--
- * Address:	8000AA00
- * Size:	000064
- */
 BOOL Del_WaitDSPChannel(jc_* jc)
 {
 	for (u32 i = 0; i < cur_waits; i++) {
@@ -1062,11 +917,6 @@ BOOL Del_WaitDSPChannel(jc_* jc)
 	return FALSE;
 }
 
-/*
- * --INFO--
- * Address:	8000AA80
- * Size:	0000FC
- */
 void __Entry_WaitChannel(u8 a)
 {
 	jc_* jc;
@@ -1103,11 +953,6 @@ void __Entry_WaitChannel(u8 a)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8000AB80
- * Size:	0000C4
- */
 void EntryCheck_WaitDSPChannel()
 {
 	__Entry_WaitChannel(0);
@@ -1129,11 +974,6 @@ void EntryCheck_WaitDSPChannel()
 	STACK_PAD_VAR(2);
 }
 
-/*
- * --INFO--
- * Address:	8000AC60
- * Size:	00004C
- */
 static void Cancel_WaitDSPChannel(jc_* jc)
 {
 	for (u32 i = 0; i < cur_waits; i++) {
@@ -1143,11 +983,6 @@ static void Cancel_WaitDSPChannel(jc_* jc)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8000ACC0
- * Size:	000038
- */
 BOOL ForceStopLogicalChannel(jc_* jc)
 {
 	if (jc->dspChannel == NULL) {

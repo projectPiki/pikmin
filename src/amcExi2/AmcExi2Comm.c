@@ -19,11 +19,6 @@ static void EXI2_SetTRKCallback(EXICallback monitorCallback)
 	OSRestoreInterrupts(enable);
 }
 
-/*
- * --INFO--
- * Address:	80220E2C
- * Size:	000040
- */
 static void EXI2_CallBack(s32 chan, OSContext* context)
 {
 	*pucEXI2InputPending = 1;
@@ -138,11 +133,6 @@ static s32 EXI2_SendCmd(u8 bufAddrHi, u32 bufAddrLo, s32 bufAddr2, u32 p4)
 	return status;
 }
 
-/*
- * --INFO--
- * Address:	80220E6C
- * Size:	0000BC
- */
 void EXI2_Init(vu8** inputPendingPtrRef, EXICallback monitorCallback)
 {
 	*inputPendingPtrRef = pucEXI2InputPending;
@@ -151,22 +141,12 @@ void EXI2_Init(vu8** inputPendingPtrRef, EXICallback monitorCallback)
 	EXI2_SendCmd(1, 3, 0, 0);
 }
 
-/*
- * --INFO--
- * Address:	80220F28
- * Size:	00002C
- */
 void EXI2_EnableInterrupts(void)
 {
 	AmcEXISetExiCallback(EXI2_CallBack);
 	AmcEXIEnableInterrupts();
 }
 
-/*
- * --INFO--
- * Address:	80220F54
- * Size:	000108
- */
 int EXI2_Poll(void)
 {
 	u32 bufAddr;
@@ -202,11 +182,6 @@ int EXI2_Poll(void)
 	return bufAddr;
 }
 
-/*
- * --INFO--
- * Address:	8022105C
- * Size:	0002BC
- */
 AmcExiError EXI2_ReadN(void* dest, u32 len)
 {
 	u8* outputBytes = (u8*)dest;
@@ -243,11 +218,6 @@ AmcExiError EXI2_ReadN(void* dest, u32 len)
 	return AMC_EXI_NO_ERROR;
 }
 
-/*
- * --INFO--
- * Address:	80221318
- * Size:	0001B0
- */
 AmcExiError EXI2_WriteN(const void* src, u32 len)
 {
 	u32 size;
@@ -293,20 +263,10 @@ AmcExiError EXI2_WriteN(const void* src, u32 len)
 	return AMC_EXI_NO_ERROR;
 }
 
-/*
- * --INFO--
- * Address:	802214C8
- * Size:	000004
- */
 void EXI2_Reserve(void)
 {
 }
 
-/*
- * --INFO--
- * Address:	802214CC
- * Size:	000004
- */
 void EXI2_Unreserve(void)
 {
 }

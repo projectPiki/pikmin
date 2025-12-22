@@ -235,11 +235,6 @@ protected:
 };
 } // namespace zen
 
-/*
- * --INFO--
- * Address:	801E8900
- * Size:	000334
- */
 zen::DrawGameOver::DrawGameOver()
 {
 	mGameOverA    = new DrawGameOverScreen("screen/blo/gameover.blo");
@@ -250,11 +245,6 @@ zen::DrawGameOver::DrawGameOver()
 	mActiveScreen = 0;
 }
 
-/*
- * --INFO--
- * Address:	801E8DCC
- * Size:	0000E8
- */
 void zen::DrawGameOver::start(zen::DrawGameOver::modeFlag mode, f32 p2)
 {
 	mState         = GameOverState::Start;
@@ -278,11 +268,6 @@ void zen::DrawGameOver::start(zen::DrawGameOver::modeFlag mode, f32 p2)
 	mActiveScreen->start();
 }
 
-/*
- * --INFO--
- * Address:	801E8FE8
- * Size:	000118
- */
 bool zen::DrawGameOver::update(Controller* controller)
 {
 	bool isInputPeriodDone = false;
@@ -315,11 +300,6 @@ bool zen::DrawGameOver::update(Controller* controller)
 	return isInputPeriodDone;
 }
 
-/*
- * --INFO--
- * Address:	801E9614
- * Size:	000040
- */
 void zen::DrawGameOver::draw(Graphics& gfx)
 {
 	if (mState) {

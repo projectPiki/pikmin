@@ -363,21 +363,11 @@ void MemoryCard::GetBlockSize(s32)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	800738C8
- * Size:	00000C
- */
 int MemoryCard::getOptionsOffset(int id)
 {
 	return id * 0x2000 + 0x2000;
 }
 
-/*
- * --INFO--
- * Address:	800738D4
- * Size:	00000C
- */
 int MemoryCard::getGameFileOffset(int id)
 {
 	return id * 0x8000 + 0x6000;
@@ -454,11 +444,6 @@ RamStream* MemoryCard::getGameFileStream(int idx)
 	return new RamStream(getGameFilePtr(idx), 0x8000);
 }
 
-/*
- * --INFO--
- * Address:	800738E0
- * Size:	00017C
- */
 u32 MemoryCard::calcChecksum(void* dataptr, u32 length)
 {
 	u32 sum = 0x32546532;
@@ -472,11 +457,6 @@ u32 MemoryCard::calcChecksum(void* dataptr, u32 length)
 	return sum;
 }
 
-/*
- * --INFO--
- * Address:	80073A5C
- * Size:	000070
- */
 bool MemoryCard::hasCardFinished()
 {
 	bool res = !CardUtilIsCardBusy();
@@ -556,11 +536,6 @@ void MemoryCard::writeOneGameFile(int idx)
 	CardUtilWrite(0, mSaveFileIndex, &cardData[getGameFileOffset(idx)], getGameFileOffset(idx), 0x8000);
 }
 
-/*
- * --INFO--
- * Address:	80073ACC
- * Size:	000134
- */
 bool MemoryCard::attemptFormatCard(int channel)
 {
 	if (CARDProbe(channel)) {
@@ -599,11 +574,6 @@ bool MemoryCard::attemptFormatCard(int channel)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	80073C00
- * Size:	000038
- */
 s32 MemoryCard::waitWhileBusy(int chan)
 {
 	s32 res;
@@ -613,11 +583,6 @@ s32 MemoryCard::waitWhileBusy(int chan)
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	80073C38
- * Size:	0001BC
- */
 bool MemoryCard::getCardStatus(int channel)
 {
 	if (CARDProbe(channel)) {
@@ -675,11 +640,6 @@ bool MemoryCard::getCardStatus(int channel)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	80073DF4
- * Size:	0000FC
- */
 void MemoryCard::checkUseFile()
 {
 	for (int i = 0; i < 127; i++) {
@@ -707,11 +667,6 @@ void MemoryCard::checkUseFile()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80073EF0
- * Size:	000174
- */
 s32 MemoryCard::getMemoryCardState(bool flag)
 {
 	mCardChannel   = -1;
@@ -763,11 +718,6 @@ s32 MemoryCard::getMemoryCardState(bool flag)
 	return mErrorCode;
 }
 
-/*
- * --INFO--
- * Address:	80074064
- * Size:	0000B0
- */
 void MemoryCard::loadCurrentFile()
 {
 	CardUtilMount(0, &CardWorkArea);
@@ -784,11 +734,6 @@ void MemoryCard::loadCurrentFile()
 	OSTicksToCalendarTime(time, &calendar);
 }
 
-/*
- * --INFO--
- * Address:	80074114
- * Size:	0001DC
- */
 s32 MemoryCard::getNewestOptionsIndex()
 {
 	int a = -1;
@@ -814,11 +759,6 @@ s32 MemoryCard::getNewestOptionsIndex()
 	STACK_PAD_VAR(8);
 }
 
-/*
- * --INFO--
- * Address:	800742F0
- * Size:	0000A4
- */
 void MemoryCard::loadOptions()
 {
 	int id = getNewestOptionsIndex();
@@ -830,11 +770,6 @@ void MemoryCard::loadOptions()
 	STACK_PAD_VAR(6);
 }
 
-/*
- * --INFO--
- * Address:	80074394
- * Size:	0000D4
- */
 void MemoryCard::saveOptions()
 {
 	gsys->mIsCardSaving = 1;
@@ -851,11 +786,6 @@ void MemoryCard::saveOptions()
 	STACK_PAD_VAR(2);
 }
 
-/*
- * --INFO--
- * Address:	80074468
- * Size:	0000AC
- */
 void MemoryCard::loadCurrentGame()
 {
 	int val         = gameflow.mGamePrefs.mSaveGameIndex - 1;
@@ -865,11 +795,6 @@ void MemoryCard::loadCurrentGame()
 	STACK_PAD_VAR(2);
 }
 
-/*
- * --INFO--
- * Address:	80074514
- * Size:	000424
- */
 void MemoryCard::saveCurrentGame()
 {
 	mDidSaveFail                    = false;
@@ -901,11 +826,6 @@ void MemoryCard::saveCurrentGame()
 	STACK_PAD_VAR(10);
 }
 
-/*
- * --INFO--
- * Address:	80074938
- * Size:	000128
- */
 void MemoryCard::writeCurrentGame(RandomAccessStream* output, PlayState& playState)
 {
 	if (playerState) {
@@ -921,11 +841,6 @@ void MemoryCard::writeCurrentGame(RandomAccessStream* output, PlayState& playSta
 	}
 }
 
-/*
- * --INFO--
- * Address:	80074A60
- * Size:	000070
- */
 void MemoryCard::readCurrentGame(RandomAccessStream* data)
 {
 	gameflow.mPlayState.read(*data);
@@ -936,11 +851,6 @@ void MemoryCard::readCurrentGame(RandomAccessStream* data)
 	gameflow.mWorldClock.mCurrentDay = gameflow.mPlayState.mSavedDay;
 }
 
-/*
- * --INFO--
- * Address:	80074AD0
- * Size:	0003B0
- */
 void MemoryCard::initBannerArea(CARDStat& state, immut char* p2)
 {
 	char comment1[0x20];
@@ -1014,11 +924,6 @@ void MemoryCard::initFileArea(int idx, int p2)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80074E80
- * Size:	000210
- */
 void MemoryCard::initOptionsArea(int idx)
 {
 	RamStream* stream = gameflow.mMemoryCard.getOptionsStream(idx); // ??
@@ -1030,11 +935,6 @@ void MemoryCard::initOptionsArea(int idx)
 	STACK_PAD_VAR(4);
 }
 
-/*
- * --INFO--
- * Address:	80075090
- * Size:	000414
- */
 s32 MemoryCard::makeDefaultFile()
 {
 	PRINT("*-----------------------------------------------------------*\n");
@@ -1361,11 +1261,6 @@ s32 MemoryCard::makeDefaultFile()
 	*/
 }
 
-/*
- * --INFO--
- * Address:	800754B4
- * Size:	000314
- */
 void MemoryCard::copyFile(CardQuickInfo& p1, CardQuickInfo& p2)
 {
 	PRINT("wants to copy from file %d to %d\n", p1.mIndex + 1, p2.mIndex + 1);
@@ -1389,11 +1284,6 @@ void MemoryCard::copyFile(CardQuickInfo& p1, CardQuickInfo& p2)
 	STACK_PAD_VAR(10);
 }
 
-/*
- * --INFO--
- * Address:	800757C8
- * Size:	000454
- */
 void MemoryCard::delFile(CardQuickInfo& p1)
 {
 	PRINT("wants to delete file %d\n", p1.mIndex + 1);
@@ -1415,11 +1305,6 @@ void MemoryCard::delFile(CardQuickInfo& p1)
 	STACK_PAD_VAR(7);
 }
 
-/*
- * --INFO--
- * Address:	80075C1C
- * Size:	00006C
- */
 int MemoryCard::doFormatCard()
 {
 	PRINT("*-----------------------------------------------------------*\n");
@@ -1435,21 +1320,11 @@ int MemoryCard::doFormatCard()
 	return mErrorCode;
 }
 
-/*
- * --INFO--
- * Address:	80075C88
- * Size:	000034
- */
 bool MemoryCard::isCardInserted()
 {
 	return CARDProbe(0);
 }
 
-/*
- * --INFO--
- * Address:	80075CBC
- * Size:	00022C
- */
 bool MemoryCard::hasCardChanged()
 {
 	if (!gameflow.mGamePrefs.mHasSaveGame || !isCardInserted()) {
@@ -1475,11 +1350,6 @@ bool MemoryCard::hasCardChanged()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	80075EE8
- * Size:	000574
- */
 u32 MemoryCard::getOkSections()
 {
 	STACK_PAD_VAR(2);
@@ -1914,11 +1784,6 @@ u32 MemoryCard::getOkSections()
 	*/
 }
 
-/*
- * --INFO--
- * Address:	8007645C
- * Size:	0000A0
- */
 bool MemoryCard::isFileBroken()
 {
 	if (gameflow.mMemoryCard.getMemoryCardState(true) == 0 && gameflow.mMemoryCard.mSaveFileIndex >= 0) {
@@ -1952,11 +1817,6 @@ void MemoryCard::breakFile()
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	800764FC
- * Size:	00052C
- */
 void MemoryCard::repairFile()
 {
 	(void)errCodes;
@@ -2012,11 +1872,6 @@ void MemoryCard::repairFile()
 	STACK_PAD_INLINE(12);
 }
 
-/*
- * --INFO--
- * Address:	80076A28
- * Size:	000040
- */
 bool MemoryCard::didSaveFail()
 {
 	bool fail = mDidSaveFail;
@@ -2026,11 +1881,6 @@ bool MemoryCard::didSaveFail()
 	return fail;
 }
 
-/*
- * --INFO--
- * Address:	80076A68
- * Size:	000398
- */
 void MemoryCard::getQuickInfos(CardQuickInfo* infos)
 {
 	int i;
@@ -2334,11 +2184,6 @@ void MemoryCard::getQuickInfos(CardQuickInfo* infos)
 	*/
 }
 
-/*
- * --INFO--
- * Address:	80076E00
- * Size:	000034
- */
 void MemoryCard::init()
 {
 	CardUtilInit(&CardStack[0x2000], 0x2000, 0xe);

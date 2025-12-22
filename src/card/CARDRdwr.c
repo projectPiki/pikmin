@@ -1,10 +1,5 @@
 #include "Dolphin/card.h"
 
-/*
- * --INFO--
- * Address:	80209214
- * Size:	0000DC
- */
 static void BlockReadCallback(s32 channel, s32 result)
 {
 	CARDControl* card;
@@ -40,11 +35,6 @@ error:
 	}
 }
 
-/*
- * --INFO--
- * Address:	802092F0
- * Size:	000064
- */
 s32 __CARDRead(s32 channel, u32 addr, s32 length, void* dst, CARDCallback callback)
 {
 	CARDControl* card;
@@ -61,11 +51,6 @@ s32 __CARDRead(s32 channel, u32 addr, s32 length, void* dst, CARDCallback callba
 	return __CARDReadSegment(channel, BlockReadCallback);
 }
 
-/*
- * --INFO--
- * Address:	80209354
- * Size:	0000DC
- */
 static void BlockWriteCallback(s32 channel, s32 result)
 {
 	CARDControl* card;
@@ -101,11 +86,6 @@ error:
 	}
 }
 
-/*
- * --INFO--
- * Address:	80209430
- * Size:	000064
- */
 s32 __CARDWrite(s32 channel, u32 addr, s32 length, void* dst, CARDCallback callback)
 {
 	CARDControl* card;
@@ -122,11 +102,6 @@ s32 __CARDWrite(s32 channel, u32 addr, s32 length, void* dst, CARDCallback callb
 	return __CARDWritePage(channel, BlockWriteCallback);
 }
 
-/*
- * --INFO--
- * Address:	80209494
- * Size:	000018
- */
 s32 CARDGetXferredBytes(s32 channel)
 {
 	return __CARDBlock[channel].xferred;

@@ -1,10 +1,5 @@
 #include "PUT/Geometry.h"
 
-/*
- * --INFO--
- * Address:	801B3628
- * Size:	000024
- */
 void PUTRect::set(int x0, int y0, int x1, int y1)
 {
 	mMinX = x0;
@@ -14,11 +9,6 @@ void PUTRect::set(int x0, int y0, int x1, int y1)
 	mMaxY = y1;
 }
 
-/*
- * --INFO--
- * Address:	801B364C
- * Size:	000024
- */
 void PUTRect::copy(const PUTRect& other)
 {
 	mMinX = other.mMinX;
@@ -42,11 +32,6 @@ void PUTRect::add(const PUTPoint& point)
 	mMaxY += point.y;
 }
 
-/*
- * --INFO--
- * Address:	801B3670
- * Size:	000034
- */
 void PUTRect::add(int x, int y)
 {
 	mMinX += x;
@@ -56,11 +41,6 @@ void PUTRect::add(int x, int y)
 	mMaxY += y;
 }
 
-/*
- * --INFO--
- * Address:	801B36A4
- * Size:	000080
- */
 bool PUTRect::intersect(const PUTRect& other)
 {
 	if (mMinX < other.mMinX) {
@@ -101,11 +81,6 @@ void PUTRect::move(const PUTPoint& point)
 	mMaxY = mMinY + height;
 }
 
-/*
- * --INFO--
- * Address:	801B3724
- * Size:	000044
- */
 void PUTRect::move(int newMinX, int newMinY)
 {
 	s16 width  = getWidth();
@@ -118,11 +93,6 @@ void PUTRect::move(int newMinX, int newMinY)
 	mMaxY = mMinY + height;
 }
 
-/*
- * --INFO--
- * Address:	801B3768
- * Size:	00001C
- */
 void PUTRect::resize(int width, int height)
 {
 	mMaxX = mMinX + width;
@@ -139,11 +109,6 @@ void PUTRect::reform(int, int, int, int)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801B3784
- * Size:	00003C
- */
 void PUTRect::normalize()
 {
 	if (mMinX > mMaxX) {
@@ -159,11 +124,6 @@ void PUTRect::normalize()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801B37C0
- * Size:	000030
- */
 bool PUTRect::isEmpty() const
 {
 	return (mMinX >= mMaxX) || (mMinY >= mMaxY);

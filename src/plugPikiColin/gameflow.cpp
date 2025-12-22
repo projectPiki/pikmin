@@ -43,11 +43,6 @@ DEFINE_PRINT("GameFlow");
 
 static const char* timopts[] = { " [off]", "  [on]", "[full]" };
 
-/*
- * --INFO--
- * Address:	80051478
- * Size:	000150
- */
 void GameLoadIdler::draw(Graphics& gfx)
 {
 	gfx.mAmbientFogColour.set(48, 48, 48, 255);
@@ -68,11 +63,6 @@ void GameLoadIdler::draw(Graphics& gfx)
 	gameflow.drawLoadLogo(gfx, true, gameflow.mLevelBannerTexture, gameflow.mLevelBannerFadeValue);
 }
 
-/*
- * --INFO--
- * Address:	800515C8
- * Size:	000254
- */
 void GameFlow::drawLoadLogo(Graphics& gfx, bool p2, Texture* p3, f32 p4)
 {
 	if (!p3) {
@@ -113,11 +103,6 @@ void WorldClock::setClockSpd(f32 speed)
 	mTimeScale    = mTicksPerHour / mHoursInDay;
 }
 
-/*
- * --INFO--
- * Address:	8005181C
- * Size:	0000A8
- */
 void WorldClock::setTime(f32 time)
 {
 	mCurrentTime      = time;
@@ -154,11 +139,6 @@ f32 WorldClock::age(f32 p1)
 	return (hours * mTimeScale + mFractionalTime) / mTicksPerHour - p1;
 }
 
-/*
- * --INFO--
- * Address:	800518C4
- * Size:	0000F8
- */
 void WorldClock::update(f32 timeStep)
 {
 	mFractionalTime += gsys->getFrameTime() * timeStep;
@@ -181,11 +161,6 @@ void WorldClock::update(f32 timeStep)
 	mLastRecordedTime = mTimeOfDay;
 }
 
-/*
- * --INFO--
- * Address:	800519BC
- * Size:	000090
- */
 void GameFlow::menuToggleTimers(Menu& menu)
 {
 	gsys->mTimerState = (gsys->mTimerState + 1) % 3;
@@ -193,66 +168,36 @@ void GameFlow::menuToggleTimers(Menu& menu)
 	sprintf(menu.mCurrentItem->mName, "Toggle Timers %s", timopts[gsys->mTimerState]);
 }
 
-/*
- * --INFO--
- * Address:	80051A4C
- * Size:	000060
- */
 void GameFlow::menuTogglePrint(Menu& menu)
 {
 	gsys->mTogglePrint ^= TRUE;
 	sprintf(menu.mCurrentItem->mName, "Toggle Print %s", (gsys->mTogglePrint) ? " [on]" : "[off]");
 }
 
-/*
- * --INFO--
- * Address:	80051AAC
- * Size:	000060
- */
 void GameFlow::menuToggleDInfo(Menu& menu)
 {
 	gsys->mToggleDebugInfo ^= 1;
 	sprintf(menu.mCurrentItem->mName, "Toggle DInfo %s", (gsys->mToggleDebugInfo) ? " [on]" : "[off]");
 }
 
-/*
- * --INFO--
- * Address:	80051B0C
- * Size:	000060
- */
 void GameFlow::menuToggleDExtra(Menu& menu)
 {
 	gsys->mToggleDebugExtra ^= 1;
 	sprintf(menu.mCurrentItem->mName, "Toggle DExtra %s", (gsys->mToggleDebugExtra) ? " [on]" : "[off]");
 }
 
-/*
- * --INFO--
- * Address:	80051B6C
- * Size:	000060
- */
 void GameFlow::menuToggleBlur(Menu& menu)
 {
 	gsys->mToggleBlur ^= true;
 	sprintf(menu.mCurrentItem->mName, "Toggle Blur %s", (gsys->mToggleBlur) ? " [on]" : "[off]");
 }
 
-/*
- * --INFO--
- * Address:	80051BCC
- * Size:	000060
- */
 void GameFlow::menuToggleInfo(Menu& menu)
 {
 	gsys->mToggleFileInfo ^= 1;
 	sprintf(menu.mCurrentItem->mName, "Toggle FileInfo %s", (gsys->mToggleFileInfo) ? " [on]" : "[off]");
 }
 
-/*
- * --INFO--
- * Address:	80051C2C
- * Size:	000060
- */
 void GameFlow::menuToggleColls(Menu& menu)
 {
 	gsys->mToggleColls ^= 1;
@@ -300,11 +245,6 @@ static const char* filterNames[] = {
 	"DF off",
 };
 
-/*
- * --INFO--
- * Address:	80051C8C
- * Size:	0000A0
- */
 void GameFlow::menuChangeFilter(Menu& menu)
 {
 	mFilterType ^= 1;
@@ -313,11 +253,6 @@ void GameFlow::menuChangeFilter(Menu& menu)
 	gsys->mDGXGfx->videoReset();
 }
 
-/*
- * --INFO--
- * Address:	80051D2C
- * Size:	0000AC
- */
 void GameFlow::menuIncreaseFilter(Menu& menu)
 {
 	if (mFilters[menu.mCurrentItem->mFilterIndex] < 128) {
@@ -331,11 +266,6 @@ void GameFlow::menuIncreaseFilter(Menu& menu)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80051DD8
- * Size:	0000AC
- */
 void GameFlow::menuDecreaseFilter(Menu& menu)
 {
 	if (mFilters[menu.mCurrentItem->mFilterIndex] != 0) {
@@ -369,21 +299,11 @@ void GameFlow::addFilterMenu(Menu* parent)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80051E84
- * Size:	000024
- */
 void GameFlow::read(RandomAccessStream& input)
 {
 	mParameters->read(input);
 }
 
-/*
- * --INFO--
- * Address:	80051EA8
- * Size:	000144
- */
 void preloadLanguage()
 {
 	int unused; // for r30
@@ -494,11 +414,6 @@ void preloadLanguage()
 	*/
 }
 
-/*
- * --INFO--
- * Address:	80051FEC
- * Size:	00009C
- */
 Texture* GameFlow::setLoadBanner(immut char* texPath)
 {
 	int heapIdx = gsys->mActiveHeapIdx;
@@ -513,11 +428,6 @@ Texture* GameFlow::setLoadBanner(immut char* texPath)
 	return gameflow.mLoadBannerTexture;
 }
 
-/*
- * --INFO--
- * Address:	80052088
- * Size:	00060C
- */
 void GameFlow::hardReset(BaseApp* baseApp)
 {
 	app  = baseApp;
@@ -588,11 +498,6 @@ void GameFlow::hardReset(BaseApp* baseApp)
 	gsys->loadBundle("effects/tex/effects.bun", false);
 }
 
-/*
- * --INFO--
- * Address:	8005275C
- * Size:	000548
- */
 void GameFlow::softReset()
 {
 	BOOL togglePrint   = gsys->mTogglePrint;
@@ -693,21 +598,11 @@ void GameFlow::softReset()
 	STACK_PAD_VAR(2);
 }
 
-/*
- * --INFO--
- * Address:	80052D10
- * Size:	000024
- */
 Shape* GameFlow::loadShape(immut char* filename, bool p2)
 {
 	return gsys->loadShape(filename, p2);
 }
 
-/*
- * --INFO--
- * Address:	80052D34
- * Size:	00002C
- */
 void GameFlow::update()
 {
 	if (rumbleMgr) {
@@ -715,11 +610,6 @@ void GameFlow::update()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80052D60
- * Size:	0000D0
- */
 void GameFlow::addGenNode(immut char* name, CoreNode* node)
 {
 	mGenFlow->add(new GameGenNode((name) ? name : node->mName, node));

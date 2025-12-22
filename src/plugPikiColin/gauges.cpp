@@ -45,11 +45,6 @@ void GaugeInfo::init()
 	mIsPendingRemoval = 0;
 }
 
-/*
- * --INFO--
- * Address:	8005B780
- * Size:	000150
- */
 void GaugeInfo::update()
 {
 	switch (mUpdateState) {
@@ -117,11 +112,6 @@ void GaugeInfo::showDigits(Vector3f position, immut Colour& colour, int number, 
 	FORCE_DONT_INLINE;
 }
 
-/*
- * --INFO--
- * Address:	8005BAE0
- * Size:	000270
- */
 void GaugeInfo::refresh(Graphics& gfx)
 {
 	Vector3f pos(mOwner->mPosition.x, mOwner->mPosition.y + mHeightOffset, mOwner->mPosition.z);
@@ -143,11 +133,6 @@ void GaugeInfo::refresh(Graphics& gfx)
 	FORCE_DONT_INLINE;
 }
 
-/*
- * --INFO--
- * Address:	8005BD50
- * Size:	0000F0
- */
 void LifeGaugeMgr::init(int count)
 {
 	mActiveGaugeList.initCore("");
@@ -163,11 +148,6 @@ void LifeGaugeMgr::init(int count)
 	mLFlare->mBlendMode = 5;
 }
 
-/*
- * --INFO--
- * Address:	8005BE94
- * Size:	000040
- */
 void LifeGaugeMgr::update()
 {
 	FOREACH_NODE(GaugeInfo, mActiveGaugeList.mChild, gauge)
@@ -176,11 +156,6 @@ void LifeGaugeMgr::update()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8005BED4
- * Size:	000068
- */
 void LifeGaugeMgr::refresh(Graphics& gfx)
 {
 	// WTF
@@ -219,11 +194,6 @@ void LifeGaugeMgr::addLG(GaugeInfo* info)
 	mActiveGaugeList.add(info);
 }
 
-/*
- * --INFO--
- * Address:	8005BF3C
- * Size:	000060
- */
 void LifeGaugeMgr::removeLG(GaugeInfo* info)
 {
 	info->del();
@@ -231,11 +201,6 @@ void LifeGaugeMgr::removeLG(GaugeInfo* info)
 	mInactiveGaugeList.add(info);
 }
 
-/*
- * --INFO--
- * Address:	8005BF9C
- * Size:	0000D8
- */
 LifeGauge::LifeGauge()
 {
 	mRenderStyle               = LifeGauge::Bar;
@@ -257,11 +222,6 @@ LifeGauge::LifeGauge()
 	mActiveGauge = 0;
 }
 
-/*
- * --INFO--
- * Address:	8005C074
- * Size:	000030
- */
 void LifeGauge::updValue(f32 currHealth, f32 maxHealth)
 {
 	mHealthRatio = currHealth / maxHealth;
@@ -283,11 +243,6 @@ void LifeGauge::adjustValue()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8005C0A4
- * Size:	000EC8
- */
 void LifeGauge::refresh(Graphics& gfx)
 {
 	if (gameflow.mMoviePlayer->mIsActive) {
@@ -401,11 +356,6 @@ void LifeGauge::refresh(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8005CF6C
- * Size:	000148
- */
 void LifeGauge::countOn(immut Vector3f& p1, int p2, int p3)
 {
 	if (!mActiveGauge) {
@@ -437,11 +387,6 @@ void LifeGauge::countOn(immut Vector3f& p1, int p2, int p3)
 	STACK_PAD_VAR(1);
 }
 
-/*
- * --INFO--
- * Address:	8005D0B4
- * Size:	000030
- */
 void LifeGauge::countOff()
 {
 	mDisplayState     = -1;

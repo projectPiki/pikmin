@@ -15,30 +15,15 @@ static OSResetFunctionInfo ResetFunctionInfo = { OnReset, 127 };
 #define AD3(x)   ((u8)(((x) >> 7) & 0x03))
 #define BA(x)    ((u8)((x) & 0x7f))
 
-/*
- * --INFO--
- * Address:	80207E60
- * Size:	000004
- */
 void __CARDDefaultApiCallback(s32, s32)
 {
 }
 
-/*
- * --INFO--
- * Address:	80207E64
- * Size:	000034
- */
 void __CARDSyncCallback(s32 channel, s32 result)
 {
 	OSWakeupThread(&__CARDBlock[channel].threadQueue);
 }
 
-/*
- * --INFO--
- * Address:	80207E98
- * Size:	0000CC
- */
 void __CARDExtHandler(s32 channel, OSContext* context)
 {
 	CARDControl* card;
@@ -65,11 +50,6 @@ void __CARDExtHandler(s32 channel, OSContext* context)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80207F64
- * Size:	000118
- */
 void __CARDExiHandler(s32 channel, OSContext* context)
 {
 	CARDControl* card;
@@ -113,11 +93,6 @@ fatal:
 	}
 }
 
-/*
- * --INFO--
- * Address:	8020807C
- * Size:	0000A8
- */
 void __CARDTxHandler(s32 channel, OSContext* context)
 {
 	CARDControl* card;
@@ -134,11 +109,6 @@ void __CARDTxHandler(s32 channel, OSContext* context)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80208124
- * Size:	000084
- */
 void __CARDUnlockedHandler(s32 channel, OSContext* context)
 {
 	CARDControl* card;
@@ -152,11 +122,6 @@ void __CARDUnlockedHandler(s32 channel, OSContext* context)
 	}
 }
 
-/*
- * --INFO--
- * Address:	802081A8
- * Size:	00010C
- */
 int __CARDReadNintendoID(s32 channel, u32* id)
 {
 	BOOL err;
@@ -185,11 +150,6 @@ int __CARDReadNintendoID(s32 channel, u32* id)
 	return CARD_RESULT_READY;
 }
 
-/*
- * --INFO--
- * Address:	802082B4
- * Size:	0000C0
- */
 s32 __CARDEnableInterrupt(s32 channel, BOOL enable)
 {
 	BOOL err;
@@ -207,11 +167,6 @@ s32 __CARDEnableInterrupt(s32 channel, BOOL enable)
 	return err ? CARD_RESULT_NOCARD : CARD_RESULT_READY;
 }
 
-/*
- * --INFO--
- * Address:	80208374
- * Size:	0000F0
- */
 s32 __CARDReadStatus(s32 channel, u8* status)
 {
 	BOOL err;
@@ -231,11 +186,6 @@ s32 __CARDReadStatus(s32 channel, u8* status)
 	return err ? CARD_RESULT_NOCARD : CARD_RESULT_READY;
 }
 
-/*
- * --INFO--
- * Address:	80208464
- * Size:	0000AC
- */
 s32 __CARDClearStatus(s32 channel)
 {
 	BOOL err;
@@ -274,11 +224,6 @@ void __CARDWakeup(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80208510
- * Size:	0000A4
- */
 static void TimeoutHandler(OSAlarm* alarm, OSContext* context)
 {
 	s32 channel;
@@ -324,11 +269,6 @@ static void SetupTimeoutAlarm(CARDControl* card)
 	}
 }
 
-/*
- * --INFO--
- * Address:	802085B4
- * Size:	00022C
- */
 static s32 Retry(s32 channel)
 {
 	CARDControl* card;
@@ -368,11 +308,6 @@ static s32 Retry(s32 channel)
 	return CARD_RESULT_READY;
 }
 
-/*
- * --INFO--
- * Address:	802087E0
- * Size:	000110
- */
 static void UnlockedCallback(s32 channel, s32 result)
 {
 	CARDCallback callback;
@@ -412,11 +347,6 @@ static void UnlockedCallback(s32 channel, s32 result)
 	}
 }
 
-/*
- * --INFO--
- * Address:	802088F0
- * Size:	0001A0
- */
 static s32 __CARDStart(s32 channel, CARDCallback txCallback, CARDCallback exiCallback)
 {
 	CARDControl* card;
@@ -452,11 +382,6 @@ static s32 __CARDStart(s32 channel, CARDCallback txCallback, CARDCallback exiCal
 	return result;
 }
 
-/*
- * --INFO--
- * Address:	80208A90
- * Size:	000138
- */
 s32 __CARDReadSegment(s32 channel, CARDCallback callback)
 {
 	CARDControl* card;
@@ -494,11 +419,6 @@ s32 __CARDReadSegment(s32 channel, CARDCallback callback)
 	return CARD_RESULT_READY;
 }
 
-/*
- * --INFO--
- * Address:	80208BC8
- * Size:	000120
- */
 s32 __CARDWritePage(s32 channel, CARDCallback callback)
 {
 	CARDControl* card;
@@ -540,11 +460,6 @@ void __CARDErase(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80208CE8
- * Size:	0000DC
- */
 s32 __CARDEraseSector(s32 channel, u32 addr, CARDCallback callback)
 {
 	CARDControl* card;
@@ -579,11 +494,6 @@ s32 __CARDEraseSector(s32 channel, u32 addr, CARDCallback callback)
 	return result;
 }
 
-/*
- * --INFO--
- * Address:	80208DC4
- * Size:	000090
- */
 void CARDInit(void)
 {
 	s32 channel;
@@ -608,21 +518,11 @@ void CARDInit(void)
 	OSRegisterResetFunction(&ResetFunctionInfo);
 }
 
-/*
- * --INFO--
- * Address:	80208E54
- * Size:	00001C
- */
 void __CARDSetDiskID(DVDDiskID* diskID)
 {
 	__CARDDiskID = diskID ? diskID : &__CARDDiskNone;
 }
 
-/*
- * --INFO--
- * Address:	80208E70
- * Size:	0000B0
- */
 s32 __CARDGetControlBlock(s32 channel, CARDControl** card)
 {
 	BOOL enabled;
@@ -649,11 +549,6 @@ s32 __CARDGetControlBlock(s32 channel, CARDControl** card)
 	return result;
 }
 
-/*
- * --INFO--
- * Address:	80208F20
- * Size:	000050
- */
 s32 __CARDPutControlBlock(CARDControl* card, s32 result)
 {
 	BOOL enabled;
@@ -666,11 +561,6 @@ s32 __CARDPutControlBlock(CARDControl* card, s32 result)
 	return result;
 }
 
-/*
- * --INFO--
- * Address:	80208F70
- * Size:	000030
- */
 s32 CARDGetResultCode(s32 channel)
 {
 	CARDControl* card;
@@ -683,11 +573,6 @@ s32 CARDGetResultCode(s32 channel)
 	return card->result;
 }
 
-/*
- * --INFO--
- * Address:	80208FA0
- * Size:	000120
- */
 s32 CARDFreeBlocks(s32 channel, s32* byteNotUsed, s32* filesNotUsed)
 {
 	CARDControl* card;
@@ -745,11 +630,6 @@ void CARDGetMemSize(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	802090C0
- * Size:	00006C
- */
 s32 CARDGetSectorSize(s32 channel, u32* size)
 {
 	CARDControl* card;
@@ -763,11 +643,6 @@ s32 CARDGetSectorSize(s32 channel, u32* size)
 	return __CARDPutControlBlock(card, 0);
 }
 
-/*
- * --INFO--
- * Address:	8020912C
- * Size:	000098
- */
 s32 __CARDSync(s32 channel)
 {
 	CARDControl* card;
@@ -785,11 +660,6 @@ s32 __CARDSync(s32 channel)
 	return result;
 }
 
-/*
- * --INFO--
- * Address:	802091C4
- * Size:	000050
- */
 static BOOL OnReset(BOOL f)
 {
 	if (!f) {

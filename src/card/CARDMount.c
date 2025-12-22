@@ -10,11 +10,6 @@ static u32 LatencyTable[8] = {
 
 static void DoUnmount(s32 channel, s32 result);
 
-/*
- * --INFO--
- * Address:	8020AAA4
- * Size:	000020
- */
 BOOL CARDProbe(s32 channel)
 {
 	return EXIProbe(channel);
@@ -30,11 +25,6 @@ s32 CARDProbeEx(s32 channel, s32* memSize, s32* sectorSize)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8020AAC4
- * Size:	0003B8
- */
 static s32 DoMount(s32 channel)
 {
 	CARDControl* card;
@@ -137,11 +127,6 @@ error:
 	return result;
 }
 
-/*
- * --INFO--
- * Address:	8020AE7C
- * Size:	000108
- */
 void __CARDMountCallback(s32 channel, s32 result)
 {
 	CARDControl* card;
@@ -178,11 +163,6 @@ void __CARDMountCallback(s32 channel, s32 result)
 	callback(channel, result);
 }
 
-/*
- * --INFO--
- * Address:	8020AF84
- * Size:	000188
- */
 s32 CARDMountAsync(s32 channel, CARDMemoryCard* workArea, CARDCallback detachCallback, CARDCallback attachCallback)
 {
 	CARDControl* card;
@@ -235,11 +215,6 @@ s32 CARDMountAsync(s32 channel, CARDMemoryCard* workArea, CARDCallback detachCal
 	return DoMount(channel);
 }
 
-/*
- * --INFO--
- * Address:	8020B10C
- * Size:	000048
- */
 s32 CARDMount(s32 channel, CARDMemoryCard* workArea, CARDCallback detachCallback)
 {
 	s32 result = CARDMountAsync(channel, workArea, detachCallback, __CARDSyncCallback);
@@ -250,11 +225,6 @@ s32 CARDMount(s32 channel, CARDMemoryCard* workArea, CARDCallback detachCallback
 	return __CARDSync(channel);
 }
 
-/*
- * --INFO--
- * Address:	8020B154
- * Size:	00009C
- */
 static void DoUnmount(s32 channel, s32 result)
 {
 	CARDControl* card;
@@ -273,11 +243,6 @@ static void DoUnmount(s32 channel, s32 result)
 	OSRestoreInterrupts(enabled);
 }
 
-/*
- * --INFO--
- * Address:	8020B1F0
- * Size:	0000AC
- */
 s32 CARDUnmount(s32 channel)
 {
 	CARDControl* card;

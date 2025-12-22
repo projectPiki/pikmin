@@ -80,11 +80,6 @@ static u32 gop_header[5]; // TODO: struct?
 static OSThread jac_hvqmThread;
 static u8 hvqmStack[0x1000] ATTRIBUTE_ALIGN(32);
 
-/*
- * --INFO--
- * Address:	8001DC80
- * Size:	000104
- */
 static void __ReLoad()
 {
 	int size = dvdfile_size;
@@ -110,11 +105,6 @@ static void __ReLoad()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8001DDA0
- * Size:	000074
- */
 static void __LoadFin(u32 a)
 {
 	dvd_active--;
@@ -127,11 +117,6 @@ static void __LoadFin(u32 a)
 	__ReLoad();
 }
 
-/*
- * --INFO--
- * Address:	8001DE20
- * Size:	000198
- */
 static int __VirtualLoad(u32 currentOffs, u32 bytesToRead, u8* data)
 {
 	u32 bufIdx = 0;
@@ -172,22 +157,12 @@ static int __VirtualLoad(u32 currentOffs, u32 bytesToRead, u8* data)
 	return bytesToRead;
 }
 
-/*
- * --INFO--
- * Address:	8001DFC0
- * Size:	000050
- */
 static void InitAudio1(StreamHeader_* header, u8* data, u32 size)
 {
 	Jac_InitStreamData(data, size);
 	StreamAudio_Start(0, 0, 0, 1, 0, header);
 }
 
-/*
- * --INFO--
- * Address:	8001E020
- * Size:	0003BC
- */
 void Jac_HVQM_Init(immut char* movieFilePath, u8* data, u32 bufferSize)
 {
 	// TODO: Use this in more places below instead of hardcoding 0x40000
@@ -364,11 +339,6 @@ void OSInitFastCast(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8001E3E0
- * Size:	000050
- */
 static void hvqm_forcestop()
 {
 	if (hvqm_first == 0 && OSIsThreadTerminated(&jac_hvqmThread) == FALSE) {
@@ -386,11 +356,6 @@ void Jac_HVQM_ThreadStart(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8001E440
- * Size:	000394
- */
 BOOL Jac_HVQM_Update(void)
 {
 	STACK_PAD_VAR(2);
@@ -509,11 +474,6 @@ end:
 	return FALSE;
 }
 
-/*
- * --INFO--
- * Address:	8001E7E0
- * Size:	000074
- */
 void Jac_HVQM_ForceStop(void)
 {
 	gop_frame = file_header.mTotalFrames;
@@ -540,11 +500,6 @@ void Jac_CountReadyPictures(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8001E860
- * Size:	000228
- */
 int Jac_GetPicture(void* data, int* x, int* y)
 {
 	int offset = 0;
@@ -618,11 +573,6 @@ int Jac_GetPicture(void* data, int* x, int* y)
 	return FALSE;
 }
 
-/*
- * --INFO--
- * Address:	8001EAA0
- * Size:	000040
- */
 static void InitPic()
 {
 	ref1 = NULL;
@@ -633,11 +583,6 @@ static void InitPic()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8001EAE0
- * Size:	000044
- */
 static BOOL CheckDraw(u32 id)
 {
 	if (pic_ctrl[(id - pic_ctrl[0].mFrameNumber) % PIC_BUFFERS].mBufferState) {
@@ -646,11 +591,6 @@ static BOOL CheckDraw(u32 id)
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	8001EB40
- * Size:	0000FC
- */
 static int Decode1(u8* data, u32 frameId, u8 frameType)
 {
 	u32 id    = (frameId - pic_ctrl[0].mFrameNumber) % PIC_BUFFERS;

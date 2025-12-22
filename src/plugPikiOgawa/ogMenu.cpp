@@ -50,11 +50,6 @@ void zen::ogDrawScrMenu::setScreen(immut char* path)
 	mRootPane = mScreen->search('root', true);
 }
 
-/*
- * --INFO--
- * Address:	80191294
- * Size:	0000C0
- */
 zen::ogDrawScrMenu::ogDrawScrMenu()
 {
 	PRINT("ogDrawScrMenu() \n");
@@ -103,11 +98,6 @@ void zen::ogDrawScrMenu::calcAngleSpeed(f32 angle)
 	mAngularVelocity += temp / angle;
 }
 
-/*
- * --INFO--
- * Address:	80191354
- * Size:	000350
- */
 zen::ogDrawScrMenu::returnStatusFlag zen::ogDrawScrMenu::update(Controller* input, bool a1, bool a2)
 {
 	if (a1) {
@@ -166,11 +156,6 @@ bool zen::ogDrawScrMenu::draw(Graphics& gfx)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801916E4
- * Size:	000278
- */
 zen::ogDrawScrController::ogDrawScrController()
 {
 	mControllerScreenMenu.setScreen("screen/blo/cont_00.blo");
@@ -243,11 +228,6 @@ void zen::ogDrawScrController::setHantenColor()
 	mIsColorInverted = true;
 }
 
-/*
- * --INFO--
- * Address:	8019195C
- * Size:	00041C
- */
 void zen::ogDrawScrController::update()
 {
 	mCycleTimer -= gsys->getFrameTime();
@@ -274,11 +254,6 @@ void zen::ogDrawScrController::update()
 	setWinColor();
 }
 
-/*
- * --INFO--
- * Address:	80191D78
- * Size:	000554
- */
 zen::ogDrawScrInfo::ogDrawScrInfo()
 {
 #if defined(VERSION_PIKIDEMO)
@@ -351,11 +326,6 @@ zen::ogDrawScrInfo::ogDrawScrInfo()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801922CC
- * Size:	000300
- */
 void zen::ogDrawScrInfo::start()
 {
 	mBluePikminInSquadCount   = GameStat::formationPikis[Blue];
@@ -481,11 +451,6 @@ void zen::ogDrawScrInfo2::drawHougaku(Graphics& gfx)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801925CC
- * Size:	0003FC
- */
 zen::ogScrMenuMgr::ogScrMenuMgr()
 {
 	mLeftRightIndicator = new ogDrawLR;
@@ -519,11 +484,6 @@ zen::ogScrMenuMgr::ogScrMenuMgr()
 	STACK_PAD_TERNARY(mStatus, 1);
 }
 
-/*
- * --INFO--
- * Address:	801929C8
- * Size:	00026C
- */
 void zen::ogScrMenuMgr::start()
 {
 	mStatus             = STATE_FadingIn;
@@ -580,11 +540,6 @@ void zen::ogScrMenuMgr::updateCont(Controller* input)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80192C34
- * Size:	000598
- */
 zen::ogScrMenuMgr::returnStatusFlag zen::ogScrMenuMgr::update(Controller* input)
 {
 	if (mStatus == STATE_Inactive) {
@@ -678,11 +633,6 @@ zen::ogScrMenuMgr::returnStatusFlag zen::ogScrMenuMgr::update(Controller* input)
 	return mStatus;
 }
 
-/*
- * --INFO--
- * Address:	801931CC
- * Size:	0003C8
- */
 bool zen::ogScrMenuMgr::draw(Graphics& gfx)
 {
 	if (mStatus == STATE_Inactive) {

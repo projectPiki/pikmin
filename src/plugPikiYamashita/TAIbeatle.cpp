@@ -771,11 +771,6 @@ protected:
 	// TODO: members
 };
 
-/*
- * --INFO--
- * Address:	801C59D4
- * Size:	000084
- */
 TAIbeatleSoundTable::TAIbeatleSoundTable()
     : PaniSoundTable(7)
 {
@@ -784,11 +779,6 @@ TAIbeatleSoundTable::TAIbeatleSoundTable()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801C5A58
- * Size:	000418
- */
 TAIbeatleParameters::TAIbeatleParameters()
     : TekiParameters(TPI_COUNT, TAIbeatleFloatParms::COUNT)
 {
@@ -865,11 +855,6 @@ TAIbeatleParameters::TAIbeatleParameters()
 	u32 dumb;
 }
 
-/*
- * --INFO--
- * Address:	801C5E70
- * Size:	000EF4
- */
 TAIbeatleStrategy::TAIbeatleStrategy()
     : YaiStrategy(TAIbeatleStateID::COUNT, TAIbeatleStateID::Initializing) // TODO: fix
 {
@@ -1063,11 +1048,6 @@ TAIbeatleStrategy::TAIbeatleStrategy()
 	setState(TAIbeatleStateID::Unk13, state);
 }
 
-/*
- * --INFO--
- * Address:	801C6D64
- * Size:	000140
- */
 bool TAIbeatleStrategy::interact(Teki& teki, immut TekiInteractionKey& key)
 {
 	STACK_PAD_VAR(1);
@@ -1107,11 +1087,6 @@ bool TAIbeatleStrategy::interact(Teki& teki, immut TekiInteractionKey& key)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	801C6EA4
- * Size:	00041C
- */
 void TAIbeatleStrategy::act(Teki& teki)
 {
 	YaiStrategy::act(teki);
@@ -1170,11 +1145,6 @@ void TAIbeatleStrategy::act(Teki& teki)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801C72C0
- * Size:	000024
- */
 void TAIbeatleAnimation::makeDefaultAnimations()
 {
 	if (mAnimMgr != nullptr) {

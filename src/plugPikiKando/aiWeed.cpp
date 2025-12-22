@@ -18,21 +18,11 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT(nullptr)
 
-/*
- * --INFO--
- * Address:	800C30A8
- * Size:	000054
- */
 ActWeed::ActWeed(Piki* piki)
     : Action(piki, true)
 {
 }
 
-/*
- * --INFO--
- * Address:	800C30FC
- * Size:	000058
- */
 void ActWeed::init(Creature* creature)
 {
 	mCurrGrass = nullptr;
@@ -44,11 +34,6 @@ void ActWeed::init(Creature* creature)
 	initApproach();
 }
 
-/*
- * --INFO--
- * Address:	800C3154
- * Size:	000060
- */
 int ActWeed::exec()
 {
 	switch (mState) {
@@ -65,11 +50,6 @@ int ActWeed::exec()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800C31B4
- * Size:	00002C
- */
 void ActWeed::cleanup()
 {
 	if (mGrassGen) {
@@ -77,11 +57,6 @@ void ActWeed::cleanup()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800C31E0
- * Size:	000070
- */
 void ActWeed::initApproach()
 {
 	mState     = STATE_Approach;
@@ -89,11 +64,6 @@ void ActWeed::initApproach()
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Walk), PaniMotionInfo(PIKIANIM_Walk));
 }
 
-/*
- * --INFO--
- * Address:	800C3250
- * Size:	0001E0
- */
 int ActWeed::exeApproach()
 {
 	if (!mCurrGrass) {
@@ -119,21 +89,11 @@ int ActWeed::exeApproach()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800C3430
- * Size:	00000C
- */
 void ActWeed::initAdjust()
 {
 	mState = STATE_Adjust;
 }
 
-/*
- * --INFO--
- * Address:	800C343C
- * Size:	000214
- */
 int ActWeed::exeAdjust()
 {
 	if (!mCurrGrass) {
@@ -161,11 +121,6 @@ int ActWeed::exeAdjust()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800C3650
- * Size:	00008C
- */
 void ActWeed::initNuking()
 {
 	mState = STATE_Attack;
@@ -174,11 +129,6 @@ void ActWeed::initNuking()
 	mAnimationFinished = false;
 }
 
-/*
- * --INFO--
- * Address:	800C36DC
- * Size:	0000E0
- */
 int ActWeed::exeNuking()
 {
 	if (mAnimationFinished) {
@@ -197,11 +147,6 @@ int ActWeed::exeNuking()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800C37BC
- * Size:	0002B4
- */
 void ActWeed::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {

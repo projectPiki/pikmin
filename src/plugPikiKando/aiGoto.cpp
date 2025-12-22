@@ -16,22 +16,12 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("aiGoto")
 
-/*
- * --INFO--
- * Address:	800BAF68
- * Size:	00004C
- */
 ActGoto::ActGoto(Piki* piki)
     : Action(piki, true)
 {
 	mTarget.clear();
 }
 
-/*
- * --INFO--
- * Address:	800BAFB4
- * Size:	00007C
- */
 void ActGoto::Initialiser::initialise(Action* action)
 {
 	ActGoto* ai      = static_cast<ActGoto*>(action);
@@ -42,11 +32,6 @@ void ActGoto::Initialiser::initialise(Action* action)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800BB030
- * Size:	0000D4
- */
 void ActGoto::init(Creature* target)
 {
 	mTimeoutDuration = (2.0f * gsys->getRand(1.0f)) + 4.0f;
@@ -54,22 +39,12 @@ void ActGoto::init(Creature* target)
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Run), PaniMotionInfo(PIKIANIM_Run));
 }
 
-/*
- * --INFO--
- * Address:	800BB104
- * Size:	000040
- */
 void ActGoto::cleanup()
 {
 	Creature* target = mTarget.getPtr();
 	mTarget.reset();
 }
 
-/*
- * --INFO--
- * Address:	800BB144
- * Size:	000378
- */
 int ActGoto::exec()
 {
 	Creature* target = mTarget.getPtr();

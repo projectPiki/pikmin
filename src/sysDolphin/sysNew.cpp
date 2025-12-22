@@ -17,11 +17,6 @@ DEFINE_ERROR(6)
  */
 DEFINE_PRINT("sysNew");
 
-/*
- * --INFO--
- * Address:	80047004
- * Size:	000164
- */
 void* System::alloc(u32 size)
 {
 	void* result = nullptr;
@@ -82,11 +77,6 @@ void* operator new(u32, int)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80047168
- * Size:	000044
- */
 void* operator new[](u32 size, int alignment)
 {
 	u32 alloc  = (u32)System::alloc(size + alignment);
@@ -94,20 +84,10 @@ void* operator new[](u32 size, int alignment)
 	return (void*)result;
 }
 
-/*
- * --INFO--
- * Address:	800471AC
- * Size:	000004
- */
 void operator delete(void*)
 {
 }
 
-/*
- * --INFO--
- * Address:	800471B0
- * Size:	000004
- */
 void operator delete[](void*)
 {
 }

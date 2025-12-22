@@ -19,11 +19,6 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("Mizu");
 
-/*
- * --INFO--
- * Address:	8017B3D4
- * Size:	000090
- */
 MizuProp::MizuProp()
 {
 	mCreatureProps.mFriction.mValue      = 1.0f;
@@ -31,11 +26,6 @@ MizuProp::MizuProp()
 	mCreatureProps.mAcceleration.mValue  = 1.0f;
 }
 
-/*
- * --INFO--
- * Address:	8017B464
- * Size:	000084
- */
 Mizu::Mizu(CreatureProp* props)
     : Boss(props)
 {
@@ -43,11 +33,6 @@ Mizu::Mizu(CreatureProp* props)
 	mMizuAi   = new MizuAi(this);
 }
 
-/*
- * --INFO--
- * Address:	8017B4E8
- * Size:	00005C
- */
 bool Mizu::attackDefaultPortion()
 {
 	effectMgr->create(EffectMgr::EFF_SD_DirtSpray, mSRT.t, nullptr, nullptr);
@@ -55,21 +40,11 @@ bool Mizu::attackDefaultPortion()
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8017B544
- * Size:	000008
- */
 f32 Mizu::getiMass()
 {
 	return 0.0001f;
 }
 
-/*
- * --INFO--
- * Address:	8017B54C
- * Size:	000040
- */
 void Mizu::initMizu(immut Vector3f&)
 {
 	mCollisionRadius = 10.0f;
@@ -78,11 +53,6 @@ void Mizu::initMizu(immut Vector3f&)
 	mMizuAi->initMizu(this);
 }
 
-/*
- * --INFO--
- * Address:	8017B58C
- * Size:	000040
- */
 void Mizu::initGeyzer(immut Vector3f&)
 {
 	mCollisionRadius = 10.0f;
@@ -91,11 +61,6 @@ void Mizu::initGeyzer(immut Vector3f&)
 	mMizuAi->initGeyzer(this);
 }
 
-/*
- * --INFO--
- * Address:	8017B5CC
- * Size:	00004C
- */
 void Mizu::doKill()
 {
 	setIsAlive(0);
@@ -104,32 +69,17 @@ void Mizu::doKill()
 	bossMgr->kill(this);
 }
 
-/*
- * --INFO--
- * Address:	8017B618
- * Size:	000028
- */
 void Mizu::exitCourse()
 {
 	mMizuAi->killCallBackEffect(true);
 }
 
-/*
- * --INFO--
- * Address:	8017B640
- * Size:	00004C
- */
 void Mizu::update()
 {
 	doAI();
 	doAnimation();
 }
 
-/*
- * --INFO--
- * Address:	8017B68C
- * Size:	000098
- */
 void Mizu::refresh(Graphics& gfx)
 {
 	mWorldMtx.makeSRT(mSRT.s, mSRT.r, mSRT.t);
@@ -140,32 +90,17 @@ void Mizu::refresh(Graphics& gfx)
 	mCollInfo->updateInfo(gfx, false);
 }
 
-/*
- * --INFO--
- * Address:	8017B724
- * Size:	00006C
- */
 void Mizu::drawShape(Graphics& gfx)
 {
 	gfx.useMatrix(Matrix4f::ident, 0);
 	mShapeObject->mShape->drawshape(gfx, *gfx.mCamera, nullptr);
 }
 
-/*
- * --INFO--
- * Address:	8017B790
- * Size:	000024
- */
 void Mizu::doAI()
 {
 	mMizuAi->update();
 }
 
-/*
- * --INFO--
- * Address:	8017B7B4
- * Size:	000044
- */
 void Mizu::doAnimation()
 {
 	if (mShapeObject) {

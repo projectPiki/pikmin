@@ -6,11 +6,6 @@
 #include "SoundMgr.h"
 #include "sysNew.h"
 
-/*
- * --INFO--
- * Address:	801F1D60
- * Size:	0000EC
- */
 zen::DrawUfoParts::DrawUfoParts()
 {
 	mScreen = new DrawScreen("screen/blo/ufo_p.blo", nullptr, true, true);
@@ -24,11 +19,6 @@ zen::DrawUfoParts::DrawUfoParts()
 	STACK_PAD_TERNARY(mScreen, 1);
 }
 
-/*
- * --INFO--
- * Address:	801F1E4C
- * Size:	000130
- */
 bool zen::DrawUfoParts::update(Controller* controller)
 {
 	bool res = false;
@@ -71,11 +61,6 @@ bool zen::DrawUfoParts::update(Controller* controller)
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	801F1F7C
- * Size:	0001B4
- */
 void zen::DrawUfoParts::draw(Graphics& gfx)
 {
 	bool check = false;
@@ -111,11 +96,6 @@ void zen::DrawUfoParts::draw(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801F2130
- * Size:	000034
- */
 void zen::DrawUfoParts::sleep()
 {
 	mMode        = MODE_Sleep;
@@ -123,11 +103,6 @@ void zen::DrawUfoParts::sleep()
 	mBest.sleep();
 }
 
-/*
- * --INFO--
- * Address:	801F2164
- * Size:	000068
- */
 void zen::DrawUfoParts::start()
 {
 	mScreen->makeResident();
@@ -138,11 +113,6 @@ void zen::DrawUfoParts::start()
 	mBest.appear();
 }
 
-/*
- * --INFO--
- * Address:	801F21CC
- * Size:	00004C
- */
 void zen::DrawUfoParts::operation()
 {
 	mScreen->makeResident();
@@ -151,11 +121,6 @@ void zen::DrawUfoParts::operation()
 	dataSet();
 }
 
-/*
- * --INFO--
- * Address:	801F2218
- * Size:	00020C
- */
 void zen::DrawUfoParts::dataSet()
 {
 	int i;

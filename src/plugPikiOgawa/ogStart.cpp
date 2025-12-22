@@ -19,11 +19,6 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("TODO: Replace")
 
-/*
- * --INFO--
- * Address:	80198988
- * Size:	0000F8
- */
 zen::ogScrStartMgr::ogScrStartMgr()
 {
 	mPressStartScreen = new P2DScreen();
@@ -34,11 +29,6 @@ zen::ogScrStartMgr::ogScrStartMgr()
 	mExitState = START_Exit;
 }
 
-/*
- * --INFO--
- * Address:	80198A80
- * Size:	000038
- */
 void zen::ogScrStartMgr::start()
 {
 	mState     = START_Oscillate;
@@ -46,11 +36,6 @@ void zen::ogScrStartMgr::start()
 	P2DPaneLibrary::setFamilyAlpha(mPressStartScreen, 0);
 }
 
-/*
- * --INFO--
- * Address:	80198AB8
- * Size:	000028
- */
 void zen::ogScrStartMgr::stop()
 {
 	if (mState == START_Oscillate) {
@@ -60,11 +45,6 @@ void zen::ogScrStartMgr::stop()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80198AE0
- * Size:	0001C0
- */
 zen::ogScrStartMgr::StartStatus zen::ogScrStartMgr::update(Controller* controller)
 {
 	// not active
@@ -123,11 +103,6 @@ zen::ogScrStartMgr::StartStatus zen::ogScrStartMgr::update(Controller* controlle
 	return mState;
 }
 
-/*
- * --INFO--
- * Address:	80198CA0
- * Size:	00008C
- */
 void zen::ogScrStartMgr::draw(Graphics& gfx)
 {
 	if (mState == START_NULL) {

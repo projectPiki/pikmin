@@ -1,10 +1,5 @@
 #include "PowerPC_EABI_Support/Runtime/__va_arg.h"
 
-/*
- * --INFO--
- * Address:	80214870
- * Size:	0000F4
- */
 void* __va_arg(struct va_list* v_list, u8 type)
 {
 	char* addr;

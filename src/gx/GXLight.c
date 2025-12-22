@@ -10,11 +10,6 @@ struct __GXLightObjInt_struct {
 	f32 ldir[3];
 };
 
-/*
- * --INFO--
- * Address:	8021197C
- * Size:	00001C
- */
 void GXInitLightAttn(GXLightObj* lt_obj, f32 a0, f32 a1, f32 a2, f32 k0, f32 k1, f32 k2)
 {
 	struct __GXLightObjInt_struct* obj;
@@ -214,11 +209,6 @@ void GXInitLightDistAttn(GXLightObj* lt_obj, f32 ref_dist, f32 ref_br, GXDistAtt
 	obj->k[2] = k2;
 }
 
-/*
- * --INFO--
- * Address:	80211998
- * Size:	000010
- */
 void GXInitLightPos(GXLightObj* lt_obj, f32 x, f32 y, f32 z)
 {
 	struct __GXLightObjInt_struct* obj;
@@ -250,11 +240,6 @@ void GXGetLightPos(GXLightObj* lt_obj, f32* x, f32* y, f32* z)
 	*z = obj->lpos[2];
 }
 
-/*
- * --INFO--
- * Address:	802119A8
- * Size:	00001C
- */
 void GXInitLightDir(GXLightObj* lt_obj, f32 nx, f32 ny, f32 nz)
 {
 	struct __GXLightObjInt_struct* obj;
@@ -284,11 +269,6 @@ void GXGetLightDir(GXLightObj* lt_obj, f32* nx, f32* ny, f32* nz)
 	*nz = -obj->ldir[2];
 }
 
-/*
- * --INFO--
- * Address:	802119C4
- * Size:	0000D4
- */
 void GXInitSpecularDir(GXLightObj* lt_obj, f32 nx, f32 ny, f32 nz)
 {
 	float mag;
@@ -334,11 +314,6 @@ void GXInitSpecularDirHA(GXLightObj* lt_obj, f32 nx, f32 ny, f32 nz, f32 hx, f32
 	obj->lpos[2] = -nz * (1024.0f * 1024.0f);
 }
 
-/*
- * --INFO--
- * Address:	80211A98
- * Size:	000028
- */
 void GXInitLightColor(GXLightObj* lt_obj, GXColor color)
 {
 	struct __GXLightObjInt_struct* obj;
@@ -388,11 +363,6 @@ void GXGetLightColor(GXLightObj* lt_obj, GXColor* color)
 #define WRITE_SOME_LIGHT_REG2(val, addr) GX_WRITE_F32(val)
 #endif
 
-/*
- * --INFO--
- * Address:	80211AC0
- * Size:	000144
- */
 void GXLoadLightObjImm(GXLightObj* lt_obj, GXLightID light)
 {
 	unsigned long addr;
@@ -515,11 +485,6 @@ void GXLoadLightObjIndx(u32 lt_obj_indx, GXLightID light)
 	gx->bpSent = 0;
 }
 
-/*
- * --INFO--
- * Address:	80211C04
- * Size:	000168
- */
 void GXSetChanAmbColor(GXChannelID chan, GXColor amb_color)
 {
 	u32 reg = 0;
@@ -579,11 +544,6 @@ void GXSetChanAmbColor(GXChannelID chan, GXColor amb_color)
 	gx->ambColor[colIdx] = reg;
 }
 
-/*
- * --INFO--
- * Address:	80211D6C
- * Size:	000168
- */
 void GXSetChanMatColor(GXChannelID chan, GXColor mat_color)
 {
 	u32 reg = 0;
@@ -643,11 +603,6 @@ void GXSetChanMatColor(GXChannelID chan, GXColor mat_color)
 	gx->matColor[colIdx] = reg;
 }
 
-/*
- * --INFO--
- * Address:	80211ED4
- * Size:	00004C
- */
 void GXSetNumChans(u8 nChans)
 {
 	CHECK_GXBEGIN(0x2D5, "GXSetNumChans");
@@ -658,11 +613,6 @@ void GXSetNumChans(u8 nChans)
 	gx->dirtyState |= 4;
 }
 
-/*
- * --INFO--
- * Address:	80211F20
- * Size:	0001E4
- */
 void GXSetChanCtrl(GXChannelID chan, GXBool enable, GXColorSrc amb_src, GXColorSrc mat_src, u32 light_mask, GXDiffuseFn diff_fn,
                    GXAttnFn attn_fn)
 {

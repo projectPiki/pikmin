@@ -21,11 +21,6 @@ immut char* PaniPlantAnimator::motionLabels[PlantMotion::COUNT] = {
 	"1", "2", "3", "4", "5", "6", "7",
 };
 
-/*
- * --INFO--
- * Address:	8011B148
- * Size:	000148
- */
 PaniMotionTable* PaniPlantAnimator::createMotionTable()
 {
 	PaniMotionTable* table = new PaniMotionTable(PlantMotion::COUNT);
@@ -40,11 +35,6 @@ PaniMotionTable* PaniPlantAnimator::createMotionTable()
 	return table;
 }
 
-/*
- * --INFO--
- * Address:	8011B290
- * Size:	00003C
- */
 PaniPlantAnimator::PaniPlantAnimator()
 {
 }

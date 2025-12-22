@@ -29,20 +29,10 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("Boss");
 
-/*
- * --INFO--
- * Address:	8014D8CC
- * Size:	0005AC
- */
 BossProp::BossProp()
 {
 }
 
-/*
- * --INFO--
- * Address:	8014DE78
- * Size:	0000EC
- */
 Boss::Boss(CreatureProp* props)
     : Creature(props)
 {
@@ -52,11 +42,6 @@ Boss::Boss(CreatureProp* props)
 	mSearchBuffer.init(mSearchData, 3);
 }
 
-/*
- * --INFO--
- * Address:	8014DF64
- * Size:	000114
- */
 void Boss::initBoss(BirthInfo& birthInfo, int objType)
 {
 	Creature::init(birthInfo.mPosition);
@@ -88,11 +73,6 @@ void Boss::initBoss(BirthInfo& birthInfo, int objType)
 	mTargetPosition    = birthInfo.mPosition;
 }
 
-/*
- * --INFO--
- * Address:	8014E078
- * Size:	000098
- */
 void Boss::calcFlickPiki()
 {
 	interactStickers(this, InteractFlick(this, BOSS_PROP.mFlickKnockback(), BOSS_PROP.mFlickDamage(), FLICK_BACKWARDS_ANGLE),
@@ -101,11 +81,6 @@ void Boss::calcFlickPiki()
 	mFlickDamageCount = 0;
 }
 
-/*
- * --INFO--
- * Address:	8014E110
- * Size:	0002A0
- */
 void Boss::createPellet(immut Vector3f& bossPos, f32 vertSpeed, bool hasUfoPart)
 {
 	if (mItemCount != 0) {
@@ -154,11 +129,6 @@ void Boss::createPellet(immut Vector3f& bossPos, f32 vertSpeed, bool hasUfoPart)
 	detachGenerator();
 }
 
-/*
- * --INFO--
- * Address:	8014E3B0
- * Size:	000164
- */
 bool Boss::changeDirection(f32 turnSpeed)
 {
 	bool notFacingTarget = false;
@@ -196,22 +166,12 @@ void Boss::towardFaceDirection(f32)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8014E514
- * Size:	000034
- */
 void Boss::stopMovement()
 {
 	mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 	mVelocity.set(0.0f, 0.0f, 0.0f);
 }
 
-/*
- * --INFO--
- * Address:	8014E548
- * Size:	000050
- */
 void Boss::calcBossDamage()
 {
 	mCurrentLife -= mDamage;
@@ -219,11 +179,6 @@ void Boss::calcBossDamage()
 	mDamage = 0.0f;
 }
 
-/*
- * --INFO--
- * Address:	8014E598
- * Size:	000030
- */
 void Boss::makeTargetCreature()
 {
 	if (mTargetCreature) {
@@ -233,11 +188,6 @@ void Boss::makeTargetCreature()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8014E5C8
- * Size:	000144
- */
 void Boss::makeTargetRandom(f32 p1)
 {
 	mWalkTimer += gsys->getFrameTime();
@@ -254,11 +204,6 @@ void Boss::makeTargetRandom(f32 p1)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8014E70C
- * Size:	0002D0
- */
 bool Boss::chaseNaviTransit()
 {
 	Creature* target = nullptr;
@@ -292,11 +237,6 @@ bool Boss::chaseNaviTransit()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8014E9DC
- * Size:	0002DC
- */
 bool Boss::chasePikiTransit()
 {
 	Creature* target = nullptr;
@@ -330,11 +270,6 @@ bool Boss::chasePikiTransit()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8014ECB8
- * Size:	000158
- */
 bool Boss::targetLostTransit()
 {
 	if (mTargetCreature) {
@@ -358,11 +293,6 @@ bool Boss::targetLostTransit()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8014EE10
- * Size:	000060
- */
 bool Boss::inSideWaitRangeTransit()
 {
 	if (qdist2(mSRT.t.x, mSRT.t.z, mInitPosition.x, mInitPosition.z) < BOSS_PROP.mMaxWaitRadius()) {
@@ -372,11 +302,6 @@ bool Boss::inSideWaitRangeTransit()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8014EE70
- * Size:	000060
- */
 bool Boss::outSideChaseRangeTransit()
 {
 	if (qdist2(mSRT.t.x, mSRT.t.z, mInitPosition.x, mInitPosition.z) > BOSS_PROP.mTerritoryRadius()) {
@@ -386,11 +311,6 @@ bool Boss::outSideChaseRangeTransit()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8014EED0
- * Size:	0000C4
- */
 bool Boss::inSearchAngle(Creature* target)
 {
 	f32 dir       = atan2f(target->mSRT.t.x - mSRT.t.x, target->mSRT.t.z - mSRT.t.z);
@@ -408,11 +328,6 @@ bool Boss::inSearchAngle(Creature* target)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8014EF94
- * Size:	0000B8
- */
 bool Boss::flickPikiTransit()
 {
 	int stickPikiNum = getStickNoMouthPikiCount();
@@ -439,22 +354,12 @@ bool Boss::flickPikiTransit()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8014F04C
- * Size:	00002C
- */
 int Boss::getStickPikiCount()
 {
 	Stickers stickers(this);
 	return stickers.getNumStickers();
 }
 
-/*
- * --INFO--
- * Address:	8014F078
- * Size:	000158
- */
 int Boss::getStickMouthPikiCount()
 {
 	int count = 0;
@@ -470,11 +375,6 @@ int Boss::getStickMouthPikiCount()
 	return count;
 }
 
-/*
- * --INFO--
- * Address:	8014F1D0
- * Size:	000158
- */
 int Boss::getStickNoMouthPikiCount()
 {
 	int count = 0;
@@ -490,11 +390,6 @@ int Boss::getStickNoMouthPikiCount()
 	return count;
 }
 
-/*
- * --INFO--
- * Address:	8014F328
- * Size:	000048
- */
 void Boss::killStickToMouthPiki()
 {
 	killStickers(this, &CndStickMouthKill(this), 0);
@@ -515,11 +410,6 @@ bool Boss::checkInWater(immut Vector3f& pos)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8014F370
- * Size:	000050
- */
 int Boss::getMapAttribute(immut Vector3f& pos)
 {
 	int attr         = ATTR_NULL;
@@ -530,11 +420,6 @@ int Boss::getMapAttribute(immut Vector3f& pos)
 	return attr;
 }
 
-/*
- * --INFO--
- * Address:	8014F3C0
- * Size:	00006C
- */
 bool Boss::insideAndInSearch()
 {
 	if (aiCullable()) {
@@ -568,11 +453,6 @@ void Boss::recoveryLife()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8014F42C
- * Size:	000100
- */
 void Boss::updateBoss()
 {
 	mGrid.updateGrid(mSRT.t);
@@ -585,11 +465,6 @@ void Boss::updateBoss()
 	mCurrentStateID = mNextStateID;
 }
 
-/*
- * --INFO--
- * Address:	8014F52C
- * Size:	00008C
- */
 void Boss::refreshViewCulling(Graphics& gfx)
 {
 	Vector3f point(mSRT.t);
@@ -601,20 +476,10 @@ void Boss::refreshViewCulling(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8014F5B8
- * Size:	000004
- */
 void Boss::drawShape(Graphics&)
 {
 }
 
-/*
- * --INFO--
- * Address:	8014F5BC
- * Size:	00006C
- */
 void Boss::refresh2d(Graphics& gfx)
 {
 	mLifeGauge.mPosition = mSRT.t;
@@ -623,11 +488,6 @@ void Boss::refresh2d(Graphics& gfx)
 	mLifeGauge.refresh(gfx);
 }
 
-/*
- * --INFO--
- * Address:	8014F628
- * Size:	000030
- */
 void Boss::wallCallback(immut Plane& plane, DynCollObject* wallObject)
 {
 	mIsOnWall       = true;
@@ -635,11 +495,6 @@ void Boss::wallCallback(immut Plane& plane, DynCollObject* wallObject)
 	mWallCollObject = wallObject;
 }
 
-/*
- * --INFO--
- * Address:	8014F658
- * Size:	000114
- */
 bool InteractAttack::actBoss(Boss* boss) immut
 {
 	if (boss->getAlive() && !boss->getInvincible()) {
@@ -667,11 +522,6 @@ bool InteractAttack::actBoss(Boss* boss) immut
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8014F774
- * Size:	00003C
- */
 bool InteractFlick::actBoss(Boss* boss) immut
 {
 	if (boss->getAlive() && !boss->getInvincible()) {
@@ -682,11 +532,6 @@ bool InteractFlick::actBoss(Boss* boss) immut
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8014F7B0
- * Size:	000084
- */
 bool InteractBomb::actBoss(Boss* boss) immut
 {
 	if (boss->getAlive() && !boss->getInvincible()) {
@@ -700,11 +545,6 @@ bool InteractBomb::actBoss(Boss* boss) immut
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8014F838
- * Size:	000110
- */
 bool InteractHitEffect::actBoss(Boss* boss) immut
 {
 	switch (boss->mObjType) {
@@ -733,11 +573,6 @@ bool InteractHitEffect::actBoss(Boss* boss) immut
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8014F948
- * Size:	00006C
- */
 bool Boss::stimulate(immut Interaction& interaction)
 {
 	bool res = interaction.actCommon(this);

@@ -32,11 +32,6 @@ void zen::ogScrFileChkSelMgr::init()
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80193594
- * Size:	000110
- */
 zen::ogScrFileChkSelMgr::ogScrFileChkSelMgr()
 {
 	mState           = Null;
@@ -59,11 +54,6 @@ void zen::ogScrFileChkSelMgr::startSub()
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801936A4
- * Size:	000050
- */
 void zen::ogScrFileChkSelMgr::start(bool p1)
 {
 	PRINT("********** ogScrFileChkSelMgr %d ***************\n", p1);
@@ -75,11 +65,6 @@ void zen::ogScrFileChkSelMgr::start(bool p1)
 	mIsScreenVisible = false;
 }
 
-/*
- * --INFO--
- * Address:	801936F4
- * Size:	000054
- */
 void zen::ogScrFileChkSelMgr::startSave()
 {
 	PRINT("********** ogScrFileChkSelMgr for <<SAVE>> ***************\n");
@@ -91,11 +76,6 @@ void zen::ogScrFileChkSelMgr::startSave()
 	mIsScreenVisible = false;
 }
 
-/*
- * --INFO--
- * Address:	80193748
- * Size:	000198
- */
 zen::ogScrFileChkSelMgr::returnStatusFlag zen::ogScrFileChkSelMgr::update(Controller* controller, CardQuickInfo& cardInfo)
 {
 	if (mState == Null) {
@@ -161,11 +141,6 @@ zen::ogScrFileChkSelMgr::returnStatusFlag zen::ogScrFileChkSelMgr::update(Contro
 	return mState;
 }
 
-/*
- * --INFO--
- * Address:	801938E0
- * Size:	0000BC
- */
 void zen::ogScrFileChkSelMgr::draw(Graphics& gfx)
 {
 	if (mState == Null) {

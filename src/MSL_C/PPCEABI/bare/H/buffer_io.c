@@ -19,11 +19,6 @@ void __convert_to_newlines(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80215D7C
- * Size:	000034
- */
 void __prep_buffer(FILE* file)
 {
 	file->mBufferPtr      = file->mBuffer;
@@ -43,11 +38,6 @@ void __load_buffer(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80215CB0
- * Size:	0000CC
- */
 int __flush_buffer(FILE* file, size_t* length)
 {
 	size_t bufferLen;

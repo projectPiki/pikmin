@@ -17,11 +17,6 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("ropeItem")
 
-/*
- * --INFO--
- * Address:	800ED9DC
- * Size:	0000B0
- */
 RopeItem::RopeItem(CreatureProp* prop, Shape* shape)
     : RopeCreature(prop)
 {
@@ -35,31 +30,16 @@ RopeItem::RopeItem(CreatureProp* prop, Shape* shape)
 	mOwner           = nullptr;
 }
 
-/*
- * --INFO--
- * Address:	800EDA8C
- * Size:	000008
- */
 bool RopeItem::isAtari()
 {
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800EDA94
- * Size:	000008
- */
 f32 RopeItem::getSize()
 {
 	return 5.0f;
 }
 
-/*
- * --INFO--
- * Address:	800EDA9C
- * Size:	00004C
- */
 void RopeItem::init(immut Vector3f& pos)
 {
 	f32 scale = 1.0f;
@@ -68,11 +48,6 @@ void RopeItem::init(immut Vector3f& pos)
 	mSearchBuffer.init(mSearch, 3);
 }
 
-/*
- * --INFO--
- * Address:	800EDAE8
- * Size:	000290
- */
 void RopeItem::autoInit()
 {
 	Iterator it(itemMgr);
@@ -112,31 +87,16 @@ void RopeItem::autoInit()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800EDD78
- * Size:	000004
- */
 void RopeItem::startAI(int)
 {
 }
 
-/*
- * --INFO--
- * Address:	800EDD7C
- * Size:	000034
- */
 void RopeItem::doKill()
 {
 	PRINT("ROPE %x is killed ?\n", this);
 	itemMgr->kill(this);
 }
 
-/*
- * --INFO--
- * Address:	800EDDB0
- * Size:	000008
- */
 f32 RopeItem::getiMass()
 {
 	return 10.0f;

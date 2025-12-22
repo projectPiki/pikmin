@@ -13,21 +13,11 @@ static BOOL __SITransfer(s32 chan, void* output, u32 outputBytes, void* input, u
 static BOOL SIGetResponseRaw(s32 chan);
 static void GetTypeCallback(s32 chan, u32 error, OSContext* context);
 
-/*
- * --INFO--
- * Address:	801FAFA8
- * Size:	000020
- */
 BOOL SIBusy(void)
 {
 	return Si.chan != -1 ? TRUE : FALSE;
 }
 
-/*
- * --INFO--
- * Address:	801FAFC8
- * Size:	000244
- */
 static u32 CompleteTransfer(void)
 {
 	u32 sr;
@@ -85,11 +75,6 @@ void SITransferNext(s32 chan)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801FB20C
- * Size:	000118
- */
 static void SIIntrruptHandler(__OSInterrupt interrupt, OSContext* context)
 {
 	s32 chan;
@@ -108,11 +93,6 @@ static void SIIntrruptHandler(__OSInterrupt interrupt, OSContext* context)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801FB324
- * Size:	000074
- */
 void SIInit(void)
 {
 	Packet[0].chan = Packet[1].chan = Packet[2].chan = Packet[3].chan = -1;
@@ -129,11 +109,6 @@ void SIInit(void)
 	__OSUnmaskInterrupts(OS_INTERRUPTMASK_PI_SI);
 }
 
-/*
- * --INFO--
- * Address:	801FB398
- * Size:	000208
- */
 static BOOL __SITransfer(s32 chan, void* output, u32 outputBytes, void* input, u32 inputBytes, SICallback callback)
 {
 	BOOL enabled;
@@ -186,21 +161,11 @@ void SISync(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801FB5A0
- * Size:	000010
- */
 u32 SIGetStatus(s32)
 {
 	return __SIRegs[SI_STAT];
 }
 
-/*
- * --INFO--
- * Address:	801FB5B0
- * Size:	000014
- */
 void SISetCommand(s32 chan, u32 command)
 {
 	__SIRegs[3 * chan] = command;
@@ -216,21 +181,11 @@ void SIGetCommand(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801FB5C4
- * Size:	000010
- */
 void SITransferCommands(void)
 {
 	__SIRegs[SI_STAT] = 0x80000000;
 }
 
-/*
- * --INFO--
- * Address:	801FB5D4
- * Size:	000060
- */
 u32 SISetXY(u32 x, u32 y)
 {
 	u32 poll;
@@ -249,11 +204,6 @@ u32 SISetXY(u32 x, u32 y)
 	return poll;
 }
 
-/*
- * --INFO--
- * Address:	801FB634
- * Size:	00009C
- */
 u32 SIEnablePolling(u32 poll)
 {
 	BOOL enabled;
@@ -287,11 +237,6 @@ u32 SIEnablePolling(u32 poll)
 	return poll;
 }
 
-/*
- * --INFO--
- * Address:	801FB6D0
- * Size:	00006C
- */
 u32 SIDisablePolling(u32 poll)
 {
 	BOOL enabled;
@@ -314,22 +259,12 @@ u32 SIDisablePolling(u32 poll)
 	return poll;
 }
 
-/*
- * --INFO--
- * Address:	801FB73C
- * Size:	000024
- */
 void SIGetResponse(s32 chan, void* data)
 {
 	((u32*)data)[0] = __SIRegs[chan * 3 + 1];
 	((u32*)data)[1] = __SIRegs[chan * 3 + 2];
 }
 
-/*
- * --INFO--
- * Address:	801FB760
- * Size:	00008C
- */
 static void AlarmHandler(OSAlarm* alarm, OSContext* context)
 {
 	s32 chan;
@@ -345,11 +280,6 @@ static void AlarmHandler(OSAlarm* alarm, OSContext* context)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801FB7EC
- * Size:	00013C
- */
 BOOL SITransfer(s32 chan, void* output, u32 outputBytes, void* input, u32 inputBytes, SICallback callback, OSTime delay)
 {
 	BOOL enabled;

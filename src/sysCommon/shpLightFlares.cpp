@@ -70,11 +70,6 @@ void LightGroup::saveini(immut char*, RandomAccessStream&)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80035B38
- * Size:	000420
- */
 void LightGroup::loadini(CmdStream* commands)
 {
 	while (!commands->endOfCmds() && !commands->endOfSection()) {
@@ -145,11 +140,6 @@ void LightGroup::loadini(CmdStream* commands)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80035F58
- * Size:	0001CC
- */
 void LightGroup::refresh(Graphics& gfx, immut Matrix4f* lightMtx)
 {
 	if (mFlares.Child() && mFlareGroup) {

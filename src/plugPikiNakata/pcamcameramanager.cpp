@@ -21,11 +21,6 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("pcamcameramanager")
 
-/*
- * --INFO--
- * Address:	80123C54
- * Size:	0001F8
- */
 PcamCameraManager::PcamCameraManager(Camera* camera, Controller* controller)
     : Node("PcamCameraManager")
 {
@@ -65,21 +60,11 @@ PcamCameraManager::PcamCameraManager(Camera* camera, Controller* controller)
 	mCurrEventIndex                         = -1;
 }
 
-/*
- * --INFO--
- * Address:	80123E4C
- * Size:	000024
- */
 void PcamCameraManager::startCamera(Creature* target)
 {
 	mCamera->startCamera(target);
 }
 
-/*
- * --INFO--
- * Address:	80123E70
- * Size:	000050
- */
 void PcamCameraManager::update()
 {
 	mCamera->control(*mController);
@@ -107,11 +92,6 @@ void PcamCameraManager::finishMotion()
 	mCamera->finishMotion();
 }
 
-/*
- * --INFO--
- * Address:	80123EC0
- * Size:	000098
- */
 void PcamCameraManager::updateVibrationEvent()
 {
 	if (mCurrEventIndex < 0) {
@@ -128,11 +108,6 @@ void PcamCameraManager::updateVibrationEvent()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80123FD8
- * Size:	000148
- */
 void PcamCameraManager::startVibrationEvent(int eventIdx, immut Vector3f& p2)
 {
 	PRINT("startVibrationEvent:%d,%d\n", mCurrEventIndex, eventIdx);
@@ -161,11 +136,6 @@ void PcamCameraManager::startVibrationEvent(int eventIdx, immut Vector3f& p2)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8012415C
- * Size:	00004C
- */
 void PcamCameraManager::outputNaviPosition(Vector3f& naviPos)
 {
 	Navi* navi = naviMgr->getNavi(0);

@@ -28,11 +28,6 @@ static PADClampRegion ClampRegion = {
 	31,
 };
 
-/*
- * --INFO--
- * Address:	80203BCC
- * Size:	000130
- */
 static void ClampStick(s8* px, s8* py, s8 max, s8 xy, s8 min)
 {
 	int x = *px;
@@ -106,11 +101,6 @@ static void ClampTrigger(u8* trigger)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80203CFC
- * Size:	000108
- */
 void PADClamp(PADStatus* status)
 {
 	int i;

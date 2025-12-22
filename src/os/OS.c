@@ -125,11 +125,6 @@ static ASM void __OSInitFPRs(void) {
 #endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address:	801F59A8
- * Size:	000028
- */
 u32 OSGetConsoleType(void)
 {
 	if (BootInfo == NULL || BootInfo->consoleType == 0) {
@@ -138,11 +133,6 @@ u32 OSGetConsoleType(void)
 	return BootInfo->consoleType;
 }
 
-/*
- * --INFO--
- * Address:	801F59D0
- * Size:	0002DC
- */
 void OSInit(void)
 {
 	/*
@@ -303,11 +293,6 @@ void __OSDBJUMPEND(void);
 
 #define NOP 0x60000000
 
-/*
- * --INFO--
- * Address:	801F5CAC
- * Size:	000280
- */
 static void OSExceptionInit(void)
 {
 	__OSException exception;
@@ -388,11 +373,6 @@ static void OSExceptionInit(void)
 	DBPrintf("Exceptions initialized...\n");
 }
 
-/*
- * --INFO--
- * Address:	801F5F2C
- * Size:	000024
- */
 static ASM void __OSDBIntegrator(void)
 {
 #ifdef __MWERKS__ // clang-format off
@@ -411,11 +391,6 @@ entry __OSDBINTEND
 #endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address:	801F5F50
- * Size:	000004
- */
 static ASM void __OSDBJump(void) {
 #ifdef __MWERKS__ // clang-format off
 	nofralloc
@@ -425,11 +400,6 @@ entry __OSDBJUMPEND
 #endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address:	801F5F54
- * Size:	00001C
- */
 __OSExceptionHandler __OSSetExceptionHandler(__OSException exception, __OSExceptionHandler handler)
 {
 	__OSExceptionHandler oldHandler;
@@ -438,21 +408,11 @@ __OSExceptionHandler __OSSetExceptionHandler(__OSException exception, __OSExcept
 	return oldHandler;
 }
 
-/*
- * --INFO--
- * Address:	801F5F70
- * Size:	000014
- */
 __OSExceptionHandler __OSGetExceptionHandler(__OSException exception)
 {
 	return OSExceptionTable[exception];
 }
 
-/*
- * --INFO--
- * Address:	801F5F84
- * Size:	00009C
- */
 static ASM void OSExceptionVector(void)
 {
 #ifdef __MWERKS__ // clang-format off
@@ -538,11 +498,6 @@ entry __OSEVEnd
 #endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address:	801F6020
- * Size:	000054
- */
 static ASM void OSDefaultExceptionHandler(register __OSException exception, register OSContext* context)
 {
 #pragma unused(exception)
@@ -558,11 +513,6 @@ static ASM void OSDefaultExceptionHandler(register __OSException exception, regi
 #endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address:	801F6074
- * Size:	000038
- */
 void __OSPSInit(void)
 {
 	PPCMthid2(PPCMfhid2() | 0xA0000000);
@@ -579,11 +529,6 @@ void __OSPSInit(void)
 #define DI_CONFIG_IDX         0x9
 #define DI_CONFIG_CONFIG_MASK 0xFF
 
-/*
- * --INFO--
- * Address:	801F60AC
- * Size:	000014
- */
 u32 __OSGetDIConfig(void)
 {
 	return (__DIRegs[DI_CONFIG_IDX] & DI_CONFIG_CONFIG_MASK);

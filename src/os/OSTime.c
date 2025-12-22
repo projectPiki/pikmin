@@ -10,11 +10,6 @@ static s32 YearDays[OS_TIME_MONTH_MAX] = { 0, 31, 59, 90, 120, 151, 181, 212, 24
 // End of each month in leap year
 static s32 LeapYearDays[OS_TIME_MONTH_MAX] = { 0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335 };
 
-/*
- * --INFO--
- * Address:	801FD3A0
- * Size:	000018
- */
 ASM OSTime OSGetTime(void) {
 #ifdef __MWERKS__ // clang-format off
 	nofralloc
@@ -31,11 +26,6 @@ ASM OSTime OSGetTime(void) {
 #endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address:	801FD3B8
- * Size:	000008
- */
 ASM u32 OSGetTick(void)
 {
 #ifdef __MWERKS__ // clang-format off
@@ -66,11 +56,6 @@ void __OSSetTime(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801FD3C0
- * Size:	000064
- */
 OSTime __OSGetSystemTime(void)
 {
 	BOOL enabled;
@@ -129,11 +114,6 @@ static s32 GetLeapDays(s32 year)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801FD424
- * Size:	00019C
- */
 static void GetDates(s32 days, OSCalendarTime* cal)
 {
 	s32 year;
@@ -291,11 +271,6 @@ static void GetDates(s32 days, OSCalendarTime* cal)
 
 #pragma dont_inline on
 
-/*
- * --INFO--
- * Address:	801FD5C0
- * Size:	000204
- */
 void OSTicksToCalendarTime(OSTime ticks, OSCalendarTime* cal)
 {
 	int days;

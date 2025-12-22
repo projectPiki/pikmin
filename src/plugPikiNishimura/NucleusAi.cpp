@@ -17,21 +17,11 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("NucleusAi");
 
-/*
- * --INFO--
- * Address:	8017A544
- * Size:	000020
- */
 NucleusAi::NucleusAi(Nucleus* nucleus)
 {
 	mNucleus = nucleus;
 }
 
-/*
- * --INFO--
- * Address:	8017A564
- * Size:	000074
- */
 void NucleusAi::initAI(Nucleus* nucleus)
 {
 	mNucleus = nucleus;
@@ -42,11 +32,6 @@ void NucleusAi::initAI(Nucleus* nucleus)
 	mStickPikiCount = 0;
 }
 
-/*
- * --INFO--
- * Address:	8017A5D8
- * Size:	00007C
- */
 void NucleusAi::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
@@ -68,20 +53,10 @@ void NucleusAi::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8017A654
- * Size:	000004
- */
 void NucleusAi::keyAction0()
 {
 }
 
-/*
- * --INFO--
- * Address:	8017A658
- * Size:	000004
- */
 void NucleusAi::keyAction1()
 {
 }
@@ -104,31 +79,16 @@ void NucleusAi::keyAction3()
 {
 }
 
-/*
- * --INFO--
- * Address:	8017A65C
- * Size:	000014
- */
 void NucleusAi::keyLoopEnd()
 {
 	mNucleus->addLoopCounter(1);
 }
 
-/*
- * --INFO--
- * Address:	8017A670
- * Size:	000010
- */
 void NucleusAi::keyFinished()
 {
 	mNucleus->setMotionFinish(true);
 }
 
-/*
- * --INFO--
- * Address:	8017A680
- * Size:	000004
- */
 void NucleusAi::playSound(int)
 {
 }
@@ -277,11 +237,6 @@ void NucleusAi::followState()
 {
 }
 
-/*
- * --INFO--
- * Address:	8017A684
- * Size:	0002D0
- */
 void NucleusAi::update()
 {
 	setEveryFrame();

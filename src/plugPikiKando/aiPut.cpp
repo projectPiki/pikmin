@@ -28,11 +28,6 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("PickItem") // Nice copy-paste...
 
-/*
- * --INFO--
- * Address:	800BE9F4
- * Size:	0000A0
- */
 void ActPutBomb::procCollideMsg(Piki* piki, MsgCollide* msg)
 {
 	if (mState == STATE_Wait) {
@@ -45,22 +40,12 @@ void ActPutBomb::procCollideMsg(Piki* piki, MsgCollide* msg)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800BEA94
- * Size:	000088
- */
 ActPutBomb::ActPutBomb(Piki* piki)
     : Action(piki, true)
 {
 	setName("putbomb");
 }
 
-/*
- * --INFO--
- * Address:	800BEB1C
- * Size:	00048C
- */
 void ActPutBomb::findTeki()
 {
 #if defined(VERSION_GPIE01_00) || defined(VERSION_GPIE01_01) || defined(VERSION_GPIP01_00)
@@ -119,11 +104,6 @@ void ActPutBomb::findTeki()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800BEFA8
- * Size:	0001C0
- */
 void ActPutBomb::init(Creature* target)
 {
 	mTouchedPlayer      = false;
@@ -168,21 +148,11 @@ void ActPutBomb::init(Creature* target)
 	initPut();
 }
 
-/*
- * --INFO--
- * Address:	800BF168
- * Size:	00000C
- */
 void ActPutBomb::initSet()
 {
 	mState = STATE_Set;
 }
 
-/*
- * --INFO--
- * Address:	800BF174
- * Size:	0001D8
- */
 int ActPutBomb::exeSet()
 {
 	if (!mPiki->hasBomb()) {
@@ -210,11 +180,6 @@ int ActPutBomb::exeSet()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800BF34C
- * Size:	000164
- */
 void ActPutBomb::warnPikis()
 {
 	PRINT("*** WARN PIKIS +++++++++++++++++++++\n");
@@ -231,11 +196,6 @@ void ActPutBomb::warnPikis()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800BF4B0
- * Size:	00016C
- */
 void ActPutBomb::initAim()
 {
 	PRINT("+++++ INIT AIM\n");
@@ -245,11 +205,6 @@ void ActPutBomb::initAim()
 	mPlaceTimer = 0.0f;
 }
 
-/*
- * --INFO--
- * Address:	800BF61C
- * Size:	0002CC
- */
 int ActPutBomb::exeAim()
 {
 	if (!mTarget->isVisible() || !mTarget->isAlive()) {
@@ -302,11 +257,6 @@ int ActPutBomb::exeAim()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800BF8E8
- * Size:	00000C
- */
 void ActPutBomb::initWait()
 {
 	mState = STATE_Wait;
@@ -327,11 +277,6 @@ int ActPutBomb::exeWait()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800BF8F4
- * Size:	000084
- */
 void ActPutBomb::initThrow()
 {
 	mAnimationFinished = false;
@@ -339,11 +284,6 @@ void ActPutBomb::initThrow()
 	mState = STATE_Throw;
 }
 
-/*
- * --INFO--
- * Address:	800BF978
- * Size:	00014C
- */
 void ActPutBomb::initPut()
 {
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Tanemaki, this), PaniMotionInfo(PIKIANIM_Tanemaki));
@@ -361,11 +301,6 @@ void ActPutBomb::initPut()
 	mState             = STATE_Put;
 }
 
-/*
- * --INFO--
- * Address:	800BFAC4
- * Size:	00023C
- */
 int ActPutBomb::exeThrow()
 {
 	mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
@@ -424,11 +359,6 @@ int ActPutBomb::exePut()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800BFD00
- * Size:	000210
- */
 int ActPutBomb::exec()
 {
 	if (mTouchedPlayer) {
@@ -470,11 +400,6 @@ int ActPutBomb::exec()
 	return ACTOUT_Success;
 }
 
-/*
- * --INFO--
- * Address:	800BFF10
- * Size:	000038
- */
 void ActPutBomb::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
@@ -487,31 +412,16 @@ void ActPutBomb::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800BFF48
- * Size:	000004
- */
 void ActPutBomb::cleanup()
 {
 }
 
-/*
- * --INFO--
- * Address:	800BFF4C
- * Size:	00005C
- */
 ActPutItem::ActPutItem(Piki* piki)
     : Action(piki, true)
 {
 	mItem.clear();
 }
 
-/*
- * --INFO--
- * Address:	800BFFA8
- * Size:	00040C
- */
 void ActPutItem::findPos()
 {
 	Creature* closestItem = nullptr;
@@ -559,11 +469,6 @@ void ActPutItem::findPos()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800C03B4
- * Size:	000340
- */
 bool ActPutItem::findAdjacent(Creature* target)
 {
 	Vector3f pos(mItem.getPtr()->mSRT.t);
@@ -595,22 +500,12 @@ bool ActPutItem::findAdjacent(Creature* target)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800C06F4
- * Size:	00006C
- */
 void ActPutItem::init(Creature* target)
 {
 	mItem.set(target);
 	findPos();
 }
 
-/*
- * --INFO--
- * Address:	800C0760
- * Size:	000178
- */
 int ActPutItem::exec()
 {
 	Vector3f dir = mItemPosition - mPiki->mSRT.t;
@@ -629,11 +524,6 @@ int ActPutItem::exec()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800C08D8
- * Size:	000040
- */
 void ActPutItem::cleanup()
 {
 	mItem.reset();

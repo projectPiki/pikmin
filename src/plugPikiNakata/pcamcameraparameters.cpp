@@ -16,11 +16,6 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("pcamcameraparameters")
 
-/*
- * --INFO--
- * Address:	801249C4
- * Size:	000A78
- */
 PcamCameraParameters::PcamCameraParameters()
 {
 	ParaParameterInfoI* intParams = new ParaParameterInfoI[PCAMI_COUNT];
@@ -154,11 +149,6 @@ PcamCameraParameters::PcamCameraParameters()
 	multiP->setF(PCAMF_AttentionAngleMaxSpeed, NMathF::pi / 8.0f);
 }
 
-/*
- * --INFO--
- * Address:	80125468
- * Size:	0000D8
- */
 void PcamCameraParameters::read(RandomAccessStream& input)
 {
 	mVersion = input.readInt();

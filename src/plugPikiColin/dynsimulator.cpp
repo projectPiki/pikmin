@@ -49,11 +49,6 @@ bool CollState::add(immut Vector3f& normal, immut Vector3f& contactPt, RigidBody
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8004DC00
- * Size:	00030C
- */
 void RigidBody::initializeBody()
 {
 	Vector3f halfExtents(mDimensions.x / 2.0f, mDimensions.y / 2.0f, mDimensions.z / 2.0f);
@@ -91,20 +86,10 @@ void RigidBody::initializeBody()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8004DF0C
- * Size:	000004
- */
 void RigidBody::initRender(int)
 {
 }
 
-/*
- * --INFO--
- * Address:	8004DF10
- * Size:	0001BC
- */
 void RigidBody::render(Graphics& gfx)
 {
 	int indices[] = { 0, 1, 1, 5, 5, 4, 4, 0, 2, 3, 3, 7, 7, 6, 6, 2, 0, 2, 1, 3, 5, 7, 4, 6 };
@@ -125,11 +110,6 @@ void RigidBody::render(Graphics& gfx)
 	gfx.setLighting(lighting, nullptr);
 }
 
-/*
- * --INFO--
- * Address:	8004E0CC
- * Size:	000050
- */
 void RigidBody::applyCMForce(immut Vector3f& force)
 {
 	mLinearAccel.x += force.x * mMass;
@@ -137,11 +117,6 @@ void RigidBody::applyCMForce(immut Vector3f& force)
 	mLinearAccel.z += force.z * mMass;
 }
 
-/*
- * --INFO--
- * Address:	8004E11C
- * Size:	000D90
- */
 void RigidBody::integrate(int prevConfigIdx, int currConfigIdx, f32 timeStep)
 {
 	configuration& prevState = mIntegrationStates[prevConfigIdx];
@@ -167,11 +142,6 @@ void RigidBody::integrate(int prevConfigIdx, int currConfigIdx, f32 timeStep)
 	STACK_PAD_TERNARY(prevConfigIdx, 5);
 }
 
-/*
- * --INFO--
- * Address:	8004EF18
- * Size:	00034C
- */
 bool RigidBody::resolveCollisions(int configIdx, Collision& coll)
 {
 	configuration& config = mIntegrationStates[configIdx];
@@ -199,11 +169,6 @@ bool RigidBody::resolveCollisions(int configIdx, Collision& coll)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8004F264
- * Size:	000398
- */
 void RigidBody::applyGroundForces(int configIdx, CollGroup* collGroup)
 {
 	configuration& config = mIntegrationStates[configIdx];
@@ -260,11 +225,6 @@ void RigidBody::applyGroundForces(int configIdx, CollGroup* collGroup)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8004F7B4
- * Size:	0000E0
- */
 void RigidBody::updateViewInfo(int p1, int configIdx)
 {
 	for (int i = 0; i < mBoundingPointCount + mHookPointCount; i++) {
@@ -277,11 +237,6 @@ void RigidBody::updateViewInfo(int p1, int configIdx)
 	makeBodyQuat(mBufferedOrientations[p1]);
 }
 
-/*
- * --INFO--
- * Address:	8004F898
- * Size:	0001E8
- */
 void RigidBody::updateVecQuats(int p1, f32 p2)
 {
 	int idx1 = p1;
@@ -296,11 +251,6 @@ void RigidBody::updateVecQuats(int p1, f32 p2)
 	mRenderOrientation.slerp(mBufferedOrientations[idx2], p2, 1);
 }
 
-/*
- * --INFO--
- * Address:	8004FA80
- * Size:	00013C
- */
 void RigidBody::calculateVertices(int configIdx)
 {
 	configuration& state  = mIntegrationStates[configIdx];
@@ -312,21 +262,11 @@ void RigidBody::calculateVertices(int configIdx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8004FBBC
- * Size:	000008
- */
 bool RigidBody::checkForCollisions(int, CollState&)
 {
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8004FBC4
- * Size:	0000B8
- */
 void DynSimulator::resetWorld()
 {
 	mCurrentConfigIdx = 0;
@@ -343,11 +283,6 @@ void DynSimulator::resetWorld()
 	mWorldState.mStatus = 2;
 }
 
-/*
- * --INFO--
- * Address:	8004FC7C
- * Size:	0001B4
- */
 void DynSimulator::doSimulation(f32 p1, f32 p2, Shape* p3)
 {
 	f32 i;
@@ -416,11 +351,6 @@ void DynSimulator::CalculateVertices(int)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8004FF98
- * Size:	00006C
- */
 void DynSimulator::updateVecQuats(f32 p1)
 {
 	for (RigidBody* body = (RigidBody*)mChild; body; body = (RigidBody*)body->Next()) {

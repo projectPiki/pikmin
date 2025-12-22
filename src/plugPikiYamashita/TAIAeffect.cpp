@@ -21,11 +21,6 @@ DEFINE_PRINT("TAIAeffect")
 
 const int TAIAeffCloudOfDust::RUMBLE_NONE = -1;
 
-/*
- * --INFO--
- * Address:	801D5E50
- * Size:	0000B8
- */
 void TAIAeffCloudOfDust::init(EffectMgr::effTypeTable effID, bool p2, int soundID, int rumbleType, f32 sinkThreshold, int footNum,
                               int jointID0, int jointID1, int jointID2, int jointID3)
 {
@@ -56,11 +51,6 @@ void TAIAeffCloudOfDust::init(EffectMgr::effTypeTable effID, bool p2, int soundI
 	}
 }
 
-/*
- * --INFO--
- * Address:	801D5F08
- * Size:	0000A0
- */
 void TAIAeffCloudOfDust::start(Teki& teki)
 {
 	for (int i = 0; i < mFootNum; i++) {
@@ -73,11 +63,6 @@ void TAIAeffCloudOfDust::start(Teki& teki)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801D5FA8
- * Size:	000068
- */
 bool TAIAeffCloudOfDust::act(Teki& teki)
 {
 	for (int i = 0; i < mFootNum; i++) {
@@ -86,21 +71,11 @@ bool TAIAeffCloudOfDust::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	801D6010
- * Size:	000040
- */
 void TAIAeffCloudOfDust::setType(Vector3f& p1, int p2, int p3)
 {
 	p1.y = mapMgr->getMinY(p1.x, p1.z, true);
 }
 
-/*
- * --INFO--
- * Address:	801D6050
- * Size:	0001AC
- */
 void TAIAeffCloudOfDust::createCloudOfDust(Teki& teki, int footIdx)
 {
 	CollPart* foot = getCollPart(teki, mFootJointID[footIdx]);
@@ -140,11 +115,6 @@ void TAIAeffCloudOfDust::createCloudOfDust(Teki& teki, int footIdx)
 	teki.setFootPosY((YTeki::effFootIndexFlag)footIdx, foot->mCentre.y);
 }
 
-/*
- * --INFO--
- * Address:	801D61FC
- * Size:	000050
- */
 CollPart* TAIAeffCloudOfDust::getCollPart(Teki& teki, int partID)
 {
 	CollPart* part = teki.mCollInfo->getSphere(partID);

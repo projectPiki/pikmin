@@ -24,42 +24,22 @@ immut char* MapParts::shapeFiles[4] = {
 	"mapparts/board.mod",
 };
 
-/*
- * --INFO--
- * Address:	801184A8
- * Size:	000018
- */
 immut char* MapParts::getShapeFile(int idx)
 {
 	return shapeFiles[idx];
 }
 
-/*
- * --INFO--
- * Address:	801184C0
- * Size:	00005C
- */
 void MapParts::applyVelocity(immut Plane&, immut Vector3f&, immut Vector3f& force)
 {
 	mVelocity = mVelocity + force;
 }
 
-/*
- * --INFO--
- * Address:	8011851C
- * Size:	000078
- */
 MapEntity::MapEntity(Shape* shape)
     : MapParts(shape)
 {
 	mVelocity.set(0.0f, 0.0f, 0.0f);
 }
 
-/*
- * --INFO--
- * Address:	80118594
- * Size:	000100
- */
 void MapEntity::update()
 {
 	mPosition = mPosition + gsys->getFrameTime() * mVelocity;
@@ -67,11 +47,6 @@ void MapEntity::update()
 	DynCollShape::update();
 }
 
-/*
- * --INFO--
- * Address:	80118694
- * Size:	0000D0
- */
 MapSlider::MapSlider(Shape* shape, int activationCount, int triggerCount, f32 holdTime1, f32 holdTime2, f32 moveSpeed, int moveMode)
     : MapParts(shape)
 {
@@ -84,11 +59,6 @@ MapSlider::MapSlider(Shape* shape, int activationCount, int triggerCount, f32 ho
 	mFaceDirection   = 0.0f;
 }
 
-/*
- * --INFO--
- * Address:	80118764
- * Size:	000040
- */
 void MapSlider::init()
 {
 	if (mCurrentPart) {
@@ -100,11 +70,6 @@ void MapSlider::init()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801187A4
- * Size:	00036C
- */
 void MapSlider::update()
 {
 	bool activationReached = mContactCount >= mActivationCount;
@@ -169,11 +134,6 @@ void MapSlider::update()
 	DynCollShape::update();
 }
 
-/*
- * --INFO--
- * Address:	80118B10
- * Size:	0001EC
- */
 void MapSlider::refresh(Graphics& gfx)
 {
 	Vector3f textPos(0.0f, 20.0f, 0.0f);

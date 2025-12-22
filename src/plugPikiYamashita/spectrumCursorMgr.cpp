@@ -34,11 +34,6 @@ void zen::SpectrumCursorMgr::setMirror(P2DPane* pane)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801DA814
- * Size:	000394
- */
 void zen::SpectrumCursorMgr::update()
 {
 	f32 t, tComp;
@@ -80,11 +75,6 @@ void zen::SpectrumCursorMgr::update()
 	setMirror(mPanes[0]);
 }
 
-/*
- * --INFO--
- * Address:	801DABA8
- * Size:	000070
- */
 void zen::SpectrumCursorMgr::move(f32 x, f32 y, f32 p3)
 {
 	mMoveTimer    = 0.0f;
@@ -95,11 +85,6 @@ void zen::SpectrumCursorMgr::move(f32 x, f32 y, f32 p3)
 	mTargetPosY   = y;
 }
 
-/*
- * --INFO--
- * Address:	801DAC18
- * Size:	000024
- */
 void zen::SpectrumCursorMgr::scale(f32 p1, f32 p2)
 {
 	mScaleTimer    = 0.0f;
@@ -108,11 +93,6 @@ void zen::SpectrumCursorMgr::scale(f32 p1, f32 p2)
 	mTargetScale   = p1;
 }
 
-/*
- * --INFO--
- * Address:	801DAC3C
- * Size:	000374
- */
 void zen::SpectrumCursorMgr::init(P2DScreen* screen, P2DPane* parent, u32 p3, f32 p4, f32 p5)
 {
 	char buf[8];
@@ -157,11 +137,6 @@ void zen::SpectrumCursorMgr::init(P2DScreen* screen, P2DPane* parent, u32 p3, f3
 	scale(1.0f, 0.5f);
 }
 
-/*
- * --INFO--
- * Address:	801DAFB0
- * Size:	000108
- */
 void zen::SpectrumCursorMgr::initPos(f32 x, f32 y)
 {
 	for (int i = 0; i < mPaneCount; i++) {
@@ -171,11 +146,6 @@ void zen::SpectrumCursorMgr::initPos(f32 x, f32 y)
 	mTargetPosY = y;
 }
 
-/*
- * --INFO--
- * Address:	801DB0B8
- * Size:	00004C
- */
 void zen::SpectrumCursorMgr::initScale(f32 scale)
 {
 	mMoveTimer    = 0.0f;
@@ -187,11 +157,6 @@ void zen::SpectrumCursorMgr::initScale(f32 scale)
 	mTargetScale = scale;
 }
 
-/*
- * --INFO--
- * Address:	801DB104
- * Size:	000048
- */
 u32 zen::SpectrumCursorMgr::makeTag(u32 tag, int idx)
 {
 	char buf[8];

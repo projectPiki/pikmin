@@ -21,11 +21,6 @@ DEFINE_PRINT("naviiMgr"); // epic typo
 
 NaviMgr* naviMgr;
 
-/*
- * --INFO--
- * Address:	801171C4
- * Size:	000180
- */
 NaviMgr::NaviMgr()
 {
 	memStat->start("naviparms");
@@ -64,11 +59,6 @@ void NaviMgr::init()
 {
 }
 
-/*
- * --INFO--
- * Address:	80117344
- * Size:	000060
- */
 Creature* NaviMgr::createObject()
 {
 	Navi* navi = new Navi(mNaviParms, mNaviID);
@@ -76,21 +66,11 @@ Creature* NaviMgr::createObject()
 	return navi;
 }
 
-/*
- * --INFO--
- * Address:	801173A4
- * Size:	000020
- */
 void NaviMgr::update()
 {
 	MonoObjectMgr::update();
 }
 
-/*
- * --INFO--
- * Address:	801173C4
- * Size:	000074
- */
 Navi* NaviMgr::getNavi()
 {
 	Iterator iter(this);
@@ -98,11 +78,6 @@ Navi* NaviMgr::getNavi()
 	return static_cast<Navi*>(*iter);
 }
 
-/*
- * --INFO--
- * Address:	80117438
- * Size:	000018
- */
 Navi* NaviMgr::getNavi(int idx)
 {
 	if (idx >= mNumObjects) {
@@ -112,11 +87,6 @@ Navi* NaviMgr::getNavi(int idx)
 	return static_cast<Navi*>(mObjectList[idx]);
 }
 
-/*
- * --INFO--
- * Address:	80117450
- * Size:	00011C
- */
 void NaviMgr::refresh2d(Graphics& gfx)
 {
 	Iterator iter(this);
@@ -126,11 +96,6 @@ void NaviMgr::refresh2d(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8011756C
- * Size:	000110
- */
 void NaviMgr::renderCircle(Graphics& gfx)
 {
 	Iterator iter(this);
@@ -140,11 +105,6 @@ void NaviMgr::renderCircle(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8011767C
- * Size:	00011C
- */
 void NaviMgr::drawShadow(Graphics& gfx)
 {
 	Iterator iter(this);
@@ -154,11 +114,6 @@ void NaviMgr::drawShadow(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80117798
- * Size:	000030
- */
 void NaviMgr::read(RandomAccessStream& input)
 {
 	mNaviParms->read(input);

@@ -32,11 +32,6 @@ char filelist[][32] = { "piki.stx",    "o_dead.stx",  "d_end1.stx",    "gyoku.st
 static u8 header[] = { 0x00, 0x64, 0x0C, 0x62, 0x00, 0x58, 0xEE, 0x80, 0xBB, 0x80, 0x00, 0x04, 0x00, 0x10, 0x00, 0x1e,
 	                   0x00, 0x00, 0x00, 0x00, 0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0 };
 
-/*
- * --INFO--
- * Address:	80019760
- * Size:	000038
- */
 void Jac_Delete_CurrentBgmWave()
 {
 	Jac_StopBgm(0);
@@ -44,11 +39,6 @@ void Jac_Delete_CurrentBgmWave()
 	WaveScene_Close(current_bgm, 0);
 }
 
-/*
- * --INFO--
- * Address:	800197A0
- * Size:	000094
- */
 static void __Loaded(u32 a)
 {
 	STACK_PAD_VAR(1);
@@ -72,31 +62,16 @@ static void __Loaded(u32 a)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80019840
- * Size:	000008
- */
 u32 Jac_GetCurrentScene()
 {
 	return current_scene;
 }
 
-/*
- * --INFO--
- * Address:	80019860
- * Size:	000008
- */
 BOOL Jac_TellChgMode()
 {
 	return chgmode;
 }
 
-/*
- * --INFO--
- * Address:	80019880
- * Size:	00045C
- */
 void Jac_SceneSetup(u32 sceneID, u32 stage)
 {
 	STACK_PAD_VAR(4);
@@ -282,11 +257,6 @@ void Jac_SceneSetup(u32 sceneID, u32 stage)
 	Jac_SetProcessStatus(1);
 }
 
-/*
- * --INFO--
- * Address:	80019CE0
- * Size:	0000FC
- */
 void Jac_SceneExit(u32 nextSceneID, u32 stage)
 {
 	int fade;
@@ -326,22 +296,12 @@ void Jac_SceneExit(u32 nextSceneID, u32 stage)
 	Jac_SetProcessStatus(3);
 }
 
-/*
- * --INFO--
- * Address:	80019DE0
- * Size:	00000C
- */
 void Jac_SetStreamLevel(u16 streamLevel, u16 seLevel)
 {
 	stream_level    = streamLevel;
 	stream_se_level = seLevel;
 }
 
-/*
- * --INFO--
- * Address:	80019E00
- * Size:	000064
- */
 void Jac_UpdateStreamLevel()
 {
 	if (StreamCheckAudioFormat(0) == AUDIOFRMT_ADPCM4X) {
@@ -385,21 +345,11 @@ static int MovieSync(u32 a1, s32 cmd)
 	return sync;
 }
 
-/*
- * --INFO--
- * Address:	80019F00
- * Size:	000028
- */
 void Jac_InitStreamSystem(void)
 {
 	RegisterStreamCallback(MovieSync);
 }
 
-/*
- * --INFO--
- * Address:	80019F40
- * Size:	000038
- */
 void Jac_StopDemoSound(u32 id)
 {
 	if (StreamSyncCheckBusy(0, id) == 1) {
@@ -407,11 +357,6 @@ void Jac_StopDemoSound(u32 id)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80019F80
- * Size:	000098
- */
 void Jac_PrepareDemoSound(u32 id)
 {
 	char buffer[64];
@@ -430,11 +375,6 @@ void Jac_PrepareDemoSound(u32 id)
 	current_prepare = id;
 }
 
-/*
- * --INFO--
- * Address:	8001A020
- * Size:	0000A4
- */
 void Jac_StartDemoSound(u32 id)
 {
 

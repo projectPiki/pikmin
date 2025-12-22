@@ -22,11 +22,6 @@ DEFINE_PRINT("GeneratorCache");
 
 GeneratorCache* generatorCache;
 
-/*
- * --INFO--
- * Address:	800DED68
- * Size:	000130
- */
 GeneratorCache::GeneratorCache()
 {
 	init(new u8[GENCACHE_HEAP_SIZE], GENCACHE_HEAP_SIZE);
@@ -38,11 +33,6 @@ GeneratorCache::GeneratorCache()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800DEE98
- * Size:	000018
- */
 void GeneratorCache::init(u8* heap, int size)
 {
 	mCacheHeap      = heap;
@@ -51,11 +41,6 @@ void GeneratorCache::init(u8* heap, int size)
 	mFreeSize       = size;
 }
 
-/*
- * --INFO--
- * Address:	800DEEB0
- * Size:	0000B8
- */
 void GeneratorCache::initGame()
 {
 	mUsedSize    = 0;
@@ -86,11 +71,6 @@ void GeneratorCache::initGame()
 	PRINT("*********** INIT GAME CALLED !!!!!!!!!!!!!!!!!\n");
 }
 
-/*
- * --INFO--
- * Address:	800DEF68
- * Size:	0000F4
- */
 void GeneratorCache::addOne(u32 stageIdx)
 {
 	if (!findCache(mAliveCacheList, stageIdx) && !findCache(mDeadCacheList, stageIdx)) {
@@ -99,11 +79,6 @@ void GeneratorCache::addOne(u32 stageIdx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800DF05C
- * Size:	000134
- */
 void GeneratorCache::saveCard(RandomAccessStream& output)
 {
 	output.writeInt(mUsedSize);
@@ -135,11 +110,6 @@ void GeneratorCache::saveCard(RandomAccessStream& output)
 	PRINT("*** SAVE CARD (%d alives %d deads) \n", aliveCount, deadCount);
 }
 
-/*
- * --INFO--
- * Address:	800DF190
- * Size:	00023C
- */
 void GeneratorCache::loadCard(RandomAccessStream& input)
 {
 	PRINT("********** LOAD FROM MEMORY CARD ********\n");
@@ -204,11 +174,6 @@ void GeneratorCache::loadCard(RandomAccessStream& input)
 	assertValid();
 }
 
-/*
- * --INFO--
- * Address:	800DF3CC
- * Size:	00010C
- */
 void GeneratorCache::Cache::saveCard(RandomAccessStream& output)
 {
 	output.writeInt(mCourseIdx);
@@ -222,11 +187,6 @@ void GeneratorCache::Cache::saveCard(RandomAccessStream& output)
 	output.writeInt(mUfoPartsCount);
 }
 
-/*
- * --INFO--
- * Address:	800DF4D8
- * Size:	00010C
- */
 void GeneratorCache::Cache::loadCard(RandomAccessStream& input)
 {
 	mCourseIdx         = input.readInt();
@@ -240,11 +200,6 @@ void GeneratorCache::Cache::loadCard(RandomAccessStream& input)
 	mUfoPartsCount     = input.readInt();
 }
 
-/*
- * --INFO--
- * Address:	800DF5E4
- * Size:	000028
- */
 GeneratorCache::Cache* GeneratorCache::findCache(GeneratorCache::Cache& list, u32 stageIdx)
 {
 	FOREACH_NODE(Cache, list.mChild, cache)
@@ -257,11 +212,6 @@ GeneratorCache::Cache* GeneratorCache::findCache(GeneratorCache::Cache& list, u3
 	return nullptr;
 }
 
-/*
- * --INFO--
- * Address:	800DF60C
- * Size:	000160
- */
 void GeneratorCache::preload(u32 stageIdx)
 {
 	for (int i = 0; i < 10; i++) {
@@ -300,11 +250,6 @@ void GeneratorCache::preload(u32 stageIdx)
 	STACK_PAD_VAR(2); // idk, this has all the inlines in the map - probably some extra temp variable usage.
 }
 
-/*
- * --INFO--
- * Address:	800DF76C
- * Size:	000128
- */
 bool GeneratorCache::hasUfoParts(u32 stageIdx, u32 ufoPartIdx)
 {
 	Cache* cache = findCache(mAliveCacheList, stageIdx);
@@ -331,11 +276,6 @@ bool GeneratorCache::hasUfoParts(u32 stageIdx, u32 ufoPartIdx)
 	STACK_PAD_VAR(2);
 }
 
-/*
- * --INFO--
- * Address:	800DF894
- * Size:	00019C
- */
 void GeneratorCache::load(u32 stageIdx)
 {
 	PRINT("loading stage %d ...\n", stageIdx);
@@ -396,11 +336,6 @@ void GeneratorCache::load(u32 stageIdx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800DFA30
- * Size:	000090
- */
 void GeneratorCache::beginSave(u32 stageIdx)
 {
 	Cache* cache = findCache(mDeadCacheList, stageIdx);
@@ -426,11 +361,6 @@ void GeneratorCache::beginSave(u32 stageIdx)
 	mCurrentSaveCacheIdx      = stageIdx;
 }
 
-/*
- * --INFO--
- * Address:	800DFAC0
- * Size:	000080
- */
 void GeneratorCache::endSave()
 {
 	Cache* cache = findCache(mDeadCacheList, mCurrentSaveCacheIdx);
@@ -443,11 +373,6 @@ void GeneratorCache::endSave()
 	assertValid();
 }
 
-/*
- * --INFO--
- * Address:	800DFB40
- * Size:	000160
- */
 void GeneratorCache::saveGenerator(Generator* gen)
 {
 	if (gen->mDayLimit == -1 || gen->mDayLimit > gameflow.mWorldClock.mCurrentDay) {
@@ -485,11 +410,6 @@ void GeneratorCache::saveGenerator(Generator* gen)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800DFCA0
- * Size:	000118
- */
 void GeneratorCache::prepareUfoParts(GeneratorCache::Cache* cache)
 {
 	PRINT("prepare ufo parts ** %d\n", cache->mUfoPartsCount);
@@ -520,11 +440,6 @@ void GeneratorCache::prepareUfoParts(GeneratorCache::Cache* cache)
 	STACK_PAD_VAR(2);
 }
 
-/*
- * --INFO--
- * Address:	800DFDB8
- * Size:	00011C
- */
 void GeneratorCache::loadUfoParts(GeneratorCache::Cache* cache)
 {
 	void* heap = (void*)(((u32)mCacheHeap + cache->mHeapOffset + cache->mGenCacheSize) + cache->mCreatureCacheSize);
@@ -548,11 +463,6 @@ void GeneratorCache::loadUfoParts(GeneratorCache::Cache* cache)
 	STACK_PAD_VAR(1);
 }
 
-/*
- * --INFO--
- * Address:	800DFED4
- * Size:	000124
- */
 void GeneratorCache::saveUfoParts(Pellet* part)
 {
 	Cache* cache = findCache(mDeadCacheList, mCurrentSaveCacheIdx);
@@ -579,11 +489,6 @@ void GeneratorCache::saveUfoParts(Pellet* part)
 	cache->mUfoPartsCacheSize += pos;
 }
 
-/*
- * --INFO--
- * Address:	800DFFF8
- * Size:	000168
- */
 void GeneratorCache::saveGeneratorCreature(Generator* gen)
 {
 	if (gen->isExpired()) {
@@ -640,11 +545,6 @@ void GeneratorCache::Cache::dump()
 	PRINT("\tufo parts  = %d size = %d\n", mUfoPartsCount, mUfoPartsCacheSize);
 }
 
-/*
- * --INFO--
- * Address:	800E0160
- * Size:	00005C
- */
 void GeneratorCache::dump()
 {
 	PRINT("************ Generator Cache ***********\n");
@@ -664,11 +564,6 @@ void GeneratorCache::dump()
 	FORCE_DONT_INLINE;
 }
 
-/*
- * --INFO--
- * Address:	800E01BC
- * Size:	00006C
- */
 void GeneratorCache::assertValid()
 {
 	Cache* cache = static_cast<Cache*>(mAliveCacheList.mChild);

@@ -21,11 +21,6 @@ bool String::isSame(immut char* str)
 	return !(*currentChar || *str);
 }
 
-/*
- * --INFO--
- * Address:	800258F0
- * Size:	000024
- */
 int String::getLength() immut
 {
 	const char* str = mString;

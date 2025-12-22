@@ -20,11 +20,6 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("aiPullout")
 
-/*
- * --INFO--
- * Address:	800BD670
- * Size:	000100
- */
 ActPullout::ActPullout(Piki* piki)
     : AndAction(piki)
 {
@@ -36,11 +31,6 @@ ActPullout::ActPullout(Piki* piki)
 	mTarget.clear();
 }
 
-/*
- * --INFO--
- * Address:	800BD770
- * Size:	000250
- */
 void ActPullout::init(Creature* target)
 {
 	if (!target) {
@@ -72,11 +62,6 @@ void ActPullout::init(Creature* target)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800BD9C0
- * Size:	0000DC
- */
 int ActPullout::exec()
 {
 	if (mTarget.isNull()) {
@@ -103,11 +88,6 @@ int ActPullout::exec()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800BDA9C
- * Size:	000050
- */
 void ActPullout::cleanup()
 {
 	Action::cleanup();
@@ -115,11 +95,6 @@ void ActPullout::cleanup()
 	mTarget.reset();
 }
 
-/*
- * --INFO--
- * Address:	800BDAEC
- * Size:	000074
- */
 void ActPulloutCreature::cleanup()
 {
 	if (!mPulloutSuccess) {
@@ -132,11 +107,6 @@ void ActPulloutCreature::cleanup()
 	mTarget.reset();
 }
 
-/*
- * --INFO--
- * Address:	800BDB60
- * Size:	000078
- */
 void ActPulloutCreature::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
@@ -153,21 +123,11 @@ void ActPulloutCreature::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800BDBD8
- * Size:	00005C
- */
 ActPulloutCreature::ActPulloutCreature(Piki* piki)
     : Action(piki, true)
 {
 }
 
-/*
- * --INFO--
- * Address:	800BDC34
- * Size:	000094
- */
 void ActPulloutCreature::init(Creature* target)
 {
 	mState = STATE_Unk0;
@@ -176,11 +136,6 @@ void ActPulloutCreature::init(Creature* target)
 	mPulloutSuccess = false;
 }
 
-/*
- * --INFO--
- * Address:	800BDCC8
- * Size:	000240
- */
 int ActPulloutCreature::exec()
 {
 	mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);

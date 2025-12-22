@@ -19,31 +19,16 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("genBoss");
 
-/*
- * --INFO--
- * Address:	8014D2D0
- * Size:	00008C
- */
 static GenObject* makeObjectBoss()
 {
 	return new GenObjectBoss();
 }
 
-/*
- * --INFO--
- * Address:	8014D35C
- * Size:	000088
- */
 void GenObjectBoss::initialise()
 {
 	GenObjectFactory::factory->registerMember('boss', &makeObjectBoss, "ボスを発生", 2);
 }
 
-/*
- * --INFO--
- * Address:	8014D3E4
- * Size:	0000EC
- */
 void GenObjectBoss::doRead(RandomAccessStream& input)
 {
 	if (mVersion == 'v0.0') {
@@ -64,41 +49,21 @@ void GenObjectBoss::doRead(RandomAccessStream& input)
 	readParameters(input);
 }
 
-/*
- * --INFO--
- * Address:	8014D4D0
- * Size:	000020
- */
 void GenObjectBoss::doWrite(RandomAccessStream& output)
 {
 	writeParameters(output);
 }
 
-/*
- * --INFO--
- * Address:	8014D4F0
- * Size:	000020
- */
 void GenObjectBoss::ramLoadParameters(RandomAccessStream& input)
 {
 	readParameters(input);
 }
 
-/*
- * --INFO--
- * Address:	8014D510
- * Size:	000020
- */
 void GenObjectBoss::ramSaveParameters(RandomAccessStream& output)
 {
 	writeParameters(output);
 }
 
-/*
- * --INFO--
- * Address:	8014D530
- * Size:	000080
- */
 void GenObjectBoss::readParameters(RandomAccessStream& input)
 {
 	// this is too much compression, just read them as words goddamn it!
@@ -122,11 +87,6 @@ void GenObjectBoss::readParameters(RandomAccessStream& input)
 	mPelletConfigIdx = flags.b.m0 - 1;
 }
 
-/*
- * --INFO--
- * Address:	8014D5B0
- * Size:	000090
- */
 void GenObjectBoss::writeParameters(RandomAccessStream& output)
 {
 	// this is too much compression, just write them as words goddamn it!
@@ -151,11 +111,6 @@ void GenObjectBoss::writeParameters(RandomAccessStream& output)
 	output.writeInt(flags.w);
 }
 
-/*
- * --INFO--
- * Address:	8014D640
- * Size:	000150
- */
 void GenObjectBoss::updateUseList(Generator*, int count)
 {
 	if (mBossID == GENBOSS_Spider) {
@@ -202,11 +157,6 @@ void GenObjectBoss::updateUseList(Generator*, int count)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8014D790
- * Size:	00013C
- */
 Creature* GenObjectBoss::birth(BirthInfo& info)
 {
 	Creature* boss = nullptr;

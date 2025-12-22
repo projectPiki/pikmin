@@ -1,10 +1,5 @@
 #include "Dolphin/card.h"
 
-/*
- * --INFO--
- * Address:	8020CC78
- * Size:	0001F8
- */
 static void UpdateIconOffsets(CARDDir* entry, CARDStat* state)
 {
 	u32 offset;
@@ -62,11 +57,6 @@ static void UpdateIconOffsets(CARDDir* entry, CARDStat* state)
 	state->offsetData = offset;
 }
 
-/*
- * --INFO--
- * Address:	8020CE70
- * Size:	000128
- */
 s32 CARDGetStatus(s32 channel, s32 fileNo, CARDStat* state)
 {
 	CARDControl* card;
@@ -107,11 +97,6 @@ s32 CARDGetStatus(s32 channel, s32 fileNo, CARDStat* state)
 	return __CARDPutControlBlock(card, result);
 }
 
-/*
- * --INFO--
- * Address:	8020CF98
- * Size:	000170
- */
 s32 CARDSetStatusAsync(s32 channel, s32 fileNo, CARDStat* state, CARDCallback callback)
 {
 	CARDControl* card;
@@ -154,11 +139,6 @@ s32 CARDSetStatusAsync(s32 channel, s32 fileNo, CARDStat* state, CARDCallback ca
 	return result;
 }
 
-/*
- * --INFO--
- * Address:	8020D108
- * Size:	000048
- */
 s32 CARDSetStatus(s32 channel, s32 fileNo, CARDStat* state)
 {
 	s32 result = CARDSetStatusAsync(channel, fileNo, state, __CARDSyncCallback);

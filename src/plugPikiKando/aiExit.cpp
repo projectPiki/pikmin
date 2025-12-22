@@ -16,11 +16,6 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("Exit")
 
-/*
- * --INFO--
- * Address:	800B8D68
- * Size:	000060
- */
 ActExit::ActExit(Piki* piki)
     : Action(piki, true)
 {
@@ -28,11 +23,6 @@ ActExit::ActExit(Piki* piki)
 	mCurrActionIdx = PikiAction::NOACTION;
 }
 
-/*
- * --INFO--
- * Address:	800B8DC8
- * Size:	0000C0
- */
 void ActExit::init(Creature*)
 {
 	mPiki->mActionState = 0;
@@ -43,11 +33,6 @@ void ActExit::init(Creature*)
 	mHasCollided = false;
 }
 
-/*
- * --INFO--
- * Address:	800B8E88
- * Size:	00002C
- */
 void ActExit::procCollideMsg(Piki*, MsgCollide* msg)
 {
 	if (msg->mEvent.mCollider->mObjType != OBJTYPE_Goal && !msg->mEvent.mCollider->isPiki()
@@ -56,11 +41,6 @@ void ActExit::procCollideMsg(Piki*, MsgCollide* msg)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800B8EB4
- * Size:	0002E8
- */
 int ActExit::exec()
 {
 	if (mHasCollided || !mPiki->mRope) {
@@ -110,11 +90,6 @@ int ActExit::exec()
 	STACK_PAD_VAR(2);
 }
 
-/*
- * --INFO--
- * Address:	800B919C
- * Size:	0000C0
- */
 void ActExit::cleanup()
 {
 	if (mPiki->isAlive()) {

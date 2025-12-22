@@ -33,21 +33,11 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("KingAi");
 
-/*
- * --INFO--
- * Address:	8016C2B0
- * Size:	000048
- */
 KingAi::KingAi(King* king)
 {
 	mKing = king;
 }
 
-/*
- * --INFO--
- * Address:	8016C2F8
- * Size:	00010C
- */
 void KingAi::initAI(King* king)
 {
 	mKing = king;
@@ -69,11 +59,6 @@ void KingAi::initAI(King* king)
 	mMaxJumpAttackAngle     = PI * (C_KING_PROP(mKing).mMaxJumpAttackAngle() / 360.0f);
 }
 
-/*
- * --INFO--
- * Address:	8016C404
- * Size:	00007C
- */
 void KingAi::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
@@ -101,11 +86,6 @@ void KingAi::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8016C480
- * Size:	0001D0
- */
 void KingAi::keyAction0()
 {
 	switch (mKing->getCurrentState()) {
@@ -163,11 +143,6 @@ void KingAi::keyAction0()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8016C650
- * Size:	0000E4
- */
 void KingAi::keyAction1()
 {
 	switch (mKing->getCurrentState()) {
@@ -192,11 +167,6 @@ void KingAi::keyAction1()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8016C734
- * Size:	000050
- */
 void KingAi::keyAction2()
 {
 	// you're so right nishimura, this absolutely needed a switch statement.
@@ -217,21 +187,11 @@ void KingAi::keyAction3()
 {
 }
 
-/*
- * --INFO--
- * Address:	8016C784
- * Size:	000014
- */
 void KingAi::keyLoopEnd()
 {
 	mKing->addLoopCounter(1);
 }
 
-/*
- * --INFO--
- * Address:	8016C798
- * Size:	000090
- */
 void KingAi::keyFinished()
 {
 	mKing->setMotionFinish(true);
@@ -248,11 +208,6 @@ void KingAi::keyFinished()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8016C828
- * Size:	000044
- */
 void KingAi::playSound(int kingSoundID)
 {
 	if (mKing->mSeContext) {
@@ -260,11 +215,6 @@ void KingAi::playSound(int kingSoundID)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8016C86C
- * Size:	000040
- */
 void KingAi::createEffect(BOOL doStartSpreadSaliva)
 {
 	if (mKing->getCurrentState() == KINGAI_Attack) {
@@ -288,11 +238,6 @@ void KingAi::setAttackPosition()
 	mAttackPosition.z = mKing->mSRT.t.z + C_KING_PROP(mKing).mAttackDistance() * cosf(mKing->mFaceDirection);
 }
 
-/*
- * --INFO--
- * Address:	8016C8AC
- * Size:	000154
- */
 void KingAi::calcDamageScale()
 {
 	f32 xzScale = C_KING_PROP(mKing).mNormalKingScale();
@@ -323,21 +268,11 @@ void KingAi::calcDamageScale()
 	mKing->mSRT.s.set(xzScale, yScale, xzScale);
 }
 
-/*
- * --INFO--
- * Address:	8016CA00
- * Size:	000014
- */
 void KingAi::startSpreadSaliva()
 {
 	mKing->mKingBody->mDoSpreadSalivaEffect = true;
 }
 
-/*
- * --INFO--
- * Address:	8016CA14
- * Size:	000014
- */
 void KingAi::endSpreadSaliva()
 {
 	mKing->mKingBody->mDoSpreadSalivaEffect = false;
@@ -365,11 +300,6 @@ void KingAi::endFallSaliva()
 	mKing->mKingBody->mDoFallSalivaEffect = false;
 }
 
-/*
- * --INFO--
- * Address:	8016CA28
- * Size:	000480
- */
 void KingAi::fallBackSide()
 {
 	Iterator iterNavi(naviMgr);
@@ -421,11 +351,6 @@ int KingAi::getMouthCollPart(int partNum)
 	return (mMouthSlotFlag >> partNum) & 1;
 }
 
-/*
- * --INFO--
- * Address:	8016CEA8
- * Size:	000460
- */
 void KingAi::pikiStickToKingMouth()
 {
 
@@ -510,11 +435,6 @@ void KingAi::pikiStickToKingMouth()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8016D308
- * Size:	0002A8
- */
 void KingAi::tongueBombExplosion()
 {
 	if (mIsTongueOut) {
@@ -537,22 +457,12 @@ void KingAi::tongueBombExplosion()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8016D5B0
- * Size:	00002C
- */
 void KingAi::killStickToMouthPiki()
 {
 	mMouthSlotFlag = 0;
 	mKing->killStickToMouthPiki();
 }
 
-/*
- * --INFO--
- * Address:	8016D5DC
- * Size:	000290
- */
 void KingAi::tongueAttackNavi()
 {
 	CollPart* slot1 = mKing->mCollInfo->getSphere('slt1');
@@ -586,11 +496,6 @@ void KingAi::setDispelParm(Creature* target, f32 distance)
 	target->stimulate(flick);
 }
 
-/*
- * --INFO--
- * Address:	8016D86C
- * Size:	0004B8
- */
 void KingAi::dispelNaviPiki()
 {
 	Iterator iterNavi(naviMgr);
@@ -620,11 +525,6 @@ void KingAi::dispelNaviPiki()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8016DD24
- * Size:	000120
- */
 void KingAi::setDamageLoopCounter(int startVal, int minVal, int maxVal, int loopMin, int loopMid, int loopMax)
 {
 	if (startVal >= maxVal) {
@@ -647,11 +547,6 @@ void KingAi::setDamageLoopCounter(int startVal, int minVal, int maxVal, int loop
 	mDamageLoopCounter = loopMin;
 }
 
-/*
- * --INFO--
- * Address:	8016DE44
- * Size:	000284
- */
 void KingAi::setEatDamageLoopCounter()
 {
 	int bombPikiCount = 0;
@@ -695,11 +590,6 @@ void KingAi::setMoveVelocity(f32 speed)
 	mKing->mKingBody->mMoveSpeed = speed;
 }
 
-/*
- * --INFO--
- * Address:	8016E0C8
- * Size:	000118
- */
 void KingAi::setAttackPriority()
 {
 	mAttackType = KINGATK_Tongue;
@@ -768,11 +658,6 @@ bool KingAi::attackInArea(Creature* target, immut Vector3f* centre)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8016E1E0
- * Size:	0000CC
- */
 bool KingAi::inJumpAngle(Creature* target)
 {
 	f32 dir = NsMathF::calcNearerDirection(mKing->mFaceDirection,
@@ -877,11 +762,6 @@ bool KingAi::inSideWaitRangeTransit()
 	return mKing->inSideWaitRangeTransit();
 }
 
-/*
- * --INFO--
- * Address:	8016E2F4
- * Size:	0000CC
- */
 bool KingAi::inTurnAngleTransit()
 {
 	Vector3f* targetPos = mKing->getTargetPosition();
@@ -902,11 +782,6 @@ bool KingAi::inTurnAngleTransit()
 	STACK_PAD_VAR(1);
 }
 
-/*
- * --INFO--
- * Address:	8016E3C0
- * Size:	000300
- */
 bool KingAi::chaseNaviTransit()
 {
 	Creature* target = nullptr;
@@ -942,11 +817,6 @@ bool KingAi::chaseNaviTransit()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8016E6C0
- * Size:	00030C
- */
 bool KingAi::chasePikiTransit()
 {
 	Creature* target = nullptr;
@@ -981,11 +851,6 @@ bool KingAi::chasePikiTransit()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8016E9CC
- * Size:	0003E0
- */
 bool KingAi::attackTransit()
 {
 	if (mAttackType != KINGATK_Jump) {
@@ -1032,11 +897,6 @@ bool KingAi::missAttackNextTransit()
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	8016EDAC
- * Size:	000448
- */
 bool KingAi::jumpAttackTransit()
 {
 	if (mAttackType == KINGATK_Jump && mConsecutiveJumpCount < C_KING_PROP(mKing).mMaxConsecutiveJumpAttacks()) {
@@ -1075,11 +935,6 @@ bool KingAi::swallowTransit()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8016F1F4
- * Size:	0002B8
- */
 bool KingAi::eatThrowPikiTransit()
 {
 	bool result = false;
@@ -1121,11 +976,6 @@ bool KingAi::flickTransit()
 	return mKing->flickPikiTransit();
 }
 
-/*
- * --INFO--
- * Address:	8016F4AC
- * Size:	000190
- */
 bool KingAi::targetLostTransit()
 {
 	Creature* target = mKing->getTargetCreature();
@@ -1155,11 +1005,6 @@ bool KingAi::targetLostTransit()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8016F63C
- * Size:	00040C
- */
 bool KingAi::appearTransit()
 {
 	Iterator iterNavi(naviMgr);
@@ -1190,11 +1035,6 @@ bool KingAi::appearTransit()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8016FA48
- * Size:	00014C
- */
 void KingAi::initDie(int nextState)
 {
 	mKing->setNextState(nextState);
@@ -1488,11 +1328,6 @@ void KingAi::initWaveNeck(int nextState)
 	resultFlagOn();
 }
 
-/*
- * --INFO--
- * Address:	8016FB94
- * Size:	00016C
- */
 void KingAi::initAppear(int nextState)
 {
 	mKing->setNextState(nextState);
@@ -1797,11 +1632,6 @@ void KingAi::afterProcessing()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8016FD00
- * Size:	003084
- */
 void KingAi::update()
 {
 	setEveryFrame();

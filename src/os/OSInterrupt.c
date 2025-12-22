@@ -23,11 +23,6 @@ static OSInterruptMask InterruptPrioTable[] = {
 	0xFFFFFFFF,
 };
 
-/*
- * --INFO--
- * Address:	801F8F7C
- * Size:	000014
- */
 ASM BOOL OSDisableInterrupts(void) {
 #ifdef __MWERKS__ // clang-format off
 	nofralloc
@@ -41,11 +36,6 @@ entry    __RAS_OSDisableInterrupts_end
 #endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address:	801F8F90
- * Size:	000014
- */
 ASM BOOL OSEnableInterrupts(void) {
 #ifdef __MWERKS__ // clang-format off
 	nofralloc
@@ -58,11 +48,6 @@ ASM BOOL OSEnableInterrupts(void) {
 #endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address:	801F8FA4
- * Size:	000024
- */
 ASM BOOL OSRestoreInterrupts(register BOOL level) {
 #ifdef __MWERKS__ // clang-format off
 	nofralloc
@@ -81,11 +66,6 @@ _restore:
 #endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address:	801F8FC8
- * Size:	00001C
- */
 __OSInterruptHandler __OSSetInterruptHandler(__OSInterrupt interrupt, __OSInterruptHandler handler)
 {
 	__OSInterruptHandler oldHandler;
@@ -95,21 +75,11 @@ __OSInterruptHandler __OSSetInterruptHandler(__OSInterrupt interrupt, __OSInterr
 	return oldHandler;
 }
 
-/*
- * --INFO--
- * Address:	801F8FE4
- * Size:	000014
- */
 __OSInterruptHandler __OSGetInterruptHandler(__OSInterrupt interrupt)
 {
 	return InterruptHandlerTable[interrupt];
 }
 
-/*
- * --INFO--
- * Address:	801F8FF8
- * Size:	000074
- */
 void __OSInterruptInit(void)
 {
 	InterruptHandlerTable = OSPhysicalToCached(0x3040);
@@ -126,11 +96,6 @@ void __OSInterruptInit(void)
 	__OSSetExceptionHandler(4, ExternalInterruptHandler);
 }
 
-/*
- * --INFO--
- * Address:	801F906C
- * Size:	0002B0
- */
 static u32 SetInterruptMask(OSInterruptMask mask, OSInterruptMask current)
 {
 	u32 reg;
@@ -313,11 +278,6 @@ u32 OSSetInterruptMask(u32)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801F931C
- * Size:	000088
- */
 OSInterruptMask __OSMaskInterrupts(OSInterruptMask global)
 {
 	BOOL enabled;
@@ -338,11 +298,6 @@ OSInterruptMask __OSMaskInterrupts(OSInterruptMask global)
 	return prev;
 }
 
-/*
- * --INFO--
- * Address:	801F93A4
- * Size:	000088
- */
 OSInterruptMask __OSUnmaskInterrupts(OSInterruptMask global)
 {
 	BOOL enabled;
@@ -363,11 +318,6 @@ OSInterruptMask __OSUnmaskInterrupts(OSInterruptMask global)
 	return prev;
 }
 
-/*
- * --INFO--
- * Address:	801F942C
- * Size:	000324
- */
 void __OSDispatchInterrupt(__OSException exception, OSContext* context)
 {
 	u32 intsr;
@@ -483,11 +433,6 @@ void __OSDispatchInterrupt(__OSException exception, OSContext* context)
 	OSLoadContext(context);
 }
 
-/*
- * --INFO--
- * Address:	801F9750
- * Size:	00004C
- */
 static ASM void ExternalInterruptHandler(register __OSException exception, register OSContext* context)
 {
 #pragma unused(exception)

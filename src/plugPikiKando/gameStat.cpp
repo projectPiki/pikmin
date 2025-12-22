@@ -35,11 +35,6 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("gameStat");
 
-/*
- * --INFO--
- * Address:	801124B8
- * Size:	0000A8
- */
 void GameStat::init()
 {
 	deadPikis.init();
@@ -63,11 +58,6 @@ void GameStat::init()
 	orimaDead = false;
 }
 
-/*
- * --INFO--
- * Address:	80112560
- * Size:	0000C4
- */
 void GameStat::update()
 {
 	for (int i = PikiMinColor; i < PikiColorCount; i++) {
@@ -104,11 +94,6 @@ void GameStat::ColCounter::dump(immut char* name)
 	PRINT("<%s> %d (%d + %d + %d)\n", name, int(mCounts), mCounts[Blue], mCounts[Red], mCounts[Yellow]);
 }
 
-/*
- * --INFO--
- * Address:	80112624
- * Size:	000004
- */
 void GameStat::dump()
 {
 	PRINT("******** GAMESTAT DUMP **********\n");

@@ -196,11 +196,6 @@ protected:
 
 } // namespace zen
 
-/*
- * --INFO--
- * Address:	801EC8D8
- * Size:	0003A4
- */
 zen::DrawCMcourseSelect::DrawCMcourseSelect()
 {
 	mEffectMgr2D  = new EffectMgr2D(0x10, 0x400, 1);
@@ -230,11 +225,6 @@ zen::DrawCMcourseSelect::DrawCMcourseSelect()
 	mBest.init(bestScreen);
 }
 
-/*
- * --INFO--
- * Address:	801ECD04
- * Size:	000294
- */
 void zen::DrawCMcourseSelect::start()
 {
 	mMode = MODE_Unk1;
@@ -258,11 +248,6 @@ void zen::DrawCMcourseSelect::start()
 	PRINT("start! \n");
 }
 
-/*
- * --INFO--
- * Address:	801ECF98
- * Size:	000080
- */
 void zen::DrawCMcourseSelect::setBestScore()
 {
 	GameChalQuickInfo info;
@@ -275,11 +260,6 @@ void zen::DrawCMcourseSelect::setBestScore()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801ED018
- * Size:	00011C
- */
 bool zen::DrawCMcourseSelect::update(Controller* controller)
 {
 	bool res = false;
@@ -315,11 +295,6 @@ bool zen::DrawCMcourseSelect::update(Controller* controller)
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	801ED178
- * Size:	000090
- */
 void zen::DrawCMcourseSelect::draw(Graphics& gfx)
 {
 	mEffectMgr2D->draw(gfx);
@@ -329,21 +304,11 @@ void zen::DrawCMcourseSelect::draw(Graphics& gfx)
 	mSelectScreen->draw();
 }
 
-/*
- * --INFO--
- * Address:	801ED208
- * Size:	000008
- */
 zen::DrawCMcourseSelect::returnStatusFlag zen::DrawCMcourseSelect::getReturnStatusFlag()
 {
 	return mReturnState;
 }
 
-/*
- * --INFO--
- * Address:	801ED210
- * Size:	000100
- */
 bool zen::DrawCMcourseSelect::modeOperation(Controller* controller)
 {
 	bool res = mMenu->update(controller);

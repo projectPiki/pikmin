@@ -22,11 +22,6 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("aiBridge")
 
-/*
- * --INFO--
- * Address:	800ACEA0
- * Size:	0000AC
- */
 ActBridge::ActBridge(Piki* piki)
     : Action(piki, true)
 {
@@ -34,11 +29,6 @@ ActBridge::ActBridge(Piki* piki)
 	mBridge = nullptr;
 }
 
-/*
- * --INFO--
- * Address:	800ACF4C
- * Size:	0000DC
- */
 void ActBridge::init(Creature* creature)
 {
 	_33                 = 0;
@@ -58,11 +48,6 @@ void ActBridge::init(Creature* creature)
 	mActionCounter = (4.0f * gsys->getRand(1.0f));
 }
 
-/*
- * --INFO--
- * Address:	800AD028
- * Size:	00006C
- */
 void ActBridge::dump()
 {
 	const char* stateNames[] = { "approach", "detour", "go", "work" };
@@ -110,11 +95,6 @@ bool ActBridge::collideBridgeBlocker()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800AD094
- * Size:	000094
- */
 int ActBridge::exec()
 {
 	if (!mBridge) {
@@ -160,11 +140,6 @@ int ActBridge::exeDetour()
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	800AD128
- * Size:	000028
- */
 void ActBridge::procWallMsg(Piki* piki, MsgWall* msg)
 {
 	mBridgeWallNormal = msg->mWallPlane->mNormal;
@@ -284,11 +259,6 @@ void ActBridge::doWork(int mins)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	800AD150
- * Size:	0000B0
- */
 void ActBridge::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	STACK_PAD_VAR(1);
@@ -307,11 +277,6 @@ void ActBridge::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800AD200
- * Size:	000024
- */
 void ActBridge::cleanup()
 {
 	mPiki->resetCreatureFlag(CF_DisableMovement);
@@ -330,11 +295,6 @@ void ActBridge::newInitApproach()
 	PRINT("approach init\n");
 }
 
-/*
- * --INFO--
- * Address:	800AD224
- * Size:	000360
- */
 int ActBridge::newExeApproach()
 {
 	if (!mBridge) {
@@ -403,11 +363,6 @@ int ActBridge::newExeApproach()
 	STACK_PAD_TERNARY(mBridge, 6);
 }
 
-/*
- * --INFO--
- * Address:	800AD584
- * Size:	0000E0
- */
 void ActBridge::newInitGo()
 {
 	mState = STATE_Go;
@@ -421,11 +376,6 @@ void ActBridge::newInitGo()
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Walk, this), PaniMotionInfo(PIKIANIM_Walk));
 }
 
-/*
- * --INFO--
- * Address:	800AD664
- * Size:	00030C
- */
 int ActBridge::newExeGo()
 {
 	if (mStageIdx == -1) {
@@ -474,11 +424,6 @@ int ActBridge::newExeGo()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800AD970
- * Size:	0000D0
- */
 void ActBridge::newInitWork()
 {
 	mState          = STATE_Work;
@@ -498,11 +443,6 @@ void ActBridge::newInitWork()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800ADA40
- * Size:	000668
- */
 int ActBridge::newExeWork()
 {
 	// If the bridge is finished, continue

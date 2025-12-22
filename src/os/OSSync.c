@@ -1,10 +1,5 @@
 #include "Dolphin/os.h"
 
-/*
- * --INFO--
- * Address:	801FB928
- * Size:	000020
- */
 static ASM void SystemCallVector(void)
 {
 #ifdef __MWERKS__ // clang-format off
@@ -24,11 +19,6 @@ static ASM void SystemCallVector(void)
 #endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address:	801FB948
- * Size:	000064
- */
 void __OSInitSystemCall(void)
 {
 	void* handler = OS_SYS_CALL_HANDLER;

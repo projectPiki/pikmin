@@ -15,11 +15,6 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT(nullptr)
 
-/*
- * --INFO--
- * Address:	800C1E24
- * Size:	000060
- */
 ActRope::ActRope(Piki* piki)
     : Action(piki, true)
 {
@@ -27,11 +22,6 @@ ActRope::ActRope(Piki* piki)
 	mCurrActionIdx = PikiAction::NOACTION;
 }
 
-/*
- * --INFO--
- * Address:	800C1E84
- * Size:	000178
- */
 void ActRope::init(Creature*)
 {
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_HNoboru), PaniMotionInfo(PIKIANIM_HNoboru));
@@ -53,11 +43,6 @@ void ActRope::init(Creature*)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800C1FFC
- * Size:	000070
- */
 int ActRope::exec()
 {
 	if (!mPiki->mStickPart) {
@@ -68,11 +53,6 @@ int ActRope::exec()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800C206C
- * Size:	00009C
- */
 void ActRope::cleanup()
 {
 	mPiki->mVelocity       = mRopeDirection * 150.0f;

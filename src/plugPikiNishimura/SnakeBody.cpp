@@ -24,11 +24,6 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("SnakeBody");
 
-/*
- * --INFO--
- * Address:	8015FCA8
- * Size:	000220
- */
 void SnakeBody::setBodyOnGroundEffect()
 {
 	mOnGroundCallBack->set(mSnake);
@@ -70,22 +65,12 @@ void SnakeBody::setBodyOnGroundEffect()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8015FEC8
- * Size:	000068
- */
 void SnakeBody::killCallBackEffect(bool doForceFinish)
 {
 	effectMgr->kill(mOnGroundCallBack, nullptr, doForceFinish);
 	effectMgr->kill(mRotateCallBack, nullptr, doForceFinish);
 }
 
-/*
- * --INFO--
- * Address:	8015FF30
- * Size:	000158
- */
 SnakeBody::SnakeBody(Snake* snake)
 {
 	mSnake            = snake;
@@ -94,11 +79,6 @@ SnakeBody::SnakeBody(Snake* snake)
 	mDeadPtclGens     = new zen::particleGenerator*[7];
 }
 
-/*
- * --INFO--
- * Address:	80160088
- * Size:	00009C
- */
 void SnakeBody::init(immut Vector3f&, Snake* snake)
 {
 	mSnake         = snake;
@@ -118,11 +98,6 @@ void SnakeBody::init(immut Vector3f&, Snake* snake)
 	mDeadEffectSegmentIndex = 7;
 }
 
-/*
- * --INFO--
- * Address:	80160124
- * Size:	000028
- */
 void SnakeBody::initBlending(f32 blendRate)
 {
 	if (mBlendingRatio > 0.0f) {
@@ -195,11 +170,6 @@ void SnakeBody::makeHeadDirection()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8016014C
- * Size:	000318
- */
 void SnakeBody::makeTurnVelocity()
 {
 	if (mSnake->getCurrentState() >= SNAKEAI_ChaseNavi && mSnake->getCurrentState() <= SNAKEAI_ChasePiki) {
@@ -256,11 +226,6 @@ void SnakeBody::makeNewPosition()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80160464
- * Size:	0002F4
- */
 void SnakeBody::makeResultPosition()
 {
 	if (mSnake->getCurrentState() >= SNAKEAI_ChaseNavi && mSnake->getCurrentState() <= SNAKEAI_ChasePiki) {
@@ -316,11 +281,6 @@ void SnakeBody::makeResultPosition()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80160758
- * Size:	000368
- */
 void SnakeBody::makeVectorMatrix()
 {
 	if (mSnake->getCurrentState() >= SNAKEAI_ChaseNavi && mSnake->getCurrentState() <= SNAKEAI_ChasePiki) {
@@ -371,11 +331,6 @@ void SnakeBody::createDeadPellet(immut Vector3f& pelletPos, int itemIdx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80160AC0
- * Size:	000254
- */
 void SnakeBody::createDeadHeadEffect()
 {
 	Vector3f vec;
@@ -402,11 +357,6 @@ void SnakeBody::createDeadHeadEffect()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80160D14
- * Size:	000244
- */
 void SnakeBody::createDeadBodyEffect()
 {
 	Vector3f vec;
@@ -436,11 +386,6 @@ void SnakeBody::createDeadBodyEffect()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80160F58
- * Size:	000190
- */
 void SnakeBody::makeDeadPattern01()
 {
 	bool prev = mIsDying;
@@ -500,11 +445,6 @@ void SnakeBody::makeDeadScaleParms()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801610E8
- * Size:	000450
- */
 void SnakeBody::update()
 {
 	updateBlendingRatio();
@@ -832,11 +772,6 @@ void SnakeBody::makeAnimation(BossShapeObject* shapeObj, Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80161538
- * Size:	0001F8
- */
 void SnakeBody::makeBodySize()
 {
 	if (mSegmentLengthList[0] == 0.0f) {
@@ -852,11 +787,6 @@ void SnakeBody::makeBodySize()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80161730
- * Size:	000198
- */
 void SnakeBody::makeHeadPosition()
 {
 	if (mSnake->getCurrentState() == SNAKEAI_Attack) {
@@ -887,11 +817,6 @@ void SnakeBody::makeHeadPosition()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801618C8
- * Size:	0002F4
- */
 void SnakeBody::makeBodyMatrix()
 {
 	if (mSnake->getCurrentState() == SNAKEAI_Attack || mSnake->getCurrentState() == SNAKEAI_Die) {
@@ -937,11 +862,6 @@ void SnakeBody::makeBodyMatrix()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80161BBC
- * Size:	0003B8
- */
 void SnakeBody::makeAnimMatrix()
 {
 	if (mSnake->getCurrentState() == SNAKEAI_Attack || mSnake->getCurrentState() == SNAKEAI_Die) {
@@ -971,11 +891,6 @@ void SnakeBody::makeAnimMatrix()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80161F74
- * Size:	000524
- */
 void SnakeBody::caseOfMatrix(Matrix4f* animMatrices)
 {
 	if (mSnake->getCurrentState() >= SNAKEAI_ChaseNavi && mSnake->getCurrentState() <= SNAKEAI_ChasePiki) {
@@ -1012,11 +927,6 @@ void SnakeBody::checkBlendingParm(Matrix4f* animMatrices)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80162498
- * Size:	000540
- */
 void SnakeBody::makeBlending(Matrix4f* animMatrices)
 {
 	int segIdx;
@@ -1071,11 +981,6 @@ void SnakeBody::makeBlending(Matrix4f* animMatrices)
 	mNeckPosition = mSegmentPositionList[SnakeJointType::Neck];
 }
 
-/*
- * --INFO--
- * Address:	801629D8
- * Size:	00010C
- */
 void SnakeBody::setDeadPattern01(Matrix4f* animMatrices)
 {
 	for (int i = 0; i < 8; i++) {
@@ -1122,11 +1027,6 @@ void SnakeBody::setDeadScale(Matrix4f* animMatrices)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80162AE4
- * Size:	0001E0
- */
 void SnakeBody::returnJoint(BossShapeObject* shapeObj, Graphics& gfx, immut Matrix4f* animMatrices)
 {
 	Matrix4f mtx1; // unused? lol.
@@ -1161,11 +1061,6 @@ void SnakeBody::returnJoint(BossShapeObject* shapeObj, Graphics& gfx, immut Matr
 	}
 }
 
-/*
- * --INFO--
- * Address:	80162CC4
- * Size:	0009B8
- */
 void SnakeBody::refresh(BossShapeObject* shapeObj, Graphics& gfx)
 {
 	Matrix4f animMatrices[8];

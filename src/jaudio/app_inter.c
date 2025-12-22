@@ -16,11 +16,6 @@ void Jac_Pause(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80017460
- * Size:	000070
- */
 void Jac_StreamMovieInit(immut char* filepath, u8* param_2, int param_3)
 {
 	if (Jac_GetCurrentScene() == SCENE_Unk1 && !demo_fade_flag) {
@@ -31,11 +26,6 @@ void Jac_StreamMovieInit(immut char* filepath, u8* param_2, int param_3)
 	Jac_UpdateStreamLevel();
 }
 
-/*
- * --INFO--
- * Address:	800174E0
- * Size:	00004C
- */
 void Jac_StreamMovieStop(void)
 {
 	Jac_HVQM_ForceStop();
@@ -45,21 +35,11 @@ void Jac_StreamMovieStop(void)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80017540
- * Size:	000020
- */
 void Jac_StreamMovieUpdate(void)
 {
 	Jac_HVQM_Update();
 }
 
-/*
- * --INFO--
- * Address:	80017560
- * Size:	000064
- */
 int Jac_StreamMovieGetPicture(void* p1, int* p2, int* p3)
 {
 	int picture;

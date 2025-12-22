@@ -50,11 +50,6 @@ CollPart* getCollPartPtr(Teki& teki, u32 partID)
 	return part;
 }
 
-/*
- * --INFO--
- * Address:	801D0FBC
- * Size:	0001E4
- */
 void setDororoEffect(Teki& teki)
 {
 	CollPart* leftEye = getCollPartPtr(teki, 'leye');
@@ -591,11 +586,6 @@ protected:
 	// TODO: members
 };
 
-/*
- * --INFO--
- * Address:	801D11A0
- * Size:	000084
- */
 TAIdororoSoundTable::TAIdororoSoundTable()
     : PaniSoundTable(6)
 {
@@ -604,11 +594,6 @@ TAIdororoSoundTable::TAIdororoSoundTable()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801D1224
- * Size:	0003C0
- */
 TAIdororoParameters::TAIdororoParameters()
     : TekiParameters(DOROROPI_COUNT, DOROROPF_COUNT)
 {
@@ -681,11 +666,6 @@ TAIdororoParameters::TAIdororoParameters()
 	multiP->setI(TPI_CorpseType, TEKICORPSE_LeaveCorpse);
 }
 
-/*
- * --INFO--
- * Address:	801D15E4
- * Size:	000AD0
- */
 TAIdororoStrategy::TAIdororoStrategy()
     : YaiStrategy(DOROROSTATE_COUNT, DOROROSTATE_Init)
 {
@@ -836,11 +816,6 @@ TAIdororoStrategy::TAIdororoStrategy()
 	setState(DOROROSTATE_Bark, state);
 }
 
-/*
- * --INFO--
- * Address:	801D20B4
- * Size:	0003C8
- */
 void TAIdororoStrategy::act(Teki& teki)
 {
 	zen::particleGenerator* ptclGen;
@@ -886,21 +861,11 @@ void TAIdororoStrategy::act(Teki& teki)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801D247C
- * Size:	000020
- */
 void TAIdororoStrategy::draw(Teki& teki, Graphics& gfx)
 {
 	YaiStrategy::draw(teki, gfx);
 }
 
-/*
- * --INFO--
- * Address:	801D249C
- * Size:	0000B0
- */
 void TAIdororoStrategy::createEffect(Teki& teki, int effType)
 {
 	TekiStrategy::createEffect(teki, effType);
@@ -918,11 +883,6 @@ void TAIdororoStrategy::createEffect(Teki& teki, int effType)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801D254C
- * Size:	000148
- */
 void TAIdororoStrategy::createCloudOfDust(Teki& teki, CollPart* part)
 {
 	if (part->mCentre.y - mapMgr->getMinY(part->mCentre.x, part->mCentre.z, true) < 30.0f) {
@@ -947,11 +907,6 @@ void TAIdororoStrategy::createCloudOfDust(Teki& teki, CollPart* part)
 	rumbleMgr->start(RUMBLE_Unk10, 0, part->mCentre);
 }
 
-/*
- * --INFO--
- * Address:	801D2694
- * Size:	00008C
- */
 void TAIdororoStrategy::start(Teki& teki)
 {
 	YaiStrategy::start(teki);
@@ -964,11 +919,6 @@ void TAIdororoStrategy::start(Teki& teki)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801D2720
- * Size:	0006FC
- */
 void TAIdororoAnimation::makeDefaultAnimations()
 {
 	if (!mAnimMgr) {

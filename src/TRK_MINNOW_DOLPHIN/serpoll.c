@@ -23,11 +23,6 @@ void TRKRejectFrame(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8021CD14
- * Size:	0000D0
- */
 TRKBufferID TRKTestForPacket(void)
 {
 	int bytes;
@@ -71,11 +66,6 @@ void TRKProcessFrame(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8021CDE4
- * Size:	00007C
- */
 void TRKGetInput(void)
 {
 	TRKBuffer* msgbuffer;
@@ -96,11 +86,6 @@ void TRKGetInput(void)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8021CE60
- * Size:	000050
- */
 void TRKProcessInput(TRKBufferID bufID)
 {
 	TRKEvent event;
@@ -111,11 +96,6 @@ void TRKProcessInput(TRKBufferID bufID)
 	TRKPostEvent(&event);
 }
 
-/*
- * --INFO--
- * Address:	8021CEB0
- * Size:	000024
- */
 DSError TRKInitializeSerialHandler(void)
 {
 	gTRKFramingState.msgBufID     = -1;
@@ -124,11 +104,6 @@ DSError TRKInitializeSerialHandler(void)
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	8021CED4
- * Size:	000008
- */
 DSError TRKTerminateSerialHandler(void)
 {
 	return 0;

@@ -40,11 +40,6 @@ Creature* ActorMgr::createObject()
 	return actor;
 }
 
-/*
- * --INFO--
- * Address:	80119AB4
- * Size:	00007C
- */
 Actor* ActorMgr::newActor(int p1)
 {
 	Actor* actor = (Actor*)birth();

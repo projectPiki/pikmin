@@ -17,22 +17,12 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("taimessageactions")
 
-/*
- * --INFO--
- * Address:	80131EF8
- * Size:	00002C
- */
 void TaiSendMessageAction::start(Teki& teki)
 {
 	PRINT_NAKATA("TaiSendMessageAction::start:%08x:type:%d,id:%d\n", &teki, teki.mTekiType, mMessage);
 	teki.sendMessage(mMessage);
 }
 
-/*
- * --INFO--
- * Address:	80131F24
- * Size:	000040
- */
 bool TaiKeySendMessageAction::act(Teki& teki)
 {
 	if (teki.getAnimationKeyOption(mAnimKeyOpt)) {

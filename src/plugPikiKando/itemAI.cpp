@@ -36,11 +36,6 @@ DEFINE_ERROR(33)
  */
 DEFINE_PRINT("itemAI")
 
-/*
- * --INFO--
- * Address:	800EECE8
- * Size:	00033C
- */
 SluiceAI::SluiceAI()
 {
 	SAIUserEvent* evt1 = new SAIUserEvent(0);
@@ -66,22 +61,12 @@ SluiceAI::SluiceAI()
 	addArrow(Sluice_DamageInit, saiMotionDoneEvent, Sluice_WaitInit);
 }
 
-/*
- * --INFO--
- * Address:	800EF024
- * Size:	00003C
- */
 void SluiceAI::Init::act(AICreature* item)
 {
 	item->mCounter = 0;
 	item->mStateMachine->transit(item, Sluice_WaitInit);
 }
 
-/*
- * --INFO--
- * Address:	800EF060
- * Size:	00006C
- */
 void SluiceAI::MotionDone::act(AICreature* item)
 {
 	PRINT("GATE ** MOTION DONE ** %d\n", item->mCounter);
@@ -95,22 +80,12 @@ void SluiceAI::MotionDone::act(AICreature* item)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800EF0CC
- * Size:	000010
- */
 void SluiceAI::AddCount::act(AICreature* item)
 {
 	PRINT("GATE ** COUNTER became %d\n", item->mCounter);
 	item->mCounter++;
 }
 
-/*
- * --INFO--
- * Address:	800EF0DC
- * Size:	00008C
- */
 void SluiceAI::WaitInit::act(AICreature* item)
 {
 	BuildingItem* obj = (BuildingItem*)item;
@@ -127,11 +102,6 @@ void SluiceAI::WaitInit::act(AICreature* item)
 	obj->stopBreakEffect();
 }
 
-/*
- * --INFO--
- * Address:	800EF168
- * Size:	00008C
- */
 void SluiceAI::ChangeInit::act(AICreature* item)
 {
 	BuildingItem* obj = (BuildingItem*)item;
@@ -146,11 +116,6 @@ void SluiceAI::ChangeInit::act(AICreature* item)
 	obj->mCurrAnimId++;
 }
 
-/*
- * --INFO--
- * Address:	800EF1F4
- * Size:	00006C
- */
 void SluiceAI::DamageInit::act(AICreature* item)
 {
 	BuildingItem* obj = (BuildingItem*)item;
@@ -161,11 +126,6 @@ void SluiceAI::DamageInit::act(AICreature* item)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800EF260
- * Size:	00050C
- */
 PikiHeadAI::PikiHeadAI()
 {
 	create(PIKIHEAD_COUNT);
@@ -192,11 +152,6 @@ PikiHeadAI::PikiHeadAI()
 	addArrow(PIKIHEAD_Unk10, saiMotionDoneEvent, PIKIHEAD_Kareta);
 }
 
-/*
- * --INFO--
- * Address:	800EF76C
- * Size:	000114
- */
 void PikiHeadAI::BounceSound::act(AICreature* item)
 {
 	PikiHeadItem* obj = (PikiHeadItem*)item;
@@ -223,11 +178,6 @@ void PikiHeadAI::BounceSound::act(AICreature* item)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800EF880
- * Size:	000044
- */
 void PikiHeadAI::FlyingEffect::act(AICreature* item)
 {
 	PikiHeadItem* obj = (PikiHeadItem*)item;
@@ -235,44 +185,24 @@ void PikiHeadAI::FlyingEffect::act(AICreature* item)
 	obj->finishFix();
 }
 
-/*
- * --INFO--
- * Address:	800EF8C4
- * Size:	000028
- */
 void PikiHeadAI::FlyingExec::act(AICreature* item)
 {
 	PikiHeadItem* obj = (PikiHeadItem*)item;
 	obj->_3E4.updatePos(obj->mSRT.t);
 }
 
-/*
- * --INFO--
- * Address:	800EF8EC
- * Size:	000024
- */
 void PikiHeadAI::FlyingCleanup::act(AICreature* item)
 {
 	PikiHeadItem* obj = (PikiHeadItem*)item;
 	obj->_3E4.kill();
 }
 
-/*
- * --INFO--
- * Address:	800EF910
- * Size:	00000C
- */
 void PikiHeadAI::BuryInit2::act(AICreature* item)
 {
 	PikiHeadItem* obj = (PikiHeadItem*)item;
 	obj->mFlowerStage = Leaf;
 }
 
-/*
- * --INFO--
- * Address:	800EF91C
- * Size:	000034
- */
 void PikiHeadAI::BuryExec2::act(AICreature* item)
 {
 	PRINT("to save or not to save ....\n"); // Alright mr shakespeare over here
@@ -281,11 +211,6 @@ void PikiHeadAI::BuryExec2::act(AICreature* item)
 	obj->mStateMachine->transit(item, PIKIHEAD_Dead);
 }
 
-/*
- * --INFO--
- * Address:	800EF950
- * Size:	000088
- */
 void PikiHeadAI::BuryInit::act(AICreature* item)
 {
 	PikiHeadItem* obj = (PikiHeadItem*)item;
@@ -296,11 +221,6 @@ void PikiHeadAI::BuryInit::act(AICreature* item)
 	STACK_PAD_VAR(2);
 }
 
-/*
- * --INFO--
- * Address:	800EF9D8
- * Size:	000080
- */
 void PikiHeadAI::BuryExec::act(AICreature* item)
 {
 	// stupid but fixes a regswap
@@ -312,21 +232,11 @@ void PikiHeadAI::BuryExec::act(AICreature* item)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800EFA58
- * Size:	000074
- */
 void PikiHeadAI::TaneInit::act(AICreature* item)
 {
 	item->mCurrentItemHealth = pikiMgr->mPikiParms->mPikiParms.mPluckWaitTime() + gsys->getRand(1.0f) * 2.0f;
 }
 
-/*
- * --INFO--
- * Address:	800EFACC
- * Size:	000058
- */
 void PikiHeadAI::TaneExec::act(AICreature* item)
 {
 	f32& health = item->mCurrentItemHealth;
@@ -336,11 +246,6 @@ void PikiHeadAI::TaneExec::act(AICreature* item)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800EFB24
- * Size:	0000D8
- */
 void PikiHeadAI::WaitInit::act(AICreature* item)
 {
 	PikiHeadItem* obj = (PikiHeadItem*)item;
@@ -353,11 +258,6 @@ void PikiHeadAI::WaitInit::act(AICreature* item)
 	item->mCounter = 0;
 }
 
-/*
- * --INFO--
- * Address:	800EFBFC
- * Size:	000130
- */
 void PikiHeadAI::WaitExec::act(AICreature* item)
 {
 	f32 badocmpiler[2];
@@ -381,11 +281,6 @@ void PikiHeadAI::WaitExec::act(AICreature* item)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800EFD2C
- * Size:	000148
- */
 void PikiHeadAI::GrowupedExec::act(AICreature* item)
 {
 	PikiHeadItem* obj = (PikiHeadItem*)item;
@@ -406,21 +301,11 @@ void PikiHeadAI::GrowupedExec::act(AICreature* item)
 	utEffectMgr->cast(KandoEffect::PikiGrowup2, parm);
 }
 
-/*
- * --INFO--
- * Address:	800EFE74
- * Size:	000034
- */
 void PikiHeadAI::GrowEffect::act(AICreature* item)
 {
 	item->mStateMachine->transit(item, PIKIHEAD_Wait);
 }
 
-/*
- * --INFO--
- * Address:	800EFEA8
- * Size:	00007C
- */
 void PikiHeadAI::KaretaInit::act(AICreature* item)
 {
 	PikiHeadItem* obj = (PikiHeadItem*)item;
@@ -429,11 +314,6 @@ void PikiHeadAI::KaretaInit::act(AICreature* item)
 	obj->mFlowerStage        = Leaf;
 }
 
-/*
- * --INFO--
- * Address:	800EFF24
- * Size:	000058
- */
 void PikiHeadAI::KaretaExec::act(AICreature* item)
 {
 	f32& health = item->mCurrentItemHealth;
@@ -443,21 +323,11 @@ void PikiHeadAI::KaretaExec::act(AICreature* item)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800EFF7C
- * Size:	000028
- */
 void PikiHeadAI::Dead::act(AICreature* item)
 {
 	item->kill(false);
 }
 
-/*
- * --INFO--
- * Address:	800EFFA4
- * Size:	000390
- */
 BombAI::BombAI()
 {
 	SAIUserEvent* evt1 = new SAIUserEvent(0);
@@ -478,11 +348,6 @@ BombAI::BombAI()
 	addArrow(BOMB_Unk1, saiBounceEvent, BOMB_Bomb);
 }
 
-/*
- * --INFO--
- * Address:	800F0334
- * Size:	000080
- */
 void BombAI::SetInit::act(AICreature* item)
 {
 	item->mCurrentItemHealth = pikiMgr->mPikiParms->mPikiParms.mBombSetFuseTime() * (gsys->getRand(1.0f) * 0.05f + 1.0f);
@@ -494,11 +359,6 @@ void BombAI::SetInit::act(AICreature* item)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800F03B4
- * Size:	000070
- */
 void BombAI::SetExec::act(AICreature* item)
 {
 	item->mCurrentItemHealth -= gsys->getFrameTime();
@@ -515,11 +375,6 @@ void BombAI::SetExec::act(AICreature* item)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800F0424
- * Size:	000E3C
- */
 void BombAI::BombInit::act(AICreature* item)
 {
 	if (!tekiMgr) {
@@ -674,31 +529,16 @@ void BombAI::BombInit::act(AICreature* item)
 	PRINT("all done\n");
 }
 
-/*
- * --INFO--
- * Address:	800F1260
- * Size:	000034
- */
 void BombAI::BombExec::act(AICreature* item)
 {
 	item->mStateMachine->transit(item, BOMB_Die);
 }
 
-/*
- * --INFO--
- * Address:	800F1294
- * Size:	00000C
- */
 void BombAI::MizuInit::act(AICreature* item)
 {
 	item->mCurrentItemHealth = 1.0f;
 }
 
-/*
- * --INFO--
- * Address:	800F12A0
- * Size:	000080
- */
 void BombAI::MizuExec::act(AICreature* item)
 {
 	item->mCurrentItemHealth -= gsys->getFrameTime();
@@ -710,22 +550,12 @@ void BombAI::MizuExec::act(AICreature* item)
 	item->mSRT.s.set(health, health, health);
 }
 
-/*
- * --INFO--
- * Address:	800F1320
- * Size:	000024
- */
 void BombAI::DieInit::act(AICreature* item)
 {
 	item->mCurrentItemHealth = 5.0f;
 	item->mSRT.s.set(0.0f, 0.0f, 0.0f);
 }
 
-/*
- * --INFO--
- * Address:	800F1344
- * Size:	00007C
- */
 void BombAI::DieExec::act(AICreature* item)
 {
 	f32 time = gsys->getFrameTime();
@@ -736,11 +566,6 @@ void BombAI::DieExec::act(AICreature* item)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800F13C0
- * Size:	0003E0
- */
 GoalAI::GoalAI()
 {
 	SAIUserEvent* evt = new SAIUserEvent(0);
@@ -769,11 +594,6 @@ GoalAI::GoalAI()
 	addArrow(GOAL_BootEmit, saiMotionDoneEvent, GOAL_Wait);
 }
 
-/*
- * --INFO--
- * Address:	800F17A0
- * Size:	000028
- */
 bool GoalAI::NotFinished::satisfy(AICreature* item)
 {
 	if (item->mCurrAnimId > 0 || item->mCounter > 0) {
@@ -782,11 +602,6 @@ bool GoalAI::NotFinished::satisfy(AICreature* item)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800F17C8
- * Size:	0000B8
- */
 void GoalAI::WaitInit::act(AICreature* item)
 {
 	GoalItem* obj = (GoalItem*)item;
@@ -804,22 +619,12 @@ void GoalAI::WaitInit::act(AICreature* item)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800F1880
- * Size:	000038
- */
 void GoalAI::BootInit::act(AICreature* item)
 {
 	GoalItem* obj = (GoalItem*)item;
 	item->startMotion(obj->mOnionColour + 3);
 }
 
-/*
- * --INFO--
- * Address:	800F18B8
- * Size:	000460
- */
 void GoalAI::BootEmit::act(AICreature* item)
 {
 	GoalItem* obj = (GoalItem*)item;
@@ -900,20 +705,10 @@ void GoalAI::BootEmit::act(AICreature* item)
 	STACK_PAD_VAR(3);
 }
 
-/*
- * --INFO--
- * Address:	800F1D18
- * Size:	000004
- */
 void GoalAI::BootDone::act(AICreature* item)
 {
 }
 
-/*
- * --INFO--
- * Address:	800F1D1C
- * Size:	00032C
- */
 void GoalAI::EmitPiki::act(AICreature* item)
 {
 	GoalItem* obj = (GoalItem*)item;
@@ -974,20 +769,10 @@ void GoalAI::EmitPiki::act(AICreature* item)
 	STACK_PAD_VAR(4);
 }
 
-/*
- * --INFO--
- * Address:	800F2048
- * Size:	000004
- */
 void GoalAI::EmitWait::act(AICreature*)
 {
 }
 
-/*
- * --INFO--
- * Address:	800F204C
- * Size:	000078
- */
 void GoalAI::Effect::act(AICreature* item)
 {
 	Vector3f pos = item->mSRT.t;
@@ -1013,11 +798,6 @@ GemAI::GemAI()
 	addArrow(GEM_Unk0, evt, GEM_Rise);
 }
 
-/*
- * --INFO--
- * Address:	800F20C4
- * Size:	0000C0
- */
 void GemAI::RiseInit::act(AICreature* item)
 {
 	item->mCurrentItemHealth = 0.0f;
@@ -1032,11 +812,6 @@ void GemAI::RiseInit::act(AICreature* item)
 	item->mCurrAnimId = 0;
 }
 
-/*
- * --INFO--
- * Address:	800F2184
- * Size:	000178
- */
 void GemAI::RiseExec::act(AICreature* item)
 {
 	if (item->mTargetCreature->mObjType != OBJTYPE_Goal) {
@@ -1071,11 +846,6 @@ void GemAI::RiseExec::act(AICreature* item)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800F22FC
- * Size:	000098
- */
 void GemAI::Die::act(AICreature* item)
 {
 	GemItem* obj   = (GemItem*)item;
@@ -1098,11 +868,6 @@ void GemAI::Die::act(AICreature* item)
 	STACK_PAD_VAR(1);
 }
 
-/*
- * --INFO--
- * Address:	800F2394
- * Size:	000254
- */
 WaterAI::WaterAI()
 {
 	SAIUserEvent* evt = new SAIUserEvent(0);
@@ -1123,11 +888,6 @@ WaterAI::WaterAI()
 	addArrow(WATER_Unk2, saiMotionDoneEvent, WATER_Die);
 }
 
-/*
- * --INFO--
- * Address:	800F25E8
- * Size:	000040
- */
 bool WaterAI::CollideChar::satisfy(AICreature* item)
 {
 	if (item->mCollidingCreature->mObjType == OBJTYPE_Navi) {
@@ -1137,21 +897,11 @@ bool WaterAI::CollideChar::satisfy(AICreature* item)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800F2628
- * Size:	000028
- */
 void WaterAI::Die::act(AICreature* item)
 {
 	item->kill(false);
 }
 
-/*
- * --INFO--
- * Address:	800F2650
- * Size:	0001D8
- */
 FallWaterAI::FallWaterAI()
 {
 	create(FALLWATER_COUNT);
@@ -1168,22 +918,12 @@ FallWaterAI::FallWaterAI()
 	addArrow(FALLWATER_Emit, saiMotionDoneEvent, FALLWATER_Disappear);
 }
 
-/*
- * --INFO--
- * Address:	800F2828
- * Size:	000054
- */
 void FallWaterAI::CollideInit::act(AICreature* item)
 {
 	item->finishMotion(29.0f);
 	seSystem->playSoundDirect(1, SE_KURIONE_WATER, item->mSRT.t);
 }
 
-/*
- * --INFO--
- * Address:	800F287C
- * Size:	000080
- */
 void FallWaterAI::EmitInit::act(AICreature* item)
 {
 	PRINT("emit init !\n");
@@ -1195,11 +935,6 @@ void FallWaterAI::EmitInit::act(AICreature* item)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800F28FC
- * Size:	000028
- */
 void FallWaterAI::DisappearInit::act(AICreature* item)
 {
 	item->kill(false);

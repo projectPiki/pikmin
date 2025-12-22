@@ -48,11 +48,6 @@ bool zen::KeyRepeat::update(Controller* controller)
 
 f32 zen::KeyRepeat::repeatTime;
 
-/*
- * --INFO--
- * Address:	801C0310
- * Size:	000094
- */
 zen::ZenController::ZenController(Controller* controller)
 {
 	mController  = controller;
@@ -64,11 +59,6 @@ zen::ZenController::ZenController(Controller* controller)
 	setRepeatTime(0.5f);
 }
 
-/*
- * --INFO--
- * Address:	801C03A4
- * Size:	0000F8
- */
 void zen::ZenController::update()
 {
 	mRepeatInput = 0;

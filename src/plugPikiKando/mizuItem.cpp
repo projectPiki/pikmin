@@ -18,11 +18,6 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("matoItem")
 
-/*
- * --INFO--
- * Address:	800F7CB0
- * Size:	000068
- */
 MizuItem::MizuItem(int objType, CreatureProp* props, ItemShapeObject* shape, SimpleAI* ai)
     : ItemCreature(objType, props, nullptr)
 {
@@ -30,11 +25,6 @@ MizuItem::MizuItem(int objType, CreatureProp* props, ItemShapeObject* shape, Sim
 	mStateMachine    = ai;
 }
 
-/*
- * --INFO--
- * Address:	800F7D18
- * Size:	000070
- */
 void MizuItem::update()
 {
 	ItemCreature::update();
@@ -46,21 +36,11 @@ void MizuItem::update()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800F7D88
- * Size:	000008
- */
 bool MizuItem::needFlick(Creature*)
 {
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800F7D90
- * Size:	000090
- */
 void MizuItem::startAI(int)
 {
 	STACK_PAD_VAR(1);
@@ -79,11 +59,6 @@ void MizuItem::startAI(int)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800F7E20
- * Size:	00006C
- */
 bool MizuItem::isAlive()
 {
 	int stateID = getCurrState()->getID();
