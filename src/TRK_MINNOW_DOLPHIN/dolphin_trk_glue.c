@@ -168,6 +168,7 @@ UARTError WriteUARTFlush(void)
 	}
 	return readErr;
 }
+
 /*
  * --INFO--
  * Address:	........

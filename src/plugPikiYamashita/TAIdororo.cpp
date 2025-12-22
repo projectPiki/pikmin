@@ -36,6 +36,7 @@ DEFINE_ERROR(32)
 DEFINE_PRINT("TAIdororo")
 
 namespace {
+
 /*
  * --INFO--
  * Address:	........
