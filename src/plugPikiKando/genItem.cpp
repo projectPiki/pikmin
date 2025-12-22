@@ -31,10 +31,10 @@ DEFINE_PRINT("genItem")
  */
 GenObjectItem::GenObjectItem()
     : GenObject('item', "アイテムを生む")
-    , mParameterA(this, 0, 0, 0, "p00", nullptr)
-    , mParameterB(this, 0, 0, 0, "p01", nullptr)
-    , mParameterC(this, 0, 0, 0, "p02", nullptr)
-    , mParameterD(this, 3, 3, 3, "p03", nullptr)
+    , mParameterA(this, 0, 0, 0, "p00", "type")
+    , mParameterB(this, 0, 0, 0, "p01", "day")
+    , mParameterC(this, 0, 0, 0, "p02", "hour")
+    , mParameterD(this, 3, 3, 3, "p03", "建築段階")
 {
 	mObjType = 1;
 	sprintf(mStageName, " ");

@@ -86,4 +86,7 @@ struct Parm : public BaseParm {
 #endif
 };
 
+// For some reason, giving `CreatureProp::Parms` its parameter strings messes up matching.
+#define MATCHING_PARM_NAME(name) TERNARY_BUILD_MATCHING(nullptr, name)
+
 #endif

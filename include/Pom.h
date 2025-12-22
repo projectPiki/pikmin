@@ -26,18 +26,18 @@ public:
 	 */
 	struct Parms : public Parameters {
 		inline Parms() // TODO
-		    : mSquashAmount(this, 0.2f, 0.0f, 0.0f, "s00", nullptr)
-		    , mSquashPersistence(this, 0.5f, 0.0f, 0.0f, "s01", nullptr)
-		    , mSquashMultiplier(this, 0.15f, 0.0f, 0.0f, "s02", nullptr)
-		    , mCloseWaitTime(this, 10.0f, 0.0f, 0.0f, "p00", nullptr)
-		    , mDischargeAngle(this, 180.0f, 0.0f, 0.0f, "p10", nullptr)
-		    , mMaxPikiPerCycle(this, 10, 0, 0, "i00", nullptr)
-		    , mMinCycles(this, 10, 0, 0, "i10", nullptr)
-		    , mMaxCycles(this, 10, 0, 0, "i11", nullptr)
-		    , mDoAnimLoopWhenClosed(this, 0, 0, 1, "i20", nullptr)
-		    , mDoKillSameColorPiki(this, FALSE, FALSE, TRUE, "i90", nullptr)
-		    , mStickOrSwallow(this, 1, 0, 1, "i91", nullptr)
-		    , mOpenOnInteractionOnly(this, 0, 0, 1, "i92", nullptr)
+		    : mSquashAmount(this, 0.2f, 0.0f, 0.0f, "s00", "くっつきバネ(init)")
+		    , mSquashPersistence(this, 0.5f, 0.0f, 0.0f, "s01", "くっつきバネ(cont)")
+		    , mSquashMultiplier(this, 0.15f, 0.0f, 0.0f, "s02", "くっつきバネ(power)")
+		    , mCloseWaitTime(this, 10.0f, 0.0f, 0.0f, "p00", "花を閉じる時間")
+		    , mDischargeAngle(this, 180.0f, 0.0f, 0.0f, "p10", "ピキを吐く角度")
+		    , mMaxPikiPerCycle(this, 10, 0, 0, "i00", "花を閉じるピキ数")
+		    , mMinCycles(this, 10, 0, 0, "i10", "死亡発射回数(Min)")
+		    , mMaxCycles(this, 10, 0, 0, "i11", "死亡発射回数(Max)")
+		    , mDoAnimLoopWhenClosed(this, 0, 0, 1, "i20", "花を閉じた時のループ")
+		    , mDoKillSameColorPiki(this, FALSE, FALSE, TRUE, "i90", "Kill Same Color Piki")
+		    , mStickOrSwallow(this, 1, 0, 1, "i91", "Stick or Swallow")
+		    , mOpenOnInteractionOnly(this, 0, 0, 1, "i92", "Default and Collide")
 		{
 		}
 
