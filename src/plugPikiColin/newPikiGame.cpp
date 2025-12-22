@@ -330,10 +330,6 @@ static void showFrame(bool set, f32 time)
 }
 
 /**
- * --INFO--
- * Address:	80056B00
- * Size:	000118
- *
  * @brief Creates and initializes the debug menu window.
  */
 static void createMenuWindow()
@@ -375,10 +371,6 @@ static void deleteMenuWindow()
 }
 
 /**
- * --INFO--
- * Address:	80056C18
- * Size:	0001B0
- *
  * @brief Creates and displays a tutorial window.
  * @param tutorialId Tutorial message ID to display
  * @param partId Part collection ID for audio (if applicable)
@@ -417,10 +409,6 @@ static void createTutorialWindow(int tutorialId, int partId, bool hasAudio)
 }
 
 /**
- * --INFO--
- * Address:	80056DC8
- * Size:	0000BC
- *
  * @brief Destroys the tutorial window and restores game state.
  */
 static void deleteTutorialWindow()
