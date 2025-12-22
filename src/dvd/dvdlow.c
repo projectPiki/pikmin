@@ -41,10 +41,8 @@ static DVDBuffer Curr;
 // forward declare some statics:
 static void Read(void* addr, u32 length, u32 offset, DVDLowCallback callback);
 
-/*
- * --INFO--
- * Address:	801FE12C
- * Size:	000040
+/**
+ * @TODO: Documentation
  */
 void __DVDInitWA(void)
 {
@@ -77,10 +75,8 @@ static BOOL ProcessNextCommand(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801FE16C
- * Size:	0002F4
+/**
+ * @TODO: Documentation
  */
 void __DVDInterruptHandler(__OSInterrupt interrupt, OSContext* context)
 {
@@ -185,20 +181,16 @@ void __DVDInterruptHandler(__OSInterrupt interrupt, OSContext* context)
 	OSSetCurrentContext(context);
 }
 
-/*
- * --INFO--
- * Address:	801FE460
- * Size:	000084
+/**
+ * @TODO: Documentation
  */
 static void AlarmHandler(OSAlarm* alarm, OSContext* context)
 {
 	ProcessNextCommand();
 }
 
-/*
- * --INFO--
- * Address:	801FE4E4
- * Size:	000070
+/**
+ * @TODO: Documentation
  */
 static void AlarmHandlerForTimeout(OSAlarm* alarm, OSContext* context)
 {
@@ -228,10 +220,8 @@ static void SetTimeoutAlarm(OSTime timeout)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801FE554
- * Size:	000110
+/**
+ * @TODO: Documentation
  */
 static void Read(void* addr, u32 length, u32 offset, DVDLowCallback callback)
 {
@@ -296,10 +286,8 @@ static void DoJustRead(void* addr, u32 length, u32 offset, DVDLowCallback callba
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801FE664
- * Size:	000080
+/**
+ * @TODO: Documentation
  */
 static void SeekTwiceBeforeRead(void* addr, u32 length, u32 offset, DVDLowCallback callback)
 {
@@ -341,10 +329,8 @@ static void WaitBeforeRead(void* addr, u32 length, u32 offset, DVDLowCallback ca
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801FE6E4
- * Size:	000298
+/**
+ * @TODO: Documentation
  */
 BOOL DVDLowRead(void* addr, u32 length, u32 offset, DVDLowCallback callback)
 {
@@ -382,10 +368,8 @@ BOOL DVDLowRead(void* addr, u32 length, u32 offset, DVDLowCallback callback)
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	801FE97C
- * Size:	000094
+/**
+ * @TODO: Documentation
  */
 BOOL DVDLowSeek(u32 offset, DVDLowCallback callback)
 {
@@ -398,10 +382,8 @@ BOOL DVDLowSeek(u32 offset, DVDLowCallback callback)
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	801FEA10
- * Size:	00002C
+/**
+ * @TODO: Documentation
  */
 BOOL DVDLowWaitCoverClose(DVDLowCallback callback)
 {
@@ -412,10 +394,8 @@ BOOL DVDLowWaitCoverClose(DVDLowCallback callback)
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	801FEA3C
- * Size:	0000A4
+/**
+ * @TODO: Documentation
  */
 BOOL DVDLowReadDiskID(DVDDiskID* diskID, DVDLowCallback callback)
 {
@@ -431,10 +411,8 @@ BOOL DVDLowReadDiskID(DVDDiskID* diskID, DVDLowCallback callback)
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	801FEAE0
- * Size:	00008C
+/**
+ * @TODO: Documentation
  */
 BOOL DVDLowStopMotor(DVDLowCallback callback)
 {
@@ -446,10 +424,8 @@ BOOL DVDLowStopMotor(DVDLowCallback callback)
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	801FEB6C
- * Size:	00008C
+/**
+ * @TODO: Documentation
  */
 BOOL DVDLowRequestError(DVDLowCallback callback)
 {
@@ -461,10 +437,8 @@ BOOL DVDLowRequestError(DVDLowCallback callback)
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	801FEBF8
- * Size:	00009C
+/**
+ * @TODO: Documentation
  */
 BOOL DVDLowInquiry(DVDDriveInfo* info, DVDLowCallback callback)
 {
@@ -479,10 +453,8 @@ BOOL DVDLowInquiry(DVDDriveInfo* info, DVDLowCallback callback)
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	801FEC94
- * Size:	000098
+/**
+ * @TODO: Documentation
  */
 BOOL DVDLowAudioStream(u32 subcmd, u32 length, u32 offset, DVDLowCallback callback)
 {
@@ -496,10 +468,8 @@ BOOL DVDLowAudioStream(u32 subcmd, u32 length, u32 offset, DVDLowCallback callba
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	801FED2C
- * Size:	00008C
+/**
+ * @TODO: Documentation
  */
 BOOL DVDLowRequestAudioStatus(u32 subcmd, DVDLowCallback callback)
 {
@@ -511,10 +481,8 @@ BOOL DVDLowRequestAudioStatus(u32 subcmd, DVDLowCallback callback)
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	801FEDB8
- * Size:	00009C
+/**
+ * @TODO: Documentation
  */
 BOOL DVDLowAudioBufferConfig(BOOL enable, u32 size, DVDLowCallback callback)
 {
@@ -526,10 +494,8 @@ BOOL DVDLowAudioBufferConfig(BOOL enable, u32 size, DVDLowCallback callback)
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	801FEE54
- * Size:	0000BC
+/**
+ * @TODO: Documentation
  */
 void DVDLowReset()
 {
@@ -589,10 +555,8 @@ void SetBreakAlarm(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801FEF10
- * Size:	000014
+/**
+ * @TODO: Documentation
  */
 BOOL DVDLowBreak()
 {
@@ -601,10 +565,8 @@ BOOL DVDLowBreak()
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	801FEF24
- * Size:	000018
+/**
+ * @TODO: Documentation
  */
 DVDLowCallback DVDLowClearCallback()
 {
@@ -625,10 +587,8 @@ void DVDLowGetCoverStatus(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801FEF3C
- * Size:	000044
+/**
+ * @TODO: Documentation
  */
 void __DVDLowSetWAType(u32 type, u32 location)
 {

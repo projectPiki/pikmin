@@ -22,10 +22,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT(nullptr);
 
-/*
- * --INFO--
- * Address:	8005EA80
- * Size:	00006C
+/**
+ * @TODO: Documentation
  */
 BaseParm::BaseParm(Parameters* parm, ayuID id)
 {
@@ -52,10 +50,8 @@ BaseParm::BaseParm(Parameters* parm, ayuID id)
 	mNext = nullptr;
 }
 
-/*
- * --INFO--
- * Address:	8005EAEC
- * Size:	0000A8
+/**
+ * @TODO: Documentation
  */
 void Parameters::write(RandomAccessStream& output)
 {
@@ -80,10 +76,8 @@ int Parameters::sizeInFile()
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8005EB98
- * Size:	0000D4
+/**
+ * @TODO: Documentation
  */
 void Parameters::read(RandomAccessStream& input)
 {
@@ -153,60 +147,48 @@ void Parm<Vector3f>::write(RandomAccessStream&)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8005EC70
- * Size:	000040
+/**
+ * @TODO: Documentation
  */
 void Parm<f32>::read(RandomAccessStream& input)
 {
 	mValue = input.readFloat();
 }
 
-/*
- * --INFO--
- * Address:	8005ECB0
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 void Parm<f32>::write(RandomAccessStream& output)
 {
 	output.writeFloat(mValue);
 }
 
-/*
- * --INFO--
- * Address:	8005ECE8
- * Size:	000040
+/**
+ * @TODO: Documentation
  */
 void Parm<int>::read(RandomAccessStream& input)
 {
 	mValue = input.readInt();
 }
 
-/*
- * --INFO--
- * Address:	8005ED28
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 void Parm<int>::write(RandomAccessStream& output)
 {
 	output.writeInt(mValue);
 }
 
-/*
- * --INFO--
- * Address:	8005ED60
- * Size:	000058
+/**
+ * @TODO: Documentation
  */
 void Parm<String>::read(RandomAccessStream& input)
 {
 	mValue = String(input.readString(), 0);
 }
 
-/*
- * --INFO--
- * Address:	8005EDB8
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 void Parm<String>::write(RandomAccessStream& output)
 {

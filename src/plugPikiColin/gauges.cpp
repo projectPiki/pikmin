@@ -45,10 +45,8 @@ void GaugeInfo::init()
 	mIsPendingRemoval = 0;
 }
 
-/*
- * --INFO--
- * Address:	8005B780
- * Size:	000150
+/**
+ * @TODO: Documentation
  */
 void GaugeInfo::update()
 {
@@ -118,10 +116,8 @@ void GaugeInfo::showDigits(Vector3f position, immut Colour& colour, int number, 
 	FORCE_DONT_INLINE;
 }
 
-/*
- * --INFO--
- * Address:	8005BAE0
- * Size:	000270
+/**
+ * @TODO: Documentation
  */
 void GaugeInfo::refresh(Graphics& gfx)
 {
@@ -144,10 +140,8 @@ void GaugeInfo::refresh(Graphics& gfx)
 	FORCE_DONT_INLINE;
 }
 
-/*
- * --INFO--
- * Address:	8005BD50
- * Size:	0000F0
+/**
+ * @TODO: Documentation
  */
 void LifeGaugeMgr::init(int count)
 {
@@ -164,10 +158,8 @@ void LifeGaugeMgr::init(int count)
 	mLFlare->mBlendMode = 5;
 }
 
-/*
- * --INFO--
- * Address:	8005BE94
- * Size:	000040
+/**
+ * @TODO: Documentation
  */
 void LifeGaugeMgr::update()
 {
@@ -177,10 +169,8 @@ void LifeGaugeMgr::update()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8005BED4
- * Size:	000068
+/**
+ * @TODO: Documentation
  */
 void LifeGaugeMgr::refresh(Graphics& gfx)
 {
@@ -220,10 +210,8 @@ void LifeGaugeMgr::addLG(GaugeInfo* info)
 	mActiveGaugeList.add(info);
 }
 
-/*
- * --INFO--
- * Address:	8005BF3C
- * Size:	000060
+/**
+ * @TODO: Documentation
  */
 void LifeGaugeMgr::removeLG(GaugeInfo* info)
 {
@@ -232,10 +220,8 @@ void LifeGaugeMgr::removeLG(GaugeInfo* info)
 	mInactiveGaugeList.add(info);
 }
 
-/*
- * --INFO--
- * Address:	8005BF9C
- * Size:	0000D8
+/**
+ * @TODO: Documentation
  */
 LifeGauge::LifeGauge()
 {
@@ -258,10 +244,8 @@ LifeGauge::LifeGauge()
 	mActiveGauge = 0;
 }
 
-/*
- * --INFO--
- * Address:	8005C074
- * Size:	000030
+/**
+ * @TODO: Documentation
  */
 void LifeGauge::updValue(f32 currHealth, f32 maxHealth)
 {
@@ -284,10 +268,8 @@ void LifeGauge::adjustValue()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8005C0A4
- * Size:	000EC8
+/**
+ * @TODO: Documentation
  */
 void LifeGauge::refresh(Graphics& gfx)
 {
@@ -402,10 +384,8 @@ void LifeGauge::refresh(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8005CF6C
- * Size:	000148
+/**
+ * @TODO: Documentation
  */
 void LifeGauge::countOn(immut Vector3f& p1, int p2, int p3)
 {
@@ -438,10 +418,8 @@ void LifeGauge::countOn(immut Vector3f& p1, int p2, int p3)
 	STACK_PAD_VAR(1);
 }
 
-/*
- * --INFO--
- * Address:	8005D0B4
- * Size:	000030
+/**
+ * @TODO: Documentation
  */
 void LifeGauge::countOff()
 {

@@ -16,10 +16,8 @@ DEFINE_ERROR(7)
  */
 DEFINE_PRINT("simpleAI");
 
-/*
- * --INFO--
- * Address:	8007D26C
- * Size:	0000A4
+/**
+ * @TODO: Documentation
  */
 AICreature::AICreature(CreatureProp* props)
     : Creature(props)
@@ -37,10 +35,8 @@ AICreature::AICreature(CreatureProp* props)
 	clearEventFlags();
 }
 
-/*
- * --INFO--
- * Address:	8007D310
- * Size:	00006C
+/**
+ * @TODO: Documentation
  */
 void AICreature::collisionCallback(immut CollEvent& event)
 {
@@ -52,10 +48,8 @@ void AICreature::collisionCallback(immut CollEvent& event)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8007D37C
- * Size:	000060
+/**
+ * @TODO: Documentation
  */
 void AICreature::bounceCallback()
 {
@@ -65,10 +59,8 @@ void AICreature::bounceCallback()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8007D3DC
- * Size:	0000B4
+/**
+ * @TODO: Documentation
  */
 void AICreature::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
@@ -89,10 +81,8 @@ void AICreature::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8007D498
- * Size:	000030
+/**
+ * @TODO: Documentation
  */
 void AICreature::clearEventFlags()
 {
@@ -103,10 +93,8 @@ void AICreature::clearEventFlags()
 	mCurrentEventCount = 0;
 }
 
-/*
- * --INFO--
- * Address:	8007D4C8
- * Size:	00001C
+/**
+ * @TODO: Documentation
  */
 void AICreature::setEventFlag(int flagID, bool value)
 {
@@ -135,19 +123,15 @@ bool AICreature::checkEventFlag(int flag)
 	return mEventFlags[flag];
 }
 
-/*
- * --INFO--
- * Address:	8007D4E4
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 SimpleAI::SimpleAI()
 {
 }
 
-/*
- * --INFO--
- * Address:	8007D508
- * Size:	000068
+/**
+ * @TODO: Documentation
  */
 void SimpleAI::procMsg(AICreature* creature, Msg* msg)
 {
@@ -160,10 +144,8 @@ void SimpleAI::procMsg(AICreature* creature, Msg* msg)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8007D578
- * Size:	0000E8
+/**
+ * @TODO: Documentation
  */
 void SimpleAI::addState(int stateID, int motionID, SAIAction* initAction, SAIAction* execAction, SAIAction* cleanupAction)
 {
@@ -176,10 +158,8 @@ void SimpleAI::addState(int stateID, int motionID, SAIAction* initAction, SAIAct
 	registerState(state);
 }
 
-/*
- * --INFO--
- * Address:	8007D660
- * Size:	0000F8
+/**
+ * @TODO: Documentation
  */
 SAIArrow* SimpleAI::addArrow(int p1, SAIEvent* event, int p3)
 {
@@ -197,20 +177,16 @@ SAIArrow* SimpleAI::addArrow(int p1, SAIEvent* event, int p3)
 	return arrow;
 }
 
-/*
- * --INFO--
- * Address:	8007D758
- * Size:	00002C
+/**
+ * @TODO: Documentation
  */
 void SimpleAI::start(AICreature* creature, int stateID)
 {
 	transit(creature, stateID);
 }
 
-/*
- * --INFO--
- * Address:	8007D86C
- * Size:	00007C
+/**
+ * @TODO: Documentation
  */
 void SimpleAI::exec(AICreature* creature)
 {
@@ -221,10 +197,8 @@ void SimpleAI::exec(AICreature* creature)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8007D8E8
- * Size:	0000F8
+/**
+ * @TODO: Documentation
  */
 void SimpleAI::checkEvent(AICreature* creature)
 {
@@ -256,10 +230,8 @@ void SimpleAI::checkEvent(AICreature* creature)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8007D9E8
- * Size:	00010C
+/**
+ * @TODO: Documentation
  */
 SAIState::SAIState(int stateID)
     : AState<AICreature>(stateID)
@@ -273,10 +245,8 @@ SAIState::SAIState(int stateID)
 	mArrowCount = 0;
 }
 
-/*
- * --INFO--
- * Address:	8007DAF4
- * Size:	0000A4
+/**
+ * @TODO: Documentation
  */
 void SAIState::init(AICreature* creature)
 {
@@ -291,10 +261,8 @@ void SAIState::init(AICreature* creature)
 	creature->clearEventFlags();
 }
 
-/*
- * --INFO--
- * Address:	8007DB9C
- * Size:	000074
+/**
+ * @TODO: Documentation
  */
 void SAIState::exec(AICreature* creature)
 {
@@ -305,10 +273,8 @@ void SAIState::exec(AICreature* creature)
 	creature->clearEventFlags();
 }
 
-/*
- * --INFO--
- * Address:	8007DC10
- * Size:	0000A0
+/**
+ * @TODO: Documentation
  */
 void SAIState::procMsg(AICreature* creature, Msg* msg)
 {
@@ -323,10 +289,8 @@ void SAIState::procMsg(AICreature* creature, Msg* msg)
 	static_cast<SimpleAI*>(mStateMachine)->checkEvent(creature);
 }
 
-/*
- * --INFO--
- * Address:	8007DCB0
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 void SAIState::cleanup(AICreature* creature)
 {

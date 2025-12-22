@@ -17,20 +17,16 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT(nullptr);
 
-/*
- * --INFO--
- * Address:	800438EC
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 void AtxStream::close()
 {
 	gsys->getAtxRouter()->closeRoute(this);
 }
 
-/*
- * --INFO--
- * Address:	80043924
- * Size:	0000D8
+/**
+ * @TODO: Documentation
  */
 bool AtxStream::open(immut char* name, int port)
 {
@@ -53,10 +49,8 @@ bool AtxStream::open(immut char* name, int port)
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	800439FC
- * Size:	000094
+/**
+ * @TODO: Documentation
  */
 void AtxStream::write(immut void* buffer, int count)
 {
@@ -88,10 +82,8 @@ void AtxStream::write(immut void* buffer, int count)
 // 	// UNUSED FUNCTION
 // }
 
-/*
- * --INFO--
- * Address:	80043A90
- * Size:	000094
+/**
+ * @TODO: Documentation
  */
 void AtxStream::read(void* buffer, int count)
 {
@@ -103,10 +95,8 @@ void AtxStream::read(void* buffer, int count)
 	router->unlock();
 }
 
-/*
- * --INFO--
- * Address:	80043B24
- * Size:	000080
+/**
+ * @TODO: Documentation
  */
 int AtxStream::getPending()
 {
@@ -119,10 +109,8 @@ int AtxStream::getPending()
 	return pending;
 }
 
-/*
- * --INFO--
- * Address:	80043BA4
- * Size:	000074
+/**
+ * @TODO: Documentation
  */
 void AtxStream::flush()
 {
@@ -154,10 +142,8 @@ void AtxStream::flush()
 // 	// UNUSED FUNCTION
 // }
 
-/*
- * --INFO--
- * Address:	80043C18
- * Size:	00005C
+/**
+ * @TODO: Documentation
  */
 void AtxFileStream::setPosition(int pos)
 {
@@ -167,10 +153,8 @@ void AtxFileStream::setPosition(int pos)
 	mAtxStream.writeInt(mPosition);
 }
 
-/*
- * --INFO--
- * Address:	80043C74
- * Size:	000098
+/**
+ * @TODO: Documentation
  */
 void AtxFileStream::read(void* buffer, int length)
 {
@@ -180,10 +164,8 @@ void AtxFileStream::read(void* buffer, int length)
 	mPosition += length;
 }
 
-/*
- * --INFO--
- * Address:	80043D0C
- * Size:	0000AC
+/**
+ * @TODO: Documentation
  */
 void AtxFileStream::write(immut void* buffer, int length)
 {
@@ -197,10 +179,8 @@ void AtxFileStream::write(immut void* buffer, int length)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80043DB8
- * Size:	00007C
+/**
+ * @TODO: Documentation
  */
 void AtxFileStream::close()
 {
@@ -210,40 +190,32 @@ void AtxFileStream::close()
 	mAtxStream.close();
 }
 
-/*
- * --INFO--
- * Address:	80043E34
- * Size:	000010
+/**
+ * @TODO: Documentation
  */
 int AtxFileStream::getPending()
 {
 	return mLength - mPosition;
 }
 
-/*
- * --INFO--
- * Address:	80043E44
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 int AtxFileStream::getPosition()
 {
 	return mPosition;
 }
 
-/*
- * --INFO--
- * Address:	80043E4C
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 int AtxFileStream::getLength()
 {
 	return mLength;
 }
 
-/*
- * --INFO--
- * Address:	80043E54
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 void AtxFileStream::setLength(int length)
 {

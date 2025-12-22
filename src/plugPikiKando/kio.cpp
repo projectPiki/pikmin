@@ -23,10 +23,8 @@ bool KIO::fbCopy;
 immut char* KIO::haltMessage;
 int KIO::kontMode = 2;
 
-/*
- * --INFO--
- * Address:	80084340
- * Size:	000010
+/**
+ * @TODO: Documentation
  */
 static BOOL hioEnumCallback(s32 chan)
 {
@@ -34,20 +32,16 @@ static BOOL hioEnumCallback(s32 chan)
 	return FALSE;
 }
 
-/*
- * --INFO--
- * Address:	80084350
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 static void hioCallback()
 {
 	kio->readMailbox();
 }
 
-/*
- * --INFO--
- * Address:	80084374
- * Size:	00005C
+/**
+ * @TODO: Documentation
  */
 KIO::KIO()
 {
@@ -59,10 +53,8 @@ KIO::KIO()
 	haltMessage   = nullptr;
 }
 
-/*
- * --INFO--
- * Address:	800843D0
- * Size:	000074
+/**
+ * @TODO: Documentation
  */
 void KIO::initialise()
 {
@@ -77,10 +69,8 @@ void KIO::initialise()
 	kontMode = 2;
 }
 
-/*
- * --INFO--
- * Address:	80084444
- * Size:	0000DC
+/**
+ * @TODO: Documentation
  */
 void KIO::readMailbox()
 {
@@ -115,10 +105,8 @@ void KIO::readMailbox()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80084520
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 void KIO::startWrite(int p1, u8* bufferStart, int bufferSize)
 {
@@ -126,10 +114,8 @@ void KIO::startWrite(int p1, u8* bufferStart, int bufferSize)
 	writeHeader();
 }
 
-/*
- * --INFO--
- * Address:	80084558
- * Size:	000064
+/**
+ * @TODO: Documentation
  */
 void KIO::writeHeader()
 {
@@ -155,10 +141,8 @@ void KIO::copyEfb(u8*, u16, u16)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	800845BC
- * Size:	00001C
+/**
+ * @TODO: Documentation
  */
 void KIOContext::set(int p1, u8* bufferStart, int bufferSize)
 {
@@ -169,10 +153,8 @@ void KIOContext::set(int p1, u8* bufferStart, int bufferSize)
 	mBufferStart = bufferStart;
 }
 
-/*
- * --INFO--
- * Address:	800845D8
- * Size:	0000E8
+/**
+ * @TODO: Documentation
  */
 void KIOContext::write()
 {

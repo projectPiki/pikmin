@@ -235,10 +235,8 @@ protected:
 };
 } // namespace zen
 
-/*
- * --INFO--
- * Address:	801E8900
- * Size:	000334
+/**
+ * @TODO: Documentation
  */
 zen::DrawGameOver::DrawGameOver()
 {
@@ -250,10 +248,8 @@ zen::DrawGameOver::DrawGameOver()
 	mActiveScreen = 0;
 }
 
-/*
- * --INFO--
- * Address:	801E8DCC
- * Size:	0000E8
+/**
+ * @TODO: Documentation
  */
 void zen::DrawGameOver::start(zen::DrawGameOver::modeFlag mode, f32 p2)
 {
@@ -278,10 +274,8 @@ void zen::DrawGameOver::start(zen::DrawGameOver::modeFlag mode, f32 p2)
 	mActiveScreen->start();
 }
 
-/*
- * --INFO--
- * Address:	801E8FE8
- * Size:	000118
+/**
+ * @TODO: Documentation
  */
 bool zen::DrawGameOver::update(Controller* controller)
 {
@@ -315,10 +309,8 @@ bool zen::DrawGameOver::update(Controller* controller)
 	return isInputPeriodDone;
 }
 
-/*
- * --INFO--
- * Address:	801E9614
- * Size:	000040
+/**
+ * @TODO: Documentation
  */
 void zen::DrawGameOver::draw(Graphics& gfx)
 {

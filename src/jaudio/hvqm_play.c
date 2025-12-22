@@ -80,10 +80,8 @@ static u32 gop_header[5]; // TODO: struct?
 static OSThread jac_hvqmThread;
 static u8 hvqmStack[0x1000] ATTRIBUTE_ALIGN(32);
 
-/*
- * --INFO--
- * Address:	8001DC80
- * Size:	000104
+/**
+ * @TODO: Documentation
  */
 static void __ReLoad()
 {
@@ -110,10 +108,8 @@ static void __ReLoad()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8001DDA0
- * Size:	000074
+/**
+ * @TODO: Documentation
  */
 static void __LoadFin(u32 a)
 {
@@ -127,10 +123,8 @@ static void __LoadFin(u32 a)
 	__ReLoad();
 }
 
-/*
- * --INFO--
- * Address:	8001DE20
- * Size:	000198
+/**
+ * @TODO: Documentation
  */
 static int __VirtualLoad(u32 currentOffs, u32 bytesToRead, u8* data)
 {
@@ -172,10 +166,8 @@ static int __VirtualLoad(u32 currentOffs, u32 bytesToRead, u8* data)
 	return bytesToRead;
 }
 
-/*
- * --INFO--
- * Address:	8001DFC0
- * Size:	000050
+/**
+ * @TODO: Documentation
  */
 static void InitAudio1(StreamHeader_* header, u8* data, u32 size)
 {
@@ -183,10 +175,8 @@ static void InitAudio1(StreamHeader_* header, u8* data, u32 size)
 	StreamAudio_Start(0, 0, 0, 1, 0, header);
 }
 
-/*
- * --INFO--
- * Address:	8001E020
- * Size:	0003BC
+/**
+ * @TODO: Documentation
  */
 void Jac_HVQM_Init(immut char* movieFilePath, u8* data, u32 bufferSize)
 {
@@ -364,10 +354,8 @@ void OSInitFastCast(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8001E3E0
- * Size:	000050
+/**
+ * @TODO: Documentation
  */
 static void hvqm_forcestop()
 {
@@ -386,10 +374,8 @@ void Jac_HVQM_ThreadStart(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8001E440
- * Size:	000394
+/**
+ * @TODO: Documentation
  */
 BOOL Jac_HVQM_Update(void)
 {
@@ -509,10 +495,8 @@ end:
 	return FALSE;
 }
 
-/*
- * --INFO--
- * Address:	8001E7E0
- * Size:	000074
+/**
+ * @TODO: Documentation
  */
 void Jac_HVQM_ForceStop(void)
 {
@@ -540,10 +524,8 @@ void Jac_CountReadyPictures(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8001E860
- * Size:	000228
+/**
+ * @TODO: Documentation
  */
 int Jac_GetPicture(void* data, int* x, int* y)
 {
@@ -618,10 +600,8 @@ int Jac_GetPicture(void* data, int* x, int* y)
 	return FALSE;
 }
 
-/*
- * --INFO--
- * Address:	8001EAA0
- * Size:	000040
+/**
+ * @TODO: Documentation
  */
 static void InitPic()
 {
@@ -633,10 +613,8 @@ static void InitPic()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8001EAE0
- * Size:	000044
+/**
+ * @TODO: Documentation
  */
 static BOOL CheckDraw(u32 id)
 {
@@ -646,10 +624,8 @@ static BOOL CheckDraw(u32 id)
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	8001EB40
- * Size:	0000FC
+/**
+ * @TODO: Documentation
  */
 static int Decode1(u8* data, u32 frameId, u8 frameType)
 {

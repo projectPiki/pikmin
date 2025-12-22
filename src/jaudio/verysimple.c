@@ -40,10 +40,8 @@ static u8* lend_buffer;
 // forward declared statics
 static void __ResetCounter();
 
-/*
- * --INFO--
- * Address:	80016A60
- * Size:	00006C
+/**
+ * @TODO: Documentation
  */
 static BOOL InitQueue()
 {
@@ -58,10 +56,8 @@ static BOOL InitQueue()
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	80016AE0
- * Size:	00000C
+/**
+ * @TODO: Documentation
  */
 void Jac_StopSe(s32)
 {
@@ -70,10 +66,8 @@ void Jac_StopSe(s32)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80016B00
- * Size:	000010
+/**
+ * @TODO: Documentation
  */
 BOOL Jac_PauseCheck()
 {
@@ -90,10 +84,8 @@ void Jac_UpdateRocketParam(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80016B20
- * Size:	000068
+/**
+ * @TODO: Documentation
  */
 void Jac_SysSEDemoFadeCheck()
 {
@@ -111,10 +103,8 @@ void Jac_SysSEDemoFadeCheck()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80016BA0
- * Size:	0003A0
+/**
+ * @TODO: Documentation
  */
 void Jac_PlaySystemSe(s32 id)
 {
@@ -243,10 +233,8 @@ void Jac_PlaySystemSe(s32 id)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80016F40
- * Size:	000070
+/**
+ * @TODO: Documentation
  */
 void Jac_StopSystemSe(s32 id)
 {
@@ -276,10 +264,8 @@ void Jac_PlaySe(u32)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80016FC0
- * Size:	000050
+/**
+ * @TODO: Documentation
  */
 static void Jac_PlayInit()
 {
@@ -291,19 +277,15 @@ static void Jac_PlayInit()
 	Bank_Setup("Banks/pikibank.bx");
 }
 
-/*
- * --INFO--
- * Address:	80017020
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 static void Jac_Archiver_Init()
 {
 }
 
-/*
- * --INFO--
- * Address:	80017040
- * Size:	0000AC
+/**
+ * @TODO: Documentation
  */
 static u16 TrackReceive(seqp_* track, u16 param_2)
 {
@@ -332,10 +314,8 @@ static u16 TrackReceive(seqp_* track, u16 param_2)
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80017100
- * Size:	00007C
+/**
+ * @TODO: Documentation
  */
 static void AuxBusInit()
 {
@@ -376,30 +356,24 @@ void Jac_SetThreadPriority(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80017180
- * Size:	00000C
+/**
+ * @TODO: Documentation
  */
 static void __BootSoundOK(u32)
 {
 	boot_ok = TRUE;
 }
 
-/*
- * --INFO--
- * Address:	800171A0
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 BOOL Jac_CheckBootOk()
 {
 	return boot_ok;
 }
 
-/*
- * --INFO--
- * Address:	800171C0
- * Size:	000144
+/**
+ * @TODO: Documentation
  */
 void Jac_Start(void* heap, u32 heapSize, u32 aramSize, immut char* rootPath)
 {
@@ -451,10 +425,8 @@ void Jac_StopSoundAll(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80017320
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 void Jac_Freeze_Precall()
 {
@@ -466,10 +438,8 @@ void Jac_Freeze_Precall()
 	__ResetCounter();
 }
 
-/*
- * --INFO--
- * Address:	80017380
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 void Jac_Freeze()
 {
@@ -478,10 +448,8 @@ void Jac_Freeze()
 	OSRestoreInterrupts(level);
 }
 
-/*
- * --INFO--
- * Address:	800173C0
- * Size:	00000C
+/**
+ * @TODO: Documentation
  */
 static void __ResetCounter()
 {
@@ -498,10 +466,8 @@ void Jac_Silence_Check(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	800173E0
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 void Jac_AddDVDBuffer(u8* buf, u32 p2)
 {
@@ -509,10 +475,8 @@ void Jac_AddDVDBuffer(u8* buf, u32 p2)
 	lend_buffer = buf;
 }
 
-/*
- * --INFO--
- * Address:	80017420
- * Size:	000034
+/**
+ * @TODO: Documentation
  */
 void Jac_BackDVDBuffer()
 {

@@ -19,10 +19,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("PickItem")
 
-/*
- * --INFO--
- * Address:	800BCAFC
- * Size:	0000E0
+/**
+ * @TODO: Documentation
  */
 ActPickItem::ActPickItem(Piki* piki)
     : AndAction(piki)
@@ -35,10 +33,8 @@ ActPickItem::ActPickItem(Piki* piki)
 	mTargetItem.clear();
 }
 
-/*
- * --INFO--
- * Address:	800BCBDC
- * Size:	000180
+/**
+ * @TODO: Documentation
  */
 Creature* ActPickItem::findItem()
 {
@@ -64,10 +60,8 @@ Creature* ActPickItem::findItem()
 	return closestItem;
 }
 
-/*
- * --INFO--
- * Address:	800BCD5C
- * Size:	0000B0
+/**
+ * @TODO: Documentation
  */
 void ActPickItem::init(Creature* target)
 {
@@ -85,10 +79,8 @@ void ActPickItem::init(Creature* target)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800BCE0C
- * Size:	0000E8
+/**
+ * @TODO: Documentation
  */
 int ActPickItem::exec()
 {
@@ -123,10 +115,8 @@ int ActPickItem::exec()
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	800BCEF4
- * Size:	000040
+/**
+ * @TODO: Documentation
  */
 void ActPickItem::cleanup()
 {
@@ -144,10 +134,8 @@ ActFlower::ActFlower(Piki* piki)
 {
 }
 
-/*
- * --INFO--
- * Address:	800BCF34
- * Size:	00015C
+/**
+ * @TODO: Documentation
  */
 void ActFlower::init(Creature*)
 {
@@ -170,10 +158,8 @@ void ActFlower::init(Creature*)
 	mElapsedTime = 0.0f;
 }
 
-/*
- * --INFO--
- * Address:	800BD090
- * Size:	000120
+/**
+ * @TODO: Documentation
  */
 void ActFlower::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
@@ -198,20 +184,16 @@ void ActFlower::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800BD1B0
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 void ActFlower::cleanup()
 {
 	mPiki->mFSM->transit(mPiki, PIKISTATE_Normal);
 }
 
-/*
- * --INFO--
- * Address:	800BD1E8
- * Size:	000074
+/**
+ * @TODO: Documentation
  */
 int ActFlower::exec()
 {

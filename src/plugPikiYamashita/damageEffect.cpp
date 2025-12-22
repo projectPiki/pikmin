@@ -3,20 +3,16 @@
 #include "NaviMgr.h"
 #include "gameflow.h"
 
-/*
- * --INFO--
- * Address:	801F14F4
- * Size:	00000C
+/**
+ * @TODO: Documentation
  */
 zen::DamageEffect::DamageEffect()
 {
 	mDamageAlpha = 0.0f;
 }
 
-/*
- * --INFO--
- * Address:	801F1500
- * Size:	0000A8
+/**
+ * @TODO: Documentation
  */
 bool zen::DamageEffect::update()
 {
@@ -39,10 +35,8 @@ bool zen::DamageEffect::update()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	801F15A8
- * Size:	000430
+/**
+ * @TODO: Documentation
  */
 void zen::DamageEffect::draw(Graphics& gfx)
 {

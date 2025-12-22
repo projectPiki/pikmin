@@ -18,40 +18,32 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("genActor");
 
-/*
- * --INFO--
- * Address:	80119B30
- * Size:	000078
+/**
+ * @TODO: Documentation
  */
 static GenObject* makeObjectActor()
 {
 	return new GenObjectActor();
 }
 
-/*
- * --INFO--
- * Address:	80119BA8
- * Size:	00008C
+/**
+ * @TODO: Documentation
  */
 void GenObjectActor::initialise()
 {
 	GenObjectFactory::factory->registerMember('actr', &makeObjectActor, "create Actor", 'v0.0');
 }
 
-/*
- * --INFO--
- * Address:	80119C34
- * Size:	000040
+/**
+ * @TODO: Documentation
  */
 void GenObjectActor::doRead(RandomAccessStream& stream)
 {
 	mActorId = stream.readInt();
 }
 
-/*
- * --INFO--
- * Address:	80119C74
- * Size:	000070
+/**
+ * @TODO: Documentation
  */
 Creature* GenObjectActor::birth(BirthInfo& info)
 {

@@ -17,10 +17,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("SlimeCreature");
 
-/*
- * --INFO--
- * Address:	8016B278
- * Size:	000078
+/**
+ * @TODO: Documentation
  */
 SlimeCreature::SlimeCreature(CreatureProp* props)
     : Creature(props)
@@ -28,10 +26,8 @@ SlimeCreature::SlimeCreature(CreatureProp* props)
 	mSearchBuffer.init(mSearchData, 3);
 }
 
-/*
- * --INFO--
- * Address:	8016B2F0
- * Size:	000080
+/**
+ * @TODO: Documentation
  */
 void SlimeCreature::init(immut Vector3f& pos, Slime* slime)
 {
@@ -43,70 +39,56 @@ void SlimeCreature::init(immut Vector3f& pos, Slime* slime)
 	startFlying();
 }
 
-/*
- * --INFO--
- * Address:	8016B370
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 f32 SlimeCreature::getSize()
 {
 	return 20.0f;
 }
 
-/*
- * --INFO--
- * Address:	8016B378
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 f32 SlimeCreature::getiMass()
 {
 	return 0.01f;
 }
 
-/*
- * --INFO--
- * Address:	8016B380
- * Size:	00001C
+/**
+ * @TODO: Documentation
  */
 Vector3f SlimeCreature::getCentre()
 {
 	return mSRT.t;
 }
 
-/*
- * --INFO--
- * Address:	8016B39C
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 void SlimeCreature::doKill()
 {
 	kill(false);
 }
 
-/*
- * --INFO--
- * Address:	8016B3C0
- * Size:	000030
+/**
+ * @TODO: Documentation
  */
 bool SlimeCreature::isAlive()
 {
 	return mSlime->isAlive();
 }
 
-/*
- * --INFO--
- * Address:	8016B3F0
- * Size:	000030
+/**
+ * @TODO: Documentation
  */
 bool SlimeCreature::isAtari()
 {
 	return mSlime->isAtari();
 }
 
-/*
- * --INFO--
- * Address:	8016B420
- * Size:	000020
+/**
+ * @TODO: Documentation
  */
 bool SlimeCreature::ignoreAtari(Creature* creature)
 {
@@ -117,28 +99,22 @@ bool SlimeCreature::ignoreAtari(Creature* creature)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8016B440
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void SlimeCreature::doAI()
 {
 }
 
-/*
- * --INFO--
- * Address:	8016B444
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void SlimeCreature::doAnimation()
 {
 }
 
-/*
- * --INFO--
- * Address:	8016B448
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 void SlimeCreature::update()
 {
@@ -147,10 +123,8 @@ void SlimeCreature::update()
 	moveNew(gsys->getFrameTime());
 }
 
-/*
- * --INFO--
- * Address:	8016B494
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void SlimeCreature::refresh(Graphics&)
 {

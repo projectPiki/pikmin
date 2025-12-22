@@ -16,10 +16,8 @@ DEFINE_ERROR(6)
  */
 DEFINE_PRINT("interactGrab")
 
-/*
- * --INFO--
- * Address:	8007C89C
- * Size:	00003C
+/**
+ * @TODO: Documentation
  */
 bool InteractGrab::actCommon(Creature* creature) immut
 {
@@ -33,10 +31,8 @@ bool InteractGrab::actCommon(Creature* creature) immut
 	return result;
 }
 
-/*
- * --INFO--
- * Address:	8007C8D8
- * Size:	000120
+/**
+ * @TODO: Documentation
  */
 bool InteractRelease::actCommon(Creature* creature) immut
 {

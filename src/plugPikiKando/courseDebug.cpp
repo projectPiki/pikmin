@@ -37,39 +37,31 @@ GenObjectDebug::GenObjectDebug()
 {
 }
 
-/*
- * --INFO--
- * Address:	800864A8
- * Size:	00012C
+/**
+ * @TODO: Documentation
  */
 static GenObject* makeObjectDebug()
 {
 	return new GenObjectDebug();
 }
 
-/*
- * --INFO--
- * Address:	800865D4
- * Size:	00008C
+/**
+ * @TODO: Documentation
  */
 void GenObjectDebug::initialise()
 {
 	GenObjectFactory::factory->registerMember('debg', &makeObjectDebug, "Debug Switches", 'v0.0');
 }
 
-/*
- * --INFO--
- * Address:	80086660
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void GenObjectDebug::doRead(RandomAccessStream&)
 {
 }
 
-/*
- * --INFO--
- * Address:	80086664
- * Size:	000028
+/**
+ * @TODO: Documentation
  */
 Creature* GenObjectDebug::birth(BirthInfo&)
 {

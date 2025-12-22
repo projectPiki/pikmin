@@ -163,10 +163,8 @@ static GXVtxAttrFmtList meshVAT[] = {
 	{ GX_VA_TEX7, GX_TEX_ST, GX_F32, 0 }, { GX_VA_NULL, GX_TEX_ST, GX_S16, 0 },
 };
 
-/*
- * --INFO--
- * Address:	800474B8
- * Size:	0002F8
+/**
+ * @TODO: Documentation
  */
 DGXGraphics::DGXGraphics(bool flag)
 {
@@ -248,10 +246,8 @@ DGXGraphics::DGXGraphics(bool flag)
 	STACK_PAD_VAR(2);
 }
 
-/*
- * --INFO--
- * Address:	800477B0
- * Size:	000094
+/**
+ * @TODO: Documentation
  */
 void DGXGraphics::setVerticalFilter(u8* vf)
 {
@@ -264,10 +260,8 @@ void DGXGraphics::setVerticalFilter(u8* vf)
 	sScreenMode[mRenderMode]->vfilter[6] = vf[6];
 }
 
-/*
- * --INFO--
- * Address:	80047844
- * Size:	000094
+/**
+ * @TODO: Documentation
  */
 void DGXGraphics::getVerticalFilter(u8* vf)
 {
@@ -280,10 +274,8 @@ void DGXGraphics::getVerticalFilter(u8* vf)
 	vf[6] = sScreenMode[mRenderMode]->vfilter[6];
 }
 
-/*
- * --INFO--
- * Address:	800478D8
- * Size:	000074
+/**
+ * @TODO: Documentation
  */
 void DGXGraphics::videoReset()
 {
@@ -308,10 +300,8 @@ void DGXGraphics::videoReset()
 #endif
 }
 
-/*
- * --INFO--
- * Address:	8004794C
- * Size:	000040
+/**
+ * @TODO: Documentation
  */
 void DGXGraphics::resetCopyFilter()
 {
@@ -324,10 +314,8 @@ static bool sendTxIndx;  // type unsure
 static bool sendColIndx; // type unsure
 static bool sendNbtIndx; // type unsure
 
-/*
- * --INFO--
- * Address:	8004798C
- * Size:	000040
+/**
+ * @TODO: Documentation
  */
 void DGXGraphics::setupRender()
 {
@@ -336,30 +324,24 @@ void DGXGraphics::setupRender()
 	mDisplayListSize = kDefaultDLSize;
 }
 
-/*
- * --INFO--
- * Address:	800479CC
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 u8* DGXGraphics::getDListPtr()
 {
 	return mDisplayListPtr;
 }
 
-/*
- * --INFO--
- * Address:	800479D4
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 u32 DGXGraphics::getDListRemainSize()
 {
 	return mDisplayListSize;
 }
 
-/*
- * --INFO--
- * Address:	800479DC
- * Size:	00001C
+/**
+ * @TODO: Documentation
  */
 void DGXGraphics::useDList(u32 num)
 {
@@ -367,10 +349,8 @@ void DGXGraphics::useDList(u32 num)
 	mDisplayListPtr += num;
 }
 
-/*
- * --INFO--
- * Address:	800479F8
- * Size:	0004C8
+/**
+ * @TODO: Documentation
  */
 u32 DGXGraphics::compileMaterial(Material* mat)
 {
@@ -466,10 +446,8 @@ u32 DGXGraphics::compileMaterial(Material* mat)
 	return mat->mDisplayListSize;
 }
 
-/*
- * --INFO--
- * Address:	80047EC0
- * Size:	0001AC
+/**
+ * @TODO: Documentation
  */
 void DGXGraphics::initRender(int a1, int a2)
 {
@@ -520,10 +498,8 @@ void DGXGraphics::initRender(int a1, int a2)
 	gsys->resetLFlares();
 }
 
-/*
- * --INFO--
- * Address:	8004806C
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 void DGXGraphics::beginRender()
 {
@@ -543,10 +519,8 @@ void DGXGraphics::GXReInit()
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	800480A4
- * Size:	000030
+/**
+ * @TODO: Documentation
  */
 void DGXGraphics::doneRender()
 {
@@ -555,10 +529,8 @@ void DGXGraphics::doneRender()
 	gsys->mIsRendering = 0;
 }
 
-/*
- * --INFO--
- * Address:	800480D4
- * Size:	0000C4
+/**
+ * @TODO: Documentation
  */
 void DGXGraphics::waitRetrace()
 {
@@ -580,10 +552,8 @@ void DGXGraphics::waitRetrace()
 	mSystemFrameRate = gsys->mFrameRate;
 }
 
-/*
- * --INFO--
- * Address:	80048198
- * Size:	000070
+/**
+ * @TODO: Documentation
  */
 void DGXGraphics::waitPostRetrace()
 {
@@ -598,10 +568,8 @@ void DGXGraphics::waitPostRetrace()
 	OSRestoreInterrupts(interrupt);
 }
 
-/*
- * --INFO--
- * Address:	80048208
- * Size:	000084
+/**
+ * @TODO: Documentation
  */
 void DGXGraphics::retraceProc(u32)
 {
@@ -617,20 +585,16 @@ void DGXGraphics::retraceProc(u32)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8004828C
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 void DGXGraphics::setCamera(Camera* a1)
 {
 	mCamera = a1;
 }
 
-/*
- * --INFO--
- * Address:	80048294
- * Size:	00002C
+/**
+ * @TODO: Documentation
  */
 void DGXGraphics::calcViewMatrix(immut Matrix4f& mtx1, Matrix4f& mtx2)
 {
@@ -638,10 +602,8 @@ void DGXGraphics::calcViewMatrix(immut Matrix4f& mtx1, Matrix4f& mtx2)
 	mCamera->mLookAtMtx.multiplyTo(mtx1, mtx2);
 }
 
-/*
- * --INFO--
- * Address:	800482C0
- * Size:	000050
+/**
+ * @TODO: Documentation
  */
 f32 DGXGraphics::setLineWidth(f32 width)
 {
@@ -651,10 +613,8 @@ f32 DGXGraphics::setLineWidth(f32 width)
 	return old;
 }
 
-/*
- * --INFO--
- * Address:	80048310
- * Size:	00005C
+/**
+ * @TODO: Documentation
  */
 u8 DGXGraphics::setDepth(bool enabled)
 {
@@ -668,10 +628,8 @@ u8 DGXGraphics::setDepth(bool enabled)
 	return old;
 }
 
-/*
- * --INFO--
- * Address:	8004836C
- * Size:	000078
+/**
+ * @TODO: Documentation
  */
 int DGXGraphics::setCullFront(int cull)
 {
@@ -689,10 +647,8 @@ int DGXGraphics::setCullFront(int cull)
 	return oldCull;
 }
 
-/*
- * --INFO--
- * Address:	800483E4
- * Size:	0000A0
+/**
+ * @TODO: Documentation
  */
 void DGXGraphics::setAmbient()
 {
@@ -705,10 +661,8 @@ void DGXGraphics::setAmbient()
 	GXSetChanMatColor(GX_COLOR1A1, GColors[0].mMatColor);
 }
 
-/*
- * --INFO--
- * Address:	80048484
- * Size:	0001D0
+/**
+ * @TODO: Documentation
  */
 bool DGXGraphics::setLighting(bool set, PVWLightingInfo* lightInfo)
 {
@@ -748,10 +702,8 @@ bool DGXGraphics::setLighting(bool set, PVWLightingInfo* lightInfo)
 	return prevSetting;
 }
 
-/*
- * --INFO--
- * Address:	80048654
- * Size:	000344
+/**
+ * @TODO: Documentation
  */
 void DGXGraphics::setLight(Light* light, int idx)
 {
@@ -790,10 +742,8 @@ void DGXGraphics::setLight(Light* light, int idx)
 	GXLoadLightObjImm(gxLight, GXLightID(1 << idx));
 }
 
-/*
- * --INFO--
- * Address:	80048998
- * Size:	000098
+/**
+ * @TODO: Documentation
  */
 void DGXGraphics::setPerspective(Mtx mtx, f32 a1, f32 a2, f32 a3, f32 a4, f32 a5)
 {
@@ -809,10 +759,8 @@ void DGXGraphics::setPerspective(Mtx mtx, f32 a1, f32 a2, f32 a3, f32 a4, f32 a5
 	GXSetZMode(GX_TRUE, GX_LEQUAL, GX_TRUE);
 }
 
-/*
- * --INFO--
- * Address:	80048A30
- * Size:	00019C
+/**
+ * @TODO: Documentation
  */
 void DGXGraphics::setOrthogonal(Mtx mtx, immut RectArea& bounds)
 {
@@ -835,49 +783,39 @@ void DGXGraphics::setOrthogonal(Mtx mtx, immut RectArea& bounds)
 	setFog(false);
 }
 
-/*
- * --INFO--
- * Address:	80048BCC
- * Size:	00003C
+/**
+ * @TODO: Documentation
  */
 void DGXGraphics::setScissor(immut RectArea& bounds)
 {
 	GXSetScissor(bounds.mMinX, bounds.mMinY, bounds.width(), bounds.height());
 }
 
-/*
- * --INFO--
- * Address:	80048C08
- * Size:	000098
+/**
+ * @TODO: Documentation
  */
 void DGXGraphics::setViewport(immut RectArea& bounds)
 {
 	GXSetViewport(bounds.mMinX, bounds.mMinY, bounds.width(), bounds.height(), 0.0f, 1.0f);
 }
 
-/*
- * --INFO--
- * Address:	80048CA0
- * Size:	000030
+/**
+ * @TODO: Documentation
  */
 void DGXGraphics::setViewportOffset(immut RectArea& bounds)
 {
 	GXSetScissorBoxOffset(-bounds.mMinX, -bounds.mMinY);
 }
 
-/*
- * --INFO--
- * Address:	80048CD0
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void DGXGraphics::initReflectTex(bool)
 {
 }
 
-/*
- * --INFO--
- * Address:	80048CD4
- * Size:	0000D0
+/**
+ * @TODO: Documentation
  */
 void DGXGraphics::initProjTex(bool set, LightCamera* cam)
 {
@@ -901,10 +839,8 @@ void DGXGraphics::initProjTex(bool set, LightCamera* cam)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80048DA4
- * Size:	000168
+/**
+ * @TODO: Documentation
  */
 void DGXGraphics::useMatrixQuick(immut Matrix4f& mtx, int id)
 {
@@ -960,10 +896,8 @@ void DGXGraphics::useMatrixQuick(immut Matrix4f& mtx, int id)
 	STACK_PAD_VAR(3);
 }
 
-/*
- * --INFO--
- * Address:	80048F0C
- * Size:	000054
+/**
+ * @TODO: Documentation
  */
 void DGXGraphics::useMatrix(immut Matrix4f& mtx, int a)
 {
@@ -972,10 +906,8 @@ void DGXGraphics::useMatrix(immut Matrix4f& mtx, int a)
 	GXSetCurrentMtx(mCurrentMatrixId);
 }
 
-/*
- * --INFO--
- * Address:	80048F60
- * Size:	0000F8
+/**
+ * @TODO: Documentation
  */
 void DGXGraphics::useTexture(Texture* texture, int id)
 {
@@ -998,10 +930,8 @@ void DGXGraphics::useTexture(Texture* texture, int id)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80049058
- * Size:	000148
+/**
+ * @TODO: Documentation
  */
 void DGXGraphics::setMatMatrices(Material* mat, int p2)
 {
@@ -1043,10 +973,8 @@ void DGXGraphics::setMatMatrices(Material* mat, int p2)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800491A0
- * Size:	000864
+/**
+ * @TODO: Documentation
  */
 void DGXGraphics::setMaterial(Material* mat, bool p2)
 {
@@ -1224,10 +1152,8 @@ void DGXGraphics::setMaterial(Material* mat, bool p2)
 	STACK_PAD_TERNARY(mCustomScale, 7);
 }
 
-/*
- * --INFO--
- * Address:	80049A04
- * Size:	0001D4
+/**
+ * @TODO: Documentation
  */
 void DGXGraphics::initMesh(Shape* model)
 {
@@ -1292,10 +1218,8 @@ void DGXGraphics::initMesh(Shape* model)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80049BD8
- * Size:	000260
+/**
+ * @TODO: Documentation
  */
 void DGXGraphics::setupVtxDesc(Shape* model, Material* mat, Mesh* mesh)
 {
@@ -1368,10 +1292,8 @@ void DGXGraphics::setupVtxDesc(Shape* model, Material* mat, Mesh* mesh)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80049E38
- * Size:	000244
+/**
+ * @TODO: Documentation
  */
 void DGXGraphics::drawSingleMatpoly(Shape* model, Joint::MatPoly* matPoly)
 {
@@ -1423,10 +1345,8 @@ void DGXGraphics::drawSingleMatpoly(Shape* model, Joint::MatPoly* matPoly)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8004A07C
- * Size:	0000B0
+/**
+ * @TODO: Documentation
  */
 void DGXGraphics::drawMeshes(Camera&, Shape* shape)
 {
@@ -1437,10 +1357,8 @@ void DGXGraphics::drawMeshes(Camera&, Shape* shape)
 	useMaterial(nullptr);
 }
 
-/*
- * --INFO--
- * Address:	8004A12C
- * Size:	00009C
+/**
+ * @TODO: Documentation
  */
 void DGXGraphics::setColour(immut Colour& color, bool set)
 {
@@ -1459,20 +1377,16 @@ void DGXGraphics::setColour(immut Colour& color, bool set)
 	GXSetChanMatColor(GX_COLOR0A0, color2);
 }
 
-/*
- * --INFO--
- * Address:	8004A1C8
- * Size:	00000C
+/**
+ * @TODO: Documentation
  */
 void DGXGraphics::setAuxColour(immut Colour& color)
 {
 	mAuxiliaryColour = color;
 }
 
-/*
- * --INFO--
- * Address:	8004A1D4
- * Size:	000060
+/**
+ * @TODO: Documentation
  */
 void DGXGraphics::setPrimEnv(immut Colour* col1, immut Colour* col2)
 {
@@ -1484,30 +1398,24 @@ void DGXGraphics::setPrimEnv(immut Colour* col1, immut Colour* col2)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8004A234
- * Size:	00000C
+/**
+ * @TODO: Documentation
  */
 void DGXGraphics::setClearColour(immut Colour& color)
 {
 	mBufferClearColour = color;
 }
 
-/*
- * --INFO--
- * Address:	8004A240
- * Size:	000034
+/**
+ * @TODO: Documentation
  */
 void DGXGraphics::clearBuffer(int, bool)
 {
 	GXSetCopyClear(*(GXColor*)&mBufferClearColour, 0xffffff);
 }
 
-/*
- * --INFO--
- * Address:	8004A274
- * Size:	0000B4
+/**
+ * @TODO: Documentation
  */
 void DGXGraphics::setFog(bool set)
 {
@@ -1530,10 +1438,8 @@ void DGXGraphics::setFog(bool set)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8004A328
- * Size:	000040
+/**
+ * @TODO: Documentation
  */
 void DGXGraphics::setFog(bool set, immut Colour& color, f32 density, f32 start, f32 end)
 {
@@ -1544,10 +1450,8 @@ void DGXGraphics::setFog(bool set, immut Colour& color, f32 density, f32 start, 
 	setFog(set);
 }
 
-/*
- * --INFO--
- * Address:	8004A368
- * Size:	000164
+/**
+ * @TODO: Documentation
  */
 void DGXGraphics::setBlendMode(u8 blendFactor, u8 zMode, u8 blendMode)
 {
@@ -1578,10 +1482,8 @@ void DGXGraphics::setBlendMode(u8 blendFactor, u8 zMode, u8 blendMode)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8004A4CC
- * Size:	000438
+/**
+ * @TODO: Documentation
  */
 int DGXGraphics::setCBlending(int mode)
 {
@@ -1660,10 +1562,8 @@ int DGXGraphics::setCBlending(int mode)
 	return old;
 }
 
-/*
- * --INFO--
- * Address:	8004A904
- * Size:	0000B8
+/**
+ * @TODO: Documentation
  */
 bool DGXGraphics::initParticle(bool a)
 {
@@ -1685,10 +1585,8 @@ bool DGXGraphics::initParticle(bool a)
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8004A9BC
- * Size:	000328
+/**
+ * @TODO: Documentation
  */
 void DGXGraphics::drawRotParticle(Camera& cam, immut Vector3f& pos, u16 angle, f32 radius)
 {
@@ -1720,10 +1618,8 @@ void DGXGraphics::drawRotParticle(Camera& cam, immut Vector3f& pos, u16 angle, f
 	GXEnd();
 }
 
-/*
- * --INFO--
- * Address:	8004ACE4
- * Size:	00027C
+/**
+ * @TODO: Documentation
  */
 void DGXGraphics::drawParticle(Camera& cam, immut Vector3f& pos, f32 size)
 {
@@ -1756,10 +1652,8 @@ void DGXGraphics::drawParticle(Camera& cam, immut Vector3f& pos, f32 size)
 	GXEnd();
 }
 
-/*
- * --INFO--
- * Address:	8004AF60
- * Size:	000128
+/**
+ * @TODO: Documentation
  */
 void DGXGraphics::drawCamParticle(Camera& cam, immut Vector3f& pos, immut Vector2f& extents, immut Vector2f& uvMin, immut Vector2f& uvMax)
 {
@@ -1798,10 +1692,8 @@ void DGXGraphics::drawCamParticle(Camera& cam, immut Vector3f& pos, immut Vector
 	STACK_PAD_VAR(40);
 }
 
-/*
- * --INFO--
- * Address:	8004B088
- * Size:	0000F4
+/**
+ * @TODO: Documentation
  */
 void DGXGraphics::drawLine(immut Vector3f& start, immut Vector3f& end)
 {
@@ -1823,10 +1715,8 @@ void DGXGraphics::drawLine(immut Vector3f& start, immut Vector3f& end)
 	GXColor1u32(primClr);
 }
 
-/*
- * --INFO--
- * Address:	8004B17C
- * Size:	000224
+/**
+ * @TODO: Documentation
  */
 void DGXGraphics::drawPoints(immut Vector3f* points, int count)
 {
@@ -1847,10 +1737,8 @@ void DGXGraphics::drawPoints(immut Vector3f* points, int count)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8004B3A0
- * Size:	0003D8
+/**
+ * @TODO: Documentation
  */
 void DGXGraphics::drawOneTri(immut Vector3f* vertices, immut Vector3f* normals, immut Vector2f* texCoords, int count)
 {
@@ -1887,10 +1775,8 @@ void DGXGraphics::drawOneTri(immut Vector3f* vertices, immut Vector3f* normals, 
 	}
 }
 
-/*
- * --INFO--
- * Address:	8004B778
- * Size:	00021C
+/**
+ * @TODO: Documentation
  */
 void DGXGraphics::blatRectangle(immut RectArea& rect)
 {
@@ -1933,10 +1819,8 @@ void DGXGraphics::blatRectangle(immut RectArea& rect)
 	STACK_PAD_VAR(4);
 }
 
-/*
- * --INFO--
- * Address:	8004B994
- * Size:	0001C8
+/**
+ * @TODO: Documentation
  */
 void DGXGraphics::testRectangle(immut RectArea& rect)
 {
@@ -1972,10 +1856,8 @@ void DGXGraphics::testRectangle(immut RectArea& rect)
 	STACK_PAD_VAR(2);
 }
 
-/*
- * --INFO--
- * Address:	8004BB5C
- * Size:	00046C
+/**
+ * @TODO: Documentation
  */
 void DGXGraphics::drawRectangle(immut RectArea& bounds, immut RectArea& texCoords, immut Vector3f* offset)
 {
@@ -2010,10 +1892,8 @@ void DGXGraphics::drawRectangle(immut RectArea& bounds, immut RectArea& texCoord
 	GXTexCoord2f32(f32(texCoords.mMinX) * mActiveTexture[0]->mWidthFactor, f32(texCoords.mMaxY) * mActiveTexture[0]->mHeightFactor);
 }
 
-/*
- * --INFO--
- * Address:	8004BFC8
- * Size:	0001DC
+/**
+ * @TODO: Documentation
  */
 void DGXGraphics::lineRectangle(immut RectArea& rect)
 {
@@ -2047,10 +1927,8 @@ void DGXGraphics::lineRectangle(immut RectArea& rect)
 	GXEnd();
 }
 
-/*
- * --INFO--
- * Address:	8004C1A4
- * Size:	0001AC
+/**
+ * @TODO: Documentation
  */
 void DGXGraphics::fillRectangle(immut RectArea& rect)
 {
@@ -2081,10 +1959,8 @@ void DGXGraphics::fillRectangle(immut RectArea& rect)
 	GXEnd();
 }
 
-/*
- * --INFO--
- * Address:	8004C350
- * Size:	000404
+/**
+ * @TODO: Documentation
  */
 void DGXGraphics::texturePrintf(Font* font, int x, int y, immut char* format, ...)
 {
@@ -2261,19 +2137,15 @@ void DGXGraphics::directErase(RectArea&, bool)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8004C754
- * Size:	00003C
+/**
+ * @TODO: Documentation
  */
 Shape::Shape()
 {
 }
 
-/*
- * --INFO--
- * Address:	8004C790
- * Size:	00013C
+/**
+ * @TODO: Documentation
  */
 void Shape::optimize()
 {

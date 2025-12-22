@@ -25,10 +25,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("taiattackactions")
 
-/*
- * --INFO--
- * Address:	80127604
- * Size:	0000AC
+/**
+ * @TODO: Documentation
  */
 bool TaiAttackableNaviPikiAction::act(Teki& teki)
 {
@@ -46,10 +44,8 @@ bool TaiAttackableNaviPikiAction::act(Teki& teki)
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	801276B0
- * Size:	00008C
+/**
+ * @TODO: Documentation
  */
 bool TaiAttackableNaviAction::act(Teki& teki)
 {
@@ -61,10 +57,8 @@ bool TaiAttackableNaviAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8012773C
- * Size:	0000B8
+/**
+ * @TODO: Documentation
  */
 bool TaiAttackablePikiAction::act(Teki& teki)
 {
@@ -80,10 +74,8 @@ bool TaiAttackablePikiAction::act(Teki& teki)
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	801277F4
- * Size:	000040
+/**
+ * @TODO: Documentation
  */
 void TaiAnimationSwallowingAction::start(Teki& teki)
 {
@@ -92,10 +84,8 @@ void TaiAnimationSwallowingAction::start(Teki& teki)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80127844
- * Size:	000660
+/**
+ * @TODO: Documentation
  */
 bool TaiAnimationSwallowingAction::act(Teki& teki)
 {
@@ -202,10 +192,8 @@ bool TaiAnimationSwallowingAction::act(Teki& teki)
 	TekiNotCondition(nullptr);
 }
 
-/*
- * --INFO--
- * Address:	80127EE4
- * Size:	00012C
+/**
+ * @TODO: Documentation
  */
 void TaiAnimationSwallowingAction::finish(Teki& teki)
 {
@@ -228,10 +216,8 @@ void TaiAnimationSwallowingAction::finish(Teki& teki)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80128010
- * Size:	000088
+/**
+ * @TODO: Documentation
  */
 bool TaiBangingAction::actByEvent(immut TekiEvent& event)
 {
@@ -243,10 +229,8 @@ bool TaiBangingAction::actByEvent(immut TekiEvent& event)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	80128098
- * Size:	0000D4
+/**
+ * @TODO: Documentation
  */
 bool TaiFlickAction::act(Teki& teki)
 {
@@ -257,10 +241,8 @@ bool TaiFlickAction::act(Teki& teki)
 	TekiAndCondition(nullptr, nullptr);
 }
 
-/*
- * --INFO--
- * Address:	8012816C
- * Size:	000028
+/**
+ * @TODO: Documentation
  */
 bool TaiTargetStickAction::act(Teki& teki)
 {
@@ -272,10 +254,8 @@ bool TaiTargetStickAction::act(Teki& teki)
 	return target->getStickObject() == &teki;
 }
 
-/*
- * --INFO--
- * Address:	80128194
- * Size:	000044
+/**
+ * @TODO: Documentation
  */
 void TaiFlickingAction::start(Teki& teki)
 {
@@ -283,20 +263,16 @@ void TaiFlickingAction::start(Teki& teki)
 	teki.clearTekiOption(BTeki::TEKI_OPTION_DAMAGE_COUNTABLE);
 }
 
-/*
- * --INFO--
- * Address:	801281D8
- * Size:	000034
+/**
+ * @TODO: Documentation
  */
 void TaiFlickingAction::finish(Teki& teki)
 {
 	teki.setTekiOption(BTeki::TEKI_OPTION_DAMAGE_COUNTABLE);
 }
 
-/*
- * --INFO--
- * Address:	8012820C
- * Size:	00007C
+/**
+ * @TODO: Documentation
  */
 bool TaiFlickingAction::act(Teki& teki)
 {
@@ -312,10 +288,8 @@ bool TaiFlickingAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	80128288
- * Size:	000058
+/**
+ * @TODO: Documentation
  */
 bool TaiFlickingUpperAction::act(Teki& teki)
 {

@@ -59,10 +59,8 @@ DEFINE_ERROR(43)
  */
 DEFINE_PRINT("piki");
 
-/*
- * --INFO--
- * Address:	800C6558
- * Size:	000300
+/**
+ * @TODO: Documentation
  */
 bool Piki::isSafeMePos(immut Vector3f& pos)
 {
@@ -99,10 +97,8 @@ bool Piki::isSafeMePos(immut Vector3f& pos)
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	800C6858
- * Size:	0000AC
+/**
+ * @TODO: Documentation
  */
 void Piki::startDemo()
 {
@@ -119,10 +115,8 @@ void Piki::startDemo()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800C6908
- * Size:	0000A0
+/**
+ * @TODO: Documentation
  */
 void Piki::finishDemo()
 {
@@ -137,10 +131,8 @@ void Piki::finishDemo()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800C69AC
- * Size:	0000D4
+/**
+ * @TODO: Documentation
  */
 bool Piki::appearDemo()
 {
@@ -161,20 +153,16 @@ bool Piki::appearDemo()
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	800C6A80
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 int Piki::getUpperMotionIndex()
 {
 	return mPikiAnimMgr.getUpperAnimator().getCurrentMotionIndex();
 }
 
-/*
- * --INFO--
- * Address:	800C6A88
- * Size:	000030
+/**
+ * @TODO: Documentation
  */
 void Piki::addCntCallback()
 {
@@ -183,19 +171,15 @@ void Piki::addCntCallback()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800C6AB8
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void Piki::subCntCallback()
 {
 }
 
-/*
- * --INFO--
- * Address:	800C6ABC
- * Size:	000044
+/**
+ * @TODO: Documentation
  */
 f32 Piki::getAttackPower()
 {
@@ -220,10 +204,8 @@ PikiState* Piki::getPikiState()
 	return static_cast<PikiState*>(getCurrState());
 }
 
-/*
- * --INFO--
- * Address:	800C6B00
- * Size:	00035C
+/**
+ * @TODO: Documentation
  */
 int Piki::findRoute(int sourceWaypointIndex, int destWaypointIndex, bool isRetryAttempt, bool useAsynchronous)
 {
@@ -342,10 +324,8 @@ bool Piki::initRouteTraceDynamic(Creature* target)
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	800C6E5C
- * Size:	0001CC
+/**
+ * @TODO: Documentation
  */
 int Piki::moveRouteTraceDynamic(f32 p1)
 {
@@ -376,10 +356,8 @@ int Piki::moveRouteTraceDynamic(f32 p1)
 	return 2;
 }
 
-/*
- * --INFO--
- * Address:	800C7028
- * Size:	0004C0
+/**
+ * @TODO: Documentation
  */
 bool Piki::initRouteTrace(immut Vector3f& targetPos, bool p2)
 {
@@ -457,10 +435,8 @@ bool Piki::initRouteTrace(immut Vector3f& targetPos, bool p2)
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	800C74E8
- * Size:	000700
+/**
+ * @TODO: Documentation
  */
 int Piki::moveRouteTrace(f32 speedRatio)
 {
@@ -570,10 +546,8 @@ int Piki::moveRouteTrace(f32 speedRatio)
 	return 2;
 }
 
-/*
- * --INFO--
- * Address:	800C7BE8
- * Size:	0000B8
+/**
+ * @TODO: Documentation
  */
 Vector3f Piki::crGetPoint(int routePointIdx)
 {
@@ -594,10 +568,8 @@ Vector3f Piki::crGetPoint(int routePointIdx)
 	return wp->mPosition;
 }
 
-/*
- * --INFO--
- * Address:	800C7CA0
- * Size:	000068
+/**
+ * @TODO: Documentation
  */
 bool Piki::crPointOpen(int routePointIdx)
 {
@@ -614,10 +586,8 @@ bool Piki::crPointOpen(int routePointIdx)
 	return wp->mIsOpen;
 }
 
-/*
- * --INFO--
- * Address:	800C7D08
- * Size:	000060
+/**
+ * @TODO: Documentation
  */
 f32 Piki::crGetRadius(int routePointIdx)
 {
@@ -632,10 +602,8 @@ f32 Piki::crGetRadius(int routePointIdx)
 	return routeMgr->getWayPoint('test', mPathBuffers[routePointIdx].mWayPointIdx)->mRadius;
 }
 
-/*
- * --INFO--
- * Address:	800C7D68
- * Size:	000108
+/**
+ * @TODO: Documentation
  */
 void Piki::crMakeRefs()
 {
@@ -644,20 +612,16 @@ void Piki::crMakeRefs()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800C7E70
- * Size:	00001C
+/**
+ * @TODO: Documentation
  */
 bool Piki::hasBomb()
 {
 	return isHolding();
 }
 
-/*
- * --INFO--
- * Address:	800C7E8C
- * Size:	000090
+/**
+ * @TODO: Documentation
  */
 void Piki::startFire()
 {
@@ -685,10 +649,8 @@ void Piki::updateFire()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800C7F1C
- * Size:	000064
+/**
+ * @TODO: Documentation
  */
 void Piki::endFire()
 {
@@ -698,10 +660,8 @@ void Piki::endFire()
 	effectMgr->create(EffectMgr::EFF_Piki_FireRecover, mEffectPos, nullptr, nullptr);
 }
 
-/*
- * --INFO--
- * Address:	800C7F80
- * Size:	00013C
+/**
+ * @TODO: Documentation
  */
 bool Piki::isTeki(Piki* target)
 {
@@ -723,10 +683,8 @@ bool Piki::isTeki(Piki* target)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800C80BC
- * Size:	000404
+/**
+ * @TODO: Documentation
  */
 void Piki::actOnSituaton()
 {
@@ -861,10 +819,8 @@ int Piki::getNaviID()
 	return -1;
 }
 
-/*
- * --INFO--
- * Address:	800C84C8
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 bool Piki::doDoAI()
 {
@@ -881,10 +837,8 @@ bool Piki::doDoAI()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800C8514
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 bool Piki::isRopable()
 {
@@ -895,20 +849,16 @@ bool Piki::isRopable()
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	800C8538
- * Size:	00001C
+/**
+ * @TODO: Documentation
  */
 Vector3f Piki::getCatchPos(Creature*)
 {
 	return mCatchPos;
 }
 
-/*
- * --INFO--
- * Address:	800C8554
- * Size:	00000C
+/**
+ * @TODO: Documentation
  */
 int Piki::getState()
 {
@@ -925,20 +875,16 @@ int Piki::getLastState()
 	return mFSM->getLastStateID();
 }
 
-/*
- * --INFO--
- * Address:	800C8560
- * Size:	000018
+/**
+ * @TODO: Documentation
  */
 bool Piki::isBuried()
 {
 	return getState() == PIKISTATE_Bury;
 }
 
-/*
- * --INFO--
- * Address:	800C8578
- * Size:	001300
+/**
+ * @TODO: Documentation
  */
 int Piki::graspSituation(Creature** outTarget)
 {
@@ -1298,10 +1244,8 @@ int Piki::graspSituation(Creature** outTarget)
 	return sitchID;
 }
 
-/*
- * --INFO--
- * Address:	800C9878
- * Size:	0000D8
+/**
+ * @TODO: Documentation
  */
 void Piki::initColor(int color)
 {
@@ -1329,20 +1273,16 @@ void Piki::initColor(int color)
 	mColourBlendRatio                      = 1.0f;
 }
 
-/*
- * --INFO--
- * Address:	800C9950
- * Size:	000030
+/**
+ * @TODO: Documentation
  */
 void Piki::startKinoko()
 {
 	changeShape(PIKI_Kinoko);
 }
 
-/*
- * --INFO--
- * Address:	800C9980
- * Size:	000050
+/**
+ * @TODO: Documentation
  */
 void Piki::endKinoko()
 {
@@ -1351,10 +1291,8 @@ void Piki::endKinoko()
 	setColor(mColor);
 }
 
-/*
- * --INFO--
- * Address:	800C99D0
- * Size:	000098
+/**
+ * @TODO: Documentation
  */
 void Piki::setColor(int color)
 {
@@ -1370,10 +1308,8 @@ void Piki::setColor(int color)
 	mColourBlendRatio  = 0.0f;
 }
 
-/*
- * --INFO--
- * Address:	800C9A68
- * Size:	00009C
+/**
+ * @TODO: Documentation
  */
 void Piki::setPastel()
 {
@@ -1389,20 +1325,16 @@ void Piki::setPastel()
 	mColourBlendRatio  = 0.0f;
 }
 
-/*
- * --INFO--
- * Address:	800C9B04
- * Size:	000098
+/**
+ * @TODO: Documentation
  */
 void Piki::unsetPastel()
 {
 	setColor(mColor);
 }
 
-/*
- * --INFO--
- * Address:	800C9B9C
- * Size:	0001A8
+/**
+ * @TODO: Documentation
  */
 void Piki::updateColor()
 {
@@ -1419,10 +1351,8 @@ void Piki::updateColor()
 	mStartBlendColour.lerpTo(mTargetBlendColour, mColourBlendRatio, mCurrentColour);
 }
 
-/*
- * --INFO--
- * Address:	800C9D44
- * Size:	000078
+/**
+ * @TODO: Documentation
  */
 bool Piki::needShadow()
 {
@@ -1439,10 +1369,8 @@ bool Piki::needShadow()
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	800C9DBC
- * Size:	000028
+/**
+ * @TODO: Documentation
  */
 bool Piki::isFixed()
 {
@@ -1453,10 +1381,8 @@ bool Piki::isFixed()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800C9DE4
- * Size:	000098
+/**
+ * @TODO: Documentation
  */
 void Piki::sendMsg(Msg* msg)
 {
@@ -1470,10 +1396,8 @@ void Piki::sendMsg(Msg* msg)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800C9EB8
- * Size:	000074
+/**
+ * @TODO: Documentation
  */
 bool Piki::stimulate(immut Interaction& interaction)
 {
@@ -1484,10 +1408,8 @@ bool Piki::stimulate(immut Interaction& interaction)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800C9F2C
- * Size:	000074
+/**
+ * @TODO: Documentation
  */
 int Piki::getFormationPri()
 {
@@ -1511,10 +1433,8 @@ int Piki::getFormationPri()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800C9FA0
- * Size:	00008C
+/**
+ * @TODO: Documentation
  */
 void Piki::startDamage()
 {
@@ -1534,10 +1454,8 @@ void Piki::startDamage()
 	mFSM->resume(this);
 }
 
-/*
- * --INFO--
- * Address:	800CA030
- * Size:	0000DC
+/**
+ * @TODO: Documentation
  */
 void Piki::finishDamage()
 {
@@ -1562,10 +1480,8 @@ void Piki::finishDamage()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800CA110
- * Size:	0000DC
+/**
+ * @TODO: Documentation
  */
 void Piki::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
@@ -1593,10 +1509,8 @@ void Piki::birthBuried()
 	mFSM->transit(this, PIKISTATE_Grow);
 }
 
-/*
- * --INFO--
- * Address:	800CA1EC
- * Size:	000064
+/**
+ * @TODO: Documentation
  */
 bool Piki::isAtari()
 {
@@ -1610,10 +1524,8 @@ bool Piki::isAtari()
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	800CA250
- * Size:	0000B8
+/**
+ * @TODO: Documentation
  */
 bool Piki::ignoreAtari(Creature* target)
 {
@@ -1643,20 +1555,16 @@ bool Piki::ignoreAtari(Creature* target)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800CA308
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 bool Piki::needFlick(Creature*)
 {
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	800CA310
- * Size:	000110
+/**
+ * @TODO: Documentation
  */
 bool Piki::isVisible()
 {
@@ -1692,10 +1600,8 @@ bool Piki::isTamable()
 	return !isDamaged() && state == PIKISTATE_Normal;
 }
 
-/*
- * --INFO--
- * Address:	800CA420
- * Size:	0000C4
+/**
+ * @TODO: Documentation
  */
 bool Piki::isThrowable()
 {
@@ -1740,10 +1646,8 @@ void Piki::growup()
 	mFSM->transit(this, PIKISTATE_UNUSED32); // ooooo
 }
 
-/*
- * --INFO--
- * Address:	800CA4E4
- * Size:	000044
+/**
+ * @TODO: Documentation
  */
 void Piki::offwallCallback(DynCollObject* wall)
 {
@@ -1752,10 +1656,8 @@ void Piki::offwallCallback(DynCollObject* wall)
 	sendMsg(&msg);
 }
 
-/*
- * --INFO--
- * Address:	800CA528
- * Size:	000058
+/**
+ * @TODO: Documentation
  */
 void Piki::wallCallback(immut Plane& wallPlane, DynCollObject* wall)
 {
@@ -1767,19 +1669,15 @@ void Piki::wallCallback(immut Plane& wallPlane, DynCollObject* wall)
 	sendMsg(&msg);
 }
 
-/*
- * --INFO--
- * Address:	800CA580
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void Piki::jumpCallback()
 {
 }
 
-/*
- * --INFO--
- * Address:	800CA584
- * Size:	000080
+/**
+ * @TODO: Documentation
  */
 bool Piki::platAttachable()
 {
@@ -1802,10 +1700,8 @@ bool Piki::platAttachable()
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	800CA604
- * Size:	0000E0
+/**
+ * @TODO: Documentation
  */
 bool Piki::mayIstick()
 {
@@ -1843,10 +1739,8 @@ bool Piki::mayIstick()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800CA6E4
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 void Piki::stickToCallback(Creature*)
 {
@@ -1854,10 +1748,8 @@ void Piki::stickToCallback(Creature*)
 	sendMsg(&msg);
 }
 
-/*
- * --INFO--
- * Address:	800CA71C
- * Size:	0002BC
+/**
+ * @TODO: Documentation
  */
 void Piki::bounceCallback()
 {
@@ -1908,10 +1800,8 @@ void Piki::bounceCallback()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800CA9D8
- * Size:	000234
+/**
+ * @TODO: Documentation
  */
 void Piki::startMotion(immut PaniMotionInfo& motion1, immut PaniMotionInfo& motion2)
 {
@@ -2004,10 +1894,8 @@ void Piki::startMotion(immut PaniMotionInfo& motion1, immut PaniMotionInfo& moti
 	STACK_PAD_VAR(2); // idk what this is from
 }
 
-/*
- * --INFO--
- * Address:	800CAC0C
- * Size:	000048
+/**
+ * @TODO: Documentation
  */
 void Piki::enableMotionBlend()
 {
@@ -2044,10 +1932,8 @@ void Piki::swapMotion(immut PaniMotionInfo& motion1, immut PaniMotionInfo& motio
 	}
 }
 
-/*
- * --INFO--
- * Address:	800CAC54
- * Size:	000190
+/**
+ * @TODO: Documentation
  */
 void Piki::checkBridgeWall(Creature* object, immut Vector3f& direction)
 {
@@ -2082,10 +1968,8 @@ void Piki::checkBridgeWall(Creature* object, immut Vector3f& direction)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800CADE4
- * Size:	000B78
+/**
+ * @TODO: Documentation
  */
 void Piki::collisionCallback(immut CollEvent& event)
 {
@@ -2289,10 +2173,8 @@ void Piki::collisionCallback(immut CollEvent& event)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800CB964
- * Size:	000400
+/**
+ * @TODO: Documentation
  */
 Piki::Piki(CreatureProp* prop)
     : Creature(prop)
@@ -2345,10 +2227,8 @@ void Piki::setSpeed(f32 speedRatio)
 	mMoveSpeed = (max - min) * speedRatio + min;
 }
 
-/*
- * --INFO--
- * Address:	800CBD64
- * Size:	000074
+/**
+ * @TODO: Documentation
  */
 f32 Piki::getSpeed(f32 speedRatio)
 {
@@ -2365,10 +2245,8 @@ f32 Piki::getSpeed(f32 speedRatio)
 	return (max - min) * speedRatio + min;
 }
 
-/*
- * --INFO--
- * Address:	800CBDD8
- * Size:	0000C4
+/**
+ * @TODO: Documentation
  */
 void Piki::setSpeed(f32 speedRatio, immut Vector3f& direction)
 {
@@ -2385,10 +2263,8 @@ void Piki::setSpeed(f32 speedRatio, immut Vector3f& direction)
 	mTargetVelocity = mMoveSpeed * direction;
 }
 
-/*
- * --INFO--
- * Address:	800CBE9C
- * Size:	0000DC
+/**
+ * @TODO: Documentation
  */
 void Piki::setSpeed(f32 speedRatio, f32 angle)
 {
@@ -2406,10 +2282,8 @@ void Piki::setSpeed(f32 speedRatio, f32 angle)
 	mTargetVelocity.set(mMoveSpeed * cosf(angle), 0.0f, mMoveSpeed * sinf(angle));
 }
 
-/*
- * --INFO--
- * Address:	800CBF78
- * Size:	000020
+/**
+ * @TODO: Documentation
  */
 f32 Piki::getSize()
 {
@@ -2419,10 +2293,8 @@ f32 Piki::getSize()
 	return mPikiSize;
 }
 
-/*
- * --INFO--
- * Address:	800CBF98
- * Size:	000044
+/**
+ * @TODO: Documentation
  */
 f32 Piki::getiMass()
 {
@@ -2436,10 +2308,8 @@ f32 Piki::getiMass()
 	return pikiMgr->mPikiParms->mPikiParms.mInvMass();
 }
 
-/*
- * --INFO--
- * Address:	800CBFDC
- * Size:	000068
+/**
+ * @TODO: Documentation
  */
 void Piki::resetPosition(immut Vector3f& pos)
 {
@@ -2448,10 +2318,8 @@ void Piki::resetPosition(immut Vector3f& pos)
 	mEffectPos = pos;
 }
 
-/*
- * --INFO--
- * Address:	800CC044
- * Size:	0002EC
+/**
+ * @TODO: Documentation
  */
 void Piki::init(Navi* navi)
 {
@@ -2523,10 +2391,8 @@ void Piki::init(Navi* navi)
 	mRouteTargetCreature   = nullptr;
 }
 
-/*
- * --INFO--
- * Address:	800CC334
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 bool Piki::isAlive()
 {
@@ -2538,20 +2404,16 @@ bool Piki::isAlive()
 	return Creature::isAlive();
 }
 
-/*
- * --INFO--
- * Address:	800CC36C
- * Size:	000014
+/**
+ * @TODO: Documentation
  */
 bool Piki::isFruit()
 {
 	return mHappa == Flower;
 }
 
-/*
- * --INFO--
- * Address:	800CC380
- * Size:	00034C
+/**
+ * @TODO: Documentation
  */
 void Piki::updateLookCreature()
 {
@@ -2609,10 +2471,8 @@ void Piki::updateLookCreature()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800CC6D4
- * Size:	000050
+/**
+ * @TODO: Documentation
  */
 void Piki::doAnimation()
 {
@@ -2621,10 +2481,8 @@ void Piki::doAnimation()
 	mPikiAnimMgr.updateAnimation(mMotionSpeed);
 }
 
-/*
- * --INFO--
- * Address:	800CC724
- * Size:	000448
+/**
+ * @TODO: Documentation
  */
 void Piki::updateWalkAnimation()
 {
@@ -2733,10 +2591,8 @@ void Piki::updateWalkAnimation()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800CCB6C
- * Size:	00053C
+/**
+ * @TODO: Documentation
  */
 
 int stupid_pikiRealAI()
@@ -2870,10 +2726,8 @@ immut char* Piki::getCurrentMotionName()
 	return mPikiAnimMgr.getUpperAnimator().getCurrentMotionName();
 }
 
-/*
- * --INFO--
- * Address:	800CD0E8
- * Size:	0000E4
+/**
+ * @TODO: Documentation
  */
 void Piki::doAI()
 {
@@ -2900,10 +2754,8 @@ void Piki::doAI()
 	_500.reset();
 }
 
-/*
- * --INFO--
- * Address:	800CD1CC
- * Size:	00024C
+/**
+ * @TODO: Documentation
  */
 void Piki::changeMode(int newMode, Navi* navi)
 {
@@ -3002,10 +2854,8 @@ static const char* _colorNames[PikiColorCount] = {
 	"yellow",
 };
 
-/*
- * --INFO--
- * Address:	800CD418
- * Size:	000250
+/**
+ * @TODO: Documentation
  */
 void Piki::dump()
 {

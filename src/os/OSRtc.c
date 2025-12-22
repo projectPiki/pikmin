@@ -68,10 +68,8 @@ static BOOL ReadSram(void* buffer)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801FA69C
- * Size:	000060
+/**
+ * @TODO: Documentation
  */
 static void WriteSramCallback(s32 channel, OSContext* context)
 {
@@ -81,10 +79,8 @@ static void WriteSramCallback(s32 channel, OSContext* context)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801FA6FC
- * Size:	000118
+/**
+ * @TODO: Documentation
  */
 static BOOL WriteSram(void* buffer, u32 offset, u32 size)
 {
@@ -111,10 +107,8 @@ static BOOL WriteSram(void* buffer, u32 offset, u32 size)
 	return !err;
 }
 
-/*
- * --INFO--
- * Address:	801FA814
- * Size:	000134
+/**
+ * @TODO: Documentation
  */
 void __OSInitSram(void)
 {
@@ -144,30 +138,24 @@ static void* LockSram(u32 offset)
 	return Scb.sram + offset;
 }
 
-/*
- * --INFO--
- * Address:	801FA948
- * Size:	00005C
+/**
+ * @TODO: Documentation
  */
 OSSram* __OSLockSram(void)
 {
 	return LockSram(0);
 }
 
-/*
- * --INFO--
- * Address:	801FA9A4
- * Size:	00005C
+/**
+ * @TODO: Documentation
  */
 OSSramEx* __OSLockSramEx(void)
 {
 	return LockSram(sizeof(OSSram));
 }
 
-/*
- * --INFO--
- * Address:	801FAA00
- * Size:	000308
+/**
+ * @TODO: Documentation
  */
 static BOOL UnlockSram(BOOL commit, u32 offset)
 {
@@ -206,30 +194,24 @@ static BOOL UnlockSram(BOOL commit, u32 offset)
 	return Scb.sync;
 }
 
-/*
- * --INFO--
- * Address:	801FAD08
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 BOOL __OSUnlockSram(BOOL commit)
 {
 	return UnlockSram(commit, 0);
 }
 
-/*
- * --INFO--
- * Address:	801FAD2C
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 BOOL __OSUnlockSramEx(BOOL commit)
 {
 	return UnlockSram(commit, sizeof(OSSram));
 }
 
-/*
- * --INFO--
- * Address:	801FAD50
- * Size:	000010
+/**
+ * @TODO: Documentation
  */
 BOOL __OSSyncSram(void)
 {
@@ -276,10 +258,8 @@ void __OSReadROMAsync(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801FAD60
- * Size:	000080
+/**
+ * @TODO: Documentation
  */
 u32 OSGetSoundMode(void)
 {
@@ -293,10 +273,8 @@ u32 OSGetSoundMode(void)
 	return mode;
 }
 
-/*
- * --INFO--
- * Address:	801FADE0
- * Size:	0000A4
+/**
+ * @TODO: Documentation
  */
 void OSSetSoundMode(u32 mode)
 {
@@ -317,10 +295,8 @@ void OSSetSoundMode(u32 mode)
 	__OSUnlockSram(TRUE);
 }
 
-/*
- * --INFO--
- * Address:	801FAE84
- * Size:	000080
+/**
+ * @TODO: Documentation
  */
 u32 OSGetProgressiveMode(void)
 {
@@ -339,10 +315,8 @@ u32 OSGetProgressiveMode(void)
 	return mode;
 }
 
-/*
- * --INFO--
- * Address:	801FAF04
- * Size:	0000A4
+/**
+ * @TODO: Documentation
  */
 void OSSetProgressiveMode(u32 mode)
 {

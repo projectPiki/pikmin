@@ -3,10 +3,8 @@
 static InterleaveBuffer interleavebuf;
 static InterleaveBuffer* buf = &interleavebuf;
 
-/*
- * --INFO--
- * Address:	8001DA80
- * Size:	000090
+/**
+ * @TODO: Documentation
  */
 BOOL Jac_SendStreamData(u8* data, u32 size)
 {
@@ -24,20 +22,16 @@ BOOL Jac_SendStreamData(u8* data, u32 size)
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	8001DB20
- * Size:	000020
+/**
+ * @TODO: Documentation
  */
 BOOL Jac_CheckStreamFree(u32 size)
 {
 	return (buf->streamFree >= size) ? TRUE : FALSE;
 }
 
-/*
- * --INFO--
- * Address:	8001DB40
- * Size:	000020
+/**
+ * @TODO: Documentation
  */
 BOOL Jac_CheckStreamRemain(u32 size)
 {
@@ -54,10 +48,8 @@ u32 Jac_GetStreamRemain()
 	return buf->streamRemain;
 }
 
-/*
- * --INFO--
- * Address:	8001DB60
- * Size:	0000C0
+/**
+ * @TODO: Documentation
  */
 u32 Jac_GetStreamData(u8* data, u32 size)
 {
@@ -81,10 +73,8 @@ u32 Jac_GetStreamData(u8* data, u32 size)
 	return size;
 }
 
-/*
- * --INFO--
- * Address:	8001DC20
- * Size:	000044
+/**
+ * @TODO: Documentation
  */
 void Jac_InitStreamData(u8* data, u32 size)
 {

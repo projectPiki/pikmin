@@ -18,10 +18,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("TAIAmotion")
 
-/*
- * --INFO--
- * Address:	801ACC54
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 TAIAmotion::TAIAmotion(int nextState, int motionID)
     : TaiAction(nextState)
@@ -29,20 +27,16 @@ TAIAmotion::TAIAmotion(int nextState, int motionID)
 	mMotionID = motionID;
 }
 
-/*
- * --INFO--
- * Address:	801ACC78
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 void TAIAmotion::start(Teki& teki)
 {
 	teki.mTekiAnimator->startMotion(PaniMotionInfo(mMotionID, &teki));
 }
 
-/*
- * --INFO--
- * Address:	801ACCC4
- * Size:	00001C
+/**
+ * @TODO: Documentation
  */
 bool TAIAmotion::act(Teki& teki)
 {
@@ -53,10 +47,8 @@ bool TAIAmotion::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	801ACCE0
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 TAIAreserveMotion::TAIAreserveMotion(int nextState, int motionID)
     : TaiAction(nextState)
@@ -64,10 +56,8 @@ TAIAreserveMotion::TAIAreserveMotion(int nextState, int motionID)
 	mMotionID = motionID;
 }
 
-/*
- * --INFO--
- * Address:	801ACD04
- * Size:	0001B4
+/**
+ * @TODO: Documentation
  */
 void TAIAreserveMotion::start(Teki& teki)
 {
@@ -97,10 +87,8 @@ void TAIAreserveMotion::start(Teki& teki)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801ACEB8
- * Size:	000088
+/**
+ * @TODO: Documentation
  */
 bool TAIAreserveMotion::act(Teki& teki)
 {
@@ -116,10 +104,8 @@ bool TAIAreserveMotion::act(Teki& teki)
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	801ACF40
- * Size:	000034
+/**
+ * @TODO: Documentation
  */
 void TAIAmotionLoop::start(Teki& teki)
 {
@@ -127,10 +113,8 @@ void TAIAmotionLoop::start(Teki& teki)
 	teki.setFrameCounter(0.0f);
 }
 
-/*
- * --INFO--
- * Address:	801ACF74
- * Size:	000118
+/**
+ * @TODO: Documentation
  */
 bool TAIAmotionLoop::act(Teki& teki)
 {

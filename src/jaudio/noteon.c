@@ -6,10 +6,8 @@
 #include "jaudio/jammain_2.h"
 #include "jaudio/oneshot.h"
 
-/*
- * --INFO--
- * Address:	80013840
- * Size:	000394
+/**
+ * @TODO: Documentation
  */
 s32 NoteON(seqp_* track, s32 channel, s32 flag1, s32 flag2, s32 playFlag)
 {
@@ -116,10 +114,8 @@ s32 NoteON(seqp_* track, s32 channel, s32 flag1, s32 flag2, s32 playFlag)
 	s32* REF_channel = &channel;
 }
 
-/*
- * --INFO--
- * Address:	80013BE0
- * Size:	000090
+/**
+ * @TODO: Documentation
  */
 s32 NoteOFF_R(seqp_* track, u8 param_2, u16 param_3)
 {
@@ -142,20 +138,16 @@ s32 NoteOFF_R(seqp_* track, u8 param_2, u16 param_3)
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80013C80
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 s32 NoteOFF(seqp_* track, u8 param_2)
 {
 	return NoteOFF_R(track, param_2, 0);
 }
 
-/*
- * --INFO--
- * Address:	80013CC0
- * Size:	000058
+/**
+ * @TODO: Documentation
  */
 s32 GateON(seqp_* track, s32 channelId, s32 key, s32 velocity, s32 playId)
 {
@@ -179,10 +171,8 @@ void ProgramChange(s32 chan)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80013D20
- * Size:	000064
+/**
+ * @TODO: Documentation
  */
 BOOL CheckNoteStop(seqp_* track, s32 param_2)
 {

@@ -11,10 +11,8 @@
 #define DATA_SCRAMBLE_R(data) (~(data ^ (data >> 7) ^ (data >> 15) ^ (data >> 23)))
 #define DATA_SCRAMBLE_L(data) (~(data ^ (data << 7) ^ (data << 15) ^ (data << 23)))
 
-/*
- * --INFO--
- * Address:	80008BE0
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 static u32 exnor_1st(u32 data, u32 rshift)
 {
@@ -24,10 +22,8 @@ static u32 exnor_1st(u32 data, u32 rshift)
 	return data;
 }
 
-/*
- * --INFO--
- * Address:	80008C20
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 static u32 exnor(u32 data, u32 lshift)
 {
@@ -37,10 +33,8 @@ static u32 exnor(u32 data, u32 lshift)
 	return data;
 }
 
-/*
- * --INFO--
- * Address:	80008C60
- * Size:	00007C
+/**
+ * @TODO: Documentation
  */
 static u32 bitrev(u32 data)
 {
@@ -66,10 +60,8 @@ static u32 bitrev(u32 data)
 	return wk;
 }
 
-/*
- * --INFO--
- * Address:	80008CE0
- * Size:	00017C
+/**
+ * @TODO: Documentation
  */
 static s32 ReadArrayUnlock(s32 chan, u32 data, void* rbuf, s32 length, BOOL mode)
 {
@@ -101,10 +93,8 @@ static s32 ReadArrayUnlock(s32 chan, u32 data, void* rbuf, s32 length, BOOL mode
 	return err ? CARD_RESULT_NOCARD : CARD_RESULT_READY;
 }
 
-/*
- * --INFO--
- * Address:	80008E60
- * Size:	000044
+/**
+ * @TODO: Documentation
  */
 static u32 GetInitVal()
 {
@@ -115,10 +105,8 @@ static u32 GetInitVal()
 	return val;
 }
 
-/*
- * --INFO--
- * Address:	80008EC0
- * Size:	00008C
+/**
+ * @TODO: Documentation
  */
 static u32 DummyLen()
 {
@@ -140,10 +128,8 @@ static u32 DummyLen()
 static void InitCallback(void* dspTask);
 static void DoneCallback(void* dspTask);
 
-/*
- * --INFO--
- * Address:	80008F60
- * Size:	0002B0
+/**
+ * @TODO: Documentation
  */
 int __CARDUnlock(int chan, u8 flashID[12])
 {
@@ -250,10 +236,8 @@ static void InitCallback(void* dspTask)
 {
 }
 
-/*
- * --INFO--
- * Address:	80009220
- * Size:	0001E0
+/**
+ * @TODO: Documentation
  */
 static void DoneCallback(void* dspTask)
 {

@@ -18,20 +18,16 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT(nullptr)
 
-/*
- * --INFO--
- * Address:	801E9654
- * Size:	000064
+/**
+ * @TODO: Documentation
  */
 YaiStrategy::YaiStrategy(int stateCount, int stateID)
 {
 	init(stateCount, stateID);
 }
 
-/*
- * --INFO--
- * Address:	801E96B8
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 void YaiStrategy::init(int stateCount, int stateID)
 {
@@ -40,10 +36,8 @@ void YaiStrategy::init(int stateCount, int stateID)
 	mStateID    = stateID;
 }
 
-/*
- * --INFO--
- * Address:	801E9704
- * Size:	000044
+/**
+ * @TODO: Documentation
  */
 void YaiStrategy::start(Teki& teki)
 {
@@ -51,10 +45,8 @@ void YaiStrategy::start(Teki& teki)
 	mStateList[teki.mStateID]->start(teki);
 }
 
-/*
- * --INFO--
- * Address:	801E9748
- * Size:	0000AC
+/**
+ * @TODO: Documentation
  */
 void YaiStrategy::act(Teki& teki)
 {
@@ -66,10 +58,8 @@ void YaiStrategy::act(Teki& teki)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801E97F4
- * Size:	0000AC
+/**
+ * @TODO: Documentation
  */
 void YaiStrategy::eventPerformed(immut TekiEvent& event)
 {
@@ -81,10 +71,8 @@ void YaiStrategy::eventPerformed(immut TekiEvent& event)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801E98A0
- * Size:	000020
+/**
+ * @TODO: Documentation
  */
 void YaiStrategy::draw(Teki& teki, Graphics& gfx)
 {

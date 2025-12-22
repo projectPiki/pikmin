@@ -30,10 +30,8 @@ void CullFrustum::vectorToWorldPlane(immut Vector3f& vec, CullingPlane& worldPla
 	worldPlane.mPlane.mOffset = worldPlane.mPlane.mNormal.dot(mPosition);
 }
 
-/*
- * --INFO--
- * Address:	80041584
- * Size:	00006C
+/**
+ * @TODO: Documentation
  */
 bool CullFrustum::isPointVisible(immut Vector3f& point, f32 cutoff)
 {
@@ -47,10 +45,8 @@ bool CullFrustum::isPointVisible(immut Vector3f& point, f32 cutoff)
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	800415F0
- * Size:	000FBC
+/**
+ * @TODO: Documentation
  */
 void CullFrustum::draw(Graphics& gfx)
 {
@@ -182,10 +178,8 @@ void CullFrustum::draw(Graphics& gfx)
 	gfx.setLighting(prevLightSetting, nullptr);
 }
 
-/*
- * --INFO--
- * Address:	800425AC
- * Size:	00046C
+/**
+ * @TODO: Documentation
  */
 void CullFrustum::updateViewPlanes(f32 leftScale, f32 rightScale, f32 bottomScale, f32 topScale)
 {
@@ -226,10 +220,8 @@ void CullFrustum::updateViewPlanes(f32 leftScale, f32 rightScale, f32 bottomScal
 	mTotalPlaneCount = &planes[4] - mCullPlanes;
 }
 
-/*
- * --INFO--
- * Address:	80042A18
- * Size:	00023C
+/**
+ * @TODO: Documentation
  */
 void CullFrustum::createViewPlanes()
 {
@@ -306,10 +298,8 @@ void CullFrustum::createInvVecs()
 	mInvZAxis.z = -mLookAtMtx.mMtx[2][2];
 }
 
-/*
- * --INFO--
- * Address:	80042C54
- * Size:	000150
+/**
+ * @TODO: Documentation
  */
 void CullFrustum::update(f32 aspectRatio, f32 fov, f32 near, f32 far)
 {
@@ -332,10 +322,8 @@ void CullFrustum::update(f32 aspectRatio, f32 fov, f32 near, f32 far)
 	mBoundOffset.set(0.0f, 0.0f, 0.0f);
 }
 
-/*
- * --INFO--
- * Address:	80042DA4
- * Size:	000268
+/**
+ * @TODO: Documentation
  */
 void CullFrustum::calcVectors(immut Vector3f& eyePos, immut Vector3f& targetPos)
 {
@@ -369,10 +357,8 @@ void CullFrustum::calcVectors(immut Vector3f& eyePos, immut Vector3f& targetPos)
 	update(1.0f, mFov, mNear, mFar);
 }
 
-/*
- * --INFO--
- * Address:	8004300C
- * Size:	00003C
+/**
+ * @TODO: Documentation
  */
 void CullFrustum::calcLookAt(immut Vector3f& p1, immut Vector3f& p2, immut Vector3f* p3)
 {
@@ -400,10 +386,8 @@ void Camera::camReflect(Camera&, Plane&)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80043048
- * Size:	00017C
+/**
+ * @TODO: Documentation
  */
 f32 Camera::projectWorldPoint(Graphics& gfx, Vector3f& point)
 {
@@ -438,10 +422,8 @@ f32 Camera::projectCamPoint(Vector3f&)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	800431C4
- * Size:	000150
+/**
+ * @TODO: Documentation
  */
 Camera::Camera()
 {
@@ -451,10 +433,8 @@ Camera::Camera()
 	mBlur        = 110.0f;
 }
 
-/*
- * --INFO--
- * Address:	80043314
- * Size:	0000D0
+/**
+ * @TODO: Documentation
  */
 void LightCamera::initLightmap(int size, int texFmt)
 {
@@ -467,10 +447,8 @@ void LightCamera::initLightmap(int size, int texFmt)
 	gsys->addTexture(mLightMap, "internalLightmap");
 }
 
-/*
- * --INFO--
- * Address:	800433E4
- * Size:	000508
+/**
+ * @TODO: Documentation
  */
 void LightCamera::calcProjection(Graphics& gfx, bool p2, Node* p3)
 {

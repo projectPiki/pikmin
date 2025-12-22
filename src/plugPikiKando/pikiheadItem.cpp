@@ -25,10 +25,8 @@ DEFINE_ERROR(22)
  */
 DEFINE_PRINT("pikiheadItem")
 
-/*
- * --INFO--
- * Address:	800EC4C8
- * Size:	000060
+/**
+ * @TODO: Documentation
  */
 void PikiHeadItem::startWaterEffect()
 {
@@ -36,20 +34,16 @@ void PikiHeadItem::startWaterEffect()
 	mRippleEfx->emit(parm);
 }
 
-/*
- * --INFO--
- * Address:	800EC528
- * Size:	000030
+/**
+ * @TODO: Documentation
  */
 void PikiHeadItem::finishWaterEffect()
 {
 	mRippleEfx->kill();
 }
 
-/*
- * --INFO--
- * Address:	800EC558
- * Size:	000074
+/**
+ * @TODO: Documentation
  */
 void PikiHeadItem::playSound(int id)
 {
@@ -67,10 +61,8 @@ void PikiHeadItem::playSound(int id)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800EC5CC
- * Size:	000058
+/**
+ * @TODO: Documentation
  */
 bool PikiHeadItem::canPullout()
 {
@@ -82,20 +74,16 @@ bool PikiHeadItem::canPullout()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800EC624
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 bool PikiHeadItem::isVisible()
 {
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	800EC62C
- * Size:	000068
+/**
+ * @TODO: Documentation
  */
 bool PikiHeadItem::needShadow()
 {
@@ -107,20 +95,16 @@ bool PikiHeadItem::needShadow()
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	800EC694
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 bool PikiHeadItem::isAlive()
 {
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	800EC69C
- * Size:	00018C
+/**
+ * @TODO: Documentation
  */
 PikiHeadItem::PikiHeadItem(CreatureProp* props, ItemShapeObject* shape, SimpleAI* ai)
     : ItemCreature(15, props, nullptr)
@@ -134,10 +118,8 @@ PikiHeadItem::PikiHeadItem(CreatureProp* props, ItemShapeObject* shape, SimpleAI
 	mRippleEfx       = new RippleEffect;
 }
 
-/*
- * --INFO--
- * Address:	800EC828
- * Size:	000150
+/**
+ * @TODO: Documentation
  */
 void PikiHeadItem::startAI(int)
 {
@@ -164,10 +146,8 @@ void PikiHeadItem::startAI(int)
 	mFreeLightEfx->emit(parm);
 }
 
-/*
- * --INFO--
- * Address:	800EC978
- * Size:	00008C
+/**
+ * @TODO: Documentation
  */
 void PikiHeadItem::setPermanentEffects(bool set)
 {
@@ -180,10 +160,8 @@ void PikiHeadItem::setPermanentEffects(bool set)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800ECA04
- * Size:	00008C
+/**
+ * @TODO: Documentation
  */
 void PikiHeadItem::doKill()
 {
@@ -195,40 +173,32 @@ void PikiHeadItem::doKill()
 	_3E4.kill();
 }
 
-/*
- * --INFO--
- * Address:	800ECA90
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 f32 PikiHeadItem::getSize()
 {
 	return 5.0f;
 }
 
-/*
- * --INFO--
- * Address:	800ECA98
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 f32 PikiHeadItem::getiMass()
 {
 	return 50.0f;
 }
 
-/*
- * --INFO--
- * Address:	800ECAA0
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 void PikiHeadItem::setColor(int color)
 {
 	mSeedColor = color;
 }
 
-/*
- * --INFO--
- * Address:	800ECAA8
- * Size:	00054C
+/**
+ * @TODO: Documentation
  */
 void PikiHeadItem::refresh(Graphics& gfx)
 {
@@ -284,10 +254,8 @@ void PikiHeadItem::refresh(Graphics& gfx)
 	pikiMgr->mLeafModel[mFlowerStage]->drawshape(gfx, *gfx.mCamera, nullptr);
 }
 
-/*
- * --INFO--
- * Address:	800ECFF4
- * Size:	000108
+/**
+ * @TODO: Documentation
  */
 bool PikiHeadItem::interactBikkuri(immut InteractBikkuri& act)
 {
@@ -313,10 +281,8 @@ bool PikiHeadItem::interactBikkuri(immut InteractBikkuri& act)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800ED0FC
- * Size:	000100
+/**
+ * @TODO: Documentation
  */
 bool PikiHeadItem::interactSwallow(immut InteractSwallow& act)
 {

@@ -416,10 +416,8 @@ void DayMgr::updateComponent(Menu& menu, immut char* name, int* valuePtr)
 	sprintf(menu.mCurrentItem->mName, "%s = %d", name, *valuePtr);
 }
 
-/*
- * --INFO--
- * Address:	8006B3FC
- * Size:	00005C
+/**
+ * @TODO: Documentation
  */
 void DayMgr::menuBIncrease(Menu& menu)
 {
@@ -429,10 +427,8 @@ void DayMgr::menuBIncrease(Menu& menu)
 	updateComponent(menu, "Blur", &mMapMgr->mBlur);
 }
 
-/*
- * --INFO--
- * Address:	8006B458
- * Size:	00005C
+/**
+ * @TODO: Documentation
  */
 void DayMgr::menuBDecrease(Menu& menu)
 {
@@ -442,10 +438,8 @@ void DayMgr::menuBDecrease(Menu& menu)
 	updateComponent(menu, "Blur", &mMapMgr->mBlur);
 }
 
-/*
- * --INFO--
- * Address:	8006B4B4
- * Size:	001B80
+/**
+ * @TODO: Documentation
  */
 DayMgr::DayMgr(MapMgr* map, Controller* control)
 {
@@ -513,10 +507,8 @@ void DayMgr::updateLightCount(Menu& menu)
 	sprintf(menu.mCurrentItem->mName, "Light Count %d", mLightCount);
 }
 
-/*
- * --INFO--
- * Address:	8006E3A4
- * Size:	000058
+/**
+ * @TODO: Documentation
  */
 void DayMgr::menuIncreaseLights(Menu& menu)
 {
@@ -528,10 +520,8 @@ void DayMgr::menuIncreaseLights(Menu& menu)
 	updateLightCount(menu);
 }
 
-/*
- * --INFO--
- * Address:	8006E3FC
- * Size:	000058
+/**
+ * @TODO: Documentation
  */
 void DayMgr::menuDecreaseLights(Menu& menu)
 {
@@ -553,10 +543,8 @@ void DayMgr::updateTime(Menu& menu)
 	sprintf(menu.mCurrentItem->mName, "Time : % 2.1f", gameflow.mWorldClock.mTimeOfDay);
 }
 
-/*
- * --INFO--
- * Address:	8006E454
- * Size:	000084
+/**
+ * @TODO: Documentation
  */
 void DayMgr::menuIncreaseTime(Menu& menu)
 {
@@ -569,10 +557,8 @@ void DayMgr::menuIncreaseTime(Menu& menu)
 	updateTime(menu);
 }
 
-/*
- * --INFO--
- * Address:	8006E4D8
- * Size:	000084
+/**
+ * @TODO: Documentation
  */
 void DayMgr::menuDecreaseTime(Menu& menu)
 {
@@ -585,10 +571,8 @@ void DayMgr::menuDecreaseTime(Menu& menu)
 	updateTime(menu);
 }
 
-/*
- * --INFO--
- * Address:	8006E55C
- * Size:	000A38
+/**
+ * @TODO: Documentation
  */
 void DayMgr::refresh(Graphics& gfx, f32 time, int p2)
 {
@@ -706,20 +690,16 @@ void DayMgr::refresh(Graphics& gfx, f32 time, int p2)
 	setFog(gfx, nullptr);
 }
 
-/*
- * --INFO--
- * Address:	8006EF94
- * Size:	000054
+/**
+ * @TODO: Documentation
  */
 void DayMgr::setFog(Graphics& gfx, Colour* color)
 {
 	gfx.setFog(true, color ? *color : mCurrentTimeSetting.mFogColour, 1.0f, mCurrentTimeSetting.mFogNear, mCurrentTimeSetting.mFogFar);
 }
 
-/*
- * --INFO--
- * Address:	8006EFE8
- * Size:	000084
+/**
+ * @TODO: Documentation
  */
 void DayMgr::menuDumpSettings(Menu&)
 {
@@ -773,10 +753,8 @@ void DayMgr::menuDumpSettings(Menu&)
 	gsys->mTogglePrint = old;
 }
 
-/*
- * --INFO--
- * Address:	8006F06C
- * Size:	0008C0
+/**
+ * @TODO: Documentation
  */
 void DayMgr::init(CmdStream* stream)
 {

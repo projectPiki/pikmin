@@ -5,10 +5,8 @@
 extern void __RAS_OSDisableInterrupts_begin();
 extern void __RAS_OSDisableInterrupts_end();
 
-/*
- * --INFO--
- * Address:	801F7028
- * Size:	000124
+/**
+ * @TODO: Documentation
  */
 static ASM void __OSLoadFPUContext(register u32, register OSContext* fpuContext)
 {
@@ -95,10 +93,8 @@ _return:
 #endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address:	801F714C
- * Size:	000128
+/**
+ * @TODO: Documentation
  */
 static ASM void __OSSaveFPUContext(register u32, register u32, register OSContext* fpuContext)
 {
@@ -209,10 +205,8 @@ void OSSaveFPUContext(register OSContext* fpuContext)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801F7274
- * Size:	00005C
+/**
+ * @TODO: Documentation
  */
 ASM void OSSetCurrentContext(register OSContext* context) {
 #ifdef __MWERKS__ // clang-format off
@@ -250,20 +244,16 @@ _disableFPU:
 #endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address:	801F72D0
- * Size:	00000C
+/**
+ * @TODO: Documentation
  */
 OSContext* OSGetCurrentContext(void)
 {
 	return (OSContext*)__OSCurrentContext;
 }
 
-/*
- * --INFO--
- * Address:	801F72DC
- * Size:	000080
+/**
+ * @TODO: Documentation
  */
 ASM u32 OSSaveContext(register OSContext* context) {
 #ifdef __MWERKS__ // clang-format off
@@ -303,10 +293,8 @@ ASM u32 OSSaveContext(register OSContext* context) {
 #endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address:	801F735C
- * Size:	0000D8
+/**
+ * @TODO: Documentation
  */
 ASM void OSLoadContext(register OSContext* context)
 {
@@ -382,10 +370,8 @@ misc:
 #endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address:	801F7434
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 ASM u32 OSGetStackPointer(void) {
 #ifdef __MWERKS__ // clang-format off
@@ -415,10 +401,8 @@ int OSSwitchFiber(register u32 pc, register u32 newsp)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801F743C
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 void OSClearContext(OSContext* context)
 {
@@ -429,10 +413,8 @@ void OSClearContext(OSContext* context)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801F7460
- * Size:	0000BC
+/**
+ * @TODO: Documentation
  */
 ASM void OSInitContext(register OSContext* context, register u32 pc, register u32 newsp)
 {
@@ -495,10 +477,8 @@ ASM void OSInitContext(register OSContext* context, register u32 pc, register u3
 #endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address:	801F751C
- * Size:	0002A8
+/**
+ * @TODO: Documentation
  */
 void OSDumpContext(OSContext* context)
 {
@@ -550,10 +530,8 @@ void OSDumpContext(OSContext* context)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801F77C4
- * Size:	000084
+/**
+ * @TODO: Documentation
  */
 static ASM void OSSwitchFPUContext(register __OSException exception, register OSContext* context)
 {
@@ -597,10 +575,8 @@ _restoreAndExit:
 #endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address:	801F7848
- * Size:	000048
+/**
+ * @TODO: Documentation
  */
 void __OSContextInit(void)
 {

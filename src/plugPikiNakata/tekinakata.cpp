@@ -26,10 +26,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("tekinakata")
 
-/*
- * --INFO--
- * Address:	8014B124
- * Size:	000244
+/**
+ * @TODO: Documentation
  */
 void TekiNakata::makeTekiParameters(TekiMgr* mgr)
 {
@@ -54,10 +52,8 @@ void TekiNakata::makeTekiParameters(TekiMgr* mgr)
 	mgr->mTekiParams[TEKI_Namazu]  = new TaiCatfishParameters();
 }
 
-/*
- * --INFO--
- * Address:	8014B368
- * Size:	000690
+/**
+ * @TODO: Documentation
  */
 void TekiNakata::makeTekis(TekiMgr* mgr)
 {

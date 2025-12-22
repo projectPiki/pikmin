@@ -1,9 +1,7 @@
 #include "types.h"
 
-/*
- * --INFO--
- * Address:	80221F58
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 BOOL Hu_IsStub(void)
 {

@@ -3,20 +3,16 @@
 #include "Dolphin/hw_regs.h"
 #include "Dolphin/os.h"
 
-/*
- * --INFO--
- * Address:	80207E14
- * Size:	000010
+/**
+ * @TODO: Documentation
  */
 u32 DSPCheckMailToDSP()
 {
 	return __DSPRegs[DSP_MAILBOX_IN_HI] >> 0xF & 1;
 }
 
-/*
- * --INFO--
- * Address:	80207E24
- * Size:	000010
+/**
+ * @TODO: Documentation
  */
 u32 DSPCheckMailFromDSP(void)
 {
@@ -33,20 +29,16 @@ void DSPReadCPUToDSPMbox(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80207E34
- * Size:	000018
+/**
+ * @TODO: Documentation
  */
 u32 DSPReadMailFromDSP()
 {
 	return (__DSPRegs[DSP_MAILBOX_OUT_HI] << 0x10) | __DSPRegs[DSP_MAILBOX_OUT_LO];
 }
 
-/*
- * --INFO--
- * Address:	80207E4C
- * Size:	000014
+/**
+ * @TODO: Documentation
  */
 void DSPSendMailToDSP(u32 mail)
 {

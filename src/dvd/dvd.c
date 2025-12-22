@@ -64,10 +64,8 @@ static OSAlarm ResetAlarm;
 
 static BOOL DVDInitialized = FALSE;
 
-/*
- * --INFO--
- * Address:	801FF964
- * Size:	0000FC
+/**
+ * @TODO: Documentation
  */
 void DVDInit()
 {
@@ -99,10 +97,8 @@ void DVDInit()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801FFA60
- * Size:	000054
+/**
+ * @TODO: Documentation
  */
 static void stateReadingFST()
 {
@@ -111,10 +107,8 @@ static void stateReadingFST()
 	DVDLowRead(bootInfo->FSTLocation, OSRoundUp32B(((u32*)tmpBuffer)[2]), ((u32*)tmpBuffer)[1], cbForStateReadingFST);
 }
 
-/*
- * --INFO--
- * Address:	801FFAB4
- * Size:	000080
+/**
+ * @TODO: Documentation
  */
 static void cbForStateReadingFST(u32 p1)
 {
@@ -136,10 +130,8 @@ static void cbForStateReadingFST(u32 p1)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801FFB34
- * Size:	0000A8
+/**
+ * @TODO: Documentation
  */
 static void cbForStateError(u32 intType)
 {
@@ -179,10 +171,8 @@ static void stateError(u32 error)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801FFBDC
- * Size:	00009C
+/**
+ * @TODO: Documentation
  */
 static void stateTimeout()
 {
@@ -191,20 +181,16 @@ static void stateTimeout()
 	cbForStateError(0);
 }
 
-/*
- * --INFO--
- * Address:	801FFC78
- * Size:	000028
+/**
+ * @TODO: Documentation
  */
 static void stateGettingError()
 {
 	DVDLowRequestError(cbForStateGettingError);
 }
 
-/*
- * --INFO--
- * Address:	801FFCA0
- * Size:	0000B4
+/**
+ * @TODO: Documentation
  */
 static u32 CategorizeError(u32 error)
 {
@@ -267,10 +253,8 @@ static BOOL CheckCancel(u32 resume)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801FFD54
- * Size:	000294
+/**
+ * @TODO: Documentation
  */
 static void cbForStateGettingError(u32 intType)
 {
@@ -352,10 +336,8 @@ static void cbForStateGettingError(u32 intType)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801FFFE8
- * Size:	000068
+/**
+ * @TODO: Documentation
  */
 static void cbForUnrecoveredError(u32 p1)
 {
@@ -375,10 +357,8 @@ static void cbForUnrecoveredError(u32 p1)
 
 #pragma dont_inline on
 
-/*
- * --INFO--
- * Address:	80200050
- * Size:	000098
+/**
+ * @TODO: Documentation
  */
 void cbForUnrecoveredErrorRetry(u32 p1)
 {
@@ -451,20 +431,16 @@ void cbForUnrecoveredErrorRetry(u32 p1)
 
 #pragma dont_inline reset
 
-/*
- * --INFO--
- * Address:	802000E8
- * Size:	000028
+/**
+ * @TODO: Documentation
  */
 void stateGoToRetry()
 {
 	DVDLowStopMotor(cbForStateGoToRetry);
 }
 
-/*
- * --INFO--
- * Address:	80200110
- * Size:	000158
+/**
+ * @TODO: Documentation
  */
 void cbForStateGoToRetry(u32 p1)
 {
@@ -492,10 +468,8 @@ void cbForStateGoToRetry(u32 p1)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80200268
- * Size:	0000E4
+/**
+ * @TODO: Documentation
  */
 static void stateCheckID()
 {
@@ -522,30 +496,24 @@ static void stateCheckID()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8020034C
- * Size:	000034
+/**
+ * @TODO: Documentation
  */
 static void stateCheckID3(DVDCommandBlock* cmdBlock)
 {
 	DVDLowAudioBufferConfig(currID->streaming, 10, cbForStateCheckID3);
 }
 
-/*
- * --INFO--
- * Address:	80200380
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 static void stateCheckID2(DVDCommandBlock* block)
 {
 	DVDLowRead(tmpBuffer, OSRoundUp32B(sizeof(DVDBB2)), 0x420, cbForStateCheckID2);
 }
 
-/*
- * --INFO--
- * Address:	802003B8
- * Size:	000114
+/**
+ * @TODO: Documentation
  */
 void cbForStateCheckID1(u32 p1)
 {
@@ -569,10 +537,8 @@ void cbForStateCheckID1(u32 p1)
 	}
 }
 
-/*
- * --INFO--
- * Address:	802004CC
- * Size:	0000A4
+/**
+ * @TODO: Documentation
  */
 void cbForStateCheckID2(u32 p1)
 {
@@ -591,10 +557,8 @@ void cbForStateCheckID2(u32 p1)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80200570
- * Size:	0000FC
+/**
+ * @TODO: Documentation
  */
 static void cbForStateCheckID3(u32 p1)
 {
@@ -617,10 +581,8 @@ static void cbForStateCheckID3(u32 p1)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8020066C
- * Size:	000044
+/**
+ * @TODO: Documentation
  */
 static void AlarmHandler(OSAlarm* alarm, OSContext* context)
 {
@@ -630,10 +592,8 @@ static void AlarmHandler(OSAlarm* alarm, OSContext* context)
 	stateCoverClosed_CMD(executing);
 }
 
-/*
- * --INFO--
- * Address:	802006B0
- * Size:	0000CC
+/**
+ * @TODO: Documentation
  */
 static void stateCoverClosed()
 {
@@ -659,20 +619,16 @@ static void stateCoverClosed()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8020077C
- * Size:	000030
+/**
+ * @TODO: Documentation
  */
 void stateCoverClosed_CMD(DVDCommandBlock* cmdBlock)
 {
 	DVDLowReadDiskID(tmpBuffer, cbForStateCoverClosed);
 }
 
-/*
- * --INFO--
- * Address:	802007AC
- * Size:	000070
+/**
+ * @TODO: Documentation
  */
 void cbForStateCoverClosed(u32 p1)
 {
@@ -690,20 +646,16 @@ void cbForStateCoverClosed(u32 p1)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8020081C
- * Size:	000028
+/**
+ * @TODO: Documentation
  */
 static void stateMotorStopped()
 {
 	DVDLowWaitCoverClose(cbForStateMotorStopped);
 }
 
-/*
- * --INFO--
- * Address:	80200844
- * Size:	0000E4
+/**
+ * @TODO: Documentation
  */
 void cbForStateMotorStopped(u32 p1)
 {
@@ -712,10 +664,8 @@ void cbForStateMotorStopped(u32 p1)
 	stateCoverClosed();
 }
 
-/*
- * --INFO--
- * Address:	80200928
- * Size:	000248
+/**
+ * @TODO: Documentation
  */
 void stateReady()
 {
@@ -796,10 +746,8 @@ void stateReady()
 // idk why this file insists on doing this in the opposite order
 #define DVDMIN(a, b) (((a) > (b)) ? (b) : (a))
 
-/*
- * --INFO--
- * Address:	80200B70
- * Size:	0002C0
+/**
+ * @TODO: Documentation
  */
 void stateBusy(DVDCommandBlock* block)
 {
@@ -887,10 +835,8 @@ void stateBusy(DVDCommandBlock* block)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80200E30
- * Size:	0005D4
+/**
+ * @TODO: Documentation
  */
 void cbForStateBusy(u32 p1)
 {
@@ -1046,10 +992,8 @@ void cbForStateBusy(u32 p1)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80201404
- * Size:	0000BC
+/**
+ * @TODO: Documentation
  */
 static BOOL issueCommand(s32 prio, DVDCommandBlock* block)
 {
@@ -1074,10 +1018,8 @@ static BOOL issueCommand(s32 prio, DVDCommandBlock* block)
 	return result;
 }
 
-/*
- * --INFO--
- * Address:	802014C0
- * Size:	0000DC
+/**
+ * @TODO: Documentation
  */
 BOOL DVDReadAbsAsyncPrio(DVDCommandBlock* block, void* addr, s32 length, s32 offset, DVDCBCallback callback, s32 prio)
 {
@@ -1103,10 +1045,8 @@ void DVDSeekAbsAsyncPrio(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8020159C
- * Size:	0000D0
+/**
+ * @TODO: Documentation
  */
 BOOL DVDReadAbsAsyncForBS(DVDCommandBlock* block, void* addr, s32 length, s32 offset, DVDCBCallback callback)
 {
@@ -1122,10 +1062,8 @@ BOOL DVDReadAbsAsyncForBS(DVDCommandBlock* block, void* addr, s32 length, s32 of
 	return idle;
 }
 
-/*
- * --INFO--
- * Address:	8020166C
- * Size:	0000D4
+/**
+ * @TODO: Documentation
  */
 BOOL DVDReadDiskID(DVDCommandBlock* block, DVDDiskID* diskID, DVDCBCallback callback)
 {
@@ -1142,10 +1080,8 @@ BOOL DVDReadDiskID(DVDCommandBlock* block, DVDDiskID* diskID, DVDCBCallback call
 	return idle;
 }
 
-/*
- * --INFO--
- * Address:	80201740
- * Size:	0000C4
+/**
+ * @TODO: Documentation
  */
 BOOL DVDPrepareStreamAbsAsync(DVDCommandBlock* block, u32 length, u32 offset, DVDCBCallback callback)
 {
@@ -1174,10 +1110,8 @@ BOOL DVDCancelStreamAsync(DVDCommandBlock* block, DVDCBCallback callback)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80201804
- * Size:	0000A0
+/**
+ * @TODO: Documentation
  */
 BOOL DVDCancelStream(DVDCommandBlock* block)
 {
@@ -1209,10 +1143,8 @@ BOOL DVDCancelStream(DVDCommandBlock* block)
 	return retVal;
 }
 
-/*
- * --INFO--
- * Address:	802018A4
- * Size:	000028
+/**
+ * @TODO: Documentation
  */
 static void cbForCancelStreamSync(s32 result, DVDCommandBlock* block)
 {
@@ -1450,10 +1382,8 @@ void cbForInquirySync(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	802018CC
- * Size:	000044
+/**
+ * @TODO: Documentation
  */
 void DVDReset()
 {
@@ -1493,10 +1423,8 @@ s32 DVDGetCommandBlockStatus(const DVDCommandBlock* block)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80201910
- * Size:	0000AC
+/**
+ * @TODO: Documentation
  */
 s32 DVDGetDriveStatus()
 {
@@ -1564,10 +1492,8 @@ void DVDResume()
 	OSRestoreInterrupts(level);
 }
 
-/*
- * --INFO--
- * Address:	802019BC
- * Size:	000270
+/**
+ * @TODO: Documentation
  */
 BOOL DVDCancelAsync(DVDCommandBlock* block, DVDCBCallback callback)
 {
@@ -1664,10 +1590,8 @@ BOOL DVDCancelAsync(DVDCommandBlock* block, DVDCBCallback callback)
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	80201C2C
- * Size:	0000AC
+/**
+ * @TODO: Documentation
  */
 s32 DVDCancel(DVDCommandBlock* block)
 {
@@ -1706,10 +1630,8 @@ s32 DVDCancel(DVDCommandBlock* block)
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80201CD8
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 static void cbForCancelSync(s32 result, DVDCommandBlock* block)
 {
@@ -1768,20 +1690,16 @@ void cbForCancelAllSync(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80201CFC
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 DVDDiskID* DVDGetCurrentDiskID()
 {
 	return (DVDDiskID*)OSPhysicalToCached(0);
 }
 
-/*
- * --INFO--
- * Address:	80201D04
- * Size:	0000E4
+/**
+ * @TODO: Documentation
  */
 BOOL DVDCheckDisk()
 {
@@ -1839,10 +1757,8 @@ BOOL DVDCheckDisk()
 	return result;
 }
 
-/*
- * --INFO--
- * Address:	80201DE8
- * Size:	00011C
+/**
+ * @TODO: Documentation
  */
 void __DVDPrepareResetAsync(DVDCBCallback callback)
 {

@@ -38,10 +38,8 @@ immut char* PaniPikiAnimator::motionLabels[PIKIANIM_COUNT] = {
 	"sagasu",   "osu",       "osu-walk",  "noru",        "odead",    // 85-89
 };
 
-/*
- * --INFO--
- * Address:	80118D04
- * Size:	000CD0
+/**
+ * @TODO: Documentation
  */
 PaniMotionTable* PaniPikiAnimator::createMotionTable()
 {
@@ -138,10 +136,8 @@ PaniMotionTable* PaniPikiAnimator::createMotionTable()
 	return table;
 }
 
-/*
- * --INFO--
- * Address:	801199D4
- * Size:	00003C
+/**
+ * @TODO: Documentation
  */
 PaniPikiAnimator::PaniPikiAnimator()
 {

@@ -20,10 +20,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("GamePrefs")
 
-/*
- * --INFO--
- * Address:	80053C5C
- * Size:	000040
+/**
+ * @TODO: Documentation
  */
 void PlayState::openStage(int stageId)
 {
@@ -64,10 +62,8 @@ void GamePrefs::Initialise()
 }
 #endif
 
-/*
- * --INFO--
- * Address:	80053C9C
- * Size:	000040
+/**
+ * @TODO: Documentation
  */
 void GamePrefs::setBgmVol(u8 vol)
 {
@@ -78,10 +74,8 @@ void GamePrefs::setBgmVol(u8 vol)
 	Jac_SetBGMVolume(mBgmVol);
 }
 
-/*
- * --INFO--
- * Address:	80053CDC
- * Size:	000040
+/**
+ * @TODO: Documentation
  */
 void GamePrefs::setSfxVol(u8 vol)
 {
@@ -92,10 +86,8 @@ void GamePrefs::setSfxVol(u8 vol)
 	Jac_SetSEVolume(mSfxVol);
 }
 
-/*
- * --INFO--
- * Address:	80053D1C
- * Size:	00009C
+/**
+ * @TODO: Documentation
  */
 void GamePrefs::setStereoMode(bool set)
 {
@@ -109,10 +101,8 @@ void GamePrefs::setStereoMode(bool set)
 	OSSetSoundMode(set);
 }
 
-/*
- * --INFO--
- * Address:	80053DB8
- * Size:	0000B8
+/**
+ * @TODO: Documentation
  */
 void GamePrefs::setVibeMode(bool set)
 {
@@ -132,10 +122,8 @@ void GamePrefs::setVibeMode(bool set)
 	rumbleMgr->rumbleOption(set);
 }
 
-/*
- * --INFO--
- * Address:	80053E70
- * Size:	000054
+/**
+ * @TODO: Documentation
  */
 #if defined(VERSION_GPIP01_00)
 #else
@@ -149,10 +137,8 @@ void GamePrefs::setChildMode(bool set)
 }
 #endif
 
-/*
- * --INFO--
- * Address:	80053EC4
- * Size:	000068
+/**
+ * @TODO: Documentation
  */
 void GamePrefs::getChallengeScores(GameChalQuickInfo& info)
 {
@@ -161,10 +147,8 @@ void GamePrefs::getChallengeScores(GameChalQuickInfo& info)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80053F2C
- * Size:	000174
+/**
+ * @TODO: Documentation
  */
 void GamePrefs::checkIsHiscore(GameChalQuickInfo& info)
 {
@@ -203,10 +187,8 @@ void GamePrefs::checkIsHiscore(GameChalQuickInfo& info)
 	getChallengeScores(info);
 }
 
-/*
- * --INFO--
- * Address:	800540A0
- * Size:	00034C
+/**
+ * @TODO: Documentation
  */
 void GamePrefs::checkIsHiscore(GameQuickInfo& info)
 {
@@ -269,10 +251,8 @@ void GamePrefs::checkIsHiscore(GameQuickInfo& info)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800543EC
- * Size:	000178
+/**
+ * @TODO: Documentation
  */
 void GamePrefs::write(RandomAccessStream& output)
 {
@@ -287,10 +267,8 @@ void GamePrefs::write(RandomAccessStream& output)
 	mIsChanged = false;
 }
 
-/*
- * --INFO--
- * Address:	80054564
- * Size:	0000B8
+/**
+ * @TODO: Documentation
  */
 void GamePrefs::fixSoundMode()
 {
@@ -302,10 +280,8 @@ void GamePrefs::fixSoundMode()
 	setStereoMode(OSGetSoundMode());
 }
 
-/*
- * --INFO--
- * Address:	8005461C
- * Size:	000330
+/**
+ * @TODO: Documentation
  */
 void GamePrefs::read(RandomAccessStream& input)
 {
@@ -368,10 +344,8 @@ void GamePrefs::setChildMode(int set)
 }
 #endif
 
-/*
- * --INFO--
- * Address:	8005494C
- * Size:	0000F4
+/**
+ * @TODO: Documentation
  */
 void PlayState::write(RandomAccessStream& output)
 {
@@ -385,10 +359,8 @@ void PlayState::write(RandomAccessStream& output)
 	output.writeInt(mCourseOpenFlags);
 }
 
-/*
- * --INFO--
- * Address:	80054A40
- * Size:	0000F4
+/**
+ * @TODO: Documentation
  */
 void PlayState::read(RandomAccessStream& input)
 {

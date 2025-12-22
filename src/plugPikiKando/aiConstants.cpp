@@ -18,10 +18,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT(nullptr)
 
-/*
- * --INFO--
- * Address:	80083E60
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 void AIConstant::createInstance()
 {
@@ -30,10 +28,8 @@ void AIConstant::createInstance()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80083EAC
- * Size:	000470
+/**
+ * @TODO: Documentation
  */
 AIConstant::AIConstant()
 {

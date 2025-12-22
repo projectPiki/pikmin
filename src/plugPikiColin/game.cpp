@@ -46,20 +46,16 @@ void StageInfo::write(RandomAccessStream&)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8005315C
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void StageInfo::read(RandomAccessStream&)
 {
 	PRINT("reading information for stage %d\n", mStageID);
 }
 
-/*
- * --INFO--
- * Address:	80053160
- * Size:	000168
+/**
+ * @TODO: Documentation
  */
 void StageInfo::parseGenerators(CmdStream* commands)
 {
@@ -114,10 +110,8 @@ void FlowController::setStage(immut char* fileName)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	800532C8
- * Size:	000378
+/**
+ * @TODO: Documentation
  */
 void FlowController::readMapList(immut char* fileName)
 {
@@ -199,10 +193,8 @@ static immut char* levNames[] = {
 	"intro/map0.bti", "intro/map1.bti", "intro/map2.bti", "intro/map3.bti", "intro/map4.bti",
 };
 
-/*
- * --INFO--
- * Address:	80053640
- * Size:	00052C
+/**
+ * @TODO: Documentation
  */
 void OnePlayerSection::init()
 {

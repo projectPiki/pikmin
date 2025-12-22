@@ -5,10 +5,8 @@
 JPorthead_ cmd_once;
 JPorthead_ cmd_stay;
 
-/*
- * --INFO--
- * Address:	8000E300
- * Size:	000028
+/**
+ * @TODO: Documentation
  */
 void Add_PortcmdOnce(u32* a1)
 {
@@ -25,10 +23,8 @@ void Add_PortcmdStay(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8000E340
- * Size:	000018
+/**
+ * @TODO: Documentation
  */
 int Set_Portcmd(int* a1, int a2, int a3)
 {
@@ -39,10 +35,8 @@ int Set_Portcmd(int* a1, int a2, int a3)
 	return 1;
 }
 
-/*
- * --INFO--
- * Address:	8000E360
- * Size:	000078
+/**
+ * @TODO: Documentation
  */
 BOOL Add_Portcmd(JPorthead_* port, u32* a2)
 {
@@ -66,10 +60,8 @@ BOOL Add_Portcmd(JPorthead_* port, u32* a2)
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	8000E3E0
- * Size:	000040
+/**
+ * @TODO: Documentation
  */
 static int Get_Portcmd(JPorthead_* port)
 {
@@ -107,10 +99,8 @@ void Cancel_PortcmdStay(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8000E420
- * Size:	000050
+/**
+ * @TODO: Documentation
  */
 int Jac_Portcmd_Proc_Once(JPorthead_* port)
 {
@@ -126,10 +116,8 @@ int Jac_Portcmd_Proc_Once(JPorthead_* port)
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	8000E480
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 int Jac_Portcmd_Proc_Stay(JPorthead_* port)
 {
@@ -145,10 +133,8 @@ int Jac_Portcmd_Proc_Stay(JPorthead_* port)
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	8000E4E0
- * Size:	000030
+/**
+ * @TODO: Documentation
  */
 static s32 Portcmd_Main(void* a)
 {
@@ -157,10 +143,8 @@ static s32 Portcmd_Main(void* a)
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	8000E520
- * Size:	000010
+/**
+ * @TODO: Documentation
  */
 void Jac_Porthead_Init(JPorthead_* port)
 {
@@ -168,10 +152,8 @@ void Jac_Porthead_Init(JPorthead_* port)
 	port->_04 = 0;
 }
 
-/*
- * --INFO--
- * Address:	8000E540
- * Size:	00003C
+/**
+ * @TODO: Documentation
  */
 void Jac_Portcmd_Init(void)
 {

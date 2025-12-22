@@ -603,10 +603,8 @@ f32 TAIAdyingMar::effectScale1;
 f32 TAIAdyingMar::effectStartCounter;
 TAIeffectAttackEventCallBackMar BreathEffect::eventCallBack;
 
-/*
- * --INFO--
- * Address:	801A5774
- * Size:	000084
+/**
+ * @TODO: Documentation
  */
 TAImarSoundTable::TAImarSoundTable()
     : PaniSoundTable(6)
@@ -616,10 +614,8 @@ TAImarSoundTable::TAImarSoundTable()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801A57F8
- * Size:	000440
+/**
+ * @TODO: Documentation
  */
 TAImarParameters::TAImarParameters()
     : TekiParameters(TAImarIntParams::COUNT, TAImarFloatParams::COUNT)
@@ -699,10 +695,8 @@ TAImarParameters::TAImarParameters()
 	multiP->setI(TPI_CullingType, CULLAI_CullAIOffCamera);
 }
 
-/*
- * --INFO--
- * Address:	801A5C38
- * Size:	000DE8
+/**
+ * @TODO: Documentation
  */
 TAImarStrategy::TAImarStrategy()
     : YaiStrategy(TAImarStateID::COUNT, TAImarStateID::Unk2)
@@ -867,10 +861,8 @@ TAImarStrategy::TAImarStrategy()
 	setState(TAImarStateID::Unk13, state);
 }
 
-/*
- * --INFO--
- * Address:	801A6A20
- * Size:	0001CC
+/**
+ * @TODO: Documentation
  */
 void TAImarStrategy::act(Teki& teki)
 {
@@ -905,10 +897,8 @@ void TAImarStrategy::act(Teki& teki)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801A6BEC
- * Size:	0000C4
+/**
+ * @TODO: Documentation
  */
 bool TAImarStrategy::interact(Teki& teki, immut TekiInteractionKey& key)
 {
@@ -930,10 +920,8 @@ bool TAImarStrategy::interact(Teki& teki, immut TekiInteractionKey& key)
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	801A6CB0
- * Size:	00032C
+/**
+ * @TODO: Documentation
  */
 void TAImarAnimation::makeDefaultAnimations()
 {

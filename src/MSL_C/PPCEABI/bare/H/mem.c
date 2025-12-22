@@ -1,9 +1,7 @@
 #include "stl/mem.h"
 
-/*
- * --INFO--
- * Address:	802161DC
- * Size:	0000DC
+/**
+ * @TODO: Documentation
  */
 void* memmove(void* dst, const void* src, size_t len)
 {
@@ -51,10 +49,8 @@ void* memmove(void* dst, const void* src, size_t len)
 	return dst;
 }
 
-/*
- * --INFO--
- * Address:	802161B0
- * Size:	00002C
+/**
+ * @TODO: Documentation
  */
 void* memchr(u8* s, int c, size_t n)
 {
@@ -83,10 +79,8 @@ void __memrchr(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8021616C
- * Size:	000044
+/**
+ * @TODO: Documentation
  */
 int memcmp(const void* __s1, const void* __s2, size_t __n)
 {

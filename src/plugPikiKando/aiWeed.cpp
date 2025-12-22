@@ -18,20 +18,16 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT(nullptr)
 
-/*
- * --INFO--
- * Address:	800C30A8
- * Size:	000054
+/**
+ * @TODO: Documentation
  */
 ActWeed::ActWeed(Piki* piki)
     : Action(piki, true)
 {
 }
 
-/*
- * --INFO--
- * Address:	800C30FC
- * Size:	000058
+/**
+ * @TODO: Documentation
  */
 void ActWeed::init(Creature* creature)
 {
@@ -44,10 +40,8 @@ void ActWeed::init(Creature* creature)
 	initApproach();
 }
 
-/*
- * --INFO--
- * Address:	800C3154
- * Size:	000060
+/**
+ * @TODO: Documentation
  */
 int ActWeed::exec()
 {
@@ -65,10 +59,8 @@ int ActWeed::exec()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800C31B4
- * Size:	00002C
+/**
+ * @TODO: Documentation
  */
 void ActWeed::cleanup()
 {
@@ -77,10 +69,8 @@ void ActWeed::cleanup()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800C31E0
- * Size:	000070
+/**
+ * @TODO: Documentation
  */
 void ActWeed::initApproach()
 {
@@ -89,10 +79,8 @@ void ActWeed::initApproach()
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Walk), PaniMotionInfo(PIKIANIM_Walk));
 }
 
-/*
- * --INFO--
- * Address:	800C3250
- * Size:	0001E0
+/**
+ * @TODO: Documentation
  */
 int ActWeed::exeApproach()
 {
@@ -119,20 +107,16 @@ int ActWeed::exeApproach()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800C3430
- * Size:	00000C
+/**
+ * @TODO: Documentation
  */
 void ActWeed::initAdjust()
 {
 	mState = STATE_Adjust;
 }
 
-/*
- * --INFO--
- * Address:	800C343C
- * Size:	000214
+/**
+ * @TODO: Documentation
  */
 int ActWeed::exeAdjust()
 {
@@ -161,10 +145,8 @@ int ActWeed::exeAdjust()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800C3650
- * Size:	00008C
+/**
+ * @TODO: Documentation
  */
 void ActWeed::initNuking()
 {
@@ -174,10 +156,8 @@ void ActWeed::initNuking()
 	mAnimationFinished = false;
 }
 
-/*
- * --INFO--
- * Address:	800C36DC
- * Size:	0000E0
+/**
+ * @TODO: Documentation
  */
 int ActWeed::exeNuking()
 {
@@ -197,10 +177,8 @@ int ActWeed::exeNuking()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800C37BC
- * Size:	0002B4
+/**
+ * @TODO: Documentation
  */
 void ActWeed::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {

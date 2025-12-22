@@ -440,10 +440,8 @@ protected:
 	// TODO: members
 };
 
-/*
- * --INFO--
- * Address:	801CD720
- * Size:	000084
+/**
+ * @TODO: Documentation
  */
 TAIkabekuiCSoundTable::TAIkabekuiCSoundTable()
     : PaniSoundTable(3)
@@ -453,10 +451,8 @@ TAIkabekuiCSoundTable::TAIkabekuiCSoundTable()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801CD7A4
- * Size:	000478
+/**
+ * @TODO: Documentation
  */
 TAIkabekuiCParameters::TAIkabekuiCParameters()
     : TekiParameters(TPI_COUNT, TAIkabekuiCFloatParms::COUNT)
@@ -544,10 +540,8 @@ TAIkabekuiCParameters::TAIkabekuiCParameters()
 	STACK_PAD_VAR(1);
 }
 
-/*
- * --INFO--
- * Address:	801CDC1C
- * Size:	00129C
+/**
+ * @TODO: Documentation
  */
 TAIkabekuiCStrategy::TAIkabekuiCStrategy()
     : YaiStrategy(TAIkabekuiCStateID::COUNT, TAIkabekuiCStateID::Waiting)
@@ -773,10 +767,8 @@ TAIkabekuiCStrategy::TAIkabekuiCStrategy()
 	STACK_PAD_VAR(2);
 }
 
-/*
- * --INFO--
- * Address:	801CEEB8
- * Size:	0006FC
+/**
+ * @TODO: Documentation
  */
 void TAIkabekuiCAnimation::makeDefaultAnimations()
 {

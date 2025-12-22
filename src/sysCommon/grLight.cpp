@@ -16,10 +16,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT(nullptr);
 
-/*
- * --INFO--
- * Address:	80029A48
- * Size:	000200
+/**
+ * @TODO: Documentation
  */
 Light::Light()
     : CoreNode("light")
@@ -50,10 +48,8 @@ Light::Light()
 	setLightDistAttn(mDistancedRange, mAttenuation, mMode);
 }
 
-/*
- * --INFO--
- * Address:	80029C5C
- * Size:	0000E4
+/**
+ * @TODO: Documentation
  */
 void Light::setLightDistAttn(f32 dist, f32 attn, int mode)
 {
@@ -101,10 +97,8 @@ void Light::setLightDistAttn(f32 dist, f32 attn, int mode)
 	mLightValuesSet = 1;
 }
 
-/*
- * --INFO--
- * Address:	80029D40
- * Size:	000188
+/**
+ * @TODO: Documentation
  */
 void Light::setLightSpot(f32 angle, int spotMode)
 {
@@ -212,10 +206,8 @@ void Light::refresh(Graphics&, LFlareGroup*)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80029EC8
- * Size:	0000D0
+/**
+ * @TODO: Documentation
  */
 void Light::update()
 {

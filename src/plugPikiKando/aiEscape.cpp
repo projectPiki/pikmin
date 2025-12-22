@@ -15,10 +15,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("aiEscape")
 
-/*
- * --INFO--
- * Address:	800B8828
- * Size:	00007C
+/**
+ * @TODO: Documentation
  */
 ActEscape::ActEscape(Piki* piki)
     : Action(piki, false)
@@ -26,19 +24,15 @@ ActEscape::ActEscape(Piki* piki)
 	mTarget.reset();
 }
 
-/*
- * --INFO--
- * Address:	800B88A4
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void ActEscape::Initialiser::initialise(Action*)
 {
 }
 
-/*
- * --INFO--
- * Address:	800B88A8
- * Size:	0000F8
+/**
+ * @TODO: Documentation
  */
 void ActEscape::init(Creature* target)
 {
@@ -50,20 +44,16 @@ void ActEscape::init(Creature* target)
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Nigeru), PaniMotionInfo(PIKIANIM_Nigeru));
 }
 
-/*
- * --INFO--
- * Address:	800B89A0
- * Size:	000040
+/**
+ * @TODO: Documentation
  */
 void ActEscape::cleanup()
 {
 	mTarget.reset();
 }
 
-/*
- * --INFO--
- * Address:	800B89E0
- * Size:	0002CC
+/**
+ * @TODO: Documentation
  */
 int ActEscape::exec()
 {
@@ -116,10 +106,8 @@ int ActEscape::exec()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800B8CAC
- * Size:	000058
+/**
+ * @TODO: Documentation
  */
 void ActEscape::getInfo(char* buf)
 {

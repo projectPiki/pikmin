@@ -34,20 +34,16 @@ PikiInfMgr::PikiInfMgr()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800C56D4
- * Size:	000028
+/**
+ * @TODO: Documentation
  */
 void PikiInfMgr::initGame()
 {
 	pikiInfMgr.clear();
 }
 
-/*
- * --INFO--
- * Address:	800C56FC
- * Size:	000078
+/**
+ * @TODO: Documentation
  */
 void PikiInfMgr::saveCard(RandomAccessStream& output)
 {
@@ -58,10 +54,8 @@ void PikiInfMgr::saveCard(RandomAccessStream& output)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800C5774
- * Size:	000070
+/**
+ * @TODO: Documentation
  */
 void PikiInfMgr::loadCard(RandomAccessStream& input)
 {
@@ -82,10 +76,8 @@ void PikiInfMgr::loadCard(RandomAccessStream& input)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800C57E4
- * Size:	000034
+/**
+ * @TODO: Documentation
  */
 void PikiInfMgr::incPiki(Piki* piki)
 {
@@ -102,10 +94,8 @@ void PikiInfMgr::incPiki(Piki* piki)
 	mPikiCounts[color][happa]++;
 }
 
-/*
- * --INFO--
- * Address:	800C5818
- * Size:	00001C
+/**
+ * @TODO: Documentation
  */
 void PikiInfMgr::incPiki(int color, int happa)
 {
@@ -118,10 +108,8 @@ void PikiInfMgr::incPiki(int color, int happa)
 	mPikiCounts[color][happa]++;
 }
 
-/*
- * --INFO--
- * Address:	800C5834
- * Size:	000034
+/**
+ * @TODO: Documentation
  */
 void PikiInfMgr::decPiki(Piki* piki)
 {
@@ -138,10 +126,8 @@ void PikiInfMgr::decPiki(Piki* piki)
 	mPikiCounts[color][happa]--;
 }
 
-/*
- * --INFO--
- * Address:	800C5868
- * Size:	00002C
+/**
+ * @TODO: Documentation
  */
 void PikiInfMgr::clear()
 {
@@ -178,10 +164,8 @@ BaseInf::BaseInf()
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	800C5894
- * Size:	00005C
+/**
+ * @TODO: Documentation
  */
 void BaseInf::store(Creature* owner)
 {
@@ -190,10 +174,8 @@ void BaseInf::store(Creature* owner)
 	doStore(owner);
 }
 
-/*
- * --INFO--
- * Address:	800C58F4
- * Size:	00005C
+/**
+ * @TODO: Documentation
  */
 void BaseInf::restore(Creature* owner)
 {
@@ -202,10 +184,8 @@ void BaseInf::restore(Creature* owner)
 	doRestore(owner);
 }
 
-/*
- * --INFO--
- * Address:	800C5954
- * Size:	0000A0
+/**
+ * @TODO: Documentation
  */
 void BaseInf::saveCard(RandomAccessStream& card)
 {
@@ -214,10 +194,8 @@ void BaseInf::saveCard(RandomAccessStream& card)
 	card.writeShort(mPosition.z);
 }
 
-/*
- * --INFO--
- * Address:	800C59F4
- * Size:	0000F4
+/**
+ * @TODO: Documentation
  */
 void BaseInf::loadCard(RandomAccessStream& card)
 {
@@ -238,10 +216,8 @@ BPikiInf::BPikiInf()
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	800C5AE8
- * Size:	0000C4
+/**
+ * @TODO: Documentation
  */
 void BPikiInf::saveCard(RandomAccessStream& card)
 {
@@ -250,10 +226,8 @@ void BPikiInf::saveCard(RandomAccessStream& card)
 	card.writeByte(byte);
 }
 
-/*
- * --INFO--
- * Address:	800C5BAC
- * Size:	000118
+/**
+ * @TODO: Documentation
  */
 void BPikiInf::loadCard(RandomAccessStream& card)
 {
@@ -263,10 +237,8 @@ void BPikiInf::loadCard(RandomAccessStream& card)
 	mNextKeyIndex = (byte >> 2) & 0x3F;
 }
 
-/*
- * --INFO--
- * Address:	800C5CC4
- * Size:	000014
+/**
+ * @TODO: Documentation
  */
 void BPikiInf::doStore(Creature* piki)
 {
@@ -277,10 +249,8 @@ void BPikiInf::doStore(Creature* piki)
 	mNextKeyIndex = static_cast<Piki*>(piki)->mPikiAnimMgr.mLowerAnimator.mEndKeyIndex;
 }
 
-/*
- * --INFO--
- * Address:	800C5CD8
- * Size:	000014
+/**
+ * @TODO: Documentation
  */
 void BPikiInf::doRestore(Creature* piki)
 {
@@ -291,20 +261,16 @@ void BPikiInf::doRestore(Creature* piki)
 	static_cast<Piki*>(piki)->mPikiAnimMgr.mLowerAnimator.mEndKeyIndex   = mNextKeyIndex;
 }
 
-/*
- * --INFO--
- * Address:	800C5CEC
- * Size:	000170
+/**
+ * @TODO: Documentation
  */
 MonoInfMgr::MonoInfMgr()
 {
 	mInfs = nullptr;
 }
 
-/*
- * --INFO--
- * Address:	800C5E5C
- * Size:	0000D0
+/**
+ * @TODO: Documentation
  */
 void MonoInfMgr::init(int count)
 {
@@ -319,10 +285,8 @@ void MonoInfMgr::init(int count)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800C5F2C
- * Size:	000058
+/**
+ * @TODO: Documentation
  */
 BaseInf* MonoInfMgr::getFreeInf()
 {
@@ -334,10 +298,8 @@ BaseInf* MonoInfMgr::getFreeInf()
 	return inf;
 }
 
-/*
- * --INFO--
- * Address:	800C5F84
- * Size:	000048
+/**
+ * @TODO: Documentation
  */
 void MonoInfMgr::delInf(BaseInf* inf)
 {
@@ -345,20 +307,16 @@ void MonoInfMgr::delInf(BaseInf* inf)
 	mFreeList.add(inf);
 }
 
-/*
- * --INFO--
- * Address:	800C5FCC
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 int MonoInfMgr::getActiveNum()
 {
 	return mActiveList.getChildCount();
 }
 
-/*
- * --INFO--
- * Address:	800C5FF0
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 int MonoInfMgr::getFreeNum()
 {
@@ -375,10 +333,8 @@ void MonoInfMgr::saveCard(RandomAccessStream&)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	800C6014
- * Size:	0000C4
+/**
+ * @TODO: Documentation
  */
 void MonoInfMgr::loadCard(RandomAccessStream& input)
 {
@@ -401,10 +357,8 @@ void MonoInfMgr::loadCard(RandomAccessStream& input)
 	PRINT("*** %d ピキ デス\n", max); // "*** %d Piki Death\n"
 }
 
-/*
- * --INFO--
- * Address:	800C60D8
- * Size:	0000CC
+/**
+ * @TODO: Documentation
  */
 BaseInf* BPikiInfMgr::newInf()
 {
@@ -430,10 +384,8 @@ void BPikiInfMgr::initGame()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800C61A4
- * Size:	00002C
+/**
+ * @TODO: Documentation
  */
 int BPikiInfMgr::getPikiCount(int color)
 {
@@ -510,20 +462,16 @@ CreatureInf::CreatureInf()
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	800C61D0
- * Size:	0000D4
+/**
+ * @TODO: Documentation
  */
 BaseInf* CreatureInfMgr::newInf()
 {
 	return new CreatureInf();
 }
 
-/*
- * --INFO--
- * Address:	800C62A4
- * Size:	0000E0
+/**
+ * @TODO: Documentation
  */
 void CreatureInf::doStore(Creature* owner)
 {
@@ -550,10 +498,8 @@ void CreatureInf::doStore(Creature* owner)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800C6384
- * Size:	000060
+/**
+ * @TODO: Documentation
  */
 void CreatureInf::doRestore(Creature* owner)
 {
@@ -586,30 +532,24 @@ void CreatureInfMgr::restoreAll()
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	800C63E4
- * Size:	000030
+/**
+ * @TODO: Documentation
  */
 void StageInf::init()
 {
 	mBPikiInfMgr.init(MAX_PIKI_ON_FIELD);
 }
 
-/*
- * --INFO--
- * Address:	800C6414
- * Size:	000064
+/**
+ * @TODO: Documentation
  */
 void StageInf::initGame()
 {
 	mBPikiInfMgr.initGame();
 }
 
-/*
- * --INFO--
- * Address:	800C6478
- * Size:	000088
+/**
+ * @TODO: Documentation
  */
 void StageInf::saveCard(RandomAccessStream& output)
 {
@@ -626,10 +566,8 @@ void StageInf::saveCard(RandomAccessStream& output)
 
 #pragma dont_inline on
 
-/*
- * --INFO--
- * Address:	800C6500
- * Size:	000020
+/**
+ * @TODO: Documentation
  */
 void StageInf::loadCard(RandomAccessStream& input)
 {

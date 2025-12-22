@@ -21,10 +21,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("Kogane");
 
-/*
- * --INFO--
- * Address:	80175A30
- * Size:	000330
+/**
+ * @TODO: Documentation
  */
 KoganeProp::KoganeProp()
 {
@@ -33,10 +31,8 @@ KoganeProp::KoganeProp()
 	mCreatureProps.mAcceleration.mValue  = 1.0f;
 }
 
-/*
- * --INFO--
- * Address:	80175D60
- * Size:	000084
+/**
+ * @TODO: Documentation
  */
 Kogane::Kogane(CreatureProp* props)
     : Boss(props)
@@ -45,20 +41,16 @@ Kogane::Kogane(CreatureProp* props)
 	mKoganeAi = new KoganeAi(this);
 }
 
-/*
- * --INFO--
- * Address:	80175DE4
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 f32 Kogane::getiMass()
 {
 	return 0.1f;
 }
 
-/*
- * --INFO--
- * Address:	80175DEC
- * Size:	000054
+/**
+ * @TODO: Documentation
  */
 void Kogane::init(immut Vector3f&)
 {
@@ -72,10 +64,8 @@ void Kogane::init(immut Vector3f&)
 	mKoganeAi->initAI(this);
 }
 
-/*
- * --INFO--
- * Address:	80175E40
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 void Kogane::doKill()
 {
@@ -85,30 +75,24 @@ void Kogane::doKill()
 	bossMgr->kill(this);
 }
 
-/*
- * --INFO--
- * Address:	80175E8C
- * Size:	000028
+/**
+ * @TODO: Documentation
  */
 void Kogane::exitCourse()
 {
 	mKoganeAi->killCallBackEffect(true);
 }
 
-/*
- * --INFO--
- * Address:	80175EB4
- * Size:	000020
+/**
+ * @TODO: Documentation
  */
 void Kogane::update()
 {
 	Creature::update();
 }
 
-/*
- * --INFO--
- * Address:	80175ED4
- * Size:	000098
+/**
+ * @TODO: Documentation
  */
 void Kogane::refresh(Graphics& gfx)
 {
@@ -120,10 +104,8 @@ void Kogane::refresh(Graphics& gfx)
 	mCollInfo->updateInfo(gfx, false);
 }
 
-/*
- * --INFO--
- * Address:	80175F6C
- * Size:	00006C
+/**
+ * @TODO: Documentation
  */
 void Kogane::drawShape(Graphics& gfx)
 {
@@ -131,10 +113,8 @@ void Kogane::drawShape(Graphics& gfx)
 	mShapeObject->mShape->drawshape(gfx, *gfx.mCamera, nullptr);
 }
 
-/*
- * --INFO--
- * Address:	80175FD8
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 void Kogane::doAI()
 {
@@ -142,10 +122,8 @@ void Kogane::doAI()
 	mIsOnWall = 0;
 }
 
-/*
- * --INFO--
- * Address:	80176010
- * Size:	000044
+/**
+ * @TODO: Documentation
  */
 void Kogane::doAnimation()
 {
@@ -154,10 +132,8 @@ void Kogane::doAnimation()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80176054
- * Size:	000058
+/**
+ * @TODO: Documentation
  */
 void Kogane::collisionCallback(immut CollEvent& event)
 {

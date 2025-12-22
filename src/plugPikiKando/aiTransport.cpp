@@ -38,10 +38,8 @@ DEFINE_ERROR(74)
  */
 DEFINE_PRINT("Transport")
 
-/*
- * --INFO--
- * Address:	800AEC80
- * Size:	000290
+/**
+ * @TODO: Documentation
  */
 void ActTransport::turnOver()
 {
@@ -111,10 +109,8 @@ int ActTransport::exeWait()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800AEF10
- * Size:	000150
+/**
+ * @TODO: Documentation
  */
 bool ActTransport::isStickLeader()
 {
@@ -135,10 +131,8 @@ bool ActTransport::isStickLeader()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800AF060
- * Size:	000190
+/**
+ * @TODO: Documentation
  */
 f32 ActTransport::getCarriers()
 {
@@ -202,10 +196,8 @@ int ActTransport::calcNumStickers()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	800AF1F0
- * Size:	0000F4
+/**
+ * @TODO: Documentation
  */
 ActTransport::ActTransport(Piki* piki)
     : Action(piki, true)
@@ -214,10 +206,8 @@ ActTransport::ActTransport(Piki* piki)
 	mPathIndex = -1;
 }
 
-/*
- * --INFO--
- * Address:	800AF2E4
- * Size:	000160
+/**
+ * @TODO: Documentation
  */
 Pellet* ActTransport::findPellet()
 {
@@ -242,10 +232,8 @@ Pellet* ActTransport::findPellet()
 	return closestPellet;
 }
 
-/*
- * --INFO--
- * Address:	800AF444
- * Size:	000160
+/**
+ * @TODO: Documentation
  */
 void ActTransport::init(Creature* target)
 {
@@ -274,10 +262,8 @@ void ActTransport::init(Creature* target)
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Walk), PaniMotionInfo(PIKIANIM_Walk));
 }
 
-/*
- * --INFO--
- * Address:	800AF5A4
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 void ActTransport::setSlotIndex()
 {
@@ -289,10 +275,8 @@ void ActTransport::setSlotIndex()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800AF5F0
- * Size:	000194
+/**
+ * @TODO: Documentation
  */
 void ActTransport::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
@@ -340,10 +324,8 @@ void ActTransport::initJump()
 	mState             = STATE_Jump;
 }
 
-/*
- * --INFO--
- * Address:	800AF784
- * Size:	0004F0
+/**
+ * @TODO: Documentation
  */
 int ActTransport::execJump()
 {
@@ -429,10 +411,8 @@ int ActTransport::execJump()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800AFC74
- * Size:	000740
+/**
+ * @TODO: Documentation
  */
 bool ActTransport::gotoLiftPos()
 {
@@ -556,10 +536,8 @@ bool ActTransport::gotoLiftPos()
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	800B03B4
- * Size:	000664
+/**
+ * @TODO: Documentation
  */
 void ActTransport::doLift()
 {
@@ -685,10 +663,8 @@ void ActTransport::doLift()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800B0A18
- * Size:	000168
+/**
+ * @TODO: Documentation
  */
 bool ActTransport::useWaterRoute()
 {
@@ -716,10 +692,8 @@ bool ActTransport::useWaterRoute()
 	return onlyBlueCarry;
 }
 
-/*
- * --INFO--
- * Address:	800B0B80
- * Size:	0008B4
+/**
+ * @TODO: Documentation
  */
 int ActTransport::exec()
 {
@@ -899,10 +873,8 @@ int ActTransport::exec()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800B1434
- * Size:	0008A8
+/**
+ * @TODO: Documentation
  */
 int ActTransport::moveGuruGuru()
 {
@@ -1010,10 +982,8 @@ int ActTransport::moveGuruGuru()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800B1CDC
- * Size:	000318
+/**
+ * @TODO: Documentation
  */
 void ActTransport::decideGoal(Creature* cargo)
 {
@@ -1091,10 +1061,8 @@ void ActTransport::decideGoal(Creature* cargo)
 	STACK_PAD_VAR(1);
 }
 
-/*
- * --INFO--
- * Address:	800B1FF4
- * Size:	0001B8
+/**
+ * @TODO: Documentation
  */
 void ActTransport::cleanup()
 {
@@ -1116,10 +1084,8 @@ void ActTransport::cleanup()
 	mPellet.reset();
 }
 
-/*
- * --INFO--
- * Address:	800B21AC
- * Size:	0001D8
+/**
+ * @TODO: Documentation
  */
 Vector3f ActTransport::crGetPoint(int idx)
 {
@@ -1152,10 +1118,8 @@ Vector3f ActTransport::crGetPoint(int idx)
 	return wp->mPosition;
 }
 
-/*
- * --INFO--
- * Address:	800B2384
- * Size:	00008C
+/**
+ * @TODO: Documentation
  */
 bool ActTransport::crPointOpen(int idx)
 {
@@ -1191,10 +1155,8 @@ f32 ActTransport::crGetRadius(int idx)
 	return routeMgr->getWayPoint('test', mPiki->mPathBuffers[idx].mWayPointIdx)->mRadius;
 }
 
-/*
- * --INFO--
- * Address:	800B2410
- * Size:	000514
+/**
+ * @TODO: Documentation
  */
 void ActTransport::crInit()
 {
@@ -1263,10 +1225,8 @@ void ActTransport::crInit()
 	STACK_PAD_TERNARY(mPiki, 1);
 }
 
-/*
- * --INFO--
- * Address:	800B2924
- * Size:	000080
+/**
+ * @TODO: Documentation
  */
 void ActTransport::crMakeRefs()
 {
@@ -1275,10 +1235,8 @@ void ActTransport::crMakeRefs()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800B29A4
- * Size:	00032C
+/**
+ * @TODO: Documentation
  */
 void ActTransport::findObstacle()
 {
@@ -1306,10 +1264,8 @@ void ActTransport::findObstacle()
 	STACK_PAD_INLINE(2);
 }
 
-/*
- * --INFO--
- * Address:	800B2CD0
- * Size:	00094C
+/**
+ * @TODO: Documentation
  */
 bool ActTransport::crMove()
 {
@@ -1464,10 +1420,8 @@ bool ActTransport::crMove()
 #undef ASSERT_MVDIR_NOTNAN
 }
 
-/*
- * --INFO--
- * Address:	800B361C
- * Size:	0007C4
+/**
+ * @TODO: Documentation
  */
 void ActTransport::draw(Graphics& gfx)
 {
@@ -1562,10 +1516,8 @@ void ActTransport::draw(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800B3DE0
- * Size:	0006FC
+/**
+ * @TODO: Documentation
  */
 int ActTransport::moveToWayPoint()
 {

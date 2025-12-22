@@ -17,10 +17,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("alphaWipe")
 
-/*
- * --INFO--
- * Address:	801F19D8
- * Size:	000048
+/**
+ * @TODO: Documentation
  */
 zen::AlphaWipe::AlphaWipe()
 {
@@ -33,10 +31,8 @@ zen::AlphaWipe::AlphaWipe()
 	mEndColor.set(255, 255, 255, 255);
 }
 
-/*
- * --INFO--
- * Address:	801F1A20
- * Size:	00020C
+/**
+ * @TODO: Documentation
  */
 void zen::AlphaWipe::update()
 {
@@ -99,10 +95,8 @@ void zen::AlphaWipe::update()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801F1C2C
- * Size:	0000E4
+/**
+ * @TODO: Documentation
  */
 void zen::AlphaWipe::draw(Graphics& gfx)
 {
@@ -115,10 +109,8 @@ void zen::AlphaWipe::draw(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801F1D10
- * Size:	000050
+/**
+ * @TODO: Documentation
  */
 void zen::AlphaWipe::start(f32 totalDuration, f32 delay, zen::AlphaWipe::typeFlag type)
 {

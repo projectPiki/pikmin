@@ -157,20 +157,16 @@ void MovieInfo::refresh(Graphics&)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80076E34
- * Size:	0000BC
+/**
+ * @TODO: Documentation
  */
 MoviePlayer::MoviePlayer()
 {
 	mCamTransitionFactor = 0.0f;
 }
 
-/*
- * --INFO--
- * Address:	80076EF0
- * Size:	0000E0
+/**
+ * @TODO: Documentation
  */
 void MoviePlayer::resetMovieList()
 {
@@ -185,10 +181,8 @@ void MoviePlayer::resetMovieList()
 	mIsActive = false;
 }
 
-/*
- * --INFO--
- * Address:	80076FD0
- * Size:	000090
+/**
+ * @TODO: Documentation
  */
 void MoviePlayer::fixMovieList()
 {
@@ -218,10 +212,8 @@ MovieListInfo* MoviePlayer::findMovie(int id)
 	return movie;
 }
 
-/*
- * --INFO--
- * Address:	80077060
- * Size:	000100
+/**
+ * @TODO: Documentation
  */
 void MoviePlayer::initMovie(MovieInfo* info, int)
 {
@@ -408,10 +400,8 @@ int MoviePlayer::translateIndex(int idx, int stage)
 	return idx;
 }
 
-/*
- * --INFO--
- * Address:	80077160
- * Size:	00049C
+/**
+ * @TODO: Documentation
  */
 void MoviePlayer::startMovie(int movieIdx, int, Creature* target, immut Vector3f* pos, immut Vector3f* rot, u32 mask, bool isPlaying)
 {
@@ -540,10 +530,8 @@ void MoviePlayer::startMovie(int movieIdx, int, Creature* target, immut Vector3f
 	STACK_PAD_TERNARY(printToggle, 1);
 }
 
-/*
- * --INFO--
- * Address:	800775FC
- * Size:	000104
+/**
+ * @TODO: Documentation
  */
 void MoviePlayer::sndStartMovie(MovieInfo* info)
 {
@@ -566,10 +554,8 @@ void MoviePlayer::sndStartMovie(MovieInfo* info)
 	gsys->mPrevAllocType = old;
 }
 
-/*
- * --INFO--
- * Address:	80077700
- * Size:	000124
+/**
+ * @TODO: Documentation
  */
 void MoviePlayer::initMovieFlags(MovieInfo* info)
 {
@@ -617,10 +603,8 @@ void MoviePlayer::sndFrameMovie(MovieInfo*)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80077824
- * Size:	000064
+/**
+ * @TODO: Documentation
  */
 void MoviePlayer::sndStopMovie(MovieInfo* info)
 {
@@ -635,10 +619,8 @@ void MoviePlayer::sndStopMovie(MovieInfo* info)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80077888
- * Size:	0003CC
+/**
+ * @TODO: Documentation
  */
 void MoviePlayer::update()
 {
@@ -726,10 +708,8 @@ void MoviePlayer::update()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80077C54
- * Size:	0000AC
+/**
+ * @TODO: Documentation
  */
 void MoviePlayer::skipScene(int sceneSkipFlag)
 {
@@ -755,20 +735,16 @@ void MoviePlayer::skipScene(int sceneSkipFlag)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80077D00
- * Size:	00001C
+/**
+ * @TODO: Documentation
  */
 void MoviePlayer::getLookAtPos(Vector3f& pos)
 {
 	pos.set(mLookAtPos.x, mLookAtPos.y, mLookAtPos.z);
 }
 
-/*
- * --INFO--
- * Address:	80077D1C
- * Size:	000100
+/**
+ * @TODO: Documentation
  */
 bool MoviePlayer::setCamera(Graphics& gfx)
 {
@@ -786,10 +762,8 @@ bool MoviePlayer::setCamera(Graphics& gfx)
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	80077E1C
- * Size:	000060
+/**
+ * @TODO: Documentation
  */
 void MoviePlayer::addLights(Graphics& gfx)
 {
@@ -804,10 +778,8 @@ void MoviePlayer::addLights(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80077E7C
- * Size:	000074
+/**
+ * @TODO: Documentation
  */
 void MoviePlayer::refresh(Graphics& gfx)
 {

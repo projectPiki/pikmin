@@ -18,10 +18,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT(nullptr);
 
-/*
- * --INFO--
- * Address:	800E97AC
- * Size:	000158
+/**
+ * @TODO: Documentation
  */
 UfoShapeObject::UfoShapeObject(Shape* shape)
 {
@@ -46,10 +44,8 @@ immut char* PaniUfoAnimator::motionLabels[UfoMotion::COUNT] = {
 	"henka4a",  "henka4b", "takeoff-1", "takeoff-2", "takeoff-3", "takeoff-4", "takeoff-5", "open-close",
 };
 
-/*
- * --INFO--
- * Address:	800E992C
- * Size:	0002B0
+/**
+ * @TODO: Documentation
  */
 PaniMotionTable* PaniUfoAnimator::createMotionTable()
 {
@@ -75,19 +71,15 @@ PaniMotionTable* PaniUfoAnimator::createMotionTable()
 	return table;
 }
 
-/*
- * --INFO--
- * Address:	800E9BDC
- * Size:	00003C
+/**
+ * @TODO: Documentation
  */
 PaniUfoAnimator::PaniUfoAnimator()
 {
 }
 
-/*
- * --INFO--
- * Address:	800E9C18
- * Size:	00005C
+/**
+ * @TODO: Documentation
  */
 UfoAnimator::UfoAnimator()
 {
@@ -95,10 +87,8 @@ UfoAnimator::UfoAnimator()
 	mAnimSpeeds = new f32[8];
 }
 
-/*
- * --INFO--
- * Address:	800E9C74
- * Size:	0000A4
+/**
+ * @TODO: Documentation
  */
 void UfoAnimator::init(UfoShapeObject* shape, PaniMotionTable* table)
 {
@@ -109,10 +99,8 @@ void UfoAnimator::init(UfoShapeObject* shape, PaniMotionTable* table)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800E9D18
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 void UfoAnimator::startMotion(int id, PaniMotionInfo* info)
 {
@@ -121,30 +109,24 @@ void UfoAnimator::startMotion(int id, PaniMotionInfo* info)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800E9D50
- * Size:	000010
+/**
+ * @TODO: Documentation
  */
 void UfoAnimator::setMotionSpeed(int id, f32 speed)
 {
 	mAnimSpeeds[id] = speed;
 }
 
-/*
- * --INFO--
- * Address:	800E9D60
- * Size:	000014
+/**
+ * @TODO: Documentation
  */
 int UfoAnimator::getMotionIndex(int id)
 {
 	return mAnims[id].getCurrentMotionIndex();
 }
 
-/*
- * --INFO--
- * Address:	800E9D74
- * Size:	000048
+/**
+ * @TODO: Documentation
  */
 void UfoAnimator::stopAllMotions()
 {
@@ -153,10 +135,8 @@ void UfoAnimator::stopAllMotions()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800E9DBC
- * Size:	000120
+/**
+ * @TODO: Documentation
  */
 void UfoAnimator::initFlagMotions(int id)
 {
@@ -188,10 +168,8 @@ void UfoAnimator::initFlagMotions(int id)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800E9EDC
- * Size:	000144
+/**
+ * @TODO: Documentation
  */
 void UfoAnimator::startFlagMotions(int id)
 {
@@ -220,10 +198,8 @@ void UfoAnimator::startFlagMotions(int id)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800EA020
- * Size:	000088
+/**
+ * @TODO: Documentation
  */
 void UfoAnimator::setMotionLastFrame(int id)
 {
@@ -231,10 +207,8 @@ void UfoAnimator::setMotionLastFrame(int id)
 	mAnims[id].mAnimationCounter = (f32)mAnims[id].mAnimInfo->getKeyValue(keys - 1) - 1.0f;
 }
 
-/*
- * --INFO--
- * Address:	800EA0A8
- * Size:	000080
+/**
+ * @TODO: Documentation
  */
 void UfoAnimator::updateAnimation()
 {
@@ -243,10 +217,8 @@ void UfoAnimator::updateAnimation()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800EA128
- * Size:	000068
+/**
+ * @TODO: Documentation
  */
 void UfoAnimator::updateContext()
 {

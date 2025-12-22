@@ -21,10 +21,8 @@ DEFINE_PRINT("naviiMgr"); // epic typo
 
 NaviMgr* naviMgr;
 
-/*
- * --INFO--
- * Address:	801171C4
- * Size:	000180
+/**
+ * @TODO: Documentation
  */
 NaviMgr::NaviMgr()
 {
@@ -64,10 +62,8 @@ void NaviMgr::init()
 {
 }
 
-/*
- * --INFO--
- * Address:	80117344
- * Size:	000060
+/**
+ * @TODO: Documentation
  */
 Creature* NaviMgr::createObject()
 {
@@ -76,20 +72,16 @@ Creature* NaviMgr::createObject()
 	return navi;
 }
 
-/*
- * --INFO--
- * Address:	801173A4
- * Size:	000020
+/**
+ * @TODO: Documentation
  */
 void NaviMgr::update()
 {
 	MonoObjectMgr::update();
 }
 
-/*
- * --INFO--
- * Address:	801173C4
- * Size:	000074
+/**
+ * @TODO: Documentation
  */
 Navi* NaviMgr::getNavi()
 {
@@ -98,10 +90,8 @@ Navi* NaviMgr::getNavi()
 	return static_cast<Navi*>(*iter);
 }
 
-/*
- * --INFO--
- * Address:	80117438
- * Size:	000018
+/**
+ * @TODO: Documentation
  */
 Navi* NaviMgr::getNavi(int idx)
 {
@@ -112,10 +102,8 @@ Navi* NaviMgr::getNavi(int idx)
 	return static_cast<Navi*>(mObjectList[idx]);
 }
 
-/*
- * --INFO--
- * Address:	80117450
- * Size:	00011C
+/**
+ * @TODO: Documentation
  */
 void NaviMgr::refresh2d(Graphics& gfx)
 {
@@ -126,10 +114,8 @@ void NaviMgr::refresh2d(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8011756C
- * Size:	000110
+/**
+ * @TODO: Documentation
  */
 void NaviMgr::renderCircle(Graphics& gfx)
 {
@@ -140,10 +126,8 @@ void NaviMgr::renderCircle(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8011767C
- * Size:	00011C
+/**
+ * @TODO: Documentation
  */
 void NaviMgr::drawShadow(Graphics& gfx)
 {
@@ -154,10 +138,8 @@ void NaviMgr::drawShadow(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80117798
- * Size:	000030
+/**
+ * @TODO: Documentation
  */
 void NaviMgr::read(RandomAccessStream& input)
 {

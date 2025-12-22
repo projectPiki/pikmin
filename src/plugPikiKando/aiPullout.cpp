@@ -20,10 +20,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("aiPullout")
 
-/*
- * --INFO--
- * Address:	800BD670
- * Size:	000100
+/**
+ * @TODO: Documentation
  */
 ActPullout::ActPullout(Piki* piki)
     : AndAction(piki)
@@ -36,10 +34,8 @@ ActPullout::ActPullout(Piki* piki)
 	mTarget.clear();
 }
 
-/*
- * --INFO--
- * Address:	800BD770
- * Size:	000250
+/**
+ * @TODO: Documentation
  */
 void ActPullout::init(Creature* target)
 {
@@ -72,10 +68,8 @@ void ActPullout::init(Creature* target)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800BD9C0
- * Size:	0000DC
+/**
+ * @TODO: Documentation
  */
 int ActPullout::exec()
 {
@@ -103,10 +97,8 @@ int ActPullout::exec()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800BDA9C
- * Size:	000050
+/**
+ * @TODO: Documentation
  */
 void ActPullout::cleanup()
 {
@@ -115,10 +107,8 @@ void ActPullout::cleanup()
 	mTarget.reset();
 }
 
-/*
- * --INFO--
- * Address:	800BDAEC
- * Size:	000074
+/**
+ * @TODO: Documentation
  */
 void ActPulloutCreature::cleanup()
 {
@@ -132,10 +122,8 @@ void ActPulloutCreature::cleanup()
 	mTarget.reset();
 }
 
-/*
- * --INFO--
- * Address:	800BDB60
- * Size:	000078
+/**
+ * @TODO: Documentation
  */
 void ActPulloutCreature::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
@@ -153,20 +141,16 @@ void ActPulloutCreature::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800BDBD8
- * Size:	00005C
+/**
+ * @TODO: Documentation
  */
 ActPulloutCreature::ActPulloutCreature(Piki* piki)
     : Action(piki, true)
 {
 }
 
-/*
- * --INFO--
- * Address:	800BDC34
- * Size:	000094
+/**
+ * @TODO: Documentation
  */
 void ActPulloutCreature::init(Creature* target)
 {
@@ -176,10 +160,8 @@ void ActPulloutCreature::init(Creature* target)
 	mPulloutSuccess = false;
 }
 
-/*
- * --INFO--
- * Address:	800BDCC8
- * Size:	000240
+/**
+ * @TODO: Documentation
  */
 int ActPulloutCreature::exec()
 {

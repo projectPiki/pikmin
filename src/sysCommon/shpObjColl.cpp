@@ -57,10 +57,8 @@ void ObjCollInfo::saveini(immut char*, RandomAccessStream&)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80036124
- * Size:	000350
+/**
+ * @TODO: Documentation
  */
 void ObjCollInfo::loadini(CmdStream* cmdStream)
 {

@@ -121,10 +121,8 @@ bool Cylinder::collide(const Sphere& sphere, Vector3f& pushVector, f32& depth) i
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	80087360
- * Size:	00002C
+/**
+ * @TODO: Documentation
  */
 f32 Tube::getYRatio(f32 heightToCheck) immut
 {
@@ -136,10 +134,8 @@ f32 Tube::getYRatio(f32 heightToCheck) immut
 	return -1.0f;
 }
 
-/*
- * --INFO--
- * Address:	8008738C
- * Size:	00033C
+/**
+ * @TODO: Documentation
  */
 bool Tube::collide(const Sphere& sphere, Vector3f& pushVector, f32& depth) immut
 {
@@ -169,10 +165,8 @@ bool Tube::collide(const Sphere& sphere, Vector3f& pushVector, f32& depth) immut
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800876C8
- * Size:	0000E4
+/**
+ * @TODO: Documentation
  */
 f32 Cylinder::getPosRatio(const Vector3f& vec) immut
 {
@@ -182,10 +176,8 @@ f32 Cylinder::getPosRatio(const Vector3f& vec) immut
 	return dir.DP(vec - mStartPoint) / len;
 }
 
-/*
- * --INFO--
- * Address:	800877AC
- * Size:	0000E4
+/**
+ * @TODO: Documentation
  */
 f32 Tube::getPosRatio(const Vector3f& pos) immut
 {
@@ -206,10 +198,8 @@ f32 Tube::getRatioRadius(f32 ratio) immut
 	return (1.0f - ratio) * mStartRadius + ratio * mEndRadius;
 }
 
-/*
- * --INFO--
- * Address:	80087890
- * Size:	000238
+/**
+ * @TODO: Documentation
  */
 void Tube::getPosGradient(immut Vector3f& inputPos, f32 t, Vector3f& surfacePos, Vector3f& surfaceGrad) immut
 {
@@ -226,10 +216,8 @@ void Tube::getPosGradient(immut Vector3f& inputPos, f32 t, Vector3f& surfacePos,
 	surfaceGrad.normalise();
 }
 
-/*
- * --INFO--
- * Address:	80087AC8
- * Size:	0000F8
+/**
+ * @TODO: Documentation
  */
 Vector3f Tube::setPos(f32 t) immut
 {
@@ -249,10 +237,8 @@ void CollPartUpdater::updateCollPart(CollPart* part)
 	part->mRadius = getSize();
 }
 
-/*
- * --INFO--
- * Address:	80087BC0
- * Size:	000124
+/**
+ * @TODO: Documentation
  */
 bool CollPart::isStickable()
 {
@@ -282,10 +268,8 @@ bool CollPart::isStickable()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	80087CE4
- * Size:	00005C
+/**
+ * @TODO: Documentation
  */
 bool CollPart::isClimbable()
 {
@@ -305,10 +289,8 @@ bool CollPart::isDamagable()
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	80087D40
- * Size:	000050
+/**
+ * @TODO: Documentation
  */
 bool CollPart::isBouncy()
 {
@@ -318,10 +300,8 @@ bool CollPart::isBouncy()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	80087D90
- * Size:	000034
+/**
+ * @TODO: Documentation
  */
 int CollPart::getChildCount()
 {
@@ -332,10 +312,8 @@ int CollPart::getChildCount()
 	return -1;
 }
 
-/*
- * --INFO--
- * Address:	80087DC4
- * Size:	000028
+/**
+ * @TODO: Documentation
  */
 CollPart* CollPart::getChild()
 {
@@ -345,10 +323,8 @@ CollPart* CollPart::getChild()
 	return nullptr;
 }
 
-/*
- * --INFO--
- * Address:	80087DEC
- * Size:	00005C
+/**
+ * @TODO: Documentation
  */
 CollPart* CollPart::getChildAt(int idx)
 {
@@ -381,10 +357,8 @@ CollPart* CollPart::getNext()
 	return nullptr;
 }
 
-/*
- * --INFO--
- * Address:	80087E48
- * Size:	00003C
+/**
+ * @TODO: Documentation
  */
 CollPart::CollPart()
 {
@@ -396,40 +370,32 @@ CollPart::CollPart()
 	mIsStickEnabled               = true;
 }
 
-/*
- * --INFO--
- * Address:	80087E84
- * Size:	00001C
+/**
+ * @TODO: Documentation
  */
 immut char* CollPart::getTypeString()
 {
 	return _typeStr[mPartType];
 }
 
-/*
- * --INFO--
- * Address:	80087EA0
- * Size:	00003C
+/**
+ * @TODO: Documentation
  */
 ID32 CollPart::getID()
 {
 	return mCollInfo->mId;
 }
 
-/*
- * --INFO--
- * Address:	80087EDC
- * Size:	00003C
+/**
+ * @TODO: Documentation
  */
 ID32 CollPart::getCode()
 {
 	return mCollInfo->mCode;
 }
 
-/*
- * --INFO--
- * Address:	80087F18
- * Size:	000164
+/**
+ * @TODO: Documentation
  */
 Matrix4f CollPart::getMatrix()
 {
@@ -440,10 +406,8 @@ Matrix4f CollPart::getMatrix()
 	return outMat;
 }
 
-/*
- * --INFO--
- * Address:	8008807C
- * Size:	0004A4
+/**
+ * @TODO: Documentation
  */
 void CollPart::update(Graphics& gfx, bool p2)
 {
@@ -540,10 +504,8 @@ bool CollPart::collide(immut Vector3f& pos, f32 radius, Vector3f& pushVector)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	80088520
- * Size:	00066C
+/**
+ * @TODO: Documentation
  */
 bool CollPart::collide(CollPart* collidePart, Vector3f& pushVector)
 {
@@ -616,10 +578,8 @@ bool CollPart::collide(CollPart* collidePart, Vector3f& pushVector)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	80088B8C
- * Size:	0000A4
+/**
+ * @TODO: Documentation
  */
 void CollPart::makeTube(Tube& tube)
 {
@@ -669,10 +629,8 @@ bool CollPart::samePlatShape(Shape* shape)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80088C30
- * Size:	0000A0
+/**
+ * @TODO: Documentation
  */
 CollInfo::CollInfo(int maxParts)
 {
@@ -689,10 +647,8 @@ CollInfo::CollInfo(int maxParts)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80088CD0
- * Size:	000034
+/**
+ * @TODO: Documentation
  */
 void CollInfo::enableStick()
 {
@@ -701,10 +657,8 @@ void CollInfo::enableStick()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80088D04
- * Size:	000034
+/**
+ * @TODO: Documentation
  */
 void CollInfo::disableStick()
 {
@@ -777,10 +731,8 @@ void CollInfo::stopUpdateRec(int childIdx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80088D38
- * Size:	0001C0
+/**
+ * @TODO: Documentation
  */
 CollPart* CollInfo::checkCollisionSpecial(immut Vector3f& pos, f32 radius, CndCollPart* cond)
 {
@@ -805,20 +757,16 @@ CollPart* CollInfo::checkCollisionSpecialRec(int, immut Vector3f&, f32, CndCollP
 	return nullptr;
 }
 
-/*
- * --INFO--
- * Address:	80088F00
- * Size:	000028
+/**
+ * @TODO: Documentation
  */
 CollPart* CollInfo::checkCollision(Creature* creature, Vector3f& p2)
 {
 	return checkCollisionRec(creature, 0, p2);
 }
 
-/*
- * --INFO--
- * Address:	80088F28
- * Size:	000624
+/**
+ * @TODO: Documentation
  */
 CollPart* CollInfo::checkCollisionRec(Creature* collider, int childIdx, Vector3f& pushVector)
 {
@@ -840,20 +788,16 @@ CollPart* CollInfo::checkCollisionRec(Creature* collider, int childIdx, Vector3f
 	return nullptr;
 }
 
-/*
- * --INFO--
- * Address:	80089574
- * Size:	000034
+/**
+ * @TODO: Documentation
  */
 bool CollInfo::checkCollision(CollInfo* infoB, CollPart** outPartA, CollPart** outPartB, Vector3f& pushVector)
 {
 	return checkCollisionRec(infoB, 0, 0, outPartA, outPartB, pushVector);
 }
 
-/*
- * --INFO--
- * Address:	800895A8
- * Size:	000160
+/**
+ * @TODO: Documentation
  */
 bool CollInfo::checkCollisionRec(CollInfo* infoB, int partIdxA, int partIdxB, CollPart** outPartA, CollPart** outPartB,
                                  Vector3f& pushVector)
@@ -888,20 +832,16 @@ bool CollInfo::checkCollisionRec(CollInfo* infoB, int partIdxA, int partIdxB, Co
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	80089708
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 CollPart* CollInfo::getBoundingSphere()
 {
 	return &mCollParts[0];
 }
 
-/*
- * --INFO--
- * Address:	80089710
- * Size:	000060
+/**
+ * @TODO: Documentation
  */
 CollPart* CollInfo::getSphere(u32 id)
 {
@@ -913,10 +853,8 @@ CollPart* CollInfo::getSphere(u32 id)
 	return &mCollParts[idx];
 }
 
-/*
- * --INFO--
- * Address:	80089770
- * Size:	00017C
+/**
+ * @TODO: Documentation
  */
 CollPart* CollInfo::getNearestCollPart(immut Vector3f& pos, u32 tag)
 {
@@ -941,10 +879,8 @@ CollPart* CollInfo::getNearestCollPart(immut Vector3f& pos, u32 tag)
 	return nearestPart;
 }
 
-/*
- * --INFO--
- * Address:	800898EC
- * Size:	000130
+/**
+ * @TODO: Documentation
  */
 CollPart* CollInfo::getRandomCollPart(u32 tag)
 {
@@ -970,10 +906,8 @@ CollPart* CollInfo::getRandomCollPart(u32 tag)
 	return nullptr;
 }
 
-/*
- * --INFO--
- * Address:	80089A1C
- * Size:	0000D0
+/**
+ * @TODO: Documentation
  */
 CollPart* CollInfo::getPlatform(DynCollObject* obj)
 {
@@ -991,10 +925,8 @@ CollPart* CollInfo::getPlatform(DynCollObject* obj)
 	return nullptr;
 }
 
-/*
- * --INFO--
- * Address:	80089AEC
- * Size:	000064
+/**
+ * @TODO: Documentation
  */
 void CollInfo::updateInfo(Graphics& gfx, bool p2)
 {
@@ -1003,20 +935,16 @@ void CollInfo::updateInfo(Graphics& gfx, bool p2)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80089B50
- * Size:	000014
+/**
+ * @TODO: Documentation
  */
 bool CollInfo::hasInfo()
 {
 	return mPartsCount != 0;
 }
 
-/*
- * --INFO--
- * Address:	80089B64
- * Size:	0000A4
+/**
+ * @TODO: Documentation
  */
 void CollInfo::initInfo(Shape* shape, CollPart* parts, u32* ids)
 {
@@ -1082,10 +1010,8 @@ void CollInfo::makeTubes(u32 partID, int count)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80089C08
- * Size:	0000B0
+/**
+ * @TODO: Documentation
  */
 void CollInfo::makeTubesChild(u32 partID, int count)
 {
@@ -1107,10 +1033,8 @@ void CollInfo::makeTubesChild(u32 partID, int count)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80089CB8
- * Size:	000078
+/**
+ * @TODO: Documentation
  */
 void CollInfo::setUpdater(u32 id, CollPartUpdater* updater)
 {
@@ -1123,10 +1047,8 @@ void CollInfo::setUpdater(u32 id, CollPartUpdater* updater)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80089D30
- * Size:	0001BC
+/**
+ * @TODO: Documentation
  */
 void CollInfo::createPart(ObjCollInfo* objInfo, int p2, bool p3)
 {
@@ -1182,10 +1104,8 @@ void CollInfo::createPart(ObjCollInfo* objInfo, int p2, bool p3)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80089EEC
- * Size:	000044
+/**
+ * @TODO: Documentation
  */
 int CollInfo::getId2Index(u32 id)
 {
@@ -1214,10 +1134,8 @@ int CollInfo::getIndex(ObjCollInfo* objInfo)
 	return -1;
 }
 
-/*
- * --INFO--
- * Address:	80089F30
- * Size:	0000F8
+/**
+ * @TODO: Documentation
  */
 void CollInfo::makeTree()
 {

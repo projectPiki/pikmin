@@ -136,10 +136,8 @@ static BOOL VISetRegs(void)
 	return FALSE;
 }
 
-/*
- * --INFO--
- * Address:	8020247C
- * Size:	000210
+/**
+ * @TODO: Documentation
  */
 static void __VIRetraceHandler(__OSInterrupt interrupt, OSContext* context)
 {
@@ -210,10 +208,8 @@ VIRetraceCallback VISetPreRetraceCallback(VIRetraceCallback callback)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8020268C
- * Size:	000044
+/**
+ * @TODO: Documentation
  */
 VIRetraceCallback VISetPostRetraceCallback(VIRetraceCallback callback)
 {
@@ -231,10 +227,8 @@ VIRetraceCallback VISetPostRetraceCallback(VIRetraceCallback callback)
 
 #pragma dont_inline on
 
-/*
- * --INFO--
- * Address:	802026D0
- * Size:	000068
+/**
+ * @TODO: Documentation
  */
 static VITimingInfo* getTiming(VITVMode mode)
 {
@@ -263,10 +257,8 @@ static VITimingInfo* getTiming(VITVMode mode)
 
 #pragma dont_inline reset
 
-/*
- * --INFO--
- * Address:	80202738
- * Size:	0001E8
+/**
+ * @TODO: Documentation
  */
 void __VIInit(VITVMode mode)
 {
@@ -370,10 +362,8 @@ static void ImportAdjustingValues(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80202920
- * Size:	000438
+/**
+ * @TODO: Documentation
  */
 void VIInit(void)
 {
@@ -454,10 +444,8 @@ void VIInit(void)
 	__OSUnmaskInterrupts((0x80000000u >> (24)));
 }
 
-/*
- * --INFO--
- * Address:	80202D58
- * Size:	000054
+/**
+ * @TODO: Documentation
  */
 void VIWaitForRetrace(void)
 {
@@ -591,10 +579,8 @@ static void calcFbbs(u32 bufAddr, u16 panPosX, u16 panPosY, u8 wordPerLine, VIXF
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80202DAC
- * Size:	0002D4
+/**
+ * @TODO: Documentation
  */
 static void setFbbRegs(VIPositionInfo* hv, u32* tfbb, u32* bfbb, u32* rtfbb, u32* rbfbb)
 {
@@ -674,10 +660,8 @@ static void setHorizontalRegs(VITimingInfo* tm, u16 dispPosX, u16 dispSizeX)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80203080
- * Size:	0001A0
+/**
+ * @TODO: Documentation
  */
 static void setVerticalRegs(u16 dispPosY, u16 dispSizeY, u8 equ, u16 acv, u16 prbOdd, u16 prbEven, u16 psbOdd, u16 psbEven, BOOL black)
 {
@@ -729,10 +713,8 @@ static void setVerticalRegs(u16 dispPosY, u16 dispSizeY, u8 equ, u16 acv, u16 pr
 	changed |= VI_BITMASK(VI_VERT_TIMING_EVEN);
 }
 
-/*
- * --INFO--
- * Address:	80203220
- * Size:	00069C
+/**
+ * @TODO: Documentation
  */
 void VIConfigure(const GXRenderModeObj* obj)
 {
@@ -851,10 +833,8 @@ void VIConfigurePan(u16 panPosX, u16 panPosY, u16 panSizeX, u16 panSizeY)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	802038BC
- * Size:	00011C
+/**
+ * @TODO: Documentation
  */
 void VIFlush(void)
 {
@@ -880,10 +860,8 @@ void VIFlush(void)
 	OSRestoreInterrupts(enabled);
 }
 
-/*
- * --INFO--
- * Address:	802039D8
- * Size:	00006C
+/**
+ * @TODO: Documentation
  */
 void VISetNextFrameBuffer(void* fb)
 {
@@ -904,10 +882,8 @@ void VISetNextRightFrameBuffer(void* fb)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80203A44
- * Size:	00007C
+/**
+ * @TODO: Documentation
  */
 void VISetBlack(BOOL isBlack)
 {
@@ -932,10 +908,8 @@ void VISet3D(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80203AC0
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 u32 VIGetRetraceCount(void)
 {
@@ -965,10 +939,8 @@ static u32 getCurrentHalfLine(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80203AC8
- * Size:	0000BC
+/**
+ * @TODO: Documentation
  */
 static u32 getCurrentFieldEvenOdd()
 {
@@ -1015,20 +987,16 @@ u32 VIGetCurrentLine(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80203B84
- * Size:	00000C
+/**
+ * @TODO: Documentation
  */
 u32 VIGetTvFormat(void)
 {
 	return *(u32*)OSPhysicalToCached(0xCC);
 }
 
-/*
- * --INFO--
- * Address:	80203B90
- * Size:	00003C
+/**
+ * @TODO: Documentation
  */
 u32 VIGetDTVStatus(void)
 {

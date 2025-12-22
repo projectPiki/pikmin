@@ -1,9 +1,7 @@
 #include "PowerPC_EABI_Support/MetroTRK/trk.h"
 
-/*
- * --INFO--
- * Address:	8021E21C
- * Size:	0002D8
+/**
+ * @TODO: Documentation
  */
 DSError TRKSuppAccessFile(u32 file_handle, u8* data, size_t* count, u8* io_result, BOOL need_reply, BOOL read)
 {
@@ -97,10 +95,8 @@ DSError TRKSuppAccessFile(u32 file_handle, u8* data, size_t* count, u8* io_resul
 	return error;
 }
 
-/*
- * --INFO--
- * Address:	8021E4F4
- * Size:	0001A4
+/**
+ * @TODO: Documentation
  */
 DSError TRKRequestSend(TRKBuffer* msgBuf, int* bufferId, u32 p1, u32 p2, int p3)
 {

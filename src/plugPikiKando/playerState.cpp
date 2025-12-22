@@ -109,10 +109,8 @@ int TimeGraph::get(u16 time, int color)
 	return mEntries[time - mStartTime].get(color);
 }
 
-/*
- * --INFO--
- * Address:	8007F3B8
- * Size:	000058
+/**
+ * @TODO: Documentation
  */
 
 bool PlayerState::isEnding()
@@ -129,10 +127,8 @@ bool PlayerState::isEnding()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8007F410
- * Size:	00019C
+/**
+ * @TODO: Documentation
  */
 bool PlayerState::existUfoParts(u32 id)
 {
@@ -158,10 +154,8 @@ bool PlayerState::existUfoParts(u32 id)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8007F5AC
- * Size:	0001CC
+/**
+ * @TODO: Documentation
  */
 void PlayerState::initGame()
 {
@@ -211,10 +205,8 @@ void PlayerState::initGame()
 	mShipUpgradeLevel = 0;
 }
 
-/*
- * --INFO--
- * Address:	8007F778
- * Size:	000330
+/**
+ * @TODO: Documentation
  */
 PlayerState::PlayerState()
 {
@@ -270,10 +262,8 @@ PlayerState::PlayerState()
 	mShipUpgradeLevel = 0;
 }
 
-/*
- * --INFO--
- * Address:	8007FB44
- * Size:	000040
+/**
+ * @TODO: Documentation
  */
 bool PlayerState::courseOpen(int courseID)
 {
@@ -283,20 +273,16 @@ bool PlayerState::courseOpen(int courseID)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8007FB84
- * Size:	00001C
+/**
+ * @TODO: Documentation
  */
 bool PlayerState::happyEndable()
 {
 	return mRequiredUfoPartCount >= MIN_HAPPY_END_PARTS;
 }
 
-/*
- * --INFO--
- * Address:	8007FBA0
- * Size:	000074
+/**
+ * @TODO: Documentation
  */
 void PlayerState::setChallengeMode()
 {
@@ -325,10 +311,8 @@ void PlayerState::setDebugMode()
 	mIsChallengeMode = false;
 }
 
-/*
- * --INFO--
- * Address:	8007FC14
- * Size:	00000C
+/**
+ * @TODO: Documentation
  */
 int PlayerState::getPartsGetCount(int stageID)
 {
@@ -352,10 +336,8 @@ int PlayerState::getCardPikiCount(int color)
 	return GameStat::allPikis;
 }
 
-/*
- * --INFO--
- * Address:	8007FC20
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 int PlayerState::getCardUfoPartsCount()
 {
@@ -373,10 +355,8 @@ int PlayerState::getUfoPercentage()
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8007FC28
- * Size:	000084
+/**
+ * @TODO: Documentation
  */
 int PlayerState::getTotalPikiCount(int color)
 {
@@ -392,10 +372,8 @@ int PlayerState::getTotalPikiCount(int color)
 	return total;
 }
 
-/*
- * --INFO--
- * Address:	8007FCAC
- * Size:	0003FC
+/**
+ * @TODO: Documentation
  */
 void PlayerState::saveCard(RandomAccessStream& data)
 {
@@ -478,10 +456,8 @@ void PlayerState::saveCard(RandomAccessStream& data)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800800A8
- * Size:	0003CC
+/**
+ * @TODO: Documentation
  */
 void PlayerState::loadCard(RandomAccessStream& data)
 {
@@ -569,10 +545,8 @@ void PlayerState::loadCard(RandomAccessStream& data)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80080474
- * Size:	000044
+/**
+ * @TODO: Documentation
  */
 bool PlayerState::isTutorial()
 {
@@ -587,10 +561,8 @@ bool PlayerState::isTutorial()
 	return mIsTutorialMode;
 }
 
-/*
- * --INFO--
- * Address:	800804B8
- * Size:	00002C
+/**
+ * @TODO: Documentation
  */
 bool PlayerState::isGameCourse()
 {
@@ -598,10 +570,8 @@ bool PlayerState::isGameCourse()
 	return (val >= STAGE_START && val < STAGE_END);
 }
 
-/*
- * --INFO--
- * Address:	800804E4
- * Size:	000068
+/**
+ * @TODO: Documentation
  */
 bool PlayerState::checkLimitGenFlag(int id)
 {
@@ -611,10 +581,8 @@ bool PlayerState::checkLimitGenFlag(int id)
 	return mCourseFlags[flowCont.mCurrentStage->mStageIndex]->isFlag(id);
 }
 
-/*
- * --INFO--
- * Address:	8008054C
- * Size:	000080
+/**
+ * @TODO: Documentation
  */
 void PlayerState::setLimitGenFlag(int id)
 {
@@ -627,10 +595,8 @@ void PlayerState::setLimitGenFlag(int id)
 	STACK_PAD_VAR(2);
 }
 
-/*
- * --INFO--
- * Address:	800805CC
- * Size:	000020
+/**
+ * @TODO: Documentation
  */
 bool PlayerState::displayPikiCount(int color)
 {
@@ -641,10 +607,8 @@ bool PlayerState::displayPikiCount(int color)
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	800805EC
- * Size:	000018
+/**
+ * @TODO: Documentation
  */
 void PlayerState::setDisplayPikiCount(int color)
 {
@@ -662,10 +626,8 @@ void PlayerState::init()
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80080604
- * Size:	00005C
+/**
+ * @TODO: Documentation
  */
 bool PlayerState::hasUfoParts(u32 idx)
 {
@@ -678,10 +640,8 @@ bool PlayerState::hasUfoParts(u32 idx)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	80080660
- * Size:	0000E4
+/**
+ * @TODO: Documentation
  */
 void PlayerState::update()
 {
@@ -712,10 +672,8 @@ void PlayerState::update()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80080744
- * Size:	0001B0
+/**
+ * @TODO: Documentation
  */
 void PlayerState::initCourse()
 {
@@ -745,10 +703,8 @@ void PlayerState::initCourse()
 	mDemoFlags.initCourse();
 }
 
-/*
- * --INFO--
- * Address:	800808F4
- * Size:	0000D0
+/**
+ * @TODO: Documentation
  */
 void PlayerState::exitCourse()
 {
@@ -767,10 +723,8 @@ void PlayerState::exitCourse()
 	mIsTutorialMode = false;
 }
 
-/*
- * --INFO--
- * Address:	800809C4
- * Size:	000094
+/**
+ * @TODO: Documentation
  */
 void PlayerState::setNavi(bool doSet)
 {
@@ -787,10 +741,8 @@ void PlayerState::setNavi(bool doSet)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80080A58
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 int PlayerState::getFinalDeadPikis()
 {
@@ -807,10 +759,8 @@ int PlayerState::getFinalBornPikis()
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80080A60
- * Size:	000150
+/**
+ * @TODO: Documentation
  */
 void PlayerState::updateFinalResult()
 {
@@ -825,70 +775,56 @@ void PlayerState::updateFinalResult()
 	gameflow.mGamePrefs.addBornPikis(GameStat::bornPikis);
 }
 
-/*
- * --INFO--
- * Address:	80080BB0
- * Size:	000014
+/**
+ * @TODO: Documentation
  */
 int PlayerState::getCurrDay()
 {
 	return gameflow.mWorldClock.mCurrentDay - 1;
 }
 
-/*
- * --INFO--
- * Address:	80080BC4
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 int PlayerState::getTotalDays()
 {
 	return MAX_DAYS;
 }
 
-/*
- * --INFO--
- * Address:	80080BCC
- * Size:	000028
+/**
+ * @TODO: Documentation
  */
 int PlayerState::getStartHour()
 {
 	return gameflow.mParameters->mStartHour();
 }
 
-/*
- * --INFO--
- * Address:	80080BF4
- * Size:	000028
+/**
+ * @TODO: Documentation
  */
 int PlayerState::getEndHour()
 {
 	return gameflow.mParameters->mEndHour();
 }
 
-/*
- * --INFO--
- * Address:	80080C1C
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 int PlayerState::getPikiHourCount(int time, int color)
 {
 	return mPerHourGraph.get(time, color);
 }
 
-/*
- * --INFO--
- * Address:	80080C68
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 int PlayerState::getTotalParts()
 {
 	return mTotalParts;
 }
 
-/*
- * --INFO--
- * Address:	80080C70
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 int PlayerState::getCurrParts()
 {
@@ -905,10 +841,8 @@ int PlayerState::getRestParts()
 	return mTotalParts - mCurrParts;
 }
 
-/*
- * --INFO--
- * Address:	80080C78
- * Size:	000050
+/**
+ * @TODO: Documentation
  */
 bool PlayerState::isUfoBroken()
 {
@@ -927,10 +861,8 @@ bool PlayerState::isUfoBroken()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	80080CC8
- * Size:	0000C4
+/**
+ * @TODO: Documentation
  */
 void PlayerState::registerUfoParts(int repairAnimJointIndex, u32 modelID, u32 pelletID)
 {
@@ -954,10 +886,8 @@ void PlayerState::registerUfoParts(int repairAnimJointIndex, u32 modelID, u32 pe
 	mTotalRegisteredParts++;
 }
 
-/*
- * --INFO--
- * Address:	80080D8C
- * Size:	000074
+/**
+ * @TODO: Documentation
  */
 void PlayerState::UfoParts::initAnim(PelletShapeObject* shape)
 {
@@ -1005,10 +935,8 @@ void PlayerState::UfoParts::stopMotion()
 	mMotionSpeed = 30.0f;
 }
 
-/*
- * --INFO--
- * Address:	80080E00
- * Size:	0001F0
+/**
+ * @TODO: Documentation
  */
 void PlayerState::UfoParts::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
@@ -1065,10 +993,8 @@ void PlayerState::UfoParts::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 	STACK_PAD_VAR(2);
 }
 
-/*
- * --INFO--
- * Address:	80080FF0
- * Size:	0000D0
+/**
+ * @TODO: Documentation
  */
 void PlayerState::ufoAssignStart()
 {
@@ -1088,10 +1014,8 @@ void PlayerState::ufoAssignStart()
 	mCurrentRepairingPart = nullptr;
 }
 
-/*
- * --INFO--
- * Address:	800810C0
- * Size:	000084
+/**
+ * @TODO: Documentation
  */
 void PlayerState::startSpecialMotions()
 {
@@ -1101,10 +1025,8 @@ void PlayerState::startSpecialMotions()
 	startUfoPartsMotion(UFOID_GuardSatellite, PelletMotion::Special, false);
 }
 
-/*
- * --INFO--
- * Address:	80081144
- * Size:	0000C8
+/**
+ * @TODO: Documentation
  */
 void PlayerState::startAfterMotions()
 {
@@ -1118,10 +1040,8 @@ void PlayerState::startAfterMotions()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8008120C
- * Size:	00010C
+/**
+ * @TODO: Documentation
  */
 void PlayerState::startUfoPartsMotion(u32 id, int anim, bool wantPassiveMotion)
 {
@@ -1141,10 +1061,8 @@ void PlayerState::startUfoPartsMotion(u32 id, int anim, bool wantPassiveMotion)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80081318
- * Size:	000458
+/**
+ * @TODO: Documentation
  */
 void PlayerState::getUfoParts(u32 partID, bool isInvisiblePart)
 {
@@ -1278,10 +1196,8 @@ void PlayerState::getUfoParts(u32 partID, bool isInvisiblePart)
 	STACK_PAD_TERNARY(mCurrParts, 1);
 }
 
-/*
- * --INFO--
- * Address:	80081770
- * Size:	000058
+/**
+ * @TODO: Documentation
  */
 int PlayerState::getNextPowerupNumber()
 {
@@ -1295,10 +1211,8 @@ int PlayerState::getNextPowerupNumber()
 	return counts[mShipUpgradeLevel] - mCurrParts;
 }
 
-/*
- * --INFO--
- * Address:	800817C8
- * Size:	000100
+/**
+ * @TODO: Documentation
  */
 void PlayerState::preloadHenkaMovie()
 {
@@ -1339,10 +1253,8 @@ void PlayerState::lostUfoParts(u32 partID)
 	part->mPartVisType = PARTVIS_Visible;
 }
 
-/*
- * --INFO--
- * Address:	800818C8
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 PlayerState::UfoParts* PlayerState::findUfoParts(u32 partID)
 {
@@ -1354,10 +1266,8 @@ PlayerState::UfoParts* PlayerState::findUfoParts(u32 partID)
 	return nullptr;
 }
 
-/*
- * --INFO--
- * Address:	80081914
- * Size:	0002FC
+/**
+ * @TODO: Documentation
  */
 void PlayerState::renderParts(Graphics& gfx, Shape* shape)
 {

@@ -23,10 +23,8 @@ void fmin(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8021B1E8
- * Size:	000080
+/**
+ * @TODO: Documentation
  */
 int __fpclassifyd__Fd(f64 x)
 {

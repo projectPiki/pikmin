@@ -8,10 +8,8 @@
 #define SINTABLE_LENGTH (257)
 static f32 SINTABLE[SINTABLE_LENGTH];
 
-/*
- * --INFO--
- * Address:	8000DC20
- * Size:	000020
+/**
+ * @TODO: Documentation
  */
 f32 sqrtf2(f32 x)
 {
@@ -28,10 +26,8 @@ void cosf2(f32)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8000DCC0
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 f32 atanf2(f32 x, f32 y)
 {
@@ -48,10 +44,8 @@ void sinf2(f32)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8000DD00
- * Size:	000088
+/**
+ * @TODO: Documentation
  */
 void Jac_InitSinTable()
 {
@@ -60,10 +54,8 @@ void Jac_InitSinTable()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8000DDA0
- * Size:	000034
+/**
+ * @TODO: Documentation
  */
 f32 sinf3(f32 x)
 {

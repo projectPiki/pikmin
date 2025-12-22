@@ -19,10 +19,8 @@ DEFINE_ERROR(18)
  */
 DEFINE_PRINT("Enter")
 
-/*
- * --INFO--
- * Address:	800B7F64
- * Size:	000060
+/**
+ * @TODO: Documentation
  */
 ActEnter::ActEnter(Piki* piki)
     : Action(piki, true)
@@ -31,10 +29,8 @@ ActEnter::ActEnter(Piki* piki)
 	mCurrActionIdx = PikiAction::NOACTION;
 }
 
-/*
- * --INFO--
- * Address:	800B7FC4
- * Size:	0001F0
+/**
+ * @TODO: Documentation
  */
 void ActEnter::init(Creature* target)
 {
@@ -88,10 +84,8 @@ int ActEnter::routeMove()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800B81B4
- * Size:	0000CC
+/**
+ * @TODO: Documentation
  */
 void ActEnter::findLeg()
 {
@@ -104,10 +98,8 @@ void ActEnter::findLeg()
 	mLeg        = legs[randIdx];
 }
 
-/*
- * --INFO--
- * Address:	800B8280
- * Size:	0000E8
+/**
+ * @TODO: Documentation
  */
 int ActEnter::exec()
 {
@@ -133,10 +125,8 @@ int ActEnter::exec()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800B8368
- * Size:	000058
+/**
+ * @TODO: Documentation
  */
 void ActEnter::procCollideMsg(Piki*, MsgCollide* msg)
 {
@@ -146,10 +136,8 @@ void ActEnter::procCollideMsg(Piki*, MsgCollide* msg)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800B83C0
- * Size:	0001AC
+/**
+ * @TODO: Documentation
  */
 int ActEnter::gotoLeg()
 {
@@ -174,10 +162,8 @@ int ActEnter::gotoLeg()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800B856C
- * Size:	000234
+/**
+ * @TODO: Documentation
  */
 int ActEnter::climb()
 {
@@ -212,10 +198,8 @@ int ActEnter::climb()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800B87A0
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 void ActEnter::cleanup()
 {

@@ -21,10 +21,8 @@ DEFINE_ERROR(14)
  */
 DEFINE_PRINT("drawCMresult")
 
-/*
- * --INFO--
- * Address:	801EEB68
- * Size:	000A54
+/**
+ * @TODO: Documentation
  */
 zen::DrawCMresult::DrawCMresult()
 {
@@ -73,10 +71,8 @@ zen::DrawCMresult::DrawCMresult()
 	setMode(MODE_Sleep);
 }
 
-/*
- * --INFO--
- * Address:	801EF5BC
- * Size:	0000CC
+/**
+ * @TODO: Documentation
  */
 bool zen::DrawCMresult::update(Controller* controller)
 {
@@ -97,10 +93,8 @@ bool zen::DrawCMresult::update(Controller* controller)
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	801EF6D8
- * Size:	000098
+/**
+ * @TODO: Documentation
  */
 void zen::DrawCMresult::draw(Graphics& gfx)
 {
@@ -112,10 +106,8 @@ void zen::DrawCMresult::draw(Graphics& gfx)
 	mOptionSave->draw(gfx);
 }
 
-/*
- * --INFO--
- * Address:	801EF770
- * Size:	000170
+/**
+ * @TODO: Documentation
  */
 void zen::DrawCMresult::start(const GameChalQuickInfo& chalInfo)
 {
@@ -150,10 +142,8 @@ void zen::DrawCMresult::start(const GameChalQuickInfo& chalInfo)
 	mResultGraph->init();
 }
 
-/*
- * --INFO--
- * Address:	801EF8E0
- * Size:	0000BC
+/**
+ * @TODO: Documentation
  */
 void zen::DrawCMresult::makeResident()
 {
@@ -163,10 +153,8 @@ void zen::DrawCMresult::makeResident()
 	NumberTex::makeResident();
 }
 
-/*
- * --INFO--
- * Address:	801EF99C
- * Size:	00016C
+/**
+ * @TODO: Documentation
  */
 void zen::DrawCMresult::setMode(zen::DrawCMresult::modeFlag mode)
 {
@@ -206,20 +194,16 @@ void zen::DrawCMresult::setMode(zen::DrawCMresult::modeFlag mode)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801EFB08
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 bool zen::DrawCMresult::modeSleep(Controller*)
 {
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	801EFB10
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 bool zen::DrawCMresult::modeWaitAppear(Controller*)
 {
@@ -230,10 +214,8 @@ bool zen::DrawCMresult::modeWaitAppear(Controller*)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	801EFB5C
- * Size:	0000D8
+/**
+ * @TODO: Documentation
  */
 bool zen::DrawCMresult::modeAppear(Controller*)
 {
@@ -251,10 +233,8 @@ bool zen::DrawCMresult::modeAppear(Controller*)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	801EFC34
- * Size:	0000FC
+/**
+ * @TODO: Documentation
  */
 bool zen::DrawCMresult::modeOperation(Controller* controller)
 {
@@ -289,10 +269,8 @@ bool zen::DrawCMresult::modeOperation(Controller* controller)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	801EFD30
- * Size:	0000A4
+/**
+ * @TODO: Documentation
  */
 bool zen::DrawCMresult::modeSave(Controller* controller)
 {
@@ -325,10 +303,8 @@ bool zen::DrawCMresult::modeSave(Controller* controller)
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	801EFDD4
- * Size:	000378
+/**
+ * @TODO: Documentation
  */
 void zen::DrawCMresult::createRankInEffect()
 {

@@ -29,10 +29,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("pikiMgr");
 
-/*
- * --INFO--
- * Address:	800CDCD0
- * Size:	0000BC
+/**
+ * @TODO: Documentation
  */
 Creature* PikiMgr::birth()
 {
@@ -70,10 +68,8 @@ CPlate* PikiMgr::getFormationPikis()
 	return nullptr;
 }
 
-/*
- * --INFO--
- * Address:	800CDD8C
- * Size:	000258
+/**
+ * @TODO: Documentation
  */
 PikiMgr::PikiMgr(Navi* navi)
 {
@@ -99,10 +95,8 @@ PikiMgr::PikiMgr(Navi* navi)
 	mRefreshFlag = 0x1 | 0x2 | 0x4;
 }
 
-/*
- * --INFO--
- * Address:	800CED74
- * Size:	000018
+/**
+ * @TODO: Documentation
  */
 void PikiMgr::init()
 {
@@ -112,10 +106,8 @@ void PikiMgr::init()
 	PikiMgr::meBirthMode = false;
 }
 
-/*
- * --INFO--
- * Address:	800CED8C
- * Size:	00007C
+/**
+ * @TODO: Documentation
  */
 Creature* PikiMgr::createObject()
 {
@@ -136,20 +128,16 @@ bool PikiMgr::lostAllPikis()
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	800CEE08
- * Size:	000020
+/**
+ * @TODO: Documentation
  */
 void PikiMgr::update()
 {
 	MonoObjectMgr::update();
 }
 
-/*
- * --INFO--
- * Address:	800CEE28
- * Size:	000020
+/**
+ * @TODO: Documentation
  */
 void PikiMgr::refresh(Graphics& graphics)
 {
@@ -171,10 +159,8 @@ void PikiMgr::refresh2d(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800CEE48
- * Size:	000030
+/**
+ * @TODO: Documentation
  */
 void PikiMgr::read(RandomAccessStream& input)
 {
@@ -190,10 +176,8 @@ void PikiMgr::write(RandomAccessStream& output)
 }
 #endif
 
-/*
- * --INFO--
- * Address:	800CEEBC
- * Size:	000198
+/**
+ * @TODO: Documentation
  */
 void PikiMgr::dumpAll()
 {

@@ -157,10 +157,8 @@ struct TaiSwallowMissAttackingEffectAction : public TaiJointEffectAction {
 	// TODO: members
 };
 
-/*
- * --INFO--
- * Address:	8013F304
- * Size:	000084
+/**
+ * @TODO: Documentation
  */
 TaiSwallowSoundTable::TaiSwallowSoundTable()
     : PaniSoundTable(8)
@@ -170,10 +168,8 @@ TaiSwallowSoundTable::TaiSwallowSoundTable()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8013F388
- * Size:	000448
+/**
+ * @TODO: Documentation
  */
 TaiSwallowParameters::TaiSwallowParameters()
     : TekiParameters(TPI_COUNT, SWALLOWPF_COUNT)
@@ -246,10 +242,8 @@ TaiSwallowParameters::TaiSwallowParameters()
 	multiP->setF(SWALLOWPF_FlickLowerAngle, 360.0f);
 }
 
-/*
- * --INFO--
- * Address:	8013F7D0
- * Size:	00043C
+/**
+ * @TODO: Documentation
  */
 TaiBlackSwallowParameters::TaiBlackSwallowParameters()
     : TekiParameters(TPI_COUNT, SWALLOWPF_COUNT)
@@ -322,10 +316,8 @@ TaiBlackSwallowParameters::TaiBlackSwallowParameters()
 	multiP->setF(SWALLOWPF_FlickLowerAngle, 360.0f);
 }
 
-/*
- * --INFO--
- * Address:	8013FC0C
- * Size:	0016EC
+/**
+ * @TODO: Documentation
  */
 TaiSwallowStrategy::TaiSwallowStrategy(TekiParameters* params)
     : TaiStrategy(SWALLOWSTATE_COUNT, SWALLOWSTATE_Unk15)
@@ -607,10 +599,8 @@ TaiSwallowStrategy::TaiSwallowStrategy(TekiParameters* params)
 	setState(SWALLOWSTATE_Unk13, state);
 }
 
-/*
- * --INFO--
- * Address:	801412F8
- * Size:	000084
+/**
+ * @TODO: Documentation
  */
 void TaiSwallowStrategy::start(Teki& teki)
 {
@@ -619,10 +609,8 @@ void TaiSwallowStrategy::start(Teki& teki)
 	teki.stopParticleGenerator(0);
 }
 
-/*
- * --INFO--
- * Address:	8014137C
- * Size:	0000FC
+/**
+ * @TODO: Documentation
  */
 void TaiSwallowStrategy::draw(Teki& teki, Graphics& gfx)
 {
@@ -648,10 +636,8 @@ void TaiSwallowStrategy::draw(Teki& teki, Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80141478
- * Size:	000128
+/**
+ * @TODO: Documentation
  */
 bool TaiSwallowStrategy::interact(Teki& teki, immut TekiInteractionKey& key)
 {
@@ -682,30 +668,24 @@ bool TaiSwallowStrategy::interact(Teki& teki, immut TekiInteractionKey& key)
 	STACK_PAD_VAR(2);
 }
 
-/*
- * --INFO--
- * Address:	801415A0
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 bool TaiSwallowStrategy::isSleeping(Teki& teki)
 {
 	return teki.mStateID == SWALLOWSTATE_Unk15 || teki.mStateID == SWALLOWSTATE_Unk1;
 }
 
-/*
- * --INFO--
- * Address:	801415C4
- * Size:	000034
+/**
+ * @TODO: Documentation
  */
 void TaiSwallowStrategy::drawDebugInfo(Teki& teki, Graphics& gfx)
 {
 	teki.drawTekiDebugInfoDefault(gfx);
 }
 
-/*
- * --INFO--
- * Address:	801415F8
- * Size:	00001C
+/**
+ * @TODO: Documentation
  */
 bool TaiSwallowReceiveMessageAction::actByEvent(immut TekiEvent& event)
 {
@@ -717,10 +697,8 @@ bool TaiSwallowReceiveMessageAction::actByEvent(immut TekiEvent& event)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	80141614
- * Size:	0001DC
+/**
+ * @TODO: Documentation
  */
 bool TaiSwallowTurningAction::act(Teki& teki)
 {
@@ -760,10 +738,8 @@ bool TaiSwallowTurningAction::act(Teki& teki)
 	STACK_PAD_TERNARY(speed, 5);
 }
 
-/*
- * --INFO--
- * Address:	801417F0
- * Size:	000044
+/**
+ * @TODO: Documentation
  */
 void TaiSwallowFlickingAction::start(Teki& teki)
 {
@@ -771,20 +747,16 @@ void TaiSwallowFlickingAction::start(Teki& teki)
 	teki.clearTekiOption(BTeki::TEKI_OPTION_DAMAGE_COUNTABLE);
 }
 
-/*
- * --INFO--
- * Address:	80141834
- * Size:	000034
+/**
+ * @TODO: Documentation
  */
 void TaiSwallowFlickingAction::finish(Teki& teki)
 {
 	teki.setTekiOption(BTeki::TEKI_OPTION_DAMAGE_COUNTABLE);
 }
 
-/*
- * --INFO--
- * Address:	80141868
- * Size:	00007C
+/**
+ * @TODO: Documentation
  */
 bool TaiSwallowFlickingAction::act(Teki& teki)
 {
@@ -800,10 +772,8 @@ bool TaiSwallowFlickingAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	801418E4
- * Size:	0001DC
+/**
+ * @TODO: Documentation
  */
 void TaiSwallowFlickingAction::flick(Teki& teki)
 {
@@ -821,10 +791,8 @@ void TaiSwallowFlickingAction::flick(Teki& teki)
 	TekiNotCondition(nullptr);
 }
 
-/*
- * --INFO--
- * Address:	80141AC0
- * Size:	0001F0
+/**
+ * @TODO: Documentation
  */
 bool TaiSwallowSwallowingFlickAction::act(Teki& teki)
 {
@@ -847,10 +815,8 @@ bool TaiSwallowSwallowingFlickAction::act(Teki& teki)
 	TekiNotCondition(nullptr);
 }
 
-/*
- * --INFO--
- * Address:	80141CB0
- * Size:	000028
+/**
+ * @TODO: Documentation
  */
 void TaiSwallowSnoreAction::start(Teki& teki)
 {
@@ -858,10 +824,8 @@ void TaiSwallowSnoreAction::start(Teki& teki)
 	teki.startParticleGenerator(0);
 }
 
-/*
- * --INFO--
- * Address:	80141CD8
- * Size:	000028
+/**
+ * @TODO: Documentation
  */
 void TaiSwallowSnoreAction::finish(Teki& teki)
 {
@@ -869,10 +833,8 @@ void TaiSwallowSnoreAction::finish(Teki& teki)
 	teki.stopParticleGenerator(0);
 }
 
-/*
- * --INFO--
- * Address:	80141D00
- * Size:	0000C4
+/**
+ * @TODO: Documentation
  */
 bool TaiSwallowNoticeAction::act(Teki& teki)
 {
@@ -888,20 +850,16 @@ bool TaiSwallowNoticeAction::act(Teki& teki)
 	TekiRecognitionCondition(nullptr);
 }
 
-/*
- * --INFO--
- * Address:	80141DC4
- * Size:	000058
+/**
+ * @TODO: Documentation
  */
 TaiSwallowLegEffectAction::TaiSwallowLegEffectAction(f32 p1)
     : TaiJointEffectAction(p1, 2, 'lleg', 'rleg', 0, 0)
 {
 }
 
-/*
- * --INFO--
- * Address:	80141E1C
- * Size:	0000C4
+/**
+ * @TODO: Documentation
  */
 void TaiSwallowLegEffectAction::setType(Vector3f& effectPos, int type, int id)
 {
@@ -921,20 +879,16 @@ void TaiSwallowLegEffectAction::setType(Vector3f& effectPos, int type, int id)
 	rumbleMgr->start(RUMBLE_Unk15, 0, effectPos);
 }
 
-/*
- * --INFO--
- * Address:	80141EE0
- * Size:	000054
+/**
+ * @TODO: Documentation
  */
 TaiSwallowMissAttackingEffectAction::TaiSwallowMissAttackingEffectAction(f32 p1)
     : TaiJointEffectAction(p1, 1, 'hana', 0, 0, 0)
 {
 }
 
-/*
- * --INFO--
- * Address:	80141F34
- * Size:	00009C
+/**
+ * @TODO: Documentation
  */
 void TaiSwallowMissAttackingEffectAction::setType(Vector3f& effectPos, int type, int id)
 {

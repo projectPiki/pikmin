@@ -28,10 +28,8 @@ DEFINE_ERROR(20)
  */
 DEFINE_PRINT("aiCrowd")
 
-/*
- * --INFO--
- * Address:	800B5AAC
- * Size:	0000FC
+/**
+ * @TODO: Documentation
  */
 ActCrowd::ActCrowd(Piki* piki)
     : Action(piki, true)
@@ -42,20 +40,16 @@ ActCrowd::ActCrowd(Piki* piki)
 	mSelectAction = new ActBoreSelect(piki);
 }
 
-/*
- * --INFO--
- * Address:	800B5BA8
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 void ActCrowd::inform(int slotID)
 {
 	mCPlateSlotID = slotID;
 }
 
-/*
- * --INFO--
- * Address:	800B5BB0
- * Size:	00002C
+/**
+ * @TODO: Documentation
  */
 void ActCrowd::startSort()
 {
@@ -63,10 +57,8 @@ void ActCrowd::startSort()
 	mSelectAction->stop();
 }
 
-/*
- * --INFO--
- * Address:	800B5BDC
- * Size:	00015C
+/**
+ * @TODO: Documentation
  */
 void ActCrowd::init(Creature* target)
 {
@@ -147,10 +139,8 @@ void ActCrowd::setFormed()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800B5D38
- * Size:	0000E4
+/**
+ * @TODO: Documentation
  */
 void ActCrowd::procCollideMsg(Piki*, MsgCollide* msg)
 {
@@ -172,10 +162,8 @@ void ActCrowd::procCollideMsg(Piki*, MsgCollide* msg)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800B5E1C
- * Size:	000034
+/**
+ * @TODO: Documentation
  */
 void ActCrowd::procWallMsg(Piki*, MsgWall* msg)
 {
@@ -185,10 +173,8 @@ void ActCrowd::procWallMsg(Piki*, MsgWall* msg)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800B5E50
- * Size:	00011C
+/**
+ * @TODO: Documentation
  */
 void ActCrowd::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
@@ -216,10 +202,8 @@ void ActCrowd::procAnimMsg(Piki* piki, MsgAnim* msg)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800B5F6C
- * Size:	0000FC
+/**
+ * @TODO: Documentation
  */
 void ActCrowd::cleanup()
 {
@@ -242,10 +226,8 @@ void ActCrowd::cleanup()
 	GameStat::update();
 }
 
-/*
- * --INFO--
- * Address:	800B6068
- * Size:	00164C
+/**
+ * @TODO: Documentation
  */
 int ActCrowd::exec()
 {
@@ -551,10 +533,8 @@ int ActCrowd::exec()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800B76B4
- * Size:	000058
+/**
+ * @TODO: Documentation
  */
 void ActCrowd::startZawatuki()
 {
@@ -564,10 +544,8 @@ void ActCrowd::startZawatuki()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800B770C
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void ActCrowd::finishZawatuki()
 {

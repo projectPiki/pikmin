@@ -1,9 +1,7 @@
 #include "Dolphin/card.h"
 
-/*
- * --INFO--
- * Address:	8020D150
- * Size:	0001F0
+/**
+ * @TODO: Documentation
  */
 s32 CARDRenameAsync(s32 channel, const char* oldName, const char* newName, CARDCallback callback)
 {
@@ -70,10 +68,8 @@ s32 CARDRenameAsync(s32 channel, const char* oldName, const char* newName, CARDC
 	return result;
 }
 
-/*
- * --INFO--
- * Address:	8020D340
- * Size:	000048
+/**
+ * @TODO: Documentation
  */
 s32 CARDRename(s32 channel, const char* oldName, const char* newName)
 {

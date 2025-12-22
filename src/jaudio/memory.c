@@ -140,10 +140,8 @@ void Nas_HeapFree(ALHeap*)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80005640
- * Size:	00006C
+/**
+ * @TODO: Documentation
  */
 void* Nas_HeapAlloc(ALHeap* heap, s32 size)
 {
@@ -168,10 +166,8 @@ void* Nas_HeapAlloc(ALHeap* heap, s32 size)
 	return prev;
 }
 
-/*
- * --INFO--
- * Address:	800056C0
- * Size:	000058
+/**
+ * @TODO: Documentation
  */
 void Nas_HeapInit(ALHeap* heap, u8* p2, s32 p3)
 {

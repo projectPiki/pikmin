@@ -6,10 +6,8 @@ extern int __float_huge[];
 #define NAN      (*(f32*)__float_nan)
 #define INFINITY (*(f32*)__float_huge)
 
-/*
- * --INFO--
- * Address:	8021BEBC
- * Size:	000090
+/**
+ * @TODO: Documentation
  */
 f64 sqrt(f64 x)
 {

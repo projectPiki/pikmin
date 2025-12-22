@@ -15,10 +15,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT(nullptr)
 
-/*
- * --INFO--
- * Address:	800C1E24
- * Size:	000060
+/**
+ * @TODO: Documentation
  */
 ActRope::ActRope(Piki* piki)
     : Action(piki, true)
@@ -27,10 +25,8 @@ ActRope::ActRope(Piki* piki)
 	mCurrActionIdx = PikiAction::NOACTION;
 }
 
-/*
- * --INFO--
- * Address:	800C1E84
- * Size:	000178
+/**
+ * @TODO: Documentation
  */
 void ActRope::init(Creature*)
 {
@@ -53,10 +49,8 @@ void ActRope::init(Creature*)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800C1FFC
- * Size:	000070
+/**
+ * @TODO: Documentation
  */
 int ActRope::exec()
 {
@@ -68,10 +62,8 @@ int ActRope::exec()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800C206C
- * Size:	00009C
+/**
+ * @TODO: Documentation
  */
 void ActRope::cleanup()
 {

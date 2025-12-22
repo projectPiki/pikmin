@@ -19,10 +19,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("kmath")
 
-/*
- * --INFO--
- * Address:	801126C4
- * Size:	00005C
+/**
+ * @TODO: Documentation
  */
 bool isNan(f32 value)
 {
@@ -33,10 +31,8 @@ bool isNan(f32 value)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	80112720
- * Size:	00009C
+/**
+ * @TODO: Documentation
  */
 void makePostureMatrix(immut Vector3f& col0, immut Vector3f& col1, immut Vector3f& col2, Matrix4f& mtx)
 {
@@ -53,10 +49,8 @@ void makePostureMatrix(immut Vector3f& col0, immut Vector3f& col1, immut Vector3
 	mtx.mMtx[2][2] = col2.z;
 }
 
-/*
- * --INFO--
- * Address:	801127BC
- * Size:	0001B0
+/**
+ * @TODO: Documentation
  */
 f32 calcImpulse(immut Vector3f& relativePos, f32 mass, immut Vector3f& collisionNormal, immut Matrix4f& inertiaTensor,
                 immut Vector3f& relativeVel, immut Vector3f& separationVel)
@@ -76,10 +70,8 @@ f32 calcImpulse(immut Vector3f& relativePos, f32 mass, immut Vector3f& collision
 	return tmp / (angularComponent.DP(collisionNormal) + 1.0f / mass);
 }
 
-/*
- * --INFO--
- * Address:	8011296C
- * Size:	0001C0
+/**
+ * @TODO: Documentation
  */
 Vector3f CRSpline(f32 t, immut Vector3f* ctrlPts)
 {
@@ -94,10 +86,8 @@ Vector3f CRSpline(f32 t, immut Vector3f* ctrlPts)
 	return outVec;
 }
 
-/*
- * --INFO--
- * Address:	80112B2C
- * Size:	0001B8
+/**
+ * @TODO: Documentation
  */
 Vector3f CRSplineTangent(f32 t, immut Vector3f* ctrlPts)
 {
@@ -112,10 +102,8 @@ Vector3f CRSplineTangent(f32 t, immut Vector3f* ctrlPts)
 	return outVec;
 }
 
-/*
- * --INFO--
- * Address:	80112CE4
- * Size:	00022C
+/**
+ * @TODO: Documentation
  */
 Vector3f getThrowVelocity(immut Vector3f& startPos, f32 horizSpeed, immut Vector3f& targetPos, Vector3f NRef targetDir)
 {
@@ -146,10 +134,8 @@ Vector3f getThrowVelocity(immut Vector3f& startPos, f32 horizSpeed, immut Vector
 	return throwVel;
 }
 
-/*
- * --INFO--
- * Address:	80112F10
- * Size:	000254
+/**
+ * @TODO: Documentation
  */
 f32 getCameraSafeAngle(immut Vector3f& cameraPos, f32 checkDistance, f32 heightWeighting)
 {

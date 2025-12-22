@@ -20,10 +20,8 @@ static void __AIDHandler(s16 interrupt, OSContext* context);
 static void __AICallbackStackSwitch(register AIDCallback cb);
 static void __AI_SRC_INIT(void);
 
-/*
- * --INFO--
- * Address:	80206004
- * Size:	000044
+/**
+ * @TODO: Documentation
  */
 AIDCallback AIRegisterDMACallback(AIDCallback callback)
 {
@@ -37,10 +35,8 @@ AIDCallback AIRegisterDMACallback(AIDCallback callback)
 	return ret;
 }
 
-/*
- * --INFO--
- * Address:	80206048
- * Size:	000088
+/**
+ * @TODO: Documentation
  */
 void AIInitDMA(u32 address, u32 length)
 {
@@ -55,50 +51,40 @@ void AIInitDMA(u32 address, u32 length)
 	OSRestoreInterrupts(previousInterruptState);
 }
 
-/*
- * --INFO--
- * Address:	802060D0
- * Size:	000018
+/**
+ * @TODO: Documentation
  */
 void AIStartDMA(void)
 {
 	__DSPRegs[DSP_DMA_CONTROL_LEN] |= DSP_DMA_START_FLAG;
 }
 
-/*
- * --INFO--
- * Address:	802060E8
- * Size:	000010
+/**
+ * @TODO: Documentation
  */
 u32 AIGetStreamSampleCount(void)
 {
 	return __AIRegs[AI_SAMPLE_COUNTER];
 }
 
-/*
- * --INFO--
- * Address:	802060F8
- * Size:	000018
+/**
+ * @TODO: Documentation
  */
 void AIResetStreamSampleCount(void)
 {
 	__AIRegs[AI_CONTROL] = (__AIRegs[AI_CONTROL] & ~AI_CONTROL_STREAM_SAMPLE_COUNT) | AI_CONTROL_STREAM_SAMPLE_COUNT;
 }
 
-/*
- * --INFO--
- * Address:	80206110
- * Size:	000010
+/**
+ * @TODO: Documentation
  */
 u32 AIGetStreamTrigger(void)
 {
 	return (__AIRegs[AI_INTRPT_TIMING]);
 }
 
-/*
- * --INFO--
- * Address:	80206120
- * Size:	0000D8
+/**
+ * @TODO: Documentation
  */
 void AISetStreamPlayState(u32 playState)
 {
@@ -140,20 +126,16 @@ void AISetStreamPlayState(u32 playState)
 	}
 }
 
-/*
- * --INFO--
- * Address:	802061F8
- * Size:	000010
+/**
+ * @TODO: Documentation
  */
 u32 AIGetStreamPlayState(void)
 {
 	return __AIRegs[AI_CONTROL] & AI_CONTROL_PLAY_STATE;
 }
 
-/*
- * --INFO--
- * Address:	80206208
- * Size:	0000E0
+/**
+ * @TODO: Documentation
  */
 void AISetDSPSampleRate(u32 rate)
 {
@@ -202,20 +184,16 @@ void AISetDSPSampleRate(u32 rate)
 	}
 }
 
-/*
- * --INFO--
- * Address:	802062E8
- * Size:	000014
+/**
+ * @TODO: Documentation
  */
 u32 AIGetDSPSampleRate(void)
 {
 	return ((__AIRegs[AI_CONTROL] >> 6) & 1) ^ 1;
 }
 
-/*
- * --INFO--
- * Address:	802062FC
- * Size:	000028
+/**
+ * @TODO: Documentation
  */
 void AISetStreamSampleRate(u32 rate)
 {
@@ -224,10 +202,8 @@ void AISetStreamSampleRate(u32 rate)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80206324
- * Size:	0000D4
+/**
+ * @TODO: Documentation
  */
 static void __AI_set_stream_sample_rate(u32 rate)
 {
@@ -274,60 +250,48 @@ static void __AI_set_stream_sample_rate(u32 rate)
 	AISetStreamVolRight(rightVolume);
 }
 
-/*
- * --INFO--
- * Address:	802063F8
- * Size:	000010
+/**
+ * @TODO: Documentation
  */
 u32 AIGetStreamSampleRate(void)
 {
 	return (__AIRegs[AI_CONTROL] >> 1) & 1;
 }
 
-/*
- * --INFO--
- * Address:	80206408
- * Size:	00001C
+/**
+ * @TODO: Documentation
  */
 void AISetStreamVolLeft(u8 volume)
 {
 	__AIRegs[AI_VOLUME] = (__AIRegs[AI_VOLUME] & ~0xFF) | (volume & 0xFF);
 }
 
-/*
- * --INFO--
- * Address:	80206424
- * Size:	000010
+/**
+ * @TODO: Documentation
  */
 u8 AIGetStreamVolLeft(void)
 {
 	return __AIRegs[AI_VOLUME];
 }
 
-/*
- * --INFO--
- * Address:	80206434
- * Size:	00001C
+/**
+ * @TODO: Documentation
  */
 void AISetStreamVolRight(u8 volume)
 {
 	__AIRegs[AI_VOLUME] = (__AIRegs[AI_VOLUME] & ~0xFF00) | ((volume & 0xFF) << 8);
 }
 
-/*
- * --INFO--
- * Address:	80206450
- * Size:	000010
+/**
+ * @TODO: Documentation
  */
 u8 AIGetStreamVolRight(void)
 {
 	return __AIRegs[AI_VOLUME] >> 8;
 }
 
-/*
- * --INFO--
- * Address:	80206460
- * Size:	000164
+/**
+ * @TODO: Documentation
  */
 void AIInit(u8* stack)
 {
@@ -367,10 +331,8 @@ void AIInit(u8* stack)
 	__AI_init_flag = TRUE;
 }
 
-/*
- * --INFO--
- * Address:	802065C4
- * Size:	00007C
+/**
+ * @TODO: Documentation
  */
 static void __AISHandler(s16 interrupt, OSContext* context)
 {
@@ -385,10 +347,8 @@ static void __AISHandler(s16 interrupt, OSContext* context)
 	OSSetCurrentContext(context);
 }
 
-/*
- * --INFO--
- * Address:	80206640
- * Size:	000090
+/**
+ * @TODO: Documentation
  */
 static void __AIDHandler(s16 interrupt, OSContext* context)
 {
@@ -409,10 +369,8 @@ static void __AIDHandler(s16 interrupt, OSContext* context)
 	OSSetCurrentContext(context);
 }
 
-/*
- * --INFO--
- * Address:	802066D0
- * Size:	000058
+/**
+ * @TODO: Documentation
  */
 ASM static void __AICallbackStackSwitch(register AIDCallback cb)
 {
@@ -448,10 +406,8 @@ ASM static void __AICallbackStackSwitch(register AIDCallback cb)
 #endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address:	80206728
- * Size:	0001E4
+/**
+ * @TODO: Documentation
  */
 static void __AI_SRC_INIT(void)
 {

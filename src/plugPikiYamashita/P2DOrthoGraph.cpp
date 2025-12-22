@@ -23,10 +23,8 @@ P2DOrthoGraph::P2DOrthoGraph(const PUTRect& rect)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801AFCF0
- * Size:	0000C4
+/**
+ * @TODO: Documentation
  */
 P2DOrthoGraph::P2DOrthoGraph(int x0, int y0, int width, int height)
     : P2DGrafContext(x0, y0, width, height)
@@ -38,10 +36,8 @@ P2DOrthoGraph::P2DOrthoGraph(int x0, int y0, int width, int height)
 	mGrafType = P2DGRAF_Ortho;
 }
 
-/*
- * --INFO--
- * Address:	801AFDB4
- * Size:	0000D8
+/**
+ * @TODO: Documentation
  */
 void P2DOrthoGraph::setPort()
 {
@@ -79,10 +75,8 @@ void P2DOrthoGraph::setOrigin(int x, int y)
 	mLogicalViewBounds.add(-x, -y);
 }
 
-/*
- * --INFO--
- * Address:	801AFE8C
- * Size:	00003C
+/**
+ * @TODO: Documentation
  */
 void P2DOrthoGraph::setLookat()
 {
@@ -90,10 +84,8 @@ void P2DOrthoGraph::setLookat()
 	GXLoadPosMtxImm(mViewMtx.mMtx, 0);
 }
 
-/*
- * --INFO--
- * Address:	801AFEC8
- * Size:	00026C
+/**
+ * @TODO: Documentation
  */
 void P2DOrthoGraph::scissorBounds(PUTRect* outBounds, PUTRect* inBounds)
 {

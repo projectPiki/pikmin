@@ -29,10 +29,8 @@ TekiMessage::TekiMessage(int p1, NTeki* teki)
 	mTeki = teki;
 }
 
-/*
- * --INFO--
- * Address:	8014B9F8
- * Size:	000114
+/**
+ * @TODO: Documentation
  */
 NTeki::NTeki()
 {
@@ -42,10 +40,8 @@ NTeki::NTeki()
 	mSinWaveEvent    = new PeveHorizontalSinWaveEvent();
 }
 
-/*
- * --INFO--
- * Address:	8014BB0C
- * Size:	0001D4
+/**
+ * @TODO: Documentation
  */
 void NTeki::sendMessage(int msg)
 {
@@ -63,10 +59,8 @@ void NTeki::sendMessage(int msg)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8014BCE0
- * Size:	000054
+/**
+ * @TODO: Documentation
  */
 void NTeki::receiveMessage(immut TekiMessage& msg)
 {

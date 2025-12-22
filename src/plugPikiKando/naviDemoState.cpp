@@ -31,10 +31,8 @@ DEFINE_ERROR(41)
  */
 DEFINE_PRINT("naviDemo")
 
-/*
- * --INFO--
- * Address:	8010B0E0
- * Size:	000478
+/**
+ * @TODO: Documentation
  */
 void NaviDemoSunsetState::DemoStateMachine::init(NaviDemoSunsetState*)
 {
@@ -46,10 +44,8 @@ void NaviDemoSunsetState::DemoStateMachine::init(NaviDemoSunsetState*)
 	registerState(new SitState);
 }
 
-/*
- * --INFO--
- * Address:	8010B558
- * Size:	000090
+/**
+ * @TODO: Documentation
  */
 void NaviDemoSunsetState::GoState::init(NaviDemoSunsetState* state)
 {
@@ -57,10 +53,8 @@ void NaviDemoSunsetState::GoState::init(NaviDemoSunsetState* state)
 	_14 = false;
 }
 
-/*
- * --INFO--
- * Address:	8010B5E8
- * Size:	00034C
+/**
+ * @TODO: Documentation
  */
 void NaviDemoSunsetState::GoState::exec(NaviDemoSunsetState* state)
 {
@@ -93,10 +87,8 @@ void NaviDemoSunsetState::GoState::exec(NaviDemoSunsetState* state)
 	STACK_PAD_VAR(1);
 }
 
-/*
- * --INFO--
- * Address:	8010BA1C
- * Size:	00012C
+/**
+ * @TODO: Documentation
  */
 void NaviDemoSunsetState::GoState::procAnimMsg(NaviDemoSunsetState* state, MsgAnim* msg)
 {
@@ -118,19 +110,15 @@ void NaviDemoSunsetState::GoState::procAnimMsg(NaviDemoSunsetState* state, MsgAn
 	}
 }
 
-/*
- * --INFO--
- * Address:	8010BB48
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void NaviDemoSunsetState::GoState::cleanup(NaviDemoSunsetState*)
 {
 }
 
-/*
- * --INFO--
- * Address:	8010BB4C
- * Size:	000084
+/**
+ * @TODO: Documentation
  */
 void NaviDemoSunsetState::LookState::init(NaviDemoSunsetState* state)
 {
@@ -138,28 +126,22 @@ void NaviDemoSunsetState::LookState::init(NaviDemoSunsetState* state)
 	cameraMgr->mCamera->finishMotion();
 }
 
-/*
- * --INFO--
- * Address:	8010BBD0
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void NaviDemoSunsetState::LookState::exec(NaviDemoSunsetState*)
 {
 }
 
-/*
- * --INFO--
- * Address:	8010BBD4
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void NaviDemoSunsetState::LookState::cleanup(NaviDemoSunsetState*)
 {
 }
 
-/*
- * --INFO--
- * Address:	8010BBD8
- * Size:	00007C
+/**
+ * @TODO: Documentation
  */
 void NaviDemoSunsetState::LookState::procAnimMsg(NaviDemoSunsetState* state, MsgAnim* msg)
 {
@@ -174,10 +156,8 @@ void NaviDemoSunsetState::LookState::procAnimMsg(NaviDemoSunsetState* state, Msg
 	}
 }
 
-/*
- * --INFO--
- * Address:	8010BC54
- * Size:	00009C
+/**
+ * @TODO: Documentation
  */
 void NaviDemoSunsetState::WhistleState::init(NaviDemoSunsetState* state)
 {
@@ -186,19 +166,15 @@ void NaviDemoSunsetState::WhistleState::init(NaviDemoSunsetState* state)
 	flowCont._23C = 1;
 }
 
-/*
- * --INFO--
- * Address:	8010BCF0
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void NaviDemoSunsetState::WhistleState::exec(NaviDemoSunsetState*)
 {
 }
 
-/*
- * --INFO--
- * Address:	8010BCF4
- * Size:	0000C0
+/**
+ * @TODO: Documentation
  */
 void NaviDemoSunsetState::WhistleState::procAnimMsg(NaviDemoSunsetState* state, MsgAnim* msg)
 {
@@ -218,10 +194,8 @@ void NaviDemoSunsetState::WhistleState::procAnimMsg(NaviDemoSunsetState* state, 
 	}
 }
 
-/*
- * --INFO--
- * Address:	8010BDB4
- * Size:	0002C8
+/**
+ * @TODO: Documentation
  */
 void NaviDemoSunsetState::WhistleState::enterAllPikis(NaviDemoSunsetState* state)
 {
@@ -276,75 +250,59 @@ void NaviDemoSunsetState::WhistleState::enterAllPikis(NaviDemoSunsetState* state
 	}
 }
 
-/*
- * --INFO--
- * Address:	8010C07C
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void NaviDemoSunsetState::WhistleState::cleanup(NaviDemoSunsetState*)
 {
 }
 
-/*
- * --INFO--
- * Address:	8010C080
- * Size:	000078
+/**
+ * @TODO: Documentation
  */
 void NaviDemoSunsetState::WaitState::init(NaviDemoSunsetState* state)
 {
 	state->mNavi->startMotion(PaniMotionInfo(PIKIANIM_Wait, state->mNavi), PaniMotionInfo(PIKIANIM_Wait));
 }
 
-/*
- * --INFO--
- * Address:	8010C0F8
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void NaviDemoSunsetState::WaitState::exec(NaviDemoSunsetState*)
 {
 }
 
-/*
- * --INFO--
- * Address:	8010C0FC
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void NaviDemoSunsetState::WaitState::cleanup(NaviDemoSunsetState*)
 {
 }
 
-/*
- * --INFO--
- * Address:	8010C100
- * Size:	000078
+/**
+ * @TODO: Documentation
  */
 void NaviDemoSunsetState::SitState::init(NaviDemoSunsetState* state)
 {
 	state->mNavi->startMotion(PaniMotionInfo(PIKIANIM_Suwaru, state->mNavi), PaniMotionInfo(PIKIANIM_Suwaru));
 }
 
-/*
- * --INFO--
- * Address:	8010C178
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void NaviDemoSunsetState::SitState::exec(NaviDemoSunsetState*)
 {
 }
 
-/*
- * --INFO--
- * Address:	8010C17C
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void NaviDemoSunsetState::SitState::cleanup(NaviDemoSunsetState*)
 {
 }
 
-/*
- * --INFO--
- * Address:	8010C180
- * Size:	0000D4
+/**
+ * @TODO: Documentation
  */
 NaviDemoSunsetState::NaviDemoSunsetState()
     : NaviState(NAVISTATE_DemoSunset)
@@ -353,10 +311,8 @@ NaviDemoSunsetState::NaviDemoSunsetState()
 	mStateMachine->init(this);
 }
 
-/*
- * --INFO--
- * Address:	8010C254
- * Size:	000200
+/**
+ * @TODO: Documentation
  */
 void NaviDemoSunsetState::init(Navi* navi)
 {
@@ -385,10 +341,8 @@ void NaviDemoSunsetState::init(Navi* navi)
 	mOpenedAccount = false;
 }
 
-/*
- * --INFO--
- * Address:	8010C454
- * Size:	0004A0
+/**
+ * @TODO: Documentation
  */
 void NaviDemoSunsetState::setActors(Navi* navi)
 {
@@ -436,10 +390,8 @@ void NaviDemoSunsetState::setActors(Navi* navi)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8010C8F4
- * Size:	000160
+/**
+ * @TODO: Documentation
  */
 void NaviDemoSunsetState::exec(Navi* navi)
 {
@@ -468,10 +420,8 @@ void NaviDemoSunsetState::exec(Navi* navi)
 	mOpenedAccount = true;
 }
 
-/*
- * --INFO--
- * Address:	8010CA94
- * Size:	000218
+/**
+ * @TODO: Documentation
  */
 void NaviDemoSunsetState::cleanup(Navi* navi)
 {
@@ -492,10 +442,8 @@ void NaviDemoSunsetState::cleanup(Navi* navi)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8010CCAC
- * Size:	000034
+/**
+ * @TODO: Documentation
  */
 void NaviDemoSunsetState::procAnimMsg(Navi* navi, MsgAnim* msg)
 {

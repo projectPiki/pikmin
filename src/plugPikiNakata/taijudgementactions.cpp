@@ -19,10 +19,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("taijudgementactions")
 
-/*
- * --INFO--
- * Address:	8012F4CC
- * Size:	000050
+/**
+ * @TODO: Documentation
  */
 bool TaiVisibleTargetAction::act(Teki& teki)
 {
@@ -38,10 +36,8 @@ bool TaiVisibleTargetAction::act(Teki& teki)
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8012F51C
- * Size:	000050
+/**
+ * @TODO: Documentation
  */
 bool TaiContactTargetAction::act(Teki& teki)
 {
@@ -57,10 +53,8 @@ bool TaiContactTargetAction::act(Teki& teki)
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8012F56C
- * Size:	000050
+/**
+ * @TODO: Documentation
  */
 bool TaiSeparateTargetAction::act(Teki& teki)
 {
@@ -76,10 +70,8 @@ bool TaiSeparateTargetAction::act(Teki& teki)
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8012F5BC
- * Size:	000074
+/**
+ * @TODO: Documentation
  */
 bool TaiTargetLostAction::act(Teki& teki)
 {
@@ -96,30 +88,24 @@ bool TaiTargetLostAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8012F630
- * Size:	0000BC
+/**
+ * @TODO: Documentation
  */
 bool TaiOutsideTerritoryAction::act(Teki& teki)
 {
 	return teki.getTerritoryDistance() > mTerritoryRadius;
 }
 
-/*
- * --INFO--
- * Address:	8012F6EC
- * Size:	0000C0
+/**
+ * @TODO: Documentation
  */
 bool TaiInsideTerritoryAction::act(Teki& teki)
 {
 	return teki.getTerritoryDistance() <= mTerritoryRadius;
 }
 
-/*
- * --INFO--
- * Address:	8012F7AC
- * Size:	0000AC
+/**
+ * @TODO: Documentation
  */
 bool TaiTargetVisibleNaviPikiAction::act(Teki& teki)
 {
@@ -134,10 +120,8 @@ bool TaiTargetVisibleNaviPikiAction::act(Teki& teki)
 	TekiVisibleCondition(nullptr);
 }
 
-/*
- * --INFO--
- * Address:	8012F858
- * Size:	0000F0
+/**
+ * @TODO: Documentation
  */
 bool TaiTargetVisibleNaviAction::act(Teki& teki)
 {
@@ -154,10 +138,8 @@ bool TaiTargetVisibleNaviAction::act(Teki& teki)
 	TekiAndCondition(nullptr, nullptr);
 }
 
-/*
- * --INFO--
- * Address:	8012F948
- * Size:	000128
+/**
+ * @TODO: Documentation
  */
 bool TaiHasStickersInMouthAction::act(Teki& teki)
 {
@@ -178,10 +160,8 @@ bool TaiHasStickersInMouthAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8012FA70
- * Size:	000128
+/**
+ * @TODO: Documentation
  */
 bool TaiHasStickersOnBodyAction::act(Teki& teki)
 {

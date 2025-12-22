@@ -69,10 +69,8 @@ static BOOL DBGEXISync()
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	802214D8
- * Size:	000298
+/**
+ * @TODO: Documentation
  */
 static BOOL DBGEXIImm(void* buffer, s32 bytecounter, u32 write)
 {
@@ -146,10 +144,8 @@ static BOOL DBGWriteMailbox(u32 p1)
 	return IS_FALSE(total);
 }
 
-/*
- * --INFO--
- * Address:	80221770
- * Size:	0000AC
+/**
+ * @TODO: Documentation
  */
 static BOOL DBGReadMailbox(u32* p1)
 {
@@ -172,10 +168,8 @@ static BOOL DBGReadMailbox(u32* p1)
 	return IS_FALSE(total);
 }
 
-/*
- * --INFO--
- * Address:	8022181C
- * Size:	0000DC
+/**
+ * @TODO: Documentation
  */
 static BOOL DBGRead(u32 count, u32* buffer, s32 param3)
 {
@@ -208,10 +202,8 @@ static BOOL DBGRead(u32 count, u32* buffer, s32 param3)
 	return IS_FALSE(total);
 }
 
-/*
- * --INFO--
- * Address:	802218F8
- * Size:	0000DC
+/**
+ * @TODO: Documentation
  */
 static BOOL DBGWrite(u32 count, void* buffer, s32 param3)
 {
@@ -244,10 +236,8 @@ static BOOL DBGWrite(u32 count, void* buffer, s32 param3)
 	return IS_FALSE(total);
 }
 
-/*
- * --INFO--
- * Address:	802219D4
- * Size:	0000AC
+/**
+ * @TODO: Documentation
  */
 static BOOL DBGReadStatus(u32* p1)
 {
@@ -270,10 +260,8 @@ static BOOL DBGReadStatus(u32* p1)
 	return IS_FALSE(total);
 }
 
-/*
- * --INFO--
- * Address:	80221A80
- * Size:	00003C
+/**
+ * @TODO: Documentation
  */
 static void MWCallback(u32 a, OSContext* b)
 {
@@ -283,10 +271,8 @@ static void MWCallback(u32 a, OSContext* b)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80221ABC
- * Size:	000040
+/**
+ * @TODO: Documentation
  */
 static void DBGHandler(s16 a, OSContext* b)
 {
@@ -296,10 +282,8 @@ static void DBGHandler(s16 a, OSContext* b)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80221AFC
- * Size:	000078
+/**
+ * @TODO: Documentation
  */
 void DBInitComm(u8** a, MTRCallbackType b)
 {
@@ -317,10 +301,8 @@ void DBInitComm(u8** a, MTRCallbackType b)
 	OSRestoreInterrupts(interrupts);
 }
 
-/*
- * --INFO--
- * Address:	80221B74
- * Size:	000054
+/**
+ * @TODO: Documentation
  */
 void DBInitInterrupts(void)
 {
@@ -352,10 +334,8 @@ static void CheckMailBox(void)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80221BC8
- * Size:	00009C
+/**
+ * @TODO: Documentation
  */
 u32 DBQueryData(void)
 {
@@ -370,10 +350,8 @@ u32 DBQueryData(void)
 	return RecvDataLeng;
 }
 
-/*
- * --INFO--
- * Address:	80221C64
- * Size:	00008C
+/**
+ * @TODO: Documentation
  */
 BOOL DBRead(u32* buffer, s32 count)
 {
@@ -390,10 +368,8 @@ BOOL DBRead(u32* buffer, s32 count)
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80221CF0
- * Size:	000260
+/**
+ * @TODO: Documentation
  */
 BOOL DBWrite(const void* src, u32 size)
 {
@@ -431,10 +407,8 @@ BOOL DBWrite(const void* src, u32 size)
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80221F50
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void DBOpen(void)
 {

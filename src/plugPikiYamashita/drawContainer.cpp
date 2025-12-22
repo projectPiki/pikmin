@@ -28,10 +28,8 @@ Texture* zen::ArrowCenterCallBack::pDownTex;
 const f32 zen::WindowPaneMgr::weightPosLength  = 50.0f;
 const f32 zen::WindowPaneMgr::weightPosGravity = 9.8f;
 
-/*
- * --INFO--
- * Address:	801BA600
- * Size:	002CAC
+/**
+ * @TODO: Documentation
  */
 zen::DrawContainer::DrawContainer()
     : mZenController(nullptr)
@@ -137,10 +135,8 @@ zen::DrawContainer::DrawContainer()
 	mContainerTextures[2] = loadTexExp("screen/tex/p2b_c_y.bti", true, true);
 }
 
-/*
- * --INFO--
- * Address:	801BD5D4
- * Size:	0004B8
+/**
+ * @TODO: Documentation
  */
 void zen::DrawContainer::start(zen::DrawContainer::containerType color, int p2, int p3, int p4, int p5, int p6, int p7)
 {
@@ -190,10 +186,8 @@ void zen::DrawContainer::start(zen::DrawContainer::containerType color, int p2, 
 	}
 }
 
-/*
- * --INFO--
- * Address:	801BDBF0
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 void zen::DrawContainer::setDispParam()
 {
@@ -243,10 +237,8 @@ bool zen::DrawContainer::startStatus()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	801BDC28
- * Size:	000C20
+/**
+ * @TODO: Documentation
  */
 bool zen::DrawContainer::operationStatus()
 {
@@ -360,10 +352,8 @@ bool zen::DrawContainer::endStatus()
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	801BE848
- * Size:	00052C
+/**
+ * @TODO: Documentation
  */
 bool zen::DrawContainer::update(int& p1)
 {
@@ -398,10 +388,8 @@ bool zen::DrawContainer::update(int& p1)
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	801BF138
- * Size:	00005C
+/**
+ * @TODO: Documentation
  */
 void zen::DrawContainer::draw(Graphics& gfx)
 {

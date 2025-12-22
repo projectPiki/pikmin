@@ -90,10 +90,8 @@ void fgetws(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8021A690
- * Size:	000080
+/**
+ * @TODO: Documentation
  */
 int fwide(FILE* stream, int mode)
 {

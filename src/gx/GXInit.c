@@ -51,10 +51,8 @@ static void DisableWriteGatherPipe(void)
 	PPCMthid2(hid2);
 }
 
-/*
- * --INFO--
- * Address:	8020DB60
- * Size:	00007C
+/**
+ * @TODO: Documentation
  */
 static GXTexRegion* __GXDefaultTexRegionCallback(GXTexObj* t_obj, GXTexMapID unused)
 {
@@ -67,10 +65,8 @@ static GXTexRegion* __GXDefaultTexRegionCallback(GXTexObj* t_obj, GXTexMapID unu
 	}
 }
 
-/*
- * --INFO--
- * Address:	8020DBDC
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 static GXTlutRegion* __GXDefaultTlutRegionCallback(u32 idx)
 {
@@ -82,10 +78,8 @@ static GXTlutRegion* __GXDefaultTlutRegionCallback(u32 idx)
 
 GXFifoObj FifoObj;
 
-/*
- * --INFO--
- * Address:	8020DC00
- * Size:	000F40
+/**
+ * @TODO: Documentation
  */
 GXFifoObj* GXInit(void* base, u32 size)
 {

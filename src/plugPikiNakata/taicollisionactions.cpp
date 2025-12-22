@@ -17,30 +17,24 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("taicollisionactions")
 
-/*
- * --INFO--
- * Address:	8012E48C
- * Size:	000014
+/**
+ * @TODO: Documentation
  */
 bool TaiBounceAction::actByEvent(immut TekiEvent& event)
 {
 	return event.mEventType == TekiEventType::Ground;
 }
 
-/*
- * --INFO--
- * Address:	8012E4A0
- * Size:	000014
+/**
+ * @TODO: Documentation
  */
 bool TaiGroundCollisionAction::actByEvent(immut TekiEvent& event)
 {
 	return event.mEventType == TekiEventType::Ground;
 }
 
-/*
- * --INFO--
- * Address:	8012E4B4
- * Size:	000014
+/**
+ * @TODO: Documentation
  */
 bool TaiWallCollisionAction::actByEvent(immut TekiEvent& event)
 {
@@ -48,20 +42,16 @@ bool TaiWallCollisionAction::actByEvent(immut TekiEvent& event)
 	return event.mEventType == TekiEventType::Wall;
 }
 
-/*
- * --INFO--
- * Address:	8012E4C8
- * Size:	000014
+/**
+ * @TODO: Documentation
  */
 bool TaiCreatureCollisionAction::actByEvent(immut TekiEvent& event)
 {
 	return event.mEventType == TekiEventType::Entity;
 }
 
-/*
- * --INFO--
- * Address:	8012E4DC
- * Size:	00003C
+/**
+ * @TODO: Documentation
  */
 bool TaiPikiCollisionAction::actByEvent(immut TekiEvent& event)
 {
@@ -77,10 +67,8 @@ bool TaiPikiCollisionAction::actByEvent(immut TekiEvent& event)
 	return event.mOther->mObjType == OBJTYPE_Piki;
 }
 
-/*
- * --INFO--
- * Address:	8012E518
- * Size:	00003C
+/**
+ * @TODO: Documentation
  */
 bool TaiNaviCollisionAction::actByEvent(immut TekiEvent& event)
 {
@@ -96,10 +84,8 @@ bool TaiNaviCollisionAction::actByEvent(immut TekiEvent& event)
 	return event.mOther->mObjType == OBJTYPE_Navi;
 }
 
-/*
- * --INFO--
- * Address:	8012E554
- * Size:	000054
+/**
+ * @TODO: Documentation
  */
 bool TaiTekiTypeCollisionAction::actByEvent(immut TekiEvent& event)
 {

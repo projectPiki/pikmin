@@ -66,10 +66,8 @@ void zen::setOffsetSub(P2DPicture* pic)
 	pic->setOffset(x / 2, y / 2);
 }
 
-/*
- * --INFO--
- * Address:	801850A0
- * Size:	000970
+/**
+ * @TODO: Documentation
  */
 zen::ogRaderMgr::ogRaderMgr()
 {
@@ -232,10 +230,8 @@ void zen::ogRaderMgr::chaseRaderScale(f32 scale)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80185A10
- * Size:	00008C
+/**
+ * @TODO: Documentation
  */
 void zen::ogRaderMgr::setRaderAngle(f32 angle)
 {
@@ -243,10 +239,8 @@ void zen::ogRaderMgr::setRaderAngle(f32 angle)
 	_58->rotate(P2DROTATE_Unk2, angle);
 }
 
-/*
- * --INFO--
- * Address:	80185A9C
- * Size:	000098
+/**
+ * @TODO: Documentation
  */
 void zen::ogRaderMgr::setRaderScroll(int x, int y)
 {
@@ -326,10 +320,8 @@ void zen::ogRaderMgr::getRocketPos()
 	_7C->setScale(10.0f / _428);
 }
 
-/*
- * --INFO--
- * Address:	80185B34
- * Size:	000220
+/**
+ * @TODO: Documentation
  */
 void zen::ogRaderMgr::getPartsPos()
 {
@@ -349,10 +341,8 @@ void zen::ogRaderMgr::getPartsPos()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80185D54
- * Size:	0004E4
+/**
+ * @TODO: Documentation
  */
 void zen::ogRaderMgr::getAllPikiPos()
 {
@@ -394,10 +384,8 @@ void zen::ogRaderMgr::getAllPikiPos()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80186238
- * Size:	0005D4
+/**
+ * @TODO: Documentation
  */
 void zen::ogRaderMgr::startSub()
 {
@@ -451,10 +439,8 @@ void zen::ogRaderMgr::start()
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80186854
- * Size:	000128
+/**
+ * @TODO: Documentation
  */
 void zen::ogRaderMgr::startMenu(P2DPane* pane)
 {
@@ -482,10 +468,8 @@ void zen::ogRaderMgr::startMenu(P2DPane* pane)
 	STACK_PAD_VAR(2);
 }
 
-/*
- * --INFO--
- * Address:	8018697C
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 void zen::ogRaderMgr::MapOn()
 {
@@ -506,10 +490,8 @@ void zen::ogRaderMgr::MapOff()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801869A0
- * Size:	000168
+/**
+ * @TODO: Documentation
  */
 void zen::ogRaderMgr::updateGame(Controller* input)
 {
@@ -547,10 +529,8 @@ void zen::ogRaderMgr::updateGame(Controller* input)
 
 #if defined(VERSION_PIKIDEMO)
 #else
-/*
- * --INFO--
- * Address:	80186B08
- * Size:	000100
+/**
+ * @TODO: Documentation
  */
 void zen::ogRaderMgr::AreaScroll(f32* p1, f32* p2, f32 p3, f32 p4)
 {
@@ -576,10 +556,8 @@ void zen::ogRaderMgr::AreaScroll(f32* p1, f32* p2, f32 p3, f32 p4)
 }
 #endif
 
-/*
- * --INFO--
- * Address:	80186C08
- * Size:	000298
+/**
+ * @TODO: Documentation
  */
 void zen::ogRaderMgr::updateMenu(Controller* input)
 {
@@ -730,10 +708,8 @@ void zen::ogRaderMgr::updateMenu(Controller* input)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80186EA0
- * Size:	000748
+/**
+ * @TODO: Documentation
  */
 zen::ogRaderMgr::RaderStatus zen::ogRaderMgr::update(Controller* input)
 {
@@ -861,10 +837,8 @@ void zen::ogRaderMgr::DrawCircle(u8, u8, u8, u8, f32)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801875E8
- * Size:	00003C
+/**
+ * @TODO: Documentation
  */
 void zen::ogRaderMgr::end()
 {
@@ -874,10 +848,8 @@ void zen::ogRaderMgr::end()
 	seSystem->stopSysSe(SYSSE_YMENU_ZOOMOUT);
 }
 
-/*
- * --INFO--
- * Address:	80187624
- * Size:	00016C
+/**
+ * @TODO: Documentation
  */
 void zen::ogRaderMgr::draw(Graphics& gfx)
 {

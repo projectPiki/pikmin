@@ -16,10 +16,8 @@ void Jac_Pause(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80017460
- * Size:	000070
+/**
+ * @TODO: Documentation
  */
 void Jac_StreamMovieInit(immut char* filepath, u8* param_2, int param_3)
 {
@@ -31,10 +29,8 @@ void Jac_StreamMovieInit(immut char* filepath, u8* param_2, int param_3)
 	Jac_UpdateStreamLevel();
 }
 
-/*
- * --INFO--
- * Address:	800174E0
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 void Jac_StreamMovieStop(void)
 {
@@ -45,20 +41,16 @@ void Jac_StreamMovieStop(void)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80017540
- * Size:	000020
+/**
+ * @TODO: Documentation
  */
 void Jac_StreamMovieUpdate(void)
 {
 	Jac_HVQM_Update();
 }
 
-/*
- * --INFO--
- * Address:	80017560
- * Size:	000064
+/**
+ * @TODO: Documentation
  */
 int Jac_StreamMovieGetPicture(void* p1, int* p2, int* p3)
 {

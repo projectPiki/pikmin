@@ -363,20 +363,16 @@ void MemoryCard::GetBlockSize(s32)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	800738C8
- * Size:	00000C
+/**
+ * @TODO: Documentation
  */
 int MemoryCard::getOptionsOffset(int id)
 {
 	return id * 0x2000 + 0x2000;
 }
 
-/*
- * --INFO--
- * Address:	800738D4
- * Size:	00000C
+/**
+ * @TODO: Documentation
  */
 int MemoryCard::getGameFileOffset(int id)
 {
@@ -454,10 +450,8 @@ RamStream* MemoryCard::getGameFileStream(int idx)
 	return new RamStream(getGameFilePtr(idx), 0x8000);
 }
 
-/*
- * --INFO--
- * Address:	800738E0
- * Size:	00017C
+/**
+ * @TODO: Documentation
  */
 u32 MemoryCard::calcChecksum(void* dataptr, u32 length)
 {
@@ -472,10 +466,8 @@ u32 MemoryCard::calcChecksum(void* dataptr, u32 length)
 	return sum;
 }
 
-/*
- * --INFO--
- * Address:	80073A5C
- * Size:	000070
+/**
+ * @TODO: Documentation
  */
 bool MemoryCard::hasCardFinished()
 {
@@ -556,10 +548,8 @@ void MemoryCard::writeOneGameFile(int idx)
 	CardUtilWrite(0, mSaveFileIndex, &cardData[getGameFileOffset(idx)], getGameFileOffset(idx), 0x8000);
 }
 
-/*
- * --INFO--
- * Address:	80073ACC
- * Size:	000134
+/**
+ * @TODO: Documentation
  */
 bool MemoryCard::attemptFormatCard(int channel)
 {
@@ -599,10 +589,8 @@ bool MemoryCard::attemptFormatCard(int channel)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	80073C00
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 s32 MemoryCard::waitWhileBusy(int chan)
 {
@@ -613,10 +601,8 @@ s32 MemoryCard::waitWhileBusy(int chan)
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	80073C38
- * Size:	0001BC
+/**
+ * @TODO: Documentation
  */
 bool MemoryCard::getCardStatus(int channel)
 {
@@ -675,10 +661,8 @@ bool MemoryCard::getCardStatus(int channel)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	80073DF4
- * Size:	0000FC
+/**
+ * @TODO: Documentation
  */
 void MemoryCard::checkUseFile()
 {
@@ -707,10 +691,8 @@ void MemoryCard::checkUseFile()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80073EF0
- * Size:	000174
+/**
+ * @TODO: Documentation
  */
 s32 MemoryCard::getMemoryCardState(bool flag)
 {
@@ -763,10 +745,8 @@ s32 MemoryCard::getMemoryCardState(bool flag)
 	return mErrorCode;
 }
 
-/*
- * --INFO--
- * Address:	80074064
- * Size:	0000B0
+/**
+ * @TODO: Documentation
  */
 void MemoryCard::loadCurrentFile()
 {
@@ -784,10 +764,8 @@ void MemoryCard::loadCurrentFile()
 	OSTicksToCalendarTime(time, &calendar);
 }
 
-/*
- * --INFO--
- * Address:	80074114
- * Size:	0001DC
+/**
+ * @TODO: Documentation
  */
 s32 MemoryCard::getNewestOptionsIndex()
 {
@@ -814,10 +792,8 @@ s32 MemoryCard::getNewestOptionsIndex()
 	STACK_PAD_VAR(8);
 }
 
-/*
- * --INFO--
- * Address:	800742F0
- * Size:	0000A4
+/**
+ * @TODO: Documentation
  */
 void MemoryCard::loadOptions()
 {
@@ -830,10 +806,8 @@ void MemoryCard::loadOptions()
 	STACK_PAD_VAR(6);
 }
 
-/*
- * --INFO--
- * Address:	80074394
- * Size:	0000D4
+/**
+ * @TODO: Documentation
  */
 void MemoryCard::saveOptions()
 {
@@ -851,10 +825,8 @@ void MemoryCard::saveOptions()
 	STACK_PAD_VAR(2);
 }
 
-/*
- * --INFO--
- * Address:	80074468
- * Size:	0000AC
+/**
+ * @TODO: Documentation
  */
 void MemoryCard::loadCurrentGame()
 {
@@ -865,10 +837,8 @@ void MemoryCard::loadCurrentGame()
 	STACK_PAD_VAR(2);
 }
 
-/*
- * --INFO--
- * Address:	80074514
- * Size:	000424
+/**
+ * @TODO: Documentation
  */
 void MemoryCard::saveCurrentGame()
 {
@@ -901,10 +871,8 @@ void MemoryCard::saveCurrentGame()
 	STACK_PAD_VAR(10);
 }
 
-/*
- * --INFO--
- * Address:	80074938
- * Size:	000128
+/**
+ * @TODO: Documentation
  */
 void MemoryCard::writeCurrentGame(RandomAccessStream* output, PlayState& playState)
 {
@@ -921,10 +889,8 @@ void MemoryCard::writeCurrentGame(RandomAccessStream* output, PlayState& playSta
 	}
 }
 
-/*
- * --INFO--
- * Address:	80074A60
- * Size:	000070
+/**
+ * @TODO: Documentation
  */
 void MemoryCard::readCurrentGame(RandomAccessStream* data)
 {
@@ -936,10 +902,8 @@ void MemoryCard::readCurrentGame(RandomAccessStream* data)
 	gameflow.mWorldClock.mCurrentDay = gameflow.mPlayState.mSavedDay;
 }
 
-/*
- * --INFO--
- * Address:	80074AD0
- * Size:	0003B0
+/**
+ * @TODO: Documentation
  */
 void MemoryCard::initBannerArea(CARDStat& state, immut char* p2)
 {
@@ -1014,10 +978,8 @@ void MemoryCard::initFileArea(int idx, int p2)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80074E80
- * Size:	000210
+/**
+ * @TODO: Documentation
  */
 void MemoryCard::initOptionsArea(int idx)
 {
@@ -1030,10 +992,8 @@ void MemoryCard::initOptionsArea(int idx)
 	STACK_PAD_VAR(4);
 }
 
-/*
- * --INFO--
- * Address:	80075090
- * Size:	000414
+/**
+ * @TODO: Documentation
  */
 s32 MemoryCard::makeDefaultFile()
 {
@@ -1361,10 +1321,8 @@ s32 MemoryCard::makeDefaultFile()
 	*/
 }
 
-/*
- * --INFO--
- * Address:	800754B4
- * Size:	000314
+/**
+ * @TODO: Documentation
  */
 void MemoryCard::copyFile(CardQuickInfo& p1, CardQuickInfo& p2)
 {
@@ -1389,10 +1347,8 @@ void MemoryCard::copyFile(CardQuickInfo& p1, CardQuickInfo& p2)
 	STACK_PAD_VAR(10);
 }
 
-/*
- * --INFO--
- * Address:	800757C8
- * Size:	000454
+/**
+ * @TODO: Documentation
  */
 void MemoryCard::delFile(CardQuickInfo& p1)
 {
@@ -1415,10 +1371,8 @@ void MemoryCard::delFile(CardQuickInfo& p1)
 	STACK_PAD_VAR(7);
 }
 
-/*
- * --INFO--
- * Address:	80075C1C
- * Size:	00006C
+/**
+ * @TODO: Documentation
  */
 int MemoryCard::doFormatCard()
 {
@@ -1435,20 +1389,16 @@ int MemoryCard::doFormatCard()
 	return mErrorCode;
 }
 
-/*
- * --INFO--
- * Address:	80075C88
- * Size:	000034
+/**
+ * @TODO: Documentation
  */
 bool MemoryCard::isCardInserted()
 {
 	return CARDProbe(0);
 }
 
-/*
- * --INFO--
- * Address:	80075CBC
- * Size:	00022C
+/**
+ * @TODO: Documentation
  */
 bool MemoryCard::hasCardChanged()
 {
@@ -1475,10 +1425,8 @@ bool MemoryCard::hasCardChanged()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	80075EE8
- * Size:	000574
+/**
+ * @TODO: Documentation
  */
 u32 MemoryCard::getOkSections()
 {
@@ -1914,10 +1862,8 @@ u32 MemoryCard::getOkSections()
 	*/
 }
 
-/*
- * --INFO--
- * Address:	8007645C
- * Size:	0000A0
+/**
+ * @TODO: Documentation
  */
 bool MemoryCard::isFileBroken()
 {
@@ -1952,10 +1898,8 @@ void MemoryCard::breakFile()
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	800764FC
- * Size:	00052C
+/**
+ * @TODO: Documentation
  */
 void MemoryCard::repairFile()
 {
@@ -2012,10 +1956,8 @@ void MemoryCard::repairFile()
 	STACK_PAD_INLINE(12);
 }
 
-/*
- * --INFO--
- * Address:	80076A28
- * Size:	000040
+/**
+ * @TODO: Documentation
  */
 bool MemoryCard::didSaveFail()
 {
@@ -2026,10 +1968,8 @@ bool MemoryCard::didSaveFail()
 	return fail;
 }
 
-/*
- * --INFO--
- * Address:	80076A68
- * Size:	000398
+/**
+ * @TODO: Documentation
  */
 void MemoryCard::getQuickInfos(CardQuickInfo* infos)
 {
@@ -2334,10 +2274,8 @@ void MemoryCard::getQuickInfos(CardQuickInfo* infos)
 	*/
 }
 
-/*
- * --INFO--
- * Address:	80076E00
- * Size:	000034
+/**
+ * @TODO: Documentation
  */
 void MemoryCard::init()
 {

@@ -1,9 +1,7 @@
 #include "PowerPC_EABI_Support/MetroTRK/trk.h"
 
-/*
- * --INFO--
- * Address:	802200A0
- * Size:	0001B8
+/**
+ * @TODO: Documentation
  */
 ASM void TRKSaveExtended1Block()
 {
@@ -126,10 +124,8 @@ end:
 #endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address:	80220258
- * Size:	0001B8
+/**
+ * @TODO: Documentation
  */
 ASM void TRKRestoreExtended1Block()
 {
@@ -252,10 +248,8 @@ lbl_8037149C:
 #endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address:	80220410
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 u8 TRKTargetCPUMinorType(void)
 {

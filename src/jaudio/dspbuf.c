@@ -17,20 +17,16 @@ static u32 dac_sync_counter = 0;
 
 static s16* dsp_buf[DSPBUF_NUM];
 
-/*
- * --INFO--
- * Address:	80006B80
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 u32 Jac_GetCurrentSCounter()
 {
 	return dac_sync_counter;
 }
 
-/*
- * --INFO--
- * Address:	80006BA0
- * Size:	000250
+/**
+ * @TODO: Documentation
  */
 s16* DspbufProcess(DSPBUF_EVENTS event)
 {
@@ -106,10 +102,8 @@ s16* DspbufProcess(DSPBUF_EVENTS event)
 	return NULL;
 }
 
-/*
- * --INFO--
- * Address:	80006E00
- * Size:	000054
+/**
+ * @TODO: Documentation
  */
 void UpdateDSP()
 {
@@ -123,10 +117,8 @@ void UpdateDSP()
 	Probe_Finish(3);
 }
 
-/*
- * --INFO--
- * Address:	80006E60
- * Size:	000040
+/**
+ * @TODO: Documentation
  */
 s16* MixDsp(s32 numSamples)
 {
@@ -134,10 +126,8 @@ s16* MixDsp(s32 numSamples)
 	return DspbufProcess(DSPBUF_EVENT_MIX);
 }
 
-/*
- * --INFO--
- * Address:	80006EA0
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 void DspFrameEnd()
 {

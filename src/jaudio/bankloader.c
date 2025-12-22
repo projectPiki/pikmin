@@ -30,10 +30,8 @@ struct AddrSize {
 	u32 size;
 };
 
-/*
- * --INFO--
- * Address:	8001D9A0
- * Size:	0000E0
+/**
+ * @TODO: Documentation
  */
 void Bank_Setup(immut char* filename)
 {

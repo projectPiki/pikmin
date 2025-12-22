@@ -16,10 +16,8 @@ DEFINE_ERROR(18)
  */
 DEFINE_PRINT("Bou")
 
-/*
- * --INFO--
- * Address:	800AC79C
- * Size:	00006C
+/**
+ * @TODO: Documentation
  */
 ActBou::ActBou(Piki* piki)
     : Action(piki, true)
@@ -28,10 +26,8 @@ ActBou::ActBou(Piki* piki)
 	mCurrActionIdx = PikiAction::NOACTION;
 }
 
-/*
- * --INFO--
- * Address:	800AC808
- * Size:	0000A8
+/**
+ * @TODO: Documentation
  */
 void ActBou::init(Creature* creature)
 {
@@ -54,10 +50,8 @@ void ActBou::init(Creature* creature)
 	mTimeoutCounter = 120;
 }
 
-/*
- * --INFO--
- * Address:	800AC8B0
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 int ActBou::exec()
 {
@@ -72,10 +66,8 @@ int ActBou::exec()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800AC8FC
- * Size:	000210
+/**
+ * @TODO: Documentation
  */
 int ActBou::gotoLeg()
 {
@@ -111,10 +103,8 @@ int ActBou::gotoLeg()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800ACB0C
- * Size:	000180
+/**
+ * @TODO: Documentation
  */
 void ActBou::procCollideMsg(Piki* piki, MsgCollide* msg)
 {
@@ -153,10 +143,8 @@ void ActBou::procCollideMsg(Piki* piki, MsgCollide* msg)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800ACC8C
- * Size:	000108
+/**
+ * @TODO: Documentation
  */
 int ActBou::climb()
 {
@@ -175,10 +163,8 @@ int ActBou::climb()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800ACD94
- * Size:	0000A8
+/**
+ * @TODO: Documentation
  */
 void ActBou::cleanup()
 {

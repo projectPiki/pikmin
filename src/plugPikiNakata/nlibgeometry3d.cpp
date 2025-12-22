@@ -25,20 +25,16 @@ NLine::NLine()
 	construct(NVector3f(0.0f, 0.0f, 0.0f), NVector3f(0.0f, 0.0f, 1.0f));
 }
 
-/*
- * --INFO--
- * Address:	8011D3FC
- * Size:	000070
+/**
+ * @TODO: Documentation
  */
 NLine::NLine(immut NVector3f& pos, immut NVector3f& dir)
 {
 	construct(pos, dir);
 }
 
-/*
- * --INFO--
- * Address:	8011D46C
- * Size:	000034
+/**
+ * @TODO: Documentation
  */
 void NLine::construct(immut NVector3f& pos, immut NVector3f& dir)
 {
@@ -66,10 +62,8 @@ void NLine::construct(immut NLine& other)
 	construct(other.mPosition, other.mDirection);
 }
 
-/*
- * --INFO--
- * Address:	8011D4A0
- * Size:	0000C0
+/**
+ * @TODO: Documentation
  */
 f32 NLine::calcDistance(immut NVector3f& point, f32* vertProj) immut
 {
@@ -142,10 +136,8 @@ void NLine::outputVerticalPosition(immut NVector3f& point, NVector3f& outPos) im
 	outputPosition(calcVerticalProjection(point), outPos);
 }
 
-/*
- * --INFO--
- * Address:	8011D560
- * Size:	000064
+/**
+ * @TODO: Documentation
  */
 f32 NLine::calcVerticalProjection(immut NVector3f& point) immut
 {
@@ -153,10 +145,8 @@ f32 NLine::calcVerticalProjection(immut NVector3f& point) immut
 	return mDirection.dot(sep);
 }
 
-/*
- * --INFO--
- * Address:	8011D5C4
- * Size:	00009C
+/**
+ * @TODO: Documentation
  */
 void NLine::outputPosition(f32 t, NVector3f& outPos) immut
 {
@@ -175,10 +165,8 @@ void NLine::outputPositionY(f32 p1, NVector3f& outPos) immut
 	outputPosition((p1 - mPosition.y) / mDirection.y, outPos);
 }
 
-/*
- * --INFO--
- * Address:	8011D660
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 void NLine::transform(NTransform3D& transform)
 {
@@ -186,10 +174,8 @@ void NLine::transform(NTransform3D& transform)
 	transform.rotate(mDirection);
 }
 
-/*
- * --INFO--
- * Address:	8011D6AC
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 void NLine::println() immut
 {
@@ -229,20 +215,16 @@ void NPlane::construct(NVector3f&, f32)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8011D6E4
- * Size:	000068
+/**
+ * @TODO: Documentation
  */
 NPlane::NPlane(NVector3f& normal, NVector3f& point)
 {
 	construct(normal, point);
 }
 
-/*
- * --INFO--
- * Address:	8011D74C
- * Size:	000050
+/**
+ * @TODO: Documentation
  */
 void NPlane::construct(NVector3f& normal, NVector3f& point)
 {
@@ -380,10 +362,8 @@ void NPlane::outputPosition(NVector3f& outPos)
 	outPos.scale2(-mDifference, mNormal);
 }
 
-/*
- * --INFO--
- * Address:	8011D79C
- * Size:	0000DC
+/**
+ * @TODO: Documentation
  */
 void NPlane::outputVerticalPosition(NVector3f& point, NVector3f& outPos)
 {
@@ -453,10 +433,8 @@ f32 NPlane::calcY(f32, f32)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8011D878
- * Size:	0000C0
+/**
+ * @TODO: Documentation
  */
 void NPlane::transform(NTransform3D& transform)
 {
@@ -467,10 +445,8 @@ void NPlane::transform(NTransform3D& transform)
 	setDifference(tmp);
 }
 
-/*
- * --INFO--
- * Address:	8011D938
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 void NPlane::println() immut
 {

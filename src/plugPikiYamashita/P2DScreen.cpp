@@ -21,10 +21,8 @@ DEFINE_ERROR(37)
  */
 DEFINE_PRINT("P2DScreen")
 
-/*
- * --INFO--
- * Address:	801B2B50
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 void P2DScreen::update()
 {
@@ -37,19 +35,15 @@ void P2DScreen::update()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801B2B9C
- * Size:	000064
+/**
+ * @TODO: Documentation
  */
 P2DScreen::~P2DScreen()
 {
 }
 
-/*
- * --INFO--
- * Address:	801B2C00
- * Size:	00012C
+/**
+ * @TODO: Documentation
  */
 void P2DScreen::set(const char* bloFileName, bool useAlphaMgr, bool useTexAnimMgr, bool p4)
 {
@@ -91,10 +85,8 @@ void P2DScreen::set(RandomAccessStream* input)
 	makeHiearachyPanes(this, input, true, true);
 }
 
-/*
- * --INFO--
- * Address:	801B2D2C
- * Size:	0001A0
+/**
+ * @TODO: Documentation
  */
 void P2DScreen::makeHiearachyPanes(P2DPane* parent, RandomAccessStream* input, bool, bool doExpandBounds)
 {
@@ -136,10 +128,8 @@ void P2DScreen::makeHiearachyPanes(P2DPane* parent, RandomAccessStream* input, b
 	}
 }
 
-/*
- * --INFO--
- * Address:	801B2ECC
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 P2DPane* P2DScreen::makeUserPane(u16, P2DPane*, RandomAccessStream*)
 {
@@ -158,10 +148,8 @@ P2DPane* P2DScreen::stop()
 	return nullptr;
 }
 
-/*
- * --INFO--
- * Address:	801B2ED4
- * Size:	000328
+/**
+ * @TODO: Documentation
  */
 void P2DScreen::draw(int x, int y, const P2DGrafContext* grafContext)
 {
@@ -185,10 +173,8 @@ void P2DScreen::draw(int x, int y, const P2DGrafContext* grafContext)
 	GXSetCullMode(GX_CULL_NONE);
 }
 
-/*
- * --INFO--
- * Address:	801B31FC
- * Size:	000030
+/**
+ * @TODO: Documentation
  */
 P2DPane* P2DScreen::search(u32 tag, bool p2)
 {
@@ -199,20 +185,16 @@ P2DPane* P2DScreen::search(u32 tag, bool p2)
 	return P2DPane::search(tag, p2);
 }
 
-/*
- * --INFO--
- * Address:	801B322C
- * Size:	000020
+/**
+ * @TODO: Documentation
  */
 void P2DScreen::loadResource()
 {
 	loadChildResource();
 }
 
-/*
- * --INFO--
- * Address:	801B324C
- * Size:	000028
+/**
+ * @TODO: Documentation
  */
 void P2DScreen::makeResName(const char* fileName, char* outPath)
 {

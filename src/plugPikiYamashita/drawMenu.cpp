@@ -20,10 +20,8 @@ DEFINE_ERROR(17)
  */
 DEFINE_PRINT("drawMenu")
 
-/*
- * --INFO--
- * Address:	801C277C
- * Size:	0000AC
+/**
+ * @TODO: Documentation
  */
 void zen::DrawMenuText::init(bool useNewColors, immut Colour& charColor, immut Colour& gradColor)
 {
@@ -50,10 +48,8 @@ void zen::DrawMenuText::init(bool useNewColors, immut Colour& charColor, immut C
 	}
 }
 
-/*
- * --INFO--
- * Address:	801C2828
- * Size:	0000F4
+/**
+ * @TODO: Documentation
  */
 void zen::DrawMenuText::setPane(P2DPane* textPane, P2DPane* parentPane)
 {
@@ -89,10 +85,8 @@ void zen::DrawMenuText::setScale(f32 xScale, f32 yScale)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801C291C
- * Size:	0005C4
+/**
+ * @TODO: Documentation
  */
 void zen::DrawMenuText::update(bool isIncreasing, immut Colour& charBlend, immut Colour& gradBlend)
 {
@@ -141,10 +135,8 @@ void zen::DrawMenuText::update(bool isIncreasing, immut Colour& charBlend, immut
 	}
 }
 
-/*
- * --INFO--
- * Address:	801C2EE0
- * Size:	000088
+/**
+ * @TODO: Documentation
  */
 void zen::DrawMenuTitle::setPane(P2DScreen* screen, P2DPane* parent, u32 tag)
 {
@@ -156,20 +148,16 @@ void zen::DrawMenuTitle::setPane(P2DScreen* screen, P2DPane* parent, u32 tag)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801C2F68
- * Size:	00000C
+/**
+ * @TODO: Documentation
  */
 void zen::DrawMenuTitle::start()
 {
 	mMode = MODE_Start;
 }
 
-/*
- * --INFO--
- * Address:	801C2F74
- * Size:	00000C
+/**
+ * @TODO: Documentation
  */
 void zen::DrawMenuTitle::wait()
 {
@@ -186,20 +174,16 @@ void zen::DrawMenuTitle::operation()
 	mMode = MODE_Operation;
 }
 
-/*
- * --INFO--
- * Address:	801C2F80
- * Size:	00000C
+/**
+ * @TODO: Documentation
  */
 void zen::DrawMenuTitle::end()
 {
 	mMode = MODE_End;
 }
 
-/*
- * --INFO--
- * Address:	801C2F8C
- * Size:	000170
+/**
+ * @TODO: Documentation
  */
 bool zen::DrawMenuTitle::update(f32 p1)
 {
@@ -238,10 +222,8 @@ bool zen::DrawMenuTitle::update(f32 p1)
 	return mMode != MODE_Wait;
 }
 
-/*
- * --INFO--
- * Address:	801C30FC
- * Size:	000AFC
+/**
+ * @TODO: Documentation
  */
 zen::DrawMenu::DrawMenu(immut char* bloFileName, bool useAlphaMgr, bool useTexAnimMgr)
     : DrawScreen(bloFileName, nullptr, useAlphaMgr, useTexAnimMgr)
@@ -376,10 +358,8 @@ zen::DrawMenu::DrawMenu(immut char* bloFileName, bool useAlphaMgr, bool useTexAn
 	updateMenuPanes();
 }
 
-/*
- * --INFO--
- * Address:	801C3CB8
- * Size:	00039C
+/**
+ * @TODO: Documentation
  */
 void zen::DrawMenu::start(int p1)
 {
@@ -421,10 +401,8 @@ void zen::DrawMenu::start(int p1)
 	mRightCursorMgr.move(mMenuItems[mCurrentSelect].getIconRPosH(), mMenuItems[mCurrentSelect].getIconRPosV(), 0.5f);
 }
 
-/*
- * --INFO--
- * Address:	801C4054
- * Size:	00038C
+/**
+ * @TODO: Documentation
  */
 void zen::DrawMenu::updateMenuPanes()
 {
@@ -486,10 +464,8 @@ void zen::DrawMenu::updateSpectPanes(P2DPane*, P2DPicture**, bool)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801C43E0
- * Size:	0000F4
+/**
+ * @TODO: Documentation
  */
 void zen::DrawMenu::updateSelectMenuNo(Controller* controller)
 {
@@ -517,10 +493,8 @@ void zen::DrawMenu::updateSelectMenuNo(Controller* controller)
 	} while (!mMenuItems[mCurrentSelect].getActiveSw());
 }
 
-/*
- * --INFO--
- * Address:	801C44D4
- * Size:	00040C
+/**
+ * @TODO: Documentation
  */
 bool zen::DrawMenu::update(Controller* controller)
 {
@@ -605,10 +579,8 @@ bool zen::DrawMenu::update(Controller* controller)
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	801C48E0
- * Size:	00002C
+/**
+ * @TODO: Documentation
  */
 void zen::DrawMenu::draw(Graphics&)
 {
@@ -617,10 +589,8 @@ void zen::DrawMenu::draw(Graphics&)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801C490C
- * Size:	00002C
+/**
+ * @TODO: Documentation
  */
 void zen::DrawMenu::setMenuItemActiveSw(int idx, bool set)
 {
@@ -632,10 +602,8 @@ void zen::DrawMenu::setMenuItemActiveSw(int idx, bool set)
 	mMenuItems[idx].setActiveSw(set);
 }
 
-/*
- * --INFO--
- * Address:	801C4938
- * Size:	000028
+/**
+ * @TODO: Documentation
  */
 void zen::DrawMenu::setCancelSelectMenuNo(int menuNo)
 {

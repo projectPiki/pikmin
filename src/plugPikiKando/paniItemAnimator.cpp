@@ -21,10 +21,8 @@ immut char* PaniItemAnimator::motionLabels[15] = {
 	"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15",
 };
 
-/*
- * --INFO--
- * Address:	800F7E8C
- * Size:	000268
+/**
+ * @TODO: Documentation
  */
 PaniMotionTable* PaniItemAnimator::createMotionTable()
 {
@@ -48,10 +46,8 @@ PaniMotionTable* PaniItemAnimator::createMotionTable()
 	return table;
 }
 
-/*
- * --INFO--
- * Address:	800F80F4
- * Size:	00003C
+/**
+ * @TODO: Documentation
  */
 PaniItemAnimator::PaniItemAnimator()
 {

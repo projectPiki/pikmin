@@ -4,10 +4,8 @@
 
 static OSErrorHandler OSErrorTable[OS_ERROR_MAX];
 
-/*
- * --INFO--
- * Address:	801F7890
- * Size:	000080
+/**
+ * @TODO: Documentation
  */
 void OSReport(const char* msg, ...)
 {
@@ -18,10 +16,8 @@ void OSReport(const char* msg, ...)
 	va_end(args);
 }
 
-/*
- * --INFO--
- * Address:	801F7910
- * Size:	00012C
+/**
+ * @TODO: Documentation
  */
 void OSPanic(const char* file, int line, const char* msg, ...)
 {
@@ -47,10 +43,8 @@ void OSPanic(const char* file, int line, const char* msg, ...)
 	PPCHalt();
 }
 
-/*
- * --INFO--
- * Address:	801F7A3C
- * Size:	00001C
+/**
+ * @TODO: Documentation
  */
 OSErrorHandler OSSetErrorHandler(OSError error, OSErrorHandler handler)
 {
@@ -60,10 +54,8 @@ OSErrorHandler OSSetErrorHandler(OSError error, OSErrorHandler handler)
 	return prevHandler;
 }
 
-/*
- * --INFO--
- * Address:	801F7A58
- * Size:	000174
+/**
+ * @TODO: Documentation
  */
 void __OSUnhandledException(u8 error, OSContext* context, u32 dsisr, u32 dar)
 {

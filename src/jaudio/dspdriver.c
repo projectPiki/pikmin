@@ -22,10 +22,8 @@ dspch_* GetDSPchannelHandle(u32 idx)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8000AD00
- * Size:	000060
+/**
+ * @TODO: Documentation
  */
 void InitDSPchannel()
 {
@@ -45,10 +43,8 @@ void InitDSPchannel()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8000AD60
- * Size:	000114
+/**
+ * @TODO: Documentation
  */
 dspch_* AllocDSPchannel(u32 param_1, u32 param_2)
 {
@@ -87,10 +83,8 @@ dspch_* AllocDSPchannel(u32 param_1, u32 param_2)
 	return NULL;
 }
 
-/*
- * --INFO--
- * Address:	8000AE80
- * Size:	0000DC
+/**
+ * @TODO: Documentation
  */
 int DeAllocDSPchannel(dspch_* chan, u32 id)
 {
@@ -123,10 +117,8 @@ int DeAllocDSPchannel(dspch_* chan, u32 id)
 	STACK_PAD_VAR(2);
 }
 
-/*
- * --INFO--
- * Address:	8000AF60
- * Size:	000104
+/**
+ * @TODO: Documentation
  */
 dspch_* GetLowerDSPchannel()
 {
@@ -166,10 +158,8 @@ dspch_* GetLowerDSPchannel()
 	return &DSPCH[id];
 }
 
-/*
- * --INFO--
- * Address:	8000B080
- * Size:	0000D8
+/**
+ * @TODO: Documentation
  */
 dspch_* GetLowerActiveDSPchannel()
 {
@@ -206,10 +196,8 @@ dspch_* GetLowerActiveDSPchannel()
 	return &DSPCH[index];
 }
 
-/*
- * --INFO--
- * Address:	8000B160
- * Size:	00007C
+/**
+ * @TODO: Documentation
  */
 BOOL ForceStopDSPchannel(dspch_* chan)
 {
@@ -229,10 +217,8 @@ BOOL ForceStopDSPchannel(dspch_* chan)
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	8000B1E0
- * Size:	0000AC
+/**
+ * @TODO: Documentation
  */
 BOOL BreakLowerDSPchannel(u8 param_1)
 {
@@ -261,10 +247,8 @@ BOOL BreakLowerDSPchannel(u8 param_1)
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	8000B2A0
- * Size:	0000AC
+/**
+ * @TODO: Documentation
  */
 BOOL BreakLowerActiveDSPchannel(u8 id)
 {
@@ -305,10 +289,8 @@ void UpdateDSPchannel(dspch_* chan)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8000B360
- * Size:	0001F4
+/**
+ * @TODO: Documentation
  */
 void UpdateDSPchannelAll()
 {

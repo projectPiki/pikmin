@@ -17,10 +17,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("Snake");
 
-/*
- * --INFO--
- * Address:	8015A2C4
- * Size:	0008F0
+/**
+ * @TODO: Documentation
  */
 SnakeProp::SnakeProp()
 {
@@ -29,10 +27,8 @@ SnakeProp::SnakeProp()
 	mCreatureProps.mAcceleration(1.0f);
 }
 
-/*
- * --INFO--
- * Address:	8015ABB4
- * Size:	000104
+/**
+ * @TODO: Documentation
  */
 Snake::Snake(CreatureProp* props)
     : Boss(props)
@@ -43,40 +39,32 @@ Snake::Snake(CreatureProp* props)
 	mSnakeBody     = new SnakeBody(this);
 }
 
-/*
- * --INFO--
- * Address:	8015ACB8
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 void Snake::setBossType(bool type)
 {
 	mBossType = type;
 }
 
-/*
- * --INFO--
- * Address:	8015ACC0
- * Size:	00000C
+/**
+ * @TODO: Documentation
  */
 f32 Snake::getCentreSize()
 {
 	return mBoundsUpdater->mSize;
 }
 
-/*
- * --INFO--
- * Address:	8015ACCC
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 f32 Snake::getiMass()
 {
 	return 0.0001f;
 }
 
-/*
- * --INFO--
- * Address:	8015ACD4
- * Size:	0000B8
+/**
+ * @TODO: Documentation
  */
 void Snake::init(immut Vector3f& pos)
 {
@@ -92,10 +80,8 @@ void Snake::init(immut Vector3f& pos)
 	mCollInfo->makeTubesChild('tube', 7);
 }
 
-/*
- * --INFO--
- * Address:	8015AD8C
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 void Snake::doKill()
 {
@@ -105,20 +91,16 @@ void Snake::doKill()
 	bossMgr->kill(this);
 }
 
-/*
- * --INFO--
- * Address:	8015ADD8
- * Size:	000028
+/**
+ * @TODO: Documentation
  */
 void Snake::exitCourse()
 {
 	mSnakeBody->killCallBackEffect(true);
 }
 
-/*
- * --INFO--
- * Address:	8015AE00
- * Size:	000064
+/**
+ * @TODO: Documentation
  */
 void Snake::update()
 {
@@ -128,10 +110,8 @@ void Snake::update()
 	doAnimation();
 }
 
-/*
- * --INFO--
- * Address:	8015AE64
- * Size:	0000A8
+/**
+ * @TODO: Documentation
  */
 void Snake::refresh(Graphics& gfx)
 {
@@ -144,10 +124,8 @@ void Snake::refresh(Graphics& gfx)
 	mCollInfo->updateInfo(gfx, false);
 }
 
-/*
- * --INFO--
- * Address:	8015AF0C
- * Size:	000078
+/**
+ * @TODO: Documentation
  */
 void Snake::drawShape(Graphics& gfx)
 {
@@ -156,10 +134,8 @@ void Snake::drawShape(Graphics& gfx)
 	mShapeObject->mShape->drawshape(gfx, *gfx.mCamera, nullptr);
 }
 
-/*
- * --INFO--
- * Address:	8015AF84
- * Size:	000074
+/**
+ * @TODO: Documentation
  */
 void Snake::refresh2d(Graphics& gfx)
 {
@@ -169,20 +145,16 @@ void Snake::refresh2d(Graphics& gfx)
 	mLifeGauge.refresh(gfx);
 }
 
-/*
- * --INFO--
- * Address:	8015AFF8
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 void Snake::doAI()
 {
 	mSnakeAi->update();
 }
 
-/*
- * --INFO--
- * Address:	8015B01C
- * Size:	000054
+/**
+ * @TODO: Documentation
  */
 void Snake::doAnimation()
 {

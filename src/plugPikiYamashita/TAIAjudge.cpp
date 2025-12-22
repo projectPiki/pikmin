@@ -20,19 +20,15 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("TAIAjudge")
 
-/*
- * --INFO--
- * Address:	801AD094
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void TAIAsearchWorkObject::start(Teki& teki)
 {
 }
 
-/*
- * --INFO--
- * Address:	801AD098
- * Size:	000200
+/**
+ * @TODO: Documentation
  */
 bool TAIAsearchWorkObject::act(Teki& teki)
 {
@@ -62,10 +58,8 @@ bool TAIAsearchWorkObject::act(Teki& teki)
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	801AD298
- * Size:	000084
+/**
+ * @TODO: Documentation
  */
 bool TAIAlessLife::act(Teki& teki)
 {
@@ -75,10 +69,8 @@ bool TAIAlessLife::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	801AD31C
- * Size:	000084
+/**
+ * @TODO: Documentation
  */
 bool TAIAmoreLife::act(Teki& teki)
 {
@@ -88,10 +80,8 @@ bool TAIAmoreLife::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	801AD3A0
- * Size:	00006C
+/**
+ * @TODO: Documentation
  */
 bool TAIAjudgeOptionalRange::act(Teki& teki)
 {
@@ -102,10 +92,8 @@ bool TAIAjudgeOptionalRange::act(Teki& teki)
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	801AD40C
- * Size:	000068
+/**
+ * @TODO: Documentation
  */
 bool TAIAjudgeOptionalRange::setTargetPositionCreature(Teki& teki)
 {
@@ -120,10 +108,8 @@ bool TAIAjudgeOptionalRange::setTargetPositionCreature(Teki& teki)
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	801AD474
- * Size:	0000D0
+/**
+ * @TODO: Documentation
  */
 bool TAIAinsideOptionalRange::judgement(Teki& teki)
 {
@@ -131,10 +117,8 @@ bool TAIAinsideOptionalRange::judgement(Teki& teki)
 	return dist < getOptionalRange(teki);
 }
 
-/*
- * --INFO--
- * Address:	801AD544
- * Size:	0000D0
+/**
+ * @TODO: Documentation
  */
 bool TAIAoutsideOptionalRange::judgement(Teki& teki)
 {
@@ -142,10 +126,8 @@ bool TAIAoutsideOptionalRange::judgement(Teki& teki)
 	return dist > getOptionalRange(teki);
 }
 
-/*
- * --INFO--
- * Address:	801AD614
- * Size:	0001D8
+/**
+ * @TODO: Documentation
  */
 bool TAIAcheckInsideRangePiki::act(Teki& teki)
 {
@@ -167,10 +149,8 @@ bool TAIAcheckInsideRangePiki::act(Teki& teki)
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	801AD7FC
- * Size:	000134
+/**
+ * @TODO: Documentation
  */
 bool TAIAinsideTerritoryRangeNavi::act(Teki& teki)
 {
@@ -188,10 +168,8 @@ bool TAIAinsideTerritoryRangeNavi::act(Teki& teki)
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	801AD930
- * Size:	0000FC
+/**
+ * @TODO: Documentation
  */
 bool TAIAoutsideTerritoryRangeNavi::act(Teki& teki)
 {
@@ -208,10 +186,8 @@ bool TAIAoutsideTerritoryRangeNavi::act(Teki& teki)
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	801ADA2C
- * Size:	00008C
+/**
+ * @TODO: Documentation
  */
 bool TAIAvisibleNavi::act(Teki& teki)
 {
@@ -223,10 +199,8 @@ bool TAIAvisibleNavi::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	801ADAB8
- * Size:	000164
+/**
+ * @TODO: Documentation
  */
 bool TAIAvisiblePiki::act(Teki& teki)
 {
@@ -255,10 +229,8 @@ bool TAIAattackableTarget::checkDist(Teki& teki)
 	return (teki.mTargetPosition.distance(teki.getPosition()) < teki.getParameterF(TPF_AttackableRange)) ? TRUE : FALSE;
 }
 
-/*
- * --INFO--
- * Address:	801ADC1C
- * Size:	000080
+/**
+ * @TODO: Documentation
  */
 bool TAIAattackableTarget::checkAngle(Teki& teki)
 {
@@ -268,20 +240,16 @@ bool TAIAattackableTarget::checkAngle(Teki& teki)
 	return (teki.calcTargetAngle(target->getPosition()) < NMathF::d2r(teki.getParameterF(TPF_AttackableAngle)) / 2.0f) ? TRUE : FALSE;
 }
 
-/*
- * --INFO--
- * Address:	801ADC9C
- * Size:	00014C
+/**
+ * @TODO: Documentation
  */
 bool TAIAattackableTarget::judge(Teki& teki)
 {
 	return checkDist(teki) && checkAngle(teki);
 }
 
-/*
- * --INFO--
- * Address:	801ADDE8
- * Size:	000098
+/**
+ * @TODO: Documentation
  */
 bool TAIAattackableTarget::act(Teki& teki)
 {
@@ -296,10 +264,8 @@ bool TAIAattackableTarget::act(Teki& teki)
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	801ADE80
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 bool TAIAunvisibleTarget::act(Teki& teki)
 {
@@ -316,10 +282,8 @@ bool TAIAunvisibleTarget::act(Teki& teki)
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	801ADECC
- * Size:	0000A0
+/**
+ * @TODO: Documentation
  */
 bool TAIAstickingPiki::act(Teki& teki)
 {
@@ -333,10 +297,8 @@ bool TAIAstickingPiki::act(Teki& teki)
 	TekiStickerCondition(nullptr);
 }
 
-/*
- * --INFO--
- * Address:	801ADF74
- * Size:	000058
+/**
+ * @TODO: Documentation
  */
 void TAIAdistanceTarget::start(Teki& teki)
 {
@@ -345,10 +307,8 @@ void TAIAdistanceTarget::start(Teki& teki)
 	mDistance  = height / v;
 }
 
-/*
- * --INFO--
- * Address:	801ADFCC
- * Size:	0000E8
+/**
+ * @TODO: Documentation
  */
 bool TAIAdistanceTarget::act(Teki& teki)
 {
@@ -361,10 +321,8 @@ bool TAIAdistanceTarget::act(Teki& teki)
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	801AE0B4
- * Size:	000014
+/**
+ * @TODO: Documentation
  */
 void TAIAcheckTurnAngle::start(Teki& teki)
 {
@@ -372,10 +330,8 @@ void TAIAcheckTurnAngle::start(Teki& teki)
 	teki.setFrameCounter(0.0f);
 }
 
-/*
- * --INFO--
- * Address:	801AE0C8
- * Size:	0000D4
+/**
+ * @TODO: Documentation
  */
 bool TAIAcheckTurnAngle::act(Teki& teki)
 {

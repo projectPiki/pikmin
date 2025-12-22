@@ -181,10 +181,8 @@ f32 NMathF::remainder(f32, f32)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8011DE08
- * Size:	000058
+/**
+ * @TODO: Documentation
  */
 f32 NMathF::atan2(f32 x, f32 y)
 {

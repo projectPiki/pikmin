@@ -105,10 +105,8 @@ struct TaiKinokoLegEffectAction : public TaiJointEffectAction {
 	// TODO: members
 };
 
-/*
- * --INFO--
- * Address:	8012FB98
- * Size:	000084
+/**
+ * @TODO: Documentation
  */
 TaiKinokoSoundTable::TaiKinokoSoundTable()
     : PaniSoundTable(10)
@@ -118,10 +116,8 @@ TaiKinokoSoundTable::TaiKinokoSoundTable()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8012FC1C
- * Size:	000518
+/**
+ * @TODO: Documentation
  */
 TaiKinokoParameters::TaiKinokoParameters()
     : TekiParameters(KINOKOPI_COUNT, KINOKOPF_COUNT)
@@ -207,10 +203,8 @@ TaiKinokoParameters::TaiKinokoParameters()
 	multiP->setF(KINOKOPF_GoingHomeTerritoryRange, 100.0f);
 }
 
-/*
- * --INFO--
- * Address:	80130134
- * Size:	001298
+/**
+ * @TODO: Documentation
  */
 TaiKinokoStrategy::TaiKinokoStrategy(TekiParameters* params)
     : TaiStrategy(KINOKOSTATE_COUNT, KINOKOSTATE_Wait)
@@ -419,10 +413,8 @@ TaiKinokoStrategy::TaiKinokoStrategy(TekiParameters* params)
 	setState(KINOKOSTATE_GoingHome, state);
 }
 
-/*
- * --INFO--
- * Address:	801313CC
- * Size:	0000B0
+/**
+ * @TODO: Documentation
  */
 void TaiKinokoStrategy::start(Teki& teki)
 {
@@ -431,10 +423,8 @@ void TaiKinokoStrategy::start(Teki& teki)
 	TaiStrategy::start(teki);
 }
 
-/*
- * --INFO--
- * Address:	8013147C
- * Size:	0001B4
+/**
+ * @TODO: Documentation
  */
 void TaiKinokoStrategy::draw(Teki& teki, Graphics& gfx)
 {
@@ -471,10 +461,8 @@ void TaiKinokoStrategy::draw(Teki& teki, Graphics& gfx)
 	STACK_PAD_VAR(1);
 }
 
-/*
- * --INFO--
- * Address:	80131630
- * Size:	000124
+/**
+ * @TODO: Documentation
  */
 void TaiKinokoStrategy::createEffect(Teki& teki, int index)
 {
@@ -501,10 +489,8 @@ void TaiKinokoStrategy::createEffect(Teki& teki, int index)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80131754
- * Size:	000078
+/**
+ * @TODO: Documentation
  */
 void TaiKinokoTurningOverAction::start(Teki& teki)
 {
@@ -515,10 +501,8 @@ void TaiKinokoTurningOverAction::start(Teki& teki)
 	teki.flickUpper();
 }
 
-/*
- * --INFO--
- * Address:	801317CC
- * Size:	000054
+/**
+ * @TODO: Documentation
  */
 bool TaiKinokoChargingSporesAction::act(Teki& teki)
 {
@@ -531,19 +515,15 @@ bool TaiKinokoChargingSporesAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	80131820
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void TaiKinokoDischargingSporesAction::start(Teki&)
 {
 }
 
-/*
- * --INFO--
- * Address:	80131824
- * Size:	000160
+/**
+ * @TODO: Documentation
  */
 bool TaiKinokoDischargingSporesAction::act(Teki& teki)
 {
@@ -566,10 +546,8 @@ bool TaiKinokoDischargingSporesAction::act(Teki& teki)
 	TekiDistanceCondition(nullptr, 0.0f);
 }
 
-/*
- * --INFO--
- * Address:	80131984
- * Size:	0003D0
+/**
+ * @TODO: Documentation
  */
 bool TaiKinokoTerritoryRunningAwayAction::act(Teki& teki)
 {
@@ -625,20 +603,16 @@ bool TaiKinokoTerritoryRunningAwayAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	80131D54
- * Size:	000058
+/**
+ * @TODO: Documentation
  */
 TaiKinokoLegEffectAction::TaiKinokoLegEffectAction(f32 p1)
     : TaiJointEffectAction(p1, 2, 'lleg', 'rleg', 0, 0)
 {
 }
 
-/*
- * --INFO--
- * Address:	80131DAC
- * Size:	0000B0
+/**
+ * @TODO: Documentation
  */
 void TaiKinokoLegEffectAction::setType(Vector3f& effectPos, int type, int id)
 {

@@ -22,10 +22,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("CoreNucleus");
 
-/*
- * --INFO--
- * Address:	8017A954
- * Size:	000090
+/**
+ * @TODO: Documentation
  */
 CoreNucleusProp::CoreNucleusProp()
 {
@@ -34,10 +32,8 @@ CoreNucleusProp::CoreNucleusProp()
 	mCreatureProps.mAcceleration.mValue  = 1.0f;
 }
 
-/*
- * --INFO--
- * Address:	8017A9E4
- * Size:	000084
+/**
+ * @TODO: Documentation
  */
 CoreNucleus::CoreNucleus(CreatureProp* props)
     : Boss(props)
@@ -46,20 +42,16 @@ CoreNucleus::CoreNucleus(CreatureProp* props)
 	mCoreAi   = new CoreNucleusAi(this);
 }
 
-/*
- * --INFO--
- * Address:	8017AA68
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 f32 CoreNucleus::getiMass()
 {
 	return 0.01f;
 }
 
-/*
- * --INFO--
- * Address:	8017AA70
- * Size:	000064
+/**
+ * @TODO: Documentation
  */
 void CoreNucleus::init(immut Vector3f& pos)
 {
@@ -72,10 +64,8 @@ void CoreNucleus::init(immut Vector3f& pos)
 	mCoreAi->initAI(this);
 }
 
-/*
- * --INFO--
- * Address:	8017AAD4
- * Size:	000034
+/**
+ * @TODO: Documentation
  */
 void CoreNucleus::doKill()
 {
@@ -84,29 +74,23 @@ void CoreNucleus::doKill()
 	bossMgr->kill(this);
 }
 
-/*
- * --INFO--
- * Address:	8017AB08
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void CoreNucleus::exitCourse()
 {
 }
 
-/*
- * --INFO--
- * Address:	8017AB0C
- * Size:	000020
+/**
+ * @TODO: Documentation
  */
 void CoreNucleus::update()
 {
 	Creature::update();
 }
 
-/*
- * --INFO--
- * Address:	8017AB2C
- * Size:	000098
+/**
+ * @TODO: Documentation
  */
 void CoreNucleus::refresh(Graphics& gfx)
 {
@@ -118,10 +102,8 @@ void CoreNucleus::refresh(Graphics& gfx)
 	mCollInfo->updateInfo(gfx, false);
 }
 
-/*
- * --INFO--
- * Address:	8017ABC4
- * Size:	00006C
+/**
+ * @TODO: Documentation
  */
 void CoreNucleus::drawShape(Graphics& gfx)
 {
@@ -129,20 +111,16 @@ void CoreNucleus::drawShape(Graphics& gfx)
 	mShapeObject->mShape->drawshape(gfx, *gfx.mCamera, nullptr);
 }
 
-/*
- * --INFO--
- * Address:	8017AC30
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 void CoreNucleus::doAI()
 {
 	mCoreAi->update();
 }
 
-/*
- * --INFO--
- * Address:	8017AC54
- * Size:	000044
+/**
+ * @TODO: Documentation
  */
 void CoreNucleus::doAnimation()
 {
@@ -151,10 +129,8 @@ void CoreNucleus::doAnimation()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8017AC98
- * Size:	000054
+/**
+ * @TODO: Documentation
  */
 void CoreNucleus::collisionCallback(immut CollEvent& event)
 {

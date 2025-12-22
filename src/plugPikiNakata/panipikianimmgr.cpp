@@ -27,19 +27,15 @@ PaniMotionTable* PaniPikiAnimMgr::getMotionTable()
 	return motionTable;
 }
 
-/*
- * --INFO--
- * Address:	8011F8A0
- * Size:	00003C
+/**
+ * @TODO: Documentation
  */
 PaniPikiAnimMgr::PaniPikiAnimMgr()
 {
 }
 
-/*
- * --INFO--
- * Address:	8011F8DC
- * Size:	00007C
+/**
+ * @TODO: Documentation
  */
 void PaniPikiAnimMgr::init(AnimMgr* mgr, AnimContext* context1, AnimContext* context2, PaniMotionTable* table)
 {
@@ -54,10 +50,8 @@ void PaniPikiAnimMgr::init(AnimMgr* mgr, AnimContext* context1, AnimContext* con
 	mAnimSpeed = 30.0f;
 }
 
-/*
- * --INFO--
- * Address:	8011F958
- * Size:	000060
+/**
+ * @TODO: Documentation
  */
 void PaniPikiAnimMgr::changeContext(AnimContext* context1, AnimContext* context2)
 {
@@ -65,10 +59,8 @@ void PaniPikiAnimMgr::changeContext(AnimContext* context1, AnimContext* context2
 	mLowerAnimator.changeContext(context2);
 }
 
-/*
- * --INFO--
- * Address:	8011F9B8
- * Size:	000058
+/**
+ * @TODO: Documentation
  */
 void PaniPikiAnimMgr::startMotion(immut PaniMotionInfo* motion1, immut PaniMotionInfo* motion2)
 {
@@ -80,10 +72,8 @@ void PaniPikiAnimMgr::startMotion(immut PaniMotionInfo* motion1, immut PaniMotio
 	}
 }
 
-/*
- * --INFO--
- * Address:	8011FA10
- * Size:	000058
+/**
+ * @TODO: Documentation
  */
 void PaniPikiAnimMgr::finishMotion(immut PaniMotionInfo* motion1, immut PaniMotionInfo* motion2)
 {
@@ -95,30 +85,24 @@ void PaniPikiAnimMgr::finishMotion(immut PaniMotionInfo* motion1, immut PaniMoti
 	}
 }
 
-/*
- * --INFO--
- * Address:	8011FA68
- * Size:	000058
+/**
+ * @TODO: Documentation
  */
 void PaniPikiAnimMgr::startMotion(immut PaniMotionInfo& motion1, immut PaniMotionInfo& motion2)
 {
 	startMotion(&motion1, &motion2);
 }
 
-/*
- * --INFO--
- * Address:	8011FAC0
- * Size:	000084
+/**
+ * @TODO: Documentation
  */
 void PaniPikiAnimMgr::finishMotion(PaniAnimKeyListener* listener)
 {
 	finishMotion(&PaniMotionInfo(PANI_NO_MOTION, listener), &PaniMotionInfo(PANI_NO_MOTION, nullptr));
 }
 
-/*
- * --INFO--
- * Address:	8011FB44
- * Size:	0000C0
+/**
+ * @TODO: Documentation
  */
 void PaniPikiAnimMgr::updateAnimation(f32 speed)
 {
@@ -144,10 +128,8 @@ void PaniPikiAnimMgr::updateAnimation(f32 speed)
 	mLowerAnimator.animate(currSpeed);
 }
 
-/*
- * --INFO--
- * Address:	8011FC04
- * Size:	000050
+/**
+ * @TODO: Documentation
  */
 void PaniPikiAnimMgr::updateContext()
 {

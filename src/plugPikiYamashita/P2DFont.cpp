@@ -17,10 +17,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT(nullptr)
 
-/*
- * --INFO--
- * Address:	801B5C64
- * Size:	000150
+/**
+ * @TODO: Documentation
  */
 Font* P2DFont::loadFont(immut char* name, int& rows, int& columns)
 {
@@ -54,10 +52,8 @@ Font* P2DFont::loadFont(immut char* name, int& rows, int& columns)
 	return font;
 }
 
-/*
- * --INFO--
- * Address:	801B5DB4
- * Size:	0000BC
+/**
+ * @TODO: Documentation
  */
 P2DFont::P2DFont(immut char* fileName)
 {
@@ -70,10 +66,8 @@ P2DFont::P2DFont(immut char* fileName)
 	mAscent   = (mFont->mTexture->mHeight / columns) - mDescent;
 }
 
-/*
- * --INFO--
- * Address:	801B5E70
- * Size:	0000D8
+/**
+ * @TODO: Documentation
  */
 void P2DFont::setGX()
 {
@@ -93,10 +87,8 @@ void P2DFont::setGX()
 	GXSetVtxDesc(GX_VA_TEX0, GX_DIRECT);
 }
 
-/*
- * --INFO--
- * Address:	801B5F48
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 void P2DFont::setGradColor(const Colour& topColour, const Colour& bottomColour)
 {
@@ -120,10 +112,8 @@ int P2DFont::charToIndex(int c)
 	return mFont->charToIndex(char(c));
 }
 
-/*
- * --INFO--
- * Address:	801B5F6C
- * Size:	0000C4
+/**
+ * @TODO: Documentation
  */
 f32 P2DFont::getWidth(int charCode, int drawWidth)
 {
@@ -133,10 +123,8 @@ f32 P2DFont::getWidth(int charCode, int drawWidth)
 	return a + 1.0f;
 }
 
-/*
- * --INFO--
- * Address:	801B6030
- * Size:	000308
+/**
+ * @TODO: Documentation
  */
 f32 P2DFont::drawChar(f32 xPos, f32 yPos, int charCode, int drawWidth, int drawHeight)
 {

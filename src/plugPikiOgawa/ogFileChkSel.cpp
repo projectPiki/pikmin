@@ -32,10 +32,8 @@ void zen::ogScrFileChkSelMgr::init()
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80193594
- * Size:	000110
+/**
+ * @TODO: Documentation
  */
 zen::ogScrFileChkSelMgr::ogScrFileChkSelMgr()
 {
@@ -59,10 +57,8 @@ void zen::ogScrFileChkSelMgr::startSub()
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801936A4
- * Size:	000050
+/**
+ * @TODO: Documentation
  */
 void zen::ogScrFileChkSelMgr::start(bool p1)
 {
@@ -75,10 +71,8 @@ void zen::ogScrFileChkSelMgr::start(bool p1)
 	mIsScreenVisible = false;
 }
 
-/*
- * --INFO--
- * Address:	801936F4
- * Size:	000054
+/**
+ * @TODO: Documentation
  */
 void zen::ogScrFileChkSelMgr::startSave()
 {
@@ -91,10 +85,8 @@ void zen::ogScrFileChkSelMgr::startSave()
 	mIsScreenVisible = false;
 }
 
-/*
- * --INFO--
- * Address:	80193748
- * Size:	000198
+/**
+ * @TODO: Documentation
  */
 zen::ogScrFileChkSelMgr::returnStatusFlag zen::ogScrFileChkSelMgr::update(Controller* controller, CardQuickInfo& cardInfo)
 {
@@ -161,10 +153,8 @@ zen::ogScrFileChkSelMgr::returnStatusFlag zen::ogScrFileChkSelMgr::update(Contro
 	return mState;
 }
 
-/*
- * --INFO--
- * Address:	801938E0
- * Size:	0000BC
+/**
+ * @TODO: Documentation
  */
 void zen::ogScrFileChkSelMgr::draw(Graphics& gfx)
 {

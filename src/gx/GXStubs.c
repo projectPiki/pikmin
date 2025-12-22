@@ -1,9 +1,7 @@
 #include "types.h"
 
-/*
- * --INFO--
- * Address:	802140E4
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void __GXSetRange(void)
 {

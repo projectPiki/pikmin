@@ -50,10 +50,8 @@ void zen::ogDrawScrMenu::setScreen(immut char* path)
 	mRootPane = mScreen->search('root', true);
 }
 
-/*
- * --INFO--
- * Address:	80191294
- * Size:	0000C0
+/**
+ * @TODO: Documentation
  */
 zen::ogDrawScrMenu::ogDrawScrMenu()
 {
@@ -103,10 +101,8 @@ void zen::ogDrawScrMenu::calcAngleSpeed(f32 angle)
 	mAngularVelocity += temp / angle;
 }
 
-/*
- * --INFO--
- * Address:	80191354
- * Size:	000350
+/**
+ * @TODO: Documentation
  */
 zen::ogDrawScrMenu::returnStatusFlag zen::ogDrawScrMenu::update(Controller* input, bool a1, bool a2)
 {
@@ -166,10 +162,8 @@ bool zen::ogDrawScrMenu::draw(Graphics& gfx)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801916E4
- * Size:	000278
+/**
+ * @TODO: Documentation
  */
 zen::ogDrawScrController::ogDrawScrController()
 {
@@ -243,10 +237,8 @@ void zen::ogDrawScrController::setHantenColor()
 	mIsColorInverted = true;
 }
 
-/*
- * --INFO--
- * Address:	8019195C
- * Size:	00041C
+/**
+ * @TODO: Documentation
  */
 void zen::ogDrawScrController::update()
 {
@@ -274,10 +266,8 @@ void zen::ogDrawScrController::update()
 	setWinColor();
 }
 
-/*
- * --INFO--
- * Address:	80191D78
- * Size:	000554
+/**
+ * @TODO: Documentation
  */
 zen::ogDrawScrInfo::ogDrawScrInfo()
 {
@@ -351,10 +341,8 @@ zen::ogDrawScrInfo::ogDrawScrInfo()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801922CC
- * Size:	000300
+/**
+ * @TODO: Documentation
  */
 void zen::ogDrawScrInfo::start()
 {
@@ -481,10 +469,8 @@ void zen::ogDrawScrInfo2::drawHougaku(Graphics& gfx)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801925CC
- * Size:	0003FC
+/**
+ * @TODO: Documentation
  */
 zen::ogScrMenuMgr::ogScrMenuMgr()
 {
@@ -519,10 +505,8 @@ zen::ogScrMenuMgr::ogScrMenuMgr()
 	STACK_PAD_TERNARY(mStatus, 1);
 }
 
-/*
- * --INFO--
- * Address:	801929C8
- * Size:	00026C
+/**
+ * @TODO: Documentation
  */
 void zen::ogScrMenuMgr::start()
 {
@@ -580,10 +564,8 @@ void zen::ogScrMenuMgr::updateCont(Controller* input)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80192C34
- * Size:	000598
+/**
+ * @TODO: Documentation
  */
 zen::ogScrMenuMgr::returnStatusFlag zen::ogScrMenuMgr::update(Controller* input)
 {
@@ -678,10 +660,8 @@ zen::ogScrMenuMgr::returnStatusFlag zen::ogScrMenuMgr::update(Controller* input)
 	return mStatus;
 }
 
-/*
- * --INFO--
- * Address:	801931CC
- * Size:	0003C8
+/**
+ * @TODO: Documentation
  */
 bool zen::ogScrMenuMgr::draw(Graphics& gfx)
 {

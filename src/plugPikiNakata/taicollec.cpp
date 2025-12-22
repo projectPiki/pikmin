@@ -431,10 +431,8 @@ struct TaiCollecLegEffectAction : public TaiJointEffectAction {
 	// TODO: members
 };
 
-/*
- * --INFO--
- * Address:	8012AAC0
- * Size:	000084
+/**
+ * @TODO: Documentation
  */
 TaiCollecSoundTable::TaiCollecSoundTable()
     : PaniSoundTable(8)
@@ -444,10 +442,8 @@ TaiCollecSoundTable::TaiCollecSoundTable()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8012AB44
- * Size:	000484
+/**
+ * @TODO: Documentation
  */
 TaiCollecParameters::TaiCollecParameters()
     : TekiParameters(COLLECPI_COUNT, COLLECPF_COUNT)
@@ -525,10 +521,8 @@ TaiCollecParameters::TaiCollecParameters()
 	multiP->setF(COLLECPF_ImpassableDistance, 50.0f);
 }
 
-/*
- * --INFO--
- * Address:	8012AFC8
- * Size:	00179C
+/**
+ * @TODO: Documentation
  */
 TaiCollecStrategy::TaiCollecStrategy(TekiParameters* params)
     : TaiStrategy(COLLECSTATE_COUNT, COLLECSTATE_Unk3)
@@ -786,10 +780,8 @@ TaiCollecStrategy::TaiCollecStrategy(TekiParameters* params)
 	setState(COLLECSTATE_Unk14, state);
 }
 
-/*
- * --INFO--
- * Address:	8012C764
- * Size:	000168
+/**
+ * @TODO: Documentation
  */
 void TaiCollecStrategy::start(Teki& teki)
 {
@@ -806,10 +798,8 @@ void TaiCollecStrategy::start(Teki& teki)
 	teki.clearTekiOption(BTeki::TEKI_OPTION_ORGANIC);
 }
 
-/*
- * --INFO--
- * Address:	8012C8CC
- * Size:	000110
+/**
+ * @TODO: Documentation
  */
 void TaiCollecStrategy::draw(Teki& teki, Graphics& gfx)
 {
@@ -852,10 +842,8 @@ void TaiCollecStrategy::outputUndergroundPosition(Teki& teki, NVector3f& outPosi
 	outPosition.add(teki.getNestPosition());
 }
 
-/*
- * --INFO--
- * Address:	8012C9DC
- * Size:	0001F0
+/**
+ * @TODO: Documentation
  */
 bool TekiCollecTargetPelletCondition::satisfy(Creature* target) immut
 {
@@ -904,10 +892,8 @@ bool TekiCollecTargetPelletCondition::satisfy(Creature* target) immut
 	STACK_PAD_VAR(2);
 }
 
-/*
- * --INFO--
- * Address:	8012CBCC
- * Size:	000040
+/**
+ * @TODO: Documentation
  */
 void TaiCollecImpassableAction::start(Teki& teki)
 {
@@ -918,10 +904,8 @@ void TaiCollecImpassableAction::start(Teki& teki)
 	resetPosition(teki);
 }
 
-/*
- * --INFO--
- * Address:	8012CC0C
- * Size:	0000AC
+/**
+ * @TODO: Documentation
  */
 bool TaiCollecImpassableAction::act(Teki& teki)
 {
@@ -941,10 +925,8 @@ bool TaiCollecImpassableAction::act(Teki& teki)
 	STACK_PAD_VAR(2);
 }
 
-/*
- * --INFO--
- * Address:	8012CCB8
- * Size:	000030
+/**
+ * @TODO: Documentation
  */
 void TaiCollecImpassableAction::resetPosition(Teki& teki)
 {
@@ -952,10 +934,8 @@ void TaiCollecImpassableAction::resetPosition(Teki& teki)
 	teki.mTimers[mTimerIdx] = mTimerLength;
 }
 
-/*
- * --INFO--
- * Address:	8012CCE8
- * Size:	000070
+/**
+ * @TODO: Documentation
  */
 bool TaiCollecLetGoOfPelletAction::act(Teki& teki)
 {
@@ -973,10 +953,8 @@ bool TaiCollecLetGoOfPelletAction::act(Teki& teki)
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8012CD58
- * Size:	000074
+/**
+ * @TODO: Documentation
  */
 bool TaiCollecLetGoOfPelletAction::actByEvent(immut TekiEvent& event)
 {
@@ -995,10 +973,8 @@ bool TaiCollecLetGoOfPelletAction::actByEvent(immut TekiEvent& event)
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8012CDCC
- * Size:	000158
+/**
+ * @TODO: Documentation
  */
 bool TaiCollecTargetPelletAction::act(Teki& teki)
 {
@@ -1022,10 +998,8 @@ bool TaiCollecTargetPelletAction::act(Teki& teki)
 	TekiAndCondition(nullptr, nullptr);
 }
 
-/*
- * --INFO--
- * Address:	8012CF24
- * Size:	0000E0
+/**
+ * @TODO: Documentation
  */
 bool TaiCollecVisibleHeightPelletLostAction::act(Teki& teki)
 {
@@ -1047,10 +1021,8 @@ bool TaiCollecVisibleHeightPelletLostAction::act(Teki& teki)
 	TekiVisibleHeightCondition(nullptr);
 }
 
-/*
- * --INFO--
- * Address:	8012D004
- * Size:	000064
+/**
+ * @TODO: Documentation
  */
 bool TaiCollecVisibleHeightPelletLostTimerAction::act(Teki& teki)
 {
@@ -1060,10 +1032,8 @@ bool TaiCollecVisibleHeightPelletLostTimerAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8012D068
- * Size:	0000FC
+/**
+ * @TODO: Documentation
  */
 bool TaiCollecPelletLostAction::act(Teki& teki)
 {
@@ -1086,10 +1056,8 @@ bool TaiCollecPelletLostAction::act(Teki& teki)
 	TekiVisibleCondition(nullptr);
 }
 
-/*
- * --INFO--
- * Address:	8012D164
- * Size:	0000BC
+/**
+ * @TODO: Documentation
  */
 bool TaiCollecPelletDisappearedAction::act(Teki& teki)
 {
@@ -1111,10 +1079,8 @@ bool TaiCollecPelletDisappearedAction::act(Teki& teki)
 	TekiVisibleCondition(nullptr);
 }
 
-/*
- * --INFO--
- * Address:	8012D220
- * Size:	000110
+/**
+ * @TODO: Documentation
  */
 bool TaiCollecHoldPelletAction::act(Teki& teki)
 {
@@ -1144,10 +1110,8 @@ bool TaiCollecHoldPelletAction::act(Teki& teki)
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8012D330
- * Size:	000050
+/**
+ * @TODO: Documentation
  */
 void TaiCollecCatchingAction::start(Teki& teki)
 {
@@ -1155,20 +1119,16 @@ void TaiCollecCatchingAction::start(Teki& teki)
 	teki.mMotionSpeed = teki.mTekiAnimator->getAnimationSpeed();
 }
 
-/*
- * --INFO--
- * Address:	8012D380
- * Size:	000034
+/**
+ * @TODO: Documentation
  */
 void TaiCollecCatchingAction::finish(Teki& teki)
 {
 	teki.clearTekiOption(BTeki::TEKI_OPTION_MANUAL_ANIMATION);
 }
 
-/*
- * --INFO--
- * Address:	8012D3B4
- * Size:	000034
+/**
+ * @TODO: Documentation
  */
 void TaiCollecCarryingAction::start(Teki& teki)
 {
@@ -1176,10 +1136,8 @@ void TaiCollecCarryingAction::start(Teki& teki)
 	teki.setTekiOption(BTeki::TEKI_OPTION_MANUAL_ANIMATION);
 }
 
-/*
- * --INFO--
- * Address:	8012D3E8
- * Size:	000034
+/**
+ * @TODO: Documentation
  */
 void TaiCollecCarryingAction::finish(Teki& teki)
 {
@@ -1187,10 +1145,8 @@ void TaiCollecCarryingAction::finish(Teki& teki)
 	teki.clearTekiOption(BTeki::TEKI_OPTION_MANUAL_ANIMATION);
 }
 
-/*
- * --INFO--
- * Address:	8012D41C
- * Size:	0000B8
+/**
+ * @TODO: Documentation
  */
 bool TaiCollecCarryingAction::act(Teki& teki)
 {
@@ -1208,10 +1164,8 @@ bool TaiCollecCarryingAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8012D4D4
- * Size:	000028
+/**
+ * @TODO: Documentation
  */
 void TaiCollecBeingDraggedAction::start(Teki& teki)
 {
@@ -1219,10 +1173,8 @@ void TaiCollecBeingDraggedAction::start(Teki& teki)
 	teki.startParticleGenerator(3);
 }
 
-/*
- * --INFO--
- * Address:	8012D4FC
- * Size:	000028
+/**
+ * @TODO: Documentation
  */
 void TaiCollecBeingDraggedAction::finish(Teki& teki)
 {
@@ -1230,10 +1182,8 @@ void TaiCollecBeingDraggedAction::finish(Teki& teki)
 	teki.stopParticleGenerator(3);
 }
 
-/*
- * --INFO--
- * Address:	8012D524
- * Size:	0000A0
+/**
+ * @TODO: Documentation
  */
 bool TaiCollecWinCarryingAction::act(Teki& teki)
 {
@@ -1252,10 +1202,8 @@ bool TaiCollecWinCarryingAction::act(Teki& teki)
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8012D5C4
- * Size:	0000A0
+/**
+ * @TODO: Documentation
  */
 bool TaiCollecDefeatCarryingAction::act(Teki& teki)
 {
@@ -1274,10 +1222,8 @@ bool TaiCollecDefeatCarryingAction::act(Teki& teki)
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8012D664
- * Size:	00015C
+/**
+ * @TODO: Documentation
  */
 bool TaiCollecPutAction::act(Teki& teki)
 {
@@ -1298,10 +1244,8 @@ bool TaiCollecPutAction::act(Teki& teki)
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8012D7C0
- * Size:	0000E0
+/**
+ * @TODO: Documentation
  */
 void TaiCollecPuttingPelletAction::start(Teki& teki)
 {
@@ -1322,10 +1266,8 @@ void TaiCollecPuttingPelletAction::start(Teki& teki)
 	pellet->stimulate(InteractSwallow(&teki, teki.mCollInfo->getSphere('slot')->getChildAt(0), 0));
 }
 
-/*
- * --INFO--
- * Address:	8012D8A0
- * Size:	000040
+/**
+ * @TODO: Documentation
  */
 void TaiCollecPuttingPelletAction::finish(Teki& teki)
 {
@@ -1333,10 +1275,8 @@ void TaiCollecPuttingPelletAction::finish(Teki& teki)
 	teki.stopParticleGenerator(1);
 }
 
-/*
- * --INFO--
- * Address:	8012D8E0
- * Size:	0000BC
+/**
+ * @TODO: Documentation
  */
 bool TaiCollecPuttingPelletAction::act(Teki& teki)
 {
@@ -1356,10 +1296,8 @@ bool TaiCollecPuttingPelletAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8012D99C
- * Size:	000044
+/**
+ * @TODO: Documentation
  */
 void TaiCollecCarryingToNestAction::start(Teki& teki)
 {
@@ -1367,10 +1305,8 @@ void TaiCollecCarryingToNestAction::start(Teki& teki)
 	makePositionRoute(teki);
 }
 
-/*
- * --INFO--
- * Address:	8012D9E0
- * Size:	000214
+/**
+ * @TODO: Documentation
  */
 bool TaiCollecCarryingToNestAction::act(Teki& teki)
 {
@@ -1420,10 +1356,8 @@ bool TaiCollecCarryingToNestAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8012DBF4
- * Size:	000054
+/**
+ * @TODO: Documentation
  */
 void TaiCollecCarryingToNestAction::makePositionRoute(Teki& teki)
 {
@@ -1439,10 +1373,8 @@ void TaiCollecCarryingToNestAction::makePositionRoute(Teki& teki)
 	STACK_PAD_VAR(1);
 }
 
-/*
- * --INFO--
- * Address:	8012DC48
- * Size:	0000A0
+/**
+ * @TODO: Documentation
  */
 bool TaiCollecRouteImpassableAction::act(Teki& teki)
 {
@@ -1478,20 +1410,16 @@ bool TaiCollecRouteImpassableAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8012DCE8
- * Size:	000014
+/**
+ * @TODO: Documentation
  */
 void TaiCollecRoundCarryAction::start(Teki& teki)
 {
 	teki.mTargetAngle = teki.getDirection() + NMathF::pi;
 }
 
-/*
- * --INFO--
- * Address:	8012DCFC
- * Size:	0000E8
+/**
+ * @TODO: Documentation
  */
 bool TaiCollecRoundCarryAction::act(Teki& teki)
 {
@@ -1505,10 +1433,8 @@ bool TaiCollecRoundCarryAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8012DDE4
- * Size:	000064
+/**
+ * @TODO: Documentation
  */
 bool TaiCollecPelletStartContainerizedAction::act(Teki& teki)
 {
@@ -1526,10 +1452,8 @@ bool TaiCollecPelletStartContainerizedAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8012DE48
- * Size:	000058
+/**
+ * @TODO: Documentation
  */
 bool TaiCollecPelletFinishContainerizedAction::act(Teki& teki)
 {
@@ -1543,10 +1467,8 @@ bool TaiCollecPelletFinishContainerizedAction::act(Teki& teki)
 	STACK_PAD_VAR(2);
 }
 
-/*
- * --INFO--
- * Address:	8012DEA0
- * Size:	000078
+/**
+ * @TODO: Documentation
  */
 bool TaiCollecDeadFallingAction::act(Teki& teki)
 {
@@ -1559,10 +1481,8 @@ bool TaiCollecDeadFallingAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8012DF18
- * Size:	000050
+/**
+ * @TODO: Documentation
  */
 bool TaiCollecFallingAction::act(Teki& teki)
 {
@@ -1572,10 +1492,8 @@ bool TaiCollecFallingAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8012DF68
- * Size:	00006C
+/**
+ * @TODO: Documentation
  */
 bool TaiCollecGetOutAction::act(Teki& teki)
 {
@@ -1587,20 +1505,16 @@ bool TaiCollecGetOutAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8012DFD4
- * Size:	000058
+/**
+ * @TODO: Documentation
  */
 TaiCollecLegEffectAction::TaiCollecLegEffectAction(f32 p1)
     : TaiJointEffectAction(p1, 2, 'lleg', 'rleg', 0, 0)
 {
 }
 
-/*
- * --INFO--
- * Address:	8012E02C
- * Size:	000090
+/**
+ * @TODO: Documentation
  */
 void TaiCollecLegEffectAction::setType(Vector3f& effectPos, int type, int id)
 {
@@ -1616,10 +1530,8 @@ void TaiCollecLegEffectAction::setType(Vector3f& effectPos, int type, int id)
 	mSoundID = 112;
 }
 
-/*
- * --INFO--
- * Address:	8012E0BC
- * Size:	000088
+/**
+ * @TODO: Documentation
  */
 TaiHollecParameters::TaiHollecParameters()
     : TekiParameters(TPI_COUNT, TPF_COUNT)
@@ -1632,10 +1544,8 @@ TaiHollecParameters::TaiHollecParameters()
 	multiP->setF(TPF_Life, 1.0f);
 }
 
-/*
- * --INFO--
- * Address:	8012E144
- * Size:	0000C4
+/**
+ * @TODO: Documentation
  */
 TaiHollecStrategy::TaiHollecStrategy(TekiParameters*)
     : TaiStrategy(HOLLECSTATE_COUNT, HOLLECSTATE_Unk0)
@@ -1649,10 +1559,8 @@ TaiHollecStrategy::TaiHollecStrategy(TekiParameters*)
 	setState(HOLLECSTATE_Unk0, state);
 }
 
-/*
- * --INFO--
- * Address:	8012E208
- * Size:	000058
+/**
+ * @TODO: Documentation
  */
 void TaiHollecStrategy::draw(Teki& teki, Graphics& gfx)
 {
@@ -1660,10 +1568,8 @@ void TaiHollecStrategy::draw(Teki& teki, Graphics& gfx)
 	TekiStrategy::draw(teki, gfx);
 }
 
-/*
- * --INFO--
- * Address:	8012E260
- * Size:	00008C
+/**
+ * @TODO: Documentation
  */
 void TaiHollecStrategy::start(Teki& teki)
 {

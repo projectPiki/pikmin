@@ -20,10 +20,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("seedItem")
 
-/*
- * --INFO--
- * Address:	800EDDD0
- * Size:	0000DC
+/**
+ * @TODO: Documentation
  */
 SeedItem::SeedItem(CreatureProp* props, Shape** shapes)
     : Creature(props)
@@ -43,20 +41,16 @@ SeedItem::SeedItem(CreatureProp* props, Shape** shapes)
 	mStateId = 3;
 }
 
-/*
- * --INFO--
- * Address:	800EDEAC
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 f32 SeedItem::getSize()
 {
 	return 10.0f;
 }
 
-/*
- * --INFO--
- * Address:	800EDEB4
- * Size:	000044
+/**
+ * @TODO: Documentation
  */
 void SeedItem::init(immut Vector3f& pos)
 {
@@ -93,30 +87,24 @@ void SeedItem::startSown()
 	resetCreatureFlag(CF_Unk5);
 }
 
-/*
- * --INFO--
- * Address:	800EDEF8
- * Size:	000014
+/**
+ * @TODO: Documentation
  */
 bool SeedItem::isVisible()
 {
 	return mStateId != 2;
 }
 
-/*
- * --INFO--
- * Address:	800EDF0C
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 bool SeedItem::isAtari()
 {
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800EDF14
- * Size:	00003C
+/**
+ * @TODO: Documentation
  */
 void SeedItem::doKill()
 {
@@ -125,10 +113,8 @@ void SeedItem::doKill()
 	itemMgr->kill(this);
 }
 
-/*
- * --INFO--
- * Address:	800EDF50
- * Size:	00023C
+/**
+ * @TODO: Documentation
  */
 void SeedItem::update()
 {
@@ -184,10 +170,8 @@ void SeedItem::update()
 	updateAI();
 }
 
-/*
- * --INFO--
- * Address:	800EE18C
- * Size:	000010
+/**
+ * @TODO: Documentation
  */
 void SeedItem::doAI()
 {
@@ -197,10 +181,8 @@ void SeedItem::doAI()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800EE19C
- * Size:	000138
+/**
+ * @TODO: Documentation
  */
 void SeedItem::refresh(Graphics& gfx)
 {

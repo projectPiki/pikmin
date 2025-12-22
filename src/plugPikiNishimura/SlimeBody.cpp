@@ -18,10 +18,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("SlimeBody");
 
-/*
- * --INFO--
- * Address:	8016A630
- * Size:	00013C
+/**
+ * @TODO: Documentation
  */
 SlimeBody::SlimeBody(Slime* slime)
 {
@@ -35,10 +33,8 @@ SlimeBody::SlimeBody(Slime* slime)
 	mRelativeVelocities = new Vector3f[bossMgr->mSlimeCreatureCount];
 }
 
-/*
- * --INFO--
- * Address:	8016A76C
- * Size:	0002A4
+/**
+ * @TODO: Documentation
  */
 void SlimeBody::init(Slime* slime)
 {
@@ -171,10 +167,8 @@ f32 SlimeBody::calcVertexScore(immut Vector3f* vertex, Vector3f* creatureNormals
 	return score;
 }
 
-/*
- * --INFO--
- * Address:	8016AA10
- * Size:	0002EC
+/**
+ * @TODO: Documentation
  */
 void SlimeBody::sortPosition(Vector3f* outVertex, Vector3f* outNormal, immut Vector3f* vertical)
 {
@@ -223,10 +217,8 @@ void SlimeBody::makeSlimeBody()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8016ACFC
- * Size:	000464
+/**
+ * @TODO: Documentation
  */
 void SlimeBody::update()
 {
@@ -264,10 +256,8 @@ void SlimeBody::setJointPosition(BossShapeObject* shape, Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8016B160
- * Size:	000118
+/**
+ * @TODO: Documentation
  */
 void SlimeBody::refresh(BossShapeObject* shape, Graphics& gfx)
 {

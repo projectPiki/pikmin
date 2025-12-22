@@ -19,10 +19,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("keyConfig")
 
-/*
- * --INFO--
- * Address:	800846C0
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 void KeyConfig::createInstance()
 {
@@ -31,10 +29,8 @@ void KeyConfig::createInstance()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8008470C
- * Size:	0001DC
+/**
+ * @TODO: Documentation
  */
 KeyConfig::KeyConfig()
 {
@@ -48,10 +44,8 @@ KeyConfig::KeyConfig()
 	load("parms/", "key.bin", 1);
 }
 
-/*
- * --INFO--
- * Address:	800848E8
- * Size:	0000C0
+/**
+ * @TODO: Documentation
  */
 void KeyConfig::read(RandomAccessStream& input)
 {
@@ -63,10 +57,8 @@ void KeyConfig::read(RandomAccessStream& input)
 	mMenuKey.read(input);
 }
 
-/*
- * --INFO--
- * Address:	800849A8
- * Size:	000040
+/**
+ * @TODO: Documentation
  */
 void KeyConfig::Key::read(RandomAccessStream& input)
 {

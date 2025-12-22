@@ -10,10 +10,8 @@ void mblen(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8021611C
- * Size:	000050
+/**
+ * @TODO: Documentation
  */
 int mbtowc(wchar_t* pwc, const char* s, size_t n)
 {
@@ -56,10 +54,8 @@ void mbstowcs(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	802160E0
- * Size:	00003C
+/**
+ * @TODO: Documentation
  */
 size_t wcstombs(char* s, const wchar_t* pwcs, size_t n)
 {

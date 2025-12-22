@@ -20,10 +20,8 @@ DEFINE_PRINT("ControllerMgr");
 static PADStatus sControllerPad[PAD_MAX_CONTROLLERS];
 static u32 padChannels[PAD_CHANMAX] = { PAD_CHAN0_BIT, PAD_CHAN1_BIT, PAD_CHAN2_BIT, PAD_CHAN3_BIT };
 
-/*
- * --INFO--
- * Address:	800471B4
- * Size:	0000C4
+/**
+ * @TODO: Documentation
  */
 void ControllerMgr::update()
 {
@@ -40,20 +38,16 @@ void ControllerMgr::update()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80047278
- * Size:	000020
+/**
+ * @TODO: Documentation
  */
 bool ControllerMgr::keyDown(int btn)
 {
 	return (sControllerPad[0].button & btn);
 }
 
-/*
- * --INFO--
- * Address:	80047298
- * Size:	000028
+/**
+ * @TODO: Documentation
  */
 void ControllerMgr::init()
 {
@@ -61,10 +55,8 @@ void ControllerMgr::init()
 	PADInit();
 }
 
-/*
- * --INFO--
- * Address:	800472C0
- * Size:	0001F8
+/**
+ * @TODO: Documentation
  */
 void ControllerMgr::updateController(Controller* controller)
 {

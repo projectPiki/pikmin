@@ -21,20 +21,16 @@ DEFINE_ERROR(4)
  */
 DEFINE_PRINT("memStat");
 
-/*
- * --INFO--
- * Address:	80086690
- * Size:	000080
+/**
+ * @TODO: Documentation
  */
 MemStat::MemStat()
 {
 	reset();
 }
 
-/*
- * --INFO--
- * Address:	80086710
- * Size:	000028
+/**
+ * @TODO: Documentation
  */
 void MemStat::reset()
 {
@@ -43,10 +39,8 @@ void MemStat::reset()
 	mStatCount   = 0;
 }
 
-/*
- * --INFO--
- * Address:	80086738
- * Size:	000110
+/**
+ * @TODO: Documentation
  */
 void MemStat::start(immut char* name)
 {
@@ -77,10 +71,8 @@ void MemStat::start(immut char* name)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80086848
- * Size:	000078
+/**
+ * @TODO: Documentation
  */
 void MemStat::end(immut char* name)
 {
@@ -136,10 +128,8 @@ int MemStat::getRestMemory()
 	return gsys->getHeap(SYSHEAP_App)->getFree();
 }
 
-/*
- * --INFO--
- * Address:	800868C0
- * Size:	000034
+/**
+ * @TODO: Documentation
  */
 void MemStat::print()
 {
@@ -153,20 +143,16 @@ void MemStat::print()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800868F4
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 MemInfo* MemStat::getInfo(immut char* name)
 {
 	return getInfoRec(name, &mInfoListRoot);
 }
 
-/*
- * --INFO--
- * Address:	80086918
- * Size:	000238
+/**
+ * @TODO: Documentation
  */
 void MemStat::printInfoRec(MemInfo* info, int indentation)
 {
@@ -201,10 +187,8 @@ void MemStat::printInfoRec(MemInfo* info, int indentation)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80086B50
- * Size:	000174
+/**
+ * @TODO: Documentation
  */
 MemInfo* MemStat::getInfoRec(immut char* name, MemInfo* info)
 {

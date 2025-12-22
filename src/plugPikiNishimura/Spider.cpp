@@ -17,10 +17,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("Spider");
 
-/*
- * --INFO--
- * Address:	80152794
- * Size:	0009C8
+/**
+ * @TODO: Documentation
  */
 SpiderProp::SpiderProp()
 {
@@ -29,10 +27,8 @@ SpiderProp::SpiderProp()
 	mCreatureProps.mAcceleration(1.0f);
 }
 
-/*
- * --INFO--
- * Address:	8015315C
- * Size:	000140
+/**
+ * @TODO: Documentation
  */
 Spider::Spider(CreatureProp* props)
     : Boss(props)
@@ -45,20 +41,16 @@ Spider::Spider(CreatureProp* props)
 	mShadowCaster.mDrawer = new SpiderDrawer(this);
 }
 
-/*
- * --INFO--
- * Address:	8015329C
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 f32 Spider::getiMass()
 {
 	return 0.1f;
 }
 
-/*
- * --INFO--
- * Address:	801532A4
- * Size:	0000C4
+/**
+ * @TODO: Documentation
  */
 void Spider::init(immut Vector3f&)
 {
@@ -83,10 +75,8 @@ void Spider::init(immut Vector3f&)
 	mCollInfo->makeTubesChild('leg4', 3);
 }
 
-/*
- * --INFO--
- * Address:	80153368
- * Size:	000058
+/**
+ * @TODO: Documentation
  */
 void Spider::doKill()
 {
@@ -98,20 +88,16 @@ void Spider::doKill()
 	bossMgr->kill(this);
 }
 
-/*
- * --INFO--
- * Address:	801533C0
- * Size:	000028
+/**
+ * @TODO: Documentation
  */
 void Spider::exitCourse()
 {
 	mSpiderLeg->killCallBackEffect(true);
 }
 
-/*
- * --INFO--
- * Address:	801533E8
- * Size:	00006C
+/**
+ * @TODO: Documentation
  */
 void Spider::update()
 {
@@ -141,10 +127,8 @@ void Spider::draw(Graphics& gfx)
 	mSpiderLeg->refresh(mShapeObject, gfx);
 }
 
-/*
- * --INFO--
- * Address:	80153454
- * Size:	00014C
+/**
+ * @TODO: Documentation
  */
 void Spider::refresh(Graphics& gfx)
 {
@@ -152,10 +136,8 @@ void Spider::refresh(Graphics& gfx)
 	mCollInfo->updateInfo(gfx, false);
 }
 
-/*
- * --INFO--
- * Address:	801535A0
- * Size:	000078
+/**
+ * @TODO: Documentation
  */
 void Spider::drawShape(Graphics& gfx)
 {
@@ -164,20 +146,16 @@ void Spider::drawShape(Graphics& gfx)
 	mShapeObject->mShape->drawshape(gfx, *gfx.mCamera, nullptr);
 }
 
-/*
- * --INFO--
- * Address:	80153618
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 void Spider::doAI()
 {
 	mSpiderAi->update();
 }
 
-/*
- * --INFO--
- * Address:	8015363C
- * Size:	000044
+/**
+ * @TODO: Documentation
  */
 void Spider::doAnimation()
 {
@@ -186,10 +164,8 @@ void Spider::doAnimation()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80153680
- * Size:	000160
+/**
+ * @TODO: Documentation
  */
 void SpiderDrawer::draw(Graphics& gfx)
 {

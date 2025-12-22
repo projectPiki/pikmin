@@ -16,10 +16,8 @@ static inline int __init_console(void)
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	8021A5B0
- * Size:	0000E0
+/**
+ * @TODO: Documentation
  */
 int __read_console(__file_handle handle, unsigned char* buffer, size_t* count, __idle_proc idle_proc)
 {
@@ -45,10 +43,8 @@ int __read_console(__file_handle handle, unsigned char* buffer, size_t* count, _
 	return (res == 0 ? 0 : 1) & 0xFF;
 }
 
-/*
- * --INFO--
- * Address:	8021A518
- * Size:	000098
+/**
+ * @TODO: Documentation
  */
 WEAKFUNC BOOL __write_console(__file_handle handle, unsigned char* buffer, size_t* count, __idle_proc idle_proc)
 {
@@ -64,10 +60,8 @@ WEAKFUNC BOOL __write_console(__file_handle handle, unsigned char* buffer, size_
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	8021A510
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 u32 __close_console(void)
 {

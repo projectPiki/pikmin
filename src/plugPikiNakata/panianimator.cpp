@@ -21,30 +21,24 @@ immut char* PaniAnimator::keyNames[6] = {
 	"loop start", "loop end", "action 0", "action 1", "action 2", "action 3",
 };
 
-/*
- * --INFO--
- * Address:	8011EF58
- * Size:	000034
+/**
+ * @TODO: Documentation
  */
 PaniMotionInfo::PaniMotionInfo(int motionIdx)
 {
 	init(motionIdx, nullptr);
 }
 
-/*
- * --INFO--
- * Address:	8011EF8C
- * Size:	000030
+/**
+ * @TODO: Documentation
  */
 PaniMotionInfo::PaniMotionInfo(int motionIdx, PaniAnimKeyListener* listener)
 {
 	init(motionIdx, listener);
 }
 
-/*
- * --INFO--
- * Address:	8011EFBC
- * Size:	00000C
+/**
+ * @TODO: Documentation
  */
 void PaniMotionInfo::init(int motionIdx, PaniAnimKeyListener* listener)
 {
@@ -52,10 +46,8 @@ void PaniMotionInfo::init(int motionIdx, PaniAnimKeyListener* listener)
 	mListener  = listener;
 }
 
-/*
- * --INFO--
- * Address:	8011EFC8
- * Size:	000034
+/**
+ * @TODO: Documentation
  */
 PaniMotion::PaniMotion(int animID)
 {
@@ -73,10 +65,8 @@ PaniMotion::PaniMotion(int animID, int p2)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8011EFFC
- * Size:	00000C
+/**
+ * @TODO: Documentation
  */
 void PaniMotion::init(int id, int p2)
 {
@@ -84,10 +74,8 @@ void PaniMotion::init(int id, int p2)
 	_UNUSED04 = p2;
 }
 
-/*
- * --INFO--
- * Address:	8011F008
- * Size:	00006C
+/**
+ * @TODO: Documentation
  */
 PaniMotionTable::PaniMotionTable(int count)
 {
@@ -99,10 +87,8 @@ PaniMotionTable::PaniMotionTable(int count)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8011F074
- * Size:	00006C
+/**
+ * @TODO: Documentation
  */
 PaniSoundTable::PaniSoundTable(int count)
 {
@@ -114,10 +100,8 @@ PaniSoundTable::PaniSoundTable(int count)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8011F0E0
- * Size:	000044
+/**
+ * @TODO: Documentation
  */
 PaniAnimator::PaniAnimator()
 {
@@ -130,10 +114,8 @@ PaniAnimator::PaniAnimator()
 	mAnimationCounter = 0.0f;
 }
 
-/*
- * --INFO--
- * Address:	8011F124
- * Size:	00006C
+/**
+ * @TODO: Documentation
  */
 void PaniAnimator::init(AnimContext* context, AnimMgr* mgr, PaniMotionTable* table)
 {
@@ -147,20 +129,16 @@ void PaniAnimator::init(AnimContext* context, AnimMgr* mgr, PaniMotionTable* tab
 	}
 }
 
-/*
- * --INFO--
- * Address:	8011F190
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 void PaniAnimator::changeContext(AnimContext* context)
 {
 	mContext = context;
 }
 
-/*
- * --INFO--
- * Address:	8011F198
- * Size:	000028
+/**
+ * @TODO: Documentation
  */
 void PaniAnimator::updateContext()
 {
@@ -170,10 +148,8 @@ void PaniAnimator::updateContext()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8011F1C0
- * Size:	000070
+/**
+ * @TODO: Documentation
  */
 void PaniAnimator::startMotion(immut PaniMotionInfo& info)
 {
@@ -187,10 +163,8 @@ void PaniAnimator::startMotion(immut PaniMotionInfo& info)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8011F230
- * Size:	0000B0
+/**
+ * @TODO: Documentation
  */
 void PaniAnimator::finishMotion(immut PaniMotionInfo& info)
 {
@@ -211,10 +185,8 @@ void PaniAnimator::finishMotion(immut PaniMotionInfo& info)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8011F2E0
- * Size:	00010C
+/**
+ * @TODO: Documentation
  */
 void PaniAnimator::animate(f32 speed)
 {
@@ -248,10 +220,8 @@ void PaniAnimator::animate(f32 speed)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8011F3EC
- * Size:	0000D0
+/**
+ * @TODO: Documentation
  */
 void PaniAnimator::checkConstantKeys()
 {
@@ -275,10 +245,8 @@ void PaniAnimator::checkConstantKeys()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8011F4BC
- * Size:	0001C0
+/**
+ * @TODO: Documentation
  */
 void PaniAnimator::checkConstantKey(int idx)
 {
@@ -317,10 +285,8 @@ void PaniAnimator::checkConstantKey(int idx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8011F67C
- * Size:	000124
+/**
+ * @TODO: Documentation
  */
 void PaniAnimator::checkEventKeys(f32 startKeyframe, f32 endKeyframe)
 {
@@ -350,10 +316,8 @@ void PaniAnimator::checkEventKeys(f32 startKeyframe, f32 endKeyframe)
 	STACK_PAD_TERNARY(startKeyframe, 1);
 }
 
-/*
- * --INFO--
- * Address:	8011F7A0
- * Size:	000054
+/**
+ * @TODO: Documentation
  */
 void PaniAnimator::finishAnimation()
 {
@@ -363,10 +327,8 @@ void PaniAnimator::finishAnimation()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8011F7F4
- * Size:	0000AC
+/**
+ * @TODO: Documentation
  */
 f32 PaniAnimator::getKeyValueByKeyType(int type)
 {

@@ -1,9 +1,7 @@
 #include "PSU/LinkList.h"
 
-/*
- * --INFO--
- * Address:	801B33C8
- * Size:	000018
+/**
+ * @TODO: Documentation
  */
 PSUPtrLink::PSUPtrLink(void* value)
 {
@@ -13,10 +11,8 @@ PSUPtrLink::PSUPtrLink(void* value)
 	mNext   = nullptr;
 }
 
-/*
- * --INFO--
- * Address:	801B33E0
- * Size:	000060
+/**
+ * @TODO: Documentation
  */
 PSUPtrLink::~PSUPtrLink()
 {
@@ -35,10 +31,8 @@ PSUPtrList::PSUPtrList(bool)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801B3440
- * Size:	000068
+/**
+ * @TODO: Documentation
  */
 PSUPtrList::~PSUPtrList()
 {
@@ -49,10 +43,8 @@ PSUPtrList::~PSUPtrList()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801B34A8
- * Size:	000014
+/**
+ * @TODO: Documentation
  */
 void PSUPtrList::initiate()
 {
@@ -75,10 +67,8 @@ void PSUPtrList::setFirst(PSUPtrLink* link)
 	mLinkCount    = 1;
 }
 
-/*
- * --INFO--
- * Address:	801B34BC
- * Size:	0000BC
+/**
+ * @TODO: Documentation
  */
 bool PSUPtrList::append(PSUPtrLink* link)
 {
@@ -123,10 +113,8 @@ bool PSUPtrList::insert(PSUPtrLink*, PSUPtrLink*)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801B3578
- * Size:	0000B0
+/**
+ * @TODO: Documentation
  */
 bool PSUPtrList::remove(PSUPtrLink* link)
 {

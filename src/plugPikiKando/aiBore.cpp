@@ -25,10 +25,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT(nullptr)
 
-/*
- * --INFO--
- * Address:	800AA51C
- * Size:	000108
+/**
+ * @TODO: Documentation
  */
 ActFreeSelect::ActFreeSelect(Piki* piki)
     : Action(piki, true)
@@ -42,10 +40,8 @@ ActFreeSelect::ActFreeSelect(Piki* piki)
 	);
 }
 
-/*
- * --INFO--
- * Address:	800AA624
- * Size:	0000F4
+/**
+ * @TODO: Documentation
  */
 void ActFreeSelect::init(Creature* creature)
 {
@@ -59,10 +55,8 @@ void ActFreeSelect::init(Creature* creature)
 	mIsFinished          = false;
 }
 
-/*
- * --INFO--
- * Address:	800AA718
- * Size:	000084
+/**
+ * @TODO: Documentation
  */
 void ActFreeSelect::finishRest()
 {
@@ -81,10 +75,8 @@ void ActFreeSelect::finishRest()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800AA79C
- * Size:	000108
+/**
+ * @TODO: Documentation
  */
 int ActFreeSelect::exec()
 {
@@ -111,19 +103,15 @@ int ActFreeSelect::exec()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800AA8A4
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void ActFreeSelect::cleanup()
 {
 }
 
-/*
- * --INFO--
- * Address:	800AA8A8
- * Size:	000078
+/**
+ * @TODO: Documentation
  */
 void ActFreeSelect::procTargetMsg(Piki* piki, MsgTarget* msg)
 {
@@ -141,10 +129,8 @@ void ActFreeSelect::procTargetMsg(Piki* piki, MsgTarget* msg)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800AA920
- * Size:	0002D8
+/**
+ * @TODO: Documentation
  */
 void ActFreeSelect::determine()
 {
@@ -219,10 +205,8 @@ void ActFreeSelect::determine()
 	STACK_PAD_VAR(1);
 }
 
-/*
- * --INFO--
- * Address:	800AABF8
- * Size:	000104
+/**
+ * @TODO: Documentation
  */
 ActBoreSelect::ActBoreSelect(Piki* piki)
     : Action(piki, true)
@@ -236,10 +220,8 @@ ActBoreSelect::ActBoreSelect(Piki* piki)
 	);
 }
 
-/*
- * --INFO--
- * Address:	800AACFC
- * Size:	0000F4
+/**
+ * @TODO: Documentation
  */
 void ActBoreSelect::init(Creature* creature)
 {
@@ -253,20 +235,16 @@ void ActBoreSelect::init(Creature* creature)
 	mStop                = false;
 }
 
-/*
- * --INFO--
- * Address:	800AADF0
- * Size:	00000C
+/**
+ * @TODO: Documentation
  */
 void ActBoreSelect::stop()
 {
 	mStop = true;
 }
 
-/*
- * --INFO--
- * Address:	800AADFC
- * Size:	000184
+/**
+ * @TODO: Documentation
  */
 int ActBoreSelect::exec()
 {
@@ -308,19 +286,15 @@ int ActBoreSelect::exec()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800AAF80
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void ActBoreSelect::cleanup()
 {
 }
 
-/*
- * --INFO--
- * Address:	800AAF84
- * Size:	000078
+/**
+ * @TODO: Documentation
  */
 void ActBoreSelect::procTargetMsg(Piki* piki, MsgTarget* msg)
 {
@@ -338,10 +312,8 @@ void ActBoreSelect::procTargetMsg(Piki* piki, MsgTarget* msg)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800AAFFC
- * Size:	0000BC
+/**
+ * @TODO: Documentation
  */
 void ActBoreSelect::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
@@ -357,10 +329,8 @@ void ActBoreSelect::procAnimMsg(Piki* piki, MsgAnim* msg)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800AB0B8
- * Size:	0002D8
+/**
+ * @TODO: Documentation
  */
 void ActBoreSelect::determine()
 {
@@ -431,20 +401,16 @@ void ActBoreSelect::determine()
 	STACK_PAD_VAR(2);
 }
 
-/*
- * --INFO--
- * Address:	800AB390
- * Size:	000080
+/**
+ * @TODO: Documentation
  */
 ActBoreTalk::ActBoreTalk(Piki* piki)
     : Action(piki, true)
 {
 }
 
-/*
- * --INFO--
- * Address:	800AB410
- * Size:	0000E8
+/**
+ * @TODO: Documentation
  */
 void ActBoreTalk::init(Creature* creature)
 {
@@ -459,10 +425,8 @@ void ActBoreTalk::init(Creature* creature)
 	STACK_PAD_VAR(2);
 }
 
-/*
- * --INFO--
- * Address:	800AB4F8
- * Size:	000214
+/**
+ * @TODO: Documentation
  */
 void ActBoreTalk::startTalk()
 {
@@ -493,10 +457,8 @@ void ActBoreTalk::startTalk()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800AB70C
- * Size:	000128
+/**
+ * @TODO: Documentation
  */
 int ActBoreTalk::exec()
 {
@@ -528,19 +490,15 @@ int ActBoreTalk::exec()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800AB834
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void ActBoreTalk::cleanup()
 {
 }
 
-/*
- * --INFO--
- * Address:	800AB838
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 void ActBoreTalk::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
@@ -560,67 +518,53 @@ ActBoreListen::ActBoreListen(Piki* piki)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	800AB85C
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void ActBoreListen::init(Creature*)
 {
 }
 
-/*
- * --INFO--
- * Address:	800AB860
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 int ActBoreListen::exec()
 {
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	800AB868
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void ActBoreListen::cleanup()
 {
 }
 
-/*
- * --INFO--
- * Address:	800AB86C
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void ActBoreListen::procAnimMsg(Piki*, MsgAnim*)
 {
 }
 
-/*
- * --INFO--
- * Address:	800AB870
- * Size:	000080
+/**
+ * @TODO: Documentation
  */
 ActBoreOneshot::ActBoreOneshot(Piki* piki)
     : Action(piki, true)
 {
 }
 
-/*
- * --INFO--
- * Address:	800AB8F0
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 void ActBoreOneshot::finish()
 {
 	mPiki->mPikiAnimMgr.finishMotion(this);
 }
 
-/*
- * --INFO--
- * Address:	800AB928
- * Size:	0000E0
+/**
+ * @TODO: Documentation
  */
 void ActBoreOneshot::init(Creature* creature)
 {
@@ -637,10 +581,8 @@ void ActBoreOneshot::init(Creature* creature)
 	mPiki->startMotion(PaniMotionInfo(randAnim, this), PaniMotionInfo(randAnim));
 }
 
-/*
- * --INFO--
- * Address:	800ABA08
- * Size:	00001C
+/**
+ * @TODO: Documentation
  */
 int ActBoreOneshot::exec()
 {
@@ -651,19 +593,15 @@ int ActBoreOneshot::exec()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800ABA24
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void ActBoreOneshot::cleanup()
 {
 }
 
-/*
- * --INFO--
- * Address:	800ABA28
- * Size:	000018
+/**
+ * @TODO: Documentation
  */
 void ActBoreOneshot::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
@@ -672,20 +610,16 @@ void ActBoreOneshot::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800ABA40
- * Size:	000080
+/**
+ * @TODO: Documentation
  */
 ActBoreRest::ActBoreRest(Piki* piki)
     : Action(piki, true)
 {
 }
 
-/*
- * --INFO--
- * Address:	800ABAC0
- * Size:	00008C
+/**
+ * @TODO: Documentation
  */
 void ActBoreRest::init(Creature* creature)
 {
@@ -697,10 +631,8 @@ void ActBoreRest::init(Creature* creature)
 	mIsFinished     = false;
 }
 
-/*
- * --INFO--
- * Address:	800ABB4C
- * Size:	0000E8
+/**
+ * @TODO: Documentation
  */
 void ActBoreRest::sitDown()
 {
@@ -735,10 +667,8 @@ void ActBoreRest::standUp()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800ABC34
- * Size:	0002E8
+/**
+ * @TODO: Documentation
  */
 int ActBoreRest::exec()
 {
@@ -771,19 +701,15 @@ int ActBoreRest::exec()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800ABF1C
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void ActBoreRest::cleanup()
 {
 }
 
-/*
- * --INFO--
- * Address:	800ABF20
- * Size:	000104
+/**
+ * @TODO: Documentation
  */
 void ActBoreRest::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {

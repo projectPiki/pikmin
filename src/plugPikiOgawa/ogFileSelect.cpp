@@ -24,10 +24,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("OgFileSelectSection")
 
-/*
- * --INFO--
- * Address:	80187790
- * Size:	000140
+/**
+ * @TODO: Documentation
  */
 void zen::ogScrFileSelectMgr::copyCardInfosSub()
 {
@@ -39,10 +37,8 @@ void zen::ogScrFileSelectMgr::copyCardInfosSub()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801878D0
- * Size:	0001F4
+/**
+ * @TODO: Documentation
  */
 bool zen::ogScrFileSelectMgr::getCardFileInfos()
 {
@@ -75,10 +71,8 @@ bool zen::ogScrFileSelectMgr::getCardFileInfos()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	80187AC4
- * Size:	000020
+/**
+ * @TODO: Documentation
  */
 void zen::ogScrFileSelectMgr::paneOnOffXY(bool set)
 {
@@ -89,10 +83,8 @@ void zen::ogScrFileSelectMgr::paneOnOffXY(bool set)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80187AE4
- * Size:	0000E0
+/**
+ * @TODO: Documentation
  */
 void zen::ogScrFileSelectMgr::MovePaneXY()
 {
@@ -128,10 +120,8 @@ void zen::ogScrFileSelectMgr::MovePaneXY()
 	mPosPane->move(x1, y1);
 }
 
-/*
- * --INFO--
- * Address:	80187BC4
- * Size:	0000B4
+/**
+ * @TODO: Documentation
  */
 void zen::ogScrFileSelectMgr::OpenYesNoWindow()
 {
@@ -147,10 +137,8 @@ void zen::ogScrFileSelectMgr::OpenYesNoWindow()
 	mYesNoDialogImage->setAlpha(0);
 }
 
-/*
- * --INFO--
- * Address:	80187C78
- * Size:	000014
+/**
+ * @TODO: Documentation
  */
 void zen::ogScrFileSelectMgr::CloseYesNoWindow()
 {
@@ -203,10 +191,8 @@ void zen::ogScrFileSelectMgr::setOperateMode_Normal()
 	mCopyRightCursor.scale(0.0f, 0.2f);
 }
 
-/*
- * --INFO--
- * Address:	80187C8C
- * Size:	0000F0
+/**
+ * @TODO: Documentation
  */
 void zen::ogScrFileSelectMgr::setOperateMode(zen::ogScrFileSelectMgr::FileOperateMode mode)
 {
@@ -226,10 +212,8 @@ void zen::ogScrFileSelectMgr::setOperateMode(zen::ogScrFileSelectMgr::FileOperat
 	}
 }
 
-/*
- * --INFO--
- * Address:	80187D7C
- * Size:	0004E0
+/**
+ * @TODO: Documentation
  */
 void zen::ogScrFileSelectMgr::getPane_FileTop1()
 {
@@ -281,10 +265,8 @@ void zen::ogScrFileSelectMgr::getPane_FileTop1()
 	mCardAccessIcon->hide();
 }
 
-/*
- * --INFO--
- * Address:	8018825C
- * Size:	00032C
+/**
+ * @TODO: Documentation
  */
 void zen::ogScrFileSelectMgr::getPane_FileTop2()
 {
@@ -316,10 +298,8 @@ void zen::ogScrFileSelectMgr::getPane_FileTop2()
 	setFileData(0);
 }
 
-/*
- * --INFO--
- * Address:	80188588
- * Size:	000164
+/**
+ * @TODO: Documentation
  */
 void zen::ogScrFileSelectMgr::setFileData(int fileNum)
 {
@@ -365,10 +345,8 @@ void zen::ogScrFileSelectMgr::set_SM_C()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801886EC
- * Size:	000520
+/**
+ * @TODO: Documentation
  */
 void zen::ogScrFileSelectMgr::getPane_FileIcon()
 {
@@ -455,10 +433,8 @@ void zen::ogScrFileSelectMgr::getPane_FileIcon()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80188C0C
- * Size:	0001B8
+/**
+ * @TODO: Documentation
  */
 void zen::ogScrFileSelectMgr::OnOffKetaNissuu(int fileNum)
 {
@@ -492,10 +468,8 @@ void zen::ogScrFileSelectMgr::OnOffKetaNissuu(int fileNum)
 	STACK_PAD_VAR(1);
 }
 
-/*
- * --INFO--
- * Address:	80188DC4
- * Size:	0002F0
+/**
+ * @TODO: Documentation
  */
 void zen::ogScrFileSelectMgr::getPane_CpyCurScreen()
 {
@@ -533,10 +507,8 @@ void zen::ogScrFileSelectMgr::getPane_CpyCurScreen()
 	mCopyRightCursor.init(screen, mOperationCursorsScreenPane, 'z00r', mCopyCursorRPosX[0], mCopyCursorRPosY[0]);
 }
 
-/*
- * --INFO--
- * Address:	801890B4
- * Size:	000340
+/**
+ * @TODO: Documentation
  */
 void zen::ogScrFileSelectMgr::SetTitleMsg(zen::ogScrFileSelectMgr::titleMessageFlag flag)
 {
@@ -667,10 +639,8 @@ void zen::ogScrFileSelectMgr::ScaleAnimeData()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801893F4
- * Size:	0002C8
+/**
+ * @TODO: Documentation
  */
 void zen::ogScrFileSelectMgr::setDataNumber(int p1)
 {
@@ -744,10 +714,8 @@ void zen::ogScrFileSelectMgr::init()
 	mCursorMoveEffectPikminGroup = 0;
 }
 
-/*
- * --INFO--
- * Address:	801896BC
- * Size:	0008F8
+/**
+ * @TODO: Documentation
  */
 zen::ogScrFileSelectMgr::ogScrFileSelectMgr()
 {
@@ -814,10 +782,8 @@ void zen::ogScrFileSelectMgr::setDataScale()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80189FC0
- * Size:	0001B8
+/**
+ * @TODO: Documentation
  */
 void zen::ogScrFileSelectMgr::chaseDataScale()
 {
@@ -843,10 +809,8 @@ void zen::ogScrFileSelectMgr::chaseDataScale()
 	setDataScale();
 }
 
-/*
- * --INFO--
- * Address:	8018A178
- * Size:	0001B8
+/**
+ * @TODO: Documentation
  */
 void zen::ogScrFileSelectMgr::OnOffNewPane(int fileNum)
 {
@@ -879,10 +843,8 @@ void zen::ogScrFileSelectMgr::OnOffNewPane(int fileNum)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8018A330
- * Size:	0000B8
+/**
+ * @TODO: Documentation
  */
 void zen::ogScrFileSelectMgr::ChkOnyonOnOff()
 {
@@ -908,10 +870,8 @@ void zen::ogScrFileSelectMgr::ChkOnyonOnOff()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8018A3E8
- * Size:	000088
+/**
+ * @TODO: Documentation
  */
 void zen::ogScrFileSelectMgr::ChkNewData()
 {
@@ -924,10 +884,8 @@ void zen::ogScrFileSelectMgr::ChkNewData()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8018A470
- * Size:	000404
+/**
+ * @TODO: Documentation
  */
 void zen::ogScrFileSelectMgr::start(bool saveMode, int fileSelMode)
 {
@@ -1049,10 +1007,8 @@ int zen::ogScrFileSelectMgr::CanToCopy(int p1)
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	8018A874
- * Size:	00036C
+/**
+ * @TODO: Documentation
  */
 void zen::ogScrFileSelectMgr::OperateSelect(Controller* controller)
 {
@@ -1146,10 +1102,8 @@ void zen::ogScrFileSelectMgr::OperateSelect(Controller* controller)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8018ABE0
- * Size:	0001FC
+/**
+ * @TODO: Documentation
  */
 void zen::ogScrFileSelectMgr::KetteiEffectStart()
 {
@@ -1166,10 +1120,8 @@ void zen::ogScrFileSelectMgr::KetteiEffectStart()
 	mFxMgr->create(EFF2D_Unk34, pos, nullptr, nullptr);
 }
 
-/*
- * --INFO--
- * Address:	8018ADDC
- * Size:	0001D4
+/**
+ * @TODO: Documentation
  */
 void zen::ogScrFileSelectMgr::TailEffectStart()
 {
@@ -1231,10 +1183,8 @@ void zen::ogScrFileSelectMgr::quit()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8018AFB0
- * Size:	000A20
+/**
+ * @TODO: Documentation
  */
 zen::ogScrFileSelectMgr::returnStatusFlag zen::ogScrFileSelectMgr::update(Controller* controller, CardQuickInfo& cardInfo)
 {
@@ -1383,10 +1333,8 @@ zen::ogScrFileSelectMgr::returnStatusFlag zen::ogScrFileSelectMgr::update(Contro
 	return mSelectState;
 }
 
-/*
- * --INFO--
- * Address:	8018B9F4
- * Size:	00015C
+/**
+ * @TODO: Documentation
  */
 void zen::ogScrFileSelectMgr::draw(Graphics& gfx)
 {

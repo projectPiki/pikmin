@@ -17,10 +17,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("drawCMtitle")
 
-/*
- * --INFO--
- * Address:	801ED480
- * Size:	000158
+/**
+ * @TODO: Documentation
  */
 void zen::DrawCMtitleObj::init(P2DScreen* screen)
 {
@@ -33,10 +31,8 @@ void zen::DrawCMtitleObj::init(P2DScreen* screen)
 	mEventFlag = 2;
 }
 
-/*
- * --INFO--
- * Address:	801ED5D8
- * Size:	000030
+/**
+ * @TODO: Documentation
  */
 void zen::DrawCMtitleObj::update()
 {
@@ -44,10 +40,8 @@ void zen::DrawCMtitleObj::update()
 	(this->*mModeFunction)();
 }
 
-/*
- * --INFO--
- * Address:	801ED608
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 void zen::DrawCMtitleObj::wait(f32 p1)
 {
@@ -58,10 +52,8 @@ void zen::DrawCMtitleObj::wait(f32 p1)
 	mTitlePane->setScale(1.0f);
 }
 
-/*
- * --INFO--
- * Address:	801ED654
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 void zen::DrawCMtitleObj::appear(f32 p1)
 {
@@ -72,20 +64,16 @@ void zen::DrawCMtitleObj::appear(f32 p1)
 	mTitlePane->setScale(2.0f);
 }
 
-/*
- * --INFO--
- * Address:	801ED6A0
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 bool zen::DrawCMtitleObj::modeSleep()
 {
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	801ED6A8
- * Size:	000120
+/**
+ * @TODO: Documentation
  */
 bool zen::DrawCMtitleObj::modeAppear()
 {
@@ -108,10 +96,8 @@ bool zen::DrawCMtitleObj::modeAppear()
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	801ED7C8
- * Size:	0000E4
+/**
+ * @TODO: Documentation
  */
 bool zen::DrawCMtitleObj::modeWait()
 {

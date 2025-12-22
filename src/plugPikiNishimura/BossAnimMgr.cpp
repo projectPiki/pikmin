@@ -18,10 +18,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 DEFINE_PRINT("BossAnimMgr") //! TODO: Why is the size not proper?
 
-/*
- * --INFO--
- * Address:	8014FA68
- * Size:	000094
+/**
+ * @TODO: Documentation
  */
 BossAnimationManager::BossAnimationManager(BossMgr* mgr)
     : Node("BossAnimationManager")

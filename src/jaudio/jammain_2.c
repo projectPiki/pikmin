@@ -54,10 +54,8 @@ static u32 SEQ_ARG[8];
 // predeclare this so Jam_UpdateTrackAll can use this stupid function.
 extern "C" static void OSf32tos8(f32* in, s8* out);
 
-/*
- * --INFO--
- * Address:	8000F400
- * Size:	000054
+/**
+ * @TODO: Documentation
  */
 void* Jam_OfsToAddr(seqp_* track, u32 ofs)
 {
@@ -72,10 +70,8 @@ void* Jam_OfsToAddr(seqp_* track, u32 ofs)
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	8000F460
- * Size:	000054
+/**
+ * @TODO: Documentation
  */
 static u8 __ByteReadOfs(seqp_* track, u32 ofs)
 {
@@ -90,10 +86,8 @@ static u8 __ByteReadOfs(seqp_* track, u32 ofs)
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	8000F4C0
- * Size:	000050
+/**
+ * @TODO: Documentation
  */
 static u16 __WordReadOfs(seqp_* track, u32 ofs)
 {
@@ -103,10 +97,8 @@ static u16 __WordReadOfs(seqp_* track, u32 ofs)
 	return result;
 }
 
-/*
- * --INFO--
- * Address:	8000F520
- * Size:	000068
+/**
+ * @TODO: Documentation
  */
 static u32 __24ReadOfs(seqp_* track, u32 ofs)
 {
@@ -117,10 +109,8 @@ static u32 __24ReadOfs(seqp_* track, u32 ofs)
 	return result;
 }
 
-/*
- * --INFO--
- * Address:	8000F5A0
- * Size:	000050
+/**
+ * @TODO: Documentation
  */
 static u32 __LongReadOfs(seqp_* track, u32 ofs)
 {
@@ -130,10 +120,8 @@ static u32 __LongReadOfs(seqp_* track, u32 ofs)
 	return result;
 }
 
-/*
- * --INFO--
- * Address:	8000F600
- * Size:	000070
+/**
+ * @TODO: Documentation
  */
 static u8 __ByteRead(seqp_* track)
 {
@@ -148,10 +136,8 @@ static u8 __ByteRead(seqp_* track)
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	8000F680
- * Size:	000048
+/**
+ * @TODO: Documentation
  */
 static u16 __WordRead(seqp_* track)
 {
@@ -161,10 +147,8 @@ static u16 __WordRead(seqp_* track)
 	return result;
 }
 
-/*
- * --INFO--
- * Address:	8000F6E0
- * Size:	00005C
+/**
+ * @TODO: Documentation
  */
 static u32 __24Read(seqp_* track)
 {
@@ -189,10 +173,8 @@ static u32 __32Read(seqp_* track)
 	return result;
 }
 
-/*
- * --INFO--
- * Address:	8000F740
- * Size:	0000D0
+/**
+ * @TODO: Documentation
  */
 static BOOL __ConditionCheck(seqp_* track, u8 param_2)
 {
@@ -256,10 +238,8 @@ int Jam_SEQtimeToDSPtime(seqp_* track, s32 noteDuration, u8 velocityPercent)
 	return dspTime;
 }
 
-/*
- * --INFO--
- * Address:	8000F8C0
- * Size:	000020
+/**
+ * @TODO: Documentation
  */
 u16 Extend8to16(u8 value)
 {
@@ -269,10 +249,8 @@ u16 Extend8to16(u8 value)
 	return value;
 }
 
-/*
- * --INFO--
- * Address:	8000F8E0
- * Size:	0001A8
+/**
+ * @TODO: Documentation
  */
 void Jam_WriteTimeParam(seqp_* track, u8 controlByte)
 {
@@ -334,10 +312,8 @@ void Jam_WriteTimeParam(seqp_* track, u8 controlByte)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8000FAA0
- * Size:	0000AC
+/**
+ * @TODO: Documentation
  */
 void Jam_WriteRegDirect(seqp_* track, u8 index, u16 value)
 {
@@ -370,10 +346,8 @@ void Jam_WriteRegDirect(seqp_* track, u8 index, u16 value)
 	track->regParam.param.value = uVar1;
 }
 
-/*
- * --INFO--
- * Address:	8000FB60
- * Size:	000098
+/**
+ * @TODO: Documentation
  */
 static u32 LoadTbl(seqp_* track, u32 ofs, u32 idx, u32 param_4)
 {
@@ -400,10 +374,8 @@ static u32 LoadTbl(seqp_* track, u32 ofs, u32 idx, u32 param_4)
 	return result;
 }
 
-/*
- * --INFO--
- * Address:	8000FC00
- * Size:	000484
+/**
+ * @TODO: Documentation
  */
 void Jam_WriteRegParam(seqp_* track, u8 param_2)
 {
@@ -576,10 +548,8 @@ void Jam_WriteRegParam(seqp_* track, u8 param_2)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800100A0
- * Size:	00016C
+/**
+ * @TODO: Documentation
  */
 u16 Jam_ReadRegDirect(seqp_* track, u8 regIdx)
 {
@@ -639,20 +609,16 @@ u16 Jam_ReadRegDirect(seqp_* track, u8 regIdx)
 	return result;
 }
 
-/*
- * --INFO--
- * Address:	80010220
- * Size:	000048
+/**
+ * @TODO: Documentation
  */
 u32 Jam_ReadRegXY(seqp_* track)
 {
 	return (Jam_ReadRegDirect(track, 4) << 16) | Jam_ReadRegDirect(track, 5);
 }
 
-/*
- * --INFO--
- * Address:	80010280
- * Size:	00005C
+/**
+ * @TODO: Documentation
  */
 u32 Jam_ReadReg32(seqp_* track, u8 index)
 {
@@ -669,10 +635,8 @@ u32 Jam_ReadReg32(seqp_* track, u8 index)
 	return Jam_ReadRegDirect(track, index);
 }
 
-/*
- * --INFO--
- * Address:	800102E0
- * Size:	000048
+/**
+ * @TODO: Documentation
  */
 void Jam_WriteRegXY(seqp_* track, u32 param_2)
 {
@@ -765,10 +729,8 @@ void Jam_CheckPortIndirect(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80010380
- * Size:	000078
+/**
+ * @TODO: Documentation
  */
 BOOL Jam_WritePortAppDirect(seqp_* track, u32 param_2, u16 param_3)
 {
@@ -786,10 +748,8 @@ BOOL Jam_WritePortAppDirect(seqp_* track, u32 param_2, u16 param_3)
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	80010400
- * Size:	000030
+/**
+ * @TODO: Documentation
  */
 BOOL Jam_ReadPortAppDirect(seqp_* track, u32 param_2, u16* param_3)
 {
@@ -801,10 +761,8 @@ BOOL Jam_ReadPortAppDirect(seqp_* track, u32 param_2, u16* param_3)
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	80010440
- * Size:	00006C
+/**
+ * @TODO: Documentation
  */
 BOOL Jam_CheckPortAppDirect(seqp_* track, u32 param_2, u16 param_3)
 {
@@ -864,10 +822,8 @@ void Jam_WritePortBros(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	800104C0
- * Size:	000030
+/**
+ * @TODO: Documentation
  */
 void Jam_InitRegistTrack(void)
 {
@@ -879,10 +835,8 @@ void Jam_InitRegistTrack(void)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80010500
- * Size:	0000A8
+/**
+ * @TODO: Documentation
  */
 void Jam_RegistTrack(seqp_* track, u32 param_2)
 {
@@ -913,10 +867,8 @@ void Jam_RegistTrack(seqp_* track, u32 param_2)
 	track->isRegistered = 1;
 }
 
-/*
- * --INFO--
- * Address:	800105C0
- * Size:	00008C
+/**
+ * @TODO: Documentation
  */
 void Jam_UnRegistTrack(seqp_* track)
 {
@@ -938,10 +890,8 @@ void Jam_UnRegistTrack(seqp_* track)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80010660
- * Size:	000050
+/**
+ * @TODO: Documentation
  */
 seqp_* Jam_GetTrackHandle(u32 param_1)
 {
@@ -955,10 +905,8 @@ seqp_* Jam_GetTrackHandle(u32 param_1)
 	return NULL;
 }
 
-/*
- * --INFO--
- * Address:	800106C0
- * Size:	000018
+/**
+ * @TODO: Documentation
  */
 void Jam_InitExtBuffer(OuterParam_* ext)
 {
@@ -968,10 +916,8 @@ void Jam_InitExtBuffer(OuterParam_* ext)
 	ext->refCount    = 0;
 }
 
-/*
- * --INFO--
- * Address:	800106E0
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 BOOL Jam_AssignExtBuffer(seqp_* track, OuterParam_* ext)
 {
@@ -986,10 +932,8 @@ BOOL Jam_AssignExtBuffer(seqp_* track, OuterParam_* ext)
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	80010720
- * Size:	000060
+/**
+ * @TODO: Documentation
  */
 BOOL Jam_AssignExtBufferP(seqp_* track, u8 index, OuterParam_* ext)
 {
@@ -1005,10 +949,8 @@ BOOL Jam_AssignExtBufferP(seqp_* track, u8 index, OuterParam_* ext)
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	80010780
- * Size:	000044
+/**
+ * @TODO: Documentation
  */
 void Jam_SetExtFirFilterD(OuterParam_* ext, s16* param_2)
 {
@@ -1024,10 +966,8 @@ void Jam_SetExtFirFilterD(OuterParam_* ext, s16* param_2)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800107E0
- * Size:	0000A4
+/**
+ * @TODO: Documentation
  */
 void Jam_SetExtParamD(f32 value, OuterParam_* ext, u8 updateFlags)
 {
@@ -1064,10 +1004,8 @@ void Jam_SetExtParamD(f32 value, OuterParam_* ext, u8 updateFlags)
 	ext->updateFlags |= updateFlags;
 }
 
-/*
- * --INFO--
- * Address:	800108A0
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 void Jam_OnExtSwitchD(OuterParam_* ext, u16 param_2)
 {
@@ -1078,10 +1016,8 @@ void Jam_OnExtSwitchD(OuterParam_* ext, u16 param_2)
 	ext->updateFlags |= param_2;
 }
 
-/*
- * --INFO--
- * Address:	800108E0
- * Size:	000028
+/**
+ * @TODO: Documentation
  */
 void Jam_OffExtSwitchD(OuterParam_* ext, u16 param_2)
 {
@@ -1112,10 +1048,8 @@ void Jam_SetExtFirFilter(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80010920
- * Size:	00002C
+/**
+ * @TODO: Documentation
  */
 void Jam_SetExtParam(f32 param_1, seqp_* track, u8 param_3)
 {
@@ -1125,10 +1059,8 @@ void Jam_SetExtParam(f32 param_1, seqp_* track, u8 param_3)
 	Jam_SetExtParamD(param_1, track->outerParams, param_3);
 }
 
-/*
- * --INFO--
- * Address:	80010960
- * Size:	00002C
+/**
+ * @TODO: Documentation
  */
 void Jam_OnExtSwitch(seqp_* track, u16 param_2)
 {
@@ -1138,10 +1070,8 @@ void Jam_OnExtSwitch(seqp_* track, u16 param_2)
 	Jam_OnExtSwitchD(track->outerParams, param_2);
 }
 
-/*
- * --INFO--
- * Address:	800109A0
- * Size:	00002C
+/**
+ * @TODO: Documentation
  */
 void Jam_OffExtSwitch(seqp_* track, u16 param_2)
 {
@@ -1171,10 +1101,8 @@ void Jam_SetExtFirFilterP(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	800109E0
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 void Jam_SetExtParamP(f32 param_1, seqp_* track, u8 index, u8 param_4)
 {
@@ -1184,10 +1112,8 @@ void Jam_SetExtParamP(f32 param_1, seqp_* track, u8 index, u8 param_4)
 	Jam_SetExtParamD(param_1, track->childOuterParams[index], param_4);
 }
 
-/*
- * --INFO--
- * Address:	80010A20
- * Size:	00003C
+/**
+ * @TODO: Documentation
  */
 void Jam_OnExtSwitchP(seqp_* track, u8 index, u16 param_3)
 {
@@ -1230,10 +1156,8 @@ void Jam_CheckRunningCounter(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80010A60
- * Size:	00000C
+/**
+ * @TODO: Documentation
  */
 BOOL Jam_RegisterTrackCallback(TrackCallback callback)
 {
@@ -1251,10 +1175,8 @@ void Jam_SetTrackExtPanPower(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80010A80
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 static f32 __PanCalc(f32 param_1, f32 param_2, f32 param_3, u8 param_4)
 {
@@ -1271,10 +1193,8 @@ static f32 __PanCalc(f32 param_1, f32 param_2, f32 param_3, u8 param_4)
 	return result;
 }
 
-/*
- * --INFO--
- * Address:	80010AE0
- * Size:	000320
+/**
+ * @TODO: Documentation
  */
 void Jam_UpdateTrackAll(seqp_* track)
 {
@@ -1387,10 +1307,8 @@ void Jam_UpdateTrackAll(seqp_* track)
 
 #define OS_FASTCAST_S8 (4)
 
-/*
- * --INFO--
- * Address:	80010E00
- * Size:	00000C
+/**
+ * @TODO: Documentation
  */
 static void OSf32tos8(register f32* in, register s8* out)
 {
@@ -1402,10 +1320,8 @@ static void OSf32tos8(register f32* in, register s8* out)
 #endif
 }
 
-/*
- * --INFO--
- * Address:	80010E20
- * Size:	0004A8
+/**
+ * @TODO: Documentation
  */
 void Jam_UpdateTrack(seqp_* track, u32 updateFlags)
 {
@@ -1588,10 +1504,8 @@ void Jam_UpdateTrack(seqp_* track, u32 updateFlags)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800112E0
- * Size:	000104
+/**
+ * @TODO: Documentation
  */
 void Jam_UpdateTempo(seqp_* track)
 {
@@ -1616,10 +1530,8 @@ void Jam_UpdateTempo(seqp_* track)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80011400
- * Size:	0000CC
+/**
+ * @TODO: Documentation
  */
 void Jam_MuteTrack(seqp_* track, u8 param_2)
 {
@@ -1655,10 +1567,8 @@ void Jam_MuteChildTracks(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	800114E0
- * Size:	00013C
+/**
+ * @TODO: Documentation
  */
 void Jam_PauseTrack(seqp_* track, u8 param_2)
 {
@@ -1695,10 +1605,8 @@ void Jam_PauseTrack(seqp_* track, u8 param_2)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80011620
- * Size:	0000EC
+/**
+ * @TODO: Documentation
  */
 void Jam_UnPauseTrack(seqp_* track, u8 param_2)
 {
@@ -1739,10 +1647,8 @@ void Jam_SetInterrupt(seqp_* track, u16 interrupt)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80011760
- * Size:	000090
+/**
+ * @TODO: Documentation
  */
 BOOL Jam_TryInterrupt(seqp_* track)
 {
@@ -1767,10 +1673,8 @@ BOOL Jam_TryInterrupt(seqp_* track)
 	return FALSE;
 }
 
-/*
- * --INFO--
- * Address:	80011800
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 static u32 Cmd_OpenTrack()
 {
@@ -1778,10 +1682,8 @@ static u32 Cmd_OpenTrack()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80011840
- * Size:	000050
+/**
+ * @TODO: Documentation
  */
 static u32 Cmd_OpenTrackBros()
 {
@@ -1793,10 +1695,8 @@ static u32 Cmd_OpenTrackBros()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	800118A0
- * Size:	00003C
+/**
+ * @TODO: Documentation
  */
 static u32 Cmd_Call()
 {
@@ -1805,10 +1705,8 @@ static u32 Cmd_Call()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	800118E0
- * Size:	000100
+/**
+ * @TODO: Documentation
  */
 static u32 Cmd_CallF()
 {
@@ -1842,10 +1740,8 @@ static u32 Cmd_CallF()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	800119E0
- * Size:	000028
+/**
+ * @TODO: Documentation
  */
 static u32 Cmd_Ret()
 {
@@ -1853,10 +1749,8 @@ static u32 Cmd_Ret()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80011A20
- * Size:	000060
+/**
+ * @TODO: Documentation
  */
 static u32 Cmd_RetF()
 {
@@ -1867,10 +1761,8 @@ static u32 Cmd_RetF()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80011A80
- * Size:	00001C
+/**
+ * @TODO: Documentation
  */
 static u32 Cmd_Jmp()
 {
@@ -1878,20 +1770,16 @@ static u32 Cmd_Jmp()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80011AA0
- * Size:	000020
+/**
+ * @TODO: Documentation
  */
 static u32 Cmd_JmpF()
 {
 	Cmd_CallF();
 }
 
-/*
- * --INFO--
- * Address:	80011AC0
- * Size:	000048
+/**
+ * @TODO: Documentation
  */
 static u32 Cmd_LoopS()
 {
@@ -1900,10 +1788,8 @@ static u32 Cmd_LoopS()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80011B20
- * Size:	000078
+/**
+ * @TODO: Documentation
  */
 static u32 Cmd_LoopE()
 {
@@ -1927,10 +1813,8 @@ static u32 Cmd_LoopE()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80011BA0
- * Size:	000054
+/**
+ * @TODO: Documentation
  */
 static u32 Cmd_ReadPort()
 {
@@ -1942,10 +1826,8 @@ static u32 Cmd_ReadPort()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80011C00
- * Size:	000040
+/**
+ * @TODO: Documentation
  */
 static u32 Cmd_WritePort()
 {
@@ -1954,10 +1836,8 @@ static u32 Cmd_WritePort()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80011C40
- * Size:	000044
+/**
+ * @TODO: Documentation
  */
 static u32 Cmd_CheckPortImport()
 {
@@ -1965,10 +1845,8 @@ static u32 Cmd_CheckPortImport()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80011CA0
- * Size:	000044
+/**
+ * @TODO: Documentation
  */
 static u32 Cmd_CheckPortExport()
 {
@@ -1976,10 +1854,8 @@ static u32 Cmd_CheckPortExport()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80011D00
- * Size:	00002C
+/**
+ * @TODO: Documentation
  */
 static u32 Cmd_WaitReg()
 {
@@ -1987,10 +1863,8 @@ static u32 Cmd_WaitReg()
 	return SEQ_ARG[0] ? 1 : 0;
 }
 
-/*
- * --INFO--
- * Address:	80011D40
- * Size:	000028
+/**
+ * @TODO: Documentation
  */
 static u32 Cmd_ConnectName()
 {
@@ -1998,10 +1872,8 @@ static u32 Cmd_ConnectName()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80011D80
- * Size:	000040
+/**
+ * @TODO: Documentation
  */
 static u32 Cmd_ParentWritePort()
 {
@@ -2009,10 +1881,8 @@ static u32 Cmd_ParentWritePort()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80011DC0
- * Size:	000048
+/**
+ * @TODO: Documentation
  */
 static u32 Cmd_ChildWritePort()
 {
@@ -2020,10 +1890,8 @@ static u32 Cmd_ChildWritePort()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80011E20
- * Size:	000030
+/**
+ * @TODO: Documentation
  */
 static u32 Cmd_SetLastNote()
 {
@@ -2032,10 +1900,8 @@ static u32 Cmd_SetLastNote()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80011E60
- * Size:	00001C
+/**
+ * @TODO: Documentation
  */
 static u32 Cmd_TimeRelate()
 {
@@ -2043,10 +1909,8 @@ static u32 Cmd_TimeRelate()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80011E80
- * Size:	000034
+/**
+ * @TODO: Documentation
  */
 static u32 Cmd_SimpleOsc()
 {
@@ -2054,10 +1918,8 @@ static u32 Cmd_SimpleOsc()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80011EC0
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 static u32 Cmd_SimpleEnv()
 {
@@ -2065,10 +1927,8 @@ static u32 Cmd_SimpleEnv()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80011F00
- * Size:	000064
+/**
+ * @TODO: Documentation
  */
 static u32 Cmd_SimpleADSR()
 {
@@ -2082,10 +1942,8 @@ static u32 Cmd_SimpleADSR()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80011F80
- * Size:	000048
+/**
+ * @TODO: Documentation
  */
 static u32 Cmd_Transpose()
 {
@@ -2098,10 +1956,8 @@ static u32 Cmd_Transpose()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80011FE0
- * Size:	000068
+/**
+ * @TODO: Documentation
  */
 static u32 Cmd_CloseTrack()
 {
@@ -2114,10 +1970,8 @@ static u32 Cmd_CloseTrack()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80012060
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 static u32 Cmd_OutSwitch()
 {
@@ -2129,10 +1983,8 @@ static u32 Cmd_OutSwitch()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	800120A0
- * Size:	000034
+/**
+ * @TODO: Documentation
  */
 static u32 Cmd_UpdateSync()
 {
@@ -2140,10 +1992,8 @@ static u32 Cmd_UpdateSync()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	800120E0
- * Size:	00002C
+/**
+ * @TODO: Documentation
  */
 static u32 Cmd_BusConnect()
 {
@@ -2153,10 +2003,8 @@ static u32 Cmd_BusConnect()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80012120
- * Size:	00001C
+/**
+ * @TODO: Documentation
  */
 static u32 Cmd_PauseStatus()
 {
@@ -2164,10 +2012,8 @@ static u32 Cmd_PauseStatus()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80012140
- * Size:	000044
+/**
+ * @TODO: Documentation
  */
 static u32 Cmd_SetInterrupt()
 {
@@ -2176,10 +2022,8 @@ static u32 Cmd_SetInterrupt()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	800121A0
- * Size:	000030
+/**
+ * @TODO: Documentation
  */
 static u32 Cmd_DisInterrupt()
 {
@@ -2190,10 +2034,8 @@ static u32 Cmd_DisInterrupt()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	800121E0
- * Size:	000014
+/**
+ * @TODO: Documentation
  */
 static u32 Cmd_ClrI()
 {
@@ -2201,10 +2043,8 @@ static u32 Cmd_ClrI()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80012200
- * Size:	000014
+/**
+ * @TODO: Documentation
  */
 static u32 Cmd_SetI()
 {
@@ -2212,10 +2052,8 @@ static u32 Cmd_SetI()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80012220
- * Size:	00002C
+/**
+ * @TODO: Documentation
  */
 static u32 Cmd_RetI()
 {
@@ -2225,10 +2063,8 @@ static u32 Cmd_RetI()
 	return 2;
 }
 
-/*
- * --INFO--
- * Address:	80012260
- * Size:	000034
+/**
+ * @TODO: Documentation
  */
 static u32 Cmd_IntTimer()
 {
@@ -2238,10 +2074,8 @@ static u32 Cmd_IntTimer()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	800122A0
- * Size:	00002C
+/**
+ * @TODO: Documentation
  */
 static u32 Cmd_ConnectOpen()
 {
@@ -2249,10 +2083,8 @@ static u32 Cmd_ConnectOpen()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	800122E0
- * Size:	000028
+/**
+ * @TODO: Documentation
  */
 static u32 Cmd_ConnectClose()
 {
@@ -2260,10 +2092,8 @@ static u32 Cmd_ConnectClose()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80012320
- * Size:	000060
+/**
+ * @TODO: Documentation
  */
 static u32 Cmd_SyncCPU()
 {
@@ -2280,10 +2110,8 @@ static u32 Cmd_SyncCPU()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80012380
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 static u32 Cmd_FlushAll()
 {
@@ -2292,10 +2120,8 @@ static u32 Cmd_FlushAll()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	800123C0
- * Size:	00002C
+/**
+ * @TODO: Documentation
  */
 static u32 Cmd_FlushRelease()
 {
@@ -2303,10 +2129,8 @@ static u32 Cmd_FlushRelease()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80012400
- * Size:	00002C
+/**
+ * @TODO: Documentation
  */
 static u32 Cmd_Wait3()
 {
@@ -2314,10 +2138,8 @@ static u32 Cmd_Wait3()
 	return SEQ_ARG[0] ? 1 : 0;
 }
 
-/*
- * --INFO--
- * Address:	80012440
- * Size:	000044
+/**
+ * @TODO: Documentation
  */
 static u32 Cmd_TimeBase()
 {
@@ -2328,10 +2150,8 @@ static u32 Cmd_TimeBase()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	800124A0
- * Size:	000050
+/**
+ * @TODO: Documentation
  */
 static u32 Cmd_Tempo()
 {
@@ -2344,10 +2164,8 @@ static u32 Cmd_Tempo()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80012500
- * Size:	0000CC
+/**
+ * @TODO: Documentation
  */
 static u32 Cmd_Finish()
 {
@@ -2373,20 +2191,16 @@ static u32 Cmd_Finish()
 	return 3;
 }
 
-/*
- * --INFO--
- * Address:	800125E0
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 static u32 Cmd_Nop()
 {
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80012600
- * Size:	0000AC
+/**
+ * @TODO: Documentation
  */
 static u32 Cmd_PanPowSet()
 {
@@ -2402,10 +2216,8 @@ static u32 Cmd_PanPowSet()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	800126C0
- * Size:	000094
+/**
+ * @TODO: Documentation
  */
 static u32 Cmd_IIRSet()
 {
@@ -2425,10 +2237,8 @@ static u32 Cmd_IIRSet()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80012760
- * Size:	000044
+/**
+ * @TODO: Documentation
  */
 static u32 Cmd_FIRSet()
 {
@@ -2436,10 +2246,8 @@ static u32 Cmd_FIRSet()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	800127C0
- * Size:	000050
+/**
+ * @TODO: Documentation
  */
 static u32 Cmd_EXTSet()
 {
@@ -2451,10 +2259,8 @@ static u32 Cmd_EXTSet()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80012820
- * Size:	0000C4
+/**
+ * @TODO: Documentation
  */
 static u32 Cmd_PanSwSet()
 {
@@ -2474,10 +2280,8 @@ static u32 Cmd_PanSwSet()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80012900
- * Size:	000040
+/**
+ * @TODO: Documentation
  */
 static u32 Cmd_OscRoute()
 {
@@ -2495,10 +2299,8 @@ static u32 Cmd_OscRoute()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80012940
- * Size:	0000A0
+/**
+ * @TODO: Documentation
  */
 static u32 Cmd_IIRCutOff()
 {
@@ -2518,10 +2320,8 @@ static u32 Cmd_IIRCutOff()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	800129E0
- * Size:	000040
+/**
+ * @TODO: Documentation
  */
 static u32 Cmd_OscFull()
 {
@@ -2529,10 +2329,8 @@ static u32 Cmd_OscFull()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80012A20
- * Size:	000068
+/**
+ * @TODO: Documentation
  */
 static u32 Cmd_CheckWave()
 {
@@ -2545,10 +2343,8 @@ static u32 Cmd_CheckWave()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80012AA0
- * Size:	000204
+/**
+ * @TODO: Documentation
  */
 static u32 Cmd_Printf()
 {
@@ -2770,10 +2566,8 @@ static CmdFunction CMDP_LIST[CMD_COUNT] = {
 	Cmd_Finish,
 };
 
-/*
- * --INFO--
- * Address:	80012CC0
- * Size:	000130
+/**
+ * @TODO: Documentation
  */
 u32 Cmd_Process(seqp_* track, u8 cmd, u16 param_3)
 {
@@ -2823,10 +2617,8 @@ u32 Cmd_Process(seqp_* track, u8 cmd, u16 param_3)
 	return function();
 }
 
-/*
- * --INFO--
- * Address:	80012E00
- * Size:	0000A8
+/**
+ * @TODO: Documentation
  */
 u32 RegCmd_Process(seqp_* track, BOOL isFromRegister, u32 param_3)
 {
@@ -3291,10 +3083,8 @@ PROCESS_CHILD_TRACKS:
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80013780
- * Size:	0000A8
+/**
+ * @TODO: Documentation
  */
 void SeqUpdate(seqp_* track, u32 updateFlags)
 {

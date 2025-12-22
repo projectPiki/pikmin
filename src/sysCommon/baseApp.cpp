@@ -18,10 +18,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("baseApp");
 
-/*
- * --INFO--
- * Address:	80024DFC
- * Size:	0000D8
+/**
+ * @TODO: Documentation
  */
 BaseApp::BaseApp()
 {
@@ -110,10 +108,8 @@ void BaseApp::stopAgeServer()
 #endif
 }
 
-/*
- * --INFO--
- * Address:	80024EDC
- * Size:	000048
+/**
+ * @TODO: Documentation
  */
 void BaseApp::softReset()
 {
@@ -123,10 +119,8 @@ void BaseApp::softReset()
 	gsys->initSoftReset();
 }
 
-/*
- * --INFO--
- * Address:	80024F24
- * Size:	0000A4
+/**
+ * @TODO: Documentation
  */
 BaseApp::~BaseApp()
 {

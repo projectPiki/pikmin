@@ -176,10 +176,8 @@ protected:
 	// TODO: members
 };
 
-/*
- * --INFO--
- * Address:	801CFE0C
- * Size:	000084
+/**
+ * @TODO: Documentation
  */
 TAItamagoSoundTable::TAItamagoSoundTable()
     : PaniSoundTable(1)
@@ -189,10 +187,8 @@ TAItamagoSoundTable::TAItamagoSoundTable()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801CFE90
- * Size:	0002F4
+/**
+ * @TODO: Documentation
  */
 TAItamagoParameters::TAItamagoParameters()
     : TekiParameters(TPI_COUNT, TAMAGOPF_COUNT)
@@ -249,10 +245,8 @@ TAItamagoParameters::TAItamagoParameters()
 	multiP->setF(TPF_SpawnVelocity, 0.0f);
 }
 
-/*
- * --INFO--
- * Address:	801D0184
- * Size:	0002DC
+/**
+ * @TODO: Documentation
  */
 TAItamagoStrategy::TAItamagoStrategy()
     : YaiStrategy(TAMAGOSTATE_COUNT, TAMAGOSTATE_Wait)
@@ -295,10 +289,8 @@ TAItamagoStrategy::TAItamagoStrategy()
 	setState(TAMAGOSTATE_Hatch, state);
 }
 
-/*
- * --INFO--
- * Address:	801D0460
- * Size:	0006FC
+/**
+ * @TODO: Documentation
  */
 void TAItamagoAnimation::makeDefaultAnimations()
 {

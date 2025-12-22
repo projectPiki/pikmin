@@ -17,10 +17,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("BossShapeObj");
 
-/*
- * --INFO--
- * Address:	80152684
- * Size:	000110
+/**
+ * @TODO: Documentation
  */
 BossShapeObject::BossShapeObject(Shape* shape, immut char* bossName)
 {

@@ -17,10 +17,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT(nullptr);
 
-/*
- * --INFO--
- * Address:	8011D95C
- * Size:	000084
+/**
+ * @TODO: Documentation
  */
 NCamera::NCamera(Camera* cam)
 {
@@ -30,10 +28,8 @@ NCamera::NCamera(Camera* cam)
 	mRotationAngle = 0.0f;
 }
 
-/*
- * --INFO--
- * Address:	8011D9E0
- * Size:	0000D0
+/**
+ * @TODO: Documentation
  */
 void NCamera::makeMatrix()
 {
@@ -53,10 +49,8 @@ void NCamera::makeMatrix()
 	mCamera->calcLookAt(mViewpoint, mWatchpoint, &upVector);
 }
 
-/*
- * --INFO--
- * Address:	8011DAB0
- * Size:	000098
+/**
+ * @TODO: Documentation
  */
 void NCamera::makeCamera()
 {

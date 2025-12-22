@@ -27,10 +27,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("pcamcamera")
 
-/*
- * --INFO--
- * Address:	80121BB8
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 PcamMotionInfo::PcamMotionInfo()
 {
@@ -60,10 +58,8 @@ void PcamMotionInfo::println()
 {
 }
 
-/*
- * --INFO--
- * Address:	80121BBC
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 PcamControlInfo::PcamControlInfo()
 {
@@ -76,10 +72,8 @@ PcamControlInfo::PcamControlInfo()
 	_UNUSED06          = false;
 }
 
-/*
- * --INFO--
- * Address:	80121BE0
- * Size:	00002C
+/**
+ * @TODO: Documentation
  */
 void PcamControlInfo::init(bool p1, bool doRotate, bool doAttention, bool toggleZoom, bool adjustAngle, bool p6, bool p7, f32 azimuthRot,
                            f32 p9, f32 p10)
@@ -96,10 +90,8 @@ void PcamControlInfo::init(bool p1, bool doRotate, bool doAttention, bool toggle
 	mSubStickY           = p10;
 }
 
-/*
- * --INFO--
- * Address:	80121C0C
- * Size:	000134
+/**
+ * @TODO: Documentation
  */
 PcamCamera::PcamCamera(Camera* camera)
     : NCamera(camera)
@@ -112,20 +104,16 @@ PcamCamera::PcamCamera(Camera* camera)
 	mMaxAngleThreshold = NMathF::d2r(80.0f);
 }
 
-/*
- * --INFO--
- * Address:	80121D40
- * Size:	000028
+/**
+ * @TODO: Documentation
  */
 void PcamCamera::startCamera(Creature* target)
 {
 	startCamera(target, PCAMZOOM_Near, PCAMANGLE_Low);
 }
 
-/*
- * --INFO--
- * Address:	80121D68
- * Size:	00018C
+/**
+ * @TODO: Documentation
  */
 void PcamCamera::startCamera(Creature* target, int zoom, int angle)
 {
@@ -163,10 +151,8 @@ void PcamCamera::startCamera(Creature* target, int zoom, int angle)
 	makeCurrentPosition(target->mFaceDirection + NMathF::pi);
 }
 
-/*
- * --INFO--
- * Address:	80121F2C
- * Size:	0000DC
+/**
+ * @TODO: Documentation
  */
 void PcamCamera::makeCurrentPosition(f32 azimuth)
 {
@@ -183,10 +169,8 @@ void PcamCamera::makeCurrentPosition(f32 azimuth)
 	inputWatchpoint(watchPt);
 }
 
-/*
- * --INFO--
- * Address:	80122008
- * Size:	0004CC
+/**
+ * @TODO: Documentation
  */
 void PcamCamera::parameterUpdated()
 {
@@ -216,10 +200,8 @@ void PcamCamera::parameterUpdated()
 	                    getParameterF(PCAMF_AttentionBlur));
 }
 
-/*
- * --INFO--
- * Address:	801224E4
- * Size:	000154
+/**
+ * @TODO: Documentation
  */
 void PcamCamera::control(Controller& controller)
 {
@@ -240,10 +222,8 @@ void PcamCamera::control(Controller& controller)
 	control(info);
 }
 
-/*
- * --INFO--
- * Address:	80122638
- * Size:	00017C
+/**
+ * @TODO: Documentation
  */
 void PcamCamera::control(PcamControlInfo& info)
 {
@@ -287,10 +267,8 @@ void PcamCamera::control(PcamControlInfo& info)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801227B4
- * Size:	00002C
+/**
+ * @TODO: Documentation
  */
 void PcamCamera::startAttention()
 {
@@ -310,10 +288,8 @@ void PcamCamera::playCameraSound(int soundID)
 	SeSystem::playSysSe(soundID);
 }
 
-/*
- * --INFO--
- * Address:	801227E0
- * Size:	000110
+/**
+ * @TODO: Documentation
  */
 void PcamCamera::update()
 {
@@ -344,10 +320,8 @@ void PcamCamera::update()
 	makeCamera();
 }
 
-/*
- * --INFO--
- * Address:	801228F0
- * Size:	0003A0
+/**
+ * @TODO: Documentation
  */
 void PcamCamera::makePosture()
 {
@@ -403,20 +377,16 @@ void PcamCamera::makePosture()
 	STACK_PAD_TERNARY(fov > 0.0f, 1);
 }
 
-/*
- * --INFO--
- * Address:	80122C90
- * Size:	000048
+/**
+ * @TODO: Documentation
  */
 void PcamCamera::makePolarRadius()
 {
 	mPolarDir.mRadius = (mRadiusMode == RadiusMode::Stored) ? mStoredRadius : getGoalDistance();
 }
 
-/*
- * --INFO--
- * Address:	80122CD8
- * Size:	000228
+/**
+ * @TODO: Documentation
  */
 void PcamCamera::makeWatchObjectViewpoint(NVector3f& p1, NVector3f& p2)
 {
@@ -464,10 +434,8 @@ void PcamCamera::makeWatchObjectViewpoint(NVector3f& p1, NVector3f& p2)
 	STACK_PAD_VAR(1);
 }
 
-/*
- * --INFO--
- * Address:	80122F30
- * Size:	000084
+/**
+ * @TODO: Documentation
  */
 void PcamCamera::updateTimers()
 {
@@ -482,10 +450,8 @@ void PcamCamera::updateTimers()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80122FB4
- * Size:	000044
+/**
+ * @TODO: Documentation
  */
 void PcamCamera::startMotion(int zoom, int incl)
 {
@@ -494,10 +460,8 @@ void PcamCamera::startMotion(int zoom, int incl)
 	startMotion(getBasicMotionInfo(mZoomLevel, mInclinationLevel));
 }
 
-/*
- * --INFO--
- * Address:	80122FF8
- * Size:	00007C
+/**
+ * @TODO: Documentation
  */
 void PcamCamera::startMotion(immut PcamMotionInfo& info)
 {
@@ -507,10 +471,8 @@ void PcamCamera::startMotion(immut PcamMotionInfo& info)
 	mTimers[0]        = getParameterF(PCAMF_ChangingMotionPeriod);
 }
 
-/*
- * --INFO--
- * Address:	80123074
- * Size:	0000D0
+/**
+ * @TODO: Documentation
  */
 void PcamCamera::finishMotion()
 {
@@ -529,30 +491,24 @@ f32 PcamCamera::getChangingMotionRate()
 	return 1.0f - ratio;
 }
 
-/*
- * --INFO--
- * Address:	80123144
- * Size:	00006C
+/**
+ * @TODO: Documentation
  */
 f32 PcamCamera::getGoalDistance()
 {
 	return NMathF::interpolate(mPrevMotionInfo.mDistance, mTargetMotionInfo.mDistance, getChangingMotionRate()) * mDistanceMultiplier;
 }
 
-/*
- * --INFO--
- * Address:	801231B0
- * Size:	000060
+/**
+ * @TODO: Documentation
  */
 f32 PcamCamera::getCurrentAngle()
 {
 	return NMathF::interpolate(mPrevMotionInfo.mAngle, mTargetMotionInfo.mAngle, getChangingMotionRate());
 }
 
-/*
- * --INFO--
- * Address:	80123224
- * Size:	000064
+/**
+ * @TODO: Documentation
  */
 f32 PcamCamera::getCurrentFov()
 {
@@ -560,10 +516,8 @@ f32 PcamCamera::getCurrentFov()
 	return NMathF::interpolate(mPrevMotionInfo.mFov, mTargetMotionInfo.mFov, rate);
 }
 
-/*
- * --INFO--
- * Address:	80123288
- * Size:	000018
+/**
+ * @TODO: Documentation
  */
 f32 PcamCamera::getCurrentHomingSpeed()
 {
@@ -590,20 +544,16 @@ f32 PcamCamera::getCurrentNaviWatchWeight()
 	return NMathF::interpolate(mPrevMotionInfo.mNaviWatchWeight, mTargetMotionInfo.mNaviWatchWeight, getChangingMotionRate());
 }
 
-/*
- * --INFO--
- * Address:	801232A0
- * Size:	000060
+/**
+ * @TODO: Documentation
  */
 f32 PcamCamera::getCurrentBlur()
 {
 	return NMathF::interpolate(mPrevMotionInfo.mBlur, mTargetMotionInfo.mBlur, getChangingMotionRate());
 }
 
-/*
- * --INFO--
- * Address:	80123300
- * Size:	00005C
+/**
+ * @TODO: Documentation
  */
 f32 PcamCamera::calcCurrentDistance()
 {
@@ -643,10 +593,8 @@ f32 PcamCamera::getTargetDirection()
 	return mTargetCreature->mSRT.r.y;
 }
 
-/*
- * --INFO--
- * Address:	8012335C
- * Size:	000094
+/**
+ * @TODO: Documentation
  */
 f32 PcamCamera::getCursorDirection()
 {
@@ -659,20 +607,16 @@ f32 PcamCamera::getCursorDirection()
 	return calcDirection(dir);
 }
 
-/*
- * --INFO--
- * Address:	801233F0
- * Size:	000020
+/**
+ * @TODO: Documentation
  */
 void PcamCamera::outputTargetPosition(NVector3f& outPosition)
 {
 	outPosition.input(mTargetCreature->mSRT.t);
 }
 
-/*
- * --INFO--
- * Address:	80123410
- * Size:	000048
+/**
+ * @TODO: Documentation
  */
 void PcamCamera::outputCursorPosition(NVector3f& outPosition)
 {
@@ -684,10 +628,8 @@ void PcamCamera::outputCursorPosition(NVector3f& outPosition)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80123458
- * Size:	00026C
+/**
+ * @TODO: Documentation
  */
 void PcamCamera::outputFormationWatchpoint(Navi* navi, NVector3f& outWatchPt)
 {
@@ -715,10 +657,8 @@ void PcamCamera::outputFormationWatchpoint(Navi* navi, NVector3f& outWatchPt)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801236C4
- * Size:	0000B4
+/**
+ * @TODO: Documentation
  */
 void PcamCamera::outputTargetWatchpoint(NVector3f& outWatchPt)
 {

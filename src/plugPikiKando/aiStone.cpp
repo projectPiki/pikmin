@@ -18,20 +18,16 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT(nullptr);
 
-/*
- * --INFO--
- * Address:	800A6D94
- * Size:	000054
+/**
+ * @TODO: Documentation
  */
 ActStone::ActStone(Piki* piki)
     : Action(piki, true)
 {
 }
 
-/*
- * --INFO--
- * Address:	800A6DE8
- * Size:	000058
+/**
+ * @TODO: Documentation
  */
 void ActStone::init(Creature* creature)
 {
@@ -44,10 +40,8 @@ void ActStone::init(Creature* creature)
 	initApproach();
 }
 
-/*
- * --INFO--
- * Address:	800A6E40
- * Size:	000074
+/**
+ * @TODO: Documentation
  */
 int ActStone::exec()
 {
@@ -69,10 +63,8 @@ int ActStone::exec()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800A6EB4
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 void ActStone::cleanup()
 {
@@ -83,10 +75,8 @@ void ActStone::cleanup()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800A6F00
- * Size:	000084
+/**
+ * @TODO: Documentation
  */
 void ActStone::initApproach()
 {
@@ -101,10 +91,8 @@ void ActStone::initApproach()
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Walk), PaniMotionInfo(PIKIANIM_Walk));
 }
 
-/*
- * --INFO--
- * Address:	800A6F84
- * Size:	000190
+/**
+ * @TODO: Documentation
  */
 int ActStone::exeApproach()
 {
@@ -126,20 +114,16 @@ int ActStone::exeApproach()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800A7114
- * Size:	00000C
+/**
+ * @TODO: Documentation
  */
 void ActStone::initAdjust()
 {
 	mState = STATE_Adjust;
 }
 
-/*
- * --INFO--
- * Address:	800A7120
- * Size:	0001C4
+/**
+ * @TODO: Documentation
  */
 int ActStone::exeAdjust()
 {
@@ -163,10 +147,8 @@ int ActStone::exeAdjust()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800A72E4
- * Size:	000094
+/**
+ * @TODO: Documentation
  */
 void ActStone::initAttack()
 {
@@ -176,10 +158,8 @@ void ActStone::initAttack()
 	mPiki->enableFixPos();
 }
 
-/*
- * --INFO--
- * Address:	800A7378
- * Size:	000174
+/**
+ * @TODO: Documentation
  */
 int ActStone::exeAttack()
 {
@@ -201,10 +181,8 @@ int ActStone::exeAttack()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800A74EC
- * Size:	00030C
+/**
+ * @TODO: Documentation
  */
 void ActStone::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {

@@ -21,10 +21,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("Slime");
 
-/*
- * --INFO--
- * Address:	80163714
- * Size:	000578
+/**
+ * @TODO: Documentation
  */
 SlimeProp::SlimeProp()
 {
@@ -33,10 +31,8 @@ SlimeProp::SlimeProp()
 	mCreatureProps.mAcceleration(1.0f);
 }
 
-/*
- * --INFO--
- * Address:	80163C8C
- * Size:	0001D4
+/**
+ * @TODO: Documentation
  */
 Slime::Slime(CreatureProp* props, BossShapeObject* shape)
     : Boss(props)
@@ -58,30 +54,24 @@ Slime::Slime(CreatureProp* props, BossShapeObject* shape)
 	mSlimeBody = new SlimeBody(this);
 }
 
-/*
- * --INFO--
- * Address:	80163F08
- * Size:	00000C
+/**
+ * @TODO: Documentation
  */
 f32 Slime::getCentreSize()
 {
 	return mCentreUpdater->mSize;
 }
 
-/*
- * --INFO--
- * Address:	80163F14
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 f32 Slime::getiMass()
 {
 	return 0.0001f;
 }
 
-/*
- * --INFO--
- * Address:	80163F1C
- * Size:	00027C
+/**
+ * @TODO: Documentation
  */
 void Slime::init(immut Vector3f& pos)
 {
@@ -128,10 +118,8 @@ void Slime::init(immut Vector3f& pos)
 	mCollInfo->makeTubesChild('tub1', 3);
 }
 
-/*
- * --INFO--
- * Address:	80164198
- * Size:	000034
+/**
+ * @TODO: Documentation
  */
 void Slime::doKill()
 {
@@ -140,19 +128,15 @@ void Slime::doKill()
 	bossMgr->kill(this);
 }
 
-/*
- * --INFO--
- * Address:	801641CC
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void Slime::exitCourse()
 {
 }
 
-/*
- * --INFO--
- * Address:	801641D0
- * Size:	0000A4
+/**
+ * @TODO: Documentation
  */
 void Slime::update()
 {
@@ -167,10 +151,8 @@ void Slime::update()
 	moveNew(gsys->getFrameTime());
 }
 
-/*
- * --INFO--
- * Address:	80164274
- * Size:	0000A8
+/**
+ * @TODO: Documentation
  */
 void Slime::refresh(Graphics& gfx)
 {
@@ -183,10 +165,8 @@ void Slime::refresh(Graphics& gfx)
 	mCollInfo->updateInfo(gfx, false);
 }
 
-/*
- * --INFO--
- * Address:	8016431C
- * Size:	0000A0
+/**
+ * @TODO: Documentation
  */
 void Slime::drawShape(Graphics& gfx)
 {
@@ -198,30 +178,24 @@ void Slime::drawShape(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801643BC
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 void Slime::doAI()
 {
 	mSlimeAi->update();
 }
 
-/*
- * --INFO--
- * Address:	801643E0
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 void Slime::doAnimation()
 {
 	mSlimeBody->update();
 }
 
-/*
- * --INFO--
- * Address:	80164404
- * Size:	000168
+/**
+ * @TODO: Documentation
  */
 void Slime::collisionCallback(immut CollEvent& event)
 {

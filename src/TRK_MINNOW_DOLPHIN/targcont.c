@@ -1,9 +1,7 @@
 #include "Dolphin/trk.h"
 
-/*
- * --INFO--
- * Address:	802207B8
- * Size:	000034
+/**
+ * @TODO: Documentation
  */
 
 unsigned int TRKTargetContinue(void)

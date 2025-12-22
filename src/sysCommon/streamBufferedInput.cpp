@@ -20,10 +20,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("streamBufferedInput");
 
-/*
- * --INFO--
- * Address:	80025500
- * Size:	000098
+/**
+ * @TODO: Documentation
  */
 void BufferedInputStream::init(Stream* stream, u8* buffer, int bufferSize)
 {
@@ -37,20 +35,16 @@ void BufferedInputStream::init(Stream* stream, u8* buffer, int bufferSize)
 	fillBuffer();
 }
 
-/*
- * --INFO--
- * Address:	80025598
- * Size:	0000C0
+/**
+ * @TODO: Documentation
  */
 BufferedInputStream::BufferedInputStream(Stream* stream, u8* buffer, int bufferSize)
 {
 	init(stream, buffer, bufferSize);
 }
 
-/*
- * --INFO--
- * Address:	80025658
- * Size:	000088
+/**
+ * @TODO: Documentation
  */
 void BufferedInputStream::fillBuffer()
 {
@@ -68,10 +62,8 @@ void BufferedInputStream::fillBuffer()
 	mCurrentBufferPos = 0;
 }
 
-/*
- * --INFO--
- * Address:	80025724
- * Size:	000104
+/**
+ * @TODO: Documentation
  */
 void BufferedInputStream::read(void* input, int size)
 {

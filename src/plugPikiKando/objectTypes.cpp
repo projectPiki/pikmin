@@ -62,10 +62,8 @@ ObjType _info[] = {
 	{ OBJTYPE_NULL, "" }
 };
 
-/*
- * --INFO--
- * Address:	80094A38
- * Size:	000048
+/**
+ * @TODO: Documentation
  */
 immut char* ObjType::getName(int index)
 {
@@ -77,10 +75,8 @@ immut char* ObjType::getName(int index)
 	return "invalid objname";
 }
 
-/*
- * --INFO--
- * Address:	80094A80
- * Size:	000094
+/**
+ * @TODO: Documentation
  */
 int ObjType::getIndex(immut char* name)
 {

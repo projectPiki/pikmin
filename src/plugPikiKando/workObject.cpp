@@ -54,20 +54,16 @@ immut char* files[] = {
 	"objects/hinderrock/cube10.mod", "objects/bridge/brd_long.mod",
 };
 
-/*
- * --INFO--
- * Address:	8009B104
- * Size:	000010
+/**
+ * @TODO: Documentation
  */
 void HinderRock::beginPush()
 {
 	mPushingPikmin++;
 }
 
-/*
- * --INFO--
- * Address:	8009B114
- * Size:	000018
+/**
+ * @TODO: Documentation
  */
 void HinderRock::endPush()
 {
@@ -76,10 +72,8 @@ void HinderRock::endPush()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8009B12C
- * Size:	00010C
+/**
+ * @TODO: Documentation
  */
 void WorkObjectMgr::finalSetup()
 {
@@ -103,10 +97,8 @@ WorkObject::WorkObject()
 	mSeContext->setContext(this, 4);
 }
 
-/*
- * --INFO--
- * Address:	8009B23C
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 void WorkObject::doKill()
 {
@@ -183,10 +175,8 @@ immut char* WorkObjectMgr::getShapeName(int type)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8009B260
- * Size:	000110
+/**
+ * @TODO: Documentation
  */
 WorkObjectMgr::WorkObjectMgr()
 {
@@ -198,10 +188,8 @@ WorkObjectMgr::WorkObjectMgr()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8009B3C4
- * Size:	000094
+/**
+ * @TODO: Documentation
  */
 void WorkObjectMgr::loadShapes()
 {
@@ -226,10 +214,8 @@ void WorkObjectMgr::addUseList(int index)
 	mShouldThisShapeLoad[index] = true;
 }
 
-/*
- * --INFO--
- * Address:	8009B458
- * Size:	00012C
+/**
+ * @TODO: Documentation
  */
 Creature* WorkObjectMgr::birth(int wObjType, int p2)
 {
@@ -261,10 +247,8 @@ Creature* WorkObjectMgr::birth(int wObjType, int p2)
 	return object;
 }
 
-/*
- * --INFO--
- * Address:	8009B584
- * Size:	000088
+/**
+ * @TODO: Documentation
  */
 Creature* WorkObjectMgr::getCreature(int index)
 {
@@ -279,30 +263,24 @@ Creature* WorkObjectMgr::getCreature(int index)
 	return node->mObject;
 }
 
-/*
- * --INFO--
- * Address:	8009B60C
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 int WorkObjectMgr::getFirst()
 {
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	8009B614
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 int WorkObjectMgr::getNext(int idx)
 {
 	return idx + 1;
 }
 
-/*
- * --INFO--
- * Address:	8009B61C
- * Size:	000044
+/**
+ * @TODO: Documentation
  */
 bool WorkObjectMgr::isDone(int id)
 {
@@ -312,10 +290,8 @@ bool WorkObjectMgr::isDone(int id)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8009B660
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 int WorkObjectMgr::getSize()
 {
@@ -340,10 +316,8 @@ GenObjectWorkObject::GenObjectWorkObject()
 	mHinderRockPosition.set(0.0f, 0.0f, 0.0f);
 }
 
-/*
- * --INFO--
- * Address:	8009B684
- * Size:	0000A0
+/**
+ * @TODO: Documentation
  */
 void GenObjectWorkObject::ramSaveParameters(RandomAccessStream& data)
 {
@@ -353,10 +327,8 @@ void GenObjectWorkObject::ramSaveParameters(RandomAccessStream& data)
 	data.writeFloat(_48());
 }
 
-/*
- * --INFO--
- * Address:	8009B724
- * Size:	0000A0
+/**
+ * @TODO: Documentation
  */
 void GenObjectWorkObject::ramLoadParameters(RandomAccessStream& data)
 {
@@ -366,30 +338,24 @@ void GenObjectWorkObject::ramLoadParameters(RandomAccessStream& data)
 	_48()   = data.readFloat();
 }
 
-/*
- * --INFO--
- * Address:	8009B7C4
- * Size:	00016C
+/**
+ * @TODO: Documentation
  */
 static GenObject* makeObjectWorkObject()
 {
 	return new GenObjectWorkObject;
 }
 
-/*
- * --INFO--
- * Address:	8009B930
- * Size:	00008C
+/**
+ * @TODO: Documentation
  */
 void GenObjectWorkObject::initialise()
 {
 	GenObjectFactory::factory->registerMember('work', makeObjectWorkObject, "仕事オブジェクトを発生", 'v0.3');
 }
 
-/*
- * --INFO--
- * Address:	8009B9BC
- * Size:	00020C
+/**
+ * @TODO: Documentation
  */
 void GenObjectWorkObject::doRead(RandomAccessStream& stream)
 {
@@ -436,10 +402,8 @@ void GenObjectWorkObject::doRead(RandomAccessStream& stream)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8009BBC8
- * Size:	0001B4
+/**
+ * @TODO: Documentation
  */
 void GenObjectWorkObject::doWrite(RandomAccessStream& stream)
 {
@@ -470,10 +434,8 @@ void GenObjectWorkObject::doWrite(RandomAccessStream& stream)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8009BD7C
- * Size:	000020
+/**
+ * @TODO: Documentation
  */
 void GenObjectWorkObject::updateUseList(Generator*, int i)
 {
@@ -482,10 +444,8 @@ void GenObjectWorkObject::updateUseList(Generator*, int i)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8009BD9C
- * Size:	000180
+/**
+ * @TODO: Documentation
  */
 Creature* GenObjectWorkObject::birth(BirthInfo& info)
 {
@@ -520,10 +480,8 @@ Creature* GenObjectWorkObject::birth(BirthInfo& info)
 	STACK_PAD_VAR(2);
 }
 
-/*
- * --INFO--
- * Address:	8009BF1C
- * Size:	000178
+/**
+ * @TODO: Documentation
  */
 HinderRock::HinderRock(Shape* shape)
 {
@@ -537,10 +495,8 @@ HinderRock::HinderRock(Shape* shape)
 	mEfxB                  = 0;
 }
 
-/*
- * --INFO--
- * Address:	8009C094
- * Size:	000074
+/**
+ * @TODO: Documentation
  */
 bool HinderRock::insideSafeArea(immut Vector3f& pos)
 {
@@ -552,10 +508,8 @@ bool HinderRock::insideSafeArea(immut Vector3f& pos)
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8009C108
- * Size:	000164
+/**
+ * @TODO: Documentation
  */
 void HinderRock::doLoad(RandomAccessStream& stream)
 {
@@ -582,10 +536,8 @@ void HinderRock::doLoad(RandomAccessStream& stream)
 	mBuildShape->mTransformMtx = mWorldMtx;
 }
 
-/*
- * --INFO--
- * Address:	8009C26C
- * Size:	000040
+/**
+ * @TODO: Documentation
  */
 void HinderRock::doSave(RandomAccessStream& stream)
 {
@@ -593,30 +545,24 @@ void HinderRock::doSave(RandomAccessStream& stream)
 	PRINT("\tdoSave ******** STATE = %d WIDX = %d\n", mState, mWayPoint->mIndex);
 }
 
-/*
- * --INFO--
- * Address:	8009C2AC
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 f32 HinderRock::getCentreSize()
 {
 	return mCentreSize;
 }
 
-/*
- * --INFO--
- * Address:	8009C2B4
- * Size:	000014
+/**
+ * @TODO: Documentation
  */
 bool HinderRock::isFinished()
 {
 	return mState == 2;
 }
 
-/*
- * --INFO--
- * Address:	8009C2C8
- * Size:	0000C8
+/**
+ * @TODO: Documentation
  */
 Vector3f HinderRock::getZVector()
 {
@@ -628,10 +574,8 @@ Vector3f HinderRock::getZVector()
 	return diff;
 }
 
-/*
- * --INFO--
- * Address:	8009C390
- * Size:	0000C8
+/**
+ * @TODO: Documentation
  */
 Vector3f HinderRock::getXVector()
 {
@@ -662,10 +606,8 @@ int HinderRock::getPlaneIndex(immut Vector3f& pos)
 	return 3;
 }
 
-/*
- * --INFO--
- * Address:	8009C458
- * Size:	0000F8
+/**
+ * @TODO: Documentation
  */
 u8 HinderRock::getPlaneFlag(immut Vector3f& pos)
 {
@@ -702,10 +644,8 @@ Vector3f HinderRock::getTangentPos(f32 mod)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8009C550
- * Size:	0003A8
+/**
+ * @TODO: Documentation
  */
 void HinderRock::updatePlanes()
 {
@@ -731,10 +671,8 @@ void HinderRock::updatePlanes()
 	mMoveSideEfxPos[1] = getVertex(1);
 }
 
-/*
- * --INFO--
- * Address:	8009C8F8
- * Size:	0000A0
+/**
+ * @TODO: Documentation
  */
 Vector3f HinderRock::getVertex(int vtx)
 {
@@ -763,10 +701,8 @@ Vector3f HinderRock::getVertex(int vtx)
 	return part->mCentre;
 }
 
-/*
- * --INFO--
- * Address:	8009C998
- * Size:	000074
+/**
+ * @TODO: Documentation
  */
 bool HinderRock::stimulate(immut Interaction& act)
 {
@@ -777,10 +713,8 @@ bool HinderRock::stimulate(immut Interaction& act)
 	return act.actHinderRock(this);
 }
 
-/*
- * --INFO--
- * Address:	8009CA0C
- * Size:	000018
+/**
+ * @TODO: Documentation
  */
 bool InteractPush::actHinderRock(HinderRock* obj) immut
 {
@@ -789,10 +723,8 @@ bool InteractPush::actHinderRock(HinderRock* obj) immut
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8009CA24
- * Size:	0000C0
+/**
+ * @TODO: Documentation
  */
 void HinderRock::refresh(Graphics& gfx)
 {
@@ -807,10 +739,8 @@ void HinderRock::refresh(Graphics& gfx)
 	updatePlanes();
 }
 
-/*
- * --INFO--
- * Address:	8009CAE4
- * Size:	00011C
+/**
+ * @TODO: Documentation
  */
 bool HinderRock::workable(immut Vector3f& pos)
 {
@@ -821,10 +751,8 @@ bool HinderRock::workable(immut Vector3f& pos)
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8009CC00
- * Size:	000830
+/**
+ * @TODO: Documentation
  */
 void HinderRock::update()
 {
@@ -964,10 +892,8 @@ void HinderRock::update()
 	STACK_PAD_VAR(1);
 }
 
-/*
- * --INFO--
- * Address:	8009D430
- * Size:	000198
+/**
+ * @TODO: Documentation
  */
 void HinderRock::startAI(int)
 {
@@ -992,10 +918,8 @@ void HinderRock::startAI(int)
 	mSRT.t.y        = mapMgr->getMinY(mSRT.t.x, mSRT.t.z, false);
 }
 
-/*
- * --INFO--
- * Address:	8009D5C8
- * Size:	000154
+/**
+ * @TODO: Documentation
  */
 bool Bridge::workable(immut Vector3f& pos)
 {
@@ -1037,10 +961,8 @@ bool Bridge::workable(immut Vector3f& pos)
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8009D71C
- * Size:	0002C4
+/**
+ * @TODO: Documentation
  */
 Bridge::Bridge(Shape* shape, bool a3)
 {
@@ -1079,10 +1001,8 @@ Bridge::Bridge(Shape* shape, bool a3)
 	mStageProgressList = new f32[mStageCount];
 }
 
-/*
- * --INFO--
- * Address:	8009D9E0
- * Size:	000074
+/**
+ * @TODO: Documentation
  */
 bool Bridge::stimulate(immut Interaction& i)
 {
@@ -1093,10 +1013,8 @@ bool Bridge::stimulate(immut Interaction& i)
 	return i.actBridge(this);
 }
 
-/*
- * --INFO--
- * Address:	8009DA54
- * Size:	0000E4
+/**
+ * @TODO: Documentation
  */
 void Bridge::refresh(Graphics& gfx)
 {
@@ -1118,10 +1036,8 @@ void Bridge::refresh(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8009DB38
- * Size:	0000E0
+/**
+ * @TODO: Documentation
  */
 void Bridge::update()
 {
@@ -1152,10 +1068,8 @@ void Bridge::update()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8009DC18
- * Size:	000300
+/**
+ * @TODO: Documentation
  */
 void Bridge::startAI(int)
 {
@@ -1198,10 +1112,8 @@ void Bridge::startAI(int)
 	_3CC = false;
 }
 
-/*
- * --INFO--
- * Address:	8009DF18
- * Size:	00018C
+/**
+ * @TODO: Documentation
  */
 void Bridge::doLoad(RandomAccessStream& data)
 {
@@ -1236,10 +1148,8 @@ void Bridge::doLoad(RandomAccessStream& data)
 	PRINT("_______________________________\n");
 }
 
-/*
- * --INFO--
- * Address:	8009E0A4
- * Size:	000080
+/**
+ * @TODO: Documentation
  */
 void Bridge::doSave(RandomAccessStream& data)
 {
@@ -1248,10 +1158,8 @@ void Bridge::doSave(RandomAccessStream& data)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8009E124
- * Size:	0000B0
+/**
+ * @TODO: Documentation
  */
 bool Bridge::insideSafeArea(immut Vector3f& pos)
 {
@@ -1264,10 +1172,8 @@ bool Bridge::insideSafeArea(immut Vector3f& pos)
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8009E1D4
- * Size:	000068
+/**
+ * @TODO: Documentation
  */
 bool Bridge::isFinished()
 {
@@ -1279,10 +1185,8 @@ bool Bridge::isFinished()
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8009E23C
- * Size:	000068
+/**
+ * @TODO: Documentation
  */
 int Bridge::getFirstUnfinishedStage()
 {
@@ -1294,10 +1198,8 @@ int Bridge::getFirstUnfinishedStage()
 	return -1;
 }
 
-/*
- * --INFO--
- * Address:	8009E2A4
- * Size:	000068
+/**
+ * @TODO: Documentation
  */
 int Bridge::getFirstFinishedStage()
 {
@@ -1309,10 +1211,8 @@ int Bridge::getFirstFinishedStage()
 	return -1;
 }
 
-/*
- * --INFO--
- * Address:	8009E30C
- * Size:	000040
+/**
+ * @TODO: Documentation
  */
 int Bridge::getJointIndex(int id)
 {
@@ -1326,10 +1226,8 @@ int Bridge::getJointIndex(int id)
 	return _410->getChildAt(id)->mCollInfo->mJointIndex;
 }
 
-/*
- * --INFO--
- * Address:	8009E34C
- * Size:	00009C
+/**
+ * @TODO: Documentation
  */
 bool Bridge::isStageFinished(int id)
 {
@@ -1343,10 +1241,8 @@ bool Bridge::isStageFinished(int id)
 	return mBuildShape->mVisibleList[jointIdx];
 }
 
-/*
- * --INFO--
- * Address:	8009E3E8
- * Size:	0000A4
+/**
+ * @TODO: Documentation
  */
 void Bridge::flatten()
 {
@@ -1359,10 +1255,8 @@ void Bridge::flatten()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8009E48C
- * Size:	000128
+/**
+ * @TODO: Documentation
  */
 void Bridge::dump()
 {
@@ -1373,10 +1267,8 @@ void Bridge::dump()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8009E5B4
- * Size:	000394
+/**
+ * @TODO: Documentation
  */
 void Bridge::setStageFinished(int stageIndex, bool isFinished)
 {
@@ -1425,10 +1317,8 @@ void Bridge::setStageFinished(int stageIndex, bool isFinished)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8009E948
- * Size:	0000C8
+/**
+ * @TODO: Documentation
  */
 Vector3f Bridge::getStagePos(int stage)
 {
@@ -1442,10 +1332,8 @@ Vector3f Bridge::getStagePos(int stage)
 	return _410->getChildAt(stage)->mCentre;
 }
 
-/*
- * --INFO--
- * Address:	8009EA10
- * Size:	000064
+/**
+ * @TODO: Documentation
  */
 f32 Bridge::getStageZ(int stage)
 {
@@ -1456,10 +1344,8 @@ f32 Bridge::getStageZ(int stage)
 	return z - 10.0f;
 }
 
-/*
- * --INFO--
- * Address:	8009EA74
- * Size:	0000E8
+/**
+ * @TODO: Documentation
  */
 void Bridge::getBridgePos(immut Vector3f& origin, f32& xProjection, f32& zProjection)
 {
@@ -1470,10 +1356,8 @@ void Bridge::getBridgePos(immut Vector3f& origin, f32& xProjection, f32& zProjec
 	zProjection = diff.dot(getBridgeZVec());
 }
 
-/*
- * --INFO--
- * Address:	8009EB5C
- * Size:	000060
+/**
+ * @TODO: Documentation
  */
 Vector3f Bridge::getBridgeZVec()
 {
@@ -1482,10 +1366,8 @@ Vector3f Bridge::getBridgeZVec()
 	return zvec;
 }
 
-/*
- * --INFO--
- * Address:	8009EBBC
- * Size:	000060
+/**
+ * @TODO: Documentation
  */
 Vector3f Bridge::getBridgeXVec()
 {
@@ -1494,10 +1376,8 @@ Vector3f Bridge::getBridgeXVec()
 	return xvec;
 }
 
-/*
- * --INFO--
- * Address:	8009EC1C
- * Size:	0000FC
+/**
+ * @TODO: Documentation
  */
 Vector3f Bridge::getStartPos()
 {
@@ -1506,30 +1386,24 @@ Vector3f Bridge::getStartPos()
 	return pos;
 }
 
-/*
- * --INFO--
- * Address:	8009ED18
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 f32 Bridge::getStageDepth()
 {
 	return 20.0f;
 }
 
-/*
- * --INFO--
- * Address:	8009ED20
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 f32 Bridge::getStageWidth()
 {
 	return 150.0f;
 }
 
-/*
- * --INFO--
- * Address:	8009ED28
- * Size:	000424
+/**
+ * @TODO: Documentation
  */
 void Bridge::startStageFinished(int stageIndex, bool isFinished)
 {
@@ -1593,10 +1467,8 @@ void Bridge::startStageFinished(int stageIndex, bool isFinished)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8009F14C
- * Size:	0000A0
+/**
+ * @TODO: Documentation
  */
 bool InteractBuild::actBridge(Bridge* bridge) immut
 {
@@ -1614,10 +1486,8 @@ bool InteractBuild::actBridge(Bridge* bridge) immut
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8009F1EC
- * Size:	0002E8
+/**
+ * @TODO: Documentation
  */
 bool InteractBreak::actBridge(Bridge* bridge) immut
 {

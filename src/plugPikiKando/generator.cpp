@@ -86,10 +86,8 @@ static void sprintID(char*, u32)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	800DACB4
- * Size:	000030
+/**
+ * @TODO: Documentation
  */
 GenBase::GenBase(u32 id, immut char* type, immut char* name)
     : mID(id)
@@ -128,20 +126,16 @@ void GenBase::write(RandomAccessStream& output)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800DACF0
- * Size:	000020
+/**
+ * @TODO: Documentation
  */
 void GenBase::ramSaveParameters(RandomAccessStream& output)
 {
 	Parameters::write(output);
 }
 
-/*
- * --INFO--
- * Address:	800DAD10
- * Size:	000020
+/**
+ * @TODO: Documentation
  */
 void GenBase::ramLoadParameters(RandomAccessStream& input)
 {
@@ -180,10 +174,8 @@ void GenBase::read(RandomAccessStream& input)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800DAD34
- * Size:	0000FC
+/**
+ * @TODO: Documentation
  */
 static GenObject* makeObjectPiki()
 {
@@ -213,40 +205,32 @@ void GenObjectFactory::createInstance()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800DAE30
- * Size:	000050
+/**
+ * @TODO: Documentation
  */
 u32 GenObject::getLatestVersion()
 {
 	return GenObjectFactory::factory->_getLatestVersion(mID);
 }
 
-/*
- * --INFO--
- * Address:	800DAE80
- * Size:	00017C
+/**
+ * @TODO: Documentation
  */
 static GenType* makeTypeOne()
 {
 	return new GenTypeOne;
 }
 
-/*
- * --INFO--
- * Address:	800DAFFC
- * Size:	000130
+/**
+ * @TODO: Documentation
  */
 static GenType* makeTypeAtOnce()
 {
 	return new GenTypeAtOnce;
 }
 
-/*
- * --INFO--
- * Address:	800DB12C
- * Size:	00015C
+/**
+ * @TODO: Documentation
  */
 static GenType* makeTypeInitRand()
 {
@@ -278,20 +262,16 @@ void GenTypeFactory::createInstance()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800DB288
- * Size:	000050
+/**
+ * @TODO: Documentation
  */
 u32 GenType::getLatestVersion()
 {
 	return GenTypeFactory::factory->_getLatestVersion(mID);
 }
 
-/*
- * --INFO--
- * Address:	800DB2D8
- * Size:	00006C
+/**
+ * @TODO: Documentation
  */
 void GenType::ramSaveParameters(RandomAccessStream& output)
 {
@@ -299,10 +279,8 @@ void GenType::ramSaveParameters(RandomAccessStream& output)
 	output.writeByte(mAdjustFaceDirection());
 }
 
-/*
- * --INFO--
- * Address:	800DB344
- * Size:	00006C
+/**
+ * @TODO: Documentation
  */
 void GenType::ramLoadParameters(RandomAccessStream& input)
 {
@@ -310,10 +288,8 @@ void GenType::ramLoadParameters(RandomAccessStream& input)
 	mAdjustFaceDirection() = input.readByte();
 }
 
-/*
- * --INFO--
- * Address:	800DB3B0
- * Size:	0000C0
+/**
+ * @TODO: Documentation
  */
 void GenTypeOne::ramSaveParameters(RandomAccessStream& output)
 {
@@ -323,10 +299,8 @@ void GenTypeOne::ramSaveParameters(RandomAccessStream& output)
 	output.writeShort(_58());
 }
 
-/*
- * --INFO--
- * Address:	800DB470
- * Size:	0000C0
+/**
+ * @TODO: Documentation
  */
 void GenTypeOne::ramLoadParameters(RandomAccessStream& input)
 {
@@ -336,10 +310,8 @@ void GenTypeOne::ramLoadParameters(RandomAccessStream& input)
 	_58() = input.readShort();
 }
 
-/*
- * --INFO--
- * Address:	800DB530
- * Size:	000088
+/**
+ * @TODO: Documentation
  */
 void GenTypeAtOnce::ramSaveParameters(RandomAccessStream& output)
 {
@@ -347,10 +319,8 @@ void GenTypeAtOnce::ramSaveParameters(RandomAccessStream& output)
 	output.writeByte(mMaxCount());
 }
 
-/*
- * --INFO--
- * Address:	800DB5B8
- * Size:	000088
+/**
+ * @TODO: Documentation
  */
 void GenTypeAtOnce::ramLoadParameters(RandomAccessStream& input)
 {
@@ -358,10 +328,8 @@ void GenTypeAtOnce::ramLoadParameters(RandomAccessStream& input)
 	mMaxCount() = input.readByte();
 }
 
-/*
- * --INFO--
- * Address:	800DB640
- * Size:	0000A4
+/**
+ * @TODO: Documentation
  */
 void GenTypeInitRand::ramSaveParameters(RandomAccessStream& output)
 {
@@ -370,10 +338,8 @@ void GenTypeInitRand::ramSaveParameters(RandomAccessStream& output)
 	output.writeByte(mMaxCount());
 }
 
-/*
- * --INFO--
- * Address:	800DB6E4
- * Size:	0000A4
+/**
+ * @TODO: Documentation
  */
 void GenTypeInitRand::ramLoadParameters(RandomAccessStream& input)
 {
@@ -382,10 +348,8 @@ void GenTypeInitRand::ramLoadParameters(RandomAccessStream& input)
 	mMaxCount() = input.readByte();
 }
 
-/*
- * --INFO--
- * Address:	800DB788
- * Size:	00007C
+/**
+ * @TODO: Documentation
  */
 void GenArea::doWrite(RandomAccessStream& output)
 {
@@ -394,10 +358,8 @@ void GenArea::doWrite(RandomAccessStream& output)
 	output.writeFloat(_18.z);
 }
 
-/*
- * --INFO--
- * Address:	800DB804
- * Size:	00007C
+/**
+ * @TODO: Documentation
  */
 void GenArea::doRead(RandomAccessStream& input)
 {
@@ -406,20 +368,16 @@ void GenArea::doRead(RandomAccessStream& input)
 	_18.z = input.readFloat();
 }
 
-/*
- * --INFO--
- * Address:	800DB880
- * Size:	0000D8
+/**
+ * @TODO: Documentation
  */
 static GenArea* makeCircleArea()
 {
 	return new GenAreaCircle;
 }
 
-/*
- * --INFO--
- * Address:	800DB958
- * Size:	000098
+/**
+ * @TODO: Documentation
  */
 static GenArea* makePointArea()
 {
@@ -451,40 +409,32 @@ void GenAreaFactory::createInstance()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800DB9F0
- * Size:	000050
+/**
+ * @TODO: Documentation
  */
 u32 GenArea::getLatestVersion()
 {
 	return GenAreaFactory::factory->_getLatestVersion(mID);
 }
 
-/*
- * --INFO--
- * Address:	800DBA40
- * Size:	000040
+/**
+ * @TODO: Documentation
  */
 void GenAreaCircle::ramSaveParameters(RandomAccessStream& output)
 {
 	output.writeShort(mRadius());
 }
 
-/*
- * --INFO--
- * Address:	800DBA80
- * Size:	000060
+/**
+ * @TODO: Documentation
  */
 void GenAreaCircle::ramLoadParameters(RandomAccessStream& input)
 {
 	mRadius() = input.readShort();
 }
 
-/*
- * --INFO--
- * Address:	800DBAE0
- * Size:	000170
+/**
+ * @TODO: Documentation
  */
 Generator::Generator()
 {
@@ -510,10 +460,8 @@ Generator::Generator()
 	setDayLimit(-1);
 }
 
-/*
- * --INFO--
- * Address:	800DBC50
- * Size:	000154
+/**
+ * @TODO: Documentation
  */
 Generator::Generator(int)
 {
@@ -559,10 +507,8 @@ void Generator::updateUseList()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800DBDA4
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 bool Generator::isExpired()
 {
@@ -579,10 +525,8 @@ bool Generator::isExpired()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800DBDDC
- * Size:	000104
+/**
+ * @TODO: Documentation
  */
 void Generator::loadCreature(RandomAccessStream& input)
 {
@@ -611,10 +555,8 @@ void Generator::loadCreature(RandomAccessStream& input)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800DBEE0
- * Size:	000078
+/**
+ * @TODO: Documentation
  */
 void Generator::saveCreature(RandomAccessStream& output)
 {
@@ -632,10 +574,8 @@ void Generator::saveCreature(RandomAccessStream& output)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800DBF58
- * Size:	00023C
+/**
+ * @TODO: Documentation
  */
 void Generator::init()
 {
@@ -713,10 +653,8 @@ void Generator::init()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800DC19C
- * Size:	000088
+/**
+ * @TODO: Documentation
  */
 void Generator::informDeath(Creature* creature)
 {
@@ -738,19 +676,15 @@ void Generator::informDeath(Creature* creature)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800DC224
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void Generator::update()
 {
 }
 
-/*
- * --INFO--
- * Address:	800DC228
- * Size:	0001AC
+/**
+ * @TODO: Documentation
  */
 void Generator::render(Graphics& gfx)
 {
@@ -789,10 +723,8 @@ void Generator::render(Graphics& gfx)
 
 const char* coStrings[] = { "なし", "常に" };
 
-/*
- * --INFO--
- * Address:	800DC3DC
- * Size:	000734
+/**
+ * @TODO: Documentation
  */
 void Generator::read(RandomAccessStream& input)
 {
@@ -880,10 +812,8 @@ void Generator::read(RandomAccessStream& input)
 	STACK_PAD_INLINE(3);
 }
 
-/*
- * --INFO--
- * Address:	800DCC54
- * Size:	000760
+/**
+ * @TODO: Documentation
  */
 void Generator::write(RandomAccessStream& output)
 {
@@ -945,10 +875,8 @@ void Generator::write(RandomAccessStream& output)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800DD3B4
- * Size:	000514
+/**
+ * @TODO: Documentation
  */
 GeneratorMgr::GeneratorMgr()
     : Node("genMgr")
@@ -967,10 +895,8 @@ GeneratorMgr::GeneratorMgr()
 	setName("GeneratorMgr");
 }
 
-/*
- * --INFO--
- * Address:	800DD8C8
- * Size:	000040
+/**
+ * @TODO: Documentation
  */
 void GeneratorMgr::init()
 {
@@ -979,10 +905,8 @@ void GeneratorMgr::init()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800DD908
- * Size:	00001C
+/**
+ * @TODO: Documentation
  */
 void GeneratorMgr::setDayLimit(int limit)
 {
@@ -991,10 +915,8 @@ void GeneratorMgr::setDayLimit(int limit)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800DD924
- * Size:	0000A0
+/**
+ * @TODO: Documentation
  */
 void GeneratorMgr::updateUseList()
 {
@@ -1003,10 +925,8 @@ void GeneratorMgr::updateUseList()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800DD9C4
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 void GeneratorMgr::update()
 {
@@ -1015,10 +935,8 @@ void GeneratorMgr::update()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800DDA10
- * Size:	00005C
+/**
+ * @TODO: Documentation
  */
 void GeneratorMgr::render(Graphics& gfx)
 {
@@ -1027,10 +945,8 @@ void GeneratorMgr::render(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800DDA6C
- * Size:	000274
+/**
+ * @TODO: Documentation
  */
 void GeneratorMgr::read(RandomAccessStream& input, bool p2)
 {
@@ -1134,10 +1050,8 @@ void GeneratorMgr::changeNaviPos()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800DDCE0
- * Size:	00006C
+/**
+ * @TODO: Documentation
  */
 void GenObjectPiki::ramSaveParameters(RandomAccessStream& output)
 {
@@ -1145,10 +1059,8 @@ void GenObjectPiki::ramSaveParameters(RandomAccessStream& output)
 	output.writeByte(mSpawnColor());
 }
 
-/*
- * --INFO--
- * Address:	800DDD4C
- * Size:	00006C
+/**
+ * @TODO: Documentation
  */
 void GenObjectPiki::ramLoadParameters(RandomAccessStream& input)
 {
@@ -1156,10 +1068,8 @@ void GenObjectPiki::ramLoadParameters(RandomAccessStream& input)
 	mSpawnColor() = input.readByte();
 }
 
-/*
- * --INFO--
- * Address:	800DDDB8
- * Size:	000214
+/**
+ * @TODO: Documentation
  */
 Creature* GenObjectPiki::birth(BirthInfo& info)
 {
@@ -1217,10 +1127,8 @@ f32 deg2rad(int val)
 	return PI * (val / 180.0f);
 }
 
-/*
- * --INFO--
- * Address:	800DDFCC
- * Size:	0000A4
+/**
+ * @TODO: Documentation
  */
 void GenTypeOne::init(Generator* gen)
 {
@@ -1236,10 +1144,8 @@ void GenTypeOne::init(Generator* gen)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800DE070
- * Size:	0001B8
+/**
+ * @TODO: Documentation
  */
 void GenTypeOne::setBirthInfo(BirthInfo& info, Generator* gen)
 {
@@ -1257,10 +1163,8 @@ void GenTypeOne::setBirthInfo(BirthInfo& info, Generator* gen)
 	info.set(pos, rot, p, gen);
 }
 
-/*
- * --INFO--
- * Address:	800DE228
- * Size:	000168
+/**
+ * @TODO: Documentation
  */
 void GenTypeOne::render(Graphics& gfx, Generator* gen)
 {
@@ -1281,20 +1185,16 @@ void GenTypeOne::render(Graphics& gfx, Generator* gen)
 	GlobalShape::axisShape->drawshape(gfx, *gfx.mCamera, nullptr);
 }
 
-/*
- * --INFO--
- * Address:	800DE390
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 int GenTypeAtOnce::getMaxCount()
 {
 	return mMaxCount();
 }
 
-/*
- * --INFO--
- * Address:	800DE398
- * Size:	0000E4
+/**
+ * @TODO: Documentation
  */
 void GenTypeAtOnce::init(Generator* gen)
 {
@@ -1313,10 +1213,8 @@ void GenTypeAtOnce::init(Generator* gen)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800DE47C
- * Size:	000138
+/**
+ * @TODO: Documentation
  */
 void GenTypeAtOnce::setBirthInfo(BirthInfo& info, Generator* gen)
 {
@@ -1331,20 +1229,16 @@ void GenTypeAtOnce::setBirthInfo(BirthInfo& info, Generator* gen)
 	info.set(vec, Vector3f(0.0f, 0.0f, 0.0f), pos, gen);
 }
 
-/*
- * --INFO--
- * Address:	800DE5B4
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 int GenTypeInitRand::getMaxCount()
 {
 	return mMaxCount();
 }
 
-/*
- * --INFO--
- * Address:	800DE5BC
- * Size:	000144
+/**
+ * @TODO: Documentation
  */
 void GenTypeInitRand::init(Generator* gen)
 {
@@ -1363,10 +1257,8 @@ void GenTypeInitRand::init(Generator* gen)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800DE700
- * Size:	000138
+/**
+ * @TODO: Documentation
  */
 void GenTypeInitRand::setBirthInfo(BirthInfo& info, Generator* gen)
 {
@@ -1381,10 +1273,8 @@ void GenTypeInitRand::setBirthInfo(BirthInfo& info, Generator* gen)
 	info.set(vec, Vector3f(0.0f, 0.0f, 0.0f), pos, gen);
 }
 
-/*
- * --INFO--
- * Address:	800DE838
- * Size:	000088
+/**
+ * @TODO: Documentation
  */
 Vector3f GenAreaPoint::getPos(Generator* gen)
 {
@@ -1392,19 +1282,15 @@ Vector3f GenAreaPoint::getPos(Generator* gen)
 	return pos;
 }
 
-/*
- * --INFO--
- * Address:	800DE8C0
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void GenAreaPoint::render(Graphics&, Generator*)
 {
 }
 
-/*
- * --INFO--
- * Address:	800DE8C4
- * Size:	0001A4
+/**
+ * @TODO: Documentation
  */
 Vector3f GenAreaCircle::getPos(Generator* gen)
 {
@@ -1422,10 +1308,8 @@ Vector3f GenAreaCircle::getPos(Generator* gen)
 	return pos;
 }
 
-/*
- * --INFO--
- * Address:	800DEA68
- * Size:	000130
+/**
+ * @TODO: Documentation
  */
 void GenAreaCircle::render(Graphics& gfx, Generator* gen)
 {
@@ -1449,20 +1333,16 @@ void GenAreaCircle::render(Graphics& gfx, Generator* gen)
 	STACK_PAD_TERNARY(gen, 2);
 }
 
-/*
- * --INFO--
- * Address:	800DEB98
- * Size:	000058
+/**
+ * @TODO: Documentation
  */
 GeneratorList::GeneratorList()
 {
 	mGenListHead = new Generator(123456); // lol
 }
 
-/*
- * --INFO--
- * Address:	800DEBF0
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 Generator* GeneratorList::findGenerator(int idx)
 {
@@ -1476,10 +1356,8 @@ Generator* GeneratorList::findGenerator(int idx)
 	return nullptr;
 }
 
-/*
- * --INFO--
- * Address:	800DEC28
- * Size:	000070
+/**
+ * @TODO: Documentation
  */
 void GeneratorList::createRamGenerators()
 {
@@ -1493,10 +1371,8 @@ void GeneratorList::createRamGenerators()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800DEC98
- * Size:	0000B0
+/**
+ * @TODO: Documentation
  */
 void GeneratorList::updateUseList()
 {

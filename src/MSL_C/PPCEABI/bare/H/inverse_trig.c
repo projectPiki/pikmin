@@ -10,10 +10,8 @@ f32 atanf(f32);
 f32 _inv_sqrtf(f32);
 f32 atan__Ff(f32);
 
-/*
- * --INFO--
- * Address:	8021B9F8
- * Size:	0000D8
+/**
+ * @TODO: Documentation
  */
 f32 atan2f(f32 __y, f32 __x)
 {
@@ -35,10 +33,8 @@ f32 atan2f(f32 __y, f32 __x)
 	return __y;
 }
 
-/*
- * --INFO--
- * Address:	8021B9B4
- * Size:	000044
+/**
+ * @TODO: Documentation
  */
 f32 acosf(f32 x)
 {
@@ -47,10 +43,8 @@ f32 acosf(f32 x)
 
 #pragma dont_inline on
 
-/*
- * --INFO--
- * Address:	8021B944
- * Size:	000070
+/**
+ * @TODO: Documentation
  */
 f32 _inv_sqrtf(f32 x)
 {
@@ -69,10 +63,8 @@ f32 _inv_sqrtf(f32 x)
 	return INFINITY;
 }
 
-/*
- * --INFO--
- * Address:	8021B924
- * Size:	000020
+/**
+ * @TODO: Documentation
  */
 f32 atan__Ff(f32 x)
 {
@@ -81,10 +73,8 @@ f32 atan__Ff(f32 x)
 
 #pragma dont_inline reset
 
-/*
- * --INFO--
- * Address:	8021B730
- * Size:	0001F4
+/**
+ * @TODO: Documentation
  */
 f32 atanf(f32 x)
 {

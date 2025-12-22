@@ -125,10 +125,8 @@ static ASM void __OSInitFPRs(void) {
 #endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address:	801F59A8
- * Size:	000028
+/**
+ * @TODO: Documentation
  */
 u32 OSGetConsoleType(void)
 {
@@ -138,10 +136,8 @@ u32 OSGetConsoleType(void)
 	return BootInfo->consoleType;
 }
 
-/*
- * --INFO--
- * Address:	801F59D0
- * Size:	0002DC
+/**
+ * @TODO: Documentation
  */
 void OSInit(void)
 {
@@ -303,10 +299,8 @@ void __OSDBJUMPEND(void);
 
 #define NOP 0x60000000
 
-/*
- * --INFO--
- * Address:	801F5CAC
- * Size:	000280
+/**
+ * @TODO: Documentation
  */
 static void OSExceptionInit(void)
 {
@@ -388,10 +382,8 @@ static void OSExceptionInit(void)
 	DBPrintf("Exceptions initialized...\n");
 }
 
-/*
- * --INFO--
- * Address:	801F5F2C
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 static ASM void __OSDBIntegrator(void)
 {
@@ -411,10 +403,8 @@ entry __OSDBINTEND
 #endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address:	801F5F50
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 static ASM void __OSDBJump(void) {
 #ifdef __MWERKS__ // clang-format off
@@ -425,10 +415,8 @@ entry __OSDBJUMPEND
 #endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address:	801F5F54
- * Size:	00001C
+/**
+ * @TODO: Documentation
  */
 __OSExceptionHandler __OSSetExceptionHandler(__OSException exception, __OSExceptionHandler handler)
 {
@@ -438,20 +426,16 @@ __OSExceptionHandler __OSSetExceptionHandler(__OSException exception, __OSExcept
 	return oldHandler;
 }
 
-/*
- * --INFO--
- * Address:	801F5F70
- * Size:	000014
+/**
+ * @TODO: Documentation
  */
 __OSExceptionHandler __OSGetExceptionHandler(__OSException exception)
 {
 	return OSExceptionTable[exception];
 }
 
-/*
- * --INFO--
- * Address:	801F5F84
- * Size:	00009C
+/**
+ * @TODO: Documentation
  */
 static ASM void OSExceptionVector(void)
 {
@@ -538,10 +522,8 @@ entry __OSEVEnd
 #endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address:	801F6020
- * Size:	000054
+/**
+ * @TODO: Documentation
  */
 static ASM void OSDefaultExceptionHandler(register __OSException exception, register OSContext* context)
 {
@@ -558,10 +540,8 @@ static ASM void OSDefaultExceptionHandler(register __OSException exception, regi
 #endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address:	801F6074
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 void __OSPSInit(void)
 {
@@ -579,10 +559,8 @@ void __OSPSInit(void)
 #define DI_CONFIG_IDX         0x9
 #define DI_CONFIG_CONFIG_MASK 0xFF
 
-/*
- * --INFO--
- * Address:	801F60AC
- * Size:	000014
+/**
+ * @TODO: Documentation
  */
 u32 __OSGetDIConfig(void)
 {

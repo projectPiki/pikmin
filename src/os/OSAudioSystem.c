@@ -12,10 +12,8 @@ static u8 DSPInitCode[] = {
 vu16 __DSPRegs[] : 0xCC005000;
 #define __DSPWorkBuffer (void*)0x81000000
 
-/*
- * --INFO--
- * Address:	801F6938
- * Size:	000194
+/**
+ * @TODO: Documentation
  */
 void __OSInitAudioSystem(void)
 {
@@ -77,10 +75,8 @@ void __OSInitAudioSystem(void)
 		;
 }
 
-/*
- * --INFO--
- * Address:	801F6ACC
- * Size:	0000D8
+/**
+ * @TODO: Documentation
  */
 void __OSStopAudioSystem(void)
 {

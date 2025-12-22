@@ -15,10 +15,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("aiRandomBoid") // ... no you're not
 
-/*
- * --INFO--
- * Address:	800B5688
- * Size:	00006C
+/**
+ * @TODO: Documentation
  */
 ActChase::ActChase(Piki* piki)
     : Action(piki, true)
@@ -26,19 +24,15 @@ ActChase::ActChase(Piki* piki)
 	mTarget.reset();
 }
 
-/*
- * --INFO--
- * Address:	800B56F4
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void ActChase::Initialiser::initialise(Action*)
 {
 }
 
-/*
- * --INFO--
- * Address:	800B56F8
- * Size:	0000D4
+/**
+ * @TODO: Documentation
  */
 void ActChase::init(Creature* target)
 {
@@ -47,10 +41,8 @@ void ActChase::init(Creature* target)
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Run), PaniMotionInfo(PIKIANIM_Run));
 }
 
-/*
- * --INFO--
- * Address:	800B57CC
- * Size:	000040
+/**
+ * @TODO: Documentation
  */
 void ActChase::cleanup()
 {
@@ -58,10 +50,8 @@ void ActChase::cleanup()
 	mTarget.reset();
 }
 
-/*
- * --INFO--
- * Address:	800B580C
- * Size:	00023C
+/**
+ * @TODO: Documentation
  */
 int ActChase::exec()
 {

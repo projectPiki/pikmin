@@ -182,10 +182,8 @@ immut char* bloFile_Res_Table[] = {
 EnumResult dummy_blo_num_table[] = { (EnumResult)0x91, (EnumResult)0 };
 } // namespace zen
 
-/*
- * --INFO--
- * Address:	80183408
- * Size:	000DE0
+/**
+ * @TODO: Documentation
  */
 void zen::ogScrResultMgr::ogScrResultMgrSub()
 {
@@ -409,10 +407,8 @@ void zen::ogScrResultMgr::setEnumResultTable(EnumResult* result)
 	PRINT("OVERFLOW in setEnumResultTable()\n");
 }
 
-/*
- * --INFO--
- * Address:	801841E8
- * Size:	00017C
+/**
+ * @TODO: Documentation
  */
 zen::ogScrResultMgr::ogScrResultMgr()
 {
@@ -421,10 +417,8 @@ zen::ogScrResultMgr::ogScrResultMgr()
 	ogScrResultMgrSub();
 }
 
-/*
- * --INFO--
- * Address:	80184364
- * Size:	000170
+/**
+ * @TODO: Documentation
  */
 zen::ogScrResultMgr::ogScrResultMgr(EnumResult* table)
 {
@@ -432,10 +426,8 @@ zen::ogScrResultMgr::ogScrResultMgr(EnumResult* table)
 	ogScrResultMgrSub();
 }
 
-/*
- * --INFO--
- * Address:	801844D4
- * Size:	000744
+/**
+ * @TODO: Documentation
  */
 void zen::ogScrResultMgr::start()
 {
@@ -552,10 +544,8 @@ void zen::ogScrResultMgr::StartRESULT()
 	mStartWaitDelay = 6;
 }
 
-/*
- * --INFO--
- * Address:	80184C18
- * Size:	000384
+/**
+ * @TODO: Documentation
  */
 zen::ogScrResultMgr::returnStatusFlag zen::ogScrResultMgr::update(Controller* input)
 {
@@ -665,10 +655,8 @@ zen::ogScrResultMgr::returnStatusFlag zen::ogScrResultMgr::update(Controller* in
 	STACK_PAD_VAR(2);
 }
 
-/*
- * --INFO--
- * Address:	80184F9C
- * Size:	000104
+/**
+ * @TODO: Documentation
  */
 void zen::ogScrResultMgr::draw(Graphics& gfx)
 {

@@ -21,10 +21,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("")
 
-/*
- * --INFO--
- * Address:	80182DE0
- * Size:	0000D4
+/**
+ * @TODO: Documentation
  */
 void zen::ogScrMapMgr::start(s16 p1)
 {
@@ -46,10 +44,8 @@ void zen::ogScrMapMgr::start(s16 p1)
 	mScreenPosY = 0;
 }
 
-/*
- * --INFO--
- * Address:	80182EB4
- * Size:	0001CC
+/**
+ * @TODO: Documentation
  */
 zen::ogScrMapMgr::ogScrMapMgr()
 {
@@ -67,10 +63,8 @@ zen::ogScrMapMgr::ogScrMapMgr()
 	mState      = Inactive;
 }
 
-/*
- * --INFO--
- * Address:	80183080
- * Size:	00029C
+/**
+ * @TODO: Documentation
  */
 zen::ogScrMapMgr::MapStatus zen::ogScrMapMgr::update(Controller* controller)
 {
@@ -149,10 +143,8 @@ zen::ogScrMapMgr::MapStatus zen::ogScrMapMgr::update(Controller* controller)
 	return mState;
 }
 
-/*
- * --INFO--
- * Address:	8018337C
- * Size:	00008C
+/**
+ * @TODO: Documentation
  */
 void zen::ogScrMapMgr::draw(Graphics& gfx)
 {

@@ -29,10 +29,8 @@ DEFINE_PRINT("KoganeAi");
 
 static u32 koganeSE[] = { SE_KOGANE_WALK, SE_KOGANE_DAMAGE };
 
-/*
- * --INFO--
- * Address:	80176104
- * Size:	0001AC
+/**
+ * @TODO: Documentation
  */
 void KoganeAi::createWaterEffect()
 {
@@ -61,20 +59,16 @@ void KoganeAi::createWaterEffect()
 	FORCE_DONT_INLINE;
 }
 
-/*
- * --INFO--
- * Address:	801762B0
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 void KoganeAi::killCallBackEffect(bool p1)
 {
 	effectMgr->kill(mRippleCallBack, nullptr, p1);
 }
 
-/*
- * --INFO--
- * Address:	801762E8
- * Size:	000074
+/**
+ * @TODO: Documentation
  */
 KoganeAi::KoganeAi(Kogane* kogane)
 {
@@ -82,10 +76,8 @@ KoganeAi::KoganeAi(Kogane* kogane)
 	mRippleCallBack = new KoganeGenRippleCallBack();
 }
 
-/*
- * --INFO--
- * Address:	8017635C
- * Size:	000110
+/**
+ * @TODO: Documentation
  */
 void KoganeAi::initAI(Kogane* kogane)
 {
@@ -101,10 +93,8 @@ void KoganeAi::initAI(Kogane* kogane)
 	             + NsMathF::getRand(NsLibMath<f32>::abs(C_KOGANE_PROP(mKogane).mAppearTimeMax() - C_KOGANE_PROP(mKogane).mAppearTimeMin()));
 }
 
-/*
- * --INFO--
- * Address:	8017646C
- * Size:	00007C
+/**
+ * @TODO: Documentation
  */
 void KoganeAi::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
@@ -127,10 +117,8 @@ void KoganeAi::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801764E8
- * Size:	00005C
+/**
+ * @TODO: Documentation
  */
 void KoganeAi::keyAction0()
 {
@@ -143,10 +131,8 @@ void KoganeAi::keyAction0()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80176544
- * Size:	0000A8
+/**
+ * @TODO: Documentation
  */
 void KoganeAi::keyAction1()
 {
@@ -179,20 +165,16 @@ void KoganeAi::keyAction3()
 {
 }
 
-/*
- * --INFO--
- * Address:	801765EC
- * Size:	000014
+/**
+ * @TODO: Documentation
  */
 void KoganeAi::keyLoopEnd()
 {
 	mKogane->addLoopCounter(1);
 }
 
-/*
- * --INFO--
- * Address:	80176600
- * Size:	000028
+/**
+ * @TODO: Documentation
  */
 void KoganeAi::keyFinished()
 {
@@ -202,10 +184,8 @@ void KoganeAi::keyFinished()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80176628
- * Size:	00003C
+/**
+ * @TODO: Documentation
  */
 void KoganeAi::playSound(int koganeSoundID)
 {
@@ -225,10 +205,8 @@ void KoganeAi::setEveryFrame()
 	checkAppearTimeCounter();
 }
 
-/*
- * --INFO--
- * Address:	80176664
- * Size:	0000DC
+/**
+ * @TODO: Documentation
  */
 void KoganeAi::setMapAttribute()
 {
@@ -295,10 +273,8 @@ void KoganeAi::calcScaleUp()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80176740
- * Size:	0001E8
+/**
+ * @TODO: Documentation
  */
 void KoganeAi::setNewTargetPosition()
 {
@@ -323,10 +299,8 @@ void KoganeAi::setNewTargetPosition()
 	mKogane->setTargetPosition(targetPos);
 }
 
-/*
- * --INFO--
- * Address:	80176928
- * Size:	00022C
+/**
+ * @TODO: Documentation
  */
 void KoganeAi::setRouteTargetPosition()
 {
@@ -380,10 +354,8 @@ void KoganeAi::makeStopMoving()
 	mKogane->mVelocity.set(0.0f, 0.0f, 0.0f);
 }
 
-/*
- * --INFO--
- * Address:	80176B54
- * Size:	0001A8
+/**
+ * @TODO: Documentation
  */
 void KoganeAi::birthItemPellet(int size)
 {
@@ -410,10 +382,8 @@ void KoganeAi::birthItemPellet(int size)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80176CFC
- * Size:	0001E0
+/**
+ * @TODO: Documentation
  */
 void KoganeAi::birthItemWater(int numDrops, f32 p2)
 {
@@ -450,10 +420,8 @@ void KoganeAi::birthItemWater(int numDrops, f32 p2)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80176EDC
- * Size:	0000C4
+/**
+ * @TODO: Documentation
  */
 void KoganeAi::createPellet()
 {
@@ -514,10 +482,8 @@ bool KoganeAi::isMotionFinishTransit()
 	return mKogane->getMotionFinish();
 }
 
-/*
- * --INFO--
- * Address:	80176FA0
- * Size:	0003A0
+/**
+ * @TODO: Documentation
  */
 bool KoganeAi::appearTransit()
 {
@@ -683,10 +649,8 @@ void KoganeAi::initStopWalk(int nextState)
 	resultFlagOn();
 }
 
-/*
- * --INFO--
- * Address:	80177340
- * Size:	0001D4
+/**
+ * @TODO: Documentation
  */
 void KoganeAi::initCreate(int nextState)
 {
@@ -772,10 +736,8 @@ void KoganeAi::createState()
 	calcScaleUp();
 }
 
-/*
- * --INFO--
- * Address:	80177514
- * Size:	0008A4
+/**
+ * @TODO: Documentation
  */
 void KoganeAi::update()
 {

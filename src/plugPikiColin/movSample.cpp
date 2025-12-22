@@ -213,10 +213,8 @@ struct MovSampleSetupSection : public Node {
 	u8* _48[2];              // _48
 };
 
-/*
- * --INFO--
- * Address:	80077EF0
- * Size:	0003F0
+/**
+ * @TODO: Documentation
  */
 void convHVQM4TexY8UV8(int stride, int height, u8* src, u8* dst)
 {
@@ -315,10 +313,8 @@ void convHVQM4TexY8UV8(int stride, int height, u8* src, u8* dst)
 	DCStoreRange(dst, (stride * height) + ((stride / 2) * (height / 2)) * 2);
 }
 
-/*
- * --INFO--
- * Address:	800782E0
- * Size:	000034
+/**
+ * @TODO: Documentation
  */
 static void* playbackFunc(void*)
 {
@@ -328,10 +324,8 @@ static void* playbackFunc(void*)
 	return nullptr;
 }
 
-/*
- * --INFO--
- * Address:	80078314
- * Size:	000258
+/**
+ * @TODO: Documentation
  */
 void MovSampleSection::init()
 {

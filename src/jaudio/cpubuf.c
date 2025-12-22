@@ -9,10 +9,8 @@ static u8 dspstatus    = 0;
 
 static s16* dsp_buf[DSPBUF_NUM];
 
-/*
- * --INFO--
- * Address:	80006EE0
- * Size:	0001F8
+/**
+ * @TODO: Documentation
  */
 s16* CpubufProcess(DSPBUF_EVENTS event)
 {
@@ -91,10 +89,8 @@ void MixCpu(s32)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	800070E0
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 void CpuFrameEnd()
 {

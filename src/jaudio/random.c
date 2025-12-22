@@ -7,10 +7,8 @@ static s32 v1 = 0x0005555;
 #define V0_MULT (s32)0x13579BDE
 #define V1_MULT (s32)0x98765432
 
-/*
- * --INFO--
- * Address:	8000D740
- * Size:	000064
+/**
+ * @TODO: Documentation
  */
 s32 GetRandom_s32()
 {
@@ -24,20 +22,16 @@ s32 GetRandom_s32()
 	return tmp;
 }
 
-/*
- * --INFO--
- * Address:	8000D7C0
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 u32 GetRandom_u32()
 {
 	return GetRandom_s32() & ~0x80000000;
 }
 
-/*
- * --INFO--
- * Address:	8000D800
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 u32 GetRandom_ulimit(u32 limit)
 {
@@ -54,10 +48,8 @@ void GetRandom_slimit(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8000D840
- * Size:	000054
+/**
+ * @TODO: Documentation
  */
 f32 GetRandom_sf32()
 {

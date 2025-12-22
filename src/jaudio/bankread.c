@@ -6,10 +6,8 @@
 #define BANKP_SIZE (0x100)
 static Bank_* bankp[BANKP_SIZE];
 
-/*
- * --INFO--
- * Address:	8000BE00
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 static void PTconvert(void** pointer, u32 base_address)
 {
@@ -19,10 +17,8 @@ static void PTconvert(void** pointer, u32 base_address)
 	*pointer = *(char**)pointer + base_address;
 }
 
-/*
- * --INFO--
- * Address:	8000BE40
- * Size:	000270
+/**
+ * @TODO: Documentation
  */
 Bank_* Bank_Test(u8* ibnk_address)
 {
@@ -106,10 +102,8 @@ Bank_* Bank_Test(u8* ibnk_address)
 	return startBank;
 }
 
-/*
- * --INFO--
- * Address:	8000C0C0
- * Size:	000068
+/**
+ * @TODO: Documentation
  */
 static BOOL __Bank_Regist_Inner(u8* ibnk, u32 param_2, u32 param_3)
 {
@@ -120,10 +114,8 @@ static BOOL __Bank_Regist_Inner(u8* ibnk, u32 param_2, u32 param_3)
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	8000C140
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 BOOL Bank_Regist(void* ibnk, u32 param_2)
 {
@@ -140,10 +132,8 @@ BOOL Bank_Regist_Direct(void* ibnk, u32 param_2, u32 param_3)
 	return __Bank_Regist_Inner((u8*)ibnk, param_2, param_3);
 }
 
-/*
- * --INFO--
- * Address:	8000C180
- * Size:	00002C
+/**
+ * @TODO: Documentation
  */
 void Bank_Init()
 {
@@ -152,10 +142,8 @@ void Bank_Init()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8000C1C0
- * Size:	000028
+/**
+ * @TODO: Documentation
  */
 Bank_* Bank_Get(u32 index)
 {

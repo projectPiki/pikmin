@@ -26,10 +26,8 @@ DECL_SECT(".init") void __TRK_reset()
 	__TRK_copy_vectors();
 }
 
-/*
- * --INFO--
- * Address:	8021FE60
- * Size:	000094
+/**
+ * @TODO: Documentation
  */
 ASM void InitMetroTRK()
 {
@@ -93,20 +91,16 @@ initCommTableSuccess:
 #endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address:	8021FEF4
- * Size:	000020
+/**
+ * @TODO: Documentation
  */
 void EnableMetroTRKInterrupts(void)
 {
 	EnableEXI2Interrupts();
 }
 
-/*
- * --INFO--
- * Address:	8021FF14
- * Size:	000048
+/**
+ * @TODO: Documentation
  */
 u32 TRKTargetTranslate(u32 param_0)
 {
@@ -119,10 +113,8 @@ u32 TRKTargetTranslate(u32 param_0)
 	return param_0 & 0x3FFFFFFF | 0x80000000;
 }
 
-/*
- * --INFO--
- * Address:	8021FF5C
- * Size:	000060
+/**
+ * @TODO: Documentation
  */
 void TRK_copy_vector(u32 offset)
 {
@@ -131,10 +123,8 @@ void TRK_copy_vector(u32 offset)
 	TRK_flush_cache(destPtr, 0x100);
 }
 
-/*
- * --INFO--
- * Address:	8021FFBC
- * Size:	000094
+/**
+ * @TODO: Documentation
  */
 void __TRK_copy_vectors(void)
 {
@@ -150,10 +140,8 @@ void __TRK_copy_vectors(void)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80220050
- * Size:	000050
+/**
+ * @TODO: Documentation
  */
 DSError TRKInitializeTarget()
 {

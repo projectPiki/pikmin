@@ -22,10 +22,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("drawHurryUp")
 
-/*
- * --INFO--
- * Address:	801C049C
- * Size:	000308
+/**
+ * @TODO: Documentation
  */
 zen::DrawHurryUp::DrawHurryUp()
 {
@@ -52,10 +50,8 @@ zen::DrawHurryUp::DrawHurryUp()
 	initPanes();
 }
 
-/*
- * --INFO--
- * Address:	801C07A4
- * Size:	000110
+/**
+ * @TODO: Documentation
  */
 void zen::DrawHurryUp::initPanes()
 {
@@ -75,10 +71,8 @@ void zen::DrawHurryUp::initPanes()
 	mMsgFillPane->setAlpha(0);
 }
 
-/*
- * --INFO--
- * Address:	801C08B4
- * Size:	00012C
+/**
+ * @TODO: Documentation
  */
 void zen::DrawHurryUp::start(zen::DrawHurryUp::messageTypeFlag)
 {
@@ -89,10 +83,8 @@ void zen::DrawHurryUp::start(zen::DrawHurryUp::messageTypeFlag)
 	initPanes();
 }
 
-/*
- * --INFO--
- * Address:	801C09E0
- * Size:	0001AC
+/**
+ * @TODO: Documentation
  */
 void zen::DrawHurryUp::startStatus()
 {
@@ -184,10 +176,8 @@ void zen::DrawHurryUp::brightStatus()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801C0B8C
- * Size:	0001F8
+/**
+ * @TODO: Documentation
  */
 bool zen::DrawHurryUp::endStatus()
 {
@@ -218,10 +208,8 @@ bool zen::DrawHurryUp::endStatus()
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	801C0D84
- * Size:	0002C0
+/**
+ * @TODO: Documentation
  */
 bool zen::DrawHurryUp::update()
 {
@@ -254,10 +242,8 @@ bool zen::DrawHurryUp::update()
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	801C1044
- * Size:	00005C
+/**
+ * @TODO: Documentation
  */
 void zen::DrawHurryUp::draw(Graphics&)
 {

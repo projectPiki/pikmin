@@ -1,9 +1,7 @@
 #include "Dolphin/os.h"
 
-/*
- * --INFO--
- * Address:	801FB928
- * Size:	000020
+/**
+ * @TODO: Documentation
  */
 static ASM void SystemCallVector(void)
 {
@@ -24,10 +22,8 @@ static ASM void SystemCallVector(void)
 #endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address:	801FB948
- * Size:	000064
+/**
+ * @TODO: Documentation
  */
 void __OSInitSystemCall(void)
 {

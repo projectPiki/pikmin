@@ -32,10 +32,8 @@ static immut char** bloFiles_default_Diary[2] = { &bloFile_Res_Table[1], nullptr
 static immut char** bloFiles_Diary[2]         = { bloFile_Diary_Table, nullptr };
 }; // namespace zen
 
-/*
- * --INFO--
- * Address:	8018F1F4
- * Size:	000150
+/**
+ * @TODO: Documentation
  */
 zen::ogScrDiaryMgr::ogScrDiaryMgr()
 {
@@ -60,10 +58,8 @@ zen::ogScrDiaryMgr::ogScrDiaryMgr()
 	mStatus         = Inactive;
 }
 
-/*
- * --INFO--
- * Address:	8018F344
- * Size:	0000FC
+/**
+ * @TODO: Documentation
  */
 zen::ogScrDiaryMgr::DiaryStatus zen::ogScrDiaryMgr::update(Controller* input)
 {
@@ -91,10 +87,8 @@ zen::ogScrDiaryMgr::DiaryStatus zen::ogScrDiaryMgr::update(Controller* input)
 	return (DiaryStatus)msgState;
 }
 
-/*
- * --INFO--
- * Address:	8018F440
- * Size:	000178
+/**
+ * @TODO: Documentation
  */
 void zen::ogScrDiaryMgr::draw(Graphics& gfx)
 {
@@ -116,10 +110,8 @@ void zen::ogScrDiaryMgr::draw(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8018F5B8
- * Size:	000294
+/**
+ * @TODO: Documentation
  */
 void zen::ogScrDiaryMgr::start(s16 a1, s16 day)
 {
@@ -184,10 +176,8 @@ void zen::ogScrDiaryMgr::setDiarySpecialNumber(s16 day)
 	setSpecialNumber(5, powerup);
 }
 
-/*
- * --INFO--
- * Address:	8018F84C
- * Size:	00009C
+/**
+ * @TODO: Documentation
  */
 void zen::ogScrDiaryMgr::typePage()
 {
@@ -197,10 +187,8 @@ void zen::ogScrDiaryMgr::typePage()
 	mMesgMgr->move(mMessageMgrPosX, mMessageMgrPosY);
 }
 
-/*
- * --INFO--
- * Address:	8018F8E8
- * Size:	0000C8
+/**
+ * @TODO: Documentation
  */
 bool zen::ogScrDiaryMgr::nextPage()
 {
@@ -215,10 +203,8 @@ bool zen::ogScrDiaryMgr::nextPage()
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8018F9B0
- * Size:	0000A0
+/**
+ * @TODO: Documentation
  */
 void zen::ogScrDiaryMgr::backPage()
 {
@@ -228,10 +214,8 @@ void zen::ogScrDiaryMgr::backPage()
 	mMesgMgr->dispAll();
 }
 
-/*
- * --INFO--
- * Address:	8018FA50
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 void zen::ogScrDiaryMgr::exit()
 {
@@ -276,10 +260,8 @@ void zen::ogScrDiaryMgr::updateDiary(Controller* input)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8018FA74
- * Size:	000158
+/**
+ * @TODO: Documentation
  */
 zen::ogDrawDiary::ogDrawDiary()
 {
@@ -320,10 +302,8 @@ void zen::ogDrawDiary::setOffset()
 	mDiaryMgr->getScrMsgMgr()->getBaseScreenPtr()->setOffset(mScreenCenterX, mScreenCenterY);
 }
 
-/*
- * --INFO--
- * Address:	8018FBCC
- * Size:	000298
+/**
+ * @TODO: Documentation
  */
 void zen::ogDrawDiary::open(f32 a1, f32 a2, s16 day)
 {
@@ -353,10 +333,8 @@ void zen::ogDrawDiary::open(f32 a1, f32 a2, s16 day)
 	mEfxMgr->create(EFF2D_Unk11, pos, nullptr, nullptr);
 }
 
-/*
- * --INFO--
- * Address:	8018FE64
- * Size:	0002B8
+/**
+ * @TODO: Documentation
  */
 zen::ogDrawDiary::DiaryStatus zen::ogDrawDiary::update(Controller* input)
 {
@@ -423,10 +401,8 @@ void zen::ogDrawDiary::draw(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8019011C
- * Size:	000430
+/**
+ * @TODO: Documentation
  */
 zen::ogDrawSelectDiary::ogDrawSelectDiary()
 {
@@ -469,10 +445,8 @@ zen::ogDrawSelectDiary::ogDrawSelectDiary()
 	setCursorAlpha();
 }
 
-/*
- * --INFO--
- * Address:	8019054C
- * Size:	0001C8
+/**
+ * @TODO: Documentation
  */
 void zen::ogDrawSelectDiary::start()
 {
@@ -512,10 +486,8 @@ void zen::ogDrawSelectDiary::start()
 	setCursorAlpha();
 }
 
-/*
- * --INFO--
- * Address:	80190714
- * Size:	00010C
+/**
+ * @TODO: Documentation
  */
 void zen::ogDrawSelectDiary::setCursorAlpha()
 {
@@ -529,10 +501,8 @@ void zen::ogDrawSelectDiary::setCursorAlpha()
 	MoveCursor();
 }
 
-/*
- * --INFO--
- * Address:	80190820
- * Size:	000104
+/**
+ * @TODO: Documentation
  */
 bool zen::ogDrawSelectDiary::MoveCursor()
 {
@@ -553,10 +523,8 @@ bool zen::ogDrawSelectDiary::MoveCursor()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	80190924
- * Size:	000880
+/**
+ * @TODO: Documentation
  */
 zen::ogDrawSelectDiary::SelectDiaryStatus zen::ogDrawSelectDiary::update(Controller* input)
 {
@@ -688,10 +656,8 @@ zen::ogDrawSelectDiary::SelectDiaryStatus zen::ogDrawSelectDiary::update(Control
 	return mStatus;
 }
 
-/*
- * --INFO--
- * Address:	801911A4
- * Size:	0000F0
+/**
+ * @TODO: Documentation
  */
 void zen::ogDrawSelectDiary::draw(Graphics& gfx)
 {

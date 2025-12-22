@@ -21,10 +21,8 @@ enum scan_states {
 #define fetch()                 (count++, (*ReadProc)(ReadProcArg, 0, __GetAChar))
 #define unfetch(c)              (*ReadProc)(ReadProcArg, c, __UngetAChar)
 
-/*
- * --INFO--
- * Address:	8021A1C8
- * Size:	000348
+/**
+ * @TODO: Documentation
  */
 u32 __strtoul(int base, int max_width, int (*ReadProc)(void*, int, int), void* ReadProcArg, int* chars_scanned, int* negative,
               int* overflow)
@@ -155,10 +153,8 @@ u32 __strtoul(int base, int max_width, int (*ReadProc)(void*, int, int), void* R
 	return value;
 }
 
-/*
- * --INFO--
- * Address:	80219DFC
- * Size:	0003CC
+/**
+ * @TODO: Documentation
  */
 u64 __strtoull(int base, int max_width, int (*ReadProc)(void*, int, int), void* ReadProcArg, int* chars_scanned, int* negative,
                int* overflow)
@@ -301,10 +297,8 @@ void strtoll(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80219D50
- * Size:	0000AC
+/**
+ * @TODO: Documentation
  */
 u32 strtoul(const char* str, char** end, int base)
 {
@@ -341,10 +335,8 @@ void strtoull(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80219C60
- * Size:	0000F0
+/**
+ * @TODO: Documentation
  */
 s32 strtol(const char* str, char** end, int base)
 {
@@ -372,10 +364,8 @@ s32 strtol(const char* str, char** end, int base)
 	return svalue;
 }
 
-/*
- * --INFO--
- * Address:	80219B9C
- * Size:	0000C4
+/**
+ * @TODO: Documentation
  */
 int atoi(const char* str)
 {

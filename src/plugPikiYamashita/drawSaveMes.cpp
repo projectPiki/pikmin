@@ -22,10 +22,8 @@ DEFINE_ERROR(14)
  */
 DEFINE_PRINT("drawSaveMes")
 
-/*
- * --INFO--
- * Address:	801F265C
- * Size:	000348
+/**
+ * @TODO: Documentation
  */
 zen::DrawSaveMes::DrawSaveMes()
 {
@@ -64,20 +62,16 @@ zen::DrawSaveMes::DrawSaveMes()
 	setMode(MODE_Sleep);
 }
 
-/*
- * --INFO--
- * Address:	801F29A4
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 void zen::DrawSaveMes::sleep()
 {
 	setMode(MODE_Sleep);
 }
 
-/*
- * --INFO--
- * Address:	801F29C8
- * Size:	000050
+/**
+ * @TODO: Documentation
  */
 void zen::DrawSaveMes::mesAppear()
 {
@@ -87,10 +81,8 @@ void zen::DrawSaveMes::mesAppear()
 	_0C->makeResident();
 }
 
-/*
- * --INFO--
- * Address:	801F2A18
- * Size:	000048
+/**
+ * @TODO: Documentation
  */
 void zen::DrawSaveMes::saveFinish()
 {
@@ -99,10 +91,8 @@ void zen::DrawSaveMes::saveFinish()
 	_0C->makeResident();
 }
 
-/*
- * --INFO--
- * Address:	801F2A60
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 void zen::DrawSaveMes::saveError()
 {
@@ -120,10 +110,8 @@ void zen::DrawSaveMes::hide()
 	_0C->getScreenPtr()->hide();
 }
 
-/*
- * --INFO--
- * Address:	801F2A84
- * Size:	0008A4
+/**
+ * @TODO: Documentation
  */
 bool zen::DrawSaveMes::update(Controller* controller)
 {
@@ -280,10 +268,8 @@ bool zen::DrawSaveMes::update(Controller* controller)
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	801F3328
- * Size:	000068
+/**
+ * @TODO: Documentation
  */
 void zen::DrawSaveMes::draw(Graphics& gfx)
 {
@@ -292,10 +278,8 @@ void zen::DrawSaveMes::draw(Graphics& gfx)
 	mSaveFailure.draw(gfx);
 }
 
-/*
- * --INFO--
- * Address:	801F3390
- * Size:	0001D0
+/**
+ * @TODO: Documentation
  */
 void zen::DrawSaveMes::setMode(zen::DrawSaveMes::modeFlag mode)
 {

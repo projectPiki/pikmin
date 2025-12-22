@@ -94,10 +94,8 @@ void GemItem::initParam(int type)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	800E4390
- * Size:	0000E4
+/**
+ * @TODO: Documentation
  */
 void GemItem::setColorType(int col)
 {
@@ -281,10 +279,8 @@ f32 GemItem::getiMass()
 	return 0.0f;
 }
 
-/*
- * --INFO--
- * Address:	800E4474
- * Size:	0001FC
+/**
+ * @TODO: Documentation
  */
 void GemItem::split()
 {
@@ -393,10 +389,8 @@ void GemItem::setRouteTracer(RouteTracer*)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	800E4670
- * Size:	00000C
+/**
+ * @TODO: Documentation
  */
 void ItemCreature::finalSetup()
 {

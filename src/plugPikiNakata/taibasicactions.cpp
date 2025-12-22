@@ -18,20 +18,16 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("taibasicactions")
 
-/*
- * --INFO--
- * Address:	801283A8
- * Size:	00000C
+/**
+ * @TODO: Documentation
  */
 void TaiActionStateAction::start(Teki& teki)
 {
 	teki.mActionStateId = 0;
 }
 
-/*
- * --INFO--
- * Address:	801283B4
- * Size:	000020
+/**
+ * @TODO: Documentation
  */
 bool TaiActionStateAction::act(Teki& teki)
 {
@@ -41,10 +37,8 @@ bool TaiActionStateAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	801283D4
- * Size:	000060
+/**
+ * @TODO: Documentation
  */
 void TaiSetOptionAction::start(Teki& teki)
 {
@@ -55,30 +49,24 @@ void TaiSetOptionAction::start(Teki& teki)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80128434
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 void TaiPlaySoundAction::start(Teki& teki)
 {
 	teki.playSound(mSoundID);
 }
 
-/*
- * --INFO--
- * Address:	8012846C
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 void TaiStopSoundAction::start(Teki& teki)
 {
 	teki.stopSound(mSoundID);
 }
 
-/*
- * --INFO--
- * Address:	801284A4
- * Size:	000044
+/**
+ * @TODO: Documentation
  */
 void TaiTypeNaviWatchResultOnAction::start(Teki& teki)
 {
@@ -89,10 +77,8 @@ void TaiTypeNaviWatchResultOnAction::start(Teki& teki)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801284E8
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 void TaiNaviWatchResultOnAction::start(Teki& teki)
 {

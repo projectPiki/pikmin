@@ -24,10 +24,8 @@ DEFINE_ERROR(13)
  */
 DEFINE_PRINT("demoInvoker");
 
-/*
- * --INFO--
- * Address:	80082818
- * Size:	0006D8
+/**
+ * @TODO: Documentation
  */
 bool Navi::demoCheck()
 {
@@ -125,10 +123,8 @@ bool Navi::demoCheck()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	80082EF0
- * Size:	00024C
+/**
+ * @TODO: Documentation
  */
 void Piki::demoCheck()
 {

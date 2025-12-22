@@ -17,20 +17,16 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("CoreNucleusAi");
 
-/*
- * --INFO--
- * Address:	8017AD44
- * Size:	000020
+/**
+ * @TODO: Documentation
  */
 CoreNucleusAi::CoreNucleusAi(CoreNucleus* core)
 {
 	mCore = core;
 }
 
-/*
- * --INFO--
- * Address:	8017AD64
- * Size:	000074
+/**
+ * @TODO: Documentation
  */
 void CoreNucleusAi::initAI(CoreNucleus* core)
 {
@@ -42,10 +38,8 @@ void CoreNucleusAi::initAI(CoreNucleus* core)
 	mIsHit = false;
 }
 
-/*
- * --INFO--
- * Address:	8017ADD8
- * Size:	00007C
+/**
+ * @TODO: Documentation
  */
 void CoreNucleusAi::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
@@ -68,19 +62,15 @@ void CoreNucleusAi::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8017AE54
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void CoreNucleusAi::keyAction0()
 {
 }
 
-/*
- * --INFO--
- * Address:	8017AE58
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void CoreNucleusAi::keyAction1()
 {
@@ -106,39 +96,31 @@ void CoreNucleusAi::keyAction3()
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8017AE5C
- * Size:	000014
+/**
+ * @TODO: Documentation
  */
 void CoreNucleusAi::keyLoopEnd()
 {
 	mCore->addLoopCounter(1);
 }
 
-/*
- * --INFO--
- * Address:	8017AE70
- * Size:	000010
+/**
+ * @TODO: Documentation
  */
 void CoreNucleusAi::keyFinished()
 {
 	mCore->setMotionFinish(true);
 }
 
-/*
- * --INFO--
- * Address:	8017AE80
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void CoreNucleusAi::playSound(int)
 {
 }
 
-/*
- * --INFO--
- * Address:	8017AE84
- * Size:	00000C
+/**
+ * @TODO: Documentation
  */
 void CoreNucleusAi::setHitMotionStart()
 {
@@ -324,10 +306,8 @@ void CoreNucleusAi::hitState()
 {
 }
 
-/*
- * --INFO--
- * Address:	8017AE90
- * Size:	000544
+/**
+ * @TODO: Documentation
  */
 void CoreNucleusAi::update()
 {

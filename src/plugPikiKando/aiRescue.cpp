@@ -18,10 +18,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("aiRescue")
 
-/*
- * --INFO--
- * Address:	800C12E8
- * Size:	000098
+/**
+ * @TODO: Documentation
  */
 ActRescue::ActRescue(Piki* piki)
     : Action(piki, true)
@@ -29,10 +27,8 @@ ActRescue::ActRescue(Piki* piki)
 	setName("Rescue");
 }
 
-/*
- * --INFO--
- * Address:	800C1380
- * Size:	000044
+/**
+ * @TODO: Documentation
  */
 void ActRescue::init(Creature* target)
 {
@@ -45,10 +41,8 @@ void ActRescue::init(Creature* target)
 	initApproach();
 }
 
-/*
- * --INFO--
- * Address:	800C13C4
- * Size:	00014C
+/**
+ * @TODO: Documentation
  */
 int ActRescue::exec()
 {
@@ -98,10 +92,8 @@ int ActRescue::exec()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800C1510
- * Size:	00006C
+/**
+ * @TODO: Documentation
  */
 void ActRescue::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
@@ -119,10 +111,8 @@ void ActRescue::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800C157C
- * Size:	000064
+/**
+ * @TODO: Documentation
  */
 void ActRescue::initApproach()
 {
@@ -130,10 +120,8 @@ void ActRescue::initApproach()
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Walk), PaniMotionInfo(PIKIANIM_Walk));
 }
 
-/*
- * --INFO--
- * Address:	800C15E0
- * Size:	0000E4
+/**
+ * @TODO: Documentation
  */
 int ActRescue::exeApproach()
 {
@@ -148,10 +136,8 @@ int ActRescue::exeApproach()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800C16C4
- * Size:	00008C
+/**
+ * @TODO: Documentation
  */
 void ActRescue::initRescue()
 {
@@ -161,10 +147,8 @@ void ActRescue::initRescue()
 	mGotAnimationAction = false;
 }
 
-/*
- * --INFO--
- * Address:	800C1750
- * Size:	000078
+/**
+ * @TODO: Documentation
  */
 int ActRescue::exeRescue()
 {
@@ -177,10 +161,8 @@ int ActRescue::exeRescue()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800C17C8
- * Size:	000184
+/**
+ * @TODO: Documentation
  */
 void ActRescue::initGo()
 {
@@ -196,10 +178,8 @@ void ActRescue::initGo()
 	mRescueTargetPosition.y += 30.0f;
 }
 
-/*
- * --INFO--
- * Address:	800C194C
- * Size:	00016C
+/**
+ * @TODO: Documentation
  */
 int ActRescue::exeGo()
 {
@@ -218,10 +198,8 @@ int ActRescue::exeGo()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800C1AB8
- * Size:	000020
+/**
+ * @TODO: Documentation
  */
 void ActRescue::initThrow()
 {
@@ -232,10 +210,8 @@ void ActRescue::initThrow()
 	PRINT("INIT THROW!\n");
 }
 
-/*
- * --INFO--
- * Address:	800C1AD8
- * Size:	0002B4
+/**
+ * @TODO: Documentation
  */
 int ActRescue::exeThrow()
 {
@@ -280,10 +256,8 @@ int ActRescue::exeThrow()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800C1D8C
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void ActRescue::cleanup()
 {

@@ -19,10 +19,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("Timers")
 
-/*
- * --INFO--
- * Address:	80040984
- * Size:	000010
+/**
+ * @TODO: Documentation
  */
 void Timers::reset()
 {
@@ -30,20 +28,16 @@ void Timers::reset()
 	mTimerCount = 0;
 }
 
-/*
- * --INFO--
- * Address:	80040994
- * Size:	000010
+/**
+ * @TODO: Documentation
  */
 void Timers::newFrame()
 {
 	mFrameCount++;
 }
 
-/*
- * --INFO--
- * Address:	800409A4
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void Timers::_start(immut char* name, bool set)
 {
@@ -85,10 +79,8 @@ void Timers::_start(immut char* name, bool set)
 #endif
 }
 
-/*
- * --INFO--
- * Address:	800409A8
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void Timers::_stop(immut char* name)
 {
@@ -114,10 +106,8 @@ void Timers::showTimes()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800409AC
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void Timers::draw(Graphics& gfx, Font* font)
 {

@@ -186,10 +186,8 @@ protected:
 	// TODO: members
 };
 
-/*
- * --INFO--
- * Address:	801EAA70
- * Size:	000084
+/**
+ * @TODO: Documentation
  */
 TAIotamaSoundTable::TAIotamaSoundTable()
     : PaniSoundTable(3)
@@ -199,10 +197,8 @@ TAIotamaSoundTable::TAIotamaSoundTable()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801EAAF4
- * Size:	00033C
+/**
+ * @TODO: Documentation
  */
 TAIotamaParameters::TAIotamaParameters()
     : TekiParameters(TPI_COUNT, TAIotamaFloatParams::COUNT)
@@ -275,10 +271,8 @@ TAIotamaParameters::TAIotamaParameters()
 	STACK_PAD_VAR(1);
 }
 
-/*
- * --INFO--
- * Address:	801EAE30
- * Size:	000530
+/**
+ * @TODO: Documentation
  */
 TAIotamaStrategy::TAIotamaStrategy()
     : YaiStrategy(TAIotamaStateID::COUNT, TAIotamaStateID::Wait)
@@ -355,10 +349,8 @@ TAIotamaStrategy::TAIotamaStrategy()
 	setState(TAIotamaStateID::RunAway, state);
 }
 
-/*
- * --INFO--
- * Address:	801EB360
- * Size:	0006FC
+/**
+ * @TODO: Documentation
  */
 void TAIotamaAnimation::makeDefaultAnimations()
 {

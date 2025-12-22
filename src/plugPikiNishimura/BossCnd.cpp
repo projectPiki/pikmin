@@ -20,10 +20,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT(nullptr);
 
-/*
- * --INFO--
- * Address:	8014FAFC
- * Size:	000040
+/**
+ * @TODO: Documentation
  */
 bool CndIsAlive::satisfy(Creature* target) immut
 {
@@ -33,10 +31,8 @@ bool CndIsAlive::satisfy(Creature* target) immut
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8014FB3C
- * Size:	0000C8
+/**
+ * @TODO: Documentation
  */
 bool CndBossFlick::satisfy(Creature* target) immut
 {
@@ -49,10 +45,8 @@ bool CndBossFlick::satisfy(Creature* target) immut
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8014FC04
- * Size:	000070
+/**
+ * @TODO: Documentation
  */
 bool CndStickBossKill::satisfy(Creature* target) immut
 {
@@ -62,10 +56,8 @@ bool CndStickBossKill::satisfy(Creature* target) immut
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8014FC74
- * Size:	00007C
+/**
+ * @TODO: Documentation
  */
 bool CndStickMouthKill::satisfy(Creature* target) immut
 {
@@ -75,10 +67,8 @@ bool CndStickMouthKill::satisfy(Creature* target) immut
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8014FCF0
- * Size:	000098
+/**
+ * @TODO: Documentation
  */
 bool CndBossCollKill::satisfy(Creature* target) immut
 {

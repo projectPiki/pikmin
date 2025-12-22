@@ -141,10 +141,8 @@ DEFINE_ERROR(13)
  */
 DEFINE_PRINT("drawCMscore")
 
-/*
- * --INFO--
- * Address:	801EDA04
- * Size:	0004E4
+/**
+ * @TODO: Documentation
  */
 void zen::DrawCMscoreMgr::init(P2DScreen* screen)
 {
@@ -158,10 +156,8 @@ void zen::DrawCMscoreMgr::init(P2DScreen* screen)
 	mModeFunction = &modeSleep;
 }
 
-/*
- * --INFO--
- * Address:	801EDFF8
- * Size:	00007C
+/**
+ * @TODO: Documentation
  */
 void zen::DrawCMscoreMgr::update()
 {
@@ -184,10 +180,8 @@ void zen::DrawCMscoreMgr::show()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801EE074
- * Size:	00003C
+/**
+ * @TODO: Documentation
  */
 void zen::DrawCMscoreMgr::hide()
 {
@@ -196,10 +190,8 @@ void zen::DrawCMscoreMgr::hide()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801EE0B0
- * Size:	000064
+/**
+ * @TODO: Documentation
  */
 void zen::DrawCMscoreMgr::sleep()
 {
@@ -208,10 +200,8 @@ void zen::DrawCMscoreMgr::sleep()
 	mModeFunction = &modeSleep;
 }
 
-/*
- * --INFO--
- * Address:	801EE114
- * Size:	000114
+/**
+ * @TODO: Documentation
  */
 void zen::DrawCMscoreMgr::appear(f32 p1)
 {
@@ -223,20 +213,16 @@ void zen::DrawCMscoreMgr::appear(f32 p1)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801EE228
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 bool zen::DrawCMscoreMgr::modeSleep()
 {
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	801EE230
- * Size:	00007C
+/**
+ * @TODO: Documentation
  */
 bool zen::DrawCMscoreMgr::modeAppear()
 {
@@ -256,10 +242,8 @@ bool zen::DrawCMscoreMgr::modeAppear()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	801EE2AC
- * Size:	000014
+/**
+ * @TODO: Documentation
  */
 bool zen::DrawCMscoreMgr::modeWait()
 {
@@ -267,10 +251,8 @@ bool zen::DrawCMscoreMgr::modeWait()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	801EE2C0
- * Size:	000028
+/**
+ * @TODO: Documentation
  */
 void zen::DrawCMscoreMgr::setScore(int rank, int score)
 {

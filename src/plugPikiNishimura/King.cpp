@@ -17,10 +17,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("King");
 
-/*
- * --INFO--
- * Address:	8016B4A4
- * Size:	0007BC
+/**
+ * @TODO: Documentation
  */
 KingProp::KingProp()
 {
@@ -29,10 +27,8 @@ KingProp::KingProp()
 	mCreatureProps.mAcceleration(1.0f);
 }
 
-/*
- * --INFO--
- * Address:	8016BC60
- * Size:	000148
+/**
+ * @TODO: Documentation
  */
 King::King(CreatureProp* props)
     : Boss(props)
@@ -45,20 +41,16 @@ King::King(CreatureProp* props)
 	mShadowCaster.mDrawer = new KingDrawer(this);
 }
 
-/*
- * --INFO--
- * Address:	8016BDA8
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 f32 King::getiMass()
 {
 	return 0.0001f;
 }
 
-/*
- * --INFO--
- * Address:	8016BDB0
- * Size:	000020
+/**
+ * @TODO: Documentation
  */
 void King::bombDamageCounter(CollPart*)
 {
@@ -67,10 +59,8 @@ void King::bombDamageCounter(CollPart*)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8016BDD0
- * Size:	000084
+/**
+ * @TODO: Documentation
  */
 void King::init(immut Vector3f&)
 {
@@ -85,10 +75,8 @@ void King::init(immut Vector3f&)
 	mPlatMgr.init(this, mapMgr, mShapeObject->mShape);
 }
 
-/*
- * --INFO--
- * Address:	8016BE54
- * Size:	000060
+/**
+ * @TODO: Documentation
  */
 void King::doKill()
 {
@@ -101,20 +89,16 @@ void King::doKill()
 	bossMgr->kill(this);
 }
 
-/*
- * --INFO--
- * Address:	8016BEB4
- * Size:	000028
+/**
+ * @TODO: Documentation
  */
 void King::exitCourse()
 {
 	mKingBody->killCallBackEffect(true);
 }
 
-/*
- * --INFO--
- * Address:	8016BEDC
- * Size:	000064
+/**
+ * @TODO: Documentation
  */
 void King::update()
 {
@@ -124,10 +108,8 @@ void King::update()
 	doAnimation();
 }
 
-/*
- * --INFO--
- * Address:	8016BF40
- * Size:	000178
+/**
+ * @TODO: Documentation
  */
 void King::draw(Graphics& gfx)
 {
@@ -154,10 +136,8 @@ void King::draw(Graphics& gfx)
 	mKingBody->refresh(mShapeObject, gfx);
 }
 
-/*
- * --INFO--
- * Address:	8016C0B8
- * Size:	000054
+/**
+ * @TODO: Documentation
  */
 void King::refresh(Graphics& gfx)
 {
@@ -166,10 +146,8 @@ void King::refresh(Graphics& gfx)
 	mPlatMgr.update(gfx);
 }
 
-/*
- * --INFO--
- * Address:	8016C10C
- * Size:	000078
+/**
+ * @TODO: Documentation
  */
 void King::drawShape(Graphics& gfx)
 {
@@ -178,20 +156,16 @@ void King::drawShape(Graphics& gfx)
 	mShapeObject->mShape->drawshape(gfx, *gfx.mCamera, nullptr);
 }
 
-/*
- * --INFO--
- * Address:	8016C184
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 void King::doAI()
 {
 	mKingAi->update();
 }
 
-/*
- * --INFO--
- * Address:	8016C1A8
- * Size:	000054
+/**
+ * @TODO: Documentation
  */
 void King::doAnimation()
 {
@@ -201,10 +175,8 @@ void King::doAnimation()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8016C1FC
- * Size:	000054
+/**
+ * @TODO: Documentation
  */
 void KingDrawer::draw(Graphics& gfx)
 {

@@ -17,20 +17,16 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("aiBoMake");
 
-/*
- * --INFO--
- * Address:	800AC30C
- * Size:	000054
+/**
+ * @TODO: Documentation
  */
 ActBoMake::ActBoMake(Piki* piki)
     : Action(piki, true)
 {
 }
 
-/*
- * --INFO--
- * Address:	800AC360
- * Size:	000040
+/**
+ * @TODO: Documentation
  */
 void ActBoMake::init(Creature* creature)
 {
@@ -42,10 +38,8 @@ void ActBoMake::init(Creature* creature)
 	initApproach();
 }
 
-/*
- * --INFO--
- * Address:	800AC3A0
- * Size:	0000A0
+/**
+ * @TODO: Documentation
  */
 int ActBoMake::exec()
 {
@@ -69,10 +63,8 @@ int ActBoMake::exec()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800AC440
- * Size:	000064
+/**
+ * @TODO: Documentation
  */
 void ActBoMake::initApproach()
 {
@@ -80,10 +72,8 @@ void ActBoMake::initApproach()
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Walk), PaniMotionInfo(PIKIANIM_Walk));
 }
 
-/*
- * --INFO--
- * Address:	800AC4A4
- * Size:	00012C
+/**
+ * @TODO: Documentation
  */
 int ActBoMake::exeApproach()
 {
@@ -97,10 +87,8 @@ int ActBoMake::exeApproach()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800AC5D0
- * Size:	0000B4
+/**
+ * @TODO: Documentation
  */
 void ActBoMake::initWork()
 {
@@ -113,30 +101,24 @@ void ActBoMake::initWork()
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Kuttuku, this), PaniMotionInfo(PIKIANIM_Kuttuku));
 }
 
-/*
- * --INFO--
- * Address:	800AC684
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 int ActBoMake::exeWork()
 {
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800AC68C
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 void ActBoMake::cleanup()
 {
 	mPiki->endStickObject();
 }
 
-/*
- * --INFO--
- * Address:	800AC6B0
- * Size:	000078
+/**
+ * @TODO: Documentation
  */
 void ActBoMake::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {

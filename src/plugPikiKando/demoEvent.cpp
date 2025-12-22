@@ -48,19 +48,15 @@ immut char* DemoEventMgr::getSenderName(int)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8008313C
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 DemoEventMgr::DemoEventMgr()
 {
 }
 
-/*
- * --INFO--
- * Address:	80083140
- * Size:	00044C
+/**
+ * @TODO: Documentation
  */
 void DemoEventMgr::act(int cmd, int type)
 {

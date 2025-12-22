@@ -17,19 +17,15 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("peve")
 
-/*
- * --INFO--
- * Address:	80125540
- * Size:	000010
+/**
+ * @TODO: Documentation
  */
 PeveCondition::PeveCondition()
 {
 }
 
-/*
- * --INFO--
- * Address:	80125550
- * Size:	000048
+/**
+ * @TODO: Documentation
  */
 PeveEvent::PeveEvent(int count)
     : NNode(count)
@@ -48,10 +44,8 @@ PeveParallelEvent::PeveParallelEvent(int count)
 {
 }
 
-/*
- * --INFO--
- * Address:	80125598
- * Size:	000084
+/**
+ * @TODO: Documentation
  */
 void PeveParallelEvent::reset()
 {
@@ -61,10 +55,8 @@ void PeveParallelEvent::reset()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8012561C
- * Size:	000084
+/**
+ * @TODO: Documentation
  */
 void PeveParallelEvent::update()
 {
@@ -74,10 +66,8 @@ void PeveParallelEvent::update()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801256A0
- * Size:	00007C
+/**
+ * @TODO: Documentation
  */
 bool PeveParallelEvent::isFinished()
 {
@@ -90,20 +80,16 @@ bool PeveParallelEvent::isFinished()
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8012571C
- * Size:	000054
+/**
+ * @TODO: Documentation
  */
 PeveSerialEvent::PeveSerialEvent(int count)
     : PeveEvent(count)
 {
 }
 
-/*
- * --INFO--
- * Address:	80125770
- * Size:	000068
+/**
+ * @TODO: Documentation
  */
 void PeveSerialEvent::reset()
 {
@@ -113,10 +99,8 @@ void PeveSerialEvent::reset()
 	currEvent->reset();
 }
 
-/*
- * --INFO--
- * Address:	801257D8
- * Size:	0000CC
+/**
+ * @TODO: Documentation
  */
 void PeveSerialEvent::update()
 {
@@ -134,10 +118,8 @@ void PeveSerialEvent::update()
 	currEvent->update();
 }
 
-/*
- * --INFO--
- * Address:	801258A4
- * Size:	000074
+/**
+ * @TODO: Documentation
  */
 bool PeveSerialEvent::isFinished()
 {
@@ -191,20 +173,16 @@ void PeveCameraWatchpointIO::construct(PcamCamera* camera)
 	mCamera = camera;
 }
 
-/*
- * --INFO--
- * Address:	80125918
- * Size:	000050
+/**
+ * @TODO: Documentation
  */
 PeveCameraPostureIO::PeveCameraPostureIO()
 {
 	construct(nullptr);
 }
 
-/*
- * --INFO--
- * Address:	80125968
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 void PeveCameraPostureIO::construct(PcamCamera* camera)
 {
@@ -231,30 +209,24 @@ void PeveCreaturePositionIO::construct(Creature* creature)
 	mCreature = creature;
 }
 
-/*
- * --INFO--
- * Address:	80125970
- * Size:	000060
+/**
+ * @TODO: Documentation
  */
 PeveClampVector3fIO::PeveClampVector3fIO()
 {
 	construct();
 }
 
-/*
- * --INFO--
- * Address:	801259D0
- * Size:	00000C
+/**
+ * @TODO: Documentation
  */
 void PeveClampVector3fIO::construct()
 {
 	mMaxLength = 1.0f;
 }
 
-/*
- * --INFO--
- * Address:	801259DC
- * Size:	0000DC
+/**
+ * @TODO: Documentation
  */
 void PeveClampVector3fIO::input(immut NVector3f& vec)
 {

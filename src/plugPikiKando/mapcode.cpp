@@ -3,10 +3,8 @@
 #include "Collision.h"
 #include "math.h"
 
-/*
- * --INFO--
- * Address:	80116080
- * Size:	00000C
+/**
+ * @TODO: Documentation
  */
 int MapCode::getAttribute(CollTriInfo* triInfo)
 {
@@ -29,10 +27,8 @@ immut char* MapCode::getAttributeName(int num)
 	return mapcodeNames[num];
 };
 
-/*
- * --INFO--
- * Address:	8011608C
- * Size:	00001C
+/**
+ * @TODO: Documentation
  */
 int MapCode::getSlipCode(CollTriInfo* triInfo)
 {
@@ -42,10 +38,8 @@ int MapCode::getSlipCode(CollTriInfo* triInfo)
 	return 0;
 };
 
-/*
- * --INFO--
- * Address:	801160A8
- * Size:	000068
+/**
+ * @TODO: Documentation
  */
 bool MapCode::isBald(CollTriInfo* triInfo)
 {

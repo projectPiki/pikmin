@@ -49,10 +49,8 @@ void KingBody::setSalivaEffect()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80172D84
- * Size:	0000DC
+/**
+ * @TODO: Documentation
  */
 void KingBody::setSeedFlashEffect()
 {
@@ -69,10 +67,8 @@ void KingBody::setSeedFlashEffect()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80172E60
- * Size:	00024C
+/**
+ * @TODO: Documentation
  */
 void KingBody::setEatBombEffect()
 {
@@ -98,10 +94,8 @@ void KingBody::setEatBombEffect()
 	setSeedFlashEffect();
 }
 
-/*
- * --INFO--
- * Address:	801730AC
- * Size:	000210
+/**
+ * @TODO: Documentation
  */
 void KingBody::createWaterEffect(int idx)
 {
@@ -133,10 +127,8 @@ void KingBody::createWaterEffect(int idx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801732BC
- * Size:	000250
+/**
+ * @TODO: Documentation
  */
 void KingBody::createUfoParts()
 {
@@ -179,10 +171,8 @@ void KingBody::createUfoParts()
 	mKing->detachGenerator();
 }
 
-/*
- * --INFO--
- * Address:	8017350C
- * Size:	0000DC
+/**
+ * @TODO: Documentation
  */
 void KingBody::killCallBackEffect(bool p1)
 {
@@ -199,10 +189,8 @@ void KingBody::killCallBackEffect(bool p1)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801735E8
- * Size:	00023C
+/**
+ * @TODO: Documentation
  */
 KingBody::KingBody(King*)
 {
@@ -216,10 +204,8 @@ KingBody::KingBody(King*)
 	mSpitPartsParticleCallBack = new KingGenSpitPartsParticleCallBack;
 }
 
-/*
- * --INFO--
- * Address:	8017385C
- * Size:	00023C
+/**
+ * @TODO: Documentation
  */
 void KingBody::init(King* king)
 {
@@ -243,10 +229,8 @@ void KingBody::init(King* king)
 	setSalivaEffect();
 }
 
-/*
- * --INFO--
- * Address:	80173A98
- * Size:	000028
+/**
+ * @TODO: Documentation
  */
 void KingBody::initBlending(f32 blendRate)
 {
@@ -289,10 +273,8 @@ void KingBody::checkOnGround()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80173AC0
- * Size:	0001E0
+/**
+ * @TODO: Documentation
  */
 void KingBody::setVelocityFromPosition()
 {
@@ -323,10 +305,8 @@ void KingBody::setVelocityFromPosition()
 	mKing->setOnWall(false);
 }
 
-/*
- * --INFO--
- * Address:	80173CA0
- * Size:	000140
+/**
+ * @TODO: Documentation
  */
 void KingBody::emitOnGroundEffect()
 {
@@ -382,10 +362,8 @@ void KingBody::copyOnGround()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80173DE0
- * Size:	000198
+/**
+ * @TODO: Documentation
  */
 void KingBody::update()
 {
@@ -434,10 +412,8 @@ void KingBody::checkBlendingParm(Matrix4f* animMatrices)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80173F78
- * Size:	000578
+/**
+ * @TODO: Documentation
  */
 void KingBody::makeBlending(Matrix4f* animMatrices)
 {
@@ -480,10 +456,8 @@ void KingBody::makeBlending(Matrix4f* animMatrices)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801744F0
- * Size:	000230
+/**
+ * @TODO: Documentation
  */
 void KingBody::copyJointPosition(immut Matrix4f* animMatrices)
 {
@@ -526,10 +500,8 @@ void KingBody::returnJoint(BossShapeObject* shapeObj, Graphics& gfx, immut Matri
 	}
 }
 
-/*
- * --INFO--
- * Address:	80174720
- * Size:	000C6C
+/**
+ * @TODO: Documentation
  */
 void KingBody::refresh(BossShapeObject* shapeObj, Graphics& gfx)
 {

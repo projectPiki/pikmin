@@ -17,10 +17,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("tekianimationmanager")
 
-/*
- * --INFO--
- * Address:	80143E48
- * Size:	000094
+/**
+ * @TODO: Documentation
  */
 TekiAnimationManager::TekiAnimationManager(TekiMgr* mgr)
     : Node("TekiAnimationManager")
@@ -28,10 +26,8 @@ TekiAnimationManager::TekiAnimationManager(TekiMgr* mgr)
 	mTekiMgr = mgr;
 }
 
-/*
- * --INFO--
- * Address:	80143EDC
- * Size:	000080
+/**
+ * @TODO: Documentation
  */
 void TekiAnimationManager::read(RandomAccessStream& input)
 {

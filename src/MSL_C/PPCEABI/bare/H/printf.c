@@ -32,10 +32,8 @@ typedef struct {
 	int precision;
 } print_format;
 
-/*
- * --INFO--
- * Address:	80217B90
- * Size:	0004D8
+/**
+ * @TODO: Documentation
  */
 static const char* parse_format(const char* format_string, va_list* arg, print_format* format)
 {
@@ -259,10 +257,8 @@ static const char* parse_format(const char* format_string, va_list* arg, print_f
 	return ((const char*)s + 1);
 }
 
-/*
- * --INFO--
- * Address:	8021796C
- * Size:	000224
+/**
+ * @TODO: Documentation
  */
 static char* long2str(s32 num, char* buff, print_format* format)
 {
@@ -371,10 +367,8 @@ static char* long2str(s32 num, char* buff, print_format* format)
 	return p;
 }
 
-/*
- * --INFO--
- * Address:	8021768C
- * Size:	0002E0
+/**
+ * @TODO: Documentation
  */
 static char* longlong2str(s64 num, char* pBuf, print_format* format)
 {
@@ -478,10 +472,8 @@ static char* longlong2str(s64 num, char* pBuf, print_format* format)
 	return p;
 }
 
-/*
- * --INFO--
- * Address:	80217558
- * Size:	000134
+/**
+ * @TODO: Documentation
  */
 static void round_decimal(decimal* dec, int new_length)
 {
@@ -538,10 +530,8 @@ static void round_decimal(decimal* dec, int new_length)
 	dec->sig.length = new_length;
 }
 
-/*
- * --INFO--
- * Address:	80216F20
- * Size:	000638
+/**
+ * @TODO: Documentation
  */
 static char* float2str(va_list arg, char* buff, print_format* format, int unused)
 {
@@ -754,10 +744,8 @@ static char* float2str(va_list arg, char* buff, print_format* format, int unused
 	return p;
 }
 
-/*
- * --INFO--
- * Address:	802168F0
- * Size:	000630
+/**
+ * @TODO: Documentation
  */
 static int __pformatter(void* (*WriteProc)(void*, const char*, size_t), void* WriteProcArg, const char* format_str, va_list arg)
 {
@@ -1004,20 +992,16 @@ static int __pformatter(void* (*WriteProc)(void*, const char*, size_t), void* Wr
 	return chars_written;
 }
 
-/*
- * --INFO--
- * Address:	8021682C
- * Size:	00006C
+/**
+ * @TODO: Documentation
  */
 static void* __FileWrite(void* pFile, const char* pBuffer, size_t char_num)
 {
 	return (fwrite(pBuffer, 1, char_num, (FILE*)pFile) == char_num ? pFile : 0);
 }
 
-/*
- * --INFO--
- * Address:	8021682C
- * Size:	00006C
+/**
+ * @TODO: Documentation
  */
 static void* __StringWrite(void* pCtrl, const char* pBuffer, size_t char_num)
 {
@@ -1031,10 +1015,8 @@ static void* __StringWrite(void* pCtrl, const char* pBuffer, size_t char_num)
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	80216760
- * Size:	0000CC
+/**
+ * @TODO: Documentation
  */
 int printf(const char* format, ...)
 {
@@ -1063,10 +1045,8 @@ int fprintf(FILE*, const char* format, ...)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	802166E4
- * Size:	00007C
+/**
+ * @TODO: Documentation
  */
 int vprintf(const char* format, va_list arg)
 {
@@ -1108,10 +1088,8 @@ int vsnprintf(char* s, size_t n, const char* format, va_list arg)
 	return end;
 }
 
-/*
- * --INFO--
- * Address:	8021666C
- * Size:	000078
+/**
+ * @TODO: Documentation
  */
 int vsprintf(char* s, const char* format, va_list arg)
 {
@@ -1128,10 +1106,8 @@ int snprintf(char* s, size_t n, const char* format, ...)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80216598
- * Size:	0000D4
+/**
+ * @TODO: Documentation
  */
 int sprintf(char* s, const char* format, ...)
 {

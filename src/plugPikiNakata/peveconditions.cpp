@@ -58,20 +58,16 @@ void PeveDependenceCondition::construct(PeveCondition* cond)
 	mDependenceCondition = cond;
 }
 
-/*
- * --INFO--
- * Address:	80125C68
- * Size:	000048
+/**
+ * @TODO: Documentation
  */
 PeveTimeCondition::PeveTimeCondition()
 {
 	construct(0.0f);
 }
 
-/*
- * --INFO--
- * Address:	80125CB0
- * Size:	000010
+/**
+ * @TODO: Documentation
  */
 void PeveTimeCondition::construct(f32 limit)
 {
@@ -102,10 +98,8 @@ void PeveDistanceCondition::construct(f32 threshold, NVector3fIO* vecIOA, NVecto
 	mVectorIOB = vecIOB;
 }
 
-/*
- * --INFO--
- * Address:	80125CC0
- * Size:	00010C
+/**
+ * @TODO: Documentation
  */
 void PeveDistanceCondition::update()
 {
@@ -143,10 +137,8 @@ void PeveComparisonYCondition::construct(NVector3fIO* vecIOA, NVector3fIO* vecIO
 	mVectorIOB = vecIOB;
 }
 
-/*
- * --INFO--
- * Address:	80125DCC
- * Size:	0000A0
+/**
+ * @TODO: Documentation
  */
 void PeveComparisonYCondition::update()
 {
