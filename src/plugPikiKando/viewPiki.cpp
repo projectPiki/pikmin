@@ -379,10 +379,9 @@ bool Piki::isLooking()
 	return mLookatPosPtr != nullptr;
 }
 
-/*
- * --INFO--
- * Address:	800D96F0, 100DE380 in DLL
- * Size:	000378
+/**
+ * @TODO: Add documentation
+ * Address:	100DE380 in DLL
  */
 void Piki::updateLook()
 {

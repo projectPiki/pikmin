@@ -84,10 +84,9 @@ void GaugeInfo::update()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8005B8D0, 100377F0 in DLL
- * Size:	000210
+/**
+ * @TODO: Add documentation
+ * Address:	100377F0 in DLL
  */
 void GaugeInfo::showDigits(Vector3f position, immut Colour& colour, int number, f32 width, f32 height)
 {
