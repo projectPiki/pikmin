@@ -12,8 +12,8 @@
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * Address:	........
- * Size:	0000F0
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("id32");
 
@@ -91,11 +91,10 @@ void ID32::updateString()
 }
 
 /**
- * --INFO--
- * Address:	........
- * Size:	000030
  * @brief Assignment operator.
  * @param other ID value.
+ *
+ * @note UNUSED Size: 000030
  */
 void ID32::operator=(u32 other)
 {

@@ -298,13 +298,11 @@ struct DayOverModeState : public ModeState {
 };
 
 /**
- * --INFO--
- * Address:	........
- * Size:	0000E4
- *
  * @brief Controls visibility of game HUD frames.
  * @param set Whether to show (true) or hide (false) the frames
  * @param time Fade duration in seconds
+ *
+ * @note UNUSED Size: 0000E4
  */
 static void showFrame(bool set, f32 time)
 {
@@ -354,11 +352,8 @@ static void createMenuWindow()
 }
 
 /**
- * --INFO--
- * Address:	........
- * Size:	000040
- *
  * @brief Destroys the debug menu window and frees resources.
+ * @note UNUSED Size: 000040
  */
 static void deleteMenuWindow()
 {
@@ -431,13 +426,11 @@ static void deleteTutorialWindow()
 }
 
 /**
- * --INFO--
- * Address:	........
- * Size:	0000A8
- *
  * @brief Handles the tutorial window update logic.
  * @param unused
  * @param controller Player input controller
+ *
+ * @note UNUSED Size: 0000A8
  */
 static void handleTutorialWindow(u32& unused, Controller* controller)
 {

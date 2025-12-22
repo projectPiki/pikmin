@@ -54,9 +54,9 @@ void SeMgr::playNaviSound(s32 stickX, s32 stickY)
 }
 
 /**
- * --INFO--
- * Address:	........ in DOL, 10126280 in DLL
- * Size:	000048
+ * @TODO: Documentation
+ * Address:	10126280 in DLL
+ * @note UNUSED Size: 000048
  */
 SeInfo* SeMgr::findInfo(int jacSeID)
 {

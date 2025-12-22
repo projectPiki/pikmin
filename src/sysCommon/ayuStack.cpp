@@ -21,15 +21,14 @@ DEFINE_ERROR(7)
 DEFINE_PRINT("AyuStack");
 
 /**
- * --INFO--
- * Address:	........
- * Size:	000070
  * Creates and initializes a stack region with optional overflow protection.
  * @param name Name for debugging.
  * @param allocFlags Allocation mode flags (bitmask of AYU_STACK_GROW_*).
  * @param stackBase Start address of the stack memory.
  * @param stackSizeBytes Size of the stack region in bytes.
  * @param enableOverflowGuard Enables guard word for overflow checks when true.
+ *
+ * @note UNUSED Size: 000070
  */
 void AyuStack::create(immut char* name, int allocFlags, void* stackBase, int stackSizeBytes, bool enableOverflowGuard)
 {
@@ -48,10 +47,8 @@ void AyuStack::create(immut char* name, int allocFlags, void* stackBase, int sta
 }
 
 /**
- * --INFO--
- * Address:	........
- * Size:	00001C
- * Resets stack pointers to their initial positions.
+ * @brief Resets stack pointers to their initial positions.
+ * @note UNUSED Size: 00001C
  */
 void AyuStack::reset()
 {
@@ -61,10 +58,8 @@ void AyuStack::reset()
 }
 
 /**
- * --INFO--
- * Address:	........
- * Size:	000024
- * Verifies guard values to detect stack corruption.
+ * @brief Verifies guard values to detect stack corruption.
+ * @note UNUSED Size: 000024
  */
 void AyuStack::checkStack()
 {
@@ -232,10 +227,8 @@ void AyuCache::init(u32 bufferStart, u32 bufferEnd)
 }
 
 /**
- * --INFO--
- * Address:	........
- * Size:	000018
- * Retrieves the next page index for allocation.
+ * @brief Retrieves the next page index for allocation.
+ * @note UNUSED Size: 000018
  */
 int AyuCache::getIndex()
 {
@@ -243,11 +236,8 @@ int AyuCache::getIndex()
 }
 
 /**
- * --INFO--
- * Address:	........
- * Size:	000060
- * Attempts to release a page index back to the pool.
- * // UNUSED FUNCTION
+ * @brief Attempts to release a page index back to the pool.
+ * @note UNUSED Size: 000060
  */
 void AyuCache::releaseIndex(int index)
 {
@@ -265,10 +255,8 @@ void AyuCache::releaseIndex(int index)
 }
 
 /**
- * --INFO--
- * Address:	........
- * Size:	000020
- * Links a chunk into a doubly-linked list with given tag/size.
+ * @brief Links a chunk into a doubly-linked list with given tag/size.
+ * @note UNUSED Size: 000020
  */
 void linkChunk(MemHead* node, u32 tagAndSize, MemHead* listHead)
 {
@@ -362,10 +350,8 @@ void AyuCache::cacheFree(void* ptr)
 }
 
 /**
- * --INFO--
- * Address:	........
- * Size:	00007C
- * Deletes all entries matching an id (unused stub).
+ * @brief Deletes all entries matching an id (unused stub).
+ * @note UNUSED Size: 00007C
  */
 void AyuCache::deleteIdAll(u32)
 {
@@ -373,10 +359,8 @@ void AyuCache::deleteIdAll(u32)
 }
 
 /**
- * --INFO--
- * Address:	........
- * Size:	00002C
- * Returns amount of free cache space (unused stub).
+ * @brief Returns amount of free cache space (unused stub).
+ * @note UNUSED Size: 00002C
  */
 u32 AyuCache::amountFree()
 {

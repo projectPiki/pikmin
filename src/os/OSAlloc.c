@@ -26,11 +26,9 @@ volatile OSHeapHandle __OSCurrHeap = -1;
 #define ALIGNMENT  32
 #define MINOBJSIZE 64
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000020
- * inserts 'cell' before 'neighbor' and returns 'cell'
+/**
+ * @brief inserts 'cell' before 'neighbor' and returns 'cell'
+ * @note UNUSED Size: 000020
  */
 static inline void* DLAddFront(struct HeapCell* neighbor, struct HeapCell* cell)
 {
@@ -50,11 +48,9 @@ void DLLookup(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000034
- * removes 'cell' from 'list' and returns 'list'
+/**
+ * @brief Removes 'cell' from 'list' and returns 'list'
+ * @note UNUSED Size: 000034
  */
 static inline HeapCell* DLExtract(struct HeapCell* list, struct HeapCell* cell)
 {

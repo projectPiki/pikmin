@@ -20,10 +20,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
 DEFINE_PRINT("cmdStream")
 
 /**
- * --INFO--
- * Address:	........
- * Size:	0000AC
  * @param stream Backing stream to read from.
+ * @note UNUSED Size: 0000AC
  */
 void CmdStream::init(Stream* stream)
 {
@@ -123,11 +121,10 @@ bool CmdStream::endOfCmds()
 }
 
 /**
- * --INFO--
- * Address:	........
- * Size:	00003C
  * @brief Checks whether the current line starts with a comment marker ('#' or '//').
  * @return True if the current line is a comment.
+ *
+ * @note UNUSED Size: 00003C
  */
 bool CmdStream::LineIsComment()
 {
@@ -228,11 +225,10 @@ immut char* CmdStream::getToken(bool skipComments)
 }
 
 /**
- * --INFO--
- * Address:	........
- * Size:	000010
  * @brief Returns the current character without advancing.
  * @return Current character at the read cursor.
+ *
+ * @note UNUSED Size: 000010
  */
 char CmdStream::nextChar()
 {
