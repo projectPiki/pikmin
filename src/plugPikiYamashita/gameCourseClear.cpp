@@ -1,3 +1,4 @@
+#include "Camera.h"
 #include "Controller.h"
 #include "DebugLog.h"
 #include "Delegate.h"
@@ -6,8 +7,21 @@
 #include "GameCourseClearSection.h"
 #include "Graphics.h"
 #include "Menu.h"
+#include "P2D/Screen.h"
+#include "Parameters.h"
+#include "zen/DrawCM.h"
 #include "zen/DrawContainer.h"
+#include "zen/DrawCountDown.h"
+#include "zen/DrawFinalResult.h"
+#include "zen/DrawGameInfo.h"
+#include "zen/DrawGameOver.h"
+#include "zen/DrawHiScore.h"
 #include "zen/DrawHurryUp.h"
+#include "zen/DrawProgre.h"
+#include "zen/DrawSave.h"
+#include "zen/DrawUfoParts.h"
+#include "zen/DrawWMPause.h"
+#include "zen/DrawWorldMap.h"
 #include "zen/bBoardColourAnim.h"
 #include "zen/particle.h"
 
@@ -56,7 +70,7 @@ protected:
 /**
  * @brief TODO
  *
- * @note Size: 0x10. In gameCourseClear.cpp for PRINT reasons.
+ * @note Size: 0x10
  */
 struct GameModeMgr {
 public:
@@ -678,7 +692,7 @@ protected:
 /**
  * @brief TODO
  *
- * @note Size: 0x554. In gameCourseClear.cpp because of PRINT usage.
+ * @note Size: 0x554
  */
 struct GameCourseClearScreen : public Node {
 

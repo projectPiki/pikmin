@@ -1,11 +1,14 @@
+#include "Controller.h"
 #include "DebugLog.h"
 #include "Dolphin/gx.h"
 #include "FlowController.h"
 #include "Graphics.h"
 #include "MovSampleSection.h"
+#include "gameflow.h"
 #include "jaudio/app_inter.h"
 #include "jaudio/piki_scene.h"
 #include "sysNew.h"
+#include "system.h"
 
 u16 ImgH;
 u16 ImgW;
@@ -14,8 +17,6 @@ GXTexObj UVtexObj;
 OSThread playbackThread;
 u8 playbackThreadStack[0x1000];
 bool finishPlayback;
-
-static void* playbackFunc(void*);
 
 /**
  * @TODO: Documentation
@@ -28,6 +29,117 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("MovSample")
+
+/**
+ * @TODO: Documentation
+ */
+void convHVQM4TexY8UV8(int stride, int height, u8* src, u8* dst)
+{
+	u32* out;
+	int i, j;
+
+	// Part 1: Y plane processing
+	u32* y0 = (u32*)src;
+	u32* y1 = y0 + (stride / 4);
+	u32* y2 = y1 + (stride / 4);
+	u32* y3 = y2 + (stride / 4);
+
+	for (i = height, out = (u32*)dst; i > 0; i -= 4) {
+		for (j = stride; j > 0; j -= 8) {
+			out[0] = y0[0];
+			out[1] = y0[1];
+			out[2] = y1[0];
+			out[3] = y1[1];
+			out[4] = y2[0];
+			out[5] = y2[1];
+			out[6] = y3[0];
+			out[7] = y3[1];
+
+			y0 += 2;
+			y1 += 2;
+			y2 += 2;
+			y3 += 2;
+			out += 8;
+		}
+
+		// advance to next 4 lines
+		y0 = y3;
+		y1 = y0 + (stride / 4);
+		y2 = y1 + (stride / 4);
+		y3 = y2 + (stride / 4);
+	}
+
+	// Part 2: UV plane processing
+	u8* srcuv = src + (stride * height);
+
+	// base pointers for four lines of U and V
+	u8* u0 = srcuv;
+	u8* u1 = u0 + (stride / 2);
+	u8* u2 = u1 + (stride / 2);
+	u8* u3 = u2 + (stride / 2);
+
+	u8* v0 = srcuv + ((stride / 2) * (height / 2));
+	u8* v1 = v0 + (stride / 2);
+	u8* v2 = v1 + (stride / 2);
+	u8* v3 = v2 + (stride / 2);
+
+	out = (u32*)(dst + (stride * height));
+
+	for (i = height / 2; i > 0; i -= 4) {
+		for (j = stride / 2; j > 0; j -= 4) {
+			// two packed pixels per line per iteration
+			// Line 0
+			out[0] = ((u32)u0[0] << 24) | ((u32)v0[0] << 16) | ((u32)u0[1] << 8) | ((u32)v0[1]);
+			out[1] = ((u32)u0[2] << 24) | ((u32)v0[2] << 16) | ((u32)u0[3] << 8) | ((u32)v0[3]);
+			u0 += 4;
+			v0 += 4;
+
+			// Line 1
+			out[2] = ((u32)u1[0] << 24) | ((u32)v1[0] << 16) | ((u32)u1[1] << 8) | ((u32)v1[1]);
+			out[3] = ((u32)u1[2] << 24) | ((u32)v1[2] << 16) | ((u32)u1[3] << 8) | ((u32)v1[3]);
+			u1 += 4;
+			v1 += 4;
+
+			// Line 2
+			out[4] = ((u32)u2[0] << 24) | ((u32)v2[0] << 16) | ((u32)u2[1] << 8) | ((u32)v2[1]);
+			out[5] = ((u32)u2[2] << 24) | ((u32)v2[2] << 16) | ((u32)u2[3] << 8) | ((u32)v2[3]);
+			u2 += 4;
+			v2 += 4;
+
+			// Line 3
+			out[6] = ((u32)u3[0] << 24) | ((u32)v3[0] << 16) | ((u32)u3[1] << 8) | ((u32)v3[1]);
+			out[7] = ((u32)u3[2] << 24) | ((u32)v3[2] << 16) | ((u32)u3[3] << 8) | ((u32)v3[3]);
+			u3 += 4;
+			v3 += 4;
+
+			out += 8;
+		}
+
+		// advance to next block of 4 UV lines
+		u0 = u3;
+		u1 = u0 + (stride / 2);
+		u2 = u1 + (stride / 2);
+		u3 = u2 + (stride / 2);
+
+		v0 = v3;
+		v1 = v0 + (stride / 2);
+		v2 = v1 + (stride / 2);
+		v3 = v2 + (stride / 2);
+	}
+
+	DCStoreRange(dst, (stride * height) + ((stride / 2) * (height / 2)) * 2);
+}
+
+/**
+ * @TODO: Documentation
+ */
+static void* playbackFunc(void*)
+{
+	while (!finishPlayback) {
+		Jac_StreamMovieUpdate();
+	}
+	return nullptr;
+}
 
 /**
  * @brief TODO
@@ -210,117 +322,6 @@ struct MovSampleSetupSection : public Node {
 	int _44;                 // _44
 	u8* _48[2];              // _48
 };
-
-/**
- * @TODO: Documentation
- */
-void convHVQM4TexY8UV8(int stride, int height, u8* src, u8* dst)
-{
-	u32* out;
-	int i, j;
-
-	// Part 1: Y plane processing
-	u32* y0 = (u32*)src;
-	u32* y1 = y0 + (stride / 4);
-	u32* y2 = y1 + (stride / 4);
-	u32* y3 = y2 + (stride / 4);
-
-	for (i = height, out = (u32*)dst; i > 0; i -= 4) {
-		for (j = stride; j > 0; j -= 8) {
-			out[0] = y0[0];
-			out[1] = y0[1];
-			out[2] = y1[0];
-			out[3] = y1[1];
-			out[4] = y2[0];
-			out[5] = y2[1];
-			out[6] = y3[0];
-			out[7] = y3[1];
-
-			y0 += 2;
-			y1 += 2;
-			y2 += 2;
-			y3 += 2;
-			out += 8;
-		}
-
-		// advance to next 4 lines
-		y0 = y3;
-		y1 = y0 + (stride / 4);
-		y2 = y1 + (stride / 4);
-		y3 = y2 + (stride / 4);
-	}
-
-	// Part 2: UV plane processing
-	u8* srcuv = src + (stride * height);
-
-	// base pointers for four lines of U and V
-	u8* u0 = srcuv;
-	u8* u1 = u0 + (stride / 2);
-	u8* u2 = u1 + (stride / 2);
-	u8* u3 = u2 + (stride / 2);
-
-	u8* v0 = srcuv + ((stride / 2) * (height / 2));
-	u8* v1 = v0 + (stride / 2);
-	u8* v2 = v1 + (stride / 2);
-	u8* v3 = v2 + (stride / 2);
-
-	out = (u32*)(dst + (stride * height));
-
-	for (i = height / 2; i > 0; i -= 4) {
-		for (j = stride / 2; j > 0; j -= 4) {
-			// two packed pixels per line per iteration
-			// Line 0
-			out[0] = ((u32)u0[0] << 24) | ((u32)v0[0] << 16) | ((u32)u0[1] << 8) | ((u32)v0[1]);
-			out[1] = ((u32)u0[2] << 24) | ((u32)v0[2] << 16) | ((u32)u0[3] << 8) | ((u32)v0[3]);
-			u0 += 4;
-			v0 += 4;
-
-			// Line 1
-			out[2] = ((u32)u1[0] << 24) | ((u32)v1[0] << 16) | ((u32)u1[1] << 8) | ((u32)v1[1]);
-			out[3] = ((u32)u1[2] << 24) | ((u32)v1[2] << 16) | ((u32)u1[3] << 8) | ((u32)v1[3]);
-			u1 += 4;
-			v1 += 4;
-
-			// Line 2
-			out[4] = ((u32)u2[0] << 24) | ((u32)v2[0] << 16) | ((u32)u2[1] << 8) | ((u32)v2[1]);
-			out[5] = ((u32)u2[2] << 24) | ((u32)v2[2] << 16) | ((u32)u2[3] << 8) | ((u32)v2[3]);
-			u2 += 4;
-			v2 += 4;
-
-			// Line 3
-			out[6] = ((u32)u3[0] << 24) | ((u32)v3[0] << 16) | ((u32)u3[1] << 8) | ((u32)v3[1]);
-			out[7] = ((u32)u3[2] << 24) | ((u32)v3[2] << 16) | ((u32)u3[3] << 8) | ((u32)v3[3]);
-			u3 += 4;
-			v3 += 4;
-
-			out += 8;
-		}
-
-		// advance to next block of 4 UV lines
-		u0 = u3;
-		u1 = u0 + (stride / 2);
-		u2 = u1 + (stride / 2);
-		u3 = u2 + (stride / 2);
-
-		v0 = v3;
-		v1 = v0 + (stride / 2);
-		v2 = v1 + (stride / 2);
-		v3 = v2 + (stride / 2);
-	}
-
-	DCStoreRange(dst, (stride * height) + ((stride / 2) * (height / 2)) * 2);
-}
-
-/**
- * @TODO: Documentation
- */
-static void* playbackFunc(void*)
-{
-	while (!finishPlayback) {
-		Jac_StreamMovieUpdate();
-	}
-	return nullptr;
-}
 
 /**
  * @TODO: Documentation

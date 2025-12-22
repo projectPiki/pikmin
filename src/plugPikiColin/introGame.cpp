@@ -1,4 +1,7 @@
+#include "Camera.h"
+#include "DayMgr.h"
 #include "DebugLog.h"
+#include "EffectMgr.h"
 #include "Graphics.h"
 #include "IntroGameSection.h"
 #include "MapMgr.h"
@@ -86,8 +89,6 @@ struct IntroModeState : public ModeState {
 
 /**
  * @brief TODO
- *
- * @note In introGame.cpp because IntroModeState needs to be there.
  */
 struct IntroGameSetupSection : public BaseGameSection {
 	IntroGameSetupSection()

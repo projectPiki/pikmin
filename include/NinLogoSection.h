@@ -1,11 +1,8 @@
 #ifndef _NINLOGOSECTION_H
 #define _NINLOGOSECTION_H
 
-#include "Controller.h"
 #include "Section.h"
 #include "types.h"
-
-struct Menu;
 
 /**
  * @brief TODO
