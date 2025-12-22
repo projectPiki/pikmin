@@ -82,7 +82,7 @@ void ComplexCreature::doAI()
  * Address:	........
  * Size:	00009C
  */
-void ComplexCreature::postUpdate(int, f32)
+void ComplexCreature::postUpdate(int unused, f32 deltaTime)
 {
 	// this is just here for the weak function generation
 	mCreatures[0].mPtr->bounceCallback();

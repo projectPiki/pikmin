@@ -843,10 +843,10 @@ void Navi::updateWalkAnimation()
  * Address:	800FACB4
  * Size:	000034
  */
-void Navi::postUpdate(int p1, f32 p2)
+void Navi::postUpdate(int unused, f32 deltaTime)
 {
 	if (!movieMode()) {
-		Creature::postUpdate(p1, p2);
+		Creature::postUpdate(unused, deltaTime);
 	}
 }
 

@@ -306,7 +306,7 @@ public:
 	virtual void startWaterEffect();                           // _CC
 	virtual void finishWaterEffect();                          // _D0
 	virtual void update();                                     // _E0
-	virtual void postUpdate(int, f32);                         // _E4
+	virtual void postUpdate(int unused, f32 deltaTime);        // _E4
 	virtual void refresh(Graphics&);                           // _EC
 	virtual void animationKeyUpdated(immut PaniAnimKeyEvent&); // _12C (weak)
 

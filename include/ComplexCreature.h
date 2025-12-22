@@ -56,7 +56,7 @@ struct ComplexCreature {
 	void cleanup();
 	void update();
 	void doAI();
-	void postUpdate(int, f32);
+	void postUpdate(int unused, f32 deltaTime);
 
 	// just here to spawn the right weak functions, who knows what this actually was lol
 	SmartPtr<Creature> mCreatures[3]; // _00

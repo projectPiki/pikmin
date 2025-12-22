@@ -1,4 +1,5 @@
 #include "GameCoreSection.h"
+
 #include "AIConstant.h"
 #include "AIPerf.h"
 #include "BombItem.h"
@@ -865,7 +866,8 @@ void GameCoreSection::initStage()
 		mIsTimePastQuarter1 = true;
 	}
 
-	// hmm. not sure how to get the orphaned cmpwi x2 to spawn in the middle of this switch
+	// hmm. not sure how to get the orphaned cmpwi x2 to spawn in the middle of
+	// this switch
 	switch (flowCont.mCurrentStage->mStageID) {
 	case STAGE_Practice:
 		break;
@@ -1299,7 +1301,8 @@ GameCoreSection::GameCoreSection(Controller* controller, MapMgr* mgr, Camera& ca
 
 	memStat->start("workobj");
 	workObjectMgr = new WorkObjectMgr();
-	gameflow.addGenNode("仕事オブジェマネージャ", workObjectMgr); // 'work object manager'
+	gameflow.addGenNode("仕事オブジェマネージャ",
+	                    workObjectMgr); // 'work object manager'
 	memStat->end("workobj");
 
 	memStat->end("mapMgr");
@@ -1365,7 +1368,8 @@ GameCoreSection::GameCoreSection(Controller* controller, MapMgr* mgr, Camera& ca
 	memStat->start("generator");
 	generatorMgr = new GeneratorMgr();
 	generatorMgr->setName("default");
-	gameflow.addGenNode("ジェネレータ(default)", generatorMgr); // 'generator (default)'
+	gameflow.addGenNode("ジェネレータ(default)",
+	                    generatorMgr); // 'generator (default)'
 
 	GenObjectDebug::initialise();
 	GenObjectItem::initialise();
@@ -1381,20 +1385,24 @@ GameCoreSection::GameCoreSection(Controller* controller, MapMgr* mgr, Camera& ca
 
 	onceGeneratorMgr = new GeneratorMgr();
 	onceGeneratorMgr->setName("init");
-	gameflow.addGenNode("ジェネレータ(init)", onceGeneratorMgr); // 'generator (init)'
+	gameflow.addGenNode("ジェネレータ(init)",
+	                    onceGeneratorMgr); // 'generator (init)'
 
 	dailyGeneratorMgr = new GeneratorMgr();
 	dailyGeneratorMgr->setName("daily");
-	gameflow.addGenNode("ジェネレータ(daily)", dailyGeneratorMgr); // 'generator (daily)'
+	gameflow.addGenNode("ジェネレータ(daily)",
+	                    dailyGeneratorMgr); // 'generator (daily)'
 
 	plantGeneratorMgr = new GeneratorMgr();
 	plantGeneratorMgr->setName("plant");
-	gameflow.addGenNode("ジェネレータ(plants)", plantGeneratorMgr); // 'generator (plants)'
+	gameflow.addGenNode("ジェネレータ(plants)",
+	                    plantGeneratorMgr); // 'generator (plants)'
 
 	limitGeneratorMgr = new GeneratorMgr();
 	limitGeneratorMgr->setLimitGenerator(true);
 	limitGeneratorMgr->setName("limit");
-	gameflow.addGenNode("ジェネレータ(limit)", limitGeneratorMgr); // 'generator (limit)'
+	gameflow.addGenNode("ジェネレータ(limit)",
+	                    limitGeneratorMgr); // 'generator (limit)'
 	memStat->end("generator");
 
 	memStat->start("boss");
@@ -1652,26 +1660,27 @@ void GameCoreSection::updateAI()
 		}
 	}
 	if (tekiMgr) {
-		f32 time = gsys->getFrameTime();
+		f32 deltaTime = gsys->getFrameTime();
 		MATCHING_START_TIMER("post", true);
 		if (!gameflow.mIsUiOverlayActive) {
-			naviMgr->postUpdate(0, time);
+			naviMgr->postUpdate(0, deltaTime);
 		}
 
 		if (!gameflow.mIsUiOverlayActive && !inPause() && !gameflow._33C) {
-			pikiMgr->postUpdate(0, time);
-			itemMgr->postUpdate(0, time);
-			pelletMgr->postUpdate(0, time);
-			plantMgr->postUpdate(0, time);
+			pikiMgr->postUpdate(0, deltaTime);
+			itemMgr->postUpdate(0, deltaTime);
+			pelletMgr->postUpdate(0, deltaTime);
+			plantMgr->postUpdate(0, deltaTime);
 			if (tekiMgr && !hideTeki()) {
-				tekiMgr->postUpdate(0, time);
+				tekiMgr->postUpdate(0, deltaTime);
 			}
 			if (bossMgr && !hideTeki()) {
-				bossMgr->postUpdate(0, time);
+				bossMgr->postUpdate(0, deltaTime);
 			}
 		}
 	}
-	MATCHING_STOP_TIMER("post"); // Wrong scope, but if the tekiMgr doesn't exist you probably have bigger problems.
+	MATCHING_STOP_TIMER("post"); // Wrong scope, but if the tekiMgr doesn't exist
+	                             // you probably have bigger problems.
 	gsys->mTimer->stop("GameCore");
 }
 
@@ -1737,8 +1746,9 @@ void GameCoreSection::draw(Graphics& gfx)
 		}
 	}
 
-	// This code snippet is imitating a development feature that exists in the DLLs, but this
-	// might not be where the equivalent code from the DLL exists.  TODO: Figure that out.
+	// This code snippet is imitating a development feature that exists in the
+	// DLLs, but this might not be where the equivalent code from the DLL exists.
+	// TODO: Figure that out.
 #ifdef DEVELOP
 	generatorMgr->render(gfx);
 	plantGeneratorMgr->render(gfx);
@@ -1792,7 +1802,8 @@ void GameCoreSection::draw(Graphics& gfx)
  */
 void drawRectangle(Graphics& gfx, RectArea& p2, RectArea& p3, Vector3f* p4)
 {
-	// we need the magic int-to-float conversion value to generate before the 1.0f in draw2D, so here makes sense.
+	// we need the magic int-to-float conversion value to generate before the 1.0f
+	// in draw2D, so here makes sense.
 	p4->z = p2.mMaxX;
 }
 
@@ -1920,9 +1931,9 @@ void GameCoreSection::draw2D(Graphics& gfx)
 		accountWindow->draw(gfx);
 	}
 
-	// this function requires an UNGODLY amount of stack from inlines, plus some from temps.
-	// ternaries in the stripped out PRINT function generate inline stack.
-	// forgive my sins please, this combo lets it match.
+	// this function requires an UNGODLY amount of stack from inlines, plus some
+	// from temps. ternaries in the stripped out PRINT function generate inline
+	// stack. forgive my sins please, this combo lets it match.
 	STACK_PAD_VAR(48);
 	STACK_PAD_TERNARY(triNames, 10);
 	STACK_PAD_TERNARY(triNames, 10);

@@ -892,7 +892,7 @@ void Creature::update()
  * Address:	8008B788
  * Size:	0001F4
  */
-void Creature::postUpdate(int, f32 _unused)
+void Creature::postUpdate(int unused, f32 deltaTime)
 {
 	bool isPikiOrNavi = false;
 	if (mObjType == OBJTYPE_Piki || mObjType == OBJTYPE_Navi) {
@@ -907,7 +907,7 @@ void Creature::postUpdate(int, f32 _unused)
 		return;
 	}
 
-	collisionCheck(_unused);
+	collisionCheck(deltaTime);
 
 	if (mCollPlatform) {
 		Creature* platCreature = mCollPlatform->mCreature;

@@ -139,7 +139,7 @@ public:
 	virtual bool mayIstick() { return false; }                          // _D8 (weak)
 	virtual int getFormationPri() { return 128; }                       // _DC (weak)
 	virtual void update();                                              // _E0
-	virtual void postUpdate(int, f32);                                  // _E4
+	virtual void postUpdate(int unused, f32 deltaTime);                 // _E4
 	virtual void stickUpdate();                                         // _E8
 	virtual void refresh(Graphics&) = 0;                                // _EC
 	virtual void refresh2d(Graphics&) { }                               // _F0 (weak)

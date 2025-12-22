@@ -252,7 +252,7 @@ void ViewPiki::setLeaves(int)
  * Address:	800D90A0
  * Size:	00017C
  */
-void ViewPiki::postUpdate(int _, f32 __)
+void ViewPiki::postUpdate(int unused, f32 deltaTime)
 {
 	if (mMode == PikiMode::FreeMode && !pikiMgr->isUpdating(PMUPDATE_FreePiki)) {
 		return;
@@ -273,8 +273,7 @@ void ViewPiki::postUpdate(int _, f32 __)
 		}
 	}
 
-	// Params are unused through all function calls
-	Creature::postUpdate(_, __);
+	Creature::postUpdate(unused, deltaTime);
 
 	STACK_PAD_VAR(2);
 }

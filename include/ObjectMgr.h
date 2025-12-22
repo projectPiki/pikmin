@@ -24,7 +24,7 @@ struct ObjectMgr : public Traversable, public Node {
 	virtual bool isDone(int)           = 0;                                // _14
 	virtual ~ObjectMgr() { }                                               // _48
 	virtual void update();                                                 // _4C
-	virtual void postUpdate(int, f32);                                     // _50
+	virtual void postUpdate(int unused, f32 deltaTime);                    // _50
 	virtual void stickUpdate();                                            // _54
 	virtual void refresh(Graphics&);                                       // _58
 	virtual void drawShadow(Graphics&, Texture*);                          // _5C
@@ -56,17 +56,17 @@ struct MonoObjectMgr : public ObjectMgr {
 public:
 	MonoObjectMgr();
 
-	virtual ~MonoObjectMgr() { }                  // _48 (weak)
-	virtual void update();                        // _4C (weak)
-	virtual void postUpdate(int, f32);            // _50
-	virtual void refresh(Graphics&);              // _58
-	virtual void drawShadow(Graphics&, Texture*); // _5C
-	virtual int getSize() { return mNumObjects; } // _60 (weak)
-	virtual int getMax() { return mMaxElements; } // _64 (weak)
-	virtual void search(ObjectMgr*);              // _70
-	virtual Creature* birth();                    // _78
-	virtual void kill(Creature*);                 // _7C
-	virtual Creature* createObject() = 0;         // _80
+	virtual ~MonoObjectMgr() { }                        // _48 (weak)
+	virtual void update();                              // _4C (weak)
+	virtual void postUpdate(int unused, f32 deltaTime); // _50
+	virtual void refresh(Graphics&);                    // _58
+	virtual void drawShadow(Graphics&, Texture*);       // _5C
+	virtual int getSize() { return mNumObjects; }       // _60 (weak)
+	virtual int getMax() { return mMaxElements; }       // _64 (weak)
+	virtual void search(ObjectMgr*);                    // _70
+	virtual Creature* birth();                          // _78
+	virtual void kill(Creature*);                       // _7C
+	virtual Creature* createObject() = 0;               // _80
 
 	void create(int);
 	void searchSelf();
@@ -105,16 +105,16 @@ struct PolyObjectMgr : public ObjectMgr {
 		int mClassId;
 	};
 
-	virtual ~PolyObjectMgr() { }                     // _48
-	virtual void update();                           // _4C
-	virtual void postUpdate(int, f32);               // _50
-	virtual void refresh(Graphics&);                 // _58
-	virtual void drawShadow(Graphics&, Texture*);    // _5C
-	virtual int getSize() { return mActiveObjects; } // _60
-	virtual int getMax() { return mPoolCapacity; }   // _64
-	virtual void search(ObjectMgr*);                 // _70
-	virtual Creature* birth(int);                    // _78
-	virtual void kill(Creature*);                    // _7C
+	virtual ~PolyObjectMgr() { }                        // _48
+	virtual void update();                              // _4C
+	virtual void postUpdate(int unused, f32 deltaTime); // _50
+	virtual void refresh(Graphics&);                    // _58
+	virtual void drawShadow(Graphics&, Texture*);       // _5C
+	virtual int getSize() { return mActiveObjects; }    // _60
+	virtual int getMax() { return mPoolCapacity; }      // _64
+	virtual void search(ObjectMgr*);                    // _70
+	virtual Creature* birth(int);                       // _78
+	virtual void kill(Creature*);                       // _7C
 
 	void create(int);
 

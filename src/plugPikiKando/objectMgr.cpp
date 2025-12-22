@@ -128,13 +128,13 @@ void ObjectMgr::killAll()
  * Address:	800E07CC
  * Size:	00016C
  */
-void ObjectMgr::postUpdate(int a1, f32 a2)
+void ObjectMgr::postUpdate(int unused, f32 deltaTime)
 {
 	Iterator it(this);
 	CI_LOOP(it)
 	{
 		Creature* obj = *it;
-		obj->postUpdate(a1, a2);
+		obj->postUpdate(unused, deltaTime);
 		if (!AIPerf::insQuick && !AIPerf::updateSearchBuffer) {
 			if (obj->mSearchBuffer.available()) {
 				obj->mSearchBuffer.clear();
@@ -258,12 +258,12 @@ void MonoObjectMgr::create(int num)
  * Address:	800E11A4
  * Size:	0000B8
  */
-void MonoObjectMgr::postUpdate(int a1, f32 a2)
+void MonoObjectMgr::postUpdate(int unused, f32 deltaTime)
 {
 	for (int i = 0; i < mMaxElements; i++) {
 		if (mEntryStatus[i] == 0) {
 			Creature* obj = mObjectList[i];
-			obj->postUpdate(a1, a2);
+			obj->postUpdate(unused, deltaTime);
 			if (!AIPerf::insQuick && !AIPerf::updateSearchBuffer) {
 				if (obj->mSearchBuffer.available()) {
 					obj->mSearchBuffer.clear();
@@ -681,13 +681,13 @@ void PolyObjectMgr::update()
  * Address:	800E2128
  * Size:	0000AC
  */
-void PolyObjectMgr::postUpdate(int a1, f32 a2)
+void PolyObjectMgr::postUpdate(int unused, f32 deltaTime)
 {
 	for (int i = 0; i < mPoolCapacity; i++) {
 		if (mObjectIndices[i] >= 0) {
 			Creature* obj = get(i);
 			if (obj) {
-				obj->postUpdate(a1, a2);
+				obj->postUpdate(unused, deltaTime);
 			}
 		}
 	}

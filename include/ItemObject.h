@@ -30,10 +30,10 @@ struct ItemBall : public ItemCreature {
 struct ItemObject : public ItemCreature {
 	ItemObject(int, Shape*); // unused/inlined
 
-	virtual bool needShadow() { return false; } // _90
-	virtual void update();                      // _E0
-	virtual void postUpdate(int, f32) { }       // _E4
-	virtual bool isAtari() { return false; }    // _84
+	virtual bool needShadow() { return false; }            // _90
+	virtual void update();                                 // _E0
+	virtual void postUpdate(int unused, f32 deltaTime) { } // _E4
+	virtual bool isAtari() { return false; }               // _84
 
 	// _00      = VTBL
 	// _00-_3C8 = ItemCreature

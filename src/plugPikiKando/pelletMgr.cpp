@@ -1211,7 +1211,7 @@ void Pellet::refresh(Graphics& gfx)
  * Address:	80097320
  * Size:	000088
  */
-void Pellet::postUpdate(int _, f32 __)
+void Pellet::postUpdate(int unused, f32 deltaTime)
 {
 	int state = getState();
 	if (state == PELSTATE_Swallowed && !pelletMgr->isMovieFlag(1)) {
@@ -1223,7 +1223,7 @@ void Pellet::postUpdate(int _, f32 __)
 	}
 
 	if (pelletMgr->isMovieFlag(4)) {
-		DualCreature::postUpdate(_, __);
+		DualCreature::postUpdate(unused, deltaTime);
 	}
 }
 

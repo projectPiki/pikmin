@@ -13,15 +13,15 @@ struct MapMgr;
 struct ViewPiki : public Piki {
 	ViewPiki(CreatureProp*);
 
-	virtual void update();                             // _E0
-	virtual void postUpdate(int, f32);                 // _E4
-	virtual void refresh(Graphics&);                   // _EC
-	virtual void demoDraw(Graphics&, immut Matrix4f*); // _FC
-	virtual bool isKinoko();                           // _120
-	virtual void initBirth();                          // _128
-	virtual void changeShape(int);                     // _12C
-	virtual void setFlower(int);                       // _130
-	virtual void setLeaves(int);                       // _134
+	virtual void update();                              // _E0
+	virtual void postUpdate(int unused, f32 deltaTime); // _E4
+	virtual void refresh(Graphics&);                    // _EC
+	virtual void demoDraw(Graphics&, immut Matrix4f*);  // _FC
+	virtual bool isKinoko();                            // _120
+	virtual void initBirth();                           // _128
+	virtual void changeShape(int);                      // _12C
+	virtual void setFlower(int);                        // _130
+	virtual void setLeaves(int);                        // _134
 
 	void init(Shape*, MapMgr*, Navi*);
 
