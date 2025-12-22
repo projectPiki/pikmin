@@ -56,10 +56,16 @@ struct Parameters {
  */
 template <typename T>
 struct Parm : public BaseParm {
-	Parm(Parameters* owner, T value, T min, T max, ayuID id, immut char* str)
+	Parm(Parameters* owner, T value, T min, T max, ayuID id, immut char* name)
 	    : BaseParm(owner, id)
 	{
 		mValue = value;
+#ifdef WIN32
+		mDefaultValue = value;
+		mMinValue     = min;
+		mMaxValue     = max;
+		mName         = name;
+#endif
 	}
 
 	virtual int size() { return sizeof(T); } // _08
@@ -71,7 +77,13 @@ struct Parm : public BaseParm {
 
 	// _08     = VTBL
 	// _00-_0C = BaseParm
-	T mValue; // _0C
+	T mValue;          // _0C
+#ifdef WIN32           //
+	T mDefaultValue;   // _10
+	T mMinValue;       // _14
+	T mMaxValue;       // _18
+	immut char* mName; // _1C
+#endif
 };
 
 #endif

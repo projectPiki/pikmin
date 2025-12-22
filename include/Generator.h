@@ -642,7 +642,7 @@ struct GenType : public GenBase {
 	inline GenType(u32 id, immut char* name)
 	    : GenBase(id, "time type", name)
 	    , _18(this, 0, 0, 0, "b00", nullptr)
-	    , mAdjustFaceDirection(this, 0, 0, 0, "b01", nullptr)
+	    , mCarryOver(this, 0, 0, 0, "b01", nullptr)
 	{
 	}
 
@@ -657,8 +657,8 @@ struct GenType : public GenBase {
 
 	// _04     = VTBL
 	// _00-_18 = GenBase
-	Parm<int> _18;                  // _18, b00
-	Parm<int> mAdjustFaceDirection; // _28, b01
+	Parm<int> _18;        // _18, b00
+	Parm<int> mCarryOver; // _28, b01, This is *really* poorly named (see `Generator::doAdjustFaceDir`)
 };
 
 /**
@@ -861,15 +861,15 @@ struct Generator : public Node {
 	int getRebirthDay() { return mGenType->_18(); }
 	bool readFromRam() { return !mIsRamReadDisabled; }
 
-	// this is an inline in the DLL, but I cant tell what its name is from the list
-	bool doAdjustFaceDir() { return mGenType->mAdjustFaceDirection(); }
+	// This inline is actually called `isCarryOver`, but it is *not* used for this purpose (carry-over configuration as it exists in
+	// the final game is stored in `Generator::mCarryOverFlags`).  I would leave it with its original name if it wasn't so confusing.
+	int doAdjustFaceDir() { return mGenType->mCarryOver(); }
 
 	// DLL inlines to make:
 	void changeNaviPos();
 	void setNaviPos();
 	void setOffset(immut Vector3f& ofs) { mGenOffset = ofs; }
 	void setPos(immut Vector3f& pos) { mGenPosition = pos; }
-	// int isCarryOver();
 
 	void genAge(AgeServer&);
 	void changeArea(AgeServer&);

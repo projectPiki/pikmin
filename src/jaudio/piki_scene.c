@@ -12,20 +12,22 @@
 #include "jaudio/verysimple.h"
 #include "jaudio/waveread.h"
 
+#include "GlobalGameOptions.h"
+
 static u32 current_bgm;
 static u32 current_ready; // type
 static vu32 now_loading;  // type
 static volatile BOOL first_load;
 static BOOL chgmode;
 
-static u32 current_scene           = SCENE_NULL;
-static u32 current_stage           = -1;
-static u32 current_prepare         = -1;
-static u16 stream_level            = 8000;
-static u16 stream_se_level         = 8000;
-static int tbl_scene_to_bgm[]      = { 0, 7, 18, 12, 0, 1, 0, 0, 0, 8, 19, 0, 0, 0 };
-static int tbl_scene_to_fadetime[] = { 0, 60, 15, 120, 10, 25, 10, 10, 10, 10, 25, 0, 0, 0 };
-static int tbl_stage_to_bgm[]      = { 4, 5, 10, 9, 17 };
+static u32 current_scene                      = SCENE_NULL;
+static u32 current_stage                      = -1;
+static u32 current_prepare                    = -1;
+static u16 stream_level                       = 8000;
+static u16 stream_se_level                    = 8000;
+static int tbl_scene_to_bgm[SCENE_COUNT]      = { 0, 7, 18, 12, 0, 1, 0, 0, 0, 8, 19, 0, 0, 0 };
+static int tbl_scene_to_fadetime[SCENE_COUNT] = { 0, 60, 15, 120, 10, 25, 10, 10, 10, 10, 25, 0, 0, 0 };
+static int tbl_stage_to_bgm[STAGE_COUNT]      = { 4, 5, 10, 9, 17 };
 char filelist[][32] = { "piki.stx",    "o_dead.stx",  "d_end1.stx",    "gyoku.stx",    "d_end3.stx",   "fanf5.stx",   "badend0.stx",
 	                    "badend1.stx", "opening.stx", "happyend1.stx", "compend1.stx", "compend0.stx", "badend2.stx", "onion.stx" };
 

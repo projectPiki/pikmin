@@ -32,7 +32,8 @@ void P2DPane::printTagName(bool doPrint)
 {
 	if (doPrint) {
 		if (mTagName) {
-			PRINT("tag[%c%c%c%c] \n", ((u8*)&mTagName)[0], ((u8*)&mTagName)[1], ((u8*)&mTagName)[2], ((u8*)&mTagName)[3]);
+			const char* s = reinterpret_cast<char*>(&mTagName);
+			PRINT("tag[%c%c%c%c] \n", s[0], s[1], s[2], s[3]);
 		} else {
 			PRINT("tag[]\n");
 		}
@@ -293,8 +294,9 @@ P2DPane* P2DPane::search(u32 tag, bool doPanicOnNull)
 	}
 
 	if (doPanicOnNull) {
-		PRINT("tag <%c%c%c%c> is not found.\n", ((u8*)&tag)[0], ((u8*)&tag)[1], ((u8*)&tag)[2], ((u8*)&tag)[3]);
-		ERROR("tag <%c%c%c%c> is not found. 逝ってよし\n", ((u8*)&tag)[0], ((u8*)&tag)[1], ((u8*)&tag)[2], ((u8*)&tag)[3]); // "Go away"
+		const char* s = reinterpret_cast<char*>(&tag);
+		PRINT("tag <%c%c%c%c> is not found.\n", s[0], s[1], s[2], s[3]);
+		ERROR("tag <%c%c%c%c> is not found. 逝ってよし\n", s[0], s[1], s[2], s[3]); // "Go away"
 	}
 	return nullptr;
 }

@@ -262,20 +262,21 @@ struct GameRecChalCourse {
 	GameRecChalCourse()
 	{
 		// what on EARTH is going on here
-		*(u32*)(this + 1) = 0;
-		*(u32*)(this + 1) = 0;
-		*(u32*)(this + 1) = 0;
-		*(u32*)(this + 1) = 0;
-		*(u32*)(this + 1) = 0;
+		mScores[TERNARY_BUGFIX(0, MAX_HI_SCORES)] = 0;
+		mScores[TERNARY_BUGFIX(1, MAX_HI_SCORES)] = 0;
+		mScores[TERNARY_BUGFIX(2, MAX_HI_SCORES)] = 0;
+		mScores[TERNARY_BUGFIX(3, MAX_HI_SCORES)] = 0;
+		mScores[TERNARY_BUGFIX(4, MAX_HI_SCORES)] = 0;
 	}
 
 	void Initialise()
 	{
-		*(u32*)(this + 1) = 0;
-		*(u32*)(this + 1) = 0;
-		*(u32*)(this + 1) = 0;
-		*(u32*)(this + 1) = 0;
-		*(u32*)(this + 1) = 0;
+		// This is illegal, you know.
+		mScores[TERNARY_BUGFIX(0, MAX_HI_SCORES)] = 0;
+		mScores[TERNARY_BUGFIX(1, MAX_HI_SCORES)] = 0;
+		mScores[TERNARY_BUGFIX(2, MAX_HI_SCORES)] = 0;
+		mScores[TERNARY_BUGFIX(3, MAX_HI_SCORES)] = 0;
+		mScores[TERNARY_BUGFIX(4, MAX_HI_SCORES)] = 0;
 	}
 
 	void read(RandomAccessStream& input)

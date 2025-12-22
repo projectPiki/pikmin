@@ -1424,9 +1424,9 @@ void DGXGraphics::setFog(bool set)
 			GXSetFog(GX_FOG_LINEAR, mFogStart, mFogEnd, mCamera->mNear, mCamera->mFar, *(GXColor*)&mFogColour);
 		} else {
 #if defined(VERSION_GPIP01_00)
-			OSReport("%s:%d Warning: cam->vNear >= cam->vFar\n", "dgxGraphics.cpp", 1732);
+			OSReport("%s:%d Warning: cam->vNear >= cam->vFar\n", __FILE__, 1732);
 #else
-			OSReport("%s:%d Warning: cam->vNear >= cam->vFar\n", "dgxGraphics.cpp", 1683);
+			OSReport("%s:%d Warning: cam->vNear >= cam->vFar\n", __FILE__, 1683);
 #endif
 		}
 #endif

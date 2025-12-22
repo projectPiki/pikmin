@@ -70,7 +70,7 @@ struct CardSelectSetupSection : public Node {
 			mJacSetupCountdown--;
 
 			if (mJacSetupCountdown == 0) {
-#ifdef __MWERKS__
+#ifndef WIN32
 				Jac_SceneSetup(2, 0);
 #endif
 			}
