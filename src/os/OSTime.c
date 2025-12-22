@@ -290,6 +290,7 @@ static void GetDates(s32 days, OSCalendarTime* cal)
 }
 
 #pragma dont_inline on
+
 /*
  * --INFO--
  * Address:	801FD5C0
@@ -458,6 +459,7 @@ void OSTicksToCalendarTime(OSTime ticks, OSCalendarTime* cal)
 	  blr
 	*/
 }
+
 #pragma dont_inline reset
 
 /*

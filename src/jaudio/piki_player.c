@@ -243,7 +243,9 @@ void Jac_StopOrimaSe(s32 id)
 		Jal_SendCmdQueue_Noblock(&player_se_stop, id);
 	}
 }
+
 static u32 pikis;
+
 /*
  * --INFO--
  * Address:	80018740

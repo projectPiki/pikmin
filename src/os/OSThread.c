@@ -179,6 +179,7 @@ static void SetRun(OSThread* thread)
 }
 
 #pragma dont_inline on
+
 /*
  * --INFO--
  * Address:	801FBBA4
@@ -193,6 +194,7 @@ static void UnsetRun(OSThread* thread)
 		RunQueueBits &= ~(1u << (OS_PRIORITY_MAX - thread->priority));
 	thread->queue = NULL;
 }
+
 #pragma dont_inline reset
 
 /*

@@ -59,6 +59,7 @@ lbl_80371C20:
     b TRKInterruptHandler
 #endif // clang-format on
 }
+
 /*
  * --INFO--
  * Address:	802204E8

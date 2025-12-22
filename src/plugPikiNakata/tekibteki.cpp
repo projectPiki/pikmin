@@ -2453,6 +2453,7 @@ void BTeki::setParticleGeneratorDirection(int param_1, immut Vector3f& effectDir
 		particleGenerator->setEmitDir(effectDir);
 	}
 }
+
 /*
  * --INFO--
  * Address:	80149AA0

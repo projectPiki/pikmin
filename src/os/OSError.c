@@ -3,6 +3,7 @@
 #include "stl/stdio.h"
 
 static OSErrorHandler OSErrorTable[OS_ERROR_MAX];
+
 /*
  * --INFO--
  * Address:	801F7890

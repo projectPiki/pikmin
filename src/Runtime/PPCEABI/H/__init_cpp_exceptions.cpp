@@ -17,6 +17,7 @@ ASM static char* GetR2()
 #endif // clang-format on
 }
 extern "C" {
+
 /*
  * --INFO--
  * Address:	802154FC

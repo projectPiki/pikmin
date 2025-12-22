@@ -350,6 +350,7 @@ void GXAdjustForOverscan(GXRenderModeObj* rmin, GXRenderModeObj* rmout, u16 hor,
 	rmout->viXOrigin = rmin->viXOrigin + hor;
 	rmout->viYOrigin = rmin->viYOrigin + ver;
 }
+
 /*
  * --INFO--
  * Address:	80210F00
@@ -747,6 +748,7 @@ void GXCopyDisp(void* dest, GXBool clear)
 	}
 	gx->bpSent = 1;
 }
+
 /*
  * --INFO--
  * Address:	802117B4

@@ -46,6 +46,7 @@ loop:
 	blr
 #endif // clang-format on
 }
+
 /*
  * --INFO--
  * Address:	801FDA14

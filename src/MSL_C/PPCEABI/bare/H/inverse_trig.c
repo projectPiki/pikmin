@@ -46,6 +46,7 @@ f32 acosf(f32 x)
 }
 
 #pragma dont_inline on
+
 /*
  * --INFO--
  * Address:	8021B944
@@ -79,6 +80,7 @@ f32 atan__Ff(f32 x)
 }
 
 #pragma dont_inline reset
+
 /*
  * --INFO--
  * Address:	8021B730
