@@ -230,6 +230,7 @@ VIRetraceCallback VISetPostRetraceCallback(VIRetraceCallback callback)
 }
 
 #pragma dont_inline on
+
 /*
  * --INFO--
  * Address:	802026D0
@@ -259,6 +260,7 @@ static VITimingInfo* getTiming(VITVMode mode)
 
 	return NULL;
 }
+
 #pragma dont_inline reset
 
 /*

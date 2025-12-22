@@ -134,6 +134,7 @@ DSError TRKSetBufferPosition(TRKBuffer* msg, u32 pos)
  * Size:	0000A4
  */
 #pragma dont_inline on
+
 DSError TRKAppendBuffer(TRKBuffer* msg, const void* data, size_t length)
 {
 	DSError error = DS_NoError; // r31
@@ -167,6 +168,7 @@ DSError TRKAppendBuffer(TRKBuffer* msg, const void* data, size_t length)
 
 	return error;
 }
+
 #pragma dont_inline reset
 
 /*
@@ -247,6 +249,7 @@ DSError TRKAppendBuffer1_ui32(TRKBuffer* buffer, const u32 data)
 
 	return TRKAppendBuffer(buffer, (const void*)bigEndianData, sizeof(data));
 }
+
 /*
  * --INFO--
  * Address:	8021C8D4

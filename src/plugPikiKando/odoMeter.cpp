@@ -40,6 +40,7 @@ void OdoMeter::start(f32 startTime, f32 maxDistance)
 	mMinAllowedDistance = maxDistance;
 	mTotalDistance      = 0.0f;
 }
+
 /*
  * --INFO--
  * Address:	800CD82C

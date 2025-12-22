@@ -506,6 +506,7 @@ void DynMapObject::refresh(Graphics& gfx)
 }
 
 static f32 Kdl = 1.25f;
+
 /*
  * --INFO--
  * Address:	8006255C

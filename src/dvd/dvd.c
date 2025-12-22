@@ -374,6 +374,7 @@ static void cbForUnrecoveredError(u32 p1)
 }
 
 #pragma dont_inline on
+
 /*
  * --INFO--
  * Address:	80200050
@@ -447,6 +448,7 @@ void cbForUnrecoveredErrorRetry(u32 p1)
 	  blr
 	*/
 }
+
 #pragma dont_inline reset
 
 /*

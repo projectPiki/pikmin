@@ -417,6 +417,7 @@ static void __PcmToLoop(StreamCtrl_*);
 static void __StreamChgVolume(StreamCtrl_* ctrl);
 static void __StreamChgPitch(StreamCtrl_* ctrl);
 static u32 __Decode(StreamCtrl_* ctrl);
+
 /*
  * --INFO--
  * Address:	8001C460
