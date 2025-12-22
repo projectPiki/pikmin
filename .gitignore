@@ -46,3 +46,4 @@ tools/powerpc
 *.idb
 *.til
 mwcc_debugger.py
+/docs
