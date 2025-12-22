@@ -47,9 +47,7 @@ void CineShapeObject::init(immut char* modelPath, immut char* animPath, immut ch
 }
 
 /**
- * --INFO--
- * Address:	8006FA1C
- * Size:	0001BC
+ * @TODO: Documentation
  */
 void CinematicPlayer::init(immut char* cinFilePath)
 {
@@ -83,9 +81,7 @@ void CinematicPlayer::init(immut char* cinFilePath)
 }
 
 /**
- * --INFO--
- * Address:	8006FBD8
- * Size:	0001B0
+ * @TODO: Documentation
  */
 CinematicPlayer::CinematicPlayer(immut char* cinFilePath)
 {
@@ -104,9 +100,7 @@ CinematicPlayer::CinematicPlayer(immut char* cinFilePath)
 }
 
 /**
- * --INFO--
- * Address:	8006FEB8
- * Size:	000720
+ * @TODO: Documentation
  */
 void CinematicPlayer::loadCin(immut char* cinFilePath)
 {
@@ -273,9 +267,7 @@ void CinematicPlayer::loadCin(immut char* cinFilePath)
 }
 
 /**
- * --INFO--
- * Address:	800705D8
- * Size:	0000B4
+ * @TODO: Documentation
  */
 void CinematicPlayer::addScene(SceneData* scene)
 {
@@ -305,9 +297,7 @@ SceneData* CinematicPlayer::addScene(immut char* dskFilePath)
 }
 
 /**
- * --INFO--
- * Address:	8007068C
- * Size:	000090
+ * @TODO: Documentation
  */
 SceneCut* CinematicPlayer::addCut(int sceneID, int startFrame, int endFrame)
 {
@@ -321,9 +311,7 @@ SceneCut* CinematicPlayer::addCut(int sceneID, int startFrame, int endFrame)
 }
 
 /**
- * --INFO--
- * Address:	8007071C
- * Size:	0000A0
+ * @TODO: Documentation
  */
 void CinematicPlayer::addActor(CineShapeObject* actor)
 {
@@ -346,9 +334,7 @@ void CinematicPlayer::addActor(immut char* modelFilePath, immut char* animFilePa
 }
 
 /**
- * --INFO--
- * Address:	800707BC
- * Size:	000138
+ * @TODO: Documentation
  */
 SceneCut* CinematicPlayer::addSceneCut()
 {
@@ -361,9 +347,7 @@ SceneCut* CinematicPlayer::addSceneCut()
 }
 
 /**
- * --INFO--
- * Address:	800708F4
- * Size:	000084
+ * @TODO: Documentation
  */
 void CinematicPlayer::skipScene(int sceneSkipFlag)
 {
@@ -379,9 +363,7 @@ void CinematicPlayer::skipScene(int sceneSkipFlag)
 }
 
 /**
- * --INFO--
- * Address:	80070978
- * Size:	000574
+ * @TODO: Documentation
  */
 BOOL CinematicPlayer::update()
 {
@@ -496,9 +478,7 @@ BOOL CinematicPlayer::update()
 }
 
 /**
- * --INFO--
- * Address:	80070EEC
- * Size:	0000C4
+ * @TODO: Documentation
  */
 void CinematicPlayer::addLights(Graphics& gfx)
 {
@@ -515,9 +495,7 @@ void CinematicPlayer::addLights(Graphics& gfx)
 }
 
 /**
- * --INFO--
- * Address:	80070FB0
- * Size:	0000A8
+ * @TODO: Documentation
  */
 void CinematicPlayer::refresh(Graphics& gfx)
 {
@@ -534,9 +512,7 @@ void CinematicPlayer::refresh(Graphics& gfx)
 }
 
 /**
- * --INFO--
- * Address:	80071058
- * Size:	000190
+ * @TODO: Documentation
  */
 ActorInstance* SceneCut::addInstance(immut char* modelFilePath)
 {
@@ -578,9 +554,7 @@ void ActorInstance::onceInit()
 }
 
 /**
- * --INFO--
- * Address:	800711E8
- * Size:	0000C4
+ * @TODO: Documentation
  */
 void ActorInstance::exitInstance()
 {
@@ -603,9 +577,7 @@ void ActorInstance::exitInstance()
 }
 
 /**
- * --INFO--
- * Address:	800712AC
- * Size:	0001BC
+ * @TODO: Documentation
  */
 void ActorInstance::initInstance()
 {
@@ -656,9 +628,7 @@ void ActorInstance::initInstance()
 }
 
 /**
- * --INFO--
- * Address:	80071468
- * Size:	000DCC
+ * @TODO: Documentation
  */
 void ActorInstance::checkEventKeys(f32 curTime, f32 prevTime, Vector3f& pos)
 {
@@ -910,9 +880,7 @@ void ActorInstance::checkEventKeys(f32 curTime, f32 prevTime, Vector3f& pos)
 }
 
 /**
- * --INFO--
- * Address:	80072234
- * Size:	000F10
+ * @TODO: Documentation
  */
 void ActorInstance::refresh(immut Matrix4f& mtx, Graphics& gfx, f32* p3)
 {

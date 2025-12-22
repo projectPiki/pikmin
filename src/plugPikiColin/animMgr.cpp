@@ -43,9 +43,7 @@ void AnimInfo::initAnimData(AnimData* data)
 }
 
 /**
- * --INFO--
- * Address:	80050024
- * Size:	0000DC
+ * @TODO: Documentation
  */
 void AnimInfo::checkAnimData()
 {
@@ -72,9 +70,7 @@ void AnimInfo::checkAnimData()
 }
 
 /**
- * --INFO--
- * Address:	80050100
- * Size:	00027C
+ * @TODO: Documentation
  */
 AnimInfo::AnimInfo(AnimMgr* mgr, AnimData* data)
     : CoreNode("")
@@ -104,9 +100,7 @@ AnimInfo::AnimInfo(AnimMgr* mgr, AnimData* data)
 }
 
 /**
- * --INFO--
- * Address:	8005037C
- * Size:	000048
+ * @TODO: Documentation
  */
 void AnimInfo::setIndex()
 {
@@ -114,9 +108,7 @@ void AnimInfo::setIndex()
 }
 
 /**
- * --INFO--
- * Address:	800503C4
- * Size:	000024
+ * @TODO: Documentation
  */
 void AnimInfo::setAnimFlags(u32 flags)
 {
@@ -125,9 +117,7 @@ void AnimInfo::setAnimFlags(u32 flags)
 }
 
 /**
- * --INFO--
- * Address:	800503E8
- * Size:	000024
+ * @TODO: Documentation
  */
 int AnimInfo::countAKeys()
 {
@@ -141,9 +131,7 @@ int AnimInfo::countAKeys()
 }
 
 /**
- * --INFO--
- * Address:	8005040C
- * Size:	000024
+ * @TODO: Documentation
  */
 int AnimInfo::countIKeys()
 {
@@ -157,9 +145,7 @@ int AnimInfo::countIKeys()
 }
 
 /**
- * --INFO--
- * Address:	80050430
- * Size:	000024
+ * @TODO: Documentation
  */
 int AnimInfo::countEKeys()
 {
@@ -173,9 +159,7 @@ int AnimInfo::countEKeys()
 }
 
 /**
- * --INFO--
- * Address:	80050454
- * Size:	000038
+ * @TODO: Documentation
  */
 AnimKey* AnimInfo::getInfoKey(int idx)
 {
@@ -191,9 +175,7 @@ AnimKey* AnimInfo::getInfoKey(int idx)
 }
 
 /**
- * --INFO--
- * Address:	8005048C
- * Size:	000038
+ * @TODO: Documentation
  */
 AnimKey* AnimInfo::getEventKey(int idx)
 {
@@ -209,9 +191,7 @@ AnimKey* AnimInfo::getEventKey(int idx)
 }
 
 /**
- * --INFO--
- * Address:	800504C4
- * Size:	000038
+ * @TODO: Documentation
  */
 int AnimInfo::getKeyValue(int idx)
 {
@@ -227,9 +207,7 @@ int AnimInfo::getKeyValue(int idx)
 }
 
 /**
- * --INFO--
- * Address:	800504FC
- * Size:	0002F8
+ * @TODO: Documentation
  */
 void AnimInfo::doread(RandomAccessStream& input, int version)
 {
@@ -290,9 +268,7 @@ void AnimInfo::doread(RandomAccessStream& input, int version)
 }
 
 /**
- * --INFO--
- * Address:	80050814
- * Size:	000010
+ * @TODO: Documentation
  */
 void AnimInfo::updateAnimFlags()
 {
@@ -300,9 +276,7 @@ void AnimInfo::updateAnimFlags()
 }
 
 /**
- * --INFO--
- * Address:	80050824
- * Size:	000080
+ * @TODO: Documentation
  */
 AnimKey* AnimInfo::addKeyFrame()
 {
@@ -313,9 +287,7 @@ AnimKey* AnimInfo::addKeyFrame()
 }
 
 /**
- * --INFO--
- * Address:	800508A4
- * Size:	000234
+ * @TODO: Documentation
  */
 AnimMgr::AnimMgr(Shape* model, immut char* animPath, int flags, immut char* bundlePath)
 {
@@ -327,9 +299,7 @@ AnimMgr::AnimMgr(Shape* model, immut char* animPath, int flags, immut char* bund
 }
 
 /**
- * --INFO--
- * Address:	80050B04
- * Size:	0001E8
+ * @TODO: Documentation
  */
 void AnimMgr::loadAnims(immut char* animPath, immut char* bundlePath)
 {
@@ -384,9 +354,7 @@ void AnimMgr::loadAnims(immut char* animPath, immut char* bundlePath)
 }
 
 /**
- * --INFO--
- * Address:	80050CEC
- * Size:	00008C
+ * @TODO: Documentation
  */
 AnimInfo* AnimMgr::addAnimation(immut char* animPath, bool isRelativePath)
 {
@@ -419,9 +387,7 @@ AnimInfo* AnimMgr::findAnim(int idx)
 }
 
 /**
- * --INFO--
- * Address:	80050D78
- * Size:	000020
+ * @TODO: Documentation
  */
 int AnimMgr::countAnims()
 {
@@ -435,9 +401,7 @@ int AnimMgr::countAnims()
 }
 
 /**
- * --INFO--
- * Address:	80050D98
- * Size:	0001D8
+ * @TODO: Documentation
  */
 void AnimMgr::read(RandomAccessStream& input)
 {
@@ -456,9 +420,7 @@ void AnimMgr::read(RandomAccessStream& input)
 }
 
 /**
- * --INFO--
- * Address:	80050F70
- * Size:	00021C
+ * @TODO: Documentation
  */
 void Animator::startAnim(int playState, int animID, int firstKeyFrameIdx, int lastKeyFrameIdx)
 {
@@ -489,18 +451,14 @@ void Animator::startAnim(int playState, int animID, int firstKeyFrameIdx, int la
 }
 
 /**
- * --INFO--
- * Address:	8005118C
- * Size:	000004
+ * @TODO: Documentation
  */
 void Animator::finishLoop()
 {
 }
 
 /**
- * --INFO--
- * Address:	80051190
- * Size:	000030
+ * @TODO: Documentation
  */
 void Animator::finishOneShot()
 {
@@ -508,9 +466,7 @@ void Animator::finishOneShot()
 }
 
 /**
- * --INFO--
- * Address:	800511C0
- * Size:	00005C
+ * @TODO: Documentation
  */
 void Animator::updateContext()
 {
@@ -522,9 +478,7 @@ void Animator::updateContext()
 }
 
 /**
- * --INFO--
- * Address:	8005121C
- * Size:	00023C
+ * @TODO: Documentation
  */
 void Animator::animate(f32 animSpeed)
 {

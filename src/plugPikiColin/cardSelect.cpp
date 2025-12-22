@@ -200,9 +200,7 @@ struct CardSelectSetupSection : public Node {
 };
 
 /**
- * --INFO--
- * Address:	8005503C
- * Size:	00023C
+ * @TODO: Documentation
  */
 CardSelectSection::CardSelectSection()
 {

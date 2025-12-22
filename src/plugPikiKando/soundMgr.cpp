@@ -399,9 +399,7 @@ SoundTableInfo soundTable[] = {
 };
 
 /**
- * --INFO--
- * Address:	800A3C5C
- * Size:	000070
+ * @TODO: Documentation
  */
 SeContext::SeContext()
 {
@@ -414,9 +412,7 @@ SeContext::SeContext()
 }
 
 /**
- * --INFO--
- * Address:	800A3CCC
- * Size:	000068
+ * @TODO: Documentation
  */
 SeContext::SeContext(Creature* obj, int eventType)
 {
@@ -429,9 +425,7 @@ SeContext::SeContext(Creature* obj, int eventType)
 }
 
 /**
- * --INFO--
- * Address:	800A3D34
- * Size:	00009C
+ * @TODO: Documentation
  */
 void SeContext::setContext(Creature* obj, int type)
 {
@@ -487,9 +481,7 @@ void SeContext::createEvent(int eventType)
 }
 
 /**
- * --INFO--
- * Address:	800A3DD0
- * Size:	0000D4
+ * @TODO: Documentation
  */
 void SeContext::playSound(int soundID)
 {
@@ -509,9 +501,7 @@ void SeContext::playSound(int soundID)
 }
 
 /**
- * --INFO--
- * Address:	800A3EA4
- * Size:	000048
+ * @TODO: Documentation
  */
 void SeContext::stopSound(int soundID)
 {
@@ -522,9 +512,7 @@ void SeContext::stopSound(int soundID)
 }
 
 /**
- * --INFO--
- * Address:	800A3EEC
- * Size:	000094
+ * @TODO: Documentation
  */
 void SeContext::update()
 {
@@ -537,9 +525,7 @@ void SeContext::update()
 }
 
 /**
- * --INFO--
- * Address:	800A3F80
- * Size:	000058
+ * @TODO: Documentation
  */
 bool SeContext::releaseEvent()
 {
@@ -568,9 +554,7 @@ void SeContext::dump()
 }
 
 /**
- * --INFO--
- * Address:	800A3FD8
- * Size:	000120
+ * @TODO: Documentation
  */
 SeSystem::SeSystem()
 {
@@ -591,9 +575,7 @@ SeSystem::SeSystem()
 }
 
 /**
- * --INFO--
- * Address:	800A410C
- * Size:	000078
+ * @TODO: Documentation
  */
 void SeSystem::initEvent()
 {
@@ -610,9 +592,7 @@ void SeSystem::initEvent()
 }
 
 /**
- * --INFO--
- * Address:	800A4184
- * Size:	000078
+ * @TODO: Documentation
  */
 void SeSystem::resetSystem()
 {
@@ -620,9 +600,7 @@ void SeSystem::resetSystem()
 }
 
 /**
- * --INFO--
- * Address:	800A41FC
- * Size:	00020C
+ * @TODO: Documentation
  */
 int SeSystem::createEvent(SeContext* context, int eventType, SVector_* soundOffset)
 {
@@ -692,9 +670,7 @@ int SeSystem::createEvent(SeContext* context, int eventType, SVector_* soundOffs
 }
 
 /**
- * --INFO--
- * Address:	800A4408
- * Size:	00002C
+ * @TODO: Documentation
  */
 void SeSystem::playPikiSound(int id, immut Vector3f& sourcePos)
 {
@@ -702,9 +678,7 @@ void SeSystem::playPikiSound(int id, immut Vector3f& sourcePos)
 }
 
 /**
- * --INFO--
- * Address:	800A4434
- * Size:	000394
+ * @TODO: Documentation
  */
 void SeSystem::playSoundDirect(int eventType, int sound, immut Vector3f& sourcePos)
 {
@@ -747,9 +721,7 @@ void SeSystem::playSoundDirect(int eventType, int sound, immut Vector3f& sourceP
 }
 
 /**
- * --INFO--
- * Address:	800A47C8
- * Size:	000108
+ * @TODO: Documentation
  */
 bool SeSystem::destroyEvent(SeContext* context, s32 handle)
 {
@@ -814,9 +786,7 @@ int SeSystem::getEvent(s32 handle)
 }
 
 /**
- * --INFO--
- * Address:	800A48D0
- * Size:	000048
+ * @TODO: Documentation
  */
 int SeSystem::getEvent(SeContext* context)
 {
@@ -830,9 +800,7 @@ int SeSystem::getEvent(SeContext* context)
 }
 
 /**
- * --INFO--
- * Address:	800A4918
- * Size:	0001B8
+ * @TODO: Documentation
  */
 void SeSystem::draw3d(Graphics& gfx)
 {
@@ -856,9 +824,7 @@ void SeSystem::draw3d(Graphics& gfx)
 }
 
 /**
- * --INFO--
- * Address:	800A4AD0
- * Size:	0002D0
+ * @TODO: Documentation
  */
 void SeSystem::draw2d(Graphics& gfx)
 {
@@ -896,9 +862,7 @@ void SeSystem::draw2d(Graphics& gfx)
 }
 
 /**
- * --INFO--
- * Address:	800A4DA0
- * Size:	0000B8
+ * @TODO: Documentation
  */
 void SeSystem::dumpEvents()
 {
@@ -922,9 +886,7 @@ void SeSystem::dumpEvents()
 }
 
 /**
- * --INFO--
- * Address:	800A4E58
- * Size:	000368
+ * @TODO: Documentation
  */
 void SeSystem::update(Graphics& gfx, immut Vector3f& listenerPos)
 {
@@ -985,9 +947,7 @@ void SeSystem::update(Graphics& gfx, immut Vector3f& listenerPos)
 }
 
 /**
- * --INFO--
- * Address:	800A51C8
- * Size:	0000FC
+ * @TODO: Documentation
  */
 void SeSystem::calcCameraPos(immut Vector3f& objectPos, Vector3f& normalisedCamDir)
 {
@@ -1007,9 +967,7 @@ void SeSystem::calcCameraPos(immut Vector3f& objectPos, Vector3f& normalisedCamD
 }
 
 /**
- * --INFO--
- * Address:	800A52C4
- * Size:	000018
+ * @TODO: Documentation
  */
 int SeSystem::getJacID(int soundID)
 {
@@ -1063,9 +1021,7 @@ bool SeSystem::isLoopType(int soundID)
 }
 
 /**
- * --INFO--
- * Address:	800A52DC
- * Size:	000098
+ * @TODO: Documentation
  */
 void SeSystem::exitCourse()
 {
@@ -1078,9 +1034,7 @@ void SeSystem::exitCourse()
 }
 
 /**
- * --INFO--
- * Address:	800A5374
- * Size:	000034
+ * @TODO: Documentation
  */
 void SeSystem::playSysSe(int soundID)
 {
@@ -1088,9 +1042,7 @@ void SeSystem::playSysSe(int soundID)
 }
 
 /**
- * --INFO--
- * Address:	800A53A8
- * Size:	000034
+ * @TODO: Documentation
  */
 void SeSystem::stopSysSe(int soundID)
 {
@@ -1098,9 +1050,7 @@ void SeSystem::stopSysSe(int soundID)
 }
 
 /**
- * --INFO--
- * Address:	800A53DC
- * Size:	000034
+ * @TODO: Documentation
  */
 void SeSystem::playPlayerSe(int soundID)
 {
@@ -1108,9 +1058,7 @@ void SeSystem::playPlayerSe(int soundID)
 }
 
 /**
- * --INFO--
- * Address:	800A5410
- * Size:	000034
+ * @TODO: Documentation
  */
 void SeSystem::stopPlayerSe(int soundID)
 {

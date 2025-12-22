@@ -465,9 +465,7 @@ static void handleTutorialWindow(u32& unused, Controller* controller)
 }
 
 /**
- * --INFO--
- * Address:	80056E84
- * Size:	000118
+ * @TODO: Documentation
  */
 BaseGameSection::BaseGameSection()
     : Node("")
@@ -484,9 +482,7 @@ BaseGameSection::BaseGameSection()
 }
 
 /**
- * --INFO--
- * Address:	80056F9C
- * Size:	000244
+ * @TODO: Documentation
  */
 void BaseGameSection::draw(Graphics& gfx)
 {
@@ -535,9 +531,7 @@ void BaseGameSection::draw(Graphics& gfx)
 }
 
 /**
- * --INFO--
- * Address:	800571E4
- * Size:	000128
+ * @TODO: Documentation
  */
 ModeState* IntroGameModeState::update(u32& result)
 {
@@ -557,9 +551,7 @@ ModeState* IntroGameModeState::update(u32& result)
 }
 
 /**
- * --INFO--
- * Address:	8005730C
- * Size:	000640
+ * @TODO: Documentation
  */
 ModeState* RunningModeState::update(u32& result)
 {
@@ -676,9 +668,7 @@ ModeState* RunningModeState::update(u32& result)
 }
 
 /**
- * --INFO--
- * Address:	80057950
- * Size:	000078
+ * @TODO: Documentation
  */
 void IntroGameModeState::postRender(Graphics& gfx)
 {
@@ -690,9 +680,7 @@ void IntroGameModeState::postRender(Graphics& gfx)
 }
 
 /**
- * --INFO--
- * Address:	800579C8
- * Size:	000294
+ * @TODO: Documentation
  */
 void RunningModeState::postRender(Graphics& gfx)
 {
@@ -736,9 +724,7 @@ void RunningModeState::postRender(Graphics& gfx)
 }
 
 /**
- * --INFO--
- * Address:	80057C5C
- * Size:	000360
+ * @TODO: Documentation
  */
 ModeState* MessageModeState::update(u32& result)
 {
@@ -807,9 +793,7 @@ ModeState* MessageModeState::update(u32& result)
 }
 
 /**
- * --INFO--
- * Address:	80057FBC
- * Size:	000474
+ * @TODO: Documentation
  */
 ModeState* DayOverModeState::update(u32& result)
 {
@@ -952,9 +936,7 @@ ModeState* DayOverModeState::update(u32& result)
 }
 
 /**
- * --INFO--
- * Address:	80058430
- * Size:	000250
+ * @TODO: Documentation
  */
 void DayOverModeState::makeTotalScoreWindow()
 {
@@ -990,9 +972,7 @@ void DayOverModeState::makeTotalScoreWindow()
 }
 
 /**
- * --INFO--
- * Address:	80058680
- * Size:	000368
+ * @TODO: Documentation
  */
 ModeState* DayOverModeState::initialisePhaseOne()
 {
@@ -1058,9 +1038,7 @@ ModeState* DayOverModeState::initialisePhaseOne()
 }
 
 /**
- * --INFO--
- * Address:	800589E8
- * Size:	000410
+ * @TODO: Documentation
  */
 ModeState* DayOverModeState::initialisePhaseTwo()
 {
@@ -1137,9 +1115,7 @@ ModeState* DayOverModeState::initialisePhaseTwo()
 }
 
 /**
- * --INFO--
- * Address:	80058DF8
- * Size:	000258
+ * @TODO: Documentation
  */
 ModeState* DayOverModeState::initialisePhaseThree()
 {
@@ -1181,9 +1157,7 @@ ModeState* DayOverModeState::initialisePhaseThree()
 }
 
 /**
- * --INFO--
- * Address:	80059050
- * Size:	00013C
+ * @TODO: Documentation
  */
 ModeState* DayOverModeState::initialisePhaseFour()
 {
@@ -1602,9 +1576,7 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 };
 
 /**
- * --INFO--
- * Address:	8005918C
- * Size:	0000C0
+ * @TODO: Documentation
  */
 void GameMovieInterface::parseMessages()
 {
@@ -1621,9 +1593,7 @@ void GameMovieInterface::parseMessages()
 }
 
 /**
- * --INFO--
- * Address:	8005924C
- * Size:	000428
+ * @TODO: Documentation
  */
 void GameMovieInterface::parse(GameMovieInterface::SimpleMessage& msg)
 {
@@ -1772,9 +1742,7 @@ void GameMovieInterface::parse(GameMovieInterface::SimpleMessage& msg)
 }
 
 /**
- * --INFO--
- * Address:	80059674
- * Size:	00004C
+ * @TODO: Documentation
  */
 void GameMovieInterface::parse(GameMovieInterface::ComplexMessage& msg)
 {
@@ -1783,9 +1751,7 @@ void GameMovieInterface::parse(GameMovieInterface::ComplexMessage& msg)
 }
 
 /**
- * --INFO--
- * Address:	800596C0
- * Size:	000724
+ * @TODO: Documentation
  */
 NewPikiGameSection::NewPikiGameSection()
 {
