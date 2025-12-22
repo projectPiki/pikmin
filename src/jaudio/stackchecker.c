@@ -1,9 +1,7 @@
 #include "jaudio/stackchecker.h"
 
-/*
- * --INFO--
- * Address:	800082C0
- * Size:	00003C
+/**
+ * @TODO: Documentation
  */
 void Jac_StackInit(void* stack, s32 size)
 {

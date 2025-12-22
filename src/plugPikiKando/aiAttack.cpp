@@ -26,10 +26,8 @@ DEFINE_ERROR(25)
  */
 DEFINE_PRINT("aiAttack")
 
-/*
- * --INFO--
- * Address:	800A82E8
- * Size:	0000C8
+/**
+ * @TODO: Documentation
  */
 ActAttack::ActAttack(Piki* piki)
     : AndAction(piki)
@@ -42,10 +40,8 @@ ActAttack::ActAttack(Piki* piki)
 	mTargetIsPlayer = false;
 }
 
-/*
- * --INFO--
- * Address:	800A8414
- * Size:	000150
+/**
+ * @TODO: Documentation
  */
 void ActAttack::init(Creature* creature)
 {
@@ -100,10 +96,8 @@ void ActAttack::startLost()
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Sagasu2, this), PaniMotionInfo(PIKIANIM_Sagasu2));
 }
 
-/*
- * --INFO--
- * Address:	800A8564
- * Size:	0000FC
+/**
+ * @TODO: Documentation
  */
 void ActAttack::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
@@ -127,20 +121,16 @@ void ActAttack::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800A8660
- * Size:	00000C
+/**
+ * @TODO: Documentation
  */
 void ActAttack::resume()
 {
 	mHasLost = false;
 }
 
-/*
- * --INFO--
- * Address:	800A866C
- * Size:	000054
+/**
+ * @TODO: Documentation
  */
 void ActAttack::restart()
 {
@@ -150,20 +140,16 @@ void ActAttack::restart()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800A86C0
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 bool ActAttack::resumable()
 {
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	800A86C8
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 Creature* ActAttack::findTarget()
 {
@@ -214,10 +200,8 @@ Creature* ActAttack::decideTarget()
 	return nullptr;
 }
 
-/*
- * --INFO--
- * Address:	800A86D0
- * Size:	00033C
+/**
+ * @TODO: Documentation
  */
 int ActAttack::exec()
 {
@@ -315,10 +299,8 @@ int ActAttack::exec()
 	return andRet;
 }
 
-/*
- * --INFO--
- * Address:	800A8A0C
- * Size:	000064
+/**
+ * @TODO: Documentation
  */
 void ActAttack::cleanup()
 {
@@ -329,10 +311,8 @@ void ActAttack::cleanup()
 	mPiki->_519 = false;
 }
 
-/*
- * --INFO--
- * Address:	800A8A70
- * Size:	000060
+/**
+ * @TODO: Documentation
  */
 ActJumpAttack::ActJumpAttack(Piki* piki)
     : Action(piki, true)
@@ -340,10 +320,8 @@ ActJumpAttack::ActJumpAttack(Piki* piki)
 	mTarget.clear(); // lol
 }
 
-/*
- * --INFO--
- * Address:	800A8AD0
- * Size:	0001CC
+/**
+ * @TODO: Documentation
  */
 void ActJumpAttack::init(Creature* creature)
 {
@@ -399,10 +377,8 @@ f32 ActJumpAttack::getAttackSize()
 	return mTarget.getPtr()->getCentreSize();
 }
 
-/*
- * --INFO--
- * Address:	800A8C9C
- * Size:	00009C
+/**
+ * @TODO: Documentation
  */
 void ActJumpAttack::procStickMsg(Piki* piki, MsgStick* msg)
 {
@@ -413,10 +389,8 @@ void ActJumpAttack::procStickMsg(Piki* piki, MsgStick* msg)
 	piki->mWantToStick = false;
 }
 
-/*
- * --INFO--
- * Address:	800A8D38
- * Size:	00001C
+/**
+ * @TODO: Documentation
  */
 void ActJumpAttack::procBounceMsg(Piki* piki, MsgBounce* msg)
 {
@@ -426,10 +400,8 @@ void ActJumpAttack::procBounceMsg(Piki* piki, MsgBounce* msg)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800A8D54
- * Size:	000268
+/**
+ * @TODO: Documentation
  */
 void ActJumpAttack::procCollideMsg(Piki* piki, MsgCollide* msg)
 {
@@ -508,10 +480,8 @@ void ActJumpAttack::procCollideMsg(Piki* piki, MsgCollide* msg)
 	STACK_PAD_VAR(2);
 }
 
-/*
- * --INFO--
- * Address:	800A8FBC
- * Size:	000E6C
+/**
+ * @TODO: Documentation
  */
 int ActJumpAttack::exec()
 {
@@ -733,10 +703,8 @@ int ActJumpAttack::exec()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800A9E28
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 void ActJumpAttack::cleanup()
 {
@@ -744,20 +712,16 @@ void ActJumpAttack::cleanup()
 	mPiki->mWantToStick = false;
 }
 
-/*
- * --INFO--
- * Address:	800A9E74
- * Size:	00002C
+/**
+ * @TODO: Documentation
  */
 void ActJumpAttack::attackHit()
 {
 	mPiki->playEventSound(mTarget.getPtr(), 25);
 }
 
-/*
- * --INFO--
- * Address:	800A9EA0
- * Size:	00012C
+/**
+ * @TODO: Documentation
  */
 void ActJumpAttack::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
@@ -788,10 +752,8 @@ void ActJumpAttack::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800A9FCC
- * Size:	000458
+/**
+ * @TODO: Documentation
  */
 void ActJumpAttack::doClimb()
 {

@@ -85,10 +85,8 @@ static const EffectMgr::effTypeTable unusedEffects[3] = {
  */
 DEFINE_PRINT("ufoItem")
 
-/*
- * --INFO--
- * Address:	800E7018
- * Size:	0000B4
+/**
+ * @TODO: Documentation
  */
 bool UfoItem::insideSafeArea(immut Vector3f& pos)
 {
@@ -107,10 +105,8 @@ bool UfoItem::insideSafeArea(immut Vector3f& pos)
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	800E70CC
- * Size:	000124
+/**
+ * @TODO: Documentation
  */
 void UfoItem::setSpotTurn(bool set)
 {
@@ -133,10 +129,8 @@ void UfoItem::setSpotTurn(bool set)
 	mShouldLightActivate = set;
 }
 
-/*
- * --INFO--
- * Address:	800E71F0
- * Size:	00014C
+/**
+ * @TODO: Documentation
  */
 void UfoItem::setSpotActive(bool set)
 {
@@ -172,10 +166,8 @@ void UfoItem::setSpotActive(bool set)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800E733C
- * Size:	0000B8
+/**
+ * @TODO: Documentation
  */
 void UfoItem::setTroubleEffect(bool set)
 {
@@ -197,10 +189,8 @@ void UfoItem::setTroubleEffect(bool set)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800E73F4
- * Size:	0000D4
+/**
+ * @TODO: Documentation
  */
 void UfoItem::startTroubleEffectOne(int id)
 {
@@ -214,10 +204,8 @@ void UfoItem::startTroubleEffectOne(int id)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800E74C8
- * Size:	00024C
+/**
+ * @TODO: Documentation
  */
 void UfoItem::updateTroubleEffect()
 {
@@ -248,10 +236,8 @@ void UfoItem::updateTroubleEffect()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800E7714
- * Size:	00012C
+/**
+ * @TODO: Documentation
  */
 void UfoItem::startConeEffect(int)
 {
@@ -265,10 +251,8 @@ void UfoItem::startConeEffect(int)
 	PRINT("*** UFO FUTA OPEN !!!!!!!!!!!!!!________________________________\n");
 }
 
-/*
- * --INFO--
- * Address:	800E7840
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 void UfoItem::finishConeEffect()
 {
@@ -286,10 +270,8 @@ void UfoItem::initLevelFlag(int level)
 	mAnimator.initFlagMotions(level);
 }
 
-/*
- * --INFO--
- * Address:	800E7864
- * Size:	000158
+/**
+ * @TODO: Documentation
  */
 void UfoItem::startLevelFlag(int flag)
 {
@@ -309,10 +291,8 @@ void UfoItem::startLevelFlag(int flag)
 	mAnimator.startFlagMotions(flag);
 }
 
-/*
- * --INFO--
- * Address:	800E79BC
- * Size:	000078
+/**
+ * @TODO: Documentation
  */
 void UfoItem::lightLevelFlag(int flag)
 {
@@ -329,10 +309,8 @@ void UfoItem::lightLevelFlag(int flag)
 	FORCE_DONT_INLINE;
 }
 
-/*
- * --INFO--
- * Address:	800E7A34
- * Size:	000390
+/**
+ * @TODO: Documentation
  */
 void UfoItem::setJetEffect(int level, bool doSmokeEffects)
 {
@@ -423,10 +401,8 @@ void UfoItem::setJetEffect(int level, bool doSmokeEffects)
 	mJetLevel = 0;
 }
 
-/*
- * --INFO--
- * Address:	800E7DC4
- * Size:	00001C
+/**
+ * @TODO: Documentation
  */
 UfoItem::LightAnimator::LightAnimator()
 {
@@ -436,10 +412,8 @@ UfoItem::LightAnimator::LightAnimator()
 	mType  = 0;
 }
 
-/*
- * --INFO--
- * Address:	800E7DE0
- * Size:	000058
+/**
+ * @TODO: Documentation
  */
 void UfoItem::LightAnimator::start(int id)
 {
@@ -475,10 +449,8 @@ void UfoItem::LightAnimator::update()
 	mDyn->animate(&mFrame);
 }
 
-/*
- * --INFO--
- * Address:	800E7E38
- * Size:	000064
+/**
+ * @TODO: Documentation
  */
 Vector3f UfoItem::getGoalPos()
 {
@@ -486,10 +458,8 @@ Vector3f UfoItem::getGoalPos()
 	return mCollInfo->getSphere('gol1')->mCentre;
 }
 
-/*
- * --INFO--
- * Address:	800E7E9C
- * Size:	000044
+/**
+ * @TODO: Documentation
  */
 f32 UfoItem::getGoalPosRadius()
 {
@@ -497,10 +467,8 @@ f32 UfoItem::getGoalPosRadius()
 	return mCollInfo->getSphere('gol1')->mRadius;
 }
 
-/*
- * --INFO--
- * Address:	800E7EE0
- * Size:	000084
+/**
+ * @TODO: Documentation
  */
 Vector3f UfoItem::getSuckPos()
 {
@@ -511,10 +479,8 @@ Vector3f UfoItem::getSuckPos()
 	return mCollInfo->getSphere(tag)->mCentre;
 }
 
-/*
- * --INFO--
- * Address:	800E7F64
- * Size:	0000BC
+/**
+ * @TODO: Documentation
  */
 void UfoItem::suckMe(Pellet* pelt)
 {
@@ -530,10 +496,8 @@ void UfoItem::suckMe(Pellet* pelt)
 	playEventSound(this, SE_UFO_PARTSIN);
 }
 
-/*
- * --INFO--
- * Address:	800E8020
- * Size:	0000AC
+/**
+ * @TODO: Documentation
  */
 void UfoItem::startYozora()
 {
@@ -547,10 +511,8 @@ void UfoItem::startYozora()
 	PRINT("** START YOZORA\n");
 }
 
-/*
- * --INFO--
- * Address:	800E80CC
- * Size:	0000AC
+/**
+ * @TODO: Documentation
  */
 void UfoItem::startGalaxy()
 {
@@ -563,10 +525,8 @@ void UfoItem::startGalaxy()
 	PRINT("** START GALAXY\n");
 }
 
-/*
- * --INFO--
- * Address:	800E8178
- * Size:	000130
+/**
+ * @TODO: Documentation
  */
 void UfoItem::finishSuck(Pellet* pelt)
 {
@@ -588,10 +548,8 @@ void UfoItem::finishSuck(Pellet* pelt)
 	mAnimator.setMotionSpeed(0, 30.0f);
 }
 
-/*
- * --INFO--
- * Address:	800E82A8
- * Size:	000454
+/**
+ * @TODO: Documentation
  */
 void UfoItem::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
@@ -710,20 +668,16 @@ void UfoItem::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800E86FC
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 bool UfoItem::needShadow()
 {
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800E8704
- * Size:	0001F4
+/**
+ * @TODO: Documentation
  */
 UfoItem::UfoItem(CreatureProp* prop, UfoShapeObject* shape)
     : Suckable(OBJTYPE_Ufo, prop)
@@ -756,20 +710,16 @@ UfoItem::UfoItem(CreatureProp* prop, UfoShapeObject* shape)
 	mDynMat             = mat;
 }
 
-/*
- * --INFO--
- * Address:	800E890C
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 bool UfoItem::ignoreAtari(Creature*)
 {
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800E8914
- * Size:	0000C0
+/**
+ * @TODO: Documentation
  */
 void UfoItem::startTakeoff()
 {
@@ -784,10 +734,8 @@ void UfoItem::startTakeoff()
 	playerState->startSpecialMotions();
 }
 
-/*
- * --INFO--
- * Address:	800E89D4
- * Size:	0002BC
+/**
+ * @TODO: Documentation
  */
 void UfoItem::startAI(int)
 {
@@ -853,30 +801,24 @@ void UfoItem::startAI(int)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800E8C90
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 f32 UfoItem::getSize()
 {
 	return 10.0f;
 }
 
-/*
- * --INFO--
- * Address:	800E8C98
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 f32 UfoItem::getiMass()
 {
 	return 0.0f;
 }
 
-/*
- * --INFO--
- * Address:	800E8CA0
- * Size:	0000B0
+/**
+ * @TODO: Documentation
  */
 bool UfoItem::accessible()
 {
@@ -893,10 +835,8 @@ bool UfoItem::accessible()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800E8D50
- * Size:	000170
+/**
+ * @TODO: Documentation
  */
 void UfoItem::startAccess()
 {
@@ -907,10 +847,8 @@ void UfoItem::startAccess()
 	mAnimator.setMotionSpeed(0, 30.0f);
 }
 
-/*
- * --INFO--
- * Address:	800E8EC0
- * Size:	000048
+/**
+ * @TODO: Documentation
  */
 void UfoItem::finishAccess()
 {
@@ -919,10 +857,8 @@ void UfoItem::finishAccess()
 	mAnimator.setMotionSpeed(0, 30.0f);
 }
 
-/*
- * --INFO--
- * Address:	800E8F08
- * Size:	00006C
+/**
+ * @TODO: Documentation
  */
 void UfoItem::update()
 {
@@ -933,10 +869,8 @@ void UfoItem::update()
 	mSRT.t = mSpotlightPosition;
 }
 
-/*
- * --INFO--
- * Address:	800E8F74
- * Size:	000118
+/**
+ * @TODO: Documentation
  */
 void UfoItem::setPca1Effect(bool set)
 {
@@ -955,10 +889,8 @@ void UfoItem::setPca1Effect(bool set)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800E908C
- * Size:	000118
+/**
+ * @TODO: Documentation
  */
 void UfoItem::setPca2Effect(bool set)
 {
@@ -977,10 +909,8 @@ void UfoItem::setPca2Effect(bool set)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800E91A4
- * Size:	0000E4
+/**
+ * @TODO: Documentation
  */
 void UfoItem::refresh(Graphics& gfx)
 {
@@ -998,10 +928,8 @@ void UfoItem::refresh(Graphics& gfx)
 	demoDraw(gfx, &mtx);
 }
 
-/*
- * --INFO--
- * Address:	800E9288
- * Size:	000504
+/**
+ * @TODO: Documentation
  */
 void UfoItem::demoDraw(Graphics& gfx, immut Matrix4f* mtx)
 {

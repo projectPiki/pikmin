@@ -22,10 +22,8 @@ DEFINE_PRINT("GeneratorCache");
 
 GeneratorCache* generatorCache;
 
-/*
- * --INFO--
- * Address:	800DED68
- * Size:	000130
+/**
+ * @TODO: Documentation
  */
 GeneratorCache::GeneratorCache()
 {
@@ -38,10 +36,8 @@ GeneratorCache::GeneratorCache()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800DEE98
- * Size:	000018
+/**
+ * @TODO: Documentation
  */
 void GeneratorCache::init(u8* heap, int size)
 {
@@ -51,10 +47,8 @@ void GeneratorCache::init(u8* heap, int size)
 	mFreeSize       = size;
 }
 
-/*
- * --INFO--
- * Address:	800DEEB0
- * Size:	0000B8
+/**
+ * @TODO: Documentation
  */
 void GeneratorCache::initGame()
 {
@@ -86,10 +80,8 @@ void GeneratorCache::initGame()
 	PRINT("*********** INIT GAME CALLED !!!!!!!!!!!!!!!!!\n");
 }
 
-/*
- * --INFO--
- * Address:	800DEF68
- * Size:	0000F4
+/**
+ * @TODO: Documentation
  */
 void GeneratorCache::addOne(u32 stageIdx)
 {
@@ -99,10 +91,8 @@ void GeneratorCache::addOne(u32 stageIdx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800DF05C
- * Size:	000134
+/**
+ * @TODO: Documentation
  */
 void GeneratorCache::saveCard(RandomAccessStream& output)
 {
@@ -135,10 +125,8 @@ void GeneratorCache::saveCard(RandomAccessStream& output)
 	PRINT("*** SAVE CARD (%d alives %d deads) \n", aliveCount, deadCount);
 }
 
-/*
- * --INFO--
- * Address:	800DF190
- * Size:	00023C
+/**
+ * @TODO: Documentation
  */
 void GeneratorCache::loadCard(RandomAccessStream& input)
 {
@@ -204,10 +192,8 @@ void GeneratorCache::loadCard(RandomAccessStream& input)
 	assertValid();
 }
 
-/*
- * --INFO--
- * Address:	800DF3CC
- * Size:	00010C
+/**
+ * @TODO: Documentation
  */
 void GeneratorCache::Cache::saveCard(RandomAccessStream& output)
 {
@@ -222,10 +208,8 @@ void GeneratorCache::Cache::saveCard(RandomAccessStream& output)
 	output.writeInt(mUfoPartsCount);
 }
 
-/*
- * --INFO--
- * Address:	800DF4D8
- * Size:	00010C
+/**
+ * @TODO: Documentation
  */
 void GeneratorCache::Cache::loadCard(RandomAccessStream& input)
 {
@@ -240,10 +224,8 @@ void GeneratorCache::Cache::loadCard(RandomAccessStream& input)
 	mUfoPartsCount     = input.readInt();
 }
 
-/*
- * --INFO--
- * Address:	800DF5E4
- * Size:	000028
+/**
+ * @TODO: Documentation
  */
 GeneratorCache::Cache* GeneratorCache::findCache(GeneratorCache::Cache& list, u32 stageIdx)
 {
@@ -257,10 +239,8 @@ GeneratorCache::Cache* GeneratorCache::findCache(GeneratorCache::Cache& list, u3
 	return nullptr;
 }
 
-/*
- * --INFO--
- * Address:	800DF60C
- * Size:	000160
+/**
+ * @TODO: Documentation
  */
 void GeneratorCache::preload(u32 stageIdx)
 {
@@ -300,10 +280,8 @@ void GeneratorCache::preload(u32 stageIdx)
 	STACK_PAD_VAR(2); // idk, this has all the inlines in the map - probably some extra temp variable usage.
 }
 
-/*
- * --INFO--
- * Address:	800DF76C
- * Size:	000128
+/**
+ * @TODO: Documentation
  */
 bool GeneratorCache::hasUfoParts(u32 stageIdx, u32 ufoPartIdx)
 {
@@ -331,10 +309,8 @@ bool GeneratorCache::hasUfoParts(u32 stageIdx, u32 ufoPartIdx)
 	STACK_PAD_VAR(2);
 }
 
-/*
- * --INFO--
- * Address:	800DF894
- * Size:	00019C
+/**
+ * @TODO: Documentation
  */
 void GeneratorCache::load(u32 stageIdx)
 {
@@ -396,10 +372,8 @@ void GeneratorCache::load(u32 stageIdx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800DFA30
- * Size:	000090
+/**
+ * @TODO: Documentation
  */
 void GeneratorCache::beginSave(u32 stageIdx)
 {
@@ -426,10 +400,8 @@ void GeneratorCache::beginSave(u32 stageIdx)
 	mCurrentSaveCacheIdx      = stageIdx;
 }
 
-/*
- * --INFO--
- * Address:	800DFAC0
- * Size:	000080
+/**
+ * @TODO: Documentation
  */
 void GeneratorCache::endSave()
 {
@@ -443,10 +415,8 @@ void GeneratorCache::endSave()
 	assertValid();
 }
 
-/*
- * --INFO--
- * Address:	800DFB40
- * Size:	000160
+/**
+ * @TODO: Documentation
  */
 void GeneratorCache::saveGenerator(Generator* gen)
 {
@@ -485,10 +455,8 @@ void GeneratorCache::saveGenerator(Generator* gen)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800DFCA0
- * Size:	000118
+/**
+ * @TODO: Documentation
  */
 void GeneratorCache::prepareUfoParts(GeneratorCache::Cache* cache)
 {
@@ -520,10 +488,8 @@ void GeneratorCache::prepareUfoParts(GeneratorCache::Cache* cache)
 	STACK_PAD_VAR(2);
 }
 
-/*
- * --INFO--
- * Address:	800DFDB8
- * Size:	00011C
+/**
+ * @TODO: Documentation
  */
 void GeneratorCache::loadUfoParts(GeneratorCache::Cache* cache)
 {
@@ -548,10 +514,8 @@ void GeneratorCache::loadUfoParts(GeneratorCache::Cache* cache)
 	STACK_PAD_VAR(1);
 }
 
-/*
- * --INFO--
- * Address:	800DFED4
- * Size:	000124
+/**
+ * @TODO: Documentation
  */
 void GeneratorCache::saveUfoParts(Pellet* part)
 {
@@ -579,10 +543,8 @@ void GeneratorCache::saveUfoParts(Pellet* part)
 	cache->mUfoPartsCacheSize += pos;
 }
 
-/*
- * --INFO--
- * Address:	800DFFF8
- * Size:	000168
+/**
+ * @TODO: Documentation
  */
 void GeneratorCache::saveGeneratorCreature(Generator* gen)
 {
@@ -640,10 +602,8 @@ void GeneratorCache::Cache::dump()
 	PRINT("\tufo parts  = %d size = %d\n", mUfoPartsCount, mUfoPartsCacheSize);
 }
 
-/*
- * --INFO--
- * Address:	800E0160
- * Size:	00005C
+/**
+ * @TODO: Documentation
  */
 void GeneratorCache::dump()
 {
@@ -664,10 +624,8 @@ void GeneratorCache::dump()
 	FORCE_DONT_INLINE;
 }
 
-/*
- * --INFO--
- * Address:	800E01BC
- * Size:	00006C
+/**
+ * @TODO: Documentation
  */
 void GeneratorCache::assertValid()
 {

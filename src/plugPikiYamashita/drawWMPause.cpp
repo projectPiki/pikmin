@@ -20,10 +20,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("drawWMPause")
 
-/*
- * --INFO--
- * Address:	801E9CF8
- * Size:	0000A8
+/**
+ * @TODO: Documentation
  */
 zen::DrawWMPause::DrawWMPause()
 {
@@ -35,10 +33,8 @@ zen::DrawWMPause::DrawWMPause()
 	mReturnFlag = RETURN_NULL;
 }
 
-/*
- * --INFO--
- * Address:	801E9DA0
- * Size:	000060
+/**
+ * @TODO: Documentation
  */
 void zen::DrawWMPause::start()
 {
@@ -49,10 +45,8 @@ void zen::DrawWMPause::start()
 	SeSystem::playSysSe(SYSSE_PAUSE);
 }
 
-/*
- * --INFO--
- * Address:	801E9E00
- * Size:	00017C
+/**
+ * @TODO: Documentation
  */
 zen::DrawWMPause::returnStatusFlag zen::DrawWMPause::update(Controller* controller)
 {
@@ -84,10 +78,8 @@ zen::DrawWMPause::returnStatusFlag zen::DrawWMPause::update(Controller* controll
 	return mReturnFlag;
 }
 
-/*
- * --INFO--
- * Address:	801E9F7C
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 void zen::DrawWMPause::draw(Graphics& gfx)
 {

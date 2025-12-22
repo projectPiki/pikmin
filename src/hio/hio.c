@@ -7,20 +7,16 @@ static HIOCallback ExiCallback;
 static HIOCallback TxCallback;
 static HIOCallback RxCallback;
 
-/*
- * --INFO--
- * Address:	8020D388
- * Size:	00000C
+/**
+ * @TODO: Documentation
  */
 static void ExtHandler(s32 chan, OSContext* context)
 {
 	Chan = -1;
 }
 
-/*
- * --INFO--
- * Address:	8020D394
- * Size:	000030
+/**
+ * @TODO: Documentation
  */
 static void ExiHandler(s32 chan, OSContext* context)
 {
@@ -29,10 +25,8 @@ static void ExiHandler(s32 chan, OSContext* context)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8020D3C4
- * Size:	00003C
+/**
+ * @TODO: Documentation
  */
 static void DbgHandler(__OSInterrupt interrupt, OSContext* context)
 {
@@ -62,10 +56,8 @@ static void RxHandler(s32 chan, OSContext* context)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8020D400
- * Size:	0001C4
+/**
+ * @TODO: Documentation
  */
 BOOL HIOEnumDevices(HIOEnumCallback callback)
 {
@@ -117,10 +109,8 @@ BOOL HIOEnumDevices(HIOEnumCallback callback)
 	return FALSE;
 }
 
-/*
- * --INFO--
- * Address:	8020D5C4
- * Size:	000234
+/**
+ * @TODO: Documentation
  */
 BOOL HIOInit(s32 chan, HIOCallback callback)
 {
@@ -187,10 +177,8 @@ BOOL HIOInit(s32 chan, HIOCallback callback)
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	8020D7F8
- * Size:	000130
+/**
+ * @TODO: Documentation
  */
 BOOL HIOReadMailbox(u32* word)
 {
@@ -219,10 +207,8 @@ BOOL HIOReadMailbox(u32* word)
 	return !err;
 }
 
-/*
- * --INFO--
- * Address:	8020D928
- * Size:	0000F4
+/**
+ * @TODO: Documentation
  */
 BOOL HIOWriteMailbox(u32 word)
 {
@@ -258,10 +244,8 @@ BOOL HIORead(u32 addr, void* buffer, s32 size)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8020DA1C
- * Size:	000144
+/**
+ * @TODO: Documentation
  */
 BOOL HIOWrite(u32 addr, void* buffer, s32 size)
 {

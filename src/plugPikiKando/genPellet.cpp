@@ -31,30 +31,24 @@ GenObjectPellet::GenObjectPellet()
 	mIndex = 0;
 }
 
-/*
- * --INFO--
- * Address:	80099D1C
- * Size:	000080
+/**
+ * @TODO: Documentation
  */
 static GenObject* makeObjectPellet()
 {
 	return new GenObjectPellet();
 }
 
-/*
- * --INFO--
- * Address:	80099D9C
- * Size:	00008C
+/**
+ * @TODO: Documentation
  */
 void GenObjectPellet::initialise()
 {
 	GenObjectFactory::factory->registerMember('pelt', makeObjectPellet, "ペレットをうむ", 'v0.0');
 }
 
-/*
- * --INFO--
- * Address:	80099E28
- * Size:	000054
+/**
+ * @TODO: Documentation
  */
 void GenObjectPellet::doRead(RandomAccessStream& stream)
 {
@@ -65,10 +59,8 @@ void GenObjectPellet::doRead(RandomAccessStream& stream)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80099E7C
- * Size:	000070
+/**
+ * @TODO: Documentation
  */
 void GenObjectPellet::doWrite(RandomAccessStream& stream)
 {
@@ -78,10 +70,8 @@ void GenObjectPellet::doWrite(RandomAccessStream& stream)
 	mPelletId.print();
 }
 
-/*
- * --INFO--
- * Address:	80099EEC
- * Size:	000040
+/**
+ * @TODO: Documentation
  */
 void GenObjectPellet::updateUseList(Generator*, int)
 {
@@ -91,10 +81,8 @@ void GenObjectPellet::updateUseList(Generator*, int)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80099F2C
- * Size:	000100
+/**
+ * @TODO: Documentation
  */
 Creature* GenObjectPellet::birth(BirthInfo& info)
 {

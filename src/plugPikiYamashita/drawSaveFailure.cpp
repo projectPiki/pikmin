@@ -20,10 +20,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("drawSaveFailure")
 
-/*
- * --INFO--
- * Address:	801F3560
- * Size:	0000F4
+/**
+ * @TODO: Documentation
  */
 zen::DrawSaveFailure::DrawSaveFailure()
 {
@@ -35,10 +33,8 @@ zen::DrawSaveFailure::DrawSaveFailure()
 	setMode(MODE_Unk0);
 }
 
-/*
- * --INFO--
- * Address:	801F3654
- * Size:	0001F0
+/**
+ * @TODO: Documentation
  */
 bool zen::DrawSaveFailure::update(Controller* controller)
 {
@@ -82,10 +78,8 @@ bool zen::DrawSaveFailure::update(Controller* controller)
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	801F3844
- * Size:	00003C
+/**
+ * @TODO: Documentation
  */
 void zen::DrawSaveFailure::draw(Graphics&)
 {
@@ -94,10 +88,8 @@ void zen::DrawSaveFailure::draw(Graphics&)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801F3880
- * Size:	000054
+/**
+ * @TODO: Documentation
  */
 void zen::DrawSaveFailure::open(f32 p1)
 {
@@ -107,10 +99,8 @@ void zen::DrawSaveFailure::open(f32 p1)
 	mSaveFailScreen->makeResident();
 }
 
-/*
- * --INFO--
- * Address:	801F38D4
- * Size:	000098
+/**
+ * @TODO: Documentation
  */
 void zen::DrawSaveFailure::setMode(zen::DrawSaveFailure::modeFlag mode)
 {
@@ -138,10 +128,8 @@ void zen::DrawSaveFailure::setMode(zen::DrawSaveFailure::modeFlag mode)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801F396C
- * Size:	000034
+/**
+ * @TODO: Documentation
  */
 f32 zen::DrawSaveFailure::calcFrame(f32 max)
 {
@@ -154,10 +142,8 @@ f32 zen::DrawSaveFailure::calcFrame(f32 max)
 	return _08 / max;
 }
 
-/*
- * --INFO--
- * Address:	801F39A0
- * Size:	000098
+/**
+ * @TODO: Documentation
  */
 void zen::DrawSaveFailure::init()
 {

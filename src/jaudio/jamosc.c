@@ -46,20 +46,16 @@ void Osc_Update_Param(seqp_* track, u8 id, f32 val)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80014D40
- * Size:	00003C
+/**
+ * @TODO: Documentation
  */
 void Osc_Setup_Vibrato(seqp_* track, u8 id)
 {
 	track->oscillators[id] = VIBRATO_DEF;
 }
 
-/*
- * --INFO--
- * Address:	80014D80
- * Size:	00003C
+/**
+ * @TODO: Documentation
  */
 void Osc_Setup_Tremolo(seqp_* track, u8 id)
 {
@@ -87,10 +83,8 @@ void Osc_Setup_Simple(seqp_* track, u8 id)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80014E40
- * Size:	000010
+/**
+ * @TODO: Documentation
  */
 void Osc_Clear_Overwrite(seqp_* track)
 {
@@ -98,10 +92,8 @@ void Osc_Clear_Overwrite(seqp_* track)
 	track->oscillatorRouting[1] = 15;
 }
 
-/*
- * --INFO--
- * Address:	80014E60
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 void Osc_Init_Env(seqp_* track)
 {
@@ -110,10 +102,8 @@ void Osc_Init_Env(seqp_* track)
 	Osc_Clear_Overwrite(track);
 }
 
-/*
- * --INFO--
- * Address:	80014EC0
- * Size:	000094
+/**
+ * @TODO: Documentation
  */
 void Osc_Setup_SimpleEnv(seqp_* track, u8 id, u32 val)
 {
@@ -130,10 +120,8 @@ void Osc_Setup_SimpleEnv(seqp_* track, u8 id, u32 val)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80014F60
- * Size:	0000B0
+/**
+ * @TODO: Documentation
  */
 void Osc_Setup_ADSR(seqp_* track, s16* addr)
 {
@@ -157,10 +145,8 @@ void Osc_Setup_ADSR(seqp_* track, s16* addr)
 	track->relTable[1] = addr[4];
 }
 
-/*
- * --INFO--
- * Address:	80015020
- * Size:	00010C
+/**
+ * @TODO: Documentation
  */
 void Osc_Setup_Full(seqp_* track, u8 flag, u32 offs1, u32 offs2)
 {

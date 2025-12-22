@@ -59,10 +59,8 @@ struct TaiIwagonRollingAction : public TaiAction {
 	// TODO: members
 };
 
-/*
- * --INFO--
- * Address:	8012E6C8
- * Size:	000108
+/**
+ * @TODO: Documentation
  */
 TaiIwagonParameters::TaiIwagonParameters()
     : TekiParameters(TPI_COUNT, TPF_COUNT)
@@ -84,10 +82,8 @@ TaiIwagonParameters::TaiIwagonParameters()
 	multiP->setF(TPF_CollisionRadius, 24.0f);
 }
 
-/*
- * --INFO--
- * Address:	8012E7D0
- * Size:	000084
+/**
+ * @TODO: Documentation
  */
 TaiIwagonSoundTable::TaiIwagonSoundTable()
     : PaniSoundTable(2)
@@ -97,10 +93,8 @@ TaiIwagonSoundTable::TaiIwagonSoundTable()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8012E854
- * Size:	0004C0
+/**
+ * @TODO: Documentation
  */
 TaiIwagonStrategy::TaiIwagonStrategy(TekiParameters* params)
     : TaiStrategy(IWAGONSTATE_COUNT, IWAGONSTATE_Roll)
@@ -149,10 +143,8 @@ TaiIwagonStrategy::TaiIwagonStrategy(TekiParameters* params)
 	setState(IWAGONSTATE_Roll, state);
 }
 
-/*
- * --INFO--
- * Address:	8012ED14
- * Size:	000114
+/**
+ * @TODO: Documentation
  */
 void TaiIwagonStrategy::start(Teki& teki)
 {
@@ -173,10 +165,8 @@ void TaiIwagonStrategy::start(Teki& teki)
 	teki.clearTekiOption(BTeki::TEKI_OPTION_LIFE_GAUGE_VISIBLE);
 }
 
-/*
- * --INFO--
- * Address:	8012EE28
- * Size:	000070
+/**
+ * @TODO: Documentation
  */
 bool TaiIwagonDustEffectAction::act(Teki& teki)
 {
@@ -193,20 +183,16 @@ bool TaiIwagonDustEffectAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8012EE98
- * Size:	00001C
+/**
+ * @TODO: Documentation
  */
 void TaiIwagonRollingAction::start(Teki& teki)
 {
 	teki.mActionVelocity.input(teki.mVelocity);
 }
 
-/*
- * --INFO--
- * Address:	8012EEB4
- * Size:	000020
+/**
+ * @TODO: Documentation
  */
 bool TaiIwagonRollingAction::act(Teki& teki)
 {
@@ -231,10 +217,8 @@ struct TaiIwagenShootingAction : public TaiAction {
 	// TODO: members
 };
 
-/*
- * --INFO--
- * Address:	8012EED4
- * Size:	000118
+/**
+ * @TODO: Documentation
  */
 TaiIwagenParameters::TaiIwagenParameters()
     : TekiParameters(TPI_COUNT, IWAGENPF_COUNT)
@@ -258,10 +242,8 @@ TaiIwagenParameters::TaiIwagenParameters()
 	STACK_PAD_VAR(1);
 }
 
-/*
- * --INFO--
- * Address:	8012EFEC
- * Size:	000210
+/**
+ * @TODO: Documentation
  */
 TaiIwagenStrategy::TaiIwagenStrategy(TekiParameters* params)
     : TaiStrategy(IWAGENSTATE_COUNT, IWAGENSTATE_Wait)
@@ -293,10 +275,8 @@ TaiIwagenStrategy::TaiIwagenStrategy(TekiParameters* params)
 	setState(IWAGENSTATE_Reset, state);
 }
 
-/*
- * --INFO--
- * Address:	8012F1FC
- * Size:	00007C
+/**
+ * @TODO: Documentation
  */
 void TaiIwagenStrategy::draw(Teki& teki, Graphics& gfx)
 {
@@ -309,10 +289,8 @@ void TaiIwagenStrategy::draw(Teki& teki, Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8012F278
- * Size:	000044
+/**
+ * @TODO: Documentation
  */
 void TaiIwagenStrategy::start(Teki& teki)
 {
@@ -320,20 +298,16 @@ void TaiIwagenStrategy::start(Teki& teki)
 	teki.clearTekiOption(BTeki::TEKI_OPTION_ORGANIC);
 }
 
-/*
- * --INFO--
- * Address:	8012F2BC
- * Size:	000078
+/**
+ * @TODO: Documentation
  */
 void TaiIwagenShootingAction::start(Teki& teki)
 {
 	teki.stopMove();
 }
 
-/*
- * --INFO--
- * Address:	8012F334
- * Size:	000198
+/**
+ * @TODO: Documentation
  */
 bool TaiIwagenShootingAction::act(Teki& teki)
 {

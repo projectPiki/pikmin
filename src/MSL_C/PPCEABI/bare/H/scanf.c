@@ -31,10 +31,8 @@ typedef struct {
 #define set_char_map(map, ch) map[(u8)ch >> 3] |= (1 << (ch & 7))
 #define tst_char_map(map, ch) (map[(u8)ch >> 3] & (1 << (ch & 7)))
 
-/*
- * --INFO--
- * Address:	80218B84
- * Size:	000564
+/**
+ * @TODO: Documentation
  */
 static const char* parse_format(const char* format_string, scan_format* format)
 {
@@ -240,10 +238,8 @@ static const char* parse_format(const char* format_string, scan_format* format)
 	return ((const char*)s + 1);
 }
 
-/*
- * --INFO--
- * Address:	802181E0
- * Size:	0009A4
+/**
+ * @TODO: Documentation
  */
 static int __sformatter(int (*ReadProc)(void*, int, int), void* ReadProcArg, const char* format_str, va_list arg)
 {
@@ -583,10 +579,8 @@ exit:
 	return items_assigned;
 }
 
-/*
- * --INFO--
- * Address:	80218150
- * Size:	000090
+/**
+ * @TODO: Documentation
  */
 int __StringRead(void* pPtr, int ch, int act)
 {
@@ -659,10 +653,8 @@ int __vsscanf(const char* s, const char* format, va_list arg)
 	return __sformatter(&__StringRead, (void*)&isc, format, arg);
 }
 
-/*
- * --INFO--
- * Address:	80218094
- * Size:	0000BC
+/**
+ * @TODO: Documentation
  */
 int sscanf(const char* s, const char* pFormat, ...)
 {

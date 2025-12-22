@@ -5,10 +5,8 @@
 BOOL DBVerbose;
 DBInterface* __DBInterface;
 
-/*
- * --INFO--
- * Address:	801FDAA8
- * Size:	000028
+/**
+ * @TODO: Documentation
  */
 void DBInit(void)
 {
@@ -27,10 +25,8 @@ void DBIsDebuggerPresent(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801FDAD0
- * Size:	000048
+/**
+ * @TODO: Documentation
  */
 void __DBExceptionDestinationAux(void)
 {
@@ -41,10 +37,8 @@ void __DBExceptionDestinationAux(void)
 	PPCHalt();
 }
 
-/*
- * --INFO--
- * Address:	801FDB18
- * Size:	000010
+/**
+ * @TODO: Documentation
  */
 #ifdef __MWERKS__ // clang-format off
 ASM void __DBExceptionDestination(void)
@@ -65,10 +59,8 @@ void __DBExceptionDestination(void)
 }
 #endif
 
-/*
- * --INFO--
- * Address:	801FDB28
- * Size:	00001C
+/**
+ * @TODO: Documentation
  */
 int __DBIsExceptionMarked(u8 a)
 {
@@ -95,10 +87,8 @@ void __DBSetPresent(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801FDB44
- * Size:	000050
+/**
+ * @TODO: Documentation
  */
 void DBPrintf(const char*, ...)
 {

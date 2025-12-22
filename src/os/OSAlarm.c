@@ -35,10 +35,8 @@ static void SetTimer(OSAlarm* alarm)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801F60C0
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 void OSInitAlarm(void)
 {
@@ -48,20 +46,16 @@ void OSInitAlarm(void)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801F610C
- * Size:	00000C
+/**
+ * @TODO: Documentation
  */
 void OSCreateAlarm(OSAlarm* alarm)
 {
 	alarm->handler = NULL;
 }
 
-/*
- * --INFO--
- * Address:	801F6118
- * Size:	000250
+/**
+ * @TODO: Documentation
  */
 static void InsertAlarm(OSAlarm* alarm, OSTime fire, OSAlarmHandler handler)
 {
@@ -109,10 +103,8 @@ static void InsertAlarm(OSAlarm* alarm, OSTime fire, OSAlarmHandler handler)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801F6368
- * Size:	000068
+/**
+ * @TODO: Documentation
  */
 void OSSetAlarm(OSAlarm* alarm, OSTime tick, OSAlarmHandler handler)
 {
@@ -123,10 +115,8 @@ void OSSetAlarm(OSAlarm* alarm, OSTime tick, OSAlarmHandler handler)
 	OSRestoreInterrupts(enabled);
 }
 
-/*
- * --INFO--
- * Address:	801F63D0
- * Size:	000064
+/**
+ * @TODO: Documentation
  */
 void OSSetAbsAlarm(OSAlarm* alarm, OSTime tick, OSAlarmHandler handler)
 {
@@ -148,10 +138,8 @@ void OSSetPeriodicAlarm(OSAlarm*, OSTime, OSTime, OSAlarmHandler)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801F6434
- * Size:	00011C
+/**
+ * @TODO: Documentation
  */
 void OSCancelAlarm(OSAlarm* alarm)
 {
@@ -184,10 +172,8 @@ void OSCancelAlarm(OSAlarm* alarm)
 	OSRestoreInterrupts(enabled);
 }
 
-/*
- * --INFO--
- * Address:	801F6550
- * Size:	000210
+/**
+ * @TODO: Documentation
  */
 static void DecrementerExceptionCallback(__OSException exception, OSContext* context)
 {
@@ -231,10 +217,8 @@ static void DecrementerExceptionCallback(__OSException exception, OSContext* con
 	OSLoadContext(context);
 }
 
-/*
- * --INFO--
- * Address:	801F6760
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 static ASM void DecrementerExceptionHandler(register __OSException exception, register OSContext* context)
 {

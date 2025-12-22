@@ -17,10 +17,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("aiShoot")
 
-/*
- * --INFO--
- * Address:	800C216C
- * Size:	000120
+/**
+ * @TODO: Documentation
  */
 ActShoot::ActShoot(Piki* piki)
     : AndAction(piki)
@@ -33,10 +31,8 @@ ActShoot::ActShoot(Piki* piki)
 	mTargetIsPlayer = false;
 }
 
-/*
- * --INFO--
- * Address:	800C228C
- * Size:	0000B0
+/**
+ * @TODO: Documentation
  */
 void ActShoot::init(Creature* target)
 {
@@ -64,10 +60,8 @@ void ActShoot::init(Creature* target)
 	STACK_PAD_VAR(1);
 }
 
-/*
- * --INFO--
- * Address:	800C233C
- * Size:	000178
+/**
+ * @TODO: Documentation
  */
 Creature* ActShoot::findTarget()
 {
@@ -116,10 +110,8 @@ Creature* ActShoot::decideTarget()
 	return nullptr;
 }
 
-/*
- * --INFO--
- * Address:	800C24B4
- * Size:	0001CC
+/**
+ * @TODO: Documentation
  */
 int ActShoot::exec()
 {
@@ -146,10 +138,8 @@ int ActShoot::exec()
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	800C2680
- * Size:	000040
+/**
+ * @TODO: Documentation
  */
 void ActShoot::cleanup()
 {
@@ -157,20 +147,16 @@ void ActShoot::cleanup()
 	mTarget.reset();
 }
 
-/*
- * --INFO--
- * Address:	800C26C0
- * Size:	000040
+/**
+ * @TODO: Documentation
  */
 void ActShootCreature::cleanup()
 {
 	mTarget.reset();
 }
 
-/*
- * --INFO--
- * Address:	800C2700
- * Size:	0000AC
+/**
+ * @TODO: Documentation
  */
 void ActShootCreature::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
@@ -189,20 +175,16 @@ void ActShootCreature::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800C27AC
- * Size:	00005C
+/**
+ * @TODO: Documentation
  */
 ActShootCreature::ActShootCreature(Piki* piki)
     : Action(piki, true)
 {
 }
 
-/*
- * --INFO--
- * Address:	800C2808
- * Size:	000088
+/**
+ * @TODO: Documentation
  */
 void ActShootCreature::init(Creature* target)
 {
@@ -211,10 +193,8 @@ void ActShootCreature::init(Creature* target)
 	mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 }
 
-/*
- * --INFO--
- * Address:	800C2890
- * Size:	0002DC
+/**
+ * @TODO: Documentation
  */
 int ActShootCreature::exec()
 {

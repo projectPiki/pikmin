@@ -18,20 +18,16 @@ DEFINE_ERROR(13)
  */
 DEFINE_PRINT(nullptr)
 
-/*
- * --INFO--
- * Address:	800B92C0
- * Size:	000080
+/**
+ * @TODO: Documentation
  */
 ActMine::ActMine(Piki* piki)
     : Action(piki, true)
 {
 }
 
-/*
- * --INFO--
- * Address:	800B9340
- * Size:	000064
+/**
+ * @TODO: Documentation
  */
 void ActMine::init(Creature* target)
 {
@@ -45,10 +41,8 @@ void ActMine::init(Creature* target)
 	mState = STATE_Watch;
 }
 
-/*
- * --INFO--
- * Address:	800B93A4
- * Size:	000090
+/**
+ * @TODO: Documentation
  */
 void ActMine::initWatch()
 {
@@ -107,10 +101,8 @@ void ActMine::initGo()
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Walk, this), PaniMotionInfo(PIKIANIM_Walk));
 }
 
-/*
- * --INFO--
- * Address:	800B9434
- * Size:	00014C
+/**
+ * @TODO: Documentation
  */
 int ActMine::exeMine()
 {
@@ -142,10 +134,8 @@ int ActMine::exeMine()
 	return ACTOUT_Fail;
 }
 
-/*
- * --INFO--
- * Address:	800B9580
- * Size:	000200
+/**
+ * @TODO: Documentation
  */
 int ActMine::exec()
 {
@@ -179,19 +169,15 @@ int ActMine::exec()
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	800B9780
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void ActMine::cleanup()
 {
 }
 
-/*
- * --INFO--
- * Address:	800B9784
- * Size:	0000C0
+/**
+ * @TODO: Documentation
  */
 void ActMine::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {

@@ -3,40 +3,32 @@
 char file[] = __FILE__;
 char name[] = "smartPtr";
 
-/*
- * --INFO--
- * Address:	800E4338
- * Size:	000018
+/**
+ * @TODO: Documentation
  */
 RefCountable::RefCountable()
 {
 	mCount = 0;
 }
 
-/*
- * --INFO--
- * Address:	800E4350
- * Size:	00000C
+/**
+ * @TODO: Documentation
  */
 void RefCountable::clearCnt()
 {
 	mCount = 0;
 }
 
-/*
- * --INFO--
- * Address:	800E435C
- * Size:	000010
+/**
+ * @TODO: Documentation
  */
 void RefCountable::addCnt()
 {
 	mCount++;
 }
 
-/*
- * --INFO--
- * Address:	800E436C
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 void RefCountable::subCnt()
 {

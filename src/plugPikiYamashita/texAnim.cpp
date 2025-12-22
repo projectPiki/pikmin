@@ -15,10 +15,8 @@ DEFINE_ERROR(16)
  */
 DEFINE_PRINT(nullptr);
 
-/*
- * --INFO--
- * Address:	801C10A0
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 void zen::TexAnim::setData(u32 index, Texture* texture, f32 time)
 {
@@ -29,10 +27,8 @@ void zen::TexAnim::setData(u32 index, Texture* texture, f32 time)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801C10C4
- * Size:	00007C
+/**
+ * @TODO: Documentation
  */
 Texture* zen::TexAnim::update()
 {

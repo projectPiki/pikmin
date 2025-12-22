@@ -19,10 +19,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("bombItem")
 
-/*
- * --INFO--
- * Address:	800EA190
- * Size:	0000A8
+/**
+ * @TODO: Documentation
  */
 void BombItem::collisionCallback(immut CollEvent& coll)
 {
@@ -39,10 +37,8 @@ void BombItem::collisionCallback(immut CollEvent& coll)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800EA238
- * Size:	000058
+/**
+ * @TODO: Documentation
  */
 bool BombItem::isVisible()
 {
@@ -55,20 +51,16 @@ bool BombItem::isVisible()
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	800EA290
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 bool BombItem::needShadow()
 {
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800EA298
- * Size:	000058
+/**
+ * @TODO: Documentation
  */
 bool BombItem::isAlive()
 {
@@ -81,10 +73,8 @@ bool BombItem::isAlive()
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	800EA2F0
- * Size:	0000AC
+/**
+ * @TODO: Documentation
  */
 BombItem::BombItem(CreatureProp* props, ItemShapeObject* shape, SimpleAI* ai)
     : ItemCreature(OBJTYPE_Bomb, props, nullptr)
@@ -96,10 +86,8 @@ BombItem::BombItem(CreatureProp* props, ItemShapeObject* shape, SimpleAI* ai)
 	mLifeGauge.mRenderStyle        = LifeGauge::Wheel;
 }
 
-/*
- * --INFO--
- * Address:	800EA39C
- * Size:	0000E8
+/**
+ * @TODO: Documentation
  */
 void BombItem::startAI(int)
 {
@@ -124,30 +112,24 @@ void BombItem::startAI(int)
 	mLifeGauge.mOffset.set(0.0f, 20.0f, 0.0f);
 }
 
-/*
- * --INFO--
- * Address:	800EA484
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 f32 BombItem::getSize()
 {
 	return 5.0f;
 }
 
-/*
- * --INFO--
- * Address:	800EA48C
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 f32 BombItem::getiMass()
 {
 	return 0.0f;
 }
 
-/*
- * --INFO--
- * Address:	800EA494
- * Size:	0000D8
+/**
+ * @TODO: Documentation
  */
 void BombItem::update()
 {
@@ -169,19 +151,15 @@ void BombItem::update()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800EA56C
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void BombItem::renderTimer(Graphics&)
 {
 }
 
-/*
- * --INFO--
- * Address:	800EA570
- * Size:	000098
+/**
+ * @TODO: Documentation
  */
 void BombItem::refresh2d(Graphics& gfx)
 {
@@ -195,10 +173,8 @@ void BombItem::refresh2d(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800EA608
- * Size:	0000A8
+/**
+ * @TODO: Documentation
  */
 void BombItem::refresh(Graphics& gfx)
 {
@@ -221,19 +197,15 @@ void BombItem::refresh(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800EA6B0
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void BombItem::renderBlast(Graphics&)
 {
 }
 
-/*
- * --INFO--
- * Address:	800EA6B4
- * Size:	000060
+/**
+ * @TODO: Documentation
  */
 void BombItem::dump()
 {

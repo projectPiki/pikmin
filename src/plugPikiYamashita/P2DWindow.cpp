@@ -18,10 +18,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("P2DWindow")
 
-/*
- * --INFO--
- * Address:	801B37F0
- * Size:	000088
+/**
+ * @TODO: Documentation
  */
 void P2DWindow::makeResident()
 {
@@ -52,10 +50,8 @@ Texture* P2DWindow::loadResource(immut char* name)
 	return tex;
 }
 
-/*
- * --INFO--
- * Address:	801B3878
- * Size:	000160
+/**
+ * @TODO: Documentation
  */
 void P2DWindow::loadResource()
 {
@@ -68,10 +64,8 @@ void P2DWindow::loadResource()
 	mMinHeight = mTLCornerTexture->getHeight() + mBLCornerTexture->getHeight();
 }
 
-/*
- * --INFO--
- * Address:	801B39D8
- * Size:	000258
+/**
+ * @TODO: Documentation
  */
 P2DWindow::P2DWindow(P2DPane* parent, RandomAccessStream* input, u16 paneType)
     : P2DPane(parent, input, paneType)
@@ -96,10 +90,8 @@ P2DWindow::P2DWindow(P2DPane* parent, RandomAccessStream* input, u16 paneType)
 	stream.align(4);
 }
 
-/*
- * --INFO--
- * Address:	801B3C30
- * Size:	000068
+/**
+ * @TODO: Documentation
  */
 void P2DWindow::drawSelf(int x, int y)
 {
@@ -108,10 +100,8 @@ void P2DWindow::drawSelf(int x, int y)
 	drawSelf(x, y, &mtx);
 }
 
-/*
- * --INFO--
- * Address:	801B3C98
- * Size:	000098
+/**
+ * @TODO: Documentation
  */
 void P2DWindow::drawSelf(int x, int y, immut Matrix4f* mtx)
 {
@@ -121,10 +111,8 @@ void P2DWindow::drawSelf(int x, int y, immut Matrix4f* mtx)
 	clip(mWindowBounds);
 }
 
-/*
- * --INFO--
- * Address:	801B3D30
- * Size:	000394
+/**
+ * @TODO: Documentation
  */
 void P2DWindow::draw_private(const PUTRect& bounds, const PUTRect& windowBounds, immut Matrix4f* transform)
 {
@@ -193,10 +181,8 @@ void P2DWindow::draw_private(const PUTRect& bounds, const PUTRect& windowBounds,
 	}
 }
 
-/*
- * --INFO--
- * Address:	801B40C4
- * Size:	00018C
+/**
+ * @TODO: Documentation
  */
 void P2DWindow::drawContents(const PUTRect& windowBounds)
 {
@@ -237,10 +223,8 @@ void P2DWindow::drawContents(const PUTRect& windowBounds)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801B4250
- * Size:	000100
+/**
+ * @TODO: Documentation
  */
 void P2DWindow::P2DWindowTexture::draw(int x, int y, int width, int height, u16 u0, u16 v0, u16 u1, u16 v1)
 {
@@ -270,20 +254,16 @@ void P2DWindow::P2DWindowTexture::draw(int x, int y, int width, int height, u16 
 	GXTexCoord2s16(u1, v0);
 }
 
-/*
- * --INFO--
- * Address:	801B4350
- * Size:	0000A0
+/**
+ * @TODO: Documentation
  */
 void P2DWindow::P2DWindowTexture::draw(int x, int y, bool p3, bool p4)
 {
 	draw(x, y, mTexture->mWidth, mTexture->mHeight, u16(p3 ? 0 : 0x8000), u16(p4 ? 0 : 0x8000), u16(p3 ? 0x8000 : 0), u16(p4 ? 0x8000 : 0));
 }
 
-/*
- * --INFO--
- * Address:	801B43F0
- * Size:	000058
+/**
+ * @TODO: Documentation
  */
 void P2DWindow::P2DWindowTexture::setTevMode()
 {

@@ -28,10 +28,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("OgSaveSection")
 
-/*
- * --INFO--
- * Address:	80195740
- * Size:	00073C
+/**
+ * @TODO: Documentation
  */
 zen::ogSaveMgr::ogSaveMgr()
 {
@@ -107,10 +105,8 @@ zen::ogSaveMgr::ogSaveMgr()
 	_UNUSED14   = 0;
 }
 
-/*
- * --INFO--
- * Address:	80195E7C
- * Size:	0000C0
+/**
+ * @TODO: Documentation
  */
 void zen::ogSaveMgr::start()
 {
@@ -149,10 +145,8 @@ void zen::ogSaveMgr::startDirectSave(s16 state)
 	mBackPicture->setAlpha(0);
 }
 
-/*
- * --INFO--
- * Address:	80195F3C
- * Size:	000834
+/**
+ * @TODO: Documentation
  */
 zen::ogSaveMgr::SaveStatus zen::ogSaveMgr::update(Controller* input)
 {
@@ -455,10 +449,8 @@ zen::ogSaveMgr::SaveStatus zen::ogSaveMgr::update(Controller* input)
 	return mStatus;
 }
 
-/*
- * --INFO--
- * Address:	80196770
- * Size:	0000F4
+/**
+ * @TODO: Documentation
  */
 void zen::ogSaveMgr::draw(Graphics& gfx)
 {

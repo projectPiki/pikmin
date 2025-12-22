@@ -16,20 +16,16 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("taimotionactions")
 
-/*
- * --INFO--
- * Address:	80134018
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 void TaiMotionAction::start(Teki& teki)
 {
 	teki.startMotion(mMotionIdx);
 }
 
-/*
- * --INFO--
- * Address:	80134050
- * Size:	000020
+/**
+ * @TODO: Documentation
  */
 bool TaiMotionAction::act(Teki& teki)
 {
@@ -39,10 +35,8 @@ bool TaiMotionAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	80134070
- * Size:	0000FC
+/**
+ * @TODO: Documentation
  */
 void TaiContinuousMotionAction::start(Teki& teki)
 {
@@ -73,10 +67,8 @@ void TaiContinuousMotionAction::start(Teki& teki)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8013416C
- * Size:	000074
+/**
+ * @TODO: Documentation
  */
 bool TaiContinuousMotionAction::act(Teki& teki)
 {
@@ -91,10 +83,8 @@ bool TaiContinuousMotionAction::act(Teki& teki)
 	return TaiMotionAction::act(teki);
 }
 
-/*
- * --INFO--
- * Address:	801341E0
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 bool TaiContinuousMotionAction::motionStarted(Teki& teki)
 {
@@ -105,20 +95,16 @@ bool TaiContinuousMotionAction::motionStarted(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	80134204
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 void TaiFinishMotionAction::start(Teki& teki)
 {
 	teki.mTekiAnimator->finishMotion(PaniMotionInfo(PANI_NO_MOTION, &teki));
 }
 
-/*
- * --INFO--
- * Address:	80134250
- * Size:	000020
+/**
+ * @TODO: Documentation
  */
 bool TaiAnimationKeyAction::act(Teki& teki)
 {
@@ -128,20 +114,16 @@ bool TaiAnimationKeyAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	80134270
- * Size:	00000C
+/**
+ * @TODO: Documentation
  */
 void TaiCountLoopAction::start(Teki& teki)
 {
 	teki.mMotionLoopCount = 0;
 }
 
-/*
- * --INFO--
- * Address:	8013427C
- * Size:	00003C
+/**
+ * @TODO: Documentation
  */
 bool TaiCountLoopAction::act(Teki& teki)
 {
@@ -155,10 +137,8 @@ bool TaiCountLoopAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	801342B8
- * Size:	00005C
+/**
+ * @TODO: Documentation
  */
 void TaiSwitchMotionAction::start(Teki& teki)
 {
@@ -167,10 +147,8 @@ void TaiSwitchMotionAction::start(Teki& teki)
 	teki.mTekiAnimator->setCounter(counter);
 }
 
-/*
- * --INFO--
- * Address:	80134314
- * Size:	0000D4
+/**
+ * @TODO: Documentation
  */
 bool TaiOutsideKeyStopMoveAction::act(Teki& teki)
 {
@@ -184,19 +162,15 @@ bool TaiOutsideKeyStopMoveAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	801343E8
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void TaiStoppingMoveAction::start(Teki& teki)
 {
 }
 
-/*
- * --INFO--
- * Address:	801343EC
- * Size:	000064
+/**
+ * @TODO: Documentation
  */
 bool TaiStoppingMoveAction::act(Teki& teki)
 {
@@ -213,39 +187,31 @@ bool TaiStoppingMoveAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	80134450
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void TaiStoppingMoveAction::finish(Teki& teki)
 {
 }
 
-/*
- * --INFO--
- * Address:	80134454
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 void TaiFinishStoppingMoveAction::start(Teki& teki)
 {
 	teki.finishStoppingMove();
 }
 
-/*
- * --INFO--
- * Address:	80134478
- * Size:	00003C
+/**
+ * @TODO: Documentation
  */
 void TaiSetFrameMotionAction::start(Teki& teki)
 {
 	teki.mTekiAnimator->setCounter(teki.mTekiAnimator->getKeyValueByKeyType(mKeyType));
 }
 
-/*
- * --INFO--
- * Address:	801344B4
- * Size:	0000AC
+/**
+ * @TODO: Documentation
  */
 void TaiRandomSetAnimationCounterAction::start(Teki& teki)
 {

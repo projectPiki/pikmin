@@ -86,10 +86,8 @@ zen::EffectMgr2D::~EffectMgr2D()
 {
 }
 
-/*
- * --INFO--
- * Address:	801E98C0
- * Size:	00027C
+/**
+ * @TODO: Documentation
  */
 zen::EffectMgr2D::EffectMgr2D(int numPtclGens, int numParticles, int numChildParticles)
 {
@@ -104,10 +102,8 @@ zen::EffectMgr2D::EffectMgr2D(int numPtclGens, int numParticles, int numChildPar
 	mCamera.calcVectors(eyePos, targetPos);
 }
 
-/*
- * --INFO--
- * Address:	801E9B3C
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 zen::particleGenerator* zen::EffectMgr2D::create(u32 effID, immut Vector3f& pos, zen::CallBack1<zen::particleGenerator*>* cb1,
                                                  zen::CallBack2<zen::particleGenerator*, zen::particleMdl*>* cb2)
@@ -115,20 +111,16 @@ zen::particleGenerator* zen::EffectMgr2D::create(u32 effID, immut Vector3f& pos,
 	return mEffects[effID]->create(mParticleManager, pos, cb1, cb2);
 }
 
-/*
- * --INFO--
- * Address:	801E9B88
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 void zen::EffectMgr2D::update()
 {
 	mParticleManager.update();
 }
 
-/*
- * --INFO--
- * Address:	801E9BAC
- * Size:	000128
+/**
+ * @TODO: Documentation
  */
 void zen::EffectMgr2D::draw(Graphics& gfx)
 {
@@ -140,10 +132,8 @@ void zen::EffectMgr2D::draw(Graphics& gfx)
 	mParticleManager.draw(gfx);
 }
 
-/*
- * --INFO--
- * Address:	801E9CD4
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 void zen::EffectMgr2D::killAll(bool doForceFinish)
 {

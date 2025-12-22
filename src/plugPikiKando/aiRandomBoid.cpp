@@ -15,10 +15,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("aiRandomBoid")
 
-/*
- * --INFO--
- * Address:	800C0A10
- * Size:	0002F8
+/**
+ * @TODO: Documentation
  */
 void ActRandomBoid::AnimListener::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
@@ -58,10 +56,8 @@ void ActRandomBoid::AnimListener::animationKeyUpdated(immut PaniAnimKeyEvent& ev
 	}
 }
 
-/*
- * --INFO--
- * Address:	800C0D08
- * Size:	00008C
+/**
+ * @TODO: Documentation
  */
 ActRandomBoid::ActRandomBoid(Piki* piki)
     : Action(piki, true)
@@ -69,19 +65,15 @@ ActRandomBoid::ActRandomBoid(Piki* piki)
 	mListener = new AnimListener(this, piki);
 }
 
-/*
- * --INFO--
- * Address:	800C0D94
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void ActRandomBoid::Initialiser::initialise(Action*)
 {
 }
 
-/*
- * --INFO--
- * Address:	800C0D98
- * Size:	0000E8
+/**
+ * @TODO: Documentation
  */
 void ActRandomBoid::init(Creature*)
 {
@@ -94,19 +86,15 @@ void ActRandomBoid::init(Creature*)
 	mIsAnimFinishing = false;
 }
 
-/*
- * --INFO--
- * Address:	800C0E80
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void ActRandomBoid::cleanup()
 {
 }
 
-/*
- * --INFO--
- * Address:	800C0E84
- * Size:	0003BC
+/**
+ * @TODO: Documentation
  */
 int ActRandomBoid::exec()
 {
@@ -185,10 +173,8 @@ static const char* stateName[] = {
 	"停止", // 'stop'
 };
 
-/*
- * --INFO--
- * Address:	800C1240
- * Size:	000044
+/**
+ * @TODO: Documentation
  */
 void ActRandomBoid::getInfo(char* buf)
 {

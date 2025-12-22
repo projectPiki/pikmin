@@ -21,10 +21,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("nakatacode")
 
-/*
- * --INFO--
- * Address:	8011B6AC
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 void NakataCodeInitializer::init()
 {

@@ -8,10 +8,8 @@ static u8 TASK_READPTR;
 static u8 TASK_WRITEPTR;
 static u8 TASK_REMAIN;
 
-/*
- * --INFO--
- * Address:	80008A00
- * Size:	000070
+/**
+ * @TODO: Documentation
  */
 static DSPTask* WriteTask(u8 target, u32 cmd, void* task, DSPCallback callback)
 {
@@ -34,10 +32,8 @@ static DSPTask* WriteTask(u8 target, u32 cmd, void* task, DSPCallback callback)
 	return EX_DSPTASK;
 }
 
-/*
- * --INFO--
- * Address:	80008A80
- * Size:	0000C0
+/**
+ * @TODO: Documentation
  */
 static void DoTask()
 {
@@ -70,10 +66,8 @@ static void DoTask()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80008B40
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 BOOL DspExtraTaskCheck()
 {
@@ -91,10 +85,8 @@ void Jac_IPLDspSec(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80008B80
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 void Jac_DSPcardDecodeAsync(void* task, void* cmd, DSPCallback callback)
 {

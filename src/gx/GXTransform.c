@@ -34,10 +34,8 @@ void GXProject(f32 x, f32 y, f32 z, const Mtx mtx, f32* pm, f32* vp, f32* sx, f3
 	*sz = vp[5] + (wc * (zc * (vp[5] - vp[4])));
 }
 
-/*
- * --INFO--
- * Address:	802142F4
- * Size:	0000D4
+/**
+ * @TODO: Documentation
  */
 void GXSetProjection(const Mtx44 mtx, GXProjectionType type)
 {
@@ -123,10 +121,8 @@ void GXGetProjectionv(f32* ptr)
 	ptr[6] = gx->projMtx[5];
 }
 
-/*
- * --INFO--
- * Address:	802143C8
- * Size:	000034
+/**
+ * @TODO: Documentation
  */
 ASM void WriteMTXPS4x3(register const Mtx mtx, register volatile f32* dest) {
 #ifdef __MWERKS__ // clang-format off
@@ -145,10 +141,8 @@ ASM void WriteMTXPS4x3(register const Mtx mtx, register volatile f32* dest) {
 	#endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address:	802143FC
- * Size:	000034
+/**
+ * @TODO: Documentation
  */
 ASM void WriteMTXPS3x3from3x4(register const Mtx mtx, register volatile f32* dest) {
 #ifdef __MWERKS__ // clang-format off
@@ -187,10 +181,8 @@ ASM void WriteMTXPS3x3(register const Mtx33 mtx, register volatile f32* dest) {
 	#endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address:	80214430
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 ASM void WriteMTXPS4x2(register const Mtx mtx, register volatile f32* dest) {
 #ifdef __MWERKS__ // clang-format off
@@ -212,10 +204,8 @@ ASM void WriteMTXPS4x2(register const Mtx mtx, register volatile f32* dest) {
 		VERIF_MTXLIGHT((addr), *(u32*)&xfData); \
 	} while (0)
 
-/*
- * --INFO--
- * Address:	80214454
- * Size:	00003C
+/**
+ * @TODO: Documentation
  */
 void GXLoadPosMtxImm(const Mtx mtx, u32 id)
 {
@@ -277,10 +267,8 @@ void GXLoadPosMtxIndx(u16 mtx_indx, u32 id)
 #endif
 }
 
-/*
- * --INFO--
- * Address:	80214490
- * Size:	000040
+/**
+ * @TODO: Documentation
  */
 void GXLoadNrmMtxImm(const Mtx mtx, u32 id)
 {
@@ -364,10 +352,8 @@ void GXLoadNrmMtxIndx3x3(u16 mtx_indx, u32 id)
 #endif
 }
 
-/*
- * --INFO--
- * Address:	802144D0
- * Size:	00003C
+/**
+ * @TODO: Documentation
  */
 void GXSetCurrentMtx(u32 id)
 {
@@ -376,10 +362,8 @@ void GXSetCurrentMtx(u32 id)
 	__GXSetMatrixIndex(GX_VA_PNMTXIDX);
 }
 
-/*
- * --INFO--
- * Address:	8021450C
- * Size:	000084
+/**
+ * @TODO: Documentation
  */
 void GXLoadTexMtxImm(const Mtx mtx, u32 id, GXTexMtxType type)
 {
@@ -456,10 +440,8 @@ void GXLoadTexMtxIndx(u16 mtx_indx, u32 id, GXTexMtxType type)
 #endif
 }
 
-/*
- * --INFO--
- * Address:	80214590
- * Size:	00011C
+/**
+ * @TODO: Documentation
  */
 void GXSetViewportJitter(f32 left, f32 top, f32 wd, f32 ht, f32 nearz, f32 farz, u32 field)
 {
@@ -507,10 +489,8 @@ void GXSetViewportJitter(f32 left, f32 top, f32 wd, f32 ht, f32 nearz, f32 farz,
 	gx->bpSent = 0;
 }
 
-/*
- * --INFO--
- * Address:	802146AC
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 void GXSetViewport(f32 left, f32 top, f32 wd, f32 ht, f32 nearz, f32 farz)
 {
@@ -534,10 +514,8 @@ void GXGetViewportv(f32* vp)
 	vp[5] = gx->vpFarz;
 }
 
-/*
- * --INFO--
- * Address:	802146D0
- * Size:	0000B0
+/**
+ * @TODO: Documentation
  */
 void GXSetScissor(u32 left, u32 top, u32 wd, u32 ht)
 {
@@ -593,10 +571,8 @@ void GXGetScissor(u32* left, u32* top, u32* wd, u32* ht)
 	*ht   = bm - tp + 1;
 }
 
-/*
- * --INFO--
- * Address:	80214780
- * Size:	000044
+/**
+ * @TODO: Documentation
  */
 void GXSetScissorBoxOffset(s32 x_off, s32 y_off)
 {
@@ -619,10 +595,8 @@ void GXSetScissorBoxOffset(s32 x_off, s32 y_off)
 	gx->bpSent = 1;
 }
 
-/*
- * --INFO--
- * Address:	802147C4
- * Size:	000028
+/**
+ * @TODO: Documentation
  */
 void GXSetClipMode(GXClipMode mode)
 {
@@ -631,10 +605,8 @@ void GXSetClipMode(GXClipMode mode)
 	gx->bpSent = 0;
 }
 
-/*
- * --INFO--
- * Address:	802147EC
- * Size:	000084
+/**
+ * @TODO: Documentation
  */
 void __GXSetMatrixIndex(GXAttr matIdxAttr)
 {

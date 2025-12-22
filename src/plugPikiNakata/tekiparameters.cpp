@@ -16,10 +16,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("tekiparameters");
 
-/*
- * --INFO--
- * Address:	8014BD48
- * Size:	000954
+/**
+ * @TODO: Documentation
  */
 TekiParameters::TekiParameters(int iParamNum, int fParamNum)
 {
@@ -112,10 +110,8 @@ TekiParameters::TekiParameters(int iParamNum, int fParamNum)
 	multiP->setF(TPF_CollisionRadius, 16.0f);
 }
 
-/*
- * --INFO--
- * Address:	8014C69C
- * Size:	0003C4
+/**
+ * @TODO: Documentation
  */
 void TekiParameters::read(RandomAccessStream& input)
 {

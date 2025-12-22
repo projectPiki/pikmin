@@ -129,10 +129,8 @@ void DLSize(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801F67AC
- * Size:	0000FC
+/**
+ * @TODO: Documentation
  */
 void* OSAllocFromHeap(OSHeapHandle heap, u32 size)
 {
@@ -222,10 +220,8 @@ OSHeapHandle OSSetCurrentHeap(OSHeapHandle heap)
 	return old;
 }
 
-/*
- * --INFO--
- * Address:	801F68A8
- * Size:	000070
+/**
+ * @TODO: Documentation
  */
 void* OSInitAlloc(void* arenaStart, void* arenaEnd, int maxHeaps)
 {

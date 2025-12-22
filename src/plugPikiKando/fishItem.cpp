@@ -19,10 +19,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT(nullptr)
 
-/*
- * --INFO--
- * Address:	800E6668
- * Size:	0000B0
+/**
+ * @TODO: Documentation
  */
 FishGenerator::FishGenerator()
     : ItemCreature(OBJTYPE_Fish, nullptr, nullptr)
@@ -32,10 +30,8 @@ FishGenerator::FishGenerator()
 	mFish      = new Fish[mMaxFish];
 }
 
-/*
- * --INFO--
- * Address:	800E6738
- * Size:	0001B4
+/**
+ * @TODO: Documentation
  */
 void FishGenerator::startAI(int)
 {
@@ -52,10 +48,8 @@ void FishGenerator::startAI(int)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800E68EC
- * Size:	000140
+/**
+ * @TODO: Documentation
  */
 void FishGenerator::update()
 {
@@ -71,10 +65,8 @@ void FishGenerator::update()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800E6A2C
- * Size:	000554
+/**
+ * @TODO: Documentation
  */
 void FishGenerator::moveFish(Fish* fish)
 {
@@ -148,10 +140,8 @@ void FishGenerator::moveFish(Fish* fish)
 	fish->mVelocity = trace.mVelocity;
 }
 
-/*
- * --INFO--
- * Address:	800E6F80
- * Size:	000098
+/**
+ * @TODO: Documentation
  */
 void FishGenerator::refresh(Graphics& gfx)
 {

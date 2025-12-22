@@ -1,9 +1,7 @@
 #include "Dolphin/card.h"
 
-/*
- * --INFO--
- * Address:	8020B29C
- * Size:	000144
+/**
+ * @TODO: Documentation
  */
 static void FormatCallback(s32 channel, s32 result)
 {
@@ -43,10 +41,8 @@ error:
 	callback(channel, result);
 }
 
-/*
- * --INFO--
- * Address:	8020B3E0
- * Size:	000658
+/**
+ * @TODO: Documentation
  */
 s32 CARDFormatAsync(s32 channel, CARDCallback callback)
 {
@@ -124,10 +120,8 @@ s32 CARDFormatAsync(s32 channel, CARDCallback callback)
 	return result;
 }
 
-/*
- * --INFO--
- * Address:	8020BA38
- * Size:	000048
+/**
+ * @TODO: Documentation
  */
 s32 CARDFormat(s32 channel)
 {

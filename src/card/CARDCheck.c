@@ -1,9 +1,7 @@
 #include "Dolphin/card.h"
 
-/*
- * --INFO--
- * Address:	80209B14
- * Size:	0001B0
+/**
+ * @TODO: Documentation
  */
 void __CARDCheckSum(void* data, int length, u16* checksum, u16* checksumInv)
 {
@@ -24,10 +22,8 @@ void __CARDCheckSum(void* data, int length, u16* checksum, u16* checksumInv)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80209CC4
- * Size:	000284
+/**
+ * @TODO: Documentation
  */
 static s32 VerifyID(CARDControl* card)
 {
@@ -70,10 +66,8 @@ static s32 VerifyID(CARDControl* card)
 	return CARD_RESULT_READY;
 }
 
-/*
- * --INFO--
- * Address:	80209F48
- * Size:	000240
+/**
+ * @TODO: Documentation
  */
 static s32 VerifyDir(CARDControl* card, int* outCurrent)
 {
@@ -117,10 +111,8 @@ static s32 VerifyDir(CARDControl* card, int* outCurrent)
 	return errors;
 }
 
-/*
- * --INFO--
- * Address:	8020A188
- * Size:	000284
+/**
+ * @TODO: Documentation
  */
 static s32 VerifyFAT(CARDControl* card, int* outCurrent)
 {
@@ -179,10 +171,8 @@ static s32 VerifyFAT(CARDControl* card, int* outCurrent)
 	return errors;
 }
 
-/*
- * --INFO--
- * Address:	8020A40C
- * Size:	00008C
+/**
+ * @TODO: Documentation
  */
 s32 __CARDVerify(CARDControl* card)
 {
@@ -206,10 +196,8 @@ s32 __CARDVerify(CARDControl* card)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8020A498
- * Size:	000590
+/**
+ * @TODO: Documentation
  */
 s32 CARDCheckExAsync(s32 channel, s32* xferBytes, CARDCallback callback)
 {
@@ -341,10 +329,8 @@ s32 CARDCheckExAsync(s32 channel, s32* xferBytes, CARDCallback callback)
 	return CARD_RESULT_READY;
 }
 
-/*
- * --INFO--
- * Address:	8020AA28
- * Size:	000028
+/**
+ * @TODO: Documentation
  */
 s32 CARDCheckAsync(s32 channel, CARDCallback callback)
 {
@@ -362,10 +348,8 @@ void CARDCheckEx(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8020AA50
- * Size:	000054
+/**
+ * @TODO: Documentation
  */
 s32 CARDCheck(s32 channel)
 {

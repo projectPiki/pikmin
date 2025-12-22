@@ -22,10 +22,8 @@ DEFINE_ERROR(5)
  */
 DEFINE_PRINT("updateMgr");
 
-/*
- * --INFO--
- * Address:	800A5444
- * Size:	000014
+/**
+ * @TODO: Documentation
  */
 UpdateContext::UpdateContext()
 {
@@ -33,10 +31,8 @@ UpdateContext::UpdateContext()
 	mMgrSlotIndex = -1;
 }
 
-/*
- * --INFO--
- * Address:	800A5458
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 bool UpdateContext::updatable()
 {
@@ -51,10 +47,8 @@ bool UpdateContext::updatable()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800A54A4
- * Size:	000030
+/**
+ * @TODO: Documentation
  */
 void UpdateContext::init(UpdateMgr* mgr)
 {
@@ -62,10 +56,8 @@ void UpdateContext::init(UpdateMgr* mgr)
 	mgr->addClient(this);
 }
 
-/*
- * --INFO--
- * Address:	800A54D4
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 void UpdateContext::exit()
 {
@@ -76,10 +68,8 @@ void UpdateContext::exit()
 	mIsPiki = false;
 }
 
-/*
- * --INFO--
- * Address:	800A5520
- * Size:	00001C
+/**
+ * @TODO: Documentation
  */
 UpdateMgr::UpdateMgr()
 {
@@ -90,10 +80,8 @@ UpdateMgr::UpdateMgr()
 	mCurrentIndex         = 0;
 }
 
-/*
- * --INFO--
- * Address:	800A553C
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 void UpdateMgr::update()
 {
@@ -102,10 +90,8 @@ void UpdateMgr::update()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800A5560
- * Size:	000030
+/**
+ * @TODO: Documentation
  */
 bool UpdateMgr::updatable(UpdateContext* client)
 {
@@ -120,10 +106,8 @@ bool UpdateMgr::updatable(UpdateContext* client)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800A5590
- * Size:	000094
+/**
+ * @TODO: Documentation
  */
 void UpdateMgr::create(int slotCount)
 {
@@ -143,10 +127,8 @@ void UpdateMgr::create(int slotCount)
 	mUnused14 = 0;
 }
 
-/*
- * --INFO--
- * Address:	800A5624
- * Size:	000090
+/**
+ * @TODO: Documentation
  */
 void UpdateMgr::addClient(UpdateContext* client)
 {
@@ -178,10 +160,8 @@ void UpdateMgr::addClient(UpdateContext* client)
 	mClientCount++;
 }
 
-/*
- * --INFO--
- * Address:	800A56B4
- * Size:	00005C
+/**
+ * @TODO: Documentation
  */
 void UpdateMgr::removeClient(UpdateContext* client)
 {

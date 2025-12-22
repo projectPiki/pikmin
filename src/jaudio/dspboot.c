@@ -457,10 +457,8 @@ void DSPCall()
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80008300
- * Size:	000280
+/**
+ * @TODO: Documentation
  */
 s32 __DSPCheckMXICBoot2(DSPTaskInfo2* task)
 {
@@ -574,19 +572,15 @@ s32 __DSPCheckMXICBoot2(DSPTaskInfo2* task)
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80008580
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void DSPInit(void)
 {
 }
 
-/*
- * --INFO--
- * Address:	800085A0
- * Size:	000098
+/**
+ * @TODO: Documentation
  */
 void DSPInit2(DSPTaskInfo2* task)
 {
@@ -611,10 +605,8 @@ void DSPInit2(DSPTaskInfo2* task)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80008640
- * Size:	000074
+/**
+ * @TODO: Documentation
  */
 void DspBoot()
 {

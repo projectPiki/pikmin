@@ -397,10 +397,8 @@ struct TaiNapkidStartDroppingWaterAction : public TaiAction {
 	// TODO: members
 };
 
-/*
- * --INFO--
- * Address:	80135C20
- * Size:	000084
+/**
+ * @TODO: Documentation
  */
 TaiNapkidSoundTable::TaiNapkidSoundTable()
     : PaniSoundTable(4)
@@ -410,10 +408,8 @@ TaiNapkidSoundTable::TaiNapkidSoundTable()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80135CA4
- * Size:	000564
+/**
+ * @TODO: Documentation
  */
 TaiNapkidParameters::TaiNapkidParameters()
     : TekiParameters(TaiNapkidIntParms::COUNT, TaiNapkidFloatParms::COUNT)
@@ -503,10 +499,8 @@ TaiNapkidParameters::TaiNapkidParameters()
 	multiP->setF(TaiNapkidFloatParms::ThrowVelocity, 200.0f);
 }
 
-/*
- * --INFO--
- * Address:	80136208
- * Size:	0022C4
+/**
+ * @TODO: Documentation
  */
 TaiNapkidStrategy::TaiNapkidStrategy(TekiParameters* params)
     : TaiStrategy(TaiNapkidStateID::COUNT, TaiNapkidStateID::Wandering)
@@ -907,10 +901,8 @@ TaiNapkidStrategy::TaiNapkidStrategy(TekiParameters* params)
 	setState(TaiNapkidStateID::Rising, state);
 }
 
-/*
- * --INFO--
- * Address:	801384CC
- * Size:	000084
+/**
+ * @TODO: Documentation
  */
 void TaiNapkidStrategy::start(Teki& teki)
 {
@@ -919,10 +911,8 @@ void TaiNapkidStrategy::start(Teki& teki)
 	TaiStrategy::start(teki);
 }
 
-/*
- * --INFO--
- * Address:	80138550
- * Size:	0000BC
+/**
+ * @TODO: Documentation
  */
 void TaiNapkidStrategy::draw(Teki& teki, Graphics& gfx)
 {
@@ -940,10 +930,8 @@ void TaiNapkidStrategy::draw(Teki& teki, Graphics& gfx)
 	teki.setParticleGeneratorPosition(0, position);
 }
 
-/*
- * --INFO--
- * Address:	8013860C
- * Size:	000250
+/**
+ * @TODO: Documentation
  */
 void TaiNapkidStrategy::drawDebugInfo(Teki& teki, Graphics& gfx)
 {
@@ -965,10 +953,8 @@ void TaiNapkidStrategy::drawDebugInfo(Teki& teki, Graphics& gfx)
 	teki.drawRange(gfx, teki.getPosition(), teki.getLowerRange(), Colour(255, 0, 255, 255));
 }
 
-/*
- * --INFO--
- * Address:	8013885C
- * Size:	0000BC
+/**
+ * @TODO: Documentation
  */
 bool TekiNapkidTargetPikiCondition::satisfy(Creature* target) immut
 {
@@ -993,10 +979,8 @@ bool TekiNapkidTargetPikiCondition::satisfy(Creature* target) immut
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	80138918
- * Size:	0000A0
+/**
+ * @TODO: Documentation
  */
 bool TekiNapkidShortRangeCondition::satisfy(Creature* target) immut
 {
@@ -1018,10 +1002,8 @@ bool TekiNapkidShortRangeCondition::satisfy(Creature* target) immut
 	TekiDistanceCondition(nullptr, 0.0f);
 }
 
-/*
- * --INFO--
- * Address:	801389B8
- * Size:	000054
+/**
+ * @TODO: Documentation
  */
 void TaiNapkidWanderingRouteAction::start(Teki& teki)
 {
@@ -1030,10 +1012,8 @@ void TaiNapkidWanderingRouteAction::start(Teki& teki)
 	makeTargetPosition(teki);
 }
 
-/*
- * --INFO--
- * Address:	80138A0C
- * Size:	0000AC
+/**
+ * @TODO: Documentation
  */
 bool TaiNapkidWanderingRouteAction::act(Teki& teki)
 {
@@ -1058,10 +1038,8 @@ bool TaiNapkidWanderingRouteAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	80138AB8
- * Size:	0000A8
+/**
+ * @TODO: Documentation
  */
 void TaiNapkidWanderingRouteAction::makeTargetPosition(Teki& teki)
 {
@@ -1091,10 +1069,8 @@ void TaiNapkidWanderingRouteAction::makeTargetPosition(Teki& teki)
 	PRINT_NAKATA("TaiNapkidWanderingRouteAction::makeTargetPosition::act:%08x:->%d\n", &teki, teki.mCurrRouteWayPointID);
 }
 
-/*
- * --INFO--
- * Address:	80138B60
- * Size:	0000B8
+/**
+ * @TODO: Documentation
  */
 bool TaiNapkidTargetPikiAction::act(Teki& teki)
 {
@@ -1111,10 +1087,8 @@ bool TaiNapkidTargetPikiAction::act(Teki& teki)
 	TekiNapkidTargetPikiCondition(nullptr);
 }
 
-/*
- * --INFO--
- * Address:	80138C18
- * Size:	0000A8
+/**
+ * @TODO: Documentation
  */
 bool TaiNapkidPikiLostAction::act(Teki& teki)
 {
@@ -1137,10 +1111,8 @@ bool TaiNapkidPikiLostAction::act(Teki& teki)
 	TekiNapkidTargetPikiCondition(nullptr);
 }
 
-/*
- * --INFO--
- * Address:	80138CC0
- * Size:	000088
+/**
+ * @TODO: Documentation
  */
 bool TaiNapkidShortRangeAction::act(Teki& teki)
 {
@@ -1161,10 +1133,8 @@ bool TaiNapkidShortRangeAction::act(Teki& teki)
 	TekiNapkidShortRangeCondition(nullptr);
 }
 
-/*
- * --INFO--
- * Address:	80138D48
- * Size:	0000A8
+/**
+ * @TODO: Documentation
  */
 void TaiNapkidStraightFlyingAction::start(Teki& teki)
 {
@@ -1174,10 +1144,8 @@ void TaiNapkidStraightFlyingAction::start(Teki& teki)
 	teki.inputDrive(directionVec);
 }
 
-/*
- * --INFO--
- * Address:	80138DF0
- * Size:	000098
+/**
+ * @TODO: Documentation
  */
 bool TaiNapkidStraightFlyingAction::act(Teki& teki)
 {
@@ -1196,10 +1164,8 @@ bool TaiNapkidStraightFlyingAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	80138E88
- * Size:	00029C
+/**
+ * @TODO: Documentation
  */
 void TaiNapkidCirclingAction::start(Teki& teki)
 {
@@ -1252,10 +1218,8 @@ void TaiNapkidCirclingAction::start(Teki& teki)
 	teki.setCreatureFlag(CF_Unk10);
 }
 
-/*
- * --INFO--
- * Address:	80139124
- * Size:	000018
+/**
+ * @TODO: Documentation
  */
 void TaiNapkidCirclingAction::finish(Teki& teki)
 {
@@ -1263,10 +1227,8 @@ void TaiNapkidCirclingAction::finish(Teki& teki)
 	teki._3A4 = 0.0f;
 }
 
-/*
- * --INFO--
- * Address:	8013913C
- * Size:	000124
+/**
+ * @TODO: Documentation
  */
 bool TaiNapkidCirclingAction::act(Teki& teki)
 {
@@ -1292,10 +1254,8 @@ bool TaiNapkidCirclingAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	80139260
- * Size:	000060
+/**
+ * @TODO: Documentation
  */
 bool TaiNapkidFlyingAction::act(Teki& teki)
 {
@@ -1304,10 +1264,8 @@ bool TaiNapkidFlyingAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	801392C0
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 bool TaiNapkidAscendingAction::act(Teki& teki)
 {
@@ -1315,10 +1273,8 @@ bool TaiNapkidAscendingAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	801392E4
- * Size:	00006C
+/**
+ * @TODO: Documentation
  */
 bool TaiNapkidApproachPikiAction::act(Teki& teki)
 {
@@ -1336,10 +1292,8 @@ bool TaiNapkidApproachPikiAction::act(Teki& teki)
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	80139350
- * Size:	000364
+/**
+ * @TODO: Documentation
  */
 bool TaiNapkidCatchingAction::act(Teki& teki)
 {
@@ -1390,10 +1344,8 @@ bool TaiNapkidCatchingAction::act(Teki& teki)
 	TekiNotCondition(nullptr);
 }
 
-/*
- * --INFO--
- * Address:	801396B4
- * Size:	00017C
+/**
+ * @TODO: Documentation
  */
 void TaiNapkidCatchDescendingAction::start(Teki& teki)
 {
@@ -1414,10 +1366,8 @@ void TaiNapkidCatchDescendingAction::start(Teki& teki)
 	teki.mAccelEvent->reset();
 }
 
-/*
- * --INFO--
- * Address:	80139830
- * Size:	0002CC
+/**
+ * @TODO: Documentation
  */
 bool TaiNapkidCatchTracingAction::act(Teki& teki)
 {
@@ -1473,10 +1423,8 @@ bool TaiNapkidCatchTracingAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	80139AFC
- * Size:	0000E4
+/**
+ * @TODO: Documentation
  */
 void TaiNapkidCatchFlyingAction::start(Teki& teki)
 {
@@ -1494,10 +1442,8 @@ void TaiNapkidCatchFlyingAction::start(Teki& teki)
 	teki.mAccelEvent->reset();
 }
 
-/*
- * --INFO--
- * Address:	80139BE0
- * Size:	0000E4
+/**
+ * @TODO: Documentation
  */
 void TaiNapkidCatchAscendingAction::start(Teki& teki)
 {
@@ -1515,10 +1461,8 @@ void TaiNapkidCatchAscendingAction::start(Teki& teki)
 	teki.mAccelEvent->reset();
 }
 
-/*
- * --INFO--
- * Address:	80139CC4
- * Size:	000198
+/**
+ * @TODO: Documentation
  */
 void TaiNapkidTakingOffAscendingAction::start(Teki& teki)
 {
@@ -1545,10 +1489,8 @@ void TaiNapkidTakingOffAscendingAction::start(Teki& teki)
 	teki.mAccelEvent->reset();
 }
 
-/*
- * --INFO--
- * Address:	80139E5C
- * Size:	00012C
+/**
+ * @TODO: Documentation
  */
 void TaiNapkidRisingAscendingAction::start(Teki& teki)
 {
@@ -1567,10 +1509,8 @@ void TaiNapkidRisingAscendingAction::start(Teki& teki)
 	teki.mAccelEvent->reset();
 }
 
-/*
- * --INFO--
- * Address:	80139F88
- * Size:	0001D4
+/**
+ * @TODO: Documentation
  */
 bool TaiNapkidThrowingPikiAction::act(Teki& teki)
 {
@@ -1607,10 +1547,8 @@ bool TaiNapkidThrowingPikiAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8013A15C
- * Size:	0000C4
+/**
+ * @TODO: Documentation
  */
 bool TaiNapkidFlickAction::act(Teki& teki)
 {
@@ -1631,10 +1569,8 @@ bool TaiNapkidFlickAction::act(Teki& teki)
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8013A220
- * Size:	0001A8
+/**
+ * @TODO: Documentation
  */
 void TaiNapkidFallingAction::start(Teki& teki)
 {
@@ -1664,30 +1600,24 @@ void TaiNapkidFallingAction::start(Teki& teki)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8013A3C8
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 bool TaiNapkidFallingAction::act(Teki&)
 {
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8013A3D0
- * Size:	000014
+/**
+ * @TODO: Documentation
  */
 void TaiNapkidShockFallingAction::start(Teki& teki)
 {
 	teki.getPosition().y += 10.0f;
 }
 
-/*
- * --INFO--
- * Address:	8013A3E4
- * Size:	0000D8
+/**
+ * @TODO: Documentation
  */
 void TaiNapkidFallingWaterEffectAction::start(Teki& teki)
 {
@@ -1707,10 +1637,8 @@ void TaiNapkidFallingWaterEffectAction::start(Teki& teki)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8013A4BC
- * Size:	000044
+/**
+ * @TODO: Documentation
  */
 void TaiNapkidStartDroppingWaterAction::start(Teki& teki)
 {

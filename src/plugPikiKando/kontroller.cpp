@@ -19,10 +19,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("Kontroller")
 
-/*
- * --INFO--
- * Address:	80115B8C
- * Size:	0000CC
+/**
+ * @TODO: Documentation
  */
 Kontroller::Kontroller(int p1)
     : Controller(p1)
@@ -32,10 +30,8 @@ Kontroller::Kontroller(int p1)
 	mDataStream = nullptr;
 }
 
-/*
- * --INFO--
- * Address:	80115C58
- * Size:	000050
+/**
+ * @TODO: Documentation
  */
 void Kontroller::save(RamStream* stream, int p2)
 {
@@ -46,10 +42,8 @@ void Kontroller::save(RamStream* stream, int p2)
 	mState = 1;
 }
 
-/*
- * --INFO--
- * Address:	80115CA8
- * Size:	000050
+/**
+ * @TODO: Documentation
  */
 void Kontroller::load(RamStream* stream, int p2)
 {
@@ -73,10 +67,8 @@ void Kontroller::stop()
 	mDuration   = 0;
 }
 
-/*
- * --INFO--
- * Address:	80115CF8
- * Size:	000168
+/**
+ * @TODO: Documentation
  */
 void Kontroller::update()
 {
@@ -116,20 +108,16 @@ void Kontroller::update()
 	STACK_PAD_VAR(2);
 }
 
-/*
- * --INFO--
- * Address:	80115E60
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 u32 Kontroller::getSaveSize(int p1)
 {
 	return p1 * 12;
 }
 
-/*
- * --INFO--
- * Address:	80115E68
- * Size:	00010C
+/**
+ * @TODO: Documentation
  */
 void Kontroller::write(RandomAccessStream& stream)
 {
@@ -144,10 +132,8 @@ void Kontroller::write(RandomAccessStream& stream)
 	stream.writeByte(mTriggerR);
 }
 
-/*
- * --INFO--
- * Address:	80115F74
- * Size:	00010C
+/**
+ * @TODO: Documentation
  */
 void Kontroller::read(RandomAccessStream& stream)
 {

@@ -26,10 +26,8 @@ u32 JAC_VFRAME_COUNTER               = 0;
 static MixCallback ext_mixcallback   = NULL;
 static u8 ext_mixmode                = MixMode_Mono;
 
-/*
- * --INFO--
- * Address:	80005720
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 void Jac_HeapSetup(void* heap, s32 size)
 {
@@ -51,10 +49,8 @@ void GetAudioHeapRemain(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80005780
- * Size:	000080
+/**
+ * @TODO: Documentation
  */
 void* OSAlloc2(u32 size)
 {
@@ -88,10 +84,8 @@ void OSFree2(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80005800
- * Size:	0000AC
+/**
+ * @TODO: Documentation
  */
 void Jac_Init()
 {
@@ -159,10 +153,8 @@ void CheckHaltDSP(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	800058C0
- * Size:	0000DC
+/**
+ * @TODO: Documentation
  */
 static void MixMonoTrack(s16* track, s32 nSamples, MixCallback callback)
 {
@@ -206,10 +198,8 @@ static void MixMonoTrack(s16* track, s32 nSamples, MixCallback callback)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800059A0
- * Size:	0000DC
+/**
+ * @TODO: Documentation
  */
 static void MixMonoTrackWide(s16* track, s32 nSamples, MixCallback callback)
 {
@@ -252,10 +242,8 @@ static void MixMonoTrackWide(s16* track, s32 nSamples, MixCallback callback)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80005A80
- * Size:	0000F8
+/**
+ * @TODO: Documentation
  */
 static void MixExtraTrack(s16* track, s32 nSamples, MixCallback callback)
 {
@@ -303,10 +291,8 @@ static void MixExtraTrack(s16* track, s32 nSamples, MixCallback callback)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80005B80
- * Size:	00008C
+/**
+ * @TODO: Documentation
  */
 static void MixInterleaveTrack(s16* track, s32 nSamples, MixCallback callback)
 {
@@ -356,10 +342,8 @@ void Jac_RegisterMixcallback(MixCallback callback, u8 mixmode)
 	ext_mixmode     = mixmode;
 }
 
-/*
- * --INFO--
- * Address:	80005C20
- * Size:	000188
+/**
+ * @TODO: Documentation
  */
 void Jac_VframeWork()
 {
@@ -400,10 +384,8 @@ void Jac_VframeWork()
 	vframe_work_running = FALSE;
 }
 
-/*
- * --INFO--
- * Address:	80005DC0
- * Size:	0000A8
+/**
+ * @TODO: Documentation
  */
 void Jac_UpdateDAC()
 {
@@ -440,30 +422,24 @@ void Jac_RegisterDacCallback(DACCallback callback)
 	DAC_CALLBACK_FUNC = callback;
 }
 
-/*
- * --INFO--
- * Address:	80005E80
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 void Jac_SetOutputMode(int mode)
 {
 	JAC_SYSTEM_OUTPUT_MODE = mode;
 }
 
-/*
- * --INFO--
- * Address:	80005EA0
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 int Jac_GetOutputMode()
 {
 	return JAC_SYSTEM_OUTPUT_MODE;
 }
 
-/*
- * --INFO--
- * Address:	80005EC0
- * Size:	000034
+/**
+ * @TODO: Documentation
  */
 void Jac_SetMixerLevel(f32 channelLevel, f32 dspLevel)
 {

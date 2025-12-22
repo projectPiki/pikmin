@@ -20,10 +20,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT(nullptr);
 
-/*
- * --INFO--
- * Address:	8005D6F8
- * Size:	0001C8
+/**
+ * @TODO: Documentation
  */
 Menu::Menu(Controller* controller, Font* font, bool useCustomPosition)
 {
@@ -126,10 +124,8 @@ Menu::KeyEvent::KeyEvent(int eventType, int inputCode, IDelegate1<Menu&>* delega
 	mPrev = mNext = nullptr;
 }
 
-/*
- * --INFO--
- * Address:	8005D8C0
- * Size:	000094
+/**
+ * @TODO: Documentation
  */
 Menu::MenuItem::MenuItem(int type, int filterIndex, char* name, IDelegate1<Menu&>* delegate)
 {
@@ -167,10 +163,8 @@ void Menu::setOnExit(IDelegate1<Menu&>* callback)
 	mOnExitCallBack = callback;
 }
 
-/*
- * --INFO--
- * Address:	8005D954
- * Size:	0000C8
+/**
+ * @TODO: Documentation
  */
 void Menu::addKeyEvent(int eventCode, int inputCode, IDelegate1<Menu&>* delegate)
 {
@@ -184,20 +178,16 @@ void Menu::addKeyEvent(int eventCode, int inputCode, IDelegate1<Menu&>* delegate
 	}
 }
 
-/*
- * --INFO--
- * Address:	8005DA1C
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 Menu* Menu::enterOption()
 {
 	return this;
 }
 
-/*
- * --INFO--
- * Address:	8005DA20
- * Size:	000048
+/**
+ * @TODO: Documentation
  */
 Menu* Menu::enterMenu(Menu* menu)
 {
@@ -208,10 +198,8 @@ Menu* Menu::enterMenu(Menu* menu)
 	return ret;
 }
 
-/*
- * --INFO--
- * Address:	8005DA68
- * Size:	000044
+/**
+ * @TODO: Documentation
  */
 Menu* Menu::exitMenu(Menu* menu)
 {
@@ -222,10 +210,8 @@ Menu* Menu::exitMenu(Menu* menu)
 	return ret;
 }
 
-/*
- * --INFO--
- * Address:	8005DAAC
- * Size:	00002C
+/**
+ * @TODO: Documentation
  */
 void Menu::open(bool p1)
 {
@@ -236,10 +222,8 @@ void Menu::open(bool p1)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8005DAD8
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 void Menu::close()
 {
@@ -250,10 +234,8 @@ void Menu::close()
 	mState               = MenuStateType::FadeOut;
 }
 
-/*
- * --INFO--
- * Address:	8005DAFC
- * Size:	000020
+/**
+ * @TODO: Documentation
  */
 void Menu::resetOptions()
 {
@@ -262,10 +244,8 @@ void Menu::resetOptions()
 	mLastItem->mPrev = mLastItem->mNext = mLastItem;
 }
 
-/*
- * --INFO--
- * Address:	8005DB1C
- * Size:	000194
+/**
+ * @TODO: Documentation
  */
 void Menu::addOption(int p1, char* name, IDelegate1<Menu&>* delegate, bool p4)
 {
@@ -283,10 +263,8 @@ void Menu::addOption(int p1, char* name, IDelegate1<Menu&>* delegate, bool p4)
 	mMenuCount++;
 }
 
-/*
- * --INFO--
- * Address:	8005DCB0
- * Size:	000184
+/**
+ * @TODO: Documentation
  */
 void Menu::addMenu(Menu* menu, int p2, char* name)
 {
@@ -304,10 +282,8 @@ void Menu::addMenu(Menu* menu, int p2, char* name)
 	mMenuCount++;
 }
 
-/*
- * --INFO--
- * Address:	8005DE34
- * Size:	000150
+/**
+ * @TODO: Documentation
  */
 bool Menu::checkNewOption()
 {
@@ -358,30 +334,24 @@ bool Menu::checkNewOption()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8005DF84
- * Size:	00001C
+/**
+ * @TODO: Documentation
  */
 bool Menu::checkSelectKey()
 {
 	return mController->keyClick(KBBTN_A) != false;
 }
 
-/*
- * --INFO--
- * Address:	8005DFA0
- * Size:	00001C
+/**
+ * @TODO: Documentation
  */
 bool Menu::checkCancelKey()
 {
 	return mController->keyClick(KBBTN_B) != false;
 }
 
-/*
- * --INFO--
- * Address:	8005DFBC
- * Size:	000258
+/**
+ * @TODO: Documentation
  */
 Menu* Menu::doUpdate(bool selectItem)
 {
@@ -459,10 +429,8 @@ Menu* Menu::doUpdate(bool selectItem)
 	return resultMenu;
 }
 
-/*
- * --INFO--
- * Address:	8005E214
- * Size:	0001FC
+/**
+ * @TODO: Documentation
  */
 bool Menu::MenuItem::checkEvents(Menu* menu, int events)
 {
@@ -527,10 +495,8 @@ bool Menu::MenuItem::checkEvents(Menu* menu, int events)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8005E410
- * Size:	00060C
+/**
+ * @TODO: Documentation
  */
 void Menu::draw(Graphics& gfx, f32 fadePct)
 {
@@ -636,10 +602,8 @@ void Menu::draw(Graphics& gfx, f32 fadePct)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8005EA1C
- * Size:	000064
+/**
+ * @TODO: Documentation
  */
 void Menu::menuCloseMenu(Menu& menu)
 {

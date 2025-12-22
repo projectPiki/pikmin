@@ -37,10 +37,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("panitestsection")
 
-/*
- * --INFO--
- * Address:	8011FEF8
- * Size:	000554
+/**
+ * @TODO: Documentation
  */
 PaniTestNode::PaniTestNode()
 {
@@ -125,10 +123,8 @@ PaniTestNode::PaniTestNode()
 	setTestMode(PANITEST_Teki);
 }
 
-/*
- * --INFO--
- * Address:	8012044C
- * Size:	000084
+/**
+ * @TODO: Documentation
  */
 void PaniTestNode::setTestMode(int mode)
 {
@@ -147,10 +143,8 @@ void PaniTestNode::setTestMode(int mode)
 	mMotionId = 0;
 }
 
-/*
- * --INFO--
- * Address:	801204D0
- * Size:	00048C
+/**
+ * @TODO: Documentation
  */
 void PaniTestNode::update()
 {
@@ -265,10 +259,8 @@ void PaniTestNode::update()
 	STACK_PAD_VAR(2);
 }
 
-/*
- * --INFO--
- * Address:	8012095C
- * Size:	0002B4
+/**
+ * @TODO: Documentation
  */
 void PaniTestNode::updatePikis()
 {
@@ -309,10 +301,8 @@ void PaniTestNode::updatePikis()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80120C10
- * Size:	0001BC
+/**
+ * @TODO: Documentation
  */
 void PaniTestNode::updateTekis()
 {
@@ -338,10 +328,8 @@ void PaniTestNode::updateTekis()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80120DCC
- * Size:	00006C
+/**
+ * @TODO: Documentation
  */
 void PaniTestNode::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
@@ -354,10 +342,8 @@ void PaniTestNode::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80120E38
- * Size:	000684
+/**
+ * @TODO: Documentation
  */
 void PaniTestNode::draw(Graphics& gfx)
 {
@@ -445,30 +431,24 @@ void PaniTestNode::draw(Graphics& gfx)
 	gfx.texturePrintf(gsys->mConsFont, 0, 400, "Name:%s", TekiMgr::getTypeName(mFocusTekiType));
 }
 
-/*
- * --INFO--
- * Address:	801214BC
- * Size:	000034
+/**
+ * @TODO: Documentation
  */
 void PaniTestNode::drawPiki(ViewPiki* piki, Graphics& gfx)
 {
 	piki->refresh(gfx);
 }
 
-/*
- * --INFO--
- * Address:	801214F0
- * Size:	000034
+/**
+ * @TODO: Documentation
  */
 void PaniTestNode::drawTeki(Teki* teki, Graphics& gfx)
 {
 	teki->refresh(gfx);
 }
 
-/*
- * --INFO--
- * Address:	80121524
- * Size:	000078
+/**
+ * @TODO: Documentation
  */
 void PaniTestSection::init()
 {

@@ -2,10 +2,8 @@
 
 BOOL gTRKBigEndian;
 
-/*
- * --INFO--
- * Address:	8021C310
- * Size:	0000D4
+/**
+ * @TODO: Documentation
  */
 DSError TRKInitializeNub(void)
 {
@@ -39,10 +37,8 @@ DSError TRKInitializeNub(void)
 	return ret;
 }
 
-/*
- * --INFO--
- * Address:	8021C3E4
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 DSError TRKTerminateNub(void)
 {
@@ -50,10 +46,8 @@ DSError TRKTerminateNub(void)
 	return DS_NoError;
 }
 
-/*
- * --INFO--
- * Address:	8021C408
- * Size:	000028
+/**
+ * @TODO: Documentation
  */
 void TRKNubWelcome(void)
 {
@@ -61,10 +55,8 @@ void TRKNubWelcome(void)
 	return;
 }
 
-/*
- * --INFO--
- * Address:	8021C430
- * Size:	000074
+/**
+ * @TODO: Documentation
  */
 BOOL TRKInitializeEndian(void)
 {

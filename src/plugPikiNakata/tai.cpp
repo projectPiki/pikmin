@@ -17,10 +17,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("tai");
 
-/*
- * --INFO--
- * Address:	80126E04
- * Size:	00005C
+/**
+ * @TODO: Documentation
  */
 TaiSerialAction::TaiSerialAction(int nextState, int count)
     : TaiAction(nextState)
@@ -29,10 +27,8 @@ TaiSerialAction::TaiSerialAction(int nextState, int count)
 	mActionQueue = new TaiAction*[mCount];
 }
 
-/*
- * --INFO--
- * Address:	80126E60
- * Size:	000044
+/**
+ * @TODO: Documentation
  */
 void TaiSerialAction::start(Teki& teki)
 {
@@ -40,10 +36,8 @@ void TaiSerialAction::start(Teki& teki)
 	mActionQueue[teki.mCurrentQueueId]->start(teki);
 }
 
-/*
- * --INFO--
- * Address:	80126EA8
- * Size:	000080
+/**
+ * @TODO: Documentation
  */
 void TaiSerialAction::finish(Teki& teki)
 {
@@ -53,10 +47,8 @@ void TaiSerialAction::finish(Teki& teki)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80126F2C
- * Size:	0000A8
+/**
+ * @TODO: Documentation
  */
 bool TaiSerialAction::act(Teki& teki)
 {
@@ -71,10 +63,8 @@ bool TaiSerialAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	80126FDC
- * Size:	0000B4
+/**
+ * @TODO: Documentation
  */
 bool TaiSerialAction::actByEvent(immut TekiEvent& event)
 {
@@ -90,10 +80,8 @@ bool TaiSerialAction::actByEvent(immut TekiEvent& event)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	80127098
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 TaiState::TaiState(int count)
     : mCount(count)
@@ -101,10 +89,8 @@ TaiState::TaiState(int count)
 	mActions = new TaiAction*[mCount];
 }
 
-/*
- * --INFO--
- * Address:	801270E4
- * Size:	000080
+/**
+ * @TODO: Documentation
  */
 void TaiState::start(Teki& teki)
 {
@@ -114,10 +100,8 @@ void TaiState::start(Teki& teki)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80127164
- * Size:	000080
+/**
+ * @TODO: Documentation
  */
 void TaiState::finish(Teki& teki)
 {
@@ -127,10 +111,8 @@ void TaiState::finish(Teki& teki)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801271E4
- * Size:	0000EC
+/**
+ * @TODO: Documentation
  */
 bool TaiState::act(Teki& teki)
 {
@@ -155,10 +137,8 @@ bool TaiState::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	801272F0
- * Size:	0000F4
+/**
+ * @TODO: Documentation
  */
 bool TaiState::eventPerformed(immut TekiEvent& event)
 {
@@ -185,20 +165,16 @@ bool TaiState::eventPerformed(immut TekiEvent& event)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	801273E4
- * Size:	000064
+/**
+ * @TODO: Documentation
  */
 TaiStrategy::TaiStrategy(int stateCount, int stateID)
 {
 	init(stateCount, stateID);
 }
 
-/*
- * --INFO--
- * Address:	80127448
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 void TaiStrategy::init(int stateCount, int stateID)
 {
@@ -207,10 +183,8 @@ void TaiStrategy::init(int stateCount, int stateID)
 	mStateID    = stateID;
 }
 
-/*
- * --INFO--
- * Address:	80127494
- * Size:	000014
+/**
+ * @TODO: Documentation
  */
 void TaiStrategy::start(Teki& teki)
 {
@@ -218,10 +192,8 @@ void TaiStrategy::start(Teki& teki)
 	teki.mIsStateReady = true;
 }
 
-/*
- * --INFO--
- * Address:	801274A8
- * Size:	0000CC
+/**
+ * @TODO: Documentation
  */
 void TaiStrategy::act(Teki& teki)
 {
@@ -237,10 +209,8 @@ void TaiStrategy::act(Teki& teki)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80127574
- * Size:	000090
+/**
+ * @TODO: Documentation
  */
 void TaiStrategy::eventPerformed(immut TekiEvent& event)
 {

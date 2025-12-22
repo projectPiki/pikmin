@@ -21,30 +21,24 @@ DEFINE_ERROR(13)
  */
 DEFINE_PRINT(nullptr)
 
-/*
- * --INFO--
- * Address:	8011B2CC
- * Size:	000040
+/**
+ * @TODO: Documentation
  */
 static GenObject* makeObjectTeki()
 {
 	return new GenObjectTeki();
 }
 
-/*
- * --INFO--
- * Address:	8011B30C
- * Size:	000088
+/**
+ * @TODO: Documentation
  */
 void GenObjectTeki::initialise()
 {
 	GenObjectFactory::factory->registerMember('teki', &makeObjectTeki, "敵を発生", 10);
 }
 
-/*
- * --INFO--
- * Address:	8011B394
- * Size:	00008C
+/**
+ * @TODO: Documentation
  */
 GenObjectTeki::GenObjectTeki()
     : GenObject('teki', "敵を生む") // 'create enemies'
@@ -53,10 +47,8 @@ GenObjectTeki::GenObjectTeki()
 	mPersonality = new TekiPersonality();
 }
 
-/*
- * --INFO--
- * Address:	8011B420
- * Size:	000094
+/**
+ * @TODO: Documentation
  */
 void GenObjectTeki::doRead(RandomAccessStream& input)
 {
@@ -69,10 +61,8 @@ void GenObjectTeki::doRead(RandomAccessStream& input)
 	mPersonality->read(input, mVersion);
 }
 
-/*
- * --INFO--
- * Address:	8011B4B4
- * Size:	000068
+/**
+ * @TODO: Documentation
  */
 void GenObjectTeki::doWrite(RandomAccessStream& output)
 {
@@ -80,10 +70,8 @@ void GenObjectTeki::doWrite(RandomAccessStream& output)
 	mPersonality->write(output);
 }
 
-/*
- * --INFO--
- * Address:	8011B51C
- * Size:	000070
+/**
+ * @TODO: Documentation
  */
 void GenObjectTeki::updateUseList(Generator*, int)
 {
@@ -105,10 +93,8 @@ void GenObjectTeki::updateUseList(Generator*, int)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8011B58C
- * Size:	000120
+/**
+ * @TODO: Documentation
  */
 Creature* GenObjectTeki::birth(BirthInfo& info)
 {

@@ -58,10 +58,8 @@ void RoutePoint::refresh(Graphics& gfx)
 	gfx.perspPrintf(gsys->mConsFont, pos2, -(gsys->mConsFont->stringWidth(buf) / 2), 0, buf);
 }
 
-/*
- * --INFO--
- * Address:	80036474
- * Size:	000184
+/**
+ * @TODO: Documentation
  */
 void RoutePoint::loadini(CmdStream* s)
 {
@@ -86,10 +84,8 @@ void RoutePoint::loadini(CmdStream* s)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800365F8
- * Size:	000184
+/**
+ * @TODO: Documentation
  */
 RouteGroup::RouteGroup()
     : EditNode("")
@@ -100,10 +96,8 @@ RouteGroup::RouteGroup()
 	mColour.set(0xFF, 0xFF, 0xFF, 0xC0);
 }
 
-/*
- * --INFO--
- * Address:	8003677C
- * Size:	0009A0
+/**
+ * @TODO: Documentation
  */
 void RouteGroup::refresh(Graphics& gfx, EditNode* node)
 {
@@ -176,20 +170,16 @@ void RouteGroup::refresh(Graphics& gfx, EditNode* node)
 	gfx.setLighting(lighting, nullptr);
 }
 
-/*
- * --INFO--
- * Address:	80037138
- * Size:	000060
+/**
+ * @TODO: Documentation
  */
 void RouteGroup::render2d(Graphics& gfx, int& textHeight)
 {
 	gfx.texturePrintf(gsys->mConsFont, 0, textHeight += 12, "route [ %s ]", mRouteName);
 }
 
-/*
- * --INFO--
- * Address:	80037198
- * Size:	0003CC
+/**
+ * @TODO: Documentation
  */
 void RouteGroup::loadini(CmdStream* s)
 {

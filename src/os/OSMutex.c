@@ -1,9 +1,7 @@
 #include "Dolphin/os.h"
 
-/*
- * --INFO--
- * Address:	801F99B8
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 void OSInitMutex(OSMutex* mutex)
 {
@@ -12,10 +10,8 @@ void OSInitMutex(OSMutex* mutex)
 	mutex->count  = 0;
 }
 
-/*
- * --INFO--
- * Address:	801F99F0
- * Size:	0000DC
+/**
+ * @TODO: Documentation
  */
 void OSLockMutex(OSMutex* mutex)
 {
@@ -43,10 +39,8 @@ void OSLockMutex(OSMutex* mutex)
 	OSRestoreInterrupts(enabled);
 }
 
-/*
- * --INFO--
- * Address:	801F9ACC
- * Size:	0000C8
+/**
+ * @TODO: Documentation
  */
 void OSUnlockMutex(OSMutex* mutex)
 {
@@ -65,10 +59,8 @@ void OSUnlockMutex(OSMutex* mutex)
 	OSRestoreInterrupts(enabled);
 }
 
-/*
- * --INFO--
- * Address:	801F9B94
- * Size:	000070
+/**
+ * @TODO: Documentation
  */
 void __OSUnlockAllMutex(OSThread* thread)
 {
@@ -92,20 +84,16 @@ BOOL OSTryLockMutex(OSMutex* mutex)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801F9C04
- * Size:	000020
+/**
+ * @TODO: Documentation
  */
 void OSInitCond(OSCond* cond)
 {
 	OSInitThreadQueue(&cond->queue);
 }
 
-/*
- * --INFO--
- * Address:	801F9C24
- * Size:	0000D4
+/**
+ * @TODO: Documentation
  */
 void OSWaitCond(OSCond* cond, OSMutex* mutex)
 {
@@ -134,10 +122,8 @@ void OSWaitCond(OSCond* cond, OSMutex* mutex)
 	OSRestoreInterrupts(enabled);
 }
 
-/*
- * --INFO--
- * Address:	801F9CF8
- * Size:	000020
+/**
+ * @TODO: Documentation
  */
 void OSSignalCond(OSCond* cond)
 {
@@ -154,10 +140,8 @@ void IsMember(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801F9D18
- * Size:	000100
+/**
+ * @TODO: Documentation
  */
 int __OSCheckMutex(OSMutex* mutex)
 {
@@ -201,10 +185,8 @@ int __OSCheckMutex(OSMutex* mutex)
 	return 1;
 }
 
-/*
- * --INFO--
- * Address:	801F9E18
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 int __OSCheckDeadLock(OSThread* thread)
 {
@@ -219,10 +201,8 @@ int __OSCheckDeadLock(OSThread* thread)
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	801F9E50
- * Size:	000074
+/**
+ * @TODO: Documentation
  */
 int __OSCheckMutexes(OSThread* thread)
 {

@@ -19,10 +19,8 @@ DEFINE_ERROR(14)
  */
 DEFINE_PRINT("drawHiScore")
 
-/*
- * --INFO--
- * Address:	801F0A80
- * Size:	0003D8
+/**
+ * @TODO: Documentation
  */
 zen::DrawHiScore::DrawHiScore()
 {
@@ -79,10 +77,8 @@ zen::DrawHiScore::DrawHiScore()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801F0E58
- * Size:	00012C
+/**
+ * @TODO: Documentation
  */
 bool zen::DrawHiScore::update(Controller* controller)
 {
@@ -117,10 +113,8 @@ bool zen::DrawHiScore::update(Controller* controller)
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	801F0F84
- * Size:	0001B0
+/**
+ * @TODO: Documentation
  */
 void zen::DrawHiScore::draw(Graphics& gfx)
 {
@@ -155,10 +149,8 @@ void zen::DrawHiScore::draw(Graphics& gfx)
 	mAlphaWipe.draw(gfx);
 }
 
-/*
- * --INFO--
- * Address:	801F1134
- * Size:	000084
+/**
+ * @TODO: Documentation
  */
 void zen::DrawHiScore::start()
 {
@@ -168,10 +160,8 @@ void zen::DrawHiScore::start()
 	mAlphaWipe.start(0.5f, 0.25, AlphaWipe::TYPE_Reverse);
 }
 
-/*
- * --INFO--
- * Address:	801F11B8
- * Size:	00033C
+/**
+ * @TODO: Documentation
  */
 void zen::DrawHiScore::rewriteNumber(P2DScreen* screen, u32 tag, int value, int digits, bool p5)
 {

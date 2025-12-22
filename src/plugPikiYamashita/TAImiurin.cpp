@@ -741,10 +741,8 @@ protected:
 	// TODO: members
 };
 
-/*
- * --INFO--
- * Address:	801D624C
- * Size:	000084
+/**
+ * @TODO: Documentation
  */
 TAImiurinSoundTable::TAImiurinSoundTable()
     : PaniSoundTable(3)
@@ -754,10 +752,8 @@ TAImiurinSoundTable::TAImiurinSoundTable()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801D62D0
- * Size:	000404
+/**
+ * @TODO: Documentation
  */
 TAImiurinParameters::TAImiurinParameters()
     : TekiParameters(TAImiurinIntParams::COUNT, TAImiurinFloatParams::COUNT)
@@ -840,10 +836,8 @@ TAImiurinParameters::TAImiurinParameters()
 	multiP->setF(TPF_SpawnVelocity, 0.0f);
 }
 
-/*
- * --INFO--
- * Address:	801D66D4
- * Size:	0019CC
+/**
+ * @TODO: Documentation
  */
 TAImiurinStrategy::TAImiurinStrategy()
     : YaiStrategy(TAImiurinStateID::COUNT, TAImiurinStateID::Init)
@@ -1169,10 +1163,8 @@ TAImiurinStrategy::TAImiurinStrategy()
 	STACK_PAD_VAR(2);
 }
 
-/*
- * --INFO--
- * Address:	801D80A0
- * Size:	0000C4
+/**
+ * @TODO: Documentation
  */
 bool TAImiurinStrategy::interact(Teki& teki, immut TekiInteractionKey& interaction)
 {
@@ -1194,10 +1186,8 @@ bool TAImiurinStrategy::interact(Teki& teki, immut TekiInteractionKey& interacti
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	801D8164
- * Size:	0006FC
+/**
+ * @TODO: Documentation
  */
 void TAImiurinAnimation::makeDefaultAnimations()
 {

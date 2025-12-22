@@ -1,29 +1,23 @@
 #include "PowerPC_EABI_Support/MetroTRK/trk.h"
 
-/*
- * --INFO--
- * Address:	8021E698
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 DSError TRKInitializeMutex(void*)
 {
 	return DS_NoError;
 }
 
-/*
- * --INFO--
- * Address:	8021E6A0
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 DSError TRKAcquireMutex(void*)
 {
 	return DS_NoError;
 }
 
-/*
- * --INFO--
- * Address:	8021E6A8
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 DSError TRKReleaseMutex(void*)
 {

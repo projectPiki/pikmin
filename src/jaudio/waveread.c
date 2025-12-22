@@ -11,10 +11,8 @@ static WaveArchiveBank_* wavearc[WAVEARC_SIZE];
 static CtrlGroup_* wavegroup[WAVEGROUP_SIZE];
 CtrlGroup_* CGRP_ARRAY[16];
 
-/*
- * --INFO--
- * Address:	8000C200
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 
 static void PTconvert(void** pointer, u32 base_address)
@@ -29,10 +27,8 @@ static void PTconvert(void** pointer, u32 base_address)
 	*pointer = *(char**)pointer + base_address;
 }
 
-/*
- * --INFO--
- * Address:	8000C240
- * Size:	0002A0
+/**
+ * @TODO: Documentation
  */
 CtrlGroup_* Wave_Test(u8* data)
 {
@@ -121,10 +117,8 @@ void GetSound_Test(u32 id)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8000C4E0
- * Size:	000084
+/**
+ * @TODO: Documentation
  */
 BOOL Wavegroup_Regist(void* wsysData, u32 id)
 {
@@ -140,10 +134,8 @@ BOOL Wavegroup_Regist(void* wsysData, u32 id)
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	8000C580
- * Size:	00002C
+/**
+ * @TODO: Documentation
  */
 void Wavegroup_Init()
 {
@@ -152,10 +144,8 @@ void Wavegroup_Init()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8000C5C0
- * Size:	000064
+/**
+ * @TODO: Documentation
  */
 CtrlGroup_* WaveidToWavegroup(u32 param_1, u32 param_2)
 {
@@ -174,10 +164,8 @@ CtrlGroup_* WaveidToWavegroup(u32 param_1, u32 param_2)
 	return index >= WAVEGROUP_SIZE ? NULL : wavegroup[index];
 }
 
-/*
- * --INFO--
- * Address:	8000C640
- * Size:	00008C
+/**
+ * @TODO: Documentation
  */
 static BOOL __WaveScene_Set(u32 waveIndex, u32 ctrlIndex, BOOL doSet)
 {
@@ -201,30 +189,24 @@ static BOOL __WaveScene_Set(u32 waveIndex, u32 ctrlIndex, BOOL doSet)
 	return Jac_SceneSet(wavearc[waveIndex], group, ctrlIndex, doSet);
 }
 
-/*
- * --INFO--
- * Address:	8000C6E0
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 BOOL WaveScene_Set(u32 waveIndex, u32 ctrlIndex)
 {
 	return __WaveScene_Set(waveIndex, ctrlIndex, TRUE);
 }
 
-/*
- * --INFO--
- * Address:	8000C720
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 BOOL WaveScene_Load(u32 waveIndex, u32 ctrlIndex)
 {
 	return __WaveScene_Set(waveIndex, ctrlIndex, FALSE);
 }
 
-/*
- * --INFO--
- * Address:	8000C760
- * Size:	000074
+/**
+ * @TODO: Documentation
  */
 static void __WaveScene_Close(u32 waveIndex, u32 ctrlIndex, BOOL param_3)
 {
@@ -246,20 +228,16 @@ static void __WaveScene_Close(u32 waveIndex, u32 ctrlIndex, BOOL param_3)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8000C7E0
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 void WaveScene_Close(u32 waveIndex, u32 ctrlIndex)
 {
 	__WaveScene_Close(waveIndex, ctrlIndex, TRUE);
 }
 
-/*
- * --INFO--
- * Address:	8000C820
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 void WaveScene_Erase(u32 waveIndex, u32 ctrlIndex)
 {

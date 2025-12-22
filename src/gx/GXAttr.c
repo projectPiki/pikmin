@@ -14,10 +14,8 @@
 #define CHECK_FRAC(line, frac)     ASSERTMSGLINE(line, (frac) < 32, "GXSetVtxAttrFmt: Frac value is >= 32")
 #define CHECK_LISTPTR(line, list)  ASSERTMSGLINE(line, (list) != NULL, "GXSetVtxAttrFmt: list pointer is NULL")
 
-/*
- * --INFO--
- * Address:	8020F2A8
- * Size:	000158
+/**
+ * @TODO: Documentation
  */
 static void __GXXfVtxSpecs(void)
 {
@@ -121,10 +119,8 @@ static inline void SETVCDATTR(GXAttr Attr, GXAttrType Type)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8020F400
- * Size:	000338
+/**
+ * @TODO: Documentation
  */
 void GXSetVtxDesc(GXAttr attr, GXAttrType type)
 {
@@ -141,10 +137,8 @@ void GXSetVtxDesc(GXAttr attr, GXAttrType type)
 	gx->dirtyState |= 8;
 }
 
-/*
- * --INFO--
- * Address:	8020F738
- * Size:	00035C
+/**
+ * @TODO: Documentation
  */
 void GXSetVtxDescv(GXVtxDescList* attrPtr)
 {
@@ -164,10 +158,8 @@ void GXSetVtxDescv(GXVtxDescList* attrPtr)
 	gx->dirtyState |= 8;
 }
 
-/*
- * --INFO--
- * Address:	8020FA94
- * Size:	000168
+/**
+ * @TODO: Documentation
  */
 void __GXSetVCD(void)
 {
@@ -315,10 +307,8 @@ void GXGetVtxDescv(GXVtxDescList* vcd)
 	vcd[attr].mAttr = 0xFF;
 }
 
-/*
- * --INFO--
- * Address:	8020FBFC
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 void GXClearVtxDesc(void)
 {
@@ -401,10 +391,8 @@ static inline void SETVAT(u32* va, u32* vb, u32* vc, GXAttr attr, GXCompCnt cnt,
 	}
 }
 
-/*
- * --INFO--
- * Address:	8020FC48
- * Size:	00035C
+/**
+ * @TODO: Documentation
  */
 void GXSetVtxAttrFmt(GXVtxFmt vtxfmt, GXAttr attr, GXCompCnt cnt, GXCompType type, u8 frac)
 {
@@ -424,10 +412,8 @@ void GXSetVtxAttrFmt(GXVtxFmt vtxfmt, GXAttr attr, GXCompCnt cnt, GXCompType typ
 	gx->dirtyVAT |= (u8)(1 << (u8)vtxfmt);
 }
 
-/*
- * --INFO--
- * Address:	8020FFA4
- * Size:	00037C
+/**
+ * @TODO: Documentation
  */
 void GXSetVtxAttrFmtv(GXVtxFmt vtxfmt, GXVtxAttrFmtList* list)
 {
@@ -451,10 +437,8 @@ void GXSetVtxAttrFmtv(GXVtxFmt vtxfmt, GXVtxAttrFmtList* list)
 	gx->dirtyVAT |= (u8)(1 << (u8)vtxfmt);
 }
 
-/*
- * --INFO--
- * Address:	80210320
- * Size:	00009C
+/**
+ * @TODO: Documentation
  */
 void __GXSetVAT(void)
 {
@@ -579,10 +563,8 @@ void GXGetVtxAttrFmtv(GXVtxFmt fmt, GXVtxAttrFmtList* vat)
 	vat->mAttr = GX_VA_NULL;
 }
 
-/*
- * --INFO--
- * Address:	802103BC
- * Size:	00008C
+/**
+ * @TODO: Documentation
  */
 void GXSetArray(GXAttr attr, void* base_ptr, u8 stride)
 {
@@ -602,10 +584,8 @@ void GXSetArray(GXAttr attr, void* base_ptr, u8 stride)
 	GX_WRITE_SOME_REG3(8, cpAttr | 0xB0, stride, cpAttr - 12);
 }
 
-/*
- * --INFO--
- * Address:	80210448
- * Size:	000010
+/**
+ * @TODO: Documentation
  */
 void GXInvalidateVtxCache(void)
 {
@@ -613,10 +593,8 @@ void GXInvalidateVtxCache(void)
 	GX_WRITE_U8(0x48);
 }
 
-/*
- * --INFO--
- * Address:	80210458
- * Size:	0002D0
+/**
+ * @TODO: Documentation
  */
 
 void GXSetTexCoordGen2(GXTexCoordID dst_coord, GXTexGenType func, GXTexGenSrc src_param, u32 mtx, GXBool normalize, u32 pt_texmtx)
@@ -781,10 +759,8 @@ void GXSetTexCoordGen2(GXTexCoordID dst_coord, GXTexGenType func, GXTexGenSrc sr
 	__GXSetMatrixIndex(mtxIdAttr);
 }
 
-/*
- * --INFO--
- * Address:	80210728
- * Size:	000048
+/**
+ * @TODO: Documentation
  */
 void GXSetNumTexGens(u8 nTexGens)
 {

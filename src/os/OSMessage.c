@@ -1,9 +1,7 @@
 #include "Dolphin/os.h"
 
-/*
- * --INFO--
- * Address:	801F97B4
- * Size:	000060
+/**
+ * @TODO: Documentation
  */
 void OSInitMessageQueue(OSMessageQueue* queue, OSMessage* msgArray, s32 msgCount)
 {
@@ -15,10 +13,8 @@ void OSInitMessageQueue(OSMessageQueue* queue, OSMessage* msgArray, s32 msgCount
 	queue->usedCount  = 0;
 }
 
-/*
- * --INFO--
- * Address:	801F9814
- * Size:	0000C8
+/**
+ * @TODO: Documentation
  */
 BOOL OSSendMessage(OSMessageQueue* queue, OSMessage msg, s32 flags)
 {
@@ -45,10 +41,8 @@ BOOL OSSendMessage(OSMessageQueue* queue, OSMessage msg, s32 flags)
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	801F98DC
- * Size:	0000DC
+/**
+ * @TODO: Documentation
  */
 BOOL OSReceiveMessage(OSMessageQueue* queue, OSMessage* buffer, s32 flags)
 {

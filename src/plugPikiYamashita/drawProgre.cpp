@@ -17,10 +17,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("drawProgre")
 
-/*
- * --INFO--
- * Address:	801DA250
- * Size:	0001B4
+/**
+ * @TODO: Documentation
  */
 zen::DrawProgre::DrawProgre()
 {
@@ -33,10 +31,8 @@ zen::DrawProgre::DrawProgre()
 	mReturnState = RETSTATE_NULL;
 }
 
-/*
- * --INFO--
- * Address:	801DA4DC
- * Size:	000050
+/**
+ * @TODO: Documentation
  */
 void zen::DrawProgre::start()
 {
@@ -46,10 +42,8 @@ void zen::DrawProgre::start()
 	mProgreMes->init();
 }
 
-/*
- * --INFO--
- * Address:	801DA52C
- * Size:	0002A0
+/**
+ * @TODO: Documentation
  */
 zen::DrawProgre::returnStatusFlag zen::DrawProgre::update(Controller* controller)
 {
@@ -76,10 +70,8 @@ zen::DrawProgre::returnStatusFlag zen::DrawProgre::update(Controller* controller
 	return mReturnState;
 }
 
-/*
- * --INFO--
- * Address:	801DA7CC
- * Size:	000048
+/**
+ * @TODO: Documentation
  */
 void zen::DrawProgre::draw(Graphics& gfx)
 {

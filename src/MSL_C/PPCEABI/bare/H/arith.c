@@ -1,9 +1,7 @@
 #include "Dolphin/arith.h"
 
-/*
- * --INFO--
- * Address:	80215CA0
- * Size:	000010
+/**
+ * @TODO: Documentation
  */
 s32 abs(s32 __x)
 {

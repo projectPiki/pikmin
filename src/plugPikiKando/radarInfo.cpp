@@ -21,10 +21,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("radarInfo");
 
-/*
- * --INFO--
- * Address:	8007B564
- * Size:	0000C8
+/**
+ * @TODO: Documentation
  */
 RadarInfo::RadarInfo()
 {
@@ -32,10 +30,8 @@ RadarInfo::RadarInfo()
 	mDeadPartsList.initCore("dead ");
 }
 
-/*
- * --INFO--
- * Address:	8007B62C
- * Size:	0000E8
+/**
+ * @TODO: Documentation
  */
 void RadarInfo::attachParts(Creature* part)
 {
@@ -61,10 +57,8 @@ void RadarInfo::attachParts(Creature* part)
 	newInfo->mPart = part;
 }
 
-/*
- * --INFO--
- * Address:	8007B714
- * Size:	000070
+/**
+ * @TODO: Documentation
  */
 void RadarInfo::detachParts(Creature* part)
 {
@@ -80,10 +74,8 @@ void RadarInfo::detachParts(Creature* part)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8007B784
- * Size:	000044
+/**
+ * @TODO: Documentation
  */
 Vector3f RadarInfo::PartsInfo::getPos()
 {

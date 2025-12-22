@@ -20,10 +20,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT(nullptr)
 
-/*
- * --INFO--
- * Address:	80197AD8
- * Size:	000064
+/**
+ * @TODO: Documentation
  */
 void zen::ogScrFileSelectMgr::setOperateMode_Delete()
 {
@@ -66,10 +64,8 @@ void zen::ogScrFileSelectMgr::DeleteEffectStart()
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80197B3C
- * Size:	0003EC
+/**
+ * @TODO: Documentation
  */
 void zen::ogScrFileSelectMgr::OperateDelete(Controller* input)
 {

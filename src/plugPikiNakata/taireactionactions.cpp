@@ -19,50 +19,40 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("taireactionactions")
 
-/*
- * --INFO--
- * Address:	8013EBD8
- * Size:	00001C
+/**
+ * @TODO: Documentation
  */
 bool TaiDeadAction::act(Teki& teki)
 {
 	return teki.mHealth <= 0.0f;
 }
 
-/*
- * --INFO--
- * Address:	8013EBF4
- * Size:	00000C
+/**
+ * @TODO: Documentation
  */
 void TaiLifeZeroAction::start(Teki& teki)
 {
 	teki.mHealth = 0.0f;
 }
 
-/*
- * --INFO--
- * Address:	8013EC00
- * Size:	000014
+/**
+ * @TODO: Documentation
  */
 void TaiLifeDamageAction::start(Teki& teki)
 {
 	teki.mHealth -= mDamage;
 }
 
-/*
- * --INFO--
- * Address:	8013EC14
- * Size:	000030
+/**
+ * @TODO: Documentation
  */
 void TaiDyeAction::start(Teki& teki)
 {
 	teki.die();
 }
 
-/*
- * --INFO--
- * Address:	8013EC44
- * Size:	000058
+/**
+ * @TODO: Documentation
  */
 void TaiStartDyingAction::start(Teki& teki)
 {
@@ -72,30 +62,24 @@ void TaiStartDyingAction::start(Teki& teki)
 	teki.clearTekiOption(BTeki::TEKI_OPTION_SHADOW_VISIBLE);
 }
 
-/*
- * --INFO--
- * Address:	8013EC9C
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 void TaiSpawnItemsAction::start(Teki& teki)
 {
 	teki.spawnItems();
 }
 
-/*
- * --INFO--
- * Address:	8013ECC0
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 void TaiCreateDeadEffectAction::start(Teki& teki)
 {
 	teki.createDeadEffect();
 }
 
-/*
- * --INFO--
- * Address:	8013ECE4
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 void TaiDyingAction::start(Teki& teki)
 {
@@ -104,10 +88,8 @@ void TaiDyingAction::start(Teki& teki)
 	teki.mHealth = 0.0f;
 }
 
-/*
- * --INFO--
- * Address:	8013ED30
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 bool TaiDyingAction::act(Teki& teki)
 {
@@ -119,30 +101,24 @@ bool TaiDyingAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8013ED7C
- * Size:	00000C
+/**
+ * @TODO: Documentation
  */
 void TaiDamageCountResetAction::start(Teki& teki)
 {
 	teki.mDamageCount = 0.0f;
 }
 
-/*
- * --INFO--
- * Address:	8013ED88
- * Size:	000040
+/**
+ * @TODO: Documentation
  */
 bool TaiDamageCountAction::act(Teki& teki)
 {
 	return (teki.mDamageCount >= mMaxDamageCount);
 }
 
-/*
- * --INFO--
- * Address:	8013EDC8
- * Size:	000018
+/**
+ * @TODO: Documentation
  */
 bool TaiDamageScaleAction::act(Teki& teki)
 {
@@ -150,10 +126,8 @@ bool TaiDamageScaleAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8013EDE0
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 bool TaiDamageAction::act(Teki& teki)
 {
@@ -163,10 +137,8 @@ bool TaiDamageAction::act(Teki& teki)
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8013EE04
- * Size:	000088
+/**
+ * @TODO: Documentation
  */
 bool TaiSimultaneousDamageAction::act(Teki& teki)
 {
@@ -179,10 +151,8 @@ bool TaiSimultaneousDamageAction::act(Teki& teki)
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8013EE8C
- * Size:	0000D8
+/**
+ * @TODO: Documentation
  */
 bool TaiCounterattackSimultaneousDamageAction::act(Teki& teki)
 {
@@ -200,10 +170,8 @@ bool TaiCounterattackSimultaneousDamageAction::act(Teki& teki)
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8013EF64
- * Size:	000040
+/**
+ * @TODO: Documentation
  */
 void TaiDamagingAction::start(Teki& teki)
 {
@@ -211,10 +179,8 @@ void TaiDamagingAction::start(Teki& teki)
 	teki.makeDamaged();
 }
 
-/*
- * --INFO--
- * Address:	8013EFA4
- * Size:	000020
+/**
+ * @TODO: Documentation
  */
 bool TaiDamagingAction::act(Teki& teki)
 {
@@ -225,10 +191,8 @@ bool TaiDamagingAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8013EFC4
- * Size:	000098
+/**
+ * @TODO: Documentation
  */
 bool TaiTargetNearestAssailantAction::act(Teki& teki)
 {
@@ -243,10 +207,8 @@ bool TaiTargetNearestAssailantAction::act(Teki& teki)
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8013F05C
- * Size:	00013C
+/**
+ * @TODO: Documentation
  */
 bool TaiTargetNearestCollisionAction::actByEvent(immut TekiEvent& event)
 {
@@ -268,10 +230,8 @@ bool TaiTargetNearestCollisionAction::actByEvent(immut TekiEvent& event)
 	TekiRecognitionCondition(nullptr);
 }
 
-/*
- * --INFO--
- * Address:	8013F198
- * Size:	000040
+/**
+ * @TODO: Documentation
  */
 bool TaiStickedAction::act(Teki& teki)
 {
@@ -280,10 +240,8 @@ bool TaiStickedAction::act(Teki& teki)
 	return count > 0;
 }
 
-/*
- * --INFO--
- * Address:	8013F1D8
- * Size:	000050
+/**
+ * @TODO: Documentation
  */
 bool TaiSmashedAction::actByEvent(immut TekiEvent& event)
 {
@@ -298,10 +256,8 @@ bool TaiSmashedAction::actByEvent(immut TekiEvent& event)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8013F228
- * Size:	000070
+/**
+ * @TODO: Documentation
  */
 void TaiBeingPressedAction::start(Teki& teki)
 {
@@ -310,10 +266,8 @@ void TaiBeingPressedAction::start(Teki& teki)
 	teki.clearTekiOption(BTeki::TEKI_OPTION_ATARI);
 }
 
-/*
- * --INFO--
- * Address:	8013F298
- * Size:	00001C
+/**
+ * @TODO: Documentation
  */
 bool TaiPressedAction::actByEvent(immut TekiEvent& event)
 {
@@ -325,20 +279,16 @@ bool TaiPressedAction::actByEvent(immut TekiEvent& event)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8013F2B4
- * Size:	00001C
+/**
+ * @TODO: Documentation
  */
 void TaiWarnAction::start(Teki& teki)
 {
 	teki.mTimers[4] = teki.getParameterF(TPF_WarnPeriod);
 }
 
-/*
- * --INFO--
- * Address:	8013F2D0
- * Size:	000034
+/**
+ * @TODO: Documentation
  */
 bool TaiDangerLifeAction::act(Teki& teki)
 {

@@ -26,10 +26,8 @@ immut char* Reaction::info[9] = {
 	"-", "WATCH", "ESCAPE", "CHASE", "GOTO", "PICK", "PUT", "KICK", "FORMATION",
 };
 
-/*
- * --INFO--
- * Address:	800C3AE4
- * Size:	000240
+/**
+ * @TODO: Documentation
  */
 void Action::procMsg(Msg* msg)
 {
@@ -47,10 +45,8 @@ void Action::procMsg(Msg* msg)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800C3D24
- * Size:	0000AC
+/**
+ * @TODO: Documentation
  */
 void Action::Child::initialise(Creature* creature)
 {
@@ -71,10 +67,8 @@ void Action::Child::initialise(Creature* creature)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800C3DD0
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 Action::Action(Piki* actor, bool p2)
 {
@@ -85,10 +79,8 @@ Action::Action(Piki* actor, bool p2)
 	mName          = "no name";
 }
 
-/*
- * --INFO--
- * Address:	800C3E08
- * Size:	000078
+/**
+ * @TODO: Documentation
  */
 Action::~Action()
 {
@@ -98,30 +90,24 @@ Action::~Action()
 	mChildActions = nullptr;
 }
 
-/*
- * --INFO--
- * Address:	800C3F00
- * Size:	00000C
+/**
+ * @TODO: Documentation
  */
 void Action::init(Creature*)
 {
 	mCurrActionIdx = PikiAction::RandomBoid;
 }
 
-/*
- * --INFO--
- * Address:	800C3F0C
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 int Action::exec()
 {
 	return ACTOUT_Success;
 }
 
-/*
- * --INFO--
- * Address:	800C3F14
- * Size:	0000E0
+/**
+ * @TODO: Documentation
  */
 void AndAction::init(Creature* creature)
 {
@@ -130,10 +116,8 @@ void AndAction::init(Creature* creature)
 	mOtherCreature = creature;
 }
 
-/*
- * --INFO--
- * Address:	800C3FF4
- * Size:	00014C
+/**
+ * @TODO: Documentation
  */
 int AndAction::exec()
 {
@@ -159,10 +143,8 @@ int AndAction::exec()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800C4140
- * Size:	0000E0
+/**
+ * @TODO: Documentation
  */
 void OrAction::init(Creature* creature)
 {
@@ -171,10 +153,8 @@ void OrAction::init(Creature* creature)
 	mOtherCreature = creature;
 }
 
-/*
- * --INFO--
- * Address:	800C4220
- * Size:	000150
+/**
+ * @TODO: Documentation
  */
 int OrAction::exec()
 {
@@ -198,10 +178,8 @@ int OrAction::exec()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800C4370
- * Size:	000124
+/**
+ * @TODO: Documentation
  */
 void Action::setChildren(int count, ...)
 {
@@ -220,10 +198,8 @@ void Action::setChildren(int count, ...)
 	va_end(list);
 }
 
-/*
- * --INFO--
- * Address:	800C44A4
- * Size:	000070
+/**
+ * @TODO: Documentation
  */
 void Action::cleanup()
 {
@@ -233,10 +209,8 @@ void Action::cleanup()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800C4514
- * Size:	0000DC
+/**
+ * @TODO: Documentation
  */
 void TopAction::MotionListener::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
@@ -248,10 +222,8 @@ void TopAction::MotionListener::animationKeyUpdated(immut PaniAnimKeyEvent& even
 	}
 }
 
-/*
- * --INFO--
- * Address:	800C45F0
- * Size:	00064C
+/**
+ * @TODO: Documentation
  */
 TopAction::TopAction(Piki* piki)
     : Action(piki, false)
@@ -308,19 +280,15 @@ TopAction::TopAction(Piki* piki)
 	memStat->end("topaction");
 }
 
-/*
- * --INFO--
- * Address:	800C4C3C
- * Size:	000088
+/**
+ * @TODO: Documentation
  */
 TopAction::~TopAction()
 {
 }
 
-/*
- * --INFO--
- * Address:	800C4CC4
- * Size:	0000E8
+/**
+ * @TODO: Documentation
  */
 void TopAction::init(Creature* creature)
 {
@@ -333,10 +301,8 @@ void TopAction::init(Creature* creature)
 	mIsSuspended = false;
 }
 
-/*
- * --INFO--
- * Address:	800C4DAC
- * Size:	000598
+/**
+ * @TODO: Documentation
  */
 int TopAction::exec()
 {
@@ -453,10 +419,8 @@ int TopAction::exec()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800C5344
- * Size:	000084
+/**
+ * @TODO: Documentation
  */
 void TopAction::abandon(zen::particleGenerator* particle)
 {
@@ -482,10 +446,8 @@ void TopAction::abandon(zen::particleGenerator* particle)
 	mIsSuspended   = false;
 }
 
-/*
- * --INFO--
- * Address:	800C53C8
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 bool TopAction::resumable()
 {
@@ -495,10 +457,8 @@ bool TopAction::resumable()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800C5414
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 void TopAction::resume()
 {
@@ -510,10 +470,8 @@ void TopAction::resume()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800C5460
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 void TopAction::restart()
 {
@@ -535,10 +493,8 @@ void TopAction::knowledgeCheck()
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	800C54AC
- * Size:	000090
+/**
+ * @TODO: Documentation
  */
 TopAction::ObjBore::ObjBore()
 {
@@ -622,10 +578,8 @@ void TopAction::ObjBore::update()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800C553C
- * Size:	00008C
+/**
+ * @TODO: Documentation
  */
 TopAction::Boredom::Boredom()
 {

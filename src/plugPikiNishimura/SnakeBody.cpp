@@ -24,10 +24,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("SnakeBody");
 
-/*
- * --INFO--
- * Address:	8015FCA8
- * Size:	000220
+/**
+ * @TODO: Documentation
  */
 void SnakeBody::setBodyOnGroundEffect()
 {
@@ -70,10 +68,8 @@ void SnakeBody::setBodyOnGroundEffect()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8015FEC8
- * Size:	000068
+/**
+ * @TODO: Documentation
  */
 void SnakeBody::killCallBackEffect(bool doForceFinish)
 {
@@ -81,10 +77,8 @@ void SnakeBody::killCallBackEffect(bool doForceFinish)
 	effectMgr->kill(mRotateCallBack, nullptr, doForceFinish);
 }
 
-/*
- * --INFO--
- * Address:	8015FF30
- * Size:	000158
+/**
+ * @TODO: Documentation
  */
 SnakeBody::SnakeBody(Snake* snake)
 {
@@ -94,10 +88,8 @@ SnakeBody::SnakeBody(Snake* snake)
 	mDeadPtclGens     = new zen::particleGenerator*[7];
 }
 
-/*
- * --INFO--
- * Address:	80160088
- * Size:	00009C
+/**
+ * @TODO: Documentation
  */
 void SnakeBody::init(immut Vector3f&, Snake* snake)
 {
@@ -118,10 +110,8 @@ void SnakeBody::init(immut Vector3f&, Snake* snake)
 	mDeadEffectSegmentIndex = 7;
 }
 
-/*
- * --INFO--
- * Address:	80160124
- * Size:	000028
+/**
+ * @TODO: Documentation
  */
 void SnakeBody::initBlending(f32 blendRate)
 {
@@ -195,10 +185,8 @@ void SnakeBody::makeHeadDirection()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8016014C
- * Size:	000318
+/**
+ * @TODO: Documentation
  */
 void SnakeBody::makeTurnVelocity()
 {
@@ -256,10 +244,8 @@ void SnakeBody::makeNewPosition()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80160464
- * Size:	0002F4
+/**
+ * @TODO: Documentation
  */
 void SnakeBody::makeResultPosition()
 {
@@ -316,10 +302,8 @@ void SnakeBody::makeResultPosition()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80160758
- * Size:	000368
+/**
+ * @TODO: Documentation
  */
 void SnakeBody::makeVectorMatrix()
 {
@@ -371,10 +355,8 @@ void SnakeBody::createDeadPellet(immut Vector3f& pelletPos, int itemIdx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80160AC0
- * Size:	000254
+/**
+ * @TODO: Documentation
  */
 void SnakeBody::createDeadHeadEffect()
 {
@@ -402,10 +384,8 @@ void SnakeBody::createDeadHeadEffect()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80160D14
- * Size:	000244
+/**
+ * @TODO: Documentation
  */
 void SnakeBody::createDeadBodyEffect()
 {
@@ -436,10 +416,8 @@ void SnakeBody::createDeadBodyEffect()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80160F58
- * Size:	000190
+/**
+ * @TODO: Documentation
  */
 void SnakeBody::makeDeadPattern01()
 {
@@ -500,10 +478,8 @@ void SnakeBody::makeDeadScaleParms()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801610E8
- * Size:	000450
+/**
+ * @TODO: Documentation
  */
 void SnakeBody::update()
 {
@@ -832,10 +808,8 @@ void SnakeBody::makeAnimation(BossShapeObject* shapeObj, Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80161538
- * Size:	0001F8
+/**
+ * @TODO: Documentation
  */
 void SnakeBody::makeBodySize()
 {
@@ -852,10 +826,8 @@ void SnakeBody::makeBodySize()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80161730
- * Size:	000198
+/**
+ * @TODO: Documentation
  */
 void SnakeBody::makeHeadPosition()
 {
@@ -887,10 +859,8 @@ void SnakeBody::makeHeadPosition()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801618C8
- * Size:	0002F4
+/**
+ * @TODO: Documentation
  */
 void SnakeBody::makeBodyMatrix()
 {
@@ -937,10 +907,8 @@ void SnakeBody::makeBodyMatrix()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80161BBC
- * Size:	0003B8
+/**
+ * @TODO: Documentation
  */
 void SnakeBody::makeAnimMatrix()
 {
@@ -971,10 +939,8 @@ void SnakeBody::makeAnimMatrix()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80161F74
- * Size:	000524
+/**
+ * @TODO: Documentation
  */
 void SnakeBody::caseOfMatrix(Matrix4f* animMatrices)
 {
@@ -1012,10 +978,8 @@ void SnakeBody::checkBlendingParm(Matrix4f* animMatrices)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80162498
- * Size:	000540
+/**
+ * @TODO: Documentation
  */
 void SnakeBody::makeBlending(Matrix4f* animMatrices)
 {
@@ -1071,10 +1035,8 @@ void SnakeBody::makeBlending(Matrix4f* animMatrices)
 	mNeckPosition = mSegmentPositionList[SnakeJointType::Neck];
 }
 
-/*
- * --INFO--
- * Address:	801629D8
- * Size:	00010C
+/**
+ * @TODO: Documentation
  */
 void SnakeBody::setDeadPattern01(Matrix4f* animMatrices)
 {
@@ -1122,10 +1084,8 @@ void SnakeBody::setDeadScale(Matrix4f* animMatrices)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80162AE4
- * Size:	0001E0
+/**
+ * @TODO: Documentation
  */
 void SnakeBody::returnJoint(BossShapeObject* shapeObj, Graphics& gfx, immut Matrix4f* animMatrices)
 {
@@ -1161,10 +1121,8 @@ void SnakeBody::returnJoint(BossShapeObject* shapeObj, Graphics& gfx, immut Matr
 	}
 }
 
-/*
- * --INFO--
- * Address:	80162CC4
- * Size:	0009B8
+/**
+ * @TODO: Documentation
  */
 void SnakeBody::refresh(BossShapeObject* shapeObj, Graphics& gfx)
 {

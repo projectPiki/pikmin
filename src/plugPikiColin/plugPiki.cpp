@@ -21,10 +21,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("plugPiki")
 
-/*
- * --INFO--
- * Address:	8005EDF0
- * Size:	000160
+/**
+ * @TODO: Documentation
  */
 void PlugPikiApp::hardReset()
 {
@@ -45,10 +43,8 @@ void PlugPikiApp::hardReset()
 	gsys->softReset();
 }
 
-/*
- * --INFO--
- * Address:	8005EF50
- * Size:	000040
+/**
+ * @TODO: Documentation
  */
 void PlugPikiApp::softReset()
 {
@@ -57,10 +53,8 @@ void PlugPikiApp::softReset()
 	mIsReadyToDraw = TRUE;
 }
 
-/*
- * --INFO--
- * Address:	8005EF90
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 void PlugPikiApp::update()
 {
@@ -69,10 +63,8 @@ void PlugPikiApp::update()
 	Node::update();
 }
 
-/*
- * --INFO--
- * Address:	8005EFDC
- * Size:	0004BC
+/**
+ * @TODO: Documentation
  */
 void PlugPikiApp::draw(Graphics& gfx)
 {
@@ -146,10 +138,8 @@ void PlugPikiApp::draw(Graphics& gfx)
 	gsys->mTimer->stop("cpu draw");
 }
 
-/*
- * --INFO--
- * Address:	8005F498
- * Size:	000144
+/**
+ * @TODO: Documentation
  */
 int PlugPikiApp::idle()
 {
@@ -186,10 +176,8 @@ int PlugPikiApp::idle()
 	return 1;
 }
 
-/*
- * --INFO--
- * Address:	8005F5DC
- * Size:	000148
+/**
+ * @TODO: Documentation
  */
 PlugPikiApp::PlugPikiApp()
 {

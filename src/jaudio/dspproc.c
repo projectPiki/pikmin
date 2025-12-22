@@ -4,10 +4,8 @@
 
 static u16 DSP_MIXERLEVEL = 0x4000;
 
-/*
- * --INFO--
- * Address:	800086C0
- * Size:	0000A8
+/**
+ * @TODO: Documentation
  */
 s32 DSPSendCommands(u32* commands, u32 count)
 {
@@ -39,10 +37,8 @@ s32 DSPSendCommands(u32* commands, u32 count)
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80008780
- * Size:	000048
+/**
+ * @TODO: Documentation
  */
 u32 DSPReleaseHalt()
 {
@@ -56,10 +52,8 @@ u32 DSPReleaseHalt()
 	return 0x88881357;
 }
 
-/*
- * --INFO--
- * Address:	800087E0
- * Size:	000058
+/**
+ * @TODO: Documentation
  */
 void DSPWaitFinish()
 {
@@ -239,10 +233,8 @@ void Dadpcmtest(u32)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80008840
- * Size:	000048
+/**
+ * @TODO: Documentation
  */
 void DsetupTable(u32 cmd1, u32 cmd2, u32 cmd3, u32 cmd4, u32 cmd5)
 {
@@ -258,20 +250,16 @@ void DsetupTable(u32 cmd1, u32 cmd2, u32 cmd3, u32 cmd4, u32 cmd5)
 	DSPWaitFinish();
 }
 
-/*
- * --INFO--
- * Address:	800088A0
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 void DsetMixerLevel(f32 level)
 {
 	DSP_MIXERLEVEL = 4096.0f * level;
 }
 
-/*
- * --INFO--
- * Address:	800088E0
- * Size:	000048
+/**
+ * @TODO: Documentation
  */
 void DsyncFrame(u32 subframes, u32 dspbufStart, u32 dspbufEnd)
 {
@@ -287,10 +275,8 @@ void DsyncFrame(u32 subframes, u32 dspbufStart, u32 dspbufEnd)
 	DSPWaitFinish();
 }
 
-/*
- * --INFO--
- * Address:	80008940
- * Size:	000034
+/**
+ * @TODO: Documentation
  */
 void DwaitFrame()
 {
@@ -301,10 +287,8 @@ void DwaitFrame()
 	DSPWaitFinish();
 }
 
-/*
- * --INFO--
- * Address:	80008980
- * Size:	00003C
+/**
+ * @TODO: Documentation
  */
 void DiplSec(u32 cmd)
 {
@@ -317,10 +301,8 @@ void DiplSec(u32 cmd)
 	DSPWaitFinish();
 }
 
-/*
- * --INFO--
- * Address:	800089C0
- * Size:	00003C
+/**
+ * @TODO: Documentation
  */
 void DagbSec(u32 cmd)
 {

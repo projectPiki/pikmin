@@ -22,20 +22,16 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("genMapObject");
 
-/*
- * --INFO--
- * Address:	8005D0E8
- * Size:	000040
+/**
+ * @TODO: Documentation
  */
 static GenObject* makeObjectMapObject()
 {
 	return new GenObjectMapObject;
 }
 
-/*
- * --INFO--
- * Address:	8005D128
- * Size:	000068
+/**
+ * @TODO: Documentation
  */
 GenObjectMapObject::GenObjectMapObject()
     : GenObject('mobj', "create MAP OBJECT")
@@ -43,10 +39,8 @@ GenObjectMapObject::GenObjectMapObject()
 	mObjType = 0;
 }
 
-/*
- * --INFO--
- * Address:	8005D190
- * Size:	000090
+/**
+ * @TODO: Documentation
  */
 void GenObjectMapObject::initialise(MapMgr* mgr)
 {
@@ -54,29 +48,23 @@ void GenObjectMapObject::initialise(MapMgr* mgr)
 	GenObjectFactory::factory->registerMember('mobj', &makeObjectMapObject, "create MAP OBJECT", 'v0.0');
 }
 
-/*
- * --INFO--
- * Address:	8005D220
- * Size:	000040
+/**
+ * @TODO: Documentation
  */
 void GenObjectMapObject::doRead(RandomAccessStream& input)
 {
 	mObjType = input.readInt();
 }
 
-/*
- * --INFO--
- * Address:	8005D260
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void GenObjectMapObject::render(Graphics&, Generator*)
 {
 }
 
-/*
- * --INFO--
- * Address:	8005D264
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 Creature* GenObjectMapObject::birth(BirthInfo&)
 {

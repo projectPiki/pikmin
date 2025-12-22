@@ -15,10 +15,8 @@
 	} while (0)
 #endif
 
-/*
- * --INFO--
- * Address:	80212BC8
- * Size:	00009C
+/**
+ * @TODO: Documentation
  */
 void GXSetTevIndirect(GXTevStageID tev_stage, GXIndTexStageID ind_stage, GXIndTexFormat format, GXIndTexBiasSel bias_sel,
                       GXIndTexMtxID matrix_sel, GXIndTexWrap wrap_s, GXIndTexWrap wrap_t, GXBool add_prev, GXBool utc_lod,
@@ -107,10 +105,8 @@ void GXSetIndTexMtx(GXIndTexMtxID mtx_id, const f32 offset[2][3], s8 scale_exp)
 	gx->bpSent = 1;
 }
 
-/*
- * --INFO--
- * Address:	80212C64
- * Size:	0001D4
+/**
+ * @TODO: Documentation
  */
 void GXSetIndTexCoordScale(GXIndTexStageID ind_state, GXIndTexScale scale_s, GXIndTexScale scale_t)
 {
@@ -186,10 +182,8 @@ void GXSetIndTexOrder(GXIndTexStageID ind_stage, GXTexCoordID tex_coord, GXTexMa
 	gx->bpSent = 1;
 }
 
-/*
- * --INFO--
- * Address:	80212E38
- * Size:	00002C
+/**
+ * @TODO: Documentation
  */
 void GXSetNumIndStages(u8 nIndStages)
 {
@@ -199,10 +193,8 @@ void GXSetNumIndStages(u8 nIndStages)
 	gx->dirtyState |= 6;
 }
 
-/*
- * --INFO--
- * Address:	80212E64
- * Size:	000048
+/**
+ * @TODO: Documentation
  */
 void GXSetTevDirect(GXTevStageID tev_stage)
 {
@@ -344,10 +336,8 @@ void GXSetTevIndRepeat(GXTevStageID tev_stage)
 	GXSetTevIndirect(tev_stage, GX_IND_TEX_STAGE_0, GX_ITF_8, GX_ITB_NONE, GX_ITM_OFF, GX_ITW_0, GX_ITW_0, 1U, 0, 0);
 }
 
-/*
- * --INFO--
- * Address:	80212EAC
- * Size:	0000CC
+/**
+ * @TODO: Documentation
  */
 void __GXUpdateBPMask(void)
 {
@@ -397,10 +387,8 @@ void __GXUpdateBPMask(void)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80212F78
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 void __GXFlushTextureState(void)
 {

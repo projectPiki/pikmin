@@ -77,10 +77,8 @@ void DVDStream::init()
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	800447DC
- * Size:	000254
+/**
+ * @TODO: Documentation
  */
 RandomAccessStream* System::openFile(immut char* path, bool isRelativePath, bool)
 {
@@ -133,10 +131,8 @@ RandomAccessStream* System::openFile(immut char* path, bool isRelativePath, bool
 	STACK_PAD_VAR(2);
 }
 
-/*
- * --INFO--
- * Address:	80044A30
- * Size:	000048
+/**
+ * @TODO: Documentation
  */
 void System::initSoftReset()
 {
@@ -147,10 +143,8 @@ void System::initSoftReset()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80044A78
- * Size:	0000F4
+/**
+ * @TODO: Documentation
  */
 void System::beginRender()
 {
@@ -164,30 +158,24 @@ void System::beginRender()
 	mDGXGfx->initRender(glnWidth, glnHeight);
 }
 
-/*
- * --INFO--
- * Address:	80044B6C
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 void System::doneRender()
 {
 	static_cast<DGXGraphics*>(mDGXGfx)->doneRender();
 }
 
-/*
- * --INFO--
- * Address:	80044B90
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 void System::waitRetrace()
 {
 	static_cast<DGXGraphics*>(mDGXGfx)->waitRetrace();
 }
 
-/*
- * --INFO--
- * Address:	80044BB4
- * Size:	000060
+/**
+ * @TODO: Documentation
  */
 void System::run(BaseApp* app)
 {
@@ -206,20 +194,16 @@ void System::run(BaseApp* app)
 	STACK_PAD_VAR(2);
 }
 
-/*
- * --INFO--
- * Address:	80044C14
- * Size:	000058
+/**
+ * @TODO: Documentation
  */
 f32 System::getTime()
 {
 	return OSTicksToMilliseconds(OSGetTick());
 }
 
-/*
- * --INFO--
- * Address:	80044C6C
- * Size:	00013C
+/**
+ * @TODO: Documentation
  */
 void System::updateSysClock()
 {
@@ -244,10 +228,8 @@ void System::updateSysClock()
 	mPrevTick = tick;
 }
 
-/*
- * --INFO--
- * Address:	80044DA8
- * Size:	00039C
+/**
+ * @TODO: Documentation
  */
 void System::parseArchiveDirectory(immut char* path1, immut char* path2)
 {
@@ -317,10 +299,8 @@ void System::parseArchiveDirectory(immut char* path1, immut char* path2)
 	int freeEnd = gsys->getHeap(gsys->mActiveHeapIdx)->getFree();
 }
 
-/*
- * --INFO--
- * Address:	800451D8
- * Size:	000648
+/**
+ * @TODO: Documentation
  */
 void ParseMapFile()
 {
@@ -495,10 +475,8 @@ void System::findAddress(u32)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80045820
- * Size:	000114
+/**
+ * @TODO: Documentation
  */
 void System::hardReset()
 {
@@ -523,10 +501,8 @@ void System::hardReset()
 	STACK_PAD_VAR(4);
 }
 
-/*
- * --INFO--
- * Address:	80045934
- * Size:	0000F8
+/**
+ * @TODO: Documentation
  */
 System::System()
 {
@@ -564,10 +540,8 @@ void sysErrorHandler(u16, OSContext*, u32, u32)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80045A2C
- * Size:	000170
+/**
+ * @TODO: Documentation
  */
 void initBigFont()
 {
@@ -769,10 +743,8 @@ static immut char** errorList[6] = {
 };
 #endif
 
-/*
- * --INFO--
- * Address:	80045B9C
- * Size:	000180
+/**
+ * @TODO: Documentation
  */
 void System::showDvdError(Graphics& gfx)
 {
@@ -799,10 +771,8 @@ void System::showDvdError(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80045D1C
- * Size:	000498
+/**
+ * @TODO: Documentation
  */
 void System::Initialise()
 {
@@ -878,19 +848,15 @@ void System::Initialise()
 	endLoading();
 }
 
-/*
- * --INFO--
- * Address:	800461B4
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void System::sndPlaySe(u32)
 {
 }
 
-/*
- * --INFO--
- * Address:	800461B8
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 System::~System()
 {
@@ -923,10 +889,8 @@ void System::halt(immut char* file, int line, immut char* message)
 #endif
 }
 
-/*
- * --INFO--
- * Address:	80046204
- * Size:	000348
+/**
+ * @TODO: Documentation
  */
 void* loadFunc(void* idler)
 {
@@ -1002,10 +966,8 @@ u8 ThreadStack[0x2000] ATTRIBUTE_ALIGN(32);
 OSThread dvdThread;
 u8 dvdThreadStack[0x2000] ATTRIBUTE_ALIGN(32);
 
-/*
- * --INFO--
- * Address:	80046554
- * Size:	000094
+/**
+ * @TODO: Documentation
  */
 void System::startLoading(LoadIdler* idler, bool useLoadScreen, u32 loadDelay)
 {
@@ -1023,20 +985,16 @@ void System::startLoading(LoadIdler* idler, bool useLoadScreen, u32 loadDelay)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800465E8
- * Size:	000034
+/**
+ * @TODO: Documentation
  */
 void System::nudgeLoading()
 {
 	OSSendMessage(&loadMesgQueue, (OSMessage)'NEWF', 0);
 }
 
-/*
- * --INFO--
- * Address:	8004661C
- * Size:	000078
+/**
+ * @TODO: Documentation
  */
 void System::endLoading()
 {
@@ -1055,10 +1013,8 @@ void System::endLoading()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80046694
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 void doneDMA(u32 cache)
 {
@@ -1068,20 +1024,16 @@ void doneDMA(u32 cache)
 	gsys->mDmaComplete = TRUE;
 }
 
-/*
- * --INFO--
- * Address:	800466E0
- * Size:	000010
+/**
+ * @TODO: Documentation
  */
 void System::copyWaitUntilDone()
 {
 	while (mDmaComplete == 0) { }
 }
 
-/*
- * --INFO--
- * Address:	800466F0
- * Size:	000104
+/**
+ * @TODO: Documentation
  */
 u32 System::copyRamToCache(u32 src, u32 size, u32 dest)
 {
@@ -1106,10 +1058,8 @@ u32 System::copyRamToCache(u32 src, u32 size, u32 dest)
 	STACK_PAD_VAR(1);
 }
 
-/*
- * --INFO--
- * Address:	800467F4
- * Size:	0000C4
+/**
+ * @TODO: Documentation
  */
 void System::copyCacheToRam(u32 dst, u32 src, u32 size)
 {
@@ -1125,10 +1075,8 @@ void System::copyCacheToRam(u32 dst, u32 src, u32 size)
 	ARQPostRequest(cache, (u32)cache, 1, 1, src, dst, size, doneDMA);
 }
 
-/*
- * --INFO--
- * Address:	800468B8
- * Size:	0000C0
+/**
+ * @TODO: Documentation
  */
 void freeBuffer(u32 cache)
 {
@@ -1146,10 +1094,8 @@ void freeBuffer(u32 cache)
 	STACK_PAD_VAR(2);
 }
 
-/*
- * --INFO--
- * Address:	80046978
- * Size:	0000CC
+/**
+ * @TODO: Documentation
  */
 void System::copyCacheToTexture(CacheTexture* tex)
 {
@@ -1171,10 +1117,8 @@ void System::copyCacheToTexture(CacheTexture* tex)
 	while (mTexComplete == 0) { }
 }
 
-/*
- * --INFO--
- * Address:	80046A44
- * Size:	000224
+/**
+ * @TODO: Documentation
  */
 void* dvdFunc(void*)
 {
@@ -1246,20 +1190,16 @@ void* dvdFunc(void*)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80046C68
- * Size:	000034
+/**
+ * @TODO: Documentation
  */
 void System::nudgeDvdThread()
 {
 	OSSendMessage(&dvdMesgQueue, (OSMessage)'NEWF', 0);
 }
 
-/*
- * --INFO--
- * Address:	80046C9C
- * Size:	000058
+/**
+ * @TODO: Documentation
  */
 void System::startDvdThread()
 {

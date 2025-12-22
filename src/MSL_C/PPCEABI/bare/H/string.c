@@ -3,10 +3,8 @@
 static s32 K1 = 0x80808080;
 static s32 K2 = 0xFEFEFEFF;
 
-/*
- * --INFO--
- * Address:	8021940C
- * Size:	000020
+/**
+ * @TODO: Documentation
  */
 size_t strlen(const char* str)
 {
@@ -19,10 +17,8 @@ size_t strlen(const char* str)
 	return (len);
 }
 
-/*
- * --INFO--
- * Address:	80219358
- * Size:	0000B4
+/**
+ * @TODO: Documentation
  */
 char* strcpy(char* dst, const char* src)
 {
@@ -103,10 +99,8 @@ bytecopy:
 	return dst;
 }
 
-/*
- * --INFO--
- * Address:	80219314
- * Size:	000044
+/**
+ * @TODO: Documentation
  */
 char* strncpy(char* dst, const char* src, size_t n)
 {
@@ -125,10 +119,8 @@ char* strncpy(char* dst, const char* src, size_t n)
 	return (dst);
 }
 
-/*
- * --INFO--
- * Address:	802192E8
- * Size:	00002C
+/**
+ * @TODO: Documentation
  */
 char* strcat(char* dst, const char* src)
 {
@@ -156,10 +148,8 @@ char* strncat(char* dst, const char* src, size_t n)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	802191C4
- * Size:	000124
+/**
+ * @TODO: Documentation
  */
 int strcmp(const char* lhs, const char* rhs)
 {
@@ -236,10 +226,8 @@ bytecopy:
 	} while (1);
 }
 
-/*
- * --INFO--
- * Address:	80219184
- * Size:	000040
+/**
+ * @TODO: Documentation
  */
 int strncmp(const char* lhs, const char* rhs, size_t n)
 {
@@ -257,10 +245,8 @@ int strncmp(const char* lhs, const char* rhs, size_t n)
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80219154
- * Size:	000030
+/**
+ * @TODO: Documentation
  */
 char* strchr(const char* str, int chr)
 {
@@ -345,10 +331,8 @@ char* strtok(char* str, const char* delim)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	802190E8
- * Size:	00006C
+/**
+ * @TODO: Documentation
  */
 char* strstr(const char* str, const char* substr)
 {

@@ -7,10 +7,8 @@ static u16 SEND_TABLE[] = {
 	0x0D00, 0x0D60, 0x0DC0, 0x0E20, 0x0E80, 0x0EE0, 0x0CA0, 0x0F40, 0x0FA0, 0x0B00, 0x09A0, 0x0000,
 };
 
-/*
- * --INFO--
- * Address:	8000BCC0
- * Size:	000138
+/**
+ * @TODO: Documentation
  */
 BOOL DFX_SetFxLine(u8 idx, s16* circularBufferBase, FxlineConfig* config)
 {

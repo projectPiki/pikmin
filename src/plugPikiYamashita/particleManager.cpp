@@ -18,10 +18,8 @@ DEFINE_PRINT("particleManager");
 
 const f32 zen::particleManager::DEFAULT_FRAME_RATE = 30.0f;
 
-/*
- * --INFO--
- * Address:	801A1100
- * Size:	00013C
+/**
+ * @TODO: Documentation
  */
 void zen::particleManager::init(u32 numPtclGens, u32 numParticles, u32 numChildParticles, f32 p4)
 {
@@ -61,10 +59,8 @@ void zen::particleManager::init(u32 numPtclGens, u32 numParticles, u32 numChildP
 	mMaxUsedChildParticleCount = 0;
 }
 
-/*
- * --INFO--
- * Address:	801A1288
- * Size:	000074
+/**
+ * @TODO: Documentation
  */
 zen::particleGenerator* zen::particleManager::createGenerator(u8* data, Texture* tex, Texture* childTex, immut Vector3f& pos,
                                                               zen::CallBack1<zen::particleGenerator*>* cbGen,
@@ -77,10 +73,8 @@ zen::particleGenerator* zen::particleManager::createGenerator(u8* data, Texture*
 	return ptclGen;
 }
 
-/*
- * --INFO--
- * Address:	801A12FC
- * Size:	000110
+/**
+ * @TODO: Documentation
  */
 void zen::particleManager::update()
 {
@@ -122,10 +116,8 @@ void zen::particleManager::debugUpdate()
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801A140C
- * Size:	000074
+/**
+ * @TODO: Documentation
  */
 void zen::particleManager::draw(Graphics& gfx)
 {
@@ -141,10 +133,8 @@ void zen::particleManager::draw(Graphics& gfx)
 	mSimplePtclMgr.draw(gfx);
 }
 
-/*
- * --INFO--
- * Address:	801A1480
- * Size:	0000A8
+/**
+ * @TODO: Documentation
  */
 void zen::particleManager::cullingDraw(Graphics& gfx)
 {
@@ -173,10 +163,8 @@ void zen::particleManager::debugDraw(Graphics&)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801A1528
- * Size:	00009C
+/**
+ * @TODO: Documentation
  */
 void zen::particleManager::killAllGenarator(bool doForceFinish)
 {
@@ -199,10 +187,8 @@ void zen::particleManager::killAllGenarator(bool doForceFinish)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801A15C4
- * Size:	000098
+/**
+ * @TODO: Documentation
  */
 void zen::particleManager::killGenerator(zen::particleGenerator* gen, bool doForceFinish)
 {
@@ -216,10 +202,8 @@ void zen::particleManager::killGenerator(zen::particleGenerator* gen, bool doFor
 	}
 }
 
-/*
- * --INFO--
- * Address:	801A165C
- * Size:	0000B4
+/**
+ * @TODO: Documentation
  */
 void zen::particleManager::killGenerator(CallBack1<particleGenerator*>* cb1, CallBack2<particleGenerator*, particleMdl*>* cb2,
                                          bool doForceFinish)
@@ -240,10 +224,8 @@ void zen::particleManager::killGenerator(CallBack1<particleGenerator*>* cb1, Cal
 	}
 }
 
-/*
- * --INFO--
- * Address:	801A1710
- * Size:	000030
+/**
+ * @TODO: Documentation
  */
 bool zen::particleManager::pmCheckList(zen::particleGenerator* testGen)
 {
@@ -259,10 +241,8 @@ bool zen::particleManager::pmCheckList(zen::particleGenerator* testGen)
 	return ret;
 }
 
-/*
- * --INFO--
- * Address:	801A1740
- * Size:	000094
+/**
+ * @TODO: Documentation
  */
 zen::particleGenerator* zen::particleManager::pmGetPtclGen()
 {

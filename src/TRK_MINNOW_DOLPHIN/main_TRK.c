@@ -2,10 +2,8 @@
 
 static DSError TRK_mainError;
 
-/*
- * --INFO--
- * Address:	80220418
- * Size:	000048
+/**
+ * @TODO: Documentation
  */
 DSError TRK_main(void)
 {

@@ -19,10 +19,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT(nullptr)
 
-/*
- * --INFO--
- * Address:	80182B94
- * Size:	000080
+/**
+ * @TODO: Documentation
  */
 zen::ogScrTutorialMgr::ogScrTutorialMgr()
 {
@@ -32,10 +30,8 @@ zen::ogScrTutorialMgr::ogScrTutorialMgr()
 	mStatus = Status_Null;
 }
 
-/*
- * --INFO--
- * Address:	80182C14
- * Size:	0000BC
+/**
+ * @TODO: Documentation
  */
 zen::ogScrTutorialMgr::TutorialStatus zen::ogScrTutorialMgr::update(Controller* input)
 {
@@ -66,10 +62,8 @@ zen::ogScrTutorialMgr::TutorialStatus zen::ogScrTutorialMgr::update(Controller* 
 	return mStatus;
 }
 
-/*
- * --INFO--
- * Address:	80182CD0
- * Size:	000030
+/**
+ * @TODO: Documentation
  */
 void zen::ogScrTutorialMgr::draw(Graphics& gfx)
 {
@@ -78,10 +72,8 @@ void zen::ogScrTutorialMgr::draw(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80182D00
- * Size:	0000E0
+/**
+ * @TODO: Documentation
  */
 void zen::ogScrTutorialMgr::start(EnumTutorial state)
 {

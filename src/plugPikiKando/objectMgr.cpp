@@ -28,10 +28,8 @@ void boundSphereDist(Creature*, Creature*)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	800E0228
- * Size:	00010C
+/**
+ * @TODO: Documentation
  */
 void ObjectMgr::stickUpdate()
 {
@@ -42,10 +40,8 @@ void ObjectMgr::stickUpdate()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800E0334
- * Size:	000124
+/**
+ * @TODO: Documentation
  */
 void ObjectMgr::invalidateSearch()
 {
@@ -59,10 +55,8 @@ void ObjectMgr::invalidateSearch()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800E0458
- * Size:	00010C
+/**
+ * @TODO: Documentation
  */
 void ObjectMgr::update()
 {
@@ -73,10 +67,8 @@ void ObjectMgr::update()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800E0564
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void ObjectMgr::store()
 {
@@ -92,10 +84,8 @@ void ObjectMgr::restore()
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	800E0568
- * Size:	000264
+/**
+ * @TODO: Documentation
  */
 void ObjectMgr::killAll()
 {
@@ -123,10 +113,8 @@ void ObjectMgr::killAll()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800E07CC
- * Size:	00016C
+/**
+ * @TODO: Documentation
  */
 void ObjectMgr::postUpdate(int unused, f32 deltaTime)
 {
@@ -177,10 +165,8 @@ Creature* ObjectMgr::findClosest(immut Vector3f& pos, immut Condition* cond)
 	return ret;
 }
 
-/*
- * --INFO--
- * Address:	800E0CB0
- * Size:	000274
+/**
+ * @TODO: Documentation
  */
 Creature* ObjectMgr::findClosest(immut Vector3f& pos, f32 maxLen, immut Condition* cond)
 {
@@ -206,10 +192,8 @@ Creature* ObjectMgr::findClosest(immut Vector3f& pos, f32 maxLen, immut Conditio
 	return ret;
 }
 
-/*
- * --INFO--
- * Address:	800E0F24
- * Size:	000128
+/**
+ * @TODO: Documentation
  */
 void ObjectMgr::drawShadow(Graphics& gfx, Texture* tex)
 {
@@ -222,10 +206,8 @@ void ObjectMgr::drawShadow(Graphics& gfx, Texture* tex)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800E104C
- * Size:	0000A4
+/**
+ * @TODO: Documentation
  */
 MonoObjectMgr::MonoObjectMgr()
 {
@@ -235,10 +217,8 @@ MonoObjectMgr::MonoObjectMgr()
 	_38          = 0;
 }
 
-/*
- * --INFO--
- * Address:	800E10F0
- * Size:	0000B4
+/**
+ * @TODO: Documentation
  */
 void MonoObjectMgr::create(int num)
 {
@@ -253,10 +233,8 @@ void MonoObjectMgr::create(int num)
 	mNumObjects = 0;
 }
 
-/*
- * --INFO--
- * Address:	800E11A4
- * Size:	0000B8
+/**
+ * @TODO: Documentation
  */
 void MonoObjectMgr::postUpdate(int unused, f32 deltaTime)
 {
@@ -273,10 +251,8 @@ void MonoObjectMgr::postUpdate(int unused, f32 deltaTime)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800E125C
- * Size:	00009C
+/**
+ * @TODO: Documentation
  */
 void MonoObjectMgr::drawShadow(Graphics& gfx, Texture*)
 {
@@ -291,10 +267,8 @@ void MonoObjectMgr::drawShadow(Graphics& gfx, Texture*)
 	STACK_PAD_VAR(2);
 }
 
-/*
- * --INFO--
- * Address:	800E12F8
- * Size:	000090
+/**
+ * @TODO: Documentation
  */
 void MonoObjectMgr::refresh(Graphics& gfx)
 {
@@ -306,10 +280,8 @@ void MonoObjectMgr::refresh(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800E1388
- * Size:	0000EC
+/**
+ * @TODO: Documentation
  */
 void MonoObjectMgr::update()
 {
@@ -358,10 +330,8 @@ int MonoObjectMgr::getIndex(Creature* obj)
 	return -1;
 }
 
-/*
- * --INFO--
- * Address:	800E1474
- * Size:	0000AC
+/**
+ * @TODO: Documentation
  */
 Creature* MonoObjectMgr::birth()
 {
@@ -387,10 +357,8 @@ Creature* MonoObjectMgr::birth()
 	return mObjectList[id];
 }
 
-/*
- * --INFO--
- * Address:	800E1520
- * Size:	000084
+/**
+ * @TODO: Documentation
  */
 void MonoObjectMgr::kill(Creature* obj)
 {
@@ -405,10 +373,8 @@ void MonoObjectMgr::kill(Creature* obj)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800E15A4
- * Size:	00003C
+/**
+ * @TODO: Documentation
  */
 Creature* MonoObjectMgr::getCreature(int id)
 {
@@ -418,10 +384,8 @@ Creature* MonoObjectMgr::getCreature(int id)
 	return mObjectList[id];
 }
 
-/*
- * --INFO--
- * Address:	800E15E0
- * Size:	000058
+/**
+ * @TODO: Documentation
  */
 int MonoObjectMgr::getFirst()
 {
@@ -438,10 +402,8 @@ int MonoObjectMgr::getFirst()
 	return ret;
 }
 
-/*
- * --INFO--
- * Address:	800E1638
- * Size:	00005C
+/**
+ * @TODO: Documentation
  */
 int MonoObjectMgr::getNext(int id)
 {
@@ -458,10 +420,8 @@ int MonoObjectMgr::getNext(int id)
 	return ret;
 }
 
-/*
- * --INFO--
- * Address:	800E1694
- * Size:	00001C
+/**
+ * @TODO: Documentation
  */
 bool MonoObjectMgr::isDone(int index)
 {
@@ -472,10 +432,8 @@ bool MonoObjectMgr::isDone(int index)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800E16B0
- * Size:	000388
+/**
+ * @TODO: Documentation
  */
 void MonoObjectMgr::search(ObjectMgr* mgr)
 {
@@ -542,10 +500,8 @@ void MonoObjectMgr::search(ObjectMgr* mgr)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800E1A38
- * Size:	00030C
+/**
+ * @TODO: Documentation
  */
 void MonoObjectMgr::searchSelf()
 {
@@ -616,10 +572,8 @@ void MonoObjectMgr::searchSelf()
 	STACK_PAD_VAR(2);
 }
 
-/*
- * --INFO--
- * Address:	800E1D44
- * Size:	000260
+/**
+ * @TODO: Documentation
  */
 PolyObjectMgr::PolyObjectMgr(int num)
 {
@@ -635,10 +589,8 @@ PolyObjectMgr::PolyObjectMgr(int num)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800E1FA4
- * Size:	00007C
+/**
+ * @TODO: Documentation
  */
 void PolyObjectMgr::create(int num)
 {
@@ -651,10 +603,8 @@ void PolyObjectMgr::create(int num)
 	mMaxSize = 0;
 }
 
-/*
- * --INFO--
- * Address:	800E2020
- * Size:	000108
+/**
+ * @TODO: Documentation
  */
 void PolyObjectMgr::update()
 {
@@ -676,10 +626,8 @@ void PolyObjectMgr::update()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800E2128
- * Size:	0000AC
+/**
+ * @TODO: Documentation
  */
 void PolyObjectMgr::postUpdate(int unused, f32 deltaTime)
 {
@@ -693,10 +641,8 @@ void PolyObjectMgr::postUpdate(int unused, f32 deltaTime)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800E21D4
- * Size:	00009C
+/**
+ * @TODO: Documentation
  */
 void PolyObjectMgr::refresh(Graphics& gfx)
 {
@@ -710,10 +656,8 @@ void PolyObjectMgr::refresh(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800E2270
- * Size:	0000A8
+/**
+ * @TODO: Documentation
  */
 void PolyObjectMgr::drawShadow(Graphics& gfx, Texture*)
 {
@@ -727,19 +671,15 @@ void PolyObjectMgr::drawShadow(Graphics& gfx, Texture*)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800E2318
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void PolyObjectMgr::beginRegister()
 {
 }
 
-/*
- * --INFO--
- * Address:	800E231C
- * Size:	000088
+/**
+ * @TODO: Documentation
  */
 void PolyObjectMgr::registerClass(int id, Creature* obj, int size)
 {
@@ -761,10 +701,8 @@ void PolyObjectMgr::registerClass(int id, Creature* obj, int size)
 	mEntryCount++;
 }
 
-/*
- * --INFO--
- * Address:	800E23A4
- * Size:	000068
+/**
+ * @TODO: Documentation
  */
 void PolyObjectMgr::endRegister()
 {
@@ -822,20 +760,16 @@ int PolyObjectMgr::getTemplateIndex(int id)
 	return -1;
 }
 
-/*
- * --INFO--
- * Address:	800E240C
- * Size:	000014
+/**
+ * @TODO: Documentation
  */
 Creature* PolyObjectMgr::get(int i)
 {
 	return (Creature*)((int)mObjectPool + mMaxSize * i);
 }
 
-/*
- * --INFO--
- * Address:	800E2420
- * Size:	00011C
+/**
+ * @TODO: Documentation
  */
 Creature* PolyObjectMgr::birth(int id)
 {
@@ -870,10 +804,8 @@ Creature* PolyObjectMgr::birth(int id)
 	return (Creature*)newObject;
 }
 
-/*
- * --INFO--
- * Address:	800E253C
- * Size:	000080
+/**
+ * @TODO: Documentation
  */
 void PolyObjectMgr::kill(Creature* obj)
 {
@@ -887,10 +819,8 @@ void PolyObjectMgr::kill(Creature* obj)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800E25BC
- * Size:	000044
+/**
+ * @TODO: Documentation
  */
 Creature* PolyObjectMgr::getCreature(int id)
 {
@@ -900,10 +830,8 @@ Creature* PolyObjectMgr::getCreature(int id)
 	return get(id);
 }
 
-/*
- * --INFO--
- * Address:	800E2600
- * Size:	000058
+/**
+ * @TODO: Documentation
  */
 int PolyObjectMgr::getFirst()
 {
@@ -921,10 +849,8 @@ int PolyObjectMgr::getFirst()
 	return next;
 }
 
-/*
- * --INFO--
- * Address:	800E2658
- * Size:	00005C
+/**
+ * @TODO: Documentation
  */
 int PolyObjectMgr::getNext(int idx)
 {
@@ -942,10 +868,8 @@ int PolyObjectMgr::getNext(int idx)
 	return next;
 }
 
-/*
- * --INFO--
- * Address:	800E26B4
- * Size:	00001C
+/**
+ * @TODO: Documentation
  */
 bool PolyObjectMgr::isDone(int idx)
 {
@@ -955,10 +879,8 @@ bool PolyObjectMgr::isDone(int idx)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800E26D0
- * Size:	000028
+/**
+ * @TODO: Documentation
  */
 void PolyObjectMgr::search(ObjectMgr* mgr)
 {
@@ -967,10 +889,8 @@ void PolyObjectMgr::search(ObjectMgr* mgr)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800E26F8
- * Size:	0002C0
+/**
+ * @TODO: Documentation
  */
 void PolyObjectMgr::searchSelf()
 {
@@ -1110,10 +1030,8 @@ void ObjectMgr::search(ObjectMgr* otherMgr)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800E2DBC
- * Size:	000088
+/**
+ * @TODO: Documentation
  */
 Creature* CreatureNodeMgr::getCreature(int idx)
 {
@@ -1129,30 +1047,24 @@ Creature* CreatureNodeMgr::getCreature(int idx)
 	return node->mCreature;
 }
 
-/*
- * --INFO--
- * Address:	800E2E44
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 int CreatureNodeMgr::getFirst()
 {
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	800E2E4C
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 int CreatureNodeMgr::getNext(int idx)
 {
 	return idx + 1;
 }
 
-/*
- * --INFO--
- * Address:	800E2E54
- * Size:	000044
+/**
+ * @TODO: Documentation
  */
 bool CreatureNodeMgr::isDone(int idx)
 {
@@ -1163,10 +1075,8 @@ bool CreatureNodeMgr::isDone(int idx)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800E2E98
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 int CreatureNodeMgr::getSize()
 {

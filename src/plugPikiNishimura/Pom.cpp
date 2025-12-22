@@ -21,10 +21,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("Pom");
 
-/*
- * --INFO--
- * Address:	80177DE0
- * Size:	0002B4
+/**
+ * @TODO: Documentation
  */
 PomProp::PomProp()
 {
@@ -33,10 +31,8 @@ PomProp::PomProp()
 	mCreatureProps.mAcceleration.mValue  = 1.0f;
 }
 
-/*
- * --INFO--
- * Address:	80178094
- * Size:	000098
+/**
+ * @TODO: Documentation
  */
 Pom::Pom(CreatureProp* props)
     : Boss(props)
@@ -45,20 +41,16 @@ Pom::Pom(CreatureProp* props)
 	mPomAi    = new PomAi(this);
 }
 
-/*
- * --INFO--
- * Address:	8017812C
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 f32 Pom::getiMass()
 {
 	return 0.0001f;
 }
 
-/*
- * --INFO--
- * Address:	80178134
- * Size:	000050
+/**
+ * @TODO: Documentation
  */
 void Pom::init(immut Vector3f&)
 {
@@ -71,10 +63,8 @@ void Pom::init(immut Vector3f&)
 	mPomAi->initAI(this);
 }
 
-/*
- * --INFO--
- * Address:	80178184
- * Size:	00009C
+/**
+ * @TODO: Documentation
  */
 void Pom::setColor(int color)
 {
@@ -86,10 +76,8 @@ void Pom::setColor(int color)
 	mShapeObject->mShape->makeInstance(mDynMaterial, 0);
 }
 
-/*
- * --INFO--
- * Address:	80178220
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 void Pom::doKill()
 {
@@ -99,20 +87,16 @@ void Pom::doKill()
 	bossMgr->kill(this);
 }
 
-/*
- * --INFO--
- * Address:	8017826C
- * Size:	000028
+/**
+ * @TODO: Documentation
  */
 void Pom::exitCourse()
 {
 	mPomAi->killCallBackEffect(true);
 }
 
-/*
- * --INFO--
- * Address:	80178294
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 void Pom::update()
 {
@@ -120,10 +104,8 @@ void Pom::update()
 	doAnimation();
 }
 
-/*
- * --INFO--
- * Address:	801782E0
- * Size:	0000E0
+/**
+ * @TODO: Documentation
  */
 void Pom::refresh(Graphics& gfx)
 {
@@ -140,10 +122,8 @@ void Pom::refresh(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801783C0
- * Size:	000084
+/**
+ * @TODO: Documentation
  */
 void Pom::drawShape(Graphics& gfx)
 {
@@ -153,20 +133,16 @@ void Pom::drawShape(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80178444
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 void Pom::doAI()
 {
 	mPomAi->update();
 }
 
-/*
- * --INFO--
- * Address:	80178468
- * Size:	000044
+/**
+ * @TODO: Documentation
  */
 void Pom::doAnimation()
 {
@@ -175,10 +151,8 @@ void Pom::doAnimation()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801784AC
- * Size:	000054
+/**
+ * @TODO: Documentation
  */
 void Pom::collisionCallback(immut CollEvent& event)
 {

@@ -3,10 +3,8 @@
 
 static int fragmentID = -2;
 
-/*
- * --INFO--
- * Address:	802154C0
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 ASM static char* GetR2()
 {
@@ -18,10 +16,8 @@ ASM static char* GetR2()
 }
 extern "C" {
 
-/*
- * --INFO--
- * Address:	802154FC
- * Size:	000040
+/**
+ * @TODO: Documentation
  */
 void __init_cpp_exceptions(void)
 {
@@ -31,10 +27,8 @@ void __init_cpp_exceptions(void)
 	}
 }
 
-/*
- * --INFO--
- * Address:	802154C8
- * Size:	000034
+/**
+ * @TODO: Documentation
  */
 void __fini_cpp_exceptions(void)
 {

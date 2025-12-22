@@ -83,10 +83,8 @@ static immut char* arambundleList[][2] = {
 	{ nullptr, nullptr },
 };
 
-/*
- * --INFO--
- * Address:	80054B34
- * Size:	000190
+/**
+ * @TODO: Documentation
  */
 void GameSetupSection::preCacheShapes()
 {
@@ -246,10 +244,8 @@ void GameSetupSection::preCacheShapes()
 	*/
 }
 
-/*
- * --INFO--
- * Address:	80054CC4
- * Size:	000284
+/**
+ * @TODO: Documentation
  */
 GameSetupSection::GameSetupSection()
 {
@@ -296,10 +292,8 @@ GameSetupSection::GameSetupSection()
 	gameflow.mPlayState.Initialise();
 }
 
-/*
- * --INFO--
- * Address:	80054F48
- * Size:	00001C
+/**
+ * @TODO: Documentation
  */
 void GameSetupSection::update()
 {

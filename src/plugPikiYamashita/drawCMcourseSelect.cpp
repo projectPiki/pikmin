@@ -196,10 +196,8 @@ protected:
 
 } // namespace zen
 
-/*
- * --INFO--
- * Address:	801EC8D8
- * Size:	0003A4
+/**
+ * @TODO: Documentation
  */
 zen::DrawCMcourseSelect::DrawCMcourseSelect()
 {
@@ -230,10 +228,8 @@ zen::DrawCMcourseSelect::DrawCMcourseSelect()
 	mBest.init(bestScreen);
 }
 
-/*
- * --INFO--
- * Address:	801ECD04
- * Size:	000294
+/**
+ * @TODO: Documentation
  */
 void zen::DrawCMcourseSelect::start()
 {
@@ -258,10 +254,8 @@ void zen::DrawCMcourseSelect::start()
 	PRINT("start! \n");
 }
 
-/*
- * --INFO--
- * Address:	801ECF98
- * Size:	000080
+/**
+ * @TODO: Documentation
  */
 void zen::DrawCMcourseSelect::setBestScore()
 {
@@ -275,10 +269,8 @@ void zen::DrawCMcourseSelect::setBestScore()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801ED018
- * Size:	00011C
+/**
+ * @TODO: Documentation
  */
 bool zen::DrawCMcourseSelect::update(Controller* controller)
 {
@@ -315,10 +307,8 @@ bool zen::DrawCMcourseSelect::update(Controller* controller)
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	801ED178
- * Size:	000090
+/**
+ * @TODO: Documentation
  */
 void zen::DrawCMcourseSelect::draw(Graphics& gfx)
 {
@@ -329,20 +319,16 @@ void zen::DrawCMcourseSelect::draw(Graphics& gfx)
 	mSelectScreen->draw();
 }
 
-/*
- * --INFO--
- * Address:	801ED208
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 zen::DrawCMcourseSelect::returnStatusFlag zen::DrawCMcourseSelect::getReturnStatusFlag()
 {
 	return mReturnState;
 }
 
-/*
- * --INFO--
- * Address:	801ED210
- * Size:	000100
+/**
+ * @TODO: Documentation
  */
 bool zen::DrawCMcourseSelect::modeOperation(Controller* controller)
 {

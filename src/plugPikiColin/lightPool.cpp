@@ -17,10 +17,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("LightPool");
 
-/*
- * --INFO--
- * Address:	80073164
- * Size:	00016C
+/**
+ * @TODO: Documentation
  */
 LightPool::LightPool()
 {
@@ -37,10 +35,8 @@ LightPool::LightPool()
 	mColour.set(255, 255, 64, 128);
 }
 
-/*
- * --INFO--
- * Address:	800732D0
- * Size:	0005F8
+/**
+ * @TODO: Documentation
  */
 void LightPool::draw(Graphics& gfx)
 {

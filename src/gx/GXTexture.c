@@ -109,10 +109,8 @@ u32 GXGetTexBufferSize(u16 width, u16 height, u32 format, u8 mipmap, u8 max_lod)
 	return bufferSize;
 }
 
-/*
- * --INFO--
- * Address:	80212104
- * Size:	0000C8
+/**
+ * @TODO: Documentation
  */
 void __GetImageTileCount(enum _GXTexFmt fmt, u16 wd, u16 ht, u32* rowTiles, u32* colTiles, u32* cmpTiles)
 {
@@ -131,10 +129,8 @@ void __GetImageTileCount(enum _GXTexFmt fmt, u16 wd, u16 ht, u32* rowTiles, u32*
 	*cmpTiles = (fmt == GX_TF_RGBA8 || fmt == GX_TF_Z24X8) ? 2 : 1;
 }
 
-/*
- * --INFO--
- * Address:	802121CC
- * Size:	000254
+/**
+ * @TODO: Documentation
  */
 void GXInitTexObj(GXTexObj* obj, void* image_ptr, u16 width, u16 height, GXTexFmt format, GXTexWrapMode wrap_s, GXTexWrapMode wrap_t,
                   u8 mipmap)
@@ -249,10 +245,8 @@ void GXInitTexObjCI(GXTexObj* obj, void* image_ptr, u16 width, u16 height, GXCIT
 	t->tlutName = tlut_name;
 }
 
-/*
- * --INFO--
- * Address:	80212420
- * Size:	000194
+/**
+ * @TODO: Documentation
  */
 void GXInitTexObjLOD(GXTexObj* obj, GXTexFilter min_filt, GXTexFilter mag_filt, f32 min_lod, f32 max_lod, f32 lod_bias, u8 bias_clamp,
                      u8 do_edge_lod, GXAnisotropy max_aniso)
@@ -427,10 +421,8 @@ u16 GXGetTexObjHeight(const GXTexObj* to)
 	return (u32)GET_REG_FIELD(t->image0, 10, 10) + 1;
 }
 
-/*
- * --INFO--
- * Address:	802125B4
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 GXTexFmt GXGetTexObjFmt(const GXTexObj* to)
 {
@@ -627,10 +619,8 @@ u32 GXGetTexObjTlut(const GXTexObj* tex_obj)
 	return t->tlutName;
 }
 
-/*
- * --INFO--
- * Address:	802125BC
- * Size:	0001A8
+/**
+ * @TODO: Documentation
  */
 void GXLoadTexObjPreLoaded(GXTexObj* obj, GXTexRegion* region, GXTexMapID id)
 {
@@ -671,10 +661,8 @@ void GXLoadTexObjPreLoaded(GXTexObj* obj, GXTexRegion* region, GXTexMapID id)
 	gx->bpSent = 1;
 }
 
-/*
- * --INFO--
- * Address:	80212764
- * Size:	000054
+/**
+ * @TODO: Documentation
  */
 void GXLoadTexObj(GXTexObj* obj, GXTexMapID id)
 {
@@ -787,10 +775,8 @@ void GXLoadTlut(GXTlutObj* tlut_obj, u32 tlut_name)
 	r->tlutObj = *t;
 }
 
-/*
- * --INFO--
- * Address:	802127B8
- * Size:	000120
+/**
+ * @TODO: Documentation
  */
 void GXInitTexCacheRegion(GXTexRegion* region, u8 is_32b_mipmap, u32 tmem_even, GXTexCacheSize size_even, u32 tmem_odd,
                           GXTexCacheSize size_odd)
@@ -928,10 +914,8 @@ void GXGetTexRegionAll(const GXTexRegion* region, u8* is_cached, u8* is_32b_mipm
 	*is_cached     = t->isCached;
 }
 
-/*
- * --INFO--
- * Address:	802128D8
- * Size:	000048
+/**
+ * @TODO: Documentation
  */
 void GXInitTlutRegion(GXTlutRegion* region, u32 tmem_addr, GXTlutSize tlut_size)
 {
@@ -1027,10 +1011,8 @@ void GXInvalidateTexRegion(GXTexRegion* region)
 	r; // needed to match
 }
 
-/*
- * --INFO--
- * Address:	80212920
- * Size:	000048
+/**
+ * @TODO: Documentation
  */
 void GXInvalidateTexAll(void)
 {
@@ -1046,10 +1028,8 @@ void GXInvalidateTexAll(void)
 	__GXFlushTextureState();
 }
 
-/*
- * --INFO--
- * Address:	80212968
- * Size:	000014
+/**
+ * @TODO: Documentation
  */
 GXTexRegionCallback GXSetTexRegionCallback(GXTexRegionCallback f)
 {
@@ -1059,10 +1039,8 @@ GXTexRegionCallback GXSetTexRegionCallback(GXTexRegionCallback f)
 	return oldcb;
 }
 
-/*
- * --INFO--
- * Address:	8021297C
- * Size:	000014
+/**
+ * @TODO: Documentation
  */
 GXTlutRegionCallback GXSetTlutRegionCallback(GXTlutRegionCallback f)
 {
@@ -1290,10 +1268,8 @@ void GXSetTexCoordBias(GXTexCoordID coord, u8 s_enable, u8 t_enable)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80212990
- * Size:	0000CC
+/**
+ * @TODO: Documentation
  */
 static void __SetSURegs(u32 tmap, u32 tcoord)
 {
@@ -1315,10 +1291,8 @@ static void __SetSURegs(u32 tmap, u32 tcoord)
 	gx->bpSent = 1;
 }
 
-/*
- * --INFO--
- * Address:	80212A5C
- * Size:	00016C
+/**
+ * @TODO: Documentation
  */
 void __GXSetSUTexRegs(void)
 {

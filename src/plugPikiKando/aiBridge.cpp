@@ -22,10 +22,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("aiBridge")
 
-/*
- * --INFO--
- * Address:	800ACEA0
- * Size:	0000AC
+/**
+ * @TODO: Documentation
  */
 ActBridge::ActBridge(Piki* piki)
     : Action(piki, true)
@@ -34,10 +32,8 @@ ActBridge::ActBridge(Piki* piki)
 	mBridge = nullptr;
 }
 
-/*
- * --INFO--
- * Address:	800ACF4C
- * Size:	0000DC
+/**
+ * @TODO: Documentation
  */
 void ActBridge::init(Creature* creature)
 {
@@ -58,10 +54,8 @@ void ActBridge::init(Creature* creature)
 	mActionCounter = (4.0f * gsys->getRand(1.0f));
 }
 
-/*
- * --INFO--
- * Address:	800AD028
- * Size:	00006C
+/**
+ * @TODO: Documentation
  */
 void ActBridge::dump()
 {
@@ -110,10 +104,8 @@ bool ActBridge::collideBridgeBlocker()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800AD094
- * Size:	000094
+/**
+ * @TODO: Documentation
  */
 int ActBridge::exec()
 {
@@ -160,10 +152,8 @@ int ActBridge::exeDetour()
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	800AD128
- * Size:	000028
+/**
+ * @TODO: Documentation
  */
 void ActBridge::procWallMsg(Piki* piki, MsgWall* msg)
 {
@@ -284,10 +274,8 @@ void ActBridge::doWork(int mins)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	800AD150
- * Size:	0000B0
+/**
+ * @TODO: Documentation
  */
 void ActBridge::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
@@ -307,10 +295,8 @@ void ActBridge::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800AD200
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 void ActBridge::cleanup()
 {
@@ -330,10 +316,8 @@ void ActBridge::newInitApproach()
 	PRINT("approach init\n");
 }
 
-/*
- * --INFO--
- * Address:	800AD224
- * Size:	000360
+/**
+ * @TODO: Documentation
  */
 int ActBridge::newExeApproach()
 {
@@ -403,10 +387,8 @@ int ActBridge::newExeApproach()
 	STACK_PAD_TERNARY(mBridge, 6);
 }
 
-/*
- * --INFO--
- * Address:	800AD584
- * Size:	0000E0
+/**
+ * @TODO: Documentation
  */
 void ActBridge::newInitGo()
 {
@@ -421,10 +403,8 @@ void ActBridge::newInitGo()
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Walk, this), PaniMotionInfo(PIKIANIM_Walk));
 }
 
-/*
- * --INFO--
- * Address:	800AD664
- * Size:	00030C
+/**
+ * @TODO: Documentation
  */
 int ActBridge::newExeGo()
 {
@@ -474,10 +454,8 @@ int ActBridge::newExeGo()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800AD970
- * Size:	0000D0
+/**
+ * @TODO: Documentation
  */
 void ActBridge::newInitWork()
 {
@@ -498,10 +476,8 @@ void ActBridge::newInitWork()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800ADA40
- * Size:	000668
+/**
+ * @TODO: Documentation
  */
 int ActBridge::newExeWork()
 {

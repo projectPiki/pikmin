@@ -15,10 +15,8 @@ DEFINE_ERROR(19)
  */
 DEFINE_PRINT("particleLoader")
 
-/*
- * --INFO--
- * Address:	801A0F24
- * Size:	000158
+/**
+ * @TODO: Documentation
  */
 u8* zen::particleLoader::load(immut char* fileName, bool p2)
 {
@@ -48,10 +46,8 @@ u8* zen::particleLoader::load(immut char* fileName, bool p2)
 	return data;
 }
 
-/*
- * --INFO--
- * Address:	801A107C
- * Size:	000084
+/**
+ * @TODO: Documentation
  */
 u8* zen::particleLoader::pmFind(immut char* fileName)
 {

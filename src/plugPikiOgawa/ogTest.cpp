@@ -37,10 +37,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("OgTestSection")
 
-/*
- * --INFO--
- * Address:	8017D744
- * Size:	0002EC
+/**
+ * @TODO: Documentation
  */
 zen::OgTestScreen::OgTestScreen()
 {
@@ -94,10 +92,8 @@ zen::OgTestScreen::OgTestScreen()
 	PRINT("**********************************************\n");
 }
 
-/*
- * --INFO--
- * Address:	8017DA30
- * Size:	0004DC
+/**
+ * @TODO: Documentation
  */
 void zen::OgTestScreen::modeSelectSub()
 {
@@ -273,10 +269,8 @@ void zen::OgTestScreen::modeSelectSub()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8017DF0C
- * Size:	000188
+/**
+ * @TODO: Documentation
  */
 void zen::OgTestScreen::update()
 {
@@ -339,10 +333,8 @@ void zen::OgTestScreen::update()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8017E094
- * Size:	0006A8
+/**
+ * @TODO: Documentation
  */
 void zen::OgTestScreen::draw(Graphics& gfx)
 {
@@ -452,10 +444,8 @@ void zen::OgTestScreen::draw(Graphics& gfx)
 	gfx.setLighting(false, nullptr);
 }
 
-/*
- * --INFO--
- * Address:	8017E73C
- * Size:	000094
+/**
+ * @TODO: Documentation
  */
 zen::OgTestSection::OgTestSection()
 {
@@ -465,10 +455,8 @@ zen::OgTestSection::OgTestSection()
 	flowCont._250 = 0;
 }
 
-/*
- * --INFO--
- * Address:	8017E7D0
- * Size:	000080
+/**
+ * @TODO: Documentation
  */
 void zen::OgTestSection::init()
 {

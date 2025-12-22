@@ -19,10 +19,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("Mizu");
 
-/*
- * --INFO--
- * Address:	8017B3D4
- * Size:	000090
+/**
+ * @TODO: Documentation
  */
 MizuProp::MizuProp()
 {
@@ -31,10 +29,8 @@ MizuProp::MizuProp()
 	mCreatureProps.mAcceleration.mValue  = 1.0f;
 }
 
-/*
- * --INFO--
- * Address:	8017B464
- * Size:	000084
+/**
+ * @TODO: Documentation
  */
 Mizu::Mizu(CreatureProp* props)
     : Boss(props)
@@ -43,10 +39,8 @@ Mizu::Mizu(CreatureProp* props)
 	mMizuAi   = new MizuAi(this);
 }
 
-/*
- * --INFO--
- * Address:	8017B4E8
- * Size:	00005C
+/**
+ * @TODO: Documentation
  */
 bool Mizu::attackDefaultPortion()
 {
@@ -55,20 +49,16 @@ bool Mizu::attackDefaultPortion()
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8017B544
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 f32 Mizu::getiMass()
 {
 	return 0.0001f;
 }
 
-/*
- * --INFO--
- * Address:	8017B54C
- * Size:	000040
+/**
+ * @TODO: Documentation
  */
 void Mizu::initMizu(immut Vector3f&)
 {
@@ -78,10 +68,8 @@ void Mizu::initMizu(immut Vector3f&)
 	mMizuAi->initMizu(this);
 }
 
-/*
- * --INFO--
- * Address:	8017B58C
- * Size:	000040
+/**
+ * @TODO: Documentation
  */
 void Mizu::initGeyzer(immut Vector3f&)
 {
@@ -91,10 +79,8 @@ void Mizu::initGeyzer(immut Vector3f&)
 	mMizuAi->initGeyzer(this);
 }
 
-/*
- * --INFO--
- * Address:	8017B5CC
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 void Mizu::doKill()
 {
@@ -104,20 +90,16 @@ void Mizu::doKill()
 	bossMgr->kill(this);
 }
 
-/*
- * --INFO--
- * Address:	8017B618
- * Size:	000028
+/**
+ * @TODO: Documentation
  */
 void Mizu::exitCourse()
 {
 	mMizuAi->killCallBackEffect(true);
 }
 
-/*
- * --INFO--
- * Address:	8017B640
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 void Mizu::update()
 {
@@ -125,10 +107,8 @@ void Mizu::update()
 	doAnimation();
 }
 
-/*
- * --INFO--
- * Address:	8017B68C
- * Size:	000098
+/**
+ * @TODO: Documentation
  */
 void Mizu::refresh(Graphics& gfx)
 {
@@ -140,10 +120,8 @@ void Mizu::refresh(Graphics& gfx)
 	mCollInfo->updateInfo(gfx, false);
 }
 
-/*
- * --INFO--
- * Address:	8017B724
- * Size:	00006C
+/**
+ * @TODO: Documentation
  */
 void Mizu::drawShape(Graphics& gfx)
 {
@@ -151,20 +129,16 @@ void Mizu::drawShape(Graphics& gfx)
 	mShapeObject->mShape->drawshape(gfx, *gfx.mCamera, nullptr);
 }
 
-/*
- * --INFO--
- * Address:	8017B790
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 void Mizu::doAI()
 {
 	mMizuAi->update();
 }
 
-/*
- * --INFO--
- * Address:	8017B7B4
- * Size:	000044
+/**
+ * @TODO: Documentation
  */
 void Mizu::doAnimation()
 {

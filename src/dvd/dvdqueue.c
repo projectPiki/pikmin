@@ -2,10 +2,8 @@
 
 struct DVDQueue WaitingQueue[4];
 
-/*
- * --INFO--
- * Address:	80201F04
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 void __DVDClearWaitingQueue()
 {
@@ -19,10 +17,8 @@ void __DVDClearWaitingQueue()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80201F3C
- * Size:	000068
+/**
+ * @TODO: Documentation
  */
 BOOL __DVDPushWaitingQueue(int idx, struct DVDQueue* newTail)
 {
@@ -49,10 +45,8 @@ void PopWaitingQueuePrio(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80201FA4
- * Size:	0000A0
+/**
+ * @TODO: Documentation
  */
 DVDQueue* __DVDPopWaitingQueue()
 {
@@ -82,10 +76,8 @@ DVDQueue* __DVDPopWaitingQueue()
 	return NULL;
 }
 
-/*
- * --INFO--
- * Address:	80202044
- * Size:	000058
+/**
+ * @TODO: Documentation
  */
 BOOL __DVDCheckWaitingQueue()
 {
@@ -102,10 +94,8 @@ BOOL __DVDCheckWaitingQueue()
 	return FALSE;
 }
 
-/*
- * --INFO--
- * Address:	8020209C
- * Size:	000060
+/**
+ * @TODO: Documentation
  */
 BOOL __DVDDequeueWaitingQueue(DVDQueue* queue)
 {

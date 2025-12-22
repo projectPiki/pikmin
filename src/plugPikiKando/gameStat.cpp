@@ -35,10 +35,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("gameStat");
 
-/*
- * --INFO--
- * Address:	801124B8
- * Size:	0000A8
+/**
+ * @TODO: Documentation
  */
 void GameStat::init()
 {
@@ -63,10 +61,8 @@ void GameStat::init()
 	orimaDead = false;
 }
 
-/*
- * --INFO--
- * Address:	80112560
- * Size:	0000C4
+/**
+ * @TODO: Documentation
  */
 void GameStat::update()
 {
@@ -104,10 +100,8 @@ void GameStat::ColCounter::dump(immut char* name)
 	PRINT("<%s> %d (%d + %d + %d)\n", name, int(mCounts), mCounts[Blue], mCounts[Red], mCounts[Yellow]);
 }
 
-/*
- * --INFO--
- * Address:	80112624
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void GameStat::dump()
 {

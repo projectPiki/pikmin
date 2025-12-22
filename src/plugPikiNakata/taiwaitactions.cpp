@@ -19,10 +19,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("taiwaitactions")
 
-/*
- * --INFO--
- * Address:	80143A9C
- * Size:	000070
+/**
+ * @TODO: Documentation
  */
 void TaiWaitTurningAction::start(Teki& teki)
 {
@@ -30,10 +28,8 @@ void TaiWaitTurningAction::start(Teki& teki)
 	teki.mTargetAngle = 2.0f * NSystem::random() * NMathF::pi;
 }
 
-/*
- * --INFO--
- * Address:	80143B0C
- * Size:	0000E4
+/**
+ * @TODO: Documentation
  */
 bool TaiWaitTurningAction::act(Teki& teki)
 {

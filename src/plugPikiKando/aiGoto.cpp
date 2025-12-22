@@ -16,10 +16,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("aiGoto")
 
-/*
- * --INFO--
- * Address:	800BAF68
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 ActGoto::ActGoto(Piki* piki)
     : Action(piki, true)
@@ -27,10 +25,8 @@ ActGoto::ActGoto(Piki* piki)
 	mTarget.clear();
 }
 
-/*
- * --INFO--
- * Address:	800BAFB4
- * Size:	00007C
+/**
+ * @TODO: Documentation
  */
 void ActGoto::Initialiser::initialise(Action* action)
 {
@@ -42,10 +38,8 @@ void ActGoto::Initialiser::initialise(Action* action)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800BB030
- * Size:	0000D4
+/**
+ * @TODO: Documentation
  */
 void ActGoto::init(Creature* target)
 {
@@ -54,10 +48,8 @@ void ActGoto::init(Creature* target)
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Run), PaniMotionInfo(PIKIANIM_Run));
 }
 
-/*
- * --INFO--
- * Address:	800BB104
- * Size:	000040
+/**
+ * @TODO: Documentation
  */
 void ActGoto::cleanup()
 {
@@ -65,10 +57,8 @@ void ActGoto::cleanup()
 	mTarget.reset();
 }
 
-/*
- * --INFO--
- * Address:	800BB144
- * Size:	000378
+/**
+ * @TODO: Documentation
  */
 int ActGoto::exec()
 {

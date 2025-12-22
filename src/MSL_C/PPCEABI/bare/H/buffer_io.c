@@ -19,10 +19,8 @@ void __convert_to_newlines(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80215D7C
- * Size:	000034
+/**
+ * @TODO: Documentation
  */
 void __prep_buffer(FILE* file)
 {
@@ -43,10 +41,8 @@ void __load_buffer(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80215CB0
- * Size:	0000CC
+/**
+ * @TODO: Documentation
  */
 int __flush_buffer(FILE* file, size_t* length)
 {

@@ -23,10 +23,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("attentionCamera")
 
-/*
- * --INFO--
- * Address:	80078DB0
- * Size:	0001E8
+/**
+ * @TODO: Documentation
  */
 AttentionCamera::AttentionCamera()
 {
@@ -63,10 +61,8 @@ void AttentionCamera::start(u32 tag, Creature* target, f32 p3, f32 p4)
 	mActiveFader->initFadeOut();
 }
 
-/*
- * --INFO--
- * Address:	80079464
- * Size:	000050
+/**
+ * @TODO: Documentation
  */
 void AttentionCamera::finish()
 {
@@ -75,10 +71,8 @@ void AttentionCamera::finish()
 	mActiveFader->initFadeOut();
 }
 
-/*
- * --INFO--
- * Address:	800794B4
- * Size:	0000F0
+/**
+ * @TODO: Documentation
  */
 void AttentionCamera::update()
 {
@@ -107,10 +101,8 @@ void AttentionCamera::update()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800795B8
- * Size:	00005C
+/**
+ * @TODO: Documentation
  */
 void AttentionCamera::refresh(Graphics& gfx)
 {

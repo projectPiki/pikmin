@@ -27,10 +27,8 @@ DEFINE_PRINT("drawCommon")
 Texture* zen::NumberTex::texTable[10];
 Texture* zen::NumberTex::shadowTexTable[10];
 
-/*
- * --INFO--
- * Address:	801BF574
- * Size:	000108
+/**
+ * @TODO: Documentation
  */
 zen::DrawScreen::DrawScreen(immut char* bloFileName, P2DGrafContext* grafContext, bool useAlphaMgr, bool useTexAnimMgr)
 {
@@ -42,20 +40,16 @@ zen::DrawScreen::DrawScreen(immut char* bloFileName, P2DGrafContext* grafContext
 	}
 }
 
-/*
- * --INFO--
- * Address:	801BF67C
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 void zen::DrawScreen::update()
 {
 	mScreen.update();
 }
 
-/*
- * --INFO--
- * Address:	801BF6A0
- * Size:	000050
+/**
+ * @TODO: Documentation
  */
 void zen::DrawScreen::draw()
 {
@@ -63,10 +57,8 @@ void zen::DrawScreen::draw()
 	mScreen.draw(0, 0, mGrafContext);
 }
 
-/*
- * --INFO--
- * Address:	801BF6F0
- * Size:	0000B4
+/**
+ * @TODO: Documentation
  */
 zen::NumberTex::NumberTex()
 {
@@ -88,10 +80,8 @@ zen::NumberTex::NumberTex()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801BF7A4
- * Size:	000118
+/**
+ * @TODO: Documentation
  */
 void zen::P2DPaneLibrary::makeResident(P2DPane* pane)
 {
@@ -104,10 +94,8 @@ void zen::P2DPaneLibrary::makeResident(P2DPane* pane)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801BF8D8
- * Size:	0000EC
+/**
+ * @TODO: Documentation
  */
 void zen::P2DPaneLibrary::setFamilyAlpha(P2DPane* pane, u8 alpha)
 {
@@ -121,10 +109,8 @@ void zen::P2DPaneLibrary::setFamilyAlpha(P2DPane* pane, u8 alpha)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801BF9C4
- * Size:	000030
+/**
+ * @TODO: Documentation
  */
 void zen::P2DPaneLibrary::setAlpha(P2DPane* pane, u8 alpha)
 {
@@ -159,10 +145,8 @@ void zen::P2DPaneLibrary::setMirror(P2DPane* pane, P2DMirror mirror)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801BF9F4
- * Size:	000120
+/**
+ * @TODO: Documentation
  */
 void zen::P2DPaneLibrary::setFamilyMirror(P2DPane* pane, P2DMirror mirror)
 {
@@ -176,10 +160,8 @@ void zen::P2DPaneLibrary::setFamilyMirror(P2DPane* pane, P2DMirror mirror)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801BFB14
- * Size:	00001C
+/**
+ * @TODO: Documentation
  */
 P2DPane* zen::P2DPaneLibrary::getParentPane(P2DPane* pane)
 {
@@ -190,10 +172,8 @@ P2DPane* zen::P2DPaneLibrary::getParentPane(P2DPane* pane)
 	return nullptr;
 }
 
-/*
- * --INFO--
- * Address:	801BFB30
- * Size:	000070
+/**
+ * @TODO: Documentation
  */
 void zen::P2DPaneLibrary::getWorldPos(P2DPane* pane, int* outX, int* outY)
 {
@@ -221,10 +201,8 @@ void zen::P2DPaneLibrary::getWorldPos(P2DPane* pane, int* outX, int* outY)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801BFBA0
- * Size:	000124
+/**
+ * @TODO: Documentation
  */
 void zen::P2DPaneLibrary::changeParent(P2DPane* pane, P2DPane* newParent)
 {
@@ -308,10 +286,8 @@ void zen::P2DPaneLibrary::printUseTexName(immut char* bloFileName, IDelegate1<im
 	printUseTexName(&screen, delegate);
 }
 
-/*
- * --INFO--
- * Address:	801BFCC4
- * Size:	000168
+/**
+ * @TODO: Documentation
  */
 zen::BalloonPane::BalloonPane(P2DPane* pane, f32 p2)
     : P2DPaneCallBack(nullptr, PANETYPE_Pane)
@@ -326,10 +302,8 @@ zen::BalloonPane::BalloonPane(P2DPane* pane, f32 p2)
 	setGoalRotate();
 }
 
-/*
- * --INFO--
- * Address:	801BFE2C
- * Size:	00039C
+/**
+ * @TODO: Documentation
  */
 bool zen::BalloonPane::invoke(P2DPane* pane)
 {
@@ -370,10 +344,8 @@ bool zen::BalloonPane::invoke(P2DPane* pane)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	801C01C8
- * Size:	0000DC
+/**
+ * @TODO: Documentation
  */
 void zen::BalloonPane::setGoalPos()
 {
@@ -382,10 +354,8 @@ void zen::BalloonPane::setGoalPos()
 	mGoalPos.set(mHomePos + randOffset);
 }
 
-/*
- * --INFO--
- * Address:	801C02A4
- * Size:	00006C
+/**
+ * @TODO: Documentation
  */
 void zen::BalloonPane::setGoalRotate()
 {

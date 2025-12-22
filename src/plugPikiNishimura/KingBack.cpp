@@ -19,10 +19,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("KingBack");
 
-/*
- * --INFO--
- * Address:	80179E08
- * Size:	000090
+/**
+ * @TODO: Documentation
  */
 KingBackProp::KingBackProp()
 {
@@ -31,10 +29,8 @@ KingBackProp::KingBackProp()
 	mCreatureProps.mAcceleration.mValue  = 1.0f;
 }
 
-/*
- * --INFO--
- * Address:	80179E98
- * Size:	00006C
+/**
+ * @TODO: Documentation
  */
 KingBack::KingBack(CreatureProp* props)
     : Boss(props)
@@ -42,20 +38,16 @@ KingBack::KingBack(CreatureProp* props)
 	mCollInfo = new CollInfo(4);
 }
 
-/*
- * --INFO--
- * Address:	80179F04
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 f32 KingBack::getiMass()
 {
 	return 0.0001f;
 }
 
-/*
- * --INFO--
- * Address:	80179F0C
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 void KingBack::init(immut Vector3f&)
 {
@@ -65,10 +57,8 @@ void KingBack::init(immut Vector3f&)
 	mPlatMgr.init(this, mapMgr, mShapeObject->mShape);
 }
 
-/*
- * --INFO--
- * Address:	80179F58
- * Size:	00003C
+/**
+ * @TODO: Documentation
  */
 void KingBack::doKill()
 {
@@ -76,19 +66,15 @@ void KingBack::doKill()
 	bossMgr->kill(this);
 }
 
-/*
- * --INFO--
- * Address:	80179F94
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void KingBack::exitCourse()
 {
 }
 
-/*
- * --INFO--
- * Address:	80179F98
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 void KingBack::update()
 {
@@ -96,10 +82,8 @@ void KingBack::update()
 	doAnimation();
 }
 
-/*
- * --INFO--
- * Address:	80179FE4
- * Size:	0000A4
+/**
+ * @TODO: Documentation
  */
 void KingBack::refresh(Graphics& gfx)
 {
@@ -113,10 +97,8 @@ void KingBack::refresh(Graphics& gfx)
 	mPlatMgr.update(gfx);
 }
 
-/*
- * --INFO--
- * Address:	8017A088
- * Size:	00006C
+/**
+ * @TODO: Documentation
  */
 void KingBack::drawShape(Graphics& gfx)
 {
@@ -124,20 +106,16 @@ void KingBack::drawShape(Graphics& gfx)
 	mShapeObject->mShape->drawshape(gfx, *gfx.mCamera, nullptr);
 }
 
-/*
- * --INFO--
- * Address:	8017A0F4
- * Size:	00001C
+/**
+ * @TODO: Documentation
  */
 void KingBack::doAI()
 {
 	mSRT.t.set(mInitPosition);
 }
 
-/*
- * --INFO--
- * Address:	8017A110
- * Size:	000044
+/**
+ * @TODO: Documentation
  */
 void KingBack::doAnimation()
 {

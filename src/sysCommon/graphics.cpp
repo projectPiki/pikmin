@@ -51,10 +51,8 @@ void PVWLightingInfo::read(RandomAccessStream& s)
 	_UNUSED08 = s.readFloat();
 }
 
-/*
- * --INFO--
- * Address:	80025914
- * Size:	000120
+/**
+ * @TODO: Documentation
  */
 void PVWPolygonColourInfo::animate(f32* data, Colour& col)
 {
@@ -99,10 +97,8 @@ f32 subExtract(f32 time, immut AKeyInfo& src, immut AKeyInfo& dest)
 	return result;
 }
 
-/*
- * --INFO--
- * Address:	80025A34
- * Size:	000498
+/**
+ * @TODO: Documentation
  */
 void PVWColourAnimInfo::extract(f32 value, Colour& target)
 {
@@ -176,10 +172,8 @@ void PVWColourAnimInfo::extract(f32 value, Colour& target)
 	target.b = b;
 }
 
-/*
- * --INFO--
- * Address:	80025ECC
- * Size:	0001F8
+/**
+ * @TODO: Documentation
  */
 void PVWAlphaAnimInfo::extract(f32 value, Colour& target)
 {
@@ -219,10 +213,8 @@ void PVWAlphaAnimInfo::extract(f32 value, Colour& target)
 	target.a = a;
 }
 
-/*
- * --INFO--
- * Address:	800260C4
- * Size:	0004A0
+/**
+ * @TODO: Documentation
  */
 void PVWColourShortAnimInfo::extract(f32 value, ShortColour& target)
 {
@@ -296,10 +288,8 @@ void PVWColourShortAnimInfo::extract(f32 value, ShortColour& target)
 	target.b = b;
 }
 
-/*
- * --INFO--
- * Address:	80026564
- * Size:	000208
+/**
+ * @TODO: Documentation
  */
 void PVWAlphaShortAnimInfo::extract(f32 value, ShortColour& target)
 {
@@ -339,10 +329,8 @@ void PVWAlphaShortAnimInfo::extract(f32 value, ShortColour& target)
 	target.a = a;
 }
 
-/*
- * --INFO--
- * Address:	8002676C
- * Size:	0003B0
+/**
+ * @TODO: Documentation
  */
 void PVWTexAnimInfo::extract(f32 value, Vector3f& target)
 {
@@ -389,10 +377,8 @@ void PVWTexAnimInfo::extract(f32 value, Vector3f& target)
 	                               mInfo.mKeyframes[idx + 1].mBlueData.mValue, mInfo.mKeyframes[idx + 1].mBlueData.mTangent));
 }
 
-/*
- * --INFO--
- * Address:	80026B1C
- * Size:	0002F8
+/**
+ * @TODO: Documentation
  */
 void PVWTextureData::animate(f32* p1, Matrix4f& mtx)
 {
@@ -454,10 +440,8 @@ void PVWTextureData::animate(f32* p1, Matrix4f& mtx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80026E14
- * Size:	0005A4
+/**
+ * @TODO: Documentation
  */
 void PVWTextureData::read(RandomAccessStream& stream)
 {
@@ -501,10 +485,8 @@ void PVWTexGenData::read(RandomAccessStream& input)
 	mMatrixType = input.readByte();
 }
 
-/*
- * --INFO--
- * Address:	800273B8
- * Size:	0001E8
+/**
+ * @TODO: Documentation
  */
 void PVWTextureInfo::read(RandomAccessStream& input)
 {
@@ -533,10 +515,8 @@ void PVWTextureInfo::read(RandomAccessStream& input)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800275B8
- * Size:	000120
+/**
+ * @TODO: Documentation
  */
 void PVWTevColReg::animate(f32* p1, ShortColour& color)
 {
@@ -557,20 +537,16 @@ void PVWTevColReg::animate(f32* p1, ShortColour& color)
 	mAlphaAnimData.extract(mCurrentAnimFrame, color);
 }
 
-/*
- * --INFO--
- * Address:	800276D8
- * Size:	000054
+/**
+ * @TODO: Documentation
  */
 void Material::attach()
 {
 	gsys->mDGXGfx->useDList(gsys->mDGXGfx->compileMaterial(this));
 }
 
-/*
- * --INFO--
- * Address:	80027738
- * Size:	000238
+/**
+ * @TODO: Documentation
  */
 void Material::read(RandomAccessStream& input)
 {
@@ -587,10 +563,8 @@ void Material::read(RandomAccessStream& input)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80027CB8
- * Size:	0002D0
+/**
+ * @TODO: Documentation
  */
 void Font::setTexture(Texture* tex, int numRows, int numCols)
 {
@@ -730,20 +704,16 @@ static char kanji_convert_table[] ATTRIBUTE_ALIGN(32) = {
 	"績匹累替角更包獰吹遇悪似謎守有軽様告武器危崩順形養境届両衛貫渦砕淵裂凡義務貴毎賊突測庭円翔魅夫秩低爆住笑"
 };
 
-/*
- * --INFO--
- * Address:	80027FB4
- * Size:	00000C
+/**
+ * @TODO: Documentation
  */
 int Font::charToIndex(char c)
 {
 	return c - 0x20;
 }
 
-/*
- * --INFO--
- * Address:	80027FC0
- * Size:	000098
+/**
+ * @TODO: Documentation
  */
 static s16 searchKanjiCode(u16 code)
 {
@@ -764,10 +734,8 @@ static s16 searchKanjiCode(u16 code)
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	80028058
- * Size:	0000DC
+/**
+ * @TODO: Documentation
  */
 int Font::charToIndex(u16 c)
 {
@@ -779,10 +747,8 @@ int Font::charToIndex(u16 c)
 	return ((s16)kanji != -1) ? (s16)kanji + 0x126 : '_';
 }
 
-/*
- * --INFO--
- * Address:	80028134
- * Size:	0000E0
+/**
+ * @TODO: Documentation
  */
 int Font::stringWidth(immut char* str)
 {
@@ -824,30 +790,24 @@ void GfxInfo::createCollData(immut Vector3f* pos, f32)
 	               // more here, but this is enough to get the weak ctors to spawn
 }
 
-/*
- * --INFO--
- * Address:	80028280
- * Size:	000034
+/**
+ * @TODO: Documentation
  */
 void MaterialHandler::setMaterial(Material* mat)
 {
 	mGfx->setMaterial(mat, false);
 }
 
-/*
- * --INFO--
- * Address:	800282B4
- * Size:	000030
+/**
+ * @TODO: Documentation
  */
 void MaterialHandler::setTexMatrix(bool p1)
 {
 	mGfx->initReflectTex(p1);
 }
 
-/*
- * --INFO--
- * Address:	800282E4
- * Size:	0001C8
+/**
+ * @TODO: Documentation
  */
 Graphics::Graphics()
 {
@@ -890,10 +850,8 @@ Graphics::Graphics()
 	mLightIntensity = 1.0f;
 }
 
-/*
- * --INFO--
- * Address:	800284B8
- * Size:	000050
+/**
+ * @TODO: Documentation
  */
 void Graphics::initRender(int, int)
 {
@@ -903,20 +861,16 @@ void Graphics::initRender(int, int)
 	resetCacheBuffer();
 }
 
-/*
- * --INFO--
- * Address:	80028508
- * Size:	00000C
+/**
+ * @TODO: Documentation
  */
 void Graphics::resetMatrixBuffer()
 {
 	mActiveMatrixIdx = nullptr;
 }
 
-/*
- * --INFO--
- * Address:	80028514
- * Size:	00001C
+/**
+ * @TODO: Documentation
  */
 Matrix4f* Graphics::getMatrices(int requestedMatrixCount)
 {
@@ -929,10 +883,8 @@ Matrix4f* Graphics::getMatrices(int requestedMatrixCount)
 	return mtx;
 }
 
-/*
- * --INFO--
- * Address:	80028530
- * Size:	000018
+/**
+ * @TODO: Documentation
  */
 void Graphics::resetCacheBuffer()
 {
@@ -942,10 +894,8 @@ void Graphics::resetCacheBuffer()
 	mCachedShapeCount = nullptr;
 }
 
-/*
- * --INFO--
- * Address:	80028548
- * Size:	000184
+/**
+ * @TODO: Documentation
  */
 void Graphics::cacheShape(BaseShape* shape, ShapeDynMaterials* mats)
 {
@@ -976,10 +926,8 @@ void Graphics::cacheShape(BaseShape* shape, ShapeDynMaterials* mats)
 	mCachedShapeCount++;
 }
 
-/*
- * --INFO--
- * Address:	800286CC
- * Size:	0000A0
+/**
+ * @TODO: Documentation
  */
 void Graphics::flushCachedShapes()
 {
@@ -1029,10 +977,8 @@ immut char* TexImg::formatName(u32 format)
 	return fmtNames[format];
 }
 
-/*
- * --INFO--
- * Address:	8002876C
- * Size:	00009C
+/**
+ * @TODO: Documentation
  */
 int TexImg::calcDataSize(int format, int width, int height)
 {
@@ -1084,10 +1030,8 @@ void TexImg::setColour(immut Colour&)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80028808
- * Size:	000130
+/**
+ * @TODO: Documentation
  */
 void TexImg::read(RandomAccessStream& stream)
 {
@@ -1106,10 +1050,8 @@ void TexImg::read(RandomAccessStream& stream)
 	stream.read(mTextureData, mDataSize);
 }
 
-/*
- * --INFO--
- * Address:	80028938
- * Size:	000058
+/**
+ * @TODO: Documentation
  */
 void TexImg::getTileSize(int format, u32& xSize, u32& ySize)
 {
@@ -1203,10 +1145,8 @@ void TexImg::dumpBti(Texture* tex, immut char* name, RandomAccessStream& input, 
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80028990
- * Size:	0003EC
+/**
+ * @TODO: Documentation
  */
 void TexImg::importBti(Texture* tex, RandomAccessStream& input, u8* data)
 {
@@ -1232,10 +1172,8 @@ void TexImg::importBti(Texture* tex, RandomAccessStream& input, u8* data)
 	readTexData(tex, input, data);
 }
 
-/*
- * --INFO--
- * Address:	80028D7C
- * Size:	0001A8
+/**
+ * @TODO: Documentation
  */
 void TexImg::importTxe(Texture* tex, RandomAccessStream& stream)
 {
@@ -1255,10 +1193,8 @@ void TexImg::importTxe(Texture* tex, RandomAccessStream& stream)
 	readTexData(tex, stream, nullptr);
 }
 
-/*
- * --INFO--
- * Address:	80028F24
- * Size:	0001E4
+/**
+ * @TODO: Documentation
  */
 void TexAttr::initImage()
 {
@@ -1297,10 +1233,8 @@ void TexAttr::initImage()
 	mTexture->decodeData(mImage);
 }
 
-/*
- * --INFO--
- * Address:	80029108
- * Size:	0000AC
+/**
+ * @TODO: Documentation
  */
 void TexAttr::read(RandomAccessStream& stream)
 {
@@ -1311,10 +1245,8 @@ void TexAttr::read(RandomAccessStream& stream)
 	mLODBias          = stream.readFloat();
 }
 
-/*
- * --INFO--
- * Address:	800291B4
- * Size:	0002BC
+/**
+ * @TODO: Documentation
  */
 void Graphics::drawCylinder(immut Vector3f& p1, immut Vector3f& p2, f32 p3, immut Matrix4f& p4)
 {
@@ -1356,10 +1288,8 @@ void Graphics::drawCircle(immut Vector3f&, f32, immut Matrix4f&)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80029470
- * Size:	0001FC
+/**
+ * @TODO: Documentation
  */
 void Graphics::drawSphere(immut Vector3f& p1, f32 p2, immut Matrix4f& p3)
 {
@@ -1382,10 +1312,8 @@ void Graphics::drawSphere(immut Vector3f& p1, f32 p2, immut Matrix4f& p3)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8002966C
- * Size:	000170
+/**
+ * @TODO: Documentation
  */
 void Graphics::perspPrintf(Font* font, immut Vector3f& pos, int p3, int p4, immut char* fmt, ...)
 {
@@ -1404,10 +1332,8 @@ void Graphics::perspPrintf(Font* font, immut Vector3f& pos, int p3, int p4, immu
 	}
 }
 
-/*
- * --INFO--
- * Address:	800297DC
- * Size:	000114
+/**
+ * @TODO: Documentation
  */
 int Graphics::calcLighting(f32 intensity)
 {
@@ -1464,10 +1390,8 @@ int Graphics::calcBoxLighting(immut BoundBox&)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	800298F4
- * Size:	00007C
+/**
+ * @TODO: Documentation
  */
 void CacheTexture::makeResident()
 {

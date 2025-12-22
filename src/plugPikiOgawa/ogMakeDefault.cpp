@@ -22,10 +22,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT(nullptr)
 
-/*
- * --INFO--
- * Address:	8019399C
- * Size:	000360
+/**
+ * @TODO: Documentation
  */
 zen::ogScrMakeDefaultMgr::ogScrMakeDefaultMgr()
 {
@@ -62,10 +60,8 @@ zen::ogScrMakeDefaultMgr::ogScrMakeDefaultMgr()
 	mStatus     = Inactive;
 }
 
-/*
- * --INFO--
- * Address:	80193CFC
- * Size:	0000EC
+/**
+ * @TODO: Documentation
  */
 void zen::ogScrMakeDefaultMgr::start()
 {
@@ -82,10 +78,8 @@ void zen::ogScrMakeDefaultMgr::start()
 	mActiveTypingTextMgr->transCursor(mCursorPicture);
 }
 
-/*
- * --INFO--
- * Address:	80193DE8
- * Size:	000354
+/**
+ * @TODO: Documentation
  */
 zen::ogScrMakeDefaultMgr::MakeDefaultStatus zen::ogScrMakeDefaultMgr::update(Controller* input)
 {
@@ -197,10 +191,8 @@ zen::ogScrMakeDefaultMgr::MakeDefaultStatus zen::ogScrMakeDefaultMgr::update(Con
 	return mStatus;
 }
 
-/*
- * --INFO--
- * Address:	8019413C
- * Size:	0000A8
+/**
+ * @TODO: Documentation
  */
 void zen::ogScrMakeDefaultMgr::draw(Graphics& gfx)
 {
@@ -212,10 +204,8 @@ void zen::ogScrMakeDefaultMgr::draw(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801941E4
- * Size:	000020
+/**
+ * @TODO: Documentation
  */
 bool zen::ogScrMakeDefaultMgr::checkTypingAll()
 {

@@ -20,10 +20,8 @@ INIT void* TRK_memset(void* dest, int val, size_t count)
 	return dest;
 }
 
-/*
- * --INFO--
- * Address:	8021E7C0
- * Size:	0000C4
+/**
+ * @TODO: Documentation
  */
 static void TRK_fill_mem(void* dest, int value, size_t length)
 {

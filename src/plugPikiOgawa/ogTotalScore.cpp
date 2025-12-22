@@ -26,10 +26,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("OgTotalScoreSection") // probably
 
-/*
- * --INFO--
- * Address:	80194204
- * Size:	000A0C
+/**
+ * @TODO: Documentation
  */
 zen::ogScrTotalScoreMgr::ogScrTotalScoreMgr(zen::TotalScoreType* scores)
 {
@@ -147,10 +145,8 @@ zen::ogScrTotalScoreMgr::ogScrTotalScoreMgr(zen::TotalScoreType* scores)
 	STACK_PAD_TERNARY(mDeadRecordTexts, 3);
 }
 
-/*
- * --INFO--
- * Address:	80194C10
- * Size:	00003C
+/**
+ * @TODO: Documentation
  */
 void zen::ogScrTotalScoreMgr::start()
 {
@@ -159,10 +155,8 @@ void zen::ogScrTotalScoreMgr::start()
 	mBest->appear();
 }
 
-/*
- * --INFO--
- * Address:	80194C4C
- * Size:	000190
+/**
+ * @TODO: Documentation
  */
 zen::ogScrTotalScoreMgr::TotalScoreStatus zen::ogScrTotalScoreMgr::update(Controller* input)
 {
@@ -209,10 +203,8 @@ zen::ogScrTotalScoreMgr::TotalScoreStatus zen::ogScrTotalScoreMgr::update(Contro
 	}
 }
 
-/*
- * --INFO--
- * Address:	80194DDC
- * Size:	0000A4
+/**
+ * @TODO: Documentation
  */
 void zen::ogScrTotalScoreMgr::draw(Graphics& gfx)
 {
@@ -245,10 +237,8 @@ void zen::ogScrTotalScoreMgr::setEffect(P2DPane* pane, int effID)
 	mEfxMgr2D->create(effID, pos, nullptr, nullptr);
 }
 
-/*
- * --INFO--
- * Address:	80194E80
- * Size:	0006EC
+/**
+ * @TODO: Documentation
  */
 void zen::ogScrTotalScoreMgr::setRankInEffect()
 {
@@ -269,10 +259,8 @@ void zen::ogScrTotalScoreMgr::setRankInEffect()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8019556C
- * Size:	0001D4
+/**
+ * @TODO: Documentation
  */
 void zen::ogScrTotalScoreMgr::setRankInColor()
 {

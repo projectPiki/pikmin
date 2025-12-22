@@ -20,19 +20,15 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("tekiyteki")
 
-/*
- * --INFO--
- * Address:	801A2754
- * Size:	0000F8
+/**
+ * @TODO: Documentation
  */
 YTeki::YTeki()
 {
 }
 
-/*
- * --INFO--
- * Address:	801A28D0
- * Size:	000120
+/**
+ * @TODO: Documentation
  */
 void YTeki::doKill()
 {
@@ -45,10 +41,8 @@ void YTeki::doKill()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801A29F0
- * Size:	000058
+/**
+ * @TODO: Documentation
  */
 void YTeki::exitCourse()
 {
@@ -61,10 +55,8 @@ void YTeki::exitCourse()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801A2A48
- * Size:	000080
+/**
+ * @TODO: Documentation
  */
 bool YTeki::isNaviWatch()
 {
@@ -93,20 +85,16 @@ int YTeki::getMapAttribute()
 	return attr;
 }
 
-/*
- * --INFO--
- * Address:	801A2AC8
- * Size:	000034
+/**
+ * @TODO: Documentation
  */
 void YTeki::moveTowardPriorityFaceDir(immut Vector3f& p1, f32 p2)
 {
 	moveTowardPriorityFaceDir(p1, p2, getParameterF(TPF_TurnVelocity));
 }
 
-/*
- * --INFO--
- * Address:	801A2AFC
- * Size:	000150
+/**
+ * @TODO: Documentation
  */
 void YTeki::moveTowardPriorityFaceDir(immut Vector3f& p1, f32 p2, f32 turnSpeed)
 {
@@ -137,10 +125,8 @@ void YTeki::moveTowardPriorityFaceDir(immut Vector3f& p1, f32 p2, f32 turnSpeed)
 	mTargetVelocity.y = ySpeed;
 }
 
-/*
- * --INFO--
- * Address:	801A2C4C
- * Size:	0000FC
+/**
+ * @TODO: Documentation
  */
 bool YTeki::turnToTarget()
 {
@@ -159,10 +145,8 @@ bool YTeki::turnToTarget()
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	801A2D48
- * Size:	000114
+/**
+ * @TODO: Documentation
  */
 void YTeki::flyingStay(f32 speed)
 {
@@ -181,10 +165,8 @@ void YTeki::flyingStay(f32 speed)
 	mVelocity = mTargetVelocity;
 }
 
-/*
- * --INFO--
- * Address:	801A2E5C
- * Size:	0001A4
+/**
+ * @TODO: Documentation
  */
 void YTeki::killStickToMouthPiki()
 {
@@ -202,10 +184,8 @@ void YTeki::killStickToMouthPiki()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801A3000
- * Size:	0000C8
+/**
+ * @TODO: Documentation
  */
 bool YTeki::startNewMotion(int motionIdx)
 {

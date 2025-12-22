@@ -2,10 +2,8 @@
 
 #include "jaudio/ja_calc.h"
 
-/*
- * --INFO--
- * Address:	8001BB60
- * Size:	000034
+/**
+ * @TODO: Documentation
  */
 f32 V3D_GetAngle(Vector3D_* input_vec)
 {
@@ -33,10 +31,8 @@ void V3D_Minus(Vector3D_*, Vector3D_*, Vector3D_*)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8001BBA0
- * Size:	000040
+/**
+ * @TODO: Documentation
  */
 f32 V3D_Abs(Vector3D_* input_vec)
 {

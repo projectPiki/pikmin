@@ -27,10 +27,8 @@ ParaParametersI::ParaParametersI(int count, ParaParameterInfoI* info)
 {
 }
 
-/*
- * --INFO--
- * Address:	801215A4
- * Size:	000080
+/**
+ * @TODO: Documentation
  */
 void ParaParametersI::read(Stream& input)
 {
@@ -39,10 +37,8 @@ void ParaParametersI::read(Stream& input)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80121624
- * Size:	000080
+/**
+ * @TODO: Documentation
  */
 void ParaParametersI::write(Stream& output)
 {
@@ -51,10 +47,8 @@ void ParaParametersI::write(Stream& output)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801216A4
- * Size:	000058
+/**
+ * @TODO: Documentation
  */
 void ParaParametersI::print()
 {
@@ -73,10 +67,8 @@ ParaParametersF::ParaParametersF(int count, ParaParameterInfoF* info)
 {
 }
 
-/*
- * --INFO--
- * Address:	801216FC
- * Size:	000080
+/**
+ * @TODO: Documentation
  */
 void ParaParametersF::read(Stream& input)
 {
@@ -85,10 +77,8 @@ void ParaParametersF::read(Stream& input)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8012177C
- * Size:	000080
+/**
+ * @TODO: Documentation
  */
 void ParaParametersF::write(Stream& output)
 {
@@ -97,10 +87,8 @@ void ParaParametersF::write(Stream& output)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801217FC
- * Size:	000058
+/**
+ * @TODO: Documentation
  */
 void ParaParametersF::print()
 {
@@ -109,10 +97,8 @@ void ParaParametersF::print()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80121854
- * Size:	0000A8
+/**
+ * @TODO: Documentation
  */
 ParaMultiParameters::ParaMultiParameters(int iCount, ParaParameterInfoI* iInfo, int fCount, ParaParameterInfoF* fInfo)
 {
@@ -120,10 +106,8 @@ ParaMultiParameters::ParaMultiParameters(int iCount, ParaParameterInfoI* iInfo, 
 	mFloatParams = new ParaParametersF(fCount, fInfo);
 }
 
-/*
- * --INFO--
- * Address:	80121A1C
- * Size:	000074
+/**
+ * @TODO: Documentation
  */
 void ParaMultiParameters::input(ParaMultiParameters& other)
 {
@@ -131,10 +115,8 @@ void ParaMultiParameters::input(ParaMultiParameters& other)
 	mFloatParams->input(*other.mFloatParams);
 }
 
-/*
- * --INFO--
- * Address:	80121A90
- * Size:	000060
+/**
+ * @TODO: Documentation
  */
 void ParaMultiParameters::read(Stream& input)
 {
@@ -142,10 +124,8 @@ void ParaMultiParameters::read(Stream& input)
 	mFloatParams->read(input);
 }
 
-/*
- * --INFO--
- * Address:	80121AF0
- * Size:	000060
+/**
+ * @TODO: Documentation
  */
 void ParaMultiParameters::write(Stream& output)
 {
@@ -153,10 +133,8 @@ void ParaMultiParameters::write(Stream& output)
 	mFloatParams->write(output);
 }
 
-/*
- * --INFO--
- * Address:	80121B50
- * Size:	000050
+/**
+ * @TODO: Documentation
  */
 void ParaMultiParameters::print()
 {

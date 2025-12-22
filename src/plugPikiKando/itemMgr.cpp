@@ -48,10 +48,8 @@ DEFINE_PRINT("itemMgr")
 bool PikiHeadMgr::buryMode;
 ItemMgr* itemMgr;
 
-/*
- * --INFO--
- * Address:	800F2978
- * Size:	000040
+/**
+ * @TODO: Documentation
  */
 bool BuildingItem::insideSafeArea(immut Vector3f& pos)
 {
@@ -64,10 +62,8 @@ bool BuildingItem::insideSafeArea(immut Vector3f& pos)
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	800F29B8
- * Size:	00013C
+/**
+ * @TODO: Documentation
  */
 GoalItem* ItemMgr::getContainer(int color)
 {
@@ -89,10 +85,8 @@ GoalItem* ItemMgr::getContainer(int color)
 	return nullptr;
 }
 
-/*
- * --INFO--
- * Address:	800F2AF4
- * Size:	000144
+/**
+ * @TODO: Documentation
  */
 GoalItem* ItemMgr::getNearestContainer(immut Vector3f& pos, f32 radius)
 {
@@ -117,10 +111,8 @@ GoalItem* ItemMgr::getNearestContainer(immut Vector3f& pos, f32 radius)
 	return goal;
 }
 
-/*
- * --INFO--
- * Address:	800F2C38
- * Size:	000114
+/**
+ * @TODO: Documentation
  */
 UfoItem* ItemMgr::getUfo()
 {
@@ -156,10 +148,8 @@ ItemShapeObject::ItemShapeObject(Shape* shape, immut char* objName, immut char* 
 	mShape->overrideAnim(0, &mAnimContext);
 }
 
-/*
- * --INFO--
- * Address:	800F2D4C
- * Size:	0003C0
+/**
+ * @TODO: Documentation
  */
 MeltingPotMgr::MeltingPotMgr(ItemMgr* mgr)
 {
@@ -175,10 +165,8 @@ MeltingPotMgr::MeltingPotMgr(ItemMgr* mgr)
 	mBoBaseShape = nullptr;
 }
 
-/*
- * --INFO--
- * Address:	800F310C
- * Size:	000160
+/**
+ * @TODO: Documentation
  */
 void MeltingPotMgr::finalSetup()
 {
@@ -193,10 +181,8 @@ void MeltingPotMgr::finalSetup()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800F326C
- * Size:	000374
+/**
+ * @TODO: Documentation
  */
 void MeltingPotMgr::prepare(int objType)
 {
@@ -230,10 +216,8 @@ void MeltingPotMgr::prepare(int objType)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800F35E0
- * Size:	0002BC
+/**
+ * @TODO: Documentation
  */
 Creature* MeltingPotMgr::birth(int objType)
 {
@@ -318,10 +302,8 @@ bool ItemMgr::useObjType(int type)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800F389C
- * Size:	0000F4
+/**
+ * @TODO: Documentation
  */
 void ItemMgr::addUseList(int type)
 {
@@ -332,10 +314,8 @@ void ItemMgr::addUseList(int type)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800F3990
- * Size:	0009D8
+/**
+ * @TODO: Documentation
  */
 ItemMgr::ItemMgr()
     : PolyObjectMgr(30)
@@ -402,10 +382,8 @@ void ItemMgr::showInfo()
 	PRINT("%s * size is %d\n", "GoalItem", sizeof(GoalItem));
 }
 
-/*
- * --INFO--
- * Address:	800F4368
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 ItemShapeObject* ItemMgr::getPelletShapeObject(int, int)
 {
@@ -426,10 +404,8 @@ Shape* ItemMgr::getUfoShape()
 	return nullptr;
 }
 
-/*
- * --INFO--
- * Address:	800F4370
- * Size:	00153C
+/**
+ * @TODO: Documentation
  */
 void ItemMgr::initialise()
 {
@@ -559,10 +535,8 @@ void ItemMgr::initialise()
 	STACK_PAD_TERNARY(mPikiHeadMgr, 1);
 }
 
-/*
- * --INFO--
- * Address:	800F58AC
- * Size:	0000C8
+/**
+ * @TODO: Documentation
  */
 ItemCreature::ItemCreature(int objType, CreatureProp* props, Shape* shape)
     : AICreature(props)
@@ -577,10 +551,8 @@ ItemCreature::ItemCreature(int objType, CreatureProp* props, Shape* shape)
 	mStateMachine    = nullptr;
 }
 
-/*
- * --INFO--
- * Address:	800F5974
- * Size:	000070
+/**
+ * @TODO: Documentation
  */
 void ItemCreature::init(immut Vector3f& pos)
 {
@@ -593,80 +565,64 @@ void ItemCreature::init(immut Vector3f& pos)
 	_3C4 = true;
 }
 
-/*
- * --INFO--
- * Address:	800F59E4
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 void ItemCreature::setMotionSpeed(f32 speed)
 {
 	mMotionSpeed = speed;
 }
 
-/*
- * --INFO--
- * Address:	800F59EC
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 f32 ItemCreature::getMotionSpeed()
 {
 	return mMotionSpeed;
 }
 
-/*
- * --INFO--
- * Address:	800F59F4
- * Size:	00000C
+/**
+ * @TODO: Documentation
  */
 void ItemCreature::stopMotion()
 {
 	mMotionSpeed = 0.0f;
 }
 
-/*
- * --INFO--
- * Address:	800F5A00
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 f32 ItemCreature::getCurrentMotionCounter()
 {
 	return mItemAnimator.mAnimationCounter;
 }
 
-/*
- * --INFO--
- * Address:	800F5A08
- * Size:	00002C
+/**
+ * @TODO: Documentation
  */
 immut char* ItemCreature::getCurrentMotionName()
 {
 	return mItemAnimator.getCurrentMotionName();
 }
 
-/*
- * --INFO--
- * Address:	800F5A34
- * Size:	000048
+/**
+ * @TODO: Documentation
  */
 void ItemCreature::startMotion(int motionID)
 {
 	mItemAnimator.startMotion(PaniMotionInfo(motionID, this));
 }
 
-/*
- * --INFO--
- * Address:	800F5A7C
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 void ItemCreature::finishMotion()
 {
 	mItemAnimator.finishMotion(PaniMotionInfo(PANI_NO_MOTION, this));
 }
 
-/*
- * --INFO--
- * Address:	800F5AC8
- * Size:	000058
+/**
+ * @TODO: Documentation
  */
 void ItemCreature::startMotion(int motionID, f32 frame)
 {
@@ -674,10 +630,8 @@ void ItemCreature::startMotion(int motionID, f32 frame)
 	mItemAnimator.mAnimationCounter = frame;
 }
 
-/*
- * --INFO--
- * Address:	800F5B20
- * Size:	00005C
+/**
+ * @TODO: Documentation
  */
 void ItemCreature::finishMotion(f32 frame)
 {
@@ -685,20 +639,16 @@ void ItemCreature::finishMotion(f32 frame)
 	mItemAnimator.mAnimationCounter = frame;
 }
 
-/*
- * --INFO--
- * Address:	800F5B7C
- * Size:	000034
+/**
+ * @TODO: Documentation
  */
 void ItemCreature::doKill()
 {
 	itemMgr->kill(this);
 }
 
-/*
- * --INFO--
- * Address:	800F5BB0
- * Size:	000044
+/**
+ * @TODO: Documentation
  */
 void ItemCreature::doAnimation()
 {
@@ -707,10 +657,8 @@ void ItemCreature::doAnimation()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800F5BF4
- * Size:	00003C
+/**
+ * @TODO: Documentation
  */
 void ItemCreature::update()
 {
@@ -719,10 +667,8 @@ void ItemCreature::update()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800F5C30
- * Size:	000048
+/**
+ * @TODO: Documentation
  */
 void ItemCreature::doAI()
 {
@@ -731,10 +677,8 @@ void ItemCreature::doAI()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800F5C78
- * Size:	000220
+/**
+ * @TODO: Documentation
  */
 void ItemCreature::refresh(Graphics& gfx)
 {
@@ -775,10 +719,8 @@ void ItemCreature::refresh(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800F5E98
- * Size:	000074
+/**
+ * @TODO: Documentation
  */
 bool ItemCreature::stimulate(immut Interaction& interaction)
 {
@@ -789,10 +731,8 @@ bool ItemCreature::stimulate(immut Interaction& interaction)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800F5F0C
- * Size:	000040
+/**
+ * @TODO: Documentation
  */
 bool InteractBuild::actItem(ItemCreature* item) immut
 {
@@ -803,10 +743,8 @@ bool InteractBuild::actItem(ItemCreature* item) immut
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800F5F4C
- * Size:	000040
+/**
+ * @TODO: Documentation
  */
 bool InteractBikkuri::actItem(ItemCreature* item) immut
 {
@@ -816,10 +754,8 @@ bool InteractBikkuri::actItem(ItemCreature* item) immut
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800F5F8C
- * Size:	000034
+/**
+ * @TODO: Documentation
  */
 bool InteractFlick::actItem(ItemCreature* item) immut
 {
@@ -830,10 +766,8 @@ bool InteractFlick::actItem(ItemCreature* item) immut
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	800F5FC0
- * Size:	000040
+/**
+ * @TODO: Documentation
  */
 bool InteractSwallow::actItem(ItemCreature* item) immut
 {
@@ -844,10 +778,8 @@ bool InteractSwallow::actItem(ItemCreature* item) immut
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800F6000
- * Size:	000040
+/**
+ * @TODO: Documentation
  */
 bool InteractPullout::actItem(ItemCreature* item) immut
 {
@@ -859,10 +791,8 @@ bool InteractPullout::actItem(ItemCreature* item) immut
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800F6040
- * Size:	0002D4
+/**
+ * @TODO: Documentation
  */
 bool InteractBomb::actItem(ItemCreature* item) immut
 {
@@ -923,10 +853,8 @@ bool InteractBomb::actItem(ItemCreature* item) immut
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800F6314
- * Size:	000060
+/**
+ * @TODO: Documentation
  */
 void BuildingItem::playEffect(int id)
 {
@@ -941,10 +869,8 @@ void BuildingItem::playEffect(int id)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800F6374
- * Size:	000270
+/**
+ * @TODO: Documentation
  */
 bool InteractAttack::actItem(ItemCreature* item) immut
 {
@@ -994,10 +920,8 @@ bool InteractAttack::actItem(ItemCreature* item) immut
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800F65E4
- * Size:	000144
+/**
+ * @TODO: Documentation
  */
 BuildingItem::BuildingItem(int objType, CreatureProp* props, ItemShapeObject* itemShape, SimpleAI* ai)
     : ItemCreature(objType, props, nullptr)
@@ -1008,10 +932,8 @@ BuildingItem::BuildingItem(int objType, CreatureProp* props, ItemShapeObject* it
 	mLifeGauge.mRenderStyle = LifeGauge::Wheel;
 }
 
-/*
- * --INFO--
- * Address:	800F6728
- * Size:	000064
+/**
+ * @TODO: Documentation
  */
 f32 BuildingItem::getBoundingSphereRadius()
 {
@@ -1025,10 +947,8 @@ f32 BuildingItem::getBoundingSphereRadius()
 	return 100.0f;
 }
 
-/*
- * --INFO--
- * Address:	800F678C
- * Size:	0001C8
+/**
+ * @TODO: Documentation
  */
 void BuildingItem::startAI(int)
 {
@@ -1069,10 +989,8 @@ void BuildingItem::startAI(int)
 	mLifeGauge.mOffset.set(0.0f, 0.0f, 0.0f);
 }
 
-/*
- * --INFO--
- * Address:	800F6954
- * Size:	000090
+/**
+ * @TODO: Documentation
  */
 void BuildingItem::startBreakEffect()
 {
@@ -1088,10 +1006,8 @@ void BuildingItem::startBreakEffect()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800F69E4
- * Size:	000060
+/**
+ * @TODO: Documentation
  */
 void BuildingItem::stopBreakEffect()
 {
@@ -1106,10 +1022,8 @@ void BuildingItem::stopBreakEffect()
 	_3E8.kill();
 }
 
-/*
- * --INFO--
- * Address:	800F6A44
- * Size:	000054
+/**
+ * @TODO: Documentation
  */
 void BuildingItem::update()
 {
@@ -1119,10 +1033,8 @@ void BuildingItem::update()
 	mLifeGauge.updValue(mHealth, mMaxHealth);
 }
 
-/*
- * --INFO--
- * Address:	800F6A98
- * Size:	0001A4
+/**
+ * @TODO: Documentation
  */
 void BuildingItem::refresh(Graphics& gfx)
 {
@@ -1164,19 +1076,15 @@ void BuildingItem::refresh(Graphics& gfx)
 	mCollInfo->updateInfo(gfx, false);
 }
 
-/*
- * --INFO--
- * Address:	800F6C3C
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void BuildingItem::refresh2d(Graphics&)
 {
 }
 
-/*
- * --INFO--
- * Address:	800F6C40
- * Size:	000048
+/**
+ * @TODO: Documentation
  */
 void BuildingItem::doKill()
 {
@@ -1184,10 +1092,8 @@ void BuildingItem::doKill()
 	ItemCreature::doKill();
 }
 
-/*
- * --INFO--
- * Address:	800F6C88
- * Size:	0000AC
+/**
+ * @TODO: Documentation
  */
 void BuildingItem::doSave(RandomAccessStream& output)
 {
@@ -1199,10 +1105,8 @@ void BuildingItem::doSave(RandomAccessStream& output)
 	PRINT_KANDO("\t life=%.1f maxLife=%.1f curr/num=%d/%d\n", mHealth, mMaxHealth, mCurrStage, mNumStages);
 }
 
-/*
- * --INFO--
- * Address:	800F6D34
- * Size:	00017C
+/**
+ * @TODO: Documentation
  */
 void BuildingItem::doLoad(RandomAccessStream& input)
 {
@@ -1229,10 +1133,8 @@ void BuildingItem::doLoad(RandomAccessStream& input)
 	PRINT_KANDO("* DONE\n");
 }
 
-/*
- * --INFO--
- * Address:	800F6EB0
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 void BuildingItem::doStore(CreatureInf* info)
 {
@@ -1242,10 +1144,8 @@ void BuildingItem::doStore(CreatureInf* info)
 	info->mObjInfo2  = mNumStages;
 }
 
-/*
- * --INFO--
- * Address:	800F6ED4
- * Size:	000120
+/**
+ * @TODO: Documentation
  */
 void BuildingItem::doRestore(CreatureInf* info)
 {
@@ -1278,10 +1178,8 @@ void BuildingItem::doRestore(CreatureInf* info)
 	C_SAI(this)->start(this, SluiceAI::Sluice_WaitInit);
 }
 
-/*
- * --INFO--
- * Address:	800F6FF4
- * Size:	000068
+/**
+ * @TODO: Documentation
  */
 Creature* ItemMgr::birth(int objType)
 {
@@ -1307,10 +1205,8 @@ Creature* ItemMgr::birth(int objType)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800F705C
- * Size:	000068
+/**
+ * @TODO: Documentation
  */
 void ItemMgr::refresh(Graphics& gfx)
 {
@@ -1319,10 +1215,8 @@ void ItemMgr::refresh(Graphics& gfx)
 	mMeltingPotMgr->refresh(gfx);
 }
 
-/*
- * --INFO--
- * Address:	800F70C4
- * Size:	000204
+/**
+ * @TODO: Documentation
  */
 void ItemMgr::refresh2d(Graphics& gfx)
 {
@@ -1339,10 +1233,8 @@ void ItemMgr::refresh2d(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800F72C8
- * Size:	000064
+/**
+ * @TODO: Documentation
  */
 void ItemMgr::update()
 {
@@ -1354,10 +1246,8 @@ void ItemMgr::update()
 	mMeltingPotMgr->update();
 }
 
-/*
- * --INFO--
- * Address:	800F732C
- * Size:	000064
+/**
+ * @TODO: Documentation
  */
 void ItemMgr::kill(Creature* item)
 {
@@ -1378,10 +1268,8 @@ void ItemMgr::kill(Creature* item)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800F7390
- * Size:	0001D8
+/**
+ * @TODO: Documentation
  */
 PikiHeadMgr::PikiHeadMgr(ItemMgr* mgr)
 {
@@ -1393,10 +1281,8 @@ PikiHeadMgr::PikiHeadMgr(ItemMgr* mgr)
 	PRINT_KANDO("=====================================\n");
 }
 
-/*
- * --INFO--
- * Address:	800F7568
- * Size:	0000A0
+/**
+ * @TODO: Documentation
  */
 Creature* PikiHeadMgr::birth()
 {
@@ -1414,20 +1300,16 @@ Creature* PikiHeadMgr::birth()
 	return MonoObjectMgr::birth();
 }
 
-/*
- * --INFO--
- * Address:	800F7608
- * Size:	000060
+/**
+ * @TODO: Documentation
  */
 Creature* PikiHeadMgr::createObject()
 {
 	return new PikiHeadItem(mPikiHeadProps, mItemMgr->mItemShapes[3], mPikiHeadAI);
 }
 
-/*
- * --INFO--
- * Address:	800F7668
- * Size:	00014C
+/**
+ * @TODO: Documentation
  */
 int ItemMgr::getContainerExitCount()
 {

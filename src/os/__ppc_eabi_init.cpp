@@ -47,20 +47,16 @@ loop:
 #endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address:	801FDA14
- * Size:	000020
+/**
+ * @TODO: Documentation
  */
 void __init_user(void)
 {
 	__init_cpp();
 }
 
-/*
- * --INFO--
- * Address:	801FDA34
- * Size:	000054
+/**
+ * @TODO: Documentation
  */
 static void __init_cpp(void)
 {
@@ -83,10 +79,8 @@ void __fini_cpp(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801FDA88
- * Size:	000020
+/**
+ * @TODO: Documentation
  */
 void _ExitProcess(void)
 {

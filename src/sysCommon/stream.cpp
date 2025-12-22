@@ -8,10 +8,8 @@
 #include "sysNew.h"
 #endif
 
-/*
- * --INFO--
- * Address:	800250B0
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 int Stream::readInt()
 {
@@ -20,10 +18,8 @@ int Stream::readInt()
 	return i;
 }
 
-/*
- * --INFO--
- * Address:	800250E8
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 u8 Stream::readByte()
 {
@@ -32,10 +28,8 @@ u8 Stream::readByte()
 	return c;
 }
 
-/*
- * --INFO--
- * Address:	80025120
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 s16 Stream::readShort()
 {
@@ -44,10 +38,8 @@ s16 Stream::readShort()
 	return s;
 }
 
-/*
- * --INFO--
- * Address:	80025158
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 f32 Stream::readFloat()
 {
@@ -56,10 +48,8 @@ f32 Stream::readFloat()
 	return f;
 }
 
-/*
- * --INFO--
- * Address:	80025190
- * Size:	00007C
+/**
+ * @TODO: Documentation
  */
 char* Stream::readString()
 {
@@ -71,10 +61,8 @@ char* Stream::readString()
 	return str;
 }
 
-/*
- * --INFO--
- * Address:	8002520C
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 void Stream::readString(char* dest, int size)
 {
@@ -82,10 +70,8 @@ void Stream::readString(char* dest, int size)
 	readString(str);
 }
 
-/*
- * --INFO--
- * Address:	80025244
- * Size:	0000A4
+/**
+ * @TODO: Documentation
  */
 void Stream::readString(String& str)
 {
@@ -98,10 +84,8 @@ void Stream::readString(String& str)
 	str.mString[size] = '\0';
 }
 
-/*
- * --INFO--
- * Address:	800252E8
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 void Stream::writeInt(int i)
 {
@@ -112,20 +96,16 @@ void Stream::writeInt(int i)
 	write(&result, sizeof(result));
 }
 
-/*
- * --INFO--
- * Address:	80025320
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 void Stream::writeByte(u8 c)
 {
 	write(&c, sizeof(u8));
 }
 
-/*
- * --INFO--
- * Address:	80025358
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 void Stream::writeShort(s16 _s)
 {
@@ -136,10 +116,8 @@ void Stream::writeShort(s16 _s)
 	write(&s, sizeof(s16));
 }
 
-/*
- * --INFO--
- * Address:	80025390
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 void Stream::writeFloat(f32 f)
 {
@@ -151,10 +129,8 @@ void Stream::writeFloat(f32 f)
 	write(&result, sizeof(f32));
 }
 
-/*
- * --INFO--
- * Address:	800253C8
- * Size:	00003C
+/**
+ * @TODO: Documentation
  */
 void Stream::writeString(immut char* str)
 {
@@ -163,10 +139,8 @@ void Stream::writeString(immut char* str)
 	writeString(s);
 }
 
-/*
- * --INFO--
- * Address:	80025404
- * Size:	0000D4
+/**
+ * @TODO: Documentation
  */
 void Stream::writeString(immut String& s)
 {
@@ -206,48 +180,38 @@ void Stream::print(immut char* fmt, ...)
 // 	// UNUSED FUNCTION
 // }
 
-/*
- * --INFO--
- * Address:	800254D8
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void Stream::read(void*, int)
 {
 }
 
-/*
- * --INFO--
- * Address:	800254DC
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void Stream::write(immut void*, int)
 {
 }
 
-/*
- * --INFO--
- * Address:	800254E0
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 int Stream::getPending()
 {
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	800254E8
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 int Stream::getAvailable()
 {
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	800254F0
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void Stream::close()
 {
@@ -295,9 +259,7 @@ void RandomAccessStream::writeTo(int p1, void*, int)
 // 	// UNUSED FUNCTION
 // }
 
-/*
- * --INFO--
- * Address:	800254F8
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 // bool Stream::getClosing() { return false; }

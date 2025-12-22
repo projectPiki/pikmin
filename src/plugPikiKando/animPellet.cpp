@@ -20,10 +20,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("animPellet");
 
-/*
- * --INFO--
- * Address:	80099548
- * Size:	000180
+/**
+ * @TODO: Documentation
  */
 PelletAnimInfo::PelletAnimInfo()
     : mFolderPath(this, String("pellets", 0), String("", 0), String("", 0), "x00", nullptr)
@@ -38,10 +36,8 @@ PelletAnimInfo::PelletAnimInfo()
 	mPelletShapeObject = nullptr;
 }
 
-/*
- * --INFO--
- * Address:	800996C8
- * Size:	0000D4
+/**
+ * @TODO: Documentation
  */
 PelletShapeObject* PelletAnimInfo::createShapeObject()
 {
@@ -61,10 +57,8 @@ PelletShapeObject* PelletAnimInfo::createShapeObject()
 	return mPelletShapeObject;
 }
 
-/*
- * --INFO--
- * Address:	8009979C
- * Size:	000090
+/**
+ * @TODO: Documentation
  */
 void PelletAnimInfo::read(RandomAccessStream& stream)
 {
@@ -75,10 +69,8 @@ void PelletAnimInfo::read(RandomAccessStream& stream)
 	Parameters::read(stream);
 }
 
-/*
- * --INFO--
- * Address:	8009982C
- * Size:	000140
+/**
+ * @TODO: Documentation
  */
 PelletShapeObject::PelletShapeObject(immut char* str1, Shape* shape, immut char* str2, immut char* str3, int overrideJoint)
 {
@@ -105,19 +97,15 @@ PelletShapeObject::PelletShapeObject(immut char* str1, Shape* shape, immut char*
 
 immut char* PaniPelletAnimator::motionLabels[PelletMotion::COUNT] = { "Carry", "Appear", "3", "4", "5", "6", "7" };
 
-/*
- * --INFO--
- * Address:	8009996C
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 PelletAnimator::PelletAnimator()
 {
 }
 
-/*
- * --INFO--
- * Address:	800999A4
- * Size:	00006C
+/**
+ * @TODO: Documentation
  */
 void PelletAnimator::init(AnimContext* context1, AnimContext* context2, AnimMgr* mgr, PaniMotionTable* motionTable)
 {
@@ -141,10 +129,8 @@ void PelletAnimator::startMotion(immut PaniMotionInfo* lowerMotionInfo, immut Pa
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80099A10
- * Size:	000058
+/**
+ * @TODO: Documentation
  */
 void PelletAnimator::finishMotion(immut PaniMotionInfo* lowerMotionInfo, immut PaniMotionInfo* upperMotionInfo)
 {
@@ -156,20 +142,16 @@ void PelletAnimator::finishMotion(immut PaniMotionInfo* lowerMotionInfo, immut P
 	}
 }
 
-/*
- * --INFO--
- * Address:	80099A68
- * Size:	000058
+/**
+ * @TODO: Documentation
  */
 void PelletAnimator::startMotion(immut PaniMotionInfo& lowerMotionInfo, immut PaniMotionInfo& upperMotionInfo)
 {
 	startMotion(&lowerMotionInfo, &upperMotionInfo);
 }
 
-/*
- * --INFO--
- * Address:	80099AC0
- * Size:	000028
+/**
+ * @TODO: Documentation
  */
 void PelletAnimator::startMotion(immut PaniMotionInfo& motionInfo)
 {
@@ -186,10 +168,8 @@ void PelletAnimator::finishMotion(immut PaniAnimKeyListener*)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80099AE8
- * Size:	00005C
+/**
+ * @TODO: Documentation
  */
 void PelletAnimator::updateAnimation(f32 lowerAnimSpeed, f32 upperAnimSpeed)
 {
@@ -197,10 +177,8 @@ void PelletAnimator::updateAnimation(f32 lowerAnimSpeed, f32 upperAnimSpeed)
 	mUpperAnimator.animate(upperAnimSpeed);
 }
 
-/*
- * --INFO--
- * Address:	80099B44
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 void PelletAnimator::updateContext()
 {
@@ -208,10 +186,8 @@ void PelletAnimator::updateContext()
 	mUpperAnimator.updateContext();
 }
 
-/*
- * --INFO--
- * Address:	80099B90
- * Size:	000148
+/**
+ * @TODO: Documentation
  */
 PaniMotionTable* PaniPelletAnimator::createMotionTable()
 {
@@ -226,10 +202,8 @@ PaniMotionTable* PaniPelletAnimator::createMotionTable()
 	return table;
 }
 
-/*
- * --INFO--
- * Address:	80099CD8
- * Size:	00003C
+/**
+ * @TODO: Documentation
  */
 PaniPelletAnimator::PaniPelletAnimator()
 {

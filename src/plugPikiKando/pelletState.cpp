@@ -28,10 +28,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("pelletState");
 
-/*
- * --INFO--
- * Address:	8009A02C
- * Size:	000400
+/**
+ * @TODO: Documentation
  */
 void PelletStateMachine::init(Pellet* pelt)
 {
@@ -44,30 +42,24 @@ void PelletStateMachine::init(Pellet* pelt)
 	registerState(new PelletUfoLoadState);
 }
 
-/*
- * --INFO--
- * Address:	8009A42C
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 PelletUfoLoadState::PelletUfoLoadState()
     : PelletState(PELSTATE_UfoLoad, "UFOLOAD")
 {
 }
 
-/*
- * --INFO--
- * Address:	8009A478
- * Size:	00000C
+/**
+ * @TODO: Documentation
  */
 void PelletUfoLoadState::init(Pellet*)
 {
 	mWaitTime = 8;
 }
 
-/*
- * --INFO--
- * Address:	8009A484
- * Size:	000070
+/**
+ * @TODO: Documentation
  */
 void PelletUfoLoadState::exec(Pellet* pelt)
 {
@@ -81,10 +73,8 @@ void PelletUfoLoadState::exec(Pellet* pelt)
 	PRINT("setting ufo parts(%s) : y=%f\n", pelt->mConfig->mName, pelt->mSRT.t.y);
 }
 
-/*
- * --INFO--
- * Address:	8009A524
- * Size:	00001C
+/**
+ * @TODO: Documentation
  */
 void PelletUfoLoadState::cleanup(Pellet* pelt)
 {
@@ -92,103 +82,81 @@ void PelletUfoLoadState::cleanup(Pellet* pelt)
 	pelt->enableFixPos();
 }
 
-/*
- * --INFO--
- * Address:	8009A540
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 PelletDeadState::PelletDeadState()
     : PelletState(PELSTATE_Dead, "DEAD")
 {
 }
 
-/*
- * --INFO--
- * Address:	8009A58C
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void PelletDeadState::init(Pellet* pelt)
 {
 }
 
-/*
- * --INFO--
- * Address:	8009A590
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void PelletDeadState::exec(Pellet*)
 {
 }
 
-/*
- * --INFO--
- * Address:	8009A594
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void PelletDeadState::cleanup(Pellet*)
 {
 }
 
-/*
- * --INFO--
- * Address:	8009A598
- * Size:	000048
+/**
+ * @TODO: Documentation
  */
 PelletNormalState::PelletNormalState()
     : PelletState(PELSTATE_Normal, "NORMAL")
 {
 }
 
-/*
- * --INFO--
- * Address:	8009A5E0
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void PelletNormalState::init(Pellet*)
 {
 }
 
-/*
- * --INFO--
- * Address:	8009A5E4
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void PelletNormalState::exec(Pellet*)
 {
 }
 
-/*
- * --INFO--
- * Address:	8009A5E8
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void PelletNormalState::cleanup(Pellet*)
 {
 }
 
-/*
- * --INFO--
- * Address:	8009A5EC
- * Size:	000050
+/**
+ * @TODO: Documentation
  */
 PelletSwallowedState::PelletSwallowedState()
     : PelletState(PELSTATE_Swallowed, "SWALLOWED")
 {
 }
 
-/*
- * --INFO--
- * Address:	8009A63C
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void PelletSwallowedState::init(Pellet*)
 {
 }
 
-/*
- * --INFO--
- * Address:	8009A640
- * Size:	00003C
+/**
+ * @TODO: Documentation
  */
 void PelletSwallowedState::exec(Pellet* pelt)
 {
@@ -198,30 +166,24 @@ void PelletSwallowedState::exec(Pellet* pelt)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8009A67C
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 void PelletSwallowedState::cleanup(Pellet* pelt)
 {
 	pelt->endStickMouth();
 }
 
-/*
- * --INFO--
- * Address:	8009A6A0
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 PelletAppearState::PelletAppearState()
     : PelletState(PELSTATE_Appear, "APPEAR")
 {
 }
 
-/*
- * --INFO--
- * Address:	8009A6EC
- * Size:	000030
+/**
+ * @TODO: Documentation
  */
 void PelletAppearState::init(Pellet* pelt)
 {
@@ -231,20 +193,16 @@ void PelletAppearState::init(Pellet* pelt)
 	mTransitionTimer = 2.0f;
 }
 
-/*
- * --INFO--
- * Address:	8009A71C
- * Size:	000030
+/**
+ * @TODO: Documentation
  */
 void PelletAppearState::procBounceMsg(Pellet* pelt, MsgBounce* msg)
 {
 	transit(pelt, PELSTATE_Normal);
 }
 
-/*
- * --INFO--
- * Address:	8009A74C
- * Size:	0000CC
+/**
+ * @TODO: Documentation
  */
 void PelletAppearState::exec(Pellet* pelt)
 {
@@ -266,29 +224,23 @@ void PelletAppearState::exec(Pellet* pelt)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8009A818
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void PelletAppearState::cleanup(Pellet*)
 {
 }
 
-/*
- * --INFO--
- * Address:	8009A81C
- * Size:	00005C
+/**
+ * @TODO: Documentation
  */
 PelletGoalState::PelletGoalState()
     : PelletState(PELSTATE_Goal, "GOAL")
 {
 }
 
-/*
- * --INFO--
- * Address:	8009A878
- * Size:	00057C
+/**
+ * @TODO: Documentation
  */
 void PelletGoalState::init(Pellet* pelt)
 {
@@ -363,10 +315,8 @@ void PelletGoalState::init(Pellet* pelt)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8009ADF4
- * Size:	0002D4
+/**
+ * @TODO: Documentation
  */
 void PelletGoalState::exec(Pellet* pelt)
 {
@@ -407,10 +357,8 @@ void PelletGoalState::exec(Pellet* pelt)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8009B0CC
- * Size:	000030
+/**
+ * @TODO: Documentation
  */
 void PelletGoalState::cleanup(Pellet*)
 {

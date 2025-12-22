@@ -11,10 +11,8 @@ void fread(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80215E04
- * Size:	0002DC
+/**
+ * @TODO: Documentation
  */
 size_t fwrite(const void* buffer, size_t size, size_t count, FILE* stream)
 {

@@ -28,10 +28,8 @@ P2DGrafContext::P2DGrafContext(const PUTRect&)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801AF7AC
- * Size:	0000B4
+/**
+ * @TODO: Documentation
  */
 P2DGrafContext::P2DGrafContext(int x0, int y0, int width, int height)
     : mViewportBounds(x0, y0, x0 + width, y0 + height)
@@ -42,10 +40,8 @@ P2DGrafContext::P2DGrafContext(int x0, int y0, int width, int height)
 	setLineWidth(6);
 }
 
-/*
- * --INFO--
- * Address:	801AF860
- * Size:	0000CC
+/**
+ * @TODO: Documentation
  */
 void P2DGrafContext::setPort()
 {
@@ -54,10 +50,8 @@ void P2DGrafContext::setPort()
 	setup2D();
 }
 
-/*
- * --INFO--
- * Address:	801AF92C
- * Size:	000174
+/**
+ * @TODO: Documentation
  */
 void P2DGrafContext::setup2D()
 {
@@ -87,10 +81,8 @@ void P2DGrafContext::setup2D()
 	GXSetCullMode(GX_CULL_NONE);
 }
 
-/*
- * --INFO--
- * Address:	801AFAA0
- * Size:	0000A0
+/**
+ * @TODO: Documentation
  */
 void P2DGrafContext::setScissor()
 {
@@ -104,20 +96,16 @@ void P2DGrafContext::setScissor()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801AFB40
- * Size:	000014
+/**
+ * @TODO: Documentation
  */
 void P2DGrafContext::scissor(const PUTRect& rect)
 {
 	mScissorBounds = rect;
 }
 
-/*
- * --INFO--
- * Address:	801AFB54
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 void P2DGrafContext::place(const PUTRect& position)
 {
@@ -125,10 +113,8 @@ void P2DGrafContext::place(const PUTRect& position)
 	mScissorBounds  = position;
 }
 
-/*
- * --INFO--
- * Address:	801AFB78
- * Size:	0000AC
+/**
+ * @TODO: Documentation
  */
 void P2DGrafContext::setColor(immut Colour& p1, immut Colour& p2, immut Colour& p3, immut Colour& p4)
 {
@@ -171,10 +157,8 @@ void P2DGrafContext::setColor(immut Colour& p1, immut Colour& p2, immut Colour& 
 	}
 }
 
-/*
- * --INFO--
- * Address:	801AFC24
- * Size:	00002C
+/**
+ * @TODO: Documentation
  */
 void P2DGrafContext::setLineWidth(u8 width)
 {

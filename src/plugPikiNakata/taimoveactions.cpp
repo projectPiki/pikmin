@@ -19,10 +19,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("taimoveactions")
 
-/*
- * --INFO--
- * Address:	80134560
- * Size:	000028
+/**
+ * @TODO: Documentation
  */
 bool TaiMoveNestPositionAction::act(Teki& teki)
 {
@@ -30,40 +28,32 @@ bool TaiMoveNestPositionAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	80134588
- * Size:	000078
+/**
+ * @TODO: Documentation
  */
 void TaiStopMoveAction::start(Teki& teki)
 {
 	teki.stopMove();
 }
 
-/*
- * --INFO--
- * Address:	80134600
- * Size:	00001C
+/**
+ * @TODO: Documentation
  */
 void TaiStartFlyingAction::start(Teki& teki)
 {
 	teki.startFlying();
 }
 
-/*
- * --INFO--
- * Address:	8013461C
- * Size:	00001C
+/**
+ * @TODO: Documentation
  */
 void TaiFinishFlyingAction::start(Teki& teki)
 {
 	teki.finishFlying();
 }
 
-/*
- * --INFO--
- * Address:	80134638
- * Size:	000080
+/**
+ * @TODO: Documentation
  */
 bool TaiMakeVelocityDirectionAction::act(Teki& teki)
 {
@@ -75,10 +65,8 @@ bool TaiMakeVelocityDirectionAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	801346B8
- * Size:	000080
+/**
+ * @TODO: Documentation
  */
 bool TaiMakeAccelerationDirectionAction::act(Teki& teki)
 {
@@ -90,10 +78,8 @@ bool TaiMakeAccelerationDirectionAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	80134738
- * Size:	0000D0
+/**
+ * @TODO: Documentation
  */
 bool TaiMakingNextVelocityAction::act(Teki& teki)
 {
@@ -106,10 +92,8 @@ bool TaiMakingNextVelocityAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	80134808
- * Size:	0000D0
+/**
+ * @TODO: Documentation
  */
 bool TaiMakingNextDriveAction::act(Teki& teki)
 {
@@ -122,10 +106,8 @@ bool TaiMakingNextDriveAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	801348D8
- * Size:	000034
+/**
+ * @TODO: Documentation
  */
 bool TaiAccelerationAction::act(Teki& teki)
 {
@@ -133,10 +115,8 @@ bool TaiAccelerationAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8013490C
- * Size:	000034
+/**
+ * @TODO: Documentation
  */
 bool TaiParabolaAction::act(Teki& teki)
 {
@@ -144,10 +124,8 @@ bool TaiParabolaAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	80134940
- * Size:	000034
+/**
+ * @TODO: Documentation
  */
 bool TaiCircleMoveAction::act(Teki& teki)
 {
@@ -155,10 +133,8 @@ bool TaiCircleMoveAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	80134974
- * Size:	000034
+/**
+ * @TODO: Documentation
  */
 bool TaiHorizontalSinWaveAction::act(Teki& teki)
 {
@@ -166,10 +142,8 @@ bool TaiHorizontalSinWaveAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	801349A8
- * Size:	0000A8
+/**
+ * @TODO: Documentation
  */
 bool TaiClampMaxHeightAction::act(Teki& teki)
 {
@@ -183,10 +157,8 @@ bool TaiClampMaxHeightAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	80134A50
- * Size:	0000A8
+/**
+ * @TODO: Documentation
  */
 bool TaiClampMinHeightAction::act(Teki& teki)
 {
@@ -200,10 +172,8 @@ bool TaiClampMinHeightAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	80134AF8
- * Size:	00008C
+/**
+ * @TODO: Documentation
  */
 bool TaiClampMinVelocityYAction::act(Teki& teki)
 {
@@ -218,20 +188,16 @@ bool TaiClampMinVelocityYAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	80134B84
- * Size:	000020
+/**
+ * @TODO: Documentation
  */
 void TaiImpassableAction::start(Teki& teki)
 {
 	resetPosition(teki);
 }
 
-/*
- * --INFO--
- * Address:	80134BA4
- * Size:	0000AC
+/**
+ * @TODO: Documentation
  */
 bool TaiImpassableAction::act(Teki& teki)
 {
@@ -251,10 +217,8 @@ bool TaiImpassableAction::act(Teki& teki)
 	STACK_PAD_VAR(2);
 }
 
-/*
- * --INFO--
- * Address:	80134C50
- * Size:	000030
+/**
+ * @TODO: Documentation
  */
 void TaiImpassableAction::resetPosition(Teki& teki)
 {
@@ -262,10 +226,8 @@ void TaiImpassableAction::resetPosition(Teki& teki)
 	teki.mTimers[mTimerIdx] = mTimerLength;
 }
 
-/*
- * --INFO--
- * Address:	80134C80
- * Size:	000044
+/**
+ * @TODO: Documentation
  */
 void TaiRandomWanderingRouteAction::start(Teki& teki)
 {
@@ -273,19 +235,15 @@ void TaiRandomWanderingRouteAction::start(Teki& teki)
 	makeTargetPosition(teki);
 }
 
-/*
- * --INFO--
- * Address:	80134CC4
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void TaiRandomWanderingRouteAction::finish(Teki& teki)
 {
 }
 
-/*
- * --INFO--
- * Address:	80134CC8
- * Size:	00013C
+/**
+ * @TODO: Documentation
  */
 bool TaiRandomWanderingRouteAction::act(Teki& teki)
 {
@@ -332,10 +290,8 @@ bool TaiRandomWanderingRouteAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	80134E04
- * Size:	000070
+/**
+ * @TODO: Documentation
  */
 void TaiRandomWanderingRouteAction::makeTargetPosition(Teki& teki)
 {
@@ -345,10 +301,8 @@ void TaiRandomWanderingRouteAction::makeTargetPosition(Teki& teki)
 	teki.mCurrRouteWayPointID = 0;
 }
 
-/*
- * --INFO--
- * Address:	80134E74
- * Size:	000088
+/**
+ * @TODO: Documentation
  */
 bool TaiTracingAction::act(Teki& teki)
 {
@@ -367,19 +321,15 @@ bool TaiTracingAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	80134EFC
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void TaiGoingHomeAction::finish(Teki& teki)
 {
 }
 
-/*
- * --INFO--
- * Address:	80134F00
- * Size:	000078
+/**
+ * @TODO: Documentation
  */
 bool TaiGoingHomeAction::act(Teki& teki)
 {
@@ -391,10 +341,8 @@ bool TaiGoingHomeAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	80134F78
- * Size:	000044
+/**
+ * @TODO: Documentation
  */
 bool TaiDirectTurnAction::act(Teki& teki)
 {
@@ -408,10 +356,8 @@ bool TaiDirectTurnAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	80134FBC
- * Size:	00014C
+/**
+ * @TODO: Documentation
  */
 bool TaiTurningAction::act(Teki& teki)
 {
@@ -441,10 +387,8 @@ bool TaiTurningAction::act(Teki& teki)
 	return teki.turnToward(teki.mTargetAngle, mTurnSpeed);
 }
 
-/*
- * --INFO--
- * Address:	80135108
- * Size:	00015C
+/**
+ * @TODO: Documentation
  */
 bool TaiTurningAwayAction::act(Teki& teki)
 {
@@ -475,10 +419,8 @@ bool TaiTurningAwayAction::act(Teki& teki)
 	return teki.turnToward(teki.mTargetAngle, mTurnSpeed);
 }
 
-/*
- * --INFO--
- * Address:	80135264
- * Size:	000194
+/**
+ * @TODO: Documentation
  */
 bool TaiTraceTurningAction::act(Teki& teki)
 {
@@ -512,10 +454,8 @@ bool TaiTraceTurningAction::act(Teki& teki)
 	return teki.turnToward(teki.mTargetAngle, mTurnSpeed);
 }
 
-/*
- * --INFO--
- * Address:	801353F8
- * Size:	0000D0
+/**
+ * @TODO: Documentation
  */
 bool TaiOutOfTraceAngleAction::act(Teki& teki)
 {
@@ -537,10 +477,8 @@ bool TaiOutOfTraceAngleAction::act(Teki& teki)
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	801354C8
- * Size:	000130
+/**
+ * @TODO: Documentation
  */
 bool TaiTurningToTargetPositionAction::act(Teki& teki)
 {
@@ -562,10 +500,8 @@ bool TaiTurningToTargetPositionAction::act(Teki& teki)
 	return teki.turnToward(teki.mTargetAngle, mTurnSpeed);
 }
 
-/*
- * --INFO--
- * Address:	801355F8
- * Size:	00002C
+/**
+ * @TODO: Documentation
  */
 bool TaiRotatingAction::act(Teki& teki)
 {
@@ -573,10 +509,8 @@ bool TaiRotatingAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	80135624
- * Size:	0000AC
+/**
+ * @TODO: Documentation
  */
 bool TaiRunningAwayToTargetDirectionAction::act(Teki& teki)
 {
@@ -591,10 +525,8 @@ bool TaiRunningAwayToTargetDirectionAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	801356D0
- * Size:	00036C
+/**
+ * @TODO: Documentation
  */
 bool TaiRunningAwayAction::act(Teki& teki)
 {
@@ -637,30 +569,24 @@ bool TaiRunningAwayAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	80135A3C
- * Size:	000044
+/**
+ * @TODO: Documentation
  */
 bool TaiWatchOffTerritoryCenterAction::act(Teki& teki)
 {
 	return (teki.calcTargetAngle(teki.getNestPosition()) > NMathF::pi * 0.1f);
 }
 
-/*
- * --INFO--
- * Address:	80135A80
- * Size:	000020
+/**
+ * @TODO: Documentation
  */
 void TaiTargetNestAction::start(Teki& teki)
 {
 	teki.mTargetPosition.input(teki.getNestPosition());
 }
 
-/*
- * --INFO--
- * Address:	80135AA0
- * Size:	000180
+/**
+ * @TODO: Documentation
  */
 bool TaiHeadOnCollisionAvoidanceAction::actByEvent(immut TekiEvent& event)
 {

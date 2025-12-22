@@ -1,9 +1,7 @@
 #include "types.h"
 
-/*
- * --INFO--
- * Address:	8021A710
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 f64 fabs__Fd(f64 x)
 {

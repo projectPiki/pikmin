@@ -15,10 +15,8 @@ DEFINE_ERROR(7)
  */
 DEFINE_PRINT("pickCreature\n")
 
-/*
- * --INFO--
- * Address:	800BD364
- * Size:	0000CC
+/**
+ * @TODO: Documentation
  */
 ActPickCreature::ActPickCreature(Piki* piki)
     : AndAction(piki)
@@ -29,10 +27,8 @@ ActPickCreature::ActPickCreature(Piki* piki)
 	);
 }
 
-/*
- * --INFO--
- * Address:	800BD430
- * Size:	000020
+/**
+ * @TODO: Documentation
  */
 void ActPickCreature::init(Creature* target)
 {
@@ -65,10 +61,8 @@ ActDeliver::ActDeliver(Piki* piki)
 	);
 }
 
-/*
- * --INFO--
- * Address:	800BD450
- * Size:	000064
+/**
+ * @TODO: Documentation
  */
 void ActDeliver::Initialiser::initialise(Action* deliverAction)
 {
@@ -76,10 +70,8 @@ void ActDeliver::Initialiser::initialise(Action* deliverAction)
 	deliver->mObject.set(mObject);
 }
 
-/*
- * --INFO--
- * Address:	800BD4B4
- * Size:	000084
+/**
+ * @TODO: Documentation
  */
 void ActDeliver::init(Creature* target)
 {

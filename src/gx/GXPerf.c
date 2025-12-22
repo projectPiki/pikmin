@@ -3,10 +3,8 @@
 #include "Dolphin/GX/GXData.h"
 #include "Dolphin/GX/GXMisc.h"
 
-/*
- * --INFO--
- * Address:	80215d50
- * Size:	000898
+/**
+ * @TODO: Documentation
  */
 void GXSetGPMetric(GXPerf0 perf0, GXPerf1 perf1)
 {
@@ -479,10 +477,8 @@ void GXReadGPMetric(u32* cnt0, u32* cnt1)
 	}
 }
 
-/*
- * --INFO--
- * Address:	802165e8
- * Size:	000010
+/**
+ * @TODO: Documentation
  */
 void GXClearGPMetric(void)
 {

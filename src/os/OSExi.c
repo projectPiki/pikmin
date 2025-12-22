@@ -2,10 +2,8 @@
 
 static EXIControl Ecb[EXI_MAX_CHAN];
 
-/*
- * --INFO--
- * Address:	801F7BCC
- * Size:	0000F4
+/**
+ * @TODO: Documentation
  */
 static void SetExiInterruptMask(s32 chan, EXIControl* exi)
 {
@@ -63,10 +61,8 @@ static void CompleteTransfer(s32 chan)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801F7CC0
- * Size:	00025C
+/**
+ * @TODO: Documentation
  */
 BOOL EXIImm(s32 chan, void* buf, s32 len, u32 type, EXICallback callback)
 {
@@ -108,10 +104,8 @@ BOOL EXIImm(s32 chan, void* buf, s32 len, u32 type, EXICallback callback)
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	801F7F1C
- * Size:	0000A0
+/**
+ * @TODO: Documentation
  */
 BOOL EXIImmEx(s32 chan, void* buf, s32 len, u32 mode)
 {
@@ -133,10 +127,8 @@ BOOL EXIImmEx(s32 chan, void* buf, s32 len, u32 mode)
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	801F7FBC
- * Size:	0000EC
+/**
+ * @TODO: Documentation
  */
 BOOL EXIDma(s32 chan, void* buf, s32 len, u32 type, EXICallback callback)
 {
@@ -166,10 +158,8 @@ BOOL EXIDma(s32 chan, void* buf, s32 len, u32 type, EXICallback callback)
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	801F80A8
- * Size:	000208
+/**
+ * @TODO: Documentation
  */
 BOOL EXISync(s32 chan)
 {
@@ -194,10 +184,8 @@ BOOL EXISync(s32 chan)
 	return rc;
 }
 
-/*
- * --INFO--
- * Address:	801F82B0
- * Size:	000048
+/**
+ * @TODO: Documentation
  */
 int EXIClearInterrupts(s32 chan, BOOL exi, BOOL tc, BOOL ext)
 {
@@ -216,10 +204,8 @@ int EXIClearInterrupts(s32 chan, BOOL exi, BOOL tc, BOOL ext)
 	return prev;
 }
 
-/*
- * --INFO--
- * Address:	801F82F8
- * Size:	00007C
+/**
+ * @TODO: Documentation
  */
 EXICallback EXISetExiCallback(s32 chan, EXICallback exiCallback)
 {
@@ -251,10 +237,8 @@ void EXIProbeReset(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801F8374
- * Size:	000168
+/**
+ * @TODO: Documentation
  */
 BOOL EXIProbe(s32 chan)
 {
@@ -297,10 +281,8 @@ BOOL EXIProbe(s32 chan)
 	return rc;
 }
 
-/*
- * --INFO--
- * Address:	801F84DC
- * Size:	000060
+/**
+ * @TODO: Documentation
  */
 s32 EXIProbeEx(s32 chan)
 {
@@ -312,10 +294,8 @@ s32 EXIProbeEx(s32 chan)
 	return -1;
 }
 
-/*
- * --INFO--
- * Address:	801F853C
- * Size:	0000E4
+/**
+ * @TODO: Documentation
  */
 BOOL EXIAttach(s32 chan, EXICallback extCallback)
 {
@@ -345,10 +325,8 @@ BOOL EXIAttach(s32 chan, EXICallback extCallback)
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	801F8620
- * Size:	0000BC
+/**
+ * @TODO: Documentation
  */
 BOOL EXIDetach(s32 chan)
 {
@@ -371,10 +349,8 @@ BOOL EXIDetach(s32 chan)
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	801F86DC
- * Size:	00012C
+/**
+ * @TODO: Documentation
  */
 BOOL EXISelect(s32 chan, u32 dev, u32 freq)
 {
@@ -412,10 +388,8 @@ BOOL EXISelect(s32 chan, u32 dev, u32 freq)
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	801F8808
- * Size:	000110
+/**
+ * @TODO: Documentation
  */
 BOOL EXIDeselect(s32 chan)
 {
@@ -452,10 +426,8 @@ BOOL EXIDeselect(s32 chan)
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	801F8918
- * Size:	000080
+/**
+ * @TODO: Documentation
  */
 static void EXIIntrruptHandler(__OSInterrupt interrupt, OSContext* context)
 {
@@ -472,10 +444,8 @@ static void EXIIntrruptHandler(__OSInterrupt interrupt, OSContext* context)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801F8998
- * Size:	0001F4
+/**
+ * @TODO: Documentation
  */
 static void TCIntrruptHandler(__OSInterrupt interrupt, OSContext* context)
 {
@@ -501,10 +471,8 @@ static void TCIntrruptHandler(__OSInterrupt interrupt, OSContext* context)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801F8B8C
- * Size:	0000AC
+/**
+ * @TODO: Documentation
  */
 static void EXTIntrruptHandler(__OSInterrupt interrupt, OSContext* context)
 {
@@ -524,10 +492,8 @@ static void EXTIntrruptHandler(__OSInterrupt interrupt, OSContext* context)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801F8C38
- * Size:	000104
+/**
+ * @TODO: Documentation
  */
 void EXIInit(void)
 {
@@ -556,10 +522,8 @@ void EXIInit(void)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801F8D3C
- * Size:	0000F4
+/**
+ * @TODO: Documentation
  */
 BOOL EXILock(s32 chan, u32 dev, EXICallback unlockedCallback)
 {
@@ -592,10 +556,8 @@ BOOL EXILock(s32 chan, u32 dev, EXICallback unlockedCallback)
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	801F8E30
- * Size:	0000DC
+/**
+ * @TODO: Documentation
  */
 BOOL EXIUnlock(s32 chan)
 {
@@ -623,10 +585,8 @@ BOOL EXIUnlock(s32 chan)
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	801F8F0C
- * Size:	000018
+/**
+ * @TODO: Documentation
  */
 u32 EXIGetState(s32 chan)
 {

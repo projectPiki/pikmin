@@ -70,10 +70,8 @@ void LightGroup::saveini(immut char*, RandomAccessStream&)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80035B38
- * Size:	000420
+/**
+ * @TODO: Documentation
  */
 void LightGroup::loadini(CmdStream* commands)
 {
@@ -145,10 +143,8 @@ void LightGroup::loadini(CmdStream* commands)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80035F58
- * Size:	0001CC
+/**
+ * @TODO: Documentation
  */
 void LightGroup::refresh(Graphics& gfx, immut Matrix4f* lightMtx)
 {

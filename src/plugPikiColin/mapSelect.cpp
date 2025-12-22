@@ -263,10 +263,8 @@ struct MapSelectSetupSection : public Node {
 	Camera mCamera;           // _3C
 };
 
-/*
- * --INFO--
- * Address:	80055E50
- * Size:	00046C
+/**
+ * @TODO: Documentation
  */
 MapSelectSection::MapSelectSection()
 {

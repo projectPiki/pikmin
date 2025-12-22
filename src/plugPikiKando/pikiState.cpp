@@ -40,10 +40,8 @@ DEFINE_ERROR(46)
  */
 DEFINE_PRINT("pikiState")
 
-/*
- * --INFO--
- * Address:	800CF0E8
- * Size:	001428
+/**
+ * @TODO: Documentation
  */
 void PikiStateMachine::init(Piki* piki)
 {
@@ -87,10 +85,8 @@ void PikiStateMachine::init(Piki* piki)
 	memStat->end("pikistate");
 }
 
-/*
- * --INFO--
- * Address:	800D0510
- * Size:	00002C
+/**
+ * @TODO: Documentation
  */
 void PikiState::dump()
 {
@@ -98,19 +94,15 @@ void PikiState::dump()
 	doDump();
 }
 
-/*
- * --INFO--
- * Address:	800D053C
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void PikiState::doDump()
 {
 }
 
-/*
- * --INFO--
- * Address:	800D0540
- * Size:	0000E0
+/**
+ * @TODO: Documentation
  */
 void PikiStateMachine::transit(Piki* piki, int stateID)
 {
@@ -121,30 +113,24 @@ void PikiStateMachine::transit(Piki* piki, int stateID)
 	StateMachine::transit(piki, stateID);
 }
 
-/*
- * --INFO--
- * Address:	800D0620
- * Size:	000030
+/**
+ * @TODO: Documentation
  */
 void PikiState::transit(Piki* piki, int stateID)
 {
 	AState::transit(piki, stateID);
 }
 
-/*
- * --INFO--
- * Address:	800D0650
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 PikiLookAtState::PikiLookAtState()
     : PikiState(PIKISTATE_LookAt, "LOOKAT")
 {
 }
 
-/*
- * --INFO--
- * Address:	800D069C
- * Size:	0000A0
+/**
+ * @TODO: Documentation
  */
 void PikiLookAtState::init(Piki* piki)
 {
@@ -156,10 +142,8 @@ void PikiLookAtState::init(Piki* piki)
 	piki->endStick();
 }
 
-/*
- * --INFO--
- * Address:	800D073C
- * Size:	00020C
+/**
+ * @TODO: Documentation
  */
 void PikiLookAtState::exec(Piki* piki)
 {
@@ -206,20 +190,16 @@ void PikiLookAtState::exec(Piki* piki)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800D0948
- * Size:	00002C
+/**
+ * @TODO: Documentation
  */
 void PikiLookAtState::cleanup(Piki* piki)
 {
 	piki->changeMode(PikiMode::FormationMode, piki->mNavi);
 }
 
-/*
- * --INFO--
- * Address:	800D0974
- * Size:	0000B4
+/**
+ * @TODO: Documentation
  */
 void PikiLookAtState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
@@ -240,20 +220,16 @@ void PikiLookAtState::procAnimMsg(Piki* piki, MsgAnim* msg)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800D0A28
- * Size:	000048
+/**
+ * @TODO: Documentation
  */
 PikiNormalState::PikiNormalState()
     : PikiState(PIKISTATE_Normal, "NORMAL")
 {
 }
 
-/*
- * --INFO--
- * Address:	800D0A70
- * Size:	000088
+/**
+ * @TODO: Documentation
  */
 void PikiNormalState::init(Piki* piki)
 {
@@ -264,20 +240,16 @@ void PikiNormalState::init(Piki* piki)
 	mPushPiki = 0;
 }
 
-/*
- * --INFO--
- * Address:	800D0AF8
- * Size:	00002C
+/**
+ * @TODO: Documentation
  */
 void PikiNormalState::restart(Piki* piki)
 {
 	init(piki);
 }
 
-/*
- * --INFO--
- * Address:	800D0B24
- * Size:	00006C
+/**
+ * @TODO: Documentation
  */
 void PikiNormalState::exec(Piki* piki)
 {
@@ -286,28 +258,22 @@ void PikiNormalState::exec(Piki* piki)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800D0B90
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void PikiNormalState::cleanup(Piki* piki)
 {
 }
 
-/*
- * --INFO--
- * Address:	800D0B94
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void PikiNormalState::procWallMsg(Piki*, MsgWall*)
 {
 }
 
-/*
- * --INFO--
- * Address:	800D0B98
- * Size:	000014
+/**
+ * @TODO: Documentation
  */
 void PikiNormalState::procOffWallMsg(Piki*, MsgOffWall*)
 {
@@ -315,10 +281,8 @@ void PikiNormalState::procOffWallMsg(Piki*, MsgOffWall*)
 	_UNUSED14 = 0.0f;
 }
 
-/*
- * --INFO--
- * Address:	800D0BAC
- * Size:	0000F4
+/**
+ * @TODO: Documentation
  */
 void PikiNormalState::procCollideMsg(Piki* piki, MsgCollide* msg)
 {
@@ -345,20 +309,16 @@ void PikiNormalState::procCollideMsg(Piki* piki, MsgCollide* msg)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800D0CA0
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 PikiAbsorbState::PikiAbsorbState()
     : PikiState(PIKISTATE_Absorb, "ABSORB")
 {
 }
 
-/*
- * --INFO--
- * Address:	800D0CEC
- * Size:	0000A4
+/**
+ * @TODO: Documentation
  */
 void PikiAbsorbState::init(Piki* piki)
 {
@@ -369,10 +329,8 @@ void PikiAbsorbState::init(Piki* piki)
 	piki->turnTo(mNectar->mSRT.t);
 }
 
-/*
- * --INFO--
- * Address:	800D0D90
- * Size:	0000E8
+/**
+ * @TODO: Documentation
  */
 void PikiAbsorbState::exec(Piki* piki)
 {
@@ -397,10 +355,8 @@ void PikiAbsorbState::exec(Piki* piki)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800D0E78
- * Size:	000110
+/**
+ * @TODO: Documentation
  */
 void PikiAbsorbState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
@@ -427,29 +383,23 @@ void PikiAbsorbState::procAnimMsg(Piki* piki, MsgAnim* msg)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800D0F88
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void PikiAbsorbState::cleanup(Piki* piki)
 {
 }
 
-/*
- * --INFO--
- * Address:	800D0F8C
- * Size:	00005C
+/**
+ * @TODO: Documentation
  */
 PikiDrownState::PikiDrownState()
     : PikiState(PIKISTATE_Drown, "DROWN")
 {
 }
 
-/*
- * --INFO--
- * Address:	800D0FE8
- * Size:	000208
+/**
+ * @TODO: Documentation
  */
 void PikiDrownState::init(Piki* piki)
 {
@@ -487,10 +437,8 @@ void PikiDrownState::init(Piki* piki)
 	STACK_PAD_TERNARY(mIsBeingWhistled, 1);
 }
 
-/*
- * --INFO--
- * Address:	800D11F0
- * Size:	0003DC
+/**
+ * @TODO: Documentation
  */
 void PikiDrownState::exec(Piki* piki)
 {
@@ -545,19 +493,15 @@ void PikiDrownState::exec(Piki* piki)
 	piki->mVelocity = piki->mTargetVelocity;
 }
 
-/*
- * --INFO--
- * Address:	800D15CC
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void PikiDrownState::cleanup(Piki* piki)
 {
 }
 
-/*
- * --INFO--
- * Address:	800D15D0
- * Size:	0001AC
+/**
+ * @TODO: Documentation
  */
 void PikiDrownState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
@@ -591,20 +535,16 @@ void PikiDrownState::procAnimMsg(Piki* piki, MsgAnim* msg)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800D177C
- * Size:	00005C
+/**
+ * @TODO: Documentation
  */
 PikiKinokoState::PikiKinokoState()
     : PikiState(PIKISTATE_Kinoko, "KINOKO")
 {
 }
 
-/*
- * --INFO--
- * Address:	800D17D8
- * Size:	0000A4
+/**
+ * @TODO: Documentation
  */
 void PikiKinokoState::init(Piki* piki)
 {
@@ -615,10 +555,8 @@ void PikiKinokoState::init(Piki* piki)
 	mState = 0;
 }
 
-/*
- * --INFO--
- * Address:	800D187C
- * Size:	000268
+/**
+ * @TODO: Documentation
  */
 void PikiKinokoState::initWalk(Piki* piki)
 {
@@ -636,10 +574,8 @@ void PikiKinokoState::initWalk(Piki* piki)
 	mTargetDir = orthoDir;
 }
 
-/*
- * --INFO--
- * Address:	800D1AE4
- * Size:	000044
+/**
+ * @TODO: Documentation
  */
 void PikiKinokoState::exec(Piki* piki)
 {
@@ -653,19 +589,15 @@ void PikiKinokoState::exec(Piki* piki)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800D1B28
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void PikiKinokoState::exeAttack(Piki* piki)
 {
 }
 
-/*
- * --INFO--
- * Address:	800D1B2C
- * Size:	0007B8
+/**
+ * @TODO: Documentation
  */
 void PikiKinokoState::exeBoid(Piki* piki)
 {
@@ -738,30 +670,24 @@ void PikiKinokoState::exeBoid(Piki* piki)
 	piki->setSpeed(0.5f, targetDir);
 }
 
-/*
- * --INFO--
- * Address:	800D22E4
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 void PikiKinokoState::cleanup(Piki* piki)
 {
 	piki->endKinoko();
 }
 
-/*
- * --INFO--
- * Address:	800D2308
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 PikiBubbleState::PikiBubbleState()
     : PikiState(PIKISTATE_Bubble, "BUBBLE")
 {
 }
 
-/*
- * --INFO--
- * Address:	800D2354
- * Size:	00012C
+/**
+ * @TODO: Documentation
  */
 void PikiBubbleState::init(Piki* piki)
 {
@@ -778,10 +704,8 @@ void PikiBubbleState::init(Piki* piki)
 	seSystem->playPikiSound(SEF_PIKI_WATERED, piki->mSRT.t);
 }
 
-/*
- * --INFO--
- * Address:	800D2480
- * Size:	000154
+/**
+ * @TODO: Documentation
  */
 void PikiBubbleState::exec(Piki* piki)
 {
@@ -801,10 +725,8 @@ void PikiBubbleState::exec(Piki* piki)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800D25D4
- * Size:	000080
+/**
+ * @TODO: Documentation
  */
 void PikiBubbleState::cleanup(Piki* piki)
 {
@@ -813,20 +735,16 @@ void PikiBubbleState::cleanup(Piki* piki)
 	piki->mSlimeEffect->kill();
 }
 
-/*
- * --INFO--
- * Address:	800D2654
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 PikiFiredState::PikiFiredState()
     : PikiState(PIKISTATE_Fired, "FIRED")
 {
 }
 
-/*
- * --INFO--
- * Address:	800D26A0
- * Size:	0000E4
+/**
+ * @TODO: Documentation
  */
 void PikiFiredState::init(Piki* piki)
 {
@@ -840,10 +758,8 @@ void PikiFiredState::init(Piki* piki)
 	mSpeedRatio           = 1.0f;
 }
 
-/*
- * --INFO--
- * Address:	800D2784
- * Size:	000154
+/**
+ * @TODO: Documentation
  */
 void PikiFiredState::exec(Piki* piki)
 {
@@ -863,29 +779,23 @@ void PikiFiredState::exec(Piki* piki)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800D28D8
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void PikiFiredState::cleanup(Piki* piki)
 {
 }
 
-/*
- * --INFO--
- * Address:	800D28DC
- * Size:	000050
+/**
+ * @TODO: Documentation
  */
 PikiSwallowedState::PikiSwallowedState()
     : PikiState(PIKISTATE_Swallowed, "SWALLOWED")
 {
 }
 
-/*
- * --INFO--
- * Address:	800D292C
- * Size:	000010
+/**
+ * @TODO: Documentation
  */
 void PikiSwallowedState::init(Piki* piki)
 {
@@ -893,10 +803,8 @@ void PikiSwallowedState::init(Piki* piki)
 	piki->stopAI();
 }
 
-/*
- * --INFO--
- * Address:	800D293C
- * Size:	000104
+/**
+ * @TODO: Documentation
  */
 void PikiSwallowedState::exec(Piki* piki)
 {
@@ -915,10 +823,8 @@ void PikiSwallowedState::exec(Piki* piki)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800D2A40
- * Size:	000018
+/**
+ * @TODO: Documentation
  */
 void PikiSwallowedState::cleanup(Piki* piki)
 {
@@ -926,20 +832,16 @@ void PikiSwallowedState::cleanup(Piki* piki)
 	piki->restartAI();
 }
 
-/*
- * --INFO--
- * Address:	800D2A58
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 PikiBulletState::PikiBulletState()
     : PikiState(PIKISTATE_Bullet, "BULLET")
 {
 }
 
-/*
- * --INFO--
- * Address:	800D2AA4
- * Size:	000070
+/**
+ * @TODO: Documentation
  */
 void PikiBulletState::init(Piki* piki)
 {
@@ -947,10 +849,8 @@ void PikiBulletState::init(Piki* piki)
 	mDistanceTravelled = 0.0f;
 }
 
-/*
- * --INFO--
- * Address:	800D2B14
- * Size:	0003F0
+/**
+ * @TODO: Documentation
  */
 void PikiBulletState::exec(Piki* piki)
 {
@@ -984,10 +884,8 @@ void PikiBulletState::exec(Piki* piki)
 	piki->mVelocity = piki->getSpeed(1.0f) * piki->mVelocity;
 }
 
-/*
- * --INFO--
- * Address:	800D2F04
- * Size:	000060
+/**
+ * @TODO: Documentation
  */
 void PikiBulletState::procWallMsg(Piki* piki, MsgWall*)
 {
@@ -995,29 +893,23 @@ void PikiBulletState::procWallMsg(Piki* piki, MsgWall*)
 	transit(piki, PIKISTATE_Normal);
 }
 
-/*
- * --INFO--
- * Address:	800D2F64
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void PikiBulletState::cleanup(Piki* piki)
 {
 }
 
-/*
- * --INFO--
- * Address:	800D2F68
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 PikiFlickState::PikiFlickState()
     : PikiState(PIKISTATE_Flick, "FLICK")
 {
 }
 
-/*
- * --INFO--
- * Address:	800D2FB4
- * Size:	000168
+/**
+ * @TODO: Documentation
  */
 void PikiFlickState::init(Piki* piki)
 {
@@ -1030,10 +922,8 @@ void PikiFlickState::init(Piki* piki)
 	piki->startMotion(PaniMotionInfo(PIKIANIM_JHit, piki), PaniMotionInfo(PIKIANIM_JHit));
 }
 
-/*
- * --INFO--
- * Address:	800D311C
- * Size:	0001A0
+/**
+ * @TODO: Documentation
  */
 void PikiFlickState::exec(Piki* piki)
 {
@@ -1068,10 +958,8 @@ void PikiFlickState::exec(Piki* piki)
 	piki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 }
 
-/*
- * --INFO--
- * Address:	800D32BC
- * Size:	000294
+/**
+ * @TODO: Documentation
  */
 void PikiFlickState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
@@ -1117,10 +1005,8 @@ void PikiFlickState::procAnimMsg(Piki* piki, MsgAnim* msg)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800D3550
- * Size:	0000F8
+/**
+ * @TODO: Documentation
  */
 void PikiFlickState::cleanup(Piki* piki)
 {
@@ -1148,20 +1034,16 @@ void PikiFlickState::cleanup(Piki* piki)
 	piki->mActiveAction->abandon(nullptr);
 }
 
-/*
- * --INFO--
- * Address:	800D3648
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 PikiFlownState::PikiFlownState()
     : PikiState(PIKISTATE_Flown, "FLOWN")
 {
 }
 
-/*
- * --INFO--
- * Address:	800D3694
- * Size:	000124
+/**
+ * @TODO: Documentation
  */
 void PikiFlownState::init(Piki* piki)
 {
@@ -1172,10 +1054,8 @@ void PikiFlownState::init(Piki* piki)
 	piki->startMotion(PaniMotionInfo(PIKIANIM_JHit, piki), PaniMotionInfo(PIKIANIM_JHit));
 }
 
-/*
- * --INFO--
- * Address:	800D37B8
- * Size:	000098
+/**
+ * @TODO: Documentation
  */
 void PikiFlownState::procBounceMsg(Piki* piki, MsgBounce*)
 {
@@ -1185,10 +1065,8 @@ void PikiFlownState::procBounceMsg(Piki* piki, MsgBounce*)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800D3850
- * Size:	000170
+/**
+ * @TODO: Documentation
  */
 void PikiFlownState::exec(Piki* piki)
 {
@@ -1219,10 +1097,8 @@ void PikiFlownState::exec(Piki* piki)
 	piki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 }
 
-/*
- * --INFO--
- * Address:	800D39C0
- * Size:	000230
+/**
+ * @TODO: Documentation
  */
 void PikiFlownState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
@@ -1263,10 +1139,8 @@ void PikiFlownState::procAnimMsg(Piki* piki, MsgAnim* msg)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800D3BF0
- * Size:	0000A0
+/**
+ * @TODO: Documentation
  */
 void PikiFlownState::cleanup(Piki* piki)
 {
@@ -1286,20 +1160,16 @@ void PikiFlownState::cleanup(Piki* piki)
 	piki->mActiveAction->abandon(nullptr);
 }
 
-/*
- * --INFO--
- * Address:	800D3C90
- * Size:	000050
+/**
+ * @TODO: Documentation
  */
 PikiFallMeckState::PikiFallMeckState()
     : PikiState(PIKISTATE_FallMeck, "FALLMECK")
 {
 }
 
-/*
- * --INFO--
- * Address:	800D3CE0
- * Size:	000084
+/**
+ * @TODO: Documentation
  */
 void PikiFallMeckState::init(Piki* piki)
 {
@@ -1309,19 +1179,15 @@ void PikiFallMeckState::init(Piki* piki)
 	piki->mSwallowMouthPart = nullptr;
 }
 
-/*
- * --INFO--
- * Address:	800D3D64
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void PikiFallMeckState::exec(Piki* piki)
 {
 }
 
-/*
- * --INFO--
- * Address:	800D3D68
- * Size:	000288
+/**
+ * @TODO: Documentation
  */
 void PikiFallMeckState::procBounceMsg(Piki* piki, MsgBounce*)
 {
@@ -1370,29 +1236,23 @@ void PikiFallMeckState::procBounceMsg(Piki* piki, MsgBounce*)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800D3FF0
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void PikiFallMeckState::cleanup(Piki* piki)
 {
 }
 
-/*
- * --INFO--
- * Address:	800D3FF4
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 PikiFallState::PikiFallState()
     : PikiState(PIKISTATE_Fall, "FALL")
 {
 }
 
-/*
- * --INFO--
- * Address:	800D4040
- * Size:	000088
+/**
+ * @TODO: Documentation
  */
 void PikiFallState::init(Piki* piki)
 {
@@ -1401,19 +1261,15 @@ void PikiFallState::init(Piki* piki)
 	mState = 0;
 }
 
-/*
- * --INFO--
- * Address:	800D40C8
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void PikiFallState::exec(Piki* piki)
 {
 }
 
-/*
- * --INFO--
- * Address:	800D40CC
- * Size:	00007C
+/**
+ * @TODO: Documentation
  */
 void PikiFallState::procBounceMsg(Piki* piki, MsgBounce*)
 {
@@ -1422,10 +1278,8 @@ void PikiFallState::procBounceMsg(Piki* piki, MsgBounce*)
 	piki->startMotion(PaniMotionInfo(PIKIANIM_JKoke, piki), PaniMotionInfo(PIKIANIM_JKoke));
 }
 
-/*
- * --INFO--
- * Address:	800D4148
- * Size:	0000D4
+/**
+ * @TODO: Documentation
  */
 void PikiFallState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
@@ -1444,29 +1298,23 @@ void PikiFallState::procAnimMsg(Piki* piki, MsgAnim* msg)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800D421C
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void PikiFallState::cleanup(Piki* piki)
 {
 }
 
-/*
- * --INFO--
- * Address:	800D4220
- * Size:	00005C
+/**
+ * @TODO: Documentation
  */
 PikiCliffState::PikiCliffState()
     : PikiState(PIKISTATE_Cliff, "CLIFF")
 {
 }
 
-/*
- * --INFO--
- * Address:	800D427C
- * Size:	000138
+/**
+ * @TODO: Documentation
  */
 void PikiCliffState::init(Piki* piki)
 {
@@ -1486,10 +1334,8 @@ void PikiCliffState::init(Piki* piki)
 	mInitialFaceDir = piki->mFaceDirection;
 }
 
-/*
- * --INFO--
- * Address:	800D43B4
- * Size:	00003C
+/**
+ * @TODO: Documentation
  */
 void PikiCliffState::exec(Piki* piki)
 {
@@ -1510,10 +1356,8 @@ void PikiCliffState::startFall(Piki* piki)
 	mState = 3;
 }
 
-/*
- * --INFO--
- * Address:	800D43F0
- * Size:	0001A4
+/**
+ * @TODO: Documentation
  */
 bool PikiCliffState::nearEnough(Piki* piki)
 {
@@ -1546,10 +1390,8 @@ bool PikiCliffState::nearEnough(Piki* piki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800D4594
- * Size:	0004A4
+/**
+ * @TODO: Documentation
  */
 void PikiCliffState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
@@ -1644,40 +1486,32 @@ void PikiCliffState::procAnimMsg(Piki* piki, MsgAnim* msg)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800D4A38
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void PikiCliffState::cleanup(Piki* piki)
 {
 	PRINT_KANDO("cliff cleanup\n");
 }
 
-/*
- * --INFO--
- * Address:	800D4A3C
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 PikiGoHangState::PikiGoHangState()
     : PikiState(PIKISTATE_GoHang, "GOHANG")
 {
 }
 
-/*
- * --INFO--
- * Address:	800D4A88
- * Size:	00005C
+/**
+ * @TODO: Documentation
  */
 void PikiGoHangState::init(Piki* piki)
 {
 	piki->startMotion(PaniMotionInfo(PIKIANIM_Run), PaniMotionInfo(PIKIANIM_Run));
 }
 
-/*
- * --INFO--
- * Address:	800D4AE4
- * Size:	000174
+/**
+ * @TODO: Documentation
  */
 void PikiGoHangState::exec(Piki* piki)
 {
@@ -1694,29 +1528,23 @@ void PikiGoHangState::exec(Piki* piki)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800D4C58
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void PikiGoHangState::cleanup(Piki* piki)
 {
 }
 
-/*
- * --INFO--
- * Address:	800D4C5C
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 PikiHangedState::PikiHangedState()
     : PikiState(PIKISTATE_Hanged, "HANGED")
 {
 }
 
-/*
- * --INFO--
- * Address:	800D4CA8
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 void PikiHangedState::procAnimMsg(Piki*, MsgAnim* msg)
 {
@@ -1727,10 +1555,8 @@ void PikiHangedState::procAnimMsg(Piki*, MsgAnim* msg)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800D4CE0
- * Size:	0000B4
+/**
+ * @TODO: Documentation
  */
 void PikiHangedState::init(Piki* piki)
 {
@@ -1741,10 +1567,8 @@ void PikiHangedState::init(Piki* piki)
 	piki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 }
 
-/*
- * --INFO--
- * Address:	800D4D94
- * Size:	000044
+/**
+ * @TODO: Documentation
  */
 void PikiHangedState::exec(Piki* piki)
 {
@@ -1753,30 +1577,24 @@ void PikiHangedState::exec(Piki* piki)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800D4DD8
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 void PikiHangedState::cleanup(Piki* piki)
 {
 	SeSystem::stopPlayerSe(SE_PIKI_FLYREADY);
 }
 
-/*
- * --INFO--
- * Address:	800D4DFC
- * Size:	000050
+/**
+ * @TODO: Documentation
  */
 PikiWaterHangedState::PikiWaterHangedState()
     : PikiState(PIKISTATE_WaterHanged, "WATER_HANGED")
 {
 }
 
-/*
- * --INFO--
- * Address:	800D4E4C
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 void PikiWaterHangedState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
@@ -1787,10 +1605,8 @@ void PikiWaterHangedState::procAnimMsg(Piki* piki, MsgAnim* msg)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800D4E84
- * Size:	0000B4
+/**
+ * @TODO: Documentation
  */
 void PikiWaterHangedState::init(Piki* piki)
 {
@@ -1802,10 +1618,8 @@ void PikiWaterHangedState::init(Piki* piki)
 	PRINT("water hang init!\n");
 }
 
-/*
- * --INFO--
- * Address:	800D4F38
- * Size:	000044
+/**
+ * @TODO: Documentation
  */
 void PikiWaterHangedState::exec(Piki* piki)
 {
@@ -1815,10 +1629,8 @@ void PikiWaterHangedState::exec(Piki* piki)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800D4F7C
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 void PikiWaterHangedState::cleanup(Piki* piki)
 {
@@ -1826,20 +1638,16 @@ void PikiWaterHangedState::cleanup(Piki* piki)
 	SeSystem::stopPlayerSe(SE_PIKI_FLYREADY);
 }
 
-/*
- * --INFO--
- * Address:	800D4FA0
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 PikiEmitState::PikiEmitState()
     : PikiState(PIKISTATE_Emit, "EMIT")
 {
 }
 
-/*
- * --INFO--
- * Address:	800D4FEC
- * Size:	0000A4
+/**
+ * @TODO: Documentation
  */
 void PikiEmitState::init(Piki* piki)
 {
@@ -1850,10 +1658,8 @@ void PikiEmitState::init(Piki* piki)
 	mHasLanded                    = true;
 }
 
-/*
- * --INFO--
- * Address:	800D5090
- * Size:	000040
+/**
+ * @TODO: Documentation
  */
 void PikiEmitState::exec(Piki* piki)
 {
@@ -1863,20 +1669,16 @@ void PikiEmitState::exec(Piki* piki)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800D50D0
- * Size:	000010
+/**
+ * @TODO: Documentation
  */
 void PikiEmitState::cleanup(Piki* piki)
 {
 	piki->restartAI();
 }
 
-/*
- * --INFO--
- * Address:	800D50E0
- * Size:	00008C
+/**
+ * @TODO: Documentation
  */
 void PikiEmitState::procBounceMsg(Piki* piki, MsgBounce*)
 {
@@ -1886,10 +1688,8 @@ void PikiEmitState::procBounceMsg(Piki* piki, MsgBounce*)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800D516C
- * Size:	0000B4
+/**
+ * @TODO: Documentation
  */
 void PikiEmitState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
@@ -1904,40 +1704,32 @@ void PikiEmitState::procAnimMsg(Piki* piki, MsgAnim* msg)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800D5220
- * Size:	00008C
+/**
+ * @TODO: Documentation
  */
 PikiFlyingState::PikiFlyingState()
     : PikiState(PIKISTATE_Flying, "FLYING")
 {
 }
 
-/*
- * --INFO--
- * Address:	800D52AC
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 void PikiFlyingState::stopEffect()
 {
 	mSparkleEffect.stop();
 }
 
-/*
- * --INFO--
- * Address:	800D52D0
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 void PikiFlyingState::restartEffect()
 {
 	mSparkleEffect.restart();
 }
 
-/*
- * --INFO--
- * Address:	800D52F4
- * Size:	0000B0
+/**
+ * @TODO: Documentation
  */
 void PikiFlyingState::init(Piki* piki)
 {
@@ -1955,10 +1747,8 @@ void PikiFlyingState::init(Piki* piki)
 	mHasBounced        = false;
 }
 
-/*
- * --INFO--
- * Address:	800D53A4
- * Size:	0003C0
+/**
+ * @TODO: Documentation
  */
 void PikiFlyingState::exec(Piki* piki)
 {
@@ -2047,10 +1837,8 @@ void PikiFlyingState::exec(Piki* piki)
 	STACK_PAD_VAR(4);
 }
 
-/*
- * --INFO--
- * Address:	800D5764
- * Size:	000044
+/**
+ * @TODO: Documentation
  */
 void PikiFlyingState::cleanup(Piki* piki)
 {
@@ -2059,10 +1847,8 @@ void PikiFlyingState::cleanup(Piki* piki)
 	piki->mWantToStick = false;
 }
 
-/*
- * --INFO--
- * Address:	800D57A8
- * Size:	0006DC
+/**
+ * @TODO: Documentation
  */
 void PikiFlyingState::procCollideMsg(Piki* piki, MsgCollide* msg)
 {
@@ -2230,19 +2016,15 @@ void PikiFlyingState::procCollideMsg(Piki* piki, MsgCollide* msg)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800D5E84
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void PikiFlyingState::procStickMsg(Piki*, MsgStick*)
 {
 }
 
-/*
- * --INFO--
- * Address:	800D5E88
- * Size:	0000E8
+/**
+ * @TODO: Documentation
  */
 void PikiFlyingState::procBounceMsg(Piki* piki, MsgBounce*)
 {
@@ -2271,20 +2053,16 @@ void PikiFlyingState::procBounceMsg(Piki* piki, MsgBounce*)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800D5F70
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 PikiGrowState::PikiGrowState()
     : PikiState(PIKISTATE_Grow, "GROW")
 {
 }
 
-/*
- * --INFO--
- * Address:	800D5FBC
- * Size:	00007C
+/**
+ * @TODO: Documentation
  */
 void PikiGrowState::init(Piki* piki)
 {
@@ -2292,28 +2070,22 @@ void PikiGrowState::init(Piki* piki)
 	piki->mFormationPriority = 0;
 }
 
-/*
- * --INFO--
- * Address:	800D6038
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void PikiGrowState::exec(Piki* piki)
 {
 }
 
-/*
- * --INFO--
- * Address:	800D603C
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void PikiGrowState::cleanup(Piki* piki)
 {
 }
 
-/*
- * --INFO--
- * Address:	800D6040
- * Size:	000044
+/**
+ * @TODO: Documentation
  */
 void PikiGrowState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
@@ -2324,20 +2096,16 @@ void PikiGrowState::procAnimMsg(Piki* piki, MsgAnim* msg)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800D6084
- * Size:	000050
+/**
+ * @TODO: Documentation
  */
 PikiKinokoChangeState::PikiKinokoChangeState()
     : PikiState(PIKISTATE_KinokoChange, "KINOKO_CHANGE")
 {
 }
 
-/*
- * --INFO--
- * Address:	800D60D4
- * Size:	0000AC
+/**
+ * @TODO: Documentation
  */
 void PikiKinokoChangeState::init(Piki* piki)
 {
@@ -2350,20 +2118,16 @@ void PikiKinokoChangeState::init(Piki* piki)
 	piki->startMotion(PaniMotionInfo(PIKIANIM_GrowUp1, piki), PaniMotionInfo(PIKIANIM_GrowUp1));
 }
 
-/*
- * --INFO--
- * Address:	800D6180
- * Size:	00002C
+/**
+ * @TODO: Documentation
  */
 void PikiKinokoChangeState::restart(Piki* piki)
 {
 	init(piki);
 }
 
-/*
- * --INFO--
- * Address:	800D61AC
- * Size:	000078
+/**
+ * @TODO: Documentation
  */
 void PikiKinokoChangeState::exec(Piki* piki)
 {
@@ -2378,19 +2142,15 @@ void PikiKinokoChangeState::exec(Piki* piki)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800D6224
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void PikiKinokoChangeState::cleanup(Piki* piki)
 {
 }
 
-/*
- * --INFO--
- * Address:	800D6228
- * Size:	000094
+/**
+ * @TODO: Documentation
  */
 void PikiKinokoChangeState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
@@ -2409,20 +2169,16 @@ void PikiKinokoChangeState::procAnimMsg(Piki* piki, MsgAnim* msg)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800D62BC
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 PikiGrowupState::PikiGrowupState()
     : PikiState(PIKISTATE_GrowUp, "GROWUP")
 {
 }
 
-/*
- * --INFO--
- * Address:	800D6308
- * Size:	0000C8
+/**
+ * @TODO: Documentation
  */
 void PikiGrowupState::init(Piki* piki)
 {
@@ -2433,10 +2189,8 @@ void PikiGrowupState::init(Piki* piki)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800D63D0
- * Size:	000098
+/**
+ * @TODO: Documentation
  */
 void PikiGrowupState::exec(Piki* piki)
 {
@@ -2448,19 +2202,15 @@ void PikiGrowupState::exec(Piki* piki)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800D6468
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void PikiGrowupState::cleanup(Piki* piki)
 {
 }
 
-/*
- * --INFO--
- * Address:	800D646C
- * Size:	000134
+/**
+ * @TODO: Documentation
  */
 void PikiGrowupState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
@@ -2484,66 +2234,52 @@ void PikiGrowupState::procAnimMsg(Piki* piki, MsgAnim* msg)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800D65A0
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 PikiWaveState::PikiWaveState()
     : PikiState(PIKISTATE_Wave, "WAVE")
 {
 }
 
-/*
- * --INFO--
- * Address:	800D65EC
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void PikiWaveState::init(Piki* piki)
 {
 }
 
-/*
- * --INFO--
- * Address:	800D65F0
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void PikiWaveState::exec(Piki* piki)
 {
 }
 
-/*
- * --INFO--
- * Address:	800D65F4
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void PikiWaveState::cleanup(Piki* piki)
 {
 }
 
-/*
- * --INFO--
- * Address:	800D65F8
- * Size:	000030
+/**
+ * @TODO: Documentation
  */
 void PikiWaveState::resume(Piki* piki)
 {
 	transit(piki, PIKISTATE_Normal);
 }
 
-/*
- * --INFO--
- * Address:	800D6628
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void PikiWaveState::restart(Piki* piki)
 {
 }
 
-/*
- * --INFO--
- * Address:	800D662C
- * Size:	000048
+/**
+ * @TODO: Documentation
  */
 void PikiWaveState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
@@ -2566,20 +2302,16 @@ void PikiWaveState::waveAttack(Piki* piki)
 {
 }
 
-/*
- * --INFO--
- * Address:	800D6674
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 PikiPushState::PikiPushState()
     : PikiState(PIKISTATE_Push, "PUSH")
 {
 }
 
-/*
- * --INFO--
- * Address:	800D66C0
- * Size:	000088
+/**
+ * @TODO: Documentation
  */
 void PikiPushState::init(Piki* piki)
 {
@@ -2587,10 +2319,8 @@ void PikiPushState::init(Piki* piki)
 	mIsFinishing = false;
 }
 
-/*
- * --INFO--
- * Address:	800D6748
- * Size:	000150
+/**
+ * @TODO: Documentation
  */
 void PikiPushState::exec(Piki* piki)
 {
@@ -2610,49 +2340,39 @@ void PikiPushState::exec(Piki* piki)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800D6898
- * Size:	00000C
+/**
+ * @TODO: Documentation
  */
 void PikiPushState::cleanup(Piki* piki)
 {
 	piki->mWallObj = nullptr;
 }
 
-/*
- * --INFO--
- * Address:	800D68A4
- * Size:	000030
+/**
+ * @TODO: Documentation
  */
 void PikiPushState::resume(Piki* piki)
 {
 	transit(piki, PIKISTATE_Normal);
 }
 
-/*
- * --INFO--
- * Address:	800D68D4
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void PikiPushState::restart(Piki* piki)
 {
 }
 
-/*
- * --INFO--
- * Address:	800D68D8
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 void PikiPushState::procOffWallMsg(Piki* piki, MsgOffWall*)
 {
 	piki->mPikiAnimMgr.finishMotion(piki);
 }
 
-/*
- * --INFO--
- * Address:	800D6910
- * Size:	000078
+/**
+ * @TODO: Documentation
  */
 void PikiPushState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
@@ -2668,20 +2388,16 @@ void PikiPushState::procAnimMsg(Piki* piki, MsgAnim* msg)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800D6988
- * Size:	000050
+/**
+ * @TODO: Documentation
  */
 PikiPushPikiState::PikiPushPikiState()
     : PikiState(PIKISTATE_PushPiki, "PUSHPIKI")
 {
 }
 
-/*
- * --INFO--
- * Address:	800D69D8
- * Size:	000090
+/**
+ * @TODO: Documentation
  */
 void PikiPushPikiState::init(Piki* piki)
 {
@@ -2690,10 +2406,8 @@ void PikiPushPikiState::init(Piki* piki)
 	mIsFinishing         = false;
 }
 
-/*
- * --INFO--
- * Address:	800D6A68
- * Size:	0000F4
+/**
+ * @TODO: Documentation
  */
 void PikiPushPikiState::exec(Piki* piki)
 {
@@ -2712,39 +2426,31 @@ void PikiPushPikiState::exec(Piki* piki)
 	mCollisionFrameCount = 0;
 }
 
-/*
- * --INFO--
- * Address:	800D6B5C
- * Size:	00000C
+/**
+ * @TODO: Documentation
  */
 void PikiPushPikiState::cleanup(Piki* piki)
 {
 	piki->mPushTargetPiki = nullptr;
 }
 
-/*
- * --INFO--
- * Address:	800D6B68
- * Size:	000030
+/**
+ * @TODO: Documentation
  */
 void PikiPushPikiState::resume(Piki* piki)
 {
 	transit(piki, PIKISTATE_Normal);
 }
 
-/*
- * --INFO--
- * Address:	800D6B98
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void PikiPushPikiState::restart(Piki* piki)
 {
 }
 
-/*
- * --INFO--
- * Address:	800D6B9C
- * Size:	0000A4
+/**
+ * @TODO: Documentation
  */
 void PikiPushPikiState::procCollideMsg(Piki* piki, MsgCollide* msg)
 {
@@ -2762,19 +2468,15 @@ void PikiPushPikiState::procCollideMsg(Piki* piki, MsgCollide* msg)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800D6C40
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void PikiPushPikiState::procWallMsg(Piki*, MsgWall*)
 {
 }
 
-/*
- * --INFO--
- * Address:	800D6C44
- * Size:	000080
+/**
+ * @TODO: Documentation
  */
 void PikiPushPikiState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
@@ -2792,29 +2494,23 @@ void PikiPushPikiState::procAnimMsg(Piki* piki, MsgAnim* msg)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800D6CC4
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 PikiBuryState::PikiBuryState()
     : PikiState(PIKISTATE_Bury, "BURY")
 {
 }
 
-/*
- * --INFO--
- * Address:	800D6D10
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void PikiBuryState::init(Piki* piki)
 {
 }
 
-/*
- * --INFO--
- * Address:	800D6D14
- * Size:	000200
+/**
+ * @TODO: Documentation
  */
 void PikiBuryState::exec(Piki* piki)
 {
@@ -2861,29 +2557,23 @@ void PikiBuryState::exec(Piki* piki)
 	transit(piki, PIKISTATE_Normal);
 }
 
-/*
- * --INFO--
- * Address:	800D6F14
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void PikiBuryState::cleanup(Piki* piki)
 {
 }
 
-/*
- * --INFO--
- * Address:	800D6F18
- * Size:	000050
+/**
+ * @TODO: Documentation
  */
 PikiNukareWaitState::PikiNukareWaitState()
     : PikiState(PIKISTATE_NukareWait, "NUKARE_WAIT")
 {
 }
 
-/*
- * --INFO--
- * Address:	800D6F68
- * Size:	00014C
+/**
+ * @TODO: Documentation
  */
 void PikiNukareWaitState::init(Piki* piki)
 {
@@ -2899,10 +2589,8 @@ void PikiNukareWaitState::init(Piki* piki)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800D70B4
- * Size:	000078
+/**
+ * @TODO: Documentation
  */
 void PikiNukareWaitState::exec(Piki* piki)
 {
@@ -2916,29 +2604,23 @@ void PikiNukareWaitState::exec(Piki* piki)
 	piki->mPikiAnimMgr.getLowerAnimator().mAnimationCounter = 0.0f;
 }
 
-/*
- * --INFO--
- * Address:	800D712C
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void PikiNukareWaitState::cleanup(Piki* piki)
 {
 }
 
-/*
- * --INFO--
- * Address:	800D7130
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 PikiNukareState::PikiNukareState()
     : PikiState(PIKISTATE_Nukare, "NUKARE")
 {
 }
 
-/*
- * --INFO--
- * Address:	800D717C
- * Size:	0000AC
+/**
+ * @TODO: Documentation
  */
 void PikiNukareState::init(Piki* piki)
 {
@@ -2950,19 +2632,15 @@ void PikiNukareState::init(Piki* piki)
 	gameflow.mGameInterface->message(MOVIECMD_SetInputEnabled, FALSE);
 }
 
-/*
- * --INFO--
- * Address:	800D7228
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void PikiNukareState::exec(Piki* piki)
 {
 }
 
-/*
- * --INFO--
- * Address:	800D722C
- * Size:	000264
+/**
+ * @TODO: Documentation
  */
 void PikiNukareState::cleanup(Piki* piki)
 {
@@ -3001,10 +2679,8 @@ void PikiNukareState::cleanup(Piki* piki)
 	gameflow.mGameInterface->message(MOVIECMD_SetInputEnabled, TRUE);
 }
 
-/*
- * --INFO--
- * Address:	800D7490
- * Size:	000190
+/**
+ * @TODO: Documentation
  */
 void PikiNukareState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
@@ -3039,20 +2715,16 @@ void PikiNukareState::procAnimMsg(Piki* piki, MsgAnim* msg)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800D7620
- * Size:	000050
+/**
+ * @TODO: Documentation
  */
 PikiAutoNukiState::PikiAutoNukiState()
     : PikiState(PIKISTATE_AutoNuki, "AUTONUKI")
 {
 }
 
-/*
- * --INFO--
- * Address:	800D7670
- * Size:	0000DC
+/**
+ * @TODO: Documentation
  */
 void PikiAutoNukiState::init(Piki* piki)
 {
@@ -3065,10 +2737,8 @@ void PikiAutoNukiState::init(Piki* piki)
 	piki->mVolatileVelocity.set(0.0f, 0.0f, 0.0f);
 }
 
-/*
- * --INFO--
- * Address:	800D774C
- * Size:	000078
+/**
+ * @TODO: Documentation
  */
 void PikiAutoNukiState::exec(Piki* piki)
 {
@@ -3080,19 +2750,15 @@ void PikiAutoNukiState::exec(Piki* piki)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800D77C4
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void PikiAutoNukiState::cleanup(Piki* piki)
 {
 }
 
-/*
- * --INFO--
- * Address:	800D77C8
- * Size:	00009C
+/**
+ * @TODO: Documentation
  */
 void PikiAutoNukiState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
@@ -3109,20 +2775,16 @@ void PikiAutoNukiState::procAnimMsg(Piki* piki, MsgAnim* msg)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800D7864
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 PikiPressedState::PikiPressedState()
     : PikiState(PIKISTATE_Pressed, "PRESSED")
 {
 }
 
-/*
- * --INFO--
- * Address:	800D78B0
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 void PikiPressedState::procCollideMsg(Piki* piki, MsgCollide* msg)
 {
@@ -3132,10 +2794,8 @@ void PikiPressedState::procCollideMsg(Piki* piki, MsgCollide* msg)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800D78D4
- * Size:	000034
+/**
+ * @TODO: Documentation
  */
 void PikiPressedState::init(Piki* piki)
 {
@@ -3146,10 +2806,8 @@ void PikiPressedState::init(Piki* piki)
 	PRINT_KANDO("pressed init !\n");
 }
 
-/*
- * --INFO--
- * Address:	800D7908
- * Size:	000140
+/**
+ * @TODO: Documentation
  */
 void PikiPressedState::exec(Piki* piki)
 {
@@ -3180,29 +2838,23 @@ void PikiPressedState::exec(Piki* piki)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800D7A48
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void PikiPressedState::cleanup(Piki* piki)
 {
 }
 
-/*
- * --INFO--
- * Address:	800D7A4C
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 PikiDyingState::PikiDyingState()
     : PikiState(PIKISTATE_Dying, "DYING")
 {
 }
 
-/*
- * --INFO--
- * Address:	800D7A98
- * Size:	00011C
+/**
+ * @TODO: Documentation
  */
 void PikiDyingState::init(Piki* piki)
 {
@@ -3223,10 +2875,8 @@ void PikiDyingState::init(Piki* piki)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800D7BB4
- * Size:	000034
+/**
+ * @TODO: Documentation
  */
 void PikiDyingState::exec(Piki* piki)
 {
@@ -3234,19 +2884,15 @@ void PikiDyingState::exec(Piki* piki)
 	piki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 }
 
-/*
- * --INFO--
- * Address:	800D7BE8
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void PikiDyingState::cleanup(Piki* piki)
 {
 }
 
-/*
- * --INFO--
- * Address:	800D7BEC
- * Size:	000090
+/**
+ * @TODO: Documentation
  */
 void PikiDyingState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
@@ -3261,20 +2907,16 @@ void PikiDyingState::procAnimMsg(Piki* piki, MsgAnim* msg)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800D7C7C
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 PikiDeadState::PikiDeadState()
     : PikiState(PIKISTATE_Dead, "DEAD")
 {
 }
 
-/*
- * --INFO--
- * Address:	800D7CC8
- * Size:	000034
+/**
+ * @TODO: Documentation
  */
 void PikiDeadState::init(Piki* piki)
 {
@@ -3284,10 +2926,8 @@ void PikiDeadState::init(Piki* piki)
 	piki->endStickObject();
 }
 
-/*
- * --INFO--
- * Address:	800D7CFC
- * Size:	00009C
+/**
+ * @TODO: Documentation
  */
 void PikiDeadState::exec(Piki* piki)
 {
@@ -3305,20 +2945,16 @@ void PikiDeadState::exec(Piki* piki)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800D7D98
- * Size:	00001C
+/**
+ * @TODO: Documentation
  */
 void PikiDeadState::cleanup(Piki* piki)
 {
 	piki->mSRT.s.set(0.0f, 0.0f, 0.0f);
 }
 
-/*
- * --INFO--
- * Address:	800D7DB4
- * Size:	000060
+/**
+ * @TODO: Documentation
  */
 PikiEmotionState::PikiEmotionState()
     : PikiState(PIKISTATE_Emotion, "EMOTION")
@@ -3326,10 +2962,8 @@ PikiEmotionState::PikiEmotionState()
 {
 }
 
-/*
- * --INFO--
- * Address:	800D7E14
- * Size:	000784
+/**
+ * @TODO: Documentation
  */
 void PikiEmotionState::init(Piki* piki)
 {
@@ -3456,10 +3090,8 @@ void PikiEmotionState::init(Piki* piki)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800D8598
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void PikiEmotionState::doDump()
 {
@@ -3467,10 +3099,8 @@ void PikiEmotionState::doDump()
 	      mGazePosition.z);
 }
 
-/*
- * --INFO--
- * Address:	800D859C
- * Size:	0001B8
+/**
+ * @TODO: Documentation
  */
 void PikiEmotionState::exec(Piki* piki)
 {
@@ -3503,10 +3133,8 @@ void PikiEmotionState::exec(Piki* piki)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800D8754
- * Size:	000034
+/**
+ * @TODO: Documentation
  */
 void PikiEmotionState::cleanup(Piki* piki)
 {
@@ -3515,10 +3143,8 @@ void PikiEmotionState::cleanup(Piki* piki)
 	piki->finishLook();
 }
 
-/*
- * --INFO--
- * Address:	800D8788
- * Size:	000084
+/**
+ * @TODO: Documentation
  */
 void PikiEmotionState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {

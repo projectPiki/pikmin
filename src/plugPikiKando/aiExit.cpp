@@ -16,10 +16,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("Exit")
 
-/*
- * --INFO--
- * Address:	800B8D68
- * Size:	000060
+/**
+ * @TODO: Documentation
  */
 ActExit::ActExit(Piki* piki)
     : Action(piki, true)
@@ -28,10 +26,8 @@ ActExit::ActExit(Piki* piki)
 	mCurrActionIdx = PikiAction::NOACTION;
 }
 
-/*
- * --INFO--
- * Address:	800B8DC8
- * Size:	0000C0
+/**
+ * @TODO: Documentation
  */
 void ActExit::init(Creature*)
 {
@@ -43,10 +39,8 @@ void ActExit::init(Creature*)
 	mHasCollided = false;
 }
 
-/*
- * --INFO--
- * Address:	800B8E88
- * Size:	00002C
+/**
+ * @TODO: Documentation
  */
 void ActExit::procCollideMsg(Piki*, MsgCollide* msg)
 {
@@ -56,10 +50,8 @@ void ActExit::procCollideMsg(Piki*, MsgCollide* msg)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800B8EB4
- * Size:	0002E8
+/**
+ * @TODO: Documentation
  */
 int ActExit::exec()
 {
@@ -110,10 +102,8 @@ int ActExit::exec()
 	STACK_PAD_VAR(2);
 }
 
-/*
- * --INFO--
- * Address:	800B919C
- * Size:	0000C0
+/**
+ * @TODO: Documentation
  */
 void ActExit::cleanup()
 {

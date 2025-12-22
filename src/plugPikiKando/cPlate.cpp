@@ -21,20 +21,16 @@ DEFINE_ERROR(10)
  */
 DEFINE_PRINT("cPlate");
 
-/*
- * --INFO--
- * Address:	800A5710
- * Size:	000014
+/**
+ * @TODO: Documentation
  */
 Creature* CPlate::getCreature(int idx)
 {
 	return mSlotList[idx].mOccupant.getPtr();
 }
 
-/*
- * --INFO--
- * Address:	800A5724
- * Size:	00022C
+/**
+ * @TODO: Documentation
  */
 CPlate::CPlate(MapMgr* mgr)
 {
@@ -55,29 +51,23 @@ CPlate::CPlate(MapMgr* mgr)
 	mHappaCounts[0] = mHappaCounts[1] = mHappaCounts[2] = 0;
 }
 
-/*
- * --INFO--
- * Address:	800A5980
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 bool CPlate::canNaviRunFast()
 {
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	800A5988
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void CPlate::init(immut Vector3f&)
 {
 }
 
-/*
- * --INFO--
- * Address:	800A598C
- * Size:	0001C0
+/**
+ * @TODO: Documentation
  */
 void CPlate::setPos(immut Vector3f& position, f32 angle, immut Vector3f& velocity)
 {
@@ -97,10 +87,8 @@ void CPlate::setPos(immut Vector3f& position, f32 angle, immut Vector3f& velocit
 	STACK_PAD_VAR(2);
 }
 
-/*
- * --INFO--
- * Address:	800A5B4C
- * Size:	0001BC
+/**
+ * @TODO: Documentation
  */
 void CPlate::setPosGray(immut Vector3f& position, f32 angle, immut Vector3f& velocity)
 {
@@ -131,10 +119,8 @@ void CPlate::setPosNeutral(immut Vector3f& position, f32 angle, immut Vector3f& 
 	mPlateCenter = mOriginPosition;
 }
 
-/*
- * --INFO--
- * Address:	800A5D08
- * Size:	0000B0
+/**
+ * @TODO: Documentation
  */
 int CPlate::getSlot(Creature* occupant, SlotChangeListner* listener)
 {
@@ -146,10 +132,8 @@ int CPlate::getSlot(Creature* occupant, SlotChangeListner* listener)
 	return idx;
 }
 
-/*
- * --INFO--
- * Address:	800A5DB8
- * Size:	000050
+/**
+ * @TODO: Documentation
  */
 void CPlate::changeFlower(Piki* piki)
 {
@@ -158,10 +142,8 @@ void CPlate::changeFlower(Piki* piki)
 	mHappaCounts[oldHappa]--;
 }
 
-/*
- * --INFO--
- * Address:	800A5E08
- * Size:	000144
+/**
+ * @TODO: Documentation
  */
 void CPlate::releaseSlot(Creature* occupant, int idx)
 {
@@ -210,10 +192,8 @@ void CPlate::swapSlot(int idx1, int idx2)
 	slot2->mListener->inform(idx2);
 }
 
-/*
- * --INFO--
- * Address:	800A5F4C
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 bool CPlate::validSlot(int idx)
 {
@@ -225,10 +205,8 @@ bool CPlate::validSlot(int idx)
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	800A5F70
- * Size:	000424
+/**
+ * @TODO: Documentation
  */
 void CPlate::sortByColor(Piki* piki)
 {
@@ -280,10 +258,8 @@ void CPlate::sortByColor(Piki* piki)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800A6394
- * Size:	0002DC
+/**
+ * @TODO: Documentation
  */
 void CPlate::rearrangeSlot(immut Vector3f& p1, f32, immut Vector3f&)
 {
@@ -302,10 +278,8 @@ void CPlate::rearrangeSlot(immut Vector3f& p1, f32, immut Vector3f&)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800A6670
- * Size:	000188
+/**
+ * @TODO: Documentation
  */
 void CPlate::refresh(int slotCount, f32 interpT)
 {
@@ -340,10 +314,8 @@ void CPlate::refresh(int slotCount, f32 interpT)
 	refreshSlot();
 }
 
-/*
- * --INFO--
- * Address:	800A67F8
- * Size:	000234
+/**
+ * @TODO: Documentation
  */
 void CPlate::refreshSlot()
 {
@@ -389,10 +361,8 @@ void CPlate::refreshSlot()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800A6A2C
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 void CPlate::update()
 {
@@ -416,10 +386,8 @@ void CPlate::postUpdate(f32)
 {
 }
 
-/*
- * --INFO--
- * Address:	800A6A64
- * Size:	0002CC
+/**
+ * @TODO: Documentation
  */
 void CPlate::render(Graphics& gfx)
 {

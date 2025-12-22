@@ -21,10 +21,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("MizuAi");
 
-/*
- * --INFO--
- * Address:	8017B858
- * Size:	000080
+/**
+ * @TODO: Documentation
  */
 MizuAi::MizuAi(Mizu* mizu)
 {
@@ -33,10 +31,8 @@ MizuAi::MizuAi(Mizu* mizu)
 	mPuffCallBack = new MizuGenSpringPuffCallBack();
 }
 
-/*
- * --INFO--
- * Address:	8017B8D8
- * Size:	0000B8
+/**
+ * @TODO: Documentation
  */
 void MizuAi::initMizu(Mizu* mizu)
 {
@@ -50,10 +46,8 @@ void MizuAi::initMizu(Mizu* mizu)
 	initWait(0);
 }
 
-/*
- * --INFO--
- * Address:	8017B990
- * Size:	0000B8
+/**
+ * @TODO: Documentation
  */
 void MizuAi::initGeyzer(Mizu* geyzer)
 {
@@ -67,19 +61,15 @@ void MizuAi::initGeyzer(Mizu* geyzer)
 	initReady(1);
 }
 
-/*
- * --INFO--
- * Address:	8017BA48
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void MizuAi::animationKeyUpdated(immut PaniAnimKeyEvent&)
 {
 }
 
-/*
- * --INFO--
- * Address:	8017BA4C
- * Size:	00007C
+/**
+ * @TODO: Documentation
  */
 void MizuAi::killCallBackEffect(bool p1)
 {
@@ -155,10 +145,8 @@ bool MizuAi::waitTransit()
 	return (mMizu->getAttackTimer() > 4.0f) ? true : false;
 }
 
-/*
- * --INFO--
- * Address:	8017BAC8
- * Size:	0000BC
+/**
+ * @TODO: Documentation
  */
 void MizuAi::initWait(int stateID)
 {
@@ -178,10 +166,8 @@ void MizuAi::initWait(int stateID)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8017BB84
- * Size:	0000D0
+/**
+ * @TODO: Documentation
  */
 void MizuAi::initReady(int stateID)
 {
@@ -205,10 +191,8 @@ void MizuAi::initReady(int stateID)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8017BC54
- * Size:	00026C
+/**
+ * @TODO: Documentation
  */
 void MizuAi::initJet(int stateID)
 {
@@ -295,10 +279,8 @@ void MizuAi::jetState()
 	mMizu->addAttackTimer(gsys->getFrameTime());
 }
 
-/*
- * --INFO--
- * Address:	8017BEC0
- * Size:	000358
+/**
+ * @TODO: Documentation
  */
 void MizuAi::update()
 {

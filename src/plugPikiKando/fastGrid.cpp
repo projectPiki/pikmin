@@ -22,10 +22,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("fastGrid")
 
-/*
- * --INFO--
- * Address:	80094098
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 FastGrid::FastGrid()
 {
@@ -33,10 +31,8 @@ FastGrid::FastGrid()
 	mNeighbourSize                                                      = 1;
 }
 
-/*
- * --INFO--
- * Address:	800940BC
- * Size:	000078
+/**
+ * @TODO: Documentation
  */
 void FastGrid::initAIGrid(u8 shift)
 {
@@ -50,10 +46,8 @@ void FastGrid::initAIGrid(u8 shift)
 	PRINT("@@@@@@@@@@ aiGridSize = %d : griz size = %f\n", aiGridSize, 32768.0f / aiGridSize);
 }
 
-/*
- * --INFO--
- * Address:	80094134
- * Size:	00002C
+/**
+ * @TODO: Documentation
  */
 void FastGrid::clearAIGrid()
 {
@@ -73,10 +67,8 @@ void FastGrid::addAIGrid()
 	aiGridMap[id]++;
 }
 
-/*
- * --INFO--
- * Address:	80094160
- * Size:	000030
+/**
+ * @TODO: Documentation
  */
 void FastGrid::delAIGrid()
 {
@@ -86,10 +78,8 @@ void FastGrid::delAIGrid()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80094190
- * Size:	0001A8
+/**
+ * @TODO: Documentation
  */
 bool FastGrid::aiCulling()
 {
@@ -141,10 +131,8 @@ bool FastGrid::aiCulling()
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	80094338
- * Size:	0000B8
+/**
+ * @TODO: Documentation
  */
 bool FastGrid::aiCullingLarge(int max)
 {
@@ -166,10 +154,8 @@ bool FastGrid::aiCullingLarge(int max)
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	800943F0
- * Size:	000130
+/**
+ * @TODO: Documentation
  */
 bool FastGrid::doCulling(const FastGrid& grid, f32 p2)
 {
@@ -202,10 +188,8 @@ bool FastGrid::doCulling(const FastGrid& grid, f32 p2)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	80094520
- * Size:	00009C
+/**
+ * @TODO: Documentation
  */
 void FastGrid::updateGrid(const Vector3f& pos)
 {
@@ -222,10 +206,8 @@ void FastGrid::updateGrid(const Vector3f& pos)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800945BC
- * Size:	0000E8
+/**
+ * @TODO: Documentation
  */
 void FastGrid::updateAIGrid(const Vector3f& pos, bool p2)
 {

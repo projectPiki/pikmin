@@ -97,10 +97,8 @@ ResultFlags::FlagInfo ResultFlags::flagTable[] = {
 	{ RESFLAG_NULL, 0, 0, 0 },                                                            // END
 };
 
-/*
- * --INFO--
- * Address:	8008358C
- * Size:	0001BC
+/**
+ * @TODO: Documentation
  */
 ResultFlags::ResultFlags()
 {
@@ -140,10 +138,8 @@ ResultFlags::ResultFlags()
 	setSeen(RESFLAG_BluePikminWaterImmunity);
 }
 
-/*
- * --INFO--
- * Address:	80083748
- * Size:	000178
+/**
+ * @TODO: Documentation
  */
 void ResultFlags::initGame()
 {
@@ -172,10 +168,8 @@ void ResultFlags::initGame()
 	setSeen(RESFLAG_BluePikminWaterImmunity);
 }
 
-/*
- * --INFO--
- * Address:	800838C0
- * Size:	0000A4
+/**
+ * @TODO: Documentation
  */
 void ResultFlags::saveCard(RandomAccessStream& stream)
 {
@@ -189,10 +183,8 @@ void ResultFlags::saveCard(RandomAccessStream& stream)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80083964
- * Size:	00009C
+/**
+ * @TODO: Documentation
  */
 void ResultFlags::loadCard(RandomAccessStream& stream)
 {
@@ -206,10 +198,8 @@ void ResultFlags::loadCard(RandomAccessStream& stream)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80083A00
- * Size:	000050
+/**
+ * @TODO: Documentation
  */
 void ResultFlags::setOn(int flag)
 {
@@ -218,20 +208,16 @@ void ResultFlags::setOn(int flag)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80083A50
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 void ResultFlags::setSeen(int flag)
 {
 	setFlag(flag, 2);
 }
 
-/*
- * --INFO--
- * Address:	80083A74
- * Size:	0000A0
+/**
+ * @TODO: Documentation
  */
 int ResultFlags::getDayDocument(int dayIndex, int& length)
 {
@@ -259,10 +245,8 @@ int ResultFlags::getDayDocument(int dayIndex, int& length)
 	return -1;
 }
 
-/*
- * --INFO--
- * Address:	80083B14
- * Size:	000180
+/**
+ * @TODO: Documentation
  */
 int ResultFlags::getDocument(int& out)
 {
@@ -333,10 +317,8 @@ int ResultFlags::FlagInfo::type()
 	return 600;
 }
 
-/*
- * --INFO--
- * Address:	80083C94
- * Size:	00010C
+/**
+ * @TODO: Documentation
  */
 void ResultFlags::dump()
 {
@@ -380,10 +362,8 @@ void ResultFlags::dump()
 	PRINT("*************************************************\n");
 }
 
-/*
- * --INFO--
- * Address:	80083DA0
- * Size:	000030
+/**
+ * @TODO: Documentation
  */
 u8 ResultFlags::getFlag(int index)
 {
@@ -392,10 +372,8 @@ u8 ResultFlags::getFlag(int index)
 	return mStates[b] >> ((a - b * 4) * 2) & 3;
 }
 
-/*
- * --INFO--
- * Address:	80083DD0
- * Size:	000090
+/**
+ * @TODO: Documentation
  */
 void ResultFlags::setFlag(int index, u8 flag)
 {

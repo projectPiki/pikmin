@@ -62,10 +62,8 @@ DEFINE_ERROR(89)
  */
 DEFINE_PRINT("navi");
 
-/*
- * --INFO--
- * Address:	800F82E8
- * Size:	00009C
+/**
+ * @TODO: Documentation
  */
 void Navi::viewDraw(Graphics& gfx, immut Matrix4f& mtx)
 {
@@ -75,20 +73,16 @@ void Navi::viewDraw(Graphics& gfx, immut Matrix4f& mtx)
 	demoDraw(gfx, &mtx);
 }
 
-/*
- * --INFO--
- * Address:	800F8384
- * Size:	00005C
+/**
+ * @TODO: Documentation
  */
 void Navi::viewStartTrembleMotion(f32)
 {
 	mNaviAnimMgr.startMotion(PaniMotionInfo(PIKIANIM_OCarry), PaniMotionInfo(PIKIANIM_OCarry));
 }
 
-/*
- * --INFO--
- * Address:	800F83E0
- * Size:	000028
+/**
+ * @TODO: Documentation
  */
 void Navi::viewKill()
 {
@@ -96,30 +90,24 @@ void Navi::viewKill()
 	mPellet = nullptr;
 }
 
-/*
- * --INFO--
- * Address:	800F8408
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 f32 Navi::viewGetBottomRadius()
 {
 	return 7.5f;
 }
 
-/*
- * --INFO--
- * Address:	800F8410
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 f32 Navi::viewGetHeight()
 {
 	return 10.0f;
 }
 
-/*
- * --INFO--
- * Address:	800F8418
- * Size:	000028
+/**
+ * @TODO: Documentation
  */
 bool Navi::isNuking()
 {
@@ -145,10 +133,8 @@ void Navi::startMovie(bool doStopEffects)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800F84F8
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 void Navi::startMovieInf()
 {
@@ -166,40 +152,32 @@ bool Navi::movieMode()
 	return (gameflow.mDemoFlags & 0x40) != 0;
 }
 
-/*
- * --INFO--
- * Address:	800F8530
- * Size:	000014
+/**
+ * @TODO: Documentation
  */
 void Navi::incPlatePiki()
 {
 	mPlateMgr->mPlatePikiCount++;
 }
 
-/*
- * --INFO--
- * Address:	800F8544
- * Size:	000014
+/**
+ * @TODO: Documentation
  */
 void Navi::decPlatePiki()
 {
 	mPlateMgr->mPlatePikiCount--;
 }
 
-/*
- * --INFO--
- * Address:	800F8558
- * Size:	00000C
+/**
+ * @TODO: Documentation
  */
 int Navi::getPlatePikis()
 {
 	return mPlateMgr->mPlatePikiCount;
 }
 
-/*
- * --INFO--
- * Address:	800F8564
- * Size:	00000C
+/**
+ * @TODO: Documentation
  */
 void Navi::startDayEnd()
 {
@@ -272,10 +250,8 @@ void Navi::updateDayEnd(immut Vector3f& pos)
 	mVelocity.multiply(1.0f / gsys->getFrameTime());
 }
 
-/*
- * --INFO--
- * Address:	800F8980
- * Size:	000228
+/**
+ * @TODO: Documentation
  */
 void Navi::enterAllPikis()
 {
@@ -326,10 +302,8 @@ void Navi::enterAllPikis()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800F8BA8
- * Size:	000C20
+/**
+ * @TODO: Documentation
  */
 NaviProp::NaviProp()
 {
@@ -338,10 +312,8 @@ NaviProp::NaviProp()
 	mCreatureProps.mAcceleration(0.2f);
 }
 
-/*
- * --INFO--
- * Address:	800F97C8
- * Size:	000020
+/**
+ * @TODO: Documentation
  */
 bool Navi::isBuried()
 {
@@ -351,10 +323,8 @@ bool Navi::isBuried()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800F97E8
- * Size:	000020
+/**
+ * @TODO: Documentation
  */
 bool Navi::isVisible()
 {
@@ -364,10 +334,8 @@ bool Navi::isVisible()
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	800F9808
- * Size:	000020
+/**
+ * @TODO: Documentation
  */
 bool Navi::isRopable()
 {
@@ -396,10 +364,8 @@ bool Navi::startDamage()
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	800F9834
- * Size:	000234
+/**
+ * @TODO: Documentation
  */
 void Navi::startDamageEffect()
 {
@@ -441,10 +407,8 @@ void Navi::startDamageEffect()
 	SeSystem::playPlayerSe(SE_DAMAGED);
 }
 
-/*
- * --INFO--
- * Address:	800F9A68
- * Size:	000120
+/**
+ * @TODO: Documentation
  */
 void Navi::finishDamage()
 {
@@ -465,10 +429,8 @@ void Navi::finishDamage()
 	mDamageEfxA = mDamageEfxB = mDamageEfxC = nullptr;
 }
 
-/*
- * --INFO--
- * Address:	800F9B8C
- * Size:	000668
+/**
+ * @TODO: Documentation
  */
 Navi::Navi(CreatureProp* props, int naviID)
     : Creature(props)
@@ -565,10 +527,8 @@ void Navi::Locus::update()
 	_0C.y -= AIConstant::_instance->mConstants.mGravity() * time;
 }
 
-/*
- * --INFO--
- * Address:	800FA1F4
- * Size:	000054
+/**
+ * @TODO: Documentation
  */
 void Navi::startKontroller()
 {
@@ -582,10 +542,8 @@ void Navi::startKontroller()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800FA248
- * Size:	000040
+/**
+ * @TODO: Documentation
  */
 void Navi::rideUfo()
 {
@@ -594,10 +552,8 @@ void Navi::rideUfo()
 	mNaviLightGlowEfx->kill();
 }
 
-/*
- * --INFO--
- * Address:	800FA288
- * Size:	000408
+/**
+ * @TODO: Documentation
  */
 void Navi::reset()
 {
@@ -649,20 +605,16 @@ void Navi::reset()
 	mNaviLightGlowEfx->changeEffect(EffectMgr::EFF_Navi_LightGlow);
 }
 
-/*
- * --INFO--
- * Address:	800FA690
- * Size:	00000C
+/**
+ * @TODO: Documentation
  */
 f32 Navi::getSize()
 {
 	return NAVI_PROP._1FC();
 }
 
-/*
- * --INFO--
- * Address:	800FA69C
- * Size:	000048
+/**
+ * @TODO: Documentation
  */
 f32 Navi::getiMass()
 {
@@ -678,10 +630,8 @@ f32 Navi::getiMass()
 	return NAVI_PROP._21C();
 }
 
-/*
- * --INFO--
- * Address:	800FA6E4
- * Size:	00018C
+/**
+ * @TODO: Documentation
  */
 void Navi::findNextThrowPiki()
 {
@@ -703,10 +653,8 @@ void Navi::findNextThrowPiki()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800FA870
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 void Navi::startMotion(immut PaniMotionInfo& motion1, immut PaniMotionInfo& motion2)
 {
@@ -714,10 +662,8 @@ void Navi::startMotion(immut PaniMotionInfo& motion1, immut PaniMotionInfo& moti
 	mPreBlendLowerMotionID = -1;
 }
 
-/*
- * --INFO--
- * Address:	800FA8A8
- * Size:	000050
+/**
+ * @TODO: Documentation
  */
 void Navi::enableMotionBlend()
 {
@@ -736,10 +682,8 @@ bool Navi::doMotionBlend()
 	return mPreBlendLowerMotionID != -1;
 }
 
-/*
- * --INFO--
- * Address:	800FA8F8
- * Size:	0003BC
+/**
+ * @TODO: Documentation
  */
 void Navi::updateWalkAnimation()
 {
@@ -838,10 +782,8 @@ void Navi::updateWalkAnimation()
 	mMotionSpeed = speed;
 }
 
-/*
- * --INFO--
- * Address:	800FACB4
- * Size:	000034
+/**
+ * @TODO: Documentation
  */
 void Navi::postUpdate(int unused, f32 deltaTime)
 {
@@ -850,10 +792,8 @@ void Navi::postUpdate(int unused, f32 deltaTime)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800FACE8
- * Size:	000500
+/**
+ * @TODO: Documentation
  */
 void Navi::update()
 {
@@ -968,10 +908,8 @@ void Navi::update()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800FB1E8
- * Size:	0001F4
+/**
+ * @TODO: Documentation
  */
 void Navi::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
@@ -1020,10 +958,8 @@ void Navi::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800FB3DC
- * Size:	0007C4
+/**
+ * @TODO: Documentation
  */
 void Navi::callPikis(f32 radius)
 {
@@ -1144,10 +1080,8 @@ void Navi::callPikis(f32 radius)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800FBBA0
- * Size:	00037C
+/**
+ * @TODO: Documentation
  */
 void Navi::callDebugs(f32 radius)
 {
@@ -1312,10 +1246,8 @@ void Navi::releasePikis()
 	STACK_PAD_VAR(2);
 }
 
-/*
- * --INFO--
- * Address:	800FC6F8
- * Size:	0000C4
+/**
+ * @TODO: Documentation
  */
 void Navi::doAI()
 {
@@ -1374,10 +1306,8 @@ bool Navi::insideOnyon()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800FC7FC
- * Size:	000A40
+/**
+ * @TODO: Documentation
  */
 
 bool Navi::procActionButton()
@@ -1518,10 +1448,8 @@ bool Navi::procActionButton()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800FD23C
- * Size:	00003C
+/**
+ * @TODO: Documentation
  */
 void Navi::offwallCallback(DynCollObject* wall)
 {
@@ -1529,10 +1457,8 @@ void Navi::offwallCallback(DynCollObject* wall)
 	sendMsg(&msg);
 }
 
-/*
- * --INFO--
- * Address:	800FD278
- * Size:	000058
+/**
+ * @TODO: Documentation
  */
 void Navi::wallCallback(immut Plane& wallPlane, DynCollObject* wallObj)
 {
@@ -1544,19 +1470,15 @@ void Navi::wallCallback(immut Plane& wallPlane, DynCollObject* wallObj)
 	sendMsg(&msg);
 }
 
-/*
- * --INFO--
- * Address:	800FD2D0
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void Navi::jumpCallback()
 {
 }
 
-/*
- * --INFO--
- * Address:	800FD2D4
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 bool Navi::isAtari()
 {
@@ -1564,10 +1486,8 @@ bool Navi::isAtari()
 	return state != NAVISTATE_Pressed && state != NAVISTATE_Bury && state != NAVISTATE_Container;
 }
 
-/*
- * --INFO--
- * Address:	800FD320
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 bool Navi::ignoreAtari(Creature* target)
 {
@@ -1581,10 +1501,8 @@ bool Navi::ignoreAtari(Creature* target)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800FD36C
- * Size:	000050
+/**
+ * @TODO: Documentation
  */
 void Navi::bounceCallback()
 {
@@ -1592,10 +1510,8 @@ void Navi::bounceCallback()
 	sendMsg(&msg);
 }
 
-/*
- * --INFO--
- * Address:	800FD3BC
- * Size:	0001D8
+/**
+ * @TODO: Documentation
  */
 void Navi::letPikiWork()
 {
@@ -1626,10 +1542,8 @@ void Navi::letPikiWork()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800FD594
- * Size:	000370
+/**
+ * @TODO: Documentation
  */
 void Navi::collisionCallback(immut CollEvent& event)
 {
@@ -1703,19 +1617,15 @@ void Navi::collisionCallback(immut CollEvent& event)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800FD904
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void Navi::doKill()
 {
 }
 
-/*
- * --INFO--
- * Address:	800FD908
- * Size:	0001E8
+/**
+ * @TODO: Documentation
  */
 void Navi::reviseController(Vector3f& stickPos)
 {
@@ -1753,10 +1663,8 @@ void Navi::reviseController(Vector3f& stickPos)
 	STACK_PAD_VAR(2);
 }
 
-/*
- * --INFO--
- * Address:	800FDAF0
- * Size:	0008FC
+/**
+ * @TODO: Documentation
  */
 
 int gupper()
@@ -1887,10 +1795,8 @@ void Navi::makeVelocity(bool p1)
 	Vector2f();
 }
 
-/*
- * --INFO--
- * Address:	800FE3EC
- * Size:	000858
+/**
+ * @TODO: Documentation
  */
 void Navi::makeCStick(bool p1)
 {
@@ -2032,10 +1938,8 @@ void Navi::makeCStick(bool p1)
 	STACK_PAD_VAR(1);
 }
 
-/*
- * --INFO--
- * Address:	800FEC44
- * Size:	0005A8
+/**
+ * @TODO: Documentation
  */
 void Navi::refresh(Graphics& gfx)
 {
@@ -2118,10 +2022,8 @@ void Navi::refresh(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800FF1EC
- * Size:	0000E8
+/**
+ * @TODO: Documentation
  */
 void Navi::demoDraw(Graphics& gfx, immut Matrix4f* mtx)
 {
@@ -2134,10 +2036,8 @@ void Navi::demoDraw(Graphics& gfx, immut Matrix4f* mtx)
 	mNaviLightGlowEfx->updatePos(mNaviLightPosition);
 }
 
-/*
- * --INFO--
- * Address:	800FF2D4
- * Size:	0002D8
+/**
+ * @TODO: Documentation
  */
 void Navi::draw(Graphics& gfx)
 {
@@ -2192,10 +2092,8 @@ void Navi::draw(Graphics& gfx)
 	STACK_PAD_VAR(7);
 }
 
-/*
- * --INFO--
- * Address:	800FF5AC
- * Size:	0001FC
+/**
+ * @TODO: Documentation
  */
 void Navi::renderCircle(Graphics& gfx)
 {
@@ -2233,19 +2131,15 @@ void Navi::renderCircle(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800FF7A8
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void Navi::refresh2d(Graphics&)
 {
 }
 
-/*
- * --INFO--
- * Address:	800FF7AC
- * Size:	00003C
+/**
+ * @TODO: Documentation
  */
 void Navi::sendMsg(Msg* msg)
 {
@@ -2261,10 +2155,8 @@ void Navi::procDamage(f32)
 {
 }
 
-/*
- * --INFO--
- * Address:	800FF968
- * Size:	000074
+/**
+ * @TODO: Documentation
  */
 bool Navi::stimulate(immut Interaction& interaction)
 {
@@ -2275,10 +2167,8 @@ bool Navi::stimulate(immut Interaction& interaction)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800FF9DC
- * Size:	0000C4
+/**
+ * @TODO: Documentation
  */
 bool InteractGeyzer::actNavi(Navi* navi) immut
 {
@@ -2301,10 +2191,8 @@ bool InteractGeyzer::actNavi(Navi* navi) immut
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	800FFAA0
- * Size:	0000FC
+/**
+ * @TODO: Documentation
  */
 bool InteractBury::actNavi(Navi* navi) immut
 {
@@ -2326,10 +2214,8 @@ bool InteractBury::actNavi(Navi* navi) immut
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	800FFB9C
- * Size:	000094
+/**
+ * @TODO: Documentation
  */
 bool InteractWind::actNavi(Navi* navi) immut
 {
@@ -2343,10 +2229,8 @@ bool InteractWind::actNavi(Navi* navi) immut
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	800FFC30
- * Size:	000114
+/**
+ * @TODO: Documentation
  */
 bool InteractSuck::actNavi(Navi* navi) immut
 {
@@ -2385,10 +2269,8 @@ bool InteractSuck::actNavi(Navi* navi) immut
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	800FFD44
- * Size:	0001A4
+/**
+ * @TODO: Documentation
  */
 bool InteractAttack::actNavi(Navi* navi) immut
 {
@@ -2416,10 +2298,8 @@ bool InteractAttack::actNavi(Navi* navi) immut
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	800FFEE8
- * Size:	000110
+/**
+ * @TODO: Documentation
  */
 bool InteractPress::actNavi(Navi* navi) immut
 {
@@ -2445,10 +2325,8 @@ bool InteractPress::actNavi(Navi* navi) immut
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	800FFFF8
- * Size:	0001B8
+/**
+ * @TODO: Documentation
  */
 bool InteractSwallow::actNavi(Navi* navi) immut
 {
@@ -2477,10 +2355,8 @@ bool InteractSwallow::actNavi(Navi* navi) immut
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	801001B0
- * Size:	000118
+/**
+ * @TODO: Documentation
  */
 bool InteractBomb::actNavi(Navi* navi) immut
 {
@@ -2508,10 +2384,8 @@ bool InteractBomb::actNavi(Navi* navi) immut
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	801002C8
- * Size:	000080
+/**
+ * @TODO: Documentation
  */
 bool Navi::orimaDamaged()
 {
@@ -2519,10 +2393,8 @@ bool Navi::orimaDamaged()
 	return isDamaged() || state == NAVISTATE_Flick || state == NAVISTATE_Pressed || state == NAVISTATE_Stuck || state == NAVISTATE_Bury;
 }
 
-/*
- * --INFO--
- * Address:	80100348
- * Size:	000144
+/**
+ * @TODO: Documentation
  */
 bool InteractFlick::actNavi(Navi* navi) immut
 {
@@ -2556,10 +2428,8 @@ bool InteractFlick::actNavi(Navi* navi) immut
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8010048C
- * Size:	0000F0
+/**
+ * @TODO: Documentation
  */
 bool InteractBubble::actNavi(Navi* navi) immut
 {
@@ -2580,10 +2450,8 @@ bool InteractBubble::actNavi(Navi* navi) immut
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8010057C
- * Size:	0000F0
+/**
+ * @TODO: Documentation
  */
 bool InteractFire::actNavi(Navi* navi) immut
 {
@@ -2604,10 +2472,8 @@ bool InteractFire::actNavi(Navi* navi) immut
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8010066C
- * Size:	0000C0
+/**
+ * @TODO: Documentation
  */
 void Navi::dump()
 {
@@ -2628,10 +2494,8 @@ void Navi::dump()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8010072C
- * Size:	000234
+/**
+ * @TODO: Documentation
  */
 void Navi::throwPiki(Piki* piki, immut Vector3f& pos)
 {
@@ -2672,10 +2536,8 @@ void Navi::throwLocus(Vector3f&)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80100960
- * Size:	00005C
+/**
+ * @TODO: Documentation
  */
 void Navi::swapMotion(immut PaniMotionInfo& motion1, immut PaniMotionInfo& motion2)
 {
@@ -2729,10 +2591,8 @@ void Navi::renderParabola(Graphics& gfx, f32 height, f32 len)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801009BC
- * Size:	000014
+/**
+ * @TODO: Documentation
  */
 void Navi::finishLook()
 {
@@ -2740,10 +2600,8 @@ void Navi::finishLook()
 	_2F0          = 10;
 }
 
-/*
- * --INFO--
- * Address:	801009D0
- * Size:	000340
+/**
+ * @TODO: Documentation
  */
 void Navi::updateLook()
 {
@@ -2818,10 +2676,8 @@ void Navi::updateLook()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80100D10
- * Size:	00037C
+/**
+ * @TODO: Documentation
  */
 void Navi::updateHeadMatrix()
 {

@@ -32,10 +32,8 @@ char filelist[][32] = { "piki.stx",    "o_dead.stx",  "d_end1.stx",    "gyoku.st
 static u8 header[] = { 0x00, 0x64, 0x0C, 0x62, 0x00, 0x58, 0xEE, 0x80, 0xBB, 0x80, 0x00, 0x04, 0x00, 0x10, 0x00, 0x1e,
 	                   0x00, 0x00, 0x00, 0x00, 0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0 };
 
-/*
- * --INFO--
- * Address:	80019760
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 void Jac_Delete_CurrentBgmWave()
 {
@@ -44,10 +42,8 @@ void Jac_Delete_CurrentBgmWave()
 	WaveScene_Close(current_bgm, 0);
 }
 
-/*
- * --INFO--
- * Address:	800197A0
- * Size:	000094
+/**
+ * @TODO: Documentation
  */
 static void __Loaded(u32 a)
 {
@@ -72,30 +68,24 @@ static void __Loaded(u32 a)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80019840
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 u32 Jac_GetCurrentScene()
 {
 	return current_scene;
 }
 
-/*
- * --INFO--
- * Address:	80019860
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 BOOL Jac_TellChgMode()
 {
 	return chgmode;
 }
 
-/*
- * --INFO--
- * Address:	80019880
- * Size:	00045C
+/**
+ * @TODO: Documentation
  */
 void Jac_SceneSetup(u32 sceneID, u32 stage)
 {
@@ -282,10 +272,8 @@ void Jac_SceneSetup(u32 sceneID, u32 stage)
 	Jac_SetProcessStatus(1);
 }
 
-/*
- * --INFO--
- * Address:	80019CE0
- * Size:	0000FC
+/**
+ * @TODO: Documentation
  */
 void Jac_SceneExit(u32 nextSceneID, u32 stage)
 {
@@ -326,10 +314,8 @@ void Jac_SceneExit(u32 nextSceneID, u32 stage)
 	Jac_SetProcessStatus(3);
 }
 
-/*
- * --INFO--
- * Address:	80019DE0
- * Size:	00000C
+/**
+ * @TODO: Documentation
  */
 void Jac_SetStreamLevel(u16 streamLevel, u16 seLevel)
 {
@@ -337,10 +323,8 @@ void Jac_SetStreamLevel(u16 streamLevel, u16 seLevel)
 	stream_se_level = seLevel;
 }
 
-/*
- * --INFO--
- * Address:	80019E00
- * Size:	000064
+/**
+ * @TODO: Documentation
  */
 void Jac_UpdateStreamLevel()
 {
@@ -385,20 +369,16 @@ static int MovieSync(u32 a1, s32 cmd)
 	return sync;
 }
 
-/*
- * --INFO--
- * Address:	80019F00
- * Size:	000028
+/**
+ * @TODO: Documentation
  */
 void Jac_InitStreamSystem(void)
 {
 	RegisterStreamCallback(MovieSync);
 }
 
-/*
- * --INFO--
- * Address:	80019F40
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 void Jac_StopDemoSound(u32 id)
 {
@@ -407,10 +387,8 @@ void Jac_StopDemoSound(u32 id)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80019F80
- * Size:	000098
+/**
+ * @TODO: Documentation
  */
 void Jac_PrepareDemoSound(u32 id)
 {
@@ -430,10 +408,8 @@ void Jac_PrepareDemoSound(u32 id)
 	current_prepare = id;
 }
 
-/*
- * --INFO--
- * Address:	8001A020
- * Size:	0000A4
+/**
+ * @TODO: Documentation
  */
 void Jac_StartDemoSound(u32 id)
 {

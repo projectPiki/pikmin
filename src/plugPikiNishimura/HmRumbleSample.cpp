@@ -1,10 +1,8 @@
 #include "Dolphin/pad.h"
 #include "RumbleMgr.h"
 
-/*
- * --INFO--
- * Address:	8017D680
- * Size:	000014
+/**
+ * @TODO: Documentation
  */
 RumbleSample::RumbleSample(int chan)
 {
@@ -23,20 +21,16 @@ void RumbleSample::init()
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8017D694
- * Size:	000028
+/**
+ * @TODO: Documentation
  */
 void RumbleSample::simpleStop()
 {
 	PADStopMotorHard(mChannel);
 }
 
-/*
- * --INFO--
- * Address:	8017D6BC
- * Size:	000088
+/**
+ * @TODO: Documentation
  */
 void RumbleSample::simpleStart(f32 intensity)
 {

@@ -17,10 +17,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("CreatureColl")
 
-/*
- * --INFO--
- * Address:	8008D954
- * Size:	000768
+/**
+ * @TODO: Documentation
  */
 void Creature::respondColl(Creature* other, f32, CollPart* selfCollider, CollPart* otherCollider, const Vector3f& point)
 {

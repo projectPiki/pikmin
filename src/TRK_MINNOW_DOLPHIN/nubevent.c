@@ -2,10 +2,8 @@
 
 TRKEventQueue gTRKEventQueue;
 
-/*
- * --INFO--
- * Address:	8021C0B4
- * Size:	00005C
+/**
+ * @TODO: Documentation
  */
 DSError TRKInitializeEventQueue()
 {
@@ -18,20 +16,16 @@ DSError TRKInitializeEventQueue()
 	return DS_NoError;
 }
 
-/*
- * --INFO--
- * Address:	8021C110
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 void TRKCopyEvent(TRKEvent* dstEvent, const TRKEvent* srcEvent)
 {
 	TRK_memcpy(dstEvent, srcEvent, sizeof(TRKEvent));
 }
 
-/*
- * --INFO--
- * Address:	8021C134
- * Size:	0000C0
+/**
+ * @TODO: Documentation
  */
 BOOL TRKGetNextEvent(TRKEvent* event)
 {
@@ -50,10 +44,8 @@ BOOL TRKGetNextEvent(TRKEvent* event)
 	return status;
 }
 
-/*
- * --INFO--
- * Address:	8021C1F4
- * Size:	0000E0
+/**
+ * @TODO: Documentation
  */
 DSError TRKPostEvent(TRKEvent* event)
 {
@@ -79,10 +71,8 @@ DSError TRKPostEvent(TRKEvent* event)
 	return ret;
 }
 
-/*
- * --INFO--
- * Address:	8021C2D4
- * Size:	000018
+/**
+ * @TODO: Documentation
  */
 void TRKConstructEvent(TRKEvent* event, int eventType)
 {
@@ -91,10 +81,8 @@ void TRKConstructEvent(TRKEvent* event, int eventType)
 	event->msgBufID  = -1;
 }
 
-/*
- * --INFO--
- * Address:	8021C2EC
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 void TRKDestructEvent(TRKEvent* event)
 {

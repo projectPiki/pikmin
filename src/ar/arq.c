@@ -34,10 +34,8 @@ void __ARQPopTaskQueueHi()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80207A80
- * Size:	000100
+/**
+ * @TODO: Documentation
  */
 void __ARQServiceQueueLo()
 {
@@ -72,19 +70,15 @@ void __ARQServiceQueueLo()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80207B80
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void __ARQCallbackHack(void)
 {
 }
 
-/*
- * --INFO--
- * Address:	80207B84
- * Size:	0000CC
+/**
+ * @TODO: Documentation
  */
 void __ARQInterruptServiceRoutine(void)
 {
@@ -126,10 +120,8 @@ void __ARQPushTempQueue(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80207C50
- * Size:	000068
+/**
+ * @TODO: Documentation
  */
 void ARQInit()
 {
@@ -158,10 +150,8 @@ void ARQReset(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80207CB8
- * Size:	00015C
+/**
+ * @TODO: Documentation
  */
 void ARQPostRequest(ARQRequest* task, u32 owner, u32 type, u32 priority, u32 source, u32 dest, u32 length, ARQCallback callback)
 {

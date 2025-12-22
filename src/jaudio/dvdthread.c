@@ -31,10 +31,8 @@ static void __Alloc_DVDBuffer();
 static void __UpdateBuffer();
 static void __WriteBufferSize(u8*, u32, u32);
 
-/*
- * --INFO--
- * Address:	800073E0
- * Size:	000060
+/**
+ * @TODO: Documentation
  */
 static void* GetCallStack()
 {
@@ -52,10 +50,8 @@ static void* GetCallStack()
 	return ret;
 }
 
-/*
- * --INFO--
- * Address:	80007440
- * Size:	00008C
+/**
+ * @TODO: Documentation
  */
 static s32 DVDReadMutex(DVDFileInfo* fileInfo, void* addr, s32 len, s32 offs, immut char* errorArg)
 {
@@ -74,10 +70,8 @@ static s32 DVDReadMutex(DVDFileInfo* fileInfo, void* addr, s32 len, s32 offs, im
 	}
 }
 
-/*
- * --INFO--
- * Address:	800074E0
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 void DVDT_SetRootPath(immut char* path)
 {
@@ -88,10 +82,8 @@ void DVDT_SetRootPath(immut char* path)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80007540
- * Size:	000080
+/**
+ * @TODO: Documentation
  */
 void DVDT_ExtendPath(char* dst, immut char* ext)
 {
@@ -117,10 +109,8 @@ s32 DVDT_AddTaskHigh(TaskCallback, void*, size_t)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	800075C0
- * Size:	00007C
+/**
+ * @TODO: Documentation
  */
 s32 DVDT_AddTask(TaskCallback callback, void* stack, size_t len)
 {
@@ -138,10 +128,8 @@ s32 DVDT_AddTask(TaskCallback callback, void* stack, size_t len)
 	return 1;
 }
 
-/*
- * --INFO--
- * Address:	80007640
- * Size:	00003C
+/**
+ * @TODO: Documentation
  */
 void jac_dvdproc_init()
 {
@@ -149,10 +137,8 @@ void jac_dvdproc_init()
 	mq_init = 1;
 }
 
-/*
- * --INFO--
- * Address:	80007680
- * Size:	000088
+/**
+ * @TODO: Documentation
  */
 void* jac_dvdproc(void*)
 {
@@ -180,10 +166,8 @@ void* jac_dvdproc(void*)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80007720
- * Size:	000048
+/**
+ * @TODO: Documentation
  */
 static void __DoError(DVDCall* call, u32)
 {
@@ -196,10 +180,8 @@ static void __DoError(DVDCall* call, u32)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80007780
- * Size:	000044
+/**
+ * @TODO: Documentation
  */
 static void __DoFinish(DVDCall* call, u32 status)
 {
@@ -212,10 +194,8 @@ static void __DoFinish(DVDCall* call, u32 status)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800077E0
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 static void __DVDT_CheckBack(void* cb)
 {
@@ -224,10 +204,8 @@ static void __DVDT_CheckBack(void* cb)
 	__DoFinish(callback, callback->owner);
 }
 
-/*
- * --INFO--
- * Address:	80007820
- * Size:	0000D0
+/**
+ * @TODO: Documentation
  */
 s32 DVDT_LoadtoDRAM_Main(void* dvdCall)
 {
@@ -257,10 +235,8 @@ s32 DVDT_LoadtoDRAM_Main(void* dvdCall)
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80007900
- * Size:	000084
+/**
+ * @TODO: Documentation
  */
 s32 DVDT_LoadtoDRAM(u32 owner, immut char* name, u32 dst, u32 src, u32 length, u32* status, Jac_DVDCallback callback)
 {
@@ -283,10 +259,8 @@ s32 DVDT_LoadtoDRAM(u32 owner, immut char* name, u32 dst, u32 src, u32 length, u
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	800079A0
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 static void __Alloc_DVDBuffer()
 {
@@ -299,10 +273,8 @@ static void __Alloc_DVDBuffer()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800079E0
- * Size:	000030
+/**
+ * @TODO: Documentation
  */
 static void __WriteBufferSize(u8* buf, u32 numBuffers, u32 size)
 {
@@ -318,10 +290,8 @@ static void __WriteBufferSize(u8* buf, u32 numBuffers, u32 size)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80007A20
- * Size:	000040
+/**
+ * @TODO: Documentation
  */
 static void __UpdateBuffer()
 {
@@ -332,10 +302,8 @@ static void __UpdateBuffer()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80007A60
- * Size:	000058
+/**
+ * @TODO: Documentation
  */
 void DVDT_SetBuffer(u8* buf, u32 numBuffers, u32 size)
 {
@@ -351,10 +319,8 @@ void DVDT_SetBuffer(u8* buf, u32 numBuffers, u32 size)
 	OSSendMessage(&mq, 0, OS_MESSAGE_NOBLOCK);
 }
 
-/*
- * --INFO--
- * Address:	80007AC0
- * Size:	0000BC
+/**
+ * @TODO: Documentation
  */
 s32 DVDT_CloseBuffer(u8* buf)
 {
@@ -392,20 +358,16 @@ void DVDT_GetCurrentBuffer(u8**)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80007B80
- * Size:	000010
+/**
+ * @TODO: Documentation
  */
 static void ARAM_DMAfinish(u32)
 {
 	buffer_full--;
 }
 
-/*
- * --INFO--
- * Address:	80007BA0
- * Size:	00022C
+/**
+ * @TODO: Documentation
  */
 s32 DVDT_LoadtoARAM_Main(void* dvdCall)
 {
@@ -475,10 +437,8 @@ s32 DVDT_LoadtoARAM_Main(void* dvdCall)
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	80007DE0
- * Size:	000084
+/**
+ * @TODO: Documentation
  */
 s32 DVDT_LoadtoARAM(u32 owner, immut char* path, u32 dst, u32 src, u32 length, u32* status, Jac_DVDCallback callback)
 {
@@ -560,10 +520,8 @@ void DVDT_DRAMtoARAM(u32, u32, u32, u32, u32*, void (*)(u32))
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80007E80
- * Size:	000070
+/**
+ * @TODO: Documentation
  */
 s32 DVDT_CheckFile(immut char* file)
 {
@@ -582,10 +540,8 @@ s32 DVDT_CheckFile(immut char* file)
 	return len;
 }
 
-/*
- * --INFO--
- * Address:	80007F00
- * Size:	000070
+/**
+ * @TODO: Documentation
  */
 s32 DVDT_LoadFile(immut char* file, u8* p2)
 {
@@ -603,10 +559,8 @@ s32 DVDT_LoadFile(immut char* file, u8* p2)
 	return status;
 }
 
-/*
- * --INFO--
- * Address:	80007F80
- * Size:	000040
+/**
+ * @TODO: Documentation
  */
 void DVDT_CheckPass(u32 owner, u32* status, Jac_DVDCallback callback)
 {
@@ -672,10 +626,8 @@ void Jac_RegisterDVDErrorCallback(void (*)(immut char*, u8*))
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80007FC0
- * Size:	000030
+/**
+ * @TODO: Documentation
  */
 s32 Jac_RegisterExtFastOpen(immut char* ext)
 {
@@ -688,10 +640,8 @@ static u32 dvdfile_dics;
 static char dvd_file[32][64];
 static u32 dvd_entrynum[32];
 
-/*
- * --INFO--
- * Address:	80008000
- * Size:	000100
+/**
+ * @TODO: Documentation
  */
 s32 Jac_RegisterFastOpen(immut char* file)
 {
@@ -722,10 +672,8 @@ s32 Jac_RegisterFastOpen(immut char* file)
 	return num;
 }
 
-/*
- * --INFO--
- * Address:	80008100
- * Size:	000050
+/**
+ * @TODO: Documentation
  */
 BOOL Jac_DVDOpen(immut char* name, DVDFileInfo* info)
 {

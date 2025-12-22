@@ -16,10 +16,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("aiGuard")
 
-/*
- * --INFO--
- * Address:	800BB534
- * Size:	000084
+/**
+ * @TODO: Documentation
  */
 ActGuard::ActGuard(Piki* piki)
     : Action(piki, true)
@@ -31,10 +29,8 @@ ActGuard::ActGuard(Piki* piki)
 	mFormationSpacing = 30.0f;
 }
 
-/*
- * --INFO--
- * Address:	800BB5B8
- * Size:	0000C4
+/**
+ * @TODO: Documentation
  */
 void ActGuard::init(Creature*)
 {
@@ -52,10 +48,8 @@ void ActGuard::init(Creature*)
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Wait), PaniMotionInfo(PIKIANIM_Wait));
 }
 
-/*
- * --INFO--
- * Address:	800BB67C
- * Size:	00011C
+/**
+ * @TODO: Documentation
  */
 void ActGuard::cleanup()
 {
@@ -77,10 +71,8 @@ void ActGuard::cleanup()
 	STACK_PAD_VAR(4);
 }
 
-/*
- * --INFO--
- * Address:	800BB798
- * Size:	00000C
+/**
+ * @TODO: Documentation
  */
 void ActGuard::dump()
 {
@@ -95,10 +87,8 @@ void ActGuard::dump()
 	PRINT(" currPos(%.1f,%.1f)\n", mPiki->mSRT.t.x, mPiki->mSRT.t.z);
 }
 
-/*
- * --INFO--
- * Address:	800BB7A4
- * Size:	00071C
+/**
+ * @TODO: Documentation
  */
 int ActGuard::exec()
 {
@@ -180,10 +170,8 @@ int ActGuard::exec()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800BBEC0
- * Size:	0001F4
+/**
+ * @TODO: Documentation
  */
 Piki* ActGuard::findFriend()
 {
@@ -212,10 +200,8 @@ Piki* ActGuard::findFriend()
 	return friendPiki;
 }
 
-/*
- * --INFO--
- * Address:	800BC0B4
- * Size:	0000FC
+/**
+ * @TODO: Documentation
  */
 int ActGuard::checkLoop(Piki* piki)
 {
@@ -244,10 +230,8 @@ int ActGuard::checkLoop(Piki* piki)
 	return -1;
 }
 
-/*
- * --INFO--
- * Address:	800BC1B0
- * Size:	000258
+/**
+ * @TODO: Documentation
  */
 Piki* ActGuard::findFriend(int side)
 {
@@ -287,10 +271,8 @@ Piki* ActGuard::findFriend(int side)
 	return friendPiki;
 }
 
-/*
- * --INFO--
- * Address:	800BC408
- * Size:	0001F8
+/**
+ * @TODO: Documentation
  */
 void ActGuard::setGoal()
 {
@@ -319,10 +301,8 @@ void ActGuard::setGoal()
 	_20       = targetPos;
 }
 
-/*
- * --INFO--
- * Address:	800BC600
- * Size:	000088
+/**
+ * @TODO: Documentation
  */
 Piki* ActGuard::getLeft(Piki* piki)
 {
@@ -334,10 +314,8 @@ Piki* ActGuard::getLeft(Piki* piki)
 	return left;
 }
 
-/*
- * --INFO--
- * Address:	800BC688
- * Size:	000088
+/**
+ * @TODO: Documentation
  */
 Piki* ActGuard::getRight(Piki* piki)
 {
@@ -349,10 +327,8 @@ Piki* ActGuard::getRight(Piki* piki)
 	return right;
 }
 
-/*
- * --INFO--
- * Address:	800BC710
- * Size:	0001C4
+/**
+ * @TODO: Documentation
  */
 bool ActGuard::setLeft()
 {
@@ -372,10 +348,8 @@ bool ActGuard::setLeft()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800BC8D4
- * Size:	0001C4
+/**
+ * @TODO: Documentation
  */
 bool ActGuard::setRight()
 {

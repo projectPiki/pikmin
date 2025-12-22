@@ -93,10 +93,8 @@ void C_VECSquareMag(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801FE088
- * Size:	00001C
+/**
+ * @TODO: Documentation
  */
 ASM f32 PSVECSquareMag(register Vec* v) {
 #ifdef __MWERKS__ // clang-format off
@@ -109,10 +107,8 @@ ASM f32 PSVECSquareMag(register Vec* v) {
 #endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address:	801FE0A4
- * Size:	000088
+/**
+ * @TODO: Documentation
  */
 f32 VECMag(Vec* v)
 {

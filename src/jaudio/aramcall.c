@@ -21,10 +21,8 @@ void Jac_RegisterARAMCallback(ARAMCallback callback)
 	ARCALL = callback;
 }
 
-/*
- * --INFO--
- * Address:	8000D8A0
- * Size:	000064
+/**
+ * @TODO: Documentation
  */
 u32 LoadAram(immut char* filepath, u32* status, u32 dst)
 {
@@ -37,10 +35,8 @@ u32 LoadAram(immut char* filepath, u32* status, u32 dst)
 	return dst;
 }
 
-/*
- * --INFO--
- * Address:	8000D920
- * Size:	000068
+/**
+ * @TODO: Documentation
  */
 u32 LoadAramSingle(immut char* filepath, u32 src, u32 length, u32* status, u32 dst)
 {
@@ -75,20 +71,16 @@ jaheap_* Get_AramMotherHeap(void)
 	return &aram_mother;
 }
 
-/*
- * --INFO--
- * Address:	8000D9A0
- * Size:	00002C
+/**
+ * @TODO: Documentation
  */
 void Show_AramMotherHeap(void)
 {
 	Jac_ShowHeap(&aram_mother, 0);
 }
 
-/*
- * --INFO--
- * Address:	8000D9E0
- * Size:	00002C
+/**
+ * @TODO: Documentation
  */
 void Collect_AramMotherHeap(void)
 {
@@ -96,10 +88,8 @@ void Collect_AramMotherHeap(void)
 	Show_AramMotherHeap();
 }
 
-/*
- * --INFO--
- * Address:	8000DA20
- * Size:	00006C
+/**
+ * @TODO: Documentation
  */
 void Init_AramMotherHeap(void)
 {
@@ -118,10 +108,8 @@ void Init_AramMotherHeap(void)
 // Used only by `LoadAram_Default`.
 static BOOL first = TRUE;
 
-/*
- * --INFO--
- * Address:	8000DAA0
- * Size:	0000F8
+/**
+ * @TODO: Documentation
  */
 u32 LoadAram_Default(immut char* filename, u32 src, u32 length, u32* status, jaheap_* heap)
 {
@@ -148,20 +136,16 @@ u32 LoadAram_Default(immut char* filename, u32 src, u32 length, u32* status, jah
 	}
 }
 
-/*
- * --INFO--
- * Address:	8000DBA0
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 u32 LoadAram_All(immut char* filename, u32* status, jaheap_* heap)
 {
 	return ARCALL(filename, 0, 0, status, heap);
 }
 
-/*
- * --INFO--
- * Address:	8000DBE0
- * Size:	000028
+/**
+ * @TODO: Documentation
  */
 u32 LoadAram_One(immut char* filename, u32 src, u32 length, u32* status, jaheap_* heap)
 {

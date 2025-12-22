@@ -19,20 +19,16 @@ DEFINE_ERROR(30) // Why is this one suddenly capitalized?
  */
 DEFINE_PRINT("P2DPane");
 
-/*
- * --INFO--
- * Address:	801B069C
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 void P2DPane::setCallBack(P2DPaneCallBack* callback)
 {
 	mCallBack = callback;
 }
 
-/*
- * --INFO--
- * Address:	801B06A4
- * Size:	000014
+/**
+ * @TODO: Documentation
  */
 void P2DPane::printTagName(bool doPrint)
 {
@@ -45,10 +41,8 @@ void P2DPane::printTagName(bool doPrint)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801B06B8
- * Size:	000048
+/**
+ * @TODO: Documentation
  */
 void P2DPane::drawSelf(int, int, immut Matrix4f* drawMtx)
 {
@@ -59,20 +53,16 @@ void P2DPane::drawSelf(int, int, immut Matrix4f* drawMtx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801B0700
- * Size:	000030
+/**
+ * @TODO: Documentation
  */
 P2DPaneCallBackBase::P2DPaneCallBackBase(P2DPane* pane, P2DPaneType type)
 {
 	checkPaneType(pane, type);
 }
 
-/*
- * --INFO--
- * Address:	801B0730
- * Size:	000014
+/**
+ * @TODO: Documentation
  */
 void P2DPaneCallBackBase::checkPaneType(P2DPane* pane, P2DPaneType type)
 {
@@ -99,10 +89,8 @@ void P2DPane::init()
 	mPaneZ    = 0.0f;
 }
 
-/*
- * --INFO--
- * Address:	801B0744
- * Size:	000134
+/**
+ * @TODO: Documentation
  */
 void P2DPane::update()
 {
@@ -115,10 +103,8 @@ void P2DPane::update()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801B0880
- * Size:	00014C
+/**
+ * @TODO: Documentation
  */
 P2DPane::P2DPane()
     : mPaneTree(this)
@@ -131,10 +117,8 @@ P2DPane::P2DPane()
 	init();
 }
 
-/*
- * --INFO--
- * Address:	801B09CC
- * Size:	000168
+/**
+ * @TODO: Documentation
  */
 P2DPane::P2DPane(P2DPane* parent, u16 paneType, bool, u32 tag, const PUTRect& p5)
     : mPaneTree(this)
@@ -180,10 +164,8 @@ P2DPane::P2DPane(u16 paneType, u32 tag, const PUTRect& rect)
 	init();
 }
 
-/*
- * --INFO--
- * Address:	801B0B34
- * Size:	000290
+/**
+ * @TODO: Documentation
  */
 P2DPane::P2DPane(P2DPane* parent, RandomAccessStream* input, u16 paneType)
     : mPaneTree(this)
@@ -216,10 +198,8 @@ P2DPane::P2DPane(P2DPane* parent, RandomAccessStream* input, u16 paneType)
 	init();
 }
 
-/*
- * --INFO--
- * Address:	801B0DC4
- * Size:	0000E0
+/**
+ * @TODO: Documentation
  */
 P2DPane::~P2DPane()
 {
@@ -230,10 +210,8 @@ P2DPane::~P2DPane()
 	}
 }
 
-/*
- * --INFO--
- * Address:	801B0EA4
- * Size:	0004A4
+/**
+ * @TODO: Documentation
  */
 void P2DPane::draw(int xOffs, int yOffs, const P2DGrafContext* grafContext, bool applyScissor)
 {
@@ -291,10 +269,8 @@ void P2DPane::draw(int xOffs, int yOffs, const P2DGrafContext* grafContext, bool
 	}
 }
 
-/*
- * --INFO--
- * Address:	801B1348
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 void P2DPane::clip(const PUTRect& rect)
 {
@@ -303,10 +279,8 @@ void P2DPane::clip(const PUTRect& rect)
 	mClipBounds.intersect(newRect);
 }
 
-/*
- * --INFO--
- * Address:	801B1394
- * Size:	0000A4
+/**
+ * @TODO: Documentation
  */
 P2DPane* P2DPane::search(u32 tag, bool doPanicOnNull)
 {
@@ -330,10 +304,8 @@ P2DPane* P2DPane::search(u32 tag, bool doPanicOnNull)
 	return nullptr;
 }
 
-/*
- * --INFO--
- * Address:	801B1438
- * Size:	00025C
+/**
+ * @TODO: Documentation
  */
 void P2DPane::makeMatrix(int x, int y)
 {
@@ -372,10 +344,8 @@ void P2DPane::setCullBack(bool isCullBack)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801B1694
- * Size:	00010C
+/**
+ * @TODO: Documentation
  */
 void P2DPane::loadChildResource()
 {

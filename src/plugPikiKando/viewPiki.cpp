@@ -32,10 +32,8 @@ DEFINE_PRINT("viewPiki")
 PikiShapeObject* PikiShapeObject::_instances[4];
 bool PikiShapeObject::firstTime = true;
 
-/*
- * --INFO--
- * Address:	800D8894
- * Size:	000028
+/**
+ * @TODO: Documentation
  */
 void PikiShapeObject::exitCourse()
 {
@@ -43,10 +41,8 @@ void PikiShapeObject::exitCourse()
 	_instances[0] = _instances[1] = _instances[2] = _instances[3] = nullptr;
 }
 
-/*
- * --INFO--
- * Address:	800D88BC
- * Size:	000028
+/**
+ * @TODO: Documentation
  */
 void PikiShapeObject::init()
 {
@@ -72,10 +68,8 @@ PikiShapeObject* PikiShapeObject::create(int index)
 	return _instances[index];
 }
 
-/*
- * --INFO--
- * Address:	800D88E4
- * Size:	00003C
+/**
+ * @TODO: Documentation
  */
 AnimMgr* PikiShapeObject::getAnimMgr()
 {
@@ -86,10 +80,8 @@ AnimMgr* PikiShapeObject::getAnimMgr()
 	return _instances[0]->mAnimMgr;
 }
 
-/*
- * --INFO--
- * Address:	800D8920
- * Size:	0001B4
+/**
+ * @TODO: Documentation
  */
 void PikiShapeObject::initOnce()
 {
@@ -108,10 +100,8 @@ void PikiShapeObject::initOnce()
 	firstTime = false;
 }
 
-/*
- * --INFO--
- * Address:	800D8AD4
- * Size:	00009C
+/**
+ * @TODO: Documentation
  */
 PikiShapeObject::PikiShapeObject(Shape* shape)
 {
@@ -122,20 +112,16 @@ PikiShapeObject::PikiShapeObject(Shape* shape)
 	mShape->overrideAnim(1, &mAnimatorB);
 }
 
-/*
- * --INFO--
- * Address:	800D8B70
- * Size:	000020
+/**
+ * @TODO: Documentation
  */
 bool ViewPiki::isKinoko()
 {
 	return mPikiShape == PikiShapeObject::_instances[PIKI_Kinoko];
 }
 
-/*
- * --INFO--
- * Address:	800D8B90
- * Size:	000128
+/**
+ * @TODO: Documentation
  */
 void ViewPiki::changeShape(int index)
 {
@@ -161,10 +147,8 @@ void ViewPiki::changeShape(int index)
 	STACK_PAD_VAR(2);
 }
 
-/*
- * --INFO--
- * Address:	800D8CB8
- * Size:	000060
+/**
+ * @TODO: Documentation
  */
 ViewPiki::ViewPiki(CreatureProp* prop)
     : Piki(prop)
@@ -173,10 +157,8 @@ ViewPiki::ViewPiki(CreatureProp* prop)
 	mHappa     = 0;
 }
 
-/*
- * --INFO--
- * Address:	800D8D18
- * Size:	0000B4
+/**
+ * @TODO: Documentation
  */
 void ViewPiki::initBirth()
 {
@@ -191,10 +173,8 @@ void ViewPiki::initBirth()
 	STACK_PAD_VAR(4);
 }
 
-/*
- * --INFO--
- * Address:	800D8DCC
- * Size:	00026C
+/**
+ * @TODO: Documentation
  */
 void ViewPiki::init(Shape* shp, MapMgr*, Navi* navi)
 {
@@ -225,10 +205,8 @@ void ViewPiki::init(Shape* shp, MapMgr*, Navi* navi)
 	STACK_PAD_TERNARY(_268, 1);
 }
 
-/*
- * --INFO--
- * Address:	800D9038
- * Size:	000064
+/**
+ * @TODO: Documentation
  */
 void ViewPiki::setFlower(int id)
 {
@@ -238,19 +216,15 @@ void ViewPiki::setFlower(int id)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800D909C
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void ViewPiki::setLeaves(int)
 {
 }
 
-/*
- * --INFO--
- * Address:	800D90A0
- * Size:	00017C
+/**
+ * @TODO: Documentation
  */
 void ViewPiki::postUpdate(int unused, f32 deltaTime)
 {
@@ -278,10 +252,8 @@ void ViewPiki::postUpdate(int unused, f32 deltaTime)
 	STACK_PAD_VAR(2);
 }
 
-/*
- * --INFO--
- * Address:	800D921C
- * Size:	000408
+/**
+ * @TODO: Documentation
  */
 void ViewPiki::update()
 {
@@ -342,10 +314,8 @@ void ViewPiki::update()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800D9624
- * Size:	0000A0
+/**
+ * @TODO: Documentation
  */
 void Piki::startHimaLook(immut Vector3f* pos)
 {
@@ -357,10 +327,8 @@ void Piki::startHimaLook(immut Vector3f* pos)
 	_334       = gsys->getRand(1.0f) * 3.0f + 4.0f;
 }
 
-/*
- * --INFO--
- * Address:	800D96C4
- * Size:	000018
+/**
+ * @TODO: Documentation
  */
 void Piki::finishLook()
 {
@@ -369,10 +337,8 @@ void Piki::finishLook()
 	mIsLooking    = false;
 }
 
-/*
- * --INFO--
- * Address:	800D96DC
- * Size:	000014
+/**
+ * @TODO: Documentation
  */
 bool Piki::isLooking()
 {
@@ -455,10 +421,8 @@ void Piki::updateLook()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800D9A68
- * Size:	000678
+/**
+ * @TODO: Documentation
  */
 void ViewPiki::demoDraw(Graphics& gfx, immut Matrix4f* mtx)
 {
@@ -555,10 +519,8 @@ static void printMatrix(immut char* name, immut Matrix4f& mat)
 	PRINT("-------------------------\n");
 }
 
-/*
- * --INFO--
- * Address:	800DA0E0
- * Size:	000B48
+/**
+ * @TODO: Documentation
  */
 void ViewPiki::refresh(Graphics& gfx)
 {

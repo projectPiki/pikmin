@@ -2,20 +2,16 @@
 
 TRKBuffer gTRKMsgBufs[3];
 
-/*
- * --INFO--
- * Address:	8021C4CC
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 static void TRKSetBufferUsed(TRKBuffer* msg, BOOL state)
 {
 	msg->isInUse = state;
 }
 
-/*
- * --INFO--
- * Address:	8021C4D4
- * Size:	000078
+/**
+ * @TODO: Documentation
  */
 DSError TRKInitializeMessageBuffers(void)
 {
@@ -30,10 +26,8 @@ DSError TRKInitializeMessageBuffers(void)
 	return DS_NoError;
 }
 
-/*
- * --INFO--
- * Address:	8021C54C
- * Size:	00009C
+/**
+ * @TODO: Documentation
  */
 DSError TRKGetFreeBuffer(int* msgID, TRKBuffer** outMsg)
 {
@@ -59,10 +53,8 @@ DSError TRKGetFreeBuffer(int* msgID, TRKBuffer** outMsg)
 	return error;
 }
 
-/*
- * --INFO--
- * Address:	8021C5E8
- * Size:	00002C
+/**
+ * @TODO: Documentation
  */
 void* TRKGetBuffer(int idx)
 {
@@ -74,10 +66,8 @@ void* TRKGetBuffer(int idx)
 	return buf;
 }
 
-/*
- * --INFO--
- * Address:	8021C614
- * Size:	000068
+/**
+ * @TODO: Documentation
  */
 void TRKReleaseBuffer(int idx)
 {
@@ -90,10 +80,8 @@ void TRKReleaseBuffer(int idx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8021C67C
- * Size:	000040
+/**
+ * @TODO: Documentation
  */
 void TRKResetBuffer(TRKBuffer* msg, u8 keepData)
 {
@@ -105,10 +93,8 @@ void TRKResetBuffer(TRKBuffer* msg, u8 keepData)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8021C6BC
- * Size:	000030
+/**
+ * @TODO: Documentation
  */
 DSError TRKSetBufferPosition(TRKBuffer* msg, u32 pos)
 {
@@ -128,10 +114,8 @@ DSError TRKSetBufferPosition(TRKBuffer* msg, u32 pos)
 	return error;
 }
 
-/*
- * --INFO--
- * Address:	8021C6EC
- * Size:	0000A4
+/**
+ * @TODO: Documentation
  */
 #pragma dont_inline on
 
@@ -171,10 +155,8 @@ DSError TRKAppendBuffer(TRKBuffer* msg, const void* data, size_t length)
 
 #pragma dont_inline reset
 
-/*
- * --INFO--
- * Address:	8021C790
- * Size:	00008C
+/**
+ * @TODO: Documentation
  */
 DSError TRKReadBuffer(TRKBuffer* msg, void* data, size_t length)
 {
@@ -200,10 +182,8 @@ DSError TRKReadBuffer(TRKBuffer* msg, void* data, size_t length)
 	return error;
 }
 
-/*
- * --INFO--
- * Address:	8021C81C
- * Size:	000054
+/**
+ * @TODO: Documentation
  */
 DSError TRKAppendBuffer1_ui16(TRKBuffer* buffer, const u16 data)
 {
@@ -224,10 +204,8 @@ DSError TRKAppendBuffer1_ui16(TRKBuffer* buffer, const u16 data)
 	return TRKAppendBuffer(buffer, (const void*)bigEndianData, sizeof(data));
 }
 
-/*
- * --INFO--
- * Address:	8021C870
- * Size:	000064
+/**
+ * @TODO: Documentation
  */
 DSError TRKAppendBuffer1_ui32(TRKBuffer* buffer, const u32 data)
 {
@@ -250,10 +228,8 @@ DSError TRKAppendBuffer1_ui32(TRKBuffer* buffer, const u32 data)
 	return TRKAppendBuffer(buffer, (const void*)bigEndianData, sizeof(data));
 }
 
-/*
- * --INFO--
- * Address:	8021C8D4
- * Size:	000088
+/**
+ * @TODO: Documentation
  */
 DSError TRKAppendBuffer1_ui64(TRKBuffer* buffer, const u64 data)
 {
@@ -289,10 +265,8 @@ void TRKAppendBuffer1_ui128(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8021C95C
- * Size:	000068
+/**
+ * @TODO: Documentation
  */
 DSError TRKAppendBuffer_ui8(TRKBuffer* buffer, const u8* data, int count)
 {
@@ -316,10 +290,8 @@ void TRKAppendBuffer_ui16(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8021C9C4
- * Size:	00007C
+/**
+ * @TODO: Documentation
  */
 DSError TRKAppendBuffer_ui32(TRKBuffer* buffer, const u32* data, int count)
 {
@@ -353,20 +325,16 @@ void TRKAppendBuffer_ui128(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8021CA40
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 DSError TRKReadBuffer1_ui8(TRKBuffer* buffer, u8* data)
 {
 	return TRKReadBuffer(buffer, (void*)data, 1);
 }
 
-/*
- * --INFO--
- * Address:	8021CA64
- * Size:	000080
+/**
+ * @TODO: Documentation
  */
 DSError TRKReadBuffer1_ui16(TRKBuffer* buffer, u16* data)
 {
@@ -394,10 +362,8 @@ DSError TRKReadBuffer1_ui16(TRKBuffer* buffer, u16* data)
 	return err;
 }
 
-/*
- * --INFO--
- * Address:	8021CAE4
- * Size:	000090
+/**
+ * @TODO: Documentation
  */
 DSError TRKReadBuffer1_ui32(TRKBuffer* buffer, u32* data)
 {
@@ -427,10 +393,8 @@ DSError TRKReadBuffer1_ui32(TRKBuffer* buffer, u32* data)
 	return err;
 }
 
-/*
- * --INFO--
- * Address:	8021CB74
- * Size:	0000B0
+/**
+ * @TODO: Documentation
  */
 DSError TRKReadBuffer1_ui64(TRKBuffer* buffer, u64* data)
 {
@@ -474,10 +438,8 @@ void TRKReadBuffer1_ui128(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8021CC24
- * Size:	000074
+/**
+ * @TODO: Documentation
  */
 DSError TRKReadBuffer_ui8(TRKBuffer* buffer, u8* data, int count)
 {
@@ -501,10 +463,8 @@ void TRKReadBuffer_ui16(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8021CC98
- * Size:	00007C
+/**
+ * @TODO: Documentation
  */
 DSError TRKReadBuffer_ui32(TRKBuffer* buffer, u32* data, int count)
 {

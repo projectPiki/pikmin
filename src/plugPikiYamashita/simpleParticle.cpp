@@ -46,10 +46,8 @@ zen::particleMdl* zen::simplePtclManager::create(Texture* tex, s16 lifeTime, con
 	return ptcl;
 }
 
-/*
- * --INFO--
- * Address:	801A226C
- * Size:	0001E0
+/**
+ * @TODO: Documentation
  */
 void zen::simplePtclManager::update(f32 timeStep)
 {
@@ -76,10 +74,8 @@ void zen::simplePtclManager::update(f32 timeStep)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801A244C
- * Size:	00028C
+/**
+ * @TODO: Documentation
  */
 void zen::simplePtclManager::draw(Graphics& gfx)
 {
@@ -111,10 +107,8 @@ void zen::simplePtclManager::draw(Graphics& gfx)
 	gfx.setLighting(light, nullptr);
 }
 
-/*
- * --INFO--
- * Address:	801A26D8
- * Size:	00007C
+/**
+ * @TODO: Documentation
  */
 void zen::simplePtclManager::forceFinish()
 {

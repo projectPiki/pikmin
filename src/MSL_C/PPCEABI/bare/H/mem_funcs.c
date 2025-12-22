@@ -20,10 +20,8 @@ void __move_mem(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	802164D8
- * Size:	0000BC
+/**
+ * @TODO: Documentation
  */
 void __copy_longs_aligned(void* pDest, const void* pSrc, size_t len)
 {
@@ -77,10 +75,8 @@ void __copy_longs_aligned(void* pDest, const void* pSrc, size_t len)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8021642C
- * Size:	0000AC
+/**
+ * @TODO: Documentation
  */
 void __copy_longs_rev_aligned(void* pDest, const void* pSrc, size_t len)
 {
@@ -129,10 +125,8 @@ void __copy_longs_rev_aligned(void* pDest, const void* pSrc, size_t len)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80216368
- * Size:	0000C4
+/**
+ * @TODO: Documentation
  */
 void __copy_longs_unaligned(void* pDest, const void* pSrc, size_t len)
 {
@@ -189,10 +183,8 @@ void __copy_longs_unaligned(void* pDest, const void* pSrc, size_t len)
 	}
 }
 
-/*
- * --INFO--
- * Address:	802162B8
- * Size:	0000B0
+/**
+ * @TODO: Documentation
  */
 void __copy_longs_rev_unaligned(void* pDest, const void* pSrc, size_t len)
 {

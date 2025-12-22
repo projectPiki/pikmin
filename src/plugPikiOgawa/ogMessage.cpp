@@ -92,10 +92,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("OgMessageSection")
 
-/*
- * --INFO--
- * Address:	8018BB50
- * Size:	000048
+/**
+ * @TODO: Documentation
  */
 s16 zen::ogScrMessageMgr::SearchTopPage(int a)
 {
@@ -120,10 +118,8 @@ void zen::ogScrMessageMgr::setMessagePage(int page)
 	resetPage();
 }
 
-/*
- * --INFO--
- * Address:	8018BB98
- * Size:	00011C
+/**
+ * @TODO: Documentation
  */
 void zen::ogScrMessageMgr::resetPage()
 {
@@ -160,10 +156,8 @@ void zen::ogScrMessageMgr::resetPage()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8018BCB4
- * Size:	000080
+/**
+ * @TODO: Documentation
  */
 void zen::ogScrMessageMgr::start(int page)
 {
@@ -177,10 +171,8 @@ void zen::ogScrMessageMgr::start(int page)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8018BD34
- * Size:	00005C
+/**
+ * @TODO: Documentation
  */
 void zen::ogScrMessageMgr::setPage(int page)
 {
@@ -193,10 +185,8 @@ void zen::ogScrMessageMgr::setPage(int page)
 	setMessagePage(page);
 }
 
-/*
- * --INFO--
- * Address:	8018BD90
- * Size:	000058
+/**
+ * @TODO: Documentation
  */
 void zen::ogScrMessageMgr::nextPage()
 {
@@ -208,10 +198,8 @@ void zen::ogScrMessageMgr::nextPage()
 	setMessagePage(id);
 }
 
-/*
- * --INFO--
- * Address:	8018BDE8
- * Size:	000054
+/**
+ * @TODO: Documentation
  */
 void zen::ogScrMessageMgr::backPage()
 {
@@ -223,10 +211,8 @@ void zen::ogScrMessageMgr::backPage()
 	setMessagePage(id);
 }
 
-/*
- * --INFO--
- * Address:	8018BE3C
- * Size:	0001DC
+/**
+ * @TODO: Documentation
  */
 s16 zen::ogScrMessageMgr::makePageInfo(immut char*** data)
 {
@@ -260,10 +246,8 @@ s16 zen::ogScrMessageMgr::makePageInfo(immut char*** data)
 
 #if defined(VERSION_PIKIDEMO) // these two functions are straight up not in demo
 #else
-/*
- * --INFO--
- * Address:	8018C018
- * Size:	00018C
+/**
+ * @TODO: Documentation
  */
 void zen::ogScrMessageMgr::cnvSingleMulti(char* str)
 {
@@ -330,10 +314,8 @@ void zen::ogScrMessageMgr::cnvSingleMulti(char* str)
 	STACK_PAD_VAR(1);
 }
 
-/*
- * --INFO--
- * Address:	8018C1A4
- * Size:	000184
+/**
+ * @TODO: Documentation
  */
 void zen::ogScrMessageMgr::cnvButtonIcon(char* str)
 {
@@ -392,10 +374,8 @@ void zen::ogScrMessageMgr::cnvButtonIcon(char* str)
 }
 #endif
 
-/*
- * --INFO--
- * Address:	8018C328
- * Size:	000234
+/**
+ * @TODO: Documentation
  */
 void zen::ogScrMessageMgr::setPageInfoSub()
 {
@@ -471,10 +451,8 @@ void zen::ogScrMessageMgr::ReadAllScreen()
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8018C55C
- * Size:	000048
+/**
+ * @TODO: Documentation
  */
 void zen::ogScrMessageMgr::MakeAndSetPageInfo(immut char*** data)
 {
@@ -482,10 +460,8 @@ void zen::ogScrMessageMgr::MakeAndSetPageInfo(immut char*** data)
 	setMessagePage(0);
 }
 
-/*
- * --INFO--
- * Address:	8018C5A4
- * Size:	0002A4
+/**
+ * @TODO: Documentation
  */
 zen::ogScrMessageMgr::ogScrMessageMgr(immut char* path)
 {
@@ -545,10 +521,8 @@ void zen::ogScrMessageMgr::setScreenAlpha(u8 alpha)
 	P2DPaneLibrary::setFamilyAlpha(mBaseScreen, alpha);
 }
 
-/*
- * --INFO--
- * Address:	8018C848
- * Size:	000170
+/**
+ * @TODO: Documentation
  */
 void zen::ogScrMessageMgr::dispAll()
 {
@@ -584,10 +558,8 @@ void zen::ogScrMessageMgr::dispAll()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8018C9B8
- * Size:	000014
+/**
+ * @TODO: Documentation
  */
 void zen::ogScrMessageMgr::fadeOut()
 {
@@ -595,10 +567,8 @@ void zen::ogScrMessageMgr::fadeOut()
 	mState           = STATE_FadingOut;
 }
 
-/*
- * --INFO--
- * Address:	8018C9CC
- * Size:	00057C
+/**
+ * @TODO: Documentation
  */
 zen::ogScrMessageMgr::MessageStatus zen::ogScrMessageMgr::update(Controller* input)
 {
@@ -758,10 +728,8 @@ zen::ogScrMessageMgr::MessageStatus zen::ogScrMessageMgr::update(Controller* inp
 	return mState;
 }
 
-/*
- * --INFO--
- * Address:	8018CF48
- * Size:	000104
+/**
+ * @TODO: Documentation
  */
 void zen::ogScrMessageMgr::draw(Graphics& gfx)
 {

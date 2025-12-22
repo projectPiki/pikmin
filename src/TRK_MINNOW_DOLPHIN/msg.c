@@ -23,10 +23,8 @@ void TRKMessageGet(void)
 }
 */
 
-/*
- * --INFO--
- * Address:	8021C4A4
- * Size:	000028
+/**
+ * @TODO: Documentation
  */
 DSError TRKMessageSend(TRKBuffer* param_1)
 {

@@ -16,10 +16,8 @@ struct DispatchEntry gTRKDispatchTable[33] = {
 	{ &TRKDoUnsupported }, { &TRKDoUnsupported },
 };
 
-/*
- * --INFO--
- * Address:	8021CEE0
- * Size:	000014
+/**
+ * @TODO: Documentation
  */
 DSError TRKInitializeDispatcher()
 {
@@ -39,10 +37,8 @@ DSError TRKOverrideDispatch(TRKBuffer* buffer)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8021CEF4
- * Size:	000084
+/**
+ * @TODO: Documentation
  */
 DSError TRKDispatchMessage(TRKBuffer* buffer)
 {

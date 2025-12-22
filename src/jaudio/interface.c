@@ -16,20 +16,16 @@ static u8 game_bgm_vol     = 8;
 static u8 game_se_vol      = 8;
 static int current_process = 0xFFFFFFFF;
 
-/*
- * --INFO--
- * Address:	80016900
- * Size:	000020
+/**
+ * @TODO: Documentation
  */
 void Jac_OutputMode(int mode)
 {
 	Jac_SetOutputMode(mode);
 }
 
-/*
- * --INFO--
- * Address:	80016920
- * Size:	000010
+/**
+ * @TODO: Documentation
  */
 void Jac_SetBGMVolume(u8 vol)
 {
@@ -37,10 +33,8 @@ void Jac_SetBGMVolume(u8 vol)
 	vol_chg      = TRUE;
 }
 
-/*
- * --INFO--
- * Address:	80016940
- * Size:	000010
+/**
+ * @TODO: Documentation
  */
 void Jac_SetSEVolume(u8 vol)
 {
@@ -48,10 +42,8 @@ void Jac_SetSEVolume(u8 vol)
 	vol_chg     = TRUE;
 }
 
-/*
- * --INFO--
- * Address:	80016960
- * Size:	000048
+/**
+ * @TODO: Documentation
  */
 void Jac_Gsync()
 {
@@ -84,10 +76,8 @@ void __print_thread(immut char*, OSThread*)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	800169C0
- * Size:	00008C
+/**
+ * @TODO: Documentation
  */
 void Jac_SetProcessStatus(u32 processStat)
 {

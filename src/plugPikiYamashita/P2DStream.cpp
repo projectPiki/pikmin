@@ -17,10 +17,8 @@ DEFINE_ERROR(21)
  */
 DEFINE_PRINT("P2DStream");
 
-/*
- * --INFO--
- * Address:	801B3274
- * Size:	0000C4
+/**
+ * @TODO: Documentation
  */
 immut char* P2DStream::getResource(int dataType)
 {
@@ -54,10 +52,8 @@ immut char* P2DStream::getResource(int dataType)
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	801B3338
- * Size:	000090
+/**
+ * @TODO: Documentation
  */
 void P2DStream::align(int paddingAmount)
 {

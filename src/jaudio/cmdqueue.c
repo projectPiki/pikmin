@@ -4,10 +4,8 @@
 #include "jaudio/playercall.h"
 #include "jaudio/verysimple.h"
 
-/*
- * --INFO--
- * Address:	8001B960
- * Size:	00003C
+/**
+ * @TODO: Documentation
  */
 static void Add_Queue(CmdQueue* cmdQueue)
 {
@@ -37,10 +35,8 @@ void Del_Queue(CmdQueue*)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8001B9A0
- * Size:	000060
+/**
+ * @TODO: Documentation
  */
 void Jal_AddCmdQueue(CmdQueue* cmdQueue, seqp_* track, u8 param_3)
 {
@@ -74,10 +70,8 @@ void Jal_SendCmdQueue(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8001BA00
- * Size:	000030
+/**
+ * @TODO: Documentation
  */
 void Jal_SendCmdQueue_Noblock(CmdQueue* queue, u16 msg)
 {
@@ -89,10 +83,8 @@ void Jal_SendCmdQueue_Noblock(CmdQueue* queue, u16 msg)
 	Jac_SendMessage(&queue->msgQueue, (OSMessage)msg);
 }
 
-/*
- * --INFO--
- * Address:	8001BA40
- * Size:	000054
+/**
+ * @TODO: Documentation
  */
 void Jal_SendCmdQueue_Force(CmdQueue* queue, u16 msg)
 {
@@ -103,10 +95,8 @@ void Jal_SendCmdQueue_Force(CmdQueue* queue, u16 msg)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8001BAA0
- * Size:	000078
+/**
+ * @TODO: Documentation
  */
 static s32 Jal_FrameWork(void*)
 {
@@ -123,10 +113,8 @@ static s32 Jal_FrameWork(void*)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8001BB20
- * Size:	00002C
+/**
+ * @TODO: Documentation
  */
 void Jal_CmdQueue_Init(void)
 {

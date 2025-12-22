@@ -20,10 +20,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("nlibsystem")
 
-/*
- * --INFO--
- * Address:	8011E0F8
- * Size:	0000CC
+/**
+ * @TODO: Documentation
  */
 NNode::NNode(int size)
 {
@@ -34,10 +32,8 @@ NNode::NNode(int size)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8011E1C4
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 void NNode::setChild(int idx, NNode* child)
 {
@@ -48,10 +44,8 @@ void NNode::setChild(int idx, NNode* child)
 	mNodeArray->set(idx, child);
 }
 
-/*
- * --INFO--
- * Address:	8011E238
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 void NNode::addChild(NNode* child)
 {
@@ -66,10 +60,8 @@ void NNode::addChild(NNode* child)
 	mNodeArray->add(child);
 }
 
-/*
- * --INFO--
- * Address:	8011E2A8
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 void NNode::addChild(int idx, NNode* child)
 {
@@ -84,10 +76,8 @@ void NNode::addChild(int idx, NNode* child)
 	mNodeArray->add(idx, child);
 }
 
-/*
- * --INFO--
- * Address:	8011E444
- * Size:	000040
+/**
+ * @TODO: Documentation
  */
 NNode* NNode::getChild(int idx)
 {
@@ -99,10 +89,8 @@ NNode* NNode::getChild(int idx)
 	return mNodeArray->get(idx);
 }
 
-/*
- * --INFO--
- * Address:	8011E4B4
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 void NNode::removeChild(NNode* node)
 {
@@ -114,10 +102,8 @@ void NNode::removeChild(NNode* node)
 	mNodeArray->remove(node);
 }
 
-/*
- * --INFO--
- * Address:	8011E610
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 void NNode::removeChild(int idx)
 {
@@ -129,10 +115,8 @@ void NNode::removeChild(int idx)
 	mNodeArray->remove(idx);
 }
 
-/*
- * --INFO--
- * Address:	8011E648
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 void NNode::removeAllChildren()
 {
@@ -248,10 +232,8 @@ NHeap::NHeap(int size)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8011E7F0
- * Size:	00007C
+/**
+ * @TODO: Documentation
  */
 void NHeap::release()
 {
@@ -262,20 +244,16 @@ void NHeap::release()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8011E89C
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 void NSystem::initSystem(System* sys)
 {
 	system = sys;
 }
 
-/*
- * --INFO--
- * Address:	8011E8A4
- * Size:	000094
+/**
+ * @TODO: Documentation
  */
 int NSystem::randomInt(int max)
 {
@@ -286,10 +264,8 @@ int NSystem::randomInt(int max)
 	return val;
 }
 
-/*
- * --INFO--
- * Address:	8011E938
- * Size:	000034
+/**
+ * @TODO: Documentation
  */
 u32 NSystem::getFreeHeap()
 {

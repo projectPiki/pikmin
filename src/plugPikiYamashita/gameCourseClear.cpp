@@ -832,10 +832,8 @@ struct GameCourseClearScreen : public Node {
 	GameModeMgr* mGameModeMgr;         // _550
 };
 
-/*
- * --INFO--
- * Address:	80199474
- * Size:	000D38
+/**
+ * @TODO: Documentation
  */
 GameCourseClearSection::GameCourseClearSection()
 {

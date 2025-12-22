@@ -27,20 +27,16 @@ TekiInteractionKey::TekiInteractionKey(int type, immut Interaction* interaction)
 	mInteraction     = interaction;
 }
 
-/*
- * --INFO--
- * Address:	8014A40C
- * Size:	000044
+/**
+ * @TODO: Documentation
  */
 bool InteractAttack::actTeki(Teki* teki) immut
 {
 	return teki->interact(TekiInteractionKey(TekiInteractType::Attack, this));
 }
 
-/*
- * --INFO--
- * Address:	8014A450
- * Size:	000090
+/**
+ * @TODO: Documentation
  */
 bool InteractBomb::actTeki(Teki* teki) immut
 {
@@ -48,30 +44,24 @@ bool InteractBomb::actTeki(Teki* teki) immut
 	return teki->interact(TekiInteractionKey(TekiInteractType::Attack, &InteractAttack(mOwner, nullptr, mDamage * bombFactor, false)));
 }
 
-/*
- * --INFO--
- * Address:	8014A4E0
- * Size:	000044
+/**
+ * @TODO: Documentation
  */
 bool InteractHitEffect::actTeki(Teki* teki) immut
 {
 	return teki->interact(TekiInteractionKey(TekiInteractType::HitEffect, this));
 }
 
-/*
- * --INFO--
- * Address:	8014A524
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 bool InteractSwallow::actTeki(Teki*) immut
 {
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8014A52C
- * Size:	000058
+/**
+ * @TODO: Documentation
  */
 bool InteractPress::actTeki(Teki* teki) immut
 {
@@ -79,10 +69,8 @@ bool InteractPress::actTeki(Teki* teki) immut
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8014A584
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 bool InteractFlick::actTeki(Teki*) immut
 {

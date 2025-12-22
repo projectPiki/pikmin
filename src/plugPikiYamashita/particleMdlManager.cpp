@@ -16,10 +16,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("particleMdlManager");
 
-/*
- * --INFO--
- * Address:	801A17D4
- * Size:	000130
+/**
+ * @TODO: Documentation
  */
 void zen::particleMdlManager::init(u32 particleNum, u32 childNum)
 {

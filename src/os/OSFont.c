@@ -31,10 +31,8 @@ void GetFontSize(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801F8F24
- * Size:	000058
+/**
+ * @TODO: Documentation
  */
 u16 OSGetFontEncode(void)
 {

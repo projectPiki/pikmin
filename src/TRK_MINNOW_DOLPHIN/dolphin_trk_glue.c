@@ -12,10 +12,8 @@ s32 gWritePos;
 
 DBCommTable gDBCommTable = { NULL, NULL, NULL, NULL, NULL, NULL, NULL };
 
-/*
- * --INFO--
- * Address:	80220460
- * Size:	000088
+/**
+ * @TODO: Documentation
  */
 ASM void TRKLoadContext(OSContext* ctx, u32 a)
 {
@@ -60,10 +58,8 @@ lbl_80371C20:
 #endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address:	802204E8
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 void TRKEXICallBack(__OSInterrupt param_0, OSContext* ctx)
 {
@@ -71,10 +67,8 @@ void TRKEXICallBack(__OSInterrupt param_0, OSContext* ctx)
 	TRKLoadContext(ctx, 0x500);
 }
 
-/*
- * --INFO--
- * Address:	80220520
- * Size:	0000E8
+/**
+ * @TODO: Documentation
  */
 int InitMetroTRKCommTable(int hwId)
 {
@@ -105,19 +99,15 @@ int InitMetroTRKCommTable(int hwId)
 	return result;
 }
 
-/*
- * --INFO--
- * Address:	80220608
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void TRKUARTInterruptHandler(void)
 {
 }
 
-/*
- * --INFO--
- * Address:	8022060C
- * Size:	000040
+/**
+ * @TODO: Documentation
  */
 DSError TRKInitializeIntDrivenUART(u32 param_0, u32 param_1, u32 param_2, volatile u8** param_3)
 {
@@ -125,30 +115,24 @@ DSError TRKInitializeIntDrivenUART(u32 param_0, u32 param_1, u32 param_2, volati
 	return DS_NoError;
 }
 
-/*
- * --INFO--
- * Address:	8022064C
- * Size:	000030
+/**
+ * @TODO: Documentation
  */
 void EnableEXI2Interrupts(void)
 {
 	gDBCommTable.init_interrupts_func();
 }
 
-/*
- * --INFO--
- * Address:	8022067C
- * Size:	000030
+/**
+ * @TODO: Documentation
  */
 int TRKPollUART(void)
 {
 	return gDBCommTable.peek_func();
 }
 
-/*
- * --INFO--
- * Address:	802206AC
- * Size:	000044
+/**
+ * @TODO: Documentation
  */
 UARTError TRKReadUARTN(void* bytes, u32 length)
 {
@@ -156,10 +140,8 @@ UARTError TRKReadUARTN(void* bytes, u32 length)
 	return readErr == 0 ? 0 : -1;
 }
 
-/*
- * --INFO--
- * Address:	802206F0
- * Size:	000044
+/**
+ * @TODO: Documentation
  */
 UARTError TRKWriteUARTN(const void* bytes, u32 length)
 {
@@ -227,30 +209,24 @@ UARTError TRKReadUARTPoll(u8* arg0)
 	return readErr;
 }
 
-/*
- * --INFO--
- * Address:	80220734
- * Size:	000030
+/**
+ * @TODO: Documentation
  */
 void ReserveEXI2Port(void)
 {
 	gDBCommTable.open_func();
 }
 
-/*
- * --INFO--
- * Address:	80220764
- * Size:	000030
+/**
+ * @TODO: Documentation
  */
 void UnreserveEXI2Port(void)
 {
 	gDBCommTable.close_func();
 }
 
-/*
- * --INFO--
- * Address:	80220794
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 void TRK_board_display(const char* str)
 {

@@ -15,10 +15,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("ropeCreature");
 
-/*
- * --INFO--
- * Address:	800946A4
- * Size:	000058
+/**
+ * @TODO: Documentation
  */
 RopeCreature::RopeCreature(CreatureProp* prop)
     : Creature(prop)
@@ -27,10 +25,8 @@ RopeCreature::RopeCreature(CreatureProp* prop)
 	mAttachedObj = nullptr;
 }
 
-/*
- * --INFO--
- * Address:	800946FC
- * Size:	0001A8
+/**
+ * @TODO: Documentation
  */
 void RopeCreature::setRope(Creature* obj)
 {
@@ -45,10 +41,8 @@ void RopeCreature::setRope(Creature* obj)
 	mRopeLength = 50.0f;
 }
 
-/*
- * --INFO--
- * Address:	800948A4
- * Size:	0000D4
+/**
+ * @TODO: Documentation
  */
 void RopeCreature::update()
 {
@@ -57,10 +51,8 @@ void RopeCreature::update()
 	mRopeDirection.normalise();
 }
 
-/*
- * --INFO--
- * Address:	80094978
- * Size:	0000B4
+/**
+ * @TODO: Documentation
  */
 Vector3f RopeCreature::getRopePos(f32 size)
 {
@@ -69,19 +61,15 @@ Vector3f RopeCreature::getRopePos(f32 size)
 	return pos;
 }
 
-/*
- * --INFO--
- * Address:	80094A2C
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void RopeCreature::refresh(Graphics&)
 {
 }
 
-/*
- * --INFO--
- * Address:	80094A30
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 bool RopeCreature::needShadow()
 {

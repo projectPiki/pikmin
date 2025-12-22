@@ -6,10 +6,8 @@
 #include "SoundMgr.h"
 #include "sysNew.h"
 
-/*
- * --INFO--
- * Address:	801F1D60
- * Size:	0000EC
+/**
+ * @TODO: Documentation
  */
 zen::DrawUfoParts::DrawUfoParts()
 {
@@ -24,10 +22,8 @@ zen::DrawUfoParts::DrawUfoParts()
 	STACK_PAD_TERNARY(mScreen, 1);
 }
 
-/*
- * --INFO--
- * Address:	801F1E4C
- * Size:	000130
+/**
+ * @TODO: Documentation
  */
 bool zen::DrawUfoParts::update(Controller* controller)
 {
@@ -71,10 +67,8 @@ bool zen::DrawUfoParts::update(Controller* controller)
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	801F1F7C
- * Size:	0001B4
+/**
+ * @TODO: Documentation
  */
 void zen::DrawUfoParts::draw(Graphics& gfx)
 {
@@ -111,10 +105,8 @@ void zen::DrawUfoParts::draw(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801F2130
- * Size:	000034
+/**
+ * @TODO: Documentation
  */
 void zen::DrawUfoParts::sleep()
 {
@@ -123,10 +115,8 @@ void zen::DrawUfoParts::sleep()
 	mBest.sleep();
 }
 
-/*
- * --INFO--
- * Address:	801F2164
- * Size:	000068
+/**
+ * @TODO: Documentation
  */
 void zen::DrawUfoParts::start()
 {
@@ -138,10 +128,8 @@ void zen::DrawUfoParts::start()
 	mBest.appear();
 }
 
-/*
- * --INFO--
- * Address:	801F21CC
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 void zen::DrawUfoParts::operation()
 {
@@ -151,10 +139,8 @@ void zen::DrawUfoParts::operation()
 	dataSet();
 }
 
-/*
- * --INFO--
- * Address:	801F2218
- * Size:	00020C
+/**
+ * @TODO: Documentation
  */
 void zen::DrawUfoParts::dataSet()
 {

@@ -464,10 +464,8 @@ void SmokeEmitter::update(f32 timeStep)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8019BC60
- * Size:	00031C
+/**
+ * @TODO: Documentation
  */
 void SmokeEmitter::draw(Graphics& gfx)
 {
@@ -586,10 +584,8 @@ void EffShpInst::initEffShpInst()
 	visible();
 }
 
-/*
- * --INFO--
- * Address:	8019BF7C
- * Size:	000134
+/**
+ * @TODO: Documentation
  */
 bool EffShpInst::update()
 {
@@ -654,10 +650,8 @@ EffectGeometryRegistration::EffectGeometryRegistration(immut char* modelFile, im
 	}
 }
 
-/*
- * --INFO--
- * Address:	8019C0B0
- * Size:	0000FC
+/**
+ * @TODO: Documentation
  */
 EffShpInst* EffectGeometryRegistration::create(immut Vector3f& pos, immut Vector3f& scale, immut Vector3f& rot)
 {
@@ -696,10 +690,8 @@ EffectSimpleParticleRegistration::EffectSimpleParticleRegistration(immut char* t
 	}
 }
 
-/*
- * --INFO--
- * Address:	8019C1AC
- * Size:	00064C
+/**
+ * @TODO: Documentation
  */
 EffectMgr::EffectMgr()
     : CoreNode("effectMgr")
@@ -750,10 +742,8 @@ EffectMgr::EffectMgr()
 	STACK_PAD_VAR(2);
 }
 
-/*
- * --INFO--
- * Address:	8019C7F8
- * Size:	000140
+/**
+ * @TODO: Documentation
  */
 void EffectMgr::initEffectGeometry(int effShpCount)
 {
@@ -763,10 +753,8 @@ void EffectMgr::initEffectGeometry(int effShpCount)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8019C938
- * Size:	00007C
+/**
+ * @TODO: Documentation
  */
 void EffectMgr::update()
 {
@@ -781,10 +769,8 @@ void EffectMgr::update()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8019C9B4
- * Size:	00003C
+/**
+ * @TODO: Documentation
  */
 void EffectMgr::draw(Graphics& gfx)
 {
@@ -795,10 +781,8 @@ void EffectMgr::draw(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8019C9F0
- * Size:	000118
+/**
+ * @TODO: Documentation
  */
 void EffectMgr::drawshapes(Graphics& gfx)
 {
@@ -807,10 +791,8 @@ void EffectMgr::drawshapes(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8019CB08
- * Size:	000030
+/**
+ * @TODO: Documentation
  */
 void EffectMgr::exit()
 {
@@ -818,10 +800,8 @@ void EffectMgr::exit()
 	effectMgr = nullptr;
 }
 
-/*
- * --INFO--
- * Address:	8019CB38
- * Size:	000044
+/**
+ * @TODO: Documentation
  */
 zen::particleGenerator* EffectMgr::create(EffectMgr::effTypeTable effID, immut Vector3f& pos,
                                           zen::CallBack1<zen::particleGenerator*>* cbGen,
@@ -830,10 +810,8 @@ zen::particleGenerator* EffectMgr::create(EffectMgr::effTypeTable effID, immut V
 	return mParticles[effID]->create(pos, cbGen, cbPtcl);
 }
 
-/*
- * --INFO--
- * Address:	8019CBBC
- * Size:	000044
+/**
+ * @TODO: Documentation
  */
 EffShpInst* EffectMgr::create(EffectMgr::modelTypeTable modID, immut Vector3f& pos, immut Vector3f& scale, immut Vector3f& rot)
 {
@@ -851,10 +829,8 @@ zen::particleMdl* EffectMgr::create(EffectMgr::simpleTypeTable simpleID, immut V
 	return mSimpleParticles[simpleID]->create(lifeTime, globalPos, vel, accel, size, rotSpeed, cbPtcl);
 }
 
-/*
- * --INFO--
- * Address:	8019CC00
- * Size:	0000A8
+/**
+ * @TODO: Documentation
  */
 EffShpInst* EffectMgr::getShapeInst()
 {
@@ -880,10 +856,8 @@ void EffectMgr::putShapeInst(EffShpInst* inst)
 	mInactiveGeomList.add(inst);
 }
 
-/*
- * --INFO--
- * Address:	8019CCA8
- * Size:	000064
+/**
+ * @TODO: Documentation
  */
 void EffectMgr::killAllShapes()
 {

@@ -35,20 +35,16 @@ static OSMessage msgbuf[AUDIOPROC_MQ_BUF_COUNT];
 static u32 audioproc_mq_init;
 static volatile int intcount;
 
-/*
- * --INFO--
- * Address:	800062C0
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 void DspSyncCountClear(int count)
 {
 	intcount = count;
 }
 
-/*
- * --INFO--
- * Address:	800062E0
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 int DspSyncCountCheck()
 {
@@ -65,10 +61,8 @@ void Jac_GetDacRate(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80006300
- * Size:	000044
+/**
+ * @TODO: Documentation
  */
 static void DspSync()
 {
@@ -79,10 +73,8 @@ static void DspSync()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80006360
- * Size:	000050
+/**
+ * @TODO: Documentation
  */
 void StopAudioThread()
 {
@@ -93,10 +85,8 @@ void StopAudioThread()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800063C0
- * Size:	000080
+/**
+ * @TODO: Documentation
  */
 static void AudioSync()
 {
@@ -123,10 +113,8 @@ void NeosSync()
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80006440
- * Size:	000068
+/**
+ * @TODO: Documentation
  */
 static void __DspSync(__OSInterrupt interrupt, OSContext* context)
 {
@@ -142,10 +130,8 @@ static void __DspSync(__OSInterrupt interrupt, OSContext* context)
 	OSSetCurrentContext(context);
 }
 
-/*
- * --INFO--
- * Address:	800064C0
- * Size:	000044
+/**
+ * @TODO: Documentation
  */
 static void __DspReg()
 {
@@ -154,10 +140,8 @@ static void __DspReg()
 	OSRestoreInterrupts(enable);
 }
 
-/*
- * --INFO--
- * Address:	80006520
- * Size:	000130
+/**
+ * @TODO: Documentation
  */
 static void* audioproc(void*)
 {
@@ -224,10 +208,8 @@ static void* audioproc(void*)
 #define OS_FASTCAST_S8  (4)
 #define OS_FASTCAST_S16 (5)
 
-/*
- * --INFO--
- * Address:	80006660
- * Size:	000034
+/**
+ * @TODO: Documentation
  */
 static void OSInitFastCast(void)
 {
@@ -264,10 +246,8 @@ void SetAudioThreadPriority(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	800066A0
- * Size:	000124
+/**
+ * @TODO: Documentation
  */
 void StartAudioThread(void* heap, s32 heapSize, u32 aramSize, u32 flags)
 {

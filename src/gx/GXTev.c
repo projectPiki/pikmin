@@ -1,9 +1,7 @@
 #include "Dolphin/gx.h"
 
-/*
- * --INFO--
- * Address:	80212F9C
- * Size:	0001A4
+/**
+ * @TODO: Documentation
  */
 void GXSetTevOp(GXTevStageID id, GXTevMode mode)
 {
@@ -45,10 +43,8 @@ void GXSetTevOp(GXTevStageID id, GXTevMode mode)
 	GXSetTevAlphaOp(id, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);
 }
 
-/*
- * --INFO--
- * Address:	80213140
- * Size:	000080
+/**
+ * @TODO: Documentation
  */
 void GXSetTevColorIn(GXTevStageID stage, GXTevColorArg a, GXTevColorArg b, GXTevColorArg c, GXTevColorArg d)
 {
@@ -71,10 +67,8 @@ void GXSetTevColorIn(GXTevStageID stage, GXTevColorArg a, GXTevColorArg b, GXTev
 	gx->bpSent = 1;
 }
 
-/*
- * --INFO--
- * Address:	802131C0
- * Size:	000084
+/**
+ * @TODO: Documentation
  */
 void GXSetTevAlphaIn(GXTevStageID stage, GXTevAlphaArg a, GXTevAlphaArg b, GXTevAlphaArg c, GXTevAlphaArg d)
 {
@@ -97,10 +91,8 @@ void GXSetTevAlphaIn(GXTevStageID stage, GXTevAlphaArg a, GXTevAlphaArg b, GXTev
 	gx->bpSent = 1;
 }
 
-/*
- * --INFO--
- * Address:	80213244
- * Size:	0000C0
+/**
+ * @TODO: Documentation
  */
 void GXSetTevColorOp(GXTevStageID stage, GXTevOp op, GXTevBias bias, GXTevScale scale, GXBool clamp, GXTevRegID out_reg)
 {
@@ -125,10 +117,8 @@ void GXSetTevColorOp(GXTevStageID stage, GXTevOp op, GXTevBias bias, GXTevScale 
 	gx->bpSent = 1;
 }
 
-/*
- * --INFO--
- * Address:	80213304
- * Size:	0000C0
+/**
+ * @TODO: Documentation
  */
 void GXSetTevAlphaOp(GXTevStageID stage, GXTevOp op, GXTevBias bias, GXTevScale scale, GXBool clamp, GXTevRegID out_reg)
 {
@@ -153,10 +143,8 @@ void GXSetTevAlphaOp(GXTevStageID stage, GXTevOp op, GXTevBias bias, GXTevScale 
 	gx->bpSent = 1;
 }
 
-/*
- * --INFO--
- * Address:	802133C4
- * Size:	000074
+/**
+ * @TODO: Documentation
  */
 void GXSetTevColor(GXTevRegID id, GXColor color)
 {
@@ -182,10 +170,8 @@ void GXSetTevColor(GXTevRegID id, GXColor color)
 	gx->bpSent = 1;
 }
 
-/*
- * --INFO--
- * Address:	80213438
- * Size:	000074
+/**
+ * @TODO: Documentation
  */
 void GXSetTevColorS10(GXTevRegID id, GXColorS10 color)
 {
@@ -216,10 +202,8 @@ void GXSetTevColorS10(GXTevRegID id, GXColorS10 color)
 	gx->bpSent = 1;
 }
 
-/*
- * --INFO--
- * Address:	802134AC
- * Size:	000074
+/**
+ * @TODO: Documentation
  */
 void GXSetTevKColor(GXTevKColorID id, GXColor color)
 {
@@ -245,10 +229,8 @@ void GXSetTevKColor(GXTevKColorID id, GXColor color)
 	gx->bpSent = 1;
 }
 
-/*
- * --INFO--
- * Address:	80213520
- * Size:	00006C
+/**
+ * @TODO: Documentation
  */
 void GXSetTevKColorSel(GXTevStageID stage, GXTevKColorSel sel)
 {
@@ -268,10 +250,8 @@ void GXSetTevKColorSel(GXTevStageID stage, GXTevKColorSel sel)
 	gx->bpSent = 1;
 }
 
-/*
- * --INFO--
- * Address:	8021358C
- * Size:	00006C
+/**
+ * @TODO: Documentation
  */
 void GXSetTevKAlphaSel(GXTevStageID stage, GXTevKAlphaSel sel)
 {
@@ -291,10 +271,8 @@ void GXSetTevKAlphaSel(GXTevStageID stage, GXTevKAlphaSel sel)
 	gx->bpSent = 1;
 }
 
-/*
- * --INFO--
- * Address:	802135F8
- * Size:	000058
+/**
+ * @TODO: Documentation
  */
 void GXSetTevSwapMode(GXTevStageID stage, GXTevSwapSel ras_sel, GXTevSwapSel tex_sel)
 {
@@ -311,10 +289,8 @@ void GXSetTevSwapMode(GXTevStageID stage, GXTevSwapSel ras_sel, GXTevSwapSel tex
 	gx->bpSent = 1;
 }
 
-/*
- * --INFO--
- * Address:	80213650
- * Size:	0000A0
+/**
+ * @TODO: Documentation
  */
 void GXSetTevSwapModeTable(GXTevSwapSel table, GXTevColorChan red, GXTevColorChan green, GXTevColorChan blue, GXTevColorChan alpha)
 {
@@ -355,10 +331,8 @@ void GXSetTevClampMode(GXTevStageID stage, GXTevClampMode mode)
 	ASSERTMSGLINE(0x290, 0, "GXSetTevClampMode: not available on this hardware");
 }
 
-/*
- * --INFO--
- * Address:	802136F0
- * Size:	000050
+/**
+ * @TODO: Documentation
  */
 void GXSetAlphaCompare(GXCompare comp0, u8 ref0, GXAlphaOp op, GXCompare comp1, u8 ref1)
 {
@@ -377,10 +351,8 @@ void GXSetAlphaCompare(GXCompare comp0, u8 ref0, GXAlphaOp op, GXCompare comp1, 
 	gx->bpSent = 1;
 }
 
-/*
- * --INFO--
- * Address:	80213740
- * Size:	000084
+/**
+ * @TODO: Documentation
  */
 void GXSetZTexture(GXZTexOp op, GXTexFmt fmt, u32 bias)
 {
@@ -419,10 +391,8 @@ void GXSetZTexture(GXZTexOp op, GXTexFmt fmt, u32 bias)
 	gx->bpSent = 1;
 }
 
-/*
- * --INFO--
- * Address:	802137C4
- * Size:	0001A0
+/**
+ * @TODO: Documentation
  */
 void GXSetTevOrder(GXTevStageID stage, GXTexCoordID coord, GXTexMapID map, GXChannelID color)
 {
@@ -458,10 +428,8 @@ void GXSetTevOrder(GXTevStageID stage, GXTexCoordID coord, GXTexMapID map, GXCha
 	gx->dirtyState |= 1;
 }
 
-/*
- * --INFO--
- * Address:	80213964
- * Size:	000034
+/**
+ * @TODO: Documentation
  */
 void GXSetNumTevStages(u8 nStages)
 {

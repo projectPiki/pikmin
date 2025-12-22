@@ -17,10 +17,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("odoMeter");
 
-/*
- * --INFO--
- * Address:	800CD804
- * Size:	000010
+/**
+ * @TODO: Documentation
  */
 OdoMeter::OdoMeter()
 {
@@ -28,10 +26,8 @@ OdoMeter::OdoMeter()
 	mRemainingTime = 0.0f;
 }
 
-/*
- * --INFO--
- * Address:	800CD814
- * Size:	000018
+/**
+ * @TODO: Documentation
  */
 void OdoMeter::start(f32 startTime, f32 maxDistance)
 {
@@ -41,10 +37,8 @@ void OdoMeter::start(f32 startTime, f32 maxDistance)
 	mTotalDistance      = 0.0f;
 }
 
-/*
- * --INFO--
- * Address:	800CD82C
- * Size:	000124
+/**
+ * @TODO: Documentation
  */
 bool OdoMeter::moving(immut Vector3f& startPosition, immut Vector3f& endPosition)
 {

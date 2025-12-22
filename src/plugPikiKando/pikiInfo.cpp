@@ -2,10 +2,8 @@
 
 PikiInfo* pikiInfo = nullptr;
 
-/*
- * --INFO--
- * Address:	80119CE4
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 
 PikiInfo::PikiInfo()
@@ -19,10 +17,8 @@ PikiInfo::PikiInfo()
 	_0C               = 0;
 }
 
-/*
- * --INFO--
- * Address:	80119D08
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 void PikiInfo::addFormationPiki()
 {
@@ -34,10 +30,8 @@ void PikiInfo::addFormationPiki()
 	return;
 }
 
-/*
- * --INFO--
- * Address:	80119D2C
- * Size:	000010
+/**
+ * @TODO: Documentation
  */
 
 void PikiInfo::subFormationPiki()

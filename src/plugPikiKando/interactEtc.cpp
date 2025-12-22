@@ -19,10 +19,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("interactEtc")
 
-/*
- * --INFO--
- * Address:	8007C9F8
- * Size:	00003C
+/**
+ * @TODO: Documentation
  */
 bool InteractTalk::actPiki(Piki* piki) immut
 {
@@ -31,10 +29,8 @@ bool InteractTalk::actPiki(Piki* piki) immut
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8007CA34
- * Size:	000104
+/**
+ * @TODO: Documentation
  */
 bool InteractWarn::actPiki(Piki* piki) immut
 {

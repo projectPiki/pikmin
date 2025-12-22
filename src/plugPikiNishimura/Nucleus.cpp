@@ -19,10 +19,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("Nucleus");
 
-/*
- * --INFO--
- * Address:	8017A1AC
- * Size:	000090
+/**
+ * @TODO: Documentation
  */
 NucleusProp::NucleusProp()
 {
@@ -31,10 +29,8 @@ NucleusProp::NucleusProp()
 	mCreatureProps.mAcceleration.mValue  = 1.0f;
 }
 
-/*
- * --INFO--
- * Address:	8017A23C
- * Size:	000084
+/**
+ * @TODO: Documentation
  */
 Nucleus::Nucleus(CreatureProp* props)
     : Boss(props)
@@ -43,20 +39,16 @@ Nucleus::Nucleus(CreatureProp* props)
 	mNucleusAi = new NucleusAi(this);
 }
 
-/*
- * --INFO--
- * Address:	8017A2C0
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 f32 Nucleus::getiMass()
 {
 	return 0.01f;
 }
 
-/*
- * --INFO--
- * Address:	8017A2C8
- * Size:	000060
+/**
+ * @TODO: Documentation
  */
 void Nucleus::init(immut Vector3f&)
 {
@@ -68,10 +60,8 @@ void Nucleus::init(immut Vector3f&)
 	mNucleusAi->initAI(this);
 }
 
-/*
- * --INFO--
- * Address:	8017A328
- * Size:	000034
+/**
+ * @TODO: Documentation
  */
 void Nucleus::doKill()
 {
@@ -80,29 +70,23 @@ void Nucleus::doKill()
 	bossMgr->kill(this);
 }
 
-/*
- * --INFO--
- * Address:	8017A35C
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void Nucleus::exitCourse()
 {
 }
 
-/*
- * --INFO--
- * Address:	8017A360
- * Size:	000020
+/**
+ * @TODO: Documentation
  */
 void Nucleus::update()
 {
 	Creature::update();
 }
 
-/*
- * --INFO--
- * Address:	8017A380
- * Size:	000098
+/**
+ * @TODO: Documentation
  */
 void Nucleus::refresh(Graphics& gfx)
 {
@@ -114,10 +98,8 @@ void Nucleus::refresh(Graphics& gfx)
 	mCollInfo->updateInfo(gfx, false);
 }
 
-/*
- * --INFO--
- * Address:	8017A418
- * Size:	00006C
+/**
+ * @TODO: Documentation
  */
 void Nucleus::drawShape(Graphics& gfx)
 {
@@ -125,20 +107,16 @@ void Nucleus::drawShape(Graphics& gfx)
 	mShapeObject->mShape->drawshape(gfx, *gfx.mCamera, nullptr);
 }
 
-/*
- * --INFO--
- * Address:	8017A484
- * Size:	000024
+/**
+ * @TODO: Documentation
  */
 void Nucleus::doAI()
 {
 	mNucleusAi->update();
 }
 
-/*
- * --INFO--
- * Address:	8017A4A8
- * Size:	000044
+/**
+ * @TODO: Documentation
  */
 void Nucleus::doAnimation()
 {

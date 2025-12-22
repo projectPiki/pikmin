@@ -18,10 +18,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("GameExit");
 
-/*
- * --INFO--
- * Address:	8005B690
- * Size:	00009C
+/**
+ * @TODO: Documentation
  */
 GameExitSection::GameExitSection()
 {
@@ -31,10 +29,8 @@ GameExitSection::GameExitSection()
 	gsys->mAramRoot.initCore("");
 }
 
-/*
- * --INFO--
- * Address:	8005B72C
- * Size:	000050
+/**
+ * @TODO: Documentation
  */
 void GameExitSection::update()
 {

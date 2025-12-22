@@ -108,10 +108,8 @@ static void SetWirelessID(s32 chan, u16 id)
 	__OSUnlockSramEx(0);
 }
 
-/*
- * --INFO--
- * Address:	80203E04
- * Size:	0000D4
+/**
+ * @TODO: Documentation
  */
 static int DoReset(void)
 {
@@ -183,10 +181,8 @@ static void ProbeWireless(s32 chan)
 	SIEnablePolling(EnabledBits);
 }
 
-/*
- * --INFO--
- * Address:	80203ED8
- * Size:	0001DC
+/**
+ * @TODO: Documentation
  */
 static void PADProbeCallback(s32 chan, u32 error, OSContext* context)
 {
@@ -227,10 +223,8 @@ static void PADDisable(s32 chan)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	802040B4
- * Size:	000194
+/**
+ * @TODO: Documentation
  */
 static void UpdateOrigin(s32 chan)
 {
@@ -277,10 +271,8 @@ static void UpdateOrigin(s32 chan)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80204248
- * Size:	00011C
+/**
+ * @TODO: Documentation
  */
 static void PADOriginCallback(s32 chan, u32 error, OSContext* context)
 {
@@ -293,10 +285,8 @@ static void PADOriginCallback(s32 chan, u32 error, OSContext* context)
 	DoReset();
 }
 
-/*
- * --INFO--
- * Address:	80204364
- * Size:	00003C
+/**
+ * @TODO: Documentation
  */
 static void PADOriginUpdateCallback(s32 chan, u32 error, OSContext* context)
 {
@@ -307,10 +297,8 @@ static void PADOriginUpdateCallback(s32 chan, u32 error, OSContext* context)
 		UpdateOrigin(chan);
 }
 
-/*
- * --INFO--
- * Address:	802043A0
- * Size:	000254
+/**
+ * @TODO: Documentation
  */
 static void PADFixCallback(s32 unused, u32 error, struct OSContext* context)
 {
@@ -340,10 +328,8 @@ static void PADFixCallback(s32 unused, u32 error, struct OSContext* context)
 
 u32 __PADFixBits; // size: 0x4, address: 0x24
 
-/*
- * --INFO--
- * Address:	802045F4
- * Size:	000730
+/**
+ * @TODO: Documentation
  */
 static void PADResetCallback(s32 unused, u32 error, struct OSContext* context)
 {
@@ -425,10 +411,8 @@ static void PADResetCallback(s32 unused, u32 error, struct OSContext* context)
 	DoReset();
 }
 
-/*
- * --INFO--
- * Address:	80204D24
- * Size:	00016C
+/**
+ * @TODO: Documentation
  */
 int PADReset(u32 mask)
 {
@@ -453,10 +437,8 @@ int PADReset(u32 mask)
 	return rc;
 }
 
-/*
- * --INFO--
- * Address:	80204E90
- * Size:	000154
+/**
+ * @TODO: Documentation
  */
 BOOL PADRecalibrate(u32 mask)
 {
@@ -479,10 +461,8 @@ BOOL PADRecalibrate(u32 mask)
 
 u32 __PADSpec; // size: 0x4, address: 0x20
 
-/*
- * --INFO--
- * Address:	80204FE4
- * Size:	0001C4
+/**
+ * @TODO: Documentation
  */
 BOOL PADInit()
 {
@@ -511,10 +491,8 @@ BOOL PADInit()
 	return PADReset(PAD_CHAN0_BIT | PAD_CHAN1_BIT | PAD_CHAN2_BIT | PAD_CHAN3_BIT);
 }
 
-/*
- * --INFO--
- * Address:	802051A8
- * Size:	00015C
+/**
+ * @TODO: Documentation
  */
 static void PADReceiveCheckCallback(s32 chan, u32 error, OSContext* arg2)
 {
@@ -534,10 +512,8 @@ static void PADReceiveCheckCallback(s32 chan, u32 error, OSContext* arg2)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80205304
- * Size:	000338
+/**
+ * @TODO: Documentation
  */
 u32 PADRead(PADStatus* status)
 {
@@ -622,10 +598,8 @@ static XY XYNTSC[12] = { { 0xF7, 0x02 }, { 0x0E, 0x13 }, { 0x1D, 0x09 }, { 0x25,
 static XY XYPAL[12] = { { 0x94, 0x03 }, { 0x0D, 0x18 }, { 0x1A, 0x0C }, { 0x27, 0x08 }, { 0x34, 0x06 }, { 0x3E, 0x05 },
 	                    { 0x4E, 0x04 }, { 0x68, 0x03 }, { 0x68, 0x03 }, { 0x68, 0x03 }, { 0x68, 0x03 }, { 0x9C, 0x02 } };
 
-/*
- * --INFO--
- * Address:	8020563C
- * Size:	0000B0
+/**
+ * @TODO: Documentation
  */
 void PADSetSamplingRate(u32 msec)
 {
@@ -685,10 +659,8 @@ void PADControlAllMotors(const u32* commandArray)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	802056EC
- * Size:	0000BC
+/**
+ * @TODO: Documentation
  */
 void PADControlMotor(s32 chan, u32 command)
 {
@@ -708,10 +680,8 @@ void PADControlMotor(s32 chan, u32 command)
 	OSRestoreInterrupts(enabled);
 }
 
-/*
- * --INFO--
- * Address:	802057A8
- * Size:	000060
+/**
+ * @TODO: Documentation
  */
 void PADSetSpec(u32 spec)
 {
@@ -744,10 +714,8 @@ u32 PADGetSpec(void)
 	return Spec;
 }
 
-/*
- * --INFO--
- * Address:	80205808
- * Size:	000174
+/**
+ * @TODO: Documentation
  */
 static void SPEC0_MakeStatus(s32 chan, PADStatus* status, u32 data[2])
 {
@@ -775,10 +743,8 @@ static void SPEC0_MakeStatus(s32 chan, PADStatus* status, u32 data[2])
 	status->substickY -= 128;
 }
 
-/*
- * --INFO--
- * Address:	8020597C
- * Size:	000174
+/**
+ * @TODO: Documentation
  */
 static void SPEC1_MakeStatus(s32 chan, PADStatus* status, u32 data[2])
 {
@@ -844,10 +810,8 @@ static u8 ClampU8(u8 var, u8 org)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80205AF0
- * Size:	0003F8
+/**
+ * @TODO: Documentation
  */
 static void SPEC2_MakeStatus(s32 chan, PADStatus* status, u32 data[2])
 {
@@ -971,10 +935,8 @@ void PADSetAnalogMode(u32 mode)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80205EE8
- * Size:	00011C
+/**
+ * @TODO: Documentation
  */
 static BOOL OnReset(BOOL f)
 {

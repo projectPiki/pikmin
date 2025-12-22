@@ -19,10 +19,8 @@ DEFINE_ERROR(9)
  */
 DEFINE_PRINT("tekipersonality");
 
-/*
- * --INFO--
- * Address:	8014CA60
- * Size:	0001F8
+/**
+ * @TODO: Documentation
  */
 TekiPersonality::TekiPersonality()
 {
@@ -48,10 +46,8 @@ TekiPersonality::TekiPersonality()
 	reset();
 }
 
-/*
- * --INFO--
- * Address:	8014CC58
- * Size:	00012C
+/**
+ * @TODO: Documentation
  */
 void TekiPersonality::reset()
 {
@@ -75,10 +71,8 @@ void TekiPersonality::reset()
 	setF(FLT_NectarAppearChance, 0.0f);
 }
 
-/*
- * --INFO--
- * Address:	8014CD84
- * Size:	0000A0
+/**
+ * @TODO: Documentation
  */
 void TekiPersonality::input(TekiPersonality& other)
 {
@@ -91,10 +85,8 @@ void TekiPersonality::input(TekiPersonality& other)
 	mParams->input(*other.mParams);
 }
 
-/*
- * --INFO--
- * Address:	8014CE24
- * Size:	0002F0
+/**
+ * @TODO: Documentation
  */
 void TekiPersonality::read(RandomAccessStream& input, int version)
 {
@@ -162,10 +154,8 @@ void TekiPersonality::read(RandomAccessStream& input, int version)
 	PRINT_NAKATA("TekiPersonality::read:pelletColor:%d\n", mPelletColor);
 }
 
-/*
- * --INFO--
- * Address:	8014D114
- * Size:	000090
+/**
+ * @TODO: Documentation
  */
 void TekiPersonality::write(RandomAccessStream& output)
 {

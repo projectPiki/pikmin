@@ -1,18 +1,14 @@
 #include "jaudio/dummyprobe.h"
 
-/*
- * --INFO--
- * Address:	80005600
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void Probe_Start(s32 id, immut char* label)
 {
 }
 
-/*
- * --INFO--
- * Address:	80005620
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void Probe_Finish(s32 id)
 {

@@ -44,10 +44,8 @@ static void printMatrix(immut char* name, immut Matrix4f& mat)
 #endif
 }
 
-/*
- * --INFO--
- * Address:	80092808
- * Size:	0000D8
+/**
+ * @TODO: Documentation
  */
 DynParticle::DynParticle()
 {
@@ -62,38 +60,30 @@ DynParticle::DynParticle()
 	FORCE_DONT_INLINE;
 }
 
-/*
- * --INFO--
- * Address:	800928E0
- * Size:	000010
+/**
+ * @TODO: Documentation
  */
 f32 DynParticle::getSize()
 {
 	return mCollisionRadius * 3.0f;
 }
 
-/*
- * --INFO--
- * Address:	800928F0
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void DynParticle::refresh(Graphics&)
 {
 }
 
-/*
- * --INFO--
- * Address:	800928F4
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void DynParticle::doKill()
 {
 }
 
-/*
- * --INFO--
- * Address:	800928F8
- * Size:	0001F4
+/**
+ * @TODO: Documentation
  */
 DynParticleHeap::DynParticleHeap(int numParticles)
 {
@@ -138,10 +128,8 @@ void DynParticleHeap::releaseOne(DynParticle* ptcl)
 	mFreeParticleList.add(ptcl);
 }
 
-/*
- * --INFO--
- * Address:	80092AEC
- * Size:	0000F4
+/**
+ * @TODO: Documentation
  */
 DynCreature::DynCreature()
     : Creature(nullptr)
@@ -157,10 +145,8 @@ DynCreature::DynCreature()
 	enableFriction();
 }
 
-/*
- * --INFO--
- * Address:	80092BE0
- * Size:	00001C
+/**
+ * @TODO: Documentation
  */
 void DynCreature::enablePickOffset(f32 offset)
 {
@@ -168,10 +154,8 @@ void DynCreature::enablePickOffset(f32 offset)
 	mPickOffset = -offset;
 }
 
-/*
- * --INFO--
- * Address:	80092BFC
- * Size:	000018
+/**
+ * @TODO: Documentation
  */
 void DynCreature::disablePickOffset()
 {
@@ -179,10 +163,8 @@ void DynCreature::disablePickOffset()
 	mPickOffset = 0.0f;
 }
 
-/*
- * --INFO--
- * Address:	80092C14
- * Size:	000100
+/**
+ * @TODO: Documentation
  */
 void DynCreature::addParticle(f32 mass, immut Vector3f& position)
 {
@@ -213,10 +195,8 @@ void DynCreature::addParticle(f32 mass, immut Vector3f& position)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80092D14
- * Size:	000068
+/**
+ * @TODO: Documentation
  */
 void DynCreature::releaseAllParticles()
 {
@@ -230,10 +210,8 @@ void DynCreature::releaseAllParticles()
 	mParticleList = nullptr;
 }
 
-/*
- * --INFO--
- * Address:	80092D7C
- * Size:	00018C
+/**
+ * @TODO: Documentation
  */
 void DynCreature::initialiseSystem()
 {
@@ -258,10 +236,8 @@ void DynCreature::initialiseSystem()
 	createInvInertiaTensor();
 }
 
-/*
- * --INFO--
- * Address:	80092F08
- * Size:	00003C
+/**
+ * @TODO: Documentation
  */
 void DynCreature::update()
 {
@@ -269,10 +245,8 @@ void DynCreature::update()
 	Creature::update();
 }
 
-/*
- * --INFO--
- * Address:	80092F44
- * Size:	000B64
+/**
+ * @TODO: Documentation
  */
 void DynCreature::simulate(f32 timeStep)
 {
@@ -452,10 +426,8 @@ void DynCreature::applyTorque(int, f32)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80093AA8
- * Size:	0001B0
+/**
+ * @TODO: Documentation
  */
 void DynCreature::createInvInertiaTensor()
 {
@@ -523,10 +495,8 @@ void DynCreature::calcModelMatrix(Matrix4f& modelMtx)
 	mtx1.multiplyTo(mtx2, modelMtx);
 }
 
-/*
- * --INFO--
- * Address:	80093C58
- * Size:	0002B4
+/**
+ * @TODO: Documentation
  */
 void DynCreature::refresh(Graphics& gfx)
 {
@@ -559,10 +529,8 @@ void DynCreature::refresh(Graphics& gfx)
 	gfx.useMatrix(Matrix4f::ident, 0);
 }
 
-/*
- * --INFO--
- * Address:	80093F0C
- * Size:	000068
+/**
+ * @TODO: Documentation
  */
 void DynCreature::doKill()
 {

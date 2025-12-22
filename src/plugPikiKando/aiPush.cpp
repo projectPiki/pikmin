@@ -18,10 +18,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("aiPush")
 
-/*
- * --INFO--
- * Address:	800BDFF0
- * Size:	0000A0
+/**
+ * @TODO: Documentation
  */
 ActPush::ActPush(Piki* piki)
     : Action(piki, true)
@@ -30,10 +28,8 @@ ActPush::ActPush(Piki* piki)
 	mHinderRock = nullptr;
 }
 
-/*
- * --INFO--
- * Address:	800BE090
- * Size:	000098
+/**
+ * @TODO: Documentation
  */
 void ActPush::init(Creature* target)
 {
@@ -66,10 +62,8 @@ bool ActPush::collideRockSurface()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800BE128
- * Size:	0000CC
+/**
+ * @TODO: Documentation
  */
 int ActPush::exec()
 {
@@ -111,10 +105,8 @@ void ActPush::initApproach()
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Run, this), PaniMotionInfo(PIKIANIM_Run));
 }
 
-/*
- * --INFO--
- * Address:	800BE1F4
- * Size:	000110
+/**
+ * @TODO: Documentation
  */
 int ActPush::exeApproach()
 {
@@ -157,10 +149,8 @@ int ActPush::exeApproach()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800BE304
- * Size:	00013C
+/**
+ * @TODO: Documentation
  */
 void ActPush::initGo()
 {
@@ -186,10 +176,8 @@ void ActPush::initGo()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800BE440
- * Size:	000214
+/**
+ * @TODO: Documentation
  */
 int ActPush::exeGo()
 {
@@ -229,10 +217,8 @@ int ActPush::exeGo()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800BE654
- * Size:	0002D4
+/**
+ * @TODO: Documentation
  */
 void ActPush::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
@@ -288,10 +274,8 @@ void ActPush::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800BE928
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 void ActPush::cleanup()
 {

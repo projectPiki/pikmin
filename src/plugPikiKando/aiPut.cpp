@@ -28,10 +28,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("PickItem") // Nice copy-paste...
 
-/*
- * --INFO--
- * Address:	800BE9F4
- * Size:	0000A0
+/**
+ * @TODO: Documentation
  */
 void ActPutBomb::procCollideMsg(Piki* piki, MsgCollide* msg)
 {
@@ -45,10 +43,8 @@ void ActPutBomb::procCollideMsg(Piki* piki, MsgCollide* msg)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800BEA94
- * Size:	000088
+/**
+ * @TODO: Documentation
  */
 ActPutBomb::ActPutBomb(Piki* piki)
     : Action(piki, true)
@@ -56,10 +52,8 @@ ActPutBomb::ActPutBomb(Piki* piki)
 	setName("putbomb");
 }
 
-/*
- * --INFO--
- * Address:	800BEB1C
- * Size:	00048C
+/**
+ * @TODO: Documentation
  */
 void ActPutBomb::findTeki()
 {
@@ -119,10 +113,8 @@ void ActPutBomb::findTeki()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800BEFA8
- * Size:	0001C0
+/**
+ * @TODO: Documentation
  */
 void ActPutBomb::init(Creature* target)
 {
@@ -168,20 +160,16 @@ void ActPutBomb::init(Creature* target)
 	initPut();
 }
 
-/*
- * --INFO--
- * Address:	800BF168
- * Size:	00000C
+/**
+ * @TODO: Documentation
  */
 void ActPutBomb::initSet()
 {
 	mState = STATE_Set;
 }
 
-/*
- * --INFO--
- * Address:	800BF174
- * Size:	0001D8
+/**
+ * @TODO: Documentation
  */
 int ActPutBomb::exeSet()
 {
@@ -210,10 +198,8 @@ int ActPutBomb::exeSet()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800BF34C
- * Size:	000164
+/**
+ * @TODO: Documentation
  */
 void ActPutBomb::warnPikis()
 {
@@ -231,10 +217,8 @@ void ActPutBomb::warnPikis()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800BF4B0
- * Size:	00016C
+/**
+ * @TODO: Documentation
  */
 void ActPutBomb::initAim()
 {
@@ -245,10 +229,8 @@ void ActPutBomb::initAim()
 	mPlaceTimer = 0.0f;
 }
 
-/*
- * --INFO--
- * Address:	800BF61C
- * Size:	0002CC
+/**
+ * @TODO: Documentation
  */
 int ActPutBomb::exeAim()
 {
@@ -302,10 +284,8 @@ int ActPutBomb::exeAim()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800BF8E8
- * Size:	00000C
+/**
+ * @TODO: Documentation
  */
 void ActPutBomb::initWait()
 {
@@ -327,10 +307,8 @@ int ActPutBomb::exeWait()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800BF8F4
- * Size:	000084
+/**
+ * @TODO: Documentation
  */
 void ActPutBomb::initThrow()
 {
@@ -339,10 +317,8 @@ void ActPutBomb::initThrow()
 	mState = STATE_Throw;
 }
 
-/*
- * --INFO--
- * Address:	800BF978
- * Size:	00014C
+/**
+ * @TODO: Documentation
  */
 void ActPutBomb::initPut()
 {
@@ -361,10 +337,8 @@ void ActPutBomb::initPut()
 	mState             = STATE_Put;
 }
 
-/*
- * --INFO--
- * Address:	800BFAC4
- * Size:	00023C
+/**
+ * @TODO: Documentation
  */
 int ActPutBomb::exeThrow()
 {
@@ -424,10 +398,8 @@ int ActPutBomb::exePut()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800BFD00
- * Size:	000210
+/**
+ * @TODO: Documentation
  */
 int ActPutBomb::exec()
 {
@@ -470,10 +442,8 @@ int ActPutBomb::exec()
 	return ACTOUT_Success;
 }
 
-/*
- * --INFO--
- * Address:	800BFF10
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 void ActPutBomb::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
@@ -487,19 +457,15 @@ void ActPutBomb::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800BFF48
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void ActPutBomb::cleanup()
 {
 }
 
-/*
- * --INFO--
- * Address:	800BFF4C
- * Size:	00005C
+/**
+ * @TODO: Documentation
  */
 ActPutItem::ActPutItem(Piki* piki)
     : Action(piki, true)
@@ -507,10 +473,8 @@ ActPutItem::ActPutItem(Piki* piki)
 	mItem.clear();
 }
 
-/*
- * --INFO--
- * Address:	800BFFA8
- * Size:	00040C
+/**
+ * @TODO: Documentation
  */
 void ActPutItem::findPos()
 {
@@ -559,10 +523,8 @@ void ActPutItem::findPos()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800C03B4
- * Size:	000340
+/**
+ * @TODO: Documentation
  */
 bool ActPutItem::findAdjacent(Creature* target)
 {
@@ -595,10 +557,8 @@ bool ActPutItem::findAdjacent(Creature* target)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	800C06F4
- * Size:	00006C
+/**
+ * @TODO: Documentation
  */
 void ActPutItem::init(Creature* target)
 {
@@ -606,10 +566,8 @@ void ActPutItem::init(Creature* target)
 	findPos();
 }
 
-/*
- * --INFO--
- * Address:	800C0760
- * Size:	000178
+/**
+ * @TODO: Documentation
  */
 int ActPutItem::exec()
 {
@@ -629,10 +587,8 @@ int ActPutItem::exec()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	800C08D8
- * Size:	000040
+/**
+ * @TODO: Documentation
  */
 void ActPutItem::cleanup()
 {

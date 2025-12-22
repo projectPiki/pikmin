@@ -31,10 +31,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("PomAi");
 
-/*
- * --INFO--
- * Address:	80178558
- * Size:	000074
+/**
+ * @TODO: Documentation
  */
 PomAi::PomAi(Pom* pom)
 {
@@ -42,10 +40,8 @@ PomAi::PomAi(Pom* pom)
 	mOpenStarCallBack = new PomGenOpenStarCallBack;
 }
 
-/*
- * --INFO--
- * Address:	801785CC
- * Size:	000194
+/**
+ * @TODO: Documentation
  */
 void PomAi::initAI(Pom* pom)
 {
@@ -77,10 +73,8 @@ void PomAi::initAI(Pom* pom)
 	mDeformAmount  = 0.0f;
 }
 
-/*
- * --INFO--
- * Address:	80178760
- * Size:	00007C
+/**
+ * @TODO: Documentation
  */
 void PomAi::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
@@ -103,10 +97,8 @@ void PomAi::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 	}
 }
 
-/*
- * --INFO--
- * Address:	801787DC
- * Size:	000044
+/**
+ * @TODO: Documentation
  */
 void PomAi::keyAction0()
 {
@@ -117,10 +109,8 @@ void PomAi::keyAction0()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80178820
- * Size:	00001C
+/**
+ * @TODO: Documentation
  */
 void PomAi::keyAction1()
 {
@@ -147,20 +137,16 @@ void PomAi::keyAction3()
 {
 }
 
-/*
- * --INFO--
- * Address:	8017883C
- * Size:	000014
+/**
+ * @TODO: Documentation
  */
 void PomAi::keyLoopEnd()
 {
 	mPom->addLoopCounter(1);
 }
 
-/*
- * --INFO--
- * Address:	80178850
- * Size:	0000C8
+/**
+ * @TODO: Documentation
  */
 void PomAi::keyFinished()
 {
@@ -178,10 +164,8 @@ void PomAi::keyFinished()
 	mPom->setMotionFinish(1);
 }
 
-/*
- * --INFO--
- * Address:	80178918
- * Size:	000044
+/**
+ * @TODO: Documentation
  */
 void PomAi::playSound(int pomSoundID)
 {
@@ -190,10 +174,8 @@ void PomAi::playSound(int pomSoundID)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8017895C
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 void PomAi::killCallBackEffect(bool p1)
 {
@@ -201,10 +183,8 @@ void PomAi::killCallBackEffect(bool p1)
 	effectMgr->kill(cb, nullptr, p1);
 }
 
-/*
- * --INFO--
- * Address:	80178994
- * Size:	0001B4
+/**
+ * @TODO: Documentation
  */
 void PomAi::collidePetal(Creature* collider)
 {
@@ -221,10 +201,8 @@ void PomAi::collidePetal(Creature* collider)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80178B48
- * Size:	000060
+/**
+ * @TODO: Documentation
  */
 void PomAi::setCollideSound(Creature* collider)
 {
@@ -301,10 +279,8 @@ void PomAi::setInitPosition()
 	mPom->mSRT.t.z = pos->z;
 }
 
-/*
- * --INFO--
- * Address:	80178BA8
- * Size:	0001D4
+/**
+ * @TODO: Documentation
  */
 int PomAi::killStickPiki()
 {
@@ -332,10 +308,8 @@ int PomAi::killStickPiki()
 	return seedCount;
 }
 
-/*
- * --INFO--
- * Address:	80178D7C
- * Size:	000228
+/**
+ * @TODO: Documentation
  */
 void PomAi::createPikiHead()
 {
@@ -400,10 +374,8 @@ void PomAi::createPomOpenEffect()
 	emitPomOpenEffect('pom5');
 }
 
-/*
- * --INFO--
- * Address:	80178FA4
- * Size:	0001DC
+/**
+ * @TODO: Documentation
  */
 void PomAi::calcPetalStickers()
 {
@@ -550,10 +522,8 @@ void PomAi::initDie(int nextState)
 	mPom->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Dead, this));
 }
 
-/*
- * --INFO--
- * Address:	80179180
- * Size:	000200
+/**
+ * @TODO: Documentation
  */
 void PomAi::initWait(int nextState)
 {
@@ -625,10 +595,8 @@ void PomAi::initPetalClose(int nextState)
 	mIsOpening = false;
 }
 
-/*
- * --INFO--
- * Address:	80179380
- * Size:	0001CC
+/**
+ * @TODO: Documentation
  */
 void PomAi::initDischarge(int nextState)
 {
@@ -715,10 +683,8 @@ void PomAi::dischargeState()
 {
 }
 
-/*
- * --INFO--
- * Address:	8017954C
- * Size:	000898
+/**
+ * @TODO: Documentation
  */
 void PomAi::update()
 {

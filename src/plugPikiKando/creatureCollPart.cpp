@@ -19,19 +19,15 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("creatureCollPart")
 
-/*
- * --INFO--
- * Address:	8008E0BC
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void CreatureCollPart::touchCallback(immut Plane&, immut Vector3f&, immut Vector3f&)
 {
 }
 
-/*
- * --INFO--
- * Address:	8008E0C0
- * Size:	0000A0
+/**
+ * @TODO: Documentation
  */
 void CreaturePlatMgr::init(Creature* creature, MapMgr* map, Shape* shape)
 {
@@ -48,10 +44,8 @@ void CreaturePlatMgr::init(Creature* creature, MapMgr* map, Shape* shape)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8008E160
- * Size:	000068
+/**
+ * @TODO: Documentation
  */
 void CreaturePlatMgr::release()
 {
@@ -63,10 +57,8 @@ void CreaturePlatMgr::release()
 	mPartCount = 0;
 }
 
-/*
- * --INFO--
- * Address:	8008E1C8
- * Size:	0000FC
+/**
+ * @TODO: Documentation
  */
 void CreaturePlatMgr::update(Graphics& gfx)
 {

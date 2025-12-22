@@ -212,10 +212,8 @@ struct TaiOtimotiLegEffectAction : public TaiJointEffectAction {
 	// TODO: members
 };
 
-/*
- * --INFO--
- * Address:	8013A500
- * Size:	000084
+/**
+ * @TODO: Documentation
  */
 TaiOtimotiSoundTable::TaiOtimotiSoundTable()
     : PaniSoundTable(12)
@@ -225,10 +223,8 @@ TaiOtimotiSoundTable::TaiOtimotiSoundTable()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8013A584
- * Size:	000540
+/**
+ * @TODO: Documentation
  */
 TaiOtimotiParameters::TaiOtimotiParameters()
     : TekiParameters(OTIMOTIPI_COUNT, OTIMOTIPF_COUNT)
@@ -315,10 +311,8 @@ TaiOtimotiParameters::TaiOtimotiParameters()
 	multiP->setF(OTIMOTIPF_MissFuncMaxChance, 0.8f);
 }
 
-/*
- * --INFO--
- * Address:	8013AAC4
- * Size:	000084
+/**
+ * @TODO: Documentation
  */
 TaiBlackFrogSoundTable::TaiBlackFrogSoundTable()
     : PaniSoundTable(10)
@@ -328,10 +322,8 @@ TaiBlackFrogSoundTable::TaiBlackFrogSoundTable()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8013AB48
- * Size:	00053C
+/**
+ * @TODO: Documentation
  */
 TaiBlackFrogParameters::TaiBlackFrogParameters()
     : TekiParameters(OTIMOTIPI_COUNT, OTIMOTIPF_COUNT)
@@ -418,10 +410,8 @@ TaiBlackFrogParameters::TaiBlackFrogParameters()
 	multiP->setF(OTIMOTIPF_MissFuncMaxChance, 0.7f);
 }
 
-/*
- * --INFO--
- * Address:	8013B084
- * Size:	00161C
+/**
+ * @TODO: Documentation
  */
 TaiOtimotiStrategy::TaiOtimotiStrategy(TekiParameters* params)
     : TaiStrategy(OTIMOTISTATE_COUNT, OTIMOTISTATE_Unk2)
@@ -684,10 +674,8 @@ TaiOtimotiStrategy::TaiOtimotiStrategy(TekiParameters* params)
 	setState(OTIMOTISTATE_Unk16, state);
 }
 
-/*
- * --INFO--
- * Address:	8013C6A0
- * Size:	0000C8
+/**
+ * @TODO: Documentation
  */
 void TaiOtimotiStrategy::start(Teki& teki)
 {
@@ -700,10 +688,8 @@ void TaiOtimotiStrategy::start(Teki& teki)
 	TaiStrategy::start(teki);
 }
 
-/*
- * --INFO--
- * Address:	8013C768
- * Size:	00011C
+/**
+ * @TODO: Documentation
  */
 void TaiOtimotiStrategy::draw(Teki& teki, Graphics& gfx)
 {
@@ -727,10 +713,8 @@ void TaiOtimotiStrategy::draw(Teki& teki, Graphics& gfx)
 	teki.setParticleGeneratorPosition(1, pos);
 }
 
-/*
- * --INFO--
- * Address:	8013C884
- * Size:	0001C4
+/**
+ * @TODO: Documentation
  */
 void TaiOtimotiStrategy::drawDebugInfo(Teki& teki, Graphics& gfx)
 {
@@ -740,10 +724,8 @@ void TaiOtimotiStrategy::drawDebugInfo(Teki& teki, Graphics& gfx)
 	teki.drawRange(gfx, teki.getPosition(), teki.getLowerRange(), Colour(255, 0, 255, 255));
 }
 
-/*
- * --INFO--
- * Address:	8013CA48
- * Size:	000054
+/**
+ * @TODO: Documentation
  */
 void TaiOtimotiStartDroppingWaterAction::start(Teki& teki)
 {
@@ -756,10 +738,8 @@ void TaiOtimotiStartDroppingWaterAction::start(Teki& teki)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8013CA9C
- * Size:	000128
+/**
+ * @TODO: Documentation
  */
 bool TaiOtimotiFlickAction::act(Teki& teki)
 {
@@ -779,10 +759,8 @@ bool TaiOtimotiFlickAction::act(Teki& teki)
 	TekiAndCondition(nullptr, nullptr);
 }
 
-/*
- * --INFO--
- * Address:	8013CBC4
- * Size:	000148
+/**
+ * @TODO: Documentation
  */
 bool TaiOtimotiFailToJumpAction::act(Teki& teki)
 {
@@ -803,10 +781,8 @@ bool TaiOtimotiFailToJumpAction::act(Teki& teki)
 	TekiAndCondition(nullptr, nullptr);
 }
 
-/*
- * --INFO--
- * Address:	8013CD0C
- * Size:	000418
+/**
+ * @TODO: Documentation
  */
 void TaiOtimotiJumpingAction::start(Teki& teki)
 {
@@ -855,10 +831,8 @@ void TaiOtimotiJumpingAction::start(Teki& teki)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8013D124
- * Size:	000084
+/**
+ * @TODO: Documentation
  */
 bool TaiOtimotiJumpingAction::act(Teki& teki)
 {
@@ -873,10 +847,8 @@ bool TaiOtimotiJumpingAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8013D1A8
- * Size:	00012C
+/**
+ * @TODO: Documentation
  */
 void TaiOtimotiAirWaitingAction::start(Teki& teki)
 {
@@ -891,10 +863,8 @@ void TaiOtimotiAirWaitingAction::start(Teki& teki)
 	teki.mAccelEvent->reset();
 }
 
-/*
- * --INFO--
- * Address:	8013D2D4
- * Size:	000164
+/**
+ * @TODO: Documentation
  */
 bool TaiOtimotiAirWaitingAction::act(Teki& teki)
 {
@@ -929,10 +899,8 @@ bool TaiOtimotiAirWaitingAction::act(Teki& teki)
 	STACK_PAD_TERNARY(check, 2);
 }
 
-/*
- * --INFO--
- * Address:	8013D438
- * Size:	000084
+/**
+ * @TODO: Documentation
  */
 void TaiOtimotiDroppingAction::start(Teki& teki)
 {
@@ -941,10 +909,8 @@ void TaiOtimotiDroppingAction::start(Teki& teki)
 	teki.setTekiOption(BTeki::TEKI_OPTION_GRAVITATABLE);
 }
 
-/*
- * --INFO--
- * Address:	8013D4BC
- * Size:	00005C
+/**
+ * @TODO: Documentation
  */
 bool TaiOtimotiDroppingAction::act(Teki& teki)
 {
@@ -954,10 +920,8 @@ bool TaiOtimotiDroppingAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8013D518
- * Size:	000060
+/**
+ * @TODO: Documentation
  */
 bool TaiOtimotiDroppingAction::actByEvent(immut TekiEvent& event)
 {
@@ -969,20 +933,16 @@ bool TaiOtimotiDroppingAction::actByEvent(immut TekiEvent& event)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8013D578
- * Size:	000034
+/**
+ * @TODO: Documentation
  */
 void TaiOtimotiPressingAction::start(Teki& teki)
 {
 	teki.startMotion(TekiMotion::Attack);
 }
 
-/*
- * --INFO--
- * Address:	8013D5AC
- * Size:	00005C
+/**
+ * @TODO: Documentation
  */
 bool TaiOtimotiPressingAction::act(Teki& teki)
 {
@@ -994,10 +954,8 @@ bool TaiOtimotiPressingAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8013D608
- * Size:	00021C
+/**
+ * @TODO: Documentation
  */
 bool TaiOtimotiPressingAction::actByEvent(immut TekiEvent& event)
 {
@@ -1027,39 +985,31 @@ bool TaiOtimotiPressingAction::actByEvent(immut TekiEvent& event)
 	TekiAndCondition(nullptr, nullptr);
 }
 
-/*
- * --INFO--
- * Address:	8013D824
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 bool TaiOtimotiBouncingAction::act(Teki& teki)
 {
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	8013D82C
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 bool TaiOtimotiBouncingAction::actByEvent(immut TekiEvent&)
 {
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8013D834
- * Size:	000004
+/**
+ * @TODO: Documentation
  */
 void TaiOtimotiAttackingAction::start(Teki& teki)
 {
 }
 
-/*
- * --INFO--
- * Address:	8013D838
- * Size:	0000B0
+/**
+ * @TODO: Documentation
  */
 bool TaiOtimotiAttackingAction::act(Teki& teki)
 {
@@ -1084,20 +1034,16 @@ bool TaiOtimotiAttackingAction::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8013D8E8
- * Size:	000008
+/**
+ * @TODO: Documentation
  */
 bool TaiOtimotiAttackingAction::actByEvent(immut TekiEvent&)
 {
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8013D8F0
- * Size:	0000F0
+/**
+ * @TODO: Documentation
  */
 void TaiOtimotiAttackingEffectAction::start(Teki& teki)
 {
@@ -1115,20 +1061,16 @@ void TaiOtimotiAttackingEffectAction::start(Teki& teki)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8013D9E0
- * Size:	000058
+/**
+ * @TODO: Documentation
  */
 TaiOtimotiLegEffectAction::TaiOtimotiLegEffectAction(f32 p1)
     : TaiJointEffectAction(p1, 2, 'lleg', 'rleg', 0, 0)
 {
 }
 
-/*
- * --INFO--
- * Address:	8013DA38
- * Size:	00007C
+/**
+ * @TODO: Documentation
  */
 void TaiOtimotiLegEffectAction::setType(Vector3f& effectPos, int type, int id)
 {

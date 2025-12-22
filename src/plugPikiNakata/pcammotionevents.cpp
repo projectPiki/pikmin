@@ -17,10 +17,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("pcammotionevents")
 
-/*
- * --INFO--
- * Address:	801241A8
- * Size:	0000CC
+/**
+ * @TODO: Documentation
  */
 PcamLongVibrationEvent::PcamLongVibrationEvent(PcamCamera* camera)
     : PeveSerialEvent(2)
@@ -33,10 +31,8 @@ PcamLongVibrationEvent::PcamLongVibrationEvent(PcamCamera* camera)
 	mPostureIO.construct(mCamera);
 }
 
-/*
- * --INFO--
- * Address:	80124274
- * Size:	0000D8
+/**
+ * @TODO: Documentation
  */
 void PcamLongVibrationEvent::makePcamLongVibrationEvent(f32 p1, f32 p2, f32 p3, f32 p4)
 {
@@ -48,10 +44,8 @@ void PcamLongVibrationEvent::makePcamLongVibrationEvent(f32 p1, f32 p2, f32 p3, 
 	mEventB->makeVibrationEvent(p2, &mPostureIO, orient.getUp(), p3, p4, -p4 / p2);
 }
 
-/*
- * --INFO--
- * Address:	8012434C
- * Size:	000078
+/**
+ * @TODO: Documentation
  */
 PcamVibrationEvent::PcamVibrationEvent(PcamCamera* camera)
 {
@@ -62,10 +56,8 @@ PcamVibrationEvent::PcamVibrationEvent(PcamCamera* camera)
 	mVibrationFrequency = 16.0f;
 }
 
-/*
- * --INFO--
- * Address:	801243C4
- * Size:	000084
+/**
+ * @TODO: Documentation
  */
 void PcamVibrationEvent::makePcamVibrationEvent()
 {
@@ -77,10 +69,8 @@ void PcamVibrationEvent::makePcamVibrationEvent()
 	                   -mVibrationFrequency / mVibrationDuration);
 }
 
-/*
- * --INFO--
- * Address:	80124448
- * Size:	000078
+/**
+ * @TODO: Documentation
  */
 PcamDamageEvent::PcamDamageEvent(PcamCamera* camera)
 {
@@ -91,10 +81,8 @@ PcamDamageEvent::PcamDamageEvent(PcamCamera* camera)
 	mVibrationFrequency = 16.0f;
 }
 
-/*
- * --INFO--
- * Address:	801244C0
- * Size:	000070
+/**
+ * @TODO: Documentation
  */
 void PcamDamageEvent::makePcamDamageEvent()
 {
@@ -128,10 +116,8 @@ void PcamRandomMoveEvent::makePcamRandomMoveEvent()
 	makeEvent(&mTimeCondition);
 }
 
-/*
- * --INFO--
- * Address:	80124530
- * Size:	000290
+/**
+ * @TODO: Documentation
  */
 void PcamRandomMoveEvent::update()
 {
@@ -150,10 +136,8 @@ void PcamRandomMoveEvent::update()
 	mCamera->getWatchpoint().add(offset);
 }
 
-/*
- * --INFO--
- * Address:	801247C0
- * Size:	0000C4
+/**
+ * @TODO: Documentation
  */
 PcamSideVibrationEvent::PcamSideVibrationEvent(PcamCamera* camera)
     : PeveEvent(0)
@@ -167,10 +151,8 @@ PcamSideVibrationEvent::PcamSideVibrationEvent(PcamCamera* camera)
 	mMaxRotation        = NMathF::pi / 8.0f;
 }
 
-/*
- * --INFO--
- * Address:	80124884
- * Size:	000070
+/**
+ * @TODO: Documentation
  */
 void PcamSideVibrationEvent::makePcamSideVibrationEvent()
 {
@@ -181,10 +163,8 @@ void PcamSideVibrationEvent::makePcamSideVibrationEvent()
 	mPolyFunction.mData.mValues[1] = -mMaxRotation / mEventPeriod;
 }
 
-/*
- * --INFO--
- * Address:	801248F4
- * Size:	000098
+/**
+ * @TODO: Documentation
  */
 void PcamSideVibrationEvent::update()
 {
@@ -193,10 +173,8 @@ void PcamSideVibrationEvent::update()
 	mCamera->mRotationAngle = mPolyFunction.getValue(time) * mVibFunction.getValue(time);
 }
 
-/*
- * --INFO--
- * Address:	8012498C
- * Size:	000010
+/**
+ * @TODO: Documentation
  */
 void PcamSideVibrationEvent::finish()
 {

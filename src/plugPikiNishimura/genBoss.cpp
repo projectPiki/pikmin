@@ -19,30 +19,24 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("genBoss");
 
-/*
- * --INFO--
- * Address:	8014D2D0
- * Size:	00008C
+/**
+ * @TODO: Documentation
  */
 static GenObject* makeObjectBoss()
 {
 	return new GenObjectBoss();
 }
 
-/*
- * --INFO--
- * Address:	8014D35C
- * Size:	000088
+/**
+ * @TODO: Documentation
  */
 void GenObjectBoss::initialise()
 {
 	GenObjectFactory::factory->registerMember('boss', &makeObjectBoss, "ボスを発生", 2);
 }
 
-/*
- * --INFO--
- * Address:	8014D3E4
- * Size:	0000EC
+/**
+ * @TODO: Documentation
  */
 void GenObjectBoss::doRead(RandomAccessStream& input)
 {
@@ -64,40 +58,32 @@ void GenObjectBoss::doRead(RandomAccessStream& input)
 	readParameters(input);
 }
 
-/*
- * --INFO--
- * Address:	8014D4D0
- * Size:	000020
+/**
+ * @TODO: Documentation
  */
 void GenObjectBoss::doWrite(RandomAccessStream& output)
 {
 	writeParameters(output);
 }
 
-/*
- * --INFO--
- * Address:	8014D4F0
- * Size:	000020
+/**
+ * @TODO: Documentation
  */
 void GenObjectBoss::ramLoadParameters(RandomAccessStream& input)
 {
 	readParameters(input);
 }
 
-/*
- * --INFO--
- * Address:	8014D510
- * Size:	000020
+/**
+ * @TODO: Documentation
  */
 void GenObjectBoss::ramSaveParameters(RandomAccessStream& output)
 {
 	writeParameters(output);
 }
 
-/*
- * --INFO--
- * Address:	8014D530
- * Size:	000080
+/**
+ * @TODO: Documentation
  */
 void GenObjectBoss::readParameters(RandomAccessStream& input)
 {
@@ -122,10 +108,8 @@ void GenObjectBoss::readParameters(RandomAccessStream& input)
 	mPelletConfigIdx = flags.b.m0 - 1;
 }
 
-/*
- * --INFO--
- * Address:	8014D5B0
- * Size:	000090
+/**
+ * @TODO: Documentation
  */
 void GenObjectBoss::writeParameters(RandomAccessStream& output)
 {
@@ -151,10 +135,8 @@ void GenObjectBoss::writeParameters(RandomAccessStream& output)
 	output.writeInt(flags.w);
 }
 
-/*
- * --INFO--
- * Address:	8014D640
- * Size:	000150
+/**
+ * @TODO: Documentation
  */
 void GenObjectBoss::updateUseList(Generator*, int count)
 {
@@ -202,10 +184,8 @@ void GenObjectBoss::updateUseList(Generator*, int count)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8014D790
- * Size:	00013C
+/**
+ * @TODO: Documentation
  */
 Creature* GenObjectBoss::birth(BirthInfo& info)
 {

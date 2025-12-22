@@ -49,10 +49,8 @@ ChannelData* ChannelDataMgr::getChannelDataTbl(int row)
 	return &channelDataTbl[row];
 }
 
-/*
- * --INFO--
- * Address:	8017C868
- * Size:	000028
+/**
+ * @TODO: Documentation
  */
 ChannelMgr::ChannelMgr()
 {
@@ -92,10 +90,8 @@ void ChannelMgr::reset()
 	mData            = nullptr;
 }
 
-/*
- * --INFO--
- * Address:	8017C890
- * Size:	000060
+/**
+ * @TODO: Documentation
  */
 void ChannelMgr::start(int idx, f32* valuePtr)
 {
@@ -117,10 +113,8 @@ void ChannelMgr::start(int idx, f32* valuePtr)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8017C8F0
- * Size:	0000FC
+/**
+ * @TODO: Documentation
  */
 f32 ChannelMgr::update()
 {
@@ -181,10 +175,8 @@ void ControlerMgr::reset()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8017C9EC
- * Size:	00009C
+/**
+ * @TODO: Documentation
  */
 void ControlerMgr::start(int idx, f32* valuePtr)
 {
@@ -250,10 +242,8 @@ f32 ControlerMgr::update()
 	return mRumbleIntensity;
 }
 
-/*
- * --INFO--
- * Address:	8017CA88
- * Size:	000120
+/**
+ * @TODO: Documentation
  */
 RumbleMgr::RumbleMgr(bool p1, bool p2, bool p3, bool p4)
 {
@@ -303,10 +293,8 @@ void RumbleMgr::init()
 	mIsDisabled = 0;
 }
 
-/*
- * --INFO--
- * Address:	8017CBA8
- * Size:	0001A0
+/**
+ * @TODO: Documentation
  */
 void RumbleMgr::reset()
 {
@@ -323,10 +311,8 @@ void RumbleMgr::reset()
 	mIsDisabled = 0;
 }
 
-/*
- * --INFO--
- * Address:	8017CD48
- * Size:	00008C
+/**
+ * @TODO: Documentation
  */
 void RumbleMgr::start(int type, int ctrlNum, f32* valuePtr)
 {
@@ -337,10 +323,8 @@ void RumbleMgr::start(int type, int ctrlNum, f32* valuePtr)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8017CDD4
- * Size:	000120
+/**
+ * @TODO: Documentation
  */
 void RumbleMgr::start(int type, int ctrlNum, immut Vector3f& sourcePos)
 {
@@ -353,10 +337,8 @@ void RumbleMgr::start(int type, int ctrlNum, immut Vector3f& sourcePos)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8017CEF4
- * Size:	0001C4
+/**
+ * @TODO: Documentation
  */
 void RumbleMgr::stop()
 {
@@ -367,10 +349,8 @@ void RumbleMgr::stop()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8017D0B8
- * Size:	000140
+/**
+ * @TODO: Documentation
  */
 void RumbleMgr::stop(int rumbleType, int controllerIndex)
 {
@@ -381,10 +361,8 @@ void RumbleMgr::stop(int rumbleType, int controllerIndex)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8017D1F8
- * Size:	00016C
+/**
+ * @TODO: Documentation
  */
 void RumbleMgr::update()
 {
@@ -412,10 +390,8 @@ void RumbleMgr::update()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8017D364
- * Size:	00031C
+/**
+ * @TODO: Documentation
  */
 void RumbleMgr::rumbleOption(bool p1)
 {

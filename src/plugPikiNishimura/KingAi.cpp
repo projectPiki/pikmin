@@ -33,20 +33,16 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("KingAi");
 
-/*
- * --INFO--
- * Address:	8016C2B0
- * Size:	000048
+/**
+ * @TODO: Documentation
  */
 KingAi::KingAi(King* king)
 {
 	mKing = king;
 }
 
-/*
- * --INFO--
- * Address:	8016C2F8
- * Size:	00010C
+/**
+ * @TODO: Documentation
  */
 void KingAi::initAI(King* king)
 {
@@ -69,10 +65,8 @@ void KingAi::initAI(King* king)
 	mMaxJumpAttackAngle     = PI * (C_KING_PROP(mKing).mMaxJumpAttackAngle() / 360.0f);
 }
 
-/*
- * --INFO--
- * Address:	8016C404
- * Size:	00007C
+/**
+ * @TODO: Documentation
  */
 void KingAi::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
@@ -101,10 +95,8 @@ void KingAi::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8016C480
- * Size:	0001D0
+/**
+ * @TODO: Documentation
  */
 void KingAi::keyAction0()
 {
@@ -163,10 +155,8 @@ void KingAi::keyAction0()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8016C650
- * Size:	0000E4
+/**
+ * @TODO: Documentation
  */
 void KingAi::keyAction1()
 {
@@ -192,10 +182,8 @@ void KingAi::keyAction1()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8016C734
- * Size:	000050
+/**
+ * @TODO: Documentation
  */
 void KingAi::keyAction2()
 {
@@ -217,20 +205,16 @@ void KingAi::keyAction3()
 {
 }
 
-/*
- * --INFO--
- * Address:	8016C784
- * Size:	000014
+/**
+ * @TODO: Documentation
  */
 void KingAi::keyLoopEnd()
 {
 	mKing->addLoopCounter(1);
 }
 
-/*
- * --INFO--
- * Address:	8016C798
- * Size:	000090
+/**
+ * @TODO: Documentation
  */
 void KingAi::keyFinished()
 {
@@ -248,10 +232,8 @@ void KingAi::keyFinished()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8016C828
- * Size:	000044
+/**
+ * @TODO: Documentation
  */
 void KingAi::playSound(int kingSoundID)
 {
@@ -260,10 +242,8 @@ void KingAi::playSound(int kingSoundID)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8016C86C
- * Size:	000040
+/**
+ * @TODO: Documentation
  */
 void KingAi::createEffect(BOOL doStartSpreadSaliva)
 {
@@ -288,10 +268,8 @@ void KingAi::setAttackPosition()
 	mAttackPosition.z = mKing->mSRT.t.z + C_KING_PROP(mKing).mAttackDistance() * cosf(mKing->mFaceDirection);
 }
 
-/*
- * --INFO--
- * Address:	8016C8AC
- * Size:	000154
+/**
+ * @TODO: Documentation
  */
 void KingAi::calcDamageScale()
 {
@@ -323,20 +301,16 @@ void KingAi::calcDamageScale()
 	mKing->mSRT.s.set(xzScale, yScale, xzScale);
 }
 
-/*
- * --INFO--
- * Address:	8016CA00
- * Size:	000014
+/**
+ * @TODO: Documentation
  */
 void KingAi::startSpreadSaliva()
 {
 	mKing->mKingBody->mDoSpreadSalivaEffect = true;
 }
 
-/*
- * --INFO--
- * Address:	8016CA14
- * Size:	000014
+/**
+ * @TODO: Documentation
  */
 void KingAi::endSpreadSaliva()
 {
@@ -365,10 +339,8 @@ void KingAi::endFallSaliva()
 	mKing->mKingBody->mDoFallSalivaEffect = false;
 }
 
-/*
- * --INFO--
- * Address:	8016CA28
- * Size:	000480
+/**
+ * @TODO: Documentation
  */
 void KingAi::fallBackSide()
 {
@@ -421,10 +393,8 @@ int KingAi::getMouthCollPart(int partNum)
 	return (mMouthSlotFlag >> partNum) & 1;
 }
 
-/*
- * --INFO--
- * Address:	8016CEA8
- * Size:	000460
+/**
+ * @TODO: Documentation
  */
 void KingAi::pikiStickToKingMouth()
 {
@@ -510,10 +480,8 @@ void KingAi::pikiStickToKingMouth()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8016D308
- * Size:	0002A8
+/**
+ * @TODO: Documentation
  */
 void KingAi::tongueBombExplosion()
 {
@@ -537,10 +505,8 @@ void KingAi::tongueBombExplosion()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8016D5B0
- * Size:	00002C
+/**
+ * @TODO: Documentation
  */
 void KingAi::killStickToMouthPiki()
 {
@@ -548,10 +514,8 @@ void KingAi::killStickToMouthPiki()
 	mKing->killStickToMouthPiki();
 }
 
-/*
- * --INFO--
- * Address:	8016D5DC
- * Size:	000290
+/**
+ * @TODO: Documentation
  */
 void KingAi::tongueAttackNavi()
 {
@@ -586,10 +550,8 @@ void KingAi::setDispelParm(Creature* target, f32 distance)
 	target->stimulate(flick);
 }
 
-/*
- * --INFO--
- * Address:	8016D86C
- * Size:	0004B8
+/**
+ * @TODO: Documentation
  */
 void KingAi::dispelNaviPiki()
 {
@@ -620,10 +582,8 @@ void KingAi::dispelNaviPiki()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8016DD24
- * Size:	000120
+/**
+ * @TODO: Documentation
  */
 void KingAi::setDamageLoopCounter(int startVal, int minVal, int maxVal, int loopMin, int loopMid, int loopMax)
 {
@@ -647,10 +607,8 @@ void KingAi::setDamageLoopCounter(int startVal, int minVal, int maxVal, int loop
 	mDamageLoopCounter = loopMin;
 }
 
-/*
- * --INFO--
- * Address:	8016DE44
- * Size:	000284
+/**
+ * @TODO: Documentation
  */
 void KingAi::setEatDamageLoopCounter()
 {
@@ -695,10 +653,8 @@ void KingAi::setMoveVelocity(f32 speed)
 	mKing->mKingBody->mMoveSpeed = speed;
 }
 
-/*
- * --INFO--
- * Address:	8016E0C8
- * Size:	000118
+/**
+ * @TODO: Documentation
  */
 void KingAi::setAttackPriority()
 {
@@ -768,10 +724,8 @@ bool KingAi::attackInArea(Creature* target, immut Vector3f* centre)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8016E1E0
- * Size:	0000CC
+/**
+ * @TODO: Documentation
  */
 bool KingAi::inJumpAngle(Creature* target)
 {
@@ -877,10 +831,8 @@ bool KingAi::inSideWaitRangeTransit()
 	return mKing->inSideWaitRangeTransit();
 }
 
-/*
- * --INFO--
- * Address:	8016E2F4
- * Size:	0000CC
+/**
+ * @TODO: Documentation
  */
 bool KingAi::inTurnAngleTransit()
 {
@@ -902,10 +854,8 @@ bool KingAi::inTurnAngleTransit()
 	STACK_PAD_VAR(1);
 }
 
-/*
- * --INFO--
- * Address:	8016E3C0
- * Size:	000300
+/**
+ * @TODO: Documentation
  */
 bool KingAi::chaseNaviTransit()
 {
@@ -942,10 +892,8 @@ bool KingAi::chaseNaviTransit()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8016E6C0
- * Size:	00030C
+/**
+ * @TODO: Documentation
  */
 bool KingAi::chasePikiTransit()
 {
@@ -981,10 +929,8 @@ bool KingAi::chasePikiTransit()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8016E9CC
- * Size:	0003E0
+/**
+ * @TODO: Documentation
  */
 bool KingAi::attackTransit()
 {
@@ -1032,10 +978,8 @@ bool KingAi::missAttackNextTransit()
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	8016EDAC
- * Size:	000448
+/**
+ * @TODO: Documentation
  */
 bool KingAi::jumpAttackTransit()
 {
@@ -1075,10 +1019,8 @@ bool KingAi::swallowTransit()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8016F1F4
- * Size:	0002B8
+/**
+ * @TODO: Documentation
  */
 bool KingAi::eatThrowPikiTransit()
 {
@@ -1121,10 +1063,8 @@ bool KingAi::flickTransit()
 	return mKing->flickPikiTransit();
 }
 
-/*
- * --INFO--
- * Address:	8016F4AC
- * Size:	000190
+/**
+ * @TODO: Documentation
  */
 bool KingAi::targetLostTransit()
 {
@@ -1155,10 +1095,8 @@ bool KingAi::targetLostTransit()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8016F63C
- * Size:	00040C
+/**
+ * @TODO: Documentation
  */
 bool KingAi::appearTransit()
 {
@@ -1190,10 +1128,8 @@ bool KingAi::appearTransit()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	8016FA48
- * Size:	00014C
+/**
+ * @TODO: Documentation
  */
 void KingAi::initDie(int nextState)
 {
@@ -1488,10 +1424,8 @@ void KingAi::initWaveNeck(int nextState)
 	resultFlagOn();
 }
 
-/*
- * --INFO--
- * Address:	8016FB94
- * Size:	00016C
+/**
+ * @TODO: Documentation
  */
 void KingAi::initAppear(int nextState)
 {
@@ -1797,10 +1731,8 @@ void KingAi::afterProcessing()
 	}
 }
 
-/*
- * --INFO--
- * Address:	8016FD00
- * Size:	003084
+/**
+ * @TODO: Documentation
  */
 void KingAi::update()
 {

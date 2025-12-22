@@ -20,10 +20,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("Node");
 
-/*
- * --INFO--
- * Address:	800405D8
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 void CoreNode::add(CoreNode* toAdd)
 {
@@ -47,10 +45,8 @@ void CoreNode::add(CoreNode* toAdd)
 	toAdd->mParent = this;
 }
 
-/*
- * --INFO--
- * Address:	80040610
- * Size:	000070
+/**
+ * @TODO: Documentation
  */
 void CoreNode::del()
 {
@@ -83,10 +79,8 @@ void CoreNode::del()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80040680
- * Size:	000020
+/**
+ * @TODO: Documentation
  */
 int CoreNode::getChildCount()
 {
@@ -98,10 +92,8 @@ int CoreNode::getChildCount()
 	return count;
 }
 
-/*
- * --INFO--
- * Address:	800406A0
- * Size:	00009C
+/**
+ * @TODO: Documentation
  */
 void CoreNode::load(immut char* dirPath, immut char* fileName, u32)
 {
@@ -114,10 +106,8 @@ void CoreNode::load(immut char* dirPath, immut char* fileName, u32)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8004073C
- * Size:	000028
+/**
+ * @TODO: Documentation
  */
 void Node::init(immut char* name)
 {
@@ -126,10 +116,8 @@ void Node::init(immut char* name)
 	_1C    = -1;
 }
 
-/*
- * --INFO--
- * Address:	80040764
- * Size:	00006C
+/**
+ * @TODO: Documentation
  */
 void Node::update()
 {
@@ -142,10 +130,8 @@ void Node::update()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800407D0
- * Size:	00005C
+/**
+ * @TODO: Documentation
  */
 void Node::draw(Graphics& gfx)
 {
@@ -155,10 +141,8 @@ void Node::draw(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8004082C
- * Size:	00002C
+/**
+ * @TODO: Documentation
  */
 void Node::render(Graphics& gfx)
 {
@@ -176,10 +160,8 @@ SRTNode::SRTNode(immut char* name = "<SRTNode>")
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80040858
- * Size:	00007C
+/**
+ * @TODO: Documentation
  */
 void SRTNode::update()
 {
@@ -194,10 +176,8 @@ void SRTNode::update()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800408D4
- * Size:	000064
+/**
+ * @TODO: Documentation
  */
 void NodeMgr::Del(Node* node)
 {
@@ -243,10 +223,8 @@ CoreNode* NodeMgr::findNode(immut char*, CoreNode*)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80040938
- * Size:	00003C
+/**
+ * @TODO: Documentation
  */
 NodeMgr::NodeMgr()
 {

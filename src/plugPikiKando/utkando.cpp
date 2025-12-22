@@ -21,10 +21,8 @@ DEFINE_ERROR(7)
  */
 DEFINE_PRINT("utKando");
 
-/*
- * --INFO--
- * Address:	80116110
- * Size:	0000B0
+/**
+ * @TODO: Documentation
  */
 int selectRandomly(immut Choice* choice, int num)
 {
@@ -39,10 +37,8 @@ int selectRandomly(immut Choice* choice, int num)
 	return choice[num - 1].mValue;
 }
 
-/*
- * --INFO--
- * Address:	801161C0
- * Size:	000010
+/**
+ * @TODO: Documentation
  */
 BitFlags::BitFlags()
 {
@@ -50,10 +46,8 @@ BitFlags::BitFlags()
 	mSize  = 0;
 }
 
-/*
- * --INFO--
- * Address:	801161D0
- * Size:	000058
+/**
+ * @TODO: Documentation
  */
 void BitFlags::dump()
 {
@@ -63,10 +57,8 @@ void BitFlags::dump()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80116228
- * Size:	000070
+/**
+ * @TODO: Documentation
  */
 void BitFlags::loadCard(RandomAccessStream& stream)
 {
@@ -75,10 +67,8 @@ void BitFlags::loadCard(RandomAccessStream& stream)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80116298
- * Size:	000070
+/**
+ * @TODO: Documentation
  */
 void BitFlags::saveCard(RandomAccessStream& stream)
 {
@@ -87,10 +77,8 @@ void BitFlags::saveCard(RandomAccessStream& stream)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80116308
- * Size:	000054
+/**
+ * @TODO: Documentation
  */
 void BitFlags::create(u16 size, u8* data)
 {
@@ -103,10 +91,8 @@ void BitFlags::create(u16 size, u8* data)
 	}
 }
 
-/*
- * --INFO--
- * Address:	8011635C
- * Size:	000028
+/**
+ * @TODO: Documentation
  */
 void BitFlags::reset()
 {
@@ -115,10 +101,8 @@ void BitFlags::reset()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80116384
- * Size:	000030
+/**
+ * @TODO: Documentation
  */
 void BitFlags::setFlag(u16 flag)
 {
@@ -135,20 +119,16 @@ void BitFlags::resetFlag(u16 flag)
 	mFlags[flag >> 3] &= ~(1 << u16(flag - 8 * (flag >> 3)));
 }
 
-/*
- * --INFO--
- * Address:	801163B4
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 bool BitFlags::isFlag(u16 flag)
 {
 	return ((1 << u16(flag - 8 * (flag >> 3))) & mFlags[flag >> 3]) != 0;
 }
 
-/*
- * --INFO--
- * Address:	801163EC
- * Size:	00000C
+/**
+ * @TODO: Documentation
  */
 LoopChecker::LoopChecker(immut char* name, f32 time)
 {
@@ -156,10 +136,8 @@ LoopChecker::LoopChecker(immut char* name, f32 time)
 	mLoopName  = name;
 }
 
-/*
- * --INFO--
- * Address:	801163F8
- * Size:	000028
+/**
+ * @TODO: Documentation
  */
 void LoopChecker::update()
 {
@@ -170,10 +148,8 @@ void LoopChecker::update()
 	}
 }
 
-/*
- * --INFO--
- * Address:	80116420
- * Size:	00016C
+/**
+ * @TODO: Documentation
  */
 void drawBatten(Graphics& gfx, immut Vector3f& pos, f32 size)
 {
@@ -188,10 +164,8 @@ void drawBatten(Graphics& gfx, immut Vector3f& pos, f32 size)
 	gfx.drawLine(p2, p4);
 }
 
-/*
- * --INFO--
- * Address:	8011658C
- * Size:	000424
+/**
+ * @TODO: Documentation
  */
 void drawBattenPole(Graphics& gfx, immut Vector3f& pos, f32 size, immut char* name)
 {
@@ -218,10 +192,8 @@ void drawBattenPole(Graphics& gfx, immut Vector3f& pos, f32 size, immut char* na
 	}
 }
 
-/*
- * --INFO--
- * Address:	801169B0
- * Size:	00026C
+/**
+ * @TODO: Documentation
  */
 void drawArrow(Graphics& gfx, immut Vector3f& p1, immut Vector3f& p2, f32 size)
 {
@@ -249,10 +221,8 @@ void drawArrow(Graphics& gfx, immut Vector3f& p1, immut Vector3f& p2, f32 size)
 	gfx.drawLine(pos3, pos5);
 }
 
-/*
- * --INFO--
- * Address:	80116C1C
- * Size:	0001E8
+/**
+ * @TODO: Documentation
  */
 void CRSplineDraw(Graphics& gfx, int numSides, immut Vector3f* origin)
 {
@@ -277,10 +247,8 @@ void CRSplineDraw(Graphics& gfx, int numSides, immut Vector3f* origin)
 	}
 }
 
-/*
- * --INFO--
- * Address:	80116E04
- * Size:	0003C0
+/**
+ * @TODO: Documentation
  */
 void drawCube(Graphics& gfx, immut Vector3f& pos, f32 size)
 {

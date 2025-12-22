@@ -16,10 +16,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT(nullptr);
 
-/*
- * --INFO--
- * Address:	80061250
- * Size:	000180
+/**
+ * @TODO: Documentation
  */
 void NinLogoSection::init()
 {

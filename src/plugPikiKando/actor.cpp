@@ -27,10 +27,8 @@ Actor::Actor()
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	80119A10
- * Size:	0000A4
+/**
+ * @TODO: Documentation
  */
 void Actor::setType(int, PikiShapeObject* shape, CreatureProp* props, SimpleAI* ai)
 {

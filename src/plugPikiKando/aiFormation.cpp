@@ -17,10 +17,8 @@ DEFINE_ERROR(8)
  */
 DEFINE_PRINT("aiFormation")
 
-/*
- * --INFO--
- * Address:	800B98D8
- * Size:	00032C
+/**
+ * @TODO: Documentation
  */
 void ActFormation::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
@@ -68,10 +66,8 @@ void ActFormation::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800B9C04
- * Size:	00005C
+/**
+ * @TODO: Documentation
  */
 ActFormation::ActFormation(Piki* piki)
     : Action(piki, true)
@@ -79,10 +75,8 @@ ActFormation::ActFormation(Piki* piki)
 	mFormMgr = nullptr;
 }
 
-/*
- * --INFO--
- * Address:	800B9C60
- * Size:	000148
+/**
+ * @TODO: Documentation
  */
 void ActFormation::getFormPoint()
 {
@@ -106,10 +100,8 @@ void ActFormation::getFormPoint()
 	mUseLastFormationPosition = false;
 }
 
-/*
- * --INFO--
- * Address:	800B9DA8
- * Size:	0000F4
+/**
+ * @TODO: Documentation
  */
 void ActFormation::init(Creature* target)
 {
@@ -135,10 +127,8 @@ void ActFormation::init(Creature* target)
 	mIsTripping         = FALSE;
 }
 
-/*
- * --INFO--
- * Address:	800B9E9C
- * Size:	00004C
+/**
+ * @TODO: Documentation
  */
 void ActFormation::cleanup()
 {
@@ -149,10 +139,8 @@ void ActFormation::cleanup()
 	}
 }
 
-/*
- * --INFO--
- * Address:	800B9EE8
- * Size:	0006A4
+/**
+ * @TODO: Documentation
  */
 int ActFormation::exec()
 {

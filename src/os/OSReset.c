@@ -3,10 +3,8 @@
 
 static OSResetQueue ResetFunctionQueue;
 
-/*
- * --INFO--
- * Address:	801FA0C0
- * Size:	000084
+/**
+ * @TODO: Documentation
  */
 void OSRegisterResetFunction(OSResetFunctionInfo* info)
 {
@@ -74,10 +72,8 @@ BOOL CallResetFunctions(BOOL final)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801FA144
- * Size:	000070
+/**
+ * @TODO: Documentation
  */
 static ASM Reset(register s32 resetCode)
 {
@@ -153,10 +149,8 @@ static void KillThreads(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801FA1B4
- * Size:	000048
+/**
+ * @TODO: Documentation
  */
 void __OSDoHotReset(s32 code)
 {
@@ -166,10 +160,8 @@ void __OSDoHotReset(s32 code)
 	Reset(code * 8);
 }
 
-/*
- * --INFO--
- * Address:	801FA1FC
- * Size:	0001B8
+/**
+ * @TODO: Documentation
  */
 void OSResetSystem(int reset, u32 resetCode, BOOL forceMenu)
 {

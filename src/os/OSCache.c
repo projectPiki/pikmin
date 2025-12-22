@@ -12,10 +12,8 @@ void DCFlashInvalidate(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801F6BA4
- * Size:	000014
+/**
+ * @TODO: Documentation
  */
 ASM void DCEnable(void)
 {
@@ -112,10 +110,8 @@ void DCBlockInvalidate(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801F6BB8
- * Size:	000030
+/**
+ * @TODO: Documentation
  */
 ASM void DCInvalidateRange(register void* addr, register u32 nBytes) {
 #ifdef __MWERKS__ // clang-format off
@@ -137,10 +133,8 @@ _loop:
 #endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address:	801F6BE8
- * Size:	000034
+/**
+ * @TODO: Documentation
  */
 ASM void DCFlushRange(register void* addr, register u32 nBytes) {
 #ifdef __MWERKS__ // clang-format off
@@ -165,10 +159,8 @@ _loop:
 #endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address:	801F6C1C
- * Size:	000034
+/**
+ * @TODO: Documentation
  */
 ASM void DCStoreRange(register void* addr, register u32 nBytes) {
 #ifdef __MWERKS__ // clang-format off
@@ -193,10 +185,8 @@ _loop:
 #endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address:	801F6C50
- * Size:	000030
+/**
+ * @TODO: Documentation
  */
 ASM void DCFlushRangeNoSync(register void* addr, register u32 nBytes) {
 #ifdef __MWERKS__ // clang-format off
@@ -219,10 +209,8 @@ _loop:
 #endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address:	801F6C80
- * Size:	000030
+/**
+ * @TODO: Documentation
  */
 ASM void DCStoreRangeNoSync(register void* addr, register u32 nBytes) {
 #ifdef __MWERKS__ // clang-format off
@@ -245,10 +233,8 @@ _loop:
 #endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address:	801F6CB0
- * Size:	000030
+/**
+ * @TODO: Documentation
  */
 ASM void DCZeroRange(register void* addr, register u32 nBytes)
 {
@@ -281,10 +267,8 @@ void DCTouchRange(register void* addr, register u32 nBytes)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801F6CE0
- * Size:	000038
+/**
+ * @TODO: Documentation
  */
 ASM void ICInvalidateRange(register void* addr, register u32 nBytes) {
 #ifdef __MWERKS__ // clang-format off
@@ -308,10 +292,8 @@ _loop:
 #endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address:	801F6D18
- * Size:	000010
+/**
+ * @TODO: Documentation
  */
 ASM void ICFlashInvalidate(void) {
 #ifdef __MWERKS__ // clang-format off
@@ -325,10 +307,8 @@ ASM void ICFlashInvalidate(void) {
 #endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address:	801F6D28
- * Size:	000014
+/**
+ * @TODO: Documentation
  */
 ASM void ICEnable(void)
 {
@@ -582,10 +562,8 @@ void L2Disable(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801F6D3C
- * Size:	000098
+/**
+ * @TODO: Documentation
  */
 void L2GlobalInvalidate(void)
 {
@@ -623,10 +601,8 @@ void L2SetWriteThrough(int)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	801F6DD4
- * Size:	000160
+/**
+ * @TODO: Documentation
  */
 void DMAErrorHandler(OSError error, OSContext* context, ...)
 {
@@ -665,10 +641,8 @@ void DMAErrorHandler(OSError error, OSContext* context, ...)
 	PPCMthid2(hid2);
 }
 
-/*
- * --INFO--
- * Address:	801F6F34
- * Size:	0000F4
+/**
+ * @TODO: Documentation
  */
 void __OSCacheInit(void)
 {
