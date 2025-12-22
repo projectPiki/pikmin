@@ -1022,10 +1022,6 @@ void Navi::callDebugs(f32 radius)
 }
 
 /*
- * --INFO--
- * Address:	800FBF1C
- * Size:	0007DC
- *
  * @brief Releases the Pikmin from the Navi's control and organizes them by color.
  *
  * This function iterates through the Pikmin managed by the Navi, filters out those that are not in a releasable state,

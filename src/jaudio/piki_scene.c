@@ -316,10 +316,6 @@ static u32 stop_flag;
 static volatile u32 stop_ready;
 
 /*
- * --INFO--
- * Address:	80019E80
- * Size:	00007C
- *
  * cmd -1: stop, cmd 0: ready
  */
 static int MovieSync(u32 a1, s32 cmd)

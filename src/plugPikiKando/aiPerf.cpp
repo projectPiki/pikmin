@@ -432,10 +432,6 @@ void AIPerf::collectPikis(Menu& menu)
 }
 
 /*
- * --INFO--
- * Address:	80085F0C
- * Size:	0000B8
- *
  * Collects all pikis and puts them in the onion.
  */
 void AIPerf::fullfillPiki(Menu& menu)

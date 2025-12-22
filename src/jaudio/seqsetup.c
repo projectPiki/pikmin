@@ -528,10 +528,6 @@ u32 Jaq_CloseTrack(seqp_* track)
 }
 
 /*
- * --INFO--
- * Address:	80014AC0
- * Size:	0000E8
- *
  * Note: While this function accepts `void*`, it really expects `seqp_*`.
  */
 static s32 Jaq_RootCallback(void* VOID_track)
