@@ -14,7 +14,7 @@ struct Matrix3f {
 	enum mode {
 		MODE_Unk0 = 0,
 	};
-	enum do_not_initialize {};
+	enum do_not_initialize { };
 
 	Matrix3f() { identity(); }
 

@@ -396,6 +396,7 @@ void __GXUpdateBPMask(void)
 		gx->bpSent = 1;
 	}
 }
+
 /*
  * --INFO--
  * Address:	80212F78

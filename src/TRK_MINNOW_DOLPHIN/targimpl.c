@@ -694,6 +694,7 @@ DSError TRKTargetSupportMask(u8 mask[32])
 }
 
 extern BOOL gTRKBigEndian;
+
 /*
  * --INFO--
  * Address:	8021F1BC

@@ -40,7 +40,7 @@ struct AyuCache {
 	u32 amountFree();
 
 	MemHead mFreeBlockHead;      // _00, sentinel head for address-sorted free list
-	u8 _0C[0x4];				 // _0C, unused
+	u8 _0C[0x4];                 // _0C, unused
 	MemHead mAllocatedBlockHead; // _10, sentinel head for allocated list (typically MRU/LRU ordered)
 	u32 mBlockGuardValue;        // _1C, guard/canary value written into headers/trailers
 	u32 mCurrentAllocationTag;   // _20, tag (0-255) applied to new allocations via mallocL

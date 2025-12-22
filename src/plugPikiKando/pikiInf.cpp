@@ -625,6 +625,7 @@ void StageInf::saveCard(RandomAccessStream& output)
 }
 
 #pragma dont_inline on
+
 /*
  * --INFO--
  * Address:	800C6500
@@ -634,4 +635,5 @@ void StageInf::loadCard(RandomAccessStream& input)
 {
 	mBPikiInfMgr.loadCard(input);
 }
+
 #pragma dont_inline reset

@@ -82,6 +82,7 @@ void CoreNode::del()
 		}
 	}
 }
+
 /*
  * --INFO--
  * Address:	80040680

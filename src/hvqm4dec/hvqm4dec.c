@@ -177,6 +177,7 @@ static inline s16 getByte(BitBuffer* str)
 	value &= 0xFF;
 	return value;
 }
+
 /*
  * --INFO--
  * Address:	8001F0B8
