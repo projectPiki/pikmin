@@ -8,6 +8,38 @@
 #include "stl/string.h"
 #include "types.h"
 
+// ---- AgeServer protocol constants ----
+// Only name the ones we can be confident about; keep others numeric.
+// Client -> server
+#define AGE_CMD_END_OPTION        (0)
+#define AGE_CMD_NEW_OPTION        (1)
+#define AGE_CMD_DONE              (200)
+#define AGE_CMD_NEW_NODE_WINDOW   (100)
+#define AGE_CMD_NEW_NODE          (101)
+#define AGE_CMD_NEW_EDITOR        (102)
+#define AGE_CMD_NEW_PROP_WINDOW   (104)
+#define AGE_CMD_NEW_VIEWER        (107)
+#define AGE_CMD_NEW_LABEL         (108)
+#define AGE_CMD_START_SECTION     (300)
+#define AGE_CMD_END_SECTION       (301)
+#define AGE_CMD_START_GROUP       (302)
+#define AGE_CMD_END_GROUP         (303)
+#define AGE_CMD_SET_ON_CHANGE     (207)
+#define AGE_CMD_208               (208)
+#define AGE_CMD_REFRESH_NODE      (402)
+#define AGE_CMD_REFRESH_SECTION   (403)
+#define AGE_CMD_GET_OPEN_FILENAME (404)
+
+// Server -> client
+#define AGE_SRV_CMD_REQUEST_CLOSE               (500)
+#define AGE_SRV_CMD_0xCA                        (0xCA)
+#define AGE_SRV_CMD_APPLY_PROP_VALUE_TO_PTR     (0xCB)
+#define AGE_SRV_CMD_0xCC                        (0xCC)
+#define AGE_SRV_CMD_0xCD                        (0xCD)
+#define AGE_SRV_CMD_REQUEST_PROP_VALUE_FROM_PTR (0xCE)
+#define AGE_SRV_CMD_0xD1                        (0xD1)
+#define AGE_SRV_CMD_0xD2                        (0xD2)
+
 enum PROP_TYPE {
 	CHAR_PROP = 0,
 	SHORT_PROP,    // 1
@@ -30,25 +62,25 @@ struct AgeServer : public AtxStream {
 // configure.py
 // Note that all of these functions work by sending a specific command id to the server, plugAtxServer.dll has the important stuff
 #ifdef WIN32
-	void Done() { writeInt(200); }
+	void Done() { writeInt(AGE_CMD_DONE); }
 
-	void EndBitGroup() { writeInt(0); }
+	void EndBitGroup() { writeInt(AGE_CMD_END_OPTION); }
 
-	void EndGroup() { writeInt(303); }
+	void EndGroup() { writeInt(AGE_CMD_END_GROUP); }
 
-	void EndNode() { writeInt(200); }
+	void EndNode() { writeInt(AGE_CMD_END_NODE); }
 
-	void EndOptionBox() { writeInt(0); }
+	void EndOptionBox() { writeInt(AGE_CMD_END_OPTION); }
 
 	void EndSection()
 	{
-		writeInt(301);
+		writeInt(AGE_CMD_END_SECTION);
 		mIsActive = false;
 	}
 
 	void NewBit(char* name, u32 a1, u32 a2)
 	{
-		writeInt(1);
+		writeInt(AGE_CMD_NEW_OPTION);
 		writeString(name);
 		writeInt(a1);
 		writeInt(a2);
@@ -56,7 +88,7 @@ struct AgeServer : public AtxStream {
 
 	void NewButton(char* name, IDelegate* cmd, int a)
 	{
-		writeInt(302);
+		writeInt(AGE_CMD_START_GROUP);
 		writeString(name);
 		writeInt(a);
 		writeInt(0);
@@ -65,7 +97,7 @@ struct AgeServer : public AtxStream {
 
 	void NewButton(char* name, IDelegate1<AgeServer&>* cmd, int a)
 	{
-		writeInt(302);
+		writeInt(AGE_CMD_START_GROUP);
 		writeString(name);
 		writeInt(a);
 		writeInt(1);
@@ -74,7 +106,7 @@ struct AgeServer : public AtxStream {
 
 	void NewEditor(char* name, class AyuImage* img, bool a)
 	{
-		writeInt(102);
+		writeInt(AGE_CMD_NEW_EDITOR);
 		writeString(name);
 		if (a) {
 			writeProp(IMAGE_PROP, img);
@@ -85,14 +117,14 @@ struct AgeServer : public AtxStream {
 
 	void NewEditor(char* name, Colour* col)
 	{
-		writeInt(102);
+		writeInt(AGE_CMD_NEW_EDITOR);
 		writeString(name);
 		writeProp(COLOUR_PROP, col);
 	}
 
 	void NewEditor(char* name, char* val, int a)
 	{
-		writeInt(102);
+		writeInt(AGE_CMD_NEW_EDITOR);
 		writeString(name);
 		writeProp(CHAR_PTR_PROP, val);
 		writeInt(a - 1);
@@ -100,7 +132,7 @@ struct AgeServer : public AtxStream {
 
 	void NewEditor(char* name, char* val, int min, int max, int step)
 	{
-		writeInt(102);
+		writeInt(AGE_CMD_NEW_EDITOR);
 		writeString(name);
 		writeProp(CHAR_PROP, val);
 		writeInt(1);
@@ -111,7 +143,7 @@ struct AgeServer : public AtxStream {
 
 	void NewEditor(char* name, f32* val, f32 min, f32 max, int step)
 	{
-		writeInt(102);
+		writeInt(AGE_CMD_NEW_EDITOR);
 		writeString(name);
 		writeProp(FLOAT_PROP, val);
 		writeFloat(min);
@@ -121,7 +153,7 @@ struct AgeServer : public AtxStream {
 
 	void NewEditor(char* name, int* val, int min, int max, int step)
 	{
-		writeInt(102);
+		writeInt(AGE_CMD_NEW_EDITOR);
 		writeString(name);
 		writeProp(INT_PROP, val);
 		writeFloat(min);
@@ -131,7 +163,7 @@ struct AgeServer : public AtxStream {
 
 	void NewEditor(char* name, short* val, int min, int max, int step)
 	{
-		writeInt(102);
+		writeInt(AGE_CMD_NEW_EDITOR);
 		writeString(name);
 		writeProp(SHORT_PROP, val);
 		writeFloat(min);
@@ -141,13 +173,13 @@ struct AgeServer : public AtxStream {
 
 	void NewLabel(char* lbl)
 	{
-		writeInt(108);
+		writeInt(AGE_CMD_NEW_LABEL);
 		writeString(lbl);
 	}
 
 	void NewNode(char* name, ANode* node)
 	{
-		writeInt(101);
+		writeInt(AGE_CMD_NEW_NODE);
 		writeInt((int)node);
 		writeString(name);
 		writeInt(node->getAgeNodeType());
@@ -155,34 +187,34 @@ struct AgeServer : public AtxStream {
 
 	void NewNodeWindow(char* name)
 	{
-		writeInt(100);
+		writeInt(AGE_CMD_NEW_NODE_WINDOW);
 		writeString(name);
 	}
 
 	void NewOption(char* name, int a)
 	{
-		writeInt(1);
+		writeInt(AGE_CMD_NEW_OPTION);
 		writeString(name);
 		writeInt(a);
 	}
 
 	void NewPropWindow(char* name, u32 a)
 	{
-		writeInt(104);
+		writeInt(AGE_CMD_NEW_PROP_WINDOW);
 		writeString(name);
 		writeInt(a);
 	}
 
 	void NewViewer(char* name, f32* val)
 	{
-		writeInt(107);
+		writeInt(AGE_CMD_NEW_VIEWER);
 		writeString(name);
 		writeProp(FLOAT_PROP, val);
 	}
 
 	void NewViewer(char* name, int* val)
 	{
-		writeInt(107);
+		writeInt(AGE_CMD_NEW_VIEWER);
 		writeString(name);
 		writeProp(INT_PROP, val);
 	}
@@ -190,7 +222,7 @@ struct AgeServer : public AtxStream {
 	bool Open()
 	{
 		// PRINT("!!!!! Opening Age server\n");
-		if (AtxStream::open("age", 3)) {
+		if (AtxStream::open(ATX_SERVICE_AGE, ATX_SERVICE_NAME_SIZE)) {
 			mIsActive = false;
 			return true;
 		}
@@ -199,13 +231,13 @@ struct AgeServer : public AtxStream {
 		return false;
 	}
 
-	void RefreshNode() { writeInt(402); }
+	void RefreshNode() { writeInt(AGE_CMD_REFRESH_NODE); }
 
-	void RefreshSection() { writeInt(403); }
+	void RefreshSection() { writeInt(AGE_CMD_REFRESH_SECTION); }
 
 	void StartBitGroup(char* name, u32* val, int a)
 	{
-		writeInt(102);
+		writeInt(AGE_CMD_NEW_EDITOR);
 		writeString(name);
 		writeProp(UNK7, nullptr);
 		writeProp(INT_PROP, val);
@@ -214,7 +246,7 @@ struct AgeServer : public AtxStream {
 
 	void StartBitGroup(char* name, u8* val, int a)
 	{
-		writeInt(102);
+		writeInt(AGE_CMD_NEW_EDITOR);
 		writeString(name);
 		writeProp(UNK7, nullptr);
 		writeProp(CHAR_PROP, val);
@@ -223,13 +255,13 @@ struct AgeServer : public AtxStream {
 
 	void StartGroup(char* name)
 	{
-		writeInt(302);
+		writeInt(AGE_CMD_START_GROUP);
 		writeString(name);
 	}
 
 	void StartOptionBox(char* name, int* val, int a)
 	{
-		writeInt(102);
+		writeInt(AGE_CMD_NEW_EDITOR);
 		writeString(name);
 		// PRINT("new optionbox : %08x\n", val);
 		writeProp(UNK9, nullptr);
@@ -239,7 +271,7 @@ struct AgeServer : public AtxStream {
 
 	void StartOptionBox(char* name, u16* val, int a)
 	{
-		writeInt(102);
+		writeInt(AGE_CMD_NEW_EDITOR);
 		writeString(name);
 		writeProp(UNK9, nullptr);
 		writeProp(SHORT_PROP, val);
@@ -248,7 +280,7 @@ struct AgeServer : public AtxStream {
 
 	void StartOptionBox(char* name, u8* val, int a)
 	{
-		writeInt(102);
+		writeInt(AGE_CMD_NEW_EDITOR);
 		writeString(name);
 		writeProp(UNK9, nullptr);
 		writeProp(CHAR_PROP, val);
@@ -257,7 +289,7 @@ struct AgeServer : public AtxStream {
 
 	void StartSection(char* name, bool unk)
 	{
-		writeInt(300);
+		writeInt(AGE_CMD_START_SECTION);
 		writeInt(unk);
 		writeString(name);
 	}
@@ -266,7 +298,7 @@ struct AgeServer : public AtxStream {
 
 	bool getOpenFilename(String& path, char* option)
 	{
-		writeInt(404);
+		writeInt(AGE_CMD_GET_OPEN_FILENAME);
 		if (option) {
 			// PRINT("filter length = %d\n", strlen(option));
 			writeString(option);
@@ -279,7 +311,7 @@ struct AgeServer : public AtxStream {
 
 	bool getSaveFilename(String& path, char* option)
 	{
-		writeInt(208);
+		writeInt(AGE_CMD_208);
 		if (option) {
 			writeString(option);
 		} else {
@@ -321,21 +353,21 @@ struct AgeServer : public AtxStream {
 
 	void setOnChange(IDelegate* cmd)
 	{
-		writeInt(207);
+		writeInt(AGE_CMD_SET_ON_CHANGE);
 		writeInt(0);
 		writeInt((int)cmd);
 	}
 
 	void setOnChange(IDelegate1<AgeServer&>* cmd)
 	{
-		writeInt(207);
+		writeInt(AGE_CMD_SET_ON_CHANGE);
 		writeInt(1);
 		writeInt((int)cmd);
 	}
 
 	void setSectionRefresh(IDelegate1<AgeServer&>* cmd)
 	{
-		writeInt(208);
+		writeInt(AGE_CMD_208);
 		writeInt((int)cmd);
 	}
 
@@ -358,7 +390,7 @@ struct AgeServer : public AtxStream {
 				}
 			}
 
-			if (cmd == 500) {
+			if (cmd == AGE_SRV_CMD_REQUEST_CLOSE) {
 				// PRINT("wants to close age\n");
 				writeInt(0xffff);
 				return -1;
@@ -368,38 +400,38 @@ struct AgeServer : public AtxStream {
 			default:
 				// ERROR("Age cmd unknown %d", cmd);
 				break;
-			case 0xca: {
+			case AGE_SRV_CMD_0xCA: {
 				u32 win = readInt();
 				// PRINT("got genage command : %08x\n", win);
 				NewPropWindow("Props", win);
 				writeInt(win);
 				Done();
 			} break;
-			case 0xcb: {
+			case AGE_SRV_CMD_APPLY_PROP_VALUE_TO_PTR: {
 				PROP_TYPE type = (PROP_TYPE)readInt();
 				void* data     = (void*)readInt();
 				readPropValue(type, data);
 			} break;
-			case 0xcc: {
+			case AGE_SRV_CMD_0xCC: {
 				u32 win = readInt();
 				writeInt(win); // this might be wrong, if win is supposed to be a struct with a virtual func then idk what it is
 				Done();
-			case 0xcd: {
+			case AGE_SRV_CMD_0xCD: {
 				u32 win = readInt();
 				writeInt(win);
 				Done();
 			} break;
-			case 0xce: {
+			case AGE_SRV_CMD_REQUEST_PROP_VALUE_FROM_PTR: {
 				PROP_TYPE type = (PROP_TYPE)readInt();
 				void* data     = (void*)readInt();
 				writePropValue(type, data);
 			} break;
-			case 0xd1: {
+			case AGE_SRV_CMD_0xD1: {
 				u32 win = readInt();
 				writeInt(win);
 				Done();
 			} break;
-			case 0xd2: {
+			case AGE_SRV_CMD_0xD2: {
 				// PRINT("got update genage command\n");
 				u32 win = readInt();
 				writeInt(win);

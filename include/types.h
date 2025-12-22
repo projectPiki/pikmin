@@ -40,6 +40,13 @@ typedef volatile f128 vf128;
 typedef u16 wchar_t;
 #endif
 
+// For Windows-specific types
+#ifdef WIN32
+#include <windows.h>
+#else
+typedef u32 HWND;
+#endif
+
 // Here we check if the decomp build system is configured for a non-matching build, and define `BUILD_MATCHING` if it is not.
 // Please do not use the `DTK_CONFIG_NONMATCHING` macro for any other purpose, and instead check if the the `BUILD_MATCHING`
 // macro is defined.  This is to ensure the codebase doesn't require any preprocessor macros to be defined by the build system.

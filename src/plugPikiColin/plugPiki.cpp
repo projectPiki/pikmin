@@ -182,12 +182,14 @@ PlugPikiApp::PlugPikiApp()
 	setName("Piki the Game");
 	gsys->setHeap(SYSHEAP_Sys);
 	hardReset();
+
 	mCommandStream = new AtxCommandStream(this);
-	if (mCommandStream->open("app", 3)) {
+	if (mCommandStream->open(ATX_SERVICE_APP, ATX_SERVICE_NAME_SIZE)) {
 		mCommandStream->mPath = Name();
 	} else {
 		mCommandStream = nullptr;
 	}
+
 	gsys->mTimerState = 1;
 	gsys->hardReset();
 	PRINT("*--------------- <%s> after all system setup %.2fk free \n", gsys->getHeap(gsys->mActiveHeapIdx)->mName,

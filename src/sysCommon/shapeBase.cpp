@@ -46,24 +46,30 @@ static const char* modes[5] = {
 };
 
 /**
- * @TODO: Documentation
+ * @brief Reads the envelope data from a stream.
+ * @param stream The stream to read from.
  * @note UNUSED Size: 0000DC
  */
 void Envelope::read(RandomAccessStream& stream)
 {
 	mIndexCount = stream.readShort();
-	// why would you do this.
-	void* why = new u8[8 * mIndexCount];
-	mIndices  = (s32*)why;
-	mWeights  = (f32*)&((f32*)why)[mIndexCount];
+	
+	// Allocate a single block for both indices and weights
+	void* arr = new u8[8 * mIndexCount];
+	mIndices  = (s32*)arr;
+
+	// Point weights to after indices in that block
+	mWeights  = (f32*)&((f32*)arr)[mIndexCount];
+
 	for (int i = 0; i < mIndexCount; i++) {
 		mIndices[i] = stream.readShort();
 		mWeights[i] = stream.readFloat();
 	}
 }
 
-/*
- * Regswaps
+/**
+ * @brief Reads the display list data from a stream.
+ * @param stream The stream to read from.
  */
 void DispList::read(RandomAccessStream& stream)
 {
@@ -81,7 +87,8 @@ void DispList::read(RandomAccessStream& stream)
 }
 
 /**
- * @TODO: Documentation
+ * @brief Reads the matrix group data from a stream.
+ * @param stream The stream to read from.
  */
 void MtxGroup::read(RandomAccessStream& stream)
 {
@@ -330,7 +337,6 @@ static f32 extract(f32 currTime, AnimParam& param, DataChunk& data)
 	}
 
 	// Interpolation calculations
-	// Chat-GPT says Hermite Interpolation
 	const f32 fps /*maybe*/ = 30.f;
 	f32 t                   = (currTime - start.mTime) * (1.0f / fps);
 	f32 frameDelta          = fps / (end.mTime - start.mTime);
