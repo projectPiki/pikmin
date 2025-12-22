@@ -34,7 +34,7 @@ public:
 		    , mMaxPikiPerCycle(this, 10, 0, 0, "i00", nullptr)
 		    , mMinCycles(this, 10, 0, 0, "i10", nullptr)
 		    , mMaxCycles(this, 10, 0, 0, "i11", nullptr)
-		    , mDoAnimLoopWhenClosed(this, FALSE, FALSE, TRUE, "i20", nullptr)
+		    , mDoAnimLoopWhenClosed(this, 0, 0, 1, "i20", nullptr)
 		    , mDoKillSameColorPiki(this, FALSE, FALSE, TRUE, "i90", nullptr)
 		    , mStickOrSwallow(this, 1, 0, 1, "i91", nullptr)
 		    , mOpenOnInteractionOnly(this, 0, 0, 1, "i92", nullptr)

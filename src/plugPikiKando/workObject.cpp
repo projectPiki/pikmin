@@ -462,7 +462,7 @@ Creature* GenObjectWorkObject::birth(BirthInfo& info)
 		obj->mHealth    = mDay() * (int)gameflow.mWorldClock.mHoursInDay + mHour();
 		obj->mMaxHealth = obj->mHealth;
 		obj->startAI(0);
-		if (info.mGenerator->mGenType->mAdjustFaceDirection()) {
+		if (info.mGenerator->doAdjustFaceDir()) {
 			obj->enableFaceDirAdjust();
 		}
 	}

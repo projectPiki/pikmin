@@ -88,8 +88,8 @@ public:
 		    , mDeadScaleStartDelay(this, 6.0f, 0.0f, 10.0f, "s00", "Dead Scale Start")
 		    , mDeadScaleStageDelay(this, 0.1f, 0.1f, 10.0f, "s01", "Dead Scale Timing")
 		    , mDeadMotionDelay(this, 0.1f, 0.1f, 10.0f, "s02", "Dead Scale Time")
-		    , _4A4(this, 100.0f, 0.0f, 500.0f, "s10", "Stick Heiht Modify")
-		    , _4B4(this, 100.0f, 0.0f, 500.0f, "s11", "Map Heiht Modify")
+		    , _4A4(this, 100.0f, 0.0f, 500.0f, "s10", "Stick Heiht Modify") // dev spelling
+		    , _4B4(this, 100.0f, 0.0f, 500.0f, "s11", "Map Heiht Modify")   // dev spelling
 		    , _4C4(this, 150.0f, 0.0f, 300.0f, "s30", "Target Centre")
 		    , _4D4(this, 0.5f, 0.0f, 1.0f, "s31", "Cent Leg Dist(Min)")
 		    , _4E4(this, 0.75f, 0.0f, 1.0f, "s32", "Cent Leg Dist(Max)")

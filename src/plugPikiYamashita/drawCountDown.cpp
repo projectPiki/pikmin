@@ -111,7 +111,7 @@ void zen::DrawCountDown::update()
 		int counter    = time / spacing;                       // how many BEEPs have we done, basically
 		f32 currRatio  = (time - spacing * counter) / spacing; // how far are we to the next BEEP
 		f32 digitScale = counter * 0.1f + 0.7f;                // digits get bigger as we get closer to 0
-		int digit      = 11 - counter;                         // what digit are we actually displaying (kinda, 11 is '10')
+		int digit      = countPicsNum - counter;               // what digit are we actually displaying (kinda, 11 is '10')
 
 		// when we reach '1', send some message
 		if (digit != mPrevDigit && digit == 2) {

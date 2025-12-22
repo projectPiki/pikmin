@@ -1213,7 +1213,7 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 		memStat->end("shape");
 		memStat->end("mapMgr");
 
-		Jac_SceneSetup(5, flowCont.mCurrentStage->mStageID < 5 ? flowCont.mCurrentStage->mStageID : 0);
+		Jac_SceneSetup(5, flowCont.mCurrentStage->mStageID < STAGE_COUNT ? flowCont.mCurrentStage->mStageID : 0);
 		init2Ddata();
 		gamecore = new GameCoreSection(mController, mapMgr, mGameCamera);
 		add(gamecore);

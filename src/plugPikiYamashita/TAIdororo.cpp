@@ -43,7 +43,8 @@ CollPart* getCollPartPtr(Teki& teki, u32 partID)
 {
 	CollPart* part = teki.mCollInfo->getSphere(partID);
 	if (!part) {
-		ERROR("CollPart [%c%c%c%c] is not found.\n", ((u8*)&partID)[0], ((u8*)&partID)[1], ((u8*)&partID)[2], ((u8*)&partID)[3]);
+		const char* s = reinterpret_cast<char*>(&partID);
+		ERROR("CollPart [%c%c%c%c] is not found.\n", s[0], s[1], s[2], s[3]);
 	}
 	return part;
 }
@@ -487,7 +488,8 @@ protected:
 	{
 		CollPart* part = teki.mCollInfo->getSphere(partID);
 		if (!part) {
-			ERROR("CollPart [%c%c%c%c] is not found.\n", ((u8*)&partID)[0], ((u8*)&partID)[1], ((u8*)&partID)[2], ((u8*)&partID)[3]);
+			const char* s = reinterpret_cast<char*>(&partID);
+			ERROR("CollPart [%c%c%c%c] is not found.\n", s[0], s[1], s[2], s[3]);
 			return;
 		}
 

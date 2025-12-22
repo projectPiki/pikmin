@@ -19,6 +19,7 @@ typedef enum JacSceneID {
 	SCENE_Unk11 = 11,
 	SCENE_Unk12 = 12,
 	SCENE_Unk13 = 13,
+	SCENE_COUNT,
 } JacSceneID;
 
 //////////// JAUDIO PIKMIN SCENE FUNCTIONS ////////////

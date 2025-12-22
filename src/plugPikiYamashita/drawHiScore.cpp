@@ -187,7 +187,8 @@ void zen::DrawHiScore::rewriteNumber(P2DScreen* screen, u32 tag, int value, int 
 
 		static_cast<P2DTextBox*>(pane)->setString(text);
 	} else {
-		PRINT("tag <%c%c%c%c> is not TextBox Pane. \n", ((u32*)&tag)[0], ((u32*)&tag)[1], ((u32*)&tag)[2], ((u32*)&tag)[3]);
-		ERROR("tag <%c%c%c%c> is not TextBox Pane. \n", ((u32*)&tag)[0], ((u32*)&tag)[1], ((u32*)&tag)[2], ((u32*)&tag)[3]);
+		const char* s = reinterpret_cast<char*>(&tag);
+		PRINT("tag <%c%c%c%c> is not TextBox Pane. \n", s[0], s[1], s[2], s[3]);
+		ERROR("tag <%c%c%c%c> is not TextBox Pane. \n", s[0], s[1], s[2], s[3]);
 	}
 }

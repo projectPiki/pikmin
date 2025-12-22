@@ -5,10 +5,8 @@
 /**
  * @TODO: Documentation
  */
-void main()
+TERNARY_BUILD_MATCHING(void, int) main(int argc, char* argv[])
 {
-	int filler[2];
-
 	gsys->Initialise();
 	nodeMgr = new NodeMgr();
 	gsys->run(new PlugPikiApp());

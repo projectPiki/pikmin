@@ -537,18 +537,17 @@ void StageInf::initGame()
  */
 void StageInf::saveCard(RandomAccessStream& output)
 {
-	output.writeInt(mBPikiInfMgr.getActiveNum());
+	int activeNum = mBPikiInfMgr.getActiveNum();
+	output.writeInt(activeNum);
 
 	FOREACH_NODE(BaseInf, mBPikiInfMgr.mActiveList.mChild, inf)
 	{
 		inf->saveCard(output);
 	}
 
-	// TODO: Figure out how to do this.
-	PRINT(" SAVE CARD ***** %d です\n" /*, activeNum*/);
+	BUMP_REGISTER(r0); // No fucking way
+	PRINT(" SAVE CARD ***** %d です\n", activeNum);
 }
-
-#pragma dont_inline on
 
 /**
  * @TODO: Documentation
@@ -557,5 +556,3 @@ void StageInf::loadCard(RandomAccessStream& input)
 {
 	mBPikiInfMgr.loadCard(input);
 }
-
-#pragma dont_inline reset
