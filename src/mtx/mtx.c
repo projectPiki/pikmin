@@ -27,10 +27,8 @@ void C_MTXIdentity(Mtx mtx)
 	mtx[2][2] = 1.0f;
 }
 
-/*
- * --INFO--
- * Address: 801FDB94
- * Size:    00002C
+/**
+ * @TODO: Documentation
  */
 void PSMTXIdentity(register Mtx m)
 {
@@ -99,10 +97,8 @@ void C_MTXConcat(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address: 801FDBC0
- * Size:    0000CC
+/**
+ * @TODO: Documentation
  */
 ASM void PSMTXConcat(const register Mtx mA, // r3
                      const register Mtx mB, // r4
@@ -216,10 +212,8 @@ void C_MTXTranspose(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address: 801FDC8C
- * Size:    000050
+/**
+ * @TODO: Documentation
  */
 void PSMTXTranspose(const register Mtx src, register Mtx xPose)
 {
@@ -261,10 +255,8 @@ void C_MTXInverse(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address: 801FDCDC
- * Size:    000104
+/**
+ * @TODO: Documentation
  */
 ASM u32 PSMTXInverse(const register Mtx src, register Mtx inv)
 {
@@ -389,10 +381,8 @@ void MTXRotAxisRad(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address: 801FDDE0
- * Size:    00003C
+/**
+ * @TODO: Documentation
  */
 void MTXTrans(Mtx m, f32 xT, f32 yT, f32 zT)
 {
@@ -422,10 +412,8 @@ void MTXTransApply(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address: 801FDE1C
- * Size:    000038
+/**
+ * @TODO: Documentation
  */
 void MTXScale(Mtx m, f32 xS, f32 yS, f32 zS)
 {
@@ -512,10 +500,8 @@ void MTXLightFrustum(Mtx m, f32 t, f32 b, f32 l, f32 r, f32 n, f32 scaleS, f32 s
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address: 801FDE54
- * Size:    0000CC
+/**
+ * @TODO: Documentation
  */
 void MTXLightPerspective(Mtx m, f32 fovY, f32 aspect, f32 scaleS, f32 scaleT, f32 transS, f32 transT)
 {

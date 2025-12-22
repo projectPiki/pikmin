@@ -115,10 +115,8 @@
 #include "fdlibm.h"
 #include "types.h"
 
-/*
- * --INFO--
- * Address: 8021B1C8
- * Size:    000020
+/**
+ * @TODO: Documentation
  */
 f64 scalbn(f64 p1, int p2)
 {
@@ -167,10 +165,8 @@ ivln2 = 1.44269504088896338700e+00, /* 0x3FF71547, 0x652B82FE =1/ln2 */
 ivln2_h = 1.44269502162933349609e+00, /* 0x3FF71547, 0x60000000 =24b 1/ln2*/
 ivln2_l = 1.92596299112661746887e-08; /* 0x3E54AE0B, 0xF85DDF44 =1/ln2 tail*/
 
-/*
- * --INFO--
- * Address: 8021A9B0
- * Size:    000818
+/**
+ * @TODO: Documentation
  */
 #ifdef __STDC__
 f64 __ieee754_pow(f64 x, f64 y)

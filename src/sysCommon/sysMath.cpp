@@ -84,10 +84,8 @@ void Plane::frictionVector(Vector3f&, f32)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address: 8003756C
- * Size:    0000A0
+/**
+ * @TODO: Documentation
  */
 void CullingPlane::CheckMinMaxDir()
 {
@@ -135,10 +133,8 @@ void Vector3f::rotateTranspose(immut Matrix4f&)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address: 8003760C
- * Size:    0000AC
+/**
+ * @TODO: Documentation
  */
 void Vector3f::rotate(immut Matrix4f& mtx)
 {
@@ -150,10 +146,8 @@ void Vector3f::rotate(immut Matrix4f& mtx)
 	*this = vec;
 }
 
-/*
- * --INFO--
- * Address: 800376B8
- * Size:    000094
+/**
+ * @TODO: Documentation
  */
 void Vector3f::rotateTo(immut Matrix4f& mtx, Vector3f& outVec)
 {
@@ -162,10 +156,8 @@ void Vector3f::rotateTo(immut Matrix4f& mtx, Vector3f& outVec)
 	outVec.z = mtx.mMtx[2][0] * x + mtx.mMtx[2][1] * y + mtx.mMtx[2][2] * z;
 }
 
-/*
- * --INFO--
- * Address: 8003774C
- * Size:    0000C4
+/**
+ * @TODO: Documentation
  */
 void Vector3f::multMatrix(immut Matrix4f& mtx)
 {
@@ -176,10 +168,8 @@ void Vector3f::multMatrix(immut Matrix4f& mtx)
 	*this = vec;
 }
 
-/*
- * --INFO--
- * Address: 80037810
- * Size:    0000AC
+/**
+ * @TODO: Documentation
  */
 void Vector3f::multMatrixTo(immut Matrix4f& mtx, Vector3f& outVec)
 {
@@ -208,10 +198,8 @@ void Vector3f::rotateInverse(immut Quat&)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address: 800378BC
- * Size:    0004E4
+/**
+ * @TODO: Documentation
  */
 void Quat::fromMat3f(immut Matrix3f& mtx)
 {
@@ -292,10 +280,8 @@ void Quat::fromMat3f(immut Matrix3f& mtx)
 	v.z *= n;
 }
 
-/*
- * --INFO--
- * Address: 80037DA0
- * Size:    0000A4
+/**
+ * @TODO: Documentation
  */
 void Quat::rotate(immut Vector3f& axis, f32 angle)
 {
@@ -308,10 +294,8 @@ void Quat::rotate(immut Vector3f& axis, f32 angle)
 	multiply(quat);
 }
 
-/*
- * --INFO--
- * Address: 80037E44
- * Size:    0000EC
+/**
+ * @TODO: Documentation
  */
 void Quat::multiply(immut Quat& other)
 {
@@ -336,10 +320,8 @@ void Quat::multiplyTo(immut Quat& other, Quat& outQuat)
 	outQuat.v.z = (other.v.x * v.y + (other.s * v.z + other.v.z * s)) - other.v.y * v.x;
 }
 
-/*
- * --INFO--
- * Address: 80037F30
- * Size:    0000D4
+/**
+ * @TODO: Documentation
  */
 void Quat::normalise()
 {
@@ -350,10 +332,8 @@ void Quat::normalise()
 	s *= factor;
 }
 
-/*
- * --INFO--
- * Address: 80038004
- * Size:    000080
+/**
+ * @TODO: Documentation
  */
 void Quat::genVectorX(Vector3f& outVec) immut
 {
@@ -370,10 +350,8 @@ void Quat::genVectorX(Vector3f& outVec) immut
 	outVec.z = 2.0f * xz - 2.0f * sy;
 }
 
-/*
- * --INFO--
- * Address: 80038084
- * Size:    000080
+/**
+ * @TODO: Documentation
  */
 void Quat::genVectorY(Vector3f& outVec) immut
 {
@@ -390,10 +368,8 @@ void Quat::genVectorY(Vector3f& outVec) immut
 	outVec.z = 2.0f * yz + 2.0f * sx;
 }
 
-/*
- * --INFO--
- * Address: 80038104
- * Size:    000080
+/**
+ * @TODO: Documentation
  */
 void Quat::genVectorZ(Vector3f& outVec) immut
 {
@@ -410,10 +386,8 @@ void Quat::genVectorZ(Vector3f& outVec) immut
 	outVec.z = (1.0f - 2.0f * xx) - (2.0f * yy);
 }
 
-/*
- * --INFO--
- * Address: 80038184
- * Size:    000164
+/**
+ * @TODO: Documentation
  */
 void Quat::slerp(immut Quat& other, f32 t, int)
 {
@@ -447,10 +421,8 @@ void Quat::slerp(immut Quat& other, f32 t, int)
 	s   = tComp * s + t * other.s;
 }
 
-/*
- * --INFO--
- * Address: 800382E8
- * Size:    0002A0
+/**
+ * @TODO: Documentation
  */
 void Quat::fromEuler(immut Vector3f& angles)
 {
@@ -483,10 +455,8 @@ void Quat::fromEuler(immut Vector3f& angles)
 	normalise();
 }
 
-/*
- * --INFO--
- * Address: 80038588
- * Size:    00002C
+/**
+ * @TODO: Documentation
  */
 f32 roundAng(f32 x)
 {
@@ -501,10 +471,8 @@ f32 roundAng(f32 x)
 	return x;
 }
 
-/*
- * --INFO--
- * Address: 800385B4
- * Size:    000074
+/**
+ * @TODO: Documentation
  */
 f32 angDist(f32 angle1, f32 angle2)
 {
@@ -516,10 +484,8 @@ f32 angDist(f32 angle1, f32 angle2)
 	return angle;
 }
 
-/*
- * --INFO--
- * Address: 80038628
- * Size:    000050
+/**
+ * @TODO: Documentation
  */
 f32 qdist2(f32 x0, f32 y0, f32 x1, f32 y1)
 {
@@ -586,10 +552,8 @@ f32 qdist3(f32 x0, f32 y0, f32 z0, f32 x1, f32 y1, f32 z1)
 	return (min + mid) / 2.0f + max;
 }
 
-/*
- * --INFO--
- * Address: 80038678
- * Size:    0001BC
+/**
+ * @TODO: Documentation
  */
 void CollTriInfo::init(RoomInfo* info, immut Vector3f* vertices)
 {
@@ -606,10 +570,8 @@ void CollTriInfo::init(RoomInfo* info, immut Vector3f* vertices)
 	}
 }
 
-/*
- * --INFO--
- * Address: 80038834
- * Size:    0000C4
+/**
+ * @TODO: Documentation
  */
 int CollTriInfo::behindEdge(immut Vector3f& point)
 {
@@ -622,10 +584,8 @@ int CollTriInfo::behindEdge(immut Vector3f& point)
 	return -1;
 }
 
-/*
- * --INFO--
- * Address: 800388F8
- * Size:    000644
+/**
+ * @TODO: Documentation
  */
 void BoundBox::draw(Graphics& gfx)
 {
@@ -676,10 +636,8 @@ void BoundBox::draw(Graphics& gfx)
 	gfx.drawOneTri(triangleVertices, nullptr, unk2, 4);
 }
 
-/*
- * --INFO--
- * Address: 80038F3C
- * Size:    0000E8
+/**
+ * @TODO: Documentation
  */
 static bool pointInsideTri(KTri& tri, Vector3f& point)
 {
@@ -716,10 +674,8 @@ static bool pointInsideTri(KTri& tri, Vector3f& point)
 	return true;
 }
 
-/*
- * --INFO--
- * Address: 80039024
- * Size:    000260
+/**
+ * @TODO: Documentation
  */
 f32 triRectDistance(immut Vector3f* vertex1, immut Vector3f* vertex2, immut Vector3f* vertex3, BoundBox& boundingBox, bool)
 {
@@ -790,10 +746,8 @@ f32 triRectDistance(immut Vector3f* vertex1, immut Vector3f* vertex2, immut Vect
 	return distanceTriRect(projTriangle, projRectangle, &a, &b, &c, &d);
 }
 
-/*
- * --INFO--
- * Address: 80039284
- * Size:    0001A8
+/**
+ * @TODO: Documentation
  */
 f32 distanceTriRect(KTri& tri, KRect& rect, f32* barycentricU, f32* barycentricV, f32* p5, f32* p6)
 {
@@ -809,10 +763,8 @@ f32 distanceTriRect(KTri& tri, KRect& rect, f32* barycentricU, f32* barycentricV
 	return std::sqrtf(sqrDist);
 }
 
-/*
- * --INFO--
- * Address: 8003942C
- * Size:    000070
+/**
+ * @TODO: Documentation
  */
 bool KRect::inside(immut Vector3f& point)
 {
@@ -828,19 +780,15 @@ bool KRect::inside(immut Vector3f& point)
 	return false;
 }
 
-/*
- * --INFO--
- * Address: 8003949C
- * Size:    00002C
+/**
+ * @TODO: Documentation
  */
 KTri::KTri()
 {
 }
 
-/*
- * --INFO--
- * Address: 800394C8
- * Size:    0000C4
+/**
+ * @TODO: Documentation
  */
 void KTri::set(immut Vector3f& pointA, immut Vector3f& pointB, immut Vector3f& pointC)
 {
@@ -861,10 +809,8 @@ KSegment::KSegment()
 
 f32 gs_fTolerance = 0.00001f;
 
-/*
- * --INFO--
- * Address: 8003958C
- * Size:    0018C4
+/**
+ * @TODO: Documentation
  */
 f32 sqrDistance(KSegment& segment, KTri& tri, f32* outP3, f32* outP4, f32* outP5)
 {
@@ -1364,10 +1310,8 @@ f32 sqrDistance(KSegment& segment, KTri& tri, f32* outP3, f32* outP4, f32* outP5
 	return absF(sqrDist);
 }
 
-/*
- * --INFO--
- * Address: 8003AE50
- * Size:    000828
+/**
+ * @TODO: Documentation
  */
 f32 sqrDistance(KSegment& segment1, KSegment& segment2, f32* outP3, f32* outP4)
 {
@@ -1642,10 +1586,8 @@ f32 sqrDistance(KSegment& segment1, KSegment& segment2, f32* outP3, f32* outP4)
 	return absF(sqrDist);
 }
 
-/*
- * --INFO--
- * Address: 8003B678
- * Size:    001D9C
+/**
+ * @TODO: Documentation
  */
 f32 sqrDistance(KSegment& segment, KRect& rect, f32* p3, f32* p4, f32* p5)
 {
@@ -2407,10 +2349,8 @@ f32 sqrDistance(KSegment& segment, KRect& rect, f32* p3, f32* p4, f32* p5)
 	return absF(sqrDist);
 }
 
-/*
- * --INFO--
- * Address: 8003D414
- * Size:    000468
+/**
+ * @TODO: Documentation
  */
 f32 sqrDistance(KTri& tri, KRect& rect, f32* p3, f32* p4, f32* p5, f32* p6)
 {
@@ -2515,10 +2455,8 @@ f32 sqrDistance(KTri& tri, KRect& rect, f32* p3, f32* p4, f32* p5, f32* p6)
 	return absF(sqrDist);
 }
 
-/*
- * --INFO--
- * Address: 8003D87C
- * Size:    000540
+/**
+ * @TODO: Documentation
  */
 f32 sqrDistance(immut Vector3f& point, KTri& tri, f32* outBaryU, f32* outBaryV)
 {
