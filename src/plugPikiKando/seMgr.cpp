@@ -8,16 +8,14 @@
 #include "zen/Math.h"
 
 /**
- * --INFO--
- * Address:	........
- * Size:	00009C
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(7)
 
 /**
- * --INFO--
- * Address:	........
- * Size:	0000F0
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("seMgr");
 
@@ -94,18 +92,16 @@ void SeMgr::update()
 }
 
 /**
- * --INFO--
- * Address:	........
- * Size:	000004
+ * @TODO: Documentation
+ * @note UNUSED Size: 000004
  */
 void SeMgr::play(u32)
 {
 }
 
 /**
- * --INFO--
- * Address:	........
- * Size:	000024
+ * @TODO: Documentation
+ * @note UNUSED Size: 000024
  */
 void SeMgr::stop(u32 jacSeID)
 {
@@ -113,27 +109,24 @@ void SeMgr::stop(u32 jacSeID)
 }
 
 /**
- * --INFO--
- * Address:	........
- * Size:	000004
+ * @TODO: Documentation
+ * @note UNUSED Size: 000004
  */
 void SeMgr::playBGM(u32)
 {
 }
 
 /**
- * --INFO--
- * Address:	........
- * Size:	000004
+ * @TODO: Documentation
+ * @note UNUSED Size: 000004
  */
 void SeMgr::stopBGM()
 {
 }
 
 /**
- * --INFO--
- * Address:	........
- * Size:	000020
+ * @TODO: Documentation
+ * @note UNUSED Size: 000020
  */
 void SeMgr::stopSoundAll()
 {
