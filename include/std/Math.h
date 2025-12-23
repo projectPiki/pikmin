@@ -12,8 +12,8 @@ namespace std {
 inline f32 sqrtf(f32 x)
 {
 	// these REALLY don't have to be static.
-	const f64 _half  = 0.5;
-	const f64 _three = 3.0;
+	static const f64 _half  = 0.5;
+	static const f64 _three = 3.0;
 
 	vf32 y;
 	if (x > 0.0f) {

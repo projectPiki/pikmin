@@ -78,10 +78,11 @@ void __mtfsb0(int);
 void __mtfsb1(int);
 f64 __setflm(f64);
 
-static inline f32 sqrtf(f32 x)
+inline f32 sqrtf(f32 x)
 {
-	const f64 _half  = .5;
-	const f64 _three = 3.0;
+	// these REALLY don't have to be static.
+	static const f64 _half  = .5;
+	static const f64 _three = 3.0;
 
 	vf32 y;
 	if (x > 0.0f) {
@@ -96,13 +97,13 @@ static inline f32 sqrtf(f32 x)
 	return x;
 }
 
-static inline f32 absF(f32 val)
+inline f32 absF(f32 val)
 {
 	return (f32)__fabsf(val);
 }
 
 // TODO: probably change this to zen::abs in some zenMath library later
-static inline f32 absVal(f32 val)
+inline f32 absVal(f32 val)
 {
 	if (val > 0.0f) {
 		return val;
@@ -118,7 +119,7 @@ struct KTri;
 struct KRect;
 struct KSegment;
 
-static inline f32 fmod(f32 x, f32 m)
+inline f32 fmod(f32 x, f32 m)
 {
 	return std::fmodf(x, m);
 }
