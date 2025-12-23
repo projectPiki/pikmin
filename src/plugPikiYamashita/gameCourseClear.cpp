@@ -727,7 +727,7 @@ struct GameCourseClearScreen : public Node {
 
 		mMainMenu->addKeyEvent(Menu::KeyEventType::SpecialRelease, KBBTN_B, new Delegate1<Menu, Menu&>(mMainMenu, &Menu::menuCloseMenu));
 		mMainMenu->addOption(0, "Quit", new Delegate1<GameCourseClearScreen, Menu&>(this, &menuQuitGame), true);
-		mActiveMenu = 0;
+		mActiveMenu = nullptr;
 		gsys->setFade(1.0f, 3.0f);
 		mFlags = 0xB0000;
 

@@ -777,7 +777,7 @@ void System::Initialise()
 	if (mHeapEnd < 0x1800000) {
 		useSymbols = false;
 	}
-	mHeaps[0].init("sys", AYU_STACK_GROW_DOWN, (void*)mHeapStart, mHeapEnd);
+	mHeaps[SYSHEAP_Sys].init("sys", AYU_STACK_GROW_DOWN, (void*)mHeapStart, mHeapEnd);
 	setHeap(SYSHEAP_Sys);
 	sysCon = new LogStream;
 	errCon = sysCon;

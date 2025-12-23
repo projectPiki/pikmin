@@ -173,7 +173,7 @@ struct TitleSetupSection : public Node {
 				mStartTransitionTimer       = 0.0f;
 				gameflow.mIntroMovieId      = gameflow.mIntroMovieIdCycle;
 				gameflow.mIntroMovieIdCycle = (gameflow.mIntroMovieIdCycle + 1) & 0x3;
-				mNextSectionId              = 0x20000;
+				mNextSectionId              = SECTION_MovSample << 16;
 				mState                      = 1;
 				gsys->setFade(0.0f, 3.0f);
 				return;
@@ -243,7 +243,7 @@ struct TitleSetupSection : public Node {
 					zen::ogScrTitleMgr::TitleStatus titleState = titleWindow->update(mController);
 					if (titleState == zen::ogScrTitleMgr::Status_6) {
 						PRINT("going to CHALLENGE MODE SETUP!\n");
-						mNextSectionId                   = 0x40000;
+						mNextSectionId                   = SECTION_OnePlayer << 16;
 						gameflow.mGamePrefs.mHasSaveGame = false;
 						gameflow.mIsChallengeMode        = TRUE;
 						Jac_SceneExit(13, 0);
@@ -258,10 +258,10 @@ struct TitleSetupSection : public Node {
 					} else if (titleState == zen::ogScrTitleMgr::Status_4) {
 						if (gameflow.mGamePrefs.mHasSaveGame) {
 							PRINT("going to SETUP!\n");
-							mNextSectionId = 0x40000;
+							mNextSectionId = SECTION_OnePlayer << 16;
 						} else {
 							PRINT("going to SETUP!\n");
-							mNextSectionId = 0x40000;
+							mNextSectionId = SECTION_OnePlayer << 16;
 						}
 						Jac_SceneExit(13, 0);
 						mState = 1;
@@ -323,7 +323,7 @@ struct TitleSetupSection : public Node {
 		if (mState == 1 && !mCurrentMenu && gsys->getFade() == 0.0f) {
 			mState                           = -1;
 			gameflow.mGameSectionID          = mNextSectionId >> 16;
-			gameflow.mNextOnePlayerSectionID = u16(mNextSectionId);
+			gameflow.mNextOnePlayerSectionID = mNextSectionId & 0xFFFF;
 			gsys->softReset();
 		}
 	}

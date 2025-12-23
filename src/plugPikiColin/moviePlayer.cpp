@@ -688,7 +688,7 @@ void MoviePlayer::update()
 				bool togglePrint   = gsys->mTogglePrint != FALSE;
 				gsys->mTogglePrint = TRUE;
 				PRINT("clearing top heap!\n");
-				gsys->resetHeap(SYSHEAP_Movie, 1);
+				gsys->resetHeap(SYSHEAP_Movie, AYU_STACK_GROW_DOWN);
 				gsys->mTogglePrint = togglePrint;
 				gameflow._33C      = FALSE;
 				PRINT("all movies ended!\n");

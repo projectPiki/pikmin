@@ -278,7 +278,7 @@ static void DBGHandler(s16 a, OSContext* b)
 /**
  * @TODO: Documentation
  */
-void DBInitComm(u8** a, MTRCallbackType b)
+void DBInitComm(vu8** a, MTRCallbackType b)
 {
 	BOOL interrupts = OSDisableInterrupts();
 	{

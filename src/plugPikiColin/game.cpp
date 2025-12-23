@@ -185,7 +185,7 @@ void FlowController::readMapList(immut char* fileName)
 	file->close();
 }
 
-static immut char* levNames[] = {
+static immut char* levNames[STAGE_COUNT] = {
 	"intro/map0.bti", "intro/map1.bti", "intro/map2.bti", "intro/map3.bti", "intro/map4.bti",
 };
 

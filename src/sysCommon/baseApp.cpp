@@ -22,8 +22,8 @@ DEFINE_PRINT("baseApp");
 BaseApp::BaseApp()
 {
 	mIsReadyToDraw = FALSE;
-	mCommandStream = 0;
-	mAgeServer     = 0;
+	mCommandStream = nullptr;
+	mAgeServer     = nullptr;
 	_28            = 1;
 
 	nodeMgr->firstNode().add(this);

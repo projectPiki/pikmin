@@ -92,7 +92,7 @@ struct MapSelectSetupSection : public Node {
 		StageInfo* info = (StageInfo*)parent.mCurrentItem->mFilterIndex;
 
 		enterCourse(info);
-		mNextSectionId = 0x70000;
+		mNextSectionId = ONEPLAYER_NewPikiGame << 16;
 		parent.close();
 
 		gameflow.mWorldClock.setTime(gameflow.mParameters->mStartHour());
@@ -140,7 +140,7 @@ struct MapSelectSetupSection : public Node {
 			selectWindow->start();
 		}
 		gsys->setFade(1.0f, 3.0f);
-		mNextSectionId = 0xb0000;
+		mNextSectionId = ONEPLAYER_GameExit << 16;
 	}
 
 	virtual void update() // _10 (weak)
@@ -177,7 +177,7 @@ struct MapSelectSetupSection : public Node {
 					for (StageInfo* inf = (StageInfo*)flowCont.mRootInfo.mChild; inf; inf = (StageInfo*)inf->mNext) {
 						if (inf->mChalStageID == status) {
 							enterCourse(inf);
-							mNextSectionId = 0x70000;
+							mNextSectionId = ONEPLAYER_NewPikiGame << 16;
 
 							gameflow.mWorldClock.setTime(gameflow.mParameters->mStartHour());
 							mSectionState = 1;
@@ -197,7 +197,7 @@ struct MapSelectSetupSection : public Node {
 					for (StageInfo* inf = (StageInfo*)flowCont.mRootInfo.mChild; inf; inf = (StageInfo*)inf->mNext) {
 						if (inf->mStageID == returnStatus) {
 							enterCourse(inf);
-							mNextSectionId = 0x70000;
+							mNextSectionId = ONEPLAYER_NewPikiGame << 16;
 
 							gameflow.mWorldClock.setTime(gameflow.mParameters->mStartHour());
 							mSectionState = 1;
@@ -211,7 +211,7 @@ struct MapSelectSetupSection : public Node {
 
 		if (mSectionState == 1 && !mActiveOverlayMenu && gsys->getFade() == 0.0f) {
 			mSectionState                    = -1;
-			gameflow.mNextOnePlayerSectionID = mNextSectionId >> 0x10;
+			gameflow.mNextOnePlayerSectionID = mNextSectionId >> 16;
 			Jac_SceneExit(13, 0);
 			gsys->softReset();
 		}

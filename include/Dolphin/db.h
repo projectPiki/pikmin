@@ -17,7 +17,7 @@ extern DBInterface* __DBInterface;
 extern BOOL DBVerbose;
 
 void DBInit(void);
-int DBInitComm(void*, AmcEXICallback); // possibly not this type, but some similar construction
+int DBInitComm(vu8**, AmcEXICallback); // possibly not this type, but some similar construction
 int DBInitInterrupts();
 
 int DBQueryData();
