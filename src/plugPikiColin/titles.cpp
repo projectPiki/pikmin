@@ -9,6 +9,7 @@
 #include "Interface.h"
 #include "Light.h"
 #include "Menu.h"
+#include "SoundMgr.h"
 #include "TitlesSection.h"
 #include "gameflow.h"
 #include "jaudio/piki_scene.h"
@@ -60,6 +61,12 @@ struct TitleSetupSection : public Node {
 	TitleSetupSection()
 	{
 		setName("Titles section");
+
+		// This section uses `SeSystem` without constructing it.
+#if defined(BUGFIX)
+		seSystem = new SeSystem();
+#endif
+
 		mStartTransitionTimer = 20.0f;
 		mCameraFocusPoint.set(0.0f, 20.0f, 0.0f);
 		gameflow.mGameInterface = new TitlesMovieInterface(this);
