@@ -656,7 +656,7 @@ void NaviWalkState::exec(Navi* navi)
 
 	if (navi->mKontroller->keyClick(KBBTN_X)) {
 		if (pikiMgr->findClosest(navi->mSRT.t, nullptr)) {
-			PRINT("here is %s\n", navi->mNextThrowPiki->isSafeMePos(navi->mSRT.t) ? 'o' : 'x');
+			PRINT("here is %s\n", navi->mNextThrowPiki->isSafeMePos(navi->mSRT.t) ? "o" : "x");
 		}
 		if (navi->mGroundTriangle && MapCode::isBald(navi->mGroundTriangle)) {
 			PRINT("\tcurr polygon is bald\n");

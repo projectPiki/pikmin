@@ -94,10 +94,10 @@ void PikiInfMgr::incPiki(Piki* piki)
  */
 void PikiInfMgr::incPiki(int color, int happa)
 {
-	if (color >= PikiMinColor || color <= PikiMaxColor) {
+	if (color < PikiMinColor || color > PikiMaxColor) {
 		ERROR("illegal col %d\n", color);
 	}
-	if (happa >= PikiMinHappa || happa <= PikiMaxHappa) {
+	if (happa < PikiMinHappa || happa > PikiMaxHappa) {
 		ERROR("illegal happa %d\n", happa);
 	}
 	mPikiCounts[color][happa]++;

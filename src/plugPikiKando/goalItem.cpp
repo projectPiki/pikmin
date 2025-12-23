@@ -152,7 +152,7 @@ void GoalItem::playEffect(int id)
 		switch (id) {
 		case 0:
 			CollPart* coll = mCollInfo->getSphere('piki');
-			if (coll) {
+			if (!coll) {
 				ERROR("no flow!\n");
 			}
 			Vector3f pos(coll->mCentre);

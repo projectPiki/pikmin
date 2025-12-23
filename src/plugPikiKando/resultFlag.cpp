@@ -323,25 +323,29 @@ void ResultFlags::dump()
 	int p    = 0;
 	PRINT("******* CURRENT RESULT FLAGS STATUS ***********\n");
 	for (int i = 0; i < mTableSize; i++) {
-		int id = flagTable[i].mScreenId;
-		if (id == -1) {
+		FlagInfo& info = flagTable[i];
+		if (info.mScreenId == -1) {
 			break;
 		}
 
-#if 0 // This all seems to be DLL exclusive
+		// For some God-forsaken reason, the devs decided to micro-optimize this code to do different things between the DLL and the DOL.
+#if defined(DEVELOP) || defined(WIN32)
 		const char* strs[4];
-		strs[3]  = nullptr;
-		int type = info[id].type();
-		if (type < 0x191) {
-			if (type == 400) {
-				strs[3] = "TEK";
-			} else if (type == 0) {
-				strs[3] = "GEN";
-			} else if (type == 200) {
-				strs[3] = "SET";
-			}
-		} else if (type == 600) {
+		strs[3] = nullptr;
+
+		switch (info.type()) {
+		case 0:
+			strs[3] = "GEN";
+			break;
+		case 200:
+			strs[3] = "SET";
+			break;
+		case 400:
+			strs[3] = "TEK";
+			break;
+		case 600:
 			strs[3] = "ETC";
+			break;
 		}
 #endif
 
@@ -349,12 +353,21 @@ void ResultFlags::dump()
 			p    = 0;
 			prev = flagTable[i].type();
 		}
-		prev                = flagTable[i].type();
-		const char* strs[3] = { "OFF", "ON", "SEEN" };
+		prev = flagTable[i].type();
 
-		// The final game version of this print probably cut out the strs[3], since its not set in final
+#if defined(DEVELOP) || defined(WIN32)
+		strs[0] = "OFF";
+		strs[1] = "ON";
+		strs[2] = "SEEN";
+#else
+		// It genuinely has to be written this way to match retail.  Reusing the above char* array and preprocessor block does not work.
+		const char* strs[3] = { "OFF", "ON", "SEEN" };
+		STACK_PAD_INLINE(1);
+#endif
+
+		// So as a result of all that, the final game version this PRINT contains brazen (but stripped) undefined behavior (`strs[3]`).
 		PRINT(" ENUM_RESULT_%s_G%02d_P00 = %s : %d pages\n", strs[3], p++, strs[getFlag(flagTable[i].mScreenId)],
-		      (flagTable[i + 1].mScreenId == -1) ? 1 : flagTable[i + 1].mScreenId - id);
+		      (flagTable[i + 1].mScreenId == -1) ? 1 : flagTable[i + 1].mScreenId - info.mScreenId);
 	}
 	PRINT("*************************************************\n");
 }
