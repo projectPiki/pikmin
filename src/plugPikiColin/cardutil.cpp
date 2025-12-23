@@ -1,62 +1,68 @@
 #include "CardUtil.h"
 
 #include "DebugLog.h"
-#include "Dolphin/card.h"
 #include "gameflow.h"
 
+/// Global thread for async card operations called directly by the game code.
 CardUtilThread CardThread;
+
+/// Global object for handling card command queueing and execution.
 CardUtilControl CardControl;
 
 /**
- * @TODO: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("CardUtil")
 
 /**
- * @TODO: Documentation
+ * @brief Gets number of directory entries in card list.
  * @note UNUSED Size: 000010
  */
-void CardUtilNumFiles()
+int CardUtilNumFiles()
 {
-	// UNUSED FUNCTION
+	return CardControl.mDirentCount;
 }
 
 /**
- * @TODO: Documentation
+ * @brief Locks directory mutex.
+ *
+ * Ensures thread-safe access to card directory data. Pair with CardUtilUnlockDirectory.
+ *
  * @note UNUSED Size: 000038
  */
 void CardUtilLockDirectory()
 {
-	OSLockMutex(&CardControl.mMutex2);
+	OSLockMutex(&CardControl.mDirMutex);
 }
 
 /**
- * @TODO: Documentation
+ * @brief Unlocks directory mutex.
+ *
+ * Ensures thread-safe access to card directory data. Pair with CardUtilLockDirectory.
+ *
  * @note UNUSED Size: 00002C
  */
 void CardUtilUnlockDirectory()
 {
-	OSUnlockMutex(&CardControl.mMutex2);
+	OSUnlockMutex(&CardControl.mDirMutex);
 }
 
 /**
- * @TODO: Documentation
+ * @brief Gets pointer to number of unused memory card bytes.
  * @note UNUSED Size: 000010
  */
-s32 CardUtilByteNotUsed()
+s32* CardUtilByteNotUsed()
 {
-	return CardControl.mByteNotUsed;
+	return &CardControl.mByteNotUsed;
 }
 
 /**
- * @TODO: Documentation
+ * @brief Stripped function, not yet decompiled or reconstructed.
  * @note UNUSED Size: 000028
  */
 s32 CardUtilBlocksNotUsed()
@@ -65,221 +71,273 @@ s32 CardUtilBlocksNotUsed()
 }
 
 /**
- * @TODO: Documentation
+ * @brief Gets pointer to number of unused file slots.
  * @note UNUSED Size: 000010
  */
-s32 CardUtilFilesNotUsed()
+s32* CardUtilFilesNotUsed()
 {
-	return CardControl.mFilesNotUsed;
+	return &CardControl.mFilesNotUsed;
 }
 
 /**
- * @TODO: Documentation
+ * @brief Gets pointer to memory card sector size.
  * @note UNUSED Size: 000010
  */
-s32 CardUtilSectorSize()
+u32* CardUtilSectorSize()
 {
-	return CardControl.mSectorSize;
+	return &CardControl.mSectorSize;
 }
 
 /**
- * @TODO: Documentation
+ * @brief Mounts the memory card in given channel and resets control information.
+ *
+ * @param chan Memory card channel (0 or 1 for Slot A or Slot B).
+ * @param workArea Address of memory card working memory.
+ * @return CARD result code from last operation hit - 0 or 1 if no error, negative if error.
  */
-static int DoMount(s32 channel, void* a2)
+static s32 DoMount(s32 chan, void* workArea)
 {
-	OSLockMutex(&CardControl.mMutex2);
+	// reset directory count (thread-safe)
+	CardUtilLockDirectory();
 	CardControl.mDirentCount = 0;
-	OSUnlockMutex(&CardControl.mMutex2);
+	CardUtilUnlockDirectory();
+
+	// reset control values and mount card
 	CardControl.mFilesNotUsed  = 0;
 	CardControl.mByteNotUsed   = 0;
-	CardControl.mOperationSize = 0xA000;
-	s32 res                    = CARDMount(channel, (CARDMemoryCard*)a2, 0);
+	CardControl.mOperationSize = CARD_WORKAREA_SIZE;
+	s32 res                    = CARDMount(chan, (CARDMemoryCard*)workArea, nullptr);
 	switch (res) {
 	case CARD_RESULT_READY:
-	case CARD_RESULT_BROKEN:
-		int res2 = CARDGetSectorSize(channel, &CardControl.mSectorSize);
-		if (res2 >= 0) {
-		} else {
-			return res2;
+	case CARD_RESULT_BROKEN: {
+		// fetch sector size for utility purposes (+ check card is accessible as a side effect)
+		s32 sectorRes = CARDGetSectorSize(chan, CardUtilSectorSize());
+		if (sectorRes < 0) {
+			// throw error
+			return sectorRes;
 		}
-		res = CARDCheck(channel);
-		break;
 
-	case CARD_RESULT_ENCODING:
-		int res3 = CARDGetSectorSize(channel, &CardControl.mSectorSize);
-		if (res3 >= 0) {
-		} else {
-			return res3;
+		// double check card is valid and working
+		res = CARDCheck(chan);
+	} break;
+
+	case CARD_RESULT_ENCODING: {
+		// fetch sector size for utility purposes (+ check card is accessible as a side effect)
+		s32 sectorRes = CARDGetSectorSize(chan, CardUtilSectorSize());
+		if (sectorRes < 0) {
+			// throw error
+			return sectorRes;
 		}
-		break;
+	} break;
 	}
 
+	// if everything is fine, calc what's free on memory card and update our values
 	if (res == CARD_RESULT_READY) {
-		res = CARDFreeBlocks(channel, &CardControl.mByteNotUsed, &CardControl.mFilesNotUsed);
+		res = CARDFreeBlocks(chan, CardUtilByteNotUsed(), CardUtilFilesNotUsed());
 	}
 	return res;
 }
 
 /**
- * @TODO: Documentation
+ * @brief Unmounts memory card in given channel.
+ *
+ * @param chan Memory card channel (0 or 1 for Slot A or Slot B).
+ * @return CARD result code from last operation hit - 0 or 1 if no error, negative if error.
  * @note UNUSED Size: 000064
  */
-static int DoUnmount(s32 channel)
+static s32 DoUnmount(s32 chan)
 {
-	OSLockMutex(&CardControl.mMutex2);
+	// reset directory count (thread-safe)
+	CardUtilLockDirectory();
 	CardControl.mDirentCount = 0;
-	OSUnlockMutex(&CardControl.mMutex2);
-	return CARDUnmount(channel);
+	CardUtilUnlockDirectory();
+
+	return CARDUnmount(chan);
 }
 
 /**
- * @TODO: Documentation
+ * @brief Formats memory card in given channel.
+ *
+ * @param chan Memory card channel (0 or 1 for Slot A or Slot B).
+ * @return CARD result code from last operation hit - 0 or 1 if no error, negative if error.
  * @note UNUSED Size: 000088
  */
-static int DoFormat(s32 channel)
+static s32 DoFormat(s32 chan)
 {
-	OSLockMutex(&CardControl.mMutex2);
+	// reset directory count (thread-safe)
+	CardUtilLockDirectory();
 	CardControl.mDirentCount = 0;
-	OSUnlockMutex(&CardControl.mMutex2);
-	CardControl.mOperationSize = 0xA000;
-	int res                    = CARDFormat(channel);
+	CardUtilUnlockDirectory();
+
+	CardControl.mOperationSize = CARD_WORKAREA_SIZE;
+	s32 res                    = CARDFormat(chan);
 	if (res == CARD_RESULT_READY) {
-		res = CARDFreeBlocks(channel, &CardControl.mByteNotUsed, &CardControl.mFilesNotUsed);
+		res = CARDFreeBlocks(chan, CardUtilByteNotUsed(), CardUtilFilesNotUsed());
 	}
 	return res;
 }
 
 /**
- * @TODO: Documentation
+ * @brief Erases a file by index.
+ *
+ * @param chan Memory card channel (0 or 1 for Slot A or Slot B).
+ * @param fileNo Index of directory entry to erase.
+ * @return CARD result code from deleting or freeing blocks - 0 or 1 = successful, negative = error.
  */
-static int DoErase(s32 chan, s32 fileNo)
+static s32 DoErase(s32 chan, s32 fileNo)
 {
 	CardControl.mOperationSize = 0x4000;
 	int resDel                 = CARDFastDelete(chan, fileNo);
-	if (resDel >= 0) {
-
-	} else {
+	if (resDel < 0) {
+		// throw error
 		return resDel;
 	}
 
+	// if we have a list going, need to also remove the entry from that.
 	if (CardControl.mDirentList) {
-		u8* card = (u8*)CardControl.mDirentList;
-		for (card; card < &((u8*)CardControl.mDirentList)[CardControl.mDirentCount * sizeof(CardUtilDirent)];
-		     card += sizeof(CardUtilDirent)) {
-			int a = *(int*)(card + 0x5A40);
-			if (a != fileNo) {
+		CardUtilDirent* entry = &CardControl.mDirentList[0];
+		for (entry; entry < &(CardControl.mDirentList)[CardControl.mDirentCount]; entry++) {
+
+			int entryNo = entry->mFileNo;
+			// make sure we're erasing the right entry
+			if (entryNo != fileNo) {
 				continue;
 			}
 
-			OSLockMutex(&CardControl.mMutex2);
-			memmove(card, card + sizeof(CardUtilDirent),
-			        &((u8*)CardControl.mDirentList)[CardControl.mDirentCount * sizeof(CardUtilDirent)] - (card + sizeof(CardUtilDirent)));
+			// move any entries after the target back over it to keep memory contiguous (thread-safe)
+			CardUtilLockDirectory();
+			memmove(entry, entry + 1, (u8*)&(CardControl.mDirentList)[CardControl.mDirentCount] - (u8*)(entry + 1));
 			CardControl.mDirentCount--;
-			DCStoreRange(card, &((u8*)CardControl.mDirentList)[CardControl.mDirentCount * sizeof(CardUtilDirent)] - card);
-			OSUnlockMutex(&CardControl.mMutex2);
+			DCStoreRange(entry, (u8*)&(CardControl.mDirentList)[CardControl.mDirentCount] - (u8*)entry);
+			CardUtilUnlockDirectory();
 		}
 	}
 
-	return CARDFreeBlocks(chan, &CardControl.mByteNotUsed, &CardControl.mFilesNotUsed);
+	return CARDFreeBlocks(chan, CardUtilByteNotUsed(), CardUtilFilesNotUsed());
 }
 
 /**
- * @TODO: Documentation
+ * @brief Reads card data in for any Pikmin save files and populates the directory entry list.
+ *
+ * Specifically reads in comment, icon and banner information. Also handles any temporary files.
+ *
+ * @param chan Memory card channel (0 or 1 for Slot A or Slot B).
+ * @param dirent Array of directory entries, to be filled with save file information from the card.
+ * @return CARD result code from last operation hit - 0 or 1 if no error, negative if error.
  */
-static int DoList(s32 chan, CardUtilDirent* dirent)
+static s32 DoList(s32 chan, CardUtilDirent* dirent)
 {
-
 	DVDDiskID* diskID = DVDGetCurrentDiskID();
 	int res           = CARD_RESULT_READY;
+
+	// update card control structure with directory entry list (thread-safe)
 	CardUtilLockDirectory();
 	CardControl.mDirentList  = dirent;
 	CardControl.mDirentCount = 0;
 	CardUtilUnlockDirectory();
+
 	if (!dirent) {
+		// no buffer to fill, return early
 		return CARD_RESULT_READY;
 	}
 
-	memset(dirent, 0, 127 * sizeof(CardUtilDirent));
+	// clear entire buffer (up to 127 entries) before filling it with data
+	memset(dirent, 0, CARD_MAX_FILE * sizeof(CardUtilDirent));
 
 	CARDFileInfo info;
-	char buf2[36];
-	char buf[36];
-	for (int i = 0; i < 127; i++) {
+	char newFileName[CARD_FILENAME_MAX + 1];
+	char tempFileName[CARD_FILENAME_MAX + 1];
+
+	// scan up to 127 file slots
+	for (int i = 0; i < CARD_MAX_FILE; i++) {
 		CardUtilDirent& entry = dirent[CardControl.mDirentCount];
+		// grab card state for this slot and check it's valid
 		if (CARDGetStatus(chan, i, &entry.mState) < 0) {
 			continue;
 		}
 
+		// confirm data is for the right game (via game name and company) otherwise skip
 		if (memcmp(entry.mState.gameName, diskID->gameName, 4) != 0) {
 			continue;
 		}
-
 		if (memcmp(entry.mState.company, diskID->company, 2) != 0) {
 			continue;
 		}
 
+		// ~ indicates a temp file, handle that separately
 		if (entry.mState.fileName[0] == '~') {
-			strncpy(buf, entry.mState.fileName, CARD_FILENAME_MAX);
-			buf[CARD_FILENAME_MAX] = 0;
-			strncpy(buf2, &buf[1], CARD_FILENAME_MAX);
-			buf2[CARD_FILENAME_MAX] = 0;
 
-			if (entry.mState.commentAddr <= entry.mState.length - 0x40) {
-				if (CARDRename(chan, buf, buf2) == 0) {
+			// try and rename it to remove the ~
+			strncpy(tempFileName, entry.mState.fileName, CARD_FILENAME_MAX);
+			tempFileName[CARD_FILENAME_MAX] = 0; // 0-terminated string
+
+			strncpy(newFileName, &tempFileName[1], CARD_FILENAME_MAX);
+			newFileName[CARD_FILENAME_MAX] = 0; // 0-terminated string
+
+			// if we have a comment, assume it's a valid temp file and try and rename it
+			if (entry.mState.commentAddr <= entry.mState.length - CARD_COMMENT_SIZE) {
+				if (CARDRename(chan, tempFileName, newFileName) == 0) {
 					// renamed! redo this entry with the new name
 					i--;
 					continue;
 				}
 			}
 
+			// no comment present OR rename failed, delete the temp file
 			res = CARDFastDelete(chan, i);
 			if (res >= 0) {
-				res = CARDFreeBlocks(chan, &CardControl.mByteNotUsed, &CardControl.mFilesNotUsed);
+				res = CARDFreeBlocks(chan, CardUtilByteNotUsed(), CardUtilFilesNotUsed());
 				if (res >= 0) {
 					continue;
 				}
 			}
+			// either the delete or freeing of blocks failed, throw an error
 			return res;
 		}
 
-		memset(&entry.mFileData[0x5A00], 0, 0x40);
-		if (entry.mState.commentAddr <= entry.mState.length - 0x40) {
-			res = CARDFastOpen(chan, i, &info);
-			if (res >= 0) {
+		// clear comment buffer before we try and read in data
+		memset(entry.mFileCommentData, 0, CARD_COMMENT_SIZE);
 
-			} else {
+		// if we have comment data, read it in
+		if (entry.mState.commentAddr <= entry.mState.length - CARD_COMMENT_SIZE) {
+			res = CARDFastOpen(chan, i, &info);
+			if (res < 0) {
+				// throw error
 				return res;
 			}
 
-			s32 offset = TRUNC(entry.mState.commentAddr, 0x200);
-			s32 addr   = entry.mState.commentAddr + 0x40;
-			res        = CARDRead(&info, &entry, ALIGN_NEXT(addr - offset, 0x200), offset);
+			s32 commentStart = TRUNC(entry.mState.commentAddr, CARD_READ_SIZE);
+			s32 commentEnd   = entry.mState.commentAddr + CARD_COMMENT_SIZE;
+			res              = CARDRead(&info, &entry, ALIGN_NEXT(commentEnd - commentStart, CARD_READ_SIZE), commentStart);
 			CARDClose(&info);
 			if (res < 0) {
+				// throw error
 				return res;
 			}
-			void* dst = &entry.mFileData[0x5A00];
-			void* src = &entry.mFileData[OFFSET(entry.mState.commentAddr, 0x200)];
-			memmove(dst, src, 0x40);
+
+			void* dst = entry.mFileCommentData;
+			void* src = &entry.mFileData[OFFSET(entry.mState.commentAddr, CARD_READ_SIZE)];
+			memmove(dst, src, CARD_COMMENT_SIZE);
 		}
 
 		if (entry.mState.bannerFormat || entry.mState.iconFormat) {
 			if (entry.mState.offsetData <= entry.mState.length && entry.mState.iconAddr < entry.mState.offsetData) {
 				int resOpen = CARDFastOpen(chan, i, &info);
-				if (resOpen >= 0) {
-
-				} else {
+				if (resOpen < 0) {
+					// throw error
 					return resOpen;
 				}
 
-				s32 offset = TRUNC(entry.mState.iconAddr, 0x200);
-				res        = CARDRead(&info, &entry, ALIGN_NEXT(entry.mState.offsetData - offset, 0x200), offset);
+				s32 offset = TRUNC(entry.mState.iconAddr, CARD_READ_SIZE);
+				res        = CARDRead(&info, &entry, ALIGN_NEXT(entry.mState.offsetData - offset, CARD_READ_SIZE), offset);
 				CARDClose(&info);
 				if (res < 0) {
+					// throw error
 					return res;
 				}
 
-				memmove(&entry, &entry.mFileData[OFFSET(entry.mState.iconAddr, 0x200)], entry.mState.offsetData - entry.mState.iconAddr);
+				memmove(&entry, &entry.mFileData[OFFSET(entry.mState.iconAddr, CARD_READ_SIZE)],
+				        entry.mState.offsetData - entry.mState.iconAddr);
 
 				DCFlushRange(&entry, entry.mState.offsetData - entry.mState.iconAddr);
 
@@ -313,7 +371,10 @@ static int DoList(s32 chan, CardUtilDirent* dirent)
 				}
 			}
 		}
+
 		entry.mFileNo = i;
+
+		// increment card control's count (thread-safe)
 		CardUtilLockDirectory();
 		CardControl.mDirentCount++;
 		CardUtilUnlockDirectory();
@@ -323,154 +384,193 @@ static int DoList(s32 chan, CardUtilDirent* dirent)
 }
 
 /**
- * @TODO: Documentation
+ * @brief Opens memory card in given channel and reads in the data in given slot.
+ *
+ * @param chan Memory card channel (0 or 1 for Slot A or Slot B).
+ * @param fileNo Index of directory entry to read in.
+ * @param workBuffer Pointer to working area to read data into.
+ * @return CARD result code from last operation hit - 0 or 1 if no error, negative if error.
  * @note UNUSED Size: 0000A0
  */
-static int DoOpen(s32 chan, s32 fileNo, void* addr)
+static s32 DoOpen(s32 chan, s32 fileNo, void* workBuffer)
 {
 	CARDStat state;
 	CARDFileInfo info;
-	int res1 = CARDGetStatus(chan, fileNo, &state);
-	if (res1 >= 0) {
-	} else {
-		return res1;
+	s32 res = CARDGetStatus(chan, fileNo, &state);
+	if (res < 0) {
+		// throw error
+		return res;
 	}
-	int res2 = CARDFastOpen(chan, fileNo, &info);
-	if (res2 >= 0) {
-	} else {
-		return res2;
+	res = CARDFastOpen(chan, fileNo, &info);
+	if (res < 0) {
+		// throw error
+		return res;
 	}
 	CardControl.mOperationSize = state.length;
-	int res3                   = CARDRead(&info, addr, state.length, 0);
+	res                        = CARDRead(&info, workBuffer, state.length, 0);
 	CARDClose(&info);
-	return res3;
+	return res;
 }
 
 /**
- * @TODO: Documentation
+ * @brief Writes data to the given memory card slot.
+ *
+ * @param chan Memory card channel (0 or 1 for Slot A or Slot B).
+ * @param fileNo Index of directory entry to write to.
+ * @param data Pointer to data buffer to write from.
+ * @param length Length of data to write.
+ * @param offset Offset of data to write (within data buffer).
+ * @return CARD result code from last operation hit - 0 or 1 if no error, negative if error.
  * @note UNUSED Size: 00008C
  */
-static int DoWrite(s32 chan, s32 fileNo, void* addr, u32 length, u32 offset)
+static s32 DoWrite(s32 chan, s32 fileNo, void* data, u32 length, u32 offset)
 {
 	CARDStat state;
 	CARDFileInfo info;
-	int res1 = CARDGetStatus(chan, fileNo, &state);
-	if (res1 >= 0) {
-	} else {
-		return res1;
+	s32 res = CARDGetStatus(chan, fileNo, &state);
+	if (res < 0) {
+		// throw error
+		return res;
 	}
-	int res2 = CARDFastOpen(chan, fileNo, &info);
-	if (res2 >= 0) {
-	} else {
-		return res2;
+	res = CARDFastOpen(chan, fileNo, &info);
+	if (res < 0) {
+		// throw error
+		return res;
 	}
-	int res3 = CARDWrite(&info, addr, length, offset);
+	res = CARDWrite(&info, data, length, offset);
 	CARDClose(&info);
-	return res3;
+	return res;
 }
 
 /**
- * @TODO: Documentation
+ * @brief Saves an entire file to memory card.
+ *
+ * File is provided in pieces - the state (summary info) and data pointer.
+ *
+ * @param chan Memory card channel (0 or 1 for Slot A or Slot B).
+ * @param fileState CARDStat pointer for file to save.
+ * @param fileData Data pointer for file to save.
+ * @return CARD result code from last operation hit - 0 or 1 if no error, negative if error.
  */
-static int DoSave(s32 chan, CARDStat* state, void* addr)
+static s32 DoSave(s32 chan, CARDStat* fileState, void* fileData)
 {
 	CARDFileInfo info;
-	char buf[36];
-	strncpy(buf, state->fileName, CARD_FILENAME_MAX);
-	buf[CARD_FILENAME_MAX] = 0;
-	if (strlen(buf) >= CARD_FILENAME_MAX) {
+	// get 0-terminated file name string
+	char fileName[CARD_FILENAME_MAX + 1];
+	strncpy(fileName, fileState->fileName, CARD_FILENAME_MAX);
+	fileName[CARD_FILENAME_MAX] = 0;
+
+	// make sure file name is within length bounds
+	if (strlen(fileName) >= CARD_FILENAME_MAX) {
 		return CARD_RESULT_NAMETOOLONG;
 	}
 
-	if (buf[0] == '~') {
+	// don't try and save a temporary file - only proper files allowed
+	if (fileName[0] == '~') {
 		// dramatic
 		return CARD_RESULT_FATAL_ERROR;
 	}
 
-	char buf2[36];
-	buf2[0] = '~';
-	strncpy(&buf2[1], state->fileName, CARD_FILENAME_MAX - 1);
-	buf2[CARD_FILENAME_MAX] = 0;
+	char tempFileName[CARD_FILENAME_MAX + 1];
+
+	// temp file names start with "~"
+	tempFileName[0] = '~';
+	strncpy(&tempFileName[1], fileState->fileName, CARD_FILENAME_MAX - 1);
+	tempFileName[CARD_FILENAME_MAX] = 0;
 
 	int newFileNo;
-	int fileNo = -1;
-	if (CARDOpen(chan, buf, &info) == CARD_RESULT_READY) {
-		fileNo = info.fileNo;
+	int oldFileNo = -1;
+
+	// check if file exists
+	if (CARDOpen(chan, fileName, &info) == CARD_RESULT_READY) {
+		oldFileNo = info.fileNo;
 		CARDClose(&info);
 	}
 
-	CardControl.mOperationSize = state->length + 0x8000;
-	if (fileNo >= 0 && fileNo < 127) {
+	CardControl.mOperationSize = fileState->length + 0x8000;
+	if (oldFileNo >= 0 && oldFileNo < CARD_MAX_FILE) {
 		CardControl.mOperationSize += 0x4000;
 	}
 
-	int resCreate = CARDCreate(chan, buf2, state->length, &info);
-	if (resCreate >= 0) {
-
-	} else {
+	// try and create temp file
+	int resCreate = CARDCreate(chan, tempFileName, fileState->length, &info);
+	if (resCreate < 0) {
+		// throw error
 		return resCreate;
 	}
 
-	newFileNo    = info.fileNo;
-	int resWrite = CARDWrite(&info, addr, state->length, 0);
+	newFileNo = info.fileNo;
+
+	// write data to temp file
+	int resWrite = CARDWrite(&info, fileData, fileState->length, 0);
 	CARDClose(&info);
-	if (resWrite < 0 || (resWrite = CARDSetStatus(chan, newFileNo, state)) < 0) {
+	if (resWrite < 0 || (resWrite = CARDSetStatus(chan, newFileNo, fileState)) < 0) {
+		// throw error
 		return resWrite;
 	}
 
-	if (fileNo >= 0 && fileNo < 127) {
-		int resDel = CARDFastDelete(chan, fileNo);
-		if (resDel >= 0) {
-
-		} else {
+	// if old file exists, delete it
+	if (oldFileNo >= 0 && oldFileNo < CARD_MAX_FILE) {
+		int resDel = CARDFastDelete(chan, oldFileNo);
+		if (resDel < 0) {
+			// throw error
 			return resDel;
 		}
 	}
-	int resRename = CARDRename(chan, buf2, buf);
-	if (resRename >= 0) {
 
-	} else {
+	// rename temp file to final name
+	int resRename = CARDRename(chan, tempFileName, fileName);
+	if (resRename < 0) {
+		// throw error
 		return resRename;
 	}
 
+	// if no directory list, update our free space counters and return
 	if (!CardControl.mDirentList) {
-		return CARDFreeBlocks(chan, &CardControl.mByteNotUsed, &CardControl.mFilesNotUsed);
+		return CARDFreeBlocks(chan, CardUtilByteNotUsed(), CardUtilFilesNotUsed());
 	}
 
-	OSLockMutex(&CardControl.mMutex2);
+	// update or add directory entry (thread-safe)
+	CardUtilLockDirectory();
 	CardUtilDirent* entry;
-	if (fileNo == -1) {
+	if (oldFileNo == -1) {
+		// new file, add at end
 		entry = &CardControl.mDirentList[CardControl.mDirentCount];
 		CardControl.mDirentCount++;
 	} else {
-		entry                    = CardControl.mDirentList;
-		CardUtilDirent* altEntry = &CardControl.mDirentList[CardControl.mDirentCount];
-		for (entry; entry < altEntry; entry++) {
-			if (entry->mFileNo == fileNo) {
+		// existing file, find and update
+		entry               = CardControl.mDirentList;
+		CardUtilDirent* end = &CardControl.mDirentList[CardControl.mDirentCount];
+		for (entry; entry < end; entry++) {
+			if (entry->mFileNo == oldFileNo) {
 				break;
 			}
 		}
-		if (entry == altEntry) {
+		if (entry == end) {
+			// failed to find file, add at end
 			CardControl.mDirentCount++;
 		}
 	}
 
-	memset(&entry->mFileData[0x5A00], 0, 0x40);
+	// clear comment data
+	memset(entry->mFileCommentData, 0, CARD_COMMENT_SIZE);
 
-	if (state->commentAddr <= state->length - 0x40) {
-		memmove(&entry->mFileData[0x5A00], (void*)((u32)addr + state->commentAddr), 0x40);
+	// copy comment data from save buffer, if present
+	if (fileState->commentAddr <= fileState->length - CARD_COMMENT_SIZE) {
+		memmove(entry->mFileCommentData, (void*)((u32)fileData + fileState->commentAddr), CARD_COMMENT_SIZE);
 	}
 
+	// handle icon/banner data, if present
 	entry->mAnimTotalFrames = 0;
-	if (state->bannerFormat || state->iconFormat) {
-		memmove(entry, (void*)((u32)addr + state->iconAddr), state->offsetData - state->iconAddr);
-		DCFlushRange(entry, state->offsetData - state->iconAddr);
+	if (fileState->bannerFormat || fileState->iconFormat) {
+		memmove(entry, (void*)((u32)fileData + fileState->iconAddr), fileState->offsetData - fileState->iconAddr);
+		DCFlushRange(entry, fileState->offsetData - fileState->iconAddr);
 
 		int iconCnt;
 		int i;
 		int count;
 		for (i = 0, count = 0, iconCnt = 0; count < 8; count++, i++) {
-			int speed = CARDGetIconSpeed(state, count);
+			int speed = CARDGetIconSpeed(fileState, count);
 			if (speed == CARD_STAT_SPEED_END) {
 				break;
 			}
@@ -479,14 +579,15 @@ static int DoSave(s32 chan, CARDStat* state, void* addr)
 			entry->mAnimIconIndices[i]  = iconCnt;
 			entry->mAnimTotalFrames += speed << 2;
 
-			if (CARDGetIconFormat(state, iconCnt) != CARD_STAT_ICON_NONE) {
+			if (CARDGetIconFormat(fileState, iconCnt) != CARD_STAT_ICON_NONE) {
 				iconCnt++;
 			}
 		}
 
-		if (CARDGetIconAnim(state) == CARD_STAT_ANIM_BOUNCE && count > 2) {
+		// handle bounce return frames
+		if (CARDGetIconAnim(fileState) == CARD_STAT_ANIM_BOUNCE && count > 2) {
 			for (int j = count - 2; j > 0; j--) {
-				int speed                   = CARDGetIconSpeed(state, j);
+				int speed                   = CARDGetIconSpeed(fileState, j);
 				entry->mAnimFrameOffsets[i] = entry->mAnimTotalFrames;
 				entry->mAnimIconIndices[i]  = entry->mAnimIconIndices[j];
 				entry->mAnimTotalFrames += speed << 2;
@@ -495,28 +596,38 @@ static int DoSave(s32 chan, CARDStat* state, void* addr)
 		}
 	}
 
-	memcpy(&entry->mState, state, sizeof(CARDStat));
+	// copy CARDStat to entry and update file number
+	memcpy(&entry->mState, fileState, sizeof(CARDStat));
 	entry->mFileNo = newFileNo;
-	OSUnlockMutex(&CardControl.mMutex2);
-	return CARDFreeBlocks(chan, &CardControl.mByteNotUsed, &CardControl.mFilesNotUsed);
+	CardUtilUnlockDirectory();
+
+	// update free space counters
+	return CARDFreeBlocks(chan, CardUtilByteNotUsed(), CardUtilFilesNotUsed());
 }
 
 /**
- * @TODO: Documentation
+ * @brief Issues a command to the card utility thread for async execution.
+ * @param chan Memory card channel (0 or 1 for Slot A or Slot B).
+ * @param command Command code (see `CardUtilCommands` enum).
+ * @param file File number or, for saving, a casted file state pointer.
+ * @param workBuffer Pointer to data buffer or directory entry list.
+ * @param offset Offset for write operations.
+ * @param length Length for write operations.
+ * @return CARD result code from last operation hit - 0 or 1 if no error, negative if error.
  */
-static int CardUtilCommand(s32 chan, s32 command, s32 file, void* addr, u32 offset, u32 length)
+static s32 CardUtilCommand(s32 chan, s32 command, s32 file, void* workBuffer, u32 offset, u32 length)
 {
 	OSLockMutex(&CardControl.mMutex);
 	int res;
 	if (CardControl.mChannel != -1) {
+		// card thread is busy
 		res = CardControl.mResultCode;
 	} else {
-
-		CardControl.mChannel    = CardControl.mChannel;
+		// notify global control of command parameters
 		CardControl.mChannel    = chan;
 		CardControl.mCommand    = command;
-		CardControl.mFileNo     = file;
-		CardControl.mAddr       = addr;
+		CardControl.mFileNo     = (void*)file;
+		CardControl.mDataPtr    = workBuffer;
 		CardControl.mOffset     = offset;
 		CardControl.mLength     = length;
 		CardControl.mResultCode = CARD_RESULT_BUSY;
@@ -525,6 +636,7 @@ static int CardUtilCommand(s32 chan, s32 command, s32 file, void* addr, u32 offs
 			CardControl.mTransferredBytes = CARDGetXferredBytes(chan);
 		}
 		res = CARD_RESULT_READY;
+		// wake up card thread
 		OSSignalCond(&CardControl.mCondition);
 	}
 	OSUnlockMutex(&CardControl.mMutex);
@@ -532,49 +644,55 @@ static int CardUtilCommand(s32 chan, s32 command, s32 file, void* addr, u32 offs
 }
 
 /**
- * @TODO: Documentation
+ * @brief Gets the result code for the last completed operation.
  */
-int CardUtilResultCode()
+s32 CardUtilResultCode()
 {
 	return CardControl.mResultCode;
 }
 
 /**
- * @TODO: Documentation
+ * @brief Signals to mount card (async).
+ * @param chan Memory card channel (0 or 1 for Slot A or Slot B).
+ * @param workBuffer Working area to mount card to.
  */
-void CardUtilMount(s32 channel, void* addr)
+void CardUtilMount(s32 chan, void* workBuffer)
 {
-	CardUtilCommand(channel, CARDCMD_Mount, 0, addr, 0, 0);
+	CardUtilCommand(chan, CARDCMD_Mount, 0, workBuffer, 0, 0);
 }
 
 /**
- * @TODO: Documentation
+ * @brief Signals to unmount card (async).
+ * @param chan Memory card channel (0 or 1 for Slot A or Slot B).
  */
-void CardUtilUnmount(s32 channel)
+void CardUtilUnmount(s32 chan)
 {
-	CardUtilCommand(channel, CARDCMD_Unmount, 0, nullptr, 0, 0);
+	CardUtilCommand(chan, CARDCMD_Unmount, 0, nullptr, 0, 0);
 }
 
 /**
- * @TODO: Documentation
+ * @brief Signals to retrieve save file list (async).
+ * @param chan Memory card channel (0 or 1 for Slot A or Slot B).
+ * @param dirList Array to write list of save files to.
  * @note UNUSED Size: 000034
  */
-void CardUtilList(s32, CardUtilDirent*)
+void CardUtilList(s32 chan, CardUtilDirent* dirList)
 {
-	// UNUSED FUNCTION
+	CardUtilCommand(chan, CARDCMD_List, 0, dirList, 0, 0);
 }
 
 /**
- * @TODO: Documentation
+ * @brief Signals to format card (async).
+ * @param chan Memory card channel (0 or 1 for Slot A or Slot B).
  * @note UNUSED Size: 000034
  */
-void CardUtilFormat(s32)
+void CardUtilFormat(s32 chan)
 {
-	// UNUSED FUNCTION
+	CardUtilCommand(chan, CARDCMD_Format, 0, nullptr, 0, 0);
 }
 
 /**
- * @TODO: Documentation
+ * @brief Checks if card is busy.
  */
 bool CardUtilIsCardBusy()
 {
@@ -582,7 +700,7 @@ bool CardUtilIsCardBusy()
 }
 
 /**
- * @TODO: Documentation
+ * @brief Yields working thread while card is busy.
  */
 void CardUtilIdleWhileBusy()
 {
@@ -592,66 +710,90 @@ void CardUtilIdleWhileBusy()
 }
 
 /**
- * @TODO: Documentation
+ * @brief Signals to erase file from card (async).
+ * @param chan Memory card channel (0 or 1 for Slot A or Slot B).
+ * @param fileNo File number/index to erase.
  */
-void CardUtilErase(s32 channel, s32 file)
+void CardUtilErase(s32 chan, s32 fileNo)
 {
-	CardUtilCommand(channel, CARDCMD_Erase, file, nullptr, 0, 0);
+	CardUtilCommand(chan, CARDCMD_Erase, fileNo, nullptr, 0, 0);
 }
 
 /**
- * @TODO: Documentation
+ * @brief Signals to read in data from card (async).
+ * @param chan Memory card channel (0 or 1 for Slot A or Slot B).
+ * @param fileNo Index of file to read in.
+ * @param workBuffer Pointer to working area to read data into.
  */
-void CardUtilOpen(s32 channel, s32 file, void* addr)
+void CardUtilOpen(s32 chan, s32 fileNo, void* workBuffer)
 {
-	CardUtilCommand(channel, CARDCMD_Open, file, addr, 0, 0);
+	CardUtilCommand(chan, CARDCMD_Open, fileNo, workBuffer, 0, 0);
 }
 
 /**
- * @TODO: Documentation
+ * @brief Signals to save file to card (async).
+ * @param chan Memory card channel (0 or 1 for Slot A or Slot B).
+ * @param fileState Status info for file to save.
+ * @param data Pointer to file data to save.
  */
-void CardUtilSave(s32 channel, CARDStat* stat, void* addr)
+void CardUtilSave(s32 chan, CARDStat* fileState, void* data)
 {
-	CardUtilCommand(channel, CARDCMD_Save, (int)stat, addr, 0, 0);
+	// no clue why they needed to force the CARDStat pointer in as a long
+	CardUtilCommand(chan, CARDCMD_Save, (s32)fileState, data, 0, 0);
 }
 
 /**
- * @TODO: Documentation
+ * @brief Signals to write a chunk of data to card (async).
+ * @param chan Memory card channel (0 or 1 for Slot A or Slot B).
+ * @param fileNo Index of file to write to.
+ * @param data Pointer to data to write from.
+ * @param offset Offset of data to write (within data buffer).
+ * @param length Length of data to write.
  */
-void CardUtilWrite(s32 channel, s32 fileNo, void* data, u32 offset, u32 size)
+void CardUtilWrite(s32 chan, s32 fileNo, void* data, u32 offset, u32 length)
 {
-	CardUtilCommand(channel, CARDCMD_Write, fileNo, data, offset, size);
+	CardUtilCommand(chan, CARDCMD_Write, fileNo, data, offset, length);
 }
 
 /**
- * @TODO: Documentation
+ * @brief Main loop for the card utility thread.
+ *
+ * Waits for commands to be issued to CardControl, then executes them
+ * on the memory card in a thread-safe manner.
+ *
+ * @note Parameter and return are unused, but required to align with the `OSThreadStartFunction` typedef.
+ * @warning NON-MATCHING! Functionally equivalent.
  */
 static void* CardUtilMain(void*)
 {
-	s32 res;
-	s32 length;
-	s32 cmd;
-	s32 chan;
-	u32 offset;
-	s32 fileNo;
-	void* addr;
+	// I think variable declaration needs jostling, along with maybe some inline adjustments.
+	s32 chan;   // r23
+	void* data; // r22
+	s32 offset; // r21
+	s32 res;    // r20
+	void* file; // r19
+	s32 length; // r17
+	s32 cmd;    // r16
 	while (true) {
+
 		OSLockMutex(&CardControl.mMutex);
-		while (CardControl.mChannel == -1) {
+		while (!CardUtilIsCardBusy()) {
 			OSWaitCond(&CardControl.mCondition, &CardControl.mMutex);
 		}
 
-		cmd    = CardControl.mCommand;
-		chan   = CardControl.mChannel;
-		fileNo = CardControl.mFileNo;
-		addr   = CardControl.mAddr;
-		offset = CardControl.mOffset;
-		length = CardControl.mLength;
+		// get command info from global object (thread-safe)
+		cmd    = CardControl.mCommand; // r16
+		chan   = CardControl.mChannel; // r23
+		file   = CardControl.mFileNo;  // r19
+		data   = CardControl.mDataPtr; // r22
+		offset = CardControl.mOffset;  // r21
+		length = CardControl.mLength;  // r17
 		OSUnlockMutex(&CardControl.mMutex);
 
+		// execute command
 		switch (cmd) {
 		case CARDCMD_Mount:
-			res = DoMount(chan, (void*)addr);
+			res = DoMount(chan, data);
 			break;
 
 		case CARDCMD_Unmount:
@@ -663,230 +805,59 @@ static void* CardUtilMain(void*)
 			break;
 
 		case CARDCMD_List:
-			res = DoList(chan, (CardUtilDirent*)addr);
+			res = DoList(chan, (CardUtilDirent*)data);
 			break;
 
 		case CARDCMD_Erase:
-			res = DoErase(chan, fileNo);
+			res = DoErase(chan, (s32)file);
 			break;
 
 		case CARDCMD_Open:
-			res = DoOpen(chan, fileNo, (void*)addr);
+			res = DoOpen(chan, (s32)file, data);
 			break;
 
 		case CARDCMD_Save:
-			res = DoSave(chan, (CARDStat*)fileNo, (void*)addr);
+			res = DoSave(chan, (CARDStat*)file, data);
 			break;
 
 		case CARDCMD_Write:
-			u32 v = length;
-			res   = DoWrite(chan, fileNo, (void*)addr, (u32)v, offset);
+			u32 uLength = length;
+			res         = DoWrite(chan, (s32)file, data, uLength, offset);
 			break;
 		}
 
+		// update global objects with results
 		OSLockMutex(&CardControl.mMutex);
 		if (res == CARD_RESULT_IOERROR) {
 			gameflow.mMemoryCard.mDidSaveFail = true;
 		}
 		CardControl.mResultCode = res;
-		CardControl.mChannel    = -1;
+		// mark card as idle
+		CardControl.mChannel = -1;
 		OSUnlockMutex(&CardControl.mMutex);
+
 		STACK_PAD_TERNARY(CardControl.mChannel, 1);
 	}
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r3, 0x803A
-	  stw       r0, 0x4(r1)
-	  lis       r4, 0x1
-	  lis       r5, 0x802A
-	  stwu      r1, -0x158(r1)
-	  stmw      r16, 0x118(r1)
-	  subi      r31, r3, 0x2BC8
-	  lis       r3, 0x803A
-	  addi      r29, r31, 0x328
-	  addi      r28, r31, 0x360
-	  addi      r26, r31, 0x350
-	  addi      r27, r31, 0x34C
-	  addi      r30, r31, 0x330
-	  subi      r24, r4, 0x6000
-	  addi      r25, r5, 0x5EB0
-	  subi      r18, r3, 0x2848
-
-	.loc_0x44:
-	  addi      r3, r31, 0x310
-	  bl        0x1AC098
-	  b         .loc_0x5C
-
-	.loc_0x50:
-	  addi      r3, r29, 0
-	  addi      r4, r31, 0x310
-	  bl        0x1AC2BC
-
-	.loc_0x5C:
-	  lwz       r0, 0x0(r30)
-	  cmpwi     r0, -0x1
-	  beq+      .loc_0x50
-	  lwz       r16, 0x334(r31)
-	  mr        r23, r0
-	  lwz       r19, 0x338(r31)
-	  addi      r3, r31, 0x310
-	  lwz       r22, 0x33C(r31)
-	  lwz       r21, 0x340(r31)
-	  lwz       r17, 0x344(r31)
-	  bl        0x1AC138
-	  cmplwi    r16, 0x9
-	  bgt-      .loc_0x22C
-	  rlwinm    r0,r16,2,0,29
-	  lwzx      r0, r25, r0
-	  mtctr     r0
-	  bctr
-	  addi      r3, r23, 0
-	  addi      r4, r22, 0
-	  bl        -0x107C
-	  mr        r20, r3
-	  b         .loc_0x22C
-	  mr        r3, r28
-	  bl        0x1AC028
-	  li        r0, 0
-	  stw       r0, 0x37C(r31)
-	  mr        r3, r28
-	  bl        0x1AC0F4
-	  mr        r3, r23
-	  bl        0x1BD810
-	  mr        r20, r3
-	  b         .loc_0x22C
-	  mr        r3, r28
-	  bl        0x1AC000
-	  li        r0, 0
-	  stw       r0, 0x37C(r31)
-	  mr        r3, r28
-	  bl        0x1AC0CC
-	  stw       r24, 0x35C(r31)
-	  mr        r3, r23
-	  bl        0x1BE02C
-	  cmpwi     r3, 0
-	  bne-      .loc_0x118
-	  addi      r3, r23, 0
-	  addi      r4, r27, 0
-	  addi      r5, r26, 0
-	  bl        0x1BB57C
-
-	.loc_0x118:
-	  mr        r20, r3
-	  b         .loc_0x22C
-	  addi      r3, r23, 0
-	  addi      r4, r22, 0
-	  bl        -0xEFC
-	  mr        r20, r3
-	  b         .loc_0x22C
-	  addi      r3, r23, 0
-	  addi      r4, r19, 0
-	  bl        -0x100C
-	  mr        r20, r3
-	  b         .loc_0x22C
-	  addi      r3, r23, 0
-	  addi      r4, r19, 0
-	  addi      r5, r1, 0x94
-	  bl        0x1BF40C
-	  cmpwi     r3, 0
-	  bge-      .loc_0x164
-	  b         .loc_0x1A8
-
-	.loc_0x164:
-	  addi      r3, r23, 0
-	  addi      r4, r19, 0
-	  addi      r5, r1, 0x100
-	  bl        0x1BE124
-	  cmpwi     r3, 0
-	  bge-      .loc_0x180
-	  b         .loc_0x1A8
-
-	.loc_0x180:
-	  lwz       r5, 0xB4(r1)
-	  addi      r4, r22, 0
-	  addi      r3, r1, 0x100
-	  stw       r5, 0x35C(r31)
-	  li        r6, 0
-	  bl        0x1BEC00
-	  addi      r17, r3, 0
-	  addi      r3, r1, 0x100
-	  bl        0x1BE3DC
-	  mr        r3, r17
-
-	.loc_0x1A8:
-	  mr        r20, r3
-	  b         .loc_0x22C
-	  addi      r3, r23, 0
-	  addi      r4, r19, 0
-	  addi      r5, r22, 0
-	  bl        -0x9C4
-	  mr        r20, r3
-	  b         .loc_0x22C
-	  addi      r20, r17, 0
-	  addi      r3, r23, 0
-	  addi      r4, r19, 0
-	  addi      r5, r1, 0x14
-	  bl        0x1BF388
-	  cmpwi     r3, 0
-	  bge-      .loc_0x1E8
-	  b         .loc_0x228
-
-	.loc_0x1E8:
-	  addi      r3, r23, 0
-	  addi      r4, r19, 0
-	  addi      r5, r1, 0x80
-	  bl        0x1BE0A0
-	  cmpwi     r3, 0
-	  bge-      .loc_0x204
-	  b         .loc_0x228
-
-	.loc_0x204:
-	  addi      r4, r22, 0
-	  addi      r5, r20, 0
-	  addi      r6, r21, 0
-	  addi      r3, r1, 0x80
-	  bl        0x1BEEF8
-	  addi      r17, r3, 0
-	  addi      r3, r1, 0x80
-	  bl        0x1BE35C
-	  mr        r3, r17
-
-	.loc_0x228:
-	  mr        r20, r3
-
-	.loc_0x22C:
-	  addi      r3, r31, 0x310
-	  bl        0x1ABEB0
-	  cmpwi     r20, -0x5
-	  bne-      .loc_0x244
-	  li        r0, 0x1
-	  stb       r0, 0x8C(r18)
-
-	.loc_0x244:
-	  stw       r20, 0x348(r31)
-	  li        r0, -0x1
-	  addi      r3, r31, 0x310
-	  stw       r0, 0x0(r30)
-	  bl        0x1ABF68
-	  b         .loc_0x44
-	*/
 }
 
 /**
- * @TODO: Documentation
+ * @brief Initialises the card utility thread and associated sync primitives.
+ *
+ * @param stack Stack pointer for card utility thread.
+ * @param stackSize Size of stack for card utility thread.
+ * @param prio Thread priority for card utility thread.
  */
 void CardUtilInit(void* stack, u32 stackSize, s32 prio)
 {
 	OSInitMutex(&CardControl.mMutex);
-	OSInitMutex(&CardControl.mMutex2);
+	OSInitMutex(&CardControl.mDirMutex);
 	OSInitCond(&CardControl.mCondition);
 	OSCreateThread(&CardThread.mThread, CardUtilMain, nullptr, stack, stackSize, prio, OS_THREAD_ATTR_DETACH);
 	OSResumeThread(&CardThread.mThread);
 }
 
 /**
- * @TODO: Documentation
+ * @brief Stripped function, not yet decompiled or reconstructed.
  * @note UNUSED Size: 000238
  */
 void CardUtilDrawIcon(int, int, int, void*, void*, u16, u16, int)
@@ -895,7 +866,7 @@ void CardUtilDrawIcon(int, int, int, void*, void*, u16, u16, int)
 }
 
 /**
- * @TODO: Documentation
+ * @brief Stripped function, not yet decompiled or reconstructed.
  * @note UNUSED Size: 000168
  */
 void CardUtilDrawAnimatedIcon(CardUtilDirent*, int, int, int)
@@ -904,7 +875,7 @@ void CardUtilDrawAnimatedIcon(CardUtilDirent*, int, int, int)
 }
 
 /**
- * @TODO: Documentation
+ * @brief Stripped function, not yet decompiled or reconstructed.
  * @note UNUSED Size: 000050
  */
 void CardUtilGetProgress(s32)
