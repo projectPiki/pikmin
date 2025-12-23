@@ -1627,7 +1627,7 @@ void ActorInstance::genSection(AgeServer& server)
 
 void SceneData::genAge(AgeServer& server)
 {
-	server.StartGroup("Commands");
+	server.StartGroup("commands");
 	server.EndGroup();
 }
 

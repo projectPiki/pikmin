@@ -1301,7 +1301,7 @@ void DGXGraphics::drawSingleMatpoly(Shape* model, Joint::MatPoly* matPoly)
 		return;
 	}
 
-	if ((!mesh.mJointList->mFlags) & 0x1) { // is this a typo? feels like a typo.
+	if ((!mesh.mJointList->mFlags) & JOINT_FLAG_VISIBLE) { // is this a typo? feels like a typo.
 		return;
 	}
 

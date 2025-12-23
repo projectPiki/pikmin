@@ -23,7 +23,7 @@ struct RigidBody;
 struct Graphics;
 
 /**
- * @brief TODO
+ * @brief TODO: fill out docs
  */
 enum ObjCollType {
 	OCT_Sphere   = 1,

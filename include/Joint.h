@@ -14,6 +14,8 @@ struct Graphics;
 struct Mesh;
 struct Joint;
 
+#define JOINT_FLAG_VISIBLE (1 << 0) // If 1, joint (and children) is visible, else invisible
+
 /**
  * @brief TODO
  */
@@ -44,7 +46,7 @@ struct Joint : public CoreNode {
 	Joint()
 	    : CoreNode(nullptr)
 	{
-		mFlags = 1;
+		mFlags = JOINT_FLAG_VISIBLE;
 		_10C   = 0;
 	}
 

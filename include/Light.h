@@ -161,6 +161,9 @@ struct Light : public CoreNode {
 	u8 _24C[0x2D4 - 0x24C];      // _24C, unknown
 };
 
+#define LIGHTGROUP_FLAG_NONE          (0 << 0)
+#define LIGHTGROUP_FLAG_USE_DIRECTION (1 << 0)
+
 /**
  * @brief TODO
  *
@@ -169,7 +172,7 @@ struct Light : public CoreNode {
 struct LightGroup : public CoreNode {
 	LightGroup()
 	{
-		mFlags      = 0;
+		mFlags      = LIGHTGROUP_FLAG_NONE;
 		mType       = 0;
 		mJointIndex = -1;
 		mTexture    = nullptr;
@@ -201,7 +204,7 @@ struct LightGroup : public CoreNode {
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	int mFlags;               // _14
+	int mFlags;               // _14, unused, but 1="UseDir"? see LightGroup::genAge in sysCore
 	int mType;                // _18
 	u32 mJointIndex;          // _1C
 	Texture* mTexture;        // _20

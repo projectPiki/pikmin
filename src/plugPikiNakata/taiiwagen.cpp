@@ -281,7 +281,7 @@ void TaiIwagenStrategy::draw(Teki& teki, Graphics& gfx)
 	if (teki.mStateID == IWAGENSTATE_Wait || teki.mStateID == IWAGENSTATE_Reset) {
 		teki.mTekiShape->mShape->mJointList[1].mFlags = 0;
 		TekiStrategy::draw(teki, gfx);
-		teki.mTekiShape->mShape->mJointList[1].mFlags = 1;
+		teki.mTekiShape->mShape->mJointList[1].mFlags = JOINT_FLAG_VISIBLE;
 	} else {
 		TekiStrategy::draw(teki, gfx);
 	}
