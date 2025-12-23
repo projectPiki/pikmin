@@ -612,12 +612,12 @@ void UfoItem::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 				setJetEffect(vals[level], false);
 				break;
 			case 2:
-				if (playerState->hasUfoLeftControl()) {
+				if (playerState->hasUfoRightControl()) {
 					setPca2Effect(true);
 				}
 				break;
 			case 3:
-				if (playerState->hasUfoRightControl()) {
+				if (playerState->hasUfoLeftControl()) {
 					setPca1Effect(true);
 				}
 				break;

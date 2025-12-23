@@ -186,8 +186,8 @@ public:
 
 	bool isChallengeMode() { return mIsChallengeMode; }
 
-	bool hasUfoLeftControl() { return mShipEffectPartFlag & 4; }
-	bool hasUfoRightControl() { return mShipEffectPartFlag & 2; }
+	bool hasUfoRightControl() { return mShipEffectPartFlag & 4; }
+	bool hasUfoLeftControl() { return mShipEffectPartFlag & 2; }
 	bool hasRadar() { return mShipEffectPartFlag & 1; }
 
 	void setDayCollectCount(int day, int parts) { mPartsCollectedByDay[day] = parts; }
