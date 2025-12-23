@@ -1,9 +1,9 @@
 #ifndef _ZEN_MATH_H
 #define _ZEN_MATH_H
 
-#include "stl/math.h"
 #include "system.h"
 #include "types.h"
+#include <math.h>
 
 struct Vector3f;
 struct Matrix3f;

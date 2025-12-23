@@ -4,8 +4,8 @@
 #include "PowerPC_EABI_Support/MSL_C/MSL_Common/math_api.h"
 #include "fdlibm.h"
 #include "float.h"
-#include "stl/math.h"
 #include "types.h"
+#include <math.h>
 
 #define SIGDIGLEN 36
 

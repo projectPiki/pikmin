@@ -1,6 +1,6 @@
 #include "Dolphin/AmcExi2.h"
-#include "stl/stdio.h"
 #include "types.h"
+#include <stdio.h>
 
 static inline int __init_console(void)
 {

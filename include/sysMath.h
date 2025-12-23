@@ -1,8 +1,8 @@
 #ifndef _SYSMATH_H
 #define _SYSMATH_H
 
-#include "stl/math.h"
 #include "types.h"
+#include <math.h>
 
 struct Vector3f;
 struct BoundBox;

@@ -1,7 +1,7 @@
 #include "Stream.h"
 
 #include "Common/String.h"
-#include <stl/string.h>
+#include <string.h>
 
 // operator new[] is used without this header being included.
 #if defined(BUGFIX)

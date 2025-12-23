@@ -1,7 +1,7 @@
 #ifndef _LIMITS_H
 #define _LIMITS_H
-#include "stl/iterator.h"
 #include "types.h"
+#include <iterator.h>
 
 #ifdef __cplusplus
 extern "C" {

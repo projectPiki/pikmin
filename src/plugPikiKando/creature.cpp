@@ -17,9 +17,9 @@
 #include "RadarInfo.h"
 #include "SearchSystem.h"
 #include "SoundMgr.h"
-#include "stl/math.h"
 #include "sysMath.h"
 #include "timers.h"
+#include <math.h>
 
 static CollTriInfo* triList[0x200];
 

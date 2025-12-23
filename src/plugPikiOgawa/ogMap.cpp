@@ -3,9 +3,9 @@
 #include "P2D/Graph.h"
 #include "P2D/Screen.h"
 #include "P2D/TextBox.h"
-#include "stl/math.h"
 #include "sysNew.h"
 #include "zen/ogSub.h"
+#include <math.h>
 
 /**
  * @TODO: Documentation

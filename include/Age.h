@@ -5,8 +5,8 @@
 #include "AtxStream.h"
 #include "Common/String.h"
 #include "Delegate.h"
-#include "stl/string.h"
 #include "types.h"
+#include <string.h>
 
 enum PROP_TYPE {
 	CHAR_PROP = 0,

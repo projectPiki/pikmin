@@ -14,10 +14,10 @@
 #include "NewPikiGame.h"
 #include "OnePlayerSection.h"
 #include "gameflow.h"
-#include "stl/stdio.h"
-#include "stl/string.h"
 #include "sysNew.h"
 #include "system.h"
+#include <stdio.h>
+#include <string.h>
 
 FlowController flowCont;
 

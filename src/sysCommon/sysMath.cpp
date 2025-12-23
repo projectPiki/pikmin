@@ -8,7 +8,7 @@
 #include "KMath.h"
 #include "Matrix3f.h"
 #include "Plane.h"
-#include "stl/math.h"
+#include <math.h>
 
 /**
  * @TODO: Documentation

@@ -10,8 +10,8 @@
 #include "SoundMgr.h"
 #include "nlib/Geometry3D.h"
 #include "nlib/System.h"
-#include "stl/limits.h"
 #include "sysNew.h"
+#include <limits.h>
 
 /**
  * @TODO: Documentation

@@ -6,9 +6,9 @@
 #include "Dolphin/os.h"
 #include "Parameters.h"
 #include "Shape.h"
-#include "stl/string.h"
 #include "sysNew.h"
 #include "system.h"
+#include <string.h>
 
 /**
  * @TODO: Documentation

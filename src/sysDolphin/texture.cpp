@@ -3,9 +3,9 @@
 #include "DebugLog.h"
 #include "Dolphin/gx.h"
 #include "Stream.h"
-#include "stl/string.h"
 #include "sysNew.h"
 #include "system.h"
+#include <string.h>
 
 /**
  * @TODO: Documentation

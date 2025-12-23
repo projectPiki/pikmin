@@ -8,7 +8,6 @@
 #include "P2D/TextBox.h"
 #include "SoundMgr.h"
 #include "nlib/Math.h"
-#include "stl/stdio.h"
 #include "sysNew.h"
 #include "types.h"
 #include "zen/DrawCommon.h"
@@ -16,6 +15,7 @@
 #include "zen/TexAnim.h"
 #include "zen/ZenController.h"
 #include "zen/ogSub.h"
+#include <stdio.h>
 
 struct P2DPicture;
 struct P2DPerspGraph;

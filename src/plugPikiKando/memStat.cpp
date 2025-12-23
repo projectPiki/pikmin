@@ -1,9 +1,9 @@
 #include "MemStat.h"
 #include "DebugLog.h"
 #include "Dolphin/os.h"
-#include "stl/string.h"
 #include "sysNew.h"
 #include "system.h"
+#include <string.h>
 
 MemStat* memStat;
 

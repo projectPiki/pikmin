@@ -4,9 +4,9 @@
 #include "NaviMgr.h"
 #include "Pcam/Camera.h"
 #include "Pcam/CameraManager.h"
-#include "stl/math.h"
 #include "sysMath.h"
 #include "sysNew.h"
+#include <math.h>
 
 AttentionCamera* attentionCamera;
 

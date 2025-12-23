@@ -2,10 +2,10 @@
 #include "PowerPC_EABI_Support/MSL_C/MSL_Common/ansi_fp.h"
 #include "ctype.h"
 #include "stdarg.h"
-#include "stl/limits.h"
-#include "stl/stdio.h"
-#include "stl/string.h"
 #include "types.h"
+#include <limits.h>
+#include <stdio.h>
+#include <string.h>
 
 enum justification_options { left_justification, right_justification, zero_fill };
 

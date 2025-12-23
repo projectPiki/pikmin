@@ -1,8 +1,8 @@
 #include "Node.h"
 #include "DebugLog.h"
 #include "Dolphin/os.h"
-#include "stl/stdio.h"
 #include "system.h"
+#include <stdio.h>
 
 NodeMgr* nodeMgr;
 

@@ -8,8 +8,8 @@
 #include "EffectMgr.h"
 #include "Light.h"
 #include "Shape.h"
-#include "stl/string.h"
 #include "types.h"
+#include <string.h>
 
 struct AgeServer;
 struct CmdStream;

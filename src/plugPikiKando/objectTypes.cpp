@@ -1,6 +1,6 @@
 #include "ObjType.h"
 
-#include "stl/string.h"
+#include <string.h>
 
 ObjType _info[] = {
 	// index, name
