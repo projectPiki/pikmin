@@ -5,6 +5,7 @@
 #include "Matrix4f.h"
 #include "Plane.h"
 #include "Vector.h"
+#include "sysMath.h"
 #include "types.h"
 
 struct Graphics;

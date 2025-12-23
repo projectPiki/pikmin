@@ -4,6 +4,7 @@
 #include "Graphics.h"
 #include "Interface.h"
 #include "gameflow.h"
+#include "sysMath.h"
 #include "sysNew.h"
 #include "timers.h"
 
