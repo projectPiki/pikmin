@@ -1,5 +1,5 @@
-#ifndef _STRING_H
-#define _STRING_H
+#ifndef _COMMON_STRING_H
+#define _COMMON_STRING_H
 
 #include "stl/stdio.h"
 #include "types.h"

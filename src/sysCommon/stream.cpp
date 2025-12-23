@@ -1,6 +1,6 @@
 #include "Stream.h"
 
-#include "String.h"
+#include "Common/String.h"
 #include <stl/string.h>
 
 // operator new[] is used without this header being included.
