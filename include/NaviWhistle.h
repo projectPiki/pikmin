@@ -52,7 +52,7 @@ struct NaviWhistle : public KEffect {
 
 		return false;
 	}
-	virtual void emit(EffectParm&) // _2C
+	virtual void emit(immut EffectParm&) // _2C
 	{
 		if (mEfxA || mEfxB || mEfxC) {
 			return;
@@ -113,7 +113,7 @@ struct NaviFue : public KEffect {
 		}
 	}
 	virtual bool invoke(zen::particleGenerator*) { return true; } // _08
-	virtual void emit(EffectParm&)                                // _2C
+	virtual void emit(immut EffectParm&)                          // _2C
 	{
 		if (mEntries[0]) {
 			return;
