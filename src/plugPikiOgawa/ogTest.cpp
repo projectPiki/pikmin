@@ -125,7 +125,7 @@ OgTestScreen::OgTestScreen()
 	seSystem = new SeSystem();
 #endif
 
-	mController         = new Controller();
+	mController         = new Controller(1);
 	_20                 = 0;
 	mActiveMode         = TESTMODE_INACTIVE;
 	mTutorialMode       = 0;

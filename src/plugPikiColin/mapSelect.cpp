@@ -114,7 +114,7 @@ struct MapSelectSetupSection : public Node {
 		seSystem = new SeSystem();
 #endif
 
-		mController   = new Controller;
+		mController   = new Controller(1);
 		mSectionState = 0;
 		mConsFont     = new Font;
 		mConsFont->setTexture(gsys->loadTexture("consFont.bti", true), 16, 8);

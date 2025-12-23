@@ -456,7 +456,7 @@ BaseGameSection::BaseGameSection()
 	mActiveMenu                = nullptr;
 	mCurrentModeState          = nullptr;
 	mNextModeState             = nullptr;
-	mController                = new Controller;
+	mController                = new Controller(1);
 	mUpdateFlags               = UPDATE_NONE;
 	mCurrentFade               = 0.0f;
 	mTargetFade                = 1.0f;

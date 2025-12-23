@@ -46,15 +46,15 @@ void Controller::updateCont(u32 keyStatus)
 
 	if (mInputDelay) {
 		if (--mInputDelay) {
-			if (mButtonState = mButtonMask & mInputPressed) {
+			if (mInputDoublePressed = mDoublePressMask & mInputPressed) {
 				mInputDelay = 0;
 				return;
 			}
 		}
 	} else {
-		mButtonState = 0;
+		mInputDoublePressed = 0;
 
-		if (!(mButtonMask = mInputPressed)) {
+		if (!(mDoublePressMask = mInputPressed)) {
 			return;
 		}
 

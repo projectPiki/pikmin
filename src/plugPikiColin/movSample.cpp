@@ -148,7 +148,7 @@ struct MovSampleSetupSection : public Node {
 	MovSampleSetupSection()
 	{
 		mName       = "MovSample section";
-		mController = new Controller;
+		mController = new Controller(1);
 		_28         = 160;
 		_30         = 0;
 		gsys->setFade(1.0f, 3.0f);
