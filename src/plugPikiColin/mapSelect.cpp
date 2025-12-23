@@ -8,6 +8,7 @@
 #include "Font.h"
 #include "Graphics.h"
 #include "Menu.h"
+#include "SoundMgr.h"
 #include "gameflow.h"
 #include "jaudio/piki_scene.h"
 #include "sysNew.h"
@@ -103,6 +104,12 @@ struct MapSelectSetupSection : public Node {
 	MapSelectSetupSection()
 	{
 		setName("MapSelect section");
+
+		// This section uses `SeSystem` without constructing it.
+#if defined(BUGFIX)
+		seSystem = new SeSystem();
+#endif
+
 		mController   = new Controller;
 		mSectionState = 0;
 		mConsFont     = new Font;

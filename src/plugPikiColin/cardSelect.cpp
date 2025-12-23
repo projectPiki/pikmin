@@ -9,6 +9,7 @@
 #include "MemoryCard.h"
 #include "PlayerState.h"
 #include "Section.h"
+#include "SoundMgr.h"
 #include "gameflow.h"
 #include "jaudio/piki_scene.h"
 #include "sysNew.h"
@@ -43,6 +44,12 @@ struct CardSelectSetupSection : public Node {
 	CardSelectSetupSection()
 	{
 		setName("CardSelect section");
+
+		// This section uses `SeSystem` without constructing it.
+#if defined(BUGFIX)
+		seSystem = new SeSystem();
+#endif
+
 		mJacSetupCountdown = 5;
 		mController        = new Controller();
 		mFadeState         = 0;

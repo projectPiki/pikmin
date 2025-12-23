@@ -9,6 +9,7 @@
 #include "Menu.h"
 #include "P2D/Screen.h"
 #include "Parameters.h"
+#include "SoundMgr.h"
 #include "zen/DrawCM.h"
 #include "zen/DrawContainer.h"
 #include "zen/DrawCountDown.h"
@@ -716,6 +717,12 @@ struct GameCourseClearScreen : public Node {
 	GameCourseClearScreen()
 	{
 		setName("GameCourseClearScreen");
+
+		// This section uses `SeSystem` without constructing it.
+#if defined(BUGFIX)
+		seSystem = new SeSystem();
+#endif
+
 		mController  = new Controller(1);
 		mState       = 0;
 		Texture* tex = gsys->loadTexture("bigFont.bti", true);

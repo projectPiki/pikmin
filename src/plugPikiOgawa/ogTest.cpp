@@ -8,6 +8,7 @@
 #include "Geometry.h"
 #include "Graphics.h"
 #include "MemoryCard.h"
+#include "SoundMgr.h"
 #include "sysNew.h"
 #include "zen/ZenController.h"
 #include "zen/ogDiary.h"
@@ -118,6 +119,12 @@ private:
 OgTestScreen::OgTestScreen()
 {
 	setName("OgTestScreen");
+
+	// This section uses `SeSystem` without constructing it.
+#if defined(BUGFIX)
+	seSystem = new SeSystem();
+#endif
+
 	mController         = new Controller();
 	_20                 = 0;
 	mActiveMode         = TESTMODE_INACTIVE;
