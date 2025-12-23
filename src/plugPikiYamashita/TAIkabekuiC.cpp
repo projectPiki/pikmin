@@ -9,6 +9,7 @@
 #include "TAI/Amove.h"
 #include "TAI/Areaction.h"
 #include "TAI/EffectAttack.h"
+#include "sysMath.h"
 #include "zen/CallBack.h"
 #include "zen/particle.h"
 

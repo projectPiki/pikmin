@@ -1,6 +1,7 @@
 #include "Camera.h"
 #include "DebugLog.h"
 #include "Light.h"
+#include "sysMath.h"
 
 /**
  * @TODO: Documentation

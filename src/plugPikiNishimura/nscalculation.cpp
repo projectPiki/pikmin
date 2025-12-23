@@ -4,6 +4,7 @@
 #include "Matrix3f.h"
 #include "Matrix4f.h"
 #include "Vector.h"
+#include "sysMath.h"
 
 /**
  * @TODO: Documentation

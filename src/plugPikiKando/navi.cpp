@@ -40,6 +40,7 @@
 #include "WorkObject.h"
 #include "gameflow.h"
 #include "jaudio/piki_player.h"
+#include "sysMath.h"
 #include "sysNew.h"
 #include "teki.h"
 #include "zen/Math.h"

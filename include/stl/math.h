@@ -8,8 +8,6 @@
 extern "C" {
 #endif // ifdef __cplusplus
 
-#define SQUARE(v) ((v) * (v))
-
 #define signbit(x)    ((int)(__HI(x) & 0x80000000))
 #define ispositive(x) ((((u8*)&x)[0] & 0x80) != 0)
 
@@ -34,15 +32,6 @@ extern "C" {
 #define FP_ZERO      3
 #define FP_NORMAL    4
 #define FP_SUBNORMAL 5
-
-#ifndef DEG2RAD
-
-#define DEG2RAD            (1.0f / 180.0f)
-#define TORADIANS(degrees) (PI * (DEG2RAD * degrees))
-#define RAD2DEG            (180.0f / PI)
-#define TODEGREES(radians) (radians * RAD2DEG)
-
-#endif
 
 extern const f32 __float_huge[];
 extern const f32 __float_nan[];

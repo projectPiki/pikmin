@@ -3,6 +3,7 @@
 
 #include "Boss.h"
 #include "Collision.h"
+#include "sysMath.h"
 #include "types.h"
 
 /////////// Goolix (Slime) ///////////

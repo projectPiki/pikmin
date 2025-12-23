@@ -29,6 +29,7 @@
 #include "UfoItem.h"
 #include "WeedsItem.h"
 #include "gameflow.h"
+#include "sysMath.h"
 #include "sysNew.h"
 
 /**
