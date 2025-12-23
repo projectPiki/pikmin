@@ -8,6 +8,7 @@ struct AtxCommandStream;
 struct AgeServer;
 
 struct BaseApp : public Node {
+public:
 	BaseApp();
 	int idleupdate();
 
@@ -29,6 +30,7 @@ struct BaseApp : public Node {
 	}
 	virtual void procCmd(char*) { } // _48
 
+protected:
 	// _00     = VTBL
 	// _00-_20 = Node
 	AtxCommandStream* mCommandStream; // _20

@@ -386,7 +386,7 @@ void zen::ogScrMessageMgr::setPageInfoSub()
 	int old = gsys->getHeapNum();
 	if (gsys->getHeap(SYSHEAP_Message)->mIsActive) {
 		gsys->setHeap(SYSHEAP_Message);
-		gsys->resetHeap(SYSHEAP_Message, 2);
+		gsys->resetHeap(SYSHEAP_Message, AYU_STACK_GROW_UP);
 	}
 	mCurrentScreen = new P2DScreen;
 	mCurrentScreen->set(info->mScreenResourcePath, true, true, true);

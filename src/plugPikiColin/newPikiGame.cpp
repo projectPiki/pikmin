@@ -359,7 +359,7 @@ static void createMenuWindow()
  */
 static void deleteMenuWindow()
 {
-	gsys->resetHeap(5, 1);
+	gsys->resetHeap(SYSHEAP_Movie, AYU_STACK_GROW_DOWN);
 	PRINT("menu window detach\n");
 	gameflow.mIsUiOverlayActive = FALSE;
 	menuWindow                  = nullptr;
@@ -851,14 +851,14 @@ ModeState* DayOverModeState::update(u32& result)
 	if (resultWindow) {
 		zen::ogScrResultMgr::returnStatusFlag stat = resultWindow->update(mSection->mController);
 		if (stat >= 7) {
-			gsys->startLoading(nullptr, 1, 120);
+			gsys->startLoading(nullptr, true, 120);
 			PRINT("EXITDAYEND!!!!\n");
 			gamecore->exitDayEnd();
 			gameflow.mMoviePlayer->fixMovieList();
 			Jac_SceneSetup(6, 0);
-			gsys->resetHeap(5, 1);
-			gsys->resetHeap(4, 1);
-			gsys->resetHeap(4, 2);
+			gsys->resetHeap(SYSHEAP_Movie, AYU_STACK_GROW_DOWN);
+			gsys->resetHeap(SYSHEAP_Teki, AYU_STACK_GROW_DOWN);
+			gsys->resetHeap(SYSHEAP_Teki, AYU_STACK_GROW_UP);
 			int heapIdx = gsys->setHeap(SYSHEAP_Teki);
 			gsys->setHeap(heapIdx);
 			gsys->endLoading();
@@ -960,7 +960,7 @@ ModeState* DayOverModeState::initialisePhaseOne()
 	if (playerState->getCurrParts() == MAX_UFO_PARTS) {
 		PRINT("EXITDAYEND!!!!\n");
 		gamecore->exitDayEnd();
-		gsys->resetHeap(SYSHEAP_Teki, 2);
+		gsys->resetHeap(SYSHEAP_Teki, AYU_STACK_GROW_UP);
 		int old = gsys->setHeap(SYSHEAP_Teki);
 		gameflow.mMoviePlayer->startMovie(DEMOID_GoodEndingWave, 0, nullptr, nullptr, nullptr, -1, true);
 		gsys->setHeap(old);
@@ -968,7 +968,7 @@ ModeState* DayOverModeState::initialisePhaseOne()
 	} else if (gameflow.mWorldClock.mCurrentDay >= MAX_DAYS) {
 		PRINT("EXITDAYEND!!!!\n");
 		gamecore->exitDayEnd();
-		gsys->resetHeap(SYSHEAP_Teki, 2);
+		gsys->resetHeap(SYSHEAP_Teki, AYU_STACK_GROW_UP);
 		int old    = gsys->setHeap(SYSHEAP_Teki);
 		u32 flags  = 0;
 		u32 ids[3] = { Red, Yellow, Blue };
@@ -990,7 +990,7 @@ ModeState* DayOverModeState::initialisePhaseOne()
 		gameoverWindow = nullptr;
 		gsys->setHeap(old);
 	} else {
-		gsys->resetHeap(SYSHEAP_Teki, 2);
+		gsys->resetHeap(SYSHEAP_Teki, AYU_STACK_GROW_UP);
 		int old                = gsys->setHeap(SYSHEAP_Teki);
 		gameoverWindow         = nullptr;
 		mSection->mCurrentFade = -0.1f;
@@ -1032,9 +1032,9 @@ ModeState* DayOverModeState::initialisePhaseTwo()
 #endif
 	gameflow.mMoviePlayer->fixMovieList();
 	Jac_SceneSetup(6, 0);
-	gsys->resetHeap(SYSHEAP_Movie, 1);
-	gsys->resetHeap(SYSHEAP_Teki, 1);
-	gsys->resetHeap(SYSHEAP_Teki, 2);
+	gsys->resetHeap(SYSHEAP_Movie, AYU_STACK_GROW_DOWN);
+	gsys->resetHeap(SYSHEAP_Teki, AYU_STACK_GROW_DOWN);
+	gsys->resetHeap(SYSHEAP_Teki, AYU_STACK_GROW_UP);
 	int old = gsys->setHeap(SYSHEAP_Teki);
 
 	if (playerState->getCurrParts() == MAX_UFO_PARTS) {
@@ -1102,9 +1102,9 @@ ModeState* DayOverModeState::initialisePhaseThree()
 {
 	gsys->startLoading(nullptr, true, 120);
 	gameflow.mMoviePlayer->fixMovieList();
-	gsys->resetHeap(5, 1);
-	gsys->resetHeap(4, 1);
-	gsys->resetHeap(4, 2);
+	gsys->resetHeap(SYSHEAP_Movie, AYU_STACK_GROW_DOWN);
+	gsys->resetHeap(SYSHEAP_Teki, AYU_STACK_GROW_DOWN);
+	gsys->resetHeap(SYSHEAP_Teki, AYU_STACK_GROW_UP);
 	int old = gsys->setHeap(SYSHEAP_Teki);
 	playerState->setNavi(false);
 
@@ -1143,9 +1143,9 @@ ModeState* DayOverModeState::initialisePhaseThree()
 ModeState* DayOverModeState::initialisePhaseFour()
 {
 	gameflow.mMoviePlayer->fixMovieList();
-	gsys->resetHeap(5, 1);
-	gsys->resetHeap(4, 1);
-	gsys->resetHeap(4, 2);
+	gsys->resetHeap(SYSHEAP_Movie, AYU_STACK_GROW_DOWN);
+	gsys->resetHeap(SYSHEAP_Teki, AYU_STACK_GROW_DOWN);
+	gsys->resetHeap(SYSHEAP_Teki, AYU_STACK_GROW_UP);
 	int old = gsys->setHeap(SYSHEAP_Teki);
 
 	if (playerState->getCurrParts() == MAX_UFO_PARTS) {
@@ -1198,11 +1198,10 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 		flowCont._23C               = 0;
 		flowCont.mDayOverSeqStarted = 0;
 
-		int size1 = 0x280000;
-		gsys->mHeaps[4].init("teki", AYU_STACK_GROW_UP, new u8[size1],
-		                     size1); // size 0xa00000 in the DLL
+		int size1 = 0x280000; // = 0xa00000 in the DLL
+		gsys->mHeaps[SYSHEAP_Teki].init("teki", AYU_STACK_GROW_UP, new u8[size1], size1);
 		int size2 = 0x40000;
-		gsys->mHeaps[5].init("movie", AYU_STACK_GROW_UP, new u8[size2], size2);
+		gsys->mHeaps[SYSHEAP_Movie].init("movie", AYU_STACK_GROW_UP, new u8[size2], size2);
 
 		PRINT("now doing map!\n");
 		memStat->start("mapMgr");
@@ -1273,7 +1272,7 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 			if (gsys->getHeap(SYSHEAP_Movie)->getTopUsed()) {
 				bool old           = gsys->mTogglePrint != FALSE;
 				gsys->mTogglePrint = TRUE;
-				gsys->resetHeap(SYSHEAP_Movie, true);
+				gsys->resetHeap(SYSHEAP_Movie, AYU_STACK_GROW_DOWN);
 				gsys->mTogglePrint = old;
 			}
 		}

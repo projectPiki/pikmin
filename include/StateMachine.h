@@ -14,6 +14,7 @@ struct Msg;
  */
 template <typename T>
 struct AState : public Receiver<T> {
+public:
 	inline AState(int stateID)
 	    : mStateID(stateID)
 	    , mStateMachine(nullptr)
@@ -36,6 +37,7 @@ struct AState : public Receiver<T> {
 	immut char* getName() { return mName; }
 	void setName(immut char* name) { mName = name; }
 
+protected:
 	// _00 = VTBL
 	int mStateID;                   // _04
 	StateMachine<T>* mStateMachine; // _08

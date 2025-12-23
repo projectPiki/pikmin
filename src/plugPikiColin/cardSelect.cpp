@@ -53,7 +53,7 @@ struct CardSelectSetupSection : public Node {
 		memcardWindow->start(gameflow.mIsChallengeMode);
 
 		gsys->setFade(1.0f, 3.0f);
-		mNextSectionID = 0;
+		mNextSectionID = ONEPLAYER_GameSetup << 16;
 	}
 
 	/// Updates the screen each frame and alters the state.
@@ -163,7 +163,7 @@ struct CardSelectSetupSection : public Node {
 				mFadeState     = 1;
 				gsys->setFade(0.0f, 3.0f);
 			} else if (returnCode == zen::ogScrFileChkSelMgr::FILECHKSEL_Unk5) {
-				mNextSectionID = ONEPLAYER_GameSetup;
+				mNextSectionID = ONEPLAYER_GameSetup << 16;
 				mFadeState     = 1;
 				gsys->setFade(0.0f, 3.0f);
 			} else {

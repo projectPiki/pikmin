@@ -354,7 +354,7 @@ void preloadLanguage()
 	gsys->mCacher->purgeAll();
 	heapIdx = gsys->getHeapNum();
 	gsys->setHeap(SYSHEAP_Lang);
-	gsys->resetHeap(SYSHEAP_Lang, 2);
+	gsys->resetHeap(SYSHEAP_Lang, AYU_STACK_GROW_UP);
 	gsys->getHeap(gsys->getHeapNum())->getFree();
 	gsys->mAramAllocator.init();
 	gsys->mDvdRoot.initCore("");
@@ -461,7 +461,7 @@ void preloadLanguage()
 Texture* GameFlow::setLoadBanner(immut char* texPath)
 {
 	int heapIdx = gsys->mActiveHeapIdx;
-	gsys->resetHeap(SYSHEAP_Load, 2);
+	gsys->resetHeap(SYSHEAP_Load, AYU_STACK_GROW_UP);
 	gsys->setHeap(SYSHEAP_Load);
 	gameflow.mLoadBannerTexture = gsys->loadTexture(texPath, true);
 	if (gameflow.mLoadBannerTexture) {
@@ -554,9 +554,9 @@ void GameFlow::softReset()
 	gsys->mTogglePrint = FALSE;
 
 	if (mGameSectionID != mNextSectionID) {
-		gsys->resetHeap(1, 2);
+		gsys->resetHeap(SYSHEAP_Ovl, AYU_STACK_GROW_UP);
 		gsys->getHeap(SYSHEAP_Ovl)->setAllocType(AYU_STACK_GROW_UP);
-		app->useHeap(1);
+		app->useHeap(SYSHEAP_Ovl);
 		PRINT("*------------------------------------------- section change\n");
 		AyuHeap* heap = gsys->getHeap(SYSHEAP_Ovl);
 		int max       = heap->getMaxFree();
@@ -564,7 +564,7 @@ void GameFlow::softReset()
 		u8* buf       = new u8[heap->getMaxFree()];
 		heap->setAllocType(type);
 		gsys->mHeaps[SYSHEAP_App].init("app", AYU_STACK_GROW_UP, buf, max);
-		app->useHeap(2);
+		app->useHeap(SYSHEAP_App);
 		gsys->getHeap(gsys->getHeapNum())->setAllocType(AYU_STACK_GROW_DOWN);
 
 		switch (mGameSectionID) {
@@ -595,10 +595,10 @@ void GameFlow::softReset()
 		gsys->getHeap(gsys->getHeapNum())->setAllocType(AYU_STACK_GROW_UP);
 	}
 
-	gsys->resetHeap(2, 2);
+	gsys->resetHeap(SYSHEAP_App, AYU_STACK_GROW_UP);
 
 	gsys->getHeap(SYSHEAP_App)->setAllocType(AYU_STACK_GROW_UP);
-	app->useHeap(2);
+	app->useHeap(SYSHEAP_App);
 	PRINT("*------------------------------------------- softReset %.2fk free\n", gsys->getHeap(SYSHEAP_App)->getFree() / 1024.0f);
 	mGenFlow->init("GameFlow");
 	app->add(mGenFlow);

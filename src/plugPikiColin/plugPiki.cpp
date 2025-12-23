@@ -25,7 +25,7 @@ DEFINE_PRINT("plugPiki")
  */
 void PlugPikiApp::hardReset()
 {
-	useHeap(0);
+	useHeap(SYSHEAP_Sys);
 	gsys->mTimer = new Timers;
 	gameflow.hardReset(this);
 	AyuHeap* heap = gsys->getHeap(SYSHEAP_Sys);
@@ -36,7 +36,7 @@ void PlugPikiApp::hardReset()
 
 	gsys->getHeap(SYSHEAP_Ovl)->init("ovl", AYU_STACK_GROW_UP, buf, max);
 
-	gsys->resetHeap(SYSHEAP_Ovl, 1);
+	gsys->resetHeap(SYSHEAP_Ovl, AYU_STACK_GROW_DOWN);
 	gsys->getHeap(SYSHEAP_Ovl)->setAllocType(AYU_STACK_GROW_DOWN);
 	useHeap(SYSHEAP_Ovl);
 	gsys->softReset();

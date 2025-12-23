@@ -133,7 +133,7 @@ void Jac_PlayOrimaSe(u32 id)
 	if (id & JACORIMA_PIKISOUND) {
 		static int flyready = FALSE;
 		if (Jac_DemoCheck() != TRUE && (flyready == FALSE || id != JACORIMA_PikiFlyReady)) {
-			Jam_WritePortAppDirect(orima_seqp, 1, id & 0x7fff);
+			Jam_WritePortAppDirect(orima_seqp, 1, id & (u16)~JACORIMA_PIKISOUND);
 			if (id == JACORIMA_PikiFly) {
 				flyready = FALSE;
 			}
@@ -178,7 +178,7 @@ void Jac_PlayOrimaSe(u32 id)
 				old1 = randomVariationId;
 			}
 
-			Jam_WritePortAppDirect(orima_seqp, 1, variantSoundId & 0x7fff);
+			Jam_WritePortAppDirect(orima_seqp, 1, variantSoundId & (u16)~JACORIMA_PIKISOUND);
 		}
 
 		if (id == JACORIMA_PlayerDown) {
