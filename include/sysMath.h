@@ -1,5 +1,5 @@
-#ifndef _MATH_H
-#define _MATH_H
+#ifndef _SYSMATH_H
+#define _SYSMATH_H
 
 #include "stl/math.h"
 #include "types.h"
@@ -34,7 +34,6 @@ inline f32 absVal(f32 val)
 	return -val;
 }
 
-#ifdef __cplusplus
 // Pikmin-specific global math functions
 struct Vector3f;
 struct BoundBox;
@@ -68,6 +67,4 @@ inline f32 speedy_sqrtf(f32 x)
 	return x;
 }
 
-#endif
-
-#endif // _MATH_H
+#endif // _SYSMATH_H

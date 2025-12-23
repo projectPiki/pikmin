@@ -14,6 +14,7 @@
 #include "MemStat.h"
 #include "MoviePlayer.h"
 #include "gameflow.h"
+#include "sysMath.h"
 #include "sysNew.h"
 #include "timers.h"
 

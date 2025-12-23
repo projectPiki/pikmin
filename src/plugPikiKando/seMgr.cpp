@@ -3,6 +3,7 @@
 #include "jaudio/piki_player.h"
 #include "jaudio/verysimple.h"
 #include "stdio.h"
+#include "sysMath.h"
 #include "sysNew.h"
 #include "system.h"
 #include "zen/Math.h"

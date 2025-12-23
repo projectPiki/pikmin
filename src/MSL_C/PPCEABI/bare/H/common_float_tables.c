@@ -1,4 +1,4 @@
-#include "math.h"
+#include "stl/math.h"
 
 const f32 __sincos_on_quadrant[] = {
 	0.0f, 1.0f, 1.0f, 0.0f, 0.0f, -1.0f, -1.0f, 0.0f,

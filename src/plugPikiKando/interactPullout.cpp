@@ -5,6 +5,7 @@
 #include "PikiMgr.h"
 #include "PikiState.h"
 #include "stl/math.h"
+#include "sysMath.h"
 
 /**
  * @TODO: Documentation
