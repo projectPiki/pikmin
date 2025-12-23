@@ -46,7 +46,7 @@ void SlimeEffect::restart()
 /**
  * @TODO: Documentation
  */
-void SlimeEffect::emit(EffectParm& parm)
+void SlimeEffect::emit(immut EffectParm& parm)
 {
 	mObj         = parm.mOwner;
 	Vector3f pos = mObj->mSRT.t;
@@ -136,7 +136,7 @@ void UtEffectMgr::registerEffect(int kEffID, KEffect* efx)
 /**
  * @TODO: Documentation
  */
-void UtEffectMgr::cast(int kEffID, EffectParm& parm)
+void UtEffectMgr::cast(int kEffID, immut EffectParm& parm)
 {
 	if (kEffID < KandoEffect::START || kEffID > KandoEffect::END) {
 		ERROR("cast oob : %d", kEffID);
@@ -247,7 +247,7 @@ void PermanentEffect::kill()
 /**
  * @TODO: Documentation
  */
-void FreeLightEffect::emit(EffectParm& parm)
+void FreeLightEffect::emit(immut EffectParm& parm)
 {
 	if (!mEfx) {
 		mEfx = effectMgr->create((EffectMgr::effTypeTable)(EffectMgr::EFF_Piki_IdleBlue - mColor), *parm.mPositionRef, nullptr, nullptr);
@@ -302,7 +302,7 @@ void FreeLightEffect::kill()
 /**
  * @TODO: Documentation
  */
-void RippleEffect::emit(EffectParm& parm)
+void RippleEffect::emit(immut EffectParm& parm)
 {
 	if (mEfxA) {
 		return;
@@ -394,7 +394,7 @@ void BurnEffect::restart()
 /**
  * @TODO: Documentation
  */
-void BurnEffect::emit(EffectParm& parm)
+void BurnEffect::emit(immut EffectParm& parm)
 {
 	if (mEfxA) {
 		return;

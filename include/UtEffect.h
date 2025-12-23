@@ -64,7 +64,7 @@ struct BurnEffect : public KEffect {
 	}
 
 	virtual bool invoke(zen::particleGenerator*); // _08
-	virtual void emit(EffectParm&);               // _2C
+	virtual void emit(immut EffectParm&);         // _2C
 	virtual void kill();                          // _30
 	virtual void stop();                          // _34
 	virtual void restart();                       // _38
@@ -86,7 +86,7 @@ struct BurnEffect : public KEffect {
 struct FreeLightEffect : public KEffect {
 	FreeLightEffect() { mEfx = nullptr; }
 
-	virtual void emit(EffectParm&); // _2C
+	virtual void emit(immut EffectParm&); // _2C
 	virtual void kill();            // _30
 	virtual void stop();            // _34
 	virtual void restart();         // _38
@@ -114,7 +114,7 @@ struct GoalEffect : public KEffect {
 		}
 		return true;
 	}
-	virtual void emit(EffectParm& parm) // _2C
+	virtual void emit(immut EffectParm& parm) // _2C
 	{
 		effectMgr->create(EffectMgr::EFF_Onyon_Suck, parm.mPosition, this, this);
 	}
@@ -138,7 +138,7 @@ struct RippleEffect : public KEffect {
 		mEfxB = mEfxC = 0;
 	}
 
-	virtual void emit(EffectParm&); // _2C
+	virtual void emit(immut EffectParm&); // _2C
 	virtual void kill();            // _30
 	virtual void stop();            // _34
 	virtual void restart();         // _38
@@ -161,7 +161,7 @@ struct SimpleEffect : public KEffect {
 		mEfxId = id;
 		mEfx   = 0;
 	}
-	virtual void emit(EffectParm& parm) // _2C
+	virtual void emit(immut EffectParm& parm) // _2C
 	{
 		mEfx = effectMgr->create((EffectMgr::effTypeTable)mEfxId, parm.mPosition, nullptr, nullptr);
 	}
@@ -184,7 +184,7 @@ struct SimpleEffect : public KEffect {
  * @brief TODO
  */
 struct SmokeGrassEffect : public KEffect {
-	virtual void emit(EffectParm& parm) // _2C
+	virtual void emit(immut EffectParm& parm) // _2C
 	{
 		effectMgr->create(EffectMgr::EFF_Kogane_Walk1, parm.mPosition, nullptr, nullptr);
 	}
@@ -200,7 +200,7 @@ struct SmokeGrassEffect : public KEffect {
  * @brief TODO
  */
 struct SmokeRockEffect : public KEffect {
-	virtual void emit(EffectParm& parm) // _2C
+	virtual void emit(immut EffectParm& parm) // _2C
 	{
 		effectMgr->create(EffectMgr::EFF_Kogane_Walk2, parm.mPosition, nullptr, nullptr);
 	}
@@ -216,7 +216,7 @@ struct SmokeRockEffect : public KEffect {
  * @brief TODO
  */
 struct SmokeSoilEffect : public KEffect {
-	virtual void emit(EffectParm& parm) // _2C
+	virtual void emit(immut EffectParm& parm) // _2C
 	{
 		effectMgr->create(EffectMgr::EFF_Kogane_Walk0, parm.mPosition, nullptr, nullptr);
 	}
@@ -232,7 +232,7 @@ struct SmokeSoilEffect : public KEffect {
  * @brief TODO
  */
 struct SmokeTreeEffect : public KEffect {
-	virtual void emit(EffectParm& parm) // _2C
+	virtual void emit(immut EffectParm& parm) // _2C
 	{
 		effectMgr->create(EffectMgr::EFF_Kogane_Walk0, parm.mPosition, nullptr, nullptr);
 	}
@@ -250,7 +250,7 @@ struct SmokeTreeEffect : public KEffect {
 struct UfoSuikomiEffect : public KEffect {
 	UfoSuikomiEffect() { mEfx = 0; }
 
-	virtual void emit(EffectParm& parm) // _2C
+	virtual void emit(immut EffectParm& parm) // _2C
 	{
 		_0C = parm.mPosition;
 		_18 = parm.mDirection;
@@ -284,7 +284,7 @@ struct UfoSuikomiEffect : public KEffect {
  * @brief TODO
  */
 struct BombEffect : public KEffect {
-	virtual void emit(EffectParm& parm) // _2C
+	virtual void emit(immut EffectParm& parm) // _2C
 	{
 		zen::particleGenerator* efx = effectMgr->create(EffectMgr::EFF_Bomb_Glow, parm.mPosition, nullptr, nullptr);
 		if (efx) {
@@ -312,7 +312,7 @@ struct BombEffect : public KEffect {
  * @note Size: 0xC.
  */
 struct BombEffectLight : public KEffect {
-	virtual void emit(EffectParm& parm) // _2C
+	virtual void emit(immut EffectParm& parm) // _2C
 	{
 		zen::particleGenerator* efx = effectMgr->create(EffectMgr::EFF_Bomb_Glow, parm.mPosition, nullptr, nullptr);
 		if (efx) {
@@ -375,7 +375,7 @@ struct WhistleTemplate : public KEffect {
 
 		return false;
 	}
-	virtual void emit(EffectParm& parm) // _2C
+	virtual void emit(immut EffectParm& parm) // _2C
 	{
 		_0C = parm.mPosition;
 		_18 = parm.mDirection;
@@ -458,7 +458,7 @@ public:
 	UtEffectMgr();
 
 	static void kill(int);
-	static void cast(int, EffectParm&);
+	static void cast(int, immut EffectParm&);
 
 protected:
 	void registerEffect(int, KEffect*);

@@ -54,7 +54,7 @@ struct KEffect : public zen::CallBack1<zen::particleGenerator*>,
 	virtual bool invoke(zen::particleGenerator*) { return false; }                    // _08 (weak)
 	virtual bool invoke(zen::particleGenerator*, zen::particleMdl*) { return false; } // _24 (weak)
 	virtual bool invoke(zen::particleMdl*) { return false; }                          // _28 (weak)
-	virtual void emit(EffectParm&) = 0;                                               // _2C
+	virtual void emit(immut EffectParm&) = 0;                                         // _2C
 	virtual void kill() { }                                                           // _30 (weak)
 	virtual void stop() { }                                                           // _34 (weak)
 	virtual void restart() { }                                                        // _38 (weak)
@@ -76,7 +76,7 @@ struct SlimeEffect : public KEffect {
 	SlimeEffect();
 
 	virtual bool invoke(zen::particleGenerator*, zen::particleMdl*); // _24
-	virtual void emit(EffectParm&);                                  // _2C
+	virtual void emit(immut EffectParm&);                            // _2C
 	virtual void kill();                                             // _30
 	virtual void stop();                                             // _34
 	virtual void restart();                                          // _38
