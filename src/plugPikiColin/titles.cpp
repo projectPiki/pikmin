@@ -537,7 +537,7 @@ void TitlesSection::init()
 {
 	Node::init("<TitlesSection>");
 	Jac_BackDVDBuffer();
-	gsys->mTimerState = 0;
+	gsys->mTimerState = TS_Off;
 	gsys->setFrameClamp(1);
 	gsys->setDataRoot("dataDir/");
 	gameflow.mLevelBannerTexture     = nullptr;

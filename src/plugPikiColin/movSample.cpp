@@ -330,7 +330,7 @@ void MovSampleSection::init()
 {
 	Node::init("<MovSampleSection>");
 	gsys->setFrameClamp(1);
-	gsys->mTimerState = 0;
+	gsys->mTimerState = TS_Off;
 	gsys->startLoading(nullptr, true, 60);
 
 	add(new MovSampleSetupSection);
