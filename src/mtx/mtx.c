@@ -1,11 +1,10 @@
 #include "Dolphin/mtx.h"
 
-#include "Dolphin/math.h"
 #include "Dolphin/os.h"
 #include "fdlibm.h"
+#include "stl/math.h"
 
 static f32 Unit01[] = { 0.0f, 1.0f };
-extern f32 sinf(f32);
 
 /**
  * @TODO: Documentation

@@ -1,5 +1,5 @@
-#include "Dolphin/math.h"
 #include "Dolphin/mtx.h"
+#include "stl/math.h"
 
 /**
  * @TODO: Documentation
