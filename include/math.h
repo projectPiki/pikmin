@@ -22,8 +22,6 @@ static inline f32 u32ToFloat(u32 a)
 	return tmp.f;
 }
 
-#define CHECK_BOUNDS_BOTH(min, val1, val2, max) (min <= val1 && val2 < max)
-
 inline f32 sqrtf(f32 x)
 {
 	// these REALLY don't have to be static.
