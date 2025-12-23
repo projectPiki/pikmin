@@ -903,7 +903,7 @@ void ActorInstance::refresh(immut Matrix4f& mtx, Graphics& gfx, f32* p3)
 		check1 = true;
 		d      = &mAnimator.mAnimationCounter;
 	} else if (p3 && mActiveActor->mModel->mCurrentAnimation->mData->mTotalFrameCount) {
-		c = std::fmodf(*p3, f32(mActiveActor->mModel->mCurrentAnimation->mData->mTotalFrameCount));
+		c = std::fmodf(*p3, mActiveActor->mModel->mCurrentAnimation->mData->mTotalFrameCount);
 		d = &c;
 	}
 

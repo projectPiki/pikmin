@@ -32,10 +32,11 @@ f32 tanf(f32);
 f64 atan(f64);
 f64 atan2(f64, f64);
 
-static inline f32 sqrtf(f32 x)
+inline f32 sqrtf(f32 x)
 {
-	const f64 _half  = .5;
-	const f64 _three = 3.0;
+	// these REALLY don't have to be static.
+	static const f64 _half  = .5;
+	static const f64 _three = 3.0;
 
 	vf32 y;
 	if (x > 0.0f) {
