@@ -2541,6 +2541,7 @@ void BaseShape::initIni(bool p1)
 				coll->mPlatShape->mSystemFlags |= ShapeFlags::IsPlatform;
 			}
 		}
+
 		for (ObjCollInfo* childColl = (ObjCollInfo*)coll->Child(); childColl; childColl = (ObjCollInfo*)childColl->mNext) {
 			if (childColl->mCollType == OCT_Platform && p1) {
 				childColl->mPlatShape = gsys->loadShape(childColl->mPlatformName, true);

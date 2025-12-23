@@ -181,7 +181,7 @@ struct DynSimulator : public Node {
 	}
 
 	void resetWorld();
-	void doSimulation(f32, f32, Shape*);
+	void doSimulation(f32 totalTime, f32 maxTimeStep, Shape* shape);
 	void updateVecQuats(f32);
 
 	// unused/inlined:

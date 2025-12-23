@@ -1,8 +1,9 @@
-#include "DynSimulator.h"
 #include "Collision.h"
 #include "DebugLog.h"
+#include "DynSimulator.h"
 #include "Graphics.h"
 #include "Matrix3f.h"
+
 
 /**
  * @TODO: Documentation
@@ -260,18 +261,18 @@ void RigidBody::updateViewInfo(int p1, int configIdx)
 /**
  * @TODO: Documentation
  */
-void RigidBody::updateVecQuats(int p1, f32 p2)
+void RigidBody::updateVecQuats(int renderBufferIndex, f32 interp)
 {
-	int idx1 = p1;
-	int idx2 = p1 ^ 1;
+	int idx1 = renderBufferIndex;
+	int idx2 = renderBufferIndex ^ 1;
 
 	for (int i = 0; i < mBoundingPointCount + mHookPointCount; i++) {
-		mBodySpaceHookPoints[i] = mBufferedPoints[idx1][i] + (mBufferedPoints[idx2][i] - mBufferedPoints[idx1][i]) * p2;
+		mBodySpaceHookPoints[i] = mBufferedPoints[idx1][i] + (mBufferedPoints[idx2][i] - mBufferedPoints[idx1][i]) * interp;
 	}
 
-	mRenderPosition    = mBufferedPositions[idx1] + (mBufferedPositions[idx2] - mBufferedPositions[idx1]) * p2;
+	mRenderPosition    = mBufferedPositions[idx1] + (mBufferedPositions[idx2] - mBufferedPositions[idx1]) * interp;
 	mRenderOrientation = mBufferedOrientations[idx1];
-	mRenderOrientation.slerp(mBufferedOrientations[idx2], p2, 1);
+	mRenderOrientation.slerp(mBufferedOrientations[idx2], interp, 1);
 }
 
 /**
@@ -318,14 +319,14 @@ void DynSimulator::resetWorld()
 /**
  * @TODO: Documentation
  */
-void DynSimulator::doSimulation(f32 p1, f32 p2, Shape* p3)
+void DynSimulator::doSimulation(f32 totalTime, f32 maxTimeStep, Shape* shape)
 {
 	f32 i;
 	f32 dt;
-	for (i = p1; i > 0.0f; i -= dt) {
+	for (i = totalTime; i > 0.0f; i -= dt) {
 		dt = i;
-		if (i > p2) {
-			dt = p2;
+		if (i > maxTimeStep) {
+			dt = maxTimeStep;
 		}
 		if (!isPaused()) {
 			FOREACH_NODE(RigidBody, mChild, body)

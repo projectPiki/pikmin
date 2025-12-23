@@ -13,13 +13,11 @@
 #include "DebugLog.h"
 
 /**
- * @TODO: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(9)
 
 /**
- * @TODO: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("collInfo");
@@ -37,7 +35,8 @@ static immut char* _typeStr[] = {
 };
 
 /**
- * @TODO: Add documentation
+ * @brief Returns the XZ-plane distance from @p point to this cylinder segment.
+ * @note Ignores Y; clamps to the end points when projected outside the segment.
  * Address:	100E7340 in DLL
  */
 f32 Cylinder::get2dDist(immut Vector3f& point) immut
@@ -70,7 +69,11 @@ f32 Cylinder::get2dDist(immut Vector3f& point) immut
 }
 
 /**
- * @TODO: Add documentation
+ * @brief Sphere vs finite cylinder collision.
+ *
+ * @param sphere Sphere to test.
+ * @param pushVector Output push direction/amount (from sphere out of cylinder).
+ * @param depth Output axis ratio ($0..1$) where the sphere projects onto the cylinder.
  * Address:	100E7530 in DLL
  */
 bool Cylinder::collide(const Sphere& sphere, Vector3f& pushVector, f32& depth) immut
@@ -120,7 +123,8 @@ bool Cylinder::collide(const Sphere& sphere, Vector3f& pushVector, f32& depth) i
 }
 
 /**
- * @TODO: Documentation
+ * @brief Computes a linear ratio along the tube's Y span.
+ * @return Ratio along Y, or -1 if start/end have identical Y.
  */
 f32 Tube::getYRatio(f32 heightToCheck) immut
 {
@@ -133,7 +137,8 @@ f32 Tube::getYRatio(f32 heightToCheck) immut
 }
 
 /**
- * @TODO: Documentation
+ * @brief Sphere vs tapered tube collision (radius linearly interpolates start->end).
+ * @param depth Output axis ratio ($0..1$) where the sphere projects onto the tube.
  */
 bool Tube::collide(const Sphere& sphere, Vector3f& pushVector, f32& depth) immut
 {
@@ -164,7 +169,7 @@ bool Tube::collide(const Sphere& sphere, Vector3f& pushVector, f32& depth) immut
 }
 
 /**
- * @TODO: Documentation
+ * @brief Returns the axis ratio of @p vec projected onto the cylinder line.
  */
 f32 Cylinder::getPosRatio(const Vector3f& vec) immut
 {
@@ -175,7 +180,7 @@ f32 Cylinder::getPosRatio(const Vector3f& vec) immut
 }
 
 /**
- * @TODO: Documentation
+ * @brief Returns the axis ratio of @p pos projected onto the tube line.
  */
 f32 Tube::getPosRatio(const Vector3f& pos) immut
 {
@@ -187,7 +192,7 @@ f32 Tube::getPosRatio(const Vector3f& pos) immut
 }
 
 /**
- * @TODO: Documentation
+ * @brief Linearly interpolates tube radius at @p ratio.
  * @note UNUSED Size: 000020
  */
 f32 Tube::getRatioRadius(f32 ratio) immut
@@ -196,7 +201,7 @@ f32 Tube::getRatioRadius(f32 ratio) immut
 }
 
 /**
- * @TODO: Documentation
+ * @brief Computes a point on the tube surface and a surface-gradient direction.
  */
 void Tube::getPosGradient(immut Vector3f& inputPos, f32 t, Vector3f& surfacePos, Vector3f& surfaceGrad) immut
 {
@@ -214,7 +219,7 @@ void Tube::getPosGradient(immut Vector3f& inputPos, f32 t, Vector3f& surfacePos,
 }
 
 /**
- * @TODO: Documentation
+ * @brief Returns the point at axis ratio @p t between start and end.
  */
 Vector3f Tube::setPos(f32 t) immut
 {
@@ -224,7 +229,7 @@ Vector3f Tube::setPos(f32 t) immut
 }
 
 /**
- * @TODO: Documentation
+ * @brief Updates a part using the updater's position/size.
  * @note UNUSED Size: 00007C
  */
 void CollPartUpdater::updateCollPart(CollPart* part)
@@ -234,7 +239,8 @@ void CollPartUpdater::updateCollPart(CollPart* part)
 }
 
 /**
- * @TODO: Documentation
+ * @brief Returns true if this part is eligible for sticking.
+ * @note Uses ID32::match patterns like 's***'/'c***'; effectively checks the leading character.
  */
 bool CollPart::isStickable()
 {
@@ -265,7 +271,8 @@ bool CollPart::isStickable()
 }
 
 /**
- * @TODO: Documentation
+ * @brief Returns true if this platform part is climbable.
+ * @note Climbable platforms are tagged with a code starting with 'c' ("c***").
  */
 bool CollPart::isClimbable()
 {
@@ -276,7 +283,7 @@ bool CollPart::isClimbable()
 }
 
 /**
- * @TODO: Documentation
+ * @brief Returns true if this part can take damage.
  * @note UNUSED Size: 000008
  */
 bool CollPart::isDamagable()
@@ -285,7 +292,8 @@ bool CollPart::isDamagable()
 }
 
 /**
- * @TODO: Documentation
+ * @brief Returns true if this part is bouncy.
+ * @note Bouncy parts are tagged with a code starting with 'b' ("b***").
  */
 bool CollPart::isBouncy()
 {
@@ -296,7 +304,7 @@ bool CollPart::isBouncy()
 }
 
 /**
- * @TODO: Documentation
+ * @brief Returns the number of children in the source ObjCollInfo, if present.
  */
 int CollPart::getChildCount()
 {
@@ -308,7 +316,7 @@ int CollPart::getChildCount()
 }
 
 /**
- * @TODO: Documentation
+ * @brief Returns the first child CollPart in the built tree.
  */
 CollPart* CollPart::getChild()
 {
@@ -319,7 +327,7 @@ CollPart* CollPart::getChild()
 }
 
 /**
- * @TODO: Documentation
+ * @brief Returns the Nth child CollPart by following the sibling chain.
  */
 CollPart* CollPart::getChildAt(int idx)
 {
@@ -340,7 +348,7 @@ CollPart* CollPart::getChildAt(int idx)
 }
 
 /**
- * @TODO: Documentation
+ * @brief Returns the next sibling CollPart.
  * @note UNUSED Size: 000028
  */
 CollPart* CollPart::getNext()
@@ -352,7 +360,7 @@ CollPart* CollPart::getNext()
 }
 
 /**
- * @TODO: Documentation
+ * @brief Constructs a CollPart with default flags and null pointers.
  */
 CollPart::CollPart()
 {
@@ -365,7 +373,7 @@ CollPart::CollPart()
 }
 
 /**
- * @TODO: Documentation
+ * @brief Returns a debug string for this part type.
  */
 immut char* CollPart::getTypeString()
 {
@@ -373,7 +381,7 @@ immut char* CollPart::getTypeString()
 }
 
 /**
- * @TODO: Documentation
+ * @brief Returns the ID of the underlying ObjCollInfo.
  */
 ID32 CollPart::getID()
 {
@@ -381,7 +389,7 @@ ID32 CollPart::getID()
 }
 
 /**
- * @TODO: Documentation
+ * @brief Returns the code/tag of the underlying ObjCollInfo.
  */
 ID32 CollPart::getCode()
 {
@@ -389,7 +397,8 @@ ID32 CollPart::getCode()
 }
 
 /**
- * @TODO: Documentation
+ * @brief Returns the part's joint matrix transformed into camera space.
+ * @note Translation is overridden with the current part centre.
  */
 Matrix4f CollPart::getMatrix()
 {
@@ -401,9 +410,9 @@ Matrix4f CollPart::getMatrix()
 }
 
 /**
- * @TODO: Documentation
+ * @brief Updates derived world-space centre/radius and optionally draws debug geometry.
  */
-void CollPart::update(Graphics& gfx, bool p2)
+void CollPart::update(Graphics& gfx, bool drawDebug)
 {
 	if (mIsUpdateActive && mPartType != PART_Platform) {
 		gsys->mTimer->start("CollPart", true);
@@ -418,7 +427,7 @@ void CollPart::update(Graphics& gfx, bool p2)
 		}
 		gsys->mTimer->stop("CollPart");
 
-		if (!p2) {
+		if (!drawDebug) {
 			return;
 		}
 
@@ -459,7 +468,7 @@ void CollPart::update(Graphics& gfx, bool p2)
 }
 
 /**
- * @TODO: Documentation
+ * @brief Sphere-style collision against a creature's bounding sphere.
  * @note UNUSED Size: 0001A4
  */
 bool CollPart::collide(Creature* collider, Vector3f& pushVector)
@@ -478,7 +487,7 @@ bool CollPart::collide(Creature* collider, Vector3f& pushVector)
 }
 
 /**
- * @TODO: Documentation
+ * @brief Sphere-style collision against a sphere at @p pos with radius @p radius.
  * @note UNUSED Size: 000158
  */
 bool CollPart::collide(immut Vector3f& pos, f32 radius, Vector3f& pushVector)
@@ -497,7 +506,7 @@ bool CollPart::collide(immut Vector3f& pos, f32 radius, Vector3f& pushVector)
 }
 
 /**
- * @TODO: Documentation
+ * @brief Collides this part against another part (sphere/cylinder/tube combinations).
  */
 bool CollPart::collide(CollPart* collidePart, Vector3f& pushVector)
 {
@@ -571,7 +580,7 @@ bool CollPart::collide(CollPart* collidePart, Vector3f& pushVector)
 }
 
 /**
- * @TODO: Documentation
+ * @brief Fills @p tube from this part and its linked endpoint (next or child).
  */
 void CollPart::makeTube(Tube& tube)
 {
@@ -589,7 +598,7 @@ void CollPart::makeTube(Tube& tube)
 }
 
 /**
- * @TODO: Documentation
+ * @brief Fills @p sphere from this part's centre/radius.
  * @note UNUSED Size: 000024
  */
 void CollPart::makeSphere(Sphere& sphere)
@@ -599,7 +608,7 @@ void CollPart::makeSphere(Sphere& sphere)
 }
 
 /**
- * @TODO: Documentation
+ * @brief Cylinder construction helper (not implemented).
  * @note UNUSED Size: 000004
  */
 void CollPart::makeCylinder(Cylinder&)
@@ -609,7 +618,7 @@ void CollPart::makeCylinder(Cylinder&)
 }
 
 /**
- * @TODO: Documentation
+ * @brief True if this part represents @p shape as a platform.
  * @note UNUSED Size: 000048
  */
 bool CollPart::samePlatShape(Shape* shape)
@@ -619,7 +628,8 @@ bool CollPart::samePlatShape(Shape* shape)
 }
 
 /**
- * @TODO: Documentation
+ * @brief Creates a CollInfo container for up to @p maxParts parts.
+ * @note If @p maxParts is 0, external arrays are provided later via initInfo().
  */
 CollInfo::CollInfo(int maxParts)
 {
@@ -637,7 +647,7 @@ CollInfo::CollInfo(int maxParts)
 }
 
 /**
- * @TODO: Documentation
+ * @brief Enables sticking on all parts.
  */
 void CollInfo::enableStick()
 {
@@ -647,7 +657,7 @@ void CollInfo::enableStick()
 }
 
 /**
- * @TODO: Documentation
+ * @brief Disables sticking on all parts.
  */
 void CollInfo::disableStick()
 {
@@ -657,7 +667,7 @@ void CollInfo::disableStick()
 }
 
 /**
- * @TODO: Documentation
+ * @brief Enables updates starting at @p partID, including its descendants.
  * @note UNUSED Size: 000048
  */
 void CollInfo::startUpdate(u32 partID)
@@ -670,7 +680,7 @@ void CollInfo::startUpdate(u32 partID)
 }
 
 /**
- * @TODO: Documentation
+ * @brief Recursively enables updates for the subtree rooted at @p childIdx.
  * @note UNUSED Size: 0001A8
  */
 void CollInfo::startUpdateRec(int childIdx)
@@ -687,7 +697,7 @@ void CollInfo::startUpdateRec(int childIdx)
 }
 
 /**
- * @TODO: Documentation
+ * @brief Disables updates starting at @p partID, including its descendants.
  * @note UNUSED Size: 000048
  */
 void CollInfo::stopUpdate(u32 partID)
@@ -700,7 +710,7 @@ void CollInfo::stopUpdate(u32 partID)
 }
 
 /**
- * @TODO: Documentation
+ * @brief Recursively disables updates for the subtree rooted at @p childIdx.
  * @note UNUSED Size: 0001A8
  */
 void CollInfo::stopUpdateRec(int childIdx)
@@ -717,7 +727,7 @@ void CollInfo::stopUpdateRec(int childIdx)
 }
 
 /**
- * @TODO: Documentation
+ * @brief Tests @p pos/@p radius against reference parts that satisfy @p cond.
  */
 CollPart* CollInfo::checkCollisionSpecial(immut Vector3f& pos, f32 radius, CndCollPart* cond)
 {
@@ -733,7 +743,7 @@ CollPart* CollInfo::checkCollisionSpecial(immut Vector3f& pos, f32 radius, CndCo
 }
 
 /**
- * @TODO: Documentation
+ * @brief Unused recursive special-collision helper.
  * @note UNUSED Size: 000008
  */
 CollPart* CollInfo::checkCollisionSpecialRec(int, immut Vector3f&, f32, CndCollPart*)
@@ -742,15 +752,15 @@ CollPart* CollInfo::checkCollisionSpecialRec(int, immut Vector3f&, f32, CndCollP
 }
 
 /**
- * @TODO: Documentation
+ * @brief Collides @p creature against this CollInfo's part tree.
  */
-CollPart* CollInfo::checkCollision(Creature* creature, Vector3f& p2)
+CollPart* CollInfo::checkCollision(Creature* creature, Vector3f& pushVec)
 {
-	return checkCollisionRec(creature, 0, p2);
+	return checkCollisionRec(creature, 0, pushVec);
 }
 
 /**
- * @TODO: Documentation
+ * @brief Recursive creature collision; descends into child spheres and iterates siblings.
  */
 CollPart* CollInfo::checkCollisionRec(Creature* collider, int childIdx, Vector3f& pushVector)
 {
@@ -773,7 +783,7 @@ CollPart* CollInfo::checkCollisionRec(Creature* collider, int childIdx, Vector3f
 }
 
 /**
- * @TODO: Documentation
+ * @brief Collides this CollInfo against @p infoB and returns the colliding parts.
  */
 bool CollInfo::checkCollision(CollInfo* infoB, CollPart** outPartA, CollPart** outPartB, Vector3f& pushVector)
 {
@@ -781,7 +791,7 @@ bool CollInfo::checkCollision(CollInfo* infoB, CollPart** outPartA, CollPart** o
 }
 
 /**
- * @TODO: Documentation
+ * @brief Recursive pairwise collision; when both sides are non-spheres, returns the hit parts.
  */
 bool CollInfo::checkCollisionRec(CollInfo* infoB, int partIdxA, int partIdxB, CollPart** outPartA, CollPart** outPartB,
                                  Vector3f& pushVector)
@@ -817,7 +827,7 @@ bool CollInfo::checkCollisionRec(CollInfo* infoB, int partIdxA, int partIdxB, Co
 }
 
 /**
- * @TODO: Documentation
+ * @brief Returns the root/bounding sphere part (index 0).
  */
 CollPart* CollInfo::getBoundingSphere()
 {
@@ -825,7 +835,7 @@ CollPart* CollInfo::getBoundingSphere()
 }
 
 /**
- * @TODO: Documentation
+ * @brief Returns the part with the given ID, or nullptr if not present.
  */
 CollPart* CollInfo::getSphere(u32 id)
 {
@@ -838,7 +848,7 @@ CollPart* CollInfo::getSphere(u32 id)
 }
 
 /**
- * @TODO: Documentation
+ * @brief Returns the nearest non-platform part whose code matches @p tag.
  */
 CollPart* CollInfo::getNearestCollPart(immut Vector3f& pos, u32 tag)
 {
@@ -864,7 +874,7 @@ CollPart* CollInfo::getNearestCollPart(immut Vector3f& pos, u32 tag)
 }
 
 /**
- * @TODO: Documentation
+ * @brief Picks a random non-platform part whose code matches @p tag.
  */
 CollPart* CollInfo::getRandomCollPart(u32 tag)
 {
@@ -891,7 +901,7 @@ CollPart* CollInfo::getRandomCollPart(u32 tag)
 }
 
 /**
- * @TODO: Documentation
+ * @brief Returns the platform part corresponding to @p obj's Shape, if any.
  */
 CollPart* CollInfo::getPlatform(DynCollObject* obj)
 {
@@ -910,17 +920,17 @@ CollPart* CollInfo::getPlatform(DynCollObject* obj)
 }
 
 /**
- * @TODO: Documentation
+ * @brief Updates all parts and optionally draws debug geometry.
  */
-void CollInfo::updateInfo(Graphics& gfx, bool p2)
+void CollInfo::updateInfo(Graphics& gfx, bool drawDebug)
 {
 	for (int i = 0; i < mPartsCount; i++) {
-		mCollParts[i].update(gfx, p2);
+		mCollParts[i].update(gfx, drawDebug);
 	}
 }
 
 /**
- * @TODO: Documentation
+ * @brief True if any collision parts have been built.
  */
 bool CollInfo::hasInfo()
 {
@@ -928,7 +938,7 @@ bool CollInfo::hasInfo()
 }
 
 /**
- * @TODO: Documentation
+ * @brief Initializes from @p shape and builds the part tree into the provided arrays.
  */
 void CollInfo::initInfo(Shape* shape, CollPart* parts, u32* ids)
 {
@@ -954,7 +964,7 @@ void CollInfo::initInfo(Shape* shape, CollPart* parts, u32* ids)
 }
 
 /**
- * @TODO: Documentation
+ * @brief Prints a debug dump of all parts (index/id/code/links/type).
  * @note UNUSED Size: 0000DC
  */
 void CollInfo::dumpInfo()
@@ -969,7 +979,7 @@ void CollInfo::dumpInfo()
 }
 
 /**
- * @TODO: Documentation
+ * @brief Marks a chain of @p count parts (via next pointers) as tube segments.
  * @note UNUSED Size: 0000B0
  */
 void CollInfo::makeTubes(u32 partID, int count)
@@ -993,7 +1003,7 @@ void CollInfo::makeTubes(u32 partID, int count)
 }
 
 /**
- * @TODO: Documentation
+ * @brief Marks a chain of @p count parts (via child pointers) as tube-child segments.
  */
 void CollInfo::makeTubesChild(u32 partID, int count)
 {
@@ -1016,7 +1026,7 @@ void CollInfo::makeTubesChild(u32 partID, int count)
 }
 
 /**
- * @TODO: Documentation
+ * @brief Attaches a custom updater to the part with ID @p id.
  */
 void CollInfo::setUpdater(u32 id, CollPartUpdater* updater)
 {
@@ -1030,9 +1040,12 @@ void CollInfo::setUpdater(u32 id, CollPartUpdater* updater)
 }
 
 /**
- * @TODO: Documentation
+ * @brief Flattens an ObjCollInfo tree into the part arrays.
+ * @note Uses IDs like "cyl*" to tag cylinders and codes like "s***"/"c***" for gameplay.
+ * @param depth Current recursion depth (0=root).
+ * @param forceCollision If true, marks all parts as collision types regardless of depth.
  */
-void CollInfo::createPart(ObjCollInfo* objInfo, int p2, bool p3)
+void CollInfo::createPart(ObjCollInfo* objInfo, int depth, bool forceCollision)
 {
 	if (!objInfo) {
 		return;
@@ -1044,8 +1057,9 @@ void CollInfo::createPart(ObjCollInfo* objInfo, int p2, bool p3)
 		mPartIDs[mPartsCount++] = objInfo->mId.mId;
 		part->mPartType         = PART_Platform;
 		if (objInfo->mNext) {
-			createPart(static_cast<ObjCollInfo*>(objInfo->mNext), p2, p3);
+			createPart(static_cast<ObjCollInfo*>(objInfo->mNext), depth, forceCollision);
 		}
+
 		return;
 	}
 
@@ -1058,7 +1072,7 @@ void CollInfo::createPart(ObjCollInfo* objInfo, int p2, bool p3)
 	part->mCollInfo         = objInfo;
 	mPartIDs[mPartsCount++] = objInfo->mId.mId;
 
-	if (p2 == 0 && mPartsCount > 1) {
+	if (depth == 0 && mPartsCount > 1) {
 		part->mPartType = PART_Reference;
 
 	} else {
@@ -1068,26 +1082,26 @@ void CollInfo::createPart(ObjCollInfo* objInfo, int p2, bool p3)
 			} else {
 				part->mPartType = PART_BoundSphere;
 			}
-		} else if (p2 > 0 || p3) {
+		} else if (depth > 0 || forceCollision) {
 			part->mPartType = PART_Collision;
 		}
 	}
 
 	if (objInfo->mChild) {
 		if (part->mPartType == PART_Reference) {
-			createPart(static_cast<ObjCollInfo*>(objInfo->mChild), p2, false);
+			createPart(static_cast<ObjCollInfo*>(objInfo->mChild), depth, false);
 		} else {
-			createPart(static_cast<ObjCollInfo*>(objInfo->mChild), p2 + 1, false);
+			createPart(static_cast<ObjCollInfo*>(objInfo->mChild), depth + 1, false);
 		}
 	}
 
 	if (objInfo->mNext) {
-		createPart(static_cast<ObjCollInfo*>(objInfo->mNext), p2, false);
+		createPart(static_cast<ObjCollInfo*>(objInfo->mNext), depth, false);
 	}
 }
 
 /**
- * @TODO: Documentation
+ * @brief Maps a part ID to an array index.
  */
 int CollInfo::getId2Index(u32 id)
 {
@@ -1101,7 +1115,7 @@ int CollInfo::getId2Index(u32 id)
 }
 
 /**
- * @TODO: Documentation
+ * @brief Finds the array index for an ObjCollInfo pointer.
  * @note UNUSED Size: 000048
  */
 int CollInfo::getIndex(ObjCollInfo* objInfo)
@@ -1116,7 +1130,7 @@ int CollInfo::getIndex(ObjCollInfo* objInfo)
 }
 
 /**
- * @TODO: Documentation
+ * @brief Builds sibling/child indices from the ObjCollInfo next/child pointers.
  */
 void CollInfo::makeTree()
 {
