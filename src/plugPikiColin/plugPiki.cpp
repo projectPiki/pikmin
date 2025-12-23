@@ -184,13 +184,13 @@ PlugPikiApp::PlugPikiApp()
 	hardReset();
 
 	mCommandStream = new AtxCommandStream(this);
-	if (mCommandStream->open(ATX_SERVICE_APP, ATX_SERVICE_NAME_SIZE)) {
+	if (mCommandStream->open(ATX_SERVICE_APP, 3)) {
 		mCommandStream->mPath = Name();
 	} else {
 		mCommandStream = nullptr;
 	}
 
-	gsys->mTimerState = 1;
+	gsys->mTimerState = TS_On;
 	gsys->hardReset();
 	PRINT("*--------------- <%s> after all system setup %.2fk free \n", gsys->getHeap(gsys->mActiveHeapIdx)->mName,
 	      gsys->getHeap(gsys->mActiveHeapIdx)->getFree() / 1024.0f);

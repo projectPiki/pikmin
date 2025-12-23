@@ -10,10 +10,9 @@
 #define ATX_SERVICE_AGE       ("age") // For requesting AgeServer operations
 #define ATX_SERVICE_APP       ("app") // For requesting App control operations
 
-// Route/selector passed to AtxRouter::openRoute(). Some router implementations
-// may ignore this value (e.g. AtxDirectRouter).
-#define ATX_PORT_FILE (3)
-#define ATX_PORT_AGE  (4)
+// TODO: There are some identifier numbers that I THINK reference which service
+// is being requested But I'm not 100% sure, see all instances of open(const
+// char*, int) in the codebase for more info.
 
 // Opcodes from client to server.
 #define ATX_CMD_ID    (1)       // Retrieves identification
@@ -36,6 +35,7 @@ struct BaseApp;
 /**
  * @brief Websocket wrapper for network communication.
  * @details Windows-only code, used by AtxStream for TCP communication.
+ * @todo Decompile this struct and its methods.
  */
 struct WSocket {
 	/// @brief Initializes the Winsock library. (Called once at program start.)
@@ -101,7 +101,8 @@ struct AtxRouter {
 
 /**
  * @brief TCP communication stream used across a network.
- * @details This is used to communicate between developer tools, allowing for debug GUIs.
+ * @details This is used to communicate between developer tools, allowing for
+ * debug GUIs.
  *
  * @note Size: 0x10.
  */
@@ -114,7 +115,7 @@ struct AtxStream : public Stream {
 	virtual void close();                             // _4C
 	virtual void flush();                             // _54
 
-	bool open(immut char* name, int port);
+	bool open(immut char* name, int unused);
 
 	void init() { _0C = 0; }
 

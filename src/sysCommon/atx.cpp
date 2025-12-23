@@ -27,10 +27,10 @@ void AtxStream::close()
 /**
  * @brief Opens a communication channel to the specified server.
  * @param name The name of the server to connect to.
- * @param port The port number to use for the connection.
+ * @param unused An unused parameter.
  * @return True if the connection was successful, false otherwise.
  */
-bool AtxStream::open(immut char* name, int port)
+bool AtxStream::open(immut char* name, int unused)
 {
 	AtxRouter* router = gsys->getAtxRouter();
 	if (!router) {
@@ -38,7 +38,7 @@ bool AtxStream::open(immut char* name, int port)
 	}
 
 	// Attempt to open the route
-	if (!router->openRoute(this, port)) {
+	if (!router->openRoute(this, unused)) {
 		ERROR("Could not open route to server\n");
 		gsys->setAtxRouter(nullptr);
 		return false;
