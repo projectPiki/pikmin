@@ -6,7 +6,7 @@
 #include "jaudio/interleave.h"
 #include "jaudio/sample.h"
 #include "jaudio/syncstream.h"
-#include "stl/string.h"
+#include <string.h>
 
 static volatile BOOL dvd_loadfinish;
 static u32 dvdcount;

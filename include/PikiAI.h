@@ -5,8 +5,8 @@
 #include "Piki.h"
 #include "Receiver.h"
 #include "SlotChangeListner.h"
-#include "stl/stdio.h"
 #include "types.h"
+#include <stdio.h>
 
 struct BombGenItem;
 struct Bridge;

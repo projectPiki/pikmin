@@ -1,8 +1,8 @@
 #ifndef _MSL_MATH_API_H
 #define _MSL_MATH_API_H
 
-#include "stl/fdlibm.h"
 #include "types.h"
+#include <fdlibm.h>
 
 #ifdef __cplusplus
 extern "C" {

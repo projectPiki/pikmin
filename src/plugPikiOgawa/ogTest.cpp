@@ -8,7 +8,6 @@
 #include "Geometry.h"
 #include "Graphics.h"
 #include "MemoryCard.h"
-#include "stl/stdio.h"
 #include "sysNew.h"
 #include "zen/ZenController.h"
 #include "zen/ogDiary.h"
@@ -23,6 +22,7 @@
 #include "zen/ogTitle.h"
 #include "zen/ogTotalScore.h"
 #include "zen/ogTutorial.h"
+#include <stdio.h>
 
 /**
  * @TODO: Documentation

@@ -1,4 +1,4 @@
-#include "stl/ctype.h"
+#include <ctype.h>
 
 const u8 __ctype_map[256] = { __control_char,
 	                          __control_char,

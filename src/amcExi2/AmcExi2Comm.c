@@ -1,6 +1,6 @@
 #include "Dolphin/AmcExi2.h"
 #include "Dolphin/hw_regs.h"
-#include "stl/stdio.h"
+#include <stdio.h>
 
 static u8 ucEXI2InputPending;
 static u8* pucEXI2InputPending = &ucEXI2InputPending;

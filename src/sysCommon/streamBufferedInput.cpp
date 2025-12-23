@@ -2,9 +2,9 @@
 
 #include "DebugLog.h"
 #include "Dolphin/os.h"
-#include "stl/mem.h"
 #include "sysNew.h"
 #include "system.h"
+#include <mem.h>
 
 /**
  * @TODO: Documentation

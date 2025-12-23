@@ -10,8 +10,8 @@
 #include "Shape.h"
 #include "Texture.h"
 #include "nlib/Math.h"
-#include "stl/math.h"
 #include "sysNew.h"
+#include <math.h>
 
 /**
  * @TODO: Documentation

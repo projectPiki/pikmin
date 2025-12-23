@@ -5,8 +5,8 @@
 #include "PlayerState.h"
 #include "Stream.h"
 #include "gameflow.h"
-#include "stl/string.h"
 #include "system.h"
+#include <string.h>
 
 /**
  * @TODO: Documentation

@@ -1,10 +1,10 @@
 #include "PowerPC_EABI_Support/MSL_C/MSL_Common/strtoul.h"
 #include "PowerPC_EABI_Support/MSL_C/MSL_Common/ansi_fp.h"
 #include "PowerPC_EABI_Support/MSL_C/MSL_Common/stdio_api.h"
-#include "stl/ctype.h"
-#include "stl/errno.h"
-#include "stl/limits.h"
-#include "stl/locale.h"
+#include <ctype.h>
+#include <errno.h>
+#include <limits.h>
+#include <locale.h>
 
 enum scan_states {
 	start          = 0x01,

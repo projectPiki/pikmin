@@ -3,7 +3,7 @@
 #include "jaudio/aictrl.h"
 #include "jaudio/dvdthread.h"
 
-#include "stl/string.h"
+#include <string.h>
 
 #define JV_DIR_NAME_LENGTH (16)
 static char JV_DIR_NAME[JV_DIR_NAME_LENGTH][64];

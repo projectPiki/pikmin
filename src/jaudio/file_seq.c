@@ -4,7 +4,7 @@
 #include "jaudio/seqsetup.h"
 #include "jaudio/virload.h"
 
-#include "stl/string.h"
+#include <string.h>
 
 /**
  * @brief Invented struct of an unknown name.

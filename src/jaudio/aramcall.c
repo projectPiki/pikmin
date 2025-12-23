@@ -4,7 +4,7 @@
 #include "jaudio/dvdthread.h"
 #include "jaudio/heapctrl.h"
 
-#include "stl/string.h"
+#include <string.h>
 
 jaheap_ aram_mother;
 

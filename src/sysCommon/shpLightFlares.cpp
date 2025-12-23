@@ -3,9 +3,9 @@
 #include "Light.h"
 #include "Matrix4f.h"
 #include "Shape.h"
-#include "stl/stdio.h"
-#include "stl/string.h"
 #include "sysNew.h"
+#include <stdio.h>
+#include <string.h>
 
 /**
  * @TODO: Documentation

@@ -1,7 +1,7 @@
 #include "MapCode.h"
 
 #include "Collision.h"
-#include "stl/math.h"
+#include <math.h>
 
 /**
  * @TODO: Documentation

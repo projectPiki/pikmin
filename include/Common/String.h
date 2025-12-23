@@ -1,8 +1,8 @@
 #ifndef _COMMON_STRING_H
 #define _COMMON_STRING_H
 
-#include "stl/stdio.h"
 #include "types.h"
+#include <stdio.h>
 
 /**
  * @brief TODO

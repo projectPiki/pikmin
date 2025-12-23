@@ -3,11 +3,11 @@
 
 #include "Dolphin/OS/OSError.h"
 #include "Stream.h"
-#include "stl/stdarg.h"
-#include "stl/stdio.h"
-#include "stl/string.h"
 #include "system.h"
 #include "types.h"
+#include <stdarg.h>
+#include <stdio.h>
+#include <string.h>
 
 #define DEFINE_PRINT(_NAME)                        \
 	static void _Print(immut char* fmt, ...)       \
