@@ -8,15 +8,6 @@
 extern "C" {
 #endif // ifdef __cplusplus
 
-#ifndef __MWERKS__
-// Get clangd to shut up about __fabs being undefined.
-#define __fabs(x)    (x)
-#define __frsqrte(x) (x)
-#endif
-
-#define FABS(x) (f32) __fabs(x)
-// #define __frsqrtes opword
-
 inline f32 sqrtf(f32 x)
 {
 	// these REALLY don't have to be static.

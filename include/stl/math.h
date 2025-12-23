@@ -8,9 +8,7 @@
 extern "C" {
 #endif // ifdef __cplusplus
 
-#define SQUARE(v)                      ((v) * (v))
-#define IS_WITHIN_CIRCLE(x, z, radius) ((SQUARE(x) + SQUARE(z)) < SQUARE(radius))
-#define VECTOR_SQUARE_MAG(v)           (SQUARE(v.x) + SQUARE(v.y) + SQUARE(v.z))
+#define SQUARE(v) ((v) * (v))
 
 #define signbit(x)    ((int)(__HI(x) & 0x80000000))
 #define ispositive(x) ((((u8*)&x)[0] & 0x80) != 0)
@@ -120,7 +118,6 @@ void __mtfsb0(int);
 void __mtfsb1(int);
 f64 __setflm(f64);
 
-#define FABS(x)  (f32) __fabs(x)
 #define fabs(x)  __fabs(x)
 #define fabsf(x) __fabsf(x)
 
