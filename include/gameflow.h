@@ -2,13 +2,13 @@
 #define _GAMEFLOW_H
 
 #include "Ayu.h"
+#include "Common/String.h"
 #include "GlobalGameOptions.h"
 #include "LoadIdler.h"
 #include "MemoryCard.h"
 #include "Node.h"
 #include "OnePlayerSection.h"
 #include "Parameters.h"
-#include "String.h"
 #include "WorldClock.h"
 #include "types.h"
 

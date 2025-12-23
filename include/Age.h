@@ -3,8 +3,8 @@
 
 #include "ANode.h"
 #include "AtxStream.h"
+#include "Common/String.h"
 #include "Delegate.h"
-#include "String.h"
 #include "stl/string.h"
 #include "types.h"
 

@@ -2,10 +2,10 @@
 #include "Age.h"
 #include "Ayu.h"
 #include "Colour.h"
+#include "Common/String.h"
 #include "CoreNode.h"
 #include "DebugLog.h"
 #include "Stream.h"
-#include "String.h"
 #include "Vector.h"
 
 /**
