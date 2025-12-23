@@ -10,6 +10,7 @@
 #include "jaudio/pikiinter.h"
 #include "jaudio/verysimple.h"
 #include "math.h"
+#include "sysMath.h"
 #include "sysNew.h"
 #include "timers.h"
 

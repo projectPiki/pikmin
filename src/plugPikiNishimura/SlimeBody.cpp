@@ -2,6 +2,7 @@
 #include "Graphics.h"
 #include "Shape.h"
 #include "Slime.h"
+#include "sysMath.h"
 #include "sysNew.h"
 
 /**

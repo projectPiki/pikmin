@@ -12,6 +12,7 @@
 #include "PikiMgr.h"
 #include "PikiState.h"
 #include "RopeCreature.h"
+#include "sysMath.h"
 
 /**
  * @TODO: Documentation

@@ -3,6 +3,7 @@
 #include "P2D/Pane.h"
 #include "P2D/TextBox.h"
 #include "nlib/Math.h"
+#include "sysMath.h"
 #include "sysNew.h"
 #include "zen/DrawCommon.h"
 #include "zen/EffectMgr2D.h"

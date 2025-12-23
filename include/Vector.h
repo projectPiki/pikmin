@@ -3,6 +3,7 @@
 
 #include "Stream.h"
 #include "math.h"
+#include "sysMath.h"
 #include "types.h"
 
 struct AgeServer;
@@ -205,7 +206,7 @@ struct Vector3f {
 
 	bool isSame(immut Vector3f& other) immut
 	{
-		return __fabsf(x - other.x) < 0.0001f && __fabsf(y - other.y) < 0.0001f && __fabsf(z - other.z) < 0.0001f;
+		return fabsf(x - other.x) < 0.0001f && fabsf(y - other.y) < 0.0001f && fabsf(z - other.z) < 0.0001f;
 	}
 
 	void add(immut Vector3f& a, immut Vector3f& b)

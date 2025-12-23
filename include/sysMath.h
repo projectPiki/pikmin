@@ -4,6 +4,19 @@
 #include "stl/math.h"
 #include "types.h"
 
+struct Vector3f;
+struct BoundBox;
+struct KTri;
+struct KRect;
+struct KSegment;
+
+#define SQUARE(v) ((v) * (v))
+
+#define DEG2RAD            (1.0f / 180.0f)
+#define TORADIANS(degrees) (PI * (DEG2RAD * degrees))
+#define RAD2DEG            (180.0f / PI)
+#define TODEGREES(radians) (radians * RAD2DEG)
+
 static inline f32 quickABS(f32 x)
 {
 	*(u32*)&x &= ~0x80000000;
@@ -22,7 +35,7 @@ static inline f32 u32ToFloat(u32 a)
 
 inline f32 absF(f32 val)
 {
-	return (f32)__fabsf(val);
+	return (f32)fabsf(val);
 }
 
 // TODO: probably change this to zen::abs in some zenMath library later
@@ -33,13 +46,6 @@ inline f32 absVal(f32 val)
 	}
 	return -val;
 }
-
-// Pikmin-specific global math functions
-struct Vector3f;
-struct BoundBox;
-struct KTri;
-struct KRect;
-struct KSegment;
 
 f32 roundAng(f32 angle);
 f32 angDist(f32 x, f32 z);
