@@ -62,16 +62,12 @@ enum KeyboardButtons {
  */
 struct Controller : public Node {
 
-	Controller()
-	    : Node("<Controller>")
-	{
-		reset(1);
-	}
-
+	// I really wanted to make `int playerNum = 1` since it (almost) always is, but guess what?  SOMEHOW, THAT BREAKS MATCHING!  Yeah,
+	// a DEFAULT ARGUMENT tips the inlining score enough to stop the `Node` base class constructor from inlining.  This compiler, man.
 	Controller(int playerNum)
 	    : Node("<Controller>")
 	{
-		reset(playerNum);
+		initialise(playerNum);
 	}
 
 	virtual void update(); // _10
@@ -83,10 +79,13 @@ struct Controller : public Node {
 	f32 getSubStickX();
 	f32 getSubStickY();
 
+	void initialise(u32 playerNum) { reset(playerNum); }
+
 	// use KeyboardButtons enum - could maybe rename these from DLL names
 	bool keyDown(u32 button) { return (mCurrentInput & button) != 0; }
 	bool keyUp(u32 button) { return (mCurrentInput & button) == 0; }
 	bool keyClick(u32 button) { return (mInputPressed & button) != 0; }
+	bool keyDoubleClick(u32 button) { return (mInputDoublePressed & button) != 0; }
 	bool keyUnClick(u32 button) { return (mInputReleased & button) != 0; }
 
 	// _00     = VTBL
@@ -95,8 +94,8 @@ struct Controller : public Node {
 	u32 mPrevInput;           // _24
 	u32 mInputPressed;        // _28
 	u32 mInputReleased;       // _2C
-	u32 mButtonState;         // _30
-	u32 mButtonMask;          // _34
+	u32 mInputDoublePressed;  // _30
+	u32 mDoublePressMask;     // _34
 	u32 mPlayerNum;           // _38, 1 => use controller port 0, etc
 	u32 _3C;                  // _3C
 	u32 mInputDelay;          // _40

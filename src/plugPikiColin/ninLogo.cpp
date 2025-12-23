@@ -35,7 +35,7 @@ struct NinLogoSetupSection : public Node {
 	inline NinLogoSetupSection()
 	{
 		setName("NinLogo section");
-		mController   = new Controller();
+		mController   = new Controller(1);
 		progresWindow = nullptr;
 
 #if defined(VERSION_GPIP01_00)

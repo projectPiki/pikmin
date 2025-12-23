@@ -55,7 +55,7 @@ struct CardSelectSetupSection : public Node {
 #endif
 
 		mJacSetupCountdown = 5;
-		mController        = new Controller();
+		mController        = new Controller(1);
 		mFadeState         = 0;
 
 		// reset the window pointer

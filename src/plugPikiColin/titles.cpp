@@ -82,7 +82,7 @@ struct TitleSetupSection : public Node {
 #endif
 		mCameraFocusPoint.set(0.0f, 20.0f, 0.0f);
 		gameflow.mGameInterface = new TitlesMovieInterface(this);
-		mController             = new Controller;
+		mController             = new Controller(1);
 		mState                  = 0;
 		titleWindow             = new zen::ogScrTitleMgr;
 		titleWindowOn           = false;
