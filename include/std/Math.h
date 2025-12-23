@@ -1,6 +1,7 @@
 #ifndef _STD_MATH_H
 #define _STD_MATH_H
 
+#include "stl/math.h"
 #include "types.h"
 
 /**
@@ -27,14 +28,6 @@ inline f32 sqrtf(f32 x)
 	}
 	return x;
 }
-
-#ifdef __MWERKS__
-#define fabs(x)  __fabs(x)
-#define fabsf(x) __fabsf(x)
-#else
-double fabs(double x);
-f32 fabsf(f32 x);
-#endif
 
 inline f32 fmodf(f32 x, f32 m)
 {
