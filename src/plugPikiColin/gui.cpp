@@ -238,10 +238,10 @@ void Menu::resetOptions()
 /**
  * @TODO: Documentation
  */
-void Menu::addOption(int p1, char* name, IDelegate1<Menu&>* delegate, bool p4)
+void Menu::addOption(int filterIndex, char* name, IDelegate1<Menu&>* delegate, bool isEnabled)
 {
-	mFirstItem             = new MenuItem(MenuNavigationType::TopMenu, p1, name, delegate);
-	mFirstItem->mIsEnabled = p4;
+	mFirstItem             = new MenuItem(MenuNavigationType::TopMenu, filterIndex, name, delegate);
+	mFirstItem->mIsEnabled = isEnabled;
 	mLastItem->mPrev->insertAfter(mFirstItem);
 	if (delegate) {
 		addKeyEvent(KeyEventType::Navigate, mInputCode, delegate);

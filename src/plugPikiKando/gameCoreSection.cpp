@@ -1428,7 +1428,7 @@ void GameCoreSection::update()
 	accountWindow->update();
 	routeMgr->update();
 
-	if (!gameflow._33C && !gameflow.mIsUiOverlayActive) {
+	if (!gameflow.mPauseAll && !gameflow.mIsUiOverlayActive) {
 		playerState->update();
 	}
 
@@ -1589,7 +1589,7 @@ void GameCoreSection::updateAI()
 			gsys->mTimer->stop("search");
 		}
 
-		if (!gameflow._33C) {
+		if (!gameflow.mPauseAll) {
 			if (!inPause() && bossMgr) {
 				if (!hideTeki()) {
 					bossMgr->update();
@@ -1621,7 +1621,7 @@ void GameCoreSection::updateAI()
 			naviMgr->postUpdate(0, deltaTime);
 		}
 
-		if (!gameflow.mIsUiOverlayActive && !inPause() && !gameflow._33C) {
+		if (!gameflow.mIsUiOverlayActive && !inPause() && !gameflow.mPauseAll) {
 			pikiMgr->postUpdate(0, deltaTime);
 			itemMgr->postUpdate(0, deltaTime);
 			pelletMgr->postUpdate(0, deltaTime);

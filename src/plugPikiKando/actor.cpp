@@ -27,7 +27,7 @@ Actor::Actor()
 /**
  * @TODO: Documentation
  */
-void Actor::setType(int, PikiShapeObject* shape, CreatureProp* props, SimpleAI* ai)
+void Actor::setType(int /*unused*/, PikiShapeObject* shape, CreatureProp* props, SimpleAI* ai)
 {
 	mProps               = props;
 	mPikiShape           = shape;

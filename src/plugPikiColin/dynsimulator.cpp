@@ -246,16 +246,15 @@ void RigidBody::applyGroundForces(int configIdx, CollGroup* collGroup)
 /**
  * @TODO: Documentation
  */
-void RigidBody::updateViewInfo(int p1, int configIdx)
+void RigidBody::updateViewInfo(int bufIdx, int configIdx)
 {
 	for (int i = 0; i < mBoundingPointCount + mHookPointCount; i++) {
-		mBufferedPoints[p1][i] = mIntegrationStates[configIdx].mBodyPoints[i];
+		mBufferedPoints[bufIdx][i] = mIntegrationStates[configIdx].mBodyPoints[i];
 	}
 
-	mBufferedPositions[p1]    = mIntegrationStates[configIdx].mPosition;
-	mBufferedOrientations[p1] = mIntegrationStates[configIdx].mOrientationQuat;
-
-	makeBodyQuat(mBufferedOrientations[p1]);
+	mBufferedPositions[bufIdx]    = mIntegrationStates[configIdx].mPosition;
+	mBufferedOrientations[bufIdx] = mIntegrationStates[configIdx].mOrientationQuat;
+	makeBodyQuat(mBufferedOrientations[bufIdx]);
 }
 
 /**

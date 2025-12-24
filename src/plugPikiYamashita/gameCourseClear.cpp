@@ -778,7 +778,7 @@ struct GameCourseClearScreen : public Node {
 		if (mActiveMenu) {
 			mActiveMenu = mActiveMenu->doUpdate(false);
 		} else if (mState == 0) {
-			gameflow._33C = FALSE;
+			gameflow.mPauseAll = FALSE;
 			Node::update();
 		} else if (mState == 1 && !mActiveMenu && gsys->getFade() == 0.0f) {
 			mState                           = -1;

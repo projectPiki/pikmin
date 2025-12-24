@@ -83,6 +83,17 @@ enum LanguageFileType {
 	LANGFILE_COUNT, // 5
 };
 
+enum GameflowDemoFlags {
+	GFDEMO_None           = 0,
+	GFDEMO_HideNavi       = (1 << 2),  // 0x4, hide the player
+	GFDEMO_HideBluePiki   = (1 << 3),  // 0x8, hide blue pikmin
+	GFDEMO_HideRedPiki    = (1 << 4),  // 0x10, hide red pikmin
+	GFDEMO_HideYellowPiki = (1 << 5),  // 0x20, hide yellow pikmin
+	GFDEMO_MovieMode      = (1 << 6),  // 0x40
+	GFDEMO_InMenu         = (1 << 7),  // 0x80
+	GFDEMO_ShowTekis      = (1 << 10), // 0x400, show enemies even in demo mode
+};
+
 struct GameQuickInfo {
 	// This struct has no ctor or any other functions
 
@@ -512,7 +523,7 @@ struct GameFlow : public Node {
 	PlayState mPlayState;          // _1A4
 	int mCurrentStageId;           // _1CC
 	int mLastUnlockedStageId;      // _1D0
-	u32 _1D4;                      // _1D4, unknown
+	u32 _1D4;                      // _1D4, unused
 	u32 mDemoFlags;                // _1D8, bitflag of some description
 	MoviePlayer* mMoviePlayer;     // _1DC
 	s16 mMovieInfoNum;             // _1E0
@@ -552,7 +563,7 @@ struct GameFlow : public Node {
 	u8 _330[0x4];                  // _330
 	BOOL mIsGameplayInputEnabled;  // _334
 	BOOL mIsUiOverlayActive;       // _338
-	BOOL _33C;                     // _33C
+	BOOL mPauseAll;                // _33C
 	BOOL mIsTutorialActive;        // _340
 	u8 _344[0x4];                  // _344, unknown
 	u32 _348;                      // _348, unknown

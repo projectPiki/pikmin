@@ -146,7 +146,7 @@ void Navi::startMovieInf()
  */
 bool Navi::movieMode()
 {
-	return (gameflow.mDemoFlags & 0x40) != 0;
+	return (gameflow.mDemoFlags & GFDEMO_MovieMode) != 0;
 }
 
 /**
@@ -1238,7 +1238,7 @@ void Navi::releasePikis()
  */
 void Navi::doAI()
 {
-	if (gameflow.mDemoFlags & 0x40) {
+	if (gameflow.mDemoFlags & GFDEMO_MovieMode) {
 		return;
 	}
 
@@ -2070,7 +2070,7 @@ void Navi::draw(Graphics& gfx)
 	}
 
 	updateHeadMatrix();
-	if (!(gameflow.mDemoFlags & 4) && !mIsRidingUfo) {
+	if (!(gameflow.mDemoFlags & GFDEMO_HideNavi) && !mIsRidingUfo) {
 		demoDraw(gfx, nullptr);
 	}
 

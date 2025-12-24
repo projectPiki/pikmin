@@ -134,11 +134,11 @@ void Piki::finishDemo()
  */
 bool Piki::appearDemo()
 {
-	if (mColor == Blue && gameflow.mDemoFlags & 8) {
+	if (mColor == Blue && gameflow.mDemoFlags & GFDEMO_HideBluePiki) {
 		return false;
-	} else if (mColor == Red && gameflow.mDemoFlags & 0x10) {
+	} else if (mColor == Red && gameflow.mDemoFlags & GFDEMO_HideRedPiki) {
 		return false;
-	} else if (mColor == Yellow && gameflow.mDemoFlags & 0x20) {
+	} else if (mColor == Yellow && gameflow.mDemoFlags & GFDEMO_HideYellowPiki) {
 		return false;
 	} else if (mMode == PikiMode::FreeMode && !pikiMgr->isUpdating(PMUPDATE_FreePiki)) {
 		return false;
@@ -1349,13 +1349,13 @@ void Piki::updateColor()
  */
 bool Piki::needShadow()
 {
-	if (mColor == Blue && (gameflow.mDemoFlags & 0x8)) {
+	if (mColor == Blue && (gameflow.mDemoFlags & GFDEMO_HideBluePiki)) {
 		return false;
 	}
-	if (mColor == Red && (gameflow.mDemoFlags & 0x10)) {
+	if (mColor == Red && (gameflow.mDemoFlags & GFDEMO_HideRedPiki)) {
 		return false;
 	}
-	if (mColor == Yellow && (gameflow.mDemoFlags & 0x20)) {
+	if (mColor == Yellow && (gameflow.mDemoFlags & GFDEMO_HideYellowPiki)) {
 		return false;
 	}
 

@@ -6,20 +6,15 @@
 #include "sysNew.h"
 
 /**
- * @TODO: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT(nullptr)
 
-/**
- * @TODO: Documentation
- */
 FishGenerator::FishGenerator()
     : ItemCreature(OBJTYPE_Fish, nullptr, nullptr)
 {
@@ -31,7 +26,7 @@ FishGenerator::FishGenerator()
 /**
  * @TODO: Documentation
  */
-void FishGenerator::startAI(int)
+void FishGenerator::startAI(int /*unused*/)
 {
 	mFishCount = 32;
 	for (int i = 0; i < mFishCount; i++) {

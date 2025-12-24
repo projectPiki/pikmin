@@ -212,7 +212,7 @@ void StringArray::read(Stream&)
  * @TODO: Documentation
  * @note UNUSED Size: 00009C
  */
- void StringArray::write(Stream&)
- {
-	 // UNUSED FUNCTION
- }
+void StringArray::write(Stream&)
+{
+	// UNUSED FUNCTION
+}

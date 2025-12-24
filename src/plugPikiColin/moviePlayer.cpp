@@ -506,7 +506,7 @@ void MoviePlayer::startMovie(int movieIdx, int, Creature* target, immut Vector3f
 		PRINT("playing movie %s\n", info->mName);
 		initMovieFlags(info);
 		if (info->mPlayer->mFlags & CinePlayerFlags::PauseAll) {
-			gameflow._33C = TRUE;
+			gameflow.mPauseAll = TRUE;
 		}
 		info->update();
 		mPlayInfoList.add(info);
@@ -616,7 +616,7 @@ void MoviePlayer::sndStopMovie(MovieInfo* info)
  */
 void MoviePlayer::update()
 {
-	gameflow.mDemoFlags = 0;
+	gameflow.mDemoFlags = GFDEMO_None;
 	if (gsys->mDvdErrorCode >= DvdError::ReadingDisc) {
 		return;
 	}
@@ -681,7 +681,7 @@ void MoviePlayer::update()
 
 			if (mPlayInfoList.getChildCount() == 0) {
 				mIsActive           = false;
-				gameflow.mDemoFlags = 0;
+				gameflow.mDemoFlags = GFDEMO_None;
 				if (gameflow.mGameInterface) {
 					gameflow.mGameInterface->message(MOVIECMD_ShowHUD, 0);
 				}
@@ -690,7 +690,7 @@ void MoviePlayer::update()
 				PRINT("clearing top heap!\n");
 				gsys->resetHeap(SYSHEAP_Movie, AYU_STACK_GROW_DOWN);
 				gsys->mTogglePrint = togglePrint;
-				gameflow._33C      = FALSE;
+				gameflow.mPauseAll = FALSE;
 				PRINT("all movies ended!\n");
 			}
 

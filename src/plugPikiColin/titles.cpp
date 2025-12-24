@@ -380,7 +380,7 @@ struct TitleSetupSection : public Node {
 
 		STACK_PAD_VAR(1);
 
-		if (!(gameflow.mDemoFlags & 0x80)) {
+		if (!(gameflow.mDemoFlags & GFDEMO_InMenu)) {
 			mDayMgr->refresh(gfx, 25.0f, 8);
 			mDayMgr->setFog(gfx, nullptr);
 		} else {

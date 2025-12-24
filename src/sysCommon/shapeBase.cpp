@@ -53,13 +53,13 @@ static const char* modes[5] = {
 void Envelope::read(RandomAccessStream& stream)
 {
 	mIndexCount = stream.readShort();
-	
+
 	// Allocate a single block for both indices and weights
 	void* arr = new u8[8 * mIndexCount];
 	mIndices  = (s32*)arr;
 
 	// Point weights to after indices in that block
-	mWeights  = (f32*)&((f32*)arr)[mIndexCount];
+	mWeights = (f32*)&((f32*)arr)[mIndexCount];
 
 	for (int i = 0; i < mIndexCount; i++) {
 		mIndices[i] = stream.readShort();

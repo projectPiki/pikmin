@@ -1,4 +1,3 @@
-#include "NaviState.h"
 #include "AIConstant.h"
 #include "Dolphin/os.h"
 #include "EffectMgr.h"
@@ -13,6 +12,7 @@
 #include "MapCode.h"
 #include "MoviePlayer.h"
 #include "NaviMgr.h"
+#include "NaviState.h"
 #include "Pcam/Camera.h"
 #include "Pcam/CameraManager.h"
 #include "Pellet.h"
@@ -30,6 +30,7 @@
 #include "sysNew.h"
 #include "teki.h"
 #include "zen/DrawContainer.h"
+
 
 #include "CPlate.h"
 #include "DebugLog.h"
@@ -934,56 +935,58 @@ NaviContainerState::NaviContainerState()
  */
 void NaviContainerState::init(Navi* navi)
 {
-	navi->_70C = true;
-	int store  = navi->mGoalItem->getTotalStorePikis() - navi->mGoalItem->mPikisToExit;
+	navi->_70C               = true;
+	int storedPikisAvailable = navi->mGoalItem->getTotalStorePikis() - navi->mGoalItem->mPikisToExit;
 	rumbleMgr->stop();
-	int pikisInParty = 0;
+	int numOnionColoredPikis = 0;
 
 	Iterator iter(navi->mPlateMgr);
 	CI_LOOP(iter)
 	{
 		Piki* piki = (Piki*)*iter;
 		if (piki->mColor == navi->mGoalItem->mOnionColour) {
-			pikisInParty++;
+			numOnionColoredPikis++;
 		}
 	}
 
-	int exitPikis = 0;
+	int totalExitPendingPikis = 0;
 	for (int i = 0; i < 3; i++) {
 		GoalItem* goal = itemMgr->getContainer(i);
 		if (goal) {
-			exitPikis += goal->mPikisToExit;
+			totalExitPendingPikis += goal->mPikisToExit;
 		}
 	}
 
 	GameStat::update();
 	PRINT("START CONAINER WINDOW ***\n");
 	gameflow.mGameInterface->message(MOVIECMD_HideHUD, 0);
-	containerWindow->start((zen::DrawContainer::containerType)navi->mGoalItem->mOnionColour, store, 10000, pikisInParty,
-	                       AIConstant::_instance->mConstants.mMaxPikisOnField(), exitPikis + GameStat::mapPikis,
-	                       AIConstant::_instance->mConstants.mMaxPikisOnField());
+	containerWindow->start((zen::DrawContainer::containerType)navi->mGoalItem->mOnionColour, storedPikisAvailable, 10000,
+	                       numOnionColoredPikis, AIConstant::_instance->mConstants.mMaxPikisOnField(),
+	                       totalExitPendingPikis + GameStat::mapPikis, AIConstant::_instance->mConstants.mMaxPikisOnField());
 	PRINT("FINISH START CONAINER WINDOW ***\n");
-	gameflow._33C = TRUE;
-	_18           = 0;
-	_1C           = 0;
+	gameflow.mPauseAll = TRUE;
+	mContainerWinEvent = 0;
+	mContainerWinCount = 0;
 }
 
 /**
  * @TODO: Documentation
  */
-void NaviContainerState::informWin(int p1)
+void NaviContainerState::informWin(int pikiCnt)
 {
-	PRINT("GOT CONTAINER %d MESSAGE ****\n", p1);
+	PRINT("GOT CONTAINER %d MESSAGE ****\n", pikiCnt);
 
-	if (p1 > 0) {
-		_18 = 1;
-		_1C = p1;
+	// Enter that many pikis
+	if (pikiCnt > 0) {
+		mContainerWinEvent = 1;
+		mContainerWinCount = pikiCnt;
 		return;
 	}
 
-	if (p1 < 0) {
-		_18 = 2;
-		_1C = -p1;
+	// Exit that many pikis
+	if (pikiCnt < 0) {
+		mContainerWinEvent = 2;
+		mContainerWinCount = -pikiCnt; // Make positive, because we subtract this amount later
 	}
 }
 
@@ -994,8 +997,8 @@ void NaviContainerState::onCloseWindow()
 {
 	PRINT("GOT CLOSE WIN MESSAGE ******\n");
 
-	if (_18 == 0) {
-		_18 = 3;
+	if (mContainerWinEvent == 0) {
+		mContainerWinEvent = 3;
 	}
 }
 
@@ -1004,14 +1007,14 @@ void NaviContainerState::onCloseWindow()
  */
 void NaviContainerState::exec(Navi* navi)
 {
-	int a;
-	if (containerWindow->update(a)) {
+	int signedPikiCount;
+	if (containerWindow->update(signedPikiCount)) {
 		gameflow.mGameInterface->message(MOVIECMD_ShowHUD, 0);
-		PRINT("result is %d\n", a);
-		if (a > 0) {
-			enterPikis(navi, a);
-		} else if (a < 0) {
-			exitPikis(navi, -a);
+		PRINT("result is %d\n", signedPikiCount);
+		if (signedPikiCount > 0) {
+			enterPikis(navi, signedPikiCount);
+		} else if (signedPikiCount < 0) {
+			exitPikis(navi, -signedPikiCount);
 		}
 		transit(navi, NAVISTATE_Walk);
 	}
@@ -1023,7 +1026,7 @@ void NaviContainerState::exec(Navi* navi)
 /**
  * @TODO: Documentation
  */
-void NaviContainerState::enterPikis(Navi* navi, int max)
+void NaviContainerState::enterPikis(Navi* navi, int countToEnter)
 {
 	PRINT("goal color = %d\n", navi->mGoalItem->mOnionColour);
 	// This has a capacity of 200 in the vanilla game for some reason.
@@ -1041,13 +1044,13 @@ void NaviContainerState::enterPikis(Navi* navi, int max)
 		}
 		if (piki->mColor == navi->mGoalItem->mOnionColour) {
 			pikiList[numPikis++] = piki;
-			if (numPikis == max) {
+			if (numPikis == countToEnter) {
 				break;
 			}
 		}
 	}
 
-	PRINT("#### numPikis = %d : max = %d \n", numPikis, max);
+	PRINT("#### numPikis = %d : max = %d \n", numPikis, countToEnter);
 	for (int i = 0; i < numPikis; i++) {
 		PRINT("enter : %d\n", i);
 		int state = pikiList[i]->getState();
@@ -1062,9 +1065,9 @@ void NaviContainerState::enterPikis(Navi* navi, int max)
 /**
  * @TODO: Documentation
  */
-void NaviContainerState::exitPikis(Navi* navi, int p2)
+void NaviContainerState::exitPikis(Navi* navi, int countToExit)
 {
-	navi->mGoalItem->exitPikis(p2);
+	navi->mGoalItem->exitPikis(countToExit);
 }
 
 /**
@@ -1073,7 +1076,7 @@ void NaviContainerState::exitPikis(Navi* navi, int p2)
 void NaviContainerState::cleanup(Navi* navi)
 {
 	PRINT("cleanup\n");
-	gameflow._33C = FALSE;
+	gameflow.mPauseAll = FALSE;
 	navi->mGoalItem->setSpotActive(true);
 }
 
@@ -1648,7 +1651,7 @@ void NaviGatherState::exec(Navi* navi)
 		if (navi->_AB8 > C_NAVI_PROP(navi)._AC()) {
 			navi->_AB8 = C_NAVI_PROP(navi)._AC();
 
-			if (!gameflow._33C) {
+			if (!gameflow.mPauseAll) {
 				navi->callPikis(C_NAVI_PROP(navi)._8C());
 			} else {
 				navi->callDebugs(C_NAVI_PROP(navi)._8C());
@@ -1670,7 +1673,7 @@ void NaviGatherState::exec(Navi* navi)
 		navi->_AB8 = 0.0f;
 		navi->_ABC = 2;
 		_14        = scale;
-		if (!gameflow._33C) {
+		if (!gameflow.mPauseAll) {
 			navi->callPikis(scale);
 		} else {
 			navi->callDebugs(scale);
@@ -1681,7 +1684,7 @@ void NaviGatherState::exec(Navi* navi)
 	if (navi->_ABC != 2) {
 		return;
 	}
-	if (!gameflow._33C) {
+	if (!gameflow.mPauseAll) {
 		navi->callPikis(_14);
 	} else {
 		navi->callDebugs(_14);

@@ -27,7 +27,7 @@ struct Kontroller : public Controller {
 	int mState;             // _50
 	int mDuration;          // _54
 	RamStream* mDataStream; // _58
-	int _5C;                // _5C
+	int mCurrentKeyStatus;  // _5C
 };
 
 extern RamStream* controllerBuffer;

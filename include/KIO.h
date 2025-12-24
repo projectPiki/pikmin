@@ -12,10 +12,20 @@ enum KontMode {
 };
 
 /*
+ * @brief Identifies the kind of payload being sent via KIO/HIO.
+ *
+ * This value is written into the first word of the KIO header buffer.
+ */
+enum KIOWriteKind {
+	KIOWRITE_MemoryCard       = 0,
+	KIOWRITE_ControllerStream = 1,
+};
+
+/*
  * @brief TODO
  */
 struct KIOContext {
-	void set(int, u8*, int);
+	void set(int writeKind, u8* bufferStart, int bufferSize);
 	void write();
 
 	int mBufferSize;    // _00
@@ -30,7 +40,7 @@ struct KIO {
 
 	void initialise();
 	void readMailbox();
-	void startWrite(int, u8*, int);
+	void startWrite(int writeKind, u8* bufferStart, int bufferSize);
 	void writeHeader();
 
 	// unused/inlined:
@@ -40,7 +50,6 @@ struct KIO {
 	static immut char* haltMessage;
 	static int kontMode; // see KontMode enum
 
-	// TODO: members
 	s32 mChannel;        // _00
 	KIOContext mContext; // _04
 	void* mHeaderBuffer; // _0C, maybe an array of something?

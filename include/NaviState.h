@@ -156,7 +156,7 @@ struct NaviContainerState : public NaviState, virtual public ContainerWin::Liste
 	virtual void exec(Navi*);                       // _3C
 	virtual void cleanup(Navi*);                    // _40
 	virtual bool invincible(Navi*) { return true; } // _50
-	virtual void informWin(int);                    // _54
+	virtual void informWin(int signedPikiCount);    // _54
 	virtual void onCloseWindow();                   // _58
 
 	void enterPikis(Navi*, int);
@@ -166,10 +166,10 @@ struct NaviContainerState : public NaviState, virtual public ContainerWin::Liste
 	// _00-_10 = NaviState
 	// _10     = ContainerWin::Listener ptr
 	// _14     = GmWin::CloseListener ptr
-	int _18; // _18
-	int _1C; // _1C
-	         // ContainerWin::Listener
-	         // GmWin::CloseListener
+	int mContainerWinEvent; // _18
+	int mContainerWinCount; // _1C
+	                        // ContainerWin::Listener
+	                        // GmWin::CloseListener
 };
 
 /**

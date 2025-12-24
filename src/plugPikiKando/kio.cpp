@@ -106,9 +106,9 @@ void KIO::readMailbox()
 /**
  * @TODO: Documentation
  */
-void KIO::startWrite(int p1, u8* bufferStart, int bufferSize)
+void KIO::startWrite(int writeKind, u8* bufferStart, int bufferSize)
 {
-	mContext.set(p1, bufferStart, bufferSize);
+	mContext.set(writeKind, bufferStart, bufferSize);
 	writeHeader();
 }
 
@@ -141,12 +141,12 @@ void KIO::copyEfb(u8*, u16, u16)
 /**
  * @TODO: Documentation
  */
-void KIOContext::set(int p1, u8* bufferStart, int bufferSize)
+void KIOContext::set(int writeKind, u8* bufferStart, int bufferSize)
 {
 	mBufferSize  = bufferSize;
 	int* header  = (int*)kio->mHeaderBuffer;
 	header[1]    = bufferSize;
-	header[0]    = p1;
+	header[0]    = writeKind;
 	mBufferStart = bufferStart;
 }
 

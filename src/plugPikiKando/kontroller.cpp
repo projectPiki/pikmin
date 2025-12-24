@@ -20,8 +20,8 @@ DEFINE_PRINT("Kontroller")
 /**
  * @TODO: Documentation
  */
-Kontroller::Kontroller(int p1)
-    : Controller(p1)
+Kontroller::Kontroller(int controllerId)
+    : Controller(controllerId)
 {
 	mState      = 0;
 	mDuration   = 0;
@@ -31,10 +31,10 @@ Kontroller::Kontroller(int p1)
 /**
  * @TODO: Documentation
  */
-void Kontroller::save(RamStream* stream, int p2)
+void Kontroller::save(RamStream* stream, int duration)
 {
 	PRINT("************ save start\n");
-	mDuration   = p2;
+	mDuration   = duration;
 	mDataStream = stream;
 	stream->setPosition(0);
 	mState = 1;
@@ -43,10 +43,10 @@ void Kontroller::save(RamStream* stream, int p2)
 /**
  * @TODO: Documentation
  */
-void Kontroller::load(RamStream* stream, int p2)
+void Kontroller::load(RamStream* stream, int duration)
 {
 	PRINT("************ load start\n");
-	mDuration   = p2;
+	mDuration   = duration;
 	mDataStream = stream;
 	stream->setPosition(0);
 	mState = 2;
@@ -75,7 +75,7 @@ void Kontroller::update()
 		if (--mDuration <= 0) {
 			stop();
 		}
-		updateCont(_5C);
+		updateCont(mCurrentKeyStatus);
 		break;
 	case 1:
 		Controller::update();
@@ -93,7 +93,7 @@ void Kontroller::update()
 
 			mDataStream->close();
 			mDataStream->getPosition();
-			kio->startWrite(1, (u8*)mDataStream->mBufferAddr, mDataStream->getPosition());
+			kio->startWrite(KIOWRITE_ControllerStream, (u8*)mDataStream->mBufferAddr, mDataStream->getPosition());
 			stop();
 		}
 		break;
@@ -108,9 +108,9 @@ void Kontroller::update()
 /**
  * @TODO: Documentation
  */
-u32 Kontroller::getSaveSize(int p1)
+u32 Kontroller::getSaveSize(int duration)
 {
-	return p1 * 12;
+	return duration * 12;
 }
 
 /**
@@ -134,7 +134,7 @@ void Kontroller::write(RandomAccessStream& stream)
  */
 void Kontroller::read(RandomAccessStream& stream)
 {
-	_5C         = stream.readInt();
+	mCurrentKeyStatus = stream.readInt();
 	mMainStickX = stream.readByte();
 	mMainStickY = stream.readByte();
 	mSubStickX  = stream.readByte();

@@ -39,12 +39,12 @@ Creature* ActorMgr::createObject()
 /**
  * @TODO: Documentation
  */
-Actor* ActorMgr::newActor(int p1)
+Actor* ActorMgr::newActor(int unused)
 {
 	Actor* actor = (Actor*)birth();
 
 	if (actor) {
-		actor->setType(p1, mShapeObjectList[0], mCreaturePropertyList[0], mAiManagerList[0]);
+		actor->setType(unused, mShapeObjectList[0], mCreaturePropertyList[0], mAiManagerList[0]);
 	}
 
 	return actor;

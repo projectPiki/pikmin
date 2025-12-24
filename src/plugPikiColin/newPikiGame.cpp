@@ -575,7 +575,7 @@ ModeState* RunningModeState::update(u32& result)
 	}
 
 	// Handle pause menu
-	if (gameflow.mIsGameplayInputEnabled && !gameflow.mIsUiOverlayActive && !gameflow._33C && !gameflow.mMoviePlayer->mIsActive) {
+	if (gameflow.mIsGameplayInputEnabled && !gameflow.mIsUiOverlayActive && !gameflow.mPauseAll && !gameflow.mMoviePlayer->mIsActive) {
 
 		if (mController->keyClick(KBBTN_START)) {
 			if (!gameflow.mIsUiOverlayActive && !mesgsPending) {
@@ -674,7 +674,7 @@ void RunningModeState::postRender(Graphics& gfx)
 		gamecore->draw1D(gfx);
 	}
 
-	if (!gameflow._33C && !gameflow.mMoviePlayer->mIsActive && mSection->mUpdateFlags & UPDATE_COUNTDOWN) {
+	if (!gameflow.mPauseAll && !gameflow.mMoviePlayer->mIsActive && mSection->mUpdateFlags & UPDATE_COUNTDOWN) {
 		f32 time = (gameflow.mWorldClock.mTimeOfDay - gameflow.mParameters->mNightCountdown())
 		         / (gameflow.mParameters->mNightEnd() - gameflow.mParameters->mNightCountdown());
 		if (time >= 0.0f && time < 1.0f) {
@@ -903,7 +903,7 @@ ModeState* DayOverModeState::update(u32& result)
 				PRINT("doing save now!!\n");
 				gameflow.mMemoryCard.saveCurrentGame();
 				if (mSection->mController->keyDown(KBBTN_Z)) {
-					kio->startWrite(0, cardData, CARD_DATA_SIZE);
+					kio->startWrite(KIOWRITE_MemoryCard, cardData, CARD_DATA_SIZE);
 				}
 				gsys->mTogglePrint = sysbackup;
 				STACK_PAD_VAR(1);
@@ -1340,7 +1340,7 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 			mGameCamera.update(f32(gfx.mScreenWidth) / f32(gfx.mScreenHeight), mGameCamera.mFov, 100.0f, mCameraFarClip);
 		}
 
-		if (!(gameflow.mDemoFlags & 0x80)) {
+		if (!(gameflow.mDemoFlags & GFDEMO_InMenu)) {
 			gsys->mTimer->start("preRender", true);
 			preRender(gfx);
 			gsys->mTimer->stop("preRender");
@@ -1352,7 +1352,7 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 		MATCHING_STOP_TIMER("mainRender");
 
 		if (effectMgr) {
-			if (!gameflow._33C && !gameflow.mIsUiOverlayActive || gameflow.mIsTutorialActive) {
+			if (!gameflow.mPauseAll && !gameflow.mIsUiOverlayActive || gameflow.mIsTutorialActive) {
 				bool check = true;
 				if (gsys->mDvdErrorCode >= DvdError::ReadingDisc) {
 					check = false;
@@ -1364,7 +1364,7 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 			effectMgr->draw(gfx);
 		}
 
-		if (!(gameflow.mDemoFlags & 0x80)) {
+		if (!(gameflow.mDemoFlags & GFDEMO_InMenu)) {
 			menuOn = false;
 			gfx.setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
 			postRender(gfx);
@@ -1405,7 +1405,7 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 		BaseGameSection::draw(gfx);
 		if (!mIsInitialSetup) {
 			if (!gsys->resetPending() && (!mActiveMenu || gameflow.mMoviePlayer->mIsActive)) {
-				if (!gameflow._33C && !gameflow.mIsUiOverlayActive) {
+				if (!gameflow.mPauseAll && !gameflow.mIsUiOverlayActive) {
 					if (!gameflow.mMoviePlayer->mIsActive && mUpdateFlags & UPDATE_WORLD_CLOCK && !playerState->isTutorial()) {
 						f32 tod = gameflow.mWorldClock.mTimeOfDay;
 						gameflow.mWorldClock.update(1.0f);
@@ -1414,7 +1414,7 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 					Node::update();
 				}
 				gamecore->mDrawGameInfo->update();
-				if (mUpdateFlags & UPDATE_AI && !(gameflow.mDemoFlags & 0x80)) {
+				if (mUpdateFlags & UPDATE_AI && !(gameflow.mDemoFlags & GFDEMO_InMenu)) {
 					gamecore->updateAI();
 				}
 			}
@@ -1497,7 +1497,7 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 		gfx.clearBuffer(3, false);
 		gfx.setPerspective(gfx.mCamera->mPerspectiveMatrix.mMtx, gfx.mCamera->mFov, gfx.mCamera->mAspectRatio, gfx.mCamera->mNear,
 		                   gfx.mCamera->mFar, 1.0f);
-		if (!memcardWindow && !(gameflow.mDemoFlags & 0x80)) {
+		if (!memcardWindow && !(gameflow.mDemoFlags & GFDEMO_InMenu)) {
 			bool check = true;
 			if (playerState->isTutorial() && !gameflow.mIsDayEndActive) {
 				check = false;

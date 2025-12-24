@@ -174,7 +174,7 @@ struct IntroGameSetupSection : public BaseGameSection {
 		gsys->mTimer->stop("mainRender");
 
 		if (effectMgr) {
-			if (gameflow._33C == FALSE && !gameflow.mIsUiOverlayActive) {
+			if (gameflow.mPauseAll == FALSE && !gameflow.mIsUiOverlayActive) {
 				gsys->mTimer->start("effect", true);
 				bool check = true;
 				if (gsys->mDvdErrorCode >= DvdError::ReadingDisc) {
@@ -191,7 +191,7 @@ struct IntroGameSetupSection : public BaseGameSection {
 			gsys->mTimer->stop("eff draw");
 		}
 
-		if (!(gameflow.mDemoFlags & 0x80)) {
+		if (!(gameflow.mDemoFlags & GFDEMO_InMenu)) {
 			gsys->mTimer->start("postRender", true);
 			gfx.setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
 			postRender(gfx);
