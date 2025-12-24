@@ -88,7 +88,7 @@ void ActBreakWall::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 		mIsAttackReady = false;
 		break;
 	case KEY_PlayEffect:
-		if (!mPiki->isCreatureFlag(CF_IsAICullingActive) && (AIPerf::optLevel <= 0 || mPiki->mOptUpdateContext.updatable())) {
+		if (!mPiki->isCreatureFlag(CF_UseAICulling) && (AIPerf::optLevel <= 0 || mPiki->mOptUpdateContext.updatable())) {
 			Vector3f vec = mPiki->mEffectPos;
 			EffectParm parm(vec);
 			if (mWall->mObjType == OBJTYPE_SluiceSoft) {

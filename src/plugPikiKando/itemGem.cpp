@@ -124,7 +124,7 @@ void GemItem::startAI(int)
 	mGemCollInfo.initInfo(mItemShapeObject->mShape, mGemColl, nullptr);
 	mSRT.s.set(1.0f, 1.0f, 1.0f);
 	mSRT.r.set(1.0f, mFaceDirection, 1.0f);
-	resetCreatureFlag(CF_Unk8);
+	resetCreatureFlag(CF_IgnoreGravity);
 	C_SAI(this)->start(this, GemAI::GEM_Unk0);
 	mIsBeingLifted = false;
 	mIsRising      = false;
@@ -171,7 +171,7 @@ void GemItem::update()
 				stopEventSound(this, SE_LIFT_MOVE);
 				finishPick();
 			}
-			setCreatureFlag(CF_Unk8); // this is a further inline
+			setCreatureFlag(CF_IgnoreGravity); // this is a further inline
 			if (isCreatureFlag(CF_IsOnGround)) {
 				mVelocity = mVelocity * 1.5f;
 			}

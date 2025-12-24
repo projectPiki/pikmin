@@ -24,7 +24,7 @@ DEFINE_PRINT(nullptr);
 DualCreature::DualCreature()
 {
 	mIsCollisionInitialised = false;
-	setCreatureFlag(CF_Unk1 | CF_Unk10);
+	setCreatureFlag(CF_Unk1 | CF_DisableAutoFaceDir);
 	mPrevAngularVelocity.set(0.0f, 0.0f, 0.0f);
 	mAngularMomentum.set(0.0f, 0.0f, 0.0f);
 	useRealDynamics();

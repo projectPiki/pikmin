@@ -93,7 +93,7 @@ public:
 	virtual void start(Teki& teki) // _08
 	{
 		teki.clearTekiOption(BTeki::TEKI_OPTION_ATARI);
-		teki.setCreatureFlag(CF_Unk10);
+		teki.setCreatureFlag(CF_DisableAutoFaceDir);
 		teki.clearTekiOption(BTeki::TEKI_OPTION_ORGANIC);
 	}
 	virtual bool act(Teki&) { return true; } // _10

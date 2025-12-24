@@ -463,7 +463,7 @@ void CreatureInf::doStore(Creature* owner)
 	mObjType             = owner->mObjType;
 	mRebirthDay          = 0;
 	mCurrentDay          = -1;
-	mAdjustFaceDirection = owner->isCreatureFlag(CF_FaceDirAdjust);
+	mAdjustFaceDirection = owner->isCreatureFlag(CF_AdjustFaceDirOnSpawn);
 	owner->doStore(this);
 
 	if (owner->getRebirthDay() > 0) {
@@ -486,9 +486,9 @@ void CreatureInf::doStore(Creature* owner)
 void CreatureInf::doRestore(Creature* owner)
 {
 	if (mAdjustFaceDirection != 0) {
-		owner->setCreatureFlag(CF_FaceDirAdjust);
+		owner->setCreatureFlag(CF_AdjustFaceDirOnSpawn);
 	} else {
-		owner->resetCreatureFlag(CF_FaceDirAdjust);
+		owner->resetCreatureFlag(CF_AdjustFaceDirOnSpawn);
 	}
 
 	owner->doRestore(this);

@@ -109,7 +109,7 @@ Creature* GenObjectTeki::birth(BirthInfo& info)
 	teki->startAI(0);
 	teki->mSRT.r = info.mRotation;
 	if (info.mGenerator->doAdjustFaceDir()) {
-		teki->setCreatureFlag(CF_FaceDirAdjust);
+		teki->setCreatureFlag(CF_AdjustFaceDirOnSpawn);
 	}
 
 	teki->mRebirthDay = info.mGenerator->getRebirthDay();

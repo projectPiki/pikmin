@@ -491,7 +491,7 @@ Navi::Navi(CreatureProp* props, int naviID)
 	_800 = 0.0f;
 	_7FC = false;
 	_928 = 0;
-	resetCreatureFlag(CF_Unk1 | CF_Unk10);
+	resetCreatureFlag(CF_Unk1 | CF_DisableAutoFaceDir);
 	mObjType = OBJTYPE_Navi;
 	mSearchBuffer.init(mNaviSearchData, 6);
 
@@ -1766,9 +1766,9 @@ void Navi::makeVelocity(bool p1)
 		mFaceDirection += 0.2f * angDist(roundAng(atan2f(cursorPos.x, cursorPos.z)), mFaceDirection);
 		mFaceDirection = roundAng(mFaceDirection);
 		mSRT.r.set(0.0f, mFaceDirection, 0.0f);
-		setCreatureFlag(CF_Unk11);
+		setCreatureFlag(CF_UsePriorityFaceDir);
 	} else {
-		resetCreatureFlag(CF_Unk11);
+		resetCreatureFlag(CF_UsePriorityFaceDir);
 	}
 
 	stickVec.set(0.0f, 0.0f, 0.0f);

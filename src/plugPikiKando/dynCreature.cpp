@@ -211,7 +211,7 @@ void DynCreature::releaseAllParticles()
  */
 void DynCreature::initialiseSystem()
 {
-	setCreatureFlag(CF_Unk1 | CF_Unk10);
+	setCreatureFlag(CF_Unk1 | CF_DisableAutoFaceDir);
 	mCenterOfMass.set(0.0f, 0.0f, 0.0f);
 	mMass = 0.0f;
 

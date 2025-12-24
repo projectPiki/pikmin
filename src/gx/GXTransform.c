@@ -180,7 +180,8 @@ ASM void WriteMTXPS3x3(register const Mtx33 mtx, register volatile f32* dest) {
 /**
  * @TODO: Documentation
  */
-ASM void WriteMTXPS4x2(register const Mtx mtx, register volatile f32* dest) {
+ASM void WriteMTXPS4x2(register const Mtx mtx, register volatile f32* dest)
+{
 #ifdef __MWERKS__ // clang-format off
     psq_l f0, 0x00(mtx), 0, qr0
     psq_l f1, 0x08(mtx), 0, qr0

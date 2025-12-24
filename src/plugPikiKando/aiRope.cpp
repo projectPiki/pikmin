@@ -29,7 +29,7 @@ ActRope::ActRope(Piki* piki)
 void ActRope::init(Creature*)
 {
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_HNoboru), PaniMotionInfo(PIKIANIM_HNoboru));
-	mPiki->setCreatureFlag(CF_Unk8);
+	mPiki->setCreatureFlag(CF_IgnoreGravity);
 	mSpeed = (gsys->getRand(1.0f) - 0.5f) * 4.0f + 22.0f;
 	if (mPiki->isHolding()) {
 		mPiki->mActionState = 3;
@@ -67,6 +67,6 @@ void ActRope::cleanup()
 {
 	mPiki->mVelocity       = mRopeDirection * 150.0f;
 	mPiki->mTargetVelocity = mPiki->mVelocity;
-	mPiki->mCreatureFlags &= ~(CF_Unk8);
+	mPiki->mCreatureFlags &= ~(CF_IgnoreGravity);
 	mPiki->endStickObject();
 }

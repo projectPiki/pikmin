@@ -87,9 +87,9 @@ struct FreeLightEffect : public KEffect {
 	FreeLightEffect() { mEfx = nullptr; }
 
 	virtual void emit(immut EffectParm&); // _2C
-	virtual void kill();            // _30
-	virtual void stop();            // _34
-	virtual void restart();         // _38
+	virtual void kill();                  // _30
+	virtual void stop();                  // _34
+	virtual void restart();               // _38
 
 	void setScale(f32);
 
@@ -139,9 +139,9 @@ struct RippleEffect : public KEffect {
 	}
 
 	virtual void emit(immut EffectParm&); // _2C
-	virtual void kill();            // _30
-	virtual void stop();            // _34
-	virtual void restart();         // _38
+	virtual void kill();                  // _30
+	virtual void stop();                  // _34
+	virtual void restart();               // _38
 
 	// _00     = VTBL1
 	// _04     = VTBL2

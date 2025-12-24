@@ -2470,7 +2470,7 @@ void NaviNukuAdjustState::exec(Navi* navi)
 		return;
 	}
 	_24 = navi->mSRT.t;
-	navi->setCreatureFlag(CF_Unk11);
+	navi->setCreatureFlag(CF_UsePriorityFaceDir);
 	Vector3f pos;
 	if (DelayPikiBirth) {
 		pos = navi->_7C0->mSRT.t - navi->mSRT.t;
@@ -2525,7 +2525,7 @@ void NaviNukuAdjustState::exec(Navi* navi)
 		}
 		navi->mVelocity       = pos * mod;
 		navi->mTargetVelocity = pos * mod;
-		navi->setCreatureFlag(CF_Unk11);
+		navi->setCreatureFlag(CF_UsePriorityFaceDir);
 		navi->mSRT.r.set(0.0f, navi->mFaceDirection, 0.0f);
 	}
 	STACK_PAD_STRUCT(1);
@@ -2536,7 +2536,7 @@ void NaviNukuAdjustState::exec(Navi* navi)
  */
 void NaviNukuAdjustState::cleanup(Navi* navi)
 {
-	navi->resetCreatureFlag(CF_Unk11);
+	navi->resetCreatureFlag(CF_UsePriorityFaceDir);
 }
 
 /**

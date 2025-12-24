@@ -31,7 +31,7 @@ DEFINE_PRINT("CreatureMove")
  */
 void Creature::moveRotation(f32 p1)
 {
-	if (isCreatureFlag(CF_Unk10)) {
+	if (isCreatureFlag(CF_DisableAutoFaceDir)) {
 		Vector3f vec1 = mPrevAngularVelocity * p1;
 		Quat q1(vec1.x, vec1.y, vec1.z, 0.0f);
 		Quat q2(mRotationQuat);
@@ -44,7 +44,7 @@ void Creature::moveRotation(f32 p1)
 		mRotationQuat.normalise();
 	}
 
-	if (!isCreatureFlag(CF_Unk10) && !isCreatureFlag(CF_Unk11)) {
+	if (!isCreatureFlag(CF_DisableAutoFaceDir) && !isCreatureFlag(CF_UsePriorityFaceDir)) {
 		if (SQUARE(mTargetVelocity.x) + SQUARE(mTargetVelocity.z) > 1.0f) {
 			f32 angle = atan2f(mTargetVelocity.x, mTargetVelocity.z);
 
@@ -73,7 +73,7 @@ void Creature::moveRotation(f32 p1)
 		return;
 	}
 
-	if (!isCreatureFlag(CF_Unk10) && isCreatureFlag(CF_Unk11)) {
+	if (!isCreatureFlag(CF_DisableAutoFaceDir) && isCreatureFlag(CF_UsePriorityFaceDir)) {
 		mSRT.r.set(0.0f, mFaceDirection, 0.0f);
 	}
 }
@@ -83,7 +83,7 @@ void Creature::moveRotation(f32 p1)
  */
 void Creature::moveAttach()
 {
-	_29C = mSRT.t;
+	mPlatformAdjustDelta = mSRT.t;
 	if (mCollPlatform) {
 		Creature* plat = mCollPlatform->mCreature;
 		if (platAttachable() || mStickTarget && isStickToPlatform()) {
@@ -102,7 +102,7 @@ void Creature::moveAttach()
 		}
 	}
 
-	_29C = _29C - mSRT.t;
+	mPlatformAdjustDelta = mPlatformAdjustDelta - mSRT.t;
 }
 
 /**
@@ -137,11 +137,11 @@ void Creature::moveNew(f32 deltaTime)
 	}
 
 	if (!isCreatureFlag(CF_IsFlying) && !mRope && (!mStickTarget || !isStickToPlatform() || !mStickPart->isClimbable())
-	    && !isCreatureFlag(CF_Unk8) && (!mStickTarget || mPelletStickSlot == -1)) {
+	    && !isCreatureFlag(CF_IgnoreGravity) && (!mStickTarget || mPelletStickSlot == -1)) {
 		mVelocity.y -= AIConstant::_instance->mConstants.mGravity() * deltaTime;
 	}
 
-	if (isCreatureFlag(CF_Unk5)) {
+	if (isCreatureFlag(CF_EnableAirDrag)) {
 		mVelocity.y -= deltaTime * mAirResistance * mVelocity.y;
 		f32 scale   = 0.2f;
 		mVelocity.x = mVelocity.x - (deltaTime * mAirResistance) * scale * mVelocity.x;
@@ -214,7 +214,7 @@ void Creature::moveNew(f32 deltaTime)
 
 	if (mObjType != OBJTYPE_Pellet) {
 		Vector3f adjustedPos(mSRT.t);
-		if (isCreatureFlag(CF_GroundOffsetEnabled)) {
+		if (isCreatureFlag(CF_EnableGroundOffset)) {
 			adjustedPos.y -= mGroundOffset;
 		}
 
@@ -230,7 +230,7 @@ void Creature::moveNew(f32 deltaTime)
 			mSRT.t    = trace.mPosition;
 		}
 
-		if (isCreatureFlag(CF_GroundOffsetEnabled)) {
+		if (isCreatureFlag(CF_EnableGroundOffset)) {
 			mSRT.t.y += mGroundOffset;
 		}
 	} else {
@@ -255,7 +255,7 @@ void Creature::moveNew(f32 deltaTime)
 
 		} else {
 			Vector3f adjustedPos(mSRT.t);
-			if (isCreatureFlag(CF_GroundOffsetEnabled)) {
+			if (isCreatureFlag(CF_EnableGroundOffset)) {
 				adjustedPos.y -= mGroundOffset;
 			}
 
@@ -265,7 +265,7 @@ void Creature::moveNew(f32 deltaTime)
 			mVelocity = trace.mVelocity;
 			mSRT.t    = trace.mPosition;
 
-			if (isCreatureFlag(CF_GroundOffsetEnabled)) {
+			if (isCreatureFlag(CF_EnableGroundOffset)) {
 				mSRT.t.y += mGroundOffset;
 			}
 		}

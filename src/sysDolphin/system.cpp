@@ -819,7 +819,7 @@ void System::Initialise()
 
 	u32 audioHeapSize = 0x80000;
 	Jac_Start(new (0x20) u8[audioHeapSize], audioHeapSize, 0x800000, "/dataDir/SndData/");
-	Jac_AddDVDBuffer((u8*)mMatrices, mMatrixCount * sizeof(Matrix4f)); // wack.
+	Jac_AddDVDBuffer((u8*)mMatrices, mMatrixCount * sizeof(Matrix4f));
 	mAramAllocator.mBaseAddress   = 0x800000;
 	mAramAllocator.mSize          = 0x800000;
 	mAramAllocator.mCurrentOffset = mAramAllocator.mBaseAddress;

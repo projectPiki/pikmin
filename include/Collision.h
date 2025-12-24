@@ -385,7 +385,7 @@ struct CollState {
 
 	int mStatus;               // _00, state/status flag (set to 2 on reset, 1 when adding)
 	f32 _04;                   // _04, unknown (initialized to 0.0001f)
-	u32 _08;                   // _08, unknown 
+	u32 _08;                   // _08, unknown
 	int mResetCount;           // _0C, number of times resetCollisions() has been called
 	int mCollisionCount;       // _10, number of valid entries in mCollisions
 	Collision mCollisions[10]; // _14, fixed-size contact list

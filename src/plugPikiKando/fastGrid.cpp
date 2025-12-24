@@ -20,9 +20,6 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("fastGrid")
 
-/**
- * @TODO: Documentation
- */
 FastGrid::FastGrid()
 {
 	mGridPositionX = mGridPositionY = mGridPositionZ = mWidth = mHeight = 0;
@@ -30,12 +27,16 @@ FastGrid::FastGrid()
 }
 
 /**
- * @TODO: Documentation
+ * @brief Clears and initializes the AI grid used for culling.
+ * @param shift The bit shift amount to determine grid cell size (2^shift units).
  */
 void FastGrid::initAIGrid(u8 shift)
 {
 	aiGridShift = shift;
-	aiGridSize  = 1 << 0x10 - aiGridShift;
+
+	// Set the grid size to 2^(16 - shift), so higher shift means fewer, larger cells.
+	aiGridSize = (1 << (16 - aiGridShift));
+
 	memStat->start("aiGrid");
 	aiGridMap = new (0x20) u8[aiGridSize * aiGridSize];
 	clearAIGrid();
@@ -45,7 +46,7 @@ void FastGrid::initAIGrid(u8 shift)
 }
 
 /**
- * @TODO: Documentation
+ * @brief Clears the AI grid map, setting all cells to zero.
  */
 void FastGrid::clearAIGrid()
 {
@@ -55,7 +56,7 @@ void FastGrid::clearAIGrid()
 }
 
 /**
- * @TODO: Documentation
+ * @brief Increments the AI grid cell count at the current grid position.
  * @note UNUSED Size: 000028
  */
 void FastGrid::addAIGrid()
@@ -65,7 +66,7 @@ void FastGrid::addAIGrid()
 }
 
 /**
- * @TODO: Documentation
+ * @brief Decrements the AI grid cell count at the current grid position if it's greater than zero.
  */
 void FastGrid::delAIGrid()
 {
@@ -76,7 +77,7 @@ void FastGrid::delAIGrid()
 }
 
 /**
- * @TODO: Documentation
+ * @brief Checks if the current grid position is culled based on neighboring AI grid cells.
  */
 bool FastGrid::aiCulling()
 {
@@ -84,43 +85,55 @@ bool FastGrid::aiCulling()
 		return false;
 	}
 
+	// Check neighboring cells for culling
 	if (mNeighbourSize != 1) {
 		return aiCullingLarge(mNeighbourSize);
 	}
 
+	// Standard neighbor check (1-cell radius)
 	int offset = mHeight + mWidth * aiGridSize;
 	if (aiGridMap[offset]) {
 		return false;
 	}
 
+	// Check 8 neighboring cells
+	// Right
 	if (mHeight < aiGridSize - 1 && aiGridMap[offset + 1]) {
 		return false;
 	}
 
+	// Left
 	if (mHeight > 0 && aiGridMap[offset - 1]) {
 		return false;
 	}
 
+	// Down
 	if (mWidth < aiGridSize - 1 && aiGridMap[offset + aiGridSize]) {
 		return false;
 	}
 
+	// Up
 	if (mWidth > 0 && aiGridMap[offset - aiGridSize]) {
 		return false;
 	}
 
+	// Diagonals
+	// Up-Right
 	if (mHeight < aiGridSize - 1 && mWidth > 0 && aiGridMap[offset + 1 - aiGridSize]) {
 		return false;
 	}
 
+	// Down-Right
 	if (mHeight < aiGridSize - 1 && mWidth < aiGridSize - 1 && aiGridMap[offset + 1 + aiGridSize]) {
 		return false;
 	}
 
+	// Up-Left
 	if (mHeight > 0 && mWidth > 0 && aiGridMap[offset - 1 - aiGridSize]) {
 		return false;
 	}
 
+	// Down-Left
 	if (mHeight > 0 && mWidth < aiGridSize - 1 && aiGridMap[offset - 1 + aiGridSize]) {
 		return false;
 	}
@@ -129,7 +142,8 @@ bool FastGrid::aiCulling()
 }
 
 /**
- * @TODO: Documentation
+ * @brief Checks if the current grid position is culled based on a larger neighborhood.
+ * @param max The radius of neighboring cells to check.
  */
 bool FastGrid::aiCullingLarge(int max)
 {
@@ -137,10 +151,13 @@ bool FastGrid::aiCullingLarge(int max)
 		return false;
 	}
 
+	// Check a square area of side length (2*max + 1) around the current cell
 	int offset = mHeight + mWidth * aiGridSize;
 	for (int x = -max; x <= max; x++) {
+		// Bounds check X
 		if (mWidth + x >= 0 && mWidth + x < aiGridSize) {
 			for (int y = -max; y <= max; y++) {
+				// Bounds check Y
 				if (mHeight + y >= 0 && mHeight + y < aiGridSize && aiGridMap[offset + x * aiGridSize + y]) {
 					return false;
 				}
@@ -152,33 +169,42 @@ bool FastGrid::aiCullingLarge(int max)
 }
 
 /**
- * @TODO: Documentation
+ * @brief Returns true when `grid` is far enough away to be considered "culled".
+ * @param other The other grid to compare against.
+ * @param distanceThreshold Distance-like threshold in world units.
+ *
+ * @note The "- 1" in the axis checks treats immediate neighbors as distance 0 for culling purposes (gives a 1-cell cushion).
  */
-bool FastGrid::doCulling(const FastGrid& grid, f32 p2)
+bool FastGrid::doCulling(const FastGrid& other, f32 distanceThreshold)
 {
-	s16 limit = s16(p2) >> AIPerf::gridShift;
-	s16 xDiff = mGridPositionX - grid.mGridPositionX;
-	s16 xAbs  = (xDiff > 0) ? xDiff : -(xDiff);
-	s16 val   = (xAbs == 0) ? 0 : xAbs - 1;
-	if (val > limit) {
+	s16 cellLimit = s16(distanceThreshold) >> AIPerf::gridShift;
+
+	// X axis
+	s16 dx     = mGridPositionX - other.mGridPositionX;
+	s16 absDx  = (dx > 0) ? dx : -(dx);
+	s16 excess = (absDx == 0) ? 0 : absDx - 1;
+	if (excess > cellLimit) {
 		return true;
 	}
 
-	s16 zDiff = mGridPositionZ - grid.mGridPositionZ;
-	s16 zAbs  = (zDiff > 0) ? zDiff : -(zDiff);
-	val       = (zAbs == 0) ? 0 : zAbs - 1;
-	if (val > limit) {
+	// Z axis
+	s16 dz    = mGridPositionZ - other.mGridPositionZ;
+	s16 absDz = (dz > 0) ? dz : -(dz);
+	excess    = (absDz == 0) ? 0 : absDz - 1;
+	if (excess > cellLimit) {
 		return true;
 	}
 
+	// When disabled, ignore Y entirely.
 	if (AIPerf::useGrid != true) {
 		return false;
 	}
 
-	s16 yDiff = mGridPositionY - grid.mGridPositionY;
-	s16 yAbs  = (yDiff > 0) ? yDiff : -(yDiff);
-	val       = (yAbs == 0) ? 0 : yAbs - 1;
-	if (val > limit) {
+	// Y axis
+	s16 dy    = mGridPositionY - other.mGridPositionY;
+	s16 absDy = (dy > 0) ? dy : -(dy);
+	excess    = (absDy == 0) ? 0 : absDy - 1;
+	if (excess > cellLimit) {
 		return true;
 	}
 
@@ -186,7 +212,8 @@ bool FastGrid::doCulling(const FastGrid& grid, f32 p2)
 }
 
 /**
- * @TODO: Documentation
+ * @brief Updates the grid position based on the given world position.
+ * @param pos The world position to update the grid coordinates from.
  */
 void FastGrid::updateGrid(const Vector3f& pos)
 {
@@ -196,6 +223,7 @@ void FastGrid::updateGrid(const Vector3f& pos)
 
 		mGridPositionZ = pos.z;
 		mGridPositionZ = mGridPositionZ >> AIPerf::gridShift;
+
 		if (AIPerf::useGrid == 1) {
 			mGridPositionY = pos.y;
 			mGridPositionY = mGridPositionY >> AIPerf::gridShift;
@@ -204,22 +232,27 @@ void FastGrid::updateGrid(const Vector3f& pos)
 }
 
 /**
- * @TODO: Documentation
+ * @brief Updates the AI grid position based on the given world position.
+ * @param pos The world position to update the AI grid coordinates from.
+ * @param updateMap A flag indicating whether to update the AI grid map counts.
  */
-void FastGrid::updateAIGrid(const Vector3f& pos, bool p2)
+void FastGrid::updateAIGrid(const Vector3f& pos, bool updateMap)
 {
 	f32 x      = pos.x;
 	f32 z      = pos.z;
 	int width  = mWidth;
 	int height = mHeight;
+
 	if (AIPerf::aiGrid) {
+		// Calculate new grid cell indices based on position and grid shift
 		mWidth = x;
 		mWidth = (aiGridSize >> 1) + (mWidth >> aiGridShift);
 
 		mHeight = z;
 		mHeight = (aiGridSize >> 1) + (mHeight >> aiGridShift);
 
-		if (p2 && (mWidth != width || mHeight != height)) {
+		// Update map counts if the grid cell has changed
+		if (updateMap && (mWidth != width || mHeight != height)) {
 			int offset = height + width * aiGridSize;
 			if (aiGridMap[offset]) {
 				aiGridMap[offset]--;
@@ -232,19 +265,19 @@ void FastGrid::updateAIGrid(const Vector3f& pos, bool p2)
 }
 
 /**
- * @TODO: Documentation
+ * @brief Unused.
  * @note UNUSED Size: 000820
+ * @note 100BD9A0 in the DLL
  */
 void FastGrid::renderAIGrid2D(Graphics&)
 {
-	// UNUSED FUNCTION
 }
 
 /**
- * @TODO: Documentation
+ * @brief Unused.
  * @note UNUSED Size: 000348
+ * @note 100BE130 in the DLL
  */
 void FastGrid::renderAIGrid(Graphics&)
 {
-	// UNUSED FUNCTION
 }

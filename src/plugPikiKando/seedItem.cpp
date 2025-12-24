@@ -32,8 +32,8 @@ SeedItem::SeedItem(CreatureProp* props, Shape** shapes)
 	mSRT.s.set(scale, scale, scale);
 
 	_68 = 4;
-	resetCreatureFlag(CF_Unk10);
-	setCreatureFlag(CF_Unk1 | CF_Unk5);
+	resetCreatureFlag(CF_DisableAutoFaceDir);
+	setCreatureFlag(CF_Unk1 | CF_EnableAirDrag);
 	mSearchBuffer.init(mSearch, 3);
 	mObjType = OBJTYPE_Seed;
 	mStateId = 3;
@@ -65,8 +65,8 @@ void SeedItem::startBirth()
 {
 	mStateId      = 0;
 	mCurrentShape = mSeedShape;
-	resetCreatureFlag(CF_GravityEnabled); // Disable gravity for controlled drop
-	setCreatureFlag(CF_Unk5);
+	resetCreatureFlag(CF_Unk2);
+	setCreatureFlag(CF_EnableAirDrag);
 	mVelocity.y = 10.0f;
 }
 
@@ -79,8 +79,8 @@ void SeedItem::startSown()
 	mStateId      = 1;
 	mGrowthTimer  = 200.0f;
 	mCurrentShape = mPlantedShape;
-	setCreatureFlag(CF_GravityEnabled); // Enable gravity
-	resetCreatureFlag(CF_Unk5);
+	setCreatureFlag(CF_Unk2);
+	resetCreatureFlag(CF_EnableAirDrag);
 }
 
 /**

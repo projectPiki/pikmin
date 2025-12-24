@@ -68,7 +68,7 @@ void TaiStopSoundAction::start(Teki& teki)
  */
 void TaiTypeNaviWatchResultOnAction::start(Teki& teki)
 {
-	if (!teki.isCreatureFlag(CF_IsAICullingActive)) {
+	if (!teki.isCreatureFlag(CF_UseAICulling)) {
 		int resFlag = tekiMgr->getResultFlag(teki.mTekiType);
 		PRINT_NAKATA("TaiTypeNaviWatchResultOnAction::start:%08x:%d\n", &teki, resFlag);
 		playerState->mResultFlags.setOn(resFlag);
@@ -80,7 +80,7 @@ void TaiTypeNaviWatchResultOnAction::start(Teki& teki)
  */
 void TaiNaviWatchResultOnAction::start(Teki& teki)
 {
-	if (!teki.isCreatureFlag(CF_IsAICullingActive)) {
+	if (!teki.isCreatureFlag(CF_UseAICulling)) {
 		playerState->mResultFlags.setOn(mResultFlag);
 	}
 }

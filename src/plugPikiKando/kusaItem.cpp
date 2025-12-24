@@ -28,7 +28,7 @@ KusaItem::KusaItem(CreatureProp* props, Shape* shape)
     , mKusaCollision(0)
 {
 	mProps = props;
-	setCreatureFlag(CF_Unk10);
+	setCreatureFlag(CF_DisableAutoFaceDir);
 }
 
 /**
@@ -36,7 +36,7 @@ KusaItem::KusaItem(CreatureProp* props, Shape* shape)
  */
 void KusaItem::startAI(int)
 {
-	setCreatureFlag(CF_Unk10);
+	setCreatureFlag(CF_DisableAutoFaceDir);
 	mCollInfo = &mKusaCollision;
 	mCollInfo->initInfo(mItemShape, mKusaParts, mPartIDs);
 	mCollInfo->makeTubesChild('rope', 1);
@@ -140,7 +140,7 @@ BoBaseItem::BoBaseItem(CreatureProp* props, Shape* shape)
     , mBaseCollision(0)
 {
 	mProps = props;
-	setCreatureFlag(CF_Unk10);
+	setCreatureFlag(CF_DisableAutoFaceDir);
 	mStickItem = nullptr;
 	mSeContext = new SeContext();
 	mSeContext->setContext(this, 4);
@@ -151,7 +151,7 @@ BoBaseItem::BoBaseItem(CreatureProp* props, Shape* shape)
  */
 void BoBaseItem::startAI(int)
 {
-	setCreatureFlag(CF_Unk10);
+	setCreatureFlag(CF_DisableAutoFaceDir);
 	mCollInfo = &mBaseCollision;
 	mCollInfo->initInfo(mItemShape, mBaseParts, mPartIDs);
 	mSRT.s.set(1.0f, 1.0f, 1.0f);

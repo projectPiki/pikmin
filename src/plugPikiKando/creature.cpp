@@ -417,16 +417,16 @@ void Creature::init()
 	disableAICulling();
 	mFormMgr = nullptr;
 	setCreatureFlag(CF_Free);
-	resetCreatureFlag(CF_GroundOffsetEnabled | CF_IsAiDisabled | CF_IsClimbing | CF_AIAlwaysActive);
+	resetCreatureFlag(CF_EnableGroundOffset | CF_IsAiDisabled | CF_IsClimbing | CF_AIAlwaysActive);
 	mGroundOffset = 0.0f;
 	mHoldingCreature.clear();
 	mGrabbedCreature.clear();
-	resetCreatureFlag(CF_Unk6 | CF_Unk17);
+	resetCreatureFlag(CF_SkipPhysicsAndCollision | CF_Unk17);
 	clearCnt();
 	mIsBeingDamaged = false;
 
 	setCreatureFlag(CF_IsOnGround | CF_Unk4);
-	resetCreatureFlag(CF_Unk5 | CF_IsFlying | CF_Unk8 | CF_Unk11);
+	resetCreatureFlag(CF_EnableAirDrag | CF_IsFlying | CF_IgnoreGravity | CF_UsePriorityFaceDir);
 	mVolatileVelocity.set(0.0f, 0.0f, 0.0f);
 	mLastPosition.set(0.0f, 0.0f, 0.0f);
 	mStickTarget = nullptr;
@@ -606,12 +606,12 @@ Creature::Creature(CreatureProp* props)
 	mCollisionRadius = 16.0f;
 	mProps           = props;
 	mFormPoint       = nullptr;
-	resetCreatureFlag(CF_Unk10);
+	resetCreatureFlag(CF_DisableAutoFaceDir);
 
 	mRotationQuat.fromEuler(Vector3f(0.0f, 0.0f, 0.0f));
 	mPrevAngularVelocity.set(0.0f, 0.0f, 0.0f);
 
-	resetCreatureFlag(CF_Unk1 | CF_Unk6);
+	resetCreatureFlag(CF_Unk1 | CF_SkipPhysicsAndCollision);
 
 	mHoldingCreature.clear();
 	mGrabbedCreature.clear();
@@ -884,7 +884,7 @@ void Creature::updateAI()
 		return;
 	}
 
-	if (!isCreatureFlag(CF_Unk6) && !mIsBeingDamaged && !isCreatureFlag(CF_IsAiDisabled)) {
+	if (!isCreatureFlag(CF_SkipPhysicsAndCollision) && !mIsBeingDamaged && !isCreatureFlag(CF_IsAiDisabled)) {
 		moveVelocity();
 	}
 }
@@ -932,7 +932,7 @@ void Creature::collisionCheck(f32 _unused)
 		return;
 	}
 
-	if (isCreatureFlag(CF_Unk6)) {
+	if (isCreatureFlag(CF_SkipPhysicsAndCollision)) {
 		return;
 	}
 

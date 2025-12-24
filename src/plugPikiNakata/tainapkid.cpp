@@ -1213,7 +1213,7 @@ void TaiNapkidCirclingAction::start(Teki& teki)
 	teki.mCircleMoveEvent->reset();
 
 	teki.mTargetAngle = teki.mCircleMoveEvent->mAngle;
-	teki.setCreatureFlag(CF_Unk10);
+	teki.setCreatureFlag(CF_DisableAutoFaceDir);
 }
 
 /**
@@ -1221,7 +1221,7 @@ void TaiNapkidCirclingAction::start(Teki& teki)
  */
 void TaiNapkidCirclingAction::finish(Teki& teki)
 {
-	teki.resetCreatureFlag(CF_Unk10);
+	teki.resetCreatureFlag(CF_DisableAutoFaceDir);
 	teki._3A4 = 0.0f;
 }
 

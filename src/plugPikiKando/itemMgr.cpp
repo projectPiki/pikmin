@@ -536,7 +536,7 @@ ItemCreature::ItemCreature(int objType, CreatureProp* props, Shape* shape)
 {
 	mItemShape = shape;
 	_68        = 4;
-	resetCreatureFlag(CF_Unk10);
+	resetCreatureFlag(CF_DisableAutoFaceDir);
 	setCreatureFlag(CF_Unk1);
 	mSearchBuffer.init(mItemSearchData, 8);
 	mObjType         = (EObjType)objType;

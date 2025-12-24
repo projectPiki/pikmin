@@ -15,7 +15,8 @@ GXBool __GXinBegin;
  * @TODO: Documentation
  * @note UNUSED Size: 000010
  */
-ASM BOOL IsWriteGatherBufferEmpty(void) {
+ASM BOOL IsWriteGatherBufferEmpty(void)
+{
 #ifdef __MWERKS__ // clang-format off
     sync
     mfspr r3, WPAR

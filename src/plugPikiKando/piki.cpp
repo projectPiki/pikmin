@@ -2361,7 +2361,7 @@ void Piki::init(Navi* navi)
 	}
 	initColor(color);
 	mHappa = Leaf;
-	resetCreatureFlag(CF_Unk6);
+	resetCreatureFlag(CF_SkipPhysicsAndCollision);
 	_500.reset();
 	mMode   = PikiMode::FormationMode;
 	mHealth = pikiMgr->mPikiParms->mPikiParms.mPikiMaxHealth();
@@ -2723,7 +2723,7 @@ void Piki::doAI()
 		return;
 	}
 
-	if (!isCreatureFlag(CF_Unk6)) {
+	if (!isCreatureFlag(CF_SkipPhysicsAndCollision)) {
 		if (state == PIKISTATE_Absorb || state == PIKISTATE_GrowUp) {
 			dump();
 			ERROR(" state is ABSORB or GROWUP!!!!!!!!!!\n");

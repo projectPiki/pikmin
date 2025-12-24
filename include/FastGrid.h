@@ -7,7 +7,7 @@ struct Graphics;
 struct Vector3f;
 
 /**
- * @brief TODO
+ * @brief A spatial grid used for AI culling optimizations.
  */
 struct FastGrid {
 	FastGrid();

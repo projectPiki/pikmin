@@ -199,7 +199,7 @@ void ActAdjust::init(Creature* target)
 		PRINT(" deltaVec(%.1f,%.1f,%.1f) : deltaF(%.1f)\n", mVelocity.x, mVelocity.y, mVelocity.z, mTurnSpeed);
 		mAdjustTimer = 0.0f;
 		mPiki->startMotion(PaniMotionInfo(PIKIANIM_Asibumi), PaniMotionInfo(PIKIANIM_Asibumi));
-		mPiki->setCreatureFlag(CF_Unk11);
+		mPiki->setCreatureFlag(CF_UsePriorityFaceDir);
 	} else {
 		mForceFail = true;
 	}
@@ -210,7 +210,7 @@ void ActAdjust::init(Creature* target)
  */
 void ActAdjust::cleanup()
 {
-	mPiki->resetCreatureFlag(CF_Unk11);
+	mPiki->resetCreatureFlag(CF_UsePriorityFaceDir);
 }
 
 /**

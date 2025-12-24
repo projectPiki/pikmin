@@ -23,7 +23,7 @@ RopeItem::RopeItem(CreatureProp* prop, Shape* shape)
 {
 	mModel = shape;
 	_68    = 4;
-	resetCreatureFlag(CF_Unk10);
+	resetCreatureFlag(CF_DisableAutoFaceDir);
 	setCreatureFlag(CF_Unk1);
 	mSearchBuffer.init(mSearch, 3);
 	mObjType         = OBJTYPE_Rope;

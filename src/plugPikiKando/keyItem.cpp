@@ -26,7 +26,7 @@ KeyItem::KeyItem(CreatureProp* props, Shape* model)
 	mModel = model;
 	_68    = 4;
 	mSearchBuffer.init(mSearch, 3);
-	resetCreatureFlag(CF_Unk10);
+	resetCreatureFlag(CF_DisableAutoFaceDir);
 	setCreatureFlag(CF_Unk1);
 	mObjType = OBJTYPE_Key;
 	mState   = KeyState::Inactive;

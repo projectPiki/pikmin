@@ -38,32 +38,34 @@ struct SeContext;
 struct Sphere;
 
 /**
- * @brief TODO
+ * @brief Bitflags stored in Creature::mCreatureFlags.
+ *
+ * Comments describe observed behavior in current sources.
  */
 enum CreatureFlags {
-	CF_Unk1                = 1 << 0,  // 0x1
-	CF_GravityEnabled      = 1 << 1,  // 0x2
-	CF_IsOnGround          = 1 << 2,  // 0x4
-	CF_Unk4                = 1 << 3,  // 0x8
-	CF_Unk5                = 1 << 4,  // 0x10
-	CF_Unk6                = 1 << 5,  // 0x20
-	CF_IsFlying            = 1 << 6,  // 0x40
-	CF_Unk8                = 1 << 7,  // 0x80
-	CF_GroundOffsetEnabled = 1 << 8,  // 0x100
-	CF_Unk10               = 1 << 9,  // 0x200
-	CF_Unk11               = 1 << 10, // 0x400
-	CF_IsAiDisabled        = 1 << 11, // 0x800, aka aiSTOP
-	CF_Free                = 1 << 12, // 0x1000
-	CF_IsClimbing          = 1 << 13, // 0x2000
-	CF_StuckToObject       = 1 << 14, // 0x4000, stuck to an object
-	CF_StuckToMouth        = 1 << 15, // 0x8000, stuck to mouth of some enemy
-	CF_FaceDirAdjust       = 1 << 16, // 0x10000
-	CF_Unk17               = 1 << 17, // 0x20000
-	CF_DisableMovement     = 1 << 18, // 0x40000
-	CF_IsAICullingActive   = 1 << 19, // 0x80000, creature is off camera
-	CF_AIAlwaysActive      = 1 << 20, // 0x100000, do not cull AI when off-camera
-	CF_IsPositionFixed     = 1 << 21, // 0x200000
-	CF_AllowFixPosition    = 1 << 22, // 0x400000
+	CF_Unk1                    = (1 << 0),  // 0x1, Functionally unused.
+	CF_Unk2                    = (1 << 1),  // 0x2, Functionally unused.
+	CF_IsOnGround              = (1 << 2),  // 0x4, On a floor triangle this frame.
+	CF_Unk4                    = (1 << 3),  // 0x8, Functionally unused.
+	CF_EnableAirDrag           = (1 << 4),  // 0x10, Dampen velocity using mAirResistance.
+	CF_SkipPhysicsAndCollision = (1 << 5),  // 0x20, Skip moveVelocity and collisionCheck.
+	CF_IsFlying                = (1 << 6),  // 0x40, Flying physics state (no gravity).
+	CF_IgnoreGravity           = (1 << 7),  // 0x80, Disable gravity in moveNew.
+	CF_EnableGroundOffset      = (1 << 8),  // 0x100, Trace collisions as if lowered by mGroundOffset.
+	CF_DisableAutoFaceDir      = (1 << 9),  // 0x200, Don't auto-face; use quat integration.
+	CF_UsePriorityFaceDir      = (1 << 10), // 0x400, Force yaw to mFaceDirection.
+	CF_IsAiDisabled            = (1 << 11), // 0x800, AI paused (no doAI/moveVelocity).
+	CF_Free                    = (1 << 12), // 0x1000, "Free" state, functionally unused.
+	CF_IsClimbing              = (1 << 13), // 0x2000, Climbing while stuck to a climbable part.
+	CF_StuckToObject           = (1 << 14), // 0x4000, Stuck-to-object mode (sphere/tube/pellet).
+	CF_StuckToMouth            = (1 << 15), // 0x8000, Stuck-in-mouth mode (update early-return).
+	CF_AdjustFaceDirOnSpawn    = (1 << 16), // 0x10000, Persisted; adjust facing on restore/spawn.
+	CF_Unk17                   = (1 << 17), // 0x20000, Functionally unused.
+	CF_DisableMovement         = (1 << 18), // 0x40000, Skip movement/rotation in update.
+	CF_UseAICulling            = (1 << 19), // 0x80000, Allows culling early-return (name is inverted).
+	CF_AIAlwaysActive          = (1 << 20), // 0x100000, Never culled by the AI-culling check.
+	CF_IsPositionFixed         = (1 << 21), // 0x200000, Fix-position is currently active.
+	CF_AllowFixPosition        = (1 << 22), // 0x400000, Enable fix-position system.
 };
 
 /**
@@ -212,11 +214,11 @@ public:
 	bool isStickLeader();
 
 	// these are ONE PAIR of the inlines.
-	inline void setFlag80() { setCreatureFlag(CF_Unk8); }
-	inline void unsetFlag80() { resetCreatureFlag(CF_Unk8); }
+	inline void setFlag80() { setCreatureFlag(CF_IgnoreGravity); }
+	inline void unsetFlag80() { resetCreatureFlag(CF_IgnoreGravity); }
 
-	inline void setFlag400() { setCreatureFlag(CF_Unk11); }
-	inline void resetFlag400() { resetCreatureFlag(CF_Unk11); }
+	inline void setFlag400() { setCreatureFlag(CF_UsePriorityFaceDir); }
+	inline void resetFlag400() { resetCreatureFlag(CF_UsePriorityFaceDir); }
 
 	// these are setFlag/resetFlag/isFlag in the DLL, but this is clearer.
 	void setCreatureFlag(u32 flag) { mCreatureFlags |= flag; }
@@ -233,26 +235,26 @@ public:
 	void setOutsideView() { resetCreatureFlag(CF_AIAlwaysActive); }
 	bool insideView() { return isCreatureFlag(CF_AIAlwaysActive); }
 
-	void enableFaceDirAdjust() { setCreatureFlag(CF_FaceDirAdjust); }
-	void disableFaceDirAdjust() { resetCreatureFlag(CF_FaceDirAdjust); }
+	void enableFaceDirAdjust() { setCreatureFlag(CF_AdjustFaceDirOnSpawn); }
+	void disableFaceDirAdjust() { resetCreatureFlag(CF_AdjustFaceDirOnSpawn); }
 
 	void startFlying()
 	{
 		setCreatureFlag(CF_IsFlying);
-		resetCreatureFlag(CF_GravityEnabled);
+		resetCreatureFlag(CF_Unk2);
 	}
 
 	void finishFlying()
 	{
 		resetCreatureFlag(CF_IsFlying);
-		setCreatureFlag(CF_GravityEnabled);
+		setCreatureFlag(CF_Unk2);
 	}
 
 	BOOL isFlying() { return isCreatureFlag(CF_IsFlying); }
 
-	void disableAICulling() { resetCreatureFlag(CF_IsAICullingActive); }
-	void enableAICulling() { setCreatureFlag(CF_IsAICullingActive); }
-	bool aiCullable() { return !isCreatureFlag(CF_IsAICullingActive); }
+	void disableAICulling() { resetCreatureFlag(CF_UseAICulling); }
+	void enableAICulling() { setCreatureFlag(CF_UseAICulling); }
+	bool aiCullable() { return !isCreatureFlag(CF_UseAICulling); }
 
 	bool isAIActive() { return !isCreatureFlag(CF_IsAiDisabled); }
 	void stopAI() { setCreatureFlag(CF_IsAiDisabled); }
@@ -262,17 +264,17 @@ public:
 
 	void enableGroundOffset(f32 offset)
 	{
-		setCreatureFlag(CF_GroundOffsetEnabled);
+		setCreatureFlag(CF_EnableGroundOffset);
 		mGroundOffset = offset;
 	}
 
-	void disableGroundOffset() { resetCreatureFlag(CF_GroundOffsetEnabled); }
+	void disableGroundOffset() { resetCreatureFlag(CF_EnableGroundOffset); }
 
 	void setFree(bool set) { set ? setCreatureFlag(CF_Free) : resetCreatureFlag(CF_Free); }
 
 	void enableAirResist(f32 res)
 	{
-		setCreatureFlag(CF_Unk5);
+		setCreatureFlag(CF_EnableAirDrag);
 		mAirResistance = res;
 	}
 
@@ -288,8 +290,6 @@ public:
 	// we're holding if we've grabbed something
 	bool isHolding() { return !mGrabbedCreature.isNull(); }
 	Creature* getHoldCreature() { return mGrabbedCreature.getPtr(); }
-
-	// idk why this is a BOOL and not bool but go figure
 
 	CollPart* getStickPart() { return mStickPart; }
 	Creature* getStickObject() { return mStickTarget; }
@@ -411,7 +411,7 @@ public:
 	CollTriInfo* mPreviousTriangle;      // _290
 	Shape* mCurrCollisionModel;          // _294
 	u32 _298;                            // _298, unknown
-	Vector3f _29C;                       // _29C
+	Vector3f mPlatformAdjustDelta;       // _29C, difference between platform position last frame and this frame
 	SmartPtr<Creature> mHoldingCreature; // _2A8, what is holding this creature (e.g. what piki if this is a bomb)
 	SmartPtr<Creature> mGrabbedCreature; // _2AC, what is this creature holding (e.g. what bomb if this is a piki)
 	u32 mIsFrozen;                       // _2B0, unknown

@@ -476,7 +476,7 @@ Weed::Weed()
     : ItemCreature(0, nullptr, nullptr)
 {
 	mItemShapeObject = nullptr;
-	setCreatureFlag(CF_Unk1 | CF_Unk5);
+	setCreatureFlag(CF_Unk1 | CF_EnableAirDrag);
 	// UNUSED FUNCTION
 }
 

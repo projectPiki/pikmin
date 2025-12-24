@@ -257,7 +257,7 @@ void BTeki::init(int tekiType)
 	mTekiType   = (TekiTypes)tekiType;
 	mTekiParams = tekiMgr->getTekiParameters(mTekiType);
 	mSearchBuffer.init(mTekiSearchData, 3);
-	resetCreatureFlag(CF_Unk1 | CF_Unk10);
+	resetCreatureFlag(CF_Unk1 | CF_DisableAutoFaceDir);
 	Creature::init();
 }
 
@@ -1974,7 +1974,7 @@ void BTeki::drawRange(Graphics& gfx, immut Vector3f& centre, f32 range, immut Co
  */
 void BTeki::refresh2d(Graphics& gfx)
 {
-	if (mDeadState != 0 || !tekiMgr->hasModel(mTekiType) || !isVisible() || isCreatureFlag(CF_IsAICullingActive)) {
+	if (mDeadState != 0 || !tekiMgr->hasModel(mTekiType) || !isVisible() || isCreatureFlag(CF_UseAICulling)) {
 		return;
 	}
 

@@ -76,7 +76,7 @@ int ActBou::gotoLeg()
 		mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 		mPiki->startMotion(PaniMotionInfo(PIKIANIM_HNoboru), PaniMotionInfo(PIKIANIM_HNoboru));
 
-		mPiki->setCreatureFlag(CF_Unk8);
+		mPiki->setCreatureFlag(CF_IgnoreGravity);
 		mPiki->finishLook();
 
 		Tube tube;
@@ -169,5 +169,5 @@ void ActBou::cleanup()
 	mPiki->mVelocity       = mClimbDirection * 150.0f;
 	mPiki->mTargetVelocity = mPiki->mVelocity;
 	mPiki->endStickObject();
-	mPiki->mCreatureFlags &= ~(CF_Unk8); // should use the inline, but stack
+	mPiki->mCreatureFlags &= ~(CF_IgnoreGravity); // should use the inline, but stack
 }
