@@ -1,4 +1,5 @@
 #include "Common/String.h"
+#include <Stream.h>
 
 /**
  * @TODO: Documentation
@@ -38,52 +39,105 @@ int String::getLength() immut
  * @TODO: Documentation
  * @note UNUSED Size: 000008
  */
-// void String::toFloat()
-// {
-// 	// UNUSED FUNCTION
-// }
+f32 String::toFloat()
+{
+	return 0.0f;
+}
 
 /**
  * @TODO: Documentation
  * @note UNUSED Size: 00012C
  */
-// void String::toInt()
-// {
-// 	// UNUSED FUNCTION
-// }
+int String::toInt()
+{
+	const char* str = mString;
+	int result      = 0;
+	bool isNegative = false;
+
+	// Check for hexadecimal prefix "0x"
+	if (str[0] == '0' && str[1] == 'x') {
+		str += 2; // Skip "0x"
+
+		while (*str) {
+			char c = *str;
+			int digitValue;
+
+			if (c >= '0' && c <= '9') {
+				digitValue = c - '0';
+			} else if (c >= 'a' && c <= 'f') {
+				digitValue = c - 'a' + 10;
+			} else if (c >= 'A' && c <= 'F') {
+				digitValue = c - 'A' + 10;
+			} else {
+				return 0; // Invalid character
+			}
+
+			result = result * 16 + digitValue;
+			str++;
+		}
+
+		return result;
+	} else {
+		// Parse decimal number
+		while (*str) {
+			char c = *str;
+
+			// Check for minus sign
+			if (c == '-') {
+				isNegative = true;
+				str++;
+				continue;
+			}
+
+			// Check if it's a digit
+			if (c < '0' || c > '9') {
+				return 0; // Invalid character
+			}
+
+			result = result * 10 + (c - '0');
+			str++;
+		}
+
+		return isNegative ? -result : result;
+	}
+}
 
 /**
  * @TODO: Documentation
  * @note UNUSED Size: 000024
  */
-// void String::getLength(char *)
-// {
-// 	// UNUSED FUNCTION
-// }
+int String::getLength(char* str)
+{
+	String tempStr(str, 0);
+	return tempStr.getLength();
+}
 
 /**
  * @TODO: Documentation
  * @note UNUSED Size: 00006C
  */
-// void String::isSame(char *, char *)
-// {
-// 	// UNUSED FUNCTION
-// }
+bool String::isSame(char* a, char* b)
+{
+	String aStr(a, 0);
+	return aStr.isSame(b);
+}
 
 /**
  * @TODO: Documentation
  * @note UNUSED Size: 00005C
  */
-// void String::dup(char *)
-// {
-// 	// UNUSED FUNCTION
-// }
+char* String::dup(char* s)
+{
+	char* newStr = new char[String::getLength(s) + 1];
+	String::copy(newStr, s);
+	return newStr;
+}
 
 /**
  * @TODO: Documentation
  * @note UNUSED Size: 000058
  */
-// void String::contains(char *, char *)
+// void String::contains(char*, char*)
 // {
 // 	// UNUSED FUNCTION
 // }
@@ -92,16 +146,19 @@ int String::getLength() immut
  * @TODO: Documentation
  * @note UNUSED Size: 00001C
  */
-// void String::copy(char *, char *)
-// {
-// 	// UNUSED FUNCTION
-// }
+char* String::copy(char* a, char* b)
+{
+	while ((*a++ = *b++))
+		;
+
+	return a;
+}
 
 /**
  * @TODO: Documentation
  * @note UNUSED Size: 000058
  */
-// void String::copyUntil(char *, char *, char, char **)
+// void String::copyUntil(char*, char*, char, char**)
 // {
 // 	// UNUSED FUNCTION
 // }
@@ -110,16 +167,16 @@ int String::getLength() immut
  * @TODO: Documentation
  * @note UNUSED Size: 000030
  */
-// void String::concat(char *, char *)
-// {
-// 	// UNUSED FUNCTION
-// }
+void String::concat(char*, char*)
+{
+	// UNUSED FUNCTION
+}
 
 /**
  * @TODO: Documentation
  * @note UNUSED Size: 000030
  */
-// void String::calcHash(char *)
+// void String::calcHash(char*)
 // {
 // 	// UNUSED FUNCTION
 // }
@@ -137,25 +194,25 @@ int String::getLength() immut
  * @TODO: Documentation
  * @note UNUSED Size: 000030
  */
-// void String::toInt(char *)
-// {
-// 	// UNUSED FUNCTION
-// }
+//  void String::toInt(char*)
+//  {
+// 	 // UNUSED FUNCTION
+//  }
 
 /**
  * @TODO: Documentation
  * @note UNUSED Size: 0000A0
  */
-// void StringArray::read(Stream &)
-// {
-// 	// UNUSED FUNCTION
-// }
+void StringArray::read(Stream&)
+{
+	// UNUSED FUNCTION
+}
 
 /**
  * @TODO: Documentation
  * @note UNUSED Size: 00009C
  */
-// void StringArray::write(Stream &)
-// {
-// 	// UNUSED FUNCTION
-// }
+ void StringArray::write(Stream&)
+ {
+	 // UNUSED FUNCTION
+ }

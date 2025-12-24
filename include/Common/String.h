@@ -4,6 +4,8 @@
 #include "types.h"
 #include <stdio.h>
 
+struct Stream;
+
 /**
  * @brief TODO
  *
@@ -33,6 +35,7 @@ struct String {
 		mString = length ? new char[length + 1] : nullptr;
 		mLength = length;
 	}
+
 	void init(char* str, int length)
 	{
 		mString = str;
@@ -45,6 +48,14 @@ struct String {
 
 	int mLength;   // _00
 	char* mString; // _04
+};
+
+// in sysCore there are two unexported functions that use String like this:
+// default String() ctor inits with 128 and 2048
+// So is it this? who knows.
+struct StringArray {
+	void read(Stream&);
+	void write(Stream&);
 };
 
 #endif
