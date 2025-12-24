@@ -744,7 +744,8 @@ int PlayerState::getFinalDeadPikis()
  */
 int PlayerState::getFinalBornPikis()
 {
-	// UNUSED FUNCTION
+	// UNUSED FUNCTION (Matching by size)
+	return mTotalBornPikiNum;
 }
 
 /**

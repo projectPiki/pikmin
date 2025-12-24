@@ -22,7 +22,7 @@ DEFINE_PRINT("MemoryCard")
 
 static CARDStat cst;
 static CARDMemoryCard CardWorkArea ATTRIBUTE_ALIGN(32);
-u8 cardData[0x26000];
+u8 cardData[CARD_DATA_SIZE];
 static u8 CardStack[0x2000];
 static immut char basecardname[]                            = "Pikmin dataFile";
 static immut char p_icon_palette[0x200] ATTRIBUTE_ALIGN(32) = {

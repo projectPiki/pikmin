@@ -8,7 +8,9 @@ struct CARDStat;
 struct PlayState;
 struct RamStream;
 
-extern u8 cardData[];
+#define CARD_DATA_SIZE (0x26000)
+
+extern u8 cardData[CARD_DATA_SIZE];
 
 /**
  * @brief TODO
@@ -41,7 +43,7 @@ public:
 		mTempFileIndex     = -1;
 		mCardChannel       = -1;
 		mSaveFileIndex     = -1;
-		mRequiredFreeSpace = 0x26000;
+		mRequiredFreeSpace = CARD_DATA_SIZE;
 		mErrorCode         = 0;
 	}
 
