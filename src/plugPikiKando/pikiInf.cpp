@@ -78,17 +78,15 @@ void PikiInfMgr::loadCard(RandomAccessStream& input)
  */
 void PikiInfMgr::incPiki(Piki* piki)
 {
-	u16 color = piki->mColor;
-	if (color < PikiMinColor || color > PikiMaxColor) {
+	if (piki->mColor < PikiMinColor || piki->mColor > PikiMaxColor) {
 		ERROR("illegal col %d\n", piki->mColor);
 	}
 
-	int happa = piki->mHappa;
-	if (happa < PikiMinHappa || happa > PikiMaxHappa) {
+	if (piki->mHappa < PikiMinHappa || piki->mHappa > PikiMaxHappa) {
 		ERROR("illegal happa %d\n", piki->mHappa);
 	}
 
-	mPikiCounts[color][happa]++;
+	mPikiCounts[piki->mColor][piki->mHappa]++;
 }
 
 /**
@@ -110,17 +108,15 @@ void PikiInfMgr::incPiki(int color, int happa)
  */
 void PikiInfMgr::decPiki(Piki* piki)
 {
-	u16 color = piki->mColor;
-	if (color < PikiMinColor || color > PikiMaxColor) {
+	if (piki->mColor < PikiMinColor || piki->mColor > PikiMaxColor) {
 		ERROR("illegal col %d\n", piki->mColor);
 	}
 
-	int happa = piki->mHappa;
-	if (happa < PikiMinHappa || happa > PikiMaxHappa) {
+	if (piki->mHappa < PikiMinHappa || piki->mHappa > PikiMaxHappa) {
 		ERROR("illegal happa %d\n", piki->mHappa);
 	}
 
-	mPikiCounts[color][happa]--;
+	mPikiCounts[piki->mColor][piki->mHappa]--;
 }
 
 /**

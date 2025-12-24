@@ -903,7 +903,7 @@ ModeState* DayOverModeState::update(u32& result)
 				PRINT("doing save now!!\n");
 				gameflow.mMemoryCard.saveCurrentGame();
 				if (mSection->mController->keyDown(KBBTN_Z)) {
-					kio->startWrite(0, (u8*)cardData, 0x26000);
+					kio->startWrite(0, cardData, CARD_DATA_SIZE);
 				}
 				gsys->mTogglePrint = sysbackup;
 				STACK_PAD_VAR(1);
