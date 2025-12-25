@@ -602,11 +602,11 @@ void DynObjBody::render(Graphics& gfx)
 	gfx.useMatrix(mtx, 0);
 	gfx.mCamera->setBoundOffset(nullptr);
 	gfx.useTexture(nullptr, GX_TEXMAP0);
-	gfx.setColour(Colour(255, 255, 255, 255), true);
+	gfx.setColour(COLOUR_WHITE, true);
 	gfx.useMatrix(gfx.mCamera->mLookAtMtx, 0);
 
 	for (int i = 0; i < mSpringCount; i++) {
-		gfx.drawLine(mBodySpaceHookPoints[mSprings[i].mHookIdx], mSprings[i].mOffset);
+		gfx.drawLine(mRenderBodyPoints[mSprings[i].mHookIdx], mSprings[i].mOffset);
 	}
 }
 
@@ -767,7 +767,7 @@ void DynObjPushable::render(Graphics& gfx)
 
 	bool lighting = gfx.setLighting(false, nullptr);
 	gfx.useMatrix(Matrix4f::ident, 0);
-	gfx.setColour(Colour(255, 255, 255, 255), true);
+	gfx.setColour(COLOUR_WHITE, true);
 
 	int blend = gfx.setCBlending(0);
 	Vector3f vec(0.0f, 90.0f, 0.0f);
@@ -881,7 +881,7 @@ void MapMgr::initShape()
 	mMapBounds.expandBound(mMapShape->mCourseExtents);
 	mDynSimulator = new DynSimulator();
 
-	mFixedTimeStep    = 0.016666668f;
+	mFixedTimeStep    = 0.016666668f; // NB: map physics calculates at 60 fps, but only renders at 30 fps
 	mIntegrationStep  = 0.0125f;
 	mLastPhysicsTime  = 0.0f;
 	mAccumPhysicsTime = 0.0f;
@@ -934,8 +934,8 @@ void MapMgr::updateSimulation()
 			mLastPhysicsTime += mFixedTimeStep;
 		}
 
-		f32 a = (mAccumPhysicsTime - mLastPhysicsTime) / mFixedTimeStep;
-		mDynSimulator->updateVecQuats(a);
+		f32 interpFactor = (mAccumPhysicsTime - mLastPhysicsTime) / mFixedTimeStep;
+		mDynSimulator->updateVecQuats(interpFactor);
 	}
 }
 
@@ -1113,11 +1113,11 @@ void MapMgr::showCollisions(immut Vector3f& pos)
 		if (box.intersects(coll->mBoundingBox)) {
 			for (int i = 0; i < coll->mColliderCount; i++) {
 				if (coll->mVisibleList[coll->mColliderList[i]->mRoomIndex]) {
-					coll->mColliderList[i]->mShape          = coll->mShape;
-					coll->mColliderList[i]->mVertexList     = coll->mVertexList;
-					coll->mColliderList[i]->mSourceCollider = coll;
-					coll->mColliderList[i]->mNextCollider   = collGroup;
-					collGroup                               = coll->mColliderList[i];
+					coll->mColliderList[i]->mModel         = coll->mShape;
+					coll->mColliderList[i]->mVertexList    = coll->mVertexList;
+					coll->mColliderList[i]->mPlatCollider  = coll;
+					coll->mColliderList[i]->mNextCollGroup = collGroup;
+					collGroup                              = coll->mColliderList[i];
 				}
 			}
 		}
@@ -1125,14 +1125,14 @@ void MapMgr::showCollisions(immut Vector3f& pos)
 
 	CollGroup* coll = mMapShape->getCollTris(pos);
 	if (coll && coll->mTriCount) {
-		coll->mShape          = mMapShape;
-		coll->mVertexList     = mMapShape->mVertexList;
-		coll->mSourceCollider = nullptr;
-		coll->mNextCollider   = collGroup;
-		collGroup             = coll;
+		coll->mModel         = mMapShape;
+		coll->mVertexList    = mMapShape->mVertexList;
+		coll->mPlatCollider  = nullptr;
+		coll->mNextCollGroup = collGroup;
+		collGroup            = coll;
 	}
 
-	for (coll = collGroup; coll; coll = coll->mNextCollider) {
+	for (coll = collGroup; coll; coll = coll->mNextCollGroup) {
 		if (!coll) {
 			continue;
 		}
@@ -1240,8 +1240,8 @@ void MapMgr::postrefresh(Graphics& gfx)
 			gfx.setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
 			bool lighting = gfx.setLighting(false, nullptr);
 			gfx.setFog(false);
-			gfx.setColour(Colour(255, 255, 255, 255), true);
-			gfx.setAuxColour(Colour(255, 255, 255, 255));
+			gfx.setColour(COLOUR_WHITE, true);
+			gfx.setAuxColour(COLOUR_WHITE);
 			mCaptureTexture->grabBuffer(mCaptureTexture->mWidth, mCaptureTexture->mHeight, false, true);
 			gfx.useTexture(mBlurredTexture, GX_TEXMAP0);
 			gfx.useTexture(mCaptureTexture, GX_TEXMAP1);
@@ -1331,7 +1331,7 @@ void MapMgr::postrefresh(Graphics& gfx)
 				}
 			}
 
-			gfx.setColour(Colour(255, 255, 255, 255), true);
+			gfx.setColour(COLOUR_WHITE, true);
 			Vector3f pos(mDebugFocusPoint.x, mDebugFocusPoint.y + 50.0f, mDebugFocusPoint.z);
 			pos.multMatrix(gfx.mCamera->mLookAtMtx);
 
@@ -1422,8 +1422,8 @@ CollGroup* MapMgr::getCollGroupList(f32 x, f32 z, bool doCheckDynColl)
 			    && z < coll->mBoundingBox.mMax.z && coll->mShape->mSystemFlags & ShapeFlags::IsPlatform) {
 				for (int i = 0; i < coll->mColliderCount; i++) {
 					if (coll->mVisibleList[coll->mColliderList[i]->mRoomIndex]) {
-						coll->mColliderList[i]->mNextCollider = collList;
-						collList                              = coll->mColliderList[i];
+						coll->mColliderList[i]->mNextCollGroup = collList;
+						collList                               = coll->mColliderList[i];
 					}
 				}
 			}
@@ -1432,8 +1432,8 @@ CollGroup* MapMgr::getCollGroupList(f32 x, f32 z, bool doCheckDynColl)
 
 	CollGroup* mapColl = mMapShape->getCollTris(Vector3f(x, 0.0f, z));
 	if (mapColl && mapColl->mTriCount) {
-		mapColl->mNextCollider = collList;
-		collList               = mapColl;
+		mapColl->mNextCollGroup = collList;
+		collList                = mapColl;
 	}
 
 	return collList;
@@ -1446,7 +1446,7 @@ f32 MapMgr::getMinY(f32 x, f32 z, bool doCheckDynColl)
 {
 	mVertRayCount++;
 	f32 minY = -32768.0f;
-	for (CollGroup* colls = getCollGroupList(x, z, doCheckDynColl); colls; colls = colls->mNextCollider) {
+	for (CollGroup* colls = getCollGroupList(x, z, doCheckDynColl); colls; colls = colls->mNextCollGroup) {
 		int count = (AIPerf::showColls) ? colls->mTriCount - colls->mFarCulledTriCount : colls->mTriCount;
 		if (count == 0) {
 			count = colls->mTriCount;
@@ -1475,7 +1475,7 @@ f32 MapMgr::getMaxY(f32 x, f32 z, bool doCheckDynColl)
 {
 	mVertRayCount++;
 	f32 minY = 32768.0f;
-	for (CollGroup* colls = getCollGroupList(x, z, doCheckDynColl); colls; colls = colls->mNextCollider) {
+	for (CollGroup* colls = getCollGroupList(x, z, doCheckDynColl); colls; colls = colls->mNextCollGroup) {
 		int count = (AIPerf::showColls) ? colls->mTriCount - colls->mFarCulledTriCount : colls->mTriCount;
 		if (count == 0) {
 			count = colls->mTriCount;
@@ -1505,7 +1505,7 @@ CollTriInfo* MapMgr::getCurrTri(f32 x, f32 z, bool doCheckDynColl)
 	mGroundTriRayCount++;
 	CollTriInfo* tri = nullptr;
 	f32 minY         = -32768.0f;
-	for (CollGroup* colls = getCollGroupList(x, z, doCheckDynColl); colls; colls = colls->mNextCollider) {
+	for (CollGroup* colls = getCollGroupList(x, z, doCheckDynColl); colls; colls = colls->mNextCollGroup) {
 		int count = (AIPerf::showColls) ? colls->mTriCount - colls->mFarCulledTriCount : colls->mTriCount;
 		if (count == 0) {
 			count = colls->mTriCount;
@@ -1593,7 +1593,7 @@ void MapMgr::recTraceMove(CollGroup* colls, MoveTrace& trace, f32 timeStep)
 	Vector3f vec;
 	bool check1 = false;
 
-	for (currColls; currColls; currColls = currColls->mNextCollider) {
+	for (currColls; currColls; currColls = currColls->mNextCollGroup) {
 		int count = currColls->mTriCount - currColls->mFarCulledTriCount;
 		if (!count) {
 			count = colls->mTriCount;
@@ -1634,11 +1634,11 @@ void MapMgr::recTraceMove(CollGroup* colls, MoveTrace& trace, f32 timeStep)
 			if (trace.mObject) {
 				trace.mObject->mCollisionOccurred = 1;
 			}
-			PRINT_IF(false, ">> before bounce : n(%.1f,%.1f,%.1f) vel(%.1f,%.1f,%.1f) p(%.1f,%.1f,%.1f) % s :%.1f %.1f\n", normal.x,
+			PRINT_IF(false, ">> before bounce : n(%.1f,%.1f,%.1f) vel(%.1f,%.1f,%.1f) p(%.1f,%.1f,%.1f) %s :%.1f %.1f\n", normal.x,
 			         normal.y, normal.z, vel.x, vel.y, vel.z, nextPos.x, nextPos.y, nextPos.z,
-			         currColls->mSourceCollider ? "PLATFORM" : "MAP", pen, rad);
+			         currColls->mPlatCollider ? "PLATFORM" : "MAP", pen, rad);
 			bool check2 = false;
-			if (!currColls->mSourceCollider) {
+			if (!currColls->mPlatCollider) {
 				check1 = true;
 				vec    = normal;
 				trace.mVelocity.bounce(normal, bounceFactor);
@@ -1647,14 +1647,14 @@ void MapMgr::recTraceMove(CollGroup* colls, MoveTrace& trace, f32 timeStep)
 				check2 = true;
 				PRINT_IF(false, "ignore platform\n");
 			} else {
-				if (trace.mObject && currColls->mSourceCollider && currColls->mSourceCollider->mCreature) {
+				if (trace.mObject && currColls->mPlatCollider && currColls->mPlatCollider->mCreature) {
 					bounceFactor = 1.0f;
 				}
 				trace.mVelocity.bounce(normal, bounceFactor);
 				vel.bounce(normal, bounceFactor);
 			}
 			PRINT_IF(false, ">> after bounce : n(%.1f,%.1f,%.1f) vel(%.1f,%.1f,%.1f) p(%.1f,%.1f,%.1f) %s\n", normal.x, normal.y, normal.z,
-			         vel.x, vel.y, vel.z, nextPos.x, nextPos.y, nextPos.z, currColls->mSourceCollider ? "PLATFORM" : "MAP");
+			         vel.x, vel.y, vel.z, nextPos.x, nextPos.y, nextPos.z, currColls->mPlatCollider ? "PLATFORM" : "MAP");
 			if (!check2) {
 				nextPos.x += normal.x * (rad - pen);
 				nextPos.y += normal.y * (rad - pen);
@@ -1664,26 +1664,26 @@ void MapMgr::recTraceMove(CollGroup* colls, MoveTrace& trace, f32 timeStep)
 			if (trace.mObject) {
 				if (normal.y > 0.6f) {
 					trace.mObject->mGroundTriangle     = tri;
-					trace.mObject->mCurrCollisionModel = currColls->mShape;
+					trace.mObject->mCurrCollisionModel = currColls->mModel;
 				}
 				if (a && tri->mTriangle.mNormal.y < 0.5f && tri->mTriangle.mNormal.y > -0.5f) {
-					trace.mObject->wallCallback(tri->mTriangle, currColls->mSourceCollider);
+					trace.mObject->wallCallback(tri->mTriangle, currColls->mPlatCollider);
 				}
-				trace.mObject->mCollPlatform   = currColls->mSourceCollider;
+				trace.mObject->mCollPlatform   = currColls->mPlatCollider;
 				trace.mObject->mCollPlatNormal = &tri->mTriangle.mNormal;
 
-				if (currColls->mSourceCollider && trace.mObject->mObjType == OBJTYPE_Piki) {
+				if (currColls->mPlatCollider && trace.mObject->mObjType == OBJTYPE_Piki) {
 					trace.mObject->mClimbingTri = tri;
 				} else {
 					trace.mObject->mClimbingTri = nullptr;
 				}
 
-				if (currColls->mSourceCollider) {
-					if (a == 1 && currColls->mSourceCollider->mLastContactFrameID != mCollCheckCount) {
-						currColls->mSourceCollider->mContactCount++;
-						currColls->mSourceCollider->mLastContactFrameID = mCollCheckCount;
+				if (currColls->mPlatCollider) {
+					if (a == 1 && currColls->mPlatCollider->mLastContactFrameID != mCollCheckCount) {
+						currColls->mPlatCollider->mContactCount++;
+						currColls->mPlatCollider->mLastContactFrameID = mCollCheckCount;
 					}
-					currColls->mSourceCollider->touchCallback(tri->mTriangle, nextPos, trace.mVelocity);
+					currColls->mPlatCollider->touchCallback(tri->mTriangle, nextPos, trace.mVelocity);
 				}
 			}
 		}
@@ -1724,11 +1724,11 @@ void MapMgr::traceMove(Creature* creature, MoveTrace& trace, f32 timeStep)
 				if ((!coll->mCreature || coll->mCreature != creature) && box.intersects(coll->mBoundingBox)) {
 					for (int j = 0; j < coll->mColliderCount; j++) {
 						if (coll->mVisibleList[coll->mColliderList[j]->mRoomIndex]) {
-							coll->mColliderList[j]->mShape          = coll->mShape;
-							coll->mColliderList[j]->mVertexList     = coll->mVertexList;
-							coll->mColliderList[j]->mSourceCollider = coll;
-							coll->mColliderList[j]->mNextCollider   = collGroup;
-							collGroup                               = coll->mColliderList[j];
+							coll->mColliderList[j]->mModel         = coll->mShape;
+							coll->mColliderList[j]->mVertexList    = coll->mVertexList;
+							coll->mColliderList[j]->mPlatCollider  = coll;
+							coll->mColliderList[j]->mNextCollGroup = collGroup;
+							collGroup                              = coll->mColliderList[j];
 						}
 					}
 				}
@@ -1737,11 +1737,11 @@ void MapMgr::traceMove(Creature* creature, MoveTrace& trace, f32 timeStep)
 
 		CollGroup* mapColls = mMapShape->getCollTris(trace.mPosition);
 		if (mapColls && mapColls->mTriCount) {
-			mapColls->mShape          = mMapShape;
-			mapColls->mVertexList     = mMapShape->mVertexList;
-			mapColls->mSourceCollider = nullptr;
-			mapColls->mNextCollider   = collGroup;
-			collGroup                 = mapColls;
+			mapColls->mModel         = mMapShape;
+			mapColls->mVertexList    = mMapShape->mVertexList;
+			mapColls->mPlatCollider  = nullptr;
+			mapColls->mNextCollGroup = collGroup;
+			collGroup                = mapColls;
 		}
 		if (collGroup) {
 			recTraceMove(collGroup, trace, timeStep);

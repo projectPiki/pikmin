@@ -130,8 +130,8 @@ void GenObjectMapParts::render(Graphics& gfx, Generator* gen)
 	bool light = gfx.setLighting(false, nullptr);
 	gfx.useMatrix(gfx.mCamera->mLookAtMtx, 0);
 	gfx.useTexture(nullptr, GX_TEXMAP0);
-	gfx.setColour(Colour(255, 255, 255, 255), true);
-	gfx.setAuxColour(Colour(255, 255, 255, 255));
+	gfx.setColour(COLOUR_WHITE, true);
+	gfx.setAuxColour(COLOUR_WHITE);
 	gfx.drawLine(pos3, globalPos2);
 	gfx.setLighting(light, nullptr);
 }

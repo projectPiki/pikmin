@@ -95,8 +95,8 @@ void zen::DrawUfoParts::draw(Graphics& gfx)
 		if (check) {
 			Matrix4f mtx;
 			gfx.setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
-			gfx.setColour(Colour(0, 0, 0, 255), true);
-			gfx.setAuxColour(Colour(0, 0, 0, 255));
+			gfx.setColour(COLOUR_BLACK, true);
+			gfx.setAuxColour(COLOUR_BLACK);
 			gfx.fillRectangle(RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
 			mScreen->draw();
 		}
@@ -156,14 +156,14 @@ void zen::DrawUfoParts::dataSet()
 		if (playerState) {
 			if (!playerState->hasUfoParts(PelletMgr::getUfoIDFromIndex(i))) {
 				partIcon->setBlack(Colour(48, 48, 48, 0));
-				partIcon->setWhite(Colour(0, 0, 0, 255));
+				partIcon->setWhite(COLOUR_BLACK);
 				partLabel->setCharColor(Colour(0, 0, 0, 0));
 				partLabel->setGradColor(Colour(0, 0, 0, 0));
 			}
 
 		} else if ((i % 2) == 0) {
 			partIcon->setBlack(Colour(48, 48, 48, 0));
-			partIcon->setWhite(Colour(0, 0, 0, 255));
+			partIcon->setWhite(COLOUR_BLACK);
 			partLabel->setCharColor(Colour(0, 0, 0, 0));
 			partLabel->setGradColor(Colour(0, 0, 0, 0));
 		}

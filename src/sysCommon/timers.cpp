@@ -174,7 +174,7 @@ void Timers::draw(Graphics& gfx, Font* font)
 
 	char buf[PATH_MAX];
 	sprintf(buf, "%.1f fps", gsys->getFrameRate());
-	gfx.setColour(Colour(255, 255, 255, 255), true);
+	gfx.setColour(COLOUR_WHITE, true);
 
 	gfx.texturePrintf(font, gfx.mScreenWidth / 2 - font->stringWidth(buf) + 30, yPos - 1.0f, buf);
 #endif

@@ -1782,8 +1782,8 @@ void GameCoreSection::draw1D(Graphics& gfx)
 	naviMgr->refresh2d(gfx);
 
 	if (gsys->mToggleDebugExtra) {
-		gfx.setColour(Colour(255, 255, 255, 255), true);
-		gfx.setAuxColour(Colour(255, 255, 255, 255));
+		gfx.setColour(COLOUR_WHITE, true);
+		gfx.setAuxColour(COLOUR_WHITE);
 		gfx.useTexture(nullptr, GX_TEXMAP0);
 		char str[PATH_MAX];
 		sprintf(str, "culled:ai %d view %d/%d shape %d (%d tekis)", AIPerf::aiCullCnt, AIPerf::viewCullCnt, AIPerf::outsideViewCnt,
@@ -1806,8 +1806,8 @@ void GameCoreSection::draw2D(Graphics& gfx)
 	};
 	Matrix4f mtx;
 	gfx.setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
-	gfx.setColour(Colour(255, 255, 255, 255), true);
-	gfx.setAuxColour(Colour(255, 255, 255, 255));
+	gfx.setColour(COLOUR_WHITE, true);
+	gfx.setAuxColour(COLOUR_WHITE);
 	gfx.useTexture(nullptr, GX_TEXMAP0);
 	gfx.texturePrintf(gsys->mConsFont, 60, 120, triNames[mDrawHideType]);
 

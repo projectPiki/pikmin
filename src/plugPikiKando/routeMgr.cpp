@@ -1717,7 +1717,7 @@ int PathFinder::selectSecondBestWayOnyon(immut Vector3f& curPos, int& secondBest
  */
 void RouteMgr::refresh(Graphics& gfx)
 {
-	gfx.setColour(Colour(255, 255, 255, 255), true);
+	gfx.setColour(COLOUR_WHITE, true);
 	gfx.setLighting(false, nullptr);
 	gfx.useTexture(nullptr, GX_TEXMAP0);
 	for (int i = 0; i < getNumWayPoints('test'); i++) {

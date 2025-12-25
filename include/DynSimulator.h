@@ -1,5 +1,5 @@
-#ifndef _DYNAMICS_H
-#define _DYNAMICS_H
+#ifndef _DYNSIMULATOR_H
+#define _DYNSIMULATOR_H
 
 #include "BoundBox.h"
 #include "Collision.h"
@@ -15,72 +15,83 @@ struct Shape;
 struct LightCamera;
 
 /**
- * @brief TODO
+ * @brief A spring attached to a "hook" point on a rigid body.
+ *
+ * @note Size: 0x10.
  */
 struct WorldSpring {
+
+	/// Default constructor (trivial).
 	WorldSpring() { }
 
+	/// Initialises the hook with an index and offset position (x,y,z).
 	void init(int hookIdx, f32 x, f32 y, f32 z)
 	{
 		mHookIdx = hookIdx;
 		mOffset.set(x, y, z);
 	}
 
-	int mHookIdx;     // _00
-	Vector3f mOffset; // _04
+	int mHookIdx;     ///< _00, index of hook point spring is attached to.
+	Vector3f mOffset; ///< _04, offset vector from hook point.
 };
 
 /**
- * @brief TODO
+ * @brief A physical object being simulated.
+ *
+ * Includes mass, geometry, state and methods for simulation and rendering.
  *
  * @note Size: 0x132B4.
  */
 struct RigidBody : public Node {
 
 	/**
-	 * @brief TODO
+	 * @brief Stores the physical state of a rigid body at a given simulation step.
 	 *
 	 * @note Size: 0x308C.
 	 */
 	struct configuration {
+
+		/// Trivial default constructor.
 		configuration() { }
 
-		Matrix3f mOrientationMtx;    // _00
-		Quat mOrientationQuat;       // _24
-		Vector3f mPosition;          // _34
-		Vector3f mLinearVel;         // _40
-		Vector3f mAngularVel;        // _4C
-		Vector3f mLocalAngularVel;   // _58
-		Matrix3f mInertiaTensor;     // _64
-		u32 _88;                     // _88, unknown
-		Vector3f mBodyPoints[0x400]; // _8C
+		Matrix3f mOrientationMtx;    ///< _00, orientation of rigid body (as matrix).
+		Quat mOrientationQuat;       ///< _24, orientation of rigid body (as quaternion).
+		Vector3f mPosition;          ///< _34, position of rigid body.
+		Vector3f mLinearVel;         ///< _40, linear velocity of rigid body.
+		Vector3f mAngularVel;        ///< _4C, angular velocity of rigid body (in world space).
+		Vector3f mLocalAngularVel;   ///< _58, angular velocity of rigid body (in local space).
+		Matrix3f mInertiaTensor;     ///< _64, inertia tensor (in world space).
+		u32 _unused88;               ///< _88, unknown - only ever set to 0.
+		Vector3f mBodyPoints[0x400]; ///< _8C, transformed body points (in world space).
 	};
 
+	/// Default constructor. Sets all basic counts to 0.
 	RigidBody()
 	    : Node("rigidBody")
 	{
-		mIntegrationStates[1]._88 = 0;
-		mIntegrationStates[0]._88 = 0;
-		mMass                     = 0.0f;
-		mHookPointCount           = 0;
-		mBoundingPointCount       = 0;
-		mSpringCount              = 0;
+		mIntegrationStates[0]._unused88 = mIntegrationStates[1]._unused88 = 0;
+
+		mMass               = 0.0f;
+		mHookPointCount     = 0;
+		mBoundingPointCount = 0;
+		mSpringCount        = 0;
 	}
 
-	virtual void render(Graphics&);                               // _18
+	virtual void render(Graphics& gfx);                           // _18
 	virtual void initDimensions(f32 width, f32 height, f32 depth) // _30
 	{
 		mDimensions.set(width, height, depth);
 	}
-	virtual void computeForces(int, f32) // _34
+	virtual void computeForces(int configIdx, f32 timeStep) // _34
 	{
+		// apply gravity and nothing else.
 		mLinearAccel.set(0.0f, 0.0f, 0.0f);
 		mAngularAccel.set(0.0f, 0.0f, 0.0f);
 		applyCMForce(Vector3f(0.0f, -9.81f, 0.0f));
 	}
 	virtual void integrate(int prevConfigIdx, int currConfigIdx, f32 timeStep); // _38
-	virtual bool resolveCollisions(int, Collision&);                            // _3C
-	virtual void calculateVertices(int);                                        // _40
+	virtual bool resolveCollisions(int configIdx, Collision& coll);             // _3C
+	virtual void calculateVertices(int configIdx);                              // _40
 	virtual void initCollisions(int configIdx)                                  // _44
 	{
 		configuration& state = mIntegrationStates[configIdx];
@@ -90,8 +101,8 @@ struct RigidBody : public Node {
 		}
 	}
 	virtual bool checkForCollisions(int, CollState&);                                                                               // _48
-	virtual void updateVecQuats(int, f32);                                                                                          // _4C
-	virtual void updateViewInfo(int, int);                                                                                          // _50
+	virtual void updateVecQuats(int renderBufferIndex, f32 interpFactor);                                                           // _4C
+	virtual void updateViewInfo(int targetBufferIdx, int srcConfigIdx);                                                             // _50
 	virtual void applyBodyFriction(int configIdx, immut Vector3f& contactNormal, immut Vector3f& contactPoint, immut Vector3f& vel) // _54
 	{
 		Vector3f frictionForce(vel);
@@ -99,15 +110,15 @@ struct RigidBody : public Node {
 		frictionForce.multiply(-vel.length() * 0.125f); // scale friction by velocity + oppose motion
 		applyForce(configIdx, Vector3f(frictionForce), contactPoint);
 	}
-	virtual void makeBodyQuat(immut Quat&) { }           // _58
-	virtual void initRender(int);                        // _5C
-	virtual void shadrender(Graphics&, LightCamera*) { } // _60
-	virtual f32 getViewScale() { return 1.0f; }          // _64
-	virtual void updateCont() { }                        // _68
-	virtual void applyGroundForces(int, CollGroup*);     // _6C
+	virtual void makeBodyQuat(immut Quat&) { }                           // _58
+	virtual void initRender(int);                                        // _5C
+	virtual void shadrender(Graphics&, LightCamera*) { }                 // _60
+	virtual f32 getViewScale() { return 1.0f; }                          // _64
+	virtual void updateCont() { }                                        // _68
+	virtual void applyGroundForces(int configIdx, CollGroup* collGroup); // _6C
 
 	void initializeBody();
-	void applyCMForce(immut Vector3f&);
+	void applyCMForce(immut Vector3f& force);
 
 	void applyForce(int configIdx, immut Vector3f& force, immut Vector3f& appliedPoint)
 	{
@@ -141,43 +152,45 @@ struct RigidBody : public Node {
 
 	// _00     = VTBL
 	// _00-_20 = Node
-	Vector3f mInitPosition;               // _20
-	Vector3f mInitOrientationX;           // _2C
-	Vector3f mInitOrientationY;           // _38
-	Vector3f mInitOrientationZ;           // _44
-	Vector3f mDimensions;                 // _50
-	f32 mMass;                            // _5C
-	f32 mInvMass;                         // _60
-	Matrix3f mInertiaTensor;              // _64
-	f32 mRestitutionFactor;               // _88
-	int mBoundingPointCount;              // _8C
-	int mHookPointCount;                  // _90
-	Vector3f mBodyPoints[0x400];          // _94, hook points, then bounding points
-	int mBodyPointHitCounts[0x400];       // _3094
-	int mSpringCount;                     // _4094
-	WorldSpring mSprings[8];              // _4098
-	configuration mIntegrationStates[2];  // _4118, prev and current, which swap from frame to frame
-	Vector3f mLinearAccel;                // _A230
-	Vector3f mAngularAccel;               // _A23C
-	Vector3f mBufferedPoints[2][0x400];   // _A248
-	Vector3f mBodySpaceHookPoints[0x400]; // _10248
-	Vector3f mBufferedPositions[2];       // _13248
-	Vector3f mRenderPosition;             // _13260
-	Quat mBufferedOrientations[2];        // _1326C
-	Quat mRenderOrientation;              // _1328C
-	BoundBox mCollisionBounds;            // _1329C
+	Vector3f mInitPosition;                 ///< _00020, initial position of object.
+	Vector3f mInitOrientationX;             ///< _0002C, initial orientation (X axis).
+	Vector3f mInitOrientationY;             ///< _00038, initial orientation (Y axis).
+	Vector3f mInitOrientationZ;             ///< _00044, initial orientation (Z axis).
+	Vector3f mDimensions;                   ///< _00050, dimensions (width, height, depth).
+	f32 mMass;                              ///< _0005C, mass.
+	f32 mInvMass;                           ///< _00060, inverse mass.
+	Matrix3f mInertiaTensor;                ///< _00064, inertia tensor (local space).
+	f32 mRestitutionFactor;                 ///< _00088, i.e. bounciness.
+	int mBoundingPointCount;                ///< _0008C, number of bounding points.
+	int mHookPointCount;                    ///< _00090, number of hook points.
+	Vector3f mBodyPoints[0x400];            ///< _00094, local-space points; hook points first, then bounding points.
+	int mBoundingPointHitCounts[0x400];     ///< _03094, number of times each bounding point has been hit (for collision processing).
+	int mSpringCount;                       ///< _04094, number of springs connected to object.
+	WorldSpring mSprings[8];                ///< _04098, array of springs connected to object.
+	configuration mIntegrationStates[2];    ///< _04118, prev and current, which swap from frame to frame (i.e. double-buffered simulation).
+	Vector3f mLinearAccel;                  ///< _0A230, linear acceleration.
+	Vector3f mAngularAccel;                 ///< _0A23C, angular acceleration.
+	Vector3f mBufferedBodyPoints[2][0x400]; ///< _0A248, double-buffered points for rendering/interpolation.
+	Vector3f mRenderBodyPoints[0x400];      ///< _10248, interpolated hook points for rendering.
+	Vector3f mBufferedPositions[2];         ///< _13248, double-buffered positions for rendering.
+	Vector3f mRenderPosition;               ///< _13260, interpolated position for rendering.
+	Quat mBufferedOrientations[2];          ///< _1326C, double-buffered orientations for rendering.
+	Quat mRenderOrientation;                ///< _1328C, interpolated orientation for rendering.
+	BoundBox mCollisionBounds;              ///< _1329C, bounding box for collision detection.
 };
 
 /**
- * @brief TODO
+ * @brief Manages the overall simulation world, including all rigid bodies and the sim state.
+ *
+ * @note Size: 0x1B0.
  */
 struct DynSimulator : public Node {
 	DynSimulator()
 	    : Node("simulator")
 	{
-		_unused2C                     = 0;
-		mIsPaused                     = FALSE;
-		mWriteTargetRenderBufferIndex = 0;
+		_unused2C                 = 0;
+		mIsPaused                 = FALSE;
+		mCurrentRenderBufferIndex = 0;
 	}
 
 	void resetWorld();
@@ -213,11 +226,11 @@ struct DynSimulator : public Node {
 
 	// _00     = VTBL
 	// _00-_20 = Node
-	BOOL mIsPaused;                    // _20
-	int mWriteTargetRenderBufferIndex; // _24
-	int mCurrentConfigIdx;             // _28
-	u32 _unused2C;                     // _2C, unknown
-	CollState mWorldState;             // _30
+	BOOL mIsPaused;                ///< _20, whether simulation is paused.
+	int mCurrentRenderBufferIndex; ///< _24, index for double-buffered rendering.
+	int mCurrentConfigIdx;         ///< _28, index for double-buffered simulation state.
+	u32 _unused2C;                 ///< _2C, unknown - only ever set to 0.
+	CollState mWorldState;         ///< _30, global collision state (largely unused structure).
 };
 
 #endif

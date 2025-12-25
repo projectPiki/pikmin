@@ -445,7 +445,7 @@ void ViewPiki::demoDraw(Graphics& gfx, immut Matrix4f* mtx)
 	mEffectPos = pos;
 
 	if (isDamaged() && gsys->getRand(1.0f) > 0.5f) {
-		mPikiShape->mShape->mMaterialList->setColour(Colour(255, 255, 255, 255));
+		mPikiShape->mShape->mMaterialList->setColour(COLOUR_WHITE);
 	} else {
 		mPikiShape->mShape->mMaterialList->setColour(mCurrentColour);
 	}
@@ -477,7 +477,7 @@ void ViewPiki::demoDraw(Graphics& gfx, immut Matrix4f* mtx)
 			} else if (act->mState == ActCrowd::STATE_Unk0) {
 				gfx.setColour(Colour(200, 255, 255, 255), 1);
 			} else {
-				gfx.setColour(Colour(255, 255, 255, 255), 1);
+				gfx.setColour(COLOUR_WHITE, 1);
 			}
 
 			const char* strs[6] = { "A", "B", "C", "D", "E", "F" };
