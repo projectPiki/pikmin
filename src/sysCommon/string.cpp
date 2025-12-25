@@ -267,16 +267,24 @@ int String::toInt(immut char* str)
  * @TODO: Documentation
  * @note UNUSED Size: 0000A0
  */
-void StringArray::read(Stream&)
+void StringArray::read(Stream& stream)
 {
-	// UNUSED FUNCTION
+	// UNUSED FUNCTION (Matching by size)
+	mSize = stream.readInt();
+	for (int i = 0; i < mSize; ++i) {
+		stream.readString(mElems[i].mString, 10000);
+	}
 }
 
 /**
  * @TODO: Documentation
  * @note UNUSED Size: 00009C
  */
-void StringArray::write(Stream&)
+void StringArray::write(Stream& stream)
 {
-	// UNUSED FUNCTION
+	// UNUSED FUNCTION (Matching by size)
+	stream.writeInt(mSize);
+	for (int i = 0; i < mSize; ++i) {
+		stream.writeString(mElems[i].mString);
+	}
 }

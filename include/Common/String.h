@@ -82,6 +82,9 @@ struct String {
 struct StringArray {
 	void read(Stream&);
 	void write(Stream&);
+
+	int mSize;      // _00
+	String* mElems; // _04
 };
 
 #endif
