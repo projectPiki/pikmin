@@ -1476,7 +1476,7 @@ void ActTransport::draw(Graphics& gfx)
 	}
 
 	gfx.useMatrix(Matrix4f::ident, 0);
-	gfx.setColour(Colour(255, 255, 255, 255), true);
+	gfx.setColour(COLOUR_WHITE, true);
 	pikiPos.y += 30.0f;
 
 	Vector3f newVec(pikiPos);

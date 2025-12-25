@@ -271,7 +271,7 @@ void DoorItem::refresh(Graphics& gfx)
 
 	char str[256];
 
-	gfx.setColour(Colour(255, 255, 255, 255), true);
+	gfx.setColour(COLOUR_WHITE, true);
 	gfx.useTexture(gsys->mConsFont->mTexture, GX_TEXMAP0);
 	int blend = gfx.setCBlending(0);
 

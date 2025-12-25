@@ -1918,7 +1918,7 @@ void BaseShape::drawculled(Graphics& gfx, Camera& cam, ShapeDynMaterials* dynMat
 			if (cam.isBoundVisible(box, 0x8000 | 0x10 | 0x20 | 0x1 | 0x2 | 0x4 | 0x8)) {
 				bool lighting = gfx.setLighting(false, nullptr);
 				gfx.useMatrix(Matrix4f::ident, 0);
-				gfx.setColour(Colour(255, 255, 255, 255), true);
+				gfx.setColour(COLOUR_WHITE, true);
 				int blend = gfx.setCBlending(0);
 				Vector3f centre((box.mMax.x + box.mMin.x) * 0.5f, (box.mMax.y + box.mMin.y) * 0.5f + 10.0f,
 				                (box.mMax.z + box.mMin.z) * 0.5f);

@@ -95,7 +95,7 @@ bool zen::DrawHiScore::update(Controller* controller)
 		if (controller->keyClick(KBBTN_B)) {
 			SeSystem::playSysSe(SYSSE_CANCEL);
 			mMode = MODE_FadeOut;
-			mAlphaWipe.setColour(Colour(0, 0, 0, 255), Colour(0, 0, 0, 255));
+			mAlphaWipe.setColour(COLOUR_BLACK, COLOUR_BLACK);
 			mAlphaWipe.start(0.5f, 0.25f, AlphaWipe::TYPE_Normal);
 		}
 		break;
@@ -138,7 +138,7 @@ void zen::DrawHiScore::draw(Graphics& gfx)
 	if (check) {
 		Matrix4f mtx;
 		gfx.setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
-		gfx.setColour(Colour(0, 0, 0, 255), true);
+		gfx.setColour(COLOUR_BLACK, true);
 		gfx.setAuxColour(Colour(0, 0, 64, 255));
 		gfx.fillRectangle(RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
 		mScreen->draw();
@@ -154,7 +154,7 @@ void zen::DrawHiScore::start()
 {
 	mMode = MODE_FadeIn;
 	mBest.wait();
-	mAlphaWipe.setColour(Colour(0, 0, 0, 255), Colour(0, 0, 0, 255));
+	mAlphaWipe.setColour(COLOUR_BLACK, COLOUR_BLACK);
 	mAlphaWipe.start(0.5f, 0.25, AlphaWipe::TYPE_Reverse);
 }
 

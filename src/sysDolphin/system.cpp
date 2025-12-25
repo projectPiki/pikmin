@@ -743,10 +743,10 @@ void System::showDvdError(Graphics& gfx)
 		return;
 	}
 
-	gfx.setColour(Colour(0, 0, 0, 255), true);
+	gfx.setColour(COLOUR_BLACK, true);
 	gfx.fillRectangle(RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
-	gfx.setColour(Colour(255, 255, 255, 255), true);
-	gfx.setAuxColour(Colour(255, 255, 255, 255));
+	gfx.setColour(COLOUR_WHITE, true);
+	gfx.setAuxColour(COLOUR_WHITE);
 
 	if (mDvdErrorCode) { // DvdError::ReadingDisc or higher
 		int y = 160;

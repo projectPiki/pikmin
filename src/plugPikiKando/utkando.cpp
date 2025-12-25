@@ -182,7 +182,7 @@ void drawBattenPole(Graphics& gfx, immut Vector3f& pos, f32 size, immut char* na
 
 	if (name) {
 		gfx.useMatrix(Matrix4f::ident, 0);
-		gfx.setColour(Colour(255, 255, 255, 255), true);
+		gfx.setColour(COLOUR_WHITE, true);
 		pos3.y += 10.0f;
 		pos3.multMatrix(gfx.mCamera->mLookAtMtx);
 		gfx.perspPrintf(gsys->mConsFont, pos3, -gsys->mConsFont->stringWidth(name) / 2, 0, name);

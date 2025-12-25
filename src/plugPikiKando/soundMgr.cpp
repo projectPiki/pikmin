@@ -824,7 +824,7 @@ void SeSystem::draw2d(Graphics& gfx)
 {
 	char str[PATH_MAX];
 
-	gfx.setColour(Colour(255, 255, 255, 255), true);
+	gfx.setColour(COLOUR_WHITE, true);
 	gfx.useTexture(nullptr, GX_TEXMAP0);
 
 	gfx.setColour(Colour(55, 55, 55, 128), true);
@@ -832,7 +832,7 @@ void SeSystem::draw2d(Graphics& gfx)
 	RectArea rect(20, 60, 550, mMaxEventCount * 16 + 120);
 	gfx.fillRectangle(rect);
 
-	gfx.setColour(Colour(255, 255, 255, 255), true);
+	gfx.setColour(COLOUR_WHITE, true);
 
 	sprintf(str, "-- se events -- %d/%d (%.1f %.1f %.1f): clock %d", mCurrentEventCount, mMaxEventCount, mListenerPosition.x,
 	        mListenerPosition.y, mListenerPosition.z, mClock);

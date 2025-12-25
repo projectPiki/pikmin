@@ -422,7 +422,7 @@ void OgTestScreen::draw(Graphics& gfx)
 {
 	gfx.setViewport(RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
 	gfx.setScissor(RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
-	gfx.setClearColour(Colour(0, 0, 0, 255));
+	gfx.setClearColour(COLOUR_BLACK);
 	gfx.clearBuffer(3, false);
 
 	Camera cam;
@@ -451,7 +451,7 @@ void OgTestScreen::draw(Graphics& gfx)
 	if (mActiveMode == TESTMODE_INACTIVE) {
 		Matrix4f ortho;
 		gfx.setOrthogonal(ortho.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
-		gfx.setColour(Colour(255, 255, 255, 255), true);
+		gfx.setColour(COLOUR_WHITE, true);
 		gfx.setAuxColour(Colour(255, 255, 0, 255));
 
 		char scrnSelectorText[PATH_MAX];
@@ -497,8 +497,8 @@ void OgTestScreen::draw(Graphics& gfx)
 			gfx.texturePrintf(mFont, 200, 30 * i + 60, optionsTexts[i]);
 		}
 
-		gfx.setColour(Colour(255, 255, 255, 255), true);
-		gfx.setAuxColour(Colour(255, 255, 255, 255));
+		gfx.setColour(COLOUR_WHITE, true);
+		gfx.setAuxColour(COLOUR_WHITE);
 
 		char arrowText[256];
 		sprintf(arrowText, "＞");
@@ -508,7 +508,7 @@ void OgTestScreen::draw(Graphics& gfx)
 	if (mActiveMode == TESTMODE_Tutorial) {
 		Matrix4f ortho;
 		gfx.setOrthogonal(ortho.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
-		gfx.setColour(Colour(255, 255, 255, 255), true);
+		gfx.setColour(COLOUR_WHITE, true);
 		gfx.setAuxColour(Colour(255, 255, 150, 255));
 
 		ogScrMessageMgr* msgMgr = mTutorialMgr->getScrMsgMgr();

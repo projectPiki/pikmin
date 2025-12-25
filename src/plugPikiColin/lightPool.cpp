@@ -75,7 +75,7 @@ void LightPool::draw(Graphics& gfx)
 	gfx.useMatrix(gfx.mCamera->mLookAtMtx, 0);
 	gfx.useTexture(mParticleTexture, GX_TEXMAP0);
 	gfx.setCBlending(4);
-	gfx.setColour(Colour(255, 255, 255, 255), true);
+	gfx.setColour(COLOUR_WHITE, true);
 
 	if (gfx.initParticle(true)) {
 		gfx.drawParticle(*gfx.mCamera, camera->mPosition, 80.0f);

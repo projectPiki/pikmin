@@ -324,8 +324,8 @@ void LifeGauge::refresh(Graphics& gfx)
 
 	f32 proj1 = gfx.mCamera->projectWorldPoint(gfx, pos1);
 	f32 proj2 = gfx.mCamera->projectWorldPoint(gfx, pos2);
-	gfx.setColour(Colour(255, 255, 255, 255), true);
-	gfx.setAuxColour(Colour(255, 255, 255, 255));
+	gfx.setColour(COLOUR_WHITE, true);
+	gfx.setAuxColour(COLOUR_WHITE);
 
 	STACK_PAD_VAR(2);
 	if (proj1 > 0.0f && proj2 > 0.0f) {
@@ -372,7 +372,7 @@ void LifeGauge::refresh(Graphics& gfx)
 				vecs3D[2].set(sinf(angle1) * -b + pos2.x, cosf(angle1) * -b + pos2.y, 0.0f);
 				vecs3D[3].set(sinf(angle1) * -a + pos2.x, cosf(angle1) * -a + pos2.y, 0.0f);
 
-				gfx.setColour(Colour(0, 0, 0, 255), true);
+				gfx.setColour(COLOUR_BLACK, true);
 				gfx.drawOneTri(vecs3D, nullptr, vecs2D, 4);
 			}
 		}

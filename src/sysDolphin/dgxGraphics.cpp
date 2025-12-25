@@ -591,12 +591,15 @@ void DGXGraphics::setCamera(Camera* a1)
 }
 
 /**
- * @TODO: Documentation
+ * @brief Transforms a given model matrix for an object from world space to the camera's view space.
+ *
+ * @param modelMtx Matrix for an object (in world space).
+ * @param viewMtx Output matrix, now in view space.
  */
-void DGXGraphics::calcViewMatrix(immut Matrix4f& mtx1, Matrix4f& mtx2)
+void DGXGraphics::calcViewMatrix(immut Matrix4f& modelMtx, Matrix4f& viewMtx)
 {
-	mMatrix = &mtx1;
-	mCamera->mLookAtMtx.multiplyTo(mtx1, mtx2);
+	mLastModelMatrix = &modelMtx;
+	mCamera->mLookAtMtx.multiplyTo(modelMtx, viewMtx);
 }
 
 /**

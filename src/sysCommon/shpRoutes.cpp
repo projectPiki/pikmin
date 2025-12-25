@@ -46,7 +46,7 @@ void RoutePoint::refresh(Graphics& gfx)
 	mScreenX     = pos.x;
 	mScreenY     = pos.y;
 	gfx.useMatrix(Matrix4f::ident, 0);
-	gfx.setColour(Colour(255, 255, 255, 255), true);
+	gfx.setColour(COLOUR_WHITE, true);
 	Vector3f pos2(mPosition.x, mPosition.y + 12.0f, mPosition.z);
 	pos2.multMatrix(gfx.mCamera->mLookAtMtx);
 	char buf[PATH_MAX];
@@ -143,7 +143,7 @@ void RouteGroup::refresh(Graphics& gfx, EditNode* node)
 
 			gfx.drawOneTri(vecs3D, nullptr, vecs2D, 4);
 			vec6.multiply(4.0f);
-			gfx.setColour(Colour(255, 255, 255, 255), true);
+			gfx.setColour(COLOUR_WHITE, true);
 
 			gfx.drawLine(vec4 - vec5 - vec5 - vec6, vec4 - vec5);
 			gfx.drawLine(vec4 - vec5, vec4 - vec5 - vec5 + vec6);

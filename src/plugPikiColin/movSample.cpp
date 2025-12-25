@@ -281,7 +281,7 @@ struct MovSampleSetupSection : public Node {
 		GXInitTexObjLOD(&UVtexObj, GX_NEAR, GX_NEAR, 0.0f, 0.0f, 0.0f, GX_FALSE, GX_FALSE, GX_ANISO_1);
 		GXLoadTexObj(&UVtexObj, GX_TEXMAP0);
 
-		gfx.setColour(Colour(255, 255, 255, 255), true);
+		gfx.setColour(COLOUR_WHITE, true);
 
 		// WHY WONT YOU USE DIFFERENT REGISTERS
 		gfx.testRectangle(RectArea(0, 0, 640, 480));

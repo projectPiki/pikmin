@@ -88,7 +88,7 @@ void PlugPikiApp::draw(Graphics& gfx)
 	gfx.useTexture(nullptr, GX_TEXMAP0);
 
 	if (gsys->mTimerState) {
-		gfx.setColour(Colour(255, 255, 255, 255), true);
+		gfx.setColour(COLOUR_WHITE, true);
 		gfx.texturePrintf(gsys->mConsFont, 32, 32, "%d polys = %d pps", gsys->mPolygonCount,
 		                  int(gsys->mPolygonCount * gsys->getFrameRate()));
 		gfx.texturePrintf(gsys->mConsFont, 32, 44, "%d anims", gsys->mAnimatedPolygons);

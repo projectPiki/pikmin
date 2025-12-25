@@ -231,7 +231,7 @@ struct MapSelectSetupSection : public Node {
 		gfx.clearBuffer(3, false);
 		Matrix4f mtx;
 		gfx.setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
-		gfx.setColour(Colour(0, 0, 0, 255), true);
+		gfx.setColour(COLOUR_BLACK, true);
 		gfx.setAuxColour(Colour(0, 0, 64, 255));
 		gfx.fillRectangle(RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
 

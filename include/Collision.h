@@ -331,9 +331,13 @@ struct CollTriInfo : public BaseCollTriInfo {
 };
 
 /**
- * @brief Group of collision triangles for a Shape.
+ * @brief Ground or platform triangle-related collision information for a given "room" of a (map) model.
+ *
+ * @note Size: 0x24.
  */
 struct CollGroup {
+
+	/// Default constructor - resets lists, counts and room index.
 	CollGroup()
 	{
 		mTriangleList          = nullptr;
@@ -342,54 +346,70 @@ struct CollGroup {
 		mFarCulledTriDistances = nullptr;
 	}
 
-	u8 _00[0x4];                   // _00, unknown
-	s16 mTriCount;                 // _04, number of triangles
-	s16 mFarCulledTriCount;        // _06, number of far-culled triangles
-	CollTriInfo** mTriangleList;   // _08, list of triangle pointers
-	u8* mFarCulledTriDistances;    // _0C, per-triangle distance metadata (far culling)
-	Shape* mShape;                 // _10, owning shape
-	Vector3f* mVertexList;         // _14, vertex array for triangle indices
-	int mRoomIndex;                // _18, room index for this group
-	DynCollShape* mSourceCollider; // _1C, source dynamic collider
-	CollGroup* mNextCollider;      // _20, linked-list next
+	u8 _unused00[0x4];           ///< _00, unknown/unused.
+	s16 mTriCount;               ///< _04, number of triangles in group (both culled and not).
+	s16 mFarCulledTriCount;      ///< _06, number of far-culled triangles.
+	CollTriInfo** mTriangleList; ///< _08, list of pointers to all triangles in group.
+	u8* mFarCulledTriDistances;  ///< _0C, per-triangle distance metadata (for far culling).
+	Shape* mModel;               ///< _10, model that owns the collision triangles.
+	Vector3f* mVertexList;       ///< _14, vertex array for triangle indices.
+	int mRoomIndex;              ///< _18, room index for this group.
+	DynCollShape* mPlatCollider; ///< _1C, source collider (if from platform collision).
+	CollGroup* mNextCollGroup;   ///< _20, next group in singly linked list.
 };
 
 /**
  * @brief Single collision contact.
  */
 struct Collision {
+
+	/// Default constructor (trivial).
 	Collision() { }
 
-	u8 _00[0x4];            // _00, unknown
-	Vector3f mNormal;       // _04, contact normal
-	Vector3f mContactPoint; // _10, contact point
-	RigidBody* mColliderRb; // _1C, collider rigid body
-	u8 _20[0x4];            // _20, unknown
+	u8 _unused00[0x4];        ///< _00, unknown/unused.
+	Vector3f mNormal;         ///< _04, contact normal (i.e. line collision happens along).
+	Vector3f mContactPoint;   ///< _10, contact point (between objects).
+	RigidBody* mColliderBody; ///< _1C, rigid body causing the collision.
+	u8 _unused20[0x4];        ///< _20, unknown/unused.
 };
 
 /**
- * @brief Fixed-size list of recent collision contacts.
+ * @brief Managing structure for complex collisions, largely stripped. Records up to 10 at a time.
+ *
+ * @note Size: 0x180.
  */
 struct CollState {
+
+	/**
+	 * @brief Status of collision state. Largely guesses from what remains of the functionality.
+	 */
+	enum Status {
+		Unk0             = 0, ///< 0, unknown, possibly "full" or a trigger to evaluate stored collisions.
+		PendingCollision = 1, ///< 1, a new collision has been added and needs resolving.
+		Resolved         = 2, ///< 2, fresh/with no pending collisions.
+	};
+
+	/// Default constructor - sets unknown floats.
 	CollState()
 	{
-		mStatus     = 2;
+		mStatus     = Resolved;
 		_04         = 0.0001f;
 		_08         = 0;
 		mResetCount = 0;
 	}
 
 	// unused/inlined:
+
 	void resetCollisions(Shape* shape);
 	bool add(immut Vector3f& normal, immut Vector3f& contactPt, RigidBody* collider);
 
-	int mStatus;               // _00, state/status flag (set to 2 on reset, 1 when adding)
-	f32 _04;                   // _04, unknown (initialized to 0.0001f)
-	u32 _08;                   // _08, unknown
-	int mResetCount;           // _0C, number of times resetCollisions() has been called
-	int mCollisionCount;       // _10, number of valid entries in mCollisions
-	Collision mCollisions[10]; // _14, fixed-size contact list
-	Shape* mShape;             // _17C, shape associated with the current collision set
+	int mStatus;               ///< _00, see `Status` enum.
+	f32 _04;                   ///< _04, unknown - initialized to 0.0001f.
+	u32 _08;                   ///< _08, unknown.
+	int mResetCount;           ///< _0C, number of times resetCollisions() has been called.
+	int mCollisionCount;       ///< _10, number of valid entries in mCollisions.
+	Collision mCollisions[10]; ///< _14, fixed-size contact list.
+	Shape* mModel;             ///< _17C, model of the owner object/map.
 };
 
 #endif

@@ -445,7 +445,7 @@ void PaniTestNode::draw(Graphics& gfx)
 	gfx.setDepth(0);
 	gfx.setLighting(false, nullptr);
 	gfx.useTexture(mShadowTexture, GX_TEXMAP0);
-	gfx.setColour(Colour(255, 255, 255, 255), true);
+	gfx.setColour(COLOUR_WHITE, true);
 	gfx.setCBlending(blend);
 	gfx.setDepth(1);
 

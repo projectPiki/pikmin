@@ -89,7 +89,7 @@ struct Graphics {
 	// _3B4 = VTBL
 	int mRenderMode;                          // _00, 0 = localNtsc480IntDf, 1 = progressiveRenderMode
 	u32 mRenderState;                         // _04
-	immut Matrix4f* mMatrix;                  // _08
+	immut Matrix4f* mLastModelMatrix;         // _08
 	immut Matrix4f* mActiveMatrix;            // _0C
 	Light mLight;                             // _10
 	Camera* mCamera;                          // _2E4
@@ -158,7 +158,7 @@ struct Graphics {
 	virtual void setPointSize(f32)                                                                            = 0; // _64
 	virtual f32 setLineWidth(f32)                                                                             = 0; // _68
 	virtual void setCamera(Camera*)                                                                           = 0; // _6C
-	virtual void calcViewMatrix(immut Matrix4f&, Matrix4f&)                                                   = 0; // _70
+	virtual void calcViewMatrix(immut Matrix4f& modelMtx, Matrix4f& viewMtx)                                  = 0; // _70
 	virtual void useMatrix(immut Matrix4f&, int)                                                              = 0; // _74
 	virtual void setClippingPlane(bool, Plane*)                                                               = 0; // _78
 	virtual void initMesh(Shape*)                                                                             = 0; // _7C
@@ -232,7 +232,7 @@ struct DGXGraphics : public Graphics {
 	virtual void setPointSize(f32) { }                                                                         // _64 (weak)
 	virtual f32 setLineWidth(f32);                                                                             // _68
 	virtual void setCamera(Camera*);                                                                           // _6C
-	virtual void calcViewMatrix(immut Matrix4f&, Matrix4f&);                                                   // _70
+	virtual void calcViewMatrix(immut Matrix4f& modelMtx, Matrix4f& viewMtx);                                  // _70
 	virtual void useMatrix(immut Matrix4f&, int);                                                              // _74
 	virtual void setClippingPlane(bool, Plane*) { }                                                            // _78 (weak)
 	virtual void initMesh(Shape*);                                                                             // _7C

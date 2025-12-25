@@ -792,7 +792,7 @@ struct GameCourseClearScreen : public Node {
 	{
 		gfx.setViewport(RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
 		gfx.setScissor(RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
-		gfx.setClearColour(Colour(0, 0, 0, 255));
+		gfx.setClearColour(COLOUR_BLACK);
 		gfx.clearBuffer(3, false);
 		Matrix4f mtx;
 		gfx.setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));

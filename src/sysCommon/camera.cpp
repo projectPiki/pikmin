@@ -51,8 +51,8 @@ void CullFrustum::draw(Graphics& gfx)
 	bool prevLightSetting = gfx.setLighting(false, nullptr);
 	gfx.useMatrix(gfx.mCamera->mLookAtMtx, 0);
 	gfx.useTexture(nullptr, GX_TEXMAP0);
-	gfx.setColour(Colour(255, 255, 255, 255), true);
-	gfx.setAuxColour(Colour(255, 255, 255, 255));
+	gfx.setColour(COLOUR_WHITE, true);
+	gfx.setAuxColour(COLOUR_WHITE);
 	gfx.drawLine(mPosition, mFocus);
 
 	f32 targetDist = mPosition.distance(mFocus);

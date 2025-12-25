@@ -84,7 +84,7 @@ void GmWin::render(Graphics& gfx)
 	gfx.useTexture(wintex, GX_TEXMAP0);
 	gfx.drawRectangle(area, RectArea(0, 0, 128, 128), nullptr);
 	gfx.useTexture(nullptr, GX_TEXMAP0);
-	gfx.setColour(Colour(255, 255, 255, 255), true);
+	gfx.setColour(COLOUR_WHITE, true);
 	doRender(gfx);
 }
 

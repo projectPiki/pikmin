@@ -400,11 +400,11 @@ void traceMove2(Creature* target, MoveTrace& trace, f32 p3)
 			if ((!collShape->mCreature || collShape->mCreature != target) && box.intersects(collShape->mBoundingBox)) {
 				for (int i = 0; i < collShape->mColliderCount; i++) {
 					if (collShape->mVisibleList[collShape->mColliderList[i]->mRoomIndex]) {
-						collShape->mColliderList[i]->mShape          = collShape->mShape;
-						collShape->mColliderList[i]->mVertexList     = collShape->mVertexList;
-						collShape->mColliderList[i]->mSourceCollider = collShape;
-						collShape->mColliderList[i]->mNextCollider   = prevColl;
-						prevColl                                     = collShape->mColliderList[i];
+						collShape->mColliderList[i]->mModel         = collShape->mShape;
+						collShape->mColliderList[i]->mVertexList    = collShape->mVertexList;
+						collShape->mColliderList[i]->mPlatCollider  = collShape;
+						collShape->mColliderList[i]->mNextCollGroup = prevColl;
+						prevColl                                    = collShape->mColliderList[i];
 					}
 				}
 			}
@@ -412,11 +412,11 @@ void traceMove2(Creature* target, MoveTrace& trace, f32 p3)
 
 		CollGroup* coll = mapMgr->mMapShape->getCollTris(trace.mPosition);
 		if (coll && coll->mTriCount) {
-			coll->mShape          = mapMgr->mMapShape;
-			coll->mVertexList     = mapMgr->mMapShape->mVertexList;
-			coll->mSourceCollider = nullptr;
-			coll->mNextCollider   = prevColl;
-			prevColl              = coll;
+			coll->mModel         = mapMgr->mMapShape;
+			coll->mVertexList    = mapMgr->mMapShape->mVertexList;
+			coll->mPlatCollider  = nullptr;
+			coll->mNextCollGroup = prevColl;
+			prevColl             = coll;
 		}
 
 		if (prevColl) {

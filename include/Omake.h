@@ -417,13 +417,13 @@ struct DefaultFader : public AttentionCamera::Fader {
 		int x = t * 320.0f;
 		int y = t * 240.0f;
 		RectArea area1(0, 0, 640, 480);
-		gfx.setColour(Colour(0, 0, 0, 255), true);
-		gfx.setAuxColour(Colour(0, 0, 0, 255));
+		gfx.setColour(COLOUR_BLACK, true);
+		gfx.setAuxColour(COLOUR_BLACK);
 		gfx.useTexture(nullptr, GX_TEXMAP0);
 		gfx.fillRectangle(area1);
 
-		gfx.setColour(Colour(255, 255, 255, 255), true);
-		gfx.setAuxColour(Colour(255, 255, 255, 255));
+		gfx.setColour(COLOUR_WHITE, true);
+		gfx.setAuxColour(COLOUR_WHITE);
 		gfx.useTexture(mapMgr->mBlurredTexture, GX_TEXMAP0);
 
 		RectArea area2(x, y, 640 - x, 480 - y);
@@ -450,13 +450,13 @@ struct DefaultFader : public AttentionCamera::Fader {
 		int x = t * 320.0f;
 		int y = t * 240.0f;
 		RectArea area1(0, 0, 640, 480);
-		gfx.setColour(Colour(0, 0, 0, 255), true);
-		gfx.setAuxColour(Colour(0, 0, 0, 255));
+		gfx.setColour(COLOUR_BLACK, true);
+		gfx.setAuxColour(COLOUR_BLACK);
 		gfx.useTexture(nullptr, GX_TEXMAP0);
 		gfx.fillRectangle(area1);
 
-		gfx.setColour(Colour(255, 255, 255, 255), true);
-		gfx.setAuxColour(Colour(255, 255, 255, 255));
+		gfx.setColour(COLOUR_WHITE, true);
+		gfx.setAuxColour(COLOUR_WHITE);
 		gfx.useTexture(mapMgr->mBlurredTexture, GX_TEXMAP0);
 
 		RectArea area2(x, y, 640 - x, 480 - y);
