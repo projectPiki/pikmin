@@ -137,10 +137,10 @@ void WorldClock::reset(f32 speed)
  * @TODO: Documentation
  * @note UNUSED Size: 00006C
  */
-f32 WorldClock::age(f32 p1)
+f32 WorldClock::age(f32 offsetHours)
 {
 	f32 hours = f32(mCurrentDay) * mHoursInDay + f32(mCurrentTime);
-	return (hours * mTimeScale + mFractionalTime) / mTicksPerHour - p1;
+	return (hours * mTimeScale + mFractionalTime) / mTicksPerHour - offsetHours;
 }
 
 /**

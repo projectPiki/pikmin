@@ -144,16 +144,16 @@ public:
 	}
 
 protected:
-	bool move(f32 p1)
+	bool move(f32 time)
 	{
 		bool res = false;
 		mAnimTimer += gsys->getFrameTime();
-		if (mAnimTimer > p1) {
-			mAnimTimer = p1;
+		if (mAnimTimer > time) {
+			mAnimTimer = time;
 			res        = true;
 		}
 
-		f32 t     = sinf(mAnimTimer / p1 * HALF_PI);
+		f32 t     = sinf(mAnimTimer / time * HALF_PI);
 		f32 tComp = 1.0f - t;
 		mTitlePane->move(zen::RoundOff(mStartPos.x * tComp + mTargetPos.x * t), zen::RoundOff(mStartPos.y * tComp + mTargetPos.y * t));
 		return res;

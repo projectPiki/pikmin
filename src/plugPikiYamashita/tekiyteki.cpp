@@ -85,20 +85,20 @@ int YTeki::getMapAttribute()
 /**
  * @TODO: Documentation
  */
-void YTeki::moveTowardPriorityFaceDir(immut Vector3f& p1, f32 p2)
+void YTeki::moveTowardPriorityFaceDir(immut Vector3f& targetPos, f32 speed)
 {
-	moveTowardPriorityFaceDir(p1, p2, getParameterF(TPF_TurnVelocity));
+	moveTowardPriorityFaceDir(targetPos, speed, getParameterF(TPF_TurnVelocity));
 }
 
 /**
  * @TODO: Documentation
  */
-void YTeki::moveTowardPriorityFaceDir(immut Vector3f& p1, f32 p2, f32 turnSpeed)
+void YTeki::moveTowardPriorityFaceDir(immut Vector3f& targetPos, f32 speed, f32 turnSpeed)
 {
 	STACK_PAD_VAR(4);
 
 	f32 ySpeed   = mTargetVelocity.y;
-	mTargetAngle = NMathF::atan2(p1.x - getPosition().x, p1.z - getPosition().z);
+	mTargetAngle = NMathF::atan2(targetPos.x - getPosition().x, targetPos.z - getPosition().z);
 	f32 angSep   = angDist(mTargetAngle, mFaceDirection);
 	mFaceDirection += gsys->getFrameTime() * (angSep * turnSpeed);
 	mFaceDirection = roundAng(mFaceDirection);
@@ -108,7 +108,7 @@ void YTeki::moveTowardPriorityFaceDir(immut Vector3f& p1, f32 p2, f32 turnSpeed)
 	if (angle > 1.0f) {
 		angle = 1.0f;
 	} else {
-		p2 *= (1.0f - angle);
+		speed *= (1.0f - angle);
 	}
 	f32 faceDir = mFaceDirection;
 	f32 zSpeed  = cosf(faceDir);
@@ -118,7 +118,7 @@ void YTeki::moveTowardPriorityFaceDir(immut Vector3f& p1, f32 p2, f32 turnSpeed)
 	f32 xSpeed = sinf(faceDir);
 
 	mTargetVelocity.set(xSpeed, 0.0f, zSpeed);
-	mTargetVelocity.multiply(p2);
+	mTargetVelocity.multiply(speed);
 	mTargetVelocity.y = ySpeed;
 }
 

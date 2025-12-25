@@ -375,7 +375,7 @@ void PVWTexAnimInfo::extract(f32 value, Vector3f& target)
 /**
  * @TODO: Documentation
  */
-void PVWTextureData::animate(f32* p1, Matrix4f& mtx)
+void PVWTextureData::animate(f32* framePtr, Matrix4f& mtx)
 {
 	if (mAnimationFactor == 255) {
 		return;
@@ -392,8 +392,8 @@ void PVWTextureData::animate(f32* p1, Matrix4f& mtx)
 			vec3.set(mTranslationX, mTranslationY, 0.0f);
 		}
 	} else {
-		if (p1) {
-			mCurrentFrame = std::fmodf(*p1, (f32)mTotalFrameCount);
+		if (framePtr) {
+			mCurrentFrame = std::fmodf(*framePtr, (f32)mTotalFrameCount);
 		} else {
 			mCurrentFrame += gsys->getFrameTime() * (30.0f * mAnimSpeed);
 			if (mCurrentFrame >= f32(mTotalFrameCount - 1)) {
@@ -512,14 +512,14 @@ void PVWTextureInfo::read(RandomAccessStream& input)
 /**
  * @TODO: Documentation
  */
-void PVWTevColReg::animate(f32* p1, ShortColour& color)
+void PVWTevColReg::animate(f32* framePtr, ShortColour& color)
 {
 	if (!mAnimFrameCount) {
 		return;
 	}
 
-	if (p1) {
-		mCurrentAnimFrame = std::fmodf(*p1, mAnimFrameCount);
+	if (framePtr) {
+		mCurrentAnimFrame = std::fmodf(*framePtr, mAnimFrameCount);
 	} else {
 		mCurrentAnimFrame += gsys->getFrameTime() * (30.0f * mAnimSpeed);
 		if (mCurrentAnimFrame >= f32(mAnimFrameCount - 1)) {
@@ -794,9 +794,9 @@ void MaterialHandler::setMaterial(Material* mat)
 /**
  * @TODO: Documentation
  */
-void MaterialHandler::setTexMatrix(bool p1)
+void MaterialHandler::setTexMatrix(bool enable)
 {
-	mGfx->initReflectTex(p1);
+	mGfx->initReflectTex(enable);
 }
 
 /**
@@ -1236,12 +1236,12 @@ void TexAttr::read(RandomAccessStream& stream)
 /**
  * @TODO: Documentation
  */
-void Graphics::drawCylinder(immut Vector3f& p1, immut Vector3f& p2, f32 p3, immut Matrix4f& p4)
+void Graphics::drawCylinder(immut Vector3f& start, immut Vector3f& end, f32 radius, immut Matrix4f& transformMtx)
 {
 	useTexture(nullptr, GX_TEXMAP0);
 
-	Vector3f vec1(p1);
-	Vector3f vec2 = p2 - p1;
+	Vector3f vec1(start);
+	Vector3f vec2 = end - start;
 	f32 distance  = vec2.normalise();
 
 	vec2 = vec2 * (distance / 16.0f);
@@ -1250,7 +1250,7 @@ void Graphics::drawCylinder(immut Vector3f& p1, immut Vector3f& p2, f32 p3, immu
 		Matrix4f b;
 
 		a.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), Vector3f(0.0f, f32(i) * (PI / 8.0f), 0.0f), vec1);
-		p4.multiplyTo(a, b);
+		transformMtx.multiplyTo(a, b);
 		useMatrix(b, 0);
 
 		for (int j = 0; j < 16; j++) {
@@ -1258,8 +1258,8 @@ void Graphics::drawCylinder(immut Vector3f& p1, immut Vector3f& p2, f32 p3, immu
 			f32 currentAngle = f32(j) * (PI / 8.0f);
 			f32 nextAngle    = f32((j + 1) % 32) * (PI / 8.0f);
 
-			drawLine(Vector3f(sinf(currentAngle) * p3, 0.0f, cosf(currentAngle) * p3),
-			         Vector3f(sinf(nextAngle) * p3, 0.0f, cosf(nextAngle) * p3));
+			drawLine(Vector3f(sinf(currentAngle) * radius, 0.0f, cosf(currentAngle) * radius),
+			         Vector3f(sinf(nextAngle) * radius, 0.0f, cosf(nextAngle) * radius));
 		}
 
 		vec1 = vec1 + vec2;
@@ -1278,7 +1278,7 @@ void Graphics::drawCircle(immut Vector3f&, f32, immut Matrix4f&)
 /**
  * @TODO: Documentation
  */
-void Graphics::drawSphere(immut Vector3f& p1, f32 p2, immut Matrix4f& p3)
+void Graphics::drawSphere(immut Vector3f& center, f32 radius, immut Matrix4f& transformMtx)
 {
 	useTexture(nullptr, GX_TEXMAP0);
 
@@ -1286,15 +1286,16 @@ void Graphics::drawSphere(immut Vector3f& p1, f32 p2, immut Matrix4f& p3)
 		Matrix4f mtx1;
 		Matrix4f mtx2;
 
-		mtx1.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), Vector3f(0.0f, f32(i) * (PI / 8.0f), 0.0f), p1);
-		p3.multiplyTo(mtx1, mtx2);
+		mtx1.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), Vector3f(0.0f, f32(i) * (PI / 8.0f), 0.0f), center);
+		transformMtx.multiplyTo(mtx1, mtx2);
 		useMatrix(mtx2, 0);
 
 		for (int j = 0; j < 16; j++) {
 			f32 theta0 = f32(j) * (PI / 8.0f);
 			f32 theta1 = f32((j + 1) % 32) * (PI / 8.0f);
 
-			drawLine(Vector3f(sinf(theta0) * p2, cosf(theta0) * p2, 0.0f), Vector3f(sinf(theta1) * p2, cosf(theta1) * p2, 0.0f));
+			drawLine(Vector3f(sinf(theta0) * radius, cosf(theta0) * radius, 0.0f),
+			         Vector3f(sinf(theta1) * radius, cosf(theta1) * radius, 0.0f));
 		}
 	}
 }

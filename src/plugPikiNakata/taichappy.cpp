@@ -600,8 +600,8 @@ bool TaiChappySmashedAction::actByEvent(immut TekiEvent& event)
 /**
  * @TODO: Documentation
  */
-TaiChappyLegEffectAction::TaiChappyLegEffectAction(f32 p1)
-    : TaiJointEffectAction(p1, 2, 'lleg', 'rleg', 0, 0)
+TaiChappyLegEffectAction::TaiChappyLegEffectAction(f32 sinkThreshold)
+    : TaiJointEffectAction(sinkThreshold, 2, 'lleg', 'rleg', 0, 0)
 {
 }
 

@@ -29,10 +29,10 @@ DEFINE_PRINT("CreatureMove")
 /**
  * @TODO: Documentation
  */
-void Creature::moveRotation(f32 p1)
+void Creature::moveRotation(f32 deltaTime)
 {
 	if (isCreatureFlag(CF_DisableAutoFaceDir)) {
-		Vector3f vec1 = mPrevAngularVelocity * p1;
+		Vector3f vec1 = mPrevAngularVelocity * deltaTime;
 		Quat q1(vec1.x, vec1.y, vec1.z, 0.0f);
 		Quat q2(mRotationQuat);
 
@@ -55,7 +55,7 @@ void Creature::moveRotation(f32 p1)
 			}
 #endif
 
-			mFaceDirection += angDist(angle, mFaceDirection) * mProps->mCreatureProps.mFaceDirAdjust() * p1 * 10.0f;
+			mFaceDirection += angDist(angle, mFaceDirection) * mProps->mCreatureProps.mFaceDirAdjust() * deltaTime * 10.0f;
 			mFaceDirection = roundAng(mFaceDirection);
 			if (mRope) {
 				mSRT.r.y = mFaceDirection;

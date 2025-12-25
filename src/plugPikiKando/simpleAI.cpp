@@ -158,12 +158,12 @@ void SimpleAI::addState(int stateID, int motionID, SAIAction* initAction, SAIAct
 /**
  * @TODO: Documentation
  */
-SAIArrow* SimpleAI::addArrow(int p1, SAIEvent* event, int p3)
+SAIArrow* SimpleAI::addArrow(int stateIdId, SAIEvent* event, int nextStateId)
 {
-	SAIArrow* arrow = new SAIArrow(event, p3);
-	int stateIdx    = mStateIndexes[p1];
+	SAIArrow* arrow = new SAIArrow(event, nextStateId);
+	int stateIdx    = mStateIndexes[stateIdId];
 	if (stateIdx == -1) {
-		PRINT("addArrow(%d,%x,%d) : ILLEGAL STATE %d\n", p1, event, p3, p1);
+		PRINT("addArrow(%d,%x,%d) : ILLEGAL STATE %d\n", stateIdId, event, nextStateId, stateIdx);
 		return nullptr;
 	}
 

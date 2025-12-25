@@ -492,7 +492,7 @@ struct TurbulenceFun : public NoiseFunction {
 	f32 getValue(f32);
 
 	// _00-_08 = NoiseFunction
-	int _UNUSED08;  // _08
+	int _08;        // _08
 	f32 mFrequency; // _0C
 };
 

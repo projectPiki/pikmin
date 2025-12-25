@@ -846,28 +846,28 @@ void NPosture3D::translate(immut Vector3f& offset)
  * @TODO: Documentation
  * @note UNUSED Size: 000064
  */
-void NPosture3D::rotate(immut NVector3f& p1, immut NPolar3f& p2)
+void NPosture3D::rotate(immut NVector3f& pivot, immut NPolar3f& rotationDelta)
 {
-	rotatePoint(mViewpoint, p1, p2);
-	rotatePoint(mWatchpoint, p1, p2);
+	rotatePoint(mViewpoint, pivot, rotationDelta);
+	rotatePoint(mWatchpoint, pivot, rotationDelta);
 }
 
 /**
  * @TODO: Documentation
  * @note UNUSED Size: 0001CC
  */
-void NPosture3D::rotatePoint(NVector3f& p1, immut NVector3f& p2, immut NPolar3f& p3) immut
+void NPosture3D::rotatePoint(NVector3f& point, immut NVector3f& pivot, immut NPolar3f& rotationDelta) immut
 {
 	NVector3f NRef tempVec = NVector3f();
 	NPolar3f NRef tempPol  = NPolar3f();
 
-	tempVec.sub2(p1, p2);
+	tempVec.sub2(point, pivot);
 
 	tempPol.input(tempVec);
-	tempPol.add(p3);
+	tempPol.add(rotationDelta);
 	tempPol.output(tempVec);
 
-	p1.add2(p2, tempVec);
+	point.add2(pivot, tempVec);
 }
 
 /**
@@ -911,11 +911,11 @@ void NPosture3D::output(NPosture2D& out2D) immut
  * @TODO: Documentation
  * @note UNUSED Size: 000078
  */
-void NPosture3D::outputTransform(immut NPosture3D& p1, NTransform3D& outTransform) immut
+void NPosture3D::outputTransform(immut NPosture3D& otherPosture, NTransform3D& outTransform) immut
 {
 	NTransform3D NRef temp = NTransform3D();
 	outputInverseTransform(outTransform);
-	p1.outputTransform(temp);
+	otherPosture.outputTransform(temp);
 	outTransform.mul(temp);
 }
 
@@ -1355,10 +1355,10 @@ void NTransform3D::transform(Vector3f& point) immut
  * @TODO: Documentation
  * @note UNUSED Size: 000044
  */
-void NTransform3D::transform(immut Vector3f& p1, Vector3f& p2) immut
+void NTransform3D::transform(immut Vector3f& inputPoint, Vector3f& outputPoint) immut
 {
-	p2 = p1;
-	transform(p2);
+	outputPoint = inputPoint;
+	transform(outputPoint);
 }
 
 /**
@@ -1382,10 +1382,10 @@ void NTransform3D::transform(NVector& vec) immut
  * @TODO: Documentation
  * @note UNUSED Size: 00018C
  */
-void NTransform3D::transform(immut NVector& p1, NVector& p2) immut
+void NTransform3D::transform(immut NVector& in, NVector& out) immut
 {
-	p2.input(p1);
-	transform(p2);
+	out.input(in);
+	transform(out);
 }
 
 /**

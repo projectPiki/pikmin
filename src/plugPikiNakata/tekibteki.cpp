@@ -494,10 +494,10 @@ void BTeki::finishStoppingMove()
 /**
  * @TODO: Documentation
  */
-f32 BTeki::getVelocityAnimationSpeed(f32 p1)
+f32 BTeki::getVelocityAnimationSpeed(f32 speed)
 {
 	f32 animSpeed   = mTekiAnimator->getAnimationSpeed() / 30.0f;
-	f32 scaledSpeed = p1 * animSpeed / getScaleRate();
+	f32 scaledSpeed = speed * animSpeed / getScaleRate();
 	f32 minSpeed    = 10.0f * animSpeed;
 	if (scaledSpeed < minSpeed) {
 		scaledSpeed = minSpeed;
@@ -1119,15 +1119,15 @@ bool BTeki::cullableSphere(Creature& target, f32 radius)
 /**
  * @TODO: Documentation
  */
-bool BTeki::inSectorPosition(immut Vector3f& p1, f32 p2, f32 p3)
+bool BTeki::inSectorPosition(immut Vector3f& targetPos, f32 maxDistance, f32 sectorAngle)
 {
-	NVector3f pos(getPosition());
-	f32 dist = pos.distanceXZ(p1);
-	if (dist > p2) {
+	NVector3f selfPos(getPosition());
+	f32 distance = selfPos.distanceXZ(targetPos);
+	if (distance > maxDistance) {
 		return false;
 	}
 
-	if (calcTargetAngle(p1) > p3 / 2.0f) {
+	if (calcTargetAngle(targetPos) > sectorAngle / 2.0f) {
 		return false;
 	}
 
@@ -1761,21 +1761,22 @@ void BTeki::makePositionRoute(immut Vector3f& pos1, immut Vector3f& pos2, bool i
 /**
  * @TODO: Documentation
  */
-void BTeki::makeWayPointRoute(int p1, int p2, bool includeBlockedPaths)
+void BTeki::makeWayPointRoute(int start, int destination, bool includeBlockedPaths)
 {
 	for (int i = 0; i < mRouteWayPointMax; i++) {
 		mRouteWayPoints[i] = nullptr;
 	}
 
-	mRouteWayPointCount = routeMgr->getPathFinder(mPathHandle)->findSync(mRouteWayPoints, mRouteWayPointMax, p1, p2, includeBlockedPaths);
+	mRouteWayPointCount
+	    = routeMgr->getPathFinder(mPathHandle)->findSync(mRouteWayPoints, mRouteWayPointMax, start, destination, includeBlockedPaths);
 
 	if (mRouteWayPointCount > mRouteWayPointMax) {
 		PRINT("!makeWayPointRoute:routeWayPointCount>routeWayPointMax:%08x:%d,%d\n", this, mRouteWayPointCount, mTekiType);
 	}
 
-	PRINT_NAKATA("makeWayPointRoute:%08x,%d->%d,%d\n", this, p1, p2, mRouteWayPointCount);
+	PRINT_NAKATA("makeWayPointRoute:%08x,%d->%d,%d\n", this, start, destination, mRouteWayPointCount);
 	if (mRouteWayPointCount == 0) {
-		PRINT("!makeWayPointRoute:%08x,%d->%d,%d\n", this, p1, p2, mRouteWayPointCount);
+		PRINT("!makeWayPointRoute:%08x,%d->%d,%d\n", this, start, destination, mRouteWayPointCount);
 	}
 }
 
@@ -2106,11 +2107,11 @@ void BTeki::outputWorldAnimationMatrix(Matrix4f& mtx1, int idx, immut Matrix4f& 
 /**
  * @TODO: Documentation
  */
-void BTeki::outputWorldAnimationPosition(Vector3f& p1, int p2, immut Matrix4f& p3)
+void BTeki::outputWorldAnimationPosition(Vector3f& position, int idx, immut Matrix4f& mtx)
 {
 	NMatrix4f tmp;
-	outputWorldAnimationMatrix(tmp, p2, p3);
-	tmp.outputCol(3, p1);
+	outputWorldAnimationMatrix(tmp, idx, mtx);
+	tmp.outputCol(3, position);
 }
 
 /**
@@ -2169,9 +2170,9 @@ void BTeki::startParticleGenerator(int param_1)
 /**
  * @TODO: Documentation
  */
-void BTeki::stopParticleGenerator(int param_1)
+void BTeki::stopParticleGenerator(int generatorIndex)
 {
-	zen::particleGenerator* particleGenerator = mParticleGenerators[param_1];
+	zen::particleGenerator* particleGenerator = mParticleGenerators[generatorIndex];
 	if (particleGenerator != nullptr) {
 		particleGenerator->stopGen();
 	}

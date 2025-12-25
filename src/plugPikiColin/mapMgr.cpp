@@ -51,14 +51,14 @@ static SoftLightLight* vlink;
  * @brief TODO
  */
 struct SoftLight {
-	void addLight(u32 p1, LShortColour*, Shape*)
+	void addLight(u32 tick, LShortColour*, Shape*)
 	{
 		if (mSublightList) {
 			for (int i = 0; i < mLightListSize; i++) {
-				if (mSublightList[i]->mLastUpdateTick != p1) {
+				if (mSublightList[i]->mLastUpdateTick != tick) {
 					mSublightList[i]->mNext           = vlink;
 					vlink                             = mSublightList[i];
-					mSublightList[i]->mLastUpdateTick = p1;
+					mSublightList[i]->mLastUpdateTick = tick;
 				}
 				mSublightList[i]->mAccumulatedIntensity += (mIntensityScales[i] * mEffectiveColour.r) >> 8;
 			}

@@ -232,15 +232,15 @@ f32 ControlerMgr::update()
 /**
  * @TODO: Documentation
  */
-RumbleMgr::RumbleMgr(bool p1, bool p2, bool p3, bool p4)
+RumbleMgr::RumbleMgr(bool enabled1, bool enabled2, bool enabled3, bool enabled4)
 {
 	mRumbleIntensity    = 0.0f;
 	mRumbleFadeOutTimer = 0.0f;
 	bool valArray[4];
-	valArray[0] = p1;
-	valArray[1] = p2;
-	valArray[2] = p3;
-	valArray[3] = p4;
+	valArray[0] = enabled1;
+	valArray[1] = enabled2;
+	valArray[2] = enabled3;
+	valArray[3] = enabled4;
 
 	for (int i = 0; i < 4; i++) {
 		mControlerMgrs[i] = nullptr;
@@ -379,9 +379,9 @@ void RumbleMgr::update()
 /**
  * @TODO: Documentation
  */
-void RumbleMgr::rumbleOption(bool p1)
+void RumbleMgr::rumbleOption(bool enabled)
 {
-	mIsEnabled = p1;
+	mIsEnabled = enabled;
 
 	if (!mIsEnabled) {
 		reset();

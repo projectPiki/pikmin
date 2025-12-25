@@ -181,7 +181,7 @@ void zen::DrawMenuTitle::end()
 /**
  * @TODO: Documentation
  */
-bool zen::DrawMenuTitle::update(f32 p1)
+bool zen::DrawMenuTitle::update(f32 dt)
 {
 	f32 xScale, tmp;
 	if (mTitlePane) {
@@ -190,8 +190,8 @@ bool zen::DrawMenuTitle::update(f32 p1)
 			mTitlePane->setScale(0.0f);
 		} break;
 		case MODE_Start: {
-			xScale = (1.0f - NMathF::sin(HALF_PI * p1)) * 3.0f + 1.0f;
-			tmp    = (p1 - 0.65f) / 0.35f;
+			xScale = (1.0f - NMathF::sin(HALF_PI * dt)) * 3.0f + 1.0f;
+			tmp    = (dt - 0.65f) / 0.35f;
 			if (tmp < 0.0f) {
 				tmp = 0.0f;
 			}
@@ -201,9 +201,9 @@ bool zen::DrawMenuTitle::update(f32 p1)
 			mTitlePane->setScale(1.0f);
 		} break;
 		case MODE_End: {
-			p1     = 1.0f - p1;
-			xScale = (1.0f - NMathF::sin(HALF_PI * p1)) * 3.0f + 1.0f;
-			tmp    = (p1 - 0.65f) / 0.35f;
+			dt     = 1.0f - dt;
+			xScale = (1.0f - NMathF::sin(HALF_PI * dt)) * 3.0f + 1.0f;
+			tmp    = (dt - 0.65f) / 0.35f;
 			if (tmp < 0.0f) {
 				tmp = 0.0f;
 			}
@@ -357,14 +357,14 @@ zen::DrawMenu::DrawMenu(immut char* bloFileName, bool useAlphaMgr, bool useTexAn
 /**
  * @TODO: Documentation
  */
-void zen::DrawMenu::start(int p1)
+void zen::DrawMenu::start(int select)
 {
 	mState = STATUS_Unk1;
 	_104   = 0.0f;
 	_108   = 0.5f;
 	mRatio = 0.0f;
-	if (p1 >= 0) {
-		mCurrentSelect = p1;
+	if (select >= 0) {
+		mCurrentSelect = select;
 	}
 
 	mIsSelectMenuCancel = false;

@@ -215,10 +215,10 @@ void Boss::makeTargetCreature()
 /**
  * @TODO: Documentation
  */
-void Boss::makeTargetRandom(f32 p1)
+void Boss::makeTargetRandom(f32 maxDistance)
 {
 	mWalkTimer += gsys->getFrameTime();
-	if (mWalkTimer > 5.0f || qdist2(mSRT.t.x, mSRT.t.z, mTargetPosition.x, mTargetPosition.z) < p1) {
+	if (mWalkTimer > 5.0f || qdist2(mSRT.t.x, mSRT.t.z, mTargetPosition.x, mTargetPosition.z) < maxDistance) {
 		f32 randAngle = NsMathF::getRand(TAU);
 		Vector3f vec;
 		f32 randDist = NsMathF::getRand(BOSS_PROP.mMaxWaitRadius());

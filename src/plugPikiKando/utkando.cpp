@@ -192,13 +192,13 @@ void drawBattenPole(Graphics& gfx, immut Vector3f& pos, f32 size, immut char* na
 /**
  * @TODO: Documentation
  */
-void drawArrow(Graphics& gfx, immut Vector3f& p1, immut Vector3f& p2, f32 size)
+void drawArrow(Graphics& gfx, immut Vector3f& from, immut Vector3f& to, f32 size)
 {
 	gfx.useMatrix(gfx.mCamera->mLookAtMtx, 0);
 	gfx.setColour(Colour(255, 125, 0, 255), true);
 
-	Vector3f pos1 = p1;
-	Vector3f pos2 = p2;
+	Vector3f pos1 = from;
+	Vector3f pos2 = to;
 	pos2.y        = 0.0f;
 	pos2.normalise();
 

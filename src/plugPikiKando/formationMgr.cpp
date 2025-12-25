@@ -206,12 +206,12 @@ void FormationMgr::slide(Creature* target, int idx)
  * @TODO: Documentation
  * @note UNUSED Size: 0000CC
  */
-void FormationMgr::add(immut Vector3f& p1, immut Vector3f& p2)
+void FormationMgr::add(immut Vector3f& localPos, immut Vector3f& color)
 {
 	Colour col;
-	col.set(int(255.0f * p2.x), int(255.0f * p2.y), int(255.0f * p2.z), 255);
+	col.set(int(255.0f * color.x), int(255.0f * color.y), int(255.0f * color.z), 255);
 	mFormPoints[mFormPointCount].reset();
-	mFormPoints[mFormPointCount].mLocalPosition = p1;
+	mFormPoints[mFormPointCount].mLocalPosition = localPos;
 	mFormPoints[mFormPointCount].mDebugColor    = col;
 	mFormPointCount++;
 }

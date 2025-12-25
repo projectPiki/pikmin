@@ -12,9 +12,9 @@ struct Creature;
  * @brief TODO
  */
 struct EffectParm {
-	EffectParm(immut Vector3f* p1)
+	EffectParm(immut Vector3f* pos)
 	{
-		mPositionRef = p1;
+		mPositionRef = pos;
 		mScale       = 1.0f;
 	}
 

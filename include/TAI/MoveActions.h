@@ -416,10 +416,10 @@ struct TaiTurningToTargetPositionAction : public TaiContinuousMotionAction {
  * @brief TODO
  */
 struct TaiRotatingAction : public TaiAction {
-	TaiRotatingAction(f32 p1)
+	TaiRotatingAction(f32 speed)
 	    : TaiAction(TAI_NO_TRANSIT)
 	{
-		mRotateSpeed = p1;
+		mRotateSpeed = speed;
 	}
 
 	virtual bool act(Teki& teki); // _10

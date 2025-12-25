@@ -145,10 +145,10 @@ public:
 		mState = WipeState::Idle;
 	}
 
-	void open(f32 p1)
+	void open(f32 duration)
 	{
 		mTimer    = 0.0f;
-		mDuration = p1;
+		mDuration = duration;
 		for (int i = 0; i < 4; i++) {
 			mWipes[i].moveDefaultPos();
 		}
@@ -197,10 +197,10 @@ public:
 		return mIsActive;
 	}
 
-	void close(f32 p1, int p2, int p3)
+	void close(f32 duration, int p2, int p3)
 	{
 		mTimer    = 0.0f;
-		mDuration = p1;
+		mDuration = duration;
 
 		for (int i = 0; i < 4; i++) {
 			mWipes[i].move(p2, p3);
@@ -828,11 +828,11 @@ protected:
 		}
 	}
 
-	f32 calcAddAngle(f32 p1, f32 p2, f32 p3, f32 p4)
+	f32 calcAddAngle(f32 currentAngle, f32 targetAngle, f32 maxDelta, f32 scale)
 	{
-		f32 diff = p2 - p1;
-		if (zen::Abs(diff) > p3) {
-			f32 x = p3;
+		f32 diff = targetAngle - currentAngle;
+		if (zen::Abs(diff) > maxDelta) {
+			f32 x = maxDelta;
 			if (zen::Abs(diff) < PI) {
 				if (diff < 0.0f) {
 					x *= -1.0f;
@@ -841,7 +841,7 @@ protected:
 				x *= -1.0f;
 			}
 
-			return x * p4;
+			return x * scale;
 		}
 
 		return diff;

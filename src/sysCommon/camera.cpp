@@ -354,9 +354,9 @@ void CullFrustum::calcVectors(immut Vector3f& eyePos, immut Vector3f& targetPos)
 /**
  * @TODO: Documentation
  */
-void CullFrustum::calcLookAt(immut Vector3f& p1, immut Vector3f& p2, immut Vector3f* p3)
+void CullFrustum::calcLookAt(immut Vector3f& cameraPos, immut Vector3f& targetPos, immut Vector3f* upVector)
 {
-	mLookAtMtx.makeLookat(p1, p2, p3);
+	mLookAtMtx.makeLookat(cameraPos, targetPos, upVector);
 	mLookAtMtx.inverse(&mInverseLookAtMtx);
 }
 

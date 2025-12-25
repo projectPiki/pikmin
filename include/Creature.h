@@ -311,7 +311,7 @@ public:
 	void setRebirthDay(int day) { mRebirthDay = day; }
 	int getRebirthDay() { return mRebirthDay; }
 
-	bool roughCulling(Creature* other, f32 p2) { return mGrid.doCulling(other->mGrid, p2); }
+	bool roughCulling(Creature* other, f32 radius) { return mGrid.doCulling(other->mGrid, radius); }
 
 	void setStateDamaged() { mIsBeingDamaged = true; }
 	void resetStateDamaged() { mIsBeingDamaged = false; }

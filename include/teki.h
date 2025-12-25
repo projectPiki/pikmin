@@ -175,7 +175,7 @@ struct TekiShapeObject {
 struct TekiMessage {
 	TekiMessage(int, NTeki*);
 
-	int _00;      // _00
+	int mMsg;     // _00
 	NTeki* mTeki; // _04
 };
 
@@ -667,10 +667,10 @@ public:
 	void setSpeed(f32 speed) { mSpeed = speed; }
 	void addSpeed(f32 amt) { mSpeed += amt; }
 
-	void initCylinderTYpePtclCallBack(Teki* p1, immut Vector3f& p2, immut Vector3f& p3, f32 p4, f32 p5, f32 p6, f32 p7,
-	                                  TAIeffectAttackEventCallBack* cb)
+	void initCylinderTYpePtclCallBack(Teki* teki, immut Vector3f& startPos, Vector3f velocity, f32 duration, f32 damage, f32 maxRange,
+	                                  f32 radius, TAIeffectAttackEventCallBack* eventCB)
 	{
-		mCylinderCallBack.init(&mEffectAttackParam, p1, p2, p3, p4, p5, p6, p7, cb);
+		mCylinderCallBack.init(&mEffectAttackParam, teki, startPos, velocity, duration, damage, maxRange, radius, eventCB);
 	}
 	zen::CallBack1<zen::particleGenerator*>* getCylinderTypePtclCallBack() { return &mCylinderCallBack; }
 

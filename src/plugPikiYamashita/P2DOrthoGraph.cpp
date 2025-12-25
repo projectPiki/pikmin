@@ -55,11 +55,11 @@ void P2DOrthoGraph::setPort()
  * @TODO: Documentation
  * @note UNUSED Size: 000024
  */
-void P2DOrthoGraph::setOrtho(const PUTRect& p1, int p2, int p3)
+void P2DOrthoGraph::setOrtho(const PUTRect& viewBounds, int nearZ, int farZ)
 {
-	mLogicalViewBounds = p1;
-	mLogicalFarZ       = -p3;
-	mLogicalNearZ      = -p2;
+	mLogicalViewBounds = viewBounds;
+	mLogicalFarZ       = -farZ;
+	mLogicalNearZ      = -nearZ;
 }
 
 /**

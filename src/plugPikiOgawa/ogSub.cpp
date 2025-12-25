@@ -42,16 +42,17 @@ bool ogCheckInsCard()
 /**
  * @TODO: Documentation
  */
-f32 calcPuruPuruScale(f32 p1)
+f32 calcPuruPuruScale(f32 timer)
 {
 	STACK_PAD_VAR(1);
 
-	f32 val = (p1 / 0.5f);
-	if (val > 1.0f) {
-		val = 1.0f;
+	f32 normalizedTime = (timer / 0.5f);
+	if (normalizedTime > 1.0f) {
+		normalizedTime = 1.0f;
 	}
-	f32 x = (1.0f - val) * 0.08f;
-	return (NMathF::cos(2.0f * TAU * val) + 1.0f) * x + 1.0f;
+
+	f32 amplitude = (1.0f - normalizedTime) * 0.08f;
+	return (NMathF::cos(2.0f * TAU * normalizedTime) + 1.0f) * amplitude + 1.0f;
 }
 
 /**
@@ -78,27 +79,27 @@ void setTextColor(P2DTextBox* tbox, P2DPicture* pic)
 /**
  * @TODO: Documentation
  */
-bool getStringCVS(char* p1, immut char* p2, s16 p3)
+bool getStringCVS(char* outStr, immut char* csvText, s16 fieldIndex)
 {
-	s16 count = 512;
-	while (p3 > 0) {
-		char a = *p2;
-		if (!a) {
+	s16 remainingChars = 512;
+	while (fieldIndex > 0) {
+		char currentChar = *csvText;
+		if (!currentChar) {
 			return true;
 		}
-		if (a == ',' || a == '\n') {
-			p3--;
+		if (currentChar == ',' || currentChar == '\n') {
+			fieldIndex--;
 		}
-		p2++;
+		csvText++;
 	}
 
 	while (true) {
-		char a = *p2;
-		if (a != 0 && a != ',' && a != '\n') {
-			*p1++ = a;
-			p2++;
-			count--;
-			if (count < 0) {
+		char currentChar = *csvText;
+		if (currentChar != 0 && currentChar != ',' && currentChar != '\n') {
+			*outStr++ = currentChar;
+			csvText++;
+			remainingChars--;
+			if (remainingChars < 0) {
 				PRINT("文字列が%d文字を超えました。\n", 0); // 'the string exceeds %d characters.'
 				return true;
 			}
@@ -107,7 +108,7 @@ bool getStringCVS(char* p1, immut char* p2, s16 p3)
 		}
 	};
 
-	*p1 = 0;
+	*outStr = 0;
 	return false;
 }
 
@@ -199,22 +200,22 @@ void PikaAlphaMgr::start()
 /**
  * @TODO: Documentation
  */
-void PikaAlphaMgr::startFadeIn(f32 p1)
+void PikaAlphaMgr::startFadeIn(f32 duration)
 {
 	mState = 1;
 	for (int i = 0; i < mAlphaCount; i++) {
-		mTenmetuAlphas[i]->startFadeIn(p1, 0.0f, 1.0f);
+		mTenmetuAlphas[i]->startFadeIn(duration, 0.0f, 1.0f);
 	}
 }
 
 /**
  * @TODO: Documentation
  */
-void PikaAlphaMgr::startFadeOut(f32 p1)
+void PikaAlphaMgr::startFadeOut(f32 duration)
 {
 	mState = 2;
 	for (int i = 0; i < mAlphaCount; i++) {
-		mTenmetuAlphas[i]->startFadeOut(p1, 0.0f, 1.0f);
+		mTenmetuAlphas[i]->startFadeOut(duration, 0.0f, 1.0f);
 	}
 }
 
@@ -347,45 +348,45 @@ void setTenmetuAlpha::start()
 /**
  * @TODO: Documentation
  */
-void setTenmetuAlpha::startFadeIn(f32 p1, f32 p2, f32 p3)
+void setTenmetuAlpha::startFadeIn(f32 duration, f32 start, f32 end)
 {
 	if (mMode == MODE_Running) {
 		return;
 	}
 
-	if (p1 <= 0.0f) {
-		p1 = 0.01f;
+	if (duration <= 0.0f) {
+		duration = 0.01f;
 	}
 
 	mCurrentColorIndex = 0;
 	mTimer             = mReferenceTime;
 	mColorTimer        = mReferenceTime;
-	mFadeDuration      = p1;
+	mFadeDuration      = duration;
 	mFadeTimer         = 0.0f;
-	mFadeStart         = p2;
-	mFadeEnd           = p3;
-	mFadeRange         = p3 - p2;
+	mFadeStart         = start;
+	mFadeEnd           = end;
+	mFadeRange         = end - start;
 	mMode              = MODE_FadeIn;
 }
 
 /**
  * @TODO: Documentation
  */
-void setTenmetuAlpha::startFadeOut(f32 p1, f32 p2, f32 p3)
+void setTenmetuAlpha::startFadeOut(f32 duration, f32 start, f32 end)
 {
 	if (mMode == MODE_Stopped) {
 		return;
 	}
 
-	if (p1 <= 0.0f) {
-		p1 = 0.01f;
+	if (duration <= 0.0f) {
+		duration = 0.01f;
 	}
 
-	mFadeDuration = p1;
+	mFadeDuration = duration;
 	mFadeTimer    = 0.0f;
-	mFadeStart    = p2;
-	mFadeEnd      = p3;
-	mFadeRange    = p3 - p2;
+	mFadeStart    = start;
+	mFadeEnd      = end;
+	mFadeRange    = end - start;
 	mMode         = MODE_FadeOut;
 }
 
@@ -393,7 +394,7 @@ void setTenmetuAlpha::startFadeOut(f32 p1, f32 p2, f32 p3)
  * @TODO: Documentation
  * @note UNUSED Size: 0000F0
  */
-void setTenmetuAlpha::calcAlpha(f32 p1)
+void setTenmetuAlpha::calcAlpha(f32 maxAlpha)
 {
 	if (mPeriod > 0.0f) {
 		mTimer += gsys->getFrameTime();
@@ -404,7 +405,7 @@ void setTenmetuAlpha::calcAlpha(f32 p1)
 		updateColor();
 		f32 angle = TAU * mTimer / mPeriod;
 		u8 alpha  = u8(mMinAlpha + int((sinf(angle) + 1.0f) * mAlphaRange / 2.0f));
-		alpha     = alpha * p1;
+		alpha     = alpha * maxAlpha;
 		mPic->setAlpha(alpha);
 	}
 }
@@ -826,78 +827,78 @@ ogMsgCtrlTagMgr::ogMsgCtrlTagMgr()
 /**
  * @TODO: Documentation
  */
-bool ogMsgCtrlTagMgr::CheckCtrlTag(immut char* p1, s16* p2, f32* p3)
+bool ogMsgCtrlTagMgr::CheckCtrlTag(immut char* text, s16* indexPtr, f32* waitTimePtr)
 {
 #if defined(VERSION_PIKIDEMO)
 #else
 	STACK_PAD_VAR(1);
 #endif
-	int a               = *p2;
-	const char* tmpStr1 = &p1[*p2];
-	char b              = *tmpStr1;
-	*p3                 = 0.0f;
+	int charIndex      = *indexPtr;
+	const char* cursor = &text[*indexPtr];
+	char ch            = *cursor;
+	*waitTimePtr       = 0.0f;
 
-	if (b == 0) {
+	if (ch == 0) {
 		return true;
 	}
 
-	s16 c;
-	if (strncmp(tmpStr1, mOnesWaitChar, 2) == 0) {
+	s16 nextIndex;
+	if (strncmp(cursor, mOnesWaitChar, 2) == 0) {
 		PRINT("Hit MARU !!\n");
-		*p3 = 0.25f;
-		c   = a + 2;
-	} else if (strncmp(tmpStr1, mTensWaitChar, 2) == 0) {
+		*waitTimePtr = 0.25f;
+		nextIndex    = charIndex + 2;
+	} else if (strncmp(cursor, mTensWaitChar, 2) == 0) {
 		PRINT("Hit TEN !!\n");
-		*p3 = 0.25f;
-		c   = a + 2;
-	} else if (b == 0x1B) { // esc character
-		c             = a + 1;
-		const char* d = p1 + c;
-		if (strncmp(d, "CC", 2) == 0 || strncmp(d, "GC", 2) == 0 || strncmp(d, "TM", 2) == 0 || strncmp(d, "Z", 1) == 0
-		    || strncmp(d, "CA", 2) == 0 || strncmp(d, "GA", 2) == 0 || strncmp(d, "TB", 2) == 0 || strncmp(d, "BS", 2) == 0
-		    || strncmp(d, "CU", 2) == 0 || strncmp(d, "CD", 2) == 0 || strncmp(d, "CL", 2) == 0 || strncmp(d, "CR", 2) == 0
-		    || strncmp(d, "LU", 2) == 0 || strncmp(d, "LD", 2) == 0 || strncmp(d, "HM", 2) == 0 || strncmp(d, "ST", 2) == 0
-		    || strncmp(d, "FX", 2) == 0 || strncmp(d, "FY", 2) == 0 || strncmp(d, "SH", 2) == 0 || strncmp(d, "SV", 2) == 0
-		    || strncmp(d, "GM", 2) == 0) {
-			if (strncmp(d, "Z", 1) == 0) {
-				c++;
-			} else if (strncmp(d, "TM", 2) == 0) {
-				*p3 = 0.25f;
-				c += 2;
+		*waitTimePtr = 0.25f;
+		nextIndex    = charIndex + 2;
+	} else if (ch == 0x1B) { // esc character
+		nextIndex       = charIndex + 1;
+		const char* tag = text + nextIndex;
+		if (strncmp(tag, "CC", 2) == 0 || strncmp(tag, "GC", 2) == 0 || strncmp(tag, "TM", 2) == 0 || strncmp(tag, "Z", 1) == 0
+		    || strncmp(tag, "CA", 2) == 0 || strncmp(tag, "GA", 2) == 0 || strncmp(tag, "TB", 2) == 0 || strncmp(tag, "BS", 2) == 0
+		    || strncmp(tag, "CU", 2) == 0 || strncmp(tag, "CD", 2) == 0 || strncmp(tag, "CL", 2) == 0 || strncmp(tag, "CR", 2) == 0
+		    || strncmp(tag, "LU", 2) == 0 || strncmp(tag, "LD", 2) == 0 || strncmp(tag, "HM", 2) == 0 || strncmp(tag, "ST", 2) == 0
+		    || strncmp(tag, "FX", 2) == 0 || strncmp(tag, "FY", 2) == 0 || strncmp(tag, "SH", 2) == 0 || strncmp(tag, "SV", 2) == 0
+		    || strncmp(tag, "GM", 2) == 0) {
+			if (strncmp(tag, "Z", 1) == 0) {
+				nextIndex++;
+			} else if (strncmp(tag, "TM", 2) == 0) {
+				*waitTimePtr = 0.25f;
+				nextIndex += 2;
 			} else {
-				const char* tmp = strstr(d, "]");
-				if (tmp) {
-					int count = tmp - d + 1;
-					strncpy(workString, d, count);
+				const char* closingBracket = strstr(tag, "]");
+				if (closingBracket) {
+					int count = closingBracket - tag + 1;
+					strncpy(workString, tag, count);
 					workString[count] = 0;
 					PRINT("SKIP '%s'\n", workString);
-					c += count;
+					nextIndex += count;
 				} else {
-					c += 2;
+					nextIndex += 2;
 				}
 			}
 		} else {
-			PRINT("Tag ERROR !!! (%s)\n", d);
+			PRINT("Tag ERROR !!! (%s)\n", tag);
 		}
-	} else if (b & 0x80) {
-		c = a + 2;
+	} else if (ch & 0x80) {
+		nextIndex = charIndex + 2;
 		SeSystem::playSysSe(SYSSE_TYPEWRITER);
 	}
 #if defined(VERSION_PIKIDEMO)
 #else
-	else if (strchr(mHankakuWaitChars, b)) {
+	else if (strchr(mHankakuWaitChars, ch)) {
 		PRINT("Hit HANKAKU WAIT!!\n");
-		*p3 = 0.25f;
+		*waitTimePtr = 0.25f;
 		SeSystem::playSysSe(SYSSE_TYPEWRITER);
-		c = a + 1;
+		nextIndex = charIndex + 1;
 	}
 #endif
 	else {
-		c = a + 1;
+		nextIndex = charIndex + 1;
 		SeSystem::playSysSe(SYSSE_TYPEWRITER);
 	}
 
-	*p2 = c;
+	*indexPtr = nextIndex;
 	return false;
 }
 

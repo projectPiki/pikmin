@@ -635,7 +635,7 @@ void zen::ogScrFileSelectMgr::ScaleAnimeData()
 /**
  * @TODO: Documentation
  */
-void zen::ogScrFileSelectMgr::setDataNumber(int p1)
+void zen::ogScrFileSelectMgr::setDataNumber(int dataNum)
 {
 	mTitleAnimationTimer = 0.0f;
 	mIsTitleAnimating    = true;
@@ -643,7 +643,7 @@ void zen::ogScrFileSelectMgr::setDataNumber(int p1)
 	mFileInfoPane2->hide();
 	mFileInfoPane3->hide();
 
-	switch (p1) {
+	switch (dataNum) {
 	case 0:
 		mFileInfoPane1->show();
 		break;
@@ -984,11 +984,11 @@ void zen::ogScrFileSelectMgr::BeginFadeOut()
  * @TODO: Documentation
  * @note UNUSED Size: 000060
  */
-int zen::ogScrFileSelectMgr::CanToCopy(int p1)
+int zen::ogScrFileSelectMgr::CanToCopy(int fileSlot)
 {
 	int res = 0;
 	for (int i = 0; i < 3; i++) {
-		if (mFileSlotSelectionStates[i] && i != p1) {
+		if (mFileSlotSelectionStates[i] && i != fileSlot) {
 			res++;
 		}
 	}

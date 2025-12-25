@@ -71,19 +71,19 @@ PcamControlInfo::PcamControlInfo()
 /**
  * @TODO: Documentation
  */
-void PcamControlInfo::init(bool p1, bool doRotate, bool doAttention, bool toggleZoom, bool adjustAngle, bool p6, bool p7, f32 azimuthRot,
-                           f32 p9, f32 p10)
+void PcamControlInfo::init(bool isActive, bool doRotate, bool doAttentionCamera, bool doToggleZoom, bool doAdjustAngle,
+                           bool doAdjustAngleDown, bool unused06, f32 azimuthRotIntensity, f32 subStickInput, f32 subStickY)
 {
-	mIsActive            = p1;
+	mIsActive            = isActive;
 	mDoRotate            = doRotate;
-	mDoAttentionCamera   = doAttention;
-	mDoToggleZoom        = toggleZoom;
-	mDoAdjustAngle       = adjustAngle;
-	mDoAdjustAngleDown   = p6;
-	_UNUSED06            = p7;
-	mAzimuthRotIntensity = azimuthRot;
-	mSubStickInput       = p9;
-	mSubStickY           = p10;
+	mDoAttentionCamera   = doAttentionCamera;
+	mDoToggleZoom        = doToggleZoom;
+	mDoAdjustAngle       = doAdjustAngle;
+	mDoAdjustAngleDown   = doAdjustAngleDown;
+	_UNUSED06            = unused06;
+	mAzimuthRotIntensity = azimuthRotIntensity;
+	mSubStickInput       = subStickInput;
+	mSubStickY           = subStickY;
 }
 
 /**
@@ -383,46 +383,46 @@ void PcamCamera::makePolarRadius()
 /**
  * @TODO: Documentation
  */
-void PcamCamera::makeWatchObjectViewpoint(NVector3f& p1, NVector3f& p2)
+void PcamCamera::makeWatchObjectViewpoint(NVector3f& watchPt, NVector3f& viewPt)
 {
 	if (mCreatureArray->getSize()) {
-		NVector3f vec1(p2, p1);
-		vec1.normalize();
-		NLine line(p2, vec1);
-		NOrientation orient(vec1);
-		orient.normalize();
-		NPlane plane1(orient.getUp(), p2);
-		NVector3f vec2;
-		orient.outputLeft(vec2);
-		NPlane plane2(vec2, p2);
+		NVector3f viewToWatchDir(viewPt, watchPt);
+		viewToWatchDir.normalize();
+		NLine viewLine(viewPt, viewToWatchDir);
+		NOrientation viewOrient(viewToWatchDir);
+		viewOrient.normalize();
+		NPlane upPlane(viewOrient.getUp(), viewPt);
+		NVector3f leftDir;
+		viewOrient.outputLeft(leftDir);
+		NPlane leftPlane(leftDir, viewPt);
 
-		f32 invtan = 1.0f / NMathF::tan(NMathF::d2r(getFov() / 2.0f) * 0.7f);
-		f32 ratio  = invtan / getAspect();
-		f32 minVal = f32(INT_MAX);
+		f32 invTanHalfFov = 1.0f / NMathF::tan(NMathF::d2r(getFov() / 2.0f) * 0.7f);
+		f32 aspectRatio   = invTanHalfFov / getAspect();
+		f32 minOffset     = f32(INT_MAX);
 		for (int i = 0; i < mCreatureArray->getSize(); i++) {
 			Creature* creature = mCreatureArray->get(i);
-			NVector3f vec3;
-			creature->outputPosition(vec3);
-			NVector3f vec4;
-			plane1.outputVerticalPosition(vec3, vec4);
+			NVector3f creaturePos;
+			creature->outputPosition(creaturePos);
+			NVector3f upPlanePos;
+			upPlane.outputVerticalPosition(creaturePos, upPlanePos);
 
-			f32 vertProj = 0.0f;
-			f32 dist     = line.calcDistance(vec4, &vertProj);
+			f32 alongViewDir = 0.0f;
+			f32 planeDist    = viewLine.calcDistance(upPlanePos, &alongViewDir);
 			STACK_PAD_VAR(1);
-			f32 b = vertProj - (dist * ratio);
-			NVector3f vec5;
-			plane2.outputVerticalPosition(vec3, vec5);
-			f32 vertProj2 = 0.0f;
-			f32 dist2     = line.calcDistance(vec5, &vertProj2);
-			f32 c         = vertProj2 - (dist2 * invtan);
-			f32 min       = NMath<f32>::minValue(b, c);
-			if (min < minVal) {
-				minVal = min;
+			f32 horizOffset = alongViewDir - (planeDist * aspectRatio);
+			NVector3f leftPlanePos;
+			leftPlane.outputVerticalPosition(creaturePos, leftPlanePos);
+			f32 alongViewDir2 = 0.0f;
+			f32 planeDist2    = viewLine.calcDistance(leftPlanePos, &alongViewDir2);
+			f32 vertOffset    = alongViewDir2 - (planeDist2 * invTanHalfFov);
+			f32 offset        = NMath<f32>::minValue(horizOffset, vertOffset);
+			if (offset < minOffset) {
+				minOffset = offset;
 			}
 		}
 
-		if (minVal < 0.0f) {
-			line.outputPosition(minVal, p2);
+		if (minOffset < 0.0f) {
+			viewLine.outputPosition(minOffset, viewPt);
 		}
 	}
 

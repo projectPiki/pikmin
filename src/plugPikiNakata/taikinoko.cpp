@@ -604,8 +604,8 @@ bool TaiKinokoTerritoryRunningAwayAction::act(Teki& teki)
 /**
  * @TODO: Documentation
  */
-TaiKinokoLegEffectAction::TaiKinokoLegEffectAction(f32 p1)
-    : TaiJointEffectAction(p1, 2, 'lleg', 'rleg', 0, 0)
+TaiKinokoLegEffectAction::TaiKinokoLegEffectAction(f32 sinkThreshold)
+    : TaiJointEffectAction(sinkThreshold, 2, 'lleg', 'rleg', 0, 0)
 {
 }
 

@@ -162,10 +162,10 @@ void Creature::disableStick()
 /**
  * @TODO: Documentation
  */
-CollPart* Creature::getNearestCollPart(immut Vector3f& p1, u32 p2)
+CollPart* Creature::getNearestCollPart(immut Vector3f& pos, u32 tag)
 {
 	if (mCollInfo && mCollInfo->hasInfo()) {
-		return mCollInfo->getNearestCollPart(p1, p2);
+		return mCollInfo->getNearestCollPart(pos, tag);
 	}
 	return nullptr;
 }
@@ -173,10 +173,10 @@ CollPart* Creature::getNearestCollPart(immut Vector3f& p1, u32 p2)
 /**
  * @TODO: Documentation
  */
-CollPart* Creature::getRandomCollPart(u32 p1)
+CollPart* Creature::getRandomCollPart(u32 tag)
 {
 	if (mCollInfo && mCollInfo->hasInfo()) {
-		return mCollInfo->getRandomCollPart(p1);
+		return mCollInfo->getRandomCollPart(tag);
 	}
 
 	return nullptr;
@@ -494,7 +494,7 @@ void Creature::detachGenerator()
 /**
  * @TODO: Documentation
  */
-void Creature::kill(bool p1)
+void Creature::kill(bool)
 {
 	finishWaterEffect();
 
@@ -1330,9 +1330,9 @@ void Creature::renderAtari(Graphics& gfx)
 /**
  * @TODO: Documentation
  */
-bool roughCull(Creature* p1, Creature* p2, f32 p3)
+bool roughCull(Creature* culler, Creature* target, f32 radius)
 {
-	if (AIPerf::useGrid && AIPerf::iteratorCull && p1->roughCulling(p2, p3)) {
+	if (AIPerf::useGrid && AIPerf::iteratorCull && culler->roughCulling(target, radius)) {
 		return true;
 	}
 

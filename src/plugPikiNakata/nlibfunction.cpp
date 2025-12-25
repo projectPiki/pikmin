@@ -63,13 +63,13 @@ void NPolynomialFunction::mul2(NPolynomialFunction&, NPolynomialFunction&)
 /**
  * @TODO: Documentation
  */
-f32 NPolynomialFunction::getValue(f32 p1)
+f32 NPolynomialFunction::getValue(f32 x)
 {
 	f32 factor = 1.0f;
 	f32 value  = 0.0f;
 	for (int i = 0; i < mData.mSize; i++) {
 		value += factor * mData.mValues[i];
-		factor *= p1;
+		factor *= x;
 	}
 	return value;
 }
@@ -161,9 +161,9 @@ void NClampLinearFunction::makeClampLinearFunction(f32 x1, f32 y1, f32 x2, f32 y
 /**
  * @TODO: Documentation
  */
-f32 NClampLinearFunction::getValue(f32 p1)
+f32 NClampLinearFunction::getValue(f32 x)
 {
-	f32 val = NPolynomialFunction::getValue(p1);
+	f32 val = NPolynomialFunction::getValue(x);
 	return NMathf::clampMinMax(val, mMinValue, mMaxValue);
 }
 
@@ -198,10 +198,10 @@ void NVibrationFunction::makeVibrationFunction(f32 phase, f32 period, f32 amp)
 /**
  * @TODO: Documentation
  */
-f32 NVibrationFunction::getValue(f32 p1)
+f32 NVibrationFunction::getValue(f32 x)
 {
 	STACK_PAD_VAR(1);
-	return mAmplitude * sinf(mPhase + mAngularFreq * p1);
+	return mAmplitude * sinf(mPhase + mAngularFreq * x);
 }
 
 /**

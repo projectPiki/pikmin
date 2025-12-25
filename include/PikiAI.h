@@ -1153,11 +1153,11 @@ public:
 	 * @brief TODO
 	 */
 	struct Initialiser : public Action::Initialiser {
-		Initialiser(f32 p1, f32 p2, Creature* p3)
+		Initialiser(f32 maxDistance, f32 minDistance, Creature* target)
 		{
-			mTarget      = p3;
-			mMaxDistance = p1;
-			mMinDistance = p2;
+			mTarget      = target;
+			mMaxDistance = maxDistance;
+			mMinDistance = minDistance;
 		}
 
 		virtual void initialise(Action*); // _08

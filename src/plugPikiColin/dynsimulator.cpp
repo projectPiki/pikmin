@@ -386,10 +386,10 @@ void DynSimulator::CalculateVertices(int)
 /**
  * @TODO: Documentation
  */
-void DynSimulator::updateVecQuats(f32 p1)
+void DynSimulator::updateVecQuats(f32 interpTime)
 {
 	for (RigidBody* body = (RigidBody*)mChild; body; body = (RigidBody*)body->Next()) {
-		body->updateVecQuats(mWriteTargetRenderBufferIndex, p1);
+		body->updateVecQuats(mWriteTargetRenderBufferIndex, interpTime);
 	}
 }
 

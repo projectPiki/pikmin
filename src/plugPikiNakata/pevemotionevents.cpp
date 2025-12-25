@@ -352,10 +352,10 @@ void PeveHomingPostureEvent::makeHomingPostureEvent(PeveCondition*, NVector3fIO*
  * @TODO: Documentation
  * @note UNUSED Size: 00009C
  */
-PeveInterpolationEvent::PeveInterpolationEvent(int p1, NPool<SplineSegment>* p2)
+PeveInterpolationEvent::PeveInterpolationEvent(int size, NPool<SplineSegment>* splinePool)
     : PeveEvent(0)
 {
-	mSplineInterpolator = new SplineInterpolator(p1, p2);
+	mSplineInterpolator = new SplineInterpolator(size, splinePool);
 	_10                 = 0;
 	_14                 = 0;
 }

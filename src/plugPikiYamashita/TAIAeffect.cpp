@@ -81,9 +81,9 @@ bool TAIAeffCloudOfDust::act(Teki& teki)
 /**
  * @TODO: Documentation
  */
-void TAIAeffCloudOfDust::setType(Vector3f& p1, int p2, int p3)
+void TAIAeffCloudOfDust::setType(Vector3f& pos, int mapAttr, int jointID)
 {
-	p1.y = mapMgr->getMinY(p1.x, p1.z, true);
+	pos.y = mapMgr->getMinY(pos.x, pos.z, true);
 }
 
 /**

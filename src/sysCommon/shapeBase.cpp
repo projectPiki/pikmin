@@ -1793,17 +1793,17 @@ void BaseShape::recTraverseMaterials(Joint* joint, IDelegate2<Joint*, u32>* dele
 /**
  * @TODO: Documentation
  */
-ShapeDynMaterials* BaseShape::instanceMaterials(int p1)
+ShapeDynMaterials* BaseShape::instanceMaterials(int jointIdx)
 {
 	ShapeDynMaterials* dynMats = new ShapeDynMaterials();
-	makeInstance(*dynMats, p1);
+	makeInstance(*dynMats, jointIdx);
 	return dynMats;
 }
 
 /**
  * @TODO: Documentation
  */
-void BaseShape::makeInstance(ShapeDynMaterials& dynMats, int p2)
+void BaseShape::makeInstance(ShapeDynMaterials& dynMats, int jointIdx)
 {
 	dynMats.mShape = this;
 	for (int i = 0; i < 0x100; i++) {
@@ -1812,7 +1812,7 @@ void BaseShape::makeInstance(ShapeDynMaterials& dynMats, int p2)
 
 	matIndex     = 0;
 	usedIndex    = 0;
-	Joint* joint = &mJointList[p2];
+	Joint* joint = &mJointList[jointIdx];
 	countMaterials(joint, 0);
 
 	if (joint->mChild) {
@@ -2487,7 +2487,7 @@ void BaseShape::read(RandomAccessStream& stream)
 /**
  * @TODO: Documentation
  */
-void BaseShape::initIni(bool p1)
+void BaseShape::initIni(bool usePlatforms)
 {
 	for (LightGroup* light = (LightGroup*)mLightGroup.Child(); light; light = (LightGroup*)light->mNext) {
 		if (!light->mTexSource) {
@@ -2532,7 +2532,7 @@ void BaseShape::initIni(bool p1)
 	}
 
 	for (ObjCollInfo* coll = (ObjCollInfo*)mCollisionInfo.Child(); coll; coll = (ObjCollInfo*)coll->mNext) {
-		if (coll->mCollType == OCT_Platform && p1) {
+		if (coll->mCollType == OCT_Platform && usePlatforms) {
 			coll->mPlatShape = gsys->loadShape(coll->mPlatformName, true);
 			if (coll->mPlatShape) {
 				coll->mPlatShape->createCollisions(32);
@@ -2543,7 +2543,7 @@ void BaseShape::initIni(bool p1)
 		}
 
 		for (ObjCollInfo* childColl = (ObjCollInfo*)coll->Child(); childColl; childColl = (ObjCollInfo*)childColl->mNext) {
-			if (childColl->mCollType == OCT_Platform && p1) {
+			if (childColl->mCollType == OCT_Platform && usePlatforms) {
 				childColl->mPlatShape = gsys->loadShape(childColl->mPlatformName, true);
 				if (childColl->mPlatShape) {
 					childColl->mPlatShape->createCollisions(32);
@@ -3155,18 +3155,18 @@ void AnimFrameCacher::removeOldest()
 /**
  * @TODO: Documentation
  */
-void AnimFrameCacher::cacheFrameSpace(int p1, AnimCacheInfo* info)
+void AnimFrameCacher::cacheFrameSpace(int numTextures, AnimCacheInfo* info)
 {
-	u32 texSize = OSRoundDown32B(59 + 4 * p1 + 64 * p1);
+	u32 texSize = OSRoundDown32B(59 + 4 * numTextures + 64 * numTextures);
 
 	while (true) {
 		if (mCache->largestBlockFree() > texSize) {
 			FrameCacher* alloc      = (FrameCacher*)mCache->mallocL(texSize);
 			alloc->mBoneMtxList     = &alloc->mBoneMatrices[0];
-			alloc->mBoneMatricesEnd = &alloc->mBoneMatrices[p1];
+			alloc->mBoneMatricesEnd = &alloc->mBoneMatrices[numTextures];
 			alloc->mInfo            = &info->mCachedMtxBlock;
 
-			for (int i = 0; i < p1; i++) {
+			for (int i = 0; i < numTextures; i++) {
 				alloc->mBoneMtxList[i] = 0;
 			}
 

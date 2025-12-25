@@ -43,7 +43,7 @@ protected:
 	DrawScreen* mSaveFailScreen; // _00
 	modeFlag mMode;              // _04
 	f32 _08;                     // _08
-	f32 _0C;                     // _0C
+	f32 mTransitionDuration;     // _0C
 	P2DPane* mSaveFailPane;      // _10
 	P2DPicture* mBackIcon;       // _14
 };

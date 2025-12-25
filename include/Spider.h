@@ -426,9 +426,9 @@ public:
 		return true;
 	}
 
-	void set(immut Vector3f* p1, Spider* spider)
+	void set(immut Vector3f* pos, Spider* spider)
 	{
-		mPosition = p1;
+		mPosition = pos;
 		mSpider   = spider;
 	}
 

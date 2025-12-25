@@ -158,12 +158,12 @@ struct TaiPalmSettingPelletAction : public TaiAction {
  * @brief TODO
  */
 struct TaiPalmChangingColorAction : public TaiAction {
-	TaiPalmChangingColorAction(int p1, f32 p2, f32 p3)
+	TaiPalmChangingColorAction(int timerIdx, f32 avgTimer, f32 range)
 	    : TaiAction(TAI_NO_TRANSIT)
 	{
-		mTimerIdx      = p1;
-		mAvgTimerValue = p2;
-		mTimerRange    = p3;
+		mTimerIdx      = timerIdx;
+		mAvgTimerValue = avgTimer;
+		mTimerRange    = range;
 	}
 
 	virtual void start(Teki&); // _08

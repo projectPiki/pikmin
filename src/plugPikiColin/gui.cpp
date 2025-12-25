@@ -204,7 +204,7 @@ Menu* Menu::exitMenu(Menu* menu)
 /**
  * @TODO: Documentation
  */
-void Menu::open(bool p1)
+void Menu::open(bool)
 {
 	mOpeningFadeProgress = 0.0;
 	mState               = MenuStateType::FadeIn;

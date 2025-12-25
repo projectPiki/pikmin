@@ -173,10 +173,10 @@ void PomAi::playSound(int pomSoundID)
 /**
  * @TODO: Documentation
  */
-void PomAi::killCallBackEffect(bool p1)
+void PomAi::killCallBackEffect(bool forceFinish)
 {
 	PomGenOpenStarCallBack* cb = mOpenStarCallBack;
-	effectMgr->kill(cb, nullptr, p1);
+	effectMgr->kill(cb, nullptr, forceFinish);
 }
 
 /**

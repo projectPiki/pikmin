@@ -1658,7 +1658,8 @@ int gupper()
 	return x;
 }
 
-void Navi::makeVelocity(bool p1)
+// Assumed parameter name from makeCStick, only ever called with false
+void Navi::makeVelocity(bool isSunset)
 {
 
 	mNeutralTime += gsys->getFrameTime();
@@ -1694,13 +1695,13 @@ void Navi::makeVelocity(bool p1)
 	NTransform3D NRef transform = NTransform3D();
 	transform.inputAxisAngle(axisAngle);
 
-	if (!p1) {
+	if (!isSunset) {
 		mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 	}
 
 	if (alwaysTrue) {
 		transform.transform(stickVec);
-		if (!p1) {
+		if (!isSunset) {
 			Stickers stuckList(this);
 			int stickCount = stuckList.getNumStickers();
 			f32 drag       = 1.0f;
@@ -1783,7 +1784,7 @@ void Navi::makeVelocity(bool p1)
 /**
  * @TODO: Documentation
  */
-void Navi::makeCStick(bool p1)
+void Navi::makeCStick(bool isSunset)
 {
 	f32 angle                   = NMathF::atan2(mNaviCamera->mViewXAxis.z, mNaviCamera->mViewXAxis.x);
 	NAxisAngle4f NRef axisAngle = NAxisAngle4f(NVector3f(0.0f, 1.0f, 0.0f), angle);
@@ -1793,7 +1794,7 @@ void Navi::makeCStick(bool p1)
 
 	NVector3f subStick(mKontroller->getSubStickX(), 0.0f, -mKontroller->getSubStickY());
 
-	if (p1) {
+	if (isSunset) {
 		subStick.set(0.0f, 0.0f, 0.0f);
 	}
 

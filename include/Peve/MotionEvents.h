@@ -230,7 +230,7 @@ struct PeveVibrationEvent : public PeveEvent {
 
 	virtual void update(); // _24
 
-	void makeVibrationEvent(f32, NPosture3DIO*, NVector3f&, f32, f32, f32);
+	void makeVibrationEvent(f32 duration, NPosture3DIO* postureIO, NVector3f& up, f32 intensity, f32 frequency, f32);
 
 	// _00     = VTBL
 	// _00-_10 = PeveEvent

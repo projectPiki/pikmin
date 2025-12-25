@@ -60,9 +60,9 @@ void KoganeAi::createWaterEffect()
 /**
  * @TODO: Documentation
  */
-void KoganeAi::killCallBackEffect(bool p1)
+void KoganeAi::killCallBackEffect(bool doForceFinish)
 {
-	effectMgr->kill(mRippleCallBack, nullptr, p1);
+	effectMgr->kill(mRippleCallBack, nullptr, doForceFinish);
 }
 
 /**

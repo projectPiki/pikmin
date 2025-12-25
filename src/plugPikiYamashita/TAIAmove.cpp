@@ -1220,7 +1220,7 @@ void TAIAflyingDistance::start(Teki& teki)
 {
 	teki.setFlag400();
 	teki.startFlying();
-	teki.mProps->mCreatureProps.mFaceDirAdjust(_08);
+	teki.mProps->mCreatureProps.mFaceDirAdjust(mFaceDir);
 	teki.setSpeed(0.0f);
 }
 

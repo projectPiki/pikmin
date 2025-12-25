@@ -1025,18 +1025,17 @@ s32 MemoryCard::makeDefaultFile()
 /**
  * @TODO: Documentation
  */
-void MemoryCard::copyFile(CardQuickInfo& p1, CardQuickInfo& p2)
+void MemoryCard::copyFile(CardQuickInfo& from, CardQuickInfo& to)
 {
-	PRINT("wants to copy from file %d to %d\n", p1.mIndex + 1, p2.mIndex + 1);
-	PRINT("wants to copy game file %d to %d\n", p1.mFlags + 1, p2.mFlags + 1);
+	PRINT("wants to copy from file %d to %d\n", from.mIndex + 1, to.mIndex + 1);
+	PRINT("wants to copy game file %d to %d\n", from.mFlags + 1, to.mFlags + 1);
 
 	mDidSaveFail        = false;
 	gsys->mIsCardSaving = TRUE;
-	memcpy(FAKE_getGameFilePtr(gameflow.mGamePrefs.mSpareSaveGameIndex - 1), FAKE_getGameFilePtr(p1.mIndex), 0x8000);
-
+	memcpy(FAKE_getGameFilePtr(gameflow.mGamePrefs.mSpareSaveGameIndex - 1), FAKE_getGameFilePtr(from.mIndex), 0x8000);
 	RamStream* stream = getGameFileStream(gameflow.mGamePrefs.mSpareSaveGameIndex - 1);
 	stream->writeByte(2);
-	stream->writeByte(p2.mFlags);
+	stream->writeByte(to.mFlags);
 	stream->setPosition(0x7FF8);
 
 	u32 sum = calcChecksum(FAKE_getGameFilePtr(gameflow.mGamePrefs.mSpareSaveGameIndex - 1), 0x7FF8);
@@ -1051,15 +1050,15 @@ void MemoryCard::copyFile(CardQuickInfo& p1, CardQuickInfo& p2)
 /**
  * @TODO: Documentation
  */
-void MemoryCard::delFile(CardQuickInfo& p1)
+void MemoryCard::delFile(CardQuickInfo& target)
 {
-	PRINT("wants to delete file %d\n", p1.mIndex + 1);
+	PRINT("wants to delete file %d\n", target.mIndex + 1);
 
 	mDidSaveFail        = false;
 	gsys->mIsCardSaving = TRUE;
 	PlayState state;
 	state.Initialise();
-	state.mSaveFlags  = p1.mFlags;
+	state.mSaveFlags  = target.mFlags;
 	RamStream* stream = getGameFileStream(gameflow.mGamePrefs.mSpareSaveGameIndex - 1);
 	writeCurrentGame(stream, state);
 	stream->padFileTo(0x8000, 8);

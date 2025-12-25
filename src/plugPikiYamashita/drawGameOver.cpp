@@ -138,12 +138,12 @@ public:
 	}
 
 	// DLL inlines to do:
-	void start(f32 p1)
+	void start(f32 startDelay)
 	{
 		initParams();
 		mState      = LetterState::Wait;
 		mStateTimer = 0.0f;
-		mStartDelay = p1;
+		mStartDelay = startDelay;
 	}
 
 protected:

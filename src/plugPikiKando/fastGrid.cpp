@@ -171,13 +171,13 @@ bool FastGrid::aiCullingLarge(int max)
 /**
  * @brief Returns true when `grid` is far enough away to be considered "culled".
  * @param other The other grid to compare against.
- * @param distanceThreshold Distance-like threshold in world units.
+ * @param radius The culling radius.
  *
  * @note The "- 1" in the axis checks treats immediate neighbors as distance 0 for culling purposes (gives a 1-cell cushion).
  */
-bool FastGrid::doCulling(const FastGrid& other, f32 distanceThreshold)
+bool FastGrid::doCulling(const FastGrid& other, f32 radius)
 {
-	s16 cellLimit = s16(distanceThreshold) >> AIPerf::gridShift;
+	s16 cellLimit = s16(radius) >> AIPerf::gridShift;
 
 	// X axis
 	s16 dx     = mGridPositionX - other.mGridPositionX;

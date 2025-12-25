@@ -162,7 +162,7 @@ f32 NoiseFunction::getValue(f32 x)
 void TurbulenceFun::init(int p1, int count)
 {
 	NoiseFunction::init(count);
-	_UNUSED08  = p1;
+	_08        = p1;
 	mFrequency = p1 / count;
 }
 

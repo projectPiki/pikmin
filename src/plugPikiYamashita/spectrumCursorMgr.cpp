@@ -91,12 +91,12 @@ void zen::SpectrumCursorMgr::move(f32 x, f32 y, f32 p3)
 /**
  * @TODO: Documentation
  */
-void zen::SpectrumCursorMgr::scale(f32 p1, f32 p2)
+void zen::SpectrumCursorMgr::scale(f32 targetScale, f32 duration)
 {
 	mScaleTimer    = 0.0f;
-	mScaleDuration = p2;
+	mScaleDuration = duration;
 	mStartScale    = mPanes[0]->getScale().x;
-	mTargetScale   = p1;
+	mTargetScale   = targetScale;
 }
 
 /**

@@ -173,8 +173,8 @@ bool TaiMizigenNaviApprouchAction::act(Teki& teki)
  * @brief TODO
  */
 struct TaiMizinkoCryTimerAction : public TaiTimerAction {
-	TaiMizinkoCryTimerAction(int p1, f32 p2, f32 p3)
-	    : TaiTimerAction(TAI_NO_TRANSIT, p1, p2, p3)
+	TaiMizinkoCryTimerAction(int timerIdx, f32 length, f32 rate)
+	    : TaiTimerAction(TAI_NO_TRANSIT, timerIdx, length, rate)
 	{
 	}
 

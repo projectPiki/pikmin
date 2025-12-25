@@ -257,14 +257,14 @@ void CPlate::sortByColor(Piki* piki)
 /**
  * @TODO: Documentation
  */
-void CPlate::rearrangeSlot(immut Vector3f& p1, f32, immut Vector3f&)
+void CPlate::rearrangeSlot(immut Vector3f& position, f32, immut Vector3f&)
 {
 	for (int i = mUsedSlotCount - 1; i >= 1; i--) {
 		for (int j = i; j >= 1; j--) {
-			Vector3f sep = p1 - mSlotList[j].mOccupant.getPtr()->mSRT.t;
+			Vector3f sep = position - mSlotList[j].mOccupant.getPtr()->mSRT.t;
 			f32 jDist    = sep.length();
 
-			sep          = p1 - mSlotList[j - 1].mOccupant.getPtr()->mSRT.t;
+			sep          = position - mSlotList[j - 1].mOccupant.getPtr()->mSRT.t;
 			f32 prevDist = sep.length();
 
 			if (jDist < prevDist) {

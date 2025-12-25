@@ -56,10 +56,10 @@ void zen::ogScrFileChkSelMgr::startSub()
 /**
  * @TODO: Documentation
  */
-void zen::ogScrFileChkSelMgr::start(bool p1)
+void zen::ogScrFileChkSelMgr::start(bool skipFileSelect)
 {
-	PRINT("********** ogScrFileChkSelMgr %d ***************\n", p1);
-	mSkipFileSelect  = p1;
+	PRINT("********** ogScrFileChkSelMgr %d ***************\n", skipFileSelect);
+	mSkipFileSelect  = skipFileSelect;
 	mIsSaveOperation = false;
 	mState           = MemoryCheckInProgress;
 	mMemChkMgr->start();

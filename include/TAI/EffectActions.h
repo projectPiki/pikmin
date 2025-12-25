@@ -43,17 +43,17 @@ struct TaiStartGenParticleGeneratorAction : public TaiAction {
  * @brief TODO
  */
 struct TaiStopGenParticleGeneratorAction : public TaiAction {
-	TaiStopGenParticleGeneratorAction(int p1)
+	TaiStopGenParticleGeneratorAction(int generatorIndex)
 	    : TaiAction(TAI_NO_TRANSIT)
 	{
-		_08 = p1;
+		mGenIndex = generatorIndex;
 	}
 
 	virtual void start(Teki&); // _08
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
-	int _08; // _08
+	int mGenIndex; // _08
 };
 
 /**

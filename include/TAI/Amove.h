@@ -555,18 +555,18 @@ protected:
  */
 struct FlyingDistance {
 public:
-	FlyingDistance(f32 p1, f32 p2, f32 p3)
+	FlyingDistance(f32 diveAngle, f32 offset, f32 faceDir)
 	{
-		mDiveAngle = p1;
-		mOffset    = p2;
-		_08        = p3;
+		mDiveAngle = diveAngle;
+		mOffset    = offset;
+		mFaceDir   = faceDir;
 	}
 
 protected:
 	// _0C = VTBL
 	f32 mDiveAngle; // _00
 	f32 mOffset;    // _04
-	f32 _08;        // _08
+	f32 mFaceDir;   // _08
 
 	virtual f32 getOffset(Teki&) { return mOffset; } // _08
 };
@@ -576,9 +576,9 @@ protected:
  */
 struct TAIAflyingDistance : public TaiAction, public FlyingDistance {
 public:
-	TAIAflyingDistance(int nextState, f32 p2, f32 p3, f32 p4)
+	TAIAflyingDistance(int nextState, f32 diveAngle, f32 offset, f32 faceDir)
 	    : TaiAction(nextState)
-	    , FlyingDistance(p2, p3, p4)
+	    , FlyingDistance(diveAngle, offset, faceDir)
 	{
 	}
 

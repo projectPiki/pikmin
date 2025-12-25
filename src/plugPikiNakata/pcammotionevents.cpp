@@ -32,14 +32,14 @@ PcamLongVibrationEvent::PcamLongVibrationEvent(PcamCamera* camera)
 /**
  * @TODO: Documentation
  */
-void PcamLongVibrationEvent::makePcamLongVibrationEvent(f32 p1, f32 p2, f32 p3, f32 p4)
+void PcamLongVibrationEvent::makePcamLongVibrationEvent(f32 aDuration, f32 bDuration, f32 intensity, f32 frequency)
 {
 	NVector3f NRef dir = NVector3f(mCamera->getViewpoint(), mCamera->getWatchpoint());
 	dir.normalize();
 	NOrientation NRef orient = NOrientation(dir);
 	orient.normalize();
-	mEventA->makeVibrationEvent(p1, &mPostureIO, orient.getUp(), p3, p4, 0.0f);
-	mEventB->makeVibrationEvent(p2, &mPostureIO, orient.getUp(), p3, p4, -p4 / p2);
+	mEventA->makeVibrationEvent(aDuration, &mPostureIO, orient.getUp(), intensity, frequency, 0.0f);
+	mEventB->makeVibrationEvent(bDuration, &mPostureIO, orient.getUp(), intensity, frequency, -frequency / bDuration);
 }
 
 /**

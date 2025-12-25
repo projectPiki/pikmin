@@ -87,9 +87,9 @@ struct MapProjMatHandler : public MaterialHandler {
 	{
 		mGfx->setMaterial(mProjMat, true);
 	}
-	virtual void setTexMatrix(bool p1) // _0C
+	virtual void setTexMatrix(bool set) // _0C
 	{
-		mGfx->initProjTex(p1, mLightCamera);
+		mGfx->initProjTex(set, mLightCamera);
 	}
 
 	// _00     = VTBL

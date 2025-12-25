@@ -323,11 +323,11 @@ bool Piki::initRouteTraceDynamic(Creature* target)
 /**
  * @TODO: Documentation
  */
-int Piki::moveRouteTraceDynamic(f32 p1)
+int Piki::moveRouteTraceDynamic(f32 speedRatio)
 {
 	STACK_PAD_VAR(1); // some other temp, whatever.
 
-	int traceRes = moveRouteTrace(p1);
+	int traceRes = moveRouteTrace(speedRatio);
 	if (traceRes != 2) {
 		return traceRes;
 	}

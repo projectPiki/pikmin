@@ -22,9 +22,9 @@ DEFINE_PRINT("")
 /**
  * @TODO: Documentation
  */
-void zen::ogScrMapMgr::start(s16 p1)
+void zen::ogScrMapMgr::start(s16 mode)
 {
-	mMode  = p1;
+	mMode  = mode;
 	mState = Initialising;
 
 	if (mMode == Initialising) {

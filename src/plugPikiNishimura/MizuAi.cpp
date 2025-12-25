@@ -69,7 +69,7 @@ void MizuAi::animationKeyUpdated(immut PaniAnimKeyEvent&)
 /**
  * @TODO: Documentation
  */
-void MizuAi::killCallBackEffect(bool p1)
+void MizuAi::killCallBackEffect(bool doForceFinish)
 {
 	if (_08) {
 		_08->forceFinish();
@@ -81,7 +81,7 @@ void MizuAi::killCallBackEffect(bool p1)
 		_0C = nullptr;
 	}
 
-	effectMgr->kill(mPuffCallBack, nullptr, p1);
+	effectMgr->kill(mPuffCallBack, nullptr, doForceFinish);
 }
 
 /**

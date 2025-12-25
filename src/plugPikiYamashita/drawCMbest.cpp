@@ -36,7 +36,7 @@ public:
 	DrawCMBpicObj()
 	{
 		mRootPane = nullptr;
-		_04 = _08     = 0.0f;
+		mWaitTime = mAppearTime = 0.0f;
 		mModeFunction = nullptr;
 		mMode         = MODE_Sleep;
 		_1C           = 0.0f;
@@ -52,15 +52,15 @@ public:
 	// DLL:
 	void update() { (this->*mModeFunction)(); }
 	void sleep() { setMode(MODE_Sleep); }
-	void wait(f32 p1)
+	void wait(f32 waitTime)
 	{
 		setMode(MODE_Wait);
-		_04 = p1;
+		mWaitTime = waitTime;
 	}
-	void appear(f32 p1)
+	void appear(f32 appearTime)
 	{
 		setMode(MODE_Appear);
-		_08 = p1;
+		mAppearTime = appearTime;
 	}
 
 protected:
@@ -68,8 +68,8 @@ protected:
 	bool modeSleep() { return false; }
 	bool modeAppear()
 	{
-		_04 += gsys->getFrameTime();
-		if (_04 > _08) {
+		mWaitTime += gsys->getFrameTime();
+		if (mWaitTime > mAppearTime) {
 			setMode(MODE_Wait);
 		}
 
@@ -77,9 +77,9 @@ protected:
 	}
 	bool modeWait()
 	{
-		_04 += gsys->getFrameTime();
-		if (_04 > _08) {
-			_04 -= _08;
+		mWaitTime += gsys->getFrameTime();
+		if (mWaitTime > mAppearTime) {
+			mWaitTime -= mAppearTime;
 			_1C += Rand(0.05f) + 0.02f;
 		}
 		_1C += (1.0f - mRootPane->getScale().x) * gsys->getFrameTime();
@@ -103,23 +103,23 @@ protected:
 			break;
 
 		case MODE_Appear:
-			_04 = 0.0f;
+			mWaitTime = 0.0f;
 			_1C = 0.0f;
 			mRootPane->setScale(0.0f);
 			mModeFunction = &modeAppear;
 			break;
 
 		case MODE_Wait:
-			_04           = 0.0f;
-			_08           = 4.0f;
+			mWaitTime     = 0.0f;
+			mAppearTime   = 4.0f;
 			mModeFunction = &modeWait;
 			break;
 		}
 	}
 
 	P2DPane* mRootPane;     // _00, unknown
-	f32 _04;                // _04
-	f32 _08;                // _08
+	f32 mWaitTime;          // _04
+	f32 mAppearTime;        // _08
 	ModeFunc mModeFunction; // _0C
 	modeFlag mMode;         // _18
 	f32 _1C;                // _1C

@@ -43,7 +43,7 @@ bool zen::DrawSaveFailure::update(Controller* controller)
 		break;
 
 	case MODE_Unk1:
-		f32 frame = calcFrame(_0C);
+		f32 frame = calcFrame(mTransitionDuration);
 		if (frame == 1.0f) {
 			setMode(MODE_Unk2);
 		} else {
@@ -60,7 +60,7 @@ bool zen::DrawSaveFailure::update(Controller* controller)
 		break;
 
 	case MODE_Unk3:
-		f32 frame2 = calcFrame(_0C);
+		f32 frame2 = calcFrame(mTransitionDuration);
 		if (frame2 == 1.0f) {
 			setMode(MODE_Unk0);
 		} else {
@@ -89,10 +89,10 @@ void zen::DrawSaveFailure::draw(Graphics&)
 /**
  * @TODO: Documentation
  */
-void zen::DrawSaveFailure::open(f32 p1)
+void zen::DrawSaveFailure::open(f32 duration)
 {
 	setMode(MODE_Unk1);
-	_0C = p1;
+	mTransitionDuration = duration;
 	SeSystem::playSysSe(SYSSE_CARDERROR);
 	mSaveFailScreen->makeResident();
 }
@@ -106,7 +106,7 @@ void zen::DrawSaveFailure::setMode(zen::DrawSaveFailure::modeFlag mode)
 	switch (mMode) {
 	case MODE_Unk0:
 		_08 = 0.0f;
-		_0C = 0.0f;
+		mTransitionDuration = 0.0f;
 		mSaveFailPane->setScale(0.0f);
 		mBackIcon->setAlpha(0);
 		break;

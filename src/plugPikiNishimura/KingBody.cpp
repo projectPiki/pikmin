@@ -171,18 +171,18 @@ void KingBody::createUfoParts()
 /**
  * @TODO: Documentation
  */
-void KingBody::killCallBackEffect(bool p1)
+void KingBody::killCallBackEffect(bool doForceFinish)
 {
 	int i;
 	for (i = 0; i < 3; i++) {
-		effectMgr->kill(&mSalivaCallBacks[i], mSalivaParticleCallBack, p1);
+		effectMgr->kill(&mSalivaCallBacks[i], mSalivaParticleCallBack, doForceFinish);
 	}
 
-	effectMgr->kill(mSpreadSalivaCallBack, mSalivaParticleCallBack, p1);
-	effectMgr->kill(mDamageStarCallBack, nullptr, p1);
+	effectMgr->kill(mSpreadSalivaCallBack, mSalivaParticleCallBack, doForceFinish);
+	effectMgr->kill(mDamageStarCallBack, nullptr, doForceFinish);
 
 	for (i = 0; i < 2; i++) {
-		effectMgr->kill(&mRippleCallBacks[i], nullptr, p1);
+		effectMgr->kill(&mRippleCallBacks[i], nullptr, doForceFinish);
 	}
 }
 

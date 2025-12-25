@@ -851,8 +851,8 @@ bool TaiSwallowNoticeAction::act(Teki& teki)
 /**
  * @TODO: Documentation
  */
-TaiSwallowLegEffectAction::TaiSwallowLegEffectAction(f32 p1)
-    : TaiJointEffectAction(p1, 2, 'lleg', 'rleg', 0, 0)
+TaiSwallowLegEffectAction::TaiSwallowLegEffectAction(f32 sinkThreshold)
+    : TaiJointEffectAction(sinkThreshold, 2, 'lleg', 'rleg', 0, 0)
 {
 }
 
@@ -880,8 +880,8 @@ void TaiSwallowLegEffectAction::setType(Vector3f& effectPos, int type, int id)
 /**
  * @TODO: Documentation
  */
-TaiSwallowMissAttackingEffectAction::TaiSwallowMissAttackingEffectAction(f32 p1)
-    : TaiJointEffectAction(p1, 1, 'hana', 0, 0, 0)
+TaiSwallowMissAttackingEffectAction::TaiSwallowMissAttackingEffectAction(f32 sinkThreshold)
+    : TaiJointEffectAction(sinkThreshold, 1, 'hana', 0, 0, 0)
 {
 }
 

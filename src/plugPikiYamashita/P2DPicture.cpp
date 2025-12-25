@@ -324,7 +324,7 @@ void P2DPicture::drawOut(const PUTRect&, const PUTRect&)
 /**
  * @TODO: Documentation
  */
-void P2DPicture::drawTexCoord(int x, int y, int width, int height, f32 p5, f32 p6, f32 p7, f32 p8, f32 p9, f32 p10, f32 p11, f32 p12,
+void P2DPicture::drawTexCoord(int x, int y, int width, int height, f32 uBL, f32 vBL, f32 uBR, f32 vBR, f32 uTL, f32 vTL, f32 uTR, f32 vTR,
                               immut Matrix4f* mtx)
 {
 	for (int i = 0; i < mTextureCount; i++) {
@@ -355,22 +355,22 @@ void P2DPicture::drawTexCoord(int x, int y, int width, int height, f32 p5, f32 p
 	// bottom left
 	GXPosition3s16(x, y, 0);
 	GXColor1u32(0xFFFFFFFF);
-	GXTexCoord2f32(p5, p6);
+	GXTexCoord2f32(uBL, vBL);
 
 	// bottom right
 	GXPosition3s16(xEnd, y, 0);
 	GXColor1u32(0xFFFFFFFF);
-	GXTexCoord2f32(p7, p8);
+	GXTexCoord2f32(uBR, vBR);
 
 	// top right
 	GXPosition3s16(xEnd, yEnd, 0);
 	GXColor1u32(0xFFFFFFFF);
-	GXTexCoord2f32(p11, p12);
+	GXTexCoord2f32(uTR, vTR);
 
 	// top left
 	GXPosition3s16(x, yEnd, 0);
 	GXColor1u32(0xFFFFFFFF);
-	GXTexCoord2f32(p9, p10);
+	GXTexCoord2f32(uTL, vTL);
 
 	GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_POS_XYZ, GX_U16, 15);
 

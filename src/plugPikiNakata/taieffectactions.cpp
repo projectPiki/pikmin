@@ -37,7 +37,7 @@ void TaiStartGenParticleGeneratorAction::start(Teki& teki)
  */
 void TaiStopGenParticleGeneratorAction::start(Teki& teki)
 {
-	teki.stopParticleGenerator(_08);
+	teki.stopParticleGenerator(mGenIndex);
 }
 
 /**

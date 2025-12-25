@@ -5,17 +5,17 @@
 #include "types.h"
 
 /**
- * @brief TODO
+ * @brief A generic "event" structure, used solely for the unused Key/Lock system.
  */
 struct Event {
-	Event(int p1, u32 id)
+	Event(int unk, u32 id)
 	{
-		_UNUSED00 = p1;
+		_00       = unk;
 		mId       = id;
 	}
 
-	int _UNUSED00; // _00
-	u32 mId;       // _04
+	int _00; // _00, not used anywhere.
+	u32 mId; // _04, guessed from collider->getGeneratorID()
 };
 
 /**

@@ -382,10 +382,10 @@ void LifeGauge::refresh(Graphics& gfx)
 /**
  * @TODO: Documentation
  */
-void LifeGauge::countOn(immut Vector3f& p1, int p2, int p3)
+void LifeGauge::countOn(immut Vector3f& position, int primaryValue, int secondaryValue)
 {
 	if (!mActiveGauge) {
-		mCurrentDisplayHealthRatio = p2;
+		mCurrentDisplayHealthRatio = primaryValue;
 		mDisplayState              = 0;
 		mVisibleHoldTimer          = 0.0f;
 		if (mActiveGauge) {
@@ -395,17 +395,17 @@ void LifeGauge::countOn(immut Vector3f& p1, int p2, int p3)
 		GaugeInfo* info = lgMgr->getGaugeInfo();
 		if (info) {
 			info->mOwner          = this;
-			info->mPrimaryValue   = p2;
-			info->mSecondaryValue = p3;
+			info->mPrimaryValue   = primaryValue;
+			info->mSecondaryValue = secondaryValue;
 			lgMgr->addLG(info);
 			mActiveGauge = info;
 		}
 	} else {
-		mActiveGauge->mPrimaryValue   = p2;
-		mActiveGauge->mSecondaryValue = p3;
+		mActiveGauge->mPrimaryValue   = primaryValue;
+		mActiveGauge->mSecondaryValue = secondaryValue;
 	}
 
-	mPosition = p1;
+	mPosition = position;
 	if (mActiveGauge) {
 		mActiveGauge->mOwnerCachedPosition = mPosition;
 	}

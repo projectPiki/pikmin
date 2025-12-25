@@ -1505,8 +1505,8 @@ bool TaiCollecGetOutAction::act(Teki& teki)
 /**
  * @TODO: Documentation
  */
-TaiCollecLegEffectAction::TaiCollecLegEffectAction(f32 p1)
-    : TaiJointEffectAction(p1, 2, 'lleg', 'rleg', 0, 0)
+TaiCollecLegEffectAction::TaiCollecLegEffectAction(f32 sinkThreshold)
+    : TaiJointEffectAction(sinkThreshold, 2, 'lleg', 'rleg', 0, 0)
 {
 }
 

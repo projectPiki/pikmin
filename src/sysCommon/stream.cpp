@@ -219,10 +219,10 @@ void Stream::close()
  * @TODO: Documentation
  * @note UNUSED Size: 00006C
  */
-void RandomAccessStream::writeTo(int p1, void*, int)
+void RandomAccessStream::writeTo(int _, void*, int)
 {
 	// this is just here to spawn the weak function setPosition(int);
-	setPosition(p1);
+	setPosition(_);
 	// UNUSED FUNCTION
 }
 

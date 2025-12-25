@@ -30,21 +30,21 @@ bool EventTypeCallBack::invoke(zen::particleGenerator* ptclGen)
 /**
  * @TODO: Documentation
  */
-void CylinderTypeCallBack::init(TAIeffectAttackParam* param, Teki* teki, immut Vector3f& p3, Vector3f p4, f32 p5, f32 p6, f32 p7, f32 p8,
-                                TAIeffectAttackEventCallBack* eventCB)
+void CylinderTypeCallBack::init(TAIeffectAttackParam* attackParam, Teki* teki, immut Vector3f& startPos, Vector3f velocity, f32 duration,
+                                f32 damage, f32 maxRange, f32 radius, TAIeffectAttackEventCallBack* eventCB)
 {
-	mParam = param;
+	mParam = attackParam;
 	mParam->init();
 	mParam->mTeki        = teki;
 	mParam->mCurrentTime = 0.0f;
-	mParam->mDuration    = p5;
-	mParam->mMaxRange    = p7;
-	mParam->mVelocity    = p4;
-	mParam->mPosition    = p3;
-	mParam->mDirection   = p4;
+	mParam->mDuration    = duration;
+	mParam->mMaxRange    = maxRange;
+	mParam->mVelocity    = velocity;
+	mParam->mPosition    = startPos;
+	mParam->mDirection   = velocity;
 	mParam->mDirection.normalize();
-	mParam->mDamage = p6;
-	mParam->mRadius = p8;
+	mParam->mDamage = damage;
+	mParam->mRadius = radius;
 	if (eventCB) {
 		mParam->mCallBackRef = eventCB;
 	}

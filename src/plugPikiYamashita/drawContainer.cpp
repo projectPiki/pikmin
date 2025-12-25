@@ -350,7 +350,7 @@ bool zen::DrawContainer::endStatus()
 /**
  * @TODO: Documentation
  */
-bool zen::DrawContainer::update(int& p1)
+bool zen::DrawContainer::update(int& delta)
 {
 	bool res = false;
 	if (mIsActive) {
@@ -373,7 +373,7 @@ bool zen::DrawContainer::update(int& p1)
 			res = endStatus();
 			break;
 		}
-		p1 = mTransferDelta;
+		delta = mTransferDelta;
 		mMessageMgr->update(mController, mContainerPikiNum, mSquadPikiNum);
 		mScreen.update();
 	} else {

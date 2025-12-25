@@ -152,9 +152,9 @@ void NLine::outputPosition(f32 t, NVector3f& outPos) immut
  * @TODO: Documentation
  * @note UNUSED Size: 0000A8
  */
-void NLine::outputPositionY(f32 p1, NVector3f& outPos) immut
+void NLine::outputPositionY(f32 y, NVector3f& outPos) immut
 {
-	outputPosition((p1 - mPosition.y) / mDirection.y, outPos);
+	outputPosition((y - mPosition.y) / mDirection.y, outPos);
 }
 
 /**

@@ -20,9 +20,9 @@ DEFINE_PRINT("tekinakata")
  * @TODO: Documentation
  * @note UNUSED Size: 00000C
  */
-TekiMessage::TekiMessage(int p1, NTeki* teki)
+TekiMessage::TekiMessage(int msg, NTeki* teki)
 {
-	_00   = p1;
+	mMsg  = msg;
 	mTeki = teki;
 }
 

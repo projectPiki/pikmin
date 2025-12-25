@@ -1062,8 +1062,8 @@ void TaiOtimotiAttackingEffectAction::start(Teki& teki)
 /**
  * @TODO: Documentation
  */
-TaiOtimotiLegEffectAction::TaiOtimotiLegEffectAction(f32 p1)
-    : TaiJointEffectAction(p1, 2, 'lleg', 'rleg', 0, 0)
+TaiOtimotiLegEffectAction::TaiOtimotiLegEffectAction(f32 sinkThreshold)
+    : TaiJointEffectAction(sinkThreshold, 2, 'lleg', 'rleg', 0, 0)
 {
 }
 
