@@ -312,6 +312,15 @@ enum {
 } END_ENUM_TYPE;
 
 /**
+ * @brief FABRICATED - Singly-linked list of symbolic information (See `ParseMapFile`)
+ */
+struct SymbolInfo {
+	SymbolInfo* mNext;     // _00
+	u32 mVirtualAddress;   // _04
+	char mDemangledName[]; // _08, Flexible array member, also contains translation unit name.
+};
+
+/**
  * @brief TODO
  *
  * @note Size: 0x334.
@@ -404,7 +413,7 @@ struct System : public StdSystem {
 	u32 mRetraceCount;                               // _2A0
 	BOOL mPrevAllocType;                             // _2A4, member name is seriously suspect
 	AddressNode _2A8;                                // _2A8
-	u32 mBuildMapFuncList;                           // _2BC, structure is nextItemPtr, virtAddr, char buf w/ demangled name/filename
+	SymbolInfo* mBuildMapFuncList;                   // _2BC
 	SystemCache mActiveCacheList;                    // _2C0
 	SystemCache mFreeCacheList;                      // _2E8
 	AramAllocator mBaseAramAllocator;                // _310, fake
