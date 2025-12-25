@@ -5,7 +5,7 @@
  * @TODO: Documentation
  * @note UNUSED Size: 000070
  */
-bool String::isSame(immut char* str)
+bool String::isSame(immut char* str) immut
 {
 	// UNUSED FUNCTION (Matching by size)
 	const char* currentChar = mString;
@@ -42,7 +42,7 @@ int String::getLength() immut
  * @brief This function was never implemented; it just returns 0.0f.
  * @note UNUSED Size: 000008
  */
-float String::toFloat()
+float String::toFloat() immut
 {
 	// UNUSED FUNCTION (Matching by size)
 	return 0.0f;
@@ -52,7 +52,7 @@ float String::toFloat()
  * @TODO: Documentation
  * @note UNUSED Size: 00012C
  */
-int String::toInt()
+int String::toInt() immut
 {
 	// UNUSED FUNCTION (Matching by size)
 	char c;
@@ -121,10 +121,10 @@ int String::toInt()
  * @TODO: Documentation
  * @note UNUSED Size: 000024
  */
-int String::getLength(char* str)
+int String::getLength(immut char* str)
 {
 	// UNUSED FUNCTION (Matching by size)
-	String tempStr(str, 0);
+	String tempStr(const_cast<char*>(str), 0);
 	return tempStr.getLength();
 }
 
@@ -132,10 +132,10 @@ int String::getLength(char* str)
  * @TODO: Documentation
  * @note UNUSED Size: 00006C
  */
-bool String::isSame(char* a, char* b)
+bool String::isSame(immut char* a, immut char* b)
 {
 	// UNUSED FUNCTION (Matching by size)
-	String aStr(a, 0);
+	String aStr(const_cast<char*>(a), 0);
 	return aStr.isSame(b);
 }
 
@@ -143,7 +143,7 @@ bool String::isSame(char* a, char* b)
  * @TODO: Documentation
  * @note UNUSED Size: 00005C
  */
-char* String::dup(char* str)
+char* String::dup(immut char* str)
 {
 	// UNUSED FUNCTION (Matching by size)
 	char* newStr = new char[getLength(str) + 1];
@@ -155,13 +155,13 @@ char* String::dup(char* str)
  * @TODO: Documentation
  * @note UNUSED Size: 000058
  */
-bool String::contains(char* str, char* substr)
+bool String::contains(immut char* str, immut char* substr)
 {
 	// UNUSED FUNCTION (Matching by size)
 #if defined(BUGFIX)
-	char* submatchStart = str;
+	const char* submatchStart = str;
 #endif
-	char* substrBackup = substr;
+	const char* substrBackup = substr;
 	while (*str && *substr) {
 		if (*str++ == *substr++) {
 			if (*substr == '\0') {
@@ -184,7 +184,7 @@ bool String::contains(char* str, char* substr)
  * @TODO: Documentation
  * @note UNUSED Size: 00001C
  */
-char* String::copy(char* out, char* str)
+char* String::copy(char* out, immut char* str)
 {
 	// UNUSED FUNCTION (Matching by size)
 	while ((*out++ = *str++)) { }
@@ -195,7 +195,7 @@ char* String::copy(char* out, char* str)
  * @TODO: Documentation
  * @note UNUSED Size: 000058
  */
-bool String::copyUntil(char* out, char* str, char delim, char** end)
+bool String::copyUntil(char* out, immut char* str, char delim, immut char** end)
 {
 	// UNUSED FUNCTION (Matching by size)
 	while (*str != delim && *str != '\0') {
@@ -212,7 +212,7 @@ bool String::copyUntil(char* out, char* str, char delim, char** end)
  * @TODO: Documentation
  * @note UNUSED Size: 000030
  */
-void String::concat(char* out, char* str)
+void String::concat(char* out, immut char* str)
 {
 	// UNUSED FUNCTION (Matching by size)
 	while (*out++) { }          // Loop until one-past-end of `out`.
@@ -224,10 +224,10 @@ void String::concat(char* out, char* str)
  * @TODO: Documentation
  * @note UNUSED Size: 000030
  */
-u32 String::calcHash(char* str)
+u32 String::calcHash(immut char* str)
 {
 	// UNUSED FUNCTION (Matching by size)
-	String tempStr(str, 0);
+	String tempStr(const_cast<char*>(str), 0);
 	return tempStr.calcHash();
 }
 
@@ -235,7 +235,7 @@ u32 String::calcHash(char* str)
  * @TODO: Documentation
  * @note UNUSED Size: 000040
  */
-u32 String::calcHash()
+u32 String::calcHash() immut
 {
 	// UNUSED FUNCTION (Matching by size)
 	u32 hash                = 0;
@@ -256,10 +256,10 @@ u32 String::calcHash()
  * @TODO: Documentation
  * @note UNUSED Size: 000030
  */
-int String::toInt(char* str)
+int String::toInt(immut char* str)
 {
 	// UNUSED FUNCTION (Matching by size)
-	String tempStr(str, 0);
+	String tempStr(const_cast<char*>(str), 0);
 	return tempStr.toInt();
 }
 
