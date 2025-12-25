@@ -293,9 +293,11 @@ void System::parseArchiveDirectory(immut char* path1, immut char* path2)
 }
 
 /**
- * @TODO: Documentation
+ * @brief Parses the .text section layout of a 3-column MetroWerks linker map for symbolic information on functions.
+ * @note This is the text-based linker map format only produced by MWLDEPPC 1.0 through 2.6.  MWLDEPPC 2.7+ changed the format.
+ * @result The results of this function are a singly-linked list stored in `gsys->mBuildMapFuncList`.
  */
-void ParseMapFile()
+static void ParseMapFile()
 {
 	RandomAccessStream* file = gsys->openFile("build.map", true, true);
 	if (!file) {
@@ -304,35 +306,42 @@ void ParseMapFile()
 
 	CmdStream* cmds = new CmdStream(file);
 	while (!cmds->endOfCmds() && !cmds->endOfSection()) {
+		// Keep scanning and discarding tokens until the prologue of the .text section layout is detected.
 		cmds->getToken(true);
 		if (!cmds->isToken(".text")) {
 			continue;
 		}
 
-		cmds->skipLine();
-		cmds->skipLine();
-		cmds->skipLine();
-		cmds->skipLine();
+		// Skip the rest of the .text section layout prologue.
+		cmds->skipLine(); // .text section layout
+		cmds->skipLine(); //   Starting        Virtual
+		cmds->skipLine(); //   address  Size   address
+		cmds->skipLine(); //   -----------------------
 
-		char* bufPtr = nullptr;
+		SymbolInfo* prevSymbol = nullptr;
 
+		// Lines of a 3-column MetroWerks linker map section layout can take three forms:
+		// Normal : "  00085780 0001f8 8008ace0  4 kill__8CreatureFb 	plugPikiKando.a creature.cpp"
+		// Unused : "  UNUSED   000008 ........ getAtariType__8CreatureFv plugPikiKando.a creature.cpp"
+		// Entry  : "  0020f8dc 000000 80214e3c _savefpr_20 (entry of __save_fpr) 	Runtime.PPCEABI.H.a runtime.c"
+
+		// The following loop parses these three formats until the .ctor section layout (the one following .text) is detected.
 		while (!cmds->endOfCmds()) {
+			// First we parse the starting address column to detect worthless (to this program) "UNUSED" symbol lines and skip them.
 			cmds->getToken(true);
 			if (cmds->isToken("UNUSED")) {
 				cmds->skipLine();
 			} else {
-				// this... doesn't seem to be the same format as the build map we have?
-				// that should be address | size | virtual_address, but the %08xs vs %ds seem to say otherwise
-				// I assume their map was actually address | virtual_address | size
-				// (two of these are unused, the middle gets written to the list alongside the func name)
-				// (would make sense if it were the virtual address)
-				u32 addr; // 0x28
-				sscanf(cmds->getToken(true), "%08x", &addr);
-				u32 virtAddr; // 0x24
-				sscanf(cmds->getToken(true), "%08x", &virtAddr);
-				u32 funcSize; // 0x20
-				sscanf(cmds->getToken(true), "%d", &funcSize);
+				// The starting address column has already been parsed; next we read the size, virtual address, and alignment.
+				// Alignment is not present for entry symbols, but silently failing to scan them causes no issues as the value is unused.
+				// Entry symbols in general aren't handled very well by this function, but they're pretty rare in .text sections.
+				u32 symbolSize /* 0x28 */, symbolVirtualAddress /* 0x24 */, symbolAlignment /* 0x20 */;
+				sscanf(cmds->getToken(true), "%08x", &symbolSize); // "%06x" would be more accurate, but it doesn't matter.
+				sscanf(cmds->getToken(true), "%08x", &symbolVirtualAddress);
+				sscanf(cmds->getToken(true), "%d", &symbolAlignment);
 
+				// Despite its name, `CmdStream::skipLine` actually stores the remainder of the line as the current token.
+				// i.e. `cmds->mCurrentToken` = "kill__8CreatureFb 	plugPikiKando.a creature.cpp"
 				cmds->skipLine();
 
 				bool isLastCharValid = false;
@@ -344,6 +353,7 @@ void ParseMapFile()
 				int fileInfoLength  = 0;
 				for (i = 0; i < strlen(cmds->mCurrentToken); i++) {
 					char currChar = cmds->mCurrentToken[i];
+
 					if (currChar != ' ' && currChar != '_') {
 						isLastCharValid = true;
 						funcNameLength++;
@@ -365,6 +375,7 @@ void ParseMapFile()
 
 					if (cmds->mCurrentToken[i + 1] == '_') {
 						// look ahead to find the length/namespace length for the class
+						// BUG: This doesn't handle class names from nested namespaces, e.g. `getGPos__Q23zen17particleGeneratorFv`.
 						char digit1 = cmds->mCurrentToken[i + 2];
 						if (digit1 >= '0' && digit1 <= '9') {
 							char digit2 = cmds->mCurrentToken[i + 3];
@@ -396,7 +407,7 @@ void ParseMapFile()
 				}
 
 				int size;
-				if (classNameLength) {
+				if (classNameLength != 0) {
 					size = classNameLength + 2;
 				} else {
 					size = 0;
@@ -404,57 +415,60 @@ void ParseMapFile()
 
 				size = funcNameLength + size + 3 + fileInfoLength;
 
-				// i assume this buffer is meant to be some dedicated class but w/e
-				char* buffer      = new char[ALIGN_NEXT(size, 4) + 8];
-				((u32*)buffer)[0] = 0;
-				((u32*)buffer)[1] = virtAddr;
+				// NOTE: Using `operator new` is explicitly the *wrong* way to allocate a struct containing a flexible array member.
+				SymbolInfo* symbol      = (SymbolInfo*)System::alloc(ALIGN_NEXT(size, 4) + sizeof(SymbolInfo));
+				symbol->mNext           = nullptr;
+				symbol->mVirtualAddress = symbolVirtualAddress;
 
-				int d = 8;
+				// It's evident from the codegen (MWCC is needlessly inefficient with flexible array members) that the devs didn't access
+				// `SymbolInfo::mDemangledName` by name and instead manually wrote to memory with pointer arithmetic and type aliasing.
+				int offs = sizeof(SymbolInfo); // Therefore, we must start the string offset at 8 instead of 0.
 
-				if (bufPtr) {
-					((u32*)bufPtr)[0] = (u32)buffer;
+				if (prevSymbol) {
+					prevSymbol->mNext = symbol;
 				} else {
-					gsys->mBuildMapFuncList = (u32)buffer;
+					gsys->mBuildMapFuncList = symbol;
 				}
-
-				bufPtr = buffer;
+				prevSymbol = symbol;
 
 				// demangle! example: kill__8CreatureFb 	plugPikiKando.a creature.cpp
 				// write class name (e.g. Creature::)
-				if (classNameLength) {
+				if (classNameLength != 0) {
 					for (int j = 0; j < classNameLength; j++) {
-						buffer[d++] = cmds->mCurrentToken[j + classNameOffset];
+						((char*)symbol)[offs++] = cmds->mCurrentToken[j + classNameOffset];
 					}
-					buffer[d++] = ':';
-					buffer[d++] = ':';
+					((char*)symbol)[offs++] = ':';
+					((char*)symbol)[offs++] = ':';
 				}
 
 				// write function name (e.g. kill)
 				for (int j = 0; j < funcNameLength; j++) {
-					buffer[d++] = cmds->mCurrentToken[j];
+					((char*)symbol)[offs++] = cmds->mCurrentToken[j];
 				}
 
-				buffer[d++] = ' ';
-				buffer[d++] = ' ';
+				((char*)symbol)[offs++] = ' ';
+				((char*)symbol)[offs++] = ' ';
 
 				// write file name and library (e.g. plugPikiKando.a creature.cpp)
 				for (int j = 0; j < fileInfoLength; j++) {
-					buffer[d++] = cmds->mCurrentToken[j + fileInfoOffset];
+					((char*)symbol)[offs++] = cmds->mCurrentToken[j + fileInfoOffset];
 				}
 
-				buffer[d++] = 0;
+				((char*)symbol)[offs++] = '\0';
 			}
 
+			// .ctors section layout prologue detected!  Time to bail!
 			if (cmds->isToken(".ctors")) {
 				break;
 			}
 		}
 	}
+	// ...What are you doing?  The show is over!
 	if (!cmds->endOfCmds()) {
 		cmds->getToken(true);
 	}
 
-	STACK_PAD_VAR(2);
+	STACK_PAD_VAR(3);
 	file->close();
 }
 
@@ -518,7 +532,7 @@ System::System()
 	mAtxRouter        = nullptr;
 	mActiveHeapIdx    = -1;
 	gsys              = this;
-	mBuildMapFuncList = 0;
+	mBuildMapFuncList = nullptr;
 	mTimer            = nullptr;
 }
 
