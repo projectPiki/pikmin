@@ -34,22 +34,22 @@ struct String {
 		mLength = length;
 	}
 
-	static bool equals(char* lhs, char* rhs) { return isSame(lhs, rhs); }
+	static bool equals(immut char* lhs, immut char* rhs) { return isSame(lhs, rhs); }
 
-	static bool isSame(char*, char*);
-	bool isSame(immut char*);
-	bool isSame(String* other) { return isSame(other->mString); }
+	static bool isSame(immut char*, immut char*);
+	bool isSame(immut char*) immut;
+	bool isSame(immut String* other) immut { return isSame(other->mString); }
 
-	static bool contains(char*, char*);
-	static bool contains(char* str, char c)
+	static bool contains(immut char*, immut char*);
+	static bool contains(immut char* str, char c)
 	{
-		char substr[] = { c, '\0' };
+		immut char substr[] = { c, '\0' };
 		return contains(str, substr);
 	}
-	bool contains(char* substr) { return contains(mString, substr); }
+	bool contains(immut char* substr) immut { return contains(mString, substr); }
 
-	static char* dup(char*);
-	char* dup() { return dup(mString); }
+	static char* dup(immut char*);
+	char* dup() immut { return dup(mString); }
 
 	static bool isWhiteSpace(char c)
 	{
@@ -57,20 +57,20 @@ struct String {
 	}
 
 	// There isn't a static version of this function (probably because it's unimplemented).
-	float toFloat();
+	float toFloat() immut;
 
-	static int toInt(char*);
-	int toInt();
+	static int toInt(immut char*);
+	int toInt() immut;
 
-	static int getLength(char*);
+	static int getLength(immut char*);
 	int getLength() immut;
 
-	static u32 calcHash(char*);
-	u32 calcHash();
+	static u32 calcHash(immut char*);
+	u32 calcHash() immut;
 
-	static char* copy(char*, char*);
-	static bool copyUntil(char*, char*, char, char**);
-	static void concat(char*, char*);
+	static char* copy(char*, immut char*);
+	static bool copyUntil(char*, immut char*, char, immut char**);
+	static void concat(char*, immut char*);
 
 	int mLength;   // _00
 	char* mString; // _04
