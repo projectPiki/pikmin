@@ -71,7 +71,11 @@ void SITransferCommands(void);
 u32 SISetXY(u32 x, u32 y);
 u32 SIEnablePolling(u32 poll);
 u32 SIDisablePolling(u32 poll);
+#if defined(VERSION_G98E01_PIKIDEMO)
+BOOL SIGetResponse(s32 chan, void* data);
+#else
 void SIGetResponse(s32 chan, void* data);
+#endif
 BOOL SITransfer(s32 chan, void* output, u32 outputBytes, void* input, u32 inputBytes, SICallback callback, OSTime delay);
 u32 SIGetType(s32 chan);
 u32 SIGetTypeAsync(s32 chan, SITypeAndStatusCallback callback);

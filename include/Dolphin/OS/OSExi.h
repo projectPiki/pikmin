@@ -40,7 +40,11 @@ typedef struct EXIControl {
 	int immLen;              // _10
 	u8* immBuf;              // _14
 	u32 dev;                 // _18
-	int items;               // _24
+#if defined(VERSION_G98E01_PIKIDEMO)
+	u32 id;
+	s32 idTime;
+#endif
+	int items; // _24
 	struct {
 		u32 dev;
 		EXICallback callback;

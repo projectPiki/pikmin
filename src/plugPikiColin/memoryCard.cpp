@@ -862,12 +862,21 @@ void MemoryCard::saveCurrentGame()
  */
 void MemoryCard::writeCurrentGame(RandomAccessStream* output, PlayState& playState)
 {
+#if defined(VERSION_G98E01_PIKIDEMO)
+	if (playerState) {
+		playState.mRedPikiCount    = playerState->hasContainer(Red) ? playerState->getCardPikiCount(Red) : -1;
+		playState.mYellowPikiCount = playerState->hasContainer(Yellow) ? playerState->getCardPikiCount(Yellow) : -1;
+		playState.mBluePikiCount   = playerState->hasContainer(Blue) ? playerState->getCardPikiCount(Blue) : -1;
+		playState.mShipPartsCount  = playerState->getCardUfoPartsCount();
+	}
+#else
 	if (playerState) {
 		playState.mRedPikiCount    = playerState->hasContainer(Red) ? pikiInfMgr.getColorTotal(Red) : -1;
 		playState.mYellowPikiCount = playerState->hasContainer(Yellow) ? pikiInfMgr.getColorTotal(Yellow) : -1;
 		playState.mBluePikiCount   = playerState->hasContainer(Blue) ? pikiInfMgr.getColorTotal(Blue) : -1;
 		playState.mShipPartsCount  = playerState->getCardUfoPartsCount();
 	}
+#endif
 
 	playState.write(*output);
 	if (playState.mSaveStatus == 2 && playerState) {
@@ -888,6 +897,11 @@ void MemoryCard::readCurrentGame(RandomAccessStream* data)
 	gameflow.mWorldClock.mCurrentDay = gameflow.mPlayState.mSavedDay;
 }
 
+static const char* errCodes[] = {
+	"No Error",      "ERR! No Card", "ERR! Not a Card",    "ERR! Card Fullup", "ERR! Card Broken", "ERR! Card Wrong Country",
+	"ERR! Unusable", "ERR! Unknown", "ERR! No Files Left",
+};
+
 /**
  * @TODO: Documentation
  */
@@ -897,9 +911,13 @@ void MemoryCard::initBannerArea(CARDStat& state, immut char* p2)
 	char comment2[0x20];
 
 	RamStream stream(cardData, state.length);
+#if defined(VERSION_G98E01_PIKIDEMO)
+	sprintf(comment1, "ピクミン");
+	sprintf(comment2, p2);
+#else
 	sprintf(comment1, "Pikmin");
 	sprintf(comment2, "Blocks");
-
+#endif
 	CARDSetCommentAddress(&state, stream.mPosition);
 	stream.write(comment1, 0x20);
 	stream.write(comment2, 0x20);
@@ -934,11 +952,6 @@ void MemoryCard::initBannerArea(CARDStat& state, immut char* p2)
 
 	STACK_PAD_VAR(1);
 }
-
-static const char* errCodes[] = {
-	"No Error",      "ERR! No Card", "ERR! Not a Card",    "ERR! Card Fullup", "ERR! Card Broken", "ERR! Card Wrong Country",
-	"ERR! Unusable", "ERR! Unknown", "ERR! No Files Left",
-};
 
 /**
  * @TODO: Documentation

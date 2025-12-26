@@ -77,7 +77,10 @@ static immut char* arambundleList[][2] = {
 	{ "archives/pikihead.dir", "dataDir/archives/pikihead.arc" },
 	{ "archives/effshapes.dir", "dataDir/archives/effshapes.arc" },
 	{ "archives/weeds.dir", "dataDir/archives/weeds.arc" },
+#if defined(VERSION_G98E01_PIKIDEMO)
+#else
 	{ "archives/goal.dir", "dataDir/archives/goal.arc" },
+#endif
 	{ nullptr, nullptr },
 };
 
@@ -104,6 +107,17 @@ void GameSetupSection::preCacheShapes()
 
 	BOOL print         = gsys->mTogglePrint;
 	gsys->mTogglePrint = TRUE;
+#if defined(VERSION_G98E01_PIKIDEMO)
+	_Print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+	_Print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+	_Print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+	AramAllocator* alloc = &gsys->mBaseAramAllocator;
+	_Print("!!!!!!!!!!!!!!!!! %d bytes still in aramHeap\n", alloc->mBaseAddress + alloc->mSize - alloc->mCurrentOffset);
+	_Print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+	_Print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+	_Print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+	_Print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+#endif
 	gsys->mTogglePrint = print;
 
 	for (bundlePair = shapeList[0]; bundlePair[0]; bundlePair += 2) {
@@ -295,7 +309,39 @@ GameSetupSection::GameSetupSection()
  */
 void GameSetupSection::update()
 {
+#if defined(VERSION_G98E01_PIKIDEMO)
+	flowCont.mCurrentStage = 0;
+	playerState->initGame();
+	generatorCache->initGame();
+	pikiInfMgr.initGame();
+
+	StageInfo* stage = flowCont.mRootInfo.getChild();
+	while (stage) {
+		stage->mHasInitialised = 0;
+		stage->mStageInf.initGame();
+		stage = (StageInfo*)stage->mNext;
+	}
+
+	gameflow.mGamePrefs.mSaveGameIndex = 0;
+	gameflow.mGamePrefs.mHasSaveGame   = 0;
+	playerState->setChallengeMode();
+
+	stage = flowCont.mRootInfo.getChild();
+	while (stage) {
+		if ((int)stage->mChalStageID == 1) {
+			flowCont.mCurrentStage = stage;
+			sprintf(flowCont.mStagePath1, "%s", stage->mFileName);
+			sprintf(flowCont.mStagePath2, "%s", stage->mFileName);
+			gameflow.mNextOnePlayerSectionID = ONEPLAYER_NewPikiGame;
+			gameflow.mWorldClock.setTime(gameflow.mParameters->mStartHour());
+			break;
+		}
+		stage = (StageInfo*)stage->mNext;
+	}
+	gsys->softReset();
+#else
 	PRINT("reset!\n");
 	gameflow.mNextOnePlayerSectionID = ONEPLAYER_CardSelect;
 	gsys->softReset();
+#endif
 }

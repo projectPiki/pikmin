@@ -974,6 +974,11 @@ void ActorInstance::refresh(immut Matrix4f& mtx, Graphics& gfx, f32* p3)
 		mActiveActor->mModel->overrideAnim(0, &mActiveActor->mContext);
 	}
 
+#if defined(VERSION_G98E01_PIKIDEMO)
+	STACK_PAD_STRUCT(50);
+#else
+#endif
+
 	int modelType = 0;
 	if (strcmp(mActiveActor->mModel->mName, "pikis/bluModel.mod") == 0) {
 		modelType = 1;
@@ -1016,6 +1021,11 @@ void ActorInstance::refresh(immut Matrix4f& mtx, Graphics& gfx, f32* p3)
 			}
 		}
 	}
+
+#if defined(VERSION_G98E01_PIKIDEMO)
+	STACK_PAD_STRUCT(12);
+#else
+#endif
 
 	AnimFrameCacher* prevCacher        = mActiveActor->mModel->mFrameCacher;
 	mActiveActor->mModel->mFrameCacher = nullptr;

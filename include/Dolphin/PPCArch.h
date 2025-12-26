@@ -29,6 +29,7 @@ extern "C" {
 
 #define MSR_IR 0x00000020 // instruction relocate
 #define MSR_DR 0x00000010 // data relocate
+#define MSR_RI 0x00000002 // Recoverable interrupt
 
 #define HID2_DCHERR 0x00800000 // ERROR: dcbz_l cache hit
 #define HID2_DNCERR 0x00400000 // ERROR: DMA access to normal cache

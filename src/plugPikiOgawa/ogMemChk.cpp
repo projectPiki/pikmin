@@ -494,7 +494,11 @@ void zen::ogScrMemChkMgr::checkErrNitaku(ogNitakuMgr* mgr, Controller* input)
 {
 	if (checkTypingAll()) {
 		DispYesNo(true);
+#if defined(VERSION_PIKIDEMO)
+		ogNitakuMgr::NitakuStatus status = mNitakuMgr->update(input);
+#else
 		ogNitakuMgr::NitakuStatus status = mgr->update(input);
+#endif
 		if (status == ogNitakuMgr::ExitFailure) {
 			mStatus = ExitFailure;
 		} else if (status == ogNitakuMgr::ExitSuccess) {
@@ -571,9 +575,9 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 #if defined(VERSION_PIKIDEMO)
 #else
 		SetNitaku_W_R();
-#endif
 		PRINT("##### MEMCHK_DISP_ERR_KAIGAI  ######\n");
 		checkErrNitaku(mNitakuMgr, input);
+#endif
 		break;
 
 	case BrokenCard:
@@ -677,7 +681,11 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 	case Formatting:
 		DispYesNo(false);
 		DispAcup(true);
+#if defined(VERSION_PIKIDEMO)
+		if (mWaitTimer > 3.0f) {
+#else
 		if (checkTypingAll() && mWaitTimer > 6.0f) {
+#endif
 			mEfxA->finish();
 			mEfxB->finish();
 			bool format = true;
@@ -711,7 +719,12 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 #endif
 			_UNUSEDC4 = 0.0f;
 			if (gameflow.mMemoryCard.mSaveFileIndex < 0) {
+#if defined(VERSION_PIKIDEMO)
+				mMakeDefaultMgr->start();
+				mStatus = MakeDefaultFile;
+#else
 				MakeDefFileStart();
+#endif
 			} else {
 				mStatus = Finished;
 			}
@@ -824,7 +837,11 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 	mActiveTextMgr->transCursor(mCursorPane);
 	mBlackScreen->update();
 
+#if defined(VERSION_PIKIDEMO)
+	STACK_PAD_TERNARY(mStatus, 8);
+#else
 	STACK_PAD_TERNARY(mStatus, 10);
+#endif
 	return mStatus;
 }
 

@@ -184,10 +184,14 @@ void FlowController::readMapList(immut char* fileName)
 	}
 	file->close();
 }
-
+#if defined(VERSION_G98E01_PIKIDEMO)
+static immut char* levNames[]
+    = { "intro/map0.bti", "intro/ot_map.bti", "intro/map2.bti", "intro/map3.bti", "intro/map4.bti", "intro/loading.bti" };
+#else
 static immut char* levNames[STAGE_COUNT] = {
 	"intro/map0.bti", "intro/map1.bti", "intro/map2.bti", "intro/map3.bti", "intro/map4.bti",
 };
+#endif
 
 /**
  * @TODO: Documentation
@@ -204,6 +208,10 @@ void OnePlayerSection::init()
 		case ONEPLAYER_GameSetup:
 			PRINT("making new SETUP\n");
 			gsys->startLoading(&gameflow.mGameLoadIdler, true, 60);
+#if defined(VERSION_G98E01_PIKIDEMO)
+			gameflow.mLevelBannerTexture   = gameflow.setLoadBanner(levNames[5]);
+			gameflow.mLevelBannerFadeValue = 0.0f;
+#else
 			if (gameflow.mLevelIndex >= 2 && gameflow.mLevelIndex <= 4) {
 				PRINT("setting banner!\n");
 				gameflow.mLevelBannerTexture   = gameflow.setLoadBanner(levNames[gameflow.mLevelIndex - 2]);
@@ -211,6 +219,7 @@ void OnePlayerSection::init()
 			} else {
 				gameflow.mLevelBannerTexture = nullptr;
 			}
+#endif
 
 			currentSection = new GameSetupSection();
 			gsys->endLoading();

@@ -28,6 +28,10 @@ enum GameMovieCommand {
 	MOVIECMD_CountDownLastSecond = 15, // Signals the last second of the day
 	MOVIECMD_StageFinish         = 16, // Forced day end (navi down or extinction)
 	MOVIECMD_CreateMenuWindow    = 17, // Create radar and controls menu
+#if defined(VERSION_G98E01_PIKIDEMO)
+	MOVIECMD_DemoFinish = 18, // Demo Forest of Hope day end (?)
+#else
+#endif
 };
 
 /**

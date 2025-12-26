@@ -4,6 +4,7 @@
 #include "Graphics.h"
 #include "MemStat.h"
 #include "gameflow.h"
+#include "timers.h"
 
 /**
  * @TODO: Documentation
@@ -745,7 +746,14 @@ void EffectMgr::initEffectGeometry(int effShpCount)
  */
 void EffectMgr::update()
 {
+#if defined(VERSION_G98E01_PIKIDEMO)
+	gsys->mTimer->start("ptcl", true);
+#endif
 	mPtclMgr.update();
+#if defined(VERSION_G98E01_PIKIDEMO)
+	gsys->mTimer->stop("ptcl");
+#endif
+
 	EffShpInst* next;
 	for (EffShpInst* inst = (EffShpInst*)mActiveGeomList.mChild; inst; inst = next) {
 		next = (EffShpInst*)inst->mNext;

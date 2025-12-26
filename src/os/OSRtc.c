@@ -286,11 +286,26 @@ void OSSetSoundMode(u32 mode)
 	__OSUnlockSram(TRUE);
 }
 
+inline OSSram* __OSLockSramHACK()
+{
+	return LockSram(0);
+}
+
 /**
  * @TODO: Documentation
  */
 u32 OSGetProgressiveMode(void)
 {
+#if defined(VERSION_G98E01_PIKIDEMO)
+	OSSram* sram;
+	u32 mode;
+
+	sram = __OSLockSramHACK();
+	mode = (sram->flags & 0x80) >> 7;
+	__OSUnlockSram(FALSE);
+	return mode;
+#else
+
 	OSSram* sram;
 	u32 mode;
 	u32 tmp;  // dumbass compiler
@@ -304,6 +319,7 @@ u32 OSGetProgressiveMode(void)
 	}
 	__OSUnlockSram(FALSE);
 	return mode;
+#endif
 }
 
 /**
@@ -381,3 +397,29 @@ void __OSSetBootMode(void)
 {
 	// UNUSED FUNCTION
 }
+#if defined(VERSION_G98E01_PIKIDEMO)
+u16 OSGetWirelessID(s32 channel)
+{
+	OSSramEx* sram;
+	u16 id;
+
+	sram = __OSLockSramEx();
+	id   = sram->wirelessPadID[channel];
+	__OSUnlockSramEx(FALSE);
+	return id;
+}
+
+void OSSetWirelessID(s32 channel, u16 id)
+{
+	OSSramEx* sram;
+
+	sram = __OSLockSramEx();
+	if (sram->wirelessPadID[channel] != id) {
+		sram->wirelessPadID[channel] = id;
+		__OSUnlockSramEx(TRUE);
+		return;
+	}
+
+	__OSUnlockSramEx(FALSE);
+}
+#endif

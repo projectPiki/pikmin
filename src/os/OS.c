@@ -134,6 +134,36 @@ u32 OSGetConsoleType(void)
 	return BootInfo->consoleType;
 }
 
+#if defined(VERSION_G98E01_PIKIDEMO)
+extern u32 BOOT_REGION_START : 0x812FDFF0; //(*(u32 *)0x812fdff0)
+extern u32 BOOT_REGION_END : 0x812FDFEC;   //(*(u32 *)0x812fdfec)
+
+void ClearArena()
+{
+	void *start, *end;
+	if ((u32)(OSGetResetCode() + 0x80000000) != 0U) {
+		memset(OSGetArenaLo(), 0U, (u32)OSGetArenaHi() - (u32)OSGetArenaLo());
+		return;
+	}
+	start = (void*)BOOT_REGION_START;
+	end   = (void*)BOOT_REGION_END;
+	if (BOOT_REGION_START == 0U) {
+		memset(OSGetArenaLo(), 0U, (u32)OSGetArenaHi() - (u32)OSGetArenaLo());
+		return;
+	}
+
+	if ((u32)OSGetArenaLo() < (u32)start) {
+		if ((u32)OSGetArenaHi() <= (u32)start) {
+			memset((u32)OSGetArenaLo(), 0U, (u32)OSGetArenaHi() - (u32)OSGetArenaLo());
+			return;
+		}
+		memset(OSGetArenaLo(), 0U, (u32)start - (u32)OSGetArenaLo());
+		if ((u32)OSGetArenaHi() > (u32)end) {
+			memset((u32)end, 0, (u32)OSGetArenaHi() - (u32)end);
+		}
+	}
+}
+#endif
 /**
  * @TODO: Documentation
  */
@@ -155,7 +185,11 @@ void OSInit(void)
 	if ((BOOL)AreWeInitialized == FALSE) { // fantastic name
 		AreWeInitialized = TRUE;           // flag to make sure we don't have to do this again
 
-		// SYSTEM //
+// SYSTEM //
+#if defined(VERSION_G98E01_PIKIDEMO)
+		__OSStartTime = __OSGetSystemTime();
+#endif
+
 		OSDisableInterrupts();
 
 		// DEBUG //
@@ -169,13 +203,28 @@ void OSInit(void)
 		// the address for where the BI2 debug info is, is stored at OS_BI2_DEBUG_ADDRESS
 		DebugInfo = (BI2Debug*)*((u32*)OS_BI2_DEBUG_ADDRESS);
 
+#if defined(VERSION_G98E01_PIKIDEMO)
+		// if the debug info address exists, grab some debug info
+		if (DebugInfo != NULL) {
+			BI2DebugFlag               = &DebugInfo->debugFlag;     // debug flag from DVD BI2
+			__PADSpec                  = (u32)DebugInfo->padSpec;   // some other info from DVD BI2
+			*((u8*)DEBUGFLAG_ADDR)     = (u8)*BI2DebugFlag;         // store flag in mem
+			*((u8*)OS_DEBUG_ADDRESS_2) = (u8)__PADSpec;             // store other info in mem
+		} else if (BootInfo->arenaHi) {                             // if the top of the heap is already set
+			BI2DebugFlagHolder = (u32*)*((u8*)DEBUGFLAG_ADDR);      // grab whatever's stored at 0x800030E8
+			BI2DebugFlag       = (u32*)&BI2DebugFlagHolder;         // flag is then address of flag holder
+			__PADSpec          = (u32) * ((u8*)OS_DEBUG_ADDRESS_2); // pad spec is whatever's at 0x800030E9
+		}
+
+		__DVDLongFileNameFlag = (u32)1;
+#else
 		// if the debug info address exists, grab some debug info
 		if (DebugInfo != NULL) {
 			BI2DebugFlag          = &DebugInfo->debugFlag;          // debug flag from DVD BI2
 			__DVDLongFileNameFlag = DebugInfo->dvdLongFileNameFlag; // we made it through debug!
 			__PADSpec             = (u32)DebugInfo->padSpec;        // some other info from DVD BI2
 		}
-
+#endif
 		// HEAP //
 		// set up bottom of heap (ArenaLo)
 		// grab address from BootInfo if it exists, otherwise use default __ArenaLo
@@ -196,6 +245,9 @@ void OSInit(void)
 		// initialise a whole bunch of OS stuff
 		OSExceptionInit();
 		__OSInitSystemCall();
+#if defined(VERSION_G98E01_PIKIDEMO)
+		OSInitAlarm();
+#endif
 		__OSModuleInit();
 		__OSInterruptInit();
 		__OSSetInterruptHandler(__OS_INTERRUPT_PI_RSW, (void*)__OSResetSWInterruptHandler);
@@ -206,19 +258,26 @@ void OSInit(void)
 		__OSInitSram();
 		__OSThreadInit();
 		__OSInitAudioSystem();
-
+#if defined(VERSION_G98E01_PIKIDEMO)
+		PPCMthid2(PPCMfhid2() & 0xBFFFFFFF);
+#endif
 		if ((BootInfo->consoleType & OS_CONSOLE_DEVELOPMENT) != 0) {
 			BootInfo->consoleType = OS_CONSOLE_DEVHW1;
 		} else {
 			BootInfo->consoleType = OS_CONSOLE_RETAIL1;
 		}
 		BootInfo->consoleType += (__PIRegs[11] & 0xF0000000) >> 28;
-
+#if defined(VERSION_G98E01_PIKIDEMO)
+		__OSInitMemoryProtection();
+		// begin OS reporting
+		OSReport("\nDolphin OS $Revision: 47 $.\n");
+		OSReport("Kernel built : %s %s\n", "Nov 12 2001", "01:46:17");
+#else
 		// begin OS reporting
 		OSReport("\nDolphin OS $Revision: 37 $.\n");
 		OSReport("Kernel built : %s %s\n", "Jul 19 2001", "05:43:42");
+#endif
 		OSReport("Console Type : ");
-
 		if (BootInfo == NULL || (inputConsoleType = BootInfo->consoleType) == 0) {
 			inputConsoleType = OS_CONSOLE_ARTHUR; // default console type
 		} else {
@@ -260,7 +319,10 @@ void OSInit(void)
 			EnableMetroTRKInterrupts();
 		}
 
-		// free up memory and re-enable things
+// free up memory and re-enable things
+#if defined(VERSION_G98E01_PIKIDEMO)
+		ClearArena();
+#endif
 		OSEnableInterrupts();
 	}
 }

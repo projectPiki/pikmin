@@ -165,15 +165,27 @@ void OSResetSystem(int reset, u32 resetCode, BOOL forceMenu)
 	BOOL rc;
 	BOOL disableRecalibration;
 	BOOL enabled;
-
+#if defined(VERSION_G98E01_PIKIDEMO)
+	int stack, stack2;
+#endif
 	OSDisableScheduler();
 	__OSStopAudioSystem();
+
+#if defined(VERSION_G98E01_PIKIDEMO)
+	if (reset == OS_RESET_SHUTDOWN) {
+		disableRecalibration = __PADDisableRecalibration(TRUE);
+	}
+#endif
 
 	while (!CallResetFunctions(FALSE)) {
 		;
 	}
 
+#if defined(VERSION_G98E01_PIKIDEMO)
+	if (reset == OS_RESET_HOTRESET && forceMenu) {
+#else
 	if (reset && forceMenu) {
+#endif
 		OSSram* sram;
 
 		sram = __OSLockSram();
@@ -185,19 +197,49 @@ void OSResetSystem(int reset, u32 resetCode, BOOL forceMenu)
 		}
 	}
 
+#if defined(VERSION_G98E01_PIKIDEMO)
+	OSDisableInterrupts();
+#else
 	enabled = OSDisableInterrupts();
+#endif
 	CallResetFunctions(TRUE);
+#if defined(VERSION_G98E01_PIKIDEMO)
+	LCDisable();
+#endif
 	if (reset == OS_RESET_HOTRESET) {
 		__OSDoHotReset(resetCode);
+#if defined(VERSION_G98E01_PIKIDEMO)
+	} else if (reset == OS_RESET_RESTART) {
+#else
 	} else {
+#endif
 		KillThreads();
 		OSEnableScheduler();
 		__OSReboot(resetCode, forceMenu);
 	}
 
+#if defined(VERSION_G98E01_PIKIDEMO)
+	KillThreads();
+	memset(OSPhysicalToCached(0x40), 0, 0xcc - 0x40);
+	memset(OSPhysicalToCached(0xd4), 0, 0xe8 - 0xd4);
+	memset(OSPhysicalToCached(0xf4), 0, 0xf8 - 0xf4);
+	memset(OSPhysicalToCached(0x3000), 0, 0xc0);
+	memset(OSPhysicalToCached(0x30c8), 0, 0xd4 - 0xc8);
+	// memset(OSPhysicalToCached(0x30e2), 0, 1);
+	__PADDisableRecalibration(disableRecalibration);
+#else
 	OSRestoreInterrupts(enabled);
 	OSEnableScheduler();
+#endif
 }
+
+#if defined(VERSION_G98E01_PIKIDEMO)
+volatile u8 DAT_800030e2 : 0x800030e2;
+typedef struct Unk {
+	u8 pad[0x24];
+	u32 resetCode;
+} Unk;
+volatile Unk DAT_cc003000 : 0xcc003000;
 
 /**
  * @TODO: Documentation
@@ -205,5 +247,10 @@ void OSResetSystem(int reset, u32 resetCode, BOOL forceMenu)
  */
 u32 OSGetResetCode(void)
 {
+	if (DAT_800030e2 != 0) {
+		return 0x80000000;
+	}
+	return ((DAT_cc003000.resetCode & ~7) >> 3);
 	// UNUSED FUNCTION
 }
+#endif

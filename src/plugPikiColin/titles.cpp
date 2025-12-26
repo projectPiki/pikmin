@@ -67,7 +67,11 @@ struct TitleSetupSection : public Node {
 		seSystem = new SeSystem();
 #endif
 
+#if defined(VERSION_G98E01_PIKIDEMO)
+		mStartTransitionTimer = 1800.0f;
+#else
 		mStartTransitionTimer = 20.0f;
+#endif
 		mCameraFocusPoint.set(0.0f, 20.0f, 0.0f);
 		gameflow.mGameInterface = new TitlesMovieInterface(this);
 		mController             = new Controller;
@@ -177,13 +181,18 @@ struct TitleSetupSection : public Node {
 		if (!mState && startWindowOn) {
 			mStartTransitionTimer -= gsys->getFrameTime();
 			if (mStartTransitionTimer < 0.0f) {
-				mStartTransitionTimer       = 0.0f;
+				mStartTransitionTimer = 0.0f;
+#if defined(VERSION_G98E01_PIKIDEMO)
+				gsys->forceHardReset();
+				while (true) { }
+#else
 				gameflow.mIntroMovieId      = gameflow.mIntroMovieIdCycle;
 				gameflow.mIntroMovieIdCycle = (gameflow.mIntroMovieIdCycle + 1) & 0x3;
 				mNextSectionId              = SECTION_MovSample << 16;
 				mState                      = 1;
 				gsys->setFade(0.0f, 3.0f);
 				return;
+#endif
 			}
 		}
 
@@ -239,10 +248,19 @@ struct TitleSetupSection : public Node {
 
 				if (!totalWindowOn) {
 					if (startWindowOn && !titleWindowOn && mController->keyClick(KBBTN_START | KBBTN_A)) {
+#if defined(VERSION_G98E01_PIKIDEMO)
+						mNextSectionId                   = 0x40000;
+						gameflow.mGamePrefs.mHasSaveGame = 0;
+						gameflow.mIsChallengeMode        = true;
+						Jac_SceneExit(0xd, 0);
+						mState = 1;
+						gsys->setFade(0.0f, 3.0f);
+#else
 						startWindow->stop();
 						startWindowOn = false;
 						titleWindow->start(gameflow.mGamePrefs.isChallengeOpen());
 						titleWindowOn = true;
+#endif
 					}
 
 					startWindow->update(mController);
@@ -274,6 +292,27 @@ struct TitleSetupSection : public Node {
 						mState = 1;
 						gsys->setFade(0.0f, 3.0f);
 					} else if (titleState == zen::ogScrTitleMgr::Status_5 || titleState == zen::ogScrTitleMgr::Status_3) {
+#if defined(VERSION_G98E01_PIKIDEMO)
+						STACK_PAD_VAR(1);
+						if (gameflow.mGamePrefs.mIsChanged)
+							gameflow.mMemoryCard.saveOptions();
+
+						int old = gameflow.mLanguageIndex;
+						if (!gameflow.mGamePrefs.getChildMode()) {
+							gameflow.mLanguageIndex = 0;
+						} else {
+							gameflow.mLanguageIndex = 1;
+						}
+						if (gameflow.mLanguageIndex != old) {
+							gameflow.mLanguageIndex = -1;
+							mState                  = 1;
+							gsys->setFade(0.0f, 3.0f);
+						} else {
+							startWindow->start();
+							startWindowOn = true;
+							titleWindowOn = false;
+						}
+#else
 #if defined(VERSION_GPIP01_00)
 						int child = gameflow.mGamePrefs.getChildMode();
 						STACK_PAD_VAR(1);
@@ -304,7 +343,6 @@ struct TitleSetupSection : public Node {
 							gameflow.mGamePrefs.mIsChanged = false;
 							gameflow.mMemoryCard.saveOptions();
 						}
-
 						if (gameflow.mLanguageIndex != child) {
 							gameflow.mLanguageIndex = -1;
 							mState                  = 1;
@@ -314,6 +352,7 @@ struct TitleSetupSection : public Node {
 							startWindowOn = true;
 							titleWindowOn = false;
 						}
+#endif
 					}
 				}
 
@@ -543,10 +582,12 @@ void TitlesSection::init()
 	gameflow.mLevelBannerTexture     = nullptr;
 	gameflow.mLevelBannerFadeValue   = 1.0f;
 	gameflow.mGamePrefs.mHasSaveGame = true;
-
+#if defined(VERSION_G98E01_PIKIDEMO)
+#else
 	if (gameflow.mMemoryCard.getMemoryCardState(true) == 0 && gameflow.mMemoryCard.mSaveFileIndex >= 0) {
 		gameflow.mMemoryCard.loadOptions();
 	}
+#endif
 	gameflow.mGamePrefs.fixSoundMode();
 	gsys->startLoading(&gameflow.mGameLoadIdler, true, gameflow.mRedLoadLogo ? 0 : 60);
 

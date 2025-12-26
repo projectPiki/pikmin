@@ -252,6 +252,77 @@ void C_MTXInverse(void)
 /**
  * @TODO: Documentation
  */
+#if defined(VERSION_G98E01_PIKIDEMO)
+ASM u32 PSMTXInverse(const register Mtx src, register Mtx inv) {
+#ifdef __MWERKS__ // clang-format off
+	nofralloc
+  psq_l       fp0, 0(src), 1, 0
+  psq_l       fp1, 4(src), 0, 0
+  psq_l       fp2, 16(src), 1, 0
+  ps_merge10  fp6, fp1, fp0
+  psq_l       fp3, 20(src), 0, 0
+  psq_l       fp4, 32(src), 1, 0
+  ps_merge10  fp7, fp3, fp2
+  psq_l       fp5, 36(src), 0, 0
+  ps_mul      fp11, fp3, fp6
+  ps_mul      fp13, fp5, fp7
+  ps_merge10  fp8, fp5, fp4
+  ps_msub     fp11, fp1, fp7, fp11
+  ps_mul      fp12, fp1, fp8
+  ps_msub     fp13, fp3, fp8, fp13
+  ps_mul      fp10, fp3, fp4
+  ps_msub     fp12, fp5, fp6, fp12
+  ps_mul      fp9,  fp0, fp5
+  ps_mul      fp8,  fp1, fp2
+  ps_sub      fp6, fp6, fp6
+  ps_msub     fp10, fp2, fp5, fp10
+  ps_mul      fp7, fp0, fp13
+  ps_msub     fp9,  fp1, fp4, fp9
+  ps_madd     fp7, fp2, fp12, fp7
+  ps_msub     fp8,  fp0, fp3, fp8
+  ps_madd     fp7, fp4, fp11, fp7
+  ps_cmpo0    cr0, fp7, fp6
+  bne         _regular
+  addi        r3, 0, 0
+  blr
+
+_regular:
+  fres        fp0, fp7
+  ps_add      fp6, fp0, fp0
+  ps_mul      fp5, fp0, fp0
+  ps_nmsub    fp0, fp7, fp5, fp6
+  lfs         fp1, 12(src)
+  ps_muls0    fp13, fp13, fp0
+  lfs         fp2, 28(src)
+  ps_muls0    fp12, fp12, fp0
+  lfs         fp3, 44(src)
+  ps_muls0    fp11, fp11, fp0
+  ps_merge00  fp5, fp13, fp12
+  ps_muls0    fp10, fp10, fp0
+  ps_merge11  fp4, fp13, fp12
+  ps_muls0    fp9,  fp9,  fp0
+  psq_st      fp5,  0(inv), 0, 0
+  ps_mul      fp6, fp13, fp1
+  psq_st      fp4,  16(inv), 0, 0
+  ps_muls0    fp8,  fp8,  fp0
+  ps_madd     fp6, fp12, fp2, fp6
+  psq_st      fp10, 32(inv), 1, 0
+  ps_nmadd    fp6, fp11, fp3, fp6
+  psq_st      fp9,  36(inv), 1, 0
+  ps_mul      fp7, fp10, fp1
+  ps_merge00  fp5, fp11, fp6
+  psq_st      fp8,  40(inv), 1, 0
+  ps_merge11  fp4, fp11, fp6
+  psq_st      fp5,  8(inv), 0, 0
+  ps_madd     fp7, fp9,  fp2, fp7
+  psq_st      fp4,  24(inv), 0, 0
+  ps_nmadd    fp7, fp8,  fp3, fp7
+  addi        r3, 0, 1
+  psq_st      fp7,  44(inv), 1, 0
+  blr
+  #endif // clang-format on
+}
+#else
 ASM u32 PSMTXInverse(const register Mtx src, register Mtx inv)
 {
 #ifdef __MWERKS__ // clang-format off
@@ -322,9 +393,9 @@ ASM u32 PSMTXInverse(const register Mtx src, register Mtx inv)
 			addi        r3, 0, 1
 	psq_st      fp7,  44(inv), 1, 0
 	blr
-#endif // clang-format on
+	#endif // clang-format on
 }
-
+#endif
 /**
  * @TODO: Documentation
  * @note UNUSED Size: 00021C
@@ -510,60 +581,6 @@ void MTXLightPerspective(Mtx m, f32 fovY, f32 aspect, f32 scaleS, f32 scaleT, f3
 	m[2][1] = 0.0f;
 	m[2][2] = -1.0f;
 	m[2][3] = 0.0f;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x58(r1)
-	  stfd      f31, 0x50(r1)
-	  stfd      f30, 0x48(r1)
-	  stfd      f29, 0x40(r1)
-	  stfd      f28, 0x38(r1)
-	  stfd      f27, 0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  fmr       f27, f2
-	  mr        r31, r3
-	  fmr       f28, f3
-	  fmr       f29, f4
-	  fmr       f30, f5
-	  fmr       f31, f6
-	  lfs       f2, -0x3D1C(r2)
-	  lfs       f0, -0x3D18(r2)
-	  fmuls     f1, f2, f1
-	  fmuls     f1, f0, f1
-	  bl        0x1DC30
-	  lfs       f3, -0x3D28(r2)
-	  fneg      f2, f30
-	  fneg      f0, f31
-	  fdivs     f4, f3, f1
-	  fdivs     f1, f4, f27
-	  fmuls     f3, f28, f1
-	  fmuls     f1, f4, f29
-	  stfs      f3, 0x0(r31)
-	  lfs       f3, -0x3D24(r2)
-	  stfs      f3, 0x4(r31)
-	  stfs      f2, 0x8(r31)
-	  stfs      f3, 0xC(r31)
-	  stfs      f3, 0x10(r31)
-	  stfs      f1, 0x14(r31)
-	  stfs      f0, 0x18(r31)
-	  stfs      f3, 0x1C(r31)
-	  stfs      f3, 0x20(r31)
-	  stfs      f3, 0x24(r31)
-	  lfs       f0, -0x3D20(r2)
-	  stfs      f0, 0x28(r31)
-	  stfs      f3, 0x2C(r31)
-	  lwz       r0, 0x5C(r1)
-	  lfd       f31, 0x50(r1)
-	  lfd       f30, 0x48(r1)
-	  mtlr      r0
-	  lfd       f29, 0x40(r1)
-	  lfd       f28, 0x38(r1)
-	  lfd       f27, 0x30(r1)
-	  lwz       r31, 0x2C(r1)
-	  addi      r1, r1, 0x58
-	  blr
-	*/
 }
 
 /**
@@ -574,3 +591,70 @@ void MTXLightOrtho(void)
 {
 	// UNUSED FUNCTION
 }
+
+#if defined(VERSION_G98E01_PIKIDEMO)
+void PSMTXTrans(register Mtx m, register f32 xT, register f32 yT, register f32 zT)
+{
+	register f32 c0 = 0.0F;
+	register f32 c1 = 1.0F;
+#ifdef __MWERKS__ // clang-format off
+  asm
+  {
+    stfs        xT,     12(m)
+    stfs        yT,     28(m)
+    psq_st      c0,      4(m), 0, 0
+    psq_st      c0,     32(m), 0, 0
+    stfs        c0,     16(m)
+    stfs        c1,     20(m)
+    stfs        c0,     24(m)
+    stfs        c1,     40(m)
+    stfs        zT,     44(m)
+    stfs        c1,      0(m)
+  }
+#endif // clang-format on
+}
+
+void PSMTXScale(register Mtx m, register f32 xS, register f32 yS, register f32 zS)
+{
+	register f32 c0 = 0.0F;
+#ifdef __MWERKS__ // clang-format off
+  asm
+  {
+    stfs        xS,      0(m)
+    psq_st      c0,      4(m), 0, 0
+    psq_st      c0,     12(m), 0, 0
+    stfs        yS,     20(m)
+    psq_st      c0,     24(m), 0, 0
+    psq_st      c0,     32(m), 0, 0
+    stfs        zS,     40(m)
+    stfs        c0,     44(m)
+  }
+  #endif // clang-format on
+}
+
+void C_MTXLightPerspective(Mtx m, f32 fovY, f32 aspect, f32 scaleS, f32 scaleT, f32 transS, f32 transT)
+{
+	f32 angle;
+	f32 cot;
+
+	angle = fovY * 0.5f;
+	angle = MTXDegToRad(angle);
+
+	cot = 1.0f / tanf(angle);
+
+	m[0][0] = (cot / aspect) * scaleS;
+	m[0][1] = 0.0f;
+	m[0][2] = -transS;
+	m[0][3] = 0.0f;
+
+	m[1][0] = 0.0f;
+	m[1][1] = cot * scaleT;
+	m[1][2] = -transT;
+	m[1][3] = 0.0f;
+
+	m[2][0] = 0.0f;
+	m[2][1] = 0.0f;
+	m[2][2] = -1.0f;
+	m[2][3] = 0.0f;
+}
+#endif

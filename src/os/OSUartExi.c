@@ -55,7 +55,11 @@ u32 WriteUARTN(const void* buf, u32 len)
 	u32 cmd;
 	int qLen;
 	s32 xLen;
+#if defined(VERSION_G98E01_PIKIDEMO)
+	char* ptr;
+#else
 	u8* ptr;
+#endif
 	BOOL locked;
 	u32 error;
 
@@ -67,7 +71,11 @@ u32 WriteUARTN(const void* buf, u32 len)
 		return 0;
 	}
 
+#if defined(VERSION_G98E01_PIKIDEMO)
+	for (ptr = (char*)buf; ptr - buf < len; ptr++) {
+#else
 	for (ptr = (u8*)buf; ptr - buf < len; ptr++) {
+#endif
 		if (*ptr == '\n')
 			*ptr = '\r';
 	}

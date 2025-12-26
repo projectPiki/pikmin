@@ -1,6 +1,11 @@
 #include "Dolphin/ai.h"
 #include "Dolphin/os.h"
 
+#if defined(VERSION_G98E01_PIKIDEMO)
+static void* SaveStart = NULL;
+static void* SaveEnd   = NULL;
+#endif
+
 static volatile BOOL Prepared;
 
 extern void* BOOT_REGION_START AT_ADDRESS(0x812FDFF0);
@@ -101,9 +106,16 @@ void __OSReboot(u32 resetCode, u32 bootDol)
 	OS_HOT_RESET_CODE = resetCode;
 	OS_UNK_CODE       = 0;
 	OS_REBOOT_BOOL    = TRUE;
+#if defined(VERSION_G98E01_PIKIDEMO)
+	BOOT_REGION_START = SaveStart;
+	BOOT_REGION_END   = SaveEnd;
+#endif
 	OSClearContext(&exceptionContext);
 	OSSetCurrentContext(&exceptionContext);
 	DVDInit();
+#if defined(VERSION_G98E01_PIKIDEMO)
+	DVDSetAutoInvalidation(TRUE);
+#endif
 
 	__DVDPrepareResetAsync(Callback);
 

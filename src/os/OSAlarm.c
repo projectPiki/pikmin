@@ -22,7 +22,12 @@ static void SetTimer(OSAlarm* alarm)
 {
 	OSTime delta;
 
+#if defined(VERSION_G98E01_PIKIDEMO)
+	delta = alarm->fire - __OSGetSystemTime();
+#else
 	delta = alarm->fire - OSGetTime();
+#endif
+
 	if (delta < 0) {
 		PPCMtdec(0);
 	} else if (delta < 0x80000000) {
@@ -61,7 +66,11 @@ static void InsertAlarm(OSAlarm* alarm, OSTime fire, OSAlarmHandler handler)
 	OSAlarm* prev;
 
 	if (alarm->period > 0) {
+#if defined(VERSION_G98E01_PIKIDEMO)
+		OSTime time = __OSGetSystemTime();
+#else
 		OSTime time = OSGetTime();
+#endif
 
 		fire = alarm->start;
 		if (alarm->start < time) {
@@ -109,7 +118,11 @@ void OSSetAlarm(OSAlarm* alarm, OSTime tick, OSAlarmHandler handler)
 	BOOL enabled;
 	enabled       = OSDisableInterrupts();
 	alarm->period = 0;
+#if defined(VERSION_G98E01_PIKIDEMO)
+	InsertAlarm(alarm, __OSGetSystemTime() + tick, handler);
+#else
 	InsertAlarm(alarm, OSGetTime() + tick, handler);
+#endif
 	OSRestoreInterrupts(enabled);
 }
 
@@ -178,7 +191,13 @@ static void DecrementerExceptionCallback(__OSException exception, OSContext* con
 	OSAlarm* next;
 	OSAlarmHandler handler;
 	OSTime time;
-	time  = OSGetTime();
+
+#if defined(VERSION_G98E01_PIKIDEMO)
+	OSContext exceptionContext;
+	time = __OSGetSystemTime();
+#else
+	time = OSGetTime();
+#endif
 	alarm = AlarmQueue.head;
 	if (alarm == NULL) {
 		OSLoadContext(context);
@@ -208,7 +227,15 @@ static void DecrementerExceptionCallback(__OSException exception, OSContext* con
 	}
 
 	OSDisableScheduler();
+#if defined(VERSION_G98E01_PIKIDEMO)
+	OSClearContext(&exceptionContext);
+	OSSetCurrentContext(&exceptionContext);
+#endif
 	handler(alarm, context);
+#if defined(VERSION_G98E01_PIKIDEMO)
+	OSClearContext(&exceptionContext);
+	OSSetCurrentContext(context);
+#endif
 	OSEnableScheduler();
 	__OSReschedule();
 	OSLoadContext(context);

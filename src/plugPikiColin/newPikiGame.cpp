@@ -549,8 +549,11 @@ ModeState* RunningModeState::update(u32& result)
 	// Trigger day end when time expires
 	if (!gameflow.mIsDayEndActive && !gameflow.mMoviePlayer->mIsActive
 	    && gameflow.mWorldClock.mTimeOfDay >= gameflow.mParameters->mEndHour()) {
+#if defined(VERSION_G98E01_PIKIDEMO)
+#else
 		gameflow.mIsGameplayInputEnabled = FALSE;
-		gameflow.mIsDayEndTriggered      = TRUE;
+#endif
+		gameflow.mIsDayEndTriggered = TRUE;
 	}
 
 	// Process day end trigger
@@ -585,9 +588,14 @@ ModeState* RunningModeState::update(u32& result)
 				mCachedPauseFlag            = gameflow.mIsUiOverlayActive;
 				gameflow.mIsUiOverlayActive = TRUE;
 			}
+#if defined(VERSION_G98E01_PIKIDEMO)
+		} else if (mController->keyClick(KBBTN_Y) && gameflow.mWorldClock.mTimeOfDay < gameflow.mParameters->mEndHour() - 0.125f
+		           && !gameflow.mIsUiOverlayActive && !mesgsPending) {
+#else
 		} else if (!gameflow.mIsChallengeMode && mController->keyClick(KBBTN_Y)
 		           && gameflow.mWorldClock.mTimeOfDay < gameflow.mParameters->mEndHour() - 0.125f && !gameflow.mIsUiOverlayActive
 		           && !mesgsPending) {
+#endif
 			gameflow.mGameInterface->message(MOVIECMD_CreateMenuWindow, 0);
 			mCachedPauseFlag            = gameflow.mIsUiOverlayActive;
 			gameflow.mIsUiOverlayActive = TRUE;
@@ -631,14 +639,21 @@ ModeState* RunningModeState::update(u32& result)
 		result &= ~UPDATE_AI; // Disable AI updates when pause menu is active
 	} else if (state == zen::ogScrPauseMgr::PAUSE_Unk6) {
 		gamecore->forceDayEnd();
+#if defined(VERSION_G98E01_PIKIDEMO)
+#else
 		gameflow.mIsGameplayInputEnabled = FALSE;
-		gameflow.mIsDayEndTriggered      = TRUE;
-		gameflow.mIsUiOverlayActive      = mCachedPauseFlag;
+#endif
+		gameflow.mIsDayEndTriggered = TRUE;
+		gameflow.mIsUiOverlayActive = mCachedPauseFlag;
 
 	} else if (state == zen::ogScrPauseMgr::PAUSE_Unk7) {
+#if defined(VERSION_G98E01_PIKIDEMO)
+		gsys->forceHardReset();
+#else
 		mSection->mNextSectionId = ONEPLAYER_CardSelect;
 		gsys->setFade(0.0f, 3.0f);
 		return new QuittingGameModeState(mSection);
+#endif
 	} else if (state == zen::ogScrPauseMgr::PAUSE_Unk5) {
 		showFrame(true, 0.5f);
 		gameflow.mIsUiOverlayActive = mCachedPauseFlag;
@@ -863,15 +878,21 @@ ModeState* DayOverModeState::update(u32& result)
 			gsys->setHeap(heapIdx);
 			gsys->endLoading();
 
+#if defined(VERSION_G98E01_PIKIDEMO)
+#else
 			if (!memcardWindow) {
-				if (stat == 8) {
-					mSection->mNextSectionId = ONEPLAYER_CardSelect;
-				} else {
-					mSection->mNextSectionId = ONEPLAYER_MapSelect;
-				}
-				gsys->setFade(0.0f, 3.0f);
-				return new QuittingGameModeState(mSection);
+#endif
+			if (stat == 8) {
+				mSection->mNextSectionId = ONEPLAYER_CardSelect;
+			} else {
+				mSection->mNextSectionId = ONEPLAYER_MapSelect;
 			}
+			gsys->setFade(0.0f, 3.0f);
+			return new QuittingGameModeState(mSection);
+#if defined(VERSION_G98E01_PIKIDEMO)
+#else
+			}
+#endif
 		}
 	}
 
@@ -887,6 +908,8 @@ ModeState* DayOverModeState::update(u32& result)
 		}
 	}
 
+#if defined(VERSION_G98E01_PIKIDEMO)
+#else
 	if (memcardWindow) {
 		CardQuickInfo info;
 		int state = memcardWindow->update(mSection->mController, info);
@@ -912,6 +935,7 @@ ModeState* DayOverModeState::update(u32& result)
 			return new QuittingGameModeState(mSection);
 		}
 	}
+#endif
 
 	return this;
 }
@@ -1323,6 +1347,31 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 				f32 fov   = cameraMgr->mCamera->getFov();
 				f32 a     = gameflow.mMoviePlayer->mTargetFov;
 
+#if defined(VERSION_G98E01_PIKIDEMO)
+				// stack is a mess here
+				Vector3f unused1(cameraMgr->mCamera->getViewpoint());
+				Vector3f unused2(gameflow.mMoviePlayer->mTargetViewpoint);
+				Vector3f unused3(cameraMgr->mCamera->getWatchpoint());
+				Vector3f unused4(gameflow.mMoviePlayer->mLookAtPos);
+
+				f32 fov2 = sinf(HALF_PI * tComp);
+				fov2     = sinf(HALF_PI * fov2);
+				fov2     = sinf(HALF_PI * fov2);
+				fov2     = sinf(HALF_PI * fov2);
+
+				gfx.mCamera->mFov = (fov - a) * fov2 + a;
+
+				unused1.set(unused1 - unused2);
+				unused1.set(unused1 * tComp);
+				gfx.mCamera->mPosition.set(unused1 + unused2);
+
+				unused3.set(unused3 - unused4);
+				unused3.set(unused3 * tComp);
+				gfx.mCamera->mFocus.set(unused3 + unused4);
+
+				gfx.mCamera->calcLookAt(gfx.mCamera->mPosition, gfx.mCamera->mFocus, nullptr);
+#else
+
 				// huh.
 				Vector3f unused1(cameraMgr->mCamera->getViewpoint());
 				Vector3f unused2(gameflow.mMoviePlayer->mTargetViewpoint);
@@ -1330,6 +1379,8 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 				Vector3f unused4(gameflow.mMoviePlayer->mLookAtPos);
 
 				gfx.mCamera->mFov = (fov - a) * tComp + a;
+#endif
+
 			} else {
 				// no scene or active transition, so set to player cam
 				gameflow.mMoviePlayer->setGameCamInfo(true, cameraMgr->mCamera->getFov(), cameraMgr->mCamera->getViewpoint(),
@@ -1346,31 +1397,60 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 			gsys->mTimer->stop("preRender");
 		}
 
-		// need these to be commented out, otherwise gsys does weird things in the next if block.
+// need these to be commented out, otherwise gsys does weird things in the next if block.
+#if defined(VERSION_G98E01_PIKIDEMO)
+		gsys->mTimer->start("mainRender", true);
+#else
 		MATCHING_START_TIMER("mainRender", true);
+#endif
 		mainRender(gfx);
+#if defined(VERSION_G98E01_PIKIDEMO)
+		gsys->mTimer->stop("mainRender");
+#else
 		MATCHING_STOP_TIMER("mainRender");
+#endif
 
 		if (effectMgr) {
 			if (!gameflow.mPauseAll && !gameflow.mIsUiOverlayActive || gameflow.mIsTutorialActive) {
+
+#if defined(VERSION_G98E01_PIKIDEMO)
+				gsys->mTimer->start("effect", true);
+#endif
 				bool check = true;
 				if (gsys->mDvdErrorCode >= DvdError::ReadingDisc) {
 					check = false;
 				}
+
 				if (check) {
 					effectMgr->update();
 				}
+#if defined(VERSION_G98E01_PIKIDEMO)
+				gsys->mTimer->stop("effect");
+#endif
 			}
+
+#if defined(VERSION_G98E01_PIKIDEMO)
+			gsys->mTimer->start("eff draw", true);
+#endif
 			effectMgr->draw(gfx);
+#if defined(VERSION_G98E01_PIKIDEMO)
+			gsys->mTimer->stop("eff draw");
+#endif
 		}
 
 		if (!(gameflow.mDemoFlags & GFDEMO_InMenu)) {
+#if defined(VERSION_G98E01_PIKIDEMO)
+			gsys->mTimer->start("postRender", true);
+#endif
 			menuOn = false;
 			gfx.setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
 			postRender(gfx);
 			if (!mActiveMenu && menuWindow) {
 				menuOn = menuWindow->draw(gfx);
 			}
+#if defined(VERSION_G98E01_PIKIDEMO)
+			gsys->mTimer->stop("postRender");
+#endif
 		}
 
 		gfx.setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
@@ -1396,10 +1476,13 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 				gfx.setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
 				totalWindow->draw(gfx);
 			}
+#if defined(VERSION_G98E01_PIKIDEMO)
+#else
 			if (memcardWindow) {
 				gfx.setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
 				memcardWindow->draw(gfx);
 			}
+#endif
 		}
 
 		BaseGameSection::draw(gfx);
@@ -1445,8 +1528,10 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 		challengeWindow = nullptr;
 		memcardWindow   = nullptr;
 		tutorialWindow  = nullptr;
-		menuWindow      = nullptr;
-
+#if defined(VERSION_G98E01_PIKIDEMO)
+#else
+		menuWindow = nullptr;
+#endif
 		memStat->start("gameover");
 		gameoverWindow = new zen::DrawGameOver;
 		memStat->end("gameover");
@@ -1497,7 +1582,11 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 		gfx.clearBuffer(3, false);
 		gfx.setPerspective(gfx.mCamera->mPerspectiveMatrix.mMtx, gfx.mCamera->mFov, gfx.mCamera->mAspectRatio, gfx.mCamera->mNear,
 		                   gfx.mCamera->mFar, 1.0f);
+#if defined(VERSION_G98E01_PIKIDEMO)
+		if (!(gameflow.mDemoFlags & GFDEMO_InMenu)) {
+#else
 		if (!memcardWindow && !(gameflow.mDemoFlags & GFDEMO_InMenu)) {
+#endif
 			bool check = true;
 			if (playerState->isTutorial() && !gameflow.mIsDayEndActive) {
 				check = false;
@@ -1718,6 +1807,13 @@ void GameMovieInterface::parse(GameMovieInterface::SimpleMessage& msg)
 	case MOVIECMD_CreateMenuWindow:
 		createMenuWindow();
 		break;
+#if defined(VERSION_G98E01_PIKIDEMO)
+	case MOVIECMD_DemoFinish:
+		createTutorialWindow(DEMOID_DayEndForest, -1, 0);
+		gameflow.mIsUiOverlayActive = 1;
+		break;
+#else
+#endif
 	}
 }
 
