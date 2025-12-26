@@ -4,6 +4,7 @@
 #include "DayMgr.h"
 #include "DebugLog.h"
 #include "Delegate.h"
+#include "Dolphin/card.h"
 #include "Font.h"
 #include "Graphics.h"
 #include "Interface.h"
@@ -102,7 +103,7 @@ struct TitleSetupSection : public Node {
 		mCameraDistanceScale = 0.45f;
 		_UNUSED39C           = 1.0f;
 
-#if 0 // DLL exclusive
+#if defined(WIN32) // DLL exclusive
 		PRINT("big font!\n");
 		mFont = new Font();
 		mFont->setTexture(gsys->loadTexture("bigFont.bti", true), 21, 42);
@@ -185,7 +186,7 @@ struct TitleSetupSection : public Node {
 #if defined(VERSION_G98E01_PIKIDEMO)
 				gsys->forceHardReset();
 				while (true) { }
-#else
+#endif
 				// set up the next idle movie to play, and queue up the next
 				gameflow.mCurrIntroMovieID = gameflow.mNextIntroMovieID;
 				gameflow.mNextIntroMovieID = (gameflow.mNextIntroMovieID + 1) & MOV_INTRO_CYCLE_MASK; // basically mod(4)
@@ -194,7 +195,6 @@ struct TitleSetupSection : public Node {
 				mState         = 1;
 				gsys->setFade(0.0f, 3.0f);
 				return;
-#endif
 			}
 		}
 
@@ -586,7 +586,7 @@ void TitlesSection::init()
 	gameflow.mGamePrefs.mHasSaveGame = true;
 #if defined(VERSION_G98E01_PIKIDEMO)
 #else
-	if (gameflow.mMemoryCard.getMemoryCardState(true) == 0 && gameflow.mMemoryCard.mSaveFileIndex >= 0) {
+	if (gameflow.mMemoryCard.getMemoryCardState(true) == CARD_RESULT_READY && gameflow.mMemoryCard.mSaveFileIndex >= 0) {
 		gameflow.mMemoryCard.loadOptions();
 	}
 #endif

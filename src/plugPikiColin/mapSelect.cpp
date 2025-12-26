@@ -90,7 +90,7 @@ struct MapSelectSetupSection : public Node {
 	}
 	void menuSelectOption(Menu& parent)
 	{
-		StageInfo* info = (StageInfo*)parent.mCurrentItem->mFilterIndex;
+		StageInfo* info = reinterpret_cast<StageInfo*>(parent.mCurrentItem->mData);
 
 		enterCourse(info);
 		mNextSectionId = ONEPLAYER_NewPikiGame << 16;

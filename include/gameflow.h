@@ -254,7 +254,7 @@ struct PlayState : public CoreNode {
 	 */
 	bool isStageOpen(int stageIdx)
 	{
-		if (stageIdx >= STAGE_START && stageIdx <= STAGE_COUNT) {
+		if (stageIdx >= STAGE_START && stageIdx TERNARY_BUGFIX(<, <=) STAGE_COUNT) {
 			return (mCourseOpenFlags & (1 << stageIdx)) != 0;
 		}
 		return false;
@@ -278,11 +278,7 @@ struct PlayState : public CoreNode {
  * @note Size: 0x8.
  */
 struct GameRecMinDay {
-	GameRecMinDay()
-	{
-		mNumParts = 0;
-		mNumDays  = MAX_DAYS;
-	}
+	GameRecMinDay() { Initialise(); }
 
 	void Initialise()
 	{
@@ -311,7 +307,7 @@ struct GameRecMinDay {
  * @note Size: 0x4.
  */
 struct GameRecBornPikmin {
-	GameRecBornPikmin() { mNumBorn = 0; }
+	GameRecBornPikmin() { Initialise(); }
 
 	void Initialise() { mNumBorn = 0; }
 
@@ -327,7 +323,7 @@ struct GameRecBornPikmin {
  * @note Size: 0x4.
  */
 struct GameRecDeadPikmin {
-	GameRecDeadPikmin() { mNumDead = 9999; }
+	GameRecDeadPikmin() { Initialise(); }
 
 	void Initialise() { mNumDead = 9999; }
 
@@ -343,35 +339,24 @@ struct GameRecDeadPikmin {
  * @note Size: 0x14.
  */
 struct GameRecChalCourse {
-	GameRecChalCourse()
-	{
-		// what on EARTH is going on here
-		mScores[TERNARY_BUGFIX(0, MAX_HI_SCORES)] = 0;
-		mScores[TERNARY_BUGFIX(1, MAX_HI_SCORES)] = 0;
-		mScores[TERNARY_BUGFIX(2, MAX_HI_SCORES)] = 0;
-		mScores[TERNARY_BUGFIX(3, MAX_HI_SCORES)] = 0;
-		mScores[TERNARY_BUGFIX(4, MAX_HI_SCORES)] = 0;
-	}
+	GameRecChalCourse() { Initialise(); }
 
 	void Initialise()
 	{
-		// This is illegal, you know.
-		mScores[TERNARY_BUGFIX(0, MAX_HI_SCORES)] = 0;
-		mScores[TERNARY_BUGFIX(1, MAX_HI_SCORES)] = 0;
-		mScores[TERNARY_BUGFIX(2, MAX_HI_SCORES)] = 0;
-		mScores[TERNARY_BUGFIX(3, MAX_HI_SCORES)] = 0;
-		mScores[TERNARY_BUGFIX(4, MAX_HI_SCORES)] = 0;
+		for (int i = 0; i < MAX_HI_SCORES; i++) {
+			mScores[TERNARY_BUGFIX(i, MAX_HI_SCORES)] = 0; // Nice job.
+		}
 	}
 
 	void read(RandomAccessStream& input)
 	{
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < MAX_HI_SCORES; i++) {
 			mScores[i] = input.readInt();
 		}
 	}
 	void write(RandomAccessStream& output)
 	{
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < MAX_HI_SCORES; i++) {
 			output.writeInt(mScores[i]);
 		}
 	}
@@ -473,14 +458,14 @@ struct GamePrefs : public CoreNode {
 
 	void openStage(int stageIdx)
 	{
-		if (stageIdx >= STAGE_START && stageIdx <= STAGE_COUNT) {
+		if (stageIdx >= STAGE_START && stageIdx TERNARY_BUGFIX(<, <=) STAGE_COUNT) {
 			mUnlockedStageFlags |= (1 << stageIdx);
 		}
 	}
 
 	bool isStageOpen(int stageIdx)
 	{
-		if (stageIdx >= STAGE_START && stageIdx <= STAGE_COUNT) {
+		if (stageIdx >= STAGE_START && stageIdx TERNARY_BUGFIX(<, <=) STAGE_COUNT) {
 			return (mUnlockedStageFlags & (1 << stageIdx)) != 0;
 		}
 		return false;
@@ -513,10 +498,10 @@ struct GamePrefs : public CoreNode {
 	u8 mUnlockedStageFlags;    ///< _22
 	u8 _23;                    ///< _23
 	GameHiscores mHiscores;    ///< _24
-	u32 mSaveCount;            ///< _DC, unknown
+	u32 mSaveCount;            ///< _DC
 	u32 _E0;                   ///< _E0
-	u8 _E4[0x108 - 0xE4];      ///< _E4, unknown
-	u32 mFileNum;              ///< _108, unknown
+	u8 _E4[0x108 - 0xE4];      ///< _E4, unknown (DLL doesn't have it, either)
+	u32 mFileNum;              ///< _108
 };
 
 /**

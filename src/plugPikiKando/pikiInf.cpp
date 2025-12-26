@@ -310,7 +310,7 @@ int MonoInfMgr::getActiveNum()
  */
 int MonoInfMgr::getFreeNum()
 {
-	mFreeList.getChildCount();
+	return mFreeList.getChildCount();
 }
 
 /**
