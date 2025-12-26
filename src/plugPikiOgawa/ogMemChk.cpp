@@ -12,19 +12,19 @@
 #include "zen/ogSub.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("OgMemChkSection")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::ogScrMemChkMgr::ogScrMemChkMgr()
 {
@@ -187,7 +187,7 @@ zen::ogScrMemChkMgr::ogScrMemChkMgr()
 #if defined(VERSION_PIKIDEMO)
 #else
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000034
  */
 void zen::ogScrMemChkMgr::SetNitaku_Y_N()
@@ -200,7 +200,7 @@ void zen::ogScrMemChkMgr::SetNitaku_Y_N()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000034
  */
 void zen::ogScrMemChkMgr::SetNitaku_W_R()
@@ -212,7 +212,7 @@ void zen::ogScrMemChkMgr::SetNitaku_W_R()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000034
  */
 void zen::ogScrMemChkMgr::SetNitaku_F_N()
@@ -225,7 +225,7 @@ void zen::ogScrMemChkMgr::SetNitaku_F_N()
 #endif
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000C4
  */
 void zen::ogScrMemChkMgr::StartSub()
@@ -242,7 +242,7 @@ void zen::ogScrMemChkMgr::StartSub()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrMemChkMgr::StatusCheck()
 {
@@ -333,7 +333,7 @@ void zen::ogScrMemChkMgr::StatusCheck()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrMemChkMgr::setPCtex(TypingTextMgr* text)
 {
@@ -343,7 +343,7 @@ void zen::ogScrMemChkMgr::setPCtex(TypingTextMgr* text)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrMemChkMgr::DispYesNo(bool set)
 {
@@ -355,7 +355,7 @@ void zen::ogScrMemChkMgr::DispYesNo(bool set)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrMemChkMgr::DispAcup(bool set)
 {
@@ -367,7 +367,7 @@ void zen::ogScrMemChkMgr::DispAcup(bool set)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000040
  */
 void zen::ogScrMemChkMgr::MakeDefFileStart()
@@ -378,7 +378,7 @@ void zen::ogScrMemChkMgr::MakeDefFileStart()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00008C
  */
 void zen::ogScrMemChkMgr::RepairFileStart()
@@ -391,7 +391,7 @@ void zen::ogScrMemChkMgr::RepairFileStart()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrMemChkMgr::start()
 {
@@ -434,7 +434,7 @@ void zen::ogScrMemChkMgr::start()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrMemChkMgr::DebugStart(int state)
 {
@@ -462,7 +462,7 @@ void zen::ogScrMemChkMgr::DebugStart(int state)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000120
  */
 void zen::ogScrMemChkMgr::FormatEffectStart()
@@ -478,7 +478,7 @@ void zen::ogScrMemChkMgr::FormatEffectStart()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000020
  */
 bool zen::ogScrMemChkMgr::checkTypingAll()
@@ -487,7 +487,7 @@ bool zen::ogScrMemChkMgr::checkTypingAll()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000A8
  */
 void zen::ogScrMemChkMgr::checkErrNitaku(ogNitakuMgr* mgr, Controller* input)
@@ -510,7 +510,7 @@ void zen::ogScrMemChkMgr::checkErrNitaku(ogNitakuMgr* mgr, Controller* input)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000100
  */
 void zen::ogScrMemChkMgr::setNoCard()
@@ -537,7 +537,7 @@ void zen::ogScrMemChkMgr::setNoCard()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 {
@@ -846,7 +846,7 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrMemChkMgr::draw(Graphics& gfx)
 {
@@ -884,7 +884,7 @@ void zen::ogScrMemChkMgr::draw(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrMemChkMgr::setErrorMessage()
 {

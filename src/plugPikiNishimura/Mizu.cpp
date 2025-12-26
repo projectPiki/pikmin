@@ -6,19 +6,19 @@
 #include "Shape.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("Mizu");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 MizuProp::MizuProp()
 {
@@ -28,7 +28,7 @@ MizuProp::MizuProp()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Mizu::Mizu(CreatureProp* props)
     : Boss(props)
@@ -38,7 +38,7 @@ Mizu::Mizu(CreatureProp* props)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Mizu::attackDefaultPortion()
 {
@@ -48,7 +48,7 @@ bool Mizu::attackDefaultPortion()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 Mizu::getiMass()
 {
@@ -56,7 +56,7 @@ f32 Mizu::getiMass()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Mizu::initMizu(immut Vector3f&)
 {
@@ -67,7 +67,7 @@ void Mizu::initMizu(immut Vector3f&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Mizu::initGeyzer(immut Vector3f&)
 {
@@ -78,7 +78,7 @@ void Mizu::initGeyzer(immut Vector3f&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Mizu::doKill()
 {
@@ -89,7 +89,7 @@ void Mizu::doKill()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Mizu::exitCourse()
 {
@@ -97,7 +97,7 @@ void Mizu::exitCourse()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Mizu::update()
 {
@@ -106,7 +106,7 @@ void Mizu::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Mizu::refresh(Graphics& gfx)
 {
@@ -119,7 +119,7 @@ void Mizu::refresh(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Mizu::drawShape(Graphics& gfx)
 {
@@ -128,7 +128,7 @@ void Mizu::drawShape(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Mizu::doAI()
 {
@@ -136,7 +136,7 @@ void Mizu::doAI()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Mizu::doAnimation()
 {

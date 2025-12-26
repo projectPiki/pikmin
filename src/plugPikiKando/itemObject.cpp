@@ -3,19 +3,19 @@
 #include "Dolphin/os.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("itemObject");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000074
  */
 ItemBall::ItemBall(Shape* shape, CreatureProp* props)
@@ -25,7 +25,7 @@ ItemBall::ItemBall(Shape* shape, CreatureProp* props)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ItemBall::startAI(int)
 {
@@ -34,7 +34,7 @@ void ItemBall::startAI(int)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool ItemBall::isAlive()
 {
@@ -42,7 +42,7 @@ bool ItemBall::isAlive()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool ItemBall::isVisible()
 {
@@ -50,7 +50,7 @@ bool ItemBall::isVisible()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00005C
  */
 ItemObject::ItemObject(int objType, Shape* shape)
@@ -60,14 +60,14 @@ ItemObject::ItemObject(int objType, Shape* shape)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ItemObject::update()
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 BombGenItem::BombGenItem(Shape* shape)
     : ItemObject(OBJTYPE_BombGen, shape)
@@ -77,7 +77,7 @@ BombGenItem::BombGenItem(Shape* shape)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool BombGenItem::pickable()
 {
@@ -85,7 +85,7 @@ bool BombGenItem::pickable()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool BombGenItem::pick()
 {
@@ -105,7 +105,7 @@ bool BombGenItem::pick()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Fulcrum::Fulcrum()
     : ItemObject(OBJTYPE_Fulcrum, nullptr)
@@ -113,7 +113,7 @@ Fulcrum::Fulcrum()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 NaviDemoSunsetStart::NaviDemoSunsetStart()
     : ItemObject(OBJTYPE_SunsetStart, nullptr)
@@ -121,7 +121,7 @@ NaviDemoSunsetStart::NaviDemoSunsetStart()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 NaviDemoSunsetGoal::NaviDemoSunsetGoal()
     : ItemObject(OBJTYPE_SunsetGoal, nullptr)

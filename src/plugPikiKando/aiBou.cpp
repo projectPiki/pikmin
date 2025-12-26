@@ -3,19 +3,19 @@
 #include "PikiAI.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(18)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("Bou")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 ActBou::ActBou(Piki* piki)
     : Action(piki, true)
@@ -25,7 +25,7 @@ ActBou::ActBou(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActBou::init(Creature* creature)
 {
@@ -49,7 +49,7 @@ void ActBou::init(Creature* creature)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActBou::exec()
 {
@@ -65,7 +65,7 @@ int ActBou::exec()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActBou::gotoLeg()
 {
@@ -102,7 +102,7 @@ int ActBou::gotoLeg()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActBou::procCollideMsg(Piki* piki, MsgCollide* msg)
 {
@@ -142,7 +142,7 @@ void ActBou::procCollideMsg(Piki* piki, MsgCollide* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActBou::climb()
 {
@@ -162,7 +162,7 @@ int ActBou::climb()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActBou::cleanup()
 {

@@ -7,7 +7,7 @@
 #include "sysNew.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::DrawUfoParts::DrawUfoParts()
 {
@@ -23,7 +23,7 @@ zen::DrawUfoParts::DrawUfoParts()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool zen::DrawUfoParts::update(Controller* controller)
 {
@@ -68,7 +68,7 @@ bool zen::DrawUfoParts::update(Controller* controller)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawUfoParts::draw(Graphics& gfx)
 {
@@ -106,7 +106,7 @@ void zen::DrawUfoParts::draw(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawUfoParts::sleep()
 {
@@ -116,7 +116,7 @@ void zen::DrawUfoParts::sleep()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawUfoParts::start()
 {
@@ -129,7 +129,7 @@ void zen::DrawUfoParts::start()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawUfoParts::operation()
 {
@@ -140,7 +140,7 @@ void zen::DrawUfoParts::operation()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawUfoParts::dataSet()
 {

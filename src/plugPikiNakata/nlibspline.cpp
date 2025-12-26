@@ -3,19 +3,19 @@
 #include "nlib/Spline.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("nlibspline")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000E8
  */
 SplineInterpolator::SplineInterpolator(int size, NPool<SplineSegment>* segPool)
@@ -28,7 +28,7 @@ SplineInterpolator::SplineInterpolator(int size, NPool<SplineSegment>* segPool)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SplineInterpolator::reset()
 {
@@ -36,7 +36,7 @@ void SplineInterpolator::reset()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000130
  */
 void SplineInterpolator::makeSpline()
@@ -65,7 +65,7 @@ void SplineInterpolator::makeSpline()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000030
  */
 bool SplineInterpolator::interpolate(f32 t, NPosture3D& outPosture, bool isDirect)
@@ -78,7 +78,7 @@ bool SplineInterpolator::interpolate(f32 t, NPosture3D& outPosture, bool isDirec
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool SplineInterpolator::interpolateNext(f32 t, NPosture3D& outPosture)
 {
@@ -103,7 +103,7 @@ bool SplineInterpolator::interpolateNext(f32 t, NPosture3D& outPosture)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000FC
  */
 bool SplineInterpolator::interpolateDirect(f32 t, NPosture3D& outPosture)
@@ -116,7 +116,7 @@ bool SplineInterpolator::interpolateDirect(f32 t, NPosture3D& outPosture)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SplineInterpolator::outputPosture(f32 t, NPosture3D& outPosture)
 {
@@ -128,7 +128,7 @@ void SplineInterpolator::outputPosture(f32 t, NPosture3D& outPosture)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int SplineInterpolator::searchSegmentIndex(f32 targetParam, int startIdx)
 {
@@ -147,7 +147,7 @@ int SplineInterpolator::searchSegmentIndex(f32 targetParam, int startIdx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000054
  */
 void SplineInterpolator::addFrame(SplineKeyFrame*)
@@ -156,7 +156,7 @@ void SplineInterpolator::addFrame(SplineKeyFrame*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000038
  */
 void NArray<SplineKeyFrame>::add(SplineKeyFrame*)
@@ -165,7 +165,7 @@ void NArray<SplineKeyFrame>::add(SplineKeyFrame*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000098
  */
 void SplineInterpolator::addSegment()
@@ -174,7 +174,7 @@ void SplineInterpolator::addSegment()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000038
  */
 void NArray<SplineSegment>::add(SplineSegment*)
@@ -183,7 +183,7 @@ void NArray<SplineSegment>::add(SplineSegment*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000038
  */
 void NPool<SplineSegment>::newObject()
@@ -192,7 +192,7 @@ void NPool<SplineSegment>::newObject()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 void SplineInterpolator::removeAllFrames()
@@ -201,7 +201,7 @@ void SplineInterpolator::removeAllFrames()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000034
  */
 void NArray<SplineSegment>::removeAll()
@@ -210,7 +210,7 @@ void NArray<SplineSegment>::removeAll()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00013C
  */
 void NArray<SplineSegment>::remove(int, int)
@@ -219,7 +219,7 @@ void NArray<SplineSegment>::remove(int, int)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000054
  */
 void NPool<SplineSegment>::deleteObject(SplineSegment*)
@@ -228,7 +228,7 @@ void NPool<SplineSegment>::deleteObject(SplineSegment*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00006C
  */
 void NPool<SplineSegment>::deleteObject(int)
@@ -237,7 +237,7 @@ void NPool<SplineSegment>::deleteObject(int)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000030
  */
 void NPool<SplineSegment>::indexOf(SplineSegment*)
@@ -246,7 +246,7 @@ void NPool<SplineSegment>::indexOf(SplineSegment*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000044
  */
 void NPool<SplineSegment>::indexOf(SplineSegment*, int)
@@ -255,7 +255,7 @@ void NPool<SplineSegment>::indexOf(SplineSegment*, int)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000034
  */
 void NArray<SplineKeyFrame>::removeAll()
@@ -264,7 +264,7 @@ void NArray<SplineKeyFrame>::removeAll()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00013C
  */
 void NArray<SplineKeyFrame>::remove(int, int)
@@ -273,7 +273,7 @@ void NArray<SplineKeyFrame>::remove(int, int)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000048
  */
 SplineKeyFrame::SplineKeyFrame()
@@ -282,7 +282,7 @@ SplineKeyFrame::SplineKeyFrame()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000024
  */
 void SplineKeyFrame::transform(NTransform3D&)
@@ -291,7 +291,7 @@ void SplineKeyFrame::transform(NTransform3D&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00005C
  */
 void SplineKeyFrame::inputPosture(NPosture3D&)
@@ -300,7 +300,7 @@ void SplineKeyFrame::inputPosture(NPosture3D&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000060
  */
 void SplineKeyFrame::outputPosture(NPosture3D&)
@@ -309,7 +309,7 @@ void SplineKeyFrame::outputPosture(NPosture3D&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000070
  */
 void SplineKeyFrame::interpolate(SplineKeyFrame&, f32, NPosture3D&)
@@ -318,7 +318,7 @@ void SplineKeyFrame::interpolate(SplineKeyFrame&, f32, NPosture3D&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000060
  */
 void SplineKeyFrame::readData(Stream&, int)
@@ -327,7 +327,7 @@ void SplineKeyFrame::readData(Stream&, int)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000C4
  */
 SplineSegment::SplineSegment()
@@ -339,7 +339,7 @@ SplineSegment::SplineSegment()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0001EC
  */
 f32 SplineSegment::calcDistance(NVector3f&, f32*)
@@ -348,7 +348,7 @@ f32 SplineSegment::calcDistance(NVector3f&, f32*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000B0
  */
 SplineCurve::SplineCurve(int)
@@ -357,7 +357,7 @@ SplineCurve::SplineCurve(int)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0003E8
  */
 void SplineCurve::makeCurve(f32*, NVector3f**, int)
@@ -366,7 +366,7 @@ void SplineCurve::makeCurve(f32*, NVector3f**, int)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000334
  */
 void SplineCurve::makeFunctions(int, f32*, f32*, NPolynomialFunction**)
@@ -375,7 +375,7 @@ void SplineCurve::makeFunctions(int, f32*, f32*, NPolynomialFunction**)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000054
  */
 int NArray<SplineKeyFrame>::indexOf(SplineKeyFrame*, int)
@@ -384,7 +384,7 @@ int NArray<SplineKeyFrame>::indexOf(SplineKeyFrame*, int)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00003C
  */
 void NArray<SplineKeyFrame>::set(int, SplineKeyFrame*)
@@ -393,7 +393,7 @@ void NArray<SplineKeyFrame>::set(int, SplineKeyFrame*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000050
  */
 void NArray<SplineKeyFrame>::remove(int)
@@ -402,7 +402,7 @@ void NArray<SplineKeyFrame>::remove(int)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000114
  */
 void NArray<SplineKeyFrame>::insert(int, SplineKeyFrame*)
@@ -411,7 +411,7 @@ void NArray<SplineKeyFrame>::insert(int, SplineKeyFrame*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000030
  */
 SplineKeyFrame* NArray<SplineKeyFrame>::firstElement()
@@ -420,7 +420,7 @@ SplineKeyFrame* NArray<SplineKeyFrame>::firstElement()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000034
  */
 SplineKeyFrame* NArray<SplineKeyFrame>::lastElement()
@@ -429,7 +429,7 @@ SplineKeyFrame* NArray<SplineKeyFrame>::lastElement()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000054
  */
 int NArray<SplineSegment>::indexOf(SplineSegment*, int)
@@ -438,7 +438,7 @@ int NArray<SplineSegment>::indexOf(SplineSegment*, int)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00003C
  */
 void NArray<SplineSegment>::set(int, SplineSegment*)
@@ -447,7 +447,7 @@ void NArray<SplineSegment>::set(int, SplineSegment*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000050
  */
 void NArray<SplineSegment>::remove(int)
@@ -456,7 +456,7 @@ void NArray<SplineSegment>::remove(int)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000114
  */
 void NArray<SplineSegment>::insert(int, SplineSegment*)
@@ -465,7 +465,7 @@ void NArray<SplineSegment>::insert(int, SplineSegment*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000030
  */
 SplineSegment* NArray<SplineSegment>::firstElement()
@@ -474,7 +474,7 @@ SplineSegment* NArray<SplineSegment>::firstElement()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000034
  */
 SplineSegment* NArray<SplineSegment>::lastElement()
@@ -483,7 +483,7 @@ SplineSegment* NArray<SplineSegment>::lastElement()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000050
  */
 void NArray<SplineSegment>::remove(SplineSegment*)
@@ -492,7 +492,7 @@ void NArray<SplineSegment>::remove(SplineSegment*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000050
  */
 void NArray<SplineSegment>::add(int, SplineSegment*)
@@ -501,7 +501,7 @@ void NArray<SplineSegment>::add(int, SplineSegment*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000030
  */
 int NArray<SplineSegment>::indexOf(SplineSegment*)
@@ -510,7 +510,7 @@ int NArray<SplineSegment>::indexOf(SplineSegment*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000044
  */
 bool NArray<SplineSegment>::contains(SplineSegment*)
@@ -519,7 +519,7 @@ bool NArray<SplineSegment>::contains(SplineSegment*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000050
  */
 void NArray<SplineKeyFrame>::remove(SplineKeyFrame*)
@@ -528,7 +528,7 @@ void NArray<SplineKeyFrame>::remove(SplineKeyFrame*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000050
  */
 void NArray<SplineKeyFrame>::add(int, SplineKeyFrame*)
@@ -537,7 +537,7 @@ void NArray<SplineKeyFrame>::add(int, SplineKeyFrame*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000030
  */
 int NArray<SplineKeyFrame>::indexOf(SplineKeyFrame*)
@@ -546,7 +546,7 @@ int NArray<SplineKeyFrame>::indexOf(SplineKeyFrame*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000044
  */
 bool NArray<SplineKeyFrame>::contains(SplineKeyFrame*)

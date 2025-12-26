@@ -6,19 +6,19 @@
 #include "sysNew.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(14)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("drawHiScore")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::DrawHiScore::DrawHiScore()
 {
@@ -76,7 +76,7 @@ zen::DrawHiScore::DrawHiScore()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool zen::DrawHiScore::update(Controller* controller)
 {
@@ -112,7 +112,7 @@ bool zen::DrawHiScore::update(Controller* controller)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawHiScore::draw(Graphics& gfx)
 {
@@ -148,7 +148,7 @@ void zen::DrawHiScore::draw(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawHiScore::start()
 {
@@ -159,7 +159,7 @@ void zen::DrawHiScore::start()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawHiScore::rewriteNumber(P2DScreen* screen, u32 tag, int value, int digits, bool p5)
 {

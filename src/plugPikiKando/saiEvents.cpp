@@ -12,19 +12,19 @@ SAIGroundEvent* saiGroundEvent;
 SAIMotionAction0Event* saiMotionAction0Event;
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("saiEvent");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SAIEventInit()
 {
@@ -36,7 +36,7 @@ void SAIEventInit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SAIMotionDoneEvent::procAnimMsg(AICreature* creature, MsgAnim* msg)
 {
@@ -44,7 +44,7 @@ void SAIMotionDoneEvent::procAnimMsg(AICreature* creature, MsgAnim* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SAIMotionAction0Event::procAnimMsg(AICreature* creature, MsgAnim* msg)
 {
@@ -52,7 +52,7 @@ void SAIMotionAction0Event::procAnimMsg(AICreature* creature, MsgAnim* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SAIMotionLoopStartEvent::procAnimMsg(AICreature* creature, MsgAnim* msg)
 {
@@ -60,7 +60,7 @@ void SAIMotionLoopStartEvent::procAnimMsg(AICreature* creature, MsgAnim* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SAIMotionLoopEndEvent::procAnimMsg(AICreature* creature, MsgAnim* msg)
 {
@@ -68,7 +68,7 @@ void SAIMotionLoopEndEvent::procAnimMsg(AICreature* creature, MsgAnim* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SAIBounceEvent::procBounceMsg(AICreature* creature, MsgBounce*)
 {
@@ -76,7 +76,7 @@ void SAIBounceEvent::procBounceMsg(AICreature* creature, MsgBounce*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SAICollideEvent::procCollideMsg(AICreature* creature, MsgCollide*)
 {
@@ -84,7 +84,7 @@ void SAICollideEvent::procCollideMsg(AICreature* creature, MsgCollide*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SAIGroundEvent::procGroundMsg(AICreature* creature, MsgGround*)
 {
@@ -92,7 +92,7 @@ void SAIGroundEvent::procGroundMsg(AICreature* creature, MsgGround*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SAIUserEvent::procUserMsg(AICreature* creature, MsgUser* msg)
 {

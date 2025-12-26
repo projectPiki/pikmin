@@ -3,19 +3,19 @@
 #include "nlib/Math.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("pcamcameraparameters")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PcamCameraParameters::PcamCameraParameters()
 {
@@ -151,7 +151,7 @@ PcamCameraParameters::PcamCameraParameters()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PcamCameraParameters::read(RandomAccessStream& input)
 {

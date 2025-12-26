@@ -5,19 +5,19 @@
 #include "zen/ogSub.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("P2DWindow")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void P2DWindow::makeResident()
 {
@@ -28,7 +28,7 @@ void P2DWindow::makeResident()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000038
  */
 Texture* P2DWindow::loadResource(immut char* name)
@@ -48,7 +48,7 @@ Texture* P2DWindow::loadResource(immut char* name)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void P2DWindow::loadResource()
 {
@@ -62,7 +62,7 @@ void P2DWindow::loadResource()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 P2DWindow::P2DWindow(P2DPane* parent, RandomAccessStream* input, u16 paneType)
     : P2DPane(parent, input, paneType)
@@ -88,7 +88,7 @@ P2DWindow::P2DWindow(P2DPane* parent, RandomAccessStream* input, u16 paneType)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void P2DWindow::drawSelf(int x, int y)
 {
@@ -98,7 +98,7 @@ void P2DWindow::drawSelf(int x, int y)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void P2DWindow::drawSelf(int x, int y, immut Matrix4f* mtx)
 {
@@ -109,7 +109,7 @@ void P2DWindow::drawSelf(int x, int y, immut Matrix4f* mtx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void P2DWindow::draw_private(const PUTRect& bounds, const PUTRect& windowBounds, immut Matrix4f* transform)
 {
@@ -179,7 +179,7 @@ void P2DWindow::draw_private(const PUTRect& bounds, const PUTRect& windowBounds,
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void P2DWindow::drawContents(const PUTRect& windowBounds)
 {
@@ -221,7 +221,7 @@ void P2DWindow::drawContents(const PUTRect& windowBounds)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void P2DWindow::P2DWindowTexture::draw(int x, int y, int width, int height, u16 u0, u16 v0, u16 u1, u16 v1)
 {
@@ -252,7 +252,7 @@ void P2DWindow::P2DWindowTexture::draw(int x, int y, int width, int height, u16 
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void P2DWindow::P2DWindowTexture::draw(int x, int y, bool p3, bool p4)
 {
@@ -260,7 +260,7 @@ void P2DWindow::P2DWindowTexture::draw(int x, int y, bool p3, bool p4)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void P2DWindow::P2DWindowTexture::setTevMode()
 {

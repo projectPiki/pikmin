@@ -9,19 +9,19 @@
 #include "sysNew.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("kusa")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 KusaItem::KusaItem(CreatureProp* props, Shape* shape)
     : ItemCreature(OBJTYPE_Kusa, mProps, shape)
@@ -32,7 +32,7 @@ KusaItem::KusaItem(CreatureProp* props, Shape* shape)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KusaItem::startAI(int)
 {
@@ -57,7 +57,7 @@ void KusaItem::startAI(int)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KusaItem::doLoad(RandomAccessStream& input)
 {
@@ -68,7 +68,7 @@ void KusaItem::doLoad(RandomAccessStream& input)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KusaItem::doSave(RandomAccessStream& output)
 {
@@ -76,7 +76,7 @@ void KusaItem::doSave(RandomAccessStream& output)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool KusaItem::ignoreAtari(Creature* creature)
 {
@@ -88,7 +88,7 @@ bool KusaItem::ignoreAtari(Creature* creature)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 KusaItem::getSize()
 {
@@ -96,7 +96,7 @@ f32 KusaItem::getSize()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 KusaItem::getiMass()
 {
@@ -104,7 +104,7 @@ f32 KusaItem::getiMass()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KusaItem::update()
 {
@@ -113,7 +113,7 @@ void KusaItem::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KusaItem::refresh(Graphics& gfx)
 {
@@ -133,7 +133,7 @@ void KusaItem::refresh(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 BoBaseItem::BoBaseItem(CreatureProp* props, Shape* shape)
     : ItemCreature(OBJTYPE_BoBase, mProps, shape)
@@ -147,7 +147,7 @@ BoBaseItem::BoBaseItem(CreatureProp* props, Shape* shape)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BoBaseItem::startAI(int)
 {
@@ -163,7 +163,7 @@ void BoBaseItem::startAI(int)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool BoBaseItem::ignoreAtari(Creature* creature)
 {
@@ -179,7 +179,7 @@ bool BoBaseItem::ignoreAtari(Creature* creature)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 BoBaseItem::getSize()
 {
@@ -187,7 +187,7 @@ f32 BoBaseItem::getSize()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 BoBaseItem::getiMass()
 {
@@ -195,7 +195,7 @@ f32 BoBaseItem::getiMass()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BoBaseItem::update()
 {
@@ -222,7 +222,7 @@ void BoBaseItem::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BoBaseItem::refresh(Graphics& gfx)
 {
@@ -241,7 +241,7 @@ void BoBaseItem::refresh(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool BoBaseItem::interactBuild(immut InteractBuild& build)
 {
@@ -272,7 +272,7 @@ bool BoBaseItem::interactBuild(immut InteractBuild& build)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool BoBaseItem::isAlive()
 {

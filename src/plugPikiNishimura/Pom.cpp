@@ -8,19 +8,19 @@
 #include "sysNew.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000098
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("Pom");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PomProp::PomProp()
 {
@@ -30,7 +30,7 @@ PomProp::PomProp()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Pom::Pom(CreatureProp* props)
     : Boss(props)
@@ -40,7 +40,7 @@ Pom::Pom(CreatureProp* props)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 Pom::getiMass()
 {
@@ -48,7 +48,7 @@ f32 Pom::getiMass()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Pom::init(immut Vector3f&)
 {
@@ -62,7 +62,7 @@ void Pom::init(immut Vector3f&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Pom::setColor(int color)
 {
@@ -75,7 +75,7 @@ void Pom::setColor(int color)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Pom::doKill()
 {
@@ -86,7 +86,7 @@ void Pom::doKill()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Pom::exitCourse()
 {
@@ -94,7 +94,7 @@ void Pom::exitCourse()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Pom::update()
 {
@@ -103,7 +103,7 @@ void Pom::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Pom::refresh(Graphics& gfx)
 {
@@ -121,7 +121,7 @@ void Pom::refresh(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Pom::drawShape(Graphics& gfx)
 {
@@ -132,7 +132,7 @@ void Pom::drawShape(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Pom::doAI()
 {
@@ -140,7 +140,7 @@ void Pom::doAI()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Pom::doAnimation()
 {
@@ -150,7 +150,7 @@ void Pom::doAnimation()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Pom::collisionCallback(immut CollEvent& event)
 {

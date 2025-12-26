@@ -8,19 +8,19 @@
 #include "zen/ogNitaku.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("OgFileSelectSection")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrFileSelectMgr::setOperateMode_Copy()
 {
@@ -51,7 +51,7 @@ void zen::ogScrFileSelectMgr::setOperateMode_Copy()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00006C
  */
 void zen::ogScrFileSelectMgr::MoveCpyCursor(int id, f32 a2)
@@ -61,7 +61,7 @@ void zen::ogScrFileSelectMgr::MoveCpyCursor(int id, f32 a2)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrFileSelectMgr::CopyEffectStart()
 {
@@ -96,7 +96,7 @@ void zen::ogScrFileSelectMgr::CopyEffectStart()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrFileSelectMgr::OperateCopy(Controller* input)
 {

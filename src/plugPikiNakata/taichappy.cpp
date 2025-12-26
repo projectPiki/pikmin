@@ -16,13 +16,13 @@
 #include "teki.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("taichappy")
@@ -72,7 +72,7 @@ struct TaiChappyLegEffectAction : public TaiJointEffectAction {
 };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TaiChappySoundTable::TaiChappySoundTable()
     : PaniSoundTable(8)
@@ -83,7 +83,7 @@ TaiChappySoundTable::TaiChappySoundTable()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TaiChappyParameters::TaiChappyParameters()
     : TekiParameters(CHAPPYPI_COUNT, CHAPPYPF_COUNT)
@@ -153,7 +153,7 @@ TaiChappyParameters::TaiChappyParameters()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TaiBlackChappyParameters::TaiBlackChappyParameters()
     : TekiParameters(CHAPPYPI_COUNT, CHAPPYPF_COUNT)
@@ -223,7 +223,7 @@ TaiBlackChappyParameters::TaiBlackChappyParameters()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TaiCatfishSoundTable::TaiCatfishSoundTable()
     : PaniSoundTable(3)
@@ -234,7 +234,7 @@ TaiCatfishSoundTable::TaiCatfishSoundTable()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TaiCatfishParameters::TaiCatfishParameters()
     : TekiParameters(CHAPPYPI_COUNT, CHAPPYPF_COUNT)
@@ -304,7 +304,7 @@ TaiCatfishParameters::TaiCatfishParameters()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TaiChappyStrategy::TaiChappyStrategy(TekiParameters* params)
     : TaiStrategy(CHAPPYSTATE_COUNT, CHAPPYSTATE_Unk15)
@@ -564,7 +564,7 @@ TaiChappyStrategy::TaiChappyStrategy(TekiParameters* params)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiChappyCryAction::act(Teki& teki)
 {
@@ -586,7 +586,7 @@ bool TaiChappyCryAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiChappySmashedAction::actByEvent(immut TekiEvent& event)
 {
@@ -598,7 +598,7 @@ bool TaiChappySmashedAction::actByEvent(immut TekiEvent& event)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TaiChappyLegEffectAction::TaiChappyLegEffectAction(f32 sinkThreshold)
     : TaiJointEffectAction(sinkThreshold, 2, 'lleg', 'rleg', 0, 0)
@@ -606,7 +606,7 @@ TaiChappyLegEffectAction::TaiChappyLegEffectAction(f32 sinkThreshold)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiChappyLegEffectAction::setType(Vector3f& effectPos, int type, int id)
 {

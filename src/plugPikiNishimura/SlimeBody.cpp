@@ -6,19 +6,19 @@
 #include "sysNew.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("SlimeBody");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 SlimeBody::SlimeBody(Slime* slime)
 {
@@ -33,7 +33,7 @@ SlimeBody::SlimeBody(Slime* slime)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SlimeBody::init(Slime* slime)
 {
@@ -70,7 +70,7 @@ void SlimeBody::init(Slime* slime)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000124
  */
 void SlimeBody::traceCreaturePosition()
@@ -87,7 +87,7 @@ void SlimeBody::traceCreaturePosition()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000AC
  */
 void SlimeBody::makeCentrePosition()
@@ -101,7 +101,7 @@ void SlimeBody::makeCentrePosition()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000090
  */
 void SlimeBody::makeInnerPosition()
@@ -113,7 +113,7 @@ void SlimeBody::makeInnerPosition()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000B8
  */
 void SlimeBody::makeMaxRadius()
@@ -130,7 +130,7 @@ void SlimeBody::makeMaxRadius()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000098
  */
 void SlimeBody::setSpherePosition()
@@ -143,7 +143,7 @@ void SlimeBody::setSpherePosition()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000128
  */
 f32 SlimeBody::calcVertexScore(immut Vector3f* vertex, Vector3f* creatureNormals, f32* creatureScores)
@@ -161,7 +161,7 @@ f32 SlimeBody::calcVertexScore(immut Vector3f* vertex, Vector3f* creatureNormals
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SlimeBody::sortPosition(Vector3f* outVertex, Vector3f* outNormal, immut Vector3f* vertical)
 {
@@ -197,7 +197,7 @@ void SlimeBody::sortPosition(Vector3f* outVertex, Vector3f* outNormal, immut Vec
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000BC
  */
 void SlimeBody::makeSlimeBody()
@@ -210,7 +210,7 @@ void SlimeBody::makeSlimeBody()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SlimeBody::update()
 {
@@ -225,7 +225,7 @@ void SlimeBody::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000118
  */
 void SlimeBody::setJointPosition(BossShapeObject* shape, Graphics& gfx)
@@ -248,7 +248,7 @@ void SlimeBody::setJointPosition(BossShapeObject* shape, Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SlimeBody::refresh(BossShapeObject* shape, Graphics& gfx)
 {

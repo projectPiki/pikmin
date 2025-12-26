@@ -7,19 +7,19 @@
 #include "teki.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("animPellet");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PelletAnimInfo::PelletAnimInfo()
     : mFolderPath(this, String("pellets", 0), String("", 0), String("", 0), "x00", "dirName")
@@ -35,7 +35,7 @@ PelletAnimInfo::PelletAnimInfo()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PelletShapeObject* PelletAnimInfo::createShapeObject()
 {
@@ -56,7 +56,7 @@ PelletShapeObject* PelletAnimInfo::createShapeObject()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PelletAnimInfo::read(RandomAccessStream& stream)
 {
@@ -68,7 +68,7 @@ void PelletAnimInfo::read(RandomAccessStream& stream)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PelletShapeObject::PelletShapeObject(immut char* str1, Shape* shape, immut char* str2, immut char* str3, int overrideJoint)
 {
@@ -96,14 +96,14 @@ PelletShapeObject::PelletShapeObject(immut char* str1, Shape* shape, immut char*
 immut char* PaniPelletAnimator::motionLabels[PelletMotion::COUNT] = { "Carry", "Appear", "3", "4", "5", "6", "7" };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PelletAnimator::PelletAnimator()
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PelletAnimator::init(AnimContext* context1, AnimContext* context2, AnimMgr* mgr, PaniMotionTable* motionTable)
 {
@@ -112,7 +112,7 @@ void PelletAnimator::init(AnimContext* context1, AnimContext* context2, AnimMgr*
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000058
  */
 void PelletAnimator::startMotion(immut PaniMotionInfo* lowerMotionInfo, immut PaniMotionInfo* upperMotionInfo)
@@ -127,7 +127,7 @@ void PelletAnimator::startMotion(immut PaniMotionInfo* lowerMotionInfo, immut Pa
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PelletAnimator::finishMotion(immut PaniMotionInfo* lowerMotionInfo, immut PaniMotionInfo* upperMotionInfo)
 {
@@ -140,7 +140,7 @@ void PelletAnimator::finishMotion(immut PaniMotionInfo* lowerMotionInfo, immut P
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PelletAnimator::startMotion(immut PaniMotionInfo& lowerMotionInfo, immut PaniMotionInfo& upperMotionInfo)
 {
@@ -148,7 +148,7 @@ void PelletAnimator::startMotion(immut PaniMotionInfo& lowerMotionInfo, immut Pa
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PelletAnimator::startMotion(immut PaniMotionInfo& motionInfo)
 {
@@ -156,7 +156,7 @@ void PelletAnimator::startMotion(immut PaniMotionInfo& motionInfo)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000084
  */
 void PelletAnimator::finishMotion(immut PaniAnimKeyListener*)
@@ -165,7 +165,7 @@ void PelletAnimator::finishMotion(immut PaniAnimKeyListener*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PelletAnimator::updateAnimation(f32 lowerAnimSpeed, f32 upperAnimSpeed)
 {
@@ -174,7 +174,7 @@ void PelletAnimator::updateAnimation(f32 lowerAnimSpeed, f32 upperAnimSpeed)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PelletAnimator::updateContext()
 {
@@ -183,7 +183,7 @@ void PelletAnimator::updateContext()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PaniMotionTable* PaniPelletAnimator::createMotionTable()
 {
@@ -199,7 +199,7 @@ PaniMotionTable* PaniPelletAnimator::createMotionTable()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PaniPelletAnimator::PaniPelletAnimator()
 {

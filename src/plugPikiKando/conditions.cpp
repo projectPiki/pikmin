@@ -2,7 +2,7 @@
 #include "Creature.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool CndIsVisible::satisfy(Creature* creature) immut
 {
@@ -10,7 +10,7 @@ bool CndIsVisible::satisfy(Creature* creature) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool CndIsAtari::satisfy(Creature* creature) immut
 {
@@ -18,7 +18,7 @@ bool CndIsAtari::satisfy(Creature* creature) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool CndStickMouth::satisfy(Creature* creature) immut
 {

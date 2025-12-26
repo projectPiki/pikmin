@@ -6,19 +6,19 @@
 #include "sysNew.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("shpRoutes")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000A8
  */
 RoutePoint::RoutePoint()
@@ -32,7 +32,7 @@ RoutePoint::RoutePoint()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0001D4
  */
 void RoutePoint::refresh(Graphics& gfx)
@@ -55,7 +55,7 @@ void RoutePoint::refresh(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void RoutePoint::loadini(CmdStream* s)
 {
@@ -81,7 +81,7 @@ void RoutePoint::loadini(CmdStream* s)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 RouteGroup::RouteGroup()
     : EditNode("")
@@ -93,7 +93,7 @@ RouteGroup::RouteGroup()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void RouteGroup::refresh(Graphics& gfx, EditNode* node)
 {
@@ -167,7 +167,7 @@ void RouteGroup::refresh(Graphics& gfx, EditNode* node)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void RouteGroup::render2d(Graphics& gfx, int& textHeight)
 {
@@ -175,7 +175,7 @@ void RouteGroup::render2d(Graphics& gfx, int& textHeight)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void RouteGroup::loadini(CmdStream* s)
 {
@@ -243,7 +243,7 @@ void RouteGroup::loadini(CmdStream* s)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0001C0
  */
 void RouteGroup::saveini(immut char* name, RandomAccessStream& s)

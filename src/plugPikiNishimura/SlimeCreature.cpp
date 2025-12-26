@@ -4,19 +4,19 @@
 #include "system.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("SlimeCreature");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 SlimeCreature::SlimeCreature(CreatureProp* props)
     : Creature(props)
@@ -25,7 +25,7 @@ SlimeCreature::SlimeCreature(CreatureProp* props)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SlimeCreature::init(immut Vector3f& pos, Slime* slime)
 {
@@ -38,7 +38,7 @@ void SlimeCreature::init(immut Vector3f& pos, Slime* slime)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 SlimeCreature::getSize()
 {
@@ -46,7 +46,7 @@ f32 SlimeCreature::getSize()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 SlimeCreature::getiMass()
 {
@@ -54,7 +54,7 @@ f32 SlimeCreature::getiMass()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Vector3f SlimeCreature::getCentre()
 {
@@ -62,7 +62,7 @@ Vector3f SlimeCreature::getCentre()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SlimeCreature::doKill()
 {
@@ -70,7 +70,7 @@ void SlimeCreature::doKill()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool SlimeCreature::isAlive()
 {
@@ -78,7 +78,7 @@ bool SlimeCreature::isAlive()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool SlimeCreature::isAtari()
 {
@@ -86,7 +86,7 @@ bool SlimeCreature::isAtari()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool SlimeCreature::ignoreAtari(Creature* creature)
 {
@@ -98,21 +98,21 @@ bool SlimeCreature::ignoreAtari(Creature* creature)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SlimeCreature::doAI()
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SlimeCreature::doAnimation()
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SlimeCreature::update()
 {
@@ -122,7 +122,7 @@ void SlimeCreature::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SlimeCreature::refresh(Graphics&)
 {

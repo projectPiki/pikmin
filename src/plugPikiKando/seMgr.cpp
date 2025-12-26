@@ -9,13 +9,13 @@
 #include "zen/Math.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(7)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("seMgr");
@@ -24,7 +24,7 @@ DEFINE_PRINT("seMgr");
 SeMgr* seMgr;
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 SeMgr::SeMgr()
 {
@@ -47,7 +47,7 @@ SeMgr::SeMgr()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SeMgr::playNaviSound(s32 stickX, s32 stickY)
 {
@@ -55,7 +55,7 @@ void SeMgr::playNaviSound(s32 stickX, s32 stickY)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * Address:	10126280 in DLL
  * @note UNUSED Size: 000048
  */
@@ -71,7 +71,7 @@ SeInfo* SeMgr::findInfo(int jacSeID)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SeMgr::addInfo(int jacSeID, immut char* seName)
 {
@@ -86,14 +86,14 @@ void SeMgr::addInfo(int jacSeID, immut char* seName)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SeMgr::update()
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 void SeMgr::play(u32)
@@ -101,7 +101,7 @@ void SeMgr::play(u32)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000024
  */
 void SeMgr::stop(u32 jacSeID)
@@ -110,7 +110,7 @@ void SeMgr::stop(u32 jacSeID)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 void SeMgr::playBGM(u32)
@@ -118,7 +118,7 @@ void SeMgr::playBGM(u32)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 void SeMgr::stopBGM()
@@ -126,7 +126,7 @@ void SeMgr::stopBGM()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000020
  */
 void SeMgr::stopSoundAll()
@@ -135,7 +135,7 @@ void SeMgr::stopSoundAll()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SeMgr::joinBattle()
 {
@@ -143,7 +143,7 @@ void SeMgr::joinBattle()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SeMgr::leaveBattle()
 {
@@ -167,7 +167,7 @@ void SeMgr::setPikiNum(int pikiNum)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SeWin::doRender(Graphics& gfx)
 {
@@ -182,7 +182,7 @@ void SeWin::doRender(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SeWin::update()
 {
@@ -277,7 +277,7 @@ void SeWin::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SeWin::open()
 {
@@ -301,7 +301,7 @@ void SeWin::open()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SeWin::close()
 {

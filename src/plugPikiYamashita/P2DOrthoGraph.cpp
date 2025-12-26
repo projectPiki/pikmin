@@ -2,7 +2,7 @@
 #include "P2D/Graph.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000088
  */
 P2DOrthoGraph::P2DOrthoGraph()
@@ -12,7 +12,7 @@ P2DOrthoGraph::P2DOrthoGraph()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000C8
  */
 P2DOrthoGraph::P2DOrthoGraph(const PUTRect& rect)
@@ -22,7 +22,7 @@ P2DOrthoGraph::P2DOrthoGraph(const PUTRect& rect)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 P2DOrthoGraph::P2DOrthoGraph(int x0, int y0, int width, int height)
     : P2DGrafContext(x0, y0, width, height)
@@ -35,7 +35,7 @@ P2DOrthoGraph::P2DOrthoGraph(int x0, int y0, int width, int height)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void P2DOrthoGraph::setPort()
 {
@@ -52,7 +52,7 @@ void P2DOrthoGraph::setPort()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000024
  */
 void P2DOrthoGraph::setOrtho(const PUTRect& viewBounds, int nearZ, int farZ)
@@ -63,7 +63,7 @@ void P2DOrthoGraph::setOrtho(const PUTRect& viewBounds, int nearZ, int farZ)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000E4
  */
 void P2DOrthoGraph::setOrigin(int x, int y)
@@ -72,7 +72,7 @@ void P2DOrthoGraph::setOrigin(int x, int y)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void P2DOrthoGraph::setLookat()
 {
@@ -81,7 +81,7 @@ void P2DOrthoGraph::setLookat()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void P2DOrthoGraph::scissorBounds(PUTRect* outBounds, PUTRect* inBounds)
 {

@@ -23,19 +23,19 @@
 #include "teki.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(33)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("itemAI")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 SluiceAI::SluiceAI()
 {
@@ -63,7 +63,7 @@ SluiceAI::SluiceAI()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SluiceAI::Init::act(AICreature* item)
 {
@@ -72,7 +72,7 @@ void SluiceAI::Init::act(AICreature* item)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SluiceAI::MotionDone::act(AICreature* item)
 {
@@ -88,7 +88,7 @@ void SluiceAI::MotionDone::act(AICreature* item)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SluiceAI::AddCount::act(AICreature* item)
 {
@@ -97,7 +97,7 @@ void SluiceAI::AddCount::act(AICreature* item)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SluiceAI::WaitInit::act(AICreature* item)
 {
@@ -116,7 +116,7 @@ void SluiceAI::WaitInit::act(AICreature* item)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SluiceAI::ChangeInit::act(AICreature* item)
 {
@@ -133,7 +133,7 @@ void SluiceAI::ChangeInit::act(AICreature* item)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SluiceAI::DamageInit::act(AICreature* item)
 {
@@ -146,7 +146,7 @@ void SluiceAI::DamageInit::act(AICreature* item)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PikiHeadAI::PikiHeadAI()
 {
@@ -175,7 +175,7 @@ PikiHeadAI::PikiHeadAI()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiHeadAI::BounceSound::act(AICreature* item)
 {
@@ -204,7 +204,7 @@ void PikiHeadAI::BounceSound::act(AICreature* item)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiHeadAI::FlyingEffect::act(AICreature* item)
 {
@@ -214,7 +214,7 @@ void PikiHeadAI::FlyingEffect::act(AICreature* item)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiHeadAI::FlyingExec::act(AICreature* item)
 {
@@ -223,7 +223,7 @@ void PikiHeadAI::FlyingExec::act(AICreature* item)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiHeadAI::FlyingCleanup::act(AICreature* item)
 {
@@ -232,7 +232,7 @@ void PikiHeadAI::FlyingCleanup::act(AICreature* item)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiHeadAI::BuryInit2::act(AICreature* item)
 {
@@ -241,7 +241,7 @@ void PikiHeadAI::BuryInit2::act(AICreature* item)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiHeadAI::BuryExec2::act(AICreature* item)
 {
@@ -252,7 +252,7 @@ void PikiHeadAI::BuryExec2::act(AICreature* item)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiHeadAI::BuryInit::act(AICreature* item)
 {
@@ -265,7 +265,7 @@ void PikiHeadAI::BuryInit::act(AICreature* item)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiHeadAI::BuryExec::act(AICreature* item)
 {
@@ -279,7 +279,7 @@ void PikiHeadAI::BuryExec::act(AICreature* item)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiHeadAI::TaneInit::act(AICreature* item)
 {
@@ -287,7 +287,7 @@ void PikiHeadAI::TaneInit::act(AICreature* item)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiHeadAI::TaneExec::act(AICreature* item)
 {
@@ -299,7 +299,7 @@ void PikiHeadAI::TaneExec::act(AICreature* item)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiHeadAI::WaitInit::act(AICreature* item)
 {
@@ -314,7 +314,7 @@ void PikiHeadAI::WaitInit::act(AICreature* item)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiHeadAI::WaitExec::act(AICreature* item)
 {
@@ -340,7 +340,7 @@ void PikiHeadAI::WaitExec::act(AICreature* item)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiHeadAI::GrowupedExec::act(AICreature* item)
 {
@@ -363,7 +363,7 @@ void PikiHeadAI::GrowupedExec::act(AICreature* item)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiHeadAI::GrowEffect::act(AICreature* item)
 {
@@ -371,7 +371,7 @@ void PikiHeadAI::GrowEffect::act(AICreature* item)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiHeadAI::KaretaInit::act(AICreature* item)
 {
@@ -382,7 +382,7 @@ void PikiHeadAI::KaretaInit::act(AICreature* item)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiHeadAI::KaretaExec::act(AICreature* item)
 {
@@ -394,7 +394,7 @@ void PikiHeadAI::KaretaExec::act(AICreature* item)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiHeadAI::Dead::act(AICreature* item)
 {
@@ -402,7 +402,7 @@ void PikiHeadAI::Dead::act(AICreature* item)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 BombAI::BombAI()
 {
@@ -425,7 +425,7 @@ BombAI::BombAI()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BombAI::SetInit::act(AICreature* item)
 {
@@ -439,7 +439,7 @@ void BombAI::SetInit::act(AICreature* item)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BombAI::SetExec::act(AICreature* item)
 {
@@ -458,7 +458,7 @@ void BombAI::SetExec::act(AICreature* item)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BombAI::BombInit::act(AICreature* item)
 {
@@ -615,7 +615,7 @@ void BombAI::BombInit::act(AICreature* item)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BombAI::BombExec::act(AICreature* item)
 {
@@ -623,7 +623,7 @@ void BombAI::BombExec::act(AICreature* item)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BombAI::MizuInit::act(AICreature* item)
 {
@@ -631,7 +631,7 @@ void BombAI::MizuInit::act(AICreature* item)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BombAI::MizuExec::act(AICreature* item)
 {
@@ -645,7 +645,7 @@ void BombAI::MizuExec::act(AICreature* item)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BombAI::DieInit::act(AICreature* item)
 {
@@ -654,7 +654,7 @@ void BombAI::DieInit::act(AICreature* item)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BombAI::DieExec::act(AICreature* item)
 {
@@ -667,7 +667,7 @@ void BombAI::DieExec::act(AICreature* item)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 GoalAI::GoalAI()
 {
@@ -698,7 +698,7 @@ GoalAI::GoalAI()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool GoalAI::NotFinished::satisfy(AICreature* item)
 {
@@ -709,7 +709,7 @@ bool GoalAI::NotFinished::satisfy(AICreature* item)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GoalAI::WaitInit::act(AICreature* item)
 {
@@ -729,7 +729,7 @@ void GoalAI::WaitInit::act(AICreature* item)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GoalAI::BootInit::act(AICreature* item)
 {
@@ -738,7 +738,7 @@ void GoalAI::BootInit::act(AICreature* item)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GoalAI::BootEmit::act(AICreature* item)
 {
@@ -821,14 +821,14 @@ void GoalAI::BootEmit::act(AICreature* item)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GoalAI::BootDone::act(AICreature* item)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GoalAI::EmitPiki::act(AICreature* item)
 {
@@ -891,14 +891,14 @@ void GoalAI::EmitPiki::act(AICreature* item)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GoalAI::EmitWait::act(AICreature*)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GoalAI::Effect::act(AICreature* item)
 {
@@ -909,7 +909,7 @@ void GoalAI::Effect::act(AICreature* item)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0001AC
  */
 GemAI::GemAI()
@@ -925,7 +925,7 @@ GemAI::GemAI()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GemAI::RiseInit::act(AICreature* item)
 {
@@ -942,7 +942,7 @@ void GemAI::RiseInit::act(AICreature* item)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GemAI::RiseExec::act(AICreature* item)
 {
@@ -979,7 +979,7 @@ void GemAI::RiseExec::act(AICreature* item)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GemAI::Die::act(AICreature* item)
 {
@@ -1004,7 +1004,7 @@ void GemAI::Die::act(AICreature* item)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 WaterAI::WaterAI()
 {
@@ -1027,7 +1027,7 @@ WaterAI::WaterAI()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool WaterAI::CollideChar::satisfy(AICreature* item)
 {
@@ -1039,7 +1039,7 @@ bool WaterAI::CollideChar::satisfy(AICreature* item)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void WaterAI::Die::act(AICreature* item)
 {
@@ -1047,7 +1047,7 @@ void WaterAI::Die::act(AICreature* item)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 FallWaterAI::FallWaterAI()
 {
@@ -1066,7 +1066,7 @@ FallWaterAI::FallWaterAI()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void FallWaterAI::CollideInit::act(AICreature* item)
 {
@@ -1075,7 +1075,7 @@ void FallWaterAI::CollideInit::act(AICreature* item)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void FallWaterAI::EmitInit::act(AICreature* item)
 {
@@ -1089,7 +1089,7 @@ void FallWaterAI::EmitInit::act(AICreature* item)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void FallWaterAI::DisappearInit::act(AICreature* item)
 {

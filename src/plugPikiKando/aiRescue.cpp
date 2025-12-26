@@ -5,19 +5,19 @@
 #include "zen/Math.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("aiRescue")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 ActRescue::ActRescue(Piki* piki)
     : Action(piki, true)
@@ -26,7 +26,7 @@ ActRescue::ActRescue(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActRescue::init(Creature* target)
 {
@@ -40,7 +40,7 @@ void ActRescue::init(Creature* target)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActRescue::exec()
 {
@@ -91,7 +91,7 @@ int ActRescue::exec()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActRescue::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
@@ -110,7 +110,7 @@ void ActRescue::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActRescue::initApproach()
 {
@@ -119,7 +119,7 @@ void ActRescue::initApproach()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActRescue::exeApproach()
 {
@@ -135,7 +135,7 @@ int ActRescue::exeApproach()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActRescue::initRescue()
 {
@@ -146,7 +146,7 @@ void ActRescue::initRescue()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActRescue::exeRescue()
 {
@@ -160,7 +160,7 @@ int ActRescue::exeRescue()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActRescue::initGo()
 {
@@ -177,7 +177,7 @@ void ActRescue::initGo()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActRescue::exeGo()
 {
@@ -197,7 +197,7 @@ int ActRescue::exeGo()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActRescue::initThrow()
 {
@@ -209,7 +209,7 @@ void ActRescue::initThrow()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActRescue::exeThrow()
 {
@@ -255,7 +255,7 @@ int ActRescue::exeThrow()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActRescue::cleanup()
 {

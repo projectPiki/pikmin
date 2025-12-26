@@ -2,19 +2,19 @@
 #include "PikiAI.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("aiEscape")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 ActEscape::ActEscape(Piki* piki)
     : Action(piki, false)
@@ -23,14 +23,14 @@ ActEscape::ActEscape(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActEscape::Initialiser::initialise(Action*)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActEscape::init(Creature* target)
 {
@@ -43,7 +43,7 @@ void ActEscape::init(Creature* target)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActEscape::cleanup()
 {
@@ -51,7 +51,7 @@ void ActEscape::cleanup()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActEscape::exec()
 {
@@ -105,7 +105,7 @@ int ActEscape::exec()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActEscape::getInfo(char* buf)
 {

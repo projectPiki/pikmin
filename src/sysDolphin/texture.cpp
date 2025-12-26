@@ -8,13 +8,13 @@
 #include <string.h>
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(14)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("Texture");
@@ -24,7 +24,7 @@ static GXTexFmt gxTexFmts[TEX_FMT_COUNT] = {
 };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Texture::Texture()
 {
@@ -37,7 +37,7 @@ Texture::Texture()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00004C
  */
 void Texture::offsetGLtoGX(int, int)
@@ -46,7 +46,7 @@ void Texture::offsetGLtoGX(int, int)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 u8 Texture::getAlpha(int x, int y)
 {
@@ -138,7 +138,7 @@ u8 Texture::getAlpha(int x, int y)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000D4
  */
 u8 Texture::getRed(int, int)
@@ -147,7 +147,7 @@ u8 Texture::getRed(int, int)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Texture::read(RandomAccessStream& input)
 {
@@ -165,7 +165,7 @@ void Texture::read(RandomAccessStream& input)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Texture::detach()
 {
@@ -174,7 +174,7 @@ void Texture::detach()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Texture::attach()
 {
@@ -219,7 +219,7 @@ void Texture::attach()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Texture::createBuffer(int width, int height, int texFmt, void* buf)
 {
@@ -239,7 +239,7 @@ void Texture::createBuffer(int width, int height, int texFmt, void* buf)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Texture::grabBuffer(int width, int height, bool doClear, bool useMIPmap)
 {
@@ -265,7 +265,7 @@ void Texture::grabBuffer(int width, int height, bool doClear, bool useMIPmap)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Texture::decodeData(TexImg* texImg)
 {

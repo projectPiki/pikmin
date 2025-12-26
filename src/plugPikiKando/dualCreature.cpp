@@ -7,19 +7,19 @@
 #include "NaviMgr.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT(nullptr);
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 DualCreature::DualCreature()
 {
@@ -32,7 +32,7 @@ DualCreature::DualCreature()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DualCreature::doKill()
 {
@@ -41,7 +41,7 @@ void DualCreature::doKill()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool DualCreature::isFrontFace()
 {
@@ -55,7 +55,7 @@ bool DualCreature::isFrontFace()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 DualCreature::getY()
 {
@@ -69,7 +69,7 @@ f32 DualCreature::getY()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool DualCreature::onGround()
 {
@@ -88,7 +88,7 @@ bool DualCreature::onGround()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000078
  */
 void DualCreature::createCollisions(Graphics& gfx)
@@ -103,7 +103,7 @@ void DualCreature::createCollisions(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DualCreature::useRealDynamics()
 {
@@ -117,7 +117,7 @@ void DualCreature::useRealDynamics()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DualCreature::useSimpleDynamics()
 {
@@ -128,7 +128,7 @@ void DualCreature::useSimpleDynamics()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DualCreature::rotateY(f32 rotY)
 {
@@ -145,7 +145,7 @@ void DualCreature::rotateY(f32 rotY)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DualCreature::update()
 {
@@ -157,7 +157,7 @@ void DualCreature::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DualCreature::refresh(Graphics& gfx)
 {
@@ -205,7 +205,7 @@ void DualCreature::refresh(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000140
  */
 PelCreature::PelCreature(int objType, ItemShapeObject* shape, CreatureProp* props, MapMgr* mgr)
@@ -218,7 +218,7 @@ PelCreature::PelCreature(int objType, ItemShapeObject* shape, CreatureProp* prop
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PelCreature::init(immut Vector3f& pos)
 {
@@ -229,7 +229,7 @@ void PelCreature::init(immut Vector3f& pos)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 PelCreature::getiMass()
 {
@@ -237,7 +237,7 @@ f32 PelCreature::getiMass()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool PelCreature::isAlive()
 {
@@ -245,7 +245,7 @@ bool PelCreature::isAlive()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PelCreature::startAI(int)
 {
@@ -255,7 +255,7 @@ void PelCreature::startAI(int)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PelCreature::doRender(Graphics& gfx, Matrix4f& mtx)
 {
@@ -279,7 +279,7 @@ void PelCreature::doRender(Graphics& gfx, Matrix4f& mtx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PelCreature::doCreateColls(Graphics& gfx)
 {

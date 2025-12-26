@@ -4,19 +4,19 @@
 #include "teki.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000098
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("tai");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TaiSerialAction::TaiSerialAction(int nextState, int count)
     : TaiAction(nextState)
@@ -26,7 +26,7 @@ TaiSerialAction::TaiSerialAction(int nextState, int count)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiSerialAction::start(Teki& teki)
 {
@@ -35,7 +35,7 @@ void TaiSerialAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiSerialAction::finish(Teki& teki)
 {
@@ -46,7 +46,7 @@ void TaiSerialAction::finish(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiSerialAction::act(Teki& teki)
 {
@@ -62,7 +62,7 @@ bool TaiSerialAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiSerialAction::actByEvent(immut TekiEvent& event)
 {
@@ -79,7 +79,7 @@ bool TaiSerialAction::actByEvent(immut TekiEvent& event)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TaiState::TaiState(int count)
     : mCount(count)
@@ -88,7 +88,7 @@ TaiState::TaiState(int count)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiState::start(Teki& teki)
 {
@@ -99,7 +99,7 @@ void TaiState::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiState::finish(Teki& teki)
 {
@@ -110,7 +110,7 @@ void TaiState::finish(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiState::act(Teki& teki)
 {
@@ -136,7 +136,7 @@ bool TaiState::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiState::eventPerformed(immut TekiEvent& event)
 {
@@ -164,7 +164,7 @@ bool TaiState::eventPerformed(immut TekiEvent& event)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TaiStrategy::TaiStrategy(int stateCount, int stateID)
 {
@@ -172,7 +172,7 @@ TaiStrategy::TaiStrategy(int stateCount, int stateID)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiStrategy::init(int stateCount, int stateID)
 {
@@ -182,7 +182,7 @@ void TaiStrategy::init(int stateCount, int stateID)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiStrategy::start(Teki& teki)
 {
@@ -191,7 +191,7 @@ void TaiStrategy::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiStrategy::act(Teki& teki)
 {
@@ -208,7 +208,7 @@ void TaiStrategy::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiStrategy::eventPerformed(immut TekiEvent& event)
 {

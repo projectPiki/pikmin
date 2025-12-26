@@ -4,13 +4,13 @@
 #include "sysNew.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(5)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("resultFlag");
@@ -96,7 +96,7 @@ ResultFlags::FlagInfo ResultFlags::flagTable[] = {
 };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 ResultFlags::ResultFlags()
 {
@@ -137,7 +137,7 @@ ResultFlags::ResultFlags()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ResultFlags::initGame()
 {
@@ -167,7 +167,7 @@ void ResultFlags::initGame()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ResultFlags::saveCard(RandomAccessStream& stream)
 {
@@ -182,7 +182,7 @@ void ResultFlags::saveCard(RandomAccessStream& stream)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ResultFlags::loadCard(RandomAccessStream& stream)
 {
@@ -197,7 +197,7 @@ void ResultFlags::loadCard(RandomAccessStream& stream)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ResultFlags::setOn(int flag)
 {
@@ -207,7 +207,7 @@ void ResultFlags::setOn(int flag)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ResultFlags::setSeen(int flag)
 {
@@ -215,7 +215,7 @@ void ResultFlags::setSeen(int flag)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ResultFlags::getDayDocument(int dayIndex, int& length)
 {
@@ -244,7 +244,7 @@ int ResultFlags::getDayDocument(int dayIndex, int& length)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ResultFlags::getDocument(int& out)
 {
@@ -297,7 +297,7 @@ int ResultFlags::getDocument(int& out)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00003C
  */
 int ResultFlags::FlagInfo::type()
@@ -315,7 +315,7 @@ int ResultFlags::FlagInfo::type()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ResultFlags::dump()
 {
@@ -373,7 +373,7 @@ void ResultFlags::dump()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 u8 ResultFlags::getFlag(int index)
 {
@@ -383,7 +383,7 @@ u8 ResultFlags::getFlag(int index)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ResultFlags::setFlag(int index, u8 flag)
 {

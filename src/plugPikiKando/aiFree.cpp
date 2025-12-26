@@ -9,13 +9,13 @@
 #include "sysNew.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(23)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("free")
@@ -24,7 +24,7 @@ static int motions[] = { PIKIANIM_Rinbow, PIKIANIM_Akubi, PIKIANIM_Sagasu2, PIKI
 int numMotions       = 4;
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 ActFree::ActFree(Piki* piki)
     : Action(piki, true)
@@ -34,7 +34,7 @@ ActFree::ActFree(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActFree::initBoid(immut Vector3f& targetPosition, f32 radius)
 {
@@ -52,7 +52,7 @@ void ActFree::initBoid(immut Vector3f& targetPosition, f32 radius)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActFree::exeBoid()
 {
@@ -77,7 +77,7 @@ void ActFree::exeBoid()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActFree::init(Creature*)
 {
@@ -122,7 +122,7 @@ void ActFree::init(Creature*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActFree::cleanup()
 {
@@ -140,14 +140,14 @@ void ActFree::cleanup()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActFree::animationKeyUpdated(immut PaniAnimKeyEvent&)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActFree::exec()
 {
@@ -182,7 +182,7 @@ int ActFree::exec()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActFree::procCollideMsg(Piki* piki, MsgCollide* msg)
 {

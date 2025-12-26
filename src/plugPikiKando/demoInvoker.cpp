@@ -11,19 +11,19 @@
 #include "gameflow.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(13)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("demoInvoker");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Navi::demoCheck()
 {
@@ -122,7 +122,7 @@ bool Navi::demoCheck()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Piki::demoCheck()
 {

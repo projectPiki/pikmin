@@ -18,13 +18,13 @@
 SeSystem* seSystem;
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(11)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("soundMgr")
@@ -398,7 +398,7 @@ SoundTableInfo soundTable[] = {
 };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 SeContext::SeContext()
 {
@@ -411,7 +411,7 @@ SeContext::SeContext()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 SeContext::SeContext(Creature* obj, int eventType)
 {
@@ -424,7 +424,7 @@ SeContext::SeContext(Creature* obj, int eventType)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SeContext::setContext(Creature* obj, int type)
 {
@@ -442,7 +442,7 @@ void SeContext::setContext(Creature* obj, int type)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000044
  */
 Vector3f SeContext::getPos()
@@ -454,7 +454,7 @@ Vector3f SeContext::getPos()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00001C
  */
 int SeContext::getObjType()
@@ -466,7 +466,7 @@ int SeContext::getObjType()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000098
  */
 void SeContext::createEvent(int eventType)
@@ -477,7 +477,7 @@ void SeContext::createEvent(int eventType)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SeContext::playSound(int soundID)
 {
@@ -497,7 +497,7 @@ void SeContext::playSound(int soundID)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SeContext::stopSound(int soundID)
 {
@@ -508,7 +508,7 @@ void SeContext::stopSound(int soundID)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SeContext::update()
 {
@@ -521,7 +521,7 @@ void SeContext::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool SeContext::releaseEvent()
 {
@@ -538,7 +538,7 @@ bool SeContext::releaseEvent()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000030
  */
 void SeContext::dump()
@@ -549,7 +549,7 @@ void SeContext::dump()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 SeSystem::SeSystem()
 {
@@ -570,7 +570,7 @@ SeSystem::SeSystem()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SeSystem::initEvent()
 {
@@ -587,7 +587,7 @@ void SeSystem::initEvent()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SeSystem::resetSystem()
 {
@@ -595,7 +595,7 @@ void SeSystem::resetSystem()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int SeSystem::createEvent(SeContext* context, int eventType, SVector_* soundOffset)
 {
@@ -665,7 +665,7 @@ int SeSystem::createEvent(SeContext* context, int eventType, SVector_* soundOffs
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SeSystem::playPikiSound(int id, immut Vector3f& sourcePos)
 {
@@ -673,7 +673,7 @@ void SeSystem::playPikiSound(int id, immut Vector3f& sourcePos)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SeSystem::playSoundDirect(int eventType, int sound, immut Vector3f& sourcePos)
 {
@@ -716,7 +716,7 @@ void SeSystem::playSoundDirect(int eventType, int sound, immut Vector3f& sourceP
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool SeSystem::destroyEvent(SeContext* context, s32 handle)
 {
@@ -765,7 +765,7 @@ bool SeSystem::destroyEvent(SeContext* context, s32 handle)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00005C
  */
 int SeSystem::getEvent(s32 handle)
@@ -780,7 +780,7 @@ int SeSystem::getEvent(s32 handle)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int SeSystem::getEvent(SeContext* context)
 {
@@ -794,7 +794,7 @@ int SeSystem::getEvent(SeContext* context)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SeSystem::draw3d(Graphics& gfx)
 {
@@ -818,7 +818,7 @@ void SeSystem::draw3d(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SeSystem::draw2d(Graphics& gfx)
 {
@@ -856,7 +856,7 @@ void SeSystem::draw2d(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SeSystem::dumpEvents()
 {
@@ -880,7 +880,7 @@ void SeSystem::dumpEvents()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SeSystem::update(Graphics& gfx, immut Vector3f& listenerPos)
 {
@@ -941,7 +941,7 @@ void SeSystem::update(Graphics& gfx, immut Vector3f& listenerPos)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SeSystem::calcCameraPos(immut Vector3f& objectPos, Vector3f& normalisedCamDir)
 {
@@ -961,7 +961,7 @@ void SeSystem::calcCameraPos(immut Vector3f& objectPos, Vector3f& normalisedCamD
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int SeSystem::getJacID(int soundID)
 {
@@ -973,7 +973,7 @@ int SeSystem::getJacID(int soundID)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000018
  */
 immut char* SeSystem::getSoundName(int soundID)
@@ -986,7 +986,7 @@ immut char* SeSystem::getSoundName(int soundID)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000018
  */
 int SeSystem::getEventType(int soundID)
@@ -999,7 +999,7 @@ int SeSystem::getEventType(int soundID)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000024
  */
 bool SeSystem::isLoopType(int soundID)
@@ -1012,7 +1012,7 @@ bool SeSystem::isLoopType(int soundID)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SeSystem::exitCourse()
 {
@@ -1025,7 +1025,7 @@ void SeSystem::exitCourse()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SeSystem::playSysSe(int soundID)
 {
@@ -1033,7 +1033,7 @@ void SeSystem::playSysSe(int soundID)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SeSystem::stopSysSe(int soundID)
 {
@@ -1041,7 +1041,7 @@ void SeSystem::stopSysSe(int soundID)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SeSystem::playPlayerSe(int soundID)
 {
@@ -1049,7 +1049,7 @@ void SeSystem::playPlayerSe(int soundID)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SeSystem::stopPlayerSe(int soundID)
 {

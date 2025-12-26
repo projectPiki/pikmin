@@ -8,19 +8,19 @@
 #include "sysNew.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("Kogane");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 KoganeProp::KoganeProp()
 {
@@ -30,7 +30,7 @@ KoganeProp::KoganeProp()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Kogane::Kogane(CreatureProp* props)
     : Boss(props)
@@ -40,7 +40,7 @@ Kogane::Kogane(CreatureProp* props)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 Kogane::getiMass()
 {
@@ -48,7 +48,7 @@ f32 Kogane::getiMass()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Kogane::init(immut Vector3f&)
 {
@@ -63,7 +63,7 @@ void Kogane::init(immut Vector3f&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Kogane::doKill()
 {
@@ -74,7 +74,7 @@ void Kogane::doKill()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Kogane::exitCourse()
 {
@@ -82,7 +82,7 @@ void Kogane::exitCourse()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Kogane::update()
 {
@@ -90,7 +90,7 @@ void Kogane::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Kogane::refresh(Graphics& gfx)
 {
@@ -103,7 +103,7 @@ void Kogane::refresh(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Kogane::drawShape(Graphics& gfx)
 {
@@ -112,7 +112,7 @@ void Kogane::drawShape(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Kogane::doAI()
 {
@@ -121,7 +121,7 @@ void Kogane::doAI()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Kogane::doAnimation()
 {
@@ -131,7 +131,7 @@ void Kogane::doAnimation()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Kogane::collisionCallback(immut CollEvent& event)
 {

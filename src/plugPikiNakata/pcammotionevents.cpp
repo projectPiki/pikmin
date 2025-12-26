@@ -4,19 +4,19 @@
 #include "sysNew.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("pcammotionevents")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PcamLongVibrationEvent::PcamLongVibrationEvent(PcamCamera* camera)
     : PeveSerialEvent(2)
@@ -30,7 +30,7 @@ PcamLongVibrationEvent::PcamLongVibrationEvent(PcamCamera* camera)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PcamLongVibrationEvent::makePcamLongVibrationEvent(f32 aDuration, f32 bDuration, f32 intensity, f32 frequency)
 {
@@ -43,7 +43,7 @@ void PcamLongVibrationEvent::makePcamLongVibrationEvent(f32 aDuration, f32 bDura
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PcamVibrationEvent::PcamVibrationEvent(PcamCamera* camera)
 {
@@ -55,7 +55,7 @@ PcamVibrationEvent::PcamVibrationEvent(PcamCamera* camera)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PcamVibrationEvent::makePcamVibrationEvent()
 {
@@ -68,7 +68,7 @@ void PcamVibrationEvent::makePcamVibrationEvent()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PcamDamageEvent::PcamDamageEvent(PcamCamera* camera)
 {
@@ -80,7 +80,7 @@ PcamDamageEvent::PcamDamageEvent(PcamCamera* camera)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PcamDamageEvent::makePcamDamageEvent()
 {
@@ -91,7 +91,7 @@ void PcamDamageEvent::makePcamDamageEvent()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000064
  */
 PcamRandomMoveEvent::PcamRandomMoveEvent(PcamCamera* camera)
@@ -103,7 +103,7 @@ PcamRandomMoveEvent::PcamRandomMoveEvent(PcamCamera* camera)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000014
  */
 void PcamRandomMoveEvent::makePcamRandomMoveEvent()
@@ -113,7 +113,7 @@ void PcamRandomMoveEvent::makePcamRandomMoveEvent()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PcamRandomMoveEvent::update()
 {
@@ -133,7 +133,7 @@ void PcamRandomMoveEvent::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PcamSideVibrationEvent::PcamSideVibrationEvent(PcamCamera* camera)
     : PeveEvent(0)
@@ -148,7 +148,7 @@ PcamSideVibrationEvent::PcamSideVibrationEvent(PcamCamera* camera)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PcamSideVibrationEvent::makePcamSideVibrationEvent()
 {
@@ -160,7 +160,7 @@ void PcamSideVibrationEvent::makePcamSideVibrationEvent()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PcamSideVibrationEvent::update()
 {
@@ -170,7 +170,7 @@ void PcamSideVibrationEvent::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PcamSideVibrationEvent::finish()
 {

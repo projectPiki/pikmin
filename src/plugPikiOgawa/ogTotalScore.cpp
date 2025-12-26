@@ -13,19 +13,19 @@
 #include "zen/ogSub.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("OgTotalScoreSection") // probably
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::ogScrTotalScoreMgr::ogScrTotalScoreMgr(zen::TotalScoreType* scores)
 {
@@ -144,7 +144,7 @@ zen::ogScrTotalScoreMgr::ogScrTotalScoreMgr(zen::TotalScoreType* scores)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrTotalScoreMgr::start()
 {
@@ -154,7 +154,7 @@ void zen::ogScrTotalScoreMgr::start()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::ogScrTotalScoreMgr::TotalScoreStatus zen::ogScrTotalScoreMgr::update(Controller* input)
 {
@@ -202,7 +202,7 @@ zen::ogScrTotalScoreMgr::TotalScoreStatus zen::ogScrTotalScoreMgr::update(Contro
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrTotalScoreMgr::draw(Graphics& gfx)
 {
@@ -217,7 +217,7 @@ void zen::ogScrTotalScoreMgr::draw(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00010C
  */
 void zen::ogScrTotalScoreMgr::setEffect(P2DPane* pane, int effID)
@@ -235,7 +235,7 @@ void zen::ogScrTotalScoreMgr::setEffect(P2DPane* pane, int effID)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrTotalScoreMgr::setRankInEffect()
 {
@@ -257,7 +257,7 @@ void zen::ogScrTotalScoreMgr::setRankInEffect()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrTotalScoreMgr::setRankInColor()
 {

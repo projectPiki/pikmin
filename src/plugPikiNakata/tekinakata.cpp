@@ -13,19 +13,19 @@
 #include "teki.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("tekinakata")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TekiNakata::makeTekiParameters(TekiMgr* mgr)
 {
@@ -51,7 +51,7 @@ void TekiNakata::makeTekiParameters(TekiMgr* mgr)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TekiNakata::makeTekis(TekiMgr* mgr)
 {

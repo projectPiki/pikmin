@@ -6,19 +6,19 @@
 #include "MapMgr.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("keyItem")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 KeyItem::KeyItem(CreatureProp* props, Shape* model)
     : Creature(props)
@@ -33,7 +33,7 @@ KeyItem::KeyItem(CreatureProp* props, Shape* model)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 KeyItem::getSize()
 {
@@ -41,7 +41,7 @@ f32 KeyItem::getSize()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KeyItem::init(immut Vector3f& pos)
 {
@@ -53,7 +53,7 @@ void KeyItem::init(immut Vector3f& pos)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KeyItem::startAI(int)
 {
@@ -61,7 +61,7 @@ void KeyItem::startAI(int)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool KeyItem::isVisible()
 {
@@ -75,7 +75,7 @@ bool KeyItem::isVisible()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KeyItem::doKill()
 {
@@ -85,7 +85,7 @@ void KeyItem::doKill()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KeyItem::update()
 {
@@ -103,14 +103,14 @@ void KeyItem::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KeyItem::collisionCallback(immut CollEvent&)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 KeyItem::getiMass()
 {
@@ -118,7 +118,7 @@ f32 KeyItem::getiMass()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KeyItem::refresh(Graphics& gfx)
 {
@@ -137,7 +137,7 @@ void KeyItem::refresh(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 DoorItem::DoorItem(int objType, CreatureProp* props, Shape* shape)
     : ItemCreature(objType, props, shape)
@@ -149,7 +149,7 @@ DoorItem::DoorItem(int objType, CreatureProp* props, Shape* shape)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DoorItem::disappear()
 {
@@ -160,7 +160,7 @@ void DoorItem::disappear()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00000C
  */
 void DoorItem::becomeGate()
@@ -169,7 +169,7 @@ void DoorItem::becomeGate()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 DoorItem::getSize()
 {
@@ -181,7 +181,7 @@ f32 DoorItem::getSize()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DoorItem::init(immut Vector3f& pos)
 {
@@ -195,7 +195,7 @@ void DoorItem::init(immut Vector3f& pos)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DoorItem::startAI(int)
 {
@@ -203,7 +203,7 @@ void DoorItem::startAI(int)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DoorItem::update()
 {
@@ -224,7 +224,7 @@ void DoorItem::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool DoorItem::isVisible()
 {
@@ -236,7 +236,7 @@ bool DoorItem::isVisible()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 DoorItem::getiMass()
 {
@@ -244,7 +244,7 @@ f32 DoorItem::getiMass()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool DoorItem::isAtari()
 {
@@ -256,7 +256,7 @@ bool DoorItem::isAtari()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DoorItem::refresh(Graphics& gfx)
 {

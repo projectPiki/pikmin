@@ -13,13 +13,13 @@
 #include "system.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(27)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("MoviePlayer")
@@ -115,7 +115,7 @@ static MovieListInfo movieTitles[] = {
 };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000054
  */
 bool MovieInfo::update()
@@ -129,7 +129,7 @@ bool MovieInfo::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000074
  */
 bool MovieInfo::setCamera(Graphics& gfx)
@@ -144,7 +144,7 @@ bool MovieInfo::setCamera(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000024
  */
 void MovieInfo::refresh(Graphics&)
@@ -153,7 +153,7 @@ void MovieInfo::refresh(Graphics&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 MoviePlayer::MoviePlayer()
 {
@@ -161,7 +161,7 @@ MoviePlayer::MoviePlayer()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MoviePlayer::resetMovieList()
 {
@@ -177,7 +177,7 @@ void MoviePlayer::resetMovieList()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MoviePlayer::fixMovieList()
 {
@@ -191,7 +191,7 @@ void MoviePlayer::fixMovieList()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00003C
  */
 MovieListInfo* MoviePlayer::findMovie(int id)
@@ -207,7 +207,7 @@ MovieListInfo* MoviePlayer::findMovie(int id)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MoviePlayer::initMovie(MovieInfo* info, int)
 {
@@ -376,7 +376,7 @@ MovieTransInfo transTable[] = {
 };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000040
  */
 int MoviePlayer::translateIndex(int idx, int stage)
@@ -394,7 +394,7 @@ int MoviePlayer::translateIndex(int idx, int stage)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MoviePlayer::startMovie(int movieIdx, int, Creature* target, immut Vector3f* pos, immut Vector3f* rot, u32 mask, bool isPlaying)
 {
@@ -524,7 +524,7 @@ void MoviePlayer::startMovie(int movieIdx, int, Creature* target, immut Vector3f
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MoviePlayer::sndStartMovie(MovieInfo* info)
 {
@@ -548,7 +548,7 @@ void MoviePlayer::sndStartMovie(MovieInfo* info)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MoviePlayer::initMovieFlags(MovieInfo* info)
 {
@@ -586,7 +586,7 @@ void MoviePlayer::initMovieFlags(MovieInfo* info)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000024
  */
 void MoviePlayer::sndFrameMovie(MovieInfo*)
@@ -596,7 +596,7 @@ void MoviePlayer::sndFrameMovie(MovieInfo*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MoviePlayer::sndStopMovie(MovieInfo* info)
 {
@@ -612,7 +612,7 @@ void MoviePlayer::sndStopMovie(MovieInfo* info)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MoviePlayer::update()
 {
@@ -701,7 +701,7 @@ void MoviePlayer::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MoviePlayer::skipScene(int sceneSkipFlag)
 {
@@ -728,7 +728,7 @@ void MoviePlayer::skipScene(int sceneSkipFlag)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MoviePlayer::getLookAtPos(Vector3f& pos)
 {
@@ -736,7 +736,7 @@ void MoviePlayer::getLookAtPos(Vector3f& pos)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool MoviePlayer::setCamera(Graphics& gfx)
 {
@@ -755,7 +755,7 @@ bool MoviePlayer::setCamera(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MoviePlayer::addLights(Graphics& gfx)
 {
@@ -771,7 +771,7 @@ void MoviePlayer::addLights(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MoviePlayer::refresh(Graphics& gfx)
 {
@@ -785,7 +785,7 @@ void MoviePlayer::refresh(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00001C
  */
 void MoviePlayer::nextFrame()
@@ -794,7 +794,7 @@ void MoviePlayer::nextFrame()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000028
  */
 void MoviePlayer::backFrame()

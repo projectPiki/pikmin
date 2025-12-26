@@ -19,13 +19,13 @@
 #include "timers.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("mapMgr")
@@ -171,7 +171,7 @@ struct MapLightMgr {
 };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DynCollShape::createDupCollData()
 {
@@ -216,7 +216,7 @@ void DynCollShape::createDupCollData()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0001FC
  */
 void DynCollShape::drawAtari(Graphics& gfx)
@@ -242,7 +242,7 @@ void DynCollShape::drawAtari(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DynCollShape::updatePos()
 {
@@ -271,7 +271,7 @@ void DynCollShape::updatePos()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DynCollShape::jointVisible(int id, int set)
 {
@@ -282,7 +282,7 @@ void DynCollShape::jointVisible(int id, int set)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DynCollShape::adjust(Creature* obj)
 {
@@ -294,7 +294,7 @@ void DynCollShape::adjust(Creature* obj)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DynCollShape::update()
 {
@@ -303,7 +303,7 @@ void DynCollShape::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DynCollShape::updateContext()
 {
@@ -313,7 +313,7 @@ void DynCollShape::updateContext()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DynCollShape::refresh(Graphics& gfx)
 {
@@ -322,7 +322,7 @@ void DynCollShape::refresh(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MapObjAnimator::finishOneShot()
 {
@@ -336,7 +336,7 @@ void MapObjAnimator::finishOneShot()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000364
  */
 DynMapObject::DynMapObject(MapMgr* map, MapAnimShapeObject* obj)
@@ -377,7 +377,7 @@ DynMapObject::DynMapObject(MapMgr* map, MapAnimShapeObject* obj)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DynMapObject::nextState()
 {
@@ -388,7 +388,7 @@ void DynMapObject::nextState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DynMapObject::touchCallback(immut Plane&, immut Vector3f&, immut Vector3f&)
 {
@@ -404,7 +404,7 @@ void DynMapObject::touchCallback(immut Plane&, immut Vector3f&, immut Vector3f&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DynMapObject::update()
 {
@@ -444,7 +444,7 @@ void DynMapObject::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DynMapObject::draw(Graphics& gfx)
 {
@@ -452,7 +452,7 @@ void DynMapObject::draw(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DynMapObject::refresh(Graphics& gfx)
 {
@@ -479,7 +479,7 @@ void DynMapObject::refresh(Graphics& gfx)
 static f32 Kdl = 1.25f;
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DynCollObjBody::touchCallback(immut Plane& plane, immut Vector3f& a1, immut Vector3f& a2)
 {
@@ -487,7 +487,7 @@ void DynCollObjBody::touchCallback(immut Plane& plane, immut Vector3f& a1, immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DynCollObjBody::applyVelocity(immut Plane& plane, immut Vector3f& a1, immut Vector3f& a2)
 {
@@ -495,7 +495,7 @@ void DynCollObjBody::applyVelocity(immut Plane& plane, immut Vector3f& a1, immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DynObjBody::touchCallback(immut Plane& plane, immut Vector3f& p2, immut Vector3f& p3)
 {
@@ -508,7 +508,7 @@ void DynObjBody::touchCallback(immut Plane& plane, immut Vector3f& p2, immut Vec
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DynObjBody::applyVelocity(immut Plane& plane, immut Vector3f& p2, immut Vector3f& p3)
 {
@@ -521,7 +521,7 @@ void DynObjBody::applyVelocity(immut Plane& plane, immut Vector3f& p2, immut Vec
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DynObjBody::integrate(int prevConfigIdx, int currConfigIdx, f32 timeStep)
 {
@@ -538,7 +538,7 @@ void DynObjBody::integrate(int prevConfigIdx, int currConfigIdx, f32 timeStep)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DynObjSeeSaw::integrate(int prevConfigIdx, int currConfigIdx, f32 timeStep)
 {
@@ -560,7 +560,7 @@ void DynObjSeeSaw::integrate(int prevConfigIdx, int currConfigIdx, f32 timeStep)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DynObjBody::initRender(int)
 {
@@ -570,7 +570,7 @@ void DynObjBody::initRender(int)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DynObjBody::applyWorldSpring(int configIdx, int attachPointIdx, immut Vector3f& p3)
 {
@@ -592,7 +592,7 @@ void DynObjBody::applyWorldSpring(int configIdx, int attachPointIdx, immut Vecto
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DynObjBody::render(Graphics& gfx)
 {
@@ -611,7 +611,7 @@ void DynObjBody::render(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DynObjBody::computeForces(int configIdx, f32 p2)
 {
@@ -639,7 +639,7 @@ void DynObjBody::computeForces(int configIdx, f32 p2)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DynObjBody::initBodyCollisions()
 {
@@ -669,7 +669,7 @@ void DynObjBody::initBodyCollisions()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DynObjBody::readScript(MapMgr* map, immut char* fileName)
 {
@@ -745,7 +745,7 @@ void DynObjBody::readScript(MapMgr* map, immut char* fileName)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DynObjPushable::render(Graphics& gfx)
 {
@@ -782,7 +782,7 @@ void DynObjPushable::render(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 MapMgr::MapMgr(Controller* controller)
 {
@@ -853,7 +853,7 @@ MapMgr::MapMgr(Controller* controller)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MapMgr::initEffects()
 {
@@ -862,7 +862,7 @@ void MapMgr::initEffects()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MapMgr::initShape()
 {
@@ -905,14 +905,14 @@ void MapMgr::initShape()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MapMgr::createLights()
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MapMgr::updateSimulation()
 {
@@ -940,7 +940,7 @@ void MapMgr::updateSimulation()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MapMgr::update()
 {
@@ -983,7 +983,7 @@ void MapMgr::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MapMgr::preRender(Graphics& gfx)
 {
@@ -1008,7 +1008,7 @@ void MapMgr::preRender(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MapMgr::drawShadowCasters(Graphics& gfx)
 {
@@ -1038,7 +1038,7 @@ void MapMgr::drawShadowCasters(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MapMgr::refresh(Graphics& gfx)
 {
@@ -1080,7 +1080,7 @@ void MapMgr::refresh(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MapMgr::showCollisions(immut Vector3f& pos)
 {
@@ -1174,7 +1174,7 @@ void MapMgr::showCollisions(immut Vector3f& pos)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00006C
  */
 bool MapMgr::closeCollTri(CollGroup*, CollTriInfo*)
@@ -1183,7 +1183,7 @@ bool MapMgr::closeCollTri(CollGroup*, CollTriInfo*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MapMgr::drawXLU(Graphics& gfx)
 {
@@ -1212,7 +1212,7 @@ void MapMgr::drawXLU(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MapMgr::postrefresh(Graphics& gfx)
 {
@@ -1389,7 +1389,7 @@ void MapMgr::postrefresh(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MapMgr::updatePos(f32 x, f32 z)
 {
@@ -1402,7 +1402,7 @@ void MapMgr::updatePos(f32 x, f32 z)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 MapMgr::getLight(f32, f32)
 {
@@ -1410,7 +1410,7 @@ f32 MapMgr::getLight(f32, f32)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 CollGroup* MapMgr::getCollGroupList(f32 x, f32 z, bool doCheckDynColl)
 {
@@ -1440,7 +1440,7 @@ CollGroup* MapMgr::getCollGroupList(f32 x, f32 z, bool doCheckDynColl)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 MapMgr::getMinY(f32 x, f32 z, bool doCheckDynColl)
 {
@@ -1469,7 +1469,7 @@ f32 MapMgr::getMinY(f32 x, f32 z, bool doCheckDynColl)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 MapMgr::getMaxY(f32 x, f32 z, bool doCheckDynColl)
 {
@@ -1498,7 +1498,7 @@ f32 MapMgr::getMaxY(f32 x, f32 z, bool doCheckDynColl)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 CollTriInfo* MapMgr::getCurrTri(f32 x, f32 z, bool doCheckDynColl)
 {
@@ -1523,7 +1523,7 @@ CollTriInfo* MapMgr::getCurrTri(f32 x, f32 z, bool doCheckDynColl)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 MapMgr::findEdgePenetration(CollTriInfo& tri, immut Vector3f* vertexList, immut Vector3f& pos, f32 rad, Vector3f& normal)
 {
@@ -1566,7 +1566,7 @@ f32 MapMgr::findEdgePenetration(CollTriInfo& tri, immut Vector3f* vertexList, im
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MapMgr::recTraceMove(CollGroup* colls, MoveTrace& trace, f32 timeStep)
 {
@@ -1692,7 +1692,7 @@ void MapMgr::recTraceMove(CollGroup* colls, MoveTrace& trace, f32 timeStep)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MapMgr::traceMove(Creature* creature, MoveTrace& trace, f32 timeStep)
 {
@@ -1756,7 +1756,7 @@ void MapMgr::traceMove(Creature* creature, MoveTrace& trace, f32 timeStep)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Shape* MapMgr::loadPlatshape(immut char* path)
 {
@@ -1773,7 +1773,7 @@ Shape* MapMgr::loadPlatshape(immut char* path)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 CreatureCollPart* MapMgr::requestCollPart(ObjCollInfo* info, Creature* obj)
 {
@@ -1786,7 +1786,7 @@ CreatureCollPart* MapMgr::requestCollPart(ObjCollInfo* info, Creature* obj)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 ShadowCaster::ShadowCaster()
     : CoreNode("")
@@ -1804,7 +1804,7 @@ ShadowCaster::ShadowCaster()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ShadowCaster::initShadow()
 {

@@ -5,19 +5,19 @@
 #include "WeedsItem.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT(nullptr)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 ActWeed::ActWeed(Piki* piki)
     : Action(piki, true)
@@ -25,7 +25,7 @@ ActWeed::ActWeed(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActWeed::init(Creature* creature)
 {
@@ -39,7 +39,7 @@ void ActWeed::init(Creature* creature)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActWeed::exec()
 {
@@ -58,7 +58,7 @@ int ActWeed::exec()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActWeed::cleanup()
 {
@@ -68,7 +68,7 @@ void ActWeed::cleanup()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActWeed::initApproach()
 {
@@ -78,7 +78,7 @@ void ActWeed::initApproach()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActWeed::exeApproach()
 {
@@ -106,7 +106,7 @@ int ActWeed::exeApproach()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActWeed::initAdjust()
 {
@@ -114,7 +114,7 @@ void ActWeed::initAdjust()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActWeed::exeAdjust()
 {
@@ -144,7 +144,7 @@ int ActWeed::exeAdjust()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActWeed::initNuking()
 {
@@ -155,7 +155,7 @@ void ActWeed::initNuking()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActWeed::exeNuking()
 {
@@ -176,7 +176,7 @@ int ActWeed::exeNuking()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActWeed::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {

@@ -4,13 +4,13 @@
 #include "Dolphin/pad.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("ControllerMgr");
@@ -19,7 +19,7 @@ static PADStatus sControllerPad[PAD_MAX_CONTROLLERS];
 static u32 padChannels[PAD_CHANMAX] = { PAD_CHAN0_BIT, PAD_CHAN1_BIT, PAD_CHAN2_BIT, PAD_CHAN3_BIT };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ControllerMgr::update()
 {
@@ -37,7 +37,7 @@ void ControllerMgr::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool ControllerMgr::keyDown(int btn)
 {
@@ -45,7 +45,7 @@ bool ControllerMgr::keyDown(int btn)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ControllerMgr::init()
 {
@@ -54,7 +54,7 @@ void ControllerMgr::init()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ControllerMgr::updateController(Controller* controller)
 {

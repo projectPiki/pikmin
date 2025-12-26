@@ -4,19 +4,19 @@
 #include "nlib/Math.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("nlibfunction");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000074
  */
 NPolynomialFunction::NPolynomialFunction(f32*, int)
@@ -25,7 +25,7 @@ NPolynomialFunction::NPolynomialFunction(f32*, int)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NPolynomialFunction::construct(f32* coefficients, int degree)
 {
@@ -33,7 +33,7 @@ void NPolynomialFunction::construct(f32* coefficients, int degree)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000074
  */
 NPolynomialFunction::NPolynomialFunction(f32*, NPolynomialFunction&)
@@ -42,7 +42,7 @@ NPolynomialFunction::NPolynomialFunction(f32*, NPolynomialFunction&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000050
  */
 void NPolynomialFunction::construct(f32*, NPolynomialFunction&)
@@ -52,7 +52,7 @@ void NPolynomialFunction::construct(f32*, NPolynomialFunction&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00029C
  */
 void NPolynomialFunction::mul2(NPolynomialFunction&, NPolynomialFunction&)
@@ -61,7 +61,7 @@ void NPolynomialFunction::mul2(NPolynomialFunction&, NPolynomialFunction&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 NPolynomialFunction::getValue(f32 x)
 {
@@ -75,7 +75,7 @@ f32 NPolynomialFunction::getValue(f32 x)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000028
  */
 f32 NPolynomialFunction::getCoefficient(int)
@@ -84,7 +84,7 @@ f32 NPolynomialFunction::getCoefficient(int)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NPolynomialFunction::println() immut
 {
@@ -95,7 +95,7 @@ void NPolynomialFunction::println() immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000070
  */
 NLinearFunction::NLinearFunction(f32* values)
@@ -105,7 +105,7 @@ NLinearFunction::NLinearFunction(f32* values)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000028
  */
 void NLinearFunction::construct(f32* values)
@@ -114,7 +114,7 @@ void NLinearFunction::construct(f32* values)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000068
  */
 void NLinearFunction::makeLinearFunction(f32, f32, f32, f32)
@@ -123,7 +123,7 @@ void NLinearFunction::makeLinearFunction(f32, f32, f32, f32)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 NClampLinearFunction::NClampLinearFunction(f32* values)
     : NLinearFunction(values)
@@ -132,7 +132,7 @@ NClampLinearFunction::NClampLinearFunction(f32* values)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NClampLinearFunction::construct(f32* values)
 {
@@ -140,7 +140,7 @@ void NClampLinearFunction::construct(f32* values)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NClampLinearFunction::makeClampLinearFunction(f32 x1, f32 y1, f32 x2, f32 y2)
 {
@@ -159,7 +159,7 @@ void NClampLinearFunction::makeClampLinearFunction(f32 x1, f32 y1, f32 x2, f32 y
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 NClampLinearFunction::getValue(f32 x)
 {
@@ -168,7 +168,7 @@ f32 NClampLinearFunction::getValue(f32 x)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NClampLinearFunction::println() immut
 {
@@ -176,7 +176,7 @@ void NClampLinearFunction::println() immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 NVibrationFunction::NVibrationFunction()
 {
@@ -186,7 +186,7 @@ NVibrationFunction::NVibrationFunction()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NVibrationFunction::makeVibrationFunction(f32 phase, f32 period, f32 amp)
 {
@@ -196,7 +196,7 @@ void NVibrationFunction::makeVibrationFunction(f32 phase, f32 period, f32 amp)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 NVibrationFunction::getValue(f32 x)
 {
@@ -205,7 +205,7 @@ f32 NVibrationFunction::getValue(f32 x)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 NFunction3D::NFunction3D()
@@ -213,7 +213,7 @@ NFunction3D::NFunction3D()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000010
  */
 void NFunction3D::construct(NFunction* funX, NFunction* funY, NFunction* funZ)
@@ -224,7 +224,7 @@ void NFunction3D::construct(NFunction* funX, NFunction* funY, NFunction* funZ)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NFunction3D::outputPosition(f32 val, NVector3f& vec)
 {

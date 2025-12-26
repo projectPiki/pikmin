@@ -12,19 +12,19 @@
 #include "teki.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT(nullptr)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 ActFreeSelect::ActFreeSelect(Piki* piki)
     : Action(piki, true)
@@ -39,7 +39,7 @@ ActFreeSelect::ActFreeSelect(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActFreeSelect::init(Creature* creature)
 {
@@ -54,7 +54,7 @@ void ActFreeSelect::init(Creature* creature)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActFreeSelect::finishRest()
 {
@@ -74,7 +74,7 @@ void ActFreeSelect::finishRest()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActFreeSelect::exec()
 {
@@ -102,14 +102,14 @@ int ActFreeSelect::exec()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActFreeSelect::cleanup()
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActFreeSelect::procTargetMsg(Piki* piki, MsgTarget* msg)
 {
@@ -128,7 +128,7 @@ void ActFreeSelect::procTargetMsg(Piki* piki, MsgTarget* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActFreeSelect::determine()
 {
@@ -204,7 +204,7 @@ void ActFreeSelect::determine()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 ActBoreSelect::ActBoreSelect(Piki* piki)
     : Action(piki, true)
@@ -219,7 +219,7 @@ ActBoreSelect::ActBoreSelect(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActBoreSelect::init(Creature* creature)
 {
@@ -234,7 +234,7 @@ void ActBoreSelect::init(Creature* creature)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActBoreSelect::stop()
 {
@@ -242,7 +242,7 @@ void ActBoreSelect::stop()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActBoreSelect::exec()
 {
@@ -285,14 +285,14 @@ int ActBoreSelect::exec()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActBoreSelect::cleanup()
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActBoreSelect::procTargetMsg(Piki* piki, MsgTarget* msg)
 {
@@ -311,7 +311,7 @@ void ActBoreSelect::procTargetMsg(Piki* piki, MsgTarget* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActBoreSelect::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
@@ -328,7 +328,7 @@ void ActBoreSelect::procAnimMsg(Piki* piki, MsgAnim* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActBoreSelect::determine()
 {
@@ -400,7 +400,7 @@ void ActBoreSelect::determine()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 ActBoreTalk::ActBoreTalk(Piki* piki)
     : Action(piki, true)
@@ -408,7 +408,7 @@ ActBoreTalk::ActBoreTalk(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActBoreTalk::init(Creature* creature)
 {
@@ -424,7 +424,7 @@ void ActBoreTalk::init(Creature* creature)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActBoreTalk::startTalk()
 {
@@ -456,7 +456,7 @@ void ActBoreTalk::startTalk()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActBoreTalk::exec()
 {
@@ -489,14 +489,14 @@ int ActBoreTalk::exec()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActBoreTalk::cleanup()
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActBoreTalk::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
@@ -506,7 +506,7 @@ void ActBoreTalk::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000040
  */
 ActBoreListen::ActBoreListen(Piki* piki)
@@ -516,14 +516,14 @@ ActBoreListen::ActBoreListen(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActBoreListen::init(Creature*)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActBoreListen::exec()
 {
@@ -531,21 +531,21 @@ int ActBoreListen::exec()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActBoreListen::cleanup()
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActBoreListen::procAnimMsg(Piki*, MsgAnim*)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 ActBoreOneshot::ActBoreOneshot(Piki* piki)
     : Action(piki, true)
@@ -553,7 +553,7 @@ ActBoreOneshot::ActBoreOneshot(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActBoreOneshot::finish()
 {
@@ -561,7 +561,7 @@ void ActBoreOneshot::finish()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActBoreOneshot::init(Creature* creature)
 {
@@ -579,7 +579,7 @@ void ActBoreOneshot::init(Creature* creature)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActBoreOneshot::exec()
 {
@@ -591,14 +591,14 @@ int ActBoreOneshot::exec()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActBoreOneshot::cleanup()
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActBoreOneshot::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
@@ -608,7 +608,7 @@ void ActBoreOneshot::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 ActBoreRest::ActBoreRest(Piki* piki)
     : Action(piki, true)
@@ -616,7 +616,7 @@ ActBoreRest::ActBoreRest(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActBoreRest::init(Creature* creature)
 {
@@ -629,7 +629,7 @@ void ActBoreRest::init(Creature* creature)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActBoreRest::sitDown()
 {
@@ -646,7 +646,7 @@ void ActBoreRest::sitDown()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 void ActBoreRest::standUp()
@@ -664,7 +664,7 @@ void ActBoreRest::standUp()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActBoreRest::exec()
 {
@@ -698,14 +698,14 @@ int ActBoreRest::exec()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActBoreRest::cleanup()
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActBoreRest::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {

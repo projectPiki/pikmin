@@ -5,19 +5,19 @@
 #include "system.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT(nullptr);
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Controller::reset(u32 playerNum)
 {
@@ -30,7 +30,7 @@ void Controller::reset(u32 playerNum)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Controller::updateCont(u32 keyStatus)
 {
@@ -63,7 +63,7 @@ void Controller::updateCont(u32 keyStatus)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Controller::update()
 {
@@ -71,7 +71,7 @@ void Controller::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 Controller::getMainStickX()
 {
@@ -79,7 +79,7 @@ f32 Controller::getMainStickX()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 Controller::getMainStickY()
 {
@@ -87,7 +87,7 @@ f32 Controller::getMainStickY()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 Controller::getSubStickX()
 {
@@ -95,7 +95,7 @@ f32 Controller::getSubStickX()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 Controller::getSubStickY()
 {

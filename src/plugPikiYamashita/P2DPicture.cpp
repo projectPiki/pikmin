@@ -6,19 +6,19 @@
 #include "zen/ogSub.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(35)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("P2DPicture")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void P2DPicture::makeResident()
 {
@@ -30,7 +30,7 @@ void P2DPicture::makeResident()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void P2DPicture::loadResource()
 {
@@ -50,7 +50,7 @@ void P2DPicture::loadResource()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 P2DPicture::~P2DPicture()
 {
@@ -62,7 +62,7 @@ P2DPicture::~P2DPicture()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000058
  */
 P2DPicture::P2DPicture()
@@ -73,7 +73,7 @@ P2DPicture::P2DPicture()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 P2DPicture::P2DPicture(P2DPane* parent, RandomAccessStream* input, u16 paneType)
     : P2DPane(parent, input, paneType)
@@ -97,7 +97,7 @@ P2DPicture::P2DPicture(P2DPane* parent, RandomAccessStream* input, u16 paneType)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 P2DPicture::P2DPicture(Texture* texture)
 {
@@ -112,7 +112,7 @@ P2DPicture::P2DPicture(Texture* texture)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool P2DPicture::insert(Texture* texture, u8 idx, f32)
 {
@@ -134,7 +134,7 @@ bool P2DPicture::insert(Texture* texture, u8 idx, f32)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void P2DPicture::initinfo()
 {
@@ -149,7 +149,7 @@ void P2DPicture::initinfo()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void P2DPicture::drawSelf(int x, int y)
 {
@@ -159,7 +159,7 @@ void P2DPicture::drawSelf(int x, int y)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void P2DPicture::drawSelf(int x, int y, immut Matrix4f* mtx)
 {
@@ -170,7 +170,7 @@ void P2DPicture::drawSelf(int x, int y, immut Matrix4f* mtx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void P2DPicture::drawFullSet(int x, int y, int width, int height, P2DBinding binding, P2DMirror mirror, bool tumble, P2DWrapmode wrapS,
                              P2DWrapmode wrapT, immut Matrix4f* mtx)
@@ -304,7 +304,7 @@ void P2DPicture::drawFullSet(int x, int y, int width, int height, P2DBinding bin
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00040C
  */
 void P2DPicture::draw(int, int, int, int, bool, bool, bool)
@@ -313,7 +313,7 @@ void P2DPicture::draw(int, int, int, int, bool, bool, bool)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0002F4
  */
 void P2DPicture::drawOut(const PUTRect&, const PUTRect&)
@@ -322,7 +322,7 @@ void P2DPicture::drawOut(const PUTRect&, const PUTRect&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void P2DPicture::drawTexCoord(int x, int y, int width, int height, f32 uBL, f32 vBL, f32 uBR, f32 vBR, f32 uTL, f32 vTL, f32 uTR, f32 vTR,
                               immut Matrix4f* mtx)
@@ -378,7 +378,7 @@ void P2DPicture::drawTexCoord(int x, int y, int width, int height, f32 uBL, f32 
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void P2DPicture::setTevMode()
 {
@@ -788,7 +788,7 @@ void P2DPicture::setTevMode()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void P2DPicture::swap(f32& val1, f32& val2)
 {
@@ -798,7 +798,7 @@ void P2DPicture::swap(f32& val1, f32& val2)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00017C
  */
 void P2DPicture::drawTest()

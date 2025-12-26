@@ -6,19 +6,19 @@
 #include "sysNew.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(9)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("tekipersonality");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TekiPersonality::TekiPersonality()
 {
@@ -45,7 +45,7 @@ TekiPersonality::TekiPersonality()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TekiPersonality::reset()
 {
@@ -70,7 +70,7 @@ void TekiPersonality::reset()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TekiPersonality::input(TekiPersonality& other)
 {
@@ -84,7 +84,7 @@ void TekiPersonality::input(TekiPersonality& other)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TekiPersonality::read(RandomAccessStream& input, int version)
 {
@@ -153,7 +153,7 @@ void TekiPersonality::read(RandomAccessStream& input, int version)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TekiPersonality::write(RandomAccessStream& output)
 {

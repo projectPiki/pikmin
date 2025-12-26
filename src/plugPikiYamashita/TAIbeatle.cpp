@@ -18,13 +18,13 @@
 #include "zen/particle.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(38)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("TAIbeatle")
@@ -770,7 +770,7 @@ protected:
 };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TAIbeatleSoundTable::TAIbeatleSoundTable()
     : PaniSoundTable(7)
@@ -781,7 +781,7 @@ TAIbeatleSoundTable::TAIbeatleSoundTable()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TAIbeatleParameters::TAIbeatleParameters()
     : TekiParameters(TPI_COUNT, TAIbeatleFloatParms::COUNT)
@@ -860,7 +860,7 @@ TAIbeatleParameters::TAIbeatleParameters()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TAIbeatleStrategy::TAIbeatleStrategy()
     : YaiStrategy(TAIbeatleStateID::COUNT, TAIbeatleStateID::Initializing) // TODO: fix
@@ -1056,7 +1056,7 @@ TAIbeatleStrategy::TAIbeatleStrategy()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIbeatleStrategy::interact(Teki& teki, immut TekiInteractionKey& key)
 {
@@ -1098,7 +1098,7 @@ bool TAIbeatleStrategy::interact(Teki& teki, immut TekiInteractionKey& key)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAIbeatleStrategy::act(Teki& teki)
 {
@@ -1159,7 +1159,7 @@ void TAIbeatleStrategy::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAIbeatleAnimation::makeDefaultAnimations()
 {

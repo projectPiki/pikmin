@@ -32,13 +32,13 @@ static f32 rotateY[1] = { 0.0f };
 static f32 rotateZ[1] = { 0.0f };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(29)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("goalItem")
@@ -48,7 +48,7 @@ static u32 leg_ids[3] = { 'leg1', 'leg2', 'leg3' };
 u8 GoalItem::demoHideFlag;
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 static void printMatrix(immut char* name, immut Matrix4f& mat)
@@ -61,7 +61,7 @@ static void printMatrix(immut char* name, immut Matrix4f& mat)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool GoalItem::insideSafeArea(immut Vector3f& pos)
 {
@@ -73,7 +73,7 @@ bool GoalItem::insideSafeArea(immut Vector3f& pos)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GoalItem::playEffect(int id)
 {
@@ -207,7 +207,7 @@ void GoalItem::playEffect(int id)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GoalItem::setFlowEffect(bool set)
 {
@@ -231,7 +231,7 @@ void GoalItem::setFlowEffect(bool set)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GoalItem::setSpotActive(bool set)
 {
@@ -275,7 +275,7 @@ void GoalItem::setSpotActive(bool set)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool GoalItem::invoke(zen::particleGenerator* efx, zen::particleMdl* mdl)
 {
@@ -286,7 +286,7 @@ bool GoalItem::invoke(zen::particleGenerator* efx, zen::particleMdl* mdl)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GoalItem::setFlightLight(bool a1)
 {
@@ -295,7 +295,7 @@ void GoalItem::setFlightLight(bool a1)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Vector3f GoalItem::getSuckPos()
 {
@@ -305,7 +305,7 @@ Vector3f GoalItem::getSuckPos()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GoalItem::suckMe(Pellet* item)
 {
@@ -332,7 +332,7 @@ void GoalItem::suckMe(Pellet* item)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GoalItem::enterGoal(Piki* piki)
 {
@@ -350,7 +350,7 @@ void GoalItem::enterGoal(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GoalItem::exitPikis(int pikis)
 {
@@ -360,7 +360,7 @@ void GoalItem::exitPikis(int pikis)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Piki* GoalItem::exitPiki()
 {
@@ -410,7 +410,7 @@ Piki* GoalItem::exitPiki()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool GoalItem::needShadow()
 {
@@ -418,7 +418,7 @@ bool GoalItem::needShadow()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 GoalItem::GoalItem(CreatureProp* prop, ItemShapeObject* shape1, ItemShapeObject* shape2, ItemShapeObject* shape3, SimpleAI* ai)
     : Suckable(16, prop)
@@ -437,7 +437,7 @@ GoalItem::GoalItem(CreatureProp* prop, ItemShapeObject* shape1, ItemShapeObject*
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool GoalItem::ignoreAtari(Creature* obj)
 {
@@ -448,7 +448,7 @@ bool GoalItem::ignoreAtari(Creature* obj)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GoalItem::setColorType(int type)
 {
@@ -461,7 +461,7 @@ void GoalItem::setColorType(int type)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GoalItem::startTakeoff()
 {
@@ -476,7 +476,7 @@ void GoalItem::startTakeoff()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GoalItem::startLand()
 {
@@ -490,7 +490,7 @@ void GoalItem::startLand()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GoalItem::startConeShrink()
 {
@@ -500,7 +500,7 @@ void GoalItem::startConeShrink()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000BC
  */
 void GoalItem::updateConeShrink()
@@ -525,7 +525,7 @@ void GoalItem::updateConeShrink()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GoalItem::startConeEmit()
 {
@@ -534,7 +534,7 @@ void GoalItem::startConeEmit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000D8
  */
 void GoalItem::updateConeEmit()
@@ -560,7 +560,7 @@ void GoalItem::updateConeEmit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GoalItem::startAI(int)
 {
@@ -633,7 +633,7 @@ void GoalItem::startAI(int)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GoalItem::startBoot()
 {
@@ -644,7 +644,7 @@ void GoalItem::startBoot()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GoalItem::emitPiki()
 {
@@ -652,7 +652,7 @@ void GoalItem::emitPiki()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 GoalItem::getSize()
 {
@@ -660,7 +660,7 @@ f32 GoalItem::getSize()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 GoalItem::getiMass()
 {
@@ -668,7 +668,7 @@ f32 GoalItem::getiMass()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GoalItem::update()
 {
@@ -714,7 +714,7 @@ void GoalItem::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GoalItem::refresh(Graphics& gfx)
 {

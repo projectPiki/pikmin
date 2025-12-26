@@ -2,7 +2,7 @@
 #include <Stream.h>
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000070
  */
 bool String::isSame(immut char* str) immut
@@ -25,7 +25,7 @@ bool String::isSame(immut char* str) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int String::getLength() immut
 {
@@ -49,7 +49,7 @@ float String::toFloat() immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00012C
  */
 int String::toInt() immut
@@ -118,7 +118,7 @@ int String::toInt() immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000024
  */
 int String::getLength(immut char* str)
@@ -129,7 +129,7 @@ int String::getLength(immut char* str)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00006C
  */
 bool String::isSame(immut char* a, immut char* b)
@@ -140,7 +140,7 @@ bool String::isSame(immut char* a, immut char* b)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00005C
  */
 char* String::dup(immut char* str)
@@ -152,7 +152,7 @@ char* String::dup(immut char* str)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000058
  */
 bool String::contains(immut char* str, immut char* substr)
@@ -181,7 +181,7 @@ bool String::contains(immut char* str, immut char* substr)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00001C
  */
 char* String::copy(char* out, immut char* str)
@@ -192,7 +192,7 @@ char* String::copy(char* out, immut char* str)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000058
  */
 bool String::copyUntil(char* out, immut char* str, char delim, immut char** end)
@@ -209,7 +209,7 @@ bool String::copyUntil(char* out, immut char* str, char delim, immut char** end)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000030
  */
 void String::concat(char* out, immut char* str)
@@ -221,7 +221,7 @@ void String::concat(char* out, immut char* str)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000030
  */
 u32 String::calcHash(immut char* str)
@@ -232,7 +232,7 @@ u32 String::calcHash(immut char* str)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000040
  */
 u32 String::calcHash() immut
@@ -253,7 +253,7 @@ u32 String::calcHash() immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000030
  */
 int String::toInt(immut char* str)
@@ -264,7 +264,7 @@ int String::toInt(immut char* str)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000A0
  */
 void StringArray::read(Stream& stream)
@@ -277,7 +277,7 @@ void StringArray::read(Stream& stream)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 void StringArray::write(Stream& stream)

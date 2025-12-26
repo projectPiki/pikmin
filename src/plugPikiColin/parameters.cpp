@@ -9,19 +9,19 @@
 #include "Vector.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT(nullptr);
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 BaseParm::BaseParm(Parameters* parm, ayuID id)
 {
@@ -49,7 +49,7 @@ BaseParm::BaseParm(Parameters* parm, ayuID id)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Parameters::write(RandomAccessStream& output)
 {
@@ -65,7 +65,7 @@ void Parameters::write(RandomAccessStream& output)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000064
  */
 int Parameters::sizeInFile()
@@ -74,7 +74,7 @@ int Parameters::sizeInFile()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Parameters::read(RandomAccessStream& input)
 {
@@ -105,7 +105,7 @@ void Parameters::read(RandomAccessStream& input)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000094
  */
 void Parm<Colour>::read(RandomAccessStream&)
@@ -114,7 +114,7 @@ void Parm<Colour>::read(RandomAccessStream&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000024
  */
 void Parm<Colour>::write(RandomAccessStream&)
@@ -123,7 +123,7 @@ void Parm<Colour>::write(RandomAccessStream&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00007C
  */
 void Parm<Vector3f>::read(RandomAccessStream&)
@@ -132,7 +132,7 @@ void Parm<Vector3f>::read(RandomAccessStream&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00007C
  */
 void Parm<Vector3f>::write(RandomAccessStream&)
@@ -141,7 +141,7 @@ void Parm<Vector3f>::write(RandomAccessStream&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Parm<f32>::read(RandomAccessStream& input)
 {
@@ -149,7 +149,7 @@ void Parm<f32>::read(RandomAccessStream& input)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Parm<f32>::write(RandomAccessStream& output)
 {
@@ -157,7 +157,7 @@ void Parm<f32>::write(RandomAccessStream& output)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Parm<int>::read(RandomAccessStream& input)
 {
@@ -165,7 +165,7 @@ void Parm<int>::read(RandomAccessStream& input)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Parm<int>::write(RandomAccessStream& output)
 {
@@ -173,7 +173,7 @@ void Parm<int>::write(RandomAccessStream& output)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Parm<String>::read(RandomAccessStream& input)
 {
@@ -181,7 +181,7 @@ void Parm<String>::read(RandomAccessStream& input)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Parm<String>::write(RandomAccessStream& output)
 {

@@ -9,13 +9,13 @@
 #include "sysNew.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(13)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("aiAction")
@@ -25,7 +25,7 @@ immut char* Reaction::info[9] = {
 };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Action::procMsg(Msg* msg)
 {
@@ -44,7 +44,7 @@ void Action::procMsg(Msg* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Action::Child::initialise(Creature* creature)
 {
@@ -66,7 +66,7 @@ void Action::Child::initialise(Creature* creature)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Action::Action(Piki* actor, bool p2)
 {
@@ -78,7 +78,7 @@ Action::Action(Piki* actor, bool p2)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Action::~Action()
 {
@@ -89,7 +89,7 @@ Action::~Action()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Action::init(Creature*)
 {
@@ -97,7 +97,7 @@ void Action::init(Creature*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int Action::exec()
 {
@@ -105,7 +105,7 @@ int Action::exec()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void AndAction::init(Creature* creature)
 {
@@ -115,7 +115,7 @@ void AndAction::init(Creature* creature)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int AndAction::exec()
 {
@@ -142,7 +142,7 @@ int AndAction::exec()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void OrAction::init(Creature* creature)
 {
@@ -152,7 +152,7 @@ void OrAction::init(Creature* creature)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int OrAction::exec()
 {
@@ -177,7 +177,7 @@ int OrAction::exec()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Action::setChildren(int count, ...)
 {
@@ -197,7 +197,7 @@ void Action::setChildren(int count, ...)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Action::cleanup()
 {
@@ -208,7 +208,7 @@ void Action::cleanup()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TopAction::MotionListener::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
@@ -221,7 +221,7 @@ void TopAction::MotionListener::animationKeyUpdated(immut PaniAnimKeyEvent& even
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TopAction::TopAction(Piki* piki)
     : Action(piki, false)
@@ -279,14 +279,14 @@ TopAction::TopAction(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TopAction::~TopAction()
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TopAction::init(Creature* creature)
 {
@@ -300,7 +300,7 @@ void TopAction::init(Creature* creature)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int TopAction::exec()
 {
@@ -418,7 +418,7 @@ int TopAction::exec()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TopAction::abandon(zen::particleGenerator* particle)
 {
@@ -445,7 +445,7 @@ void TopAction::abandon(zen::particleGenerator* particle)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TopAction::resumable()
 {
@@ -456,7 +456,7 @@ bool TopAction::resumable()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TopAction::resume()
 {
@@ -469,7 +469,7 @@ void TopAction::resume()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TopAction::restart()
 {
@@ -482,7 +482,7 @@ void TopAction::restart()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000024
  */
 void TopAction::knowledgeCheck()
@@ -491,7 +491,7 @@ void TopAction::knowledgeCheck()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TopAction::ObjBore::ObjBore()
 {
@@ -507,7 +507,7 @@ TopAction::ObjBore::ObjBore()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000044
  */
 int TopAction::ObjBore::getIndex(int id)
@@ -522,7 +522,7 @@ int TopAction::ObjBore::getIndex(int id)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000134
  */
 void TopAction::ObjBore::addBoredom(int id, f32 inc)
@@ -556,7 +556,7 @@ void TopAction::ObjBore::addBoredom(int id, f32 inc)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000124
  */
 void TopAction::ObjBore::update()
@@ -573,7 +573,7 @@ void TopAction::ObjBore::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TopAction::Boredom::Boredom()
 {
@@ -585,7 +585,7 @@ TopAction::Boredom::Boredom()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000044
  */
 int TopAction::Boredom::getIndex(int id)
@@ -600,7 +600,7 @@ int TopAction::Boredom::getIndex(int id)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000C4
  */
 f32 TopAction::Boredom::getBoredom(int boreID, int objID)
@@ -620,7 +620,7 @@ f32 TopAction::Boredom::getBoredom(int boreID, int objID)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000C8
  */
 void TopAction::Boredom::addBoredom(int boreID, int objID, f32 p2)
@@ -644,7 +644,7 @@ void TopAction::Boredom::addBoredom(int boreID, int objID, f32 p2)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000134
  */
 void TopAction::Boredom::update()
@@ -655,7 +655,7 @@ void TopAction::Boredom::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000180
  */
 void TopAction::Boredom::draw2d(Graphics& gfx, int id)

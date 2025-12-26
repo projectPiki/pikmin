@@ -6,19 +6,19 @@
 #include "zen/DrawCommon.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("TODO: Replace")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::ogScrStartMgr::ogScrStartMgr()
 {
@@ -31,7 +31,7 @@ zen::ogScrStartMgr::ogScrStartMgr()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrStartMgr::start()
 {
@@ -41,7 +41,7 @@ void zen::ogScrStartMgr::start()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrStartMgr::stop()
 {
@@ -53,7 +53,7 @@ void zen::ogScrStartMgr::stop()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::ogScrStartMgr::StartStatus zen::ogScrStartMgr::update(Controller* controller)
 {
@@ -114,7 +114,7 @@ zen::ogScrStartMgr::StartStatus zen::ogScrStartMgr::update(Controller* controlle
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrStartMgr::draw(Graphics& gfx)
 {

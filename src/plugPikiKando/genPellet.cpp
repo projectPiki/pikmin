@@ -7,19 +7,19 @@
 #include "sysNew.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("genPellet")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000070
  */
 GenObjectPellet::GenObjectPellet()
@@ -29,7 +29,7 @@ GenObjectPellet::GenObjectPellet()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 static GenObject* makeObjectPellet()
 {
@@ -37,7 +37,7 @@ static GenObject* makeObjectPellet()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GenObjectPellet::initialise()
 {
@@ -45,7 +45,7 @@ void GenObjectPellet::initialise()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GenObjectPellet::doRead(RandomAccessStream& stream)
 {
@@ -57,7 +57,7 @@ void GenObjectPellet::doRead(RandomAccessStream& stream)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GenObjectPellet::doWrite(RandomAccessStream& stream)
 {
@@ -68,7 +68,7 @@ void GenObjectPellet::doWrite(RandomAccessStream& stream)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GenObjectPellet::updateUseList(Generator*, int)
 {
@@ -79,7 +79,7 @@ void GenObjectPellet::updateUseList(Generator*, int)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Creature* GenObjectPellet::birth(BirthInfo& info)
 {

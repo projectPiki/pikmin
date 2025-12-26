@@ -1,7 +1,7 @@
 #include "PUT/Geometry.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PUTRect::set(int x0, int y0, int x1, int y1)
 {
@@ -13,7 +13,7 @@ void PUTRect::set(int x0, int y0, int x1, int y1)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PUTRect::copy(const PUTRect& other)
 {
@@ -25,7 +25,7 @@ void PUTRect::copy(const PUTRect& other)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000044
  */
 void PUTRect::add(const PUTPoint& point)
@@ -38,7 +38,7 @@ void PUTRect::add(const PUTPoint& point)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PUTRect::add(int x, int y)
 {
@@ -50,7 +50,7 @@ void PUTRect::add(int x, int y)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool PUTRect::intersect(const PUTRect& other)
 {
@@ -76,7 +76,7 @@ bool PUTRect::intersect(const PUTRect& other)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000044
  */
 void PUTRect::move(const PUTPoint& point)
@@ -92,7 +92,7 @@ void PUTRect::move(const PUTPoint& point)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PUTRect::move(int newMinX, int newMinY)
 {
@@ -107,7 +107,7 @@ void PUTRect::move(int newMinX, int newMinY)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PUTRect::resize(int width, int height)
 {
@@ -116,7 +116,7 @@ void PUTRect::resize(int width, int height)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000034
  */
 void PUTRect::reform(int, int, int, int)
@@ -125,7 +125,7 @@ void PUTRect::reform(int, int, int, int)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PUTRect::normalize()
 {
@@ -143,7 +143,7 @@ void PUTRect::normalize()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool PUTRect::isEmpty() const
 {

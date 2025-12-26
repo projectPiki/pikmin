@@ -2,26 +2,26 @@
 #include "PikiAI.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT(nullptr)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActWatch::AnimListener::animationKeyUpdated(immut PaniAnimKeyEvent&)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 ActWatch::ActWatch(Piki* piki)
     : Action(piki, true)
@@ -31,14 +31,14 @@ ActWatch::ActWatch(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActWatch::Initialiser::initialise(Action*)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActWatch::init(Creature* target)
 {
@@ -53,7 +53,7 @@ void ActWatch::init(Creature* target)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActWatch::cleanup()
 {
@@ -62,7 +62,7 @@ void ActWatch::cleanup()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActWatch::getInfo(char* buffer)
 {
@@ -70,7 +70,7 @@ void ActWatch::getInfo(char* buffer)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActWatch::exec()
 {

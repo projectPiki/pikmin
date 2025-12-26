@@ -7,13 +7,13 @@
 #include "sysNew.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(9)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("genMapParts")
@@ -31,7 +31,7 @@ int numParts             = 4;
 static char* kindNames[] = { "slider", "entity", "dynamic" };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 static GenObject* makeObjectMapParts()
 {
@@ -39,7 +39,7 @@ static GenObject* makeObjectMapParts()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GenObjectMapParts::initialise(MapMgr* mgr)
 {
@@ -48,7 +48,7 @@ void GenObjectMapParts::initialise(MapMgr* mgr)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GenObjectMapParts::doRead(RandomAccessStream& input)
 {
@@ -67,7 +67,7 @@ void GenObjectMapParts::doRead(RandomAccessStream& input)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GenObjectMapParts::render(Graphics& gfx, Generator* gen)
 {
@@ -137,7 +137,7 @@ void GenObjectMapParts::render(Graphics& gfx, Generator* gen)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Creature* GenObjectMapParts::birth(BirthInfo& info)
 {

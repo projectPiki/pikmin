@@ -24,7 +24,7 @@ FishGenerator::FishGenerator()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void FishGenerator::startAI(int /*unused*/)
 {
@@ -42,7 +42,7 @@ void FishGenerator::startAI(int /*unused*/)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void FishGenerator::update()
 {
@@ -59,7 +59,7 @@ void FishGenerator::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void FishGenerator::moveFish(Fish* fish)
 {
@@ -134,7 +134,7 @@ void FishGenerator::moveFish(Fish* fish)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void FishGenerator::refresh(Graphics& gfx)
 {

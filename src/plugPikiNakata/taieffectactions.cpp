@@ -5,19 +5,19 @@
 #include "teki.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("taieffectactions")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiEffectAction::start(Teki& teki)
 {
@@ -25,7 +25,7 @@ void TaiEffectAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiStartGenParticleGeneratorAction::start(Teki& teki)
 {
@@ -33,7 +33,7 @@ void TaiStartGenParticleGeneratorAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiStopGenParticleGeneratorAction::start(Teki& teki)
 {
@@ -41,7 +41,7 @@ void TaiStopGenParticleGeneratorAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TaiJointEffectAction::TaiJointEffectAction(f32 sinkThreshold, int footNum, int jointID0, int jointID1, int jointID2, int jointID3)
     : TAIAeffCloudOfDust(TAI_NO_TRANSIT, EffectMgr::EFF_NULL, sinkThreshold, footNum, jointID0, jointID1, jointID2, jointID3)
@@ -50,7 +50,7 @@ TaiJointEffectAction::TaiJointEffectAction(f32 sinkThreshold, int footNum, int j
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiJointEffectAction::setType(Vector3f&, int, int)
 {

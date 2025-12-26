@@ -3,13 +3,13 @@
 #include "zen/DrawCM.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("drawCMbest")
@@ -127,7 +127,7 @@ protected:
 } // namespace zen
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawCMbest::init(P2DScreen* screen)
 {
@@ -161,7 +161,7 @@ void zen::DrawCMbest::init(P2DScreen* screen)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawCMbest::sleep()
 {
@@ -169,7 +169,7 @@ void zen::DrawCMbest::sleep()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawCMbest::update()
 {
@@ -180,7 +180,7 @@ void zen::DrawCMbest::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawCMbest::appear()
 {
@@ -188,7 +188,7 @@ void zen::DrawCMbest::appear()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawCMbest::wait()
 {
@@ -196,7 +196,7 @@ void zen::DrawCMbest::wait()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool zen::DrawCMbest::modeSleep()
 {
@@ -204,7 +204,7 @@ bool zen::DrawCMbest::modeSleep()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool zen::DrawCMbest::modeWait()
 {
@@ -212,7 +212,7 @@ bool zen::DrawCMbest::modeWait()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool zen::DrawCMbest::modeAppear()
 {
@@ -224,7 +224,7 @@ bool zen::DrawCMbest::modeAppear()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawCMbest::setMode(zen::DrawCMbest::modeFlag mode)
 {

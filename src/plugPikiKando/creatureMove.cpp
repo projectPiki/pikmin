@@ -15,19 +15,19 @@
 #include "sysMath.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(28)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("CreatureMove")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Creature::moveRotation(f32 deltaTime)
 {
@@ -79,7 +79,7 @@ void Creature::moveRotation(f32 deltaTime)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Creature::moveAttach()
 {
@@ -106,7 +106,7 @@ void Creature::moveAttach()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Creature::moveNew(f32 deltaTime)
 {
@@ -315,7 +315,7 @@ void Creature::moveNew(f32 deltaTime)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0002E8
  */
 CollTriInfo* Creature::checkForward(immut Vector3f&, f32, f32&)
@@ -324,7 +324,7 @@ CollTriInfo* Creature::checkForward(immut Vector3f&, f32, f32&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000130
  */
 CollTriInfo* Creature::getNextTri(CollTriInfo*, immut Vector3f&, int&)
@@ -333,7 +333,7 @@ CollTriInfo* Creature::getNextTri(CollTriInfo*, immut Vector3f&, int&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Plane* Creature::getNearestPlane(CollTriInfo* tri)
 {
@@ -356,7 +356,7 @@ Plane* Creature::getNearestPlane(CollTriInfo* tri)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000010
  */
 void Creature::renderCollTriInfo(Graphics&, CollTriInfo*, immut Colour&)
@@ -365,7 +365,7 @@ void Creature::renderCollTriInfo(Graphics&, CollTriInfo*, immut Colour&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void traceMove2(Creature* target, MoveTrace& trace, f32 p3)
 {

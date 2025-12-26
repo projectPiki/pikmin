@@ -15,19 +15,19 @@
 #include "zen/Math.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("PickItem") // Nice copy-paste...
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActPutBomb::procCollideMsg(Piki* piki, MsgCollide* msg)
 {
@@ -42,7 +42,7 @@ void ActPutBomb::procCollideMsg(Piki* piki, MsgCollide* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 ActPutBomb::ActPutBomb(Piki* piki)
     : Action(piki, true)
@@ -51,7 +51,7 @@ ActPutBomb::ActPutBomb(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActPutBomb::findTeki()
 {
@@ -112,7 +112,7 @@ void ActPutBomb::findTeki()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActPutBomb::init(Creature* target)
 {
@@ -159,7 +159,7 @@ void ActPutBomb::init(Creature* target)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActPutBomb::initSet()
 {
@@ -167,7 +167,7 @@ void ActPutBomb::initSet()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActPutBomb::exeSet()
 {
@@ -197,7 +197,7 @@ int ActPutBomb::exeSet()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActPutBomb::warnPikis()
 {
@@ -216,7 +216,7 @@ void ActPutBomb::warnPikis()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActPutBomb::initAim()
 {
@@ -228,7 +228,7 @@ void ActPutBomb::initAim()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActPutBomb::exeAim()
 {
@@ -283,7 +283,7 @@ int ActPutBomb::exeAim()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActPutBomb::initWait()
 {
@@ -291,7 +291,7 @@ void ActPutBomb::initWait()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000080
  */
 int ActPutBomb::exeWait()
@@ -305,7 +305,7 @@ int ActPutBomb::exeWait()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActPutBomb::initThrow()
 {
@@ -315,7 +315,7 @@ void ActPutBomb::initThrow()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActPutBomb::initPut()
 {
@@ -335,7 +335,7 @@ void ActPutBomb::initPut()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActPutBomb::exeThrow()
 {
@@ -381,7 +381,7 @@ int ActPutBomb::exeThrow()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000038
  */
 int ActPutBomb::exePut()
@@ -395,7 +395,7 @@ int ActPutBomb::exePut()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActPutBomb::exec()
 {
@@ -439,7 +439,7 @@ int ActPutBomb::exec()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActPutBomb::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
@@ -454,14 +454,14 @@ void ActPutBomb::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActPutBomb::cleanup()
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 ActPutItem::ActPutItem(Piki* piki)
     : Action(piki, true)
@@ -470,7 +470,7 @@ ActPutItem::ActPutItem(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActPutItem::findPos()
 {
@@ -520,7 +520,7 @@ void ActPutItem::findPos()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool ActPutItem::findAdjacent(Creature* target)
 {
@@ -554,7 +554,7 @@ bool ActPutItem::findAdjacent(Creature* target)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActPutItem::init(Creature* target)
 {
@@ -563,7 +563,7 @@ void ActPutItem::init(Creature* target)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActPutItem::exec()
 {
@@ -584,7 +584,7 @@ int ActPutItem::exec()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActPutItem::cleanup()
 {

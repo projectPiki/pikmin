@@ -72,7 +72,7 @@ static char kanji_convert_table[] ATTRIBUTE_ALIGN(32) = {
 #endif
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000098
  */
 void searchKanjiCode(u16 id)
@@ -81,19 +81,19 @@ void searchKanjiCode(u16 id)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("OgMessageSection")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 s16 zen::ogScrMessageMgr::SearchTopPage(int a)
 {
@@ -106,7 +106,7 @@ s16 zen::ogScrMessageMgr::SearchTopPage(int a)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00003C
  */
 void zen::ogScrMessageMgr::setMessagePage(int page)
@@ -118,7 +118,7 @@ void zen::ogScrMessageMgr::setMessagePage(int page)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrMessageMgr::resetPage()
 {
@@ -156,7 +156,7 @@ void zen::ogScrMessageMgr::resetPage()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrMessageMgr::start(int page)
 {
@@ -171,7 +171,7 @@ void zen::ogScrMessageMgr::start(int page)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrMessageMgr::setPage(int page)
 {
@@ -185,7 +185,7 @@ void zen::ogScrMessageMgr::setPage(int page)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrMessageMgr::nextPage()
 {
@@ -198,7 +198,7 @@ void zen::ogScrMessageMgr::nextPage()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrMessageMgr::backPage()
 {
@@ -211,7 +211,7 @@ void zen::ogScrMessageMgr::backPage()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 s16 zen::ogScrMessageMgr::makePageInfo(immut char*** data)
 {
@@ -246,7 +246,7 @@ s16 zen::ogScrMessageMgr::makePageInfo(immut char*** data)
 #if defined(VERSION_PIKIDEMO) // these two functions are straight up not in demo
 #else
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrMessageMgr::cnvSingleMulti(char* str)
 {
@@ -314,7 +314,7 @@ void zen::ogScrMessageMgr::cnvSingleMulti(char* str)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrMessageMgr::cnvButtonIcon(char* str)
 {
@@ -374,7 +374,7 @@ void zen::ogScrMessageMgr::cnvButtonIcon(char* str)
 #endif
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrMessageMgr::setPageInfoSub()
 {
@@ -435,7 +435,7 @@ void zen::ogScrMessageMgr::setPageInfoSub()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000058
  */
 void zen::ogScrMessageMgr::ReadAllScreen()
@@ -450,7 +450,7 @@ void zen::ogScrMessageMgr::ReadAllScreen()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrMessageMgr::MakeAndSetPageInfo(immut char*** data)
 {
@@ -459,7 +459,7 @@ void zen::ogScrMessageMgr::MakeAndSetPageInfo(immut char*** data)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::ogScrMessageMgr::ogScrMessageMgr(immut char* path)
 {
@@ -509,7 +509,7 @@ zen::ogScrMessageMgr::ogScrMessageMgr(immut char* path)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000048
  */
 void zen::ogScrMessageMgr::setScreenAlpha(u8 alpha)
@@ -519,7 +519,7 @@ void zen::ogScrMessageMgr::setScreenAlpha(u8 alpha)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrMessageMgr::dispAll()
 {
@@ -556,7 +556,7 @@ void zen::ogScrMessageMgr::dispAll()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrMessageMgr::fadeOut()
 {
@@ -565,7 +565,7 @@ void zen::ogScrMessageMgr::fadeOut()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::ogScrMessageMgr::MessageStatus zen::ogScrMessageMgr::update(Controller* input)
 {
@@ -726,7 +726,7 @@ zen::ogScrMessageMgr::MessageStatus zen::ogScrMessageMgr::update(Controller* inp
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrMessageMgr::draw(Graphics& gfx)
 {

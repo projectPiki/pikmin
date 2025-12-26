@@ -3,19 +3,19 @@
 #include "zen/particle.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("particleMdlManager");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::particleMdlManager::init(u32 particleNum, u32 childNum)
 {

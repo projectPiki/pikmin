@@ -6,19 +6,19 @@
 #include "PSU/Tree.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(30) // Why is this one suddenly capitalized?
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("P2DPane");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void P2DPane::setCallBack(P2DPaneCallBack* callback)
 {
@@ -26,7 +26,7 @@ void P2DPane::setCallBack(P2DPaneCallBack* callback)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void P2DPane::printTagName(bool doPrint)
 {
@@ -41,7 +41,7 @@ void P2DPane::printTagName(bool doPrint)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void P2DPane::drawSelf(int, int, immut Matrix4f* drawMtx)
 {
@@ -53,7 +53,7 @@ void P2DPane::drawSelf(int, int, immut Matrix4f* drawMtx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 P2DPaneCallBackBase::P2DPaneCallBackBase(P2DPane* pane, P2DPaneType type)
 {
@@ -61,7 +61,7 @@ P2DPaneCallBackBase::P2DPaneCallBackBase(P2DPane* pane, P2DPaneType type)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void P2DPaneCallBackBase::checkPaneType(P2DPane* pane, P2DPaneType type)
 {
@@ -72,7 +72,7 @@ void P2DPaneCallBackBase::checkPaneType(P2DPane* pane, P2DPaneType type)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000048
  */
 void P2DPane::init()
@@ -88,7 +88,7 @@ void P2DPane::init()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void P2DPane::update()
 {
@@ -102,7 +102,7 @@ void P2DPane::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 P2DPane::P2DPane()
     : mPaneTree(this)
@@ -116,7 +116,7 @@ P2DPane::P2DPane()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 P2DPane::P2DPane(P2DPane* parent, u16 paneType, bool, u32 tag, const PUTRect& p5)
     : mPaneTree(this)
@@ -133,7 +133,7 @@ P2DPane::P2DPane(P2DPane* parent, u16 paneType, bool, u32 tag, const PUTRect& p5
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000158
  */
 P2DPane::P2DPane(u32 tag, const PUTRect& rect)
@@ -147,7 +147,7 @@ P2DPane::P2DPane(u32 tag, const PUTRect& rect)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000140
  */
 P2DPane::P2DPane(u16 paneType, u32 tag, const PUTRect& rect)
@@ -161,7 +161,7 @@ P2DPane::P2DPane(u16 paneType, u32 tag, const PUTRect& rect)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 P2DPane::P2DPane(P2DPane* parent, RandomAccessStream* input, u16 paneType)
     : mPaneTree(this)
@@ -195,7 +195,7 @@ P2DPane::P2DPane(P2DPane* parent, RandomAccessStream* input, u16 paneType)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 P2DPane::~P2DPane()
 {
@@ -207,7 +207,7 @@ P2DPane::~P2DPane()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void P2DPane::draw(int xOffs, int yOffs, const P2DGrafContext* grafContext, bool applyScissor)
 {
@@ -266,7 +266,7 @@ void P2DPane::draw(int xOffs, int yOffs, const P2DGrafContext* grafContext, bool
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void P2DPane::clip(const PUTRect& rect)
 {
@@ -276,7 +276,7 @@ void P2DPane::clip(const PUTRect& rect)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 P2DPane* P2DPane::search(u32 tag, bool doPanicOnNull)
 {
@@ -302,7 +302,7 @@ P2DPane* P2DPane::search(u32 tag, bool doPanicOnNull)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void P2DPane::makeMatrix(int x, int y)
 {
@@ -326,7 +326,7 @@ void P2DPane::makeMatrix(int x, int y)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000114
  */
 void P2DPane::setCullBack(bool isCullBack)
@@ -341,7 +341,7 @@ void P2DPane::setCullBack(bool isCullBack)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void P2DPane::loadChildResource()
 {

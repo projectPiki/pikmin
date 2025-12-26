@@ -4,19 +4,19 @@
 #include "Stream.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("paraparameters");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 ParaParametersI::ParaParametersI(int count, ParaParameterInfoI* info)
@@ -25,7 +25,7 @@ ParaParametersI::ParaParametersI(int count, ParaParameterInfoI* info)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ParaParametersI::read(Stream& input)
 {
@@ -35,7 +35,7 @@ void ParaParametersI::read(Stream& input)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ParaParametersI::write(Stream& output)
 {
@@ -45,7 +45,7 @@ void ParaParametersI::write(Stream& output)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ParaParametersI::print()
 {
@@ -55,7 +55,7 @@ void ParaParametersI::print()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 ParaParametersF::ParaParametersF(int count, ParaParameterInfoF* info)
@@ -64,7 +64,7 @@ ParaParametersF::ParaParametersF(int count, ParaParameterInfoF* info)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ParaParametersF::read(Stream& input)
 {
@@ -74,7 +74,7 @@ void ParaParametersF::read(Stream& input)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ParaParametersF::write(Stream& output)
 {
@@ -84,7 +84,7 @@ void ParaParametersF::write(Stream& output)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ParaParametersF::print()
 {
@@ -94,7 +94,7 @@ void ParaParametersF::print()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 ParaMultiParameters::ParaMultiParameters(int iCount, ParaParameterInfoI* iInfo, int fCount, ParaParameterInfoF* fInfo)
 {
@@ -103,7 +103,7 @@ ParaMultiParameters::ParaMultiParameters(int iCount, ParaParameterInfoI* iInfo, 
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ParaMultiParameters::input(ParaMultiParameters& other)
 {
@@ -112,7 +112,7 @@ void ParaMultiParameters::input(ParaMultiParameters& other)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ParaMultiParameters::read(Stream& input)
 {
@@ -121,7 +121,7 @@ void ParaMultiParameters::read(Stream& input)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ParaMultiParameters::write(Stream& output)
 {
@@ -130,7 +130,7 @@ void ParaMultiParameters::write(Stream& output)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ParaMultiParameters::print()
 {

@@ -5,19 +5,19 @@
 #include "TAI/Areaction.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("TAIAreaction")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAhitCheckFlyingPiki::actByEvent(immut TekiEvent& event)
 {
@@ -30,7 +30,7 @@ bool TAIAhitCheckFlyingPiki::actByEvent(immut TekiEvent& event)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAdeadCheck::act(Teki& teki)
 {
@@ -38,7 +38,7 @@ bool TAIAdeadCheck::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAIAdie::start(Teki& teki)
 {
@@ -46,7 +46,7 @@ void TAIAdie::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAIAdying::start(Teki& teki)
 {
@@ -74,7 +74,7 @@ void TAIAdying::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAdying::act(Teki& teki)
 {
@@ -99,7 +99,7 @@ bool TAIAdying::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAIAdyingKabekui::start(Teki& teki)
 {
@@ -108,7 +108,7 @@ void TAIAdyingKabekui::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAdyingKabekui::act(Teki& teki)
 {
@@ -122,7 +122,7 @@ bool TAIAdyingKabekui::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAIAdyingCrushKabekui::start(Teki& teki)
 {
@@ -130,7 +130,7 @@ void TAIAdyingCrushKabekui::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAdamage::act(Teki& teki)
 {
@@ -154,7 +154,7 @@ bool TAIAdamage::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAinWater::act(Teki& teki)
 {
@@ -166,7 +166,7 @@ bool TAIAinWater::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAinWater::actByEvent(immut TekiEvent& event)
 {
@@ -183,7 +183,7 @@ bool TAIAinWater::actByEvent(immut TekiEvent& event)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAinWaterDamage::act(Teki& teki)
 {
@@ -218,7 +218,7 @@ bool TAIAinWaterDamage::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAinWaterDamage::actByEvent(immut TekiEvent& event)
 {
@@ -232,7 +232,7 @@ bool TAIAinWaterDamage::actByEvent(immut TekiEvent& event)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAIAinWaterDamage::createEffect(Teki& teki)
 {

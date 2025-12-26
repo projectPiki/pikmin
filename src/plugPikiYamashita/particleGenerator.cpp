@@ -4,13 +4,13 @@
 #include "zen/particle.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(29)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("particleGenerator")
@@ -72,7 +72,7 @@ static inline void readDDF_Colour(Colour* outColour, u8*& data, u32 size)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::particleGenerator::init(u8* data, Texture* tex1, Texture* tex2, immut Vector3f& pos, zen::particleMdlManager* mdlMgr,
                                   zen::CallBack1<zen::particleGenerator*>* cb1,
@@ -139,7 +139,7 @@ void zen::particleGenerator::init(u8* data, Texture* tex1, Texture* tex2, immut 
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool zen::particleGenerator::update(f32 timeStep)
 {
@@ -180,7 +180,7 @@ bool zen::particleGenerator::update(f32 timeStep)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::particleGenerator::draw(Graphics& gfx)
 {
@@ -206,7 +206,7 @@ void zen::particleGenerator::draw(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::particleGenerator::pmSetDDF(u8* data)
 {
@@ -360,7 +360,7 @@ void zen::particleGenerator::pmSetDDF(u8* data)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000074
  */
 f32 zen::particleGenerator::pmIntpManual(f32* frameThresholds, f32* values)
@@ -373,7 +373,7 @@ f32 zen::particleGenerator::pmIntpManual(f32* frameThresholds, f32* values)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000A0
  */
 f32 zen::particleGenerator::pmIntpLinear(f32* frameThresholds, f32* values)
@@ -388,7 +388,7 @@ f32 zen::particleGenerator::pmIntpLinear(f32* frameThresholds, f32* values)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::particleGenerator::SetPtclsLife()
 {
@@ -427,7 +427,7 @@ void zen::particleGenerator::SetPtclsLife()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::particleGenerator::PtclsGen(zen::particleMdl* ptcl)
 {
@@ -626,7 +626,7 @@ void zen::particleGenerator::PtclsGen(zen::particleMdl* ptcl)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::particleGenerator::pmCalcAccel(zen::particleMdl* ptcl)
 {
@@ -759,7 +759,7 @@ void zen::particleGenerator::pmCalcAccel(zen::particleMdl* ptcl)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::particleGenerator::UpdatePtclsStatus(f32 timeStep)
 {
@@ -866,7 +866,7 @@ void zen::particleGenerator::UpdatePtclsStatus(f32 timeStep)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::particleGenerator::ClearPtclsStatus(Texture* tex, Texture* childTex)
 {
@@ -925,7 +925,7 @@ void zen::particleGenerator::ClearPtclsStatus(Texture* tex, Texture* childTex)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::particleGenerator::drawPtclBillboard(Graphics& gfx)
 {
@@ -952,7 +952,7 @@ void zen::particleGenerator::drawPtclBillboard(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::particleGenerator::drawPtclOriented(Graphics& gfx)
 {
@@ -1562,7 +1562,7 @@ void zen::particleGenerator::drawPtclOriented(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::particleGenerator::RotAxisX(Mtx& mtx, f32& p2, f32& p3)
 {
@@ -1576,7 +1576,7 @@ void zen::particleGenerator::RotAxisX(Mtx& mtx, f32& p2, f32& p3)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::particleGenerator::RotAxisY(Mtx& mtx, f32& p2, f32& p3)
 {
@@ -1590,7 +1590,7 @@ void zen::particleGenerator::RotAxisY(Mtx& mtx, f32& p2, f32& p3)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::particleGenerator::RotAxisZ(Mtx& mtx, f32& p2, f32& p3)
 {
@@ -1604,7 +1604,7 @@ void zen::particleGenerator::RotAxisZ(Mtx& mtx, f32& p2, f32& p3)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::particleGenerator::RotAxisXY(Mtx& mtx, f32& p2, f32& p3)
 {
@@ -1619,7 +1619,7 @@ void zen::particleGenerator::RotAxisXY(Mtx& mtx, f32& p2, f32& p3)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::particleGenerator::RotAxisXZ(Mtx& mtx, f32& p2, f32& p3)
 {
@@ -1640,7 +1640,7 @@ void zen::particleGenerator::RotAxisXZ(Mtx& mtx, f32& p2, f32& p3)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::particleGenerator::RotAxisYZ(Mtx& mtx, f32& p2, f32& p3)
 {
@@ -1661,7 +1661,7 @@ void zen::particleGenerator::RotAxisYZ(Mtx& mtx, f32& p2, f32& p3)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::particleGenerator::RotAxisXYZ(Mtx& mtx, f32& p2, f32& p3)
 {
@@ -1674,7 +1674,7 @@ void zen::particleGenerator::RotAxisXYZ(Mtx& mtx, f32& p2, f32& p3)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::particleGenerator::updatePtclChildren(f32 timeStep)
 {
@@ -1703,7 +1703,7 @@ void zen::particleGenerator::updatePtclChildren(f32 timeStep)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::particleGenerator::drawPtclChildren(Graphics& gfx)
 {
@@ -1730,7 +1730,7 @@ void zen::particleGenerator::drawPtclChildren(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::particleGenerator::forceFinish()
 {
@@ -1745,7 +1745,7 @@ void zen::particleGenerator::forceFinish()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool zen::particleGenerator::finish(zen::CallBack1<zen::particleGenerator*>* cbGen,
                                     zen::CallBack2<zen::particleGenerator*, zen::particleMdl*>* cbPtcl)
@@ -1760,7 +1760,7 @@ bool zen::particleGenerator::finish(zen::CallBack1<zen::particleGenerator*>* cbG
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool zen::particleGenerator::forceFinish(zen::CallBack1<zen::particleGenerator*>* cbGen,
                                          zen::CallBack2<zen::particleGenerator*, zen::particleMdl*>* cbPtcl)
@@ -1775,7 +1775,7 @@ bool zen::particleGenerator::forceFinish(zen::CallBack1<zen::particleGenerator*>
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::particleMdl* zen::particleGenerator::pmGetParticle()
 {
@@ -1787,7 +1787,7 @@ zen::particleMdl* zen::particleGenerator::pmGetParticle()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::particleChildMdl* zen::particleGenerator::pmGetParticleChild()
 {

@@ -50,19 +50,19 @@ bool DelayPikiBirth = true;
 static f32 controllerLen;
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(89)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("navi");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Navi::viewDraw(Graphics& gfx, immut Matrix4f& mtx)
 {
@@ -73,7 +73,7 @@ void Navi::viewDraw(Graphics& gfx, immut Matrix4f& mtx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Navi::viewStartTrembleMotion(f32)
 {
@@ -81,7 +81,7 @@ void Navi::viewStartTrembleMotion(f32)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Navi::viewKill()
 {
@@ -90,7 +90,7 @@ void Navi::viewKill()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 Navi::viewGetBottomRadius()
 {
@@ -98,7 +98,7 @@ f32 Navi::viewGetBottomRadius()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 Navi::viewGetHeight()
 {
@@ -106,7 +106,7 @@ f32 Navi::viewGetHeight()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Navi::isNuking()
 {
@@ -114,7 +114,7 @@ bool Navi::isNuking()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00008C
  */
 void Navi::startMovie(bool doStopEffects)
@@ -132,7 +132,7 @@ void Navi::startMovie(bool doStopEffects)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Navi::startMovieInf()
 {
@@ -141,7 +141,7 @@ void Navi::startMovieInf()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000020
  */
 bool Navi::movieMode()
@@ -150,7 +150,7 @@ bool Navi::movieMode()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Navi::incPlatePiki()
 {
@@ -158,7 +158,7 @@ void Navi::incPlatePiki()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Navi::decPlatePiki()
 {
@@ -166,7 +166,7 @@ void Navi::decPlatePiki()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int Navi::getPlatePikis()
 {
@@ -174,7 +174,7 @@ int Navi::getPlatePikis()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Navi::startDayEnd()
 {
@@ -245,7 +245,7 @@ void Navi::updateDayEnd(immut Vector3f& pos)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Navi::enterAllPikis()
 {
@@ -297,7 +297,7 @@ void Navi::enterAllPikis()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 NaviProp::NaviProp()
 {
@@ -307,7 +307,7 @@ NaviProp::NaviProp()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Navi::isBuried()
 {
@@ -318,7 +318,7 @@ bool Navi::isBuried()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Navi::isVisible()
 {
@@ -329,7 +329,7 @@ bool Navi::isVisible()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Navi::isRopable()
 {
@@ -340,7 +340,7 @@ bool Navi::isRopable()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00008C
  */
 bool Navi::startDamage()
@@ -358,7 +358,7 @@ bool Navi::startDamage()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Navi::startDamageEffect()
 {
@@ -401,7 +401,7 @@ void Navi::startDamageEffect()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Navi::finishDamage()
 {
@@ -423,7 +423,7 @@ void Navi::finishDamage()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Navi::Navi(CreatureProp* props, int naviID)
     : Creature(props)
@@ -503,7 +503,7 @@ Navi::Navi(CreatureProp* props, int naviID)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F8
  */
 void Navi::Locus::update()
@@ -520,7 +520,7 @@ void Navi::Locus::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Navi::startKontroller()
 {
@@ -535,7 +535,7 @@ void Navi::startKontroller()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Navi::rideUfo()
 {
@@ -545,7 +545,7 @@ void Navi::rideUfo()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Navi::reset()
 {
@@ -598,7 +598,7 @@ void Navi::reset()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 Navi::getSize()
 {
@@ -606,7 +606,7 @@ f32 Navi::getSize()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 Navi::getiMass()
 {
@@ -623,7 +623,7 @@ f32 Navi::getiMass()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Navi::findNextThrowPiki()
 {
@@ -646,7 +646,7 @@ void Navi::findNextThrowPiki()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Navi::startMotion(immut PaniMotionInfo& motion1, immut PaniMotionInfo& motion2)
 {
@@ -655,7 +655,7 @@ void Navi::startMotion(immut PaniMotionInfo& motion1, immut PaniMotionInfo& moti
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Navi::enableMotionBlend()
 {
@@ -665,7 +665,7 @@ void Navi::enableMotionBlend()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000014
  */
 bool Navi::doMotionBlend()
@@ -674,7 +674,7 @@ bool Navi::doMotionBlend()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Navi::updateWalkAnimation()
 {
@@ -774,7 +774,7 @@ void Navi::updateWalkAnimation()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Navi::postUpdate(int unused, f32 deltaTime)
 {
@@ -784,7 +784,7 @@ void Navi::postUpdate(int unused, f32 deltaTime)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Navi::update()
 {
@@ -900,7 +900,7 @@ void Navi::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Navi::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
@@ -950,7 +950,7 @@ void Navi::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Navi::callPikis(f32 radius)
 {
@@ -1072,7 +1072,7 @@ void Navi::callPikis(f32 radius)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Navi::callDebugs(f32 radius)
 {
@@ -1234,7 +1234,7 @@ void Navi::releasePikis()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Navi::doAI()
 {
@@ -1258,7 +1258,7 @@ void Navi::doAI()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00008C
  */
 void Navi::doAttack()
@@ -1270,7 +1270,7 @@ void Navi::doAttack()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 bool Navi::insideOnyon()
@@ -1292,7 +1292,7 @@ bool Navi::insideOnyon()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 
 bool Navi::procActionButton()
@@ -1434,7 +1434,7 @@ bool Navi::procActionButton()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Navi::offwallCallback(DynCollObject* wall)
 {
@@ -1443,7 +1443,7 @@ void Navi::offwallCallback(DynCollObject* wall)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Navi::wallCallback(immut Plane& wallPlane, DynCollObject* wallObj)
 {
@@ -1456,14 +1456,14 @@ void Navi::wallCallback(immut Plane& wallPlane, DynCollObject* wallObj)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Navi::jumpCallback()
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Navi::isAtari()
 {
@@ -1472,7 +1472,7 @@ bool Navi::isAtari()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Navi::ignoreAtari(Creature* target)
 {
@@ -1487,7 +1487,7 @@ bool Navi::ignoreAtari(Creature* target)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Navi::bounceCallback()
 {
@@ -1496,7 +1496,7 @@ void Navi::bounceCallback()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Navi::letPikiWork()
 {
@@ -1528,7 +1528,7 @@ void Navi::letPikiWork()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Navi::collisionCallback(immut CollEvent& event)
 {
@@ -1603,14 +1603,14 @@ void Navi::collisionCallback(immut CollEvent& event)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Navi::doKill()
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Navi::reviseController(Vector3f& stickPos)
 {
@@ -1649,7 +1649,7 @@ void Navi::reviseController(Vector3f& stickPos)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 
 int gupper()
@@ -1782,7 +1782,7 @@ void Navi::makeVelocity(bool isSunset)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Navi::makeCStick(bool isSunset)
 {
@@ -1925,7 +1925,7 @@ void Navi::makeCStick(bool isSunset)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Navi::refresh(Graphics& gfx)
 {
@@ -2009,7 +2009,7 @@ void Navi::refresh(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Navi::demoDraw(Graphics& gfx, immut Matrix4f* mtx)
 {
@@ -2023,7 +2023,7 @@ void Navi::demoDraw(Graphics& gfx, immut Matrix4f* mtx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Navi::draw(Graphics& gfx)
 {
@@ -2079,7 +2079,7 @@ void Navi::draw(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Navi::renderCircle(Graphics& gfx)
 {
@@ -2118,14 +2118,14 @@ void Navi::renderCircle(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Navi::refresh2d(Graphics&)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Navi::sendMsg(Msg* msg)
 {
@@ -2133,7 +2133,7 @@ void Navi::sendMsg(Msg* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 void Navi::procDamage(f32)
@@ -2141,7 +2141,7 @@ void Navi::procDamage(f32)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Navi::stimulate(immut Interaction& interaction)
 {
@@ -2153,7 +2153,7 @@ bool Navi::stimulate(immut Interaction& interaction)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool InteractGeyzer::actNavi(Navi* navi) immut
 {
@@ -2177,7 +2177,7 @@ bool InteractGeyzer::actNavi(Navi* navi) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool InteractBury::actNavi(Navi* navi) immut
 {
@@ -2200,7 +2200,7 @@ bool InteractBury::actNavi(Navi* navi) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool InteractWind::actNavi(Navi* navi) immut
 {
@@ -2215,7 +2215,7 @@ bool InteractWind::actNavi(Navi* navi) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool InteractSuck::actNavi(Navi* navi) immut
 {
@@ -2255,7 +2255,7 @@ bool InteractSuck::actNavi(Navi* navi) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool InteractAttack::actNavi(Navi* navi) immut
 {
@@ -2284,7 +2284,7 @@ bool InteractAttack::actNavi(Navi* navi) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool InteractPress::actNavi(Navi* navi) immut
 {
@@ -2311,7 +2311,7 @@ bool InteractPress::actNavi(Navi* navi) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool InteractSwallow::actNavi(Navi* navi) immut
 {
@@ -2341,7 +2341,7 @@ bool InteractSwallow::actNavi(Navi* navi) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool InteractBomb::actNavi(Navi* navi) immut
 {
@@ -2370,7 +2370,7 @@ bool InteractBomb::actNavi(Navi* navi) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Navi::orimaDamaged()
 {
@@ -2379,7 +2379,7 @@ bool Navi::orimaDamaged()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool InteractFlick::actNavi(Navi* navi) immut
 {
@@ -2414,7 +2414,7 @@ bool InteractFlick::actNavi(Navi* navi) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool InteractBubble::actNavi(Navi* navi) immut
 {
@@ -2436,7 +2436,7 @@ bool InteractBubble::actNavi(Navi* navi) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool InteractFire::actNavi(Navi* navi) immut
 {
@@ -2458,7 +2458,7 @@ bool InteractFire::actNavi(Navi* navi) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Navi::dump()
 {
@@ -2480,7 +2480,7 @@ void Navi::dump()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Navi::throwPiki(Piki* piki, immut Vector3f& pos)
 {
@@ -2512,7 +2512,7 @@ void Navi::throwPiki(Piki* piki, immut Vector3f& pos)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0001DC
  */
 void Navi::throwLocus(Vector3f&)
@@ -2521,7 +2521,7 @@ void Navi::throwLocus(Vector3f&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Navi::swapMotion(immut PaniMotionInfo& motion1, immut PaniMotionInfo& motion2)
 {
@@ -2537,7 +2537,7 @@ void Navi::swapMotion(immut PaniMotionInfo& motion1, immut PaniMotionInfo& motio
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0002D4
  */
 void Navi::renderParabola(Graphics& gfx, f32 height, f32 len)
@@ -2575,7 +2575,7 @@ void Navi::renderParabola(Graphics& gfx, f32 height, f32 len)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Navi::finishLook()
 {
@@ -2584,7 +2584,7 @@ void Navi::finishLook()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Navi::updateLook()
 {
@@ -2660,7 +2660,7 @@ void Navi::updateLook()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Navi::updateHeadMatrix()
 {

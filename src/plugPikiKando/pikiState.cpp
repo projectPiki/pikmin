@@ -27,19 +27,19 @@
 #include "teki.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(46)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("pikiState")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiStateMachine::init(Piki* piki)
 {
@@ -84,7 +84,7 @@ void PikiStateMachine::init(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiState::dump()
 {
@@ -93,14 +93,14 @@ void PikiState::dump()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiState::doDump()
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiStateMachine::transit(Piki* piki, int stateID)
 {
@@ -112,7 +112,7 @@ void PikiStateMachine::transit(Piki* piki, int stateID)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiState::transit(Piki* piki, int stateID)
 {
@@ -120,7 +120,7 @@ void PikiState::transit(Piki* piki, int stateID)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PikiLookAtState::PikiLookAtState()
     : PikiState(PIKISTATE_LookAt, "LOOKAT")
@@ -128,7 +128,7 @@ PikiLookAtState::PikiLookAtState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiLookAtState::init(Piki* piki)
 {
@@ -141,7 +141,7 @@ void PikiLookAtState::init(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiLookAtState::exec(Piki* piki)
 {
@@ -189,7 +189,7 @@ void PikiLookAtState::exec(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiLookAtState::cleanup(Piki* piki)
 {
@@ -197,7 +197,7 @@ void PikiLookAtState::cleanup(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiLookAtState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
@@ -219,7 +219,7 @@ void PikiLookAtState::procAnimMsg(Piki* piki, MsgAnim* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PikiNormalState::PikiNormalState()
     : PikiState(PIKISTATE_Normal, "NORMAL")
@@ -227,7 +227,7 @@ PikiNormalState::PikiNormalState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiNormalState::init(Piki* piki)
 {
@@ -239,7 +239,7 @@ void PikiNormalState::init(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiNormalState::restart(Piki* piki)
 {
@@ -247,7 +247,7 @@ void PikiNormalState::restart(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiNormalState::exec(Piki* piki)
 {
@@ -257,21 +257,21 @@ void PikiNormalState::exec(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiNormalState::cleanup(Piki* piki)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiNormalState::procWallMsg(Piki*, MsgWall*)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiNormalState::procOffWallMsg(Piki*, MsgOffWall*)
 {
@@ -280,7 +280,7 @@ void PikiNormalState::procOffWallMsg(Piki*, MsgOffWall*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiNormalState::procCollideMsg(Piki* piki, MsgCollide* msg)
 {
@@ -308,7 +308,7 @@ void PikiNormalState::procCollideMsg(Piki* piki, MsgCollide* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PikiAbsorbState::PikiAbsorbState()
     : PikiState(PIKISTATE_Absorb, "ABSORB")
@@ -316,7 +316,7 @@ PikiAbsorbState::PikiAbsorbState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiAbsorbState::init(Piki* piki)
 {
@@ -328,7 +328,7 @@ void PikiAbsorbState::init(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiAbsorbState::exec(Piki* piki)
 {
@@ -354,7 +354,7 @@ void PikiAbsorbState::exec(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiAbsorbState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
@@ -382,14 +382,14 @@ void PikiAbsorbState::procAnimMsg(Piki* piki, MsgAnim* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiAbsorbState::cleanup(Piki* piki)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PikiDrownState::PikiDrownState()
     : PikiState(PIKISTATE_Drown, "DROWN")
@@ -397,7 +397,7 @@ PikiDrownState::PikiDrownState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiDrownState::init(Piki* piki)
 {
@@ -436,7 +436,7 @@ void PikiDrownState::init(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiDrownState::exec(Piki* piki)
 {
@@ -492,14 +492,14 @@ void PikiDrownState::exec(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiDrownState::cleanup(Piki* piki)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiDrownState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
@@ -534,7 +534,7 @@ void PikiDrownState::procAnimMsg(Piki* piki, MsgAnim* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PikiKinokoState::PikiKinokoState()
     : PikiState(PIKISTATE_Kinoko, "KINOKO")
@@ -542,7 +542,7 @@ PikiKinokoState::PikiKinokoState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiKinokoState::init(Piki* piki)
 {
@@ -554,7 +554,7 @@ void PikiKinokoState::init(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiKinokoState::initWalk(Piki* piki)
 {
@@ -573,7 +573,7 @@ void PikiKinokoState::initWalk(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiKinokoState::exec(Piki* piki)
 {
@@ -588,14 +588,14 @@ void PikiKinokoState::exec(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiKinokoState::exeAttack(Piki* piki)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiKinokoState::exeBoid(Piki* piki)
 {
@@ -669,7 +669,7 @@ void PikiKinokoState::exeBoid(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiKinokoState::cleanup(Piki* piki)
 {
@@ -677,7 +677,7 @@ void PikiKinokoState::cleanup(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PikiBubbleState::PikiBubbleState()
     : PikiState(PIKISTATE_Bubble, "BUBBLE")
@@ -685,7 +685,7 @@ PikiBubbleState::PikiBubbleState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiBubbleState::init(Piki* piki)
 {
@@ -703,7 +703,7 @@ void PikiBubbleState::init(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiBubbleState::exec(Piki* piki)
 {
@@ -724,7 +724,7 @@ void PikiBubbleState::exec(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiBubbleState::cleanup(Piki* piki)
 {
@@ -734,7 +734,7 @@ void PikiBubbleState::cleanup(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PikiFiredState::PikiFiredState()
     : PikiState(PIKISTATE_Fired, "FIRED")
@@ -742,7 +742,7 @@ PikiFiredState::PikiFiredState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiFiredState::init(Piki* piki)
 {
@@ -757,7 +757,7 @@ void PikiFiredState::init(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiFiredState::exec(Piki* piki)
 {
@@ -778,14 +778,14 @@ void PikiFiredState::exec(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiFiredState::cleanup(Piki* piki)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PikiSwallowedState::PikiSwallowedState()
     : PikiState(PIKISTATE_Swallowed, "SWALLOWED")
@@ -793,7 +793,7 @@ PikiSwallowedState::PikiSwallowedState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiSwallowedState::init(Piki* piki)
 {
@@ -802,7 +802,7 @@ void PikiSwallowedState::init(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiSwallowedState::exec(Piki* piki)
 {
@@ -822,7 +822,7 @@ void PikiSwallowedState::exec(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiSwallowedState::cleanup(Piki* piki)
 {
@@ -831,7 +831,7 @@ void PikiSwallowedState::cleanup(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PikiBulletState::PikiBulletState()
     : PikiState(PIKISTATE_Bullet, "BULLET")
@@ -839,7 +839,7 @@ PikiBulletState::PikiBulletState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiBulletState::init(Piki* piki)
 {
@@ -848,7 +848,7 @@ void PikiBulletState::init(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiBulletState::exec(Piki* piki)
 {
@@ -883,7 +883,7 @@ void PikiBulletState::exec(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiBulletState::procWallMsg(Piki* piki, MsgWall*)
 {
@@ -892,14 +892,14 @@ void PikiBulletState::procWallMsg(Piki* piki, MsgWall*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiBulletState::cleanup(Piki* piki)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PikiFlickState::PikiFlickState()
     : PikiState(PIKISTATE_Flick, "FLICK")
@@ -907,7 +907,7 @@ PikiFlickState::PikiFlickState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiFlickState::init(Piki* piki)
 {
@@ -921,7 +921,7 @@ void PikiFlickState::init(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiFlickState::exec(Piki* piki)
 {
@@ -957,7 +957,7 @@ void PikiFlickState::exec(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiFlickState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
@@ -1004,7 +1004,7 @@ void PikiFlickState::procAnimMsg(Piki* piki, MsgAnim* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiFlickState::cleanup(Piki* piki)
 {
@@ -1033,7 +1033,7 @@ void PikiFlickState::cleanup(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PikiFlownState::PikiFlownState()
     : PikiState(PIKISTATE_Flown, "FLOWN")
@@ -1041,7 +1041,7 @@ PikiFlownState::PikiFlownState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiFlownState::init(Piki* piki)
 {
@@ -1053,7 +1053,7 @@ void PikiFlownState::init(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiFlownState::procBounceMsg(Piki* piki, MsgBounce*)
 {
@@ -1064,7 +1064,7 @@ void PikiFlownState::procBounceMsg(Piki* piki, MsgBounce*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiFlownState::exec(Piki* piki)
 {
@@ -1096,7 +1096,7 @@ void PikiFlownState::exec(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiFlownState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
@@ -1138,7 +1138,7 @@ void PikiFlownState::procAnimMsg(Piki* piki, MsgAnim* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiFlownState::cleanup(Piki* piki)
 {
@@ -1159,7 +1159,7 @@ void PikiFlownState::cleanup(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PikiFallMeckState::PikiFallMeckState()
     : PikiState(PIKISTATE_FallMeck, "FALLMECK")
@@ -1167,7 +1167,7 @@ PikiFallMeckState::PikiFallMeckState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiFallMeckState::init(Piki* piki)
 {
@@ -1178,14 +1178,14 @@ void PikiFallMeckState::init(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiFallMeckState::exec(Piki* piki)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiFallMeckState::procBounceMsg(Piki* piki, MsgBounce*)
 {
@@ -1235,14 +1235,14 @@ void PikiFallMeckState::procBounceMsg(Piki* piki, MsgBounce*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiFallMeckState::cleanup(Piki* piki)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PikiFallState::PikiFallState()
     : PikiState(PIKISTATE_Fall, "FALL")
@@ -1250,7 +1250,7 @@ PikiFallState::PikiFallState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiFallState::init(Piki* piki)
 {
@@ -1260,14 +1260,14 @@ void PikiFallState::init(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiFallState::exec(Piki* piki)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiFallState::procBounceMsg(Piki* piki, MsgBounce*)
 {
@@ -1277,7 +1277,7 @@ void PikiFallState::procBounceMsg(Piki* piki, MsgBounce*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiFallState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
@@ -1297,14 +1297,14 @@ void PikiFallState::procAnimMsg(Piki* piki, MsgAnim* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiFallState::cleanup(Piki* piki)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PikiCliffState::PikiCliffState()
     : PikiState(PIKISTATE_Cliff, "CLIFF")
@@ -1312,7 +1312,7 @@ PikiCliffState::PikiCliffState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiCliffState::init(Piki* piki)
 {
@@ -1333,7 +1333,7 @@ void PikiCliffState::init(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiCliffState::exec(Piki* piki)
 {
@@ -1344,7 +1344,7 @@ void PikiCliffState::exec(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000088
  */
 void PikiCliffState::startFall(Piki* piki)
@@ -1354,7 +1354,7 @@ void PikiCliffState::startFall(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool PikiCliffState::nearEnough(Piki* piki)
 {
@@ -1388,7 +1388,7 @@ bool PikiCliffState::nearEnough(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiCliffState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
@@ -1484,7 +1484,7 @@ void PikiCliffState::procAnimMsg(Piki* piki, MsgAnim* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiCliffState::cleanup(Piki* piki)
 {
@@ -1492,7 +1492,7 @@ void PikiCliffState::cleanup(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PikiGoHangState::PikiGoHangState()
     : PikiState(PIKISTATE_GoHang, "GOHANG")
@@ -1500,7 +1500,7 @@ PikiGoHangState::PikiGoHangState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiGoHangState::init(Piki* piki)
 {
@@ -1508,7 +1508,7 @@ void PikiGoHangState::init(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiGoHangState::exec(Piki* piki)
 {
@@ -1526,14 +1526,14 @@ void PikiGoHangState::exec(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiGoHangState::cleanup(Piki* piki)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PikiHangedState::PikiHangedState()
     : PikiState(PIKISTATE_Hanged, "HANGED")
@@ -1541,7 +1541,7 @@ PikiHangedState::PikiHangedState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiHangedState::procAnimMsg(Piki*, MsgAnim* msg)
 {
@@ -1553,7 +1553,7 @@ void PikiHangedState::procAnimMsg(Piki*, MsgAnim* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiHangedState::init(Piki* piki)
 {
@@ -1565,7 +1565,7 @@ void PikiHangedState::init(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiHangedState::exec(Piki* piki)
 {
@@ -1575,7 +1575,7 @@ void PikiHangedState::exec(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiHangedState::cleanup(Piki* piki)
 {
@@ -1583,7 +1583,7 @@ void PikiHangedState::cleanup(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PikiWaterHangedState::PikiWaterHangedState()
     : PikiState(PIKISTATE_WaterHanged, "WATER_HANGED")
@@ -1591,7 +1591,7 @@ PikiWaterHangedState::PikiWaterHangedState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiWaterHangedState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
@@ -1603,7 +1603,7 @@ void PikiWaterHangedState::procAnimMsg(Piki* piki, MsgAnim* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiWaterHangedState::init(Piki* piki)
 {
@@ -1616,7 +1616,7 @@ void PikiWaterHangedState::init(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiWaterHangedState::exec(Piki* piki)
 {
@@ -1627,7 +1627,7 @@ void PikiWaterHangedState::exec(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiWaterHangedState::cleanup(Piki* piki)
 {
@@ -1636,7 +1636,7 @@ void PikiWaterHangedState::cleanup(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PikiEmitState::PikiEmitState()
     : PikiState(PIKISTATE_Emit, "EMIT")
@@ -1644,7 +1644,7 @@ PikiEmitState::PikiEmitState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiEmitState::init(Piki* piki)
 {
@@ -1656,7 +1656,7 @@ void PikiEmitState::init(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiEmitState::exec(Piki* piki)
 {
@@ -1667,7 +1667,7 @@ void PikiEmitState::exec(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiEmitState::cleanup(Piki* piki)
 {
@@ -1675,7 +1675,7 @@ void PikiEmitState::cleanup(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiEmitState::procBounceMsg(Piki* piki, MsgBounce*)
 {
@@ -1686,7 +1686,7 @@ void PikiEmitState::procBounceMsg(Piki* piki, MsgBounce*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiEmitState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
@@ -1702,7 +1702,7 @@ void PikiEmitState::procAnimMsg(Piki* piki, MsgAnim* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PikiFlyingState::PikiFlyingState()
     : PikiState(PIKISTATE_Flying, "FLYING")
@@ -1710,7 +1710,7 @@ PikiFlyingState::PikiFlyingState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiFlyingState::stopEffect()
 {
@@ -1718,7 +1718,7 @@ void PikiFlyingState::stopEffect()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiFlyingState::restartEffect()
 {
@@ -1726,7 +1726,7 @@ void PikiFlyingState::restartEffect()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiFlyingState::init(Piki* piki)
 {
@@ -1745,7 +1745,7 @@ void PikiFlyingState::init(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiFlyingState::exec(Piki* piki)
 {
@@ -1835,7 +1835,7 @@ void PikiFlyingState::exec(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiFlyingState::cleanup(Piki* piki)
 {
@@ -1845,7 +1845,7 @@ void PikiFlyingState::cleanup(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiFlyingState::procCollideMsg(Piki* piki, MsgCollide* msg)
 {
@@ -2014,14 +2014,14 @@ void PikiFlyingState::procCollideMsg(Piki* piki, MsgCollide* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiFlyingState::procStickMsg(Piki*, MsgStick*)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiFlyingState::procBounceMsg(Piki* piki, MsgBounce*)
 {
@@ -2051,7 +2051,7 @@ void PikiFlyingState::procBounceMsg(Piki* piki, MsgBounce*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PikiGrowState::PikiGrowState()
     : PikiState(PIKISTATE_Grow, "GROW")
@@ -2059,7 +2059,7 @@ PikiGrowState::PikiGrowState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiGrowState::init(Piki* piki)
 {
@@ -2068,21 +2068,21 @@ void PikiGrowState::init(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiGrowState::exec(Piki* piki)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiGrowState::cleanup(Piki* piki)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiGrowState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
@@ -2094,7 +2094,7 @@ void PikiGrowState::procAnimMsg(Piki* piki, MsgAnim* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PikiKinokoChangeState::PikiKinokoChangeState()
     : PikiState(PIKISTATE_KinokoChange, "KINOKO_CHANGE")
@@ -2102,7 +2102,7 @@ PikiKinokoChangeState::PikiKinokoChangeState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiKinokoChangeState::init(Piki* piki)
 {
@@ -2116,7 +2116,7 @@ void PikiKinokoChangeState::init(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiKinokoChangeState::restart(Piki* piki)
 {
@@ -2124,7 +2124,7 @@ void PikiKinokoChangeState::restart(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiKinokoChangeState::exec(Piki* piki)
 {
@@ -2140,14 +2140,14 @@ void PikiKinokoChangeState::exec(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiKinokoChangeState::cleanup(Piki* piki)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiKinokoChangeState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
@@ -2167,7 +2167,7 @@ void PikiKinokoChangeState::procAnimMsg(Piki* piki, MsgAnim* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PikiGrowupState::PikiGrowupState()
     : PikiState(PIKISTATE_GrowUp, "GROWUP")
@@ -2175,7 +2175,7 @@ PikiGrowupState::PikiGrowupState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiGrowupState::init(Piki* piki)
 {
@@ -2187,7 +2187,7 @@ void PikiGrowupState::init(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiGrowupState::exec(Piki* piki)
 {
@@ -2200,14 +2200,14 @@ void PikiGrowupState::exec(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiGrowupState::cleanup(Piki* piki)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiGrowupState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
@@ -2232,7 +2232,7 @@ void PikiGrowupState::procAnimMsg(Piki* piki, MsgAnim* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PikiWaveState::PikiWaveState()
     : PikiState(PIKISTATE_Wave, "WAVE")
@@ -2240,28 +2240,28 @@ PikiWaveState::PikiWaveState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiWaveState::init(Piki* piki)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiWaveState::exec(Piki* piki)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiWaveState::cleanup(Piki* piki)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiWaveState::resume(Piki* piki)
 {
@@ -2269,14 +2269,14 @@ void PikiWaveState::resume(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiWaveState::restart(Piki* piki)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiWaveState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
@@ -2291,7 +2291,7 @@ void PikiWaveState::procAnimMsg(Piki* piki, MsgAnim* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 void PikiWaveState::waveAttack(Piki* piki)
@@ -2299,7 +2299,7 @@ void PikiWaveState::waveAttack(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PikiPushState::PikiPushState()
     : PikiState(PIKISTATE_Push, "PUSH")
@@ -2307,7 +2307,7 @@ PikiPushState::PikiPushState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiPushState::init(Piki* piki)
 {
@@ -2316,7 +2316,7 @@ void PikiPushState::init(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiPushState::exec(Piki* piki)
 {
@@ -2337,7 +2337,7 @@ void PikiPushState::exec(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiPushState::cleanup(Piki* piki)
 {
@@ -2345,7 +2345,7 @@ void PikiPushState::cleanup(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiPushState::resume(Piki* piki)
 {
@@ -2353,14 +2353,14 @@ void PikiPushState::resume(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiPushState::restart(Piki* piki)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiPushState::procOffWallMsg(Piki* piki, MsgOffWall*)
 {
@@ -2368,7 +2368,7 @@ void PikiPushState::procOffWallMsg(Piki* piki, MsgOffWall*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiPushState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
@@ -2385,7 +2385,7 @@ void PikiPushState::procAnimMsg(Piki* piki, MsgAnim* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PikiPushPikiState::PikiPushPikiState()
     : PikiState(PIKISTATE_PushPiki, "PUSHPIKI")
@@ -2393,7 +2393,7 @@ PikiPushPikiState::PikiPushPikiState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiPushPikiState::init(Piki* piki)
 {
@@ -2403,7 +2403,7 @@ void PikiPushPikiState::init(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiPushPikiState::exec(Piki* piki)
 {
@@ -2423,7 +2423,7 @@ void PikiPushPikiState::exec(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiPushPikiState::cleanup(Piki* piki)
 {
@@ -2431,7 +2431,7 @@ void PikiPushPikiState::cleanup(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiPushPikiState::resume(Piki* piki)
 {
@@ -2439,14 +2439,14 @@ void PikiPushPikiState::resume(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiPushPikiState::restart(Piki* piki)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiPushPikiState::procCollideMsg(Piki* piki, MsgCollide* msg)
 {
@@ -2465,14 +2465,14 @@ void PikiPushPikiState::procCollideMsg(Piki* piki, MsgCollide* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiPushPikiState::procWallMsg(Piki*, MsgWall*)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiPushPikiState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
@@ -2491,7 +2491,7 @@ void PikiPushPikiState::procAnimMsg(Piki* piki, MsgAnim* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PikiBuryState::PikiBuryState()
     : PikiState(PIKISTATE_Bury, "BURY")
@@ -2499,14 +2499,14 @@ PikiBuryState::PikiBuryState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiBuryState::init(Piki* piki)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiBuryState::exec(Piki* piki)
 {
@@ -2554,14 +2554,14 @@ void PikiBuryState::exec(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiBuryState::cleanup(Piki* piki)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PikiNukareWaitState::PikiNukareWaitState()
     : PikiState(PIKISTATE_NukareWait, "NUKARE_WAIT")
@@ -2569,7 +2569,7 @@ PikiNukareWaitState::PikiNukareWaitState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiNukareWaitState::init(Piki* piki)
 {
@@ -2586,7 +2586,7 @@ void PikiNukareWaitState::init(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiNukareWaitState::exec(Piki* piki)
 {
@@ -2601,14 +2601,14 @@ void PikiNukareWaitState::exec(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiNukareWaitState::cleanup(Piki* piki)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PikiNukareState::PikiNukareState()
     : PikiState(PIKISTATE_Nukare, "NUKARE")
@@ -2616,7 +2616,7 @@ PikiNukareState::PikiNukareState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiNukareState::init(Piki* piki)
 {
@@ -2629,14 +2629,14 @@ void PikiNukareState::init(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiNukareState::exec(Piki* piki)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiNukareState::cleanup(Piki* piki)
 {
@@ -2676,7 +2676,7 @@ void PikiNukareState::cleanup(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiNukareState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
@@ -2712,7 +2712,7 @@ void PikiNukareState::procAnimMsg(Piki* piki, MsgAnim* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PikiAutoNukiState::PikiAutoNukiState()
     : PikiState(PIKISTATE_AutoNuki, "AUTONUKI")
@@ -2720,7 +2720,7 @@ PikiAutoNukiState::PikiAutoNukiState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiAutoNukiState::init(Piki* piki)
 {
@@ -2734,7 +2734,7 @@ void PikiAutoNukiState::init(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiAutoNukiState::exec(Piki* piki)
 {
@@ -2747,14 +2747,14 @@ void PikiAutoNukiState::exec(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiAutoNukiState::cleanup(Piki* piki)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiAutoNukiState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
@@ -2772,7 +2772,7 @@ void PikiAutoNukiState::procAnimMsg(Piki* piki, MsgAnim* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PikiPressedState::PikiPressedState()
     : PikiState(PIKISTATE_Pressed, "PRESSED")
@@ -2780,7 +2780,7 @@ PikiPressedState::PikiPressedState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiPressedState::procCollideMsg(Piki* piki, MsgCollide* msg)
 {
@@ -2791,7 +2791,7 @@ void PikiPressedState::procCollideMsg(Piki* piki, MsgCollide* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiPressedState::init(Piki* piki)
 {
@@ -2803,7 +2803,7 @@ void PikiPressedState::init(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiPressedState::exec(Piki* piki)
 {
@@ -2835,14 +2835,14 @@ void PikiPressedState::exec(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiPressedState::cleanup(Piki* piki)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PikiDyingState::PikiDyingState()
     : PikiState(PIKISTATE_Dying, "DYING")
@@ -2850,7 +2850,7 @@ PikiDyingState::PikiDyingState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiDyingState::init(Piki* piki)
 {
@@ -2872,7 +2872,7 @@ void PikiDyingState::init(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiDyingState::exec(Piki* piki)
 {
@@ -2881,14 +2881,14 @@ void PikiDyingState::exec(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiDyingState::cleanup(Piki* piki)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiDyingState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
@@ -2904,7 +2904,7 @@ void PikiDyingState::procAnimMsg(Piki* piki, MsgAnim* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PikiDeadState::PikiDeadState()
     : PikiState(PIKISTATE_Dead, "DEAD")
@@ -2912,7 +2912,7 @@ PikiDeadState::PikiDeadState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiDeadState::init(Piki* piki)
 {
@@ -2923,7 +2923,7 @@ void PikiDeadState::init(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiDeadState::exec(Piki* piki)
 {
@@ -2942,7 +2942,7 @@ void PikiDeadState::exec(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiDeadState::cleanup(Piki* piki)
 {
@@ -2950,7 +2950,7 @@ void PikiDeadState::cleanup(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PikiEmotionState::PikiEmotionState()
     : PikiState(PIKISTATE_Emotion, "EMOTION")
@@ -2959,7 +2959,7 @@ PikiEmotionState::PikiEmotionState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiEmotionState::init(Piki* piki)
 {
@@ -3087,7 +3087,7 @@ void PikiEmotionState::init(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiEmotionState::doDump()
 {
@@ -3096,7 +3096,7 @@ void PikiEmotionState::doDump()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiEmotionState::exec(Piki* piki)
 {
@@ -3130,7 +3130,7 @@ void PikiEmotionState::exec(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiEmotionState::cleanup(Piki* piki)
 {
@@ -3140,7 +3140,7 @@ void PikiEmotionState::cleanup(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiEmotionState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {

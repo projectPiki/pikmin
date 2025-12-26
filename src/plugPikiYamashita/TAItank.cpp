@@ -13,13 +13,13 @@
 #include "zen/CallBack.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT(nullptr)
@@ -282,7 +282,7 @@ protected:
 };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TAItankSoundTable::TAItankSoundTable()
     : PaniSoundTable(7)
@@ -293,7 +293,7 @@ TAItankSoundTable::TAItankSoundTable()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TAItankParameters::TAItankParameters()
     : TekiParameters(TPI_COUNT, TAItankFloatParams::COUNT)
@@ -369,7 +369,7 @@ TAItankParameters::TAItankParameters()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TAItankStrategy::TAItankStrategy()
     : YaiStrategy(TAItankStateID::COUNT, TAItankStateID::Unk1)
@@ -522,7 +522,7 @@ TAItankStrategy::TAItankStrategy()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAItankStrategy::act(Teki& teki)
 {
@@ -552,7 +552,7 @@ void TAItankStrategy::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAItankStrategy::interact(Teki& teki, immut TekiInteractionKey& key)
 {
@@ -575,7 +575,7 @@ bool TAItankStrategy::interact(Teki& teki, immut TekiInteractionKey& key)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAItankAnimation::makeDefaultAnimations()
 {

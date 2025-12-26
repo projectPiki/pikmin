@@ -8,19 +8,19 @@
 #include <math.h>
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrMapMgr::start(s16 mode)
 {
@@ -43,7 +43,7 @@ void zen::ogScrMapMgr::start(s16 mode)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::ogScrMapMgr::ogScrMapMgr()
 {
@@ -62,7 +62,7 @@ zen::ogScrMapMgr::ogScrMapMgr()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::ogScrMapMgr::MapStatus zen::ogScrMapMgr::update(Controller* controller)
 {
@@ -142,7 +142,7 @@ zen::ogScrMapMgr::MapStatus zen::ogScrMapMgr::update(Controller* controller)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrMapMgr::draw(Graphics& gfx)
 {

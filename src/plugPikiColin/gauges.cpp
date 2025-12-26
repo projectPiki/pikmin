@@ -18,19 +18,19 @@ static Colour lglev3;
 LifeGaugeMgr* lgMgr;
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("Gauges")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000020
  */
 void GaugeInfo::init()
@@ -44,7 +44,7 @@ void GaugeInfo::init()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GaugeInfo::update()
 {
@@ -81,7 +81,7 @@ void GaugeInfo::update()
 }
 
 /**
- * @TODO: Add documentation
+ * @todo: Add documentation
  * Address:	100377F0 in DLL
  */
 void GaugeInfo::showDigits(Vector3f position, immut Colour& colour, int number, f32 width, f32 height)
@@ -115,7 +115,7 @@ void GaugeInfo::showDigits(Vector3f position, immut Colour& colour, int number, 
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GaugeInfo::refresh(Graphics& gfx)
 {
@@ -139,7 +139,7 @@ void GaugeInfo::refresh(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void LifeGaugeMgr::init(int count)
 {
@@ -157,7 +157,7 @@ void LifeGaugeMgr::init(int count)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void LifeGaugeMgr::update()
 {
@@ -168,7 +168,7 @@ void LifeGaugeMgr::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void LifeGaugeMgr::refresh(Graphics& gfx)
 {
@@ -182,7 +182,7 @@ void LifeGaugeMgr::refresh(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000080
  */
 GaugeInfo* LifeGaugeMgr::getGaugeInfo()
@@ -198,7 +198,7 @@ GaugeInfo* LifeGaugeMgr::getGaugeInfo()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000020
  */
 void LifeGaugeMgr::addLG(GaugeInfo* info)
@@ -207,7 +207,7 @@ void LifeGaugeMgr::addLG(GaugeInfo* info)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void LifeGaugeMgr::removeLG(GaugeInfo* info)
 {
@@ -217,7 +217,7 @@ void LifeGaugeMgr::removeLG(GaugeInfo* info)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 LifeGauge::LifeGauge()
 {
@@ -241,7 +241,7 @@ LifeGauge::LifeGauge()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void LifeGauge::updValue(f32 currHealth, f32 maxHealth)
 {
@@ -252,7 +252,7 @@ void LifeGauge::updValue(f32 currHealth, f32 maxHealth)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00005C
  */
 void LifeGauge::adjustValue()
@@ -264,7 +264,7 @@ void LifeGauge::adjustValue()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void LifeGauge::refresh(Graphics& gfx)
 {
@@ -380,7 +380,7 @@ void LifeGauge::refresh(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void LifeGauge::countOn(immut Vector3f& position, int primaryValue, int secondaryValue)
 {
@@ -414,7 +414,7 @@ void LifeGauge::countOn(immut Vector3f& position, int primaryValue, int secondar
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void LifeGauge::countOff()
 {

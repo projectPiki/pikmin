@@ -63,7 +63,7 @@ ObjType _info[] = {
 };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 immut char* ObjType::getName(int index)
 {
@@ -76,7 +76,7 @@ immut char* ObjType::getName(int index)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ObjType::getIndex(immut char* name)
 {

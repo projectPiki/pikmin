@@ -14,13 +14,13 @@
 #include "SoundMgr.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("KoganeAi");
@@ -28,7 +28,7 @@ DEFINE_PRINT("KoganeAi");
 static u32 koganeSE[] = { SE_KOGANE_WALK, SE_KOGANE_DAMAGE };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KoganeAi::createWaterEffect()
 {
@@ -58,7 +58,7 @@ void KoganeAi::createWaterEffect()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KoganeAi::killCallBackEffect(bool doForceFinish)
 {
@@ -66,7 +66,7 @@ void KoganeAi::killCallBackEffect(bool doForceFinish)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 KoganeAi::KoganeAi(Kogane* kogane)
 {
@@ -75,7 +75,7 @@ KoganeAi::KoganeAi(Kogane* kogane)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KoganeAi::initAI(Kogane* kogane)
 {
@@ -92,7 +92,7 @@ void KoganeAi::initAI(Kogane* kogane)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KoganeAi::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
@@ -116,7 +116,7 @@ void KoganeAi::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KoganeAi::keyAction0()
 {
@@ -130,7 +130,7 @@ void KoganeAi::keyAction0()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KoganeAi::keyAction1()
 {
@@ -146,7 +146,7 @@ void KoganeAi::keyAction1()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 void KoganeAi::keyAction2()
@@ -154,7 +154,7 @@ void KoganeAi::keyAction2()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 void KoganeAi::keyAction3()
@@ -162,7 +162,7 @@ void KoganeAi::keyAction3()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KoganeAi::keyLoopEnd()
 {
@@ -170,7 +170,7 @@ void KoganeAi::keyLoopEnd()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KoganeAi::keyFinished()
 {
@@ -181,7 +181,7 @@ void KoganeAi::keyFinished()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KoganeAi::playSound(int koganeSoundID)
 {
@@ -191,7 +191,7 @@ void KoganeAi::playSound(int koganeSoundID)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000034
  */
 void KoganeAi::setEveryFrame()
@@ -201,7 +201,7 @@ void KoganeAi::setEveryFrame()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KoganeAi::setMapAttribute()
 {
@@ -240,7 +240,7 @@ void KoganeAi::setMapAttribute()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000028
  */
 void KoganeAi::checkAppearTimeCounter()
@@ -251,7 +251,7 @@ void KoganeAi::checkAppearTimeCounter()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000068
  */
 void KoganeAi::calcScaleUp()
@@ -267,7 +267,7 @@ void KoganeAi::calcScaleUp()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KoganeAi::setNewTargetPosition()
 {
@@ -293,7 +293,7 @@ void KoganeAi::setNewTargetPosition()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KoganeAi::setRouteTargetPosition()
 {
@@ -322,7 +322,7 @@ void KoganeAi::setRouteTargetPosition()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 void KoganeAi::makeTargetRandom()
@@ -336,7 +336,7 @@ void KoganeAi::makeTargetRandom()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00003C
  */
 void KoganeAi::makeStopMoving()
@@ -346,7 +346,7 @@ void KoganeAi::makeStopMoving()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KoganeAi::birthItemPellet(int size)
 {
@@ -374,7 +374,7 @@ void KoganeAi::birthItemPellet(int size)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KoganeAi::birthItemWater(int numDrops, f32 p2)
 {
@@ -412,7 +412,7 @@ void KoganeAi::birthItemWater(int numDrops, f32 p2)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KoganeAi::createPellet()
 {
@@ -442,7 +442,7 @@ void KoganeAi::createPellet()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00003C
  */
 void KoganeAi::resultFlagOn()
@@ -453,7 +453,7 @@ void KoganeAi::resultFlagOn()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000024
  */
 bool KoganeAi::dieTransit()
@@ -462,7 +462,7 @@ bool KoganeAi::dieTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00000C
  */
 bool KoganeAi::isMotionFinishTransit()
@@ -471,7 +471,7 @@ bool KoganeAi::isMotionFinishTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool KoganeAi::appearTransit()
 {
@@ -509,7 +509,7 @@ bool KoganeAi::appearTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00001C
  */
 bool KoganeAi::startWalkTransit()
@@ -518,7 +518,7 @@ bool KoganeAi::startWalkTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00004C
  */
 bool KoganeAi::stopWalkTransit()
@@ -528,7 +528,7 @@ bool KoganeAi::stopWalkTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00003C
  */
 bool KoganeAi::changeTargetTransit()
@@ -544,7 +544,7 @@ bool KoganeAi::changeTargetTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00000C
  */
 bool KoganeAi::createPelletTransit()
@@ -553,7 +553,7 @@ bool KoganeAi::createPelletTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000050
  */
 void KoganeAi::initDie(int nextState)
@@ -564,7 +564,7 @@ void KoganeAi::initDie(int nextState)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0002CC
  */
 void KoganeAi::initAppear(int nextState)
@@ -585,7 +585,7 @@ void KoganeAi::initAppear(int nextState)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00045C
  */
 void KoganeAi::initWalkRandom(int nextState, bool isRandomPos)
@@ -609,7 +609,7 @@ void KoganeAi::initWalkRandom(int nextState, bool isRandomPos)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000164
  */
 void KoganeAi::initStopWalk(int nextState)
@@ -630,7 +630,7 @@ void KoganeAi::initStopWalk(int nextState)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KoganeAi::initCreate(int nextState)
 {
@@ -661,7 +661,7 @@ void KoganeAi::initCreate(int nextState)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000B4
  */
 void KoganeAi::dieState()
@@ -680,7 +680,7 @@ void KoganeAi::dieState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000180
  */
 void KoganeAi::walkRandomState()
@@ -693,7 +693,7 @@ void KoganeAi::walkRandomState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000080
  */
 void KoganeAi::stopWalkState()
@@ -703,7 +703,7 @@ void KoganeAi::stopWalkState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000094
  */
 void KoganeAi::createState()
@@ -713,7 +713,7 @@ void KoganeAi::createState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KoganeAi::update()
 {

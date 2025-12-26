@@ -15,13 +15,13 @@
 #include "teki.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("taiswallow")
@@ -156,7 +156,7 @@ struct TaiSwallowMissAttackingEffectAction : public TaiJointEffectAction {
 };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TaiSwallowSoundTable::TaiSwallowSoundTable()
     : PaniSoundTable(8)
@@ -167,7 +167,7 @@ TaiSwallowSoundTable::TaiSwallowSoundTable()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TaiSwallowParameters::TaiSwallowParameters()
     : TekiParameters(TPI_COUNT, SWALLOWPF_COUNT)
@@ -241,7 +241,7 @@ TaiSwallowParameters::TaiSwallowParameters()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TaiBlackSwallowParameters::TaiBlackSwallowParameters()
     : TekiParameters(TPI_COUNT, SWALLOWPF_COUNT)
@@ -315,7 +315,7 @@ TaiBlackSwallowParameters::TaiBlackSwallowParameters()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TaiSwallowStrategy::TaiSwallowStrategy(TekiParameters* params)
     : TaiStrategy(SWALLOWSTATE_COUNT, SWALLOWSTATE_Unk15)
@@ -598,7 +598,7 @@ TaiSwallowStrategy::TaiSwallowStrategy(TekiParameters* params)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiSwallowStrategy::start(Teki& teki)
 {
@@ -608,7 +608,7 @@ void TaiSwallowStrategy::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiSwallowStrategy::draw(Teki& teki, Graphics& gfx)
 {
@@ -635,7 +635,7 @@ void TaiSwallowStrategy::draw(Teki& teki, Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiSwallowStrategy::interact(Teki& teki, immut TekiInteractionKey& key)
 {
@@ -667,7 +667,7 @@ bool TaiSwallowStrategy::interact(Teki& teki, immut TekiInteractionKey& key)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiSwallowStrategy::isSleeping(Teki& teki)
 {
@@ -675,7 +675,7 @@ bool TaiSwallowStrategy::isSleeping(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiSwallowStrategy::drawDebugInfo(Teki& teki, Graphics& gfx)
 {
@@ -683,7 +683,7 @@ void TaiSwallowStrategy::drawDebugInfo(Teki& teki, Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiSwallowReceiveMessageAction::actByEvent(immut TekiEvent& event)
 {
@@ -696,7 +696,7 @@ bool TaiSwallowReceiveMessageAction::actByEvent(immut TekiEvent& event)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiSwallowTurningAction::act(Teki& teki)
 {
@@ -737,7 +737,7 @@ bool TaiSwallowTurningAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiSwallowFlickingAction::start(Teki& teki)
 {
@@ -746,7 +746,7 @@ void TaiSwallowFlickingAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiSwallowFlickingAction::finish(Teki& teki)
 {
@@ -754,7 +754,7 @@ void TaiSwallowFlickingAction::finish(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiSwallowFlickingAction::act(Teki& teki)
 {
@@ -771,7 +771,7 @@ bool TaiSwallowFlickingAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiSwallowFlickingAction::flick(Teki& teki)
 {
@@ -790,7 +790,7 @@ void TaiSwallowFlickingAction::flick(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiSwallowSwallowingFlickAction::act(Teki& teki)
 {
@@ -814,7 +814,7 @@ bool TaiSwallowSwallowingFlickAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiSwallowSnoreAction::start(Teki& teki)
 {
@@ -823,7 +823,7 @@ void TaiSwallowSnoreAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiSwallowSnoreAction::finish(Teki& teki)
 {
@@ -832,7 +832,7 @@ void TaiSwallowSnoreAction::finish(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiSwallowNoticeAction::act(Teki& teki)
 {
@@ -849,7 +849,7 @@ bool TaiSwallowNoticeAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TaiSwallowLegEffectAction::TaiSwallowLegEffectAction(f32 sinkThreshold)
     : TaiJointEffectAction(sinkThreshold, 2, 'lleg', 'rleg', 0, 0)
@@ -857,7 +857,7 @@ TaiSwallowLegEffectAction::TaiSwallowLegEffectAction(f32 sinkThreshold)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiSwallowLegEffectAction::setType(Vector3f& effectPos, int type, int id)
 {
@@ -878,7 +878,7 @@ void TaiSwallowLegEffectAction::setType(Vector3f& effectPos, int type, int id)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TaiSwallowMissAttackingEffectAction::TaiSwallowMissAttackingEffectAction(f32 sinkThreshold)
     : TaiJointEffectAction(sinkThreshold, 1, 'hana', 0, 0, 0)
@@ -886,7 +886,7 @@ TaiSwallowMissAttackingEffectAction::TaiSwallowMissAttackingEffectAction(f32 sin
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiSwallowMissAttackingEffectAction::setType(Vector3f& effectPos, int type, int id)
 {

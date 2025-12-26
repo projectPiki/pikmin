@@ -9,19 +9,19 @@
 #include "zen/Math.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("drawHurryUp")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::DrawHurryUp::DrawHurryUp()
 {
@@ -49,7 +49,7 @@ zen::DrawHurryUp::DrawHurryUp()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawHurryUp::initPanes()
 {
@@ -70,7 +70,7 @@ void zen::DrawHurryUp::initPanes()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawHurryUp::start(zen::DrawHurryUp::messageTypeFlag)
 {
@@ -82,7 +82,7 @@ void zen::DrawHurryUp::start(zen::DrawHurryUp::messageTypeFlag)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawHurryUp::startStatus()
 {
@@ -108,7 +108,7 @@ void zen::DrawHurryUp::startStatus()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000C0
  */
 void zen::DrawHurryUp::enlargeStatus()
@@ -128,7 +128,7 @@ void zen::DrawHurryUp::enlargeStatus()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 void zen::DrawHurryUp::brightShotStatus()
@@ -149,7 +149,7 @@ void zen::DrawHurryUp::brightShotStatus()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000100
  */
 void zen::DrawHurryUp::brightStatus()
@@ -172,7 +172,7 @@ void zen::DrawHurryUp::brightStatus()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool zen::DrawHurryUp::endStatus()
 {
@@ -204,7 +204,7 @@ bool zen::DrawHurryUp::endStatus()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool zen::DrawHurryUp::update()
 {
@@ -238,7 +238,7 @@ bool zen::DrawHurryUp::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawHurryUp::draw(Graphics&)
 {

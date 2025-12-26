@@ -7,19 +7,19 @@
 #include "sysNew.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000098
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT(nullptr);
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Menu::Menu(Controller* controller, Font* font, bool useCustomPosition)
 {
@@ -59,7 +59,7 @@ Menu::Menu(Controller* controller, Font* font, bool useCustomPosition)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00001C
  */
 void Menu::KeyEvent::insertAfter(Menu::KeyEvent* key)
@@ -72,7 +72,7 @@ void Menu::KeyEvent::insertAfter(Menu::KeyEvent* key)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00001C
  */
 void Menu::KeyEvent::remove()
@@ -82,7 +82,7 @@ void Menu::KeyEvent::remove()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00001C
  */
 void Menu::MenuItem::insertAfter(Menu::MenuItem* item)
@@ -95,7 +95,7 @@ void Menu::MenuItem::insertAfter(Menu::MenuItem* item)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00001C
  */
 void Menu::MenuItem::remove()
@@ -105,7 +105,7 @@ void Menu::MenuItem::remove()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00001C
  */
 Menu::KeyEvent::KeyEvent(int eventType, int inputCode, IDelegate1<Menu&>* delegate)
@@ -118,7 +118,7 @@ Menu::KeyEvent::KeyEvent(int eventType, int inputCode, IDelegate1<Menu&>* delega
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Menu::MenuItem::MenuItem(int type, int filterIndex, char* name, IDelegate1<Menu&>* delegate)
 {
@@ -137,7 +137,7 @@ Menu::MenuItem::MenuItem(int type, int filterIndex, char* name, IDelegate1<Menu&
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000008
  */
 void Menu::setOnEnter(IDelegate1<Menu&>* callback)
@@ -146,7 +146,7 @@ void Menu::setOnEnter(IDelegate1<Menu&>* callback)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000008
  */
 void Menu::setOnExit(IDelegate1<Menu&>* callback)
@@ -155,7 +155,7 @@ void Menu::setOnExit(IDelegate1<Menu&>* callback)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Menu::addKeyEvent(int eventCode, int inputCode, IDelegate1<Menu&>* delegate)
 {
@@ -170,7 +170,7 @@ void Menu::addKeyEvent(int eventCode, int inputCode, IDelegate1<Menu&>* delegate
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Menu* Menu::enterOption()
 {
@@ -178,7 +178,7 @@ Menu* Menu::enterOption()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Menu* Menu::enterMenu(Menu* menu)
 {
@@ -190,7 +190,7 @@ Menu* Menu::enterMenu(Menu* menu)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Menu* Menu::exitMenu(Menu* menu)
 {
@@ -202,7 +202,7 @@ Menu* Menu::exitMenu(Menu* menu)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Menu::open(bool)
 {
@@ -214,7 +214,7 @@ void Menu::open(bool)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Menu::close()
 {
@@ -226,7 +226,7 @@ void Menu::close()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Menu::resetOptions()
 {
@@ -236,7 +236,7 @@ void Menu::resetOptions()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Menu::addOption(int filterIndex, char* name, IDelegate1<Menu&>* delegate, bool isEnabled)
 {
@@ -255,7 +255,7 @@ void Menu::addOption(int filterIndex, char* name, IDelegate1<Menu&>* delegate, b
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Menu::addMenu(Menu* menu, int p2, char* name)
 {
@@ -274,7 +274,7 @@ void Menu::addMenu(Menu* menu, int p2, char* name)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Menu::checkNewOption()
 {
@@ -326,7 +326,7 @@ bool Menu::checkNewOption()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Menu::checkSelectKey()
 {
@@ -334,7 +334,7 @@ bool Menu::checkSelectKey()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Menu::checkCancelKey()
 {
@@ -342,7 +342,7 @@ bool Menu::checkCancelKey()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Menu* Menu::doUpdate(bool selectItem)
 {
@@ -421,7 +421,7 @@ Menu* Menu::doUpdate(bool selectItem)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Menu::MenuItem::checkEvents(Menu* menu, int events)
 {
@@ -487,7 +487,7 @@ bool Menu::MenuItem::checkEvents(Menu* menu, int events)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Menu::draw(Graphics& gfx, f32 fadePct)
 {
@@ -594,7 +594,7 @@ void Menu::draw(Graphics& gfx, f32 fadePct)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Menu::menuCloseMenu(Menu& menu)
 {

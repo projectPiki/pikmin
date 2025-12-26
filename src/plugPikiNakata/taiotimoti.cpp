@@ -19,13 +19,13 @@
 #include "teki.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("taiotimoti")
@@ -211,7 +211,7 @@ struct TaiOtimotiLegEffectAction : public TaiJointEffectAction {
 };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TaiOtimotiSoundTable::TaiOtimotiSoundTable()
     : PaniSoundTable(12)
@@ -222,7 +222,7 @@ TaiOtimotiSoundTable::TaiOtimotiSoundTable()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TaiOtimotiParameters::TaiOtimotiParameters()
     : TekiParameters(OTIMOTIPI_COUNT, OTIMOTIPF_COUNT)
@@ -310,7 +310,7 @@ TaiOtimotiParameters::TaiOtimotiParameters()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TaiBlackFrogSoundTable::TaiBlackFrogSoundTable()
     : PaniSoundTable(10)
@@ -321,7 +321,7 @@ TaiBlackFrogSoundTable::TaiBlackFrogSoundTable()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TaiBlackFrogParameters::TaiBlackFrogParameters()
     : TekiParameters(OTIMOTIPI_COUNT, OTIMOTIPF_COUNT)
@@ -409,7 +409,7 @@ TaiBlackFrogParameters::TaiBlackFrogParameters()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TaiOtimotiStrategy::TaiOtimotiStrategy(TekiParameters* params)
     : TaiStrategy(OTIMOTISTATE_COUNT, OTIMOTISTATE_Unk2)
@@ -673,7 +673,7 @@ TaiOtimotiStrategy::TaiOtimotiStrategy(TekiParameters* params)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiOtimotiStrategy::start(Teki& teki)
 {
@@ -687,7 +687,7 @@ void TaiOtimotiStrategy::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiOtimotiStrategy::draw(Teki& teki, Graphics& gfx)
 {
@@ -712,7 +712,7 @@ void TaiOtimotiStrategy::draw(Teki& teki, Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiOtimotiStrategy::drawDebugInfo(Teki& teki, Graphics& gfx)
 {
@@ -723,7 +723,7 @@ void TaiOtimotiStrategy::drawDebugInfo(Teki& teki, Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiOtimotiStartDroppingWaterAction::start(Teki& teki)
 {
@@ -737,7 +737,7 @@ void TaiOtimotiStartDroppingWaterAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiOtimotiFlickAction::act(Teki& teki)
 {
@@ -758,7 +758,7 @@ bool TaiOtimotiFlickAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiOtimotiFailToJumpAction::act(Teki& teki)
 {
@@ -780,7 +780,7 @@ bool TaiOtimotiFailToJumpAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiOtimotiJumpingAction::start(Teki& teki)
 {
@@ -830,7 +830,7 @@ void TaiOtimotiJumpingAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiOtimotiJumpingAction::act(Teki& teki)
 {
@@ -846,7 +846,7 @@ bool TaiOtimotiJumpingAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiOtimotiAirWaitingAction::start(Teki& teki)
 {
@@ -862,7 +862,7 @@ void TaiOtimotiAirWaitingAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiOtimotiAirWaitingAction::act(Teki& teki)
 {
@@ -898,7 +898,7 @@ bool TaiOtimotiAirWaitingAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiOtimotiDroppingAction::start(Teki& teki)
 {
@@ -908,7 +908,7 @@ void TaiOtimotiDroppingAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiOtimotiDroppingAction::act(Teki& teki)
 {
@@ -919,7 +919,7 @@ bool TaiOtimotiDroppingAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiOtimotiDroppingAction::actByEvent(immut TekiEvent& event)
 {
@@ -932,7 +932,7 @@ bool TaiOtimotiDroppingAction::actByEvent(immut TekiEvent& event)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiOtimotiPressingAction::start(Teki& teki)
 {
@@ -940,7 +940,7 @@ void TaiOtimotiPressingAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiOtimotiPressingAction::act(Teki& teki)
 {
@@ -953,7 +953,7 @@ bool TaiOtimotiPressingAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiOtimotiPressingAction::actByEvent(immut TekiEvent& event)
 {
@@ -984,7 +984,7 @@ bool TaiOtimotiPressingAction::actByEvent(immut TekiEvent& event)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiOtimotiBouncingAction::act(Teki& teki)
 {
@@ -992,7 +992,7 @@ bool TaiOtimotiBouncingAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiOtimotiBouncingAction::actByEvent(immut TekiEvent&)
 {
@@ -1000,14 +1000,14 @@ bool TaiOtimotiBouncingAction::actByEvent(immut TekiEvent&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiOtimotiAttackingAction::start(Teki& teki)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiOtimotiAttackingAction::act(Teki& teki)
 {
@@ -1033,7 +1033,7 @@ bool TaiOtimotiAttackingAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiOtimotiAttackingAction::actByEvent(immut TekiEvent&)
 {
@@ -1041,7 +1041,7 @@ bool TaiOtimotiAttackingAction::actByEvent(immut TekiEvent&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiOtimotiAttackingEffectAction::start(Teki& teki)
 {
@@ -1060,7 +1060,7 @@ void TaiOtimotiAttackingEffectAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TaiOtimotiLegEffectAction::TaiOtimotiLegEffectAction(f32 sinkThreshold)
     : TaiJointEffectAction(sinkThreshold, 2, 'lleg', 'rleg', 0, 0)
@@ -1068,7 +1068,7 @@ TaiOtimotiLegEffectAction::TaiOtimotiLegEffectAction(f32 sinkThreshold)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiOtimotiLegEffectAction::setType(Vector3f& effectPos, int type, int id)
 {

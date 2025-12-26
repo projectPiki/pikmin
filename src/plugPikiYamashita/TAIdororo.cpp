@@ -22,13 +22,13 @@
 #include "zen/CallBack.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(32)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("TAIdororo")
@@ -36,7 +36,7 @@ DEFINE_PRINT("TAIdororo")
 namespace {
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000030
  */
 CollPart* getCollPartPtr(Teki& teki, u32 partID)
@@ -50,7 +50,7 @@ CollPart* getCollPartPtr(Teki& teki, u32 partID)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void setDororoEffect(Teki& teki)
 {
@@ -107,7 +107,7 @@ void setDororoEffect(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000DC
  */
 void killDororoEffect(Teki& teki)
@@ -589,7 +589,7 @@ protected:
 };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TAIdororoSoundTable::TAIdororoSoundTable()
     : PaniSoundTable(6)
@@ -600,7 +600,7 @@ TAIdororoSoundTable::TAIdororoSoundTable()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TAIdororoParameters::TAIdororoParameters()
     : TekiParameters(DOROROPI_COUNT, DOROROPF_COUNT)
@@ -675,7 +675,7 @@ TAIdororoParameters::TAIdororoParameters()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TAIdororoStrategy::TAIdororoStrategy()
     : YaiStrategy(DOROROSTATE_COUNT, DOROROSTATE_Init)
@@ -828,7 +828,7 @@ TAIdororoStrategy::TAIdororoStrategy()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAIdororoStrategy::act(Teki& teki)
 {
@@ -876,7 +876,7 @@ void TAIdororoStrategy::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAIdororoStrategy::draw(Teki& teki, Graphics& gfx)
 {
@@ -884,7 +884,7 @@ void TAIdororoStrategy::draw(Teki& teki, Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAIdororoStrategy::createEffect(Teki& teki, int effType)
 {
@@ -904,7 +904,7 @@ void TAIdororoStrategy::createEffect(Teki& teki, int effType)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAIdororoStrategy::createCloudOfDust(Teki& teki, CollPart* part)
 {
@@ -931,7 +931,7 @@ void TAIdororoStrategy::createCloudOfDust(Teki& teki, CollPart* part)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAIdororoStrategy::start(Teki& teki)
 {
@@ -946,7 +946,7 @@ void TAIdororoStrategy::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAIdororoAnimation::makeDefaultAnimations()
 {

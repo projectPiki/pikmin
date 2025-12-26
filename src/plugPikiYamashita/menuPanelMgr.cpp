@@ -3,19 +3,19 @@
 #include "sysNew.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("menuPanelMgr")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::MenuPanelMgr::setCallBack(P2DScreen* screen, P2DPane* parent)
 {
@@ -34,7 +34,7 @@ void zen::MenuPanelMgr::setCallBack(P2DScreen* screen, P2DPane* parent)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool zen::MenuPanelMgr::update()
 {
@@ -61,7 +61,7 @@ bool zen::MenuPanelMgr::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool zen::MenuPanelMgr::checkFinish()
 {

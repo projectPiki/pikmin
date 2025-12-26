@@ -46,19 +46,19 @@ Colour Piki::kinokoColors[6] = {
 bool Piki::directDumpMode;
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(43)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("piki");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Piki::isSafeMePos(immut Vector3f& pos)
 {
@@ -96,7 +96,7 @@ bool Piki::isSafeMePos(immut Vector3f& pos)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Piki::startDemo()
 {
@@ -114,7 +114,7 @@ void Piki::startDemo()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Piki::finishDemo()
 {
@@ -130,7 +130,7 @@ void Piki::finishDemo()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Piki::appearDemo()
 {
@@ -152,7 +152,7 @@ bool Piki::appearDemo()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int Piki::getUpperMotionIndex()
 {
@@ -160,7 +160,7 @@ int Piki::getUpperMotionIndex()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Piki::addCntCallback()
 {
@@ -170,14 +170,14 @@ void Piki::addCntCallback()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Piki::subCntCallback()
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 Piki::getAttackPower()
 {
@@ -193,7 +193,7 @@ f32 Piki::getAttackPower()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000008
  */
 PikiState* Piki::getPikiState()
@@ -202,7 +202,7 @@ PikiState* Piki::getPikiState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int Piki::findRoute(int sourceWaypointIndex, int destWaypointIndex, bool isRetryAttempt, bool useAsynchronous)
 {
@@ -307,7 +307,7 @@ int Piki::findRoute(int sourceWaypointIndex, int destWaypointIndex, bool isRetry
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000078
  */
 bool Piki::initRouteTraceDynamic(Creature* target)
@@ -321,7 +321,7 @@ bool Piki::initRouteTraceDynamic(Creature* target)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int Piki::moveRouteTraceDynamic(f32 speedRatio)
 {
@@ -353,7 +353,7 @@ int Piki::moveRouteTraceDynamic(f32 speedRatio)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Piki::initRouteTrace(immut Vector3f& targetPos, bool p2)
 {
@@ -432,7 +432,7 @@ bool Piki::initRouteTrace(immut Vector3f& targetPos, bool p2)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int Piki::moveRouteTrace(f32 speedRatio)
 {
@@ -543,7 +543,7 @@ int Piki::moveRouteTrace(f32 speedRatio)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Vector3f Piki::crGetPoint(int routePointIdx)
 {
@@ -565,7 +565,7 @@ Vector3f Piki::crGetPoint(int routePointIdx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Piki::crPointOpen(int routePointIdx)
 {
@@ -583,7 +583,7 @@ bool Piki::crPointOpen(int routePointIdx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 Piki::crGetRadius(int routePointIdx)
 {
@@ -599,7 +599,7 @@ f32 Piki::crGetRadius(int routePointIdx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Piki::crMakeRefs()
 {
@@ -609,7 +609,7 @@ void Piki::crMakeRefs()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Piki::hasBomb()
 {
@@ -617,7 +617,7 @@ bool Piki::hasBomb()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Piki::startFire()
 {
@@ -629,7 +629,7 @@ void Piki::startFire()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000A0
  */
 void Piki::updateFire()
@@ -645,7 +645,7 @@ void Piki::updateFire()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Piki::endFire()
 {
@@ -656,7 +656,7 @@ void Piki::endFire()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Piki::isTeki(Piki* target)
 {
@@ -679,7 +679,7 @@ bool Piki::isTeki(Piki* target)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Piki::actOnSituaton()
 {
@@ -802,7 +802,7 @@ void Piki::actOnSituaton()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00001C
  */
 int Piki::getNaviID()
@@ -814,7 +814,7 @@ int Piki::getNaviID()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Piki::doDoAI()
 {
@@ -832,7 +832,7 @@ bool Piki::doDoAI()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Piki::isRopable()
 {
@@ -844,7 +844,7 @@ bool Piki::isRopable()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Vector3f Piki::getCatchPos(Creature*)
 {
@@ -852,7 +852,7 @@ Vector3f Piki::getCatchPos(Creature*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int Piki::getState()
 {
@@ -860,7 +860,7 @@ int Piki::getState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00000C
  */
 int Piki::getLastState()
@@ -869,7 +869,7 @@ int Piki::getLastState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Piki::isBuried()
 {
@@ -877,7 +877,7 @@ bool Piki::isBuried()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int Piki::graspSituation(Creature** outTarget)
 {
@@ -1238,7 +1238,7 @@ int Piki::graspSituation(Creature** outTarget)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Piki::initColor(int color)
 {
@@ -1267,7 +1267,7 @@ void Piki::initColor(int color)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Piki::startKinoko()
 {
@@ -1275,7 +1275,7 @@ void Piki::startKinoko()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Piki::endKinoko()
 {
@@ -1285,7 +1285,7 @@ void Piki::endKinoko()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Piki::setColor(int color)
 {
@@ -1302,7 +1302,7 @@ void Piki::setColor(int color)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Piki::setPastel()
 {
@@ -1319,7 +1319,7 @@ void Piki::setPastel()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Piki::unsetPastel()
 {
@@ -1327,7 +1327,7 @@ void Piki::unsetPastel()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Piki::updateColor()
 {
@@ -1345,7 +1345,7 @@ void Piki::updateColor()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Piki::needShadow()
 {
@@ -1363,7 +1363,7 @@ bool Piki::needShadow()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Piki::isFixed()
 {
@@ -1375,7 +1375,7 @@ bool Piki::isFixed()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Piki::sendMsg(Msg* msg)
 {
@@ -1390,7 +1390,7 @@ void Piki::sendMsg(Msg* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Piki::stimulate(immut Interaction& interaction)
 {
@@ -1402,7 +1402,7 @@ bool Piki::stimulate(immut Interaction& interaction)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int Piki::getFormationPri()
 {
@@ -1427,7 +1427,7 @@ int Piki::getFormationPri()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Piki::startDamage()
 {
@@ -1448,7 +1448,7 @@ void Piki::startDamage()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Piki::finishDamage()
 {
@@ -1474,7 +1474,7 @@ void Piki::finishDamage()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Piki::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
@@ -1493,7 +1493,7 @@ void Piki::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000038
  */
 void Piki::birthBuried()
@@ -1502,7 +1502,7 @@ void Piki::birthBuried()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Piki::isAtari()
 {
@@ -1517,7 +1517,7 @@ bool Piki::isAtari()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Piki::ignoreAtari(Creature* target)
 {
@@ -1548,7 +1548,7 @@ bool Piki::ignoreAtari(Creature* target)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Piki::needFlick(Creature*)
 {
@@ -1556,7 +1556,7 @@ bool Piki::needFlick(Creature*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Piki::isVisible()
 {
@@ -1571,7 +1571,7 @@ bool Piki::isVisible()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000080
  */
 bool Piki::isGrowable()
@@ -1581,7 +1581,7 @@ bool Piki::isGrowable()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00002C
  */
 bool Piki::isTamable()
@@ -1591,7 +1591,7 @@ bool Piki::isTamable()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Piki::isThrowable()
 {
@@ -1620,7 +1620,7 @@ bool Piki::isThrowable()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000064
  */
 void Piki::growup()
@@ -1636,7 +1636,7 @@ void Piki::growup()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Piki::offwallCallback(DynCollObject* wall)
 {
@@ -1646,7 +1646,7 @@ void Piki::offwallCallback(DynCollObject* wall)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Piki::wallCallback(immut Plane& wallPlane, DynCollObject* wall)
 {
@@ -1659,14 +1659,14 @@ void Piki::wallCallback(immut Plane& wallPlane, DynCollObject* wall)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Piki::jumpCallback()
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Piki::platAttachable()
 {
@@ -1690,7 +1690,7 @@ bool Piki::platAttachable()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Piki::mayIstick()
 {
@@ -1729,7 +1729,7 @@ bool Piki::mayIstick()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Piki::stickToCallback(Creature*)
 {
@@ -1738,7 +1738,7 @@ void Piki::stickToCallback(Creature*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Piki::bounceCallback()
 {
@@ -1790,7 +1790,7 @@ void Piki::bounceCallback()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Piki::startMotion(immut PaniMotionInfo& motion1, immut PaniMotionInfo& motion2)
 {
@@ -1884,7 +1884,7 @@ void Piki::startMotion(immut PaniMotionInfo& motion1, immut PaniMotionInfo& moti
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Piki::enableMotionBlend()
 {
@@ -1893,7 +1893,7 @@ void Piki::enableMotionBlend()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000014
  */
 bool Piki::doMotionBlend()
@@ -1902,7 +1902,7 @@ bool Piki::doMotionBlend()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00005C
  */
 void Piki::swapMotion(immut PaniMotionInfo& motion1, immut PaniMotionInfo& motion2)
@@ -1920,7 +1920,7 @@ void Piki::swapMotion(immut PaniMotionInfo& motion1, immut PaniMotionInfo& motio
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Piki::checkBridgeWall(Creature* object, immut Vector3f& direction)
 {
@@ -1956,7 +1956,7 @@ void Piki::checkBridgeWall(Creature* object, immut Vector3f& direction)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Piki::collisionCallback(immut CollEvent& event)
 {
@@ -2161,7 +2161,7 @@ void Piki::collisionCallback(immut CollEvent& event)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Piki::Piki(CreatureProp* prop)
     : Creature(prop)
@@ -2195,7 +2195,7 @@ Piki::Piki(CreatureProp* prop)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000078
  */
 void Piki::setSpeed(f32 speedRatio)
@@ -2214,7 +2214,7 @@ void Piki::setSpeed(f32 speedRatio)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 Piki::getSpeed(f32 speedRatio)
 {
@@ -2232,7 +2232,7 @@ f32 Piki::getSpeed(f32 speedRatio)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Piki::setSpeed(f32 speedRatio, immut Vector3f& direction)
 {
@@ -2250,7 +2250,7 @@ void Piki::setSpeed(f32 speedRatio, immut Vector3f& direction)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Piki::setSpeed(f32 speedRatio, f32 angle)
 {
@@ -2269,7 +2269,7 @@ void Piki::setSpeed(f32 speedRatio, f32 angle)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 Piki::getSize()
 {
@@ -2280,7 +2280,7 @@ f32 Piki::getSize()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 Piki::getiMass()
 {
@@ -2295,7 +2295,7 @@ f32 Piki::getiMass()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Piki::resetPosition(immut Vector3f& pos)
 {
@@ -2305,7 +2305,7 @@ void Piki::resetPosition(immut Vector3f& pos)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Piki::init(Navi* navi)
 {
@@ -2378,7 +2378,7 @@ void Piki::init(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Piki::isAlive()
 {
@@ -2391,7 +2391,7 @@ bool Piki::isAlive()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Piki::isFruit()
 {
@@ -2399,7 +2399,7 @@ bool Piki::isFruit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Piki::updateLookCreature()
 {
@@ -2458,7 +2458,7 @@ void Piki::updateLookCreature()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Piki::doAnimation()
 {
@@ -2468,7 +2468,7 @@ void Piki::doAnimation()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Piki::updateWalkAnimation()
 {
@@ -2578,7 +2578,7 @@ void Piki::updateWalkAnimation()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 
 int stupid_pikiRealAI()
@@ -2703,7 +2703,7 @@ void Piki::realAI()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00002C
  */
 immut char* Piki::getCurrentMotionName()
@@ -2712,7 +2712,7 @@ immut char* Piki::getCurrentMotionName()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Piki::doAI()
 {
@@ -2740,7 +2740,7 @@ void Piki::doAI()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Piki::changeMode(int newMode, Navi* navi)
 {
@@ -2840,7 +2840,7 @@ static const char* _colorNames[PikiColorCount] = {
 };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Piki::dump()
 {

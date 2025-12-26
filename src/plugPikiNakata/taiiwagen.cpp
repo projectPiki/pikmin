@@ -13,13 +13,13 @@
 #include "teki.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(12)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("taiiwagen")
@@ -58,7 +58,7 @@ struct TaiIwagonRollingAction : public TaiAction {
 };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TaiIwagonParameters::TaiIwagonParameters()
     : TekiParameters(TPI_COUNT, TPF_COUNT)
@@ -81,7 +81,7 @@ TaiIwagonParameters::TaiIwagonParameters()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TaiIwagonSoundTable::TaiIwagonSoundTable()
     : PaniSoundTable(2)
@@ -92,7 +92,7 @@ TaiIwagonSoundTable::TaiIwagonSoundTable()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TaiIwagonStrategy::TaiIwagonStrategy(TekiParameters* params)
     : TaiStrategy(IWAGONSTATE_COUNT, IWAGONSTATE_Roll)
@@ -142,7 +142,7 @@ TaiIwagonStrategy::TaiIwagonStrategy(TekiParameters* params)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiIwagonStrategy::start(Teki& teki)
 {
@@ -164,7 +164,7 @@ void TaiIwagonStrategy::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiIwagonDustEffectAction::act(Teki& teki)
 {
@@ -182,7 +182,7 @@ bool TaiIwagonDustEffectAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiIwagonRollingAction::start(Teki& teki)
 {
@@ -190,7 +190,7 @@ void TaiIwagonRollingAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiIwagonRollingAction::act(Teki& teki)
 {
@@ -216,7 +216,7 @@ struct TaiIwagenShootingAction : public TaiAction {
 };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TaiIwagenParameters::TaiIwagenParameters()
     : TekiParameters(TPI_COUNT, IWAGENPF_COUNT)
@@ -241,7 +241,7 @@ TaiIwagenParameters::TaiIwagenParameters()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TaiIwagenStrategy::TaiIwagenStrategy(TekiParameters* params)
     : TaiStrategy(IWAGENSTATE_COUNT, IWAGENSTATE_Wait)
@@ -274,7 +274,7 @@ TaiIwagenStrategy::TaiIwagenStrategy(TekiParameters* params)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiIwagenStrategy::draw(Teki& teki, Graphics& gfx)
 {
@@ -288,7 +288,7 @@ void TaiIwagenStrategy::draw(Teki& teki, Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiIwagenStrategy::start(Teki& teki)
 {
@@ -297,7 +297,7 @@ void TaiIwagenStrategy::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiIwagenShootingAction::start(Teki& teki)
 {
@@ -305,7 +305,7 @@ void TaiIwagenShootingAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiIwagenShootingAction::act(Teki& teki)
 {

@@ -22,19 +22,19 @@ int GameStat::maxPikis;
 bool GameStat::orimaDead;
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("gameStat");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GameStat::init()
 {
@@ -60,7 +60,7 @@ void GameStat::init()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GameStat::update()
 {
@@ -79,7 +79,7 @@ void GameStat::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 void GameStat::Counter::dump(immut char* name)
@@ -88,7 +88,7 @@ void GameStat::Counter::dump(immut char* name)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 void GameStat::ColCounter::dump(immut char* name)
@@ -97,7 +97,7 @@ void GameStat::ColCounter::dump(immut char* name)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GameStat::dump()
 {

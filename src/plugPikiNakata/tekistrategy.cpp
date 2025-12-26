@@ -4,54 +4,54 @@
 #include "teki.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("tekistrategy")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TekiStrategy::TekiStrategy()
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TekiStrategy::start(Teki&)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TekiStrategy::act(Teki&)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TekiStrategy::eventPerformed(immut TekiEvent&)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TekiStrategy::createEffect(Teki&, int)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TekiStrategy::draw(Teki& teki, Graphics& gfx)
 {
@@ -59,7 +59,7 @@ void TekiStrategy::draw(Teki& teki, Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TekiStrategy::drawDebugInfo(Teki& teki, Graphics& gfx)
 {
@@ -67,7 +67,7 @@ void TekiStrategy::drawDebugInfo(Teki& teki, Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TekiStrategy::interact(Teki& teki, immut TekiInteractionKey& key)
 {
@@ -75,14 +75,14 @@ bool TekiStrategy::interact(Teki& teki, immut TekiInteractionKey& key)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TekiStrategy::spawnCorpseParts(Teki&)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TekiStrategyTable::TekiStrategyTable(int count)
 {

@@ -4,19 +4,19 @@
 #include "Graphics.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("Spider");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 SpiderProp::SpiderProp()
 {
@@ -26,7 +26,7 @@ SpiderProp::SpiderProp()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Spider::Spider(CreatureProp* props)
     : Boss(props)
@@ -40,7 +40,7 @@ Spider::Spider(CreatureProp* props)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 Spider::getiMass()
 {
@@ -48,7 +48,7 @@ f32 Spider::getiMass()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Spider::init(immut Vector3f&)
 {
@@ -74,7 +74,7 @@ void Spider::init(immut Vector3f&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Spider::doKill()
 {
@@ -87,7 +87,7 @@ void Spider::doKill()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Spider::exitCourse()
 {
@@ -95,7 +95,7 @@ void Spider::exitCourse()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Spider::update()
 {
@@ -107,7 +107,7 @@ void Spider::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000100
  */
 void Spider::draw(Graphics& gfx)
@@ -125,7 +125,7 @@ void Spider::draw(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Spider::refresh(Graphics& gfx)
 {
@@ -134,7 +134,7 @@ void Spider::refresh(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Spider::drawShape(Graphics& gfx)
 {
@@ -144,7 +144,7 @@ void Spider::drawShape(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Spider::doAI()
 {
@@ -152,7 +152,7 @@ void Spider::doAI()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Spider::doAnimation()
 {
@@ -162,7 +162,7 @@ void Spider::doAnimation()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SpiderDrawer::draw(Graphics& gfx)
 {

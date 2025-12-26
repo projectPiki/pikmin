@@ -11,19 +11,19 @@
 #include "SoundMgr.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("SnakeBody");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SnakeBody::setBodyOnGroundEffect()
 {
@@ -67,7 +67,7 @@ void SnakeBody::setBodyOnGroundEffect()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SnakeBody::killCallBackEffect(bool doForceFinish)
 {
@@ -76,7 +76,7 @@ void SnakeBody::killCallBackEffect(bool doForceFinish)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 SnakeBody::SnakeBody(Snake* snake)
 {
@@ -87,7 +87,7 @@ SnakeBody::SnakeBody(Snake* snake)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SnakeBody::init(immut Vector3f&, Snake* snake)
 {
@@ -109,7 +109,7 @@ void SnakeBody::init(immut Vector3f&, Snake* snake)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SnakeBody::initBlending(f32 blendRate)
 {
@@ -122,7 +122,7 @@ void SnakeBody::initBlending(f32 blendRate)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000A4
  */
 void SnakeBody::updateBlendingRatio()
@@ -140,7 +140,7 @@ void SnakeBody::updateBlendingRatio()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00001C
  */
 void SnakeBody::setInitializePosition()
@@ -150,7 +150,7 @@ void SnakeBody::setInitializePosition()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000FC
  */
 void SnakeBody::copyAnimPosition()
@@ -165,7 +165,7 @@ void SnakeBody::copyAnimPosition()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00010C
  */
 void SnakeBody::makeHeadDirection()
@@ -181,7 +181,7 @@ void SnakeBody::makeHeadDirection()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SnakeBody::makeTurnVelocity()
 {
@@ -224,7 +224,7 @@ void SnakeBody::makeTurnVelocity()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00013C
  */
 void SnakeBody::makeNewPosition()
@@ -239,7 +239,7 @@ void SnakeBody::makeNewPosition()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SnakeBody::makeResultPosition()
 {
@@ -297,7 +297,7 @@ void SnakeBody::makeResultPosition()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SnakeBody::makeVectorMatrix()
 {
@@ -328,7 +328,7 @@ void SnakeBody::makeVectorMatrix()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 void SnakeBody::createDeadPellet(immut Vector3f& pelletPos, int itemIdx)
@@ -349,7 +349,7 @@ void SnakeBody::createDeadPellet(immut Vector3f& pelletPos, int itemIdx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SnakeBody::createDeadHeadEffect()
 {
@@ -378,7 +378,7 @@ void SnakeBody::createDeadHeadEffect()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SnakeBody::createDeadBodyEffect()
 {
@@ -410,7 +410,7 @@ void SnakeBody::createDeadBodyEffect()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SnakeBody::makeDeadPattern01()
 {
@@ -450,7 +450,7 @@ void SnakeBody::makeDeadPattern01()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000088
  */
 void SnakeBody::makeDeadPattern02()
@@ -459,7 +459,7 @@ void SnakeBody::makeDeadPattern02()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00003C
  */
 void SnakeBody::makeDeadScaleParms()
@@ -470,7 +470,7 @@ void SnakeBody::makeDeadScaleParms()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SnakeBody::update()
 {
@@ -782,7 +782,7 @@ void SnakeBody::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00013C
  */
 void SnakeBody::makeAnimation(BossShapeObject* shapeObj, Graphics& gfx)
@@ -799,7 +799,7 @@ void SnakeBody::makeAnimation(BossShapeObject* shapeObj, Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SnakeBody::makeBodySize()
 {
@@ -817,7 +817,7 @@ void SnakeBody::makeBodySize()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SnakeBody::makeHeadPosition()
 {
@@ -850,7 +850,7 @@ void SnakeBody::makeHeadPosition()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SnakeBody::makeBodyMatrix()
 {
@@ -898,7 +898,7 @@ void SnakeBody::makeBodyMatrix()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SnakeBody::makeAnimMatrix()
 {
@@ -930,7 +930,7 @@ void SnakeBody::makeAnimMatrix()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SnakeBody::caseOfMatrix(Matrix4f* animMatrices)
 {
@@ -949,7 +949,7 @@ void SnakeBody::caseOfMatrix(Matrix4f* animMatrices)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00082C
  */
 void SnakeBody::checkBlendingParm(Matrix4f* animMatrices)
@@ -968,7 +968,7 @@ void SnakeBody::checkBlendingParm(Matrix4f* animMatrices)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SnakeBody::makeBlending(Matrix4f* animMatrices)
 {
@@ -1025,7 +1025,7 @@ void SnakeBody::makeBlending(Matrix4f* animMatrices)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SnakeBody::setDeadPattern01(Matrix4f* animMatrices)
 {
@@ -1052,7 +1052,7 @@ void SnakeBody::setDeadPattern01(Matrix4f* animMatrices)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000268
  */
 void SnakeBody::setDeadPattern02(Matrix4f*)
@@ -1061,7 +1061,7 @@ void SnakeBody::setDeadPattern02(Matrix4f*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000030
  */
 void SnakeBody::setDeadScale(Matrix4f* animMatrices)
@@ -1072,7 +1072,7 @@ void SnakeBody::setDeadScale(Matrix4f* animMatrices)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SnakeBody::returnJoint(BossShapeObject* shapeObj, Graphics& gfx, immut Matrix4f* animMatrices)
 {
@@ -1109,7 +1109,7 @@ void SnakeBody::returnJoint(BossShapeObject* shapeObj, Graphics& gfx, immut Matr
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SnakeBody::refresh(BossShapeObject* shapeObj, Graphics& gfx)
 {

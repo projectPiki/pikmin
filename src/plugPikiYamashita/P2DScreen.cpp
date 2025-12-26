@@ -8,19 +8,19 @@
 #include "zen/ogSub.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(37)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("P2DScreen")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void P2DScreen::update()
 {
@@ -34,14 +34,14 @@ void P2DScreen::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 P2DScreen::~P2DScreen()
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void P2DScreen::set(const char* bloFileName, bool useAlphaMgr, bool useTexAnimMgr, bool p4)
 {
@@ -74,7 +74,7 @@ void P2DScreen::set(const char* bloFileName, bool useAlphaMgr, bool useTexAnimMg
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000030
  */
 void P2DScreen::set(RandomAccessStream* input)
@@ -83,7 +83,7 @@ void P2DScreen::set(RandomAccessStream* input)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void P2DScreen::makeHiearachyPanes(P2DPane* parent, RandomAccessStream* input, bool, bool doExpandBounds)
 {
@@ -126,7 +126,7 @@ void P2DScreen::makeHiearachyPanes(P2DPane* parent, RandomAccessStream* input, b
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 P2DPane* P2DScreen::makeUserPane(u16, P2DPane*, RandomAccessStream*)
 {
@@ -135,7 +135,7 @@ P2DPane* P2DScreen::makeUserPane(u16, P2DPane*, RandomAccessStream*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000008
  */
 P2DPane* P2DScreen::stop()
@@ -145,7 +145,7 @@ P2DPane* P2DScreen::stop()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void P2DScreen::draw(int x, int y, const P2DGrafContext* grafContext)
 {
@@ -170,7 +170,7 @@ void P2DScreen::draw(int x, int y, const P2DGrafContext* grafContext)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 P2DPane* P2DScreen::search(u32 tag, bool p2)
 {
@@ -182,7 +182,7 @@ P2DPane* P2DScreen::search(u32 tag, bool p2)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void P2DScreen::loadResource()
 {
@@ -190,7 +190,7 @@ void P2DScreen::loadResource()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void P2DScreen::makeResName(const char* fileName, char* outPath)
 {

@@ -5,19 +5,19 @@
 #include "sysNew.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT(nullptr);
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 UfoShapeObject::UfoShapeObject(Shape* shape)
 {
@@ -43,7 +43,7 @@ immut char* PaniUfoAnimator::motionLabels[UfoMotion::COUNT] = {
 };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PaniMotionTable* PaniUfoAnimator::createMotionTable()
 {
@@ -70,14 +70,14 @@ PaniMotionTable* PaniUfoAnimator::createMotionTable()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PaniUfoAnimator::PaniUfoAnimator()
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 UfoAnimator::UfoAnimator()
 {
@@ -86,7 +86,7 @@ UfoAnimator::UfoAnimator()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void UfoAnimator::init(UfoShapeObject* shape, PaniMotionTable* table)
 {
@@ -98,7 +98,7 @@ void UfoAnimator::init(UfoShapeObject* shape, PaniMotionTable* table)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void UfoAnimator::startMotion(int id, PaniMotionInfo* info)
 {
@@ -108,7 +108,7 @@ void UfoAnimator::startMotion(int id, PaniMotionInfo* info)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void UfoAnimator::setMotionSpeed(int id, f32 speed)
 {
@@ -116,7 +116,7 @@ void UfoAnimator::setMotionSpeed(int id, f32 speed)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int UfoAnimator::getMotionIndex(int id)
 {
@@ -124,7 +124,7 @@ int UfoAnimator::getMotionIndex(int id)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void UfoAnimator::stopAllMotions()
 {
@@ -134,7 +134,7 @@ void UfoAnimator::stopAllMotions()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void UfoAnimator::initFlagMotions(int id)
 {
@@ -167,7 +167,7 @@ void UfoAnimator::initFlagMotions(int id)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void UfoAnimator::startFlagMotions(int id)
 {
@@ -197,7 +197,7 @@ void UfoAnimator::startFlagMotions(int id)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void UfoAnimator::setMotionLastFrame(int id)
 {
@@ -206,7 +206,7 @@ void UfoAnimator::setMotionLastFrame(int id)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void UfoAnimator::updateAnimation()
 {
@@ -216,7 +216,7 @@ void UfoAnimator::updateAnimation()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void UfoAnimator::updateContext()
 {

@@ -6,19 +6,19 @@
 #include "teki.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("taimoveactions")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiMoveNestPositionAction::act(Teki& teki)
 {
@@ -27,7 +27,7 @@ bool TaiMoveNestPositionAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiStopMoveAction::start(Teki& teki)
 {
@@ -35,7 +35,7 @@ void TaiStopMoveAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiStartFlyingAction::start(Teki& teki)
 {
@@ -43,7 +43,7 @@ void TaiStartFlyingAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiFinishFlyingAction::start(Teki& teki)
 {
@@ -51,7 +51,7 @@ void TaiFinishFlyingAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiMakeVelocityDirectionAction::act(Teki& teki)
 {
@@ -64,7 +64,7 @@ bool TaiMakeVelocityDirectionAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiMakeAccelerationDirectionAction::act(Teki& teki)
 {
@@ -77,7 +77,7 @@ bool TaiMakeAccelerationDirectionAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiMakingNextVelocityAction::act(Teki& teki)
 {
@@ -91,7 +91,7 @@ bool TaiMakingNextVelocityAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiMakingNextDriveAction::act(Teki& teki)
 {
@@ -105,7 +105,7 @@ bool TaiMakingNextDriveAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiAccelerationAction::act(Teki& teki)
 {
@@ -114,7 +114,7 @@ bool TaiAccelerationAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiParabolaAction::act(Teki& teki)
 {
@@ -123,7 +123,7 @@ bool TaiParabolaAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiCircleMoveAction::act(Teki& teki)
 {
@@ -132,7 +132,7 @@ bool TaiCircleMoveAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiHorizontalSinWaveAction::act(Teki& teki)
 {
@@ -141,7 +141,7 @@ bool TaiHorizontalSinWaveAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiClampMaxHeightAction::act(Teki& teki)
 {
@@ -156,7 +156,7 @@ bool TaiClampMaxHeightAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiClampMinHeightAction::act(Teki& teki)
 {
@@ -171,7 +171,7 @@ bool TaiClampMinHeightAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiClampMinVelocityYAction::act(Teki& teki)
 {
@@ -187,7 +187,7 @@ bool TaiClampMinVelocityYAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiImpassableAction::start(Teki& teki)
 {
@@ -195,7 +195,7 @@ void TaiImpassableAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiImpassableAction::act(Teki& teki)
 {
@@ -216,7 +216,7 @@ bool TaiImpassableAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiImpassableAction::resetPosition(Teki& teki)
 {
@@ -225,7 +225,7 @@ void TaiImpassableAction::resetPosition(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiRandomWanderingRouteAction::start(Teki& teki)
 {
@@ -234,14 +234,14 @@ void TaiRandomWanderingRouteAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiRandomWanderingRouteAction::finish(Teki& teki)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiRandomWanderingRouteAction::act(Teki& teki)
 {
@@ -289,7 +289,7 @@ bool TaiRandomWanderingRouteAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiRandomWanderingRouteAction::makeTargetPosition(Teki& teki)
 {
@@ -300,7 +300,7 @@ void TaiRandomWanderingRouteAction::makeTargetPosition(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiTracingAction::act(Teki& teki)
 {
@@ -320,14 +320,14 @@ bool TaiTracingAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiGoingHomeAction::finish(Teki& teki)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiGoingHomeAction::act(Teki& teki)
 {
@@ -340,7 +340,7 @@ bool TaiGoingHomeAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiDirectTurnAction::act(Teki& teki)
 {
@@ -355,7 +355,7 @@ bool TaiDirectTurnAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiTurningAction::act(Teki& teki)
 {
@@ -386,7 +386,7 @@ bool TaiTurningAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiTurningAwayAction::act(Teki& teki)
 {
@@ -418,7 +418,7 @@ bool TaiTurningAwayAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiTraceTurningAction::act(Teki& teki)
 {
@@ -453,7 +453,7 @@ bool TaiTraceTurningAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiOutOfTraceAngleAction::act(Teki& teki)
 {
@@ -476,7 +476,7 @@ bool TaiOutOfTraceAngleAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiTurningToTargetPositionAction::act(Teki& teki)
 {
@@ -499,7 +499,7 @@ bool TaiTurningToTargetPositionAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiRotatingAction::act(Teki& teki)
 {
@@ -508,7 +508,7 @@ bool TaiRotatingAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiRunningAwayToTargetDirectionAction::act(Teki& teki)
 {
@@ -524,7 +524,7 @@ bool TaiRunningAwayToTargetDirectionAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiRunningAwayAction::act(Teki& teki)
 {
@@ -568,7 +568,7 @@ bool TaiRunningAwayAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiWatchOffTerritoryCenterAction::act(Teki& teki)
 {
@@ -576,7 +576,7 @@ bool TaiWatchOffTerritoryCenterAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiTargetNestAction::start(Teki& teki)
 {
@@ -584,7 +584,7 @@ void TaiTargetNestAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiHeadOnCollisionAvoidanceAction::actByEvent(immut TekiEvent& event)
 {

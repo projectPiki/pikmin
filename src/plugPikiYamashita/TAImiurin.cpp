@@ -18,13 +18,13 @@
 #include "zen/CallBack.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(34)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("TAImiurin")
@@ -740,7 +740,7 @@ protected:
 };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TAImiurinSoundTable::TAImiurinSoundTable()
     : PaniSoundTable(3)
@@ -751,7 +751,7 @@ TAImiurinSoundTable::TAImiurinSoundTable()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TAImiurinParameters::TAImiurinParameters()
     : TekiParameters(TAImiurinIntParams::COUNT, TAImiurinFloatParams::COUNT)
@@ -835,7 +835,7 @@ TAImiurinParameters::TAImiurinParameters()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TAImiurinStrategy::TAImiurinStrategy()
     : YaiStrategy(TAImiurinStateID::COUNT, TAImiurinStateID::Init)
@@ -1162,7 +1162,7 @@ TAImiurinStrategy::TAImiurinStrategy()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAImiurinStrategy::interact(Teki& teki, immut TekiInteractionKey& interaction)
 {
@@ -1185,7 +1185,7 @@ bool TAImiurinStrategy::interact(Teki& teki, immut TekiInteractionKey& interacti
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAImiurinAnimation::makeDefaultAnimations()
 {

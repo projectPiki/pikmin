@@ -24,13 +24,13 @@ bool preloadUFO = false;
 PlayerState* playerState;
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(20)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("PlayerState")
@@ -43,7 +43,7 @@ UfoPartsInfo partsInfo[5] = {
 char unusedStr[] = { "ペレットマネージャ" };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000014
  */
 TimeGraph::TimeGraph()
@@ -54,7 +54,7 @@ TimeGraph::TimeGraph()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000054
  */
 void TimeGraph::create(u16 startTime, u16 endTime)
@@ -67,7 +67,7 @@ void TimeGraph::create(u16 startTime, u16 endTime)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000048
  */
 void TimeGraph::init()
@@ -78,7 +78,7 @@ void TimeGraph::init()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000044
  */
 void TimeGraph::set(u16 time, int color, int num)
@@ -91,7 +91,7 @@ void TimeGraph::set(u16 time, int color, int num)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00004C
  */
 int TimeGraph::get(u16 time, int color)
@@ -103,7 +103,7 @@ int TimeGraph::get(u16 time, int color)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 
 bool PlayerState::isEnding()
@@ -121,7 +121,7 @@ bool PlayerState::isEnding()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool PlayerState::existUfoParts(u32 id)
 {
@@ -148,7 +148,7 @@ bool PlayerState::existUfoParts(u32 id)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PlayerState::initGame()
 {
@@ -199,7 +199,7 @@ void PlayerState::initGame()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PlayerState::PlayerState()
 {
@@ -256,7 +256,7 @@ PlayerState::PlayerState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool PlayerState::courseOpen(int courseID)
 {
@@ -267,7 +267,7 @@ bool PlayerState::courseOpen(int courseID)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool PlayerState::happyEndable()
 {
@@ -275,7 +275,7 @@ bool PlayerState::happyEndable()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PlayerState::setChallengeMode()
 {
@@ -294,7 +294,7 @@ void PlayerState::setChallengeMode()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000078
  */
 void PlayerState::setDebugMode()
@@ -304,7 +304,7 @@ void PlayerState::setDebugMode()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int PlayerState::getPartsGetCount(int stageID)
 {
@@ -315,7 +315,7 @@ int PlayerState::getPartsGetCount(int stageID)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000048
  */
 int PlayerState::getCardPikiCount(int color)
@@ -328,7 +328,7 @@ int PlayerState::getCardPikiCount(int color)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int PlayerState::getCardUfoPartsCount()
 {
@@ -336,7 +336,7 @@ int PlayerState::getCardUfoPartsCount()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000078
  */
 int PlayerState::getUfoPercentage()
@@ -346,7 +346,7 @@ int PlayerState::getUfoPercentage()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int PlayerState::getTotalPikiCount(int color)
 {
@@ -363,7 +363,7 @@ int PlayerState::getTotalPikiCount(int color)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PlayerState::saveCard(RandomAccessStream& data)
 {
@@ -447,7 +447,7 @@ void PlayerState::saveCard(RandomAccessStream& data)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PlayerState::loadCard(RandomAccessStream& data)
 {
@@ -536,7 +536,7 @@ void PlayerState::loadCard(RandomAccessStream& data)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool PlayerState::isTutorial()
 {
@@ -552,7 +552,7 @@ bool PlayerState::isTutorial()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool PlayerState::isGameCourse()
 {
@@ -561,7 +561,7 @@ bool PlayerState::isGameCourse()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool PlayerState::checkLimitGenFlag(int id)
 {
@@ -572,7 +572,7 @@ bool PlayerState::checkLimitGenFlag(int id)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PlayerState::setLimitGenFlag(int id)
 {
@@ -586,7 +586,7 @@ void PlayerState::setLimitGenFlag(int id)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool PlayerState::displayPikiCount(int color)
 {
@@ -598,7 +598,7 @@ bool PlayerState::displayPikiCount(int color)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PlayerState::setDisplayPikiCount(int color)
 {
@@ -606,7 +606,7 @@ void PlayerState::setDisplayPikiCount(int color)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 void PlayerState::init()
@@ -616,7 +616,7 @@ void PlayerState::init()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool PlayerState::hasUfoParts(u32 idx)
 {
@@ -630,7 +630,7 @@ bool PlayerState::hasUfoParts(u32 idx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PlayerState::update()
 {
@@ -662,7 +662,7 @@ void PlayerState::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PlayerState::initCourse()
 {
@@ -693,7 +693,7 @@ void PlayerState::initCourse()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PlayerState::exitCourse()
 {
@@ -713,7 +713,7 @@ void PlayerState::exitCourse()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PlayerState::setNavi(bool doSet)
 {
@@ -731,7 +731,7 @@ void PlayerState::setNavi(bool doSet)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int PlayerState::getFinalDeadPikis()
 {
@@ -739,7 +739,7 @@ int PlayerState::getFinalDeadPikis()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000008
  */
 int PlayerState::getFinalBornPikis()
@@ -749,7 +749,7 @@ int PlayerState::getFinalBornPikis()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PlayerState::updateFinalResult()
 {
@@ -765,7 +765,7 @@ void PlayerState::updateFinalResult()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int PlayerState::getCurrDay()
 {
@@ -773,7 +773,7 @@ int PlayerState::getCurrDay()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int PlayerState::getTotalDays()
 {
@@ -781,7 +781,7 @@ int PlayerState::getTotalDays()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int PlayerState::getStartHour()
 {
@@ -789,7 +789,7 @@ int PlayerState::getStartHour()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int PlayerState::getEndHour()
 {
@@ -797,7 +797,7 @@ int PlayerState::getEndHour()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int PlayerState::getPikiHourCount(int time, int color)
 {
@@ -805,7 +805,7 @@ int PlayerState::getPikiHourCount(int time, int color)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int PlayerState::getTotalParts()
 {
@@ -813,7 +813,7 @@ int PlayerState::getTotalParts()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int PlayerState::getCurrParts()
 {
@@ -821,7 +821,7 @@ int PlayerState::getCurrParts()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000010
  */
 int PlayerState::getRestParts()
@@ -830,7 +830,7 @@ int PlayerState::getRestParts()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool PlayerState::isUfoBroken()
 {
@@ -850,7 +850,7 @@ bool PlayerState::isUfoBroken()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PlayerState::registerUfoParts(int repairAnimJointIndex, u32 modelID, u32 pelletID)
 {
@@ -875,7 +875,7 @@ void PlayerState::registerUfoParts(int repairAnimJointIndex, u32 modelID, u32 pe
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PlayerState::UfoParts::initAnim(PelletShapeObject* shape)
 {
@@ -890,7 +890,7 @@ void PlayerState::UfoParts::initAnim(PelletShapeObject* shape)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00004C
  */
 void PlayerState::UfoParts::startMotion(int id)
@@ -901,7 +901,7 @@ void PlayerState::UfoParts::startMotion(int id)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000078
  */
 void PlayerState::UfoParts::startMotion(int id1, int id2)
@@ -912,7 +912,7 @@ void PlayerState::UfoParts::startMotion(int id1, int id2)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00000C
  */
 void PlayerState::UfoParts::stopMotion()
@@ -921,7 +921,7 @@ void PlayerState::UfoParts::stopMotion()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PlayerState::UfoParts::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
@@ -979,7 +979,7 @@ void PlayerState::UfoParts::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PlayerState::ufoAssignStart()
 {
@@ -1000,7 +1000,7 @@ void PlayerState::ufoAssignStart()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PlayerState::startSpecialMotions()
 {
@@ -1011,7 +1011,7 @@ void PlayerState::startSpecialMotions()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PlayerState::startAfterMotions()
 {
@@ -1026,7 +1026,7 @@ void PlayerState::startAfterMotions()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PlayerState::startUfoPartsMotion(u32 id, int anim, bool wantPassiveMotion)
 {
@@ -1047,7 +1047,7 @@ void PlayerState::startUfoPartsMotion(u32 id, int anim, bool wantPassiveMotion)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PlayerState::getUfoParts(u32 partID, bool isInvisiblePart)
 {
@@ -1182,7 +1182,7 @@ void PlayerState::getUfoParts(u32 partID, bool isInvisiblePart)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int PlayerState::getNextPowerupNumber()
 {
@@ -1197,7 +1197,7 @@ int PlayerState::getNextPowerupNumber()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PlayerState::preloadHenkaMovie()
 {
@@ -1223,7 +1223,7 @@ void PlayerState::preloadHenkaMovie()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000050
  */
 void PlayerState::lostUfoParts(u32 partID)
@@ -1238,7 +1238,7 @@ void PlayerState::lostUfoParts(u32 partID)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PlayerState::UfoParts* PlayerState::findUfoParts(u32 partID)
 {
@@ -1251,7 +1251,7 @@ PlayerState::UfoParts* PlayerState::findUfoParts(u32 partID)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PlayerState::renderParts(Graphics& gfx, Shape* shape)
 {

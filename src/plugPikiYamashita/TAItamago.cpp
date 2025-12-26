@@ -13,13 +13,13 @@
 #include "zen/Math.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("TAItamago")
@@ -175,7 +175,7 @@ protected:
 };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TAItamagoSoundTable::TAItamagoSoundTable()
     : PaniSoundTable(1)
@@ -186,7 +186,7 @@ TAItamagoSoundTable::TAItamagoSoundTable()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TAItamagoParameters::TAItamagoParameters()
     : TekiParameters(TPI_COUNT, TAMAGOPF_COUNT)
@@ -244,7 +244,7 @@ TAItamagoParameters::TAItamagoParameters()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TAItamagoStrategy::TAItamagoStrategy()
     : YaiStrategy(TAMAGOSTATE_COUNT, TAMAGOSTATE_Wait)
@@ -288,7 +288,7 @@ TAItamagoStrategy::TAItamagoStrategy()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAItamagoAnimation::makeDefaultAnimations()
 {

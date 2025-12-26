@@ -7,19 +7,19 @@
 #include "zen/Math.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("drawWMPause")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::DrawWMPause::DrawWMPause()
 {
@@ -32,7 +32,7 @@ zen::DrawWMPause::DrawWMPause()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawWMPause::start()
 {
@@ -44,7 +44,7 @@ void zen::DrawWMPause::start()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::DrawWMPause::returnStatusFlag zen::DrawWMPause::update(Controller* controller)
 {
@@ -77,7 +77,7 @@ zen::DrawWMPause::returnStatusFlag zen::DrawWMPause::update(Controller* controll
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawWMPause::draw(Graphics& gfx)
 {

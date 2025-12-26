@@ -14,13 +14,13 @@
 #include "teki.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("taikinoko")
@@ -104,7 +104,7 @@ struct TaiKinokoLegEffectAction : public TaiJointEffectAction {
 };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TaiKinokoSoundTable::TaiKinokoSoundTable()
     : PaniSoundTable(10)
@@ -115,7 +115,7 @@ TaiKinokoSoundTable::TaiKinokoSoundTable()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TaiKinokoParameters::TaiKinokoParameters()
     : TekiParameters(KINOKOPI_COUNT, KINOKOPF_COUNT)
@@ -202,7 +202,7 @@ TaiKinokoParameters::TaiKinokoParameters()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TaiKinokoStrategy::TaiKinokoStrategy(TekiParameters* params)
     : TaiStrategy(KINOKOSTATE_COUNT, KINOKOSTATE_Wait)
@@ -412,7 +412,7 @@ TaiKinokoStrategy::TaiKinokoStrategy(TekiParameters* params)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiKinokoStrategy::start(Teki& teki)
 {
@@ -422,7 +422,7 @@ void TaiKinokoStrategy::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiKinokoStrategy::draw(Teki& teki, Graphics& gfx)
 {
@@ -460,7 +460,7 @@ void TaiKinokoStrategy::draw(Teki& teki, Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiKinokoStrategy::createEffect(Teki& teki, int index)
 {
@@ -488,7 +488,7 @@ void TaiKinokoStrategy::createEffect(Teki& teki, int index)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiKinokoTurningOverAction::start(Teki& teki)
 {
@@ -500,7 +500,7 @@ void TaiKinokoTurningOverAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiKinokoChargingSporesAction::act(Teki& teki)
 {
@@ -514,14 +514,14 @@ bool TaiKinokoChargingSporesAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiKinokoDischargingSporesAction::start(Teki&)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiKinokoDischargingSporesAction::act(Teki& teki)
 {
@@ -545,7 +545,7 @@ bool TaiKinokoDischargingSporesAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiKinokoTerritoryRunningAwayAction::act(Teki& teki)
 {
@@ -602,7 +602,7 @@ bool TaiKinokoTerritoryRunningAwayAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TaiKinokoLegEffectAction::TaiKinokoLegEffectAction(f32 sinkThreshold)
     : TaiJointEffectAction(sinkThreshold, 2, 'lleg', 'rleg', 0, 0)
@@ -610,7 +610,7 @@ TaiKinokoLegEffectAction::TaiKinokoLegEffectAction(f32 sinkThreshold)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiKinokoLegEffectAction::setType(Vector3f& effectPos, int type, int id)
 {

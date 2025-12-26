@@ -2,19 +2,19 @@
 #include "zen/TextColorCallBack.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("OgCallBackSection")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::TextColorCallBack::TextColorCallBack(P2DPane* pane)
     : P2DPaneCallBack(pane, PANETYPE_TextBox)
@@ -30,7 +30,7 @@ zen::TextColorCallBack::TextColorCallBack(P2DPane* pane)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::TextColorCallBack::setTargetColor(immut Colour& tCharColor, immut Colour& tGradColor, f32 duration)
 {
@@ -53,7 +53,7 @@ void zen::TextColorCallBack::setTargetColor(immut Colour& tCharColor, immut Colo
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool zen::TextColorCallBack::invoke(P2DPane* pane)
 {

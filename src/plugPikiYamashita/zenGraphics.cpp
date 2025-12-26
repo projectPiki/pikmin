@@ -8,7 +8,7 @@
 const f32 zen::DrawLifeCircle::TRI_NUM = 128.0f;
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000A8
  */
 void zen::zenGraphics::drawOneTri(immut Vector3f* vertices, immut Colour& color)
@@ -23,7 +23,7 @@ void zen::zenGraphics::drawOneTri(immut Vector3f* vertices, immut Colour& color)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000D0
  */
 void zen::zenGraphics::setTevFillPolygon()
@@ -42,7 +42,7 @@ void zen::zenGraphics::setTevFillPolygon()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawLifeCircle::drawLifeCircle(f32 healthRatio)
 {
@@ -98,7 +98,7 @@ void zen::DrawLifeCircle::drawLifeCircle(f32 healthRatio)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawNaviLifeCircle::drawLifeCircle()
 {

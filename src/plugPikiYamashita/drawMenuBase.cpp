@@ -5,19 +5,19 @@
 #include "zen/DrawMenu.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(22)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("drawMenuBase")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::DrawMenuBase::DrawMenuBase(immut char* bloFileName, bool useAlphaMgr, bool useTexAnimMgr)
     : DrawScreen(bloFileName, nullptr, useAlphaMgr, useTexAnimMgr)
@@ -76,7 +76,7 @@ zen::DrawMenuBase::DrawMenuBase(immut char* bloFileName, bool useAlphaMgr, bool 
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool zen::DrawMenuBase::update(Controller* controller)
 {
@@ -94,7 +94,7 @@ bool zen::DrawMenuBase::update(Controller* controller)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawMenuBase::draw(Graphics&)
 {
@@ -102,7 +102,7 @@ void zen::DrawMenuBase::draw(Graphics&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawMenuBase::init(int mode)
 {
@@ -124,7 +124,7 @@ void zen::DrawMenuBase::init(int mode)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawMenuBase::start()
 {
@@ -134,7 +134,7 @@ void zen::DrawMenuBase::start()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool zen::DrawMenuBase::modeSleep(Controller*)
 {
@@ -142,7 +142,7 @@ bool zen::DrawMenuBase::modeSleep(Controller*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool zen::DrawMenuBase::modeOperation(Controller* controller)
 {
@@ -191,7 +191,7 @@ bool zen::DrawMenuBase::modeOperation(Controller* controller)
 const int zen::DrawMenuBase::SELECT_CANCEL = -1;
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawMenuBase::setModeFunc(int mode)
 {

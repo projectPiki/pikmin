@@ -18,13 +18,13 @@
 #include "teki.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("taicollec")
@@ -430,7 +430,7 @@ struct TaiCollecLegEffectAction : public TaiJointEffectAction {
 };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TaiCollecSoundTable::TaiCollecSoundTable()
     : PaniSoundTable(8)
@@ -441,7 +441,7 @@ TaiCollecSoundTable::TaiCollecSoundTable()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TaiCollecParameters::TaiCollecParameters()
     : TekiParameters(COLLECPI_COUNT, COLLECPF_COUNT)
@@ -520,7 +520,7 @@ TaiCollecParameters::TaiCollecParameters()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TaiCollecStrategy::TaiCollecStrategy(TekiParameters* params)
     : TaiStrategy(COLLECSTATE_COUNT, COLLECSTATE_Unk3)
@@ -779,7 +779,7 @@ TaiCollecStrategy::TaiCollecStrategy(TekiParameters* params)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiCollecStrategy::start(Teki& teki)
 {
@@ -797,7 +797,7 @@ void TaiCollecStrategy::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiCollecStrategy::draw(Teki& teki, Graphics& gfx)
 {
@@ -828,7 +828,7 @@ void TaiCollecStrategy::draw(Teki& teki, Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000E0
  */
 void TaiCollecStrategy::outputUndergroundPosition(Teki& teki, NVector3f& outPosition)
@@ -840,7 +840,7 @@ void TaiCollecStrategy::outputUndergroundPosition(Teki& teki, NVector3f& outPosi
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TekiCollecTargetPelletCondition::satisfy(Creature* target) immut
 {
@@ -890,7 +890,7 @@ bool TekiCollecTargetPelletCondition::satisfy(Creature* target) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiCollecImpassableAction::start(Teki& teki)
 {
@@ -902,7 +902,7 @@ void TaiCollecImpassableAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiCollecImpassableAction::act(Teki& teki)
 {
@@ -923,7 +923,7 @@ bool TaiCollecImpassableAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiCollecImpassableAction::resetPosition(Teki& teki)
 {
@@ -932,7 +932,7 @@ void TaiCollecImpassableAction::resetPosition(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiCollecLetGoOfPelletAction::act(Teki& teki)
 {
@@ -951,7 +951,7 @@ bool TaiCollecLetGoOfPelletAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiCollecLetGoOfPelletAction::actByEvent(immut TekiEvent& event)
 {
@@ -971,7 +971,7 @@ bool TaiCollecLetGoOfPelletAction::actByEvent(immut TekiEvent& event)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiCollecTargetPelletAction::act(Teki& teki)
 {
@@ -996,7 +996,7 @@ bool TaiCollecTargetPelletAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiCollecVisibleHeightPelletLostAction::act(Teki& teki)
 {
@@ -1019,7 +1019,7 @@ bool TaiCollecVisibleHeightPelletLostAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiCollecVisibleHeightPelletLostTimerAction::act(Teki& teki)
 {
@@ -1030,7 +1030,7 @@ bool TaiCollecVisibleHeightPelletLostTimerAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiCollecPelletLostAction::act(Teki& teki)
 {
@@ -1054,7 +1054,7 @@ bool TaiCollecPelletLostAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiCollecPelletDisappearedAction::act(Teki& teki)
 {
@@ -1077,7 +1077,7 @@ bool TaiCollecPelletDisappearedAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiCollecHoldPelletAction::act(Teki& teki)
 {
@@ -1108,7 +1108,7 @@ bool TaiCollecHoldPelletAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiCollecCatchingAction::start(Teki& teki)
 {
@@ -1117,7 +1117,7 @@ void TaiCollecCatchingAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiCollecCatchingAction::finish(Teki& teki)
 {
@@ -1125,7 +1125,7 @@ void TaiCollecCatchingAction::finish(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiCollecCarryingAction::start(Teki& teki)
 {
@@ -1134,7 +1134,7 @@ void TaiCollecCarryingAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiCollecCarryingAction::finish(Teki& teki)
 {
@@ -1143,7 +1143,7 @@ void TaiCollecCarryingAction::finish(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiCollecCarryingAction::act(Teki& teki)
 {
@@ -1162,7 +1162,7 @@ bool TaiCollecCarryingAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiCollecBeingDraggedAction::start(Teki& teki)
 {
@@ -1171,7 +1171,7 @@ void TaiCollecBeingDraggedAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiCollecBeingDraggedAction::finish(Teki& teki)
 {
@@ -1180,7 +1180,7 @@ void TaiCollecBeingDraggedAction::finish(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiCollecWinCarryingAction::act(Teki& teki)
 {
@@ -1200,7 +1200,7 @@ bool TaiCollecWinCarryingAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiCollecDefeatCarryingAction::act(Teki& teki)
 {
@@ -1220,7 +1220,7 @@ bool TaiCollecDefeatCarryingAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiCollecPutAction::act(Teki& teki)
 {
@@ -1242,7 +1242,7 @@ bool TaiCollecPutAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiCollecPuttingPelletAction::start(Teki& teki)
 {
@@ -1264,7 +1264,7 @@ void TaiCollecPuttingPelletAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiCollecPuttingPelletAction::finish(Teki& teki)
 {
@@ -1273,7 +1273,7 @@ void TaiCollecPuttingPelletAction::finish(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiCollecPuttingPelletAction::act(Teki& teki)
 {
@@ -1294,7 +1294,7 @@ bool TaiCollecPuttingPelletAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiCollecCarryingToNestAction::start(Teki& teki)
 {
@@ -1303,7 +1303,7 @@ void TaiCollecCarryingToNestAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiCollecCarryingToNestAction::act(Teki& teki)
 {
@@ -1354,7 +1354,7 @@ bool TaiCollecCarryingToNestAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiCollecCarryingToNestAction::makePositionRoute(Teki& teki)
 {
@@ -1371,7 +1371,7 @@ void TaiCollecCarryingToNestAction::makePositionRoute(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiCollecRouteImpassableAction::act(Teki& teki)
 {
@@ -1408,7 +1408,7 @@ bool TaiCollecRouteImpassableAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiCollecRoundCarryAction::start(Teki& teki)
 {
@@ -1416,7 +1416,7 @@ void TaiCollecRoundCarryAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiCollecRoundCarryAction::act(Teki& teki)
 {
@@ -1431,7 +1431,7 @@ bool TaiCollecRoundCarryAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiCollecPelletStartContainerizedAction::act(Teki& teki)
 {
@@ -1450,7 +1450,7 @@ bool TaiCollecPelletStartContainerizedAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiCollecPelletFinishContainerizedAction::act(Teki& teki)
 {
@@ -1465,7 +1465,7 @@ bool TaiCollecPelletFinishContainerizedAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiCollecDeadFallingAction::act(Teki& teki)
 {
@@ -1479,7 +1479,7 @@ bool TaiCollecDeadFallingAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiCollecFallingAction::act(Teki& teki)
 {
@@ -1490,7 +1490,7 @@ bool TaiCollecFallingAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiCollecGetOutAction::act(Teki& teki)
 {
@@ -1503,7 +1503,7 @@ bool TaiCollecGetOutAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TaiCollecLegEffectAction::TaiCollecLegEffectAction(f32 sinkThreshold)
     : TaiJointEffectAction(sinkThreshold, 2, 'lleg', 'rleg', 0, 0)
@@ -1511,7 +1511,7 @@ TaiCollecLegEffectAction::TaiCollecLegEffectAction(f32 sinkThreshold)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiCollecLegEffectAction::setType(Vector3f& effectPos, int type, int id)
 {
@@ -1528,7 +1528,7 @@ void TaiCollecLegEffectAction::setType(Vector3f& effectPos, int type, int id)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TaiHollecParameters::TaiHollecParameters()
     : TekiParameters(TPI_COUNT, TPF_COUNT)
@@ -1542,7 +1542,7 @@ TaiHollecParameters::TaiHollecParameters()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TaiHollecStrategy::TaiHollecStrategy(TekiParameters*)
     : TaiStrategy(HOLLECSTATE_COUNT, HOLLECSTATE_Unk0)
@@ -1557,7 +1557,7 @@ TaiHollecStrategy::TaiHollecStrategy(TekiParameters*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiHollecStrategy::draw(Teki& teki, Graphics& gfx)
 {
@@ -1566,7 +1566,7 @@ void TaiHollecStrategy::draw(Teki& teki, Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiHollecStrategy::start(Teki& teki)
 {

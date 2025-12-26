@@ -8,19 +8,19 @@
 #include "zen/Math.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(33)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("P2DTextBox")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void P2DTextBox::makeResident()
 {
@@ -28,7 +28,7 @@ void P2DTextBox::makeResident()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void P2DTextBox::loadResource()
 {
@@ -36,7 +36,7 @@ void P2DTextBox::loadResource()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 P2DTextBox::P2DTextBox(P2DPane* pane, RandomAccessStream* ramStream, u16 param3)
     : P2DPane(pane, ramStream, param3)
@@ -78,7 +78,7 @@ P2DTextBox::P2DTextBox(P2DPane* pane, RandomAccessStream* ramStream, u16 param3)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void P2DTextBox::drawSelf(int param1, int param2)
 {
@@ -88,7 +88,7 @@ void P2DTextBox::drawSelf(int param1, int param2)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void P2DTextBox::drawSelf(int param1, int param2, immut Matrix4f* mtx)
 {

@@ -39,19 +39,19 @@
 #include "jaudio/pikidemo.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("naviState");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 NaviState* NaviStateMachine::getNaviState(Navi* navi)
 {
@@ -59,7 +59,7 @@ NaviState* NaviStateMachine::getNaviState(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviStateMachine::init(Navi* navi)
 {
@@ -103,7 +103,7 @@ void NaviStateMachine::init(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 NaviPelletState::NaviPelletState()
     : NaviState(NAVISTATE_Pellet)
@@ -111,7 +111,7 @@ NaviPelletState::NaviPelletState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviPelletState::init(Navi* navi)
 {
@@ -122,7 +122,7 @@ void NaviPelletState::init(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviPelletState::exec(Navi* navi)
 {
@@ -160,7 +160,7 @@ void NaviPelletState::exec(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviPelletState::procAnimMsg(Navi* navi, MsgAnim* msg)
 {
@@ -175,7 +175,7 @@ void NaviPelletState::procAnimMsg(Navi* navi, MsgAnim* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviPelletState::cleanup(Navi* navi)
 {
@@ -187,7 +187,7 @@ void NaviPelletState::cleanup(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 NaviDemoWaitState::NaviDemoWaitState()
     : NaviState(NAVISTATE_DemoWait)
@@ -195,7 +195,7 @@ NaviDemoWaitState::NaviDemoWaitState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviDemoWaitState::init(Navi* navi)
 {
@@ -211,7 +211,7 @@ void NaviDemoWaitState::init(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviDemoWaitState::exec(Navi* navi)
 {
@@ -234,7 +234,7 @@ void NaviDemoWaitState::exec(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviDemoWaitState::cleanup(Navi* navi)
 {
@@ -258,7 +258,7 @@ void NaviDemoWaitState::cleanup(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 NaviDemoInfState::NaviDemoInfState()
     : NaviState(NAVISTATE_DemoInf)
@@ -266,14 +266,14 @@ NaviDemoInfState::NaviDemoInfState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviDemoInfState::init(Navi* navi)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviDemoInfState::exec(Navi* navi)
 {
@@ -281,14 +281,14 @@ void NaviDemoInfState::exec(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviDemoInfState::cleanup(Navi* navi)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 NaviStuckState::NaviStuckState()
     : NaviState(NAVISTATE_Stuck)
@@ -296,7 +296,7 @@ NaviStuckState::NaviStuckState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviStuckState::init(Navi* navi)
 {
@@ -308,7 +308,7 @@ void NaviStuckState::init(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviStuckState::exec(Navi* navi)
 {
@@ -366,14 +366,14 @@ void NaviStuckState::exec(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviStuckState::cleanup(Navi* navi)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 NaviBuryState::NaviBuryState()
     : NaviState(NAVISTATE_Bury)
@@ -381,7 +381,7 @@ NaviBuryState::NaviBuryState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviBuryState::init(Navi* navi)
 {
@@ -397,7 +397,7 @@ void NaviBuryState::init(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviBuryState::exec(Navi* navi)
 {
@@ -444,7 +444,7 @@ void NaviBuryState::exec(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviBuryState::procAnimMsg(Navi* navi, MsgAnim* msg)
 {
@@ -503,14 +503,14 @@ void NaviBuryState::procAnimMsg(Navi* navi, MsgAnim* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviBuryState::cleanup(Navi* navi)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 NaviWalkState::NaviWalkState()
     : NaviState(NAVISTATE_Walk)
@@ -518,7 +518,7 @@ NaviWalkState::NaviWalkState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviWalkState::init(Navi* navi)
 {
@@ -530,7 +530,7 @@ void NaviWalkState::init(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviWalkState::restart(Navi* navi)
 {
@@ -538,7 +538,7 @@ void NaviWalkState::restart(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviWalkState::exec(Navi* navi)
 {
@@ -744,7 +744,7 @@ void NaviWalkState::exec(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviWalkState::cleanup(Navi* navi)
 {
@@ -752,7 +752,7 @@ void NaviWalkState::cleanup(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviWalkState::procWallMsg(Navi* navi, MsgWall* msg)
 {
@@ -766,7 +766,7 @@ void NaviWalkState::procWallMsg(Navi* navi, MsgWall* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviWalkState::procOffWallMsg(Navi* navi, MsgOffWall* msg)
 {
@@ -775,7 +775,7 @@ void NaviWalkState::procOffWallMsg(Navi* navi, MsgOffWall* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviWalkState::procCollideMsg(Navi* navi, MsgCollide* msg)
 {
@@ -783,7 +783,7 @@ void NaviWalkState::procCollideMsg(Navi* navi, MsgCollide* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 NaviUfoState::NaviUfoState()
     : NaviState(NAVISTATE_Ufo)
@@ -791,7 +791,7 @@ NaviUfoState::NaviUfoState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviUfoState::init(Navi* navi)
 {
@@ -810,7 +810,7 @@ void NaviUfoState::init(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviUfoState::procCollideMsg(Navi* navi, MsgCollide* msg)
 {
@@ -822,7 +822,7 @@ void NaviUfoState::procCollideMsg(Navi* navi, MsgCollide* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviUfoState::exec(Navi* navi)
 {
@@ -894,7 +894,7 @@ void NaviUfoState::exec(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviUfoState::cleanup(Navi* navi)
 {
@@ -910,7 +910,7 @@ void NaviUfoState::cleanup(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviUfoState::procAnimMsg(Navi* navi, MsgAnim* msg)
 {
@@ -923,7 +923,7 @@ void NaviUfoState::procAnimMsg(Navi* navi, MsgAnim* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 NaviContainerState::NaviContainerState()
     : NaviState(NAVISTATE_Container)
@@ -931,7 +931,7 @@ NaviContainerState::NaviContainerState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviContainerState::init(Navi* navi)
 {
@@ -970,7 +970,7 @@ void NaviContainerState::init(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviContainerState::informWin(int pikiCnt)
 {
@@ -991,7 +991,7 @@ void NaviContainerState::informWin(int pikiCnt)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviContainerState::onCloseWindow()
 {
@@ -1003,7 +1003,7 @@ void NaviContainerState::onCloseWindow()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviContainerState::exec(Navi* navi)
 {
@@ -1024,7 +1024,7 @@ void NaviContainerState::exec(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviContainerState::enterPikis(Navi* navi, int countToEnter)
 {
@@ -1063,7 +1063,7 @@ void NaviContainerState::enterPikis(Navi* navi, int countToEnter)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviContainerState::exitPikis(Navi* navi, int countToExit)
 {
@@ -1071,7 +1071,7 @@ void NaviContainerState::exitPikis(Navi* navi, int countToExit)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviContainerState::cleanup(Navi* navi)
 {
@@ -1081,7 +1081,7 @@ void NaviContainerState::cleanup(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 NaviPickState::NaviPickState()
     : NaviState(NAVISTATE_Pick)
@@ -1089,14 +1089,14 @@ NaviPickState::NaviPickState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviPickState::procAnimMsg(Navi* navi, MsgAnim*)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviPickState::init(Navi* navi)
 {
@@ -1107,7 +1107,7 @@ void NaviPickState::init(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviPickState::exec(Navi* navi)
 {
@@ -1117,7 +1117,7 @@ void NaviPickState::exec(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviPickState::cleanup(Navi* navi)
 {
@@ -1125,7 +1125,7 @@ void NaviPickState::cleanup(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 NaviRopeState::NaviRopeState()
     : NaviState(NAVISTATE_Rope)
@@ -1133,7 +1133,7 @@ NaviRopeState::NaviRopeState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviRopeState::init(Navi* navi)
 {
@@ -1141,7 +1141,7 @@ void NaviRopeState::init(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviRopeState::exec(Navi* navi)
 {
@@ -1172,14 +1172,14 @@ void NaviRopeState::exec(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviRopeState::cleanup(Navi* navi)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 NaviRopeExitState::NaviRopeExitState()
     : NaviState(NAVISTATE_RopeExit)
@@ -1187,7 +1187,7 @@ NaviRopeExitState::NaviRopeExitState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviRopeExitState::init(Navi* navi)
 {
@@ -1200,21 +1200,21 @@ void NaviRopeExitState::init(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviRopeExitState::exec(Navi* navi)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviRopeExitState::cleanup(Navi* navi)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviRopeExitState::procBounceMsg(Navi* navi, MsgBounce*)
 {
@@ -1223,7 +1223,7 @@ void NaviRopeExitState::procBounceMsg(Navi* navi, MsgBounce*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 NaviFunbariState::NaviFunbariState()
     : NaviState(NAVISTATE_Funbari)
@@ -1231,7 +1231,7 @@ NaviFunbariState::NaviFunbariState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviFunbariState::init(Navi* navi)
 {
@@ -1242,7 +1242,7 @@ void NaviFunbariState::init(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviFunbariState::exec(Navi* navi)
 {
@@ -1250,7 +1250,7 @@ void NaviFunbariState::exec(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviFunbariState::procAnimMsg(Navi* navi, MsgAnim* msg)
 {
@@ -1262,14 +1262,14 @@ void NaviFunbariState::procAnimMsg(Navi* navi, MsgAnim* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviFunbariState::cleanup(Navi* navi)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 NaviIdleState::NaviIdleState()
     : NaviState(NAVISTATE_Idle)
@@ -1277,7 +1277,7 @@ NaviIdleState::NaviIdleState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviIdleState::init(Navi* navi)
 {
@@ -1295,7 +1295,7 @@ void NaviIdleState::init(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviIdleState::exec(Navi* navi)
 {
@@ -1320,7 +1320,7 @@ void NaviIdleState::exec(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviIdleState::procAnimMsg(Navi* navi, MsgAnim* msg)
 {
@@ -1336,7 +1336,7 @@ void NaviIdleState::procAnimMsg(Navi* navi, MsgAnim* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviIdleState::cleanup(Navi* navi)
 {
@@ -1344,7 +1344,7 @@ void NaviIdleState::cleanup(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 NaviFlickState::NaviFlickState()
     : NaviState(NAVISTATE_Flick)
@@ -1352,7 +1352,7 @@ NaviFlickState::NaviFlickState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviFlickState::init(Navi* navi)
 {
@@ -1366,7 +1366,7 @@ void NaviFlickState::init(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviFlickState::exec(Navi* navi)
 {
@@ -1396,7 +1396,7 @@ void NaviFlickState::exec(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviFlickState::procAnimMsg(Navi* navi, MsgAnim* msg)
 {
@@ -1423,7 +1423,7 @@ void NaviFlickState::procAnimMsg(Navi* navi, MsgAnim* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviFlickState::cleanup(Navi* navi)
 {
@@ -1433,7 +1433,7 @@ void NaviFlickState::cleanup(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 NaviGeyzerState::NaviGeyzerState()
     : NaviState(NAVISTATE_Geyzer)
@@ -1441,7 +1441,7 @@ NaviGeyzerState::NaviGeyzerState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviGeyzerState::init(Navi* navi)
 {
@@ -1459,7 +1459,7 @@ void NaviGeyzerState::init(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviGeyzerState::exec(Navi* navi)
 {
@@ -1502,7 +1502,7 @@ void NaviGeyzerState::exec(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviGeyzerState::procAnimMsg(Navi* navi, MsgAnim* msg)
 {
@@ -1527,7 +1527,7 @@ void NaviGeyzerState::procAnimMsg(Navi* navi, MsgAnim* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviGeyzerState::procBounceMsg(Navi* navi, MsgBounce* msg)
 {
@@ -1539,7 +1539,7 @@ void NaviGeyzerState::procBounceMsg(Navi* navi, MsgBounce* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviGeyzerState::cleanup(Navi* navi)
 {
@@ -1549,7 +1549,7 @@ void NaviGeyzerState::cleanup(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 NaviGatherState::NaviGatherState()
     : NaviState(NAVISTATE_Gather)
@@ -1557,7 +1557,7 @@ NaviGatherState::NaviGatherState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviGatherState::resume(Navi* navi)
 {
@@ -1565,7 +1565,7 @@ void NaviGatherState::resume(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviGatherState::restart(Navi* navi)
 {
@@ -1573,7 +1573,7 @@ void NaviGatherState::restart(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviGatherState::init(Navi* navi)
 {
@@ -1595,7 +1595,7 @@ void NaviGatherState::init(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviGatherState::exec(Navi* navi)
 {
@@ -1721,7 +1721,7 @@ void NaviGatherState::exec(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviGatherState::procAnimMsg(Navi* navi, MsgAnim* msg)
 {
@@ -1739,7 +1739,7 @@ void NaviGatherState::procAnimMsg(Navi* navi, MsgAnim* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviGatherState::cleanup(Navi* navi)
 {
@@ -1751,7 +1751,7 @@ void NaviGatherState::cleanup(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 NaviReleaseState::NaviReleaseState()
     : NaviState(NAVISTATE_Release)
@@ -1759,7 +1759,7 @@ NaviReleaseState::NaviReleaseState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviReleaseState::init(Navi* navi)
 {
@@ -1771,7 +1771,7 @@ void NaviReleaseState::init(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviReleaseState::exec(Navi* navi)
 {
@@ -1787,14 +1787,14 @@ void NaviReleaseState::exec(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviReleaseState::cleanup(Navi* navi)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviReleaseState::procAnimMsg(Navi* navi, MsgAnim* msg)
 {
@@ -1813,7 +1813,7 @@ void NaviReleaseState::procAnimMsg(Navi* navi, MsgAnim* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 NaviThrowWaitState::NaviThrowWaitState()
     : NaviState(NAVISTATE_ThrowWait)
@@ -1821,7 +1821,7 @@ NaviThrowWaitState::NaviThrowWaitState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviThrowWaitState::resume(Navi* navi)
 {
@@ -1829,7 +1829,7 @@ void NaviThrowWaitState::resume(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviThrowWaitState::restart(Navi* navi)
 {
@@ -1837,7 +1837,7 @@ void NaviThrowWaitState::restart(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviThrowWaitState::init(Navi* navi)
 {
@@ -1888,7 +1888,7 @@ void NaviThrowWaitState::init(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviThrowWaitState::procAnimMsg(Navi* navi, MsgAnim* msg)
 {
@@ -1908,7 +1908,7 @@ void NaviThrowWaitState::procAnimMsg(Navi* navi, MsgAnim* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000A4
  */
 void NaviThrowWaitState::lockHangPiki(Navi* navi)
@@ -1920,7 +1920,7 @@ void NaviThrowWaitState::lockHangPiki(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviThrowWaitState::exec(Navi* navi)
 {
@@ -2007,7 +2007,7 @@ void NaviThrowWaitState::exec(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviThrowWaitState::sortPikis(Navi* navi)
 {
@@ -2030,14 +2030,14 @@ void NaviThrowWaitState::sortPikis(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviThrowWaitState::cleanup(Navi* navi)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 NaviThrowState::NaviThrowState()
     : NaviState(NAVISTATE_Throw)
@@ -2045,7 +2045,7 @@ NaviThrowState::NaviThrowState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviThrowState::init(Navi* navi)
 {
@@ -2058,7 +2058,7 @@ void NaviThrowState::init(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviThrowState::procTargetMsg(Navi* navi, MsgTarget* msg)
 {
@@ -2066,7 +2066,7 @@ void NaviThrowState::procTargetMsg(Navi* navi, MsgTarget* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviThrowState::procAnimMsg(Navi* navi, MsgAnim* msg)
 {
@@ -2092,7 +2092,7 @@ void NaviThrowState::procAnimMsg(Navi* navi, MsgAnim* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviThrowState::exec(Navi* navi)
 {
@@ -2118,14 +2118,14 @@ void NaviThrowState::exec(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviThrowState::cleanup(Navi* navi)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 NaviPushState::NaviPushState()
     : NaviState(NAVISTATE_Push)
@@ -2133,7 +2133,7 @@ NaviPushState::NaviPushState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviPushState::init(Navi* navi)
 {
@@ -2144,7 +2144,7 @@ void NaviPushState::init(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviPushState::exec(Navi* navi)
 {
@@ -2179,7 +2179,7 @@ void NaviPushState::exec(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviPushState::cleanup(Navi* navi)
 {
@@ -2189,7 +2189,7 @@ void NaviPushState::cleanup(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviPushState::procAnimMsg(Navi* navi, MsgAnim* msg)
 {
@@ -2209,14 +2209,14 @@ void NaviPushState::procAnimMsg(Navi* navi, MsgAnim* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviPushState::procOffWallMsg(Navi* navi, MsgOffWall*)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 NaviPushPikiState::NaviPushPikiState()
     : NaviState(NAVISTATE_PushPiki)
@@ -2224,7 +2224,7 @@ NaviPushPikiState::NaviPushPikiState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviPushPikiState::init(Navi* navi)
 {
@@ -2235,7 +2235,7 @@ void NaviPushPikiState::init(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviPushPikiState::exec(Navi* navi)
 {
@@ -2257,14 +2257,14 @@ void NaviPushPikiState::exec(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviPushPikiState::cleanup(Navi* navi)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviPushPikiState::procAnimMsg(Navi* navi, MsgAnim* msg)
 {
@@ -2283,7 +2283,7 @@ void NaviPushPikiState::procAnimMsg(Navi* navi, MsgAnim* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviPushPikiState::procCollideMsg(Navi* navi, MsgCollide*)
 {
@@ -2291,7 +2291,7 @@ void NaviPushPikiState::procCollideMsg(Navi* navi, MsgCollide*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 NaviNukuState::NaviNukuState()
     : NaviState(NAVISTATE_Nuku)
@@ -2299,7 +2299,7 @@ NaviNukuState::NaviNukuState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviNukuState::init(Navi* navi)
 {
@@ -2335,7 +2335,7 @@ void NaviNukuState::init(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviNukuState::exec(Navi* navi)
 {
@@ -2359,7 +2359,7 @@ void NaviNukuState::exec(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviNukuState::cleanup(Navi* navi)
 {
@@ -2373,7 +2373,7 @@ void NaviNukuState::cleanup(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviNukuState::procAnimMsg(Navi* navi, MsgAnim* msg)
 {
@@ -2408,7 +2408,7 @@ void NaviNukuState::procAnimMsg(Navi* navi, MsgAnim* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 NaviNukuAdjustState::NaviNukuAdjustState()
     : NaviState(NAVISTATE_NukuAdjust)
@@ -2416,7 +2416,7 @@ NaviNukuAdjustState::NaviNukuAdjustState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviNukuAdjustState::resume(Navi* navi)
 {
@@ -2424,7 +2424,7 @@ void NaviNukuAdjustState::resume(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviNukuAdjustState::restart(Navi* navi)
 {
@@ -2432,7 +2432,7 @@ void NaviNukuAdjustState::restart(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviNukuAdjustState::init(Navi* navi)
 {
@@ -2457,7 +2457,7 @@ void NaviNukuAdjustState::init(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviNukuAdjustState::exec(Navi* navi)
 {
@@ -2535,7 +2535,7 @@ void NaviNukuAdjustState::exec(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviNukuAdjustState::cleanup(Navi* navi)
 {
@@ -2543,7 +2543,7 @@ void NaviNukuAdjustState::cleanup(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 NaviPressedState::NaviPressedState()
     : NaviState(NAVISTATE_Pressed)
@@ -2551,7 +2551,7 @@ NaviPressedState::NaviPressedState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviPressedState::init(Navi* navi)
 {
@@ -2560,7 +2560,7 @@ void NaviPressedState::init(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviPressedState::exec(Navi* navi)
 {
@@ -2593,14 +2593,14 @@ void NaviPressedState::exec(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviPressedState::cleanup(Navi* navi)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 NaviSowState::NaviSowState()
     : NaviState(NAVISTATE_Sow)
@@ -2608,7 +2608,7 @@ NaviSowState::NaviSowState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviSowState::init(Navi* navi)
 {
@@ -2616,21 +2616,21 @@ void NaviSowState::init(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviSowState::exec(Navi* navi)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviSowState::cleanup(Navi* navi)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 NaviWaterState::NaviWaterState()
     : NaviState(NAVISTATE_Water)
@@ -2638,7 +2638,7 @@ NaviWaterState::NaviWaterState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviWaterState::init(Navi* navi)
 {
@@ -2648,21 +2648,21 @@ void NaviWaterState::init(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviWaterState::exec(Navi* navi)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviWaterState::cleanup(Navi* navi)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 NaviAttackState::NaviAttackState()
     : NaviState(NAVISTATE_Attack)
@@ -2670,7 +2670,7 @@ NaviAttackState::NaviAttackState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviAttackState::resume(Navi* navi)
 {
@@ -2678,7 +2678,7 @@ void NaviAttackState::resume(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviAttackState::restart(Navi* navi)
 {
@@ -2686,7 +2686,7 @@ void NaviAttackState::restart(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviAttackState::init(Navi* navi)
 {
@@ -2702,7 +2702,7 @@ void NaviAttackState::init(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviAttackState::exec(Navi* navi)
 {
@@ -2751,14 +2751,14 @@ void NaviAttackState::exec(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviAttackState::cleanup(Navi* navi)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviAttackState::procAnimMsg(Navi* navi, MsgAnim* msg)
 {
@@ -2777,7 +2777,7 @@ void NaviAttackState::procAnimMsg(Navi* navi, MsgAnim* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 NaviLockState::NaviLockState()
     : NaviState(NAVISTATE_Lock)
@@ -2785,28 +2785,28 @@ NaviLockState::NaviLockState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviLockState::init(Navi* navi)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviLockState::exec(Navi* navi)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviLockState::cleanup(Navi* navi)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 NaviClearState::NaviClearState()
     : NaviState(NAVISTATE_Clear)
@@ -2814,7 +2814,7 @@ NaviClearState::NaviClearState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviClearState::init(Navi* navi)
 {
@@ -2824,14 +2824,14 @@ void NaviClearState::init(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviClearState::exec(Navi* navi)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviClearState::procAnimMsg(Navi* navi, MsgAnim* msg)
 {
@@ -2842,14 +2842,14 @@ void NaviClearState::procAnimMsg(Navi* navi, MsgAnim* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviClearState::cleanup(Navi* navi)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 NaviIroIroState::NaviIroIroState()
     : NaviState(NAVISTATE_IroIro)
@@ -2857,14 +2857,14 @@ NaviIroIroState::NaviIroIroState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviIroIroState::init(Navi* navi)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviIroIroState::exec(Navi* navi)
 {
@@ -2872,14 +2872,14 @@ void NaviIroIroState::exec(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviIroIroState::cleanup(Navi* navi)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 NaviDeadState::NaviDeadState()
     : NaviState(NAVISTATE_Dead)
@@ -2887,14 +2887,14 @@ NaviDeadState::NaviDeadState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviDeadState::restart(Navi* navi)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviDeadState::init(Navi* navi)
 {
@@ -2917,7 +2917,7 @@ void NaviDeadState::init(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviDeadState::exec(Navi* navi)
 {
@@ -2925,14 +2925,14 @@ void NaviDeadState::exec(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviDeadState::cleanup(Navi* navi)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviDeadState::procAnimMsg(Navi* navi, MsgAnim* msg)
 {
@@ -2944,7 +2944,7 @@ void NaviDeadState::procAnimMsg(Navi* navi, MsgAnim* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 NaviPikiZeroState::NaviPikiZeroState()
     : NaviState(NAVISTATE_PikiZero)
@@ -2952,7 +2952,7 @@ NaviPikiZeroState::NaviPikiZeroState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviPikiZeroState::init(Navi* navi)
 {
@@ -2966,7 +2966,7 @@ void NaviPikiZeroState::init(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviPikiZeroState::exec(Navi* navi)
 {
@@ -2976,21 +2976,21 @@ void NaviPikiZeroState::exec(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviPikiZeroState::cleanup(Navi* navi)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviPikiZeroState::procAnimMsg(Navi* navi, MsgAnim*)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 NaviStartingState::NaviStartingState()
     : NaviState(NAVISTATE_Starting)
@@ -2998,7 +2998,7 @@ NaviStartingState::NaviStartingState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviStartingState::init(Navi* navi)
 {
@@ -3032,7 +3032,7 @@ void NaviStartingState::init(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviStartingState::procCollideMsg(Navi* navi, MsgCollide* msg)
 {
@@ -3048,7 +3048,7 @@ void NaviStartingState::procCollideMsg(Navi* navi, MsgCollide* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviStartingState::exec(Navi* navi)
 {
@@ -3095,7 +3095,7 @@ void NaviStartingState::exec(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviStartingState::procAnimMsg(Navi* navi, MsgAnim* msg)
 {
@@ -3110,7 +3110,7 @@ void NaviStartingState::procAnimMsg(Navi* navi, MsgAnim* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviStartingState::cleanup(Navi* navi)
 {
@@ -3121,7 +3121,7 @@ void NaviStartingState::cleanup(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 NaviPartsAccessState::NaviPartsAccessState()
     : NaviState(NAVISTATE_PartsAccess)
@@ -3129,7 +3129,7 @@ NaviPartsAccessState::NaviPartsAccessState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviPartsAccessState::init(Navi* navi)
 {
@@ -3145,7 +3145,7 @@ void NaviPartsAccessState::init(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviPartsAccessState::exec(Navi* navi)
 {
@@ -3155,7 +3155,7 @@ void NaviPartsAccessState::exec(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviPartsAccessState::cleanup(Navi* navi)
 {
@@ -3165,7 +3165,7 @@ void NaviPartsAccessState::cleanup(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviPartsAccessState::procAnimMsg(Navi* navi, MsgAnim* msg)
 {
@@ -3185,7 +3185,7 @@ void NaviPartsAccessState::procAnimMsg(Navi* navi, MsgAnim* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 NaviUfoAccessState::NaviUfoAccessState()
     : NaviState(NAVISTATE_UfoAccess)
@@ -3193,7 +3193,7 @@ NaviUfoAccessState::NaviUfoAccessState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviUfoAccessState::init(Navi* navi)
 {
@@ -3208,7 +3208,7 @@ void NaviUfoAccessState::init(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviUfoAccessState::exec(Navi* navi)
 {
@@ -3219,7 +3219,7 @@ void NaviUfoAccessState::exec(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviUfoAccessState::cleanup(Navi* navi)
 {
@@ -3229,7 +3229,7 @@ void NaviUfoAccessState::cleanup(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviUfoAccessState::procAnimMsg(Navi* navi, MsgAnim* msg)
 {

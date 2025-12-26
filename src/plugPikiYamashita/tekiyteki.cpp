@@ -7,26 +7,26 @@
 #include "TAI/EffectAttack.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("tekiyteki")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 YTeki::YTeki()
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void YTeki::doKill()
 {
@@ -40,7 +40,7 @@ void YTeki::doKill()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void YTeki::exitCourse()
 {
@@ -54,7 +54,7 @@ void YTeki::exitCourse()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool YTeki::isNaviWatch()
 {
@@ -69,7 +69,7 @@ bool YTeki::isNaviWatch()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000054
  */
 int YTeki::getMapAttribute()
@@ -83,7 +83,7 @@ int YTeki::getMapAttribute()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void YTeki::moveTowardPriorityFaceDir(immut Vector3f& targetPos, f32 speed)
 {
@@ -91,7 +91,7 @@ void YTeki::moveTowardPriorityFaceDir(immut Vector3f& targetPos, f32 speed)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void YTeki::moveTowardPriorityFaceDir(immut Vector3f& targetPos, f32 speed, f32 turnSpeed)
 {
@@ -123,7 +123,7 @@ void YTeki::moveTowardPriorityFaceDir(immut Vector3f& targetPos, f32 speed, f32 
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool YTeki::turnToTarget()
 {
@@ -143,7 +143,7 @@ bool YTeki::turnToTarget()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void YTeki::flyingStay(f32 speed)
 {
@@ -163,7 +163,7 @@ void YTeki::flyingStay(f32 speed)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void YTeki::killStickToMouthPiki()
 {
@@ -182,7 +182,7 @@ void YTeki::killStickToMouthPiki()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool YTeki::startNewMotion(int motionIdx)
 {

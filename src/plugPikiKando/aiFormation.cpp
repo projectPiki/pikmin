@@ -4,19 +4,19 @@
 #include "PikiAI.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(8)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("aiFormation")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActFormation::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
@@ -65,7 +65,7 @@ void ActFormation::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 ActFormation::ActFormation(Piki* piki)
     : Action(piki, true)
@@ -74,7 +74,7 @@ ActFormation::ActFormation(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActFormation::getFormPoint()
 {
@@ -99,7 +99,7 @@ void ActFormation::getFormPoint()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActFormation::init(Creature* target)
 {
@@ -126,7 +126,7 @@ void ActFormation::init(Creature* target)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActFormation::cleanup()
 {
@@ -138,7 +138,7 @@ void ActFormation::cleanup()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActFormation::exec()
 {

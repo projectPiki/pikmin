@@ -4,19 +4,19 @@
 #include "RopeCreature.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("ropeItem")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 RopeItem::RopeItem(CreatureProp* prop, Shape* shape)
     : RopeCreature(prop)
@@ -32,7 +32,7 @@ RopeItem::RopeItem(CreatureProp* prop, Shape* shape)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool RopeItem::isAtari()
 {
@@ -40,7 +40,7 @@ bool RopeItem::isAtari()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 RopeItem::getSize()
 {
@@ -48,7 +48,7 @@ f32 RopeItem::getSize()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void RopeItem::init(immut Vector3f& pos)
 {
@@ -59,7 +59,7 @@ void RopeItem::init(immut Vector3f& pos)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void RopeItem::autoInit()
 {
@@ -101,14 +101,14 @@ void RopeItem::autoInit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void RopeItem::startAI(int)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void RopeItem::doKill()
 {
@@ -117,7 +117,7 @@ void RopeItem::doKill()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 RopeItem::getiMass()
 {

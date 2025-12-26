@@ -4,19 +4,19 @@
 #include "zen/Math.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("alphaWipe")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::AlphaWipe::AlphaWipe()
 {
@@ -30,7 +30,7 @@ zen::AlphaWipe::AlphaWipe()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::AlphaWipe::update()
 {
@@ -94,7 +94,7 @@ void zen::AlphaWipe::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::AlphaWipe::draw(Graphics& gfx)
 {
@@ -108,7 +108,7 @@ void zen::AlphaWipe::draw(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::AlphaWipe::start(f32 totalDuration, f32 delay, zen::AlphaWipe::typeFlag type)
 {

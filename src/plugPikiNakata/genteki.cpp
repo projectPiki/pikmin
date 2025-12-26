@@ -8,19 +8,19 @@
 #include "teki.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(13)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT(nullptr)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 static GenObject* makeObjectTeki()
 {
@@ -28,7 +28,7 @@ static GenObject* makeObjectTeki()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GenObjectTeki::initialise()
 {
@@ -36,7 +36,7 @@ void GenObjectTeki::initialise()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 GenObjectTeki::GenObjectTeki()
     : GenObject('teki', "敵を生む") // 'create enemies'
@@ -46,7 +46,7 @@ GenObjectTeki::GenObjectTeki()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GenObjectTeki::doRead(RandomAccessStream& input)
 {
@@ -60,7 +60,7 @@ void GenObjectTeki::doRead(RandomAccessStream& input)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GenObjectTeki::doWrite(RandomAccessStream& output)
 {
@@ -69,7 +69,7 @@ void GenObjectTeki::doWrite(RandomAccessStream& output)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GenObjectTeki::updateUseList(Generator*, int)
 {
@@ -92,7 +92,7 @@ void GenObjectTeki::updateUseList(Generator*, int)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Creature* GenObjectTeki::birth(BirthInfo& info)
 {

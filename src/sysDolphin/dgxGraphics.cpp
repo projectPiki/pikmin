@@ -7,13 +7,13 @@
 #include "sysNew.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("DGXGraphics")
@@ -162,7 +162,7 @@ static GXVtxAttrFmtList meshVAT[] = {
 };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 DGXGraphics::DGXGraphics(bool flag)
 {
@@ -245,7 +245,7 @@ DGXGraphics::DGXGraphics(bool flag)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DGXGraphics::setVerticalFilter(u8* vf)
 {
@@ -259,7 +259,7 @@ void DGXGraphics::setVerticalFilter(u8* vf)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DGXGraphics::getVerticalFilter(u8* vf)
 {
@@ -273,7 +273,7 @@ void DGXGraphics::getVerticalFilter(u8* vf)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DGXGraphics::videoReset()
 {
@@ -299,7 +299,7 @@ void DGXGraphics::videoReset()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DGXGraphics::resetCopyFilter()
 {
@@ -313,7 +313,7 @@ static bool sendColIndx; // type unsure
 static bool sendNbtIndx; // type unsure
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DGXGraphics::setupRender()
 {
@@ -323,7 +323,7 @@ void DGXGraphics::setupRender()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 u8* DGXGraphics::getDListPtr()
 {
@@ -331,7 +331,7 @@ u8* DGXGraphics::getDListPtr()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 u32 DGXGraphics::getDListRemainSize()
 {
@@ -339,7 +339,7 @@ u32 DGXGraphics::getDListRemainSize()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DGXGraphics::useDList(u32 num)
 {
@@ -348,7 +348,7 @@ void DGXGraphics::useDList(u32 num)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 u32 DGXGraphics::compileMaterial(Material* mat)
 {
@@ -445,7 +445,7 @@ u32 DGXGraphics::compileMaterial(Material* mat)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DGXGraphics::initRender(int a1, int a2)
 {
@@ -497,7 +497,7 @@ void DGXGraphics::initRender(int a1, int a2)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DGXGraphics::beginRender()
 {
@@ -508,7 +508,7 @@ void DGXGraphics::beginRender()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000084
  */
 void DGXGraphics::GXReInit()
@@ -517,7 +517,7 @@ void DGXGraphics::GXReInit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DGXGraphics::doneRender()
 {
@@ -527,7 +527,7 @@ void DGXGraphics::doneRender()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DGXGraphics::waitRetrace()
 {
@@ -550,7 +550,7 @@ void DGXGraphics::waitRetrace()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DGXGraphics::waitPostRetrace()
 {
@@ -566,7 +566,7 @@ void DGXGraphics::waitPostRetrace()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DGXGraphics::retraceProc(u32)
 {
@@ -583,7 +583,7 @@ void DGXGraphics::retraceProc(u32)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DGXGraphics::setCamera(Camera* a1)
 {
@@ -603,7 +603,7 @@ void DGXGraphics::calcViewMatrix(immut Matrix4f& modelMtx, Matrix4f& viewMtx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 DGXGraphics::setLineWidth(f32 width)
 {
@@ -614,7 +614,7 @@ f32 DGXGraphics::setLineWidth(f32 width)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 u8 DGXGraphics::setDepth(bool enabled)
 {
@@ -629,7 +629,7 @@ u8 DGXGraphics::setDepth(bool enabled)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int DGXGraphics::setCullFront(int cull)
 {
@@ -648,7 +648,7 @@ int DGXGraphics::setCullFront(int cull)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DGXGraphics::setAmbient()
 {
@@ -662,7 +662,7 @@ void DGXGraphics::setAmbient()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool DGXGraphics::setLighting(bool set, PVWLightingInfo* lightInfo)
 {
@@ -703,7 +703,7 @@ bool DGXGraphics::setLighting(bool set, PVWLightingInfo* lightInfo)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DGXGraphics::setLight(Light* light, int idx)
 {
@@ -743,7 +743,7 @@ void DGXGraphics::setLight(Light* light, int idx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DGXGraphics::setPerspective(Mtx mtx, f32 a1, f32 a2, f32 a3, f32 a4, f32 a5)
 {
@@ -760,7 +760,7 @@ void DGXGraphics::setPerspective(Mtx mtx, f32 a1, f32 a2, f32 a3, f32 a4, f32 a5
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DGXGraphics::setOrthogonal(Mtx mtx, immut RectArea& bounds)
 {
@@ -784,7 +784,7 @@ void DGXGraphics::setOrthogonal(Mtx mtx, immut RectArea& bounds)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DGXGraphics::setScissor(immut RectArea& bounds)
 {
@@ -792,7 +792,7 @@ void DGXGraphics::setScissor(immut RectArea& bounds)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DGXGraphics::setViewport(immut RectArea& bounds)
 {
@@ -800,7 +800,7 @@ void DGXGraphics::setViewport(immut RectArea& bounds)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DGXGraphics::setViewportOffset(immut RectArea& bounds)
 {
@@ -808,14 +808,14 @@ void DGXGraphics::setViewportOffset(immut RectArea& bounds)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DGXGraphics::initReflectTex(bool)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DGXGraphics::initProjTex(bool set, LightCamera* cam)
 {
@@ -840,7 +840,7 @@ void DGXGraphics::initProjTex(bool set, LightCamera* cam)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DGXGraphics::useMatrixQuick(immut Matrix4f& mtx, int id)
 {
@@ -897,7 +897,7 @@ void DGXGraphics::useMatrixQuick(immut Matrix4f& mtx, int id)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DGXGraphics::useMatrix(immut Matrix4f& mtx, int a)
 {
@@ -907,7 +907,7 @@ void DGXGraphics::useMatrix(immut Matrix4f& mtx, int a)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DGXGraphics::useTexture(Texture* texture, int id)
 {
@@ -931,7 +931,7 @@ void DGXGraphics::useTexture(Texture* texture, int id)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DGXGraphics::setMatMatrices(Material* mat, int p2)
 {
@@ -974,7 +974,7 @@ void DGXGraphics::setMatMatrices(Material* mat, int p2)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DGXGraphics::setMaterial(Material* mat, bool p2)
 {
@@ -1153,7 +1153,7 @@ void DGXGraphics::setMaterial(Material* mat, bool p2)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DGXGraphics::initMesh(Shape* model)
 {
@@ -1219,7 +1219,7 @@ void DGXGraphics::initMesh(Shape* model)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DGXGraphics::setupVtxDesc(Shape* model, Material* mat, Mesh* mesh)
 {
@@ -1293,7 +1293,7 @@ void DGXGraphics::setupVtxDesc(Shape* model, Material* mat, Mesh* mesh)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DGXGraphics::drawSingleMatpoly(Shape* model, Joint::MatPoly* matPoly)
 {
@@ -1346,7 +1346,7 @@ void DGXGraphics::drawSingleMatpoly(Shape* model, Joint::MatPoly* matPoly)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DGXGraphics::drawMeshes(Camera&, Shape* shape)
 {
@@ -1358,7 +1358,7 @@ void DGXGraphics::drawMeshes(Camera&, Shape* shape)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DGXGraphics::setColour(immut Colour& color, bool set)
 {
@@ -1378,7 +1378,7 @@ void DGXGraphics::setColour(immut Colour& color, bool set)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DGXGraphics::setAuxColour(immut Colour& color)
 {
@@ -1386,7 +1386,7 @@ void DGXGraphics::setAuxColour(immut Colour& color)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DGXGraphics::setPrimEnv(immut Colour* col1, immut Colour* col2)
 {
@@ -1399,7 +1399,7 @@ void DGXGraphics::setPrimEnv(immut Colour* col1, immut Colour* col2)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DGXGraphics::setClearColour(immut Colour& color)
 {
@@ -1407,7 +1407,7 @@ void DGXGraphics::setClearColour(immut Colour& color)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DGXGraphics::clearBuffer(int, bool)
 {
@@ -1415,7 +1415,7 @@ void DGXGraphics::clearBuffer(int, bool)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DGXGraphics::setFog(bool set)
 {
@@ -1439,7 +1439,7 @@ void DGXGraphics::setFog(bool set)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DGXGraphics::setFog(bool set, immut Colour& color, f32 density, f32 start, f32 end)
 {
@@ -1451,7 +1451,7 @@ void DGXGraphics::setFog(bool set, immut Colour& color, f32 density, f32 start, 
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DGXGraphics::setBlendMode(u8 blendFactor, u8 zMode, u8 blendMode)
 {
@@ -1483,7 +1483,7 @@ void DGXGraphics::setBlendMode(u8 blendFactor, u8 zMode, u8 blendMode)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int DGXGraphics::setCBlending(int mode)
 {
@@ -1563,7 +1563,7 @@ int DGXGraphics::setCBlending(int mode)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool DGXGraphics::initParticle(bool a)
 {
@@ -1586,7 +1586,7 @@ bool DGXGraphics::initParticle(bool a)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DGXGraphics::drawRotParticle(Camera& cam, immut Vector3f& pos, u16 angle, f32 radius)
 {
@@ -1619,7 +1619,7 @@ void DGXGraphics::drawRotParticle(Camera& cam, immut Vector3f& pos, u16 angle, f
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DGXGraphics::drawParticle(Camera& cam, immut Vector3f& pos, f32 size)
 {
@@ -1653,7 +1653,7 @@ void DGXGraphics::drawParticle(Camera& cam, immut Vector3f& pos, f32 size)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DGXGraphics::drawCamParticle(Camera& cam, immut Vector3f& pos, immut Vector2f& extents, immut Vector2f& uvMin, immut Vector2f& uvMax)
 {
@@ -1693,7 +1693,7 @@ void DGXGraphics::drawCamParticle(Camera& cam, immut Vector3f& pos, immut Vector
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DGXGraphics::drawLine(immut Vector3f& start, immut Vector3f& end)
 {
@@ -1716,7 +1716,7 @@ void DGXGraphics::drawLine(immut Vector3f& start, immut Vector3f& end)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DGXGraphics::drawPoints(immut Vector3f* points, int count)
 {
@@ -1738,7 +1738,7 @@ void DGXGraphics::drawPoints(immut Vector3f* points, int count)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DGXGraphics::drawOneTri(immut Vector3f* vertices, immut Vector3f* normals, immut Vector2f* texCoords, int count)
 {
@@ -1776,7 +1776,7 @@ void DGXGraphics::drawOneTri(immut Vector3f* vertices, immut Vector3f* normals, 
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DGXGraphics::blatRectangle(immut RectArea& rect)
 {
@@ -1820,7 +1820,7 @@ void DGXGraphics::blatRectangle(immut RectArea& rect)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DGXGraphics::testRectangle(immut RectArea& rect)
 {
@@ -1857,7 +1857,7 @@ void DGXGraphics::testRectangle(immut RectArea& rect)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DGXGraphics::drawRectangle(immut RectArea& bounds, immut RectArea& texCoords, immut Vector3f* offset)
 {
@@ -1893,7 +1893,7 @@ void DGXGraphics::drawRectangle(immut RectArea& bounds, immut RectArea& texCoord
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DGXGraphics::lineRectangle(immut RectArea& rect)
 {
@@ -1928,7 +1928,7 @@ void DGXGraphics::lineRectangle(immut RectArea& rect)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DGXGraphics::fillRectangle(immut RectArea& rect)
 {
@@ -1960,7 +1960,7 @@ void DGXGraphics::fillRectangle(immut RectArea& rect)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DGXGraphics::texturePrintf(Font* font, int x, int y, immut char* format, ...)
 {
@@ -2051,7 +2051,7 @@ void DGXGraphics::texturePrintf(Font* font, int x, int y, immut char* format, ..
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0001A0
  */
 void DGXGraphics::showCrash(u16, OSContext*)
@@ -2061,7 +2061,7 @@ void DGXGraphics::showCrash(u16, OSContext*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000184
  */
 void DGXGraphics::showError(immut char* msg1, immut char* fileName, int line)
@@ -2096,7 +2096,7 @@ static char sFontData[] = {
 };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000D0
  */
 void DGXGraphics::directDrawChar(int, int, int)
@@ -2105,7 +2105,7 @@ void DGXGraphics::directDrawChar(int, int, int)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F8
  */
 void DGXGraphics::directDrawChar(RectArea&, RectArea&)
@@ -2114,7 +2114,7 @@ void DGXGraphics::directDrawChar(RectArea&, RectArea&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0001D8
  */
 void DGXGraphics::directPrint(int, int, immut char*, ...)
@@ -2123,7 +2123,7 @@ void DGXGraphics::directPrint(int, int, immut char*, ...)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000108
  */
 void DGXGraphics::directErase(RectArea&, bool)
@@ -2132,14 +2132,14 @@ void DGXGraphics::directErase(RectArea&, bool)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Shape::Shape()
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Shape::optimize()
 {

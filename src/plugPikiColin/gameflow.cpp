@@ -28,13 +28,13 @@ BaseApp* app;
 static f32 llspin;
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("GameFlow");
@@ -42,7 +42,7 @@ DEFINE_PRINT("GameFlow");
 static const char* timopts[] = { " [off]", "  [on]", "[full]" };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GameLoadIdler::draw(Graphics& gfx)
 {
@@ -65,7 +65,7 @@ void GameLoadIdler::draw(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GameFlow::drawLoadLogo(Graphics& gfx, bool p2, Texture* p3, f32 p4)
 {
@@ -97,7 +97,7 @@ void GameFlow::drawLoadLogo(Graphics& gfx, bool p2, Texture* p3, f32 p4)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000020
  */
 void WorldClock::setClockSpd(f32 speed)
@@ -107,7 +107,7 @@ void WorldClock::setClockSpd(f32 speed)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void WorldClock::setTime(f32 time)
 {
@@ -119,7 +119,7 @@ void WorldClock::setTime(f32 time)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000044
  */
 void WorldClock::reset(f32 speed)
@@ -134,7 +134,7 @@ void WorldClock::reset(f32 speed)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00006C
  */
 f32 WorldClock::age(f32 offsetHours)
@@ -144,7 +144,7 @@ f32 WorldClock::age(f32 offsetHours)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void WorldClock::update(f32 timeStep)
 {
@@ -169,7 +169,7 @@ void WorldClock::update(f32 timeStep)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GameFlow::menuToggleTimers(Menu& menu)
 {
@@ -179,7 +179,7 @@ void GameFlow::menuToggleTimers(Menu& menu)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GameFlow::menuTogglePrint(Menu& menu)
 {
@@ -188,7 +188,7 @@ void GameFlow::menuTogglePrint(Menu& menu)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GameFlow::menuToggleDInfo(Menu& menu)
 {
@@ -197,7 +197,7 @@ void GameFlow::menuToggleDInfo(Menu& menu)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GameFlow::menuToggleDExtra(Menu& menu)
 {
@@ -206,7 +206,7 @@ void GameFlow::menuToggleDExtra(Menu& menu)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GameFlow::menuToggleBlur(Menu& menu)
 {
@@ -215,7 +215,7 @@ void GameFlow::menuToggleBlur(Menu& menu)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GameFlow::menuToggleInfo(Menu& menu)
 {
@@ -224,7 +224,7 @@ void GameFlow::menuToggleInfo(Menu& menu)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GameFlow::menuToggleColls(Menu& menu)
 {
@@ -233,7 +233,7 @@ void GameFlow::menuToggleColls(Menu& menu)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0004DC
  */
 void GameFlow::addOptionsMenu(Menu* parent)
@@ -273,7 +273,7 @@ static const char* filterNames[] = {
 };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GameFlow::menuChangeFilter(Menu& menu)
 {
@@ -284,7 +284,7 @@ void GameFlow::menuChangeFilter(Menu& menu)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GameFlow::menuIncreaseFilter(Menu& menu)
 {
@@ -300,7 +300,7 @@ void GameFlow::menuIncreaseFilter(Menu& menu)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GameFlow::menuDecreaseFilter(Menu& menu)
 {
@@ -316,7 +316,7 @@ void GameFlow::menuDecreaseFilter(Menu& menu)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000214
  */
 void GameFlow::addFilterMenu(Menu* parent)
@@ -335,7 +335,7 @@ void GameFlow::addFilterMenu(Menu* parent)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GameFlow::read(RandomAccessStream& input)
 {
@@ -343,7 +343,7 @@ void GameFlow::read(RandomAccessStream& input)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void preloadLanguage()
 {
@@ -456,7 +456,7 @@ void preloadLanguage()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Texture* GameFlow::setLoadBanner(immut char* texPath)
 {
@@ -473,7 +473,7 @@ Texture* GameFlow::setLoadBanner(immut char* texPath)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GameFlow::hardReset(BaseApp* baseApp)
 {
@@ -546,7 +546,7 @@ void GameFlow::hardReset(BaseApp* baseApp)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GameFlow::softReset()
 {
@@ -649,7 +649,7 @@ void GameFlow::softReset()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Shape* GameFlow::loadShape(immut char* filename, bool p2)
 {
@@ -657,7 +657,7 @@ Shape* GameFlow::loadShape(immut char* filename, bool p2)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GameFlow::update()
 {
@@ -667,7 +667,7 @@ void GameFlow::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GameFlow::addGenNode(immut char* name, CoreNode* node)
 {

@@ -3,19 +3,19 @@
 #include "zen/Math.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("aiGoto")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 ActGoto::ActGoto(Piki* piki)
     : Action(piki, true)
@@ -24,7 +24,7 @@ ActGoto::ActGoto(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActGoto::Initialiser::initialise(Action* action)
 {
@@ -37,7 +37,7 @@ void ActGoto::Initialiser::initialise(Action* action)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActGoto::init(Creature* target)
 {
@@ -47,7 +47,7 @@ void ActGoto::init(Creature* target)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActGoto::cleanup()
 {
@@ -56,7 +56,7 @@ void ActGoto::cleanup()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActGoto::exec()
 {

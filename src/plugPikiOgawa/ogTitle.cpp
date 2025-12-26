@@ -11,19 +11,19 @@
 #include "zen/ogSub.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("OgTitleSection")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000068
  */
 void zen::ogScrTitleMgr::getGamePrefs()
@@ -37,7 +37,7 @@ void zen::ogScrTitleMgr::getGamePrefs()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000080
  */
 void zen::ogScrTitleMgr::setGamePrefs()
@@ -50,7 +50,7 @@ void zen::ogScrTitleMgr::setGamePrefs()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::ogScrTitleMgr::ogScrTitleMgr()
 {
@@ -128,7 +128,7 @@ zen::ogScrTitleMgr::ogScrTitleMgr()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrTitleMgr::start(bool hasChallenge)
 {
@@ -156,7 +156,7 @@ void zen::ogScrTitleMgr::start(bool hasChallenge)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 {
@@ -480,7 +480,7 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrTitleMgr::draw(Graphics& gfx)
 {
@@ -506,7 +506,7 @@ void zen::ogScrTitleMgr::draw(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrTitleMgr::StereoOnOff(bool set)
 {
@@ -530,7 +530,7 @@ void zen::ogScrTitleMgr::StereoOnOff(bool set)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrTitleMgr::DispBarBGM(bool set)
 {
@@ -552,7 +552,7 @@ void zen::ogScrTitleMgr::DispBarBGM(bool set)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrTitleMgr::DispBarSE(bool set)
 {

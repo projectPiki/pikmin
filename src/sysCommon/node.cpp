@@ -7,19 +7,19 @@
 NodeMgr* nodeMgr;
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("Node");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void CoreNode::add(CoreNode* toAdd)
 {
@@ -44,7 +44,7 @@ void CoreNode::add(CoreNode* toAdd)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void CoreNode::del()
 {
@@ -78,7 +78,7 @@ void CoreNode::del()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int CoreNode::getChildCount()
 {
@@ -91,7 +91,7 @@ int CoreNode::getChildCount()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void CoreNode::load(immut char* dirPath, immut char* fileName, u32)
 {
@@ -105,7 +105,7 @@ void CoreNode::load(immut char* dirPath, immut char* fileName, u32)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Node::init(immut char* name)
 {
@@ -115,7 +115,7 @@ void Node::init(immut char* name)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Node::update()
 {
@@ -129,7 +129,7 @@ void Node::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Node::draw(Graphics& gfx)
 {
@@ -140,7 +140,7 @@ void Node::draw(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Node::render(Graphics& gfx)
 {
@@ -148,7 +148,7 @@ void Node::render(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000128
  */
 SRTNode::SRTNode(immut char* name = "<SRTNode>")
@@ -158,7 +158,7 @@ SRTNode::SRTNode(immut char* name = "<SRTNode>")
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SRTNode::update()
 {
@@ -174,7 +174,7 @@ void SRTNode::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NodeMgr::Del(Node* node)
 {
@@ -201,7 +201,7 @@ void NodeMgr::Del(Node* node)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000EC
  */
 void NodeMgr::recFindNode(CoreNode*, immut char*)
@@ -210,7 +210,7 @@ void NodeMgr::recFindNode(CoreNode*, immut char*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000A8
  */
 CoreNode* NodeMgr::findNode(immut char*, CoreNode*)
@@ -219,7 +219,7 @@ CoreNode* NodeMgr::findNode(immut char*, CoreNode*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 NodeMgr::NodeMgr()
 {
@@ -227,7 +227,7 @@ NodeMgr::NodeMgr()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000040
  */
 NodeMgr::~NodeMgr()

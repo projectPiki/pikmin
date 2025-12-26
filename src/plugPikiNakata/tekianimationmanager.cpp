@@ -4,19 +4,19 @@
 #include "teki.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("tekianimationmanager")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TekiAnimationManager::TekiAnimationManager(TekiMgr* mgr)
     : Node("TekiAnimationManager")
@@ -25,7 +25,7 @@ TekiAnimationManager::TekiAnimationManager(TekiMgr* mgr)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TekiAnimationManager::read(RandomAccessStream& input)
 {

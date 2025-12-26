@@ -10,19 +10,19 @@
 #include "Stickers.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(16)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("CreatureStick");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Creature::interactStickers(Creature* stuckTo, immut Interaction& interaction, immut Condition* condition)
 {
@@ -40,7 +40,7 @@ void Creature::interactStickers(Creature* stuckTo, immut Interaction& interactio
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Creature::killStickers(Creature* stuckTo, immut Condition* cond, int p3)
 {
@@ -49,7 +49,7 @@ void Creature::killStickers(Creature* stuckTo, immut Condition* cond, int p3)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Creature::startClimb()
 {
@@ -62,7 +62,7 @@ void Creature::startClimb()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Creature::endClimb()
 {
@@ -70,7 +70,7 @@ void Creature::endClimb()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Creature::isStickToPlatform()
 {
@@ -85,7 +85,7 @@ bool Creature::isStickToPlatform()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000054
  */
 bool Creature::isStickToSphere()
@@ -94,7 +94,7 @@ bool Creature::isStickToSphere()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0003E8
  */
 void Creature::adjustStickObject(immut Vector3f&)
@@ -103,7 +103,7 @@ void Creature::adjustStickObject(immut Vector3f&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Creature::startStickMouth(Creature* mouthOwner, CollPart* mouthPart)
 {
@@ -125,7 +125,7 @@ void Creature::startStickMouth(Creature* mouthOwner, CollPart* mouthPart)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Creature::endStickMouth()
 {
@@ -135,7 +135,7 @@ void Creature::endStickMouth()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Creature::startStickObjectSphere(Creature* obj, CollPart* stickPart, f32 stickDist)
 {
@@ -176,7 +176,7 @@ void Creature::startStickObjectSphere(Creature* obj, CollPart* stickPart, f32 st
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Creature::startStickObjectTube(Creature* obj, CollPart* stickPart)
 {
@@ -211,7 +211,7 @@ void Creature::startStickObjectTube(Creature* obj, CollPart* stickPart)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 void Creature::startStickObjectPellet(Pellet* pellet, int slotIdx, f32 offset)
@@ -226,7 +226,7 @@ void Creature::startStickObjectPellet(Pellet* pellet, int slotIdx, f32 offset)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Creature::startStickObject(Creature* obj, CollPart* stickPart, int slot, f32 p4)
 {
@@ -268,7 +268,7 @@ void Creature::startStickObject(Creature* obj, CollPart* stickPart, int slot, f3
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Creature::endStickObject()
 {
@@ -289,7 +289,7 @@ void Creature::endStickObject()
 const char* _standType[] = { "GROUND", "TEKIPLAT", "PLAT", "AIR" };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Creature::startStick(Creature* stickTarget, CollPart* stickPart)
 {
@@ -332,7 +332,7 @@ bool Creature::startStick(Creature* stickTarget, CollPart* stickPart)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000028
  */
 bool Creature::isStickLeader()
@@ -345,7 +345,7 @@ bool Creature::isStickLeader()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Creature::endStick()
 {
@@ -383,7 +383,7 @@ void Creature::endStick()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Creature::startRope(RopeCreature* rope, f32 ropeRatio)
 {
@@ -420,7 +420,7 @@ bool Creature::startRope(RopeCreature* rope, f32 ropeRatio)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Creature::endRope()
 {
@@ -455,7 +455,7 @@ void Creature::endRope()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Stickers::Stickers(Creature* owner)
 {
@@ -464,7 +464,7 @@ Stickers::Stickers(Creature* owner)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Stickers::calcNum()
 {
@@ -477,7 +477,7 @@ void Stickers::calcNum()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Creature* Stickers::getCreature(int idx)
 {
@@ -498,7 +498,7 @@ Creature* Stickers::getCreature(int idx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int Stickers::getFirst()
 {
@@ -506,7 +506,7 @@ int Stickers::getFirst()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int Stickers::getNext(int idx)
 {
@@ -514,7 +514,7 @@ int Stickers::getNext(int idx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Stickers::isDone(int idx)
 {
@@ -525,7 +525,7 @@ bool Stickers::isDone(int idx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Creature::updateStickPlatform()
 {
@@ -551,7 +551,7 @@ void Creature::updateStickPlatform()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Creature::updateStickNonPlatform()
 {
@@ -577,7 +577,7 @@ void Creature::updateStickNonPlatform()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Creature::updateStickSphere()
 {
@@ -611,7 +611,7 @@ void Creature::updateStickSphere()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Creature::updateStickPellet()
 {
@@ -661,7 +661,7 @@ void Creature::updateStickPellet()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Creature::updateStickTube()
 {
@@ -701,7 +701,7 @@ void Creature::updateStickTube()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Creature::updateStickRope()
 {

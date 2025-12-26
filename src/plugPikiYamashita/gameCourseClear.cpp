@@ -27,13 +27,13 @@
 #include "zen/particle.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(64)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("GameCourseClearSection")
@@ -852,7 +852,7 @@ struct GameCourseClearScreen : public Node {
 };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 GameCourseClearSection::GameCourseClearSection()
 {

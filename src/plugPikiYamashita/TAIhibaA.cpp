@@ -9,13 +9,13 @@
 #include "zen/CallBack.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("TAIhibaA")
@@ -198,7 +198,7 @@ protected:
 };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TAIhibaASoundTable::TAIhibaASoundTable()
     : PaniSoundTable(7)
@@ -209,7 +209,7 @@ TAIhibaASoundTable::TAIhibaASoundTable()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TAIhibaAParameters::TAIhibaAParameters()
     : TekiParameters(TPI_COUNT, TAIhibaAFloatParams::COUNT)
@@ -276,7 +276,7 @@ TAIhibaAParameters::TAIhibaAParameters()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TAIhibaAStrategy::TAIhibaAStrategy()
     : YaiStrategy(TAIhibaAStateID::COUNT, TAIhibaAStateID::Init)
@@ -308,7 +308,7 @@ TAIhibaAStrategy::TAIhibaAStrategy()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAIhibaAStrategy::act(Teki& teki)
 {
@@ -334,7 +334,7 @@ void TAIhibaAStrategy::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAIhibaAStrategy::draw(Teki& teki, Graphics& gfx)
 {
@@ -343,7 +343,7 @@ void TAIhibaAStrategy::draw(Teki& teki, Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAIhibaAAnimation::makeDefaultAnimations()
 {

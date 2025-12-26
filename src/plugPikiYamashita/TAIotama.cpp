@@ -11,13 +11,13 @@
 #include "zen/CallBack.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("TAIotama")
@@ -185,7 +185,7 @@ protected:
 };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TAIotamaSoundTable::TAIotamaSoundTable()
     : PaniSoundTable(3)
@@ -196,7 +196,7 @@ TAIotamaSoundTable::TAIotamaSoundTable()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TAIotamaParameters::TAIotamaParameters()
     : TekiParameters(TPI_COUNT, TAIotamaFloatParams::COUNT)
@@ -270,7 +270,7 @@ TAIotamaParameters::TAIotamaParameters()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TAIotamaStrategy::TAIotamaStrategy()
     : YaiStrategy(TAIotamaStateID::COUNT, TAIotamaStateID::Wait)
@@ -348,7 +348,7 @@ TAIotamaStrategy::TAIotamaStrategy()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAIotamaAnimation::makeDefaultAnimations()
 {

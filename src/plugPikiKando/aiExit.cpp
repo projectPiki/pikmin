@@ -3,19 +3,19 @@
 #include "RopeCreature.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("Exit")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 ActExit::ActExit(Piki* piki)
     : Action(piki, true)
@@ -25,7 +25,7 @@ ActExit::ActExit(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActExit::init(Creature*)
 {
@@ -38,7 +38,7 @@ void ActExit::init(Creature*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActExit::procCollideMsg(Piki*, MsgCollide* msg)
 {
@@ -49,7 +49,7 @@ void ActExit::procCollideMsg(Piki*, MsgCollide* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActExit::exec()
 {
@@ -101,7 +101,7 @@ int ActExit::exec()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActExit::cleanup()
 {

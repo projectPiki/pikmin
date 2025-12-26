@@ -6,19 +6,19 @@
 #include "zen/Math.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("kmath")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool isNan(f32 value)
 {
@@ -30,7 +30,7 @@ bool isNan(f32 value)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void makePostureMatrix(immut Vector3f& col0, immut Vector3f& col1, immut Vector3f& col2, Matrix4f& mtx)
 {
@@ -48,7 +48,7 @@ void makePostureMatrix(immut Vector3f& col0, immut Vector3f& col1, immut Vector3
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 calcImpulse(immut Vector3f& relativePos, f32 mass, immut Vector3f& collisionNormal, immut Matrix4f& inertiaTensor,
                 immut Vector3f& relativeVel, immut Vector3f& separationVel)
@@ -69,7 +69,7 @@ f32 calcImpulse(immut Vector3f& relativePos, f32 mass, immut Vector3f& collision
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Vector3f CRSpline(f32 t, immut Vector3f* ctrlPts)
 {
@@ -85,7 +85,7 @@ Vector3f CRSpline(f32 t, immut Vector3f* ctrlPts)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Vector3f CRSplineTangent(f32 t, immut Vector3f* ctrlPts)
 {
@@ -101,7 +101,7 @@ Vector3f CRSplineTangent(f32 t, immut Vector3f* ctrlPts)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Vector3f getThrowVelocity(immut Vector3f& startPos, f32 horizSpeed, immut Vector3f& targetPos, Vector3f NRef targetDir)
 {
@@ -133,7 +133,7 @@ Vector3f getThrowVelocity(immut Vector3f& startPos, f32 horizSpeed, immut Vector
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 getCameraSafeAngle(immut Vector3f& cameraPos, f32 checkDistance, f32 heightWeighting)
 {

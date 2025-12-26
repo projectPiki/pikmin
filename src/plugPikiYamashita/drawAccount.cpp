@@ -6,19 +6,19 @@
 #include "zen/Number.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("DrawAccount")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::DrawAccount::DrawAccount()
     : DrawScreen("screen/blo/account.blo", nullptr, false, false)
@@ -68,7 +68,7 @@ zen::DrawAccount::DrawAccount()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawAccount::update()
 {
@@ -87,7 +87,7 @@ void zen::DrawAccount::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawAccount::draw(Graphics&)
 {
@@ -97,7 +97,7 @@ void zen::DrawAccount::draw(Graphics&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawAccount::start(zen::AccountData& data)
 {

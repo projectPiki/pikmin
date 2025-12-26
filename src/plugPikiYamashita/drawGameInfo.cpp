@@ -14,13 +14,13 @@
 #include "zen/ogSub.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(38)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("drawGameInfo")
@@ -597,7 +597,7 @@ struct MapPikminWindowCallBack : public P2DPaneCallBack {
 zen::GameInfo* zen::pGameInfo;
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::DrawGameInfo::DrawGameInfo(zen::DrawGameInfo::playModeFlag playMode)
 {
@@ -738,7 +738,7 @@ zen::DrawGameInfo::DrawGameInfo(zen::DrawGameInfo::playModeFlag playMode)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawGameInfo::update()
 {
@@ -751,7 +751,7 @@ void zen::DrawGameInfo::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawGameInfo::draw(Graphics& gfx)
 {
@@ -767,7 +767,7 @@ void zen::DrawGameInfo::draw(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000060
  */
 void zen::DrawGameInfo::upperDisplayOn()
@@ -777,7 +777,7 @@ void zen::DrawGameInfo::upperDisplayOn()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00002C
  */
 void zen::DrawGameInfo::upperDisplayOff()
@@ -786,7 +786,7 @@ void zen::DrawGameInfo::upperDisplayOff()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000A0
  */
 void zen::DrawGameInfo::lowerDisplayOn()
@@ -798,7 +798,7 @@ void zen::DrawGameInfo::lowerDisplayOn()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00004C
  */
 void zen::DrawGameInfo::lowerDisplayOff()
@@ -808,7 +808,7 @@ void zen::DrawGameInfo::lowerDisplayOff()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawGameInfo::upperFrameIn(f32 p1, bool p2)
 {
@@ -819,7 +819,7 @@ void zen::DrawGameInfo::upperFrameIn(f32 p1, bool p2)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawGameInfo::upperFrameOut(f32 p1, bool p2)
 {
@@ -830,7 +830,7 @@ void zen::DrawGameInfo::upperFrameOut(f32 p1, bool p2)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawGameInfo::lowerFrameIn(f32 p1, bool p2)
 {
@@ -844,7 +844,7 @@ void zen::DrawGameInfo::lowerFrameIn(f32 p1, bool p2)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawGameInfo::lowerFrameOut(f32 p1, bool p2)
 {
@@ -858,7 +858,7 @@ void zen::DrawGameInfo::lowerFrameOut(f32 p1, bool p2)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000018
  */
 bool zen::DrawGameInfo::isUpperFrameIn()
@@ -867,7 +867,7 @@ bool zen::DrawGameInfo::isUpperFrameIn()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000018
  */
 bool zen::DrawGameInfo::isUpperFrameOut()
@@ -876,7 +876,7 @@ bool zen::DrawGameInfo::isUpperFrameOut()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000030
  */
 bool zen::DrawGameInfo::isLowerFrameIn()
@@ -885,7 +885,7 @@ bool zen::DrawGameInfo::isLowerFrameIn()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000030
  */
 bool zen::DrawGameInfo::isLowerFrameOut()

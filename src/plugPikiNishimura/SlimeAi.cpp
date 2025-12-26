@@ -12,19 +12,19 @@
 #include "SoundMgr.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT(nullptr);
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 SlimeAi::SlimeAi(Slime* slime)
 {
@@ -32,7 +32,7 @@ SlimeAi::SlimeAi(Slime* slime)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SlimeAi::init(Slime* slime)
 {
@@ -52,7 +52,7 @@ void SlimeAi::init(Slime* slime)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SlimeAi::addDamagePoint(f32 damage)
 {
@@ -60,7 +60,7 @@ void SlimeAi::addDamagePoint(f32 damage)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000074
  */
 void SlimeAi::setEveryFrame()
@@ -78,7 +78,7 @@ void SlimeAi::setEveryFrame()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000018
  */
 void SlimeAi::afterProcessing()
@@ -87,7 +87,7 @@ void SlimeAi::afterProcessing()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SlimeAi::calcBubblePiki()
 {
@@ -136,7 +136,7 @@ void SlimeAi::calcBubblePiki()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SlimeAi::calcStickersRatio()
 {
@@ -154,7 +154,7 @@ void SlimeAi::calcStickersRatio()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000058
  */
 void SlimeAi::setLeaderIndex()
@@ -171,7 +171,7 @@ void SlimeAi::setLeaderIndex()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000194
  */
 void SlimeAi::makeInterrelation()
@@ -185,7 +185,7 @@ void SlimeAi::makeInterrelation()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000104
  */
 void SlimeAi::makeBodyThickness()
@@ -200,7 +200,7 @@ void SlimeAi::makeBodyThickness()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SlimeAi::playExpandingSound()
 {
@@ -232,7 +232,7 @@ void SlimeAi::playExpandingSound()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SlimeAi::calcCollisionCheck()
 {
@@ -262,7 +262,7 @@ void SlimeAi::calcCollisionCheck()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SlimeAi::setLeaderNearerTarget()
 {
@@ -289,7 +289,7 @@ void SlimeAi::setLeaderNearerTarget()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SlimeAi::moveFlagCheck()
 {
@@ -307,7 +307,7 @@ void SlimeAi::moveFlagCheck()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00006C
  */
 void SlimeAi::makeTargetPosition()
@@ -320,7 +320,7 @@ void SlimeAi::makeTargetPosition()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SlimeAi::makeFollowerVelocity()
 {
@@ -338,7 +338,7 @@ void SlimeAi::makeFollowerVelocity()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SlimeAi::makeLeaderVelocity()
 {
@@ -355,7 +355,7 @@ void SlimeAi::makeLeaderVelocity()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SlimeAi::setMidPointVelocity()
 {
@@ -372,7 +372,7 @@ void SlimeAi::setMidPointVelocity()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000584
  */
 void SlimeAi::walkAllState()
@@ -386,7 +386,7 @@ void SlimeAi::walkAllState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SlimeAi::calcContractDamage()
 {
@@ -408,7 +408,7 @@ void SlimeAi::calcContractDamage()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SlimeAi::contractCoreFlickPiki()
 {
@@ -431,7 +431,7 @@ void SlimeAi::contractCoreFlickPiki()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SlimeAi::contractSubFlickPiki()
 {
@@ -454,7 +454,7 @@ void SlimeAi::contractSubFlickPiki()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SlimeAi::inCaseOfContract()
 {
@@ -503,7 +503,7 @@ void SlimeAi::inCaseOfContract()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000120
  */
 void SlimeAi::setDieGoal()
@@ -516,7 +516,7 @@ void SlimeAi::setDieGoal()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000204
  */
 void SlimeAi::setContractGoal()
@@ -532,7 +532,7 @@ void SlimeAi::setContractGoal()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000204
  */
 void SlimeAi::setExpansionGoal()
@@ -549,7 +549,7 @@ void SlimeAi::setExpansionGoal()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F8
  */
 void SlimeAi::setAppearGoal()
@@ -562,7 +562,7 @@ void SlimeAi::setAppearGoal()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000154
  */
 void SlimeAi::bothEndsToGoal()
@@ -584,7 +584,7 @@ void SlimeAi::bothEndsToGoal()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000BC
  */
 void SlimeAi::bothEndsToAppearGoal()
@@ -597,7 +597,7 @@ void SlimeAi::bothEndsToAppearGoal()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SlimeAi::makeTargetRandom()
 {
@@ -617,7 +617,7 @@ void SlimeAi::makeTargetRandom()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00000C
  */
 void SlimeAi::setVelocity(f32 speed)
@@ -626,7 +626,7 @@ void SlimeAi::setVelocity(f32 speed)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00000C
  */
 bool SlimeAi::motionFinishTransit()
@@ -635,7 +635,7 @@ bool SlimeAi::motionFinishTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000024
  */
 bool SlimeAi::dieTransit()
@@ -644,7 +644,7 @@ bool SlimeAi::dieTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000068
  */
 bool SlimeAi::outSideChaseRangeTransit()
@@ -658,7 +658,7 @@ bool SlimeAi::outSideChaseRangeTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000068
  */
 bool SlimeAi::inSideWaitRangeTransit()
@@ -672,7 +672,7 @@ bool SlimeAi::inSideWaitRangeTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool SlimeAi::chaseNaviTransit()
 {
@@ -710,7 +710,7 @@ bool SlimeAi::chaseNaviTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool SlimeAi::chasePikiTransit()
 {
@@ -748,7 +748,7 @@ bool SlimeAi::chasePikiTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool SlimeAi::targetLostTransit()
 {
@@ -776,7 +776,7 @@ bool SlimeAi::targetLostTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000020
  */
 bool SlimeAi::collisionContractTransit()
@@ -788,7 +788,7 @@ bool SlimeAi::collisionContractTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000034
  */
 bool SlimeAi::dissolutionContractTransit()
@@ -800,7 +800,7 @@ bool SlimeAi::dissolutionContractTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000030
  */
 bool SlimeAi::finishContractTransit()
@@ -812,7 +812,7 @@ bool SlimeAi::finishContractTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000024
  */
 bool SlimeAi::finishExpansionTransit()
@@ -824,7 +824,7 @@ bool SlimeAi::finishExpansionTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool SlimeAi::appearTransit()
 {
@@ -853,7 +853,7 @@ bool SlimeAi::appearTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000024
  */
 bool SlimeAi::disAppearTransit()
@@ -865,7 +865,7 @@ bool SlimeAi::disAppearTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SlimeAi::initDie(int nextState)
 {
@@ -901,7 +901,7 @@ void SlimeAi::initDie(int nextState)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000050
  */
 void SlimeAi::initWalk(int nextState)
@@ -918,7 +918,7 @@ void SlimeAi::initWalk(int nextState)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000018
  */
 void SlimeAi::initChase(int nextState)
@@ -929,7 +929,7 @@ void SlimeAi::initChase(int nextState)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000360
  */
 void SlimeAi::initContract(int nextState)
@@ -945,7 +945,7 @@ void SlimeAi::initContract(int nextState)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000268
  */
 void SlimeAi::initExpansion(int nextState)
@@ -959,7 +959,7 @@ void SlimeAi::initExpansion(int nextState)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000174
  */
 void SlimeAi::initAppear(int nextState)
@@ -977,7 +977,7 @@ void SlimeAi::initAppear(int nextState)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000E0
  */
 void SlimeAi::initDisAppear(int nextState)
@@ -998,7 +998,7 @@ void SlimeAi::initDisAppear(int nextState)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000420
  */
 void SlimeAi::dieState()
@@ -1019,7 +1019,7 @@ void SlimeAi::dieState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00020C
  */
 void SlimeAi::walkRandomState()
@@ -1030,7 +1030,7 @@ void SlimeAi::walkRandomState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000E0
  */
 void SlimeAi::walkGoHomeState()
@@ -1041,7 +1041,7 @@ void SlimeAi::walkGoHomeState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000D0
  */
 void SlimeAi::chaseNaviState()
@@ -1052,7 +1052,7 @@ void SlimeAi::chaseNaviState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000D0
  */
 void SlimeAi::chasePikiState()
@@ -1063,7 +1063,7 @@ void SlimeAi::chasePikiState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0002C8
  */
 void SlimeAi::contractState()
@@ -1074,7 +1074,7 @@ void SlimeAi::contractState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0002C8
  */
 void SlimeAi::expansionState()
@@ -1085,7 +1085,7 @@ void SlimeAi::expansionState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 void SlimeAi::stayState()
@@ -1093,7 +1093,7 @@ void SlimeAi::stayState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SlimeAi::appearState()
 {
@@ -1160,7 +1160,7 @@ void SlimeAi::appearState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0001B4
  */
 void SlimeAi::disAppearState()
@@ -1173,7 +1173,7 @@ void SlimeAi::disAppearState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SlimeAi::update()
 {

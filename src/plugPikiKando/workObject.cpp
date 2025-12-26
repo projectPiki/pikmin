@@ -17,13 +17,13 @@
 WorkObjectMgr* workObjectMgr;
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(15)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("workObject");
@@ -53,7 +53,7 @@ immut char* files[] = {
 };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void HinderRock::beginPush()
 {
@@ -61,7 +61,7 @@ void HinderRock::beginPush()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void HinderRock::endPush()
 {
@@ -71,7 +71,7 @@ void HinderRock::endPush()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void WorkObjectMgr::finalSetup()
 {
@@ -83,7 +83,7 @@ void WorkObjectMgr::finalSetup()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00008C
  */
 WorkObject::WorkObject()
@@ -95,7 +95,7 @@ WorkObject::WorkObject()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void WorkObject::doKill()
 {
@@ -103,7 +103,7 @@ void WorkObject::doKill()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000070
  */
 int WorkObjectMgr::getNameIndex(immut char* name)
@@ -119,7 +119,7 @@ int WorkObjectMgr::getNameIndex(immut char* name)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000038
  */
 immut char* WorkObjectMgr::getName(int type)
@@ -135,7 +135,7 @@ immut char* WorkObjectMgr::getName(int type)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000070
  */
 int WorkObjectMgr::getShapeNameIndex(immut char* name)
@@ -152,7 +152,7 @@ int WorkObjectMgr::getShapeNameIndex(immut char* name)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000038
  */
 immut char* WorkObjectMgr::getShapeName(int type)
@@ -169,7 +169,7 @@ immut char* WorkObjectMgr::getShapeName(int type)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 WorkObjectMgr::WorkObjectMgr()
 {
@@ -182,7 +182,7 @@ WorkObjectMgr::WorkObjectMgr()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void WorkObjectMgr::loadShapes()
 {
@@ -198,7 +198,7 @@ void WorkObjectMgr::loadShapes()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000010
  */
 void WorkObjectMgr::addUseList(int index)
@@ -207,7 +207,7 @@ void WorkObjectMgr::addUseList(int index)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Creature* WorkObjectMgr::birth(int wObjType, int p2)
 {
@@ -240,7 +240,7 @@ Creature* WorkObjectMgr::birth(int wObjType, int p2)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Creature* WorkObjectMgr::getCreature(int index)
 {
@@ -256,7 +256,7 @@ Creature* WorkObjectMgr::getCreature(int index)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int WorkObjectMgr::getFirst()
 {
@@ -264,7 +264,7 @@ int WorkObjectMgr::getFirst()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int WorkObjectMgr::getNext(int idx)
 {
@@ -272,7 +272,7 @@ int WorkObjectMgr::getNext(int idx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool WorkObjectMgr::isDone(int id)
 {
@@ -283,7 +283,7 @@ bool WorkObjectMgr::isDone(int id)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int WorkObjectMgr::getSize()
 {
@@ -291,7 +291,7 @@ int WorkObjectMgr::getSize()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00015C
  */
 GenObjectWorkObject::GenObjectWorkObject()
@@ -308,7 +308,7 @@ GenObjectWorkObject::GenObjectWorkObject()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GenObjectWorkObject::ramSaveParameters(RandomAccessStream& data)
 {
@@ -319,7 +319,7 @@ void GenObjectWorkObject::ramSaveParameters(RandomAccessStream& data)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GenObjectWorkObject::ramLoadParameters(RandomAccessStream& data)
 {
@@ -330,7 +330,7 @@ void GenObjectWorkObject::ramLoadParameters(RandomAccessStream& data)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 static GenObject* makeObjectWorkObject()
 {
@@ -338,7 +338,7 @@ static GenObject* makeObjectWorkObject()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GenObjectWorkObject::initialise()
 {
@@ -346,7 +346,7 @@ void GenObjectWorkObject::initialise()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GenObjectWorkObject::doRead(RandomAccessStream& stream)
 {
@@ -394,7 +394,7 @@ void GenObjectWorkObject::doRead(RandomAccessStream& stream)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GenObjectWorkObject::doWrite(RandomAccessStream& stream)
 {
@@ -426,7 +426,7 @@ void GenObjectWorkObject::doWrite(RandomAccessStream& stream)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GenObjectWorkObject::updateUseList(Generator*, int i)
 {
@@ -436,7 +436,7 @@ void GenObjectWorkObject::updateUseList(Generator*, int i)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Creature* GenObjectWorkObject::birth(BirthInfo& info)
 {
@@ -472,7 +472,7 @@ Creature* GenObjectWorkObject::birth(BirthInfo& info)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 HinderRock::HinderRock(Shape* shape)
 {
@@ -487,7 +487,7 @@ HinderRock::HinderRock(Shape* shape)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool HinderRock::insideSafeArea(immut Vector3f& pos)
 {
@@ -500,7 +500,7 @@ bool HinderRock::insideSafeArea(immut Vector3f& pos)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void HinderRock::doLoad(RandomAccessStream& stream)
 {
@@ -528,7 +528,7 @@ void HinderRock::doLoad(RandomAccessStream& stream)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void HinderRock::doSave(RandomAccessStream& stream)
 {
@@ -537,7 +537,7 @@ void HinderRock::doSave(RandomAccessStream& stream)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 HinderRock::getCentreSize()
 {
@@ -545,7 +545,7 @@ f32 HinderRock::getCentreSize()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool HinderRock::isFinished()
 {
@@ -553,7 +553,7 @@ bool HinderRock::isFinished()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Vector3f HinderRock::getZVector()
 {
@@ -566,7 +566,7 @@ Vector3f HinderRock::getZVector()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Vector3f HinderRock::getXVector()
 {
@@ -579,7 +579,7 @@ Vector3f HinderRock::getXVector()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000CC
  */
 int HinderRock::getPlaneIndex(immut Vector3f& pos)
@@ -597,7 +597,7 @@ int HinderRock::getPlaneIndex(immut Vector3f& pos)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 u8 HinderRock::getPlaneFlag(immut Vector3f& pos)
 {
@@ -618,7 +618,7 @@ u8 HinderRock::getPlaneFlag(immut Vector3f& pos)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000E8
  */
 Vector3f HinderRock::getTangentPos(f32 mod)
@@ -634,7 +634,7 @@ Vector3f HinderRock::getTangentPos(f32 mod)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void HinderRock::updatePlanes()
 {
@@ -661,7 +661,7 @@ void HinderRock::updatePlanes()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Vector3f HinderRock::getVertex(int vtx)
 {
@@ -691,7 +691,7 @@ Vector3f HinderRock::getVertex(int vtx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool HinderRock::stimulate(immut Interaction& act)
 {
@@ -703,7 +703,7 @@ bool HinderRock::stimulate(immut Interaction& act)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool InteractPush::actHinderRock(HinderRock* obj) immut
 {
@@ -713,7 +713,7 @@ bool InteractPush::actHinderRock(HinderRock* obj) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void HinderRock::refresh(Graphics& gfx)
 {
@@ -729,7 +729,7 @@ void HinderRock::refresh(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool HinderRock::workable(immut Vector3f& pos)
 {
@@ -741,7 +741,7 @@ bool HinderRock::workable(immut Vector3f& pos)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void HinderRock::update()
 {
@@ -882,7 +882,7 @@ void HinderRock::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void HinderRock::startAI(int)
 {
@@ -908,7 +908,7 @@ void HinderRock::startAI(int)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Bridge::workable(immut Vector3f& pos)
 {
@@ -951,7 +951,7 @@ bool Bridge::workable(immut Vector3f& pos)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Bridge::Bridge(Shape* shape, bool a3)
 {
@@ -991,7 +991,7 @@ Bridge::Bridge(Shape* shape, bool a3)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Bridge::stimulate(immut Interaction& i)
 {
@@ -1003,7 +1003,7 @@ bool Bridge::stimulate(immut Interaction& i)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Bridge::refresh(Graphics& gfx)
 {
@@ -1026,7 +1026,7 @@ void Bridge::refresh(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Bridge::update()
 {
@@ -1058,7 +1058,7 @@ void Bridge::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Bridge::startAI(int)
 {
@@ -1102,7 +1102,7 @@ void Bridge::startAI(int)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Bridge::doLoad(RandomAccessStream& data)
 {
@@ -1138,7 +1138,7 @@ void Bridge::doLoad(RandomAccessStream& data)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Bridge::doSave(RandomAccessStream& data)
 {
@@ -1148,7 +1148,7 @@ void Bridge::doSave(RandomAccessStream& data)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Bridge::insideSafeArea(immut Vector3f& pos)
 {
@@ -1162,7 +1162,7 @@ bool Bridge::insideSafeArea(immut Vector3f& pos)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Bridge::isFinished()
 {
@@ -1175,7 +1175,7 @@ bool Bridge::isFinished()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int Bridge::getFirstUnfinishedStage()
 {
@@ -1188,7 +1188,7 @@ int Bridge::getFirstUnfinishedStage()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int Bridge::getFirstFinishedStage()
 {
@@ -1201,7 +1201,7 @@ int Bridge::getFirstFinishedStage()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int Bridge::getJointIndex(int id)
 {
@@ -1216,7 +1216,7 @@ int Bridge::getJointIndex(int id)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Bridge::isStageFinished(int id)
 {
@@ -1231,7 +1231,7 @@ bool Bridge::isStageFinished(int id)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Bridge::flatten()
 {
@@ -1245,7 +1245,7 @@ void Bridge::flatten()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Bridge::dump()
 {
@@ -1257,7 +1257,7 @@ void Bridge::dump()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Bridge::setStageFinished(int stageIndex, bool isFinished)
 {
@@ -1307,7 +1307,7 @@ void Bridge::setStageFinished(int stageIndex, bool isFinished)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Vector3f Bridge::getStagePos(int stage)
 {
@@ -1322,7 +1322,7 @@ Vector3f Bridge::getStagePos(int stage)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 Bridge::getStageZ(int stage)
 {
@@ -1334,7 +1334,7 @@ f32 Bridge::getStageZ(int stage)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Bridge::getBridgePos(immut Vector3f& origin, f32& xProjection, f32& zProjection)
 {
@@ -1346,7 +1346,7 @@ void Bridge::getBridgePos(immut Vector3f& origin, f32& xProjection, f32& zProjec
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Vector3f Bridge::getBridgeZVec()
 {
@@ -1356,7 +1356,7 @@ Vector3f Bridge::getBridgeZVec()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Vector3f Bridge::getBridgeXVec()
 {
@@ -1366,7 +1366,7 @@ Vector3f Bridge::getBridgeXVec()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Vector3f Bridge::getStartPos()
 {
@@ -1376,7 +1376,7 @@ Vector3f Bridge::getStartPos()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 Bridge::getStageDepth()
 {
@@ -1384,7 +1384,7 @@ f32 Bridge::getStageDepth()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 Bridge::getStageWidth()
 {
@@ -1392,7 +1392,7 @@ f32 Bridge::getStageWidth()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Bridge::startStageFinished(int stageIndex, bool isFinished)
 {
@@ -1457,7 +1457,7 @@ void Bridge::startStageFinished(int stageIndex, bool isFinished)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool InteractBuild::actBridge(Bridge* bridge) immut
 {
@@ -1476,7 +1476,7 @@ bool InteractBuild::actBridge(Bridge* bridge) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool InteractBreak::actBridge(Bridge* bridge) immut
 {

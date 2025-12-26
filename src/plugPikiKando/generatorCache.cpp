@@ -7,13 +7,13 @@
 #include "sysNew.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(11)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("GeneratorCache");
@@ -21,7 +21,7 @@ DEFINE_PRINT("GeneratorCache");
 GeneratorCache* generatorCache;
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 GeneratorCache::GeneratorCache()
 {
@@ -35,7 +35,7 @@ GeneratorCache::GeneratorCache()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GeneratorCache::init(u8* heap, int size)
 {
@@ -46,7 +46,7 @@ void GeneratorCache::init(u8* heap, int size)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GeneratorCache::initGame()
 {
@@ -79,7 +79,7 @@ void GeneratorCache::initGame()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GeneratorCache::addOne(u32 stageIdx)
 {
@@ -90,7 +90,7 @@ void GeneratorCache::addOne(u32 stageIdx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GeneratorCache::saveCard(RandomAccessStream& output)
 {
@@ -124,7 +124,7 @@ void GeneratorCache::saveCard(RandomAccessStream& output)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GeneratorCache::loadCard(RandomAccessStream& input)
 {
@@ -191,7 +191,7 @@ void GeneratorCache::loadCard(RandomAccessStream& input)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GeneratorCache::Cache::saveCard(RandomAccessStream& output)
 {
@@ -207,7 +207,7 @@ void GeneratorCache::Cache::saveCard(RandomAccessStream& output)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GeneratorCache::Cache::loadCard(RandomAccessStream& input)
 {
@@ -223,7 +223,7 @@ void GeneratorCache::Cache::loadCard(RandomAccessStream& input)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 GeneratorCache::Cache* GeneratorCache::findCache(GeneratorCache::Cache& list, u32 stageIdx)
 {
@@ -238,7 +238,7 @@ GeneratorCache::Cache* GeneratorCache::findCache(GeneratorCache::Cache& list, u3
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GeneratorCache::preload(u32 stageIdx)
 {
@@ -279,7 +279,7 @@ void GeneratorCache::preload(u32 stageIdx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool GeneratorCache::hasUfoParts(u32 stageIdx, u32 ufoPartIdx)
 {
@@ -308,7 +308,7 @@ bool GeneratorCache::hasUfoParts(u32 stageIdx, u32 ufoPartIdx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GeneratorCache::load(u32 stageIdx)
 {
@@ -371,7 +371,7 @@ void GeneratorCache::load(u32 stageIdx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GeneratorCache::beginSave(u32 stageIdx)
 {
@@ -399,7 +399,7 @@ void GeneratorCache::beginSave(u32 stageIdx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GeneratorCache::endSave()
 {
@@ -414,7 +414,7 @@ void GeneratorCache::endSave()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GeneratorCache::saveGenerator(Generator* gen)
 {
@@ -454,7 +454,7 @@ void GeneratorCache::saveGenerator(Generator* gen)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GeneratorCache::prepareUfoParts(GeneratorCache::Cache* cache)
 {
@@ -487,7 +487,7 @@ void GeneratorCache::prepareUfoParts(GeneratorCache::Cache* cache)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GeneratorCache::loadUfoParts(GeneratorCache::Cache* cache)
 {
@@ -513,7 +513,7 @@ void GeneratorCache::loadUfoParts(GeneratorCache::Cache* cache)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GeneratorCache::saveUfoParts(Pellet* part)
 {
@@ -542,7 +542,7 @@ void GeneratorCache::saveUfoParts(Pellet* part)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GeneratorCache::saveGeneratorCreature(Generator* gen)
 {
@@ -587,7 +587,7 @@ void GeneratorCache::saveGeneratorCreature(Generator* gen)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00001C
  */
 void GeneratorCache::Cache::dump()
@@ -600,7 +600,7 @@ void GeneratorCache::Cache::dump()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GeneratorCache::dump()
 {
@@ -622,7 +622,7 @@ void GeneratorCache::dump()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GeneratorCache::assertValid()
 {

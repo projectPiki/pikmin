@@ -6,19 +6,19 @@
 #include "system.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("Timers")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Timers::reset()
 {
@@ -27,7 +27,7 @@ void Timers::reset()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Timers::newFrame()
 {
@@ -35,7 +35,7 @@ void Timers::newFrame()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Timers::_start(immut char* name, bool set)
 {
@@ -78,7 +78,7 @@ void Timers::_start(immut char* name, bool set)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Timers::_stop(immut char* name)
 {
@@ -93,7 +93,7 @@ void Timers::_stop(immut char* name)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 void Timers::showTimes()
@@ -104,7 +104,7 @@ void Timers::showTimes()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Timers::draw(Graphics& gfx, Font* font)
 {

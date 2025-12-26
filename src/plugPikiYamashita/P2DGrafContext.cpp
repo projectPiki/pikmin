@@ -5,19 +5,19 @@
 #include "PUT/Geometry.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("P2DGrafContext");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 P2DGrafContext::P2DGrafContext(const PUTRect&)
@@ -26,7 +26,7 @@ P2DGrafContext::P2DGrafContext(const PUTRect&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 P2DGrafContext::P2DGrafContext(int x0, int y0, int width, int height)
     : mViewportBounds(x0, y0, x0 + width, y0 + height)
@@ -37,7 +37,7 @@ P2DGrafContext::P2DGrafContext(int x0, int y0, int width, int height)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void P2DGrafContext::setPort()
 {
@@ -47,7 +47,7 @@ void P2DGrafContext::setPort()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void P2DGrafContext::setup2D()
 {
@@ -78,7 +78,7 @@ void P2DGrafContext::setup2D()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void P2DGrafContext::setScissor()
 {
@@ -93,7 +93,7 @@ void P2DGrafContext::setScissor()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void P2DGrafContext::scissor(const PUTRect& rect)
 {
@@ -101,7 +101,7 @@ void P2DGrafContext::scissor(const PUTRect& rect)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void P2DGrafContext::place(const PUTRect& position)
 {
@@ -110,7 +110,7 @@ void P2DGrafContext::place(const PUTRect& position)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void P2DGrafContext::setColor(immut Colour& p1, immut Colour& p2, immut Colour& p3, immut Colour& p4)
 {
@@ -154,7 +154,7 @@ void P2DGrafContext::setColor(immut Colour& p1, immut Colour& p2, immut Colour& 
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void P2DGrafContext::setLineWidth(u8 width)
 {
@@ -163,7 +163,7 @@ void P2DGrafContext::setLineWidth(u8 width)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00016C
  */
 void P2DGrafContext::fillBox(const PUTRect&)
@@ -172,7 +172,7 @@ void P2DGrafContext::fillBox(const PUTRect&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000DC
  */
 void P2DGrafContext::drawFrame(const PUTRect&)
@@ -181,7 +181,7 @@ void P2DGrafContext::drawFrame(const PUTRect&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000B0
  */
 void P2DGrafContext::line(PUTPoint, PUTPoint)
@@ -190,7 +190,7 @@ void P2DGrafContext::line(PUTPoint, PUTPoint)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000A4
  */
 void P2DGrafContext::lineTo(PUTPoint)
@@ -199,7 +199,7 @@ void P2DGrafContext::lineTo(PUTPoint)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0001D0
  */
 void P2DGrafContext::polyline(PUTPoint* param_1, int param_2)
@@ -211,7 +211,7 @@ void P2DGrafContext::polyline(PUTPoint* param_1, int param_2)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0001E4
  */
 void P2DGrafContext::polyline(int* param_1, int param_2)
@@ -223,7 +223,7 @@ void P2DGrafContext::polyline(int* param_1, int param_2)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0001F8
  */
 void P2DGrafContext::polylineTo(PUTPoint* param_1, int param_2)
@@ -234,7 +234,7 @@ void P2DGrafContext::polylineTo(PUTPoint* param_1, int param_2)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000218
  */
 void P2DGrafContext::polylineTo(int* param_1, int param_2)

@@ -6,19 +6,19 @@
 #include "zen/Math.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(10)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("utEffect")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 SlimeEffect::SlimeEffect()
 {
@@ -26,7 +26,7 @@ SlimeEffect::SlimeEffect()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SlimeEffect::stop()
 {
@@ -35,7 +35,7 @@ void SlimeEffect::stop()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SlimeEffect::restart()
 {
@@ -44,7 +44,7 @@ void SlimeEffect::restart()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SlimeEffect::emit(immut EffectParm& parm)
 {
@@ -57,7 +57,7 @@ void SlimeEffect::emit(immut EffectParm& parm)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool SlimeEffect::invoke(zen::particleGenerator* gen, zen::particleMdl* mdl)
 {
@@ -71,7 +71,7 @@ bool SlimeEffect::invoke(zen::particleGenerator* gen, zen::particleMdl* mdl)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SlimeEffect::kill()
 {
@@ -88,7 +88,7 @@ UtEffectMgr* utEffectMgr;
 KEffect** UtEffectMgr::effects;
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 UtEffectMgr::UtEffectMgr()
 {
@@ -123,7 +123,7 @@ UtEffectMgr::UtEffectMgr()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void UtEffectMgr::registerEffect(int kEffID, KEffect* efx)
 {
@@ -134,7 +134,7 @@ void UtEffectMgr::registerEffect(int kEffID, KEffect* efx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void UtEffectMgr::cast(int kEffID, immut EffectParm& parm)
 {
@@ -149,7 +149,7 @@ void UtEffectMgr::cast(int kEffID, immut EffectParm& parm)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void UtEffectMgr::kill(int kEffID)
 {
@@ -163,7 +163,7 @@ void UtEffectMgr::kill(int kEffID)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PermanentEffect::PermanentEffect()
 {
@@ -172,7 +172,7 @@ PermanentEffect::PermanentEffect()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PermanentEffect::init(immut Vector3f& pos, int effType)
 {
@@ -189,7 +189,7 @@ void PermanentEffect::init(immut Vector3f& pos, int effType)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PermanentEffect::updatePos(immut Vector3f& pos)
 {
@@ -200,7 +200,7 @@ void PermanentEffect::updatePos(immut Vector3f& pos)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PermanentEffect::changeEffect(int effType)
 {
@@ -214,7 +214,7 @@ void PermanentEffect::changeEffect(int effType)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PermanentEffect::stop()
 {
@@ -224,7 +224,7 @@ void PermanentEffect::stop()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PermanentEffect::restart()
 {
@@ -234,7 +234,7 @@ void PermanentEffect::restart()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PermanentEffect::kill()
 {
@@ -245,7 +245,7 @@ void PermanentEffect::kill()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void FreeLightEffect::emit(immut EffectParm& parm)
 {
@@ -259,7 +259,7 @@ void FreeLightEffect::emit(immut EffectParm& parm)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void FreeLightEffect::stop()
 {
@@ -269,7 +269,7 @@ void FreeLightEffect::stop()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void FreeLightEffect::restart()
 {
@@ -279,7 +279,7 @@ void FreeLightEffect::restart()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void FreeLightEffect::setScale(f32 scale)
 {
@@ -289,7 +289,7 @@ void FreeLightEffect::setScale(f32 scale)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void FreeLightEffect::kill()
 {
@@ -300,7 +300,7 @@ void FreeLightEffect::kill()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void RippleEffect::emit(immut EffectParm& parm)
 {
@@ -327,7 +327,7 @@ void RippleEffect::emit(immut EffectParm& parm)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void RippleEffect::kill()
 {
@@ -346,7 +346,7 @@ void RippleEffect::kill()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void RippleEffect::stop()
 {
@@ -359,7 +359,7 @@ void RippleEffect::stop()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void RippleEffect::restart()
 {
@@ -372,7 +372,7 @@ void RippleEffect::restart()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BurnEffect::stop()
 {
@@ -382,7 +382,7 @@ void BurnEffect::stop()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BurnEffect::restart()
 {
@@ -392,7 +392,7 @@ void BurnEffect::restart()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BurnEffect::emit(immut EffectParm& parm)
 {
@@ -421,7 +421,7 @@ void BurnEffect::emit(immut EffectParm& parm)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BurnEffect::kill()
 {
@@ -436,7 +436,7 @@ void BurnEffect::kill()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool BurnEffect::invoke(zen::particleGenerator*)
 {

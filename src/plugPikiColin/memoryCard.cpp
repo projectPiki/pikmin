@@ -9,13 +9,13 @@
 #include <string.h>
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("MemoryCard")
@@ -352,7 +352,7 @@ static immut char* icon_datas[] = { p_icon_data, nullptr, nullptr, p_icon_data, 
 static immut char* icon_pals[]  = { p_icon_palette };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000014
  */
 void MemoryCard::GetBlockSize(s32)
@@ -361,7 +361,7 @@ void MemoryCard::GetBlockSize(s32)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int MemoryCard::getOptionsOffset(int id)
 {
@@ -369,7 +369,7 @@ int MemoryCard::getOptionsOffset(int id)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int MemoryCard::getGameFileOffset(int id)
 {
@@ -377,7 +377,7 @@ int MemoryCard::getGameFileOffset(int id)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00000C
  */
 void* MemoryCard::getBannerPtr()
@@ -387,7 +387,7 @@ void* MemoryCard::getBannerPtr()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000018
  */
 void* MemoryCard::getOptionsPtr(int idx)
@@ -397,7 +397,7 @@ void* MemoryCard::getOptionsPtr(int idx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000018
  */
 void* MemoryCard::getGameFilePtr(int idx)
@@ -414,7 +414,7 @@ void* MemoryCard::FAKE_getGameFilePtr(int idx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00006C
  */
 RamStream* MemoryCard::getBannerStream()
@@ -424,7 +424,7 @@ RamStream* MemoryCard::getBannerStream()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000084
  */
 RamStream* MemoryCard::getOptionsStream(int idx)
@@ -433,7 +433,7 @@ RamStream* MemoryCard::getOptionsStream(int idx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000088
  */
 RamStream* MemoryCard::getGameFileStream(int idx)
@@ -442,7 +442,7 @@ RamStream* MemoryCard::getGameFileStream(int idx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 u32 MemoryCard::calcChecksum(void* dataptr, u32 length)
 {
@@ -458,7 +458,7 @@ u32 MemoryCard::calcChecksum(void* dataptr, u32 length)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool MemoryCard::hasCardFinished()
 {
@@ -475,7 +475,7 @@ bool MemoryCard::hasCardFinished()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000078
  */
 void MemoryCard::waitPolling()
@@ -484,7 +484,7 @@ void MemoryCard::waitPolling()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000054
  */
 void MemoryCard::createFile(CARDStat& state)
@@ -498,7 +498,7 @@ void MemoryCard::createFile(CARDStat& state)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000A8
  */
 void MemoryCard::writeOneBanner()
@@ -510,7 +510,7 @@ void MemoryCard::writeOneBanner()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000B8
  */
 void MemoryCard::writeOneOption(int idx)
@@ -523,7 +523,7 @@ void MemoryCard::writeOneOption(int idx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000074
  */
 void MemoryCard::writeOneGameFile(int idx)
@@ -535,7 +535,7 @@ void MemoryCard::writeOneGameFile(int idx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool MemoryCard::attemptFormatCard(int channel)
 {
@@ -576,7 +576,7 @@ bool MemoryCard::attemptFormatCard(int channel)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 s32 MemoryCard::waitWhileBusy(int chan)
 {
@@ -588,7 +588,7 @@ s32 MemoryCard::waitWhileBusy(int chan)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool MemoryCard::getCardStatus(int channel)
 {
@@ -648,7 +648,7 @@ bool MemoryCard::getCardStatus(int channel)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MemoryCard::checkUseFile()
 {
@@ -678,7 +678,7 @@ void MemoryCard::checkUseFile()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 s32 MemoryCard::getMemoryCardState(bool flag)
 {
@@ -732,7 +732,7 @@ s32 MemoryCard::getMemoryCardState(bool flag)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MemoryCard::loadCurrentFile()
 {
@@ -751,7 +751,7 @@ void MemoryCard::loadCurrentFile()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 s32 MemoryCard::getNewestOptionsIndex()
 {
@@ -779,7 +779,7 @@ s32 MemoryCard::getNewestOptionsIndex()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MemoryCard::loadOptions()
 {
@@ -793,7 +793,7 @@ void MemoryCard::loadOptions()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MemoryCard::saveOptions()
 {
@@ -812,7 +812,7 @@ void MemoryCard::saveOptions()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MemoryCard::loadCurrentGame()
 {
@@ -824,7 +824,7 @@ void MemoryCard::loadCurrentGame()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MemoryCard::saveCurrentGame()
 {
@@ -858,7 +858,7 @@ void MemoryCard::saveCurrentGame()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MemoryCard::writeCurrentGame(RandomAccessStream* output, PlayState& playState)
 {
@@ -885,7 +885,7 @@ void MemoryCard::writeCurrentGame(RandomAccessStream* output, PlayState& playSta
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MemoryCard::readCurrentGame(RandomAccessStream* data)
 {
@@ -903,7 +903,7 @@ static const char* errCodes[] = {
 };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MemoryCard::initBannerArea(CARDStat& state, immut char* p2)
 {
@@ -954,7 +954,7 @@ void MemoryCard::initBannerArea(CARDStat& state, immut char* p2)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000404
  */
 void MemoryCard::initFileArea(int idx, int p2)
@@ -977,7 +977,7 @@ void MemoryCard::initFileArea(int idx, int p2)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MemoryCard::initOptionsArea(int idx)
 {
@@ -991,7 +991,7 @@ void MemoryCard::initOptionsArea(int idx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 s32 MemoryCard::makeDefaultFile()
 {
@@ -1036,7 +1036,7 @@ s32 MemoryCard::makeDefaultFile()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MemoryCard::copyFile(CardQuickInfo& from, CardQuickInfo& to)
 {
@@ -1061,7 +1061,7 @@ void MemoryCard::copyFile(CardQuickInfo& from, CardQuickInfo& to)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MemoryCard::delFile(CardQuickInfo& target)
 {
@@ -1085,7 +1085,7 @@ void MemoryCard::delFile(CardQuickInfo& target)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int MemoryCard::doFormatCard()
 {
@@ -1103,7 +1103,7 @@ int MemoryCard::doFormatCard()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool MemoryCard::isCardInserted()
 {
@@ -1111,7 +1111,7 @@ bool MemoryCard::isCardInserted()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool MemoryCard::hasCardChanged()
 {
@@ -1139,7 +1139,7 @@ bool MemoryCard::hasCardChanged()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 u32 MemoryCard::getOkSections()
 {
@@ -1576,7 +1576,7 @@ u32 MemoryCard::getOkSections()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool MemoryCard::isFileBroken()
 {
@@ -1599,7 +1599,7 @@ bool MemoryCard::isFileBroken()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F8
  */
 void MemoryCard::breakFile()
@@ -1611,7 +1611,7 @@ void MemoryCard::breakFile()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MemoryCard::repairFile()
 {
@@ -1669,7 +1669,7 @@ void MemoryCard::repairFile()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool MemoryCard::didSaveFail()
 {
@@ -1681,7 +1681,7 @@ bool MemoryCard::didSaveFail()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MemoryCard::getQuickInfos(CardQuickInfo* infos)
 {
@@ -1987,7 +1987,7 @@ void MemoryCard::getQuickInfos(CardQuickInfo* infos)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MemoryCard::init()
 {

@@ -2,19 +2,19 @@
 #include "PikiAI.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("aiRandomBoid") // ... no you're not
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 ActChase::ActChase(Piki* piki)
     : Action(piki, true)
@@ -23,14 +23,14 @@ ActChase::ActChase(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActChase::Initialiser::initialise(Action*)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActChase::init(Creature* target)
 {
@@ -40,7 +40,7 @@ void ActChase::init(Creature* target)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActChase::cleanup()
 {
@@ -49,7 +49,7 @@ void ActChase::cleanup()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActChase::exec()
 {

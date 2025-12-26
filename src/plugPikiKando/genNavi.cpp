@@ -5,19 +5,19 @@
 #include "sysNew.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("genNavi");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000060
  */
 // GenObjectNavi::GenObjectNavi()
@@ -26,7 +26,7 @@ DEFINE_PRINT("genNavi");
 // }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 GenObject* makeObjectNavi()
 {
@@ -34,7 +34,7 @@ GenObject* makeObjectNavi()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GenObjectNavi::initialise()
 {
@@ -42,14 +42,14 @@ void GenObjectNavi::initialise()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GenObjectNavi::doRead(RandomAccessStream&)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Creature* GenObjectNavi::birth(BirthInfo& info)
 {

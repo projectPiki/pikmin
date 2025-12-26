@@ -6,19 +6,19 @@
 RumbleMgr* rumbleMgr;
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(12)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT(nullptr);
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00000C
  */
 ChannelDataMgr::ChannelDataMgr()
@@ -27,7 +27,7 @@ ChannelDataMgr::ChannelDataMgr()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000010
  */
 void ChannelDataMgr::init()
@@ -36,7 +36,7 @@ void ChannelDataMgr::init()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000014
  */
 ChannelData* ChannelDataMgr::getChannelDataTbl(int row)
@@ -45,7 +45,7 @@ ChannelData* ChannelDataMgr::getChannelDataTbl(int row)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 ChannelMgr::ChannelMgr()
 {
@@ -57,7 +57,7 @@ ChannelMgr::ChannelMgr()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00002C
  */
 void ChannelMgr::init(ChannelDataMgr* dataMgr)
@@ -71,7 +71,7 @@ void ChannelMgr::init(ChannelDataMgr* dataMgr)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000028
  */
 void ChannelMgr::reset()
@@ -84,7 +84,7 @@ void ChannelMgr::reset()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ChannelMgr::start(int idx, f32* valuePtr)
 {
@@ -107,7 +107,7 @@ void ChannelMgr::start(int idx, f32* valuePtr)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 ChannelMgr::update()
 {
@@ -132,7 +132,7 @@ f32 ChannelMgr::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000058
  */
 ControlerMgr::ControlerMgr()
@@ -142,7 +142,7 @@ ControlerMgr::ControlerMgr()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000188
  */
 void ControlerMgr::init()
@@ -154,7 +154,7 @@ void ControlerMgr::init()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000140
  */
 void ControlerMgr::reset()
@@ -166,7 +166,7 @@ void ControlerMgr::reset()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ControlerMgr::start(int idx, f32* valuePtr)
 {
@@ -179,7 +179,7 @@ void ControlerMgr::start(int idx, f32* valuePtr)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0001A4
  */
 void ControlerMgr::stop()
@@ -192,7 +192,7 @@ void ControlerMgr::stop()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000114
  */
 void ControlerMgr::stop(int type)
@@ -205,7 +205,7 @@ void ControlerMgr::stop(int type)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000AC
  */
 f32 ControlerMgr::update()
@@ -230,7 +230,7 @@ f32 ControlerMgr::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 RumbleMgr::RumbleMgr(bool enabled1, bool enabled2, bool enabled3, bool enabled4)
 {
@@ -258,7 +258,7 @@ RumbleMgr::RumbleMgr(bool enabled1, bool enabled2, bool enabled3, bool enabled4)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0001F8
  */
 void RumbleMgr::init()
@@ -280,7 +280,7 @@ void RumbleMgr::init()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void RumbleMgr::reset()
 {
@@ -298,7 +298,7 @@ void RumbleMgr::reset()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void RumbleMgr::start(int type, int ctrlNum, f32* valuePtr)
 {
@@ -310,7 +310,7 @@ void RumbleMgr::start(int type, int ctrlNum, f32* valuePtr)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void RumbleMgr::start(int type, int ctrlNum, immut Vector3f& sourcePos)
 {
@@ -324,7 +324,7 @@ void RumbleMgr::start(int type, int ctrlNum, immut Vector3f& sourcePos)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void RumbleMgr::stop()
 {
@@ -336,7 +336,7 @@ void RumbleMgr::stop()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void RumbleMgr::stop(int rumbleType, int controllerIndex)
 {
@@ -348,7 +348,7 @@ void RumbleMgr::stop(int rumbleType, int controllerIndex)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void RumbleMgr::update()
 {
@@ -377,7 +377,7 @@ void RumbleMgr::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void RumbleMgr::rumbleOption(bool enabled)
 {
@@ -391,7 +391,7 @@ void RumbleMgr::rumbleOption(bool enabled)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000070
  */
 void RumbleMgr::rumblePause(bool)

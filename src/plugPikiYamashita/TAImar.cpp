@@ -18,13 +18,13 @@
 #include "zen/CallBack.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(31)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("TAImar")
@@ -602,7 +602,7 @@ f32 TAIAdyingMar::effectStartCounter;
 TAIeffectAttackEventCallBackMar BreathEffect::eventCallBack;
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TAImarSoundTable::TAImarSoundTable()
     : PaniSoundTable(6)
@@ -613,7 +613,7 @@ TAImarSoundTable::TAImarSoundTable()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TAImarParameters::TAImarParameters()
     : TekiParameters(TAImarIntParams::COUNT, TAImarFloatParams::COUNT)
@@ -694,7 +694,7 @@ TAImarParameters::TAImarParameters()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TAImarStrategy::TAImarStrategy()
     : YaiStrategy(TAImarStateID::COUNT, TAImarStateID::Unk2)
@@ -860,7 +860,7 @@ TAImarStrategy::TAImarStrategy()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAImarStrategy::act(Teki& teki)
 {
@@ -896,7 +896,7 @@ void TAImarStrategy::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAImarStrategy::interact(Teki& teki, immut TekiInteractionKey& key)
 {
@@ -919,7 +919,7 @@ bool TAImarStrategy::interact(Teki& teki, immut TekiInteractionKey& key)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAImarAnimation::makeDefaultAnimations()
 {

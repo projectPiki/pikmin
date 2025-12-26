@@ -3,7 +3,7 @@
 #include "system.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TERNARY_BUILD_MATCHING(void, int) main(int argc, char* argv[])
 {

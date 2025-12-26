@@ -27,19 +27,19 @@ static int legId[9] = {
 } // namespace Kumo
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("SpiderLeg");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000A8
  */
 void SpiderLeg::setHalfDeadEffect(u32 legCollPartID, int jointIdx, int legNum)
@@ -59,7 +59,7 @@ void SpiderLeg::setHalfDeadEffect(u32 legCollPartID, int jointIdx, int legNum)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SpiderLeg::setHalfDeadFallEffect(u32 legCollPartID)
 {
@@ -86,7 +86,7 @@ void SpiderLeg::setHalfDeadFallEffect(u32 legCollPartID)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SpiderLeg::setDeadBombEffect(u32 legCollPartID)
 {
@@ -119,7 +119,7 @@ void SpiderLeg::setDeadBombEffect(u32 legCollPartID)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000094
  */
 void SpiderLeg::setSmallSparkEffect(u32 legCollPartID, int* p2)
@@ -137,7 +137,7 @@ void SpiderLeg::setSmallSparkEffect(u32 legCollPartID, int* p2)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000C8
  */
 void SpiderLeg::setPerishEffect(u32 legCollPartID, int p2)
@@ -157,7 +157,7 @@ void SpiderLeg::setPerishEffect(u32 legCollPartID, int p2)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SpiderLeg::createHalfDeadEffect()
 {
@@ -168,7 +168,7 @@ void SpiderLeg::createHalfDeadEffect()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000090
  */
 void SpiderLeg::createHalfDeadFallEffect(int idx)
@@ -188,7 +188,7 @@ void SpiderLeg::createHalfDeadFallEffect(int idx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SpiderLeg::createDeadBombEffect()
 {
@@ -205,7 +205,7 @@ void SpiderLeg::createDeadBombEffect()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SpiderLeg::createSmallSparkEffect(int count)
 {
@@ -238,7 +238,7 @@ void SpiderLeg::createSmallSparkEffect(int count)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SpiderLeg::createPerishEffect()
 {
@@ -249,7 +249,7 @@ void SpiderLeg::createPerishEffect()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SpiderLeg::createRippleEffect(int legNum)
 {
@@ -277,7 +277,7 @@ void SpiderLeg::createRippleEffect(int legNum)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SpiderLeg::killCallBackEffect(bool doForceFinish)
 {
@@ -294,7 +294,7 @@ void SpiderLeg::killCallBackEffect(bool doForceFinish)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SpiderLeg::setLegScaleParam(int jointIdx)
 {
@@ -521,7 +521,7 @@ void SpiderLeg::setLegScaleParam(int jointIdx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 SpiderLeg::SpiderLeg(Spider* spider)
 {
@@ -532,7 +532,7 @@ SpiderLeg::SpiderLeg(Spider* spider)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SpiderLeg::init(Spider* spider)
 {
@@ -559,7 +559,7 @@ void SpiderLeg::init(Spider* spider)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SpiderLeg::initParm(int motionType)
 {
@@ -586,7 +586,7 @@ void SpiderLeg::initParm(int motionType)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 #pragma push
 #pragma ppc_unroll_factor_limit 1
@@ -614,7 +614,7 @@ void SpiderLeg::setLegParameter()
 #pragma pop
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SpiderLeg::setWalkNewParameter()
 {
@@ -628,7 +628,7 @@ void SpiderLeg::setWalkNewParameter()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SpiderLeg::setShakeOffNewParameter()
 {
@@ -658,7 +658,7 @@ void SpiderLeg::setShakeOffNewParameter()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SpiderLeg::setBodyShakeNewParameter()
 {
@@ -698,7 +698,7 @@ void SpiderLeg::setBodyShakeNewParameter()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SpiderLeg::setNextDirAndCent()
 {
@@ -763,7 +763,7 @@ void SpiderLeg::setNextDirAndCent()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SpiderLeg::setWalkNewPosition()
 {
@@ -808,7 +808,7 @@ void SpiderLeg::setWalkNewPosition()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000210
  */
 void SpiderLeg::checkGroundTimer()
@@ -832,7 +832,7 @@ void SpiderLeg::checkGroundTimer()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SpiderLeg::checkMotionRatio()
 {
@@ -867,7 +867,7 @@ void SpiderLeg::checkMotionRatio()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SpiderLeg::makeNewPosition()
 {
@@ -896,7 +896,7 @@ void SpiderLeg::makeNewPosition()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000080
  */
 void SpiderLeg::calcSpiderDirection()
@@ -910,7 +910,7 @@ void SpiderLeg::calcSpiderDirection()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000030
  */
 void SpiderLeg::calcShakeOffDirection()
@@ -922,7 +922,7 @@ void SpiderLeg::calcShakeOffDirection()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SpiderLeg::calcStickersPiki()
 {
@@ -950,7 +950,7 @@ void SpiderLeg::calcStickersPiki()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000064
  */
 void SpiderLeg::calcShakeOff()
@@ -962,7 +962,7 @@ void SpiderLeg::calcShakeOff()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SpiderLeg::setIdealCentre(Vector3f& centre)
 {
@@ -995,7 +995,7 @@ void SpiderLeg::setIdealCentre(Vector3f& centre)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SpiderLeg::setRealCentre(immut Vector3f& centre)
 {
@@ -1018,7 +1018,7 @@ void SpiderLeg::setRealCentre(immut Vector3f& centre)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000310
  */
 void SpiderLeg::setCentrePosition()
@@ -1041,7 +1041,7 @@ void SpiderLeg::setCentrePosition()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SpiderLeg::updateAnimation(const BossShapeObject* shapeObj, Graphics& gfx, Matrix4f& animMtx)
 {
@@ -1071,7 +1071,7 @@ void SpiderLeg::updateAnimation(const BossShapeObject* shapeObj, Graphics& gfx, 
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000E4
  */
 void SpiderLeg::setJointMatrix(const BossShapeObject* shapeObj, immut Matrix4f& animMtx)
@@ -1088,7 +1088,7 @@ void SpiderLeg::setJointMatrix(const BossShapeObject* shapeObj, immut Matrix4f& 
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000148
  */
 void SpiderLeg::setLength()
@@ -1103,7 +1103,7 @@ void SpiderLeg::setLength()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SpiderLeg::getHeight()
 {
@@ -1134,7 +1134,7 @@ void SpiderLeg::getHeight()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000E8
  */
 void SpiderLeg::getLegController()
@@ -1150,7 +1150,7 @@ void SpiderLeg::getLegController()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000100
  */
 void SpiderLeg::setQuatParameter()
@@ -1164,7 +1164,7 @@ void SpiderLeg::setQuatParameter()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SpiderLeg::stepDamageNavi(int legNum)
 {
@@ -1183,7 +1183,7 @@ void SpiderLeg::stepDamageNavi(int legNum)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SpiderLeg::stepDamagePiki(int legNum)
 {
@@ -1205,7 +1205,7 @@ void SpiderLeg::stepDamagePiki(int legNum)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SpiderLeg::stepShakeOffPiki(int legNum)
 {
@@ -1236,7 +1236,7 @@ void SpiderLeg::stepShakeOffPiki(int legNum)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SpiderLeg::emitOnGroundEffect(int legNum)
 {
@@ -1260,7 +1260,7 @@ void SpiderLeg::emitOnGroundEffect(int legNum)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000140
  */
 void SpiderLeg::onGroundFunction()
@@ -1276,7 +1276,7 @@ void SpiderLeg::onGroundFunction()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000C0
  */
 void SpiderLeg::emitOffGroundEffect()
@@ -1298,7 +1298,7 @@ void SpiderLeg::emitOffGroundEffect()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SpiderLeg::setKneeDirection()
 {
@@ -1336,7 +1336,7 @@ void SpiderLeg::setKneeDirection()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00028C
  */
 void SpiderLeg::getJointMatrix(immut Vector3f& vec1, immut Vector3f& vec2, immut Vector3f& vec3, Matrix4f& animMtx)
@@ -1358,7 +1358,7 @@ void SpiderLeg::getJointMatrix(immut Vector3f& vec1, immut Vector3f& vec2, immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000184
  */
 void SpiderLeg::calcQuatToMatrix(int legNum)
@@ -1380,7 +1380,7 @@ void SpiderLeg::calcQuatToMatrix(int legNum)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SpiderLeg::create3Joint(BossShapeObject* shapeObj, Graphics& gfx)
 {
@@ -1401,7 +1401,7 @@ void SpiderLeg::create3Joint(BossShapeObject* shapeObj, Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000C8
  */
 void SpiderLeg::createMatrixScale(BossShapeObject* shapeObj, Graphics& gfx)
@@ -1419,7 +1419,7 @@ void SpiderLeg::createMatrixScale(BossShapeObject* shapeObj, Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000024
  */
 void SpiderLeg::setGroundFlag()
@@ -1430,7 +1430,7 @@ void SpiderLeg::setGroundFlag()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000D8
  */
 void SpiderLeg::checkMotionFinished()
@@ -1452,7 +1452,7 @@ void SpiderLeg::checkMotionFinished()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SpiderLeg::update()
 {
@@ -1467,7 +1467,7 @@ void SpiderLeg::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SpiderLeg::refresh(BossShapeObject* shapeObj, Graphics& gfx)
 {

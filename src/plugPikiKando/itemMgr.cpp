@@ -33,13 +33,13 @@
 #include "sysNew.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(45)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("itemMgr")
@@ -48,7 +48,7 @@ bool PikiHeadMgr::buryMode;
 ItemMgr* itemMgr;
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool BuildingItem::insideSafeArea(immut Vector3f& pos)
 {
@@ -62,7 +62,7 @@ bool BuildingItem::insideSafeArea(immut Vector3f& pos)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 GoalItem* ItemMgr::getContainer(int color)
 {
@@ -85,7 +85,7 @@ GoalItem* ItemMgr::getContainer(int color)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 GoalItem* ItemMgr::getNearestContainer(immut Vector3f& pos, f32 radius)
 {
@@ -111,7 +111,7 @@ GoalItem* ItemMgr::getNearestContainer(immut Vector3f& pos, f32 radius)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 UfoItem* ItemMgr::getUfo()
 {
@@ -128,7 +128,7 @@ UfoItem* ItemMgr::getUfo()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000110
  */
 ItemShapeObject::ItemShapeObject(Shape* shape, immut char* objName, immut char* file)
@@ -147,7 +147,7 @@ ItemShapeObject::ItemShapeObject(Shape* shape, immut char* objName, immut char* 
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 MeltingPotMgr::MeltingPotMgr(ItemMgr* mgr)
 {
@@ -164,7 +164,7 @@ MeltingPotMgr::MeltingPotMgr(ItemMgr* mgr)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MeltingPotMgr::finalSetup()
 {
@@ -180,7 +180,7 @@ void MeltingPotMgr::finalSetup()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MeltingPotMgr::prepare(int objType)
 {
@@ -215,7 +215,7 @@ void MeltingPotMgr::prepare(int objType)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Creature* MeltingPotMgr::birth(int objType)
 {
@@ -263,7 +263,7 @@ Creature* MeltingPotMgr::birth(int objType)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000048
  */
 ObjectMgr* ItemMgr::getMgr(int)
@@ -273,7 +273,7 @@ ObjectMgr* ItemMgr::getMgr(int)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000120
  */
 int ItemMgr::getPikiNum()
@@ -282,7 +282,7 @@ int ItemMgr::getPikiNum()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000030
  */
 bool ItemMgr::useObjType(int type)
@@ -298,7 +298,7 @@ bool ItemMgr::useObjType(int type)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ItemMgr::addUseList(int type)
 {
@@ -310,7 +310,7 @@ void ItemMgr::addUseList(int type)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 ItemMgr::ItemMgr()
     : PolyObjectMgr(30)
@@ -355,7 +355,7 @@ ItemMgr::ItemMgr()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 void ItemMgr::showInfo()
@@ -377,7 +377,7 @@ void ItemMgr::showInfo()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 ItemShapeObject* ItemMgr::getPelletShapeObject(int, int)
 {
@@ -385,7 +385,7 @@ ItemShapeObject* ItemMgr::getPelletShapeObject(int, int)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00001C
  */
 Shape* ItemMgr::getUfoShape()
@@ -398,7 +398,7 @@ Shape* ItemMgr::getUfoShape()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ItemMgr::initialise()
 {
@@ -529,7 +529,7 @@ void ItemMgr::initialise()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 ItemCreature::ItemCreature(int objType, CreatureProp* props, Shape* shape)
     : AICreature(props)
@@ -545,7 +545,7 @@ ItemCreature::ItemCreature(int objType, CreatureProp* props, Shape* shape)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ItemCreature::init(immut Vector3f& pos)
 {
@@ -559,7 +559,7 @@ void ItemCreature::init(immut Vector3f& pos)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ItemCreature::setMotionSpeed(f32 speed)
 {
@@ -567,7 +567,7 @@ void ItemCreature::setMotionSpeed(f32 speed)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 ItemCreature::getMotionSpeed()
 {
@@ -575,7 +575,7 @@ f32 ItemCreature::getMotionSpeed()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ItemCreature::stopMotion()
 {
@@ -583,7 +583,7 @@ void ItemCreature::stopMotion()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 ItemCreature::getCurrentMotionCounter()
 {
@@ -591,7 +591,7 @@ f32 ItemCreature::getCurrentMotionCounter()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 immut char* ItemCreature::getCurrentMotionName()
 {
@@ -599,7 +599,7 @@ immut char* ItemCreature::getCurrentMotionName()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ItemCreature::startMotion(int motionID)
 {
@@ -607,7 +607,7 @@ void ItemCreature::startMotion(int motionID)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ItemCreature::finishMotion()
 {
@@ -615,7 +615,7 @@ void ItemCreature::finishMotion()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ItemCreature::startMotion(int motionID, f32 frame)
 {
@@ -624,7 +624,7 @@ void ItemCreature::startMotion(int motionID, f32 frame)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ItemCreature::finishMotion(f32 frame)
 {
@@ -633,7 +633,7 @@ void ItemCreature::finishMotion(f32 frame)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ItemCreature::doKill()
 {
@@ -641,7 +641,7 @@ void ItemCreature::doKill()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ItemCreature::doAnimation()
 {
@@ -651,7 +651,7 @@ void ItemCreature::doAnimation()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ItemCreature::update()
 {
@@ -661,7 +661,7 @@ void ItemCreature::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ItemCreature::doAI()
 {
@@ -671,7 +671,7 @@ void ItemCreature::doAI()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ItemCreature::refresh(Graphics& gfx)
 {
@@ -713,7 +713,7 @@ void ItemCreature::refresh(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool ItemCreature::stimulate(immut Interaction& interaction)
 {
@@ -725,7 +725,7 @@ bool ItemCreature::stimulate(immut Interaction& interaction)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool InteractBuild::actItem(ItemCreature* item) immut
 {
@@ -737,7 +737,7 @@ bool InteractBuild::actItem(ItemCreature* item) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool InteractBikkuri::actItem(ItemCreature* item) immut
 {
@@ -748,7 +748,7 @@ bool InteractBikkuri::actItem(ItemCreature* item) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool InteractFlick::actItem(ItemCreature* item) immut
 {
@@ -760,7 +760,7 @@ bool InteractFlick::actItem(ItemCreature* item) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool InteractSwallow::actItem(ItemCreature* item) immut
 {
@@ -772,7 +772,7 @@ bool InteractSwallow::actItem(ItemCreature* item) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool InteractPullout::actItem(ItemCreature* item) immut
 {
@@ -785,7 +785,7 @@ bool InteractPullout::actItem(ItemCreature* item) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool InteractBomb::actItem(ItemCreature* item) immut
 {
@@ -847,7 +847,7 @@ bool InteractBomb::actItem(ItemCreature* item) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BuildingItem::playEffect(int id)
 {
@@ -863,7 +863,7 @@ void BuildingItem::playEffect(int id)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool InteractAttack::actItem(ItemCreature* item) immut
 {
@@ -914,7 +914,7 @@ bool InteractAttack::actItem(ItemCreature* item) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 BuildingItem::BuildingItem(int objType, CreatureProp* props, ItemShapeObject* itemShape, SimpleAI* ai)
     : ItemCreature(objType, props, nullptr)
@@ -926,7 +926,7 @@ BuildingItem::BuildingItem(int objType, CreatureProp* props, ItemShapeObject* it
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 BuildingItem::getBoundingSphereRadius()
 {
@@ -941,7 +941,7 @@ f32 BuildingItem::getBoundingSphereRadius()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BuildingItem::startAI(int)
 {
@@ -983,7 +983,7 @@ void BuildingItem::startAI(int)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BuildingItem::startBreakEffect()
 {
@@ -1000,7 +1000,7 @@ void BuildingItem::startBreakEffect()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BuildingItem::stopBreakEffect()
 {
@@ -1016,7 +1016,7 @@ void BuildingItem::stopBreakEffect()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BuildingItem::update()
 {
@@ -1027,7 +1027,7 @@ void BuildingItem::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BuildingItem::refresh(Graphics& gfx)
 {
@@ -1070,14 +1070,14 @@ void BuildingItem::refresh(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BuildingItem::refresh2d(Graphics&)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BuildingItem::doKill()
 {
@@ -1086,7 +1086,7 @@ void BuildingItem::doKill()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BuildingItem::doSave(RandomAccessStream& output)
 {
@@ -1099,7 +1099,7 @@ void BuildingItem::doSave(RandomAccessStream& output)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BuildingItem::doLoad(RandomAccessStream& input)
 {
@@ -1127,7 +1127,7 @@ void BuildingItem::doLoad(RandomAccessStream& input)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BuildingItem::doStore(CreatureInf* info)
 {
@@ -1138,7 +1138,7 @@ void BuildingItem::doStore(CreatureInf* info)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BuildingItem::doRestore(CreatureInf* info)
 {
@@ -1172,7 +1172,7 @@ void BuildingItem::doRestore(CreatureInf* info)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Creature* ItemMgr::birth(int objType)
 {
@@ -1199,7 +1199,7 @@ Creature* ItemMgr::birth(int objType)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ItemMgr::refresh(Graphics& gfx)
 {
@@ -1209,7 +1209,7 @@ void ItemMgr::refresh(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ItemMgr::refresh2d(Graphics& gfx)
 {
@@ -1227,7 +1227,7 @@ void ItemMgr::refresh2d(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ItemMgr::update()
 {
@@ -1240,7 +1240,7 @@ void ItemMgr::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ItemMgr::kill(Creature* item)
 {
@@ -1262,7 +1262,7 @@ void ItemMgr::kill(Creature* item)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PikiHeadMgr::PikiHeadMgr(ItemMgr* mgr)
 {
@@ -1275,7 +1275,7 @@ PikiHeadMgr::PikiHeadMgr(ItemMgr* mgr)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Creature* PikiHeadMgr::birth()
 {
@@ -1294,7 +1294,7 @@ Creature* PikiHeadMgr::birth()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Creature* PikiHeadMgr::createObject()
 {
@@ -1302,7 +1302,7 @@ Creature* PikiHeadMgr::createObject()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ItemMgr::getContainerExitCount()
 {

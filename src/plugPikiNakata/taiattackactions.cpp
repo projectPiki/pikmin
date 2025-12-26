@@ -12,19 +12,19 @@
 #include "teki.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("taiattackactions")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiAttackableNaviPikiAction::act(Teki& teki)
 {
@@ -43,7 +43,7 @@ bool TaiAttackableNaviPikiAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiAttackableNaviAction::act(Teki& teki)
 {
@@ -56,7 +56,7 @@ bool TaiAttackableNaviAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiAttackablePikiAction::act(Teki& teki)
 {
@@ -73,7 +73,7 @@ bool TaiAttackablePikiAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiAnimationSwallowingAction::start(Teki& teki)
 {
@@ -83,7 +83,7 @@ void TaiAnimationSwallowingAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiAnimationSwallowingAction::act(Teki& teki)
 {
@@ -191,7 +191,7 @@ bool TaiAnimationSwallowingAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiAnimationSwallowingAction::finish(Teki& teki)
 {
@@ -215,7 +215,7 @@ void TaiAnimationSwallowingAction::finish(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiBangingAction::actByEvent(immut TekiEvent& event)
 {
@@ -228,7 +228,7 @@ bool TaiBangingAction::actByEvent(immut TekiEvent& event)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiFlickAction::act(Teki& teki)
 {
@@ -240,7 +240,7 @@ bool TaiFlickAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiTargetStickAction::act(Teki& teki)
 {
@@ -253,7 +253,7 @@ bool TaiTargetStickAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiFlickingAction::start(Teki& teki)
 {
@@ -262,7 +262,7 @@ void TaiFlickingAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiFlickingAction::finish(Teki& teki)
 {
@@ -270,7 +270,7 @@ void TaiFlickingAction::finish(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiFlickingAction::act(Teki& teki)
 {
@@ -287,7 +287,7 @@ bool TaiFlickingAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiFlickingUpperAction::act(Teki& teki)
 {

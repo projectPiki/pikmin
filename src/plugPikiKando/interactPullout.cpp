@@ -8,19 +8,19 @@
 #include <math.h>
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("interactPullout");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool InteractPullout::actCommon(Creature*) immut
 {
@@ -28,7 +28,7 @@ bool InteractPullout::actCommon(Creature*) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool InteractPullout::actPiki(Piki* piki) immut
 {

@@ -7,19 +7,19 @@
 #include "zen/TextColorCallBack.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("OgNitakuSection")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::ogNitakuMgr::ogNitakuMgr(P2DScreen* screen, P2DTextBox* text1, P2DTextBox* text2, P2DTextBox* text3, bool startYes, bool canCancel)
 {
@@ -82,7 +82,7 @@ zen::ogNitakuMgr::ogNitakuMgr(P2DScreen* screen, P2DTextBox* text1, P2DTextBox* 
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000088
  */
 void zen::ogNitakuMgr::MoveCursorYes(f32 rate)
@@ -95,7 +95,7 @@ void zen::ogNitakuMgr::MoveCursorYes(f32 rate)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000088
  */
 void zen::ogNitakuMgr::MoveCursorNo(f32 rate)
@@ -108,7 +108,7 @@ void zen::ogNitakuMgr::MoveCursorNo(f32 rate)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000150
  */
 void zen::ogNitakuMgr::InitCursor()
@@ -129,7 +129,7 @@ void zen::ogNitakuMgr::InitCursor()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogNitakuMgr::start()
 {
@@ -140,7 +140,7 @@ void zen::ogNitakuMgr::start()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000154
  */
 void zen::ogNitakuMgr::stop()
@@ -150,7 +150,7 @@ void zen::ogNitakuMgr::stop()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogNitakuMgr::cursorEnable(f32 rate)
 {
@@ -159,7 +159,7 @@ void zen::ogNitakuMgr::cursorEnable(f32 rate)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogNitakuMgr::cursorDisable(f32 rate)
 {
@@ -168,7 +168,7 @@ void zen::ogNitakuMgr::cursorDisable(f32 rate)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::ogNitakuMgr::NitakuStatus zen::ogNitakuMgr::update(Controller* input)
 {

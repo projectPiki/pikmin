@@ -9,19 +9,19 @@
 MapMgr* GenObjectMapObject::mapMgr;
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("genMapObject");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 static GenObject* makeObjectMapObject()
 {
@@ -29,7 +29,7 @@ static GenObject* makeObjectMapObject()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 GenObjectMapObject::GenObjectMapObject()
     : GenObject('mobj', "create MAP OBJECT")
@@ -38,7 +38,7 @@ GenObjectMapObject::GenObjectMapObject()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GenObjectMapObject::initialise(MapMgr* mgr)
 {
@@ -47,7 +47,7 @@ void GenObjectMapObject::initialise(MapMgr* mgr)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GenObjectMapObject::doRead(RandomAccessStream& input)
 {
@@ -55,14 +55,14 @@ void GenObjectMapObject::doRead(RandomAccessStream& input)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GenObjectMapObject::render(Graphics&, Generator*)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Creature* GenObjectMapObject::birth(BirthInfo&)
 {

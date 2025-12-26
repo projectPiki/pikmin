@@ -6,14 +6,14 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
 DEFINE_PRINT("eventListener");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 EventTalker::EventTalker()
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void EventTalker::informEvent(Event& event)
 {

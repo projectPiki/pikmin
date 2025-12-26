@@ -18,19 +18,19 @@ static u32 pomSE[] = {
 };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("PomAi");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PomAi::PomAi(Pom* pom)
 {
@@ -39,7 +39,7 @@ PomAi::PomAi(Pom* pom)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PomAi::initAI(Pom* pom)
 {
@@ -72,7 +72,7 @@ void PomAi::initAI(Pom* pom)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PomAi::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
@@ -96,7 +96,7 @@ void PomAi::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PomAi::keyAction0()
 {
@@ -108,7 +108,7 @@ void PomAi::keyAction0()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PomAi::keyAction1()
 {
@@ -118,7 +118,7 @@ void PomAi::keyAction1()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 void PomAi::keyAction2()
@@ -126,7 +126,7 @@ void PomAi::keyAction2()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 void PomAi::keyAction3()
@@ -134,7 +134,7 @@ void PomAi::keyAction3()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PomAi::keyLoopEnd()
 {
@@ -142,7 +142,7 @@ void PomAi::keyLoopEnd()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PomAi::keyFinished()
 {
@@ -161,7 +161,7 @@ void PomAi::keyFinished()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PomAi::playSound(int pomSoundID)
 {
@@ -171,7 +171,7 @@ void PomAi::playSound(int pomSoundID)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PomAi::killCallBackEffect(bool forceFinish)
 {
@@ -180,7 +180,7 @@ void PomAi::killCallBackEffect(bool forceFinish)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PomAi::collidePetal(Creature* collider)
 {
@@ -198,7 +198,7 @@ void PomAi::collidePetal(Creature* collider)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PomAi::setCollideSound(Creature* collider)
 {
@@ -215,7 +215,7 @@ void PomAi::setCollideSound(Creature* collider)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000044
  */
 void PomAi::setEveryFrame()
@@ -227,7 +227,7 @@ void PomAi::setEveryFrame()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000A8
  */
 void PomAi::checkSwayAndScale()
@@ -244,7 +244,7 @@ void PomAi::checkSwayAndScale()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000084
  */
 void PomAi::calcSwayAndScale()
@@ -260,7 +260,7 @@ void PomAi::calcSwayAndScale()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00002C
  */
 void PomAi::setInitPosition()
@@ -272,7 +272,7 @@ void PomAi::setInitPosition()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int PomAi::killStickPiki()
 {
@@ -301,7 +301,7 @@ int PomAi::killStickPiki()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PomAi::createPikiHead()
 {
@@ -337,7 +337,7 @@ void PomAi::createPikiHead()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00006C
  */
 void PomAi::emitPomOpenEffect(u32 collPartID)
@@ -350,7 +350,7 @@ void PomAi::emitPomOpenEffect(u32 collPartID)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000198
  */
 void PomAi::createPomOpenEffect()
@@ -365,7 +365,7 @@ void PomAi::createPomOpenEffect()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PomAi::calcPetalStickers()
 {
@@ -391,7 +391,7 @@ void PomAi::calcPetalStickers()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00003C
  */
 void PomAi::resultFlagOn()
@@ -402,7 +402,7 @@ void PomAi::resultFlagOn()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00002C
  */
 void PomAi::resultFlagSeen()
@@ -411,7 +411,7 @@ void PomAi::resultFlagSeen()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00000C
  */
 bool PomAi::isMotionFinishTransit()
@@ -420,7 +420,7 @@ bool PomAi::isMotionFinishTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000020
  */
 bool PomAi::deadTransit()
@@ -429,7 +429,7 @@ bool PomAi::deadTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000024
  */
 bool PomAi::petalOpenTransit()
@@ -442,7 +442,7 @@ bool PomAi::petalOpenTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000008
  */
 bool PomAi::petalShakeTransit()
@@ -451,7 +451,7 @@ bool PomAi::petalShakeTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000070
  */
 bool PomAi::petalCloseTransit()
@@ -471,7 +471,7 @@ bool PomAi::petalCloseTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0001BC
  */
 bool PomAi::dischargeTransit()
@@ -492,7 +492,7 @@ bool PomAi::dischargeTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000068
  */
 void PomAi::initDie(int nextState)
@@ -504,7 +504,7 @@ void PomAi::initDie(int nextState)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PomAi::initWait(int nextState)
 {
@@ -529,7 +529,7 @@ void PomAi::initWait(int nextState)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0001E4
  */
 void PomAi::initPetalOpen(int nextState)
@@ -544,7 +544,7 @@ void PomAi::initPetalOpen(int nextState)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000098
  */
 void PomAi::initPetalShake(int nextState)
@@ -560,7 +560,7 @@ void PomAi::initPetalShake(int nextState)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000078
  */
 void PomAi::initPetalClose(int nextState)
@@ -574,7 +574,7 @@ void PomAi::initPetalClose(int nextState)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PomAi::initDischarge(int nextState)
 {
@@ -597,7 +597,7 @@ void PomAi::initDischarge(int nextState)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000070
  */
 void PomAi::dieState()
@@ -611,7 +611,7 @@ void PomAi::dieState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 void PomAi::waitState()
@@ -619,7 +619,7 @@ void PomAi::waitState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000020
  */
 void PomAi::openState()
@@ -628,7 +628,7 @@ void PomAi::openState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000020
  */
 void PomAi::shakeState()
@@ -637,7 +637,7 @@ void PomAi::shakeState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000060
  */
 void PomAi::closeState()
@@ -648,7 +648,7 @@ void PomAi::closeState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 void PomAi::dischargeState()
@@ -656,7 +656,7 @@ void PomAi::dischargeState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PomAi::update()
 {

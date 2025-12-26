@@ -7,19 +7,19 @@
 #include "zen/Math.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(15)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("spectrumCursorMgr")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000054
  */
 void zen::SpectrumCursorMgr::setMirror(P2DPane* pane)
@@ -32,7 +32,7 @@ void zen::SpectrumCursorMgr::setMirror(P2DPane* pane)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::SpectrumCursorMgr::update()
 {
@@ -76,7 +76,7 @@ void zen::SpectrumCursorMgr::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::SpectrumCursorMgr::move(f32 x, f32 y, f32 p3)
 {
@@ -89,7 +89,7 @@ void zen::SpectrumCursorMgr::move(f32 x, f32 y, f32 p3)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::SpectrumCursorMgr::scale(f32 targetScale, f32 duration)
 {
@@ -100,7 +100,7 @@ void zen::SpectrumCursorMgr::scale(f32 targetScale, f32 duration)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::SpectrumCursorMgr::init(P2DScreen* screen, P2DPane* parent, u32 p3, f32 p4, f32 p5)
 {
@@ -147,7 +147,7 @@ void zen::SpectrumCursorMgr::init(P2DScreen* screen, P2DPane* parent, u32 p3, f3
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::SpectrumCursorMgr::initPos(f32 x, f32 y)
 {
@@ -159,7 +159,7 @@ void zen::SpectrumCursorMgr::initPos(f32 x, f32 y)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::SpectrumCursorMgr::initScale(f32 scale)
 {
@@ -173,7 +173,7 @@ void zen::SpectrumCursorMgr::initScale(f32 scale)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 u32 zen::SpectrumCursorMgr::makeTag(u32 tag, int idx)
 {

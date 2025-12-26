@@ -5,19 +5,19 @@
 #include "teki.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000098
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT(nullptr)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 YaiStrategy::YaiStrategy(int stateCount, int stateID)
 {
@@ -25,7 +25,7 @@ YaiStrategy::YaiStrategy(int stateCount, int stateID)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void YaiStrategy::init(int stateCount, int stateID)
 {
@@ -35,7 +35,7 @@ void YaiStrategy::init(int stateCount, int stateID)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void YaiStrategy::start(Teki& teki)
 {
@@ -44,7 +44,7 @@ void YaiStrategy::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void YaiStrategy::act(Teki& teki)
 {
@@ -57,7 +57,7 @@ void YaiStrategy::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void YaiStrategy::eventPerformed(immut TekiEvent& event)
 {
@@ -70,7 +70,7 @@ void YaiStrategy::eventPerformed(immut TekiEvent& event)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void YaiStrategy::draw(Teki& teki, Graphics& gfx)
 {

@@ -5,19 +5,19 @@
 #include "WorkObject.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("aiPush")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 ActPush::ActPush(Piki* piki)
     : Action(piki, true)
@@ -27,7 +27,7 @@ ActPush::ActPush(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActPush::init(Creature* target)
 {
@@ -47,7 +47,7 @@ void ActPush::init(Creature* target)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000050
  */
 bool ActPush::collideRockSurface()
@@ -60,7 +60,7 @@ bool ActPush::collideRockSurface()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActPush::exec()
 {
@@ -92,7 +92,7 @@ int ActPush::exec()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00007C
  */
 void ActPush::initApproach()
@@ -102,7 +102,7 @@ void ActPush::initApproach()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActPush::exeApproach()
 {
@@ -146,7 +146,7 @@ int ActPush::exeApproach()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActPush::initGo()
 {
@@ -173,7 +173,7 @@ void ActPush::initGo()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActPush::exeGo()
 {
@@ -214,7 +214,7 @@ int ActPush::exeGo()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActPush::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
@@ -271,7 +271,7 @@ void ActPush::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActPush::cleanup()
 {

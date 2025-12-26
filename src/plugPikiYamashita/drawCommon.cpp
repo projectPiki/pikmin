@@ -11,13 +11,13 @@
 #include "zen/ogSub.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(23)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("drawCommon")
@@ -26,7 +26,7 @@ Texture* zen::NumberTex::texTable[10];
 Texture* zen::NumberTex::shadowTexTable[10];
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::DrawScreen::DrawScreen(immut char* bloFileName, P2DGrafContext* grafContext, bool useAlphaMgr, bool useTexAnimMgr)
 {
@@ -39,7 +39,7 @@ zen::DrawScreen::DrawScreen(immut char* bloFileName, P2DGrafContext* grafContext
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawScreen::update()
 {
@@ -47,7 +47,7 @@ void zen::DrawScreen::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawScreen::draw()
 {
@@ -56,7 +56,7 @@ void zen::DrawScreen::draw()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::NumberTex::NumberTex()
 {
@@ -79,7 +79,7 @@ zen::NumberTex::NumberTex()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::P2DPaneLibrary::makeResident(P2DPane* pane)
 {
@@ -93,7 +93,7 @@ void zen::P2DPaneLibrary::makeResident(P2DPane* pane)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::P2DPaneLibrary::setFamilyAlpha(P2DPane* pane, u8 alpha)
 {
@@ -108,7 +108,7 @@ void zen::P2DPaneLibrary::setFamilyAlpha(P2DPane* pane, u8 alpha)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::P2DPaneLibrary::setAlpha(P2DPane* pane, u8 alpha)
 {
@@ -125,7 +125,7 @@ void zen::P2DPaneLibrary::setAlpha(P2DPane* pane, u8 alpha)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000020
  */
 void zen::P2DPaneLibrary::setMirror(P2DPane* pane, P2DMirror mirror)
@@ -143,7 +143,7 @@ void zen::P2DPaneLibrary::setMirror(P2DPane* pane, P2DMirror mirror)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::P2DPaneLibrary::setFamilyMirror(P2DPane* pane, P2DMirror mirror)
 {
@@ -158,7 +158,7 @@ void zen::P2DPaneLibrary::setFamilyMirror(P2DPane* pane, P2DMirror mirror)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 P2DPane* zen::P2DPaneLibrary::getParentPane(P2DPane* pane)
 {
@@ -170,7 +170,7 @@ P2DPane* zen::P2DPaneLibrary::getParentPane(P2DPane* pane)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::P2DPaneLibrary::getWorldPos(P2DPane* pane, int* outX, int* outY)
 {
@@ -199,7 +199,7 @@ void zen::P2DPaneLibrary::getWorldPos(P2DPane* pane, int* outX, int* outY)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::P2DPaneLibrary::changeParent(P2DPane* pane, P2DPane* newParent)
 {
@@ -236,7 +236,7 @@ void zen::P2DPaneLibrary::changeParent(P2DPane* pane, P2DPane* newParent)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 void zen::P2DPaneLibrary::printTag(P2DPane* pane)
@@ -250,7 +250,7 @@ void zen::P2DPaneLibrary::printTag(P2DPane* pane)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000100
  */
 void zen::P2DPaneLibrary::printUseTexName(P2DPane* pane, IDelegate1<immut char*>* delegate)
@@ -270,7 +270,7 @@ void zen::P2DPaneLibrary::printUseTexName(P2DPane* pane, IDelegate1<immut char*>
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000120
  */
 void zen::P2DPaneLibrary::printUseTexName(immut char* bloFileName, IDelegate1<immut char*>* delegate)
@@ -281,7 +281,7 @@ void zen::P2DPaneLibrary::printUseTexName(immut char* bloFileName, IDelegate1<im
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::BalloonPane::BalloonPane(P2DPane* pane, f32 p2)
     : P2DPaneCallBack(nullptr, PANETYPE_Pane)
@@ -297,7 +297,7 @@ zen::BalloonPane::BalloonPane(P2DPane* pane, f32 p2)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool zen::BalloonPane::invoke(P2DPane* pane)
 {
@@ -339,7 +339,7 @@ bool zen::BalloonPane::invoke(P2DPane* pane)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::BalloonPane::setGoalPos()
 {
@@ -349,7 +349,7 @@ void zen::BalloonPane::setGoalPos()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::BalloonPane::setGoalRotate()
 {

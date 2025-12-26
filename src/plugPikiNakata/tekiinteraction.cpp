@@ -3,19 +3,19 @@
 #include "teki.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("tekiinteraction");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00000C
  */
 TekiInteractionKey::TekiInteractionKey(int type, immut Interaction* interaction)
@@ -25,7 +25,7 @@ TekiInteractionKey::TekiInteractionKey(int type, immut Interaction* interaction)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool InteractAttack::actTeki(Teki* teki) immut
 {
@@ -33,7 +33,7 @@ bool InteractAttack::actTeki(Teki* teki) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool InteractBomb::actTeki(Teki* teki) immut
 {
@@ -42,7 +42,7 @@ bool InteractBomb::actTeki(Teki* teki) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool InteractHitEffect::actTeki(Teki* teki) immut
 {
@@ -50,7 +50,7 @@ bool InteractHitEffect::actTeki(Teki* teki) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool InteractSwallow::actTeki(Teki*) immut
 {
@@ -58,7 +58,7 @@ bool InteractSwallow::actTeki(Teki*) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool InteractPress::actTeki(Teki* teki) immut
 {
@@ -67,7 +67,7 @@ bool InteractPress::actTeki(Teki* teki) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool InteractFlick::actTeki(Teki*) immut
 {

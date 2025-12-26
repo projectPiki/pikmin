@@ -9,7 +9,7 @@
 #endif
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int Stream::readInt()
 {
@@ -19,7 +19,7 @@ int Stream::readInt()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 u8 Stream::readByte()
 {
@@ -29,7 +29,7 @@ u8 Stream::readByte()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 s16 Stream::readShort()
 {
@@ -39,7 +39,7 @@ s16 Stream::readShort()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 Stream::readFloat()
 {
@@ -49,7 +49,7 @@ f32 Stream::readFloat()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 char* Stream::readString()
 {
@@ -62,7 +62,7 @@ char* Stream::readString()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Stream::readString(char* dest, int size)
 {
@@ -71,7 +71,7 @@ void Stream::readString(char* dest, int size)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Stream::readString(String& str)
 {
@@ -85,7 +85,7 @@ void Stream::readString(String& str)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Stream::writeInt(int i)
 {
@@ -97,7 +97,7 @@ void Stream::writeInt(int i)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Stream::writeByte(u8 c)
 {
@@ -105,7 +105,7 @@ void Stream::writeByte(u8 c)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Stream::writeShort(s16 _s)
 {
@@ -117,7 +117,7 @@ void Stream::writeShort(s16 _s)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Stream::writeFloat(f32 f)
 {
@@ -130,7 +130,7 @@ void Stream::writeFloat(f32 f)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Stream::writeString(immut char* str)
 {
@@ -140,7 +140,7 @@ void Stream::writeString(immut char* str)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Stream::writeString(immut String& s)
 {
@@ -155,7 +155,7 @@ void Stream::writeString(immut String& s)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000C4
  */
 void Stream::print(immut char* fmt, ...)
@@ -170,7 +170,7 @@ void Stream::print(immut char* fmt, ...)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000064
  */
 // void Stream::vPrintf(char*, std::@class$1stream_cpp*)
@@ -179,21 +179,21 @@ void Stream::print(immut char* fmt, ...)
 // }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Stream::read(void*, int)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Stream::write(immut void*, int)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int Stream::getPending()
 {
@@ -201,7 +201,7 @@ int Stream::getPending()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int Stream::getAvailable()
 {
@@ -209,14 +209,14 @@ int Stream::getAvailable()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Stream::close()
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00006C
  */
 void RandomAccessStream::writeTo(int _, void*, int)
@@ -227,7 +227,7 @@ void RandomAccessStream::writeTo(int _, void*, int)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00006C
  */
 // void RandomAccessStream::readFrom(int, void*, int)
@@ -236,7 +236,7 @@ void RandomAccessStream::writeTo(int _, void*, int)
 // }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00005C
  */
 // void RandomAccessStream::writeIntTo(int, int)
@@ -245,7 +245,7 @@ void RandomAccessStream::writeTo(int _, void*, int)
 // }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00004C
  */
 // void RandomAccessStream::readIntFrom(int)
@@ -254,6 +254,6 @@ void RandomAccessStream::writeTo(int _, void*, int)
 // }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 // bool Stream::getClosing() { return false; }

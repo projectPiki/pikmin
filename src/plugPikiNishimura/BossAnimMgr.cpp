@@ -3,21 +3,21 @@
 #include "Dolphin/os.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 
 DEFINE_PRINT("BossAnimMgr") //! TODO: Why is the size not proper?
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 BossAnimationManager::BossAnimationManager(BossMgr* mgr)
     : Node("BossAnimationManager")

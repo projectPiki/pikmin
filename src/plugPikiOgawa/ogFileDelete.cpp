@@ -7,19 +7,19 @@
 #include "zen/ogNitaku.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT(nullptr)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrFileSelectMgr::setOperateMode_Delete()
 {
@@ -31,7 +31,7 @@ void zen::ogScrFileSelectMgr::setOperateMode_Delete()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000178
  */
 void zen::ogScrFileSelectMgr::DeleteEffectStart()
@@ -62,7 +62,7 @@ void zen::ogScrFileSelectMgr::DeleteEffectStart()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrFileSelectMgr::OperateDelete(Controller* input)
 {

@@ -12,13 +12,13 @@
 #include "sysNew.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(16)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("routeMgr")
@@ -29,7 +29,7 @@ int PathFinder::avoidWayPointIndex = -1;
 RouteMgr* routeMgr;
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 PathFinder::PathFinder(RouteMgr::Group& group)
@@ -46,7 +46,7 @@ PathFinder::PathFinder(RouteMgr::Group& group)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000048
  */
 int PathFinder::handle2idx(u32 handle)
@@ -60,7 +60,7 @@ int PathFinder::handle2idx(u32 handle)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 u32 PathFinder::findASync(PathFinder::Buffer* buf, int a, int b, bool flag)
 {
@@ -92,7 +92,7 @@ u32 PathFinder::findASync(PathFinder::Buffer* buf, int a, int b, bool flag)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int PathFinder::checkASync(u32 handle)
 {
@@ -117,7 +117,7 @@ int PathFinder::checkASync(u32 handle)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PathFinder::releaseHandle(u32 handle)
 {
@@ -146,7 +146,7 @@ void PathFinder::releaseHandle(u32 handle)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000080
  */
 void PathFinder::updateASync()
@@ -164,7 +164,7 @@ void PathFinder::updateASync()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PathFinder::updateClient(Client& client, int loops)
 {
@@ -244,7 +244,7 @@ void PathFinder::updateClient(Client& client, int loops)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int PathFinder::findSync(WayPoint** pathWayPoints, int numWPsToFind, int startWPIdx, int destWPIdx, bool includeBlockedPaths)
 {
@@ -259,7 +259,7 @@ int PathFinder::findSync(WayPoint** pathWayPoints, int numWPsToFind, int startWP
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int PathFinder::findSync(PathFinder::Buffer* bufferList, int startWPIdx, int destWPIdx, bool includeBlockedPaths)
 {
@@ -358,7 +358,7 @@ int PathFinder::findSync(PathFinder::Buffer* bufferList, int startWPIdx, int des
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 WayPoint* PathFinder::getWayPoint(int wpIdx)
 {
@@ -366,7 +366,7 @@ WayPoint* PathFinder::getWayPoint(int wpIdx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int PathFinder::selectWay(PathFinder::Buffer& buf, int destWPIdx, PathFinder::Buffer* bufferList, int wpCount, bool includeBlockedPaths)
 {
@@ -472,7 +472,7 @@ int PathFinder::selectWay(PathFinder::Buffer& buf, int destWPIdx, PathFinder::Bu
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PathFinder* RouteMgr::getPathFinder(u32 handle)
 {
@@ -485,7 +485,7 @@ PathFinder* RouteMgr::getPathFinder(u32 handle)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void RouteMgr::update()
 {
@@ -496,7 +496,7 @@ void RouteMgr::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int RouteMgr::getNumWayPoints(u32 handle)
 {
@@ -509,7 +509,7 @@ int RouteMgr::getNumWayPoints(u32 handle)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Vector3f RouteMgr::getSafePosition(u32, Vector3f& pos)
 {
@@ -571,7 +571,7 @@ Vector3f RouteMgr::getSafePosition(u32, Vector3f& pos)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void RouteMgr::findNearestEdge(WayPoint** outNearestStart, WayPoint** outNearestEnd, u32 handle, immut Vector3f& pos, bool allowWater,
                                bool requireOpen, bool avoidDestination)
@@ -653,7 +653,7 @@ void RouteMgr::findNearestEdge(WayPoint** outNearestStart, WayPoint** outNearest
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void RouteMgr::findNearestEdgeAvoidOff(WayPoint** outNearestStart, WayPoint** outNearestEnd, u32 handle, immut Vector3f& pos,
                                        bool allowWater, bool requireOpen, bool avoidDestination)
@@ -766,7 +766,7 @@ void RouteMgr::findNearestEdgeAvoidOff(WayPoint** outNearestStart, WayPoint** ou
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 WayPoint* RouteMgr::findNearestWayPoint(u32 handle, immut Vector3f& pos, bool excludeWater)
 {
@@ -801,7 +801,7 @@ WayPoint* RouteMgr::findNearestWayPoint(u32 handle, immut Vector3f& pos, bool ex
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 WayPoint* RouteMgr::findNearestOffWayPoint(u32 handle, immut Vector3f& pos, bool excludeWater)
 {
@@ -835,7 +835,7 @@ WayPoint* RouteMgr::findNearestOffWayPoint(u32 handle, immut Vector3f& pos, bool
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void RouteMgr::createOffPlane(u32 handle, Plane& plane, WayPoint* wp)
 {
@@ -871,7 +871,7 @@ void RouteMgr::createOffPlane(u32 handle, Plane& plane, WayPoint* wp)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000080
  */
 void RouteMgr::dump(u32 handle)
@@ -889,7 +889,7 @@ void RouteMgr::dump(u32 handle)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 WayPoint* RouteMgr::findNearestWayPointAll(u32 handle, immut Vector3f& pos)
 {
@@ -916,7 +916,7 @@ WayPoint* RouteMgr::findNearestWayPointAll(u32 handle, immut Vector3f& pos)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 WayPoint* RouteMgr::getWayPoint(u32 handle, int wpIdx)
 {
@@ -929,7 +929,7 @@ WayPoint* RouteMgr::getWayPoint(u32 handle, int wpIdx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 RouteMgr::RouteMgr()
 {
@@ -940,7 +940,7 @@ RouteMgr::RouteMgr()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void WayPoint::setFlag(bool flag)
 {
@@ -949,7 +949,7 @@ void WayPoint::setFlag(bool flag)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void RouteMgr::construct(MapMgr* map)
 {
@@ -1010,7 +1010,7 @@ void RouteMgr::construct(MapMgr* map)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void RouteMgr::initLinks()
 {
@@ -1037,7 +1037,7 @@ void RouteMgr::initLinks()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int RouteMgr::id2idx(u32 id)
 {
@@ -1055,7 +1055,7 @@ int RouteMgr::id2idx(u32 id)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000010
  */
 u32 RouteMgr::idx2id(int idx)
@@ -1064,7 +1064,7 @@ u32 RouteMgr::idx2id(int idx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int RouteMgr::getColinIndex(RouteGroup* group, RoutePoint* point)
 {
@@ -1083,7 +1083,7 @@ int RouteMgr::getColinIndex(RouteGroup* group, RoutePoint* point)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000080
  */
 RouteTracer::RouteTracer()
@@ -1092,7 +1092,7 @@ RouteTracer::RouteTracer()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000014
  */
 RouteTracer::Context::PointInfo::PointInfo()
@@ -1101,7 +1101,7 @@ RouteTracer::Context::PointInfo::PointInfo()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000764
  */
 void RouteTracer::render(Graphics&)
@@ -1110,7 +1110,7 @@ void RouteTracer::render(Graphics&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000278
  */
 void RouteTracer::Context::makeContext(RouteTracer*)
@@ -1119,7 +1119,7 @@ void RouteTracer::Context::makeContext(RouteTracer*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0002EC
  */
 void RouteTracer::Context::setTarget(RouteTracer*)
@@ -1128,7 +1128,7 @@ void RouteTracer::Context::setTarget(RouteTracer*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000224
  */
 int RouteTracer::Context::recognise(RouteTracer*)
@@ -1137,7 +1137,7 @@ int RouteTracer::Context::recognise(RouteTracer*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000044
  */
 bool RouteTracer::noLink()
@@ -1146,7 +1146,7 @@ bool RouteTracer::noLink()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000B0
  */
 void RouteTracer::startConsult(Creature*, PathFinder*, PathFinder::Buffer*, int, Vector3f&)
@@ -1155,7 +1155,7 @@ void RouteTracer::startConsult(Creature*, PathFinder*, PathFinder::Buffer*, int,
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000364
  */
 void RouteTracer::updateState()
@@ -1164,7 +1164,7 @@ void RouteTracer::updateState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000054
  */
 Vector3f RouteTracer::getTarget()
@@ -1173,7 +1173,7 @@ Vector3f RouteTracer::getTarget()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000C0
  */
 int WayPoint::getLinkIndex(int idx)
@@ -1188,7 +1188,7 @@ int WayPoint::getLinkIndex(int idx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void WayPoint::resetLinkInfos()
 {
@@ -1201,7 +1201,7 @@ void WayPoint::resetLinkInfos()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void WayPoint::initLinkInfos()
 {
@@ -1294,7 +1294,7 @@ void WayPoint::initLinkInfos()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00007C
  */
 int PathFinder::findFirstStepOnyon(int, int, PathFinder::Buffer*)
@@ -1303,7 +1303,7 @@ int PathFinder::findFirstStepOnyon(int, int, PathFinder::Buffer*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int PathFinder::findSyncOnyon(immut Vector3f& startPos, PathFinder::Buffer* bufferList, int startWPIdx, int goalType,
                               bool ignoreClosedWaypoints)
@@ -1472,7 +1472,7 @@ int PathFinder::findSyncOnyon(immut Vector3f& startPos, PathFinder::Buffer* buff
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int PathFinder::selectWayOnyon(int additionalCost, int goalType, PathFinder::Buffer& buf, int destWPIdx, PathFinder::Buffer* bufferList,
                                int visitedBufferCount, bool ignoreClosedWaypoints)
@@ -1572,7 +1572,7 @@ int PathFinder::selectWayOnyon(int additionalCost, int goalType, PathFinder::Buf
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int PathFinder::selectSecondBestWayOnyon(immut Vector3f& curPos, int& secondBestCost, int goalType, PathFinder::Buffer& buf, int destWPIdx,
                                          PathFinder::Buffer* bufferList, int bufIdx, bool ignoreClosedWaypoints)
@@ -1713,7 +1713,7 @@ int PathFinder::selectSecondBestWayOnyon(immut Vector3f& curPos, int& secondBest
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void RouteMgr::refresh(Graphics& gfx)
 {
@@ -1729,7 +1729,7 @@ void RouteMgr::refresh(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 static void drawBattenPoleSpec(Graphics& gfx, immut Vector3f& pos, f32 height, immut char* labelText, immut Colour& labelColor)
 {
@@ -1760,7 +1760,7 @@ static void drawBattenPoleSpec(Graphics& gfx, immut Vector3f& pos, f32 height, i
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void WayPoint::refresh(Graphics& gfx)
 {

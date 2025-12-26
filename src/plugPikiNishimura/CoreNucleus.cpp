@@ -9,19 +9,19 @@
 #include "sysNew.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("CoreNucleus");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 CoreNucleusProp::CoreNucleusProp()
 {
@@ -31,7 +31,7 @@ CoreNucleusProp::CoreNucleusProp()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 CoreNucleus::CoreNucleus(CreatureProp* props)
     : Boss(props)
@@ -41,7 +41,7 @@ CoreNucleus::CoreNucleus(CreatureProp* props)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 CoreNucleus::getiMass()
 {
@@ -49,7 +49,7 @@ f32 CoreNucleus::getiMass()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void CoreNucleus::init(immut Vector3f& pos)
 {
@@ -63,7 +63,7 @@ void CoreNucleus::init(immut Vector3f& pos)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void CoreNucleus::doKill()
 {
@@ -73,14 +73,14 @@ void CoreNucleus::doKill()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void CoreNucleus::exitCourse()
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void CoreNucleus::update()
 {
@@ -88,7 +88,7 @@ void CoreNucleus::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void CoreNucleus::refresh(Graphics& gfx)
 {
@@ -101,7 +101,7 @@ void CoreNucleus::refresh(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void CoreNucleus::drawShape(Graphics& gfx)
 {
@@ -110,7 +110,7 @@ void CoreNucleus::drawShape(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void CoreNucleus::doAI()
 {
@@ -118,7 +118,7 @@ void CoreNucleus::doAI()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void CoreNucleus::doAnimation()
 {
@@ -128,7 +128,7 @@ void CoreNucleus::doAnimation()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void CoreNucleus::collisionCallback(immut CollEvent& event)
 {

@@ -23,13 +23,13 @@ u8 mapNoGame2Scr[5] = { WMSCR_Practice, WMSCR_Forest, WMSCR_Cave, WMSCR_Yakushim
 } // namespace
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(26)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("drawWorldMap")
@@ -1665,7 +1665,7 @@ const int WorldMapCoursePoint::EVENT_NONE          = 0;
 const int WorldMapCoursePoint::EVENT_APPEAR_FINISH = 1;
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000040
  */
 zen::DrawWorldMap::~DrawWorldMap()
@@ -1673,7 +1673,7 @@ zen::DrawWorldMap::~DrawWorldMap()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::DrawWorldMap::DrawWorldMap()
 {
@@ -1790,7 +1790,7 @@ zen::DrawWorldMap::DrawWorldMap()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool zen::DrawWorldMap::update(Controller* controller)
 {
@@ -1889,7 +1889,7 @@ bool zen::DrawWorldMap::update(Controller* controller)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawWorldMap::draw(Graphics& gfx)
 {
@@ -1913,7 +1913,7 @@ void zen::DrawWorldMap::draw(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000AA4
  */
 void zen::DrawWorldMap::setCoursePoint(zen::DrawWorldMap::startPlaceFlag placeFlag)
@@ -1942,7 +1942,7 @@ void zen::DrawWorldMap::setCoursePoint(zen::DrawWorldMap::startPlaceFlag placeFl
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawWorldMap::start(zen::DrawWorldMap::startModeFlag modeFlag, zen::DrawWorldMap::startPlaceFlag placeFlag)
 {
@@ -2021,7 +2021,7 @@ void zen::DrawWorldMap::start(zen::DrawWorldMap::startModeFlag modeFlag, zen::Dr
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool zen::DrawWorldMap::modeStart(Controller* controller)
 {
@@ -2065,7 +2065,7 @@ bool zen::DrawWorldMap::modeStart(Controller* controller)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool zen::DrawWorldMap::modeAppear(Controller* controller)
 {
@@ -2105,7 +2105,7 @@ bool zen::DrawWorldMap::modeAppear(Controller* controller)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool zen::DrawWorldMap::modeOperation(Controller* controller)
 {
@@ -2144,7 +2144,7 @@ bool zen::DrawWorldMap::modeOperation(Controller* controller)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool zen::DrawWorldMap::modeConfirm(Controller* controller)
 {
@@ -2163,7 +2163,7 @@ bool zen::DrawWorldMap::modeConfirm(Controller* controller)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool zen::DrawWorldMap::modeEnd(Controller*)
 {
@@ -2178,7 +2178,7 @@ bool zen::DrawWorldMap::modeEnd(Controller*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawWorldMap::updateScreens()
 {
@@ -2194,7 +2194,7 @@ void zen::DrawWorldMap::updateScreens()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawWorldMap::closeMapInfo()
 {
@@ -2204,7 +2204,7 @@ void zen::DrawWorldMap::closeMapInfo()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawWorldMap::openMapInfo()
 {

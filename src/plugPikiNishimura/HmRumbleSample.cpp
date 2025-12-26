@@ -2,7 +2,7 @@
 #include "RumbleMgr.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 RumbleSample::RumbleSample(int chan)
 {
@@ -12,7 +12,7 @@ RumbleSample::RumbleSample(int chan)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000010
  */
 void RumbleSample::init()
@@ -21,7 +21,7 @@ void RumbleSample::init()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void RumbleSample::simpleStop()
 {
@@ -29,7 +29,7 @@ void RumbleSample::simpleStop()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void RumbleSample::simpleStart(f32 intensity)
 {

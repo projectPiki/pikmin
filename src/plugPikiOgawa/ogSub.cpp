@@ -12,13 +12,13 @@
 #include "zen/Number.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("OgSubSection");
@@ -32,7 +32,7 @@ static char formatStr[0x100]  = {};
 static int SpecialNumber[100] = {};
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool ogCheckInsCard()
 {
@@ -40,7 +40,7 @@ bool ogCheckInsCard()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 calcPuruPuruScale(f32 timer)
 {
@@ -56,7 +56,7 @@ f32 calcPuruPuruScale(f32 timer)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void setNumberTag(P2DScreen* screen, u32 tag, int* valuePtr, int digit)
 {
@@ -65,7 +65,7 @@ void setNumberTag(P2DScreen* screen, u32 tag, int* valuePtr, int digit)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void setTextColor(P2DTextBox* tbox, P2DPicture* pic)
 {
@@ -77,7 +77,7 @@ void setTextColor(P2DTextBox* tbox, P2DPicture* pic)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool getStringCVS(char* outStr, immut char* csvText, s16 fieldIndex)
 {
@@ -113,7 +113,7 @@ bool getStringCVS(char* outStr, immut char* csvText, s16 fieldIndex)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PikaAlphaMgr::PikaAlphaMgr(P2DScreen* screen)
 {
@@ -187,7 +187,7 @@ PikaAlphaMgr::PikaAlphaMgr(P2DScreen* screen)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikaAlphaMgr::start()
 {
@@ -198,7 +198,7 @@ void PikaAlphaMgr::start()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikaAlphaMgr::startFadeIn(f32 duration)
 {
@@ -209,7 +209,7 @@ void PikaAlphaMgr::startFadeIn(f32 duration)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikaAlphaMgr::startFadeOut(f32 duration)
 {
@@ -220,7 +220,7 @@ void PikaAlphaMgr::startFadeOut(f32 duration)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikaAlphaMgr::update()
 {
@@ -254,7 +254,7 @@ void PikaAlphaMgr::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 setTenmetuAlpha::setTenmetuAlpha(P2DPicture* pic, f32 p2, f32 p3, u8 p4, u8 p5)
 {
@@ -274,7 +274,7 @@ setTenmetuAlpha::setTenmetuAlpha(P2DPicture* pic, f32 p2, f32 p3, u8 p4, u8 p5)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 setTenmetuAlpha::setTenmetuAlpha(P2DPicture* pic, f32 p2)
 {
@@ -294,7 +294,7 @@ setTenmetuAlpha::setTenmetuAlpha(P2DPicture* pic, f32 p2)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void setTenmetuAlpha::updateColor()
 {
@@ -335,7 +335,7 @@ void setTenmetuAlpha::updateColor()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void setTenmetuAlpha::start()
 {
@@ -346,7 +346,7 @@ void setTenmetuAlpha::start()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void setTenmetuAlpha::startFadeIn(f32 duration, f32 start, f32 end)
 {
@@ -370,7 +370,7 @@ void setTenmetuAlpha::startFadeIn(f32 duration, f32 start, f32 end)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void setTenmetuAlpha::startFadeOut(f32 duration, f32 start, f32 end)
 {
@@ -391,7 +391,7 @@ void setTenmetuAlpha::startFadeOut(f32 duration, f32 start, f32 end)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 void setTenmetuAlpha::calcAlpha(f32 maxAlpha)
@@ -411,7 +411,7 @@ void setTenmetuAlpha::calcAlpha(f32 maxAlpha)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 setTenmetuAlpha::TenmetuMode setTenmetuAlpha::update()
 {
@@ -457,7 +457,7 @@ setTenmetuAlpha::TenmetuMode setTenmetuAlpha::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 ogFadeMgr::ogFadeMgr(P2DPane* pane, u8 p2)
 {
@@ -473,7 +473,7 @@ ogFadeMgr::ogFadeMgr(P2DPane* pane, u8 p2)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ogFadeMgr::start(ogFadeMgr::ogFadeStatusFlag state, f32 p2)
 {
@@ -497,7 +497,7 @@ void ogFadeMgr::start(ogFadeMgr::ogFadeStatusFlag state, f32 p2)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ogFadeMgr::setAlpha()
 {
@@ -519,7 +519,7 @@ void ogFadeMgr::setAlpha()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 ogFadeMgr::ogFadeStatusFlag ogFadeMgr::update()
 {
@@ -553,7 +553,7 @@ ogFadeMgr::ogFadeStatusFlag ogFadeMgr::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00003C
  */
 void movePicturePos(P2DPicture* alignPic, P2DPicture* movingPic)
@@ -564,7 +564,7 @@ void movePicturePos(P2DPicture* alignPic, P2DPicture* movingPic)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 ogTexAnimSubMgr::ogTexAnimSubMgr(P2DScreen* screen, P2DPicture* pic, P2DTextBox* tbox)
 {
@@ -607,7 +607,7 @@ ogTexAnimSubMgr::ogTexAnimSubMgr(P2DScreen* screen, P2DPicture* pic, P2DTextBox*
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000108
  */
 void ogTexAnimSubMgr::update()
@@ -630,7 +630,7 @@ void ogTexAnimSubMgr::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 ogTexAnimMgr::ogTexAnimMgr(P2DScreen* screen)
 {
@@ -654,7 +654,7 @@ ogTexAnimMgr::ogTexAnimMgr(P2DScreen* screen)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ogTexAnimMgr::update()
 {
@@ -664,7 +664,7 @@ void ogTexAnimMgr::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int getSpecialNumber(int idx)
 {
@@ -676,7 +676,7 @@ int getSpecialNumber(int idx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void setSpecialNumber(int idx, int value)
 {
@@ -689,7 +689,7 @@ void setSpecialNumber(int idx, int value)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void cnvSpecialNumber(char* str)
 {
@@ -771,7 +771,7 @@ void cnvSpecialNumber(char* str)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TypingTextMgr::TypingTextMgr(P2DTextBox* textBox)
 {
@@ -787,7 +787,7 @@ TypingTextMgr::TypingTextMgr(P2DTextBox* textBox)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TypingTextMgr::start()
 {
@@ -802,7 +802,7 @@ void TypingTextMgr::start()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 ogMsgCtrlTagMgr::ogMsgCtrlTagMgr()
 {
@@ -825,7 +825,7 @@ ogMsgCtrlTagMgr::ogMsgCtrlTagMgr()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool ogMsgCtrlTagMgr::CheckCtrlTag(immut char* text, s16* indexPtr, f32* waitTimePtr)
 {
@@ -903,7 +903,7 @@ bool ogMsgCtrlTagMgr::CheckCtrlTag(immut char* text, s16* indexPtr, f32* waitTim
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TypingTextMgr::update()
 {
@@ -937,7 +937,7 @@ void TypingTextMgr::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void cnvSpecialNumberHyphen(char* str)
 {

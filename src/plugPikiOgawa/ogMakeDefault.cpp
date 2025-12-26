@@ -9,19 +9,19 @@
 #include "zen/ogSub.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT(nullptr)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::ogScrMakeDefaultMgr::ogScrMakeDefaultMgr()
 {
@@ -59,7 +59,7 @@ zen::ogScrMakeDefaultMgr::ogScrMakeDefaultMgr()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrMakeDefaultMgr::start()
 {
@@ -77,7 +77,7 @@ void zen::ogScrMakeDefaultMgr::start()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::ogScrMakeDefaultMgr::MakeDefaultStatus zen::ogScrMakeDefaultMgr::update(Controller* input)
 {
@@ -190,7 +190,7 @@ zen::ogScrMakeDefaultMgr::MakeDefaultStatus zen::ogScrMakeDefaultMgr::update(Con
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrMakeDefaultMgr::draw(Graphics& gfx)
 {
@@ -203,7 +203,7 @@ void zen::ogScrMakeDefaultMgr::draw(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool zen::ogScrMakeDefaultMgr::checkTypingAll()
 {

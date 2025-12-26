@@ -11,7 +11,7 @@
 #include "gameflow.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
@@ -78,13 +78,13 @@ static const EffectMgr::effTypeTable unusedEffects[3] = {
 };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("ufoItem")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool UfoItem::insideSafeArea(immut Vector3f& pos)
 {
@@ -104,7 +104,7 @@ bool UfoItem::insideSafeArea(immut Vector3f& pos)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void UfoItem::setSpotTurn(bool set)
 {
@@ -128,7 +128,7 @@ void UfoItem::setSpotTurn(bool set)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void UfoItem::setSpotActive(bool set)
 {
@@ -165,7 +165,7 @@ void UfoItem::setSpotActive(bool set)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void UfoItem::setTroubleEffect(bool set)
 {
@@ -188,7 +188,7 @@ void UfoItem::setTroubleEffect(bool set)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void UfoItem::startTroubleEffectOne(int id)
 {
@@ -203,7 +203,7 @@ void UfoItem::startTroubleEffectOne(int id)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void UfoItem::updateTroubleEffect()
 {
@@ -235,7 +235,7 @@ void UfoItem::updateTroubleEffect()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void UfoItem::startConeEffect(int)
 {
@@ -250,7 +250,7 @@ void UfoItem::startConeEffect(int)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void UfoItem::finishConeEffect()
 {
@@ -258,7 +258,7 @@ void UfoItem::finishConeEffect()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000044
  */
 void UfoItem::initLevelFlag(int level)
@@ -268,7 +268,7 @@ void UfoItem::initLevelFlag(int level)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void UfoItem::startLevelFlag(int flag)
 {
@@ -289,7 +289,7 @@ void UfoItem::startLevelFlag(int flag)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void UfoItem::lightLevelFlag(int flag)
 {
@@ -307,7 +307,7 @@ void UfoItem::lightLevelFlag(int flag)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void UfoItem::setJetEffect(int level, bool doSmokeEffects)
 {
@@ -399,7 +399,7 @@ void UfoItem::setJetEffect(int level, bool doSmokeEffects)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 UfoItem::LightAnimator::LightAnimator()
 {
@@ -410,7 +410,7 @@ UfoItem::LightAnimator::LightAnimator()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void UfoItem::LightAnimator::start(int id)
 {
@@ -424,7 +424,7 @@ void UfoItem::LightAnimator::start(int id)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000DC
  */
 void UfoItem::LightAnimator::update()
@@ -446,7 +446,7 @@ void UfoItem::LightAnimator::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Vector3f UfoItem::getGoalPos()
 {
@@ -455,7 +455,7 @@ Vector3f UfoItem::getGoalPos()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 UfoItem::getGoalPosRadius()
 {
@@ -464,7 +464,7 @@ f32 UfoItem::getGoalPosRadius()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Vector3f UfoItem::getSuckPos()
 {
@@ -476,7 +476,7 @@ Vector3f UfoItem::getSuckPos()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void UfoItem::suckMe(Pellet* pelt)
 {
@@ -493,7 +493,7 @@ void UfoItem::suckMe(Pellet* pelt)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void UfoItem::startYozora()
 {
@@ -508,7 +508,7 @@ void UfoItem::startYozora()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void UfoItem::startGalaxy()
 {
@@ -522,7 +522,7 @@ void UfoItem::startGalaxy()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void UfoItem::finishSuck(Pellet* pelt)
 {
@@ -545,7 +545,7 @@ void UfoItem::finishSuck(Pellet* pelt)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void UfoItem::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
@@ -665,7 +665,7 @@ void UfoItem::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool UfoItem::needShadow()
 {
@@ -673,7 +673,7 @@ bool UfoItem::needShadow()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 UfoItem::UfoItem(CreatureProp* prop, UfoShapeObject* shape)
     : Suckable(OBJTYPE_Ufo, prop)
@@ -707,7 +707,7 @@ UfoItem::UfoItem(CreatureProp* prop, UfoShapeObject* shape)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool UfoItem::ignoreAtari(Creature*)
 {
@@ -715,7 +715,7 @@ bool UfoItem::ignoreAtari(Creature*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void UfoItem::startTakeoff()
 {
@@ -731,7 +731,7 @@ void UfoItem::startTakeoff()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void UfoItem::startAI(int)
 {
@@ -798,7 +798,7 @@ void UfoItem::startAI(int)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 UfoItem::getSize()
 {
@@ -806,7 +806,7 @@ f32 UfoItem::getSize()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 UfoItem::getiMass()
 {
@@ -814,7 +814,7 @@ f32 UfoItem::getiMass()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool UfoItem::accessible()
 {
@@ -832,7 +832,7 @@ bool UfoItem::accessible()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void UfoItem::startAccess()
 {
@@ -844,7 +844,7 @@ void UfoItem::startAccess()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void UfoItem::finishAccess()
 {
@@ -854,7 +854,7 @@ void UfoItem::finishAccess()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void UfoItem::update()
 {
@@ -866,7 +866,7 @@ void UfoItem::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void UfoItem::setPca1Effect(bool set)
 {
@@ -886,7 +886,7 @@ void UfoItem::setPca1Effect(bool set)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void UfoItem::setPca2Effect(bool set)
 {
@@ -906,7 +906,7 @@ void UfoItem::setPca2Effect(bool set)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void UfoItem::refresh(Graphics& gfx)
 {
@@ -925,7 +925,7 @@ void UfoItem::refresh(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void UfoItem::demoDraw(Graphics& gfx, immut Matrix4f* mtx)
 {

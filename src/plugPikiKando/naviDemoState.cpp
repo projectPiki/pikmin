@@ -18,19 +18,19 @@
 #include "zen/DrawAccount.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(41)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("naviDemo")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviDemoSunsetState::DemoStateMachine::init(NaviDemoSunsetState*)
 {
@@ -43,7 +43,7 @@ void NaviDemoSunsetState::DemoStateMachine::init(NaviDemoSunsetState*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviDemoSunsetState::GoState::init(NaviDemoSunsetState* state)
 {
@@ -52,7 +52,7 @@ void NaviDemoSunsetState::GoState::init(NaviDemoSunsetState* state)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviDemoSunsetState::GoState::exec(NaviDemoSunsetState* state)
 {
@@ -86,7 +86,7 @@ void NaviDemoSunsetState::GoState::exec(NaviDemoSunsetState* state)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviDemoSunsetState::GoState::procAnimMsg(NaviDemoSunsetState* state, MsgAnim* msg)
 {
@@ -109,14 +109,14 @@ void NaviDemoSunsetState::GoState::procAnimMsg(NaviDemoSunsetState* state, MsgAn
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviDemoSunsetState::GoState::cleanup(NaviDemoSunsetState*)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviDemoSunsetState::LookState::init(NaviDemoSunsetState* state)
 {
@@ -125,21 +125,21 @@ void NaviDemoSunsetState::LookState::init(NaviDemoSunsetState* state)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviDemoSunsetState::LookState::exec(NaviDemoSunsetState*)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviDemoSunsetState::LookState::cleanup(NaviDemoSunsetState*)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviDemoSunsetState::LookState::procAnimMsg(NaviDemoSunsetState* state, MsgAnim* msg)
 {
@@ -155,7 +155,7 @@ void NaviDemoSunsetState::LookState::procAnimMsg(NaviDemoSunsetState* state, Msg
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviDemoSunsetState::WhistleState::init(NaviDemoSunsetState* state)
 {
@@ -165,14 +165,14 @@ void NaviDemoSunsetState::WhistleState::init(NaviDemoSunsetState* state)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviDemoSunsetState::WhistleState::exec(NaviDemoSunsetState*)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviDemoSunsetState::WhistleState::procAnimMsg(NaviDemoSunsetState* state, MsgAnim* msg)
 {
@@ -193,7 +193,7 @@ void NaviDemoSunsetState::WhistleState::procAnimMsg(NaviDemoSunsetState* state, 
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviDemoSunsetState::WhistleState::enterAllPikis(NaviDemoSunsetState* state)
 {
@@ -249,14 +249,14 @@ void NaviDemoSunsetState::WhistleState::enterAllPikis(NaviDemoSunsetState* state
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviDemoSunsetState::WhistleState::cleanup(NaviDemoSunsetState*)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviDemoSunsetState::WaitState::init(NaviDemoSunsetState* state)
 {
@@ -264,21 +264,21 @@ void NaviDemoSunsetState::WaitState::init(NaviDemoSunsetState* state)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviDemoSunsetState::WaitState::exec(NaviDemoSunsetState*)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviDemoSunsetState::WaitState::cleanup(NaviDemoSunsetState*)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviDemoSunsetState::SitState::init(NaviDemoSunsetState* state)
 {
@@ -286,21 +286,21 @@ void NaviDemoSunsetState::SitState::init(NaviDemoSunsetState* state)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviDemoSunsetState::SitState::exec(NaviDemoSunsetState*)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviDemoSunsetState::SitState::cleanup(NaviDemoSunsetState*)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 NaviDemoSunsetState::NaviDemoSunsetState()
     : NaviState(NAVISTATE_DemoSunset)
@@ -310,7 +310,7 @@ NaviDemoSunsetState::NaviDemoSunsetState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviDemoSunsetState::init(Navi* navi)
 {
@@ -340,7 +340,7 @@ void NaviDemoSunsetState::init(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviDemoSunsetState::setActors(Navi* navi)
 {
@@ -389,7 +389,7 @@ void NaviDemoSunsetState::setActors(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviDemoSunsetState::exec(Navi* navi)
 {
@@ -419,7 +419,7 @@ void NaviDemoSunsetState::exec(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviDemoSunsetState::cleanup(Navi* navi)
 {
@@ -441,7 +441,7 @@ void NaviDemoSunsetState::cleanup(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviDemoSunsetState::procAnimMsg(Navi* navi, MsgAnim* msg)
 {

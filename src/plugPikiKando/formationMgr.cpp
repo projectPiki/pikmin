@@ -5,19 +5,19 @@
 #include "system.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(8)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("formation")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Creature* FormationMgr::getCreature(int idx)
 {
@@ -25,7 +25,7 @@ Creature* FormationMgr::getCreature(int idx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int FormationMgr::getFirst()
 {
@@ -33,7 +33,7 @@ int FormationMgr::getFirst()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int FormationMgr::getNext(int idx)
 {
@@ -41,7 +41,7 @@ int FormationMgr::getNext(int idx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool FormationMgr::isDone(int idx)
 {
@@ -53,7 +53,7 @@ bool FormationMgr::isDone(int idx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Vector3f FormPoint::getPos()
 {
@@ -65,7 +65,7 @@ Vector3f FormPoint::getPos()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Vector3f FormationMgr::getLastCentre()
 {
@@ -77,7 +77,7 @@ Vector3f FormationMgr::getLastCentre()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000148
  */
 FormationMgr::FormationMgr()
@@ -100,7 +100,7 @@ FormationMgr::FormationMgr()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000044
  */
 FormPoint::FormPoint()
@@ -110,7 +110,7 @@ FormPoint::FormPoint()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 FormPoint* FormationMgr::getFormPoint(Creature* target)
 {
@@ -158,7 +158,7 @@ FormPoint* FormationMgr::getFormPoint(Creature* target)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void FormationMgr::slide(Creature* target, int idx)
 {
@@ -203,7 +203,7 @@ void FormationMgr::slide(Creature* target, int idx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000CC
  */
 void FormationMgr::add(immut Vector3f& localPos, immut Vector3f& color)
@@ -217,7 +217,7 @@ void FormationMgr::add(immut Vector3f& localPos, immut Vector3f& color)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000044
  */
 int FormationMgr::getIndex(Creature* target)
@@ -231,7 +231,7 @@ int FormationMgr::getIndex(Creature* target)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000044
  */
 int FormationMgr::getFptIndex(FormPoint* point)
@@ -245,7 +245,7 @@ int FormationMgr::getFptIndex(FormPoint* point)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void FormationMgr::exit(Creature* target)
 {
@@ -274,7 +274,7 @@ void FormationMgr::exit(Creature* target)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00008C
  */
 void FormationMgr::clear()
@@ -294,7 +294,7 @@ void FormationMgr::clear()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 void FormationMgr::rearrange()
@@ -302,7 +302,7 @@ void FormationMgr::rearrange()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000060
  */
 void FormationMgr::setOffset(immut Vector3f& offset)
@@ -314,7 +314,7 @@ void FormationMgr::setOffset(immut Vector3f& offset)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000008
  */
 void FormationMgr::setAngOffset(f32 offset)
@@ -323,7 +323,7 @@ void FormationMgr::setAngOffset(f32 offset)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void CircleArranger::arrange(FormationMgr* mgr)
 {
@@ -359,7 +359,7 @@ void CircleArranger::arrange(FormationMgr* mgr)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PyramidArranger::arrange(FormationMgr* mgr)
 {
@@ -392,7 +392,7 @@ void PyramidArranger::arrange(FormationMgr* mgr)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 PyramidArranger::getLength(FormationMgr* mgr)
 {
@@ -401,7 +401,7 @@ f32 PyramidArranger::getLength(FormationMgr* mgr)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void LineArranger::arrange(FormationMgr* mgr)
 {
@@ -431,7 +431,7 @@ void LineArranger::arrange(FormationMgr* mgr)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void WingArranger::arrange(FormationMgr* mgr)
 {
@@ -466,7 +466,7 @@ void WingArranger::arrange(FormationMgr* mgr)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00005C
  */
 Rope::Rope()
@@ -476,7 +476,7 @@ Rope::Rope()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000A1C
  */
 void Rope::move(immut Vector3f& targetPos, immut Vector3f& initialVel, immut Vector3f& p3)
@@ -499,7 +499,7 @@ void Rope::move(immut Vector3f& targetPos, immut Vector3f& initialVel, immut Vec
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000170
  */
 void Rope::refresh(Graphics& gfx)
@@ -518,7 +518,7 @@ void Rope::refresh(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000020
  */
 Spine::Spine()
@@ -527,7 +527,7 @@ Spine::Spine()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000340
  */
 void Spine::init(Creature* target)
@@ -561,7 +561,7 @@ void Spine::init(Creature* target)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000A8C
  */
 void Spine::preMove()
@@ -571,7 +571,7 @@ void Spine::preMove()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 void Spine::postMove()
@@ -579,7 +579,7 @@ void Spine::postMove()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000020
  */
 void Spine::move()
@@ -589,7 +589,7 @@ void Spine::move()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000DC
  */
 void Spine::refresh(Graphics& gfx)

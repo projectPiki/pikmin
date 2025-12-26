@@ -6,19 +6,19 @@
 #include "zen/ogSub.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT(nullptr)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::ogScrTutorialMgr::ogScrTutorialMgr()
 {
@@ -29,7 +29,7 @@ zen::ogScrTutorialMgr::ogScrTutorialMgr()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::ogScrTutorialMgr::TutorialStatus zen::ogScrTutorialMgr::update(Controller* input)
 {
@@ -61,7 +61,7 @@ zen::ogScrTutorialMgr::TutorialStatus zen::ogScrTutorialMgr::update(Controller* 
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrTutorialMgr::draw(Graphics& gfx)
 {
@@ -71,7 +71,7 @@ void zen::ogScrTutorialMgr::draw(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrTutorialMgr::start(EnumTutorial state)
 {
@@ -101,7 +101,7 @@ void zen::ogScrTutorialMgr::start(EnumTutorial state)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000024
  */
 void zen::ogScrTutorialMgr::nextPage()
@@ -110,7 +110,7 @@ void zen::ogScrTutorialMgr::nextPage()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000024
  */
 void zen::ogScrTutorialMgr::backPage()
@@ -119,7 +119,7 @@ void zen::ogScrTutorialMgr::backPage()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00002C
  */
 void zen::ogScrTutorialMgr::setCursorXY(P2DTextBox*)

@@ -6,19 +6,19 @@
 #include "sysNew.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("genBoss");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 static GenObject* makeObjectBoss()
 {
@@ -26,7 +26,7 @@ static GenObject* makeObjectBoss()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GenObjectBoss::initialise()
 {
@@ -34,7 +34,7 @@ void GenObjectBoss::initialise()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GenObjectBoss::doRead(RandomAccessStream& input)
 {
@@ -57,7 +57,7 @@ void GenObjectBoss::doRead(RandomAccessStream& input)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GenObjectBoss::doWrite(RandomAccessStream& output)
 {
@@ -65,7 +65,7 @@ void GenObjectBoss::doWrite(RandomAccessStream& output)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GenObjectBoss::ramLoadParameters(RandomAccessStream& input)
 {
@@ -73,7 +73,7 @@ void GenObjectBoss::ramLoadParameters(RandomAccessStream& input)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GenObjectBoss::ramSaveParameters(RandomAccessStream& output)
 {
@@ -81,7 +81,7 @@ void GenObjectBoss::ramSaveParameters(RandomAccessStream& output)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GenObjectBoss::readParameters(RandomAccessStream& input)
 {
@@ -107,7 +107,7 @@ void GenObjectBoss::readParameters(RandomAccessStream& input)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GenObjectBoss::writeParameters(RandomAccessStream& output)
 {
@@ -134,7 +134,7 @@ void GenObjectBoss::writeParameters(RandomAccessStream& output)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GenObjectBoss::updateUseList(Generator*, int count)
 {
@@ -183,7 +183,7 @@ void GenObjectBoss::updateUseList(Generator*, int count)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Creature* GenObjectBoss::birth(BirthInfo& info)
 {

@@ -29,13 +29,13 @@ static zen::ogScrStartMgr* startWindow;
 static bool startWindowOn;
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("Titles")
@@ -557,7 +557,7 @@ struct TitleSetupSection : public Node {
 };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TitlesMovieInterface::message(int a1, int)
 {
@@ -570,7 +570,7 @@ void TitlesMovieInterface::message(int a1, int)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TitlesSection::init()
 {

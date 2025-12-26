@@ -3,19 +3,19 @@
 #include "Interactions.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(6)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("interactGrab")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool InteractGrab::actCommon(Creature* creature) immut
 {
@@ -30,7 +30,7 @@ bool InteractGrab::actCommon(Creature* creature) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool InteractRelease::actCommon(Creature* creature) immut
 {

@@ -4,19 +4,19 @@
 #include "teki.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("taitimeractions")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiTimerAction::start(Teki& teki)
 {
@@ -24,7 +24,7 @@ void TaiTimerAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiTimerAction::act(Teki& teki)
 {
@@ -32,7 +32,7 @@ bool TaiTimerAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiTimerAction::resetTimer(Teki& teki)
 {
@@ -40,7 +40,7 @@ void TaiTimerAction::resetTimer(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiResetTimerAction::start(Teki& teki)
 {
@@ -48,7 +48,7 @@ void TaiResetTimerAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiResetTimerAction::resetTimer(Teki& teki)
 {
@@ -56,7 +56,7 @@ void TaiResetTimerAction::resetTimer(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiTimerElapsedAction::act(Teki& teki)
 {
@@ -64,7 +64,7 @@ bool TaiTimerElapsedAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiStartingTimerAction::start(Teki& teki)
 {
@@ -72,7 +72,7 @@ void TaiStartingTimerAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiStartingTimerAction::act(Teki& teki)
 {

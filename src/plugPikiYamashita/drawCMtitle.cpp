@@ -4,19 +4,19 @@
 #include "zen/DrawCM.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("drawCMtitle")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawCMtitleObj::init(P2DScreen* screen)
 {
@@ -30,7 +30,7 @@ void zen::DrawCMtitleObj::init(P2DScreen* screen)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawCMtitleObj::update()
 {
@@ -39,7 +39,7 @@ void zen::DrawCMtitleObj::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawCMtitleObj::wait(f32 p1)
 {
@@ -51,7 +51,7 @@ void zen::DrawCMtitleObj::wait(f32 p1)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawCMtitleObj::appear(f32 p1)
 {
@@ -63,7 +63,7 @@ void zen::DrawCMtitleObj::appear(f32 p1)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool zen::DrawCMtitleObj::modeSleep()
 {
@@ -71,7 +71,7 @@ bool zen::DrawCMtitleObj::modeSleep()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool zen::DrawCMtitleObj::modeAppear()
 {
@@ -95,7 +95,7 @@ bool zen::DrawCMtitleObj::modeAppear()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool zen::DrawCMtitleObj::modeWait()
 {

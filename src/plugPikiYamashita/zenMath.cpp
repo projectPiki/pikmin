@@ -4,19 +4,19 @@
 #include "zen/Math.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT(nullptr)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000D8
  */
 void zen::ZenQuat::GetMatrix(const Quat&, Matrix3f& outMtx)
@@ -26,7 +26,7 @@ void zen::ZenQuat::GetMatrix(const Quat&, Matrix3f& outMtx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000100
  */
 void zen::ZenQuat::GetMatrix(const Quat&, Matrix4f&)
@@ -35,7 +35,7 @@ void zen::ZenQuat::GetMatrix(const Quat&, Matrix4f&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000238
  */
 void zen::ZenQuat::GetRotate(const Quat&, Vector3f&)
@@ -44,7 +44,7 @@ void zen::ZenQuat::GetRotate(const Quat&, Vector3f&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 zen::getDistPointAndLine(Vector3f point, Vector3f lineStartPt, Vector3f lineEndPt, f32& t)
 {
@@ -71,7 +71,7 @@ f32 zen::getDistPointAndLine(Vector3f point, Vector3f lineStartPt, Vector3f line
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::makeRotMatrix(immut Vector3f& axis, Matrix3f& rotMtx)
 {

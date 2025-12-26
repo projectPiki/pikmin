@@ -21,13 +21,13 @@
 #include "timers.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(21)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("System")
@@ -59,7 +59,7 @@ static DVDStream dvdStream;
 static BufferedInputStream dvdBufferedStream;
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000044
  */
 void DVDStream::init()
@@ -71,7 +71,7 @@ void DVDStream::init()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 RandomAccessStream* System::openFile(immut char* path, bool isRelativePath, bool)
 {
@@ -125,7 +125,7 @@ RandomAccessStream* System::openFile(immut char* path, bool isRelativePath, bool
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void System::initSoftReset()
 {
@@ -137,7 +137,7 @@ void System::initSoftReset()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void System::beginRender()
 {
@@ -152,7 +152,7 @@ void System::beginRender()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void System::doneRender()
 {
@@ -160,7 +160,7 @@ void System::doneRender()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void System::waitRetrace()
 {
@@ -168,7 +168,7 @@ void System::waitRetrace()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void System::run(BaseApp* app)
 {
@@ -188,7 +188,7 @@ void System::run(BaseApp* app)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 System::getTime()
 {
@@ -196,7 +196,7 @@ f32 System::getTime()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void System::updateSysClock()
 {
@@ -222,7 +222,7 @@ void System::updateSysClock()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void System::parseArchiveDirectory(immut char* path1, immut char* path2)
 {
@@ -473,7 +473,7 @@ static void ParseMapFile()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000040
  */
 void System::findAddress(u32)
@@ -482,7 +482,7 @@ void System::findAddress(u32)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void System::hardReset()
 {
@@ -508,7 +508,7 @@ void System::hardReset()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 System::System()
 {
@@ -537,7 +537,7 @@ System::System()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000BC
  */
 void sysErrorHandler(u16, OSContext*, u32, u32)
@@ -546,7 +546,7 @@ void sysErrorHandler(u16, OSContext*, u32, u32)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void initBigFont()
 {
@@ -749,7 +749,7 @@ static immut char** errorList[6] = {
 #endif
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void System::showDvdError(Graphics& gfx)
 {
@@ -777,7 +777,7 @@ void System::showDvdError(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void System::Initialise()
 {
@@ -854,21 +854,21 @@ void System::Initialise()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void System::sndPlaySe(u32)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 System::~System()
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000028
  */
 bool System::hasDebugInfo()
@@ -877,7 +877,7 @@ bool System::hasDebugInfo()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000b8
  */
 void System::halt(immut char* file, int line, immut char* message)
@@ -893,7 +893,7 @@ void System::halt(immut char* file, int line, immut char* message)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void* loadFunc(void* idler)
 {
@@ -970,7 +970,7 @@ OSThread dvdThread;
 u8 dvdThreadStack[0x2000] ATTRIBUTE_ALIGN(32);
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void System::startLoading(LoadIdler* idler, bool useLoadScreen, u32 loadDelay)
 {
@@ -989,7 +989,7 @@ void System::startLoading(LoadIdler* idler, bool useLoadScreen, u32 loadDelay)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void System::nudgeLoading()
 {
@@ -997,7 +997,7 @@ void System::nudgeLoading()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void System::endLoading()
 {
@@ -1017,7 +1017,7 @@ void System::endLoading()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void doneDMA(u32 cache)
 {
@@ -1028,7 +1028,7 @@ void doneDMA(u32 cache)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void System::copyWaitUntilDone()
 {
@@ -1036,7 +1036,7 @@ void System::copyWaitUntilDone()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 u32 System::copyRamToCache(u32 src, u32 size, u32 dest)
 {
@@ -1062,7 +1062,7 @@ u32 System::copyRamToCache(u32 src, u32 size, u32 dest)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void System::copyCacheToRam(u32 dst, u32 src, u32 size)
 {
@@ -1079,7 +1079,7 @@ void System::copyCacheToRam(u32 dst, u32 src, u32 size)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void freeBuffer(u32 cache)
 {
@@ -1098,7 +1098,7 @@ void freeBuffer(u32 cache)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void System::copyCacheToTexture(CacheTexture* tex)
 {
@@ -1121,7 +1121,7 @@ void System::copyCacheToTexture(CacheTexture* tex)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void* dvdFunc(void*)
 {
@@ -1194,7 +1194,7 @@ void* dvdFunc(void*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void System::nudgeDvdThread()
 {
@@ -1202,7 +1202,7 @@ void System::nudgeDvdThread()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void System::startDvdThread()
 {

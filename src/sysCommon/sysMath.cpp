@@ -11,19 +11,19 @@
 #include <math.h>
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT(nullptr)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000C0
  */
 bool Plane::equal(immut Plane& other)
@@ -32,7 +32,7 @@ bool Plane::equal(immut Plane& other)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000148
  */
 f32 Plane::calcRadScale()
@@ -41,7 +41,7 @@ f32 Plane::calcRadScale()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000074
  */
 void Plane::reflect(Vector3f&)
@@ -50,7 +50,7 @@ void Plane::reflect(Vector3f&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00006C
  */
 void Plane::reflectVector(Vector3f&)
@@ -59,7 +59,7 @@ void Plane::reflectVector(Vector3f&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000078
  */
 void Plane::bounceVector(Vector3f&, f32)
@@ -68,7 +68,7 @@ void Plane::bounceVector(Vector3f&, f32)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000084
  */
 void Plane::frictionVector(Vector3f&, f32)
@@ -77,7 +77,7 @@ void Plane::frictionVector(Vector3f&, f32)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void CullingPlane::CheckMinMaxDir()
 {
@@ -107,7 +107,7 @@ void CullingPlane::CheckMinMaxDir()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000AC
  */
 void Vector3f::rotateTranspose(immut Matrix4f&)
@@ -125,7 +125,7 @@ void Vector3f::rotateTranspose(immut Matrix4f&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Vector3f::rotate(immut Matrix4f& mtx)
 {
@@ -138,7 +138,7 @@ void Vector3f::rotate(immut Matrix4f& mtx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Vector3f::rotateTo(immut Matrix4f& mtx, Vector3f& outVec)
 {
@@ -148,7 +148,7 @@ void Vector3f::rotateTo(immut Matrix4f& mtx, Vector3f& outVec)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Vector3f::multMatrix(immut Matrix4f& mtx)
 {
@@ -160,7 +160,7 @@ void Vector3f::multMatrix(immut Matrix4f& mtx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Vector3f::multMatrixTo(immut Matrix4f& mtx, Vector3f& outVec)
 {
@@ -170,7 +170,7 @@ void Vector3f::multMatrixTo(immut Matrix4f& mtx, Vector3f& outVec)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000110
  */
 void Vector3f::rotate(immut Quat&)
@@ -179,7 +179,7 @@ void Vector3f::rotate(immut Quat&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000104
  */
 void Vector3f::rotateInverse(immut Quat&)
@@ -188,7 +188,7 @@ void Vector3f::rotateInverse(immut Quat&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Quat::fromMat3f(immut Matrix3f& mtx)
 {
@@ -270,7 +270,7 @@ void Quat::fromMat3f(immut Matrix3f& mtx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Quat::rotate(immut Vector3f& axis, f32 angle)
 {
@@ -284,7 +284,7 @@ void Quat::rotate(immut Vector3f& axis, f32 angle)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Quat::multiply(immut Quat& other)
 {
@@ -297,7 +297,7 @@ void Quat::multiply(immut Quat& other)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000104
  */
 void Quat::multiplyTo(immut Quat& other, Quat& outQuat)
@@ -309,7 +309,7 @@ void Quat::multiplyTo(immut Quat& other, Quat& outQuat)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Quat::normalise()
 {
@@ -321,7 +321,7 @@ void Quat::normalise()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Quat::genVectorX(Vector3f& outVec) immut
 {
@@ -339,7 +339,7 @@ void Quat::genVectorX(Vector3f& outVec) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Quat::genVectorY(Vector3f& outVec) immut
 {
@@ -357,7 +357,7 @@ void Quat::genVectorY(Vector3f& outVec) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Quat::genVectorZ(Vector3f& outVec) immut
 {
@@ -375,7 +375,7 @@ void Quat::genVectorZ(Vector3f& outVec) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Quat::slerp(immut Quat& other, f32 t, int)
 {
@@ -410,7 +410,7 @@ void Quat::slerp(immut Quat& other, f32 t, int)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Quat::fromEuler(immut Vector3f& angles)
 {
@@ -444,7 +444,7 @@ void Quat::fromEuler(immut Vector3f& angles)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 roundAng(f32 x)
 {
@@ -460,7 +460,7 @@ f32 roundAng(f32 x)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 angDist(f32 angle1, f32 angle2)
 {
@@ -473,7 +473,7 @@ f32 angDist(f32 angle1, f32 angle2)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 qdist2(f32 x0, f32 y0, f32 x1, f32 y1)
 {
@@ -499,7 +499,7 @@ f32 qdist2(f32 x0, f32 y0, f32 x1, f32 y1)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000080
  */
 f32 qdist3(f32 x0, f32 y0, f32 z0, f32 x1, f32 y1, f32 z1)
@@ -540,7 +540,7 @@ f32 qdist3(f32 x0, f32 y0, f32 z0, f32 x1, f32 y1, f32 z1)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void CollTriInfo::init(RoomInfo* info, immut Vector3f* vertices)
 {
@@ -558,7 +558,7 @@ void CollTriInfo::init(RoomInfo* info, immut Vector3f* vertices)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int CollTriInfo::behindEdge(immut Vector3f& point)
 {
@@ -572,7 +572,7 @@ int CollTriInfo::behindEdge(immut Vector3f& point)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BoundBox::draw(Graphics& gfx)
 {
@@ -624,7 +624,7 @@ void BoundBox::draw(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 static bool pointInsideTri(KTri& tri, Vector3f& point)
 {
@@ -662,7 +662,7 @@ static bool pointInsideTri(KTri& tri, Vector3f& point)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 triRectDistance(immut Vector3f* vertex1, immut Vector3f* vertex2, immut Vector3f* vertex3, BoundBox& boundingBox, bool)
 {
@@ -734,7 +734,7 @@ f32 triRectDistance(immut Vector3f* vertex1, immut Vector3f* vertex2, immut Vect
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 distanceTriRect(KTri& tri, KRect& rect, f32* barycentricU, f32* barycentricV, f32* p5, f32* p6)
 {
@@ -751,7 +751,7 @@ f32 distanceTriRect(KTri& tri, KRect& rect, f32* barycentricU, f32* barycentricV
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool KRect::inside(immut Vector3f& point)
 {
@@ -768,14 +768,14 @@ bool KRect::inside(immut Vector3f& point)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 KTri::KTri()
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KTri::set(immut Vector3f& pointA, immut Vector3f& pointB, immut Vector3f& pointC)
 {
@@ -785,7 +785,7 @@ void KTri::set(immut Vector3f& pointA, immut Vector3f& pointB, immut Vector3f& p
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000020
  */
 KSegment::KSegment()
@@ -796,7 +796,7 @@ KSegment::KSegment()
 f32 gs_fTolerance = 0.00001f;
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 sqrDistance(KSegment& segment, KTri& tri, f32* outP3, f32* outP4, f32* outP5)
 {
@@ -1297,7 +1297,7 @@ f32 sqrDistance(KSegment& segment, KTri& tri, f32* outP3, f32* outP4, f32* outP5
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 sqrDistance(KSegment& segment1, KSegment& segment2, f32* outP3, f32* outP4)
 {
@@ -1573,7 +1573,7 @@ f32 sqrDistance(KSegment& segment1, KSegment& segment2, f32* outP3, f32* outP4)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 sqrDistance(KSegment& segment, KRect& rect, f32* p3, f32* p4, f32* p5)
 {
@@ -2336,7 +2336,7 @@ f32 sqrDistance(KSegment& segment, KRect& rect, f32* p3, f32* p4, f32* p5)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 sqrDistance(KTri& tri, KRect& rect, f32* p3, f32* p4, f32* p5, f32* p6)
 {
@@ -2442,7 +2442,7 @@ f32 sqrDistance(KTri& tri, KRect& rect, f32* p3, f32* p4, f32* p5, f32* p6)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 sqrDistance(immut Vector3f& point, KTri& tri, f32* outBaryU, f32* outBaryV)
 {

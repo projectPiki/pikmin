@@ -13,19 +13,19 @@
 #include "zen/Math.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(25)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("aiAttack")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 ActAttack::ActAttack(Piki* piki)
     : AndAction(piki)
@@ -39,7 +39,7 @@ ActAttack::ActAttack(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActAttack::init(Creature* creature)
 {
@@ -83,7 +83,7 @@ void ActAttack::init(Creature* creature)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000084
  */
 void ActAttack::startLost()
@@ -94,7 +94,7 @@ void ActAttack::startLost()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActAttack::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
@@ -119,7 +119,7 @@ void ActAttack::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActAttack::resume()
 {
@@ -127,7 +127,7 @@ void ActAttack::resume()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActAttack::restart()
 {
@@ -138,7 +138,7 @@ void ActAttack::restart()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool ActAttack::resumable()
 {
@@ -146,7 +146,7 @@ bool ActAttack::resumable()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Creature* ActAttack::findTarget()
 {
@@ -170,7 +170,7 @@ Creature* ActAttack::findTarget()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0002C8
  */
 Creature* ActAttack::decideTarget()
@@ -197,7 +197,7 @@ Creature* ActAttack::decideTarget()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActAttack::exec()
 {
@@ -296,7 +296,7 @@ int ActAttack::exec()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActAttack::cleanup()
 {
@@ -308,7 +308,7 @@ void ActAttack::cleanup()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 ActJumpAttack::ActJumpAttack(Piki* piki)
     : Action(piki, true)
@@ -317,7 +317,7 @@ ActJumpAttack::ActJumpAttack(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActJumpAttack::init(Creature* creature)
 {
@@ -348,7 +348,7 @@ void ActJumpAttack::init(Creature* creature)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000068
  */
 Vector3f ActJumpAttack::getAttackPos()
@@ -360,7 +360,7 @@ Vector3f ActJumpAttack::getAttackPos()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000044
  */
 f32 ActJumpAttack::getAttackSize()
@@ -372,7 +372,7 @@ f32 ActJumpAttack::getAttackSize()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActJumpAttack::procStickMsg(Piki* piki, MsgStick* msg)
 {
@@ -384,7 +384,7 @@ void ActJumpAttack::procStickMsg(Piki* piki, MsgStick* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActJumpAttack::procBounceMsg(Piki* piki, MsgBounce* msg)
 {
@@ -395,7 +395,7 @@ void ActJumpAttack::procBounceMsg(Piki* piki, MsgBounce* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActJumpAttack::procCollideMsg(Piki* piki, MsgCollide* msg)
 {
@@ -475,7 +475,7 @@ void ActJumpAttack::procCollideMsg(Piki* piki, MsgCollide* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActJumpAttack::exec()
 {
@@ -698,7 +698,7 @@ int ActJumpAttack::exec()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActJumpAttack::cleanup()
 {
@@ -707,7 +707,7 @@ void ActJumpAttack::cleanup()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActJumpAttack::attackHit()
 {
@@ -715,7 +715,7 @@ void ActJumpAttack::attackHit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActJumpAttack::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
@@ -747,7 +747,7 @@ void ActJumpAttack::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActJumpAttack::doClimb()
 {

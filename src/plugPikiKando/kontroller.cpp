@@ -6,19 +6,19 @@
 RamStream* controllerBuffer;
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("Kontroller")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Kontroller::Kontroller(int controllerId)
     : Controller(controllerId)
@@ -29,7 +29,7 @@ Kontroller::Kontroller(int controllerId)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Kontroller::save(RamStream* stream, int duration)
 {
@@ -41,7 +41,7 @@ void Kontroller::save(RamStream* stream, int duration)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Kontroller::load(RamStream* stream, int duration)
 {
@@ -53,7 +53,7 @@ void Kontroller::load(RamStream* stream, int duration)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000014
  */
 void Kontroller::stop()
@@ -65,7 +65,7 @@ void Kontroller::stop()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Kontroller::update()
 {
@@ -106,7 +106,7 @@ void Kontroller::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 u32 Kontroller::getSaveSize(int duration)
 {
@@ -114,7 +114,7 @@ u32 Kontroller::getSaveSize(int duration)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Kontroller::write(RandomAccessStream& stream)
 {
@@ -130,7 +130,7 @@ void Kontroller::write(RandomAccessStream& stream)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Kontroller::read(RandomAccessStream& stream)
 {

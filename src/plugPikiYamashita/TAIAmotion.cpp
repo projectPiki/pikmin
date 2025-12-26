@@ -5,19 +5,19 @@
 #include "teki.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("TAIAmotion")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TAIAmotion::TAIAmotion(int nextState, int motionID)
     : TaiAction(nextState)
@@ -26,7 +26,7 @@ TAIAmotion::TAIAmotion(int nextState, int motionID)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAIAmotion::start(Teki& teki)
 {
@@ -34,7 +34,7 @@ void TAIAmotion::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAmotion::act(Teki& teki)
 {
@@ -46,7 +46,7 @@ bool TAIAmotion::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TAIAreserveMotion::TAIAreserveMotion(int nextState, int motionID)
     : TaiAction(nextState)
@@ -55,7 +55,7 @@ TAIAreserveMotion::TAIAreserveMotion(int nextState, int motionID)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAIAreserveMotion::start(Teki& teki)
 {
@@ -86,7 +86,7 @@ void TAIAreserveMotion::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAreserveMotion::act(Teki& teki)
 {
@@ -103,7 +103,7 @@ bool TAIAreserveMotion::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAIAmotionLoop::start(Teki& teki)
 {
@@ -112,7 +112,7 @@ void TAIAmotionLoop::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAmotionLoop::act(Teki& teki)
 {

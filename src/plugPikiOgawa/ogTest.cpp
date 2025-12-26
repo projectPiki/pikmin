@@ -26,13 +26,13 @@
 #include <stdio.h>
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("OgTestSection")
@@ -114,7 +114,7 @@ private:
 };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 OgTestScreen::OgTestScreen()
 {
@@ -175,7 +175,7 @@ OgTestScreen::OgTestScreen()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void OgTestScreen::modeSelectSub()
 {
@@ -352,7 +352,7 @@ void OgTestScreen::modeSelectSub()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void OgTestScreen::update()
 {
@@ -416,7 +416,7 @@ void OgTestScreen::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void OgTestScreen::draw(Graphics& gfx)
 {
@@ -527,7 +527,7 @@ void OgTestScreen::draw(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 OgTestSection::OgTestSection()
 {
@@ -538,7 +538,7 @@ OgTestSection::OgTestSection()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void OgTestSection::init()
 {

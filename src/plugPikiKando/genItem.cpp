@@ -14,19 +14,19 @@
 #include "sysNew.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("genItem")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000148
  */
 GenObjectItem::GenObjectItem()
@@ -42,7 +42,7 @@ GenObjectItem::GenObjectItem()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GenObjectItem::ramSaveParameters(RandomAccessStream& stream)
 {
@@ -53,7 +53,7 @@ void GenObjectItem::ramSaveParameters(RandomAccessStream& stream)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GenObjectItem::ramLoadParameters(RandomAccessStream& stream)
 {
@@ -64,7 +64,7 @@ void GenObjectItem::ramLoadParameters(RandomAccessStream& stream)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 static GenObject* makeObjectItem()
 {
@@ -72,7 +72,7 @@ static GenObject* makeObjectItem()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GenObjectItem::initialise()
 {
@@ -80,7 +80,7 @@ void GenObjectItem::initialise()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GenObjectItem::doRead(RandomAccessStream& stream)
 {
@@ -112,7 +112,7 @@ void GenObjectItem::doRead(RandomAccessStream& stream)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GenObjectItem::doWrite(RandomAccessStream& stream)
 {
@@ -134,7 +134,7 @@ void GenObjectItem::doWrite(RandomAccessStream& stream)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000028
  */
 static void sprintID(char*, u32)
@@ -143,7 +143,7 @@ static void sprintID(char*, u32)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GenObjectItem::updateUseList(Generator*, int)
 {
@@ -153,7 +153,7 @@ void GenObjectItem::updateUseList(Generator*, int)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Creature* GenObjectItem::birth(BirthInfo& info)
 {

@@ -15,19 +15,19 @@
 #include "zen/ogSub.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("OgSaveSection")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::ogSaveMgr::ogSaveMgr()
 {
@@ -104,7 +104,7 @@ zen::ogSaveMgr::ogSaveMgr()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogSaveMgr::start()
 {
@@ -124,7 +124,7 @@ void zen::ogSaveMgr::start()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000138
  */
 void zen::ogSaveMgr::startDirectSave(s16 state)
@@ -143,7 +143,7 @@ void zen::ogSaveMgr::startDirectSave(s16 state)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::ogSaveMgr::SaveStatus zen::ogSaveMgr::update(Controller* input)
 {
@@ -447,7 +447,7 @@ zen::ogSaveMgr::SaveStatus zen::ogSaveMgr::update(Controller* input)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogSaveMgr::draw(Graphics& gfx)
 {

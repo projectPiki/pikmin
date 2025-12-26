@@ -9,13 +9,13 @@
 #include "zen/CallBack.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("TAIusuba")
@@ -69,7 +69,7 @@ struct TAIAflyUsuba : public TAIAmotion {
 };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000084
  */
 TAIusubaSoundTable::TAIusubaSoundTable()
@@ -81,7 +81,7 @@ TAIusubaSoundTable::TAIusubaSoundTable()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TAIusubaParameters::TAIusubaParameters()
     : TekiParameters(TPI_COUNT, TPF_COUNT)
@@ -133,7 +133,7 @@ TAIusubaParameters::TAIusubaParameters()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0001D8
  */
 TAIusubaStrategy::TAIusubaStrategy()
@@ -160,7 +160,7 @@ TAIusubaStrategy::TAIusubaStrategy()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAIusubaAnimation::makeDefaultAnimations()
 {

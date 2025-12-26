@@ -3,19 +3,19 @@
 #include "SimpleAI.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT(nullptr)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000074
  */
 Actor::Actor()
@@ -25,7 +25,7 @@ Actor::Actor()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Actor::setType(int /*unused*/, PikiShapeObject* shape, CreatureProp* props, SimpleAI* ai)
 {
@@ -40,7 +40,7 @@ void Actor::setType(int /*unused*/, PikiShapeObject* shape, CreatureProp* props,
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00002C
  */
 void Actor::startAI(int state)
@@ -49,7 +49,7 @@ void Actor::startAI(int state)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000E0
  */
 void Actor::refresh(Graphics& gfx)
@@ -70,7 +70,7 @@ void Actor::refresh(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000040
  */
 void Actor::update()
@@ -80,7 +80,7 @@ void Actor::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000034
  */
 void Actor::doAnimation()
@@ -89,7 +89,7 @@ void Actor::doAnimation()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00003C
  */
 void Actor::doAI()
@@ -100,7 +100,7 @@ void Actor::doAI()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000034
  */
 void Actor::doKill()
@@ -109,7 +109,7 @@ void Actor::doKill()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000080
  */
 void Actor::startMotion(int)
@@ -118,7 +118,7 @@ void Actor::startMotion(int)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000094
  */
 void Actor::startMotion(int, f32)
@@ -127,7 +127,7 @@ void Actor::startMotion(int, f32)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000034
  */
 void Actor::finishMotion()
@@ -136,7 +136,7 @@ void Actor::finishMotion()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000050
  */
 void Actor::finishMotion(f32)

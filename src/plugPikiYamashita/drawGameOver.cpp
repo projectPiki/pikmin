@@ -5,13 +5,13 @@
 #include "zen/Math.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(15)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("drawGameOver")
@@ -234,7 +234,7 @@ protected:
 } // namespace zen
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::DrawGameOver::DrawGameOver()
 {
@@ -247,7 +247,7 @@ zen::DrawGameOver::DrawGameOver()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawGameOver::start(zen::DrawGameOver::modeFlag mode, f32 p2)
 {
@@ -273,7 +273,7 @@ void zen::DrawGameOver::start(zen::DrawGameOver::modeFlag mode, f32 p2)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool zen::DrawGameOver::update(Controller* controller)
 {
@@ -308,7 +308,7 @@ bool zen::DrawGameOver::update(Controller* controller)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawGameOver::draw(Graphics& gfx)
 {

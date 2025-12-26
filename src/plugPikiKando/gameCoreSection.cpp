@@ -65,19 +65,19 @@ zen::DrawHurryUp* hurryupWindow;
 zen::DrawAccount* accountWindow;
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("gameCoreSection")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GameCoreSection::startTextDemo(Creature*, int textDemoID)
 {
@@ -85,7 +85,7 @@ void GameCoreSection::startTextDemo(Creature*, int textDemoID)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GameCoreSection::updateTextDemo()
 {
@@ -117,7 +117,7 @@ void GameCoreSection::updateTextDemo()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GameCoreSection::startMovie(u32 flags, bool useMovieBackCamera)
 {
@@ -248,7 +248,7 @@ void GameCoreSection::startMovie(u32 flags, bool useMovieBackCamera)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 #if defined(VERSION_PIKIDEMO)
 void GameCoreSection::endMovie()
@@ -310,7 +310,7 @@ void GameCoreSection::endMovie(int movieIdx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000034
  */
 bool GameCoreSection::hideTeki()
@@ -319,7 +319,7 @@ bool GameCoreSection::hideTeki()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000034
  */
 bool GameCoreSection::hideAllPellet()
@@ -328,7 +328,7 @@ bool GameCoreSection::hideAllPellet()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000034
  */
 bool GameCoreSection::hidePelletExceptSucked()
@@ -337,7 +337,7 @@ bool GameCoreSection::hidePelletExceptSucked()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GameCoreSection::exitDayEnd()
 {
@@ -362,7 +362,7 @@ void GameCoreSection::exitDayEnd()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GameCoreSection::forceDayEnd()
 {
@@ -386,7 +386,7 @@ void GameCoreSection::forceDayEnd()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GameCoreSection::clearDeadlyPikmins()
 {
@@ -420,7 +420,7 @@ void GameCoreSection::clearDeadlyPikmins()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GameCoreSection::enterFreePikmins()
 {
@@ -478,7 +478,7 @@ void GameCoreSection::enterFreePikmins()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GameCoreSection::cleanupDayEnd()
 {
@@ -735,7 +735,7 @@ void GameCoreSection::cleanupDayEnd()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GameCoreSection::prepareBadEnd()
 {
@@ -750,7 +750,7 @@ void GameCoreSection::prepareBadEnd()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GameCoreSection::exitStage()
 {
@@ -774,7 +774,7 @@ void GameCoreSection::exitStage()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000024
  */
 ASM void ps_vec3f_add(Vector3f&, Vector3f&)
@@ -783,7 +783,7 @@ ASM void ps_vec3f_add(Vector3f&, Vector3f&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000024
  */
 ASM void ps_vec3f_sub(Vector3f&, Vector3f&)
@@ -792,7 +792,7 @@ ASM void ps_vec3f_sub(Vector3f&, Vector3f&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000020
  */
 ASM void ps_vec3f_multiply(Vector3f&, f32&)
@@ -801,7 +801,7 @@ ASM void ps_vec3f_multiply(Vector3f&, f32&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000018
  */
 ASM void asmTest(f32, f32)
@@ -810,7 +810,7 @@ ASM void asmTest(f32, f32)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GameCoreSection::initStage()
 {
@@ -1135,7 +1135,7 @@ void GameCoreSection::initStage()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GameCoreSection::finalSetup()
 {
@@ -1222,7 +1222,7 @@ void GameCoreSection::finalSetup()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 GameCoreSection::GameCoreSection(Controller* controller, MapMgr* mgr, Camera& camera)
     : Node("gamecore")
@@ -1408,7 +1408,7 @@ GameCoreSection::GameCoreSection(Controller* controller, MapMgr* mgr, Camera& ca
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GameCoreSection::update()
 {
@@ -1485,7 +1485,7 @@ void GameCoreSection::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GameCoreSection::startContainerDemo()
 {
@@ -1493,7 +1493,7 @@ void GameCoreSection::startContainerDemo()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GameCoreSection::startSundownWarn()
 {
@@ -1504,7 +1504,7 @@ void GameCoreSection::startSundownWarn()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GameCoreSection::updateAI()
 {
@@ -1640,7 +1640,7 @@ void GameCoreSection::updateAI()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GameCoreSection::draw(Graphics& gfx)
 {
@@ -1749,7 +1749,7 @@ void GameCoreSection::draw(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000374
  */
 void drawRectangle(Graphics& gfx, RectArea& p2, RectArea& p3, Vector3f* p4)
@@ -1760,7 +1760,7 @@ void drawRectangle(Graphics& gfx, RectArea& p2, RectArea& p3, Vector3f* p4)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GameCoreSection::draw1D(Graphics& gfx)
 {
@@ -1797,7 +1797,7 @@ void GameCoreSection::draw1D(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GameCoreSection::draw2D(Graphics& gfx)
 {

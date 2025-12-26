@@ -5,19 +5,19 @@
 #include "system.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("aiActions");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 ActPick::ActPick(Piki* piki)
     : Action(piki, true)
@@ -26,7 +26,7 @@ ActPick::ActPick(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActPick::Initialiser::initialise(Action* action)
 {
@@ -38,7 +38,7 @@ void ActPick::Initialiser::initialise(Action* action)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActPick::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
@@ -57,7 +57,7 @@ void ActPick::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActPick::init(Creature* object)
 {
@@ -69,7 +69,7 @@ void ActPick::init(Creature* object)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActPick::cleanup()
 {
@@ -78,7 +78,7 @@ void ActPick::cleanup()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActPick::exec()
 {
@@ -97,7 +97,7 @@ int ActPick::exec()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000040
  */
 ActPut::ActPut(Piki* piki)
@@ -107,14 +107,14 @@ ActPut::ActPut(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActPut::Initialiser::initialise(Action*)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActPut::init(Creature*)
 {
@@ -122,14 +122,14 @@ void ActPut::init(Creature*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActPut::cleanup()
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActPut::exec()
 {
@@ -154,7 +154,7 @@ int ActPut::exec()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 ActAdjust::ActAdjust(Piki* piki)
     : Action(piki, true)
@@ -164,7 +164,7 @@ ActAdjust::ActAdjust(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActAdjust::Initialiser::initialise(Action* action)
 {
@@ -174,7 +174,7 @@ void ActAdjust::Initialiser::initialise(Action* action)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActAdjust::init(Creature* target)
 {
@@ -206,7 +206,7 @@ void ActAdjust::init(Creature* target)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActAdjust::cleanup()
 {
@@ -214,7 +214,7 @@ void ActAdjust::cleanup()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActAdjust::exec()
 {

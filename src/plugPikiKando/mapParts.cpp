@@ -4,13 +4,13 @@
 #include "MapMgr.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("mapParts")
@@ -23,7 +23,7 @@ immut char* MapParts::shapeFiles[4] = {
 };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 immut char* MapParts::getShapeFile(int idx)
 {
@@ -31,7 +31,7 @@ immut char* MapParts::getShapeFile(int idx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MapParts::applyVelocity(immut Plane&, immut Vector3f&, immut Vector3f& force)
 {
@@ -39,7 +39,7 @@ void MapParts::applyVelocity(immut Plane&, immut Vector3f&, immut Vector3f& forc
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 MapEntity::MapEntity(Shape* shape)
     : MapParts(shape)
@@ -48,7 +48,7 @@ MapEntity::MapEntity(Shape* shape)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MapEntity::update()
 {
@@ -58,7 +58,7 @@ void MapEntity::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 MapSlider::MapSlider(Shape* shape, int activationCount, int triggerCount, f32 holdTime1, f32 holdTime2, f32 moveSpeed, int moveMode)
     : MapParts(shape)
@@ -73,7 +73,7 @@ MapSlider::MapSlider(Shape* shape, int activationCount, int triggerCount, f32 ho
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MapSlider::init()
 {
@@ -87,7 +87,7 @@ void MapSlider::init()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MapSlider::update()
 {
@@ -154,7 +154,7 @@ void MapSlider::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MapSlider::refresh(Graphics& gfx)
 {

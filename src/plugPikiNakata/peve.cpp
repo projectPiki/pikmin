@@ -4,26 +4,26 @@
 #include "Peve/IO.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("peve")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PeveCondition::PeveCondition()
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PeveEvent::PeveEvent(int count)
     : NNode(count)
@@ -33,7 +33,7 @@ PeveEvent::PeveEvent(int count)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000054
  */
 PeveParallelEvent::PeveParallelEvent(int count)
@@ -42,7 +42,7 @@ PeveParallelEvent::PeveParallelEvent(int count)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PeveParallelEvent::reset()
 {
@@ -53,7 +53,7 @@ void PeveParallelEvent::reset()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PeveParallelEvent::update()
 {
@@ -64,7 +64,7 @@ void PeveParallelEvent::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool PeveParallelEvent::isFinished()
 {
@@ -78,7 +78,7 @@ bool PeveParallelEvent::isFinished()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PeveSerialEvent::PeveSerialEvent(int count)
     : PeveEvent(count)
@@ -86,7 +86,7 @@ PeveSerialEvent::PeveSerialEvent(int count)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PeveSerialEvent::reset()
 {
@@ -97,7 +97,7 @@ void PeveSerialEvent::reset()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PeveSerialEvent::update()
 {
@@ -116,7 +116,7 @@ void PeveSerialEvent::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool PeveSerialEvent::isFinished()
 {
@@ -131,7 +131,7 @@ bool PeveSerialEvent::isFinished()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000050
  */
 PeveCameraViewpointIO::PeveCameraViewpointIO()
@@ -140,7 +140,7 @@ PeveCameraViewpointIO::PeveCameraViewpointIO()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000008
  */
 void PeveCameraViewpointIO::construct(PcamCamera* camera)
@@ -149,7 +149,7 @@ void PeveCameraViewpointIO::construct(PcamCamera* camera)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000050
  */
 PeveCameraWatchpointIO::PeveCameraWatchpointIO()
@@ -158,7 +158,7 @@ PeveCameraWatchpointIO::PeveCameraWatchpointIO()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000008
  */
 void PeveCameraWatchpointIO::construct(PcamCamera* camera)
@@ -167,7 +167,7 @@ void PeveCameraWatchpointIO::construct(PcamCamera* camera)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PeveCameraPostureIO::PeveCameraPostureIO()
 {
@@ -175,7 +175,7 @@ PeveCameraPostureIO::PeveCameraPostureIO()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PeveCameraPostureIO::construct(PcamCamera* camera)
 {
@@ -183,7 +183,7 @@ void PeveCameraPostureIO::construct(PcamCamera* camera)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000050
  */
 PeveCreaturePositionIO::PeveCreaturePositionIO()
@@ -192,7 +192,7 @@ PeveCreaturePositionIO::PeveCreaturePositionIO()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000008
  */
 void PeveCreaturePositionIO::construct(Creature* creature)
@@ -201,7 +201,7 @@ void PeveCreaturePositionIO::construct(Creature* creature)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PeveClampVector3fIO::PeveClampVector3fIO()
 {
@@ -209,7 +209,7 @@ PeveClampVector3fIO::PeveClampVector3fIO()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PeveClampVector3fIO::construct()
 {
@@ -217,7 +217,7 @@ void PeveClampVector3fIO::construct()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PeveClampVector3fIO::input(immut NVector3f& vec)
 {

@@ -7,19 +7,19 @@
 #include "sysNew.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT(nullptr);
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool CndIsAlive::satisfy(Creature* target) immut
 {
@@ -30,7 +30,7 @@ bool CndIsAlive::satisfy(Creature* target) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool CndBossFlick::satisfy(Creature* target) immut
 {
@@ -44,7 +44,7 @@ bool CndBossFlick::satisfy(Creature* target) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool CndStickBossKill::satisfy(Creature* target) immut
 {
@@ -55,7 +55,7 @@ bool CndStickBossKill::satisfy(Creature* target) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool CndStickMouthKill::satisfy(Creature* target) immut
 {
@@ -66,7 +66,7 @@ bool CndStickMouthKill::satisfy(Creature* target) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool CndBossCollKill::satisfy(Creature* target) immut
 {

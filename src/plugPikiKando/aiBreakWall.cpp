@@ -10,19 +10,19 @@
 #include "gameflow.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("aiBreakWall")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 ActBreakWall::ActBreakWall(Piki* piki)
     : Action(piki, true)
@@ -31,7 +31,7 @@ ActBreakWall::ActBreakWall(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActBreakWall::init(Creature* creature)
 {
@@ -56,7 +56,7 @@ void ActBreakWall::init(Creature* creature)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActBreakWall::procCollideMsg(Piki* piki, MsgCollide* msg)
 {
@@ -71,7 +71,7 @@ void ActBreakWall::procCollideMsg(Piki* piki, MsgCollide* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActBreakWall::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
@@ -106,7 +106,7 @@ void ActBreakWall::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActBreakWall::exec()
 {
@@ -131,7 +131,7 @@ int ActBreakWall::exec()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActBreakWall::gotoWall()
 {
@@ -142,7 +142,7 @@ int ActBreakWall::gotoWall()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActBreakWall::initBreakWall()
 {
@@ -153,7 +153,7 @@ void ActBreakWall::initBreakWall()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActBreakWall::startWorkMotion()
 {
@@ -171,7 +171,7 @@ void ActBreakWall::startWorkMotion()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActBreakWall::breakWall()
 {
@@ -212,7 +212,7 @@ int ActBreakWall::breakWall()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActBreakWall::cleanup()
 {

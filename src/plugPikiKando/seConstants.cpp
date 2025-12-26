@@ -3,19 +3,19 @@
 #include "SoundMgr.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("seConstant")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 SeConstant::SeConstant()
 {

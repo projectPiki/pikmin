@@ -7,19 +7,19 @@
 #include "PikiState.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("aiPullout")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 ActPullout::ActPullout(Piki* piki)
     : AndAction(piki)
@@ -33,7 +33,7 @@ ActPullout::ActPullout(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActPullout::init(Creature* target)
 {
@@ -67,7 +67,7 @@ void ActPullout::init(Creature* target)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActPullout::exec()
 {
@@ -96,7 +96,7 @@ int ActPullout::exec()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActPullout::cleanup()
 {
@@ -106,7 +106,7 @@ void ActPullout::cleanup()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActPulloutCreature::cleanup()
 {
@@ -121,7 +121,7 @@ void ActPulloutCreature::cleanup()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActPulloutCreature::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
@@ -140,7 +140,7 @@ void ActPulloutCreature::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 ActPulloutCreature::ActPulloutCreature(Piki* piki)
     : Action(piki, true)
@@ -148,7 +148,7 @@ ActPulloutCreature::ActPulloutCreature(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActPulloutCreature::init(Creature* target)
 {
@@ -159,7 +159,7 @@ void ActPulloutCreature::init(Creature* target)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActPulloutCreature::exec()
 {

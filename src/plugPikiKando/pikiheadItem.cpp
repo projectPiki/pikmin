@@ -12,19 +12,19 @@
 #include "SoundMgr.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(22)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("pikiheadItem")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiHeadItem::startWaterEffect()
 {
@@ -33,7 +33,7 @@ void PikiHeadItem::startWaterEffect()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiHeadItem::finishWaterEffect()
 {
@@ -41,7 +41,7 @@ void PikiHeadItem::finishWaterEffect()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiHeadItem::playSound(int id)
 {
@@ -60,7 +60,7 @@ void PikiHeadItem::playSound(int id)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool PikiHeadItem::canPullout()
 {
@@ -73,7 +73,7 @@ bool PikiHeadItem::canPullout()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool PikiHeadItem::isVisible()
 {
@@ -81,7 +81,7 @@ bool PikiHeadItem::isVisible()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool PikiHeadItem::needShadow()
 {
@@ -94,7 +94,7 @@ bool PikiHeadItem::needShadow()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool PikiHeadItem::isAlive()
 {
@@ -102,7 +102,7 @@ bool PikiHeadItem::isAlive()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PikiHeadItem::PikiHeadItem(CreatureProp* props, ItemShapeObject* shape, SimpleAI* ai)
     : ItemCreature(15, props, nullptr)
@@ -117,7 +117,7 @@ PikiHeadItem::PikiHeadItem(CreatureProp* props, ItemShapeObject* shape, SimpleAI
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiHeadItem::startAI(int)
 {
@@ -145,7 +145,7 @@ void PikiHeadItem::startAI(int)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiHeadItem::setPermanentEffects(bool set)
 {
@@ -159,7 +159,7 @@ void PikiHeadItem::setPermanentEffects(bool set)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiHeadItem::doKill()
 {
@@ -172,7 +172,7 @@ void PikiHeadItem::doKill()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 PikiHeadItem::getSize()
 {
@@ -180,7 +180,7 @@ f32 PikiHeadItem::getSize()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 PikiHeadItem::getiMass()
 {
@@ -188,7 +188,7 @@ f32 PikiHeadItem::getiMass()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiHeadItem::setColor(int color)
 {
@@ -196,7 +196,7 @@ void PikiHeadItem::setColor(int color)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiHeadItem::refresh(Graphics& gfx)
 {
@@ -253,7 +253,7 @@ void PikiHeadItem::refresh(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool PikiHeadItem::interactBikkuri(immut InteractBikkuri& act)
 {
@@ -280,7 +280,7 @@ bool PikiHeadItem::interactBikkuri(immut InteractBikkuri& act)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool PikiHeadItem::interactSwallow(immut InteractSwallow& act)
 {

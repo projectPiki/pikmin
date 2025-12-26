@@ -4,19 +4,19 @@
 #include "sysNew.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("drawProgre")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::DrawProgre::DrawProgre()
 {
@@ -30,7 +30,7 @@ zen::DrawProgre::DrawProgre()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawProgre::start()
 {
@@ -41,7 +41,7 @@ void zen::DrawProgre::start()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::DrawProgre::returnStatusFlag zen::DrawProgre::update(Controller* controller)
 {
@@ -69,7 +69,7 @@ zen::DrawProgre::returnStatusFlag zen::DrawProgre::update(Controller* controller
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawProgre::draw(Graphics& gfx)
 {

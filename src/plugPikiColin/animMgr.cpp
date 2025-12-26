@@ -11,19 +11,19 @@
 #include <string.h>
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(12)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("AnimMgr");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000084
  */
 void AnimInfo::initAnimData(AnimData* data)
@@ -40,7 +40,7 @@ void AnimInfo::initAnimData(AnimData* data)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void AnimInfo::checkAnimData()
 {
@@ -67,7 +67,7 @@ void AnimInfo::checkAnimData()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 AnimInfo::AnimInfo(AnimMgr* mgr, AnimData* data)
     : CoreNode("")
@@ -97,7 +97,7 @@ AnimInfo::AnimInfo(AnimMgr* mgr, AnimData* data)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void AnimInfo::setIndex()
 {
@@ -105,7 +105,7 @@ void AnimInfo::setIndex()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void AnimInfo::setAnimFlags(u32 flags)
 {
@@ -114,7 +114,7 @@ void AnimInfo::setAnimFlags(u32 flags)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int AnimInfo::countAKeys()
 {
@@ -128,7 +128,7 @@ int AnimInfo::countAKeys()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int AnimInfo::countIKeys()
 {
@@ -142,7 +142,7 @@ int AnimInfo::countIKeys()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int AnimInfo::countEKeys()
 {
@@ -156,7 +156,7 @@ int AnimInfo::countEKeys()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 AnimKey* AnimInfo::getInfoKey(int idx)
 {
@@ -172,7 +172,7 @@ AnimKey* AnimInfo::getInfoKey(int idx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 AnimKey* AnimInfo::getEventKey(int idx)
 {
@@ -188,7 +188,7 @@ AnimKey* AnimInfo::getEventKey(int idx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int AnimInfo::getKeyValue(int idx)
 {
@@ -204,7 +204,7 @@ int AnimInfo::getKeyValue(int idx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void AnimInfo::doread(RandomAccessStream& input, int version)
 {
@@ -265,7 +265,7 @@ void AnimInfo::doread(RandomAccessStream& input, int version)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void AnimInfo::updateAnimFlags()
 {
@@ -273,7 +273,7 @@ void AnimInfo::updateAnimFlags()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 AnimKey* AnimInfo::addKeyFrame()
 {
@@ -284,7 +284,7 @@ AnimKey* AnimInfo::addKeyFrame()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 AnimMgr::AnimMgr(Shape* model, immut char* animPath, int flags, immut char* bundlePath)
 {
@@ -296,7 +296,7 @@ AnimMgr::AnimMgr(Shape* model, immut char* animPath, int flags, immut char* bund
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void AnimMgr::loadAnims(immut char* animPath, immut char* bundlePath)
 {
@@ -351,7 +351,7 @@ void AnimMgr::loadAnims(immut char* animPath, immut char* bundlePath)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 AnimInfo* AnimMgr::addAnimation(immut char* animPath, bool isRelativePath)
 {
@@ -361,7 +361,7 @@ AnimInfo* AnimMgr::addAnimation(immut char* animPath, bool isRelativePath)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000A4
  */
 AnimInfo* AnimMgr::findAnim(int idx)
@@ -383,7 +383,7 @@ AnimInfo* AnimMgr::findAnim(int idx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int AnimMgr::countAnims()
 {
@@ -397,7 +397,7 @@ int AnimMgr::countAnims()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void AnimMgr::read(RandomAccessStream& input)
 {
@@ -416,7 +416,7 @@ void AnimMgr::read(RandomAccessStream& input)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Animator::startAnim(int playState, int animID, int firstKeyFrameIdx, int lastKeyFrameIdx)
 {
@@ -447,14 +447,14 @@ void Animator::startAnim(int playState, int animID, int firstKeyFrameIdx, int la
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Animator::finishLoop()
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Animator::finishOneShot()
 {
@@ -462,7 +462,7 @@ void Animator::finishOneShot()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Animator::updateContext()
 {
@@ -474,7 +474,7 @@ void Animator::updateContext()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Animator::animate(f32 animSpeed)
 {

@@ -14,13 +14,13 @@
 #include "zen/particle.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("TAIkabekuiC")
@@ -440,7 +440,7 @@ protected:
 };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TAIkabekuiCSoundTable::TAIkabekuiCSoundTable()
     : PaniSoundTable(3)
@@ -451,7 +451,7 @@ TAIkabekuiCSoundTable::TAIkabekuiCSoundTable()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TAIkabekuiCParameters::TAIkabekuiCParameters()
     : TekiParameters(TPI_COUNT, TAIkabekuiCFloatParms::COUNT)
@@ -540,7 +540,7 @@ TAIkabekuiCParameters::TAIkabekuiCParameters()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TAIkabekuiCStrategy::TAIkabekuiCStrategy()
     : YaiStrategy(TAIkabekuiCStateID::COUNT, TAIkabekuiCStateID::Waiting)
@@ -767,7 +767,7 @@ TAIkabekuiCStrategy::TAIkabekuiCStrategy()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAIkabekuiCAnimation::makeDefaultAnimations()
 {

@@ -4,19 +4,19 @@
 #include "Graphics.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("King");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 KingProp::KingProp()
 {
@@ -26,7 +26,7 @@ KingProp::KingProp()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 King::King(CreatureProp* props)
     : Boss(props)
@@ -40,7 +40,7 @@ King::King(CreatureProp* props)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 King::getiMass()
 {
@@ -48,7 +48,7 @@ f32 King::getiMass()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void King::bombDamageCounter(CollPart*)
 {
@@ -58,7 +58,7 @@ void King::bombDamageCounter(CollPart*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void King::init(immut Vector3f&)
 {
@@ -74,7 +74,7 @@ void King::init(immut Vector3f&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void King::doKill()
 {
@@ -88,7 +88,7 @@ void King::doKill()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void King::exitCourse()
 {
@@ -96,7 +96,7 @@ void King::exitCourse()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void King::update()
 {
@@ -107,7 +107,7 @@ void King::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void King::draw(Graphics& gfx)
 {
@@ -135,7 +135,7 @@ void King::draw(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void King::refresh(Graphics& gfx)
 {
@@ -145,7 +145,7 @@ void King::refresh(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void King::drawShape(Graphics& gfx)
 {
@@ -155,7 +155,7 @@ void King::drawShape(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void King::doAI()
 {
@@ -163,7 +163,7 @@ void King::doAI()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void King::doAnimation()
 {
@@ -174,7 +174,7 @@ void King::doAnimation()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KingDrawer::draw(Graphics& gfx)
 {

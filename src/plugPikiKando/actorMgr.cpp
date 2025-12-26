@@ -4,19 +4,19 @@
 ActorMgr* actorMgr;
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("genActor");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000E4
  */
 ActorMgr::ActorMgr(MapMgr*)
@@ -25,7 +25,7 @@ ActorMgr::ActorMgr(MapMgr*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000050
  */
 Creature* ActorMgr::createObject()
@@ -37,7 +37,7 @@ Creature* ActorMgr::createObject()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Actor* ActorMgr::newActor(int unused)
 {
@@ -51,7 +51,7 @@ Actor* ActorMgr::newActor(int unused)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000084
  */
 ActorMgr::~ActorMgr()

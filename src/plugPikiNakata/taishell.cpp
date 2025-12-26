@@ -18,13 +18,13 @@
 #include "teki.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("taishell");
@@ -98,7 +98,7 @@ struct TaiShellEatAction : public TaiAction {
 };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TaiShellSoundTable::TaiShellSoundTable()
     : PaniSoundTable(5)
@@ -109,7 +109,7 @@ TaiShellSoundTable::TaiShellSoundTable()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TaiShellParameters::TaiShellParameters()
     : TekiParameters(SHELLPI_COUNT, SHELLPF_COUNT)
@@ -142,7 +142,7 @@ TaiShellParameters::TaiShellParameters()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TaiShellStrategy::TaiShellStrategy(TekiParameters* params)
     : TaiStrategy(SHELLSTATE_COUNT, SHELLSTATE_Normal)
@@ -207,7 +207,7 @@ TaiShellStrategy::TaiShellStrategy(TekiParameters* params)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiShellStrategy::createEffect(Teki& teki, int p2)
 {
@@ -221,7 +221,7 @@ void TaiShellStrategy::createEffect(Teki& teki, int p2)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiShellStrategy::start(Teki& teki)
 {
@@ -263,7 +263,7 @@ void TaiShellStrategy::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiShellStrategy::draw(Teki& teki, Graphics& gfx)
 {
@@ -286,7 +286,7 @@ void TaiShellStrategy::draw(Teki& teki, Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiShellSetPositionAction::act(Teki& teki)
 {
@@ -298,7 +298,7 @@ bool TaiShellSetPositionAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiShellSetPositionAction::setPosition(Teki& teki, Creature* pearl)
 {
@@ -309,7 +309,7 @@ void TaiShellSetPositionAction::setPosition(Teki& teki, Creature* pearl)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiShellSaveItemPositionAction::act(Teki& teki)
 {
@@ -339,7 +339,7 @@ bool TaiShellSaveItemPositionAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiShellSaveItemPositionAction::setPosition(Teki& teki, Creature* item)
 {
@@ -350,7 +350,7 @@ void TaiShellSaveItemPositionAction::setPosition(Teki& teki, Creature* item)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiShellNaviPikiInsideAction::act(Teki& teki)
 {
@@ -365,7 +365,7 @@ bool TaiShellNaviPikiInsideAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiShellEatAction::act(Teki& teki)
 {
@@ -399,7 +399,7 @@ struct TaiPearlTresureSoundAction : public TaiAction {
 };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TaiPearlSoundTable::TaiPearlSoundTable()
     : PaniSoundTable(5)
@@ -410,7 +410,7 @@ TaiPearlSoundTable::TaiPearlSoundTable()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TaiPearlParameters::TaiPearlParameters()
     : TekiParameters(20, 50)
@@ -439,7 +439,7 @@ TaiPearlParameters::TaiPearlParameters()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TaiRocpearlParameters::TaiRocpearlParameters()
     : TekiParameters(20, 50)
@@ -468,7 +468,7 @@ TaiRocpearlParameters::TaiRocpearlParameters()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TaiPearlStrategy::TaiPearlStrategy(TekiParameters*)
     : TaiStrategy(PEARLSTATE_COUNT, PEARLSTATE_Normal)
@@ -512,7 +512,7 @@ TaiPearlStrategy::TaiPearlStrategy(TekiParameters*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiPearlStrategy::start(Teki& teki)
 {
@@ -520,7 +520,7 @@ void TaiPearlStrategy::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiPearlTresureSoundAction::start(Teki& teki)
 {

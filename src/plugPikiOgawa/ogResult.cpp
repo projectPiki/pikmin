@@ -13,13 +13,13 @@
 #include "zen/ogSub.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("OgResultSection")
@@ -181,7 +181,7 @@ EnumResult dummy_blo_num_table[] = { (EnumResult)0x91, (EnumResult)0 };
 } // namespace zen
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrResultMgr::ogScrResultMgrSub()
 {
@@ -374,7 +374,7 @@ void zen::ogScrResultMgr::ogScrResultMgrSub()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000068
  */
 void zen::ogScrResultMgr::check1000(int val, P2DPane* pane1, P2DPane* pane2, int x)
@@ -388,7 +388,7 @@ void zen::ogScrResultMgr::check1000(int val, P2DPane* pane1, P2DPane* pane2, int
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00013C
  */
 void zen::ogScrResultMgr::setEnumResultTable(EnumResult* result)
@@ -404,7 +404,7 @@ void zen::ogScrResultMgr::setEnumResultTable(EnumResult* result)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::ogScrResultMgr::ogScrResultMgr()
 {
@@ -414,7 +414,7 @@ zen::ogScrResultMgr::ogScrResultMgr()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::ogScrResultMgr::ogScrResultMgr(EnumResult* table)
 {
@@ -423,7 +423,7 @@ zen::ogScrResultMgr::ogScrResultMgr(EnumResult* table)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrResultMgr::start()
 {
@@ -529,7 +529,7 @@ void zen::ogScrResultMgr::start()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000038
  */
 void zen::ogScrResultMgr::StartRESULT()
@@ -540,7 +540,7 @@ void zen::ogScrResultMgr::StartRESULT()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::ogScrResultMgr::returnStatusFlag zen::ogScrResultMgr::update(Controller* input)
 {
@@ -651,7 +651,7 @@ zen::ogScrResultMgr::returnStatusFlag zen::ogScrResultMgr::update(Controller* in
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrResultMgr::draw(Graphics& gfx)
 {

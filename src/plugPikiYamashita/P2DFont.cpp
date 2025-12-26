@@ -4,19 +4,19 @@
 #include "sysNew.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT(nullptr)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Font* P2DFont::loadFont(immut char* name, int& rows, int& columns)
 {
@@ -51,7 +51,7 @@ Font* P2DFont::loadFont(immut char* name, int& rows, int& columns)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 P2DFont::P2DFont(immut char* fileName)
 {
@@ -65,7 +65,7 @@ P2DFont::P2DFont(immut char* fileName)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void P2DFont::setGX()
 {
@@ -86,7 +86,7 @@ void P2DFont::setGX()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void P2DFont::setGradColor(const Colour& topColour, const Colour& bottomColour)
 {
@@ -97,7 +97,7 @@ void P2DFont::setGradColor(const Colour& topColour, const Colour& bottomColour)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000040
  */
 int P2DFont::charToIndex(int c)
@@ -110,7 +110,7 @@ int P2DFont::charToIndex(int c)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 P2DFont::getWidth(int charCode, int drawWidth)
 {
@@ -121,7 +121,7 @@ f32 P2DFont::getWidth(int charCode, int drawWidth)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 P2DFont::drawChar(f32 xPos, f32 yPos, int charCode, int drawWidth, int drawHeight)
 {

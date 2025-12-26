@@ -4,19 +4,19 @@
 #include "system.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("odoMeter");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 OdoMeter::OdoMeter()
 {
@@ -25,7 +25,7 @@ OdoMeter::OdoMeter()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void OdoMeter::start(f32 startTime, f32 maxDistance)
 {
@@ -36,7 +36,7 @@ void OdoMeter::start(f32 startTime, f32 maxDistance)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool OdoMeter::moving(immut Vector3f& startPosition, immut Vector3f& endPosition)
 {

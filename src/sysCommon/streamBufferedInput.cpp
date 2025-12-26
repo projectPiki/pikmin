@@ -7,19 +7,19 @@
 #include <mem.h>
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("streamBufferedInput");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BufferedInputStream::init(Stream* stream, u8* buffer, int bufferSize)
 {
@@ -34,7 +34,7 @@ void BufferedInputStream::init(Stream* stream, u8* buffer, int bufferSize)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 BufferedInputStream::BufferedInputStream(Stream* stream, u8* buffer, int bufferSize)
 {
@@ -42,7 +42,7 @@ BufferedInputStream::BufferedInputStream(Stream* stream, u8* buffer, int bufferS
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BufferedInputStream::fillBuffer()
 {
@@ -61,7 +61,7 @@ void BufferedInputStream::fillBuffer()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BufferedInputStream::read(void* input, int size)
 {

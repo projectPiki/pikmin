@@ -4,19 +4,19 @@
 #include "Slime.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("NucleusAi");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 NucleusAi::NucleusAi(Nucleus* nucleus)
 {
@@ -24,7 +24,7 @@ NucleusAi::NucleusAi(Nucleus* nucleus)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NucleusAi::initAI(Nucleus* nucleus)
 {
@@ -37,7 +37,7 @@ void NucleusAi::initAI(Nucleus* nucleus)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NucleusAi::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
@@ -61,21 +61,21 @@ void NucleusAi::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NucleusAi::keyAction0()
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NucleusAi::keyAction1()
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 void NucleusAi::keyAction2()
@@ -83,7 +83,7 @@ void NucleusAi::keyAction2()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 void NucleusAi::keyAction3()
@@ -91,7 +91,7 @@ void NucleusAi::keyAction3()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NucleusAi::keyLoopEnd()
 {
@@ -99,7 +99,7 @@ void NucleusAi::keyLoopEnd()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NucleusAi::keyFinished()
 {
@@ -107,14 +107,14 @@ void NucleusAi::keyFinished()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NucleusAi::playSound(int)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000044
  */
 void NucleusAi::setEveryFrame()
@@ -125,7 +125,7 @@ void NucleusAi::setEveryFrame()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000024
  */
 void NucleusAi::setBossPosition()
@@ -135,7 +135,7 @@ void NucleusAi::setBossPosition()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000030
  */
 void NucleusAi::setSlimeDamagePoint()
@@ -144,7 +144,7 @@ void NucleusAi::setSlimeDamagePoint()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000010
  */
 void NucleusAi::afterProcessing()
@@ -153,7 +153,7 @@ void NucleusAi::afterProcessing()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000024
  */
 bool NucleusAi::dieTransit()
@@ -162,7 +162,7 @@ bool NucleusAi::dieTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00000C
  */
 bool NucleusAi::isMotionFinishTransit()
@@ -171,7 +171,7 @@ bool NucleusAi::isMotionFinishTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000024
  */
 bool NucleusAi::damageTransit()
@@ -180,7 +180,7 @@ bool NucleusAi::damageTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000D8
  */
 void NucleusAi::initDie(int val)
@@ -197,7 +197,7 @@ void NucleusAi::initDie(int val)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000064
  */
 void NucleusAi::initDamage(int val)
@@ -209,7 +209,7 @@ void NucleusAi::initDamage(int val)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000064
  */
 void NucleusAi::initFollow(int val)
@@ -221,7 +221,7 @@ void NucleusAi::initFollow(int val)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 void NucleusAi::dieState()
@@ -229,7 +229,7 @@ void NucleusAi::dieState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 void NucleusAi::damageState()
@@ -237,7 +237,7 @@ void NucleusAi::damageState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 void NucleusAi::followState()
@@ -245,7 +245,7 @@ void NucleusAi::followState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NucleusAi::update()
 {

@@ -4,19 +4,19 @@
 #include "PikiAI.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("aiBoMake");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 ActBoMake::ActBoMake(Piki* piki)
     : Action(piki, true)
@@ -24,7 +24,7 @@ ActBoMake::ActBoMake(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActBoMake::init(Creature* creature)
 {
@@ -37,7 +37,7 @@ void ActBoMake::init(Creature* creature)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActBoMake::exec()
 {
@@ -62,7 +62,7 @@ int ActBoMake::exec()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActBoMake::initApproach()
 {
@@ -71,7 +71,7 @@ void ActBoMake::initApproach()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActBoMake::exeApproach()
 {
@@ -86,7 +86,7 @@ int ActBoMake::exeApproach()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActBoMake::initWork()
 {
@@ -100,7 +100,7 @@ void ActBoMake::initWork()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActBoMake::exeWork()
 {
@@ -108,7 +108,7 @@ int ActBoMake::exeWork()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActBoMake::cleanup()
 {
@@ -116,7 +116,7 @@ void ActBoMake::cleanup()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActBoMake::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {

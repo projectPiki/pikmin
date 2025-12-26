@@ -4,19 +4,19 @@
 #include "Slime.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("CoreNucleusAi");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 CoreNucleusAi::CoreNucleusAi(CoreNucleus* core)
 {
@@ -24,7 +24,7 @@ CoreNucleusAi::CoreNucleusAi(CoreNucleus* core)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void CoreNucleusAi::initAI(CoreNucleus* core)
 {
@@ -37,7 +37,7 @@ void CoreNucleusAi::initAI(CoreNucleus* core)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void CoreNucleusAi::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
@@ -61,21 +61,21 @@ void CoreNucleusAi::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void CoreNucleusAi::keyAction0()
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void CoreNucleusAi::keyAction1()
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 void CoreNucleusAi::keyAction2()
@@ -84,7 +84,7 @@ void CoreNucleusAi::keyAction2()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 void CoreNucleusAi::keyAction3()
@@ -93,7 +93,7 @@ void CoreNucleusAi::keyAction3()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void CoreNucleusAi::keyLoopEnd()
 {
@@ -101,7 +101,7 @@ void CoreNucleusAi::keyLoopEnd()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void CoreNucleusAi::keyFinished()
 {
@@ -109,14 +109,14 @@ void CoreNucleusAi::keyFinished()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void CoreNucleusAi::playSound(int)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void CoreNucleusAi::setHitMotionStart()
 {
@@ -124,7 +124,7 @@ void CoreNucleusAi::setHitMotionStart()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000034
  */
 void CoreNucleusAi::setEveryFrame()
@@ -134,7 +134,7 @@ void CoreNucleusAi::setEveryFrame()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000024
  */
 void CoreNucleusAi::setBossPosition()
@@ -144,7 +144,7 @@ void CoreNucleusAi::setBossPosition()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000030
  */
 void CoreNucleusAi::setSlimeDamagePoint()
@@ -153,7 +153,7 @@ void CoreNucleusAi::setSlimeDamagePoint()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000010
  */
 void CoreNucleusAi::afterProcessing()
@@ -162,7 +162,7 @@ void CoreNucleusAi::afterProcessing()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000024
  */
 bool CoreNucleusAi::dieTransit()
@@ -171,7 +171,7 @@ bool CoreNucleusAi::dieTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00000C
  */
 bool CoreNucleusAi::isMotionFinishTransit()
@@ -180,7 +180,7 @@ bool CoreNucleusAi::isMotionFinishTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000024
  */
 bool CoreNucleusAi::damageTransit()
@@ -189,7 +189,7 @@ bool CoreNucleusAi::damageTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000008
  */
 bool CoreNucleusAi::hitMotionStartTransit()
@@ -198,7 +198,7 @@ bool CoreNucleusAi::hitMotionStartTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000D8
  */
 void CoreNucleusAi::initDie(int val)
@@ -215,7 +215,7 @@ void CoreNucleusAi::initDie(int val)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000064
  */
 void CoreNucleusAi::initDamage(int val)
@@ -227,7 +227,7 @@ void CoreNucleusAi::initDamage(int val)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000068
  */
 void CoreNucleusAi::initFollow(int val)
@@ -239,7 +239,7 @@ void CoreNucleusAi::initFollow(int val)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000CC
  */
 void CoreNucleusAi::initHit(int val)
@@ -255,7 +255,7 @@ void CoreNucleusAi::initHit(int val)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 void CoreNucleusAi::dieState()
@@ -263,7 +263,7 @@ void CoreNucleusAi::dieState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 void CoreNucleusAi::damageState()
@@ -271,7 +271,7 @@ void CoreNucleusAi::damageState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 void CoreNucleusAi::followState()
@@ -279,7 +279,7 @@ void CoreNucleusAi::followState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 void CoreNucleusAi::hitState()
@@ -287,7 +287,7 @@ void CoreNucleusAi::hitState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void CoreNucleusAi::update()
 {

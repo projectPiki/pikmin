@@ -15,13 +15,13 @@
 #include "teki.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("taimizinko")
@@ -60,7 +60,7 @@ struct TaiMizigenNaviApprouchAction : public TaiAction {
 };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TaiMizigenParameters::TaiMizigenParameters()
     : TekiParameters(TPI_COUNT, TPF_COUNT)
@@ -77,7 +77,7 @@ TaiMizigenParameters::TaiMizigenParameters()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TaiMizigenStrategy::TaiMizigenStrategy(TekiParameters* params)
     : TaiStrategy(MIZIGENSTATE_COUNT, MIZIGENSTATE_Wait)
@@ -101,7 +101,7 @@ TaiMizigenStrategy::TaiMizigenStrategy(TekiParameters* params)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiMizigenStrategy::start(Teki& teki)
 {
@@ -113,7 +113,7 @@ void TaiMizigenStrategy::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiMizigenGeneratingAction::start(Teki& teki)
 {
@@ -141,7 +141,7 @@ void TaiMizigenGeneratingAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiMizigenGeneratingAction::act(Teki& teki)
 {
@@ -149,7 +149,7 @@ bool TaiMizigenGeneratingAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiMizigenNaviApprouchAction::act(Teki& teki)
 {
@@ -297,7 +297,7 @@ struct TaiMizinkoFlyingAwayAction : public TaiAction {
 };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TaiMizinkoParameters::TaiMizinkoParameters()
     : TekiParameters(TPI_COUNT, MIZINKOPF_COUNT)
@@ -352,7 +352,7 @@ TaiMizinkoParameters::TaiMizinkoParameters()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TaiMizinkoSoundTable::TaiMizinkoSoundTable()
     : PaniSoundTable(4)
@@ -363,7 +363,7 @@ TaiMizinkoSoundTable::TaiMizinkoSoundTable()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TaiMizinkoStrategy::TaiMizinkoStrategy(TekiParameters* params)
     : TaiStrategy(MIZINKOSTATE_COUNT, MIZINKOSTATE_Going)
@@ -468,7 +468,7 @@ TaiMizinkoStrategy::TaiMizinkoStrategy(TekiParameters* params)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiMizinkoStrategy::start(Teki& teki)
 {
@@ -479,7 +479,7 @@ void TaiMizinkoStrategy::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiMizinkoStrategy::draw(Teki& teki, Graphics& gfx)
 {
@@ -514,7 +514,7 @@ void TaiMizinkoStrategy::draw(Teki& teki, Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiMizinkoStrategy::hasWater(Teki& teki)
 {
@@ -522,7 +522,7 @@ bool TaiMizinkoStrategy::hasWater(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiMizinkoCryTimerAction::act(Teki& teki)
 {
@@ -535,7 +535,7 @@ bool TaiMizinkoCryTimerAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiMizinkoMovingTimerAction::start(Teki& teki)
 {
@@ -544,7 +544,7 @@ void TaiMizinkoMovingTimerAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiMizinkoFadingAction::act(Teki& teki)
 {
@@ -565,7 +565,7 @@ bool TaiMizinkoFadingAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiMizinkoGoingAction::start(Teki& teki)
 {
@@ -603,7 +603,7 @@ void TaiMizinkoGoingAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiMizinkoComingAction::start(Teki& teki)
 {
@@ -655,7 +655,7 @@ void TaiMizinkoComingAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiMizinkoDropWaterAction::act(Teki& teki)
 {
@@ -679,7 +679,7 @@ bool TaiMizinkoDropWaterAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiMizinkoWaitingAction::start(Teki& teki)
 {
@@ -689,7 +689,7 @@ void TaiMizinkoWaitingAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiMizinkoFlyingAwayAction::start(Teki& teki)
 {

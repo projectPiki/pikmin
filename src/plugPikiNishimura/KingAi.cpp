@@ -20,19 +20,19 @@ static u32 kingSE[] = {
 };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("KingAi");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 KingAi::KingAi(King* king)
 {
@@ -40,7 +40,7 @@ KingAi::KingAi(King* king)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KingAi::initAI(King* king)
 {
@@ -64,7 +64,7 @@ void KingAi::initAI(King* king)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KingAi::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
@@ -94,7 +94,7 @@ void KingAi::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KingAi::keyAction0()
 {
@@ -154,7 +154,7 @@ void KingAi::keyAction0()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KingAi::keyAction1()
 {
@@ -181,7 +181,7 @@ void KingAi::keyAction1()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KingAi::keyAction2()
 {
@@ -195,7 +195,7 @@ void KingAi::keyAction2()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 void KingAi::keyAction3()
@@ -203,7 +203,7 @@ void KingAi::keyAction3()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KingAi::keyLoopEnd()
 {
@@ -211,7 +211,7 @@ void KingAi::keyLoopEnd()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KingAi::keyFinished()
 {
@@ -230,7 +230,7 @@ void KingAi::keyFinished()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KingAi::playSound(int kingSoundID)
 {
@@ -240,7 +240,7 @@ void KingAi::playSound(int kingSoundID)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KingAi::createEffect(BOOL doStartSpreadSaliva)
 {
@@ -254,7 +254,7 @@ void KingAi::createEffect(BOOL doStartSpreadSaliva)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000094
  */
 void KingAi::setAttackPosition()
@@ -265,7 +265,7 @@ void KingAi::setAttackPosition()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KingAi::calcDamageScale()
 {
@@ -298,7 +298,7 @@ void KingAi::calcDamageScale()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KingAi::startSpreadSaliva()
 {
@@ -306,7 +306,7 @@ void KingAi::startSpreadSaliva()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KingAi::endSpreadSaliva()
 {
@@ -314,7 +314,7 @@ void KingAi::endSpreadSaliva()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000020
  */
 void KingAi::startFallSaliva()
@@ -325,7 +325,7 @@ void KingAi::startFallSaliva()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000014
  */
 void KingAi::endFallSaliva()
@@ -334,7 +334,7 @@ void KingAi::endFallSaliva()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KingAi::fallBackSide()
 {
@@ -368,7 +368,7 @@ void KingAi::fallBackSide()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000018
  */
 void KingAi::setMouthCollPart(int partNum)
@@ -377,7 +377,7 @@ void KingAi::setMouthCollPart(int partNum)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000010
  */
 int KingAi::getMouthCollPart(int partNum)
@@ -386,7 +386,7 @@ int KingAi::getMouthCollPart(int partNum)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KingAi::pikiStickToKingMouth()
 {
@@ -473,7 +473,7 @@ void KingAi::pikiStickToKingMouth()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KingAi::tongueBombExplosion()
 {
@@ -498,7 +498,7 @@ void KingAi::tongueBombExplosion()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KingAi::killStickToMouthPiki()
 {
@@ -507,7 +507,7 @@ void KingAi::killStickToMouthPiki()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KingAi::tongueAttackNavi()
 {
@@ -530,7 +530,7 @@ void KingAi::tongueAttackNavi()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000080
  */
 void KingAi::setDispelParm(Creature* target, f32 distance)
@@ -542,7 +542,7 @@ void KingAi::setDispelParm(Creature* target, f32 distance)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KingAi::dispelNaviPiki()
 {
@@ -574,7 +574,7 @@ void KingAi::dispelNaviPiki()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KingAi::setDamageLoopCounter(int startVal, int minVal, int maxVal, int loopMin, int loopMid, int loopMax)
 {
@@ -599,7 +599,7 @@ void KingAi::setDamageLoopCounter(int startVal, int minVal, int maxVal, int loop
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KingAi::setEatDamageLoopCounter()
 {
@@ -622,7 +622,7 @@ void KingAi::setEatDamageLoopCounter()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000148
  */
 void KingAi::setBombDamageLoopCounter()
@@ -634,7 +634,7 @@ void KingAi::setBombDamageLoopCounter()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000010
  */
 void KingAi::setMoveVelocity(f32 speed)
@@ -643,7 +643,7 @@ void KingAi::setMoveVelocity(f32 speed)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KingAi::setAttackPriority()
 {
@@ -664,7 +664,7 @@ void KingAi::setAttackPriority()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000044
  */
 void KingAi::resetAttackPriority()
@@ -676,7 +676,7 @@ void KingAi::resetAttackPriority()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00003C
  */
 void KingAi::resultFlagOn()
@@ -687,7 +687,7 @@ void KingAi::resultFlagOn()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00002C
  */
 void KingAi::resultFlagSeen()
@@ -696,7 +696,7 @@ void KingAi::resultFlagSeen()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000C0
  */
 bool KingAi::attackInArea(Creature* target, immut Vector3f* centre)
@@ -710,7 +710,7 @@ bool KingAi::attackInArea(Creature* target, immut Vector3f* centre)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool KingAi::inJumpAngle(Creature* target)
 {
@@ -729,7 +729,7 @@ bool KingAi::inJumpAngle(Creature* target)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000148
  */
 bool KingAi::jumpAttackInArea(Creature* target, immut Vector3f* centre)
@@ -744,7 +744,7 @@ bool KingAi::jumpAttackInArea(Creature* target, immut Vector3f* centre)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000024
  */
 bool KingAi::dieTransit()
@@ -753,7 +753,7 @@ bool KingAi::dieTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000158
  */
 bool KingAi::damageTransit()
@@ -771,7 +771,7 @@ bool KingAi::damageTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00001C
  */
 bool KingAi::bombDownTransit()
@@ -783,7 +783,7 @@ bool KingAi::bombDownTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00000C
  */
 bool KingAi::isMotionFinishTransit()
@@ -792,7 +792,7 @@ bool KingAi::isMotionFinishTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000024
  */
 bool KingAi::outSideChaseRangeTransit()
@@ -801,7 +801,7 @@ bool KingAi::outSideChaseRangeTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000024
  */
 bool KingAi::inSideWaitRangeTransit()
@@ -810,7 +810,7 @@ bool KingAi::inSideWaitRangeTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool KingAi::inTurnAngleTransit()
 {
@@ -833,7 +833,7 @@ bool KingAi::inTurnAngleTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool KingAi::chaseNaviTransit()
 {
@@ -871,7 +871,7 @@ bool KingAi::chaseNaviTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool KingAi::chasePikiTransit()
 {
@@ -908,7 +908,7 @@ bool KingAi::chasePikiTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool KingAi::attackTransit()
 {
@@ -936,7 +936,7 @@ bool KingAi::attackTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000194
  */
 bool KingAi::missAttackNextTransit()
@@ -956,7 +956,7 @@ bool KingAi::missAttackNextTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool KingAi::jumpAttackTransit()
 {
@@ -984,7 +984,7 @@ bool KingAi::jumpAttackTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00001C
  */
 bool KingAi::swallowTransit()
@@ -996,7 +996,7 @@ bool KingAi::swallowTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool KingAi::eatThrowPikiTransit()
 {
@@ -1030,7 +1030,7 @@ bool KingAi::eatThrowPikiTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000024
  */
 bool KingAi::flickTransit()
@@ -1039,7 +1039,7 @@ bool KingAi::flickTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool KingAi::targetLostTransit()
 {
@@ -1071,7 +1071,7 @@ bool KingAi::targetLostTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool KingAi::appearTransit()
 {
@@ -1104,7 +1104,7 @@ bool KingAi::appearTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KingAi::initDie(int nextState)
 {
@@ -1128,7 +1128,7 @@ void KingAi::initDie(int nextState)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0001C8
  */
 void KingAi::initDamage(int nextState)
@@ -1143,7 +1143,7 @@ void KingAi::initDamage(int nextState)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000D0
  */
 void KingAi::initBombDown(int nextState)
@@ -1160,7 +1160,7 @@ void KingAi::initBombDown(int nextState)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000E8
  */
 void KingAi::initWalkRandom(int nextState, bool doBlending)
@@ -1183,7 +1183,7 @@ void KingAi::initWalkRandom(int nextState, bool doBlending)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000E8
  */
 void KingAi::initWalkGoHome(int nextState, bool doBlending)
@@ -1207,7 +1207,7 @@ void KingAi::initWalkGoHome(int nextState, bool doBlending)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000E0
  */
 void KingAi::initChaseNavi(int nextState, bool doBlending)
@@ -1230,7 +1230,7 @@ void KingAi::initChaseNavi(int nextState, bool doBlending)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000E0
  */
 void KingAi::initChasePiki(int nextState, bool doBlending)
@@ -1253,7 +1253,7 @@ void KingAi::initChasePiki(int nextState, bool doBlending)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00008C
  */
 void KingAi::initHomeTurn(int nextState)
@@ -1268,7 +1268,7 @@ void KingAi::initHomeTurn(int nextState)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000084
  */
 void KingAi::initChaseTurn(int nextState)
@@ -1282,7 +1282,7 @@ void KingAi::initChaseTurn(int nextState)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000AC
  */
 void KingAi::initAttack(int nextState)
@@ -1299,7 +1299,7 @@ void KingAi::initAttack(int nextState)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00011C
  */
 void KingAi::initJumpAttack(int nextState)
@@ -1323,7 +1323,7 @@ void KingAi::initJumpAttack(int nextState)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000A4
  */
 void KingAi::initSwallow(int nextState)
@@ -1338,7 +1338,7 @@ void KingAi::initSwallow(int nextState)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000A4
  */
 void KingAi::initEatThrowPiki(int nextState)
@@ -1353,7 +1353,7 @@ void KingAi::initEatThrowPiki(int nextState)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000198
  */
 void KingAi::initFlick(int nextState)
@@ -1370,7 +1370,7 @@ void KingAi::initFlick(int nextState)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000AC
  */
 void KingAi::initWaveNeck(int nextState)
@@ -1386,7 +1386,7 @@ void KingAi::initWaveNeck(int nextState)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KingAi::initAppear(int nextState)
 {
@@ -1422,7 +1422,7 @@ void KingAi::initAppear(int nextState)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000098
  */
 void KingAi::initStay(int nextState)
@@ -1438,7 +1438,7 @@ void KingAi::initStay(int nextState)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000010
  */
 void KingAi::dieState()
@@ -1447,7 +1447,7 @@ void KingAi::dieState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00005C
  */
 void KingAi::damageState()
@@ -1458,7 +1458,7 @@ void KingAi::damageState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00005C
  */
 void KingAi::bombDownState()
@@ -1469,7 +1469,7 @@ void KingAi::bombDownState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000044
  */
 void KingAi::walkRandomState()
@@ -1479,7 +1479,7 @@ void KingAi::walkRandomState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000048
  */
 void KingAi::walkGoHomeState()
@@ -1489,7 +1489,7 @@ void KingAi::walkGoHomeState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F8
  */
 void KingAi::homeTurnState()
@@ -1503,7 +1503,7 @@ void KingAi::homeTurnState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000FC
  */
 void KingAi::chaseTurnState()
@@ -1522,7 +1522,7 @@ void KingAi::chaseTurnState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000040
  */
 void KingAi::chaseNaviState()
@@ -1532,7 +1532,7 @@ void KingAi::chaseNaviState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000040
  */
 void KingAi::chasePikiState()
@@ -1542,7 +1542,7 @@ void KingAi::chasePikiState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000078
  */
 void KingAi::attackState()
@@ -1556,7 +1556,7 @@ void KingAi::attackState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000C0
  */
 void KingAi::jumpAttackState()
@@ -1574,7 +1574,7 @@ void KingAi::jumpAttackState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 void KingAi::swallowState()
@@ -1582,7 +1582,7 @@ void KingAi::swallowState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 void KingAi::eatThrowPikiState()
@@ -1590,7 +1590,7 @@ void KingAi::eatThrowPikiState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 void KingAi::flickState()
@@ -1598,7 +1598,7 @@ void KingAi::flickState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 void KingAi::waitState()
@@ -1606,7 +1606,7 @@ void KingAi::waitState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 void KingAi::waveNeckState()
@@ -1614,7 +1614,7 @@ void KingAi::waveNeckState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 void KingAi::appearState()
@@ -1622,7 +1622,7 @@ void KingAi::appearState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 void KingAi::stayState()
@@ -1630,7 +1630,7 @@ void KingAi::stayState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00012C
  */
 void KingAi::setEveryFrame()
@@ -1649,7 +1649,7 @@ void KingAi::setEveryFrame()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00033C
  */
 void KingAi::afterProcessing()
@@ -1672,7 +1672,7 @@ void KingAi::afterProcessing()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KingAi::update()
 {

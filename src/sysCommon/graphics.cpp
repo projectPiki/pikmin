@@ -14,19 +14,19 @@
 #include <math.h>
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(17)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("Graphics");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000094
  */
 void Colour::write(Stream& s)
@@ -38,7 +38,7 @@ void Colour::write(Stream& s)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000064
  */
 void PVWLightingInfo::read(RandomAccessStream& s)
@@ -48,7 +48,7 @@ void PVWLightingInfo::read(RandomAccessStream& s)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PVWPolygonColourInfo::animate(f32* data, Colour& col)
 {
@@ -75,7 +75,7 @@ void PVWPolygonColourInfo::animate(f32* data, Colour& col)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000A0
  */
 f32 subExtract(f32 time, immut AKeyInfo& src, immut AKeyInfo& dest)
@@ -93,7 +93,7 @@ f32 subExtract(f32 time, immut AKeyInfo& src, immut AKeyInfo& dest)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PVWColourAnimInfo::extract(f32 value, Colour& target)
 {
@@ -168,7 +168,7 @@ void PVWColourAnimInfo::extract(f32 value, Colour& target)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PVWAlphaAnimInfo::extract(f32 value, Colour& target)
 {
@@ -209,7 +209,7 @@ void PVWAlphaAnimInfo::extract(f32 value, Colour& target)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PVWColourShortAnimInfo::extract(f32 value, ShortColour& target)
 {
@@ -284,7 +284,7 @@ void PVWColourShortAnimInfo::extract(f32 value, ShortColour& target)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PVWAlphaShortAnimInfo::extract(f32 value, ShortColour& target)
 {
@@ -325,7 +325,7 @@ void PVWAlphaShortAnimInfo::extract(f32 value, ShortColour& target)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PVWTexAnimInfo::extract(f32 value, Vector3f& target)
 {
@@ -373,7 +373,7 @@ void PVWTexAnimInfo::extract(f32 value, Vector3f& target)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PVWTextureData::animate(f32* framePtr, Matrix4f& mtx)
 {
@@ -436,7 +436,7 @@ void PVWTextureData::animate(f32* framePtr, Matrix4f& mtx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PVWTextureData::read(RandomAccessStream& stream)
 {
@@ -468,7 +468,7 @@ void PVWTextureData::read(RandomAccessStream& stream)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000094
  */
 void PVWTexGenData::read(RandomAccessStream& input)
@@ -480,7 +480,7 @@ void PVWTexGenData::read(RandomAccessStream& input)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PVWTextureInfo::read(RandomAccessStream& input)
 {
@@ -510,7 +510,7 @@ void PVWTextureInfo::read(RandomAccessStream& input)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PVWTevColReg::animate(f32* framePtr, ShortColour& color)
 {
@@ -532,7 +532,7 @@ void PVWTevColReg::animate(f32* framePtr, ShortColour& color)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Material::attach()
 {
@@ -540,7 +540,7 @@ void Material::attach()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Material::read(RandomAccessStream& input)
 {
@@ -558,7 +558,7 @@ void Material::read(RandomAccessStream& input)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Font::setTexture(Texture* tex, int numRows, int numCols)
 {
@@ -699,7 +699,7 @@ static char kanji_convert_table[] ATTRIBUTE_ALIGN(32) = {
 };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int Font::charToIndex(char c)
 {
@@ -707,7 +707,7 @@ int Font::charToIndex(char c)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 static s16 searchKanjiCode(u16 code)
 {
@@ -729,7 +729,7 @@ static s16 searchKanjiCode(u16 code)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int Font::charToIndex(u16 c)
 {
@@ -742,7 +742,7 @@ int Font::charToIndex(u16 c)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int Font::stringWidth(immut char* str)
 {
@@ -772,7 +772,7 @@ int Font::stringWidth(immut char* str)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0003A0
  */
 void GfxInfo::createCollData(immut Vector3f* pos, f32)
@@ -784,7 +784,7 @@ void GfxInfo::createCollData(immut Vector3f* pos, f32)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MaterialHandler::setMaterial(Material* mat)
 {
@@ -792,7 +792,7 @@ void MaterialHandler::setMaterial(Material* mat)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MaterialHandler::setTexMatrix(bool enable)
 {
@@ -800,7 +800,7 @@ void MaterialHandler::setTexMatrix(bool enable)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Graphics::Graphics()
 {
@@ -844,7 +844,7 @@ Graphics::Graphics()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Graphics::initRender(int, int)
 {
@@ -855,7 +855,7 @@ void Graphics::initRender(int, int)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Graphics::resetMatrixBuffer()
 {
@@ -863,7 +863,7 @@ void Graphics::resetMatrixBuffer()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Matrix4f* Graphics::getMatrices(int requestedMatrixCount)
 {
@@ -877,7 +877,7 @@ Matrix4f* Graphics::getMatrices(int requestedMatrixCount)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Graphics::resetCacheBuffer()
 {
@@ -888,7 +888,7 @@ void Graphics::resetCacheBuffer()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Graphics::cacheShape(BaseShape* shape, ShapeDynMaterials* mats)
 {
@@ -920,7 +920,7 @@ void Graphics::cacheShape(BaseShape* shape, ShapeDynMaterials* mats)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Graphics::flushCachedShapes()
 {
@@ -946,7 +946,7 @@ static u32 convFmts[] = {
 };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000018
  */
 u32 TexImg::convFormat(u32 inFmt)
@@ -960,7 +960,7 @@ static immut char* fmtNames[] = {
 };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000018
  */
 immut char* TexImg::formatName(u32 format)
@@ -969,7 +969,7 @@ immut char* TexImg::formatName(u32 format)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int TexImg::calcDataSize(int format, int width, int height)
 {
@@ -1012,7 +1012,7 @@ int TexImg::calcDataSize(int format, int width, int height)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00005C
  */
 void TexImg::setColour(immut Colour&)
@@ -1021,7 +1021,7 @@ void TexImg::setColour(immut Colour&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TexImg::read(RandomAccessStream& stream)
 {
@@ -1041,7 +1041,7 @@ void TexImg::read(RandomAccessStream& stream)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TexImg::getTileSize(int format, u32& xSize, u32& ySize)
 {
@@ -1064,7 +1064,7 @@ void TexImg::getTileSize(int format, u32& xSize, u32& ySize)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00014C
  */
 void TexImg::readTexData(Texture* tex, RandomAccessStream& stream, u8* data)
@@ -1096,7 +1096,7 @@ static const char* btipalFmts[] = {
 };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 void TexImg::dumpBti(Texture* tex, immut char* name, RandomAccessStream& input, RandomAccessStream& output)
@@ -1134,7 +1134,7 @@ void TexImg::dumpBti(Texture* tex, immut char* name, RandomAccessStream& input, 
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TexImg::importBti(Texture* tex, RandomAccessStream& input, u8* data)
 {
@@ -1161,7 +1161,7 @@ void TexImg::importBti(Texture* tex, RandomAccessStream& input, u8* data)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TexImg::importTxe(Texture* tex, RandomAccessStream& stream)
 {
@@ -1182,7 +1182,7 @@ void TexImg::importTxe(Texture* tex, RandomAccessStream& stream)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TexAttr::initImage()
 {
@@ -1222,7 +1222,7 @@ void TexAttr::initImage()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TexAttr::read(RandomAccessStream& stream)
 {
@@ -1234,7 +1234,7 @@ void TexAttr::read(RandomAccessStream& stream)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Graphics::drawCylinder(immut Vector3f& start, immut Vector3f& end, f32 radius, immut Matrix4f& transformMtx)
 {
@@ -1267,7 +1267,7 @@ void Graphics::drawCylinder(immut Vector3f& start, immut Vector3f& end, f32 radi
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0001E8
  */
 void Graphics::drawCircle(immut Vector3f&, f32, immut Matrix4f&)
@@ -1276,7 +1276,7 @@ void Graphics::drawCircle(immut Vector3f&, f32, immut Matrix4f&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Graphics::drawSphere(immut Vector3f& center, f32 radius, immut Matrix4f& transformMtx)
 {
@@ -1301,7 +1301,7 @@ void Graphics::drawSphere(immut Vector3f& center, f32 radius, immut Matrix4f& tr
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Graphics::perspPrintf(Font* font, immut Vector3f& pos, int p3, int p4, immut char* fmt, ...)
 {
@@ -1321,7 +1321,7 @@ void Graphics::perspPrintf(Font* font, immut Vector3f& pos, int p3, int p4, immu
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int Graphics::calcLighting(f32 intensity)
 {
@@ -1359,7 +1359,7 @@ int Graphics::calcLighting(f32 intensity)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0001D0
  */
 int Graphics::calcSphereLighting(immut Vector3f&, f32)
@@ -1368,7 +1368,7 @@ int Graphics::calcSphereLighting(immut Vector3f&, f32)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0003A4
  */
 int Graphics::calcBoxLighting(immut BoundBox&)
@@ -1377,7 +1377,7 @@ int Graphics::calcBoxLighting(immut BoundBox&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void CacheTexture::makeResident()
 {

@@ -9,19 +9,19 @@ UpdateMgr* pikiOptUpdateMgr;
 UpdateMgr* tekiOptUpdateMgr;
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(5)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("updateMgr");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 UpdateContext::UpdateContext()
 {
@@ -30,7 +30,7 @@ UpdateContext::UpdateContext()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool UpdateContext::updatable()
 {
@@ -46,7 +46,7 @@ bool UpdateContext::updatable()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void UpdateContext::init(UpdateMgr* mgr)
 {
@@ -55,7 +55,7 @@ void UpdateContext::init(UpdateMgr* mgr)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void UpdateContext::exit()
 {
@@ -67,7 +67,7 @@ void UpdateContext::exit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 UpdateMgr::UpdateMgr()
 {
@@ -79,7 +79,7 @@ UpdateMgr::UpdateMgr()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void UpdateMgr::update()
 {
@@ -89,7 +89,7 @@ void UpdateMgr::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool UpdateMgr::updatable(UpdateContext* client)
 {
@@ -105,7 +105,7 @@ bool UpdateMgr::updatable(UpdateContext* client)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void UpdateMgr::create(int slotCount)
 {
@@ -126,7 +126,7 @@ void UpdateMgr::create(int slotCount)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void UpdateMgr::addClient(UpdateContext* client)
 {
@@ -159,7 +159,7 @@ void UpdateMgr::addClient(UpdateContext* client)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void UpdateMgr::removeClient(UpdateContext* client)
 {
@@ -177,7 +177,7 @@ void UpdateMgr::removeClient(UpdateContext* client)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 void UpdateMgr::balanceClient(UpdateContext*)
@@ -186,7 +186,7 @@ void UpdateMgr::balanceClient(UpdateContext*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000130
  */
 void UpdateMgr::showInfo(Graphics&, int, int)

@@ -4,19 +4,19 @@
 #include "Light.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("LightPool");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 LightPool::LightPool()
 {
@@ -34,7 +34,7 @@ LightPool::LightPool()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void LightPool::draw(Graphics& gfx)
 {

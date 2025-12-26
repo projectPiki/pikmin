@@ -9,19 +9,19 @@
 #include "zen/ogMemChk.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("OgFileChkSelectSection")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00001C
  */
 void zen::ogScrFileChkSelMgr::init()
@@ -30,7 +30,7 @@ void zen::ogScrFileChkSelMgr::init()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::ogScrFileChkSelMgr::ogScrFileChkSelMgr()
 {
@@ -45,7 +45,7 @@ zen::ogScrFileChkSelMgr::ogScrFileChkSelMgr()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000048
  */
 void zen::ogScrFileChkSelMgr::startSub()
@@ -54,7 +54,7 @@ void zen::ogScrFileChkSelMgr::startSub()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrFileChkSelMgr::start(bool skipFileSelect)
 {
@@ -68,7 +68,7 @@ void zen::ogScrFileChkSelMgr::start(bool skipFileSelect)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrFileChkSelMgr::startSave()
 {
@@ -82,7 +82,7 @@ void zen::ogScrFileChkSelMgr::startSave()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::ogScrFileChkSelMgr::returnStatusFlag zen::ogScrFileChkSelMgr::update(Controller* controller, CardQuickInfo& cardInfo)
 {
@@ -150,7 +150,7 @@ zen::ogScrFileChkSelMgr::returnStatusFlag zen::ogScrFileChkSelMgr::update(Contro
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrFileChkSelMgr::draw(Graphics& gfx)
 {

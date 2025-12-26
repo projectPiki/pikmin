@@ -9,19 +9,19 @@
 #include <string.h>
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("shpObjColl");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000128
  */
 void ObjCollInfo::getCentreSize(Vector3f& centre, f32& radius)
@@ -35,7 +35,7 @@ void ObjCollInfo::getCentreSize(Vector3f& centre, f32& radius)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00016C
  */
 void ObjCollInfo::showInfo(Graphics&, Matrix4f&)
@@ -44,7 +44,7 @@ void ObjCollInfo::showInfo(Graphics&, Matrix4f&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0001AC
  */
 void ObjCollInfo::saveini(immut char*, RandomAccessStream&)
@@ -53,7 +53,7 @@ void ObjCollInfo::saveini(immut char*, RandomAccessStream&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ObjCollInfo::loadini(CmdStream* cmdStream)
 {

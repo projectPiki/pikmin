@@ -6,19 +6,19 @@
 #include "zen/Math.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(18)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("Enter")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 ActEnter::ActEnter(Piki* piki)
     : Action(piki, true)
@@ -28,7 +28,7 @@ ActEnter::ActEnter(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActEnter::init(Creature* target)
 {
@@ -67,7 +67,7 @@ void ActEnter::init(Creature* target)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000064
  */
 int ActEnter::routeMove()
@@ -82,7 +82,7 @@ int ActEnter::routeMove()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActEnter::findLeg()
 {
@@ -96,7 +96,7 @@ void ActEnter::findLeg()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActEnter::exec()
 {
@@ -123,7 +123,7 @@ int ActEnter::exec()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActEnter::procCollideMsg(Piki*, MsgCollide* msg)
 {
@@ -134,7 +134,7 @@ void ActEnter::procCollideMsg(Piki*, MsgCollide* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActEnter::gotoLeg()
 {
@@ -160,7 +160,7 @@ int ActEnter::gotoLeg()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActEnter::climb()
 {
@@ -196,7 +196,7 @@ int ActEnter::climb()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActEnter::cleanup()
 {

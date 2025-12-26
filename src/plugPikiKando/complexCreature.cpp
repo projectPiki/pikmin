@@ -4,19 +4,19 @@
 #include "DebugLog.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("TODO: Replace")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000B4
  */
 ComplexCreature::ComplexCreature(int, CreatureProp*)
@@ -25,7 +25,7 @@ ComplexCreature::ComplexCreature(int, CreatureProp*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000A0
  */
 void ComplexCreature::join(Creature*)
@@ -34,7 +34,7 @@ void ComplexCreature::join(Creature*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000114
  */
 void ComplexCreature::leave(Creature*)
@@ -43,7 +43,7 @@ void ComplexCreature::leave(Creature*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000070
  */
 void ComplexCreature::cleanup()
@@ -52,7 +52,7 @@ void ComplexCreature::cleanup()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000EC
  */
 void ComplexCreature::update()
@@ -61,7 +61,7 @@ void ComplexCreature::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 void ComplexCreature::doAI()
@@ -70,7 +70,7 @@ void ComplexCreature::doAI()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 void ComplexCreature::postUpdate(int unused, f32 deltaTime)

@@ -5,13 +5,13 @@
 #include "sysNew.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000098
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT(nullptr);
@@ -22,7 +22,7 @@ immut char* KIO::haltMessage;
 int KIO::kontMode = 2;
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 static BOOL hioEnumCallback(s32 chan)
 {
@@ -31,7 +31,7 @@ static BOOL hioEnumCallback(s32 chan)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 static void hioCallback()
 {
@@ -39,7 +39,7 @@ static void hioCallback()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 KIO::KIO()
 {
@@ -52,7 +52,7 @@ KIO::KIO()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KIO::initialise()
 {
@@ -68,7 +68,7 @@ void KIO::initialise()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KIO::readMailbox()
 {
@@ -104,7 +104,7 @@ void KIO::readMailbox()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KIO::startWrite(int writeKind, u8* bufferStart, int bufferSize)
 {
@@ -113,7 +113,7 @@ void KIO::startWrite(int writeKind, u8* bufferStart, int bufferSize)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KIO::writeHeader()
 {
@@ -130,7 +130,7 @@ void KIO::writeHeader()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000E4
  */
 void KIO::copyEfb(u8*, u16, u16)
@@ -139,7 +139,7 @@ void KIO::copyEfb(u8*, u16, u16)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KIOContext::set(int writeKind, u8* bufferStart, int bufferSize)
 {
@@ -151,7 +151,7 @@ void KIOContext::set(int writeKind, u8* bufferStart, int bufferSize)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KIOContext::write()
 {

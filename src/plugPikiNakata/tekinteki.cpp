@@ -5,19 +5,19 @@
 #include "sysNew.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("tekinakata")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00000C
  */
 TekiMessage::TekiMessage(int msg, NTeki* teki)
@@ -27,7 +27,7 @@ TekiMessage::TekiMessage(int msg, NTeki* teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 NTeki::NTeki()
 {
@@ -38,7 +38,7 @@ NTeki::NTeki()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NTeki::sendMessage(int msg)
 {
@@ -57,7 +57,7 @@ void NTeki::sendMessage(int msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NTeki::receiveMessage(immut TekiMessage& msg)
 {

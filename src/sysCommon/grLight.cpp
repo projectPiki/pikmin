@@ -4,19 +4,19 @@
 #include "sysMath.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT(nullptr);
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Light::Light()
     : CoreNode("light")
@@ -48,7 +48,7 @@ Light::Light()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Light::setLightDistAttn(f32 dist, f32 attn, int mode)
 {
@@ -97,7 +97,7 @@ void Light::setLightDistAttn(f32 dist, f32 attn, int mode)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Light::setLightSpot(f32 angle, int spotMode)
 {
@@ -156,7 +156,7 @@ void Light::setLightSpot(f32 angle, int spotMode)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00002C
  */
 void Light::setLightParallel()
@@ -165,7 +165,7 @@ void Light::setLightParallel()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000218
  */
 void Light::calcLightSizes()
@@ -174,7 +174,7 @@ void Light::calcLightSizes()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000030
  */
 f32 Light::calcLightMapRadius()
@@ -183,7 +183,7 @@ f32 Light::calcLightMapRadius()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000030
  */
 f32 Light::calcLightObjRadius()
@@ -192,7 +192,7 @@ f32 Light::calcLightObjRadius()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0001C4
  */
 void Light::refresh(Graphics&, LFlareGroup*)
@@ -201,7 +201,7 @@ void Light::refresh(Graphics&, LFlareGroup*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Light::update()
 {

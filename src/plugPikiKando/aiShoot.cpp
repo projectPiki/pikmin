@@ -4,19 +4,19 @@
 #include "teki.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("aiShoot")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 ActShoot::ActShoot(Piki* piki)
     : AndAction(piki)
@@ -30,7 +30,7 @@ ActShoot::ActShoot(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActShoot::init(Creature* target)
 {
@@ -59,7 +59,7 @@ void ActShoot::init(Creature* target)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Creature* ActShoot::findTarget()
 {
@@ -79,7 +79,7 @@ Creature* ActShoot::findTarget()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000288
  */
 Creature* ActShoot::decideTarget()
@@ -108,7 +108,7 @@ Creature* ActShoot::decideTarget()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActShoot::exec()
 {
@@ -136,7 +136,7 @@ int ActShoot::exec()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActShoot::cleanup()
 {
@@ -145,7 +145,7 @@ void ActShoot::cleanup()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActShootCreature::cleanup()
 {
@@ -153,7 +153,7 @@ void ActShootCreature::cleanup()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActShootCreature::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
@@ -173,7 +173,7 @@ void ActShootCreature::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 ActShootCreature::ActShootCreature(Piki* piki)
     : Action(piki, true)
@@ -181,7 +181,7 @@ ActShootCreature::ActShootCreature(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActShootCreature::init(Creature* target)
 {
@@ -191,7 +191,7 @@ void ActShootCreature::init(Creature* target)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActShootCreature::exec()
 {

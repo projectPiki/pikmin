@@ -6,13 +6,13 @@
 #include "PlayerState.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("OgResultSection")
@@ -28,7 +28,7 @@ static s16 ogawa_per_line[]                                        = { 1, 1, 2, 
 static u32 og_piki_lines_color[PikiColorCount] ATTRIBUTE_ALIGN(32) = { 0x00C0FFFF, 0xFF0000FF, 0xFFFF00FF };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 ogGraphMgr::ogGraphMgr(P2DScreen* screen)
 {
@@ -49,7 +49,7 @@ ogGraphMgr::ogGraphMgr(P2DScreen* screen)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ogGraphMgr::SetDummyLineData()
 {
@@ -76,7 +76,7 @@ void ogGraphMgr::SetDummyLineData()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ogGraphMgr::MakeData()
 {
@@ -209,7 +209,7 @@ void ogGraphMgr::MakeData()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 static void setGraphGX(void* vertexData, int pikminColor, u8 alpha)
 {
@@ -272,7 +272,7 @@ static void setGraphGX(void* vertexData, int pikminColor, u8 alpha)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ogGraphMgr::draw(u8 a)
 {

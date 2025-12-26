@@ -9,19 +9,19 @@
 #include "nlib/Math.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(22)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("TAIAmove")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAIAappearKabekui::start(Teki& teki)
 {
@@ -33,7 +33,7 @@ void TAIAappearKabekui::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAappearKabekui::act(Teki& teki)
 {
@@ -60,7 +60,7 @@ bool TAIAappearKabekui::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAIAsetTargetPointWorkObject::start(Teki& teki)
 {
@@ -80,7 +80,7 @@ void TAIAsetTargetPointWorkObject::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAsetTargetPointWorkObject::act(Teki& teki)
 {
@@ -88,7 +88,7 @@ bool TAIAsetTargetPointWorkObject::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAgoGoalPath::makePath(Teki& teki)
 {
@@ -123,7 +123,7 @@ bool TAIAgoGoalPath::makePath(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAIAgoGoalPath::start(Teki& teki)
 {
@@ -133,7 +133,7 @@ void TAIAgoGoalPath::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAgoGoalPath::act(Teki& teki)
 {
@@ -175,7 +175,7 @@ bool TAIAgoGoalPath::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAgoGoalPath::checkArrival(Teki& teki)
 {
@@ -189,7 +189,7 @@ bool TAIAgoGoalPath::checkArrival(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAIAsetTargetPointCircleRandom::start(Teki& teki)
 {
@@ -202,7 +202,7 @@ void TAIAsetTargetPointCircleRandom::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAsetTargetPointCircleRandom::act(Teki& teki)
 {
@@ -210,7 +210,7 @@ bool TAIAsetTargetPointCircleRandom::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAIAsetTargetPointCircle::start(Teki& teki)
 {
@@ -218,7 +218,7 @@ void TAIAsetTargetPointCircle::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAsetTargetPointCircle::act(Teki& teki)
 {
@@ -227,7 +227,7 @@ bool TAIAsetTargetPointCircle::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAIAsetTargetPointCircle::setTargetPoint(Teki& teki)
 {
@@ -242,7 +242,7 @@ void TAIAsetTargetPointCircle::setTargetPoint(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAIAgoTarget::start(Teki& teki)
 {
@@ -251,7 +251,7 @@ void TAIAgoTarget::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAgoTarget::act(Teki& teki)
 {
@@ -267,7 +267,7 @@ bool TAIAgoTarget::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAIAgoTargetPriorityFaceDir::start(Teki& teki)
 {
@@ -276,7 +276,7 @@ void TAIAgoTargetPriorityFaceDir::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAgoTargetPriorityFaceDir::act(Teki& teki)
 {
@@ -292,7 +292,7 @@ bool TAIAgoTargetPriorityFaceDir::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAgoTargetPriorityFaceDir::checkArrival(Teki& teki)
 {
@@ -300,7 +300,7 @@ bool TAIAgoTargetPriorityFaceDir::checkArrival(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 TAIAgoTargetPriorityFaceDir::getWalkVelocity(Teki& teki)
 {
@@ -308,7 +308,7 @@ f32 TAIAgoTargetPriorityFaceDir::getWalkVelocity(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAIAapproachTargetPriorityFaceDir::start(Teki& teki)
 {
@@ -317,7 +317,7 @@ void TAIAapproachTargetPriorityFaceDir::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAapproachTargetPriorityFaceDir::act(Teki& teki)
 {
@@ -333,7 +333,7 @@ bool TAIAapproachTargetPriorityFaceDir::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000D0
  */
 void TAIAlookAround::setTargetDirection(Teki& teki, f32 angle)
@@ -344,7 +344,7 @@ void TAIAlookAround::setTargetDirection(Teki& teki, f32 angle)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAIAlookAround::start(Teki& teki)
 {
@@ -355,7 +355,7 @@ void TAIAlookAround::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAlookAround::act(Teki& teki)
 {
@@ -411,7 +411,7 @@ bool TAIAlookAround::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00004C
  */
 int TAIAturnToTarget::getTurnMotionIndex(Teki& teki)
@@ -425,7 +425,7 @@ int TAIAturnToTarget::getTurnMotionIndex(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAIAturnToTarget::start(Teki& teki)
 {
@@ -436,7 +436,7 @@ void TAIAturnToTarget::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAturnToTarget::act(Teki& teki)
 {
@@ -470,7 +470,7 @@ bool TAIAturnToTarget::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAIAstop::start(Teki& teki)
 {
@@ -478,7 +478,7 @@ void TAIAstop::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAIArandomWalk::start(Teki& teki)
 {
@@ -489,7 +489,7 @@ void TAIArandomWalk::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIArandomWalk::act(Teki& teki)
 {
@@ -508,7 +508,7 @@ bool TAIArandomWalk::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAIArandomWalk::makeTargetPosition(Teki& teki)
 {
@@ -519,7 +519,7 @@ void TAIArandomWalk::makeTargetPosition(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAIAturnOccasion::start(Teki& teki)
 {
@@ -527,7 +527,7 @@ void TAIAturnOccasion::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAturnOccasion::act(Teki& teki)
 {
@@ -539,7 +539,7 @@ bool TAIAturnOccasion::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAIAturnFocusCreature::start(Teki& teki)
 {
@@ -558,7 +558,7 @@ void TAIAturnFocusCreature::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAturnFocusCreature::act(Teki& teki)
 {
@@ -571,7 +571,7 @@ bool TAIAturnFocusCreature::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAIAwait::start(Teki& teki)
 {
@@ -581,7 +581,7 @@ void TAIAwait::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAwait::act(Teki& teki)
 {
@@ -596,7 +596,7 @@ bool TAIAwait::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000058
  */
 void TAIApatrol::changeStatus(int status, Teki& teki)
@@ -614,7 +614,7 @@ void TAIApatrol::changeStatus(int status, Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TAIApatrol::TAIApatrol(int nextState, int p2, int leftMotionID, int rightMotionID, immut Vector3f* p5, int p6, bool p7)
     : TAIAturnToTarget(nextState, leftMotionID, rightMotionID, p7)
@@ -625,7 +625,7 @@ TAIApatrol::TAIApatrol(int nextState, int p2, int leftMotionID, int rightMotionI
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000070
  */
 void TAIApatrol::setTargetPosition(Teki& teki)
@@ -638,7 +638,7 @@ void TAIApatrol::setTargetPosition(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAIApatrol::start(Teki& teki)
 {
@@ -862,7 +862,7 @@ void TAIApatrol::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIApatrol::act(Teki& teki)
 {
@@ -906,7 +906,7 @@ bool TAIApatrol::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAIAstepBack::start(Teki& teki)
 {
@@ -915,7 +915,7 @@ void TAIAstepBack::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAstepBack::act(Teki& teki)
 {
@@ -941,7 +941,7 @@ bool TAIAstepBack::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAIAturnHome::start(Teki& teki)
 {
@@ -959,7 +959,7 @@ void TAIAturnHome::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAturnHome::act(Teki& teki)
 {
@@ -967,7 +967,7 @@ bool TAIAturnHome::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAIAgoingHome::start(Teki& teki)
 {
@@ -976,7 +976,7 @@ void TAIAgoingHome::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAgoingHome::act(Teki& teki)
 {
@@ -992,7 +992,7 @@ bool TAIAgoingHome::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAIAgoingHomePriorityFaceDir::start(Teki& teki)
 {
@@ -1001,7 +1001,7 @@ void TAIAgoingHomePriorityFaceDir::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAgoingHomePriorityFaceDir::act(Teki& teki)
 {
@@ -1017,7 +1017,7 @@ bool TAIAgoingHomePriorityFaceDir::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAIAflyingBase::start(Teki& teki)
 {
@@ -1026,7 +1026,7 @@ void TAIAflyingBase::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAflyingBase::act(Teki& teki)
 {
@@ -1038,7 +1038,7 @@ bool TAIAflyingBase::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000144
  */
 void TAIAflyingInTerritory::setTargetPosition(Teki& teki)
@@ -1053,7 +1053,7 @@ void TAIAflyingInTerritory::setTargetPosition(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAIAflyingInTerritory::start(Teki& teki)
 {
@@ -1064,7 +1064,7 @@ void TAIAflyingInTerritory::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAflyingInTerritory::act(Teki& teki)
 {
@@ -1102,7 +1102,7 @@ bool TAIAflyingInTerritory::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAIAflyingToGoal::start(Teki& teki)
 {
@@ -1112,7 +1112,7 @@ void TAIAflyingToGoal::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAflyingToGoal::act(Teki& teki)
 {
@@ -1160,7 +1160,7 @@ bool TAIAflyingToGoal::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAIAflyingDistanceInTerritory::start(Teki& teki)
 {
@@ -1170,7 +1170,7 @@ void TAIAflyingDistanceInTerritory::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAflyingDistanceInTerritory::act(Teki& teki)
 {
@@ -1179,7 +1179,7 @@ bool TAIAflyingDistanceInTerritory::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAflyingDistanceInTerritory::goal(Teki& teki)
 {
@@ -1214,7 +1214,7 @@ bool TAIAflyingDistanceInTerritory::goal(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAIAflyingDistance::start(Teki& teki)
 {
@@ -1225,7 +1225,7 @@ void TAIAflyingDistance::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAflyingDistance::act(Teki& teki)
 {
@@ -1282,7 +1282,7 @@ bool TAIAflyingDistance::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAIAdescent::start(Teki& teki)
 {
@@ -1295,7 +1295,7 @@ void TAIAdescent::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAdescent::act(Teki& teki)
 {
@@ -1334,7 +1334,7 @@ bool TAIAdescent::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAIAlanding::start(Teki& teki)
 {
@@ -1347,7 +1347,7 @@ void TAIAlanding::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAlanding::act(Teki& teki)
 {
@@ -1371,7 +1371,7 @@ bool TAIAlanding::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAIAtakeOff::start(Teki& teki)
 {
@@ -1384,7 +1384,7 @@ void TAIAtakeOff::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAtakeOff::act(Teki& teki)
 {
@@ -1419,7 +1419,7 @@ bool TAIAtakeOff::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAIAtakeOff::startFlying(Teki& teki)
 {

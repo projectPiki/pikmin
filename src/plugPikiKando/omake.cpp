@@ -11,19 +11,19 @@
 AttentionCamera* attentionCamera;
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("attentionCamera")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 AttentionCamera::AttentionCamera()
 {
@@ -46,7 +46,7 @@ AttentionCamera::AttentionCamera()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000054
  */
 void AttentionCamera::start(u32 tag, Creature* target, f32 p3, f32 p4)
@@ -60,7 +60,7 @@ void AttentionCamera::start(u32 tag, Creature* target, f32 p3, f32 p4)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void AttentionCamera::finish()
 {
@@ -70,7 +70,7 @@ void AttentionCamera::finish()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void AttentionCamera::update()
 {
@@ -100,7 +100,7 @@ void AttentionCamera::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void AttentionCamera::refresh(Graphics& gfx)
 {
@@ -115,7 +115,7 @@ void AttentionCamera::refresh(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000058
  */
 void AttentionCamera::setFader(u32 tag)
@@ -132,7 +132,7 @@ void AttentionCamera::setFader(u32 tag)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000AC
  */
 void NoiseFunction::init(int count)
@@ -145,7 +145,7 @@ void NoiseFunction::init(int count)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00008C
  */
 f32 NoiseFunction::getValue(f32 x)
@@ -156,7 +156,7 @@ f32 NoiseFunction::getValue(f32 x)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000EC
  */
 void TurbulenceFun::init(int p1, int count)
@@ -167,7 +167,7 @@ void TurbulenceFun::init(int p1, int count)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000240
  */
 f32 TurbulenceFun::getValue(f32 x)

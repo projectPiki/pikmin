@@ -4,7 +4,7 @@
 #include <math.h>
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int MapCode::getAttribute(CollTriInfo* triInfo)
 {
@@ -17,7 +17,7 @@ static immut char* mapcodeNames[] = {
 };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000018
  */
 immut char* MapCode::getAttributeName(int num)
@@ -27,7 +27,7 @@ immut char* MapCode::getAttributeName(int num)
 };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int MapCode::getSlipCode(CollTriInfo* triInfo)
 {
@@ -38,7 +38,7 @@ int MapCode::getSlipCode(CollTriInfo* triInfo)
 };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool MapCode::isBald(CollTriInfo* triInfo)
 {

@@ -9,19 +9,19 @@
 #include "zen/Math.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(14)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("drawSaveMes")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::DrawSaveMes::DrawSaveMes()
 {
@@ -61,7 +61,7 @@ zen::DrawSaveMes::DrawSaveMes()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawSaveMes::sleep()
 {
@@ -69,7 +69,7 @@ void zen::DrawSaveMes::sleep()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawSaveMes::mesAppear()
 {
@@ -80,7 +80,7 @@ void zen::DrawSaveMes::mesAppear()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawSaveMes::saveFinish()
 {
@@ -90,7 +90,7 @@ void zen::DrawSaveMes::saveFinish()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawSaveMes::saveError()
 {
@@ -98,7 +98,7 @@ void zen::DrawSaveMes::saveError()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000028
  */
 void zen::DrawSaveMes::hide()
@@ -108,7 +108,7 @@ void zen::DrawSaveMes::hide()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool zen::DrawSaveMes::update(Controller* controller)
 {
@@ -266,7 +266,7 @@ bool zen::DrawSaveMes::update(Controller* controller)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawSaveMes::draw(Graphics& gfx)
 {
@@ -276,7 +276,7 @@ void zen::DrawSaveMes::draw(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawSaveMes::setMode(zen::DrawSaveMes::modeFlag mode)
 {

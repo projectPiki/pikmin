@@ -82,13 +82,13 @@ static bool dontShowFrame;
 static int resultTable[16];
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(61)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("newPikiGame");
@@ -446,7 +446,7 @@ static void handleTutorialWindow(u32& unused, Controller* controller)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 BaseGameSection::BaseGameSection()
     : Node("")
@@ -463,7 +463,7 @@ BaseGameSection::BaseGameSection()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BaseGameSection::draw(Graphics& gfx)
 {
@@ -512,7 +512,7 @@ void BaseGameSection::draw(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 ModeState* IntroGameModeState::update(u32& result)
 {
@@ -532,7 +532,7 @@ ModeState* IntroGameModeState::update(u32& result)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 ModeState* RunningModeState::update(u32& result)
 {
@@ -664,7 +664,7 @@ ModeState* RunningModeState::update(u32& result)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void IntroGameModeState::postRender(Graphics& gfx)
 {
@@ -676,7 +676,7 @@ void IntroGameModeState::postRender(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void RunningModeState::postRender(Graphics& gfx)
 {
@@ -720,7 +720,7 @@ void RunningModeState::postRender(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 ModeState* MessageModeState::update(u32& result)
 {
@@ -789,7 +789,7 @@ ModeState* MessageModeState::update(u32& result)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 ModeState* DayOverModeState::update(u32& result)
 {
@@ -941,7 +941,7 @@ ModeState* DayOverModeState::update(u32& result)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DayOverModeState::makeTotalScoreWindow()
 {
@@ -977,7 +977,7 @@ void DayOverModeState::makeTotalScoreWindow()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 ModeState* DayOverModeState::initialisePhaseOne()
 {
@@ -1043,7 +1043,7 @@ ModeState* DayOverModeState::initialisePhaseOne()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 ModeState* DayOverModeState::initialisePhaseTwo()
 {
@@ -1120,7 +1120,7 @@ ModeState* DayOverModeState::initialisePhaseTwo()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 ModeState* DayOverModeState::initialisePhaseThree()
 {
@@ -1162,7 +1162,7 @@ ModeState* DayOverModeState::initialisePhaseThree()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 ModeState* DayOverModeState::initialisePhaseFour()
 {
@@ -1645,7 +1645,7 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GameMovieInterface::parseMessages()
 {
@@ -1662,7 +1662,7 @@ void GameMovieInterface::parseMessages()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GameMovieInterface::parse(GameMovieInterface::SimpleMessage& msg)
 {
@@ -1818,7 +1818,7 @@ void GameMovieInterface::parse(GameMovieInterface::SimpleMessage& msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GameMovieInterface::parse(GameMovieInterface::ComplexMessage& msg)
 {
@@ -1827,7 +1827,7 @@ void GameMovieInterface::parse(GameMovieInterface::ComplexMessage& msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 NewPikiGameSection::NewPikiGameSection()
 {

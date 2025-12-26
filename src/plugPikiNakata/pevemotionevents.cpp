@@ -4,19 +4,19 @@
 #include "sysNew.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("pevemotionevents")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000054
  */
 PeveWaitEvent::PeveWaitEvent()
@@ -26,7 +26,7 @@ PeveWaitEvent::PeveWaitEvent()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000010
  */
 void PeveWaitEvent::makeWaitEvent(f32 waitTime)
@@ -36,7 +36,7 @@ void PeveWaitEvent::makeWaitEvent(f32 waitTime)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PeveAccelerationEvent::PeveAccelerationEvent()
     : PeveEvent(0)
@@ -44,7 +44,7 @@ PeveAccelerationEvent::PeveAccelerationEvent()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PeveAccelerationEvent::makeAccelerationEvent(PeveCondition* cond, NVector3fIO* posIO, NVector3fIO* velIO, NVector3fIO* accelIO)
 {
@@ -55,7 +55,7 @@ void PeveAccelerationEvent::makeAccelerationEvent(PeveCondition* cond, NVector3f
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PeveAccelerationEvent::update()
 {
@@ -82,14 +82,14 @@ void PeveAccelerationEvent::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PeveParabolaEvent::PeveParabolaEvent()
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PeveParabolaEvent::makeParabolaEvent(PeveCondition* cond, NVector3fIO* vecIO, NVector3f& p3, f32 maxLength, f32 p5)
 {
@@ -102,7 +102,7 @@ void PeveParabolaEvent::makeParabolaEvent(PeveCondition* cond, NVector3fIO* vecI
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PeveHorizontalSinWaveEvent::makeHorizontalSinWaveEvent(PeveCondition* cond, NVector3fIO* vecIO, NVector3f p3, f32 offset, f32 amp,
                                                             f32 startTheta, f32 angularVel)
@@ -117,7 +117,7 @@ void PeveHorizontalSinWaveEvent::makeHorizontalSinWaveEvent(PeveCondition* cond,
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PeveHorizontalSinWaveEvent::reset()
 {
@@ -126,7 +126,7 @@ void PeveHorizontalSinWaveEvent::reset()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PeveHorizontalSinWaveEvent::update()
 {
@@ -147,7 +147,7 @@ void PeveHorizontalSinWaveEvent::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PeveCircleMoveEvent::PeveCircleMoveEvent()
     : PeveEvent(0)
@@ -157,7 +157,7 @@ PeveCircleMoveEvent::PeveCircleMoveEvent()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PeveCircleMoveEvent::makeCircleMoveEvent(f32 timeLimit, NVector3fIO* vecIOA, NVector3fIO* vecIOB, f32 p4, f32 p5, f32 p6, f32 p7)
 {
@@ -172,7 +172,7 @@ void PeveCircleMoveEvent::makeCircleMoveEvent(f32 timeLimit, NVector3fIO* vecIOA
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PeveCircleMoveEvent::reset()
 {
@@ -181,7 +181,7 @@ void PeveCircleMoveEvent::reset()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PeveCircleMoveEvent::update()
 {
@@ -199,7 +199,7 @@ void PeveCircleMoveEvent::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PeveCircleMoveEvent::outputPosition(Vector3f& outPos)
 {
@@ -209,7 +209,7 @@ void PeveCircleMoveEvent::outputPosition(Vector3f& outPos)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 PeveCircleMoveEvent::calcAngle()
 {
@@ -224,7 +224,7 @@ f32 PeveCircleMoveEvent::calcAngle()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 PeveCircleMoveWatchEvent::PeveCircleMoveWatchEvent()
@@ -234,7 +234,7 @@ PeveCircleMoveWatchEvent::PeveCircleMoveWatchEvent()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000058
  */
 void PeveCircleMoveWatchEvent::makeCircleMoveWatchEvent(f32, NVector3fIO*, NVector3fIO*, NVector3fIO*, f32, f32, f32, f32, f32)
@@ -243,7 +243,7 @@ void PeveCircleMoveWatchEvent::makeCircleMoveWatchEvent(f32, NVector3fIO*, NVect
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000040
  */
 PeveFunctionCurveEvent::PeveFunctionCurveEvent()
@@ -252,7 +252,7 @@ PeveFunctionCurveEvent::PeveFunctionCurveEvent()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00001C
  */
 void PeveFunctionCurveEvent::makeFunctionCurveEvent(PeveCondition* cond, NVector3fIO* vecIO, NFunction3D* func, f32 p4, f32 p5, bool p6)
@@ -266,7 +266,7 @@ void PeveFunctionCurveEvent::makeFunctionCurveEvent(PeveCondition* cond, NVector
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PeveFunctionCurveEvent::reset()
 {
@@ -274,7 +274,7 @@ void PeveFunctionCurveEvent::reset()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PeveFunctionCurveEvent::update()
 {
@@ -290,7 +290,7 @@ void PeveFunctionCurveEvent::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000040
  */
 PeveHomingPositionEvent::PeveHomingPositionEvent()
@@ -299,7 +299,7 @@ PeveHomingPositionEvent::PeveHomingPositionEvent()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000014
  */
 void PeveHomingPositionEvent::makeHomingPositionEvent(PeveCondition* cond, NVector3fIO* vecIOA, NVector3fIO* vecIOB, f32 p4)
@@ -311,7 +311,7 @@ void PeveHomingPositionEvent::makeHomingPositionEvent(PeveCondition* cond, NVect
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PeveHomingPositionEvent::update()
 {
@@ -329,7 +329,7 @@ void PeveHomingPositionEvent::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000D0
  */
 PeveHomingPostureEvent::PeveHomingPostureEvent()
@@ -339,7 +339,7 @@ PeveHomingPostureEvent::PeveHomingPostureEvent()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00002C
  */
 void PeveHomingPostureEvent::makeHomingPostureEvent(PeveCondition*, NVector3fIO*, NVector3fIO*, f32, PeveCondition*, NVector3fIO*,
@@ -349,7 +349,7 @@ void PeveHomingPostureEvent::makeHomingPostureEvent(PeveCondition*, NVector3fIO*
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 PeveInterpolationEvent::PeveInterpolationEvent(int size, NPool<SplineSegment>* splinePool)
@@ -361,7 +361,7 @@ PeveInterpolationEvent::PeveInterpolationEvent(int size, NPool<SplineSegment>* s
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00002C
  */
 void PeveInterpolationEvent::makeInterpolationEvent(PeveCondition* cond, NPosture3DIO* postureIO)
@@ -372,7 +372,7 @@ void PeveInterpolationEvent::makeInterpolationEvent(PeveCondition* cond, NPostur
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PeveInterpolationEvent::reset()
 {
@@ -389,7 +389,7 @@ void PeveInterpolationEvent::reset()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PeveInterpolationEvent::update()
 {
@@ -415,7 +415,7 @@ void PeveInterpolationEvent::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00005C
  */
 PeveMoveEvent::PeveMoveEvent()
@@ -425,7 +425,7 @@ PeveMoveEvent::PeveMoveEvent()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00006C
  */
 void PeveMoveEvent::makeMoveEvent(NPosture3DIO* postureIO, NPosture3D& posture)
@@ -436,7 +436,7 @@ void PeveMoveEvent::makeMoveEvent(NPosture3DIO* postureIO, NPosture3D& posture)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PeveMoveEvent::reset()
 {
@@ -445,7 +445,7 @@ void PeveMoveEvent::reset()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PeveVibrationEvent::PeveVibrationEvent()
     : PeveEvent(0)
@@ -455,7 +455,7 @@ PeveVibrationEvent::PeveVibrationEvent()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PeveVibrationEvent::makeVibrationEvent(f32 duration, NPosture3DIO* postureIO, NVector3f& up, f32 intensity, f32 frequency, f32 p6)
 {
@@ -469,7 +469,7 @@ void PeveVibrationEvent::makeVibrationEvent(f32 duration, NPosture3DIO* postureI
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PeveVibrationEvent::update()
 {

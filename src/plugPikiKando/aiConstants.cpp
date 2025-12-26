@@ -5,19 +5,19 @@
 AIConstant* AIConstant::_instance;
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT(nullptr)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void AIConstant::createInstance()
 {
@@ -27,7 +27,7 @@ void AIConstant::createInstance()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 AIConstant::AIConstant()
 {

@@ -4,7 +4,7 @@ char file[] = __FILE__;
 char name[] = "smartPtr";
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 RefCountable::RefCountable()
 {
@@ -12,7 +12,7 @@ RefCountable::RefCountable()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void RefCountable::clearCnt()
 {
@@ -20,7 +20,7 @@ void RefCountable::clearCnt()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void RefCountable::addCnt()
 {
@@ -28,7 +28,7 @@ void RefCountable::addCnt()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void RefCountable::subCnt()
 {

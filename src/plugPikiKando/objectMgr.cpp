@@ -6,19 +6,19 @@
 #include "sysNew.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(13)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("objectMgr");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000080
  */
 void boundSphereDist(Creature*, Creature*)
@@ -27,7 +27,7 @@ void boundSphereDist(Creature*, Creature*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ObjectMgr::stickUpdate()
 {
@@ -39,7 +39,7 @@ void ObjectMgr::stickUpdate()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ObjectMgr::invalidateSearch()
 {
@@ -54,7 +54,7 @@ void ObjectMgr::invalidateSearch()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ObjectMgr::update()
 {
@@ -66,14 +66,14 @@ void ObjectMgr::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ObjectMgr::store()
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 void ObjectMgr::restore()
@@ -82,7 +82,7 @@ void ObjectMgr::restore()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ObjectMgr::killAll()
 {
@@ -111,7 +111,7 @@ void ObjectMgr::killAll()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ObjectMgr::postUpdate(int unused, f32 deltaTime)
 {
@@ -163,7 +163,7 @@ Creature* ObjectMgr::findClosest(immut Vector3f& pos, immut Condition* cond)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Creature* ObjectMgr::findClosest(immut Vector3f& pos, f32 maxLen, immut Condition* cond)
 {
@@ -190,7 +190,7 @@ Creature* ObjectMgr::findClosest(immut Vector3f& pos, f32 maxLen, immut Conditio
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ObjectMgr::drawShadow(Graphics& gfx, Texture* tex)
 {
@@ -204,7 +204,7 @@ void ObjectMgr::drawShadow(Graphics& gfx, Texture* tex)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 MonoObjectMgr::MonoObjectMgr()
 {
@@ -215,7 +215,7 @@ MonoObjectMgr::MonoObjectMgr()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MonoObjectMgr::create(int num)
 {
@@ -231,7 +231,7 @@ void MonoObjectMgr::create(int num)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MonoObjectMgr::postUpdate(int unused, f32 deltaTime)
 {
@@ -249,7 +249,7 @@ void MonoObjectMgr::postUpdate(int unused, f32 deltaTime)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MonoObjectMgr::drawShadow(Graphics& gfx, Texture*)
 {
@@ -265,7 +265,7 @@ void MonoObjectMgr::drawShadow(Graphics& gfx, Texture*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MonoObjectMgr::refresh(Graphics& gfx)
 {
@@ -278,7 +278,7 @@ void MonoObjectMgr::refresh(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MonoObjectMgr::update()
 {
@@ -298,7 +298,7 @@ void MonoObjectMgr::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000044
  */
 int MonoObjectMgr::getEmptyIndex()
@@ -312,7 +312,7 @@ int MonoObjectMgr::getEmptyIndex()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000044
  */
 int MonoObjectMgr::getIndex(Creature* obj)
@@ -326,7 +326,7 @@ int MonoObjectMgr::getIndex(Creature* obj)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Creature* MonoObjectMgr::birth()
 {
@@ -353,7 +353,7 @@ Creature* MonoObjectMgr::birth()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MonoObjectMgr::kill(Creature* obj)
 {
@@ -369,7 +369,7 @@ void MonoObjectMgr::kill(Creature* obj)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Creature* MonoObjectMgr::getCreature(int id)
 {
@@ -380,7 +380,7 @@ Creature* MonoObjectMgr::getCreature(int id)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int MonoObjectMgr::getFirst()
 {
@@ -398,7 +398,7 @@ int MonoObjectMgr::getFirst()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int MonoObjectMgr::getNext(int id)
 {
@@ -416,7 +416,7 @@ int MonoObjectMgr::getNext(int id)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool MonoObjectMgr::isDone(int index)
 {
@@ -428,7 +428,7 @@ bool MonoObjectMgr::isDone(int index)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MonoObjectMgr::search(ObjectMgr* mgr)
 {
@@ -496,7 +496,7 @@ void MonoObjectMgr::search(ObjectMgr* mgr)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MonoObjectMgr::searchSelf()
 {
@@ -568,7 +568,7 @@ void MonoObjectMgr::searchSelf()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PolyObjectMgr::PolyObjectMgr(int num)
 {
@@ -585,7 +585,7 @@ PolyObjectMgr::PolyObjectMgr(int num)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PolyObjectMgr::create(int num)
 {
@@ -599,7 +599,7 @@ void PolyObjectMgr::create(int num)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PolyObjectMgr::update()
 {
@@ -622,7 +622,7 @@ void PolyObjectMgr::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PolyObjectMgr::postUpdate(int unused, f32 deltaTime)
 {
@@ -637,7 +637,7 @@ void PolyObjectMgr::postUpdate(int unused, f32 deltaTime)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PolyObjectMgr::refresh(Graphics& gfx)
 {
@@ -652,7 +652,7 @@ void PolyObjectMgr::refresh(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PolyObjectMgr::drawShadow(Graphics& gfx, Texture*)
 {
@@ -667,14 +667,14 @@ void PolyObjectMgr::drawShadow(Graphics& gfx, Texture*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PolyObjectMgr::beginRegister()
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PolyObjectMgr::registerClass(int id, Creature* obj, int size)
 {
@@ -697,7 +697,7 @@ void PolyObjectMgr::registerClass(int id, Creature* obj, int size)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PolyObjectMgr::endRegister()
 {
@@ -708,7 +708,7 @@ void PolyObjectMgr::endRegister()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000044
  */
 int PolyObjectMgr::getEmptyIndex()
@@ -723,7 +723,7 @@ int PolyObjectMgr::getEmptyIndex()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000080
  */
 int PolyObjectMgr::getIndex(Creature* obj)
@@ -739,7 +739,7 @@ int PolyObjectMgr::getIndex(Creature* obj)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000048
  */
 int PolyObjectMgr::getTemplateIndex(int id)
@@ -753,7 +753,7 @@ int PolyObjectMgr::getTemplateIndex(int id)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Creature* PolyObjectMgr::get(int i)
 {
@@ -761,7 +761,7 @@ Creature* PolyObjectMgr::get(int i)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Creature* PolyObjectMgr::birth(int id)
 {
@@ -797,7 +797,7 @@ Creature* PolyObjectMgr::birth(int id)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PolyObjectMgr::kill(Creature* obj)
 {
@@ -812,7 +812,7 @@ void PolyObjectMgr::kill(Creature* obj)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Creature* PolyObjectMgr::getCreature(int id)
 {
@@ -823,7 +823,7 @@ Creature* PolyObjectMgr::getCreature(int id)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int PolyObjectMgr::getFirst()
 {
@@ -842,7 +842,7 @@ int PolyObjectMgr::getFirst()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int PolyObjectMgr::getNext(int idx)
 {
@@ -861,7 +861,7 @@ int PolyObjectMgr::getNext(int idx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool PolyObjectMgr::isDone(int idx)
 {
@@ -872,7 +872,7 @@ bool PolyObjectMgr::isDone(int idx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PolyObjectMgr::search(ObjectMgr* mgr)
 {
@@ -882,7 +882,7 @@ void PolyObjectMgr::search(ObjectMgr* mgr)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PolyObjectMgr::searchSelf()
 {
@@ -1019,7 +1019,7 @@ void ObjectMgr::search(ObjectMgr* otherMgr)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Creature* CreatureNodeMgr::getCreature(int idx)
 {
@@ -1036,7 +1036,7 @@ Creature* CreatureNodeMgr::getCreature(int idx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int CreatureNodeMgr::getFirst()
 {
@@ -1044,7 +1044,7 @@ int CreatureNodeMgr::getFirst()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int CreatureNodeMgr::getNext(int idx)
 {
@@ -1052,7 +1052,7 @@ int CreatureNodeMgr::getNext(int idx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool CreatureNodeMgr::isDone(int idx)
 {
@@ -1064,7 +1064,7 @@ bool CreatureNodeMgr::isDone(int idx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int CreatureNodeMgr::getSize()
 {

@@ -6,19 +6,19 @@
 #include "teki.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("taireactionactions")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiDeadAction::act(Teki& teki)
 {
@@ -26,7 +26,7 @@ bool TaiDeadAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiLifeZeroAction::start(Teki& teki)
 {
@@ -34,7 +34,7 @@ void TaiLifeZeroAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiLifeDamageAction::start(Teki& teki)
 {
@@ -42,7 +42,7 @@ void TaiLifeDamageAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiDyeAction::start(Teki& teki)
 {
@@ -50,7 +50,7 @@ void TaiDyeAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiStartDyingAction::start(Teki& teki)
 {
@@ -61,7 +61,7 @@ void TaiStartDyingAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiSpawnItemsAction::start(Teki& teki)
 {
@@ -69,7 +69,7 @@ void TaiSpawnItemsAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiCreateDeadEffectAction::start(Teki& teki)
 {
@@ -77,7 +77,7 @@ void TaiCreateDeadEffectAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiDyingAction::start(Teki& teki)
 {
@@ -87,7 +87,7 @@ void TaiDyingAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiDyingAction::act(Teki& teki)
 {
@@ -100,7 +100,7 @@ bool TaiDyingAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiDamageCountResetAction::start(Teki& teki)
 {
@@ -108,7 +108,7 @@ void TaiDamageCountResetAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiDamageCountAction::act(Teki& teki)
 {
@@ -116,7 +116,7 @@ bool TaiDamageCountAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiDamageScaleAction::act(Teki& teki)
 {
@@ -125,7 +125,7 @@ bool TaiDamageScaleAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiDamageAction::act(Teki& teki)
 {
@@ -136,7 +136,7 @@ bool TaiDamageAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiSimultaneousDamageAction::act(Teki& teki)
 {
@@ -150,7 +150,7 @@ bool TaiSimultaneousDamageAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiCounterattackSimultaneousDamageAction::act(Teki& teki)
 {
@@ -169,7 +169,7 @@ bool TaiCounterattackSimultaneousDamageAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiDamagingAction::start(Teki& teki)
 {
@@ -178,7 +178,7 @@ void TaiDamagingAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiDamagingAction::act(Teki& teki)
 {
@@ -190,7 +190,7 @@ bool TaiDamagingAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiTargetNearestAssailantAction::act(Teki& teki)
 {
@@ -206,7 +206,7 @@ bool TaiTargetNearestAssailantAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiTargetNearestCollisionAction::actByEvent(immut TekiEvent& event)
 {
@@ -229,7 +229,7 @@ bool TaiTargetNearestCollisionAction::actByEvent(immut TekiEvent& event)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiStickedAction::act(Teki& teki)
 {
@@ -239,7 +239,7 @@ bool TaiStickedAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiSmashedAction::actByEvent(immut TekiEvent& event)
 {
@@ -255,7 +255,7 @@ bool TaiSmashedAction::actByEvent(immut TekiEvent& event)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiBeingPressedAction::start(Teki& teki)
 {
@@ -265,7 +265,7 @@ void TaiBeingPressedAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiPressedAction::actByEvent(immut TekiEvent& event)
 {
@@ -278,7 +278,7 @@ bool TaiPressedAction::actByEvent(immut TekiEvent& event)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiWarnAction::start(Teki& teki)
 {
@@ -286,7 +286,7 @@ void TaiWarnAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiDangerLifeAction::act(Teki& teki)
 {

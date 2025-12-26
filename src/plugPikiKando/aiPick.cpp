@@ -6,19 +6,19 @@
 #include "PikiState.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("PickItem")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 ActPickItem::ActPickItem(Piki* piki)
     : AndAction(piki)
@@ -32,7 +32,7 @@ ActPickItem::ActPickItem(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Creature* ActPickItem::findItem()
 {
@@ -59,7 +59,7 @@ Creature* ActPickItem::findItem()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActPickItem::init(Creature* target)
 {
@@ -78,7 +78,7 @@ void ActPickItem::init(Creature* target)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActPickItem::exec()
 {
@@ -114,7 +114,7 @@ int ActPickItem::exec()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActPickItem::cleanup()
 {
@@ -123,7 +123,7 @@ void ActPickItem::cleanup()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000080
  */
 ActFlower::ActFlower(Piki* piki)
@@ -132,7 +132,7 @@ ActFlower::ActFlower(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActFlower::init(Creature*)
 {
@@ -156,7 +156,7 @@ void ActFlower::init(Creature*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActFlower::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
@@ -182,7 +182,7 @@ void ActFlower::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActFlower::cleanup()
 {
@@ -190,7 +190,7 @@ void ActFlower::cleanup()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActFlower::exec()
 {

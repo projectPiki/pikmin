@@ -6,19 +6,19 @@
 #include <stdlib.h>
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(31)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("P2DPrint")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 P2DPrint::P2DPrint(P2DFont* font, int spacing, int leading, Colour topColour, Colour bottomColour)
 {
@@ -26,7 +26,7 @@ P2DPrint::P2DPrint(P2DFont* font, int spacing, int leading, Colour topColour, Co
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void P2DPrint::private_initiate(P2DFont* font, int spacing, int leading, Colour topColour, Colour bottomColour)
 {
@@ -59,7 +59,7 @@ void P2DPrint::private_initiate(P2DFont* font, int spacing, int leading, Colour 
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void P2DPrint::locate(int x, int y)
 {
@@ -71,7 +71,7 @@ void P2DPrint::locate(int x, int y)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void P2DPrint::setFontSize()
 {
@@ -82,7 +82,7 @@ void P2DPrint::setFontSize()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void P2DPrint::initchar()
 {
@@ -97,7 +97,7 @@ void P2DPrint::initchar()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void P2DPrint::printReturn(const char* textBuffer, int boxWidth, int boxHeight, P2DTextBoxHBinding hBind, P2DTextBoxVBinding vBind,
                            int xOffset, int yOffset)
@@ -151,7 +151,7 @@ void P2DPrint::printReturn(const char* textBuffer, int boxWidth, int boxHeight, 
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 P2DPrint::parse(const u8* textBuffer, int textLen, int maxWidth, u16* outXPosBuffer, P2DPrint::TSize& textSize, bool doDraw)
 {
@@ -297,7 +297,7 @@ f32 P2DPrint::parse(const u8* textBuffer, int textLen, int maxWidth, u16* outXPo
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 u16 P2DPrint::doEscapeCode(const u8** textPtr)
 {
@@ -411,7 +411,7 @@ u16 P2DPrint::doEscapeCode(const u8** textPtr)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void P2DPrint::doCtrlCode(int inputChar)
 {
@@ -460,7 +460,7 @@ void P2DPrint::doCtrlCode(int inputChar)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 s32 P2DPrint::getNumber(const u8** strPtr, s32 defaultValue, s32 invalidValue, int base)
 {

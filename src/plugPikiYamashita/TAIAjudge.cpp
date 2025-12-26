@@ -7,26 +7,26 @@
 #include "teki.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("TAIAjudge")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAIAsearchWorkObject::start(Teki& teki)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAsearchWorkObject::act(Teki& teki)
 {
@@ -57,7 +57,7 @@ bool TAIAsearchWorkObject::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAlessLife::act(Teki& teki)
 {
@@ -68,7 +68,7 @@ bool TAIAlessLife::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAmoreLife::act(Teki& teki)
 {
@@ -79,7 +79,7 @@ bool TAIAmoreLife::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAjudgeOptionalRange::act(Teki& teki)
 {
@@ -91,7 +91,7 @@ bool TAIAjudgeOptionalRange::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAjudgeOptionalRange::setTargetPositionCreature(Teki& teki)
 {
@@ -107,7 +107,7 @@ bool TAIAjudgeOptionalRange::setTargetPositionCreature(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAinsideOptionalRange::judgement(Teki& teki)
 {
@@ -116,7 +116,7 @@ bool TAIAinsideOptionalRange::judgement(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAoutsideOptionalRange::judgement(Teki& teki)
 {
@@ -125,7 +125,7 @@ bool TAIAoutsideOptionalRange::judgement(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAcheckInsideRangePiki::act(Teki& teki)
 {
@@ -148,7 +148,7 @@ bool TAIAcheckInsideRangePiki::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAinsideTerritoryRangeNavi::act(Teki& teki)
 {
@@ -167,7 +167,7 @@ bool TAIAinsideTerritoryRangeNavi::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAoutsideTerritoryRangeNavi::act(Teki& teki)
 {
@@ -185,7 +185,7 @@ bool TAIAoutsideTerritoryRangeNavi::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAvisibleNavi::act(Teki& teki)
 {
@@ -198,7 +198,7 @@ bool TAIAvisibleNavi::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAvisiblePiki::act(Teki& teki)
 {
@@ -218,7 +218,7 @@ bool TAIAvisiblePiki::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000CC
  */
 bool TAIAattackableTarget::checkDist(Teki& teki)
@@ -227,7 +227,7 @@ bool TAIAattackableTarget::checkDist(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAattackableTarget::checkAngle(Teki& teki)
 {
@@ -238,7 +238,7 @@ bool TAIAattackableTarget::checkAngle(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAattackableTarget::judge(Teki& teki)
 {
@@ -246,7 +246,7 @@ bool TAIAattackableTarget::judge(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAattackableTarget::act(Teki& teki)
 {
@@ -262,7 +262,7 @@ bool TAIAattackableTarget::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAunvisibleTarget::act(Teki& teki)
 {
@@ -280,7 +280,7 @@ bool TAIAunvisibleTarget::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAstickingPiki::act(Teki& teki)
 {
@@ -295,7 +295,7 @@ bool TAIAstickingPiki::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAIAdistanceTarget::start(Teki& teki)
 {
@@ -305,7 +305,7 @@ void TAIAdistanceTarget::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAdistanceTarget::act(Teki& teki)
 {
@@ -319,7 +319,7 @@ bool TAIAdistanceTarget::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAIAcheckTurnAngle::start(Teki& teki)
 {
@@ -328,7 +328,7 @@ void TAIAcheckTurnAngle::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAcheckTurnAngle::act(Teki& teki)
 {

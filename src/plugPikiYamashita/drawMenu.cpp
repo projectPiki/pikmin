@@ -7,19 +7,19 @@
 #include "zen/Math.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(17)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("drawMenu")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawMenuText::init(bool useNewColors, immut Colour& charColor, immut Colour& gradColor)
 {
@@ -47,7 +47,7 @@ void zen::DrawMenuText::init(bool useNewColors, immut Colour& charColor, immut C
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawMenuText::setPane(P2DPane* textPane, P2DPane* parentPane)
 {
@@ -71,7 +71,7 @@ void zen::DrawMenuText::setPane(P2DPane* textPane, P2DPane* parentPane)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00006C
  */
 void zen::DrawMenuText::setScale(f32 xScale, f32 yScale)
@@ -83,7 +83,7 @@ void zen::DrawMenuText::setScale(f32 xScale, f32 yScale)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawMenuText::update(bool isIncreasing, immut Colour& charBlend, immut Colour& gradBlend)
 {
@@ -133,7 +133,7 @@ void zen::DrawMenuText::update(bool isIncreasing, immut Colour& charBlend, immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawMenuTitle::setPane(P2DScreen* screen, P2DPane* parent, u32 tag)
 {
@@ -146,7 +146,7 @@ void zen::DrawMenuTitle::setPane(P2DScreen* screen, P2DPane* parent, u32 tag)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawMenuTitle::start()
 {
@@ -154,7 +154,7 @@ void zen::DrawMenuTitle::start()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawMenuTitle::wait()
 {
@@ -162,7 +162,7 @@ void zen::DrawMenuTitle::wait()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00000C
  */
 void zen::DrawMenuTitle::operation()
@@ -171,7 +171,7 @@ void zen::DrawMenuTitle::operation()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawMenuTitle::end()
 {
@@ -179,7 +179,7 @@ void zen::DrawMenuTitle::end()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool zen::DrawMenuTitle::update(f32 dt)
 {
@@ -219,7 +219,7 @@ bool zen::DrawMenuTitle::update(f32 dt)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::DrawMenu::DrawMenu(immut char* bloFileName, bool useAlphaMgr, bool useTexAnimMgr)
     : DrawScreen(bloFileName, nullptr, useAlphaMgr, useTexAnimMgr)
@@ -355,7 +355,7 @@ zen::DrawMenu::DrawMenu(immut char* bloFileName, bool useAlphaMgr, bool useTexAn
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawMenu::start(int select)
 {
@@ -398,7 +398,7 @@ void zen::DrawMenu::start(int select)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawMenu::updateMenuPanes()
 {
@@ -441,7 +441,7 @@ void zen::DrawMenu::updateMenuPanes()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000054
  */
 void zen::DrawMenu::setMirror(P2DPane*)
@@ -450,7 +450,7 @@ void zen::DrawMenu::setMirror(P2DPane*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0003E4
  */
 void zen::DrawMenu::updateSpectPanes(P2DPane*, P2DPicture**, bool)
@@ -459,7 +459,7 @@ void zen::DrawMenu::updateSpectPanes(P2DPane*, P2DPicture**, bool)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawMenu::updateSelectMenuNo(Controller* controller)
 {
@@ -488,7 +488,7 @@ void zen::DrawMenu::updateSelectMenuNo(Controller* controller)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool zen::DrawMenu::update(Controller* controller)
 {
@@ -574,7 +574,7 @@ bool zen::DrawMenu::update(Controller* controller)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawMenu::draw(Graphics&)
 {
@@ -584,7 +584,7 @@ void zen::DrawMenu::draw(Graphics&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawMenu::setMenuItemActiveSw(int idx, bool set)
 {
@@ -597,7 +597,7 @@ void zen::DrawMenu::setMenuItemActiveSw(int idx, bool set)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawMenu::setCancelSelectMenuNo(int menuNo)
 {

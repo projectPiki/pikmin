@@ -7,13 +7,13 @@
 #include "timers.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(24)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("effectMgr")
@@ -366,7 +366,7 @@ SimplePtclLoadInfo simplePtclLoadInfo[EffectMgr::SIMPLE_COUNT] = {
 EffectMgr* effectMgr;
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0001C0
  */
 SmokeEmitter::SmokeEmitter(int count, Texture* tex)
@@ -387,7 +387,7 @@ SmokeEmitter::SmokeEmitter(int count, Texture* tex)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 SmokeEmitter::Smoke* SmokeEmitter::emit(immut Vector3f& pos, immut Vector3f& vel)
@@ -416,7 +416,7 @@ SmokeEmitter::Smoke* SmokeEmitter::emit(immut Vector3f& pos, immut Vector3f& vel
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00016C
  */
 void SmokeEmitter::update(f32 timeStep)
@@ -461,7 +461,7 @@ void SmokeEmitter::update(f32 timeStep)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SmokeEmitter::draw(Graphics& gfx)
 {
@@ -505,7 +505,7 @@ void SmokeEmitter::draw(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000A0
  */
 EffectParticleRegistration::EffectParticleRegistration(immut char* pcrFile, immut char* ptclTexFile, immut char* childPtclTexFile)
@@ -525,7 +525,7 @@ EffectParticleRegistration::EffectParticleRegistration(immut char* pcrFile, immu
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000060
  */
 void EffectShape::initShape(immut char* modelFile)
@@ -536,7 +536,7 @@ void EffectShape::initShape(immut char* modelFile)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000008
  */
 bool EffectShape::update()
@@ -545,7 +545,7 @@ bool EffectShape::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000BC
  */
 void EffectShape::refresh(Graphics& gfx, Matrix4f& mtx, f32* p4)
@@ -560,7 +560,7 @@ void EffectShape::refresh(Graphics& gfx, Matrix4f& mtx, f32* p4)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00006C
  */
 void EffShpInst::initEffShpInst()
@@ -576,7 +576,7 @@ void EffShpInst::initEffShpInst()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool EffShpInst::update()
 {
@@ -604,7 +604,7 @@ bool EffShpInst::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000130
  */
 void EffShpInst::draw(Graphics& gfx)
@@ -621,7 +621,7 @@ void EffShpInst::draw(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000124
  */
 EffectGeometryRegistration::EffectGeometryRegistration(immut char* modelFile, immut char* animFile, f32 scale, u8 loopMax)
@@ -640,7 +640,7 @@ EffectGeometryRegistration::EffectGeometryRegistration(immut char* modelFile, im
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 EffShpInst* EffectGeometryRegistration::create(immut Vector3f& pos, immut Vector3f& scale, immut Vector3f& rot)
 {
@@ -665,7 +665,7 @@ EffShpInst* EffectGeometryRegistration::create(immut Vector3f& pos, immut Vector
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000064
  */
 EffectSimpleParticleRegistration::EffectSimpleParticleRegistration(immut char* texFile, Colour p2, Colour p3)
@@ -679,7 +679,7 @@ EffectSimpleParticleRegistration::EffectSimpleParticleRegistration(immut char* t
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 EffectMgr::EffectMgr()
     : CoreNode("effectMgr")
@@ -731,7 +731,7 @@ EffectMgr::EffectMgr()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void EffectMgr::initEffectGeometry(int effShpCount)
 {
@@ -742,7 +742,7 @@ void EffectMgr::initEffectGeometry(int effShpCount)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void EffectMgr::update()
 {
@@ -765,7 +765,7 @@ void EffectMgr::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void EffectMgr::draw(Graphics& gfx)
 {
@@ -777,7 +777,7 @@ void EffectMgr::draw(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void EffectMgr::drawshapes(Graphics& gfx)
 {
@@ -787,7 +787,7 @@ void EffectMgr::drawshapes(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void EffectMgr::exit()
 {
@@ -796,7 +796,7 @@ void EffectMgr::exit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::particleGenerator* EffectMgr::create(EffectMgr::effTypeTable effID, immut Vector3f& pos,
                                           zen::CallBack1<zen::particleGenerator*>* cbGen,
@@ -806,7 +806,7 @@ zen::particleGenerator* EffectMgr::create(EffectMgr::effTypeTable effID, immut V
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 EffShpInst* EffectMgr::create(EffectMgr::modelTypeTable modID, immut Vector3f& pos, immut Vector3f& scale, immut Vector3f& rot)
 {
@@ -814,7 +814,7 @@ EffShpInst* EffectMgr::create(EffectMgr::modelTypeTable modID, immut Vector3f& p
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000060
  */
 zen::particleMdl* EffectMgr::create(EffectMgr::simpleTypeTable simpleID, immut Vector3f& globalPos, s16 lifeTime, immut Vector3f& vel,
@@ -824,7 +824,7 @@ zen::particleMdl* EffectMgr::create(EffectMgr::simpleTypeTable simpleID, immut V
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 EffShpInst* EffectMgr::getShapeInst()
 {
@@ -840,7 +840,7 @@ EffShpInst* EffectMgr::getShapeInst()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000048
  */
 void EffectMgr::putShapeInst(EffShpInst* inst)
@@ -850,7 +850,7 @@ void EffectMgr::putShapeInst(EffShpInst* inst)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void EffectMgr::killAllShapes()
 {

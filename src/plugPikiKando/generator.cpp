@@ -12,13 +12,13 @@
 #include "teki.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(17)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("generator");
@@ -35,7 +35,7 @@ GeneratorMgr* limitGeneratorMgr;
 GeneratorList* generatorList;
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000088
  */
 static void writeID(RandomAccessStream& output, u32 id)
@@ -49,7 +49,7 @@ static void writeID(RandomAccessStream& output, u32 id)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000088
  */
 static u32 readID(RandomAccessStream& input)
@@ -64,7 +64,7 @@ static u32 readID(RandomAccessStream& input)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 static void printID(u32)
@@ -72,7 +72,7 @@ static void printID(u32)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000028
  */
 static void sprintID(char*, u32)
@@ -81,7 +81,7 @@ static void sprintID(char*, u32)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 GenBase::GenBase(u32 id, immut char* type, immut char* name)
     : mID(id)
@@ -92,7 +92,7 @@ GenBase::GenBase(u32 id, immut char* type, immut char* name)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 void GenBase::writeVersion(RandomAccessStream& output)
@@ -101,7 +101,7 @@ void GenBase::writeVersion(RandomAccessStream& output)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00016C
  */
 void GenBase::write(RandomAccessStream& output)
@@ -119,7 +119,7 @@ void GenBase::write(RandomAccessStream& output)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GenBase::ramSaveParameters(RandomAccessStream& output)
 {
@@ -127,7 +127,7 @@ void GenBase::ramSaveParameters(RandomAccessStream& output)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GenBase::ramLoadParameters(RandomAccessStream& input)
 {
@@ -135,7 +135,7 @@ void GenBase::ramLoadParameters(RandomAccessStream& input)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 void GenBase::readVersion(RandomAccessStream& input)
@@ -144,7 +144,7 @@ void GenBase::readVersion(RandomAccessStream& input)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000110
  */
 void GenBase::read(RandomAccessStream& input)
@@ -165,7 +165,7 @@ void GenBase::read(RandomAccessStream& input)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 static GenObject* makeObjectPiki()
 {
@@ -173,7 +173,7 @@ static GenObject* makeObjectPiki()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000070
  */
 GenObject* GenObjectFactory::getProduct(u32 id)
@@ -182,7 +182,7 @@ GenObject* GenObjectFactory::getProduct(u32 id)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000E8
  */
 void GenObjectFactory::createInstance()
@@ -194,7 +194,7 @@ void GenObjectFactory::createInstance()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 u32 GenObject::getLatestVersion()
 {
@@ -202,7 +202,7 @@ u32 GenObject::getLatestVersion()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 static GenType* makeTypeOne()
 {
@@ -210,7 +210,7 @@ static GenType* makeTypeOne()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 static GenType* makeTypeAtOnce()
 {
@@ -218,7 +218,7 @@ static GenType* makeTypeAtOnce()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 static GenType* makeTypeInitRand()
 {
@@ -226,7 +226,7 @@ static GenType* makeTypeInitRand()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000070
  */
 GenType* GenTypeFactory::getProduct(u32 id)
@@ -235,7 +235,7 @@ GenType* GenTypeFactory::getProduct(u32 id)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0001FC
  */
 void GenTypeFactory::createInstance()
@@ -249,7 +249,7 @@ void GenTypeFactory::createInstance()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 u32 GenType::getLatestVersion()
 {
@@ -257,7 +257,7 @@ u32 GenType::getLatestVersion()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GenType::ramSaveParameters(RandomAccessStream& output)
 {
@@ -266,7 +266,7 @@ void GenType::ramSaveParameters(RandomAccessStream& output)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GenType::ramLoadParameters(RandomAccessStream& input)
 {
@@ -275,7 +275,7 @@ void GenType::ramLoadParameters(RandomAccessStream& input)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GenTypeOne::ramSaveParameters(RandomAccessStream& output)
 {
@@ -286,7 +286,7 @@ void GenTypeOne::ramSaveParameters(RandomAccessStream& output)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GenTypeOne::ramLoadParameters(RandomAccessStream& input)
 {
@@ -297,7 +297,7 @@ void GenTypeOne::ramLoadParameters(RandomAccessStream& input)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GenTypeAtOnce::ramSaveParameters(RandomAccessStream& output)
 {
@@ -306,7 +306,7 @@ void GenTypeAtOnce::ramSaveParameters(RandomAccessStream& output)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GenTypeAtOnce::ramLoadParameters(RandomAccessStream& input)
 {
@@ -315,7 +315,7 @@ void GenTypeAtOnce::ramLoadParameters(RandomAccessStream& input)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GenTypeInitRand::ramSaveParameters(RandomAccessStream& output)
 {
@@ -325,7 +325,7 @@ void GenTypeInitRand::ramSaveParameters(RandomAccessStream& output)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GenTypeInitRand::ramLoadParameters(RandomAccessStream& input)
 {
@@ -335,7 +335,7 @@ void GenTypeInitRand::ramLoadParameters(RandomAccessStream& input)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GenArea::doWrite(RandomAccessStream& output)
 {
@@ -345,7 +345,7 @@ void GenArea::doWrite(RandomAccessStream& output)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GenArea::doRead(RandomAccessStream& input)
 {
@@ -355,7 +355,7 @@ void GenArea::doRead(RandomAccessStream& input)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 static GenArea* makeCircleArea()
 {
@@ -363,7 +363,7 @@ static GenArea* makeCircleArea()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 static GenArea* makePointArea()
 {
@@ -371,7 +371,7 @@ static GenArea* makePointArea()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000070
  */
 GenArea* GenAreaFactory::getProduct(u32 id)
@@ -380,7 +380,7 @@ GenArea* GenAreaFactory::getProduct(u32 id)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0001A4
  */
 void GenAreaFactory::createInstance()
@@ -394,7 +394,7 @@ void GenAreaFactory::createInstance()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 u32 GenArea::getLatestVersion()
 {
@@ -402,7 +402,7 @@ u32 GenArea::getLatestVersion()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GenAreaCircle::ramSaveParameters(RandomAccessStream& output)
 {
@@ -410,7 +410,7 @@ void GenAreaCircle::ramSaveParameters(RandomAccessStream& output)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GenAreaCircle::ramLoadParameters(RandomAccessStream& input)
 {
@@ -418,7 +418,7 @@ void GenAreaCircle::ramLoadParameters(RandomAccessStream& input)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Generator::Generator()
 {
@@ -445,7 +445,7 @@ Generator::Generator()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Generator::Generator(int)
 {
@@ -468,7 +468,7 @@ Generator::Generator(int)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000054
  */
 Generator::~Generator()
@@ -477,7 +477,7 @@ Generator::~Generator()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000058
  */
 void Generator::updateUseList()
@@ -490,7 +490,7 @@ void Generator::updateUseList()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Generator::isExpired()
 {
@@ -508,7 +508,7 @@ bool Generator::isExpired()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Generator::loadCreature(RandomAccessStream& input)
 {
@@ -538,7 +538,7 @@ void Generator::loadCreature(RandomAccessStream& input)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Generator::saveCreature(RandomAccessStream& output)
 {
@@ -557,7 +557,7 @@ void Generator::saveCreature(RandomAccessStream& output)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Generator::init()
 {
@@ -636,7 +636,7 @@ void Generator::init()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Generator::informDeath(Creature* creature)
 {
@@ -659,14 +659,14 @@ void Generator::informDeath(Creature* creature)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Generator::update()
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Generator::render(Graphics& gfx)
 {
@@ -706,7 +706,7 @@ void Generator::render(Graphics& gfx)
 const char* coStrings[] = { "なし", "常に" };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Generator::read(RandomAccessStream& input)
 {
@@ -795,7 +795,7 @@ void Generator::read(RandomAccessStream& input)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Generator::write(RandomAccessStream& output)
 {
@@ -858,7 +858,7 @@ void Generator::write(RandomAccessStream& output)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 GeneratorMgr::GeneratorMgr()
     : Node("genMgr")
@@ -878,7 +878,7 @@ GeneratorMgr::GeneratorMgr()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GeneratorMgr::init()
 {
@@ -888,7 +888,7 @@ void GeneratorMgr::init()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GeneratorMgr::setDayLimit(int limit)
 {
@@ -898,7 +898,7 @@ void GeneratorMgr::setDayLimit(int limit)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GeneratorMgr::updateUseList()
 {
@@ -908,7 +908,7 @@ void GeneratorMgr::updateUseList()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GeneratorMgr::update()
 {
@@ -918,7 +918,7 @@ void GeneratorMgr::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GeneratorMgr::render(Graphics& gfx)
 {
@@ -928,7 +928,7 @@ void GeneratorMgr::render(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GeneratorMgr::read(RandomAccessStream& input, bool p2)
 {
@@ -988,7 +988,7 @@ void GeneratorMgr::read(RandomAccessStream& input, bool p2)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000D4
  */
 void GeneratorMgr::write(RandomAccessStream& output)
@@ -1006,7 +1006,7 @@ void GeneratorMgr::write(RandomAccessStream& output)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000050
  */
 void GeneratorMgr::setNaviPos()
@@ -1018,7 +1018,7 @@ void GeneratorMgr::setNaviPos()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000050
  */
 void GeneratorMgr::changeNaviPos()
@@ -1030,7 +1030,7 @@ void GeneratorMgr::changeNaviPos()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GenObjectPiki::ramSaveParameters(RandomAccessStream& output)
 {
@@ -1039,7 +1039,7 @@ void GenObjectPiki::ramSaveParameters(RandomAccessStream& output)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GenObjectPiki::ramLoadParameters(RandomAccessStream& input)
 {
@@ -1048,7 +1048,7 @@ void GenObjectPiki::ramLoadParameters(RandomAccessStream& input)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Creature* GenObjectPiki::birth(BirthInfo& info)
 {
@@ -1097,7 +1097,7 @@ Creature* GenObjectPiki::birth(BirthInfo& info)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000038
  */
 f32 deg2rad(int val)
@@ -1106,7 +1106,7 @@ f32 deg2rad(int val)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GenTypeOne::init(Generator* gen)
 {
@@ -1123,7 +1123,7 @@ void GenTypeOne::init(Generator* gen)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GenTypeOne::setBirthInfo(BirthInfo& info, Generator* gen)
 {
@@ -1142,7 +1142,7 @@ void GenTypeOne::setBirthInfo(BirthInfo& info, Generator* gen)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GenTypeOne::render(Graphics& gfx, Generator* gen)
 {
@@ -1164,7 +1164,7 @@ void GenTypeOne::render(Graphics& gfx, Generator* gen)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int GenTypeAtOnce::getMaxCount()
 {
@@ -1172,7 +1172,7 @@ int GenTypeAtOnce::getMaxCount()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GenTypeAtOnce::init(Generator* gen)
 {
@@ -1192,7 +1192,7 @@ void GenTypeAtOnce::init(Generator* gen)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GenTypeAtOnce::setBirthInfo(BirthInfo& info, Generator* gen)
 {
@@ -1208,7 +1208,7 @@ void GenTypeAtOnce::setBirthInfo(BirthInfo& info, Generator* gen)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int GenTypeInitRand::getMaxCount()
 {
@@ -1216,7 +1216,7 @@ int GenTypeInitRand::getMaxCount()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GenTypeInitRand::init(Generator* gen)
 {
@@ -1236,7 +1236,7 @@ void GenTypeInitRand::init(Generator* gen)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GenTypeInitRand::setBirthInfo(BirthInfo& info, Generator* gen)
 {
@@ -1252,7 +1252,7 @@ void GenTypeInitRand::setBirthInfo(BirthInfo& info, Generator* gen)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Vector3f GenAreaPoint::getPos(Generator* gen)
 {
@@ -1261,14 +1261,14 @@ Vector3f GenAreaPoint::getPos(Generator* gen)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GenAreaPoint::render(Graphics&, Generator*)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Vector3f GenAreaCircle::getPos(Generator* gen)
 {
@@ -1287,7 +1287,7 @@ Vector3f GenAreaCircle::getPos(Generator* gen)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GenAreaCircle::render(Graphics& gfx, Generator* gen)
 {
@@ -1312,7 +1312,7 @@ void GenAreaCircle::render(Graphics& gfx, Generator* gen)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 GeneratorList::GeneratorList()
 {
@@ -1320,7 +1320,7 @@ GeneratorList::GeneratorList()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Generator* GeneratorList::findGenerator(int idx)
 {
@@ -1335,7 +1335,7 @@ Generator* GeneratorList::findGenerator(int idx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GeneratorList::createRamGenerators()
 {
@@ -1350,7 +1350,7 @@ void GeneratorList::createRamGenerators()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GeneratorList::updateUseList()
 {

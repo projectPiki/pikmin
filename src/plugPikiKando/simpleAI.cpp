@@ -3,19 +3,19 @@
 #include "sysNew.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(7)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("simpleAI");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 AICreature::AICreature(CreatureProp* props)
     : Creature(props)
@@ -34,7 +34,7 @@ AICreature::AICreature(CreatureProp* props)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void AICreature::collisionCallback(immut CollEvent& event)
 {
@@ -47,7 +47,7 @@ void AICreature::collisionCallback(immut CollEvent& event)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void AICreature::bounceCallback()
 {
@@ -58,7 +58,7 @@ void AICreature::bounceCallback()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void AICreature::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
@@ -80,7 +80,7 @@ void AICreature::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void AICreature::clearEventFlags()
 {
@@ -92,7 +92,7 @@ void AICreature::clearEventFlags()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void AICreature::setEventFlag(int flagID, bool value)
 {
@@ -108,7 +108,7 @@ void AICreature::setEventFlag(int flagID, bool value)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00000C
  */
 bool AICreature::checkEventFlag(int flag)
@@ -121,14 +121,14 @@ bool AICreature::checkEventFlag(int flag)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 SimpleAI::SimpleAI()
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SimpleAI::procMsg(AICreature* creature, Msg* msg)
 {
@@ -142,7 +142,7 @@ void SimpleAI::procMsg(AICreature* creature, Msg* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SimpleAI::addState(int stateID, int motionID, SAIAction* initAction, SAIAction* execAction, SAIAction* cleanupAction)
 {
@@ -156,7 +156,7 @@ void SimpleAI::addState(int stateID, int motionID, SAIAction* initAction, SAIAct
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 SAIArrow* SimpleAI::addArrow(int stateIdId, SAIEvent* event, int nextStateId)
 {
@@ -175,7 +175,7 @@ SAIArrow* SimpleAI::addArrow(int stateIdId, SAIEvent* event, int nextStateId)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SimpleAI::start(AICreature* creature, int stateID)
 {
@@ -183,7 +183,7 @@ void SimpleAI::start(AICreature* creature, int stateID)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SimpleAI::exec(AICreature* creature)
 {
@@ -195,7 +195,7 @@ void SimpleAI::exec(AICreature* creature)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SimpleAI::checkEvent(AICreature* creature)
 {
@@ -228,7 +228,7 @@ void SimpleAI::checkEvent(AICreature* creature)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 SAIState::SAIState(int stateID)
     : AState<AICreature>(stateID)
@@ -243,7 +243,7 @@ SAIState::SAIState(int stateID)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SAIState::init(AICreature* creature)
 {
@@ -259,7 +259,7 @@ void SAIState::init(AICreature* creature)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SAIState::exec(AICreature* creature)
 {
@@ -271,7 +271,7 @@ void SAIState::exec(AICreature* creature)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SAIState::procMsg(AICreature* creature, Msg* msg)
 {
@@ -287,7 +287,7 @@ void SAIState::procMsg(AICreature* creature, Msg* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SAIState::cleanup(AICreature* creature)
 {

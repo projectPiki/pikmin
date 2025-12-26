@@ -6,19 +6,19 @@
 #include "SoundMgr.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(22)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("aiKinoko")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 ActKinoko::ActKinoko(Piki* piki)
     : Action(piki, true)
@@ -28,7 +28,7 @@ ActKinoko::ActKinoko(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActKinoko::init(Creature* creature)
 {
@@ -41,7 +41,7 @@ void ActKinoko::init(Creature* creature)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActKinoko::exec()
 {
@@ -60,7 +60,7 @@ int ActKinoko::exec()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00007C
  */
 void ActKinoko::initStick()
@@ -70,7 +70,7 @@ void ActKinoko::initStick()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActKinoko::exeStick()
 {
@@ -89,7 +89,7 @@ int ActKinoko::exeStick()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000A8
  */
 void ActKinoko::initJump()
@@ -103,7 +103,7 @@ void ActKinoko::initJump()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActKinoko::exeJump()
 {
@@ -123,7 +123,7 @@ int ActKinoko::exeJump()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActKinoko::initAttack()
 {
@@ -131,7 +131,7 @@ void ActKinoko::initAttack()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActKinoko::exeAttack()
 {
@@ -158,7 +158,7 @@ int ActKinoko::exeAttack()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActKinoko::initBoid()
 {
@@ -184,7 +184,7 @@ void ActKinoko::initBoid()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActKinoko::exeBoid()
 {
@@ -263,7 +263,7 @@ int ActKinoko::exeBoid()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActKinoko::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
@@ -287,7 +287,7 @@ void ActKinoko::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActKinoko::cleanup()
 {

@@ -3,19 +3,19 @@
 #include "sysNew.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("zenController")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000AC
  */
 bool zen::KeyRepeat::update(Controller* controller)
@@ -46,7 +46,7 @@ bool zen::KeyRepeat::update(Controller* controller)
 f32 zen::KeyRepeat::repeatTime;
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::ZenController::ZenController(Controller* controller)
 {
@@ -60,7 +60,7 @@ zen::ZenController::ZenController(Controller* controller)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ZenController::update()
 {

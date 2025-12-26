@@ -3,13 +3,13 @@
 #include "zen/particle.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(19)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("particleManager");
@@ -17,7 +17,7 @@ DEFINE_PRINT("particleManager");
 const f32 zen::particleManager::DEFAULT_FRAME_RATE = 30.0f;
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::particleManager::init(u32 numPtclGens, u32 numParticles, u32 numChildParticles, f32 p4)
 {
@@ -58,7 +58,7 @@ void zen::particleManager::init(u32 numPtclGens, u32 numParticles, u32 numChildP
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::particleGenerator* zen::particleManager::createGenerator(u8* data, Texture* tex, Texture* childTex, immut Vector3f& pos,
                                                               zen::CallBack1<zen::particleGenerator*>* cbGen,
@@ -72,7 +72,7 @@ zen::particleGenerator* zen::particleManager::createGenerator(u8* data, Texture*
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::particleManager::update()
 {
@@ -93,7 +93,7 @@ void zen::particleManager::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000080
  */
 void zen::particleManager::calcActiveList()
@@ -104,7 +104,7 @@ void zen::particleManager::calcActiveList()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 void zen::particleManager::debugUpdate()
@@ -113,7 +113,7 @@ void zen::particleManager::debugUpdate()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::particleManager::draw(Graphics& gfx)
 {
@@ -130,7 +130,7 @@ void zen::particleManager::draw(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::particleManager::cullingDraw(Graphics& gfx)
 {
@@ -150,7 +150,7 @@ void zen::particleManager::cullingDraw(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 void zen::particleManager::debugDraw(Graphics&)
@@ -159,7 +159,7 @@ void zen::particleManager::debugDraw(Graphics&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::particleManager::killAllGenarator(bool doForceFinish)
 {
@@ -183,7 +183,7 @@ void zen::particleManager::killAllGenarator(bool doForceFinish)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::particleManager::killGenerator(zen::particleGenerator* gen, bool doForceFinish)
 {
@@ -198,7 +198,7 @@ void zen::particleManager::killGenerator(zen::particleGenerator* gen, bool doFor
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::particleManager::killGenerator(CallBack1<particleGenerator*>* cb1, CallBack2<particleGenerator*, particleMdl*>* cb2,
                                          bool doForceFinish)
@@ -220,7 +220,7 @@ void zen::particleManager::killGenerator(CallBack1<particleGenerator*>* cb1, Cal
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool zen::particleManager::pmCheckList(zen::particleGenerator* testGen)
 {
@@ -237,7 +237,7 @@ bool zen::particleManager::pmCheckList(zen::particleGenerator* testGen)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::particleGenerator* zen::particleManager::pmGetPtclGen()
 {

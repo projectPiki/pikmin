@@ -13,13 +13,13 @@
 #include "timers.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("tekiMgr");
@@ -103,7 +103,7 @@ int TekiMgr::typeIds[TEKI_TypeCount] = {
 };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TekiMgr::initTekiMgr()
 {
@@ -111,7 +111,7 @@ void TekiMgr::initTekiMgr()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00007C
  */
 int TekiMgr::getTypeIndex(immut char* typeName)
@@ -126,7 +126,7 @@ int TekiMgr::getTypeIndex(immut char* typeName)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TekiMgr::TekiMgr()
 {
@@ -174,7 +174,7 @@ TekiMgr::TekiMgr()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TekiMgr::startStage()
 {
@@ -217,7 +217,7 @@ void TekiMgr::startStage()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TekiMgr::update()
 {
@@ -227,7 +227,7 @@ void TekiMgr::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TekiMgr::refresh(Graphics& gfx)
 {
@@ -244,7 +244,7 @@ void TekiMgr::refresh(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Teki* TekiMgr::newTeki(int type)
 {
@@ -263,7 +263,7 @@ Teki* TekiMgr::newTeki(int type)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TekiMgr::reset()
 {
@@ -279,7 +279,7 @@ void TekiMgr::reset()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Creature* TekiMgr::createObject()
 {
@@ -287,7 +287,7 @@ Creature* TekiMgr::createObject()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TekiStrategy* TekiMgr::getStrategy(int tekiType)
 {
@@ -295,7 +295,7 @@ TekiStrategy* TekiMgr::getStrategy(int tekiType)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TekiParameters* TekiMgr::getTekiParameters(int tekiType)
 {
@@ -303,7 +303,7 @@ TekiParameters* TekiMgr::getTekiParameters(int tekiType)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TekiShapeObject* TekiMgr::getTekiShapeObject(int tekiType)
 {
@@ -311,7 +311,7 @@ TekiShapeObject* TekiMgr::getTekiShapeObject(int tekiType)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PaniSoundTable* TekiMgr::getSoundTable(int tekiType)
 {
@@ -319,7 +319,7 @@ PaniSoundTable* TekiMgr::getSoundTable(int tekiType)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TekiMgr::refresh2d(Graphics& gfx)
 {
@@ -332,7 +332,7 @@ void TekiMgr::refresh2d(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TekiMgr::setUsingTypeTable(bool isUsingType)
 {
@@ -342,7 +342,7 @@ void TekiMgr::setUsingTypeTable(bool isUsingType)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00000C
  */
 void TekiMgr::setUsingType(int tekiType, bool isUsing)
@@ -351,7 +351,7 @@ void TekiMgr::setUsingType(int tekiType, bool isUsing)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TekiMgr::setVisibleTypeTable(bool isVisibleType)
 {
@@ -361,7 +361,7 @@ void TekiMgr::setVisibleTypeTable(bool isVisibleType)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TekiMgr::setVisibleType(int tekiType, bool isVisible)
 {
@@ -369,7 +369,7 @@ void TekiMgr::setVisibleType(int tekiType, bool isVisible)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TekiMgr::hasModel(int type)
 {
@@ -377,7 +377,7 @@ bool TekiMgr::hasModel(int type)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int TekiMgr::getResultFlag(int tekiType)
 {

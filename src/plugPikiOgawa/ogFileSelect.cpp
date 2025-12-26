@@ -11,19 +11,19 @@
 #include "zen/ogNitaku.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("OgFileSelectSection")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrFileSelectMgr::copyCardInfosSub()
 {
@@ -36,7 +36,7 @@ void zen::ogScrFileSelectMgr::copyCardInfosSub()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool zen::ogScrFileSelectMgr::getCardFileInfos()
 {
@@ -70,7 +70,7 @@ bool zen::ogScrFileSelectMgr::getCardFileInfos()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrFileSelectMgr::paneOnOffXY(bool set)
 {
@@ -82,7 +82,7 @@ void zen::ogScrFileSelectMgr::paneOnOffXY(bool set)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrFileSelectMgr::MovePaneXY()
 {
@@ -119,7 +119,7 @@ void zen::ogScrFileSelectMgr::MovePaneXY()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrFileSelectMgr::OpenYesNoWindow()
 {
@@ -136,7 +136,7 @@ void zen::ogScrFileSelectMgr::OpenYesNoWindow()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrFileSelectMgr::CloseYesNoWindow()
 {
@@ -145,7 +145,7 @@ void zen::ogScrFileSelectMgr::CloseYesNoWindow()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000DC
  */
 void zen::ogScrFileSelectMgr::UpDateYesNoWindow()
@@ -171,7 +171,7 @@ void zen::ogScrFileSelectMgr::UpDateYesNoWindow()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000A8
  */
 void zen::ogScrFileSelectMgr::setOperateMode_Normal()
@@ -188,7 +188,7 @@ void zen::ogScrFileSelectMgr::setOperateMode_Normal()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrFileSelectMgr::setOperateMode(zen::ogScrFileSelectMgr::FileOperateMode mode)
 {
@@ -209,7 +209,7 @@ void zen::ogScrFileSelectMgr::setOperateMode(zen::ogScrFileSelectMgr::FileOperat
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrFileSelectMgr::getPane_FileTop1()
 {
@@ -262,7 +262,7 @@ void zen::ogScrFileSelectMgr::getPane_FileTop1()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrFileSelectMgr::getPane_FileTop2()
 {
@@ -295,7 +295,7 @@ void zen::ogScrFileSelectMgr::getPane_FileTop2()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrFileSelectMgr::setFileData(int fileNum)
 {
@@ -322,7 +322,7 @@ void zen::ogScrFileSelectMgr::setFileData(int fileNum)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00013C
  */
 void zen::ogScrFileSelectMgr::set_SM_C()
@@ -341,7 +341,7 @@ void zen::ogScrFileSelectMgr::set_SM_C()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrFileSelectMgr::getPane_FileIcon()
 {
@@ -429,7 +429,7 @@ void zen::ogScrFileSelectMgr::getPane_FileIcon()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrFileSelectMgr::OnOffKetaNissuu(int fileNum)
 {
@@ -464,7 +464,7 @@ void zen::ogScrFileSelectMgr::OnOffKetaNissuu(int fileNum)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrFileSelectMgr::getPane_CpyCurScreen()
 {
@@ -503,7 +503,7 @@ void zen::ogScrFileSelectMgr::getPane_CpyCurScreen()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrFileSelectMgr::SetTitleMsg(zen::ogScrFileSelectMgr::titleMessageFlag flag)
 {
@@ -593,7 +593,7 @@ void zen::ogScrFileSelectMgr::SetTitleMsg(zen::ogScrFileSelectMgr::titleMessageF
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000B8
  */
 void zen::ogScrFileSelectMgr::ScaleAnimeTitle()
@@ -613,7 +613,7 @@ void zen::ogScrFileSelectMgr::ScaleAnimeTitle()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000090
  */
 void zen::ogScrFileSelectMgr::ScaleAnimeData()
@@ -633,7 +633,7 @@ void zen::ogScrFileSelectMgr::ScaleAnimeData()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrFileSelectMgr::setDataNumber(int dataNum)
 {
@@ -686,7 +686,7 @@ void zen::ogScrFileSelectMgr::setDataNumber(int dataNum)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000044
  */
 void zen::ogScrFileSelectMgr::init()
@@ -707,7 +707,7 @@ void zen::ogScrFileSelectMgr::init()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::ogScrFileSelectMgr::ogScrFileSelectMgr()
 {
@@ -762,7 +762,7 @@ zen::ogScrFileSelectMgr::ogScrFileSelectMgr()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000080
  */
 void zen::ogScrFileSelectMgr::setDataScale()
@@ -774,7 +774,7 @@ void zen::ogScrFileSelectMgr::setDataScale()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrFileSelectMgr::chaseDataScale()
 {
@@ -801,7 +801,7 @@ void zen::ogScrFileSelectMgr::chaseDataScale()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrFileSelectMgr::OnOffNewPane(int fileNum)
 {
@@ -835,7 +835,7 @@ void zen::ogScrFileSelectMgr::OnOffNewPane(int fileNum)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrFileSelectMgr::ChkOnyonOnOff()
 {
@@ -862,7 +862,7 @@ void zen::ogScrFileSelectMgr::ChkOnyonOnOff()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrFileSelectMgr::ChkNewData()
 {
@@ -876,7 +876,7 @@ void zen::ogScrFileSelectMgr::ChkNewData()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrFileSelectMgr::start(bool saveMode, int fileSelMode)
 {
@@ -971,7 +971,7 @@ void zen::ogScrFileSelectMgr::start(bool saveMode, int fileSelMode)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000014
  */
 void zen::ogScrFileSelectMgr::BeginFadeOut()
@@ -981,7 +981,7 @@ void zen::ogScrFileSelectMgr::BeginFadeOut()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000060
  */
 int zen::ogScrFileSelectMgr::CanToCopy(int fileSlot)
@@ -997,7 +997,7 @@ int zen::ogScrFileSelectMgr::CanToCopy(int fileSlot)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrFileSelectMgr::OperateSelect(Controller* controller)
 {
@@ -1092,7 +1092,7 @@ void zen::ogScrFileSelectMgr::OperateSelect(Controller* controller)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrFileSelectMgr::KetteiEffectStart()
 {
@@ -1110,7 +1110,7 @@ void zen::ogScrFileSelectMgr::KetteiEffectStart()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrFileSelectMgr::TailEffectStart()
 {
@@ -1127,7 +1127,7 @@ void zen::ogScrFileSelectMgr::TailEffectStart()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000B4
  */
 void zen::ogScrFileSelectMgr::TailEffectMove(int x, int y)
@@ -1141,7 +1141,7 @@ void zen::ogScrFileSelectMgr::TailEffectMove(int x, int y)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000B4
  */
 void zen::ogScrFileSelectMgr::TailEffectMoveM(int x, int y)
@@ -1155,7 +1155,7 @@ void zen::ogScrFileSelectMgr::TailEffectMoveM(int x, int y)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000050
  */
 void zen::ogScrFileSelectMgr::quit()
@@ -1170,7 +1170,7 @@ void zen::ogScrFileSelectMgr::quit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::ogScrFileSelectMgr::returnStatusFlag zen::ogScrFileSelectMgr::update(Controller* controller, CardQuickInfo& cardInfo)
 {
@@ -1320,7 +1320,7 @@ zen::ogScrFileSelectMgr::returnStatusFlag zen::ogScrFileSelectMgr::update(Contro
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrFileSelectMgr::draw(Graphics& gfx)
 {

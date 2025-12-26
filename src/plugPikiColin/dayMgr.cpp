@@ -9,13 +9,13 @@
 #include "sysNew.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000C8
  */
 DEFINE_PRINT(nullptr) //! TODO: Why is the size not proper?
@@ -405,7 +405,7 @@ struct DaySetMenu : public Menu {
 };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000034
  */
 void DayMgr::updateComponent(Menu& menu, immut char* name, int* valuePtr)
@@ -414,7 +414,7 @@ void DayMgr::updateComponent(Menu& menu, immut char* name, int* valuePtr)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DayMgr::menuBIncrease(Menu& menu)
 {
@@ -425,7 +425,7 @@ void DayMgr::menuBIncrease(Menu& menu)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DayMgr::menuBDecrease(Menu& menu)
 {
@@ -436,7 +436,7 @@ void DayMgr::menuBDecrease(Menu& menu)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 DayMgr::DayMgr(MapMgr* map, Controller* control)
 {
@@ -495,7 +495,7 @@ DayMgr::DayMgr(MapMgr* map, Controller* control)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000038
  */
 void DayMgr::updateLightCount(Menu& menu)
@@ -504,7 +504,7 @@ void DayMgr::updateLightCount(Menu& menu)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DayMgr::menuIncreaseLights(Menu& menu)
 {
@@ -517,7 +517,7 @@ void DayMgr::menuIncreaseLights(Menu& menu)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DayMgr::menuDecreaseLights(Menu& menu)
 {
@@ -530,7 +530,7 @@ void DayMgr::menuDecreaseLights(Menu& menu)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000040
  */
 void DayMgr::updateTime(Menu& menu)
@@ -539,7 +539,7 @@ void DayMgr::updateTime(Menu& menu)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DayMgr::menuIncreaseTime(Menu& menu)
 {
@@ -553,7 +553,7 @@ void DayMgr::menuIncreaseTime(Menu& menu)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DayMgr::menuDecreaseTime(Menu& menu)
 {
@@ -567,7 +567,7 @@ void DayMgr::menuDecreaseTime(Menu& menu)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DayMgr::refresh(Graphics& gfx, f32 time, int p2)
 {
@@ -686,7 +686,7 @@ void DayMgr::refresh(Graphics& gfx, f32 time, int p2)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DayMgr::setFog(Graphics& gfx, Colour* color)
 {
@@ -694,7 +694,7 @@ void DayMgr::setFog(Graphics& gfx, Colour* color)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DayMgr::menuDumpSettings(Menu&)
 {
@@ -749,7 +749,7 @@ void DayMgr::menuDumpSettings(Menu&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DayMgr::init(CmdStream* stream)
 {

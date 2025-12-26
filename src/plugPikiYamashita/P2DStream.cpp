@@ -4,19 +4,19 @@
 #include "sysNew.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(21)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("P2DStream");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 immut char* P2DStream::getResource(int dataType)
 {
@@ -51,7 +51,7 @@ immut char* P2DStream::getResource(int dataType)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void P2DStream::align(int paddingAmount)
 {

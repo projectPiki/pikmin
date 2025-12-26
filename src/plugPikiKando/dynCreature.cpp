@@ -12,13 +12,13 @@
 #include "sysNew.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(10)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT(nullptr);
@@ -26,7 +26,7 @@ DEFINE_PRINT(nullptr);
 DynParticleHeap* particleHeap;
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 static void printMatrix(immut char* name, immut Matrix4f& mat)
@@ -43,7 +43,7 @@ static void printMatrix(immut char* name, immut Matrix4f& mat)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 DynParticle::DynParticle()
 {
@@ -59,7 +59,7 @@ DynParticle::DynParticle()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 DynParticle::getSize()
 {
@@ -67,21 +67,21 @@ f32 DynParticle::getSize()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DynParticle::refresh(Graphics&)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DynParticle::doKill()
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 DynParticleHeap::DynParticleHeap(int numParticles)
 {
@@ -99,7 +99,7 @@ DynParticleHeap::DynParticleHeap(int numParticles)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000060
  */
 DynParticle* DynParticleHeap::getFreeOne()
@@ -114,7 +114,7 @@ DynParticle* DynParticleHeap::getFreeOne()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000050
  */
 void DynParticleHeap::releaseOne(DynParticle* ptcl)
@@ -125,7 +125,7 @@ void DynParticleHeap::releaseOne(DynParticle* ptcl)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 DynCreature::DynCreature()
     : Creature(nullptr)
@@ -142,7 +142,7 @@ DynCreature::DynCreature()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DynCreature::enablePickOffset(f32 offset)
 {
@@ -151,7 +151,7 @@ void DynCreature::enablePickOffset(f32 offset)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DynCreature::disablePickOffset()
 {
@@ -160,7 +160,7 @@ void DynCreature::disablePickOffset()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DynCreature::addParticle(f32 mass, immut Vector3f& position)
 {
@@ -192,7 +192,7 @@ void DynCreature::addParticle(f32 mass, immut Vector3f& position)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DynCreature::releaseAllParticles()
 {
@@ -207,7 +207,7 @@ void DynCreature::releaseAllParticles()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DynCreature::initialiseSystem()
 {
@@ -233,7 +233,7 @@ void DynCreature::initialiseSystem()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DynCreature::update()
 {
@@ -242,7 +242,7 @@ void DynCreature::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DynCreature::simulate(f32 timeStep)
 {
@@ -413,7 +413,7 @@ void DynCreature::simulate(f32 timeStep)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000254
  */
 void DynCreature::applyTorque(int, f32)
@@ -422,7 +422,7 @@ void DynCreature::applyTorque(int, f32)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DynCreature::createInvInertiaTensor()
 {
@@ -476,7 +476,7 @@ void DynCreature::createInvInertiaTensor()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000078
  */
 void DynCreature::calcModelMatrix(Matrix4f& modelMtx)
@@ -490,7 +490,7 @@ void DynCreature::calcModelMatrix(Matrix4f& modelMtx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DynCreature::refresh(Graphics& gfx)
 {
@@ -524,7 +524,7 @@ void DynCreature::refresh(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DynCreature::doKill()
 {
@@ -535,7 +535,7 @@ void DynCreature::doKill()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000928
  */
 void DynCreature::simulate2(f32)

@@ -12,13 +12,13 @@
 #include "zen/CallBack.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("TAIkabekuiB")
@@ -154,7 +154,7 @@ protected:
 };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TAIkabekuiBSoundTable::TAIkabekuiBSoundTable()
     : PaniSoundTable(3)
@@ -165,7 +165,7 @@ TAIkabekuiBSoundTable::TAIkabekuiBSoundTable()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TAIkabekuiBParameters::TAIkabekuiBParameters()
     : TekiParameters(TPI_COUNT, TAIkabekuiBFloatParms::COUNT)
@@ -242,7 +242,7 @@ TAIkabekuiBParameters::TAIkabekuiBParameters()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TAIkabekuiBStrategy::TAIkabekuiBStrategy()
     : YaiStrategy(TAIkabekuiBStateID::COUNT, TAIkabekuiBStateID::Waiting)
@@ -424,7 +424,7 @@ TAIkabekuiBStrategy::TAIkabekuiBStrategy()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAIkabekuiBAnimation::makeDefaultAnimations()
 {

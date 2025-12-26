@@ -9,19 +9,19 @@
 #include "timers.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("plugPiki")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PlugPikiApp::hardReset()
 {
@@ -43,7 +43,7 @@ void PlugPikiApp::hardReset()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PlugPikiApp::softReset()
 {
@@ -53,7 +53,7 @@ void PlugPikiApp::softReset()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PlugPikiApp::update()
 {
@@ -63,7 +63,7 @@ void PlugPikiApp::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PlugPikiApp::draw(Graphics& gfx)
 {
@@ -138,7 +138,7 @@ void PlugPikiApp::draw(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int PlugPikiApp::idle()
 {
@@ -176,7 +176,7 @@ int PlugPikiApp::idle()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PlugPikiApp::PlugPikiApp()
 {

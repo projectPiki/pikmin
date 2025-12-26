@@ -6,19 +6,19 @@
 #include "MapMgr.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("KingBack");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 KingBackProp::KingBackProp()
 {
@@ -28,7 +28,7 @@ KingBackProp::KingBackProp()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 KingBack::KingBack(CreatureProp* props)
     : Boss(props)
@@ -37,7 +37,7 @@ KingBack::KingBack(CreatureProp* props)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 KingBack::getiMass()
 {
@@ -45,7 +45,7 @@ f32 KingBack::getiMass()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KingBack::init(immut Vector3f&)
 {
@@ -56,7 +56,7 @@ void KingBack::init(immut Vector3f&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KingBack::doKill()
 {
@@ -65,14 +65,14 @@ void KingBack::doKill()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KingBack::exitCourse()
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KingBack::update()
 {
@@ -81,7 +81,7 @@ void KingBack::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KingBack::refresh(Graphics& gfx)
 {
@@ -96,7 +96,7 @@ void KingBack::refresh(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KingBack::drawShape(Graphics& gfx)
 {
@@ -105,7 +105,7 @@ void KingBack::drawShape(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KingBack::doAI()
 {
@@ -113,7 +113,7 @@ void KingBack::doAI()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KingBack::doAnimation()
 {

@@ -5,19 +5,19 @@
 #include "SoundMgr.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(6)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("weeds")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool RockGen::workable()
 {
@@ -25,7 +25,7 @@ bool RockGen::workable()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void RockGen::startWork()
 {
@@ -35,7 +35,7 @@ void RockGen::startWork()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void RockGen::finishWork()
 {
@@ -45,7 +45,7 @@ void RockGen::finishWork()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool GrassGen::workable()
 {
@@ -53,7 +53,7 @@ bool GrassGen::workable()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GrassGen::startWork()
 {
@@ -63,7 +63,7 @@ void GrassGen::startWork()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GrassGen::finishWork()
 {
@@ -73,7 +73,7 @@ void GrassGen::finishWork()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void RockGen::resolve()
 {
@@ -102,7 +102,7 @@ void RockGen::resolve()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GrassGen::resolve()
 {
@@ -129,7 +129,7 @@ void GrassGen::resolve()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 RockGen::RockGen(Shape* shape, CreatureProp* props)
     : ItemCreature(OBJTYPE_RockGen, props, nullptr)
@@ -142,7 +142,7 @@ RockGen::RockGen(Shape* shape, CreatureProp* props)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void RockGen::create(int num, f32 radius, int)
 {
@@ -172,7 +172,7 @@ void RockGen::create(int num, f32 radius, int)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void RockGen::setSizeAndNum(f32 size, int num)
 {
@@ -182,7 +182,7 @@ void RockGen::setSizeAndNum(f32 size, int num)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void RockGen::startAI(int state)
 {
@@ -194,7 +194,7 @@ void RockGen::startAI(int state)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void RockGen::killPebble()
 {
@@ -202,7 +202,7 @@ void RockGen::killPebble()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void RockGen::doSave(RandomAccessStream& data)
 {
@@ -210,7 +210,7 @@ void RockGen::doSave(RandomAccessStream& data)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void RockGen::doLoad(RandomAccessStream& data)
 {
@@ -225,7 +225,7 @@ void RockGen::doLoad(RandomAccessStream& data)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void RockGen::update()
 {
@@ -235,7 +235,7 @@ void RockGen::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void RockGen::refresh(Graphics& gfx)
 {
@@ -261,7 +261,7 @@ void RockGen::refresh(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Pebble* RockGen::getRandomPebble()
 {
@@ -287,7 +287,7 @@ Pebble* RockGen::getRandomPebble()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 GrassGen::GrassGen(Shape* shape, CreatureProp* props)
     : ItemCreature(OBJTYPE_GrassGen, props, nullptr)
@@ -300,7 +300,7 @@ GrassGen::GrassGen(Shape* shape, CreatureProp* props)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GrassGen::create(int num, f32 size, int)
 {
@@ -330,7 +330,7 @@ void GrassGen::create(int num, f32 size, int)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GrassGen::setSizeAndNum(f32 size, int num)
 {
@@ -340,7 +340,7 @@ void GrassGen::setSizeAndNum(f32 size, int num)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GrassGen::startAI(int)
 {
@@ -352,7 +352,7 @@ void GrassGen::startAI(int)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GrassGen::update()
 {
@@ -362,7 +362,7 @@ void GrassGen::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GrassGen::refresh(Graphics& gfx)
 {
@@ -384,7 +384,7 @@ void GrassGen::refresh(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Grass* GrassGen::getRandomGrass()
 {
@@ -409,7 +409,7 @@ Grass* GrassGen::getRandomGrass()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000078
  */
 WeedsGen::WeedsGen(Shape* shape, CreatureProp* props)
@@ -425,21 +425,21 @@ WeedsGen::WeedsGen(Shape* shape, CreatureProp* props)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void WeedsGen::update()
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void WeedsGen::refresh(Graphics&)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void WeedsGen::startAI(int ai)
 {
@@ -469,7 +469,7 @@ void WeedsGen::startAI(int ai)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000064
  */
 Weed::Weed()
@@ -481,7 +481,7 @@ Weed::Weed()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Weed::startAI(int)
 {
@@ -490,7 +490,7 @@ void Weed::startAI(int)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Weed::interactPullout(Creature* item)
 {
@@ -509,7 +509,7 @@ bool Weed::interactPullout(Creature* item)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Weed::update()
 {
@@ -528,7 +528,7 @@ void Weed::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Weed::refresh(Graphics& gfx)
 {
@@ -543,7 +543,7 @@ void Weed::refresh(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Weed::isVisible()
 {
@@ -551,7 +551,7 @@ bool Weed::isVisible()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Weed::isAlive()
 {
@@ -559,7 +559,7 @@ bool Weed::isAlive()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Weed::isAtari()
 {

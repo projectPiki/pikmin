@@ -47,19 +47,19 @@ const int BTeki::ANIMATION_KEY_OPTION_LOOPSTART = 1 << KEY_LoopStart;
 const int BTeki::ANIMATION_KEY_OPTION_LOOPEND   = 1 << KEY_LoopEnd;
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(57)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("teki");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BTeki::viewStartTrembleMotion(f32 motionSpeed)
 {
@@ -69,7 +69,7 @@ void BTeki::viewStartTrembleMotion(f32 motionSpeed)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BTeki::viewSetMotionSpeed(f32 speed)
 {
@@ -77,7 +77,7 @@ void BTeki::viewSetMotionSpeed(f32 speed)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BTeki::viewDoAnimation()
 {
@@ -85,7 +85,7 @@ void BTeki::viewDoAnimation()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BTeki::viewFinishMotion()
 {
@@ -93,7 +93,7 @@ void BTeki::viewFinishMotion()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Vector3f BTeki::viewGetScale()
 {
@@ -101,7 +101,7 @@ Vector3f BTeki::viewGetScale()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 BTeki::viewGetBottomRadius()
 {
@@ -109,7 +109,7 @@ f32 BTeki::viewGetBottomRadius()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 BTeki::viewGetHeight()
 {
@@ -117,7 +117,7 @@ f32 BTeki::viewGetHeight()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BTeki::viewDraw(Graphics& gfx, immut Matrix4f& mat)
 {
@@ -128,7 +128,7 @@ void BTeki::viewDraw(Graphics& gfx, immut Matrix4f& mat)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BTeki::viewKill()
 {
@@ -136,7 +136,7 @@ void BTeki::viewKill()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BTeki::doStore(CreatureInf* info)
 {
@@ -145,7 +145,7 @@ void BTeki::doStore(CreatureInf* info)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BTeki::doRestore(CreatureInf* info)
 {
@@ -153,7 +153,7 @@ void BTeki::doRestore(CreatureInf* info)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TekiShapeObject::TekiShapeObject(Shape* shape)
 {
@@ -165,7 +165,7 @@ TekiShapeObject::TekiShapeObject(Shape* shape)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool BTeki::isPellet(int objType)
 {
@@ -173,7 +173,7 @@ bool BTeki::isPellet(int objType)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 BTeki::calcCircleDistanceStatic(immut Vector3f& pos1, f32 rad1, immut Vector3f& pos2, f32 rad2)
 {
@@ -181,7 +181,7 @@ f32 BTeki::calcCircleDistanceStatic(immut Vector3f& pos1, f32 rad1, immut Vector
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool BTeki::alwaysUpdatePlatform()
 {
@@ -189,7 +189,7 @@ bool BTeki::alwaysUpdatePlatform()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 BTeki::calcSphereDistanceStatic(immut Vector3f& pos1, f32 rad1, immut Vector3f& pos2, f32 rad2)
 {
@@ -197,7 +197,7 @@ f32 BTeki::calcSphereDistanceStatic(immut Vector3f& pos1, f32 rad1, immut Vector
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool BTeki::moveTowardStatic(immut Vector3f& currentPosition, immut Vector3f& targetPosition, f32 speed, Vector3f& output)
 {
@@ -219,7 +219,7 @@ bool BTeki::moveTowardStatic(immut Vector3f& currentPosition, immut Vector3f& ta
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool BTeki::arrivedAt(f32 distance, f32 speed)
 {
@@ -228,7 +228,7 @@ bool BTeki::arrivedAt(f32 distance, f32 speed)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 BTeki::BTeki()
     : Creature(nullptr)
@@ -249,7 +249,7 @@ BTeki::BTeki()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BTeki::init(int tekiType)
 {
@@ -262,7 +262,7 @@ void BTeki::init(int tekiType)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BTeki::reset()
 {
@@ -356,7 +356,7 @@ void BTeki::reset()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BTeki::prepareEffects()
 {
@@ -386,7 +386,7 @@ void BTeki::prepareEffects()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000090
  */
 void BTeki::setCorpsePartJoint(int partIdx, int jointIdx)
@@ -400,7 +400,7 @@ void BTeki::setCorpsePartJoint(int partIdx, int jointIdx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BTeki::startAI(int)
 {
@@ -419,7 +419,7 @@ void BTeki::startAI(int)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BTeki::update()
 {
@@ -439,7 +439,7 @@ void BTeki::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BTeki::doAnimation()
 {
@@ -462,7 +462,7 @@ void BTeki::doAnimation()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BTeki::startMotion(int motionID)
 {
@@ -472,7 +472,7 @@ void BTeki::startMotion(int motionID)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BTeki::startStoppingMove()
 {
@@ -483,7 +483,7 @@ void BTeki::startStoppingMove()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BTeki::finishStoppingMove()
 {
@@ -492,7 +492,7 @@ void BTeki::finishStoppingMove()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 BTeki::getVelocityAnimationSpeed(f32 speed)
 {
@@ -507,7 +507,7 @@ f32 BTeki::getVelocityAnimationSpeed(f32 speed)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BTeki::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
@@ -526,7 +526,7 @@ void BTeki::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BTeki::doAI()
 {
@@ -575,7 +575,7 @@ void BTeki::doAI()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BTeki::die()
 {
@@ -583,7 +583,7 @@ void BTeki::die()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BTeki::dieSoon()
 {
@@ -633,7 +633,7 @@ void BTeki::dieSoon()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BTeki::becomeCorpse()
 {
@@ -648,7 +648,7 @@ void BTeki::becomeCorpse()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BTeki::doKill()
 {
@@ -673,7 +673,7 @@ void BTeki::doKill()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BTeki::exitCourse()
 {
@@ -689,7 +689,7 @@ void BTeki::exitCourse()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BTeki::gravitate(f32 accel)
 {
@@ -706,7 +706,7 @@ void BTeki::gravitate(f32 accel)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BTeki::updateTimers()
 {
@@ -722,7 +722,7 @@ void BTeki::updateTimers()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool BTeki::stimulate(immut Interaction& interaction)
 {
@@ -733,7 +733,7 @@ bool BTeki::stimulate(immut Interaction& interaction)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 BTeki::getiMass()
 {
@@ -745,7 +745,7 @@ f32 BTeki::getiMass()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 BTeki::getTekiCollisionSize()
 {
@@ -753,7 +753,7 @@ f32 BTeki::getTekiCollisionSize()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BTeki::makeDamaged()
 {
@@ -766,7 +766,7 @@ void BTeki::makeDamaged()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BTeki::startDamageMotion(f32 period, f32 amp)
 {
@@ -777,7 +777,7 @@ void BTeki::startDamageMotion(f32 period, f32 amp)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BTeki::releasePlatCollisions()
 {
@@ -786,7 +786,7 @@ void BTeki::releasePlatCollisions()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BTeki::createDeadEffect()
 {
@@ -811,7 +811,7 @@ void BTeki::createDeadEffect()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BTeki::createSoulEffect()
 {
@@ -830,7 +830,7 @@ void BTeki::createSoulEffect()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BTeki::spawnItems()
 {
@@ -870,7 +870,7 @@ void BTeki::spawnItems()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BTeki::spawnPellets(int kind, int color, int count)
 {
@@ -926,7 +926,7 @@ void BTeki::spawnPellets(int kind, int color, int count)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BTeki::spawnWaters(int count)
 {
@@ -961,7 +961,7 @@ void BTeki::spawnWaters(int count)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BTeki::spawnCorpseParts()
 {
@@ -969,7 +969,7 @@ void BTeki::spawnCorpseParts()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Teki* BTeki::generateTeki(int tekiType)
 {
@@ -989,7 +989,7 @@ Teki* BTeki::generateTeki(int tekiType)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000140
  */
 void BTeki::outputDirectionPosition(Vector3f& outPos, f32 dist, f32 height)
@@ -1004,7 +1004,7 @@ void BTeki::outputDirectionPosition(Vector3f& outPos, f32 dist, f32 height)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BTeki::outputSpawnPosition(Vector3f& spawnPos)
 {
@@ -1012,7 +1012,7 @@ void BTeki::outputSpawnPosition(Vector3f& spawnPos)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Teki* BTeki::spawnTeki(int tekiType)
 {
@@ -1035,14 +1035,14 @@ Teki* BTeki::spawnTeki(int tekiType)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BTeki::shootBall(Creature&)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BTeki::dump()
 {
@@ -1063,7 +1063,7 @@ void BTeki::dump()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool BTeki::nearestAngleTarget(Creature* newTarget)
 {
@@ -1101,7 +1101,7 @@ bool BTeki::nearestAngleTarget(Creature* newTarget)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool BTeki::cullableCenter(Creature& target, f32 radius)
 {
@@ -1109,7 +1109,7 @@ bool BTeki::cullableCenter(Creature& target, f32 radius)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool BTeki::cullableSphere(Creature& target, f32 radius)
 {
@@ -1117,7 +1117,7 @@ bool BTeki::cullableSphere(Creature& target, f32 radius)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool BTeki::inSectorPosition(immut Vector3f& targetPos, f32 maxDistance, f32 sectorAngle)
 {
@@ -1135,7 +1135,7 @@ bool BTeki::inSectorPosition(immut Vector3f& targetPos, f32 maxDistance, f32 sec
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool BTeki::visibleCreature(Creature& target)
 {
@@ -1174,7 +1174,7 @@ bool BTeki::visibleCreature(Creature& target)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool BTeki::separateCreature(Creature& target)
 {
@@ -1203,7 +1203,7 @@ bool BTeki::separateCreature(Creature& target)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool BTeki::contactCreature(Creature& target)
 {
@@ -1231,7 +1231,7 @@ bool BTeki::contactCreature(Creature& target)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool BTeki::attackableCreature(Creature& target)
 {
@@ -1253,7 +1253,7 @@ bool BTeki::attackableCreature(Creature& target)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 BTeki::calcTargetAngle(immut Vector3f& targetPos)
 {
@@ -1265,7 +1265,7 @@ f32 BTeki::calcTargetAngle(immut Vector3f& targetPos)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool BTeki::moveToward(immut Vector3f& target, f32 speed)
 {
@@ -1273,7 +1273,7 @@ bool BTeki::moveToward(immut Vector3f& target, f32 speed)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool BTeki::turnToward(f32 targetAngle, f32 turnSpeed)
 {
@@ -1300,7 +1300,7 @@ bool BTeki::turnToward(f32 targetAngle, f32 turnSpeed)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BTeki::rotateTeki(f32 speed)
 {
@@ -1311,7 +1311,7 @@ void BTeki::rotateTeki(f32 speed)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000218
  */
 void BTeki::jumpTo(Vector3f&, f32)
@@ -1320,7 +1320,7 @@ void BTeki::jumpTo(Vector3f&, f32)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000168
  */
 bool BTeki::insideDirection(Vector3f&)
@@ -1329,7 +1329,7 @@ bool BTeki::insideDirection(Vector3f&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Creature* BTeki::getClosestNaviPiki(immut Condition& cond, f32* outDist)
 {
@@ -1363,7 +1363,7 @@ Creature* BTeki::getClosestNaviPiki(immut Condition& cond, f32* outDist)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool BTeki::attackTarget(Creature& target, f32 range, f32 damage, immut Condition& cond)
 {
@@ -1381,7 +1381,7 @@ bool BTeki::attackTarget(Creature& target, f32 range, f32 damage, immut Conditio
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BTeki::outputHitCenter(Vector3f& outCenter)
 {
@@ -1392,7 +1392,7 @@ void BTeki::outputHitCenter(Vector3f& outCenter)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0001F4
  */
 bool BTeki::attackRangeNaviPiki(immut Interaction&, immut Condition&)
@@ -1401,7 +1401,7 @@ bool BTeki::attackRangeNaviPiki(immut Interaction&, immut Condition&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00015C
  */
 bool BTeki::interactTeki(immut Interaction&, immut Condition&)
@@ -1410,7 +1410,7 @@ bool BTeki::interactTeki(immut Interaction&, immut Condition&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool BTeki::interactNaviPiki(immut Interaction& interaction, immut Condition& cond)
 {
@@ -1421,7 +1421,7 @@ bool BTeki::interactNaviPiki(immut Interaction& interaction, immut Condition& co
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool BTeki::interactNavi(immut Interaction& interaction, immut Condition& cond)
 {
@@ -1436,7 +1436,7 @@ bool BTeki::interactNavi(immut Interaction& interaction, immut Condition& cond)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool BTeki::interactPiki(immut Interaction& interaction, immut Condition& cond)
 {
@@ -1459,7 +1459,7 @@ bool BTeki::interactPiki(immut Interaction& interaction, immut Condition& cond)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BTeki::flick()
 {
@@ -1468,7 +1468,7 @@ void BTeki::flick()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BTeki::flick(InteractFlick& upperFlick, InteractFlick& lowerFlick)
 {
@@ -1477,7 +1477,7 @@ void BTeki::flick(InteractFlick& upperFlick, InteractFlick& lowerFlick)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BTeki::flickUpper()
 {
@@ -1486,7 +1486,7 @@ void BTeki::flickUpper()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BTeki::flickUpper(InteractFlick& flick)
 {
@@ -1508,7 +1508,7 @@ void BTeki::flickUpper(InteractFlick& flick)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BTeki::flickLower()
 {
@@ -1526,7 +1526,7 @@ static void fakeFunc()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BTeki::flickLower(InteractFlick& flick)
 {
@@ -1543,7 +1543,7 @@ void BTeki::flickLower(InteractFlick& flick)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool BTeki::checkNaviPiki(immut Condition& cond)
 {
@@ -1564,7 +1564,7 @@ bool BTeki::checkNaviPiki(immut Condition& cond)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int BTeki::countPikis(immut Condition& cond)
 {
@@ -1581,7 +1581,7 @@ int BTeki::countPikis(immut Condition& cond)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000148
  */
 int BTeki::countTekis(immut Condition& cond)
@@ -1599,7 +1599,7 @@ int BTeki::countTekis(immut Condition& cond)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int BTeki::getFlickDamageCount(int pikiCount)
 {
@@ -1617,7 +1617,7 @@ int BTeki::getFlickDamageCount(int pikiCount)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BTeki::eventPerformed(immut TekiEvent& event)
 {
@@ -1626,7 +1626,7 @@ void BTeki::eventPerformed(immut TekiEvent& event)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BTeki::collisionCallback(immut CollEvent& event)
 {
@@ -1641,7 +1641,7 @@ void BTeki::collisionCallback(immut CollEvent& event)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool BTeki::ignoreAtari(Creature* target)
 {
@@ -1653,7 +1653,7 @@ bool BTeki::ignoreAtari(Creature* target)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BTeki::bounceCallback()
 {
@@ -1661,7 +1661,7 @@ void BTeki::bounceCallback()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BTeki::wallCallback(immut Plane&, DynCollObject*)
 {
@@ -1669,7 +1669,7 @@ void BTeki::wallCallback(immut Plane&, DynCollObject*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool BTeki::interact(immut TekiInteractionKey& key)
 {
@@ -1678,7 +1678,7 @@ bool BTeki::interact(immut TekiInteractionKey& key)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool BTeki::interactDefault(immut TekiInteractionKey& key)
 {
@@ -1715,7 +1715,7 @@ bool BTeki::interactDefault(immut TekiInteractionKey& key)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 BTeki::getGravity()
 {
@@ -1723,7 +1723,7 @@ f32 BTeki::getGravity()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TekiStrategy* BTeki::getStrategy()
 {
@@ -1731,7 +1731,7 @@ TekiStrategy* BTeki::getStrategy()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 BTeki::getSeaLevel()
 {
@@ -1740,7 +1740,7 @@ f32 BTeki::getSeaLevel()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 BTeki::getYFromSeaLevel()
 {
@@ -1749,7 +1749,7 @@ f32 BTeki::getYFromSeaLevel()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BTeki::makePositionRoute(immut Vector3f& pos1, immut Vector3f& pos2, bool includeBlockedPaths)
 {
@@ -1759,7 +1759,7 @@ void BTeki::makePositionRoute(immut Vector3f& pos1, immut Vector3f& pos2, bool i
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BTeki::makeWayPointRoute(int start, int destination, bool includeBlockedPaths)
 {
@@ -1781,7 +1781,7 @@ void BTeki::makeWayPointRoute(int start, int destination, bool includeBlockedPat
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 WayPoint* BTeki::getTargetNearestWayPoint(immut Vector3f& pos)
 {
@@ -1789,7 +1789,7 @@ WayPoint* BTeki::getTargetNearestWayPoint(immut Vector3f& pos)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 WayPoint* BTeki::getNearestWayPoint()
 {
@@ -1797,7 +1797,7 @@ WayPoint* BTeki::getNearestWayPoint()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 WayPoint* BTeki::getWayPoint(int wpIdx)
 {
@@ -1805,7 +1805,7 @@ WayPoint* BTeki::getWayPoint(int wpIdx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 WayPoint* BTeki::getRouteWayPoint(int idx)
 {
@@ -1818,7 +1818,7 @@ WayPoint* BTeki::getRouteWayPoint(int idx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BTeki::updateLifeGauge()
 {
@@ -1826,7 +1826,7 @@ void BTeki::updateLifeGauge()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BTeki::refresh(Graphics& gfx)
 {
@@ -1839,7 +1839,7 @@ void BTeki::refresh(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BTeki::drawDefault(Graphics& gfx)
 {
@@ -1876,7 +1876,7 @@ void BTeki::drawDefault(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BTeki::drawTekiShape(Graphics& gfx)
 {
@@ -1929,7 +1929,7 @@ void BTeki::drawTekiShape(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BTeki::drawTekiDebugInfo(Graphics& gfx)
 {
@@ -1942,7 +1942,7 @@ void BTeki::drawTekiDebugInfo(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BTeki::drawTekiDebugInfoDefault(Graphics& gfx)
 {
@@ -1958,7 +1958,7 @@ void BTeki::drawTekiDebugInfoDefault(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BTeki::drawRange(Graphics& gfx, immut Vector3f& centre, f32 range, immut Colour& colour)
 {
@@ -1971,7 +1971,7 @@ void BTeki::drawRange(Graphics& gfx, immut Vector3f& centre, f32 range, immut Co
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BTeki::refresh2d(Graphics& gfx)
 {
@@ -1992,7 +1992,7 @@ void BTeki::refresh2d(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 CollPart* BTeki::getFreeSlot()
 {
@@ -2009,7 +2009,7 @@ CollPart* BTeki::getFreeSlot()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool BTeki::isFreeCollPart(CollPart* part)
 {
@@ -2032,7 +2032,7 @@ bool BTeki::isFreeCollPart(CollPart* part)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BTeki::playTableSound(int index)
 {
@@ -2057,7 +2057,7 @@ void BTeki::playTableSound(int index)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BTeki::playSound(int soundID)
 {
@@ -2065,7 +2065,7 @@ void BTeki::playSound(int soundID)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BTeki::stopSound(int soundID)
 {
@@ -2073,7 +2073,7 @@ void BTeki::stopSound(int soundID)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BTeki::createTekiEffect(int effectID)
 {
@@ -2083,7 +2083,7 @@ void BTeki::createTekiEffect(int effectID)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000028
  */
 Matrix4f& BTeki::getCameraAnimationMatrix(int idx)
@@ -2092,7 +2092,7 @@ Matrix4f& BTeki::getCameraAnimationMatrix(int idx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000080
  */
 void BTeki::outputWorldAnimationMatrix(Matrix4f& mtx1, int idx, immut Matrix4f& mtx2)
@@ -2105,7 +2105,7 @@ void BTeki::outputWorldAnimationMatrix(Matrix4f& mtx1, int idx, immut Matrix4f& 
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BTeki::outputWorldAnimationPosition(Vector3f& position, int idx, immut Matrix4f& mtx)
 {
@@ -2115,7 +2115,7 @@ void BTeki::outputWorldAnimationPosition(Vector3f& position, int idx, immut Matr
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int BTeki::getPositionMapCode(immut Vector3f& pos)
 {
@@ -2129,7 +2129,7 @@ int BTeki::getPositionMapCode(immut Vector3f& pos)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int BTeki::getPositionMapCode()
 {
@@ -2137,7 +2137,7 @@ int BTeki::getPositionMapCode()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool BTeki::inWaterTeki()
 {
@@ -2149,7 +2149,7 @@ bool BTeki::inWaterTeki()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BTeki::moveNestPosition()
 {
@@ -2157,7 +2157,7 @@ void BTeki::moveNestPosition()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BTeki::startParticleGenerator(int param_1)
 {
@@ -2168,7 +2168,7 @@ void BTeki::startParticleGenerator(int param_1)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BTeki::stopParticleGenerator(int generatorIndex)
 {
@@ -2179,7 +2179,7 @@ void BTeki::stopParticleGenerator(int generatorIndex)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BTeki::setParticleGeneratorPosition(int param_1, immut Vector3f& effectPos)
 {
@@ -2190,7 +2190,7 @@ void BTeki::setParticleGeneratorPosition(int param_1, immut Vector3f& effectPos)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BTeki::setParticleGeneratorDirection(int param_1, immut Vector3f& effectDir)
 {
@@ -2201,7 +2201,7 @@ void BTeki::setParticleGeneratorDirection(int param_1, immut Vector3f& effectDir
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 BTeki::calcCollisionDistance(Creature& creature)
 {
@@ -2214,7 +2214,7 @@ f32 BTeki::calcCollisionDistance(Creature& creature)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 BTeki::getCollisionSize()
 {
@@ -2222,7 +2222,7 @@ f32 BTeki::getCollisionSize()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000038
  */
 Vector3f BTeki::getCollisionCenter()

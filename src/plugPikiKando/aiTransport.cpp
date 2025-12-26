@@ -25,19 +25,19 @@
 #include "zen/Math.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(74)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("Transport")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActTransport::turnOver()
 {
@@ -72,7 +72,7 @@ void ActTransport::turnOver()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000A4
  */
 void ActTransport::initWait()
@@ -85,7 +85,7 @@ void ActTransport::initWait()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000070
  */
 int ActTransport::exeWait()
@@ -106,7 +106,7 @@ int ActTransport::exeWait()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool ActTransport::isStickLeader()
 {
@@ -128,7 +128,7 @@ bool ActTransport::isStickLeader()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 ActTransport::getCarriers()
 {
@@ -154,7 +154,7 @@ f32 ActTransport::getCarriers()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00001C
  */
 int ActTransport::getNumStickers()
@@ -167,7 +167,7 @@ int ActTransport::getNumStickers()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000140
  */
 int ActTransport::calcNumStickers()
@@ -191,7 +191,7 @@ int ActTransport::calcNumStickers()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 ActTransport::ActTransport(Piki* piki)
     : Action(piki, true)
@@ -201,7 +201,7 @@ ActTransport::ActTransport(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Pellet* ActTransport::findPellet()
 {
@@ -227,7 +227,7 @@ Pellet* ActTransport::findPellet()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActTransport::init(Creature* target)
 {
@@ -257,7 +257,7 @@ void ActTransport::init(Creature* target)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActTransport::setSlotIndex()
 {
@@ -270,7 +270,7 @@ void ActTransport::setSlotIndex()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActTransport::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
@@ -305,7 +305,7 @@ void ActTransport::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000064
  */
 void ActTransport::initJump()
@@ -318,7 +318,7 @@ void ActTransport::initJump()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActTransport::execJump()
 {
@@ -405,7 +405,7 @@ int ActTransport::execJump()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool ActTransport::gotoLiftPos()
 {
@@ -530,7 +530,7 @@ bool ActTransport::gotoLiftPos()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActTransport::doLift()
 {
@@ -657,7 +657,7 @@ void ActTransport::doLift()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool ActTransport::useWaterRoute()
 {
@@ -686,7 +686,7 @@ bool ActTransport::useWaterRoute()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActTransport::exec()
 {
@@ -867,7 +867,7 @@ int ActTransport::exec()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActTransport::moveGuruGuru()
 {
@@ -976,7 +976,7 @@ int ActTransport::moveGuruGuru()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActTransport::decideGoal(Creature* cargo)
 {
@@ -1055,7 +1055,7 @@ void ActTransport::decideGoal(Creature* cargo)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActTransport::cleanup()
 {
@@ -1078,7 +1078,7 @@ void ActTransport::cleanup()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Vector3f ActTransport::crGetPoint(int idx)
 {
@@ -1112,7 +1112,7 @@ Vector3f ActTransport::crGetPoint(int idx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool ActTransport::crPointOpen(int idx)
 {
@@ -1130,7 +1130,7 @@ bool ActTransport::crPointOpen(int idx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000078
  */
 f32 ActTransport::crGetRadius(int idx)
@@ -1148,7 +1148,7 @@ f32 ActTransport::crGetRadius(int idx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActTransport::crInit()
 {
@@ -1218,7 +1218,7 @@ void ActTransport::crInit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActTransport::crMakeRefs()
 {
@@ -1228,7 +1228,7 @@ void ActTransport::crMakeRefs()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActTransport::findObstacle()
 {
@@ -1257,7 +1257,7 @@ void ActTransport::findObstacle()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool ActTransport::crMove()
 {
@@ -1413,7 +1413,7 @@ bool ActTransport::crMove()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActTransport::draw(Graphics& gfx)
 {
@@ -1509,7 +1509,7 @@ void ActTransport::draw(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActTransport::moveToWayPoint()
 {

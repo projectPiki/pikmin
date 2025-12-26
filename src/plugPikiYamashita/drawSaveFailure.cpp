@@ -7,19 +7,19 @@
 #include "zen/Math.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("drawSaveFailure")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::DrawSaveFailure::DrawSaveFailure()
 {
@@ -32,7 +32,7 @@ zen::DrawSaveFailure::DrawSaveFailure()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool zen::DrawSaveFailure::update(Controller* controller)
 {
@@ -77,7 +77,7 @@ bool zen::DrawSaveFailure::update(Controller* controller)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawSaveFailure::draw(Graphics&)
 {
@@ -87,7 +87,7 @@ void zen::DrawSaveFailure::draw(Graphics&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawSaveFailure::open(f32 duration)
 {
@@ -98,7 +98,7 @@ void zen::DrawSaveFailure::open(f32 duration)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawSaveFailure::setMode(zen::DrawSaveFailure::modeFlag mode)
 {
@@ -127,7 +127,7 @@ void zen::DrawSaveFailure::setMode(zen::DrawSaveFailure::modeFlag mode)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 zen::DrawSaveFailure::calcFrame(f32 max)
 {
@@ -141,7 +141,7 @@ f32 zen::DrawSaveFailure::calcFrame(f32 max)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawSaveFailure::init()
 {

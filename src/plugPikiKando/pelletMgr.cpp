@@ -21,13 +21,13 @@
 #include "zen/Math.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(33)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("pel");
@@ -69,7 +69,7 @@ static u32 _ufoIDTable[] = {
 };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int PelletMgr::getUfoIndexFromID(u32 ufoID)
 {
@@ -88,7 +88,7 @@ int PelletMgr::getUfoIndexFromID(u32 ufoID)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 u32 PelletMgr::getUfoIDFromIndex(int idx)
 {
@@ -99,7 +99,7 @@ u32 PelletMgr::getUfoIDFromIndex(int idx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PelletConfig::PelletConfig()
     : mPelletName(this, String("new", 0), String("", 0), String("", 0), "x99", "theName")
@@ -126,7 +126,7 @@ PelletConfig::PelletConfig()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PelletConfig::read(RandomAccessStream& input)
 {
@@ -154,7 +154,7 @@ NumberPel numberPellets[13] = {
 };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PelletView::becomePellet(u32 id, Vector3f NRef pos, f32 direction)
 {
@@ -194,7 +194,7 @@ void PelletView::becomePellet(u32 id, Vector3f NRef pos, f32 direction)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Pellet::Pellet()
 {
@@ -221,7 +221,7 @@ Pellet::Pellet()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Pellet::isUfoPartsID(u32 partsID)
 {
@@ -230,7 +230,7 @@ bool Pellet::isUfoPartsID(u32 partsID)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Pellet::startWaterEffect()
 {
@@ -241,7 +241,7 @@ void Pellet::startWaterEffect()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Pellet::finishWaterEffect()
 {
@@ -249,7 +249,7 @@ void Pellet::finishWaterEffect()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Pellet::doKill()
 {
@@ -266,7 +266,7 @@ void Pellet::doKill()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int Pellet::getState()
 {
@@ -277,7 +277,7 @@ int Pellet::getState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Pellet::ignoreAtari(Creature* creature)
 {
@@ -294,7 +294,7 @@ bool Pellet::ignoreAtari(Creature* creature)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Pellet::isAlive()
 {
@@ -302,7 +302,7 @@ bool Pellet::isAlive()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Pellet::isAtari()
 {
@@ -317,7 +317,7 @@ bool Pellet::isAtari()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Pellet::isVisible()
 {
@@ -333,7 +333,7 @@ bool Pellet::isVisible()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Pellet::setTrySound(bool doSetOn)
 {
@@ -348,7 +348,7 @@ void Pellet::setTrySound(bool doSetOn)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Pellet::startPick()
 {
@@ -415,7 +415,7 @@ void Pellet::startPick()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Pellet::finishPick()
 {
@@ -430,7 +430,7 @@ void Pellet::finishPick()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Pellet::startGoal()
 {
@@ -441,7 +441,7 @@ void Pellet::startGoal()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Pellet::doCarry(Creature* carryingPiki, immut Vector3f& direction, u16 carrierCount)
 {
@@ -483,7 +483,7 @@ void Pellet::doCarry(Creature* carryingPiki, immut Vector3f& direction, u16 carr
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 Pellet::getBottomRadius()
 {
@@ -523,7 +523,7 @@ f32 Pellet::getBottomRadius()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Vector3f Pellet::getCentre()
 {
@@ -531,7 +531,7 @@ Vector3f Pellet::getCentre()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 Pellet::getCylinderHeight()
 {
@@ -542,7 +542,7 @@ f32 Pellet::getCylinderHeight()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 Pellet::getSize()
 {
@@ -554,7 +554,7 @@ f32 Pellet::getSize()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 Pellet::getiMass()
 {
@@ -562,7 +562,7 @@ f32 Pellet::getiMass()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Pellet::startStickTeki(Creature* teki, f32 p2)
 {
@@ -581,7 +581,7 @@ bool Pellet::startStickTeki(Creature* teki, f32 p2)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Pellet::endStickTeki(Creature* teki)
 {
@@ -590,7 +590,7 @@ void Pellet::endStickTeki(Creature* teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Pellet::winnable(int tekiStrength)
 {
@@ -619,7 +619,7 @@ bool Pellet::winnable(int tekiStrength)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Pellet::stickSlot(int slotID)
 {
@@ -633,7 +633,7 @@ bool Pellet::stickSlot(int slotID)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Pellet::stickOffSlot(int slotID)
 {
@@ -644,7 +644,7 @@ void Pellet::stickOffSlot(int slotID)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int Pellet::getMinFreeSlotIndex()
 {
@@ -658,7 +658,7 @@ int Pellet::getMinFreeSlotIndex()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int Pellet::getNearestFreeSlotIndex(immut Vector3f& pos)
 {
@@ -680,7 +680,7 @@ int Pellet::getNearestFreeSlotIndex(immut Vector3f& pos)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int Pellet::getRandomFreeSlotIndex()
 {
@@ -704,7 +704,7 @@ int Pellet::getRandomFreeSlotIndex()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Vector3f Pellet::getSlotLocalPos(int slotID, f32 offset)
 {
@@ -744,7 +744,7 @@ Vector3f Pellet::getSlotLocalPos(int slotID, f32 offset)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Vector3f Pellet::getSlotGlobalPos(int slotID, f32 offset)
 {
@@ -754,7 +754,7 @@ Vector3f Pellet::getSlotGlobalPos(int slotID, f32 offset)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000014
  */
 void Pellet::initSlotFlags()
@@ -763,7 +763,7 @@ void Pellet::initSlotFlags()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Pellet::setSlotFlag(int slotID)
 {
@@ -774,7 +774,7 @@ void Pellet::setSlotFlag(int slotID)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Pellet::resetSlotFlag(int slotID)
 {
@@ -785,7 +785,7 @@ void Pellet::resetSlotFlag(int slotID)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Pellet::isSlotFlag(int slotID)
 {
@@ -797,7 +797,7 @@ bool Pellet::isSlotFlag(int slotID)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Pellet::initPellet(PelletShapeObject* shapeObj, PelletConfig* config)
 {
@@ -823,7 +823,7 @@ void Pellet::initPellet(PelletShapeObject* shapeObj, PelletConfig* config)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00007C
  */
 void Pellet::initPellet(PelletView* view, PelletConfig* config)
@@ -838,7 +838,7 @@ void Pellet::initPellet(PelletView* view, PelletConfig* config)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Pellet::startCarryMotion(f32 speed)
 {
@@ -849,7 +849,7 @@ void Pellet::startCarryMotion(f32 speed)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00004C
  */
 void Pellet::stopMotion()
@@ -862,7 +862,7 @@ void Pellet::stopMotion()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Pellet::finishMotion()
 {
@@ -874,7 +874,7 @@ void Pellet::finishMotion()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Pellet::init(immut Vector3f& pos)
 {
@@ -894,7 +894,7 @@ void Pellet::init(immut Vector3f& pos)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Pellet::isFree()
 {
@@ -906,7 +906,7 @@ bool Pellet::isFree()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Pellet::doLoad(RandomAccessStream& input)
 {
@@ -940,7 +940,7 @@ void Pellet::doLoad(RandomAccessStream& input)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Pellet::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
@@ -950,7 +950,7 @@ void Pellet::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Pellet::doSave(RandomAccessStream& output)
 {
@@ -961,7 +961,7 @@ void Pellet::doSave(RandomAccessStream& output)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Pellet::startAI(int doSpawnScaleOff)
 {
@@ -1055,7 +1055,7 @@ void Pellet::startAI(int doSpawnScaleOff)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00007C
  */
 void Pellet::startAppear()
@@ -1070,7 +1070,7 @@ void Pellet::startAppear()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Pellet::doAnimation()
 {
@@ -1084,7 +1084,7 @@ void Pellet::doAnimation()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Pellet::refresh(Graphics& gfx)
 {
@@ -1103,7 +1103,7 @@ void Pellet::refresh(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Pellet::postUpdate(int unused, f32 deltaTime)
 {
@@ -1122,7 +1122,7 @@ void Pellet::postUpdate(int unused, f32 deltaTime)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Pellet::update()
 {
@@ -1298,7 +1298,7 @@ void Pellet::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Pellet::bounceCallback()
 {
@@ -1307,7 +1307,7 @@ void Pellet::bounceCallback()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Pellet::collisionCallback(immut CollEvent& event)
 {
@@ -1317,7 +1317,7 @@ void Pellet::collisionCallback(immut CollEvent& event)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Pellet::stimulate(immut Interaction& interaction)
 {
@@ -1328,7 +1328,7 @@ bool Pellet::stimulate(immut Interaction& interaction)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Pellet::doRender(Graphics& gfx, Matrix4f& mtx)
 {
@@ -1369,7 +1369,7 @@ void Pellet::doRender(Graphics& gfx, Matrix4f& mtx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Pellet::doCreateColls(Graphics& gfx)
 {
@@ -1398,7 +1398,7 @@ void Pellet::doCreateColls(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool InteractSwallow::actPellet(Pellet* pellet) immut
 {
@@ -1411,7 +1411,7 @@ bool InteractSwallow::actPellet(Pellet* pellet) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool InteractKill::actPellet(Pellet* pellet) immut
 {
@@ -1429,7 +1429,7 @@ bool InteractKill::actPellet(Pellet* pellet) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool PelletMgr::decomposeNumberPellet(u32 id, int& color, int& type)
 {
@@ -1445,7 +1445,7 @@ bool PelletMgr::decomposeNumberPellet(u32 id, int& color, int& type)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PelletMgr::registerUfoParts()
 {
@@ -1460,7 +1460,7 @@ void PelletMgr::registerUfoParts()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Pellet* PelletMgr::newNumberPellet(int color, int type)
 {
@@ -1482,7 +1482,7 @@ Pellet* PelletMgr::newNumberPellet(int color, int type)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Pellet* PelletMgr::newPellet(u32 pelletID, PelletView* view)
 {
@@ -1533,7 +1533,7 @@ Pellet* PelletMgr::newPellet(u32 pelletID, PelletView* view)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PelletShapeObject* PelletMgr::getShapeObject(u32 pelletID)
 {
@@ -1555,7 +1555,7 @@ PelletShapeObject* PelletMgr::getShapeObject(u32 pelletID)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Creature* PelletMgr::createObject()
 {
@@ -1565,7 +1565,7 @@ Creature* PelletMgr::createObject()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PelletMgr::PelletMgr(MapMgr* mgr)
 {
@@ -1585,7 +1585,7 @@ PelletMgr::PelletMgr(MapMgr* mgr)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000030
  */
 bool PelletMgr::useShape(u32 pelletID)
@@ -1600,7 +1600,7 @@ bool PelletMgr::useShape(u32 pelletID)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PelletMgr::addUseList(u32 pelletID)
 {
@@ -1612,7 +1612,7 @@ void PelletMgr::addUseList(u32 pelletID)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PelletMgr::initShapeInfos()
 {
@@ -1622,7 +1622,7 @@ void PelletMgr::initShapeInfos()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int PelletMgr::getConfigIndex(u32 pelletID)
 {
@@ -1639,7 +1639,7 @@ int PelletMgr::getConfigIndex(u32 pelletID)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PelletConfig* PelletMgr::getConfigFromIdx(int idx)
 {
@@ -1655,7 +1655,7 @@ PelletConfig* PelletMgr::getConfigFromIdx(int idx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 ID32 PelletMgr::getConfigIdAt(int idx)
@@ -1670,7 +1670,7 @@ ID32 PelletMgr::getConfigIdAt(int idx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PelletConfig* PelletMgr::getConfig(u32 pelletID)
 {
@@ -1686,7 +1686,7 @@ PelletConfig* PelletMgr::getConfig(u32 pelletID)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PelletMgr::read(RandomAccessStream& input)
 {
@@ -1701,7 +1701,7 @@ void PelletMgr::read(RandomAccessStream& input)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PelletMgr::readConfigs(RandomAccessStream& input)
 {
@@ -1715,7 +1715,7 @@ void PelletMgr::readConfigs(RandomAccessStream& input)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PelletMgr::readAnimInfos(RandomAccessStream& input)
 {
@@ -1729,7 +1729,7 @@ void PelletMgr::readAnimInfos(RandomAccessStream& input)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PelletMgr::initTekiNakaParts()
 {
@@ -1748,7 +1748,7 @@ void PelletMgr::initTekiNakaParts()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PelletMgr::createShapeObjects()
 {
@@ -1780,7 +1780,7 @@ void PelletMgr::createShapeObjects()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PelletMgr::refresh(Graphics& gfx)
 {
@@ -1808,7 +1808,7 @@ void PelletMgr::refresh(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PelletMgr::refresh2d(Graphics&)
 {

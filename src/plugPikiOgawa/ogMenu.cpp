@@ -18,13 +18,13 @@
 #include "zen/ogSub.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("OgMenuSection")
@@ -37,7 +37,7 @@ static f32 RotateAngleData[]
 } // namespace zen
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000060
  */
 void zen::ogDrawScrMenu::setScreen(immut char* path)
@@ -48,7 +48,7 @@ void zen::ogDrawScrMenu::setScreen(immut char* path)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::ogDrawScrMenu::ogDrawScrMenu()
 {
@@ -62,7 +62,7 @@ zen::ogDrawScrMenu::ogDrawScrMenu()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000034
  */
 void zen::ChkAngle(f32* out)
@@ -81,7 +81,7 @@ void zen::ChkAngle(f32* out)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000048
  */
 void zen::ogDrawScrMenu::calcAngleSpeed(f32 angle)
@@ -97,7 +97,7 @@ void zen::ogDrawScrMenu::calcAngleSpeed(f32 angle)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::ogDrawScrMenu::returnStatusFlag zen::ogDrawScrMenu::update(Controller* input, bool a1, bool a2)
 {
@@ -145,7 +145,7 @@ zen::ogDrawScrMenu::returnStatusFlag zen::ogDrawScrMenu::update(Controller* inpu
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000080
  */
 bool zen::ogDrawScrMenu::draw(Graphics& gfx)
@@ -157,7 +157,7 @@ bool zen::ogDrawScrMenu::draw(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::ogDrawScrController::ogDrawScrController()
 {
@@ -187,7 +187,7 @@ zen::ogDrawScrController::ogDrawScrController()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000CC
  */
 void zen::ogDrawScrController::setWinColor()
@@ -199,7 +199,7 @@ void zen::ogDrawScrController::setWinColor()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000BC
  */
 void zen::ogDrawScrController::setOriginalColor()
@@ -216,7 +216,7 @@ void zen::ogDrawScrController::setOriginalColor()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00006C
  */
 void zen::ogDrawScrController::setHantenColor()
@@ -229,7 +229,7 @@ void zen::ogDrawScrController::setHantenColor()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogDrawScrController::update()
 {
@@ -258,7 +258,7 @@ void zen::ogDrawScrController::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::ogDrawScrInfo::ogDrawScrInfo()
 {
@@ -333,7 +333,7 @@ zen::ogDrawScrInfo::ogDrawScrInfo()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogDrawScrInfo::start()
 {
@@ -389,7 +389,7 @@ void zen::ogDrawScrInfo::start()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 void zen::ogDrawScrInfo::update(Controller*)
@@ -398,7 +398,7 @@ void zen::ogDrawScrInfo::update(Controller*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000170
  */
 zen::ogDrawScrInfo2::ogDrawScrInfo2()
@@ -413,7 +413,7 @@ zen::ogDrawScrInfo2::ogDrawScrInfo2()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 void zen::ogDrawScrInfo2::start()
@@ -422,7 +422,7 @@ void zen::ogDrawScrInfo2::start()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 void zen::ogDrawScrInfo2::update(Controller*)
@@ -431,7 +431,7 @@ void zen::ogDrawScrInfo2::update(Controller*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 void zen::ogDrawScrInfo2::drawHougaku(Graphics& gfx)
@@ -456,7 +456,7 @@ void zen::ogDrawScrInfo2::drawHougaku(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::ogScrMenuMgr::ogScrMenuMgr()
 {
@@ -492,7 +492,7 @@ zen::ogScrMenuMgr::ogScrMenuMgr()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrMenuMgr::start()
 {
@@ -511,7 +511,7 @@ void zen::ogScrMenuMgr::start()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000080
  */
 void zen::ogScrMenuMgr::updateInfo(Controller* input)
@@ -530,7 +530,7 @@ void zen::ogScrMenuMgr::updateInfo(Controller* input)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000078
  */
 void zen::ogScrMenuMgr::updateCont(Controller* input)
@@ -549,7 +549,7 @@ void zen::ogScrMenuMgr::updateCont(Controller* input)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::ogScrMenuMgr::returnStatusFlag zen::ogScrMenuMgr::update(Controller* input)
 {
@@ -645,7 +645,7 @@ zen::ogScrMenuMgr::returnStatusFlag zen::ogScrMenuMgr::update(Controller* input)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool zen::ogScrMenuMgr::draw(Graphics& gfx)
 {

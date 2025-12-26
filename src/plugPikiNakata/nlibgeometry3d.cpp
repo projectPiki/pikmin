@@ -2,19 +2,19 @@
 #include "nlib/Geometry3D.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("nlibgeometry3d");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00008C
  */
 NLine::NLine()
@@ -23,7 +23,7 @@ NLine::NLine()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 NLine::NLine(immut NVector3f& pos, immut NVector3f& dir)
 {
@@ -31,7 +31,7 @@ NLine::NLine(immut NVector3f& pos, immut NVector3f& dir)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NLine::construct(immut NVector3f& pos, immut NVector3f& dir)
 {
@@ -40,7 +40,7 @@ void NLine::construct(immut NVector3f& pos, immut NVector3f& dir)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000060
  */
 NLine::NLine(immut NLine& other)
@@ -49,7 +49,7 @@ NLine::NLine(immut NLine& other)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000034
  */
 void NLine::construct(immut NLine& other)
@@ -58,7 +58,7 @@ void NLine::construct(immut NLine& other)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 NLine::calcDistance(immut NVector3f& point, f32* vertProj) immut
 {
@@ -74,7 +74,7 @@ f32 NLine::calcDistance(immut NVector3f& point, f32* vertProj) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0002AC
  */
 f32 NLine::calcDistance(immut NLine& other, f32* closestPointThisLine, f32* closestPointOtherLine) immut
@@ -121,7 +121,7 @@ f32 NLine::calcDistance(immut NLine& other, f32* closestPointThisLine, f32* clos
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000044
  */
 void NLine::outputVerticalPosition(immut NVector3f& point, NVector3f& outPos) immut
@@ -130,7 +130,7 @@ void NLine::outputVerticalPosition(immut NVector3f& point, NVector3f& outPos) im
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 NLine::calcVerticalProjection(immut NVector3f& point) immut
 {
@@ -139,7 +139,7 @@ f32 NLine::calcVerticalProjection(immut NVector3f& point) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NLine::outputPosition(f32 t, NVector3f& outPos) immut
 {
@@ -149,7 +149,7 @@ void NLine::outputPosition(f32 t, NVector3f& outPos) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000A8
  */
 void NLine::outputPositionY(f32 y, NVector3f& outPos) immut
@@ -158,7 +158,7 @@ void NLine::outputPositionY(f32 y, NVector3f& outPos) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NLine::transform(NTransform3D& transform)
 {
@@ -167,7 +167,7 @@ void NLine::transform(NTransform3D& transform)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NLine::println() immut
 {
@@ -178,7 +178,7 @@ void NLine::println() immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000064
  */
 NPlane::NPlane()
@@ -187,7 +187,7 @@ NPlane::NPlane()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000068
  */
 NPlane::NPlane(NVector3f&, f32)
@@ -196,7 +196,7 @@ NPlane::NPlane(NVector3f&, f32)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000020
  */
 void NPlane::construct(NVector3f&, f32)
@@ -205,7 +205,7 @@ void NPlane::construct(NVector3f&, f32)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 NPlane::NPlane(NVector3f& normal, NVector3f& point)
 {
@@ -213,7 +213,7 @@ NPlane::NPlane(NVector3f& normal, NVector3f& point)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NPlane::construct(NVector3f& normal, NVector3f& point)
 {
@@ -222,7 +222,7 @@ void NPlane::construct(NVector3f& normal, NVector3f& point)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000078
  */
 NPlane::NPlane(NVector3f&, NVector3f&, NVector3f&)
@@ -231,7 +231,7 @@ NPlane::NPlane(NVector3f&, NVector3f&, NVector3f&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000E8
  */
 void NPlane::construct(NVector3f&, NVector3f&, NVector3f&)
@@ -240,7 +240,7 @@ void NPlane::construct(NVector3f&, NVector3f&, NVector3f&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000058
  */
 NPlane::NPlane(Plane&)
@@ -249,7 +249,7 @@ NPlane::NPlane(Plane&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00005C
  */
 void NPlane::construct(Plane&)
@@ -258,7 +258,7 @@ void NPlane::construct(Plane&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000058
  */
 NPlane::NPlane(NPlane&)
@@ -267,7 +267,7 @@ NPlane::NPlane(NPlane&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000024
  */
 void NPlane::construct(NPlane&)
@@ -276,7 +276,7 @@ void NPlane::construct(NPlane&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000114
  */
 bool NPlane::intersects(NLine&, f32*)
@@ -285,7 +285,7 @@ bool NPlane::intersects(NLine&, f32*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00018C
  */
 bool NPlane::outputIntersection(NLine&, NVector3f&)
@@ -294,7 +294,7 @@ bool NPlane::outputIntersection(NLine&, NVector3f&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000154
  */
 bool NPlane::intersectsRay(NLine&, f32*)
@@ -303,7 +303,7 @@ bool NPlane::intersectsRay(NLine&, f32*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000100
  */
 bool NPlane::outputRayIntersection(NLine&, NVector3f&)
@@ -312,7 +312,7 @@ bool NPlane::outputRayIntersection(NLine&, NVector3f&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0001DC
  */
 bool NPlane::intersectsSegment(NSegment&, f32*)
@@ -321,7 +321,7 @@ bool NPlane::intersectsSegment(NSegment&, f32*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000188
  */
 bool NPlane::outputSegmentIntersection(NSegment&, NVector3f&)
@@ -330,7 +330,7 @@ bool NPlane::outputSegmentIntersection(NSegment&, NVector3f&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000030
  */
 void NPlane::outputPosition(NVector3f& outPos)
@@ -339,7 +339,7 @@ void NPlane::outputPosition(NVector3f& outPos)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NPlane::outputVerticalPosition(NVector3f& point, NVector3f& outPos)
 {
@@ -350,7 +350,7 @@ void NPlane::outputVerticalPosition(NVector3f& point, NVector3f& outPos)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000B4
  */
 void NPlane::negate()
@@ -359,7 +359,7 @@ void NPlane::negate()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 bool NPlane::adjustTo(NVector3f&, f32)
@@ -368,7 +368,7 @@ bool NPlane::adjustTo(NVector3f&, f32)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F8
  */
 bool NPlane::adjust(NVector3f&)
@@ -377,7 +377,7 @@ bool NPlane::adjust(NVector3f&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00028C
  */
 bool NPlane::outputIntersectionLineY(NPlane&, NLine&)
@@ -386,7 +386,7 @@ bool NPlane::outputIntersectionLineY(NPlane&, NLine&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000028
  */
 f32 NPlane::calcAngle(NPlane&)
@@ -395,7 +395,7 @@ f32 NPlane::calcAngle(NPlane&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00005C
  */
 f32 NPlane::calcY(f32, f32)
@@ -404,7 +404,7 @@ f32 NPlane::calcY(f32, f32)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NPlane::transform(NTransform3D& transform)
 {
@@ -416,7 +416,7 @@ void NPlane::transform(NTransform3D& transform)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NPlane::println() immut
 {
@@ -426,7 +426,7 @@ void NPlane::println() immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 NSegment::NSegment()
@@ -435,7 +435,7 @@ NSegment::NSegment()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000D4
  */
 NSegment::NSegment(NVector3f&, NVector3f&)
@@ -444,7 +444,7 @@ NSegment::NSegment(NVector3f&, NVector3f&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000060
  */
 void NSegment::construct(NVector3f&, NVector3f&)
@@ -453,7 +453,7 @@ void NSegment::construct(NVector3f&, NVector3f&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000C4
  */
 NSegment::NSegment(NSegment&)
@@ -462,7 +462,7 @@ NSegment::NSegment(NSegment&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000070
  */
 void NSegment::construct(NSegment&)
@@ -471,7 +471,7 @@ void NSegment::construct(NSegment&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0002E0
  */
 f32 NSegment::calcDistanceAsSegment(NVector3f&, f32*, f32*)
@@ -480,7 +480,7 @@ f32 NSegment::calcDistanceAsSegment(NVector3f&, f32*, f32*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0003CC
  */
 f32 NSegment::calcDistanceAsSegment(NLine&, f32*, f32*)
@@ -489,7 +489,7 @@ f32 NSegment::calcDistanceAsSegment(NLine&, f32*, f32*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000230
  */
 f32 NSegment::calcSegmentDistanceAsSegment(NSegment&, f32*, f32*)
@@ -498,7 +498,7 @@ f32 NSegment::calcSegmentDistanceAsSegment(NSegment&, f32*, f32*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00005C
  */
 void NSegment::transform(NTransform3D&)
@@ -507,7 +507,7 @@ void NSegment::transform(NTransform3D&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000090
  */
 void NSegment::translate(NVector3f&)
@@ -516,7 +516,7 @@ void NSegment::translate(NVector3f&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00003C
  */
 void NSegment::makeProjectionY()
@@ -525,7 +525,7 @@ void NSegment::makeProjectionY()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000040
  */
 void NSegment::println() immut

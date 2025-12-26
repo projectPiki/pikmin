@@ -4,19 +4,19 @@
 #include "Shape.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("Snake");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 SnakeProp::SnakeProp()
 {
@@ -26,7 +26,7 @@ SnakeProp::SnakeProp()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Snake::Snake(CreatureProp* props)
     : Boss(props)
@@ -38,7 +38,7 @@ Snake::Snake(CreatureProp* props)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Snake::setBossType(bool type)
 {
@@ -46,7 +46,7 @@ void Snake::setBossType(bool type)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 Snake::getCentreSize()
 {
@@ -54,7 +54,7 @@ f32 Snake::getCentreSize()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 Snake::getiMass()
 {
@@ -62,7 +62,7 @@ f32 Snake::getiMass()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Snake::init(immut Vector3f& pos)
 {
@@ -79,7 +79,7 @@ void Snake::init(immut Vector3f& pos)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Snake::doKill()
 {
@@ -90,7 +90,7 @@ void Snake::doKill()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Snake::exitCourse()
 {
@@ -98,7 +98,7 @@ void Snake::exitCourse()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Snake::update()
 {
@@ -109,7 +109,7 @@ void Snake::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Snake::refresh(Graphics& gfx)
 {
@@ -123,7 +123,7 @@ void Snake::refresh(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Snake::drawShape(Graphics& gfx)
 {
@@ -133,7 +133,7 @@ void Snake::drawShape(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Snake::refresh2d(Graphics& gfx)
 {
@@ -144,7 +144,7 @@ void Snake::refresh2d(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Snake::doAI()
 {
@@ -152,7 +152,7 @@ void Snake::doAI()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Snake::doAnimation()
 {

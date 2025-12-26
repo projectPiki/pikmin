@@ -13,13 +13,13 @@
 #include "teki.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("taipalm")
@@ -179,7 +179,7 @@ struct TaiPalmChangingColorAction : public TaiAction {
 };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TaiPalmSoundTable::TaiPalmSoundTable()
     : PaniSoundTable(5)
@@ -190,7 +190,7 @@ TaiPalmSoundTable::TaiPalmSoundTable()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TaiPalmParameters::TaiPalmParameters()
     : TekiParameters(TPI_COUNT, PALMPF_COUNT)
@@ -229,7 +229,7 @@ TaiPalmParameters::TaiPalmParameters()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TaiPalmStrategy::TaiPalmStrategy(TekiParameters* params)
     : TaiStrategy(PALMSTATE_COUNT, PALMSTATE_Normal)
@@ -288,7 +288,7 @@ TaiPalmStrategy::TaiPalmStrategy(TekiParameters* params)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiPalmStrategy::start(Teki& teki)
 {
@@ -338,7 +338,7 @@ void TaiPalmStrategy::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiPalmStrategy::draw(Teki& teki, Graphics& gfx)
 {
@@ -347,7 +347,7 @@ void TaiPalmStrategy::draw(Teki& teki, Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiPalmStrategy::createEffect(Teki& teki, int palmEffectID)
 {
@@ -376,7 +376,7 @@ void TaiPalmStrategy::createEffect(Teki& teki, int palmEffectID)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int TaiPalmStrategy::translateMotionIndex(Teki& teki, int tekiMotionIdx)
 {
@@ -442,7 +442,7 @@ int TaiPalmStrategy::translateMotionIndex(Teki& teki, int tekiMotionIdx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiPalmMotionAction::start(Teki& teki)
 {
@@ -453,7 +453,7 @@ void TaiPalmMotionAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiPalmDyingAction::start(Teki& teki)
 {
@@ -465,7 +465,7 @@ void TaiPalmDyingAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiPalmDyingAction::act(Teki& teki)
 {
@@ -479,7 +479,7 @@ bool TaiPalmDyingAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiPalmDamagingAction::start(Teki& teki)
 {
@@ -491,7 +491,7 @@ void TaiPalmDamagingAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiPalmGrowingAction::start(Teki& teki)
 {
@@ -502,7 +502,7 @@ void TaiPalmGrowingAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiPalmGrowAction::act(Teki& teki)
 {
@@ -519,7 +519,7 @@ bool TaiPalmGrowAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiPalmFlowerDamageAction::act(Teki& teki)
 {
@@ -535,7 +535,7 @@ bool TaiPalmFlowerDamageAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiPalmSunflowerAction::act(Teki& teki)
 {
@@ -544,7 +544,7 @@ bool TaiPalmSunflowerAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiPalmSettingPelletAction::start(Teki& teki)
 {
@@ -557,14 +557,14 @@ void TaiPalmSettingPelletAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiPalmChangingColorAction::start(Teki&)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiPalmChangingColorAction::act(Teki& teki)
 {
@@ -586,7 +586,7 @@ bool TaiPalmChangingColorAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiPalmChangingColorAction::resetTimer(Teki& teki)
 {

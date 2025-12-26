@@ -6,19 +6,19 @@
 #include "sysNew.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("Nucleus");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 NucleusProp::NucleusProp()
 {
@@ -28,7 +28,7 @@ NucleusProp::NucleusProp()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Nucleus::Nucleus(CreatureProp* props)
     : Boss(props)
@@ -38,7 +38,7 @@ Nucleus::Nucleus(CreatureProp* props)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 Nucleus::getiMass()
 {
@@ -46,7 +46,7 @@ f32 Nucleus::getiMass()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Nucleus::init(immut Vector3f&)
 {
@@ -59,7 +59,7 @@ void Nucleus::init(immut Vector3f&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Nucleus::doKill()
 {
@@ -69,14 +69,14 @@ void Nucleus::doKill()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Nucleus::exitCourse()
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Nucleus::update()
 {
@@ -84,7 +84,7 @@ void Nucleus::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Nucleus::refresh(Graphics& gfx)
 {
@@ -97,7 +97,7 @@ void Nucleus::refresh(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Nucleus::drawShape(Graphics& gfx)
 {
@@ -106,7 +106,7 @@ void Nucleus::drawShape(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Nucleus::doAI()
 {
@@ -114,7 +114,7 @@ void Nucleus::doAI()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Nucleus::doAnimation()
 {

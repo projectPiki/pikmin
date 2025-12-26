@@ -8,19 +8,19 @@
 #include "sysNew.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(10)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("cPlate");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Creature* CPlate::getCreature(int idx)
 {
@@ -28,7 +28,7 @@ Creature* CPlate::getCreature(int idx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 CPlate::CPlate(MapMgr* mgr)
 {
@@ -50,7 +50,7 @@ CPlate::CPlate(MapMgr* mgr)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool CPlate::canNaviRunFast()
 {
@@ -58,14 +58,14 @@ bool CPlate::canNaviRunFast()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void CPlate::init(immut Vector3f&)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void CPlate::setPos(immut Vector3f& position, f32 angle, immut Vector3f& velocity)
 {
@@ -86,7 +86,7 @@ void CPlate::setPos(immut Vector3f& position, f32 angle, immut Vector3f& velocit
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void CPlate::setPosGray(immut Vector3f& position, f32 angle, immut Vector3f& velocity)
 {
@@ -106,7 +106,7 @@ void CPlate::setPosGray(immut Vector3f& position, f32 angle, immut Vector3f& vel
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0001E0
  */
 void CPlate::setPosNeutral(immut Vector3f& position, f32 angle, immut Vector3f& velocity)
@@ -117,7 +117,7 @@ void CPlate::setPosNeutral(immut Vector3f& position, f32 angle, immut Vector3f& 
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int CPlate::getSlot(Creature* occupant, SlotChangeListner* listener)
 {
@@ -130,7 +130,7 @@ int CPlate::getSlot(Creature* occupant, SlotChangeListner* listener)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void CPlate::changeFlower(Piki* piki)
 {
@@ -140,7 +140,7 @@ void CPlate::changeFlower(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void CPlate::releaseSlot(Creature* occupant, int idx)
 {
@@ -164,7 +164,7 @@ void CPlate::releaseSlot(Creature* occupant, int idx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000118
  */
 void CPlate::swapSlot(int idx1, int idx2)
@@ -189,7 +189,7 @@ void CPlate::swapSlot(int idx1, int idx2)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool CPlate::validSlot(int idx)
 {
@@ -202,7 +202,7 @@ bool CPlate::validSlot(int idx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void CPlate::sortByColor(Piki* piki)
 {
@@ -255,7 +255,7 @@ void CPlate::sortByColor(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void CPlate::rearrangeSlot(immut Vector3f& position, f32, immut Vector3f&)
 {
@@ -275,7 +275,7 @@ void CPlate::rearrangeSlot(immut Vector3f& position, f32, immut Vector3f&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void CPlate::refresh(int slotCount, f32 interpT)
 {
@@ -311,7 +311,7 @@ void CPlate::refresh(int slotCount, f32 interpT)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void CPlate::refreshSlot()
 {
@@ -358,7 +358,7 @@ void CPlate::refreshSlot()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void CPlate::update()
 {
@@ -374,7 +374,7 @@ void CPlate::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 void CPlate::postUpdate(f32)
@@ -382,7 +382,7 @@ void CPlate::postUpdate(f32)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void CPlate::render(Graphics& gfx)
 {

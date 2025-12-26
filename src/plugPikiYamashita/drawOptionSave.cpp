@@ -4,19 +4,19 @@
 #include "zen/DrawSave.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(14)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("drawOptionSave")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::DrawOptionSave::DrawOptionSave()
 {
@@ -24,7 +24,7 @@ zen::DrawOptionSave::DrawOptionSave()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool zen::DrawOptionSave::update(Controller* controller)
 {
@@ -101,7 +101,7 @@ bool zen::DrawOptionSave::update(Controller* controller)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawOptionSave::draw(Graphics& gfx)
 {
@@ -114,7 +114,7 @@ void zen::DrawOptionSave::draw(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawOptionSave::modeCardCheck(Controller* controller)
 {
@@ -137,7 +137,7 @@ void zen::DrawOptionSave::modeCardCheck(Controller* controller)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawOptionSave::init()
 {
@@ -145,7 +145,7 @@ void zen::DrawOptionSave::init()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawOptionSave::start()
 {
@@ -153,7 +153,7 @@ void zen::DrawOptionSave::start()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawOptionSave::setMode(u32 mode, Controller* controller)
 {

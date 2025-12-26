@@ -19,13 +19,13 @@
 #include "teki.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("tainapkid")
@@ -396,7 +396,7 @@ struct TaiNapkidStartDroppingWaterAction : public TaiAction {
 };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TaiNapkidSoundTable::TaiNapkidSoundTable()
     : PaniSoundTable(4)
@@ -407,7 +407,7 @@ TaiNapkidSoundTable::TaiNapkidSoundTable()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TaiNapkidParameters::TaiNapkidParameters()
     : TekiParameters(TaiNapkidIntParms::COUNT, TaiNapkidFloatParms::COUNT)
@@ -498,7 +498,7 @@ TaiNapkidParameters::TaiNapkidParameters()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TaiNapkidStrategy::TaiNapkidStrategy(TekiParameters* params)
     : TaiStrategy(TaiNapkidStateID::COUNT, TaiNapkidStateID::Wandering)
@@ -900,7 +900,7 @@ TaiNapkidStrategy::TaiNapkidStrategy(TekiParameters* params)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiNapkidStrategy::start(Teki& teki)
 {
@@ -910,7 +910,7 @@ void TaiNapkidStrategy::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiNapkidStrategy::draw(Teki& teki, Graphics& gfx)
 {
@@ -929,7 +929,7 @@ void TaiNapkidStrategy::draw(Teki& teki, Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiNapkidStrategy::drawDebugInfo(Teki& teki, Graphics& gfx)
 {
@@ -952,7 +952,7 @@ void TaiNapkidStrategy::drawDebugInfo(Teki& teki, Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TekiNapkidTargetPikiCondition::satisfy(Creature* target) immut
 {
@@ -978,7 +978,7 @@ bool TekiNapkidTargetPikiCondition::satisfy(Creature* target) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TekiNapkidShortRangeCondition::satisfy(Creature* target) immut
 {
@@ -1001,7 +1001,7 @@ bool TekiNapkidShortRangeCondition::satisfy(Creature* target) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiNapkidWanderingRouteAction::start(Teki& teki)
 {
@@ -1011,7 +1011,7 @@ void TaiNapkidWanderingRouteAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiNapkidWanderingRouteAction::act(Teki& teki)
 {
@@ -1037,7 +1037,7 @@ bool TaiNapkidWanderingRouteAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiNapkidWanderingRouteAction::makeTargetPosition(Teki& teki)
 {
@@ -1068,7 +1068,7 @@ void TaiNapkidWanderingRouteAction::makeTargetPosition(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiNapkidTargetPikiAction::act(Teki& teki)
 {
@@ -1086,7 +1086,7 @@ bool TaiNapkidTargetPikiAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiNapkidPikiLostAction::act(Teki& teki)
 {
@@ -1110,7 +1110,7 @@ bool TaiNapkidPikiLostAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiNapkidShortRangeAction::act(Teki& teki)
 {
@@ -1132,7 +1132,7 @@ bool TaiNapkidShortRangeAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiNapkidStraightFlyingAction::start(Teki& teki)
 {
@@ -1143,7 +1143,7 @@ void TaiNapkidStraightFlyingAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiNapkidStraightFlyingAction::act(Teki& teki)
 {
@@ -1163,7 +1163,7 @@ bool TaiNapkidStraightFlyingAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiNapkidCirclingAction::start(Teki& teki)
 {
@@ -1217,7 +1217,7 @@ void TaiNapkidCirclingAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiNapkidCirclingAction::finish(Teki& teki)
 {
@@ -1226,7 +1226,7 @@ void TaiNapkidCirclingAction::finish(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiNapkidCirclingAction::act(Teki& teki)
 {
@@ -1253,7 +1253,7 @@ bool TaiNapkidCirclingAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiNapkidFlyingAction::act(Teki& teki)
 {
@@ -1263,7 +1263,7 @@ bool TaiNapkidFlyingAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiNapkidAscendingAction::act(Teki& teki)
 {
@@ -1272,7 +1272,7 @@ bool TaiNapkidAscendingAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiNapkidApproachPikiAction::act(Teki& teki)
 {
@@ -1291,7 +1291,7 @@ bool TaiNapkidApproachPikiAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiNapkidCatchingAction::act(Teki& teki)
 {
@@ -1343,7 +1343,7 @@ bool TaiNapkidCatchingAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiNapkidCatchDescendingAction::start(Teki& teki)
 {
@@ -1365,7 +1365,7 @@ void TaiNapkidCatchDescendingAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiNapkidCatchTracingAction::act(Teki& teki)
 {
@@ -1422,7 +1422,7 @@ bool TaiNapkidCatchTracingAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiNapkidCatchFlyingAction::start(Teki& teki)
 {
@@ -1441,7 +1441,7 @@ void TaiNapkidCatchFlyingAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiNapkidCatchAscendingAction::start(Teki& teki)
 {
@@ -1460,7 +1460,7 @@ void TaiNapkidCatchAscendingAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiNapkidTakingOffAscendingAction::start(Teki& teki)
 {
@@ -1488,7 +1488,7 @@ void TaiNapkidTakingOffAscendingAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiNapkidRisingAscendingAction::start(Teki& teki)
 {
@@ -1508,7 +1508,7 @@ void TaiNapkidRisingAscendingAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiNapkidThrowingPikiAction::act(Teki& teki)
 {
@@ -1546,7 +1546,7 @@ bool TaiNapkidThrowingPikiAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiNapkidFlickAction::act(Teki& teki)
 {
@@ -1568,7 +1568,7 @@ bool TaiNapkidFlickAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiNapkidFallingAction::start(Teki& teki)
 {
@@ -1599,7 +1599,7 @@ void TaiNapkidFallingAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiNapkidFallingAction::act(Teki&)
 {
@@ -1607,7 +1607,7 @@ bool TaiNapkidFallingAction::act(Teki&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiNapkidShockFallingAction::start(Teki& teki)
 {
@@ -1615,7 +1615,7 @@ void TaiNapkidShockFallingAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiNapkidFallingWaterEffectAction::start(Teki& teki)
 {
@@ -1636,7 +1636,7 @@ void TaiNapkidFallingWaterEffectAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiNapkidStartDroppingWaterAction::start(Teki& teki)
 {

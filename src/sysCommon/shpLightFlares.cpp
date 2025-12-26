@@ -8,19 +8,19 @@
 #include <string.h>
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("shpLightFlares");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00011C
  */
 void LightFlare::loadini(CmdStream* commands)
@@ -47,7 +47,7 @@ void LightFlare::loadini(CmdStream* commands)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000B0
  */
 void LightFlare::saveini(immut char*, RandomAccessStream&)
@@ -57,7 +57,7 @@ void LightFlare::saveini(immut char*, RandomAccessStream&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0001E8
  */
 void LightGroup::saveini(immut char*, RandomAccessStream&)
@@ -66,7 +66,7 @@ void LightGroup::saveini(immut char*, RandomAccessStream&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void LightGroup::loadini(CmdStream* commands)
 {
@@ -139,7 +139,7 @@ void LightGroup::loadini(CmdStream* commands)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void LightGroup::refresh(Graphics& gfx, immut Matrix4f* lightMtx)
 {

@@ -15,19 +15,19 @@
 static bool newVer = true;
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(20)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("aiCrowd")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 ActCrowd::ActCrowd(Piki* piki)
     : Action(piki, true)
@@ -39,7 +39,7 @@ ActCrowd::ActCrowd(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActCrowd::inform(int slotID)
 {
@@ -47,7 +47,7 @@ void ActCrowd::inform(int slotID)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActCrowd::startSort()
 {
@@ -56,7 +56,7 @@ void ActCrowd::startSort()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActCrowd::init(Creature* target)
 {
@@ -97,7 +97,7 @@ void ActCrowd::init(Creature* target)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000054
  */
 void ActCrowd::initRouteMove()
@@ -111,7 +111,7 @@ void ActCrowd::initRouteMove()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000044
  */
 void ActCrowd::exeRouteMove()
@@ -123,7 +123,7 @@ void ActCrowd::exeRouteMove()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00006C
  */
 void ActCrowd::setFormed()
@@ -135,7 +135,7 @@ void ActCrowd::setFormed()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActCrowd::procCollideMsg(Piki*, MsgCollide* msg)
 {
@@ -158,7 +158,7 @@ void ActCrowd::procCollideMsg(Piki*, MsgCollide* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActCrowd::procWallMsg(Piki*, MsgWall* msg)
 {
@@ -169,7 +169,7 @@ void ActCrowd::procWallMsg(Piki*, MsgWall* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActCrowd::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
@@ -198,7 +198,7 @@ void ActCrowd::procAnimMsg(Piki* piki, MsgAnim* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActCrowd::cleanup()
 {
@@ -222,7 +222,7 @@ void ActCrowd::cleanup()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActCrowd::exec()
 {
@@ -529,7 +529,7 @@ int ActCrowd::exec()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActCrowd::startZawatuki()
 {
@@ -540,14 +540,14 @@ void ActCrowd::startZawatuki()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActCrowd::finishZawatuki()
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000C0
  */
 void ActCrowd::startBoredom()
@@ -566,7 +566,7 @@ void ActCrowd::startBoredom()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000DC
  */
 void ActCrowd::startTalk()

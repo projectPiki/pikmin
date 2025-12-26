@@ -4,7 +4,7 @@
 static int fragmentID = -2;
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 ASM static char* GetR2()
 {
@@ -17,7 +17,7 @@ ASM static char* GetR2()
 extern "C" {
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void __init_cpp_exceptions(void)
 {
@@ -28,7 +28,7 @@ void __init_cpp_exceptions(void)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void __fini_cpp_exceptions(void)
 {

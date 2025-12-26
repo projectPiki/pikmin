@@ -8,13 +8,13 @@
 #include "zen/TexAnim.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(26)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("DrawContainer")
@@ -27,7 +27,7 @@ const f32 zen::WindowPaneMgr::weightPosLength  = 50.0f;
 const f32 zen::WindowPaneMgr::weightPosGravity = 9.8f;
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::DrawContainer::DrawContainer()
     : mZenController(nullptr)
@@ -134,7 +134,7 @@ zen::DrawContainer::DrawContainer()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawContainer::start(zen::DrawContainer::containerType color, int p2, int p3, int p4, int p5, int p6, int p7)
 {
@@ -185,7 +185,7 @@ void zen::DrawContainer::start(zen::DrawContainer::containerType color, int p2, 
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawContainer::setDispParam()
 {
@@ -195,7 +195,7 @@ void zen::DrawContainer::setDispParam()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00003C
  */
 bool zen::DrawContainer::waitStatus()
@@ -209,7 +209,7 @@ bool zen::DrawContainer::waitStatus()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000404
  */
 bool zen::DrawContainer::startStatus()
@@ -234,7 +234,7 @@ bool zen::DrawContainer::startStatus()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool zen::DrawContainer::operationStatus()
 {
@@ -322,7 +322,7 @@ bool zen::DrawContainer::operationStatus()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000384
  */
 bool zen::DrawContainer::endStatus()
@@ -348,7 +348,7 @@ bool zen::DrawContainer::endStatus()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool zen::DrawContainer::update(int& delta)
 {
@@ -384,7 +384,7 @@ bool zen::DrawContainer::update(int& delta)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawContainer::draw(Graphics& gfx)
 {

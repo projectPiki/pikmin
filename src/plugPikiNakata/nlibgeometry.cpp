@@ -4,19 +4,19 @@
 #include "nlib/Math.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("nlibgeometry")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000058
  */
 NAxisAngle4f::NAxisAngle4f()
@@ -26,7 +26,7 @@ NAxisAngle4f::NAxisAngle4f()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 NAxisAngle4f::NAxisAngle4f(immut NVector3f& axis, f32 angle)
 {
@@ -34,7 +34,7 @@ NAxisAngle4f::NAxisAngle4f(immut NVector3f& axis, f32 angle)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NAxisAngle4f::construct(immut NVector3f& axis, f32 angle)
 {
@@ -43,7 +43,7 @@ void NAxisAngle4f::construct(immut NVector3f& axis, f32 angle)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 NMatrix4f::NMatrix4f()
 {
@@ -51,7 +51,7 @@ NMatrix4f::NMatrix4f()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000030
  */
 NMatrix4f::NMatrix4f(immut Matrix4f& mat)
@@ -60,7 +60,7 @@ NMatrix4f::NMatrix4f(immut Matrix4f& mat)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NMatrix4f::construct(immut Matrix4f& mat)
 {
@@ -68,7 +68,7 @@ void NMatrix4f::construct(immut Matrix4f& mat)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 NMatrix4f::NMatrix4f(f32 x00, f32 x01, f32 x02, f32 x03, f32 x10, f32 x11, f32 x12, f32 x13, f32 x20, f32 x21, f32 x22, f32 x23, f32 x30,
                      f32 x31, f32 x32, f32 x33)
@@ -77,7 +77,7 @@ NMatrix4f::NMatrix4f(f32 x00, f32 x01, f32 x02, f32 x03, f32 x10, f32 x11, f32 x
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000060
  */
 void NMatrix4f::construct(f32 x00, f32 x01, f32 x02, f32 x03, f32 x10, f32 x11, f32 x12, f32 x13, f32 x20, f32 x21, f32 x22, f32 x23,
@@ -87,7 +87,7 @@ void NMatrix4f::construct(f32 x00, f32 x01, f32 x02, f32 x03, f32 x10, f32 x11, 
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000030
  */
 NMatrix4f::NMatrix4f(immut Mtx44 mtx)
@@ -96,7 +96,7 @@ NMatrix4f::NMatrix4f(immut Mtx44 mtx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000020
  */
 void NMatrix4f::construct(immut Mtx44 mtx)
@@ -105,7 +105,7 @@ void NMatrix4f::construct(immut Mtx44 mtx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000090
  */
 void NMatrix4f::input(immut Mtx44 mtx)
@@ -114,7 +114,7 @@ void NMatrix4f::input(immut Mtx44 mtx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000090
  */
 void NMatrix4f::output(Mtx44 mtx) immut
@@ -123,7 +123,7 @@ void NMatrix4f::output(Mtx44 mtx) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NMatrix4f::input(immut Matrix4f& mat)
 {
@@ -131,7 +131,7 @@ void NMatrix4f::input(immut Matrix4f& mat)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NMatrix4f::set(f32 x00, f32 x01, f32 x02, f32 x03, f32 x10, f32 x11, f32 x12, f32 x13, f32 x20, f32 x21, f32 x22, f32 x23, f32 x30,
                     f32 x31, f32 x32, f32 x33)
@@ -158,7 +158,7 @@ void NMatrix4f::set(f32 x00, f32 x01, f32 x02, f32 x03, f32 x10, f32 x11, f32 x1
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000018
  */
 void NMatrix4f::setRow(int row, f32 x, f32 y, f32 z)
@@ -169,7 +169,7 @@ void NMatrix4f::setRow(int row, f32 x, f32 y, f32 z)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000024
  */
 void NMatrix4f::inputRow(int row, immut Vector3f& vec)
@@ -178,7 +178,7 @@ void NMatrix4f::inputRow(int row, immut Vector3f& vec)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000028
  */
 void NMatrix4f::inputRow(int row, immut Vector3f& vec, f32 trans)
@@ -188,7 +188,7 @@ void NMatrix4f::inputRow(int row, immut Vector3f& vec, f32 trans)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000024
  */
 void NMatrix4f::outputRow(int row, Vector3f& outRow) immut
@@ -197,7 +197,7 @@ void NMatrix4f::outputRow(int row, Vector3f& outRow) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000B0
  */
 void NMatrix4f::inputRows(immut NVector3f& row0, immut NVector3f& row1, immut NVector3f& row2)
@@ -209,7 +209,7 @@ void NMatrix4f::inputRows(immut NVector3f& row0, immut NVector3f& row1, immut NV
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000018
  */
 void NMatrix4f::setCol(int col, f32 x, f32 y, f32 z)
@@ -220,7 +220,7 @@ void NMatrix4f::setCol(int col, f32 x, f32 y, f32 z)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000024
  */
 void NMatrix4f::inputCol(int col, immut Vector3f& input)
@@ -229,7 +229,7 @@ void NMatrix4f::inputCol(int col, immut Vector3f& input)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000028
  */
 void NMatrix4f::inputCol(int col, immut Vector3f& input, f32 trans)
@@ -239,7 +239,7 @@ void NMatrix4f::inputCol(int col, immut Vector3f& input, f32 trans)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NMatrix4f::outputCol(int col, Vector3f& output) immut
 {
@@ -247,7 +247,7 @@ void NMatrix4f::outputCol(int col, Vector3f& output) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000B0
  */
 void NMatrix4f::inputCols(immut NVector3f& col0, immut NVector3f& col1, immut NVector3f& col2)
@@ -259,7 +259,7 @@ void NMatrix4f::inputCols(immut NVector3f& col0, immut NVector3f& col1, immut NV
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000020
  */
 void NMatrix4f::mul(immut Matrix4f& mtx)
@@ -268,7 +268,7 @@ void NMatrix4f::mul(immut Matrix4f& mtx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000030
  */
 void NMatrix4f::mul2(immut Matrix4f& mtx, Matrix4f& outMtx) immut
@@ -277,7 +277,7 @@ void NMatrix4f::mul2(immut Matrix4f& mtx, Matrix4f& outMtx) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000C8
  */
 void NMatrix4f::scale(f32 scale)
@@ -290,7 +290,7 @@ void NMatrix4f::scale(f32 scale)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000130
  */
 void NMatrix4f::transpose()
@@ -305,7 +305,7 @@ void NMatrix4f::transpose()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NMatrix4f::makeIdentRow(int row)
 {
@@ -316,7 +316,7 @@ void NMatrix4f::makeIdentRow(int row)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 void NMatrix4f::println() immut
@@ -327,7 +327,7 @@ void NMatrix4f::println() immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000090
  */
 NOrientation::NOrientation()
@@ -336,7 +336,7 @@ NOrientation::NOrientation()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 NOrientation::NOrientation(immut Vector3f& direction)
 {
@@ -344,7 +344,7 @@ NOrientation::NOrientation(immut Vector3f& direction)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NOrientation::construct(immut Vector3f& direction)
 {
@@ -352,7 +352,7 @@ void NOrientation::construct(immut Vector3f& direction)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000060
  */
 NOrientation::NOrientation(immut Vector3f& direction, immut Vector3f& up)
@@ -361,7 +361,7 @@ NOrientation::NOrientation(immut Vector3f& direction, immut Vector3f& up)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000034
  */
 void NOrientation::construct(immut Vector3f& direction, immut Vector3f& up)
@@ -370,7 +370,7 @@ void NOrientation::construct(immut Vector3f& direction, immut Vector3f& up)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NOrientation::normalize()
 {
@@ -391,7 +391,7 @@ void NOrientation::normalize()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00004C
  */
 void NOrientation::transform(immut NTransform3D& transform)
@@ -401,7 +401,7 @@ void NOrientation::transform(immut NTransform3D& transform)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00004C
  */
 void NOrientation::outputRight(NVector3f& outRight) immut
@@ -410,7 +410,7 @@ void NOrientation::outputRight(NVector3f& outRight) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NOrientation::outputLeft(NVector3f& outLeft) immut
 {
@@ -418,7 +418,7 @@ void NOrientation::outputLeft(NVector3f& outLeft) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NOrientation::makeUp()
 {
@@ -439,7 +439,7 @@ void NOrientation::makeUp()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000124
  */
 void NOrientation::outputTransform(NTransform3D& transform) immut
@@ -451,7 +451,7 @@ void NOrientation::outputTransform(NTransform3D& transform) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000068
  */
 void NOrientation::inputTransform(immut NTransform3D& transform)
@@ -463,7 +463,7 @@ void NOrientation::inputTransform(immut NTransform3D& transform)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000CC
  */
 void NOrientation::outputRotation(NTransform3D& transform) immut
@@ -477,7 +477,7 @@ void NOrientation::outputRotation(NTransform3D& transform) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000034
  */
 void NOrientation::inputRotation(immut NTransform3D& transform)
@@ -487,7 +487,7 @@ void NOrientation::inputRotation(immut NTransform3D& transform)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000034
  */
 void NOrientation::println() immut
@@ -499,7 +499,7 @@ void NOrientation::println() immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 NPolar3f::NPolar3f()
 {
@@ -507,7 +507,7 @@ NPolar3f::NPolar3f()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000030
  */
 NPolar3f::NPolar3f(f32 rad, f32 inc, f32 azi)
@@ -516,7 +516,7 @@ NPolar3f::NPolar3f(f32 rad, f32 inc, f32 azi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000020
  */
 void NPolar3f::construct(f32 rad, f32 inc, f32 azi)
@@ -525,7 +525,7 @@ void NPolar3f::construct(f32 rad, f32 inc, f32 azi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000030
  */
 NPolar3f::NPolar3f(immut NPolar3f& other)
@@ -534,7 +534,7 @@ NPolar3f::NPolar3f(immut NPolar3f& other)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00002C
  */
 void NPolar3f::construct(immut NPolar3f& other)
@@ -543,7 +543,7 @@ void NPolar3f::construct(immut NPolar3f& other)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 NPolar3f::NPolar3f(immut Vector3f& point)
 {
@@ -551,7 +551,7 @@ NPolar3f::NPolar3f(immut Vector3f& point)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NPolar3f::construct(immut Vector3f& point)
 {
@@ -559,7 +559,7 @@ void NPolar3f::construct(immut Vector3f& point)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NPolar3f::set(f32 radius, f32 inclination, f32 azimuth)
 {
@@ -569,7 +569,7 @@ void NPolar3f::set(f32 radius, f32 inclination, f32 azimuth)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00001C
  */
 void NPolar3f::input(immut NPolar3f& other)
@@ -578,7 +578,7 @@ void NPolar3f::input(immut NPolar3f& other)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NPolar3f::input(immut Vector3f& point)
 {
@@ -586,7 +586,7 @@ void NPolar3f::input(immut Vector3f& point)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NPolar3f::output(Vector3f& point) immut
 {
@@ -599,7 +599,7 @@ void NPolar3f::output(Vector3f& point) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000058
  */
 void NPolar3f::negate()
@@ -609,7 +609,7 @@ void NPolar3f::negate()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000054
  */
 void NPolar3f::interpolate(immut NPolar3f& start, immut NPolar3f& end, f32 t)
@@ -619,7 +619,7 @@ void NPolar3f::interpolate(immut NPolar3f& start, immut NPolar3f& end, f32 t)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00005C
  */
 void NPolar3f::roundMeridian()
@@ -631,7 +631,7 @@ void NPolar3f::roundMeridian()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00003C
  */
 bool NPolar3f::clampMeridian(f32 angle)
@@ -650,7 +650,7 @@ bool NPolar3f::clampMeridian(f32 angle)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 void NPolar3f::println() immut
@@ -659,7 +659,7 @@ void NPolar3f::println() immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00005C
  */
 NPosture2D::NPosture2D()
@@ -669,7 +669,7 @@ NPosture2D::NPosture2D()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000068
  */
 NPosture2D::NPosture2D(immut Vector3f& trans, f32 dir)
@@ -678,7 +678,7 @@ NPosture2D::NPosture2D(immut Vector3f& trans, f32 dir)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000020
  */
 void NPosture2D::construct(immut Vector3f& trans, f32 dir)
@@ -688,7 +688,7 @@ void NPosture2D::construct(immut Vector3f& trans, f32 dir)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000094
  */
 void NPosture2D::outputTransform(NTransform3D& transform)
@@ -700,7 +700,7 @@ void NPosture2D::outputTransform(NTransform3D& transform)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000110
  */
 void NPosture2D::outputInverseTransform(NTransform3D& transform)
@@ -719,7 +719,7 @@ void NPosture2D::outputInverseTransform(NTransform3D& transform)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000068
  */
 void NPosture2D::outputAxisAngle(NAxisAngle4f& axisAngle)
@@ -729,7 +729,7 @@ void NPosture2D::outputAxisAngle(NAxisAngle4f& axisAngle)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NPosture2D::readData(Stream& input)
 {
@@ -738,7 +738,7 @@ void NPosture2D::readData(Stream& input)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000024
  */
 void NPosture2D::println() immut
@@ -749,7 +749,7 @@ void NPosture2D::println() immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 NPosture3D::NPosture3D()
 {
@@ -758,7 +758,7 @@ NPosture3D::NPosture3D()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000060
  */
 NPosture3D::NPosture3D(immut NPosture3D& other)
@@ -767,7 +767,7 @@ NPosture3D::NPosture3D(immut NPosture3D& other)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00005C
  */
 void NPosture3D::construct(immut NPosture3D& other)
@@ -776,7 +776,7 @@ void NPosture3D::construct(immut NPosture3D& other)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 NPosture3D::NPosture3D(immut Vector3f& view, immut Vector3f& watch)
 {
@@ -784,7 +784,7 @@ NPosture3D::NPosture3D(immut Vector3f& view, immut Vector3f& watch)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NPosture3D::construct(immut Vector3f& view, immut Vector3f& watch)
 {
@@ -793,7 +793,7 @@ void NPosture3D::construct(immut Vector3f& view, immut Vector3f& watch)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NPosture3D::normalize()
 {
@@ -806,7 +806,7 @@ void NPosture3D::normalize()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NPosture3D::outputRelative(NVector3f& dir) immut
 {
@@ -814,7 +814,7 @@ void NPosture3D::outputRelative(NVector3f& dir) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000054
  */
 void NPosture3D::outputUnitVector(NVector3f& dir) immut
@@ -824,7 +824,7 @@ void NPosture3D::outputUnitVector(NVector3f& dir) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00004C
  */
 void NPosture3D::transform(immut NTransform3D& transform)
@@ -834,7 +834,7 @@ void NPosture3D::transform(immut NTransform3D& transform)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NPosture3D::translate(immut Vector3f& offset)
 {
@@ -843,7 +843,7 @@ void NPosture3D::translate(immut Vector3f& offset)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000064
  */
 void NPosture3D::rotate(immut NVector3f& pivot, immut NPolar3f& rotationDelta)
@@ -853,7 +853,7 @@ void NPosture3D::rotate(immut NVector3f& pivot, immut NPolar3f& rotationDelta)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0001CC
  */
 void NPosture3D::rotatePoint(NVector3f& point, immut NVector3f& pivot, immut NPolar3f& rotationDelta) immut
@@ -871,7 +871,7 @@ void NPosture3D::rotatePoint(NVector3f& point, immut NVector3f& pivot, immut NPo
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000070
  */
 void NPosture3D::interpolate(immut NPosture3D& start, immut NPosture3D& end, f32 t)
@@ -881,7 +881,7 @@ void NPosture3D::interpolate(immut NPosture3D& start, immut NPosture3D& end, f32
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000D8
  */
 void NPosture3D::input(immut NPosture2D& other2D)
@@ -896,7 +896,7 @@ void NPosture3D::input(immut NPosture2D& other2D)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000094
  */
 void NPosture3D::output(NPosture2D& out2D) immut
@@ -908,7 +908,7 @@ void NPosture3D::output(NPosture2D& out2D) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000078
  */
 void NPosture3D::outputTransform(immut NPosture3D& otherPosture, NTransform3D& outTransform) immut
@@ -920,7 +920,7 @@ void NPosture3D::outputTransform(immut NPosture3D& otherPosture, NTransform3D& o
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0002A0
  */
 void NPosture3D::outputTransform(NTransform3D& transform) immut
@@ -935,7 +935,7 @@ void NPosture3D::outputTransform(NTransform3D& transform) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000418
  */
 void NPosture3D::outputInverseTransform(NTransform3D& invTransform) immut
@@ -961,7 +961,7 @@ void NPosture3D::outputInverseTransform(NTransform3D& invTransform) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00010C
  */
 void NPosture3D::inputTransform(immut NTransform3D& transform)
@@ -973,7 +973,7 @@ void NPosture3D::inputTransform(immut NTransform3D& transform)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00006C
  */
 f32 NPosture3D::calcDirection() immut
@@ -984,7 +984,7 @@ f32 NPosture3D::calcDirection() immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NPosture3D::readData(Stream& input)
 {
@@ -993,7 +993,7 @@ void NPosture3D::readData(Stream& input)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000038
  */
 void NPosture3D::println() immut
@@ -1003,7 +1003,7 @@ void NPosture3D::println() immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00003C
  */
 NSpecialMatrix::NSpecialMatrix(int dim)
@@ -1012,7 +1012,7 @@ NSpecialMatrix::NSpecialMatrix(int dim)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000008
  */
 void NSpecialMatrix::construct(int dim)
@@ -1021,7 +1021,7 @@ void NSpecialMatrix::construct(int dim)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00004C
  */
 NLowerMatrix::NLowerMatrix(f32* values, int dim)
@@ -1030,7 +1030,7 @@ NLowerMatrix::NLowerMatrix(f32* values, int dim)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00000C
  */
 void NLowerMatrix::construct(f32* values, int dim)
@@ -1040,7 +1040,7 @@ void NLowerMatrix::construct(f32* values, int dim)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000060
  */
 void NLowerMatrix::solve(immut NVector& inVec, NVector& outVec)
@@ -1052,7 +1052,7 @@ void NLowerMatrix::solve(immut NVector& inVec, NVector& outVec)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000058
  */
 void NLowerMatrix::println() immut
@@ -1063,7 +1063,7 @@ void NLowerMatrix::println() immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00004C
  */
 NUpperMatrix::NUpperMatrix(f32* centreVals, f32* upperVals, int dim)
@@ -1072,7 +1072,7 @@ NUpperMatrix::NUpperMatrix(f32* centreVals, f32* upperVals, int dim)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000010
  */
 void NUpperMatrix::construct(f32* centreVals, f32* upperVals, int dim)
@@ -1083,7 +1083,7 @@ void NUpperMatrix::construct(f32* centreVals, f32* upperVals, int dim)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000180
  */
 void NUpperMatrix::solve(immut NVector& inVec, NVector& outVec)
@@ -1096,7 +1096,7 @@ void NUpperMatrix::solve(immut NVector& inVec, NVector& outVec)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000A4
  */
 void NUpperMatrix::println() immut
@@ -1110,7 +1110,7 @@ void NUpperMatrix::println() immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00006C
  */
 LUMatrix::LUMatrix(f32* centreVals, f32* lowerVals, f32* upperVals, int dim)
@@ -1119,7 +1119,7 @@ LUMatrix::LUMatrix(f32* centreVals, f32* lowerVals, f32* upperVals, int dim)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000034
  */
 void LUMatrix::construct(f32* centreVals, f32* lowerVals, f32* upperVals, int dim)
@@ -1133,7 +1133,7 @@ void LUMatrix::construct(f32* centreVals, f32* lowerVals, f32* upperVals, int di
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void LUMatrix::setDimension(int dim)
 {
@@ -1143,7 +1143,7 @@ void LUMatrix::setDimension(int dim)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00022C
  */
 void LUMatrix::solve(immut NVector& inVec, NVector& outVec)
@@ -1156,7 +1156,7 @@ void LUMatrix::solve(immut NVector& inVec, NVector& outVec)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000B0
  */
 void LUMatrix::decompose()
@@ -1173,7 +1173,7 @@ void LUMatrix::decompose()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 void LUMatrix::println() immut
@@ -1190,14 +1190,14 @@ void LUMatrix::println() immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 NTransform3D::NTransform3D()
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000098
  */
 NTransform3D::NTransform3D(immut NMatrix4f& mtx)
@@ -1206,7 +1206,7 @@ NTransform3D::NTransform3D(immut NMatrix4f& mtx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000020
  */
 void NTransform3D::construct(immut NMatrix4f& mtx)
@@ -1215,7 +1215,7 @@ void NTransform3D::construct(immut NMatrix4f& mtx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000090
  */
 void NTransform3D::translate(immut Vector3f& offset)
@@ -1227,7 +1227,7 @@ void NTransform3D::translate(immut Vector3f& offset)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NTransform3D::rotate(immut Vector3f& point)
 {
@@ -1344,7 +1344,7 @@ void NTransform3D::rotate(immut Vector3f& point)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NTransform3D::transform(Vector3f& point) immut
 {
@@ -1352,7 +1352,7 @@ void NTransform3D::transform(Vector3f& point) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000044
  */
 void NTransform3D::transform(immut Vector3f& inputPoint, Vector3f& outputPoint) immut
@@ -1362,7 +1362,7 @@ void NTransform3D::transform(immut Vector3f& inputPoint, Vector3f& outputPoint) 
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000184
  */
 void NTransform3D::transform(NVector& vec) immut
@@ -1379,7 +1379,7 @@ void NTransform3D::transform(NVector& vec) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00018C
  */
 void NTransform3D::transform(immut NVector& in, NVector& out) immut
@@ -1389,7 +1389,7 @@ void NTransform3D::transform(immut NVector& in, NVector& out) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000094
  */
 void NTransform3D::inputVector(immut Vector3f& vec)
@@ -1399,7 +1399,7 @@ void NTransform3D::inputVector(immut Vector3f& vec)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NTransform3D::inputAxisAngle(immut NAxisAngle4f& axisAngle)
 {
@@ -1407,7 +1407,7 @@ void NTransform3D::inputAxisAngle(immut NAxisAngle4f& axisAngle)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00001C
  */
 void NTransform3D::inputTranslation(immut Vector3f& trans)
@@ -1416,7 +1416,7 @@ void NTransform3D::inputTranslation(immut Vector3f& trans)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00001C
  */
 void NTransform3D::outputTranslation(Vector3f& trans) immut
@@ -1425,7 +1425,7 @@ void NTransform3D::outputTranslation(Vector3f& trans) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00004C
  */
 void NTransform3D::inputRotation(immut Matrix4f& rotMtx)
@@ -1436,7 +1436,7 @@ void NTransform3D::inputRotation(immut Matrix4f& rotMtx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NTransform3D::outputRotation(Matrix4f& rotMtx) immut
 {
@@ -1450,7 +1450,7 @@ void NTransform3D::outputRotation(Matrix4f& rotMtx) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000E4
  */
 void NTransform3D::inputRotation(immut NAxisAngle4f& axisAngle)
@@ -1461,7 +1461,7 @@ void NTransform3D::inputRotation(immut NAxisAngle4f& axisAngle)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 NVector::NVector()
 {
@@ -1470,7 +1470,7 @@ NVector::NVector()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000030
  */
 NVector::NVector(f32* values, int size)
@@ -1479,7 +1479,7 @@ NVector::NVector(f32* values, int size)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NVector::construct(f32* values, int size)
 {
@@ -1489,7 +1489,7 @@ void NVector::construct(f32* values, int size)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NVector::makeZero()
 {
@@ -1499,7 +1499,7 @@ void NVector::makeZero()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00003C
  */
 void NVector::add(immut NVector&)
@@ -1508,7 +1508,7 @@ void NVector::add(immut NVector&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000118
  */
 f32 NVector::dot(immut NVector&) immut
@@ -1517,7 +1517,7 @@ f32 NVector::dot(immut NVector&) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000034
  */
 void NVector::input(immut NVector&)
@@ -1526,7 +1526,7 @@ void NVector::input(immut NVector&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000058
  */
 void NVector::println() immut
@@ -1538,7 +1538,7 @@ void NVector::println() immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00002C
  */
 void NVector3f::printVector3f(immut Vector3f& vec)
@@ -1547,7 +1547,7 @@ void NVector3f::printVector3f(immut Vector3f& vec)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NVector3f::printlnVector3f(immut Vector3f& vec)
 {
@@ -1555,7 +1555,7 @@ void NVector3f::printlnVector3f(immut Vector3f& vec)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 NVector3f::NVector3f()
 {
@@ -1563,7 +1563,7 @@ NVector3f::NVector3f()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 NVector3f::NVector3f(immut Vector3f& vec)
 {
@@ -1571,7 +1571,7 @@ NVector3f::NVector3f(immut Vector3f& vec)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NVector3f::construct(immut Vector3f& vec)
 {
@@ -1579,7 +1579,7 @@ void NVector3f::construct(immut Vector3f& vec)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 NVector3f::NVector3f(f32 x, f32 y, f32 z)
 {
@@ -1587,7 +1587,7 @@ NVector3f::NVector3f(f32 x, f32 y, f32 z)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NVector3f::construct(f32 x, f32 y, f32 z)
 {
@@ -1595,7 +1595,7 @@ void NVector3f::construct(f32 x, f32 y, f32 z)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 NVector3f::NVector3f(immut Vector3f& start, immut Vector3f& end)
 {
@@ -1603,7 +1603,7 @@ NVector3f::NVector3f(immut Vector3f& start, immut Vector3f& end)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NVector3f::construct(immut Vector3f& start, immut Vector3f& end)
 {
@@ -1611,7 +1611,7 @@ void NVector3f::construct(immut Vector3f& start, immut Vector3f& end)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000054
  */
 void NVector3f::interpolate(immut Vector3f& start, immut Vector3f& end, f32 t)
@@ -1620,7 +1620,7 @@ void NVector3f::interpolate(immut Vector3f& start, immut Vector3f& end, f32 t)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000B4
  */
 bool NVector3f::isZero() immut
@@ -1629,7 +1629,7 @@ bool NVector3f::isZero() immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 bool NVector3f::equals(immut Vector3f& vec) immut
@@ -1638,7 +1638,7 @@ bool NVector3f::equals(immut Vector3f& vec) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000058
  */
 bool NVector3f::isVertical(immut Vector3f& vec) immut
@@ -1647,7 +1647,7 @@ bool NVector3f::isVertical(immut Vector3f& vec) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool NVector3f::isParallel(immut Vector3f& vec) immut
 {
@@ -1655,7 +1655,7 @@ bool NVector3f::isParallel(immut Vector3f& vec) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000144
  */
 void NVector3f::makeUnitVector(immut Vector3f& start, immut Vector3f& end)
@@ -1670,7 +1670,7 @@ void NVector3f::makeUnitVector(immut Vector3f& start, immut Vector3f& end)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000088
  */
 void NVector3f::outputQuat(f32 theta, Quat& q) immut
@@ -1680,7 +1680,7 @@ void NVector3f::outputQuat(f32 theta, Quat& q) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000E0
  */
 f32 NVector3f::calcAngle(immut NVector3f& other) immut
@@ -1698,7 +1698,7 @@ f32 NVector3f::calcAngle(immut NVector3f& other) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000098
  */
 f32 NVector3f::calcLargerAngle(immut NVector3f& other) immut
@@ -1708,7 +1708,7 @@ f32 NVector3f::calcLargerAngle(immut NVector3f& other) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 void NVector3f::print() immut
@@ -1717,7 +1717,7 @@ void NVector3f::print() immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NVector3f::println() immut
 {
@@ -1725,7 +1725,7 @@ void NVector3f::println() immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000028
  */
 void NVector3f::normalizeByLength(f32 length)
@@ -1736,7 +1736,7 @@ void NVector3f::normalizeByLength(f32 length)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool NVector3f::normalizeCheck()
 {
@@ -1752,7 +1752,7 @@ bool NVector3f::normalizeCheck()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NVector3f::normalize()
 {
@@ -1768,7 +1768,7 @@ void NVector3f::normalize()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00003C
  */
 f32 NAlpha::fadeInValue(f32 x)
@@ -1778,7 +1778,7 @@ f32 NAlpha::fadeInValue(f32 x)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000030
  */
 f32 NAlpha::fadeOutValue(f32 x)
@@ -1787,7 +1787,7 @@ f32 NAlpha::fadeOutValue(f32 x)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000080
  */
 f32 NAlpha::fadeInOutValue(f32 x)
@@ -1799,7 +1799,7 @@ f32 NAlpha::fadeInOutValue(f32 x)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000080
  */
 f32 NAlpha::fadeOutInValue(f32 x)
@@ -1812,7 +1812,7 @@ f32 NAlpha::fadeOutInValue(f32 x)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000030
  */
 NAlpha::NAlpha()
@@ -1824,7 +1824,7 @@ NAlpha::NAlpha()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NAlpha::reset()
 {
@@ -1832,7 +1832,7 @@ void NAlpha::reset()
 }
 
 /**
- * @TODO: Add documentation
+ * @todo: Add documentation
  * Address:	1004BE90 in plugPiki
  */
 f32 NAlpha::getValue(f32 input)
@@ -1863,7 +1863,7 @@ f32 NAlpha::getValue(f32 input)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NAlpha::readData(Stream& input)
 {

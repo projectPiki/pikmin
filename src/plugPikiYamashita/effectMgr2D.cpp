@@ -4,13 +4,13 @@
 #include "nlib/Math.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("effectMgr2D")
@@ -76,7 +76,7 @@ PtclLoadInfo ptclInfo[52] =
 } // namespace
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000068
  */
 zen::EffectMgr2D::~EffectMgr2D()
@@ -84,7 +84,7 @@ zen::EffectMgr2D::~EffectMgr2D()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::EffectMgr2D::EffectMgr2D(int numPtclGens, int numParticles, int numChildParticles)
 {
@@ -100,7 +100,7 @@ zen::EffectMgr2D::EffectMgr2D(int numPtclGens, int numParticles, int numChildPar
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::particleGenerator* zen::EffectMgr2D::create(u32 effID, immut Vector3f& pos, zen::CallBack1<zen::particleGenerator*>* cb1,
                                                  zen::CallBack2<zen::particleGenerator*, zen::particleMdl*>* cb2)
@@ -109,7 +109,7 @@ zen::particleGenerator* zen::EffectMgr2D::create(u32 effID, immut Vector3f& pos,
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::EffectMgr2D::update()
 {
@@ -117,7 +117,7 @@ void zen::EffectMgr2D::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::EffectMgr2D::draw(Graphics& gfx)
 {
@@ -130,7 +130,7 @@ void zen::EffectMgr2D::draw(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::EffectMgr2D::killAll(bool doForceFinish)
 {

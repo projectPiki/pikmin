@@ -8,19 +8,19 @@
 RadarInfo* radarInfo;
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("radarInfo");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 RadarInfo::RadarInfo()
 {
@@ -29,7 +29,7 @@ RadarInfo::RadarInfo()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void RadarInfo::attachParts(Creature* part)
 {
@@ -56,7 +56,7 @@ void RadarInfo::attachParts(Creature* part)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void RadarInfo::detachParts(Creature* part)
 {
@@ -73,7 +73,7 @@ void RadarInfo::detachParts(Creature* part)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Vector3f RadarInfo::PartsInfo::getPos()
 {

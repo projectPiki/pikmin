@@ -19,19 +19,19 @@ u8 playbackThreadStack[0x1000];
 bool finishPlayback;
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("MovSample")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void convHVQM4TexY8UV8(int stride, int height, u8* src, u8* dst)
 {
@@ -131,7 +131,7 @@ void convHVQM4TexY8UV8(int stride, int height, u8* src, u8* dst)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 static void* playbackFunc(void*)
 {
@@ -324,7 +324,7 @@ struct MovSampleSetupSection : public Node {
 };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MovSampleSection::init()
 {

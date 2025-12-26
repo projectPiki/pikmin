@@ -4,7 +4,7 @@
 #include "gameflow.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::DamageEffect::DamageEffect()
 {
@@ -12,7 +12,7 @@ zen::DamageEffect::DamageEffect()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool zen::DamageEffect::update()
 {
@@ -36,7 +36,7 @@ bool zen::DamageEffect::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DamageEffect::draw(Graphics& gfx)
 {

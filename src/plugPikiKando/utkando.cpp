@@ -8,19 +8,19 @@
 #include "system.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(7)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("utKando");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int selectRandomly(immut Choice* choice, int num)
 {
@@ -36,7 +36,7 @@ int selectRandomly(immut Choice* choice, int num)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 BitFlags::BitFlags()
 {
@@ -45,7 +45,7 @@ BitFlags::BitFlags()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BitFlags::dump()
 {
@@ -56,7 +56,7 @@ void BitFlags::dump()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BitFlags::loadCard(RandomAccessStream& stream)
 {
@@ -66,7 +66,7 @@ void BitFlags::loadCard(RandomAccessStream& stream)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BitFlags::saveCard(RandomAccessStream& stream)
 {
@@ -76,7 +76,7 @@ void BitFlags::saveCard(RandomAccessStream& stream)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BitFlags::create(u16 size, u8* data)
 {
@@ -90,7 +90,7 @@ void BitFlags::create(u16 size, u8* data)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BitFlags::reset()
 {
@@ -100,7 +100,7 @@ void BitFlags::reset()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BitFlags::setFlag(u16 flag)
 {
@@ -108,7 +108,7 @@ void BitFlags::setFlag(u16 flag)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000030
  */
 void BitFlags::resetFlag(u16 flag)
@@ -117,7 +117,7 @@ void BitFlags::resetFlag(u16 flag)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool BitFlags::isFlag(u16 flag)
 {
@@ -125,7 +125,7 @@ bool BitFlags::isFlag(u16 flag)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 LoopChecker::LoopChecker(immut char* name, f32 time)
 {
@@ -134,7 +134,7 @@ LoopChecker::LoopChecker(immut char* name, f32 time)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void LoopChecker::update()
 {
@@ -146,7 +146,7 @@ void LoopChecker::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void drawBatten(Graphics& gfx, immut Vector3f& pos, f32 size)
 {
@@ -162,7 +162,7 @@ void drawBatten(Graphics& gfx, immut Vector3f& pos, f32 size)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void drawBattenPole(Graphics& gfx, immut Vector3f& pos, f32 size, immut char* name)
 {
@@ -190,7 +190,7 @@ void drawBattenPole(Graphics& gfx, immut Vector3f& pos, f32 size, immut char* na
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void drawArrow(Graphics& gfx, immut Vector3f& from, immut Vector3f& to, f32 size)
 {
@@ -219,7 +219,7 @@ void drawArrow(Graphics& gfx, immut Vector3f& from, immut Vector3f& to, f32 size
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void CRSplineDraw(Graphics& gfx, int numSides, immut Vector3f* origin)
 {
@@ -245,7 +245,7 @@ void CRSplineDraw(Graphics& gfx, int numSides, immut Vector3f* origin)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void drawCube(Graphics& gfx, immut Vector3f& pos, f32 size)
 {

@@ -7,13 +7,13 @@
 #include "sysMath.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("TODO: Replace")
@@ -32,7 +32,7 @@ void NsCalculation::calcLagrange(f32 t, const Vector3f* controlPts, Vector3f& ou
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NsCalculation::calcMatrix(const Vector3f& xVec, const Vector3f& yVec, const Vector3f& zVec, const Vector3f& transVec, Matrix4f& mtx)
 {
@@ -52,7 +52,7 @@ void NsCalculation::calcMatrix(const Vector3f& xVec, const Vector3f& yVec, const
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00004C
  */
 void NsCalculation::calcMatrix3f(const Vector3f&, const Vector3f&, const Vector3f&, Matrix3f&)
@@ -61,7 +61,7 @@ void NsCalculation::calcMatrix3f(const Vector3f&, const Vector3f&, const Vector3
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 /**
  * Calculates the position of the middle joint and bottom joint based on the given parameters.
@@ -126,7 +126,7 @@ void NsCalculation::calcJointPos(const Vector3f& topPosition, const Vector3f& bo
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0001E8
  */
 int NsCalculation::calcMtxDirect(const Matrix4f&, const Matrix4f&)
@@ -135,7 +135,7 @@ int NsCalculation::calcMtxDirect(const Matrix4f&, const Matrix4f&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NsCalculation::calcMat4toMat3(const Matrix4f& inMtx, Matrix3f& outMtx)
 {
@@ -153,7 +153,7 @@ void NsCalculation::calcMat4toMat3(const Matrix4f& inMtx, Matrix3f& outMtx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00004C
  */
 void NsCalculation::calcMat3toMat4(const Matrix3f& inMtx, Matrix4f& outMtx)

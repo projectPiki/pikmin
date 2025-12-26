@@ -8,19 +8,19 @@
 #include "zen/Number.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(14)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("drawCMresult")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::DrawCMresult::DrawCMresult()
 {
@@ -70,7 +70,7 @@ zen::DrawCMresult::DrawCMresult()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool zen::DrawCMresult::update(Controller* controller)
 {
@@ -92,7 +92,7 @@ bool zen::DrawCMresult::update(Controller* controller)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawCMresult::draw(Graphics& gfx)
 {
@@ -105,7 +105,7 @@ void zen::DrawCMresult::draw(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawCMresult::start(const GameChalQuickInfo& chalInfo)
 {
@@ -141,7 +141,7 @@ void zen::DrawCMresult::start(const GameChalQuickInfo& chalInfo)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawCMresult::makeResident()
 {
@@ -152,7 +152,7 @@ void zen::DrawCMresult::makeResident()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawCMresult::setMode(zen::DrawCMresult::modeFlag mode)
 {
@@ -193,7 +193,7 @@ void zen::DrawCMresult::setMode(zen::DrawCMresult::modeFlag mode)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool zen::DrawCMresult::modeSleep(Controller*)
 {
@@ -201,7 +201,7 @@ bool zen::DrawCMresult::modeSleep(Controller*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool zen::DrawCMresult::modeWaitAppear(Controller*)
 {
@@ -213,7 +213,7 @@ bool zen::DrawCMresult::modeWaitAppear(Controller*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool zen::DrawCMresult::modeAppear(Controller*)
 {
@@ -232,7 +232,7 @@ bool zen::DrawCMresult::modeAppear(Controller*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool zen::DrawCMresult::modeOperation(Controller* controller)
 {
@@ -268,7 +268,7 @@ bool zen::DrawCMresult::modeOperation(Controller* controller)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool zen::DrawCMresult::modeSave(Controller* controller)
 {
@@ -302,7 +302,7 @@ bool zen::DrawCMresult::modeSave(Controller* controller)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawCMresult::createRankInEffect()
 {

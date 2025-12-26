@@ -8,19 +8,19 @@
 #include "system.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("Slime");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 SlimeProp::SlimeProp()
 {
@@ -30,7 +30,7 @@ SlimeProp::SlimeProp()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Slime::Slime(CreatureProp* props, BossShapeObject* shape)
     : Boss(props)
@@ -53,7 +53,7 @@ Slime::Slime(CreatureProp* props, BossShapeObject* shape)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 Slime::getCentreSize()
 {
@@ -61,7 +61,7 @@ f32 Slime::getCentreSize()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 Slime::getiMass()
 {
@@ -69,7 +69,7 @@ f32 Slime::getiMass()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Slime::init(immut Vector3f& pos)
 {
@@ -117,7 +117,7 @@ void Slime::init(immut Vector3f& pos)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Slime::doKill()
 {
@@ -127,14 +127,14 @@ void Slime::doKill()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Slime::exitCourse()
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Slime::update()
 {
@@ -150,7 +150,7 @@ void Slime::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Slime::refresh(Graphics& gfx)
 {
@@ -164,7 +164,7 @@ void Slime::refresh(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Slime::drawShape(Graphics& gfx)
 {
@@ -177,7 +177,7 @@ void Slime::drawShape(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Slime::doAI()
 {
@@ -185,7 +185,7 @@ void Slime::doAI()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Slime::doAnimation()
 {
@@ -193,7 +193,7 @@ void Slime::doAnimation()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Slime::collisionCallback(immut CollEvent& event)
 {

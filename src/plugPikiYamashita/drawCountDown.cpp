@@ -8,13 +8,13 @@
 #include "zen/Math.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(17)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("drawCountDown")
@@ -22,7 +22,7 @@ DEFINE_PRINT("drawCountDown")
 const int zen::DrawCountDown::countPicsNum = 11;
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::DrawCountDown::DrawCountDown()
 {
@@ -65,7 +65,7 @@ zen::DrawCountDown::DrawCountDown()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawCountDown::setRate(f32 hiddenRate, f32 fadeInRate, f32 fadeOutRate)
 {
@@ -79,7 +79,7 @@ void zen::DrawCountDown::setRate(f32 hiddenRate, f32 fadeInRate, f32 fadeOutRate
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawCountDown::init(f32 startHour, f32 endHour, f32* clockPtr)
 {
@@ -100,7 +100,7 @@ void zen::DrawCountDown::init(f32 startHour, f32 endHour, f32* clockPtr)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawCountDown::update()
 {
@@ -200,7 +200,7 @@ void zen::DrawCountDown::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawCountDown::draw(Graphics&)
 {

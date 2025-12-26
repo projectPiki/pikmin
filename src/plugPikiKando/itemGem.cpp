@@ -11,19 +11,19 @@ GemTable table[5] = {
 };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("gemItem")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00003C
  */
 bool GemItem::ignoreAtari(Creature*)
@@ -39,7 +39,7 @@ bool GemItem::ignoreAtari(Creature*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000030
  */
 void GemItem::setAtariFree()
@@ -49,7 +49,7 @@ void GemItem::setAtariFree()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000054
  */
 void GemItem::bounceCallback()
@@ -62,7 +62,7 @@ void GemItem::bounceCallback()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000108
  */
 GemItem::GemItem(CreatureProp* props, int p2, Shape** shapes, Shape**, Shape**, SimpleAI* ai, f32 a1, int, int)
@@ -78,7 +78,7 @@ GemItem::GemItem(CreatureProp* props, int p2, Shape** shapes, Shape**, Shape**, 
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000068
  */
 void GemItem::initParam(int type)
@@ -88,7 +88,7 @@ void GemItem::initParam(int type)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GemItem::setColorType(int col)
 {
@@ -113,7 +113,7 @@ void GemItem::setColorType(int col)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000FC
  */
 void GemItem::startAI(int)
@@ -136,7 +136,7 @@ void GemItem::startAI(int)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000278
  */
 void GemItem::update()
@@ -181,7 +181,7 @@ void GemItem::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000050
  */
 bool GemItem::reachCapacity()
@@ -191,7 +191,7 @@ bool GemItem::reachCapacity()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00019C
  */
 void GemItem::updateLiftup()
@@ -215,7 +215,7 @@ void GemItem::updateLiftup()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000098
  */
 void GemItem::startPick(f32 val)
@@ -232,7 +232,7 @@ void GemItem::startPick(f32 val)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00003C
  */
 void GemItem::finishPick()
@@ -247,7 +247,7 @@ void GemItem::finishPick()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000018
  */
 f32 GemItem::getSize()
@@ -256,7 +256,7 @@ f32 GemItem::getSize()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000008
  */
 f32 GemItem::getiMass()
@@ -265,7 +265,7 @@ f32 GemItem::getiMass()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GemItem::split()
 {
@@ -307,7 +307,7 @@ void GemItem::split()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000048
  */
 void GemItem::refresh(Graphics& gfx)
@@ -317,7 +317,7 @@ void GemItem::refresh(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000014
  */
 void GemItem::doStore(CreatureInf* inf)
@@ -327,7 +327,7 @@ void GemItem::doStore(CreatureInf* inf)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000064
  */
 void GemItem::doRestore(CreatureInf* inf)
@@ -340,7 +340,7 @@ void GemItem::doRestore(CreatureInf* inf)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000038
  */
 void GemItem::doKill()
@@ -350,7 +350,7 @@ void GemItem::doKill()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000008
  */
 bool GemItem::isAlive()
@@ -360,7 +360,7 @@ bool GemItem::isAlive()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000008
  */
 void GemItem::setRouteTracer(RouteTracer*)
@@ -369,7 +369,7 @@ void GemItem::setRouteTracer(RouteTracer*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ItemCreature::finalSetup()
 {

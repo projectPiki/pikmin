@@ -4,19 +4,19 @@
 #include "teki.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT(nullptr)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 ActDecoy::ActDecoy(Piki* piki)
     : Action(piki, true)
@@ -24,7 +24,7 @@ ActDecoy::ActDecoy(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Creature* ActDecoy::findTeki()
 {
@@ -45,7 +45,7 @@ Creature* ActDecoy::findTeki()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0001EC
  */
 Creature* ActDecoy::update()
@@ -70,7 +70,7 @@ Creature* ActDecoy::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActDecoy::init(Creature* target)
 {
@@ -78,21 +78,21 @@ void ActDecoy::init(Creature* target)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActDecoy::cleanup()
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActDecoy::animationKeyUpdated(immut PaniAnimKeyEvent&)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActDecoy::exec()
 {

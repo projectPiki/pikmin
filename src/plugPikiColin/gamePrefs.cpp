@@ -7,19 +7,19 @@
 #include "system.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("GamePrefs")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PlayState::openStage(int stageId)
 {
@@ -61,7 +61,7 @@ void GamePrefs::Initialise()
 #endif
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GamePrefs::setBgmVol(u8 vol)
 {
@@ -73,7 +73,7 @@ void GamePrefs::setBgmVol(u8 vol)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GamePrefs::setSfxVol(u8 vol)
 {
@@ -85,7 +85,7 @@ void GamePrefs::setSfxVol(u8 vol)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GamePrefs::setStereoMode(bool set)
 {
@@ -100,7 +100,7 @@ void GamePrefs::setStereoMode(bool set)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GamePrefs::setVibeMode(bool set)
 {
@@ -121,7 +121,7 @@ void GamePrefs::setVibeMode(bool set)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 #if defined(VERSION_GPIP01_00)
 #else
@@ -136,7 +136,7 @@ void GamePrefs::setChildMode(bool set)
 #endif
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GamePrefs::getChallengeScores(GameChalQuickInfo& info)
 {
@@ -146,7 +146,7 @@ void GamePrefs::getChallengeScores(GameChalQuickInfo& info)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GamePrefs::checkIsHiscore(GameChalQuickInfo& info)
 {
@@ -186,7 +186,7 @@ void GamePrefs::checkIsHiscore(GameChalQuickInfo& info)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GamePrefs::checkIsHiscore(GameQuickInfo& info)
 {
@@ -250,7 +250,7 @@ void GamePrefs::checkIsHiscore(GameQuickInfo& info)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GamePrefs::write(RandomAccessStream& output)
 {
@@ -266,7 +266,7 @@ void GamePrefs::write(RandomAccessStream& output)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GamePrefs::fixSoundMode()
 {
@@ -279,7 +279,7 @@ void GamePrefs::fixSoundMode()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GamePrefs::read(RandomAccessStream& input)
 {
@@ -343,7 +343,7 @@ void GamePrefs::setChildMode(int set)
 #endif
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PlayState::write(RandomAccessStream& output)
 {
@@ -358,7 +358,7 @@ void PlayState::write(RandomAccessStream& output)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PlayState::read(RandomAccessStream& input)
 {

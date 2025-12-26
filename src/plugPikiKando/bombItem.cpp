@@ -6,19 +6,19 @@
 #include "gameflow.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("bombItem")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BombItem::collisionCallback(immut CollEvent& coll)
 {
@@ -36,7 +36,7 @@ void BombItem::collisionCallback(immut CollEvent& coll)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool BombItem::isVisible()
 {
@@ -50,7 +50,7 @@ bool BombItem::isVisible()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool BombItem::needShadow()
 {
@@ -58,7 +58,7 @@ bool BombItem::needShadow()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool BombItem::isAlive()
 {
@@ -72,7 +72,7 @@ bool BombItem::isAlive()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 BombItem::BombItem(CreatureProp* props, ItemShapeObject* shape, SimpleAI* ai)
     : ItemCreature(OBJTYPE_Bomb, props, nullptr)
@@ -85,7 +85,7 @@ BombItem::BombItem(CreatureProp* props, ItemShapeObject* shape, SimpleAI* ai)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BombItem::startAI(int)
 {
@@ -111,7 +111,7 @@ void BombItem::startAI(int)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 BombItem::getSize()
 {
@@ -119,7 +119,7 @@ f32 BombItem::getSize()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 BombItem::getiMass()
 {
@@ -127,7 +127,7 @@ f32 BombItem::getiMass()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BombItem::update()
 {
@@ -150,14 +150,14 @@ void BombItem::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BombItem::renderTimer(Graphics&)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BombItem::refresh2d(Graphics& gfx)
 {
@@ -172,7 +172,7 @@ void BombItem::refresh2d(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BombItem::refresh(Graphics& gfx)
 {
@@ -196,14 +196,14 @@ void BombItem::refresh(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BombItem::renderBlast(Graphics&)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BombItem::dump()
 {

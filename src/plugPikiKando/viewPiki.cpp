@@ -16,13 +16,13 @@
 #include "sysNew.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(31)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("viewPiki")
@@ -31,7 +31,7 @@ PikiShapeObject* PikiShapeObject::_instances[4];
 bool PikiShapeObject::firstTime = true;
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiShapeObject::exitCourse()
 {
@@ -40,7 +40,7 @@ void PikiShapeObject::exitCourse()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiShapeObject::init()
 {
@@ -49,7 +49,7 @@ void PikiShapeObject::init()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00006C
  */
 PikiShapeObject* PikiShapeObject::create(int index)
@@ -66,7 +66,7 @@ PikiShapeObject* PikiShapeObject::create(int index)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 AnimMgr* PikiShapeObject::getAnimMgr()
 {
@@ -78,7 +78,7 @@ AnimMgr* PikiShapeObject::getAnimMgr()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiShapeObject::initOnce()
 {
@@ -98,7 +98,7 @@ void PikiShapeObject::initOnce()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PikiShapeObject::PikiShapeObject(Shape* shape)
 {
@@ -110,7 +110,7 @@ PikiShapeObject::PikiShapeObject(Shape* shape)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool ViewPiki::isKinoko()
 {
@@ -118,7 +118,7 @@ bool ViewPiki::isKinoko()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ViewPiki::changeShape(int index)
 {
@@ -145,7 +145,7 @@ void ViewPiki::changeShape(int index)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 ViewPiki::ViewPiki(CreatureProp* prop)
     : Piki(prop)
@@ -155,7 +155,7 @@ ViewPiki::ViewPiki(CreatureProp* prop)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ViewPiki::initBirth()
 {
@@ -171,7 +171,7 @@ void ViewPiki::initBirth()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ViewPiki::init(Shape* shp, MapMgr*, Navi* navi)
 {
@@ -203,7 +203,7 @@ void ViewPiki::init(Shape* shp, MapMgr*, Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ViewPiki::setFlower(int id)
 {
@@ -214,14 +214,14 @@ void ViewPiki::setFlower(int id)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ViewPiki::setLeaves(int)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ViewPiki::postUpdate(int unused, f32 deltaTime)
 {
@@ -250,7 +250,7 @@ void ViewPiki::postUpdate(int unused, f32 deltaTime)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ViewPiki::update()
 {
@@ -312,7 +312,7 @@ void ViewPiki::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Piki::startHimaLook(immut Vector3f* pos)
 {
@@ -325,7 +325,7 @@ void Piki::startHimaLook(immut Vector3f* pos)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Piki::finishLook()
 {
@@ -335,7 +335,7 @@ void Piki::finishLook()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Piki::isLooking()
 {
@@ -343,7 +343,7 @@ bool Piki::isLooking()
 }
 
 /**
- * @TODO: Add documentation
+ * @todo: Add documentation
  * Address:	100DE380 in DLL
  */
 void Piki::updateLook()
@@ -419,7 +419,7 @@ void Piki::updateLook()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ViewPiki::demoDraw(Graphics& gfx, immut Matrix4f* mtx)
 {
@@ -501,7 +501,7 @@ void ViewPiki::demoDraw(Graphics& gfx, immut Matrix4f* mtx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 static void printMatrix(immut char* name, immut Matrix4f& mat)
@@ -516,7 +516,7 @@ static void printMatrix(immut char* name, immut Matrix4f& mat)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ViewPiki::refresh(Graphics& gfx)
 {
@@ -678,7 +678,7 @@ void ViewPiki::refresh(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00001C
  */
 void ViewPiki::refresh2d(Graphics&, int)

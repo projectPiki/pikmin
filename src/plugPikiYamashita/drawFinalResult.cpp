@@ -8,19 +8,19 @@
 #include "zen/ogSub.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(14)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("drawFinalResult")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::DrawTotalScore::DrawTotalScore(zen::TotalScoreRecord* record)
 {
@@ -135,7 +135,7 @@ zen::DrawTotalScore::DrawTotalScore(zen::TotalScoreRecord* record)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool zen::DrawTotalScore::update(Controller* controller)
 {
@@ -176,7 +176,7 @@ bool zen::DrawTotalScore::update(Controller* controller)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000054
  */
 void zen::DrawTotalScore::draw(Graphics& gfx)
@@ -186,7 +186,7 @@ void zen::DrawTotalScore::draw(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000040
  */
 void zen::DrawTotalScore::sleep()
@@ -196,7 +196,7 @@ void zen::DrawTotalScore::sleep()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000040
  */
 void zen::DrawTotalScore::start()
@@ -206,7 +206,7 @@ void zen::DrawTotalScore::start()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawTotalScore::setMode(zen::DrawTotalScore::modeFlag mode)
 {
@@ -245,7 +245,7 @@ void zen::DrawTotalScore::setMode(zen::DrawTotalScore::modeFlag mode)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00010C
  */
 void zen::DrawTotalScore::setEffect(P2DPane* pane, int effID)
@@ -263,14 +263,14 @@ void zen::DrawTotalScore::setEffect(P2DPane* pane, int effID)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawTotalScore::playRankInFanfare()
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawTotalScore::setRankInEffect()
 {
@@ -292,7 +292,7 @@ void zen::DrawTotalScore::setRankInEffect()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawTotalScore::setRankInColor()
 {
@@ -337,7 +337,7 @@ void zen::DrawTotalScore::setRankInColor()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::DrawFinalResult::DrawFinalResult(zen::TotalScoreRecord* record)
 {
@@ -345,7 +345,7 @@ zen::DrawFinalResult::DrawFinalResult(zen::TotalScoreRecord* record)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool zen::DrawFinalResult::update(Controller* controller)
 {
@@ -423,7 +423,7 @@ bool zen::DrawFinalResult::update(Controller* controller)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawFinalResult::draw(Graphics& gfx)
 {
@@ -462,7 +462,7 @@ void zen::DrawFinalResult::draw(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawFinalResult::start()
 {
@@ -470,7 +470,7 @@ void zen::DrawFinalResult::start()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawFinalResult::setMode(zen::DrawFinalResult::modeFlag mode)
 {

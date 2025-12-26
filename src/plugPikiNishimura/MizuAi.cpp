@@ -8,19 +8,19 @@
 #include "SoundMgr.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("MizuAi");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 MizuAi::MizuAi(Mizu* mizu)
 {
@@ -30,7 +30,7 @@ MizuAi::MizuAi(Mizu* mizu)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MizuAi::initMizu(Mizu* mizu)
 {
@@ -45,7 +45,7 @@ void MizuAi::initMizu(Mizu* mizu)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MizuAi::initGeyzer(Mizu* geyzer)
 {
@@ -60,14 +60,14 @@ void MizuAi::initGeyzer(Mizu* geyzer)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MizuAi::animationKeyUpdated(immut PaniAnimKeyEvent&)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MizuAi::killCallBackEffect(bool doForceFinish)
 {
@@ -85,7 +85,7 @@ void MizuAi::killCallBackEffect(bool doForceFinish)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00002C
  */
 void MizuAi::setEveryFrame()
@@ -97,7 +97,7 @@ void MizuAi::setEveryFrame()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000E4
  */
 void MizuAi::naviGeyzerJump()
@@ -112,7 +112,7 @@ void MizuAi::naviGeyzerJump()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000028
  */
 bool MizuAi::readyTransit()
@@ -121,7 +121,7 @@ bool MizuAi::readyTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000020
  */
 bool MizuAi::jetTransit()
@@ -130,7 +130,7 @@ bool MizuAi::jetTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000024
  */
 bool MizuAi::waitTransit()
@@ -139,7 +139,7 @@ bool MizuAi::waitTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MizuAi::initWait(int stateID)
 {
@@ -160,7 +160,7 @@ void MizuAi::initWait(int stateID)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MizuAi::initReady(int stateID)
 {
@@ -185,7 +185,7 @@ void MizuAi::initReady(int stateID)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MizuAi::initJet(int stateID)
 {
@@ -223,7 +223,7 @@ void MizuAi::initJet(int stateID)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 void MizuAi::waitState()
@@ -231,7 +231,7 @@ void MizuAi::waitState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00011C
  */
 void MizuAi::readyState()
@@ -261,7 +261,7 @@ void MizuAi::readyState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00001C
  */
 void MizuAi::jetState()
@@ -270,7 +270,7 @@ void MizuAi::jetState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MizuAi::update()
 {

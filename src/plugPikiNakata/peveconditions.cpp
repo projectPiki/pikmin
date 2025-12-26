@@ -5,19 +5,19 @@
 #include "system.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("peveconditions")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000048
  */
 PeveBooleanCondition::PeveBooleanCondition()
@@ -26,7 +26,7 @@ PeveBooleanCondition::PeveBooleanCondition()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000008
  */
 void PeveBooleanCondition::construct(bool value)
@@ -35,7 +35,7 @@ void PeveBooleanCondition::construct(bool value)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000048
  */
 PeveDependenceCondition::PeveDependenceCondition()
@@ -44,7 +44,7 @@ PeveDependenceCondition::PeveDependenceCondition()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000008
  */
 void PeveDependenceCondition::construct(PeveCondition* cond)
@@ -53,7 +53,7 @@ void PeveDependenceCondition::construct(PeveCondition* cond)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PeveTimeCondition::PeveTimeCondition()
 {
@@ -61,7 +61,7 @@ PeveTimeCondition::PeveTimeCondition()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PeveTimeCondition::construct(f32 limit)
 {
@@ -70,7 +70,7 @@ void PeveTimeCondition::construct(f32 limit)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000064
  */
 PeveDistanceCondition::PeveDistanceCondition()
@@ -79,7 +79,7 @@ PeveDistanceCondition::PeveDistanceCondition()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000018
  */
 void PeveDistanceCondition::construct(f32 threshold, NVector3fIO* vecIOA, NVector3fIO* vecIOB)
@@ -91,7 +91,7 @@ void PeveDistanceCondition::construct(f32 threshold, NVector3fIO* vecIOA, NVecto
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PeveDistanceCondition::update()
 {
@@ -108,7 +108,7 @@ void PeveDistanceCondition::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000060
  */
 PeveComparisonYCondition::PeveComparisonYCondition()
@@ -117,7 +117,7 @@ PeveComparisonYCondition::PeveComparisonYCondition()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000014
  */
 void PeveComparisonYCondition::construct(NVector3fIO* vecIOA, NVector3fIO* vecIOB)
@@ -128,7 +128,7 @@ void PeveComparisonYCondition::construct(NVector3fIO* vecIOA, NVector3fIO* vecIO
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PeveComparisonYCondition::update()
 {

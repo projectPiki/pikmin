@@ -4,19 +4,19 @@
 #include "teki.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("tekiconditions")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TekiPikiStateCondition::satisfy(Creature* target) immut
 {
@@ -30,7 +30,7 @@ bool TekiPikiStateCondition::satisfy(Creature* target) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TekiStateCondition::satisfy(Creature* target) immut
 {
@@ -42,7 +42,7 @@ bool TekiStateCondition::satisfy(Creature* target) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TekiTypeCondition::satisfy(Creature* target) immut
 {
@@ -54,7 +54,7 @@ bool TekiTypeCondition::satisfy(Creature* target) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TekiFreeCondition::satisfy(Creature* target) immut
 {
@@ -62,7 +62,7 @@ bool TekiFreeCondition::satisfy(Creature* target) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TekiNaviCondition::satisfy(Creature* target) immut
 {
@@ -70,7 +70,7 @@ bool TekiNaviCondition::satisfy(Creature* target) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TekiNaviPikiCondition::satisfy(Creature* target) immut
 {
@@ -78,7 +78,7 @@ bool TekiNaviPikiCondition::satisfy(Creature* target) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TekiPelletCondition::satisfy(Creature* target) immut
 {
@@ -86,7 +86,7 @@ bool TekiPelletCondition::satisfy(Creature* target) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TekiPositionDistanceCondition::satisfy(Creature* target) immut
 {
@@ -94,7 +94,7 @@ bool TekiPositionDistanceCondition::satisfy(Creature* target) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TekiPositionCircleDistanceCondition::satisfy(Creature* target) immut
 {
@@ -102,7 +102,7 @@ bool TekiPositionCircleDistanceCondition::satisfy(Creature* target) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TekiPositionSphereDistanceCondition::satisfy(Creature* target) immut
 {
@@ -110,7 +110,7 @@ bool TekiPositionSphereDistanceCondition::satisfy(Creature* target) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TekiStickingCondition::satisfy(Creature* target) immut
 {
@@ -118,7 +118,7 @@ bool TekiStickingCondition::satisfy(Creature* target) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TekiRecognitionCondition::satisfy(Creature* target) immut
 {
@@ -126,7 +126,7 @@ bool TekiRecognitionCondition::satisfy(Creature* target) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TekiCreaturePointerCondition::satisfy(Creature* target) immut
 {
@@ -134,7 +134,7 @@ bool TekiCreaturePointerCondition::satisfy(Creature* target) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TekiDistanceCondition::satisfy(Creature* target) immut
 {
@@ -146,7 +146,7 @@ bool TekiDistanceCondition::satisfy(Creature* target) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TekiSphereDistanceCondition::satisfy(Creature* target) immut
 {
@@ -159,7 +159,7 @@ bool TekiSphereDistanceCondition::satisfy(Creature* target) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TekiStickerCondition::satisfy(Creature* target) immut
 {
@@ -167,7 +167,7 @@ bool TekiStickerCondition::satisfy(Creature* target) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TekiLowerRangeCondition::satisfy(Creature* target) immut
 {
@@ -180,7 +180,7 @@ bool TekiLowerRangeCondition::satisfy(Creature* target) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TekiAttackableCondition::satisfy(Creature* target) immut
 {
@@ -188,7 +188,7 @@ bool TekiAttackableCondition::satisfy(Creature* target) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TekiVisibleCondition::satisfy(Creature* target) immut
 {
@@ -196,7 +196,7 @@ bool TekiVisibleCondition::satisfy(Creature* target) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TekiVisibleHeightCondition::satisfy(Creature* target) immut
 {
@@ -209,7 +209,7 @@ bool TekiVisibleHeightCondition::satisfy(Creature* target) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TekiLowerCondition::satisfy(Creature* target) immut
 {
@@ -219,7 +219,7 @@ bool TekiLowerCondition::satisfy(Creature* target) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TekiAngleCondition::satisfy(Creature* target) immut
 {

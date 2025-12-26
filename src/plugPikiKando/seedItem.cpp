@@ -7,19 +7,19 @@
 #include "NaviMgr.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("seedItem")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 SeedItem::SeedItem(CreatureProp* props, Shape** shapes)
     : Creature(props)
@@ -40,7 +40,7 @@ SeedItem::SeedItem(CreatureProp* props, Shape** shapes)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 SeedItem::getSize()
 {
@@ -48,7 +48,7 @@ f32 SeedItem::getSize()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SeedItem::init(immut Vector3f& pos)
 {
@@ -58,7 +58,7 @@ void SeedItem::init(immut Vector3f& pos)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000034
  */
 void SeedItem::startBirth()
@@ -71,7 +71,7 @@ void SeedItem::startBirth()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000034
  */
 void SeedItem::startSown()
@@ -84,7 +84,7 @@ void SeedItem::startSown()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool SeedItem::isVisible()
 {
@@ -92,7 +92,7 @@ bool SeedItem::isVisible()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool SeedItem::isAtari()
 {
@@ -100,7 +100,7 @@ bool SeedItem::isAtari()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SeedItem::doKill()
 {
@@ -110,7 +110,7 @@ void SeedItem::doKill()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SeedItem::update()
 {
@@ -167,7 +167,7 @@ void SeedItem::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SeedItem::doAI()
 {
@@ -178,7 +178,7 @@ void SeedItem::doAI()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SeedItem::refresh(Graphics& gfx)
 {

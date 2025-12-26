@@ -15,19 +15,19 @@
 static u32 spiderSE[] = { SE_SPIDER_WALK, SE_SPIDER_LAND, SE_SPIDER_SWING, SE_SPIDER_DEAD, SE_SPIDER_BOMB };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("SpiderAi");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 SpiderAi::SpiderAi(Spider* spider)
 {
@@ -35,7 +35,7 @@ SpiderAi::SpiderAi(Spider* spider)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SpiderAi::initAI(Spider* spider)
 {
@@ -56,7 +56,7 @@ void SpiderAi::initAI(Spider* spider)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SpiderAi::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
@@ -80,7 +80,7 @@ void SpiderAi::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SpiderAi::keyAction0()
 {
@@ -100,7 +100,7 @@ void SpiderAi::keyAction0()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SpiderAi::keyAction1()
 {
@@ -110,7 +110,7 @@ void SpiderAi::keyAction1()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 void SpiderAi::keyAction2()
@@ -118,7 +118,7 @@ void SpiderAi::keyAction2()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 void SpiderAi::keyAction3()
@@ -126,7 +126,7 @@ void SpiderAi::keyAction3()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SpiderAi::keyLoopEnd()
 {
@@ -134,7 +134,7 @@ void SpiderAi::keyLoopEnd()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SpiderAi::keyFinished()
 {
@@ -142,7 +142,7 @@ void SpiderAi::keyFinished()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SpiderAi::playSound(int spiderSoundID)
 {
@@ -152,7 +152,7 @@ void SpiderAi::playSound(int spiderSoundID)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000050
  */
 void SpiderAi::setEveryFrame()
@@ -166,7 +166,7 @@ void SpiderAi::setEveryFrame()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00006C
  */
 void SpiderAi::checkFlickPiki()
@@ -181,7 +181,7 @@ void SpiderAi::checkFlickPiki()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000064
  */
 void SpiderAi::checkHalfDead()
@@ -197,7 +197,7 @@ void SpiderAi::checkHalfDead()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00003C
  */
 void SpiderAi::resultFlagOn()
@@ -208,7 +208,7 @@ void SpiderAi::resultFlagOn()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00002C
  */
 void SpiderAi::resultFlagSeen()
@@ -217,7 +217,7 @@ void SpiderAi::resultFlagSeen()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000024
  */
 bool SpiderAi::dieTransit()
@@ -226,7 +226,7 @@ bool SpiderAi::dieTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00000C
  */
 bool SpiderAi::isMotionFinishTransit()
@@ -235,7 +235,7 @@ bool SpiderAi::isMotionFinishTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000024
  */
 bool SpiderAi::outSideChaseRangeTransit()
@@ -244,7 +244,7 @@ bool SpiderAi::outSideChaseRangeTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000024
  */
 bool SpiderAi::inSideWaitRangeTransit()
@@ -253,7 +253,7 @@ bool SpiderAi::inSideWaitRangeTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000024
  */
 bool SpiderAi::chaseNaviTransit()
@@ -262,7 +262,7 @@ bool SpiderAi::chaseNaviTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000024
  */
 bool SpiderAi::chasePikiTransit()
@@ -271,7 +271,7 @@ bool SpiderAi::chasePikiTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00002C
  */
 bool SpiderAi::shakeOffTransit()
@@ -280,7 +280,7 @@ bool SpiderAi::shakeOffTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000024
  */
 bool SpiderAi::targetLostTransit()
@@ -289,7 +289,7 @@ bool SpiderAi::targetLostTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool SpiderAi::appearTransit()
 {
@@ -350,7 +350,7 @@ bool SpiderAi::appearTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000098
  */
 void SpiderAi::initDie(int nextState)
@@ -365,7 +365,7 @@ void SpiderAi::initDie(int nextState)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000110
  */
 void SpiderAi::initWalk(int nextState)
@@ -384,7 +384,7 @@ void SpiderAi::initWalk(int nextState)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000C8
  */
 void SpiderAi::initShakeOff(int nextState)
@@ -398,7 +398,7 @@ void SpiderAi::initShakeOff(int nextState)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000C0
  */
 void SpiderAi::initAppear(int nextState)
@@ -418,7 +418,7 @@ void SpiderAi::initAppear(int nextState)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000114
  */
 void SpiderAi::initWait(int nextState)
@@ -434,7 +434,7 @@ void SpiderAi::initWait(int nextState)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SpiderAi::dieState()
 {
@@ -482,7 +482,7 @@ void SpiderAi::dieState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000028
  */
 void SpiderAi::walkRandomState()
@@ -491,7 +491,7 @@ void SpiderAi::walkRandomState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000020
  */
 void SpiderAi::walkGoHomeState()
@@ -500,7 +500,7 @@ void SpiderAi::walkGoHomeState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000024
  */
 void SpiderAi::chaseNaviState()
@@ -509,7 +509,7 @@ void SpiderAi::chaseNaviState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000024
  */
 void SpiderAi::chasePikiState()
@@ -518,7 +518,7 @@ void SpiderAi::chasePikiState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000024
  */
 void SpiderAi::shakeOffState()
@@ -527,7 +527,7 @@ void SpiderAi::shakeOffState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00005C
  */
 void SpiderAi::waitState()
@@ -538,7 +538,7 @@ void SpiderAi::waitState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000078
  */
 void SpiderAi::appearState()
@@ -552,7 +552,7 @@ void SpiderAi::appearState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SpiderAi::update()
 {

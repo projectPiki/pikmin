@@ -11,19 +11,19 @@
 #include "SoundMgr.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("KingBody");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00017C
  */
 void KingBody::setSalivaEffect()
@@ -47,7 +47,7 @@ void KingBody::setSalivaEffect()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KingBody::setSeedFlashEffect()
 {
@@ -65,7 +65,7 @@ void KingBody::setSeedFlashEffect()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KingBody::setEatBombEffect()
 {
@@ -92,7 +92,7 @@ void KingBody::setEatBombEffect()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KingBody::createWaterEffect(int idx)
 {
@@ -125,7 +125,7 @@ void KingBody::createWaterEffect(int idx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KingBody::createUfoParts()
 {
@@ -169,7 +169,7 @@ void KingBody::createUfoParts()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KingBody::killCallBackEffect(bool doForceFinish)
 {
@@ -187,7 +187,7 @@ void KingBody::killCallBackEffect(bool doForceFinish)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 KingBody::KingBody(King*)
 {
@@ -202,7 +202,7 @@ KingBody::KingBody(King*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KingBody::init(King* king)
 {
@@ -227,7 +227,7 @@ void KingBody::init(King* king)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KingBody::initBlending(f32 blendRate)
 {
@@ -239,7 +239,7 @@ void KingBody::initBlending(f32 blendRate)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000040
  */
 void KingBody::updateBlendingRatio()
@@ -253,7 +253,7 @@ void KingBody::updateBlendingRatio()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00006C
  */
 void KingBody::checkOnGround()
@@ -269,7 +269,7 @@ void KingBody::checkOnGround()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KingBody::setVelocityFromPosition()
 {
@@ -301,7 +301,7 @@ void KingBody::setVelocityFromPosition()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KingBody::emitOnGroundEffect()
 {
@@ -330,7 +330,7 @@ void KingBody::emitOnGroundEffect()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000D4
  */
 void KingBody::emitSlipEffect()
@@ -345,7 +345,7 @@ void KingBody::emitSlipEffect()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000014
  */
 void KingBody::copyOnGround()
@@ -356,7 +356,7 @@ void KingBody::copyOnGround()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KingBody::update()
 {
@@ -369,7 +369,7 @@ void KingBody::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00012C
  */
 void KingBody::makeAnimation(BossShapeObject* shapeObj, Graphics& gfx, Matrix4f* animMatrices)
@@ -385,7 +385,7 @@ void KingBody::makeAnimation(BossShapeObject* shapeObj, Graphics& gfx, Matrix4f*
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000AD0
  */
 void KingBody::checkBlendingParm(Matrix4f* animMatrices)
@@ -404,7 +404,7 @@ void KingBody::checkBlendingParm(Matrix4f* animMatrices)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KingBody::makeBlending(Matrix4f* animMatrices)
 {
@@ -448,7 +448,7 @@ void KingBody::makeBlending(Matrix4f* animMatrices)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KingBody::copyJointPosition(immut Matrix4f* animMatrices)
 {
@@ -479,7 +479,7 @@ void KingBody::copyJointPosition(immut Matrix4f* animMatrices)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000080
  */
 void KingBody::returnJoint(BossShapeObject* shapeObj, Graphics& gfx, immut Matrix4f* animMatrices)
@@ -491,7 +491,7 @@ void KingBody::returnJoint(BossShapeObject* shapeObj, Graphics& gfx, immut Matri
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KingBody::refresh(BossShapeObject* shapeObj, Graphics& gfx)
 {

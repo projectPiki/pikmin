@@ -6,19 +6,19 @@
 #include "PikiState.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("interactEtc")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool InteractTalk::actPiki(Piki* piki) immut
 {
@@ -28,7 +28,7 @@ bool InteractTalk::actPiki(Piki* piki) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool InteractWarn::actPiki(Piki* piki) immut
 {

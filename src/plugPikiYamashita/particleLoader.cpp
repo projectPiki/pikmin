@@ -2,19 +2,19 @@
 #include "zen/particle.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(19)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("particleLoader")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 u8* zen::particleLoader::load(immut char* fileName, bool p2)
 {
@@ -45,7 +45,7 @@ u8* zen::particleLoader::load(immut char* fileName, bool p2)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 u8* zen::particleLoader::pmFind(immut char* fileName)
 {

@@ -22,19 +22,19 @@
 FlowController flowCont;
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("GameOnePlayer");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 void StageInfo::write(RandomAccessStream&)
@@ -44,7 +44,7 @@ void StageInfo::write(RandomAccessStream&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void StageInfo::read(RandomAccessStream&)
 {
@@ -52,7 +52,7 @@ void StageInfo::read(RandomAccessStream&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void StageInfo::parseGenerators(CmdStream* commands)
 {
@@ -89,7 +89,7 @@ void StageInfo::parseGenerators(CmdStream* commands)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000094
  */
 void FlowController::setStage(immut char* fileName)
@@ -107,7 +107,7 @@ void FlowController::setStage(immut char* fileName)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void FlowController::readMapList(immut char* fileName)
 {
@@ -194,7 +194,7 @@ static immut char* levNames[STAGE_COUNT] = {
 #endif
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void OnePlayerSection::init()
 {

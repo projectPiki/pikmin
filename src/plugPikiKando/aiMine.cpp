@@ -5,19 +5,19 @@
 #include "PikiAI.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(13)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT(nullptr)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 ActMine::ActMine(Piki* piki)
     : Action(piki, true)
@@ -25,7 +25,7 @@ ActMine::ActMine(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActMine::init(Creature* target)
 {
@@ -40,7 +40,7 @@ void ActMine::init(Creature* target)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActMine::initWatch()
 {
@@ -49,7 +49,7 @@ void ActMine::initWatch()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000008
  */
 int ActMine::exeWatch()
@@ -58,7 +58,7 @@ int ActMine::exeWatch()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000E8
  */
 int ActMine::exeGo()
@@ -76,7 +76,7 @@ int ActMine::exeGo()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000084
  */
 void ActMine::initMine()
@@ -87,7 +87,7 @@ void ActMine::initMine()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000074
  */
 void ActMine::initGo()
@@ -96,7 +96,7 @@ void ActMine::initGo()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActMine::exeMine()
 {
@@ -129,7 +129,7 @@ int ActMine::exeMine()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActMine::exec()
 {
@@ -164,14 +164,14 @@ int ActMine::exec()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActMine::cleanup()
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActMine::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {

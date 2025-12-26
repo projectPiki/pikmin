@@ -9,19 +9,19 @@
 PikiInfMgr pikiInfMgr;
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(10)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("pikiInf");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000030
  */
 PikiInfMgr::PikiInfMgr()
@@ -32,7 +32,7 @@ PikiInfMgr::PikiInfMgr()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiInfMgr::initGame()
 {
@@ -40,7 +40,7 @@ void PikiInfMgr::initGame()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiInfMgr::saveCard(RandomAccessStream& output)
 {
@@ -52,7 +52,7 @@ void PikiInfMgr::saveCard(RandomAccessStream& output)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiInfMgr::loadCard(RandomAccessStream& input)
 {
@@ -74,7 +74,7 @@ void PikiInfMgr::loadCard(RandomAccessStream& input)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiInfMgr::incPiki(Piki* piki)
 {
@@ -90,7 +90,7 @@ void PikiInfMgr::incPiki(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiInfMgr::incPiki(int color, int happa)
 {
@@ -104,7 +104,7 @@ void PikiInfMgr::incPiki(int color, int happa)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiInfMgr::decPiki(Piki* piki)
 {
@@ -120,7 +120,7 @@ void PikiInfMgr::decPiki(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiInfMgr::clear()
 {
@@ -135,7 +135,7 @@ void PikiInfMgr::clear()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00004C
  */
 int PikiInfMgr::getTotal()
@@ -144,7 +144,7 @@ int PikiInfMgr::getTotal()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000A4
  */
 BaseInf::BaseInf()
@@ -156,7 +156,7 @@ BaseInf::BaseInf()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BaseInf::store(Creature* owner)
 {
@@ -166,7 +166,7 @@ void BaseInf::store(Creature* owner)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BaseInf::restore(Creature* owner)
 {
@@ -176,7 +176,7 @@ void BaseInf::restore(Creature* owner)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BaseInf::saveCard(RandomAccessStream& card)
 {
@@ -186,7 +186,7 @@ void BaseInf::saveCard(RandomAccessStream& card)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BaseInf::loadCard(RandomAccessStream& card)
 {
@@ -197,7 +197,7 @@ void BaseInf::loadCard(RandomAccessStream& card)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000EC
  */
 BPikiInf::BPikiInf()
@@ -207,7 +207,7 @@ BPikiInf::BPikiInf()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BPikiInf::saveCard(RandomAccessStream& card)
 {
@@ -217,7 +217,7 @@ void BPikiInf::saveCard(RandomAccessStream& card)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BPikiInf::loadCard(RandomAccessStream& card)
 {
@@ -228,7 +228,7 @@ void BPikiInf::loadCard(RandomAccessStream& card)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BPikiInf::doStore(Creature* piki)
 {
@@ -240,7 +240,7 @@ void BPikiInf::doStore(Creature* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BPikiInf::doRestore(Creature* piki)
 {
@@ -252,7 +252,7 @@ void BPikiInf::doRestore(Creature* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 MonoInfMgr::MonoInfMgr()
 {
@@ -260,7 +260,7 @@ MonoInfMgr::MonoInfMgr()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MonoInfMgr::init(int count)
 {
@@ -276,7 +276,7 @@ void MonoInfMgr::init(int count)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 BaseInf* MonoInfMgr::getFreeInf()
 {
@@ -289,7 +289,7 @@ BaseInf* MonoInfMgr::getFreeInf()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MonoInfMgr::delInf(BaseInf* inf)
 {
@@ -298,7 +298,7 @@ void MonoInfMgr::delInf(BaseInf* inf)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int MonoInfMgr::getActiveNum()
 {
@@ -306,7 +306,7 @@ int MonoInfMgr::getActiveNum()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int MonoInfMgr::getFreeNum()
 {
@@ -314,7 +314,7 @@ int MonoInfMgr::getFreeNum()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00008C
  */
 void MonoInfMgr::saveCard(RandomAccessStream&)
@@ -323,7 +323,7 @@ void MonoInfMgr::saveCard(RandomAccessStream&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MonoInfMgr::loadCard(RandomAccessStream& input)
 {
@@ -347,7 +347,7 @@ void MonoInfMgr::loadCard(RandomAccessStream& input)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 BaseInf* BPikiInfMgr::newInf()
 {
@@ -355,7 +355,7 @@ BaseInf* BPikiInfMgr::newInf()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000064
  */
 void BPikiInfMgr::initGame()
@@ -373,7 +373,7 @@ void BPikiInfMgr::initGame()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int BPikiInfMgr::getPikiCount(int color)
 {
@@ -389,7 +389,7 @@ int BPikiInfMgr::getPikiCount(int color)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00004C
  */
 void CreatureInfMgr::beginRegister(int)
@@ -398,7 +398,7 @@ void CreatureInfMgr::beginRegister(int)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000038
  */
 void CreatureInfMgr::registerType(int, InfFuncType1, InfFuncType2)
@@ -407,7 +407,7 @@ void CreatureInfMgr::registerType(int, InfFuncType1, InfFuncType2)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 void CreatureInfMgr::endRegister()
@@ -416,7 +416,7 @@ void CreatureInfMgr::endRegister()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00004C
  */
 CreatureInf* CreatureInfMgr::getStoreFun(int)
@@ -425,7 +425,7 @@ CreatureInf* CreatureInfMgr::getStoreFun(int)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00004C
  */
 CreatureInf* CreatureInfMgr::getRestoreFun(int)
@@ -434,7 +434,7 @@ CreatureInf* CreatureInfMgr::getRestoreFun(int)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 CreatureInf::CreatureInf()
@@ -445,7 +445,7 @@ CreatureInf::CreatureInf()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 BaseInf* CreatureInfMgr::newInf()
 {
@@ -453,7 +453,7 @@ BaseInf* CreatureInfMgr::newInf()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void CreatureInf::doStore(Creature* owner)
 {
@@ -481,7 +481,7 @@ void CreatureInf::doStore(Creature* owner)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void CreatureInf::doRestore(Creature* owner)
 {
@@ -495,7 +495,7 @@ void CreatureInf::doRestore(Creature* owner)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000084
  */
 void CreatureInfMgr::updateUseList()
@@ -504,7 +504,7 @@ void CreatureInfMgr::updateUseList()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00022C
  */
 void CreatureInfMgr::restoreAll()
@@ -513,7 +513,7 @@ void CreatureInfMgr::restoreAll()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void StageInf::init()
 {
@@ -521,7 +521,7 @@ void StageInf::init()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void StageInf::initGame()
 {
@@ -529,7 +529,7 @@ void StageInf::initGame()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void StageInf::saveCard(RandomAccessStream& output)
 {
@@ -546,7 +546,7 @@ void StageInf::saveCard(RandomAccessStream& output)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void StageInf::loadCard(RandomAccessStream& input)
 {

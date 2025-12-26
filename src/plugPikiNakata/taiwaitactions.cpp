@@ -6,19 +6,19 @@
 #include "teki.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("taiwaitactions")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiWaitTurningAction::start(Teki& teki)
 {
@@ -27,7 +27,7 @@ void TaiWaitTurningAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiWaitTurningAction::act(Teki& teki)
 {

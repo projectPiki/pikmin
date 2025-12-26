@@ -7,19 +7,19 @@
 #include "zen/Math.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(19)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("TAIeffectAttack")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool EventTypeCallBack::invoke(zen::particleGenerator* ptclGen)
 {
@@ -28,7 +28,7 @@ bool EventTypeCallBack::invoke(zen::particleGenerator* ptclGen)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void CylinderTypeCallBack::init(TAIeffectAttackParam* attackParam, Teki* teki, immut Vector3f& startPos, Vector3f velocity, f32 duration,
                                 f32 damage, f32 maxRange, f32 radius, TAIeffectAttackEventCallBack* eventCB)
@@ -53,7 +53,7 @@ void CylinderTypeCallBack::init(TAIeffectAttackParam* attackParam, Teki* teki, i
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void CylinderTypeCallBack::hitCheckCommon(zen::particleGenerator* ptclGen, Creature* creature)
 {
@@ -71,7 +71,7 @@ void CylinderTypeCallBack::hitCheckCommon(zen::particleGenerator* ptclGen, Creat
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0003E4
  */
 void CylinderTypeCallBack::hitCheck(zen::particleGenerator* ptclGen)
@@ -87,7 +87,7 @@ void CylinderTypeCallBack::hitCheck(zen::particleGenerator* ptclGen)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool CylinderTypeCallBack::invoke(zen::particleGenerator* ptclGen)
 {
@@ -117,7 +117,7 @@ bool CylinderTypeCallBack::invoke(zen::particleGenerator* ptclGen)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ConeTypeCallBack::init(TAIeffectAttackParam* param, Teki* teki, immut Vector3f& p3, Vector3f p4, f32 p5, f32 p6, f32 p7, f32 p8,
                             TAIeffectAttackEventCallBack* eventCB)
@@ -147,7 +147,7 @@ void ConeTypeCallBack::init(TAIeffectAttackParam* param, Teki* teki, immut Vecto
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ConeTypeCallBack::hitCheckCommon(zen::particleGenerator* ptclGen, Creature* creature)
 {
@@ -200,7 +200,7 @@ void ConeTypeCallBack::hitCheckCommon(zen::particleGenerator* ptclGen, Creature*
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000214
  */
 void ConeTypeCallBack::hitCheck(zen::particleGenerator* ptclGen)
@@ -219,7 +219,7 @@ void ConeTypeCallBack::hitCheck(zen::particleGenerator* ptclGen)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool ConeTypeCallBack::invoke(zen::particleGenerator* ptclGen)
 {

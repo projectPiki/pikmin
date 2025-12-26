@@ -10,26 +10,26 @@
 #include "teki.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("searchSys")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 SearchSystem::SearchSystem()
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SearchSystem::update()
 {
@@ -109,7 +109,7 @@ void SearchSystem::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SearchSystem::updateLoopOptimised()
 {
@@ -236,7 +236,7 @@ void SearchSystem::updateLoopOptimised()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 SearchBuffer::SearchBuffer()
 {
@@ -249,7 +249,7 @@ SearchBuffer::SearchBuffer()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SearchBuffer::init(SearchData* data, int p2)
 {
@@ -269,7 +269,7 @@ void SearchBuffer::init(SearchData* data, int p2)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000E4
  */
 void SearchBuffer::operator=(SearchBuffer& other)
@@ -288,7 +288,7 @@ void SearchBuffer::operator=(SearchBuffer& other)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000044
  */
 int SearchBuffer::getIndex(Creature* obj)
@@ -302,7 +302,7 @@ int SearchBuffer::getIndex(Creature* obj)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SearchBuffer::clear()
 {
@@ -314,7 +314,7 @@ void SearchBuffer::clear()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000024
  */
 void SearchBuffer::reset()
@@ -325,7 +325,7 @@ void SearchBuffer::reset()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SearchBuffer::invalidate()
 {
@@ -341,7 +341,7 @@ void SearchBuffer::invalidate()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SearchBuffer::insertQuick(Creature* obj, f32 dist)
 {
@@ -375,7 +375,7 @@ void SearchBuffer::insertQuick(Creature* obj, f32 dist)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SearchBuffer::insert(Creature* creature, f32 distance)
 {
@@ -422,7 +422,7 @@ void SearchBuffer::insert(Creature* creature, f32 distance)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000114
  */
 void SearchBuffer::update()
@@ -456,7 +456,7 @@ void SearchBuffer::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Creature* SearchBuffer::getCreature(int id)
 {
@@ -467,7 +467,7 @@ Creature* SearchBuffer::getCreature(int id)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int SearchBuffer::getFirst()
 {
@@ -475,7 +475,7 @@ int SearchBuffer::getFirst()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int SearchBuffer::getNext(int i)
 {
@@ -483,7 +483,7 @@ int SearchBuffer::getNext(int i)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool SearchBuffer::isDone(int i)
 {

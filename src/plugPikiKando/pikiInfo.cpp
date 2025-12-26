@@ -3,7 +3,7 @@
 PikiInfo* pikiInfo = nullptr;
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 
 PikiInfo::PikiInfo()
@@ -18,7 +18,7 @@ PikiInfo::PikiInfo()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiInfo::addFormationPiki()
 {
@@ -31,7 +31,7 @@ void PikiInfo::addFormationPiki()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 
 void PikiInfo::subFormationPiki()

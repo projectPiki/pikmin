@@ -22,13 +22,13 @@
 #include "timers.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(23)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("shapeBase")
@@ -110,7 +110,7 @@ void MtxGroup::read(RandomAccessStream& stream)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Mesh::read(RandomAccessStream& stream)
 {
@@ -132,7 +132,7 @@ void Mesh::read(RandomAccessStream& stream)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00006C
  */
 void Joint::recShowHierarchy()
@@ -147,7 +147,7 @@ void Joint::recShowHierarchy()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000018
  */
 void Joint::overrideAnim(AnimContext* anim)
@@ -156,7 +156,7 @@ void Joint::overrideAnim(AnimContext* anim)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Joint::recOverrideAnim(AnimContext* anim)
 {
@@ -170,7 +170,7 @@ void Joint::recOverrideAnim(AnimContext* anim)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Joint::read(RandomAccessStream& stream)
 {
@@ -202,7 +202,7 @@ void Joint::read(RandomAccessStream& stream)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00043C
  */
 void Joint::render(Graphics& gfx)
@@ -281,7 +281,7 @@ void Joint::render(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void AnimContext::animate(f32 animSpeed)
 {
@@ -294,7 +294,7 @@ void AnimContext::animate(f32 animSpeed)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 static f32 extract(f32 currTime, AnimParam& param, DataChunk& data)
 {
@@ -351,7 +351,7 @@ static f32 extract(f32 currTime, AnimParam& param, DataChunk& data)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 CamDataInfo::CamDataInfo()
 {
@@ -362,7 +362,7 @@ CamDataInfo::CamDataInfo()
 };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void CamDataInfo::update(f32 currentFrame, immut Matrix4f& mtx)
 {
@@ -457,7 +457,7 @@ void CamDataInfo::update(f32 currentFrame, immut Matrix4f& mtx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void LightDataInfo::update(f32 currentFrame)
 {
@@ -526,7 +526,7 @@ void LightDataInfo::update(f32 currentFrame)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SceneData::parse(CmdStream* stream)
 {
@@ -696,7 +696,7 @@ void SceneData::parse(CmdStream* stream)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SceneData::getAnimInfo(CmdStream* stream)
 {
@@ -735,7 +735,7 @@ void SceneData::getAnimInfo(CmdStream* stream)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void AnimData::extractSRT(SRT& srt, int, AnimDataInfo* info, f32 p4)
 {
@@ -802,7 +802,7 @@ void AnimData::extractSRT(SRT& srt, int, AnimDataInfo* info, f32 p4)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void AnimData::makeAnimSRT(int boneId, immut Matrix4f* parent, Matrix4f* output, AnimDataInfo* info, f32 pos)
 {
@@ -846,7 +846,7 @@ void AnimData::makeAnimSRT(int boneId, immut Matrix4f* parent, Matrix4f* output,
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void AnimData::detach()
 {
@@ -856,7 +856,7 @@ void AnimData::detach()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00005C
  */
 void AnimData::initData()
@@ -865,7 +865,7 @@ void AnimData::initData()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void AnimData::checkMask()
 {
@@ -920,7 +920,7 @@ void AnimData::checkMask()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void AnimDca::read(RandomAccessStream& input)
 {
@@ -972,7 +972,7 @@ void AnimDca::read(RandomAccessStream& input)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void AnimDca::parse(CmdStream* stream)
 {
@@ -1114,7 +1114,7 @@ void AnimDca::parse(CmdStream* stream)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void AnimDca::getAnimInfo(CmdStream* stream)
 {
@@ -1143,7 +1143,7 @@ void AnimDca::getAnimInfo(CmdStream* stream)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 AnimDck::AnimDck(BaseShape* model, int joints)
 {
@@ -1159,7 +1159,7 @@ AnimDck::AnimDck(BaseShape* model, int joints)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void AnimDck::read(RandomAccessStream& stream)
 {
@@ -1218,7 +1218,7 @@ void AnimDck::read(RandomAccessStream& stream)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void AnimDck::parse(CmdStream* stream)
 {
@@ -1405,7 +1405,7 @@ void AnimDck::parse(CmdStream* stream)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void AnimDck::getAnimInfo(CmdStream* stream)
 {
@@ -1430,7 +1430,7 @@ void AnimDck::getAnimInfo(CmdStream* stream)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void AnimDck::extractSRT(SRT& srt, int, AnimDataInfo* anim, f32 time)
 {
@@ -1515,7 +1515,7 @@ void AnimDck::extractSRT(SRT& srt, int, AnimDataInfo* anim, f32 time)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void AnimDck::makeAnimSRT(int a, immut Matrix4f* mtx1, Matrix4f* mtx2, AnimDataInfo* anim, f32 time)
 {
@@ -1534,7 +1534,7 @@ void AnimDck::makeAnimSRT(int a, immut Matrix4f* mtx1, Matrix4f* mtx2, AnimDataI
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00013C
  */
 void BaseShape::exportIni(RandomAccessStream& stream, bool doSkipLights)
@@ -1564,7 +1564,7 @@ void BaseShape::exportIni(RandomAccessStream& stream, bool doSkipLights)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BaseShape::importIni(RandomAccessStream& stream)
 {
@@ -1610,7 +1610,7 @@ void BaseShape::importIni(RandomAccessStream& stream)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ShapeDynMaterials::animate(f32* data)
 {
@@ -1641,7 +1641,7 @@ void ShapeDynMaterials::animate(f32* data)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ShapeDynMaterials::updateContext()
 {
@@ -1667,7 +1667,7 @@ void ShapeDynMaterials::updateContext()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 BaseShape::BaseShape()
 {
@@ -1733,7 +1733,7 @@ BaseShape::BaseShape()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BaseShape::countMaterials(Joint* joint, u32 p2)
 {
@@ -1777,7 +1777,7 @@ void BaseShape::countMaterials(Joint* joint, u32 p2)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BaseShape::recTraverseMaterials(Joint* joint, IDelegate2<Joint*, u32>* delegate)
 {
@@ -1791,7 +1791,7 @@ void BaseShape::recTraverseMaterials(Joint* joint, IDelegate2<Joint*, u32>* dele
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 ShapeDynMaterials* BaseShape::instanceMaterials(int jointIdx)
 {
@@ -1801,7 +1801,7 @@ ShapeDynMaterials* BaseShape::instanceMaterials(int jointIdx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BaseShape::makeInstance(ShapeDynMaterials& dynMats, int jointIdx)
 {
@@ -1833,7 +1833,7 @@ void BaseShape::makeInstance(ShapeDynMaterials& dynMats, int jointIdx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000B4
  */
 void recShowInfos(Graphics&, ObjCollInfo*)
@@ -1842,7 +1842,7 @@ void recShowInfos(Graphics&, ObjCollInfo*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000074
  */
 void BaseShape::drawobjcolls(Graphics&, Camera&)
@@ -1851,7 +1851,7 @@ void BaseShape::drawobjcolls(Graphics&, Camera&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00006C
  */
 void BaseShape::drawlights(Graphics& gfx, Camera& cam)
@@ -1865,7 +1865,7 @@ void BaseShape::drawlights(Graphics& gfx, Camera& cam)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00007C
  */
 void BaseShape::drawroutes(Graphics& gfx, Camera& cam)
@@ -1877,7 +1877,7 @@ void BaseShape::drawroutes(Graphics& gfx, Camera& cam)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BaseShape::drawculled(Graphics& gfx, Camera& cam, ShapeDynMaterials* dynMats)
 {
@@ -1934,7 +1934,7 @@ void BaseShape::drawculled(Graphics& gfx, Camera& cam, ShapeDynMaterials* dynMat
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BaseShape::drawshape(Graphics& gfx, Camera& cam, ShapeDynMaterials* dynMats)
 {
@@ -1970,7 +1970,7 @@ void BaseShape::drawshape(Graphics& gfx, Camera& cam, ShapeDynMaterials* dynMats
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BaseShape::resolveTextureNames()
 {
@@ -2020,7 +2020,7 @@ void BaseShape::resolveTextureNames()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000064
  */
 void BaseShape::skipChunk(RandomAccessStream& stream, u32 amt)
@@ -2031,7 +2031,7 @@ void BaseShape::skipChunk(RandomAccessStream& stream, u32 amt)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BaseShape::recAddMatpoly(Joint* parentJoint, int f)
 {
@@ -2055,7 +2055,7 @@ void BaseShape::recAddMatpoly(Joint* parentJoint, int f)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BaseShape::read(RandomAccessStream& stream)
 {
@@ -2485,7 +2485,7 @@ void BaseShape::read(RandomAccessStream& stream)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BaseShape::initIni(bool usePlatforms)
 {
@@ -2566,7 +2566,7 @@ void BaseShape::initIni(bool usePlatforms)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BaseShape::initialise()
 {
@@ -2799,7 +2799,7 @@ void BaseShape::initialise()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BaseShape::createCollisions(int gridSize)
 {
@@ -2936,7 +2936,7 @@ void BaseShape::createCollisions(int gridSize)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BaseShape::calcBasePose(immut Matrix4f& target)
 {
@@ -2955,7 +2955,7 @@ void BaseShape::calcBasePose(immut Matrix4f& target)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 AnimData* BaseShape::loadDck(immut char* name, RandomAccessStream& s)
 {
@@ -2972,7 +2972,7 @@ AnimData* BaseShape::loadDck(immut char* name, RandomAccessStream& s)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 AnimData* BaseShape::importDck(immut char* name, CmdStream* cmds)
 {
@@ -2998,7 +2998,7 @@ AnimData* BaseShape::importDck(immut char* name, CmdStream* cmds)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 AnimData* BaseShape::loadDca(immut char* name, RandomAccessStream& s)
 {
@@ -3014,7 +3014,7 @@ AnimData* BaseShape::loadDca(immut char* name, RandomAccessStream& s)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000138
  */
 void BaseShape::importDca(immut char* name, CmdStream* cmds)
@@ -3037,7 +3037,7 @@ void BaseShape::importDca(immut char* name, CmdStream* cmds)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 AnimData* BaseShape::loadAnimation(immut char* name, bool isRelativePath)
 {
@@ -3076,7 +3076,7 @@ AnimData* BaseShape::loadAnimation(immut char* name, bool isRelativePath)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Matrix4f& BaseShape::getAnimMatrix(int i)
 {
@@ -3084,7 +3084,7 @@ Matrix4f& BaseShape::getAnimMatrix(int i)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BaseShape::backupAnimOverrides(AnimContext** animList)
 {
@@ -3095,7 +3095,7 @@ void BaseShape::backupAnimOverrides(AnimContext** animList)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BaseShape::restoreAnimOverrides()
 {
@@ -3105,7 +3105,7 @@ void BaseShape::restoreAnimOverrides()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BaseShape::overrideAnim(int jointIdx, AnimContext* anim)
 {
@@ -3117,7 +3117,7 @@ void BaseShape::overrideAnim(int jointIdx, AnimContext* anim)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 AnimFrameCacher::AnimFrameCacher(int num)
 {
@@ -3127,7 +3127,7 @@ AnimFrameCacher::AnimFrameCacher(int num)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00004C
  */
 void AnimFrameCacher::updateInfo(AnimCacheInfo* info)
@@ -3139,7 +3139,7 @@ void AnimFrameCacher::updateInfo(AnimCacheInfo* info)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000050
  */
 void AnimFrameCacher::removeOldest()
@@ -3153,7 +3153,7 @@ void AnimFrameCacher::removeOldest()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void AnimFrameCacher::cacheFrameSpace(int numTextures, AnimCacheInfo* info)
 {
@@ -3180,7 +3180,7 @@ void AnimFrameCacher::cacheFrameSpace(int numTextures, AnimCacheInfo* info)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BaseShape::updateAnim(Graphics& gfx, immut Matrix4f& mtx, f32* p3)
 {
@@ -3240,7 +3240,7 @@ void BaseShape::updateAnim(Graphics& gfx, immut Matrix4f& mtx, f32* p3)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BaseShape::calcWeightedMatrices()
 {
@@ -3307,7 +3307,7 @@ void BaseShape::calcWeightedMatrices()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BaseShape::makeNormalIndexes(u16* indices)
 {
@@ -3354,7 +3354,7 @@ void BaseShape::makeNormalIndexes(u16* indices)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 BaseShape::calcJointWorldPos(Graphics& gfx, int index, Vector3f& worldPos)
 {
@@ -3369,7 +3369,7 @@ f32 BaseShape::calcJointWorldPos(Graphics& gfx, int index, Vector3f& worldPos)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BaseShape::calcJointWorldDir(Graphics& gfx, int index, Vector3f& worldDir)
 {
@@ -3384,7 +3384,7 @@ void BaseShape::calcJointWorldDir(Graphics& gfx, int index, Vector3f& worldDir)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000084
  */
 void BaseShape::calcJointWorldScale(Graphics&, int, Vector3f&)
@@ -3393,7 +3393,7 @@ void BaseShape::calcJointWorldScale(Graphics&, int, Vector3f&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000148
  */
 CollTriInfo* BaseShape::findCollTri(Vector3f&, Vector3f&, Vector3f&, char*)

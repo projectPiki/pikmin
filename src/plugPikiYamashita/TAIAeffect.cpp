@@ -6,13 +6,13 @@
 #include "teki.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(14)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("TAIAeffect")
@@ -20,7 +20,7 @@ DEFINE_PRINT("TAIAeffect")
 const int TAIAeffCloudOfDust::RUMBLE_NONE = -1;
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAIAeffCloudOfDust::init(EffectMgr::effTypeTable effID, bool p2, int soundID, int rumbleType, f32 sinkThreshold, int footNum,
                               int jointID0, int jointID1, int jointID2, int jointID3)
@@ -53,7 +53,7 @@ void TAIAeffCloudOfDust::init(EffectMgr::effTypeTable effID, bool p2, int soundI
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAIAeffCloudOfDust::start(Teki& teki)
 {
@@ -68,7 +68,7 @@ void TAIAeffCloudOfDust::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAeffCloudOfDust::act(Teki& teki)
 {
@@ -79,7 +79,7 @@ bool TAIAeffCloudOfDust::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAIAeffCloudOfDust::setType(Vector3f& pos, int mapAttr, int jointID)
 {
@@ -87,7 +87,7 @@ void TAIAeffCloudOfDust::setType(Vector3f& pos, int mapAttr, int jointID)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAIAeffCloudOfDust::createCloudOfDust(Teki& teki, int footIdx)
 {
@@ -129,7 +129,7 @@ void TAIAeffCloudOfDust::createCloudOfDust(Teki& teki, int footIdx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 CollPart* TAIAeffCloudOfDust::getCollPart(Teki& teki, int partID)
 {

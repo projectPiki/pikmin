@@ -3,19 +3,19 @@
 #include "zen/particle.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(14)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("ptclGenPack")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 namespace zen {
 void PtclGenPack::setPtclGenPtr(u32 idx, particleGenerator* gen)
@@ -29,7 +29,7 @@ void PtclGenPack::setPtclGenPtr(u32 idx, particleGenerator* gen)
 };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000010
  */
 particleGenerator* PtclGenPack::getPtclGenPtr(u32 idx)
@@ -38,7 +38,7 @@ particleGenerator* PtclGenPack::getPtclGenPtr(u32 idx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000048
  */
 void PtclGenPack::setEmitPos(immut Vector3f& pos)
@@ -54,7 +54,7 @@ void PtclGenPack::setEmitPos(immut Vector3f& pos)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PtclGenPack::setEmitPosPtr(immut Vector3f* posPtr)
 {
@@ -68,7 +68,7 @@ void PtclGenPack::setEmitPosPtr(immut Vector3f* posPtr)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000048
  */
 void PtclGenPack::setEmitDir(immut Vector3f& pos)
@@ -84,7 +84,7 @@ void PtclGenPack::setEmitDir(immut Vector3f& pos)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000084
  */
 void PtclGenPack::setCallBack(zen::CallBack1<zen::particleGenerator*>*, zen::CallBack2<zen::particleGenerator*, zen::particleMdl*>*)
@@ -93,7 +93,7 @@ void PtclGenPack::setCallBack(zen::CallBack1<zen::particleGenerator*>*, zen::Cal
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PtclGenPack::startGen()
 {
@@ -108,7 +108,7 @@ void PtclGenPack::startGen()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PtclGenPack::stopGen()
 {
@@ -123,7 +123,7 @@ void PtclGenPack::stopGen()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00003C
  */
 void PtclGenPack::start()
@@ -132,7 +132,7 @@ void PtclGenPack::start()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00003C
  */
 void PtclGenPack::stop()
@@ -141,7 +141,7 @@ void PtclGenPack::stop()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PtclGenPack::finish()
 {
@@ -156,7 +156,7 @@ void PtclGenPack::finish()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PtclGenPack::forceFinish()
 {
@@ -172,7 +172,7 @@ void PtclGenPack::forceFinish()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool PtclGenPack::checkStopGen()
 {
@@ -188,7 +188,7 @@ bool PtclGenPack::checkStopGen()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000044
  */
 bool PtclGenPack::checkStop()
@@ -197,7 +197,7 @@ bool PtclGenPack::checkStop()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000044
  */
 bool PtclGenPack::checkEmit()
@@ -206,7 +206,7 @@ bool PtclGenPack::checkEmit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000044
  */
 bool PtclGenPack::checkActive()

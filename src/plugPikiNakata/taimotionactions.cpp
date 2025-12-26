@@ -3,19 +3,19 @@
 #include "teki.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("taimotionactions")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiMotionAction::start(Teki& teki)
 {
@@ -23,7 +23,7 @@ void TaiMotionAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiMotionAction::act(Teki& teki)
 {
@@ -34,7 +34,7 @@ bool TaiMotionAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiContinuousMotionAction::start(Teki& teki)
 {
@@ -66,7 +66,7 @@ void TaiContinuousMotionAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiContinuousMotionAction::act(Teki& teki)
 {
@@ -82,7 +82,7 @@ bool TaiContinuousMotionAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiContinuousMotionAction::motionStarted(Teki& teki)
 {
@@ -94,7 +94,7 @@ bool TaiContinuousMotionAction::motionStarted(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiFinishMotionAction::start(Teki& teki)
 {
@@ -102,7 +102,7 @@ void TaiFinishMotionAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiAnimationKeyAction::act(Teki& teki)
 {
@@ -113,7 +113,7 @@ bool TaiAnimationKeyAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiCountLoopAction::start(Teki& teki)
 {
@@ -121,7 +121,7 @@ void TaiCountLoopAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiCountLoopAction::act(Teki& teki)
 {
@@ -136,7 +136,7 @@ bool TaiCountLoopAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiSwitchMotionAction::start(Teki& teki)
 {
@@ -146,7 +146,7 @@ void TaiSwitchMotionAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiOutsideKeyStopMoveAction::act(Teki& teki)
 {
@@ -161,14 +161,14 @@ bool TaiOutsideKeyStopMoveAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiStoppingMoveAction::start(Teki& teki)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiStoppingMoveAction::act(Teki& teki)
 {
@@ -186,14 +186,14 @@ bool TaiStoppingMoveAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiStoppingMoveAction::finish(Teki& teki)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiFinishStoppingMoveAction::start(Teki& teki)
 {
@@ -201,7 +201,7 @@ void TaiFinishStoppingMoveAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiSetFrameMotionAction::start(Teki& teki)
 {
@@ -209,7 +209,7 @@ void TaiSetFrameMotionAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiRandomSetAnimationCounterAction::start(Teki& teki)
 {

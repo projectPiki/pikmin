@@ -3,19 +3,19 @@
 #include "zen/particle.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("simpleParticle")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000150
  */
 zen::particleMdl* zen::simplePtclManager::create(Texture* tex, s16 lifeTime, const Vector3f& globalPos, const Vector3f& vel,
@@ -44,7 +44,7 @@ zen::particleMdl* zen::simplePtclManager::create(Texture* tex, s16 lifeTime, con
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::simplePtclManager::update(f32 timeStep)
 {
@@ -72,7 +72,7 @@ void zen::simplePtclManager::update(f32 timeStep)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::simplePtclManager::draw(Graphics& gfx)
 {
@@ -105,7 +105,7 @@ void zen::simplePtclManager::draw(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::simplePtclManager::forceFinish()
 {

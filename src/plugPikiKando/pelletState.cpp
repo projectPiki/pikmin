@@ -15,19 +15,19 @@
 #include "sysNew.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("pelletState");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PelletStateMachine::init(Pellet* pelt)
 {
@@ -41,7 +41,7 @@ void PelletStateMachine::init(Pellet* pelt)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PelletUfoLoadState::PelletUfoLoadState()
     : PelletState(PELSTATE_UfoLoad, "UFOLOAD")
@@ -49,7 +49,7 @@ PelletUfoLoadState::PelletUfoLoadState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PelletUfoLoadState::init(Pellet*)
 {
@@ -57,7 +57,7 @@ void PelletUfoLoadState::init(Pellet*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PelletUfoLoadState::exec(Pellet* pelt)
 {
@@ -72,7 +72,7 @@ void PelletUfoLoadState::exec(Pellet* pelt)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PelletUfoLoadState::cleanup(Pellet* pelt)
 {
@@ -81,7 +81,7 @@ void PelletUfoLoadState::cleanup(Pellet* pelt)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PelletDeadState::PelletDeadState()
     : PelletState(PELSTATE_Dead, "DEAD")
@@ -89,28 +89,28 @@ PelletDeadState::PelletDeadState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PelletDeadState::init(Pellet* pelt)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PelletDeadState::exec(Pellet*)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PelletDeadState::cleanup(Pellet*)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PelletNormalState::PelletNormalState()
     : PelletState(PELSTATE_Normal, "NORMAL")
@@ -118,28 +118,28 @@ PelletNormalState::PelletNormalState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PelletNormalState::init(Pellet*)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PelletNormalState::exec(Pellet*)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PelletNormalState::cleanup(Pellet*)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PelletSwallowedState::PelletSwallowedState()
     : PelletState(PELSTATE_Swallowed, "SWALLOWED")
@@ -147,14 +147,14 @@ PelletSwallowedState::PelletSwallowedState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PelletSwallowedState::init(Pellet*)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PelletSwallowedState::exec(Pellet* pelt)
 {
@@ -165,7 +165,7 @@ void PelletSwallowedState::exec(Pellet* pelt)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PelletSwallowedState::cleanup(Pellet* pelt)
 {
@@ -173,7 +173,7 @@ void PelletSwallowedState::cleanup(Pellet* pelt)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PelletAppearState::PelletAppearState()
     : PelletState(PELSTATE_Appear, "APPEAR")
@@ -181,7 +181,7 @@ PelletAppearState::PelletAppearState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PelletAppearState::init(Pellet* pelt)
 {
@@ -192,7 +192,7 @@ void PelletAppearState::init(Pellet* pelt)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PelletAppearState::procBounceMsg(Pellet* pelt, MsgBounce* msg)
 {
@@ -200,7 +200,7 @@ void PelletAppearState::procBounceMsg(Pellet* pelt, MsgBounce* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PelletAppearState::exec(Pellet* pelt)
 {
@@ -223,14 +223,14 @@ void PelletAppearState::exec(Pellet* pelt)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PelletAppearState::cleanup(Pellet*)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PelletGoalState::PelletGoalState()
     : PelletState(PELSTATE_Goal, "GOAL")
@@ -238,7 +238,7 @@ PelletGoalState::PelletGoalState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PelletGoalState::init(Pellet* pelt)
 {
@@ -314,7 +314,7 @@ void PelletGoalState::init(Pellet* pelt)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PelletGoalState::exec(Pellet* pelt)
 {
@@ -356,7 +356,7 @@ void PelletGoalState::exec(Pellet* pelt)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PelletGoalState::cleanup(Pellet*)
 {

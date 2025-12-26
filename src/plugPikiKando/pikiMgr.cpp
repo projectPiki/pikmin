@@ -16,19 +16,19 @@ bool PikiMgr::meNukiMode;
 bool PikiMgr::containerExitMode;
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("pikiMgr");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Creature* PikiMgr::birth()
 {
@@ -53,7 +53,7 @@ Creature* PikiMgr::birth()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00001C
  */
 CPlate* PikiMgr::getFormationPikis()
@@ -66,7 +66,7 @@ CPlate* PikiMgr::getFormationPikis()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PikiMgr::PikiMgr(Navi* navi)
 {
@@ -93,7 +93,7 @@ PikiMgr::PikiMgr(Navi* navi)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiMgr::init()
 {
@@ -104,7 +104,7 @@ void PikiMgr::init()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Creature* PikiMgr::createObject()
 {
@@ -116,7 +116,7 @@ Creature* PikiMgr::createObject()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000054
  */
 bool PikiMgr::lostAllPikis()
@@ -125,7 +125,7 @@ bool PikiMgr::lostAllPikis()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiMgr::update()
 {
@@ -133,7 +133,7 @@ void PikiMgr::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiMgr::refresh(Graphics& graphics)
 {
@@ -141,7 +141,7 @@ void PikiMgr::refresh(Graphics& graphics)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000114
  */
 void PikiMgr::refresh2d(Graphics& gfx)
@@ -155,7 +155,7 @@ void PikiMgr::refresh2d(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiMgr::read(RandomAccessStream& input)
 {
@@ -172,7 +172,7 @@ void PikiMgr::write(RandomAccessStream& output)
 #endif
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PikiMgr::dumpAll()
 {

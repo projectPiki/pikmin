@@ -4,13 +4,13 @@
 #include "sysNew.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("paniItemAnimator")
@@ -20,7 +20,7 @@ immut char* PaniItemAnimator::motionLabels[15] = {
 };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PaniMotionTable* PaniItemAnimator::createMotionTable()
 {
@@ -45,7 +45,7 @@ PaniMotionTable* PaniItemAnimator::createMotionTable()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PaniItemAnimator::PaniItemAnimator()
 {

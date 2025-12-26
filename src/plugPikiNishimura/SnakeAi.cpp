@@ -19,19 +19,19 @@ static u32 snakeSE[] = {
 };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("SnakeAi");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 SnakeAi::SnakeAi(Snake* snake)
 {
@@ -46,7 +46,7 @@ SnakeAi::SnakeAi(Snake* snake)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SnakeAi::initAI(Snake* snake)
 {
@@ -65,7 +65,7 @@ void SnakeAi::initAI(Snake* snake)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SnakeAi::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
@@ -89,7 +89,7 @@ void SnakeAi::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SnakeAi::keyAction0()
 {
@@ -127,7 +127,7 @@ void SnakeAi::keyAction0()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SnakeAi::keyAction1()
 {
@@ -139,7 +139,7 @@ void SnakeAi::keyAction1()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 void SnakeAi::keyAction2()
@@ -147,7 +147,7 @@ void SnakeAi::keyAction2()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 void SnakeAi::keyAction3()
@@ -155,7 +155,7 @@ void SnakeAi::keyAction3()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SnakeAi::keyLoopEnd()
 {
@@ -169,7 +169,7 @@ void SnakeAi::keyLoopEnd()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SnakeAi::keyFinished()
 {
@@ -177,7 +177,7 @@ void SnakeAi::keyFinished()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SnakeAi::playSound(int snakeSoundID)
 {
@@ -187,7 +187,7 @@ void SnakeAi::playSound(int snakeSoundID)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000054
  */
 void SnakeAi::setEveryFrame()
@@ -201,7 +201,7 @@ void SnakeAi::setEveryFrame()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00002C
  */
 void SnakeAi::setInitPosition()
@@ -213,7 +213,7 @@ void SnakeAi::setInitPosition()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00003C
  */
 void SnakeAi::setUnderPosition()
@@ -223,7 +223,7 @@ void SnakeAi::setUnderPosition()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00012C
  */
 void SnakeAi::setAppearPosition01()
@@ -239,7 +239,7 @@ void SnakeAi::setAppearPosition01()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0002A0
  */
 void SnakeAi::setAppearPosition02()
@@ -264,7 +264,7 @@ void SnakeAi::setAppearPosition02()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SnakeAi::traceTargetPosition()
 {
@@ -292,7 +292,7 @@ void SnakeAi::traceTargetPosition()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SnakeAi::setAttackPosition()
 {
@@ -364,7 +364,7 @@ void SnakeAi::setAttackPosition()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SnakeAi::checkAttackTarget()
 {
@@ -400,7 +400,7 @@ void SnakeAi::checkAttackTarget()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SnakeAi::naviNudge()
 {
@@ -410,7 +410,7 @@ void SnakeAi::naviNudge()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000018
  */
 void SnakeAi::setMouthCollPart(int partNum)
@@ -419,7 +419,7 @@ void SnakeAi::setMouthCollPart(int partNum)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000010
  */
 int SnakeAi::getMouthCollPart(int partNum)
@@ -428,7 +428,7 @@ int SnakeAi::getMouthCollPart(int partNum)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SnakeAi::pikiStickMouth()
 {
@@ -454,7 +454,7 @@ void SnakeAi::pikiStickMouth()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SnakeAi::eatStickToMouthPiki()
 {
@@ -464,7 +464,7 @@ void SnakeAi::eatStickToMouthPiki()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SnakeAi::nearNaviInAttackArea(Creature** target, f32* targetDist, int attackID)
 {
@@ -496,7 +496,7 @@ void SnakeAi::nearNaviInAttackArea(Creature** target, f32* targetDist, int attac
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SnakeAi::nearPikiInAttackArea(Creature** target, f32* targetDist, int attackID)
 {
@@ -528,7 +528,7 @@ void SnakeAi::nearPikiInAttackArea(Creature** target, f32* targetDist, int attac
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool SnakeAi::naviInAttackArea(int attackType)
 {
@@ -557,7 +557,7 @@ bool SnakeAi::naviInAttackArea(int attackType)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool SnakeAi::pikiInAttackArea(int attackType)
 {
@@ -586,7 +586,7 @@ bool SnakeAi::pikiInAttackArea(int attackType)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool SnakeAi::appearType01()
 {
@@ -624,7 +624,7 @@ bool SnakeAi::appearType01()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool SnakeAi::appearType02()
 {
@@ -683,7 +683,7 @@ bool SnakeAi::appearType02()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00003C
  */
 void SnakeAi::resultFlagOn()
@@ -694,7 +694,7 @@ void SnakeAi::resultFlagOn()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00002C
  */
 void SnakeAi::resultFlagSeen()
@@ -703,7 +703,7 @@ void SnakeAi::resultFlagSeen()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000024
  */
 bool SnakeAi::dieTransit()
@@ -712,7 +712,7 @@ bool SnakeAi::dieTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00003C
  */
 bool SnakeAi::struggleTransit()
@@ -721,7 +721,7 @@ bool SnakeAi::struggleTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool SnakeAi::chaseNaviTransit()
 {
@@ -763,7 +763,7 @@ bool SnakeAi::chaseNaviTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool SnakeAi::chasePikiTransit()
 {
@@ -805,7 +805,7 @@ bool SnakeAi::chasePikiTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool SnakeAi::targetLostTransit()
 {
@@ -836,7 +836,7 @@ bool SnakeAi::targetLostTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool SnakeAi::attackTransit(int attackType)
 {
@@ -849,7 +849,7 @@ bool SnakeAi::attackTransit(int attackType)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool SnakeAi::collPartMaxTransit()
 {
@@ -860,7 +860,7 @@ bool SnakeAi::collPartMaxTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00001C
  */
 bool SnakeAi::eatPikiTransit()
@@ -872,7 +872,7 @@ bool SnakeAi::eatPikiTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000024
  */
 bool SnakeAi::intoGroundTransit()
@@ -881,7 +881,7 @@ bool SnakeAi::intoGroundTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000028
  */
 bool SnakeAi::diveTimerTransit()
@@ -893,7 +893,7 @@ bool SnakeAi::diveTimerTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000028
  */
 bool SnakeAi::underTimerTransit()
@@ -905,7 +905,7 @@ bool SnakeAi::underTimerTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000038
  */
 bool SnakeAi::appearTransit()
@@ -918,7 +918,7 @@ bool SnakeAi::appearTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000088
  */
 void SnakeAi::initDie(int nextState)
@@ -932,7 +932,7 @@ void SnakeAi::initDie(int nextState)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 void SnakeAi::initStruggle(int nextState)
@@ -946,7 +946,7 @@ void SnakeAi::initStruggle(int nextState)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000090
  */
 void SnakeAi::initChase(int nextState)
@@ -959,7 +959,7 @@ void SnakeAi::initChase(int nextState)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SnakeAi::initAttack(int nextState, f32 frame)
 {
@@ -992,7 +992,7 @@ void SnakeAi::initAttack(int nextState, f32 frame)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00008C
  */
 void SnakeAi::initEat(int nextState)
@@ -1005,7 +1005,7 @@ void SnakeAi::initEat(int nextState)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000088
  */
 void SnakeAi::initWait(int nextState)
@@ -1019,7 +1019,7 @@ void SnakeAi::initWait(int nextState)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000D8
  */
 void SnakeAi::initGointo(int nextState)
@@ -1036,7 +1036,7 @@ void SnakeAi::initGointo(int nextState)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000108
  */
 void SnakeAi::initUnder(int nextState)
@@ -1058,7 +1058,7 @@ void SnakeAi::initUnder(int nextState)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SnakeAi::initAppear(int nextState)
 {
@@ -1495,7 +1495,7 @@ void SnakeAi::initAppear(int nextState)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000128
  */
 void SnakeAi::dieState()
@@ -1522,7 +1522,7 @@ void SnakeAi::dieState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SnakeAi::struggleState()
 {
@@ -1553,7 +1553,7 @@ void SnakeAi::struggleState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 void SnakeAi::chaseState()
@@ -1561,7 +1561,7 @@ void SnakeAi::chaseState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 void SnakeAi::attackState()
@@ -1569,7 +1569,7 @@ void SnakeAi::attackState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 void SnakeAi::eatState()
@@ -1577,7 +1577,7 @@ void SnakeAi::eatState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000074
  */
 void SnakeAi::waitState()
@@ -1590,7 +1590,7 @@ void SnakeAi::waitState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 void SnakeAi::gointoState()
@@ -1598,7 +1598,7 @@ void SnakeAi::gointoState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00001C
  */
 void SnakeAi::underState()
@@ -1607,7 +1607,7 @@ void SnakeAi::underState()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void SnakeAi::update()
 {

@@ -16,26 +16,26 @@
 #include "sysNew.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("Boss");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 BossProp::BossProp()
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Boss::Boss(CreatureProp* props)
     : Creature(props)
@@ -47,7 +47,7 @@ Boss::Boss(CreatureProp* props)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Boss::initBoss(BirthInfo& birthInfo, int objType)
 {
@@ -81,7 +81,7 @@ void Boss::initBoss(BirthInfo& birthInfo, int objType)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Boss::calcFlickPiki()
 {
@@ -92,7 +92,7 @@ void Boss::calcFlickPiki()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Boss::createPellet(immut Vector3f& bossPos, f32 vertSpeed, bool hasUfoPart)
 {
@@ -143,7 +143,7 @@ void Boss::createPellet(immut Vector3f& bossPos, f32 vertSpeed, bool hasUfoPart)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Boss::changeDirection(f32 turnSpeed)
 {
@@ -173,7 +173,7 @@ bool Boss::changeDirection(f32 turnSpeed)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000FC
  */
 void Boss::towardFaceDirection(f32)
@@ -182,7 +182,7 @@ void Boss::towardFaceDirection(f32)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Boss::stopMovement()
 {
@@ -191,7 +191,7 @@ void Boss::stopMovement()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Boss::calcBossDamage()
 {
@@ -201,7 +201,7 @@ void Boss::calcBossDamage()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Boss::makeTargetCreature()
 {
@@ -213,7 +213,7 @@ void Boss::makeTargetCreature()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Boss::makeTargetRandom(f32 maxDistance)
 {
@@ -232,7 +232,7 @@ void Boss::makeTargetRandom(f32 maxDistance)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Boss::chaseNaviTransit()
 {
@@ -268,7 +268,7 @@ bool Boss::chaseNaviTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Boss::chasePikiTransit()
 {
@@ -304,7 +304,7 @@ bool Boss::chasePikiTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Boss::targetLostTransit()
 {
@@ -330,7 +330,7 @@ bool Boss::targetLostTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Boss::inSideWaitRangeTransit()
 {
@@ -342,7 +342,7 @@ bool Boss::inSideWaitRangeTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Boss::outSideChaseRangeTransit()
 {
@@ -354,7 +354,7 @@ bool Boss::outSideChaseRangeTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Boss::inSearchAngle(Creature* target)
 {
@@ -374,7 +374,7 @@ bool Boss::inSearchAngle(Creature* target)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Boss::flickPikiTransit()
 {
@@ -403,7 +403,7 @@ bool Boss::flickPikiTransit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int Boss::getStickPikiCount()
 {
@@ -412,7 +412,7 @@ int Boss::getStickPikiCount()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int Boss::getStickMouthPikiCount()
 {
@@ -430,7 +430,7 @@ int Boss::getStickMouthPikiCount()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int Boss::getStickNoMouthPikiCount()
 {
@@ -448,7 +448,7 @@ int Boss::getStickNoMouthPikiCount()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Boss::killStickToMouthPiki()
 {
@@ -456,7 +456,7 @@ void Boss::killStickToMouthPiki()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000050
  */
 bool Boss::checkInWater(immut Vector3f& pos)
@@ -470,7 +470,7 @@ bool Boss::checkInWater(immut Vector3f& pos)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int Boss::getMapAttribute(immut Vector3f& pos)
 {
@@ -483,7 +483,7 @@ int Boss::getMapAttribute(immut Vector3f& pos)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Boss::insideAndInSearch()
 {
@@ -498,7 +498,7 @@ bool Boss::insideAndInSearch()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000CC
  */
 void Boss::recoveryLife()
@@ -518,7 +518,7 @@ void Boss::recoveryLife()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Boss::updateBoss()
 {
@@ -533,7 +533,7 @@ void Boss::updateBoss()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Boss::refreshViewCulling(Graphics& gfx)
 {
@@ -547,14 +547,14 @@ void Boss::refreshViewCulling(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Boss::drawShape(Graphics&)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Boss::refresh2d(Graphics& gfx)
 {
@@ -565,7 +565,7 @@ void Boss::refresh2d(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Boss::wallCallback(immut Plane& plane, DynCollObject* wallObject)
 {
@@ -575,7 +575,7 @@ void Boss::wallCallback(immut Plane& plane, DynCollObject* wallObject)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool InteractAttack::actBoss(Boss* boss) immut
 {
@@ -605,7 +605,7 @@ bool InteractAttack::actBoss(Boss* boss) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool InteractFlick::actBoss(Boss* boss) immut
 {
@@ -618,7 +618,7 @@ bool InteractFlick::actBoss(Boss* boss) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool InteractBomb::actBoss(Boss* boss) immut
 {
@@ -634,7 +634,7 @@ bool InteractBomb::actBoss(Boss* boss) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool InteractHitEffect::actBoss(Boss* boss) immut
 {
@@ -665,7 +665,7 @@ bool InteractHitEffect::actBoss(Boss* boss) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Boss::stimulate(immut Interaction& interaction)
 {

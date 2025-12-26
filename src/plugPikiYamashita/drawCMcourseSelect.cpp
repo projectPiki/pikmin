@@ -4,13 +4,13 @@
 #include "zen/EffectMgr2D.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("drawCMcourseSelect")
@@ -195,7 +195,7 @@ protected:
 } // namespace zen
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::DrawCMcourseSelect::DrawCMcourseSelect()
 {
@@ -227,7 +227,7 @@ zen::DrawCMcourseSelect::DrawCMcourseSelect()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawCMcourseSelect::start()
 {
@@ -253,7 +253,7 @@ void zen::DrawCMcourseSelect::start()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawCMcourseSelect::setBestScore()
 {
@@ -268,7 +268,7 @@ void zen::DrawCMcourseSelect::setBestScore()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool zen::DrawCMcourseSelect::update(Controller* controller)
 {
@@ -306,7 +306,7 @@ bool zen::DrawCMcourseSelect::update(Controller* controller)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawCMcourseSelect::draw(Graphics& gfx)
 {
@@ -318,7 +318,7 @@ void zen::DrawCMcourseSelect::draw(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::DrawCMcourseSelect::returnStatusFlag zen::DrawCMcourseSelect::getReturnStatusFlag()
 {
@@ -326,7 +326,7 @@ zen::DrawCMcourseSelect::returnStatusFlag zen::DrawCMcourseSelect::getReturnStat
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool zen::DrawCMcourseSelect::modeOperation(Controller* controller)
 {

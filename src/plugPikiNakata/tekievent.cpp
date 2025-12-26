@@ -1,7 +1,7 @@
 #include "teki.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TekiEvent::TekiEvent(int eventType, Teki* teki)
 {
@@ -9,7 +9,7 @@ TekiEvent::TekiEvent(int eventType, Teki* teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 TekiEvent::TekiEvent(int eventType, Teki* teki, Creature* creature)
 {
@@ -17,7 +17,7 @@ TekiEvent::TekiEvent(int eventType, Teki* teki, Creature* creature)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TekiEvent::init(int eventType, Teki* teki, Creature* creature)
 {

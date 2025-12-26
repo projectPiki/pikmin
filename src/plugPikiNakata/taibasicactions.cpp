@@ -5,19 +5,19 @@
 #include "teki.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("taibasicactions")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiActionStateAction::start(Teki& teki)
 {
@@ -25,7 +25,7 @@ void TaiActionStateAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiActionStateAction::act(Teki& teki)
 {
@@ -36,7 +36,7 @@ bool TaiActionStateAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiSetOptionAction::start(Teki& teki)
 {
@@ -48,7 +48,7 @@ void TaiSetOptionAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiPlaySoundAction::start(Teki& teki)
 {
@@ -56,7 +56,7 @@ void TaiPlaySoundAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiStopSoundAction::start(Teki& teki)
 {
@@ -64,7 +64,7 @@ void TaiStopSoundAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiTypeNaviWatchResultOnAction::start(Teki& teki)
 {
@@ -76,7 +76,7 @@ void TaiTypeNaviWatchResultOnAction::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TaiNaviWatchResultOnAction::start(Teki& teki)
 {

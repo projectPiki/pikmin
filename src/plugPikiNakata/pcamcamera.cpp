@@ -14,26 +14,26 @@
 #include <limits.h>
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("pcamcamera")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PcamMotionInfo::PcamMotionInfo()
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00001C
  */
 void PcamMotionInfo::init(f32 dist, f32 angle, f32 fov, f32 watchAdjust, f32 naviWatchWeight, f32 blur)
@@ -47,7 +47,7 @@ void PcamMotionInfo::init(f32 dist, f32 angle, f32 fov, f32 watchAdjust, f32 nav
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 void PcamMotionInfo::println()
@@ -55,7 +55,7 @@ void PcamMotionInfo::println()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PcamControlInfo::PcamControlInfo()
 {
@@ -69,7 +69,7 @@ PcamControlInfo::PcamControlInfo()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PcamControlInfo::init(bool isActive, bool doRotate, bool doAttentionCamera, bool doToggleZoom, bool doAdjustAngle,
                            bool doAdjustAngleDown, bool unused06, f32 azimuthRotIntensity, f32 subStickInput, f32 subStickY)
@@ -87,7 +87,7 @@ void PcamControlInfo::init(bool isActive, bool doRotate, bool doAttentionCamera,
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PcamCamera::PcamCamera(Camera* camera)
     : NCamera(camera)
@@ -101,7 +101,7 @@ PcamCamera::PcamCamera(Camera* camera)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PcamCamera::startCamera(Creature* target)
 {
@@ -109,7 +109,7 @@ void PcamCamera::startCamera(Creature* target)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PcamCamera::startCamera(Creature* target, int zoom, int angle)
 {
@@ -148,7 +148,7 @@ void PcamCamera::startCamera(Creature* target, int zoom, int angle)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PcamCamera::makeCurrentPosition(f32 azimuth)
 {
@@ -166,7 +166,7 @@ void PcamCamera::makeCurrentPosition(f32 azimuth)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PcamCamera::parameterUpdated()
 {
@@ -197,7 +197,7 @@ void PcamCamera::parameterUpdated()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PcamCamera::control(Controller& controller)
 {
@@ -219,7 +219,7 @@ void PcamCamera::control(Controller& controller)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PcamCamera::control(PcamControlInfo& info)
 {
@@ -264,7 +264,7 @@ void PcamCamera::control(PcamControlInfo& info)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PcamCamera::startAttention()
 {
@@ -274,7 +274,7 @@ void PcamCamera::startAttention()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000024
  */
 void PcamCamera::playCameraSound(int soundID)
@@ -284,7 +284,7 @@ void PcamCamera::playCameraSound(int soundID)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PcamCamera::update()
 {
@@ -316,7 +316,7 @@ void PcamCamera::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PcamCamera::makePosture()
 {
@@ -373,7 +373,7 @@ void PcamCamera::makePosture()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PcamCamera::makePolarRadius()
 {
@@ -381,7 +381,7 @@ void PcamCamera::makePolarRadius()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PcamCamera::makeWatchObjectViewpoint(NVector3f& watchPt, NVector3f& viewPt)
 {
@@ -430,7 +430,7 @@ void PcamCamera::makeWatchObjectViewpoint(NVector3f& watchPt, NVector3f& viewPt)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PcamCamera::updateTimers()
 {
@@ -446,7 +446,7 @@ void PcamCamera::updateTimers()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PcamCamera::startMotion(int zoom, int incl)
 {
@@ -456,7 +456,7 @@ void PcamCamera::startMotion(int zoom, int incl)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PcamCamera::startMotion(immut PcamMotionInfo& info)
 {
@@ -467,7 +467,7 @@ void PcamCamera::startMotion(immut PcamMotionInfo& info)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PcamCamera::finishMotion()
 {
@@ -476,7 +476,7 @@ void PcamCamera::finishMotion()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000028
  */
 f32 PcamCamera::getChangingMotionRate()
@@ -486,7 +486,7 @@ f32 PcamCamera::getChangingMotionRate()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 PcamCamera::getGoalDistance()
 {
@@ -494,7 +494,7 @@ f32 PcamCamera::getGoalDistance()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 PcamCamera::getCurrentAngle()
 {
@@ -502,7 +502,7 @@ f32 PcamCamera::getCurrentAngle()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 PcamCamera::getCurrentFov()
 {
@@ -511,7 +511,7 @@ f32 PcamCamera::getCurrentFov()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 PcamCamera::getCurrentHomingSpeed()
 {
@@ -519,7 +519,7 @@ f32 PcamCamera::getCurrentHomingSpeed()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000060
  */
 f32 PcamCamera::getCurrentWatchAdjustment()
@@ -528,7 +528,7 @@ f32 PcamCamera::getCurrentWatchAdjustment()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000060
  */
 f32 PcamCamera::getCurrentNaviWatchWeight()
@@ -537,7 +537,7 @@ f32 PcamCamera::getCurrentNaviWatchWeight()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 PcamCamera::getCurrentBlur()
 {
@@ -545,7 +545,7 @@ f32 PcamCamera::getCurrentBlur()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 PcamCamera::calcCurrentDistance()
 {
@@ -553,7 +553,7 @@ f32 PcamCamera::calcCurrentDistance()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000074
  */
 f32 PcamCamera::calcCurrentDirection()
@@ -564,7 +564,7 @@ f32 PcamCamera::calcCurrentDirection()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000074
  */
 f32 PcamCamera::calcTargetDistance()
@@ -574,7 +574,7 @@ f32 PcamCamera::calcTargetDistance()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00000C
  */
 f32 PcamCamera::getTargetDirection()
@@ -583,7 +583,7 @@ f32 PcamCamera::getTargetDirection()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 PcamCamera::getCursorDirection()
 {
@@ -597,7 +597,7 @@ f32 PcamCamera::getCursorDirection()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PcamCamera::outputTargetPosition(NVector3f& outPosition)
 {
@@ -605,7 +605,7 @@ void PcamCamera::outputTargetPosition(NVector3f& outPosition)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PcamCamera::outputCursorPosition(NVector3f& outPosition)
 {
@@ -618,7 +618,7 @@ void PcamCamera::outputCursorPosition(NVector3f& outPosition)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PcamCamera::outputFormationWatchpoint(Navi* navi, NVector3f& outWatchPt)
 {
@@ -647,7 +647,7 @@ void PcamCamera::outputFormationWatchpoint(Navi* navi, NVector3f& outWatchPt)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PcamCamera::outputTargetWatchpoint(NVector3f& outWatchPt)
 {
@@ -662,7 +662,7 @@ void PcamCamera::outputTargetWatchpoint(NVector3f& outWatchPt)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00006C
  */
 void PcamCamera::makePolar()
@@ -673,7 +673,7 @@ void PcamCamera::makePolar()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000148
  */
 void PcamCamera::printInfo(Graphics& gfx, Font* font)

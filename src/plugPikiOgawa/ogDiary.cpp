@@ -12,13 +12,13 @@
 #include "zen/ogSub.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("OgDiarySection")
@@ -31,7 +31,7 @@ static immut char** bloFiles_Diary[2]         = { bloFile_Diary_Table, nullptr }
 }; // namespace zen
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::ogScrDiaryMgr::ogScrDiaryMgr()
 {
@@ -57,7 +57,7 @@ zen::ogScrDiaryMgr::ogScrDiaryMgr()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::ogScrDiaryMgr::DiaryStatus zen::ogScrDiaryMgr::update(Controller* input)
 {
@@ -86,7 +86,7 @@ zen::ogScrDiaryMgr::DiaryStatus zen::ogScrDiaryMgr::update(Controller* input)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrDiaryMgr::draw(Graphics& gfx)
 {
@@ -109,7 +109,7 @@ void zen::ogScrDiaryMgr::draw(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrDiaryMgr::start(s16 a1, s16 day)
 {
@@ -149,7 +149,7 @@ void zen::ogScrDiaryMgr::start(s16 a1, s16 day)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 void zen::ogScrDiaryMgr::setDiarySpecialNumber(s16 day)
@@ -174,7 +174,7 @@ void zen::ogScrDiaryMgr::setDiarySpecialNumber(s16 day)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrDiaryMgr::typePage()
 {
@@ -185,7 +185,7 @@ void zen::ogScrDiaryMgr::typePage()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool zen::ogScrDiaryMgr::nextPage()
 {
@@ -201,7 +201,7 @@ bool zen::ogScrDiaryMgr::nextPage()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrDiaryMgr::backPage()
 {
@@ -212,7 +212,7 @@ void zen::ogScrDiaryMgr::backPage()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrDiaryMgr::exit()
 {
@@ -220,7 +220,7 @@ void zen::ogScrDiaryMgr::exit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00002C
  */
 void zen::ogScrDiaryMgr::setCursorXY(P2DTextBox* textBox)
@@ -229,7 +229,7 @@ void zen::ogScrDiaryMgr::setCursorXY(P2DTextBox* textBox)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000108
  */
 void zen::ogScrDiaryMgr::updateDiary(Controller* input)
@@ -256,7 +256,7 @@ void zen::ogScrDiaryMgr::updateDiary(Controller* input)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::ogDrawDiary::ogDrawDiary()
 {
@@ -275,7 +275,7 @@ zen::ogDrawDiary::ogDrawDiary()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000014
  */
 void zen::ogDrawDiary::start()
@@ -285,7 +285,7 @@ void zen::ogDrawDiary::start()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000B8
  */
 void zen::ogDrawDiary::setOffset()
@@ -296,7 +296,7 @@ void zen::ogDrawDiary::setOffset()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogDrawDiary::open(f32 a1, f32 a2, s16 day)
 {
@@ -327,7 +327,7 @@ void zen::ogDrawDiary::open(f32 a1, f32 a2, s16 day)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::ogDrawDiary::DiaryStatus zen::ogDrawDiary::update(Controller* input)
 {
@@ -381,7 +381,7 @@ zen::ogDrawDiary::DiaryStatus zen::ogDrawDiary::update(Controller* input)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0001A8
  */
 void zen::ogDrawDiary::draw(Graphics& gfx)
@@ -394,7 +394,7 @@ void zen::ogDrawDiary::draw(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::ogDrawSelectDiary::ogDrawSelectDiary()
 {
@@ -438,7 +438,7 @@ zen::ogDrawSelectDiary::ogDrawSelectDiary()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogDrawSelectDiary::start()
 {
@@ -479,7 +479,7 @@ void zen::ogDrawSelectDiary::start()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogDrawSelectDiary::setCursorAlpha()
 {
@@ -494,7 +494,7 @@ void zen::ogDrawSelectDiary::setCursorAlpha()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool zen::ogDrawSelectDiary::MoveCursor()
 {
@@ -516,7 +516,7 @@ bool zen::ogDrawSelectDiary::MoveCursor()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::ogDrawSelectDiary::SelectDiaryStatus zen::ogDrawSelectDiary::update(Controller* input)
 {
@@ -649,7 +649,7 @@ zen::ogDrawSelectDiary::SelectDiaryStatus zen::ogDrawSelectDiary::update(Control
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogDrawSelectDiary::draw(Graphics& gfx)
 {

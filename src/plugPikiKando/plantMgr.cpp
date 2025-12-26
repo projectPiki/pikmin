@@ -11,13 +11,13 @@
 #include "sysNew.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("plantMgr");
@@ -25,7 +25,7 @@ DEFINE_PRINT("plantMgr");
 PlantMgr* plantMgr;
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Plant::Plant()
     : AICreature(nullptr)
@@ -37,7 +37,7 @@ Plant::Plant()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Plant::startMotion(int motionID)
 {
@@ -45,7 +45,7 @@ void Plant::startMotion(int motionID)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000090
  */
 void Plant::reset(int plantType)
@@ -61,7 +61,7 @@ void Plant::reset(int plantType)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Plant::startAI(int)
 {
@@ -79,7 +79,7 @@ void Plant::startAI(int)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Plant::doAnimation()
 {
@@ -87,7 +87,7 @@ void Plant::doAnimation()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Plant::update()
 {
@@ -104,7 +104,7 @@ void Plant::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Plant::refresh(Graphics& gfx)
 {
@@ -143,14 +143,14 @@ void Plant::refresh(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Plant::doKill()
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000170
  */
 PlantAI::PlantAI()
@@ -164,7 +164,7 @@ PlantAI::PlantAI()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool PlantAI::OpponentMove::satisfy(AICreature* plant)
 {
@@ -178,7 +178,7 @@ bool PlantAI::OpponentMove::satisfy(AICreature* plant)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PlantAI::WaitInit::act(AICreature* plant)
 {
@@ -194,7 +194,7 @@ void PlantAI::WaitInit::act(AICreature* plant)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PlantAI::TouchInit::act(AICreature* plant)
 {
@@ -209,7 +209,7 @@ void PlantAI::TouchInit::act(AICreature* plant)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PlantMgr::PlantMgr(MapMgr* mgr)
 {
@@ -244,7 +244,7 @@ static immut char* plantNames[PLANT_COUNT] = {
 };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000018
  */
 immut char* PlantMgr::getPlantName(int plantType)
@@ -253,7 +253,7 @@ immut char* PlantMgr::getPlantName(int plantType)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PlantMgr::initialise()
 {
@@ -277,7 +277,7 @@ void PlantMgr::initialise()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Creature* PlantMgr::createObject()
 {
@@ -285,7 +285,7 @@ Creature* PlantMgr::createObject()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool PlantMgr::usePlantType(int type)
 {
@@ -300,7 +300,7 @@ bool PlantMgr::usePlantType(int type)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 void PlantMgr::addUseList(int plantType)
@@ -314,7 +314,7 @@ void PlantMgr::addUseList(int plantType)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000150
  */
 Creature* PlantMgr::birth()
@@ -327,7 +327,7 @@ Creature* PlantMgr::birth()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PlantShapeObject::PlantShapeObject(Shape* shape, immut char* plantName, immut char* fileName)
 {
@@ -346,7 +346,7 @@ PlantShapeObject::PlantShapeObject(Shape* shape, immut char* plantName, immut ch
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000068
  */
 GenObjectPlant::GenObjectPlant()
@@ -356,7 +356,7 @@ GenObjectPlant::GenObjectPlant()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 static GenObject* makeObjectPlant()
 {
@@ -364,7 +364,7 @@ static GenObject* makeObjectPlant()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GenObjectPlant::initialise()
 {
@@ -372,7 +372,7 @@ void GenObjectPlant::initialise()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GenObjectPlant::doRead(RandomAccessStream& input)
 {
@@ -380,7 +380,7 @@ void GenObjectPlant::doRead(RandomAccessStream& input)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GenObjectPlant::updateUseList(Generator* gen, int)
 {
@@ -388,7 +388,7 @@ void GenObjectPlant::updateUseList(Generator* gen, int)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Creature* GenObjectPlant::birth(BirthInfo& info)
 {
@@ -411,7 +411,7 @@ Creature* GenObjectPlant::birth(BirthInfo& info)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GenObjectPlant::render(Graphics&, Generator*)
 {

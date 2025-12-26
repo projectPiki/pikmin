@@ -5,19 +5,19 @@
 #include "system.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("baseApp");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 BaseApp::BaseApp()
 {
@@ -30,7 +30,7 @@ BaseApp::BaseApp()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000008
  */
 int BaseApp::idleupdate()
@@ -63,7 +63,7 @@ int BaseApp::idleupdate()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 void BaseApp::startAgeServer()
@@ -88,7 +88,7 @@ void BaseApp::startAgeServer()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 void BaseApp::stopAgeServer()
@@ -104,7 +104,7 @@ void BaseApp::stopAgeServer()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BaseApp::softReset()
 {
@@ -115,7 +115,7 @@ void BaseApp::softReset()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 BaseApp::~BaseApp()
 {

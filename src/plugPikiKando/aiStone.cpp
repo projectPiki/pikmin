@@ -5,19 +5,19 @@
 #include "WeedsItem.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT(nullptr);
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 ActStone::ActStone(Piki* piki)
     : Action(piki, true)
@@ -25,7 +25,7 @@ ActStone::ActStone(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActStone::init(Creature* creature)
 {
@@ -39,7 +39,7 @@ void ActStone::init(Creature* creature)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActStone::exec()
 {
@@ -62,7 +62,7 @@ int ActStone::exec()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActStone::cleanup()
 {
@@ -74,7 +74,7 @@ void ActStone::cleanup()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActStone::initApproach()
 {
@@ -90,7 +90,7 @@ void ActStone::initApproach()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActStone::exeApproach()
 {
@@ -113,7 +113,7 @@ int ActStone::exeApproach()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActStone::initAdjust()
 {
@@ -121,7 +121,7 @@ void ActStone::initAdjust()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActStone::exeAdjust()
 {
@@ -146,7 +146,7 @@ int ActStone::exeAdjust()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActStone::initAttack()
 {
@@ -157,7 +157,7 @@ void ActStone::initAttack()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActStone::exeAttack()
 {
@@ -180,7 +180,7 @@ int ActStone::exeAttack()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActStone::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {

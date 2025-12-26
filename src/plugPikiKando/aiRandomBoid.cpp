@@ -2,19 +2,19 @@
 #include "PikiAI.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("aiRandomBoid")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActRandomBoid::AnimListener::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
@@ -55,7 +55,7 @@ void ActRandomBoid::AnimListener::animationKeyUpdated(immut PaniAnimKeyEvent& ev
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 ActRandomBoid::ActRandomBoid(Piki* piki)
     : Action(piki, true)
@@ -64,14 +64,14 @@ ActRandomBoid::ActRandomBoid(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActRandomBoid::Initialiser::initialise(Action*)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActRandomBoid::init(Creature*)
 {
@@ -85,14 +85,14 @@ void ActRandomBoid::init(Creature*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActRandomBoid::cleanup()
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActRandomBoid::exec()
 {
@@ -172,7 +172,7 @@ static const char* stateName[] = {
 };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActRandomBoid::getInfo(char* buf)
 {

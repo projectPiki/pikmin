@@ -7,19 +7,19 @@
 System* NSystem::system;
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("nlibsystem")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 NNode::NNode(int size)
 {
@@ -31,7 +31,7 @@ NNode::NNode(int size)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NNode::setChild(int idx, NNode* child)
 {
@@ -43,7 +43,7 @@ void NNode::setChild(int idx, NNode* child)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NNode::addChild(NNode* child)
 {
@@ -59,7 +59,7 @@ void NNode::addChild(NNode* child)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NNode::addChild(int idx, NNode* child)
 {
@@ -75,7 +75,7 @@ void NNode::addChild(int idx, NNode* child)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 NNode* NNode::getChild(int idx)
 {
@@ -88,7 +88,7 @@ NNode* NNode::getChild(int idx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NNode::removeChild(NNode* node)
 {
@@ -101,7 +101,7 @@ void NNode::removeChild(NNode* node)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NNode::removeChild(int idx)
 {
@@ -114,7 +114,7 @@ void NNode::removeChild(int idx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NNode::removeAllChildren()
 {
@@ -127,7 +127,7 @@ void NNode::removeAllChildren()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000010
  */
 NListNode::NListNode()
@@ -136,7 +136,7 @@ NListNode::NListNode()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00003C
  */
 void NListNode::addChild(NListNode*)
@@ -145,7 +145,7 @@ void NListNode::addChild(NListNode*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000050
  */
 void NListNode::removeChild(NListNode*)
@@ -154,7 +154,7 @@ void NListNode::removeChild(NListNode*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00001C
  */
 int NListNode::getChildCount()
@@ -163,7 +163,7 @@ int NListNode::getChildCount()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000048
  */
 void NListNode::addChild(int, NListNode*)
@@ -172,7 +172,7 @@ void NListNode::addChild(int, NListNode*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 void NListNode::toString()
@@ -181,7 +181,7 @@ void NListNode::toString()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00000C
  */
 NList::NList()
@@ -190,7 +190,7 @@ NList::NList()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000024
  */
 void NList::addList(NList*)
@@ -199,7 +199,7 @@ void NList::addList(NList*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 void NList::toString()
@@ -208,7 +208,7 @@ void NList::toString()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000CC
  */
 NHeap::NHeap(int size)
@@ -221,7 +221,7 @@ NHeap::NHeap(int size)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NHeap::release()
 {
@@ -233,7 +233,7 @@ void NHeap::release()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NSystem::initSystem(System* sys)
 {
@@ -241,7 +241,7 @@ void NSystem::initSystem(System* sys)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int NSystem::randomInt(int max)
 {
@@ -253,7 +253,7 @@ int NSystem::randomInt(int max)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 u32 NSystem::getFreeHeap()
 {

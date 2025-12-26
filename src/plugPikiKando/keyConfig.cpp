@@ -6,19 +6,19 @@
 KeyConfig* KeyConfig::_instance;
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("keyConfig")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KeyConfig::createInstance()
 {
@@ -28,7 +28,7 @@ void KeyConfig::createInstance()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 KeyConfig::KeyConfig()
 {
@@ -43,7 +43,7 @@ KeyConfig::KeyConfig()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KeyConfig::read(RandomAccessStream& input)
 {
@@ -56,7 +56,7 @@ void KeyConfig::read(RandomAccessStream& input)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void KeyConfig::Key::read(RandomAccessStream& input)
 {

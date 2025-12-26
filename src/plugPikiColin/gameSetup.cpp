@@ -15,13 +15,13 @@
 #include "system.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("GameSetup");
@@ -85,7 +85,7 @@ static immut char* arambundleList[][2] = {
 };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GameSetupSection::preCacheShapes()
 {
@@ -257,7 +257,7 @@ void GameSetupSection::preCacheShapes()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 GameSetupSection::GameSetupSection()
 {
@@ -305,7 +305,7 @@ GameSetupSection::GameSetupSection()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GameSetupSection::update()
 {

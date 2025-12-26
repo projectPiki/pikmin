@@ -5,19 +5,19 @@
 #include "SimpleAI.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("matoItem")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 MizuItem::MizuItem(int objType, CreatureProp* props, ItemShapeObject* shape, SimpleAI* ai)
     : ItemCreature(objType, props, nullptr)
@@ -27,7 +27,7 @@ MizuItem::MizuItem(int objType, CreatureProp* props, ItemShapeObject* shape, Sim
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MizuItem::update()
 {
@@ -41,7 +41,7 @@ void MizuItem::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool MizuItem::needFlick(Creature*)
 {
@@ -49,7 +49,7 @@ bool MizuItem::needFlick(Creature*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MizuItem::startAI(int)
 {
@@ -70,7 +70,7 @@ void MizuItem::startAI(int)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool MizuItem::isAlive()
 {

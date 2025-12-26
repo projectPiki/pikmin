@@ -6,26 +6,26 @@
 #include "Shape.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("creatureCollPart")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void CreatureCollPart::touchCallback(immut Plane&, immut Vector3f&, immut Vector3f&)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void CreaturePlatMgr::init(Creature* creature, MapMgr* map, Shape* shape)
 {
@@ -43,7 +43,7 @@ void CreaturePlatMgr::init(Creature* creature, MapMgr* map, Shape* shape)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void CreaturePlatMgr::release()
 {
@@ -56,7 +56,7 @@ void CreaturePlatMgr::release()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void CreaturePlatMgr::update(Graphics& gfx)
 {

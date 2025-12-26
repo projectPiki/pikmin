@@ -10,19 +10,19 @@ int CourseDebug::noCarryover;
 int CourseDebug::pelletDebug;
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("courseDebug");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00011C
  */
 GenObjectDebug::GenObjectDebug()
@@ -35,7 +35,7 @@ GenObjectDebug::GenObjectDebug()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 static GenObject* makeObjectDebug()
 {
@@ -43,7 +43,7 @@ static GenObject* makeObjectDebug()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GenObjectDebug::initialise()
 {
@@ -51,14 +51,14 @@ void GenObjectDebug::initialise()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GenObjectDebug::doRead(RandomAccessStream&)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Creature* GenObjectDebug::birth(BirthInfo&)
 {

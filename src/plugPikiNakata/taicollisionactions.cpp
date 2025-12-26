@@ -4,19 +4,19 @@
 #include "teki.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("taicollisionactions")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiBounceAction::actByEvent(immut TekiEvent& event)
 {
@@ -24,7 +24,7 @@ bool TaiBounceAction::actByEvent(immut TekiEvent& event)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiGroundCollisionAction::actByEvent(immut TekiEvent& event)
 {
@@ -32,7 +32,7 @@ bool TaiGroundCollisionAction::actByEvent(immut TekiEvent& event)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiWallCollisionAction::actByEvent(immut TekiEvent& event)
 {
@@ -41,7 +41,7 @@ bool TaiWallCollisionAction::actByEvent(immut TekiEvent& event)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiCreatureCollisionAction::actByEvent(immut TekiEvent& event)
 {
@@ -49,7 +49,7 @@ bool TaiCreatureCollisionAction::actByEvent(immut TekiEvent& event)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiPikiCollisionAction::actByEvent(immut TekiEvent& event)
 {
@@ -66,7 +66,7 @@ bool TaiPikiCollisionAction::actByEvent(immut TekiEvent& event)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiNaviCollisionAction::actByEvent(immut TekiEvent& event)
 {
@@ -83,7 +83,7 @@ bool TaiNaviCollisionAction::actByEvent(immut TekiEvent& event)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiTekiTypeCollisionAction::actByEvent(immut TekiEvent& event)
 {

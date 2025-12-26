@@ -13,13 +13,13 @@
 #include "zen/DrawProgre.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT(nullptr);
@@ -119,7 +119,7 @@ struct NinLogoSetupSection : public Node {
 };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NinLogoSection::init()
 {

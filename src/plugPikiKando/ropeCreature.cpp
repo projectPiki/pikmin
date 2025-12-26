@@ -2,19 +2,19 @@
 #include "DebugLog.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("ropeCreature");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 RopeCreature::RopeCreature(CreatureProp* prop)
     : Creature(prop)
@@ -24,7 +24,7 @@ RopeCreature::RopeCreature(CreatureProp* prop)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void RopeCreature::setRope(Creature* obj)
 {
@@ -40,7 +40,7 @@ void RopeCreature::setRope(Creature* obj)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void RopeCreature::update()
 {
@@ -50,7 +50,7 @@ void RopeCreature::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Vector3f RopeCreature::getRopePos(f32 size)
 {
@@ -60,14 +60,14 @@ Vector3f RopeCreature::getRopePos(f32 size)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void RopeCreature::refresh(Graphics&)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool RopeCreature::needShadow()
 {

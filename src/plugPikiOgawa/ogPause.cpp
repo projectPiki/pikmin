@@ -9,19 +9,19 @@
 #include "zen/DrawMenu.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("OgPauseSection")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::ogScrPauseMgr::ogScrPauseMgr()
 {
@@ -76,7 +76,7 @@ zen::ogScrPauseMgr::ogScrPauseMgr()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrPauseMgr::start(bool isChallengeMode)
 {
@@ -97,7 +97,7 @@ void zen::ogScrPauseMgr::start(bool isChallengeMode)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 zen::ogScrPauseMgr::PauseStatus zen::ogScrPauseMgr::update(Controller* controller)
 {
@@ -213,7 +213,7 @@ zen::ogScrPauseMgr::PauseStatus zen::ogScrPauseMgr::update(Controller* controlle
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::ogScrPauseMgr::draw(Graphics& gfx)
 {

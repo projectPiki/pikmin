@@ -4,19 +4,19 @@
 #include "nlib/Math.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT(nullptr);
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 NCamera::NCamera(Camera* cam)
 {
@@ -27,7 +27,7 @@ NCamera::NCamera(Camera* cam)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NCamera::makeMatrix()
 {
@@ -48,7 +48,7 @@ void NCamera::makeMatrix()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NCamera::makeCamera()
 {

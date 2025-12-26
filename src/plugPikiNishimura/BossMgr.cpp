@@ -19,13 +19,13 @@
 #include "timers.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("BossMgr");
@@ -33,7 +33,7 @@ DEFINE_PRINT("BossMgr");
 BossMgr* bossMgr;
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Creature* BossMgr::getCreature(int bossID)
 {
@@ -54,7 +54,7 @@ Creature* BossMgr::getCreature(int bossID)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int BossMgr::getFirst()
 {
@@ -62,7 +62,7 @@ int BossMgr::getFirst()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int BossMgr::getNext(int idx)
 {
@@ -70,7 +70,7 @@ int BossMgr::getNext(int idx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool BossMgr::isDone(int idx)
 {
@@ -82,7 +82,7 @@ bool BossMgr::isDone(int idx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int BossMgr::getSize()
 {
@@ -95,7 +95,7 @@ int BossMgr::getSize()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int BossMgr::getMax()
 {
@@ -108,7 +108,7 @@ int BossMgr::getMax()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 BossMgr::BossMgr()
 {
@@ -134,7 +134,7 @@ BossMgr::BossMgr()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BossMgr::addUseCount(int bossID, int count)
 {
@@ -142,7 +142,7 @@ void BossMgr::addUseCount(int bossID, int count)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000028
  */
 bool BossMgr::useBoss(int bossID)
@@ -151,7 +151,7 @@ bool BossMgr::useBoss(int bossID)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000010
  */
 int BossMgr::getUseCount(int bossID)
@@ -160,7 +160,7 @@ int BossMgr::getUseCount(int bossID)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BossMgr::constructBoss()
 {
@@ -355,7 +355,7 @@ void BossMgr::constructBoss()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000040
  */
 void BossMgr::animatorInit(Boss* boss)
@@ -366,7 +366,7 @@ void BossMgr::animatorInit(Boss* boss)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000C8
  */
 void BossMgr::initSpider(int count)
@@ -379,7 +379,7 @@ void BossMgr::initSpider(int count)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000CC
  */
 void BossMgr::initSnake(int count)
@@ -392,7 +392,7 @@ void BossMgr::initSnake(int count)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000CC
  */
 void BossMgr::initBoxSnake(int count)
@@ -405,7 +405,7 @@ void BossMgr::initBoxSnake(int count)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BossMgr::initSlime(int count)
 {
@@ -425,7 +425,7 @@ void BossMgr::initSlime(int count)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000CC
  */
 void BossMgr::initKing(int count)
@@ -438,7 +438,7 @@ void BossMgr::initKing(int count)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000CC
  */
 void BossMgr::initKogane(int count)
@@ -451,7 +451,7 @@ void BossMgr::initKogane(int count)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000CC
  */
 void BossMgr::initPom(int count)
@@ -464,7 +464,7 @@ void BossMgr::initPom(int count)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000CC
  */
 void BossMgr::initKingBack(int count)
@@ -477,7 +477,7 @@ void BossMgr::initKingBack(int count)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000CC
  */
 void BossMgr::initMizu(int count)
@@ -490,7 +490,7 @@ void BossMgr::initMizu(int count)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000CC
  */
 void BossMgr::initGeyzer(int count)
@@ -503,7 +503,7 @@ void BossMgr::initGeyzer(int count)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000094
  */
 void BossMgr::setBossParam(Boss* boss, GenObjectBoss* genBoss)
@@ -526,7 +526,7 @@ void BossMgr::setBossParam(Boss* boss, GenObjectBoss* genBoss)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000E4
  */
 Boss* BossMgr::createBoss(int bossID)
@@ -547,7 +547,7 @@ Boss* BossMgr::createBoss(int bossID)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BossMgr::init(int bossID, int count)
 {
@@ -592,7 +592,7 @@ void BossMgr::init(int bossID, int count)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Creature* BossMgr::create(int genBossID, BirthInfo& birthInfo, GenObjectBoss* genBoss)
 {
@@ -709,7 +709,7 @@ Creature* BossMgr::create(int genBossID, BirthInfo& birthInfo, GenObjectBoss* ge
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BossMgr::kill(Creature* target)
 {
@@ -729,7 +729,7 @@ void BossMgr::kill(Creature* target)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BossMgr::killAll()
 {
@@ -754,7 +754,7 @@ void BossMgr::killAll()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BossMgr::update()
 {
@@ -790,7 +790,7 @@ void BossMgr::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BossMgr::refresh(Graphics& gfx)
 {
@@ -825,7 +825,7 @@ void BossMgr::refresh(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BossMgr::refresh2d(Graphics& gfx)
 {
@@ -840,7 +840,7 @@ void BossMgr::refresh2d(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void BossMgr::finalSetup()
 {
@@ -848,7 +848,7 @@ void BossMgr::finalSetup()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 BossShapeObject* BossMgr::getBossShapeObject(int bossID)
 {

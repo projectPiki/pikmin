@@ -3,19 +3,19 @@
 #include "PikiMgr.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("aiGuard")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 ActGuard::ActGuard(Piki* piki)
     : Action(piki, true)
@@ -28,7 +28,7 @@ ActGuard::ActGuard(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActGuard::init(Creature*)
 {
@@ -47,7 +47,7 @@ void ActGuard::init(Creature*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActGuard::cleanup()
 {
@@ -70,7 +70,7 @@ void ActGuard::cleanup()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActGuard::dump()
 {
@@ -86,7 +86,7 @@ void ActGuard::dump()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActGuard::exec()
 {
@@ -169,7 +169,7 @@ int ActGuard::exec()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Piki* ActGuard::findFriend()
 {
@@ -199,7 +199,7 @@ Piki* ActGuard::findFriend()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActGuard::checkLoop(Piki* piki)
 {
@@ -229,7 +229,7 @@ int ActGuard::checkLoop(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Piki* ActGuard::findFriend(int side)
 {
@@ -270,7 +270,7 @@ Piki* ActGuard::findFriend(int side)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActGuard::setGoal()
 {
@@ -300,7 +300,7 @@ void ActGuard::setGoal()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Piki* ActGuard::getLeft(Piki* piki)
 {
@@ -313,7 +313,7 @@ Piki* ActGuard::getLeft(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Piki* ActGuard::getRight(Piki* piki)
 {
@@ -326,7 +326,7 @@ Piki* ActGuard::getRight(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool ActGuard::setLeft()
 {
@@ -347,7 +347,7 @@ bool ActGuard::setLeft()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool ActGuard::setRight()
 {

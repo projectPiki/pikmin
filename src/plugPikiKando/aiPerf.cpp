@@ -48,13 +48,13 @@ int AIPerf::outsideViewCnt;
 int AIPerf::drawshapeCullCnt;
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("aiPerf");
@@ -62,7 +62,7 @@ DEFINE_PRINT("aiPerf");
 const char* gridStrings[] = { "[grid off]", "[grid xyz]", "[grid xz]" };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void AIPerf::clearCounts()
 {
@@ -78,7 +78,7 @@ void AIPerf::clearCounts()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void AIPerf::addMenu(Menu* menu)
 {
@@ -156,7 +156,7 @@ void AIPerf::addMenu(Menu* menu)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void AIPerf::toggleMoveType(Menu& menu)
 {
@@ -167,7 +167,7 @@ void AIPerf::toggleMoveType(Menu& menu)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void AIPerf::toggleGeneratorMode(Menu& menu)
 {
@@ -176,7 +176,7 @@ void AIPerf::toggleGeneratorMode(Menu& menu)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void AIPerf::toggleBridge(Menu& menu)
 {
@@ -185,7 +185,7 @@ void AIPerf::toggleBridge(Menu& menu)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void AIPerf::toggleShowRoute(Menu& menu)
 {
@@ -194,7 +194,7 @@ void AIPerf::toggleShowRoute(Menu& menu)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000078
  */
 void AIPerf::toggleAIGrid(Menu& menu)
@@ -204,7 +204,7 @@ void AIPerf::toggleAIGrid(Menu& menu)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void AIPerf::toggleKando(Menu& menu)
 {
@@ -213,7 +213,7 @@ void AIPerf::toggleKando(Menu& menu)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void AIPerf::toggleLOD(Menu& menu)
 {
@@ -222,7 +222,7 @@ void AIPerf::toggleLOD(Menu& menu)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void AIPerf::toggleColls(Menu& menu)
 {
@@ -231,7 +231,7 @@ void AIPerf::toggleColls(Menu& menu)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void AIPerf::toggleASync(Menu& menu)
 {
@@ -240,7 +240,7 @@ void AIPerf::toggleASync(Menu& menu)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void AIPerf::toggleInsQuick(Menu& menu)
 {
@@ -249,7 +249,7 @@ void AIPerf::toggleInsQuick(Menu& menu)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void AIPerf::toggleSoundDebug(Menu& menu)
 {
@@ -258,7 +258,7 @@ void AIPerf::toggleSoundDebug(Menu& menu)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000078
  */
 void AIPerf::toggleUpdateMgr(Menu& menu)
@@ -268,7 +268,7 @@ void AIPerf::toggleUpdateMgr(Menu& menu)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000078
  */
 void AIPerf::togglePikiMabiki(Menu& menu)
@@ -278,7 +278,7 @@ void AIPerf::togglePikiMabiki(Menu& menu)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000078
  */
 void AIPerf::togglePsOptimise(Menu& menu)
@@ -288,7 +288,7 @@ void AIPerf::togglePsOptimise(Menu& menu)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void AIPerf::toggleCollSort(Menu& menu)
 {
@@ -297,7 +297,7 @@ void AIPerf::toggleCollSort(Menu& menu)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000078
  */
 void AIPerf::toggleIteratorCull(Menu& menu)
@@ -307,7 +307,7 @@ void AIPerf::toggleIteratorCull(Menu& menu)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000070
  */
 void AIPerf::toggleUseGrid(Menu& menu)
@@ -317,7 +317,7 @@ void AIPerf::toggleUseGrid(Menu& menu)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00004C
  */
 void AIPerf::incGridShift(Menu& menu)
@@ -330,7 +330,7 @@ void AIPerf::incGridShift(Menu& menu)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00004C
  */
 void AIPerf::decGridShift(Menu& menu)
@@ -343,7 +343,7 @@ void AIPerf::decGridShift(Menu& menu)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void AIPerf::incOptLevel(Menu& menu)
 {
@@ -355,7 +355,7 @@ void AIPerf::incOptLevel(Menu& menu)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void AIPerf::decOptLevel(Menu& menu)
 {
@@ -400,7 +400,7 @@ u32 ufoParts[] = {
 };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void AIPerf::incUfoLevel(Menu& menu)
 {
@@ -439,7 +439,7 @@ void AIPerf::incUfoLevel(Menu& menu)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void AIPerf::decUfoLevel(Menu& menu)
 {
@@ -447,7 +447,7 @@ void AIPerf::decUfoLevel(Menu& menu)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000078
  */
 void AIPerf::toggleUpdateSearchBuffer(Menu& menu)
@@ -457,7 +457,7 @@ void AIPerf::toggleUpdateSearchBuffer(Menu& menu)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void AIPerf::collectPikis(Menu& menu)
 {
@@ -497,7 +497,7 @@ void AIPerf::fullfillPiki(Menu& menu)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void AIPerf::flowerPiki(Menu& menu)
 {
@@ -510,7 +510,7 @@ void AIPerf::flowerPiki(Menu& menu)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void AIPerf::breakSluice(Menu& menu)
 {

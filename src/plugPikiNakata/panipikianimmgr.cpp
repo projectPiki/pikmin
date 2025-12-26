@@ -4,19 +4,19 @@
 PaniMotionTable* PaniPikiAnimMgr::motionTable;
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("TODO: Replace")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000034
  */
 PaniMotionTable* PaniPikiAnimMgr::getMotionTable()
@@ -25,14 +25,14 @@ PaniMotionTable* PaniPikiAnimMgr::getMotionTable()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PaniPikiAnimMgr::PaniPikiAnimMgr()
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PaniPikiAnimMgr::init(AnimMgr* mgr, AnimContext* context1, AnimContext* context2, PaniMotionTable* table)
 {
@@ -48,7 +48,7 @@ void PaniPikiAnimMgr::init(AnimMgr* mgr, AnimContext* context1, AnimContext* con
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PaniPikiAnimMgr::changeContext(AnimContext* context1, AnimContext* context2)
 {
@@ -57,7 +57,7 @@ void PaniPikiAnimMgr::changeContext(AnimContext* context1, AnimContext* context2
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PaniPikiAnimMgr::startMotion(immut PaniMotionInfo* motion1, immut PaniMotionInfo* motion2)
 {
@@ -70,7 +70,7 @@ void PaniPikiAnimMgr::startMotion(immut PaniMotionInfo* motion1, immut PaniMotio
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PaniPikiAnimMgr::finishMotion(immut PaniMotionInfo* motion1, immut PaniMotionInfo* motion2)
 {
@@ -83,7 +83,7 @@ void PaniPikiAnimMgr::finishMotion(immut PaniMotionInfo* motion1, immut PaniMoti
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PaniPikiAnimMgr::startMotion(immut PaniMotionInfo& motion1, immut PaniMotionInfo& motion2)
 {
@@ -91,7 +91,7 @@ void PaniPikiAnimMgr::startMotion(immut PaniMotionInfo& motion1, immut PaniMotio
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PaniPikiAnimMgr::finishMotion(PaniAnimKeyListener* listener)
 {
@@ -99,7 +99,7 @@ void PaniPikiAnimMgr::finishMotion(PaniAnimKeyListener* listener)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PaniPikiAnimMgr::updateAnimation(f32 speed)
 {
@@ -126,7 +126,7 @@ void PaniPikiAnimMgr::updateAnimation(f32 speed)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PaniPikiAnimMgr::updateContext()
 {

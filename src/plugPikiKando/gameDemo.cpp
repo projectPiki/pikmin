@@ -11,19 +11,19 @@
 DemoParms* demoParms;
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(12)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("demoFlag")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000A4
  */
 DemoParms::DemoParms()
@@ -32,7 +32,7 @@ DemoParms::DemoParms()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000120
  */
 DemoParms::Parms::Parms()
@@ -45,7 +45,7 @@ DemoParms::Parms::Parms()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 DemoFlags::DemoFlags()
 {
@@ -110,7 +110,7 @@ DemoFlags::DemoFlags()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DemoFlags::initGame()
 {
@@ -126,7 +126,7 @@ void DemoFlags::initGame()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DemoFlags::initCourse()
 {
@@ -135,7 +135,7 @@ void DemoFlags::initCourse()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DemoFlags::update()
 {
@@ -172,7 +172,7 @@ void DemoFlags::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DemoFlags::saveCard(RandomAccessStream& data)
 {
@@ -182,7 +182,7 @@ void DemoFlags::saveCard(RandomAccessStream& data)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DemoFlags::loadCard(RandomAccessStream& data)
 {
@@ -192,7 +192,7 @@ void DemoFlags::loadCard(RandomAccessStream& data)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DemoFlags::registerDemoFlag(int index, immut char* name, u16 movieIndex, u16 a2, bool a3)
 {
@@ -216,7 +216,7 @@ void DemoFlags::registerDemoFlag(int index, immut char* name, u16 movieIndex, u1
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool DemoFlags::isFlag(int index)
 {
@@ -224,7 +224,7 @@ bool DemoFlags::isFlag(int index)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DemoFlags::resetFlag(int index)
 {
@@ -233,7 +233,7 @@ void DemoFlags::resetFlag(int index)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DemoFlags::setFlag(int index, Creature* obj)
 {
@@ -277,7 +277,7 @@ void DemoFlags::setFlag(int index, Creature* obj)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DemoFlags::setFlagOnly(int index)
 {
@@ -290,7 +290,7 @@ void DemoFlags::setFlagOnly(int index)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DemoFlags::setTimer(f32 time, int index, Creature* target)
 {
@@ -301,7 +301,7 @@ void DemoFlags::setTimer(f32 time, int index, Creature* target)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DemoFlags::resetTimer()
 {
@@ -311,7 +311,7 @@ void DemoFlags::resetTimer()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 DemoFlag* DemoFlags::getDemoFlag(int index)
 {

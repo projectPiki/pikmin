@@ -128,19 +128,19 @@ protected:
 } // namespace zen
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(13)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("drawCMscore")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawCMscoreMgr::init(P2DScreen* screen)
 {
@@ -155,7 +155,7 @@ void zen::DrawCMscoreMgr::init(P2DScreen* screen)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawCMscoreMgr::update()
 {
@@ -167,7 +167,7 @@ void zen::DrawCMscoreMgr::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00003C
  */
 void zen::DrawCMscoreMgr::show()
@@ -178,7 +178,7 @@ void zen::DrawCMscoreMgr::show()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawCMscoreMgr::hide()
 {
@@ -188,7 +188,7 @@ void zen::DrawCMscoreMgr::hide()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawCMscoreMgr::sleep()
 {
@@ -198,7 +198,7 @@ void zen::DrawCMscoreMgr::sleep()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawCMscoreMgr::appear(f32 p1)
 {
@@ -211,7 +211,7 @@ void zen::DrawCMscoreMgr::appear(f32 p1)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool zen::DrawCMscoreMgr::modeSleep()
 {
@@ -219,7 +219,7 @@ bool zen::DrawCMscoreMgr::modeSleep()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool zen::DrawCMscoreMgr::modeAppear()
 {
@@ -240,7 +240,7 @@ bool zen::DrawCMscoreMgr::modeAppear()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool zen::DrawCMscoreMgr::modeWait()
 {
@@ -249,7 +249,7 @@ bool zen::DrawCMscoreMgr::modeWait()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::DrawCMscoreMgr::setScore(int rank, int score)
 {

@@ -4,13 +4,13 @@
 #include "sysNew.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("paniPlantAnimator")
@@ -20,7 +20,7 @@ immut char* PaniPlantAnimator::motionLabels[PlantMotion::COUNT] = {
 };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PaniMotionTable* PaniPlantAnimator::createMotionTable()
 {
@@ -37,7 +37,7 @@ PaniMotionTable* PaniPlantAnimator::createMotionTable()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PaniPlantAnimator::PaniPlantAnimator()
 {

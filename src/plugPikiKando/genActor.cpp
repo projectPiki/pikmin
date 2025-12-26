@@ -5,19 +5,19 @@
 #include "sysNew.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("genActor");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 static GenObject* makeObjectActor()
 {
@@ -25,7 +25,7 @@ static GenObject* makeObjectActor()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GenObjectActor::initialise()
 {
@@ -33,7 +33,7 @@ void GenObjectActor::initialise()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GenObjectActor::doRead(RandomAccessStream& stream)
 {
@@ -41,7 +41,7 @@ void GenObjectActor::doRead(RandomAccessStream& stream)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Creature* GenObjectActor::birth(BirthInfo& info)
 {

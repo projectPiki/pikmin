@@ -9,19 +9,19 @@
 #include "zen/Math.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("aiBridge")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 ActBridge::ActBridge(Piki* piki)
     : Action(piki, true)
@@ -31,7 +31,7 @@ ActBridge::ActBridge(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActBridge::init(Creature* creature)
 {
@@ -53,7 +53,7 @@ void ActBridge::init(Creature* creature)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActBridge::dump()
 {
@@ -67,7 +67,7 @@ void ActBridge::dump()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00006C
  */
 bool ActBridge::collideBridgeSurface()
@@ -84,7 +84,7 @@ bool ActBridge::collideBridgeSurface()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000B8
  */
 bool ActBridge::collideBridgeBlocker()
@@ -101,7 +101,7 @@ bool ActBridge::collideBridgeBlocker()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActBridge::exec()
 {
@@ -129,7 +129,7 @@ int ActBridge::exec()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00000C
  */
 void ActBridge::initDetour()
@@ -138,7 +138,7 @@ void ActBridge::initDetour()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 int ActBridge::exeDetour()
@@ -147,7 +147,7 @@ int ActBridge::exeDetour()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActBridge::procWallMsg(Piki* piki, MsgWall* msg)
 {
@@ -156,7 +156,7 @@ void ActBridge::procWallMsg(Piki* piki, MsgWall* msg)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000134
  */
 void ActBridge::initClimb()
@@ -175,7 +175,7 @@ void ActBridge::initClimb()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000068
  */
 int ActBridge::exeClimb()
@@ -190,7 +190,7 @@ int ActBridge::exeClimb()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000080
  */
 void ActBridge::initApproach()
@@ -201,7 +201,7 @@ void ActBridge::initApproach()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000328
  */
 int ActBridge::exeApproach()
@@ -211,7 +211,7 @@ int ActBridge::exeApproach()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 void ActBridge::initGo()
@@ -220,7 +220,7 @@ void ActBridge::initGo()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0003F0
  */
 int ActBridge::exeGo()
@@ -229,7 +229,7 @@ int ActBridge::exeGo()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000E8
  */
 void ActBridge::initWork()
@@ -238,7 +238,7 @@ void ActBridge::initWork()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000414
  */
 int ActBridge::exeWork()
@@ -247,7 +247,7 @@ int ActBridge::exeWork()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000A8
  */
 void ActBridge::doWork(int mins)
@@ -260,7 +260,7 @@ void ActBridge::doWork(int mins)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActBridge::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
@@ -281,7 +281,7 @@ void ActBridge::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActBridge::cleanup()
 {
@@ -290,7 +290,7 @@ void ActBridge::cleanup()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00007C
  */
 void ActBridge::newInitApproach()
@@ -301,7 +301,7 @@ void ActBridge::newInitApproach()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActBridge::newExeApproach()
 {
@@ -372,7 +372,7 @@ int ActBridge::newExeApproach()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActBridge::newInitGo()
 {
@@ -388,7 +388,7 @@ void ActBridge::newInitGo()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActBridge::newExeGo()
 {
@@ -439,7 +439,7 @@ int ActBridge::newExeGo()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActBridge::newInitWork()
 {
@@ -461,7 +461,7 @@ void ActBridge::newInitWork()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActBridge::newExeWork()
 {

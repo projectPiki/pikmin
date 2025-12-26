@@ -8,19 +8,19 @@
 MemStat* memStat;
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(4)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("memStat");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 MemStat::MemStat()
 {
@@ -28,7 +28,7 @@ MemStat::MemStat()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MemStat::reset()
 {
@@ -38,7 +38,7 @@ void MemStat::reset()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MemStat::start(immut char* name)
 {
@@ -70,7 +70,7 @@ void MemStat::start(immut char* name)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MemStat::end(immut char* name)
 {
@@ -102,7 +102,7 @@ void MemStat::end(immut char* name)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000034
  */
 int MemStat::getMemorySize(immut char* name)
@@ -115,7 +115,7 @@ int MemStat::getMemorySize(immut char* name)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000034
  */
 int MemStat::getRestMemory()
@@ -125,7 +125,7 @@ int MemStat::getRestMemory()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MemStat::print()
 {
@@ -140,7 +140,7 @@ void MemStat::print()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 MemInfo* MemStat::getInfo(immut char* name)
 {
@@ -148,7 +148,7 @@ MemInfo* MemStat::getInfo(immut char* name)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void MemStat::printInfoRec(MemInfo* info, int indentation)
 {
@@ -184,7 +184,7 @@ void MemStat::printInfoRec(MemInfo* info, int indentation)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 MemInfo* MemStat::getInfoRec(immut char* name, MemInfo* info)
 {

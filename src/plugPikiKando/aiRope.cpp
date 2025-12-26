@@ -2,19 +2,19 @@
 #include "PikiAI.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT(nullptr)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 ActRope::ActRope(Piki* piki)
     : Action(piki, true)
@@ -24,7 +24,7 @@ ActRope::ActRope(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActRope::init(Creature*)
 {
@@ -48,7 +48,7 @@ void ActRope::init(Creature*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int ActRope::exec()
 {
@@ -61,7 +61,7 @@ int ActRope::exec()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActRope::cleanup()
 {

@@ -4,13 +4,13 @@
 #include "sysNew.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(3)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("panianimator");
@@ -20,7 +20,7 @@ immut char* PaniAnimator::keyNames[6] = {
 };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PaniMotionInfo::PaniMotionInfo(int motionIdx)
 {
@@ -28,7 +28,7 @@ PaniMotionInfo::PaniMotionInfo(int motionIdx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PaniMotionInfo::PaniMotionInfo(int motionIdx, PaniAnimKeyListener* listener)
 {
@@ -36,7 +36,7 @@ PaniMotionInfo::PaniMotionInfo(int motionIdx, PaniAnimKeyListener* listener)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PaniMotionInfo::init(int motionIdx, PaniAnimKeyListener* listener)
 {
@@ -45,7 +45,7 @@ void PaniMotionInfo::init(int motionIdx, PaniAnimKeyListener* listener)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PaniMotion::PaniMotion(int animID)
 {
@@ -53,7 +53,7 @@ PaniMotion::PaniMotion(int animID)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000030
  */
 PaniMotion::PaniMotion(int animID, int p2)
@@ -63,7 +63,7 @@ PaniMotion::PaniMotion(int animID, int p2)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PaniMotion::init(int id, int p2)
 {
@@ -72,7 +72,7 @@ void PaniMotion::init(int id, int p2)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PaniMotionTable::PaniMotionTable(int count)
 {
@@ -85,7 +85,7 @@ PaniMotionTable::PaniMotionTable(int count)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PaniSoundTable::PaniSoundTable(int count)
 {
@@ -98,7 +98,7 @@ PaniSoundTable::PaniSoundTable(int count)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PaniAnimator::PaniAnimator()
 {
@@ -112,7 +112,7 @@ PaniAnimator::PaniAnimator()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PaniAnimator::init(AnimContext* context, AnimMgr* mgr, PaniMotionTable* table)
 {
@@ -127,7 +127,7 @@ void PaniAnimator::init(AnimContext* context, AnimMgr* mgr, PaniMotionTable* tab
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PaniAnimator::changeContext(AnimContext* context)
 {
@@ -135,7 +135,7 @@ void PaniAnimator::changeContext(AnimContext* context)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PaniAnimator::updateContext()
 {
@@ -146,7 +146,7 @@ void PaniAnimator::updateContext()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PaniAnimator::startMotion(immut PaniMotionInfo& info)
 {
@@ -161,7 +161,7 @@ void PaniAnimator::startMotion(immut PaniMotionInfo& info)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PaniAnimator::finishMotion(immut PaniMotionInfo& info)
 {
@@ -183,7 +183,7 @@ void PaniAnimator::finishMotion(immut PaniMotionInfo& info)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PaniAnimator::animate(f32 speed)
 {
@@ -218,7 +218,7 @@ void PaniAnimator::animate(f32 speed)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PaniAnimator::checkConstantKeys()
 {
@@ -243,7 +243,7 @@ void PaniAnimator::checkConstantKeys()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PaniAnimator::checkConstantKey(int idx)
 {
@@ -283,7 +283,7 @@ void PaniAnimator::checkConstantKey(int idx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PaniAnimator::checkEventKeys(f32 startKeyframe, f32 endKeyframe)
 {
@@ -314,7 +314,7 @@ void PaniAnimator::checkEventKeys(f32 startKeyframe, f32 endKeyframe)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PaniAnimator::finishAnimation()
 {
@@ -325,7 +325,7 @@ void PaniAnimator::finishAnimation()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 PaniAnimator::getKeyValueByKeyType(int type)
 {
@@ -341,7 +341,7 @@ f32 PaniAnimator::getKeyValueByKeyType(int type)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00004C
  */
 void PaniAnimator::checkCounter_4DEBUG()

@@ -27,13 +27,13 @@
 #include "teki.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("panitestsection")
@@ -92,7 +92,7 @@ struct PaniTestNode : public Node, public PaniAnimKeyListener {
 };
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PaniTestNode::PaniTestNode()
 {
@@ -178,7 +178,7 @@ PaniTestNode::PaniTestNode()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PaniTestNode::setTestMode(int mode)
 {
@@ -198,7 +198,7 @@ void PaniTestNode::setTestMode(int mode)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PaniTestNode::update()
 {
@@ -314,7 +314,7 @@ void PaniTestNode::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PaniTestNode::updatePikis()
 {
@@ -356,7 +356,7 @@ void PaniTestNode::updatePikis()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PaniTestNode::updateTekis()
 {
@@ -383,7 +383,7 @@ void PaniTestNode::updateTekis()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PaniTestNode::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
@@ -397,7 +397,7 @@ void PaniTestNode::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PaniTestNode::draw(Graphics& gfx)
 {
@@ -486,7 +486,7 @@ void PaniTestNode::draw(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PaniTestNode::drawPiki(ViewPiki* piki, Graphics& gfx)
 {
@@ -494,7 +494,7 @@ void PaniTestNode::drawPiki(ViewPiki* piki, Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PaniTestNode::drawTeki(Teki* teki, Graphics& gfx)
 {
@@ -502,7 +502,7 @@ void PaniTestNode::drawTeki(Teki* teki, Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PaniTestSection::init()
 {

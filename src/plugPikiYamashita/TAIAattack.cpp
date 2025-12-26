@@ -8,19 +8,19 @@
 #include "gameflow.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(21)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("TAIAattack")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAIAattackWorkObject::start(Teki& teki)
 {
@@ -30,7 +30,7 @@ void TAIAattackWorkObject::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAattackWorkObject::act(Teki& teki)
 {
@@ -78,7 +78,7 @@ bool TAIAattackWorkObject::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAattackWorkObject::attackWorkObject(Teki& teki)
 {
@@ -104,7 +104,7 @@ bool TAIAattackWorkObject::attackWorkObject(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAattackWorkObject::setTargetPosition(Teki& teki)
 {
@@ -133,7 +133,7 @@ bool TAIAattackWorkObject::setTargetPosition(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int TAIAattackWorkObject::getLastFinishedStageBridge(Bridge* bridge)
 {
@@ -146,7 +146,7 @@ int TAIAattackWorkObject::getLastFinishedStageBridge(Bridge* bridge)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAIAflickingAfterMotionLoop::start(Teki& teki)
 {
@@ -155,7 +155,7 @@ void TAIAflickingAfterMotionLoop::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAflickingAfterMotionLoop::permitFlick(Teki& teki)
 {
@@ -166,7 +166,7 @@ bool TAIAflickingAfterMotionLoop::permitFlick(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAflickingAfterMotionLoop::act(Teki& teki)
 {
@@ -183,7 +183,7 @@ bool TAIAflickingAfterMotionLoop::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAtargetNavi::act(Teki& teki)
 {
@@ -197,7 +197,7 @@ bool TAIAtargetNavi::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAtargetPiki::act(Teki& teki)
 {
@@ -217,7 +217,7 @@ bool TAIAtargetPiki::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAIAfireBreath::start(Teki& teki)
 {
@@ -226,7 +226,7 @@ void TAIAfireBreath::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAfireBreath::act(Teki& teki)
 {
@@ -246,7 +246,7 @@ bool TAIAfireBreath::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAflickCheck::act(Teki& teki)
 {
@@ -267,7 +267,7 @@ bool TAIAflickCheck::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAIAflicking::start(Teki& teki)
 {
@@ -277,7 +277,7 @@ void TAIAflicking::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAflicking::act(Teki& teki)
 {
@@ -293,7 +293,7 @@ bool TAIAflicking::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAIAflicking::flick(Teki& teki)
 {
@@ -305,7 +305,7 @@ void TAIAflicking::flick(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAIAflickingReserveMotion::start(Teki& teki)
 {
@@ -315,7 +315,7 @@ void TAIAflickingReserveMotion::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAflickingReserveMotion::act(Teki& teki)
 {
@@ -333,7 +333,7 @@ bool TAIAflickingReserveMotion::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAIAflickingReserveMotion::flick(Teki& teki)
 {
@@ -345,7 +345,7 @@ void TAIAflickingReserveMotion::flick(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAIAbiteForKabekui::start(Teki& teki)
 {
@@ -355,7 +355,7 @@ void TAIAbiteForKabekui::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAbiteForKabekui::act(Teki& teki)
 {
@@ -384,7 +384,7 @@ bool TAIAbiteForKabekui::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAbiteForKabekui::hitCheck(Teki& teki)
 {
@@ -426,7 +426,7 @@ bool TAIAbiteForKabekui::hitCheck(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAIAeatPiki::start(Teki& teki)
 {
@@ -434,7 +434,7 @@ void TAIAeatPiki::start(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TAIAeatPiki::act(Teki& teki)
 {
@@ -449,7 +449,7 @@ bool TAIAeatPiki::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TAIAeatPiki::eatEffect(Teki& teki)
 {

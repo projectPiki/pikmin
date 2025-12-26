@@ -16,19 +16,19 @@
 #include "system.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("tekiyamashita")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TekiYamashita::makeTekiParameters(TekiMgr* mgr)
 {
@@ -47,7 +47,7 @@ void TekiYamashita::makeTekiParameters(TekiMgr* mgr)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void TekiYamashita::makeTekis(TekiMgr* mgr)
 {
@@ -88,7 +88,7 @@ void TekiYamashita::makeTekis(TekiMgr* mgr)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000488
  */
 void TekiYamashita::makeDefaultAnimations()

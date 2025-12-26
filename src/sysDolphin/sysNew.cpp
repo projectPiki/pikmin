@@ -4,19 +4,19 @@
 #include "MemStat.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(6)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("sysNew");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void* System::alloc(u32 size)
 {
@@ -69,7 +69,7 @@ void* System::alloc(u32 size)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000044
  */
 void* operator new(u32, int)
@@ -78,7 +78,7 @@ void* operator new(u32, int)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void* operator new[](u32 size, int alignment)
 {
@@ -88,14 +88,14 @@ void* operator new[](u32 size, int alignment)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void operator delete(void*)
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void operator delete[](void*)
 {

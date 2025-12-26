@@ -3,13 +3,13 @@
 #include "DebugLog.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("bBoardColourAnim")
@@ -51,7 +51,7 @@ static inline void bBoard_lerpColor(Colour* outColor, Colour* colA, f32 ratioA, 
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::bBoardColourAnimData::set(u8* data)
 {
@@ -67,7 +67,7 @@ void zen::bBoardColourAnimData::set(u8* data)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::bBoardColourAnim::update(f32 timeStep, Colour* primColor, Colour* envColor)
 {

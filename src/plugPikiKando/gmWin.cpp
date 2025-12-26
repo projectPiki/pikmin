@@ -10,19 +10,19 @@ static Texture* wintex;
 static Font* font;
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT(nullptr)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F8
  */
 GmWin::GmWin()
@@ -31,7 +31,7 @@ GmWin::GmWin()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00000C
  */
 void GmWin::setRect(int, int)
@@ -40,7 +40,7 @@ void GmWin::setRect(int, int)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000014
  */
 void GmWin::moveHome(Vector2i&)
@@ -49,7 +49,7 @@ void GmWin::moveHome(Vector2i&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GmWin::open()
 {
@@ -57,7 +57,7 @@ void GmWin::open()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GmWin::close()
 {
@@ -68,7 +68,7 @@ void GmWin::close()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GmWin::render(Graphics& gfx)
 {
@@ -89,7 +89,7 @@ void GmWin::render(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 void GmWin::doRender(Graphics&)
@@ -98,7 +98,7 @@ void GmWin::doRender(Graphics&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GmWin::placeCentre()
 {
@@ -110,7 +110,7 @@ void GmWin::placeCentre()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GmWin::print(Graphics& gfx, int posX, int posY, immut char* message)
 {
@@ -118,7 +118,7 @@ void GmWin::print(Graphics& gfx, int posX, int posY, immut char* message)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GmWin::printcentre(Graphics& gfx, int posY, immut char* message)
 {
@@ -128,7 +128,7 @@ void GmWin::printcentre(Graphics& gfx, int posY, immut char* message)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GmWin::printright(Graphics& gfx, int posY, immut char* message)
 {
@@ -138,7 +138,7 @@ void GmWin::printright(Graphics& gfx, int posY, immut char* message)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GmWin::printleft(Graphics& gfx, int posY, immut char* message)
 {
@@ -146,7 +146,7 @@ void GmWin::printleft(Graphics& gfx, int posY, immut char* message)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GmWin::printStart(Graphics& gfx)
 {
@@ -155,7 +155,7 @@ void GmWin::printStart(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GmWin::texture(Graphics& gfx, Texture* texture, int minX, int minY, int maxX, int maxY, RectArea area)
 {
@@ -166,7 +166,7 @@ void GmWin::texture(Graphics& gfx, Texture* texture, int minX, int minY, int max
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GmWin::texturecentre(Graphics& gfx, Texture* texture, int minY, int width, int height, RectArea area)
 {
@@ -177,7 +177,7 @@ void GmWin::texturecentre(Graphics& gfx, Texture* texture, int minY, int width, 
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GmWin::textureleft(Graphics& gfx, Texture* texture, int minY, int width, int height, RectArea area)
 {
@@ -188,7 +188,7 @@ void GmWin::textureleft(Graphics& gfx, Texture* texture, int minY, int width, in
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void GmWin::textureright(Graphics& gfx, Texture* texture, int minY, int width, int height, RectArea area)
 {
@@ -199,7 +199,7 @@ void GmWin::textureright(Graphics& gfx, Texture* texture, int minY, int width, i
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00004C
  */
 GmWinMgr::GmWinMgr()
@@ -208,7 +208,7 @@ GmWinMgr::GmWinMgr()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000020
  */
 void GmWinMgr::addWindow(GmWin*)
@@ -217,7 +217,7 @@ void GmWinMgr::addWindow(GmWin*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000058
  */
 void GmWinMgr::update()
@@ -226,7 +226,7 @@ void GmWinMgr::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 void GmWin::update()
@@ -235,7 +235,7 @@ void GmWin::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000A0
  */
 void GmWinMgr::render(Graphics&)
@@ -244,7 +244,7 @@ void GmWinMgr::render(Graphics&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000028
  */
 void GmWinMgr::getWindow(u32)
@@ -253,7 +253,7 @@ void GmWinMgr::getWindow(u32)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0005B4
  */
 void ContainerWin::doRender(Graphics&)
@@ -262,7 +262,7 @@ void ContainerWin::doRender(Graphics&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00007C
  */
 void ContainerWin::setWin(int, int, ContainerWin::Listener*)
@@ -271,7 +271,7 @@ void ContainerWin::setWin(int, int, ContainerWin::Listener*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000310
  */
 void ContainerWin::update()
@@ -280,7 +280,7 @@ void ContainerWin::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00006C
  */
 void ContainerWin::open()
@@ -289,7 +289,7 @@ void ContainerWin::open()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000080
  */
 void ContainerWin::close()
@@ -298,7 +298,7 @@ void ContainerWin::close()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000180
  */
 void ResultWin::doRender(Graphics&)
@@ -307,7 +307,7 @@ void ResultWin::doRender(Graphics&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 void ResultWin::update()

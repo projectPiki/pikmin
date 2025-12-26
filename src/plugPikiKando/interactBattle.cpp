@@ -14,19 +14,19 @@
 #include "Stickers.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(19)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("interactBattle");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool InteractBomb::actPiki(Piki* piki) immut
 {
@@ -66,7 +66,7 @@ bool InteractBomb::actPiki(Piki* piki) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool InteractBury::actPiki(Piki* piki) immut
 {
@@ -88,7 +88,7 @@ bool InteractBury::actPiki(Piki* piki) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool InteractThrowAway::actPiki(Piki* piki) immut
 {
@@ -101,7 +101,7 @@ bool InteractThrowAway::actPiki(Piki* piki) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool InteractChangeColor::actPiki(Piki* piki) immut
 {
@@ -115,7 +115,7 @@ bool InteractChangeColor::actPiki(Piki* piki) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool InteractChangeHappa::actPiki(Piki* piki) immut
 {
@@ -128,7 +128,7 @@ bool InteractChangeHappa::actPiki(Piki* piki) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool InteractSpore::actPiki(Piki* piki) immut
 {
@@ -160,7 +160,7 @@ bool InteractSpore::actPiki(Piki* piki) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool InteractBubble::actPiki(Piki* piki) immut
 {
@@ -184,7 +184,7 @@ bool InteractBubble::actPiki(Piki* piki) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool InteractFire::actPiki(Piki* piki) immut
 {
@@ -203,7 +203,7 @@ bool InteractFire::actPiki(Piki* piki) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool InteractWind::actCommon(Creature*) immut
 {
@@ -211,7 +211,7 @@ bool InteractWind::actCommon(Creature*) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool InteractWind::actPiki(Piki* piki) immut
 {
@@ -244,7 +244,7 @@ bool InteractWind::actPiki(Piki* piki) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool InteractFlick::actCommon(Creature* creature) immut
 {
@@ -262,7 +262,7 @@ bool InteractFlick::actCommon(Creature* creature) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool InteractFlick::actPiki(Piki* piki) immut
 {
@@ -293,7 +293,7 @@ bool InteractFlick::actPiki(Piki* piki) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool InteractSlimeAttack::actCommon(Creature*) immut
 {
@@ -301,7 +301,7 @@ bool InteractSlimeAttack::actCommon(Creature*) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int InteractAttack::getDamagePortion() immut
 {
@@ -352,7 +352,7 @@ int InteractAttack::getDamagePortion() immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool InteractAttack::actCommon(Creature* creature) immut
 {
@@ -363,7 +363,7 @@ bool InteractAttack::actCommon(Creature* creature) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool InteractAttack::actPiki(Piki* piki) immut
 {
@@ -403,7 +403,7 @@ bool InteractAttack::actPiki(Piki* piki) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool InteractSwallow::actCommon(Creature*) immut
 {
@@ -411,7 +411,7 @@ bool InteractSwallow::actCommon(Creature*) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool InteractSwallow::actPiki(Piki* piki) immut
 {
@@ -507,7 +507,7 @@ bool InteractSwallow::actPiki(Piki* piki) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool InteractKill::actPiki(Piki* piki) immut
 {
@@ -520,7 +520,7 @@ bool InteractKill::actPiki(Piki* piki) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool InteractKill::actNavi(Navi* navi) immut
 {
@@ -529,7 +529,7 @@ bool InteractKill::actNavi(Navi* navi) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool InteractPress::actPiki(Piki* piki) immut
 {
@@ -561,7 +561,7 @@ bool InteractPress::actPiki(Piki* piki) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool InteractFlute::actTeki(Teki*) immut
 {

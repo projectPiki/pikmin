@@ -2,19 +2,19 @@
 #include "zen/ogSub.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT(nullptr);
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void zen::makePathName(const char* directoryPath, const char* fileName, char* outputPath)
 {
@@ -37,7 +37,7 @@ void zen::makePathName(const char* directoryPath, const char* fileName, char* ou
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Texture* zen::loadTexExp(const char* textureName, bool useDirectory, bool makePath)
 {

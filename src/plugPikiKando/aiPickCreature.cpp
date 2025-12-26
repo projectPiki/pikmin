@@ -2,19 +2,19 @@
 #include "PikiAI.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(7)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("pickCreature\n")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 ActPickCreature::ActPickCreature(Piki* piki)
     : AndAction(piki)
@@ -26,7 +26,7 @@ ActPickCreature::ActPickCreature(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActPickCreature::init(Creature* target)
 {
@@ -35,7 +35,7 @@ void ActPickCreature::init(Creature* target)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 void ActPickCreature::InitGoto::initialise(Action*, Action*)
@@ -44,7 +44,7 @@ void ActPickCreature::InitGoto::initialise(Action*, Action*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00019C
  */
 ActDeliver::ActDeliver(Piki* piki)
@@ -58,7 +58,7 @@ ActDeliver::ActDeliver(Piki* piki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActDeliver::Initialiser::initialise(Action* deliverAction)
 {
@@ -67,7 +67,7 @@ void ActDeliver::Initialiser::initialise(Action* deliverAction)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActDeliver::init(Creature* target)
 {

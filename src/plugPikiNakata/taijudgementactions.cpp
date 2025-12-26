@@ -6,19 +6,19 @@
 #include "teki.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("taijudgementactions")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiVisibleTargetAction::act(Teki& teki)
 {
@@ -35,7 +35,7 @@ bool TaiVisibleTargetAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiContactTargetAction::act(Teki& teki)
 {
@@ -52,7 +52,7 @@ bool TaiContactTargetAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiSeparateTargetAction::act(Teki& teki)
 {
@@ -69,7 +69,7 @@ bool TaiSeparateTargetAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiTargetLostAction::act(Teki& teki)
 {
@@ -87,7 +87,7 @@ bool TaiTargetLostAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiOutsideTerritoryAction::act(Teki& teki)
 {
@@ -95,7 +95,7 @@ bool TaiOutsideTerritoryAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiInsideTerritoryAction::act(Teki& teki)
 {
@@ -103,7 +103,7 @@ bool TaiInsideTerritoryAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiTargetVisibleNaviPikiAction::act(Teki& teki)
 {
@@ -119,7 +119,7 @@ bool TaiTargetVisibleNaviPikiAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiTargetVisibleNaviAction::act(Teki& teki)
 {
@@ -137,7 +137,7 @@ bool TaiTargetVisibleNaviAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiHasStickersInMouthAction::act(Teki& teki)
 {
@@ -159,7 +159,7 @@ bool TaiHasStickersInMouthAction::act(Teki& teki)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool TaiHasStickersOnBodyAction::act(Teki& teki)
 {

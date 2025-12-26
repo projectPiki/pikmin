@@ -48,7 +48,7 @@ loop:
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void __init_user(void)
 {
@@ -56,7 +56,7 @@ void __init_user(void)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 static void __init_cpp(void)
 {
@@ -70,7 +70,7 @@ static void __init_cpp(void)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000054
  */
 void __fini_cpp(void)
@@ -79,7 +79,7 @@ void __fini_cpp(void)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void _ExitProcess(void)
 {

@@ -6,19 +6,19 @@
 #include "sysNew.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT(nullptr)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000C4
  */
 void CullFrustum::vectorToWorldPlane(immut Vector3f& vec, CullingPlane& worldPlane)
@@ -28,7 +28,7 @@ void CullFrustum::vectorToWorldPlane(immut Vector3f& vec, CullingPlane& worldPla
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool CullFrustum::isPointVisible(immut Vector3f& point, f32 cutoff)
 {
@@ -43,7 +43,7 @@ bool CullFrustum::isPointVisible(immut Vector3f& point, f32 cutoff)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void CullFrustum::draw(Graphics& gfx)
 {
@@ -176,7 +176,7 @@ void CullFrustum::draw(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void CullFrustum::updateViewPlanes(f32 leftScale, f32 rightScale, f32 bottomScale, f32 topScale)
 {
@@ -218,7 +218,7 @@ void CullFrustum::updateViewPlanes(f32 leftScale, f32 rightScale, f32 bottomScal
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void CullFrustum::createViewPlanes()
 {
@@ -243,7 +243,7 @@ void CullFrustum::createViewPlanes()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000BC
  */
 void CullFrustum::additionalPlanes(CullFrustum*)
@@ -252,7 +252,7 @@ void CullFrustum::additionalPlanes(CullFrustum*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000058
  */
 void CullFrustum::createVecs()
@@ -274,7 +274,7 @@ void CullFrustum::createVecs()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000058
  */
 void CullFrustum::createInvVecs()
@@ -293,7 +293,7 @@ void CullFrustum::createInvVecs()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void CullFrustum::update(f32 aspectRatio, f32 fov, f32 near, f32 far)
 {
@@ -317,7 +317,7 @@ void CullFrustum::update(f32 aspectRatio, f32 fov, f32 near, f32 far)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void CullFrustum::calcVectors(immut Vector3f& eyePos, immut Vector3f& targetPos)
 {
@@ -352,7 +352,7 @@ void CullFrustum::calcVectors(immut Vector3f& eyePos, immut Vector3f& targetPos)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void CullFrustum::calcLookAt(immut Vector3f& cameraPos, immut Vector3f& targetPos, immut Vector3f* upVector)
 {
@@ -361,7 +361,7 @@ void CullFrustum::calcLookAt(immut Vector3f& cameraPos, immut Vector3f& targetPo
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00003C
  */
 void CullFrustum::calcLookFrom(immut Vector3f&, immut Vector3f&)
@@ -370,7 +370,7 @@ void CullFrustum::calcLookFrom(immut Vector3f&, immut Vector3f&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00015C
  */
 void Camera::camReflect(Camera&, Plane&)
@@ -379,7 +379,7 @@ void Camera::camReflect(Camera&, Plane&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 Camera::projectWorldPoint(Graphics& gfx, Vector3f& point)
 {
@@ -405,7 +405,7 @@ f32 Camera::projectWorldPoint(Graphics& gfx, Vector3f& point)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000170
  */
 f32 Camera::projectCamPoint(Vector3f&)
@@ -414,7 +414,7 @@ f32 Camera::projectCamPoint(Vector3f&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Camera::Camera()
 {
@@ -425,7 +425,7 @@ Camera::Camera()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void LightCamera::initLightmap(int size, int texFmt)
 {
@@ -439,7 +439,7 @@ void LightCamera::initLightmap(int size, int texFmt)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void LightCamera::calcProjection(Graphics& gfx, bool p2, Node* p3)
 {

@@ -8,19 +8,19 @@
 #include "sysNew.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("pcamcameramanager")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PcamCameraManager::PcamCameraManager(Camera* camera, Controller* controller)
     : Node("PcamCameraManager")
@@ -62,7 +62,7 @@ PcamCameraManager::PcamCameraManager(Camera* camera, Controller* controller)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PcamCameraManager::startCamera(Creature* target)
 {
@@ -70,7 +70,7 @@ void PcamCameraManager::startCamera(Creature* target)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PcamCameraManager::update()
 {
@@ -80,7 +80,7 @@ void PcamCameraManager::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000024
  */
 void PcamCameraManager::startMotion(PcamMotionInfo& info)
@@ -89,7 +89,7 @@ void PcamCameraManager::startMotion(PcamMotionInfo& info)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000024
  */
 void PcamCameraManager::finishMotion()
@@ -98,7 +98,7 @@ void PcamCameraManager::finishMotion()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PcamCameraManager::updateVibrationEvent()
 {
@@ -117,7 +117,7 @@ void PcamCameraManager::updateVibrationEvent()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PcamCameraManager::startVibrationEvent(int eventIdx, immut Vector3f& p2)
 {
@@ -148,7 +148,7 @@ void PcamCameraManager::startVibrationEvent(int eventIdx, immut Vector3f& p2)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PcamCameraManager::outputNaviPosition(Vector3f& naviPos)
 {

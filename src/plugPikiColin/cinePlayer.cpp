@@ -16,13 +16,13 @@
 #include "zen/Math.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("CinePlayer")
@@ -31,7 +31,7 @@ DEFINE_PRINT("CinePlayer")
 static AnimContext* bcs[0x100];
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000A0
  */
 void CineShapeObject::init(immut char* modelPath, immut char* animPath, immut char* bundlePath)
@@ -44,7 +44,7 @@ void CineShapeObject::init(immut char* modelPath, immut char* animPath, immut ch
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void CinematicPlayer::init(immut char* cinFilePath)
 {
@@ -78,7 +78,7 @@ void CinematicPlayer::init(immut char* cinFilePath)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 CinematicPlayer::CinematicPlayer(immut char* cinFilePath)
 {
@@ -97,7 +97,7 @@ CinematicPlayer::CinematicPlayer(immut char* cinFilePath)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void CinematicPlayer::loadCin(immut char* cinFilePath)
 {
@@ -264,7 +264,7 @@ void CinematicPlayer::loadCin(immut char* cinFilePath)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void CinematicPlayer::addScene(SceneData* scene)
 {
@@ -280,7 +280,7 @@ void CinematicPlayer::addScene(SceneData* scene)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000124
  */
 SceneData* CinematicPlayer::addScene(immut char* dskFilePath)
@@ -293,7 +293,7 @@ SceneData* CinematicPlayer::addScene(immut char* dskFilePath)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 SceneCut* CinematicPlayer::addCut(int sceneID, int startFrame, int endFrame)
 {
@@ -307,7 +307,7 @@ SceneCut* CinematicPlayer::addCut(int sceneID, int startFrame, int endFrame)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void CinematicPlayer::addActor(CineShapeObject* actor)
 {
@@ -315,7 +315,7 @@ void CinematicPlayer::addActor(CineShapeObject* actor)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000128
  */
 void CinematicPlayer::addActor(immut char* modelFilePath, immut char* animFilePath, immut char* bundleFilePath)
@@ -329,7 +329,7 @@ void CinematicPlayer::addActor(immut char* modelFilePath, immut char* animFilePa
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 SceneCut* CinematicPlayer::addSceneCut()
 {
@@ -342,7 +342,7 @@ SceneCut* CinematicPlayer::addSceneCut()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void CinematicPlayer::skipScene(int sceneSkipFlag)
 {
@@ -358,7 +358,7 @@ void CinematicPlayer::skipScene(int sceneSkipFlag)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 BOOL CinematicPlayer::update()
 {
@@ -473,7 +473,7 @@ BOOL CinematicPlayer::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void CinematicPlayer::addLights(Graphics& gfx)
 {
@@ -490,7 +490,7 @@ void CinematicPlayer::addLights(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void CinematicPlayer::refresh(Graphics& gfx)
 {
@@ -507,7 +507,7 @@ void CinematicPlayer::refresh(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 ActorInstance* SceneCut::addInstance(immut char* modelFilePath)
 {
@@ -523,7 +523,7 @@ ActorInstance* SceneCut::addInstance(immut char* modelFilePath)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000024
  */
 int SceneCut::countEKeys()
@@ -536,7 +536,7 @@ int SceneCut::countEKeys()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00005C
  */
 void ActorInstance::onceInit()
@@ -547,7 +547,7 @@ void ActorInstance::onceInit()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActorInstance::exitInstance()
 {
@@ -570,7 +570,7 @@ void ActorInstance::exitInstance()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActorInstance::initInstance()
 {
@@ -621,7 +621,7 @@ void ActorInstance::initInstance()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActorInstance::checkEventKeys(f32 curTime, f32 prevTime, Vector3f& pos)
 {
@@ -873,7 +873,7 @@ void ActorInstance::checkEventKeys(f32 curTime, f32 prevTime, Vector3f& pos)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void ActorInstance::refresh(immut Matrix4f& mtx, Graphics& gfx, f32* p3)
 {

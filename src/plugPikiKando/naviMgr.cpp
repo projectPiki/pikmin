@@ -6,13 +6,13 @@
 #include "sysNew.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("naviiMgr"); // epic typo
@@ -20,7 +20,7 @@ DEFINE_PRINT("naviiMgr"); // epic typo
 NaviMgr* naviMgr;
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 NaviMgr::NaviMgr()
 {
@@ -52,7 +52,7 @@ NaviMgr::NaviMgr()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000004
  */
 void NaviMgr::init()
@@ -60,7 +60,7 @@ void NaviMgr::init()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Creature* NaviMgr::createObject()
 {
@@ -70,7 +70,7 @@ Creature* NaviMgr::createObject()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviMgr::update()
 {
@@ -78,7 +78,7 @@ void NaviMgr::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Navi* NaviMgr::getNavi()
 {
@@ -88,7 +88,7 @@ Navi* NaviMgr::getNavi()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Navi* NaviMgr::getNavi(int idx)
 {
@@ -101,7 +101,7 @@ Navi* NaviMgr::getNavi(int idx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviMgr::refresh2d(Graphics& gfx)
 {
@@ -113,7 +113,7 @@ void NaviMgr::refresh2d(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviMgr::renderCircle(Graphics& gfx)
 {
@@ -125,7 +125,7 @@ void NaviMgr::renderCircle(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviMgr::drawShadow(Graphics& gfx)
 {
@@ -137,7 +137,7 @@ void NaviMgr::drawShadow(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void NaviMgr::read(RandomAccessStream& input)
 {

@@ -8,7 +8,7 @@ f32 costable[0x1000];
 immut Matrix4f Matrix4f::ident;
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000088
  */
 
@@ -22,7 +22,7 @@ Matrix4f::Matrix4f(immut Mtx44 mtx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Matrix4f::makeIdentity()
 {
@@ -45,7 +45,7 @@ void Matrix4f::makeIdentity()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000D8
  */
 void Matrix4f::blend(immut Matrix4f&, f32)
@@ -54,7 +54,7 @@ void Matrix4f::blend(immut Matrix4f&, f32)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0001A4
  */
 void Matrix4f::makeOrtho(f32, f32, f32, f32, f32, f32, f32)
@@ -63,7 +63,7 @@ void Matrix4f::makeOrtho(f32, f32, f32, f32, f32, f32, f32)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000CC
  */
 void Matrix4f::makePerspective(f32, f32, f32, f32)
@@ -104,7 +104,7 @@ void Matrix4f::makeRotate(immut Vector3f& axis, f32 angleSin, f32 angleCos)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Matrix4f::makeRotate(immut Vector3f& axis, f32 angle)
 {
@@ -115,7 +115,7 @@ void Matrix4f::makeRotate(immut Vector3f& axis, f32 angle)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000178
  */
 void Matrix4f::makeBallRotate(Vector3f&)
@@ -124,7 +124,7 @@ void Matrix4f::makeBallRotate(Vector3f&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000078
  */
 void Matrix4f::rotate(Vector3f&, f32)
@@ -133,7 +133,7 @@ void Matrix4f::rotate(Vector3f&, f32)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000138
  */
 void Matrix4f::rotate(f32, f32, f32)
@@ -142,7 +142,7 @@ void Matrix4f::rotate(f32, f32, f32)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Matrix4f::multiply(immut Matrix4f& other)
 {
@@ -161,7 +161,7 @@ void Matrix4f::multiply(immut Matrix4f& other)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Matrix4f::multiplyTo(immut Matrix4f& mtxB, Matrix4f& outMtx) immut
 {
@@ -169,7 +169,7 @@ void Matrix4f::multiplyTo(immut Matrix4f& mtxB, Matrix4f& outMtx) immut
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Matrix4f::makeSRT(immut Vector3f& scale, immut Vector3f& rotation, immut Vector3f& translation)
 {
@@ -208,7 +208,7 @@ void Matrix4f::makeSRT(immut Vector3f& scale, immut Vector3f& rotation, immut Ve
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Matrix4f::makeConcatSRT(immut Matrix4f* a, Matrix4f& b, immut SRT& srt)
 {
@@ -251,7 +251,7 @@ void Matrix4f::makeConcatSRT(immut Matrix4f* a, Matrix4f& b, immut SRT& srt)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Matrix4f::inverse(Matrix4f* inv)
 {
@@ -307,7 +307,7 @@ void Matrix4f::inverse(Matrix4f* inv)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000244
  */
 void Matrix4f::makeAligned(Vector3f&, f32)
@@ -316,7 +316,7 @@ void Matrix4f::makeAligned(Vector3f&, f32)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000100
  */
 void Matrix4f::rotateX(f32)
@@ -325,7 +325,7 @@ void Matrix4f::rotateX(f32)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000100
  */
 void Matrix4f::rotateY(f32)
@@ -334,7 +334,7 @@ void Matrix4f::rotateY(f32)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000100
  */
 void Matrix4f::rotateZ(f32)
@@ -343,7 +343,7 @@ void Matrix4f::rotateZ(f32)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 void Matrix4f::translate(f32, f32, f32)
@@ -352,7 +352,7 @@ void Matrix4f::translate(f32, f32, f32)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Matrix4f::scale(immut Vector3f& scaleVector)
 {
@@ -373,7 +373,7 @@ void Matrix4f::scale(immut Vector3f& scaleVector)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0003C0
  */
 void Matrix4f::makeLookfrom(immut Vector3f&, immut Vector3f&)
@@ -382,7 +382,7 @@ void Matrix4f::makeLookfrom(immut Vector3f&, immut Vector3f&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Matrix4f::makeLookat(immut Vector3f& cameraPos, immut Vector3f& targetPos, immut Vector3f* optionalUp)
 {
@@ -414,7 +414,7 @@ void Matrix4f::makeLookat(immut Vector3f& cameraPos, immut Vector3f& targetPos, 
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Matrix4f::makeLookat(immut Vector3f& cameraPos, immut Vector3f& rightDir, immut Vector3f& upDir, immut Vector3f& backDir)
 {
@@ -434,7 +434,7 @@ void Matrix4f::makeLookat(immut Vector3f& cameraPos, immut Vector3f& rightDir, i
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000164
  */
 void Matrix4f::makeProjection(Vector3f&, Plane&)
@@ -443,7 +443,7 @@ void Matrix4f::makeProjection(Vector3f&, Plane&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000140
  */
 void Matrix4f::makeReflection(Plane&)
@@ -452,7 +452,7 @@ void Matrix4f::makeReflection(Plane&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Matrix4f::transposeTo(Matrix4f& dest)
 {
@@ -465,7 +465,7 @@ void Matrix4f::transposeTo(Matrix4f& dest)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Matrix4f::makeVQS(immut Vector3f& translation, immut Quat& rotation, immut Vector3f& scale)
 {

@@ -15,19 +15,19 @@
 DemoEventMgr* demoEventMgr;
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("demoEvent")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000090
  */
 immut char* DemoEventMgr::getEventName(int, int)
@@ -36,7 +36,7 @@ immut char* DemoEventMgr::getEventName(int, int)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000018
  */
 immut char* DemoEventMgr::getSenderName(int)
@@ -45,14 +45,14 @@ immut char* DemoEventMgr::getSenderName(int)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 DemoEventMgr::DemoEventMgr()
 {
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void DemoEventMgr::act(int cmd, int type)
 {

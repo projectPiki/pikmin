@@ -3,19 +3,19 @@
 #include "P2D/Graph.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("P2DPersGraph") // nice typo
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000054
  */
 P2DPerspGraph::P2DPerspGraph()
@@ -25,7 +25,7 @@ P2DPerspGraph::P2DPerspGraph()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000084
  */
 P2DPerspGraph::P2DPerspGraph(const PUTRect& rect, f32, f32, f32)
@@ -35,7 +35,7 @@ P2DPerspGraph::P2DPerspGraph(const PUTRect& rect, f32, f32, f32)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 P2DPerspGraph::P2DPerspGraph(int x0, int y0, int width, int height, f32 fovy, f32 nearZ, f32 farZ)
     : P2DGrafContext(x0, y0, width, height)
@@ -45,7 +45,7 @@ P2DPerspGraph::P2DPerspGraph(int x0, int y0, int width, int height, f32 fovy, f3
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void P2DPerspGraph::set(f32 fovy, f32 nearZ, f32 farZ)
 {
@@ -56,7 +56,7 @@ void P2DPerspGraph::set(f32 fovy, f32 nearZ, f32 farZ)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void P2DPerspGraph::setFovy(f32 fovy)
 {
@@ -69,7 +69,7 @@ void P2DPerspGraph::setFovy(f32 fovy)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000080
  */
 void P2DPerspGraph::getMatrix(Matrix4f& mtx)
@@ -79,7 +79,7 @@ void P2DPerspGraph::getMatrix(Matrix4f& mtx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void P2DPerspGraph::setPort()
 {
@@ -109,7 +109,7 @@ void P2DPerspGraph::setPort()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void P2DPerspGraph::setLookat()
 {
@@ -118,7 +118,7 @@ void P2DPerspGraph::setLookat()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000024
  */
 void P2DPerspGraph::setDistance(f32 distance)
@@ -128,7 +128,7 @@ void P2DPerspGraph::setDistance(f32 distance)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void P2DPerspGraph::makeLookat()
 {

@@ -1,7 +1,7 @@
 #include "PSU/LinkList.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PSUPtrLink::PSUPtrLink(void* value)
 {
@@ -12,7 +12,7 @@ PSUPtrLink::PSUPtrLink(void* value)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PSUPtrLink::~PSUPtrLink()
 {
@@ -22,7 +22,7 @@ PSUPtrLink::~PSUPtrLink()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00003C
  */
 PSUPtrList::PSUPtrList(bool)
@@ -31,7 +31,7 @@ PSUPtrList::PSUPtrList(bool)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 PSUPtrList::~PSUPtrList()
 {
@@ -43,7 +43,7 @@ PSUPtrList::~PSUPtrList()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void PSUPtrList::initiate()
 {
@@ -53,7 +53,7 @@ void PSUPtrList::initiate()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000024
  */
 void PSUPtrList::setFirst(PSUPtrLink* link)
@@ -66,7 +66,7 @@ void PSUPtrList::setFirst(PSUPtrLink* link)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool PSUPtrList::append(PSUPtrLink* link)
 {
@@ -92,7 +92,7 @@ bool PSUPtrList::append(PSUPtrLink* link)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000BC
  */
 bool PSUPtrList::prepend(PSUPtrLink*)
@@ -101,7 +101,7 @@ bool PSUPtrList::prepend(PSUPtrLink*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0001DC
  */
 bool PSUPtrList::insert(PSUPtrLink*, PSUPtrLink*)
@@ -110,7 +110,7 @@ bool PSUPtrList::insert(PSUPtrLink*, PSUPtrLink*)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool PSUPtrList::remove(PSUPtrLink* link)
 {
@@ -140,7 +140,7 @@ bool PSUPtrList::remove(PSUPtrLink* link)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000088
  */
 PSUPtrLink* PSUPtrList::getNthLink(u32) const

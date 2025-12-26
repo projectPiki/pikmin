@@ -4,19 +4,19 @@
 #include "PikiState.h"
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("CreatureColl")
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Creature::respondColl(Creature* other, f32, CollPart* selfCollider, CollPart* otherCollider, const Vector3f& point)
 {

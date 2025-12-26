@@ -28,19 +28,19 @@ static CollTriInfo* baseTri;
 static f32 checkRadius;
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(32)
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("Creature");
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000028
  */
 void Creature::startFixPosition()
@@ -50,7 +50,7 @@ void Creature::startFixPosition()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Creature::finishFixPosition()
 {
@@ -58,7 +58,7 @@ void Creature::finishFixPosition()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Creature::isTerrible()
 {
@@ -66,7 +66,7 @@ bool Creature::isTerrible()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Creature::load(RandomAccessStream& stream, bool doLoadPosition)
 {
@@ -84,7 +84,7 @@ void Creature::load(RandomAccessStream& stream, bool doLoadPosition)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Creature::save(RandomAccessStream& stream, bool doSavePosition)
 {
@@ -102,7 +102,7 @@ void Creature::save(RandomAccessStream& stream, bool doSavePosition)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Creature* Creature::getCollidePlatformCreature()
 {
@@ -113,7 +113,7 @@ Creature* Creature::getCollidePlatformCreature()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Vector3f Creature::getCollidePlatformNormal()
 {
@@ -124,7 +124,7 @@ Vector3f Creature::getCollidePlatformNormal()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Creature::isBoss()
 {
@@ -136,7 +136,7 @@ bool Creature::isBoss()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Creature::enableStick()
 {
@@ -148,7 +148,7 @@ void Creature::enableStick()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Creature::disableStick()
 {
@@ -160,7 +160,7 @@ void Creature::disableStick()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 CollPart* Creature::getNearestCollPart(immut Vector3f& pos, u32 tag)
 {
@@ -171,7 +171,7 @@ CollPart* Creature::getNearestCollPart(immut Vector3f& pos, u32 tag)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 CollPart* Creature::getRandomCollPart(u32 tag)
 {
@@ -183,7 +183,7 @@ CollPart* Creature::getRandomCollPart(u32 tag)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Vector3f Creature::getBoundingSphereCentre()
 {
@@ -200,7 +200,7 @@ Vector3f Creature::getBoundingSphereCentre()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 Creature::getBoundingSphereRadius()
 {
@@ -217,7 +217,7 @@ f32 Creature::getBoundingSphereRadius()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Creature::playEventSound(Creature* target, int soundID)
 {
@@ -227,7 +227,7 @@ void Creature::playEventSound(Creature* target, int soundID)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Creature::stopEventSound(Creature* target, int soundID)
 {
@@ -237,7 +237,7 @@ void Creature::stopEventSound(Creature* target, int soundID)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000C4
  */
 bool Creature::insideSphere(immut Sphere& sphere)
@@ -250,7 +250,7 @@ bool Creature::insideSphere(immut Sphere& sphere)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Vector3f Creature::getCentre()
 {
@@ -269,7 +269,7 @@ Vector3f Creature::getCentre()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 Creature::getCentreSize()
 {
@@ -283,7 +283,7 @@ f32 Creature::getCentreSize()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 int Creature::getStandType()
 {
@@ -317,7 +317,7 @@ int Creature::getStandType()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 SearchData::SearchData()
 {
@@ -327,7 +327,7 @@ SearchData::SearchData()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 u32 Creature::getGeneratorID()
 {
@@ -338,7 +338,7 @@ u32 Creature::getGeneratorID()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Creature::stimulate(immut Interaction& interaction)
 {
@@ -347,7 +347,7 @@ bool Creature::stimulate(immut Interaction& interaction)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Creature::setStateGrabbed(Creature* holder)
 {
@@ -373,7 +373,7 @@ bool Creature::setStateGrabbed(Creature* holder)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Creature::resetStateGrabbed()
 {
@@ -383,7 +383,7 @@ void Creature::resetStateGrabbed()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Creature::turnTo(immut Vector3f& targetDir)
 {
@@ -391,7 +391,7 @@ void Creature::turnTo(immut Vector3f& targetDir)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000FC
  */
 void Creature::adjustDistance(immut Vector3f& targetPos, f32 targetDist)
@@ -403,7 +403,7 @@ void Creature::adjustDistance(immut Vector3f& targetPos, f32 targetDist)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Creature::init()
 {
@@ -452,7 +452,7 @@ void Creature::init()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Creature::init(immut Vector3f& pos)
 {
@@ -463,7 +463,7 @@ void Creature::init(immut Vector3f& pos)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000008
  */
 int Creature::getAtariType()
@@ -472,7 +472,7 @@ int Creature::getAtariType()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Creature::resetPosition(immut Vector3f& pos)
 {
@@ -481,7 +481,7 @@ void Creature::resetPosition(immut Vector3f& pos)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Creature::detachGenerator()
 {
@@ -492,7 +492,7 @@ void Creature::detachGenerator()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Creature::kill(bool)
 {
@@ -575,7 +575,7 @@ void Creature::kill(bool)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Creature::Creature(CreatureProp* props)
 {
@@ -624,7 +624,7 @@ Creature::Creature(CreatureProp* props)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Creature::updateStatic()
 {
@@ -638,7 +638,7 @@ void Creature::updateStatic()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Creature::update()
 {
@@ -819,7 +819,7 @@ void Creature::update()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Creature::postUpdate(int unused, f32 deltaTime)
 {
@@ -868,7 +868,7 @@ void Creature::postUpdate(int unused, f32 deltaTime)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Creature::updateAI()
 {
@@ -890,7 +890,7 @@ void Creature::updateAI()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 centreDist(Creature* c1, Creature* c2)
 {
@@ -899,7 +899,7 @@ f32 centreDist(Creature* c1, Creature* c2)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 0000DC
  */
 f32 sphereDistQuick(Creature* c1, Creature* c2)
@@ -911,7 +911,7 @@ f32 sphereDistQuick(Creature* c1, Creature* c2)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 sphereDist(Creature* c1, Creature* c2)
 {
@@ -920,7 +920,7 @@ f32 sphereDist(Creature* c1, Creature* c2)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Creature::collisionCheck(f32 _unused)
 {
@@ -1010,7 +1010,7 @@ void Creature::collisionCheck(f32 _unused)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 Vector3f Creature::getCatchPos(Creature* target)
 {
@@ -1022,7 +1022,7 @@ Vector3f Creature::getCatchPos(Creature* target)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Creature::needShadow()
 {
@@ -1033,7 +1033,7 @@ bool Creature::needShadow()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 Creature::getShadowSize()
 {
@@ -1041,7 +1041,7 @@ f32 Creature::getShadowSize()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000164
  */
 void showTri(Graphics& gfx, immut Vector3f& vec, CollTriInfo* tri)
@@ -1059,7 +1059,7 @@ void showTri(Graphics& gfx, immut Vector3f& vec, CollTriInfo* tri)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 static void recTraceShadowTris(Graphics& gfx, immut Vector3f& vec, CollTriInfo* tri)
 {
@@ -1091,7 +1091,7 @@ static void recTraceShadowTris(Graphics& gfx, immut Vector3f& vec, CollTriInfo* 
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  * @note UNUSED Size: 000098
  */
 void calcShadowTris(Graphics& gfx, immut Vector3f& vec, f32 rad)
@@ -1107,7 +1107,7 @@ void calcShadowTris(Graphics& gfx, immut Vector3f& vec, f32 rad)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Creature::drawShadow(Graphics& gfx)
 {
@@ -1198,7 +1198,7 @@ void Creature::drawShadow(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 qdist2(Creature* c1, Creature* c2)
 {
@@ -1208,7 +1208,7 @@ f32 qdist2(Creature* c1, Creature* c2)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 f32 circleDist(Creature* c1, Creature* c2)
 {
@@ -1217,7 +1217,7 @@ f32 circleDist(Creature* c1, Creature* c2)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Creature::moveVelocity()
 {
@@ -1272,7 +1272,7 @@ void Creature::moveVelocity()
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool Creature::getAvoid(immut Vector3f&, immut Vector3f&)
 {
@@ -1280,7 +1280,7 @@ bool Creature::getAvoid(immut Vector3f&, immut Vector3f&)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Creature::renderAtari(Graphics& gfx)
 {
@@ -1328,7 +1328,7 @@ void Creature::renderAtari(Graphics& gfx)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 bool roughCull(Creature* culler, Creature* target, f32 radius)
 {
@@ -1340,7 +1340,7 @@ bool roughCull(Creature* culler, Creature* target, f32 radius)
 }
 
 /**
- * @TODO: Documentation
+ * @todo: Documentation
  */
 void Creature::stickUpdate()
 {
