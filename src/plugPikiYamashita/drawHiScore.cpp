@@ -32,7 +32,7 @@ zen::DrawHiScore::DrawHiScore()
 
 	int stageCount = 0;
 	char buf[8];
-	for (int i = 0; i < 5; i++) {
+	for (int i = 0; i < MAX_HI_SCORES; i++) {
 		// parts / days
 		sprintf(buf, "p_%02d", i);
 		rewriteNumber(screen, P2DPaneLibrary::makeTag(buf), gameflow.mGamePrefs.mHiscores.mMinDayRecords[i].mNumParts, 2, true);
@@ -59,7 +59,7 @@ zen::DrawHiScore::DrawHiScore()
 			stageCount++;
 		}
 
-		for (int j = 0; j < 5; j++) {
+		for (int j = 0; j < STAGE_COUNT; j++) {
 			GameChalQuickInfo info;
 			info.mCourseID = j;
 			gameflow.mGamePrefs.getChallengeScores(info);
@@ -68,7 +68,7 @@ zen::DrawHiScore::DrawHiScore()
 		}
 	}
 
-	// if we haven't unlocked any challenge modes, hide the challenge mode records?
+	// If we haven't unlocked any challenge modes, hide the challenge mode records.
 	if (stageCount == 0) {
 		mTotalsPane->move(27, 130);
 		mCMRecordsPane->hide();

@@ -45,7 +45,7 @@ struct NinLogoSetupSection : public Node {
 			progresWindow->start();
 		}
 #endif
-		mMenu                            = 0;
+		mMenu                            = nullptr;
 		gameflow.mGamePrefs.mHasSaveGame = true;
 		gsys->setFade(1.0f, 3.0f);
 	}

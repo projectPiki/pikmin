@@ -54,7 +54,6 @@ void GamePrefs::Initialise()
 		LANG_English  // OS Dutch
 	};
 
-	STACK_PAD_VAR(3);
 	setChildMode(ids[OSGetLanguage()]);
 	mBgmVol                = 8;
 	mSfxVol                = 8;
