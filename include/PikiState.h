@@ -6,18 +6,24 @@
 #include "Vector.h"
 #include "types.h"
 
+/**
+ * @brief Piki high-level state IDs.
+ *
+ * Gameplay: this governs the Piki's current "mode of existence" (normal AI,
+ * hazards like fire/water, being held/thrown, growth/planting, etc.).
+ */
 enum PikiStateID {
-	PIKISTATE_Normal       = 0,
-	PIKISTATE_Grow         = 1,
-	PIKISTATE_Bury         = 2,
-	PIKISTATE_Nukare       = 3, // Being plucked from the ground by a captain.
-	PIKISTATE_NukareWait   = 4, // A planted sprout waiting to be plucked.
-	PIKISTATE_AutoNuki     = 5, // Plucking itself out of the ground (cursor nuki, dororo bark).
-	PIKISTATE_Dying        = 6,
-	PIKISTATE_Dead         = 7,
-	PIKISTATE_Swallowed    = 8,
-	PIKISTATE_Fired        = 9,
-	PIKISTATE_Bubble       = 10,
+	PIKISTATE_Normal       = 0,  // Default active behavior state.
+	PIKISTATE_Grow         = 1,  // Growth animation before becoming a planted sprout.
+	PIKISTATE_Bury         = 2,  // Converts the Piki into a planted sprout (PikiHeadItem) and removes the actor.
+	PIKISTATE_Nukare       = 3,  // Being plucked from the ground by a captain.
+	PIKISTATE_NukareWait   = 4,  // A planted sprout waiting to be plucked.
+	PIKISTATE_AutoNuki     = 5,  // Plucking itself out of the ground (cursor nuki, dororo bark).
+	PIKISTATE_Dying        = 6,  // Plays death sequence prior to becoming inert.
+	PIKISTATE_Dead         = 7,  // Inert/dead; no regular AI.
+	PIKISTATE_Swallowed    = 8,  // Captured inside an enemy (temporarily removed from play).
+	PIKISTATE_Fired        = 9,  // Burning panic state; usually ends in death unless extinguished.
+	PIKISTATE_Bubble       = 10, // Trapped in a bubble; panics until freed or time runs out.
 	PIKISTATE_GoHang       = 11, // Running to a captain to be thrown.
 	PIKISTATE_Hanged       = 12, // Held by a captain, ready for a throw.
 	PIKISTATE_WaterHanged  = 13, // Held by a captain over water.
@@ -27,26 +33,26 @@ enum PikiStateID {
 	PIKISTATE_Fall         = 17, // Falling from a height.
 	PIKISTATE_Wave         = 18, // Stunned by a shockwave.
 	PIKISTATE_GrowUp       = 19, // Maturing flower stage after drinking nectar.
-	PIKISTATE_Push         = 20,
-	PIKISTATE_PushPiki     = 21,
+	PIKISTATE_Push         = 20, // Local push/brace behavior (separation / unsticking).
+	PIKISTATE_PushPiki     = 21, // Resolves Piki-on-Piki pushing.
 	PIKISTATE_Flick        = 22, // Being knocked back by an attack.
 	PIKISTATE_Kinoko       = 23, // Infected by a Puffstool (mushroom state).
-	PIKISTATE_Drown        = 24,
-	PIKISTATE_Flown        = 25,
-	PIKISTATE_LookAt       = 26,
-	PIKISTATE_Bullet       = 27,
-	PIKISTATE_Absorb       = 28,
+	PIKISTATE_Drown        = 24, // Drowning struggle/sink/death sequence.
+	PIKISTATE_Flown        = 25, // Blown/knocked into a long tumble flight (distinct from thrown flight).
+	PIKISTATE_LookAt       = 26, // Called attention; turns to face the captain.
+	PIKISTATE_Bullet       = 27, // Launched as a fast projectile.
+	PIKISTATE_Absorb       = 28, // Drinks nectar/water object to trigger growth.
 	PIKISTATE_KinokoChange = 29, // Transforming into or out of the mushroom state.
-	PIKISTATE_FallMeck     = 30, // Special falling state from a mechanical enemy.
-	PIKISTATE_Emotion      = 31, // Performing an idle emotional animation (e.g., joy).
+	PIKISTATE_FallMeck     = 30, // Special fall/impact handling from mechanical enemies.
+	PIKISTATE_Emotion      = 31, // Performs an idle emotion animation (joy, sad, cheer, etc.).
 	PIKISTATE_UNUSED32     = 32, // Unused
-	PIKISTATE_Pressed      = 33, // Crushed or flattened by an object or enemy.
+	PIKISTATE_Pressed      = 33, // Crushed/flattened; stun + temporary invulnerability.
 	PIKISTATE_Unk34        = 34, // Unused
-	PIKISTATE_Count,             // 35?
+	PIKISTATE_Count,             // Total number of states.
 };
 
 /**
- * @brief TODO
+ * @brief Owns and routes a Piki's high-level state transitions.
  */
 struct PikiStateMachine : public StateMachine<Piki> {
 	virtual void init(Piki*);         // _08
@@ -54,11 +60,10 @@ struct PikiStateMachine : public StateMachine<Piki> {
 
 	// _00     = VTBL
 	// _00-_1C = StateMachine
-	// TODO: members
 };
 
 /**
- * @brief TODO
+ * @brief Base class for all Piki state handlers.
  */
 struct PikiState : public AState<Piki> {
 	PikiState(int stateID, immut char* name)
@@ -81,7 +86,7 @@ struct PikiState : public AState<Piki> {
 };
 
 /**
- * @brief TODO
+ * @brief Drinks nectar and triggers flower-stage growth.
  *
  * @note Size: 0x1C.
  */
@@ -103,7 +108,7 @@ protected:
 };
 
 /**
- * @brief TODO
+ * @brief Self-plucks from the ground without direct captain interaction.
  *
  * @note Size: 0x14.
  */
@@ -124,7 +129,7 @@ protected:
 };
 
 /**
- * @brief TODO
+ * @brief Bubble-trap panic behavior.
  *
  * @note Size: 0x20.
  */
@@ -146,7 +151,7 @@ protected:
 };
 
 /**
- * @brief TODO
+ * @brief Projectile flight state (fast launched movement + collisions).
  *
  * @note Size: 0x14.
  */
@@ -166,7 +171,7 @@ protected:
 };
 
 /**
- * @brief TODO
+ * @brief Plants the Piki as a sprout and removes the actor.
  *
  * @note Size: 0x10.
  */
@@ -184,7 +189,7 @@ protected:
 };
 
 /**
- * @brief TODO
+ * @brief Edge-slip and ledge-hang recovery (or transition into falling).
  *
  * @note Size: 0x2C.
  */
@@ -212,7 +217,7 @@ protected:
 };
 
 /**
- * @brief TODO
+ * @brief Inert dead state (no look/AI updates).
  *
  * @note Size: 0x10.
  */
@@ -231,7 +236,7 @@ protected:
 };
 
 /**
- * @brief TODO
+ * @brief Drowning sequence (struggle, sink, and death).
  *
  * @note Size: 0x2C.
  */
@@ -259,7 +264,7 @@ protected:
 };
 
 /**
- * @brief TODO
+ * @brief Death animation/sequence prior to becoming fully dead.
  *
  * @note Size: 0x10.
  */
@@ -279,7 +284,7 @@ protected:
 };
 
 /**
- * @brief TODO
+ * @brief Onion ejection (spawn-in bounce/land handling).
  *
  * @note Size: 0x14.
  */
@@ -300,7 +305,7 @@ protected:
 };
 
 /**
- * @brief TODO
+ * @brief Plays an idle emotion animation with optional gaze/cheer behavior.
  *
  * @note Size: 0x24.
  */
@@ -326,7 +331,7 @@ protected:
 };
 
 /**
- * @brief TODO
+ * @brief Mechanical-enemy specific fall/impact handling.
  *
  * @note Size: 0x10.
  */
@@ -345,7 +350,7 @@ protected:
 };
 
 /**
- * @brief TODO
+ * @brief Generic fall and landing recovery.
  *
  * @note Size: 0x14.
  */
@@ -366,7 +371,7 @@ protected:
 };
 
 /**
- * @brief TODO
+ * @brief Burning panic state (runs and eventually dies unless extinguished).
  *
  * @note Size: 0x20.
  */
@@ -388,7 +393,7 @@ protected:
 };
 
 /**
- * @brief TODO
+ * @brief Knockback/flick reaction with timed recovery.
  *
  * @note Size: 0x24.
  */
@@ -414,7 +419,7 @@ protected:
 };
 
 /**
- * @brief TODO
+ * @brief Long tumble flight after being launched by an enemy.
  *
  * @note Size: 0x24.
  */
@@ -441,7 +446,7 @@ protected:
 };
 
 /**
- * @brief TODO
+ * @brief Thrown-airborne flight (steering, collisions, and landing).
  *
  * @note Size: 0x44.
  */
@@ -473,7 +478,7 @@ protected:
 };
 
 /**
- * @brief TODO
+ * @brief Runs to the captain to be picked up for throwing.
  *
  * @note Size: 0x10.
  */
@@ -491,7 +496,7 @@ protected:
 };
 
 /**
- * @brief TODO
+ * @brief Pre-sprout growth animation (leads into bury/planting).
  *
  * @note Size: 0x10.
  */
@@ -511,7 +516,7 @@ protected:
 };
 
 /**
- * @brief TODO
+ * @brief Flower-stage upgrade after drinking nectar.
  *
  * @note Size: 0x10.
  */
@@ -531,7 +536,7 @@ protected:
 };
 
 /**
- * @brief TODO
+ * @brief Held by a captain, ready to be thrown.
  *
  * @note Size: 0x10.
  */
@@ -550,7 +555,7 @@ protected:
 };
 
 /**
- * @brief TODO
+ * @brief Handles the Puffstool infection transform in/out.
  *
  * @note Size: 0x14.
  */
@@ -572,7 +577,7 @@ protected:
 };
 
 /**
- * @brief TODO
+ * @brief Mushroom-infected behavior (hostile wander/attack).
  *
  * @note Size: 0x28.
  */
@@ -598,7 +603,7 @@ protected:
 };
 
 /**
- * @brief TODO
+ * @brief Called attention: turns to face the captain.
  *
  * @note Size: 0x1C.
  */
@@ -620,7 +625,7 @@ protected:
 };
 
 /**
- * @brief TODO
+ * @brief Default active state (regular AI + interaction routing).
  *
  * @note Size: 0x20.
  */
@@ -648,7 +653,7 @@ protected:
 };
 
 /**
- * @brief TODO
+ * @brief Pluck interaction (captain pulling sprout out).
  *
  * @note Size: 0x10.
  */
@@ -668,7 +673,7 @@ protected:
 };
 
 /**
- * @brief TODO
+ * @brief Idle planted sprout waiting to be plucked.
  *
  * @note Size: 0x10.
  */
@@ -687,7 +692,7 @@ protected:
 };
 
 /**
- * @brief TODO
+ * @brief Crushed/flattened reaction with stun and invulnerability.
  *
  * @note Size: 0x18.
  */
@@ -709,7 +714,7 @@ protected:
 };
 
 /**
- * @brief TODO
+ * @brief Piki-on-Piki pushing resolution.
  *
  * @note Size: 0x18.
  */
@@ -734,7 +739,7 @@ protected:
 };
 
 /**
- * @brief TODO
+ * @brief Push/brace behavior during crowding or wall contact.
  *
  * @note Size: 0x14.
  */
@@ -759,7 +764,7 @@ protected:
 };
 
 /**
- * @brief TODO
+ * @brief Inside-enemy swallowed handling.
  *
  * @note Size: 0x14.
  */
@@ -778,7 +783,7 @@ protected:
 };
 
 /**
- * @brief TODO
+ * @brief Held by a captain over water.
  *
  * @note Size: 0x10.
  */
@@ -797,7 +802,7 @@ protected:
 };
 
 /**
- * @brief TODO
+ * @brief Shockwave stun/reaction.
  *
  * @note Size: 0x10.
  */

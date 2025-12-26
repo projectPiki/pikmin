@@ -1,4 +1,3 @@
-#include "PikiState.h"
 #include "AIConstant.h"
 #include "BombItem.h"
 #include "CPlate.h"
@@ -18,6 +17,7 @@
 #include "PikiAI.h"
 #include "PikiHeadItem.h"
 #include "PikiMgr.h"
+#include "PikiState.h"
 #include "PlayerState.h"
 #include "RumbleMgr.h"
 #include "SoundMgr.h"
@@ -26,20 +26,114 @@
 #include "gameflow.h"
 #include "teki.h"
 
+
+namespace {
 /**
- * @todo: Documentation
+ * @brief Sub-phases for the "called attention" reaction.
+ *
+ * These values drive a short, animation-keyed sequence where a Piki notices the
+ * player, turns to face them, briefly waits, then returns to normal AI.
+ */
+enum LookAtSubstate {
+	LAS_Delay     = 0, ///< Randomized delay before starting the notice animation.
+	LAS_Noticing  = 1, ///< Playing the notice animation; waits for key events.
+	LAS_Turning   = 2, ///< Turning to face the player (rotation is stepped).
+	LAS_Waiting   = 3, ///< Briefly holds facing the player.
+	LAS_Returning = 4, ///< Waits out the return timer, then exits to normal.
+};
+
+/**
+ * @brief Sub-phases for nectar drinking.
+ */
+enum AbsorbSubstate {
+	AS_BeforeDrinkLoop = 0, ///< Started the animation, not yet in the loop window.
+	AS_Drinking        = 1, ///< In the loop window; triggers the nectar interaction.
+	AS_Finishing       = 2, ///< Nectar is gone; fast-forward to animation completion.
+};
+
+/**
+ * @brief Sub-phases for drowning (struggle then sink).
+ */
+enum DrownSubstate {
+	DS_PreStruggle = 0, ///< Waiting for the initial water-entry animation to finish.
+	DS_Struggle    = 1, ///< Repeats the struggle animation for a random duration.
+	DS_Sinking     = 2, ///< Plays the sinking animation; kills the Piki on finish.
+};
+
+/**
+ * @brief Sub-behaviors for Puffstool-infected Pikmin.
+ */
+enum KinokoSubstate {
+	KS_Boid   = 0, ///< Wander in a boid-like clump.
+	KS_Attack = 1, ///< Attack behavior (target-driven).
+};
+
+/**
+ * @brief Sub-phases for falling recovery.
+ */
+enum FallSubstate {
+	FS_Falling = 0, ///< Airborne fall; waits for a bounce/impact.
+	FS_Landed  = 1, ///< Plays the landing stumble animation.
+	FS_GetUp   = 2, ///< Plays the recovery/get-up animation.
+};
+
+/**
+ * @brief Flick reaction phases.
+ *
+ * Used for the short "hit away" reaction (typically from enemies/impacts).
+ */
+enum FlickSubstate {
+	FLS_FlyingBack = 0, ///< Airborne knockback.
+	FLS_Landing    = 1, ///< First ground impact / landing.
+	FLS_Downed     = 2, ///< Brief downed/stunned pose.
+	FLS_GettingUp  = 3, ///< Recovery back to normal.
+};
+
+/**
+ * @brief Long knockback flight phases.
+ *
+ * Similar to flick, but used for longer toss/launch trajectories.
+ */
+enum FlownSubstate {
+	FNS_Airborne  = 0, ///< Extended airborne travel.
+	FNS_Landing   = 1, ///< First ground impact / landing.
+	FNS_Downed    = 2, ///< Brief downed/stunned pose.
+	FNS_GettingUp = 3, ///< Recovery back to normal.
+};
+
+/**
+ * @brief Sub-phases for cliff/ledge recovery.
+ */
+enum CliffSubstate {
+	CS_SlideStart  = 0, ///< Starts slipping on the ledge.
+	CS_EdgeShuffle = 1, ///< Shuffles at the edge (may transition into hang/fall).
+	CS_Hanging     = 2, ///< Hanging animation loops before falling.
+	CS_FallAnim    = 3, ///< Explicit fall animation started from the ledge.
+};
+
+/**
+ * @brief Phases for ship-part gazing/cheering behavior.
+ */
+enum EmotionGazePhase {
+	EGP_None        = 0, ///< Not in a gaze sequence.
+	EGP_Gazing      = 1, ///< Looking at the ship part (alive).
+	EGP_HoldLastPos = 2, ///< Ship part vanished; keep looking at last position for a short time.
+	EGP_Done        = 3, ///< Finished; waits for animation to end/transition.
+};
+} // namespace
+
+/**
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(46)
 
 /**
- * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("pikiState")
 
 /**
- * @todo: Documentation
+ * @brief Registers all Piki state handlers.
  */
 void PikiStateMachine::init(Piki* piki)
 {
@@ -84,7 +178,7 @@ void PikiStateMachine::init(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief Debug: prints state name and any state-specific fields.
  */
 void PikiState::dump()
 {
@@ -93,14 +187,14 @@ void PikiState::dump()
 }
 
 /**
- * @todo: Documentation
+ * @brief Debug: optional state-specific dump payload.
  */
 void PikiState::doDump()
 {
 }
 
 /**
- * @todo: Documentation
+ * @brief Central transition hook for special-case state behavior.
  */
 void PikiStateMachine::transit(Piki* piki, int stateID)
 {
@@ -112,7 +206,7 @@ void PikiStateMachine::transit(Piki* piki, int stateID)
 }
 
 /**
- * @todo: Documentation
+ * @brief Default transition implementation.
  */
 void PikiState::transit(Piki* piki, int stateID)
 {
@@ -120,7 +214,7 @@ void PikiState::transit(Piki* piki, int stateID)
 }
 
 /**
- * @todo: Documentation
+ * @brief Constructs the "look at" (called attention) state.
  */
 PikiLookAtState::PikiLookAtState()
     : PikiState(PIKISTATE_LookAt, "LOOKAT")
@@ -128,12 +222,12 @@ PikiLookAtState::PikiLookAtState()
 }
 
 /**
- * @todo: Documentation
+ * @brief Enter the called-attention reaction.
  */
 void PikiLookAtState::init(Piki* piki)
 {
 	mTimer = (0.3f * gsys->getRand(1.0f));
-	mState = 0;
+	mState = LAS_Delay;
 	SeSystem::playPlayerSe(SE_PIKI_CALLED);
 	seSystem->playPikiSound(SEF_PIKI_CALLED, piki->mSRT.t);
 	piki->endStickObject();
@@ -141,7 +235,7 @@ void PikiLookAtState::init(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief Keeps the Piki focused on the player until it can resume normal AI.
  */
 void PikiLookAtState::exec(Piki* piki)
 {
@@ -150,28 +244,34 @@ void PikiLookAtState::exec(Piki* piki)
 	piki->mVelocity.x = piki->mVelocity.z = 0.0f;
 	piki->mFaceDirection                  = roundAng(angDist(atan2f(dir.x, dir.z), piki->mFaceDirection) * 0.1f + piki->mFaceDirection);
 
+	// Animation-driven reaction: delay -> notice -> turn -> wait -> return.
 	switch (mState) {
-	case 0:
+	case LAS_Delay:
+		// Randomized delay before starting the notice animation.
 		mTimer -= gsys->getFrameTime();
 		if (mTimer < 0.0f) {
 			mTimer = 0.0f;
 			piki->startMotion(PaniMotionInfo(PIKIANIM_Kizuku, piki), PaniMotionInfo(PIKIANIM_Kizuku));
-			mState = 1;
+			mState = LAS_Noticing;
 		}
 		break;
 
-	case 1:
+	case LAS_Noticing:
+		// Wait for animation key events to advance (turn/wait/finish).
 		break;
 
-	case 2:
+	case LAS_Turning:
+		// Step-turn toward the player.
 		piki->mFaceDirection += mRotationStep;
 		piki->mSRT.r.set(0.0f, mRotationStep, 0.0f);
 		break;
 
-	case 3:
+	case LAS_Waiting:
+		// Hold position/facing; KEY_Finished will move to LAS_Returning.
 		break;
 
 	default:
+		// Return timer: bail immediately if stuck to something, otherwise exit when it elapses.
 		mTimer -= gsys->getFrameTime();
 		if (piki->mStickTarget) {
 			piki->mFaceDirection = roundAng(piki->mFaceDirection + PI);
@@ -189,7 +289,7 @@ void PikiLookAtState::exec(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief Restores player-following behavior after the reaction completes.
  */
 void PikiLookAtState::cleanup(Piki* piki)
 {
@@ -197,29 +297,32 @@ void PikiLookAtState::cleanup(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief Advances reaction substate based on animation events.
  */
 void PikiLookAtState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
 	switch (msg->mKeyEvent->mEventType) {
 	case KEY_Action0:
-		mState        = 2;
+		// Compute a smooth multi-frame turn toward the player.
+		mState        = LAS_Turning;
 		Vector3f dir  = piki->mNavi->mSRT.t - piki->mSRT.t;
 		mRotationStep = angDist(atan2f(dir.x, dir.z), piki->mFaceDirection) / 7.0f;
 		break;
 
 	case KEY_Action1:
-		mState = 3;
+		// Enter a short wait after turning.
+		mState = LAS_Waiting;
 		break;
 
 	case KEY_Finished:
-		mState = 4;
+		// Begin return countdown; state exits when the timer elapses.
+		mState = LAS_Returning;
 		break;
 	}
 }
 
 /**
- * @todo: Documentation
+ * @brief Constructs the default active behavior state.
  */
 PikiNormalState::PikiNormalState()
     : PikiState(PIKISTATE_Normal, "NORMAL")
@@ -227,7 +330,7 @@ PikiNormalState::PikiNormalState()
 }
 
 /**
- * @todo: Documentation
+ * @brief Enter normal AI (reset per-state scratch values).
  */
 void PikiNormalState::init(Piki* piki)
 {
@@ -239,7 +342,7 @@ void PikiNormalState::init(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief Re-initializes the normal state after an interruption.
  */
 void PikiNormalState::restart(Piki* piki)
 {
@@ -247,7 +350,7 @@ void PikiNormalState::restart(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief Ensures dead Pikis promptly stop normal behavior.
  */
 void PikiNormalState::exec(Piki* piki)
 {
@@ -257,21 +360,21 @@ void PikiNormalState::exec(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief Normal state has no explicit cleanup.
  */
 void PikiNormalState::cleanup(Piki* piki)
 {
 }
 
 /**
- * @todo: Documentation
+ * @brief Wall contacts are handled elsewhere; keep state stable.
  */
 void PikiNormalState::procWallMsg(Piki*, MsgWall*)
 {
 }
 
 /**
- * @todo: Documentation
+ * @brief Clears variables.
  */
 void PikiNormalState::procOffWallMsg(Piki*, MsgOffWall*)
 {
@@ -280,7 +383,7 @@ void PikiNormalState::procOffWallMsg(Piki*, MsgOffWall*)
 }
 
 /**
- * @todo: Documentation
+ * @brief Routes simple environment interactions while in default AI.
  */
 void PikiNormalState::procCollideMsg(Piki* piki, MsgCollide* msg)
 {
@@ -289,8 +392,10 @@ void PikiNormalState::procCollideMsg(Piki* piki, MsgCollide* msg)
 		int type           = collider->mObjType;
 		mPushPiki          = 0;
 		if (!piki->isDamaged() && piki->mMode != PikiMode::TransportMode) {
+			// Only handle a few special collisions in Normal; everything else stays AI-driven.
 			switch (type) {
 			case OBJTYPE_Water:
+				// Nectar puddles are modeled as water; non-flower Pikmin can drink to grow.
 				if (piki->mHappa != Flower) {
 					piki->changeMode(PikiMode::FreeMode, piki->mNavi);
 					piki->mCurrNectar = collider;
@@ -298,6 +403,7 @@ void PikiNormalState::procCollideMsg(Piki* piki, MsgCollide* msg)
 				}
 				break;
 			case OBJTYPE_Piki:
+				// Remember a nearby pushing Pikmin so we can be shoved coherently.
 				if (static_cast<Piki*>(collider)->getState() == PIKISTATE_Push) {
 					mPushPiki = static_cast<Piki*>(collider);
 				}
@@ -308,7 +414,7 @@ void PikiNormalState::procCollideMsg(Piki* piki, MsgCollide* msg)
 }
 
 /**
- * @todo: Documentation
+ * @brief Constructs the nectar-drinking state.
  */
 PikiAbsorbState::PikiAbsorbState()
     : PikiState(PIKISTATE_Absorb, "ABSORB")
@@ -316,26 +422,27 @@ PikiAbsorbState::PikiAbsorbState()
 }
 
 /**
- * @todo: Documentation
+ * @brief Starts the drink animation and locks onto the nectar object.
  */
 void PikiAbsorbState::init(Piki* piki)
 {
 	piki->startMotion(PaniMotionInfo(PIKIANIM_Mizunomi, piki), PaniMotionInfo(PIKIANIM_Mizunomi));
-	mState             = 0;
+	mState             = AS_BeforeDrinkLoop;
 	mNectar            = piki->mCurrNectar;
 	mHasAbsorbedNectar = false;
 	piki->turnTo(mNectar->mSRT.t);
 }
 
 /**
- * @todo: Documentation
+ * @brief Performs the drink interaction during the animation's loop window.
  */
 void PikiAbsorbState::exec(Piki* piki)
 {
 	piki->mVelocity.x = piki->mVelocity.z = 0.0f;
 	piki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
+	// Nectar interaction is only applied during the animation's loop window.
 	switch (mState) {
-	case 1:
+	case AS_Drinking:
 		if (mNectar->isAlive()) {
 			MsgUser msg(0);
 			MizuItem* nectar           = static_cast<MizuItem*>(mNectar);
@@ -354,24 +461,27 @@ void PikiAbsorbState::exec(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief Drives the drink state machine using animation key events.
  */
 void PikiAbsorbState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
 	switch (msg->mKeyEvent->mEventType) {
 	case KEY_LoopStart:
-		if (mState != 1) {
+		// Start applying the drink interaction each frame during the loop.
+		if (mState != AS_Drinking) {
 			seSystem->playPikiSound(SEF_PIKI_DRINK, piki->mSRT.t);
 		}
-		mState = 1;
+		mState = AS_Drinking;
 		break;
 	case KEY_LoopEnd:
+		// If the nectar is gone, cut the loop short and finish the animation.
 		if (!mNectar->isAlive()) {
 			piki->mPikiAnimMgr.finishMotion(piki);
-			mState = 2;
+			mState = AS_Finishing;
 		}
 		break;
 	case KEY_Finished:
+		// Grow up only if we actually drank; otherwise return to normal.
 		if (mHasAbsorbedNectar) {
 			transit(piki, PIKISTATE_GrowUp);
 		} else {
@@ -382,14 +492,14 @@ void PikiAbsorbState::procAnimMsg(Piki* piki, MsgAnim* msg)
 }
 
 /**
- * @todo: Documentation
+ * @brief No cleanup required; transition target owns follow-up behavior.
  */
 void PikiAbsorbState::cleanup(Piki* piki)
 {
 }
 
 /**
- * @todo: Documentation
+ * @brief Constructs the drowning state.
  */
 PikiDrownState::PikiDrownState()
     : PikiState(PIKISTATE_Drown, "DROWN")
@@ -397,7 +507,7 @@ PikiDrownState::PikiDrownState()
 }
 
 /**
- * @todo: Documentation
+ * @brief Begins drowning; cancels incompatible hazards/actions.
  */
 void PikiDrownState::init(Piki* piki)
 {
@@ -406,9 +516,9 @@ void PikiDrownState::init(Piki* piki)
 	}
 
 	if (piki->mPikiAnimMgr.getUpperAnimator().getCurrentMotionIndex() == PIKIANIM_TYakusui) {
-		mState = 0;
+		mState = DS_PreStruggle;
 	} else {
-		mState = 1;
+		mState = DS_Struggle;
 		piki->startMotion(PaniMotionInfo(PIKIANIM_Oboreru, piki), PaniMotionInfo(PIKIANIM_Oboreru));
 	}
 
@@ -436,7 +546,7 @@ void PikiDrownState::init(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief Allows whistle-driven escape velocity while drowning.
  */
 void PikiDrownState::exec(Piki* piki)
 {
@@ -460,7 +570,7 @@ void PikiDrownState::exec(Piki* piki)
 		mOutOfWaterFrames = 0;
 	}
 
-	if (mState == 1) {
+	if (mState == DS_Struggle) {
 		Vector3f dir = piki->mNavi->mSRT.t - piki->mSRT.t;
 		dir.normalise();
 		mEscapeVelocity = piki->getSpeed(0.5f) * dir;
@@ -492,30 +602,32 @@ void PikiDrownState::exec(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief No explicit cleanup; follow-up state handles recovery/death.
  */
 void PikiDrownState::cleanup(Piki* piki)
 {
 }
 
 /**
- * @todo: Documentation
+ * @brief Advances drowning phases on animation completion.
  */
 void PikiDrownState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
 	switch (msg->mKeyEvent->mEventType) {
 	case KEY_Finished:
-		if (mState == 2) {
+		// Advance phase on animation completion: struggle loops, sinking kills.
+		if (mState == DS_Sinking) {
 			seSystem->playSoundDirect(5, SEW_PIKI_DEAD, piki->mSRT.t);
 			piki->kill(false);
 			break;
 		}
 
-		if (mState == 1) {
+		if (mState == DS_Struggle) {
+			// Struggle repeats a random number of times before sinking.
 			if (--mStruggleDuration == 0) {
 				piki->startMotion(PaniMotionInfo(PIKIANIM_Sizumu, piki), PaniMotionInfo(PIKIANIM_Sizumu));
 				seSystem->playSoundDirect(5, SEW_PIKI_SINK, piki->mSRT.t);
-				mState = 2;
+				mState = DS_Sinking;
 			} else {
 				piki->startMotion(PaniMotionInfo(PIKIANIM_Oboreru, piki), PaniMotionInfo(PIKIANIM_Oboreru));
 			}
@@ -523,8 +635,9 @@ void PikiDrownState::procAnimMsg(Piki* piki, MsgAnim* msg)
 			break;
 		}
 
-		if (mState == 0) {
-			mState = 1;
+		if (mState == DS_PreStruggle) {
+			// Transition from initial entry animation into active struggle.
+			mState = DS_Struggle;
 			piki->startMotion(PaniMotionInfo(PIKIANIM_Oboreru, piki), PaniMotionInfo(PIKIANIM_Oboreru));
 			seSystem->playSoundDirect(5, SEW_PIKI_DROWN, piki->mSRT.t);
 		}
@@ -534,7 +647,7 @@ void PikiDrownState::procAnimMsg(Piki* piki, MsgAnim* msg)
 }
 
 /**
- * @todo: Documentation
+ * @brief Constructs the Puffstool-infected (mushroom) behavior state.
  */
 PikiKinokoState::PikiKinokoState()
     : PikiState(PIKISTATE_Kinoko, "KINOKO")
@@ -542,7 +655,7 @@ PikiKinokoState::PikiKinokoState()
 }
 
 /**
- * @todo: Documentation
+ * @brief Begins infection behavior by selecting a target and starting to wander.
  */
 void PikiKinokoState::init(Piki* piki)
 {
@@ -550,11 +663,11 @@ void PikiKinokoState::init(Piki* piki)
 	mTarget = tekiMgr->findClosest(piki->mSRT.t, nullptr);
 	initWalk(piki);
 	piki->startMotion(PaniMotionInfo(PIKIANIM_Walk), PaniMotionInfo(PIKIANIM_Walk));
-	mState = 0;
+	mState = KS_Boid;
 }
 
 /**
- * @todo: Documentation
+ * @brief Picks a new biased random walk direction toward the chosen target.
  */
 void PikiKinokoState::initWalk(Piki* piki)
 {
@@ -573,29 +686,30 @@ void PikiKinokoState::initWalk(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief Runs the infection sub-behavior (wander vs attack).
  */
 void PikiKinokoState::exec(Piki* piki)
 {
+	// Infection alternates between wandering (boid) and attack.
 	switch (mState) {
-	case 0:
+	case KS_Boid:
 		exeBoid(piki);
 		break;
-	case 1:
+	case KS_Attack:
 		exeAttack(piki);
 		break;
 	}
 }
 
 /**
- * @todo: Documentation
+ * @brief Attack behavior for infected Pikis.
  */
 void PikiKinokoState::exeAttack(Piki* piki)
 {
 }
 
 /**
- * @todo: Documentation
+ * @brief Boid-like wandering for infected groups (keeps them clustered).
  */
 void PikiKinokoState::exeBoid(Piki* piki)
 {
@@ -669,7 +783,7 @@ void PikiKinokoState::exeBoid(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief Ends infection behavior when leaving the state.
  */
 void PikiKinokoState::cleanup(Piki* piki)
 {
@@ -677,7 +791,7 @@ void PikiKinokoState::cleanup(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief Constructs the bubble-trap panic state.
  */
 PikiBubbleState::PikiBubbleState()
     : PikiState(PIKISTATE_Bubble, "BUBBLE")
@@ -685,7 +799,7 @@ PikiBubbleState::PikiBubbleState()
 }
 
 /**
- * @todo: Documentation
+ * @brief Enters panic movement and starts the bubble visual effect.
  */
 void PikiBubbleState::init(Piki* piki)
 {
@@ -703,7 +817,7 @@ void PikiBubbleState::init(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief Forces aimless panic until the timer expires.
  */
 void PikiBubbleState::exec(Piki* piki)
 {
@@ -724,7 +838,7 @@ void PikiBubbleState::exec(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief Spawns the recovery burst and stops the bubble effect.
  */
 void PikiBubbleState::cleanup(Piki* piki)
 {
@@ -734,7 +848,7 @@ void PikiBubbleState::cleanup(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief Constructs the burning panic state.
  */
 PikiFiredState::PikiFiredState()
     : PikiState(PIKISTATE_Fired, "FIRED")
@@ -742,7 +856,7 @@ PikiFiredState::PikiFiredState()
 }
 
 /**
- * @todo: Documentation
+ * @brief Enters panic movement while on fire.
  */
 void PikiFiredState::init(Piki* piki)
 {
@@ -757,7 +871,7 @@ void PikiFiredState::init(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief Runs panicked movement until the burn timer expires.
  */
 void PikiFiredState::exec(Piki* piki)
 {
@@ -778,14 +892,14 @@ void PikiFiredState::exec(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief No explicit cleanup; fire system owns extinguish/death visuals.
  */
 void PikiFiredState::cleanup(Piki* piki)
 {
 }
 
 /**
- * @todo: Documentation
+ * @brief Constructs the swallowed (in-enemy mouth) state.
  */
 PikiSwallowedState::PikiSwallowedState()
     : PikiState(PIKISTATE_Swallowed, "SWALLOWED")
@@ -793,7 +907,7 @@ PikiSwallowedState::PikiSwallowedState()
 }
 
 /**
- * @todo: Documentation
+ * @brief Disables normal AI while the Piki is held in a mouth.
  */
 void PikiSwallowedState::init(Piki* piki)
 {
@@ -802,7 +916,7 @@ void PikiSwallowedState::init(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief Restores normal behavior once the mouth-stick is broken.
  */
 void PikiSwallowedState::exec(Piki* piki)
 {
@@ -822,7 +936,7 @@ void PikiSwallowedState::exec(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief Clears mouth linkage and restarts AI after release.
  */
 void PikiSwallowedState::cleanup(Piki* piki)
 {
@@ -831,7 +945,7 @@ void PikiSwallowedState::cleanup(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief Constructs the bullet (launched projectile) state.
  */
 PikiBulletState::PikiBulletState()
     : PikiState(PIKISTATE_Bullet, "BULLET")
@@ -839,7 +953,7 @@ PikiBulletState::PikiBulletState()
 }
 
 /**
- * @todo: Documentation
+ * @brief Starts the launch animation and resets distance tracking.
  */
 void PikiBulletState::init(Piki* piki)
 {
@@ -848,7 +962,7 @@ void PikiBulletState::init(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief Auto-acquires nearby enemies; otherwise times out back to formation.
  */
 void PikiBulletState::exec(Piki* piki)
 {
@@ -883,7 +997,7 @@ void PikiBulletState::exec(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief Cancels bullet travel if it hits a wall.
  */
 void PikiBulletState::procWallMsg(Piki* piki, MsgWall*)
 {
@@ -892,14 +1006,14 @@ void PikiBulletState::procWallMsg(Piki* piki, MsgWall*)
 }
 
 /**
- * @todo: Documentation
+ * @brief No explicit cleanup.
  */
 void PikiBulletState::cleanup(Piki* piki)
 {
 }
 
 /**
- * @todo: Documentation
+ * @brief Constructs the knockback (flick) reaction state.
  */
 PikiFlickState::PikiFlickState()
     : PikiState(PIKISTATE_Flick, "FLICK")
@@ -907,11 +1021,11 @@ PikiFlickState::PikiFlickState()
 }
 
 /**
- * @todo: Documentation
+ * @brief Begins a flick reaction by launching and suspending the current action.
  */
 void PikiFlickState::init(Piki* piki)
 {
-	mState            = 0;
+	mState            = FLS_FlyingBack;
 	mInitialAngle     = piki->mRotationAngle;
 	mRotationDelta    = 0.1f * (PI * gsys->getRand(1.0f));
 	piki->mVelocity.y = (50.0f * gsys->getRand(1.0f)) + 100.0f;
@@ -921,7 +1035,7 @@ void PikiFlickState::init(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief Applies airborne knockback then waits out the knockdown.
  */
 void PikiFlickState::exec(Piki* piki)
 {
@@ -930,7 +1044,7 @@ void PikiFlickState::exec(Piki* piki)
 		PRINT_KANDO("piki %x motion KENKA!\n", piki);
 	}
 
-	if (mState == 0) {
+	if (mState == FLS_FlyingBack) {
 		f32 rad              = mStrength;
 		piki->mVelocity.x    = -rad * sinf(mInitialAngle);
 		piki->mVelocity.z    = -rad * cosf(mInitialAngle);
@@ -938,11 +1052,11 @@ void PikiFlickState::exec(Piki* piki)
 		return;
 	}
 
-	if (mState == 2) {
+	if (mState == FLS_Downed) {
 		mGetUpTimer -= gsys->getFrameTime();
 		if ((mGetUpTimer < 0.0f || piki->mIsWhistlePending) && piki->isAlive()) {
 			piki->startMotion(PaniMotionInfo(PIKIANIM_GetUp, piki), PaniMotionInfo(PIKIANIM_GetUp));
-			mState = 3;
+			mState = FLS_GettingUp;
 		}
 
 		piki->mVelocity.x = 0.9f * piki->mVelocity.x;
@@ -957,19 +1071,19 @@ void PikiFlickState::exec(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief Advances flick phases based on animation completion.
  */
 void PikiFlickState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
 	switch (msg->mKeyEvent->mEventType) {
 	case KEY_Finished:
-		if (mState == 0) {
+		if (mState == FLS_FlyingBack) {
 			piki->startMotion(PaniMotionInfo(PIKIANIM_JKoke, piki), PaniMotionInfo(PIKIANIM_JKoke));
-			mState = 1;
+			mState = FLS_Landing;
 			break;
 		}
-		if (mState == 1) {
-			mState      = 2;
+		if (mState == FLS_Landing) {
+			mState      = FLS_Downed;
 			f32 min     = C_PIKI_PROP(piki).mMinFlickKnockDownTime();
 			f32 max     = C_PIKI_PROP(piki).mMaxFlickKnockDownTime();
 			mGetUpTimer = (max - min) * gsys->getRand(1.0f) + min;
@@ -1004,7 +1118,7 @@ void PikiFlickState::procAnimMsg(Piki* piki, MsgAnim* msg)
 }
 
 /**
- * @todo: Documentation
+ * @brief Restores control: either resume prior action or return to formation.
  */
 void PikiFlickState::cleanup(Piki* piki)
 {
@@ -1033,7 +1147,7 @@ void PikiFlickState::cleanup(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief Constructs the long knockback flight state.
  */
 PikiFlownState::PikiFlownState()
     : PikiState(PIKISTATE_Flown, "FLOWN")
@@ -1041,11 +1155,11 @@ PikiFlownState::PikiFlownState()
 }
 
 /**
- * @todo: Documentation
+ * @brief Begins a long knockback by starting the hit reaction.
  */
 void PikiFlownState::init(Piki* piki)
 {
-	mState          = 0;
+	mState          = FNS_Airborne;
 	mInitialAngle   = atan2f(piki->mVelocity.x, piki->mVelocity.z);
 	mRotationDelta  = 0.1f * (PI * gsys->getRand(1.0f));
 	mFlickIntensity = 0.1f * piki->mFlickIntensity * gsys->getRand(1.0f) + piki->mFlickIntensity;
@@ -1053,18 +1167,18 @@ void PikiFlownState::init(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief Converts airborne flight into a landing stumble on first bounce.
  */
 void PikiFlownState::procBounceMsg(Piki* piki, MsgBounce*)
 {
-	if (mState == 0) {
+	if (mState == FNS_Airborne) {
 		piki->startMotion(PaniMotionInfo(PIKIANIM_JKoke, piki), PaniMotionInfo(PIKIANIM_JKoke));
-		mState = 1;
+		mState = FNS_Landing;
 	}
 }
 
 /**
- * @todo: Documentation
+ * @brief Spins in-air, then waits out a knockdown timer before recovery.
  */
 void PikiFlownState::exec(Piki* piki)
 {
@@ -1073,16 +1187,16 @@ void PikiFlownState::exec(Piki* piki)
 		PRINT_KANDO("piki %x motion KENKA!\n", piki);
 	}
 
-	if (mState == 0) {
+	if (mState == FNS_Airborne) {
 		piki->mFaceDirection = roundAng(piki->mFaceDirection + mRotationDelta);
 		return;
 	}
 
-	if (mState == 2) {
+	if (mState == FNS_Downed) {
 		_10 -= gsys->getFrameTime();
 		if ((_10 < 0.0f || piki->mIsWhistlePending) && piki->isAlive()) {
 			piki->startMotion(PaniMotionInfo(PIKIANIM_GetUp, piki), PaniMotionInfo(PIKIANIM_GetUp));
-			mState = 3;
+			mState = FNS_GettingUp;
 		}
 		piki->mVelocity.x = 0.9f * piki->mVelocity.x;
 		piki->mVelocity.z = 0.9f * piki->mVelocity.z;
@@ -1096,14 +1210,14 @@ void PikiFlownState::exec(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief Advances flown phases based on animation completion.
  */
 void PikiFlownState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
 	switch (msg->mKeyEvent->mEventType) {
 	case KEY_Finished:
-		if (mState == 1) {
-			mState  = 2;
+		if (mState == FNS_Landing) {
+			mState  = FNS_Downed;
 			f32 min = C_PIKI_PROP(piki).mMinFlickKnockDownTime();
 			f32 max = C_PIKI_PROP(piki).mMaxFlickKnockDownTime();
 			_10     = (max - min) * gsys->getRand(1.0f) + min;
@@ -1138,7 +1252,7 @@ void PikiFlownState::procAnimMsg(Piki* piki, MsgAnim* msg)
 }
 
 /**
- * @todo: Documentation
+ * @brief Drops any pending behavior; recovery is handled by the next state.
  */
 void PikiFlownState::cleanup(Piki* piki)
 {
@@ -1159,7 +1273,7 @@ void PikiFlownState::cleanup(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief Constructs the mechanical knockback fall state.
  */
 PikiFallMeckState::PikiFallMeckState()
     : PikiState(PIKISTATE_FallMeck, "FALLMECK")
@@ -1167,7 +1281,7 @@ PikiFallMeckState::PikiFallMeckState()
 }
 
 /**
- * @todo: Documentation
+ * @brief Starts a fall animation and clears mouth-stuck swallow state.
  */
 void PikiFallMeckState::init(Piki* piki)
 {
@@ -1178,14 +1292,14 @@ void PikiFallMeckState::init(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief FallMeck behavior is driven by external physics/impacts.
  */
 void PikiFallMeckState::exec(Piki* piki)
 {
 }
 
 /**
- * @todo: Documentation
+ * @brief On impact, optionally converts the Piki into a buried sprout.
  */
 void PikiFallMeckState::procBounceMsg(Piki* piki, MsgBounce*)
 {
@@ -1235,14 +1349,14 @@ void PikiFallMeckState::procBounceMsg(Piki* piki, MsgBounce*)
 }
 
 /**
- * @todo: Documentation
+ * @brief No explicit cleanup.
  */
 void PikiFallMeckState::cleanup(Piki* piki)
 {
 }
 
 /**
- * @todo: Documentation
+ * @brief Constructs the generic falling state.
  */
 PikiFallState::PikiFallState()
     : PikiState(PIKISTATE_Fall, "FALL")
@@ -1250,46 +1364,46 @@ PikiFallState::PikiFallState()
 }
 
 /**
- * @todo: Documentation
+ * @brief Starts a fall animation and waits for landing.
  */
 void PikiFallState::init(Piki* piki)
 {
 	PRINT_KANDO("--- fall start\n");
 	piki->startMotion(PaniMotionInfo(PIKIANIM_Fall, piki), PaniMotionInfo(PIKIANIM_Fall));
-	mState = 0;
+	mState = FS_Falling;
 }
 
 /**
- * @todo: Documentation
+ * @brief Fall physics/pose is handled by core; keep state active.
  */
 void PikiFallState::exec(Piki* piki)
 {
 }
 
 /**
- * @todo: Documentation
+ * @brief Converts the fall into a landing stumble on first impact.
  */
 void PikiFallState::procBounceMsg(Piki* piki, MsgBounce*)
 {
 	PRINT_KANDO("fall : got bounce\n");
-	mState = 1;
+	mState = FS_Landed;
 	piki->startMotion(PaniMotionInfo(PIKIANIM_JKoke, piki), PaniMotionInfo(PIKIANIM_JKoke));
 }
 
 /**
- * @todo: Documentation
+ * @brief Returns the Piki to normal after recovery animations complete.
  */
 void PikiFallState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
 	switch (msg->mKeyEvent->mEventType) {
 	case KEY_Finished:
-		if (mState == 1) {
+		if (mState == FS_Landed) {
 			piki->startMotion(PaniMotionInfo(PIKIANIM_GetUp, piki), PaniMotionInfo(PIKIANIM_GetUp));
-			mState = 2;
+			mState = FS_GetUp;
 			break;
 		}
 
-		if (mState == 2) {
+		if (mState == FS_GetUp) {
 			transit(piki, PIKISTATE_Normal);
 		}
 		break;
@@ -1297,14 +1411,14 @@ void PikiFallState::procAnimMsg(Piki* piki, MsgAnim* msg)
 }
 
 /**
- * @todo: Documentation
+ * @brief No explicit cleanup.
  */
 void PikiFallState::cleanup(Piki* piki)
 {
 }
 
 /**
- * @todo: Documentation
+ * @brief Constructs the cliff-edge recovery state.
  */
 PikiCliffState::PikiCliffState()
     : PikiState(PIKISTATE_Cliff, "CLIFF")
@@ -1312,7 +1426,7 @@ PikiCliffState::PikiCliffState()
 }
 
 /**
- * @todo: Documentation
+ * @brief Begins a ledge-slip sequence (may lead into hang or fall).
  */
 void PikiCliffState::init(Piki* piki)
 {
@@ -1327,13 +1441,13 @@ void PikiCliffState::init(Piki* piki)
 
 	piki->startMotion(PaniMotionInfo(PIKIANIM_LSuberu, piki), PaniMotionInfo(PIKIANIM_LSuberu));
 	piki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
-	mState = 0;
+	mState = CS_SlideStart;
 	PRINT_KANDO("%x cliff start :: %s\n", piki, mCliffHangType ? "BURAN" : "OTIKAKE"); // 'hang' and 'fall' (i think)
 	mInitialFaceDir = piki->mFaceDirection;
 }
 
 /**
- * @todo: Documentation
+ * @brief Forces a fall if floor contact vanishes mid-sequence.
  */
 void PikiCliffState::exec(Piki* piki)
 {
@@ -1344,17 +1458,17 @@ void PikiCliffState::exec(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief Starts the explicit falling animation from a ledge.
  * @note UNUSED Size: 000088
  */
 void PikiCliffState::startFall(Piki* piki)
 {
 	piki->startMotion(PaniMotionInfo(PIKIANIM_Otiru, piki), PaniMotionInfo(PIKIANIM_Otiru));
-	mState = 3;
+	mState = CS_FallAnim;
 }
 
 /**
- * @todo: Documentation
+ * @brief Checks if the Piki is close enough to a ledge to justify hanging.
  */
 bool PikiCliffState::nearEnough(Piki* piki)
 {
@@ -1388,25 +1502,28 @@ bool PikiCliffState::nearEnough(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief Drives cliff recovery using animation loop/finish events.
  */
 void PikiCliffState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
 	switch (msg->mKeyEvent->mEventType) {
 	case KEY_Finished:
+		// Some animations end once per phase; interpret finish based on cliff substate.
 		switch (mState) {
-		case 0:
+		case CS_SlideStart:
+			// Initial slip finished: move into edge shuffle loop.
 			if (mCliffHangType >= 2 || mCliffHangType < 0) {
 				return;
 			}
 
-			mState       = 1;
+			mState       = CS_EdgeShuffle;
 			mLoopCounter = int((2.0f * gsys->getRand(1.0f))) + 1;
 			PRINT_KANDO("otikake motion start\n");
 			piki->startMotion(PaniMotionInfo(PIKIANIM_Otikake, piki), PaniMotionInfo(PIKIANIM_Otikake));
 			break;
 
-		case 3:
+		case CS_FallAnim:
+			// Falling animation finished: either we landed (back to normal) or keep falling.
 			if (!piki->mGroundTriangle) {
 				PRINT_KANDO("piki fall (otiru) %x\n", piki);
 				transit(piki, PIKISTATE_Fall);
@@ -1416,7 +1533,8 @@ void PikiCliffState::procAnimMsg(Piki* piki, MsgAnim* msg)
 			transit(piki, PIKISTATE_Normal);
 			break;
 
-		case 1:
+		case CS_EdgeShuffle:
+			// Edge shuffle finished without transitioning into hang/fall: recover.
 			PRINT_KANDO("goto normal !?\n");
 			transit(piki, PIKISTATE_Normal);
 			break;
@@ -1424,8 +1542,10 @@ void PikiCliffState::procAnimMsg(Piki* piki, MsgAnim* msg)
 		break;
 
 	case KEY_LoopEnd:
+		// Loop-end is used for repeated edge/hang loops and their exit conditions.
 		switch (mState) {
-		case 1:
+		case CS_EdgeShuffle:
+			// After N loops: attempt hang, otherwise start the fall animation.
 			mLoopCounter--;
 			if (mLoopCounter > 0) {
 				break;
@@ -1441,7 +1561,7 @@ void PikiCliffState::procAnimMsg(Piki* piki, MsgAnim* msg)
 						if (dist > -0.2f && dist < 3.0f) {
 							PRINT_KANDO("piki%x : ####### start buran motion :: floor = %s\n", piki,
 							            piki->mGroundTriangle ? "on floor" : "air");
-							mState       = 2;
+							mState       = CS_Hanging;
 							mLoopCounter = int((2.0f * gsys->getRand(1.0f))) + 2;
 							break;
 						}
@@ -1468,7 +1588,8 @@ void PikiCliffState::procAnimMsg(Piki* piki, MsgAnim* msg)
 			startFall(piki);
 			break;
 
-		case 2:
+		case CS_Hanging:
+			// Hanging loops a few times, then drops into the generic fall state.
 			mLoopCounter--;
 			if (mLoopCounter > 0) {
 				break;
@@ -1484,7 +1605,7 @@ void PikiCliffState::procAnimMsg(Piki* piki, MsgAnim* msg)
 }
 
 /**
- * @todo: Documentation
+ * @brief Emits debug trace and leaves cleanup to the next state.
  */
 void PikiCliffState::cleanup(Piki* piki)
 {
@@ -1492,7 +1613,7 @@ void PikiCliffState::cleanup(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief Constructs the "run to player hand" state used before throwing.
  */
 PikiGoHangState::PikiGoHangState()
     : PikiState(PIKISTATE_GoHang, "GOHANG")
@@ -1500,7 +1621,7 @@ PikiGoHangState::PikiGoHangState()
 }
 
 /**
- * @todo: Documentation
+ * @brief Starts running toward the player to be picked up.
  */
 void PikiGoHangState::init(Piki* piki)
 {
@@ -1508,7 +1629,7 @@ void PikiGoHangState::init(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief Pulls the Piki toward the player's hand during throw prep.
  */
 void PikiGoHangState::exec(Piki* piki)
 {
@@ -1526,14 +1647,14 @@ void PikiGoHangState::exec(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief No explicit cleanup.
  */
 void PikiGoHangState::cleanup(Piki* piki)
 {
 }
 
 /**
- * @todo: Documentation
+ * @brief Constructs the "held for throw" state.
  */
 PikiHangedState::PikiHangedState()
     : PikiState(PIKISTATE_Hanged, "HANGED")
@@ -1541,7 +1662,7 @@ PikiHangedState::PikiHangedState()
 }
 
 /**
- * @todo: Documentation
+ * @brief Plays the "ready to throw" sound on animation loop.
  */
 void PikiHangedState::procAnimMsg(Piki*, MsgAnim* msg)
 {
@@ -1553,7 +1674,7 @@ void PikiHangedState::procAnimMsg(Piki*, MsgAnim* msg)
 }
 
 /**
- * @todo: Documentation
+ * @brief Freezes movement and holds the throw-ready pose.
  */
 void PikiHangedState::init(Piki* piki)
 {
@@ -1565,7 +1686,7 @@ void PikiHangedState::init(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief Cancels the held state if the player stops throw-prep.
  */
 void PikiHangedState::exec(Piki* piki)
 {
@@ -1575,7 +1696,7 @@ void PikiHangedState::exec(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief Stops the throw-ready sound.
  */
 void PikiHangedState::cleanup(Piki* piki)
 {
@@ -1583,7 +1704,7 @@ void PikiHangedState::cleanup(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief Constructs the "held over water" variant of throw-ready.
  */
 PikiWaterHangedState::PikiWaterHangedState()
     : PikiState(PIKISTATE_WaterHanged, "WATER_HANGED")
@@ -1591,7 +1712,7 @@ PikiWaterHangedState::PikiWaterHangedState()
 }
 
 /**
- * @todo: Documentation
+ * @brief Plays the "ready to throw" sound on animation loop.
  */
 void PikiWaterHangedState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
@@ -1603,7 +1724,7 @@ void PikiWaterHangedState::procAnimMsg(Piki* piki, MsgAnim* msg)
 }
 
 /**
- * @todo: Documentation
+ * @brief Holds the throw-ready pose while forcing zero velocity.
  */
 void PikiWaterHangedState::init(Piki* piki)
 {
@@ -1616,7 +1737,7 @@ void PikiWaterHangedState::init(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief Cancels the held state if the player stops throw-prep.
  */
 void PikiWaterHangedState::exec(Piki* piki)
 {
@@ -1627,7 +1748,7 @@ void PikiWaterHangedState::exec(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief Stops the throw-ready sound.
  */
 void PikiWaterHangedState::cleanup(Piki* piki)
 {
@@ -1636,7 +1757,7 @@ void PikiWaterHangedState::cleanup(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief Constructs the Onion ejection state.
  */
 PikiEmitState::PikiEmitState()
     : PikiState(PIKISTATE_Emit, "EMIT")
@@ -1644,7 +1765,7 @@ PikiEmitState::PikiEmitState()
 }
 
 /**
- * @todo: Documentation
+ * @brief Stops normal AI while playing the ejection animation.
  */
 void PikiEmitState::init(Piki* piki)
 {
@@ -1656,7 +1777,7 @@ void PikiEmitState::init(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief Prevents motion while waiting for the "landed" phase.
  */
 void PikiEmitState::exec(Piki* piki)
 {
@@ -1667,7 +1788,7 @@ void PikiEmitState::exec(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief Restarts AI once the ejection sequence finishes.
  */
 void PikiEmitState::cleanup(Piki* piki)
 {
@@ -1675,7 +1796,7 @@ void PikiEmitState::cleanup(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief Switches from airborne to bury animation on first bounce.
  */
 void PikiEmitState::procBounceMsg(Piki* piki, MsgBounce*)
 {
@@ -1686,7 +1807,7 @@ void PikiEmitState::procBounceMsg(Piki* piki, MsgBounce*)
 }
 
 /**
- * @todo: Documentation
+ * @brief Loops the jump until it "lands", then transitions into planting.
  */
 void PikiEmitState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
@@ -1702,7 +1823,7 @@ void PikiEmitState::procAnimMsg(Piki* piki, MsgAnim* msg)
 }
 
 /**
- * @todo: Documentation
+ * @brief Constructs the thrown-airborne flight state.
  */
 PikiFlyingState::PikiFlyingState()
     : PikiState(PIKISTATE_Flying, "FLYING")
@@ -1710,7 +1831,7 @@ PikiFlyingState::PikiFlyingState()
 }
 
 /**
- * @todo: Documentation
+ * @brief Halts any flight-specific looping effects.
  */
 void PikiFlyingState::stopEffect()
 {
@@ -1718,7 +1839,7 @@ void PikiFlyingState::stopEffect()
 }
 
 /**
- * @todo: Documentation
+ * @brief Restarts flight-specific looping effects.
  */
 void PikiFlyingState::restartEffect()
 {
@@ -1726,7 +1847,7 @@ void PikiFlyingState::restartEffect()
 }
 
 /**
- * @todo: Documentation
+ * @brief Enters thrown flight: stop AI, play flight sound, enable sticking.
  */
 void PikiFlyingState::init(Piki* piki)
 {
@@ -1745,7 +1866,7 @@ void PikiFlyingState::init(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief Implements flower gliding and failsafes to ensure landing.
  */
 void PikiFlyingState::exec(Piki* piki)
 {
@@ -1835,7 +1956,7 @@ void PikiFlyingState::exec(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief Cleans up flight effects and restores AI control.
  */
 void PikiFlyingState::cleanup(Piki* piki)
 {
@@ -1845,7 +1966,7 @@ void PikiFlyingState::cleanup(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief Converts mid-air collisions into appropriate actions (stick/attack/work).
  */
 void PikiFlyingState::procCollideMsg(Piki* piki, MsgCollide* msg)
 {
@@ -2014,14 +2135,14 @@ void PikiFlyingState::procCollideMsg(Piki* piki, MsgCollide* msg)
 }
 
 /**
- * @todo: Documentation
+ * @brief Ignored for this state (sticking is handled via collisions).
  */
 void PikiFlyingState::procStickMsg(Piki*, MsgStick*)
 {
 }
 
 /**
- * @todo: Documentation
+ * @brief Finalizes flight: bounce-handling vs normal landing behavior.
  */
 void PikiFlyingState::procBounceMsg(Piki* piki, MsgBounce*)
 {
@@ -2051,7 +2172,7 @@ void PikiFlyingState::procBounceMsg(Piki* piki, MsgBounce*)
 }
 
 /**
- * @todo: Documentation
+ * @brief Constructs the pre-bury growth state.
  */
 PikiGrowState::PikiGrowState()
     : PikiState(PIKISTATE_Grow, "GROW")
@@ -2059,7 +2180,7 @@ PikiGrowState::PikiGrowState()
 }
 
 /**
- * @todo: Documentation
+ * @brief Plays the first growth animation and clears formation priority.
  */
 void PikiGrowState::init(Piki* piki)
 {
@@ -2068,21 +2189,21 @@ void PikiGrowState::init(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief Growth is animation-driven.
  */
 void PikiGrowState::exec(Piki* piki)
 {
 }
 
 /**
- * @todo: Documentation
+ * @brief No explicit cleanup.
  */
 void PikiGrowState::cleanup(Piki* piki)
 {
 }
 
 /**
- * @todo: Documentation
+ * @brief Transitions into planting once the growth animation finishes.
  */
 void PikiGrowState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
@@ -2094,7 +2215,7 @@ void PikiGrowState::procAnimMsg(Piki* piki, MsgAnim* msg)
 }
 
 /**
- * @todo: Documentation
+ * @brief Constructs the kinoko (infection) transform state.
  */
 PikiKinokoChangeState::PikiKinokoChangeState()
     : PikiState(PIKISTATE_KinokoChange, "KINOKO_CHANGE")
@@ -2102,7 +2223,7 @@ PikiKinokoChangeState::PikiKinokoChangeState()
 }
 
 /**
- * @todo: Documentation
+ * @brief Plays a transform animation and decides direction (enter/exit infection).
  */
 void PikiKinokoChangeState::init(Piki* piki)
 {
@@ -2116,7 +2237,7 @@ void PikiKinokoChangeState::init(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief Replays the transform sequence.
  */
 void PikiKinokoChangeState::restart(Piki* piki)
 {
@@ -2124,7 +2245,7 @@ void PikiKinokoChangeState::restart(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief Freezes movement until the animation reaches the morph point.
  */
 void PikiKinokoChangeState::exec(Piki* piki)
 {
@@ -2140,14 +2261,14 @@ void PikiKinokoChangeState::exec(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief No explicit cleanup.
  */
 void PikiKinokoChangeState::cleanup(Piki* piki)
 {
 }
 
 /**
- * @todo: Documentation
+ * @brief Applies the morph at the keyed moment and returns to normal.
  */
 void PikiKinokoChangeState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
@@ -2167,7 +2288,7 @@ void PikiKinokoChangeState::procAnimMsg(Piki* piki, MsgAnim* msg)
 }
 
 /**
- * @todo: Documentation
+ * @brief Constructs the nectar-driven grow-up state.
  */
 PikiGrowupState::PikiGrowupState()
     : PikiState(PIKISTATE_GrowUp, "GROWUP")
@@ -2175,7 +2296,7 @@ PikiGrowupState::PikiGrowupState()
 }
 
 /**
- * @todo: Documentation
+ * @brief Chooses which grow-up animation to play based on timer.
  */
 void PikiGrowupState::init(Piki* piki)
 {
@@ -2187,7 +2308,7 @@ void PikiGrowupState::init(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief Holds still during the grow-up animation and exits when complete.
  */
 void PikiGrowupState::exec(Piki* piki)
 {
@@ -2200,14 +2321,14 @@ void PikiGrowupState::exec(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief No explicit cleanup.
  */
 void PikiGrowupState::cleanup(Piki* piki)
 {
 }
 
 /**
- * @todo: Documentation
+ * @brief Applies the flower-stage upgrade on key events.
  */
 void PikiGrowupState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
@@ -2232,7 +2353,7 @@ void PikiGrowupState::procAnimMsg(Piki* piki, MsgAnim* msg)
 }
 
 /**
- * @todo: Documentation
+ * @brief Constructs the shockwave stun state.
  */
 PikiWaveState::PikiWaveState()
     : PikiState(PIKISTATE_Wave, "WAVE")
@@ -2240,28 +2361,28 @@ PikiWaveState::PikiWaveState()
 }
 
 /**
- * @todo: Documentation
+ * @brief Shockwave handling is animation/driver controlled.
  */
 void PikiWaveState::init(Piki* piki)
 {
 }
 
 /**
- * @todo: Documentation
+ * @brief Shockwave handling is animation/driver controlled.
  */
 void PikiWaveState::exec(Piki* piki)
 {
 }
 
 /**
- * @todo: Documentation
+ * @brief No explicit cleanup.
  */
 void PikiWaveState::cleanup(Piki* piki)
 {
 }
 
 /**
- * @todo: Documentation
+ * @brief Allows interrupted shockwave states to return to normal.
  */
 void PikiWaveState::resume(Piki* piki)
 {
@@ -2269,14 +2390,14 @@ void PikiWaveState::resume(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief Re-entry uses init/animation side effects.
  */
 void PikiWaveState::restart(Piki* piki)
 {
 }
 
 /**
- * @todo: Documentation
+ * @brief Returns to normal once the stun animation completes.
  */
 void PikiWaveState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
@@ -2291,7 +2412,7 @@ void PikiWaveState::procAnimMsg(Piki* piki, MsgAnim* msg)
 }
 
 /**
- * @todo: Documentation
+ * @brief Unused helper for applying a wave hit to the Piki.
  * @note UNUSED Size: 000004
  */
 void PikiWaveState::waveAttack(Piki* piki)
@@ -2299,7 +2420,7 @@ void PikiWaveState::waveAttack(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief Constructs the wall-pushing state.
  */
 PikiPushState::PikiPushState()
     : PikiState(PIKISTATE_Push, "PUSH")
@@ -2307,7 +2428,7 @@ PikiPushState::PikiPushState()
 }
 
 /**
- * @todo: Documentation
+ * @brief Starts the push animation and arms finish detection.
  */
 void PikiPushState::init(Piki* piki)
 {
@@ -2316,7 +2437,7 @@ void PikiPushState::init(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief Keeps pushing while the player input remains committed.
  */
 void PikiPushState::exec(Piki* piki)
 {
@@ -2337,7 +2458,7 @@ void PikiPushState::exec(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief Clears the cached wall target.
  */
 void PikiPushState::cleanup(Piki* piki)
 {
@@ -2345,7 +2466,7 @@ void PikiPushState::cleanup(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief If resumed, abandon pushing and return to normal.
  */
 void PikiPushState::resume(Piki* piki)
 {
@@ -2353,14 +2474,14 @@ void PikiPushState::resume(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief Re-entry uses init/animation side effects.
  */
 void PikiPushState::restart(Piki* piki)
 {
 }
 
 /**
- * @todo: Documentation
+ * @brief Stops pushing if the wall contact is lost.
  */
 void PikiPushState::procOffWallMsg(Piki* piki, MsgOffWall*)
 {
@@ -2368,7 +2489,7 @@ void PikiPushState::procOffWallMsg(Piki* piki, MsgOffWall*)
 }
 
 /**
- * @todo: Documentation
+ * @brief Exits pushing when the animation completes.
  */
 void PikiPushState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
@@ -2385,7 +2506,7 @@ void PikiPushState::procAnimMsg(Piki* piki, MsgAnim* msg)
 }
 
 /**
- * @todo: Documentation
+ * @brief Constructs the "pushing another Piki" variant.
  */
 PikiPushPikiState::PikiPushPikiState()
     : PikiState(PIKISTATE_PushPiki, "PUSHPIKI")
@@ -2393,7 +2514,7 @@ PikiPushPikiState::PikiPushPikiState()
 }
 
 /**
- * @todo: Documentation
+ * @brief Starts the push animation and initializes collision bookkeeping.
  */
 void PikiPushPikiState::init(Piki* piki)
 {
@@ -2403,7 +2524,7 @@ void PikiPushPikiState::init(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief Continues the shove while the target remains in a push state.
  */
 void PikiPushPikiState::exec(Piki* piki)
 {
@@ -2423,7 +2544,7 @@ void PikiPushPikiState::exec(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief Clears the push target.
  */
 void PikiPushPikiState::cleanup(Piki* piki)
 {
@@ -2431,7 +2552,7 @@ void PikiPushPikiState::cleanup(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief If resumed, abandon pushing and return to normal.
  */
 void PikiPushPikiState::resume(Piki* piki)
 {
@@ -2439,14 +2560,14 @@ void PikiPushPikiState::resume(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief Re-entry uses init/animation side effects.
  */
 void PikiPushPikiState::restart(Piki* piki)
 {
 }
 
 /**
- * @todo: Documentation
+ * @brief Mirrors the pushed Piki's target direction when colliding with it.
  */
 void PikiPushPikiState::procCollideMsg(Piki* piki, MsgCollide* msg)
 {
@@ -2465,14 +2586,14 @@ void PikiPushPikiState::procCollideMsg(Piki* piki, MsgCollide* msg)
 }
 
 /**
- * @todo: Documentation
+ * @brief Ignored; pushing logic is driven by collisions/animation.
  */
 void PikiPushPikiState::procWallMsg(Piki*, MsgWall*)
 {
 }
 
 /**
- * @todo: Documentation
+ * @brief Exits pushing when the animation completes.
  */
 void PikiPushPikiState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
@@ -2491,7 +2612,7 @@ void PikiPushPikiState::procAnimMsg(Piki* piki, MsgAnim* msg)
 }
 
 /**
- * @todo: Documentation
+ * @brief Constructs the bury (sprout creation) state.
  */
 PikiBuryState::PikiBuryState()
     : PikiState(PIKISTATE_Bury, "BURY")
@@ -2499,14 +2620,14 @@ PikiBuryState::PikiBuryState()
 }
 
 /**
- * @todo: Documentation
+ * @brief Burying is executed immediately in exec().
  */
 void PikiBuryState::init(Piki* piki)
 {
 }
 
 /**
- * @todo: Documentation
+ * @brief Spawns a sprout at the current position and erases the Piki.
  */
 void PikiBuryState::exec(Piki* piki)
 {
@@ -2554,14 +2675,14 @@ void PikiBuryState::exec(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief No explicit cleanup.
  */
 void PikiBuryState::cleanup(Piki* piki)
 {
 }
 
 /**
- * @todo: Documentation
+ * @brief Constructs the "plucked but frozen" wait state.
  */
 PikiNukareWaitState::PikiNukareWaitState()
     : PikiState(PIKISTATE_NukareWait, "NUKARE_WAIT")
@@ -2569,7 +2690,7 @@ PikiNukareWaitState::PikiNukareWaitState()
 }
 
 /**
- * @todo: Documentation
+ * @brief Enters the pluck animation and optionally locks player input for tutorials.
  */
 void PikiNukareWaitState::init(Piki* piki)
 {
@@ -2586,7 +2707,7 @@ void PikiNukareWaitState::init(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief Holds the pluck animation at frame 0 until released.
  */
 void PikiNukareWaitState::exec(Piki* piki)
 {
@@ -2601,14 +2722,14 @@ void PikiNukareWaitState::exec(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief No explicit cleanup.
  */
 void PikiNukareWaitState::cleanup(Piki* piki)
 {
 }
 
 /**
- * @todo: Documentation
+ * @brief Constructs the active pluck ("nukare") state.
  */
 PikiNukareState::PikiNukareState()
     : PikiState(PIKISTATE_Nukare, "NUKARE")
@@ -2616,7 +2737,7 @@ PikiNukareState::PikiNukareState()
 }
 
 /**
- * @todo: Documentation
+ * @brief Locks movement/input and arms tutorial/demo progression.
  */
 void PikiNukareState::init(Piki* piki)
 {
@@ -2629,14 +2750,14 @@ void PikiNukareState::init(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief Plucking is animation-driven.
  */
 void PikiNukareState::exec(Piki* piki)
 {
 }
 
 /**
- * @todo: Documentation
+ * @brief Updates tutorial flags/unlocks after a successful pluck.
  */
 void PikiNukareState::cleanup(Piki* piki)
 {
@@ -2676,7 +2797,7 @@ void PikiNukareState::cleanup(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief Spawns pluck effects and returns the Piki to normal on finish.
  */
 void PikiNukareState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
@@ -2712,7 +2833,7 @@ void PikiNukareState::procAnimMsg(Piki* piki, MsgAnim* msg)
 }
 
 /**
- * @todo: Documentation
+ * @brief Constructs the automatic unbury/unpluck recovery state.
  */
 PikiAutoNukiState::PikiAutoNukiState()
     : PikiState(PIKISTATE_AutoNuki, "AUTONUKI")
@@ -2720,7 +2841,7 @@ PikiAutoNukiState::PikiAutoNukiState()
 }
 
 /**
- * @todo: Documentation
+ * @brief Plays a recovery motion and freezes movement until it completes.
  */
 void PikiAutoNukiState::init(Piki* piki)
 {
@@ -2734,7 +2855,7 @@ void PikiAutoNukiState::init(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief Spawns the dirt burst at the keyed animation moment.
  */
 void PikiAutoNukiState::exec(Piki* piki)
 {
@@ -2747,14 +2868,14 @@ void PikiAutoNukiState::exec(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief No explicit cleanup.
  */
 void PikiAutoNukiState::cleanup(Piki* piki)
 {
 }
 
 /**
- * @todo: Documentation
+ * @brief Drives effect timing and exits to formation when finished.
  */
 void PikiAutoNukiState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
@@ -2772,7 +2893,7 @@ void PikiAutoNukiState::procAnimMsg(Piki* piki, MsgAnim* msg)
 }
 
 /**
- * @todo: Documentation
+ * @brief Constructs the flattened (pressed) state.
  */
 PikiPressedState::PikiPressedState()
     : PikiState(PIKISTATE_Pressed, "PRESSED")
@@ -2780,7 +2901,7 @@ PikiPressedState::PikiPressedState()
 }
 
 /**
- * @todo: Documentation
+ * @brief Pressed-by-enemy collisions extend stun/invincibility.
  */
 void PikiPressedState::procCollideMsg(Piki* piki, MsgCollide* msg)
 {
@@ -2791,7 +2912,7 @@ void PikiPressedState::procCollideMsg(Piki* piki, MsgCollide* msg)
 }
 
 /**
- * @todo: Documentation
+ * @brief Flattens the model and enters a short invincibility window.
  */
 void PikiPressedState::init(Piki* piki)
 {
@@ -2803,7 +2924,7 @@ void PikiPressedState::init(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief Counts down press recovery and triggers death if health runs out.
  */
 void PikiPressedState::exec(Piki* piki)
 {
@@ -2835,14 +2956,14 @@ void PikiPressedState::exec(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief No explicit cleanup.
  */
 void PikiPressedState::cleanup(Piki* piki)
 {
 }
 
 /**
- * @todo: Documentation
+ * @brief Constructs the dying (death animation) state.
  */
 PikiDyingState::PikiDyingState()
     : PikiState(PIKISTATE_Dying, "DYING")
@@ -2850,7 +2971,7 @@ PikiDyingState::PikiDyingState()
 }
 
 /**
- * @todo: Documentation
+ * @brief Stops current actions, plays a death anim, and drops held bombs.
  */
 void PikiDyingState::init(Piki* piki)
 {
@@ -2872,7 +2993,7 @@ void PikiDyingState::init(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief Holds still while the death animation plays.
  */
 void PikiDyingState::exec(Piki* piki)
 {
@@ -2881,14 +3002,14 @@ void PikiDyingState::exec(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief No explicit cleanup.
  */
 void PikiDyingState::cleanup(Piki* piki)
 {
 }
 
 /**
- * @todo: Documentation
+ * @brief Finishes dying by transitioning into the dead (fade/shrink) state.
  */
 void PikiDyingState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
@@ -2904,7 +3025,7 @@ void PikiDyingState::procAnimMsg(Piki* piki, MsgAnim* msg)
 }
 
 /**
- * @todo: Documentation
+ * @brief Constructs the dead (shrink-out) state.
  */
 PikiDeadState::PikiDeadState()
     : PikiState(PIKISTATE_Dead, "DEAD")
@@ -2912,7 +3033,7 @@ PikiDeadState::PikiDeadState()
 }
 
 /**
- * @todo: Documentation
+ * @brief Starts the shrink timer and detaches from any held object.
  */
 void PikiDeadState::init(Piki* piki)
 {
@@ -2923,7 +3044,7 @@ void PikiDeadState::init(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief Shrinks over time and destroys the Piki when the timer expires.
  */
 void PikiDeadState::exec(Piki* piki)
 {
@@ -2942,7 +3063,7 @@ void PikiDeadState::exec(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief Ensures the model is fully hidden at state exit.
  */
 void PikiDeadState::cleanup(Piki* piki)
 {
@@ -2950,7 +3071,7 @@ void PikiDeadState::cleanup(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief Constructs the transient emotion/celebration state.
  */
 PikiEmotionState::PikiEmotionState()
     : PikiState(PIKISTATE_Emotion, "EMOTION")
@@ -2959,11 +3080,11 @@ PikiEmotionState::PikiEmotionState()
 }
 
 /**
- * @todo: Documentation
+ * @brief Selects an emotion animation/sound and optionally starts ship-part gazing.
  */
 void PikiEmotionState::init(Piki* piki)
 {
-	mGazeFlag = 0;
+	mGazeFlag = EGP_None;
 	if (piki->mEmotion == PikiEmotion::None) {
 		return;
 	}
@@ -3058,7 +3179,7 @@ void PikiEmotionState::init(Piki* piki)
 	case PikiEmotion::ShipPartGaze: {
 		piki->startMotion(PaniMotionInfo(PIKIANIM_Wait, piki), PaniMotionInfo(PIKIANIM_Wait));
 		piki->startLook(&piki->mCarryingShipPart->mSRT.t);
-		mGazeFlag = 1;
+		mGazeFlag = EGP_Gazing;
 	} break;
 
 	case PikiEmotion::ShipPartCheer: {
@@ -3080,14 +3201,14 @@ void PikiEmotionState::init(Piki* piki)
 			mCheerCount = 5;
 			piki->startMotion(PaniMotionInfo(PIKIANIM_Wait, piki), PaniMotionInfo(PIKIANIM_Wait));
 			piki->startLook(&piki->mCarryingShipPart->mSRT.t);
-			mGazeFlag = 1;
+			mGazeFlag = EGP_Gazing;
 		}
 	} break;
 	}
 }
 
 /**
- * @todo: Documentation
+ * @brief Debug dump of gaze/emotion bookkeeping.
  */
 void PikiEmotionState::doDump()
 {
@@ -3096,7 +3217,7 @@ void PikiEmotionState::doDump()
 }
 
 /**
- * @todo: Documentation
+ * @brief Advances special gaze sequencing and exits when emotion clears.
  */
 void PikiEmotionState::exec(Piki* piki)
 {
@@ -3107,30 +3228,33 @@ void PikiEmotionState::exec(Piki* piki)
 
 	if (piki->mEmotion == PikiEmotion::ShipPartGaze || (piki->mEmotion == PikiEmotion::ShipPartCheer && mCheerCount == 5)) {
 		switch (mGazeFlag) {
-		case 1:
+		case EGP_Gazing:
+			// If the part disappears, keep gazing at its last known position for a moment.
 			if (!piki->mCarryingShipPart->isAlive()) {
-				mGazeFlag     = 2;
+				mGazeFlag     = EGP_HoldLastPos;
 				mGazePosition = piki->mCarryingShipPart->mSRT.t;
 				piki->startLook(&mGazePosition);
 				mTimer = (0.4f * gsys->getRand(1.0f)) + 1.5f;
 			}
 			break;
-		case 2:
+		case EGP_HoldLastPos:
+			// After a short delay, stop looking and allow the animation to end naturally.
 			mTimer -= gsys->getFrameTime();
 			if (mTimer < 0.0f) {
 				piki->finishLook();
-				mGazeFlag = 3;
+				mGazeFlag = EGP_Done;
 				piki->mPikiAnimMgr.finishMotion(piki);
 			}
 			break;
-		case 3:
+		case EGP_Done:
+			// Nothing to do; wait for procAnimMsg to transition out.
 			break;
 		}
 	}
 }
 
 /**
- * @todo: Documentation
+ * @brief Clears emotion state and look targets.
  */
 void PikiEmotionState::cleanup(Piki* piki)
 {
@@ -3140,7 +3264,7 @@ void PikiEmotionState::cleanup(Piki* piki)
 }
 
 /**
- * @todo: Documentation
+ * @brief Loops cheer animations a fixed number of times, then returns to normal.
  */
 void PikiEmotionState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
