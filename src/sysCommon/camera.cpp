@@ -470,7 +470,7 @@ void LightCamera::calcProjection(Graphics& gfx, bool p2, Node* p3)
 		                         height + (int(height * mProjectionY))));
 
 		Camera* cam = gfx.mCamera;
-		gfx.setClearColour(Colour(0, 0, 0, 0));
+		gfx.setClearColour(COLOUR_TRANSPARENT);
 		gfx.clearBuffer(3, 0);
 
 		gfx.setScissor(RectArea(4, 4, int(width) - 4, int(height) - 4));

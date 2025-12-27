@@ -32,7 +32,7 @@ void PlayState::openStage(int stageId)
 	}
 
 	if (!(mCourseOpenFlags & (1 << stageId))) {
-		gameflow.mLastUnlockedStageId = stageId;
+		gameflow.mPendingStageUnlockID = stageId;
 	}
 
 	mCourseOpenFlags |= (1 << stageId);
@@ -42,20 +42,29 @@ void PlayState::openStage(int stageId)
 #if defined(VERSION_GPIP01_00)
 void GamePrefs::Initialise()
 {
-	mFlags     = 3;
-	gsys->_1A0 = 0;
-	int ids[]  = { 0, 2, 1, 3, 4, 0 };
+	mFlags            = 3;
+	gsys->mLanguageID = LANG_English;
+
+	LanguageID ids[] = {
+		LANG_English, // OS English
+		LANG_German,  // OS German
+		LANG_French,  // OS French
+		LANG_Spanish, // OS Spanish
+		LANG_Italian, // OS Italian
+		LANG_English  // OS Dutch
+	};
+
 	STACK_PAD_VAR(3);
 	setChildMode(ids[OSGetLanguage()]);
-	mBgmVol             = 8;
-	mSfxVol             = 8;
-	mFileNum            = 0;
-	mHasSaveGame        = 0;
-	mSaveGameIndex      = 0;
-	mSpareSaveGameIndex = 0;
-	_1F                 = 0;
-	mUnlockedStageFlags = 0;
-	mIsChanged          = false;
+	mBgmVol                = 8;
+	mSfxVol                = 8;
+	mFileNum               = 0;
+	mHasSaveGame           = 0;
+	mMemCardSaveIndex      = 0;
+	mSpareMemCardSaveIndex = 0;
+	_1F                    = 0;
+	mUnlockedStageFlags    = 0;
+	mIsChanged             = false;
 	mHiscores.Initialise();
 }
 #endif
@@ -303,11 +312,12 @@ void GamePrefs::read(RandomAccessStream& input)
 #endif
 #if defined(VERSION_GPIP01_00)
 	STACK_PAD_VAR(2);
-	int lang = mFlags >> 2 & 0xf;
-	if (lang < 0 || lang > 4) {
-		lang = 0;
+	LanguageID lang = (LanguageID)(mFlags >> 2 & 0xF);
+	if (lang < LANG_English || lang > LANG_Italian) {
+		// invalid language choice
+		lang = LANG_English;
 	}
-	gsys->_1A0 = lang;
+	gsys->mLanguageID = lang;
 #endif
 }
 
@@ -330,15 +340,15 @@ void GamePrefs::setChildMode(int set)
 		mIsChanged = true;
 	}
 
-	if (set < 0 || set > 4) {
+	if (set < LANG_MIN || set > LANG_MAX) {
 		OSReport("trying to set invalid language mode (%d)!!\n", set);
-		set = 0;
+		set = LANG_English;
 	}
 
 	STACK_PAD_VAR(1);
 
-	gsys->_1A0 = set;
-	mFlags     = mFlags & 0xffffffc3 | (set & 0xf) << 2;
+	gsys->mLanguageID = (LanguageID)set;
+	mFlags            = mFlags & 0xffffffc3 | (set & 0xf) << 2;
 }
 #endif
 
@@ -348,7 +358,7 @@ void GamePrefs::setChildMode(int set)
 void PlayState::write(RandomAccessStream& output)
 {
 	output.writeByte(mSaveStatus);
-	output.writeByte(mSaveFlags);
+	output.writeByte(mSaveSlot);
 	output.writeByte(mSavedDay);
 	output.writeByte(mShipPartsCount);
 	output.writeInt(mRedPikiCount);
@@ -363,7 +373,7 @@ void PlayState::write(RandomAccessStream& output)
 void PlayState::read(RandomAccessStream& input)
 {
 	mSaveStatus      = input.readByte();
-	mSaveFlags       = input.readByte();
+	mSaveSlot        = input.readByte();
 	mSavedDay        = input.readByte();
 	mShipPartsCount  = input.readByte();
 	mRedPikiCount    = input.readInt();

@@ -109,8 +109,8 @@ bool Navi::demoCheck()
 					ERROR("WHY !! THIS IS NOT UFO PARTS!!\n");
 				}
 				if (!playerState->mDemoFlags.isFlag(id + DEMOFLAG_UfoPartDiscoveryOffset)) {
-					gameflow.mMovieType    = 3;
-					gameflow.mMovieInfoNum = id;
+					gameflow.mShipTextType   = SHIPTEXT_PartDiscovery;
+					gameflow.mShipTextPartID = id;
 					playerState->mDemoFlags.setFlag(id + DEMOFLAG_UfoPartDiscoveryOffset, obj);
 					PRINT("*** set ufo-parts flag %d\n", id);
 					return true;

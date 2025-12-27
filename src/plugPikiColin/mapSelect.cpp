@@ -132,15 +132,17 @@ struct MapSelectSetupSection : public Node {
 			bool old           = gsys->mTogglePrint != FALSE;
 			gsys->mTogglePrint = TRUE;
 #if defined(VERSION_PIKIDEMO)
-			_Print("opening map window with %d : %d\n", gameflow.mLastUnlockedStageId, gameflow.mCurrentStageId);
+			_Print("opening map window with %d : %d\n", gameflow.mPendingStageUnlockID, gameflow.mCurrentStageID);
 #else
-			(gameflow.mCurrentStageId != 0); // huh?
-			PRINT("opening map window with %d : %d\n", gameflow.mLastUnlockedStageId, gameflow.mCurrentStageId);
+			(gameflow.mCurrentStageID != 0); // huh?
+			PRINT("opening map window with %d : %d\n", gameflow.mPendingStageUnlockID, gameflow.mCurrentStageID);
 #endif
 			gsys->mTogglePrint = old;
 
-			mapWindow->start(zen::DrawWorldMap::startModeFlag(gameflow.mLastUnlockedStageId == -1 ? 0 : gameflow.mLastUnlockedStageId),
-			                 zen::DrawWorldMap::startPlaceFlag(gameflow.mCurrentStageId == -1 ? 0 : gameflow.mCurrentStageId));
+			mapWindow->start(zen::DrawWorldMap::startModeFlag(gameflow.mPendingStageUnlockID == -1 ? zen::DrawWorldMap::None
+			                                                                                       : gameflow.mPendingStageUnlockID),
+			                 zen::DrawWorldMap::startPlaceFlag(gameflow.mCurrentStageID == -1 ? zen::DrawWorldMap::ImpactSite
+			                                                                                  : gameflow.mCurrentStageID));
 		} else {
 			gameflow.mWorldClock.mCurrentDay = 1;
 			selectWindow                     = new zen::DrawCMcourseSelect;
@@ -219,21 +221,21 @@ struct MapSelectSetupSection : public Node {
 		if (mSectionState == 1 && !mActiveOverlayMenu && gsys->getFade() == 0.0f) {
 			mSectionState                    = -1;
 			gameflow.mNextOnePlayerSectionID = mNextSectionId >> 16;
-			Jac_SceneExit(13, 0);
+			Jac_SceneExit(SCENE_Unk13, 0);
 			gsys->softReset();
 		}
 	}
 	virtual void draw(Graphics& gfx) // _14 (weak)
 	{
-		gfx.setViewport(RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
-		gfx.setScissor(RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
-		gfx.setClearColour(Colour(0, 0, 0, 0));
+		gfx.setViewport(AREA_FULL_SCREEN(gfx));
+		gfx.setScissor(AREA_FULL_SCREEN(gfx));
+		gfx.setClearColour(COLOUR_TRANSPARENT);
 		gfx.clearBuffer(3, false);
 		Matrix4f mtx;
-		gfx.setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+		gfx.setOrthogonal(mtx.mMtx, AREA_FULL_SCREEN(gfx));
 		gfx.setColour(COLOUR_BLACK, true);
 		gfx.setAuxColour(Colour(0, 0, 64, 255));
-		gfx.fillRectangle(RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+		gfx.fillRectangle(AREA_FULL_SCREEN(gfx));
 
 		if (selectWindow) {
 			selectWindow->draw(gfx);
@@ -242,7 +244,7 @@ struct MapSelectSetupSection : public Node {
 			mapWindow->draw(gfx);
 		}
 		Matrix4f mtx2;
-		gfx.setOrthogonal(mtx2.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+		gfx.setOrthogonal(mtx2.mMtx, AREA_FULL_SCREEN(gfx));
 
 		if (mActiveOverlayMenu) {
 			mActiveOverlayMenu->draw(gfx, 1.0f);
@@ -293,9 +295,9 @@ MapSelectSection::MapSelectSection()
 	gsys->endLoading();
 
 	if (gameflow.mIsChallengeMode) {
-		Jac_SceneSetup(10, 0);
+		Jac_SceneSetup(SCENE_Unk10, 0);
 	} else {
-		Jac_SceneSetup(3, 0);
+		Jac_SceneSetup(SCENE_Unk3, 0);
 	}
 
 	demoParms->initCore("");

@@ -760,16 +760,21 @@ void DGXGraphics::setPerspective(Mtx mtx, f32 a1, f32 a2, f32 a3, f32 a4, f32 a5
 }
 
 /**
- * @todo: Documentation
+ * @brief Constructs an orthogonal/projection matrix (in device coordinates) from the supplied bounds.
+ *
+ * Also sets up the graphics pipeline to be ready to display 2D elements properly.
+ *
+ * @param orthoMtx Output orthogonal matrix in device coordinates.
+ * @param bounds Bounds to use when constructing the orthogonal matrix.
  */
-void DGXGraphics::setOrthogonal(Mtx mtx, immut RectArea& bounds)
+void DGXGraphics::setOrthogonal(Mtx orthoMtx, immut RectArea& bounds)
 {
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
-	C_MTXOrtho(mtx, bounds.mMinY, bounds.mMaxY, bounds.mMinX, bounds.mMaxX, 0.0f, -1.0f);
+	C_MTXOrtho(orthoMtx, bounds.mMinY, bounds.mMaxY, bounds.mMinX, bounds.mMaxX, 0.0f, -1.0f);
 #else
-	MTXOrtho(mtx, bounds.mMinY, bounds.mMaxY, bounds.mMinX, bounds.mMaxX, 0.0f, -1.0f);
+	MTXOrtho(orthoMtx, bounds.mMinY, bounds.mMaxY, bounds.mMinX, bounds.mMaxX, 0.0f, -1.0f);
 #endif
-	GXSetProjection(mtx, GX_ORTHOGRAPHIC);
+	GXSetProjection(orthoMtx, GX_ORTHOGRAPHIC);
 	GXLoadPosMtxImm(Matrix4f::ident.mMtx, 0);
 	GXSetCurrentMtx(0);
 	GXSetChanCtrl(GX_COLOR0A0, GX_FALSE, GX_SRC_VTX, GX_SRC_VTX, 1, GX_DF_NONE, GX_AF_NONE);
@@ -1411,7 +1416,7 @@ void DGXGraphics::setClearColour(immut Colour& color)
  */
 void DGXGraphics::clearBuffer(int, bool)
 {
-	GXSetCopyClear(*(GXColor*)&mBufferClearColour, 0xffffff);
+	GXSetCopyClear(*(GXColor*)&mBufferClearColour, 0xFFFFFF); // max clear_z value
 }
 
 /**

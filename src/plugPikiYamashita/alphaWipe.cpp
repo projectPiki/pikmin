@@ -100,10 +100,10 @@ void zen::AlphaWipe::draw(Graphics& gfx)
 {
 	if (mState == STATE_Active) {
 		Matrix4f mtx;
-		gfx.setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+		gfx.setOrthogonal(mtx.mMtx, AREA_FULL_SCREEN(gfx));
 		gfx.setColour(mStartColor, true);
 		gfx.setAuxColour(mEndColor);
-		gfx.fillRectangle(RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+		gfx.fillRectangle(AREA_FULL_SCREEN(gfx));
 	}
 }
 

@@ -38,7 +38,7 @@ StdSystem::StdSystem()
 {
 	mConsFont = nullptr;
 #if defined(VERSION_GPIP01_00)
-	_1A0 = 0;
+	mLanguageID = LANG_English;
 #endif
 	mCurrentFade      = 0.0f;
 	mFadeStart        = 0.0f;
@@ -146,10 +146,11 @@ GfxobjInfo* StdSystem::findAnyGfxObject(immut char* str, u32 id)
 
 /**
  * Loads a texture from disk or cache by path.
- * @param path File path to load.
- * @param unk Whether to use the alternate open mode.
+ * @param path File path to texture to load.
+ * @param unk Whether path supplied is relative (true) or absolute (false).
+ * @return Pointer to texture if found (nullptr if not found).
  */
-Texture* StdSystem::loadTexture(immut char* path, bool unk)
+Texture* StdSystem::loadTexture(immut char* path, bool isRelativePath)
 {
 	GfxobjInfo* foundObj = findGfxObject(path, '_tex');
 	if (foundObj) {
@@ -157,7 +158,7 @@ Texture* StdSystem::loadTexture(immut char* path, bool unk)
 	}
 
 	Texture* loadedTex     = nullptr;
-	RandomAccessStream* fs = openFile(path, unk, true);
+	RandomAccessStream* fs = openFile(path, isRelativePath, true);
 	if (fs) {
 		loadedTex = new Texture();
 		loadedTex->read(*fs);
@@ -177,16 +178,16 @@ GfxobjInfo* StdSystem::findTexture(Texture*)
 }
 
 /**
- * Loads a shape, optionally reusing a cached instance.
- * @param path Shape file path.
- * @param mayExist True to check existing cache first.
+ * @brief Loads a shape (model), optionally reusing a cached instance.
+ * @param modelPath Shape file path.
+ * @param checkCache Whether to check existing cache first.
  */
-Shape* StdSystem::loadShape(immut char* path, bool mayExist)
+Shape* StdSystem::loadShape(immut char* modelPath, bool checkCache)
 {
 	Shape* result = nullptr;
-	if (mayExist) {
+	if (checkCache) {
 		// If the shape may exist, try and look for it in the list
-		GfxobjInfo* foundInfo = findGfxObject(path, '_shp');
+		GfxobjInfo* foundInfo = findGfxObject(modelPath, '_shp');
 		if (foundInfo) {
 			result = ((ShpobjInfo*)foundInfo)->mTarget;
 		}
@@ -194,13 +195,13 @@ Shape* StdSystem::loadShape(immut char* path, bool mayExist)
 
 	if (!result) {
 		char shapePathBuffer[256];
-		sprintf(shapePathBuffer, "%s", path);
+		sprintf(shapePathBuffer, "%s", modelPath);
 
 		// Isolate the first and second half of the path
 		immut char* remainingPath = nullptr;
 		for (int i = strlen(shapePathBuffer) - 1; i >= 0; i--) {
 			u8 target = '?';
-			if ((u8)path[i] != target) {
+			if ((u8)modelPath[i] != target) {
 				continue;
 			}
 
@@ -210,15 +211,15 @@ Shape* StdSystem::loadShape(immut char* path, bool mayExist)
 		}
 
 		// Get and add the shape
-		result = getShape(shapePathBuffer, path, remainingPath, true);
+		result = getShape(shapePathBuffer, modelPath, remainingPath, true);
 		if (result) {
 			ShpobjInfo* newInfo = new ShpobjInfo();
-			newInfo->mString    = StdSystem::stringDup(path);
+			newInfo->mString    = StdSystem::stringDup(modelPath);
 			newInfo->mId.setID('_shp');
 			newInfo->mTarget = result;
 			addGfxObject(newInfo);
 		} else {
-			ERROR("Could not load shape : %s\n", path);
+			ERROR("Could not load shape : %s\n", modelPath);
 		}
 	}
 
@@ -285,21 +286,22 @@ int StdSystem::findAnyIndex(immut char* prefix, immut char* fullStr)
 }
 
 /**
- * Loads an animation for the given model if not cached.
+ * @brief Loads animation data for a given model if not cached.
+ *
  * @param model Model to attach the animation to.
- * @param path Animation path.
+ * @param dataPath Animation data file path (.dck or .dca).
  * @param isRelativePath True if path is relative to the model.
  */
-AnimData* StdSystem::loadAnimation(Shape* model, immut char* path, bool isRelativePath)
+AnimData* StdSystem::loadAnimation(Shape* model, immut char* dataPath, bool isRelativePath)
 {
-	GfxobjInfo* found = findGfxObject(path, '_anm');
+	GfxobjInfo* found = findGfxObject(dataPath, '_anm');
 	if (found) {
 		return ((AnmobjInfo*)found)->mAnimation;
 	}
 
-	AnimData* data = model->loadAnimation(path, isRelativePath);
+	AnimData* data = model->loadAnimation(dataPath, isRelativePath);
 	if (data) {
-		addAnimation(data, path);
+		addAnimation(data, dataPath);
 	}
 
 	return data;
@@ -498,7 +500,7 @@ LFlareGroup* StdSystem::registerLFlare(Texture* tex)
  */
 void StdSystem::flushLFlares(Graphics& gfx)
 {
-	gfx.setFog(true, Colour(0, 0, 0, 0), 1.0f, gfx.mCamera->mNear, gfx.mCamera->mFar);
+	gfx.setFog(true, COLOUR_TRANSPARENT, 1.0f, gfx.mCamera->mNear, gfx.mCamera->mFar);
 
 	int oldBlend     = gfx.setCBlending(1);
 	bool oldLighting = gfx.setLighting(false, nullptr);

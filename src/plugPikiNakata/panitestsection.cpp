@@ -305,7 +305,7 @@ void PaniTestNode::update()
 		Node::update();
 	} else if (mFadeState == 1) {
 		if (gsys->getFade() == 0.0f) {
-			gameflow.mGameSectionID = SECTION_Titles;
+			gameflow.mNextGameSectionID = SECTION_Titles;
 			gsys->softReset();
 		}
 	}
@@ -403,13 +403,13 @@ void PaniTestNode::draw(Graphics& gfx)
 {
 	mapMgr->preRender(gfx);
 
-	gfx.setViewport(RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
-	gfx.setScissor(RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+	gfx.setViewport(AREA_FULL_SCREEN(gfx));
+	gfx.setScissor(AREA_FULL_SCREEN(gfx));
 	gfx.setClearColour(Colour(96, 128, 255, 0));
 	gfx.clearBuffer(3, false);
 
 	Matrix4f mtx1;
-	gfx.setOrthogonal(mtx1.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+	gfx.setOrthogonal(mtx1.mMtx, AREA_FULL_SCREEN(gfx));
 	mActiveCamera.update(f32(gfx.mScreenWidth) / f32(gfx.mScreenHeight), mActiveCamera.mFov, 1.0f, 1000.0f);
 	gfx.setCamera(&mActiveCamera);
 	gfx.addLight(&mMainLight);
@@ -450,7 +450,7 @@ void PaniTestNode::draw(Graphics& gfx)
 	gfx.setDepth(1);
 
 	Matrix4f mtx4;
-	gfx.setOrthogonal(mtx4.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+	gfx.setOrthogonal(mtx4.mMtx, AREA_FULL_SCREEN(gfx));
 	Node::draw(gfx);
 
 	gfx.texturePrintf(gsys->mConsFont, 0, 440, "VerticalDegree:%d", int(NMathF::r2d(mCamMgr->mCamera->getPolar().mInclination)));

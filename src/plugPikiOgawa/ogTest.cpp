@@ -420,8 +420,8 @@ void OgTestScreen::update()
  */
 void OgTestScreen::draw(Graphics& gfx)
 {
-	gfx.setViewport(RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
-	gfx.setScissor(RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+	gfx.setViewport(AREA_FULL_SCREEN(gfx));
+	gfx.setScissor(AREA_FULL_SCREEN(gfx));
 	gfx.setClearColour(COLOUR_BLACK);
 	gfx.clearBuffer(3, false);
 
@@ -450,7 +450,7 @@ void OgTestScreen::draw(Graphics& gfx)
 
 	if (mActiveMode == TESTMODE_INACTIVE) {
 		Matrix4f ortho;
-		gfx.setOrthogonal(ortho.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+		gfx.setOrthogonal(ortho.mMtx, AREA_FULL_SCREEN(gfx));
 		gfx.setColour(COLOUR_WHITE, true);
 		gfx.setAuxColour(Colour(255, 255, 0, 255));
 
@@ -507,7 +507,7 @@ void OgTestScreen::draw(Graphics& gfx)
 
 	if (mActiveMode == TESTMODE_Tutorial) {
 		Matrix4f ortho;
-		gfx.setOrthogonal(ortho.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+		gfx.setOrthogonal(ortho.mMtx, AREA_FULL_SCREEN(gfx));
 		gfx.setColour(COLOUR_WHITE, true);
 		gfx.setAuxColour(Colour(255, 255, 150, 255));
 

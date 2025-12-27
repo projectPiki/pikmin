@@ -91,7 +91,7 @@ bool TAIAattackWorkObject::attackWorkObject(Teki& teki)
 		} else {
 			if (getLastFinishedStageBridge(bridge) == teki.getTableIndex()) {
 				InteractBreak intBreak(&teki, teki.getTableIndex(),
-				                       gsys->getFrameTime() / gameflow.mWorldClock.mTimeScale * getDamage(teki));
+				                       gsys->getFrameTime() / gameflow.mWorldClock.mRealSecsPerGameHour * getDamage(teki));
 				bridge->stimulate(intBreak);
 				attackEffect(teki);
 			} else {

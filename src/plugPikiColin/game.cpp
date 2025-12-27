@@ -209,15 +209,15 @@ void OnePlayerSection::init()
 			PRINT("making new SETUP\n");
 			gsys->startLoading(&gameflow.mGameLoadIdler, true, 60);
 #if defined(VERSION_G98E01_PIKIDEMO)
-			gameflow.mLevelBannerTexture   = gameflow.setLoadBanner(levNames[5]);
+			gameflow.mLevelBannerTex       = gameflow.setLoadBanner(levNames[5]);
 			gameflow.mLevelBannerFadeValue = 0.0f;
 #else
 			if (gameflow.mLevelIndex >= 2 && gameflow.mLevelIndex <= 4) {
 				PRINT("setting banner!\n");
-				gameflow.mLevelBannerTexture   = gameflow.setLoadBanner(levNames[gameflow.mLevelIndex - 2]);
+				gameflow.mLevelBannerTex       = gameflow.setLoadBanner(levNames[gameflow.mLevelIndex - 2]);
 				gameflow.mLevelBannerFadeValue = 0.0f;
 			} else {
-				gameflow.mLevelBannerTexture = nullptr;
+				gameflow.mLevelBannerTex = nullptr;
 			}
 #endif
 
@@ -238,9 +238,9 @@ void OnePlayerSection::init()
 		// The following three cases are leftovers from the E3 2001 showfloor demo!  At the event, the title screen had a
 		// unique menu that could directly access three different stages: "Tutorial", "Forest Day 1", and "Forest Day 2".
 		case ONEPLAYER_E3Tutorial:
-			if (!gameflow.mLevelBannerTexture) {
+			if (!gameflow.mLevelBannerTex) {
 				PRINT("setting banner!\n");
-				gameflow.mLevelBannerTexture = gameflow.setLoadBanner(levNames[nextSectionType - 2]);
+				gameflow.mLevelBannerTex = gameflow.setLoadBanner(levNames[nextSectionType - 2]);
 			}
 
 			gsys->startLoading(&gameflow.mGameLoadIdler, true, 60);
@@ -253,9 +253,9 @@ void OnePlayerSection::init()
 			break;
 
 		case ONEPLAYER_E3ForestDay1:
-			if (!gameflow.mLevelBannerTexture) {
+			if (!gameflow.mLevelBannerTex) {
 				PRINT("setting banner!\n");
-				gameflow.mLevelBannerTexture = gameflow.setLoadBanner(levNames[nextSectionType - 2]);
+				gameflow.mLevelBannerTex = gameflow.setLoadBanner(levNames[nextSectionType - 2]);
 			}
 			gsys->startLoading(&gameflow.mGameLoadIdler, true, 60);
 			flowCont.setStage("stages/stage1.ini");
@@ -267,9 +267,9 @@ void OnePlayerSection::init()
 			break;
 
 		case ONEPLAYER_E3ForestDay2:
-			if (!gameflow.mLevelBannerTexture) {
+			if (!gameflow.mLevelBannerTex) {
 				PRINT("setting banner!\n");
-				gameflow.mLevelBannerTexture = gameflow.setLoadBanner(levNames[nextSectionType - 2]);
+				gameflow.mLevelBannerTex = gameflow.setLoadBanner(levNames[nextSectionType - 2]);
 			}
 
 			gsys->startLoading(&gameflow.mGameLoadIdler, true, 60);
@@ -304,10 +304,10 @@ void OnePlayerSection::init()
 			Texture* tex = nullptr;
 			u32 stageID  = flowCont.mCurrentStage->mStageID;
 			if (stageID <= STAGE_LASTVALID) {
-				gameflow.mLevelBannerTexture = tex = gameflow.setLoadBanner(levNames[stageID]);
-				gameflow.mLevelBannerFadeValue     = 0.0f;
+				gameflow.mLevelBannerTex = tex = gameflow.setLoadBanner(levNames[stageID]);
+				gameflow.mLevelBannerFadeValue = 0.0f;
 			} else {
-				gameflow.mLevelBannerTexture = tex;
+				gameflow.mLevelBannerTex = tex;
 			}
 			PRINT("making new MAINGAME\n");
 			currentSection = new NewPikiGameSection();

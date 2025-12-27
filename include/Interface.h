@@ -24,7 +24,7 @@ enum GameMovieCommand {
 	MOVIECMD_CleanupDayEnd       = 11, // Clean up day end state
 	MOVIECMD_StartTotalResults   = 12, // Start final score screen
 	MOVIECMD_SpecialDayEnd       = 13, // Special day end trigger
-	MOVIECMD_SetInputEnabled     = 14, // Enable/disable gameplay input
+	MOVIECMD_SetPauseAllowed     = 14, // Enable/disable pausing
 	MOVIECMD_CountDownLastSecond = 15, // Signals the last second of the day
 	MOVIECMD_StageFinish         = 16, // Forced day end (navi down or extinction)
 	MOVIECMD_CreateMenuWindow    = 17, // Create radar and controls menu
@@ -35,7 +35,9 @@ enum GameMovieCommand {
 };
 
 /**
- * @brief TODO
+ * @brief Shuttle for passing messages between different game state control structures.
+ *
+ * @note Size: 0x4.
  */
 struct GameInterface {
 	virtual void message(int, int) { }                                                       // _08
@@ -44,7 +46,6 @@ struct GameInterface {
 	virtual void parse(int, int) { }                                                         // _14
 
 	// _00 = VTBL
-	// TODO: members
 };
 
 #endif

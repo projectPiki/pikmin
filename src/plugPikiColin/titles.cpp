@@ -186,10 +186,12 @@ struct TitleSetupSection : public Node {
 				gsys->forceHardReset();
 				while (true) { }
 #else
-				gameflow.mIntroMovieId      = gameflow.mIntroMovieIdCycle;
-				gameflow.mIntroMovieIdCycle = (gameflow.mIntroMovieIdCycle + 1) & 0x3;
-				mNextSectionId              = SECTION_MovSample << 16;
-				mState                      = 1;
+				// set up the next idle movie to play, and queue up the next
+				gameflow.mCurrIntroMovieID = gameflow.mNextIntroMovieID;
+				gameflow.mNextIntroMovieID = (gameflow.mNextIntroMovieID + 1) & MOV_INTRO_CYCLE_MASK; // basically mod(4)
+
+				mNextSectionId = SECTION_MovSample << 16;
+				mState         = 1;
 				gsys->setFade(0.0f, 3.0f);
 				return;
 #endif
@@ -252,7 +254,7 @@ struct TitleSetupSection : public Node {
 						mNextSectionId                   = 0x40000;
 						gameflow.mGamePrefs.mHasSaveGame = 0;
 						gameflow.mIsChallengeMode        = true;
-						Jac_SceneExit(0xd, 0);
+						Jac_SceneExit(SCENE_Unk13, 0);
 						mState = 1;
 						gsys->setFade(0.0f, 3.0f);
 #else
@@ -271,7 +273,7 @@ struct TitleSetupSection : public Node {
 						mNextSectionId                   = SECTION_OnePlayer << 16;
 						gameflow.mGamePrefs.mHasSaveGame = false;
 						gameflow.mIsChallengeMode        = TRUE;
-						Jac_SceneExit(13, 0);
+						Jac_SceneExit(SCENE_Unk13, 0);
 						mState = 1;
 						gsys->setFade(0.0f, 3.0f);
 
@@ -288,7 +290,7 @@ struct TitleSetupSection : public Node {
 							PRINT("going to SETUP!\n");
 							mNextSectionId = SECTION_OnePlayer << 16;
 						}
-						Jac_SceneExit(13, 0);
+						Jac_SceneExit(SCENE_Unk13, 0);
 						mState = 1;
 						gsys->setFade(0.0f, 3.0f);
 					} else if (titleState == zen::ogScrTitleMgr::Status_5 || titleState == zen::ogScrTitleMgr::Status_3) {
@@ -368,7 +370,7 @@ struct TitleSetupSection : public Node {
 
 		if (mState == 1 && !mCurrentMenu && gsys->getFade() == 0.0f) {
 			mState                           = -1;
-			gameflow.mGameSectionID          = mNextSectionId >> 16;
+			gameflow.mNextGameSectionID      = mNextSectionId >> 16;
 			gameflow.mNextOnePlayerSectionID = mNextSectionId & 0xFFFF;
 			gsys->softReset();
 		}
@@ -401,9 +403,9 @@ struct TitleSetupSection : public Node {
 		}
 
 		Matrix4f mtx1;
-		gfx.setViewport(RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
-		gfx.setScissor(RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
-		gfx.setClearColour(Colour(0, 0, 0, 0));
+		gfx.setViewport(AREA_FULL_SCREEN(gfx));
+		gfx.setScissor(AREA_FULL_SCREEN(gfx));
+		gfx.setClearColour(COLOUR_TRANSPARENT);
 		gfx.clearBuffer(3, false);
 		gfx.mAmbientFogColour.set(48, 48, 48, 255);
 		Matrix4f mtx2;
@@ -463,7 +465,7 @@ struct TitleSetupSection : public Node {
 		gfx.flushCachedShapes();
 		gsys->flushLFlares(gfx);
 
-		gfx.setOrthogonal(mtx1.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+		gfx.setOrthogonal(mtx1.mMtx, AREA_FULL_SCREEN(gfx));
 		gfx.useMatrix(Matrix4f::ident, 0); // colin i think it's been set mate
 
 		static f32 mfade = 0.0f;
@@ -494,7 +496,7 @@ struct TitleSetupSection : public Node {
 			startWindow->draw(gfx);
 			titleWindow->draw(gfx);
 			if (totalWindow) {
-				gfx.setOrthogonal(mtx1.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+				gfx.setOrthogonal(mtx1.mMtx, AREA_FULL_SCREEN(gfx));
 				totalWindow->draw(gfx);
 			}
 		}
@@ -503,9 +505,9 @@ struct TitleSetupSection : public Node {
 			gameflow.mLevelBannerFadeValue -= gsys->getFrameTime();
 			if (gameflow.mLevelBannerFadeValue < 0.0f) {
 				gameflow.mLevelBannerFadeValue = 0.0f;
-				gameflow.mRedLoadLogo          = FALSE;
+				gameflow.mIsNintendoLoadLogo   = FALSE;
 			} else {
-				gameflow.drawLoadLogo(gfx, false, gameflow.mLevelBannerTexture, gameflow.mLevelBannerFadeValue);
+				gameflow.drawLoadLogo(gfx, false, gameflow.mLevelBannerTex, gameflow.mLevelBannerFadeValue);
 			}
 		}
 	}
@@ -514,7 +516,7 @@ struct TitleSetupSection : public Node {
 	{
 		mNextSectionId            = parent.mCurrentItem->mFilterIndex;
 		gameflow.mIsChallengeMode = FALSE;
-		Jac_SceneExit(13, 0);
+		Jac_SceneExit(SCENE_Unk13, 0);
 		parent.close();
 		mState = 1;
 		gsys->setFade(0.0f, 3.0f);
@@ -579,7 +581,7 @@ void TitlesSection::init()
 	gsys->mTimerState = TS_Off;
 	gsys->setFrameClamp(1);
 	gsys->setDataRoot("dataDir/");
-	gameflow.mLevelBannerTexture     = nullptr;
+	gameflow.mLevelBannerTex         = nullptr;
 	gameflow.mLevelBannerFadeValue   = 1.0f;
 	gameflow.mGamePrefs.mHasSaveGame = true;
 #if defined(VERSION_G98E01_PIKIDEMO)
@@ -589,7 +591,7 @@ void TitlesSection::init()
 	}
 #endif
 	gameflow.mGamePrefs.fixSoundMode();
-	gsys->startLoading(&gameflow.mGameLoadIdler, true, gameflow.mRedLoadLogo ? 0 : 60);
+	gsys->startLoading(&gameflow.mGameLoadIdler, true, gameflow.mIsNintendoLoadLogo ? 0 : 60);
 
 	int beforeLang = gameflow.mLanguageIndex;
 #if defined(VERSION_GPIP01_00)
@@ -609,9 +611,9 @@ void TitlesSection::init()
 	if (gameflow.mLanguageIndex != beforeLang) {
 		preloadLanguage();
 	}
-	gameflow.mIsChallengeMode = FALSE;
-	gameflow._2B8             = 0;
-	gameflow.mIntroMovieId    = 0;
+	gameflow.mIsChallengeMode  = FALSE;
+	gameflow._2B8              = 0;
+	gameflow.mCurrIntroMovieID = MOV_GrowDemo;
 
 	switch (gameflow.mNextOnePlayerSectionID) {
 	case ONEPLAYER_GameSetup:
@@ -621,5 +623,5 @@ void TitlesSection::init()
 	PRINT("ending loading!\n");
 	gsys->endLoading();
 	PRINT("done!\n");
-	Jac_SceneSetup(1, 0);
+	Jac_SceneSetup(SCENE_Unk1, 0);
 }

@@ -21,7 +21,7 @@ struct Shape;
 struct AgeServer;
 
 /**
- * @brief Enum for AnimInfo flags.
+ * @brief Flags controlling a given animation.
  */
 enum AnimInfoFlags {
 	ANIMFLAG_Unk1            = 1 << 0, ///< 0x1, unknown/unused.
@@ -30,7 +30,7 @@ enum AnimInfoFlags {
 };
 
 /**
- * @brief Enum for AnimKey event types.
+ * @brief Types of event `AnimKey`s.
  */
 enum AnimKeyEvents {
 	ANIMEVENT_Notify = 0, ///< 0, play sound effect or send message. TODO: some funny business going on here
@@ -40,7 +40,7 @@ enum AnimKeyEvents {
 };
 
 /**
- * @brief Enum for Animator states.
+ * @brief States that `Animator` can be in.
  */
 enum AnimPlayState {
 	ANIMSTATE_Inactive = 0, ///< 0, not animating.
@@ -49,7 +49,7 @@ enum AnimPlayState {
 };
 
 /**
- * @brief Enum for key frame event types.
+ * @brief Key frame event trigger types.
  */
 enum KeyEventTypes {
 	KEY_NULL       = -1,
@@ -324,7 +324,7 @@ struct AnmobjInfo : public GfxobjInfo {
  */
 struct AnimKey {
 
-	// Default constructor.
+	/// Default constructor. Initialise everything to 0.
 	AnimKey()
 	{
 		mFrameIndex = 0;
@@ -352,7 +352,7 @@ struct AnimKey {
 		mNext        = key;
 	}
 
-	// Remove this key from the overall list, only used in .dll code
+	/// Remove this key from the overall list (only used in .dll code).
 	void remove()
 	{
 		mNext->mPrev = mPrev;
@@ -387,10 +387,12 @@ struct AnimInfo : public CoreNode {
 	 * @brief AnimInfo parameters.
 	 *
 	 * Offsets relative to AnimInfo for convenience.
+	 *
+	 * @note Size: 0x24.
 	 */
 	struct Parms : public Parameters {
 
-		/// Constructor.
+		/// Constructor. Default values are overwritten on file read.
 		Parms()
 		    : mFlags(this, 2, 0, 0, "p00", "flags")
 		    , mSpeed(this, 30.0f, 0.0f, 0.0f, "spd", "speed")
@@ -398,59 +400,39 @@ struct AnimInfo : public CoreNode {
 		}
 
 		// _14-_18 = Parameters
-		Parm<int> mFlags; ///< _18, 'p00'
-		Parm<f32> mSpeed; ///< _28, 'spd'
+		Parm<int> mFlags; ///< _18, 'p00' - see `AnimInfoFlags` enum.
+		Parm<f32> mSpeed; ///< _28, 'spd' - animation speed.
 	};
 
-	/// Default constructor.
+	/// Default constructor - sets up nothing.
 	AnimInfo()
 	    : CoreNode("")
 	{
-		mData = 0;
+		mData = nullptr;
 		mMgr  = nullptr;
 	}
 
-	/// Constructor that also sets connections and checks data.
 	AnimInfo(AnimMgr* mgr, AnimData* data);
 
-	/// Checks all Anim, Info and Event key indices are correctly bounded.
+	void initAnimData(AnimData* data);
 	void checkAnimData();
 
-	/// Sets index to first available with stored manager and data filenames.
-	void setIndex();
-
-	/// Sets and updates animation flags.
-	void setAnimFlags(u32 flags);
-
-	/// Counts elements in Anim key list.
-	int countAKeys();
-
-	/// Counts elements in Info key list.
-	int countIKeys();
-
-	/// Counts elements in Events key list.
-	int countEKeys();
-
-	/// Gets Info key list element at index `idx`.
-	AnimKey* getInfoKey(int idx);
-
-	/// Gets Event key list element at index `idx`.
-	AnimKey* getEventKey(int idx);
-
-	/// Gets keyframe index of Anim key list element at index `idx`.
-	int getKeyValue(int idx);
-
-	/// Reads in parameters and keyframe indices from (streamed) file.
 	void doread(RandomAccessStream& input, int version);
 
-	/// Updates data flags to align with info flags.
+	void setIndex();
+	void setAnimFlags(u32 flags);
 	void updateAnimFlags();
 
-	/// Adds new Anim key to end of list, with keyframe index at end of anim.
-	AnimKey* addKeyFrame();
+	int countAKeys();
+	int countIKeys();
+	int countEKeys();
 
-	/// Initializes the file name and data for an animation.
-	void initAnimData(AnimData* data);
+	AnimKey* getInfoKey(int idx);
+	AnimKey* getEventKey(int idx);
+
+	int getKeyValue(int idx);
+
+	AnimKey* addKeyFrame();
 
 	/// Adds new info key to end of list.
 	void addInfoKey(AnimKey* key) { mInfoKeys.mPrev->insertAfter(key); }
@@ -459,6 +441,9 @@ struct AnimInfo : public CoreNode {
 #ifdef WIN32
 	virtual void write(RandomAccessStream&);
 #endif
+
+	// DLL exclusive functions.
+
 	void ageAddEffectKey(AgeServer&);
 	void ageAddInfoKey(AgeServer&);
 	void ageAddKey(AgeServer&);
@@ -499,7 +484,6 @@ struct AnimContext {
 	f32 mCurrentFrame; ///< _04, current animation frame.
 	f32 mAnimSpeed;    ///< _08, current animation speed (fps).
 
-	/// Advances animation one (game) frame.
 	virtual void animate(f32 animSpeed); // _08
 };
 
@@ -515,10 +499,8 @@ struct Animator {
 	/// Default constructor.
 	Animator() { }
 
-	/// Starts a new animation with index `animIdx`.
 	void startAnim(int playState, int animIdx, int firstKeyFrameIdx, int lastKeyFrameIdx);
 
-	/// Updates data and frame counter of stored context to align with the animator.
 	void updateContext();
 
 	/// Initialises animator with given context and manager.
@@ -537,10 +519,10 @@ struct Animator {
 	int mPostOneShotAnimID;        ///< _0C, anim index to restore to after oneshot (never set).
 	int mPostOneShotStartKeyIndex; ///< _10, start key index to restore to after oneshot (never set).
 	int mPostOneShotEndKeyIndex;   ///< _14, end key index to restore to after oneshot (never set).
-	int mPlayState;                ///< _18, current play state - see AnimPlayState enum.
+	int mPlayState;                ///< _18, current play state - see `AnimPlayState` enum.
 	int mCurrentAnimID;            ///< _1C, current animation index, relative to mMgr anim list.
-	int mStartKeyIndex;            ///< _20, index for first AnimKey keyframe.
-	int mEndKeyIndex;              ///< _24, index for last AnimKey keyframe.
+	int mStartKeyIndex;            ///< _20, index for `AnimKey` keyframe to start from.
+	int mEndKeyIndex;              ///< _24, index for `AnimKey` keyframe to play until.
 	AnimInfo* mAnimInfo;           ///< _28, current animation.
 	f32 mAnimationCounter;         ///< _2C, animation frame counter.
 
@@ -550,15 +532,18 @@ struct Animator {
 		mContext = context;
 	}
 
-	/// Advances animation one (game) frame at given speed.
 	virtual void animate(f32 animSpeed); // _0C
 
-	/// Starts post-oneshot stored animation (unused).
 	virtual void finishOneShot(); // _10
 
-	/// Post-loop actions (trivial in base class).
 	virtual void finishLoop(); // _14
 };
+
+/// These are the only flags passed to AnimMgr lol.
+
+#define ANIMMGR_LOAD_NOSKIP    (0x0)    /// Do not skip loading bundle (default behaviour).
+#define ANIMMGR_LOAD_BUNDLE    (0x8000) /// Load bundle.
+#define ANIMMGR_LOAD_SKIP_MASK (0x7FFF) /// Mask for checking bundle loading flag.
 
 /**
  * @brief Animation managing object.
@@ -569,54 +554,45 @@ struct Animator {
  */
 struct AnimMgr : public CoreNode {
 
-/// These do the same thing (and are the only flags passed to AnimMgr, but whatever).
-#define ANIMMGR_LOAD_BUNDLE    (0x8000)
-#define ANIMMGR_LOAD_NOSKIP    (0x0)
-#define ANIMMGR_LOAD_SKIP_MASK (0x7FFF)
-
 	/**
 	 * @brief AnimMgr parameters.
 	 *
 	 * Offsets relative to AnimMgr for convenience.
+	 *
+	 * @note Size: 0x28.
 	 */
 	struct Parms : public Parameters {
 
-		/// Constructor.
+		/// Constructor. Default values are overwritten on file read.
 		Parms()
-		    : _18(this, 2, 0, 0, "a00", "flags")
+		    : mFlags(this, 2, 0, 0, "a00", "flags")
 		    , mBasePath(this, String("base dir", 0), String("", 0), String("", 0), "a01", "baseAnimDir")
 		{
 		}
 
 		// _14-_18 = Parameters
-		Parm<int> _18;          ///< _18, 'a00', unknown and unused.
+		Parm<int> mFlags;       ///< _18, 'a00', unused.
 		Parm<String> mBasePath; ///< _28, 'base dir', path to data dir containing AnimInfo data files.
 	};
 
-	/// Constructor, also loads animations and bundle file info.
 	AnimMgr(Shape* model, immut char* animPath, int flags, immut char* bundlePath);
 
-	/// Reads information for manager parameters and all managed animations.
 	virtual void read(RandomAccessStream& input); // _0C
 
-	/// Loads all parameter and animation information, including bundle.
 	void loadAnims(immut char* animPath, immut char* bundlePath);
 
-	/// Adds and loads new animation into list from specified file.
-	AnimInfo* addAnimation(immut char* animPath, bool isRelativePath);
+	AnimInfo* addAnimation(immut char* dataPath, bool isRelativePath);
 
-	/// Gets number of managed animations in list.
 	int countAnims();
 
-	/// STRIPPED - gets animation from list at index `idx` and if not loaded, loads it.
 	AnimInfo* findAnim(int idx);
 
 #ifdef WIN32
 	virtual void genAge(AgeServer&);
 	virtual void write(RandomAccessStream&);
-#endif
 
 	void importAnimationButton(AgeServer&);
+#endif
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode

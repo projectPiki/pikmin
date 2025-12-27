@@ -16,7 +16,7 @@ zen::DrawUfoParts::DrawUfoParts()
 	mReturnState = RETSTATE_Unk0;
 	mMode        = MODE_Sleep;
 
-	mAlphaWipe.setColour(Colour(0, 0, 0, 0), Colour(0, 0, 0, 0));
+	mAlphaWipe.setColour(COLOUR_TRANSPARENT, COLOUR_TRANSPARENT);
 
 	// just for stack
 	STACK_PAD_TERNARY(mScreen, 1);
@@ -94,10 +94,10 @@ void zen::DrawUfoParts::draw(Graphics& gfx)
 
 		if (check) {
 			Matrix4f mtx;
-			gfx.setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+			gfx.setOrthogonal(mtx.mMtx, AREA_FULL_SCREEN(gfx));
 			gfx.setColour(COLOUR_BLACK, true);
 			gfx.setAuxColour(COLOUR_BLACK);
-			gfx.fillRectangle(RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+			gfx.fillRectangle(AREA_FULL_SCREEN(gfx));
 			mScreen->draw();
 		}
 
@@ -157,15 +157,15 @@ void zen::DrawUfoParts::dataSet()
 			if (!playerState->hasUfoParts(PelletMgr::getUfoIDFromIndex(i))) {
 				partIcon->setBlack(Colour(48, 48, 48, 0));
 				partIcon->setWhite(COLOUR_BLACK);
-				partLabel->setCharColor(Colour(0, 0, 0, 0));
-				partLabel->setGradColor(Colour(0, 0, 0, 0));
+				partLabel->setCharColor(COLOUR_TRANSPARENT);
+				partLabel->setGradColor(COLOUR_TRANSPARENT);
 			}
 
 		} else if ((i % 2) == 0) {
 			partIcon->setBlack(Colour(48, 48, 48, 0));
 			partIcon->setWhite(COLOUR_BLACK);
-			partLabel->setCharColor(Colour(0, 0, 0, 0));
-			partLabel->setGradColor(Colour(0, 0, 0, 0));
+			partLabel->setCharColor(COLOUR_TRANSPARENT);
+			partLabel->setGradColor(COLOUR_TRANSPARENT);
 		}
 	}
 }

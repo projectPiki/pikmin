@@ -61,6 +61,28 @@ enum TimerState {
 };
 
 /**
+ * @brief Language ID. For PAL, these are mapped to OS languages in `GamePrefs::Initialise()`.
+ */
+enum LanguageID {
+#if defined(VERSION_GPIP01_00)
+	LANG_English = 0, ///< 0, PAL English. NB: for PAL, Dutch OS language also maps to this.
+	LANG_French  = 1, ///< 1, PAL French.
+	LANG_German  = 2, ///< 2, PAL Italian.
+	LANG_Spanish = 3, ///< 3, PAL Spanish.
+	LANG_Italian = 4, ///< 4, PAL Italian.
+
+	LANG_MIN = LANG_English, ///< 0, for bounds checks.
+	LANG_MAX = LANG_Italian, ///< 4, for bounds checks.
+
+#else
+	LANG_Adult = 0, ///< 0, "otona", only different in the demo, both are just "eng" in the US retail release.
+	LANG_Child = 1, ///< 1, "kodomo", only different in the demo, both are just "eng" in the US retail release.
+#endif
+
+	LANG_CAPACITY = 8,
+};
+
+/**
  * @brief TODO
  */
 struct AddressNode : public CoreNode {
@@ -145,11 +167,11 @@ struct StdSystem {
 	void resetHeap(int heapIdx, int flag);
 	int setHeap(int);
 	GfxobjInfo* findGfxObject(immut char*, u32);
-	Texture* loadTexture(immut char*, bool);
-	Shape* loadShape(immut char*, bool);
+	Texture* loadTexture(immut char* path, bool isRelativePath);
+	Shape* loadShape(immut char* modelPath, bool checkCache);
 	AnimData* findAnimation(immut char*);
 	int findAnyIndex(immut char*, immut char*);
-	AnimData* loadAnimation(Shape* model, immut char* path, bool isRelativePath);
+	AnimData* loadAnimation(Shape* model, immut char* dataPath, bool isRelativePath);
 	void addAnimation(AnimData*, immut char*);
 	void addGfxObject(GfxobjInfo*);
 	void attachObjs();
@@ -226,7 +248,7 @@ struct StdSystem {
 	BOOL mForcePrint;              // _198
 	MemInfo* mCurrMemInfo;         // _19C
 #if defined(VERSION_GPIP01_00)
-	u32 _1A0; // _1A0, language id, at least for PAL
+	LanguageID mLanguageID; // _1A0, language ID for PAL.
 #endif
 
 	// the vtable has to be at 0x1A0, so it's in the middle, yes.
@@ -328,19 +350,19 @@ struct SymbolInfo {
 struct System : public StdSystem {
 	System();
 
-	virtual void initSoftReset();                                  // _08
-	virtual RandomAccessStream* openFile(immut char*, bool, bool); // _0C
-	virtual u32 copyRamToCache(u32, u32, u32);                     // _10
-	virtual void copyCacheToRam(u32, u32, u32);                    // _14
-	virtual void copyWaitUntilDone();                              // _18
-	virtual void copyCacheToTexture(CacheTexture*);                // _1C
-#if defined(VERSION_PIKIDEMO)                                      //
-	virtual void forceHardReset() { mIsDemoTimeUp = TRUE; }        // _20
-#endif                                                             //
-	virtual void parseArchiveDirectory(immut char*, immut char*);  // _24
-	virtual void sndPlaySe(u32);                                   // _28
-	virtual void startLoading(LoadIdler*, bool, u32);              // _2C
-	virtual void endLoading();                                     // _30
+	virtual void initSoftReset();                                                      // _08
+	virtual RandomAccessStream* openFile(immut char* path, bool isRelativePath, bool); // _0C
+	virtual u32 copyRamToCache(u32, u32, u32);                                         // _10
+	virtual void copyCacheToRam(u32, u32, u32);                                        // _14
+	virtual void copyWaitUntilDone();                                                  // _18
+	virtual void copyCacheToTexture(CacheTexture*);                                    // _1C
+#if defined(VERSION_PIKIDEMO)                                                          //
+	virtual void forceHardReset() { mIsDemoTimeUp = TRUE; }                            // _20
+#endif                                                                                 //
+	virtual void parseArchiveDirectory(immut char*, immut char*);                      // _24
+	virtual void sndPlaySe(u32);                                                       // _28
+	virtual void startLoading(LoadIdler*, bool, u32);                                  // _2C
+	virtual void endLoading();                                                         // _30
 
 	~System();
 
@@ -382,12 +404,14 @@ struct System : public StdSystem {
 	// Fake!
 	inline void initCurrentAllocator() { mCurrentAllocator = &mBaseAramAllocator; }
 
+	inline AramAllocator* getAllocator() { return &mAramAllocator; }
+
 	// _00      = VTBL
 	// _00-_248 = StdSystem
 	u32 mHeapStart;                                  // _244
 	u32 mHeapEnd;                                    // _248
 	Graphics* mDGXGfx;                               // _24C, cast to DGXGraphics in DOL
-	u32 _250;                                        // _250, unknown
+	u32 _250;                                        // _250, unknown/unused - set to 0 by GameFlow::softReset.
 	Delegate1<System, Graphics&>* mDvdErrorCallback; // _254
 	int mDvdErrorCode;                               // _258
 	u32 mDvdBufferSize;                              // _25C

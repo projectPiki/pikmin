@@ -97,7 +97,7 @@ void zen::ogScrDiaryMgr::draw(Graphics& gfx)
 
 	if (!playerState) {
 		Matrix4f mtx;
-		gfx.setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+		gfx.setOrthogonal(mtx.mMtx, AREA_FULL_SCREEN(gfx));
 		gfx.setColour(COLOUR_WHITE, true);
 		gfx.setAuxColour(Colour(255, 255, 150, 255));
 

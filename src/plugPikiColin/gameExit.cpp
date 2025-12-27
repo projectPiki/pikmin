@@ -34,10 +34,10 @@ void GameExitSection::update()
 {
 	gameflow.mNextOnePlayerSectionID = ONEPLAYER_GameSetup;
 	if (flowCont._244) {
-		gameflow.mGameSectionID = SECTION_MovSample;
-		gameflow.mIntroMovieId  = flowCont._244 + 3;
+		gameflow.mNextGameSectionID = SECTION_MovSample;
+		gameflow.mCurrIntroMovieID  = flowCont._244 + 3;
 	} else {
-		gameflow.mGameSectionID = SECTION_Titles;
+		gameflow.mNextGameSectionID = SECTION_Titles;
 	}
 
 	gsys->softReset();

@@ -84,7 +84,7 @@ void PlugPikiApp::draw(Graphics& gfx)
 	Node::draw(gfx);
 
 	Matrix4f mtx;
-	gfx.setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+	gfx.setOrthogonal(mtx.mMtx, AREA_FULL_SCREEN(gfx));
 	gfx.useTexture(nullptr, GX_TEXMAP0);
 
 	if (gsys->mTimerState) {

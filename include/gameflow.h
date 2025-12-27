@@ -10,6 +10,7 @@
 #include "OnePlayerSection.h"
 #include "Parameters.h"
 #include "WorldClock.h"
+#include "system.h"
 #include "types.h"
 
 struct AnimFrameCacher;
@@ -67,8 +68,26 @@ enum OnePlayerSectionID {
  * @brief TODO
  */
 enum GameFilterType {
-	FILTER_Custom = 0,
-	FILTER_DFOff  = 1,
+	FILTER_Custom = 0, ///< 0, use the custom/editable values connected to the debug menu (7-tap filter).
+	FILTER_DFOff  = 1, ///< 1, turn deflicker off and use the default values (3-tap filter).
+	FILTER_COUNT,      ///< 2, number of vertical filter types.
+};
+
+/**
+ * @brief HVQM4 movies to play when idling on the intro screen or during the credits.
+ *
+ * The first four options are cycled through on the title screen. The last two options are for the credits.
+ */
+enum MovSampleID {
+	MOV_GrowDemo     = 0, ///< 0, `cntA_S.h4m` - tutorial video showing Olimar growing Pikmin.
+	MOV_ThrowDemo    = 1, ///< 1, `cntB_S.h4m` - tutorial video showing Olimar throwing Pikmin at things.
+	MOV_WorkDemo     = 2, ///< 2, `cntC_S.h4m` - tutorial video showing Pikmin doing tasks (building bridges and sticks, using bombs).
+	MOV_DeathDemo    = 3, ///< 3, `cntD_S.h4m` - tutorial video about Pikmin deaths and hazards.
+	MOV_NormalEnding = 4, ///< 4, `sr_S.h4m` - neutral ending credits.
+	MOV_HappyEnding  = 5, ///< 5, `srhp_S.h4m` - happy (100%) ending credits.
+	MOV_COUNT,            ///< 6 total HVQM4 movies.
+
+	MOV_INTRO_CYCLE_MASK = 0x3, ///< 0x3, Cycles through CntA-CntD on title screen after idling for some time.
 };
 
 /**
@@ -83,40 +102,74 @@ enum LanguageFileType {
 	LANGFILE_COUNT, // 5
 };
 
+/**
+ * @brief Game flow state flags for handling behaviour during cutscenes.
+ */
 enum GameflowDemoFlags {
-	GFDEMO_None           = 0,
-	GFDEMO_HideNavi       = (1 << 2),  // 0x4, hide the player
-	GFDEMO_HideBluePiki   = (1 << 3),  // 0x8, hide blue pikmin
-	GFDEMO_HideRedPiki    = (1 << 4),  // 0x10, hide red pikmin
-	GFDEMO_HideYellowPiki = (1 << 5),  // 0x20, hide yellow pikmin
-	GFDEMO_MovieMode      = (1 << 6),  // 0x40
-	GFDEMO_InMenu         = (1 << 7),  // 0x80
-	GFDEMO_ShowTekis      = (1 << 10), // 0x400, show enemies even in demo mode
-};
-
-struct GameQuickInfo {
-	// This struct has no ctor or any other functions
-
-	u32 mParts;         // _00
-	u32 mDay;           // _04
-	u32 mBornPikis;     // _08
-	u32 mDeadPikis;     // _0C
-	int mPartsDaysRank; // _10
-	int mBornPikisRank; // _14
-	int mDeadPikisRank; // _18
-};
-
-struct GameChalQuickInfo {
-	int mCourseID;                    // _00, see StageID enum
-	u32 mScore;                       // _04, score for this entry
-	int mRank;                        // _08, 0-4, 0 being the best
-	u32 mCourseScores[MAX_HI_SCORES]; // _0C, all 5 top scores for mCourseID course
+	GFDEMO_None           = 0,         ///< 0x0, no flags set.
+	GFDEMO_HideNavi       = (1 << 2),  ///< 0x4, hide the player.
+	GFDEMO_HideBluePiki   = (1 << 3),  ///< 0x8, hide blue pikmin.
+	GFDEMO_HideRedPiki    = (1 << 4),  ///< 0x10, hide red pikmin.
+	GFDEMO_HideYellowPiki = (1 << 5),  ///< 0x20, hide yellow pikmin.
+	GFDEMO_MovieMode      = (1 << 6),  ///< 0x40, disables the player control.
+	GFDEMO_InMenu         = (1 << 7),  ///< 0x80, check for if a menu is open.
+	GFDEMO_ShowTekis      = (1 << 10), ///< 0x400, show enemies even in demo mode.
 };
 
 /**
- * @brief TODO
+ * @brief Type of ship-related text cutscene to play.
+ */
+enum ShipTextType {
+	SHIPTEXT_CollectEngine = -1, ///< -1, first part collection (delayed text).
+	SHIPTEXT_PartCollect   = 0,  ///< 0, ship part collection text - also when player interacts with the Dolphin directly.
+	SHIPTEXT_PartsAccess   = 1,  ///< 1, text when interacting with a ship part directly.
+	SHIPTEXT_PowerUp       = 2,  ///< 2, text when ship upgrades and opens a new area.
+	SHIPTEXT_PartDiscovery = 3,  ///< 3, text when approaching a part for the first time.
+};
+
+/**
+ * @brief Quick-pass context for (story mode) hi-score related trackables.
+ *
+ * @note Size: 0x1C.
+ */
+struct GameQuickInfo {
+	u32 mParts;         ///< _00, total number of ship parts collected.
+	u32 mDay;           ///< _04, final in-game day.
+	u32 mBornPikis;     ///< _08, total number of pikmin grown.
+	u32 mDeadPikis;     ///< _0C, total number of pikmin killed.
+	int mPartsDaysRank; ///< _10, rank for number of parts collected (0-4, 0 being the best).
+	int mBornPikisRank; ///< _14, rank for number of pikmin grown (0-4, 0 being the best).
+	int mDeadPikisRank; ///< _18, rank for number of pikmin killed (0-4, 0 being the least killed).
+};
+
+/**
+ * @brief Quick-pass context for (challenge mode) hi-score related trackables.
+ *
+ * @note Size: 0x20.
+ */
+struct GameChalQuickInfo {
+	int mCourseID;                    // _00, see StageID enum.
+	u32 mScore;                       // _04, score for this entry.
+	int mRank;                        // _08, rank of this score on this course (0-4, 0 being the best).
+	u32 mCourseScores[MAX_HI_SCORES]; // _0C, all 5 top scores for mCourseID course.
+};
+
+/**
+ * @brief Structure for handling language-specific file paths.
+ *
+ * @note Size: 0x14.
  */
 struct LangMode {
+
+	/**
+	 * @brief Sets all file paths.
+	 *
+	 * @param dir Path to language's .dir BLO archive.
+	 * @param arc Path to language's .arc BLO archive.
+	 * @param bun Path to language's .bun screen bundle.
+	 * @param blo Path to language's screen BLO directory.
+	 * @param tex Path to language's screen texture directory.
+	 */
 	void set(immut char* dir, immut char* arc, immut char* bun, immut char* blo, immut char* tex)
 	{
 		mDirPath = dir;
@@ -126,19 +179,23 @@ struct LangMode {
 		mTexPath = tex;
 	}
 
-	immut char* mDirPath; // _00
-	immut char* mArcPath; // _04
-	immut char* mBunPath; // _08
-	immut char* mBloPath; // _0C
-	immut char* mTexPath; // _10
+	immut char* mDirPath; ///< _00, path to language's .dir BLO archive.
+	immut char* mArcPath; ///< _04, path to language's .arc BLO archive.
+	immut char* mBunPath; ///< _08, path to language's .bun screen bundle.
+	immut char* mBloPath; ///< _0C, path to language's screen BLO directory.
+	immut char* mTexPath; ///< _10, path to language's screen texture directory.
 };
 
 /**
- * @brief TODO
+ * @brief Largely unused wrapper class for a node (list) to be handled by the game flow manager.
+ *
+ * The node wrapped by this class is never actually interacted with.
  *
  * @note Size: 0x24.
  */
 struct GameGenNode : public Node {
+
+	/// Constructs a generic node wrapper.
 	inline GameGenNode(immut char* name, CoreNode* node)
 	    : Node(name)
 	{
@@ -147,38 +204,54 @@ struct GameGenNode : public Node {
 
 	// _00     = VTBL
 	// _00-_20 = Node
-	CoreNode* mNode; // _20
+	CoreNode* mNode; ///< _20, list being wrapped - never interacted with.
 };
 
 /**
- * @brief TODO
+ * @brief State of trackables (stage unlocks, pikmin counts, etc) that should be saved to memory card.
  *
  * @note Size: 0x24.
  */
 struct PlayState : public CoreNode {
+
+	/**
+	 * @brief Whether we're initialised and ready to save or not.
+	 */
+	enum SaveStatus {
+		Fresh       = 1, ///< 1, fresh file/save info not yet initialised.
+		ReadyToSave = 2, ///< 2, save info initialised, will save play data to memory card on save.
+	};
+
+	/// Constructs a fresh play state - un-initialised.
 	PlayState()
 	    : CoreNode("playState")
 	{
-		mSaveFlags  = 0;
-		mSaveStatus = 1;
+		mSaveSlot   = 0;
+		mSaveStatus = Fresh;
 	}
 
 	virtual void read(RandomAccessStream&);  // _0C
 	virtual void write(RandomAccessStream&); // _10
 
-	void openStage(int);
+	void openStage(int stageID);
 
+	/// Initialises a new play state with dummy counts, and only Impact Site unlocked.
 	void Initialise()
 	{
-		mSaveStatus      = 1;
+		mSaveStatus      = Fresh;
 		mBluePikiCount   = -1;
 		mYellowPikiCount = -1;
 		mRedPikiCount    = -1;
 		mSavedDay        = 1;
 		mShipPartsCount  = 0;
-		mCourseOpenFlags = 1;
+		mCourseOpenFlags = (1 << STAGE_Practice);
 	}
 
+	/**
+	 * @brief Checks if a given stage is "open" (unlocked).
+	 * @param stageIdx Stage to check - see `StageID` enum.
+	 * @return True if stage is valid and unlocked, false otherwise.
+	 */
 	bool isStageOpen(int stageIdx)
 	{
 		if (stageIdx >= STAGE_START && stageIdx <= STAGE_COUNT) {
@@ -189,14 +262,14 @@ struct PlayState : public CoreNode {
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	int mRedPikiCount;    // _14
-	int mYellowPikiCount; // _18
-	int mBluePikiCount;   // _1C
-	u8 mSaveStatus;       // _20
-	u8 mSavedDay;         // _21
-	u8 mShipPartsCount;   // _22
-	u8 mSaveFlags;        // _23
-	u32 mCourseOpenFlags; // _24, bitflag
+	int mRedPikiCount;    ///< _14, saved red pikmin count.
+	int mYellowPikiCount; ///< _18, saved yellow pikmin count.
+	int mBluePikiCount;   ///< _1C, saved blue pikmin count.
+	u8 mSaveStatus;       ///< _20, whether play state can be saved or not - see `SaveStatus` enum.
+	u8 mSavedDay;         ///< _21, saved in-game day count.
+	u8 mShipPartsCount;   ///< _22, saved collected ship parts count.
+	u8 mSaveSlot;         ///< _23, save file slot.
+	u32 mCourseOpenFlags; ///< _24, bitflag of which courses are unlocked, packed as (1 << stageID).
 };
 
 /**
@@ -368,16 +441,16 @@ struct GamePrefs : public CoreNode {
 #else
 	void Initialise()
 	{
-		mFlags              = 3;
-		mBgmVol             = 8;
-		mSfxVol             = 8;
-		mFileNum            = 0;
-		mHasSaveGame        = false;
-		mSaveGameIndex      = 0;
-		mSpareSaveGameIndex = 0;
-		_1F                 = 0;
-		mUnlockedStageFlags = 0;
-		mIsChanged          = false;
+		mFlags                 = 3;
+		mBgmVol                = 8;
+		mSfxVol                = 8;
+		mFileNum               = 0;
+		mHasSaveGame           = false;
+		mMemCardSaveIndex      = 0;
+		mSpareMemCardSaveIndex = 0;
+		_1F                    = 0;
+		mUnlockedStageFlags    = 0;
+		mIsChanged             = false;
 		mHiscores.Initialise();
 	}
 #endif
@@ -429,21 +502,21 @@ struct GamePrefs : public CoreNode {
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	bool mIsChanged;        // _14
-	int mFlags;             // _18
-	u8 mBgmVol;             // _1C
-	u8 mSfxVol;             // _1D
-	bool mHasSaveGame;      // _1E
-	u8 _1F;                 // _1F
-	u8 mSaveGameIndex;      // _20
-	u8 mSpareSaveGameIndex; // _21
-	u8 mUnlockedStageFlags; // _22
-	u8 _23;                 // _23
-	GameHiscores mHiscores; // _24
-	u32 _DC;                // _DC, unknown
-	u32 _E0;                // _E0
-	u8 _E4[0x108 - 0xE4];   // _E4, unknown
-	u32 mFileNum;           // _108, unknown
+	bool mIsChanged;           ///< _14
+	int mFlags;                ///< _18
+	u8 mBgmVol;                ///< _1C
+	u8 mSfxVol;                ///< _1D
+	bool mHasSaveGame;         ///< _1E
+	u8 _1F;                    ///< _1F
+	u8 mMemCardSaveIndex;      ///< _20, index of save file on actual memory card + 1 (1-indexed).
+	u8 mSpareMemCardSaveIndex; ///< _21, index of backup save file on actual memory card + 1 (1-indexed).
+	u8 mUnlockedStageFlags;    ///< _22
+	u8 _23;                    ///< _23
+	GameHiscores mHiscores;    ///< _24
+	u32 mSaveCount;            ///< _DC, unknown
+	u32 _E0;                   ///< _E0
+	u8 _E4[0x108 - 0xE4];      ///< _E4, unknown
+	u32 mFileNum;              ///< _108, unknown
 };
 
 /**
@@ -452,15 +525,19 @@ struct GamePrefs : public CoreNode {
 struct GameFlow : public Node {
 
 	/**
-	 * @brief Fabricated. This is gamePrms in Minty's Spreadsheet tm.
+	 * @brief Global game state parameters, mostly around in-game time.
+	 *
+	 * This is gamePrms in Minty's Spreadsheet tm.
 	 *
 	 * @note Size: 0xD8.
 	 */
 	struct Parms : public Parameters {
+
+		/// Constructs parameters - default values are overwritten on file read.
 		inline Parms()
 		    : mStartHour(this, 7.0f, 0.0f, 0.0f, "t00", "startHour")
 		    , mEndHour(this, 19.0f, 0.0f, 0.0f, "t01", "endHour")
-		    , mDaySpeedFactor(this, 20.0f, 0.0f, 0.0f, "p00", "daySpeed")
+		    , mRealMinutesPerGameDay(this, 20.0f, 0.0f, 0.0f, "p00", "daySpeed")
 		    , mMorningStart(this, 7.0f, 0.0f, 0.0f, "p01", "mornStart")
 		    , mMorningMid(this, 8.0f, 0.0f, 0.0f, "s01", "mornMid")
 		    , mMorningEnd(this, 9.0f, 0.0f, 0.0f, "p02", "mornEnd")
@@ -475,120 +552,115 @@ struct GameFlow : public Node {
 		}
 
 		// _00-_04 = Parameters
-		Parm<f32> mStartHour;      // _04, t00 - time set to when entering stage
-		Parm<f32> mEndHour;        // _14, t01 - time when day ends
-		Parm<f32> mDaySpeedFactor; // _24, p00 - (inverse of) speed day advances
-		Parm<f32> mMorningStart;   // _34, p01 - timesetting 0 time
-		Parm<f32> mMorningMid;     // _44, s01 - timesetting 1 time
-		Parm<f32> mMorningEnd;     // _54, p02 - timesetting 2 start time
-		Parm<f32> mNightStart;     // _64, p03 - timesetting 2 end time
-		Parm<f32> mNightMid;       // _74, s03 - timesetting 3 time
-		Parm<f32> mNightEnd;       // _84, p04 - timesetting 0 time
-		Parm<f32> mNightWarning;   // _94, p05 - Hurry Up! time
-		Parm<f32> mNightCountdown; // _A4, p06 - time 10s countdown starts
-		Parm<int> mTekiAbility;    // _B4, x99 - no idea what this does yet
-		Parm<String> mGameTitle;   // _C4, x98 - P I K M I N (unused?)
+		Parm<f32> mStartHour;             ///< _04, t00 - time set to when entering stage at the start of the day.
+		Parm<f32> mEndHour;               ///< _14, t01 - time when day ends and end-of-day sequence starts.
+		Parm<f32> mRealMinutesPerGameDay; ///< _24, p00 - how many real-life minutes correspond to one (24-hr) in-game "day".
+		Parm<f32> mMorningStart;          ///< _34, p01 - timesetting 0 end time (start blending from 0 to 1).
+		Parm<f32> mMorningMid;            ///< _44, s01 - timesetting 1 time (start blending from 1 to 2).
+		Parm<f32> mMorningEnd;            ///< _54, p02 - timesetting 2 start time (steady midday lighting).
+		Parm<f32> mNightStart;            ///< _64, p03 - timesetting 2 end time (start blending from 2 to 3).
+		Parm<f32> mNightMid;              ///< _74, s03 - timesetting 3 time (start blending from 3 to 0).
+		Parm<f32> mNightEnd;              ///< _84, p04 - timesetting 0 start time.
+		Parm<f32> mNightWarning;          ///< _94, p05 - Hurry Up! time.
+		Parm<f32> mNightCountdown;        ///< _A4, p06 - time 10s countdown starts.
+		Parm<int> mTekiAbility;           ///< _B4, x99 - unused.
+		Parm<String> mGameTitle;          ///< _C4, x98 - P I K M I N (unused).
 	};
 
 	virtual void read(RandomAccessStream&); // _0C
 	virtual void update();                  // _10
 
-	void drawLoadLogo(Graphics&, bool, Texture*, f32);
-	void menuToggleTimers(Menu&);
-	void menuTogglePrint(Menu&);
-	void menuToggleDInfo(Menu&);
-	void menuToggleDExtra(Menu&);
-	void menuToggleBlur(Menu&);
-	void menuToggleInfo(Menu&);
-	void menuToggleColls(Menu&);
-	void menuChangeFilter(Menu&);
-	void menuIncreaseFilter(Menu&);
-	void menuDecreaseFilter(Menu&);
-	Texture* setLoadBanner(immut char*);
-	void hardReset(BaseApp*);
+	void drawLoadLogo(Graphics& gfx, bool force60FPSSpin, Texture* logoTex, f32 alphaFactor);
+	void menuToggleTimers(Menu& menu);
+	void menuTogglePrint(Menu& menu);
+	void menuToggleDInfo(Menu& menu);
+	void menuToggleDExtra(Menu& menu);
+	void menuToggleBlur(Menu& menu);
+	void menuToggleInfo(Menu& menu);
+	void menuToggleColls(Menu& menu);
+	void menuChangeFilter(Menu& menu);
+	void menuIncreaseFilter(Menu& menu);
+	void menuDecreaseFilter(Menu& menu);
+	Texture* setLoadBanner(immut char* texPath);
+	void hardReset(BaseApp* baseApp);
 	void softReset();
-	Shape* loadShape(immut char*, bool);
-	void addGenNode(immut char*, CoreNode*);
+	Shape* loadShape(immut char* modelPath, bool checkCache);
+	void addGenNode(immut char* name, CoreNode* node);
 
 	// unused/inlined:
-	void addOptionsMenu(Menu*);
-	void addFilterMenu(Menu*);
+
+	void addOptionsMenu(Menu* parent);
+	void addFilterMenu(Menu* parent);
 
 	// _00     = VTBL
 	// _00-_20 = Node
-	Parms* mParameters;            // _20
-	MemoryCard mMemoryCard;        // _24
-	GamePrefs mGamePrefs;          // _94
-	u32 mSaveGameCrc;              // _1A0
-	PlayState mPlayState;          // _1A4
-	int mCurrentStageId;           // _1CC
-	int mLastUnlockedStageId;      // _1D0
-	u32 _1D4;                      // _1D4, unused
-	u32 mDemoFlags;                // _1D8, bitflag of some description
-	MoviePlayer* mMoviePlayer;     // _1DC
-	s16 mMovieInfoNum;             // _1E0
-	s16 mMovieType;                // _1E2
-	s16 mIsDayEndActive;           // _1E4
-	s16 mIsDayEndTriggered;        // _1E6
-	GameInterface* mGameInterface; // _1E8
-	int mNextSectionID;            // _1EC, see GameSectionID enum
-	int mGameSectionID;            // _1F0, see GameSectionID enum
-	s32 mNextOnePlayerSectionID;   // _1F4, see OnePlayerSectionID enum
-	u8 _1F8[0x4];                  // _1F8, unknown
-	int mLevelIndex;               // _1FC, WHAT IS THIS???
-	u32 _200;                      // _200, unknown
-	Section* mGameSection;         // _204
-	LangMode mLangModes[2];        // _208
-	u8 _230[0x2A8 - 0x230];        // _230, unknown
-	int mLanguageIndex;            // _2A8
-	u32 mIntroMovieIdCycle;        // _2AC
-	u32 mIntroMovieId;             // _2B0, could be int
-	BOOL mIsChallengeMode;         // _2B4
-	u32 _2B8;                      // _2B8, unknown
-	u32 mUpdateTickCount;          // _2BC
-	f32 mLoadTimeSeconds;          // _2C0
-	f32 mCurrentEffectAlpha;       // _2C4
-	vf32 mTargetEffectAlpha;       // _2C8
-	f32 mEffectDurationTimer;      // _2CC
-	int mAppTickCounter;           // _2D0
-	BOOL mRedLoadLogo;             // _2D4, makes the load logo red?
-	WorldClock mWorldClock;        // _2D8
-	f32 mTimeMultiplier;           // _304
-	AnimFrameCacher* mFrameCacher; // _308
-	GameGenFlow* mGenFlow;         // _30C
-	Texture* mLevelBannerTexture;  // _310
-	f32 mLevelBannerFadeValue;     // _314
-	Texture* mLoadBannerTexture;   // _318
-	GameLoadIdler mGameLoadIdler;  // _31C
-	u8 _330[0x4];                  // _330
-	BOOL mIsGameplayInputEnabled;  // _334
-	BOOL mIsUiOverlayActive;       // _338
-	BOOL mPauseAll;                // _33C
-	BOOL mIsTutorialActive;        // _340
-	u8 _344[0x4];                  // _344, unknown
-	u32 _348;                      // _348, unknown
-	u32 _34C;                      // _34C, unknown
-	int mFilterType;               // _350
-	u8 mFilters[8];                // _354
-	u8 _35C;                       // _35C, maybe Colour?
-	u8 _35D;                       // _35D
-	u8 _35E;                       // _35E
-	u8 _35F;                       // _35F
-	u8 _360;                       // _360
-	u8 _361;                       // _361
-	u8 _362;                       // _362
+	Parms* mParameters;                 ///< _020, global (time-related) parameters, read from file.
+	MemoryCard mMemoryCard;             ///< _024, active memory card.
+	GamePrefs mGamePrefs;               ///< _094, global game preferences (options, save file, etc).
+	u32 mSaveGameCrc;                   ///< _1A0, check-sum for save file.
+	PlayState mPlayState;               ///< _1A4, basic trackable info to save to memory card.
+	int mCurrentStageID;                ///< _1CC, current selected stage, to show ship at on next map screen - see `StageID` enum.
+	int mPendingStageUnlockID;          ///< _1D0, unlock anim to play on next map screen - see `zen::DrawWorldMap::startModeFlag` enum.
+	u32 _1D4;                           ///< _1D4, unused - set to 0 in hardReset but otherwise untouched.
+	u32 mDemoFlags;                     ///< _1D8, game state flags during cutscenes - see `GameflowDemoFlags` enum.
+	MoviePlayer* mMoviePlayer;          ///< _1DC, pointer to global movie/cutscene player.
+	s16 mShipTextPartID;                ///< _1E0, ship part ID for the latest ship part collection or interaction text.
+	s16 mShipTextType;                  ///< _1E2, type of ship-related text to display - see `ShipTextType` enum.
+	s16 mIsDayEndActive;                ///< _1E4, is the end-of-day cutscene playing?
+	s16 mIsDayEndTriggered;             ///< _1E6, is the end-of-day cutscene pending (for next time we're out of a menu etc)?
+	GameInterface* mGameInterface;      ///< _1E8, message shuttle - upcast to `GameMovieInterface`/`TitlesMovieInterface` based on section.
+	int mCurrGameSectionID;             ///< _1EC, see GameSectionID enum
+	int mNextGameSectionID;             ///< _1F0, see GameSectionID enum
+	s32 mNextOnePlayerSectionID;        ///< _1F4, see OnePlayerSectionID enum
+	u8 _1F8[0x4];                       ///< _1F8, unknown/unused.
+	int mLevelIndex;                    ///< _1FC, WHAT IS THIS???
+	u32 _200;                           ///< _200, unknown/unused - set to zero then never referenced.
+	Section* mGameSection;              ///< _204, pointer to current active game section.
+	LangMode mLangModes[LANG_CAPACITY]; ///< _208, directories and paths for each language type - only 2 ever used (5 for PAL).
+	int mLanguageIndex;                 ///< _2A8, current language mode selected (adult/child text mode for demo/JP).
+	u32 mNextIntroMovieID;              ///< _2AC, idling title screen movie to play next - see `MovSampleID` enum.
+	u32 mCurrIntroMovieID;              ///< _2B0, currently playing idling title screen movie - see `MovSampleID` enum.
+	BOOL mIsChallengeMode;              ///< _2B4, whether we're in challenge mode (TRUE) or normal story mode (FALSE).
+	u32 _2B8;                           ///< _2B8, unknown/unused - set to 0 and never touched.
+	u32 mGenFlowUpdateTickCount;        ///< _2BC, counter for how many times the flow manager has been updated.
+	f32 mLoadTimeSeconds;               ///< _2C0, how long the last load took, in seconds.
+	f32 mCurrentEffectAlpha;            ///< _2C4, current load fade alpha when game state is "soft reset".
+	vf32 mTargetEffectAlpha;            ///< _2C8, target load fade alpha when game state is "soft reset".
+	f32 mEffectDurationTimer;           ///< _2CC, how long load fade should last, at most (unsure of this).
+	int mAppTickCounter;                ///< _2D0, counter for number of frames game application has been active for.
+	BOOL mIsNintendoLoadLogo;           ///< _2D4, is the load logo the Nintendo logo on bootup?
+	WorldClock mWorldClock;             ///< _2D8, global in-game time tracker/calculator.
+	f32 mTimeMultiplier;                ///< _304, multiplier for in-game time progression (always 1.0f).
+	AnimFrameCacher* mFrameCacher;      ///< _308, global animation frame cacher, used primarily for pikmin animations.
+	GameGenFlow* mFlowManager;          ///< _30C, flow manager that coordinates other global managers.
+	Texture* mLevelBannerTex;           ///< _310, level banner texture to display when loading into a map.
+	f32 mLevelBannerFadeValue;          ///< _314, factor to control the fade-in for the level banner.
+	Texture* mLastLoadedBannerTex;      ///< _318, most recently loaded banner texture - ends up being a dupe of mLevelBannerTex.
+	GameLoadIdler mGameLoadIdler;       ///< _31C, manager for drawing loading screens during gameplay.
+	u8 _330[0x4];                       ///< _330, unknown/unused.
+	BOOL mIsPauseAllowed;               ///< _334, whether pausing is enabled (false during cutscenes, end of day, etc).
+	BOOL mIsUIOverlayActive;            ///< _338, whether a screen is active over the gameplay screen (ship text, menus, etc).
+	BOOL mPauseAll;                     ///< _33C, whether gameplay is paused (due to cutscene or being in an onion menu).
+	BOOL mIsTutorialTextActive;         ///< _340, whether a text ("tutorial") window is currently open.
+	u8 _344[0x4];                       ///< _344, unknown/unused.
+	u32 _348;                           ///< _348, unknown/unused - set to 0 and never touched.
+	u32 _34C;                           ///< _34C, unknown/unused - set to 0 and never touched.
+	int mFilterType;                    ///< _350, type of vertical filter values to apply - see `GameFilterType` enum.
+	u8 mVFilters[FILTER_COUNT][8];      ///< _354, vertical filter values, indexed by `GameFilterType`. Only first 7 are used.
 };
 
 extern GameFlow gameflow;
 
 /**
- * @brief TODO
+ * @brief Managing class for anything list-based that needs to update each frame (pikiMgr, naviMgr, etc).
+ *
+ * The nodes in this list are all managers of other lists.
  *
  * @note Size: 0x30.
  */
 struct GameGenFlow : public Node {
-	GameGenFlow()
-	    : Node("GameGenFlow")
+	GameGenFlow(char* name)
+	    : Node(name)
 	{
 		_24 = 332;
 		_20 = 32;
@@ -596,20 +668,21 @@ struct GameGenFlow : public Node {
 		_2C = 0;
 	}
 
+	/// Updates all nodes in its list (and enforces in-game time sync).
 	virtual void update() // _10
 	{
-		gameflow.mUpdateTickCount++;
-		gameflow.mWorldClock.mTicksPerHour = 60.0f * (gameflow.mTimeMultiplier * gameflow.mParameters->mDaySpeedFactor());
-		gameflow.mWorldClock.mTimeScale    = gameflow.mWorldClock.mTicksPerHour / gameflow.mWorldClock.mHoursInDay;
+		gameflow.mGenFlowUpdateTickCount++;
+		gameflow.mWorldClock.mRealSecsPerGameDay  = 60.0f * (gameflow.mTimeMultiplier * gameflow.mParameters->mRealMinutesPerGameDay());
+		gameflow.mWorldClock.mRealSecsPerGameHour = gameflow.mWorldClock.mRealSecsPerGameDay / gameflow.mWorldClock.mHoursInDay;
 		Node::update();
 	}
 
 	// _00     = VTBL
 	// _00-_20 = Node
-	int _20; // _20
-	int _24; // _24
-	int _28; // _28
-	u32 _2C; // _2C, unknown
+	int _20; ///< _20, unknown/unused - set to 32 on construction.
+	int _24; ///< _24, unknown/unused - set to 332 on construction.
+	int _28; ///< _28, unknown/unused - set to 1 on construction.
+	u32 _2C; ///< _2C, unknown/unused - set to 0 on construction.
 };
 
 void preloadLanguage();

@@ -73,19 +73,19 @@ struct NinLogoSetupSection : public Node {
 				return;
 			}
 		} else {
-			gameflow.mGameSectionID = SECTION_Titles;
+			gameflow.mNextGameSectionID = SECTION_Titles;
 			gsys->softReset();
 		}
 	}
 	virtual void draw(Graphics& gfx) // _14
 	{
-		gfx.setViewport(RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
-		gfx.setScissor(RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
-		gfx.setClearColour(Colour(0, 0, 0, 0));
+		gfx.setViewport(AREA_FULL_SCREEN(gfx));
+		gfx.setScissor(AREA_FULL_SCREEN(gfx));
+		gfx.setClearColour(COLOUR_TRANSPARENT);
 		gfx.clearBuffer(3, false);
 
 		Matrix4f mtx;
-		gfx.setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+		gfx.setOrthogonal(mtx.mMtx, AREA_FULL_SCREEN(gfx));
 		gfx.setColour(Colour(255, 255, 64, 255), true);
 		gfx.setAuxColour(Colour(255, 0, 64, 255));
 
@@ -95,7 +95,7 @@ struct NinLogoSetupSection : public Node {
 			progresWindow->draw(gfx);
 		}
 
-		gameflow.drawLoadLogo(gfx, false, gameflow.mLevelBannerTexture, gameflow.mLevelBannerFadeValue);
+		gameflow.drawLoadLogo(gfx, false, gameflow.mLevelBannerTex, gameflow.mLevelBannerFadeValue);
 
 		// either this is a lot of inlines or there's a lot of debug stuff here.
 		STACK_PAD_VAR(64);

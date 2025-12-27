@@ -157,7 +157,7 @@ protected:
 	void drawSelect(Graphics& gfx, Font* font)
 	{
 		Matrix4f mtx;
-		gfx.setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+		gfx.setOrthogonal(mtx.mMtx, AREA_FULL_SCREEN(gfx));
 
 		for (int i = 0; i < mModeCount; i++) {
 			if (mCurrentSelect == i) {
@@ -790,15 +790,15 @@ struct GameCourseClearScreen : public Node {
 	}
 	virtual void draw(Graphics& gfx) // _14
 	{
-		gfx.setViewport(RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
-		gfx.setScissor(RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+		gfx.setViewport(AREA_FULL_SCREEN(gfx));
+		gfx.setScissor(AREA_FULL_SCREEN(gfx));
 		gfx.setClearColour(COLOUR_BLACK);
 		gfx.clearBuffer(3, false);
 		Matrix4f mtx;
-		gfx.setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+		gfx.setOrthogonal(mtx.mMtx, AREA_FULL_SCREEN(gfx));
 		gfx.setColour(Colour(64, 64, 192, 255), true);
 		gfx.setAuxColour(Colour(192, 64, 255, 255));
-		gfx.fillRectangle(RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+		gfx.fillRectangle(AREA_FULL_SCREEN(gfx));
 
 		Camera camera;
 		Matrix4f mtx2;
