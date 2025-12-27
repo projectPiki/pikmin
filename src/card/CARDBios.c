@@ -41,7 +41,10 @@ void __CARDExtHandler(s32 channel, OSContext* context)
 	card = &__CARDBlock[channel];
 	if (card->attached) {
 		card->attached = FALSE;
-		card->result   = CARD_RESULT_NOCARD;
+#if defined(VERSION_G98E01_PIKIDEMO)
+#else
+		card->result = CARD_RESULT_NOCARD;
+#endif
 		EXISetExiCallback(channel, NULL);
 		OSCancelAlarm(&card->alarm);
 		callback = card->exiCallback;
@@ -50,6 +53,12 @@ void __CARDExtHandler(s32 channel, OSContext* context)
 			card->exiCallback = NULL;
 			callback(channel, CARD_RESULT_NOCARD);
 		}
+
+#if defined(VERSION_G98E01_PIKIDEMO)
+		if (card->result != CARD_RESULT_BUSY) {
+			card->result = CARD_RESULT_NOCARD;
+		}
+#endif
 
 		callback = card->extCallback;
 		if (callback && CARD_MAX_MOUNT_STEP <= card->mountStep) {
@@ -68,6 +77,8 @@ void __CARDExiHandler(s32 channel, OSContext* context)
 	CARDCallback callback;
 	u8 status;
 	s32 result;
+
+	ASSERTLINE(0xDC, 0 <= chan && chan < 2);
 
 	card = &__CARDBlock[channel];
 

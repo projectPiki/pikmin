@@ -48,6 +48,7 @@ void MTXTrans(Mtx m, f32 xT, f32 yT, f32 zT);
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
 void C_MTXLightPerspective(Mtx m, f32 fovY, f32 aspect, f32 scaleS, f32 scaleT, f32 transS, f32 transT);
 void PSMTXScale(Mtx m, f32 xS, f32 yS, f32 zS);
+void PSMTXTrans(Mtx m, f32 xS, f32 yS, f32 zS);
 #else
 void MTXScale(Mtx m, f32 xS, f32 yS, f32 zS);
 void MTXLightPerspective(Mtx m, f32 fovY, f32 aspect, f32 scaleS, f32 scaleT, f32 transS, f32 transT);

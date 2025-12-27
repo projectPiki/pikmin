@@ -36,14 +36,20 @@ public:
 	{
 		TAIAreserveMotion::start(teki);
 		setTargetPosition(teki);
+#if defined(VERSION_G98E01_PIKIDEMO)
+#else
 		teki.setAnimSpeed(50.0f);
+#endif
 	}
 	virtual bool act(Teki& teki) // _10
 	{
 		bool res = false;
 		if (TAIAreserveMotion::act(teki)) {
 			if (setTargetPosition(teki)) {
+#if defined(VERSION_G98E01_PIKIDEMO)
+#else
 				teki.setManualAnimation(false);
+#endif
 				res = true;
 			}
 			teki.moveTowardPriorityFaceDir(teki.mTargetPosition, teki.getParameterF(TPF_RunVelocity));
@@ -147,6 +153,16 @@ protected:
 /**
  * @brief TODO
  */
+#if defined(VERSION_G98E01_PIKIDEMO)
+struct TAIAwaitOtama : public TAIAwait {
+public:
+	TAIAwaitOtama(int nextState, int motionID)
+	    : TAIAwait(nextState, motionID, 0.0f)
+	{
+		mWaitCounterMax = 0.0f;
+	}
+
+#else
 struct TAIAwaitOtama : public TAIAreserveMotion {
 public:
 	TAIAwaitOtama(int nextState, int motionID)
@@ -154,14 +170,26 @@ public:
 	{
 	}
 
+#endif
 	virtual void start(Teki& teki) // _08
 	{
+		// What the purpose of this change is, I have no idea
+#if defined(VERSION_G98E01_PIKIDEMO)
+		TAIAwait::start(teki);
+		mWaitCounterMax
+		    = teki.getParameterF(TAIotamaFloatParams::MinWaitTime)
+		    + zen::Rand(teki.getParameterF(TAIotamaFloatParams::MaxWaitTime) - teki.getParameterF(TAIotamaFloatParams::MinWaitTime));
+#else
 		TAIAreserveMotion::start(teki);
 		teki.setFrameCounter(0.0f);
 		teki.setFrameCounterMax(
 		    teki.getParameterF(TAIotamaFloatParams::MinWaitTime)
 		    + zen::Rand(teki.getParameterF(TAIotamaFloatParams::MaxWaitTime) - teki.getParameterF(TAIotamaFloatParams::MinWaitTime)));
+#endif
 	}
+#if defined(VERSION_G98E01_PIKIDEMO)
+// This function is completely absent in the demo
+#else
 	virtual bool act(Teki& teki) // _10
 	{
 		bool res = false;
@@ -177,11 +205,15 @@ public:
 		}
 		return res;
 	}
-
+#endif
 protected:
 	// _04     = VTBL
 	// _00-_0C = TAIAreserveMotion
-	// TODO: members
+#if defined(VERSION_G98E01_PIKIDEMO)
+	f32 mWaitCounterMax; // _10
+
+	virtual f32 getWaitCounterMax(Teki&) { return mWaitCounterMax; }
+#endif
 };
 
 /**
@@ -285,9 +317,13 @@ TAIotamaStrategy::TAIotamaStrategy()
 	TAIAappealOtama* appeal1              = new TAIAappealOtama(TAIotamaStateID::GoTarget, TekiMotion::WaitAct1);
 	TAIAvisibleNavi* visibleNavi          = new TAIAvisibleNavi(TAIotamaStateID::AppealRun);
 	TAIAappealOtama* appeal2              = new TAIAappealOtama(TAIotamaStateID::RunAway, TekiMotion::WaitAct1);
-	TAIAtimerReaction* timer              = new TAIAtimerReaction(TAIotamaStateID::SetTarget, 3.0f);
-	TAIArunAwayOtama* runAway             = new TAIArunAwayOtama(TAIotamaStateID::Wait, TekiMotion::Move1);
-
+#if defined(VERSION_G98E01_PIKIDEMO)
+	TAIArunAwayOtama* runAway = new TAIArunAwayOtama(TAIotamaStateID::Wait, TekiMotion::Move1);
+	TAIAtimerReaction* timer  = new TAIAtimerReaction(TAIotamaStateID::SetTarget, 3.0f);
+#else
+	TAIAtimerReaction* timer  = new TAIAtimerReaction(TAIotamaStateID::SetTarget, 3.0f);
+	TAIArunAwayOtama* runAway = new TAIArunAwayOtama(TAIotamaStateID::Wait, TekiMotion::Move1);
+#endif
 	// STATE 0 - Dead
 	TaiState* state = new TaiState(2);
 	int j           = 0;

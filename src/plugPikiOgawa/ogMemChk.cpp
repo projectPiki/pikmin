@@ -575,9 +575,9 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 #if defined(VERSION_PIKIDEMO)
 #else
 		SetNitaku_W_R();
+#endif
 		PRINT("##### MEMCHK_DISP_ERR_KAIGAI  ######\n");
 		checkErrNitaku(mNitakuMgr, input);
-#endif
 		break;
 
 	case BrokenCard:
@@ -589,6 +589,8 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 		checkErrNitaku(mNitakuMgr, input);
 		break;
 
+#if defined(VERSION_PIKIDEMO)
+#else
 	case CardFull:
 	case FileNotMade:
 #if defined(VERSION_PIKIDEMO)
@@ -597,7 +599,12 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 #endif
 		checkErrNitaku(mNitakuMgr, input);
 		break;
+#endif
 
+#if defined(VERSION_PIKIDEMO)
+	case CardFull:
+	case FileNotMade:
+#endif
 	case NotACard:
 	case UnusableCard:
 		checkErrNitaku(mNitakuMgr, input);

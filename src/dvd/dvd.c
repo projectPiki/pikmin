@@ -378,53 +378,6 @@ void cbForUnrecoveredErrorRetry(u32 p1)
 
 	__DVDStoreErrorCode(__DIRegs[DI_MM_BUF]);
 	DVDLowStopMotor(cbForStateError);
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  cmplwi    r3, 0x10
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  bne-      .loc_0x3C
-	  lwz       r4, 0x32B8(r13)
-	  li        r0, -0x1
-	  lis       r3, 0x123
-	  stw       r0, 0xC(r4)
-	  addi      r3, r3, 0x4568
-	  bl        0x2084
-	  bl        0x1850
-	  li        r3, 0
-	  bl        -0x550
-	  b         .loc_0x88
-
-	.loc_0x3C:
-	  rlwinm.   r0,r3,0,30,30
-	  lwz       r3, 0x32B8(r13)
-	  li        r4, -0x1
-	  stw       r4, 0xC(r3)
-	  beq-      .loc_0x6C
-	  lis       r3, 0x123
-	  addi      r3, r3, 0x4567
-	  bl        0x2054
-	  lis       r3, 0x8020
-	  subi      r3, r3, 0x4CC
-	  bl        -0x15D4
-	  b         .loc_0x88
-
-	.loc_0x6C:
-	  lis       r3, 0xCC00
-	  addi      r3, r3, 0x6000
-	  lwz       r3, 0x20(r3)
-	  bl        0x2034
-	  lis       r3, 0x8020
-	  subi      r3, r3, 0x4CC
-	  bl        -0x15F4
-
-	.loc_0x88:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
 }
 
 #pragma dont_inline reset
@@ -1426,7 +1379,9 @@ s32 DVDGetDriveStatus()
  */
 int DVDSetAutoInvalidation(int newValue)
 {
-	// UNUSED FUNCTION
+	int oldVal       = autoInvalidation;
+	autoInvalidation = newValue;
+	return oldVal;
 }
 
 /**

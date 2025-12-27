@@ -112,6 +112,15 @@ struct EffectMgr2D {
 	// unused/inlined:
 	~EffectMgr2D();
 
+#if defined(VERSION_G98E01_PIKIDEMO)
+	// returns true if there are zero active particles, exclusive to demo(?)
+	inline bool checkNoParticles()
+	{
+		mParticleManager.calcActiveList();
+		return mParticleManager.checkPtclGenZero() && mParticleManager.checkChildPtclZero();
+	}
+#endif
+
 	particleLoader mParticleLoader;          // _00
 	particleManager mParticleManager;        // _10
 	EffectRegister2D* mEffects[EFF2D_COUNT]; // _AC

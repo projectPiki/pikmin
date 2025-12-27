@@ -711,9 +711,12 @@ void cnvSpecialNumber(char* str)
 			if (strncmp(tmp + 1, "TM", 2) == 0) {
 				tmp += 3;
 			} else if (b == 'Z') {
+#if defined(VERSION_PIKIDEMO)
+#else
 				if (c == 0) {
 					break;
 				}
+#endif
 				if (c >= '0' && c <= '9') {
 					int digit = c - '0';
 					PRINT("zero_long = %d\n", digit);
@@ -725,12 +728,18 @@ void cnvSpecialNumber(char* str)
 					}
 					PRINT("formatStr = '%s'\n", formatStr);
 				} else {
+#if defined(VERSION_PIKIDEMO)
+#else
 					tmp++;
+#endif
 				}
 			} else if (b == 'd') {
+#if defined(VERSION_PIKIDEMO)
+#else
 				if (c == 0) {
 					break;
 				}
+#endif
 				if (c >= '0' && c <= '9') {
 					if (d >= '0' && d <= '9') {
 						int idx = 10 * (c - '0');
@@ -830,13 +839,18 @@ ogMsgCtrlTagMgr::ogMsgCtrlTagMgr()
 bool ogMsgCtrlTagMgr::CheckCtrlTag(immut char* text, s16* indexPtr, f32* waitTimePtr)
 {
 #if defined(VERSION_PIKIDEMO)
+	char ch;
+	int charIndex      = *indexPtr;
+	const char* cursor = &text[*indexPtr];
+	ch                 = *cursor;
+	*waitTimePtr       = 0.0f;
 #else
 	STACK_PAD_VAR(1);
-#endif
 	int charIndex      = *indexPtr;
 	const char* cursor = &text[*indexPtr];
 	char ch            = *cursor;
 	*waitTimePtr       = 0.0f;
+#endif
 
 	if (ch == 0) {
 		return true;
@@ -918,8 +932,13 @@ void TypingTextMgr::update()
 	}
 
 	mTypeTimer += gsys->getFrameTime();
+#if defined(VERSION_G98E01_PIKIDEMO)
+	if (mTypeTimer >= 0.04f) {
+		mTypeTimer -= 0.04f;
+#else
 	if (mTypeTimer >= 0.029639998f) {
 		mTypeTimer -= 0.029639998f;
+#endif
 		f32 a;
 		if (mCtrlTagMgr->CheckCtrlTag(mTextPtr, &mCharIndex, &a)) {
 			mState = STATE_Complete;
@@ -983,7 +1002,11 @@ void cnvSpecialNumberHyphen(char* str)
 							char buf[PATH_MAX];
 							STACK_PAD_VAR(1);
 							for (int i = 0; i < num; i++) {
+#if defined(VERSION_G98E01_PIKIDEMO)
+								buf[i] = '-';
+#else
 								buf[i] = '*';
+#endif
 							}
 							buf[num] = 0;
 							sprintf(work, "%s", buf);
@@ -999,7 +1022,11 @@ void cnvSpecialNumberHyphen(char* str)
 						} else {
 							char buf[PATH_MAX];
 							for (int i = 0; i < num; i++) {
+#if defined(VERSION_G98E01_PIKIDEMO)
+								buf[i] = '-';
+#else
 								buf[i] = '*';
+#endif
 							}
 							buf[num] = 0;
 							sprintf(work, "%s", buf);

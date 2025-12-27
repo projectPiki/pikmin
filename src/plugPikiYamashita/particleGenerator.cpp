@@ -1005,9 +1005,13 @@ void zen::particleGenerator::drawPtclOriented(Graphics& gfx)
 		sinVal = sinShort(ptcl->mRotAngle);
 		(this->*mRotAxisCallBack)(mtx3, sinVal, cosVal);
 
+#if defined(VERSION_G98E01_PIKIDEMO)
+		PSMTXTrans(mtx1.mMtx, ptcl->mLocalPosition.x + ptcl->mGlobalPosition.x, ptcl->mLocalPosition.y + ptcl->mGlobalPosition.y,
+		           ptcl->mLocalPosition.z + ptcl->mGlobalPosition.z);
+#else
 		MTXTrans(mtx1.mMtx, ptcl->mLocalPosition.x + ptcl->mGlobalPosition.x, ptcl->mLocalPosition.y + ptcl->mGlobalPosition.y,
 		         ptcl->mLocalPosition.z + ptcl->mGlobalPosition.z);
-
+#endif
 		PSMTXConcat(gfx.mCamera->mLookAtMtx.mMtx, mtx1.mMtx, mtx1.mMtx);
 
 		Vector3f* vec;

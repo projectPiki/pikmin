@@ -557,8 +557,14 @@ void MTXLightFrustum(Mtx m, f32 t, f32 b, f32 l, f32 r, f32 n, f32 scaleS, f32 s
 /**
  * @TODO: Documentation
  */
+#if defined(VERSION_GPIP01_00) || defined(VERSION_G98E01_PIKIDEMO)
+void C_MTXLightPerspective(Mtx m, f32 fovY, f32 aspect, f32 scaleS, f32 scaleT, f32 transS, f32 transT)
+{
+#else
 void MTXLightPerspective(Mtx m, f32 fovY, f32 aspect, f32 scaleS, f32 scaleT, f32 transS, f32 transT)
 {
+#endif
+
 	f32 angle;
 	f32 cot;
 
@@ -632,29 +638,4 @@ void PSMTXScale(register Mtx m, register f32 xS, register f32 yS, register f32 z
   #endif // clang-format on
 }
 
-void C_MTXLightPerspective(Mtx m, f32 fovY, f32 aspect, f32 scaleS, f32 scaleT, f32 transS, f32 transT)
-{
-	f32 angle;
-	f32 cot;
-
-	angle = fovY * 0.5f;
-	angle = MTXDegToRad(angle);
-
-	cot = 1.0f / tanf(angle);
-
-	m[0][0] = (cot / aspect) * scaleS;
-	m[0][1] = 0.0f;
-	m[0][2] = -transS;
-	m[0][3] = 0.0f;
-
-	m[1][0] = 0.0f;
-	m[1][1] = cot * scaleT;
-	m[1][2] = -transT;
-	m[1][3] = 0.0f;
-
-	m[2][0] = 0.0f;
-	m[2][1] = 0.0f;
-	m[2][2] = -1.0f;
-	m[2][3] = 0.0f;
-}
 #endif

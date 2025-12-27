@@ -56,6 +56,17 @@ void __DVDFSInit()
  */
 static BOOL isSame(const char* path, const char* string)
 {
+#if defined(VERSION_G98E01_PIKIDEMO)
+	while (*string != '\0') {
+		if (tolower(*path++) != tolower(*string++)) {
+			return FALSE;
+		}
+	}
+
+	if ((*path == '/') || (*path == '\0')) {
+		return TRUE;
+	}
+#else
 	while ((u8)*string != '\0') {
 		if (tolower((u8)*path++) != tolower((u8)*string++)) {
 			return FALSE;
@@ -65,7 +76,7 @@ static BOOL isSame(const char* path, const char* string)
 	if (((u8)*path == '/') || ((u8)*path == '\0')) {
 		return TRUE;
 	}
-
+#endif
 	return FALSE;
 	// UNUSED FUNCTION
 }
@@ -88,8 +99,96 @@ s32 DVDConvertPathToEntrynum(const char* pathPtr)
 
 	dirLookAt = currentDirectory;
 
+#if defined(VERSION_G98E01_PIKIDEMO)
 	while (1) {
+		if (*pathPtr == '\0') {
+			return (s32)dirLookAt;
+		} else if (*pathPtr == '/') {
+			dirLookAt = 0;
+			pathPtr++;
+			continue;
+		} else if (*pathPtr == '.') {
+			if (*(pathPtr + 1) == '.') {
+				if (*(pathPtr + 2) == '/') {
+					dirLookAt = parentDir(dirLookAt);
+					pathPtr += 3;
+					continue;
+				} else if (*(pathPtr + 2) == '\0') {
+					return (s32)parentDir(dirLookAt);
+				}
+			} else if (*(pathPtr + 1) == '/') {
+				pathPtr += 2;
+				continue;
+			} else if (*(pathPtr + 1) == '\0') {
+				return (s32)dirLookAt;
+			}
+		}
 
+		if (__DVDLongFileNameFlag == 0) {
+			extention = FALSE;
+			illegal   = FALSE;
+
+			for (ptr = pathPtr; (*ptr != '\0') && (*ptr != '/'); ptr++) {
+				if (*ptr == '.') {
+					if ((ptr - pathPtr > 8) || (extention == TRUE)) {
+						illegal = TRUE;
+						break;
+					}
+					extention      = TRUE;
+					extentionStart = ptr + 1;
+
+				} else if (*ptr == ' ') {
+					illegal = TRUE;
+				}
+			}
+
+			if ((extention == TRUE) && (ptr - extentionStart > 3)) {
+				illegal = TRUE;
+			}
+
+			if (illegal) {
+				OSPanic(__FILE__, 376,
+				        "DVDConvertEntrynumToPath(possibly DVDOpen or "
+				        "DVDChangeDir or DVDOpenDir): "
+				        "specified directory or file (%s) doesn't match "
+				        "standard 8.3 format. This is a "
+				        "temporary restriction and will be removed soon\n",
+				        origPathPtr);
+			}
+		} else {
+			for (ptr = pathPtr; (*ptr != '\0') && (*ptr != '/'); ptr++)
+				;
+		}
+
+		isDir  = (*ptr == '\0') ? FALSE : TRUE;
+		length = (u32)(ptr - pathPtr);
+
+		ptr = pathPtr;
+
+		for (i = dirLookAt + 1; i < nextDir(dirLookAt); i = entryIsDir(i) ? nextDir(i) : (i + 1)) {
+			if ((entryIsDir(i) == FALSE) && (isDir == TRUE)) {
+				continue;
+			}
+
+			stringPtr = FstStringStart + stringOff(i);
+
+			if (isSame(ptr, stringPtr) == TRUE) {
+				goto next_hier;
+			}
+		}
+
+		return -1;
+
+	next_hier:
+		if (!isDir) {
+			return (s32)i;
+		}
+
+		dirLookAt = i;
+		pathPtr += length + 1;
+	}
+#else
+	while (1) {
 		if ((u8)*pathPtr == '\0') {
 			return (s32)dirLookAt;
 		} else if ((u8)*pathPtr == '/') {
@@ -171,6 +270,7 @@ s32 DVDConvertPathToEntrynum(const char* pathPtr)
 		dirLookAt = i;
 		pathPtr += length + 1;
 	}
+#endif
 }
 
 /**
@@ -235,7 +335,11 @@ static u32 myStrncpy(char* dest, const char* src, u32 maxlen)
 {
 	u32 i = maxlen;
 
+#if defined(VERSION_G98E01_PIKIDEMO)
+	while ((i > 0) && (*src != 0)) {
+#else
 	while ((i > 0) && ((u8)*src != 0)) {
+#endif
 		*dest++ = *src++;
 		i--;
 	}
@@ -329,11 +433,19 @@ BOOL DVDChangeDir(const char* dirName)
 BOOL DVDReadAsyncPrio(DVDFileInfo* fileInfo, void* addr, s32 length, s32 offset, DVDCallback callback, s32 prio)
 {
 	if (!((0 <= offset) && (offset < fileInfo->length))) {
+#if defined(VERSION_G98E01_PIKIDEMO)
+		OSErrorLine(739, "DVDReadAsync(): specified area is out of the file  ");
+#else
 		OSErrorLine(735, "DVDReadAsync(): specified area is out of the file  ");
+#endif
 	}
 
 	if (!((0 <= offset + length) && (offset + length < fileInfo->length + DVD_MIN_TRANSFER_SIZE))) {
+#if defined(VERSION_G98E01_PIKIDEMO)
+		OSErrorLine(745, "DVDReadAsync(): specified area is out of the file  ");
+#else
 		OSErrorLine(741, "DVDReadAsync(): specified area is out of the file  ");
+#endif
 	}
 
 	fileInfo->callback = callback;
@@ -367,11 +479,19 @@ s32 DVDReadPrio(DVDFileInfo* fileInfo, void* addr, s32 length, s32 offset, s32 p
 	s32 retVal;
 
 	if (!((0 <= offset) && (offset < fileInfo->length))) {
+#if defined(VERSION_G98E01_PIKIDEMO)
+		OSErrorLine(809, "DVDRead(): specified area is out of the file  ");
+#else
 		OSErrorLine(805, "DVDRead(): specified area is out of the file  ");
+#endif
 	}
 
 	if (!((0 <= offset + length) && (offset + length < fileInfo->length + DVD_MIN_TRANSFER_SIZE))) {
+#if defined(VERSION_G98E01_PIKIDEMO)
+		OSErrorLine(815, "DVDRead(): specified area is out of the file  ");
+#else
 		OSErrorLine(811, "DVDRead(): specified area is out of the file  ");
+#endif
 	}
 
 	block = &(fileInfo->cBlock);
@@ -472,6 +592,25 @@ s32 DVDGetFileInfoStatus(DVDFileInfo* fileInfo)
  */
 BOOL DVDOpenDir(const char* dirName, DVDDir* dir)
 {
+	// something is making this function in particular compile this warning string in demo, this probably isnt right but it gets the job
+	// done
+#if defined(VERSION_G98E01_PIKIDEMO)
+
+	long entry;
+	char currentDir[128];
+
+	entry = DVDConvertPathToEntrynum(dirName);
+	if (entry <= 0)
+		OSErrorLine(0x409, "Warning: DVDOpenDir(): file '%s' was not found under %s.\n", dirName,
+		            (DVDGetCurrentDir(currentDir, 128), currentDir));
+	if (entry < 0 || !entryIsDir(entry)) {
+		return 0;
+	}
+	dir->entryNum = entry;
+	dir->location = entry + 1;
+	dir->next     = nextDir(entry);
+	return 1;
+#endif
 	// UNUSED FUNCTION
 }
 
@@ -515,24 +654,43 @@ BOOL DVDPrepareStreamAsync(DVDFileInfo* fileInfo, u32 length, u32 offset, DVDCal
 	start = fileInfo->startAddr + offset;
 
 	if (!Is32KBAligned(start)) {
+#if defined(VERSION_G98E01_PIKIDEMO)
+		OSErrorLine(1186,
+		            "DVDPrepareStreamAsync(): Specified start address (filestart(0x%x) + offset(0x%x)) is "
+		            "not 32KB aligned",
+		            fileInfo->startAddr, offset);
+#else
 		OSErrorLine(1150,
 		            "DVDPrepareStreamAsync(): Specified start address (filestart(0x%x) + offset(0x%x)) is "
 		            "not 32KB aligned",
 		            fileInfo->startAddr, offset);
+#endif
 	}
 
 	if (length == 0)
 		length = fileInfo->length - offset;
 
 	if (!Is32KBAligned(length)) {
+#if defined(VERSION_G98E01_PIKIDEMO)
+		OSErrorLine(1196, "DVDPrepareStreamAsync(): Specified length (0x%x) is not a multiple of 32768(32*1024)", length);
+#else
 		OSErrorLine(1160, "DVDPrepareStreamAsync(): Specified length (0x%x) is not a multiple of 32768(32*1024)", length);
+#endif
 	}
 
 	if (!((offset < fileInfo->length) && (offset + length <= fileInfo->length))) {
+
+#if defined(VERSION_G98E01_PIKIDEMO)
+		OSErrorLine(1204,
+		            "DVDPrepareStreamAsync(): The area specified (offset(0x%x), length(0x%x)) is out of "
+		            "the file",
+		            offset, length);
+#else
 		OSErrorLine(1168,
 		            "DVDPrepareStreamAsync(): The area specified (offset(0x%x), length(0x%x)) is out of "
 		            "the file",
 		            offset, length);
+#endif
 	}
 
 	fileInfo->callback = callback;

@@ -41,6 +41,11 @@ static vu16 shdwRegs[59];
 
 static VIPositionInfo HorVer;
 
+#if defined(VERSION_G98E01_PIKIDEMO)
+static VITimingInfo* CurrTiming;
+static s32 CurrTvMode;
+#endif
+
 // clang-format off
 static VITimingInfo timing[] = {
 	{ // NTSC INT
@@ -76,9 +81,9 @@ static u32 getCurrentFieldEvenOdd();
  * @TODO: Documentation
  * @note UNUSED Size: 000008
  */
-void getEncoderType(void)
+s32 getEncoderType(void)
 {
-	// UNUSED FUNCTION
+	return 1;
 }
 
 /**
@@ -126,6 +131,11 @@ static BOOL VISetRegs(void)
 		changeMode = 0;
 #else
 		shdwChangeMode = 0;
+#endif
+
+#if defined(VERSION_G98E01_PIKIDEMO)
+		CurrTiming = HorVer.timing;
+		CurrTvMode = HorVer.tv;
 #endif
 
 		return TRUE;
@@ -182,6 +192,10 @@ static void __VIRetraceHandler(__OSInterrupt interrupt, OSContext* context)
 	if (flushFlag) {
 		if (VISetRegs()) {
 			flushFlag = 0;
+
+#if defined(VERSION_G98E01_PIKIDEMO)
+			__PADRefreshSamplingRate();
+#endif
 		}
 	}
 
@@ -239,6 +253,13 @@ static VITimingInfo* getTiming(VITVMode mode)
 	case VI_TVMODE_PAL_DS:
 		return &timing[3];
 
+#if defined(VERSION_G98E01_PIKIDEMO)
+	case VI_TVMODE_EURGB60_INT:
+		return &timing[0];
+	case VI_TVMODE_EURGB60_DS:
+		return &timing[1];
+#endif
+
 	case VI_TVMODE_MPAL_INT:
 		return &timing[4];
 	case VI_TVMODE_MPAL_DS:
@@ -246,6 +267,15 @@ static VITimingInfo* getTiming(VITVMode mode)
 
 	case VI_TVMODE_NTSC_PROG:
 		return &timing[6];
+
+#if defined(VERSION_G98E01_PIKIDEMO)
+	case VI_TVMODE_NTSC_3D:
+		return &timing[7];
+	case VI_TVMODE_DEBUG_PAL_INT:
+		return &timing[2];
+	case VI_TVMODE_DEBUG_PAL_DS:
+		return &timing[3];
+#endif
 	}
 
 	return NULL;
@@ -309,7 +339,11 @@ void __VIInit(VITVMode mode)
 	__VIRegs[VI_DISP_INT_0U] = hct << 0;
 	__VIRegs[VI_DISP_INT_0]  = vct;
 
+#if defined(VERSION_G98E01_PIKIDEMO)
+	if (mode != VI_TVMODE_NTSC_PROG && mode != VI_TVMODE_NTSC_3D) {
+#else
 	if (mode != VI_TVMODE_NTSC_PROG) {
+#endif
 		__VIRegs[VI_DISP_CONFIG] = (1 << 0) | (0 << 1) | (nonInter << 2) | (0 << 3) | (0 << 4) | (0 << 6) | (tv << 8);
 		__VIRegs[VI_CLOCK_SEL]   = 0;
 
@@ -364,7 +398,7 @@ void VIInit(void)
 	u16 dspCfg;
 	u32 value, tv;
 
-	encoderType = 1;
+	encoderType = getEncoderType();
 
 	if (!(__VIRegs[VI_DISP_CONFIG] & 1)) {
 		__VIInit(VI_TVMODE_NTSC_INT);
@@ -710,6 +744,9 @@ void VIConfigure(const GXRenderModeObj* obj)
 	u32 regDspCfg;
 	BOOL enabled;
 	u32 newNonInter, tvInBootrom, tvInGame;
+#if defined(VERSION_G98E01_PIKIDEMO)
+	static u32 message = FALSE;
+#endif
 
 	enabled = OSDisableInterrupts();
 
@@ -740,6 +777,19 @@ void VIConfigure(const GXRenderModeObj* obj)
 	if ((tvInGame == VI_NTSC) || (tvInGame == VI_MPAL)) {
 	} else {
 		HorVer.tv = tvInGame;
+	}
+#endif
+
+#if defined(VERSION_G98E01_PIKIDEMO)
+	if (tvInGame == VI_DEBUG_PAL && message == FALSE) {
+		message = TRUE;
+		OSReport("***************************************\n");
+		OSReport(" ! ! ! C A U T I O N ! ! !             \n");
+		OSReport("This TV format \"DEBUG_PAL\" is only for \n");
+		OSReport("temporary solution until PAL DAC board \n");
+		OSReport("is available. Please do NOT use this   \n");
+		OSReport("mode in real games!!!                  \n");
+		OSReport("***************************************\n");
 	}
 #endif
 
@@ -907,6 +957,20 @@ u32 VIGetRetraceCount(void)
  */
 static u32 getCurrentHalfLine(void)
 {
+#if defined(VERSION_G98E01_PIKIDEMO)
+
+	u32 hcount;
+	u32 vcount0;
+	u32 vcount;
+
+	vcount = __VIRegs[22] & 0x7FF;
+	do {
+		vcount0 = vcount;
+		hcount  = __VIRegs[23] & 0x7FF;
+		vcount  = __VIRegs[22] & 0x7FF;
+	} while (vcount0 != vcount);
+	return ((vcount - 1) * 2) + ((hcount - 1) / CurrTiming->hlw);
+#else
 	u32 hcount;
 	u32 vcount0;
 	u32 vcount;
@@ -920,7 +984,7 @@ static u32 getCurrentHalfLine(void)
 		vcount  = __VIRegs[22] & 0x7FF;
 	} while (vcount0 != vcount);
 	return ((vcount - 1) * 2) + ((hcount - 1) / tm->hlw);
-	// UNUSED FUNCTION
+#endif
 }
 
 /**
@@ -928,6 +992,20 @@ static u32 getCurrentHalfLine(void)
  */
 static u32 getCurrentFieldEvenOdd()
 {
+#if defined(VERSION_G98E01_PIKIDEMO)
+	u16 value;
+	u32 nin;
+	u32 fmt;
+	VITVMode tvMode;
+	u32 nhlines;
+	VITimingInfo* tm;
+
+	if (getCurrentHalfLine() < CurrTiming->numHalfLines) {
+		return 1U;
+	}
+	return 0U;
+#else
+
 	u16 value;
 	u32 nin;
 	u32 fmt;
@@ -949,6 +1027,7 @@ static u32 getCurrentFieldEvenOdd()
 		return 1;
 	}
 	return 0;
+#endif
 }
 
 /**
@@ -957,6 +1036,13 @@ static u32 getCurrentFieldEvenOdd()
  */
 u32 VIGetNextField(void)
 {
+	s32 nextField;
+	BOOL enabled;
+
+	enabled   = OSDisableInterrupts();
+	nextField = getCurrentFieldEvenOdd() ^ 1;
+	OSRestoreInterrupts(enabled);
+	return nextField ^ (HorVer.panPosY & 1);
 	// UNUSED FUNCTION
 }
 
@@ -966,6 +1052,20 @@ u32 VIGetNextField(void)
  */
 u32 VIGetCurrentLine(void)
 {
+#if defined(VERSION_G98E01_PIKIDEMO)
+	u32 halfLine;
+	VITimingInfo* tm;
+	BOOL enabled;
+
+	tm       = CurrTiming;
+	enabled  = OSDisableInterrupts();
+	halfLine = getCurrentHalfLine();
+	OSRestoreInterrupts(enabled);
+	if (halfLine >= tm->numHalfLines) {
+		halfLine -= tm->numHalfLines;
+	}
+	return halfLine >> 1U;
+#endif
 	// UNUSED FUNCTION
 }
 
@@ -974,7 +1074,33 @@ u32 VIGetCurrentLine(void)
  */
 u32 VIGetTvFormat(void)
 {
+#if defined(VERSION_G98E01_PIKIDEMO)
+	s32 enabled;
+	s32 format;
+
+	ASSERTMSGLINE(0x80D, format == 0 || format == 1 || format == 2,
+	              "VIGetTvFormat(): Wrong format is stored in lo mem. Maybe lo mem is trashed");
+
+	enabled = OSDisableInterrupts();
+	switch (CurrTvMode) {
+	case 3:
+	case 0:
+		format = 0;
+		break;
+	case 4:
+	case 1:
+		format = 1;
+		break;
+	case 5:
+	case 2:
+		format = CurrTvMode;
+		break;
+	}
+	OSRestoreInterrupts(enabled);
+	return format;
+#else
 	return *(u32*)OSPhysicalToCached(0xCC);
+#endif
 }
 
 /**

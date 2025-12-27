@@ -676,9 +676,18 @@ public:
 	}
 
 	static const f32 DEFAULT_FRAME_RATE;
+#if defined(VERSION_G98E01_PIKIDEMO)
+	bool checkPtclGenZero() { return (int)mActivePtclGenCount == 0 && (int)mActiveParticleCount == 0; }
+	bool checkChildPtclZero() { return (int)mActiveChildParticleCount == 0; }
+
+	void calcActiveList();
+#endif
 
 protected:
+#if defined(VERSION_G98E01_PIKIDEMO)
+#else
 	void calcActiveList();
+#endif
 	bool pmCheckList(particleGenerator* testGen);
 	particleGenerator* pmGetPtclGen();
 	void pmPutPtclGen(zenList* gen) { _20.put(gen); }

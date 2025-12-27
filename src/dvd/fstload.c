@@ -74,8 +74,13 @@ void __fstLoad(void)
 	di->FSTMaxLength     = bb2->maxLength;
 	memcpy(di, idTmp, 32);
 	OSReport("\n");
+#if defined(VERSION_G98E01_PIKIDEMO)
+	OSReport("  Game Name ... %c%c%c%c\n", di->Gamecode[0], di->Gamecode[1], di->Gamecode[2], di->Gamecode[3]);
+	OSReport("  Company ..... %c%c\n", di->Company[0], di->Company[1]);
+#else
 	OSReport("  Game Name ... %c%c%c%c\n", (u8)di->Gamecode[0], (u8)di->Gamecode[1], (u8)di->Gamecode[2], (u8)di->Gamecode[3]);
 	OSReport("  Company ..... %c%c\n", (u8)di->Company[0], (u8)di->Company[1]);
+#endif
 	OSReport("  Disk # ...... %d\n", di->DiskID);
 	OSReport("  Game ver .... %d\n", di->Version);
 	if (di->Streaming == 0) {

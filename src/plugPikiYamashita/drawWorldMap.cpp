@@ -1902,9 +1902,21 @@ void zen::DrawWorldMap::draw(Graphics& gfx)
 		mMoniScreen->draw();
 		mIconScreen->draw();
 		mTitleScreen->draw();
+#if defined(VERSION_G98E01_PIKIDEMO)
+		if (mCurrentMode == DrawWorldMapMode::DiaryClosing || mCurrentMode == DrawWorldMapMode::DiaryOpening) {
+			mEffectMgr2D->draw(gfx);
+			mConfirmMgr->draw(gfx);
+			mWipeScreen->draw();
+		} else {
+			mWipeScreen->draw();
+			mEffectMgr2D->draw(gfx);
+			mConfirmMgr->draw(gfx);
+		}
+#else
 		mEffectMgr2D->draw(gfx);
 		mConfirmMgr->draw(gfx);
 		mWipeScreen->draw();
+#endif
 	} else {
 		mSelectDiary.draw(gfx);
 	}
@@ -2134,7 +2146,11 @@ bool zen::DrawWorldMap::modeOperation(Controller* controller)
 		mEffectMgr2D->killAll(false);
 		mCoursePointMgr->createCourseInEffect();
 		mWipeMgr->setDefault();
+#if defined(VERSION_G98E01_PIKIDEMO)
+		mWipeMgr->close(2.0f, 320, 240);
+#else
 		mWipeMgr->close(0.5f, 320, 240);
+#endif
 		res = true;
 	}
 
@@ -2169,8 +2185,14 @@ bool zen::DrawWorldMap::modeEnd(Controller*)
 {
 	bool res = false;
 	if (!mWipeMgr->isActive()) {
+#if defined(VERSION_G98E01_PIKIDEMO)
+		if (WMeffMgr->checkNoParticles()) {
+			res = true;
+		}
+#else
 		mEffectMgr2D->killAll(true);
 		res = true;
+#endif
 	}
 	mCursorMgr->update();
 	updateScreens();
