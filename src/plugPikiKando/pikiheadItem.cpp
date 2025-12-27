@@ -45,8 +45,8 @@ void PikiHeadItem::finishWaterEffect()
  */
 void PikiHeadItem::playSound(int id)
 {
-	if (_3E0) {
-		playEventSound(_3E0, id + 0xcc);
+	if (mParentOnion) {
+		playEventSound(mParentOnion, id + 0xcc);
 		return;
 	}
 
@@ -111,7 +111,7 @@ PikiHeadItem::PikiHeadItem(CreatureProp* props, ItemShapeObject* shape, SimpleAI
 	mStateMachine    = ai;
 	mSeedColor       = 0;
 	mFlowerStage     = 0;
-	_3E0             = nullptr;
+	mParentOnion     = nullptr;
 	mFreeLightEfx    = new FreeLightEffect;
 	mRippleEfx       = new RippleEffect;
 }
@@ -122,7 +122,7 @@ PikiHeadItem::PikiHeadItem(CreatureProp* props, ItemShapeObject* shape, SimpleAI
 void PikiHeadItem::startAI(int)
 {
 	startFix();
-	_3E0 = nullptr;
+	mParentOnion = nullptr;
 	mItemAnimator.startMotion(PaniMotionInfo(PikiHeadMotion::TaneFall));
 
 	f32 scale = 1.0f;
@@ -138,9 +138,9 @@ void PikiHeadItem::startAI(int)
 
 	GameStat::mePikis.inc(mSeedColor);
 	GameStat::update();
-	_3D4                  = mSRT.t;
+	mGlowEffectPos        = mSRT.t;
 	mFreeLightEfx->mColor = mSeedColor;
-	EffectParm parm(&_3D4);
+	EffectParm parm(&mGlowEffectPos);
 	mFreeLightEfx->emit(parm);
 }
 
@@ -151,7 +151,7 @@ void PikiHeadItem::setPermanentEffects(bool set)
 {
 	if (set) {
 		mFreeLightEfx->mColor = mSeedColor;
-		EffectParm parm(&_3D4);
+		EffectParm parm(&mGlowEffectPos);
 		mFreeLightEfx->emit(parm);
 	} else {
 		mFreeLightEfx->kill();
@@ -168,7 +168,7 @@ void PikiHeadItem::doKill()
 	GameStat::workPikis.inc(mSeedColor);
 	GameStat::update();
 	mFreeLightEfx->kill();
-	_3E4.kill();
+	mSparkleEffect.kill();
 }
 
 /**
@@ -237,17 +237,17 @@ void PikiHeadItem::refresh(Graphics& gfx)
 
 	gfx.useMatrix(mItemShapeObject->mShape->getAnimMatrix(3), 0);
 
-	Vector3f leafGlowScale;
+	Vector3f localPos;
 	if (mFlowerStage == Bud) {
-		leafGlowScale.set(4.0f, 0.0f, 0.0f);
+		localPos.set(4.0f, 0.0f, 0.0f);
 	} else if (mFlowerStage == Flower) {
-		leafGlowScale.set(3.0f, 0.0f, 0.0f);
+		localPos.set(3.0f, 0.0f, 0.0f);
 	} else {
-		leafGlowScale.set(6.0f, 0.0f, 0.0f);
+		localPos.set(6.0f, 0.0f, 0.0f);
 	}
 
-	mFreeLightEfx->setScale(0.84f * mItemShapeObject->mShape->calcJointWorldPos(gfx, 3, leafGlowScale));
-	_3D4 = leafGlowScale;
+	mFreeLightEfx->setScale(0.84f * mItemShapeObject->mShape->calcJointWorldPos(gfx, 3, localPos));
+	mGlowEffectPos = localPos;
 
 	pikiMgr->mLeafModel[mFlowerStage]->drawshape(gfx, *gfx.mCamera, nullptr);
 }

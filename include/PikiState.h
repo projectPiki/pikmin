@@ -43,7 +43,7 @@ enum PikiStateID {
 	PIKISTATE_Bullet       = 27, // Launched as a fast projectile.
 	PIKISTATE_Absorb       = 28, // Drinks nectar/water object to trigger growth.
 	PIKISTATE_KinokoChange = 29, // Transforming into or out of the mushroom state.
-	PIKISTATE_FallMeck     = 30, // Special fall/impact handling from mechanical enemies.
+	PIKISTATE_FallMeck     = 30, // Fall state.
 	PIKISTATE_Emotion      = 31, // Performs an idle emotion animation (joy, sad, cheer, etc.).
 	PIKISTATE_UNUSED32     = 32, // Unused
 	PIKISTATE_Pressed      = 33, // Crushed/flattened; stun + temporary invulnerability.
@@ -52,7 +52,7 @@ enum PikiStateID {
 };
 
 /**
- * @brief Owns and routes a Piki's high-level state transitions.
+ * @brief Owns and routes a Piki's state transitions.
  */
 struct PikiStateMachine : public StateMachine<Piki> {
 	virtual void init(Piki*);         // _08
@@ -331,7 +331,7 @@ protected:
 };
 
 /**
- * @brief Mechanical-enemy specific fall/impact handling.
+ * @brief Fall state.
  *
  * @note Size: 0x10.
  */

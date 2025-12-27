@@ -69,9 +69,9 @@ struct PikiHeadItem : public ItemCreature {
 	FreeLightEffect* mFreeLightEfx; // _3C8
 	int mSeedColor;                 // _3CC
 	int mFlowerStage;               // _3D0
-	Vector3f _3D4;                  // _3D4
-	Creature* _3E0;                 // _3E0
-	PermanentEffect _3E4;           // _3E4
+	Vector3f mGlowEffectPos;        // _3D4
+	Creature* mParentOnion;         // _3E0
+	PermanentEffect mSparkleEffect; // _3E4
 	RippleEffect* mRippleEfx;       // _3F4
 };
 

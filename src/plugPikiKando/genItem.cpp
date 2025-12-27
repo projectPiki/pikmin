@@ -264,7 +264,7 @@ Creature* GenObjectItem::birth(BirthInfo& info)
 					}
 				}
 			}
-			((PikiHeadItem*)item)->_3E0 = goal;
+			((PikiHeadItem*)item)->mParentOnion = goal;
 		}
 	}
 	return item;

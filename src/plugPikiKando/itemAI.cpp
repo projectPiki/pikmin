@@ -185,8 +185,8 @@ void PikiHeadAI::BounceSound::act(AICreature* item)
 	if (tri && MapCode::getAttribute(tri) == ATTR_Water) {
 		item->startWaterEffect();
 		effectMgr->create(EffectMgr::EFF_P_Bubbles, item->mSRT.t, nullptr, nullptr);
-		if (obj->_3E0) {
-			item->playEventSound(obj->_3E0, SE_PIKI_GROW0_WATER);
+		if (obj->mParentOnion) {
+			item->playEventSound(obj->mParentOnion, SE_PIKI_GROW0_WATER);
 		} else {
 			seSystem->playPikiSound(SEF_PIKI_GROW0_WATER, obj->mSRT.t);
 		}
@@ -195,8 +195,8 @@ void PikiHeadAI::BounceSound::act(AICreature* item)
 
 	effectMgr->create(EffectMgr::EFF_SD_DirtCloud, item->mSRT.t, nullptr, nullptr);
 	effectMgr->create(EffectMgr::EFF_SD_DirtSpray, item->mSRT.t, nullptr, nullptr);
-	if (obj->_3E0) {
-		item->playEventSound(obj->_3E0, SE_PIKI_GROW0);
+	if (obj->mParentOnion) {
+		item->playEventSound(obj->mParentOnion, SE_PIKI_GROW0);
 	} else {
 		PRINT("******** SEF_PIKI_GROW0 !!!! %d !!!!!\n", seSystem->getJacID(SEF_PIKI_GROW0));
 		seSystem->playPikiSound(SEF_PIKI_GROW0, obj->mSRT.t);
@@ -209,7 +209,7 @@ void PikiHeadAI::BounceSound::act(AICreature* item)
 void PikiHeadAI::FlyingEffect::act(AICreature* item)
 {
 	PikiHeadItem* obj = (PikiHeadItem*)item;
-	obj->_3E4.init(obj->mSRT.t, EffectMgr::EFF_SD_Sparkle);
+	obj->mSparkleEffect.init(obj->mSRT.t, EffectMgr::EFF_SD_Sparkle);
 	obj->finishFix();
 }
 
@@ -219,7 +219,7 @@ void PikiHeadAI::FlyingEffect::act(AICreature* item)
 void PikiHeadAI::FlyingExec::act(AICreature* item)
 {
 	PikiHeadItem* obj = (PikiHeadItem*)item;
-	obj->_3E4.updatePos(obj->mSRT.t);
+	obj->mSparkleEffect.updatePos(obj->mSRT.t);
 }
 
 /**
@@ -228,7 +228,7 @@ void PikiHeadAI::FlyingExec::act(AICreature* item)
 void PikiHeadAI::FlyingCleanup::act(AICreature* item)
 {
 	PikiHeadItem* obj = (PikiHeadItem*)item;
-	obj->_3E4.kill();
+	obj->mSparkleEffect.kill();
 }
 
 /**
@@ -350,8 +350,8 @@ void PikiHeadAI::GrowupedExec::act(AICreature* item)
 	int soundsA[3] = { SE_PIKI_GROW3, SE_PIKI_GROW2, SE_PIKI_GROW4 };
 	int soundsB[3] = { SEF_PIKI_GROW3, SEF_PIKI_GROW2, SEF_PIKI_GROW4 };
 
-	if (obj->_3E0) {
-		obj->playEventSound(obj->_3E0, soundsA[obj->mFlowerStage]);
+	if (obj->mParentOnion) {
+		obj->playEventSound(obj->mParentOnion, soundsA[obj->mFlowerStage]);
 	} else {
 		seSystem->playPikiSound(soundsB[obj->mFlowerStage], obj->mSRT.t);
 	}
@@ -756,7 +756,7 @@ void GoalAI::BootEmit::act(AICreature* item)
 		seed->mVelocity.set(sinf(dir) * 290.0f, 800.0f, cosf(dir) * 290.0f);
 		item->playEventSound(item, SE_CONTAINER_PIKIBORN);
 		seed->startAI(0);
-		seed->_3E0 = obj;
+		seed->mParentOnion = obj;
 		C_SAI(seed)->start(seed, PikiHeadAI::PIKIHEAD_Flying);
 		return;
 	}
@@ -866,7 +866,7 @@ void GoalAI::EmitPiki::act(AICreature* item)
 			seed->mVelocity.set(sinf(dir) * 290.0f, 800.0f, cosf(dir) * 290.0f);
 			item->playEventSound(item, SE_CONTAINER_PIKIBORN);
 			seed->startAI(0);
-			seed->_3E0 = obj;
+			seed->mParentOnion = obj;
 			C_SAI(seed)->start(seed, PikiHeadAI::PIKIHEAD_Flying);
 		} else {
 			pikiInfMgr.incPiki(obj->mOnionColour, Leaf);

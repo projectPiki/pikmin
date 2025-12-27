@@ -1273,7 +1273,7 @@ void PikiFlownState::cleanup(Piki* piki)
 }
 
 /**
- * @brief Constructs the mechanical knockback fall state.
+ * @brief Constructs fall state.
  */
 PikiFallMeckState::PikiFallMeckState()
     : PikiState(PIKISTATE_FallMeck, "FALLMECK")
@@ -1323,7 +1323,7 @@ void PikiFallMeckState::procBounceMsg(Piki* piki, MsgBounce*)
 			f32 randAngle = 2.0f * (PI * gsys->getRand(1.0f));
 			sprout->mVelocity.set(220.0f * sinf(randAngle), 540.0f, 220.0f * cosf(randAngle));
 			sprout->startAI(0);
-			sprout->_3E0 = nullptr;
+			sprout->mParentOnion = nullptr;
 			C_SAI(sprout)->start(sprout, PikiHeadAI::PIKIHEAD_Unk5);
 			piki->setEraseKill();
 			piki->kill(true);
@@ -2663,7 +2663,7 @@ void PikiBuryState::exec(Piki* piki)
 		sprout->mVelocity.set(220.0f * sinf(angle), 540.0f, 220.0f * cosf(angle));
 		sprout->mFlowerStage = piki->mHappa;
 		sprout->startAI(0);
-		sprout->_3E0 = nullptr;
+		sprout->mParentOnion = nullptr;
 		C_SAI(sprout)->start(sprout, PikiHeadAI::PIKIHEAD_Unk5);
 		piki->setEraseKill();
 		piki->kill(true);
