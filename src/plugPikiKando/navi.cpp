@@ -509,14 +509,16 @@ Navi::Navi(CreatureProp* props, int naviID)
 void Navi::Locus::update()
 {
 	// UNUSED FUNCTION (matching by size)
-	f32 time = gsys->getFrameTime() * 2.4f;
-	_00      = _00 + _0C * time;
-	_18.updatePos(_00);
-	if (_00.y < mapMgr->getMinY(_00.x, _00.z, true)) {
-		_28 = 1;
-		_18.kill();
+	f32 speed = gsys->getFrameTime() * 2.4f;
+	mPosition = mPosition + mVelocity * speed;
+	mEffect.updatePos(mPosition);
+
+	if (mPosition.y < mapMgr->getMinY(mPosition.x, mPosition.z, true)) {
+		mIsInactive = true;
+		mEffect.kill();
 	}
-	_0C.y -= AIConstant::_instance->mConstants.mGravity() * time;
+
+	mVelocity.y -= AIConstant::_instance->mConstants.mGravity() * speed;
 }
 
 /**
