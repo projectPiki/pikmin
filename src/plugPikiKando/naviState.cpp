@@ -608,6 +608,8 @@ void NaviWalkState::exec(Navi* navi)
 	}
 
 	navi->findNextThrowPiki();
+
+	// NB: This code never runs because AD0 is always nullptr.
 	if (navi->mGroundTriangle && navi->_AD0 && (navi->_AD0 != navi->mGroundTriangle)) {
 		Vector3f vel(navi->mVelocity);
 		vel.normalise();
@@ -1582,7 +1584,7 @@ void NaviGatherState::init(Navi* navi)
 	navi->enableMotionBlend();
 	navi->mWhistleTimer = 0.0f;
 	navi->_AC4 = 0.0f;
-	navi->_ABC = 1;
+	navi->mWhistleCircleMode = 1;
 	_10        = 0;
 	SeSystem::playPlayerSe(SE_GATHER);
 
@@ -1636,7 +1638,7 @@ void NaviGatherState::exec(Navi* navi)
 
 	if (navi->mKontroller->keyClick(KeyConfig::_instance->mSetCursorKey.mBind)) {
 		navi->mWhistleTimer = 0.0f;
-		navi->_ABC = 0;
+		navi->mWhistleCircleMode = 0;
 		transit(navi, NAVISTATE_Gather);
 		return;
 	}
@@ -1646,7 +1648,7 @@ void NaviGatherState::exec(Navi* navi)
 		return;
 	}
 
-	if (navi->_ABC == 1 && down) {
+	if (navi->mWhistleCircleMode == 1 && down) {
 		navi->mWhistleTimer += gsys->getFrameTime();
 		if (navi->mWhistleTimer > C_NAVI_PROP(navi)._AC()) {
 			navi->mWhistleTimer = C_NAVI_PROP(navi)._AC();
@@ -1656,22 +1658,22 @@ void NaviGatherState::exec(Navi* navi)
 			} else {
 				navi->callDebugs(C_NAVI_PROP(navi)._8C());
 			}
-			navi->_AC0 = navi->mWhistleTimer / C_NAVI_PROP(navi)._AC();
+			navi->mWhistleRadiusFrac = navi->mWhistleTimer / C_NAVI_PROP(navi)._AC();
 			navi->mWhistleTimer = 0.0f;
-			navi->_ABC = 2;
+			navi->mWhistleCircleMode = 2;
 		}
 		return;
 	}
 
-	if (navi->_ABC == 1 && up) {
+	if (navi->mWhistleCircleMode == 1 && up) {
 		f32 scale  = navi->mWhistleTimer / C_NAVI_PROP(navi)._AC();
-		navi->_AC0 = scale;
+		navi->mWhistleRadiusFrac = scale;
 		scale *= (C_NAVI_PROP(navi)._8C() - C_NAVI_PROP(navi)._9C());
 		scale += C_NAVI_PROP(navi)._9C();
 
 		check      = true;
 		navi->mWhistleTimer = 0.0f;
-		navi->_ABC = 2;
+		navi->mWhistleCircleMode = 2;
 		_14        = scale;
 		if (!gameflow.mPauseAll) {
 			navi->callPikis(scale);
@@ -1681,7 +1683,7 @@ void NaviGatherState::exec(Navi* navi)
 		return;
 	}
 
-	if (navi->_ABC != 2) {
+	if (navi->mWhistleCircleMode != 2) {
 		return;
 	}
 	if (!gameflow.mPauseAll) {
@@ -1692,7 +1694,7 @@ void NaviGatherState::exec(Navi* navi)
 
 	if (navi->mKontroller->keyClick(KeyConfig::_instance->mSetCursorKey.mBind)) {
 		navi->mWhistleTimer = 0.0f;
-		navi->_ABC = 0;
+		navi->mWhistleCircleMode = 0;
 		transit(navi, NAVISTATE_Gather);
 		return;
 	}
@@ -1711,7 +1713,7 @@ void NaviGatherState::exec(Navi* navi)
 
 	if (check || navi->mWhistleTimer > C_NAVI_PROP(navi)._BC()) {
 		navi->mWhistleTimer = 0.0f;
-		navi->_ABC = 0;
+		navi->mWhistleCircleMode = 0;
 		navi->mNaviAnimMgr.getUpperAnimator().finishMotion(PaniMotionInfo(PANI_NO_MOTION, navi));
 		transit(navi, NAVISTATE_Walk);
 	}

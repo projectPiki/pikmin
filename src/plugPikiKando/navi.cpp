@@ -459,7 +459,7 @@ Navi::Navi(CreatureProp* props, int naviID)
 	mCollInfo        = new CollInfo(5);
 	mCollInfo->initInfo(mNaviShapeObject->mShape, nullptr, nullptr);
 	mNaviAnimMgr.init(mNaviShapeObject->mAnimMgr, &mNaviShapeObject->mAnimatorB, &mNaviShapeObject->mAnimatorA, naviMgr->mMotionTable);
-	_ABC    = 0;
+	mWhistleCircleMode    = 0;
 	mWhistleTimer    = 0.0f;
 	_AC4    = 0.0f;
 	mHealth = static_cast<NaviProp*>(props)->mNaviProps.mHealth();
@@ -2086,20 +2086,20 @@ void Navi::renderCircle(Graphics& gfx)
 {
 	f32 tmp;
 	f32 rad;
-	switch (_ABC) {
+	switch (mWhistleCircleMode) {
 	case 0:
-		rad = NAVI_PROP._9C() + _AC0 * (NAVI_PROP._8C() - NAVI_PROP._9C());
+		rad = NAVI_PROP._9C() + mWhistleRadiusFrac * (NAVI_PROP._8C() - NAVI_PROP._9C());
 		break;
 	case 1:
 		tmp = (mWhistleTimer / NAVI_PROP._AC());
 		rad = NAVI_PROP._9C() + tmp * (NAVI_PROP._8C() - NAVI_PROP._9C());
 		break;
 	default:
-		rad = NAVI_PROP._9C() + _AC0 * (NAVI_PROP._8C() - NAVI_PROP._9C());
+		rad = NAVI_PROP._9C() + mWhistleRadiusFrac * (NAVI_PROP._8C() - NAVI_PROP._9C());
 		break;
 	}
 
-	_AC8 = rad;
+	mWhistleCircleRadius = rad;
 
 	static f32 ang = 0.0f;
 	ang            = ang + 0.03f;

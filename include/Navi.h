@@ -243,17 +243,19 @@ public:
 	u32 _928;                            // _928, unused
 	int mNaviID;                         // _92C
 	bool _930;                           // _930, unused
-	int _934;                            // _934
+	int _934;                            // _934, unused
+
+	///////// Whistle /////////
 	Vector3f mWhistleFxPosArr[32];                   // _938
 	f32 mWhistleTimer;                            // _AB8
-	int _ABC;                            // _ABC
-	f32 _AC0;                            // _AC0
+	int mWhistleCircleMode;                       // _ABC
+	f32 mWhistleRadiusFrac;                       // _AC0
 	f32 _AC4;                            // _AC4
-	f32 _AC8;                            // _AC8
-	bool _ACC;                           // _ACC
-	CollTriInfo* _AD0;                   // _AD0
+	f32 mWhistleCircleRadius;            // _AC8
+	bool _ACC;                           // _ACC, unused
+	CollTriInfo* _AD0;                   // _AD0, functionally unused
 	u8 _AD4[0x4];                        // _AD4, unknown
-	f32 _AD8;                            // _AD8
+	f32 _AD8;                            // _AD8, cliff distance?
 	AState<Navi>* mCurrState;            // _ADC
 };
 
