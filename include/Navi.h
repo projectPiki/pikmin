@@ -130,14 +130,14 @@ public:
 	void forceFinishLook()
 	{
 		mLookAtPosPtr = nullptr;
-		_2F4 = _2F8 = 0.0f;
-		_2F0        = 0;
+		mHeadYawOffsetRel = mHeadPitchOffset = 0.0f;
+		mLookTimer                           = 0;
 	}
 
 	void startLook(immut Vector3f* pos)
 	{
 		mLookAtPosPtr = pos;
-		_2F0          = 0;
+		mLookTimer    = 0;
 	}
 
 protected: // Nothing else, just this.
@@ -157,14 +157,14 @@ public:
 	Kontroller* mKontroller;             // _2E4
 	Camera* mNaviCamera;                 // _2E8, could be CullFrustum*, but probably Camera*
 	immut Vector3f* mLookAtPosPtr;       // _2EC
-	u8 _2F0;                             // _2F0
-	f32 _2F4;                            // _2F4
-	f32 _2F8;                            // _2F8
-	Creature* _2FC;                      // _2FC
-	f32 _300;                            // _300
-	Creature* _304;                      // _304, maybe Pellet*?
+	u8 mLookTimer;                       // _2F0
+	f32 mHeadYawOffsetRel;               // _2F4
+	f32 mHeadPitchOffset;                // _2F8
+	Creature* mCollidedWorkObj;          // _2FC
+	f32 mCollidedWorkObjTimer;           // _300
+	Pellet* mSelectedShipPart;           // _304
 	bool mIsInWater;                     // _308
-	int _30C;                            // _30C
+	int mPluckCursorVisibilityTimer;     // _30C, when a Pikmin is plucked, this timer counts up to make the cursor visible again
 	BOOL mIsCursorVisible;               // _310
 	BurnEffect* mBurnEffect;             // _314
 	RippleEffect* mRippleEffect;         // _318
@@ -178,74 +178,74 @@ public:
 	f32 mCursorNaviDist;                 // _6E0, how far is the cursor from us?
 	Vector3f mCursorTargetPosition;      // _6E4, where we want cursor to be
 	Vector3f mCursorWorldPos;            // _6F0, also cursor related?
-	int _6FC;                            // _6FC
-	int _700;                            // _700
-	f32 _704;                            // _704
+	int mPendingLowerMotionId;           // _6FC
+	int mLowerMotionCooldown;            // _700
+	f32 mFlickIntensity;                 // _704
 	GoalItem* mGoalItem;                 // _708
-	bool _70C;                           // _70C
+	bool mWithinContainer;               // _70C, not used anywhere, its a weird variable
 	CPlate* mPlateMgr;                   // _710, manages pikis in navi's party
-	f32 _714;                            // _714
-	bool _718;                           // _718
-	bool _719;                           // _719
-	int _71C;                            // _71C
-	int _720;                            // _720
-	bool _724;                           // _724
+	f32 mPlateYaw;                       // _714
+	bool mPlateDirLocked;                // _718
+	bool mRearrangePending;              // _719
+	int mFormationBand;                  // _71C
+	int _720;                            // _720, functionally unused
+	bool mIsCStickNeutral;               // _724
 	u8 _725[0x72C - 0x725];              // _725, TODO: work out members
-	u32 _72C;                            // _72C, unknown
-	u32 _730;                            // _730, unknown
+	u32 _72C;                            // _72C, functionally unused
+	u32 _730;                            // _730, functionally unknown
 	int mCurrKeyCount;                   // _734
 	f32 mNeutralTime;                    // _738, sleep button held timer?
 	u8 _73C[0x4];                        // _73C, TODO: work out members
-	Vector3f _740;                       // _740
-	Vector3f _74C;                       // _74C
-	Vector3f _758;                       // _758
-	Vector3f _764;                       // _764
-	u32 _770;                            // _770, unknown
+	Vector3f mPrevMainStick;             // _740
+	Vector3f mMainStick;                 // _74C
+	Vector3f mPrevCStick;                // _758
+	Vector3f mCStick;                    // _764
+	u32 _770;                            // _770, unused
 	PermanentEffect* mNaviLightEfx;      // _774
 	PermanentEffect* mNaviLightGlowEfx;  // _778
-	PermanentEffect* _77C;               // _77C
-	PermanentEffect* _780;               // _780
+	PermanentEffect* _77C;               // _77C, unused
+	PermanentEffect* _780;               // _780, unused
 	Vector3f mNaviLightPosition;         // _784
 	Vector3f mDayEndPosition;            // _790
-	Vector3f _79C;                       // _79C
+	Vector3f mWalkAnimPrevPos;           // _79C
 	f32 mAiTickTimer;                    // _7A8
 	immut Plane* mWallPlane;             // _7AC
 	DynCollObject* mWallCollObj;         // _7B0
-	int _7B4;                            // _7B4
-	int _7B8;                            // _7B8
-	Piki* _7BC;                          // _7BC
-	PikiHeadItem* _7C0;                  // _7C0
-	Vector3f _7C4;                       // _7C4
-	f32 _7D0;                            // _7D0
+	int mAiHitWall;                      // _7B4
+	int _7B8;                            // _7B8, unused
+	Piki* mPikiToPluck;                  // _7BC
+	PikiHeadItem* mSproutToPluck;        // _7C0, only for delayed piki plucks (set true by default)
+	Vector3f _7C4;                       // _7C4, unused
+	f32 _7D0;                            // _7D0, unused
 	u8 _7D4[0x7D8 - 0x7D4];              // _7D4, TODO: work out members
-	SmartPtr<Creature> _7D8;             // _7D8
-	f32 _7DC;                            // _7DC
+	SmartPtr<Creature> _7D8;             // _7D8, functionally unused
+	f32 mWalkAnimPrevDir;                // _7DC
 	int mPreBlendLowerMotionID;          // _7E0
 	bool mIsPlucking;                    // _7E4
 	u8 mFastPluckKeyTaps;                // _7E5, number of times A has been pressed to continue (fast) plucking
 	u8 mNoPluckTimer;                    // _7E6, count after plucking stops to zoom out camera/stop fast pluck
 	u8 _7E7[0x7F8 - 0x7E7];              // _7E7, TODO: work out members
 	Piki* mNextThrowPiki;                // _7F8
-	bool _7FC;                           // _7FC
-	f32 _800;                            // _800
-	f32 _804;                            // _804
-	f32 _808;                            // _808
-	int _80C;                            // _80C
-	u32 _810;                            // _810, unknown
-	f32 _814;                            // _814
-	f32 _818;                            // _818
-	Vector3f _81C;                       // _81C
-	u32 _828;                            // _828, unknown
+	bool _7FC;                           // _7FC, unused
+	f32 mThrowHoldTime;                  // _800
+	f32 mThrowDistance;                  // _804
+	f32 mThrowHeight;                    // _808
+	int mFormationPriMode;               // _80C, only ever 0
+	u32 _810;                            // _810, unused
+	f32 mPressedTimer;                   // _814
+	f32 _818;                            // _818, unused
+	Vector3f _81C;                       // _81C, unused
+	u32 _828;                            // _828, unused
 	PikiShapeObject* mNaviShapeObject;   // _82C
-	bool _830;                           // _830
+	bool mForcePikiDistCheck;            // _830
 	PaniPikiAnimMgr mNaviAnimMgr;        // _834
 	SearchData mNaviSearchData[6];       // _8E0
-	u32 _928;                            // _928, unknown
+	u32 _928;                            // _928, unused
 	int mNaviID;                         // _92C
-	bool _930;                           // _930
+	bool _930;                           // _930, unused
 	int _934;                            // _934
-	Vector3f _938[32];                   // _938
-	f32 _AB8;                            // _AB8
+	Vector3f mWhistleFxPosArr[32];                   // _938
+	f32 mWhistleTimer;                            // _AB8
 	int _ABC;                            // _ABC
 	f32 _AC0;                            // _AC0
 	f32 _AC4;                            // _AC4

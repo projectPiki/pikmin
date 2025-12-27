@@ -1406,7 +1406,8 @@ bool Piki::stimulate(immut Interaction& interaction)
  */
 int Piki::getFormationPri()
 {
-	switch (mNavi->_80C) {
+	// Only ever 0
+	switch (mNavi->mFormationPriMode) {
 	case 0:
 		return mFormationPriority;
 
@@ -1975,7 +1976,7 @@ void Piki::collisionCallback(immut CollEvent& event)
 	}
 
 	bool distCheck = true;
-	if (!mNavi->_830 && mNavi->_764.length() < 0.1f) {
+	if (!mNavi->mForcePikiDistCheck && mNavi->mCStick.length() < 0.1f) {
 		distCheck = false;
 	}
 

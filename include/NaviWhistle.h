@@ -120,9 +120,9 @@ struct NaviFue : public KEffect {
 		}
 
 		for (int i = 0; i < mEntryNum; i++) {
-			mEntries[i] = effectMgr->create(EffectMgr::EFF_Navi_WhistleCursor, mNavi->_938[i], this, nullptr);
+			mEntries[i] = effectMgr->create(EffectMgr::EFF_Navi_WhistleCursor, mNavi->mWhistleFxPosArr[i], this, nullptr);
 			if (mEntries[i]) {
-				mEntries[i]->setEmitPosPtr(&mNavi->_938[i]);
+				mEntries[i]->setEmitPosPtr(&mNavi->mWhistleFxPosArr[i]);
 			}
 		}
 	}

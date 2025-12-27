@@ -2442,14 +2442,14 @@ void PikiPushState::init(Piki* piki)
 void PikiPushState::exec(Piki* piki)
 {
 	piki->mMotionSpeed = 30.0f;
-	Vector3f vec(piki->mNavi->_74C);
+	Vector3f vec(piki->mNavi->mMainStick);
 	Vector3f dir(sinf(piki->mFaceDirection), 0.0f, cosf(piki->mFaceDirection));
 	if (vec.DP(dir) < 0.4f) {
 		piki->mPikiAnimMgr.finishMotion(piki);
 		mIsFinishing = true;
 	}
 
-	if (!mIsFinishing && piki->mNavi->_764.length() <= 0.1f) {
+	if (!mIsFinishing && piki->mNavi->mCStick.length() <= 0.1f) {
 		piki->mPikiAnimMgr.finishMotion(piki);
 		mIsFinishing = true;
 	} else if (piki->mWallObj && AIConstant::_instance->mConstants._64()) {
@@ -2535,7 +2535,7 @@ void PikiPushPikiState::exec(Piki* piki)
 
 	piki->mMotionSpeed = 30.0f;
 
-	if (!mIsFinishing && piki->mNavi->_764.length() <= 0.1f) {
+	if (!mIsFinishing && piki->mNavi->mCStick.length() <= 0.1f) {
 		piki->mPikiAnimMgr.finishMotion(piki);
 		mIsFinishing = true;
 	}
@@ -2823,8 +2823,8 @@ void PikiNukareState::procAnimMsg(Piki* piki, MsgAnim* msg)
 		transit(piki, PIKISTATE_Normal);
 		piki->changeMode(PikiMode::FormationMode, piki->mNavi);
 		if (piki->mNavi->mIsCursorVisible == FALSE) {
-			piki->mNavi->_30C++;
-			if (piki->mNavi->_30C >= C_NAVI_PROP(piki->mNavi)._3EC()) {
+			piki->mNavi->mPluckCursorVisibilityTimer++;
+			if (piki->mNavi->mPluckCursorVisibilityTimer >= C_NAVI_PROP(piki->mNavi)._3EC()) {
 				piki->mNavi->mIsCursorVisible = TRUE;
 			}
 		}

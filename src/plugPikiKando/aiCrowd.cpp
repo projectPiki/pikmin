@@ -275,7 +275,7 @@ int ActCrowd::exec()
 	}
 
 	bool check = false;
-	if (mPiki->mNavi->_764.length() <= C_NAVI_PROP(mPiki->mNavi).mNeutralStickThreshold()) {
+	if (mPiki->mNavi->mCStick.length() <= C_NAVI_PROP(mPiki->mNavi).mNeutralStickThreshold()) {
 		check = true;
 	}
 
@@ -315,7 +315,7 @@ int ActCrowd::exec()
 	f32 plateDist2D   = std::sqrtf(plateDir.x * plateDir.x + plateDir.z * plateDir.z);
 	plateDir.normalise();
 
-	if (plateDist2D < 60.0f && mPiki->mNavi->_724 && mState != STATE_Sort) {
+	if (plateDist2D < 60.0f && mPiki->mNavi->mIsCStickNeutral && mState != STATE_Sort) {
 		if (!mIsWaiting && mPiki->mNavi->mNeutralTime - (2.0f * gsys->getRand(1.0f)) >= C_NAVI_PROP(mPiki->mNavi)._34C()) {
 			mIsWaiting = true;
 			return ACTOUT_Continue;
