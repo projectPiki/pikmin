@@ -153,13 +153,13 @@ struct MovSampleSetupSection : public Node {
 		_30         = 0;
 		gsys->setFade(1.0f, 3.0f);
 
-		static const char* movieNames[6] = {
+		static const char* movieNames[MOV_COUNT] = {
 			"../MovieData/cntA_S.h4m", "../MovieData/cntB_S.h4m", "../MovieData/cntC_S.h4m",
 			"../MovieData/cntD_S.h4m", "../MovieData/sr_S.h4m",   "../MovieData/srhp_S.h4m",
 		};
 		int size  = 0xe00000;
 		u8* store = new (0x20) u8[size];
-		Jac_StreamMovieInit(movieNames[gameflow.mIntroMovieId], store, size);
+		Jac_StreamMovieInit(movieNames[gameflow.mCurrIntroMovieID], store, size);
 		ImgW      = 640;
 		ImgH      = 480;
 		int size2 = 0x70800;
@@ -203,11 +203,11 @@ struct MovSampleSetupSection : public Node {
 			OSCancelThread(&playbackThread);
 
 			if (flowCont._244) {
-				Jac_SceneExit(13, 0);
+				Jac_SceneExit(SCENE_Unk13, 0);
 				flowCont._244 = 0;
 			}
 
-			gameflow.mGameSectionID = SECTION_Titles;
+			gameflow.mNextGameSectionID = SECTION_Titles;
 			gsys->softReset();
 		}
 
@@ -216,13 +216,13 @@ struct MovSampleSetupSection : public Node {
 	virtual void draw(Graphics& gfx) // _14 (weak)
 	{
 		// NON-MATCHING
-		gfx.setViewport(RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
-		gfx.setScissor(RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
-		gfx.setClearColour(Colour(0, 0, 0, 0));
+		gfx.setViewport(AREA_FULL_SCREEN(gfx));
+		gfx.setScissor(AREA_FULL_SCREEN(gfx));
+		gfx.setClearColour(COLOUR_TRANSPARENT);
 		gfx.clearBuffer(3, false);
 		Matrix4f mtx;
 		STACK_PAD_VAR(64);
-		gfx.setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+		gfx.setOrthogonal(mtx.mMtx, AREA_FULL_SCREEN(gfx));
 
 		GXSetNumTexGens(2);
 		GXSetTexCoordGen2(GX_TEXCOORD0, GX_TG_MTX3X4, GX_TG_TEX0, 60, 0, 125);
@@ -295,7 +295,7 @@ struct MovSampleSetupSection : public Node {
 		gfx.setColour(Colour(255, 255, 64, 255), true);
 		gfx.setAuxColour(Colour(255, 0, 64, 255));
 
-		gameflow.drawLoadLogo(gfx, false, gameflow.mLevelBannerTexture, gameflow.mLevelBannerFadeValue);
+		gameflow.drawLoadLogo(gfx, false, gameflow.mLevelBannerTex, gameflow.mLevelBannerFadeValue);
 	}
 
 	// not in the DLL, but needed for stack ordering

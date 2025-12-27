@@ -78,7 +78,7 @@ struct CardSelectSetupSection : public Node {
 
 			if (mJacSetupCountdown == 0) {
 #ifndef WIN32
-				Jac_SceneSetup(2, 0);
+				Jac_SceneSetup(SCENE_Unk2, 0);
 #endif
 			}
 		}
@@ -96,9 +96,9 @@ struct CardSelectSetupSection : public Node {
 					if (gameflow.mGamePrefs.mHasSaveGame) {
 						// save game exists, load it
 						gameflow.mMemoryCard.loadCurrentGame();
-						if (gameflow.mPlayState.mSaveStatus == 1) {
+						if (gameflow.mPlayState.mSaveStatus == PlayState::Fresh) {
 							gameflow.mPlayState.Initialise();
-							gameflow.mPlayState.mSaveStatus = 2;
+							gameflow.mPlayState.mSaveStatus = PlayState::ReadyToSave;
 						}
 
 						// put us in the map select screen
@@ -119,7 +119,7 @@ struct CardSelectSetupSection : public Node {
 						sprintf(flowCont.mStagePath1, "%s", stage->mFileName);
 						sprintf(flowCont.mStagePath2, "%s", stage->mFileName);
 						// day one is locked at 2:48pm
-						gameflow.mWorldClock.setTime(14.8f);
+						gameflow.mWorldClock.setTime(TUTORIAL_TIME_OF_DAY);
 						gameflow.mNextOnePlayerSectionID = ONEPLAYER_IntroGame;
 					}
 				} else {
@@ -131,12 +131,12 @@ struct CardSelectSetupSection : public Node {
 					gameflow.mNextOnePlayerSectionID = ONEPLAYER_MapSelect;
 				}
 
-				gameflow.mCurrentStageId      = -1;
-				gameflow.mLastUnlockedStageId = -1;
+				gameflow.mCurrentStageID       = -1;
+				gameflow.mPendingStageUnlockID = -1;
 			}
 
 #ifdef __MWERKS__
-			Jac_SceneExit(13, 0);
+			Jac_SceneExit(SCENE_Unk13, 0);
 #endif
 			gsys->softReset();
 		}
@@ -145,13 +145,13 @@ struct CardSelectSetupSection : public Node {
 	/// Renders the screen and adjusts the render based on screen status.
 	virtual void draw(Graphics& gfx) // _14 (weak)
 	{
-		gfx.setViewport(RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
-		gfx.setScissor(RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
-		gfx.setClearColour(Colour(0, 0, 0, 0));
+		gfx.setViewport(AREA_FULL_SCREEN(gfx));
+		gfx.setScissor(AREA_FULL_SCREEN(gfx));
+		gfx.setClearColour(COLOUR_TRANSPARENT);
 		gfx.clearBuffer(3, false);
 
 		Matrix4f mtx;
-		gfx.setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+		gfx.setOrthogonal(mtx.mMtx, AREA_FULL_SCREEN(gfx));
 
 		if (!memcardWindow) {
 			// nothing to draw
@@ -178,11 +178,11 @@ struct CardSelectSetupSection : public Node {
 				gameflow.mGamePrefs.mHasSaveGame = true;
 				gameflow.mSaveGameCrc            = card.mCrc;
 				gameflow.mGamePrefs.mFileNum     = returnCode - 2;
-				PRINT("got index = %d\n", card.mIndex);
-				gameflow.mGamePrefs.mSaveGameIndex = card.mIndex + 1;
+				PRINT("got index = %d\n", card.mMemCardSaveIndex);
+				gameflow.mGamePrefs.mMemCardSaveIndex = card.mMemCardSaveIndex + 1;
 				PRINT("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
-				PRINT("using save game file %d (crc = %08x) with %d as the spare\n", gameflow.mGamePrefs.mSaveGameIndex,
-				      gameflow.mSaveGameCrc, gameflow.mGamePrefs.mSpareSaveGameIndex);
+				PRINT("using save game file %d (crc = %08x) with %d as the spare\n", gameflow.mGamePrefs.mMemCardSaveIndex,
+				      gameflow.mSaveGameCrc, gameflow.mGamePrefs.mSpareMemCardSaveIndex);
 				gameflow.mWorldClock.mCurrentDay = card.mCurrentDay;
 				mFadeState                       = 1;
 				gsys->setFade(0.0f, 3.0f);
@@ -223,11 +223,11 @@ CardSelectSection::CardSelectSection()
 		stage->mStageInf.initGame();
 	}
 
-	gameflow.mGamePrefs.mSaveGameIndex = 0;
-	gameflow.mGamePrefs.mHasSaveGame   = false;
+	gameflow.mGamePrefs.mMemCardSaveIndex = 0;
+	gameflow.mGamePrefs.mHasSaveGame      = false;
 
 	if (gameflow.mIsChallengeMode == FALSE) {
-		Jac_SceneSetup(2, 0);
+		Jac_SceneSetup(SCENE_Unk2, 0);
 	}
 
 	gsys->startLoading(nullptr, true, 60);

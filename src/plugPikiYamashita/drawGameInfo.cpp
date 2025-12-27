@@ -437,7 +437,7 @@ struct SunAnim {
 		P2DPicture* pic = (P2DPicture*)pane;
 		if (gameflow.mWorldClock.mTimeOfDay >= 7.0f && gameflow.mWorldClock.mTimeOfDay <= 19.0f) {
 			pic->show();
-			if (!gameflow.mIsUiOverlayActive) {
+			if (!gameflow.mIsUIOverlayActive) {
 				f32 t = NMathF::sin(2.0f * pane->getRotate());
 				pic->rotate(pane->getWidth() >> 1, pane->getHeight() >> 1, P2DROTATE_Unk2, pane->getRotate() + mIncrementAngle);
 				pic->setScale(0.1f * t + 0.9f);
@@ -634,13 +634,13 @@ zen::DrawGameInfo::DrawGameInfo(zen::DrawGameInfo::playModeFlag playMode)
 
 	pane = mModeScreenMgr->search('w_00', true);
 	if (pane->getTypeID() == PANETYPE_Picture) {
-		static_cast<P2DPicture*>(pane)->setBlack(Colour(0, 0, 0, 0));
+		static_cast<P2DPicture*>(pane)->setBlack(COLOUR_TRANSPARENT);
 		static_cast<P2DPicture*>(pane)->setWhite(Colour(153, 255, 153, 255));
 	}
 
 	pane = mModeScreenMgr->search('x_00', true);
 	if (pane->getTypeID() == PANETYPE_Picture) {
-		static_cast<P2DPicture*>(pane)->setBlack(Colour(0, 0, 0, 0));
+		static_cast<P2DPicture*>(pane)->setBlack(COLOUR_TRANSPARENT);
 		static_cast<P2DPicture*>(pane)->setWhite(Colour(153, 255, 153, 255));
 	}
 

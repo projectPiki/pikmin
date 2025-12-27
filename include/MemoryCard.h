@@ -18,18 +18,18 @@ extern u8 cardData[CARD_DATA_SIZE];
  * @note Size: 0x28.
  */
 struct CardQuickInfo {
-	CardQuickInfo() { mIsSelected = 0; }
+	CardQuickInfo() { mSaveStatus = 0; }
 
-	int mIndex;             // _00
-	u32 mFlags;             // _04
-	u32 mIsSelected;        // _08, guessed name, not entirely sure
-	int mCurrentDay;        // _0C
-	int mCurrentPartsCount; // _10
-	int mRedPikiCount;      // _14
-	int mYellowPikiCount;   // _18
-	int mBluePikiCount;     // _1C
-	int _20;                // _20
-	u32 mCrc;               // _24
+	int mMemCardSaveIndex;  ///< _00, index of save file on actual memory card (0-indexed).
+	u32 mGameSaveSlot;      ///< _04, save slot used in game (0-2).
+	u32 mSaveStatus;        ///< _08, whether a fresh file or used - see `PlayState::SaveStatus` enum.
+	int mCurrentDay;        ///< _0C, current (saved) in-game day.
+	int mCurrentPartsCount; ///< _10, current (saved) collected ship parts count.
+	int mRedPikiCount;      ///< _14, current (saved) red pikmin count.
+	int mYellowPikiCount;   ///< _18, current (saved) yellow pikmin count.
+	int mBluePikiCount;     ///< _1C, current (saved) blue pikmin count.
+	int mSaveCount;         ///< _20, number of saves used (unsure on this).
+	u32 mCrc;               ///< _24, checksum of save file.
 };
 
 /**

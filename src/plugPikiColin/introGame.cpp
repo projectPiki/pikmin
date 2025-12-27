@@ -49,7 +49,7 @@ struct QuittingModeState : public ModeState {
 
 			memStat->reset();
 			gameflow.mNextOnePlayerSectionID = ONEPLAYER_NewPikiGame;
-			Jac_SceneExit(13, 0);
+			Jac_SceneExit(SCENE_Unk13, 0);
 			gsys->softReset();
 		}
 	}
@@ -104,7 +104,7 @@ struct IntroGameSetupSection : public BaseGameSection {
 		_3A8 = 0;
 #endif
 		mNextModeState = 0;
-		Jac_SceneSetup(11, 0);
+		Jac_SceneSetup(SCENE_Unk11, 0);
 		EffectMgr* mgr = new EffectMgr;
 		mgr->cullingOff();
 		mDayManager = new DayMgr(nullptr, mController);
@@ -119,10 +119,10 @@ struct IntroGameSetupSection : public BaseGameSection {
 
 	void mainRender(Graphics& gfx)
 	{
-		gfx.setViewport(RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
-		gfx.setScissor(RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
-		gfx.setClearColour(Colour(0, 0, 0, 0));
-		gfx.clearBuffer(3, 0);
+		gfx.setViewport(AREA_FULL_SCREEN(gfx));
+		gfx.setScissor(AREA_FULL_SCREEN(gfx));
+		gfx.setClearColour(COLOUR_TRANSPARENT);
+		gfx.clearBuffer(3, false);
 		gfx.setPerspective(gfx.mCamera->mPerspectiveMatrix.mMtx, gfx.mCamera->mFov, gfx.mCamera->mAspectRatio, gfx.mCamera->mNear,
 		                   gfx.mCamera->mFar, 1.0f);
 		gfx.useMatrix(Matrix4f::ident, 0);
@@ -143,7 +143,7 @@ struct IntroGameSetupSection : public BaseGameSection {
 		Matrix4f mtx2;
 		gfx.mRenderState = (GFXRENDER_Unk1 | GFXRENDER_Unk2 | GFXRENDER_Unk3);
 		mCurrentModeState->postRender(gfx);
-		gfx.setOrthogonal(mtx2.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+		gfx.setOrthogonal(mtx2.mMtx, AREA_FULL_SCREEN(gfx));
 	}
 
 	virtual void update() // _10
@@ -174,7 +174,7 @@ struct IntroGameSetupSection : public BaseGameSection {
 		gsys->mTimer->stop("mainRender");
 
 		if (effectMgr) {
-			if (gameflow.mPauseAll == FALSE && !gameflow.mIsUiOverlayActive) {
+			if (gameflow.mPauseAll == FALSE && !gameflow.mIsUIOverlayActive) {
 				gsys->mTimer->start("effect", true);
 				bool check = true;
 				if (gsys->mDvdErrorCode >= DvdError::ReadingDisc) {
@@ -193,13 +193,13 @@ struct IntroGameSetupSection : public BaseGameSection {
 
 		if (!(gameflow.mDemoFlags & GFDEMO_InMenu)) {
 			gsys->mTimer->start("postRender", true);
-			gfx.setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+			gfx.setOrthogonal(mtx.mMtx, AREA_FULL_SCREEN(gfx));
 			postRender(gfx);
 			gsys->mTimer->stop("postRender");
 		}
 
-		gfx.setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
-		gfx.setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+		gfx.setOrthogonal(mtx.mMtx, AREA_FULL_SCREEN(gfx));
+		gfx.setOrthogonal(mtx.mMtx, AREA_FULL_SCREEN(gfx));
 
 		BaseGameSection::draw(gfx);
 

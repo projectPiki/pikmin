@@ -6,6 +6,7 @@
 #include "Graphics.h"
 #include "Interface.h"
 #include "ItemMgr.h"
+#include "Pellet.h"
 #include "PlayerState.h"
 #include "RumbleMgr.h"
 #include "gameflow.h"
@@ -419,7 +420,7 @@ void MoviePlayer::startMovie(int movieIdx, int, Creature* target, immut Vector3f
 	}
 
 	// whimsical radar check?
-	if (movieIdx == DEMOID_CollectPart && gameflow.mMovieInfoNum == 5) {
+	if (movieIdx == DEMOID_CollectPart && gameflow.mShipTextPartID == UFO_WhimsicalRadar) {
 		movieIdx = DEMOID_CollectRadar;
 	}
 
@@ -528,7 +529,7 @@ void MoviePlayer::startMovie(int movieIdx, int, Creature* target, immut Vector3f
  */
 void MoviePlayer::sndStartMovie(MovieInfo* info)
 {
-	Jac_SetDemoPartsID(gameflow.mMovieInfoNum);
+	Jac_SetDemoPartsID(gameflow.mShipTextPartID);
 	int onyons = 0;
 	for (int i = 0; i < 3; i++) {
 		if (playerState && playerState->hasContainer(i)) {

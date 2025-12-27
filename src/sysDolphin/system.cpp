@@ -71,7 +71,11 @@ void DVDStream::init()
 }
 
 /**
- * @todo: Documentation
+ * @brief Opens a file from the DVD at a given path as a buffered input stream.
+ *
+ * @param path Path to the file to open.
+ * @param isRelativePath Whether the path supplied is relative (true, requires directories to be appended) or absolute (false, from root).
+ * @return Buffered input stream of file.
  */
 RandomAccessStream* System::openFile(immut char* path, bool isRelativePath, bool)
 {
@@ -758,14 +762,14 @@ void System::showDvdError(Graphics& gfx)
 	}
 
 	gfx.setColour(COLOUR_BLACK, true);
-	gfx.fillRectangle(RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+	gfx.fillRectangle(AREA_FULL_SCREEN(gfx));
 	gfx.setColour(COLOUR_WHITE, true);
 	gfx.setAuxColour(COLOUR_WHITE);
 
 	if (mDvdErrorCode) { // DvdError::ReadingDisc or higher
 		int y = 160;
 #if defined(VERSION_GPIP01_00)
-		immut char** errors = errorList[mDvdErrorCode + _1A0 * 6];
+		immut char** errors = errorList[mDvdErrorCode + mLanguageID * 6];
 #else
 		immut char** errors = errorList[mDvdErrorCode];
 #endif
@@ -970,7 +974,11 @@ OSThread dvdThread;
 u8 dvdThreadStack[0x2000] ATTRIBUTE_ALIGN(32);
 
 /**
- * @todo: Documentation
+ * @brief Prompts the game to enter a loading state, calling `loadFunc`.
+ *
+ * @param idler Pointer to the relevant load screen manager/idler.
+ * @param useLoadScreen Whether to use a loading screen or not.
+ * @param loadDelay Number of frames to wait before calling the load screen manager/idler.
  */
 void System::startLoading(LoadIdler* idler, bool useLoadScreen, u32 loadDelay)
 {
@@ -979,6 +987,7 @@ void System::startLoading(LoadIdler* idler, bool useLoadScreen, u32 loadDelay)
 		mLoadTimeBeforeIdling = loadDelay;
 		mIsLoadScreenActive   = useLoadScreen;
 #if defined(VERSION_PIKIDEMO)
+		// demo removes the loading thread after it's finished, while other versions maintain it.
 		OSCreateThread(&Thread, loadFunc, idler, ThreadStack + sizeof(ThreadStack), sizeof(ThreadStack), 15, OS_THREAD_ATTR_DETACH);
 #else
 		OSCreateThread(&Thread, loadFunc, idler, ThreadStack + sizeof(ThreadStack), sizeof(ThreadStack), 15, 0);

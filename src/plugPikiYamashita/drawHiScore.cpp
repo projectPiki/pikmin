@@ -137,10 +137,10 @@ void zen::DrawHiScore::draw(Graphics& gfx)
 
 	if (check) {
 		Matrix4f mtx;
-		gfx.setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+		gfx.setOrthogonal(mtx.mMtx, AREA_FULL_SCREEN(gfx));
 		gfx.setColour(COLOUR_BLACK, true);
 		gfx.setAuxColour(Colour(0, 0, 64, 255));
-		gfx.fillRectangle(RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+		gfx.fillRectangle(AREA_FULL_SCREEN(gfx));
 		mScreen->draw();
 	}
 

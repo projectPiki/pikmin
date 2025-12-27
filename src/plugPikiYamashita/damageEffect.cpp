@@ -16,7 +16,7 @@ zen::DamageEffect::DamageEffect()
  */
 bool zen::DamageEffect::update()
 {
-	if (!gameflow.mIsUiOverlayActive) {
+	if (!gameflow.mIsUIOverlayActive) {
 		Navi* navi;
 		if (naviMgr) {
 			navi = naviMgr->getNavi(0);

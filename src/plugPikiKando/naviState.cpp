@@ -1,3 +1,4 @@
+#include "NaviState.h"
 #include "AIConstant.h"
 #include "Dolphin/os.h"
 #include "EffectMgr.h"
@@ -12,7 +13,6 @@
 #include "MapCode.h"
 #include "MoviePlayer.h"
 #include "NaviMgr.h"
-#include "NaviState.h"
 #include "Pcam/Camera.h"
 #include "Pcam/CameraManager.h"
 #include "Pellet.h"
@@ -30,7 +30,6 @@
 #include "sysNew.h"
 #include "teki.h"
 #include "zen/DrawContainer.h"
-
 
 #include "CPlate.h"
 #include "DebugLog.h"
@@ -890,7 +889,7 @@ void NaviUfoState::exec(Navi* navi)
 		mState = 3;
 	}
 
-	if (mState == 3 && !gameflow.mIsUiOverlayActive) {
+	if (mState == 3 && !gameflow.mIsUIOverlayActive) {
 		transit(navi, NAVISTATE_Walk);
 	}
 }
@@ -1582,10 +1581,10 @@ void NaviGatherState::init(Navi* navi)
 	navi->mMotionSpeed = 30.0f;
 	navi->startMotion(PaniMotionInfo(PIKIANIM_Fue, navi), PaniMotionInfo(PIKIANIM_Fue));
 	navi->enableMotionBlend();
-	navi->mWhistleTimer = 0.0f;
-	navi->_AC4 = 0.0f;
+	navi->mWhistleTimer      = 0.0f;
+	navi->_AC4               = 0.0f;
 	navi->mWhistleCircleMode = 1;
-	_10        = 0;
+	_10                      = 0;
 	SeSystem::playPlayerSe(SE_GATHER);
 
 	int kEffID = (navi->mNaviID == 0) ? KandoEffect::NaviWhistle0 : KandoEffect::NaviWhistle1;
@@ -1637,7 +1636,7 @@ void NaviGatherState::exec(Navi* navi)
 	}
 
 	if (navi->mKontroller->keyClick(KeyConfig::_instance->mSetCursorKey.mBind)) {
-		navi->mWhistleTimer = 0.0f;
+		navi->mWhistleTimer      = 0.0f;
 		navi->mWhistleCircleMode = 0;
 		transit(navi, NAVISTATE_Gather);
 		return;
@@ -1659,22 +1658,22 @@ void NaviGatherState::exec(Navi* navi)
 				navi->callDebugs(C_NAVI_PROP(navi)._8C());
 			}
 			navi->mWhistleRadiusFrac = navi->mWhistleTimer / C_NAVI_PROP(navi)._AC();
-			navi->mWhistleTimer = 0.0f;
+			navi->mWhistleTimer      = 0.0f;
 			navi->mWhistleCircleMode = 2;
 		}
 		return;
 	}
 
 	if (navi->mWhistleCircleMode == 1 && up) {
-		f32 scale  = navi->mWhistleTimer / C_NAVI_PROP(navi)._AC();
+		f32 scale                = navi->mWhistleTimer / C_NAVI_PROP(navi)._AC();
 		navi->mWhistleRadiusFrac = scale;
 		scale *= (C_NAVI_PROP(navi)._8C() - C_NAVI_PROP(navi)._9C());
 		scale += C_NAVI_PROP(navi)._9C();
 
-		check      = true;
-		navi->mWhistleTimer = 0.0f;
+		check                    = true;
+		navi->mWhistleTimer      = 0.0f;
 		navi->mWhistleCircleMode = 2;
-		_14        = scale;
+		_14                      = scale;
 		if (!gameflow.mPauseAll) {
 			navi->callPikis(scale);
 		} else {
@@ -1693,7 +1692,7 @@ void NaviGatherState::exec(Navi* navi)
 	}
 
 	if (navi->mKontroller->keyClick(KeyConfig::_instance->mSetCursorKey.mBind)) {
-		navi->mWhistleTimer = 0.0f;
+		navi->mWhistleTimer      = 0.0f;
 		navi->mWhistleCircleMode = 0;
 		transit(navi, NAVISTATE_Gather);
 		return;
@@ -1712,7 +1711,7 @@ void NaviGatherState::exec(Navi* navi)
 	}
 
 	if (check || navi->mWhistleTimer > C_NAVI_PROP(navi)._BC()) {
-		navi->mWhistleTimer = 0.0f;
+		navi->mWhistleTimer      = 0.0f;
 		navi->mWhistleCircleMode = 0;
 		navi->mNaviAnimMgr.getUpperAnimator().finishMotion(PaniMotionInfo(PANI_NO_MOTION, navi));
 		transit(navi, NAVISTATE_Walk);
@@ -1844,8 +1843,8 @@ void NaviThrowWaitState::restart(Navi* navi)
 void NaviThrowWaitState::init(Navi* navi)
 {
 	navi->mThrowHoldTime = 0.0f;
-	_10        = nullptr;
-	_14        = nullptr;
+	_10                  = nullptr;
+	_14                  = nullptr;
 	Iterator it(navi->mPlateMgr);
 	Piki* throwPiki = nullptr;
 	f32 maxDist     = 80.0f;
@@ -1883,7 +1882,7 @@ void NaviThrowWaitState::init(Navi* navi)
 	_18 = 0;
 
 	navi->mThrowDistance = C_NAVI_PROP(navi)._16C() + (_18 / 3.0f) * (C_NAVI_PROP(navi)._15C() - C_NAVI_PROP(navi)._16C());
-	navi->mThrowHeight = C_NAVI_PROP(navi)._18C() + (_18 / 3.0f) * (C_NAVI_PROP(navi)._17C() - C_NAVI_PROP(navi)._18C());
+	navi->mThrowHeight   = C_NAVI_PROP(navi)._18C() + (_18 / 3.0f) * (C_NAVI_PROP(navi)._17C() - C_NAVI_PROP(navi)._18C());
 
 	_24 = 3.0f;
 	_28 = 0.1f;
@@ -1965,7 +1964,7 @@ void NaviThrowWaitState::exec(Navi* navi)
 	navi->mNextThrowPiki = _10;
 
 	navi->mThrowDistance = C_NAVI_PROP(navi)._16C() + (_18 / 3.0f) * (C_NAVI_PROP(navi)._15C() - C_NAVI_PROP(navi)._16C());
-	navi->mThrowHeight = C_NAVI_PROP(navi)._18C() + (_18 / 3.0f) * (C_NAVI_PROP(navi)._17C() - C_NAVI_PROP(navi)._18C());
+	navi->mThrowHeight   = C_NAVI_PROP(navi)._18C() + (_18 / 3.0f) * (C_NAVI_PROP(navi)._17C() - C_NAVI_PROP(navi)._18C());
 	lockHangPiki(navi);
 
 	if (_10) {
@@ -2078,8 +2077,8 @@ void NaviThrowState::procAnimMsg(Navi* navi, MsgAnim* msg)
 		rumbleMgr->start(RUMBLE_Unk2, 0, nullptr);
 
 		// none of this is used for anything
-		f32 test
-		    = C_NAVI_PROP(navi)._16C() + (C_NAVI_PROP(navi)._15C() - C_NAVI_PROP(navi)._16C()) * (navi->mThrowHoldTime / C_NAVI_PROP(navi)._14C());
+		f32 test = C_NAVI_PROP(navi)._16C()
+		         + (C_NAVI_PROP(navi)._15C() - C_NAVI_PROP(navi)._16C()) * (navi->mThrowHoldTime / C_NAVI_PROP(navi)._14C());
 		Vector3f unused(sinf(navi->mFaceDirection) * test, 0.0f, cosf(navi->mFaceDirection) * test);
 		Vector3f speed = unused + navi->mSRT.t;
 
@@ -2317,7 +2316,7 @@ void NaviNukuState::init(Navi* navi)
 	}
 
 	navi->mPressedTimer = 0.0f;
-	_10        = C_NAVI_PROP(navi)._1CC();
+	_10                 = C_NAVI_PROP(navi)._1CC();
 	if (navi->mIsCursorVisible && !playerState->isChallengeMode() && !navi->mIsPlucking && playerState->mTotalPluckedPikiCount < 100) {
 		cameraMgr->mCamera->startMotion(cameraMgr->mCamera->mAttentionInfo);
 		PRINT_GLOBAL("> camera START MOTION | NUKU");
@@ -2509,7 +2508,7 @@ void NaviNukuAdjustState::exec(Navi* navi)
 			navi->mSproutToPluck->finishWaterEffect();
 			navi->mSproutToPluck->kill(false);
 			navi->mSproutToPluck = nullptr;
-			navi->mPikiToPluck = piki;
+			navi->mPikiToPluck   = piki;
 			navi->mPikiToPluck->stimulate(InteractPullout(navi));
 		} else {
 			navi->mPikiToPluck->stimulate(InteractPullout(navi));
@@ -2902,7 +2901,7 @@ void NaviDeadState::init(Navi* navi)
 {
 	GameStat::orimaDead = true;
 	playerState->mResultFlags.setOn(RESFLAG_OlimarDown);
-	gameflow.mGameInterface->message(MOVIECMD_SetInputEnabled, FALSE);
+	gameflow.mGameInterface->message(MOVIECMD_SetPauseAllowed, FALSE);
 	gameflow.mGameInterface->message(MOVIECMD_StageFinish, TRUE);
 	navi->mMotionSpeed = 30.0f;
 	navi->startMotion(PaniMotionInfo(PIKIANIM_ODead, navi), PaniMotionInfo(PIKIANIM_ODead));
@@ -2960,7 +2959,7 @@ void NaviPikiZeroState::init(Navi* navi)
 {
 	// 'TOTAL ANNIHILATION!' etc lol
 	PRINT("ZENMETSU! ZENMETSU! ZENMETSU! ZENMETSU! ZENMETSU! ZENMETSU! ZENMETSU! ZENMETSU! ZENMETSU! \n");
-	gameflow.mGameInterface->message(MOVIECMD_SetInputEnabled, FALSE);
+	gameflow.mGameInterface->message(MOVIECMD_SetPauseAllowed, FALSE);
 	gameflow.mGameInterface->message(MOVIECMD_StageFinish, TRUE);
 	playerState->mResultFlags.setOn(RESFLAG_PikminExtinction);
 	_12 = 30;
@@ -3004,7 +3003,7 @@ NaviStartingState::NaviStartingState()
  */
 void NaviStartingState::init(Navi* navi)
 {
-	gameflow.mGameInterface->message(MOVIECMD_SetInputEnabled, FALSE);
+	gameflow.mGameInterface->message(MOVIECMD_SetPauseAllowed, FALSE);
 	navi->startMotion(PaniMotionInfo(PIKIANIM_Walk, navi), PaniMotionInfo(PIKIANIM_Walk));
 
 	UfoItem* ufo = itemMgr->getUfo();
@@ -3116,7 +3115,7 @@ void NaviStartingState::procAnimMsg(Navi* navi, MsgAnim* msg)
  */
 void NaviStartingState::cleanup(Navi* navi)
 {
-	gameflow.mGameInterface->message(MOVIECMD_SetInputEnabled, TRUE);
+	gameflow.mGameInterface->message(MOVIECMD_SetPauseAllowed, TRUE);
 	navi->mVelocity.set(0.0f, 0.0f, 0.0f);
 	navi->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 	navi->finishLook();
@@ -3138,7 +3137,7 @@ void NaviPartsAccessState::init(Navi* navi)
 	navi->startMotion(PaniMotionInfo(PIKIANIM_Punch, navi), PaniMotionInfo(PIKIANIM_Punch));
 	navi->mVelocity.set(0.0f, 0.0f, 0.0f);
 	navi->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
-	gameflow.mGameInterface->message(MOVIECMD_SetInputEnabled, FALSE);
+	gameflow.mGameInterface->message(MOVIECMD_SetPauseAllowed, FALSE);
 	GameCoreSection::startPause(0x8001);
 	_10 = false;
 
@@ -3151,7 +3150,7 @@ void NaviPartsAccessState::init(Navi* navi)
  */
 void NaviPartsAccessState::exec(Navi* navi)
 {
-	if (_10 == true && !gameflow.mIsUiOverlayActive) {
+	if (_10 == true && !gameflow.mIsUIOverlayActive) {
 		transit(navi, NAVISTATE_Walk);
 	}
 }
@@ -3163,7 +3162,7 @@ void NaviPartsAccessState::cleanup(Navi* navi)
 {
 	GameCoreSection::finishPause();
 	Jac_FinishPartsFindDemo();
-	gameflow.mGameInterface->message(MOVIECMD_SetInputEnabled, TRUE);
+	gameflow.mGameInterface->message(MOVIECMD_SetPauseAllowed, TRUE);
 }
 
 /**
@@ -3174,13 +3173,13 @@ void NaviPartsAccessState::procAnimMsg(Navi* navi, MsgAnim* msg)
 	switch (msg->mKeyEvent->mEventType) {
 	case 0:
 		if (!_10) {
-			_10                    = true;
-			Pellet* pelt           = navi->mSelectedShipPart;
-			int id                 = PelletMgr::getUfoIndexFromID(pelt->mConfig->mModelId.mId);
-			gameflow.mMovieType    = 1;
-			gameflow.mMovieInfoNum = id;
-			playerState->mDemoFlags.resetFlag(id + 32);
-			playerState->mDemoFlags.setFlag(id + 32, pelt);
+			_10                      = true;
+			Pellet* pelt             = navi->mSelectedShipPart;
+			int id                   = PelletMgr::getUfoIndexFromID(pelt->mConfig->mModelId.mId);
+			gameflow.mShipTextType   = SHIPTEXT_PartsAccess;
+			gameflow.mShipTextPartID = id;
+			playerState->mDemoFlags.resetFlag(id + DEMOFLAG_UfoPartDiscoveryOffset);
+			playerState->mDemoFlags.setFlag(id + DEMOFLAG_UfoPartDiscoveryOffset, pelt);
 		}
 		break;
 	}
@@ -3214,7 +3213,7 @@ void NaviUfoAccessState::init(Navi* navi)
  */
 void NaviUfoAccessState::exec(Navi* navi)
 {
-	if (_10 == true && !gameflow.mIsUiOverlayActive) {
+	if (_10 == true && !gameflow.mIsUIOverlayActive) {
 		PRINT("TRANSIT TO WALK !\n");
 		transit(navi, NAVISTATE_Walk);
 	}
@@ -3239,9 +3238,9 @@ void NaviUfoAccessState::procAnimMsg(Navi* navi, MsgAnim* msg)
 	switch (msg->mKeyEvent->mEventType) {
 	case 0:
 		if (!_10) {
-			_10                    = true;
-			gameflow.mMovieType    = 0;
-			gameflow.mMovieInfoNum = -1;
+			_10                      = true;
+			gameflow.mShipTextType   = SHIPTEXT_PartCollect;
+			gameflow.mShipTextPartID = -1;
 			gameflow.mGameInterface->message(MOVIECMD_TextDemo, 17);
 		}
 		break;

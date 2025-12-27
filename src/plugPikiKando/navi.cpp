@@ -368,7 +368,7 @@ void Navi::startDamageEffect()
 	}
 
 	if (mHealth <= 1.0f) {
-		gameflow.mGameInterface->message(MOVIECMD_SetInputEnabled, FALSE);
+		gameflow.mGameInterface->message(MOVIECMD_SetPauseAllowed, FALSE);
 		GameCoreSection::startPause(COREPAUSE_Unk1 | COREPAUSE_Unk3 | COREPAUSE_Unk16);
 
 	} else if (!gameflow.mMoviePlayer->mIsActive && mHealth <= 0.25f * NAVI_PROP.mHealth()
@@ -453,21 +453,21 @@ Navi::Navi(CreatureProp* props, int naviID)
 	mNeutralTime     = 0.0f;
 	mPlateDirLocked  = false;
 	_720             = 0;
-	mFormationBand             = 0;
+	mFormationBand   = 0;
 	mCurrState       = nullptr;
 	mNaviShapeObject = naviMgr->mNaviShapeObject[mNaviID];
 	mCollInfo        = new CollInfo(5);
 	mCollInfo->initInfo(mNaviShapeObject->mShape, nullptr, nullptr);
 	mNaviAnimMgr.init(mNaviShapeObject->mAnimMgr, &mNaviShapeObject->mAnimatorB, &mNaviShapeObject->mAnimatorA, naviMgr->mMotionTable);
-	mWhistleCircleMode    = 0;
-	mWhistleTimer    = 0.0f;
-	_AC4    = 0.0f;
-	mHealth = static_cast<NaviProp*>(props)->mNaviProps.mHealth();
+	mWhistleCircleMode = 0;
+	mWhistleTimer      = 0.0f;
+	_AC4               = 0.0f;
+	mHealth            = static_cast<NaviProp*>(props)->mNaviProps.mHealth();
 
 	mDayEndPosition.set(0.0f, 0.0f, 0.0f);
-	mPressedTimer = 0.0f;
-	_818 = 1.0f;
-	_810 = 0;
+	mPressedTimer     = 0.0f;
+	_818              = 1.0f;
+	_810              = 0;
 	mFormationPriMode = 0;
 	startMotion(PaniMotionInfo(PIKIANIM_Walk, this), PaniMotionInfo(PIKIANIM_Walk));
 
@@ -486,11 +486,11 @@ Navi::Navi(CreatureProp* props, int naviID)
 	mStateMachine->init(this);
 	memStat->end("naviStateM");
 
-	_828 = 0;
+	_828             = 0;
 	mIsCStickNeutral = false;
-	mThrowHoldTime = 0.0f;
-	_7FC = false;
-	_928 = 0;
+	mThrowHoldTime   = 0.0f;
+	_7FC             = false;
+	_928             = 0;
 	resetCreatureFlag(CF_Unk1 | CF_DisableAutoFaceDir);
 	mObjType = OBJTYPE_Navi;
 	mSearchBuffer.init(mNaviSearchData, 6);
@@ -556,19 +556,19 @@ void Navi::reset()
 	mHeadYawOffsetRel                       = 0.0f;
 	mHeadPitchOffset                        = 0.0f;
 	enableFixPos();
-	mForcePikiDistCheck         = false;
-	mIsRidingUfo = false;
+	mForcePikiDistCheck = false;
+	mIsRidingUfo        = false;
 	setPellet(false);
-	mLookAtPosPtr     = nullptr;
-	mIsPlucking       = false;
-	mFastPluckKeyTaps = false;
-	mCollidedWorkObj      = nullptr;
-	mCollidedWorkObjTimer = 0.0f;
-	mIsInWater        = false;
-	mPluckCursorVisibilityTimer              = 0;
-	mIsCursorVisible  = FALSE;
-	mPendingLowerMotionId                    = 1;
-	mLowerMotionCooldown                     = 5;
+	mLookAtPosPtr               = nullptr;
+	mIsPlucking                 = false;
+	mFastPluckKeyTaps           = false;
+	mCollidedWorkObj            = nullptr;
+	mCollidedWorkObjTimer       = 0.0f;
+	mIsInWater                  = false;
+	mPluckCursorVisibilityTimer = 0;
+	mIsCursorVisible            = FALSE;
+	mPendingLowerMotionId       = 1;
+	mLowerMotionCooldown        = 5;
 	mWalkAnimPrevPos.set(0.0f, 0.0f, 0.0f);
 	for (int i = 0; i < 32; i++) {
 		mWhistleFxPosArr[i].set(0.0f, 0.0f, 0.0f);
@@ -594,7 +594,7 @@ void Navi::reset()
 	mCursorTargetPosition = mCursorPosition;
 	mCursorWorldPos.set(0.0f, 0.0f, 0.0f);
 	mWalkAnimPrevDir = mFaceDirection;
-	mNextThrowPiki = nullptr;
+	mNextThrowPiki   = nullptr;
 	mNaviLightEfx->changeEffect(EffectMgr::EFF_Navi_Light);
 	mNaviLightGlowEfx->changeEffect(EffectMgr::EFF_Navi_LightGlow);
 }
@@ -680,7 +680,7 @@ bool Navi::doMotionBlend()
  */
 void Navi::updateWalkAnimation()
 {
-	mCollisionRadius  = NAVI_PROP._20C();
+	mCollisionRadius = NAVI_PROP._20C();
 
 	Vector3f moveDelta    = mSRT.t - mWalkAnimPrevPos;
 	moveDelta.y           = 0.0f;
@@ -1392,10 +1392,10 @@ bool Navi::procActionButton()
 			_7D0               = angDist(roundAng(atan2f(sproutSep.x, sproutSep.z)), mFaceDirection) / 10.0f;
 			f32 dist           = sproutSep.length();
 			// f32 scaledDist     = 3.0003002f * ((1.0f / dist) * (dist - 15.0f));
-			_7C4 = 3.0003002f * ((1.0f / dist) * (dist - 15.0f)) * sproutSep;
-			_7B8 = 2;
+			_7C4           = 3.0003002f * ((1.0f / dist) * (dist - 15.0f)) * sproutSep;
+			_7B8           = 2;
 			mSproutToPluck = closestSprout;
-			mPikiToPluck = 0;
+			mPikiToPluck   = 0;
 			mStateMachine->transit(this, NAVISTATE_NukuAdjust);
 			return true;
 		}
@@ -1423,7 +1423,7 @@ bool Navi::procActionButton()
 			// f32 scaledDist = 3.0003002f * ((1.0f / pikiDist) * (pikiDist - 15.0f));
 			_7C4 = 3.0003002f * ((1.0f / pikiDist) * (pikiDist - 15.0f)) * pikiSep;
 
-			_7B8 = 2;
+			_7B8         = 2;
 			mPikiToPluck = piki;
 			mStateMachine->transit(this, NAVISTATE_NukuAdjust);
 			PRINT("start nuku !\n");
@@ -1884,21 +1884,21 @@ void Navi::makeCStick(bool isSunset)
 			if (mFormationBand == 0) {
 				_720++;
 			} else {
-				_720 = 0;
+				_720           = 0;
 				mFormationBand = 0;
 			}
 		} else if (nearestPikiDist < NAVI_PROP._1EC()) {
 			if (mFormationBand == 1) {
 				_720++;
 			} else {
-				_720 = 0;
+				_720           = 0;
 				mFormationBand = 1;
 			}
 		} else {
 			if (mFormationBand == 2) {
 				_720++;
 			} else {
-				_720 = 0;
+				_720           = 0;
 				mFormationBand = 2;
 			}
 		}
@@ -2112,8 +2112,8 @@ void Navi::renderCircle(Graphics& gfx)
 		tmp += ang;
 		Vector3f dir(rad * sinf(tmp), 0.0f, rad * cosf(tmp));
 		Vector3f pos(mCursorWorldPos);
-		pos     = pos + dir;
-		pos.y   = mapMgr->getMinY(pos.x, pos.z, true);
+		pos                 = pos + dir;
+		pos.y               = mapMgr->getMinY(pos.x, pos.z, true);
 		mWhistleFxPosArr[i] = pos;
 	}
 }

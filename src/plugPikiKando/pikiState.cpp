@@ -1,3 +1,4 @@
+#include "PikiState.h"
 #include "AIConstant.h"
 #include "BombItem.h"
 #include "CPlate.h"
@@ -17,7 +18,6 @@
 #include "PikiAI.h"
 #include "PikiHeadItem.h"
 #include "PikiMgr.h"
-#include "PikiState.h"
 #include "PlayerState.h"
 #include "RumbleMgr.h"
 #include "SoundMgr.h"
@@ -25,7 +25,6 @@
 #include "WorkObject.h"
 #include "gameflow.h"
 #include "teki.h"
-
 
 namespace {
 /**
@@ -2702,7 +2701,7 @@ void PikiNukareWaitState::init(Piki* piki)
 	if ((piki->mColor == Red && !playerState->mDemoFlags.isFlag(DEMOFLAG_PluckRedPikmin))
 	    || (piki->mColor == Yellow && !playerState->mDemoFlags.isFlag(DEMOFLAG_PluckYellowPikmin))
 	    || (piki->mColor == Blue && !playerState->mDemoFlags.isFlag(DEMOFLAG_PluckBluePikmin))) {
-		gameflow.mGameInterface->message(MOVIECMD_SetInputEnabled, FALSE);
+		gameflow.mGameInterface->message(MOVIECMD_SetPauseAllowed, FALSE);
 	}
 }
 
@@ -2746,7 +2745,7 @@ void PikiNukareState::init(Piki* piki)
 	piki->mVolatileVelocity.set(0.0f, 0.0f, 0.0f);
 	playerState->mDemoFlags.setFlagOnly(DEMOFLAG_NoPikminTimeout);
 	piki->finishLook();
-	gameflow.mGameInterface->message(MOVIECMD_SetInputEnabled, FALSE);
+	gameflow.mGameInterface->message(MOVIECMD_SetPauseAllowed, FALSE);
 }
 
 /**
@@ -2793,7 +2792,7 @@ void PikiNukareState::cleanup(Piki* piki)
 		gameflow.mGamePrefs.openStage(STAGE_Cave);
 	}
 
-	gameflow.mGameInterface->message(MOVIECMD_SetInputEnabled, TRUE);
+	gameflow.mGameInterface->message(MOVIECMD_SetPauseAllowed, TRUE);
 }
 
 /**

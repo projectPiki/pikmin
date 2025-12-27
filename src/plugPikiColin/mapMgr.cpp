@@ -1237,7 +1237,7 @@ void MapMgr::postrefresh(Graphics& gfx)
 
 		if (gsys->mToggleBlur) {
 			Matrix4f mtx;
-			gfx.setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+			gfx.setOrthogonal(mtx.mMtx, AREA_FULL_SCREEN(gfx));
 			bool lighting = gfx.setLighting(false, nullptr);
 			gfx.setFog(false);
 			gfx.setColour(COLOUR_WHITE, true);
@@ -1254,7 +1254,7 @@ void MapMgr::postrefresh(Graphics& gfx)
 
 			int blend = gfx.setCBlending(6);
 			gfx.setPrimEnv(&Colour(255, 255, 255, gfx.mCamera->mBlur), nullptr);
-			gfx.blatRectangle(RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+			gfx.blatRectangle(AREA_FULL_SCREEN(gfx));
 			gfx.setCBlending(blend);
 			mBlurredTexture->grabBuffer(mBlurredTexture->mWidth, mBlurredTexture->mHeight, false, true);
 			gfx.resetCopyFilter();
@@ -1290,16 +1290,15 @@ void MapMgr::postrefresh(Graphics& gfx)
 
 		if (mDesaturationLevel > 0.0f || mFadeProgress > 0.0f) {
 			Matrix4f mtx;
-			gfx.setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+			gfx.setOrthogonal(mtx.mMtx, AREA_FULL_SCREEN(gfx));
 			GXSetTevSwapModeTable(GX_TEV_SWAP0, GX_CH_RED, GX_CH_RED, GX_CH_RED, GX_CH_ALPHA);
 			gfx.setColour(Colour(160, 160, 160, (int)(mDesaturationLevel * 255.0f)), true);
 			gfx.useTexture(mBlurredTexture, GX_TEXMAP0);
-			gfx.drawRectangle(RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight),
-			                  RectArea(0, 0, mBlurredTexture->mWidth, mBlurredTexture->mHeight), nullptr);
+			gfx.drawRectangle(AREA_FULL_SCREEN(gfx), RectArea(0, 0, mBlurredTexture->mWidth, mBlurredTexture->mHeight), nullptr);
 			GXSetTevSwapModeTable(GX_TEV_SWAP0, GX_CH_RED, GX_CH_GREEN, GX_CH_BLUE, GX_CH_ALPHA);
 			gfx.setColour(Colour(0, 0, 0, int(mFadeProgress * 255.0f)), true);
 			gfx.useTexture(nullptr, GX_TEXMAP0);
-			gfx.fillRectangle(RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+			gfx.fillRectangle(AREA_FULL_SCREEN(gfx));
 		}
 
 		if (mDebugCollCount) {

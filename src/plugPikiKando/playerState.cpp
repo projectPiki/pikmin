@@ -643,7 +643,7 @@ void PlayerState::update()
 	}
 
 	if (isCM || !mIsTutorialMode) {
-		int time = gameflow.mWorldClock.mCurrentTime;
+		int time = gameflow.mWorldClock.mCurrentGameHour;
 		if (time != mLastUpdatedTime) {
 			GameStat::update();
 			mLastUpdatedTime = time;

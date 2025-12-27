@@ -1,5 +1,6 @@
-#include "Age.h"
 #include "Animator.h"
+
+#include "Age.h"
 #include "Ayu.h"
 #include "Common/String.h"
 #include "DebugLog.h"
@@ -11,23 +12,24 @@
 #include <string.h>
 
 /**
- * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(12)
 
 /**
- * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("AnimMgr");
 
 /**
- * @todo: Documentation
+ * @brief Initialises animation info with file name and animation data.
+ *
+ * @param data Pointer to animation data to associate with this animation.
  * @note UNUSED Size: 000084
  */
 void AnimInfo::initAnimData(AnimData* data)
 {
+	// get only the file name portion without the directory structure
 	int pos = strlen(data->mName) - 1;
 	for (pos; pos >= 0; pos--) {
 		if (data->mName[pos] == '/' || data->mName[pos] == '\\') {
@@ -40,7 +42,9 @@ void AnimInfo::initAnimData(AnimData* data)
 }
 
 /**
- * @todo: Documentation
+ * @brief Bounds all animation key frame indices within their valid range.
+ *
+ * Any frame indices outside the total frame count are clamped to the last frame.
  */
 void AnimInfo::checkAnimData()
 {
@@ -67,7 +71,12 @@ void AnimInfo::checkAnimData()
 }
 
 /**
- * @todo: Documentation
+ * @brief Constructs an AnimInfo object under the provided manager with given animation data.
+ *
+ * Initialises the key frame list with the first and last keys and updates flags.
+ *
+ * @param mgr Pointer to the manager for this animation.
+ * @param data Pointer to animation data to associate with this animation.
  */
 AnimInfo::AnimInfo(AnimMgr* mgr, AnimData* data)
     : CoreNode("")
@@ -97,7 +106,9 @@ AnimInfo::AnimInfo(AnimMgr* mgr, AnimData* data)
 }
 
 /**
- * @todo: Documentation
+ * @brief Links the animation info to its index in the global animation system.
+ *
+ * Uses the animation data's file name and manager's base path to find the index.
  */
 void AnimInfo::setIndex()
 {
@@ -105,7 +116,9 @@ void AnimInfo::setIndex()
 }
 
 /**
- * @todo: Documentation
+ * @brief Sets animation flags and updates the associated data's flags.
+ *
+ * @param flags Concatenated flags to set/reset.
  */
 void AnimInfo::setAnimFlags(u32 flags)
 {
@@ -114,7 +127,9 @@ void AnimInfo::setAnimFlags(u32 flags)
 }
 
 /**
- * @todo: Documentation
+ * @brief Counts the number of animation keys in the list.
+ *
+ * @return Number of animation keys in the list.
  */
 int AnimInfo::countAKeys()
 {
@@ -128,7 +143,9 @@ int AnimInfo::countAKeys()
 }
 
 /**
- * @todo: Documentation
+ * @brief Counts the number of info keys in the list.
+ *
+ * @return Number of info keys in the list.
  */
 int AnimInfo::countIKeys()
 {
@@ -142,7 +159,9 @@ int AnimInfo::countIKeys()
 }
 
 /**
- * @todo: Documentation
+ * @brief Counts the number of event keys in the list.
+ *
+ * @return Number of event keys in the list.
  */
 int AnimInfo::countEKeys()
 {
@@ -156,7 +175,10 @@ int AnimInfo::countEKeys()
 }
 
 /**
- * @todo: Documentation
+ * @brief Gets the info key at the given index in the list.
+ *
+ * @param idx Index of info key to find.
+ * @return Info key at index `idx`.
  */
 AnimKey* AnimInfo::getInfoKey(int idx)
 {
@@ -172,7 +194,10 @@ AnimKey* AnimInfo::getInfoKey(int idx)
 }
 
 /**
- * @todo: Documentation
+ * @brief Gets the event key at the given index in the list.
+ *
+ * @param idx Index of event key to find.
+ * @return Event key at index `idx`.
  */
 AnimKey* AnimInfo::getEventKey(int idx)
 {
@@ -188,7 +213,10 @@ AnimKey* AnimInfo::getEventKey(int idx)
 }
 
 /**
- * @todo: Documentation
+ * @brief Gets the key frame index for the animation key at the given index in the list.
+ *
+ * @param idx Index of animation key to find.
+ * @return Key frame index for animation key at index `idx`.
  */
 int AnimInfo::getKeyValue(int idx)
 {
@@ -204,7 +232,10 @@ int AnimInfo::getKeyValue(int idx)
 }
 
 /**
- * @todo: Documentation
+ * @brief Reads in animation info and key frame data from stream (.key file).
+ *
+ * @param input Stream to read data from.
+ * @param version Version of file (1+ has info keys).
  */
 void AnimInfo::doread(RandomAccessStream& input, int version)
 {
@@ -230,7 +261,7 @@ void AnimInfo::doread(RandomAccessStream& input, int version)
 		}
 	}
 
-	// version 1 or later has Info key count (this is a guess)
+	// version 1 or later has Info key count
 	if (version >= 1) {
 		int infoKeyNum = input.readInt();
 		if (infoKeyNum) {
@@ -265,7 +296,7 @@ void AnimInfo::doread(RandomAccessStream& input, int version)
 }
 
 /**
- * @todo: Documentation
+ * @brief Updates the data flags to be synced with the animation info's flags.
  */
 void AnimInfo::updateAnimFlags()
 {
@@ -273,7 +304,9 @@ void AnimInfo::updateAnimFlags()
 }
 
 /**
- * @todo: Documentation
+ * @brief Adds a new animation key frame at the last frame of the animation.
+ *
+ * @return Pointer to newly added key frame.
  */
 AnimKey* AnimInfo::addKeyFrame()
 {
@@ -284,7 +317,7 @@ AnimKey* AnimInfo::addKeyFrame()
 }
 
 /**
- * @todo: Documentation
+ * @brief Constructs an animation manager and loads animations from provided file paths.
  */
 AnimMgr::AnimMgr(Shape* model, immut char* animPath, int flags, immut char* bundlePath)
 {
@@ -296,10 +329,11 @@ AnimMgr::AnimMgr(Shape* model, immut char* animPath, int flags, immut char* bund
 }
 
 /**
- * @todo: Documentation
+ * @brief Loads all animation files and bundles.
  */
 void AnimMgr::loadAnims(immut char* animPath, immut char* bundlePath)
 {
+	// we need to at least load parameters and info.
 	if (!animPath) {
 		return;
 	}
@@ -311,7 +345,8 @@ void AnimMgr::loadAnims(immut char* animPath, immut char* bundlePath)
 	if (!mSkipLoading) {
 		int free = gsys->getHeap(SYSHEAP_App)->getFree();
 
-		int needBundleCount = (mAnimList.mChild) ? 0 : 1;
+		// check if we need to load animations from the bundle, or if they're all indexed already
+		int missingAnimCount = (mAnimList.mChild) ? 0 : 1;
 		char existingAnimPath[PATH_MAX];
 		char finalBundlePath[PATH_MAX];
 		char finalAnimPath[PATH_MAX];
@@ -319,11 +354,12 @@ void AnimMgr::loadAnims(immut char* animPath, immut char* bundlePath)
 		for (info = (AnimInfo*)mAnimList.mChild; info; info = (AnimInfo*)info->mNext) {
 			sprintf(existingAnimPath, "%s/%s", mParams.mBasePath().mString, info->mName);
 			if (!gsys->findAnimation(existingAnimPath)) {
-				needBundleCount++;
+				missingAnimCount++;
 			}
 		}
 
-		if (needBundleCount) {
+		// we're missing animations, try loading the bundle.
+		if (missingAnimCount != 0) {
 			gsys->mCurrentShape = mModel;
 			sprintf(finalBundlePath, bundlePath ? bundlePath : mModel->mName);
 
@@ -339,7 +375,7 @@ void AnimMgr::loadAnims(immut char* animPath, immut char* bundlePath)
 			info->mData = gsys->loadAnimation(mModel, finalAnimPath, true);
 			if (info->mData) {
 				info->setIndex();
-				info->mData->mAnimFlags = info->mParams.mFlags();
+				info->updateAnimFlags();
 				info->checkAnimData();
 			} else {
 				PRINT("COULD NOT FIND ANIM (%s) CREATING DUMMY\n", info->mName);
@@ -351,17 +387,26 @@ void AnimMgr::loadAnims(immut char* animPath, immut char* bundlePath)
 }
 
 /**
- * @todo: Documentation
+ * @brief Adds a new animation to the list, from the specified path.
+ *
+ * @param dataPath Path to animation data file (.dca or .dck).
+ * @param isRelativePath Is the path relative to the model?
+ * @return Pointer to the newly added animation info.
  */
-AnimInfo* AnimMgr::addAnimation(immut char* animPath, bool isRelativePath)
+AnimInfo* AnimMgr::addAnimation(immut char* dataPath, bool isRelativePath)
 {
-	AnimInfo* info = new AnimInfo(this, gsys->loadAnimation(mModel, animPath, isRelativePath));
+	AnimInfo* info = new AnimInfo(this, gsys->loadAnimation(mModel, dataPath, isRelativePath));
 	mAnimList.add(info);
 	return info;
 }
 
 /**
- * @todo: Documentation
+ * @brief Gets the animation info at the given index.
+ *
+ * If the animation's data isn't loaded, the game will load it as well.
+ *
+ * @param idx Index of animation to find.
+ * @return Pointer to animation info (or nullptr if not found).
  * @note UNUSED Size: 0000A4
  */
 AnimInfo* AnimMgr::findAnim(int idx)
@@ -383,7 +428,9 @@ AnimInfo* AnimMgr::findAnim(int idx)
 }
 
 /**
- * @todo: Documentation
+ * @brief Counts the number of animations managed (i.e. infos in animation list).
+ *
+ * @return Number of animations.
  */
 int AnimMgr::countAnims()
 {
@@ -397,7 +444,9 @@ int AnimMgr::countAnims()
 }
 
 /**
- * @todo: Documentation
+ * @brief Reads in animation data from stream (.key file).
+ *
+ * @param input Stream to read data from.
  */
 void AnimMgr::read(RandomAccessStream& input)
 {
@@ -416,45 +465,54 @@ void AnimMgr::read(RandomAccessStream& input)
 }
 
 /**
- * @todo: Documentation
+ * @brief Starts an animation by ID, and initialises key frames and play state.
+ *
+ * @param playState Desired play state - see `AnimPlayState` enum.
+ * @param animID ID of the animation to play.
+ * @param startKeyFrameIdx Index of the key frame to start playing from.
+ * @param endKeyFrameIdx Index of the key frame to stop playing at.
  */
-void Animator::startAnim(int playState, int animID, int firstKeyFrameIdx, int lastKeyFrameIdx)
+void Animator::startAnim(int playState, int animID, int startKeyFrameIdx, int endKeyFrameIdx)
 {
 	mAnimInfo = mMgr->findAnim(animID);
-	if (firstKeyFrameIdx == -1 && mCurrentAnimID == animID) {
-		firstKeyFrameIdx = mStartKeyIndex;
+
+	// if we give a null starting value and the same anim ID as last time, play with current settings.
+	if (startKeyFrameIdx == -1 && mCurrentAnimID == animID) {
+		startKeyFrameIdx = mStartKeyIndex;
 	} else {
-		mAnimationCounter = mAnimInfo->getKeyValue(firstKeyFrameIdx);
+		mAnimationCounter = mAnimInfo->getKeyValue(startKeyFrameIdx);
 	}
 
+	// check frame counter is within bounds for this animation
 	if (mAnimationCounter < 0.0f || mAnimationCounter >= mAnimInfo->mData->mTotalFrameCount) {
 		PRINT("StartAnim: name = %s : numFrames = %d\n", mAnimInfo->mName, mAnimInfo->mData->mTotalFrameCount);
 		ERROR("StartAnim: initialising with illegal counter value!! : %f\n", mAnimationCounter);
 		mAnimationCounter = 0.0f;
 	}
 
-	if (lastKeyFrameIdx >= mAnimInfo->countAKeys()) {
-		lastKeyFrameIdx = mAnimInfo->countAKeys() - 1;
+	// check frame index bounds are valid
+	if (endKeyFrameIdx >= mAnimInfo->countAKeys()) {
+		endKeyFrameIdx = mAnimInfo->countAKeys() - 1;
 	}
-	if (firstKeyFrameIdx >= mAnimInfo->countAKeys()) {
-		firstKeyFrameIdx = mAnimInfo->countAKeys() - 1;
+	if (startKeyFrameIdx >= mAnimInfo->countAKeys()) {
+		startKeyFrameIdx = mAnimInfo->countAKeys() - 1;
 	}
 
 	mCurrentAnimID = animID;
 	mPlayState     = playState;
-	mStartKeyIndex = firstKeyFrameIdx;
-	mEndKeyIndex   = lastKeyFrameIdx;
+	mStartKeyIndex = startKeyFrameIdx;
+	mEndKeyIndex   = endKeyFrameIdx;
 }
 
 /**
- * @todo: Documentation
+ * @brief Cleans up after looping. Trivial.
  */
 void Animator::finishLoop()
 {
 }
 
 /**
- * @todo: Documentation
+ * @brief Plays stored post-oneshot animation.
  */
 void Animator::finishOneShot()
 {
@@ -462,7 +520,9 @@ void Animator::finishOneShot()
 }
 
 /**
- * @todo: Documentation
+ * @brief Updates the animation context with the current frame and animation data.
+ *
+ * Will throw an error if the frame counter exceeds the data's total frame count.
  */
 void Animator::updateContext()
 {
@@ -474,7 +534,9 @@ void Animator::updateContext()
 }
 
 /**
- * @todo: Documentation
+ * @brief Advances the animation one frame.
+ *
+ * @param animSpeed Speed (FPS) to play animation at - requires the animation's UseDynamicSpeed flag to be set.
  */
 void Animator::animate(f32 animSpeed)
 {

@@ -95,7 +95,7 @@ struct GameCoreSection : public Node {
 	bool mDoneSundownWarn;            // _31
 	u32 _34;                          // _34, unknown
 	bool mIsTimePastQuarter1;         // _38
-	bool mIsTimePastQuarter2;         // _39
+	bool mIsTimePastNoon;             // _39
 	bool mIsTimePastQuarter3;         // _3A
 	Menu* mAiPerfDebugMenu;           // _3C, unknown
 	u8 _40[0x50 - 0x40];              // _40, unknown

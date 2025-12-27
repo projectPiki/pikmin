@@ -166,7 +166,7 @@ struct GameMovieInterface : public GameInterface {
 	virtual void parse(ComplexMessage&); // _1C
 
 	// _00 = VTBL
-	NewPikiGameSetupSection* mSection; //_04
+	NewPikiGameSetupSection* mSection; // _04
 	int mMessageLimit;                 // _08
 	SimpleMessage mMesg[32];           // _0C
 	int mMessageCount;                 // _10C
@@ -198,7 +198,7 @@ struct QuittingGameModeState : public ModeState {
 			gamecore->exitStage();
 			gameflow.mNextOnePlayerSectionID = mSection->mNextSectionId;
 			gameflow.mLevelIndex             = 6;
-			Jac_SceneExit(13, 0);
+			Jac_SceneExit(SCENE_Unk13, 0);
 			gsys->softReset();
 		}
 	}
@@ -222,7 +222,7 @@ struct MessageModeState : public ModeState {
 	{
 		Matrix4f mtx;
 		if (gameoverWindow) {
-			gfx.setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+			gfx.setOrthogonal(mtx.mMtx, AREA_FULL_SCREEN(gfx));
 			gameoverWindow->draw(gfx);
 		}
 	}
@@ -278,12 +278,12 @@ struct DayOverModeState : public ModeState {
 	{
 		Matrix4f mtx;
 		if (tutorialWindow) {
-			gfx.setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+			gfx.setOrthogonal(mtx.mMtx, AREA_FULL_SCREEN(gfx));
 			tutorialWindow->draw(gfx);
 		}
 
 		if (gameoverWindow) {
-			gfx.setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+			gfx.setOrthogonal(mtx.mMtx, AREA_FULL_SCREEN(gfx));
 			gameoverWindow->draw(gfx);
 		}
 	}
@@ -361,7 +361,7 @@ static void deleteMenuWindow()
 {
 	gsys->resetHeap(SYSHEAP_Movie, AYU_STACK_GROW_DOWN);
 	PRINT("menu window detach\n");
-	gameflow.mIsUiOverlayActive = FALSE;
+	gameflow.mIsUIOverlayActive = FALSE;
 	menuWindow                  = nullptr;
 }
 
@@ -395,9 +395,9 @@ static void createTutorialWindow(int tutorialId, int partId, bool hasAudio)
 	gsys->getHeap(SYSHEAP_Movie)->setAllocType(oldtype);
 	gsys->setHeap(heapid);
 	showFrame(false, 0.5f);
-	gameflow.mIsTutorialActive = TRUE;
-	gsys->mRetraceCount        = 0;
-	gsys->mPrevAllocType       = heapold;
+	gameflow.mIsTutorialTextActive = TRUE;
+	gsys->mRetraceCount            = 0;
+	gsys->mPrevAllocType           = heapold;
 	gsys->endLoading();
 	PRINT("tutorial window attach\n");
 	gsys->attachObjs();
@@ -414,7 +414,7 @@ static void deleteTutorialWindow()
 		Jac_FinishTextDemo();
 	}
 
-	gameflow.mIsTutorialActive = FALSE;
+	gameflow.mIsTutorialTextActive = FALSE;
 	if (!dontShowFrame && gameInfoOn && !gameInfoIn) {
 		if (!playerState->isTutorial()) {
 			gamecore->mDrawGameInfo->upperFrameIn(0.5f, true);
@@ -423,7 +423,7 @@ static void deleteTutorialWindow()
 		gameInfoIn = true;
 	}
 
-	gameflow.mIsUiOverlayActive = FALSE;
+	gameflow.mIsUIOverlayActive = FALSE;
 	tutorialWindow              = 0;
 }
 
@@ -468,7 +468,7 @@ BaseGameSection::BaseGameSection()
 void BaseGameSection::draw(Graphics& gfx)
 {
 	Matrix4f mtx;
-	gfx.setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+	gfx.setOrthogonal(mtx.mMtx, AREA_FULL_SCREEN(gfx));
 
 	// Update fade transition
 	if (mCurrentFade < mTargetFade) {
@@ -494,17 +494,17 @@ void BaseGameSection::draw(Graphics& gfx)
 
 		gfx.setColour(Colour(0, 0, 0, (int)((1.0f - fade) * 255.0f)), true);
 		gfx.setAuxColour(Colour(0, 0, 0, (int)((1.0f - fade) * 255.0f)));
-		gfx.fillRectangle(RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+		gfx.fillRectangle(AREA_FULL_SCREEN(gfx));
 	}
 
 	// Draw level banner if active
-	if (gameflow.mLevelBannerTexture && gameflow.mLevelBannerFadeValue > 0.0f) {
+	if (gameflow.mLevelBannerTex && gameflow.mLevelBannerFadeValue > 0.0f) {
 		gameflow.mLevelBannerFadeValue -= gsys->getFrameTime();
 		if (gameflow.mLevelBannerFadeValue < 0.0f) {
-			gameflow.mLevelBannerTexture   = nullptr;
+			gameflow.mLevelBannerTex       = nullptr;
 			gameflow.mLevelBannerFadeValue = 0.0f;
 		} else {
-			gameflow.drawLoadLogo(gfx, false, gameflow.mLevelBannerTexture, gameflow.mLevelBannerFadeValue);
+			gameflow.drawLoadLogo(gfx, false, gameflow.mLevelBannerTex, gameflow.mLevelBannerFadeValue);
 		}
 	}
 
@@ -539,7 +539,7 @@ ModeState* RunningModeState::update(u32& result)
 	result = UPDATE_ALL; // Enable all update types
 
 	// Check for day end during movie playback
-	if (!gameflow.mMoviePlayer->mIsActive && !gameflow.mIsTutorialActive && gameflow.mIsDayEndActive) {
+	if (!gameflow.mMoviePlayer->mIsActive && !gameflow.mIsTutorialTextActive && gameflow.mIsDayEndActive) {
 		result &= ~UPDATE_AI; // Disable AI updates during day end
 		PRINT("*-------------------------------- DAY END !!!!!!!!!!!!!!  --------------------------------*\n");
 		mSection->mNextSectionId = gameflow.mLevelIndex;
@@ -551,13 +551,13 @@ ModeState* RunningModeState::update(u32& result)
 	    && gameflow.mWorldClock.mTimeOfDay >= gameflow.mParameters->mEndHour()) {
 #if defined(VERSION_G98E01_PIKIDEMO)
 #else
-		gameflow.mIsGameplayInputEnabled = FALSE;
+		gameflow.mIsPauseAllowed = FALSE;
 #endif
 		gameflow.mIsDayEndTriggered = TRUE;
 	}
 
 	// Process day end trigger
-	if (gameflow.mIsDayEndTriggered && !gameflow.mIsUiOverlayActive) {
+	if (gameflow.mIsDayEndTriggered && !gameflow.mIsUIOverlayActive) {
 		gameflow.mIsDayEndActive    = TRUE;
 		gameflow.mIsDayEndTriggered = FALSE;
 
@@ -578,27 +578,27 @@ ModeState* RunningModeState::update(u32& result)
 	}
 
 	// Handle pause menu
-	if (gameflow.mIsGameplayInputEnabled && !gameflow.mIsUiOverlayActive && !gameflow.mPauseAll && !gameflow.mMoviePlayer->mIsActive) {
+	if (gameflow.mIsPauseAllowed && !gameflow.mIsUIOverlayActive && !gameflow.mPauseAll && !gameflow.mMoviePlayer->mIsActive) {
 
 		if (mController->keyClick(KBBTN_START)) {
-			if (!gameflow.mIsUiOverlayActive && !mesgsPending) {
+			if (!gameflow.mIsUIOverlayActive && !mesgsPending) {
 				PRINT("starting pause menu!\n");
 				seSystem->playSysSe(SYSSE_PAUSE);
 				pauseWindow->start(gameflow.mIsChallengeMode);
-				mCachedPauseFlag            = gameflow.mIsUiOverlayActive;
-				gameflow.mIsUiOverlayActive = TRUE;
+				mCachedPauseFlag            = gameflow.mIsUIOverlayActive;
+				gameflow.mIsUIOverlayActive = TRUE;
 			}
 #if defined(VERSION_G98E01_PIKIDEMO)
 		} else if (mController->keyClick(KBBTN_Y) && gameflow.mWorldClock.mTimeOfDay < gameflow.mParameters->mEndHour() - 0.125f
 		           && !gameflow.mIsUiOverlayActive && !mesgsPending) {
 #else
 		} else if (!gameflow.mIsChallengeMode && mController->keyClick(KBBTN_Y)
-		           && gameflow.mWorldClock.mTimeOfDay < gameflow.mParameters->mEndHour() - 0.125f && !gameflow.mIsUiOverlayActive
+		           && gameflow.mWorldClock.mTimeOfDay < gameflow.mParameters->mEndHour() - 0.125f && !gameflow.mIsUIOverlayActive
 		           && !mesgsPending) {
 #endif
 			gameflow.mGameInterface->message(MOVIECMD_CreateMenuWindow, 0);
-			mCachedPauseFlag            = gameflow.mIsUiOverlayActive;
-			gameflow.mIsUiOverlayActive = TRUE;
+			mCachedPauseFlag            = gameflow.mIsUIOverlayActive;
+			gameflow.mIsUIOverlayActive = TRUE;
 		}
 	}
 
@@ -641,10 +641,10 @@ ModeState* RunningModeState::update(u32& result)
 		gamecore->forceDayEnd();
 #if defined(VERSION_G98E01_PIKIDEMO)
 #else
-		gameflow.mIsGameplayInputEnabled = FALSE;
+		gameflow.mIsPauseAllowed = FALSE;
 #endif
 		gameflow.mIsDayEndTriggered = TRUE;
-		gameflow.mIsUiOverlayActive = mCachedPauseFlag;
+		gameflow.mIsUIOverlayActive = mCachedPauseFlag;
 
 	} else if (state == zen::ogScrPauseMgr::PAUSE_Unk7) {
 #if defined(VERSION_G98E01_PIKIDEMO)
@@ -656,7 +656,7 @@ ModeState* RunningModeState::update(u32& result)
 #endif
 	} else if (state == zen::ogScrPauseMgr::PAUSE_Unk5) {
 		showFrame(true, 0.5f);
-		gameflow.mIsUiOverlayActive = mCachedPauseFlag;
+		gameflow.mIsUIOverlayActive = mCachedPauseFlag;
 		seSystem->playSysSe(SYSSE_UNPAUSE);
 	}
 
@@ -670,7 +670,7 @@ void IntroGameModeState::postRender(Graphics& gfx)
 {
 	Matrix4f mtx;
 	if (tutorialWindow) {
-		gfx.setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+		gfx.setOrthogonal(mtx.mMtx, AREA_FULL_SCREEN(gfx));
 		tutorialWindow->draw(gfx);
 	}
 }
@@ -685,7 +685,7 @@ void RunningModeState::postRender(Graphics& gfx)
 	mtx2.makeSRT(Vector3f(0.1f, 0.1f, 0.1f), Vector3f(0.0f, 0.0f, 0.0f), Vector3f(0.0f, 0.0f, -5.0f));
 
 	if (!menuOn) {
-		gfx.setOrthogonal(mtx1.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+		gfx.setOrthogonal(mtx1.mMtx, AREA_FULL_SCREEN(gfx));
 		gamecore->draw1D(gfx);
 	}
 
@@ -703,19 +703,19 @@ void RunningModeState::postRender(Graphics& gfx)
 	}
 
 	if (tutorialWindow) {
-		gfx.setOrthogonal(mtx1.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+		gfx.setOrthogonal(mtx1.mMtx, AREA_FULL_SCREEN(gfx));
 		tutorialWindow->draw(gfx);
 	}
 
-	gfx.setOrthogonal(mtx1.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+	gfx.setOrthogonal(mtx1.mMtx, AREA_FULL_SCREEN(gfx));
 	gamecore->draw2D(gfx);
 
 	if (gameoverWindow) {
-		gfx.setOrthogonal(mtx1.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+		gfx.setOrthogonal(mtx1.mMtx, AREA_FULL_SCREEN(gfx));
 		gameoverWindow->draw(gfx);
 	}
 
-	gfx.setOrthogonal(mtx1.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+	gfx.setOrthogonal(mtx1.mMtx, AREA_FULL_SCREEN(gfx));
 	pauseWindow->draw(gfx);
 }
 
@@ -870,7 +870,7 @@ ModeState* DayOverModeState::update(u32& result)
 			PRINT("EXITDAYEND!!!!\n");
 			gamecore->exitDayEnd();
 			gameflow.mMoviePlayer->fixMovieList();
-			Jac_SceneSetup(6, 0);
+			Jac_SceneSetup(SCENE_Unk6, 0);
 			gsys->resetHeap(SYSHEAP_Movie, AYU_STACK_GROW_DOWN);
 			gsys->resetHeap(SYSHEAP_Teki, AYU_STACK_GROW_DOWN);
 			gsys->resetHeap(SYSHEAP_Teki, AYU_STACK_GROW_UP);
@@ -916,10 +916,10 @@ ModeState* DayOverModeState::update(u32& result)
 		if (state >= 1) {
 			memcardWindow = nullptr;
 			if (state != 1 && state != 5) {
-				gameflow.mPlayState.mSaveFlags          = info.mFlags;
-				gameflow.mGamePrefs.mSpareSaveGameIndex = info.mIndex + 1;
-				PRINT("using save game file %d with %d as the spare\n", gameflow.mGamePrefs.mSaveGameIndex,
-				      gameflow.mGamePrefs.mSpareSaveGameIndex);
+				gameflow.mPlayState.mSaveSlot              = info.mGameSaveSlot;
+				gameflow.mGamePrefs.mSpareMemCardSaveIndex = info.mMemCardSaveIndex + 1;
+				PRINT("using save game file %d with %d as the spare\n", gameflow.mGamePrefs.mMemCardSaveIndex,
+				      gameflow.mGamePrefs.mSpareMemCardSaveIndex);
 
 				bool sysbackup     = gsys->mTogglePrint != FALSE;
 				gsys->mTogglePrint = TRUE;
@@ -1055,7 +1055,7 @@ ModeState* DayOverModeState::initialisePhaseTwo()
 	while (true) { }
 #endif
 	gameflow.mMoviePlayer->fixMovieList();
-	Jac_SceneSetup(6, 0);
+	Jac_SceneSetup(SCENE_Unk6, 0);
 	gsys->resetHeap(SYSHEAP_Movie, AYU_STACK_GROW_DOWN);
 	gsys->resetHeap(SYSHEAP_Teki, AYU_STACK_GROW_DOWN);
 	gsys->resetHeap(SYSHEAP_Teki, AYU_STACK_GROW_UP);
@@ -1199,9 +1199,9 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 
 		gameflow.mMoviePlayer->setGameCamInfo(false, 60.0f, Vector3f(0.0f, 0.0f, 0.0f), Vector3f(0.0f, 0.0f, 0.0f));
 
-		dontShowFrame              = false;
-		gameflow.mIsTutorialActive = FALSE;
-		mIsInitialSetup            = true;
+		dontShowFrame                  = false;
+		gameflow.mIsTutorialTextActive = FALSE;
+		mIsInitialSetup                = true;
 
 		lgMgr                       = new LifeGaugeMgr;
 		movieIndex                  = 0;
@@ -1238,7 +1238,7 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 		memStat->end("shape");
 		memStat->end("mapMgr");
 
-		Jac_SceneSetup(5, flowCont.mCurrentStage->mStageID < STAGE_COUNT ? flowCont.mCurrentStage->mStageID : 0);
+		Jac_SceneSetup(SCENE_Unk5, flowCont.mCurrentStage->mStageID < STAGE_COUNT ? flowCont.mCurrentStage->mStageID : 0);
 		init2Ddata();
 		gamecore = new GameCoreSection(mController, mapMgr, mGameCamera);
 		add(gamecore);
@@ -1330,7 +1330,7 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 	{
 		Matrix4f mtx;
 
-		if (!gameflow.mIsUiOverlayActive || gameflow.mIsTutorialActive) {
+		if (!gameflow.mIsUIOverlayActive || gameflow.mIsTutorialTextActive) {
 			gameflow.mMoviePlayer->update();
 		}
 
@@ -1411,7 +1411,7 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 #endif
 
 		if (effectMgr) {
-			if (!gameflow.mPauseAll && !gameflow.mIsUiOverlayActive || gameflow.mIsTutorialActive) {
+			if (!gameflow.mPauseAll && !gameflow.mIsUIOverlayActive || gameflow.mIsTutorialTextActive) {
 
 #if defined(VERSION_G98E01_PIKIDEMO)
 				gsys->mTimer->start("effect", true);
@@ -1443,7 +1443,7 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 			gsys->mTimer->start("postRender", true);
 #endif
 			menuOn = false;
-			gfx.setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+			gfx.setOrthogonal(mtx.mMtx, AREA_FULL_SCREEN(gfx));
 			postRender(gfx);
 			if (!mActiveMenu && menuWindow) {
 				menuOn = menuWindow->draw(gfx);
@@ -1453,11 +1453,11 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 #endif
 		}
 
-		gfx.setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+		gfx.setOrthogonal(mtx.mMtx, AREA_FULL_SCREEN(gfx));
 
 		// whole section in DLL here about printing some debug text to screen
 
-		gfx.setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+		gfx.setOrthogonal(mtx.mMtx, AREA_FULL_SCREEN(gfx));
 
 		if (mActiveMenu) {
 			mActiveMenu->draw(gfx, 1.0f);
@@ -1465,21 +1465,21 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 
 		if (!mActiveMenu || gameflow.mMoviePlayer->mIsActive) {
 			if (challengeWindow) {
-				gfx.setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+				gfx.setOrthogonal(mtx.mMtx, AREA_FULL_SCREEN(gfx));
 				challengeWindow->draw(gfx);
 			}
 			if (resultWindow) {
-				gfx.setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+				gfx.setOrthogonal(mtx.mMtx, AREA_FULL_SCREEN(gfx));
 				resultWindow->draw(gfx);
 			}
 			if (totalWindow) {
-				gfx.setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+				gfx.setOrthogonal(mtx.mMtx, AREA_FULL_SCREEN(gfx));
 				totalWindow->draw(gfx);
 			}
 #if defined(VERSION_G98E01_PIKIDEMO)
 #else
 			if (memcardWindow) {
-				gfx.setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+				gfx.setOrthogonal(mtx.mMtx, AREA_FULL_SCREEN(gfx));
 				memcardWindow->draw(gfx);
 			}
 #endif
@@ -1488,7 +1488,7 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 		BaseGameSection::draw(gfx);
 		if (!mIsInitialSetup) {
 			if (!gsys->resetPending() && (!mActiveMenu || gameflow.mMoviePlayer->mIsActive)) {
-				if (!gameflow.mPauseAll && !gameflow.mIsUiOverlayActive) {
+				if (!gameflow.mPauseAll && !gameflow.mIsUIOverlayActive) {
 					if (!gameflow.mMoviePlayer->mIsActive && mUpdateFlags & UPDATE_WORLD_CLOCK && !playerState->isTutorial()) {
 						f32 tod = gameflow.mWorldClock.mTimeOfDay;
 						gameflow.mWorldClock.update(1.0f);
@@ -1576,9 +1576,9 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 	void preRender(Graphics& gfx) { gamecore->mMapMgr->preRender(gfx); }
 	void mainRender(Graphics& gfx)
 	{
-		gfx.setViewport(RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
-		gfx.setScissor(RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
-		gfx.setClearColour(Colour(0, 0, 0, 0));
+		gfx.setViewport(AREA_FULL_SCREEN(gfx));
+		gfx.setScissor(AREA_FULL_SCREEN(gfx));
+		gfx.setClearColour(COLOUR_TRANSPARENT);
 		gfx.clearBuffer(3, false);
 		gfx.setPerspective(gfx.mCamera->mPerspectiveMatrix.mMtx, gfx.mCamera->mFov, gfx.mCamera->mAspectRatio, gfx.mCamera->mNear,
 		                   gfx.mCamera->mFar, 1.0f);
@@ -1587,11 +1587,11 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 #else
 		if (!memcardWindow && !(gameflow.mDemoFlags & GFDEMO_InMenu)) {
 #endif
-			bool check = true;
+			bool isTimeMoving = true;
 			if (playerState->isTutorial() && !gameflow.mIsDayEndActive) {
-				check = false;
+				isTimeMoving = false;
 			}
-			mapMgr->mDayMgr->refresh(gfx, check ? gameflow.mWorldClock.mTimeOfDay : 14.8f, 8);
+			mapMgr->mDayMgr->refresh(gfx, isTimeMoving ? gameflow.mWorldClock.mTimeOfDay : TUTORIAL_TIME_OF_DAY, 8);
 			mCameraFarClip = 10000.0f;
 			Node::draw(gfx);
 		} else {
@@ -1611,7 +1611,7 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 		gfx.mRenderState = (GFXRENDER_Unk1 | GFXRENDER_Unk2 | GFXRENDER_Unk3);
 		mCurrentModeState->postRender(gfx);
 		Matrix4f mtx2;
-		gfx.setOrthogonal(mtx2.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+		gfx.setOrthogonal(mtx2.mMtx, AREA_FULL_SCREEN(gfx));
 	}
 
 	// unused DLL inlines:
@@ -1678,40 +1678,44 @@ void GameMovieInterface::parse(GameMovieInterface::SimpleMessage& msg)
 		int partId    = -1;
 		bool hasAudio = false;
 		if (data == DEMOID_ShipUpgrade) {
-			if (gameflow.mMovieInfoNum == -1) {
-				if (gameflow.mMovieType == -1) {
+			if (gameflow.mShipTextPartID == -1) {
+				if (gameflow.mShipTextType == SHIPTEXT_CollectEngine) {
 					gameflow.mMoviePlayer->skipScene(SCENESKIP_Skip);
 					return;
-				} else if (gameflow.mMovieType == 0) {
+
+				} else if (gameflow.mShipTextType == SHIPTEXT_PartCollect) {
 					data = DEMOID_ShipUpgradeLast;
 				} else {
 					data = DEMOID_Unk24;
 				}
 
-			} else if (gameflow.mMovieType == 0) {
-				data = gameflow.mMovieInfoNum + 92;
-			} else if (gameflow.mMovieType == 1) {
-				data     = gameflow.mMovieInfoNum + 62;
+			} else if (gameflow.mShipTextType == SHIPTEXT_PartCollect) {
+				data = gameflow.mShipTextPartID + 92;
+
+			} else if (gameflow.mShipTextType == SHIPTEXT_PartsAccess) {
+				data     = gameflow.mShipTextPartID + 62;
 				hasAudio = false;
-				partId   = gameflow.mMovieInfoNum;
-			} else if (gameflow.mMovieType == 2) {
-				PRINT("showing power up message (%d)!!\n", gameflow.mMovieInfoNum + 122);
-				int id = gameflow.mMovieInfoNum + 122;
-				if (gameflow.mMovieInfoNum == DEMOID_ShipUpgradeLast) {
+				partId   = gameflow.mShipTextPartID;
+
+			} else if (gameflow.mShipTextType == SHIPTEXT_PowerUp) {
+				PRINT("showing power up message (%d)!!\n", gameflow.mShipTextPartID + 122);
+				int id = gameflow.mShipTextPartID + 122;
+				if (gameflow.mShipTextPartID == DEMOID_ShipUpgradeLast) {
 					dontShowFrame = true;
 					data          = 27;
 				} else {
 					data = id;
 				}
-			} else if (gameflow.mMovieType == 3) {
-				partId   = gameflow.mMovieInfoNum;
+
+			} else if (gameflow.mShipTextType == SHIPTEXT_PartDiscovery) {
+				partId   = gameflow.mShipTextPartID;
 				hasAudio = true;
-				data     = gameflow.mMovieInfoNum + 32;
+				data     = gameflow.mShipTextPartID + 32;
 			}
 		}
 
 		createTutorialWindow(data, partId, hasAudio);
-		gameflow.mIsUiOverlayActive = TRUE;
+		gameflow.mIsUIOverlayActive = TRUE;
 		break;
 	case MOVIECMD_Unused:
 		ERROR("SHOULD NOT GET THIS COMMAND!!!\n");
@@ -1788,15 +1792,15 @@ void GameMovieInterface::parse(GameMovieInterface::SimpleMessage& msg)
 	case MOVIECMD_StartTotalResults:
 		PRINT("starting total results!!\n");
 		totalWindow->start();
-		Jac_SceneSetup(6, 1);
+		Jac_SceneSetup(SCENE_Unk6, 1);
 		break;
 	case MOVIECMD_SpecialDayEnd:
 		gamecore->forceDayEnd();
 		gameflow.mIsDayEndTriggered = TRUE;
 		flowCont._244               = 2;
 		break;
-	case MOVIECMD_SetInputEnabled:
-		gameflow.mIsGameplayInputEnabled = data;
+	case MOVIECMD_SetPauseAllowed:
+		gameflow.mIsPauseAllowed = data;
 		break;
 	case MOVIECMD_CountDownLastSecond:
 		break;
@@ -1810,7 +1814,7 @@ void GameMovieInterface::parse(GameMovieInterface::SimpleMessage& msg)
 #if defined(VERSION_G98E01_PIKIDEMO)
 	case MOVIECMD_DemoFinish:
 		createTutorialWindow(DEMOID_DayEndForest, -1, 0);
-		gameflow.mIsUiOverlayActive = 1;
+		gameflow.mIsUiOverlayActive = TRUE;
 		break;
 #else
 #endif
@@ -1833,11 +1837,12 @@ NewPikiGameSection::NewPikiGameSection()
 {
 	Node::init("<NewPikiGameSection>");
 
-	gameflow.mCurrentStageId      = flowCont.mCurrentStage->mStageIndex;
-	gameflow.mLastUnlockedStageId = -1;
+	gameflow.mCurrentStageID       = flowCont.mCurrentStage->mStageIndex;
+	gameflow.mPendingStageUnlockID = -1;
 
 	if (playerState->isTutorial()) {
-		gameflow.mWorldClock.setTime(14.8f);
+		// day one is locked at 2:48pm
+		gameflow.mWorldClock.setTime(TUTORIAL_TIME_OF_DAY);
 	}
 	flowCont.mGameEndCondition = 0;
 #if defined(VERSION_GPIP01_00)

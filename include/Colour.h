@@ -4,8 +4,9 @@
 #include "Stream.h"
 #include "types.h"
 
-#define COLOUR_WHITE Colour(255, 255, 255, 255)
-#define COLOUR_BLACK Colour(0, 0, 0, 255)
+#define COLOUR_WHITE       Colour(255, 255, 255, 255)
+#define COLOUR_BLACK       Colour(0, 0, 0, 255)
+#define COLOUR_TRANSPARENT Colour(0, 0, 0, 0)
 
 #define COLOUR_TO_U32(colour) ((u8)(colour.a) | (((u8)(colour.b) << 8) | (((u8)(colour.g) << 16) | ((u8)(colour.r) << 24))))
 

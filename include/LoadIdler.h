@@ -7,7 +7,9 @@
 struct Graphics;
 
 /**
- * @brief TODO
+ * @brief Base class for loading screen drawing managers.
+ *
+ * @note Size: 0x14.
  */
 struct LoadIdler : public CoreNode {
 	LoadIdler()
@@ -20,19 +22,19 @@ struct LoadIdler : public CoreNode {
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	// TODO: members
 };
 
 /**
- * @brief TODO
+ * @brief Manager for drawing loading screens during gameplay (e.g. entering a map).
+ *
+ * @note Size: 0x14.
  */
 struct GameLoadIdler : public LoadIdler {
-	virtual void init() { }       // _10
-	virtual void draw(Graphics&); // _14
+	virtual void init() { }           // _10
+	virtual void draw(Graphics& gfx); // _14
 
 	// _00     = VTBL
-	// _00-_14 = LoadIdler?
-	// TODO: members
+	// _00-_14 = LoadIdler
 };
 
 #endif

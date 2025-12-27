@@ -89,7 +89,7 @@ void GameCoreSection::startTextDemo(Creature*, int textDemoID)
  */
 void GameCoreSection::updateTextDemo()
 {
-	if (gameflow.mIsUiOverlayActive) {
+	if (gameflow.mIsUIOverlayActive) {
 		return;
 	}
 	switch (textDemoState) {
@@ -371,7 +371,7 @@ void GameCoreSection::forceDayEnd()
 	playerState->setDayEnd(true);
 	PRINT("------------ forceDayEnd --------------\n");
 	mIsTimePastQuarter3 = true;
-	mIsTimePastQuarter2 = true;
+	mIsTimePastNoon     = true;
 	mIsTimePastQuarter1 = true;
 	mDoneSundownWarn    = true;
 	clearDeadlyPikmins();
@@ -824,12 +824,12 @@ void GameCoreSection::initStage()
 	currDamage          = false;
 	damageParm          = 0;
 	mIsTimePastQuarter3 = false;
-	mIsTimePastQuarter2 = false;
+	mIsTimePastNoon     = false;
 	mIsTimePastQuarter1 = false;
 
 	if (playerState->isTutorial()) {
 		mIsTimePastQuarter3 = true;
-		mIsTimePastQuarter2 = true;
+		mIsTimePastNoon     = true;
 		mIsTimePastQuarter1 = true;
 	}
 
@@ -1428,7 +1428,7 @@ void GameCoreSection::update()
 	accountWindow->update();
 	routeMgr->update();
 
-	if (!gameflow.mPauseAll && !gameflow.mIsUiOverlayActive) {
+	if (!gameflow.mPauseAll && !gameflow.mIsUIOverlayActive) {
 		playerState->update();
 	}
 
@@ -1531,25 +1531,27 @@ void GameCoreSection::updateAI()
 
 	attentionCamera->update();
 
-	int start     = playerState->getStartHour();
-	int dayLength = playerState->getEndHour() - start;
+	int start     = playerState->getStartHour();       // 7am
+	int dayLength = playerState->getEndHour() - start; // 12 hrs
 
-	int timeQuarter1 = start + (dayLength / 4);
-	int timeQuarter2 = start + (dayLength / 2);
-	int timeQuarter3 = start + (dayLength / 4) * 3;
+	int timeQuarter1 = start + (dayLength / 4);     // 10am
+	int timeQuarter2 = start + (dayLength / 2);     // 1pm
+	int timeQuarter3 = start + (dayLength / 4) * 3; // 4pm
 
-	// some nonsense
-	if (!mIsTimePastQuarter1 && gameflow.mWorldClock.mCurrentTime >= timeQuarter1) {
+	if (!mIsTimePastQuarter1 && gameflow.mWorldClock.mCurrentGameHour >= timeQuarter1) {
+		// play first quarter bell
 		mIsTimePastQuarter1 = true;
 		seSystem->playSysSe(SYSSE_TIME_SMALLSIGNAL);
-	} else if (!mIsTimePastQuarter2 && gameflow.mWorldClock.mCurrentTime >= timeQuarter2) {
-		mIsTimePastQuarter2 = true;
+	} else if (!mIsTimePastNoon && gameflow.mWorldClock.mCurrentGameHour >= timeQuarter2) {
+		// play "noon" (second quarter) bell (at 1pm, go figure)
+		mIsTimePastNoon = true;
 		seSystem->playSysSe(SYSSE_TIME_SIGNAL);
 		if (!playerState->mDemoFlags.isFlag(DEMOFLAG_FirstNoon)) {
 			playerState->mDemoFlags.setFlagOnly(DEMOFLAG_FirstNoon);
 			gameflow.mGameInterface->message(MOVIECMD_TextDemo, 31);
 		}
-	} else if (!mIsTimePastQuarter3 && gameflow.mWorldClock.mCurrentTime >= timeQuarter3) {
+	} else if (!mIsTimePastQuarter3 && gameflow.mWorldClock.mCurrentGameHour >= timeQuarter3) {
+		// play third quarter bell
 		mIsTimePastQuarter3 = true;
 		seSystem->playSysSe(SYSSE_TIME_SMALLSIGNAL);
 	}
@@ -1562,11 +1564,11 @@ void GameCoreSection::updateAI()
 	pikiOptUpdateMgr->update();
 	tekiOptUpdateMgr->update();
 	mMapMgr->update();
-	if (!gameflow.mIsUiOverlayActive) {
+	if (!gameflow.mIsUIOverlayActive) {
 		naviMgr->update();
 	}
 
-	if (!gameflow.mIsUiOverlayActive) {
+	if (!gameflow.mIsUIOverlayActive) {
 		if (tekiMgr) {
 			gsys->mTimer->start("search", true);
 			if (AIPerf::insQuick) {
@@ -1617,11 +1619,11 @@ void GameCoreSection::updateAI()
 	if (tekiMgr) {
 		f32 deltaTime = gsys->getFrameTime();
 		MATCHING_START_TIMER("post", true);
-		if (!gameflow.mIsUiOverlayActive) {
+		if (!gameflow.mIsUIOverlayActive) {
 			naviMgr->postUpdate(0, deltaTime);
 		}
 
-		if (!gameflow.mIsUiOverlayActive && !inPause() && !gameflow.mPauseAll) {
+		if (!gameflow.mIsUIOverlayActive && !inPause() && !gameflow.mPauseAll) {
 			pikiMgr->postUpdate(0, deltaTime);
 			itemMgr->postUpdate(0, deltaTime);
 			pelletMgr->postUpdate(0, deltaTime);
@@ -1716,7 +1718,7 @@ void GameCoreSection::draw(Graphics& gfx)
 	naviMgr->renderCircle(gfx);
 	mMapMgr->drawXLU(gfx);
 	MATCHING_START_TIMER("shadow draw", true);
-	mMapMgr->mDayMgr->setFog(gfx, &Colour(0, 0, 0, 0));
+	mMapMgr->mDayMgr->setFog(gfx, &COLOUR_TRANSPARENT);
 	Matrix4f mtx;
 	gfx.calcViewMatrix(Matrix4f::ident, mtx);
 	gfx.useMatrix(mtx, 0);
@@ -1769,7 +1771,7 @@ void GameCoreSection::draw1D(Graphics& gfx)
 	}
 
 	Matrix4f mtx;
-	gfx.setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+	gfx.setOrthogonal(mtx.mMtx, AREA_FULL_SCREEN(gfx));
 
 	if (!AIPerf::generatorMode) {
 		if (bossMgr && !hideTeki()) {
@@ -1805,7 +1807,7 @@ void GameCoreSection::draw2D(Graphics& gfx)
 		"", "HIDE PIKI", "HIDE TEKI", "HIDE ITEM", "HIDE BOSS", "HIDE PELLET", "HIDE WORK", "HIDE PLANTS", "HIDE MAP", "HIDE 2D",
 	};
 	Matrix4f mtx;
-	gfx.setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+	gfx.setOrthogonal(mtx.mMtx, AREA_FULL_SCREEN(gfx));
 	gfx.setColour(COLOUR_WHITE, true);
 	gfx.setAuxColour(COLOUR_WHITE);
 	gfx.useTexture(nullptr, GX_TEXMAP0);
@@ -1871,9 +1873,9 @@ void GameCoreSection::draw2D(Graphics& gfx)
 		if (state != NAVISTATE_DemoSunset) {
 			mDrawGameInfo->draw(gfx);
 		}
-		gfx.setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+		gfx.setOrthogonal(mtx.mMtx, AREA_FULL_SCREEN(gfx));
 		containerWindow->draw(gfx);
-		if (!gameflow.mMoviePlayer->mIsActive && !gameflow.mIsUiOverlayActive) {
+		if (!gameflow.mMoviePlayer->mIsActive && !gameflow.mIsUIOverlayActive) {
 			hurryupWindow->draw(gfx);
 		}
 		accountWindow->draw(gfx);
