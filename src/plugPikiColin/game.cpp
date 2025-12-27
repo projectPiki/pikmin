@@ -209,7 +209,7 @@ void OnePlayerSection::init()
 			PRINT("making new SETUP\n");
 			gsys->startLoading(&gameflow.mGameLoadIdler, true, 60);
 #if defined(VERSION_G98E01_PIKIDEMO)
-			gameflow.mLevelBannerTexture   = gameflow.setLoadBanner(levNames[5]);
+			gameflow.mLevelBannerTex       = gameflow.setLoadBanner(levNames[5]);
 			gameflow.mLevelBannerFadeValue = 0.0f;
 #else
 			if (gameflow.mLevelIndex >= 2 && gameflow.mLevelIndex <= 4) {

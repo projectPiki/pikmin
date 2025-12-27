@@ -132,7 +132,7 @@ struct MapSelectSetupSection : public Node {
 			bool old           = gsys->mTogglePrint != FALSE;
 			gsys->mTogglePrint = TRUE;
 #if defined(VERSION_PIKIDEMO)
-			_Print("opening map window with %d : %d\n", gameflow.mLastUnlockedStageId, gameflow.mCurrentStageId);
+			_Print("opening map window with %d : %d\n", gameflow.mPendingStageUnlockID, gameflow.mCurrentStageID);
 #else
 			(gameflow.mCurrentStageID != 0); // huh?
 			PRINT("opening map window with %d : %d\n", gameflow.mPendingStageUnlockID, gameflow.mCurrentStageID);

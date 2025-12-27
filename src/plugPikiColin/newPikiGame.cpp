@@ -590,7 +590,7 @@ ModeState* RunningModeState::update(u32& result)
 			}
 #if defined(VERSION_G98E01_PIKIDEMO)
 		} else if (mController->keyClick(KBBTN_Y) && gameflow.mWorldClock.mTimeOfDay < gameflow.mParameters->mEndHour() - 0.125f
-		           && !gameflow.mIsUiOverlayActive && !mesgsPending) {
+		           && !gameflow.mIsUIOverlayActive && !mesgsPending) {
 #else
 		} else if (!gameflow.mIsChallengeMode && mController->keyClick(KBBTN_Y)
 		           && gameflow.mWorldClock.mTimeOfDay < gameflow.mParameters->mEndHour() - 0.125f && !gameflow.mIsUIOverlayActive
@@ -1814,7 +1814,7 @@ void GameMovieInterface::parse(GameMovieInterface::SimpleMessage& msg)
 #if defined(VERSION_G98E01_PIKIDEMO)
 	case MOVIECMD_DemoFinish:
 		createTutorialWindow(DEMOID_DayEndForest, -1, 0);
-		gameflow.mIsUiOverlayActive = TRUE;
+		gameflow.mIsUIOverlayActive = TRUE;
 		break;
 #else
 #endif

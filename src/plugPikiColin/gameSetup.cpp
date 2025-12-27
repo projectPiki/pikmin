@@ -322,8 +322,8 @@ void GameSetupSection::update()
 		stage = (StageInfo*)stage->mNext;
 	}
 
-	gameflow.mGamePrefs.mSaveGameIndex = 0;
-	gameflow.mGamePrefs.mHasSaveGame   = 0;
+	gameflow.mGamePrefs.mMemCardSaveIndex = 0;
+	gameflow.mGamePrefs.mHasSaveGame      = 0;
 	playerState->setChallengeMode();
 
 	stage = flowCont.mRootInfo.getChild();

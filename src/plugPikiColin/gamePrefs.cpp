@@ -56,15 +56,15 @@ void GamePrefs::Initialise()
 
 	STACK_PAD_VAR(3);
 	setChildMode(ids[OSGetLanguage()]);
-	mBgmVol             = 8;
-	mSfxVol             = 8;
-	mFileNum            = 0;
-	mHasSaveGame        = 0;
-	mSaveGameIndex      = 0;
-	mSpareSaveGameIndex = 0;
-	_1F                 = 0;
-	mUnlockedStageFlags = 0;
-	mIsChanged          = false;
+	mBgmVol                = 8;
+	mSfxVol                = 8;
+	mFileNum               = 0;
+	mHasSaveGame           = 0;
+	mMemCardSaveIndex      = 0;
+	mSpareMemCardSaveIndex = 0;
+	_1F                    = 0;
+	mUnlockedStageFlags    = 0;
+	mIsChanged             = false;
 	mHiscores.Initialise();
 }
 #endif
