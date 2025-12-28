@@ -120,12 +120,12 @@ Menu::KeyEvent::KeyEvent(int eventType, int inputCode, IDelegate1<Menu&>* delega
 /**
  * @todo: Documentation
  */
-Menu::MenuItem::MenuItem(int type, int filterIndex, char* name, IDelegate1<Menu&>* delegate)
+Menu::MenuItem::MenuItem(int type, int data, char* name, IDelegate1<Menu&>* delegate)
 {
 	mIsEnabled = true;
 	mName      = name;
 
-	mFilterIndex = filterIndex;
+	mData        = data;
 	mType        = (MenuNavigationType::Type)type;
 
 	mPrev = mNext = nullptr;
@@ -238,9 +238,9 @@ void Menu::resetOptions()
 /**
  * @todo: Documentation
  */
-void Menu::addOption(int filterIndex, char* name, IDelegate1<Menu&>* delegate, bool isEnabled)
+void Menu::addOption(int data, char* name, IDelegate1<Menu&>* delegate, bool isEnabled)
 {
-	mFirstItem             = new MenuItem(MenuNavigationType::TopMenu, filterIndex, name, delegate);
+	mFirstItem             = new MenuItem(MenuNavigationType::TopMenu, data, name, delegate);
 	mFirstItem->mIsEnabled = isEnabled;
 	mLastItem->mPrev->insertAfter(mFirstItem);
 	if (delegate) {

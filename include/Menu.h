@@ -81,7 +81,7 @@ struct Menu : public Node {
 		u32 _10;                        // _10, unknown
 		bool mIsEnabled;                // _14
 		char* mName;                    // _18
-		int mFilterIndex;               // _1C
+		int mData;                      // _1C, The meaning of this data payload is determined by the callback using it.
 		MenuNavigationType::Type mType; // _20
 		KeyEvent* mEventList;           // _24
 	};
