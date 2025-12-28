@@ -514,7 +514,7 @@ struct TitleSetupSection : public Node {
 
 	void menuSelectOption(Menu& parent)
 	{
-		mNextSectionId            = parent.mCurrentItem->mFilterIndex;
+		mNextSectionId            = parent.mCurrentItem->mData;
 		gameflow.mIsChallengeMode = FALSE;
 		Jac_SceneExit(SCENE_Unk13, 0);
 		parent.close();
