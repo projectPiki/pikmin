@@ -81,21 +81,21 @@ struct PositionMenu : public Menu {
 
 		char* str = new char[0x40];
 		sprintf(str, "X = %.2f", mPosition->x);
-		addOption(0, str, nullptr, true);
+		addOption(0, str, nullptr);
 		addKeyEvent(KeyEventType::Press, KBBTN_NONE, new Delegate1<PositionMenu, Menu&>(this, &menuEnterX));
 		addKeyEvent(KeyEventType::Input, KBBTN_Y, new Delegate1<PositionMenu, Menu&>(this, &menuDecrease));
 		addKeyEvent(KeyEventType::Input, KBBTN_X, new Delegate1<PositionMenu, Menu&>(this, &menuIncrease));
 
 		str = new char[0x40];
 		sprintf(str, "Y = %.2f", mPosition->y);
-		addOption(0, str, nullptr, true);
+		addOption(0, str, nullptr);
 		addKeyEvent(KeyEventType::Press, KBBTN_NONE, new Delegate1<PositionMenu, Menu&>(this, &menuEnterY));
 		addKeyEvent(KeyEventType::Input, KBBTN_Y, new Delegate1<PositionMenu, Menu&>(this, &menuDecrease));
 		addKeyEvent(KeyEventType::Input, KBBTN_X, new Delegate1<PositionMenu, Menu&>(this, &menuIncrease));
 
 		str = new char[0x40];
 		sprintf(str, "Z = %.2f", mPosition->z);
-		addOption(0, str, nullptr, true);
+		addOption(0, str, nullptr);
 		addKeyEvent(KeyEventType::Press, KBBTN_NONE, new Delegate1<PositionMenu, Menu&>(this, &menuEnterZ));
 		addKeyEvent(KeyEventType::Input, KBBTN_Y, new Delegate1<PositionMenu, Menu&>(this, &menuDecrease));
 		addKeyEvent(KeyEventType::Input, KBBTN_X, new Delegate1<PositionMenu, Menu&>(this, &menuIncrease));
@@ -167,28 +167,28 @@ struct ColourMenu : public Menu {
 
 		char* str = new char[0x40];
 		sprintf(str, "R = %d", mColour->r);
-		addOption(0, str, nullptr, true);
+		addOption(0, str, nullptr);
 		addKeyEvent(KeyEventType::Press, KBBTN_NONE, new Delegate1<ColourMenu, Menu&>(this, &menuEnterR));
 		addKeyEvent(KeyEventType::Input, KBBTN_Y, new Delegate1<ColourMenu, Menu&>(this, &menuDecrease));
 		addKeyEvent(KeyEventType::Input, KBBTN_X, new Delegate1<ColourMenu, Menu&>(this, &menuIncrease));
 
 		str = new char[0x40];
 		sprintf(str, "G = %d", mColour->g);
-		addOption(0, str, nullptr, true);
+		addOption(0, str, nullptr);
 		addKeyEvent(KeyEventType::Press, KBBTN_NONE, new Delegate1<ColourMenu, Menu&>(this, &menuEnterG));
 		addKeyEvent(KeyEventType::Input, KBBTN_Y, new Delegate1<ColourMenu, Menu&>(this, &menuDecrease));
 		addKeyEvent(KeyEventType::Input, KBBTN_X, new Delegate1<ColourMenu, Menu&>(this, &menuIncrease));
 
 		str = new char[0x40];
 		sprintf(str, "B = %d", mColour->b);
-		addOption(0, str, nullptr, true);
+		addOption(0, str, nullptr);
 		addKeyEvent(KeyEventType::Press, KBBTN_NONE, new Delegate1<ColourMenu, Menu&>(this, &menuEnterB));
 		addKeyEvent(KeyEventType::Input, KBBTN_Y, new Delegate1<ColourMenu, Menu&>(this, &menuDecrease));
 		addKeyEvent(KeyEventType::Input, KBBTN_X, new Delegate1<ColourMenu, Menu&>(this, &menuIncrease));
 
 		str = new char[0x40];
 		sprintf(str, "A = %d", mColour->a);
-		addOption(0, str, nullptr, true);
+		addOption(0, str, nullptr);
 		addKeyEvent(KeyEventType::Press, KBBTN_NONE, new Delegate1<ColourMenu, Menu&>(this, &menuEnterA));
 		addKeyEvent(KeyEventType::Input, KBBTN_Y, new Delegate1<ColourMenu, Menu&>(this, &menuDecrease));
 		addKeyEvent(KeyEventType::Input, KBBTN_X, new Delegate1<ColourMenu, Menu&>(this, &menuIncrease));
@@ -246,14 +246,14 @@ struct FogMenu : public Menu {
 
 		char* str = new char[0x40];
 		sprintf(str, "Near = %.2f", *near);
-		addOption(0, str, nullptr, true);
+		addOption(0, str, nullptr);
 		addKeyEvent(KeyEventType::Press, KBBTN_NONE, new Delegate1<FogMenu, Menu&>(this, &menuEnterNear));
 		addKeyEvent(KeyEventType::Input, KBBTN_Y, new Delegate1<FogMenu, Menu&>(this, &menuDecrease));
 		addKeyEvent(KeyEventType::Input, KBBTN_X, new Delegate1<FogMenu, Menu&>(this, &menuIncrease));
 
 		str = new char[0x40];
 		sprintf(str, "Far = %.2f", *far);
-		addOption(0, str, nullptr, true);
+		addOption(0, str, nullptr);
 		addKeyEvent(KeyEventType::Press, KBBTN_NONE, new Delegate1<FogMenu, Menu&>(this, &menuEnterFar));
 		addKeyEvent(KeyEventType::Input, KBBTN_Y, new Delegate1<FogMenu, Menu&>(this, &menuDecrease));
 		addKeyEvent(KeyEventType::Input, KBBTN_X, new Delegate1<FogMenu, Menu&>(this, &menuIncrease));
@@ -331,15 +331,15 @@ struct LightMenu : public Menu {
 	void addOptions()
 	{
 		mSelectedLightType = lightConv[(u8)mLight->mLightType];
-		addOption(0, lightTypeNames[(u8)mLight->mLightType], new Delegate1<LightMenu, Menu&>(this, menuChangeType), true);
+		addOption(0, lightTypeNames[(u8)mLight->mLightType], new Delegate1<LightMenu, Menu&>(this, menuChangeType));
 		addOption(MENU_FAKE_OPTION_FOR_GAP);
 		if ((int)(u8)mLight->mLightType == 3) {
 			mSpotFov = &mLight->mSpotAngle;
-			addOption(0, lightMoveNames[mLightAttachType[0]], new Delegate1<LightMenu, Menu&>(this, menuChangeMove), true);
+			addOption(0, lightMoveNames[mLightAttachType[0]], new Delegate1<LightMenu, Menu&>(this, menuChangeMove));
 
 			char* str = new char[0x40];
 			sprintf(str, "Fov = %.2f", *mSpotFov);
-			addOption(0, str, nullptr, true);
+			addOption(0, str, nullptr);
 			addKeyEvent(KeyEventType::Press, KBBTN_NONE, new Delegate1<LightMenu, Menu&>(this, menuEnterNear));
 			addKeyEvent(KeyEventType::Input, KBBTN_Y, new Delegate1<LightMenu, Menu&>(this, menuDecrease));
 			addKeyEvent(KeyEventType::Input, KBBTN_X, new Delegate1<LightMenu, Menu&>(this, menuIncrease));
@@ -455,18 +455,18 @@ DayMgr::DayMgr(MapMgr* map, Controller* control)
 
 	char* str = new char[0x40];
 	sprintf(str, "Light Count %d", mLightCount);
-	mMenu->addOption(0, str, nullptr, true);
+	mMenu->addOption(0, str, nullptr);
 	mMenu->addKeyEvent(Menu::KeyEventType::Release, KBBTN_Y, new Delegate1<DayMgr, Menu&>(this, &menuDecreaseLights));
 	mMenu->addKeyEvent(Menu::KeyEventType::Release, KBBTN_X, new Delegate1<DayMgr, Menu&>(this, &menuIncreaseLights));
 
 	str = new char[0x40];
 	sprintf(str, "Time : % 2.1f", gameflow.mWorldClock.mTimeOfDay);
-	mMenu->addOption(0, str, nullptr, true);
+	mMenu->addOption(0, str, nullptr);
 	mMenu->addKeyEvent(Menu::KeyEventType::Input, KBBTN_Y, new Delegate1<DayMgr, Menu&>(this, &menuDecreaseTime));
 	mMenu->addKeyEvent(Menu::KeyEventType::Input, KBBTN_X, new Delegate1<DayMgr, Menu&>(this, &menuIncreaseTime));
 
 	mMenu->addOption(MENU_FAKE_OPTION_FOR_GAP);
-	mMenu->addOption(0, "Dump Settings", new Delegate1<DayMgr, Menu&>(this, &menuDumpSettings), true);
+	mMenu->addOption(0, "Dump Settings", new Delegate1<DayMgr, Menu&>(this, &menuDumpSettings));
 	mMenu->addOption(MENU_FAKE_OPTION_FOR_GAP);
 
 	str = new char[0x40];
@@ -488,7 +488,7 @@ DayMgr::DayMgr(MapMgr* map, Controller* control)
 	if (mMapMgr) {
 		str = new char[0x40];
 		sprintf(str, "Blur = %d", mMapMgr->mBlur);
-		mMenu->addOption(0, str, nullptr, true);
+		mMenu->addOption(0, str, nullptr);
 		mMenu->addKeyEvent(Menu::KeyEventType::Input, KBBTN_Y, new Delegate1<DayMgr, Menu&>(this, &menuBDecrease));
 		mMenu->addKeyEvent(Menu::KeyEventType::Input, KBBTN_X, new Delegate1<DayMgr, Menu&>(this, &menuBIncrease));
 	}

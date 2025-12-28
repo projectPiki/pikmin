@@ -76,12 +76,12 @@ struct MapSelectSetupSection : public Node {
 				PRINT("checking map in challenge mode!\n");
 				bool valid = gameflow.mGamePrefs.isStageOpen(inf->mChalStageID);
 				if (inf->mIsVisible && valid) {
-					mMapListMenu->addOption((int)inf, StdSystem::stringDup(inf->mStageName), nullptr, true);
+					mMapListMenu->addOption((int)inf, StdSystem::stringDup(inf->mStageName), nullptr);
 				}
 			} else {
 				bool valid = gameflow.mPlayState.isStageOpen(inf->mStageID);
 				if (inf->mIsVisible && valid && inf->mChalStageID == 7) {
-					mMapListMenu->addOption((int)inf, StdSystem::stringDup(inf->mStageName), nullptr, true);
+					mMapListMenu->addOption((int)inf, StdSystem::stringDup(inf->mStageName), nullptr);
 				}
 			}
 		}
@@ -120,8 +120,7 @@ struct MapSelectSetupSection : public Node {
 		mMapListMenu->addOption(MENU_FAKE_OPTION_FOR_GAP);
 		mMapListMenu->addOption(0, "Open All Maps",
 		                        !gameflow.mIsChallengeMode ? new Delegate1<MapSelectSetupSection, Menu&>(this, &openAllMaps)
-		                                                   : new Delegate1<MapSelectSetupSection, Menu&>(this, &openAllChMaps),
-		                        true);
+		                                                   : new Delegate1<MapSelectSetupSection, Menu&>(this, &openAllChMaps));
 		mActiveOverlayMenu = nullptr;
 
 		mapWindow    = nullptr;

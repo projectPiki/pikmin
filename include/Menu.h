@@ -100,7 +100,7 @@ struct Menu : public Node {
 
 	void addKeyEvent(int, int, IDelegate1<Menu&>*);
 	void resetOptions();
-	void addOption(int, char*, IDelegate1<Menu&>*, bool);
+	void addOption(int, char*, IDelegate1<Menu&>*, bool = true);
 	void addMenu(Menu*, int, char*);
 	void draw(Graphics&, f32);
 	void menuCloseMenu(Menu&);
@@ -143,6 +143,6 @@ struct Menu : public Node {
 };
 
 // These parameters for `Menu::AddOption` create an inert option that is skipped over.
-#define MENU_FAKE_OPTION_FOR_GAP 0, nullptr, nullptr, true
+#define MENU_FAKE_OPTION_FOR_GAP 0, nullptr, nullptr
 
 #endif
