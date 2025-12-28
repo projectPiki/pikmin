@@ -20,16 +20,16 @@ extern u8 cardData[CARD_DATA_SIZE];
 struct CardQuickInfo {
 	CardQuickInfo() { mSaveStatus = 0; }
 
-	int mMemCardSaveIndex;  ///< _00, index of save file on actual memory card (0-indexed).
-	u32 mGameSaveSlot;      ///< _04, save slot used in game (0-2).
-	u32 mSaveStatus;        ///< _08, whether a fresh file or used - see `PlayState::SaveStatus` enum.
-	int mCurrentDay;        ///< _0C, current (saved) in-game day.
-	int mCurrentPartsCount; ///< _10, current (saved) collected ship parts count.
-	int mRedPikiCount;      ///< _14, current (saved) red pikmin count.
-	int mYellowPikiCount;   ///< _18, current (saved) yellow pikmin count.
-	int mBluePikiCount;     ///< _1C, current (saved) blue pikmin count.
-	int mSaveCount;         ///< _20, number of saves used (unsure on this).
-	u32 mCrc;               ///< _24, checksum of save file.
+	int mMemCardSaveIndex;   ///< _00, index of save file on actual memory card (0-indexed).
+	u32 mGameSaveSlot;       ///< _04, save slot used in game (0-2).
+	u32 mSaveStatus;         ///< _08, whether a fresh file or used - see `PlayState::SaveStatus` enum.
+	int mCurrentDay;         ///< _0C, current (saved) in-game day.
+	int mCurrentPartsCount;  ///< _10, current (saved) collected ship parts count.
+	int mRedPikiCount;       ///< _14, current (saved) red pikmin count.
+	int mYellowPikiCount;    ///< _18, current (saved) yellow pikmin count.
+	int mBluePikiCount;      ///< _1C, current (saved) blue pikmin count.
+	int mMostRecentSaveSlot; ///< _20, latest created/saved slot (0-indexed).
+	u32 mCrc;                ///< _24, checksum of save file.
 };
 
 /**

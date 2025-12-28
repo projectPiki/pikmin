@@ -8,44 +8,65 @@ struct StageInfo;
 struct Navi;
 
 /**
- * @brief TODO
+ * @brief Type of ending reached (in order to play the correct credit movie when required).
+ */
+enum EndingType {
+	ENDING_None    = 0, ///< 0, no ending triggered (yet).
+	ENDING_Neutral = 1, ///< 1, neutral ending (>= 25 parts, but not 30).
+	ENDING_Happy   = 2, ///< 2, good ending (all 30 parts).
+};
+
+/**
+ * @brief Flags for controlling when gameplay is forced to end.
+ */
+enum GameEndFlag {
+	GAMEEND_None             = 0, ///< 0, default reason, no other specific handling required.
+	GAMEEND_PikminExtinction = 1, ///< 1, you killed all your pikmin!
+	GAMEEND_NaviDown         = 2, ///< 2, your captain has no health!
+	GAMEEND_Clear            = 3, ///< 3, unused navi "clear" state results in this. Never handled.
+};
+
+/**
+ * @brief Specialised game flow controller for single-player (story or challenge mode) gameplay.
+ *
+ * Has a lot of unused features, likely from cut elements of gameplay or debugging, including the unused NaviDemoSunsetState.
  *
  * @note Size: 0x25C.
  */
 struct FlowController {
+
+	/// Constructs a bare-bones single-player game flow controller.
 	inline FlowController()
 	{
-		_244       = 0;
-		mNaviOnMap = 0;
+		mEndingType   = ENDING_None;
+		mIsVersusMode = FALSE;
 	}
 
-	void readMapList(immut char*);
+	void readMapList(immut char* fileName);
 
-	// unused/inlined:
-	void setStage(immut char*);
+	void setStage(immut char* fileName);
 
-	// TODO: members
-	StageInfo mRootInfo;           // _00
-	StageInfo* mCurrentStage;      // _A8
-	u8 _AC[0x4];                   // _AC, unknown
-	char mAnimationTestPath[0x80]; // _B0
-	char mStagePath1[0x80];        // _130
-	char mStagePath2[0x80];        // _1B0, identical to above
-	int mNaviOnMap;                // _230, unknown
-	int mGameEndCondition;         // _234
-#if defined(VERSION_GPIP01_00)     //
-	int _238PAL;                   // _238
-	int _23CPAL;                   //
-#endif                             //
-	u32 mDayOverSeqStarted;        // _238
-	u32 _23C;                      // _23C
-	int _240;                      // _240
-	int _244;                      // _244
-	u32 _248;                      // _248, unknown
-	u32 _24C;                      // _24C, unknown
-	u32 _250;                      // _250, unknown
-	u32 _254;                      // _254, unknown
-	u32 _258;                      // _258, unknown
+	StageInfo mStageList;          ///< _00, list of all stages read in from file (stages/stages.ini).
+	StageInfo* mCurrentStage;      ///< _A8, pointer to the current stage.
+	u8 _AC[0x4];                   ///< _AC, unknown/unused.
+	char mMapModelFilePath[0x80];  ///< _B0, path to .mod file for current stage's map.
+	char mCurrStageFilePath[0x80]; ///< _130, path to .ini file for current stage.
+	char mDoorStageFilePath[0x80]; ///< _1B0, likely stage unused "door" item would've led to - same as above + unused in reality.
+	BOOL mIsVersusMode;            ///< _230, indicator of an (unimplemented) VS mode - never TRUE because we never spawn a second navi.
+	int mGameEndFlag;              ///< _234, type of situation forcing the day/gameplay to end - see `GameEndFlag` enum.
+#if defined(VERSION_GPIP01_00)     ///
+	BOOL mIsDayEndSkippable;       ///< _238, day ends from extinction and navi down aren't skippable.
+	BOOL mIsDayEndSkipped;         ///< _23C, has day end cutscene been skipped?
+#endif                             ///
+	BOOL mIsDayEndSeqStarted;      ///< _238, are we in the day end sequence? Tracked but never referenced.
+	BOOL mIsSunsetWhistleActive;   ///< _23C, has Olimar blown his whistle in the (unused) sunset state? Tracked but never referenced.
+	BOOL mIsSunsetStateForceEnded; ///< _240, did the (unused) sunset state get skipped or timed out? Tracked but never referenced.
+	int mEndingType;               ///< _244, whether we've triggered an ending - see `EndingType` enum.
+	u32 mClearStatePikiCount;      ///< _248, how many Pikmin we end with in our squad in the (unused) NaviClearState.
+	u32 mNaviSeedCount;            ///< _24C, largely unused, related to unused SeedItem collection.
+	u32 _250;                      ///< _250, unknown - only ever set to 0. Corresponds to 0x730 in Navi.
+	u32 _254;                      ///< _254, unknown - only ever set to 0.
+	u32 _258;                      ///< _258, unknown - only ever set to 0.
 };
 
 extern FlowController flowCont;

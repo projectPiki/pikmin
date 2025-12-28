@@ -7,6 +7,7 @@
 #include "PlayerState.h"
 #include "gameflow.h"
 #include "sysNew.h"
+#include "zen/ogTutorial.h"
 
 DemoParms* demoParms;
 
@@ -163,7 +164,7 @@ void DemoFlags::update()
 	}
 
 	if (mCurrentDemoIndex == DEMOFLAG_FirstBombExplode) {
-		gameflow.mGameInterface->message(MOVIECMD_TextDemo, 20);
+		gameflow.mGameInterface->message(MOVIECMD_TextDemo, zen::ogScrTutorialMgr::TUT_BombInfo);
 		PRINT("*** BOMB TIME OUT * OG_BOMBINFO!\n");
 		setFlagOnly(mCurrentDemoIndex);
 	} else {
@@ -257,11 +258,12 @@ void DemoFlags::setFlag(int index, Creature* obj)
 
 	STACK_PAD_VAR(3);
 
-	if (index == 4) {
+	if (index == DEMOFLAG_PluckRedPikmin) {
 		Vector3f objPosition = obj->mSRT.t;
 		f32 yRotation        = HALF_PI;
 		Vector3f rotation(0.0f, yRotation, 0.0f);
 		gameflow.mGameInterface->movie(getDemoFlag(index)->mMovieIndex, 0, obj, obj ? &obj->mSRT.t : nullptr, &rotation, -1, true);
+
 	} else {
 		if (obj && obj->mObjType != OBJTYPE_Goal) {
 			Vector3f objPosition = obj->mSRT.t;

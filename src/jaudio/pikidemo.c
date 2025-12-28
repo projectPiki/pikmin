@@ -965,7 +965,7 @@ void Jac_FinishPartsFindDemo(void)
 /**
  * @TODO: Documentation
  */
-void Jac_StartTextDemo(int a)
+void Jac_StartTextDemo(int textID)
 {
 	if (text_demo_state != 1 && current_demo_no == DEMOID_FINISHED) {
 		switch (parts_find_demo_state) {

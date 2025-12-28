@@ -139,7 +139,7 @@ void PcamCamera::startCamera(Creature* target, int zoom, int angle)
 		mTimers[i] = 0.0f;
 	}
 
-	if (flowCont.mNaviOnMap == 1) {
+	if (flowCont.mIsVersusMode == TRUE) {
 		mCreatureArray->add(naviMgr->getNavi(0));
 		mCreatureArray->add(naviMgr->getNavi(1));
 	}

@@ -671,7 +671,7 @@ bool Piki::isTeki(Piki* target)
 		return true;
 	}
 
-	if (flowCont.mNaviOnMap == 1) {
+	if (flowCont.mIsVersusMode == TRUE) {
 		return target->mNavi != mNavi;
 	}
 
@@ -1243,7 +1243,7 @@ int Piki::graspSituation(Creature** outTarget)
 void Piki::initColor(int color)
 {
 	mColor = color;
-	if (flowCont.mNaviOnMap == 1) {
+	if (flowCont.mIsVersusMode == TRUE) {
 		switch (color) {
 		case Blue:
 			mPlayerId = 0;
@@ -2867,7 +2867,7 @@ void Piki::dump()
 		PRINT(" * motion    <%s/%s>\n", mPikiAnimMgr.getUpperAnimator().getCurrentMotionName(),
 		      mPikiAnimMgr.getLowerAnimator().getCurrentMotionName());
 
-		if (flowCont.mNaviOnMap == 1) {
+		if (flowCont.mIsVersusMode == TRUE) {
 			const char* naviName;
 			if (mNavi) {
 				naviName = (mNavi == naviMgr->getNavi(0)) ? "player1" : "player2";
@@ -2923,7 +2923,7 @@ void Piki::dump()
 		PRINT(" * motion    <%s/%s>\n", mPikiAnimMgr.getUpperAnimator().getCurrentMotionName(),
 		      mPikiAnimMgr.getLowerAnimator().getCurrentMotionName());
 
-		if (flowCont.mNaviOnMap == 1) {
+		if (flowCont.mIsVersusMode == TRUE) {
 			const char* naviName;
 			if (mNavi) {
 				naviName = (mNavi == naviMgr->getNavi(0)) ? "player1" : "player2";

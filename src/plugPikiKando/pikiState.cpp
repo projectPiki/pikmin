@@ -25,6 +25,7 @@
 #include "WorkObject.h"
 #include "gameflow.h"
 #include "teki.h"
+#include "zen/ogTutorial.h"
 
 namespace {
 /**
@@ -2339,7 +2340,7 @@ void PikiGrowupState::procAnimMsg(Piki* piki, MsgAnim* msg)
 		playerState->mResultFlags.setOn(RESFLAG_PikminSeeds);
 		if (!playerState->mDemoFlags.isFlag(DEMOFLAG_FirstNectar) && !gameflow.mMoviePlayer->mIsActive && piki->aiCullable()) {
 			playerState->mDemoFlags.setFlagOnly(DEMOFLAG_FirstNectar);
-			gameflow.mGameInterface->message(MOVIECMD_TextDemo, 22);
+			gameflow.mGameInterface->message(MOVIECMD_TextDemo, zen::ogScrTutorialMgr::TUT_Mitu);
 		}
 		if (piki->mMode == PikiMode::FormationMode) {
 			piki->mNavi->mPlateMgr->changeFlower(piki);
@@ -2762,7 +2763,7 @@ void PikiNukareState::cleanup(Piki* piki)
 {
 	if (playerState->isTutorial() && !playerState->mDemoFlags.isFlag(DEMOFLAG_Pluck15thPikmin) && GameStat::allPikis >= 15) {
 		playerState->mDemoFlags.setFlagOnly(DEMOFLAG_Pluck15thPikmin);
-		gameflow.mGameInterface->message(MOVIECMD_TextDemo, 30);
+		gameflow.mGameInterface->message(MOVIECMD_TextDemo, zen::ogScrTutorialMgr::TUT_NukiAndFree);
 	}
 
 	if (piki->mColor == Red && !playerState->mDemoFlags.isFlag(DEMOFLAG_PluckRedPikmin)) {

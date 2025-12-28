@@ -3,6 +3,7 @@
 #include "Dolphin/os.h"
 #include "GlobalGameOptions.h"
 #include "Piki.h"
+#include "PikiHeadItem.h"
 #include "gameflow.h"
 #include "sysNew.h"
 
@@ -235,8 +236,8 @@ void BPikiInf::doStore(Creature* piki)
 	if (piki->mObjType != OBJTYPE_Pikihead) {
 		ERROR("mail to teppe\n");
 	}
-	mPikiColour   = static_cast<Piki*>(piki)->mPikiAnimMgr.mLowerAnimator.mStartKeyIndex;
-	mNextKeyIndex = static_cast<Piki*>(piki)->mPikiAnimMgr.mLowerAnimator.mEndKeyIndex;
+	mPikiColour   = static_cast<PikiHeadItem*>(piki)->mSeedColor;
+	mNextKeyIndex = static_cast<PikiHeadItem*>(piki)->mFlowerStage;
 }
 
 /**

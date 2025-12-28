@@ -12,6 +12,7 @@
 #include "gameflow.h"
 #include "jaudio/pikidemo.h"
 #include "system.h"
+#include "zen/ogTutorial.h"
 
 /**
  * @todo: Documentation
@@ -406,7 +407,7 @@ void MoviePlayer::startMovie(int movieIdx, int, Creature* target, immut Vector3f
 	}
 
 	if (movieIdx == DEMOID_Unk12) { // title screen?
-		gameflow.mGameInterface->message(MOVIECMD_TextDemo, 17);
+		gameflow.mGameInterface->message(MOVIECMD_TextDemo, zen::ogScrTutorialMgr::TUT_GetParts);
 		return;
 	}
 

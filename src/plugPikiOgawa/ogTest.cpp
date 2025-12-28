@@ -533,8 +533,8 @@ OgTestSection::OgTestSection()
 {
 	Node::init("<OgTestSection>");
 	gsys->setFrameClamp(1);
-	flowCont._24C = 0;
-	flowCont._250 = 0;
+	flowCont.mNaviSeedCount = 0;
+	flowCont._250           = 0;
 }
 
 /**

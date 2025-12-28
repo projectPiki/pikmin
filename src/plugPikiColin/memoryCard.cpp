@@ -489,10 +489,10 @@ void MemoryCard::waitPolling()
  */
 void MemoryCard::createFile(CARDStat& state)
 {
-	mDidSaveFail                   = false;
-	gameflow.mGamePrefs._E0        = 0;
-	gameflow.mGamePrefs.mSaveCount = 0;
-	gsys->mIsCardSaving            = TRUE;
+	mDidSaveFail                                = false;
+	gameflow.mGamePrefs.mMostRecentOptionsIndex = 0;
+	gameflow.mGamePrefs.mMostRecentSaveIndex    = 0;
+	gsys->mIsCardSaving                         = TRUE;
 	memset(&state, 0, sizeof(CARDStat));
 	// UNUSED FUNCTION
 }
@@ -755,25 +755,25 @@ void MemoryCard::loadCurrentFile()
  */
 s32 MemoryCard::getNewestOptionsIndex()
 {
-	int a = -1;
-	int b = -1;
+	int optionCount = -1;
+	int targetIdx   = -1;
 	for (int i = 0; i < 2; i++) {
 		u32 sum           = calcChecksum(&cardData[0x2000 * i + 0x2000], 0x1FF8);
 		RamStream* stream = getOptionsStream(i);
 		stream->setPosition(0x1FF8);
-		int thisSum = stream->readInt();
-		int nextSum = stream->readInt();
+		int nextOptionCount = stream->readInt();
+		int nextSum         = stream->readInt();
 
-		if (nextSum == sum && thisSum > a) {
-			a = thisSum;
-			b = i;
+		if (nextSum == sum && nextOptionCount > optionCount) {
+			optionCount = nextOptionCount;
+			targetIdx   = i;
 		}
 	}
 
-	if (b != -1) {
-		gameflow.mGamePrefs._E0 = a + 1;
+	if (targetIdx != -1) {
+		gameflow.mGamePrefs.mMostRecentOptionsIndex = optionCount + 1;
 	}
-	return b;
+	return targetIdx;
 
 	STACK_PAD_VAR(8);
 }
@@ -839,7 +839,7 @@ void MemoryCard::saveCurrentGame()
 	stream->padFileTo(0x8000, 8);
 
 	u32 sum = calcChecksum(getGameFilePtr(gameflow.mGamePrefs.mSpareMemCardSaveIndex - 1), 0x7FF8);
-	stream->writeInt(gameflow.mGamePrefs.mSaveCount);
+	stream->writeInt(gameflow.mGamePrefs.mMostRecentSaveIndex);
 	stream->writeInt(sum);
 
 	writeOneGameFile(gameflow.mGamePrefs.mSpareMemCardSaveIndex - 1);
@@ -850,7 +850,7 @@ void MemoryCard::saveCurrentGame()
 	gameflow.mGamePrefs.mMemCardSaveIndex      = gameflow.mGamePrefs.mSpareMemCardSaveIndex;
 	gameflow.mGamePrefs.mSpareMemCardSaveIndex = idx;
 	gameflow.mSaveGameCrc                      = sum;
-	gameflow.mGamePrefs.mSaveCount++;
+	gameflow.mGamePrefs.mMostRecentSaveIndex++;
 	gameflow.mGamePrefs.mHasSaveGame = true;
 	gsys->mIsCardSaving              = FALSE;
 
@@ -971,7 +971,7 @@ void MemoryCard::initFileArea(int saveSlot, int p2)
 	stream->padFileTo(0x8000, 8);
 
 	u32 sum = calcChecksum(getGameFilePtr(p2), 0x7FF8);
-	stream->writeInt(gameflow.mGamePrefs.mSaveCount);
+	stream->writeInt(gameflow.mGamePrefs.mMostRecentSaveIndex);
 	stream->writeInt(sum);
 	// UNUSED FUNCTION
 }
@@ -985,7 +985,7 @@ void MemoryCard::initOptionsArea(int idx)
 	gameflow.mGamePrefs.write(*stream);
 	stream->padFileTo(0x1FF8, 0);
 	u32 sum = calcChecksum(getOptionsPtr(idx), 0x1FF8);
-	stream->writeInt(gameflow.mGamePrefs._E0);
+	stream->writeInt(gameflow.mGamePrefs.mMostRecentOptionsIndex);
 	stream->writeInt(sum);
 	STACK_PAD_VAR(4);
 }
@@ -1016,12 +1016,12 @@ s32 MemoryCard::makeDefaultFile()
 	int i;
 	for (i = 0; i < 2; i++) {
 		initOptionsArea(i);
-		gameflow.mGamePrefs._E0++;
+		gameflow.mGamePrefs.mMostRecentOptionsIndex++;
 	}
 
 	for (i = 0; i < 4; i++) {
 		initFileArea(i, i);
-		gameflow.mGamePrefs.mSaveCount++;
+		gameflow.mGamePrefs.mMostRecentSaveIndex++;
 	}
 
 	CardUtilMount(0, &CardWorkArea);
@@ -1052,7 +1052,7 @@ void MemoryCard::copyFile(CardQuickInfo& from, CardQuickInfo& to)
 	stream->setPosition(0x7FF8);
 
 	u32 sum = calcChecksum(FAKE_getGameFilePtr(gameflow.mGamePrefs.mSpareMemCardSaveIndex - 1), 0x7FF8);
-	stream->writeInt(gameflow.mGamePrefs.mSaveCount);
+	stream->writeInt(gameflow.mGamePrefs.mMostRecentSaveIndex);
 	stream->writeInt(sum);
 	writeOneGameFile(gameflow.mGamePrefs.mSpareMemCardSaveIndex - 1);
 	gsys->mIsCardSaving = FALSE;
@@ -1076,7 +1076,7 @@ void MemoryCard::delFile(CardQuickInfo& target)
 	writeCurrentGame(stream, state);
 	stream->padFileTo(0x8000, 8);
 	u32 sum = calcChecksum(getGameFilePtr(gameflow.mGamePrefs.mSpareMemCardSaveIndex - 1), 0x7FF8);
-	stream->writeInt(gameflow.mGamePrefs.mSaveCount);
+	stream->writeInt(gameflow.mGamePrefs.mMostRecentSaveIndex);
 	stream->writeInt(sum);
 	writeOneGameFile(gameflow.mGamePrefs.mSpareMemCardSaveIndex - 1);
 	gsys->mIsCardSaving = FALSE;
@@ -1634,7 +1634,7 @@ void MemoryCard::repairFile()
 		int a = 1 - mValidOptionsCount;
 		for (int i = 0; i < 2; i++) {
 			if (!(mOkSectionsMask & (1 << (i + 1)))) {
-				gameflow.mGamePrefs._E0 = 0;
+				gameflow.mGamePrefs.mMostRecentOptionsIndex = 0;
 				initOptionsArea(i);
 				writeOneOption(i);
 				if (!--a) {
@@ -1650,7 +1650,7 @@ void MemoryCard::repairFile()
 			if (!(mOkSectionsMask & (1 << (i + 3)))) {
 				for (int j = 0; j < 3; j++) {
 					if (mValidSlots[j] == FALSE) {
-						gameflow.mGamePrefs.mSaveCount = 0;
+						gameflow.mGamePrefs.mMostRecentSaveIndex = 0;
 						initFileArea(j, i);
 						writeOneGameFile(i);
 						waitPolling();
@@ -1689,7 +1689,7 @@ void MemoryCard::getQuickInfos(CardQuickInfo* infos)
 	int maxSaveCount = -1;
 	PlayState state;
 	for (i = 0; i < 4; i++) {
-		infos[i].mMemCardSaveIndex = infos[i].mSaveCount = -1;
+		infos[i].mMemCardSaveIndex = infos[i].mMostRecentSaveSlot = -1;
 	}
 	for (i = 0; i < 4; i++) {
 		u32 sum           = calcChecksum(getGameFilePtr(i), 0x7FF8);
@@ -1706,23 +1706,23 @@ void MemoryCard::getQuickInfos(CardQuickInfo* infos)
 
 			RamStream* stream = getGameFileStream(i);
 			state.read(*stream);
-			if (saveCountFromCard > infos[state.mSaveSlot].mSaveCount) {
+			if (saveCountFromCard > infos[state.mSaveSlot].mMostRecentSaveSlot) {
 				if (infos[state.mSaveSlot].mMemCardSaveIndex != -1) {
 					gameflow.mGamePrefs.mSpareMemCardSaveIndex = infos[state.mSaveSlot].mMemCardSaveIndex + 1;
 				}
 				if (state.mSaveStatus) {
-					u8 slot                 = state.mSaveSlot;
-					CardQuickInfo& info     = infos[slot];
-					info.mCrc               = sum;
-					info.mSaveCount         = saveCountFromCard;
-					info.mMemCardSaveIndex  = i;
-					info.mGameSaveSlot      = slot;
-					info.mSaveStatus        = state.mSaveStatus;
-					info.mCurrentDay        = state.mSavedDay;
-					info.mCurrentPartsCount = state.mShipPartsCount;
-					info.mRedPikiCount      = state.mRedPikiCount;
-					info.mYellowPikiCount   = state.mYellowPikiCount;
-					info.mBluePikiCount     = state.mBluePikiCount;
+					u8 slot                  = state.mSaveSlot;
+					CardQuickInfo& info      = infos[slot];
+					info.mCrc                = sum;
+					info.mMostRecentSaveSlot = saveCountFromCard;
+					info.mMemCardSaveIndex   = i;
+					info.mGameSaveSlot       = slot;
+					info.mSaveStatus         = state.mSaveStatus;
+					info.mCurrentDay         = state.mSavedDay;
+					info.mCurrentPartsCount  = state.mShipPartsCount;
+					info.mRedPikiCount       = state.mRedPikiCount;
+					info.mYellowPikiCount    = state.mYellowPikiCount;
+					info.mBluePikiCount      = state.mBluePikiCount;
 				}
 			} else {
 				gameflow.mGamePrefs.mSpareMemCardSaveIndex = i + 1;
@@ -1730,7 +1730,7 @@ void MemoryCard::getQuickInfos(CardQuickInfo* infos)
 		}
 	}
 
-	gameflow.mGamePrefs.mSaveCount = maxSaveCount + 1;
+	gameflow.mGamePrefs.mMostRecentSaveIndex = maxSaveCount + 1;
 
 	STACK_PAD_VAR(9);
 	/*

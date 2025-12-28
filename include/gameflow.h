@@ -25,47 +25,72 @@ struct Section;
 struct Shape;
 struct Texture;
 
+/// Sets course open flags for given stage.
+#define SET_STAGE_OPEN(flags, stageID) (flags) |= 1 << (stageID)
+
+/// Sets course open flags for ONLY the given stage, and clears all others.
+#define SET_STAGE_OPEN_ONLY(flags, stageID) (flags) = 1 << (stageID)
+
+/// Checks course open flags for a given stage.
+#define IS_STAGE_OPEN(flags, stageID) ((flags) & (1 << (stageID)))
+
+/// PAL-exclusive packing of language preference flag (to save to card).
+#define PACK_LANG_FLAG(flag, lang) ((flag) & 0xFFFFFFC3 | ((lang) & 0xF) << 2)
+
+/// PAL-exclusive unpacking of language preference flag (to read from card).
+#define UNPACK_LANG_FLAG(flag) ((flag) >> 2 & 0xF)
+
 /**
- * @brief TODO
+ * @brief Options flags to be saved on memory card across game loads.
  */
 enum GamePrefsFlags {
-	GAMEPREF_Vibe   = 0x1,
-	GAMEPREF_Stereo = 0x2,
-	GAMEPREF_Child  = 0x4,
+	GAMEPREF_Vibe   = 0x1, ///< 0x1, set: rumble on, unset: rumble off.
+	GAMEPREF_Stereo = 0x2, ///< 0x2, set: stereo sound, unset: mono sound.
+	GAMEPREF_Child  = 0x4, ///< 0x4, set: child lang mode, unset: adult lang mode (repurposed for lang in PAL).
 };
 
 /**
- * @brief TODO
+ * @brief Game section identifiers to segment game flow.
+ * These may have sub-sections within them, which have their own enums (such as for OnePlayerSection).
  */
 enum GameSectionID {
-	SECTION_NinLogo   = 0,
-	SECTION_Titles    = 1,
-	SECTION_MovSample = 2,
-	SECTION_PaniTest  = 3,
-	SECTION_OnePlayer = 4,
-	SECTION_OgTest    = 5,
+	SECTION_NinLogo   = 0, ///< 0, Nintendo logo - `NinLogoSection`.
+	SECTION_Titles    = 1, ///< 1, title screen - `TitlesSection`.
+	SECTION_MovSample = 2, ///< 2, player for h4m cutscenes - `MovSampleSection`.
+	SECTION_PaniTest  = 3, ///< 3, test section for enemies, not accessible in retail - `PaniTestSection`.
+	SECTION_OnePlayer = 4, ///< 4, section for story and challenge mode - `OnePlayerSection`.
+	SECTION_OgTest    = 5, ///< 5, test section for screens, not accessible in retail - `OgTestSection`.
 };
 
 /**
- * @brief TODO
+ * @brief Sub-sections of OnePlayerSection, for controlling different areas of story and challenge mode.
+ *
+ * Most of these sections have an associated Setup section, for initialising.
+ *
+ * @note A lot of these are inaccessible in retail, and are holdovers from demos and testing.
  */
 enum OnePlayerSectionID {
-	ONEPLAYER_GameSetup       = 0,
-	ONEPLAYER_CardSelect      = 1,
-	ONEPLAYER_E3Tutorial      = 2,
-	ONEPLAYER_E3ForestDay1    = 3,
-	ONEPLAYER_E3ForestDay2    = 4,
-	ONEPLAYER_IntroGame       = 5,
-	ONEPLAYER_MapSelect       = 6,
-	ONEPLAYER_NewPikiGame     = 7,
-	ONEPLAYER_GameCourseClear = 8,
-	ONEPLAYER_GameStageClear  = 9,
-	ONEPLAYER_GameCredits     = 10,
-	ONEPLAYER_GameExit        = 11,
+	ONEPLAYER_GameSetup       = 0,  ///< 0, load-in section when entering story/challenge mode from title - `GameSetupSection`.
+	ONEPLAYER_CardSelect      = 1,  ///< 1, section for reading data from memory card/file select for story mode - `CardSelectSection`.
+	ONEPLAYER_E3Tutorial      = 2,  ///< 2, unused E3 demo of Impact Site - redirects to a NewPikiGameSection with set parameters.
+	ONEPLAYER_E3ForestDay1    = 3,  ///< 3, unused E3 demo of Forest of Hope (Day 1) - redirects to NewPikiGameSection with set parameters.
+	ONEPLAYER_E3ForestDay2    = 4,  ///< 4, unused E3 demo of Forest of Hope (Day 2) - redirects to NewPikiGameSection with set parameters.
+	ONEPLAYER_IntroGame       = 5,  ///< 5, section for new story files, with the crash landing cutscene playing - `IntroGameSection`.
+	ONEPLAYER_MapSelect       = 6,  ///< 6, section for selecting a stage, both for world map and challenge mode - `MapSelectSection`.
+	ONEPLAYER_NewPikiGame     = 7,  ///< 7, regular gameplay, both story and challenge mode - `NewPikiGameSection`, with subsections.
+	ONEPLAYER_GameCourseClear = 8,  ///< 8, unused section for toggling through different sections for testing - `GameCourseClearSection`.
+	ONEPLAYER_GameStageClear  = 9,  ///< 9, unused section, likely for "clearing" a stage - `GameStageClearSection`.
+	ONEPLAYER_GameCredits     = 10, ///< 10, unused credits section from the E3 demo - `GameCreditsSection`.
+	ONEPLAYER_GameExit        = 11, ///< 11, cleanup section when exiting from OnePlayerSection back to title - `GameExitSection`.
+
+	// E3 demo-related bounds.
+	ONEPLAYER_E3_MIN          = ONEPLAYER_E3Tutorial,
+	ONEPLAYER_E3_MAX          = ONEPLAYER_E3ForestDay2,
+	ONEPLAYER_E3_STAGE_OFFSET = ONEPLAYER_E3Tutorial,
 };
 
 /**
- * @brief TODO
+ * @brief Types of vertical filters to apply to the frame buffer.
  */
 enum GameFilterType {
 	FILTER_Custom = 0, ///< 0, use the custom/editable values connected to the debug menu (7-tap filter).
@@ -88,6 +113,7 @@ enum MovSampleID {
 	MOV_COUNT,            ///< 6 total HVQM4 movies.
 
 	MOV_INTRO_CYCLE_MASK = 0x3, ///< 0x3, Cycles through CntA-CntD on title screen after idling for some time.
+	MOV_ENDING_OFFSET    = 0x3, ///< 0x3, offset to add to flowCont.mEndingType to get the right movie ID.
 };
 
 /**
@@ -148,10 +174,10 @@ struct GameQuickInfo {
  * @note Size: 0x20.
  */
 struct GameChalQuickInfo {
-	int mCourseID;                    // _00, see StageID enum.
-	u32 mScore;                       // _04, score for this entry.
-	int mRank;                        // _08, rank of this score on this course (0-4, 0 being the best).
-	u32 mCourseScores[MAX_HI_SCORES]; // _0C, all 5 top scores for mCourseID course.
+	int mStageID;                     ///< _00, challenge mode stage ID - see StageID enum.
+	u32 mScore;                       ///< _04, score for this entry.
+	int mRank;                        ///< _08, rank of this score on this course (0-4, 0 being the best).
+	u32 mCourseScores[MAX_HI_SCORES]; ///< _0C, all 5 top scores for mStageID course.
 };
 
 /**
@@ -208,7 +234,7 @@ struct GameGenNode : public Node {
 };
 
 /**
- * @brief State of trackables (stage unlocks, pikmin counts, etc) that should be saved to memory card.
+ * @brief State of story mode trackables (stage unlocks, pikmin counts, etc) that should be saved to memory card.
  *
  * @note Size: 0x24.
  */
@@ -230,10 +256,10 @@ struct PlayState : public CoreNode {
 		mSaveStatus = Fresh;
 	}
 
-	virtual void read(RandomAccessStream&);  // _0C
-	virtual void write(RandomAccessStream&); // _10
+	virtual void read(RandomAccessStream& input);   // _0C
+	virtual void write(RandomAccessStream& output); // _10
 
-	void openStage(int stageID);
+	void openStage(int storyStageID);
 
 	/// Initialises a new play state with dummy counts, and only Impact Site unlocked.
 	void Initialise()
@@ -244,18 +270,18 @@ struct PlayState : public CoreNode {
 		mRedPikiCount    = -1;
 		mSavedDay        = 1;
 		mShipPartsCount  = 0;
-		mCourseOpenFlags = (1 << STAGE_Practice);
+		SET_STAGE_OPEN_ONLY(mCourseOpenFlags, STAGE_Practice);
 	}
 
 	/**
-	 * @brief Checks if a given stage is "open" (unlocked).
-	 * @param stageIdx Stage to check - see `StageID` enum.
+	 * @brief Checks if a given story mode stage is "open" (unlocked).
+	 * @param storyStageID Stage to check - see `StageID` enum.
 	 * @return True if stage is valid and unlocked, false otherwise.
 	 */
-	bool isStageOpen(int stageIdx)
+	bool isStageOpen(int storyStageID)
 	{
-		if (stageIdx >= STAGE_START && stageIdx TERNARY_BUGFIX(<, <=) STAGE_COUNT) {
-			return (mCourseOpenFlags & (1 << stageIdx)) != 0;
+		if (storyStageID >= STAGE_START && storyStageID TERNARY_BUGFIX(<, <=) STAGE_COUNT) {
+			return IS_STAGE_OPEN(mCourseOpenFlags, storyStageID) != false;
 		}
 		return false;
 	}
@@ -269,78 +295,124 @@ struct PlayState : public CoreNode {
 	u8 mSavedDay;         ///< _21, saved in-game day count.
 	u8 mShipPartsCount;   ///< _22, saved collected ship parts count.
 	u8 mSaveSlot;         ///< _23, save file slot.
-	u32 mCourseOpenFlags; ///< _24, bitflag of which courses are unlocked, packed as (1 << stageID).
+	u32 mCourseOpenFlags; ///< _24, bitflag of which story mode maps are unlocked, packed as (1 << stageID) - `STAGE` defines.
 };
 
 /**
- * @brief TODO
+ * @brief Stores an individual day completion record for story mode (part count and days taken).
  *
  * @note Size: 0x8.
  */
 struct GameRecMinDay {
+
+	/// Constructs a blank record with worst possible scores (no parts, max days).
 	GameRecMinDay() { Initialise(); }
 
+	/// Initialises a record with worst possible scores (no parts, max days).
 	void Initialise()
 	{
 		mNumParts = 0;
 		mNumDays  = MAX_DAYS;
 	}
 
+	/**
+	 * @brief Reads day and part hiscores for this stage from file stream.
+	 *
+	 * @param input File stream (from memory card) to read hiscores from.
+	 */
 	void read(RandomAccessStream& input)
 	{
 		mNumParts = input.readInt();
 		mNumDays  = input.readInt();
 	}
+
+	/**
+	 * @brief Writes day and part hiscores for this stage to file stream.
+	 *
+	 * @param output File stream (to memory card) to write hiscores to.
+	 */
 	void write(RandomAccessStream& output)
 	{
 		output.writeInt(mNumParts);
 		output.writeInt(mNumDays);
 	}
 
-	int mNumParts; // _00
-	int mNumDays;  // _04
+	int mNumParts; ///< _00, total number of parts collected (max 30).
+	int mNumDays;  ///< _04, total in-game days taken (lower = better).
 };
 
 /**
- * @brief TODO
+ * @brief Stores an individual (most) born Pikmin completion record for story mode.
  *
  * @note Size: 0x4.
  */
 struct GameRecBornPikmin {
+
+	/// Constructs a blank record with worst possible scores (0 born).
 	GameRecBornPikmin() { Initialise(); }
 
+	/// Initialises a record with worst possible scores (0 born).
 	void Initialise() { mNumBorn = 0; }
 
+	/**
+	 * @brief Reads born Pikmin hiscores for this stage from file stream.
+	 *
+	 * @param input File stream (from memory card) to read hiscores from.
+	 */
 	void read(RandomAccessStream& input) { mNumBorn = input.readInt(); }
+
+	/**
+	 * @brief Writes born Pikmin hiscores for this stage to file stream.
+	 *
+	 * @param output File stream (to memory card) to write hiscores to.
+	 */
 	void write(RandomAccessStream& output) { output.writeInt(mNumBorn); }
 
-	int mNumBorn; // _00, unknown
+	int mNumBorn; ///< _00, total number of Pikmin born in this playthrough (higher better).
 };
 
 /**
- * @brief TODO
+ * @brief Stores an individual (least) killed Pikmin completion record for story mode.
  *
  * @note Size: 0x4.
  */
 struct GameRecDeadPikmin {
+
+	/// Constructs a blank record with worst possible scores (9999 dead).
 	GameRecDeadPikmin() { Initialise(); }
 
+	/// Initialises a record with worst possible scores (9999 dead).
 	void Initialise() { mNumDead = 9999; }
 
+	/**
+	 * @brief Reads dead Pikmin hiscores for this stage from file stream.
+	 *
+	 * @param input File stream (from memory card) to read hiscores from.
+	 */
 	void read(RandomAccessStream& input) { mNumDead = input.readInt(); }
+
+	/**
+	 * @brief Writes dead Pikmin hiscores for this stage to file stream.
+	 *
+	 * @param output File stream (to memory card) to write hiscores to.
+	 */
 	void write(RandomAccessStream& output) { output.writeInt(mNumDead); }
 
-	int mNumDead; // _00
+	int mNumDead; ///< _00, total number of Pikmin killed in this playthrough (lower better).
 };
 
 /**
- * @brief TODO
+ * @brief Stores the top 5 challenge mode scores for a given stage.
  *
+ * @bug Challenge mode scores are initialised incorrectly, and set data out of their bounds to 0.
  * @note Size: 0x14.
  */
 struct GameRecChalCourse {
+
+	/// Constructs a hiscore record for a challenge mode stage (badly).
 	GameRecChalCourse() { Initialise(); }
 
+	/// Initialises a hiscore record for a challenge mode stage (badly).
 	void Initialise()
 	{
 		for (int i = 0; i < MAX_HI_SCORES; i++) {
@@ -348,12 +420,23 @@ struct GameRecChalCourse {
 		}
 	}
 
+	/**
+	 * @brief Reads challenge mode hiscores for this stage from file stream.
+	 *
+	 * @param input File stream (from memory card) to read hiscores from.
+	 */
 	void read(RandomAccessStream& input)
 	{
 		for (int i = 0; i < MAX_HI_SCORES; i++) {
 			mScores[i] = input.readInt();
 		}
 	}
+
+	/**
+	 * @brief Writes challenge mode hiscores for this stage to file stream.
+	 *
+	 * @param output File stream (to memory card) to write hiscores to.
+	 */
 	void write(RandomAccessStream& output)
 	{
 		for (int i = 0; i < MAX_HI_SCORES; i++) {
@@ -361,13 +444,21 @@ struct GameRecChalCourse {
 		}
 	}
 
-	int mScores[MAX_HI_SCORES]; // _00
+	int mScores[MAX_HI_SCORES]; ///< _00, top 5 scores for this stage (higher better).
 };
 
 /**
- * @brief TODO
+ * @brief Stores all hi-score information to display in the hi-score menu (and when beating the game/challenge course).
+ *
+ * @note Size: 0xB8.
  */
 struct GameHiscores {
+
+	/**
+	 * @brief Initialises all record types with "worst" possible scores.
+	 *
+	 * @warning This only works at the moment because the number of hiscores and the number of challenge mode courses is the same.
+	 */
 	void Initialise()
 	{
 		mTotalPikis = 0;
@@ -375,10 +466,18 @@ struct GameHiscores {
 			mMinDayRecords[i].Initialise();
 			mBornPikminRecords[i].Initialise();
 			mDeadPikminRecords[i].Initialise();
+
+			// this needs to be split out if anyone ever wants to change the number of hiscores or number of challenge mode stages.
 			mChalModeRecords[i].Initialise();
 		}
 	}
 
+	/**
+	 * @brief Reads all hiscores from file stream.
+	 *
+	 * @param input File stream (from memory card) to read hiscores from.
+	 * @warning This only works at the moment because the number of hiscores and the number of challenge mode courses is the same.
+	 */
 	void read(RandomAccessStream& input)
 	{
 		mTotalPikis = input.readInt();
@@ -386,10 +485,18 @@ struct GameHiscores {
 			mMinDayRecords[i].read(input);
 			mBornPikminRecords[i].read(input);
 			mDeadPikminRecords[i].read(input);
+
+			// this needs to be split out if anyone ever wants to change the number of hiscores or number of challenge mode stages.
 			mChalModeRecords[i].read(input);
 		}
 	}
 
+	/**
+	 * @brief Writes all hiscores to file stream.
+	 *
+	 * @param output File stream (to memory card) to write hiscores to.
+	 * @warning This only works at the moment because the number of hiscores and the number of challenge mode courses is the same.
+	 */
 	void write(RandomAccessStream& output)
 	{
 		output.writeInt(mTotalPikis);
@@ -397,111 +504,130 @@ struct GameHiscores {
 			mMinDayRecords[i].write(output);
 			mBornPikminRecords[i].write(output);
 			mDeadPikminRecords[i].write(output);
+
+			// this needs to be split out if anyone ever wants to change the number of hiscores or number of challenge mode stages.
 			mChalModeRecords[i].write(output);
 		}
 	}
 
-	int mTotalPikis;                                     // _00
-	GameRecMinDay mMinDayRecords[MAX_HI_SCORES];         // _04
-	GameRecBornPikmin mBornPikminRecords[MAX_HI_SCORES]; // _1C
-	GameRecDeadPikmin mDeadPikminRecords[MAX_HI_SCORES]; // _30
-	GameRecChalCourse mChalModeRecords[MAX_HI_SCORES];   // _44
+	int mTotalPikis;                                     /// _00, total Pikmin born across all (completed) save files.
+	GameRecMinDay mMinDayRecords[MAX_HI_SCORES];         /// _04, 5 lowest day-number completions of the game.
+	GameRecBornPikmin mBornPikminRecords[MAX_HI_SCORES]; /// _2C, 5 highest born Pikmin counts on completion.
+	GameRecDeadPikmin mDeadPikminRecords[MAX_HI_SCORES]; /// _40, 5 lowest dead Pikmin counts on completion.
+	GameRecChalCourse mChalModeRecords[STAGE_CHALCOUNT]; /// _54, hiscores for each of the 5 challenge mode stages.
 };
 
 /**
- * @brief TODO
+ * @brief Global game options, connected to a given overall memory card save instance (not one file slot).
+ *
+ * @note Size: 0x10C.
  */
 struct GamePrefs : public CoreNode {
+
+	/// Constructs default game preferences and initialises with basic default values.
 	GamePrefs()
 	    : CoreNode("gamePrefs")
 	{
 		Initialise();
 	}
 
-	virtual void read(RandomAccessStream&);  // _0C
-	virtual void write(RandomAccessStream&); // _10
+	virtual void read(RandomAccessStream& input);   // _0C
+	virtual void write(RandomAccessStream& output); // _10
 
 #if defined(VERSION_GPIP01_00)
 	void Initialise();
 #else
+
+	/// Initialises game preferences with basic default values.
 	void Initialise()
 	{
-		mFlags                 = 3;
+		mFlags                 = GAMEPREF_Vibe | GAMEPREF_Stereo;
 		mBgmVol                = 8;
 		mSfxVol                = 8;
-		mFileNum               = 0;
+		mMostRecentFileSlot    = 0;
 		mHasSaveGame           = false;
 		mMemCardSaveIndex      = 0;
 		mSpareMemCardSaveIndex = 0;
-		_1F                    = 0;
-		mUnlockedStageFlags    = 0;
-		mIsChanged             = false;
+		_1F                    = 0; // unused
+		mChalCourseOpenFlags   = 0;
+		mChangesPending        = false;
 		mHiscores.Initialise();
 	}
 #endif
 
-	void setBgmVol(u8);
-	void setSfxVol(u8);
-	void setStereoMode(bool);
-	void setVibeMode(bool);
+	void setBgmVol(u8 vol);
+	void setSfxVol(u8 vol);
+	void setStereoMode(bool set);
+	void setVibeMode(bool set);
 #if defined(VERSION_GPIP01_00)
-	void setChildMode(int);
+	void setChildMode(int lang);
 #else
-	void setChildMode(bool);
+	void setChildMode(bool set);
 #endif
-	void getChallengeScores(GameChalQuickInfo&);
-	void checkIsHiscore(GameChalQuickInfo&);
-	void checkIsHiscore(GameQuickInfo&);
+	void getChallengeScores(GameChalQuickInfo& info);
+	void checkIsHiscore(GameChalQuickInfo& info);
+	void checkIsHiscore(GameQuickInfo& info);
 	void fixSoundMode();
 
+	/// Adds Pikmin to the total (ever) born hi-score count.
 	void addBornPikis(u32 count) { mHiscores.mTotalPikis += count; }
 
-	void openStage(int stageIdx)
+	/// Unlocks a challenge mode stage/map so it can be selected in the challenge mode map select screen.
+	void openStage(int chalStageID)
 	{
-		if (stageIdx >= STAGE_START && stageIdx TERNARY_BUGFIX(<, <=) STAGE_COUNT) {
-			mUnlockedStageFlags |= (1 << stageIdx);
+		if (chalStageID >= STAGE_CHALSTART && chalStageID TERNARY_BUGFIX(<, <=) STAGE_CHALCOUNT) {
+			SET_STAGE_OPEN(mChalCourseOpenFlags, chalStageID);
 		}
 	}
 
-	bool isStageOpen(int stageIdx)
+	/// Checks if a challenge mode stage/map is unlocked.
+	bool isStageOpen(int chalStageID)
 	{
-		if (stageIdx >= STAGE_START && stageIdx TERNARY_BUGFIX(<, <=) STAGE_COUNT) {
-			return (mUnlockedStageFlags & (1 << stageIdx)) != 0;
+		if (chalStageID >= STAGE_CHALSTART && chalStageID TERNARY_BUGFIX(<, <=) STAGE_CHALCOUNT) {
+			return IS_STAGE_OPEN(mChalCourseOpenFlags, chalStageID) != false;
 		}
 		return false;
 	}
 
+	/// Checks if rumble is turned on.
 	bool getVibeMode() { return (mFlags & GAMEPREF_Vibe) != 0; }
+
+	/// Checks if sound is in stereo mode.
 	bool getStereoMode() { return (mFlags & GAMEPREF_Stereo) != 0; }
 
 #if defined(VERSION_GPIP01_00)
 	int getChildMode();
 #else
+
+	/// Checks if language is in child mode (false = adult mode).
 	bool getChildMode() { return (mFlags & GAMEPREF_Child) != 0; }
 #endif
 
+	/// Gets the background music volume.
 	u8 getBgmVol() { return mBgmVol; }
+
+	/// Gets the sound effects volume.
 	u8 getSfxVol() { return mSfxVol; }
 
-	bool isChallengeOpen() { return mUnlockedStageFlags != 0; }
+	/// Checks if challenge mode menu option should be displayed - having any challenge mode course unlocked is enough.
+	bool isChallengeOpen() { return mChalCourseOpenFlags != 0; }
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	bool mIsChanged;           ///< _14
-	int mFlags;                ///< _18
-	u8 mBgmVol;                ///< _1C
-	u8 mSfxVol;                ///< _1D
-	bool mHasSaveGame;         ///< _1E
-	u8 _1F;                    ///< _1F
-	u8 mMemCardSaveIndex;      ///< _20, index of save file on actual memory card + 1 (1-indexed).
-	u8 mSpareMemCardSaveIndex; ///< _21, index of backup save file on actual memory card + 1 (1-indexed).
-	u8 mUnlockedStageFlags;    ///< _22
-	u8 _23;                    ///< _23
-	GameHiscores mHiscores;    ///< _24
-	u32 mSaveCount;            ///< _DC
-	u32 _E0;                   ///< _E0
-	u8 _E4[0x108 - 0xE4];      ///< _E4, unknown (DLL doesn't have it, either)
-	u32 mFileNum;              ///< _108
+	bool mChangesPending;        ///< _014, flag for if any preference changes have been made and not saved.
+	int mFlags;                  ///< _018, flags to store basic binary options - see `GamePrefsFlags` enum.
+	u8 mBgmVol;                  ///< _01C, max background volume level.
+	u8 mSfxVol;                  ///< _01D, max sound effects volume level.
+	bool mHasSaveGame;           ///< _01E, if player has made a save file on the memory card or not.
+	u8 _1F;                      ///< _01F, unknown/unused - set to 0 on init and never referenced.
+	u8 mMemCardSaveIndex;        ///< _020, index of save file on actual memory card + 1 (1-indexed).
+	u8 mSpareMemCardSaveIndex;   ///< _021, index of backup save file on actual memory card + 1 (1-indexed).
+	u8 mChalCourseOpenFlags;     ///< _022, bitflag of unlocked challenge mode maps, packed as (1 << stageID) - see `STAGE` defines.
+	GameHiscores mHiscores;      ///< _024, info about all current hiscores across all categories (story mode and challenge mode).
+	u32 mMostRecentSaveIndex;    ///< _0DC, most recent save on memory card (0-indexed).
+	u32 mMostRecentOptionsIndex; ///< _0E0, most recent options index on memory card (0-indexed).
+	u8 _E4[0x108 - 0xE4];        ///< _0E4, unknown/unused - not in DLL either.
+	u32 mMostRecentFileSlot;     ///< _108, last game file slot interacted with (0-2).
 };
 
 /**
@@ -594,11 +720,11 @@ struct GameFlow : public Node {
 	s16 mIsDayEndActive;                ///< _1E4, is the end-of-day cutscene playing?
 	s16 mIsDayEndTriggered;             ///< _1E6, is the end-of-day cutscene pending (for next time we're out of a menu etc)?
 	GameInterface* mGameInterface;      ///< _1E8, message shuttle - upcast to `GameMovieInterface`/`TitlesMovieInterface` based on section.
-	int mCurrGameSectionID;             ///< _1EC, see GameSectionID enum
-	int mNextGameSectionID;             ///< _1F0, see GameSectionID enum
-	s32 mNextOnePlayerSectionID;        ///< _1F4, see OnePlayerSectionID enum
+	int mCurrGameSectionID;             ///< _1EC, active game section - see `GameSectionID` enum.
+	int mNextGameSectionID;             ///< _1F0, next game section to transit to - see `GameSectionID` enum.
+	s32 mNextOnePlayerSectionID;        ///< _1F4, next OnePlayerSection to transit to - see `OnePlayerSectionID` enum.
 	u8 _1F8[0x4];                       ///< _1F8, unknown/unused.
-	int mLevelIndex;                    ///< _1FC, WHAT IS THIS???
+	int mNextOnePlayerSectionOnDayEnd;  ///< _1FC, next OnePlayerSection to transit to when day ends - see `OnePlayerSectionID` enum.
 	u32 _200;                           ///< _200, unknown/unused - set to zero then never referenced.
 	Section* mGameSection;              ///< _204, pointer to current active game section.
 	LangMode mLangModes[LANG_CAPACITY]; ///< _208, directories and paths for each language type - only 2 ever used (5 for PAL).

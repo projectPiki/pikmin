@@ -64,9 +64,9 @@ Creature* GenObjectNavi::birth(BirthInfo& info)
 		newNavi->mSRT.r         = info.mRotation;
 		newNavi->mFaceDirection = newNavi->mSRT.r.y;
 		newNavi->reset();
-		newNavi->mGenerator  = info.mGenerator;
-		newNavi->mNaviCamera = naviMgr->getNavi()->mNaviCamera;
-		flowCont.mNaviOnMap  = 1;
+		newNavi->mGenerator    = info.mGenerator;
+		newNavi->mNaviCamera   = naviMgr->getNavi()->mNaviCamera;
+		flowCont.mIsVersusMode = TRUE;
 	}
 
 	return newNavi;

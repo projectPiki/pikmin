@@ -218,7 +218,7 @@ public:
 	    : GameModeBase("チャレンジモード・リザルト") // 'challenge mode results'
 	{
 		mCancelButton          = KBBTN_Z;
-		mInfo.mCourseID        = STAGE_Yakushima;
+		mInfo.mStageID         = STAGE_Yakushima;
 		mInfo.mScore           = 0;
 		mInfo.mRank            = 2;
 		mInfo.mCourseScores[0] = 982;
@@ -782,7 +782,7 @@ struct GameCourseClearScreen : public Node {
 			Node::update();
 		} else if (mState == 1 && !mActiveMenu && gsys->getFade() == 0.0f) {
 			mState                           = -1;
-			gameflow.mNextOnePlayerSectionID = gameflow.mLevelIndex;
+			gameflow.mNextOnePlayerSectionID = gameflow.mNextOnePlayerSectionOnDayEnd;
 			gsys->softReset();
 		}
 
@@ -858,8 +858,8 @@ GameCourseClearSection::GameCourseClearSection()
 {
 	Node::init("<GameCourseClearSection>");
 	gsys->setFrameClamp(1);
-	flowCont._24C = 0;
-	flowCont._250 = 0;
+	flowCont.mNaviSeedCount = 0;
+	flowCont._250           = 0;
 
 	GameCourseClearScreen* screen = new GameCourseClearScreen();
 	screen->mPtclManager.init(10, 4081, 4081, 60.0f);

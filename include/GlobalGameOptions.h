@@ -28,21 +28,18 @@ enum StageID {
 	STAGE_END       = STAGE_INVALID,
 	STAGE_COUNT     = STAGE_INVALID,
 	STAGE_LASTVALID = STAGE_Last, // last valid loadable stage
-};
 
-/**
- * @brief IDs for each stage, as per stages.ini.
- *
- * @note There are also test maps and teki stages, but these don't have IDs.
- */
-enum ChalStageID {
-	CHALSTAGE_Practice  = 0, // Impact Site CM
-	CHALSTAGE_Forest    = 1, // Forest of Hope CM
-	CHALSTAGE_Cave      = 2, // Forest Navel CM
-	CHALSTAGE_Yakushima = 3, // Distant Spring CM
-	CHALSTAGE_Last      = 4, // Final Trial CM
-	// ...
-	CHALSTAGE_INVALID = 7, // default set on load, invalid
+	// all challenge mode stages share a stage ID with their story mode counterparts
+	// having these is lexically clearer though when reading code around unlocking or checking stages.
+	STAGE_ChalPractice  = STAGE_Practice,  // Challenge Mode Impact Site
+	STAGE_ChalForest    = STAGE_Forest,    // Challenge Mode Forest of Hope
+	STAGE_ChalCave      = STAGE_Cave,      // Challenge Mode Forest Navel
+	STAGE_ChalYakushima = STAGE_Yakushima, // Challenge Mode Distant Spring
+	STAGE_ChalLast      = STAGE_Last,      // Challenge Mode Final Trial
+	STAGE_ChalINVALID   = 7,               // Invalid challenge mode option.
+
+	STAGE_CHALSTART = STAGE_START, // first valid challenge mode level ID
+	STAGE_CHALCOUNT = STAGE_COUNT, // number of challenge mode levels
 };
 
 /**

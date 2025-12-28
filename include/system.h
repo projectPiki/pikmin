@@ -361,7 +361,7 @@ struct System : public StdSystem {
 #endif                                                                                 //
 	virtual void parseArchiveDirectory(immut char*, immut char*);                      // _24
 	virtual void sndPlaySe(u32);                                                       // _28
-	virtual void startLoading(LoadIdler*, bool, u32);                                  // _2C
+	virtual void startLoading(LoadIdler* idler, bool useLoadScreen, u32 loadDelay);    // _2C
 	virtual void endLoading();                                                         // _30
 
 	~System();

@@ -156,8 +156,8 @@ public:
 	RumbleMgr(bool, bool, bool, bool);
 
 	void reset();
-	void start(int, int, f32*);
-	void start(int, int, immut Vector3f&);
+	void start(int type, int ctrlNum, f32* valuePtr);
+	void start(int type, int ctrlNum, immut Vector3f& sourcePos);
 	void stop();
 	void stop(int, int);
 	void update();

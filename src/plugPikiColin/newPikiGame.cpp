@@ -18,6 +18,7 @@
 #include "NaviMgr.h"
 #include "Pcam/Camera.h"
 #include "Pcam/CameraManager.h"
+#include "Pellet.h"
 #include "PlayerState.h"
 #include "Section.h"
 #include "SoundMgr.h"
@@ -196,8 +197,8 @@ struct QuittingGameModeState : public ModeState {
 		if (!gsys->mSysOpPending) {
 			PRINT("sending softreset!\n");
 			gamecore->exitStage();
-			gameflow.mNextOnePlayerSectionID = mSection->mNextSectionId;
-			gameflow.mLevelIndex             = 6;
+			gameflow.mNextOnePlayerSectionID       = mSection->mPendingOnePlayerSectionID;
+			gameflow.mNextOnePlayerSectionOnDayEnd = ONEPLAYER_MapSelect;
 			Jac_SceneExit(SCENE_Unk13, 0);
 			gsys->softReset();
 		}
@@ -241,7 +242,7 @@ struct DayOverModeState : public ModeState {
 	DayOverModeState(BaseGameSection* c, int flag)
 	    : ModeState(c)
 	{
-		flowCont.mDayOverSeqStarted = true;
+		flowCont.mIsDayEndSeqStarted = TRUE;
 		gamecore->startContainerDemo();
 		gameflow.mWorldClock.setTime(gameflow.mParameters->mEndHour());
 		gamecore->mDrawGameInfo->upperFrameOut(0.5f, true);
@@ -451,15 +452,15 @@ static void handleTutorialWindow(u32& unused, Controller* controller)
 BaseGameSection::BaseGameSection()
     : Node("")
 {
-	mNextSectionId    = ONEPLAYER_MapSelect;
-	mActiveMenu       = nullptr;
-	mCurrentModeState = nullptr;
-	mNextModeState    = nullptr;
-	mController       = new Controller;
-	mUpdateFlags      = UPDATE_NONE;
-	mCurrentFade      = 0.0f;
-	mTargetFade       = 1.0f;
-	mFadeSpeed        = 0.5f;
+	mPendingOnePlayerSectionID = ONEPLAYER_MapSelect;
+	mActiveMenu                = nullptr;
+	mCurrentModeState          = nullptr;
+	mNextModeState             = nullptr;
+	mController                = new Controller;
+	mUpdateFlags               = UPDATE_NONE;
+	mCurrentFade               = 0.0f;
+	mTargetFade                = 1.0f;
+	mFadeSpeed                 = 0.5f;
 }
 
 /**
@@ -542,7 +543,7 @@ ModeState* RunningModeState::update(u32& result)
 	if (!gameflow.mMoviePlayer->mIsActive && !gameflow.mIsTutorialTextActive && gameflow.mIsDayEndActive) {
 		result &= ~UPDATE_AI; // Disable AI updates during day end
 		PRINT("*-------------------------------- DAY END !!!!!!!!!!!!!!  --------------------------------*\n");
-		mSection->mNextSectionId = gameflow.mLevelIndex;
+		mSection->mPendingOnePlayerSectionID = gameflow.mNextOnePlayerSectionOnDayEnd;
 		return new DayOverModeState(mSection, 0);
 	}
 
@@ -564,10 +565,10 @@ ModeState* RunningModeState::update(u32& result)
 		// Special handling for final day
 		if (playerState->getCurrParts() != MAX_UFO_PARTS && gameflow.mWorldClock.mCurrentDay == MAX_DAYS) {
 			if (playerState->happyEndable()) {
-				flowCont._244 = 1;
-				gameflow.mGameInterface->message(MOVIECMD_TextDemo, 28);
+				flowCont.mEndingType = ENDING_Neutral;
+				gameflow.mGameInterface->message(MOVIECMD_TextDemo, zen::ogScrTutorialMgr::TUT_BadEnding);
 			} else {
-				gameflow.mGameInterface->message(MOVIECMD_TextDemo, 28);
+				gameflow.mGameInterface->message(MOVIECMD_TextDemo, zen::ogScrTutorialMgr::TUT_BadEnding);
 			}
 		}
 	}
@@ -602,19 +603,23 @@ ModeState* RunningModeState::update(u32& result)
 		}
 	}
 
-	if (flowCont.mGameEndCondition) {
-		if (flowCont.mGameEndCondition == 2) {
+	// check if we have an unhandled forced game end pending
+	if (flowCont.mGameEndFlag != GAMEEND_None) {
+		if (flowCont.mGameEndFlag == GAMEEND_NaviDown) {
+			// you killed your captain!
 #if defined(VERSION_GPIP01_00)
-			flowCont._238PAL = 0;
+			flowCont.mIsDayEndSkippable = FALSE;
 #endif
-			mSection->mNextSectionId = ONEPLAYER_NewPikiGame;
+			mSection->mPendingOnePlayerSectionID = ONEPLAYER_NewPikiGame;
 			return new MessageModeState(mSection, false);
 		}
-		if (flowCont.mGameEndCondition == 1) {
+
+		if (flowCont.mGameEndFlag == GAMEEND_PikminExtinction) {
+			// you killed all your pikmin!
 #if defined(VERSION_GPIP01_00)
-			flowCont._238PAL = 0;
+			flowCont.mIsDayEndSkippable = FALSE;
 #endif
-			mSection->mNextSectionId = ONEPLAYER_NewPikiGame;
+			mSection->mPendingOnePlayerSectionID = ONEPLAYER_NewPikiGame;
 			return new MessageModeState(mSection, true);
 		}
 	}
@@ -650,7 +655,7 @@ ModeState* RunningModeState::update(u32& result)
 #if defined(VERSION_G98E01_PIKIDEMO)
 		gsys->forceHardReset();
 #else
-		mSection->mNextSectionId = ONEPLAYER_CardSelect;
+		mSection->mPendingOnePlayerSectionID = ONEPLAYER_CardSelect;
 		gsys->setFade(0.0f, 3.0f);
 		return new QuittingGameModeState(mSection);
 #endif
@@ -724,7 +729,8 @@ void RunningModeState::postRender(Graphics& gfx)
  */
 ModeState* MessageModeState::update(u32& result)
 {
-	if (flowCont.mGameEndCondition == 2) {
+	if (flowCont.mGameEndFlag == GAMEEND_NaviDown) {
+		// you killed your captain!
 		switch (mMessagePhase) {
 		case 0:
 			mMessageTimer -= gsys->getFrameTime();
@@ -773,7 +779,8 @@ ModeState* MessageModeState::update(u32& result)
 			}
 			break;
 		}
-	} else if (flowCont.mGameEndCondition == 0) {
+	} else if (flowCont.mGameEndFlag == GAMEEND_None) {
+		// you really shouldn't be here, but there's nothing to handle. go straight to results
 		PRINT("DOING FORCE RESULTS SCREEN !!!\n");
 		DayOverModeState* state  = new DayOverModeState(mSection, 1);
 		gameoverWindow           = nullptr;
@@ -800,15 +807,15 @@ ModeState* DayOverModeState::update(u32& result)
 
 #if defined(VERSION_GPIP01_00)
 	bool skipped = false;
-	if (flowCont._238PAL && playerState->getCurrParts() != 30 && gameflow.mWorldClock.mCurrentDay < 30) {
+	if (flowCont.mIsDayEndSkippable && playerState->getCurrParts() != 30 && gameflow.mWorldClock.mCurrentDay < 30) {
 		if (mState == 0 && mSection->mController->keyClick(KBBTN_B | KBBTN_A)) {
 			OSReport("!!!!!!!!!!!!!! SKIPPING !!!!\n");
 			gameflow.mMoviePlayer->skipScene(SCENESKIP_Skip);
-			skipped          = true;
-			flowCont._23CPAL = 1;
+			skipped                   = true;
+			flowCont.mIsDayEndSkipped = TRUE;
 		}
 
-		if (mState == 1 && (flowCont._23CPAL || mSection->mController->keyClick(KBBTN_B | KBBTN_A))) {
+		if (mState == 1 && (flowCont.mIsDayEndSkipped || mSection->mController->keyClick(KBBTN_B | KBBTN_A))) {
 			skipped = true;
 		}
 	}
@@ -858,7 +865,7 @@ ModeState* DayOverModeState::update(u32& result)
 	}
 
 	if (challengeWindow && challengeWindow->update(mSection->mController)) {
-		mSection->mNextSectionId = ONEPLAYER_MapSelect;
+		mSection->mPendingOnePlayerSectionID = ONEPLAYER_MapSelect;
 		gsys->setFade(0.0f, 3.0f);
 		return new QuittingGameModeState(mSection);
 	}
@@ -883,9 +890,9 @@ ModeState* DayOverModeState::update(u32& result)
 			if (!memcardWindow) {
 #endif
 			if (stat == 8) {
-				mSection->mNextSectionId = ONEPLAYER_CardSelect;
+				mSection->mPendingOnePlayerSectionID = ONEPLAYER_CardSelect;
 			} else {
-				mSection->mNextSectionId = ONEPLAYER_MapSelect;
+				mSection->mPendingOnePlayerSectionID = ONEPLAYER_MapSelect;
 			}
 			gsys->setFade(0.0f, 3.0f);
 			return new QuittingGameModeState(mSection);
@@ -901,8 +908,8 @@ ModeState* DayOverModeState::update(u32& result)
 			gameflow.mMoviePlayer->skipScene(SCENESKIP_Skip);
 			totalWindow = nullptr;
 		} else {
-			totalWindow              = nullptr;
-			mSection->mNextSectionId = ONEPLAYER_GameExit;
+			totalWindow                          = nullptr;
+			mSection->mPendingOnePlayerSectionID = ONEPLAYER_GameExit;
 			gsys->setFade(0.0f, 3.0f);
 			return new QuittingGameModeState(mSection);
 		}
@@ -1095,15 +1102,16 @@ ModeState* DayOverModeState::initialisePhaseTwo()
 		} else {
 			GameChalQuickInfo info;
 			PRINT("starting challenge mode window %d : %d!\n", GameStat::formationPikis, GameStat::containerPikis);
-			info.mCourseID = flowCont.mCurrentStage->mChalStageID;
-			info.mScore    = GameStat::allPikis;
+			info.mStageID = flowCont.mCurrentStage->mChalStageID;
+			info.mScore   = GameStat::allPikis;
 			gameflow.mGamePrefs.checkIsHiscore(info);
 			challengeWindow = new zen::DrawCMresult;
 			challengeWindow->start(info);
 		}
 	} else {
+		// we've hit max days, and haven't collected 30 parts :(
 		if (playerState->happyEndable()) {
-			flowCont._244 = 1;
+			flowCont.mEndingType = ENDING_Neutral;
 			gameflow.mMoviePlayer->startMovie(DEMOID_NeutralEndingLeaveOK, 0, nullptr, nullptr, nullptr, -1, true);
 		} else {
 			gameflow.mMoviePlayer->startMovie(DEMOID_BadEndingFailEscape, 0, nullptr, nullptr, nullptr, -1, true);
@@ -1176,7 +1184,7 @@ ModeState* DayOverModeState::initialisePhaseFour()
 		gameflow.mMoviePlayer->startMovie(DEMOID_EndingSpace, 0, nullptr, nullptr, nullptr, 0xFFFFFFFF, true);
 		makeTotalScoreWindow();
 	} else {
-		mSection->mNextSectionId = ONEPLAYER_GameExit;
+		mSection->mPendingOnePlayerSectionID = ONEPLAYER_GameExit;
 		gsys->setFade(0.0f, 3.0f);
 		return new QuittingGameModeState(mSection); // When this happens, the heap isnt restored, potential bug?
 	}
@@ -1218,9 +1226,9 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 		gameflow.mFrameCacher = new AnimFrameCacher(5000);
 		memStat->end("animCacher");
 
-		flowCont._240               = 0;
-		flowCont._23C               = 0;
-		flowCont.mDayOverSeqStarted = 0;
+		flowCont.mIsSunsetStateForceEnded = FALSE;
+		flowCont.mIsSunsetWhistleActive   = FALSE;
+		flowCont.mIsDayEndSeqStarted      = FALSE;
 
 		int size1 = 0x280000; // = 0xa00000 in the DLL
 		gsys->mHeaps[SYSHEAP_Teki].init("teki", AYU_STACK_GROW_UP, new u8[size1], size1);
@@ -1548,13 +1556,13 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 	{
 		gsys->getHeap(gsys->mActiveHeapIdx);
 		gameflow.mTimeMultiplier = 1.0f;
-		RandomAccessStream* data = gsys->openFile(flowCont.mStagePath1, true, true);
+		RandomAccessStream* data = gsys->openFile(flowCont.mCurrStageFilePath, true, true);
 		if (data) {
 			CmdStream* stream = new CmdStream(data);
 			while (!stream->endOfCmds() && !stream->endOfSection()) {
 				stream->getToken(true);
 				if (stream->isToken("map_file")) {
-					sprintf(flowCont.mAnimationTestPath, "%s", stream->getToken(true));
+					sprintf(flowCont.mMapModelFilePath, "%s", stream->getToken(true));
 				} else if (stream->isToken("day_multiply")) {
 					sscanf(stream->getToken(true), "%f", &gameflow.mTimeMultiplier);
 				} else if (stream->isToken("dayMgr")) {
@@ -1673,36 +1681,36 @@ void GameMovieInterface::parse(GameMovieInterface::SimpleMessage& msg)
 #endif
 	switch (id) {
 	case MOVIECMD_TextDemo:
-		// Data from here uses the DEMOID_* define (cutscene ID)
+		// data here should use the zen::ogScrTutorialMgr::EnumTutorial enum (text ID)
 		PRINT("***** START TUTORIAL WINDOW\n");
 		int partId    = -1;
 		bool hasAudio = false;
-		if (data == DEMOID_ShipUpgrade) {
+		if (data == zen::ogScrTutorialMgr::TUT_GetParts) {
 			if (gameflow.mShipTextPartID == -1) {
 				if (gameflow.mShipTextType == SHIPTEXT_CollectEngine) {
 					gameflow.mMoviePlayer->skipScene(SCENESKIP_Skip);
 					return;
 
 				} else if (gameflow.mShipTextType == SHIPTEXT_PartCollect) {
-					data = DEMOID_ShipUpgradeLast;
+					data = zen::ogScrTutorialMgr::TUT_HitUFO;
 				} else {
-					data = DEMOID_Unk24;
+					data = zen::ogScrTutorialMgr::TUT_APunchUFO;
 				}
 
 			} else if (gameflow.mShipTextType == SHIPTEXT_PartCollect) {
-				data = gameflow.mShipTextPartID + 92;
+				data = gameflow.mShipTextPartID + zen::ogScrTutorialMgr::TUT_PartsGetOffset;
 
 			} else if (gameflow.mShipTextType == SHIPTEXT_PartsAccess) {
-				data     = gameflow.mShipTextPartID + 62;
+				data     = gameflow.mShipTextPartID + zen::ogScrTutorialMgr::TUT_PartsInfoOffset;
 				hasAudio = false;
 				partId   = gameflow.mShipTextPartID;
 
 			} else if (gameflow.mShipTextType == SHIPTEXT_PowerUp) {
-				PRINT("showing power up message (%d)!!\n", gameflow.mShipTextPartID + 122);
-				int id = gameflow.mShipTextPartID + 122;
-				if (gameflow.mShipTextPartID == DEMOID_ShipUpgradeLast) {
+				PRINT("showing power up message (%d)!!\n", gameflow.mShipTextPartID + zen::ogScrTutorialMgr::TUT_PartsPower);
+				int id = gameflow.mShipTextPartID + zen::ogScrTutorialMgr::TUT_PartsPower;
+				if (gameflow.mShipTextPartID == UFO_SecretSafe) {
 					dontShowFrame = true;
-					data          = 27;
+					data          = zen::ogScrTutorialMgr::TUT_FinishUFO;
 				} else {
 					data = id;
 				}
@@ -1710,29 +1718,39 @@ void GameMovieInterface::parse(GameMovieInterface::SimpleMessage& msg)
 			} else if (gameflow.mShipTextType == SHIPTEXT_PartDiscovery) {
 				partId   = gameflow.mShipTextPartID;
 				hasAudio = true;
-				data     = gameflow.mShipTextPartID + 32;
+				data     = gameflow.mShipTextPartID + zen::ogScrTutorialMgr::TUT_PartsGetOnlyOffset;
 			}
 		}
 
 		createTutorialWindow(data, partId, hasAudio);
 		gameflow.mIsUIOverlayActive = TRUE;
 		break;
+
 	case MOVIECMD_Unused:
 		ERROR("SHOULD NOT GET THIS COMMAND!!!\n");
 		break;
+
 	case MOVIECMD_ForceDayEnd:
 		gamecore->forceDayEnd();
 		gameflow.mIsDayEndTriggered = TRUE;
 		break;
+
 	case MOVIECMD_HideHUD:
 		showFrame(false, 0.5f);
 		break;
+
 	case MOVIECMD_ShowHUD:
 		showFrame(true, 0.5f);
 		break;
+
 	case MOVIECMD_GameEndCondition:
+		// data here is 0 or 1:
+		// - 0 = caused by pikmin zero
+		// - 1 = caused by navi dead
 		if (data == 0) {
-			if (flowCont.mGameEndCondition == 1) {
+			// data = 0 => pikmin zero!
+			if (flowCont.mGameEndFlag == GAMEEND_PikminExtinction) {
+				// we already have the pikmin extinction flag set somehow, go straight to day end if we're not on day 30
 				if (!gameflow.mIsChallengeMode && gameflow.mWorldClock.mCurrentDay != MAX_DAYS) {
 					gameflow.mMoviePlayer->startMovie(DEMOID_ExtDayEnd, 0, nullptr, nullptr, nullptr, -1, true);
 					gameflow.mWorldClock.setTime(gameflow.mParameters->mEndHour());
@@ -1741,33 +1759,40 @@ void GameMovieInterface::parse(GameMovieInterface::SimpleMessage& msg)
 					}
 					mapMgr->mTargetFadeLevel = 0.0f;
 				} else {
-					flowCont.mGameEndCondition = 0;
+					// if we're in challenge mode or on the final day, reset the end flag
+					flowCont.mGameEndFlag = GAMEEND_None;
 				}
 			} else {
-				flowCont.mGameEndCondition = 1;
+				// flag isn't set yet, set it and handle the extinction cutscene
+				flowCont.mGameEndFlag = GAMEEND_PikminExtinction;
 				PRINT("got zero pikis flag!!\n");
 				Navi* navi = naviMgr->getNavi(0);
 				gameflow.mMoviePlayer->startMovie(DEMOID_Extinction, 0, navi, &navi->mSRT.t, &navi->mSRT.r, -1, true);
 				if (gameflow.mIsChallengeMode || gameflow.mWorldClock.mCurrentDay == MAX_DAYS) {
+					// if we're in challenge mode or on the final day, game over!
 					if (gameoverWindow) {
 						gameoverWindow->start(zen::DrawGameOver::MODE_Extinction, 40.0f);
 					}
 				}
 			}
 		} else {
-			flowCont.mGameEndCondition = 2;
+			// data = 1 => navi dead!
+			flowCont.mGameEndFlag = GAMEEND_NaviDown;
 			PRINT("got navi dead flag!!\n");
 		}
 		break;
+
 	case MOVIECMD_ForceResults:
 		PRINT("got FORCE RESULTS SCREEN !!!\n");
-		flowCont.mGameEndCondition = 0;
+		flowCont.mGameEndFlag = GAMEEND_None;
 		break;
+
 	case MOVIECMD_StartMovie:
 		bool check = (data & 0x80000000) != 0;
 		gamecore->startMovie(data & 0x7FFFFFFF, check);
 		PRINT("%s\n", check ? "HIDING NAVI!!!" : "not hiding!");
 		break;
+
 	case MOVIECMD_EndMovie:
 #if defined(VERSION_PIKIDEMO)
 		gamecore->endMovie();
@@ -1775,42 +1800,52 @@ void GameMovieInterface::parse(GameMovieInterface::SimpleMessage& msg)
 		gamecore->endMovie(data);
 #endif
 		break;
+
 	case MOVIECMD_FadeOut:
 		mSection->mTargetFade = 0.0f;
 		mSection->mFadeSpeed  = 4.5f;
 		break;
+
 	case MOVIECMD_FadeIn:
 		mSection->mCurrentFade = 0.0f;
 		mSection->mTargetFade  = 1.0f;
 		mSection->mFadeSpeed   = 2.5f;
 		break;
+
 	case MOVIECMD_CleanupDayEnd:
 		PRINT("MESSAGE CLEANUPDAYEND!!!!\n");
 		PRINT("wwwwwhhhhyyyyyy??????|!!!\n");
 		gamecore->cleanupDayEnd();
 		break;
+
 	case MOVIECMD_StartTotalResults:
 		PRINT("starting total results!!\n");
 		totalWindow->start();
 		Jac_SceneSetup(SCENE_Unk6, 1);
 		break;
+
 	case MOVIECMD_SpecialDayEnd:
 		gamecore->forceDayEnd();
 		gameflow.mIsDayEndTriggered = TRUE;
-		flowCont._244               = 2;
+		flowCont.mEndingType        = ENDING_Happy;
 		break;
+
 	case MOVIECMD_SetPauseAllowed:
 		gameflow.mIsPauseAllowed = data;
 		break;
+
 	case MOVIECMD_CountDownLastSecond:
 		break;
+
 	case MOVIECMD_StageFinish:
 		PRINT("GOT STAGE FINISH MESSAGE!!!\n");
 		gamecore->forceDayEnd();
 		break;
+
 	case MOVIECMD_CreateMenuWindow:
 		createMenuWindow();
 		break;
+
 #if defined(VERSION_G98E01_PIKIDEMO)
 	case MOVIECMD_DemoFinish:
 		createTutorialWindow(DEMOID_DayEndForest, -1, 0);
@@ -1844,10 +1879,10 @@ NewPikiGameSection::NewPikiGameSection()
 		// day one is locked at 2:48pm
 		gameflow.mWorldClock.setTime(TUTORIAL_TIME_OF_DAY);
 	}
-	flowCont.mGameEndCondition = 0;
+	flowCont.mGameEndFlag = 0;
 #if defined(VERSION_GPIP01_00)
-	flowCont._238PAL = 1;
-	flowCont._23CPAL = 0;
+	flowCont.mIsDayEndSkippable = TRUE;
+	flowCont.mIsDayEndSkipped   = FALSE;
 #endif
 	gsys->setFrameClamp(2);
 #ifdef WIN32

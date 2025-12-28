@@ -51,6 +51,7 @@
 #include "zen/DrawContainer.h"
 #include "zen/DrawGameInfo.h"
 #include "zen/DrawHurryUp.h"
+#include "zen/ogTutorial.h"
 
 static bool lastDamage;
 static bool currDamage;
@@ -770,7 +771,7 @@ void GameCoreSection::exitStage()
 	PADControlMotor(0, 0);
 	effectMgr->exit();
 	memStat->reset();
-	flowCont.mNaviOnMap = 0;
+	flowCont.mIsVersusMode = FALSE;
 }
 
 /**
@@ -867,11 +868,11 @@ void GameCoreSection::initStage()
 	GameStat::init();
 
 	memStat->start("initStage");
-	flowCont.mNaviOnMap = 0;
+	flowCont.mIsVersusMode = FALSE;
 	PRINT("initStage start\n");
 	seMgr->setPikiNum(0);
 	mNavi->_730 = flowCont._250;
-	mNavi->_72C = flowCont._24C;
+	mNavi->_72C = flowCont.mNaviSeedCount;
 
 	memStat->start("routeMgr");
 	routeMgr = new RouteMgr;
@@ -899,7 +900,7 @@ void GameCoreSection::initStage()
 	PRINT("done2\n");
 
 	char path[PATH_MAX];
-	strcpy(path, flowCont.mStagePath1);
+	strcpy(path, flowCont.mCurrStageFilePath);
 	u8* tmp;
 	for (tmp = (u8*)path; *tmp != (u32)'.'; tmp++) { }
 	*++tmp = 'g';
@@ -975,8 +976,8 @@ void GameCoreSection::initStage()
 	int i  = 0;
 	int j  = 0;
 	u8 day = gameflow.mWorldClock.mCurrentDay - 1;
-	for (gfInfo = (GenFileInfo*)flowCont.mCurrentStage->mFileInfoList.mChild; gfInfo; gfInfo = (GenFileInfo*)gfInfo->mNext) {
-		if (day >= gfInfo->mStartDay && day <= gfInfo->mEndDay && playerState->checkLimitGenFlag(i) == 0) {
+	for (gfInfo = (GenFileInfo*)flowCont.mCurrentStage->mGenFileList.mChild; gfInfo; gfInfo = (GenFileInfo*)gfInfo->mNext) {
+		if (day >= gfInfo->mFirstSpawnDay && day <= gfInfo->mLastSpawnDay && playerState->checkLimitGenFlag(i) == 0) {
 			sprintf(path2, "%s%s", path, gfInfo->mName);
 			data = gsys->openFile(path2, true, true);
 			if (data) {
@@ -986,7 +987,7 @@ void GameCoreSection::initStage()
 				gen->read(*data, true);
 				data->close();
 				playerState->setLimitGenFlag(i);
-				gen->setDayLimit(gfInfo->mDuration + 1);
+				gen->setDayLimit(gfInfo->mDayLimit + 1);
 				gen->updateUseList();
 				j++;
 			}
@@ -1414,7 +1415,7 @@ void GameCoreSection::update()
 {
 	STACK_PAD_VAR(2);
 	if (!gameflow.mMoviePlayer->mIsActive && !mDoneSundownWarn && gameflow.mWorldClock.mTimeOfDay >= gameflow.mParameters->mNightWarning()
-	    && (flowCont.mGameEndCondition != 1 || flowCont.mGameEndCondition != 2)) {
+	    && (flowCont.mGameEndFlag != 1 || flowCont.mGameEndFlag != 2)) {
 		if (playerState->inDayEnd()) {
 			PRINT("======== IN DAY END *** \n");
 		} else {
@@ -1548,7 +1549,7 @@ void GameCoreSection::updateAI()
 		seSystem->playSysSe(SYSSE_TIME_SIGNAL);
 		if (!playerState->mDemoFlags.isFlag(DEMOFLAG_FirstNoon)) {
 			playerState->mDemoFlags.setFlagOnly(DEMOFLAG_FirstNoon);
-			gameflow.mGameInterface->message(MOVIECMD_TextDemo, 31);
+			gameflow.mGameInterface->message(MOVIECMD_TextDemo, zen::ogScrTutorialMgr::TUT_InfoDisplay);
 		}
 	} else if (!mIsTimePastQuarter3 && gameflow.mWorldClock.mCurrentGameHour >= timeQuarter3) {
 		// play third quarter bell

@@ -33,9 +33,9 @@ GameExitSection::GameExitSection()
 void GameExitSection::update()
 {
 	gameflow.mNextOnePlayerSectionID = ONEPLAYER_GameSetup;
-	if (flowCont._244) {
+	if (flowCont.mEndingType != ENDING_None) {
 		gameflow.mNextGameSectionID = SECTION_MovSample;
-		gameflow.mCurrIntroMovieID  = flowCont._244 + 3;
+		gameflow.mCurrIntroMovieID  = flowCont.mEndingType + MOV_ENDING_OFFSET;
 	} else {
 		gameflow.mNextGameSectionID = SECTION_Titles;
 	}

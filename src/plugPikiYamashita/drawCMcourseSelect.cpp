@@ -258,9 +258,9 @@ void zen::DrawCMcourseSelect::start()
 void zen::DrawCMcourseSelect::setBestScore()
 {
 	GameChalQuickInfo info;
-	info.mCourseID = mMenu->getSelectNo();
+	info.mStageID = mMenu->getSelectNo();
 	gameflow.mGamePrefs.getChallengeScores(info);
-	PRINT("stage : %d \n", info.mCourseID);
+	PRINT("stage : %d \n", info.mStageID);
 	for (int i = 0; i < 5; i++) {
 		PRINT("score:%d\n", info.mCourseScores[i]);
 		mScoreMgr.setScore(i, info.mCourseScores[i]);

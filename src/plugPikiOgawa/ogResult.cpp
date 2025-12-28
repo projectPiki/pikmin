@@ -27,9 +27,9 @@ DEFINE_PRINT("OgResultSection")
 namespace zen {
 immut char* bloFile_Res_Table[] = {
 	"END",
-	"screen/blo/re_a_00.blo",
-	"screen/blo/re_a_01.blo",
-	"screen/blo/re_b_00.blo",
+	"screen/blo/re_a_00.blo", // 1 Day Since Impact - I have somehow managed to lauch the Dolphin, but was surprised...
+	"screen/blo/re_a_01.blo", // The Dolphin is missing 29 parts. If I can't recover them all, I may never...
+	"screen/blo/re_b_00.blo", // [X] Day(s) Since Impact - It appears that many of my ship's parts have landed in...
 	"screen/blo/re_b_01.blo",
 	"screen/blo/re_c_00.blo",
 	"screen/blo/re_d_00.blo",
@@ -71,7 +71,7 @@ immut char* bloFile_Res_Table[] = {
 	"screen/blo/re_x_00.blo",
 	"screen/blo/re_y_00.blo",
 	"screen/blo/re_z_00.blo",
-	"screen/blo/re_a1_00.blo",
+	"screen/blo/re_a1_00.blo", // [X] Day(s) Since Impact - Candypop Bud. When I throw Pikmin into this flower, ...
 	"screen/blo/re_b1_00.blo",
 	"screen/blo/re_c1_00.blo",
 	"screen/blo/re_d1_00.blo",
@@ -93,7 +93,7 @@ immut char* bloFile_Res_Table[] = {
 	"screen/blo/re_x1_00.blo",
 	"screen/blo/re_y1_00.blo",
 	"screen/blo/re_z1_00.blo",
-	"screen/blo/re_a2_00.blo",
+	"screen/blo/re_a2_00.blo", // [X] Day(s) Since Impact - At times, these seemingly emotionless Pikmin act with...
 	"screen/blo/re_b2_00.blo",
 	"screen/blo/re_c2_00.blo",
 	"screen/blo/re_d2_00.blo",
@@ -217,7 +217,7 @@ void zen::ogScrResultMgr::ogScrResultMgrSub()
 	mPaneFileNum2->hide();
 	mPaneFileNum3->hide();
 
-	switch (gameflow.mGamePrefs.mFileNum) {
+	switch (gameflow.mGamePrefs.mMostRecentFileSlot) {
 	case 0:
 		mPaneFileNum1->show();
 		break;
