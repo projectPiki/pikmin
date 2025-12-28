@@ -172,12 +172,11 @@ struct TitleSetupSection : public Node {
 		mMenu->addKeyEvent(Menu::KeyEventType::SpecialRelease, KBBTN_B, new Delegate1<Menu, Menu&>(mMenu, &Menu::menuCloseMenu));
 
 #if defined(DEVELOP) || defined(WIN32)
-		mMenu->addOption(SECTION_OnePlayer << 16, "Start GL Game", nullptr, true);
-		mMenu->addOption(SECTION_OnePlayer << 16, "Challenge Mode", new Delegate1<TitleSetupSection, Menu&>(this, &menuChallengeOption),
-		                 true);
-		mMenu->addOption(SECTION_MovSample << 16, "Movie Sample", nullptr, true);
-		mMenu->addOption(SECTION_OgTest << 16, "Rumble", nullptr, true);
-		mMenu->addOption(SECTION_PaniTest << 16, "TestScreen", nullptr, true);
+		mMenu->addOption(SECTION_OnePlayer << 16, "Start GL Game", nullptr);
+		mMenu->addOption(SECTION_OnePlayer << 16, "Challenge Mode", new Delegate1<TitleSetupSection, Menu&>(this, &menuChallengeOption));
+		mMenu->addOption(SECTION_MovSample << 16, "Movie Sample", nullptr);
+		mMenu->addOption(SECTION_OgTest << 16, "Rumble", nullptr);
+		mMenu->addOption(SECTION_PaniTest << 16, "TestScreen", nullptr);
 
 		mMenu->addOption(MENU_FAKE_OPTION_FOR_GAP);
 		mMenu->addMenu(mDayMgr->mMenu, 0, "Lighting");

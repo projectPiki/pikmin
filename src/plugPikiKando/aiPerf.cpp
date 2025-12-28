@@ -87,71 +87,71 @@ void AIPerf::addMenu(Menu* menu)
 
 	char* bridgeText = new char[0x40];
 	sprintf(bridgeText, "%s", AIPerf::bridgeFast ? "Bridge Opt [on]" : "Bridge opt [off]");
-	menu->addOption(0, bridgeText, new Delegate1<AIPerf, Menu&>(this, &AIPerf::toggleBridge), true);
+	menu->addOption(0, bridgeText, new Delegate1<AIPerf, Menu&>(this, &AIPerf::toggleBridge));
 
 	char* routeText = new char[0x40];
 	sprintf(routeText, "%s", AIPerf::showRoute ? "Route Debug [on]" : "Route Debug [off]");
-	menu->addOption(0, routeText, new Delegate1<AIPerf, Menu&>(this, &AIPerf::toggleShowRoute), true);
+	menu->addOption(0, routeText, new Delegate1<AIPerf, Menu&>(this, &AIPerf::toggleShowRoute));
 
 	char* optLevelText = new char[0x40];
 	sprintf(optLevelText, "Opt Level %d", AIPerf::optLevel);
-	menu->addOption(0, optLevelText, nullptr, true);
+	menu->addOption(0, optLevelText, nullptr);
 	menu->addKeyEvent(Menu::KeyEventType::Release, KBBTN_Y, new Delegate1<AIPerf, Menu&>(this, &AIPerf::decOptLevel));
 	menu->addKeyEvent(Menu::KeyEventType::Release, KBBTN_X, new Delegate1<AIPerf, Menu&>(this, &AIPerf::incOptLevel));
 
 	char* collSortText = new char[0x40];
 	sprintf(collSortText, "%s", AIPerf::useCollSort ? "[use Coll Sort]" : "[ignore Coll Sort]");
-	menu->addOption(0, collSortText, new Delegate1<AIPerf, Menu&>(this, &AIPerf::toggleCollSort), true);
+	menu->addOption(0, collSortText, new Delegate1<AIPerf, Menu&>(this, &AIPerf::toggleCollSort));
 
 	char* kandoDebugText = new char[0x40];
 	sprintf(kandoDebugText, "%s", AIPerf::kandoOnly ? "Kando Debug [on]" : "Kando Debug [off]");
-	menu->addOption(0, kandoDebugText, new Delegate1<AIPerf, Menu&>(this, &AIPerf::toggleKando), true);
+	menu->addOption(0, kandoDebugText, new Delegate1<AIPerf, Menu&>(this, &AIPerf::toggleKando));
 
 	char* soundText = new char[0x40];
 	sprintf(soundText, "%s", AIPerf::soundDebug ? "Sound Debug [on]" : "Sound Debug [off]");
-	menu->addOption(0, soundText, new Delegate1<AIPerf, Menu&>(this, &AIPerf::toggleSoundDebug), true);
+	menu->addOption(0, soundText, new Delegate1<AIPerf, Menu&>(this, &AIPerf::toggleSoundDebug));
 
 	char* modeText = new char[0x40];
 	sprintf(modeText, "%s", AIPerf::generatorMode ? "Generator Mode" : "Game Mode");
-	menu->addOption(0, modeText, new Delegate1<AIPerf, Menu&>(this, &AIPerf::toggleGeneratorMode), true);
+	menu->addOption(0, modeText, new Delegate1<AIPerf, Menu&>(this, &AIPerf::toggleGeneratorMode));
 
 	char* moveTypeText      = new char[0x40];
 	const char* moveTypes[] = { "stop", "no stop", "slip" };
 	sprintf(moveTypeText, "%s", moveTypes[AIPerf::moveType]);
-	menu->addOption(0, moveTypeText, new Delegate1<AIPerf, Menu&>(this, &AIPerf::toggleMoveType), true);
+	menu->addOption(0, moveTypeText, new Delegate1<AIPerf, Menu&>(this, &AIPerf::toggleMoveType));
 
 	char* lodText = new char[0x40];
 	sprintf(lodText, "%s", AIPerf::useLOD ? "LOD [on]" : "LOD [off]");
-	menu->addOption(0, lodText, new Delegate1<AIPerf, Menu&>(this, &AIPerf::toggleLOD), true);
+	menu->addOption(0, lodText, new Delegate1<AIPerf, Menu&>(this, &AIPerf::toggleLOD));
 
 	char* collsText = new char[0x40];
 	sprintf(collsText, "%s", AIPerf::showColls ? "Colls [on]" : "Colls [off]");
-	menu->addOption(0, collsText, new Delegate1<AIPerf, Menu&>(this, &AIPerf::toggleColls), true);
+	menu->addOption(0, collsText, new Delegate1<AIPerf, Menu&>(this, &AIPerf::toggleColls));
 
 	char* asyncText = new char[0x40];
 	sprintf(asyncText, "%s", AIPerf::useASync ? "ASYNC [on]" : "ASYNC [off]");
-	menu->addOption(0, asyncText, new Delegate1<AIPerf, Menu&>(this, &AIPerf::toggleASync), true);
+	menu->addOption(0, asyncText, new Delegate1<AIPerf, Menu&>(this, &AIPerf::toggleASync));
 
 	char* insQuickText = new char[0x40];
 	sprintf(insQuickText, "%s", AIPerf::insQuick ? "Ins [Fast]" : "Ins [Slow]");
-	menu->addOption(0, insQuickText, new Delegate1<AIPerf, Menu&>(this, &AIPerf::toggleInsQuick), true);
+	menu->addOption(0, insQuickText, new Delegate1<AIPerf, Menu&>(this, &AIPerf::toggleInsQuick));
 
 	char* ufoLevelText = new char[0x40];
 	sprintf(ufoLevelText, "UFO LEVEL %d", AIPerf::ufoLevel);
-	menu->addOption(0, ufoLevelText, nullptr, true);
+	menu->addOption(0, ufoLevelText, nullptr);
 	menu->addKeyEvent(Menu::KeyEventType::Release, KBBTN_Y, new Delegate1<AIPerf, Menu&>(this, &AIPerf::decUfoLevel));
 	menu->addKeyEvent(Menu::KeyEventType::Release, KBBTN_X, new Delegate1<AIPerf, Menu&>(this, &AIPerf::incUfoLevel));
 
-	menu->addOption(0, "Flower Pikis", nullptr, true);
+	menu->addOption(0, "Flower Pikis", nullptr);
 	menu->addKeyEvent(Menu::KeyEventType::Release, KBBTN_Y, new Delegate1<AIPerf, Menu&>(this, &AIPerf::flowerPiki));
 
-	menu->addOption(0, "Break sluice", nullptr, true);
+	menu->addOption(0, "Break sluice", nullptr);
 	menu->addKeyEvent(Menu::KeyEventType::Release, KBBTN_Y, new Delegate1<AIPerf, Menu&>(this, &AIPerf::breakSluice));
 
-	menu->addOption(0, "COLLECT PIKIS", nullptr, true);
+	menu->addOption(0, "COLLECT PIKIS", nullptr);
 	menu->addKeyEvent(Menu::KeyEventType::Release, KBBTN_Y, new Delegate1<AIPerf, Menu&>(this, &AIPerf::collectPikis));
 
-	menu->addOption(0, "FULLFILL PIKI", nullptr, true);
+	menu->addOption(0, "FULLFILL PIKI", nullptr);
 	menu->addKeyEvent(Menu::KeyEventType::Release, KBBTN_Y, new Delegate1<AIPerf, Menu&>(this, &AIPerf::fullfillPiki));
 }
 

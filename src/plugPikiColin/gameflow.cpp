@@ -297,31 +297,31 @@ void GameFlow::addOptionsMenu(Menu* parent)
 {
 	char* timerBuf = new char[0x40];
 	sprintf(timerBuf, "Toggle Timers %s", timopts[gsys->mTimerState]);
-	parent->addOption(0, timerBuf, new Delegate1<GameFlow, Menu&>(this, &menuToggleTimers), true);
+	parent->addOption(0, timerBuf, new Delegate1<GameFlow, Menu&>(this, &menuToggleTimers));
 
 	char* printBuf = new char[0x40];
 	sprintf(printBuf, "Toggle Print %s", (gsys->mTogglePrint) ? " [on]" : "[off]");
-	parent->addOption(0, printBuf, new Delegate1<GameFlow, Menu&>(this, &menuTogglePrint), true);
+	parent->addOption(0, printBuf, new Delegate1<GameFlow, Menu&>(this, &menuTogglePrint));
 
 	char* debugInfoBuf = new char[0x40];
 	sprintf(debugInfoBuf, "Toggle DInfo %s", (gsys->mToggleDebugInfo) ? " [on]" : "[off]");
-	parent->addOption(0, debugInfoBuf, new Delegate1<GameFlow, Menu&>(this, &menuToggleDInfo), true);
+	parent->addOption(0, debugInfoBuf, new Delegate1<GameFlow, Menu&>(this, &menuToggleDInfo));
 
 	char* debugExtraBuf = new char[0x40];
 	sprintf(debugExtraBuf, "Toggle DExtra %s", (gsys->mToggleDebugExtra) ? " [on]" : "[off]");
-	parent->addOption(0, debugExtraBuf, new Delegate1<GameFlow, Menu&>(this, &menuToggleDExtra), true);
+	parent->addOption(0, debugExtraBuf, new Delegate1<GameFlow, Menu&>(this, &menuToggleDExtra));
 
 	char* blurBuf = new char[0x40];
 	sprintf(blurBuf, "Toggle Blur %s", (gsys->mToggleBlur) ? " [on]" : "[off]");
-	parent->addOption(0, blurBuf, new Delegate1<GameFlow, Menu&>(this, &menuToggleBlur), true);
+	parent->addOption(0, blurBuf, new Delegate1<GameFlow, Menu&>(this, &menuToggleBlur));
 
 	char* fileInfoBuf = new char[0x40];
 	sprintf(fileInfoBuf, "Toggle FileInfo %s", (gsys->mToggleFileInfo) ? " [on]" : "[off]");
-	parent->addOption(0, fileInfoBuf, new Delegate1<GameFlow, Menu&>(this, &menuToggleInfo), true);
+	parent->addOption(0, fileInfoBuf, new Delegate1<GameFlow, Menu&>(this, &menuToggleInfo));
 
 	char* collsBuf = new char[0x40];
 	sprintf(collsBuf, "Toggle Colls %s", (gsys->mToggleColls) ? " [on]" : "[off]");
-	parent->addOption(0, collsBuf, new Delegate1<GameFlow, Menu&>(this, &menuToggleColls), true);
+	parent->addOption(0, collsBuf, new Delegate1<GameFlow, Menu&>(this, &menuToggleColls));
 }
 
 static const char* filterNames[] = {
@@ -388,12 +388,12 @@ void GameFlow::addFilterMenu(Menu* parent)
 {
 	char* changeBuf = new char[0x40];
 	sprintf(changeBuf, "type = %s", filterNames[mFilterType]);
-	parent->addOption(0, changeBuf, new Delegate1<GameFlow, Menu&>(this, &menuChangeFilter), true);
+	parent->addOption(0, changeBuf, new Delegate1<GameFlow, Menu&>(this, &menuChangeFilter));
 	parent->addOption(MENU_FAKE_OPTION_FOR_GAP);
 	for (int i = 0; i < 7; i++) {
 		char* buf = new char[0x40];
 		sprintf(buf, "Filter setting %d", mVFilters[i]);
-		parent->addOption(i, buf, nullptr, true);
+		parent->addOption(i, buf, nullptr);
 		parent->addKeyEvent(Menu::KeyEventType::Release, KBBTN_Y, new Delegate1<GameFlow, Menu&>(this, &menuDecreaseFilter));
 		parent->addKeyEvent(Menu::KeyEventType::Release, KBBTN_X, new Delegate1<GameFlow, Menu&>(this, &menuIncreaseFilter));
 	}
