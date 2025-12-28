@@ -117,7 +117,7 @@ struct MapSelectSetupSection : public Node {
 		mBigFont = new Font;
 		mBigFont->setTexture(gsys->loadTexture("bigFont.bti", true), 21, 42);
 		makeMapsMenu();
-		mMapListMenu->addOption(0, nullptr, nullptr, true);
+		mMapListMenu->addOption(MENU_FAKE_OPTION_FOR_GAP);
 		mMapListMenu->addOption(0, "Open All Maps",
 		                        !gameflow.mIsChallengeMode ? new Delegate1<MapSelectSetupSection, Menu&>(this, &openAllMaps)
 		                                                   : new Delegate1<MapSelectSetupSection, Menu&>(this, &openAllChMaps),

@@ -142,4 +142,7 @@ struct Menu : public Node {
 	f32 mOpeningFadeProgress;                   // _B0
 };
 
+// These parameters for `Menu::AddOption` create an inert option that is skipped over.
+#define MENU_FAKE_OPTION_FOR_GAP 0, nullptr, nullptr, true
+
 #endif

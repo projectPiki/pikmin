@@ -389,7 +389,7 @@ void GameFlow::addFilterMenu(Menu* parent)
 	char* changeBuf = new char[0x40];
 	sprintf(changeBuf, "type = %s", filterNames[mFilterType]);
 	parent->addOption(0, changeBuf, new Delegate1<GameFlow, Menu&>(this, &menuChangeFilter), true);
-	parent->addOption(0, nullptr, nullptr, true);
+	parent->addOption(MENU_FAKE_OPTION_FOR_GAP);
 	for (int i = 0; i < 7; i++) {
 		char* buf = new char[0x40];
 		sprintf(buf, "Filter setting %d", mVFilters[i]);
