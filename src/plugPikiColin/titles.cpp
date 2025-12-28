@@ -20,6 +20,13 @@
 #include "zen/ogStart.h"
 #include "zen/ogTitle.h"
 
+/// Macros for packing and unpacking the section compression flag.
+#define PACK_NEXT_SECTION(sectionID)     (sectionID) << 16
+#define PACK_NEXT_ONEPLAYER(onePlayerID) ((SECTION_OnePlayer) << 16) | (onePlayerID)
+
+#define UNPACK_NEXT_SECTION(flag)   (flag) >> 16
+#define UNPACK_NEXT_ONEPLAYER(flag) (flag) & 0xFFFF
+
 struct TitleSetupSection;
 
 static zen::ogScrTitleMgr* titleWindow;
@@ -172,11 +179,12 @@ struct TitleSetupSection : public Node {
 		mMenu->addKeyEvent(Menu::KeyEventType::SpecialRelease, KBBTN_B, new Delegate1<Menu, Menu&>(mMenu, &Menu::menuCloseMenu));
 
 #if defined(DEVELOP) || defined(WIN32)
-		mMenu->addOption(SECTION_OnePlayer << 16, "Start GL Game", nullptr);
-		mMenu->addOption(SECTION_OnePlayer << 16, "Challenge Mode", new Delegate1<TitleSetupSection, Menu&>(this, &menuChallengeOption));
-		mMenu->addOption(SECTION_MovSample << 16, "Movie Sample", nullptr);
-		mMenu->addOption(SECTION_OgTest << 16, "Rumble", nullptr);
-		mMenu->addOption(SECTION_PaniTest << 16, "TestScreen", nullptr);
+		mMenu->addOption(PACK_NEXT_ONEPLAYER(ONEPLAYER_GameSetup), "Start GL Game", nullptr);
+		mMenu->addOption(PACK_NEXT_ONEPLAYER(ONEPLAYER_GameSetup), "Challenge Mode",
+		                 new Delegate1<TitleSetupSection, Menu&>(this, &menuChallengeOption));
+		mMenu->addOption(PACK_NEXT_SECTION(SECTION_MovSample), "Movie Sample", nullptr);
+		mMenu->addOption(PACK_NEXT_SECTION(SECTION_OgTest), "Rumble", nullptr);
+		mMenu->addOption(PACK_NEXT_SECTION(SECTION_PaniTest), "TestScreen", nullptr);
 
 		mMenu->addOption(MENU_FAKE_OPTION_FOR_GAP);
 		mMenu->addMenu(mDayMgr->mMenu, 0, "Lighting");
@@ -184,7 +192,7 @@ struct TitleSetupSection : public Node {
 		mMenu->addMenu(optionsMenu, 0, "Options");
 #endif
 
-		mNextSectionId = 0;
+		mNextSectionsFlag = PACK_NEXT_SECTION(SECTION_NinLogo);
 
 		gameflow.mFrameCacher = new AnimFrameCacher(8000);
 
@@ -219,8 +227,8 @@ struct TitleSetupSection : public Node {
 				gameflow.mCurrIntroMovieID = gameflow.mNextIntroMovieID;
 				gameflow.mNextIntroMovieID = (gameflow.mNextIntroMovieID + 1) & MOV_INTRO_CYCLE_MASK; // basically mod(4)
 
-				mNextSectionId = SECTION_MovSample << 16;
-				mState         = 1;
+				mNextSectionsFlag = PACK_NEXT_SECTION(SECTION_MovSample);
+				mState            = 1;
 				gsys->setFade(0.0f, 3.0f);
 				return;
 			}
@@ -279,8 +287,8 @@ struct TitleSetupSection : public Node {
 				if (!totalWindowOn) {
 					if (startWindowOn && !titleWindowOn && mController->keyClick(KBBTN_START | KBBTN_A)) {
 #if defined(VERSION_G98E01_PIKIDEMO)
-						mNextSectionId                   = 0x40000;
-						gameflow.mGamePrefs.mHasSaveGame = 0;
+						mNextSectionsFlag                = PACK_NEXT_ONEPLAYER(ONEPLAYER_GameSetup);
+						gameflow.mGamePrefs.mHasSaveGame = false;
 						gameflow.mIsChallengeMode        = true;
 						Jac_SceneExit(SCENE_Unk13, 0);
 						mState = 1;
@@ -298,7 +306,7 @@ struct TitleSetupSection : public Node {
 					zen::ogScrTitleMgr::TitleStatus titleState = titleWindow->update(mController);
 					if (titleState == zen::ogScrTitleMgr::Status_6) {
 						PRINT("going to CHALLENGE MODE SETUP!\n");
-						mNextSectionId                   = SECTION_OnePlayer << 16;
+						mNextSectionsFlag                = PACK_NEXT_ONEPLAYER(ONEPLAYER_GameSetup);
 						gameflow.mGamePrefs.mHasSaveGame = false;
 						gameflow.mIsChallengeMode        = TRUE;
 						Jac_SceneExit(SCENE_Unk13, 0);
@@ -313,10 +321,10 @@ struct TitleSetupSection : public Node {
 					} else if (titleState == zen::ogScrTitleMgr::Status_4) {
 						if (gameflow.mGamePrefs.mHasSaveGame) {
 							PRINT("going to SETUP!\n");
-							mNextSectionId = SECTION_OnePlayer << 16;
+							mNextSectionsFlag = PACK_NEXT_ONEPLAYER(ONEPLAYER_GameSetup);
 						} else {
 							PRINT("going to SETUP!\n");
-							mNextSectionId = SECTION_OnePlayer << 16;
+							mNextSectionsFlag = PACK_NEXT_ONEPLAYER(ONEPLAYER_GameSetup);
 						}
 						Jac_SceneExit(SCENE_Unk13, 0);
 						mState = 1;
@@ -324,7 +332,7 @@ struct TitleSetupSection : public Node {
 					} else if (titleState == zen::ogScrTitleMgr::Status_5 || titleState == zen::ogScrTitleMgr::Status_3) {
 #if defined(VERSION_G98E01_PIKIDEMO)
 						STACK_PAD_VAR(1);
-						if (gameflow.mGamePrefs.mIsChanged)
+						if (gameflow.mGamePrefs.mChangesPending)
 							gameflow.mMemoryCard.saveOptions();
 
 						int old = gameflow.mLanguageIndex;
@@ -350,7 +358,7 @@ struct TitleSetupSection : public Node {
 #else
 						bool child = gameflow.mGamePrefs.getChildMode();
 #endif
-						if (gameflow.mGamePrefs.mIsChanged) {
+						if (gameflow.mGamePrefs.mChangesPending) {
 							bool vibe   = gameflow.mGamePrefs.getVibeMode();
 							bool stereo = gameflow.mGamePrefs.getStereoMode();
 #if defined(VERSION_GPIP01_00)
@@ -370,7 +378,7 @@ struct TitleSetupSection : public Node {
 							gameflow.mGamePrefs.setChildMode(child);
 							gameflow.mGamePrefs.setBgmVol(bgmVol);
 							gameflow.mGamePrefs.setSfxVol(sfxVol);
-							gameflow.mGamePrefs.mIsChanged = false;
+							gameflow.mGamePrefs.mChangesPending = false;
 							gameflow.mMemoryCard.saveOptions();
 						}
 						if (gameflow.mLanguageIndex != child) {
@@ -400,8 +408,8 @@ struct TitleSetupSection : public Node {
 
 		if (mState == 1 && !mCurrentMenu && gsys->getFade() == 0.0f) {
 			mState                           = -1;
-			gameflow.mNextGameSectionID      = mNextSectionId >> 16;
-			gameflow.mNextOnePlayerSectionID = mNextSectionId & 0xFFFF;
+			gameflow.mNextGameSectionID      = UNPACK_NEXT_SECTION(mNextSectionsFlag);
+			gameflow.mNextOnePlayerSectionID = UNPACK_NEXT_ONEPLAYER(mNextSectionsFlag);
 			gsys->softReset();
 		}
 	}
@@ -544,7 +552,7 @@ struct TitleSetupSection : public Node {
 
 	void menuSelectOption(Menu& parent)
 	{
-		mNextSectionId            = parent.mCurrentItem->mData;
+		mNextSectionsFlag         = parent.mCurrentItem->mData;
 		gameflow.mIsChallengeMode = FALSE;
 		Jac_SceneExit(SCENE_Unk13, 0);
 		parent.close();
@@ -554,7 +562,7 @@ struct TitleSetupSection : public Node {
 
 	void menuChallengeOption(Menu& parent)
 	{
-		mNextSectionId = parent.mCurrentItem->mData;
+		mNextSectionsFlag = parent.mCurrentItem->mData;
 		gameflow.mGamePrefs.Initialise();
 		gameflow.mIsChallengeMode = TRUE;
 		Jac_SceneExit(SCENE_Unk13, 0); // Just an educated guess, as this function is DLL-exclusive.
@@ -575,7 +583,7 @@ struct TitleSetupSection : public Node {
 	// _00     = VTBL
 	// _00-_20 = Node
 	u32 mState;                   // _20
-	u32 mNextSectionId;           // _24
+	u32 mNextSectionsFlag;        // _24, flag that stores the next OnePlayerSection and Section - see defines in Section.h.
 	Menu* mMenu;                  // _28
 	Menu* mCurrentMenu;           // _2C
 	Controller* mController;      // _30

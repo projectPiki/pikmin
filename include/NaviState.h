@@ -364,8 +364,8 @@ struct NaviDemoSunsetState : public NaviState {
 	Navi* mNavi;                                // _10
 	Vector3f mStartPos;                         // _14
 	Vector3f mGoalPos;                          // _20
-	f32 _2C;                                    // _2C
-	f32 _30;                                    // _30
+	f32 mGoalDistance;                          // _2C
+	f32 mSunsetTimer;                           // _30
 	bool mOpenedAccount;                        // _34
 	DemoStateMachine* mStateMachine;            // _38
 	AState<NaviDemoSunsetState>* mCurrentState; // _3C, unknown

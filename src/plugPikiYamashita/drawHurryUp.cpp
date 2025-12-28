@@ -7,6 +7,7 @@
 #include "nlib/Math.h"
 #include "sysNew.h"
 #include "zen/Math.h"
+#include "zen/ogTutorial.h"
 
 /**
  * @todo: Documentation
@@ -196,7 +197,7 @@ bool zen::DrawHurryUp::endStatus()
 		if (playerState && !gameflow.mMoviePlayer->mIsActive && !playerState->mDemoFlags.isFlag(DEMOFLAG_FirstHurryUp)
 		    && !playerState->mDemoFlags.isFlag(DEMOFLAG_FirstHurryUp)) {
 			playerState->mDemoFlags.setFlagOnly(DEMOFLAG_FirstHurryUp);
-			gameflow.mGameInterface->message(MOVIECMD_TextDemo, 19);
+			gameflow.mGameInterface->message(MOVIECMD_TextDemo, zen::ogScrTutorialMgr::TUT_DayEnd);
 		}
 	}
 

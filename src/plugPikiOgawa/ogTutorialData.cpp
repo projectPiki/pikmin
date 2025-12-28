@@ -687,160 +687,160 @@ static immut char* bloFile_Test[] = {
 };
 
 immut char** bloFiles_Tutorial[] = {
-	bloFile_Mezame,
-	bloFile_Oniyon,
-	bloFile_FoundPikmin,
-	bloFile_PullHint,
-	bloFile_GetPikmin,
-	bloFile_ControlHint,
-	bloFile_Pelette,
-	bloFile_StoneHint2,
-	bloFile_FoundEngine,
-	bloFile_GetEngine,
-	bloFile_RirikuDemo,
-	bloFile_Camera,
-	bloFile_OnyonInOut,
-	bloFile_Zenmetu,
-	bloFile_YellowPikmin,
-	bloFile_BluePikmin,
-	bloFile_FoundBomb,
-	bloFile_GetParts,
-	bloFile_PowerUp,
-	bloFile_DayEnd,
-	bloFile_BombInfo,
-	bloFile_Limit100,
-	bloFile_Mitu,
-	bloFile_Rute,
-	bloFile_APunchUFO,
-	bloFile_LifeUp,
-	bloFile_HitUFO,
-	bloFile_FinishUFO,
-	bloFile_BadEnding,
-	bloFile_HappyEnding,
-	bloFile_NukiAndFree,
-	bloFile_InfoDisplay,
-	bloFile_PartsGetOnly_ust1,
-	bloFile_PartsGetOnly_ust2,
-	bloFile_PartsGetOnly_ust3,
-	bloFile_PartsGetOnly_ust4,
-	bloFile_PartsGetOnly_ust5,
-	bloFile_PartsGetOnly_uf01,
-	bloFile_PartsGetOnly_uf02,
-	bloFile_PartsGetOnly_uf03,
-	bloFile_PartsGetOnly_uf04,
-	bloFile_PartsGetOnly_uf05,
-	bloFile_PartsGetOnly_uf06,
-	bloFile_PartsGetOnly_uf07,
-	bloFile_PartsGetOnly_uf08,
-	bloFile_PartsGetOnly_uf09,
-	bloFile_PartsGetOnly_uf10,
-	bloFile_PartsGetOnly_uf11,
-	bloFile_PartsGetOnly_un01,
-	bloFile_PartsGetOnly_un02,
-	bloFile_PartsGetOnly_un03,
-	bloFile_PartsGetOnly_un04,
-	bloFile_PartsGetOnly_un05,
-	bloFile_PartsGetOnly_un06,
-	bloFile_PartsGetOnly_un07,
-	bloFile_PartsGetOnly_un08,
-	bloFile_PartsGetOnly_un09,
-	bloFile_PartsGetOnly_un10,
-	bloFile_PartsGetOnly_un11,
-	bloFile_PartsGetOnly_un12,
-	bloFile_PartsGetOnly_un13,
-	bloFile_PartsGetOnly_un14,
-	bloFile_PartsInfo_ust1,
-	bloFile_PartsInfo_ust2,
-	bloFile_PartsInfo_ust3,
-	bloFile_PartsInfo_ust4,
-	bloFile_PartsInfo_ust5,
-	bloFile_PartsInfo_uf01,
-	bloFile_PartsInfo_uf02,
-	bloFile_PartsInfo_uf03,
-	bloFile_PartsInfo_uf04,
-	bloFile_PartsInfo_uf05,
-	bloFile_PartsInfo_uf06,
-	bloFile_PartsInfo_uf07,
-	bloFile_PartsInfo_uf08,
-	bloFile_PartsInfo_uf09,
-	bloFile_PartsInfo_uf10,
-	bloFile_PartsInfo_uf11,
-	bloFile_PartsInfo_un01,
-	bloFile_PartsInfo_un02,
-	bloFile_PartsInfo_un03,
-	bloFile_PartsInfo_un04,
-	bloFile_PartsInfo_un05,
-	bloFile_PartsInfo_un06,
-	bloFile_PartsInfo_un07,
-	bloFile_PartsInfo_un08,
-	bloFile_PartsInfo_un09,
-	bloFile_PartsInfo_un10,
-	bloFile_PartsInfo_un11,
-	bloFile_PartsInfo_un12,
-	bloFile_PartsInfo_un13,
-	bloFile_PartsInfo_un14,
-	bloFile_PartsGet_ust1,
-	bloFile_PartsGet_ust2,
-	bloFile_PartsGet_ust3,
-	bloFile_PartsGet_ust4,
-	bloFile_PartsGet_ust5,
-	bloFile_PartsGet_uf01,
-	bloFile_PartsGet_uf02,
-	bloFile_PartsGet_uf03,
-	bloFile_PartsGet_uf04,
-	bloFile_PartsGet_uf05,
-	bloFile_PartsGet_uf06,
-	bloFile_PartsGet_uf07,
-	bloFile_PartsGet_uf08,
-	bloFile_PartsGet_uf09,
-	bloFile_PartsGet_uf10,
-	bloFile_PartsGet_uf11,
-	bloFile_PartsGet_un01,
-	bloFile_PartsGet_un02,
-	bloFile_PartsGet_un03,
-	bloFile_PartsGet_un04,
-	bloFile_PartsGet_un05,
-	bloFile_PartsGet_un06,
-	bloFile_PartsGet_un07,
-	bloFile_PartsGet_un08,
-	bloFile_PartsGet_un09,
-	bloFile_PartsGet_un10,
-	bloFile_PartsGet_un11,
-	bloFile_PartsGet_un12,
-	bloFile_PartsGet_un13,
-	bloFile_PartsGet_un14,
-	bloFile_PartsPower_ust1,
-	bloFile_PartsPower_ust2,
-	bloFile_PartsPower_ust3,
-	bloFile_PartsPower_ust4,
-	bloFile_PartsPower_ust5,
-	bloFile_PartsPower_uf01,
-	bloFile_PartsPower_uf02,
-	bloFile_PartsPower_uf03,
-	bloFile_PartsPower_uf04,
-	bloFile_PartsPower_uf05,
-	bloFile_PartsPower_uf06,
-	bloFile_PartsPower_uf07,
-	bloFile_PartsPower_uf08,
-	bloFile_PartsPower_uf09,
-	bloFile_PartsPower_uf10,
-	bloFile_PartsPower_uf11,
-	bloFile_PartsPower_un01,
-	bloFile_PartsPower_un02,
-	bloFile_PartsPower_un03,
-	bloFile_PartsPower_un04,
-	bloFile_PartsPower_un05,
-	bloFile_PartsPower_un06,
-	bloFile_PartsPower_un07,
-	bloFile_PartsPower_un08,
-	bloFile_PartsPower_un09,
-	bloFile_PartsPower_un10,
-	bloFile_PartsPower_un11,
-	bloFile_PartsPower_un12,
-	bloFile_PartsPower_un13,
-	bloFile_PartsPower_un14,
-	bloFile_Test,
-	nullptr,
+	bloFile_Mezame,            ///< 0, 'Awakening' - initial crash landing - 2 pages.
+	bloFile_Oniyon,            ///< 1, Red onion discovery - 1 page.
+	bloFile_FoundPikmin,       ///< 2, First Pikmin seed - 1 page.
+	bloFile_PullHint,          ///< 3, First Pikmin seed hint (PLUCK IT PLEASE) - 1 page.
+	bloFile_GetPikmin,         ///< 4, Pluck red Pikmin - also controls - 3 pages.
+	bloFile_ControlHint,       ///< 5, What does this Pikmin think of me? - 1 page.
+	bloFile_Pelette,           ///< 6, First pellet collection - 1 page.
+	bloFile_StoneHint2,        ///< 7, Curious as children/approach and press A to pick sprouts - 2 pages.
+	bloFile_FoundEngine,       ///< 8, Main Engine discovery text - 1 page.
+	bloFile_GetEngine,         ///< 9, Main Engine collection text - 1 page.
+	bloFile_RirikuDemo,        ///< 10, Take off demo?
+	bloFile_Camera,            ///< 11,
+	bloFile_OnyonInOut,        ///< 12,
+	bloFile_Zenmetu,           ///< 13,
+	bloFile_YellowPikmin,      ///< 14,
+	bloFile_BluePikmin,        ///< 15
+	bloFile_FoundBomb,         ///< 16
+	bloFile_GetParts,          ///< 17
+	bloFile_PowerUp,           ///< 18
+	bloFile_DayEnd,            ///< 19
+	bloFile_BombInfo,          ///< 20
+	bloFile_Limit100,          ///< 21
+	bloFile_Mitu,              ///< 22
+	bloFile_Rute,              ///< 23
+	bloFile_APunchUFO,         ///< 24
+	bloFile_LifeUp,            ///< 25
+	bloFile_HitUFO,            ///< 26
+	bloFile_FinishUFO,         ///< 27
+	bloFile_BadEnding,         ///< 28
+	bloFile_HappyEnding,       ///< 29
+	bloFile_NukiAndFree,       ///< 30
+	bloFile_InfoDisplay,       ///< 31
+	bloFile_PartsGetOnly_ust1, ///< 32
+	bloFile_PartsGetOnly_ust2, ///<
+	bloFile_PartsGetOnly_ust3, ///<
+	bloFile_PartsGetOnly_ust4, ///<
+	bloFile_PartsGetOnly_ust5, ///<
+	bloFile_PartsGetOnly_uf01, ///<
+	bloFile_PartsGetOnly_uf02, ///<
+	bloFile_PartsGetOnly_uf03, ///<
+	bloFile_PartsGetOnly_uf04, ///<
+	bloFile_PartsGetOnly_uf05, ///<
+	bloFile_PartsGetOnly_uf06, ///<
+	bloFile_PartsGetOnly_uf07, ///<
+	bloFile_PartsGetOnly_uf08, ///<
+	bloFile_PartsGetOnly_uf09, ///<
+	bloFile_PartsGetOnly_uf10, ///<
+	bloFile_PartsGetOnly_uf11, ///<
+	bloFile_PartsGetOnly_un01, ///<
+	bloFile_PartsGetOnly_un02, ///<
+	bloFile_PartsGetOnly_un03, ///<
+	bloFile_PartsGetOnly_un04, ///<
+	bloFile_PartsGetOnly_un05, ///<
+	bloFile_PartsGetOnly_un06, ///<
+	bloFile_PartsGetOnly_un07, ///<
+	bloFile_PartsGetOnly_un08, ///<
+	bloFile_PartsGetOnly_un09, ///<
+	bloFile_PartsGetOnly_un10, ///<
+	bloFile_PartsGetOnly_un11, ///<
+	bloFile_PartsGetOnly_un12, ///<
+	bloFile_PartsGetOnly_un13, ///<
+	bloFile_PartsGetOnly_un14, ///<
+	bloFile_PartsInfo_ust1,    ///<
+	bloFile_PartsInfo_ust2,    ///<
+	bloFile_PartsInfo_ust3,    ///<
+	bloFile_PartsInfo_ust4,    ///<
+	bloFile_PartsInfo_ust5,    ///<
+	bloFile_PartsInfo_uf01,    ///<
+	bloFile_PartsInfo_uf02,    ///<
+	bloFile_PartsInfo_uf03,    ///<
+	bloFile_PartsInfo_uf04,    ///<
+	bloFile_PartsInfo_uf05,    ///<
+	bloFile_PartsInfo_uf06,    ///<
+	bloFile_PartsInfo_uf07,    ///<
+	bloFile_PartsInfo_uf08,    ///<
+	bloFile_PartsInfo_uf09,    ///<
+	bloFile_PartsInfo_uf10,    ///<
+	bloFile_PartsInfo_uf11,    ///<
+	bloFile_PartsInfo_un01,    ///<
+	bloFile_PartsInfo_un02,    ///<
+	bloFile_PartsInfo_un03,    ///<
+	bloFile_PartsInfo_un04,    ///<
+	bloFile_PartsInfo_un05,    ///<
+	bloFile_PartsInfo_un06,    ///<
+	bloFile_PartsInfo_un07,    ///<
+	bloFile_PartsInfo_un08,    ///<
+	bloFile_PartsInfo_un09,    ///<
+	bloFile_PartsInfo_un10,    ///<
+	bloFile_PartsInfo_un11,    ///<
+	bloFile_PartsInfo_un12,    ///<
+	bloFile_PartsInfo_un13,    ///<
+	bloFile_PartsInfo_un14,    ///<
+	bloFile_PartsGet_ust1,     ///<
+	bloFile_PartsGet_ust2,     ///<
+	bloFile_PartsGet_ust3,     ///<
+	bloFile_PartsGet_ust4,     ///<
+	bloFile_PartsGet_ust5,     ///<
+	bloFile_PartsGet_uf01,     ///<
+	bloFile_PartsGet_uf02,     ///<
+	bloFile_PartsGet_uf03,     ///<
+	bloFile_PartsGet_uf04,     ///<
+	bloFile_PartsGet_uf05,     ///<
+	bloFile_PartsGet_uf06,     ///<
+	bloFile_PartsGet_uf07,     ///<
+	bloFile_PartsGet_uf08,     ///<
+	bloFile_PartsGet_uf09,     ///<
+	bloFile_PartsGet_uf10,     ///<
+	bloFile_PartsGet_uf11,     ///<
+	bloFile_PartsGet_un01,     ///<
+	bloFile_PartsGet_un02,     ///<
+	bloFile_PartsGet_un03,     ///<
+	bloFile_PartsGet_un04,     ///<
+	bloFile_PartsGet_un05,     ///<
+	bloFile_PartsGet_un06,     ///<
+	bloFile_PartsGet_un07,     ///<
+	bloFile_PartsGet_un08,     ///<
+	bloFile_PartsGet_un09,     ///<
+	bloFile_PartsGet_un10,     ///<
+	bloFile_PartsGet_un11,     ///<
+	bloFile_PartsGet_un12,     ///<
+	bloFile_PartsGet_un13,     ///<
+	bloFile_PartsGet_un14,     ///<
+	bloFile_PartsPower_ust1,   ///<
+	bloFile_PartsPower_ust2,   ///<
+	bloFile_PartsPower_ust3,   ///<
+	bloFile_PartsPower_ust4,   ///<
+	bloFile_PartsPower_ust5,   ///<
+	bloFile_PartsPower_uf01,   ///<
+	bloFile_PartsPower_uf02,   ///<
+	bloFile_PartsPower_uf03,   ///<
+	bloFile_PartsPower_uf04,   ///<
+	bloFile_PartsPower_uf05,   ///<
+	bloFile_PartsPower_uf06,   ///<
+	bloFile_PartsPower_uf07,   ///<
+	bloFile_PartsPower_uf08,   ///<
+	bloFile_PartsPower_uf09,   ///<
+	bloFile_PartsPower_uf10,   ///<
+	bloFile_PartsPower_uf11,   ///<
+	bloFile_PartsPower_un01,   ///<
+	bloFile_PartsPower_un02,   ///<
+	bloFile_PartsPower_un03,   ///<
+	bloFile_PartsPower_un04,   ///<
+	bloFile_PartsPower_un05,   ///<
+	bloFile_PartsPower_un06,   ///<
+	bloFile_PartsPower_un07,   ///<
+	bloFile_PartsPower_un08,   ///<
+	bloFile_PartsPower_un09,   ///<
+	bloFile_PartsPower_un10,   ///<
+	bloFile_PartsPower_un11,   ///<
+	bloFile_PartsPower_un12,   ///<
+	bloFile_PartsPower_un13,   ///<
+	bloFile_PartsPower_un14,   ///<
+	bloFile_Test,              ///<
+	nullptr,                   ///<
 };
 
 } // namespace zen

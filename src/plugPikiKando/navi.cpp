@@ -44,6 +44,7 @@
 #include "sysNew.h"
 #include "teki.h"
 #include "zen/Math.h"
+#include "zen/ogTutorial.h"
 
 bool DelayPikiBirth = true;
 
@@ -374,7 +375,7 @@ void Navi::startDamageEffect()
 	} else if (!gameflow.mMoviePlayer->mIsActive && mHealth <= 0.25f * NAVI_PROP.mHealth()
 	           && !playerState->mDemoFlags.isFlag(DEMOFLAG_OlimarLowHealth)) {
 		playerState->mDemoFlags.setFlagOnly(DEMOFLAG_OlimarLowHealth);
-		gameflow.mGameInterface->message(MOVIECMD_TextDemo, 24);
+		gameflow.mGameInterface->message(MOVIECMD_TextDemo, zen::ogScrTutorialMgr::TUT_APunchUFO);
 	}
 
 	zen::particleGenerator* ptclGenA = effectMgr->create(EffectMgr::EFF_Navi_DamageA, part->mCentre, nullptr, nullptr);
@@ -415,7 +416,7 @@ void Navi::finishDamage()
 		if (!gameflow.mMoviePlayer->mIsActive && mHealth <= 0.25f * NAVI_PROP.mHealth()
 		    && !playerState->mDemoFlags.isFlag(DEMOFLAG_OlimarLowHealth)) {
 			playerState->mDemoFlags.setFlagOnly(DEMOFLAG_OlimarLowHealth);
-			gameflow.mGameInterface->message(MOVIECMD_TextDemo, 24);
+			gameflow.mGameInterface->message(MOVIECMD_TextDemo, zen::ogScrTutorialMgr::TUT_APunchUFO);
 		}
 	}
 
@@ -1228,7 +1229,7 @@ void Navi::releasePikis()
 
 		ActFree* action = static_cast<ActFree*>(pikiList[i]->mActiveAction->getCurrAction());
 		action->initBoid(colorCoMs[color], colorSizes[color]);
-		if (flowCont.mNaviOnMap == 1 && pikiList[i]->mPlayerId == -1) {
+		if (flowCont.mIsVersusMode == TRUE && pikiList[i]->mPlayerId == -1) {
 			pikiList[i]->mNavi = nullptr;
 		}
 	}
@@ -1590,7 +1591,7 @@ void Navi::collisionCallback(immut CollEvent& event)
 		case OBJTYPE_Door:
 			if (mCurrKeyCount > 0 && state != NAVISTATE_Clear) {
 				DoorItem* door = static_cast<DoorItem*>(collider);
-				sprintf(flowCont.mStagePath2, "%s", door->mDestinationStagePath);
+				sprintf(flowCont.mDoorStageFilePath, "%s", door->mDestinationStagePath);
 				Vector3f naviDoorSep = mSRT.t - door->mSRT.t;
 				naviDoorSep.normalise();
 				Vector3f faceDir(sinf(door->mFaceDirection), 0.0f, cosf(door->mFaceDirection));

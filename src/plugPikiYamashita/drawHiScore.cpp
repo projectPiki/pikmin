@@ -61,7 +61,7 @@ zen::DrawHiScore::DrawHiScore()
 
 		for (int j = 0; j < STAGE_COUNT; j++) {
 			GameChalQuickInfo info;
-			info.mCourseID = j;
+			info.mStageID = j;
 			gameflow.mGamePrefs.getChallengeScores(info);
 			sprintf(buf, "%d_%02d", j, i);
 			rewriteNumber(screen, P2DPaneLibrary::makeTag(buf), info.mCourseScores[i], 3, true);

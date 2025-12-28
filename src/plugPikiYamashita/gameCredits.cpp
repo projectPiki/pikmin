@@ -22,6 +22,6 @@ GameCreditsSection::GameCreditsSection()
 {
 	Node::init("<GameCreditsSection>");
 	gsys->setFrameClamp(1);
-	flowCont._24C = 0;
-	flowCont._250 = 0;
+	flowCont.mNaviSeedCount = 0;
+	flowCont._250           = 0;
 }

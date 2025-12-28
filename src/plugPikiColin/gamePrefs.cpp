@@ -1,48 +1,55 @@
+#include "gameFlow.h"
+
 #include "DebugLog.h"
 #include "Dolphin/os.h"
 #include "OnePlayerSection.h"
 #include "RumbleMgr.h"
-#include "gameFlow.h"
 #include "jaudio/interface.h"
 #include "system.h"
 
 /**
- * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("GamePrefs")
 
 /**
- * @todo: Documentation
+ * @brief Unlocks a given story mode stage, including queueing up the relevant stage unlock animation on the map screen.
+ *
+ * @bug This could attempt to unlock a 6th (invalid) stage by supplying it with STAGE_INVALID.
+ *
+ * @param stageID ID of the story mode stage to unlock - see `StageID` enum.
  */
-void PlayState::openStage(int stageId)
+void PlayState::openStage(int storyStageID)
 {
-	if (stageId < STAGE_START) {
+	if (storyStageID < STAGE_START) {
 		return;
 	}
 
-	if (stageId > STAGE_END) {
+	if (storyStageID > STAGE_END) {
 		return;
 	}
 
-	if (!(mCourseOpenFlags & (1 << stageId))) {
-		gameflow.mPendingStageUnlockID = stageId;
+	if (!IS_STAGE_OPEN(mCourseOpenFlags, storyStageID)) {
+		// we haven't opened this stage before, queue up the sparkly new area animation next world map screen
+		gameflow.mPendingStageUnlockID = storyStageID;
 	}
 
-	mCourseOpenFlags |= (1 << stageId);
+	SET_STAGE_OPEN(mCourseOpenFlags, storyStageID);
 }
 
 // This is a weak inline in US but a full function in PAL
 #if defined(VERSION_GPIP01_00)
+/**
+ * @brief Initialises game preferences with basic default values.
+ */
 void GamePrefs::Initialise()
 {
-	mFlags            = 3;
+	mFlags            = GAMEPREF_Vibe | GAMEPREF_Stereo;
 	gsys->mLanguageID = LANG_English;
 
 	LanguageID ids[] = {
@@ -57,48 +64,54 @@ void GamePrefs::Initialise()
 	setChildMode(ids[OSGetLanguage()]);
 	mBgmVol                = 8;
 	mSfxVol                = 8;
-	mFileNum               = 0;
-	mHasSaveGame           = 0;
+	mMostRecentFileSlot    = 0;
+	mHasSaveGame           = false;
 	mMemCardSaveIndex      = 0;
 	mSpareMemCardSaveIndex = 0;
 	_1F                    = 0;
-	mUnlockedStageFlags    = 0;
-	mIsChanged             = false;
+	mChalCourseOpenFlags   = 0;
+	mChangesPending        = false;
 	mHiscores.Initialise();
 }
 #endif
 
 /**
- * @todo: Documentation
+ * @brief Sets background music volume.
+ *
+ * @param vol Volume value to set.
  */
 void GamePrefs::setBgmVol(u8 vol)
 {
 	if (vol != mBgmVol) {
-		mIsChanged = true;
+		mChangesPending = true;
 	}
 	mBgmVol = vol;
 	Jac_SetBGMVolume(mBgmVol);
 }
 
 /**
- * @todo: Documentation
+ * @brief Sets sound effects volume.
+ *
+ * @param vol Volume value to set.
  */
 void GamePrefs::setSfxVol(u8 vol)
 {
 	if (vol != mSfxVol) {
-		mIsChanged = true;
+		mChangesPending = true;
 	}
 	mSfxVol = vol;
 	Jac_SetSEVolume(mSfxVol);
 }
 
 /**
- * @todo: Documentation
+ * @brief Sets sound to stereo or mono mode.
+ *
+ * @param set True = set to stereo, false = set to mono.
  */
 void GamePrefs::setStereoMode(bool set)
 {
 	if (set != getStereoMode()) {
-		mIsChanged = true;
+		mChangesPending = true;
 	}
 
 	mFlags = (set ? GAMEPREF_Stereo : 0) | mFlags & ~GAMEPREF_Stereo;
@@ -108,7 +121,9 @@ void GamePrefs::setStereoMode(bool set)
 }
 
 /**
- * @todo: Documentation
+ * @brief Sets rumble on or off.
+ *
+ * @param set True = set to on, false = set to off.
  */
 void GamePrefs::setVibeMode(bool set)
 {
@@ -119,7 +134,7 @@ void GamePrefs::setVibeMode(bool set)
 		} else {
 			rumbleMgr->stop();
 		}
-		mIsChanged = true;
+		mChangesPending = true;
 	}
 
 	mFlags = (set ? GAMEPREF_Vibe : 0) | mFlags & ~GAMEPREF_Vibe;
@@ -128,15 +143,54 @@ void GamePrefs::setVibeMode(bool set)
 	rumbleMgr->rumbleOption(set);
 }
 
-/**
- * @todo: Documentation
- */
 #if defined(VERSION_GPIP01_00)
+/**
+ * @brief Gets language preference - PAL exclusive version.
+ *
+ * @return Language mode - see `LanguageID` enum.
+ */
+int GamePrefs::getChildMode()
+{
+	int lang = UNPACK_LANG_FLAG(mFlags);
+	if (lang < LANG_MIN || lang > LANG_MAX) {
+		PRINT("trying to get invalid language mode!!\n");
+		// default to English
+		return LANG_English;
+	}
+	return lang;
+}
+/**
+ * @brief Sets language preference - PAL exclusive version.
+ *
+ * @param lang Language mode to set - see `LanguageID` enum.
+ */
+void GamePrefs::setChildMode(int lang)
+{
+	if (lang != getChildMode()) {
+		mChangesPending = true;
+	}
+
+	if (lang < LANG_MIN || lang > LANG_MAX) {
+		OSReport("trying to set invalid language mode (%d)!!\n", lang);
+		lang = LANG_English;
+	}
+
+	STACK_PAD_VAR(1);
+
+	gsys->mLanguageID = (LanguageID)lang;
+	mFlags            = PACK_LANG_FLAG(mFlags, lang);
+}
+
 #else
+/**
+ * @brief Sets language mode to child or adult - there's no difference outside of JP (and demo?).
+ *
+ * @param set True = set to child, false = set to adult.
+ */
 void GamePrefs::setChildMode(bool set)
 {
 	if (set != getChildMode()) {
-		mIsChanged = true;
+		mChangesPending = true;
 	}
 
 	mFlags = (set ? GAMEPREF_Child : 0) | mFlags & ~GAMEPREF_Child;
@@ -144,66 +198,80 @@ void GamePrefs::setChildMode(bool set)
 #endif
 
 /**
- * @todo: Documentation
+ * @brief Gets all existing challenge mode hiscores for a given course.
+ *
+ * @param info Challenge mode info to save hiscores to - must have its mStageID set to the right course.
  */
 void GamePrefs::getChallengeScores(GameChalQuickInfo& info)
 {
 	for (int i = 0; i < MAX_HI_SCORES; i++) {
-		info.mCourseScores[i] = mHiscores.mChalModeRecords[info.mCourseID].mScores[i];
+		info.mCourseScores[i] = mHiscores.mChalModeRecords[info.mStageID].mScores[i];
 	}
 }
 
 /**
- * @todo: Documentation
+ * @brief Checks if a given challenge mode score is a hiscore for that course, and updates the info and hiscores if so.
+ *
+ * @param info Challenge mode info to check score of, and store rank to - must have its mStageID and mScore set.
  */
 void GamePrefs::checkIsHiscore(GameChalQuickInfo& info)
 {
 	info.mRank         = -1;
-	gsys->mTogglePrint = 1;
+	gsys->mTogglePrint = TRUE; // "you're gonna wanna hear about this"
+
 #if defined(VERSION_PIKIDEMO)
 	// This somehow doesn't generate a function call.  How.
-	_Print("checking challenge info for course %d, top scores are :-\n", info.mCourseID);
+	_Print("checking challenge info for course %d, top scores are :-\n", info.mStageID);
 #else
-	PRINT("checking challenge info for course %d, top scores are :-\n", info.mCourseID);
+	PRINT("checking challenge info for course %d, top scores are :-\n", info.mStageID);
 #endif
+
 	for (int i = 0; i < MAX_HI_SCORES; i++) {
 #if defined(VERSION_PIKIDEMO)
 		// This somehow doesn't generate a function call.  How.
-		_Print("\t[%d] ... %d\n", i, mHiscores.mChalModeRecords[info.mCourseID].mScores[i]);
+		_Print("\t[%d] ... %d\n", i, mHiscores.mChalModeRecords[info.mStageID].mScores[i]);
 #else
-		PRINT("\t[%d] ... %d\n", i, mHiscores.mChalModeRecords[info.mCourseID].mScores[i]);
+		PRINT("\t[%d] ... %d\n", i, mHiscores.mChalModeRecords[info.mStageID].mScores[i]);
 #endif
 	}
 
+	// check if score is better than any existing hiscores - if so, store its appropriate rank
 	for (int i = 0; i < MAX_HI_SCORES; i++) {
-		if (info.mScore > mHiscores.mChalModeRecords[info.mCourseID].mScores[i]) {
+		if (info.mScore > mHiscores.mChalModeRecords[info.mStageID].mScores[i]) {
 			info.mRank = i;
 			break;
 		}
 	}
 
+	// if we got a new hiscore, shift the current scores and store the new one
 	if (info.mRank >= 0 && info.mRank < MAX_HI_SCORES) {
 		for (int i = 4; i > info.mRank; i--) {
-			mHiscores.mChalModeRecords[info.mCourseID].mScores[i] = mHiscores.mChalModeRecords[info.mCourseID].mScores[i - 1];
+			mHiscores.mChalModeRecords[info.mStageID].mScores[i] = mHiscores.mChalModeRecords[info.mStageID].mScores[i - 1];
 		}
-		mHiscores.mChalModeRecords[info.mCourseID].mScores[info.mRank] = info.mScore;
+		mHiscores.mChalModeRecords[info.mStageID].mScores[info.mRank] = info.mScore;
 	}
 
-	gsys->mTogglePrint = 0;
+	gsys->mTogglePrint = FALSE; // "back to scheduled programming"
+
+	// update the leaderboard stored in the quick info
 	getChallengeScores(info);
 }
 
 /**
- * @todo: Documentation
+ * @brief Checks if given story mode scores are a hiscore in any category, and updates the info and hiscores if so.
+ *
+ * @param info Story mode scores to check and store rank to - must have scores already filled out.
  */
 void GamePrefs::checkIsHiscore(GameQuickInfo& info)
 {
 	PRINT("checking if (%d parts/ day %d) : born %d pikis, dead %d pikis is in hiscore\n", info.mParts, info.mDay, info.mBornPikis,
 	      info.mDeadPikis);
+
 	info.mBornPikisRank = -1;
 	info.mDeadPikisRank = -1;
 	info.mPartsDaysRank = -1;
 
+	// check parts and days - priority is parts, then break ties with lower day count
 	for (int i = 0; i < MAX_HI_SCORES; i++) {
 		if (info.mParts > mHiscores.mMinDayRecords[i].mNumParts) {
 			info.mPartsDaysRank = i;
@@ -216,6 +284,7 @@ void GamePrefs::checkIsHiscore(GameQuickInfo& info)
 		}
 	}
 
+	// check if we got a new parts/days hiscore, if so update the hiscores!
 	if (info.mPartsDaysRank >= 0 && info.mPartsDaysRank < MAX_HI_SCORES) {
 		for (int i = (MAX_HI_SCORES - 1); i > info.mPartsDaysRank; i--) {
 			mHiscores.mMinDayRecords[i].mNumDays  = mHiscores.mMinDayRecords[i - 1].mNumDays;
@@ -225,6 +294,7 @@ void GamePrefs::checkIsHiscore(GameQuickInfo& info)
 		mHiscores.mMinDayRecords[info.mPartsDaysRank].mNumParts = info.mParts;
 	}
 
+	// check born pikmin for a new hiscore
 	for (int i = 0; i < MAX_HI_SCORES; i++) {
 		if (info.mBornPikis > mHiscores.mBornPikminRecords[i].mNumBorn) {
 			info.mBornPikisRank = i;
@@ -232,6 +302,7 @@ void GamePrefs::checkIsHiscore(GameQuickInfo& info)
 		}
 	}
 
+	// if we got a new born pikmin hiscore, update them!
 	if (info.mBornPikisRank >= 0 && info.mBornPikisRank < MAX_HI_SCORES) {
 		for (int i = (MAX_HI_SCORES - 1); i > info.mBornPikisRank; i--) {
 			mHiscores.mBornPikminRecords[i].mNumBorn = mHiscores.mBornPikminRecords[i - 1].mNumBorn;
@@ -239,7 +310,7 @@ void GamePrefs::checkIsHiscore(GameQuickInfo& info)
 		mHiscores.mBornPikminRecords[info.mBornPikisRank].mNumBorn = info.mBornPikis;
 	}
 
-	// only check/update dead pikmin ranking if we finish the ship
+	// NOTE: we only check/update dead pikmin ranking if we finish the ship!
 	if (info.mParts == MAX_UFO_PARTS) {
 		for (int i = 0; i < MAX_HI_SCORES; i++) {
 			if (info.mDeadPikis < mHiscores.mDeadPikminRecords[i].mNumDead) {
@@ -249,7 +320,8 @@ void GamePrefs::checkIsHiscore(GameQuickInfo& info)
 		}
 	}
 
-	if (info.mDeadPikisRank >= 0 && info.mDeadPikisRank < 5) {
+	// if we got a new dead pikmin hiscore (lowscore), update them!
+	if (info.mDeadPikisRank >= 0 && info.mDeadPikisRank < MAX_HI_SCORES) {
 		for (int i = (MAX_HI_SCORES - 1); i > info.mDeadPikisRank; i--) {
 			mHiscores.mDeadPikminRecords[i].mNumDead = mHiscores.mDeadPikminRecords[i - 1].mNumDead;
 		}
@@ -258,7 +330,9 @@ void GamePrefs::checkIsHiscore(GameQuickInfo& info)
 }
 
 /**
- * @todo: Documentation
+ * @brief Write global preferences to file stream (to memory card).
+ *
+ * @param output File stream (to memory card) to write preferences to.
  */
 void GamePrefs::write(RandomAccessStream& output)
 {
@@ -266,15 +340,15 @@ void GamePrefs::write(RandomAccessStream& output)
 	output.writeInt(mFlags);
 	output.writeByte(mBgmVol);
 	output.writeByte(mSfxVol);
-	output.writeByte(mUnlockedStageFlags);
+	output.writeByte(mChalCourseOpenFlags);
 
 	mHiscores.write(output);
 
-	mIsChanged = false;
+	mChangesPending = false;
 }
 
 /**
- * @todo: Documentation
+ * @brief Sync stereo/mono setting to GameCube OS setting.
  */
 void GamePrefs::fixSoundMode()
 {
@@ -287,72 +361,52 @@ void GamePrefs::fixSoundMode()
 }
 
 /**
- * @todo: Documentation
+ * @brief Read global preferences from file stream (from memory card).
+ *
+ * @param input File stream (from memory card) to read preferences from.
  */
 void GamePrefs::read(RandomAccessStream& input)
 {
 	PRINT("reading game prefs\n");
-	mFlags              = input.readInt();
-	mBgmVol             = input.readByte();
-	mSfxVol             = input.readByte();
-	mUnlockedStageFlags = input.readByte();
+	mFlags               = input.readInt();
+	mBgmVol              = input.readByte();
+	mSfxVol              = input.readByte();
+	mChalCourseOpenFlags = input.readByte();
 	mHiscores.read(input);
 
+	// adjust stereo/mono based on OS (in case we don't have stereo)
 	fixSoundMode();
 
 	PRINT("got hardFlags %08x : bgmVol %d : sfxVol %d\n", mFlags, mBgmVol, mSfxVol);
 	PRINT("got total pikis = %d\n", mHiscores.mTotalPikis);
+
+	// force update all options
 	setBgmVol(getBgmVol());
 	setSfxVol(getSfxVol());
 	setStereoMode(getStereoMode());
 	setVibeMode(getVibeMode());
+
 #if defined(VERSION_PIKIDEMO)
 	STACK_PAD_VAR(1);
 #endif
+
 #if defined(VERSION_GPIP01_00)
 	STACK_PAD_VAR(2);
-	LanguageID lang = (LanguageID)(mFlags >> 2 & 0xF);
+	LanguageID lang = (LanguageID)(UNPACK_LANG_FLAG(mFlags));
 	if (lang < LANG_English || lang > LANG_Italian) {
 		// invalid language choice
 		lang = LANG_English;
 	}
+
+	// sync with system language
 	gsys->mLanguageID = lang;
 #endif
 }
 
-#if defined(VERSION_GPIP01_00)
-int GamePrefs::getChildMode()
-{
-	int id = mFlags >> 2 & 0xf;
-	if (id < 0 || id > 4) {
-		PRINT("trying to get invalid language mode!!\n");
-		return 0;
-	}
-	return id;
-}
-#endif
-
-#if defined(VERSION_GPIP01_00)
-void GamePrefs::setChildMode(int set)
-{
-	if (set != getChildMode()) {
-		mIsChanged = true;
-	}
-
-	if (set < LANG_MIN || set > LANG_MAX) {
-		OSReport("trying to set invalid language mode (%d)!!\n", set);
-		set = LANG_English;
-	}
-
-	STACK_PAD_VAR(1);
-
-	gsys->mLanguageID = (LanguageID)set;
-	mFlags            = mFlags & 0xffffffc3 | (set & 0xf) << 2;
-}
-#endif
-
 /**
- * @todo: Documentation
+ * @brief Writes play information to file stream (memory card).
+ *
+ * @param output File stream (to memory card) to write to.
  */
 void PlayState::write(RandomAccessStream& output)
 {
@@ -367,7 +421,9 @@ void PlayState::write(RandomAccessStream& output)
 }
 
 /**
- * @todo: Documentation
+ * @brief Reads play information from file stream (memory card).
+ *
+ * @param input File stream (from memory card) to read from.
  */
 void PlayState::read(RandomAccessStream& input)
 {

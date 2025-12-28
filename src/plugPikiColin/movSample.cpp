@@ -194,7 +194,7 @@ struct MovSampleSetupSection : public Node {
 		}
 
 		bool check = false;
-		if (flowCont._244 == 0 && mController->keyClick(KBBTN_START | KBBTN_A | KBBTN_B)) {
+		if (flowCont.mEndingType == ENDING_None && mController->keyClick(KBBTN_START | KBBTN_A | KBBTN_B)) {
 			check = true;
 		}
 
@@ -202,9 +202,9 @@ struct MovSampleSetupSection : public Node {
 			Jac_StreamMovieStop();
 			OSCancelThread(&playbackThread);
 
-			if (flowCont._244) {
+			if (flowCont.mEndingType != ENDING_None) {
 				Jac_SceneExit(SCENE_Unk13, 0);
-				flowCont._244 = 0;
+				flowCont.mEndingType = ENDING_None;
 			}
 
 			gameflow.mNextGameSectionID = SECTION_Titles;

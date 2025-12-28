@@ -16,6 +16,10 @@
 #include "zen/DrawCM.h"
 #include "zen/DrawWorldMap.h"
 
+/// Macros for packing and unpacking the section compression flag.
+#define PACK_NEXT_ONEPLAYER(onePlayerID) (onePlayerID) << 16
+#define UNPACK_NEXT_ONEPLAYER(flag)      (flag) >> 16
+
 static zen::DrawCMcourseSelect* selectWindow;
 static zen::DrawWorldMap* mapWindow;
 
@@ -71,7 +75,7 @@ struct MapSelectSetupSection : public Node {
 		mMapListMenu->addKeyEvent(Menu::KeyEventType::SpecialRelease, KBBTN_B,
 		                          new Delegate1<Menu, Menu&>(mMapListMenu, &Menu::menuCloseMenu));
 
-		for (StageInfo* inf = (StageInfo*)flowCont.mRootInfo.mChild; inf; inf = (StageInfo*)inf->mNext) {
+		for (StageInfo* inf = (StageInfo*)flowCont.mStageList.mChild; inf; inf = (StageInfo*)inf->mNext) {
 			if (gameflow.mIsChallengeMode) {
 				PRINT("checking map in challenge mode!\n");
 				bool valid = gameflow.mGamePrefs.isStageOpen(inf->mChalStageID);
@@ -93,7 +97,7 @@ struct MapSelectSetupSection : public Node {
 		StageInfo* info = reinterpret_cast<StageInfo*>(parent.mCurrentItem->mData);
 
 		enterCourse(info);
-		mNextSectionId = ONEPLAYER_NewPikiGame << 16;
+		mNextSectionsFlag = PACK_NEXT_ONEPLAYER(ONEPLAYER_NewPikiGame);
 		parent.close();
 
 		gameflow.mWorldClock.setTime(gameflow.mParameters->mStartHour());
@@ -148,7 +152,7 @@ struct MapSelectSetupSection : public Node {
 			selectWindow->start();
 		}
 		gsys->setFade(1.0f, 3.0f);
-		mNextSectionId = ONEPLAYER_GameExit << 16;
+		mNextSectionsFlag = PACK_NEXT_ONEPLAYER(ONEPLAYER_GameExit);
 	}
 
 	virtual void update() // _10 (weak)
@@ -182,10 +186,10 @@ struct MapSelectSetupSection : public Node {
 					mSectionState = 1;
 					gsys->setFade(0.0f, 3.0f);
 				} else {
-					for (StageInfo* inf = (StageInfo*)flowCont.mRootInfo.mChild; inf; inf = (StageInfo*)inf->mNext) {
+					for (StageInfo* inf = (StageInfo*)flowCont.mStageList.mChild; inf; inf = (StageInfo*)inf->mNext) {
 						if (inf->mChalStageID == status) {
 							enterCourse(inf);
-							mNextSectionId = ONEPLAYER_NewPikiGame << 16;
+							mNextSectionsFlag = PACK_NEXT_ONEPLAYER(ONEPLAYER_NewPikiGame);
 
 							gameflow.mWorldClock.setTime(gameflow.mParameters->mStartHour());
 							mSectionState = 1;
@@ -202,10 +206,10 @@ struct MapSelectSetupSection : public Node {
 					mSectionState = 1;
 					gsys->setFade(0.0f, 3.0f);
 				} else {
-					for (StageInfo* inf = (StageInfo*)flowCont.mRootInfo.mChild; inf; inf = (StageInfo*)inf->mNext) {
+					for (StageInfo* inf = (StageInfo*)flowCont.mStageList.mChild; inf; inf = (StageInfo*)inf->mNext) {
 						if (inf->mStageID == returnStatus) {
 							enterCourse(inf);
-							mNextSectionId = ONEPLAYER_NewPikiGame << 16;
+							mNextSectionsFlag = PACK_NEXT_ONEPLAYER(ONEPLAYER_NewPikiGame);
 
 							gameflow.mWorldClock.setTime(gameflow.mParameters->mStartHour());
 							mSectionState = 1;
@@ -219,7 +223,7 @@ struct MapSelectSetupSection : public Node {
 
 		if (mSectionState == 1 && !mActiveOverlayMenu && gsys->getFade() == 0.0f) {
 			mSectionState                    = -1;
-			gameflow.mNextOnePlayerSectionID = mNextSectionId >> 16;
+			gameflow.mNextOnePlayerSectionID = UNPACK_NEXT_ONEPLAYER(mNextSectionsFlag);
 			Jac_SceneExit(SCENE_Unk13, 0);
 			gsys->softReset();
 		}
@@ -256,8 +260,8 @@ struct MapSelectSetupSection : public Node {
 	void enterCourse(StageInfo* info)
 	{
 		flowCont.mCurrentStage = info;
-		sprintf(flowCont.mStagePath1, "%s", info->mFileName);
-		sprintf(flowCont.mStagePath2, "%s", info->mFileName);
+		sprintf(flowCont.mCurrStageFilePath, "%s", info->mFileName);
+		sprintf(flowCont.mDoorStageFilePath, "%s", info->mFileName);
 		if (gameflow.mGamePrefs.isChallengeOpen()) {
 			gameflow.mGamePrefs.openStage(info->mStageID);
 		}
@@ -265,14 +269,14 @@ struct MapSelectSetupSection : public Node {
 
 	// _00     = VTBL
 	// _00-_20 = Node
-	u32 mSectionState;        // _20
-	u32 mNextSectionId;       // _24
-	Menu* mMapListMenu;       // _28
-	Menu* mActiveOverlayMenu; // _2C
-	Controller* mController;  // _30
-	Font* mConsFont;          // _34
-	Font* mBigFont;           // _38
-	Camera mCamera;           // _3C
+	u32 mSectionState;        ///< _20
+	u32 mNextSectionsFlag;    ///< _24, flag that stores the next OnePlayerSection and Section - see defines in Section.h.
+	Menu* mMapListMenu;       ///< _28
+	Menu* mActiveOverlayMenu; ///< _2C
+	Controller* mController;  ///< _30
+	Font* mConsFont;          ///< _34
+	Font* mBigFont;           ///< _38
+	Camera mCamera;           ///< _3C
 };
 
 /**
@@ -282,11 +286,11 @@ MapSelectSection::MapSelectSection()
 {
 	Node::init("<MapSelectSection>");
 	gsys->setFrameClamp(1);
-	flowCont._254 = 0;
-	flowCont._258 = 0;
-	flowCont._24C = 0;
-	flowCont._250 = 0;
-	int size      = 0x19800;
+	flowCont._254           = 0;
+	flowCont._258           = 0;
+	flowCont.mNaviSeedCount = 0;
+	flowCont._250           = 0;
+	int size                = 0x19800;
 	gsys->mHeaps[SYSHEAP_Message].init("message", AYU_STACK_GROW_UP, System::alloc(size), size);
 	gsys->startLoading(nullptr, true, 60);
 

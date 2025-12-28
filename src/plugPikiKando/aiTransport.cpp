@@ -23,6 +23,7 @@
 #include "gameflow.h"
 #include "teki.h"
 #include "zen/Math.h"
+#include "zen/ogTutorial.h"
 
 /**
  * @todo: Documentation
@@ -932,9 +933,9 @@ int ActTransport::moveGuruGuru()
 			if (!gameflow.mMoviePlayer->mIsActive && !playerState->mDemoFlags.isFlag(DEMOFLAG_CarryPathBlocked)) {
 				playerState->mDemoFlags.setFlagOnly(DEMOFLAG_CarryPathBlocked);
 				if (pel->aiCullable()) {
-					gameflow.mGameInterface->message(MOVIECMD_TextDemo, 23);
+					gameflow.mGameInterface->message(MOVIECMD_TextDemo, zen::ogScrTutorialMgr::TUT_Rute);
 				} else {
-					GameCoreSection::startTextDemo(pel, 23);
+					GameCoreSection::startTextDemo(pel, zen::ogScrTutorialMgr::TUT_Rute);
 				}
 			}
 		}
@@ -996,7 +997,7 @@ void ActTransport::decideGoal(Creature* cargo)
 	int optionColors[PikiColorCount];
 	int numOptions = 0;
 	int onyonColor = Blue;
-	bool isVsMode  = flowCont.mNaviOnMap == 1;
+	bool isVsMode  = flowCont.mIsVersusMode == TRUE;
 
 	PRINT_KANDO("###### decide goal\n");
 	int i;

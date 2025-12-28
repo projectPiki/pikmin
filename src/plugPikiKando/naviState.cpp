@@ -30,6 +30,7 @@
 #include "sysNew.h"
 #include "teki.h"
 #include "zen/DrawContainer.h"
+#include "zen/ogTutorial.h"
 
 #include "CPlate.h"
 #include "DebugLog.h"
@@ -885,7 +886,7 @@ void NaviUfoState::exec(Navi* navi)
 	}
 
 	if (mState == 2 && --mRecoveryTimer == 0) {
-		gameflow.mGameInterface->message(MOVIECMD_TextDemo, 25);
+		gameflow.mGameInterface->message(MOVIECMD_TextDemo, zen::ogScrTutorialMgr::TUT_LifeUp);
 		mState = 3;
 	}
 
@@ -2837,8 +2838,8 @@ void NaviClearState::exec(Navi* navi)
 void NaviClearState::procAnimMsg(Navi* navi, MsgAnim* msg)
 {
 	if (msg->mKeyEvent->mEventType == 0) {
-		flowCont.mGameEndCondition = 3;
-		flowCont._248              = navi->getPlatePikis();
+		flowCont.mGameEndFlag         = 3;
+		flowCont.mClearStatePikiCount = navi->getPlatePikis();
 	}
 }
 
@@ -3241,7 +3242,7 @@ void NaviUfoAccessState::procAnimMsg(Navi* navi, MsgAnim* msg)
 			_10                      = true;
 			gameflow.mShipTextType   = SHIPTEXT_PartCollect;
 			gameflow.mShipTextPartID = -1;
-			gameflow.mGameInterface->message(MOVIECMD_TextDemo, 17);
+			gameflow.mGameInterface->message(MOVIECMD_TextDemo, zen::ogScrTutorialMgr::TUT_GetParts);
 		}
 		break;
 	}

@@ -284,7 +284,7 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 			gameflow.mGamePrefs.setChildMode(child);
 			gameflow.mGamePrefs.setBgmVol(bgmVol);
 			gameflow.mGamePrefs.setSfxVol(sfxVol);
-			gameflow.mGamePrefs.mIsChanged = false;
+			gameflow.mGamePrefs.mChangesPending = false;
 			gameflow.mMemoryCard.saveOptions();
 #endif
 

@@ -30,13 +30,13 @@ from tools.project import (
 DEFAULT_VERSION = 5
 VERSIONS = [
     "DPIJ01_PIKIDEMO",  # 店頭ゲームデモディスク Oct'2001 (Pikmin Jitsuen-you Sample Disc) "zz_pikmin_game/PikiDemo.tgc"
-    "GPIJ01_01"      ,  # JPN Rev 1
-    "GPIJ01_02"      ,  # JPN Rev 2
+    "GPIJ01_01",  # JPN Rev 1
+    "GPIJ01_02",  # JPN Rev 2
     "G98E01_PIKIDEMO",  # USA Interactive Multi-Game Demo Disc - January 2002 "zz_PikminDemo-1210.tgc"
-    "GPIE01_00"      ,  # USA Rev 0
-    "GPIE01_01"      ,  # USA Rev 1
+    "GPIE01_00",  # USA Rev 0
+    "GPIE01_01",  # USA Rev 1
     "G98P01_PIKIDEMO",  # PAL Interactive Multi-Game Demo Disc - May 2002 "zz_PikiDemo.tgc"
-    "GPIP01_00"      ,  # PAL Rev 0
+    "GPIP01_00",  # PAL Rev 0
 ]
 
 parser = argparse.ArgumentParser()
@@ -220,7 +220,9 @@ cflags_base = [
 if args.debug:
     cflags_base.extend(["-sym on", "-DDEBUG=1"])
 else:
-    cflags_base.extend(["-DNDEBUG=1", "-w off"]) # no I DO not want to talk about my car's extended warranty.
+    cflags_base.extend(
+        ["-DNDEBUG=1", "-w off"]
+    )  # no I DO not want to talk about my car's extended warranty.
 
 # JAudio flags
 cflags_jaudio = [
@@ -251,7 +253,7 @@ cflags_jaudio = [
     "-common on",
     "-func_align 32",
     "-lang c++",
-    "-DNDEBUG=1", 
+    "-DNDEBUG=1",
     "-w off",
     "-use_lmw_stmw on",
 ]
@@ -278,7 +280,7 @@ config.linker_version = "GC/1.2.5"
 # Helper function for Dolphin libraries
 def DolphinLib(lib_name: str, objects: List[Object]) -> Dict[str, Any]:
     mw_version = "GC/1.2.5"
-    if version_num == 0 or version_num == 7: # JPN demo and PAL
+    if version_num == 0 or version_num == 7:  # JPN demo and PAL
         mw_version = "GC/1.2.5n"
     return {
         "lib": lib_name,
@@ -289,9 +291,11 @@ def DolphinLib(lib_name: str, objects: List[Object]) -> Dict[str, Any]:
     }
 
 
-Matching = True                   # Object matches and should be linked
-NonMatching = False               # Object does not match and should not be linked
-Equivalent = config.non_matching  # Object should be linked when configured with --non-matching
+Matching = True  # Object matches and should be linked
+NonMatching = False  # Object does not match and should not be linked
+Equivalent = (
+    config.non_matching
+)  # Object should be linked when configured with --non-matching
 
 
 # Object is only matching for specific versions
@@ -306,7 +310,7 @@ config.libs = [
         "lib": "sysBootup",
         "cflags": cflags_pikmin,
         "mw_version": "GC/1.2.5n",
-        "progress_category" : "game",
+        "progress_category": "game",
         "objects": [
             Object(Matching, "sysBootup.cpp"),
         ],
@@ -315,7 +319,7 @@ config.libs = [
         "lib": "jaudio",
         "cflags": cflags_jaudio,
         "mw_version": "GC/1.2.5n",
-        "progress_category" : "jaudio",
+        "progress_category": "jaudio",
         "objects": [
             Object(Matching, "jaudio/dummyprobe.c"),
             Object(Matching, "jaudio/memory.c"),
@@ -383,7 +387,7 @@ config.libs = [
         "lib": "hvqm4dec",
         "cflags": cflags_base,
         "mw_version": "GC/1.2.5",
-        "progress_category" : "hvqm4dec",
+        "progress_category": "hvqm4dec",
         "objects": [
             Object(Matching, "hvqm4dec/hvqm4dec.c"),
         ],
@@ -392,7 +396,7 @@ config.libs = [
         "lib": "sysCommon",
         "cflags": cflags_pikmin,
         "mw_version": "GC/1.2.5n",
-        "progress_category" : "game",
+        "progress_category": "game",
         "objects": [
             Object(Matching, "sysCommon/ayuStack.cpp"),
             Object(Matching, "sysCommon/baseApp.cpp"),
@@ -421,7 +425,7 @@ config.libs = [
         "lib": "sysDolphin",
         "cflags": cflags_pikmin,
         "mw_version": "GC/1.2.5n",
-        "progress_category" : "game",
+        "progress_category": "game",
         "objects": [
             Object(Equivalent, "sysDolphin/texture.cpp"),
             Object(not MatchingFor("GPIP01_00"), "sysDolphin/system.cpp"),
@@ -435,14 +439,14 @@ config.libs = [
         "lib": "plugPikiColin",
         "cflags": cflags_pikmin,
         "mw_version": "GC/1.2.5n",
-        "progress_category" : "game",
+        "progress_category": "game",
         "objects": [
             Object(Equivalent, "plugPikiColin/cardutil.cpp"),
             Object(Matching, "plugPikiColin/dynsimulator.cpp"),
             Object(Matching, "plugPikiColin/animMgr.cpp"),
             Object(Equivalent, "plugPikiColin/gameflow.cpp"),
             Object(Equivalent, "plugPikiColin/game.cpp"),
-            Object(not MatchingFor("GPIP01_00"), "plugPikiColin/gamePrefs.cpp"),
+            Object(Matching, "plugPikiColin/gamePrefs.cpp"),
             Object(Equivalent, "plugPikiColin/gameSetup.cpp"),
             Object(Matching, "plugPikiColin/cardSelect.cpp"),
             Object(Matching, "plugPikiColin/mapSelect.cpp"),
@@ -469,7 +473,7 @@ config.libs = [
         "lib": "plugPikiKando",
         "cflags": cflags_pikmin,
         "mw_version": "GC/1.2.5n",
-        "progress_category" : "game",
+        "progress_category": "game",
         "objects": [
             Object(Matching, "plugPikiKando/omake.cpp"),
             Object(Matching, "plugPikiKando/radarInfo.cpp"),
@@ -585,7 +589,9 @@ config.libs = [
             Object(Matching, "plugPikiKando/navi.cpp"),
             Object(not MatchingFor("G98E01_PIKIDEMO"), "plugPikiKando/naviState.cpp"),
             Object(Matching, "plugPikiKando/naviDemoState.cpp"),
-            Object(not MatchingFor("G98E01_PIKIDEMO"), "plugPikiKando/gameCoreSection.cpp"),
+            Object(
+                not MatchingFor("G98E01_PIKIDEMO"), "plugPikiKando/gameCoreSection.cpp"
+            ),
             Object(Matching, "plugPikiKando/gmWin.cpp"),
             Object(Matching, "plugPikiKando/gameStat.cpp"),
             Object(Matching, "plugPikiKando/kmath.cpp"),
@@ -609,7 +615,7 @@ config.libs = [
         "lib": "plugPikiNakata",
         "cflags": cflags_pikmin,
         "mw_version": "GC/1.2.5n",
-        "progress_category" : "game",
+        "progress_category": "game",
         "objects": [
             Object(Matching, "plugPikiNakata/genteki.cpp"),
             Object(Matching, "plugPikiNakata/nakatacode.cpp"),
@@ -672,7 +678,7 @@ config.libs = [
         "lib": "plugPikiNishimura",
         "cflags": cflags_pikmin,
         "mw_version": "GC/1.2.5n",
-        "progress_category" : "game",
+        "progress_category": "game",
         "objects": [
             Object(Matching, "plugPikiNishimura/genBoss.cpp"),
             Object(Matching, "plugPikiNishimura/Boss.cpp"),
@@ -714,7 +720,7 @@ config.libs = [
         "lib": "plugPikiOgawa",
         "cflags": cflags_pikmin,
         "mw_version": "GC/1.2.5n",
-        "progress_category" : "game",
+        "progress_category": "game",
         "objects": [
             Object(Matching, "plugPikiOgawa/ogTest.cpp"),
             Object(Matching, "plugPikiOgawa/ogSub.cpp"),
@@ -746,7 +752,7 @@ config.libs = [
         "lib": "plugPikiYamashita",
         "cflags": cflags_pikmin,
         "mw_version": "GC/1.2.5n",
-        "progress_category" : "game",
+        "progress_category": "game",
         "objects": [
             Object(Matching, "plugPikiYamashita/gameCourseClear.cpp"),
             Object(Matching, "plugPikiYamashita/gameStageClear.cpp"),
@@ -872,7 +878,7 @@ config.libs = [
         "db",
         [
             Object(Matching, "db/db.c"),
-        ]
+        ],
     ),
     {
         "lib": "mtx",
@@ -883,7 +889,7 @@ config.libs = [
             Object(not MatchingFor("G98E01_PIKIDEMO", "GPIP01_00"), "mtx/mtx.c"),
             Object(not MatchingFor("GPIP01_00"), "mtx/mtx44.c"),
             Object(not MatchingFor("GPIP01_00"), "mtx/vec.c"),
-        ]
+        ],
     },
     DolphinLib(
         "dvd",
@@ -894,33 +900,33 @@ config.libs = [
             Object(Matching, "dvd/dvdqueue.c"),
             Object(not MatchingFor("GPIP01_00"), "dvd/dvderror.c"),
             Object(not MatchingFor("GPIP01_00"), "dvd/fstload.c"),
-        ]
+        ],
     ),
     DolphinLib(
         "vi",
         [
             Object(not MatchingFor("G98E01_PIKIDEMO", "GPIP01_00"), "vi/vi.c"),
-        ]
+        ],
     ),
     DolphinLib(
         "pad",
         [
             Object(not MatchingFor("G98E01_PIKIDEMO"), "pad/Padclamp.c"),
             Object(not MatchingFor("G98E01_PIKIDEMO", "GPIP01_00"), "pad/Pad.c"),
-        ]
+        ],
     ),
     DolphinLib(
         "ai",
         [
             Object(Matching, "ai/ai.c"),
-        ]
+        ],
     ),
     DolphinLib(
         "ar",
         [
             Object(not MatchingFor("GPIP01_00"), "ar/ar.c"),
             Object(Matching, "ar/arq.c"),
-        ]
+        ],
     ),
     DolphinLib(
         "dsp",
@@ -928,7 +934,7 @@ config.libs = [
             Object(not MatchingFor("GPIP01_00"), "dsp/dsp.c"),
             Object(not MatchingFor("GPIP01_00"), "dsp/dsp_debug.c"),
             Object(not MatchingFor("GPIP01_00"), "dsp/dsp_task.c"),
-        ]
+        ],
     ),
     DolphinLib(
         "card",
@@ -940,36 +946,44 @@ config.libs = [
             Object(not MatchingFor("G98E01_PIKIDEMO", "GPIP01_00"), "card/CARDDir.c"),
             Object(not MatchingFor("G98E01_PIKIDEMO", "GPIP01_00"), "card/CARDCheck.c"),
             Object(not MatchingFor("G98E01_PIKIDEMO", "GPIP01_00"), "card/CARDMount.c"),
-            Object(not MatchingFor("G98E01_PIKIDEMO", "GPIP01_00"), "card/CARDFormat.c"),
+            Object(
+                not MatchingFor("G98E01_PIKIDEMO", "GPIP01_00"), "card/CARDFormat.c"
+            ),
             Object(not MatchingFor("G98E01_PIKIDEMO", "GPIP01_00"), "card/CARDOpen.c"),
-            Object(not MatchingFor("G98E01_PIKIDEMO", "GPIP01_00"), "card/CARDCreate.c"),
+            Object(
+                not MatchingFor("G98E01_PIKIDEMO", "GPIP01_00"), "card/CARDCreate.c"
+            ),
             Object(not MatchingFor("G98E01_PIKIDEMO", "GPIP01_00"), "card/CARDRead.c"),
             Object(not MatchingFor("G98E01_PIKIDEMO", "GPIP01_00"), "card/CARDWrite.c"),
-            Object(not MatchingFor("G98E01_PIKIDEMO", "GPIP01_00"), "card/CARDDelete.c"),
+            Object(
+                not MatchingFor("G98E01_PIKIDEMO", "GPIP01_00"), "card/CARDDelete.c"
+            ),
             Object(not MatchingFor("G98E01_PIKIDEMO", "GPIP01_00"), "card/CARDStat.c"),
-            Object(not MatchingFor("G98E01_PIKIDEMO", "GPIP01_00"), "card/CARDRename.c"),
+            Object(
+                not MatchingFor("G98E01_PIKIDEMO", "GPIP01_00"), "card/CARDRename.c"
+            ),
             Object(not MatchingFor("G98E01_PIKIDEMO", "GPIP01_00"), "card/CARDNet.c"),
-        ]
+        ],
     ),
     DolphinLib(
         "si",
         [
             Object(not MatchingFor("GPIP01_00"), "si/SIBios.c"),
             Object(not MatchingFor("GPIP01_00"), "si/SISamplingRate.c"),
-        ]
+        ],
     ),
     DolphinLib(
         "exi",
         [
             Object(not MatchingFor("GPIP01_00"), "exi/EXIBios.c"),
             Object(not MatchingFor("GPIP01_00"), "exi/EXIUart.c"),
-        ]
+        ],
     ),
     DolphinLib(
         "hio",
         [
             Object(not MatchingFor("G98E01_PIKIDEMO", "GPIP01_00"), "hio/hio.c"),
-        ]
+        ],
     ),
     DolphinLib(
         "gx",
@@ -986,15 +1000,17 @@ config.libs = [
             Object(not MatchingFor("G98E01_PIKIDEMO", "GPIP01_00"), "gx/GXTev.c"),
             Object(not MatchingFor("G98E01_PIKIDEMO", "GPIP01_00"), "gx/GXPixel.c"),
             Object(Matching, "gx/GXStubs.c"),
-            Object(not MatchingFor("G98E01_PIKIDEMO", "GPIP01_00"), "gx/GXDisplayList.c"),
+            Object(
+                not MatchingFor("G98E01_PIKIDEMO", "GPIP01_00"), "gx/GXDisplayList.c"
+            ),
             Object(not MatchingFor("G98E01_PIKIDEMO", "GPIP01_00"), "gx/GXTransform.c"),
             Object(not MatchingFor("GPIP01_00"), "gx/GXPerf.c"),
-        ]
+        ],
     ),
     {
         "lib": "Runtime.PPCEABI.H",
         "mw_version": "GC/1.2.5",
-        "progress_category" : "sdk",
+        "progress_category": "sdk",
         "cflags": [*cflags_runtime, "-inline deferred"],
         "objects": [
             Object(Matching, "Runtime/PPCEABI/H/__mem.c"),
@@ -1011,8 +1027,13 @@ config.libs = [
     {
         "lib": "MSL_C.PPCEABI.bare.H",
         "mw_version": "GC/1.2.5",
-        "progress_category" : "sdk",
-        "cflags": [*cflags_base, "-fp_contract on", "-inline auto,deferred", "-str pool,readonly"],
+        "progress_category": "sdk",
+        "cflags": [
+            *cflags_base,
+            "-fp_contract on",
+            "-inline auto,deferred",
+            "-str pool,readonly",
+        ],
         "objects": [
             Object(Matching, "MSL_C/PPCEABI/bare/H/ansi_files.c"),
             Object(Matching, "MSL_C/PPCEABI/bare/H/abort_exit.c"),
@@ -1057,8 +1078,15 @@ config.libs = [
     {
         "lib": "TRK_MINNOW_DOLPHIN",
         "mw_version": "GC/1.1p1",
-        "progress_category" : "sdk",
-        "cflags": [*cflags_runtime, "-rostr", "-sdata 0", "-sdata2 0", "-pool off", "-inline on,noauto"],
+        "progress_category": "sdk",
+        "cflags": [
+            *cflags_runtime,
+            "-rostr",
+            "-sdata 0",
+            "-sdata2 0",
+            "-pool off",
+            "-inline on,noauto",
+        ],
         "objects": [
             Object(Matching, "TRK_MINNOW_DOLPHIN/mainloop.c"),
             Object(Matching, "TRK_MINNOW_DOLPHIN/nubevent.c"),
@@ -1086,7 +1114,7 @@ config.libs = [
     {
         "lib": "amcExi2",
         "mw_version": "GC/1.2.5",
-        "progress_category" : "sdk",
+        "progress_category": "sdk",
         "cflags": cflags_base,
         "objects": [
             Object(Matching, "amcExi2/AmcExi.c"),
@@ -1096,7 +1124,7 @@ config.libs = [
     {
         "lib": "amcnotstub",
         "mw_version": "GC/1.2.5",
-        "progress_category" : "sdk",
+        "progress_category": "sdk",
         "cflags": cflags_base,
         "objects": [
             Object(Matching, "amcnotstub/amcnotstub.c"),
@@ -1105,7 +1133,7 @@ config.libs = [
     {
         "lib": "OdemuExi2",
         "mw_version": "GC/1.2.5",
-        "progress_category" : "sdk",
+        "progress_category": "sdk",
         "cflags": cflags_base,
         "objects": [
             Object(Matching, "OdemuExi2/DebuggerDriver.c"),
@@ -1114,13 +1142,14 @@ config.libs = [
     {
         "lib": "odenotstub",
         "mw_version": "GC/1.2.5",
-        "progress_category" : "sdk",
+        "progress_category": "sdk",
         "cflags": cflags_base,
         "objects": [
             Object(Matching, "odenotstub/odenotstub.c"),
         ],
     },
 ]
+
 
 # Optional callback to adjust link order. This can be used to add, remove, or reorder objects.
 # This is called once per module, with the module ID and the current link order.
@@ -1134,6 +1163,7 @@ def link_order_callback(module_id: int, objects: List[str]) -> List[str]:
     if module_id == 0:  # DOL
         return objects + ["dummy.c"]
     return objects
+
 
 # Uncomment to enable the link order callback.
 # config.link_order_callback = link_order_callback

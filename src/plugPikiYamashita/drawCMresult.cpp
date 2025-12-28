@@ -128,7 +128,7 @@ void zen::DrawCMresult::start(const GameChalQuickInfo& chalInfo)
 	for (i = 0; i < 5; i++) {
 		sprintf(buf, "p_m%d", i);
 		P2DPane* pane = mResultScreen->getScreenPtr()->search(P2DPaneLibrary::makeTag(buf), true);
-		if (i == chalInfo.mCourseID) {
+		if (i == chalInfo.mStageID) {
 			pane->show();
 		} else {
 			pane->hide();

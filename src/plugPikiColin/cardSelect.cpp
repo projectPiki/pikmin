@@ -15,6 +15,10 @@
 #include "sysNew.h"
 #include "zen/ogFileChkSel.h"
 
+/// Macros for packing and unpacking the section compression flag.
+#define PACK_NEXT_ONEPLAYER(onePlayerID) (onePlayerID) << 16
+#define UNPACK_NEXT_ONEPLAYER(flag)      (flag) >> 16
+
 /**
  * @todo: Documentation
  * @note UNUSED Size: 00009C
@@ -60,7 +64,7 @@ struct CardSelectSetupSection : public Node {
 		memcardWindow->start(gameflow.mIsChallengeMode);
 
 		gsys->setFade(1.0f, 3.0f);
-		mNextSectionID = ONEPLAYER_GameSetup << 16;
+		mNextSectionsFlag = PACK_NEXT_ONEPLAYER(ONEPLAYER_GameSetup);
 	}
 
 	/// Updates the screen each frame and alters the state.
@@ -86,8 +90,8 @@ struct CardSelectSetupSection : public Node {
 		if (mFadeState == 1 && gsys->getFade() == 0.0f) {
 			// fade in is done
 			mFadeState = -1;
-			if (mNextSectionID) {
-				gameflow.mNextOnePlayerSectionID = mNextSectionID >> 16;
+			if (mNextSectionsFlag) {
+				gameflow.mNextOnePlayerSectionID = UNPACK_NEXT_ONEPLAYER(mNextSectionsFlag);
 			} else {
 				if (!gameflow.mIsChallengeMode) {
 					PRINT("NORMAL MODE!!!\n");
@@ -114,10 +118,10 @@ struct CardSelectSetupSection : public Node {
 
 					if (playerState->isTutorial()) {
 						// we're in day 1, do things a bit differently
-						StageInfo* stage       = flowCont.mRootInfo.getChild();
+						StageInfo* stage       = (StageInfo*)flowCont.mStageList.mChild;
 						flowCont.mCurrentStage = stage;
-						sprintf(flowCont.mStagePath1, "%s", stage->mFileName);
-						sprintf(flowCont.mStagePath2, "%s", stage->mFileName);
+						sprintf(flowCont.mCurrStageFilePath, "%s", stage->mFileName);
+						sprintf(flowCont.mDoorStageFilePath, "%s", stage->mFileName);
 						// day one is locked at 2:48pm
 						gameflow.mWorldClock.setTime(TUTORIAL_TIME_OF_DAY);
 						gameflow.mNextOnePlayerSectionID = ONEPLAYER_IntroGame;
@@ -166,18 +170,18 @@ struct CardSelectSetupSection : public Node {
 
 			memcardWindow = nullptr;
 			if (returnCode == zen::ogScrFileChkSelMgr::ErrorOrCompleted) {
-				mNextSectionID = ONEPLAYER_GameExit << 16;
-				mFadeState     = 1;
+				mNextSectionsFlag = PACK_NEXT_ONEPLAYER(ONEPLAYER_GameExit);
+				mFadeState        = 1;
 				gsys->setFade(0.0f, 3.0f);
 			} else if (returnCode == zen::ogScrFileChkSelMgr::FILECHKSEL_Unk5) {
-				mNextSectionID = ONEPLAYER_GameSetup << 16;
-				mFadeState     = 1;
+				mNextSectionsFlag = PACK_NEXT_ONEPLAYER(ONEPLAYER_GameSetup);
+				mFadeState        = 1;
 				gsys->setFade(0.0f, 3.0f);
 			} else {
 				// 2/3/4 = we selected a a save file (A, B, or C)
-				gameflow.mGamePrefs.mHasSaveGame = true;
-				gameflow.mSaveGameCrc            = card.mCrc;
-				gameflow.mGamePrefs.mFileNum     = returnCode - 2;
+				gameflow.mGamePrefs.mHasSaveGame        = true;
+				gameflow.mSaveGameCrc                   = card.mCrc;
+				gameflow.mGamePrefs.mMostRecentFileSlot = returnCode - 2;
 				PRINT("got index = %d\n", card.mMemCardSaveIndex);
 				gameflow.mGamePrefs.mMemCardSaveIndex = card.mMemCardSaveIndex + 1;
 				PRINT("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
@@ -198,7 +202,7 @@ struct CardSelectSetupSection : public Node {
 	// _00     = VTBL
 	// _00-_20 = Node
 	u32 mFadeState;          ///< _20, whether screen is fading in, static or off.
-	u32 mNextSectionID;      ///< _24, flag that stores the next OnePlayerSection section.
+	u32 mNextSectionsFlag;   ///< _24, flag that stores the next OnePlayerSection and Section - see defines in Section.h.
 	u8 _28[0x30 - 0x28];     ///< _28, unused/unknown region.
 	Controller* mController; ///< _30, active controller.
 	int mJacSetupCountdown;  ///< _34, frame countdown before setting up audio scene (CM only).
@@ -217,7 +221,7 @@ CardSelectSection::CardSelectSection()
 	playerState->initGame();
 	generatorCache->initGame();
 	pikiInfMgr.initGame();
-	FOREACH_NODE(StageInfo, flowCont.mRootInfo.mChild, stage)
+	FOREACH_NODE(StageInfo, flowCont.mStageList.mChild, stage)
 	{
 		stage->mHasInitialised = FALSE;
 		stage->mStageInf.initGame();

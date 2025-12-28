@@ -64,7 +64,7 @@ void NaviDemoSunsetState::GoState::exec(NaviDemoSunsetState* state)
 
 	Vector3f diff = state->mGoalPos - state->mNavi->mSRT.t;
 	f32 dist      = std::sqrtf(diff.x * diff.x + diff.z * diff.z);
-	f32 nrm       = diff.normalise() / state->_2C;
+	f32 nrm       = diff.normalise() / state->mGoalDistance;
 
 	if (nrm > 0.7f && nrm < 0.71f && gsys->getRand(1.0f) >= 0.9999f) {
 		_14 = true;
@@ -160,8 +160,8 @@ void NaviDemoSunsetState::LookState::procAnimMsg(NaviDemoSunsetState* state, Msg
 void NaviDemoSunsetState::WhistleState::init(NaviDemoSunsetState* state)
 {
 	state->mNavi->startMotion(PaniMotionInfo(PIKIANIM_Fue, state->mNavi), PaniMotionInfo(PIKIANIM_Fue));
-	_10           = 0;
-	flowCont._23C = 1;
+	_10                             = 0;
+	flowCont.mIsSunsetWhistleActive = TRUE;
 }
 
 /**
@@ -334,7 +334,7 @@ void NaviDemoSunsetState::init(Navi* navi)
 	}
 
 	setActors(navi);
-	_30 = 30.0f;
+	mSunsetTimer = 30.0f;
 	cameraMgr->mCamera->startMotion(cameraMgr->mCamera->mAttentionInfo);
 	mOpenedAccount = false;
 }
@@ -347,7 +347,7 @@ void NaviDemoSunsetState::setActors(Navi* navi)
 	navi->mSRT.t = mStartPos;
 
 	Vector3f dist        = mGoalPos - mStartPos;
-	_2C                  = dist.normalise();
+	mGoalDistance        = dist.normalise();
 	navi->mFaceDirection = atan2f(dist.x, dist.z);
 	navi->makeCStick(false);
 
@@ -397,22 +397,28 @@ void NaviDemoSunsetState::exec(Navi* navi)
 	navi->makeCStick(true);
 	navi->mNeutralTime = 0.0f;
 	mStateMachine->exec(this);
-	_30 -= gsys->getFrameTime();
 
-	if (_30 < 0.0f || (_30 <= 15.0f && navi->mKontroller->keyClick(0x107f000))) {
-		flowCont._240 = 1;
+	// we have 30 seconds max to finish!
+	mSunsetTimer -= gsys->getFrameTime();
+
+	if (mSunsetTimer < 0.0f || (mSunsetTimer <= 15.0f && navi->mKontroller->keyClick(KBBTN_ANY_BUTTON))) {
+		// we timed out after 30s OR skipped the account data after 5+s, get us outta here
+		flowCont.mIsSunsetStateForceEnded = TRUE;
 		cleanup(navi);
 		return;
 	}
 
 	if (mOpenedAccount) {
+		// don't try and re-open the daily account data
 		return;
 	}
 
-	if (!(_30 <= 20.0f)) {
+	if (!(mSunsetTimer <= 20.0f)) {
+		// don't try and open the daily account data until at least 10s have passed!
 		return;
 	}
 
+	// open daily account data
 	zen::AccountData data(GameStat::minPikis, GameStat::maxPikis, GameStat::deadPikis, GameStat::killTekis, GameStat::getPellets);
 	accountWindow->start(data);
 	mOpenedAccount = true;

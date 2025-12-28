@@ -15,13 +15,11 @@
 #include "system.h"
 
 /**
- * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("GameSetup");
@@ -89,7 +87,6 @@ static immut char* arambundleList[][2] = {
  */
 void GameSetupSection::preCacheShapes()
 {
-	// what on earth is this even doing.
 	// this isn't in the DLL, so this is as close to a fake match as I can get.
 	// still refuses to addi the _310 and _31C stuff, but w/e
 	AramAllocator* list1 = &gsys->mBaseAramAllocator;
@@ -271,13 +268,13 @@ GameSetupSection::GameSetupSection()
 
 	gameflow.mPlayState.Initialise();
 	gameflow.mWorldClock.mCurrentDay = 1;
-	flowCont._248                    = 0;
+	flowCont.mClearStatePikiCount    = 0;
 	flowCont._254                    = 0;
 	flowCont._258                    = 0;
-	flowCont._24C                    = 0;
+	flowCont.mNaviSeedCount          = 0;
 	flowCont._250                    = 0;
 	flowCont.readMapList("stages/stages.ini");
-	flowCont._244 = 0;
+	flowCont.mEndingType = ENDING_None;
 	preCacheShapes();
 
 	memStat->start("genCache");
@@ -310,28 +307,35 @@ GameSetupSection::GameSetupSection()
 void GameSetupSection::update()
 {
 #if defined(VERSION_G98E01_PIKIDEMO)
-	flowCont.mCurrentStage = 0;
+	// the only thing the demo will load into is the Forest of Hope challenge mode
+
+	STACK_PAD_VAR(1);
+	flowCont.mCurrentStage = nullptr;
 	playerState->initGame();
 	generatorCache->initGame();
 	pikiInfMgr.initGame();
 
-	StageInfo* stage = flowCont.mRootInfo.getChild();
+	// reset all our story mode stages to be re-initialised
+	StageInfo* stage = (StageInfo*)flowCont.mStageList.mChild;
 	while (stage) {
-		stage->mHasInitialised = 0;
+		stage->mHasInitialised = FALSE;
 		stage->mStageInf.initGame();
 		stage = (StageInfo*)stage->mNext;
 	}
 
 	gameflow.mGamePrefs.mMemCardSaveIndex = 0;
-	gameflow.mGamePrefs.mHasSaveGame      = 0;
+	gameflow.mGamePrefs.mHasSaveGame      = false;
+
+	// put us in challenge mode
 	playerState->setChallengeMode();
 
-	stage = flowCont.mRootInfo.getChild();
+	stage = (StageInfo*)flowCont.mStageList.mChild;
 	while (stage) {
-		if ((int)stage->mChalStageID == 1) {
+		if ((int)stage->mChalStageID == STAGE_ChalForest) {
+			// if we have it, load into Forest of Hope challenge mode!
 			flowCont.mCurrentStage = stage;
-			sprintf(flowCont.mStagePath1, "%s", stage->mFileName);
-			sprintf(flowCont.mStagePath2, "%s", stage->mFileName);
+			sprintf(flowCont.mCurrStageFilePath, "%s", stage->mFileName);
+			sprintf(flowCont.mDoorStageFilePath, "%s", stage->mFileName);
 			gameflow.mNextOnePlayerSectionID = ONEPLAYER_NewPikiGame;
 			gameflow.mWorldClock.setTime(gameflow.mParameters->mStartHour());
 			break;
@@ -341,6 +345,7 @@ void GameSetupSection::update()
 	gsys->softReset();
 #else
 	PRINT("reset!\n");
+	// queue up card select as the next section (either for story mode or challenge mode, doesn't matter)
 	gameflow.mNextOnePlayerSectionID = ONEPLAYER_CardSelect;
 	gsys->softReset();
 #endif

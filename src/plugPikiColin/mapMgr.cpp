@@ -867,7 +867,7 @@ void MapMgr::initEffects()
 void MapMgr::initShape()
 {
 	mLightMgr = 0;
-	mMapShape = gameflow.loadShape(flowCont.mAnimationTestPath, true);
+	mMapShape = gameflow.loadShape(flowCont.mMapModelFilePath, true);
 	mMapShape->mSystemFlags |= ShapeFlags::AlwaysRedraw;
 	mMapShape->makeInstance(mDynMaterials, 0);
 
