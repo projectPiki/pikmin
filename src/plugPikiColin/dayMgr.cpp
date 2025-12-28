@@ -332,7 +332,7 @@ struct LightMenu : public Menu {
 	{
 		mSelectedLightType = lightConv[(u8)mLight->mLightType];
 		addOption(0, lightTypeNames[(u8)mLight->mLightType], new Delegate1<LightMenu, Menu&>(this, menuChangeType), true);
-		addOption(0, nullptr, nullptr, true);
+		addOption(MENU_FAKE_OPTION_FOR_GAP);
 		if ((int)(u8)mLight->mLightType == 3) {
 			mSpotFov = &mLight->mSpotAngle;
 			addOption(0, lightMoveNames[mLightAttachType[0]], new Delegate1<LightMenu, Menu&>(this, menuChangeMove), true);
@@ -382,7 +382,7 @@ struct DaySetMenu : public Menu {
 		addMenu(
 		    new FogMenu(&mTimeSettings->mFogColour, &mTimeSettings->mFogNear, &mTimeSettings->mFogFar, mController, gsys->mConsFont, true),
 		    0, "fog");
-		addOption(0, nullptr, nullptr, true);
+		addOption(MENU_FAKE_OPTION_FOR_GAP);
 		addMenu(new LightMenu(&mTimeSettings->mDayPhaseLights[0], &mTimeSettings->mAttachType[0], mController, gsys->mConsFont, true), 0,
 		        "main light");
 		addMenu(new LightMenu(&mTimeSettings->mDayPhaseLights[1], &mTimeSettings->mAttachType[1], mController, gsys->mConsFont, true), 0,
@@ -465,9 +465,9 @@ DayMgr::DayMgr(MapMgr* map, Controller* control)
 	mMenu->addKeyEvent(Menu::KeyEventType::Input, KBBTN_Y, new Delegate1<DayMgr, Menu&>(this, &menuDecreaseTime));
 	mMenu->addKeyEvent(Menu::KeyEventType::Input, KBBTN_X, new Delegate1<DayMgr, Menu&>(this, &menuIncreaseTime));
 
-	mMenu->addOption(0, nullptr, nullptr, true);
+	mMenu->addOption(MENU_FAKE_OPTION_FOR_GAP);
 	mMenu->addOption(0, "Dump Settings", new Delegate1<DayMgr, Menu&>(this, &menuDumpSettings), true);
-	mMenu->addOption(0, nullptr, nullptr, true);
+	mMenu->addOption(MENU_FAKE_OPTION_FOR_GAP);
 
 	str = new char[0x40];
 	sprintf(str, "morning : % 2.1f", gameflow.mParameters->mMorningMid());

@@ -179,9 +179,9 @@ struct TitleSetupSection : public Node {
 		mMenu->addOption(SECTION_OgTest << 16, "Rumble", nullptr, true);
 		mMenu->addOption(SECTION_PaniTest << 16, "TestScreen", nullptr, true);
 
-		mMenu->addOption(0, nullptr, nullptr, true);
+		mMenu->addOption(MENU_FAKE_OPTION_FOR_GAP);
 		mMenu->addMenu(mDayMgr->mMenu, 0, "Lighting");
-		mMenu->addOption(0, nullptr, nullptr, true);
+		mMenu->addOption(MENU_FAKE_OPTION_FOR_GAP);
 		mMenu->addMenu(optionsMenu, 0, "Options");
 #endif
 
