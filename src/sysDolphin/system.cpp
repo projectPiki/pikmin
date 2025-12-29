@@ -518,20 +518,20 @@ System::System()
 {
 	mTimerState       = TS_Off;
 	mTogglePrint      = FALSE;
-	mToggleDebugInfo  = 0;
-	mToggleDebugExtra = 0;
-	mToggleBlur       = true;
-	mToggleColls      = 0;
+	mToggleDebugInfo  = FALSE;
+	mToggleDebugExtra = FALSE;
+	mToggleBlur       = TRUE;
+	mToggleColls      = FALSE;
 #if defined(VERSION_PIKIDEMO)
-	mIsDemoTimeUp = 0;
+	mIsDemoTimeUp = FALSE;
 #endif
 	mDvdBufferSize    = 0x40000;
 	mCurrentThread    = OSGetCurrentThread();
-	mDvdErrorCallback = 0;
+	mDvdErrorCallback = nullptr;
 	mDvdErrorCode     = DvdError::None;
 	mPrevAllocType    = FALSE;
-	mDmaComplete      = 1;
-	mTexComplete      = 1;
+	mDmaComplete      = TRUE;
+	mTexComplete      = TRUE;
 	mActiveDir        = "";
 	mAtxRouter        = nullptr;
 	mActiveHeapIdx    = -1;
@@ -1041,7 +1041,7 @@ void doneDMA(u32 cache)
  */
 void System::copyWaitUntilDone()
 {
-	while (mDmaComplete == 0) { }
+	while (mDmaComplete == FALSE) { }
 }
 
 /**
@@ -1062,7 +1062,7 @@ u32 System::copyRamToCache(u32 src, u32 size, u32 dest)
 	mActiveCacheList.insertAfter(cache);
 	OSRestoreInterrupts(inter);
 
-	gsys->mDmaComplete = 0;
+	gsys->mDmaComplete = FALSE;
 	DCStoreRange((void*)src, size);
 	ARQPostRequest(cache, (u32)cache, 0, 1, src, adjustedDest, size, doneDMA);
 	return adjustedDest;
@@ -1082,7 +1082,7 @@ void System::copyCacheToRam(u32 dst, u32 src, u32 size)
 	cache->remove();
 	mActiveCacheList.insertAfter(cache);
 	OSRestoreInterrupts(inter);
-	gsys->mDmaComplete = 0;
+	gsys->mDmaComplete = FALSE;
 	DCInvalidateRange((void*)dst, size);
 	ARQPostRequest(cache, (u32)cache, 1, 1, src, dst, size, doneDMA);
 }
@@ -1122,11 +1122,11 @@ void System::copyCacheToTexture(CacheTexture* tex)
 	u32 size     = tex->mTexImage->mDataSize;
 
 	OSRestoreInterrupts(inter);
-	gsys->mTexComplete = 0;
+	gsys->mTexComplete = FALSE;
 	DCInvalidateRange((void*)data, size);
 	ARQPostRequest(cache, (u32)tex, 1, 1, aramAddr, (u32)data, size, freeBuffer);
 
-	while (mTexComplete == 0) { }
+	while (mTexComplete == FALSE) { }
 }
 
 /**

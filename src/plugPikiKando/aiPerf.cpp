@@ -143,16 +143,20 @@ void AIPerf::addMenu(Menu* menu)
 	menu->addKeyEvent(Menu::KeyEventType::Release, KBBTN_X, new Delegate1<AIPerf, Menu&>(this, &AIPerf::incUfoLevel));
 
 	menu->addOption(0, "Flower Pikis", nullptr);
-	menu->addKeyEvent(Menu::KeyEventType::Release, KBBTN_Y, new Delegate1<AIPerf, Menu&>(this, &AIPerf::flowerPiki));
+	menu->addKeyEvent(Menu::KeyEventType::Release, TERNARY_BUGFIX(KBBTN_A, KBBTN_Y),
+	                  new Delegate1<AIPerf, Menu&>(this, &AIPerf::flowerPiki));
 
 	menu->addOption(0, "Break sluice", nullptr);
-	menu->addKeyEvent(Menu::KeyEventType::Release, KBBTN_Y, new Delegate1<AIPerf, Menu&>(this, &AIPerf::breakSluice));
+	menu->addKeyEvent(Menu::KeyEventType::Release, TERNARY_BUGFIX(KBBTN_A, KBBTN_Y),
+	                  new Delegate1<AIPerf, Menu&>(this, &AIPerf::breakSluice));
 
 	menu->addOption(0, "COLLECT PIKIS", nullptr);
-	menu->addKeyEvent(Menu::KeyEventType::Release, KBBTN_Y, new Delegate1<AIPerf, Menu&>(this, &AIPerf::collectPikis));
+	menu->addKeyEvent(Menu::KeyEventType::Release, TERNARY_BUGFIX(KBBTN_A, KBBTN_Y),
+	                  new Delegate1<AIPerf, Menu&>(this, &AIPerf::collectPikis));
 
 	menu->addOption(0, "FULLFILL PIKI", nullptr);
-	menu->addKeyEvent(Menu::KeyEventType::Release, KBBTN_Y, new Delegate1<AIPerf, Menu&>(this, &AIPerf::fullfillPiki));
+	menu->addKeyEvent(Menu::KeyEventType::Release, TERNARY_BUGFIX(KBBTN_A, KBBTN_Y),
+	                  new Delegate1<AIPerf, Menu&>(this, &AIPerf::fullfillPiki));
 }
 
 /**

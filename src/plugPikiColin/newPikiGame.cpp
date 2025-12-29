@@ -589,14 +589,16 @@ ModeState* RunningModeState::update(u32& result)
 				mCachedPauseFlag            = gameflow.mIsUIOverlayActive;
 				gameflow.mIsUIOverlayActive = TRUE;
 			}
+		}
 #if defined(VERSION_G98E01_PIKIDEMO)
-		} else if (mController->keyClick(KBBTN_Y) && gameflow.mWorldClock.mTimeOfDay < gameflow.mParameters->mEndHour() - 0.125f
-		           && !gameflow.mIsUIOverlayActive && !mesgsPending) {
+		else if (mController->keyClick(KBBTN_Y) && gameflow.mWorldClock.mTimeOfDay < gameflow.mParameters->mEndHour() - 0.125f
+		         && !gameflow.mIsUIOverlayActive && !mesgsPending)
 #else
-		} else if (!gameflow.mIsChallengeMode && mController->keyClick(KBBTN_Y)
-		           && gameflow.mWorldClock.mTimeOfDay < gameflow.mParameters->mEndHour() - 0.125f && !gameflow.mIsUIOverlayActive
-		           && !mesgsPending) {
+		else if (!gameflow.mIsChallengeMode && mController->keyClick(KBBTN_Y)
+		         && gameflow.mWorldClock.mTimeOfDay < gameflow.mParameters->mEndHour() - 0.125f && !gameflow.mIsUIOverlayActive
+		         && !mesgsPending)
 #endif
+		{
 			gameflow.mGameInterface->message(MOVIECMD_CreateMenuWindow, 0);
 			mCachedPauseFlag            = gameflow.mIsUIOverlayActive;
 			gameflow.mIsUIOverlayActive = TRUE;
@@ -1355,13 +1357,13 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 				f32 fov   = cameraMgr->mCamera->getFov();
 				f32 a     = gameflow.mMoviePlayer->mTargetFov;
 
-#if defined(VERSION_G98E01_PIKIDEMO)
-				// stack is a mess here
+				// In the final game, these leftovers from demo got left on the stack.
 				Vector3f unused1(cameraMgr->mCamera->getViewpoint());
 				Vector3f unused2(gameflow.mMoviePlayer->mTargetViewpoint);
 				Vector3f unused3(cameraMgr->mCamera->getWatchpoint());
 				Vector3f unused4(gameflow.mMoviePlayer->mLookAtPos);
 
+#if defined(VERSION_G98E01_PIKIDEMO)
 				f32 fov2 = sinf(HALF_PI * tComp);
 				fov2     = sinf(HALF_PI * fov2);
 				fov2     = sinf(HALF_PI * fov2);
@@ -1379,16 +1381,8 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 
 				gfx.mCamera->calcLookAt(gfx.mCamera->mPosition, gfx.mCamera->mFocus, nullptr);
 #else
-
-				// huh.
-				Vector3f unused1(cameraMgr->mCamera->getViewpoint());
-				Vector3f unused2(gameflow.mMoviePlayer->mTargetViewpoint);
-				Vector3f unused3(cameraMgr->mCamera->getWatchpoint());
-				Vector3f unused4(gameflow.mMoviePlayer->mLookAtPos);
-
 				gfx.mCamera->mFov = (fov - a) * tComp + a;
 #endif
-
 			} else {
 				// no scene or active transition, so set to player cam
 				gameflow.mMoviePlayer->setGameCamInfo(true, cameraMgr->mCamera->getFov(), cameraMgr->mCamera->getViewpoint(),
@@ -1591,10 +1585,11 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 		gfx.setPerspective(gfx.mCamera->mPerspectiveMatrix.mMtx, gfx.mCamera->mFov, gfx.mCamera->mAspectRatio, gfx.mCamera->mNear,
 		                   gfx.mCamera->mFar, 1.0f);
 #if defined(VERSION_G98E01_PIKIDEMO)
-		if (!(gameflow.mDemoFlags & GFDEMO_InMenu)) {
+		if (!(gameflow.mDemoFlags & GFDEMO_InMenu))
 #else
-		if (!memcardWindow && !(gameflow.mDemoFlags & GFDEMO_InMenu)) {
+		if (!memcardWindow && !(gameflow.mDemoFlags & GFDEMO_InMenu))
 #endif
+		{
 			bool isTimeMoving = true;
 			if (playerState->isTutorial() && !gameflow.mIsDayEndActive) {
 				isTimeMoving = false;

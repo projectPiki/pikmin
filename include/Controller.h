@@ -5,55 +5,33 @@
 #include "types.h"
 
 /**
- * @brief TODO
- *
- * @note I think these are more accurate based on Minty's notes.
+ * @brief Controller input bit-flags used by `Controller`.  Not the same as Dolphin OS `PAD_XXX` defines.
  */
 enum KeyboardButtons {
-	KBBTN_NONE = 0x0,
-	KBBTN_ANY  = 0xffffffff,
+	KBBTN_CSTICK_LEFT  = 1 << 0,  // 0x1
+	KBBTN_CSTICK_RIGHT = 1 << 1,  // 0x2
+	KBBTN_CSTICK_UP    = 1 << 2,  // 0x4
+	KBBTN_CSTICK_DOWN  = 1 << 3,  // 0x8
+	/* One, two, skip a few. */   //
+	KBBTN_DPAD_LEFT    = 1 << 8,  // 0x100
+	KBBTN_DPAD_RIGHT   = 1 << 9,  // 0x200
+	KBBTN_DPAD_UP      = 1 << 10, // 0x400
+	KBBTN_DPAD_DOWN    = 1 << 11, // 0x800
+	KBBTN_A            = 1 << 12, // 0x1000
+	KBBTN_B            = 1 << 13, // 0x2000
+	KBBTN_X            = 1 << 14, // 0x4000
+	KBBTN_Y            = 1 << 15, // 0x8000
+	KBBTN_Z            = 1 << 16, // 0x10000
+	KBBTN_L            = 1 << 17, // 0x20000
+	KBBTN_R            = 1 << 18, // 0x40000
+	KBBTN_MSTICK_UP    = 1 << 19, // 0x80000
+	KBBTN_MSTICK_RIGHT = 1 << 20, // 0x100000
+	KBBTN_MSTICK_DOWN  = 1 << 21, // 0x200000
+	KBBTN_MSTICK_LEFT  = 1 << 22, // 0x400000
+	KBBTN_START        = 1 << 24, // 0x1000000 (1 << 23 is skipped)
 
-	KBBTN_CSTICK_LEFT  = 0x1,
-	KBBTN_CSTICK_RIGHT = 0x2,
-	KBBTN_CSTICK_UP    = 0x4,
-	KBBTN_CSTICK_DOWN  = 0x8,
-
-	KBBTN_Unk5 = 0x10,
-	KBBTN_Unk6 = 0x20,
-	KBBTN_Unk7 = 0x40,
-	KBBTN_Unk8 = 0x80,
-
-	KBBTN_DPAD_LEFT  = 0x100, // not sure what direction this is
-	KBBTN_DPAD_RIGHT = 0x200, // not sure what direction this is
-	KBBTN_DPAD_UP    = 0x400, // not sure what direction this is
-	KBBTN_DPAD_DOWN  = 0x800, // not sure what direction this is
-
-	KBBTN_A = 0x1000,
-	KBBTN_B = 0x2000,
-	KBBTN_X = 0x4000,
-	KBBTN_Y = 0x8000,
-
-	KBBTN_Z = 0x10000,
-	KBBTN_L = 0x20000,
-	KBBTN_R = 0x40000,
-
-	KBBTN_MSTICK_UP    = 0x80000,
-	KBBTN_MSTICK_RIGHT = 0x100000,
-	KBBTN_MSTICK_DOWN  = 0x200000,
-	KBBTN_MSTICK_LEFT  = 0x400000,
-
-	KBBTN_UNK24 = 0x800000,
-
-	KBBTN_START = 0x1000000,
-
-	KBBTN_UNK26 = 0x2000000,
-	KBBTN_UNK27 = 0x4000000,
-	KBBTN_UNK28 = 0x8000000,
-	KBBTN_UNK29 = 0x10000000,
-	KBBTN_UNK30 = 0x20000000,
-	KBBTN_UNK31 = 0x40000000,
-	KBBTN_UNK32 = 0x80000000,
-
+	KBBTN_NONE       = 0x0,
+	KBBTN_ANY        = 0xffffffff,
 	KBBTN_ANY_BUTTON = KBBTN_A | KBBTN_B | KBBTN_X | KBBTN_Y | KBBTN_Z | KBBTN_L | KBBTN_R | KBBTN_START,
 };
 

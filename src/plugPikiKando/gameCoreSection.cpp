@@ -1637,8 +1637,7 @@ void GameCoreSection::updateAI()
 			}
 		}
 	}
-	MATCHING_STOP_TIMER("post"); // Wrong scope, but if the tekiMgr doesn't exist
-	                             // you probably have bigger problems.
+	MATCHING_STOP_TIMER("post"); // Wrong scope, but if the tekiMgr doesn't exist you probably have bigger problems.
 	gsys->mTimer->stop("GameCore");
 }
 

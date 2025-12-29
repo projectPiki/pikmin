@@ -15,7 +15,7 @@ u32 ErrorTable[16] = { 0x00000000, 0x00023A00, 0x00062800, 0x00030200, 0x0003110
 u8 ErrorCode2Num(u32 errorCode)
 {
 	int i;
-	for (i = 0; i < sizeof(ErrorTable) / sizeof(ErrorTable[0]); i++) {
+	for (i = 0; i < ARRAY_SIZE(ErrorTable); i++) {
 		if (errorCode == ErrorTable[i]) {
 			return i;
 		}
