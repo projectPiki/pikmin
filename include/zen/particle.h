@@ -677,7 +677,7 @@ public:
 
 	static const f32 DEFAULT_FRAME_RATE;
 #if defined(VERSION_G98E01_PIKIDEMO)
-	bool checkPtclGenZero() { return (int)mActivePtclGenCount == 0 && (int)mActiveParticleCount == 0; }
+	bool isKillAllGenerator() { return (int)mActivePtclGenCount == 0 && (int)mActiveParticleCount == 0; }
 	bool checkChildPtclZero() { return (int)mActiveChildParticleCount == 0; }
 
 	void calcActiveList();

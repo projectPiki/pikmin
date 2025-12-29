@@ -38,8 +38,11 @@ typedef struct STRUCT_DSP_TASK2 {
 // Global functions.
 s32 __DSPCheckMXICBoot2(DSPTaskInfo2* task);
 void DSPInit2(DSPTaskInfo2* task);
+#if defined(VERSION_GPIP01_00)
+void DspBoot(DSPCallback);
+#else
 void DspBoot();
-
+#endif
 // Global declarations.
 extern u16 jdsp[];
 

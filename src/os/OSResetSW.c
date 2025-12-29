@@ -103,7 +103,7 @@ BOOL OSGetResetSwitchState(void)
 	BOOL state;
 	u32 reg;
 
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
 	return OSGetResetButtonState();
 #endif
 

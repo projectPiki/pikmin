@@ -1,9 +1,13 @@
 #include "Dolphin/dvd.h"
 #include "Dolphin/os.h"
 
+#if defined(VERSION_GPIP01_00)
+u32 ErrorTable[18] = { 0x00000000, 0x00023A00, 0x00062800, 0x00030200, 0x00031100, 0x00052000, 0x00052001, 0x00052100, 0x00052400,
+	                   0x00052401, 0x00052402, 0x000B5A01, 0x00056300, 0x00020401, 0x00020400, 0x00040800, 0x00100007, 0x00000000 };
+#else
 u32 ErrorTable[16] = { 0x00000000, 0x00023A00, 0x00062800, 0x00030200, 0x00031100, 0x00052000, 0x00052001, 0x00052100,
 	                   0x00052400, 0x00052401, 0x00052402, 0x000B5A01, 0x00056300, 0x00020401, 0x00020400, 0x00040800 };
-
+#endif
 /**
  * @TODO: Documentation
  * @note UNUSED Size: 0000E4
@@ -11,12 +15,17 @@ u32 ErrorTable[16] = { 0x00000000, 0x00023A00, 0x00062800, 0x00030200, 0x0003110
 u8 ErrorCode2Num(u32 errorCode)
 {
 	int i;
-
-	for (i = 0; i < 16; i++) {
+	for (i = 0; i < sizeof(ErrorTable) / sizeof(ErrorTable[0]); i++) {
 		if (errorCode == ErrorTable[i]) {
 			return i;
 		}
 	}
+
+#if defined(VERSION_GPIP01_00)
+	if ((errorCode >= 0x00100000) && (errorCode <= 0x00100008)) {
+		return 17;
+	}
+#endif
 
 	return 29;
 }

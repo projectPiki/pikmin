@@ -114,10 +114,11 @@ struct EffectMgr2D {
 
 #if defined(VERSION_G98E01_PIKIDEMO)
 	// returns true if there are zero active particles, exclusive to demo(?)
-	inline bool checkNoParticles()
+	// these names come from the demo .ilk, except checkChildPtclZero
+	inline bool isKillAll()
 	{
 		mParticleManager.calcActiveList();
-		return mParticleManager.checkPtclGenZero() && mParticleManager.checkChildPtclZero();
+		return mParticleManager.isKillAllGenerator() && mParticleManager.checkChildPtclZero();
 	}
 #endif
 

@@ -2186,7 +2186,7 @@ bool zen::DrawWorldMap::modeEnd(Controller*)
 	bool res = false;
 	if (!mWipeMgr->isActive()) {
 #if defined(VERSION_G98E01_PIKIDEMO)
-		if (WMeffMgr->checkNoParticles()) {
+		if (WMeffMgr->isKillAll()) {
 			res = true;
 		}
 #else

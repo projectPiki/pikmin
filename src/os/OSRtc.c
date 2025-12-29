@@ -368,7 +368,13 @@ void OSSetVideoMode(void)
  */
 u8 OSGetLanguage(void)
 {
-	// UNUSED FUNCTION
+	OSSram* sram;
+	u8 language;
+
+	sram     = __OSLockSram();
+	language = sram->language;
+	__OSUnlockSram(FALSE);
+	return language;
 }
 
 /**
@@ -397,7 +403,7 @@ void __OSSetBootMode(void)
 {
 	// UNUSED FUNCTION
 }
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
 u16 OSGetWirelessID(s32 channel)
 {
 	OSSramEx* sram;

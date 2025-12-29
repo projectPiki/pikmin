@@ -368,6 +368,24 @@ void DSP_ClearBuffer()
 	}
 }
 
+#if defined(VERSION_GPIP01_00)
+/**
+ * @TODO: Documentation
+ */
+void DSP_CreateMap()
+{
+	// This is accomplishing nothing...
+	u64 map = 0;
+	for (u32 i = 0; i < 64; i++) {
+		map <<= 1;
+		if (CH_BUF[i].enabled) {
+			map |= 1;
+		}
+	}
+	// UNUSED FUNCTION
+}
+#endif
+
 static u32 DSPADPCM_FILTER[] ATTRIBUTE_ALIGN(32) = {
 	0x00000000, 0x08000000, 0x00000800, 0x04000400, 0x1000f800, 0x0e00fa00, 0x0c00fc00, 0x1200f600,
 	0x1068f738, 0x12c0f704, 0x1400f400, 0x0800f800, 0x0400fc00, 0xfc000400, 0xfc000000, 0xf8000000,

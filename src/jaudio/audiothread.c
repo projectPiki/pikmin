@@ -1,6 +1,7 @@
 #include "jaudio/audiothread.h"
 #include "Dolphin/OS/OSThread.h"
 #include "Dolphin/ai.h"
+#include "Dolphin/dsp.h"
 #include "Dolphin/os.h"
 #include "jaudio/aictrl.h"
 #include "jaudio/audiocommon.h"
@@ -16,6 +17,8 @@
 #include "jaudio/playercall.h"
 #include "jaudio/rate.h"
 #include "jaudio/stackchecker.h"
+
+DspFinishWork(u16);
 
 // this is purely for comm bullshit to match. pretty sure it's not the comm bug, just wacky.
 typedef struct Jac_AudioThread {
@@ -71,6 +74,32 @@ static void DspSync()
 		DSPReleaseHalt();
 	}
 }
+
+#if defined(VERSION_GPIP01_00)
+/**
+ * @TODO: Documentation
+ */
+static void DspSync2(void*)
+{
+	volatile u32 check;
+	u32 mesg;
+	u32 stack;
+
+	do {
+		check = DSPCheckMailFromDSP();
+	} while (check == 0);
+
+	mesg = DSPReadMailFromDSP();
+	if (mesg >> 0x10 == 0xf355) {
+		stack = 0x10000;
+		if (u16(mesg & 0xff00) == stack - 0x100) {
+			DspSync();
+		} else {
+			DspFinishWork(mesg);
+		}
+	}
+}
+#endif
 
 /**
  * @TODO: Documentation
@@ -146,14 +175,25 @@ static void* audioproc(void*)
 	OSInitFastCast();
 	OSInitMessageQueue(&audioproc_mq, msgbuf, AUDIOPROC_MQ_BUF_COUNT);
 	audioproc_mq_init = TRUE;
+#if defined(VERSION_GPIP01_00)
+	ResetPlayerCallback();
+	Jac_Init();
+	Jac_InitSinTable();
+#else
 	Jac_Init();
 	Jac_InitSinTable();
 	ResetPlayerCallback();
+#endif
 	DspbufProcess(DSPBUF_EVENT_INIT);
 	CpubufProcess(DSPBUF_EVENT_INIT);
+#if defined(VERSION_GPIP01_00)
+	DspBoot(DspSync2);
+	DSP_InitBuffer();
+#else
 	DspBoot();
 	DSP_InitBuffer();
 	__DspReg();
+#endif
 	AISetDSPSampleRate(JAC_AI_SETTING);
 	AIRegisterDMACallback(&AudioSync);
 	AIStartDMA();

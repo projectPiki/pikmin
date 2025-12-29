@@ -15,6 +15,10 @@ void DwaitFrame();
 void DiplSec(u32 cmd);
 void DagbSec(u32 cmd);
 
+#if defined(VERSION_GPIP01_00)
+void DsyncFrame2(u32 subframes, u32 dspbufStart, u32 dspbufEnd);
+#endif
+
 ///////////////////////////////////////////////////
 
 #endif

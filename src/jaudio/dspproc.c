@@ -3,6 +3,9 @@
 #include "Dolphin/os.h"
 
 static u16 DSP_MIXERLEVEL = 0x4000;
+#if defined(VERSION_GPIP01_00)
+volatile static int flag;
+#endif
 
 /**
  * @TODO: Documentation
@@ -42,6 +45,13 @@ s32 DSPSendCommands(u32* commands, u32 count)
  */
 u32 DSPReleaseHalt()
 {
+#if defined(VERSION_GPIP01_00)
+	u32 bit[4];
+	u64 map = DSP_CreateMap();
+	bit[0]  = map >> 32;
+	bit[1]  = map & 0xFFFFFFFF;
+	DSPSendCommands2(bit, 0, NULL);
+#else
 	while (DSPCheckMailToDSP() != 0)
 		;
 	DSPSendMailToDSP(0);
@@ -50,7 +60,15 @@ u32 DSPReleaseHalt()
 	}
 
 	return 0x88881357;
+#endif
 }
+
+#if defined(VERSION_GPIP01_00)
+static void setup_callback(u16 a)
+{
+	flag = 0;
+}
+#endif
 
 /**
  * @TODO: Documentation
@@ -230,8 +248,14 @@ void DsetupTable(u32 cmd1, u32 cmd2, u32 cmd3, u32 cmd4, u32 cmd5)
 	commands[3] = cmd4;
 	commands[4] = cmd5;
 
+#if defined(VERSION_GPIP01_00)
+	flag = 1;
+	DSPSendCommands2(commands, ARRAY_SIZE(commands), setup_callback);
+	while (flag != 0) { }
+#else
 	DSPSendCommands(commands, ARRAY_SIZE(commands));
 	DSPWaitFinish();
+#endif
 }
 
 /**
@@ -255,8 +279,13 @@ void DsyncFrame(u32 subframes, u32 dspbufStart, u32 dspbufEnd)
 	commands[1] = dspbufStart;
 	commands[2] = dspbufEnd;
 
+#if defined(VERSION_GPIP01_00)
+	u32 stack;
+	DSPSendCommands2(commands, ARRAY_SIZE(commands), NULL);
+#else
 	DSPSendCommands(commands, ARRAY_SIZE(commands));
 	DSPWaitFinish();
+#endif
 }
 
 /**

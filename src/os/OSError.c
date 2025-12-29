@@ -6,7 +6,7 @@
 
 #include <stdio.h>
 
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
 OSErrorHandler __OSErrorTable[OS_ERROR_MAX];
 #else
 static OSErrorHandler OSErrorTable[OS_ERROR_MAX];
@@ -55,7 +55,7 @@ void OSPanic(const char* file, int line, const char* msg, ...)
  */
 OSErrorHandler OSSetErrorHandler(OSError error, OSErrorHandler handler)
 {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
 	OSErrorHandler prevHandler = __OSErrorTable[error];
 
 	__OSErrorTable[error] = handler;
@@ -72,7 +72,7 @@ OSErrorHandler OSSetErrorHandler(OSError error, OSErrorHandler handler)
  */
 void __OSUnhandledException(__OSException exception, OSContext* context, u32 dsisr, u32 dar)
 {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
 	if (!(context->srr1 & MSR_RI)) {
 		OSReport("Non-recoverable Exception %d", exception);
 	} else {

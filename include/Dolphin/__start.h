@@ -18,7 +18,11 @@ extern "C" {
 extern void InitMetroTRK();
 
 u16 Pad3Button : PAD3_BUTTON_ADDR;
+
+#if defined(VERSION_GPIP01_00)
+#else
 static u8 Debug_BBA = 0;
+#endif
 
 extern int main(int argc, char* argv[]);
 extern void exit(int);

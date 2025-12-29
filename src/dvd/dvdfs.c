@@ -56,7 +56,7 @@ void __DVDFSInit()
  */
 static BOOL isSame(const char* path, const char* string)
 {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
 	while (*string != '\0') {
 		if (tolower(*path++) != tolower(*string++)) {
 			return FALSE;
@@ -99,7 +99,7 @@ s32 DVDConvertPathToEntrynum(const char* pathPtr)
 
 	dirLookAt = currentDirectory;
 
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
 	while (1) {
 		if (*pathPtr == '\0') {
 			return (s32)dirLookAt;
@@ -335,7 +335,7 @@ static u32 myStrncpy(char* dest, const char* src, u32 maxlen)
 {
 	u32 i = maxlen;
 
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
 	while ((i > 0) && (*src != 0)) {
 #else
 	while ((i > 0) && ((u8)*src != 0)) {
@@ -433,7 +433,7 @@ BOOL DVDChangeDir(const char* dirName)
 BOOL DVDReadAsyncPrio(DVDFileInfo* fileInfo, void* addr, s32 length, s32 offset, DVDCallback callback, s32 prio)
 {
 	if (!((0 <= offset) && (offset < fileInfo->length))) {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
 		OSErrorLine(739, "DVDReadAsync(): specified area is out of the file  ");
 #else
 		OSErrorLine(735, "DVDReadAsync(): specified area is out of the file  ");
@@ -441,7 +441,7 @@ BOOL DVDReadAsyncPrio(DVDFileInfo* fileInfo, void* addr, s32 length, s32 offset,
 	}
 
 	if (!((0 <= offset + length) && (offset + length < fileInfo->length + DVD_MIN_TRANSFER_SIZE))) {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
 		OSErrorLine(745, "DVDReadAsync(): specified area is out of the file  ");
 #else
 		OSErrorLine(741, "DVDReadAsync(): specified area is out of the file  ");
@@ -479,7 +479,7 @@ s32 DVDReadPrio(DVDFileInfo* fileInfo, void* addr, s32 length, s32 offset, s32 p
 	s32 retVal;
 
 	if (!((0 <= offset) && (offset < fileInfo->length))) {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
 		OSErrorLine(809, "DVDRead(): specified area is out of the file  ");
 #else
 		OSErrorLine(805, "DVDRead(): specified area is out of the file  ");
@@ -487,7 +487,7 @@ s32 DVDReadPrio(DVDFileInfo* fileInfo, void* addr, s32 length, s32 offset, s32 p
 	}
 
 	if (!((0 <= offset + length) && (offset + length < fileInfo->length + DVD_MIN_TRANSFER_SIZE))) {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
 		OSErrorLine(815, "DVDRead(): specified area is out of the file  ");
 #else
 		OSErrorLine(811, "DVDRead(): specified area is out of the file  ");
@@ -594,7 +594,7 @@ BOOL DVDOpenDir(const char* dirName, DVDDir* dir)
 {
 	// something is making this function in particular compile this warning string in demo, this probably isnt right but it gets the job
 	// done
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
 
 	long entry;
 	char currentDir[128];
@@ -654,7 +654,7 @@ BOOL DVDPrepareStreamAsync(DVDFileInfo* fileInfo, u32 length, u32 offset, DVDCal
 	start = fileInfo->startAddr + offset;
 
 	if (!Is32KBAligned(start)) {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
 		OSErrorLine(1186,
 		            "DVDPrepareStreamAsync(): Specified start address (filestart(0x%x) + offset(0x%x)) is "
 		            "not 32KB aligned",
@@ -671,7 +671,7 @@ BOOL DVDPrepareStreamAsync(DVDFileInfo* fileInfo, u32 length, u32 offset, DVDCal
 		length = fileInfo->length - offset;
 
 	if (!Is32KBAligned(length)) {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
 		OSErrorLine(1196, "DVDPrepareStreamAsync(): Specified length (0x%x) is not a multiple of 32768(32*1024)", length);
 #else
 		OSErrorLine(1160, "DVDPrepareStreamAsync(): Specified length (0x%x) is not a multiple of 32768(32*1024)", length);
@@ -680,7 +680,7 @@ BOOL DVDPrepareStreamAsync(DVDFileInfo* fileInfo, u32 length, u32 offset, DVDCal
 
 	if (!((offset < fileInfo->length) && (offset + length <= fileInfo->length))) {
 
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
 		OSErrorLine(1204,
 		            "DVDPrepareStreamAsync(): The area specified (offset(0x%x), length(0x%x)) is out of "
 		            "the file",

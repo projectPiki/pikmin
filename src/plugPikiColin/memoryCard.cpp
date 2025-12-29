@@ -652,6 +652,9 @@ bool MemoryCard::getCardStatus(int channel)
  */
 void MemoryCard::checkUseFile()
 {
+#if defined(VERSION_GPIP01_00)
+	DVDDiskID* disk = DVDGetCurrentDiskID();
+#endif
 	for (int i = 0; i < 127; i++) {
 		OSCalendarTime calendar;
 		CARDStat stat;
@@ -663,7 +666,11 @@ void MemoryCard::checkUseFile()
 
 		(void)((u32)i / 100);
 
+#if defined(VERSION_GPIP01_00)
+		if (!strncmp(stat.fileName, basecardname, 15) && memcmp(&stat, disk, 4) == 0 && memcmp(&stat+4, (void*)((int)disk + 4), 2) == 0) {
+#else
 		if (!strncmp(stat.fileName, basecardname, 15)) {
+#endif
 			strcpy(mFilePath, stat.fileName);
 			mSaveFileIndex = i;
 			break;

@@ -210,13 +210,22 @@ s32 DVDT_LoadtoDRAM_Main(void* dvdCall)
 {
 	s32 readStatus = 0;
 	DVDCall* call  = (DVDCall*)dvdCall;
+
+#if defined(VERSION_GPIP01_00)
+	static DVDFileInfo finfo;
+	if (Jac_DVDOpen(call->fileName, &finfo) == FALSE) {
+#else
 	DVDFileInfo info;
 	if (Jac_DVDOpen(call->fileName, &info) == FALSE) {
+#endif
 		__DoError(call, 0);
 		return -1;
 	}
-
+#if defined(VERSION_GPIP01_00)
+	u32 infoLength = finfo.length;
+#else
 	u32 infoLength = info.length;
+#endif
 	if (infoLength == 0) {
 		__DoError(call, 1);
 		return -1;
@@ -228,8 +237,13 @@ s32 DVDT_LoadtoDRAM_Main(void* dvdCall)
 	}
 
 	DCInvalidateRange((void*)call->dst, call->length);
+#if defined(VERSION_GPIP01_00)
+	readStatus |= DVDReadMutex(&finfo, (void*)call->dst, call->length, call->src, call->fileName);
+	DVDClose(&finfo);
+#else
 	readStatus |= DVDReadMutex(&info, (void*)call->dst, call->length, call->src, call->fileName);
 	DVDClose(&info);
+#endif
 	__DoFinish(call, readStatus);
 	return 0;
 }

@@ -126,7 +126,7 @@ static u32 SetInterruptMask(OSInterruptMask mask, OSInterruptMask current)
 	case __OS_INTERRUPT_MEM_1:
 	case __OS_INTERRUPT_MEM_2:
 	case __OS_INTERRUPT_MEM_3:
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
 	case __OS_INTERRUPT_MEM_ADDRESS:
 #endif
 		reg = 0;
@@ -346,7 +346,7 @@ OSInterruptMask __OSUnmaskInterrupts(OSInterruptMask global)
 	return prev;
 }
 
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
 volatile OSTime __OSLastInterruptTime;
 volatile __OSInterrupt __OSLastInterrupt;
 volatile u32 __OSLastInterruptSrr0;
@@ -459,7 +459,7 @@ void __OSDispatchInterrupt(__OSException exception, OSContext* context)
 
 		handler = __OSGetInterruptHandler(interrupt);
 		if (handler) {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
 			if (__OS_INTERRUPT_MEM_ADDRESS < interrupt) {
 				__OSLastInterrupt     = interrupt;
 				__OSLastInterruptTime = OSGetTime();

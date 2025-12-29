@@ -74,7 +74,7 @@ void __fstLoad(void)
 	di->FSTMaxLength     = bb2->maxLength;
 	memcpy(di, idTmp, 32);
 	OSReport("\n");
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
 	OSReport("  Game Name ... %c%c%c%c\n", di->Gamecode[0], di->Gamecode[1], di->Gamecode[2], di->Gamecode[3]);
 	OSReport("  Company ..... %c%c\n", di->Company[0], di->Company[1]);
 #else

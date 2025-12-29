@@ -1,7 +1,6 @@
 #include "types.h"
 
-// this file is only non-empty for demo and PAL. TODO: fill in this file when we add those versions
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
 
 #include "Dolphin/OS/OSError.h"
 #include "Dolphin/os.h"

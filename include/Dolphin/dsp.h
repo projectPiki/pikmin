@@ -79,15 +79,31 @@ u32 DSPCheckMailFromDSP();
 
 void __DSPHandler(__OSInterrupt interrupt, OSContext* context);
 
-// Unused/inlined in P2.
 void __DSP_add_task(DSPTaskInfo* task);
 void DSPHalt();
 void DSPReset();
-
 ////////////////////////////////////////////
+
+#if defined(VERSION_GPIP01_00)
+DSPTaskInfo* DSPAddTask(DSPTaskInfo*);
+#endif
 
 #ifdef __cplusplus
 }
 #endif // ifdef __cplusplus
+
+typedef void (*CommandTask)(u16);
+
+#if defined(VERSION_GPIP01_00)
+void Dsp_Running_Start();
+u64 DSP_CreateMap();
+u32 DSPSendCommands2(u32*, u32, CommandTask);
+static void DspInitWork();
+void DSPAddPriorTask(DSPTaskInfo*);
+int Dsp_Running_Check();
+int DspStartWork(u32, CommandTask);
+
+extern DSPTaskInfo* DSP_prior_task;
+#endif
 
 #endif

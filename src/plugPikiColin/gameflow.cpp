@@ -708,9 +708,21 @@ void GameFlow::softReset()
 
 	// always print load time reporting
 	gsys->mTogglePrint = TRUE;
-	PRINT("*--------------- %.2fk free : %d files, %.1fk took %.1f secs : %.1f mb/sec\n",
-	      (u32)gsys->getHeap(SYSHEAP_App)->getFree() / 1024.0f, gsys->mDvdOpenFiles, gsys->mDvdBytesRead / 1024.0f, mLoadTimeSeconds,
+
+#if defined(VERSION_GPIP01_00)
+	int size  = (u32)gsys->getHeap(SYSHEAP_App)->getFree();
+	int size2 = size - 0x1800000;
+	if (size2 < 0) {
+		size2 = 0;
+	}
+	PRINT("*--------------- %.2fk (%.2fk) free : %d files, %.1fk took %.1f secs : %.1f mb/sec\n", size / 1024.0f, size2 / 1024.0f,
+	      gsys->mDvdOpenFiles, gsys->mDvdBytesRead / 1024.0f, mLoadTimeSeconds,
 	      gsys->mDvdBytesRead / (1024.0f * 1024.0f) / mLoadTimeSeconds);
+#else
+	u32 size = (u32)gsys->getHeap(SYSHEAP_App)->getFree();
+	PRINT("*--------------- %.2fk free : %d files, %.1fk took %.1f secs : %.1f mb/sec\n", size / 1024.0f, gsys->mDvdOpenFiles,
+	      gsys->mDvdBytesRead / 1024.0f, mLoadTimeSeconds, gsys->mDvdBytesRead / (1024.0f * 1024.0f) / mLoadTimeSeconds);
+#endif
 
 	// restore the user's debug print setting
 	gsys->mTogglePrint = togglePrint;
@@ -723,8 +735,6 @@ void GameFlow::softReset()
 
 	// all set, we can forget where we came from now
 	mCurrGameSectionID = mNextGameSectionID;
-
-	STACK_PAD_VAR(2);
 }
 
 /**

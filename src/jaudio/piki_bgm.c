@@ -37,7 +37,7 @@ static BgmControl_ bgm[3]; // 0 = normal, 1 = boss, 2 = unused?
 
 static u8 lastside;
 static int last_crossmode;
-static int call_counter;
+static u32 call_counter;
 static int bgm_semaphore;
 
 static u8* buffer[2]       = { nullptr, nullptr };
@@ -272,10 +272,16 @@ void Jac_PlayBgm(u32 trackNo, u32 id)
 	bgm[trackNo].songId          = id - 2;
 	bgm[trackNo].trackHandle     = trackNo + 3;
 
+#if defined(VERSION_GPIP01_00)
+	call_counter = 6000;
+#endif
 	Jac_SetBgmModeFlag(trackNo, 2, 0);
 	Jac_SetBgmModeFlag(trackNo, 1, 0);
 	Jac_SetBgmModeFlag(trackNo, 4, 0);
 	Jac_SetBgmModeFlag(trackNo, 8, 0);
+#if defined(VERSION_GPIP01_00)
+	call_counter = 0;
+#endif
 	Jaf_ReadySeq(trackNo + 3, id);
 	Jac_BgmFrameWork();
 	Jaq_SetBankNumber(Jaf_HandleToSeq(trackNo + 3), id);
@@ -329,6 +335,12 @@ BOOL Jac_ChangeBgmMode(u32 trackNo, u8 mode)
  */
 void Jac_SetBgmModeFlag(u32 trackNo, u8 flag, u8 doSet)
 {
+#if defined(VERSION_GPIP01_00)
+	int stack[2];
+	if (call_counter < 6000 && Jac_GetCurrentScene() == SCENE_Unk5 && flag != 8 && flag != 4) {
+		return;
+	}
+#endif
 	u32 x, y, z;
 	BgmControl_* thisBgm = &bgm[trackNo];
 	switch (flag) {

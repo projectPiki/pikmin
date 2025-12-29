@@ -550,6 +550,108 @@ void zen::ogRaderMgr::AreaScroll(f32* p1, f32* p2, f32 p3, f32 p4)
  */
 void zen::ogRaderMgr::updateMenu(Controller* input)
 {
+#if defined(VERSION_GPIP01_00)
+	if (mStatus == -1) {
+		return;
+	}
+	f32 x  = _428;
+	f32 y  = input->getSubStickY();
+	int se = 0;
+
+	if (y > 0.3f) {
+		x *= 1.1f;
+		if (x > 10.0f) {
+			se = 0;
+			x  = 10.0f;
+		} else {
+			se = 1;
+		}
+	} else if (y < -0.3f) {
+		x *= 0.9f;
+		if (x < 1.0f) {
+			x  = 1.0f;
+			se = 0;
+		} else {
+			se = -1;
+		}
+	}
+
+	f32 c = cosf(_454);
+	f32 s = sinf(_454);
+	if (input->keyDown(KBBTN_MSTICK_UP)) {
+		AreaScroll(&_34, &_38, s * -20.0f, c * -20.0f);
+	} else if (input->keyDown(KBBTN_MSTICK_DOWN)) {
+		AreaScroll(&_34, &_38, s * 20.0f, c * 20.0f);
+	}
+	if (input->keyDown(KBBTN_MSTICK_LEFT)) {
+		AreaScroll(&_34, &_38, c * -20.0f, s * 20.0f);
+	} else if (input->keyDown(KBBTN_MSTICK_RIGHT)) {
+		AreaScroll(&_34, &_38, c * 20.0f, s * -20.0f);
+	}
+
+	if (_00 && !input->keyDown(KBBTN_MSTICK_UP | KBBTN_MSTICK_DOWN | KBBTN_MSTICK_RIGHT | KBBTN_MSTICK_LEFT)) {
+		seSystem->stopSysSe(SYSSE_YMENU_SCROLL);
+		_00 = false;
+	}
+
+	if ((y > -0.2f) && (y < 0.2f)) {
+		se = 0;
+	}
+
+	if (_01) {
+		switch (se) {
+		case 0:
+			seSystem->stopSysSe(SYSSE_YMENU_ZOOMIN);
+			break;
+		case -1:
+			seSystem->playSysSe(SYSSE_YMENU_ZOOMOUT);
+			break;
+		}
+	} else if (_02) {
+		switch (se) {
+
+		case 0:
+			seSystem->stopSysSe(SYSSE_YMENU_ZOOMOUT);
+			break;
+
+		case 1:
+			seSystem->playSysSe(SYSSE_YMENU_ZOOMIN);
+			break;
+		}
+	} else {
+		switch (se) {
+		case -1:
+			seSystem->playSysSe(SYSSE_YMENU_ZOOMOUT);
+			break;
+
+		case 1:
+			seSystem->playSysSe(SYSSE_YMENU_ZOOMIN);
+			break;
+		}
+	}
+
+	switch (se) {
+	case 0:
+		_02 = 0;
+		_01 = 0;
+		break;
+
+	case 1:
+		_02 = 0;
+		_01 = 1;
+		break;
+
+	case -1:
+		_02 = 1;
+		_01 = 0;
+		break;
+	}
+
+	if (x != _428) {
+		setRaderScale(x);
+	}
+#else
+
 #if defined(VERSION_PIKIDEMO)
 #else
 	if (mStatus == -1) {
@@ -695,6 +797,7 @@ void zen::ogRaderMgr::updateMenu(Controller* input)
 	if (x != _428) {
 		setRaderScale(x);
 	}
+#endif
 }
 
 /**
