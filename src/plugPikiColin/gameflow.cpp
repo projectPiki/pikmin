@@ -239,7 +239,7 @@ void GameFlow::menuTogglePrint(Menu& menu)
  */
 void GameFlow::menuToggleDInfo(Menu& menu)
 {
-	gsys->mToggleDebugInfo ^= 1;
+	gsys->mToggleDebugInfo ^= TRUE;
 	sprintf(menu.mCurrentItem->mName, "Toggle DInfo %s", (gsys->mToggleDebugInfo) ? " [on]" : "[off]");
 }
 
@@ -250,7 +250,7 @@ void GameFlow::menuToggleDInfo(Menu& menu)
  */
 void GameFlow::menuToggleDExtra(Menu& menu)
 {
-	gsys->mToggleDebugExtra ^= 1;
+	gsys->mToggleDebugExtra ^= TRUE;
 	sprintf(menu.mCurrentItem->mName, "Toggle DExtra %s", (gsys->mToggleDebugExtra) ? " [on]" : "[off]");
 }
 
@@ -261,7 +261,7 @@ void GameFlow::menuToggleDExtra(Menu& menu)
  */
 void GameFlow::menuToggleBlur(Menu& menu)
 {
-	gsys->mToggleBlur ^= true;
+	gsys->mToggleBlur ^= TRUE;
 	sprintf(menu.mCurrentItem->mName, "Toggle Blur %s", (gsys->mToggleBlur) ? " [on]" : "[off]");
 }
 
@@ -272,7 +272,7 @@ void GameFlow::menuToggleBlur(Menu& menu)
  */
 void GameFlow::menuToggleInfo(Menu& menu)
 {
-	gsys->mToggleFileInfo ^= 1;
+	gsys->mToggleFileInfo ^= TRUE;
 	sprintf(menu.mCurrentItem->mName, "Toggle FileInfo %s", (gsys->mToggleFileInfo) ? " [on]" : "[off]");
 }
 
@@ -283,7 +283,7 @@ void GameFlow::menuToggleInfo(Menu& menu)
  */
 void GameFlow::menuToggleColls(Menu& menu)
 {
-	gsys->mToggleColls ^= 1;
+	gsys->mToggleColls ^= TRUE;
 	sprintf(menu.mCurrentItem->mName, "Toggle Colls %s", (gsys->mToggleColls) ? " [on]" : "[off]");
 }
 

@@ -72,7 +72,7 @@ struct RunningModeState : public ModeState {
 	RunningModeState(BaseGameSection* c)
 	    : ModeState(c)
 	{
-		mCachedPauseFlag = 0;
+		mCachedPauseFlag = false;
 		mController      = c->mController;
 	}
 
