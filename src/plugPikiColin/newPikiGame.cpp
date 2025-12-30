@@ -48,7 +48,7 @@ static NewPikiGameSetupSection* npgss;
 /// Core gameplay section instance
 static GameCoreSection* gamecore;
 
-/// (UNUSED), but probably the currently selected movie index
+/// Current index of the Movie Player debug menu. (See `CinDemoIDs` enum)
 static int movieIndex;
 
 /// UI windows for various game states
@@ -590,19 +590,27 @@ ModeState* RunningModeState::update(u32& result)
 				gameflow.mIsUIOverlayActive = TRUE;
 			}
 		}
+		// I added a bugfix to prevent the OgRader screen from opening in the background when the debug menu is active.  Many
+		// debug menus also use the Y button, and both being open at the same time can even cause crashes in the Movie Player.
 #if defined(VERSION_G98E01_PIKIDEMO)
 		else if (mController->keyClick(KBBTN_Y) && gameflow.mWorldClock.mTimeOfDay < gameflow.mParameters->mEndHour() - 0.125f
-		         && !gameflow.mIsUIOverlayActive && !mesgsPending)
+		         && !gameflow.mIsUIOverlayActive && !mesgsPending && TERNARY_BUGFIX(!mSection->mActiveMenu, true))
 #else
 		else if (!gameflow.mIsChallengeMode && mController->keyClick(KBBTN_Y)
 		         && gameflow.mWorldClock.mTimeOfDay < gameflow.mParameters->mEndHour() - 0.125f && !gameflow.mIsUIOverlayActive
-		         && !mesgsPending)
+		         && !mesgsPending && TERNARY_BUGFIX(!mSection->mActiveMenu, true))
 #endif
 		{
 			gameflow.mGameInterface->message(MOVIECMD_CreateMenuWindow, 0);
 			mCachedPauseFlag            = gameflow.mIsUIOverlayActive;
 			gameflow.mIsUIOverlayActive = TRUE;
 		}
+#if defined(DEVELOP) || defined(WIN32)
+		// Mapping this to d-pad down was genuinely an atrocious choice, so I'm assigning it to d-pad up.
+		else if (mController->keyUnClick(TERNARY_BUILD_MATCHING(KBBTN_DPAD_DOWN, KBBTN_DPAD_UP))) {
+			mSection->openMenu();
+		}
+#endif
 	}
 
 	// check if we have an unhandled forced game end pending
@@ -1253,7 +1261,64 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 		gamecore = new GameCoreSection(mController, mapMgr, mGameCamera);
 		add(gamecore);
 
-		// a bunch of menu stuff here in the DLL
+#if defined(DEVELOP) || defined(WIN32)
+		typedef Delegate1<NewPikiGameSetupSection, Menu&> NPGSSDelegate1; // This is an insanely long typename to spell.
+
+		Menu* optionsMenu               = new Menu(mController, gsys->mConsFont);
+		optionsMenu->mAnchorPoint.mMinX = glnWidth / 2;
+		optionsMenu->mAnchorPoint.mMinY = glnHeight / 2;
+		optionsMenu->mDiffuseColour.set(128, 32, 32, 255);
+		optionsMenu->mHighlightColour.set(32, 32, 32, 128);
+		optionsMenu->addKeyEvent(Menu::KeyEventType::SpecialRelease, KBBTN_B,
+		                         new Delegate1<Menu, Menu&>(optionsMenu, &Menu::menuCloseMenu));
+
+		gameflow.addOptionsMenu(optionsMenu);
+
+		Menu* movieMenu               = new Menu(mController, gsys->mConsFont);
+		movieMenu->mAnchorPoint.mMinX = glnWidth - 110;
+		movieMenu->mAnchorPoint.mMinY = glnHeight - 88;
+		movieMenu->mDiffuseColour.set(128, 32, 32, 255);
+		movieMenu->mHighlightColour.set(32, 32, 32, 128);
+		movieMenu->addKeyEvent(Menu::KeyEventType::SpecialRelease, KBBTN_B, new Delegate1<Menu, Menu&>(movieMenu, Menu::menuCloseMenu));
+
+		char* movieBuf = new char[0x40];
+		sprintf(movieBuf, "Movie #%d", movieIndex);
+		movieMenu->addOption(0, movieBuf, nullptr);
+		movieMenu->addKeyEvent(Menu::KeyEventType::Input, KBBTN_Y, new NPGSSDelegate1(this, &menuDecreaseMovie));
+		movieMenu->addKeyEvent(Menu::KeyEventType::Input, KBBTN_X, new NPGSSDelegate1(this, &menuIncreaseMovie));
+		movieMenu->addOption(MENU_FAKE_OPTION_FOR_GAP);
+		movieMenu->addOption(0, "Play / Stop", new NPGSSDelegate1(this, &menuPlayMovie));
+		movieMenu->addOption(0, "Pause / Frame Step", nullptr);
+		movieMenu->addKeyEvent(Menu::KeyEventType::Release, KBBTN_A, new NPGSSDelegate1(this, &menuPauseMovie));
+		movieMenu->addKeyEvent(Menu::KeyEventType::Input, KBBTN_X, new NPGSSDelegate1(this, &menuIncreaseFrame));
+		movieMenu->addKeyEvent(Menu::KeyEventType::Input, KBBTN_Y, new NPGSSDelegate1(this, &menuDecreaseFrame));
+
+		Menu* filterMenu               = new Menu(mController, gsys->mConsFont);
+		filterMenu->mAnchorPoint.mMinX = glnWidth / 2;
+		filterMenu->mAnchorPoint.mMinY = glnHeight / 2;
+		filterMenu->mDiffuseColour.set(128, 32, 32, 255);
+		filterMenu->mHighlightColour.set(32, 32, 32, 128);
+		filterMenu->addKeyEvent(Menu::KeyEventType::SpecialRelease, KBBTN_B, new Delegate1<Menu, Menu&>(filterMenu, Menu::menuCloseMenu));
+
+		gameflow.addFilterMenu(filterMenu);
+
+		mSectionMenu                     = new Menu(mController, gsys->mConsFont);
+		mSectionMenu->mAnchorPoint.mMinX = glnWidth / 2;
+		mSectionMenu->mAnchorPoint.mMinY = glnHeight / 2;
+		mSectionMenu->addKeyEvent(Menu::KeyEventType::SpecialRelease, KBBTN_B,
+		                          new Delegate1<Menu, Menu&>(mSectionMenu, &Menu::menuCloseMenu));
+
+		mSectionMenu->addOption(0, "Change Course", new NPGSSDelegate1(this, &menuChangeCourse));
+		mSectionMenu->addOption(0, "Day End", new NPGSSDelegate1(this, &menuDayEnd));
+		mSectionMenu->addMenu(optionsMenu, 0, "Options");
+		mSectionMenu->addMenu(gamecore->mAiPerfDebugMenu, 0, "Kando Options");
+		if (mapMgr->mDayMgr) {
+			mSectionMenu->addMenu(mapMgr->mDayMgr->mMenu, 0, "Lighting");
+		}
+		mSectionMenu->addMenu(movieMenu, 0, "Movie Player");
+		mSectionMenu->addOption(MENU_FAKE_OPTION_FOR_GAP);
+		mSectionMenu->addOption(0, "Quit", new NPGSSDelegate1(this, &menuQuitGame));
+#endif
 
 		flowCont._254 = 0;
 		flowCont._258 = 0;
@@ -1320,17 +1385,6 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 			}
 			mCurrentModeState = mCurrentModeState->update(mUpdateFlags);
 		}
-
-		// Three things.  1: This code snippet is imitating a development feature that exists in the DLLs, but this might not be where the
-		// equivalent code from the DLL exists.  TODO: Figure that out.  2: The original code used D-Pad Down, but that's really obnoxious
-		// so I chose D-Pad Up instead.  3: mSectionMenu was actually a top-level menu which could access many other menus, but that code
-		// was stripped from the retail game.  TODO: Completely restore that functionality from the DLL.  For now, it's better than nothing.
-#ifdef DEVELOP
-		if (mController->keyClick(KBBTN_DPAD_UP)) {
-			mSectionMenu = gamecore->mAiPerfDebugMenu;
-			openMenu();
-		}
-#endif
 
 		if (mActiveMenu) {
 			mActiveMenu = mActiveMenu->doUpdate(false);
@@ -1617,16 +1671,129 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 		gfx.setOrthogonal(mtx2.mMtx, AREA_FULL_SCREEN(gfx));
 	}
 
-	// unused DLL inlines:
-	void menuQuitGame(Menu&);
-	void menuChangeCourse(Menu&);
-	void menuDayEnd(Menu&);
-	void menuIncreaseFrame(Menu&);
-	void menuDecreaseFrame(Menu&);
-	void menuIncreaseMovie(Menu&);
-	void menuDecreaseMovie(Menu&);
-	void menuPlayMovie(Menu&);
-	void menuPauseMovie(Menu&);
+	void menuQuitGame(Menu& parent)
+	{
+		// UNUSED FUNCTION (DLL inline)
+		parent.close();
+		mPendingOnePlayerSectionID = ONEPLAYER_GameExit;
+		gsys->setFade(0.0f, 3.0f);
+		mNextModeState = new QuittingGameModeState(this);
+	}
+
+	void menuChangeCourse(Menu& parent)
+	{
+		// UNUSED FUNCTION (DLL inline)
+		parent.close();
+		mPendingOnePlayerSectionID = ONEPLAYER_MapSelect;
+		gsys->setFade(0.0f, 3.0f);
+		mNextModeState = new QuittingGameModeState(this);
+	}
+
+	void menuDayEnd(Menu& parent)
+	{
+		// UNUSED FUNCTION (DLL inline)
+		parent.close();
+		gamecore->forceDayEnd();
+		gameflow.mIsDayEndTriggered = TRUE;
+	}
+
+	void menuDecreaseFrame(Menu& parent)
+	{
+		// UNUSED FUNCTION (DLL inline)
+		if (gameflow.mMoviePlayer->mIsActive) {
+			gameflow.mMoviePlayer->mIsPaused = true;
+			if (mUpdateCountdown < -1) {
+				_3DC             = 4;
+				mUpdateCountdown = 0;
+			}
+			if (mUpdateCountdown < 0) {
+				mUpdateCountdown = _3DC;
+				if (_3DC > 0) {
+					--_3DC;
+				}
+				gameflow.mMoviePlayer->backFrame();
+			}
+		}
+	}
+
+	void menuIncreaseFrame(Menu& parent)
+	{
+		// UNUSED FUNCTION (DLL inline)
+		if (gameflow.mMoviePlayer->mIsActive) {
+			gameflow.mMoviePlayer->mIsPaused = true;
+			if (mUpdateCountdown < -1) {
+				_3DC             = 4;
+				mUpdateCountdown = 0;
+			}
+			if (mUpdateCountdown < 0) {
+				mUpdateCountdown = _3DC;
+				if (_3DC > 0) {
+					--_3DC;
+				}
+				gameflow.mMoviePlayer->nextFrame();
+			}
+		}
+	}
+
+	void menuIncreaseMovie(Menu& parent)
+	{
+		// UNUSED FUNCTION (DLL inline)
+		if (mUpdateCountdown < -1) {
+			_3DC             = 4;
+			mUpdateCountdown = 0;
+		}
+		if (mUpdateCountdown < 0) {
+			mUpdateCountdown = _3DC;
+			if (_3DC > 0) {
+				--_3DC;
+			}
+			++movieIndex;
+		}
+		if (movieIndex > TERNARY_BUGFIX(DEMOID_COUNT - 1, DEMOID_EndOfDayRedOnyon)) {
+			movieIndex = TERNARY_BUGFIX(DEMOID_COUNT - 1, DEMOID_EndOfDayRedOnyon);
+		}
+		sprintf(parent.mCurrentItem->mName, "Movie #%d", movieIndex);
+	}
+
+	void menuDecreaseMovie(Menu& parent)
+	{
+		// UNUSED FUNCTION (DLL inline)
+		if (mUpdateCountdown < -1) {
+			_3DC             = 4;
+			mUpdateCountdown = 0;
+		}
+		if (mUpdateCountdown < 0) {
+			mUpdateCountdown = _3DC;
+			if (_3DC > 0) {
+				--_3DC;
+			}
+			--movieIndex;
+		}
+		if (movieIndex < 0) {
+			movieIndex = 0;
+		}
+		sprintf(parent.mCurrentItem->mName, "Movie #%d", movieIndex);
+	}
+
+	void menuPlayMovie(Menu& parent)
+	{
+		// UNUSED FUNCTION (DLL inline)
+		if (gameflow.mMoviePlayer->mIsActive) {
+			gameflow.mMoviePlayer->skipScene(2);
+		} else {
+			gameflow.mMoviePlayer->mIsPaused = false;
+			gameflow.mMoviePlayer->startMovie(movieIndex, 0, nullptr, nullptr, nullptr, 0xFFFFFFFF, false);
+		}
+	}
+
+	void menuPauseMovie(Menu& parent)
+	{
+		// UNUSED FUNCTION (DLL inline)
+		if (gameflow.mMoviePlayer->mIsActive) {
+			gameflow.mMoviePlayer->mIsPaused ^= true;
+			PRINT("movie pause = %s\n", gameflow.mMoviePlayer->mIsPaused ? "On" : "Off");
+		}
+	}
 
 	///< 00     = VTBL
 	///< 00-_44 = BaseGameSection

@@ -96,7 +96,7 @@ struct MoviePlayer {
 	MovieInfo mStackInfoList;         ///< _C0
 	int mCurrentFrame;                ///< _120
 	bool mIsActive;                   ///< _124
-	u8 _125;                          ///< _125
+	bool mIsPaused;                   ///< _125
 	u32 mMaskFlags;                   ///< _128
 	Vector3f mTargetViewpoint;        ///< _12C
 	Vector3f mLookAtPos;              ///< _138
