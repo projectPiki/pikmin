@@ -158,7 +158,7 @@ struct TitleSetupSection : public Node {
 		mCurrentMenu = nullptr;
 
 #if defined(DEVELOP) || defined(WIN32)
-		Menu* optionsMenu = new Menu(mController, gsys->mConsFont, false);
+		Menu* optionsMenu = new Menu(mController, gsys->mConsFont);
 
 		optionsMenu->mAnchorPoint.mMinX = glnWidth / 2;
 		optionsMenu->mAnchorPoint.mMinY = glnHeight / 2 + 40;
@@ -169,7 +169,7 @@ struct TitleSetupSection : public Node {
 		gameflow.addOptionsMenu(optionsMenu);
 #endif
 
-		mMenu = new Menu(mController, gsys->mConsFont, false);
+		mMenu = new Menu(mController, gsys->mConsFont);
 
 		mMenu->mAnchorPoint.mMinX = glnWidth / 2;
 		mMenu->mAnchorPoint.mMinY = glnHeight / 2 + 80;

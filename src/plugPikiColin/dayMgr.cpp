@@ -445,7 +445,7 @@ DayMgr::DayMgr(MapMgr* map, Controller* control)
 	mMaxLights    = 7;
 	mTimeSettings = new TimeSetting[5];
 
-	mMenu                     = new Menu(control, gsys->mConsFont, false);
+	mMenu                     = new Menu(control, gsys->mConsFont);
 	mMenu->mIsCustomMenu      = TRUE;
 	mMenu->mAnchorPoint.mMinX = glnWidth / 2;
 	mMenu->mAnchorPoint.mMinY = glnHeight / 2 + 90;

@@ -67,7 +67,7 @@ struct MapSelectSetupSection : public Node {
 
 	void makeMapsMenu()
 	{
-		mMapListMenu                     = new Menu(mController, mConsFont, false);
+		mMapListMenu                     = new Menu(mController, mConsFont);
 		mMapListMenu->mAnchorPoint.mMinX = glnWidth / 2;
 		mMapListMenu->mAnchorPoint.mMinY = glnHeight / 2 + 30;
 		mMapListMenu->addKeyEvent(Menu::KeyEventType::Navigate, KBBTN_START | KBBTN_A,

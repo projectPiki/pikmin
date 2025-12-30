@@ -728,7 +728,7 @@ struct GameCourseClearScreen : public Node {
 		Texture* tex = gsys->loadTexture("bigFont.bti", true);
 		mFont        = new Font();
 		mFont->setTexture(tex, 21, 42);
-		mMainMenu                     = new Menu(mController, gsys->mConsFont, false);
+		mMainMenu                     = new Menu(mController, gsys->mConsFont);
 		mMainMenu->mAnchorPoint.mMinX = glnWidth / 2;
 		mMainMenu->mAnchorPoint.mMinY = glnHeight / 2;
 

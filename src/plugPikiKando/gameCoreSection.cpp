@@ -1281,7 +1281,7 @@ GameCoreSection::GameCoreSection(Controller* controller, MapMgr* mgr, Camera& ca
 	particleHeap = new DynParticleHeap(0x400);
 	memStat->end("dynamics");
 
-	mAiPerfDebugMenu                     = new Menu(mController, gsys->mConsFont, false);
+	mAiPerfDebugMenu                     = new Menu(mController, gsys->mConsFont);
 	mAiPerfDebugMenu->mAnchorPoint.mMinX = glnWidth / 2;
 	mAiPerfDebugMenu->mAnchorPoint.mMinY = glnHeight / 2;
 	AIPerf p;
