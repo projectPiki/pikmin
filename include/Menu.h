@@ -86,7 +86,7 @@ struct Menu : public Node {
 		KeyEvent* mEventList;           // _24
 	};
 
-	Menu(Controller*, Font*, bool);
+	Menu(Controller*, Font*, bool = false);
 
 	virtual bool checkSelectKey();  // _30
 	virtual bool checkCancelKey();  // _34
