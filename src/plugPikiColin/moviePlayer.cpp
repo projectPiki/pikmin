@@ -623,7 +623,7 @@ void MoviePlayer::update()
 		return;
 	}
 
-	if (mIsActive && _125 && static_cast<MovieInfo*>(mPlayInfoList.mChild)->mPlayer->mCurrentPlaybackTime > 0.0f) {
+	if (mIsActive && mIsPaused && static_cast<MovieInfo*>(mPlayInfoList.mChild)->mPlayer->mCurrentPlaybackTime > 0.0f) {
 		static_cast<MovieInfo*>(mPlayInfoList.mChild)->mPlayer->mCurrentPlaybackTime -= 1.0f;
 	}
 
@@ -802,7 +802,6 @@ void MoviePlayer::nextFrame()
 void MoviePlayer::backFrame()
 {
 	if (static_cast<MovieInfo*>(mPlayInfoList.mChild)->mPlayer->mCurrentPlaybackTime > 0.0f) {
-		// should this be --? in the DLL it's ++, go figure.
-		static_cast<MovieInfo*>(mPlayInfoList.mChild)->mPlayer->mCurrentPlaybackTime++;
+		static_cast<MovieInfo*>(mPlayInfoList.mChild)->mPlayer->mCurrentPlaybackTime--;
 	}
 }
