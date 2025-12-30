@@ -838,15 +838,15 @@ MapMgr::MapMgr(Controller* controller)
 
 	memStat->start("blurTextures");
 	mCaptureTexture                = new Texture();
-	mCaptureTexture->mWidthFactor  = 0.003125f;
-	mCaptureTexture->mHeightFactor = 0.004166667f;
-	mCaptureTexture->mTexFlags     = 0x105;
+	mCaptureTexture->mWidthFactor  = 1.0f / 320;
+	mCaptureTexture->mHeightFactor = 1.0f / 240;
+	mCaptureTexture->mTexFlags     = (Texture::TEX_CLAMP_S | Texture::TEX_Unk2 | Texture::TEX_CLAMP_T);
 	mCaptureTexture->createBuffer(320, 240, 8, nullptr);
 	gsys->addTexture(mCaptureTexture, "internalLightmap");
 	mBlurredTexture                = new Texture();
-	mBlurredTexture->mWidthFactor  = 0.003125f;
-	mBlurredTexture->mHeightFactor = 0.004166667f;
-	mBlurredTexture->mTexFlags     = 0x105;
+	mBlurredTexture->mWidthFactor  = 1.0f / 320;
+	mBlurredTexture->mHeightFactor = 1.0f / 240;
+	mBlurredTexture->mTexFlags     = (Texture::TEX_CLAMP_S | Texture::TEX_Unk2 | Texture::TEX_CLAMP_T);
 	mBlurredTexture->createBuffer(320, 240, 0, nullptr);
 	gsys->addTexture(mBlurredTexture, "internalLightmap");
 	memStat->end("blurTextures");
