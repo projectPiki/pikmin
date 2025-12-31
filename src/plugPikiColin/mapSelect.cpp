@@ -225,23 +225,18 @@ struct MapSelectSetupSection : public Node {
 	{
 		mController->update();
 
-		// This code snippet is imitating a development feature that exists in the DLLs, but this
-		// might not be where the equivalent code from the DLL exists.  TODO: Figure that out.
-#ifdef DEVELOP
-		// press Z in the DEVELOP build to open the debug menu!
-		if (mController->keyClick(KBBTN_Z)) {
-			// The gist of this code is copied from `NewPikiGameSetupSection::openMenu`.
-			mActiveOverlayMenu = mMapListMenu;
-			mActiveOverlayMenu->open(false);
-			mActiveOverlayMenu->mIsMenuChanging = true;
+#if defined(DEVELOP) || defined(WIN32)
+		// press R to increase the day by 1 (can't go above 30)
+		if (mController->keyClick(KBBTN_R)) {
+			if (++gameflow.mWorldClock.mCurrentDay > MAX_DAYS) {
+				gameflow.mWorldClock.mCurrentDay = MAX_DAYS;
+			}
 		}
 		// press L to decrease the day by 1 (can't go below 1)
-		if (mController->keyClick(KBBTN_L) && gameflow.mWorldClock.mCurrentDay > 1) {
-			--gameflow.mWorldClock.mCurrentDay;
-		}
-		// press R to increase the day by 1 (can't go above 30)
-		if (mController->keyClick(KBBTN_R) && gameflow.mWorldClock.mCurrentDay < MAX_DAYS) {
-			++gameflow.mWorldClock.mCurrentDay;
+		if (mController->keyClick(KBBTN_L)) {
+			if (--gameflow.mWorldClock.mCurrentDay < 1) {
+				gameflow.mWorldClock.mCurrentDay = 1;
+			}
 		}
 #endif
 
@@ -251,50 +246,61 @@ struct MapSelectSetupSection : public Node {
 
 		} else if (mSectionState == Active) {
 
-			// process challenge mode if we've made a decision
-			if (selectWindow && selectWindow->update(mController)) {
-				zen::DrawCMcourseSelect::returnStatusFlag chalStatus = selectWindow->getReturnStatusFlag();
-				if (chalStatus == zen::DrawCMcourseSelect::Exit) {
-					// exit back to previous screen (in this case title)
-					mSectionState = Exit;
-					gsys->setFade(0.0f, 3.0f);
+#if defined(DEVELOP) || defined(WIN32)
+			// press Z in the DEVELOP build to open the debug menu!
+			if (!mActiveOverlayMenu && mController->keyClick(KBBTN_Z)) {
+				// Identical to the implementation of `NewPikiGameSetupSection::openMenu`.
+				mActiveOverlayMenu = mMapListMenu;
+				mActiveOverlayMenu->open(false);
+				mActiveOverlayMenu->mIsMenuChanging = true;
+			} else
+#endif
+			{
+				// process challenge mode if we've made a decision
+				if (selectWindow && selectWindow->update(mController)) {
+					zen::DrawCMcourseSelect::returnStatusFlag chalStatus = selectWindow->getReturnStatusFlag();
+					if (chalStatus == zen::DrawCMcourseSelect::Exit) {
+						// exit back to previous screen (in this case title)
+						mSectionState = Exit;
+						gsys->setFade(0.0f, 3.0f);
 
-				} else {
-					// we made a positive selection
-					for (StageInfo* stage = (StageInfo*)flowCont.mStageList.mChild; stage; stage = (StageInfo*)stage->mNext) {
-						// if positive selection matches a course ID, prepare to enter that course
-						if (stage->mChalStageID == chalStatus) {
-							enterCourse(stage);
-							mNextSectionsFlag = PACK_NEXT_ONEPLAYER(ONEPLAYER_NewPikiGame);
+					} else {
+						// we made a positive selection
+						for (StageInfo* stage = (StageInfo*)flowCont.mStageList.mChild; stage; stage = (StageInfo*)stage->mNext) {
+							// if positive selection matches a course ID, prepare to enter that course
+							if (stage->mChalStageID == chalStatus) {
+								enterCourse(stage);
+								mNextSectionsFlag = PACK_NEXT_ONEPLAYER(ONEPLAYER_NewPikiGame);
 
-							gameflow.mWorldClock.setTime(gameflow.mParameters->mStartHour());
-							mSectionState = Exit;
-							gsys->setFade(0.0f, 3.0f);
-							break;
+								gameflow.mWorldClock.setTime(gameflow.mParameters->mStartHour());
+								mSectionState = Exit;
+								gsys->setFade(0.0f, 3.0f);
+								break;
+							}
 						}
 					}
 				}
-			}
 
-			// handle story mode world map screen if we've made a decision
-			if (mapWindow && mapWindow->update(mController)) {
-				zen::DrawWorldMap::returnStatusFlag returnStatus = mapWindow->getReturnStatusFlag();
-				if (returnStatus == zen::DrawWorldMap::RET_ReturnToTitle) {
-					// player wants to exit, so exit
-					mSectionState = Exit;
-					gsys->setFade(0.0f, 3.0f);
-				} else {
-					// player made a positive selection
-					for (StageInfo* stage = (StageInfo*)flowCont.mStageList.mChild; stage; stage = (StageInfo*)stage->mNext) {
-						if (stage->mStageID == returnStatus) {
-							// prepare to enter selected map
-							enterCourse(stage);
-							mNextSectionsFlag = PACK_NEXT_ONEPLAYER(ONEPLAYER_NewPikiGame);
+				// handle story mode world map screen if we've made a decision
+				if (mapWindow && mapWindow->update(mController)) {
+					zen::DrawWorldMap::returnStatusFlag returnStatus = mapWindow->getReturnStatusFlag();
+					if (returnStatus == zen::DrawWorldMap::RET_ReturnToTitle) {
+						// player wants to exit, so exit
+						mSectionState = Exit;
+						gsys->setFade(0.0f, 3.0f);
+					} else {
+						// player made a positive selection
+						for (StageInfo* stage = (StageInfo*)flowCont.mStageList.mChild; stage; stage = (StageInfo*)stage->mNext) {
+							if (stage->mStageID == returnStatus) {
+								// prepare to enter selected map
+								enterCourse(stage);
+								mNextSectionsFlag = PACK_NEXT_ONEPLAYER(ONEPLAYER_NewPikiGame);
 
-							gameflow.mWorldClock.setTime(gameflow.mParameters->mStartHour());
-							mSectionState = Exit;
-							gsys->setFade(0.0f, 3.0f);
-							break;
+								gameflow.mWorldClock.setTime(gameflow.mParameters->mStartHour());
+								mSectionState = Exit;
+								gsys->setFade(0.0f, 3.0f);
+								break;
+							}
 						}
 					}
 				}
