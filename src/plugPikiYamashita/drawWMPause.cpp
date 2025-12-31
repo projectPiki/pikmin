@@ -55,19 +55,19 @@ zen::DrawWMPause::returnStatusFlag zen::DrawWMPause::update(Controller* controll
 
 	DrawMenu::StatusFlag pauseState = mPauseMenu->getStatusFlag();
 	switch (pauseState) {
-	case DrawMenu::STATUS_Unk0:
+	case DrawMenu::STATUS_Inactive:
 		mBackPane->hide();
 		break;
 
-	case DrawMenu::STATUS_Unk1:
+	case DrawMenu::STATUS_FadeIn:
 		mBackPane->show();
 		mBackPane->setAlpha(zen::RoundOff(127.0f * mPauseMenu->getRatio()));
 		break;
 
-	case DrawMenu::STATUS_Unk2:
+	case DrawMenu::STATUS_Active:
 		break;
 
-	case DrawMenu::STATUS_Unk3:
+	case DrawMenu::STATUS_FadeOut:
 		f32 alpha = 127.0f * (1.0f - mPauseMenu->getRatio());
 		mBackPane->setAlpha(zen::RoundOff(alpha));
 		break;

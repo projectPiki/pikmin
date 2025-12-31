@@ -448,7 +448,7 @@ void KoganeAi::createPellet()
 void KoganeAi::resultFlagOn()
 {
 	if (mKogane->insideAndInSearch()) {
-		playerState->mResultFlags.setOn(RESFLAG_Kogane);
+		playerState->mResultFlags.setOn(zen::RESFLAG_Kogane);
 	}
 }
 

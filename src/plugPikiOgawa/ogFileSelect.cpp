@@ -1214,15 +1214,15 @@ zen::ogScrFileSelectMgr::returnStatusFlag zen::ogScrFileSelectMgr::update(Contro
 			} else {
 				switch (mCurrSlotIdx) {
 				case 0:
-					mSelectState = PostDeleteAction;
+					mSelectState = SelectionA;
 					break;
 
 				case 1:
-					mSelectState = PostCopyAction;
+					mSelectState = SelectionB;
 					break;
 
 				case 2:
-					mSelectState = CardBusy;
+					mSelectState = SelectionC;
 					break;
 
 				default:

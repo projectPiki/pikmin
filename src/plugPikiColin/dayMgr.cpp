@@ -569,14 +569,14 @@ void DayMgr::menuDecreaseTime(Menu& menu)
 /**
  * @todo: Documentation
  */
-void DayMgr::refresh(Graphics& gfx, f32 time, int p2)
+void DayMgr::refresh(Graphics& gfx, f32 time, int numLights)
 {
-	int lights     = (p2 < mLightCount) ? p2 : mLightCount;
+	int lights     = (numLights < mLightCount) ? numLights : mLightCount;
 	f32 blendRatio = 0.0f;
 	TimeSetting* timeSettingStart;
 	TimeSetting* timeSettingEnd;
-	if (time == 25.0f) {
-		// movie?
+	if (time == MOVIE_TIME) {
+		// movie!
 		timeSettingStart = timeSettingEnd = &mTimeSettings[4];
 		blendRatio                        = 0.0f;
 

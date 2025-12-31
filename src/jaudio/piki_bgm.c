@@ -231,10 +231,10 @@ void Jac_ReadyBgm(u32 id)
 /**
  * @TODO: Documentation
  */
-void Jac_PlayBgm(u32 trackNo, u32 id)
+void Jac_PlayBgm(u32 trackNo, u32 bgmID)
 {
 	STACK_PAD_VAR(4);
-	u32* REF_b = &id;
+	u32* REF_b = &bgmID;
 	u32 check;
 	seqp_* track;
 	Jac_SetProcessStatus(8);
@@ -243,22 +243,22 @@ void Jac_PlayBgm(u32 trackNo, u32 id)
 	}
 
 	// this is nearly just Jac_ReadyBgm again
-	if (id < 2) {
-		id = 2;
+	if (bgmID < 2) {
+		bgmID = BGM_Dummy2;
 	}
-	check = (u32)Jaf_CheckSeq(id);
+	check = (u32)Jaf_CheckSeq(bgmID);
 	if (check == 0) {
 		int* idx = &buffer_mus[lastside];
 		if (*idx != -1) {
 			Jaf_ClearSeq(*idx);
 		}
-		Jaf_LoadSeq(id, buffer[lastside]);
+		Jaf_LoadSeq(bgmID, buffer[lastside]);
 
-		buffer_mus[lastside] = id;
+		buffer_mus[lastside] = bgmID;
 		lastside             = 1 - lastside;
 	} else if (check == 1) {
 		while (check == 1) {
-			check = (u32)Jaf_CheckSeq(id);
+			check = (u32)Jaf_CheckSeq(bgmID);
 		}
 	}
 
@@ -269,7 +269,7 @@ void Jac_PlayBgm(u32 trackNo, u32 id)
 	bgm[trackNo].hasModeChanged  = 0;
 	bgm[trackNo].transitionTimer = 0;
 	bgm[trackNo].currentMode     = 0;
-	bgm[trackNo].songId          = id - 2;
+	bgm[trackNo].songId          = bgmID - 2;
 	bgm[trackNo].trackHandle     = trackNo + 3;
 
 #if defined(VERSION_GPIP01_00)
@@ -282,9 +282,9 @@ void Jac_PlayBgm(u32 trackNo, u32 id)
 #if defined(VERSION_GPIP01_00)
 	call_counter = 0;
 #endif
-	Jaf_ReadySeq(trackNo + 3, id);
+	Jaf_ReadySeq(trackNo + 3, bgmID);
 	Jac_BgmFrameWork();
-	Jaq_SetBankNumber(Jaf_HandleToSeq(trackNo + 3), id);
+	Jaq_SetBankNumber(Jaf_HandleToSeq(trackNo + 3), bgmID);
 	bgm[trackNo].crossfade = 0;
 
 	if (trackNo == 0) {
@@ -300,7 +300,7 @@ void Jac_PlayBgm(u32 trackNo, u32 id)
 	Jam_OnExtSwitch(track, 1);
 
 	// Challenge mode tempo speedup?
-	if (Jac_TellChgMode() == TRUE && Jac_GetCurrentScene() == SCENE_Unk5) {
+	if (Jac_TellChgMode() == TRUE && Jac_GetCurrentScene() == SCENE_Course) {
 		Jam_OnExtSwitch(track, 0x40);
 		Jam_SetExtParam(1.2f, track, 0x40);
 	} else {
@@ -337,7 +337,7 @@ void Jac_SetBgmModeFlag(u32 trackNo, u8 flag, u8 doSet)
 {
 #if defined(VERSION_GPIP01_00)
 	int stack[2];
-	if (call_counter < 6000 && Jac_GetCurrentScene() == SCENE_Unk5 && flag != 8 && flag != 4) {
+	if (call_counter < 6000 && Jac_GetCurrentScene() == SCENE_Course && flag != 8 && flag != 4) {
 		return;
 	}
 #endif

@@ -208,7 +208,7 @@ void Slime::collisionCallback(immut CollEvent& event)
 			}
 
 			if (insideAndInSearch()) {
-				playerState->mResultFlags.setOn(RESFLAG_Slime);
+				playerState->mResultFlags.setOn(zen::RESFLAG_Slime);
 			}
 		}
 	}

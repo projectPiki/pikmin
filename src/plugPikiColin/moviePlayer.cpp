@@ -398,7 +398,8 @@ int MoviePlayer::translateIndex(int idx, int stage)
 /**
  * @todo: Documentation
  */
-void MoviePlayer::startMovie(int movieIdx, int, Creature* target, immut Vector3f* pos, immut Vector3f* rot, u32 mask, bool isPlaying)
+void MoviePlayer::startMovie(int movieIdx, int, Creature* target, immut Vector3f* pos, immut Vector3f* rot, u32 actorVisMask,
+                             bool isPlaying)
 {
 	MovieInfo* info;
 	if (movieIdx < 0) {
@@ -449,8 +450,8 @@ void MoviePlayer::startMovie(int movieIdx, int, Creature* target, immut Vector3f
 	info = (MovieInfo*)mMovieInfoList.mChild;
 	info->del();
 	info->initCore(movie->mCinFileName);
-	info->mMovieIndex = translatedIdx;
-	info->mMaskFlags  = mask;
+	info->mMovieIndex   = translatedIdx;
+	info->mActorVisMask = actorVisMask;
 	if (translatedIdx == DEMOID_PikminInOnyonPractice || translatedIdx == DEMOID_PikminInOnyonForest) {
 		gsys->startLoading(nullptr, false, 0);
 	} else {
@@ -655,7 +656,7 @@ void MoviePlayer::update()
 			info->mPlayer->mStaticLookAt    = info->mPlayer->mTarget->mSRT.t;
 		}
 
-		mMaskFlags = info->mMaskFlags;
+		mActorVisMask = info->mActorVisMask;
 		if (!info->update()) { // returns false if playback is finished
 			PRINT("movie end!\n");
 			sndStopMovie(info);

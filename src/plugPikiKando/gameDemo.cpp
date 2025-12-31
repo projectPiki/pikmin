@@ -262,16 +262,18 @@ void DemoFlags::setFlag(int index, Creature* obj)
 		Vector3f objPosition = obj->mSRT.t;
 		f32 yRotation        = HALF_PI;
 		Vector3f rotation(0.0f, yRotation, 0.0f);
-		gameflow.mGameInterface->movie(getDemoFlag(index)->mMovieIndex, 0, obj, obj ? &obj->mSRT.t : nullptr, &rotation, -1, true);
+		gameflow.mGameInterface->movie(getDemoFlag(index)->mMovieIndex, 0, obj, obj ? &obj->mSRT.t : nullptr, &rotation, CAF_AllVisibleMask,
+		                               true);
 
 	} else {
 		if (obj && obj->mObjType != OBJTYPE_Goal) {
 			Vector3f objPosition = obj->mSRT.t;
 			Vector3f rotation(0.0f, getCameraSafeAngle(objPosition, 200.0f, 10.0f), 0.0f);
-			gameflow.mGameInterface->movie(getDemoFlag(index)->mMovieIndex, 0, obj, obj ? &obj->mSRT.t : nullptr, &rotation, -1, true);
+			gameflow.mGameInterface->movie(getDemoFlag(index)->mMovieIndex, 0, obj, obj ? &obj->mSRT.t : nullptr, &rotation,
+			                               CAF_AllVisibleMask, true);
 		} else {
 			gameflow.mGameInterface->movie(getDemoFlag(index)->mMovieIndex, 0, obj, obj ? &obj->mSRT.t : nullptr,
-			                               obj ? &obj->mSRT.r : nullptr, -1, true);
+			                               obj ? &obj->mSRT.r : nullptr, CAF_AllVisibleMask, true);
 		}
 	}
 

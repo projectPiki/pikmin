@@ -5,7 +5,7 @@
 #include "types.h"
 
 /**
- * @brief TODO
+ * @brief Game section for both the challenge mode map select and story mode world map screens.
  *
  * @note Size: 0x20.
  */

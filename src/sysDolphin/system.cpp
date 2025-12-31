@@ -226,15 +226,18 @@ void System::updateSysClock()
 }
 
 /**
- * @todo: Documentation
+ * @brief Reads .arc and .dir pairs from the DVD and stores them in the file list.
+ *
+ * @param arcPath Path to archive (.arc) file - relative to dataDir directory.
+ * @param dirPath Path to directory (.dir) file - absolute path from DVD root.
  */
-void System::parseArchiveDirectory(immut char* path1, immut char* path2)
+void System::parseArchiveDirectory(immut char* arcPath, immut char* dirPath)
 {
 	int free      = gsys->getHeap(gsys->mActiveHeapIdx)->getFree();
 	f32 startTime = getTime();
 	DVDStream stream;
-	stream.mPath   = path2;
-	stream.mIsOpen = DVDOpen(path2, &stream.mFileInfo) != 0;
+	stream.mPath   = dirPath;
+	stream.mIsOpen = DVDOpen(dirPath, &stream.mFileInfo) != 0;
 	stream.init();
 	DVDStream::numOpen++;
 	if (!stream.mIsOpen) {
@@ -273,7 +276,7 @@ void System::parseArchiveDirectory(immut char* path1, immut char* path2)
 
 	stream.close();
 
-	RandomAccessStream* file = gsys->openFile(path1, true, true);
+	RandomAccessStream* file = gsys->openFile(arcPath, true, true);
 	if (file) {
 		file->readInt();
 		u32 num = file->readInt();

@@ -417,7 +417,7 @@ public:
 	{
 		TAIAflicking::start(teki);
 		if (teki.isNaviWatch()) {
-			playerState->mResultFlags.setOn(RESFLAG_Dororo);
+			playerState->mResultFlags.setOn(zen::RESFLAG_Dororo);
 		}
 	}
 	virtual bool act(Teki& teki) // _10

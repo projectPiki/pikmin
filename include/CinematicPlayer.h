@@ -11,6 +11,8 @@
 #include "types.h"
 #include <string.h>
 
+#define ADD_ACTOR_PIKMIN_TYPE(flags, color) (flags) |= 1 << ((color) + 12)
+
 struct AgeServer;
 struct CmdStream;
 struct Graphics;
@@ -48,6 +50,9 @@ enum {
 	HideRedCont    = 1 << 20, // 0x100000
 	PikiNearUfo    = 1 << 21, // 0x200000
 	CameraReturn   = 1 << 22, // 0x400000
+
+	UseNaviView = 1 << 31, // 0x80000000
+
 } END_ENUM_TYPE;
 
 /**
@@ -131,18 +136,35 @@ enum CineActorFlags {
 	CAF_NoSync         = 1 << 8,  ///< 0x100, animation runs independently of the scene
 	CAF_MoveAiOnion    = 1 << 9,  ///< 0x200, used by onion cutscenes
 	CAF_DummyUfo       = 1 << 10, ///< 0x400
-
-	CAF_ObjMask1 = 1 << 11, ///< 0x800, visibility group 1
-	CAF_ObjMask2 = 1 << 12, ///< 0x1000, visibility group 2
-	CAF_ObjMask3 = 1 << 13, ///< 0x2000, visibility group 3
-	CAF_ObjMask4 = 1 << 14, ///< 0x4000, visibility group 4
-	CAF_ObjMask5 = 1 << 15, ///< 0x8000, visibility group 5
+	CAF_ObjMask1       = 1 << 11, ///< 0x800, visibility group 1
+	CAF_ObjMask2       = 1 << 12, ///< 0x1000, visibility group 2
+	CAF_ObjMask3       = 1 << 13, ///< 0x2000, visibility group 3
+	CAF_ObjMask4       = 1 << 14, ///< 0x4000, visibility group 4
+	CAF_ObjMask5       = 1 << 15, ///< 0x8000, visibility group 5
+	CAF_MoveFaller     = 1 << 16, ///< 0x10000, object falls with gravity
+	CAF_NoXluSort      = 1 << 17, ///< 0x20000, skip transparency sorting
+	CAF_MultiColour    = 1 << 18, ///< 0x40000, for cycling through colour variants
 
 	CAF_AllObjMasks = CAF_ObjMask1 | CAF_ObjMask2 | CAF_ObjMask3 | CAF_ObjMask4 | CAF_ObjMask5, ///< 0xF800
 
-	CAF_MoveFaller  = 1 << 16, ///< 0x10000, object falls with gravity
-	CAF_NoXluSort   = 1 << 17, ///< 0x20000, skip transparency sorting
-	CAF_MultiColour = 1 << 18, ///< 0x40000, for cycling through colour variants
+	// Object masks for day end cutscenes
+	CAF_DayEndRedPikmin    = CAF_ObjMask2, ///< 0x1000
+	CAF_DayEndYellowPikmin = CAF_ObjMask3, ///< 0x2000
+	CAF_DayEndBluePikmin   = CAF_ObjMask4, ///< 0x4000
+
+	CAF_DayEndEnemyAttack   = CAF_ObjMask1, ///< 0x800
+	CAF_DayEndEnemyNoDeaths = CAF_ObjMask5, ///< 0x8000
+
+	// object masks for bad ending cutscenes
+	CAF_BadEndingRedPikmin    = CAF_ObjMask2, ///< 0x1000
+	CAF_BadEndingYellowPikmin = CAF_ObjMask3, ///< 0x2000
+	CAF_BadEndingBluePikmin   = CAF_ObjMask4, ///< 0x4000
+
+	CAF_BadEndingExtraRed1 = CAF_ObjMask1, ///< 0x800
+	CAF_BadEndingExtraRed2 = CAF_ObjMask5, ///< 0x8000
+
+	// default visibility, no groupings
+	CAF_AllVisibleMask = 0xFFFFFFFF, ///< 0xFFFFFFFF
 };
 
 /**

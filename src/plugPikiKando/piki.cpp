@@ -2676,7 +2676,7 @@ void Piki::realAI()
 		}
 
 		if (mColor == Blue) {
-			playerState->mResultFlags.setOn(RESFLAG_BluePikminWaterImmunity);
+			playerState->mResultFlags.setOn(zen::RESFLAG_BluePikminWaterImmunity);
 		}
 
 		if (state != PIKISTATE_Swallowed && state != PIKISTATE_Dead && state != PIKISTATE_Dying && state != PIKISTATE_Pressed

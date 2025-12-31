@@ -3,7 +3,7 @@
 
 #include "types.h"
 
-/*
+/**
  * @brief TODO
  */
 enum KontMode {
@@ -11,7 +11,7 @@ enum KontMode {
 	KONT_Load = 1,
 };
 
-/*
+/**
  * @brief Identifies the kind of payload being sent via KIO/HIO.
  *
  * This value is written into the first word of the KIO header buffer.
@@ -21,7 +21,7 @@ enum KIOWriteKind {
 	KIOWRITE_ControllerStream = 1,
 };
 
-/*
+/**
  * @brief TODO
  */
 struct KIOContext {

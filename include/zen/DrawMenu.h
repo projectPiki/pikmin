@@ -223,10 +223,10 @@ public:
 	 * @brief TODO
 	 */
 	enum StatusFlag {
-		STATUS_Unk0 = 0,
-		STATUS_Unk1 = 1,
-		STATUS_Unk2 = 2,
-		STATUS_Unk3 = 3,
+		STATUS_Inactive = 0,
+		STATUS_FadeIn   = 1,
+		STATUS_Active   = 2,
+		STATUS_FadeOut  = 3,
 	};
 
 	DrawMenu(immut char*, bool, bool);

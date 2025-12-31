@@ -224,7 +224,7 @@ bool zen::DrawMenuTitle::update(f32 dt)
 zen::DrawMenu::DrawMenu(immut char* bloFileName, bool useAlphaMgr, bool useTexAnimMgr)
     : DrawScreen(bloFileName, nullptr, useAlphaMgr, useTexAnimMgr)
 {
-	mState         = STATUS_Unk0;
+	mState         = STATUS_Inactive;
 	_104           = 0.0f;
 	_108           = 0.5f;
 	mRatio         = 0.0f;
@@ -359,7 +359,7 @@ zen::DrawMenu::DrawMenu(immut char* bloFileName, bool useAlphaMgr, bool useTexAn
  */
 void zen::DrawMenu::start(int select)
 {
-	mState = STATUS_Unk1;
+	mState = STATUS_FadeIn;
 	_104   = 0.0f;
 	_108   = 0.5f;
 	mRatio = 0.0f;
@@ -410,7 +410,7 @@ void zen::DrawMenu::updateMenuPanes()
 		}
 
 		switch (mState) {
-		case STATUS_Unk1:
+		case STATUS_FadeIn:
 			f32 yScale = 2.0f * (mRatio - 0.5f);
 			if (yScale < 0.0f) {
 				yScale = 0.0f;
@@ -418,11 +418,11 @@ void zen::DrawMenu::updateMenuPanes()
 			mMenuItems[i].setScale(2.0f - yScale, yScale);
 			break;
 
-		case STATUS_Unk2:
+		case STATUS_Active:
 			mMenuItems[i].setScale(1.0f, 1.0f);
 			break;
 
-		case STATUS_Unk3:
+		case STATUS_FadeOut:
 			if (mCancelSelectMenuNo < 0 || i != mCurrentSelect) {
 				yScale = 1.0f - (2.0f * mRatio);
 				if (yScale < 0.0f) {
@@ -494,7 +494,7 @@ bool zen::DrawMenu::update(Controller* controller)
 {
 	bool res      = false;
 	int oldSelect = mCurrentSelect;
-	if (mState != STATUS_Unk0) {
+	if (mState != STATUS_Inactive) {
 		_104 += gsys->getFrameTime();
 		if (_104 > _108) {
 			_104 = _108;
@@ -503,17 +503,17 @@ bool zen::DrawMenu::update(Controller* controller)
 		mRatio = _104 / _108;
 
 		switch (mState) {
-		case STATUS_Unk1:
+		case STATUS_FadeIn:
 			if (mRatio == 1.0f && mMenuPanelMgr.checkFinish()) {
 				_104   = 0.0f;
 				_108   = 0.1f;
 				mRatio = 0.0f;
-				mState = STATUS_Unk2;
+				mState = STATUS_Active;
 				mMenuPanelMgr.operation();
 				mTitle.operation();
 			}
 			break;
-		case STATUS_Unk2:
+		case STATUS_Active:
 			if (mRatio == 1.0f) {
 				updateSelectMenuNo(controller);
 				if (controller->keyClick(KBBTN_MSTICK_UP | KBBTN_MSTICK_DOWN)) {
@@ -534,18 +534,18 @@ bool zen::DrawMenu::update(Controller* controller)
 
 				if (controller->keyClick(mKeyDecide)) {
 					SeSystem::playSysSe(SYSSE_DECIDE1);
-					mState = STATUS_Unk3;
+					mState = STATUS_FadeOut;
 				}
 				if (controller->keyClick(mKeyCancel)) {
 					SeSystem::playSysSe(mCancelSoundID);
-					mState              = STATUS_Unk3;
+					mState              = STATUS_FadeOut;
 					mIsSelectMenuCancel = true;
 					if (mCancelSelectMenuNo >= 0) {
 						mCurrentSelect = mCancelSelectMenuNo;
 					}
 				}
 
-				if (mState == STATUS_Unk3) {
+				if (mState == STATUS_FadeOut) {
 					_104   = 0.0f;
 					_108   = 0.5f;
 					mRatio = 0.0f;
@@ -556,9 +556,9 @@ bool zen::DrawMenu::update(Controller* controller)
 				}
 			}
 			break;
-		case STATUS_Unk3:
+		case STATUS_FadeOut:
 			if (mRatio == 1.0f && mMenuPanelMgr.checkFinish() && mLeftCursorMgr.checkFinish() && mRightCursorMgr.checkFinish()) {
-				mState = STATUS_Unk0;
+				mState = STATUS_Inactive;
 				res    = true;
 			}
 			break;

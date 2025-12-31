@@ -98,7 +98,7 @@ zen::ogScrFileChkSelMgr::returnStatusFlag zen::ogScrFileChkSelMgr::update(Contro
 	int memChkState = mMemChkMgr->update(controller);
 	if (memChkState == ogScrMemChkMgr::Finished) {
 		if (mSkipFileSelect) {
-			mState = FILECHKSEL_Unk5;
+			mState = ForceExit;
 			return mState;
 		}
 
@@ -106,7 +106,7 @@ zen::ogScrFileChkSelMgr::returnStatusFlag zen::ogScrFileChkSelMgr::update(Contro
 		mIsScreenVisible = true;
 
 	} else if (memChkState == ogScrMemChkMgr::ExitSuccess) {
-		mState = FILECHKSEL_Unk5;
+		mState = ForceExit;
 		return mState;
 
 	} else if (memChkState == ogScrMemChkMgr::ExitFailure) {
@@ -128,20 +128,20 @@ zen::ogScrFileChkSelMgr::returnStatusFlag zen::ogScrFileChkSelMgr::update(Contro
 
 		mDataBScreen->update();
 		switch (mFileSelectMgr->update(controller, cardInfo)) {
-		case 6:
+		case zen::ogScrFileSelectMgr::PostSaveAction:
 			mState = ErrorOrCompleted;
 			break;
-		case 7:
-			mState = FILECHKSEL_SelectionA;
+		case zen::ogScrFileSelectMgr::SelectionA:
+			mState = SelectionA;
 			break;
-		case 8:
-			mState = FILECHKSEL_SelectionB;
+		case zen::ogScrFileSelectMgr::SelectionB:
+			mState = SelectionB;
 			break;
-		case 9:
-			mState = FILECHKSEL_SelectionC;
+		case zen::ogScrFileSelectMgr::SelectionC:
+			mState = SelectionC;
 			break;
-		case 10:
-			mState = FILECHKSEL_Unk5;
+		case zen::ogScrFileSelectMgr::ReturnToIPL:
+			mState = ForceExit;
 			break;
 		}
 	}

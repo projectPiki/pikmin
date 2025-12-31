@@ -857,6 +857,7 @@ struct GameCourseClearScreen : public Node {
 GameCourseClearSection::GameCourseClearSection()
 {
 	Node::init("<GameCourseClearSection>");
+	// run course clear at 60 fps
 	gsys->setFrameClamp(1);
 	flowCont.mNaviSeedCount = 0;
 	flowCont._250           = 0;

@@ -2337,7 +2337,7 @@ void PikiGrowupState::procAnimMsg(Piki* piki, MsgAnim* msg)
 		piki->mFloweringTimer++;
 		seSystem->playPikiSound(SEF_PIKI_GROW4, piki->mSRT.t);
 		piki->setFlower(Flower);
-		playerState->mResultFlags.setOn(RESFLAG_PikminSeeds);
+		playerState->mResultFlags.setOn(zen::RESFLAG_PikminSeeds);
 		if (!playerState->mDemoFlags.isFlag(DEMOFLAG_FirstNectar) && !gameflow.mMoviePlayer->mIsActive && piki->aiCullable()) {
 			playerState->mDemoFlags.setFlagOnly(DEMOFLAG_FirstNectar);
 			gameflow.mGameInterface->message(MOVIECMD_TextDemo, zen::ogScrTutorialMgr::TUT_Mitu);
@@ -2776,14 +2776,14 @@ void PikiNukareState::cleanup(Piki* piki)
 
 	} else if (piki->mColor == Yellow && !playerState->mDemoFlags.isFlag(DEMOFLAG_PluckYellowPikmin)) {
 		playerState->mDemoFlags.setFlag(DEMOFLAG_PluckYellowPikmin, piki);
-		playerState->mResultFlags.setOn(RESFLAG_MeetYellowPikminNoBomb);
-		playerState->mResultFlags.setOn(RESFLAG_Onyons);
+		playerState->mResultFlags.setOn(zen::RESFLAG_MeetYellowPikminNoBomb);
+		playerState->mResultFlags.setOn(zen::RESFLAG_Onyons);
 		playerState->setContainer(Yellow);
 		playerState->setDisplayPikiCount(Yellow);
 
 	} else if (piki->mColor == Blue && !playerState->mDemoFlags.isFlag(DEMOFLAG_PluckBluePikmin)) {
 		playerState->mDemoFlags.setFlag(DEMOFLAG_PluckBluePikmin, piki);
-		playerState->mResultFlags.setOn(RESFLAG_MeetBluePikmin);
+		playerState->mResultFlags.setOn(zen::RESFLAG_MeetBluePikmin);
 		playerState->setContainer(Blue);
 		playerState->setDisplayPikiCount(Blue);
 

@@ -563,7 +563,7 @@ void GameFlow::hardReset(BaseApp* baseApp)
 	mLastLoadedBannerTex  = nullptr;
 	mLevelBannerTex       = setLoadBanner("intro/nintendo.bti");
 	mLevelBannerFadeValue = 1.0f;
-	Jac_SceneSetup(SCENE_Unk0, 0);
+	Jac_SceneSetup(SCENE_BootUp, 0);
 	mIsNintendoLoadLogo = TRUE;
 
 	PRINT("starting loading\n");

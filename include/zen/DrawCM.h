@@ -298,14 +298,16 @@ public:
 	 * @brief TODO
 	 */
 	enum returnStatusFlag {
-		RETSTATE_UnkN3 = -3,
-		RETSTATE_UnkN2 = -2,
-		RETSTATE_UnkN1 = -1,
-		RETSTATE_Unk0  = 0,
-		RETSTATE_Unk1  = 1,
-		RETSTATE_Unk2  = 2,
-		RETSTATE_Unk3  = 3,
-		RETSTATE_Unk4  = 4,
+		Inactive = -3, ///< -3, screen constructed but not initialised
+		Exit     = -2, ///< -2, return to previous screen
+		Continue = -1, ///< -1, screen initialised - active operation with no selection
+
+		// non-negative = a selection has been made
+		EnterPractice  = 0, ///< 0, Impact Site Challenge Mode
+		EnterForest    = 1, ///< 1, Forest of Hope Challenge Mode
+		EnterCave      = 2, ///< 2, Forest Navel Challenge Mode
+		EnterYakushima = 3, ///< 3, Distant Spring Challenge Mode
+		EnterLast      = 4, ///< 4, Final Trial Challenge Mode
 	};
 
 	enum modeFlag {

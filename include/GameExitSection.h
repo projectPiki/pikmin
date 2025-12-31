@@ -5,7 +5,7 @@
 #include "types.h"
 
 /**
- * @brief TODO
+ * @brief Game section for cleaning up and exiting back to title.
  *
  * @note Size: 0x20.
  */

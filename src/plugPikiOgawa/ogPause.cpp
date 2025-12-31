@@ -26,53 +26,53 @@ DEFINE_PRINT("OgPauseSection")
 zen::ogScrPauseMgr::ogScrPauseMgr()
 {
 	mIsChallengeMode = false;
-	mBlackScreen     = new P2DScreen();
-	mBlackScreen->set("screen/blo/black.blo", false, false, true);
+	mParentScreen    = new P2DScreen();
+	mParentScreen->set("screen/blo/black.blo", false, false, true);
 	// this might be P2DTextBox instead, unsure
-	mBlackPane = static_cast<P2DPicture*>(mBlackScreen->search('blck', true));
-	mBlackPane->setAlpha(0);
+	mGameplayFilterPic = static_cast<P2DPicture*>(mParentScreen->search('blck', true));
+	mGameplayFilterPic->setAlpha(0);
 
 #if defined(VERSION_PIKIDEMO)
-	mDrawMenu1 = new DrawMenu("screen/blo/ot_pause.blo", false, false);
+	mMainMenu = new DrawMenu("screen/blo/ot_pause.blo", false, false);
 #else
-	mDrawMenu1 = new DrawMenu("screen/blo/pause.blo", false, false);
+	mMainMenu = new DrawMenu("screen/blo/pause.blo", false, false);
 #endif
-	_14       = mDrawMenu1->getScreenPtr();
-	mTextBox4 = static_cast<P2DTextBox*>(_14->search('yame', true));
-	mTextBox5 = static_cast<P2DTextBox*>(_14->search('he02', true));
-	mTextBox6 = static_cast<P2DTextBox*>(_14->search('hm02', true));
+	mMainMenuScreen           = mMainMenu->getScreenPtr();
+	mQuitChalModeMainTextBox  = static_cast<P2DTextBox*>(mMainMenuScreen->search('yame', true));
+	mContLastSaveMainTextBox1 = static_cast<P2DTextBox*>(mMainMenuScreen->search('he02', true));
+	mContLastSaveMainTextBox2 = static_cast<P2DTextBox*>(mMainMenuScreen->search('hm02', true));
 
-	_3C = mTextBox4->getString();
-	_40 = mTextBox5->getString();
+	mChalModeQuitText  = mQuitChalModeMainTextBox->getString();
+	mStoryModeQuitText = mContLastSaveMainTextBox1->getString();
 
-	mTextBox4->hide();
+	mQuitChalModeMainTextBox->hide();
 
 #if defined(VERSION_PIKIDEMO)
-	mDrawMenu2 = new DrawMenu("screen/blo/ot_pa_ok.blo", false, false);
+	mSubMenu = new DrawMenu("screen/blo/ot_pa_ok.blo", false, false);
 #else
-	mDrawMenu2 = new DrawMenu("screen/blo/pause_ok.blo", false, false);
+	mSubMenu = new DrawMenu("screen/blo/pause_ok.blo", false, false);
 #endif
-	_18       = mDrawMenu2->getScreenPtr();
-	mTextBox1 = static_cast<P2DTextBox*>(_18->search('yame', true));
-	mTextBox2 = static_cast<P2DTextBox*>(_18->search('titl', true));
-	mTextBox3 = static_cast<P2DTextBox*>(_18->search('even', true));
+	mSubMenuScreen          = mSubMenu->getScreenPtr();
+	mQuitChalModeSubTextBox = static_cast<P2DTextBox*>(mSubMenuScreen->search('yame', true));
+	mContLastSaveSubTextBox = static_cast<P2DTextBox*>(mSubMenuScreen->search('titl', true));
+	mGoToSunsetSubTextBox   = static_cast<P2DTextBox*>(mSubMenuScreen->search('even', true));
 
-	mTextBox1->hide();
-	mTextBox2->hide();
-	mTextBox3->hide();
+	mQuitChalModeSubTextBox->hide();
+	mContLastSaveSubTextBox->hide();
+	mGoToSunsetSubTextBox->hide();
 
-	mState = PAUSE_NULL;
-	_00    = false;
-
-	// this might be P2DTextBox instead, unsure
-	mBackPane1 = static_cast<P2DPicture*>(_14->search('back', true));
-	mBackPane1->setAlpha(0);
-	mBackPane1->hide();
+	mState    = PAUSE_NULL;
+	mIsActive = false;
 
 	// this might be P2DTextBox instead, unsure
-	mBackPane2 = static_cast<P2DPicture*>(_18->search('back', true));
-	mBackPane2->setAlpha(0);
-	mBackPane2->hide();
+	mMainMenuBackFrame = static_cast<P2DPicture*>(mMainMenuScreen->search('back', true));
+	mMainMenuBackFrame->setAlpha(0);
+	mMainMenuBackFrame->hide();
+
+	// this might be P2DTextBox instead, unsure
+	mSubMenuBackFrame = static_cast<P2DPicture*>(mSubMenuScreen->search('back', true));
+	mSubMenuBackFrame->setAlpha(0);
+	mSubMenuBackFrame->hide();
 }
 
 /**
@@ -83,17 +83,17 @@ void zen::ogScrPauseMgr::start(bool isChallengeMode)
 	mIsChallengeMode = isChallengeMode;
 
 	if (mIsChallengeMode) {
-		mTextBox5->setString(_3C);
-		mTextBox6->setString(_3C);
+		mContLastSaveMainTextBox1->setString(mChalModeQuitText);
+		mContLastSaveMainTextBox2->setString(mChalModeQuitText);
 	} else {
-		mTextBox5->setString(_40);
-		mTextBox6->setString(_40);
+		mContLastSaveMainTextBox1->setString(mStoryModeQuitText);
+		mContLastSaveMainTextBox2->setString(mStoryModeQuitText);
 	}
 
-	mDrawMenu1->start(-1);
-	mState      = PAUSE_Unk1;
+	mMainMenu->start(-1);
+	mState      = PAUSE_FadeIn;
 	mFrameTimer = 0.0f;
-	_00         = true;
+	mIsActive   = true;
 }
 
 /**
@@ -105,104 +105,118 @@ zen::ogScrPauseMgr::PauseStatus zen::ogScrPauseMgr::update(Controller* controlle
 		return mState;
 	}
 
-	if (mState >= PAUSE_Unk5) {
+	if (mState >= PAUSE_EXIT_CODE) {
 		mState = PAUSE_NULL;
 		return mState;
 	}
 
 	if (playerState->getCurrDay() == 0 || playerState->getCurrDay() == playerState->getTotalDays() - 1) {
-		mDrawMenu1->setMenuItemActiveSw(1, false);
+		// disable "Go to Sunset" menu option on day 1 (trapped in tutorial) and day 30 (can't die early)
+		mMainMenu->setMenuItemActiveSw(1, false);
 	} else {
-		mDrawMenu1->setMenuItemActiveSw(1, true);
+		// "Go to Sunset" option is active every other day
+		mMainMenu->setMenuItemActiveSw(1, true);
 	}
 
-	mBlackScreen->update();
-	mDrawMenu1->update(controller);
-	mDrawMenu2->update(controller);
+	mParentScreen->update();
+	mMainMenu->update(controller);
+	mSubMenu->update(controller);
 	mFrameTimer += gsys->getFrameTime();
 
 	switch (mState) {
-	case PAUSE_Unk1:
+	case PAUSE_FadeIn:
+		// fading menu in/starting up
 		if (mFrameTimer < 0.5f) {
-			_54 = 128.0f * mFrameTimer / 0.5f;
-			mBlackPane->setAlpha(_54);
+			mFadeAlpha = 128.0f * mFrameTimer / 0.5f;
+			mGameplayFilterPic->setAlpha(mFadeAlpha);
 		} else {
-			mBlackPane->setAlpha(128);
-			mState = PAUSE_Unk0;
+			mGameplayFilterPic->setAlpha(128);
+			mState = PAUSE_Active;
 		}
 		break;
 
-	case PAUSE_Unk2:
+	case PAUSE_FadeOut:
+		// fading menu out/exiting
 		if (mFrameTimer < 0.5f) {
-			_54 = 128.0f * mFrameTimer / 0.5f;
-			mBlackPane->setAlpha(128 - _54);
+			mFadeAlpha = 128.0f * mFrameTimer / 0.5f;
+			mGameplayFilterPic->setAlpha(128 - mFadeAlpha);
 		} else {
-			mBlackPane->setAlpha(0);
-			mState = mState2;
-			_00    = false;
+			mGameplayFilterPic->setAlpha(0);
+			mState    = mPendingExitState;
+			mIsActive = false;
 		}
 		break;
 
-	case PAUSE_Unk0:
-		DrawMenu::StatusFlag status = mDrawMenu1->getStatusFlag();
-		int selectMenu              = mDrawMenu1->getSelectMenu();
+	case PAUSE_Active:
+		// actively choosing/scrolling
+		DrawMenu::StatusFlag status = mMainMenu->getStatusFlag();
+		int selectMenu              = mMainMenu->getSelectMenu();
 
-		if (status != DrawMenu::STATUS_Unk0) {
+		if (status != DrawMenu::STATUS_Inactive) {
+			// we're still choosing!
 			break;
 		}
 
 		if (selectMenu <= 0) {
-			mState2     = PAUSE_Unk5;
-			mState      = PAUSE_Unk2;
-			mFrameTimer = 0.0f;
+			// we hit "Continue" (or cancelled out of the menu)
+			mPendingExitState = PAUSE_ExitToGameplay;
+			mState            = PAUSE_FadeOut;
+			mFrameTimer       = 0.0f;
 			break;
 		}
 		if (selectMenu == 1) {
-			mState = PAUSE_Unk3;
-			mDrawMenu2->start(0);
-			mTextBox1->hide();
-			mTextBox2->hide();
-			mTextBox3->show();
+			// we hit "Go to Sunset"
+			mState = PAUSE_SunsetSubmenu;
+			mSubMenu->start(0); // start at Yes
+			mQuitChalModeSubTextBox->hide();
+			mContLastSaveSubTextBox->hide();
+			mGoToSunsetSubTextBox->show();
 			break;
 		}
 		if (selectMenu == 2) {
-			mState = PAUSE_Unk4;
-			mDrawMenu2->start(0);
-			mTextBox1->hide();
-			mTextBox2->hide();
-			mTextBox3->hide();
+			// we hit "Continue from Last Save" or "Quit Challenge Mode"
+			mState = PAUSE_QuitGameSubmenu;
+			mSubMenu->start(0); // start at Yes (why??)
+			mQuitChalModeSubTextBox->hide();
+			mContLastSaveSubTextBox->hide();
+			mGoToSunsetSubTextBox->hide();
 			if (mIsChallengeMode) {
-				mTextBox1->show();
+				mQuitChalModeSubTextBox->show();
 			} else {
-				mTextBox2->show();
+				mContLastSaveSubTextBox->show();
 			}
 			break;
 		}
 		break;
-	case PAUSE_Unk3:
-	case PAUSE_Unk4:
-		int status2     = mDrawMenu2->getStatusFlag();
-		int selectMenu2 = mDrawMenu2->getSelectMenu();
-		if (status2 == DrawMenu::STATUS_Unk0) {
-			if (selectMenu2 == 0) {
+
+	case PAUSE_SunsetSubmenu:
+	case PAUSE_QuitGameSubmenu:
+		int subStatus     = mSubMenu->getStatusFlag();
+		int selectSubMenu = mSubMenu->getSelectMenu();
+		if (subStatus == DrawMenu::STATUS_Inactive) {
+			// we've exited the menu somehow
+			if (selectSubMenu == 0) {
+				// we hit yes!
 				switch (mState) {
-				case PAUSE_Unk3:
-					mState2 = PAUSE_Unk6;
+				case PAUSE_SunsetSubmenu:
+					mPendingExitState = PAUSE_ExitToSunset;
 					break;
-				case PAUSE_Unk4:
-					mState2 = PAUSE_Unk7;
+				case PAUSE_QuitGameSubmenu:
+					mPendingExitState = PAUSE_ExitToTitle;
 					break;
 				}
 
-				mState      = PAUSE_Unk2;
+				mState      = PAUSE_FadeOut;
 				mFrameTimer = 0.0f;
 				break;
 			}
 
-			if (mDrawMenu2->checkSelectMenuCancel() || selectMenu2 == 1) {
-				mDrawMenu2->setCancelSelectMenuNo(-1);
-				mDrawMenu1->start(-1);
-				mState = PAUSE_Unk0;
+			if (mSubMenu->checkSelectMenuCancel() || selectSubMenu == 1) {
+				// we hit no! (or B)
+				mSubMenu->setCancelSelectMenuNo(-1);
+				// go back to main menu at previously selected option
+				mMainMenu->start(-1);
+				mState = PAUSE_Active;
 			}
 		}
 		break;
@@ -223,7 +237,7 @@ void zen::ogScrPauseMgr::draw(Graphics& gfx)
 
 	P2DPerspGraph perspGraph(0, 0, 640, 480, 30.0f, 1.0f, 5000.0f);
 	perspGraph.setPort();
-	mBlackScreen->draw(0, 0, &perspGraph);
-	mDrawMenu1->draw(gfx);
-	mDrawMenu2->draw(gfx);
+	mParentScreen->draw(0, 0, &perspGraph);
+	mMainMenu->draw(gfx);
+	mSubMenu->draw(gfx);
 }

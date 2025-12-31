@@ -1,8 +1,9 @@
+#include "GameSetupSection.h"
+
 #include "BaseInf.h"
 #include "DebugLog.h"
 #include "Dolphin/os.h"
 #include "FlowController.h"
-#include "GameSetupSection.h"
 #include "Generator.h"
 #include "GlobalShape.h"
 #include "KIO.h"
@@ -14,6 +15,9 @@
 #include "sysNew.h"
 #include "system.h"
 
+/// Size of controller input recording buffer.
+#define CONTROLLER_INPUT_BUFFER_SIZE (12 * 3000)
+
 /**
  * @note UNUSED Size: 00009C
  */
@@ -24,40 +28,55 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("GameSetup");
 
+/**
+ * @brief First set of model-animation file pairs to index in system lists - Pikmin and pellets.
+ *
+ * Pikmin models all share the same (blue Pikmin) animation set once loaded.
+ * No idea what the pellets are used for.
+ */
 static immut char* shapeList[10][2] = {
-	{ "objects/pellets/white1.mod", "objects/pellets/white1.anm" },
-	{ "objects/pellets/white2.mod", "objects/pellets/white2.anm" },
-	{ "objects/pellets/white3.mod", "objects/pellets/white3.anm" },
-	{ "objects/pellets/white4.mod", "objects/pellets/white4.anm" },
-	{ "pikis/bluModel.mod", "pikis/bluModel.anm" },
-	{ "pikis/redModel.mod", nullptr },
-	{ "pikis/yelModel.mod", nullptr },
-	{ "pikis/kinModel.mod", nullptr },
-	{ "pikis/nv3Model.mod", nullptr },
+	{ "objects/pellets/white1.mod", "objects/pellets/white1.anm" }, ///< white1 pellet?
+	{ "objects/pellets/white2.mod", "objects/pellets/white2.anm" }, ///< white2 pellet?
+	{ "objects/pellets/white3.mod", "objects/pellets/white3.anm" }, ///< white3 pellet?
+	{ "objects/pellets/white4.mod", "objects/pellets/white4.anm" }, ///< white4 pellet?
+	{ "pikis/bluModel.mod", "pikis/bluModel.anm" },                 ///< blue Pikmin model and animation.
+	{ "pikis/redModel.mod", nullptr },                              ///< red Pikmin model (reuses blue animation).
+	{ "pikis/yelModel.mod", nullptr },                              ///< yellow Pikmin model (reuses blue animation).
+	{ "pikis/kinModel.mod", nullptr },                              ///< puffmin model (reuses blue animation).
+	{ "pikis/nv3Model.mod", nullptr },                              ///< olimar model.
 	{ nullptr, nullptr },
 };
 
+/**
+ * @brief Second set of model-animation file pairs to index in system lists - ship parts with animations.
+ *
+ * These models and animations are used for attaching ship parts to the Dolphin when collected.
+ * "Soto" models are "outside" - they affect the actual hull of the ship.
+ * "Fuzoku" models are "close friends" - they make external changes to the ship.
+ * "Naka" parts don't affect the ship's appearance/have attaching animations, so don't get loaded here.
+ */
 static immut char* shapeList2[18][2] = {
-	{ "objects/ufo/ufo0705.mod", "objects/ufo/ufo0705.anm" },
-	{ "objects/ufoparts/soto1.mod", "objects/ufoparts/soto1.anm" },
-	{ "objects/ufoparts/soto2.mod", "objects/ufoparts/soto2.anm" },
-	{ "objects/ufoparts/soto3.mod", "objects/ufoparts/soto3.anm" },
-	{ "objects/ufoparts/soto4.mod", "objects/ufoparts/soto4.anm" },
-	{ "objects/ufoparts/soto5.mod", "objects/ufoparts/soto5.anm" },
-	{ "objects/ufoparts/fuzoku1.mod", "objects/ufoparts/fuzoku1.anm" },
-	{ "objects/ufoparts/fuzoku2.mod", "objects/ufoparts/fuzoku2.anm" },
-	{ "objects/ufoparts/fuzoku3.mod", "objects/ufoparts/fuzoku3.anm" },
-	{ "objects/ufoparts/fuzoku4.mod", "objects/ufoparts/fuzoku4.anm" },
-	{ "objects/ufoparts/fuzoku5.mod", "objects/ufoparts/fuzoku5.anm" },
-	{ "objects/ufoparts/fuzoku6.mod", "objects/ufoparts/fuzoku6.anm" },
-	{ "objects/ufoparts/fuzoku7.mod", "objects/ufoparts/fuzoku7.anm" },
-	{ "objects/ufoparts/fuzoku8.mod", "objects/ufoparts/fuzoku8.anm" },
-	{ "objects/ufoparts/fuzoku9.mod", "objects/ufoparts/fuzoku9.anm" },
-	{ "objects/ufoparts/fuzoku10.mod", "objects/ufoparts/fuzoku10.anm" },
-	{ "objects/ufoparts/fuzoku11.mod", "objects/ufoparts/fuzoku11.anm" },
+	{ "objects/ufo/ufo0705.mod", "objects/ufo/ufo0705.anm" },             ///< base Dolphin model and animation set.
+	{ "objects/ufoparts/soto1.mod", "objects/ufoparts/soto1.anm" },       ///< Bowsprit ("outside 1").
+	{ "objects/ufoparts/soto2.mod", "objects/ufoparts/soto2.anm" },       ///< Gluon Drive ("outside 2").
+	{ "objects/ufoparts/soto3.mod", "objects/ufoparts/soto3.anm" },       ///< Anti-Dioxin Filter ("outside 3").
+	{ "objects/ufoparts/soto4.mod", "objects/ufoparts/soto4.anm" },       ///< Eternal Fuel Dynamo ("outside 4").
+	{ "objects/ufoparts/soto5.mod", "objects/ufoparts/soto5.anm" },       ///< Main Engine ("outside 5").
+	{ "objects/ufoparts/fuzoku1.mod", "objects/ufoparts/fuzoku1.anm" },   ///< Whimsical Radar ("close friend 1").
+	{ "objects/ufoparts/fuzoku2.mod", "objects/ufoparts/fuzoku2.anm" },   ///< Interstellar Radio ("close friend 2").
+	{ "objects/ufoparts/fuzoku3.mod", "objects/ufoparts/fuzoku3.anm" },   ///< Guard Satellite ("close friend 3").
+	{ "objects/ufoparts/fuzoku4.mod", "objects/ufoparts/fuzoku4.anm" },   ///< Chronos Reactor ("close friend 4").
+	{ "objects/ufoparts/fuzoku5.mod", "objects/ufoparts/fuzoku5.anm" },   ///< Radiation Canopy ("close friend 5").
+	{ "objects/ufoparts/fuzoku6.mod", "objects/ufoparts/fuzoku6.anm" },   ///< Geiger Counter ("close friend 6").
+	{ "objects/ufoparts/fuzoku7.mod", "objects/ufoparts/fuzoku7.anm" },   ///< Sagittarius ("close friend 7").
+	{ "objects/ufoparts/fuzoku8.mod", "objects/ufoparts/fuzoku8.anm" },   ///< Libra ("close friend 8").
+	{ "objects/ufoparts/fuzoku9.mod", "objects/ufoparts/fuzoku9.anm" },   ///< Omega Stabilizer ("close friend 9").
+	{ "objects/ufoparts/fuzoku10.mod", "objects/ufoparts/fuzoku10.anm" }, ///< Ionium Jet #1 ("close friend 10").
+	{ "objects/ufoparts/fuzoku11.mod", "objects/ufoparts/fuzoku11.anm" }, ///< Ionium Jet #2 ("close friend 11").
 	{ nullptr, nullptr },
 };
 
+/// Archive-Directory pairs for various object types, to load into the system file list.
 static immut char* arambundleList[][2] = {
 	{ "archives/tekis.dir", "dataDir/archives/tekis.arc" },
 	{ "archives/bosses.dir", "dataDir/archives/bosses.arc" },
@@ -86,7 +105,9 @@ static immut char* arambundleList[][2] = {
 };
 
 /**
- * @todo: Documentation
+ * @brief Loads arc/dir file pairs and model/animation pairs to populate the system file lists.
+ *
+ * @warning NON-MATCHING! Functionally equivalent.
  */
 void GameSetupSection::preCacheShapes()
 {
@@ -100,11 +121,13 @@ void GameSetupSection::preCacheShapes()
 	gsys->mAramRoot.initCore("");
 	gsys->mFileList = (DirEntry*)&gsys->mAramRoot;
 
+	// load in all the arc/dir file pairs to cache in the file list.
 	immut char** bundlePair;
 	for (bundlePair = arambundleList[0]; bundlePair[0]; bundlePair += 2) {
 		gsys->parseArchiveDirectory(bundlePair[0], bundlePair[1]);
 	}
 
+	// Colin: "lemme yell at you real quick"
 	BOOL print         = gsys->mTogglePrint;
 	gsys->mTogglePrint = TRUE;
 #if defined(VERSION_G98E01_PIKIDEMO)
@@ -118,194 +141,95 @@ void GameSetupSection::preCacheShapes()
 	_Print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
 	_Print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
 #endif
-	gsys->mTogglePrint = print;
+	gsys->mTogglePrint = print; // "back to regularly scheduled programming"
 
+	// load in pikmin models/anims (and some seemingly unused pellet ones)
 	for (bundlePair = shapeList[0]; bundlePair[0]; bundlePair += 2) {
 		Shape* shape = gameflow.loadShape(bundlePair[0], true);
 		if (bundlePair[1]) {
 			gsys->mCurrentShape = shape;
-			gsys->loadBundle(bundlePair[1], false);
+			gsys->loadBundle(bundlePair[1], false); // don't load as cache texture
 		}
 	}
 
+	// load in model/anim pairs for ship (and ship parts that modify they ship)
 	for (bundlePair = shapeList2[0]; bundlePair[0]; bundlePair += 2) {
 		Shape* shape = gameflow.loadShape(bundlePair[0], true);
 		if (bundlePair[1]) {
 			gsys->mCurrentShape = shape;
-			gsys->loadBundle(bundlePair[1], false);
+			gsys->loadBundle(bundlePair[1], false); // don't load as cache texture
 		}
 	}
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r3, 0x802A
-	  stw       r0, 0x4(r1)
-	  subi      r0, r13, 0x73C8
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  addi      r31, r3, 0x69A8
-	  li        r3, 0
-	  stw       r30, 0x28(r1)
-	  stw       r29, 0x24(r1)
-	  addi      r29, r31, 0x9D4
-	  lwz       r6, 0x2DEC(r13)
-	  addi      r5, r6, 0x31C
-	  lwz       r4, 0x320(r6)
-	  lwz       r7, 0x320(r6)
-	  addi      r8, r6, 0x310
-	  lwz       r6, 0x31C(r6)
-	  lwz       r5, 0x8(r5)
-	  add       r5, r6, r5
-	  stw       r4, 0x0(r8)
-	  sub       r4, r5, r7
-	  stw       r4, 0x8(r8)
-	  lwz       r4, 0x0(r8)
-	  stw       r4, 0x4(r8)
-	  lwz       r5, 0x2DEC(r13)
-	  addi      r4, r5, 0x310
-	  stw       r4, 0x328(r5)
-	  lwz       r4, 0x2DEC(r13)
-	  addi      r4, r4, 0x214
-	  stw       r3, 0x10(r4)
-	  stw       r3, 0xC(r4)
-	  stw       r3, 0x8(r4)
-	  stw       r0, 0x4(r4)
-	  lwz       r3, 0x2DEC(r13)
-	  addi      r0, r3, 0x214
-	  stw       r0, 0x228(r3)
-	  b         .loc_0xB0
-
-	.loc_0x94:
-	  lwz       r3, 0x2DEC(r13)
-	  lwz       r5, 0x4(r29)
-	  lwz       r12, 0x1A0(r3)
-	  lwz       r12, 0x24(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r29, r29, 0x8
-
-	.loc_0xB0:
-	  lwz       r4, 0x0(r29)
-	  cmplwi    r4, 0
-	  bne+      .loc_0x94
-	  lwz       r4, 0x2DEC(r13)
-	  lis       r3, 0x803A
-	  lwzu      r5, 0x1C(r4)
-	  li        r0, 0x1
-	  subi      r30, r3, 0x2848
-	  stw       r0, 0x0(r4)
-	  addi      r29, r31, 0x174
-	  lwz       r3, 0x2DEC(r13)
-	  stw       r5, 0x1C(r3)
-	  b         .loc_0x118
-
-	.loc_0xE4:
-	  addi      r3, r30, 0
-	  li        r5, 0x1
-	  bl        -0x1F10
-	  lwz       r0, 0x4(r29)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x114
-	  lwz       r4, 0x2DEC(r13)
-	  li        r5, 0
-	  stw       r3, 0x1FC(r4)
-	  lwz       r3, 0x2DEC(r13)
-	  lwz       r4, 0x4(r29)
-	  bl        -0x14E70
-
-	.loc_0x114:
-	  addi      r29, r29, 0x8
-
-	.loc_0x118:
-	  lwz       r4, 0x0(r29)
-	  cmplwi    r4, 0
-	  bne+      .loc_0xE4
-	  lis       r3, 0x803A
-	  addi      r30, r31, 0x5CC
-	  subi      r31, r3, 0x2848
-	  b         .loc_0x168
-
-	.loc_0x134:
-	  addi      r3, r31, 0
-	  li        r5, 0x1
-	  bl        -0x1F60
-	  lwz       r0, 0x4(r30)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x164
-	  lwz       r4, 0x2DEC(r13)
-	  li        r5, 0
-	  stw       r3, 0x1FC(r4)
-	  lwz       r3, 0x2DEC(r13)
-	  lwz       r4, 0x4(r30)
-	  bl        -0x14EC0
-
-	.loc_0x164:
-	  addi      r30, r30, 0x8
-
-	.loc_0x168:
-	  lwz       r4, 0x0(r30)
-	  cmplwi    r4, 0
-	  bne+      .loc_0x134
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  lwz       r30, 0x28(r1)
-	  lwz       r29, 0x24(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /**
- * @todo: Documentation
+ * @brief Constructs the single-player setup section to initialise before gameplay.
  */
 GameSetupSection::GameSetupSection()
 {
 	Node::init("<GameSetupSection>");
+
+	// set heap to grow down
 	AyuHeap* heap = gsys->getHeap(SYSHEAP_App);
 	int allocType = heap->setAllocType(AYU_STACK_GROW_DOWN);
 
+	// set up memory monitor before anything else
 	memStat = new MemStat();
 
 	memStat->start("setup");
 
+	// initialise basic game flow parameters
 	gameflow.mPlayState.Initialise();
 	gameflow.mWorldClock.mCurrentDay = 1;
-	flowCont.mClearStatePikiCount    = 0;
-	flowCont._254                    = 0;
-	flowCont._258                    = 0;
-	flowCont.mNaviSeedCount          = 0;
-	flowCont._250                    = 0;
+	flowCont.mClearStatePikiCount    = 0; // basically unused
+	flowCont._254                    = 0; // unused
+	flowCont._258                    = 0; // unused
+	flowCont.mNaviSeedCount          = 0; // basically unused
+	flowCont._250                    = 0; // unused
+
+	// load all stages
 	flowCont.readMapList("stages/stages.ini");
 	flowCont.mEndingType = ENDING_None;
+
+	// cache info on some important arc/dir and model/anim pairs
 	preCacheShapes();
 
+	// set up the generator cache, to store generator info between days
 	memStat->start("genCache");
 	generatorCache = new GeneratorCache();
 	generatorCache->initGame();
 	memStat->end("genCache");
 
+	// set up player info, to track player-induced changes
 	memStat->start("playerInfo");
 	playerState = new PlayerState();
 	playerState->initGame();
 	memStat->end("playerInfo");
 
+	// set up input recording (!!)
 	kio = new KIO();
 	kio->initialise();
-	int saveSize     = Kontroller::getSaveSize(3000);
+	int saveSize     = Kontroller::getSaveSize(CONTROLLER_INPUT_BUFFER_SIZE / 12);
 	void* saveBuffer = new (0x20) u8[saveSize];
 	controllerBuffer = new RamStream(saveBuffer, saveSize);
 
+	// load pikmin head and whistle models
 	GlobalShape::init();
 
 	memStat->end("setup");
 	heap->setAllocType(allocType);
+
+	// remove any buffered pikmin information
 	pikiInfMgr.clear();
+
+	// initialise the play state (to then load/save from/to memory card)
 	gameflow.mPlayState.Initialise();
 }
 
 /**
- * @todo: Documentation
+ * @brief Performs any frame-by-frame required setup of single-player game state, then transits to card select.
+ *
+ * Demo version uses this to force setup of Forest of Hope challenge mode stage, other versions just transit straight to card select.
  */
 void GameSetupSection::update()
 {
@@ -345,11 +269,15 @@ void GameSetupSection::update()
 		}
 		stage = (StageInfo*)stage->mNext;
 	}
+
+	// force transit to new subsection
 	gsys->softReset();
 #else
 	PRINT("reset!\n");
 	// queue up card select as the next section (either for story mode or challenge mode, doesn't matter)
 	gameflow.mNextOnePlayerSectionID = ONEPLAYER_CardSelect;
+
+	// force transit to new subsection
 	gsys->softReset();
 #endif
 }

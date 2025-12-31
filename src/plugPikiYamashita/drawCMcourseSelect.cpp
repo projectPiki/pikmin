@@ -217,7 +217,7 @@ zen::DrawCMcourseSelect::DrawCMcourseSelect()
 	_90 = 0;
 	P2DPaneLibrary::setFamilyAlpha(_8C, _90);
 	mMode        = MODE_Unk0;
-	mReturnState = RETSTATE_UnkN3;
+	mReturnState = Inactive;
 
 	mMenu = new DrawCMCSmenu("screen/blo/cha_map.blo");
 
@@ -233,7 +233,7 @@ void zen::DrawCMcourseSelect::start()
 {
 	mMode = MODE_Unk1;
 	mEffectMgr2D->killAll(true);
-	mReturnState = RETSTATE_UnkN1;
+	mReturnState = Continue;
 	mTitleObj.appear(2.5f);
 	mMenu->hide();
 	mScoreMgr.hide();
@@ -338,8 +338,10 @@ bool zen::DrawCMcourseSelect::modeOperation(Controller* controller)
 	if (res) {
 		int sel = mMenu->getSelectNo();
 		if (sel == DrawMenuBase::SELECT_CANCEL) {
-			mReturnState = RETSTATE_UnkN2;
+			// signal to exit back out of this selection screen
+			mReturnState = Exit;
 		} else {
+			// we selected a course, return the stage ID
 			mReturnState = (returnStatusFlag)sel;
 		}
 		res = true; // this is... already true if we're here.

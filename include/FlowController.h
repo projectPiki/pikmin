@@ -17,13 +17,21 @@ enum EndingType {
 };
 
 /**
- * @brief Flags for controlling when gameplay is forced to end.
+ * @brief Flags for controlling when gameplay is forced to end. Used by FlowController.
  */
 enum GameEndFlag {
 	GAMEEND_None             = 0, ///< 0, default reason, no other specific handling required.
 	GAMEEND_PikminExtinction = 1, ///< 1, you killed all your pikmin!
 	GAMEEND_NaviDown         = 2, ///< 2, your captain has no health!
 	GAMEEND_Clear            = 3, ///< 3, unused navi "clear" state results in this. Never handled.
+};
+
+/**
+ * @brief Possible reasons to end gameplay. Used when passing messages.
+ */
+enum GameEndCause {
+	ENDCAUSE_PikminZero = 0, ///< 1, you killed all your pikmin!
+	ENDCAUSE_NaviDown   = 1, ///< 2, your captain has no health!
 };
 
 /**

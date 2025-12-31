@@ -1114,7 +1114,7 @@ void PlayerState::getUfoParts(u32 partID, bool isInvisiblePart)
 		PRINT_GLOBAL("--- perfect 5");
 	} else if (mCurrParts >= AIConstant::_instance->mConstants._174()) {
 		gameflow.mPlayState.openStage(4);
-		playerState->mResultFlags.setSeen(RESFLAG_Collect15Parts);
+		playerState->mResultFlags.setSeen(zen::RESFLAG_Collect15Parts);
 		for (int i = 0; i < 10; i++) {
 			PRINT("OPEN STAGE 4 ***\n");
 		}
@@ -1122,14 +1122,14 @@ void PlayerState::getUfoParts(u32 partID, bool isInvisiblePart)
 		PRINT_GLOBAL("--- level 4");
 	} else if (mCurrParts >= AIConstant::_instance->mConstants._164()) {
 		gameflow.mPlayState.openStage(3);
-		playerState->mResultFlags.setOn(RESFLAG_UnlockYakushima);
+		playerState->mResultFlags.setOn(zen::RESFLAG_UnlockYakushima);
 		for (int i = 0; i < 10; i++) {
 			PRINT("OPEN STAGE 3 ***\n");
 		}
 		mShipUpgradeLevel = 3;
 		PRINT_GLOBAL("--- level 3");
 	} else if (mCurrParts >= AIConstant::_instance->mConstants._154()) {
-		playerState->mResultFlags.setOn(RESFLAG_UnlockCave);
+		playerState->mResultFlags.setOn(zen::RESFLAG_UnlockCave);
 		gameflow.mPlayState.openStage(2);
 		for (int i = 0; i < 10; i++) {
 			PRINT("OPEN STAGE 2 ***\n");
@@ -1152,11 +1152,11 @@ void PlayerState::getUfoParts(u32 partID, bool isInvisiblePart)
 	}
 
 	if (mCurrParts >= 15) {
-		playerState->mResultFlags.setOn(RESFLAG_Collect15Parts);
+		playerState->mResultFlags.setOn(zen::RESFLAG_Collect15Parts);
 	}
 
 	if (mCurrParts >= 11 && gameflow.mWorldClock.mCurrentDay - 1 >= 9) {
-		playerState->mResultFlags.setOn(RESFLAG_Collect10Parts);
+		playerState->mResultFlags.setOn(zen::RESFLAG_Collect10Parts);
 	}
 
 	if (!isInvisiblePart) {
@@ -1170,12 +1170,12 @@ void PlayerState::getUfoParts(u32 partID, bool isInvisiblePart)
 	}
 
 	if (mCurrParts == 29) {
-		playerState->mResultFlags.setOn(RESFLAG_Collect29Parts);
-		playerState->mResultFlags.setSeen(RESFLAG_Collect25Parts);
-		playerState->mResultFlags.setSeen(RESFLAG_Collect15Parts);
+		playerState->mResultFlags.setOn(zen::RESFLAG_Collect29Parts);
+		playerState->mResultFlags.setSeen(zen::RESFLAG_Collect25Parts);
+		playerState->mResultFlags.setSeen(zen::RESFLAG_Collect15Parts);
 	} else if (mCurrParts == 25) {
-		playerState->mResultFlags.setOn(RESFLAG_Collect25Parts);
-		playerState->mResultFlags.setSeen(RESFLAG_Collect15Parts);
+		playerState->mResultFlags.setOn(zen::RESFLAG_Collect25Parts);
+		playerState->mResultFlags.setSeen(zen::RESFLAG_Collect15Parts);
 	}
 
 	STACK_PAD_TERNARY(mCurrParts, 1);
@@ -1218,7 +1218,7 @@ void PlayerState::preloadHenkaMovie()
 	int movies[5] = { DEMOID_ShipUpgradePractice, DEMOID_ShipUpgradeForest, DEMOID_ShipUpgradeCave, DEMOID_ShipUpgradeYakushima,
 		              DEMOID_ShipUpgradeLast };
 	if (level != mShipUpgradeLevel) {
-		gameflow.mGameInterface->movie(movies[level - 1], 0, nullptr, nullptr, nullptr, -1, true);
+		gameflow.mGameInterface->movie(movies[level - 1], 0, nullptr, nullptr, nullptr, CAF_AllVisibleMask, true);
 	}
 }
 

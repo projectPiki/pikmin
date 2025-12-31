@@ -24,45 +24,47 @@ struct ogScrPauseMgr {
 	 * @brief TODO
 	 */
 	enum PauseStatus {
-		PAUSE_NULL = -1,
-		PAUSE_Unk0 = 0,
-		PAUSE_Unk1 = 1,
-		PAUSE_Unk2 = 2,
-		PAUSE_Unk3 = 3,
-		PAUSE_Unk4 = 4,
-		PAUSE_Unk5 = 5,
-		PAUSE_Unk6 = 6,
-		PAUSE_Unk7 = 7,
+		PAUSE_NULL            = -1,
+		PAUSE_Active          = 0,
+		PAUSE_FadeIn          = 1,
+		PAUSE_FadeOut         = 2,
+		PAUSE_SunsetSubmenu   = 3,
+		PAUSE_QuitGameSubmenu = 4,
+		PAUSE_ExitToGameplay  = 5,
+		PAUSE_ExitToSunset    = 6,
+		PAUSE_ExitToTitle     = 7,
+
+		PAUSE_EXIT_CODE = PAUSE_ExitToGameplay,
 	};
 
 	ogScrPauseMgr();
 
-	void start(bool);
-	PauseStatus update(Controller*);
-	void draw(Graphics&);
+	void start(bool isChallengeMode);
+	PauseStatus update(Controller* controller);
+	void draw(Graphics& gfx);
 
-	bool _00;                // _00, unknown
-	PauseStatus mState;      // _04
-	PauseStatus mState2;     // _08
-	DrawMenu* mDrawMenu1;    // _0c
-	DrawMenu* mDrawMenu2;    // _10
-	P2DScreen* _14;          // _14
-	P2DScreen* _18;          // _18
-	P2DScreen* mBlackScreen; // _1c, black.blo
-	P2DPicture* mBlackPane;  // _20
-	P2DTextBox* mTextBox1;   // _24
-	P2DTextBox* mTextBox2;   // _28
-	P2DTextBox* mTextBox3;   // _2c
-	P2DTextBox* mTextBox4;   // _30
-	P2DTextBox* mTextBox5;   // _34
-	P2DTextBox* mTextBox6;   // _38
-	char* _3C;               // _3c, unknown
-	char* _40;               // _40, unknown
-	bool mIsChallengeMode;   // _44
-	P2DPicture* mBackPane1;  // _48
-	P2DPicture* mBackPane2;  // _4c
-	f32 mFrameTimer;         // _50
-	u8 _54;                  // _54, unknown
+	bool mIsActive;                        // _00, unknown
+	PauseStatus mState;                    // _04
+	PauseStatus mPendingExitState;         // _08
+	DrawMenu* mMainMenu;                   // _0c
+	DrawMenu* mSubMenu;                    // _10
+	P2DScreen* mMainMenuScreen;            // _14
+	P2DScreen* mSubMenuScreen;             // _18
+	P2DScreen* mParentScreen;              // _1c, black.blo
+	P2DPicture* mGameplayFilterPic;        // _20, creates filter over gameplay using a half-opaque big black screen
+	P2DTextBox* mQuitChalModeSubTextBox;   // _24
+	P2DTextBox* mContLastSaveSubTextBox;   // _28
+	P2DTextBox* mGoToSunsetSubTextBox;     // _2c
+	P2DTextBox* mQuitChalModeMainTextBox;  // _30
+	P2DTextBox* mContLastSaveMainTextBox1; // _34
+	P2DTextBox* mContLastSaveMainTextBox2; // _38
+	char* mChalModeQuitText;               // _3c, unknown
+	char* mStoryModeQuitText;              // _40, unknown
+	bool mIsChallengeMode;                 // _44
+	P2DPicture* mMainMenuBackFrame;        // _48
+	P2DPicture* mSubMenuBackFrame;         // _4c
+	f32 mFrameTimer;                       // _50
+	u8 mFadeAlpha;                         // _54, unknown
 };
 
 } // namespace zen

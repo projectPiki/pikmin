@@ -36,7 +36,7 @@ enum StageID {
 	STAGE_ChalCave      = STAGE_Cave,      // Challenge Mode Forest Navel
 	STAGE_ChalYakushima = STAGE_Yakushima, // Challenge Mode Distant Spring
 	STAGE_ChalLast      = STAGE_Last,      // Challenge Mode Final Trial
-	STAGE_ChalINVALID   = 7,               // Invalid challenge mode option.
+	STAGE_CHALINVALID   = 7,               // Invalid challenge mode option.
 
 	STAGE_CHALSTART = STAGE_START, // first valid challenge mode level ID
 	STAGE_CHALCOUNT = STAGE_COUNT, // number of challenge mode levels

@@ -20,14 +20,54 @@ static vu32 now_loading;  // type
 static volatile BOOL first_load;
 static BOOL chgmode;
 
-static u32 current_scene                      = SCENE_NULL;
-static u32 current_stage                      = -1;
-static u32 current_prepare                    = -1;
-static u16 stream_level                       = 8000;
-static u16 stream_se_level                    = 8000;
-static int tbl_scene_to_bgm[SCENE_COUNT]      = { 0, 7, 18, 12, 0, 1, 0, 0, 0, 8, 19, 0, 0, 0 };
-static int tbl_scene_to_fadetime[SCENE_COUNT] = { 0, 60, 15, 120, 10, 25, 10, 10, 10, 10, 25, 0, 0, 0 };
-static int tbl_stage_to_bgm[STAGE_COUNT]      = { 4, 5, 10, 9, 17 };
+static u32 current_scene   = SCENE_NULL;
+static u32 current_stage   = -1;
+static u32 current_prepare = -1;
+static u16 stream_level    = 8000;
+static u16 stream_se_level = 8000;
+
+static int tbl_scene_to_bgm[SCENE_COUNT] = {
+	BGM_PikiSE,   // SCENE_BootUp
+	BGM_Jungle,   // SCENE_Title
+	BGM_Select,   // SCENE_FileSelect
+	BGM_Map,      // SCENE_WorldMap
+	BGM_PikiSE,   // unused
+	BGM_SysEvent, // SCENE_Course
+	BGM_PikiSE,   // SCENE_Results
+	BGM_PikiSE,   // unused
+	BGM_PikiSE,   // unused
+	BGM_Dummy8,   // unused
+	BGM_Char,     // SCENE_ChalSelect
+	BGM_PikiSE,   // SCENE_Intro
+	BGM_PikiSE,   // unused
+	BGM_PikiSE,   // SCENE_Exit
+};
+
+static int tbl_scene_to_fadetime[SCENE_COUNT] = {
+	0,   // SCENE_BootUp
+	60,  // SCENE_Title
+	15,  // SCENE_FileSelect
+	120, // SCENE_WorldMap
+	10,  // unused
+	25,  // SCENE_Course
+	10,  // SCENE_Results
+	10,  // unused
+	10,  // unused
+	10,  // unused
+	25,  // SCENE_ChalSelect
+	0,   // SCENE_Intro
+	0,   // unused
+	0,   // SCENE_Exit
+};
+
+static int tbl_stage_to_bgm[STAGE_COUNT] = {
+	BGM_Tutorial,  // STAGE_Practice (Impact Site)
+	BGM_Play3,     // STAGE_Forest (Forest of Hope)
+	BGM_Cave,      // STAGE_Cave (Forest Navel)
+	BGM_Yakushima, // STAGE_Yakushima (Distant Spring)
+	BGM_Flow,      // STAGE_Last (Final Trial)
+};
+
 char filelist[][32] = { "piki.stx",    "o_dead.stx",  "d_end1.stx",    "gyoku.stx",    "d_end3.stx",   "fanf5.stx",   "badend0.stx",
 	                    "badend1.stx", "opening.stx", "happyend1.stx", "compend1.stx", "compend0.stx", "badend2.stx", "onion.stx" };
 
@@ -87,7 +127,11 @@ BOOL Jac_TellChgMode()
 }
 
 /**
- * @TODO: Documentation
+ * @brief Sets up the audio environment to start playing a music track.
+ *
+ * @param sceneID Scene type to set up for - see `JacSceneID` enum.
+ * @param stage Stage for `SCENE_Course` (see `StageID` enum) - also used as type of results screen for `SCENE_Results` (see
+ * `JacResultsType` enum). Value irrelevant for everything else.
  */
 void Jac_SceneSetup(u32 sceneID, u32 stage)
 {
@@ -105,30 +149,30 @@ void Jac_SceneSetup(u32 sceneID, u32 stage)
 
 	if (first_load == FALSE) {
 		while (first_load == FALSE) {
-			if (sceneID == SCENE_Unk1) {
+			if (sceneID == SCENE_Title) {
 				break;
 			}
-			if (sceneID == SCENE_Unk0) {
+			if (sceneID == SCENE_BootUp) {
 				break;
 			}
 		}
 	}
 
-	if (sceneID == SCENE_Unk10) {
+	if (sceneID == SCENE_ChalSelect) {
 		chgmode = 1;
 	}
 
-	if (sceneID == SCENE_Unk3) {
+	if (sceneID == SCENE_WorldMap) {
 		WaveScene_Close(13, 0);
 		Jac_DemoSceneInit();
 		chgmode = 0;
 	}
 
-	if (sceneID == SCENE_Unk1) {
+	if (sceneID == SCENE_Title) {
 		chgmode = 0;
 	}
 
-	if ((current_scene == SCENE_Unk5) || (sceneID == SCENE_Unk5)) {
+	if ((current_scene == SCENE_Course) || (sceneID == SCENE_Course)) {
 		Jac_InitAllEvent();
 		Jac_Piki_Number(0);
 		Jac_UpdatePikiGaya();
@@ -144,12 +188,12 @@ void Jac_SceneSetup(u32 sceneID, u32 stage)
 	Jac_StopSystemSe(JACSYS_MenuScroll);
 	Jac_UnPauseOrimaSe();
 
-	if (current_scene == SCENE_Unk6) {
+	if (current_scene == SCENE_Results) {
 		Jac_DemoBGMForceStop();
 	}
 
 	if (current_scene == SCENE_NULL) {
-		bgm = 0;
+		bgm = BGM_PikiSE;
 	} else {
 		bgm = tbl_scene_to_bgm[current_scene];
 	}
@@ -157,12 +201,13 @@ void Jac_SceneSetup(u32 sceneID, u32 stage)
 	current_scene = sceneID;
 	current_stage = stage;
 	bgm2          = tbl_scene_to_bgm[sceneID];
-	if (sceneID == SCENE_Unk6) {
+	if (sceneID == SCENE_Results) {
+		// interpret stage as results type
 		if (chgmode != 0) {
-			bgm2 = 0x14;
+			bgm2 = BGM_ChalResult;
 		}
-		if (stage == 1) {
-			bgm2 = 0x15;
+		if (stage == JACRES_FinalResult) {
+			bgm2 = BGM_FinalResult;
 		}
 	}
 
@@ -171,13 +216,13 @@ void Jac_SceneSetup(u32 sceneID, u32 stage)
 		Jac_StopBgm(0);
 		Jac_StopBgm(1);
 		same = FALSE;
-		if ((bgm2 == 1) && (current_bgm == tbl_stage_to_bgm[stage])) {
+		if ((bgm2 == BGM_SysEvent) && (current_bgm == tbl_stage_to_bgm[stage])) {
 			closeScene = FALSE;
 		}
-		if (current_bgm == 0) {
+		if (current_bgm == BGM_PikiSE) {
 			closeScene = FALSE;
 		}
-		if (bgm2 == 0) {
+		if (bgm2 == BGM_PikiSE) {
 			closeScene = FALSE;
 		}
 		if (closeScene) {
@@ -192,9 +237,9 @@ void Jac_SceneSetup(u32 sceneID, u32 stage)
 	closeScene = FALSE;
 
 	switch (bgm2) {
-	case 0:
+	case BGM_PikiSE:
 		break;
-	case 1:
+	case BGM_SysEvent:
 		bgm2 = tbl_stage_to_bgm[stage];
 		if (stage) {
 			closeScene = TRUE;
@@ -227,14 +272,14 @@ void Jac_SceneSetup(u32 sceneID, u32 stage)
 	}
 
 	if (closeScene) {
-		if (stage == 4) {
-			WaveScene_Close(0xb, 0);
-			WaveScene_Set(0x10, 0);
-			Jac_PlayBgm(1, 0x10);
+		if (stage == STAGE_Last) {
+			WaveScene_Close(BGM_Boss2, 0);
+			WaveScene_Set(BGM_Boss3, 0);
+			Jac_PlayBgm(1, BGM_Boss3);
 		} else {
-			WaveScene_Close(0x10, 0);
-			WaveScene_Set(0xb, 0);
-			Jac_PlayBgm(1, 0xb);
+			WaveScene_Close(BGM_Boss3, 0);
+			WaveScene_Set(BGM_Boss2, 0);
+			Jac_PlayBgm(1, BGM_Boss2);
 		}
 
 		if (dvd != FALSE) {
@@ -242,33 +287,35 @@ void Jac_SceneSetup(u32 sceneID, u32 stage)
 		}
 	}
 
-	if (current_scene == SCENE_Unk1 && first == 1) {
+	if (current_scene == SCENE_Title && first == 1) {
 		first = 0;
 		WaveScene_Load(0, 1);
 		WaveScene_Load(0, 2);
 		WaveScene_Load(0, 3);
-		WaveScene_Set(0xe, 0);
-		WaveScene_Set(0xf, 0);
-		WaveScene_Set(2, 0);
+		WaveScene_Set(BGM_Dummy14, 0);
+		WaveScene_Set(BGM_Dummy15, 0);
+		WaveScene_Set(BGM_Dummy2, 0);
 		DVDT_CheckPass(0x20000, 0, __Loaded);
 	}
 
-	if (sceneID == SCENE_Unk0) {
+	// decide on which PIKMIN sound effect to play over the Nintendo logo
+	if (sceneID == SCENE_BootUp) {
 		do {
 			bgm = Jac_CheckBootOk();
-		} while (bgm == 0);
+		} while (bgm == BGM_PikiSE);
 
+		// which sound effect we play is based on the current time tick
 		tick = OSGetTick();
 		if ((tick >> 2 & 0x1f) == 0x1f) {
 			if ((tick >> 2 & 0x3f) == 0x3f) {
-				Jac_PlayOrimaSe(JACORIMA_Unk8015);
+				Jac_PlayOrimaSe(JACORIMA_Unk8015); // hmmmm or yaaaay (1.5625% chance)
 			} else {
-				Jac_PlayOrimaSe(JACORIMA_Unk8016);
+				Jac_PlayOrimaSe(JACORIMA_Unk8016); // hmmmm or yaaaay (1.5625% chance)
 			}
 		} else if ((tick >> 2 & 0x7f) == 0x7e) {
-			Jac_PlayOrimaSe(JACORIMA_Unk8017);
+			Jac_PlayOrimaSe(JACORIMA_Unk8017); // WEEEOUEUGH (0.78125% chance)
 		} else {
-			Jac_PlayOrimaSe(JACORIMA_Unk800C);
+			Jac_PlayOrimaSe(JACORIMA_Unk800C); // PIIIKMIIIIN (96.09375% chance)
 		}
 	}
 	Jac_SetProcessStatus(1);

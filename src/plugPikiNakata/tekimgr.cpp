@@ -383,19 +383,19 @@ int TekiMgr::getResultFlag(int tekiType)
 {
 	int resFlag = 0;
 	if (tekiType == TEKI_Collec) {
-		resFlag = RESFLAG_Collec;
+		resFlag = zen::RESFLAG_Collec;
 
 	} else if (tekiType == TEKI_Frow) {
-		resFlag = RESFLAG_Otimoti;
+		resFlag = zen::RESFLAG_Otimoti;
 
 	} else if (tekiType == TEKI_Shell) {
-		resFlag = RESFLAG_Shell;
+		resFlag = zen::RESFLAG_Shell;
 
 	} else if (tekiType == TEKI_Swallow) {
-		resFlag = RESFLAG_Swallow;
+		resFlag = zen::RESFLAG_Swallow;
 
 	} else if (tekiType == TEKI_Qurione) {
-		resFlag = RESFLAG_Mizinko;
+		resFlag = zen::RESFLAG_Mizinko;
 	} else {
 		PRINT("!getResultFlag:not supported type:%d\n", tekiType);
 	}

@@ -182,7 +182,7 @@ void DemoEventMgr::act(int cmd, int type)
 			case 6:
 				if (playerState->hasContainer(goalID) && GameStat::allPikis[goalID] == 0) {
 					PRINT("***** SUPPLY 1 PiKI (COLOR = %d)\n", goalID);
-					playerState->mResultFlags.setOn(RESFLAG_PikminSeedStageUp);
+					playerState->mResultFlags.setOn(zen::RESFLAG_PikminSeedStageUp);
 					goal->mCurrAnimId++;
 					goal->emitPiki();
 				}

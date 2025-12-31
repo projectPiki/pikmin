@@ -3,23 +3,28 @@
 
 #include "types.h"
 
+typedef enum JacResultsType {
+	JACRES_EndOfDay    = 0,
+	JACRES_FinalResult = 1,
+} JacResultsType;
+
 typedef enum JacSceneID {
-	SCENE_NULL  = -1,
-	SCENE_Unk0  = 0,
-	SCENE_Unk1  = 1,
-	SCENE_Unk2  = 2,
-	SCENE_Unk3  = 3,
-	SCENE_Unk4  = 4,
-	SCENE_Unk5  = 5,
-	SCENE_Unk6  = 6,
-	SCENE_Unk7  = 7,
-	SCENE_Unk8  = 8,
-	SCENE_Unk9  = 9,
-	SCENE_Unk10 = 10,
-	SCENE_Unk11 = 11,
-	SCENE_Unk12 = 12,
-	SCENE_Unk13 = 13,
-	SCENE_COUNT,
+	SCENE_NULL       = -1,
+	SCENE_BootUp     = 0,  // nintendo/boot-up
+	SCENE_Title      = 1,  // title screen
+	SCENE_FileSelect = 2,  // file select
+	SCENE_WorldMap   = 3,  // story mode map select
+	SCENE_Unk4       = 4,  // unused
+	SCENE_Course     = 5,  // stage-specific track
+	SCENE_Results    = 6,  // results (either final or challenge mode)
+	SCENE_Unk7       = 7,  // unused
+	SCENE_Unk8       = 8,  // unused
+	SCENE_Unk9       = 9,  // unused
+	SCENE_ChalSelect = 10, // challenge mode map select?
+	SCENE_Intro      = 11, // intro/crash landing?
+	SCENE_Unk12      = 12, // unused
+	SCENE_Exit       = 13, // exit
+	SCENE_COUNT,           // 14
 } JacSceneID;
 
 //////////// JAUDIO PIKMIN SCENE FUNCTIONS ////////////

@@ -5,7 +5,10 @@
 #include "types.h"
 
 /**
- * @brief TODO
+ * @brief Game section for gameplay, for both challenge mode and story mode.
+ *
+ * Finer control is done by the `NewPikiGameSetupSection` node in this section's list, as well as the setup node's `GameCoreSection`
+ * dependent.
  *
  * @note Size: 0x20.
  */

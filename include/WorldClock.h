@@ -9,6 +9,9 @@
 /// Time of day to set the "Day 1" tutorial to (mostly for lighting) - 2:48pm!
 #define TUTORIAL_TIME_OF_DAY (14.8f)
 
+/// Invalid value to pass as a time, to indicate a movie's time setting/lighting should be handled instead.
+#define MOVIE_TIME (25.0f)
+
 /**
  * @brief Global managing structure for in-game-time calculations.
  *

@@ -532,7 +532,10 @@ void OgTestScreen::draw(Graphics& gfx)
 OgTestSection::OgTestSection()
 {
 	Node::init("<OgTestSection>");
+
+	// run screen test at 60 fps
 	gsys->setFrameClamp(1);
+
 	flowCont.mNaviSeedCount = 0;
 	flowCont._250           = 0;
 }

@@ -51,7 +51,7 @@ struct MovieInfo : public CoreNode {
 	u32 mMovieIndex;          // _14
 	CinematicPlayer* mPlayer; // _18
 	Matrix4f mRootTransform;  // _1C
-	u32 mMaskFlags;           // _5C
+	u32 mActorVisMask;        // _5C
 };
 
 /**
@@ -97,7 +97,7 @@ struct MoviePlayer {
 	int mCurrentFrame;                ///< _120
 	bool mIsActive;                   ///< _124
 	bool mIsPaused;                   ///< _125
-	u32 mMaskFlags;                   ///< _128
+	u32 mActorVisMask;                ///< _128
 	Vector3f mTargetViewpoint;        ///< _12C
 	Vector3f mLookAtPos;              ///< _138
 	f32 mTargetFov;                   ///< _144

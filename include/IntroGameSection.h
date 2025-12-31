@@ -5,7 +5,7 @@
 #include "types.h"
 
 /**
- * @brief TODO
+ * @brief Game section for the intro crash landing cutscene when starting a file for the first time.
  *
  * @note Size: 0x20.
  */

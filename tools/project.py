@@ -158,6 +158,7 @@ class ProjectConfig:
 
         # Project config
         self.non_matching: bool = False
+        self.develop: bool = False  # Build DEVELOP build with additional features
         self.build_rels: bool = True  # Build REL files
         self.check_sha_path: Optional[Path] = None  # Path to version.sha1
         self.config_path: Optional[Path] = None  # Path to config.yml

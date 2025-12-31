@@ -47,7 +47,7 @@ bool InteractBomb::actPiki(Piki* piki) immut
 		playerState->mDemoFlags.setFlagOnly(DEMOFLAG_FirstBombDeath);
 	}
 
-	playerState->mResultFlags.setOn(RESFLAG_PikminBombDeath);
+	playerState->mResultFlags.setOn(zen::RESFLAG_PikminBombDeath);
 
 	piki->playEventSound(mOwner, SE_PIKI_DAMAGED);
 
@@ -198,7 +198,7 @@ bool InteractFire::actPiki(Piki* piki) immut
 		return true;
 	}
 
-	playerState->mResultFlags.setOn(RESFLAG_PikminOnFire);
+	playerState->mResultFlags.setOn(zen::RESFLAG_PikminOnFire);
 	return false;
 }
 
