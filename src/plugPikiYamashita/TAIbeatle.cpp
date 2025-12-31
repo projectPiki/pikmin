@@ -392,7 +392,7 @@ public:
 		teki.setPtclGenPtr(YTeki::PTCL_Unk7, nullptr);
 
 		if (teki.isNaviWatch()) {
-			playerState->mResultFlags.setOn(RESFLAG_Beatle);
+			playerState->mResultFlags.setOn(zen::RESFLAG_Beatle);
 		}
 	}
 
@@ -751,7 +751,7 @@ public:
 			}
 		}
 
-		playerState->mResultFlags.setSeen(RESFLAG_Beatle);
+		playerState->mResultFlags.setSeen(zen::RESFLAG_Beatle);
 	}
 
 	virtual bool act(Teki& teki) // _10

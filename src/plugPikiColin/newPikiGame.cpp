@@ -3,6 +3,7 @@
 #include "Controller.h"
 #include "DayMgr.h"
 #include "DebugLog.h"
+#include "FlowController.h"
 #include "Font.h"
 #include "GameCoreSection.h"
 #include "GameStat.h"
@@ -13,7 +14,6 @@
 #include "MapMgr.h"
 #include "MemStat.h"
 #include "Menu.h"
-#include "ModeState.h"
 #include "MoviePlayer.h"
 #include "NaviMgr.h"
 #include "Pcam/Camera.h"
@@ -40,215 +40,449 @@
 #include "zen/ogTotalScore.h"
 #include "zen/ogTutorial.h"
 
+//////////////////////////////////////////////////////
+//////////////// FORWARD DECLARATIONS ////////////////
+//////////////////////////////////////////////////////
+
 struct NewPikiGameSetupSection;
 
-/// New piki game section instance
+//////////////////////////////////////////////////////
+///////////////// MACROS AND DEFINES /////////////////
+//////////////////////////////////////////////////////
+
+/// Maximum number of pages a daily diary entry can have.
+#define MAX_DIARY_ENTRY_PAGES (15)
+
+/// Maximum number of each type of message for `GameMovieMessage` to shuttle.
+#define GAME_MESSAGE_LIMIT (32)
+
+/// In-game time before sunset (in hours) where you can't open the map/controls (Y) menu.
+/// (This is about 8s of real-world time, or 7.5 in-game minutes.)
+#define MAP_MENU_SUNSET_LOCKOUT (0.125f)
+
+#if defined(WIN32)
+/// Size of the "teki" heap to use for gameplay (and some cutscenes) - bigger in the DLL.
+#define TEKI_HEAP_SIZE (0xA00000)
+#else
+/// Size of the "teki" heap to use for gameplay (and some cutscenes).
+#define TEKI_HEAP_SIZE (0x280000)
+#endif
+
+/// Size of the "movie" heap to use for gameplay, cutscenes, and some menus/windows.
+#define MOVIE_HEAP_SIZE (0x40000)
+
+//////////////////////////////////////////////////////
+////////////////// STATIC INSTANCES //////////////////
+//////////////////////////////////////////////////////
+
+/// Gameplay setup instance.
 static NewPikiGameSetupSection* npgss;
 
-/// Core gameplay section instance
+/// Core gameplay handler instance.
 static GameCoreSection* gamecore;
 
 /// Current index of the Movie Player debug menu. (See `CinDemoIDs` enum)
 static int movieIndex;
 
-/// UI windows for various game states
+/// Challenge mode results screen.
 static zen::DrawCMresult* challengeWindow;
-static zen::DrawGameOver* gameoverWindow;
-static zen::DrawCountDown* countWindow;
-static zen::ogScrPauseMgr* pauseWindow;
-static zen::ogScrResultMgr* resultWindow;
-static zen::DrawFinalResult* totalWindow;
-static zen::ogScrFileChkSelMgr* memcardWindow;
 
-/// Whether menu overlay is active
+/// Game over text overlay (Olimar down! or Pikmin extinction).
+static zen::DrawGameOver* gameoverWindow;
+
+/// End of day count down number overlay.
+static zen::DrawCountDown* countWindow;
+
+/// Pause menu screen (opened with START).
+static zen::ogScrPauseMgr* pauseWindow;
+
+/// End of day results screen.
+static zen::ogScrResultMgr* resultWindow;
+
+/// Story mode final results screen.
+static zen::DrawFinalResult* totalWindow;
+
+#if defined(VERSION_G98E01_PIKIDEMO)
+#else
+/// Memory card screen (mostly for errors) - not present in the demo (no need to save).
+static zen::ogScrFileChkSelMgr* memcardWindow;
+#endif
+
+/// Whether Y menu (map etc) is active.
 static bool menuOn;
 
-/// Whether game info HUD should be displayed
+/// Whether game info HUD is initialised and toggleable.
 static bool gameInfoOn;
 
-/// Whether game info HUD is currently visible
+/// Whether game info HUD is currently visible.
 static bool gameInfoIn;
 
-/// UI windows for the main menu & tutorial
+/// Radar map/Pikmin counts/controls menu (opened with Y).
 static zen::ogScrMenuMgr* menuWindow;
+
+/// Text ("tutorial") pop-ups/overlays.
 static zen::ogScrTutorialMgr* tutorialWindow;
 
-/// Whether or not the demo has sound enabled
+/// Whether or not to play the parts discovery jingle (when walking close to them for the first time).
 static bool hasDemoSound;
 
-/// Whether or not to suppress HUD frame display
+/// Whether or not to force the HUD frame to hide, even after a text box finishes (just for final part collection).
 static bool dontShowFrame;
 
-/// Day end result documents table
-static int resultTable[16];
+#if defined(VERSION_G98E01_PIKIDEMO)
+#else
+/// Table to hold indices of today's diary entry pages - gets overwritten + reused each day end. Not present in demo (no results screen).
+static zen::EnumResult resultTable[MAX_DIARY_ENTRY_PAGES + 1];
+#endif
+
+//////////////////////////////////////////////////////
+//////////////// PRINT/ERROR DEFINES /////////////////
+//////////////////////////////////////////////////////
 
 /**
- * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(61)
 
 /**
- * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("newPikiGame");
 
+//////////////////////////////////////////////////////
+/////////////////// MOVIE MESSAGES ///////////////////
+//////////////////////////////////////////////////////
+
 /**
- * @brief TODO
+ * @brief Gameplay-specific message shuttle. Primarily used for shuttling messages into and out of cutscenes and text windows.
+ *
+ * @note Size: 0x694.
  */
 struct GameMovieInterface : public GameInterface {
+
+	/**
+	 * @brief Construct a game message shuttle.
+	 * @param section Parent setup section to attach to.
+	 */
 	GameMovieInterface(NewPikiGameSetupSection* section)
 	{
-		mMessageLimit = 32;
-		mMessageCount = 0;
-		mSection      = section;
+		mMessageLimit       = GAME_MESSAGE_LIMIT;
+		mSimpleMessageCount = 0;
+		mSetupSection       = section;
 	}
 
 	/**
-	 * @brief TODO
+	 * @brief Holds simple commands and small data to pass between cutscenes and gameplay.
+	 *
+	 * @note Size: 0x8.
 	 */
 	struct SimpleMessage {
-		int mMessageId; // _00
-		int mData;      // _04
+		int mCommand; ///< _00, command to action - see `GameMovieCommand` enum.
+		int mData;    ///< _04, any data to pass, which differs by command - documented in `GameMovieCommand` enum also.
 	};
 
 	/**
-	 * @brief TODO
+	 * @brief Holds sufficient information to start a cutscene, including the movie ID, target actor, position/rotation, and flags.
+	 *
+	 * @note Size: 0x2C.
 	 */
 	struct ComplexMessage {
+
+		/// Constructs a blank message.
 		ComplexMessage() { }
 
-		int mMovieIdx;      // _00
-		int _UNUSED04;      // _04
-		Creature* mTarget;  // _08
-		Vector3f mPosition; // _0C
-		Vector3f mRotation; // _18
-		int mFlags;         // _24
-		bool mIsPlaying;    // _28
+		int mMovieIdx;      ///< _00, index of movie to play - see `CinDemoIDs` enum.
+		int _04;            ///< _04, unknown/unused.
+		Creature* mTarget;  ///< _08, target actor for cutscene.
+		Vector3f mPosition; ///< _0C, position of world (focus) during cutscene.
+		Vector3f mRotation; ///< _18, rotation of world matrix during cutscene.
+		int mActorVisMask;  ///< _24, actor visibility mask, used for day end actors and bad ending - see `CineActorFlags` enum.
+		bool mIsPlaying;    ///< _28, whether cutscene should play on start - always `true` in practice.
 	};
 
-	virtual void message(int msgId, int data) // _08
+	/**
+	 * @brief Adds a simple (command) message to the command queue for async action.
+	 * @param cmd Command to action (see `GameMovieCommand` enum).
+	 * @param data Data to send with command (also documented in `GameMovieCommand` enum with each command).
+	 */
+	virtual void message(int cmd, int data) // _08
 	{
-		if (mMessageCount >= mMessageLimit) {
+		// don't add to queue if queue is full
+		if (mSimpleMessageCount >= mMessageLimit) {
 			return;
 		}
 
-		mMesg[mMessageCount].mMessageId = msgId;
-		mMesg[mMessageCount].mData      = data;
+		// add to queue
+		mSimpMesg[mSimpleMessageCount].mCommand = cmd;
+		mSimpMesg[mSimpleMessageCount].mData    = data;
 
-		mMessageCount++;
+		mSimpleMessageCount++;
 	}
-	virtual void movie(int id, int a1, Creature* obj, immut Vector3f* pos, immut Vector3f* dir, u32 flags, bool a2) // _0C
+
+	/**
+	 * @brief Adds a cutscene to the queue to play.
+	 *
+	 * @param movieIdx Index of movie to play - see `CinDemoIDs` enum.
+	 * @param unused Stored and passed but never used.
+	 * @param target Target actor for cutscene.
+	 * @param pos Position of world (focus) during cutscene.
+	 * @param rot Rotation of world matrix during cutscene.
+	 * @param actorVisMask Actor visibility mask (day end, bad ending) - see `CineActorFlags` enum.
+	 * @param isPlaying Whether cutscene should play when started (in reality this is always true).
+	 */
+	virtual void movie(int movieIdx, int unused, Creature* target, immut Vector3f* pos, immut Vector3f* rot, u32 actorVisMask,
+	                   bool isPlaying) // _0C
 	{
+		// don't add to the queue if we're full
 		if (mComplexMesgCount >= mMessageLimit) {
 			return;
 		}
-		mCompMesg[mComplexMesgCount].mMovieIdx = id;
-		mCompMesg[mComplexMesgCount]._UNUSED04 = a1;
-		mCompMesg[mComplexMesgCount].mTarget   = obj;
+
+		// store movie info
+		mCompMesg[mComplexMesgCount].mMovieIdx = movieIdx;
+		mCompMesg[mComplexMesgCount]._04       = unused; // passed around but never used.
+		mCompMesg[mComplexMesgCount].mTarget   = target;
 		if (!pos) {
+			// no position, make a dummy one at the map origin
 			mCompMesg[mComplexMesgCount].mPosition.set(0.0f, 0.0f, 0.0f);
 		} else {
 			mCompMesg[mComplexMesgCount].mPosition = *pos;
 		}
-		if (!dir) {
+		if (!rot) {
+			// no rotation, use default world rotation
 			mCompMesg[mComplexMesgCount].mRotation.set(0.0f, 0.0f, 0.0f);
 		} else {
-			mCompMesg[mComplexMesgCount].mRotation = *dir;
+			mCompMesg[mComplexMesgCount].mRotation = *rot;
 		}
-		mCompMesg[mComplexMesgCount].mFlags     = flags;
-		mCompMesg[mComplexMesgCount].mIsPlaying = a2;
+		mCompMesg[mComplexMesgCount].mActorVisMask = actorVisMask;
+		mCompMesg[mComplexMesgCount].mIsPlaying    = isPlaying; // this is always true. why would you start a movie paused?
 
 		mComplexMesgCount++;
 	}
-	virtual void parseMessages();        // _10
-	virtual void parse(SimpleMessage&);  // _18
-	virtual void parse(ComplexMessage&); // _1C
+
+	virtual void parseMessages();            // _10
+	virtual void parse(SimpleMessage& msg);  // _18
+	virtual void parse(ComplexMessage& msg); // _1C
 
 	// _00 = VTBL
-	NewPikiGameSetupSection* mSection; // _04
-	int mMessageLimit;                 // _08
-	SimpleMessage mMesg[32];           // _0C
-	int mMessageCount;                 // _10C
-	ComplexMessage mCompMesg[32];      // _110
-	int mComplexMesgCount;             // _690
+	NewPikiGameSetupSection* mSetupSection;       ///< _004, parent setup/controlling section.
+	int mMessageLimit;                            ///< _008, max amount of messages to hold in each queue.
+	SimpleMessage mSimpMesg[GAME_MESSAGE_LIMIT];  ///< _00C, simple message queue, for commands and small data.
+	int mSimpleMessageCount;                      ///< _10C, number of messages in simple message (command) queue.
+	ComplexMessage mCompMesg[GAME_MESSAGE_LIMIT]; ///< _110, complex message queue, for queued cutscenes.
+	int mComplexMesgCount;                        ///< _690, number of messages in commplex message (cutscene) queue.
+};
+
+//////////////////////////////////////////////////////
+//////////////// GAMEPLAY MODE STATES ////////////////
+//////////////////////////////////////////////////////
+
+/**
+ * @brief State for handling the transition between the area entry (or crash landing) cutscene, and entering gameplay.
+ *
+ * @note Size: 0xC.
+ */
+struct IntroGameModeState : public ModeState {
+
+	/**
+	 * @brief Constructs a basic intro state.
+	 * @param parent Parent setup/control section (`NewPikiGameSetupSection` in this case).
+	 */
+	IntroGameModeState(BaseGameSection* parent)
+	    : ModeState(parent)
+	{
+		mController = parent->mController;
+	}
+
+	virtual ModeState* update(u32& result); // _08
+	virtual void postRender(Graphics&);     // _0C
+
+	// _00     = VTBL
+	// _00-_08 = ModeState
+	Controller* mController; ///< _08, pointer to parent's active controller.
 };
 
 /**
- * @brief State for quitting the game and returning to menu.
+ * @brief State for handling general gameplay.
+ *
+ * @note Size: 0x10.
+ */
+struct RunningModeState : public ModeState {
+
+	/**
+	 * @brief Constructs a basic running state.
+	 * @param parent Parent setup/control section (`NewPikiGameSetupSection` in this case).
+	 */
+	RunningModeState(BaseGameSection* parent)
+	    : ModeState(parent)
+	{
+		mIsOverlayCached = false;
+		mController      = parent->mController;
+	}
+
+	virtual void postRender(Graphics&);     // _0C
+	virtual ModeState* update(u32& result); // _08
+
+	// _00     = VTBL
+	// _00-_08 = ModeState
+	bool mIsOverlayCached;   ///< _08, stores current overlay state when we open the pause or map/controls menu, so we can restore it.
+	Controller* mController; ///< _0C, pointer to parent's active controller.
+};
+
+/**
+ * @brief State for handling quitting out of gameplay, either to map screen, card select, or title.
+ *
+ * @note Size: 0x8.
  */
 struct QuittingGameModeState : public ModeState {
-	QuittingGameModeState(BaseGameSection* c)
-	    : ModeState(c)
+
+	/**
+	 * @brief Constructs a quitter state.
+	 * @param parent Parent setup/control section (`NewPikiGameSetupSection` in this case).
+	 */
+	QuittingGameModeState(BaseGameSection* parent)
+	    : ModeState(parent)
 	{
 	}
 
+	/**
+	 * @brief Updates quitter - keeps update flag at none, no transits out.
+	 * @details Actual transit out of this state is handled by `postUpdate`.
+	 * @param result Output update flag, to pass to other game flow machinery - see `ModeUpdateFlags` enum.
+	 * @return Pointer to active state for next frame - always `this`.
+	 */
 	virtual ModeState* update(u32& result) // _08
 	{
 		PRINT("quitter updating!\n");
+		// don't let anything update if we're quitting
 		result = UPDATE_NONE;
 		return this;
 	}
 
+	/**
+	 * @brief Force transits to a new game section, based on what we have queued up.
+	 */
 	virtual void postUpdate() // _10
 	{
-		// Trigger soft reset when system operations are complete
+		// force transit to next section (if we're not already)
 		if (!gsys->mSysOpPending) {
 			PRINT("sending softreset!\n");
 			gamecore->exitStage();
-			gameflow.mNextOnePlayerSectionID       = mSection->mPendingOnePlayerSectionID;
+			gameflow.mNextOnePlayerSectionID       = mParentSection->mPendingOnePlayerSectionID;
 			gameflow.mNextOnePlayerSectionOnDayEnd = ONEPLAYER_MapSelect;
-			Jac_SceneExit(SCENE_Unk13, 0);
+			Jac_SceneExit(SCENE_Exit, 0);
 			gsys->softReset();
 		}
 	}
 
-	///< 00     = VTBL
-	///< 00-_04 = ModeState
+	// _00     = VTBL
+	// _00-_08 = ModeState
 };
 
 /**
- * @brief State for displaying either of the game over states
+ * @brief State for displaying either of the game over states.
+ *
+ * In reality, this is only really used for navi down, because Olimar is dramatic
+ * - pikmin extinction gets mostly handled by the simple message system and cutscenes.
+ *
+ * @note Size: 0x14.
  */
 struct MessageModeState : public ModeState {
-	MessageModeState(BaseGameSection* c, bool flag)
-	    : ModeState(c)
+
+	/**
+	 * @brief Phases of message mode progress.
+	 */
+	enum State {
+		STATE_Starting    = 0, ///< 0, starting up - for Pikmin extinction, this is the whole state.
+		STATE_Desaturate  = 1, ///< 1, desaturates the map to greyscale (for navi down).
+		STATE_FadeOut     = 2, ///< 2, fades to black - Olimar blacked out!
+		STATE_ForceDayEnd = 3, ///< 3, force (sad) day end to begin.
+	};
+
+	/**
+	 * @brief Construct a new game over message state.
+	 *
+	 * @param parent Parent setup/control section (`NewPikiGameSetupSection` in this case).
+	 * @param isPikminZero Whether we should use the pikmin extinction timing (true) or navi down (false).
+	 */
+	MessageModeState(BaseGameSection* parent, bool isPikminZero)
+	    : ModeState(parent)
 	{
-		mMessageTimer = flag ? 5.0f : 0.5f;
+		// pikmin extinction doesn't progress through states, it just lasts 5 seconds
+		// navi down DOES progress through states, so first state should only be short
+		mStateTimer = isPikminZero ? 5.0f : 0.5f;
 	}
 
 	virtual ModeState* update(u32& result); // _08
-	virtual void postRender(Graphics& gfx)  // _0C
+
+	/**
+	 * @brief Renders the relevant game over text overlay.
+	 *
+	 * This is in postRender so it comes after other renders, and is therefore on top.
+	 *
+	 * @param gfx Graphics context for rendering.
+	 */
+	virtual void postRender(Graphics& gfx) // _0C
 	{
-		Matrix4f mtx;
+		Matrix4f orthoMtx;
 		if (gameoverWindow) {
-			gfx.setOrthogonal(mtx.mMtx, AREA_FULL_SCREEN(gfx));
+			gfx.setOrthogonal(orthoMtx.mMtx, AREA_FULL_SCREEN(gfx));
 			gameoverWindow->draw(gfx);
 		}
 	}
 
-	///< 00     = VTBL
-	///< 00-_04 = ModeState
-	f32 _UNUSED08;     ///< 08, unused
-	int mMessagePhase; ///< _0C, current phase of message sequence
-	f32 mMessageTimer; ///< _10, timer for message transitions
+	// _00     = VTBL
+	// _00-_08 = ModeState
+	u32 _08;         ///< _08, unknown/unused.
+	int mState;      ///< _0C, current state of message sequence - see `State` enum.
+	f32 mStateTimer; ///< _10, timer for message state transitions.
 };
 
 /**
- * @brief State for handling end of day sequence
+ * @brief State for handling the end of day sequence, including for the various game endings.
+ *
+ * @note Size: 0xC.
  */
 struct DayOverModeState : public ModeState {
-	DayOverModeState(BaseGameSection* c, int flag)
-	    : ModeState(c)
+
+	/**
+	 * @brief Phases that end-of-day progresses through.
+	 *
+	 * Regular day end + challenge mode only use the first 2; neutral/bad endings use the first 3; happy uses all 4.
+	 * (Last one is just for wrapping things up.)
+	 * Code calls them phases, but they're states everywhere else.
+	 */
+	enum State {
+		STATE_PhaseZero  = 0, ///< 0, initial prep and starting the pikmin marching cutscene/take off/first ending cutscene.
+		STATE_PhaseOne   = 1, ///< 1, end of day/challenge results or next ending cutscene (happy:takeoff, neutral:leaving, bad:failescape).
+		STATE_PhaseTwo   = 2, ///< 2, either quick transit to quitter, or next ending cutscene (happy:onyons, neutral:space, bad:olimin).
+		STATE_PhaseThree = 3, ///< 3, only endings - neutral/bad: quick transit to quitter; happy: space cutscene/final results.
+		STATE_PhaseFour  = 4, ///< 4, done in every situation! finish processing any logic and quit out of gameplay mode state.
+	};
+
+	/**
+	 * @brief Construct a new end of day state, optionally starting the pikmin marching back into their onions cutscene.
+	 *
+	 * @param parent Parent setup/control section (`NewPikiGameSetupSection` in this case).
+	 * @param startState State to start in - see `State` enum. STATE_PhaseZero will play the pikmin marching cutscene,
+	 * STATE_EndOfDayResults won't.
+	 */
+	DayOverModeState(BaseGameSection* parent, int startState)
+	    : ModeState(parent)
 	{
 		flowCont.mIsDayEndSeqStarted = TRUE;
+
+		// this actually does nothing
 		gamecore->startContainerDemo();
+
+		// force clock to end of day time
 		gameflow.mWorldClock.setTime(gameflow.mParameters->mEndHour());
+
+		// hide the HUD
 		gamecore->mDrawGameInfo->upperFrameOut(0.5f, true);
 		gamecore->mDrawGameInfo->lowerFrameOut(0.5f, true);
 
-		if (flag == 0) {
+		if (startState == STATE_PhaseZero) {
 #if defined(VERSION_GPIP01_00)
 			OSReport("!!!!!!!!!!!!!! CLEANUPDAYEND!!!!\n");
 			OSReport("!!!!!!!!!!!!!! CLEANUPDAYEND!!!!\n");
@@ -259,32 +493,45 @@ struct DayOverModeState : public ModeState {
 #else
 			PRINT("CLEANUPDAYEND!!!!\n");
 #endif
+
+			// you heard the man, clean up day end!
 			gamecore->cleanupDayEnd();
 
-			// Play day end cutscene if not last day and haven't collected all parts
+			// if we aren't playing an ending (last day or all parts), play pikmin marching back into their onions cutscene
 			if (gameflow.mWorldClock.mCurrentDay < MAX_DAYS && playerState->getCurrParts() != MAX_UFO_PARTS && !gameflow.mIsChallengeMode) {
-				mSection->mCurrentFade = -0.1f;
-				gameflow.mMoviePlayer->startMovie(DEMOID_DayEnd, 0, nullptr, nullptr, nullptr, -1, true);
+				mParentSection->mCurrentFade = -0.1f;
+				gameflow.mMoviePlayer->startMovie(DEMOID_DayEnd, 0, nullptr, nullptr, nullptr, CAF_AllVisibleMask, true);
 			}
 
-			mSection->mTargetFade = 1.0f;
-			mSection->mFadeSpeed  = 0.5f;
+			// start fade out ahead of take-off cutscene
+			mParentSection->mTargetFade = 1.0f;
+			mParentSection->mFadeSpeed  = 0.5f;
 		}
 
-		mState = flag;
+		mState = startState;
 	}
 
 	virtual ModeState* update(u32& result); // _08
-	virtual void postRender(Graphics& gfx)  // _0C
+
+	/**
+	 * @brief Renders the relevant text screen or game over text overlay.
+	 *
+	 * This is in postRender so it comes after other renders, and is therefore on top.
+	 *
+	 * @param gfx Graphics context for rendering.
+	 */
+	virtual void postRender(Graphics& gfx) // _0C
 	{
-		Matrix4f mtx;
+		Matrix4f orthoMtx;
+		// if we have text open, handle that
 		if (tutorialWindow) {
-			gfx.setOrthogonal(mtx.mMtx, AREA_FULL_SCREEN(gfx));
+			gfx.setOrthogonal(orthoMtx.mMtx, AREA_FULL_SCREEN(gfx));
 			tutorialWindow->draw(gfx);
 		}
 
+		// if we have a game over text overlay, handle that
 		if (gameoverWindow) {
-			gfx.setOrthogonal(mtx.mMtx, AREA_FULL_SCREEN(gfx));
+			gfx.setOrthogonal(orthoMtx.mMtx, AREA_FULL_SCREEN(gfx));
 			gameoverWindow->draw(gfx);
 		}
 	}
@@ -295,71 +542,89 @@ struct DayOverModeState : public ModeState {
 	ModeState* initialisePhaseThree();
 	ModeState* initialisePhaseFour();
 
-	///< 00     = VTBL
-	///< 00-_04 = ModeState
-	int mState; ///< _08, current state of the day end sequence
+	// _00     = VTBL
+	// _00-_08 = ModeState
+	int mState; ///< _08, current state of the day end sequence - see `State` enum.
 };
 
+//////////////////////////////////////////////////////
+////////////// STATIC HELPER FUNCTIONS ///////////////
+//////////////////////////////////////////////////////
+
 /**
- * @brief Controls visibility of game HUD frames.
- * @param set Whether to show (true) or hide (false) the frames
- * @param time Fade duration in seconds
+ * @brief Controls visibility of game HUD frames, both top and bottom.
+ * @param set Whether to show (true) or hide (false) the HUD.
+ * @param fadeTime Fade (in or out) duration in seconds.
  *
  * @note UNUSED Size: 0000E4
  */
-static void showFrame(bool set, f32 time)
+static void showFrame(bool set, f32 fadeTime)
 {
 	if (set) {
+		// HUD needs to be active but hidden to re-show it
 		if (gameInfoOn && !gameInfoIn) {
 			if (!playerState->isTutorial()) {
-				gamecore->mDrawGameInfo->upperFrameIn(time, true);
+				// don't show the sun meter and day number on day 1
+				gamecore->mDrawGameInfo->upperFrameIn(fadeTime, true);
 			}
-			gamecore->mDrawGameInfo->lowerFrameIn(time, true);
+			// always show the captain health and pikmin counts etc regardless of day
+			gamecore->mDrawGameInfo->lowerFrameIn(fadeTime, true);
 			gameInfoIn = true;
 		}
 	} else {
+		// HUD needs to be active and shown to hide it
 		if (gameInfoOn && gameInfoIn) {
 			if (!playerState->isTutorial()) {
-				gamecore->mDrawGameInfo->upperFrameOut(time, true);
+				// top HUD isn't visible on day 1, nothing to hide
+				gamecore->mDrawGameInfo->upperFrameOut(fadeTime, true);
 			}
-			gamecore->mDrawGameInfo->lowerFrameOut(time, true);
+			// hide bottom HUD
+			gamecore->mDrawGameInfo->lowerFrameOut(fadeTime, true);
 			gameInfoIn = false;
 		}
 	}
 }
 
 /**
- * @brief Creates and initializes the debug menu window.
+ * @brief Creates and initializes the map and controls menu (Y menu).
  */
 static void createMenuWindow()
 {
+	// load menu assets without a loading screen
 	gsys->startLoading(nullptr, false, 0);
-	bool heapold         = gsys->mPrevAllocType;
+	bool oldAlloc        = gsys->mPrevAllocType;
 	gsys->mPrevAllocType = 0;
-	int heapid           = gsys->getHeapNum();
-	PRINT("using movie heap!\n");
+	int oldHeap          = gsys->getHeapNum();
 
+	// use movie heap for the map menu
+	PRINT("using movie heap!\n");
 	gsys->setHeap(SYSHEAP_Movie);
-	int oldtype = gsys->getHeap(SYSHEAP_Movie)->setAllocType(AYU_STACK_GROW_DOWN);
+	int oldMovieAlloc = gsys->getHeap(SYSHEAP_Movie)->setAllocType(AYU_STACK_GROW_DOWN);
 
 	menuWindow = new zen::ogScrMenuMgr;
 	menuWindow->start();
 
-	gsys->getHeap(SYSHEAP_Movie)->setAllocType(oldtype);
-	gsys->setHeap(heapid);
+	// restore movie heap settings
+	gsys->getHeap(SYSHEAP_Movie)->setAllocType(oldMovieAlloc);
+
+	// restore previous heap
+	gsys->setHeap(oldHeap);
 	gsys->mRetraceCount  = 0;
-	gsys->mPrevAllocType = heapold;
+	gsys->mPrevAllocType = oldAlloc;
+
+	// attach the menu so it gets drawn properly
 	gsys->endLoading();
 	PRINT("menu window attach\n");
 	gsys->attachObjs();
 }
 
 /**
- * @brief Destroys the debug menu window and frees resources.
+ * @brief Destroys the map and controls menu (Y menu) window and frees resources.
  * @note UNUSED Size: 000040
  */
 static void deleteMenuWindow()
 {
+	// clear movie heap to free resources
 	gsys->resetHeap(SYSHEAP_Movie, AYU_STACK_GROW_DOWN);
 	PRINT("menu window detach\n");
 	gameflow.mIsUIOverlayActive = FALSE;
@@ -367,56 +632,75 @@ static void deleteMenuWindow()
 }
 
 /**
- * @brief Creates and displays a tutorial window.
- * @param tutorialId Tutorial message ID to display
- * @param partId Part collection ID for audio (if applicable)
- * @param hasAudio Whether tutorial has associated audio
+ * @brief Creates and displays a text window.
+ *
+ * @param textID Text ID to display - see `zen::ogScrTutorialMgr::EnumTutorial` enum.
+ * @param ufoPartID Ufo part ID for audio (-1 if no part associated with the text).
+ * @param hasAudio Whether text has audio - this is just for the discovering (going near) a part jingle.
  */
-static void createTutorialWindow(int tutorialId, int partId, bool hasAudio)
+static void createTutorialWindow(int textID, int ufoPartID, bool hasAudio)
 {
+	// load assets without a loading screen
 	gsys->startLoading(nullptr, false, 0);
-	bool heapold         = gsys->mPrevAllocType;
+
+	bool oldAlloc        = gsys->mPrevAllocType;
 	gsys->mPrevAllocType = FALSE;
-	int heapid           = gsys->getHeapNum();
+	int oldHeap          = gsys->getHeapNum();
 	PRINT("using movie heap!\n");
 
-	hasDemoSound = (partId >= 0 && hasAudio);
+	hasDemoSound = (ufoPartID >= 0 && hasAudio);
 
 	if (hasDemoSound) {
-		Jac_StartPartsFindDemo(partId + 1, hasAudio);
+		// plays the part discovery (going near ship part) jingle
+		Jac_StartPartsFindDemo(ufoPartID + 1, hasAudio);
 	} else {
-		Jac_StartTextDemo(tutorialId);
+		// regular text printing sound effects
+		Jac_StartTextDemo(textID);
 	}
+
+	// use movie heap for text screen
 	gsys->setHeap(SYSHEAP_Movie);
+	int oldMovieAlloc = gsys->getHeap(SYSHEAP_Movie)->setAllocType(AYU_STACK_GROW_DOWN);
 
-	int oldtype    = gsys->getHeap(SYSHEAP_Movie)->setAllocType(AYU_STACK_GROW_DOWN);
 	tutorialWindow = new zen::ogScrTutorialMgr;
-	tutorialWindow->start((zen::ogScrTutorialMgr::EnumTutorial)tutorialId);
+	tutorialWindow->start((zen::ogScrTutorialMgr::EnumTutorial)textID);
 
-	gsys->getHeap(SYSHEAP_Movie)->setAllocType(oldtype);
-	gsys->setHeap(heapid);
+	// restore movie heap settings
+	gsys->getHeap(SYSHEAP_Movie)->setAllocType(oldMovieAlloc);
+
+	// restore previous heap
+	gsys->setHeap(oldHeap);
+
+	// hide the HUD while we're in a text screen
 	showFrame(false, 0.5f);
 	gameflow.mIsTutorialTextActive = TRUE;
 	gsys->mRetraceCount            = 0;
-	gsys->mPrevAllocType           = heapold;
+	gsys->mPrevAllocType           = oldAlloc;
+
+	// attach screen so it gets drawn properly
 	gsys->endLoading();
 	PRINT("tutorial window attach\n");
 	gsys->attachObjs();
 }
 
 /**
- * @brief Destroys the tutorial window and restores game state.
+ * @brief Destroys the current text window and restores the game state.
+ *
+ * This doesn't actually reset the movie heap used for text assets, unlike the menu screen - bug?
  */
 static void deleteTutorialWindow()
 {
 	if (hasDemoSound) {
+		// finish any part discovery jingles
 		Jac_FinishPartsFindDemo();
 	} else {
+		// finish any text printing sound effects
 		Jac_FinishTextDemo();
 	}
 
 	gameflow.mIsTutorialTextActive = FALSE;
 	if (!dontShowFrame && gameInfoOn && !gameInfoIn) {
+		// un-hide the HUD
 		if (!playerState->isTutorial()) {
 			gamecore->mDrawGameInfo->upperFrameIn(0.5f, true);
 		}
@@ -425,29 +709,37 @@ static void deleteTutorialWindow()
 	}
 
 	gameflow.mIsUIOverlayActive = FALSE;
-	tutorialWindow              = 0;
+	tutorialWindow              = nullptr;
 }
 
 /**
- * @brief Handles the tutorial window update logic.
- * @param unused
- * @param controller Player input controller
+ * @brief Handles the text window update logic.
  *
+ * @param result Unused output for any update logic flags to use or adjust.
+ * @param controller Player input controller.
  * @note UNUSED Size: 0000A8
  */
-static void handleTutorialWindow(u32& unused, Controller* controller)
+static void handleTutorialWindow(u32& result, Controller* controller)
 {
-	if (tutorialWindow && tutorialWindow->update(controller) == zen::ogScrTutorialMgr::Status_4) {
+	if (tutorialWindow && tutorialWindow->update(controller) == zen::ogScrTutorialMgr::STATUS_Exiting) {
+		// text window is closing, skip any associated cutscene going on alongside this text
 		if (gameflow.mMoviePlayer->mIsActive) {
 			gameflow.mMoviePlayer->skipScene(SCENESKIP_Skip);
 		}
 
+		// get rid of the text window
 		deleteTutorialWindow();
 	}
 }
 
+//////////////////////////////////////////////////////
+///// BASE GAME SECTION AND MODE STATE FUNCTIONS /////
+//////////////////////////////////////////////////////
+
 /**
- * @todo: Documentation
+ * @brief Constructs a base class game section, for controlling gameplay and pre-gameplay sections.
+ *
+ * Defaults to no updating, no active states, fade-in of 2 seconds and map select as the next section.
  */
 BaseGameSection::BaseGameSection()
     : Node("")
@@ -464,27 +756,31 @@ BaseGameSection::BaseGameSection()
 }
 
 /**
- * @todo: Documentation
+ * @brief Renders a single frame, handling just fade-ins and level banners.
+ *
+ * Also triggers the current mode state's postUpdate method, if it has one.
  */
 void BaseGameSection::draw(Graphics& gfx)
 {
-	Matrix4f mtx;
-	gfx.setOrthogonal(mtx.mMtx, AREA_FULL_SCREEN(gfx));
+	Matrix4f orthoMtx;
+	gfx.setOrthogonal(orthoMtx.mMtx, AREA_FULL_SCREEN(gfx));
 
-	// Update fade transition
+	// Update fade transition - fade of 1 = black screen, fade of 0 = no fade
 	if (mCurrentFade < mTargetFade) {
+		// fade out
 		mCurrentFade += mFadeSpeed * gsys->getFrameTime();
 		if (mCurrentFade > mTargetFade) {
 			mCurrentFade = mTargetFade;
 		}
 	} else if (mCurrentFade > mTargetFade) {
+		// fade in
 		mCurrentFade -= mFadeSpeed * gsys->getFrameTime();
 		if (mCurrentFade < mTargetFade) {
 			mCurrentFade = mTargetFade;
 		}
 	}
 
-	// Draw fade overlay
+	// draw fade overlay, if active
 	if (mCurrentFade < 1.0f) {
 		f32 fade = mCurrentFade;
 		if (fade < 0.0f) {
@@ -498,8 +794,9 @@ void BaseGameSection::draw(Graphics& gfx)
 		gfx.fillRectangle(AREA_FULL_SCREEN(gfx));
 	}
 
-	// Draw level banner if active
+	// draw level banner, if active
 	if (gameflow.mLevelBannerTex && gameflow.mLevelBannerFadeValue > 0.0f) {
+		// fade out level banner
 		gameflow.mLevelBannerFadeValue -= gsys->getFrameTime();
 		if (gameflow.mLevelBannerFadeValue < 0.0f) {
 			gameflow.mLevelBannerTex       = nullptr;
@@ -509,45 +806,60 @@ void BaseGameSection::draw(Graphics& gfx)
 		}
 	}
 
+	// perform any post-draw mode state updates
 	mCurrentModeState->postUpdate();
 }
 
 /**
- * @todo: Documentation
+ * @brief Updates the intro state, to decide when to enter active gameplay.
+ *
+ * @param result Output update flag, to pass to other game flow machinery - see `ModeUpdateFlags` enum.
+ * @return Pointer to active state for next frame, either `this` or a new gameplay state.
  */
 ModeState* IntroGameModeState::update(u32& result)
 {
+	// don't advance the clock or count down until we're in gameplay!
 	result = UPDATE_AI;
 
-	handleTutorialWindow(result, mSection->mController);
+	// for Day 1, deal with the "My name is Captain Olimar..." text windows while they're open.
+	handleTutorialWindow(result, mParentSection->mController);
 
 	if (!gameflow.mMoviePlayer->mIsActive) {
+		// intro cutscene is finished, get us into gameplay!
 		PRINT("switching to running!\n");
+		// enable the HUD and make it visible
 		gameInfoOn = true;
 		showFrame(true, 2.0f);
 
-		return new RunningModeState(mSection);
+		// transit to gameplay (`RunningModeState`)
+		return new RunningModeState(mParentSection);
 	}
 
+	// cutscene is still playing, stay in this state
 	return this;
 }
 
 /**
- * @todo: Documentation
+ * @brief Updates general gameplay, and controls transits to day end, game over, or "quitting" to another game subsection.
+ *
+ * @param result Output update flag, to pass to other game flow machinery - see `ModeUpdateFlags` enum.
+ * @return Pointer to active state for next frame, either `this` or a new state.
  */
 ModeState* RunningModeState::update(u32& result)
 {
-	result = UPDATE_ALL; // Enable all update types
+	result = UPDATE_ALL; // enable all update types to start, then disable any we don't want.
 
-	// Check for day end during movie playback
+	// if we've entered the end of day cutscene, transit to the day over state to handle the day end phases
 	if (!gameflow.mMoviePlayer->mIsActive && !gameflow.mIsTutorialTextActive && gameflow.mIsDayEndActive) {
-		result &= ~UPDATE_AI; // Disable AI updates during day end
+		result &= ~UPDATE_AI; // Disable AI updates during day end, but keep clock going
 		PRINT("*-------------------------------- DAY END !!!!!!!!!!!!!!  --------------------------------*\n");
-		mSection->mPendingOnePlayerSectionID = gameflow.mNextOnePlayerSectionOnDayEnd;
-		return new DayOverModeState(mSection, 0);
+
+		// queue up the next subsection - in reality this is usually map select
+		mParentSection->mPendingOnePlayerSectionID = gameflow.mNextOnePlayerSectionOnDayEnd;
+		return new DayOverModeState(mParentSection, 0);
 	}
 
-	// Trigger day end when time expires
+	// trigger day end when time expires
 	if (!gameflow.mIsDayEndActive && !gameflow.mMoviePlayer->mIsActive
 	    && gameflow.mWorldClock.mTimeOfDay >= gameflow.mParameters->mEndHour()) {
 #if defined(VERSION_G98E01_PIKIDEMO)
@@ -557,58 +869,66 @@ ModeState* RunningModeState::update(u32& result)
 		gameflow.mIsDayEndTriggered = TRUE;
 	}
 
-	// Process day end trigger
+	// process day end trigger (can't start cutscene while a window is open!)
 	if (gameflow.mIsDayEndTriggered && !gameflow.mIsUIOverlayActive) {
 		gameflow.mIsDayEndActive    = TRUE;
 		gameflow.mIsDayEndTriggered = FALSE;
 
-		// Special handling for final day
+		// Special handling for neutral and bad endings on the final day
 		if (playerState->getCurrParts() != MAX_UFO_PARTS && gameflow.mWorldClock.mCurrentDay == MAX_DAYS) {
 			if (playerState->happyEndable()) {
+				// we got at least 25 parts!
 				flowCont.mEndingType = ENDING_Neutral;
 				gameflow.mGameInterface->message(MOVIECMD_TextDemo, zen::ogScrTutorialMgr::TUT_BadEnding);
 			} else {
+				// uh oh - olimin time
 				gameflow.mGameInterface->message(MOVIECMD_TextDemo, zen::ogScrTutorialMgr::TUT_BadEnding);
 			}
 		}
 	}
 
+	// check our voicemail - do we have any simple movie-related commands pending?
 	bool mesgsPending = false;
-	if (static_cast<GameMovieInterface*>(gameflow.mGameInterface)->mMessageCount) {
+	if (static_cast<GameMovieInterface*>(gameflow.mGameInterface)->mSimpleMessageCount) {
 		mesgsPending = true;
 	}
 
-	// Handle pause menu
+	// handle pause and map/control menus
+	// can't open a pause menu if a) we're not allowed, b) a window is open, c) we're already paused, or d) if a cutscene is playing
 	if (gameflow.mIsPauseAllowed && !gameflow.mIsUIOverlayActive && !gameflow.mPauseAll && !gameflow.mMoviePlayer->mIsActive) {
 
+		// pause menu (Continue, Go To Sunset, Continue From Last Save)
 		if (mController->keyClick(KBBTN_START)) {
 			if (!gameflow.mIsUIOverlayActive && !mesgsPending) {
 				PRINT("starting pause menu!\n");
 				seSystem->playSysSe(SYSSE_PAUSE);
 				pauseWindow->start(gameflow.mIsChallengeMode);
-				mCachedPauseFlag            = gameflow.mIsUIOverlayActive;
+				mIsOverlayCached            = gameflow.mIsUIOverlayActive;
 				gameflow.mIsUIOverlayActive = TRUE;
 			}
 		}
 		// I added a bugfix to prevent the OgRader screen from opening in the background when the debug menu is active.  Many
 		// debug menus also use the Y button, and both being open at the same time can even cause crashes in the Movie Player.
 #if defined(VERSION_G98E01_PIKIDEMO)
-		else if (mController->keyClick(KBBTN_Y) && gameflow.mWorldClock.mTimeOfDay < gameflow.mParameters->mEndHour() - 0.125f
-		         && !gameflow.mIsUIOverlayActive && !mesgsPending && TERNARY_BUGFIX(!mSection->mActiveMenu, true))
+		else if (mController->keyClick(KBBTN_Y)
+		         && gameflow.mWorldClock.mTimeOfDay < gameflow.mParameters->mEndHour() - MAP_MENU_SUNSET_LOCKOUT
+		         && !gameflow.mIsUIOverlayActive && !mesgsPending && TERNARY_BUGFIX(!mParentSection->mActiveMenu, true))
+		// in the demo, you can open the map/controls menu in challenge mode...
 #else
 		else if (!gameflow.mIsChallengeMode && mController->keyClick(KBBTN_Y)
-		         && gameflow.mWorldClock.mTimeOfDay < gameflow.mParameters->mEndHour() - 0.125f && !gameflow.mIsUIOverlayActive
-		         && !mesgsPending && TERNARY_BUGFIX(!mSection->mActiveMenu, true))
+		         && gameflow.mWorldClock.mTimeOfDay < gameflow.mParameters->mEndHour() - MAP_MENU_SUNSET_LOCKOUT
+		         && !gameflow.mIsUIOverlayActive && !mesgsPending && TERNARY_BUGFIX(!mParentSection->mActiveMenu, true))
 #endif
 		{
+			// also can't open the map/controls menu in the very last ~8s of gameplay before sunset
 			gameflow.mGameInterface->message(MOVIECMD_CreateMenuWindow, 0);
-			mCachedPauseFlag            = gameflow.mIsUIOverlayActive;
+			mIsOverlayCached            = gameflow.mIsUIOverlayActive;
 			gameflow.mIsUIOverlayActive = TRUE;
 		}
 #if defined(DEVELOP) || defined(WIN32)
 		// Mapping this to d-pad down was genuinely an atrocious choice, so I'm assigning it to d-pad up.
 		else if (mController->keyUnClick(TERNARY_BUILD_MATCHING(KBBTN_DPAD_DOWN, KBBTN_DPAD_UP))) {
-			mSection->openMenu();
+			mParentSection->openMenu();
 		}
 #endif
 	}
@@ -618,60 +938,80 @@ ModeState* RunningModeState::update(u32& result)
 		if (flowCont.mGameEndFlag == GAMEEND_NaviDown) {
 			// you killed your captain!
 #if defined(VERSION_GPIP01_00)
+			// can't skip the end of day cutscene in PAL if you kill your captain - shame! shame! shame!
 			flowCont.mIsDayEndSkippable = FALSE;
 #endif
-			mSection->mPendingOnePlayerSectionID = ONEPLAYER_NewPikiGame;
-			return new MessageModeState(mSection, false);
+			mParentSection->mPendingOnePlayerSectionID = ONEPLAYER_NewPikiGame;
+			// start OLIMAR DOWN ! state
+			return new MessageModeState(mParentSection, false);
 		}
 
 		if (flowCont.mGameEndFlag == GAMEEND_PikminExtinction) {
 			// you killed all your pikmin!
 #if defined(VERSION_GPIP01_00)
+			// can't skip the end of day cutscene in PAL if you kill all your pikmin - shame! shame! shame!
 			flowCont.mIsDayEndSkippable = FALSE;
 #endif
-			mSection->mPendingOnePlayerSectionID = ONEPLAYER_NewPikiGame;
-			return new MessageModeState(mSection, true);
+			mParentSection->mPendingOnePlayerSectionID = ONEPLAYER_NewPikiGame;
+			// start PIKMIN EXTINCTION state
+			return new MessageModeState(mParentSection, true);
 		}
 	}
 
+	// update the game over window - this is really pedantic, since it should never be active in this state
 	if (gameoverWindow) {
 		gameoverWindow->update(mController);
 	}
 
+	// handle the Y menu, if it's open
 	if (menuWindow) {
-		int state = menuWindow->update(mController);
+		zen::ogScrMenuMgr::returnStatusFlag state = menuWindow->update(mController);
 		if (state == zen::ogScrMenuMgr::STATE_ActiveDisplay) {
-			result &= ~UPDATE_AI; // Disable AI updates when menu is active
+			// disable AI updates when menu is active
+			result &= ~UPDATE_AI;
 		} else if (state == zen::ogScrMenuMgr::STATE_TransitionToInactive) {
+			// we closed it, get rid of it
 			deleteMenuWindow();
 		}
 	}
 
+	// handle any text windows that are open
 	handleTutorialWindow(result, mController);
 
-	int state = pauseWindow->update(mController);
-	if (state == zen::ogScrPauseMgr::PAUSE_Unk0) {
-		result &= ~UPDATE_AI; // Disable AI updates when pause menu is active
-	} else if (state == zen::ogScrPauseMgr::PAUSE_Unk6) {
+	// handle the pause menu, if it's open
+	zen::ogScrPauseMgr::PauseStatus state = pauseWindow->update(mController);
+	if (state == zen::ogScrPauseMgr::PAUSE_Active) {
+		// disable AI updates when pause menu is active
+		result &= ~UPDATE_AI;
+
+	} else if (state == zen::ogScrPauseMgr::PAUSE_ExitToSunset) {
+		// go to sunset selected - end the day
 		gamecore->forceDayEnd();
 #if defined(VERSION_G98E01_PIKIDEMO)
 #else
 		gameflow.mIsPauseAllowed = FALSE;
 #endif
 		gameflow.mIsDayEndTriggered = TRUE;
-		gameflow.mIsUIOverlayActive = mCachedPauseFlag;
+		gameflow.mIsUIOverlayActive = mIsOverlayCached;
 
-	} else if (state == zen::ogScrPauseMgr::PAUSE_Unk7) {
+	} else if (state == zen::ogScrPauseMgr::PAUSE_ExitToTitle) {
+		// continue from last save/quit challenge mode selected
 #if defined(VERSION_G98E01_PIKIDEMO)
+		// demo creates a fresh bootup, very dramatic
 		gsys->forceHardReset();
 #else
-		mSection->mPendingOnePlayerSectionID = ONEPLAYER_CardSelect;
+		// take us back to card select
+		// (this ends up as file select for story mode, or a quick transit to map select for challenge mode)
+		mParentSection->mPendingOnePlayerSectionID = ONEPLAYER_CardSelect;
 		gsys->setFade(0.0f, 3.0f);
-		return new QuittingGameModeState(mSection);
+		// transit to quitter
+		return new QuittingGameModeState(mParentSection);
+
 #endif
-	} else if (state == zen::ogScrPauseMgr::PAUSE_Unk5) {
+	} else if (state == zen::ogScrPauseMgr::PAUSE_ExitToGameplay) {
+		// close the menu - re-enable the HUD and restore any overlays
 		showFrame(true, 0.5f);
-		gameflow.mIsUIOverlayActive = mCachedPauseFlag;
+		gameflow.mIsUIOverlayActive = mIsOverlayCached;
 		seSystem->playSysSe(SYSSE_UNPAUSE);
 	}
 
@@ -679,107 +1019,142 @@ ModeState* RunningModeState::update(u32& result)
 }
 
 /**
- * @todo: Documentation
+ * @brief Renders any text overlays during an area intro cutscene.
+ *
+ * In reality, only the end of the crash landing cutscene has text.
+ * This is in postRender so it comes after other renders, and is therefore on top.
+ *
+ * @param gfx Graphics context for rendering.
  */
 void IntroGameModeState::postRender(Graphics& gfx)
 {
-	Matrix4f mtx;
+	Matrix4f orthoMtx;
 	if (tutorialWindow) {
-		gfx.setOrthogonal(mtx.mMtx, AREA_FULL_SCREEN(gfx));
+		// render the text window over the top
+		gfx.setOrthogonal(orthoMtx.mMtx, AREA_FULL_SCREEN(gfx));
 		tutorialWindow->draw(gfx);
 	}
 }
 
 /**
- * @todo: Documentation
+ * @brief Renders any overlays (menus, text windows, game over text) during gameplay.
+ *
+ * This is in postRender so it comes after other renders, and is therefore on top.
+ *
+ * @param gfx Graphics context for rendering.
  */
 void RunningModeState::postRender(Graphics& gfx)
 {
-	Matrix4f mtx1;
-	Matrix4f mtx2;
-	mtx2.makeSRT(Vector3f(0.1f, 0.1f, 0.1f), Vector3f(0.0f, 0.0f, 0.0f), Vector3f(0.0f, 0.0f, -5.0f));
+	Matrix4f orthoMtx;
+
+	// unused - idk what the point of this would've even been.
+	Matrix4f unusedMtx;
+	unusedMtx.makeSRT(Vector3f(0.1f, 0.1f, 0.1f), Vector3f(0.0f, 0.0f, 0.0f), Vector3f(0.0f, 0.0f, -5.0f));
 
 	if (!menuOn) {
-		gfx.setOrthogonal(mtx1.mMtx, AREA_FULL_SCREEN(gfx));
+		// no map menu open, draw any other 2D screen objects (enemy health gauges, debug text, etc)
+		gfx.setOrthogonal(orthoMtx.mMtx, AREA_FULL_SCREEN(gfx));
 		gamecore->draw1D(gfx);
 	}
 
-	if (!gameflow.mPauseAll && !gameflow.mMoviePlayer->mIsActive && mSection->mUpdateFlags & UPDATE_COUNTDOWN) {
-		f32 time = (gameflow.mWorldClock.mTimeOfDay - gameflow.mParameters->mNightCountdown())
-		         / (gameflow.mParameters->mNightEnd() - gameflow.mParameters->mNightCountdown());
-		if (time >= 0.0f && time < 1.0f) {
+	// handle sunset approaching/countdown text overlay
+	if (!gameflow.mPauseAll && !gameflow.mMoviePlayer->mIsActive && mParentSection->mUpdateFlags & UPDATE_COUNTDOWN) {
+
+		// calc how "far" we are until the end of day - negative = not at countdown yet; 0 = countdown just started; 1 = end of day
+		f32 countDownProgress = (gameflow.mWorldClock.mTimeOfDay - gameflow.mParameters->mNightCountdown())
+		                      / (gameflow.mParameters->mNightEnd() - gameflow.mParameters->mNightCountdown());
+		if (countDownProgress >= 0.0f && countDownProgress < 1.0f) {
+			// we're in the countdown window! draw the overlay
 			countWindow->update();
 			countWindow->draw(gfx);
 		}
 	}
 
+	// don't bother with text screens, game over text, etc if map menu is open
 	if (menuOn) {
 		return;
 	}
 
+	// draw text screens if any are active
 	if (tutorialWindow) {
-		gfx.setOrthogonal(mtx1.mMtx, AREA_FULL_SCREEN(gfx));
+		gfx.setOrthogonal(orthoMtx.mMtx, AREA_FULL_SCREEN(gfx));
 		tutorialWindow->draw(gfx);
 	}
 
-	gfx.setOrthogonal(mtx1.mMtx, AREA_FULL_SCREEN(gfx));
+	// draw the HUD, onion menus, results screens, etc
+	gfx.setOrthogonal(orthoMtx.mMtx, AREA_FULL_SCREEN(gfx));
 	gamecore->draw2D(gfx);
 
+	// draw any game over text if required
 	if (gameoverWindow) {
-		gfx.setOrthogonal(mtx1.mMtx, AREA_FULL_SCREEN(gfx));
+		gfx.setOrthogonal(orthoMtx.mMtx, AREA_FULL_SCREEN(gfx));
 		gameoverWindow->draw(gfx);
 	}
 
-	gfx.setOrthogonal(mtx1.mMtx, AREA_FULL_SCREEN(gfx));
+	// draw the pause menu if active
+	gfx.setOrthogonal(orthoMtx.mMtx, AREA_FULL_SCREEN(gfx));
 	pauseWindow->draw(gfx);
 }
 
 /**
- * @todo: Documentation
+ * @brief Updates game over cutscene state progress, and controls transit to day end.
+ *
+ * In reality, this only really does anything for navi down, pikmin extinction is separate/not as involved.
+ *
+ * @param result Output update flag, to pass to other game flow machinery - see `ModeUpdateFlags` enum.
+ * @return Pointer to active state for next frame, always `this` in practice, since `DayOverModeState` is queued to the parent section.
  */
 ModeState* MessageModeState::update(u32& result)
 {
 	if (flowCont.mGameEndFlag == GAMEEND_NaviDown) {
 		// you killed your captain!
-		switch (mMessagePhase) {
-		case 0:
-			mMessageTimer -= gsys->getFrameTime();
-			if (mMessageTimer < 0.0f) {
-				mMessageTimer               = 2.0f;
+		switch (mState) {
+		case STATE_Starting:
+			// start the timer.
+			mStateTimer -= gsys->getFrameTime();
+			if (mStateTimer < 0.0f) {
+				mStateTimer                 = 2.0f;
 				mapMgr->mTargetDesaturation = 1.0f;
 				if ((gameflow.mIsChallengeMode || gameflow.mWorldClock.mCurrentDay == MAX_DAYS) && gameoverWindow) {
 					gameoverWindow->start(zen::DrawGameOver::MODE_NaviDown, 40.0f);
 				}
-				mMessagePhase = 1;
+				mState = STATE_Desaturate;
 			}
 			break;
-		case 1:
-			mMessageTimer -= gsys->getFrameTime();
-			if (mMessageTimer < 0.0f) {
-				mMessageTimer            = 3.0f;
+
+		case STATE_Desaturate:
+			mStateTimer -= gsys->getFrameTime();
+			if (mStateTimer < 0.0f) {
+				mStateTimer              = 3.0f;
 				mapMgr->mTargetFadeLevel = 1.0f;
-				mMessagePhase            = 2;
+				mState                   = STATE_FadeOut;
 			}
 			break;
-		case 2:
-			mMessageTimer -= gsys->getFrameTime();
-			if (mMessageTimer < 0.0f) {
-				mMessageTimer = 2.0f;
-				mMessagePhase = 3;
+
+		case STATE_FadeOut:
+			mStateTimer -= gsys->getFrameTime();
+			if (mStateTimer < 0.0f) {
+				mStateTimer = 2.0f;
+				mState      = STATE_ForceDayEnd;
 			}
 			break;
-		case 3:
+
+		case STATE_ForceDayEnd:
 			mapMgr->mTargetFadeLevel    = 0.0f;
 			mapMgr->mTargetDesaturation = 0.0f;
 			PRINT("DOING FORCE RESULTS SCREEN !!!\n");
-			DayOverModeState* state  = new DayOverModeState(mSection, 1);
-			state->mState            = 0;
-			mSection->mNextModeState = state;
+			// set up day end state
+			DayOverModeState* state = new DayOverModeState(mParentSection, DayOverModeState::STATE_PhaseOne);
+			// (we want to avoid the automatic day end cutscene that constructing in phase 0 would do, and replace it with our own)
+			state->mState                  = DayOverModeState::STATE_PhaseZero;
+			mParentSection->mNextModeState = state;
+
 			PRINT("CLEANUPDAYEND!!!!\n");
+
 			gamecore->cleanupDayEnd();
 			if (!gameflow.mIsChallengeMode) {
 				if (gameflow.mWorldClock.mCurrentDay != MAX_DAYS) {
-					gameflow.mMoviePlayer->startMovie(DEMOID_OliDownDayEnd, 0, nullptr, nullptr, nullptr, -1, true);
+					gameflow.mMoviePlayer->startMovie(DEMOID_OliDownDayEnd, 0, nullptr, nullptr, nullptr, CAF_AllVisibleMask, true);
 					if (gameoverWindow) {
 						gameoverWindow->start(zen::DrawGameOver::MODE_NaviDown, 40.0f);
 					}
@@ -789,105 +1164,129 @@ ModeState* MessageModeState::update(u32& result)
 			}
 			break;
 		}
+
 	} else if (flowCont.mGameEndFlag == GAMEEND_None) {
 		// you really shouldn't be here, but there's nothing to handle. go straight to results
 		PRINT("DOING FORCE RESULTS SCREEN !!!\n");
-		DayOverModeState* state  = new DayOverModeState(mSection, 1);
-		gameoverWindow           = nullptr;
-		state->mState            = 0;
-		mSection->mNextModeState = state;
-		mSection->mTargetFade    = 1.0f;
+		DayOverModeState* state = new DayOverModeState(mParentSection, DayOverModeState::STATE_PhaseOne);
+		gameoverWindow          = nullptr;
+		// do this to avoid the day end cutscene playing
+		state->mState                  = DayOverModeState::STATE_PhaseZero;
+		mParentSection->mNextModeState = state;
+		mParentSection->mTargetFade    = 1.0f;
 	}
 
 	if (gameoverWindow) {
-		gameoverWindow->update(mSection->mController);
+		gameoverWindow->update(mParentSection->mController);
 	}
 	return this;
 }
 
 /**
- * @todo: Documentation
+ * @brief Updates the end of day sequence, and controls transits to quit out of gameplay.
+ *
+ * @param result Output update flag, to pass to other game flow machinery - see `ModeUpdateFlags` enum.
+ * @return Pointer to active state for next frame, either `this` or a new state (`QuittingGameModeState`).
  */
 ModeState* DayOverModeState::update(u32& result)
 {
 	STACK_PAD_VAR(1);
-	result = 1;
 
-	handleTutorialWindow(result, mSection->mController);
+	result = UPDATE_AI; // we need animations to play, but we don't need in-game time to pass
+
+	// handle any text windows we might have open, such as during endings
+	handleTutorialWindow(result, mParentSection->mController);
 
 #if defined(VERSION_GPIP01_00)
+
+	// PAL-exclusive day end cutscene skipping code!
 	bool skipped = false;
-	if (flowCont.mIsDayEndSkippable && playerState->getCurrParts() != 30 && gameflow.mWorldClock.mCurrentDay < 30) {
-		if (mState == 0 && mSection->mController->keyClick(KBBTN_B | KBBTN_A)) {
+	// if the end of day is skippable (not from navi down or something) and we're not at a literal game ending, we can skip
+	if (flowCont.mIsDayEndSkippable && playerState->getCurrParts() != MAX_UFO_PARTS && gameflow.mWorldClock.mCurrentDay < MAX_DAYS) {
+		// if we're in the pikmin marching cutscene, we can skip with A or B
+		if (mState == STATE_PhaseZero && mParentSection->mController->keyClick(KBBTN_A | KBBTN_B)) {
 			OSReport("!!!!!!!!!!!!!! SKIPPING !!!!\n");
 			gameflow.mMoviePlayer->skipScene(SCENESKIP_Skip);
 			skipped                   = true;
 			flowCont.mIsDayEndSkipped = TRUE;
 		}
 
-		if (mState == 1 && (flowCont.mIsDayEndSkipped || mSection->mController->keyClick(KBBTN_B | KBBTN_A))) {
+		// if we're in the takeoff cutscene and we either already skipped the previous one, or we press A or B, skip it too
+		if (mState == STATE_PhaseOne && (flowCont.mIsDayEndSkipped || mParentSection->mController->keyClick(KBBTN_A | KBBTN_B))) {
 			skipped = true;
 		}
 	}
+
 	if (!gameflow.mMoviePlayer->mIsActive || skipped)
 #else
 	if (!gameflow.mMoviePlayer->mIsActive)
 #endif
 	{
-		ModeState* state = nullptr;
+		// once the current cutscene is finished, handle transition to the next phase
+		ModeState* nextState = nullptr;
 		switch (mState) {
-		case 0:
+		case STATE_PhaseZero:
 #if defined(VERSION_GPIP01_00)
 			OSReport("!!!!!!!!!!!!!! INITIALISE PHASE ONE!!!!\n");
 			OSReport("!!!!!!!!!!!!!! INITIALISE PHASE ONE!!!!\n");
 #endif
-			state = initialisePhaseOne();
+			nextState = initialisePhaseOne();
 			break;
-		case 1:
+
+		case STATE_PhaseOne:
 #if defined(VERSION_GPIP01_00)
 			OSReport("!!!!!!!!!!!!!! INITIALISE PHASE TWO!!!!\n");
 			OSReport("!!!!!!!!!!!!!! INITIALISE PHASE TWO!!!!\n");
 #endif
-			state = initialisePhaseTwo();
+			nextState = initialisePhaseTwo();
 			break;
-		case 2:
+
+		case STATE_PhaseTwo:
 #if defined(VERSION_GPIP01_00)
 			OSReport("!!!!!!!!!!!!!! INITIALISE PHASE THREE!!!!\n");
 			OSReport("!!!!!!!!!!!!!! INITIALISE PHASE THREE!!!!\n");
 #endif
-			state = initialisePhaseThree();
+			// in reality, we only end up here if none of the below checks transit us to a QuittingGameModeState
+			nextState = initialisePhaseThree();
 			break;
-		case 3:
+
+		case STATE_PhaseThree:
 #if defined(VERSION_GPIP01_00)
 			OSReport("!!!!!!!!!!!!!! INITIALISE PHASE FOUR!!!!\n");
 			OSReport("!!!!!!!!!!!!!! INITIALISE PHASE FOUR!!!!\n");
 #endif
-			state = initialisePhaseFour();
+			nextState = initialisePhaseFour();
 			break;
 		}
-		if (state) {
-			return state;
+
+		if (nextState) {
+			return nextState;
 		}
 	}
 
 	if (gameoverWindow) {
-		gameoverWindow->update(mSection->mController);
+		gameoverWindow->update(mParentSection->mController);
 	}
 
-	if (challengeWindow && challengeWindow->update(mSection->mController)) {
-		mSection->mPendingOnePlayerSectionID = ONEPLAYER_MapSelect;
+	// if the challenge mode results window is open and finished (we've saved or couldn't save for some reason), transit to quitter
+	if (challengeWindow && challengeWindow->update(mParentSection->mController)) {
+		// we want to go back to map select after exiting
+		mParentSection->mPendingOnePlayerSectionID = ONEPLAYER_MapSelect;
 		gsys->setFade(0.0f, 3.0f);
-		return new QuittingGameModeState(mSection);
+		return new QuittingGameModeState(mParentSection);
 	}
 
+	// if we're in the day end results screen, process that logic
 	if (resultWindow) {
-		zen::ogScrResultMgr::returnStatusFlag stat = resultWindow->update(mSection->mController);
+		zen::ogScrResultMgr::returnStatusFlag stat = resultWindow->update(mParentSection->mController);
 		if (stat >= 7) {
+			// 2-second loading screen
 			gsys->startLoading(nullptr, true, 120);
 			PRINT("EXITDAYEND!!!!\n");
+			// double quadruple check we've cleaned everything up (pikmin counts, cutscenes, heaps)
 			gamecore->exitDayEnd();
 			gameflow.mMoviePlayer->fixMovieList();
-			Jac_SceneSetup(SCENE_Unk6, 0);
+			Jac_SceneSetup(SCENE_Results, JACRES_EndOfDay);
 			gsys->resetHeap(SYSHEAP_Movie, AYU_STACK_GROW_DOWN);
 			gsys->resetHeap(SYSHEAP_Teki, AYU_STACK_GROW_DOWN);
 			gsys->resetHeap(SYSHEAP_Teki, AYU_STACK_GROW_UP);
@@ -896,16 +1295,21 @@ ModeState* DayOverModeState::update(u32& result)
 			gsys->endLoading();
 
 #if defined(VERSION_G98E01_PIKIDEMO)
+			// demo doesn't interact with the memory card
 #else
 			if (!memcardWindow) {
 #endif
+			// if we don't have a memory card window open, check if we went back to last save, or continued
 			if (stat == 8) {
-				mSection->mPendingOnePlayerSectionID = ONEPLAYER_CardSelect;
+				// return to last save
+				mParentSection->mPendingOnePlayerSectionID = ONEPLAYER_CardSelect;
 			} else {
-				mSection->mPendingOnePlayerSectionID = ONEPLAYER_MapSelect;
+				// map select for a new day
+				mParentSection->mPendingOnePlayerSectionID = ONEPLAYER_MapSelect;
 			}
+			// transit to quitter to handle changing subsection
 			gsys->setFade(0.0f, 3.0f);
-			return new QuittingGameModeState(mSection);
+			return new QuittingGameModeState(mParentSection);
 #if defined(VERSION_G98E01_PIKIDEMO)
 #else
 			}
@@ -913,23 +1317,29 @@ ModeState* DayOverModeState::update(u32& result)
 		}
 	}
 
-	if (totalWindow && totalWindow->update(mSection->mController)) {
-		if (mState == 2) {
+	// the final result screen is open and done, process what comes next
+	if (totalWindow && totalWindow->update(mParentSection->mController)) {
+		if (mState == STATE_PhaseTwo) {
 			gameflow.mMoviePlayer->skipScene(SCENESKIP_Skip);
 			totalWindow = nullptr;
 		} else {
-			totalWindow                          = nullptr;
-			mSection->mPendingOnePlayerSectionID = ONEPLAYER_GameExit;
+			// we're done with final results, transit to quitter
+			totalWindow = nullptr;
+			// next section will be title screen, but queue up exit section first to clean up
+			mParentSection->mPendingOnePlayerSectionID = ONEPLAYER_GameExit;
 			gsys->setFade(0.0f, 3.0f);
-			return new QuittingGameModeState(mSection);
+			return new QuittingGameModeState(mParentSection);
 		}
 	}
 
 #if defined(VERSION_G98E01_PIKIDEMO)
+	// no memory card screens in demo
 #else
+
+	// handle what happens if we have a memory card-related screen open
 	if (memcardWindow) {
 		CardQuickInfo info;
-		int state = memcardWindow->update(mSection->mController, info);
+		zen::ogScrFileChkSelMgr::returnStatusFlag state = memcardWindow->update(mParentSection->mController, info);
 		if (state >= 1) {
 			memcardWindow = nullptr;
 			if (state != 1 && state != 5) {
@@ -938,18 +1348,18 @@ ModeState* DayOverModeState::update(u32& result)
 				PRINT("using save game file %d with %d as the spare\n", gameflow.mGamePrefs.mMemCardSaveIndex,
 				      gameflow.mGamePrefs.mSpareMemCardSaveIndex);
 
-				bool sysbackup     = gsys->mTogglePrint != FALSE;
+				bool printSetting  = gsys->mTogglePrint != FALSE;
 				gsys->mTogglePrint = TRUE;
 				PRINT("doing save now!!\n");
 				gameflow.mMemoryCard.saveCurrentGame();
-				if (mSection->mController->keyDown(KBBTN_Z)) {
+				if (mParentSection->mController->keyDown(KBBTN_Z)) {
 					kio->startWrite(KIOWRITE_MemoryCard, cardData, CARD_DATA_SIZE);
 				}
-				gsys->mTogglePrint = sysbackup;
+				gsys->mTogglePrint = printSetting;
 				STACK_PAD_VAR(1);
 			}
 			gsys->setFade(0.0f, 3.0f);
-			return new QuittingGameModeState(mSection);
+			return new QuittingGameModeState(mParentSection);
 		}
 	}
 #endif
@@ -958,17 +1368,20 @@ ModeState* DayOverModeState::update(u32& result)
 }
 
 /**
- * @todo: Documentation
+ * @brief Opens the final results window by getting the relevant trackables and their hiscore ranks.
  */
 void DayOverModeState::makeTotalScoreWindow()
 {
+	// get our final scores!
 	GameQuickInfo info;
 	info.mDay       = gameflow.mWorldClock.mCurrentDay;
 	info.mBornPikis = playerState->getLastPikmins();
 	info.mDeadPikis = playerState->getFinalDeadPikis();
 	info.mParts     = playerState->getCurrParts();
+	// check if any of these set new records, and update the ranks if so
 	gameflow.mGamePrefs.checkIsHiscore(info);
 
+	// copy info to something DrawFinalResult can read
 	zen::TotalScoreRecord* record = new zen::TotalScoreRecord;
 	record->mParts                = info.mParts;
 	record->mDay                  = info.mDay;
@@ -976,7 +1389,8 @@ void DayOverModeState::makeTotalScoreWindow()
 	record->mDeadPikis            = info.mDeadPikis;
 	record->mTotalPikis           = gameflow.mGamePrefs.mHiscores.mTotalPikis;
 
-	for (int i = 0; i < 5; i++) {
+	// get all the hiscores to display alongside our new score
+	for (int i = 0; i < MAX_HI_SCORES; i++) {
 		record->mRecordNumParts[i] = gameflow.mGamePrefs.mHiscores.mMinDayRecords[i].mNumParts;
 		record->mRecordNumDays[i]  = gameflow.mGamePrefs.mHiscores.mMinDayRecords[i].mNumDays;
 		record->mRecordNumBorn[i]  = gameflow.mGamePrefs.mHiscores.mBornPikminRecords[i].mNumBorn;
@@ -986,233 +1400,364 @@ void DayOverModeState::makeTotalScoreWindow()
 		}
 	}
 
+	// get our new score's ranks
 	record->mPartsDaysRank = info.mPartsDaysRank;
 	record->mBornPikisRank = info.mBornPikisRank;
 	record->mDeadPikisRank = info.mDeadPikisRank;
 
+	// make final results window
 	totalWindow = new zen::DrawFinalResult(record);
 }
 
 /**
- * @todo: Documentation
+ * @brief Finishes processing of phase zero day end state (cutscenes), and sets up for phase one (results or more cutscenes).
+ *
+ * @return Next mode state to transit to, if any - `nullptr` if we should stay in the current day end state. Always `nullptr` here, since we
+ * always need to do phase one processing.
  */
 ModeState* DayOverModeState::initialisePhaseOne()
 {
 	if (playerState->getCurrParts() == MAX_UFO_PARTS) {
+		// START HAPPY ENDING!
 		PRINT("EXITDAYEND!!!!\n");
 		gamecore->exitDayEnd();
+
+		// use teki heap for the good ending/pikmin wave cutscene
 		gsys->resetHeap(SYSHEAP_Teki, AYU_STACK_GROW_UP);
 		int old = gsys->setHeap(SYSHEAP_Teki);
-		gameflow.mMoviePlayer->startMovie(DEMOID_GoodEndingWave, 0, nullptr, nullptr, nullptr, -1, true);
+		gameflow.mMoviePlayer->startMovie(DEMOID_GoodEndingWave, 0, nullptr, nullptr, nullptr, CAF_AllVisibleMask, true);
+
+		// restore the heap
 		gsys->setHeap(old);
 
 	} else if (gameflow.mWorldClock.mCurrentDay >= MAX_DAYS) {
+		// NEUTRAL OR BAD ENDING
+
 		PRINT("EXITDAYEND!!!!\n");
 		gamecore->exitDayEnd();
+
+		// use the teki heap for the bad/neutral ending
 		gsys->resetHeap(SYSHEAP_Teki, AYU_STACK_GROW_UP);
-		int old    = gsys->setHeap(SYSHEAP_Teki);
-		u32 flags  = 0;
-		u32 ids[3] = { Red, Yellow, Blue };
-		for (int i = 0; i < 3; i++) {
+		int old = gsys->setHeap(SYSHEAP_Teki);
+
+		// work out what pikmin to use for bad/neutral ending cutscene
+		u32 badEndingObjFlags   = 0;
+		u32 ids[PikiColorCount] = { Red, Yellow, Blue };
+		for (int i = 0; i < PikiColorCount; i++) {
 			if (playerState->hasContainer(ids[i])) {
-				flags |= 1 << (i + 12);
+				ADD_ACTOR_PIKMIN_TYPE(badEndingObjFlags, i);
 			}
 		}
-		if (!(flags & 0x2000)) {
-			flags |= 0x800;
+		// we never unlocked yellows, add another red instead
+		if (!(badEndingObjFlags & CAF_BadEndingYellowPikmin)) {
+			badEndingObjFlags |= CAF_BadEndingExtraRed1;
 		}
-		if (!(flags & 0x4000)) {
-			flags |= 0x8000;
+		// we never unlocked blues, add another red instead
+		if (!(badEndingObjFlags & CAF_BadEndingBluePikmin)) {
+			badEndingObjFlags |= CAF_BadEndingExtraRed2;
 		}
-		u32 flags2             = flags | 0xFFFF07FF;
-		mSection->mCurrentFade = -0.1f;
-		mSection->mTargetFade  = 1.0f;
-		gameflow.mMoviePlayer->startMovie(DEMOID_BadEnding, 0, nullptr, nullptr, nullptr, flags2, true);
+
+		u32 actorVisFlags            = badEndingObjFlags | ~CAF_AllObjMasks;
+		mParentSection->mCurrentFade = -0.1f;
+		mParentSection->mTargetFade  = 1.0f;
+		gameflow.mMoviePlayer->startMovie(DEMOID_BadEnding, 0, nullptr, nullptr, nullptr, actorVisFlags, true);
 		gameoverWindow = nullptr;
+
+		// restore the heap
 		gsys->setHeap(old);
+
 	} else {
+		// regular day end
+
+		// use teki heap for day end
 		gsys->resetHeap(SYSHEAP_Teki, AYU_STACK_GROW_UP);
-		int old                = gsys->setHeap(SYSHEAP_Teki);
-		gameoverWindow         = nullptr;
-		mSection->mCurrentFade = -0.1f;
-		gameflow.mMoviePlayer->startMovie(DEMOID_ChalDayEnd, 0, nullptr, nullptr, nullptr, 0xFFFFFFFF, true);
+		int old                      = gsys->setHeap(SYSHEAP_Teki);
+		gameoverWindow               = nullptr;
+		mParentSection->mCurrentFade = -0.1f;
+
+		// start no-enemy day end cutscene
+		// NB: this will immediately get overridden by take off cutscene if we're not in challenge mode or on Day 1
+		gameflow.mMoviePlayer->startMovie(DEMOID_ChalDayEnd, 0, nullptr, nullptr, nullptr, CAF_AllVisibleMask, true);
 		if (!playerState->isTutorial() && !gameflow.mIsChallengeMode) {
-			u32 flags  = 0;
-			u32 ids[3] = { Red, Yellow, Blue };
-			for (int i = 0; i < 3; i++) {
+
+			// play take off cutscene where we kill any pikmin left behind
+			u32 dayEndObjFlags      = 0;
+			u32 ids[PikiColorCount] = { Red, Yellow, Blue };
+			for (int i = 0; i < PikiColorCount; i++) {
 				if (GameStat::victimPikis[ids[i]]) {
+					// we had at least one of this color die, add the color to the end of day
 					PRINT("got (%d) %d victims\n", i, GameStat::victimPikis[ids[i]]);
-					flags |= 1 << (i + 12);
+					ADD_ACTOR_PIKMIN_TYPE(dayEndObjFlags, i);
 				}
 			}
-			if (flags == 0) {
-				flags |= 0x8000;
+			if (dayEndObjFlags == 0) {
+				// no dead pikmin! use correct (frustrated/neutral) animation
+				dayEndObjFlags |= CAF_DayEndEnemyNoDeaths;
 			} else {
-				flags |= 0x800;
+				// dead pikmin :( use killing animation
+				dayEndObjFlags |= CAF_DayEndEnemyAttack;
 			}
-			gameflow.mMoviePlayer->startMovie(DEMOID_TakeOff, 0, nullptr, nullptr, nullptr, flags | 0xFFFF07FF, true);
+			gameflow.mMoviePlayer->startMovie(DEMOID_TakeOff, 0, nullptr, nullptr, nullptr, dayEndObjFlags | ~CAF_AllObjMasks, true);
 		}
+
+		// restore heap
 		gsys->setHeap(old);
 	}
 
-	mState = 1;
+	// move to next phase while take off cutscene is playing
+	mState = STATE_PhaseOne;
 	return nullptr;
 }
 
 /**
- * @todo: Documentation
+ * @brief Finishes processing of phase one day end state (results or cutscenes), and sets up for phase two (ending-only cutscenes).
+ *
+ * @return Next mode state to transit to, if any - `nullptr` if we should stay in the current day end state. Always `nullptr` here, since we
+ * always need to do some post-phase one checks in `update`, even if we don't get to start initialising phase three.
  */
 ModeState* DayOverModeState::initialisePhaseTwo()
 {
+	// take off (or first ending) cutscene has ended - handle what comes next
+
+	// 2 second loading screen to be safe
 	gsys->startLoading(nullptr, true, 120);
 	PRINT("EXITDAYEND!!!!\n");
+
+	// calc our final pikmin totals
 	gamecore->exitDayEnd();
+
 #if defined(VERSION_PIKIDEMO)
+	// demo ends when the day ends. *hard* exit.
 	gsys->forceHardReset();
 	while (true) { }
-#endif
+
+	return nullptr;
+#else
+
+	// clean up all our lingering cutscenes
 	gameflow.mMoviePlayer->fixMovieList();
-	Jac_SceneSetup(SCENE_Unk6, 0);
+
+	// get results music ready
+	Jac_SceneSetup(SCENE_Results, JACRES_EndOfDay);
+
+	// clean up heaps
 	gsys->resetHeap(SYSHEAP_Movie, AYU_STACK_GROW_DOWN);
 	gsys->resetHeap(SYSHEAP_Teki, AYU_STACK_GROW_DOWN);
 	gsys->resetHeap(SYSHEAP_Teki, AYU_STACK_GROW_UP);
+
+	// use teki heap for end of day results
 	int old = gsys->setHeap(SYSHEAP_Teki);
 
 	if (playerState->getCurrParts() == MAX_UFO_PARTS) {
-		gameflow.mMoviePlayer->startMovie(DEMOID_GoodEndingTakeOff, 0, nullptr, nullptr, nullptr, 0xFFFFFFFF, true);
+		// we collected all the parts! play the good ending take off :)
+		gameflow.mMoviePlayer->startMovie(DEMOID_GoodEndingTakeOff, 0, nullptr, nullptr, nullptr, CAF_AllVisibleMask, true);
 
 	} else if (gameflow.mWorldClock.mCurrentDay < MAX_DAYS) {
-		PRINT("LOADING YOZURA MOVIE!!\n");
-		gameflow.mMoviePlayer->startMovie(DEMOID_EndOfDayResults, 0, nullptr, nullptr, nullptr, 0xFFFFFFFF, true);
+		PRINT("LOADING YOZURA MOVIE!!\n"); // 'loading night sky movie'
+		gameflow.mMoviePlayer->startMovie(DEMOID_EndOfDayResults, 0, nullptr, nullptr, nullptr, CAF_AllVisibleMask, true);
 
 		if (playerState->hasContainer(Red)) {
-			gameflow.mMoviePlayer->startMovie(DEMOID_EndOfDayRedOnyon, 0, nullptr, nullptr, nullptr, 0xFFFFFFFF, true);
+			// add red onion flying cutscene
+			gameflow.mMoviePlayer->startMovie(DEMOID_EndOfDayRedOnyon, 0, nullptr, nullptr, nullptr, CAF_AllVisibleMask, true);
 		}
 		if (playerState->hasContainer(Yellow)) {
-			gameflow.mMoviePlayer->startMovie(DEMOID_EndOfDayYellowOnyon, 0, nullptr, nullptr, nullptr, 0xFFFFFFFF, true);
+			// add yellow onion flying cutscene
+			gameflow.mMoviePlayer->startMovie(DEMOID_EndOfDayYellowOnyon, 0, nullptr, nullptr, nullptr, CAF_AllVisibleMask, true);
 		}
 		if (playerState->hasContainer(Blue)) {
-			gameflow.mMoviePlayer->startMovie(DEMOID_EndOfDayBlueOnyon, 0, nullptr, nullptr, nullptr, 0xFFFFFFFF, true);
+			// add blue onion flying cutscene
+			gameflow.mMoviePlayer->startMovie(DEMOID_EndOfDayBlueOnyon, 0, nullptr, nullptr, nullptr, CAF_AllVisibleMask, true);
 		}
 
+		// advance the day and handle the end-of-day results entries
 		gameflow.mWorldClock.mCurrentDay++;
 		if (!gameflow.mIsChallengeMode) {
-			int pages = 0;
-			int doc   = playerState->mResultFlags.getDocument(pages);
-			if (pages == 0) {
+			// story mode - get a diary entry to show at the end of the day, along with how many pages/screens it has
+			int pageCount              = 0;
+			zen::EnumResult diaryEntry = (zen::EnumResult)playerState->mResultFlags.getDocument(pageCount);
+			if (pageCount == 0) {
+				// bad!
 				ERROR("zero pages!\n");
 			}
+
+			// add all diary entry pages to the table for display.
 			int i = 0;
-			for (; i < pages; i++) {
-				resultTable[i] = doc + i;
+			for (; i < pageCount; i++) {
+				// entries can have up to 15 pages technically, but in practice they have a max of 2.
+				resultTable[i] = (zen::EnumResult)(diaryEntry + i);
 			}
-			resultTable[i] = 0;
-			resultWindow   = new zen::ogScrResultMgr((zen::EnumResult*)resultTable);
+			// signal diary entry end
+			resultTable[i] = zen::RESFLAG_DOC_END;
+
+			// start the results window with our chosen diary entry
+			resultWindow = new zen::ogScrResultMgr((zen::EnumResult*)resultTable);
 			resultWindow->start();
+
 		} else {
+			// challenge mode - start the challenge mode results window
 			GameChalQuickInfo info;
 			PRINT("starting challenge mode window %d : %d!\n", GameStat::formationPikis, GameStat::containerPikis);
 			info.mStageID = flowCont.mCurrentStage->mChalStageID;
 			info.mScore   = GameStat::allPikis;
+			// check if we got a new hiscore for this course, and update the info if so
 			gameflow.mGamePrefs.checkIsHiscore(info);
+
 			challengeWindow = new zen::DrawCMresult;
 			challengeWindow->start(info);
 		}
 	} else {
 		// we've hit max days, and haven't collected 30 parts :(
 		if (playerState->happyEndable()) {
+			// we have at least 25 parts, we can take off at least
 			flowCont.mEndingType = ENDING_Neutral;
-			gameflow.mMoviePlayer->startMovie(DEMOID_NeutralEndingLeaveOK, 0, nullptr, nullptr, nullptr, -1, true);
+			gameflow.mMoviePlayer->startMovie(DEMOID_NeutralEndingLeaveOK, 0, nullptr, nullptr, nullptr, CAF_AllVisibleMask, true);
 		} else {
-			gameflow.mMoviePlayer->startMovie(DEMOID_BadEndingFailEscape, 0, nullptr, nullptr, nullptr, -1, true);
+			// uh oh. play ship crashing back down cutscene and start final results
+			gameflow.mMoviePlayer->startMovie(DEMOID_BadEndingFailEscape, 0, nullptr, nullptr, nullptr, CAF_AllVisibleMask, true);
 			makeTotalScoreWindow();
 		}
 	}
 
+	// restore heap
 	gsys->setHeap(old);
+
+	// fade out
 	gsys->endLoading();
-	mSection->mTargetFade = 1.0f;
-	mSection->mFadeSpeed  = 0.5f;
-	mState                = 2;
+	mParentSection->mTargetFade = 1.0f;
+	mParentSection->mFadeSpeed  = 0.5f;
+	// move to next phase
+	mState = STATE_PhaseTwo;
 	return nullptr;
+#endif
 }
 
 /**
- * @todo: Documentation
+ * @brief Finishes processing of phase two day end state (ending cutscenes), and sets up for phase three (more ending cutscenes and some
+ * final results).
+ *
+ * @return Next mode state to transit to, if any - `nullptr` if we should stay in the current day end state. Always `nullptr` here, since if
+ * we've made it to this phase of processing without transiting (we're in an ending), we'll need to do some post-phase two checks in
+ * `update`.
  */
 ModeState* DayOverModeState::initialisePhaseThree()
 {
+	// 2-second loading screen
 	gsys->startLoading(nullptr, true, 120);
+
+	// double-quadruple check our cutscene list and heaps are right before we move forward
 	gameflow.mMoviePlayer->fixMovieList();
 	gsys->resetHeap(SYSHEAP_Movie, AYU_STACK_GROW_DOWN);
 	gsys->resetHeap(SYSHEAP_Teki, AYU_STACK_GROW_DOWN);
 	gsys->resetHeap(SYSHEAP_Teki, AYU_STACK_GROW_UP);
+
+	// use teki heap for these cutscenes
 	int old = gsys->setHeap(SYSHEAP_Teki);
+
+	// confirm navi isn't a pilot for the bad ending cutscene, since we crashed again
+	// (space cutscenes will re-set this to true, so it's fine)
 	playerState->setNavi(false);
 
 	if (playerState->getCurrParts() == MAX_UFO_PARTS) {
-		gameflow.mMoviePlayer->startMovie(DEMOID_GoodEndingOnyons, 0, nullptr, nullptr, nullptr, 0xFFFFFFFF, true);
+		// happy ending!
+		// cute onions floating near the planet cutscene
+		gameflow.mMoviePlayer->startMovie(DEMOID_GoodEndingOnyons, 0, nullptr, nullptr, nullptr, CAF_AllVisibleMask, true);
+
 	} else if (gameflow.mWorldClock.mCurrentDay == MAX_DAYS) {
+		// neutral or bad ending
 		if (playerState->happyEndable()) {
-			gameflow.mMoviePlayer->startMovie(DEMOID_EndingSpace, 0, nullptr, nullptr, nullptr, 0xFFFFFFFF, true);
+			// neutral! we made it to space
+			gameflow.mMoviePlayer->startMovie(DEMOID_EndingSpace, 0, nullptr, nullptr, nullptr, CAF_AllVisibleMask, true);
 			makeTotalScoreWindow();
 		} else {
-			u32 flags  = 0;
-			u32 ids[3] = { Red, Yellow, Blue };
-			for (int i = 0; i < 3; i++) {
+			// decide what pikmin should be present for the olimin cutscene
+			// if we've unlocked a type, make it present (there are a bunch of pikmin of each color)
+			u32 oliminObjFlags      = 0;
+			u32 ids[PikiColorCount] = { Red, Yellow, Blue };
+			for (int i = 0; i < PikiColorCount; i++) {
 				if (playerState->hasContainer(ids[i])) {
-					flags |= 1 << (i + 12);
+					ADD_ACTOR_PIKMIN_TYPE(oliminObjFlags, i);
 				}
 			}
-			u32 mask = flags | 0xFFFF07FF;
-			PRINT("playing movie with mask = %08x\n", mask);
+			u32 actorVisFlags = oliminObjFlags | ~CAF_AllObjMasks;
+			PRINT("playing movie with mask = %08x\n", actorVisFlags);
+
+			// kill any sprouts, since we need to be near the red onyon (and the focus should be solely on the olimin sprout)
 			gamecore->prepareBadEnd();
+
+			// make lighting morning
 			gameflow.mWorldClock.setTime(gameflow.mParameters->mStartHour());
-			gameflow.mMoviePlayer->startMovie(DEMOID_BadEndingOlimin, 0, nullptr, nullptr, nullptr, mask, true);
+
+			// OLIMIN
+			gameflow.mMoviePlayer->startMovie(DEMOID_BadEndingOlimin, 0, nullptr, nullptr, nullptr, actorVisFlags, true);
 			gameoverWindow = nullptr;
 		}
 	}
 
+	// restore heap
 	gsys->setHeap(old);
 	gsys->endLoading();
-	mState = 3;
+	// go to next phase
+	mState = STATE_PhaseThree;
 	return nullptr;
 }
 
 /**
- * @todo: Documentation
+ * @brief Finishes processing of phase three day end state (ending cutscenes), and sets up for phase four (everything being resolved).
+ *
+ * @return Next mode state to transit to, if any - `nullptr` if we should stay in the current day end state. For neutral and bad endings,
+ * this returns a pointer to a new `QuittingGameModeState`, to transit toward the title screen. Happy ending returns `nullptr` here, since
+ * if we've made it to this phase of processing without transiting, we'll need to do some post-phase three checks in `update` to clean up
+ * the final results screen.
  */
 ModeState* DayOverModeState::initialisePhaseFour()
 {
+	// double-quadruple check we're all good with cutscenes and heaps
 	gameflow.mMoviePlayer->fixMovieList();
 	gsys->resetHeap(SYSHEAP_Movie, AYU_STACK_GROW_DOWN);
 	gsys->resetHeap(SYSHEAP_Teki, AYU_STACK_GROW_DOWN);
 	gsys->resetHeap(SYSHEAP_Teki, AYU_STACK_GROW_UP);
+	// use teki heap for the space cutscene
 	int old = gsys->setHeap(SYSHEAP_Teki);
 
 	if (playerState->getCurrParts() == MAX_UFO_PARTS) {
-		gameflow.mMoviePlayer->startMovie(DEMOID_EndingSpace, 0, nullptr, nullptr, nullptr, 0xFFFFFFFF, true);
+		// happy ending, do final cutscene flying back to Hocotate
+		gameflow.mMoviePlayer->startMovie(DEMOID_EndingSpace, 0, nullptr, nullptr, nullptr, CAF_AllVisibleMask, true);
+
+		// final results!
 		makeTotalScoreWindow();
+
 	} else {
-		mSection->mPendingOnePlayerSectionID = ONEPLAYER_GameExit;
+		// we're done with all other endings, start the quitter to go back to title
+		mParentSection->mPendingOnePlayerSectionID = ONEPLAYER_GameExit;
 		gsys->setFade(0.0f, 3.0f);
-		return new QuittingGameModeState(mSection); // When this happens, the heap isnt restored, potential bug?
+		return new QuittingGameModeState(mParentSection); // When this happens, the heap isnt restored, potential bug?
 	}
 
+	// restore heap
 	gsys->setHeap(old);
-	mState = 4;
+	// move to next (final cleanup) phase
+	mState = STATE_PhaseFour;
 	return nullptr;
 }
 
+//////////////////////////////////////////////////////
+//////////////////// SETUP SECTION ///////////////////
+//////////////////////////////////////////////////////
+
 /**
- * @brief TODO
+ * @brief Inner control section for gameplay, which does a lot more of the labour than its parent `NewPikiGameSection`.
  *
- * @note Yes I know this sucks to be so far down the file.
- * @note UNFORTUNATELY IT'S REQUIRED BECAUSE SDATA SUCKS.
+ * This also sets up our `GameCoreSection` instance, which handles even more fine-grain game flow decisions.
+ *
+ * @note Size: 0x3E0.
+ * @note This is required to be this far down in the .cpp file due to .sdata nonsense.
  */
 struct NewPikiGameSetupSection : public BaseGameSection {
+
+	/// Constructs a new control section for gameplay, also setting up a lot of other important gameplay controllers in the process.
 	NewPikiGameSetupSection()
 	{
+		// start off in intro mode, to handle any area entry cutscenes
 		mCurrentModeState = new IntroGameModeState(this);
 
 		gameflow.mMoviePlayer->setGameCamInfo(false, 60.0f, Vector3f(0.0f, 0.0f, 0.0f), Vector3f(0.0f, 0.0f, 0.0f));
@@ -1221,17 +1766,26 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 		gameflow.mIsTutorialTextActive = FALSE;
 		mIsInitialSetup                = true;
 
-		lgMgr                       = new LifeGaugeMgr;
+		// set up life gauge manager
+		lgMgr = new LifeGaugeMgr;
+
 		movieIndex                  = 0;
 		gameflow.mIsDayEndActive    = FALSE;
 		gameflow.mIsDayEndTriggered = FALSE;
-		_44                         = 0;
-		mSecondController           = new Controller(2);
-		mNextModeState              = nullptr;
-		gameInfoIn                  = false;
-		gameInfoOn                  = false;
-		gameflow.mGameInterface     = new GameMovieInterface(this);
+		_44                         = 0; // unused
 
+		// set up unused player 2 controller (!!)
+		mPlayer2Controller = new Controller(2);
+
+		mNextModeState = nullptr;
+
+		gameInfoIn = false;
+		gameInfoOn = false;
+
+		// set up our interface for this section - will always be upcasted to `GameMovieInterface*` here.
+		gameflow.mGameInterface = new GameMovieInterface(this);
+
+		// set up frame cacher for pikmin animations
 		memStat->start("animCacher");
 		gameflow.mFrameCacher = new AnimFrameCacher(5000);
 		memStat->end("animCacher");
@@ -1240,11 +1794,13 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 		flowCont.mIsSunsetWhistleActive   = FALSE;
 		flowCont.mIsDayEndSeqStarted      = FALSE;
 
-		int size1 = 0x280000; // = 0xa00000 in the DLL
-		gsys->mHeaps[SYSHEAP_Teki].init("teki", AYU_STACK_GROW_UP, new u8[size1], size1);
-		int size2 = 0x40000;
-		gsys->mHeaps[SYSHEAP_Movie].init("movie", AYU_STACK_GROW_UP, new u8[size2], size2);
+		// set up teki and movie heaps
+		int tekiHeapSize = TEKI_HEAP_SIZE; // = 0xa00000 in the DLL
+		gsys->mHeaps[SYSHEAP_Teki].init("teki", AYU_STACK_GROW_UP, new u8[tekiHeapSize], tekiHeapSize);
+		int movieHeapSize = MOVIE_HEAP_SIZE;
+		gsys->mHeaps[SYSHEAP_Movie].init("movie", AYU_STACK_GROW_UP, new u8[movieHeapSize], movieHeapSize);
 
+		// set up the map!
 		PRINT("now doing map!\n");
 		memStat->start("mapMgr");
 		memStat->start("constructor");
@@ -1256,14 +1812,20 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 		memStat->end("shape");
 		memStat->end("mapMgr");
 
-		Jac_SceneSetup(SCENE_Unk5, flowCont.mCurrentStage->mStageID < STAGE_COUNT ? flowCont.mCurrentStage->mStageID : 0);
+		// set up course-specific music and any relevant windows we'll need urgently
+		// our fall-back music is the impact site track
+		Jac_SceneSetup(SCENE_Course, (flowCont.mCurrentStage->mStageID < STAGE_COUNT) ? flowCont.mCurrentStage->mStageID : STAGE_Practice);
 		init2Ddata();
+
+		// set up our workhorse gameplay handler
 		gamecore = new GameCoreSection(mController, mapMgr, mGameCamera);
 		add(gamecore);
 
+		// debug menus!
 #if defined(DEVELOP) || defined(WIN32)
 		typedef Delegate1<NewPikiGameSetupSection, Menu&> NPGSSDelegate1; // This is an insanely long typename to spell.
 
+		// set up options debug menu
 		Menu* optionsMenu               = new Menu(mController, gsys->mConsFont);
 		optionsMenu->mAnchorPoint.mMinX = glnWidth / 2;
 		optionsMenu->mAnchorPoint.mMinY = glnHeight / 2;
@@ -1274,6 +1836,7 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 
 		gameflow.addOptionsMenu(optionsMenu);
 
+		// set up movie player debug menu
 		Menu* movieMenu               = new Menu(mController, gsys->mConsFont);
 		movieMenu->mAnchorPoint.mMinX = glnWidth - 110;
 		movieMenu->mAnchorPoint.mMinY = glnHeight - 88;
@@ -1293,6 +1856,7 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 		movieMenu->addKeyEvent(Menu::KeyEventType::Input, KBBTN_X, new NPGSSDelegate1(this, &menuIncreaseFrame));
 		movieMenu->addKeyEvent(Menu::KeyEventType::Input, KBBTN_Y, new NPGSSDelegate1(this, &menuDecreaseFrame));
 
+		// set up vertical filter menu
 		Menu* filterMenu               = new Menu(mController, gsys->mConsFont);
 		filterMenu->mAnchorPoint.mMinX = glnWidth / 2;
 		filterMenu->mAnchorPoint.mMinY = glnHeight / 2;
@@ -1302,28 +1866,31 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 
 		gameflow.addFilterMenu(filterMenu);
 
-		mSectionMenu                     = new Menu(mController, gsys->mConsFont);
-		mSectionMenu->mAnchorPoint.mMinX = glnWidth / 2;
-		mSectionMenu->mAnchorPoint.mMinY = glnHeight / 2;
-		mSectionMenu->addKeyEvent(Menu::KeyEventType::SpecialRelease, KBBTN_B,
-		                          new Delegate1<Menu, Menu&>(mSectionMenu, &Menu::menuCloseMenu));
+		// set up overall debug menu
+		mDebugMenu                     = new Menu(mController, gsys->mConsFont);
+		mDebugMenu->mAnchorPoint.mMinX = glnWidth / 2;
+		mDebugMenu->mAnchorPoint.mMinY = glnHeight / 2;
+		mDebugMenu->addKeyEvent(Menu::KeyEventType::SpecialRelease, KBBTN_B, new Delegate1<Menu, Menu&>(mDebugMenu, &Menu::menuCloseMenu));
 
-		mSectionMenu->addOption(0, "Change Course", new NPGSSDelegate1(this, &menuChangeCourse));
-		mSectionMenu->addOption(0, "Day End", new NPGSSDelegate1(this, &menuDayEnd));
-		mSectionMenu->addMenu(optionsMenu, 0, "Options");
-		mSectionMenu->addMenu(gamecore->mAiPerfDebugMenu, 0, "Kando Options");
+		mDebugMenu->addOption(0, "Change Course", new NPGSSDelegate1(this, &menuChangeCourse));
+		mDebugMenu->addOption(0, "Day End", new NPGSSDelegate1(this, &menuDayEnd));
+		mDebugMenu->addMenu(optionsMenu, 0, "Options");
+		mDebugMenu->addMenu(gamecore->mAiPerfDebugMenu, 0, "Kando Options");
 		if (mapMgr->mDayMgr) {
-			mSectionMenu->addMenu(mapMgr->mDayMgr->mMenu, 0, "Lighting");
+			mDebugMenu->addMenu(mapMgr->mDayMgr->mMenu, 0, "Lighting");
 		}
-		mSectionMenu->addMenu(movieMenu, 0, "Movie Player");
-		mSectionMenu->addOption(MENU_FAKE_OPTION_FOR_GAP);
-		mSectionMenu->addOption(0, "Quit", new NPGSSDelegate1(this, &menuQuitGame));
+		mDebugMenu->addMenu(movieMenu, 0, "Movie Player");
+		mDebugMenu->addOption(MENU_FAKE_OPTION_FOR_GAP);
+		mDebugMenu->addOption(0, "Quit", new NPGSSDelegate1(this, &menuQuitGame));
 #endif
 
+		// reset more unused values
 		flowCont._254 = 0;
 		flowCont._258 = 0;
-		_3A8.set(96, 128, 255, 0);
 
+		_3A8.set(96, 128, 255, 0); // unused color
+
+		// initialise lights and effects
 		memStat->start("effects");
 		mapMgr->initEffects();
 		memStat->end("effects");
@@ -1332,7 +1899,10 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 		mapMgr->createLights();
 		memStat->end("mapMgr");
 
+		// REALLY set up the course
 		gamecore->initStage();
+
+		// set up more unused colors and floats - maybe something blending-related?
 		_3AC[0].set(0, 0, 48, 255);
 		_3AC[1].set(48, 48, 48, 255);
 		_3B4[0].set(0, 0, 0, 0);
@@ -1351,23 +1921,29 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 		gsys->mTogglePrint = old;
 
 		if (playerState->isTutorial()) {
-			gameflow.mMoviePlayer->startMovie(DEMOID_OlimarWakeUp, 0, nullptr, nullptr, nullptr, -1, true);
-		} else if (flowCont.mCurrentStage->mStageID < 5) {
-			gameflow.mMoviePlayer->startMovie(DEMOID_Landing, 0, nullptr, nullptr, nullptr, -1, true);
+			// start our wake-up post-crash-landing cutscene for Day 1
+			gameflow.mMoviePlayer->startMovie(DEMOID_OlimarWakeUp, 0, nullptr, nullptr, nullptr, CAF_AllVisibleMask, true);
+		} else if (flowCont.mCurrentStage->mStageID < STAGE_COUNT) {
+			// landing cutscene if we have a valid stage!
+			gameflow.mMoviePlayer->startMovie(DEMOID_Landing, 0, nullptr, nullptr, nullptr, CAF_AllVisibleMask, true);
 		}
 		gsys->setFade(1.0f, 3.0f);
 	}
 
+	/// Opens the debug menu.
 	virtual void openMenu() // _30
 	{
-		mActiveMenu = mSectionMenu;
+		mActiveMenu = mDebugMenu;
 		mActiveMenu->open(false);
 		mActiveMenu->mIsMenuChanging = true;
 	}
+
+	/// Updates for this frame - farms a lot of the work out to the active mode state.
 	virtual void update() // _10
 	{
-		mUpdateCountdown--;
+		mMenuRepeatTimer--;
 		if (!gameflow.mMoviePlayer->mIsActive) {
+			// if we have no active cutscene (or text screen), reset our movie heap to make sure we're not leaking memory
 			if (gsys->getHeap(SYSHEAP_Movie)->getTopUsed()) {
 				bool old           = gsys->mTogglePrint != FALSE;
 				gsys->mTogglePrint = TRUE;
@@ -1375,26 +1951,38 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 				gsys->mTogglePrint = old;
 			}
 		}
+
+		// update both player 1 and player 2 (!) controllers
 		mController->update();
-		mSecondController->update();
+		mPlayer2Controller->update();
 
 		if (!mIsInitialSetup) {
+			// handle any pending mode state transitions
 			if (mNextModeState) {
 				mCurrentModeState = mNextModeState;
 				mNextModeState    = nullptr;
 			}
+			// update the current/new mode state
 			mCurrentModeState = mCurrentModeState->update(mUpdateFlags);
 		}
 
+		// update any debug menus we have active
 		if (mActiveMenu) {
 			mActiveMenu = mActiveMenu->doUpdate(false);
 		}
 	}
+
+	/**
+	 * @brief Renders any section-related objects this frame. A lot of the main work is farmed out to inlines.
+	 *
+	 * @param gfx Graphics context for rendering.
+	 */
 	virtual void draw(Graphics& gfx) // _14
 	{
-		Matrix4f mtx;
+		Matrix4f orthoMtx;
 
 		if (!gameflow.mIsUIOverlayActive || gameflow.mIsTutorialTextActive) {
+			// update any cutscenes or text demos
 			gameflow.mMoviePlayer->update();
 		}
 
@@ -1407,35 +1995,50 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 					gameflow.mMoviePlayer->mCamTransitionFactor = 0.0f;
 				}
 
+				// flip so lerp factor goes from 0 to 1
 				f32 tComp = 1.0f - gameflow.mMoviePlayer->mCamTransitionFactor;
-				f32 fov   = cameraMgr->mCamera->getFov();
-				f32 a     = gameflow.mMoviePlayer->mTargetFov;
 
-				// In the final game, these leftovers from demo got left on the stack.
-				Vector3f unused1(cameraMgr->mCamera->getViewpoint());
-				Vector3f unused2(gameflow.mMoviePlayer->mTargetViewpoint);
-				Vector3f unused3(cameraMgr->mCamera->getWatchpoint());
-				Vector3f unused4(gameflow.mMoviePlayer->mLookAtPos);
+				f32 camFov   = cameraMgr->mCamera->getFov();
+				f32 movieFov = gameflow.mMoviePlayer->mTargetFov;
 
 #if defined(VERSION_G98E01_PIKIDEMO)
-				f32 fov2 = sinf(HALF_PI * tComp);
-				fov2     = sinf(HALF_PI * fov2);
-				fov2     = sinf(HALF_PI * fov2);
-				fov2     = sinf(HALF_PI * fov2);
+				Vector3f camViewPt(cameraMgr->mCamera->getViewpoint());
+				Vector3f movieViewPt(gameflow.mMoviePlayer->mTargetViewpoint);
+				Vector3f camWatchPt(cameraMgr->mCamera->getWatchpoint());
+				Vector3f movieWatchPt(gameflow.mMoviePlayer->mLookAtPos);
 
-				gfx.mCamera->mFov = (fov - a) * fov2 + a;
+				// unsure why you'd do this vs just a straight lerp factor but okay
+				f32 tCompFov = sinf(HALF_PI * tComp);
+				tCompFov     = sinf(HALF_PI * tCompFov);
+				tCompFov     = sinf(HALF_PI * tCompFov);
+				tCompFov     = sinf(HALF_PI * tCompFov);
 
-				unused1.set(unused1 - unused2);
-				unused1.set(unused1 * tComp);
-				gfx.mCamera->mPosition.set(unused1 + unused2);
+				// lerp the field of view from movie to gameplay camera
+				gfx.mCamera->mFov = movieFov + (camFov - movieFov) * tCompFov;
 
-				unused3.set(unused3 - unused4);
-				unused3.set(unused3 * tComp);
-				gfx.mCamera->mFocus.set(unused3 + unused4);
+				// lerp the camera's position from movie to gameplay camera
+				gfx.mCamera->mPosition.x = movieViewPt.x + (camViewPt.x - movieViewPt.x) * tComp;
+				gfx.mCamera->mPosition.y = movieViewPt.y + (camViewPt.y - movieViewPt.y) * tComp;
+				gfx.mCamera->mPosition.z = movieViewPt.z + (camViewPt.z - movieViewPt.z) * tComp;
 
+				// lerp the camera's focus from movie to gameplay camera
+				gfx.mCamera->mFocus.x = movieWatchPt.x + (camWatchPt.x - movieWatchPt.x) * tComp;
+				gfx.mCamera->mFocus.y = movieWatchPt.y + (camWatchPt.y - movieWatchPt.y) * tComp;
+				gfx.mCamera->mFocus.z = movieWatchPt.z + (camWatchPt.z - movieWatchPt.z) * tComp;
+
+				// recalculate camera matrix after changing vectors
 				gfx.mCamera->calcLookAt(gfx.mCamera->mPosition, gfx.mCamera->mFocus, nullptr);
 #else
-				gfx.mCamera->mFov = (fov - a) * tComp + a;
+
+				// in the demo, we'd also lerp the camera view (pos) and watch (focus) points from movie to gameplay camera
+				// but it seems this was removed in retail - someone forgot to remove these though!
+				Vector3f camViewPt(cameraMgr->mCamera->getViewpoint());
+				Vector3f movieViewPt(gameflow.mMoviePlayer->mTargetViewpoint);
+				Vector3f camWatchPt(cameraMgr->mCamera->getWatchpoint());
+				Vector3f targetWatchPt(gameflow.mMoviePlayer->mLookAtPos);
+
+				// just lerp the field of view from movie to gameplay camera (but preserve the eye and target points!)
+				gfx.mCamera->mFov = (camFov - movieFov) * tComp + movieFov;
 #endif
 			} else {
 				// no scene or active transition, so set to player cam
@@ -1447,11 +2050,14 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 			mGameCamera.update(f32(gfx.mScreenWidth) / f32(gfx.mScreenHeight), mGameCamera.mFov, 100.0f, mCameraFarClip);
 		}
 
+		// do any pre-rendering, assuming we're not in a menu
 		if (!(gameflow.mDemoFlags & GFDEMO_InMenu)) {
 			gsys->mTimer->start("preRender", true);
 			preRender(gfx);
 			gsys->mTimer->stop("preRender");
 		}
+
+		// do the main frame render
 
 // need these to be commented out, otherwise gsys does weird things in the next if block.
 #if defined(VERSION_G98E01_PIKIDEMO)
@@ -1466,18 +2072,19 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 		MATCHING_STOP_TIMER("mainRender");
 #endif
 
+		// try and update and draw effects
 		if (effectMgr) {
 			if (!gameflow.mPauseAll && !gameflow.mIsUIOverlayActive || gameflow.mIsTutorialTextActive) {
 
 #if defined(VERSION_G98E01_PIKIDEMO)
 				gsys->mTimer->start("effect", true);
 #endif
-				bool check = true;
+				bool isDVDNormal = true;
 				if (gsys->mDvdErrorCode >= DvdError::ReadingDisc) {
-					check = false;
+					isDVDNormal = false;
 				}
 
-				if (check) {
+				if (isDVDNormal) {
 					effectMgr->update();
 				}
 #if defined(VERSION_G98E01_PIKIDEMO)
@@ -1494,12 +2101,13 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 #endif
 		}
 
+		// do any 2D post-rendering (for overlays and windows)
 		if (!(gameflow.mDemoFlags & GFDEMO_InMenu)) {
 #if defined(VERSION_G98E01_PIKIDEMO)
 			gsys->mTimer->start("postRender", true);
 #endif
 			menuOn = false;
-			gfx.setOrthogonal(mtx.mMtx, AREA_FULL_SCREEN(gfx));
+			gfx.setOrthogonal(orthoMtx.mMtx, AREA_FULL_SCREEN(gfx));
 			postRender(gfx);
 			if (!mActiveMenu && menuWindow) {
 				menuOn = menuWindow->draw(gfx);
@@ -1509,33 +2117,35 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 #endif
 		}
 
-		gfx.setOrthogonal(mtx.mMtx, AREA_FULL_SCREEN(gfx));
+		gfx.setOrthogonal(orthoMtx.mMtx, AREA_FULL_SCREEN(gfx));
 
 		// whole section in DLL here about printing some debug text to screen
 
-		gfx.setOrthogonal(mtx.mMtx, AREA_FULL_SCREEN(gfx));
+		gfx.setOrthogonal(orthoMtx.mMtx, AREA_FULL_SCREEN(gfx));
 
+		// draw the debug menu if it's open
 		if (mActiveMenu) {
 			mActiveMenu->draw(gfx, 1.0f);
 		}
 
 		if (!mActiveMenu || gameflow.mMoviePlayer->mIsActive) {
+			// draw any other main windows we might have open
 			if (challengeWindow) {
-				gfx.setOrthogonal(mtx.mMtx, AREA_FULL_SCREEN(gfx));
+				gfx.setOrthogonal(orthoMtx.mMtx, AREA_FULL_SCREEN(gfx));
 				challengeWindow->draw(gfx);
 			}
 			if (resultWindow) {
-				gfx.setOrthogonal(mtx.mMtx, AREA_FULL_SCREEN(gfx));
+				gfx.setOrthogonal(orthoMtx.mMtx, AREA_FULL_SCREEN(gfx));
 				resultWindow->draw(gfx);
 			}
 			if (totalWindow) {
-				gfx.setOrthogonal(mtx.mMtx, AREA_FULL_SCREEN(gfx));
+				gfx.setOrthogonal(orthoMtx.mMtx, AREA_FULL_SCREEN(gfx));
 				totalWindow->draw(gfx);
 			}
 #if defined(VERSION_G98E01_PIKIDEMO)
 #else
 			if (memcardWindow) {
-				gfx.setOrthogonal(mtx.mMtx, AREA_FULL_SCREEN(gfx));
+				gfx.setOrthogonal(orthoMtx.mMtx, AREA_FULL_SCREEN(gfx));
 				memcardWindow->draw(gfx);
 			}
 #endif
@@ -1543,32 +2153,39 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 
 		BaseGameSection::draw(gfx);
 		if (!mIsInitialSetup) {
+			// check if we should advance the time of day
 			if (!gsys->resetPending() && (!mActiveMenu || gameflow.mMoviePlayer->mIsActive)) {
 				if (!gameflow.mPauseAll && !gameflow.mIsUIOverlayActive) {
-					if (!gameflow.mMoviePlayer->mIsActive && mUpdateFlags & UPDATE_WORLD_CLOCK && !playerState->isTutorial()) {
+					if (!gameflow.mMoviePlayer->mIsActive && (mUpdateFlags & UPDATE_WORLD_CLOCK) && !playerState->isTutorial()) {
 						f32 tod = gameflow.mWorldClock.mTimeOfDay;
 						gameflow.mWorldClock.update(1.0f);
 						f32 tod2 = gameflow.mWorldClock.mTimeOfDay;
 					}
+					// update any children in our list (this will make gamecore update)
 					Node::update();
 				}
+				// update the HUD
 				gamecore->mDrawGameInfo->update();
 				if (mUpdateFlags & UPDATE_AI && !(gameflow.mDemoFlags & GFDEMO_InMenu)) {
+					// update enemy/boss/pikmin/etc AI
 					gamecore->updateAI();
 				}
 			}
 		} else {
+			// we're still in initial set up - finalise things so we can start properly
 			PRINT("final setup!\n");
 			gamecore->finalSetup();
 			mIsInitialSetup = false;
 		}
 		if (mNextModeState) {
+			// force a mode transition if we have one pending
 			PRINT("FORCING MODE !!!!\n");
 			mCurrentModeState = mNextModeState;
 			mNextModeState    = nullptr;
 		}
 	}
 
+	/// Sets up our Pikmin font and sets up any relevant windows we might need suddenly (game over, count down, pause screen).
 	void init2Ddata()
 	{
 		mGameFont = new Font;
@@ -1582,12 +2199,12 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 		resultWindow    = nullptr;
 		totalWindow     = nullptr;
 		challengeWindow = nullptr;
-		memcardWindow   = nullptr;
-		tutorialWindow  = nullptr;
 #if defined(VERSION_G98E01_PIKIDEMO)
 #else
-		menuWindow = nullptr;
+		memcardWindow = nullptr;
 #endif
+		tutorialWindow = nullptr;
+		menuWindow     = nullptr;
 		memStat->start("gameover");
 		gameoverWindow = new zen::DrawGameOver;
 		memStat->end("gameover");
@@ -1600,6 +2217,11 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 
 		countWindow->init(gameflow.mParameters->mNightCountdown(), gameflow.mParameters->mNightEnd() - 0.01f, nullptr);
 	}
+
+	/**
+	 * @brief Sets up the map model and day manager, using information from the stage file.
+	 * @param map Active map manager to set up model and day manager for.
+	 */
 	void createMapObjects(MapMgr* map)
 	{
 		gsys->getHeap(gsys->mActiveHeapIdx);
@@ -1607,12 +2229,15 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 		RandomAccessStream* data = gsys->openFile(flowCont.mCurrStageFilePath, true, true);
 		if (data) {
 			CmdStream* stream = new CmdStream(data);
+
 			while (!stream->endOfCmds() && !stream->endOfSection()) {
 				stream->getToken(true);
 				if (stream->isToken("map_file")) {
 					sprintf(flowCont.mMapModelFilePath, "%s", stream->getToken(true));
+
 				} else if (stream->isToken("day_multiply")) {
 					sscanf(stream->getToken(true), "%f", &gameflow.mTimeMultiplier);
+
 				} else if (stream->isToken("dayMgr")) {
 					stream->getToken(true);
 					map->mDayMgr->init(stream);
@@ -1624,12 +2249,22 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 			}
 			data->close();
 		}
+
 		map->initShape();
 
 		STACK_PAD_VAR(6);
 	}
 
+	/**
+	 * @brief Performs any pre-rendering steps, including handling shadows, etc.
+	 * @param gfx Graphics context for rendering.
+	 */
 	void preRender(Graphics& gfx) { gamecore->mMapMgr->preRender(gfx); }
+
+	/**
+	 * @brief Performs the main rendering for a single frame, including getting `gamecore` to also render.
+	 * @param gfx Graphics context for rendering.
+	 */
 	void mainRender(Graphics& gfx)
 	{
 		gfx.setViewport(AREA_FULL_SCREEN(gfx));
@@ -1648,11 +2283,15 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 			if (playerState->isTutorial() && !gameflow.mIsDayEndActive) {
 				isTimeMoving = false;
 			}
-			mapMgr->mDayMgr->refresh(gfx, isTimeMoving ? gameflow.mWorldClock.mTimeOfDay : TUTORIAL_TIME_OF_DAY, 8);
-			mCameraFarClip = 10000.0f;
+			mapMgr->mDayMgr->refresh(gfx, isTimeMoving ? gameflow.mWorldClock.mTimeOfDay : TUTORIAL_TIME_OF_DAY, 8); // use 8 lights
+			mCameraFarClip = 10000.0f; // anything further than 10000 units isn't rendered
+
+			// force gamecore to also render
 			Node::draw(gfx);
+
 		} else {
-			mapMgr->mDayMgr->refresh(gfx, 25.0f, 8);
+			// we're in a menu or memory card error screen, act like it.
+			mapMgr->mDayMgr->refresh(gfx, MOVIE_TIME, 8);
 			gameflow.mMoviePlayer->addLights(gfx);
 			gfx.calcLighting(1.0f);
 			gameflow.mMoviePlayer->refresh(gfx);
@@ -1660,17 +2299,28 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 			gfx.flushCachedShapes();
 		}
 	}
+
+	/**
+	 * @brief Performs any post-rendering, primarily for overlays and things to be drawn on top of regular frame drawing.
+	 * @param gfx Graphics context for rendering.
+	 */
 	void postRender(Graphics& gfx)
 	{
 		gfx.setPerspective(gfx.mCamera->mPerspectiveMatrix.mMtx, 60.0f, gfx.mCamera->mAspectRatio, 1.0f, gfx.mCamera->mFar, 1.0f);
-		Matrix4f mtx;
-		mtx.makeSRT(Vector3f(0.1f, 0.1f, 0.1f), Vector3f(0.0f, 0.0f, 0.0f), Vector3f(0.0f, 0.0f, -5.0f));
+
+		Matrix4f unused;
+		unused.makeSRT(Vector3f(0.1f, 0.1f, 0.1f), Vector3f(0.0f, 0.0f, 0.0f), Vector3f(0.0f, 0.0f, -5.0f));
+
 		gfx.mRenderState = (GFXRENDER_Unk1 | GFXRENDER_Unk2 | GFXRENDER_Unk3);
 		mCurrentModeState->postRender(gfx);
-		Matrix4f mtx2;
-		gfx.setOrthogonal(mtx2.mMtx, AREA_FULL_SCREEN(gfx));
+		Matrix4f orthoMtx;
+		gfx.setOrthogonal(orthoMtx.mMtx, AREA_FULL_SCREEN(gfx));
 	}
 
+	/**
+	 * @brief Debug menu callback to quit game to title. DLL-only.
+	 * @param parent Parent debug menu.
+	 */
 	void menuQuitGame(Menu& parent)
 	{
 		// UNUSED FUNCTION (DLL inline)
@@ -1680,6 +2330,10 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 		mNextModeState = new QuittingGameModeState(this);
 	}
 
+	/**
+	 * @brief Debug menu callback to go straight to map select. DLL-only.
+	 * @param parent Parent debug menu.
+	 */
 	void menuChangeCourse(Menu& parent)
 	{
 		// UNUSED FUNCTION (DLL inline)
@@ -1689,6 +2343,10 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 		mNextModeState = new QuittingGameModeState(this);
 	}
 
+	/**
+	 * @brief Debug menu callback to end the day. DLL-only.
+	 * @param parent Parent debug menu.
+	 */
 	void menuDayEnd(Menu& parent)
 	{
 		// UNUSED FUNCTION (DLL inline)
@@ -1697,95 +2355,140 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 		gameflow.mIsDayEndTriggered = TRUE;
 	}
 
+	/**
+	 * @brief Debug menu callback to step current cutscene backward by one frame. DLL-only.
+	 * @param parent Parent debug menu.
+	 */
 	void menuDecreaseFrame(Menu& parent)
 	{
 		// UNUSED FUNCTION (DLL inline)
 		if (gameflow.mMoviePlayer->mIsActive) {
+			// pause the current cutscene so we step through frame-by-frame
 			gameflow.mMoviePlayer->mIsPaused = true;
-			if (mUpdateCountdown < -1) {
-				_3DC             = 4;
-				mUpdateCountdown = 0;
+
+			// we just had an input, set a delay for the next one to be detected
+			if (mMenuRepeatTimer < -1) {
+				mMenuRepeatDelay = 4;
+				mMenuRepeatTimer = 0;
 			}
-			if (mUpdateCountdown < 0) {
-				mUpdateCountdown = _3DC;
-				if (_3DC > 0) {
-					--_3DC;
+
+			// timer expired => we're holding the button, lock out input but decrease the delay
+			if (mMenuRepeatTimer < 0) {
+				mMenuRepeatTimer = mMenuRepeatDelay;
+				if (mMenuRepeatDelay > 0) {
+					// accelerate our input rate (holding the button speeds up our inputs)
+					// this will eventually just run the cutscene at -30 fps if held down
+					--mMenuRepeatDelay;
 				}
 				gameflow.mMoviePlayer->backFrame();
 			}
 		}
 	}
 
+	/**
+	 * @brief Debug menu callback to step current cutscene forward by one frame. DLL-only.
+	 * @param parent Parent debug menu.
+	 */
 	void menuIncreaseFrame(Menu& parent)
 	{
 		// UNUSED FUNCTION (DLL inline)
 		if (gameflow.mMoviePlayer->mIsActive) {
+			// pause the current cutscene so we step through frame-by-frame
 			gameflow.mMoviePlayer->mIsPaused = true;
-			if (mUpdateCountdown < -1) {
-				_3DC             = 4;
-				mUpdateCountdown = 0;
+
+			// we just had an input, set a delay for the next one to be detected
+			if (mMenuRepeatTimer < -1) {
+				mMenuRepeatDelay = 4;
+				mMenuRepeatTimer = 0;
 			}
-			if (mUpdateCountdown < 0) {
-				mUpdateCountdown = _3DC;
-				if (_3DC > 0) {
-					--_3DC;
+			// timer expired => we're holding the button, lock out input but decrease the delay
+			if (mMenuRepeatTimer < 0) {
+				mMenuRepeatTimer = mMenuRepeatDelay;
+				if (mMenuRepeatDelay > 0) {
+					// accelerate our input rate (holding the button speeds up our inputs)
+					// this will eventually just run the cutscene at 30 fps if held down
+					--mMenuRepeatDelay;
 				}
 				gameflow.mMoviePlayer->nextFrame();
 			}
 		}
 	}
 
+	/**
+	 * @brief Debug menu callback to increase selected cutscene index. DLL-only.
+	 * @param parent Parent debug menu.
+	 */
 	void menuIncreaseMovie(Menu& parent)
 	{
 		// UNUSED FUNCTION (DLL inline)
-		if (mUpdateCountdown < -1) {
-			_3DC             = 4;
-			mUpdateCountdown = 0;
+		// we just had an input, set a delay for the next one to be detected
+		if (mMenuRepeatTimer < -1) {
+			mMenuRepeatDelay = 4;
+			mMenuRepeatTimer = 0;
 		}
-		if (mUpdateCountdown < 0) {
-			mUpdateCountdown = _3DC;
-			if (_3DC > 0) {
-				--_3DC;
+		// timer expired => we're holding the button, lock out input but decrease the delay
+		if (mMenuRepeatTimer < 0) {
+			mMenuRepeatTimer = mMenuRepeatDelay;
+			if (mMenuRepeatDelay > 0) {
+				// accelerate our input rate (holding the button speeds up our inputs)
+				--mMenuRepeatDelay;
 			}
 			++movieIndex;
 		}
+		// set correct movie ID bounds
 		if (movieIndex > TERNARY_BUGFIX(DEMOID_COUNT - 1, DEMOID_EndOfDayRedOnyon)) {
 			movieIndex = TERNARY_BUGFIX(DEMOID_COUNT - 1, DEMOID_EndOfDayRedOnyon);
 		}
 		sprintf(parent.mCurrentItem->mName, "Movie #%d", movieIndex);
 	}
 
+	/**
+	 * @brief Debug menu callback to decrease selected cutscene index. DLL-only.
+	 * @param parent Parent debug menu.
+	 */
 	void menuDecreaseMovie(Menu& parent)
 	{
 		// UNUSED FUNCTION (DLL inline)
-		if (mUpdateCountdown < -1) {
-			_3DC             = 4;
-			mUpdateCountdown = 0;
+		// we just had an input, set a delay for the next one to be detected
+		if (mMenuRepeatTimer < -1) {
+			mMenuRepeatDelay = 4;
+			mMenuRepeatTimer = 0;
 		}
-		if (mUpdateCountdown < 0) {
-			mUpdateCountdown = _3DC;
-			if (_3DC > 0) {
-				--_3DC;
+		// timer expired => we're holding the button, lock out input but decrease the delay
+		if (mMenuRepeatTimer < 0) {
+			mMenuRepeatTimer = mMenuRepeatDelay;
+			if (mMenuRepeatDelay > 0) {
+				// accelerate our input rate (holding the button speeds up our inputs)
+				--mMenuRepeatDelay;
 			}
 			--movieIndex;
 		}
+		// set correct movie ID bounds
 		if (movieIndex < 0) {
 			movieIndex = 0;
 		}
 		sprintf(parent.mCurrentItem->mName, "Movie #%d", movieIndex);
 	}
 
+	/**
+	 * @brief Debug menu callback to start the chosen cutscene. DLL-only.
+	 * @param parent Parent debug menu.
+	 */
 	void menuPlayMovie(Menu& parent)
 	{
 		// UNUSED FUNCTION (DLL inline)
 		if (gameflow.mMoviePlayer->mIsActive) {
-			gameflow.mMoviePlayer->skipScene(2);
+			gameflow.mMoviePlayer->skipScene(SCENESKIP_Skip);
 		} else {
 			gameflow.mMoviePlayer->mIsPaused = false;
-			gameflow.mMoviePlayer->startMovie(movieIndex, 0, nullptr, nullptr, nullptr, 0xFFFFFFFF, false);
+			gameflow.mMoviePlayer->startMovie(movieIndex, 0, nullptr, nullptr, nullptr, CAF_AllVisibleMask, false);
 		}
 	}
 
+	/**
+	 * @brief Debug menu callback to pause/unpause the currently playing cutscene. DLL-only.
+	 * @param parent Parent debug menu.
+	 */
 	void menuPauseMovie(Menu& parent)
 	{
 		// UNUSED FUNCTION (DLL inline)
@@ -1797,33 +2500,39 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 
 	///< 00     = VTBL
 	///< 00-_44 = BaseGameSection
-	int _44;                       ///< 44
-	u8 _48[8];                     ///< 48
-	Menu* mSectionMenu;            ///< 50
-	Controller* mSecondController; ///< 54
-	Font* mGameFont;               ///< 58
-	Camera mGameCamera;            ///< 5C
-	f32 mCameraFarClip;            ///< 3A4
-	Colour _3A8;                   ///< 3a8, unused
-	Colour _3AC[2];                ///< 3AC, unused
-	Colour _3B4[2];                ///< 3B4, unused
-	Colour _3BC[2];                ///< 3BC, unused
-	f32 _3C4[4];                   ///< 3C4, unused
-	bool mIsInitialSetup;          ///< 3D4
-	int mUpdateCountdown;          ///< 3D8
-	int _3DC;                      ///< 3DC
+	u32 _44;                        ///< _044, unused/unknown.
+	u8 _48[0x50 - 0x48];            ///< _048, unused/unknown.
+	Menu* mDebugMenu;               ///< _050, debug menu, only enabled in DEVELOP builds.
+	Controller* mPlayer2Controller; ///< _054, controller for player 2 - never used, but set up and updated.
+	Font* mGameFont;                ///< _058, "big" font, seemingly for screens - set up, but never used.
+	Camera mGameCamera;             ///< _05C, camera following captain.
+	f32 mCameraFarClip;             ///< _3A4, max render distance from the camera.
+	Colour _3A8;                    ///< _3A8, unused/unknown.
+	Colour _3AC[2];                 ///< _3AC, unused/unknown.
+	Colour _3B4[2];                 ///< _3B4, unused/unknown.
+	Colour _3BC[2];                 ///< _3BC, unused/unknown.
+	f32 _3C4[4];                    ///< _3C4, unused/unknown.
+	bool mIsInitialSetup;           ///< _3D4, are we still in the initial setup phase? Cannot do certain actions til we're done.
+	int mMenuRepeatTimer;           ///< _3D8, timer for detecting repeat inputs in the movie debug menu so we don't scroll too fast.
+	int mMenuRepeatDelay;           ///< _3DC, decreasing lockout for repeat inputs in the movie debug menu, for variable scroll speed.
 };
 
+//////////////////////////////////////////////////////
+/////////////////// MOVIE FUNCTIONS //////////////////
+//////////////////////////////////////////////////////
+
 /**
- * @todo: Documentation
+ * @brief Processes the current command and movie queues until they're empty.
  */
 void GameMovieInterface::parseMessages()
 {
-	for (int i = 0; i < mMessageCount; i++) {
-		parse(mMesg[i]);
+	// process all queued commands
+	for (int i = 0; i < mSimpleMessageCount; i++) {
+		parse(mSimpMesg[i]);
 	}
-	mMessageCount = 0;
+	mSimpleMessageCount = 0;
 
+	// process all queued movies
 	for (int i = 0; i < mComplexMesgCount; i++) {
 		parse(mCompMesg[i]);
 	}
@@ -1832,44 +2541,58 @@ void GameMovieInterface::parseMessages()
 }
 
 /**
- * @todo: Documentation
+ * @brief Actions the given movie command and any associated data.
+ *
+ * @param msg Simple message containing command and possible data to process.
  */
 void GameMovieInterface::parse(GameMovieInterface::SimpleMessage& msg)
 {
-	int id   = msg.mMessageId;
+	int cmd  = msg.mCommand;
 	int data = msg.mData;
+
 #if defined(VERSION_GPIP01_00)
-	OSReport("!!!!!!!!!!! Got message %d : %d\n", id, data);
+	OSReport("!!!!!!!!!!! Got message %d : %d\n", cmd, data);
 #endif
-	switch (id) {
+
+	switch (cmd) {
 	case MOVIECMD_TextDemo:
-		// data here should use the zen::ogScrTutorialMgr::EnumTutorial enum (text ID)
+		// open a text window - data here should use the zen::ogScrTutorialMgr::EnumTutorial enum (text ID)
 		PRINT("***** START TUTORIAL WINDOW\n");
-		int partId    = -1;
+		int ufoPartID = -1;
 		bool hasAudio = false;
 		if (data == zen::ogScrTutorialMgr::TUT_GetParts) {
-			if (gameflow.mShipTextPartID == -1) {
+			// we want a ship part-related text box - either interacting with ship or actual part
+
+			// we have no target part - we're either interacting with the ship
+			// or have just collected the engine (since the power-up animation needs to happen before any text)
+			if (gameflow.mShipTextPartID == UFO_NOPART) {
 				if (gameflow.mShipTextType == SHIPTEXT_CollectEngine) {
 					gameflow.mMoviePlayer->skipScene(SCENESKIP_Skip);
 					return;
 
 				} else if (gameflow.mShipTextType == SHIPTEXT_PartCollect) {
+					// interacting with the Dolphin by pressing A at the ship body itself
 					data = zen::ogScrTutorialMgr::TUT_HitUFO;
 				} else {
+					// this is the damage critical text box, but never gets called like this - this is a fallback
 					data = zen::ogScrTutorialMgr::TUT_APunchUFO;
 				}
 
 			} else if (gameflow.mShipTextType == SHIPTEXT_PartCollect) {
+				// collecting a ship part!
 				data = gameflow.mShipTextPartID + zen::ogScrTutorialMgr::TUT_PartsGetOffset;
 
 			} else if (gameflow.mShipTextType == SHIPTEXT_PartsAccess) {
-				data     = gameflow.mShipTextPartID + zen::ogScrTutorialMgr::TUT_PartsInfoOffset;
-				hasAudio = false;
-				partId   = gameflow.mShipTextPartID;
+				// interacting with a part directly before collection (little info box)
+				data      = gameflow.mShipTextPartID + zen::ogScrTutorialMgr::TUT_PartsInfoOffset;
+				hasAudio  = false;
+				ufoPartID = gameflow.mShipTextPartID;
 
 			} else if (gameflow.mShipTextType == SHIPTEXT_PowerUp) {
+				// upgrading the Dolphin
 				PRINT("showing power up message (%d)!!\n", gameflow.mShipTextPartID + zen::ogScrTutorialMgr::TUT_PartsPower);
 				int id = gameflow.mShipTextPartID + zen::ogScrTutorialMgr::TUT_PartsPower;
+				// handle final part differently, since we'll need to go straight to the good ending
 				if (gameflow.mShipTextPartID == UFO_SecretSafe) {
 					dontShowFrame = true;
 					data          = zen::ogScrTutorialMgr::TUT_FinishUFO;
@@ -1878,47 +2601,51 @@ void GameMovieInterface::parse(GameMovieInterface::SimpleMessage& msg)
 				}
 
 			} else if (gameflow.mShipTextType == SHIPTEXT_PartDiscovery) {
-				partId   = gameflow.mShipTextPartID;
-				hasAudio = true;
-				data     = gameflow.mShipTextPartID + zen::ogScrTutorialMgr::TUT_PartsGetOnlyOffset;
+				// we walked close to a part for the first time
+				ufoPartID = gameflow.mShipTextPartID;
+				hasAudio  = true;
+				data      = gameflow.mShipTextPartID + zen::ogScrTutorialMgr::TUT_PartsGetOnlyOffset;
 			}
 		}
 
-		createTutorialWindow(data, partId, hasAudio);
+		createTutorialWindow(data, ufoPartID, hasAudio);
 		gameflow.mIsUIOverlayActive = TRUE;
 		break;
 
 	case MOVIECMD_Unused:
+		// bad!
 		ERROR("SHOULD NOT GET THIS COMMAND!!!\n");
 		break;
 
 	case MOVIECMD_ForceDayEnd:
+		// force day to end
 		gamecore->forceDayEnd();
 		gameflow.mIsDayEndTriggered = TRUE;
 		break;
 
 	case MOVIECMD_HideHUD:
+		// hide the game HUD with a 0.5s fade-out
 		showFrame(false, 0.5f);
 		break;
 
 	case MOVIECMD_ShowHUD:
+		// show the game HUD with a 0.5s fade-in
 		showFrame(true, 0.5f);
 		break;
 
 	case MOVIECMD_GameEndCondition:
-		// data here is 0 or 1:
-		// - 0 = caused by pikmin zero
-		// - 1 = caused by navi dead
-		if (data == 0) {
-			// data = 0 => pikmin zero!
+		// cause the day to end. data here should use `GameEndCause` enum.
+		if (data == ENDCAUSE_PikminZero) {
+			// pikmin zero!
 			if (flowCont.mGameEndFlag == GAMEEND_PikminExtinction) {
-				// we already have the pikmin extinction flag set somehow, go straight to day end if we're not on day 30
+				// we already have the pikmin extinction flag set, go straight to day end if we're not on day 30
 				if (!gameflow.mIsChallengeMode && gameflow.mWorldClock.mCurrentDay != MAX_DAYS) {
-					gameflow.mMoviePlayer->startMovie(DEMOID_ExtDayEnd, 0, nullptr, nullptr, nullptr, -1, true);
+					gameflow.mMoviePlayer->startMovie(DEMOID_ExtDayEnd, 0, nullptr, nullptr, nullptr, CAF_AllVisibleMask, true);
 					gameflow.mWorldClock.setTime(gameflow.mParameters->mEndHour());
 					if (gameoverWindow) {
 						gameoverWindow->start(zen::DrawGameOver::MODE_Extinction, 40.0f);
 					}
+					// fade to black
 					mapMgr->mTargetFadeLevel = 0.0f;
 				} else {
 					// if we're in challenge mode or on the final day, reset the end flag
@@ -1929,88 +2656,103 @@ void GameMovieInterface::parse(GameMovieInterface::SimpleMessage& msg)
 				flowCont.mGameEndFlag = GAMEEND_PikminExtinction;
 				PRINT("got zero pikis flag!!\n");
 				Navi* navi = naviMgr->getNavi(0);
-				gameflow.mMoviePlayer->startMovie(DEMOID_Extinction, 0, navi, &navi->mSRT.t, &navi->mSRT.r, -1, true);
+				gameflow.mMoviePlayer->startMovie(DEMOID_Extinction, 0, navi, &navi->mSRT.t, &navi->mSRT.r, CAF_AllVisibleMask, true);
 				if (gameflow.mIsChallengeMode || gameflow.mWorldClock.mCurrentDay == MAX_DAYS) {
-					// if we're in challenge mode or on the final day, game over!
+					// if we're in challenge mode or on the final day, display Pikmin Extinction text now, since we don't end the day
 					if (gameoverWindow) {
 						gameoverWindow->start(zen::DrawGameOver::MODE_Extinction, 40.0f);
 					}
 				}
 			}
 		} else {
-			// data = 1 => navi dead!
+			// data = ENDCAUSE_NaviDown
 			flowCont.mGameEndFlag = GAMEEND_NaviDown;
 			PRINT("got navi dead flag!!\n");
 		}
 		break;
 
 	case MOVIECMD_ForceResults:
+		// force going to results screen - in practice, this does nothing.
 		PRINT("got FORCE RESULTS SCREEN !!!\n");
 		flowCont.mGameEndFlag = GAMEEND_None;
 		break;
 
 	case MOVIECMD_StartMovie:
-		bool check = (data & 0x80000000) != 0;
-		gamecore->startMovie(data & 0x7FFFFFFF, check);
-		PRINT("%s\n", check ? "HIDING NAVI!!!" : "not hiding!");
+		// start playing a cutscene
+		bool useNaviView = (data & CinePlayerFlags::UseNaviView) != 0;
+		gamecore->startMovie(data & ~CinePlayerFlags::UseNaviView, useNaviView);
+		PRINT("%s\n", useNaviView ? "HIDING NAVI!!!" : "not hiding!");
 		break;
 
 	case MOVIECMD_EndMovie:
+		// stop playing a cutscene
 #if defined(VERSION_PIKIDEMO)
+		// demo version takes no parameter because it has no cutscene-specific behaviour
 		gamecore->endMovie();
 #else
+		// after demo, devs added some angle changes for finding each onyon, and for the main engine cutscene, so need the ID.
 		gamecore->endMovie(data);
 #endif
 		break;
 
 	case MOVIECMD_FadeOut:
-		mSection->mTargetFade = 0.0f;
-		mSection->mFadeSpeed  = 4.5f;
+		// start a fade-out from gameplay
+		mSetupSection->mTargetFade = 0.0f;
+		mSetupSection->mFadeSpeed  = 4.5f;
 		break;
 
 	case MOVIECMD_FadeIn:
-		mSection->mCurrentFade = 0.0f;
-		mSection->mTargetFade  = 1.0f;
-		mSection->mFadeSpeed   = 2.5f;
+		// start a fade-in to gameplay
+		mSetupSection->mCurrentFade = 0.0f;
+		mSetupSection->mTargetFade  = 1.0f;
+		mSetupSection->mFadeSpeed   = 2.5f;
 		break;
 
 	case MOVIECMD_CleanupDayEnd:
+		// cleanup day end! we clearly should not get this message.
 		PRINT("MESSAGE CLEANUPDAYEND!!!!\n");
 		PRINT("wwwwwhhhhyyyyyy??????|!!!\n");
 		gamecore->cleanupDayEnd();
 		break;
 
 	case MOVIECMD_StartTotalResults:
+		// start the final results for story mode
 		PRINT("starting total results!!\n");
 		totalWindow->start();
-		Jac_SceneSetup(SCENE_Unk6, 1);
+		Jac_SceneSetup(SCENE_Results, JACRES_FinalResult);
 		break;
 
 	case MOVIECMD_SpecialDayEnd:
+		// we collected all the parts! end the day and show the happy ending.
 		gamecore->forceDayEnd();
 		gameflow.mIsDayEndTriggered = TRUE;
 		flowCont.mEndingType        = ENDING_Happy;
 		break;
 
 	case MOVIECMD_SetPauseAllowed:
+		// allow/disallow pausing. data here is a BOOL for whether to allow pausing.
 		gameflow.mIsPauseAllowed = data;
 		break;
 
 	case MOVIECMD_CountDownLastSecond:
+		// this does nothing - maybe commented out code, or some flexibility for handling things last-second?
 		break;
 
 	case MOVIECMD_StageFinish:
+		// game over! pikmin extinction or navi dead, end the day.
 		PRINT("GOT STAGE FINISH MESSAGE!!!\n");
 		gamecore->forceDayEnd();
 		break;
 
 	case MOVIECMD_CreateMenuWindow:
+		// open the Y menu (map and controls etc)
 		createMenuWindow();
 		break;
 
 #if defined(VERSION_G98E01_PIKIDEMO)
 	case MOVIECMD_DemoFinish:
-		createTutorialWindow(DEMOID_DayEndForest, -1, 0);
+		// show the happy ending text at the end of the demo :)
+		createTutorialWindow(zen::ogScrTutorialMgr::TUT_HappyEnding, -1, false);
 		gameflow.mIsUIOverlayActive = TRUE;
 		break;
 #else
@@ -2019,16 +2761,24 @@ void GameMovieInterface::parse(GameMovieInterface::SimpleMessage& msg)
 }
 
 /**
- * @todo: Documentation
+ * @brief Starts a cutscene with the given cutscene information (in the form of a ComplexMessage).
+ *
+ * @param msg Message containing all information needed to start the cutscene.
  */
 void GameMovieInterface::parse(GameMovieInterface::ComplexMessage& msg)
 {
-	gameflow.mMoviePlayer->startMovie(msg.mMovieIdx, msg._UNUSED04, msg.mTarget, &msg.mPosition, &msg.mRotation, msg.mFlags,
+	gameflow.mMoviePlayer->startMovie(msg.mMovieIdx, msg._04, msg.mTarget, &msg.mPosition, &msg.mRotation, msg.mActorVisMask,
 	                                  msg.mIsPlaying);
 }
 
+//////////////////////////////////////////////////////
+//////////////////// GAME SECTION ////////////////////
+//////////////////////////////////////////////////////
+
 /**
- * @todo: Documentation
+ * @brief Constructs gameplay subsection - either challenge mode or story mode.
+ *
+ * Most of the hard work gets farmed out to `NewPikiGameSetupSection` above and any mode states, including transiting to a new subsection.
  */
 NewPikiGameSection::NewPikiGameSection()
 {
@@ -2041,20 +2791,28 @@ NewPikiGameSection::NewPikiGameSection()
 		// day one is locked at 2:48pm
 		gameflow.mWorldClock.setTime(TUTORIAL_TIME_OF_DAY);
 	}
-	flowCont.mGameEndFlag = 0;
+
+	flowCont.mGameEndFlag = GAMEEND_None;
 #if defined(VERSION_GPIP01_00)
+	// in PAL, day end is skippable unless it's a special day end
 	flowCont.mIsDayEndSkippable = TRUE;
 	flowCont.mIsDayEndSkipped   = FALSE;
 #endif
+
+	// run gameplay at 30 fps
 	gsys->setFrameClamp(2);
+
 #ifdef WIN32
 	_nPrint = FALSE;
 	_kPrint = FALSE;
 #endif
+
+	// these will get set up by NewPikiGameSetupSection or GameCoreSection
 	mapMgr = nullptr;
 	npgss  = nullptr;
 
 	memStat->start("all");
+	// the actual workhorse for gameplay
 	NewPikiGameSetupSection* setup = new NewPikiGameSetupSection;
 	add(setup);
 	memStat->end("all");
@@ -2070,3 +2828,5 @@ NewPikiGameSection::NewPikiGameSection()
 
 	STACK_PAD_TERNARY(print, 2);
 }
+
+//////////////////////////////////////////////////////

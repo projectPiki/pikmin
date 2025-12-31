@@ -20,5 +20,6 @@ DEFINE_PRINT("GameStageClearSection");
 GameStageClearSection::GameStageClearSection()
 {
 	Node::init("<GameStageClearSection>");
+	// run stage clear at 60 fps
 	gsys->setFrameClamp(1);
 }

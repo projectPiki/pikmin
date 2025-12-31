@@ -121,7 +121,7 @@ void Jac_PlaySystemSe(s32 id)
 
 	case JACSYS_OrimaLifeDim:
 	case JACSYS_ViewChange:
-		if (Jac_DemoCheck() == TRUE || Jac_PauseCheck() == TRUE || Jac_GetCurrentScene() != SCENE_Unk5) {
+		if (Jac_DemoCheck() == TRUE || Jac_PauseCheck() == TRUE || Jac_GetCurrentScene() != SCENE_Course) {
 			return;
 		}
 

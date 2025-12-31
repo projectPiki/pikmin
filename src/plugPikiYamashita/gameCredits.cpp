@@ -21,6 +21,7 @@ DEFINE_PRINT("GameCreditsSection");
 GameCreditsSection::GameCreditsSection()
 {
 	Node::init("<GameCreditsSection>");
+	// run demo credits at 60 fps
 	gsys->setFrameClamp(1);
 	flowCont.mNaviSeedCount = 0;
 	flowCont._250           = 0;

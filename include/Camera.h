@@ -148,7 +148,7 @@ struct CullFrustum {
 /**
  * @brief TODO
  *
- * @note Size: 0x348 (probably).
+ * @note Size: 0x348.
  */
 struct Camera : public CullFrustum {
 	Camera();

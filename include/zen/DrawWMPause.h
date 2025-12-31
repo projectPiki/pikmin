@@ -18,6 +18,8 @@ struct DrawWMPause {
 
 	/**
 	 * @brief World map exit status codes
+	 *
+	 * @todo de-AI these - they're completely wrong.
 	 */
 	enum returnStatusFlag {
 		RETURN_NULL    = -1,

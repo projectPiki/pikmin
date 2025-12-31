@@ -125,9 +125,9 @@ void GameCoreSection::startMovie(u32 flags, bool useMovieBackCamera)
 	// Uses CinePlayerFlags
 
 	mUseMovieBackCamera    = useMovieBackCamera;
-	GoalItem::demoHideFlag = 0;
+	GoalItem::demoHideFlag = GoalItem::ShowAll;
 	if (flags & CinePlayerFlags::HideRedCont) {
-		GoalItem::demoHideFlag = 2; // See: `GoalItem::refresh`
+		GoalItem::demoHideFlag = GoalItem::HideRedOnyon;
 	}
 
 	if (pelletMgr) {
@@ -248,16 +248,19 @@ void GameCoreSection::startMovie(u32 flags, bool useMovieBackCamera)
 	}
 }
 
+#if defined(VERSION_PIKIDEMO)
 /**
  * @todo: Documentation
  */
-#if defined(VERSION_PIKIDEMO)
 void GameCoreSection::endMovie()
 #else
+/**
+ * @todo: Documentation
+ */
 void GameCoreSection::endMovie(int movieIdx)
 #endif
 {
-	GoalItem::demoHideFlag = 0;
+	GoalItem::demoHideFlag = GoalItem::ShowAll;
 	if (tekiMgr) {
 		tekiMgr->setVisibleTypeTable(true);
 	}
@@ -491,23 +494,23 @@ void GameCoreSection::cleanupDayEnd()
 
 	switch (flowCont.mCurrentStage->mStageID) {
 	case STAGE_Practice:
-		playerState->mResultFlags.setOn(RESFLAG_EndFirstDay);
-		playerState->mResultFlags.setOn(RESFLAG_UnusedControls2);
+		playerState->mResultFlags.setOn(zen::RESFLAG_EndFirstDay);
+		playerState->mResultFlags.setOn(zen::RESFLAG_UnusedControls2);
 		break;
 	case STAGE_Forest:
-		playerState->mResultFlags.setOn(RESFLAG_FirstVisitForest);
+		playerState->mResultFlags.setOn(zen::RESFLAG_FirstVisitForest);
 		break;
 	case STAGE_Yakushima:
-		playerState->mResultFlags.setOn(RESFLAG_FirstVisitYakushima);
+		playerState->mResultFlags.setOn(zen::RESFLAG_FirstVisitYakushima);
 		break;
 	case STAGE_Last:
 		break;
 	}
 	if (playerState->getCurrDay() + 1 == playerState->getTotalDays() - 1) {
-		playerState->mResultFlags.setOn(RESFLAG_FinalDay);
+		playerState->mResultFlags.setOn(zen::RESFLAG_FinalDay);
 	}
 	if (playerState->getCurrParts() >= 11 && playerState->getCurrDay() >= 9) {
-		playerState->mResultFlags.setOn(RESFLAG_Collect10Parts);
+		playerState->mResultFlags.setOn(zen::RESFLAG_Collect10Parts);
 	}
 	int day = playerState->getCurrDay();
 	playerState->setDayCollectCount(day, playerState->getCurrParts());
@@ -636,7 +639,7 @@ void GameCoreSection::cleanupDayEnd()
 			}
 		}
 		if (GameStat::victimPikis > 0) {
-			playerState->mResultFlags.setOn(RESFLAG_PikminLeftBehind);
+			playerState->mResultFlags.setOn(zen::RESFLAG_PikminLeftBehind);
 		}
 	}
 	PRINT("++++++ %d PIKIS KILLED\n", killed);
@@ -844,17 +847,17 @@ void GameCoreSection::initStage()
 	case STAGE_Last:
 		break;
 	case STAGE_Cave:
-		playerState->mResultFlags.setOn(RESFLAG_FirstVisitCave);
+		playerState->mResultFlags.setOn(zen::RESFLAG_FirstVisitCave);
 		break;
 	case STAGE_Yakushima:
-		playerState->mResultFlags.setOn(RESFLAG_FirstVisitYakushima);
+		playerState->mResultFlags.setOn(zen::RESFLAG_FirstVisitYakushima);
 		break;
 	}
 
 	if (gameflow.mWorldClock.mCurrentDay >= 10 && gameflow.mWorldClock.mCurrentDay <= 20) {
-		playerState->mResultFlags.setOn(RESFLAG_OlimarDaydream);
+		playerState->mResultFlags.setOn(zen::RESFLAG_OlimarDaydream);
 	} else if (gameflow.mWorldClock.mCurrentDay > 20) {
-		playerState->mResultFlags.setSeen(RESFLAG_OlimarDaydream);
+		playerState->mResultFlags.setSeen(zen::RESFLAG_OlimarDaydream);
 	}
 
 	playerState->initCourse();
@@ -1173,7 +1176,7 @@ void GameCoreSection::finalSetup()
 			playerState->mDemoFlags.setFlag(DEMOFLAG_PostExtinctionSeed, nullptr);
 			playerState->mHasExtinctionDemoPlayed = true;
 		} else {
-			gameflow.mGameInterface->movie(DEMOID_Unk64Cat, 0, nullptr, nullptr, nullptr, -1, true);
+			gameflow.mGameInterface->movie(DEMOID_Unk64Cat, 0, nullptr, nullptr, nullptr, CAF_AllVisibleMask, true);
 			playerState->mHasExtinctionDemoPlayed = true;
 		}
 	}
@@ -1415,7 +1418,7 @@ void GameCoreSection::update()
 {
 	STACK_PAD_VAR(2);
 	if (!gameflow.mMoviePlayer->mIsActive && !mDoneSundownWarn && gameflow.mWorldClock.mTimeOfDay >= gameflow.mParameters->mNightWarning()
-	    && (flowCont.mGameEndFlag != 1 || flowCont.mGameEndFlag != 2)) {
+	    && (flowCont.mGameEndFlag != GAMEEND_PikminExtinction || flowCont.mGameEndFlag != GAMEEND_NaviDown)) {
 		if (playerState->inDayEnd()) {
 			PRINT("======== IN DAY END *** \n");
 		} else {
@@ -1441,7 +1444,7 @@ void GameCoreSection::update()
 			PRINT("deadpikis %d pellets %d killtekis %d maxpikis %d" MISSING_NEWLINE, GameStat::deadPikis, GameStat::getPellets,
 			      GameStat::killTekis, GameStat::maxPikis);
 			navi->mStateMachine->transit(navi, NAVISTATE_PikiZero);
-			playerState->mResultFlags.setOn(RESFLAG_PikminExtinction);
+			playerState->mResultFlags.setOn(zen::RESFLAG_PikminExtinction);
 		}
 	}
 
@@ -1770,8 +1773,8 @@ void GameCoreSection::draw1D(Graphics& gfx)
 		return;
 	}
 
-	Matrix4f mtx;
-	gfx.setOrthogonal(mtx.mMtx, AREA_FULL_SCREEN(gfx));
+	Matrix4f orthoMtx;
+	gfx.setOrthogonal(orthoMtx.mMtx, AREA_FULL_SCREEN(gfx));
 
 	if (!AIPerf::generatorMode) {
 		if (bossMgr && !hideTeki()) {
@@ -1806,8 +1809,8 @@ void GameCoreSection::draw2D(Graphics& gfx)
 	static immut char* triNames[] = {
 		"", "HIDE PIKI", "HIDE TEKI", "HIDE ITEM", "HIDE BOSS", "HIDE PELLET", "HIDE WORK", "HIDE PLANTS", "HIDE MAP", "HIDE 2D",
 	};
-	Matrix4f mtx;
-	gfx.setOrthogonal(mtx.mMtx, AREA_FULL_SCREEN(gfx));
+	Matrix4f orthoMtx;
+	gfx.setOrthogonal(orthoMtx.mMtx, AREA_FULL_SCREEN(gfx));
 	gfx.setColour(COLOUR_WHITE, true);
 	gfx.setAuxColour(COLOUR_WHITE);
 	gfx.useTexture(nullptr, GX_TEXMAP0);
@@ -1873,7 +1876,7 @@ void GameCoreSection::draw2D(Graphics& gfx)
 		if (state != NAVISTATE_DemoSunset) {
 			mDrawGameInfo->draw(gfx);
 		}
-		gfx.setOrthogonal(mtx.mMtx, AREA_FULL_SCREEN(gfx));
+		gfx.setOrthogonal(orthoMtx.mMtx, AREA_FULL_SCREEN(gfx));
 		containerWindow->draw(gfx);
 		if (!gameflow.mMoviePlayer->mIsActive && !gameflow.mIsUIOverlayActive) {
 			hurryupWindow->draw(gfx);

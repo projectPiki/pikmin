@@ -246,7 +246,8 @@ void PelletGoalState::init(Pellet* pelt)
 	if (pelt->mTargetGoal->mObjType == OBJTYPE_Ufo) {
 		mTargetIsShip = true;
 		if (!playerState->mDemoFlags.isFlag(DEMOFLAG_CollectEngine)) {
-			gameflow.mShipTextPartID = -1;
+			// we're collecting the main engine (first part!) - trigger the cutscene
+			gameflow.mShipTextPartID = UFO_NOPART;
 			gameflow.mShipTextType   = SHIPTEXT_CollectEngine;
 			playerState->mDemoFlags.setFlag(DEMOFLAG_CollectEngine, itemMgr->getUfo());
 			// just in case we got the engine without triggering the approach engine cutscene (somehow)
@@ -260,7 +261,7 @@ void PelletGoalState::init(Pellet* pelt)
 			gameflow.mShipTextPartID = pelletMgr->getUfoIndexFromID(pelt->mConfig->mModelId.mId);
 			gameflow.mShipTextType   = isPowerUpAvailable ? SHIPTEXT_PowerUp : SHIPTEXT_PartCollect;
 			PRINT("suicomi movie :- type = %d : info = %d\n", gameflow.mShipTextType, gameflow.mShipTextPartID);
-			gameflow.mGameInterface->movie(DEMOID_CollectPart, 0, pelt, &pelt->mSRT.t, &pelt->mSRT.r, -1, true);
+			gameflow.mGameInterface->movie(DEMOID_CollectPart, 0, pelt, &pelt->mSRT.t, &pelt->mSRT.r, CAF_AllVisibleMask, true);
 		}
 		playerState->preloadHenkaMovie();
 

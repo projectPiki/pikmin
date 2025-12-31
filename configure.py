@@ -126,6 +126,12 @@ parser.add_argument(
     action="store_false",
     help="disable progress calculation",
 )
+parser.add_argument(
+    "--develop",
+    dest="develop",
+    action="store_true",
+    help="builds equivalent objects and code with DEVELOP flag",
+)
 args = parser.parse_args()
 
 config = ProjectConfig()
@@ -140,6 +146,7 @@ config.binutils_path = args.binutils
 config.compilers_path = args.compilers
 config.generate_map = args.map
 config.non_matching = args.non_matching
+config.develop = args.develop
 config.sjiswrap_path = args.sjiswrap
 config.generate_compile_commands = False
 config.progress = args.progress
@@ -172,6 +179,8 @@ if args.debug:
     config.ldflags.append("-g")
 if args.map:
     config.ldflags.append("-mapunused")
+if args.develop:
+    config.non_matching = True
 
 # Use for any additional files that should cause a re-configure when modified
 config.reconfig_deps = []
@@ -223,6 +232,10 @@ else:
     cflags_base.extend(
         ["-DNDEBUG=1", "-w off"]
     )  # no I DO not want to talk about my car's extended warranty.
+
+# DEVELOP flags
+if args.develop:
+    cflags_base.extend(["-DDEVELOP=1"])
 
 # JAudio flags
 cflags_jaudio = [
@@ -450,7 +463,7 @@ config.libs = [
             Object(Equivalent, "plugPikiColin/gameSetup.cpp"),
             Object(Matching, "plugPikiColin/cardSelect.cpp"),
             Object(Matching, "plugPikiColin/mapSelect.cpp"),
-            Object(not MatchingFor("G98E01_PIKIDEMO"), "plugPikiColin/newPikiGame.cpp"),
+            Object(Matching, "plugPikiColin/newPikiGame.cpp"),
             Object(Matching, "plugPikiColin/introGame.cpp"),
             Object(Matching, "plugPikiColin/gameExit.cpp"),
             Object(Matching, "plugPikiColin/gauges.cpp"),

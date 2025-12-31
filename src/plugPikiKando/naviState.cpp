@@ -342,7 +342,7 @@ void NaviStuckState::exec(Navi* navi)
 				}
 
 				if (stuck->stimulate(InteractFlick(navi, 220.0f, 5.0f, FLICK_BACKWARDS_ANGLE))) {
-					playerState->mResultFlags.setOn(RESFLAG_Kinoko);
+					playerState->mResultFlags.setOn(zen::RESFLAG_Kinoko);
 					iter.dec();
 				}
 			}
@@ -806,7 +806,7 @@ void NaviUfoState::init(Navi* navi)
 	mState = 0;
 	navi->mOdoMeter.start(0.5f, 8.0f);
 	GameCoreSection::startPause(COREPAUSE_Unk1 | COREPAUSE_Unk2 | COREPAUSE_Unk16);
-	Jac_StartPartsFindDemo(0, 1);
+	Jac_StartPartsFindDemo(0, TRUE);
 	_21                 = false;
 	mPunchCooldownTimer = 0;
 }
@@ -2901,7 +2901,7 @@ void NaviDeadState::restart(Navi* navi)
 void NaviDeadState::init(Navi* navi)
 {
 	GameStat::orimaDead = true;
-	playerState->mResultFlags.setOn(RESFLAG_OlimarDown);
+	playerState->mResultFlags.setOn(zen::RESFLAG_OlimarDown);
 	gameflow.mGameInterface->message(MOVIECMD_SetPauseAllowed, FALSE);
 	gameflow.mGameInterface->message(MOVIECMD_StageFinish, TRUE);
 	navi->mMotionSpeed = 30.0f;
@@ -2940,7 +2940,7 @@ void NaviDeadState::procAnimMsg(Navi* navi, MsgAnim* msg)
 {
 	switch (msg->mKeyEvent->mEventType) {
 	case 0:
-		gameflow.mGameInterface->message(MOVIECMD_GameEndCondition, TRUE);
+		gameflow.mGameInterface->message(MOVIECMD_GameEndCondition, ENDCAUSE_NaviDown);
 		break;
 	}
 }
@@ -2962,7 +2962,7 @@ void NaviPikiZeroState::init(Navi* navi)
 	PRINT("ZENMETSU! ZENMETSU! ZENMETSU! ZENMETSU! ZENMETSU! ZENMETSU! ZENMETSU! ZENMETSU! ZENMETSU! \n");
 	gameflow.mGameInterface->message(MOVIECMD_SetPauseAllowed, FALSE);
 	gameflow.mGameInterface->message(MOVIECMD_StageFinish, TRUE);
-	playerState->mResultFlags.setOn(RESFLAG_PikminExtinction);
+	playerState->mResultFlags.setOn(zen::RESFLAG_PikminExtinction);
 	_12 = 30;
 	GameCoreSection::startPause(COREPAUSE_Unk1 | COREPAUSE_Unk3 | COREPAUSE_Unk16);
 }
@@ -2973,7 +2973,7 @@ void NaviPikiZeroState::init(Navi* navi)
 void NaviPikiZeroState::exec(Navi* navi)
 {
 	if (--_12 == 0) {
-		gameflow.mGameInterface->message(MOVIECMD_GameEndCondition, FALSE);
+		gameflow.mGameInterface->message(MOVIECMD_GameEndCondition, ENDCAUSE_PikminZero);
 	}
 }
 
@@ -3142,8 +3142,8 @@ void NaviPartsAccessState::init(Navi* navi)
 	GameCoreSection::startPause(0x8001);
 	_10 = false;
 
-	int id = PelletMgr::getUfoIndexFromID((navi->mSelectedShipPart)->mConfig->mModelId.mId) + 1;
-	Jac_StartPartsFindDemo(id, 0);
+	int ufoPartID = PelletMgr::getUfoIndexFromID((navi->mSelectedShipPart)->mConfig->mModelId.mId) + 1;
+	Jac_StartPartsFindDemo(ufoPartID, FALSE);
 }
 
 /**
@@ -3205,7 +3205,7 @@ void NaviUfoAccessState::init(Navi* navi)
 	navi->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 	GameCoreSection::startPause(0x8003);
 	_10 = false;
-	Jac_StartPartsFindDemo(0, 0);
+	Jac_StartPartsFindDemo(0, FALSE);
 	PRINT("UFO ACCESS INIT !\n");
 }
 
@@ -3241,7 +3241,7 @@ void NaviUfoAccessState::procAnimMsg(Navi* navi, MsgAnim* msg)
 		if (!_10) {
 			_10                      = true;
 			gameflow.mShipTextType   = SHIPTEXT_PartCollect;
-			gameflow.mShipTextPartID = -1;
+			gameflow.mShipTextPartID = UFO_NOPART;
 			gameflow.mGameInterface->message(MOVIECMD_TextDemo, zen::ogScrTutorialMgr::TUT_GetParts);
 		}
 		break;

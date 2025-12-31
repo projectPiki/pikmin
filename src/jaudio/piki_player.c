@@ -272,7 +272,7 @@ void Jac_UpdatePikiGaya()
 	static f32 volume = 0.0f;
 	static OuterParam_ outerparam;
 
-	if (Jac_GetCurrentScene() != SCENE_Unk5) {
+	if (Jac_GetCurrentScene() != SCENE_Course) {
 		Jam_SetExtParamD(0, &outerparam, 1);
 		return;
 	}

@@ -25,6 +25,9 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
 DEFINE_PRINT("OgResultSection")
 
 namespace zen {
+
+/// Table of all end of day diary entries, indexed by `zen::EnumResult`. Entries ending in _01.blo are a second page
+/// of the preceding entry.
 immut char* bloFile_Res_Table[] = {
 	"END",
 	"screen/blo/re_a_00.blo", // 1 Day Since Impact - I have somehow managed to lauch the Dolphin, but was surprised...
@@ -394,10 +397,10 @@ void zen::ogScrResultMgr::check1000(int val, P2DPane* pane1, P2DPane* pane2, int
 void zen::ogScrResultMgr::setEnumResultTable(EnumResult* result)
 {
 	for (int i = 0; i < 256; i++) {
-		int res           = result[i];
-		mDiaryPathList[i] = bloFile_Res_Table[res];
-		if (res == 0) {
-			break;
+		zen::EnumResult res = result[i];
+		mDiaryPathList[i]   = bloFile_Res_Table[res];
+		if (res == RESFLAG_DOC_END) {
+			return;
 		}
 	}
 	PRINT("OVERFLOW in setEnumResultTable()\n");
@@ -595,7 +598,7 @@ zen::ogScrResultMgr::returnStatusFlag zen::ogScrResultMgr::update(Controller* in
 	}
 
 	if (mStatus == Status_3) {
-		if (mMesgScreen->update(input) == ogScrMessageMgr::STATE_TransitionToInactive) {
+		if (mMesgScreen->update(input) == ogScrMessageMgr::STATE_Exiting) {
 			mStatus = Status_4;
 			StartRESULT();
 		}

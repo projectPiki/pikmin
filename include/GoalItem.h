@@ -12,6 +12,8 @@
 #include "zen/CallBack.h"
 #include "zen/particle.h"
 
+#define IS_DEMO_HIDE_ONYON(flag, color) ((flag) & (1 << (color)))
+
 namespace zen {
 struct particleGenerator;
 struct particleMdl;
@@ -55,6 +57,14 @@ struct GoalLeg {
  * @note Size: 0x494.
  */
 struct GoalItem : public Suckable, public zen::CallBack2<zen::particleGenerator*, zen::particleMdl*> {
+
+	enum DemoHideFlags {
+		ShowAll         = 0,      ///< 0x0, don't hide any onyons/null flag.
+		HideBlueOnyon   = 1 << 0, ///< 0x1, hide blue onyon during cutscenes. Use `IS_DEMO_HIDE_ONYON` to check with PikiColor.
+		HideRedOnyon    = 1 << 1, ///< 0x2, hide red onyon during cutscenes. Use `IS_DEMO_HIDE_ONYON` to check with PikiColor.
+		HideYellowOnyon = 1 << 2, ///< 0x4, hide yellow onyon during cutscenes. Use `IS_DEMO_HIDE_ONYON` to check with PikiColor.
+	};
+
 	GoalItem(CreatureProp*, ItemShapeObject*, ItemShapeObject*, ItemShapeObject*, SimpleAI*);
 
 	virtual bool insideSafeArea(immut Vector3f&);                    // _10

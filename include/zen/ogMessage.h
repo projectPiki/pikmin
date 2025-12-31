@@ -32,12 +32,12 @@ public:
 	 * @brief Defines the operational states of the message manager.
 	 */
 	enum MessageStatus {
-		STATE_Inactive = -1,        // The manager is idle and not displaying any message.
-		STATE_ActiveDisplay,        // Message is fully displayed and active, awaiting user interaction.
-		STATE_StartDelay,           // An initial delay period before the message begins to fade in.
-		STATE_FadingIn,             // Message is currently fading into view. Alpha is progressively increased.
-		STATE_FadingOut,            // Message is currently fading out of view. Alpha is progressively decreased.
-		STATE_TransitionToInactive, // A transitional state before the manager becomes fully inactive, follows STATE_FadingOut
+		STATE_Inactive = -1, // The manager is idle and not displaying any message.
+		STATE_ActiveDisplay, // Message is fully displayed and active, awaiting user interaction.
+		STATE_StartDelay,    // An initial delay period before the message begins to fade in.
+		STATE_FadingIn,      // Message is currently fading into view. Alpha is progressively increased.
+		STATE_FadingOut,     // Message is currently fading out of view. Alpha is progressively decreased.
+		STATE_Exiting,       // A transitional state before the manager becomes fully inactive, follows STATE_FadingOut
 	};
 
 	ogScrMessageMgr(immut char*);

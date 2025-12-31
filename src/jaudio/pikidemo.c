@@ -916,13 +916,14 @@ void Jac_PrepareDemo(u32 cinID)
 /**
  * @TODO: Documentation
  */
-void Jac_StartPartsFindDemo(u32 p1, int p2)
+void Jac_StartPartsFindDemo(u32 jingleType, BOOL hasAudio)
 {
 	STACK_PAD_VAR(2);
 	u32* REF_p1;
 
+	// we're already playing a part-related screen/cutscene!
 	if (parts_find_demo_state == 1) {
-		if (p2) {
+		if (hasAudio) {
 			Jac_PlaySystemSe(JACSYS_Unk30);
 		}
 		return;
@@ -933,16 +934,19 @@ void Jac_StartPartsFindDemo(u32 p1, int p2)
 	Jac_Orima_Formation(0, 0);
 	Jac_PauseOrimaSe();
 
-	if (p2) {
+	if (hasAudio) {
 		Jac_DemoFade(1, 15, 0.1f);
 
-		REF_p1 = &p1;
-		if (p1 == 0) {
+		REF_p1 = &jingleType;
+		if (jingleType == 0) {
+			// captain accessing the ship jingle
 			Jac_PlaySystemSe(JACSYS_Unk36);
 		} else {
+			// part discovery jingle
 			Jac_PlaySystemSe(JACSYS_Unk30);
 		}
 	} else {
+		// short "pling" sound
 		Jac_DemoFade(1, 0x1e, 0.5f);
 		Jac_PlaySystemSe(JACSYS_Unk31);
 	}

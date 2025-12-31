@@ -474,7 +474,7 @@ void BombAI::BombInit::act(AICreature* item)
 	f32 maxRange = pikiMgr->mPikiParms->mPikiParms.mBombExplodeRadius();
 	f32 unused   = pikiMgr->mPikiParms->mPikiParms.mBombDamageBomb();
 	item->setMotionSpeed(30.0f);
-	playerState->mResultFlags.setOn(RESFLAG_YellowWithBomb);
+	playerState->mResultFlags.setOn(zen::RESFLAG_YellowWithBomb);
 	rumbleMgr->start(RUMBLE_Unk8, 0, item->mSRT.t);
 	EffectParm parm(item->mSRT.t);
 	if (item->mCurrAnimId == 1) {

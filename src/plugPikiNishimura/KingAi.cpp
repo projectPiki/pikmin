@@ -682,7 +682,7 @@ void KingAi::resetAttackPriority()
 void KingAi::resultFlagOn()
 {
 	if (mKing->insideAndInSearch()) {
-		playerState->mResultFlags.setOn(RESFLAG_King);
+		playerState->mResultFlags.setOn(zen::RESFLAG_King);
 	}
 }
 
@@ -692,7 +692,7 @@ void KingAi::resultFlagOn()
  */
 void KingAi::resultFlagSeen()
 {
-	playerState->mResultFlags.setSeen(RESFLAG_King);
+	playerState->mResultFlags.setSeen(zen::RESFLAG_King);
 }
 
 /**

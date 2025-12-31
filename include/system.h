@@ -184,7 +184,7 @@ struct StdSystem {
 	LFInfo* getLFlareInfo();
 	LFlareGroup* registerLFlare(Texture*);
 	void flushLFlares(Graphics&);
-	void loadBundle(immut char*, bool);
+	void loadBundle(immut char* pPath, bool loadWithCache);
 
 	void getAppMemory(char*);
 	GfxobjInfo* findAnyGfxObject(immut char*, u32);
@@ -262,7 +262,7 @@ struct StdSystem {
 	virtual void forceHardReset() { }                                                                     // _20
 #endif                                                                                                    //
 	virtual void Activate(bool) { }                                                                       // _20
-	virtual void parseArchiveDirectory(immut char*, immut char*) { }                                      // _24
+	virtual void parseArchiveDirectory(immut char* arcPath, immut char* dirPath) { }                      // _24
 	virtual void sndPlaySe(u32) = 0;                                                                      // _28
 	virtual void startLoading(LoadIdler*, bool, u32) { }                                                  // _2C
 	virtual void endLoading() { }                                                                         // _30
@@ -359,7 +359,7 @@ struct System : public StdSystem {
 #if defined(VERSION_PIKIDEMO)                                                          //
 	virtual void forceHardReset() { mIsDemoTimeUp = TRUE; }                            // _20
 #endif                                                                                 //
-	virtual void parseArchiveDirectory(immut char*, immut char*);                      // _24
+	virtual void parseArchiveDirectory(immut char* arcPath, immut char* dirPath);      // _24
 	virtual void sndPlaySe(u32);                                                       // _28
 	virtual void startLoading(LoadIdler* idler, bool useLoadScreen, u32 loadDelay);    // _2C
 	virtual void endLoading();                                                         // _30

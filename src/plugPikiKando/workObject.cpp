@@ -1052,7 +1052,7 @@ void Bridge::update()
 			mEndWaypoint->setFlag(true);
 			seSystem->playSysSe(SYSSE_WORK_FINISH);
 			PRINT("橋：完成しました\n"); // 'bridge: completed'
-			playerState->mResultFlags.setOn(RESFLAG_BrokenBridge);
+			playerState->mResultFlags.setOn(zen::RESFLAG_BrokenBridge);
 		}
 	}
 }

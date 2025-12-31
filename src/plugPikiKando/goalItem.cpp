@@ -718,7 +718,7 @@ void GoalItem::update()
  */
 void GoalItem::refresh(Graphics& gfx)
 {
-	if (gameflow.mMoviePlayer->mIsActive && demoHideFlag & 1 << mOnionColour) {
+	if (gameflow.mMoviePlayer->mIsActive && IS_DEMO_HIDE_ONYON(demoHideFlag, mOnionColour)) {
 		return;
 	}
 

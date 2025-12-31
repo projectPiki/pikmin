@@ -573,7 +573,7 @@ zen::ogScrMessageMgr::MessageStatus zen::ogScrMessageMgr::update(Controller* inp
 		return mState;
 	}
 
-	if (mState == STATE_TransitionToInactive) {
+	if (mState == STATE_Exiting) {
 		mState = STATE_Inactive;
 		return mState;
 	}
@@ -614,7 +614,7 @@ zen::ogScrMessageMgr::MessageStatus zen::ogScrMessageMgr::update(Controller* inp
 	if (mState == STATE_FadingOut) {
 		mScreenFadeTimer += gsys->getFrameTime();
 		if (mScreenFadeTimer >= 0.25f) {
-			mState = STATE_TransitionToInactive;
+			mState = STATE_Exiting;
 		} else {
 			setScreenAlpha((u8)((0.25f - mScreenFadeTimer) * 255.0f / 0.25f));
 		}

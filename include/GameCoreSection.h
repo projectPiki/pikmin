@@ -52,7 +52,7 @@ struct GameCoreSection : public Node {
 #if defined(VERSION_PIKIDEMO)
 	void endMovie();
 #else
-	void endMovie(int);
+	void endMovie(int movieIdx);
 #endif
 	void exitDayEnd();
 	void forceDayEnd();
@@ -109,5 +109,7 @@ struct GameCoreSection : public Node {
 	Light _70;                        // _70
 	zen::DrawGameInfo* mDrawGameInfo; // _344
 };
+
+extern GameCoreSection* gamecore;
 
 #endif

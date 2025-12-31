@@ -876,7 +876,7 @@ void SlimeAi::initDie(int nextState)
 	mSlime->setAttackTimer(0.0f);
 	setContractGoal();
 	setExpansionGoal();
-	playerState->mResultFlags.setSeen(RESFLAG_Slime);
+	playerState->mResultFlags.setSeen(zen::RESFLAG_Slime);
 
 	for (int i = 0; i < SLIMECREATURE_COUNT; i++) {
 		zen::particleGenerator* ptclGenK

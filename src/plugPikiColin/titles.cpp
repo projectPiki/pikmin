@@ -20,11 +20,20 @@
 #include "zen/ogStart.h"
 #include "zen/ogTitle.h"
 
-/// Macros for packing and unpacking the section compression flag.
-#define PACK_NEXT_SECTION(sectionID)     (sectionID) << 16
+// Macros for packing and unpacking the section compression flag, to pass both section and subsection ID together.
+// Realistically, the only section with a subsection ID is OnePlayerSection, so having a dedicated macro for it is easier.
+// NB: this is actually the reverse of the MapSelectSection and CardSelectSection packing for whatever reason.
+
+/// Packs next section ID to transit to, to be stored in a flag.
+#define PACK_NEXT_SECTION(sectionID) (sectionID) << 16
+
+/// Packs next OnePlayerSection subsection ID to transit to, to be stored in a flag.
 #define PACK_NEXT_ONEPLAYER(onePlayerID) ((SECTION_OnePlayer) << 16) | (onePlayerID)
 
-#define UNPACK_NEXT_SECTION(flag)   (flag) >> 16
+/// Unpacks next section ID from flag.
+#define UNPACK_NEXT_SECTION(flag) (flag) >> 16
+
+/// Unpacks next OnePlayerSection subsection ID from flag.
 #define UNPACK_NEXT_ONEPLAYER(flag) (flag) & 0xFFFF
 
 struct TitleSetupSection;
@@ -290,7 +299,7 @@ struct TitleSetupSection : public Node {
 						mNextSectionsFlag                = PACK_NEXT_ONEPLAYER(ONEPLAYER_GameSetup);
 						gameflow.mGamePrefs.mHasSaveGame = false;
 						gameflow.mIsChallengeMode        = true;
-						Jac_SceneExit(SCENE_Unk13, 0);
+						Jac_SceneExit(SCENE_Exit, 0);
 						mState = 1;
 						gsys->setFade(0.0f, 3.0f);
 #else
@@ -309,7 +318,7 @@ struct TitleSetupSection : public Node {
 						mNextSectionsFlag                = PACK_NEXT_ONEPLAYER(ONEPLAYER_GameSetup);
 						gameflow.mGamePrefs.mHasSaveGame = false;
 						gameflow.mIsChallengeMode        = TRUE;
-						Jac_SceneExit(SCENE_Unk13, 0);
+						Jac_SceneExit(SCENE_Exit, 0);
 						mState = 1;
 						gsys->setFade(0.0f, 3.0f);
 
@@ -326,7 +335,7 @@ struct TitleSetupSection : public Node {
 							PRINT("going to SETUP!\n");
 							mNextSectionsFlag = PACK_NEXT_ONEPLAYER(ONEPLAYER_GameSetup);
 						}
-						Jac_SceneExit(SCENE_Unk13, 0);
+						Jac_SceneExit(SCENE_Exit, 0);
 						mState = 1;
 						gsys->setFade(0.0f, 3.0f);
 					} else if (titleState == zen::ogScrTitleMgr::Status_5 || titleState == zen::ogScrTitleMgr::Status_3) {
@@ -554,7 +563,7 @@ struct TitleSetupSection : public Node {
 	{
 		mNextSectionsFlag         = parent.mCurrentItem->mData;
 		gameflow.mIsChallengeMode = FALSE;
-		Jac_SceneExit(SCENE_Unk13, 0);
+		Jac_SceneExit(SCENE_Exit, 0);
 		parent.close();
 		mState = 1;
 		gsys->setFade(0.0f, 3.0f);
@@ -565,7 +574,7 @@ struct TitleSetupSection : public Node {
 		mNextSectionsFlag = parent.mCurrentItem->mData;
 		gameflow.mGamePrefs.Initialise();
 		gameflow.mIsChallengeMode = TRUE;
-		Jac_SceneExit(SCENE_Unk13, 0); // Just an educated guess, as this function is DLL-exclusive.
+		Jac_SceneExit(SCENE_Exit, 0); // Just an educated guess, as this function is DLL-exclusive.
 		parent.close();
 		mState = 1;
 		gsys->setFade(0.0f, 3.0f);
@@ -626,7 +635,10 @@ void TitlesSection::init()
 	Node::init("<TitlesSection>");
 	Jac_BackDVDBuffer();
 	gsys->mTimerState = TS_Off;
+
+	// run title screen at 60 fps
 	gsys->setFrameClamp(1);
+
 	gsys->setDataRoot("dataDir/");
 	gameflow.mLevelBannerTex         = nullptr;
 	gameflow.mLevelBannerFadeValue   = 1.0f;
@@ -670,5 +682,5 @@ void TitlesSection::init()
 	PRINT("ending loading!\n");
 	gsys->endLoading();
 	PRINT("done!\n");
-	Jac_SceneSetup(SCENE_Unk1, 0);
+	Jac_SceneSetup(SCENE_Title, 0);
 }

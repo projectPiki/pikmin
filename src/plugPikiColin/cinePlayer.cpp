@@ -877,8 +877,9 @@ void ActorInstance::checkEventKeys(f32 curTime, f32 prevTime, Vector3f& pos)
  */
 void ActorInstance::refresh(immut Matrix4f& mtx, Graphics& gfx, f32* p3)
 {
-	// feels like a typo.
-	if ((mFlags & CAF_AllObjMasks) && !(gameflow.mMoviePlayer->mMaskFlags & (mFlags & CAF_AllObjMasks))) {
+	// if actor has any object group visibility flags, check movie has that group visible.
+	// if not, return early and don't draw them.
+	if ((mFlags & CAF_AllObjMasks) && !(gameflow.mMoviePlayer->mActorVisMask & (mFlags & CAF_AllObjMasks))) {
 		return;
 	}
 

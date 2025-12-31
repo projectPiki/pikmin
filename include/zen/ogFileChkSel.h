@@ -26,18 +26,19 @@ struct ogScrFileChkSelMgr {
 	enum returnStatusFlag {
 		Null                  = -1,
 		MemoryCheckInProgress = 0,
-		ErrorOrCompleted      = 1,
-		FILECHKSEL_SelectionA = 2,
-		FILECHKSEL_SelectionB = 3,
-		FILECHKSEL_SelectionC = 4,
-		FILECHKSEL_Unk5       = 5,
+		ErrorOrCompleted      = 1, ///< 1, we backed out
+		SelectionA            = 2, ///< 2, selected file slot A.
+		SelectionB            = 3, ///< 3, selected file slot B.
+		SelectionC            = 4, ///< 4, selected file slot C.
+		ForceExit             = 5, ///< 5, exit from skipping, successful exit, or requesting return to previous screen.
 
-		FILECHKSEL_Exit = ErrorOrCompleted, // anything above this is an error/exit
+		FILECHKSEL_Exit       = ErrorOrCompleted, // anything above this is an error/exit
+		FILECHKSEL_SlotOffset = SelectionA,       // offset for converting result to save file slot
 	};
 
 	ogScrFileChkSelMgr();
 
-	void start(bool);
+	void start(bool skipFileSelect);
 	void startSave();
 	returnStatusFlag update(Controller*, CardQuickInfo&);
 	void draw(Graphics&);

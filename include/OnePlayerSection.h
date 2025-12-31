@@ -49,7 +49,7 @@ struct StageInfo : public CoreNode {
 	{
 		mStageIndex     = 0;
 		mStageID        = STAGE_INVALID;
-		mChalStageID    = STAGE_ChalINVALID;
+		mChalStageID    = STAGE_CHALINVALID;
 		mHasInitialised = FALSE;
 		mGenFileList.initCore("");
 	}

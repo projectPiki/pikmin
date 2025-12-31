@@ -1694,7 +1694,7 @@ zen::DrawWorldMap::DrawWorldMap()
 
 	mModeTimer    = 0.0f;
 	mCurrentMode  = DrawWorldMapMode::Null;
-	mReturnStatus = RETURNSTATUS_Null;
+	mReturnStatus = RET_NULL;
 
 	// SET UP COURSE POINTS
 	mCoursePointMgr = new WorldMapCoursePointMgr();
@@ -1802,7 +1802,7 @@ bool zen::DrawWorldMap::update(Controller* controller)
 				if (pauseState == DrawWMPause::Cancelled) {
 					mCurrentMode  = DrawWorldMapMode::Null;
 					res           = true;
-					mReturnStatus = RETURNSTATUS_WorldMapPaused;
+					mReturnStatus = RET_ReturnToTitle;
 				} else {
 					mCurrentMode = DrawWorldMapMode::Operation;
 				}
@@ -1962,7 +1962,7 @@ void zen::DrawWorldMap::start(zen::DrawWorldMap::startModeFlag modeFlag, zen::Dr
 	mCurrentMode = DrawWorldMapMode::Start;
 	mModeTimer   = 0.0f;
 	mEffectMgr2D->killAll(true);
-	mReturnStatus = RETURNSTATUS_WorldMapActive;
+	mReturnStatus = RET_Active;
 
 	P2DPaneLibrary::makeResident(mWipeScreen->getScreenPtr());
 	P2DPaneLibrary::makeResident(mMoniScreen->getScreenPtr());

@@ -50,46 +50,6 @@ enum GamePrefsFlags {
 };
 
 /**
- * @brief Game section identifiers to segment game flow.
- * These may have sub-sections within them, which have their own enums (such as for OnePlayerSection).
- */
-enum GameSectionID {
-	SECTION_NinLogo   = 0, ///< 0, Nintendo logo - `NinLogoSection`.
-	SECTION_Titles    = 1, ///< 1, title screen - `TitlesSection`.
-	SECTION_MovSample = 2, ///< 2, player for h4m cutscenes - `MovSampleSection`.
-	SECTION_PaniTest  = 3, ///< 3, test section for enemies, not accessible in retail - `PaniTestSection`.
-	SECTION_OnePlayer = 4, ///< 4, section for story and challenge mode - `OnePlayerSection`.
-	SECTION_OgTest    = 5, ///< 5, test section for screens, not accessible in retail - `OgTestSection`.
-};
-
-/**
- * @brief Sub-sections of OnePlayerSection, for controlling different areas of story and challenge mode.
- *
- * Most of these sections have an associated Setup section, for initialising.
- *
- * @note A lot of these are inaccessible in retail, and are holdovers from demos and testing.
- */
-enum OnePlayerSectionID {
-	ONEPLAYER_GameSetup       = 0,  ///< 0, load-in section when entering story/challenge mode from title - `GameSetupSection`.
-	ONEPLAYER_CardSelect      = 1,  ///< 1, section for reading data from memory card/file select for story mode - `CardSelectSection`.
-	ONEPLAYER_E3Tutorial      = 2,  ///< 2, unused E3 demo of Impact Site - redirects to a NewPikiGameSection with set parameters.
-	ONEPLAYER_E3ForestDay1    = 3,  ///< 3, unused E3 demo of Forest of Hope (Day 1) - redirects to NewPikiGameSection with set parameters.
-	ONEPLAYER_E3ForestDay2    = 4,  ///< 4, unused E3 demo of Forest of Hope (Day 2) - redirects to NewPikiGameSection with set parameters.
-	ONEPLAYER_IntroGame       = 5,  ///< 5, section for new story files, with the crash landing cutscene playing - `IntroGameSection`.
-	ONEPLAYER_MapSelect       = 6,  ///< 6, section for selecting a stage, both for world map and challenge mode - `MapSelectSection`.
-	ONEPLAYER_NewPikiGame     = 7,  ///< 7, regular gameplay, both story and challenge mode - `NewPikiGameSection`, with subsections.
-	ONEPLAYER_GameCourseClear = 8,  ///< 8, unused section for toggling through different sections for testing - `GameCourseClearSection`.
-	ONEPLAYER_GameStageClear  = 9,  ///< 9, unused section, likely for "clearing" a stage - `GameStageClearSection`.
-	ONEPLAYER_GameCredits     = 10, ///< 10, unused credits section from the E3 demo - `GameCreditsSection`.
-	ONEPLAYER_GameExit        = 11, ///< 11, cleanup section when exiting from OnePlayerSection back to title - `GameExitSection`.
-
-	// E3 demo-related bounds.
-	ONEPLAYER_E3_MIN          = ONEPLAYER_E3Tutorial,
-	ONEPLAYER_E3_MAX          = ONEPLAYER_E3ForestDay2,
-	ONEPLAYER_E3_STAGE_OFFSET = ONEPLAYER_E3Tutorial,
-};
-
-/**
  * @brief Types of vertical filters to apply to the frame buffer.
  */
 enum GameFilterType {
@@ -715,7 +675,7 @@ struct GameFlow : public Node {
 	u32 _1D4;                           ///< _1D4, unused - set to 0 in hardReset but otherwise untouched.
 	u32 mDemoFlags;                     ///< _1D8, game state flags during cutscenes - see `GameflowDemoFlags` enum.
 	MoviePlayer* mMoviePlayer;          ///< _1DC, pointer to global movie/cutscene player.
-	s16 mShipTextPartID;                ///< _1E0, ship part ID for the latest ship part collection or interaction text.
+	s16 mShipTextPartID;                ///< _1E0, ship part ID for the latest part collection/interaction text - see `UfoPartIndex` enum.
 	s16 mShipTextType;                  ///< _1E2, type of ship-related text to display - see `ShipTextType` enum.
 	s16 mIsDayEndActive;                ///< _1E4, is the end-of-day cutscene playing?
 	s16 mIsDayEndTriggered;             ///< _1E6, is the end-of-day cutscene pending (for next time we're out of a menu etc)?

@@ -111,9 +111,14 @@ enum PelletBounceSoundID {
 /**
  * @brief Index for UFO (ship) parts, usually referred to as UfoIndex.
  *
+ * Soto = Outside (changes actual hull of the ship)
+ * Fuzoku = Close friends (external changes to ship)
+ * Naka = Inside (no visible changes)
+ *
  * @note To convert to ID (e.g. 'uf01'), use PelletMgr::getUfoIDFromIndex.
  */
 enum UfoPartIndex {
+	UFO_NOPART            = -1, // No part found/invalid.
 	UFO_Bowsprit          = 0,  // Soto 1
 	UFO_GluonDrive        = 1,  // Soto 2
 	UFO_AntiDioxinFilter  = 2,  // Soto 3

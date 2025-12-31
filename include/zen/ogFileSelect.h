@@ -88,20 +88,22 @@ public:
 
 	/**
 	 * @brief Defines the return status of the file select manager's update function, indicating the next action for the game flow.
+	 *
+	 * @todo These need fixing and de-AI-ing :< really? IPL?
 	 */
 	enum returnStatusFlag {
-		Inactive = -1,  // No action required, or initial state
-		Continue,       // Continue updating the file select screen
-		FileChosen,     // A file has been chosen (e.g., for loading/saving)
-		ExitRequested,  // User requested to exit the file select screen (e.g., cancel)
-		OperationError, // An error occurred during a file operation
+		Inactive = -1,  ///< -1, No action required, or initial state
+		Continue,       ///< 0, Continue updating the file select screen
+		FileChosen,     ///< 1, A file has been chosen (e.g., for loading/saving)
+		ExitRequested,  ///< 2, User requested to exit the file select screen (e.g., cancel)
+		OperationError, ///< 3, An error occurred during a file operation
 		// Missing 4
 		// Missing 5
-		PostSaveAction = 6, // Action after a save operation (e.g., refresh screen)
-		PostDeleteAction,   // Action after a delete operation (e.g., refresh screen)
-		PostCopyAction,     // Action after a copy operation (e.g., refresh screen)
-		CardBusy,           // Memory card is busy, waiting for completion
-		ReturnToIPL,        // Request to return to the Initial Program Loader (IPL) or title screen
+		PostSaveAction = 6, ///< 6, Action after a save operation (e.g., refresh screen)
+		SelectionA,         ///< 7, Action after a delete operation (e.g., refresh screen)
+		SelectionB,         ///< 8, Action after a copy operation (e.g., refresh screen)
+		SelectionC,         ///< 9, Memory card is busy, waiting for completion
+		ReturnToIPL,        ///< 10, Request to return to the Initial Program Loader (IPL) or title screen
 	};
 
 	ogScrFileSelectMgr();

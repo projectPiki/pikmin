@@ -561,7 +561,7 @@ protected:
 					navi->stimulate(bury);
 					PRINT("NAVI BURY !!!\n");
 					if (teki.isNaviWatch()) {
-						playerState->mResultFlags.setOn(RESFLAG_Miurin);
+						playerState->mResultFlags.setOn(zen::RESFLAG_Miurin);
 					}
 				}
 			}

@@ -112,7 +112,7 @@ protected:
 
 			teki.playEventSound(&teki, SE_WALLEAT_EAT);
 			if (teki.aiCullable()) {
-				playerState->mResultFlags.setOn(RESFLAG_Kabekui);
+				playerState->mResultFlags.setOn(zen::RESFLAG_Kabekui);
 			}
 		}
 

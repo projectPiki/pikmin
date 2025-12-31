@@ -17,82 +17,82 @@ DEFINE_PRINT("resultFlag");
 
 ResultFlags::FlagInfo ResultFlags::flagTable[] = {
 	// .blo index, auto-enable, priority, store type
-	{ RESFLAG_EndFirstDay, false, 1, ResultFlags::FlagInfo::Store_Forget },               // End of Day 1
-	{ RESFLAG_FirstVisitForest, false, 3, ResultFlags::FlagInfo::Store_Forget },          // First Visit Forest of Hope
-	{ RESFLAG_UnlockCave, false, 9, ResultFlags::FlagInfo::Store_Forget },                // Open Forest Navel
-	{ RESFLAG_FirstVisitCave, false, 10, ResultFlags::FlagInfo::Store_Forget },           // First Visit Forest Navel
-	{ RESFLAG_UnlockYakushima, false, 11, ResultFlags::FlagInfo::Store_Forget },          // Open Distant Spring
-	{ RESFLAG_FirstVisitYakushima, false, 12, ResultFlags::FlagInfo::Store_Reset },       // First Visit Distant Spring
-	{ RESFLAG_FinalDay, false, 13, ResultFlags::FlagInfo::Store_Forget },                 // Final Day
-	{ RESFLAG_Collect25Parts, false, 14, ResultFlags::FlagInfo::Store_Forget },           // 25 parts
-	{ RESFLAG_Collect29Parts, false, 15, ResultFlags::FlagInfo::Store_Forget },           // 29 parts
-	{ RESFLAG_OlimarDown, false, 5, ResultFlags::FlagInfo::Store_Reset },                 // Olimar down
-	{ RESFLAG_PikminExtinction, false, 4, ResultFlags::FlagInfo::Store_Reset },           // Pikmin extinction
-	{ RESFLAG_CollectAllParts, false, 2, ResultFlags::FlagInfo::Store_Forget },           // All 30 parts (unused)
-	{ RESFLAG_YellowWithBomb, false, 6, ResultFlags::FlagInfo::Store_Reset },             // Yellow Pikmin with bomb
-	{ RESFLAG_MeetBluePikmin, false, 7, ResultFlags::FlagInfo::Store_Forget },            // Meet Blue Pikmin
-	{ RESFLAG_PikminRouting, false, 16, ResultFlags::FlagInfo::Store_Keep },              // Pikmin Routing
-	{ RESFLAG_OlimarDaydream, false, 19, ResultFlags::FlagInfo::Store_Reset },            // Olimar's Daydream
-	{ RESFLAG_Collect15Parts, false, 20, ResultFlags::FlagInfo::Store_Reset },            // 15 parts
-	{ RESFLAG_PikminLeftBehind, false, 8, ResultFlags::FlagInfo::Store_Reset },           // Pikmin left behind
-	{ RESFLAG_PikminBombDeath, false, 17, ResultFlags::FlagInfo::Store_Reset },           // Pikmin dies to bomb rock
-	{ RESFLAG_Collect10Parts, false, 18, ResultFlags::FlagInfo::Store_Keep },             // 10 parts
-	{ RESFLAG_UnusedControls1, true, 200, ResultFlags::FlagInfo::Store_Keep },            // Unused Controls log 1
-	{ RESFLAG_UnusedControls2, false, 201, ResultFlags::FlagInfo::Store_Keep },           // Unused Controls log 2
-	{ RESFLAG_UnusedControls3, true, 202, ResultFlags::FlagInfo::Store_Keep },            // Unused Controls log 3
-	{ RESFLAG_BrokenBridge, false, 203, ResultFlags::FlagInfo::Store_Forget },            // Broken Bridge
-	{ RESFLAG_PikminSeeds, false, 204, ResultFlags::FlagInfo::Store_Keep },               // Pikmin seeds
-	{ RESFLAG_PikminSeedStageUp, false, 205, ResultFlags::FlagInfo::Store_Keep },         // Pikmin seed grows up
-	{ RESFLAG_Onyons, false, 207, ResultFlags::FlagInfo::Store_Keep },                    // Pikmin onions
-	{ RESFLAG_MeetYellowPikminNoBomb, false, 206, ResultFlags::FlagInfo::Store_Forget },  // Meet Yellow Pikmin (no bombs)
-	{ RESFLAG_BluePikminWaterImmunity, false, 208, ResultFlags::FlagInfo::Store_Forget }, // Blue Pikmin touch water (unused)
-	{ RESFLAG_PikminOnFire, false, 209, ResultFlags::FlagInfo::Store_Forget },            // Pikmin on fire
-	{ RESFLAG_Dororo, false, 400, ResultFlags::FlagInfo::Store_Reset },                   // Smoky Progg
-	{ RESFLAG_Swallow, false, 401, ResultFlags::FlagInfo::Store_Reset },                  // Bulborb
-	{ RESFLAG_Kinoko, false, 402, ResultFlags::FlagInfo::Store_Reset },                   // Puffstool
-	{ RESFLAG_Kogane, false, 403, ResultFlags::FlagInfo::Store_Reset },                   // Flint Beetle
-	{ RESFLAG_Mizinko, false, 404, ResultFlags::FlagInfo::Store_Reset },                  // Honeywisp
-	{ RESFLAG_Pom, false, 405, ResultFlags::FlagInfo::Store_Reset },                      // Candypop Bud
-	{ RESFLAG_Spider, false, 406, ResultFlags::FlagInfo::Store_Reset },                   // Beady Long Legs
-	{ RESFLAG_Beatle, false, 407, ResultFlags::FlagInfo::Store_Reset },                   // Armored Cannon Beetle
-	{ RESFLAG_Snake, false, 408, ResultFlags::FlagInfo::Store_Reset },                    // Burrowing Snagret
-	{ RESFLAG_King, false, 409, ResultFlags::FlagInfo::Store_Reset },                     // Emperor Bulblax
-	{ RESFLAG_Slime, false, 410, ResultFlags::FlagInfo::Store_Reset },                    // Goolix
-	{ RESFLAG_Miurin, false, 411, ResultFlags::FlagInfo::Store_Reset },                   // Mamuta
-	{ RESFLAG_Kabekui, false, 412, ResultFlags::FlagInfo::Store_Reset },                  // Sheargrub
-	{ RESFLAG_Tank, false, 413, ResultFlags::FlagInfo::Store_Reset },                     // Fiery Blowhog
-	{ RESFLAG_Shell, false, 414, ResultFlags::FlagInfo::Store_Reset },                    // Pearly Clamclamp
-	{ RESFLAG_Collec, false, 415, ResultFlags::FlagInfo::Store_Reset },                   // Breadbug
-	{ RESFLAG_Mar, false, 416, ResultFlags::FlagInfo::Store_Reset },                      // Puffy Blowhog
-	{ RESFLAG_Otimoti, false, 417, ResultFlags::FlagInfo::Store_Reset },                  // Wollywog
-	{ RESFLAG_Misc1, true, 600, ResultFlags::FlagInfo::Store_Keep },                      // Misc 1
-	{ RESFLAG_Misc2, true, 601, ResultFlags::FlagInfo::Store_Keep },                      // Misc 2
-	{ RESFLAG_Misc3, true, 602, ResultFlags::FlagInfo::Store_Keep },                      // Misc 3
-	{ RESFLAG_Misc4, true, 603, ResultFlags::FlagInfo::Store_Keep },                      // Misc 4
-	{ RESFLAG_Misc5, true, 604, ResultFlags::FlagInfo::Store_Keep },                      // Misc 5
-	{ RESFLAG_Misc6, true, 605, ResultFlags::FlagInfo::Store_Keep },                      // Misc 6
-	{ RESFLAG_Misc7, true, 606, ResultFlags::FlagInfo::Store_Keep },                      // Misc 7
-	{ RESFLAG_Misc8, true, 607, ResultFlags::FlagInfo::Store_Keep },                      // Misc 8
-	{ RESFLAG_Misc9, true, 608, ResultFlags::FlagInfo::Store_Keep },                      // Misc 9
-	{ RESFLAG_Misc10, true, 609, ResultFlags::FlagInfo::Store_Keep },                     // Misc 10
-	{ RESFLAG_Misc11, true, 610, ResultFlags::FlagInfo::Store_Keep },                     // Misc 11
-	{ RESFLAG_Misc12, true, 611, ResultFlags::FlagInfo::Store_Keep },                     // Misc 12
-	{ RESFLAG_Misc13, true, 612, ResultFlags::FlagInfo::Store_Keep },                     // Misc 13
-	{ RESFLAG_Misc14, true, 613, ResultFlags::FlagInfo::Store_Keep },                     // Misc 14
-	{ RESFLAG_Misc15, true, 614, ResultFlags::FlagInfo::Store_Keep },                     // Misc 15
-	{ RESFLAG_Misc16, true, 615, ResultFlags::FlagInfo::Store_Keep },                     // Misc 16
-	{ RESFLAG_Misc17, true, 616, ResultFlags::FlagInfo::Store_Keep },                     // Misc 17
-	{ RESFLAG_Misc18, true, 617, ResultFlags::FlagInfo::Store_Keep },                     // Misc 18
-	{ RESFLAG_Misc19, true, 618, ResultFlags::FlagInfo::Store_Keep },                     // Misc 19
-	{ RESFLAG_Misc20, true, 619, ResultFlags::FlagInfo::Store_Keep },                     // Misc 20
-	{ RESFLAG_Misc21, true, 620, ResultFlags::FlagInfo::Store_Keep },                     // Misc 21
-	{ RESFLAG_Misc22, true, 621, ResultFlags::FlagInfo::Store_Keep },                     // Misc 22
-	{ RESFLAG_Misc23, true, 622, ResultFlags::FlagInfo::Store_Keep },                     // Misc 23
-	{ RESFLAG_Misc24, true, 623, ResultFlags::FlagInfo::Store_Keep },                     // Misc 24
-	{ RESFLAG_Misc25, true, 624, ResultFlags::FlagInfo::Store_Keep },                     // Misc 25
-	{ RESFLAG_Misc26, true, 625, ResultFlags::FlagInfo::Store_Keep },                     // Misc 26
-	{ RESFLAG_Misc27, true, 626, ResultFlags::FlagInfo::Store_Keep },                     // Misc 27
-	{ RESFLAG_NULL, 0, 0, 0 },                                                            // END
+	{ zen::RESFLAG_EndFirstDay, false, 1, ResultFlags::FlagInfo::Store_Forget },               // End of Day 1
+	{ zen::RESFLAG_FirstVisitForest, false, 3, ResultFlags::FlagInfo::Store_Forget },          // First Visit Forest of Hope
+	{ zen::RESFLAG_UnlockCave, false, 9, ResultFlags::FlagInfo::Store_Forget },                // Open Forest Navel
+	{ zen::RESFLAG_FirstVisitCave, false, 10, ResultFlags::FlagInfo::Store_Forget },           // First Visit Forest Navel
+	{ zen::RESFLAG_UnlockYakushima, false, 11, ResultFlags::FlagInfo::Store_Forget },          // Open Distant Spring
+	{ zen::RESFLAG_FirstVisitYakushima, false, 12, ResultFlags::FlagInfo::Store_Reset },       // First Visit Distant Spring
+	{ zen::RESFLAG_FinalDay, false, 13, ResultFlags::FlagInfo::Store_Forget },                 // Final Day
+	{ zen::RESFLAG_Collect25Parts, false, 14, ResultFlags::FlagInfo::Store_Forget },           // 25 parts
+	{ zen::RESFLAG_Collect29Parts, false, 15, ResultFlags::FlagInfo::Store_Forget },           // 29 parts
+	{ zen::RESFLAG_OlimarDown, false, 5, ResultFlags::FlagInfo::Store_Reset },                 // Olimar down
+	{ zen::RESFLAG_PikminExtinction, false, 4, ResultFlags::FlagInfo::Store_Reset },           // Pikmin extinction
+	{ zen::RESFLAG_CollectAllParts, false, 2, ResultFlags::FlagInfo::Store_Forget },           // All 30 parts (unused)
+	{ zen::RESFLAG_YellowWithBomb, false, 6, ResultFlags::FlagInfo::Store_Reset },             // Yellow Pikmin with bomb
+	{ zen::RESFLAG_MeetBluePikmin, false, 7, ResultFlags::FlagInfo::Store_Forget },            // Meet Blue Pikmin
+	{ zen::RESFLAG_PikminRouting, false, 16, ResultFlags::FlagInfo::Store_Keep },              // Pikmin Routing
+	{ zen::RESFLAG_OlimarDaydream, false, 19, ResultFlags::FlagInfo::Store_Reset },            // Olimar's Daydream
+	{ zen::RESFLAG_Collect15Parts, false, 20, ResultFlags::FlagInfo::Store_Reset },            // 15 parts
+	{ zen::RESFLAG_PikminLeftBehind, false, 8, ResultFlags::FlagInfo::Store_Reset },           // Pikmin left behind
+	{ zen::RESFLAG_PikminBombDeath, false, 17, ResultFlags::FlagInfo::Store_Reset },           // Pikmin dies to bomb rock
+	{ zen::RESFLAG_Collect10Parts, false, 18, ResultFlags::FlagInfo::Store_Keep },             // 10 parts
+	{ zen::RESFLAG_UnusedControls1, true, 200, ResultFlags::FlagInfo::Store_Keep },            // Unused Controls log 1
+	{ zen::RESFLAG_UnusedControls2, false, 201, ResultFlags::FlagInfo::Store_Keep },           // Unused Controls log 2
+	{ zen::RESFLAG_UnusedControls3, true, 202, ResultFlags::FlagInfo::Store_Keep },            // Unused Controls log 3
+	{ zen::RESFLAG_BrokenBridge, false, 203, ResultFlags::FlagInfo::Store_Forget },            // Broken Bridge
+	{ zen::RESFLAG_PikminSeeds, false, 204, ResultFlags::FlagInfo::Store_Keep },               // Pikmin seeds
+	{ zen::RESFLAG_PikminSeedStageUp, false, 205, ResultFlags::FlagInfo::Store_Keep },         // Pikmin seed grows up
+	{ zen::RESFLAG_Onyons, false, 207, ResultFlags::FlagInfo::Store_Keep },                    // Pikmin onions
+	{ zen::RESFLAG_MeetYellowPikminNoBomb, false, 206, ResultFlags::FlagInfo::Store_Forget },  // Meet Yellow Pikmin (no bombs)
+	{ zen::RESFLAG_BluePikminWaterImmunity, false, 208, ResultFlags::FlagInfo::Store_Forget }, // Blue Pikmin touch water (unused)
+	{ zen::RESFLAG_PikminOnFire, false, 209, ResultFlags::FlagInfo::Store_Forget },            // Pikmin on fire
+	{ zen::RESFLAG_Dororo, false, 400, ResultFlags::FlagInfo::Store_Reset },                   // Smoky Progg
+	{ zen::RESFLAG_Swallow, false, 401, ResultFlags::FlagInfo::Store_Reset },                  // Bulborb
+	{ zen::RESFLAG_Kinoko, false, 402, ResultFlags::FlagInfo::Store_Reset },                   // Puffstool
+	{ zen::RESFLAG_Kogane, false, 403, ResultFlags::FlagInfo::Store_Reset },                   // Flint Beetle
+	{ zen::RESFLAG_Mizinko, false, 404, ResultFlags::FlagInfo::Store_Reset },                  // Honeywisp
+	{ zen::RESFLAG_Pom, false, 405, ResultFlags::FlagInfo::Store_Reset },                      // Candypop Bud
+	{ zen::RESFLAG_Spider, false, 406, ResultFlags::FlagInfo::Store_Reset },                   // Beady Long Legs
+	{ zen::RESFLAG_Beatle, false, 407, ResultFlags::FlagInfo::Store_Reset },                   // Armored Cannon Beetle
+	{ zen::RESFLAG_Snake, false, 408, ResultFlags::FlagInfo::Store_Reset },                    // Burrowing Snagret
+	{ zen::RESFLAG_King, false, 409, ResultFlags::FlagInfo::Store_Reset },                     // Emperor Bulblax
+	{ zen::RESFLAG_Slime, false, 410, ResultFlags::FlagInfo::Store_Reset },                    // Goolix
+	{ zen::RESFLAG_Miurin, false, 411, ResultFlags::FlagInfo::Store_Reset },                   // Mamuta
+	{ zen::RESFLAG_Kabekui, false, 412, ResultFlags::FlagInfo::Store_Reset },                  // Sheargrub
+	{ zen::RESFLAG_Tank, false, 413, ResultFlags::FlagInfo::Store_Reset },                     // Fiery Blowhog
+	{ zen::RESFLAG_Shell, false, 414, ResultFlags::FlagInfo::Store_Reset },                    // Pearly Clamclamp
+	{ zen::RESFLAG_Collec, false, 415, ResultFlags::FlagInfo::Store_Reset },                   // Breadbug
+	{ zen::RESFLAG_Mar, false, 416, ResultFlags::FlagInfo::Store_Reset },                      // Puffy Blowhog
+	{ zen::RESFLAG_Otimoti, false, 417, ResultFlags::FlagInfo::Store_Reset },                  // Wollywog
+	{ zen::RESFLAG_Misc1, true, 600, ResultFlags::FlagInfo::Store_Keep },                      // Misc 1
+	{ zen::RESFLAG_Misc2, true, 601, ResultFlags::FlagInfo::Store_Keep },                      // Misc 2
+	{ zen::RESFLAG_Misc3, true, 602, ResultFlags::FlagInfo::Store_Keep },                      // Misc 3
+	{ zen::RESFLAG_Misc4, true, 603, ResultFlags::FlagInfo::Store_Keep },                      // Misc 4
+	{ zen::RESFLAG_Misc5, true, 604, ResultFlags::FlagInfo::Store_Keep },                      // Misc 5
+	{ zen::RESFLAG_Misc6, true, 605, ResultFlags::FlagInfo::Store_Keep },                      // Misc 6
+	{ zen::RESFLAG_Misc7, true, 606, ResultFlags::FlagInfo::Store_Keep },                      // Misc 7
+	{ zen::RESFLAG_Misc8, true, 607, ResultFlags::FlagInfo::Store_Keep },                      // Misc 8
+	{ zen::RESFLAG_Misc9, true, 608, ResultFlags::FlagInfo::Store_Keep },                      // Misc 9
+	{ zen::RESFLAG_Misc10, true, 609, ResultFlags::FlagInfo::Store_Keep },                     // Misc 10
+	{ zen::RESFLAG_Misc11, true, 610, ResultFlags::FlagInfo::Store_Keep },                     // Misc 11
+	{ zen::RESFLAG_Misc12, true, 611, ResultFlags::FlagInfo::Store_Keep },                     // Misc 12
+	{ zen::RESFLAG_Misc13, true, 612, ResultFlags::FlagInfo::Store_Keep },                     // Misc 13
+	{ zen::RESFLAG_Misc14, true, 613, ResultFlags::FlagInfo::Store_Keep },                     // Misc 14
+	{ zen::RESFLAG_Misc15, true, 614, ResultFlags::FlagInfo::Store_Keep },                     // Misc 15
+	{ zen::RESFLAG_Misc16, true, 615, ResultFlags::FlagInfo::Store_Keep },                     // Misc 16
+	{ zen::RESFLAG_Misc17, true, 616, ResultFlags::FlagInfo::Store_Keep },                     // Misc 17
+	{ zen::RESFLAG_Misc18, true, 617, ResultFlags::FlagInfo::Store_Keep },                     // Misc 18
+	{ zen::RESFLAG_Misc19, true, 618, ResultFlags::FlagInfo::Store_Keep },                     // Misc 19
+	{ zen::RESFLAG_Misc20, true, 619, ResultFlags::FlagInfo::Store_Keep },                     // Misc 20
+	{ zen::RESFLAG_Misc21, true, 620, ResultFlags::FlagInfo::Store_Keep },                     // Misc 21
+	{ zen::RESFLAG_Misc22, true, 621, ResultFlags::FlagInfo::Store_Keep },                     // Misc 22
+	{ zen::RESFLAG_Misc23, true, 622, ResultFlags::FlagInfo::Store_Keep },                     // Misc 23
+	{ zen::RESFLAG_Misc24, true, 623, ResultFlags::FlagInfo::Store_Keep },                     // Misc 24
+	{ zen::RESFLAG_Misc25, true, 624, ResultFlags::FlagInfo::Store_Keep },                     // Misc 25
+	{ zen::RESFLAG_Misc26, true, 625, ResultFlags::FlagInfo::Store_Keep },                     // Misc 26
+	{ zen::RESFLAG_Misc27, true, 626, ResultFlags::FlagInfo::Store_Keep },                     // Misc 27
+	{ zen::RESFLAG_NULL, 0, 0, 0 },                                                            // END
 };
 
 /**
@@ -130,10 +130,10 @@ ResultFlags::ResultFlags()
 	}
 
 	// don't display these ones
-	setSeen(RESFLAG_UnusedControls1);
-	setSeen(RESFLAG_UnusedControls2);
-	setSeen(RESFLAG_UnusedControls3);
-	setSeen(RESFLAG_BluePikminWaterImmunity);
+	setSeen(zen::RESFLAG_UnusedControls1);
+	setSeen(zen::RESFLAG_UnusedControls2);
+	setSeen(zen::RESFLAG_UnusedControls3);
+	setSeen(zen::RESFLAG_BluePikminWaterImmunity);
 }
 
 /**
@@ -160,10 +160,10 @@ void ResultFlags::initGame()
 		mDaysSeen[i] = -1;
 	}
 
-	setSeen(RESFLAG_UnusedControls1);
-	setSeen(RESFLAG_UnusedControls2);
-	setSeen(RESFLAG_UnusedControls3);
-	setSeen(RESFLAG_BluePikminWaterImmunity);
+	setSeen(zen::RESFLAG_UnusedControls1);
+	setSeen(zen::RESFLAG_UnusedControls2);
+	setSeen(zen::RESFLAG_UnusedControls3);
+	setSeen(zen::RESFLAG_BluePikminWaterImmunity);
 }
 
 /**
@@ -246,12 +246,10 @@ int ResultFlags::getDayDocument(int dayIndex, int& length)
 /**
  * @todo: Documentation
  */
-int ResultFlags::getDocument(int& out)
+int ResultFlags::getDocument(int& pageCount)
 {
-
 	int minimumPriority = 128000;
 	int index           = -1;
-	// FlagInfo* flagData  = flagTable;
 
 	for (int i = 0; i < mActiveCount; i++) {
 		int id = flagTable[i].mScreenId;
@@ -263,9 +261,9 @@ int ResultFlags::getDocument(int& out)
 
 	if (index != -1) {
 		if (flagTable[index + 1].mScreenId == -1) {
-			out = 1;
+			pageCount = 1;
 		} else {
-			out = flagTable[index + 1].mScreenId - flagTable[index].mScreenId;
+			pageCount = flagTable[index + 1].mScreenId - flagTable[index].mScreenId;
 		}
 
 		setFlag(flagTable[index].mScreenId, 2);

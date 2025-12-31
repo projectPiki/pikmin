@@ -137,7 +137,7 @@ public:
 	{
 		TAIAfireBreath::start(teki);
 		if (teki.isNaviWatch()) {
-			playerState->mResultFlags.setOn(RESFLAG_Tank);
+			playerState->mResultFlags.setOn(zen::RESFLAG_Tank);
 		}
 	}
 

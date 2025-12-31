@@ -164,7 +164,7 @@ public:
 	{
 		TAIAfireBreath::start(teki);
 		if (teki.isNaviWatch()) {
-			playerState->mResultFlags.setOn(RESFLAG_Mar);
+			playerState->mResultFlags.setOn(zen::RESFLAG_Mar);
 		}
 	}
 	virtual bool act(Teki& teki) { return TAIAfireBreath::act(teki); } // _10
@@ -531,7 +531,7 @@ public:
 		TAIAdying::start(teki);
 		teki.setPtclGenPtr(YTeki::PTCL_Unk1, nullptr);
 		teki.setPtclGenPtr(YTeki::PTCL_Unk2, nullptr);
-		playerState->mResultFlags.setSeen(RESFLAG_Mar);
+		playerState->mResultFlags.setSeen(zen::RESFLAG_Mar);
 	}
 	virtual bool act(Teki& teki) // _10
 	{

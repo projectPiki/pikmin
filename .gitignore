@@ -47,3 +47,5 @@ tools/powerpc
 *.til
 mwcc_debugger.py
 /docs
+build.py
+*.lnk

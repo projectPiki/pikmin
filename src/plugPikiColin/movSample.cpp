@@ -203,7 +203,7 @@ struct MovSampleSetupSection : public Node {
 			OSCancelThread(&playbackThread);
 
 			if (flowCont.mEndingType != ENDING_None) {
-				Jac_SceneExit(SCENE_Unk13, 0);
+				Jac_SceneExit(SCENE_Exit, 0);
 				flowCont.mEndingType = ENDING_None;
 			}
 
@@ -329,7 +329,9 @@ struct MovSampleSetupSection : public Node {
 void MovSampleSection::init()
 {
 	Node::init("<MovSampleSection>");
+	// run h4m movies at 60 fps
 	gsys->setFrameClamp(1);
+
 	gsys->mTimerState = TS_Off;
 	gsys->startLoading(nullptr, true, 60);
 

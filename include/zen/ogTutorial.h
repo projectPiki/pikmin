@@ -70,12 +70,12 @@ struct ogScrTutorialMgr {
 	 * @brief TODO
 	 */
 	enum TutorialStatus {
-		Status_Null = -1,
-		Status_0    = 0,
-		Status_1    = 1,
-		Status_2    = 2,
-		Status_3    = 3,
-		Status_4    = 4,
+		STATUS_Inactive   = -1,
+		STATUS_TextActive = 0,
+		STATUS_Starting   = 1,
+		STATUS_FadeIn     = 2,
+		STATUS_FadeOut    = 3,
+		STATUS_Exiting    = 4,
 	};
 
 	ogScrTutorialMgr();

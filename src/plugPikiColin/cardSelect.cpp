@@ -15,18 +15,21 @@
 #include "sysNew.h"
 #include "zen/ogFileChkSel.h"
 
-/// Macros for packing and unpacking the section compression flag.
+// Macros for packing and unpacking the section compression flag.
+// (this packing is a holdover from TitlesSection where there's also section transitions, not just OnePlayerSection).
+
+/// Packs next OnePlayerSection subsection ID to transit to, to be stored in a flag.
 #define PACK_NEXT_ONEPLAYER(onePlayerID) (onePlayerID) << 16
-#define UNPACK_NEXT_ONEPLAYER(flag)      (flag) >> 16
+
+/// Unpacks next OnePlayerSection subsection ID from flag.
+#define UNPACK_NEXT_ONEPLAYER(flag) (flag) >> 16
 
 /**
- * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("CardSelect")
@@ -44,7 +47,16 @@ static zen::ogScrFileChkSelMgr* memcardWindow;
  */
 struct CardSelectSetupSection : public Node {
 
-	/// Constructor.
+	/**
+	 * @brief States that the section can be in, to control transitions and actions.
+	 */
+	enum State {
+		Inactive = -1, ///< no longer active.
+		Active   = 0,  ///< normal/active state.
+		Exit     = 1,  ///< fading out/exiting.
+	};
+
+	/// Constructs a card select helper object; also sets up a new memory card selection screen.
 	CardSelectSetupSection()
 	{
 		setName("CardSelect section");
@@ -56,24 +68,24 @@ struct CardSelectSetupSection : public Node {
 
 		mJacSetupCountdown = 5;
 		mController        = new Controller(1);
-		mFadeState         = 0;
+		mState             = Active;
 
 		// reset the window pointer
 		memcardWindow = nullptr;
 		memcardWindow = new zen::ogScrFileChkSelMgr();
-		memcardWindow->start(gameflow.mIsChallengeMode);
+		memcardWindow->start(gameflow.mIsChallengeMode); // challenge mode skips file select
 
 		gsys->setFade(1.0f, 3.0f);
-		mNextSectionsFlag = PACK_NEXT_ONEPLAYER(ONEPLAYER_GameSetup);
+		mNextSectionsFlag = 0; // indicates we haven't set a destination yet (we're past setup)
 	}
 
 	/// Updates the screen each frame and alters the state.
 	virtual void update() // _10 (weak)
 	{
 		mController->update();
-		if (!memcardWindow && mFadeState == 0) {
-			// no window, fade in
-			mFadeState = 1;
+		if (!memcardWindow && mState == Active) {
+			// fade out
+			mState = Exit;
 			gsys->setFade(0.0f, 3.0f);
 		}
 
@@ -82,15 +94,16 @@ struct CardSelectSetupSection : public Node {
 
 			if (mJacSetupCountdown == 0) {
 #ifndef WIN32
-				Jac_SceneSetup(SCENE_Unk2, 0);
+				Jac_SceneSetup(SCENE_FileSelect, 0);
 #endif
 			}
 		}
 
-		if (mFadeState == 1 && gsys->getFade() == 0.0f) {
-			// fade in is done
-			mFadeState = -1;
+		if (mState == Exit && gsys->getFade() == 0.0f) {
+			// fading out is done
+			mState = Inactive;
 			if (mNextSectionsFlag) {
+				// we picked a destination!
 				gameflow.mNextOnePlayerSectionID = UNPACK_NEXT_ONEPLAYER(mNextSectionsFlag);
 			} else {
 				if (!gameflow.mIsChallengeMode) {
@@ -105,14 +118,14 @@ struct CardSelectSetupSection : public Node {
 							gameflow.mPlayState.mSaveStatus = PlayState::ReadyToSave;
 						}
 
-						// put us in the map select screen
+						// next subsection will be map select
 						gameflow.mNextOnePlayerSectionID = ONEPLAYER_MapSelect;
 
 					} else {
 						PRINT("NO SAVE GAMES!\n");
 						gameflow.mPlayState.Initialise();
 
-						// start the intro cutscene
+						// next subsection will be the new game intro cutscene
 						gameflow.mNextOnePlayerSectionID = ONEPLAYER_IntroGame;
 					}
 
@@ -132,21 +145,29 @@ struct CardSelectSetupSection : public Node {
 					if (gameflow.mIsChallengeMode) {
 						playerState->setChallengeMode();
 					}
+
+					// next subsection will be (challenge mode) map select
 					gameflow.mNextOnePlayerSectionID = ONEPLAYER_MapSelect;
 				}
 
+				// don't show any preference for ship position or any unlock animations on map screen
 				gameflow.mCurrentStageID       = -1;
 				gameflow.mPendingStageUnlockID = -1;
 			}
 
 #ifdef __MWERKS__
-			Jac_SceneExit(SCENE_Unk13, 0);
+			Jac_SceneExit(SCENE_Exit, 0);
 #endif
+
+			// force transit to next section
 			gsys->softReset();
 		}
 	}
 
-	/// Renders the screen and adjusts the render based on screen status.
+	/**
+	 * @brief Renders the screen and adjusts the render based on screen status.
+	 * @param gfx Graphics context for rendering.
+	 */
 	virtual void draw(Graphics& gfx) // _14 (weak)
 	{
 		gfx.setViewport(AREA_FULL_SCREEN(gfx));
@@ -165,30 +186,37 @@ struct CardSelectSetupSection : public Node {
 		// if screen indicates an exit or error, process that before drawing
 		CardQuickInfo card;
 		zen::ogScrFileChkSelMgr::returnStatusFlag returnCode = memcardWindow->update(mController, card);
+
+		// process any error or exit codes
 		if (returnCode >= zen::ogScrFileChkSelMgr::FILECHKSEL_Exit) {
 			PRINT("got return code .... %d\n", returnCode);
 
+			// close the memory card window and decide what to do next
 			memcardWindow = nullptr;
 			if (returnCode == zen::ogScrFileChkSelMgr::ErrorOrCompleted) {
+				// back out to title screen
 				mNextSectionsFlag = PACK_NEXT_ONEPLAYER(ONEPLAYER_GameExit);
-				mFadeState        = 1;
+				mState            = Exit;
 				gsys->setFade(0.0f, 3.0f);
-			} else if (returnCode == zen::ogScrFileChkSelMgr::FILECHKSEL_Unk5) {
-				mNextSectionsFlag = PACK_NEXT_ONEPLAYER(ONEPLAYER_GameSetup);
-				mFadeState        = 1;
+
+			} else if (returnCode == zen::ogScrFileChkSelMgr::ForceExit) {
+				// force close and let update sort out where we go
+				mNextSectionsFlag = 0;
+				mState            = Exit;
 				gsys->setFade(0.0f, 3.0f);
+
 			} else {
-				// 2/3/4 = we selected a a save file (A, B, or C)
+				// we selected a a save file (A, B, or C)
 				gameflow.mGamePrefs.mHasSaveGame        = true;
 				gameflow.mSaveGameCrc                   = card.mCrc;
-				gameflow.mGamePrefs.mMostRecentFileSlot = returnCode - 2;
+				gameflow.mGamePrefs.mMostRecentFileSlot = returnCode - zen::ogScrFileChkSelMgr::FILECHKSEL_SlotOffset;
 				PRINT("got index = %d\n", card.mMemCardSaveIndex);
 				gameflow.mGamePrefs.mMemCardSaveIndex = card.mMemCardSaveIndex + 1;
 				PRINT("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
 				PRINT("using save game file %d (crc = %08x) with %d as the spare\n", gameflow.mGamePrefs.mMemCardSaveIndex,
 				      gameflow.mSaveGameCrc, gameflow.mGamePrefs.mSpareMemCardSaveIndex);
 				gameflow.mWorldClock.mCurrentDay = card.mCurrentDay;
-				mFadeState                       = 1;
+				mState                           = Exit;
 				gsys->setFade(0.0f, 3.0f);
 			}
 		}
@@ -201,19 +229,22 @@ struct CardSelectSetupSection : public Node {
 
 	// _00     = VTBL
 	// _00-_20 = Node
-	u32 mFadeState;          ///< _20, whether screen is fading in, static or off.
-	u32 mNextSectionsFlag;   ///< _24, flag that stores the next OnePlayerSection and Section - see defines in Section.h.
-	u8 _28[0x30 - 0x28];     ///< _28, unused/unknown region.
+	u32 mState;              ///< _20, whether screen is inactive, active, or exiting - see `State` enum.
+	u32 mNextSectionsFlag;   ///< _24, flag that stores the next OnePlayerSection - see `ONEPLAYER` macros.
+	u8 _28[0x30 - 0x28];     ///< _28, unused/unknown.
 	Controller* mController; ///< _30, active controller.
 	int mJacSetupCountdown;  ///< _34, frame countdown before setting up audio scene (CM only).
 };
 
 /**
- * @todo: Documentation
+ * @brief Constructs card access/file select subsection.
+ *
+ * Most of the hard work gets farmed out to `CardSelectSetupSection` above, including transiting to a new subsection.
  */
 CardSelectSection::CardSelectSection()
 {
 	Node::init("<CardSelectSection>");
+	// run card select at 60 fps
 	gsys->setFrameClamp(1);
 
 	// reset everything game-related
@@ -231,7 +262,7 @@ CardSelectSection::CardSelectSection()
 	gameflow.mGamePrefs.mHasSaveGame      = false;
 
 	if (gameflow.mIsChallengeMode == FALSE) {
-		Jac_SceneSetup(SCENE_Unk2, 0);
+		Jac_SceneSetup(SCENE_FileSelect, 0);
 	}
 
 	gsys->startLoading(nullptr, true, 60);
