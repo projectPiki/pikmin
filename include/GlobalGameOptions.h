@@ -39,6 +39,7 @@ enum StageID {
 	STAGE_CHALINVALID   = 7,               // Invalid challenge mode option.
 
 	STAGE_CHALSTART = STAGE_START, // first valid challenge mode level ID
+	STAGE_CHALEND   = STAGE_END,
 	STAGE_CHALCOUNT = STAGE_COUNT, // number of challenge mode levels
 };
 
