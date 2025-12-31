@@ -758,7 +758,7 @@ int ActTransport::exec()
 				return ACTOUT_Fail;
 			}
 
-			if (mGoal && !pel) {
+			if (!mGoal || !pel) {
 				PRINT("theGoal = %x target = %x\n", mGoal, pel);
 				ERROR("mail to zamsi\n");
 			}

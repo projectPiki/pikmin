@@ -148,7 +148,7 @@ void zen::DrawContainer::start(zen::DrawContainer::containerType color, int p2, 
 		unused1.makeResident();
 		NumberTex::makeResident();
 
-		if (color > COLOR_Yellow) {
+		if (color < COLOR_Blue || color > COLOR_Yellow) {
 			PRINT("unknown container type %d \n", color);
 			ERROR("unknown container type %d \n", color);
 		}

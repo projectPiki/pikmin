@@ -581,7 +581,7 @@ void GameCoreSection::cleanupDayEnd()
 			int mode   = piki->mMode;
 			if (piki->isKinoko()) {
 				GameStat::victimPikis.inc(piki->mColor);
-#if defined(VERSION_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 #else
 				GameStat::deadPikis.inc(piki->mColor);
 #endif
@@ -626,7 +626,7 @@ void GameCoreSection::cleanupDayEnd()
 					}
 					if (!isNearOnyonShip) {
 						GameStat::victimPikis.inc(piki->mColor);
-#if defined(VERSION_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 #else
 						GameStat::deadPikis.inc(piki->mColor);
 #endif
@@ -1281,7 +1281,11 @@ GameCoreSection::GameCoreSection(Controller* controller, MapMgr* mgr, Camera& ca
 	mBigFont->setTexture(gsys->loadTexture("bigFont.bti", true), 21, 36);
 
 	memStat->start("dynamics");
+#if defined(VERSION_GPIJ01_01)
+	particleHeap = new DynParticleHeap(0x200);
+#else
 	particleHeap = new DynParticleHeap(0x400);
+#endif
 	memStat->end("dynamics");
 
 	mAiPerfDebugMenu                     = new Menu(mController, gsys->mConsFont);

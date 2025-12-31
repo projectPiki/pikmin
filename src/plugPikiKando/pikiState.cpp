@@ -456,7 +456,10 @@ void PikiAbsorbState::exec(Piki* piki)
 
 	if (piki->getUpperMotionIndex() != PIKIANIM_Mizunomi) {
 		transit(piki, PIKISTATE_Normal);
+#if defined(VERSION_GPIJ01_01)
+#else
 		ERROR("mizunomi err!\n");
+#endif
 	}
 }
 

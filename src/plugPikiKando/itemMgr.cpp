@@ -256,6 +256,12 @@ Creature* MeltingPotMgr::birth(int objType)
 		break;
 	}
 
+#if defined(VERSION_GPIJ01_01)
+	if (!creature) {
+		ERROR("DAME DAME\n");
+	}
+#endif
+
 	CreatureNode* node = new CreatureNode();
 	node->mCreature    = creature;
 	mRootNode.add(node);

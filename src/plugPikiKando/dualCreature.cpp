@@ -162,7 +162,7 @@ void DualCreature::update()
 void DualCreature::refresh(Graphics& gfx)
 {
 	Matrix4f mtx;
-#if defined(VERSION_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 	// I don't enjoy splitting this difference in two, but syntax highlighting really hates extra opening braces.
 #else
 	bool isPointVisible = gfx.mCamera->isPointVisible(mSRT.t, 2.0f * getBoundingSphereRadius());
@@ -175,7 +175,7 @@ void DualCreature::refresh(Graphics& gfx)
 #endif
 
 	if (!_43E) {
-#if defined(VERSION_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 		if (!mIsDynamicsSimpleFixed && gfx.mCamera->isPointVisible(mSRT.t, 2.0f * getBoundingSphereRadius()))
 #else
 		if (!mIsDynamicsSimpleFixed && isPointVisible)

@@ -53,7 +53,10 @@ void Jac_Gsync()
 	}
 	Jac_DemoEventUnPauseCheck();
 	Jac_SysSEDemoFadeCheck();
+#if defined(VERSION_GPIJ01_01)
+#else
 	Jac_EventFrameCheck();
+#endif
 }
 
 /**

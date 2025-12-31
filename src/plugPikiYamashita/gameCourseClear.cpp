@@ -127,12 +127,11 @@ public:
 	}
 	void setGameMode(int idx, GameModeBase* mode)
 	{
-		if (mModes[idx]) {
+		if (mModes[idx] == 0) {
+			mModes[idx] = mode;
+		} else {
 			ERROR("setup twice! \n");
-			return;
 		}
-
-		mModes[idx] = mode;
 	}
 
 protected:

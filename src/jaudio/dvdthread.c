@@ -233,7 +233,10 @@ s32 DVDT_LoadtoDRAM_Main(void* dvdCall)
 
 	if (call->length == 0) {
 		call->length = infoLength;
+#if defined(VERSION_GPIJ01_01)
+#else
 		call->length -= call->src;
+#endif
 	}
 
 	DCInvalidateRange((void*)call->dst, call->length);
@@ -404,7 +407,10 @@ s32 DVDT_LoadtoARAM_Main(void* dvdCall)
 	if (call->length == 0) {
 		call->length = len;
 
+#if defined(VERSION_GPIJ01_01)
+#else
 		call->length -= call->src;
+#endif
 	}
 
 	OSGetTick();

@@ -13,7 +13,6 @@ static u32 status;
 static struct bb2struct* bb2; // pointer?
 static u8* idTmp;             // also pointer
 static u8 bb2Buf[0x3F];
-static u8 block[0x30];
 
 struct blah {
 	s8 Gamecode[4];
@@ -55,6 +54,8 @@ static void cb(s32 type, DVDCommandBlock* cmdBlock)
  */
 void __fstLoad(void)
 {
+	static u8 block[0x30];
+
 	int status;
 	char* onStr;
 	u8 idBuffer[64];

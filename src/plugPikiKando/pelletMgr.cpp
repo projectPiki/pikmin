@@ -92,7 +92,7 @@ int PelletMgr::getUfoIndexFromID(u32 ufoID)
  */
 u32 PelletMgr::getUfoIDFromIndex(int idx)
 {
-	if (idx >= MAX_UFO_PARTS) {
+	if (idx < 0 || idx >= MAX_UFO_PARTS) {
 		ERROR("N MECK!\n");
 	}
 	return _ufoIDTable[idx];
@@ -137,6 +137,8 @@ void PelletConfig::read(RandomAccessStream& input)
 	mRepairAnimJointIndex = input.readInt();
 }
 
+#if defined(VERSION_GPIJ01_01)
+#else
 // see PelletBounceSoundID in Pellet.h
 static u32 bounceSounds[] = {
 	SE_PELLET_BOUND,   SE_UFOPARTS_BOUND, SE_UFOPARTS_SPRING, SE_UFOPARTS_MONEYBOX, SE_UFOPARTS_BOUND, SE_UFOPARTS_BOUND,
@@ -152,6 +154,7 @@ NumberPel numberPellets[13] = {
 	{ PELCOLOR_Yellow, NUMPEL_TenPellet, 'py10' }, { PELCOLOR_Yellow, NUMPEL_TwentyPellet, 'py20' },
 	{ PELCOLOR_NULL, NUMPEL_NULL, 'ujaa' },
 };
+#endif
 
 /**
  * @todo: Documentation
@@ -919,7 +922,7 @@ void Pellet::doLoad(RandomAccessStream& input)
 		PRINT("UFO PARTS DIDN'T MOVE!\n");
 		mSRT.t = mSpawnPosition;
 	}
-#if defined(VERSION_GPIE01_00) || defined(VERSION_PIKIDEMO)
+#if defined(VERSION_GPIE01_00) || defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 	// This isn't in the USA versions' DLL, meaning that DLL is based on rev 0 instead of rev 1 (it was not recompiled between revisions).
 #else
 	else if (isNan(mSRT.t.x) || isNan(mSRT.t.y) || isNan(mSRT.t.z)) {
@@ -1053,6 +1056,25 @@ void Pellet::startAI(int doSpawnScaleOff)
 
 	mIsAIActive = true;
 }
+
+#if defined(VERSION_GPIJ01_01)
+// see PelletBounceSoundID in Pellet.h
+static u32 bounceSounds[] = {
+	SE_PELLET_BOUND,   SE_UFOPARTS_BOUND, SE_UFOPARTS_SPRING, SE_UFOPARTS_MONEYBOX, SE_UFOPARTS_BOUND, SE_UFOPARTS_BOUND,
+	SE_UFOPARTS_BOUND, SE_UFOPARTS_BOUND, SE_UFOPARTS_BOUND,  SE_UFOPARTS_BOUND,    SE_UFOPARTS_BOUND, SE_UFOPARTS_BOUND,
+};
+
+NumberPel numberPellets[13] = {
+	{ PELCOLOR_Blue, NUMPEL_OnePellet, 'pb01' },   { PELCOLOR_Blue, NUMPEL_FivePellet, 'pb05' },
+	{ PELCOLOR_Blue, NUMPEL_TenPellet, 'pb10' },   { PELCOLOR_Blue, NUMPEL_TwentyPellet, 'pb20' },
+	{ PELCOLOR_Red, NUMPEL_OnePellet, 'pr01' },    { PELCOLOR_Red, NUMPEL_FivePellet, 'pr05' },
+	{ PELCOLOR_Red, NUMPEL_TenPellet, 'pr10' },    { PELCOLOR_Red, NUMPEL_TwentyPellet, 'pr20' },
+	{ PELCOLOR_Yellow, NUMPEL_OnePellet, 'py01' }, { PELCOLOR_Yellow, NUMPEL_FivePellet, 'py05' },
+	{ PELCOLOR_Yellow, NUMPEL_TenPellet, 'py10' }, { PELCOLOR_Yellow, NUMPEL_TwentyPellet, 'py20' },
+	{ PELCOLOR_NULL, NUMPEL_NULL, 'ujaa' },
+};
+#else
+#endif
 
 /**
  * @todo: Documentation
@@ -1500,7 +1522,7 @@ Pellet* PelletMgr::newPellet(u32 pelletID, PelletView* view)
 	if (view) {
 		if (config) {
 			Pellet* pellet = static_cast<Pellet*>(birth());
-#if defined(VERSION_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 			pellet->initPellet(view, config);
 #else
 			if (pellet) {
@@ -1517,7 +1539,7 @@ Pellet* PelletMgr::newPellet(u32 pelletID, PelletView* view)
 
 		if (config && obj) {
 			Pellet* pellet = static_cast<Pellet*>(birth());
-#if defined(VERSION_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 			pellet->initPellet(obj, config);
 #else
 			if (pellet) {
@@ -1576,7 +1598,7 @@ PelletMgr::PelletMgr(MapMgr* mgr)
 	mConfigNum   = 0;
 	mReadStage   = 0;
 	load("parms/", "pelMgr.bin", 1);
-#if defined(VERSION_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 	create(64);
 #else
 	create(96);
@@ -1739,7 +1761,10 @@ void PelletMgr::initTekiNakaParts()
 		if (useShape(info->mID.mId) && !info->mPelletShapeObject && info->mID.match('un**')) {
 			PRINT("*** NAKA PARTS (%s)\n", info->mID.mStringID);
 			if (info->createShapeObject()) {
+#if defined(VERSION_GPIJ01_01)
+#else
 				PRINT("NAKA (%s) create done !\n", info->mID.mStringID);
+#endif
 			} else {
 				ERROR("failed to create NAKA SHAPEOBJECT\n");
 			}

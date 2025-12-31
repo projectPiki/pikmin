@@ -7,7 +7,7 @@
  * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
-DEFINE_ERROR(6)
+DEFINE_ERROR(4)
 
 /**
  * @todo: Documentation

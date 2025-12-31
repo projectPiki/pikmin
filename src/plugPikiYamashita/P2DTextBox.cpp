@@ -55,14 +55,14 @@ P2DTextBox::P2DTextBox(P2DPane* pane, RandomAccessStream* ramStream, u16 param3)
 	u8 vBinding = ramStream->readByte();
 	mAlignmentV = (P2DTextBoxVBinding)(vBinding & ~0x0);
 
-	if (!(hBinding & 0x80)) {
-		PRINT("flag is not found.\n");
-		ERROR("blo data is old");
-	} else {
+	if (hBinding & 0x80) {
 		mSpacing    = (int)ramStream->readShort();
 		mLeading    = (int)ramStream->readShort();
 		mFontWidth  = (int)ramStream->readShort();
 		mFontHeight = (int)ramStream->readShort();
+	} else {
+		PRINT("flag is not found.\n");
+		ERROR("blo data is old");
 	}
 
 	s16 length = ramStream->readShort();

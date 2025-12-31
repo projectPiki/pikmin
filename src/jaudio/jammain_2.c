@@ -710,7 +710,7 @@ void Jam_ReadPortIndirect(void)
  * @TODO: Documentation
  * @note UNUSED Size: 0000A4
  */
-void Jam_CheckPortIndirect(void)
+BOOL Jam_CheckPortIndirect(seqp_*, u8, int)
 {
 	// UNUSED FUNCTION
 }

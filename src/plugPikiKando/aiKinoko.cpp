@@ -275,15 +275,13 @@ void ActKinoko::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 				ERROR("kinoko no navi!\n");
 			}
 			PRINT_GLOBAL("navi=%x", navi);
-			InteractSuck suck(mPiki, 0.5f);
-			if (navi->stimulate(suck)) {
+
+			if (navi->stimulate(InteractSuck(mPiki, 0.5f))) {
 				SeSystem::playPlayerSe(SE_KINOKOPIKI_ATTACK);
 			}
 		}
 		break;
 	}
-
-	STACK_PAD_VAR(2);
 }
 
 /**

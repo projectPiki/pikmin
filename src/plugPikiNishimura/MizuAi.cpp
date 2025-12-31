@@ -246,7 +246,7 @@ void MizuAi::readyState()
 			}
 		}
 
-#if defined(VERSION_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 #else
 		if (mMizu->getAttackTimer() > 3.0f) {
 			mMizu->setAttackTimer(0.0f);

@@ -24,7 +24,7 @@
  * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
-DEFINE_ERROR(21)
+DEFINE_ERROR(23)
 
 /**
  * @todo: Documentation
@@ -50,7 +50,7 @@ static OSMessageQueue loadMesgQueue;
 static OSMessageQueue sysMesgQueue;
 
 u8* DVDStream::readBuffer = 0;
-u32 DVDStream::numOpen    = 0;
+int DVDStream::numOpen    = 0;
 static Font* bigFont;
 
 static AramStream aramStream;
@@ -102,6 +102,12 @@ RandomAccessStream* System::openFile(immut char* path, bool isRelativePath, bool
 		}
 	}
 
+#if defined(VERSION_GPIJ01_01)
+	if (DVDStream::numOpen) {
+		ERROR("Cannot open '%s' while '%s' is open!!\n", path, lastName);
+	}
+#endif
+
 	mDvdOpenFiles++;
 	dvdStream.mPath   = strPath;
 	dvdStream.mIsOpen = DVDOpen(strPath, &dvdStream.mFileInfo);
@@ -125,7 +131,10 @@ RandomAccessStream* System::openFile(immut char* path, bool isRelativePath, bool
 	dvdBufferedStream.init(&dvdStream, dvdStream.readBuffer, mDvdBufferSize);
 	return &dvdBufferedStream;
 
+#if defined(VERSION_GPIJ01_01)
+#else
 	STACK_PAD_VAR(2);
+#endif
 }
 
 /**
@@ -242,6 +251,7 @@ void System::parseArchiveDirectory(immut char* arcPath, immut char* dirPath)
 	DVDStream::numOpen++;
 	if (!stream.mIsOpen) {
 		stream.close();
+		ERROR("Could not open archive file!!\n");
 	}
 
 	// inline?

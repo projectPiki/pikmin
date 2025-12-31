@@ -807,7 +807,7 @@ void AnimData::extractSRT(SRT& srt, int, AnimDataInfo* info, f32 p4)
 void AnimData::makeAnimSRT(int boneId, immut Matrix4f* parent, Matrix4f* output, AnimDataInfo* info, f32 pos)
 {
 	int frameNum = pos;
-	if (frameNum < 0 || frameNum > mTotalFrameCount) {
+	if (frameNum < 0 || frameNum >= mTotalFrameCount) {
 		ERROR("makeSRT too large a frame number : %d / %d : %f\n", frameNum, mTotalFrameCount, pos);
 	}
 

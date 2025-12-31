@@ -161,7 +161,7 @@ void KingBody::createUfoParts()
 		}
 	}
 
-#if defined(VERSION_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 #else
 	mKing->mIsBossBgm = false;
 #endif

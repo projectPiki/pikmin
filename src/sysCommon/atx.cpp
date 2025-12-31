@@ -39,7 +39,10 @@ bool AtxStream::open(immut char* name, int unused)
 
 	// Attempt to open the route
 	if (!router->openRoute(this, unused)) {
+#if defined(VERSION_GPIJ01_01)
+#else
 		ERROR("Could not open route to server\n");
+#endif
 		gsys->setAtxRouter(nullptr);
 		return false;
 	}

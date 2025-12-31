@@ -182,12 +182,12 @@ public:
 	bool CheckCtrlTag(immut char*, s16*, f32*);
 
 private:
-	char mOnesWaitChar[8];    // _00
-	char mTensWaitChar[8];    // _08
-#if defined(VERSION_PIKIDEMO) //
-#else                         //
+	char mOnesWaitChar[8];                                  // _00
+	char mTensWaitChar[8];                                  // _08
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01) //
+#else                                                       //
 	char mHankakuWaitChars[8]; // _10
-#endif                        //
+#endif                                                      //
 };
 
 /**

@@ -13,7 +13,7 @@
 #define VI_BITMASK(index) (1ull << (63 - (index)))
 
 static vu32 retraceCount;
-#if defined(VERSION_GPIE01_00)
+#if defined(VERSION_GPIE01_00) || defined(VERSION_GPIJ01_01)
 static vu32 changeMode; // This exists up here for some reason.
 #endif
 static u32 flushFlag;
@@ -25,7 +25,7 @@ static u32 encoderType;
 static s16 displayOffsetH;
 static s16 displayOffsetV;
 
-#if defined(VERSION_GPIE01_00)
+#if defined(VERSION_GPIE01_00) || defined(VERSION_GPIJ01_01)
 static vu64 changed;
 #else
 static vu32 changeMode;
@@ -115,7 +115,7 @@ static BOOL VISetRegs(void)
 {
 	int regIndex;
 
-#if defined(VERSION_GPIE01_00)
+#if defined(VERSION_GPIE01_00) || defined(VERSION_GPIJ01_01)
 	if (!((changeMode == 1) && (getCurrentFieldEvenOdd() == 0)))
 #else
 	if (!((shdwChangeMode == 1) && (getCurrentFieldEvenOdd() == 0)))
@@ -127,7 +127,7 @@ static BOOL VISetRegs(void)
 			shdwChanged &= ~(VI_BITMASK(regIndex));
 		}
 
-#if defined(VERSION_GPIE01_00)
+#if defined(VERSION_GPIE01_00) || defined(VERSION_GPIJ01_01)
 		changeMode = 0;
 #else
 		shdwChangeMode = 0;
@@ -408,7 +408,7 @@ void VIInit(void)
 	changed      = 0;
 	shdwChanged  = 0;
 	changeMode   = 0;
-#if defined(VERSION_GPIE01_00)
+#if defined(VERSION_GPIE01_00) || defined(VERSION_GPIJ01_01)
 #else
 	shdwChangeMode = 0;
 #endif
@@ -750,7 +750,7 @@ void VIConfigure(const GXRenderModeObj* obj)
 
 	enabled = OSDisableInterrupts();
 
-#if defined(VERSION_GPIE01_00)
+#if defined(VERSION_GPIE01_00) || defined(VERSION_GPIJ01_01)
 	if (obj->viTVmode == VI_TVMODE_NTSC_PROG) {
 		HorVer.nonInter = VI_TVMODE_NTSC_PROG;
 		changeMode      = 1;
@@ -809,7 +809,7 @@ void VIConfigure(const GXRenderModeObj* obj)
 	                         : (HorVer.xfbMode == VI_XFBMODE_SF) ? (u16)(2 * HorVer.panSizeY)
 	                                                             : HorVer.panSizeY);
 
-#if defined(VERSION_GPIE01_00)
+#if defined(VERSION_GPIE01_00) || defined(VERSION_GPIJ01_01)
 	tm = getTiming(obj->viTVmode);
 #else
 	tm = getTiming((VITVMode)VI_TVMODE(HorVer.tv, HorVer.nonInter));
@@ -880,7 +880,7 @@ void VIFlush(void)
 	u32 val; // for stack.
 
 	enabled = OSDisableInterrupts();
-#if defined(VERSION_GPIE01_00)
+#if defined(VERSION_GPIE01_00) || defined(VERSION_GPIJ01_01)
 #else
 	shdwChangeMode |= changeMode;
 	changeMode = 0;

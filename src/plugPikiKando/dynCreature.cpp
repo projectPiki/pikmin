@@ -522,7 +522,7 @@ void DynCreature::refresh(Graphics& gfx)
  */
 void DynCreature::doKill()
 {
-#if defined(VERSION_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 #else
 	releaseAllParticles();
 #endif

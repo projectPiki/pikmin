@@ -66,7 +66,7 @@ zen::ogScrMemChkMgr::ogScrMemChkMgr()
 	mYesPane = (P2DTextBox*)screen->search('hai', true); // "Yes"
 	mNoPane  = (P2DTextBox*)screen->search('iie', true); // "No"
 
-#if defined(VERSION_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 #else
 	mYesPane2 = (P2DTextBox*)screen->search('haic', true); // "Yes"
 	mNoPane2  = (P2DTextBox*)screen->search('iiec', true); // "No"
@@ -157,7 +157,7 @@ zen::ogScrMemChkMgr::ogScrMemChkMgr()
 	mStatus          = Inactive;
 	mPrevStatusCheck = Inactive;
 
-#if defined(VERSION_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 	P2DTextBox* yes = (P2DTextBox*)mMainScreen->search('hai', true); // "yes"
 	P2DTextBox* no  = (P2DTextBox*)mMainScreen->search('iie', true); // "no"
 	P2DTextBox* a4  = (P2DTextBox*)mMainScreen->search('se_c', true);
@@ -184,7 +184,7 @@ zen::ogScrMemChkMgr::ogScrMemChkMgr()
 	PRINT("---------------------------- ogScrMemChkMgr finish -----------\n");
 }
 
-#if defined(VERSION_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 #else
 /**
  * @todo: Documentation
@@ -246,7 +246,7 @@ void zen::ogScrMemChkMgr::StartSub()
  */
 void zen::ogScrMemChkMgr::StatusCheck()
 {
-#if defined(VERSION_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 #else
 	SetNitaku_Y_N();
 #endif
@@ -256,7 +256,7 @@ void zen::ogScrMemChkMgr::StatusCheck()
 		mPrevStatusCheck = UnformattedCard;
 		mStatus          = WritingFormatMsg;
 		setPCtex(mDoFixUnformattedTextMgr);
-#if defined(VERSION_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 #else
 		SetNitaku_F_N();
 #endif
@@ -265,7 +265,7 @@ void zen::ogScrMemChkMgr::StatusCheck()
 		mPrevStatusCheck = BrokenCard;
 		mStatus          = WritingFormatMsg;
 		setPCtex(mNeedFormatTextMgr);
-#if defined(VERSION_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 #else
 		SetNitaku_F_N();
 #endif
@@ -287,7 +287,7 @@ void zen::ogScrMemChkMgr::StatusCheck()
 	case UnformattedCard:
 		setPCtex(mUnformattedCardTextMgr);
 		PRINT("<<<<<<<<<< ERR_ENCODING in ogMemChk >>>>>>>>>>\n");
-#if defined(VERSION_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 #else
 		SetNitaku_W_R();
 #endif
@@ -295,7 +295,7 @@ void zen::ogScrMemChkMgr::StatusCheck()
 	case BrokenCard:
 		setPCtex(mBrokenCardTextMgr);
 		PRINT("<<<<<<<<<< ERR_BROKEN in ogMemChk >>>>>>>>>>\n");
-#if defined(VERSION_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 #else
 		SetNitaku_W_R();
 #endif
@@ -494,7 +494,7 @@ void zen::ogScrMemChkMgr::checkErrNitaku(ogNitakuMgr* mgr, Controller* input)
 {
 	if (checkTypingAll()) {
 		DispYesNo(true);
-#if defined(VERSION_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 		ogNitakuMgr::NitakuStatus status = mNitakuMgr->update(input);
 #else
 		ogNitakuMgr::NitakuStatus status = mgr->update(input);
@@ -520,7 +520,7 @@ void zen::ogScrMemChkMgr::setNoCard()
 	DispYesNo(false);
 	mAButtonPane->hide();
 	DispAcup(false);
-#if defined(VERSION_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 #else
 	SetNitaku_Y_N();
 #endif
@@ -572,7 +572,7 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 		break;
 
 	case UnformattedCard:
-#if defined(VERSION_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 #else
 		SetNitaku_W_R();
 #endif
@@ -581,7 +581,7 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 		break;
 
 	case BrokenCard:
-#if defined(VERSION_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 #else
 		SetNitaku_W_R();
 #endif
@@ -589,11 +589,11 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 		checkErrNitaku(mNitakuMgr, input);
 		break;
 
-#if defined(VERSION_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 #else
 	case CardFull:
 	case FileNotMade:
-#if defined(VERSION_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 #else
 		SetNitaku_W_R();
 #endif
@@ -601,7 +601,7 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 		break;
 #endif
 
-#if defined(VERSION_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 	case CardFull:
 	case FileNotMade:
 #endif
@@ -613,7 +613,7 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 	case WritingFormatMsg:
 		if (checkTypingAll()) {
 			mStatus = DoFormatSelection;
-#if defined(VERSION_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 #else
 			SetNitaku_F_N();
 #endif
@@ -652,7 +652,7 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 	case FormatConfirmation:
 		if (checkTypingAll()) {
 			mStatus = DoYouFormat;
-#if defined(VERSION_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 #else
 			SetNitaku_Y_N();
 #endif
@@ -688,7 +688,7 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 	case Formatting:
 		DispYesNo(false);
 		DispAcup(true);
-#if defined(VERSION_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 		if (mWaitTimer > 3.0f) {
 #else
 		if (checkTypingAll() && mWaitTimer > 6.0f) {
@@ -719,14 +719,14 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 		DispAcup(true);
 		mAButtonAlphaMgr->update();
 		if (input->keyClick(KBBTN_A | KBBTN_START)) {
-#if defined(VERSION_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 			seSystem->playSysSe(JACSYS_Decide1); // this is the wrong enum, devs.
 #else
 			seSystem->playSysSe(SYSSE_DECIDE1);
 #endif
 			_UNUSEDC4 = 0.0f;
 			if (gameflow.mMemoryCard.mSaveFileIndex < 0) {
-#if defined(VERSION_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 				mMakeDefaultMgr->start();
 				mStatus = MakeDefaultFile;
 #else
@@ -741,7 +741,7 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 	case FormatFail:
 		mAButtonAlphaMgr->update();
 		if (input->keyClick(KBBTN_A | KBBTN_START)) {
-#if defined(VERSION_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 			seSystem->playSysSe(JACSYS_Decide1);
 #else
 			seSystem->playSysSe(SYSSE_DECIDE1);
@@ -757,7 +757,7 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 		if (stat == ogScrMakeDefaultMgr::Success) {
 			mStatus = Finished;
 		} else if (stat == ogScrMakeDefaultMgr::Failure) {
-#if defined(VERSION_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 			start();
 #else
 			setPCtex(mBrokenCardTextMgr);
@@ -773,7 +773,7 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 	case RepairFile:
 		DispYesNo(false);
 		DispAcup(true);
-#if defined(VERSION_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 		if (checkTypingAll() && mWaitTimer > 5.0f) {
 #else
 		if (checkTypingAll() && mWaitTimer > 10.0f) {
@@ -798,7 +798,7 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 			mAButtonPane->show();
 			mAButtonAlphaMgr->update();
 			if (input->keyClick(KBBTN_A | KBBTN_START)) {
-#if defined(VERSION_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 				seSystem->playSysSe(JACSYS_Decide1);
 #else
 				seSystem->playSysSe(SYSSE_DECIDE1);
@@ -815,7 +815,7 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 			mAButtonPane->show();
 			mAButtonAlphaMgr->update();
 			if (input->keyClick(KBBTN_A | KBBTN_START)) {
-#if defined(VERSION_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 				seSystem->playSysSe(JACSYS_Decide1);
 				start();
 #else
@@ -844,7 +844,7 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 	mActiveTextMgr->transCursor(mCursorPane);
 	mBlackScreen->update();
 
-#if defined(VERSION_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 	STACK_PAD_TERNARY(mStatus, 8);
 #else
 	STACK_PAD_TERNARY(mStatus, 10);

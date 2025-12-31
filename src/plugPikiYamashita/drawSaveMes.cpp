@@ -163,7 +163,7 @@ bool zen::DrawSaveMes::update(Controller* controller)
 
 	case MODE_Unk1:
 		if (controller->keyClick(KBBTN_START | KBBTN_A)) {
-#if defined(VERSION_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 			SeSystem::playSysSe(JACSYS_Decide1);
 #else
 			SeSystem::playSysSe(SYSSE_DECIDE1);
@@ -171,7 +171,7 @@ bool zen::DrawSaveMes::update(Controller* controller)
 			setMode(MODE_Unk2);
 		}
 		if (controller->keyClick(KBBTN_B)) {
-#if defined(VERSION_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 			SeSystem::playSysSe(SE_FLOG_HIJUMP);
 #else
 			SeSystem::playSysSe(SYSSE_CANCEL);
@@ -330,6 +330,7 @@ void zen::DrawSaveMes::setMode(zen::DrawSaveMes::modeFlag mode)
 		_04 = 0.0f;
 		break;
 
+	case MODE_Unk6:
 	case MODE_Finish:
 		PRINT("finish \n");
 		break;

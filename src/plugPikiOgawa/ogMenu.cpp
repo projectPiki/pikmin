@@ -521,7 +521,7 @@ void zen::ogScrMenuMgr::updateInfo(Controller* input)
 	if (!input->keyClick(KBBTN_L) && input->keyClick(KBBTN_R)) {
 		mCurrentScreenIndex++;
 		mSwitchRightRequested = true;
-#if defined(VERSION_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 #else
 		mRadarManager->end();
 #endif
@@ -540,7 +540,7 @@ void zen::ogScrMenuMgr::updateCont(Controller* input)
 	if (input->keyClick(KBBTN_L)) {
 		mCurrentScreenIndex--;
 		mSwitchLeftRequested = true;
-#if defined(VERSION_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 #else
 		mRadarManager->MapOn();
 #endif
@@ -608,7 +608,7 @@ zen::ogScrMenuMgr::returnStatusFlag zen::ogScrMenuMgr::update(Controller* input)
 	mSwitchLeftRequested  = false;
 	mSwitchRightRequested = false;
 
-#if defined(VERSION_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 #else
 	if (input->keyClick(KBBTN_Y | KBBTN_B)) {
 		mTransitionTimer = 0.0f;
@@ -630,7 +630,7 @@ zen::ogScrMenuMgr::returnStatusFlag zen::ogScrMenuMgr::update(Controller* input)
 	mLeftRightIndicator->update();
 	mBlackScreen->update();
 
-#if defined(VERSION_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 	if (input->keyClick(KBBTN_Y | KBBTN_B)) {
 		mTransitionTimer = 0.0f;
 		mStatus          = STATE_FadingOut;

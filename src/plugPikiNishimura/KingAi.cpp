@@ -140,7 +140,7 @@ void KingAi::keyAction0()
 		cameraMgr->startVibrationEvent(2, mKing->mSRT.t);
 		break;
 
-#if defined(BUGFIX) || defined(VERSION_PIKIDEMO)
+#if defined(BUGFIX) || defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 		// This case is never hit anyway.  Looks like someone forgot to add a keyAction0 to the appear animation.  See: the other bugfix.
 #else
 	case KINGAI_Appear:
@@ -1394,14 +1394,14 @@ void KingAi::initAppear(int nextState)
 	mKing->setMotionFinish(false);
 	mKing->setLoopCounter(0);
 	mKing->setTargetCreature(nullptr);
-#if defined(VERSION_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 	if (!mKing->mIsBossBgm)
 #endif
 	{
 		mKing->mIsBossBgm = true;
 		// Emperor Bulblax's shadow is... difficult.  I swear it can sometimes appear in USA rev 1, but frankly I don't know how.
 		// In any case, this code originally from the demo versions works much better than the solution in `KingAi::keyAction0`.
-#if defined(BUGFIX) || defined(VERSION_PIKIDEMO)
+#if defined(BUGFIX) || defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 		mapMgr->mShadowCaster.add(&mKing->mShadowCaster);
 		mKing->setShadowNeed(true);
 #endif

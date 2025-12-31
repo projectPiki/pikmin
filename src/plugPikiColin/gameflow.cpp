@@ -94,9 +94,14 @@ void GameFlow::drawLoadLogo(Graphics& gfx, bool force60FPSSpin, Texture* logoTex
 	gfx.setOrthogonal(screenMtx.mMtx, AREA_FULL_SCREEN(gfx));
 
 	if (mIsNintendoLoadLogo) {
-		// red - this is just for the Nintendo logo on boot-up.
+// red - this is just for the Nintendo logo on boot-up.
+#if defined(VERSION_GPIJ01_01)
+		gfx.setColour(Colour(0, 70, 255, fadeInFactor * 255.0f), true);
+		gfx.setAuxColour(Colour(0, 70, 255, fadeInFactor * 255.0f));
+#else
 		gfx.setColour(Colour(220, 0, 0, fadeInFactor * 255.0f), true);
 		gfx.setAuxColour(Colour(220, 0, 0, fadeInFactor * 255.0f));
+#endif
 	} else {
 		// browny-red and gold.
 		gfx.setColour(Colour(192, 64, 0, fadeInFactor * 255.0f), true);
@@ -510,7 +515,7 @@ void GameFlow::hardReset(BaseApp* baseApp)
 	// The USA demo version kept the two versions separate, but the retail release made both point to the same (eng) files.
 	// PAL repurposes this setting to hold which language is selected instead (English, French, German, Spanish, Italian).
 
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 	mLanguageIndex = LANG_Adult;
 	mLangModes[LANG_Adult].set("archives/blo_otona.dir", "dataDir/archives/blo_otona.arc", "screen/otona_tex/screen.bun",
 	                           "screen/otona_blo/", "screen/otona_tex/");

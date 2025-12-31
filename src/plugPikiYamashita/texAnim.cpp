@@ -18,10 +18,10 @@ DEFINE_PRINT(nullptr);
  */
 void zen::TexAnim::setData(u32 index, Texture* texture, f32 time)
 {
-	if (index >= mAnimSize) {
-		ERROR("texNo ERROR %d < %d \n", index, mAnimSize);
-	} else {
+	if (index < mAnimSize) {
 		mData[index].setData(texture, time);
+	} else {
+		ERROR("texNo ERROR %d < %d \n", index, mAnimSize);
 	}
 }
 

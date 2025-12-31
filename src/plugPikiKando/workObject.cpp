@@ -1205,7 +1205,7 @@ int Bridge::getFirstFinishedStage()
  */
 int Bridge::getJointIndex(int id)
 {
-	if (id < 0 || id > mStageCount) {
+	if (id < 0 || id >= mStageCount) {
 		ERROR(" illegal stage %d\n", id);
 	}
 

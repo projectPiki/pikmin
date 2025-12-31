@@ -54,14 +54,14 @@ public:
 	// weak
 	void init(P2DPane* pane)
 	{
-		if (pane->getTypeID() == PANETYPE_Picture) {
+		if (pane->getTypeID() != PANETYPE_Picture) {
+			PRINT("not picture pane.\n");
+			ERROR("not picture pane.\n");
+		} else {
 			mLetterPic = (P2DPicture*)pane;
 			mTargetX   = mLetterPic->getPosH();
 			mTargetY   = mLetterPic->getPosV();
 			initParams();
-		} else {
-			PRINT("not picture pane.\n");
-			ERROR("not picture pane.\n");
 		}
 	}
 

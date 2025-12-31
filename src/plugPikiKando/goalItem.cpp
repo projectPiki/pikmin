@@ -373,7 +373,10 @@ Piki* GoalItem::exitPiki()
 	Piki* piki                 = (Piki*)pikiMgr->birth();
 	pikiMgr->containerExitMode = false;
 	if (!piki) {
+#if defined(VERSION_GPIJ01_01)
+#else
 		ERROR("*** PIKI BIRTH FAILED !!!\n");
+#endif
 		return nullptr;
 	}
 
@@ -452,7 +455,7 @@ bool GoalItem::ignoreAtari(Creature* obj)
  */
 void GoalItem::setColorType(int type)
 {
-	if (type < PikiMinColor || type > PikiMaxColor) {
+	if (type < PikiMinColor || type >= PikiMaxColor + 1) {
 		ERROR("illegal color type !\n");
 	}
 	mOnionColour     = type;

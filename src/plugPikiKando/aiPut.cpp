@@ -55,6 +55,9 @@ ActPutBomb::ActPutBomb(Piki* piki)
  */
 void ActPutBomb::findTeki()
 {
+#if defined(VERSION_GPIJ01_01)
+// surely the tekiMgr is fine...
+#else
 #if defined(VERSION_GPIE01_00) || defined(VERSION_GPIE01_01) || defined(VERSION_GPIP01_00)
 	if (!tekiMgr)
 #else
@@ -64,6 +67,7 @@ void ActPutBomb::findTeki()
 		mTarget = nullptr;
 		return;
 	}
+#endif
 
 	Iterator iterTeki(tekiMgr);
 	f32 minDist = C_PIKI_PROP(mPiki).mBombTargetSearchRange();
@@ -400,7 +404,7 @@ int ActPutBomb::exePut()
 int ActPutBomb::exec()
 {
 	if (mTouchedPlayer) {
-#if defined(VERSION_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 		mPiki->mFSM->transit(mPiki, PIKISTATE_LookAt);
 #else
 		if (mPiki->getState() != PIKISTATE_LookAt) {

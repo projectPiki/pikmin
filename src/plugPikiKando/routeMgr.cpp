@@ -172,7 +172,7 @@ void PathFinder::updateClient(Client& client, int loops)
 		loops--;
 
 		// Safety check: ensure current buffer index is within allocated buffer size
-		if (mBufferSize < client.mCurrentBufIdx) {
+		if (client.mCurrentBufIdx >= mBufferSize) {
 			ERROR("buffer full\n");
 		}
 
@@ -203,7 +203,7 @@ void PathFinder::updateClient(Client& client, int loops)
 				// Record destination waypoint in buffer
 				client.mBuffer[++client.mCurrentBufIdx].mWayPointIdx = client.mDestWpIdx;
 
-				if (mBufferSize < client.mCurrentBufIdx) {
+				if (client.mCurrentBufIdx >= mBufferSize) {
 					ERROR("mem access\n");
 				}
 
@@ -437,6 +437,12 @@ int PathFinder::selectWay(PathFinder::Buffer& buf, int destWPIdx, PathFinder::Bu
 			continue;
 		}
 
+		// Sanity check: no more than 8 candidates
+		if (validLinkCount >= 8) {
+			PRINT_GLOBAL("numWays=%d", validLinkCount);
+			ERROR("numWays>=8");
+		}
+
 		// Record this direction as a candidate
 		dirIndices[validLinkCount] = dir;
 
@@ -449,11 +455,7 @@ int PathFinder::selectWay(PathFinder::Buffer& buf, int destWPIdx, PathFinder::Bu
 		Vector3f linkPos             = getWayPoint(neighborIdx)->mPosition;
 		distToDestSq[validLinkCount] = qdist2(linkPos.x, linkPos.z, destPos.x, destPos.z);
 
-		// Sanity check: no more than 8 candidates
-		if (++validLinkCount > 7) {
-			PRINT_GLOBAL("numWays=%d", validLinkCount);
-			ERROR("numWays>=8");
-		}
+		validLinkCount++;
 	}
 
 	// Choose the candidate with minimum squared distance to destination

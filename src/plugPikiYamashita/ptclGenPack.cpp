@@ -24,7 +24,7 @@ void PtclGenPack::setPtclGenPtr(u32 idx, particleGenerator* gen)
 		mGeneratorList[idx] = gen;
 	} else {
 		PRINT("ptcl index %d is over %d. \n", idx, mLimit);
-		ERROR("ptcl index %d is over %d. \n", idx, mLimit);
+		ERROR("ptcl index %d is over %d. \n", mLimit); // yeah they screwed this up
 	}
 };
 

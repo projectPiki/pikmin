@@ -46,27 +46,27 @@ public:
 		}
 
 		CollPart* leftEye = teki.mCollInfo->getSphere('me_l');
-		if (leftEye == nullptr) {
-			ERROR("No Left eye");
-		} else {
+		if (leftEye) {
 			zen::particleGenerator* eyePtcl = effectMgr->create(EffectMgr::EFF_Beatle_EyeGlow, leftEye->mCentre, nullptr, nullptr);
 			if (eyePtcl != nullptr) {
 				eyePtcl->stopGen();
 			}
 
 			teki.setPtclGenPtr(YTeki::PTCL_Unk0, eyePtcl);
+		} else {
+			ERROR("No Left eye");
 		}
 
 		CollPart* rightEye = teki.mCollInfo->getSphere('me_r');
-		if (rightEye == nullptr) {
-			ERROR("No right eye");
-		} else {
+		if (rightEye) {
 			zen::particleGenerator* eyePtcl = effectMgr->create(EffectMgr::EFF_Beatle_EyeGlow, rightEye->mCentre, nullptr, nullptr);
 			if (eyePtcl != nullptr) {
 				eyePtcl->stopGen();
 			}
 
 			teki.setPtclGenPtr(YTeki::PTCL_Unk1, eyePtcl);
+		} else {
+			ERROR("No right eye");
 		}
 
 		teki.mCollisionRadius = 64.0f;

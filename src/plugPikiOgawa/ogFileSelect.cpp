@@ -1002,7 +1002,7 @@ int zen::ogScrFileSelectMgr::CanToCopy(int fileSlot)
 void zen::ogScrFileSelectMgr::OperateSelect(Controller* controller)
 {
 	if (controller->keyClick(KBBTN_MSTICK_LEFT) && mCurrSlotIdx > 0) {
-#if defined(VERSION_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 		SeSystem::playSysSe(JACSYS_Move1);
 #else
 		SeSystem::playSysSe(SYSSE_MOVE1);
@@ -1013,7 +1013,7 @@ void zen::ogScrFileSelectMgr::OperateSelect(Controller* controller)
 	}
 
 	if (controller->keyClick(KBBTN_MSTICK_RIGHT) && mCurrSlotIdx < 2) {
-#if defined(VERSION_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 		SeSystem::playSysSe(JACSYS_Move1);
 #else
 		SeSystem::playSysSe(SYSSE_MOVE1);
@@ -1024,7 +1024,7 @@ void zen::ogScrFileSelectMgr::OperateSelect(Controller* controller)
 	}
 
 	if (controller->keyClick(KBBTN_A)) {
-#if defined(VERSION_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 		SeSystem::playSysSe(JACSYS_Decide1);
 #else
 		SeSystem::playSysSe(SYSSE_DECIDE1);
@@ -1053,7 +1053,7 @@ void zen::ogScrFileSelectMgr::OperateSelect(Controller* controller)
 	if (controller->keyClick(KBBTN_B)) {
 		mIsTailMoveEffectActive = true;
 		BeginFadeOut();
-#if defined(VERSION_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 		SeSystem::playSysSe(JACSYS_Cancel);
 #else
 		SeSystem::playSysSe(SYSSE_CANCEL);
@@ -1069,7 +1069,7 @@ void zen::ogScrFileSelectMgr::OperateSelect(Controller* controller)
 
 	if (controller->keyClick(KBBTN_Y)) {
 		if (!mFileSlotSelectionStates[mCurrSlotIdx] && !mSaveMode) {
-#if defined(VERSION_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 			SeSystem::playSysSe(JACSYS_Decide1);
 #else
 			SeSystem::playSysSe(SYSSE_DECIDE1);
@@ -1081,7 +1081,7 @@ void zen::ogScrFileSelectMgr::OperateSelect(Controller* controller)
 
 	if (controller->keyClick(KBBTN_X)) {
 		if (!mFileSlotSelectionStates[mCurrSlotIdx] && !mSaveMode) {
-#if defined(VERSION_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 			SeSystem::playSysSe(JACSYS_Decide1);
 #else
 			SeSystem::playSysSe(SYSSE_DECIDE1);

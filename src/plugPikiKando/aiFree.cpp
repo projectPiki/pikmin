@@ -126,12 +126,17 @@ void ActFree::init(Creature*)
  */
 void ActFree::cleanup()
 {
+	// This might not be right but its the only way the stack will co-operate with the error
+#if defined(VERSION_GPIJ01_01)
+	mPiki->mCreatureFlags &= ~CF_AllowFixPosition;
+#else
 	mPiki->disableFixPos();
+#endif
 	mPiki->mCreatureFlags &= ~CF_IsPositionFixed;
 	mPiki->mFreeLightEffect->kill();
 	GameStat::workPikis.inc(mPiki->mColor);
 	GameStat::freePikis.dec(mPiki->mColor);
-#if 0 // DLL only?  Stack is too large if this is included.
+#if defined(VERSION_GPIJ01_01)
 	if (GameStat::freePikis < 0) {
 		ERROR("counter minus(fp)");
 	}

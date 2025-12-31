@@ -115,7 +115,7 @@ zen::ogScrFileChkSelMgr::returnStatusFlag zen::ogScrFileChkSelMgr::update(Contro
 
 	} else if (memChkState == ogScrMemChkMgr::Inactive) {
 		if (!ogCheckInsCard()) {
-#if defined(VERSION_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 			SeSystem::stopSysSe(JACSYS_CardAccess);
 			SeSystem::playSysSe(JACSYS_CardError);
 #else

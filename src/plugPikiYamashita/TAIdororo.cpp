@@ -940,8 +940,8 @@ void TAIdororoStrategy::start(Teki& teki)
 	mRightHand = getCollPartPtr(teki, 'rhnd');
 
 	if (!mLeftHand || !mRightHand) {
-		PRINT("ERROR! No hand collPart.L:%08x R:&08x\n", mLeftHand);
-		ERROR("ERROR! No hand collPart.L:%08x R:&08x\n", mLeftHand);
+		PRINT("ERROR! No hand collPart.L:%08x R:&08x\n", mLeftHand, mRightHand);
+		ERROR("ERROR! No hand collPart.L:%08x R:&08x\n", mLeftHand, mRightHand);
 	}
 }
 

@@ -59,8 +59,8 @@ PikiShapeObject* PikiShapeObject::create(int index)
 		initOnce();
 	}
 	memStat->end("piki animmgr");
-	if (index < 0 || index > 3) {
-		ERROR("illegal index %d\n");
+	if (index < 0 || index >= 4) {
+		ERROR("illegal index %d\n", index);
 	}
 	return _instances[index];
 }
@@ -140,8 +140,6 @@ void ViewPiki::changeShape(int index)
 	f32 scale = 1.0f;
 	mSRT.s.set(scale, scale, scale);
 	setLeaves(index + 1);
-
-	STACK_PAD_VAR(2);
 }
 
 /**
@@ -167,7 +165,11 @@ void ViewPiki::initBirth()
 	mSRT.s.set(scale, scale, scale);
 	setFlower(0);
 
+#if defined(VERSION_GPIJ01_01)
+	STACK_PAD_VAR(2);
+#else
 	STACK_PAD_VAR(4);
+#endif
 }
 
 /**
@@ -198,8 +200,6 @@ void ViewPiki::init(Shape* shp, MapMgr*, Navi* navi)
 	Piki::init(navi);
 	mLastPosition       = mSRT.t;
 	mLastEffectPosition = mSRT.t;
-
-	STACK_PAD_TERNARY(_268, 1);
 }
 
 /**

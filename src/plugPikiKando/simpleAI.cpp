@@ -96,15 +96,16 @@ void AICreature::clearEventFlags()
  */
 void AICreature::setEventFlag(int flagID, bool value)
 {
-	if (mCurrentEventCount < mMaxEventCount) {
-		if (flagID >= mMaxEventCount) {
-			ERROR("EVENT %d flag = %s\n", flagID, value ? "true" : "false");
-		}
-		mEventFlags[flagID] = value;
-	} else {
+	if (mCurrentEventCount >= mMaxEventCount) {
 		PRINT("############ too many events!\n");
 		ERROR("too many events");
+		return;
 	}
+
+	if (flagID >= mMaxEventCount) {
+		ERROR("EVENT %d flag = %s\n", flagID, value ? "true" : "false");
+	}
+	mEventFlags[flagID] = value;
 }
 
 /**

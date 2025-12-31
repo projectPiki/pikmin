@@ -564,7 +564,7 @@ struct DVDStream : public RandomAccessStream {
 
 	void init();
 
-	static u32 numOpen;
+	static int numOpen;
 	static u8* readBuffer;
 
 	// _04     = VTBL

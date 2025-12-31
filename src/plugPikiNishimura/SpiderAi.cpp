@@ -308,7 +308,7 @@ bool SpiderAi::appearTransit()
 			    && qdist2(initPos->x, initPos->z, navi->mSRT.t.x, navi->mSRT.t.z) < C_SPIDER_PROP(mSpider).mSpawnTriggerDist()) {
 
 				mSpider->mIsAppear = true;
-#if defined(VERSION_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 #else
 				mSpider->mIsBossBgm = true;
 
@@ -406,7 +406,7 @@ void SpiderAi::initAppear(int nextState)
 	mSpider->setNextState(nextState);
 	mSpider->setMotionFinish(false);
 	mSpider->mIsBossBgm = true;
-#if defined(VERSION_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 #else
 	// I don't think BLL is set to be invincible anywhere, so this does nothing?
 	mSpider->setInvincible(false);

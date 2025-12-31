@@ -34,24 +34,24 @@ zen::DrawCountDown::DrawCountDown()
 	for (int i = 0; i < countPicsNum; i++) {
 		sprintf(buf, "cd%02d", 10 - i);
 		P2DPane* pane = mScreen->getScreenPtr()->search(P2DPaneLibrary::makeTag(buf), true);
-		if (pane->getTypeID() == PANETYPE_Picture) {
+		if (pane->getTypeID() != PANETYPE_Picture) {
+			PRINT("not picture pane.\n");
+			ERROR("not picture pane.\n");
+		} else {
 			mNumberPics[i] = (P2DPicture*)pane;
 			mNumberPics[i]->setAlpha(0);
 			mNumberPics[i]->hide();
 			mNumberPics[i]->setOffset(mNumberPics[i]->getWidth() >> 1, mNumberPics[i]->getHeight() >> 1);
-		} else {
-			PRINT("not picture pane.\n");
-			ERROR("not picture pane.\n");
 		}
 	}
 
 	P2DPane* pane = mScreen->getScreenPtr()->search('gath', true);
-	if (pane->getTypeID() == PANETYPE_Picture) {
-		mGatherYourPikminPane = (P2DPicture*)pane;
-		mGatherYourPikminPane->hide();
-	} else {
+	if (pane->getTypeID() != PANETYPE_Picture) {
 		PRINT("not picture pane.\n");
 		ERROR("not picture pane.\n");
+	} else {
+		mGatherYourPikminPane = (P2DPicture*)pane;
+		mGatherYourPikminPane->hide();
 	}
 
 	mCountDownStartHour = 18.0f; // start countdown at 6pm

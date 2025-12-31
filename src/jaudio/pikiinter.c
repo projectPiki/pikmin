@@ -33,9 +33,13 @@ typedef struct SEvent_ {
 	u8 _148[0x160 - 0x148];        // _148, unknown
 	f32 volume;                    // _160
 	f32 pan;                       // _164
-	u8 _168[0x170 - 0x168];        // _168, unknown
-	int frameTimer;                // _170
-	OuterParam_ outerParam;        // _174
+#if defined(VERSION_GPIJ01_01)
+	u8 _168[0x170 - 0x16C]; // _168, unknown
+#else
+	u8 _168[0x170 - 0x168]; // _168, unknown
+#endif
+	int frameTimer;         // _170
+	OuterParam_ outerParam; // _174
 } SEvent_;
 
 // fabricated name, need something for the CAMERA .comm entry
@@ -329,7 +333,10 @@ int Jac_CreateEvent(u32 eventType, struct SVector_* p2)
 		event->statusEntries[i].timeStamp = event->statusEntries[i].actionGroup = event->statusEntries[i].statusIdx = 0;
 	}
 
+#if defined(VERSION_GPIJ01_01)
+#else
 	event->frameTimer = 100;
+#endif
 
 	switch (eventType) {
 	case 7:
@@ -353,8 +360,11 @@ BOOL Jac_UpdateEventPosition(int idx, struct SVector_* p2)
 		return FALSE;
 	}
 
-	EVENT[idx].position   = *p2;
+	EVENT[idx].position = *p2;
+#if defined(VERSION_GPIJ01_01)
+#else
 	EVENT[idx].frameTimer = 100;
+#endif
 	return TRUE;
 }
 

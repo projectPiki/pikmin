@@ -307,7 +307,7 @@ void Jam_CheckExportApp(void);
 void Jam_CheckImportApp(void);
 void Jam_WritePortIndirect(void);
 void Jam_ReadPortIndirect(void);
-void Jam_CheckPortIndirect(void);
+BOOL Jam_CheckPortIndirect(seqp_*, u8, int);
 BOOL Jam_WritePortAppDirect(seqp_*, u32, u16);
 BOOL Jam_ReadPortAppDirect(seqp_*, u32, u16*);
 BOOL Jam_CheckPortAppDirect(seqp_*, u32, u16);

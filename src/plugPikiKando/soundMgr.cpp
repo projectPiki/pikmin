@@ -649,6 +649,7 @@ int SeSystem::createEvent(SeContext* context, int eventType, SVector_* soundOffs
 				// we freed up a handle but still didn't make a new one, panic and print everything.
 				dumpEvents();
 				for (int x = 0; x < 10; x++) { }
+				ERROR("failed to create JacEvent !!\n");
 			}
 			// add new event to our list
 			mEvents[mCurrentEventCount].mHandle  = eventHandle;
@@ -734,6 +735,7 @@ bool SeSystem::destroyEvent(SeContext* context, s32 handle)
 			// bad! we should have more free events!
 			// i'm so angry i'm gonna loop 10 times for nothing.
 			for (int i = 0; i < 10; i++) { }
+			ERROR("なんでだよ～！！\n");
 		}
 
 		mCurrentEventCount--;
@@ -889,7 +891,7 @@ void SeSystem::update(Graphics& gfx, immut Vector3f& listenerPos)
 		return;
 	}
 
-#if defined(VERSION_GPIE01_00) || defined(VERSION_GPIE01_01) || defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIE01_00) || defined(VERSION_GPIE01_01) || defined(VERSION_GPIP01_00) || defined(VERSION_GPIJ01_01)
 #else
 	++mClock;
 	if (mClock >= 30 * 60 * 60) {
@@ -965,7 +967,11 @@ void SeSystem::calcCameraPos(immut Vector3f& objectPos, Vector3f& normalisedCamD
  */
 int SeSystem::getJacID(int soundID)
 {
+#if defined(VERSION_GPIJ01_01)
+	if (soundID < 0 || soundID >= mMaxSoundID) {
+#else
 	if (soundID < 0 || soundID > mMaxSoundID) {
+#endif
 		PRINT("soundID = %d\n", soundID);
 		ERROR("go to HELL!\n"); // rude.
 	}

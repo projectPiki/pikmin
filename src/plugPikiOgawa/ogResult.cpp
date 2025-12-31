@@ -630,7 +630,7 @@ zen::ogScrResultMgr::returnStatusFlag zen::ogScrResultMgr::update(Controller* in
 			mStatus    = Status_6;
 		} else if (mSaveStatus == -1) {
 			if (input->keyClick(KBBTN_START | KBBTN_A | KBBTN_B)) {
-#if defined(VERSION_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 				seSystem->playSysSe(JACSYS_Decide1);
 #else
 				seSystem->playSysSe(SYSSE_DECIDE1);
@@ -666,7 +666,7 @@ void zen::ogScrResultMgr::draw(Graphics& gfx)
 
 		P2DPerspGraph graf(0, 0, 640, 480, 30.0f, 1.0f, 5000.0f);
 		graf.setPort();
-#if defined(VERSION_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 		mMainScreen->draw(0, 0, &graf);
 		mGraphMgr->draw(mGraphAlpha);
 		mSaveMgr->draw(gfx);

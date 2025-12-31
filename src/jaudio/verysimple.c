@@ -154,8 +154,11 @@ void Jac_PlaySystemSe(s32 id)
 			container = FALSE;
 			Jam_UnPauseTrack(Jam_GetTrackHandle(0x20000), 1);
 			Jac_UnPauseOrimaSe();
+#if defined(VERSION_GPIJ01_01)
+#else
 			Jac_StopSystemSe(JACSYS_MenuScroll);
 			Jac_StopSystemSe(JACSYS_MenuZoomIn);
+#endif
 			break;
 		}
 		return;

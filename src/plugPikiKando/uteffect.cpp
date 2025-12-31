@@ -127,7 +127,7 @@ UtEffectMgr::UtEffectMgr()
  */
 void UtEffectMgr::registerEffect(int kEffID, KEffect* efx)
 {
-	if (kEffID < KandoEffect::START || kEffID > KandoEffect::END) {
+	if (kEffID < KandoEffect::START || kEffID >= KandoEffect::COUNT) {
 		ERROR("regist oob : %d", kEffID);
 	}
 	effects[kEffID] = efx;
@@ -138,7 +138,7 @@ void UtEffectMgr::registerEffect(int kEffID, KEffect* efx)
  */
 void UtEffectMgr::cast(int kEffID, immut EffectParm& parm)
 {
-	if (kEffID < KandoEffect::START || kEffID > KandoEffect::END) {
+	if (kEffID < KandoEffect::START || kEffID >= KandoEffect::COUNT) {
 		ERROR("cast oob : %d", kEffID);
 	}
 
@@ -153,7 +153,7 @@ void UtEffectMgr::cast(int kEffID, immut EffectParm& parm)
  */
 void UtEffectMgr::kill(int kEffID)
 {
-	if (kEffID < KandoEffect::START || kEffID > KandoEffect::END) {
+	if (kEffID < KandoEffect::START || kEffID >= KandoEffect::COUNT) {
 		ERROR("kill oob : %d", kEffID);
 	}
 

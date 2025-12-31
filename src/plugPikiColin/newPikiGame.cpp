@@ -862,7 +862,7 @@ ModeState* RunningModeState::update(u32& result)
 	// trigger day end when time expires
 	if (!gameflow.mIsDayEndActive && !gameflow.mMoviePlayer->mIsActive
 	    && gameflow.mWorldClock.mTimeOfDay >= gameflow.mParameters->mEndHour()) {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 #else
 		gameflow.mIsPauseAllowed = FALSE;
 #endif
@@ -987,7 +987,7 @@ ModeState* RunningModeState::update(u32& result)
 	} else if (state == zen::ogScrPauseMgr::PAUSE_ExitToSunset) {
 		// go to sunset selected - end the day
 		gamecore->forceDayEnd();
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 #else
 		gameflow.mIsPauseAllowed = FALSE;
 #endif

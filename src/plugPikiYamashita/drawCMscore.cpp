@@ -4,6 +4,18 @@
 #include "zen/DrawCM.h"
 #include "zen/Number.h"
 
+/**
+ * @todo: Documentation
+ * @note UNUSED Size: 00009C
+ */
+DEFINE_ERROR(13)
+
+/**
+ * @todo: Documentation
+ * @note UNUSED Size: 0000F4
+ */
+DEFINE_PRINT("drawCMscore")
+
 namespace zen {
 
 /**
@@ -129,18 +141,6 @@ protected:
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 00009C
- */
-DEFINE_ERROR(13)
-
-/**
- * @todo: Documentation
- * @note UNUSED Size: 0000F4
- */
-DEFINE_PRINT("drawCMscore")
-
-/**
- * @todo: Documentation
  */
 void zen::DrawCMscoreMgr::init(P2DScreen* screen)
 {
@@ -253,11 +253,11 @@ bool zen::DrawCMscoreMgr::modeWait()
  */
 void zen::DrawCMscoreMgr::setScore(int rank, int score)
 {
-	if (rank < 0 || rank >= MEMORY_BEST_SCORE) {
+	if (rank >= 0 && rank < MEMORY_BEST_SCORE) {
+		mScoreObjs[rank].setScore(score);
+	} else {
 		PRINT("ERROR! rank No %d is Illegal. \n", rank);
 		ERROR("ERROR! rank No %d is Illegal. \n", rank);
-	} else {
-		mScoreObjs[rank].setScore(score);
 	}
 }
 

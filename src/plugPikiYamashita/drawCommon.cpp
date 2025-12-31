@@ -63,15 +63,17 @@ zen::NumberTex::NumberTex()
 	char texFileName[PATH_MAX];
 	for (int i = 0; i < 10; i++) {
 		sprintf(texFileName, "%d_64.bti", i);
-		texTable[i] = zen::loadTexExp(texFileName, true, true);
-		if (!texTable[i]) {
+		Texture* tex = zen::loadTexExp(texFileName, true, true);
+		texTable[i]  = tex;
+		if (!tex) {
 			PRINT("Can't load texture [%s] \n", texFileName);
 			ERROR("Can't load texture [%s] \n", texFileName);
 		}
 
 		sprintf(texFileName, "%d_sha64.bti", i);
-		shadowTexTable[i] = zen::loadTexExp(texFileName, true, true);
-		if (!shadowTexTable[i]) {
+		tex               = zen::loadTexExp(texFileName, true, true);
+		shadowTexTable[i] = tex;
+		if (!tex) {
 			PRINT("Can't load texture [%s] \n", texFileName);
 			ERROR("Can't load texture [%s] \n", texFileName);
 		}

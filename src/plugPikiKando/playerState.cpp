@@ -308,7 +308,11 @@ void PlayerState::setDebugMode()
  */
 int PlayerState::getPartsGetCount(int stageID)
 {
+#if defined(VERSION_GPIJ01_01)
+	if (stageID < STAGE_START || stageID >= STAGE_INVALID) {
+#else
 	if (stageID < STAGE_START || stageID > STAGE_LASTVALID) {
+#endif
 		ERROR("yamsi3 !\n");
 	}
 	return mStagePartsCollected[stageID];
