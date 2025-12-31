@@ -240,7 +240,7 @@ struct PlayState : public CoreNode {
 	 */
 	bool isStageOpen(int storyStageID)
 	{
-		if (storyStageID >= STAGE_START && storyStageID TERNARY_BUGFIX(<, <=) STAGE_COUNT) {
+		if (storyStageID >= STAGE_START && storyStageID <= STAGE_END) {
 			return IS_STAGE_OPEN(mCourseOpenFlags, storyStageID) != false;
 		}
 		return false;
@@ -535,7 +535,7 @@ struct GamePrefs : public CoreNode {
 	/// Unlocks a challenge mode stage/map so it can be selected in the challenge mode map select screen.
 	void openStage(int chalStageID)
 	{
-		if (chalStageID >= STAGE_CHALSTART && chalStageID TERNARY_BUGFIX(<, <=) STAGE_CHALCOUNT) {
+		if (chalStageID >= STAGE_CHALSTART && chalStageID <= STAGE_CHALEND) {
 			SET_STAGE_OPEN(mChalCourseOpenFlags, chalStageID);
 		}
 	}
@@ -543,7 +543,7 @@ struct GamePrefs : public CoreNode {
 	/// Checks if a challenge mode stage/map is unlocked.
 	bool isStageOpen(int chalStageID)
 	{
-		if (chalStageID >= STAGE_CHALSTART && chalStageID TERNARY_BUGFIX(<, <=) STAGE_CHALCOUNT) {
+		if (chalStageID >= STAGE_CHALSTART && chalStageID <= STAGE_CHALEND) {
 			return IS_STAGE_OPEN(mChalCourseOpenFlags, chalStageID) != false;
 		}
 		return false;
