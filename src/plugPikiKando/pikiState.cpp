@@ -2790,10 +2790,12 @@ void PikiNukareState::cleanup(Piki* piki)
 		playerState->setContainer(Blue);
 		playerState->setDisplayPikiCount(Blue);
 
-		// plucking a blue pikmin just. force unlocks the first 3 maps? sure.
-		gameflow.mGamePrefs.openStage(STAGE_Practice);
-		gameflow.mGamePrefs.openStage(STAGE_Forest);
-		gameflow.mGamePrefs.openStage(STAGE_Cave);
+		// Challenge Mode is unlocked once all three Pikmin types are unlocked on any playthrough.  In normal story progression, this
+		// happens in The Forest Navel (after The Impact Site and The Forest of Hope) when Blue Pikmin are unlocked (after Red and Yellow
+		// Pikmin). See also: `MapSelectSetupSection::enterCourse` for more details on how the other Challenge Mode stages are unlocked.
+		gameflow.mGamePrefs.openStage(CHALSTAGE_Practice);
+		gameflow.mGamePrefs.openStage(CHALSTAGE_Forest);
+		gameflow.mGamePrefs.openStage(CHALSTAGE_Cave);
 	}
 
 	gameflow.mGameInterface->message(MOVIECMD_SetPauseAllowed, TRUE);

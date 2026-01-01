@@ -399,7 +399,7 @@ void OnePlayerSection::init()
 			u32 stageID  = flowCont.mCurrentStage->mStageID;
 
 			// if we're loading into a "valid" story or challenge mode stage, show the area title banner
-			if (stageID <= STAGE_LASTVALID) {
+			if (stageID <= STAGE_COUNT - 1) {
 #if defined(VERSION_GPIP01_00)
 				char bannerTex[128];
 				sprintf(bannerTex, "%s/%s", dirNames[gameflow.mGamePrefs.getChildMode()], levNames[stageID]);

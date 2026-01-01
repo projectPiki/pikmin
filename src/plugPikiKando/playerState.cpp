@@ -260,7 +260,7 @@ PlayerState::PlayerState()
  */
 bool PlayerState::courseOpen(int courseID)
 {
-	if (courseID >= STAGE_START && courseID <= STAGE_END) {
+	if (courseID >= STAGE_START && courseID <= STAGE_TESTMAP) {
 		return IS_STAGE_OPEN(gameflow.mPlayState.mCourseOpenFlags, courseID) != 0;
 	}
 	return false;
@@ -309,10 +309,11 @@ void PlayerState::setDebugMode()
 int PlayerState::getPartsGetCount(int stageID)
 {
 #if defined(VERSION_GPIJ01_01)
-	if (stageID < STAGE_START || stageID >= STAGE_INVALID) {
+	if (stageID < STAGE_START || stageID >= STAGE_COUNT)
 #else
-	if (stageID < STAGE_START || stageID > STAGE_LASTVALID) {
+	if (stageID < STAGE_START || stageID > STAGE_COUNT - 1)
 #endif
+	{
 		ERROR("yamsi3 !\n");
 	}
 	return mStagePartsCollected[stageID];
@@ -561,7 +562,7 @@ bool PlayerState::isTutorial()
 bool PlayerState::isGameCourse()
 {
 	int val = flowCont.mCurrentStage->mStageIndex;
-	return (val >= STAGE_START && val < STAGE_END);
+	return (val >= STAGE_START && val < STAGE_COUNT);
 }
 
 /**
@@ -1117,7 +1118,7 @@ void PlayerState::getUfoParts(u32 partID, bool isInvisiblePart)
 		mShipUpgradeLevel = 5;
 		PRINT_GLOBAL("--- perfect 5");
 	} else if (mCurrParts >= AIConstant::_instance->mConstants._174()) {
-		gameflow.mPlayState.openStage(4);
+		gameflow.mPlayState.openStage(STAGE_Last);
 		playerState->mResultFlags.setSeen(zen::RESFLAG_Collect15Parts);
 		for (int i = 0; i < 10; i++) {
 			PRINT("OPEN STAGE 4 ***\n");
@@ -1125,7 +1126,7 @@ void PlayerState::getUfoParts(u32 partID, bool isInvisiblePart)
 		mShipUpgradeLevel = 4;
 		PRINT_GLOBAL("--- level 4");
 	} else if (mCurrParts >= AIConstant::_instance->mConstants._164()) {
-		gameflow.mPlayState.openStage(3);
+		gameflow.mPlayState.openStage(STAGE_Yakushima);
 		playerState->mResultFlags.setOn(zen::RESFLAG_UnlockYakushima);
 		for (int i = 0; i < 10; i++) {
 			PRINT("OPEN STAGE 3 ***\n");
@@ -1134,14 +1135,14 @@ void PlayerState::getUfoParts(u32 partID, bool isInvisiblePart)
 		PRINT_GLOBAL("--- level 3");
 	} else if (mCurrParts >= AIConstant::_instance->mConstants._154()) {
 		playerState->mResultFlags.setOn(zen::RESFLAG_UnlockCave);
-		gameflow.mPlayState.openStage(2);
+		gameflow.mPlayState.openStage(STAGE_Cave);
 		for (int i = 0; i < 10; i++) {
 			PRINT("OPEN STAGE 2 ***\n");
 		}
 		mShipUpgradeLevel = 2;
 		PRINT_GLOBAL("--- level 2");
 	} else if (mCurrParts >= 1) {
-		gameflow.mPlayState.openStage(1);
+		gameflow.mPlayState.openStage(STAGE_Forest);
 		for (int i = 0; i < 10; i++) {
 			PRINT("OPEN STAGE 1 ***\n");
 		}
