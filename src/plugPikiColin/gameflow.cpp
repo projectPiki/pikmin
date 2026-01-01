@@ -435,10 +435,10 @@ void preloadLanguage()
 	gsys->resetHeap(SYSHEAP_Lang, AYU_STACK_GROW_UP);
 	gsys->getHeap(gsys->getHeapNum())->getFree();
 
-	gsys->mAramAllocator.init();
+	gsys->mBaseAramAllocator.reset();
 	gsys->mDvdRoot.initCore("");
-	gsys->mFileList         = (DirEntry*)&gsys->mDvdRoot;
-	gsys->mCurrentAllocator = &gsys->mAramAllocator;
+	gsys->mFileList = (DirEntry*)&gsys->mDvdRoot;
+	gsys->setActiveAramAllocator(&gsys->mBaseAramAllocator);
 
 	// set and load language-specific file
 	gsys->parseArchiveDirectory(gameflow.mLangModes[gameflow.mLanguageIndex].mDirPath,

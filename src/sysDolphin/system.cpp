@@ -300,11 +300,11 @@ void System::parseArchiveDirectory(immut char* arcPath, immut char* dirPath)
 
 	// inline?
 	u32 a               = 0;
-	AramAllocator* list = mCurrentAllocator;
-	u32 addr            = list->mCurrentOffset + ALIGN_NEXT(stream.mPending, 0x20);
-	if (addr <= mCurrentAllocator->mBaseAddress + mCurrentAllocator->mSize) {
-		a                    = mCurrentAllocator->mCurrentOffset;
-		list->mCurrentOffset = addr;
+	AramAllocator* list = mActiveAramAllocator;
+	u32 addr            = list->mNextFreeAddress + ALIGN_NEXT(stream.mPending, 0x20);
+	if (addr <= mActiveAramAllocator->mStartAddress + mActiveAramAllocator->mTotalSize) {
+		a                      = mActiveAramAllocator->mNextFreeAddress;
+		list->mNextFreeAddress = addr;
 	}
 
 	u32 unused;
@@ -925,10 +925,10 @@ void System::Initialise()
 	u32 audioHeapSize = 0x80000;
 	Jac_Start(new (0x20) u8[audioHeapSize], audioHeapSize, 0x800000, "/dataDir/SndData/");
 	Jac_AddDVDBuffer((u8*)mMatrices, mMatrixCount * sizeof(Matrix4f));
-	mAramAllocator.mBaseAddress   = 0x800000;
-	mAramAllocator.mSize          = 0x800000;
-	mAramAllocator.mCurrentOffset = mAramAllocator.mBaseAddress;
-	mCurrentAllocator             = &mAramAllocator;
+
+	mBaseAramAllocator.init(0x800000, 0x800000);
+	setActiveAramAllocator(&mBaseAramAllocator);
+
 	mDvdRoot.initCore("");
 	mAramRoot.initCore("");
 	mFileList = (DirEntry*)&mDvdRoot;
@@ -1118,18 +1118,23 @@ void System::endLoading()
 }
 
 /**
- * @todo: Documentation
+ * @brief Callback on DMA copy completion to free the system cache entry and unlock DMA copy requests.
+ *
+ * @param cache Pointer to system cache entry assigned to the DMA operation (aliased as a u32).
  */
 void doneDMA(u32 cache)
 {
+	// free the cache
 	SystemCache* sysCache = (SystemCache*)((SystemCache*)cache)->owner;
 	sysCache->remove();
 	gsys->mFreeCacheList.insertAfter(sysCache);
+
+	// update free flag
 	gsys->mDmaComplete = TRUE;
 }
 
 /**
- * @todo: Documentation
+ * @brief Forces system to wait until the previous DMA copy operation has been completed before starting the next.
  */
 void System::copyWaitUntilDone()
 {
@@ -1137,20 +1142,29 @@ void System::copyWaitUntilDone()
 }
 
 /**
- * @todo: Documentation
+ * @brief Copies a block of data from main RAM to the ARAM cache.
+ *
+ * @param mainMemAddr Address of data to copy in main RAM.
+ * @param size Size of data to copy (bytes).
+ * @param aramCacheAddr Address to copy data to in ARAM - if 0, it will attempt to allocate the next free ARAM address.
+ * @return Address that data has been copied to in ARAM.
  */
-u32 System::copyRamToCache(u32 src, u32 size, u32 dest)
+u32 System::copyRamToCache(u32 mainMemAddr, u32 size, u32 aramCacheAddr)
 {
+	// wait until any active DMA requests are done
 	copyWaitUntilDone();
-	u32 adjustedDest = dest;
 
-	if (!adjustedDest) {
-		adjustedDest = mCurrentAllocator->getDest(size);
-		if (adjustedDest == 0) {
+	u32 adjustedCacheAddr = aramCacheAddr;
+
+	// if we supplied 0, we want to put it in the next available aram address, so find that
+	if (adjustedCacheAddr == 0) {
+		adjustedCacheAddr = mActiveAramAllocator->alloc(size);
+		if (adjustedCacheAddr == 0) {
 			ERROR("Cannot fit data into aram!\n");
 		}
 	}
 
+	// grab a new cache to own the aram transfer request
 	BOOL inter = OSDisableInterrupts();
 
 	if (mFreeCacheList.mNext == &mFreeCacheList) {
@@ -1160,21 +1174,35 @@ u32 System::copyRamToCache(u32 src, u32 size, u32 dest)
 	SystemCache* cache = mFreeCacheList.mNext;
 	cache->remove();
 	mActiveCacheList.insertAfter(cache);
+
 	OSRestoreInterrupts(inter);
 
 	gsys->mDmaComplete = FALSE;
-	DCStoreRange((void*)src, size);
-	ARQPostRequest(cache, (u32)cache, 0, 1, src, adjustedDest, size, doneDMA);
-	return adjustedDest;
+
+	// sync data cache and RAM
+	DCStoreRange((void*)mainMemAddr, size);
+
+	// send request to the aram queue (high priority)
+	ARQPostRequest(cache, (u32)cache, ARQ_TYPE_MRAM_TO_ARAM, ARQ_PRIORITY_HIGH, mainMemAddr, adjustedCacheAddr, size, doneDMA);
+
+	return adjustedCacheAddr;
+
+	STACK_PAD_VAR(1);
 }
 
 /**
- * @todo: Documentation
+ * @brief Copies a block of data from the ARAM cache to main RAM.
+ *
+ * @param mainMemAddr Destination address in main RAM to copy data to.
+ * @param aramCacheAddr Address to copy data from in ARAM.
+ * @param size Size of data to copy (bytes).
  */
-void System::copyCacheToRam(u32 dst, u32 src, u32 size)
+void System::copyCacheToRam(u32 mainMemAddr, u32 aramCacheAddr, u32 size)
 {
+	// wait until any active DMA requests are done
 	copyWaitUntilDone();
 
+	// grab a new cache to own the aram transfer request
 	BOOL inter = OSDisableInterrupts();
 
 	if (mFreeCacheList.mNext == &mFreeCacheList) {
@@ -1185,35 +1213,50 @@ void System::copyCacheToRam(u32 dst, u32 src, u32 size)
 	cache->remove();
 	mActiveCacheList.insertAfter(cache);
 	OSRestoreInterrupts(inter);
+
 	gsys->mDmaComplete = FALSE;
-	DCInvalidateRange((void*)dst, size);
-	ARQPostRequest(cache, (u32)cache, 1, 1, src, dst, size, doneDMA);
+
+	// make sure data cache is clear for where we're putting this
+	DCInvalidateRange((void*)mainMemAddr, size);
+
+	// send request to the aram queue (high priority)
+	ARQPostRequest(cache, (u32)cache, ARQ_TYPE_ARAM_TO_MRAM, ARQ_PRIORITY_HIGH, aramCacheAddr, mainMemAddr, size, doneDMA);
 }
 
 /**
- * @todo: Documentation
+ * @brief Callback on texture copy completion to free the system and texture cache entries and unlock texture copy requests.
+ *
+ * @param cache Pointer to system cache entry assigned to the texture copy operation (aliased as a u32).
  */
 void freeBuffer(u32 cache)
 {
-	CacheTexture* texCache = (CacheTexture*)(((ARQRequest*)cache)->owner);
-	texCache->mPixelData   = texCache->mTexImage->mTextureData;
+	CacheTexture* texCache = (CacheTexture*)(((SystemCache*)cache)->owner);
+
+	// sync data cache of texture to main mem
+	texCache->mPixelData = texCache->mTexImage->mTextureData;
 	DCStoreRange(texCache->mPixelData, texCache->mTexImage->mDataSize);
 
+	// free the texture cache entry
 	texCache->mSystemCache->remove();
 	gsys->mFreeCacheList.insertAfter(texCache->mSystemCache);
 	texCache->mSystemCache = nullptr;
 	texCache->detach();
 	texCache->attach();
+
+	// update free flag
 	gsys->mTexComplete = TRUE;
 
 	STACK_PAD_VAR(2);
 }
 
 /**
- * @todo: Documentation
+ * @brief Copies data for a texture from the ARAM cache to its main RAM texture entry.
+ *
+ * @param tex Texture cache entry, containing the ARAM cache address to copy from, and a pointer to the main RAM texture entry to copy to.
  */
 void System::copyCacheToTexture(CacheTexture* tex)
 {
+	// grab a new cache to own the aram transfer request
 	BOOL inter = OSDisableInterrupts();
 
 	if (mFreeCacheList.mNext == &mFreeCacheList) {
@@ -1230,14 +1273,15 @@ void System::copyCacheToTexture(CacheTexture* tex)
 
 	tex->mSystemCache = cache;
 
-	u32 data     = (u32)tex->mTexImage->mTextureData;
-	u32 aramAddr = tex->mAramAddress;
-	u32 size     = tex->mTexImage->mDataSize;
+	u32 mainMemAddr = (u32)tex->mTexImage->mTextureData;
+	u32 aramAddr    = tex->mAramAddress;
+	u32 size        = tex->mTexImage->mDataSize;
 
 	OSRestoreInterrupts(inter);
+
 	gsys->mTexComplete = FALSE;
-	DCInvalidateRange((void*)data, size);
-	ARQPostRequest(cache, (u32)tex, 1, 1, aramAddr, (u32)data, size, freeBuffer);
+	DCInvalidateRange((void*)mainMemAddr, size);
+	ARQPostRequest(cache, (u32)tex, ARQ_TYPE_ARAM_TO_MRAM, ARQ_PRIORITY_HIGH, aramAddr, (u32)mainMemAddr, size, freeBuffer);
 
 	while (mTexComplete == FALSE) { }
 }
