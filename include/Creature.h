@@ -271,7 +271,7 @@ public:
 
 	void disableGroundOffset() { resetCreatureFlag(CF_EnableGroundOffset); }
 
-	void setFree(bool set) { set ? setCreatureFlag(CF_Free) : resetCreatureFlag(CF_Free); }
+	void setFree(bool) { setCreatureFlag(CF_Free); }
 
 	void enableAirResist(f32 res)
 	{

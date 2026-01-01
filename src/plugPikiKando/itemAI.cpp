@@ -988,9 +988,9 @@ void GemAI::Die::act(AICreature* item)
 	GoalItem* goal = (GoalItem*)item->mTargetCreature;
 	int seeds;
 	if (goal->mOnionColour == obj->mColor) {
-		seeds = obj->_3F8;
+		seeds = obj->mMatchingSeeds;
 	} else {
-		seeds = obj->_3FC;
+		seeds = obj->mNonMatchingSeeds;
 	}
 	MsgUser msg(0);
 	PRINT("gem item : ### add %d pikis\n", seeds);
@@ -999,7 +999,7 @@ void GemAI::Die::act(AICreature* item)
 	if (goal->mStateMachine) {
 		C_SAI(goal)->procMsg(goal, &msg);
 	}
-	obj->_3E4 = 0;
+	obj->mIsAlive = false;
 	item->kill(false);
 	STACK_PAD_VAR(1);
 }
