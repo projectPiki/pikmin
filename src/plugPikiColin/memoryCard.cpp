@@ -667,7 +667,7 @@ void MemoryCard::checkUseFile()
 		(void)((u32)i / 100);
 
 #if defined(VERSION_GPIP01_00)
-		if (!strncmp(stat.fileName, basecardname, 15) && memcmp(&stat, disk, 4) == 0 && memcmp(&stat+4, (void*)((int)disk + 4), 2) == 0) {
+		if (!strncmp(stat.fileName, basecardname, 15) && memcmp(&stat, disk, 4) == 0 && memcmp(&stat + 4, (void*)((int)disk + 4), 2) == 0) {
 #else
 		if (!strncmp(stat.fileName, basecardname, 15)) {
 #endif
@@ -918,7 +918,10 @@ void MemoryCard::initBannerArea(CARDStat& state, immut char* p2)
 	char comment2[0x20];
 
 	RamStream stream(cardData, state.length);
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_GPIJ01_01)
+	sprintf(comment1, "ピクミン");
+	sprintf(comment2, "ブロック");
+#elif defined(VERSION_G98E01_PIKIDEMO)
 	sprintf(comment1, "ピクミン");
 	sprintf(comment2, p2);
 #else

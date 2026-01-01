@@ -34,9 +34,16 @@ immut char* P2DStream::getResource(int dataType)
 			mStream->read(res, resSize);
 			res[resSize] = 0;
 
-			if (dataType != 'FONT' && dataType != 'TIMG' && dataType != 'TLUT') {
+			switch (dataType) {
+			case 'FONT':
+			case 'TIMG':
+			case 'TLUT':
+				break;
+
+			default:
 				PRINT("Unknown dataType.\n");
 				ERROR("can't load.");
+				break;
 			}
 			break;
 

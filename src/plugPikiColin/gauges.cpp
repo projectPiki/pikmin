@@ -86,7 +86,7 @@ void GaugeInfo::update()
  */
 void GaugeInfo::showDigits(Vector3f position, immut Colour& colour, int number, f32 width, f32 height)
 {
-#if defined(VERSION_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 	STACK_PAD_VAR(2);
 	int num = number;
 #else

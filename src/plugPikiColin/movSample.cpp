@@ -149,8 +149,11 @@ struct MovSampleSetupSection : public Node {
 	{
 		mName       = "MovSample section";
 		mController = new Controller(1);
-		_28         = 160;
-		_30         = 0;
+#if defined(VERSION_GPIJ01_01)
+#else
+		_28 = 160;
+#endif
+		_30 = 0;
 		gsys->setFade(1.0f, 3.0f);
 
 		static const char* movieNames[MOV_COUNT] = {
@@ -189,7 +192,11 @@ struct MovSampleSetupSection : public Node {
 		}
 
 		if (a && pic) {
+#if defined(VERSION_GPIJ01_01)
+			convHVQM4TexY8UV8(b, c, a, _48[_3C]);
+#else
 			convHVQM4TexY8UV8(b, c, a, _48[_3C ^ 1]);
+#endif
 			_3C ^= 1;
 		}
 
@@ -310,9 +317,12 @@ struct MovSampleSetupSection : public Node {
 
 	// _00     = VTBL
 	// _00-_20 = Node
-	int _20;                 // _20
-	int _24;                 // _24
-	int _28;                 // _28
+	int _20; // _20
+	int _24; // _24
+#if defined(VERSION_GPIJ01_01)
+#else
+	int _28; // _28
+#endif
 	Controller* mController; // _2C
 	int _30;                 // _30
 	int _34;                 // _34

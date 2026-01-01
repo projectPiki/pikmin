@@ -531,6 +531,10 @@ void MoviePlayer::startMovie(int movieIdx, int, Creature* target, immut Vector3f
  */
 void MoviePlayer::sndStartMovie(MovieInfo* info)
 {
+	if (info == nullptr) {
+		ERROR("trying to start movie sound with NULL pointer!\n");
+	}
+
 	Jac_SetDemoPartsID(gameflow.mShipTextPartID);
 	int onyons = 0;
 	for (int i = 0; i < 3; i++) {
@@ -540,7 +544,7 @@ void MoviePlayer::sndStartMovie(MovieInfo* info)
 	}
 	Jac_SetDemoOnyons(onyons);
 	effectMgr->cullingOff();
-#if defined(VERSION_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 #else
 	Jac_SetDemoPartsCount(playerState ? playerState->getCurrParts() : 0);
 #endif

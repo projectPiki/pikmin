@@ -32,6 +32,50 @@ DEFINE_ERROR(23)
  */
 DEFINE_PRINT("System")
 
+/**
+ * @brief TODO
+ */
+struct DVDStream : public RandomAccessStream {
+	DVDStream() { mSize = 0x40000; }
+
+	virtual void read(void* addr, int size) // _3C (weak)
+	{
+		int roundedSize = ALIGN_NEXT(size, 32);
+		s32 result      = -1;
+		gsys->mDvdBytesRead += roundedSize;
+		while (result == -1) {
+			result = DVDReadPrio(&mFileInfo, addr, roundedSize, mOffset, 2);
+		}
+
+		if (result != roundedSize) {
+			ERROR("Could not read expected amount, only got %d / %d bytes!\n", result, roundedSize);
+		}
+
+		mOffset += roundedSize;
+	}
+	virtual int getPending() { return mPending; } // _44 (weak)
+	virtual void close()                          // _4C (weak)
+	{
+		numOpen--;
+		if (mIsOpen) {
+			DVDClose(&mFileInfo);
+		}
+	}
+
+	void init();
+
+	static int numOpen;
+	static u8* readBuffer;
+
+	// _04     = VTBL
+	// _00-_08 = RandomAccessStream
+	DVDFileInfo mFileInfo; // _08
+	u32 mOffset;           // _44
+	int mPending;          // _48
+	bool mIsOpen;          // _4C, trigger to do DVDClose on close()
+	int mSize;             // _50
+};
+
 System sys;
 
 static bool useSymbols = false;
@@ -731,6 +775,36 @@ static immut char** errorList[30] = {
 	&s_errorMessages[0], &s_errorMessages[2], &s_errorMessages[8], &s_errorMessages[14], &s_errorMessages[17], &s_errorMessages[20],
 	&i_errorMessages[0], &i_errorMessages[2], &i_errorMessages[8], &i_errorMessages[14], &i_errorMessages[17], &i_errorMessages[20],
 };
+#elif defined(VERSION_GPIJ01_01)
+static immut char* errorMessages[] = {
+	"ディスクを読み込んでいます。",
+	nullptr,
+	"エラーが発生しました。",
+	"本体のパワーボタンを押し",
+	"電源をOFFにし",
+	"取り扱い説明書の指示に",
+	"したがってください。",
+	nullptr,
+	"ディスクを読み込めませんでした。",
+	"くわしくは、本体の取り扱い",
+	"説明書をお読みください。",
+	nullptr,
+	"「ピクミン」のディスクを",
+	"セットしてください。",
+	nullptr,
+	"ディスクカバーを",
+	"閉めてください。",
+	nullptr,
+	"このディスクは「ピクミン」の",
+	"ディスクではありません。",
+	"「ピクミン」のディスクを",
+	"セットしてください。",
+	nullptr,
+};
+
+static immut char** errorList[6] = {
+	&errorMessages[0], &errorMessages[2], &errorMessages[8], &errorMessages[12], &errorMessages[15], &errorMessages[18],
+};
 #else
 static immut char* errorMessages[] = {
 	"Reading Game Disc...",
@@ -905,6 +979,11 @@ void System::halt(immut char* file, int line, immut char* message)
 	MessageBox(NULL, buffer, "Error!", MB_ICONEXCLAMATION);
 	exit(0); // Failure!
 #else
+
+#if defined(VERSION_GPIJ01_01)
+	OSPanic(__FILE__, 1075, message);
+	return;
+#endif
 	OSPanic(file, line, message);
 #endif
 }
@@ -999,7 +1078,7 @@ void System::startLoading(LoadIdler* idler, bool useLoadScreen, u32 loadDelay)
 	if (mIsLoadingActive == 0) {
 		mLoadTimeBeforeIdling = loadDelay;
 		mIsLoadScreenActive   = useLoadScreen;
-#if defined(VERSION_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 		// demo removes the loading thread after it's finished, while other versions maintain it.
 		OSCreateThread(&Thread, loadFunc, idler, ThreadStack + sizeof(ThreadStack), sizeof(ThreadStack), 15, OS_THREAD_ATTR_DETACH);
 #else
@@ -1026,7 +1105,7 @@ void System::endLoading()
 	gsys->mPrevAllocType = TRUE;
 	if (mIsLoadingActive) {
 		OSSendMessage(&loadMesgQueue, (OSMessage)'QUIT', OS_MESSAGE_BLOCK);
-#if defined(VERSION_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 		OSReceiveMessage(&sysMesgQueue, nullptr, OS_MESSAGE_BLOCK);
 		OSCancelThread(&Thread);
 #else
@@ -1067,9 +1146,17 @@ u32 System::copyRamToCache(u32 src, u32 size, u32 dest)
 
 	if (!adjustedDest) {
 		adjustedDest = mCurrentAllocator->getDest(size);
+		if (adjustedDest == 0) {
+			ERROR("Cannot fit data into aram!\n");
+		}
 	}
 
-	BOOL inter         = OSDisableInterrupts();
+	BOOL inter = OSDisableInterrupts();
+
+	if (mFreeCacheList.mNext == &mFreeCacheList) {
+		ERROR("NO ARAM TRANS BLOCKS LEFT !!!\n");
+	}
+
 	SystemCache* cache = mFreeCacheList.mNext;
 	cache->remove();
 	mActiveCacheList.insertAfter(cache);
@@ -1079,8 +1166,6 @@ u32 System::copyRamToCache(u32 src, u32 size, u32 dest)
 	DCStoreRange((void*)src, size);
 	ARQPostRequest(cache, (u32)cache, 0, 1, src, adjustedDest, size, doneDMA);
 	return adjustedDest;
-
-	STACK_PAD_VAR(1);
 }
 
 /**
@@ -1090,7 +1175,12 @@ void System::copyCacheToRam(u32 dst, u32 src, u32 size)
 {
 	copyWaitUntilDone();
 
-	BOOL inter         = OSDisableInterrupts();
+	BOOL inter = OSDisableInterrupts();
+
+	if (mFreeCacheList.mNext == &mFreeCacheList) {
+		ERROR("NO ARAM TRANS BLOCKS LEFT !!!\n");
+	}
+
 	SystemCache* cache = mFreeCacheList.mNext;
 	cache->remove();
 	mActiveCacheList.insertAfter(cache);
@@ -1124,10 +1214,20 @@ void freeBuffer(u32 cache)
  */
 void System::copyCacheToTexture(CacheTexture* tex)
 {
-	BOOL inter         = OSDisableInterrupts();
+	BOOL inter = OSDisableInterrupts();
+
+	if (mFreeCacheList.mNext == &mFreeCacheList) {
+		ERROR("NO TEXTURE ARAM TRANS BLOCKS LEFT!!!\n");
+	}
+
 	SystemCache* cache = mFreeCacheList.mNext;
 	cache->remove();
 	mActiveCacheList.insertAfter(cache);
+
+	if (tex->mSystemCache) {
+		ERROR("Already transfering texture!!!!\n");
+	}
+
 	tex->mSystemCache = cache;
 
 	u32 data     = (u32)tex->mTexImage->mTextureData;
@@ -1177,6 +1277,10 @@ void* dvdFunc(void*)
 			if (!OSGetResetSwitchState() && !gsys->mIsRendering && !gsys->mIsCardSaving) {
 				PADRecalibrate(0xf0000000);
 				Jac_Freeze();
+#if defined(VERSION_GPIJ01_01)
+				GXAbortFrame();
+#else
+#endif
 				VISetBlack(1);
 				VIFlush();
 				VIWaitForRetrace();

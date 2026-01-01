@@ -125,12 +125,12 @@ struct Graphics {
 	f32 mLineWidth;                           // _37C
 	Vector3f* mCustomScale;                   // _380
 	Matrix4f* mSystemMatrices;                // _384
-	u32 mMaxMatrixCount;                      // _388
-	u32 mActiveMatrixIdx;                     // _38C
+	int mMaxMatrixCount;                      // _388
+	int mActiveMatrixIdx;                     // _38C
 	CachedShape mShapeCache;                  // _390
 	CachedShape* mCachedShapes;               // _3A8
-	u32 mCachedShapeMax;                      // _3AC
-	u32 mCachedShapeCount;                    // _3B0
+	int mCachedShapeMax;                      // _3AC
+	int mCachedShapeCount;                    // _3B0
 
 	virtual void videoReset() { }                                                                                  // _08
 	virtual void setVerticalFilter(u8*) { }                                                                        // _0C

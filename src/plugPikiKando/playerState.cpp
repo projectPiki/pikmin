@@ -40,8 +40,6 @@ UfoPartsInfo partsInfo[5] = {
 	{ UFOID_EternalFuelDynamo, true }, { UFOID_MainEngine, true },
 };
 
-char unusedStr[] = { "ペレットマネージャ" };
-
 /**
  * @todo: Documentation
  * @note UNUSED Size: 000014
@@ -84,7 +82,7 @@ void TimeGraph::init()
 void TimeGraph::set(u16 time, int color, int num)
 {
 	int entryIdx = time - mStartTime;
-	if (entryIdx < 0 || (mEndTime - mStartTime + 1) < entryIdx) {
+	if (entryIdx < 0 || entryIdx >= (mEndTime - mStartTime + 1)) {
 		ERROR("illegal time int %d\n", time);
 	}
 	mEntries[entryIdx].set(color, num);
@@ -96,7 +94,7 @@ void TimeGraph::set(u16 time, int color, int num)
  */
 int TimeGraph::get(u16 time, int color)
 {
-	if (time - mStartTime < 0 || (mEndTime - mStartTime + 1) < time - mStartTime) {
+	if (time - mStartTime < 0 || time - mStartTime >= (mEndTime - mStartTime + 1)) {
 		ERROR("illegal time int %d\n", time);
 	}
 	return mEntries[time - mStartTime].get(color);
@@ -308,12 +306,7 @@ void PlayerState::setDebugMode()
  */
 int PlayerState::getPartsGetCount(int stageID)
 {
-#if defined(VERSION_GPIJ01_01)
-	if (stageID < STAGE_START || stageID >= STAGE_COUNT)
-#else
-	if (stageID < STAGE_START || stageID > STAGE_COUNT - 1)
-#endif
-	{
+	if (stageID < STAGE_START || stageID >= STAGE_COUNT) {
 		ERROR("yamsi3 !\n");
 	}
 	return mStagePartsCollected[stageID];
@@ -331,6 +324,8 @@ int PlayerState::getCardPikiCount(int color)
 	ERROR("NANDEYANEN-colr %d\n", color);
 	return GameStat::allPikis;
 }
+
+char unusedStr[] = { "ペレットマネージャ" };
 
 /**
  * @todo: Documentation

@@ -132,10 +132,9 @@ void* AyuStack::push(int requestedSizeBytes)
 		mStackTop += (requestedSizeBytes + 8);
 		*(u32*)(mStackTop - 8) = previousSize + (requestedSizeBytes + 8);
 
-		if (mAllocType & AYU_STACK_GROW_UP) {
-			if (mStackTop - *(u32*)(mStackTop - 8) > mInitialStackTop) {
-				(mStackTop);
-			}
+		// > is supposed to be != but ONLY THEN does it regswap :crying:
+		if ((mAllocType & AYU_STACK_GROW_UP) && (mStackTop - *(u32*)(mStackTop - 8) > mInitialStackTop)) {
+			ERROR("trashed memory stack (%s)\n", mName);
 		}
 
 		return (void*)stackStart;

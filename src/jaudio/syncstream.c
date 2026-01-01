@@ -583,10 +583,17 @@ static s32 StreamAudio_Callback(void* data)
 			} else {
 				ctrl->playbackState = 1;
 				ctrl->frameCounter++;
+#if defined(VERSION_GPIJ01_01)
+#else
 				u32 mode = Jac_GetOutputMode();
+#endif
 				for (channelIdx = 0; channelIdx < 2; channelIdx++) {
 					u16 pitch = (4096.0f * ctrl->header.sampleRate * ctrl->pitchRatio) / JAC_DAC_RATE;
 					Play_DirectPCM(ctrl->dspch[channelIdx], ctrl->loopBufs[channelIdx], ctrl->loopSize, ctrl->totalSamples);
+#if defined(VERSION_GPIJ01_01)
+					DSP_SetMixerInitVolume(ctrl->dspch[channelIdx]->buffer_idx, channelIdx, ctrl->volume[channelIdx], 0);
+					DSP_SetMixerInitVolume(ctrl->dspch[channelIdx]->buffer_idx, 1 - channelIdx, 0, 0);
+#else
 					switch (mode) {
 					case 0:
 						DSP_SetMixerInitVolume(ctrl->dspch[channelIdx]->buffer_idx, channelIdx, ctrl->volume[channelIdx] * 0xBFFD / 0x10000,
@@ -600,6 +607,7 @@ static s32 StreamAudio_Callback(void* data)
 						DSP_SetMixerInitVolume(ctrl->dspch[channelIdx]->buffer_idx, 1 - channelIdx, 0, 0);
 						break;
 					}
+#endif
 					DSP_SetPitch(ctrl->dspch[channelIdx]->buffer_idx, pitch);
 					DSP_FlushChannel(ctrl->dspch[channelIdx]->buffer_idx);
 				}
@@ -973,6 +981,13 @@ void StreamChgPitch(void)
  */
 static void __StreamChgVolume(StreamCtrl_* ctrl)
 {
+#if defined(VERSION_GPIJ01_01)
+	if (ctrl->dspch[0]) {
+		for (u32 i = 0; i < 2; i++) {
+			DSP_SetMixerVolume(ctrl->dspch[i]->buffer_idx, i, ctrl->volume[i], 0);
+		}
+	}
+#else
 	if (ctrl->dspch[0]) {
 		u32 i;
 		u8 mode = Jac_GetOutputMode();
@@ -991,6 +1006,7 @@ static void __StreamChgVolume(StreamCtrl_* ctrl)
 			}
 		}
 	}
+#endif
 }
 
 /**

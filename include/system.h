@@ -536,45 +536,6 @@ struct AramStream : public RandomAccessStream {
 	int mPending;     // _10
 };
 
-/**
- * @brief TODO
- */
-struct DVDStream : public RandomAccessStream {
-	DVDStream() { mSize = 0x40000; }
-
-	virtual void read(void* addr, int size) // _3C (weak)
-	{
-		int roundedSize = ALIGN_NEXT(size, 32);
-		s32 result      = -1;
-		gsys->mDvdBytesRead += roundedSize;
-		while (result == -1) {
-			result = DVDReadPrio(&mFileInfo, addr, roundedSize, mOffset, 2);
-		}
-
-		mOffset += roundedSize;
-	}
-	virtual int getPending() { return mPending; } // _44 (weak)
-	virtual void close()                          // _4C (weak)
-	{
-		numOpen--;
-		if (mIsOpen) {
-			DVDClose(&mFileInfo);
-		}
-	}
-
-	void init();
-
-	static int numOpen;
-	static u8* readBuffer;
-
-	// _04     = VTBL
-	// _00-_08 = RandomAccessStream
-	DVDFileInfo mFileInfo; // _08
-	u32 mOffset;           // _44
-	int mPending;          // _48
-	bool mIsOpen;          // _4C, trigger to do DVDClose on close()
-	int mSize;             // _50
-};
 
 extern int glnWidth;
 extern int glnHeight;

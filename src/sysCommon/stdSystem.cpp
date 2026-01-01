@@ -60,7 +60,7 @@ StdSystem::StdSystem()
  */
 void StdSystem::onceInit()
 {
-#if defined(VERSION_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 	mMatrixCount = 0x1000;
 #else
 	mMatrixCount = 0x2000;
@@ -335,8 +335,9 @@ void StdSystem::addGfxObject(GfxobjInfo* other)
  */
 void StdSystem::attachObjs()
 {
-	// WTF? volatile variable nonsense.
-	gsys->mIsRendering;
+	if (gsys->mIsRendering) {
+		ERROR("WARNING!!! trying to attachobjs when using the GP!!!\n");
+	}
 
 	if (mHasGfxObjects) {
 		for (GfxobjInfo* info = mGfxobjInfo.mNext; info != &mGfxobjInfo; info = info->mNext) {
