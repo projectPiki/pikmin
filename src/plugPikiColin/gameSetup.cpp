@@ -111,12 +111,8 @@ static immut char* arambundleList[][2] = {
  */
 void GameSetupSection::preCacheShapes()
 {
-	// this isn't in the DLL, so this is as close to a fake match as I can get.
-	// still refuses to addi the _310 and _31C stuff, but w/e
-	AramAllocator* list1 = &gsys->mBaseAramAllocator;
-	AramAllocator* list2 = &gsys->mAramAllocator;
-	gsys->initAramAllocator(list1, list2, gsys->mAramAllocator.mCurrentOffset, gsys->mAramAllocator.mCurrentOffset);
-	gsys->initCurrentAllocator();
+	gsys->mShapeAramAllocator.init(gsys->mBaseAramAllocator.mNextFreeAddress, gsys->mBaseAramAllocator.getFreeSize());
+	gsys->setActiveAramAllocator(&gsys->mShapeAramAllocator);
 
 	gsys->mAramRoot.initCore("");
 	gsys->mFileList = (DirEntry*)&gsys->mAramRoot;
@@ -134,8 +130,8 @@ void GameSetupSection::preCacheShapes()
 	_Print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
 	_Print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
 	_Print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
-	AramAllocator* alloc = &gsys->mBaseAramAllocator;
-	_Print("!!!!!!!!!!!!!!!!! %d bytes still in aramHeap\n", alloc->mBaseAddress + alloc->mSize - alloc->mCurrentOffset);
+	AramAllocator* alloc = &gsys->mShapeAramAllocator;
+	_Print("!!!!!!!!!!!!!!!!! %d bytes still in aramHeap\n", alloc->getFreeSize());
 	_Print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
 	_Print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
 	_Print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");

@@ -444,7 +444,9 @@ config.libs = [
             Object(not MatchingFor("GPIP01_00"), "sysDolphin/system.cpp"),
             Object(not MatchingFor("GPIJ01_01"), "sysDolphin/sysNew.cpp"),
             Object(Matching, "sysDolphin/controllerMgr.cpp"),
-            Object(not MatchingFor("GPIP01_00", "GPIJ01_01"), "sysDolphin/dgxGraphics.cpp"),
+            Object(
+                not MatchingFor("GPIP01_00", "GPIJ01_01"), "sysDolphin/dgxGraphics.cpp"
+            ),
             Object(Matching, "sysDolphin/gameApp.cpp"),
         ],
     },
@@ -460,7 +462,7 @@ config.libs = [
             Object(Equivalent, "plugPikiColin/gameflow.cpp"),
             Object(Equivalent, "plugPikiColin/game.cpp"),
             Object(Matching, "plugPikiColin/gamePrefs.cpp"),
-            Object(Equivalent, "plugPikiColin/gameSetup.cpp"),
+            Object(Matching, "plugPikiColin/gameSetup.cpp"),
             Object(Matching, "plugPikiColin/cardSelect.cpp"),
             Object(Matching, "plugPikiColin/mapSelect.cpp"),
             Object(Matching, "plugPikiColin/newPikiGame.cpp"),
@@ -603,7 +605,8 @@ config.libs = [
             Object(not MatchingFor("G98E01_PIKIDEMO"), "plugPikiKando/naviState.cpp"),
             Object(Matching, "plugPikiKando/naviDemoState.cpp"),
             Object(
-                not MatchingFor("G98E01_PIKIDEMO", "GPIJ01_01"), "plugPikiKando/gameCoreSection.cpp"
+                not MatchingFor("G98E01_PIKIDEMO", "GPIJ01_01"),
+                "plugPikiKando/gameCoreSection.cpp",
             ),
             Object(Matching, "plugPikiKando/gmWin.cpp"),
             Object(Matching, "plugPikiKando/gameStat.cpp"),

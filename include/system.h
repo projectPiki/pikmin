@@ -301,22 +301,32 @@ struct StdSystem {
  * @brief Fabricated - some structure needs to live at 0x310 in System.
  */
 struct AramAllocator {
-	inline u32 getDest(u32 size)
+
+	inline void init(u32 start, u32 size)
 	{
-		u32 b = 0;
-		u32 a = mCurrentOffset;
-		if (a + size <= mBaseAddress + mSize) {
-			b              = a;
-			mCurrentOffset = a + size;
-		}
-		return b;
+		mStartAddress = start;
+		mTotalSize    = size;
+		reset();
 	}
 
-	inline void init() { mCurrentOffset = mBaseAddress; }
+	inline void reset() { mNextFreeAddress = mStartAddress; }
 
-	u32 mBaseAddress;   ///< _00
-	u32 mCurrentOffset; ///< _04
-	u32 mSize;          ///< _08
+	inline u32 alloc(u32 numBytes)
+	{
+		u32 allocAddr = 0;
+		u32 nextFree  = mNextFreeAddress;
+		if (nextFree + numBytes <= mStartAddress + mTotalSize) {
+			allocAddr        = nextFree;
+			mNextFreeAddress = nextFree + numBytes;
+		}
+		return allocAddr;
+	}
+
+	inline u32 getFreeSize() { return mStartAddress + mTotalSize - mNextFreeAddress; }
+
+	u32 mStartAddress;    ///< _00
+	u32 mNextFreeAddress; ///< _04
+	u32 mTotalSize;       ///< _08
 };
 
 /**
@@ -392,19 +402,7 @@ struct System : public StdSystem {
 	f32 getFrameTime() { return mDeltaTime; }
 	f32 getFrameRate() { return mFPS; }
 
-	// Fake!
-	inline void initAramAllocator(AramAllocator* target, AramAllocator* prev, u32 baseAddr, u32 endAddr)
-	{
-		u32 x                  = mAramAllocator.mBaseAddress + prev->mSize;
-		target->mBaseAddress   = baseAddr;
-		target->mSize          = x - endAddr;
-		target->mCurrentOffset = target->mBaseAddress;
-	}
-
-	// Fake!
-	inline void initCurrentAllocator() { mCurrentAllocator = &mBaseAramAllocator; }
-
-	inline AramAllocator* getAllocator() { return &mAramAllocator; }
+	inline void setActiveAramAllocator(AramAllocator* allocator) { mActiveAramAllocator = allocator; }
 
 	// _00      = VTBL
 	// _00-_248 = StdSystem
@@ -440,9 +438,9 @@ struct System : public StdSystem {
 	SymbolInfo* mBuildMapFuncList;                   // _2BC
 	SystemCache mActiveCacheList;                    // _2C0
 	SystemCache mFreeCacheList;                      // _2E8
-	AramAllocator mBaseAramAllocator;                // _310, fake
-	AramAllocator mAramAllocator;                    // _31C, fake
-	AramAllocator* mCurrentAllocator;                // _328, unknown
+	AramAllocator mShapeAramAllocator;               // _310
+	AramAllocator mBaseAramAllocator;                // _31C
+	AramAllocator* mActiveAramAllocator;             // _328
 	vu32 mDmaComplete;                               // _32C
 	vu32 mTexComplete;                               // _330
 };
