@@ -279,7 +279,7 @@ void PelletGoalState::init(Pellet* pelt)
 
 	_10        = 0.0f;
 	mWaitTimer = 1.5f;
-	pelt->setFlag80();
+	pelt->disableGravity();
 	pelt->mVelocity.y = 0.0f;
 
 	if (pelt->mTargetGoal->mObjType != OBJTYPE_Ufo) {

@@ -3,6 +3,7 @@
 #include "EffectMgr.h"
 #include "GemItem.h"
 #include "Stickers.h"
+#include "jaudio/pikiinter.h"
 
 // theres a lot more to this
 GemTable table[5] = {
@@ -119,7 +120,7 @@ void GemItem::setColorType(int col)
 void GemItem::startAI(int)
 {
 	mSeContext = &mGemSe;
-	mSeContext->setContext(this, 2);
+	mSeContext->setContext(this, JACEVENT_Pellet);
 	mCollInfo = &mGemCollInfo;
 	mGemCollInfo.initInfo(mItemShapeObject->mShape, mGemColl, nullptr);
 	mSRT.s.set(1.0f, 1.0f, 1.0f);
@@ -366,12 +367,4 @@ bool GemItem::isAlive()
 void GemItem::setRouteTracer(RouteTracer*)
 {
 	// UNUSED FUNCTION
-}
-
-/**
- * @todo: Documentation
- */
-void ItemCreature::finalSetup()
-{
-	_3C4 = true;
 }

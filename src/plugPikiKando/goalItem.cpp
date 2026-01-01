@@ -17,6 +17,7 @@
 #include "Route.h"
 #include "SoundMgr.h"
 #include "gameflow.h"
+#include "jaudio/pikiinter.h"
 
 // this nonsense is specifically to get the sdata ordered correctly
 // GoalItem::startAI needs to generate these Vector3f floats before earlier functions in the file
@@ -576,7 +577,7 @@ void GoalItem::startAI(int)
 	mIsClosing  = 0;
 	mIsConeEmit = false;
 	mSeContext  = &_45C;
-	mSeContext->setContext(this, 3);
+	mSeContext->setContext(this, JACEVENT_Onyon);
 	mHeldPikis[Leaf] = mHeldPikis[Bud] = mHeldPikis[Flower] = 0;
 	mCollInfo->initInfo(mItemShapeObject->mShape, nullptr, nullptr);
 	mWaypointIdx = routeMgr->findNearestWayPoint('test', mSRT.t, false)->mIndex;

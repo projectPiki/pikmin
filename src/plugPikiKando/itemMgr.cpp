@@ -29,6 +29,7 @@
 #include "UfoItem.h"
 #include "WeedsItem.h"
 #include "gameflow.h"
+#include "jaudio/pikiinter.h"
 #include "sysMath.h"
 #include "sysNew.h"
 
@@ -956,7 +957,7 @@ void BuildingItem::startAI(int)
 	mCurrAnimId = 0;
 	_3C4        = true;
 	mSeContext  = &mBuildSFX;
-	mSeContext->setContext(this, 4);
+	mSeContext->setContext(this, JACEVENT_Build);
 	PRINT("*** \n");
 	enableFaceDirAdjust();
 	mItemAnimator.startMotion(PaniMotionInfo(0));

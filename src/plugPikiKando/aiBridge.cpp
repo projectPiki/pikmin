@@ -170,7 +170,7 @@ void ActBridge::initClimb()
 
 	mClimbingVelocity = Vector3f(0.0f, 1.0f, 0.0f);
 	mClimbingVelocity.normalise();
-	mPiki->setFlag80();
+	mPiki->disableGravity();
 	PRINT("climb vel (%.1f %.1f %.1f)\n", mClimbingVelocity.x, mClimbingVelocity.y, mClimbingVelocity.z);
 }
 
@@ -185,7 +185,7 @@ int ActBridge::exeClimb()
 		mPiki->setSpeed(1.0f, mClimbingVelocity);
 	} else {
 		initApproach();
-		mPiki->unsetFlag80();
+		mPiki->enableGravity();
 	}
 }
 
@@ -286,7 +286,7 @@ void ActBridge::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 void ActBridge::cleanup()
 {
 	mPiki->resetCreatureFlag(CF_DisableMovement);
-	mPiki->unsetFlag80();
+	mPiki->enableGravity();
 }
 
 /**

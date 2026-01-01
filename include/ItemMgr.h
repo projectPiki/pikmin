@@ -56,7 +56,7 @@ public:
 	virtual f32 getMotionSpeed();               // _148
 	virtual void setMotionSpeed(f32);           // _14C
 	virtual void stopMotion();                  // _150
-	virtual void finalSetup();                  // _158 (weak)
+	virtual void finalSetup() { _3C4 = true; }  // _158 (weak)
 
 protected:
 	virtual void doKill(); // _10C

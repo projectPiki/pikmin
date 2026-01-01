@@ -6,6 +6,7 @@
 #include "Interactions.h"
 #include "MapMgr.h"
 #include "SoundMgr.h"
+#include "jaudio/pikiinter.h"
 #include "sysNew.h"
 
 /**
@@ -143,7 +144,7 @@ BoBaseItem::BoBaseItem(CreatureProp* props, Shape* shape)
 	setCreatureFlag(CF_DisableAutoFaceDir);
 	mStickItem = nullptr;
 	mSeContext = new SeContext();
-	mSeContext->setContext(this, 4);
+	mSeContext->setContext(this, JACEVENT_Build);
 }
 
 /**

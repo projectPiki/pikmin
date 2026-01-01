@@ -1355,7 +1355,7 @@ int Graphics::calcLighting(f32 intensity)
 	setLighting(true, nullptr);
 	return lightIndex;
 
-	s32 unused[2];
+	STACK_PAD_VAR(2);
 }
 
 /**

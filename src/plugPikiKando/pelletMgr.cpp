@@ -17,6 +17,7 @@
 #include "StateMachine.h"
 #include "Stickers.h"
 #include "UtEffect.h"
+#include "jaudio/pikiinter.h"
 #include "teki.h"
 #include "zen/Math.h"
 
@@ -204,7 +205,7 @@ Pellet::Pellet()
 	mUseSpawnPosition = true;
 	mSpawnPosition.set(0.0f, 0.0f, 0.0f);
 	mSeContext = new SeContext();
-	mSeContext->setContext(this, 2);
+	mSeContext->setContext(this, JACEVENT_Pellet);
 	mRippleEffect   = new RippleEffect();
 	mPelletView     = nullptr;
 	mPikiCarrier    = nullptr;

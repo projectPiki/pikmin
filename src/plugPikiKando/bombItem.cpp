@@ -4,6 +4,7 @@
 #include "MapCode.h"
 #include "MoviePlayer.h"
 #include "gameflow.h"
+#include "jaudio/pikiinter.h"
 
 /**
  * @todo: Documentation
@@ -93,7 +94,7 @@ void BombItem::startAI(int)
 	setInsideView();
 
 	mSeContext = &mSound;
-	mSeContext->setContext(this, 1);
+	mSeContext->setContext(this, JACEVENT_Battle);
 
 	mCollInfo = &mBombColl;
 	mCollInfo->initInfo(mItemShapeObject->mShape, mCollParts, mCollPartIdList);

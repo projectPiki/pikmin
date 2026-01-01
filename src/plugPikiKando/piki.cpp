@@ -2581,21 +2581,11 @@ void Piki::updateWalkAnimation()
 /**
  * @todo: Documentation
  */
-
-int stupid_pikiRealAI()
-{
-	int x;
-	return x;
-}
-
 void Piki::realAI()
 {
 
 	// Brocoli: This is abhorrently stupid, why this works should be investigated.
-	stupid_pikiRealAI();
-	stupid_pikiRealAI();
-	stupid_pikiRealAI();
-	stupid_pikiRealAI();
+	STACK_PAD_INLINE(4);
 
 	updateLookCreature();
 	if (isLooking() && isStickTo()) {

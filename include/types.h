@@ -88,6 +88,13 @@ typedef u32 HWND;
 #define TERNARY_BUGFIX(fixed, buggy) buggy
 #endif
 
+// For develop features that can fit sub-statement, use this instead of a clunky #if #else #endif.
+#if defined(DEVELOP)
+#define TERNARY_DEVELOP(development, release) development
+#else
+#define TERNARY_DEVELOP(development, release) release
+#endif
+
 // For undesireable code necessary to produce a matching build, use this instead of a clunky #if #else #endif.
 #if defined(BUILD_MATCHING)
 #define TERNARY_BUILD_MATCHING(matching, nonmatching) matching

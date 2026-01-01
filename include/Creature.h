@@ -213,10 +213,11 @@ public:
 	void adjustStickObject(immut Vector3f&);
 	bool isStickLeader();
 
-	// these are ONE PAIR of the inlines.
-	inline void setFlag80() { setCreatureFlag(CF_IgnoreGravity); }
-	inline void unsetFlag80() { resetCreatureFlag(CF_IgnoreGravity); }
+	// Hopefully I got these names correct.
+	void disableGravity() { setCreatureFlag(CF_IgnoreGravity); }
+	void enableGravity() { resetCreatureFlag(CF_IgnoreGravity); }
 
+	// TODO: These DLL inlines have fabricated names.
 	inline void setFlag400() { setCreatureFlag(CF_UsePriorityFaceDir); }
 	inline void resetFlag400() { resetCreatureFlag(CF_UsePriorityFaceDir); }
 
@@ -321,9 +322,6 @@ public:
 	    DLL inlines to assign/make:
 
 	    f32 calcDistance(Creature&);
-
-	    void enableGravity();
-	    void disableGravity();
 
 	    void setCarryOver();
 	    void unsetCarryOver();
