@@ -483,7 +483,7 @@ void ViewPiki::demoDraw(Graphics& gfx, immut Matrix4f* mtx)
 			const char* strs[6] = { "A", "B", "C", "D", "E", "F" };
 			char buf[256];
 			int formMode = act->mMode;
-			int cb       = gfx.setCBlending(0);
+			int cb       = gfx.setCBlending(BLEND_Alpha);
 			pos.multMatrix(gfx.mCamera->mLookAtMtx);
 			sprintf(buf, "%s%d", strs[formMode], slotID);
 			gfx.perspPrintf(gsys->mConsFont, pos, -(gsys->mConsFont->stringWidth(buf) / 2), 0, buf);

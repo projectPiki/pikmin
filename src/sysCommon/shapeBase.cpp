@@ -1919,7 +1919,7 @@ void BaseShape::drawculled(Graphics& gfx, Camera& cam, ShapeDynMaterials* dynMat
 				bool lighting = gfx.setLighting(false, nullptr);
 				gfx.useMatrix(Matrix4f::ident, 0);
 				gfx.setColour(COLOUR_WHITE, true);
-				int blend = gfx.setCBlending(0);
+				int blend = gfx.setCBlending(BLEND_Alpha);
 				Vector3f centre((box.mMax.x + box.mMin.x) * 0.5f, (box.mMax.y + box.mMin.y) * 0.5f + 10.0f,
 				                (box.mMax.z + box.mMin.z) * 0.5f);
 				centre.multMatrix(gfx.mCamera->mLookAtMtx);

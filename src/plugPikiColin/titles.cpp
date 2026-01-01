@@ -534,7 +534,7 @@ struct TitleSetupSection : public Node {
 			gfx.setAuxColour(Colour(255, 0, 64, (int)(mfade * 0.5f)));
 		}
 
-		gfx.setCBlending(0);
+		gfx.setCBlending(BLEND_Alpha);
 
 		STACK_PAD_TERNARY(mCurrentMenu, 2);
 		if (mCurrentMenu) {

@@ -769,7 +769,7 @@ void DynObjPushable::render(Graphics& gfx)
 	gfx.useMatrix(Matrix4f::ident, 0);
 	gfx.setColour(COLOUR_WHITE, true);
 
-	int blend = gfx.setCBlending(0);
+	int blend = gfx.setCBlending(BLEND_Alpha);
 	Vector3f vec(0.0f, 90.0f, 0.0f);
 	vec.add(mRenderPosition);
 	vec.multMatrix(gfx.mCamera->mLookAtMtx);
@@ -1013,7 +1013,7 @@ void MapMgr::preRender(Graphics& gfx)
 void MapMgr::drawShadowCasters(Graphics& gfx)
 {
 	gfx.setFog(false);
-	int blend = gfx.setCBlending(2);
+	int blend = gfx.setCBlending(BLEND_InverseColor);
 
 	FOREACH_NODE(ShadowCaster, mShadowCaster.mChild, shadow)
 	{
@@ -1042,7 +1042,7 @@ void MapMgr::drawShadowCasters(Graphics& gfx)
  */
 void MapMgr::refresh(Graphics& gfx)
 {
-	gfx.setCBlending(0);
+	gfx.setCBlending(BLEND_Alpha);
 	if (mLightMgr) {
 		gsys->mTimer->start("SoftLights", true);
 		mLightMgr->updateLights();
@@ -1252,7 +1252,7 @@ void MapMgr::postrefresh(Graphics& gfx)
 			}
 #endif
 
-			int blend = gfx.setCBlending(6);
+			int blend = gfx.setCBlending(BLEND_MultiTexture);
 			gfx.setPrimEnv(&Colour(255, 255, 255, gfx.mCamera->mBlur), nullptr);
 			gfx.blatRectangle(AREA_FULL_SCREEN(gfx));
 			gfx.setCBlending(blend);
@@ -1302,7 +1302,7 @@ void MapMgr::postrefresh(Graphics& gfx)
 		}
 
 		if (mDebugCollCount) {
-			int blend     = gfx.setCBlending(0);
+			int blend     = gfx.setCBlending(BLEND_Alpha);
 			bool lighting = gfx.setLighting(false, nullptr);
 			gfx.setFog(false);
 			gfx.useTexture(nullptr, GX_TEXMAP0);

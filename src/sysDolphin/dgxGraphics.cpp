@@ -1488,49 +1488,52 @@ void DGXGraphics::setBlendMode(u8 blendFactor, u8 zMode, u8 blendMode)
 }
 
 /**
- * @todo: Documentation
+ * @brief Configures the GX unit to use a specific color blending preset (blend, Z, and alpha test settings).
+ *
+ * @param blendMode Preset to set the color blending mode to - see `BlendMode` enum.
+ * @return The previous `BlendMode` being overridden.
  */
-int DGXGraphics::setCBlending(int mode)
+int DGXGraphics::setCBlending(int blendMode)
 {
 	int old    = mBlendMode;
-	mBlendMode = mode;
+	mBlendMode = blendMode;
 	GXSetNumTexGens(1);
 	GXSetNumTevStages(1);
 	GXSetAlphaCompare(GX_ALWAYS, 0, GX_AOP_OR, GX_ALWAYS, 0);
 
-	switch (mode) {
-	case 0:
+	switch (blendMode) {
+	case BLEND_Alpha:
 		GXSetTevOp(GX_TEVSTAGE0, GX_MODULATE);
 		GXSetBlendMode(GX_BM_BLEND, GX_BL_SRCALPHA, GX_BL_INVSRCALPHA, GX_LO_CLEAR);
 		GXSetZMode(GX_TRUE, GX_LEQUAL, GX_TRUE);
 		break;
-	case 1:
+	case BLEND_Additive:
 		GXSetTevOp(GX_TEVSTAGE0, GX_MODULATE);
 		GXSetBlendMode(GX_BM_BLEND, GX_BL_ONE, GX_BL_ONE, GX_LO_SET);
 		GXSetZMode(GX_TRUE, GX_LEQUAL, GX_FALSE);
 		break;
-	case 2:
+	case BLEND_InverseColor:
 		GXSetTevOp(GX_TEVSTAGE0, GX_MODULATE);
 		GXSetBlendMode(GX_BM_BLEND, GX_BL_ZERO, GX_BL_INVSRCCOL, GX_LO_CLEAR);
 		GXSetZMode(GX_FALSE, GX_LEQUAL, GX_FALSE);
 		break;
-	case 3:
+	case BLEND_AlphaAdditive:
 		GXSetTevOp(GX_TEVSTAGE0, GX_MODULATE);
 		GXSetBlendMode(GX_BM_BLEND, GX_BL_SRCALPHA, GX_BL_ONE, GX_LO_SET);
 		GXSetZMode(GX_TRUE, GX_LEQUAL, GX_FALSE);
 		break;
-	case 4:
+	case BLEND_AdditiveNoZ:
 		GXSetTevOp(GX_TEVSTAGE0, GX_MODULATE);
 		GXSetBlendMode(GX_BM_BLEND, GX_BL_ONE, GX_BL_ONE, GX_LO_SET);
 		GXSetZMode(GX_FALSE, GX_LEQUAL, GX_FALSE);
 		break;
-	case 5:
+	case BLEND_AlphaTest:
 		GXSetTevOp(GX_TEVSTAGE0, GX_MODULATE);
 		GXSetBlendMode(GX_BM_BLEND, GX_BL_SRCALPHA, GX_BL_INVSRCALPHA, GX_LO_CLEAR);
 		GXSetZMode(GX_TRUE, GX_LEQUAL, GX_TRUE);
 		GXSetAlphaCompare(GX_GEQUAL, 0x80, GX_AOP_AND, GX_LEQUAL, 0xff);
 		break;
-	case 6:
+	case BLEND_MultiTexture:
 		GXSetBlendMode(GX_BM_BLEND, GX_BL_SRCALPHA, GX_BL_INVSRCALPHA, GX_LO_CLEAR);
 		GXSetZMode(GX_FALSE, GX_LEQUAL, GX_FALSE);
 		GXSetNumTexGens(2);

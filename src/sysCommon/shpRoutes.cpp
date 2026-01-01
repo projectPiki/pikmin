@@ -99,7 +99,7 @@ void RouteGroup::refresh(Graphics& gfx, EditNode* node)
 {
 	bool lighting = gfx.setLighting(false, nullptr);
 	int alpha     = mColour.a;
-	gfx.setCBlending(0);
+	gfx.setCBlending(BLEND_Alpha);
 
 	FOREACH_NODE(RoutePoint, mPointListRoot.mChild, point)
 	{

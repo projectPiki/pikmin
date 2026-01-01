@@ -16,6 +16,21 @@ struct SceneData;
 struct Shape;
 struct Texture;
 
+// this is in here to avoid include looping with Graphics.h
+
+/**
+ * @brief Color blending preset modes, for use with `DGXGraphics::setCBlending`.
+ */
+enum BlendMode {
+	BLEND_Alpha         = 0, ///< 0, standard transparency, fades out with alpha - debug text, default map drawing.
+	BLEND_Additive      = 1, ///< 1, brightens/glows (no darkening) - particle effects and default light flares.
+	BLEND_InverseColor  = 2, ///< 2, subtractive (masking/erasing) - shadow textures.
+	BLEND_AlphaAdditive = 3, ///< 3, additive with alpha fade (soft glows) - unused light effects on title screen.
+	BLEND_AdditiveNoZ   = 4, ///< 4, additive but ignoring depth - unused light effects on title screen.
+	BLEND_AlphaTest     = 5, ///< 5, transparent with hard cutoff/sharp edges - carry number displays.
+	BLEND_MultiTexture  = 6, ///< 6, combines two textures, no depth - map blur texture effect.
+};
+
 /**
  * @brief TODO
  *
@@ -63,7 +78,7 @@ struct LFlareGroup : public CoreNode {
 		mTexture   = nullptr;
 		mMaterial  = 0;
 		mLFInfo    = nullptr;
-		mBlendMode = 1;
+		mBlendMode = BLEND_Additive;
 	}
 
 	void addLFlare(immut Colour& color, immut Vector3f& pos, immut Vector2f& size, immut Vector2f* a5, immut Vector2f* a6)

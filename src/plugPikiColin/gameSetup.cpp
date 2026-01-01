@@ -111,6 +111,7 @@ static immut char* arambundleList[][2] = {
  */
 void GameSetupSection::preCacheShapes()
 {
+	// grab the remaining space in the aram allocator to cache models and animations
 	gsys->mShapeAramAllocator.init(gsys->mBaseAramAllocator.mNextFreeAddress, gsys->mBaseAramAllocator.getFreeSize());
 	gsys->setActiveAramAllocator(&gsys->mShapeAramAllocator);
 

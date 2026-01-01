@@ -147,7 +147,7 @@ GfxobjInfo* StdSystem::findAnyGfxObject(immut char* str, u32 id)
 /**
  * Loads a texture from disk or cache by path.
  * @param path File path to texture to load.
- * @param unk Whether path supplied is relative (true) or absolute (false).
+ * @param isRelativePath Whether path supplied is relative to pre-set data directory (true) or from root (false).
  * @return Pointer to texture if found (nullptr if not found).
  */
 Texture* StdSystem::loadTexture(immut char* path, bool isRelativePath)
@@ -503,7 +503,7 @@ void StdSystem::flushLFlares(Graphics& gfx)
 {
 	gfx.setFog(true, COLOUR_TRANSPARENT, 1.0f, gfx.mCamera->mNear, gfx.mCamera->mFar);
 
-	int oldBlend     = gfx.setCBlending(1);
+	int oldBlend     = gfx.setCBlending(BLEND_Additive);
 	bool oldLighting = gfx.setLighting(false, nullptr);
 	gfx.useMatrix(Matrix4f::ident, 0);
 	gfx.useMaterial(nullptr);
