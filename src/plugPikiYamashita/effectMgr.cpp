@@ -382,7 +382,7 @@ SmokeEmitter::SmokeEmitter(int count, Texture* tex)
 	for (int i = 0; i < mSmokeCount; i++) {
 		mInactiveSmokeList->insertAfter(&mSmokes[i]);
 	}
-	mBlendMode = 1;
+	mBlendMode = BLEND_Additive;
 	mModel     = nullptr;
 }
 
@@ -477,7 +477,7 @@ void SmokeEmitter::draw(Graphics& gfx)
 
 		if (gfx.initParticle(true)) {
 			for (Smoke* smoke = mActiveSmokeList->mNext; smoke != mActiveSmokeList; smoke = smoke->mNext) {
-				if (mBlendMode == 0) {
+				if (mBlendMode == BLEND_Alpha) {
 					gfx.setColour(Colour(255, 255, 255, smoke->mAlpha * 255), true);
 				} else {
 					gfx.setColour(Colour(smoke->mAlpha * 255.0f, smoke->mAlpha * 255.0f, smoke->mAlpha * 255.0f, smoke->mAlpha * 255.0f),

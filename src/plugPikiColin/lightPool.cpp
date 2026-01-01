@@ -40,7 +40,7 @@ void LightPool::draw(Graphics& gfx)
 {
 	LightCamera* camera = &mCamera;
 	gfx.useMatrix(gfx.mCamera->mLookAtMtx, 0);
-	int oldBlend = gfx.setCBlending(3);
+	int oldBlend = gfx.setCBlending(BLEND_AlphaAdditive);
 	gfx.setDepth(false);
 	bool lighting = gfx.setLighting(false, nullptr);
 	gfx.useTexture(mBoxTexture, GX_TEXMAP0);
@@ -74,7 +74,7 @@ void LightPool::draw(Graphics& gfx)
 	gfx.drawOneTri(boxPositions, nullptr, texCoords, 4);
 	gfx.useMatrix(gfx.mCamera->mLookAtMtx, 0);
 	gfx.useTexture(mParticleTexture, GX_TEXMAP0);
-	gfx.setCBlending(4);
+	gfx.setCBlending(BLEND_AdditiveNoZ);
 	gfx.setColour(COLOUR_WHITE, true);
 
 	if (gfx.initParticle(true)) {

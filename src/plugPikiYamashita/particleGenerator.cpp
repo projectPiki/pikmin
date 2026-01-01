@@ -186,7 +186,7 @@ void zen::particleGenerator::draw(Graphics& gfx)
 {
 	if (mControlFlags & PTCLCTRL_Visible) {
 		bool light = gfx.setLighting(false, nullptr);
-		int blend  = gfx.setCBlending(1);
+		int blend  = gfx.setCBlending(BLEND_Additive);
 		gfx.setDepth(false);
 
 		if (mChildTexture) {

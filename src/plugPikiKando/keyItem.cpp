@@ -273,7 +273,7 @@ void DoorItem::refresh(Graphics& gfx)
 
 	gfx.setColour(COLOUR_WHITE, true);
 	gfx.useTexture(gsys->mConsFont->mTexture, GX_TEXMAP0);
-	int blend = gfx.setCBlending(0);
+	int blend = gfx.setCBlending(BLEND_Alpha);
 
 	sprintf(str, "%s", mLabelText);
 	gfx.perspPrintf(gsys->mConsFont, pos, -(gsys->mConsFont->stringWidth(str) / 2), 0, str);

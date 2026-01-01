@@ -164,7 +164,7 @@ void MapSlider::refresh(Graphics& gfx)
 	gfx.useMatrix(Matrix4f::ident, 0);
 	gfx.setColour(COLOUR_WHITE, true);
 	gfx.useTexture(gsys->mConsFont->mTexture, GX_TEXMAP0);
-	int blend = gfx.setCBlending(0);
+	int blend = gfx.setCBlending(BLEND_Alpha);
 
 	char buf[256];
 	int dist = mActivationCount - mContactCount;

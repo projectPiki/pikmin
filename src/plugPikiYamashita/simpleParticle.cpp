@@ -80,7 +80,7 @@ void zen::simplePtclManager::draw(Graphics& gfx)
 	zenList* next;
 
 	bool light = gfx.setLighting(false, nullptr);
-	int blend  = gfx.setCBlending(1);
+	int blend  = gfx.setCBlending(BLEND_Additive);
 
 	gfx.setDepth(false);
 	gfx.useMatrix(gfx.mCamera->mLookAtMtx, 0);

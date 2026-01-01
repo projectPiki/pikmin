@@ -441,7 +441,7 @@ void PaniTestNode::draw(Graphics& gfx)
 	gfx.calcViewMatrix(Matrix4f::ident, mtx3);
 	gfx.useMatrix(mtx3, 0);
 
-	int blend = gfx.setCBlending(2);
+	int blend = gfx.setCBlending(BLEND_InverseColor);
 	gfx.setDepth(0);
 	gfx.setLighting(false, nullptr);
 	gfx.useTexture(mShadowTexture, GX_TEXMAP0);
