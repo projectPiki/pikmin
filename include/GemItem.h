@@ -10,13 +10,13 @@
  * @brief TODO
  */
 struct GemTable {
-	int _00;          // _00, unused
-	int _04;          // _04, unused
-	int _08;          // _08, unused
-	int _0C;          // _0C, unused
-	int _10;          // _10, unused
-	int mSplitAmount; // _14
-	f32 _18;          // _18, unused
+	int mGemNumber;        // _00, Speculative; It counts 1, 5, 10, 20, 50.  Could just as easily be swapped with _08.
+	int mMaxCarry;         // _04, See: `GemItem::mMaxStickers` and `GemItem::reachCapacity`.
+	int mMinCarry;         // _08, Speculative, like `PelletConfig::mCarryMinPikis`?
+	int mMatchingSeeds;    // _0C, See: `GemItem::mMatchingSeeds` and `GemAI::Die::act`.
+	int mNonMatchingSeeds; // _10, See: `GemItem::mNonMatchingSeeds` and `GemAI::Die::act`.
+	int mSplitAmount;      // _14, Gem 10 splits into two Gem 5s, Gem 5 splits into five Gem 1s.  Gem 1, Gem 20, and Gem 50 split not.
+	f32 _18;               // _18, Could be a couple of things, and nothing reads it, so I won't speculate.
 };
 
 /**
@@ -53,24 +53,25 @@ struct GemItem : public ItemCreature {
 
 	// _00      = VTBL
 	// _00-_3C8 = ItemCreature
-	bool mIsFree;            // _3C8
-	int _3CC;                // _3CC
-	f32 mTargetHeight;       // _3D0
-	f32 mCurrentHeight;      // _3D4
-	u8 mIsRising;            // _3D8
-	u8 mIsBeingLifted;       // _3D9
-	int mGemType;            // _3DC pellet size?
-	int mColor;              // _3E0
-	u8 _3E4;                 // _3E4
-	f32 mSizeScale;          // _3E8
-	int _3EC;                // _3EC
-	int mMaxAttachedObjects; // _3F0
-	int _3F4;                // _3F4
-	int _3F8;                // _3F8
-	int _3FC;                // _3FC
-	CollInfo mGemCollInfo;   // _400
-	CollPart mGemColl[10];   // _414
-	SeContext mGemSe;        // _84C
+	bool mIsFree;              // _3C8
+	RouteTracer* mRouteTracer; // _3CC
+	f32 mTargetHeight;         // _3D0
+	f32 mCurrentHeight;        // _3D4
+	bool mIsRising;            // _3D8
+	bool mIsBeingLifted;       // _3D9
+	int mGemType;              // _3DC pellet size?
+	int mColor;                // _3E0
+	bool mIsAlive;             // _3E4
+	f32 mSizeScale;            // _3E8
+	int mGemNumber;            // _3EC, speculative
+	int mMaxStickers;          // _3F0
+	int mMinStickers;          // _3F4, speculative
+	int mMatchingSeeds;        // _3F8
+	int mNonMatchingSeeds;     // _3FC
+	CollInfo mGemCollInfo;     // _400
+	CollPart mGemColl[10];     // _414
+	u32 mCollInfoIDs[10];      // _824
+	SeContext mGemSe;          // _84C
 };
 
 /**

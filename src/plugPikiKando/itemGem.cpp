@@ -2,6 +2,7 @@
 #include "DebugLog.h"
 #include "EffectMgr.h"
 #include "GemItem.h"
+#include "GlobalGameOptions.h"
 #include "Stickers.h"
 #include "jaudio/pikiinter.h"
 
@@ -10,6 +11,10 @@ GemTable table[5] = {
 	{ 1, 3, 1, 2, 1, 0, 16.0f },      { 5, 10, 5, 5, 3, 5, 32.0f },    { 10, 20, 10, 10, 6, 2, 48.0f },
 	{ 20, 50, 20, 20, 10, 0, 64.0f }, { 50, 200, 50, 0, 0, 0, 16.0f },
 };
+
+// Only four?  That seems like a bug...  Was the 50 pellet already cut so early?
+// Linker Map says this was 0x10 bytes large, and this is the data structure directly following `table` in the memory of the DLL.
+f32 gemSpeedScales[4] = { 2.0f, 1.5f, 1.2f, 1.0f };
 
 /**
  * @todo: Documentation
@@ -27,13 +32,13 @@ DEFINE_PRINT("gemItem")
  * @todo: Documentation
  * @note UNUSED Size: 00003C
  */
-bool GemItem::ignoreAtari(Creature*)
+bool GemItem::ignoreAtari(Creature* creature)
 {
-	if (getStickObject()) {
+	// UNUSED FUNCTION (Matching by size)
+	if (creature->getStickObject() == this) {
 		return true;
 	}
-
-	if (mObjType == OBJTYPE_GemItem && mIsFree) {
+	if (creature->mObjType == OBJTYPE_GemItem && mIsFree) {
 		return true;
 	}
 	return false;
@@ -45,6 +50,7 @@ bool GemItem::ignoreAtari(Creature*)
  */
 void GemItem::setAtariFree()
 {
+	// UNUSED FUNCTION (Matching by size)
 	mIsFree = true;
 	playEventSound(this, SE_PELLET_BORN);
 }
@@ -55,10 +61,10 @@ void GemItem::setAtariFree()
  */
 void GemItem::bounceCallback()
 {
+	// UNUSED FUNCTION (Matching by size)
 	if (mIsFree) {
 		effectMgr->create(EffectMgr::EFF_BigDustRing, mSRT.t, nullptr, nullptr);
 	}
-
 	mIsFree = false;
 }
 
@@ -66,16 +72,24 @@ void GemItem::bounceCallback()
  * @todo: Documentation
  * @note UNUSED Size: 000108
  */
-GemItem::GemItem(CreatureProp* props, int p2, Shape** shapes, Shape**, Shape**, SimpleAI* ai, f32 a1, int, int)
-    : ItemCreature(p2, props, shapes[0])
+GemItem::GemItem(CreatureProp* props, int gemType, Shape** shapes, Shape**, Shape**, SimpleAI* ai, f32 sizeScale, int, int)
+    : ItemCreature(OBJTYPE_GemItem, props, nullptr)
     , mGemCollInfo(0)
 {
-	mGemType         = p2;
+	// UNUSED FUNCTION (Matching by size)
+	mGemType         = gemType;
 	mColor           = 0;
-	mItemShapeObject = itemMgr->getPelletShapeObject(mColor, p2);
+	mItemShapeObject = itemMgr->getPelletShapeObject(mColor, gemType);
 	mStateMachine    = ai;
-	mSizeScale       = a1;
-	// UNUSED FUNCTION
+	mSizeScale       = sizeScale;
+
+	const GemTable& tableEntry = table[mGemType];
+
+	mGemNumber        = tableEntry.mGemNumber;
+	mMaxStickers      = tableEntry.mMaxCarry;
+	mMinStickers      = tableEntry.mMinCarry;
+	mMatchingSeeds    = tableEntry.mMatchingSeeds;
+	mNonMatchingSeeds = tableEntry.mNonMatchingSeeds;
 }
 
 /**
@@ -84,23 +98,31 @@ GemItem::GemItem(CreatureProp* props, int p2, Shape** shapes, Shape**, Shape**, 
  */
 void GemItem::initParam(int type)
 {
+	// UNUSED FUNCTION (Matching by size)
 	setColorType(type);
-	// UNUSED FUNCTION
+
+	const GemTable& tableEntry = table[mGemType];
+
+	mGemNumber        = tableEntry.mGemNumber;
+	mMaxStickers      = tableEntry.mMaxCarry;
+	mMinStickers      = tableEntry.mMinCarry;
+	mMatchingSeeds    = tableEntry.mMatchingSeeds;
+	mNonMatchingSeeds = tableEntry.mNonMatchingSeeds;
 }
 
 /**
  * @todo: Documentation
  */
-void GemItem::setColorType(int col)
+void GemItem::setColorType(int color)
 {
-	mColor = col;
-	if (col >= 3) {
-		col = gsys->getRand(1.0f) * 3.0f;
-		if (col >= 3) {
-			col = 0;
+	mColor = color;
+	if (color >= PikiColorCount) {
+		color = gsys->getRand(1.0f) * f32(PikiColorCount);
+		if (color >= PikiColorCount) {
+			color = Blue;
 		}
 	}
-	mColor = col;
+	mColor = color;
 
 	if (mGemType < 0 || mGemType >= 5) {
 		PRINT("illegal gem type !\n", mGemType);
@@ -119,21 +141,25 @@ void GemItem::setColorType(int col)
  */
 void GemItem::startAI(int)
 {
+	// UNUSED FUNCTION (Matching by size)
 	mSeContext = &mGemSe;
 	mSeContext->setContext(this, JACEVENT_Pellet);
+
 	mCollInfo = &mGemCollInfo;
-	mGemCollInfo.initInfo(mItemShapeObject->mShape, mGemColl, nullptr);
+	mCollInfo->initInfo(mItemShapeObject->mShape, mGemColl, mCollInfoIDs);
+
 	mSRT.s.set(1.0f, 1.0f, 1.0f);
-	mSRT.r.set(1.0f, mFaceDirection, 1.0f);
-	resetCreatureFlag(CF_IgnoreGravity);
+	mSRT.r.set(0.0f, mFaceDirection, 0.0f);
+	enableGravity();
 	C_SAI(this)->start(this, GemAI::GEM_Unk0);
+	mIsAlive       = true;
 	mIsBeingLifted = false;
-	mIsRising      = false;
-	playSound(0);
-	// v func
-	_3CC    = 0;
-	mIsFree = 0;
-	// UNUSED FUNCTION
+	// Is this an idiom for something?
+	startMotion(0);
+	stopMotion();
+	mIsRising = false;
+	mRouteTracer = nullptr;
+	mIsFree   = false;
 }
 
 /**
@@ -142,43 +168,39 @@ void GemItem::startAI(int)
  */
 void GemItem::update()
 {
-	// a lot of this is just estimating based on the dll
+	// UNUSED FUNCTION (Matching by size)
+	f32 motionScl = 0.5f;
 
 	if (mIsRising) {
 		updateLiftup();
 	}
-	f32 motionScl;
-	if (mColor == 1 && mGemType == 1) {
+	if (mColor == Red && mGemType == 1) {
 		motionScl = 1.333333f;
-	} else {
+	} else if (mColor == Yellow || mGemType == 2) {
 		motionScl = 2.666666f;
 	}
 	ItemCreature::update();
 	if (mStickListHead) {
-		f32 speed = mVelocity.length();
-		setMotionSpeed(speed * motionScl);
-		f32 s = getMotionSpeed();
-		if (s > 1000.0f) {
+		setMotionSpeed(mVelocity.length() * gemSpeedScales[mGemType] * motionScl);
+		if (getMotionSpeed() > 1000.0f) {
 			PRINT("motionSpeed = %f : vel(%.1f %.1f %.1f) : getSpeedScl %.1f motionScl %.1f\n", getMotionSpeed(), mVelocity.x, mVelocity.y,
-			      mVelocity.z, motionScl, motionScl);
+			      mVelocity.z, gemSpeedScales[mGemType], motionScl);
 		}
+	} else if (getCurrState()->getID() == GemAI::GEM_Rise) {
+		mIsAlive = false;
+		setMotionSpeed(210.0f);
 	} else {
-		// some virtual func
-
-		if (mCurrentState->getID()) {
-			// some virtual func
-			if (mIsBeingLifted) {
-				stopEventSound(this, SE_LIFT_TRY);
-				stopEventSound(this, SE_LIFT_MOVE);
-				finishPick();
-			}
-			setCreatureFlag(CF_IgnoreGravity); // this is a further inline
-			if (isCreatureFlag(CF_IsOnGround)) {
-				mVelocity = mVelocity * 1.5f;
-			}
+		stopMotion();
+		if (mIsBeingLifted) {
+			stopEventSound(this, SE_LIFT_MOVE);
+			stopEventSound(this, SE_LIFT_TRY);
+			finishPick();
+		}
+		enableGravity();
+		if (isCreatureFlag(CF_IsOnGround)) {
+			mVelocity = mVelocity * 0.9f;
 		}
 	}
-	// UNUSED FUNCTION
 }
 
 /**
@@ -187,8 +209,12 @@ void GemItem::update()
  */
 bool GemItem::reachCapacity()
 {
+	// UNUSED FUNCTION (Matching by size)
 	Stickers stick(this);
-	return mMaxAttachedObjects < stick.getNumStickers();
+	if (stick.getNumStickers() >= mMaxStickers) {
+		return true;
+	}
+	return false;
 }
 
 /**
@@ -197,6 +223,7 @@ bool GemItem::reachCapacity()
  */
 void GemItem::updateLiftup()
 {
+	// UNUSED FUNCTION (Matching by size)
 	f32 prevHeight = mCurrentHeight;
 	mCurrentHeight += gsys->getFrameTime() * 3.333333f;
 	if (mCurrentHeight > mTargetHeight) {
@@ -207,11 +234,10 @@ void GemItem::updateLiftup()
 	mSRT.t.y += mCurrentHeight - prevHeight;
 
 	Stickers stick(this);
-	Iterator it(nullptr);
+	Iterator it(&stick);
 	CI_LOOP(it)
 	{
-		Creature* obj          = *it;
-		obj->mAttachPosition.y = obj->mAttachPosition.y - (mCurrentHeight - prevHeight);
+		(*it)->mAttachPosition.y -= mCurrentHeight - prevHeight;
 	}
 }
 
@@ -221,11 +247,12 @@ void GemItem::updateLiftup()
  */
 void GemItem::startPick(f32 val)
 {
-	playSound(0);
-	getCurrentMotionName();
+	// UNUSED FUNCTION (Matching by size)
+	startMotion(0);
+	setMotionSpeed(30.0f);
 	setFree(false);
 	mTargetHeight  = val;
-	mCurrentHeight = 0;
+	mCurrentHeight = 0.0f;
 	mIsRising      = true;
 	mVelocity.y    = 0.0f;
 	enableGroundOffset(0.0f);
@@ -238,12 +265,13 @@ void GemItem::startPick(f32 val)
  */
 void GemItem::finishPick()
 {
+	// UNUSED FUNCTION (Matching by size)
 	PRINT("FINISH PICK ++++++++++++++\n");
-	mIsRising     = 0;
-	mTargetHeight = 0;
+	mIsRising     = false;
+	mTargetHeight = 0.0f;
 	disableGroundOffset();
 	setFree(true);
-	mIsBeingLifted = 0;
+	mIsBeingLifted = false;
 	resetCreatureFlag(CF_IsFlying);
 }
 
@@ -253,7 +281,8 @@ void GemItem::finishPick()
  */
 f32 GemItem::getSize()
 {
-	return 41.0f * mSizeScale / 0.4f;
+	// UNUSED FUNCTION (Matching by size)
+	return mSizeScale * 41.0f / 0.4f;
 }
 
 /**
@@ -262,6 +291,7 @@ f32 GemItem::getSize()
  */
 f32 GemItem::getiMass()
 {
+	// UNUSED FUNCTION (Matching by size)
 	return 0.0f;
 }
 
@@ -270,14 +300,14 @@ f32 GemItem::getiMass()
  */
 void GemItem::split()
 {
-	if (!_3E4) {
+	if (!mIsAlive) {
 		return;
 	}
 
 	int splitAmount = table[mGemType].mSplitAmount;
 	if (splitAmount > 0) {
 		PRINT("gem type %d split !\n", mGemType);
-		_3E4 = 0;
+		mIsAlive = false;
 		kill(false);
 		int objType;
 		if (mGemType == 1) {
@@ -313,6 +343,7 @@ void GemItem::split()
  */
 void GemItem::refresh(Graphics& gfx)
 {
+	// UNUSED FUNCTION (Matching by size)
 	ItemCreature::refresh(gfx);
 	mCollInfo->updateInfo(gfx, false);
 }
@@ -323,6 +354,7 @@ void GemItem::refresh(Graphics& gfx)
  */
 void GemItem::doStore(CreatureInf* inf)
 {
+	// UNUSED FUNCTION (Matching by size)
 	inf->mObjInfo1 = mGemType;
 	inf->mObjInfo2 = mColor;
 }
@@ -333,6 +365,7 @@ void GemItem::doStore(CreatureInf* inf)
  */
 void GemItem::doRestore(CreatureInf* inf)
 {
+	// UNUSED FUNCTION (Matching by size)
 	mGemType = inf->mObjInfo1;
 	mColor   = inf->mObjInfo2;
 	initParam(mColor);
@@ -346,8 +379,9 @@ void GemItem::doRestore(CreatureInf* inf)
  */
 void GemItem::doKill()
 {
+	// UNUSED FUNCTION (Matching by size)
 	mSeContext->releaseEvent();
-	itemMgr->kill(this); // guess here because I cant tell from the dll
+	ItemCreature::doKill();
 }
 
 /**
@@ -356,15 +390,16 @@ void GemItem::doKill()
  */
 bool GemItem::isAlive()
 {
-	return true;
-	// UNUSED FUNCTION
+	// UNUSED FUNCTION (Matching by size)
+	return mIsAlive;
 }
 
 /**
  * @todo: Documentation
  * @note UNUSED Size: 000008
  */
-void GemItem::setRouteTracer(RouteTracer*)
+void GemItem::setRouteTracer(RouteTracer* routeTracer)
 {
-	// UNUSED FUNCTION
+	// UNUSED FUNCTION (Matching by size)
+	mRouteTracer = routeTracer;
 }
