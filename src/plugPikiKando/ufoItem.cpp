@@ -9,6 +9,7 @@
 #include "SoundID.h"
 #include "UtEffect.h"
 #include "gameflow.h"
+#include "jaudio/pikiinter.h"
 
 /**
  * @todo: Documentation
@@ -763,7 +764,7 @@ void UfoItem::startAI(int)
 	mNeedPathfindRefresh = true;
 
 	mSeContext = &mShipSe;
-	mSeContext->setContext(this, 7);
+	mSeContext->setContext(this, JACEVENT_Ufo);
 	mCollInfo = new CollInfo(16);
 	mCollInfo->initInfo(mShipModel->mShape, nullptr, nullptr);
 	mWaypointID = routeMgr->findNearestWayPoint('test', mSRT.t, false)->mIndex;

@@ -7,6 +7,7 @@
 #include "Generator.h"
 #include "Graphics.h"
 #include "Interface.h"
+#include "MemStat.h"
 #include "MoviePlayer.h"
 #include "NaviMgr.h"
 #include "OnePlayerSection.h"
@@ -325,8 +326,6 @@ int PlayerState::getCardPikiCount(int color)
 	return GameStat::allPikis;
 }
 
-char unusedStr[] = { "ペレットマネージャ" };
-
 /**
  * @todo: Documentation
  */
@@ -611,8 +610,25 @@ void PlayerState::setDisplayPikiCount(int color)
  */
 void PlayerState::init()
 {
-	pelletMgr = new PelletMgr(nullptr);
-	// UNUSED FUNCTION
+	// UNUSED FUNCTION (Matching by size)
+	setNavi(false);
+	if (!preloadUFO) {
+		memStat->start("pellet");
+		pelletMgr = new PelletMgr(mapMgr);
+		gameflow.addGenNode("ペレットマネージャ", pelletMgr);
+		memStat->end("pellet");
+
+		memStat->start("pellet");
+		pelletMgr->initShapeInfos();
+		memStat->end("pellet");
+
+		// This function's memory usage goes un-measured for some reason.
+		pelletMgr->registerUfoParts();
+
+		memStat->start("item");
+		itemMgr = new ItemMgr();
+		memStat->end("item");
+	}
 }
 
 /**

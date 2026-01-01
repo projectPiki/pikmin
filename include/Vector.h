@@ -340,9 +340,9 @@ inline Vector3f operator*(const Vector3f& a, const f32& b)
 	return Vector3f(a.x * b, a.y * b, a.z * b);
 }
 
-inline Vector3f operator*(const f32& b, const Vector3f& a)
+inline Vector3f operator*(const f32& a, const Vector3f& b)
 {
-	return a * b;
+	return b * a;
 }
 
 inline Vector3f operator+(const Vector3f& a, const Vector3f& b)

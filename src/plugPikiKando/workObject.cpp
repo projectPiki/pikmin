@@ -12,6 +12,7 @@
 #include "RumbleMgr.h"
 #include "SoundMgr.h"
 #include "gameflow.h"
+#include "jaudio/pikiinter.h"
 #include "sysNew.h"
 
 WorkObjectMgr* workObjectMgr;
@@ -91,7 +92,7 @@ WorkObject::WorkObject()
 {
 	mObjType   = OBJTYPE_WorkObject;
 	mSeContext = new SeContext();
-	mSeContext->setContext(this, 4);
+	mSeContext->setContext(this, JACEVENT_Build);
 }
 
 /**

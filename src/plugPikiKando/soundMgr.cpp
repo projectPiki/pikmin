@@ -426,7 +426,7 @@ SeContext::SeContext(Creature* obj, int eventType)
 /**
  * @todo: Documentation
  */
-void SeContext::setContext(Creature* obj, int type)
+void SeContext::setContext(Creature* obj, int eventType)
 {
 	if (mEventHandle != -1) {
 		PRINT("*** context%x setContext :: releaseEvent !\n", this);
@@ -435,7 +435,7 @@ void SeContext::setContext(Creature* obj, int type)
 
 	mEventHandle = -1;
 	mGameObj     = obj;
-	mEventType   = type;
+	mEventType   = eventType;
 	mSourceListenerOffset.set(0.0f, 0.0f, 0.0f);
 	mSourcePosition.set(0.0f, 0.0f, 0.0f);
 	mClock = 0;

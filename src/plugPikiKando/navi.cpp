@@ -1652,18 +1652,11 @@ void Navi::reviseController(Vector3f& stickPos)
 
 /**
  * @todo: Documentation
+ *
+ * @note Assumed parameter name from makeCStick, only ever called with false
  */
-
-int gupper()
-{
-	int x;
-	return x;
-}
-
-// Assumed parameter name from makeCStick, only ever called with false
 void Navi::makeVelocity(bool isSunset)
 {
-
 	mNeutralTime += gsys->getFrameTime();
 
 	if (mKontroller->keyDown(KBBTN_B) || mKontroller->keyDown(KBBTN_A) || mKontroller->keyDown(KBBTN_X) || mKontroller->keyDown(KBBTN_Z)) {

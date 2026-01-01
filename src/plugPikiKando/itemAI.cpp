@@ -932,7 +932,7 @@ void GemAI::RiseInit::act(AICreature* item)
 {
 	item->mCurrentItemHealth = 0.0f;
 	item->mMaxItemHealth     = 1.5f;
-	item->setFlag80();
+	item->disableGravity();
 
 	Vector3f pos = item->mSRT.t;
 	EffectParm parm(pos);

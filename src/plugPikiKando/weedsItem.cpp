@@ -3,6 +3,7 @@
 #include "Graphics.h"
 #include "MapMgr.h"
 #include "SoundMgr.h"
+#include "jaudio/pikiinter.h"
 
 /**
  * @todo: Documentation
@@ -138,7 +139,7 @@ RockGen::RockGen(Shape* shape, CreatureProp* props)
 	mMaxPebbles    = 0;
 	mActivePebbles = 0;
 	mSeContext     = new SeContext;
-	mSeContext->setContext(this, 4);
+	mSeContext->setContext(this, JACEVENT_Build);
 }
 
 /**
@@ -296,7 +297,7 @@ GrassGen::GrassGen(Shape* shape, CreatureProp* props)
 	mTotalGrassCount = 0;
 	mActiveGrass     = 0;
 	mSeContext       = new SeContext;
-	mSeContext->setContext(this, 4);
+	mSeContext->setContext(this, JACEVENT_Build);
 }
 
 /**
