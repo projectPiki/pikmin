@@ -240,7 +240,7 @@ struct PlayState : public CoreNode {
 	 */
 	bool isStageOpen(int storyStageID)
 	{
-		if (storyStageID >= STAGE_START && storyStageID <= STAGE_END) {
+		if (storyStageID >= STAGE_START && storyStageID <= STAGE_TESTMAP) {
 			return IS_STAGE_OPEN(mCourseOpenFlags, storyStageID) != false;
 		}
 		return false;
@@ -474,7 +474,7 @@ struct GameHiscores {
 	GameRecMinDay mMinDayRecords[MAX_HI_SCORES];         /// _04, 5 lowest day-number completions of the game.
 	GameRecBornPikmin mBornPikminRecords[MAX_HI_SCORES]; /// _2C, 5 highest born Pikmin counts on completion.
 	GameRecDeadPikmin mDeadPikminRecords[MAX_HI_SCORES]; /// _40, 5 lowest dead Pikmin counts on completion.
-	GameRecChalCourse mChalModeRecords[STAGE_CHALCOUNT]; /// _54, hiscores for each of the 5 challenge mode stages.
+	GameRecChalCourse mChalModeRecords[CHALSTAGE_COUNT]; /// _54, hiscores for each of the 5 challenge mode stages.
 };
 
 /**
@@ -535,7 +535,8 @@ struct GamePrefs : public CoreNode {
 	/// Unlocks a challenge mode stage/map so it can be selected in the challenge mode map select screen.
 	void openStage(int chalStageID)
 	{
-		if (chalStageID >= STAGE_CHALSTART && chalStageID <= STAGE_CHALEND) {
+		// Lesser than *or equal to* `CHALSTAGE_COUNT` is probably a bug; inherited from Story Mode's handling of stage IDs for test maps.
+		if (chalStageID >= CHALSTAGE_START && chalStageID <= CHALSTAGE_COUNT) {
 			SET_STAGE_OPEN(mChalCourseOpenFlags, chalStageID);
 		}
 	}
@@ -543,7 +544,8 @@ struct GamePrefs : public CoreNode {
 	/// Checks if a challenge mode stage/map is unlocked.
 	bool isStageOpen(int chalStageID)
 	{
-		if (chalStageID >= STAGE_CHALSTART && chalStageID <= STAGE_CHALEND) {
+		// Lesser than *or equal to* `CHALSTAGE_COUNT` is probably a bug; inherited from Story Mode's handling of stage IDs for test maps.
+		if (chalStageID >= CHALSTAGE_START && chalStageID <= CHALSTAGE_COUNT) {
 			return IS_STAGE_OPEN(mChalCourseOpenFlags, chalStageID) != false;
 		}
 		return false;

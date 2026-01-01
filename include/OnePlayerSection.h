@@ -43,13 +43,13 @@ struct GenFileInfo : public CoreNode {
  */
 struct StageInfo : public CoreNode {
 
-	/// Construct a new (invalid) stage info. IDs are invalid until manually changed.
+	/// Constructed `StageInfo` is for a non-Challenge Mode test map until otherwise overwritten.
 	inline StageInfo()
 	    : CoreNode("stageInfo")
 	{
 		mStageIndex     = 0;
-		mStageID        = STAGE_INVALID;
-		mChalStageID    = STAGE_CHALINVALID;
+		mStageID        = STAGE_TESTMAP;
+		mChalStageID    = CHALSTAGE_NOT;
 		mHasInitialised = FALSE;
 		mGenFileList.initCore("");
 	}

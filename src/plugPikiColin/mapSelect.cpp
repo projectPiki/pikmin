@@ -74,7 +74,7 @@ struct MapSelectSetupSection : public Node {
 	void openAllMaps(Menu& parent)
 	{
 		PRINT("opening all maps !!\n");
-		for (int i = 0; i < STAGE_COUNT + 1; i++) {
+		for (int i = 0; i < STAGE_COUNT_INCLUDING_TESTMAPS; i++) {
 			gameflow.mPlayState.openStage(i);
 		}
 
@@ -92,7 +92,7 @@ struct MapSelectSetupSection : public Node {
 	void openAllChMaps(Menu& parent)
 	{
 		PRINT("opening all challenge maps !!\n");
-		for (int i = 0; i < STAGE_COUNT; i++) {
+		for (int i = 0; i < CHALSTAGE_COUNT; i++) {
 			gameflow.mGamePrefs.openStage(i);
 		}
 
@@ -129,7 +129,7 @@ struct MapSelectSetupSection : public Node {
 			} else {
 				bool valid = gameflow.mPlayState.isStageOpen(inf->mStageID);
 				// must be open, marked visible in its .ini, and also *not* a challenge mode stage (to avoid dupes)
-				if (inf->mIsVisible && valid && inf->mChalStageID == STAGE_CHALINVALID) {
+				if (inf->mIsVisible && valid && inf->mChalStageID == CHALSTAGE_NOT) {
 					mMapListMenu->addOption((int)inf, StdSystem::stringDup(inf->mStageName), nullptr);
 				}
 			}

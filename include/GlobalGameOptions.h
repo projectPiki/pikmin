@@ -13,34 +13,37 @@
 #define MIN_HAPPY_END_PARTS (25) // NB: also need to edit the hard-coded IDs in PlayerState::getUfoParts
 
 /**
- * @brief IDs for each stage, as per stages.ini.
- *
- * @note There are also test maps and teki stages, but these don't have IDs.
+ * @brief In "stages.ini", the `id` field.  In the `StageInfo` class, the `mStageID` member.
  */
 enum StageID {
-	STAGE_START,
-	STAGE_Practice  = STAGE_START, // Impact Site
-	STAGE_Forest    = 1,           // Forest of Hope
-	STAGE_Cave      = 2,           // Forest Navel
-	STAGE_Yakushima = 3,           // Distant Spring
-	STAGE_Last      = 4,           // Final Trial
-	STAGE_INVALID   = 5,           // default set on load, invalid
-	STAGE_END       = STAGE_INVALID,
-	STAGE_COUNT     = STAGE_INVALID,
-	STAGE_LASTVALID = STAGE_Last, // last valid loadable stage
+	STAGE_Practice  = 0, // Impact Site
+	STAGE_Forest    = 1, // Forest of Hope
+	STAGE_Cave      = 2, // Forest Navel
+	STAGE_Yakushima = 3, // Distant Spring
+	STAGE_Last      = 4, // Final Trial
+	STAGE_COUNT,         // Count of Story Mode stages (excluding test maps)
 
-	// all challenge mode stages share a stage ID with their story mode counterparts
-	// having these is lexically clearer though when reading code around unlocking or checking stages.
-	STAGE_ChalPractice  = STAGE_Practice,  // Challenge Mode Impact Site
-	STAGE_ChalForest    = STAGE_Forest,    // Challenge Mode Forest of Hope
-	STAGE_ChalCave      = STAGE_Cave,      // Challenge Mode Forest Navel
-	STAGE_ChalYakushima = STAGE_Yakushima, // Challenge Mode Distant Spring
-	STAGE_ChalLast      = STAGE_Last,      // Challenge Mode Final Trial
-	STAGE_CHALINVALID   = 7,               // Invalid challenge mode option.
+	STAGE_START   = STAGE_Practice, // First valid Story Mode stage
+	STAGE_TESTMAP = STAGE_COUNT,    // Default value of `StageInfo::mStageID`; used to indicate test maps.
+	STAGE_COUNT_INCLUDING_TESTMAPS, // Count of Story Mode stages (including test maps)
+};
 
-	STAGE_CHALSTART = STAGE_START, // first valid challenge mode level ID
-	STAGE_CHALEND   = STAGE_END,
-	STAGE_CHALCOUNT = STAGE_COUNT, // number of challenge mode levels
+/**
+ * @brief In "stages.ini", the `chid` field.  In the `StageInfo` class, the `mChalStageID` member.
+ *
+ * @note All challenge mode stages must share a stage ID with their story mode counterparts due to coding decisions.
+ * However, having a separate enum is lexically clearer when reading code around unlocking or checking stages.
+ */
+enum ChalStageID {
+	CHALSTAGE_Practice  = STAGE_Practice,  // Impact Site
+	CHALSTAGE_Forest    = STAGE_Forest,    // Forest of Hope
+	CHALSTAGE_Cave      = STAGE_Cave,      // Forest Navel
+	CHALSTAGE_Yakushima = STAGE_Yakushima, // Distant Spring
+	CHALSTAGE_Last      = STAGE_Last,      // Final Trial
+	CHALSTAGE_COUNT,                       // Count of Challenge Mode stages
+
+	CHALSTAGE_START = CHALSTAGE_Practice,  // First valid Challenge Mode stage
+	CHALSTAGE_NOT   = CHALSTAGE_COUNT + 2, // Default value of `StageInfo::mChalStageID`; used to indicate it is not a Challenge Mode stage.
 };
 
 /**

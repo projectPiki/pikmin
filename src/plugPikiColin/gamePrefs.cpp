@@ -20,8 +20,6 @@ DEFINE_PRINT("GamePrefs")
 /**
  * @brief Unlocks a given story mode stage, including queueing up the relevant stage unlock animation on the map screen.
  *
- * @bug This could attempt to unlock a 6th (invalid) stage by supplying it with STAGE_INVALID.
- *
  * @param stageID ID of the story mode stage to unlock - see `StageID` enum.
  */
 void PlayState::openStage(int storyStageID)
@@ -30,7 +28,7 @@ void PlayState::openStage(int storyStageID)
 		return;
 	}
 
-	if (storyStageID > STAGE_END) {
+	if (storyStageID > STAGE_TESTMAP) {
 		return;
 	}
 

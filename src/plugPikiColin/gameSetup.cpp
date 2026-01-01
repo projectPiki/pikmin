@@ -258,7 +258,7 @@ void GameSetupSection::update()
 
 	stage = (StageInfo*)flowCont.mStageList.mChild;
 	while (stage) {
-		if ((int)stage->mChalStageID == STAGE_ChalForest) {
+		if ((int)stage->mChalStageID == CHALSTAGE_Forest) {
 			// if we have it, load into Forest of Hope challenge mode!
 			flowCont.mCurrentStage = stage;
 			sprintf(flowCont.mCurrStageFilePath, "%s", stage->mFileName);
