@@ -1,20 +1,7 @@
-#ifndef _AYU_H
-#define _AYU_H
+#ifndef _AYUSTACK_H
+#define _AYUSTACK_H
 
 #include "types.h"
-
-/**
- * @brief TODO
- */
-struct ayuID {
-	ayuID() { mID = 0; }
-	ayuID(immut char* id) { Set(id); }
-
-	void Set(immut char* id) { mID = *(s32*)id; }
-	s32& Num() { return mID; };
-
-	s32 mID; // _00, 32-bit packed ID (often fourcc-style)
-};
 
 struct MemHead {
 	u32 mTagAndSize; // _00, tag in high byte; size in low 24 bits

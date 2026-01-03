@@ -99,7 +99,7 @@ struct LifeGaugeMgr {
 struct LifeGauge {
 
 	/**
-	 * @brief TODO
+	 * @brief Style to render the health gauge in.
 	 */
 	enum RenderStyle {
 		Bar,   ///< 0, render gauge as a horizontal bar - the always-overwritten default.
@@ -107,7 +107,7 @@ struct LifeGauge {
 	};
 
 	/**
-	 * @brief TODO
+	 * @brief Display states the health gauge goes through while being updated.
 	 */
 	enum DisplayState {
 		STATE_Inactive = -1, ///< -1, inactive.
@@ -125,17 +125,17 @@ struct LifeGauge {
 	void countOn(immut Vector3f& position, int stickCount, int minCount);
 	void countOff();
 
-	Vector3f mPosition;             ///< _00
-	Vector3f mOffset;               ///< _0C
-	int mDisplayState;              ///< _18
-	RenderStyle mRenderStyle;       ///< _1C
-	bool mSnapToTargetHealth;       ///< _20
-	f32 mFadeTransitionValue;       ///< _24
-	f32 mVisibleHoldTimer;          ///< _28
-	f32 mTargetHealthRatio;         ///< _2C, aka "value"
-	f32 mCurrentDisplayHealthRatio; ///< _30
-	f32 mScale;                     ///< _34
-	GaugeInfo* mActiveCarryNumber;  ///< _38
+	Vector3f mPosition;             ///< _00, position of object gauge is for - sometimes includes offset. Gauge pos = mPosition + mOffset.
+	Vector3f mOffset;               ///< _0C, sometimes offset of health gauge from object; sometimes 0. Gauge pos = mPosition + mOffset.
+	int mDisplayState;              ///< _18, display state of gauge - see `DisplayState` enum.
+	RenderStyle mRenderStyle;       ///< _1C, style to render gauge in - see `RenderStyle` enum. Always set to `Wheel` in retail.
+	bool mSnapToTargetHealth;       ///< _20, whether gauge should "snap" instantly to target health (as opposed to slowly fill or deplete).
+	f32 mFadeTransitionValue;       ///< _24, progress control for fade transitions - 0=fully faded out; 1=fully faded in.
+	f32 mVisibleHoldTimer;          ///< _28, timer for how long to keep gauge visible, even if full. Will hide after this time if full.
+	f32 mTargetHealthRatio;         ///< _2C, health ratio gauge should end up displaying (current health / max health).
+	f32 mCurrentDisplayHealthRatio; ///< _30, health ratio currently being rendered, to allow for gradual filling/depleting.
+	f32 mScale;                     ///< _34, display scale of gauge.
+	GaugeInfo* mActiveCarryNumber;  ///< _38, associated carry number display, managed by `LifeGaugeMgr`.
 };
 
 extern LifeGaugeMgr* lgMgr;

@@ -1,7 +1,6 @@
 #ifndef _AICONSTANT_H
 #define _AICONSTANT_H
 
-#include "Ayu.h"
 #include "GlobalGameOptions.h"
 #include "Node.h"
 #include "Parameters.h"

@@ -261,7 +261,7 @@ u32 GenType::getLatestVersion()
  */
 void GenType::ramSaveParameters(RandomAccessStream& output)
 {
-	output.writeByte(_18());
+	output.writeByte(mDaysToResurrection());
 	output.writeByte(mCarryOver());
 }
 
@@ -270,8 +270,8 @@ void GenType::ramSaveParameters(RandomAccessStream& output)
  */
 void GenType::ramLoadParameters(RandomAccessStream& input)
 {
-	_18()        = input.readByte();
-	mCarryOver() = input.readByte();
+	mDaysToResurrection() = input.readByte();
+	mCarryOver()          = input.readByte();
 }
 
 /**
@@ -524,7 +524,7 @@ void Generator::loadCreature(RandomAccessStream& input)
 		if (mLatestSpawnCreature) {
 			mLatestSpawnCreature->mGenerator = this;
 			mAliveCount++;
-			if (mCarryOverFlags & GENCARRY_SavePosition) {
+			if (mCarryOverFlags & GENCARRY_SaveProperties) {
 				mLatestSpawnCreature->load(input, true);
 			} else {
 				mLatestSpawnCreature->load(input, false);
@@ -545,7 +545,7 @@ void Generator::saveCreature(RandomAccessStream& output)
 	if (mLatestSpawnCreature) {
 		PRINT("SAVING CREATURE %s\n", ObjType::getName(mLatestSpawnCreature->mObjType));
 
-		if (mCarryOverFlags & GENCARRY_SavePosition) {
+		if (mCarryOverFlags & GENCARRY_SaveProperties) {
 			mLatestSpawnCreature->save(output, true);
 		} else {
 			mLatestSpawnCreature->save(output, false);
@@ -571,7 +571,7 @@ void Generator::init()
 	if (!ramMode) {
 		mAliveCount = 0;
 
-	} else if (!(mCarryOverFlags & GENCARRY_Unk3)) {
+	} else if (!(mCarryOverFlags & GENCARRY_SaveSpawnCount)) {
 		// do nothing.
 		mAliveCount = 0;
 		return;
@@ -587,7 +587,7 @@ void Generator::init()
 		mGenObject->init(this);
 	}
 
-	if (ramMode && (mCarryOverFlags & GENCARRY_Unk3)) {
+	if (ramMode && (mCarryOverFlags & GENCARRY_SaveSpawnCount)) {
 		if (gameflow.mWorldClock.mCurrentDay >= mLatestSpawnDay + mRespawnInterval) {
 			// we're due to respawn afresh.
 			PRINT("****** RESET DAY (curr=%d / save=%d interval=%d)\n", gameflow.mWorldClock.mCurrentDay, mLatestSpawnDay,
@@ -1527,10 +1527,10 @@ void Generator::genAge(AgeServer& server)
 
 	server.StartGroup("Carry Over");
 	server.StartBitGroup("flags", &mCarryOverFlags, 200);
-	server.NewBit("ジェネレータを残す", GENCARRY_Unk1, 0);         // Leave Generator
-	server.NewBit("生んだやつを残す", GENCARRY_Unk2, 0);           // Leave the one you gave birth to
-	server.NewBit("数を残す", GENCARRY_Unk3, 0);                   // Leave a number
-	server.NewBit("ジェネレータを残す", GENCARRY_SavePosition, 0); // Leave a place
+	server.NewBit("ジェネレータを残す", GENCARRY_SaveGenerator, 0);  // Leave Generator
+	server.NewBit("生んだやつを残す", GENCARRY_SaveCreature, 0);     // Leave the one you gave birth to
+	server.NewBit("数を残す", GENCARRY_SaveSpawnCount, 0);           // Leave a number
+	server.NewBit("ジェネレータを残す", GENCARRY_SaveProperties, 0); // Leave a place
 	server.EndBitGroup();
 	server.EndGroup();
 

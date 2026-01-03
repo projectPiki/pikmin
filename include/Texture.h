@@ -1,7 +1,7 @@
 #ifndef _TEXTURE_H
 #define _TEXTURE_H
 
-#include "Ayu.h"
+#include "AyuStack.h"
 #include "CoreNode.h"
 #include "Dolphin/gx.h"
 #include "GfxObject.h"

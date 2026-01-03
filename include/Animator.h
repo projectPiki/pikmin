@@ -1,7 +1,6 @@
 #ifndef _ANIMATOR_H
 #define _ANIMATOR_H
 
-#include "Ayu.h"
 #include "CmdStream.h"
 #include "Common/String.h"
 #include "CoreNode.h"

@@ -2,13 +2,13 @@
 #define _GENERATOR_H
 
 #include "Actor.h"
-#include "Ayu.h"
 #include "ID32.h"
 #include "Node.h"
 #include "Parameters.h"
 #include "Vector.h"
 #include "types.h"
 
+/// Maximum size of the generator cache heap, in bytes (for all stages combined).
 #define GENCACHE_HEAP_SIZE (0x6C00)
 
 struct AgeServer;
@@ -24,19 +24,33 @@ struct RandomAccessStream;
 struct TekiPersonality;
 
 /**
- * @brief TODO
+ * @brief Controls for what generators and properties of generators carry over to the next day(s).
+ *
+ * These are set in the .gen files themselves, per generator. For use with Generator::mCarryOverFlags.
+ * Not to be confused with the GenType parameter of a similar name, since that's only for preserving face direction.
+ *
+ * @note GENCARRY_SaveGenerator needs to be set for any others to function.
  */
 enum GenCarryOverFlags {
-	GENCARRY_Unk1         = 1 << 0, // 0x1
-	GENCARRY_Unk2         = 1 << 1, // 0x2
-	GENCARRY_Unk3         = 1 << 2, // 0x4
-	GENCARRY_SavePosition = 1 << 3, // 0x8
+	GENCARRY_SaveGenerator  = 1 << 0, ///< 0x1, save generator between days (will not be added to the cache if not set).
+	GENCARRY_SaveCreature   = 1 << 1, ///< 0x2, save spawned creature itself (for walls, bridges, pushable bags).
+	GENCARRY_SaveSpawnCount = 1 << 2, ///< 0x4, save how many creatures are alive between days (and reset after certain number of days).
+	GENCARRY_SaveProperties = 1 << 3, ///< 0x8, save class-specific info about creature (position, health) (needs `GENCARRY_SaveCreature`).
 };
 
 /**
- * @brief TODO
+ * @brief Context information for birthing an object via a `Generator`.
  */
 struct BirthInfo {
+
+	/**
+	 * @brief Sets all variables required to birth an object.
+	 *
+	 * @param pos Position to birth object at.
+	 * @param rot Rotation to birth object with.
+	 * @param scale Scale to birth object with.
+	 * @param gen Generator used to birth object.
+	 */
 	void set(immut Vector3f& pos, immut Vector3f& rot, immut Vector3f& scale, Generator* gen)
 	{
 		mPosition  = pos;
@@ -45,28 +59,42 @@ struct BirthInfo {
 		mGenerator = gen;
 	}
 
-	Vector3f mPosition;    // _00
-	Vector3f mRotation;    // _0C
-	Vector3f mScale;       // _18
-	Generator* mGenerator; // _24
+	Vector3f mPosition;    ///< _00, position to birth object at.
+	Vector3f mRotation;    ///< _0C, rotation to birth object with.
+	Vector3f mScale;       ///< _18, scale to birth object with.
+	Generator* mGenerator; ///< _24, generator used to birth object.
 };
 
 /**
- * @brief TODO
+ * @brief Base factory for registering and instantiating generator components (spawners).
+ *
+ * @tparam The generator component type to produce (`GenObject`, `GenType`, `GenArea`).
  *
  * @note Size: 0x10.
  */
 template <typename T>
 struct Factory {
+
+	/// Function used to instantiate a produced component, usually a static `makeXYZ` function.
 	typedef T* (*GenFunc)();
 
+	/**
+	 * @brief Information about a given spawner type.
+	 *
+	 * @note Size: 0x10.
+	 */
 	struct Member {
-		u32 mID;              // _00
-		GenFunc mGenFunction; // _04
-		immut char* mName;    // _08
-		u32 mVersion;         // _0C
+		u32 mID;              ///< _00, character literal (length 4) to identify the spawner type.
+		GenFunc mGenFunction; ///< _04, function that should be used to instantiate the spawner.
+		immut char* mName;    ///< _08, descriptive name for spawner type.
+		u32 mLatestVersion;   ///< _0C, most recent (file) version of spawner type.
 	};
 
+	/**
+	 * @brief Constructs and initialises a new factory along with a blank spawner array.
+	 *
+	 * @param maxSpawners Maximum number of spawner types to produce.
+	 */
 	Factory(int maxSpawners)
 	{
 		mSpawnerInfo  = new Member[maxSpawners];
@@ -74,6 +102,12 @@ struct Factory {
 		mSpawnerCount = 0;
 	}
 
+	/**
+	 * @brief Instantiates a new spawner based on ID.
+	 *
+	 * @param id Character literal ID of spawner to instantiate.
+	 * @return Pointer to new spawner.
+	 */
 	T* create(u32 id)
 	{
 		for (int i = 0; i < mSpawnerCount; i++) {
@@ -84,37 +118,60 @@ struct Factory {
 		return nullptr;
 	}
 
-	void registerMember(u32 id, GenFunc func, immut char* name, u32 version)
+	/**
+	 * @brief Registers a new spawner type in the member array, with all required information to instantiate spawners of that type.
+	 *
+	 * @param id Character literal ID of spawner type.
+	 * @param func Instantiation function for that spawner type (static function, usually something like `make[TypeName]`).
+	 * @param name Descriptive name of spawner type.
+	 * @param latestVersion Latest (file) version of spawner type available.
+	 */
+	void registerMember(u32 id, GenFunc func, immut char* name, u32 latestVersion)
 	{
+		// trying to add more spawner types than the maximum will do nothing (and throw no error)
 		if (mSpawnerCount >= mMaxSpawners) {
 			return;
 		}
 
-		mSpawnerInfo[mSpawnerCount].mID          = id;
-		mSpawnerInfo[mSpawnerCount].mGenFunction = func;
-		mSpawnerInfo[mSpawnerCount].mName        = name;
-		mSpawnerInfo[mSpawnerCount].mVersion     = version;
+		mSpawnerInfo[mSpawnerCount].mID            = id;
+		mSpawnerInfo[mSpawnerCount].mGenFunction   = func;
+		mSpawnerInfo[mSpawnerCount].mName          = name;
+		mSpawnerInfo[mSpawnerCount].mLatestVersion = latestVersion;
 
 		mSpawnerCount++;
 	}
 
+	/**
+	 * @brief Gets the most recent file version of a spawner type, based on ID.
+	 *
+	 * @param id Character literal ID of spawner to get version of.
+	 * @return Character literal indicating file version, of the form `vX.Y`.
+	 */
 	u32 _getLatestVersion(u32 id)
 	{
 		for (int i = 0; i < mSpawnerCount; i++) {
 			if (id == mSpawnerInfo[i].mID) {
-				return mSpawnerInfo[i].mVersion;
+				return mSpawnerInfo[i].mLatestVersion;
 			}
 		}
 
 		return id;
 	}
 
+	/**
+	 * @brief Starts an iteration through member spawners - resets the iteration index and returns the first spawner.
+	 * @return Member info for first spawner type in the array (i.e. at index 0).
+	 */
 	Member* first()
 	{
 		mIterIndex = 0;
 		return next();
 	}
 
+	/**
+	 * @brief Gets the next spawner member info in an iteration through member spawners and increments the interation index.
+	 * @return Member info for next spawner type in the array; `nullptr` if we've hit the end.
+	 */
 	Member* next()
 	{
 		if (mIterIndex < mSpawnerCount) {
@@ -123,60 +180,73 @@ struct Factory {
 		return nullptr;
 	}
 
+	/**
+	 * @brief Checks if we've hit the end of an iteration through member infos.
+	 * @param member Member info to test.
+	 * @return True if we've hit the end (since next() will return `nullptr`); false if member exists.
+	 */
 	bool isDone(Member* member) { return !member; }
 
-	int mSpawnerCount;    // _00
-	int mMaxSpawners;     // _04
-	Member* mSpawnerInfo; // _08, array
-	int mIterIndex;       // _0C
+	int mSpawnerCount;    ///< _00, count of currently registered spawner infos.
+	int mMaxSpawners;     ///< _04, maximum registerable spawner infos.
+	Member* mSpawnerInfo; ///< _08, array of registered member spawner infos (size mMaxSpawners).
+	int mIterIndex;       ///< _0C, iteration index for iterating through member info array.
 };
 
 /**
- * @brief TODO
+ * @brief Manages cached generator data for each story area, to spawn or respawn objects appropriately on revisit.
  *
  * @note Size: 0x84.
  */
 struct GeneratorCache {
+
 public:
 	/**
-	 * @brief TODO
+	 * @brief Cache for a particular story mode stage's generator information/state.
 	 */
 	struct Cache : public CoreNode {
+
+		/// Constructs a blank cache entry with no initialisation (assigned to Impact Site by default).
 		Cache()
 		{
 			initCore("");
-			mCourseIdx      = 0;
-			mGenCount       = 0;
-			mTotalCacheSize = 0;
-			mHeapOffset     = 0;
+			mStageID         = STAGE_Practice;
+			mGenCount        = 0;
+			mTotalCacheSize  = 0;
+			mCacheHeapOffset = 0;
 		}
 
-		Cache(u32 stageIdx)
-		    : mCourseIdx(stageIdx)
+		/**
+		 * @brief Constructs a blank cache entry with no initialisation (assigned to given stage ID).
+		 * @param stageID Stage ID to assign cache to - see `StageID` enum.
+		 */
+		Cache(u32 stageID)
+		    : mStageID(stageID)
 		{
 			initCore("");
-			mGenCount       = 0;
-			mTotalCacheSize = 0;
-			mHeapOffset     = 0;
+			mGenCount        = 0;
+			mTotalCacheSize  = 0;
+			mCacheHeapOffset = 0;
 		}
 
-		void saveCard(RandomAccessStream&);
-		void loadCard(RandomAccessStream&);
+		void saveCard(RandomAccessStream& output);
+		void loadCard(RandomAccessStream& input);
 
 		// unused/inlined:
+
 		void dump();
 
 		// _00     = VTBL
 		// _00-_14 = CoreNode
-		u32 mCourseIdx;         // _14
-		u32 mHeapOffset;        // _18
-		u32 mTotalCacheSize;    // _1C
-		u32 mGenCacheSize;      // _20
-		u32 mCreatureCacheSize; // _24
-		u32 mUfoPartsCacheSize; // _28
-		u32 mGenCount;          // _2C
-		u32 mCreatureCount;     // _30
-		u32 mUfoPartsCount;     // _34
+		u32 mStageID;           ///< _14, stage this cache is for - see `StageID` enum.
+		u32 mCacheHeapOffset;   ///< _18, offset this cache starts at in the combined `mCacheHeap` in `GeneratorCache`.
+		u32 mTotalCacheSize;    ///< _1C, total size of this cache, in bytes (gen size + creature size + ufo parts size).
+		u32 mGenCacheSize;      ///< _20, total size of the generator information in this cache, in bytes.
+		u32 mCreatureCacheSize; ///< _24, total size of the creature information in this cache, in bytes.
+		u32 mUfoPartsCacheSize; ///< _28, total size of the ship parts information in this cache, in bytes.
+		u32 mGenCount;          ///< _2C, total number of generators tracked by this cache, in bytes.
+		u32 mCreatureCount;     ///< _30, total number of creatures tracked by this cache, in bytes.
+		u32 mUfoPartsCount;     ///< _34, total number of ship parts tracked by this cache, in bytes.
 	};
 
 	GeneratorCache();
@@ -202,13 +272,13 @@ protected:
 	void addOne(u32);
 	Cache* findCache(Cache&, u32);
 
-	Cache mAliveCacheList;    // _00, i.e. used caches
-	Cache mDeadCacheList;     // _38, i.e. free caches
-	u8* mCacheHeap;           // _70
-	int mTotalCacheSize;      // _74, max amount of cache bytes (0x6C00 by default)
-	int mUsedSize;            // _78, how many bytes of cache space have we used
-	int mFreeSize;            // _7C, how many bytes of cache space are left
-	u32 mCurrentSaveCacheIdx; // _80
+	Cache mAliveCacheList;    ///< _00, list of all currently active/used caches.
+	Cache mDeadCacheList;     ///< _38, list of all inactive/free caches.
+	u8* mCacheHeap;           ///< _70, pointer to buffer to use for saving and loading caches.
+	int mTotalCacheSize;      ///< _74, max amount of cache bytes (0x6C00 by default).
+	int mUsedSize;            ///< _78, how many bytes of cache space are currently used.
+	int mFreeSize;            ///< _7C, how many bytes of cache space are free to be used.
+	u32 mCurrentSaveCacheIdx; ///< _80, index of current active cache being used for saving.
 };
 
 /**
@@ -219,11 +289,11 @@ protected:
 struct GeneratorList {
 	GeneratorList();
 
-	Generator* findGenerator(int);
+	Generator* findGenerator(int idx);
 	void createRamGenerators();
 	void updateUseList();
 
-	Generator* mGenListHead; // _00
+	Generator* mGenListHead; ///< _00, pointer to first generator in the list; also the parent of the list.
 };
 
 /**
@@ -241,12 +311,15 @@ struct GenBase : public Parameters {
 	virtual u32 getLatestVersion() { return 'udef'; }    // _20
 
 	// unused/inlined:
+
 	void writeVersion(RandomAccessStream&);
 	void write(RandomAccessStream&);
 	void readVersion(RandomAccessStream&);
 	void read(RandomAccessStream&);
 
+#ifdef WIN32
 	void genAge(AgeServer&) { }
+#endif
 
 	// _04 = VTBL
 	// _00-_04 = Parameters
@@ -260,7 +333,7 @@ struct GenBase : public Parameters {
  * @brief TODO
  */
 struct GenObject : public GenBase {
-	inline GenObject(u32 id, immut char* name) // probably
+	GenObject(u32 id, immut char* name)
 	    : GenBase(id, "object type", name)
 	{
 	}
@@ -280,7 +353,7 @@ struct GenObject : public GenBase {
  * @brief TODO
  */
 struct GenObjectActor : public GenObject {
-	inline GenObjectActor()
+	GenObjectActor()
 	    : GenObject('actr', "create actor")
 	{
 		mActorId = 0; // POLICE
@@ -306,7 +379,7 @@ struct GenObjectActor : public GenObject {
  * @note Size: 0x2C.
  */
 struct GenObjectBoss : public GenObject {
-	inline GenObjectBoss()
+	GenObjectBoss()
 	    : GenObject('boss', "ボスを生む") // 'generate a boss'
 	{
 		mBossID          = 0; // BOSS_Spider
@@ -395,42 +468,65 @@ struct GenObjectItem : public GenObject {
 };
 
 /**
- * @brief TODO
+ * @brief Unfinished spawner for map objects of various types. Unused.
  *
+ * This only exists because it's initialised by GameCoreSection, but is never actually used to spawn any objects. Its data files are also
+ * not present on disc. Some (very limited) information remains from the DLL.
+ *
+ * @warning Implementation not usable in its current state, as almost no map object types were finished or remained in release or DLL.
  * @note Size: 0x1C.
  */
 struct GenObjectMapObject : public GenObject {
+
+	/**
+	 * @brief Map object types to spawn, exposed from DLL age server strings.
+	 *
+	 * None are usable, and only SeeSaw has any implementation details, assuming it uses `DynObjSeeSaw`.
+	 */
+	enum MapObjectType {
+		TYPE_SeeSaw,
+		TYPE_Log,
+		TYPE_Tabaco,
+		TYPE_Faller,
+		TYPE_Iwa,
+		TYPE_MiniSeeSaw,
+		TYPE_Kinoko,
+		TYPE_Lift,
+	};
+
 	GenObjectMapObject();
 
-	virtual void doRead(RandomAccessStream&);   // _14
-	virtual void render(Graphics&, Generator*); // _30
-	virtual Creature* birth(BirthInfo&);        // _34
+	virtual void doRead(RandomAccessStream& input); // _14
+	virtual void render(Graphics&, Generator*);     // _30
+	virtual Creature* birth(BirthInfo&);            // _34
 
-	static void initialise(MapMgr*);
+	static void initialise(MapMgr* mgr);
 
 #ifdef WIN32
-	virtual void doGenAge(AgeServer&);
+	virtual void doWrite(RandomAccessStream& output);
+	virtual void doGenAge(AgeServer& server);
+
+	void refreshSection(AgeServer& server);
 #endif
-	void refreshSection(AgeServer&);
 
 	static MapMgr* mapMgr;
 
 	// _04     = VTBL
 	// _00-_18 = GenObject
-	u32 mObjType; // _18
+	u32 mObjType; ///< _18, object type to spawn, guessed from DLL code - see `MapObjectType` enum.
 };
 
 /**
  * @brief TODO
  */
 struct GenObjectMapParts : public GenObject {
-	inline GenObjectMapParts()
-	    : GenObject('mpar', "マップパーツを生む") // 'generate map parts',
-	    , _18(this, 1, 1, 1, "p00", "稼動最低人数")
-	    , _28(this, 100, 100, 100, "p01", "稼動最大人数")
-	    , _38(this, 0.0f, 0.0f, 0.0f, "p02", "起動までの時間")
-	    , _48(this, 2.0f, 2.0f, 2.0f, "p04", "終点での停止時間")
-	    , _58(this, 60.0f, 60.0f, 60.0f, "p03", "スピード")
+	GenObjectMapParts()
+	    : GenObject('mpar', "マップパーツを生む")                // 'generate map parts',
+	    , _18(this, 1, 1, 1, "p00", "稼動最低人数")              // 'min number of people required'
+	    , _28(this, 100, 100, 100, "p01", "稼動最大人数")        // 'max number of people required'
+	    , _38(this, 0.0f, 0.0f, 0.0f, "p02", "起動までの時間")   // 'start-up time'
+	    , _48(this, 2.0f, 2.0f, 2.0f, "p04", "終点での停止時間") // 'stop time'
+	    , _58(this, 60.0f, 60.0f, 60.0f, "p03", "スピード")      // 'speed'
 	{
 		mPartKind       = 0;
 		mShapeIndex     = 0;
@@ -471,7 +567,7 @@ struct GenObjectMapParts : public GenObject {
  * @brief TODO
  */
 struct GenObjectNavi : public GenObject {
-	inline GenObjectNavi()
+	GenObjectNavi()
 	    : GenObject('navi', "プレイヤー２を生む") // 'generate player 2'
 	{
 	}
@@ -517,7 +613,7 @@ struct GenObjectPellet : public GenObject {
  * @brief TODO
  */
 struct GenObjectPiki : public GenObject {
-	inline GenObjectPiki()
+	GenObjectPiki()
 	    : GenObject('piki', "create PIKI")
 	    , mSpawnState(this, 0, 0, 2, "p00", "state (0:buried) (1:free) (2:team)")
 	    , mSpawnColor(this, 0, 0, 3, "p01", "color (0-2:3 random)")
@@ -639,10 +735,10 @@ public:
  * @brief TODO
  */
 struct GenType : public GenBase {
-	inline GenType(u32 id, immut char* name)
+	GenType(u32 id, immut char* name)
 	    : GenBase(id, "time type", name)
-	    , _18(this, 0, 0, 0, "b00", "復活日数")
-	    , mCarryOver(this, 0, 0, 0, "b01", "キャリーオーバー")
+	    , mDaysToResurrection(this, 0, 0, 0, "b00", "復活日数") // 'days to resurrection'
+	    , mCarryOver(this, 0, 0, 0, "b01", "キャリーオーバー")  // 'carryover'
 	{
 	}
 
@@ -657,17 +753,17 @@ struct GenType : public GenBase {
 
 	// _04     = VTBL
 	// _00-_18 = GenBase
-	Parm<int> _18;        // _18, b00
-	Parm<int> mCarryOver; // _28, b01, This is *really* poorly named (see `Generator::doAdjustFaceDir`)
+	Parm<int> mDaysToResurrection; // _18, b00
+	Parm<int> mCarryOver;          // _28, b01, This is *really* poorly named (see `Generator::doAdjustFaceDir`)
 };
 
 /**
  * @brief TODO
  */
 struct GenTypeAtOnce : public GenType {
-	inline GenTypeAtOnce()
-	    : GenType('aton', "最初から全部生む") // 'generate everything from the beginning'
-	    , mMaxCount(this, 1, 0, 0, "p00", "数")
+	GenTypeAtOnce()
+	    : GenType('aton', "最初から全部生む")   // 'generate everything from the beginning'
+	    , mMaxCount(this, 1, 0, 0, "p00", "数") // 'number'
 	{
 	}
 
@@ -686,10 +782,10 @@ struct GenTypeAtOnce : public GenType {
  * @brief TODO
  */
 struct GenTypeInitRand : public GenType {
-	inline GenTypeInitRand()
+	GenTypeInitRand()
 	    : GenType('irnd', "最初から生む（ランダム）") // 'generate from the beginning (random)'
-	    , _38(this, 1, 0, 0, "p00", "最低数")
-	    , mMaxCount(this, 5, 0, 0, "p01", "最高数")
+	    , _38(this, 1, 0, 0, "p00", "最低数")         // 'minimum number'
+	    , mMaxCount(this, 5, 0, 0, "p01", "最高数")   // 'maximum number'
 	{
 	}
 
@@ -709,11 +805,11 @@ struct GenTypeInitRand : public GenType {
  * @brief TODO
  */
 struct GenTypeOne : public GenType {
-	inline GenTypeOne()
-	    : GenType('1one', "１つだけうむ") // 'just one thing'
-	    , _38(this, 0, 0, 0, "p00", "回転(x)")
-	    , _48(this, 0, 0, 0, "p01", "回転(y)")
-	    , _58(this, 0, 0, 0, "p02", "回転(z)")
+	GenTypeOne()
+	    : GenType('1one', "１つだけうむ")      // 'just one thing'
+	    , _38(this, 0, 0, 0, "p00", "回転(x)") // 'rotation (x)'
+	    , _48(this, 0, 0, 0, "p01", "回転(y)") // 'rotation (y)'
+	    , _58(this, 0, 0, 0, "p02", "回転(z)") // 'rotation (z)'
 	{
 	}
 
@@ -754,7 +850,7 @@ public:
  * @brief TODO
  */
 struct GenArea : public GenBase {
-	inline GenArea(u32 id, immut char* name)
+	GenArea(u32 id, immut char* name)
 	    : GenBase(id, "area type", name)
 	{
 	}
@@ -777,9 +873,9 @@ struct GenArea : public GenBase {
  * @brief TODO
  */
 struct GenAreaCircle : public GenArea {
-	inline GenAreaCircle()
+	GenAreaCircle()
 	    : GenArea('circ', "inside circle")
-	    , mRadius(this, 50.0f, 0.0f, 0.0f, "p00", "半径")
+	    , mRadius(this, 50.0f, 0.0f, 0.0f, "p00", "半径") // 'radius'
 	{
 	}
 
@@ -798,7 +894,7 @@ struct GenAreaCircle : public GenArea {
  * @brief TODO
  */
 struct GenAreaPoint : public GenArea {
-	inline GenAreaPoint()
+	GenAreaPoint()
 	    : GenArea('pint', "at a point")
 	{
 	}
@@ -858,7 +954,7 @@ struct Generator : public Node {
 	void setDayLimit(int limit) { mDayLimit = limit; }
 	Vector3f getPos() { return mGenPosition + mGenOffset; }
 
-	int getRebirthDay() { return mGenType->_18(); }
+	int getRebirthDay() { return mGenType->mDaysToResurrection(); }
 	bool readFromRam() { return !mIsRamReadDisabled; }
 
 	// This inline is actually called `isCarryOver`, but it is *not* used for this purpose (carry-over configuration as it exists in

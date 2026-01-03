@@ -1,7 +1,6 @@
 #include "Animator.h"
 
 #include "Age.h"
-#include "Ayu.h"
 #include "Common/String.h"
 #include "DebugLog.h"
 #include "Dolphin/os.h"

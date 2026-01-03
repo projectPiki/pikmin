@@ -1,7 +1,6 @@
 #ifndef _CREATUREPROP_H
 #define _CREATUREPROP_H
 
-#include "Ayu.h"
 #include "Parameters.h"
 #include "types.h"
 

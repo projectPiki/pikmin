@@ -223,7 +223,7 @@ void GameFlow::menuToggleTimers(Menu& menu)
 {
 	gsys->mTimerState = (gsys->mTimerState + 1) % 3;
 	gsys->mTimer->reset();
-	sprintf(menu.mCurrentItem->mName, "Toggle Timers %s", timopts[gsys->mTimerState]);
+	sprintf(menu.mCurrentItem->mLabel, "Toggle Timers %s", timopts[gsys->mTimerState]);
 }
 
 /**
@@ -234,7 +234,7 @@ void GameFlow::menuToggleTimers(Menu& menu)
 void GameFlow::menuTogglePrint(Menu& menu)
 {
 	gsys->mTogglePrint ^= TRUE;
-	sprintf(menu.mCurrentItem->mName, "Toggle Print %s", (gsys->mTogglePrint) ? " [on]" : "[off]");
+	sprintf(menu.mCurrentItem->mLabel, "Toggle Print %s", (gsys->mTogglePrint) ? " [on]" : "[off]");
 }
 
 /**
@@ -245,7 +245,7 @@ void GameFlow::menuTogglePrint(Menu& menu)
 void GameFlow::menuToggleDInfo(Menu& menu)
 {
 	gsys->mToggleDebugInfo ^= TRUE;
-	sprintf(menu.mCurrentItem->mName, "Toggle DInfo %s", (gsys->mToggleDebugInfo) ? " [on]" : "[off]");
+	sprintf(menu.mCurrentItem->mLabel, "Toggle DInfo %s", (gsys->mToggleDebugInfo) ? " [on]" : "[off]");
 }
 
 /**
@@ -256,7 +256,7 @@ void GameFlow::menuToggleDInfo(Menu& menu)
 void GameFlow::menuToggleDExtra(Menu& menu)
 {
 	gsys->mToggleDebugExtra ^= TRUE;
-	sprintf(menu.mCurrentItem->mName, "Toggle DExtra %s", (gsys->mToggleDebugExtra) ? " [on]" : "[off]");
+	sprintf(menu.mCurrentItem->mLabel, "Toggle DExtra %s", (gsys->mToggleDebugExtra) ? " [on]" : "[off]");
 }
 
 /**
@@ -267,7 +267,7 @@ void GameFlow::menuToggleDExtra(Menu& menu)
 void GameFlow::menuToggleBlur(Menu& menu)
 {
 	gsys->mToggleBlur ^= TRUE;
-	sprintf(menu.mCurrentItem->mName, "Toggle Blur %s", (gsys->mToggleBlur) ? " [on]" : "[off]");
+	sprintf(menu.mCurrentItem->mLabel, "Toggle Blur %s", (gsys->mToggleBlur) ? " [on]" : "[off]");
 }
 
 /**
@@ -278,7 +278,7 @@ void GameFlow::menuToggleBlur(Menu& menu)
 void GameFlow::menuToggleInfo(Menu& menu)
 {
 	gsys->mToggleFileInfo ^= TRUE;
-	sprintf(menu.mCurrentItem->mName, "Toggle FileInfo %s", (gsys->mToggleFileInfo) ? " [on]" : "[off]");
+	sprintf(menu.mCurrentItem->mLabel, "Toggle FileInfo %s", (gsys->mToggleFileInfo) ? " [on]" : "[off]");
 }
 
 /**
@@ -289,7 +289,7 @@ void GameFlow::menuToggleInfo(Menu& menu)
 void GameFlow::menuToggleColls(Menu& menu)
 {
 	gsys->mToggleColls ^= TRUE;
-	sprintf(menu.mCurrentItem->mName, "Toggle Colls %s", (gsys->mToggleColls) ? " [on]" : "[off]");
+	sprintf(menu.mCurrentItem->mLabel, "Toggle Colls %s", (gsys->mToggleColls) ? " [on]" : "[off]");
 }
 
 /**
@@ -342,7 +342,7 @@ static const char* filterNames[] = {
 void GameFlow::menuChangeFilter(Menu& menu)
 {
 	mFilterType ^= 1;
-	sprintf(menu.mCurrentItem->mName, "type = %s", filterNames[mFilterType]);
+	sprintf(menu.mCurrentItem->mLabel, "type = %s", filterNames[mFilterType]);
 	gsys->mDGXGfx->setVerticalFilter(mVFilters[mFilterType]);
 	gsys->mDGXGfx->videoReset();
 }
@@ -358,7 +358,7 @@ void GameFlow::menuIncreaseFilter(Menu& menu)
 		mVFilters[0][menu.mCurrentItem->mData]++;
 	}
 
-	sprintf(menu.mCurrentItem->mName, "Filter setting %d", mVFilters[0][menu.mCurrentItem->mData]);
+	sprintf(menu.mCurrentItem->mLabel, "Filter setting %d", mVFilters[0][menu.mCurrentItem->mData]);
 	if (mFilterType == FILTER_Custom) {
 		gsys->mDGXGfx->setVerticalFilter(mVFilters[0]);
 		gsys->mDGXGfx->videoReset();
@@ -376,7 +376,7 @@ void GameFlow::menuDecreaseFilter(Menu& menu)
 		mVFilters[0][menu.mCurrentItem->mData]--;
 	}
 
-	sprintf(menu.mCurrentItem->mName, "Filter setting %d", mVFilters[0][menu.mCurrentItem->mData]);
+	sprintf(menu.mCurrentItem->mLabel, "Filter setting %d", mVFilters[0][menu.mCurrentItem->mData]);
 	if (mFilterType == FILTER_Custom) {
 		gsys->mDGXGfx->setVerticalFilter(mVFilters[0]);
 		gsys->mDGXGfx->videoReset();
@@ -399,8 +399,8 @@ void GameFlow::addFilterMenu(Menu* parent)
 		char* buf = new char[0x40];
 		sprintf(buf, "Filter setting %d", mVFilters[i]);
 		parent->addOption(i, buf, nullptr);
-		parent->addKeyEvent(Menu::KeyEventType::Release, KBBTN_Y, new Delegate1<GameFlow, Menu&>(this, &menuDecreaseFilter));
-		parent->addKeyEvent(Menu::KeyEventType::Release, KBBTN_X, new Delegate1<GameFlow, Menu&>(this, &menuIncreaseFilter));
+		parent->addKeyEvent(Menu::KeyEventType::OnInputRelease, KBBTN_Y, new Delegate1<GameFlow, Menu&>(this, &menuDecreaseFilter));
+		parent->addKeyEvent(Menu::KeyEventType::OnInputRelease, KBBTN_X, new Delegate1<GameFlow, Menu&>(this, &menuIncreaseFilter));
 	}
 }
 

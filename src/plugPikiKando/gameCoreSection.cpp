@@ -538,19 +538,19 @@ void GameCoreSection::cleanupDayEnd()
 	PRINT("STEP (1) : Save Generators\n");
 	if (!playerState->isChallengeMode()) {
 		generatorCache->beginSave(flowCont.mCurrentStage->mStageIndex);
-		int gens    = 0;
-		int objs    = 0;
-		int pellets = 0;
+		int gens      = 0;
+		int creatures = 0;
+		int ufoParts  = 0;
 		for (Generator* gen = (Generator*)generatorList->mGenListHead->mChild; gen; gen = (Generator*)gen->mNext) {
-			if (gen->mCarryOverFlags & 1) {
+			if (gen->mCarryOverFlags & GENCARRY_SaveGenerator) {
 				generatorCache->saveGenerator(gen);
 				gens++;
 			}
 		}
 		for (Generator* gen = (Generator*)generatorList->mGenListHead->mChild; gen; gen = (Generator*)gen->mNext) {
-			if ((gen->mCarryOverFlags & 1) && (gen->mCarryOverFlags & 2)) {
+			if ((gen->mCarryOverFlags & GENCARRY_SaveGenerator) && (gen->mCarryOverFlags & GENCARRY_SaveCreature)) {
 				generatorCache->saveGeneratorCreature(gen);
-				objs++;
+				creatures++;
 			}
 		}
 
@@ -560,13 +560,13 @@ void GameCoreSection::cleanupDayEnd()
 			Pellet* pelt = (Pellet*)*it;
 			if (pelt->mConfig->mPelletType() == PELTYPE_UfoPart) {
 				generatorCache->saveUfoParts(pelt);
-				pellets++;
+				ufoParts++;
 			}
 		}
 
 		PRINT("****************** SAVED %d GENERATORS *****************\n", gens);
-		PRINT("****************** SAVED %d CREATURES *****************\n", objs);
-		PRINT("****************** SAVED %d UFOPARTS *****************\n", pellets);
+		PRINT("****************** SAVED %d CREATURES *****************\n", creatures);
+		PRINT("****************** SAVED %d UFOPARTS *****************\n", ufoParts);
 		generatorCache->endSave();
 		generatorCache->dump();
 	}
@@ -1289,8 +1289,8 @@ GameCoreSection::GameCoreSection(Controller* controller, MapMgr* mgr, Camera& ca
 	memStat->end("dynamics");
 
 	mAiPerfDebugMenu                     = new Menu(mController, gsys->mConsFont);
-	mAiPerfDebugMenu->mAnchorPoint.mMinX = glnWidth / 2;
-	mAiPerfDebugMenu->mAnchorPoint.mMinY = glnHeight / 2;
+	mAiPerfDebugMenu->mCenterPoint.mMinX = glnWidth / 2;
+	mAiPerfDebugMenu->mCenterPoint.mMinY = glnHeight / 2;
 	AIPerf p;
 	p.addMenu(mAiPerfDebugMenu);
 	GlobalShape::init();

@@ -1,7 +1,7 @@
 #ifndef _SYSTEM_H
 #define _SYSTEM_H
 
-#include "Ayu.h"
+#include "AyuStack.h"
 #include "Controller.h"
 #include "CoreNode.h"
 #include "Delegate.h"
@@ -533,7 +533,6 @@ struct AramStream : public RandomAccessStream {
 	u32 mOffset;      // _0C, offset/position maybe?
 	int mPending;     // _10
 };
-
 
 extern int glnWidth;
 extern int glnHeight;

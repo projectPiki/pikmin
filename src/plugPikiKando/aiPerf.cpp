@@ -83,7 +83,7 @@ void AIPerf::clearCounts()
 void AIPerf::addMenu(Menu* menu)
 {
 	char* unused = new char[0x40];
-	menu->addKeyEvent(Menu::KeyEventType::SpecialRelease, KBBTN_B, new Delegate1<Menu, Menu&>(menu, &Menu::menuCloseMenu));
+	menu->addKeyEvent(Menu::KeyEventType::OnCancel, KBBTN_B, new Delegate1<Menu, Menu&>(menu, &Menu::menuCloseMenu));
 
 	char* bridgeText = new char[0x40];
 	sprintf(bridgeText, "%s", AIPerf::bridgeFast ? "Bridge Opt [on]" : "Bridge opt [off]");
@@ -96,8 +96,8 @@ void AIPerf::addMenu(Menu* menu)
 	char* optLevelText = new char[0x40];
 	sprintf(optLevelText, "Opt Level %d", AIPerf::optLevel);
 	menu->addOption(0, optLevelText, nullptr);
-	menu->addKeyEvent(Menu::KeyEventType::Release, KBBTN_Y, new Delegate1<AIPerf, Menu&>(this, &AIPerf::decOptLevel));
-	menu->addKeyEvent(Menu::KeyEventType::Release, KBBTN_X, new Delegate1<AIPerf, Menu&>(this, &AIPerf::incOptLevel));
+	menu->addKeyEvent(Menu::KeyEventType::OnInputRelease, KBBTN_Y, new Delegate1<AIPerf, Menu&>(this, &AIPerf::decOptLevel));
+	menu->addKeyEvent(Menu::KeyEventType::OnInputRelease, KBBTN_X, new Delegate1<AIPerf, Menu&>(this, &AIPerf::incOptLevel));
 
 	char* collSortText = new char[0x40];
 	sprintf(collSortText, "%s", AIPerf::useCollSort ? "[use Coll Sort]" : "[ignore Coll Sort]");
@@ -139,23 +139,23 @@ void AIPerf::addMenu(Menu* menu)
 	char* ufoLevelText = new char[0x40];
 	sprintf(ufoLevelText, "UFO LEVEL %d", AIPerf::ufoLevel);
 	menu->addOption(0, ufoLevelText, nullptr);
-	menu->addKeyEvent(Menu::KeyEventType::Release, KBBTN_Y, new Delegate1<AIPerf, Menu&>(this, &AIPerf::decUfoLevel));
-	menu->addKeyEvent(Menu::KeyEventType::Release, KBBTN_X, new Delegate1<AIPerf, Menu&>(this, &AIPerf::incUfoLevel));
+	menu->addKeyEvent(Menu::KeyEventType::OnInputRelease, KBBTN_Y, new Delegate1<AIPerf, Menu&>(this, &AIPerf::decUfoLevel));
+	menu->addKeyEvent(Menu::KeyEventType::OnInputRelease, KBBTN_X, new Delegate1<AIPerf, Menu&>(this, &AIPerf::incUfoLevel));
 
 	menu->addOption(0, "Flower Pikis", nullptr);
-	menu->addKeyEvent(Menu::KeyEventType::Release, TERNARY_BUGFIX(KBBTN_A, KBBTN_Y),
+	menu->addKeyEvent(Menu::KeyEventType::OnInputRelease, TERNARY_BUGFIX(KBBTN_A, KBBTN_Y),
 	                  new Delegate1<AIPerf, Menu&>(this, &AIPerf::flowerPiki));
 
 	menu->addOption(0, "Break sluice", nullptr);
-	menu->addKeyEvent(Menu::KeyEventType::Release, TERNARY_BUGFIX(KBBTN_A, KBBTN_Y),
+	menu->addKeyEvent(Menu::KeyEventType::OnInputRelease, TERNARY_BUGFIX(KBBTN_A, KBBTN_Y),
 	                  new Delegate1<AIPerf, Menu&>(this, &AIPerf::breakSluice));
 
 	menu->addOption(0, "COLLECT PIKIS", nullptr);
-	menu->addKeyEvent(Menu::KeyEventType::Release, TERNARY_BUGFIX(KBBTN_A, KBBTN_Y),
+	menu->addKeyEvent(Menu::KeyEventType::OnInputRelease, TERNARY_BUGFIX(KBBTN_A, KBBTN_Y),
 	                  new Delegate1<AIPerf, Menu&>(this, &AIPerf::collectPikis));
 
 	menu->addOption(0, "FULLFILL PIKI", nullptr);
-	menu->addKeyEvent(Menu::KeyEventType::Release, TERNARY_BUGFIX(KBBTN_A, KBBTN_Y),
+	menu->addKeyEvent(Menu::KeyEventType::OnInputRelease, TERNARY_BUGFIX(KBBTN_A, KBBTN_Y),
 	                  new Delegate1<AIPerf, Menu&>(this, &AIPerf::fullfillPiki));
 }
 
@@ -167,7 +167,7 @@ void AIPerf::toggleMoveType(Menu& menu)
 	AIPerf::moveType = (AIPerf::moveType + 1) % 3;
 
 	const char* types[] = { "stop", "no stop", "slip" };
-	sprintf(menu.mCurrentItem->mName, "%s", types[AIPerf::moveType]);
+	sprintf(menu.mCurrentItem->mLabel, "%s", types[AIPerf::moveType]);
 }
 
 /**
@@ -176,7 +176,7 @@ void AIPerf::toggleMoveType(Menu& menu)
 void AIPerf::toggleGeneratorMode(Menu& menu)
 {
 	AIPerf::generatorMode = AIPerf::generatorMode ? 0 : 1;
-	sprintf(menu.mCurrentItem->mName, "%s", AIPerf::generatorMode ? "Generator Mode" : "Game Mode");
+	sprintf(menu.mCurrentItem->mLabel, "%s", AIPerf::generatorMode ? "Generator Mode" : "Game Mode");
 }
 
 /**
@@ -185,7 +185,7 @@ void AIPerf::toggleGeneratorMode(Menu& menu)
 void AIPerf::toggleBridge(Menu& menu)
 {
 	AIPerf::bridgeFast = AIPerf::bridgeFast ? 0 : 1;
-	sprintf(menu.mCurrentItem->mName, "%s", AIPerf::bridgeFast ? "Bridge Opt [on]" : "Bridge Opt [off]");
+	sprintf(menu.mCurrentItem->mLabel, "%s", AIPerf::bridgeFast ? "Bridge Opt [on]" : "Bridge Opt [off]");
 }
 
 /**
@@ -194,7 +194,7 @@ void AIPerf::toggleBridge(Menu& menu)
 void AIPerf::toggleShowRoute(Menu& menu)
 {
 	AIPerf::showRoute = AIPerf::showRoute ? 0 : 1;
-	sprintf(menu.mCurrentItem->mName, "%s", AIPerf::showRoute ? "Route Debug [on]" : "Route Debug [off]");
+	sprintf(menu.mCurrentItem->mLabel, "%s", AIPerf::showRoute ? "Route Debug [on]" : "Route Debug [off]");
 }
 
 /**
@@ -204,7 +204,7 @@ void AIPerf::toggleShowRoute(Menu& menu)
 void AIPerf::toggleAIGrid(Menu& menu)
 {
 	AIPerf::aiGrid = AIPerf::aiGrid ? 0 : 1;
-	sprintf(menu.mCurrentItem->mName, "%s", AIPerf::aiGrid ? "AI GRID [on]" : "AI GRID [off]");
+	sprintf(menu.mCurrentItem->mLabel, "%s", AIPerf::aiGrid ? "AI GRID [on]" : "AI GRID [off]");
 }
 
 /**
@@ -213,7 +213,7 @@ void AIPerf::toggleAIGrid(Menu& menu)
 void AIPerf::toggleKando(Menu& menu)
 {
 	AIPerf::kandoOnly = AIPerf::kandoOnly ? 0 : 1;
-	sprintf(menu.mCurrentItem->mName, "%s", AIPerf::kandoOnly ? "Kando Debug [on]" : "KandoDebug [off]");
+	sprintf(menu.mCurrentItem->mLabel, "%s", AIPerf::kandoOnly ? "Kando Debug [on]" : "KandoDebug [off]");
 }
 
 /**
@@ -222,7 +222,7 @@ void AIPerf::toggleKando(Menu& menu)
 void AIPerf::toggleLOD(Menu& menu)
 {
 	AIPerf::useLOD = AIPerf::useLOD ? 0 : 1;
-	sprintf(menu.mCurrentItem->mName, "%s", AIPerf::useLOD ? "LOD [on]" : "LOD [off]");
+	sprintf(menu.mCurrentItem->mLabel, "%s", AIPerf::useLOD ? "LOD [on]" : "LOD [off]");
 }
 
 /**
@@ -231,7 +231,7 @@ void AIPerf::toggleLOD(Menu& menu)
 void AIPerf::toggleColls(Menu& menu)
 {
 	AIPerf::showColls = AIPerf::showColls ? 0 : 1;
-	sprintf(menu.mCurrentItem->mName, "%s", AIPerf::showColls ? "Colls [on]" : "Colls [off]");
+	sprintf(menu.mCurrentItem->mLabel, "%s", AIPerf::showColls ? "Colls [on]" : "Colls [off]");
 }
 
 /**
@@ -240,7 +240,7 @@ void AIPerf::toggleColls(Menu& menu)
 void AIPerf::toggleASync(Menu& menu)
 {
 	AIPerf::useASync = AIPerf::useASync ? 0 : 1;
-	sprintf(menu.mCurrentItem->mName, "%s", AIPerf::useASync ? "ASYNC [on]" : "ASYNC [off]");
+	sprintf(menu.mCurrentItem->mLabel, "%s", AIPerf::useASync ? "ASYNC [on]" : "ASYNC [off]");
 }
 
 /**
@@ -249,7 +249,7 @@ void AIPerf::toggleASync(Menu& menu)
 void AIPerf::toggleInsQuick(Menu& menu)
 {
 	AIPerf::insQuick = AIPerf::insQuick ? 0 : 1;
-	sprintf(menu.mCurrentItem->mName, "%s", AIPerf::insQuick ? "Ins [Fast]" : "Ins [Slow]");
+	sprintf(menu.mCurrentItem->mLabel, "%s", AIPerf::insQuick ? "Ins [Fast]" : "Ins [Slow]");
 }
 
 /**
@@ -258,7 +258,7 @@ void AIPerf::toggleInsQuick(Menu& menu)
 void AIPerf::toggleSoundDebug(Menu& menu)
 {
 	AIPerf::soundDebug = AIPerf::soundDebug ? 0 : 1;
-	sprintf(menu.mCurrentItem->mName, "%s", AIPerf::soundDebug ? "Sound Debug [on]" : "Sound Debug [off]");
+	sprintf(menu.mCurrentItem->mLabel, "%s", AIPerf::soundDebug ? "Sound Debug [on]" : "Sound Debug [off]");
 }
 
 /**
@@ -268,7 +268,7 @@ void AIPerf::toggleSoundDebug(Menu& menu)
 void AIPerf::toggleUpdateMgr(Menu& menu)
 {
 	AIPerf::useUpdateMgr = AIPerf::useUpdateMgr ? 0 : 1;
-	sprintf(menu.mCurrentItem->mName, "%s", AIPerf::useUpdateMgr ? "updateMgr [on]" : "updateMgr [off]");
+	sprintf(menu.mCurrentItem->mLabel, "%s", AIPerf::useUpdateMgr ? "updateMgr [on]" : "updateMgr [off]");
 }
 
 /**
@@ -278,7 +278,7 @@ void AIPerf::toggleUpdateMgr(Menu& menu)
 void AIPerf::togglePikiMabiki(Menu& menu)
 {
 	AIPerf::pikiMabiki = AIPerf::pikiMabiki ? 0 : 1;
-	sprintf(menu.mCurrentItem->mName, "%s", AIPerf::pikiMabiki ? "pikiMabiki [on]" : "pikiMabiki [off]");
+	sprintf(menu.mCurrentItem->mLabel, "%s", AIPerf::pikiMabiki ? "pikiMabiki [on]" : "pikiMabiki [off]");
 }
 
 /**
@@ -288,7 +288,7 @@ void AIPerf::togglePikiMabiki(Menu& menu)
 void AIPerf::togglePsOptimise(Menu& menu)
 {
 	// Wrong, no idea what the variable in here is meant to be
-	sprintf(menu.mCurrentItem->mName, "%s", AIPerf::pikiMabiki ? "psOptimise [on]" : "psOptimise [off]");
+	sprintf(menu.mCurrentItem->mLabel, "%s", AIPerf::pikiMabiki ? "psOptimise [on]" : "psOptimise [off]");
 }
 
 /**
@@ -297,7 +297,7 @@ void AIPerf::togglePsOptimise(Menu& menu)
 void AIPerf::toggleCollSort(Menu& menu)
 {
 	AIPerf::useCollSort = AIPerf::useCollSort ? 0 : 1;
-	sprintf(menu.mCurrentItem->mName, "%s", AIPerf::useCollSort ? "[use Coll Sort]" : "[ignore Coll Sort]");
+	sprintf(menu.mCurrentItem->mLabel, "%s", AIPerf::useCollSort ? "[use Coll Sort]" : "[ignore Coll Sort]");
 }
 
 /**
@@ -307,7 +307,7 @@ void AIPerf::toggleCollSort(Menu& menu)
 void AIPerf::toggleIteratorCull(Menu& menu)
 {
 	AIPerf::iteratorCull = AIPerf::iteratorCull ? 0 : 1;
-	sprintf(menu.mCurrentItem->mName, "%s", AIPerf::iteratorCull ? "[it-cull on]" : "[it-cull off]");
+	sprintf(menu.mCurrentItem->mLabel, "%s", AIPerf::iteratorCull ? "[it-cull on]" : "[it-cull off]");
 }
 
 /**
@@ -317,7 +317,7 @@ void AIPerf::toggleIteratorCull(Menu& menu)
 void AIPerf::toggleUseGrid(Menu& menu)
 {
 	AIPerf::useGrid = (AIPerf::useGrid + 1) % 3;
-	sprintf(menu.mCurrentItem->mName, "%s", gridStrings[AIPerf::useGrid]);
+	sprintf(menu.mCurrentItem->mLabel, "%s", gridStrings[AIPerf::useGrid]);
 }
 
 /**
@@ -330,7 +330,7 @@ void AIPerf::incGridShift(Menu& menu)
 		AIPerf::gridShift++;
 	}
 
-	sprintf(menu.mCurrentItem->mName, "grid shift %d", AIPerf::gridShift);
+	sprintf(menu.mCurrentItem->mLabel, "grid shift %d", AIPerf::gridShift);
 }
 
 /**
@@ -343,7 +343,7 @@ void AIPerf::decGridShift(Menu& menu)
 		AIPerf::gridShift--;
 	}
 
-	sprintf(menu.mCurrentItem->mName, "grid shift %d", AIPerf::gridShift);
+	sprintf(menu.mCurrentItem->mLabel, "grid shift %d", AIPerf::gridShift);
 }
 
 /**
@@ -355,7 +355,7 @@ void AIPerf::incOptLevel(Menu& menu)
 		AIPerf::optLevel++;
 	}
 
-	sprintf(menu.mCurrentItem->mName, "Opt Level %d", AIPerf::optLevel);
+	sprintf(menu.mCurrentItem->mLabel, "Opt Level %d", AIPerf::optLevel);
 }
 
 /**
@@ -367,7 +367,7 @@ void AIPerf::decOptLevel(Menu& menu)
 		AIPerf::optLevel--;
 	}
 
-	sprintf(menu.mCurrentItem->mName, "Opt Level %d", AIPerf::optLevel);
+	sprintf(menu.mCurrentItem->mLabel, "Opt Level %d", AIPerf::optLevel);
 }
 
 u32 ufoParts[] = {
@@ -439,7 +439,7 @@ void AIPerf::incUfoLevel(Menu& menu)
 		AIPerf::ufoLevel++;
 	}
 
-	sprintf(menu.mCurrentItem->mName, "UFO Level %d", AIPerf::ufoLevel);
+	sprintf(menu.mCurrentItem->mLabel, "UFO Level %d", AIPerf::ufoLevel);
 }
 
 /**
@@ -447,7 +447,7 @@ void AIPerf::incUfoLevel(Menu& menu)
  */
 void AIPerf::decUfoLevel(Menu& menu)
 {
-	sprintf(menu.mCurrentItem->mName, "UFO Level %d", AIPerf::ufoLevel);
+	sprintf(menu.mCurrentItem->mLabel, "UFO Level %d", AIPerf::ufoLevel);
 }
 
 /**
@@ -457,7 +457,7 @@ void AIPerf::decUfoLevel(Menu& menu)
 void AIPerf::toggleUpdateSearchBuffer(Menu& menu)
 {
 	AIPerf::updateSearchBuffer = AIPerf::updateSearchBuffer ? 0 : 1;
-	sprintf(menu.mCurrentItem->mName, "%s", AIPerf::updateSearchBuffer ? "[upd srchbuff]" : "[don't upd srchbuff]");
+	sprintf(menu.mCurrentItem->mLabel, "%s", AIPerf::updateSearchBuffer ? "[upd srchbuff]" : "[don't upd srchbuff]");
 }
 
 /**
