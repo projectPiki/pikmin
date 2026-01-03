@@ -6,7 +6,7 @@
 #include "Dolphin/os.h"
 #include "Dolphin/rand.h"
 #include "jaudio/ipldec.h"
-#include "mem.h"
+#include <string.h>
 
 #define DATA_SCRAMBLE_R(data) (~(data ^ (data >> 7) ^ (data >> 15) ^ (data >> 23)))
 #define DATA_SCRAMBLE_L(data) (~(data ^ (data << 7) ^ (data << 15) ^ (data << 23)))

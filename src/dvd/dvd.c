@@ -2,7 +2,7 @@
 
 #include "Dolphin/hw_regs.h"
 #include "Dolphin/os.h"
-#include "mem.h"
+#include <string.h>
 
 // forward declarations for local functions, as needed:
 static void AlarmHandler(OSAlarm* alarm, OSContext* context);

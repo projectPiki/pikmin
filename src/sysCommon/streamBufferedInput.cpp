@@ -4,7 +4,7 @@
 #include "Dolphin/os.h"
 #include "sysNew.h"
 #include "system.h"
-#include <mem.h>
+#include <string.h>
 
 /**
  * @todo: Documentation
