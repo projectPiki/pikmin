@@ -2,7 +2,6 @@
 
 #include "DebugLog.h"
 #include "sysNew.h"
-#include <mem.h>
 #include <string.h>
 
 char* CmdStream::statbuff;

@@ -1,8 +1,8 @@
 #ifndef _STL_STRING_H
 #define _STL_STRING_H
 
+#include "PowerPC_EABI_Support/MSL_C/MSL_Common/mem.h"
 #include "extras.h"
-#include "mem.h"
 #include "types.h"
 #ifdef __cplusplus
 extern "C" {

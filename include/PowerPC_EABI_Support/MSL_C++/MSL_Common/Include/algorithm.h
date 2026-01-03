@@ -1,7 +1,7 @@
 #ifndef MSL_ALGORITHM_H_
 #define MSL_ALGORITHM_H_
 
-#include "mem.h"
+#include "PowerPC_EABI_Support/MSL_C/MSL_Common/mem.h"
 
 namespace std {
 template <class ForwardIterator, class T>

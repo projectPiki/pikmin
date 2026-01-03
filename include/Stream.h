@@ -2,7 +2,7 @@
 #define _STREAM_H
 
 #include "types.h"
-#include <mem.h>
+#include <string.h>
 
 struct String;
 

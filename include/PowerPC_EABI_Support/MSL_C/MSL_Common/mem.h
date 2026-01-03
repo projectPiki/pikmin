@@ -1,5 +1,5 @@
-#ifndef _MEM_H
-#define _MEM_H
+#ifndef _MSL_MEM_H
+#define _MSL_MEM_H
 
 #include "types.h"
 
