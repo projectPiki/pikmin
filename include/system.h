@@ -8,10 +8,10 @@
 #include "Dolphin/ar.h"
 #include "Dolphin/dvd.h"
 #include "Dolphin/os.h"
-#include "Dolphin/rand.h"
 #include "GfxObject.h"
 #include "Stream.h"
 #include "types.h"
+#include <stdlib.h>
 
 struct DGXGraphics;
 struct BaseApp;
