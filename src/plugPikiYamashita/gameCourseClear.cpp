@@ -728,10 +728,10 @@ struct GameCourseClearScreen : public Node {
 		mFont        = new Font();
 		mFont->setTexture(tex, 21, 42);
 		mMainMenu                     = new Menu(mController, gsys->mConsFont);
-		mMainMenu->mAnchorPoint.mMinX = glnWidth / 2;
-		mMainMenu->mAnchorPoint.mMinY = glnHeight / 2;
+		mMainMenu->mCenterPoint.mMinX = glnWidth / 2;
+		mMainMenu->mCenterPoint.mMinY = glnHeight / 2;
 
-		mMainMenu->addKeyEvent(Menu::KeyEventType::SpecialRelease, KBBTN_B, new Delegate1<Menu, Menu&>(mMainMenu, &Menu::menuCloseMenu));
+		mMainMenu->addKeyEvent(Menu::KeyEventType::OnCancel, KBBTN_B, new Delegate1<Menu, Menu&>(mMainMenu, &Menu::menuCloseMenu));
 		mMainMenu->addOption(0, "Quit", new Delegate1<GameCourseClearScreen, Menu&>(this, &menuQuitGame));
 		mActiveMenu = nullptr;
 		gsys->setFade(1.0f, 3.0f);

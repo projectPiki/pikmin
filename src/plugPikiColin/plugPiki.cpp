@@ -1,4 +1,5 @@
 #include "App.h"
+
 #include "AtxStream.h"
 #include "DebugLog.h"
 #include "Graphics.h"
@@ -9,13 +10,11 @@
 #include "timers.h"
 
 /**
- * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("plugPiki")

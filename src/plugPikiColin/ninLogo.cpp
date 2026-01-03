@@ -103,7 +103,7 @@ struct NinLogoSetupSection : public Node {
 
 	void drawMenu(Graphics& gfx, Menu* menu, f32 p3)
 	{
-		if (menu->mUseCustomPosition) {
+		if (menu->mAlignToParentItem) {
 			drawMenu(gfx, menu->mParentMenu, 0.5f * p3);
 		}
 

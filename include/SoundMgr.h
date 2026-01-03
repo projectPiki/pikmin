@@ -1,7 +1,6 @@
 #ifndef _SOUNDMGR_H
 #define _SOUNDMGR_H
 
-#include "Ayu.h"
 #include "Controller.h"
 #include "Node.h"
 #include "Parameters.h"

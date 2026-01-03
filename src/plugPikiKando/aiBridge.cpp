@@ -58,8 +58,8 @@ void ActBridge::init(Creature* creature)
 void ActBridge::dump()
 {
 	const char* stateNames[] = { "approach", "detour", "go", "work" };
-	PRINT("state : %s  bridge stage : %d\n", stateNames[mState], mStageIdx);
-	Vector3f stagePos = mBridge->getStagePos(mStageIdx);
+	PRINT("state : %s  bridge stage : %d\n", stateNames[mState], mStageID);
+	Vector3f stagePos = mBridge->getStagePos(mStageID);
 	Vector3f sep      = stagePos - mPiki->mSRT.t;
 	Vector3f zVec     = mBridge->getBridgeZVec();
 	f32 zdist         = sep.DP(zVec);
@@ -252,7 +252,7 @@ int ActBridge::exeWork()
  */
 void ActBridge::doWork(int mins)
 {
-	InteractBuild build(mPiki, mStageIdx, mins / 60.0f);
+	InteractBuild build(mPiki, mStageID, mins / 60.0f);
 	mBridge->stimulate(build);
 	mStartWorkTime = gameflow.mWorldClock.mCurrentGameMinute;
 	mIsAttackReady = FALSE;
@@ -336,7 +336,7 @@ int ActBridge::newExeApproach()
 
 		if (absF(bridgePosX) < 0.8f * (0.5f * mBridge->getStageWidth())) {
 			if (bridgePosY <= 0.0f) {
-				mBridge->getStagePos(mStageIdx);
+				mBridge->getStagePos(mStageID);
 				// stagePos = stagePos - mActor->mSRT.t;
 				Vector3f zVec = mBridge->getBridgeZVec();
 				// f32 val = stagePos.DP(zVec);
@@ -378,10 +378,10 @@ void ActBridge::newInitGo()
 {
 	mState = STATE_Go;
 	if (mBridge) {
-		mStageIdx          = mBridge->getFirstUnfinishedStage();
+		mStageID           = mBridge->getFirstUnfinishedStage();
 		mRandomBridgeWidth = gsys->getRand(1.0f) - 0.5f;
 	} else {
-		mStageIdx = -1;
+		mStageID = -1;
 	}
 
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Walk, this), PaniMotionInfo(PIKIANIM_Walk));
@@ -392,7 +392,7 @@ void ActBridge::newInitGo()
  */
 int ActBridge::newExeGo()
 {
-	if (mStageIdx == -1) {
+	if (mStageID == -1) {
 		PRINT("stage = -1\n");
 		PRINT_GLOBAL("go : stage=-1 suc");
 		return ACTOUT_Success;
@@ -408,8 +408,8 @@ int ActBridge::newExeGo()
 
 	STACK_PAD_STRUCT(3);
 	STACK_PAD_TERNARY(this, 1);
-	if (mBridge->isStageFinished(mStageIdx)) {
-		PRINT("stage %d is finished\n", mStageIdx);
+	if (mBridge->isStageFinished(mStageID)) {
+		PRINT("stage %d is finished\n", mStageID);
 		newInitGo();
 		return ACTOUT_Continue;
 	}
@@ -423,7 +423,7 @@ int ActBridge::newExeGo()
 	bool c = collideBridgeSurface();
 	STACK_PAD_TERNARY(c, 2);
 
-	Vector3f stagePos = mBridge->getStagePos(mStageIdx);
+	Vector3f stagePos = mBridge->getStagePos(mStageID);
 	Vector3f xVec     = mBridge->getBridgeXVec();
 	xVec.multiply(mRandomBridgeWidth * mBridge->getStageWidth());
 	stagePos.add(xVec);
@@ -466,7 +466,7 @@ void ActBridge::newInitWork()
 int ActBridge::newExeWork()
 {
 	// If the bridge is finished, continue
-	if (mBridge->isStageFinished(mStageIdx)) {
+	if (mBridge->isStageFinished(mStageID)) {
 		PRINT("**** STAGE IS FINISHED *** WORK\n");
 		PRINT_GLOBAL("stage fin! work->go");
 		newInitGo();
@@ -510,7 +510,7 @@ int ActBridge::newExeWork()
 		doWork(timeSinceLastWork);
 	}
 
-	Vector3f stagePos(mBridge->getStagePos(mStageIdx));
+	Vector3f stagePos(mBridge->getStagePos(mStageID));
 	Vector3f sep = stagePos - mPiki->mSRT.t;
 	Vector3f zVec(mBridge->getBridgeZVec());
 	Vector3f xVec(mBridge->getBridgeXVec());

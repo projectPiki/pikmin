@@ -169,23 +169,23 @@ struct TitleSetupSection : public Node {
 #if defined(DEVELOP) || defined(WIN32)
 		Menu* optionsMenu = new Menu(mController, gsys->mConsFont);
 
-		optionsMenu->mAnchorPoint.mMinX = glnWidth / 2;
-		optionsMenu->mAnchorPoint.mMinY = glnHeight / 2 + 40;
-		optionsMenu->mDiffuseColour.set(128, 32, 32, 192);
-		optionsMenu->mHighlightColour.set(32, 32, 32, 64);
+		optionsMenu->mCenterPoint.mMinX = glnWidth / 2;
+		optionsMenu->mCenterPoint.mMinY = glnHeight / 2 + 40;
+		optionsMenu->mGradBGTopColour.set(MENU_COLOUR_RED);
+		optionsMenu->mGradBGBottomColour.set(MENU_COLOUR_DEFAULT_GREY);
 
-		optionsMenu->addKeyEvent(Menu::KeyEventType::SpecialRelease, KBBTN_B, new Delegate1<Menu, Menu&>(mMenu, &Menu::menuCloseMenu));
+		optionsMenu->addKeyEvent(Menu::KeyEventType::OnCancel, KBBTN_B, new Delegate1<Menu, Menu&>(mMenu, &Menu::menuCloseMenu));
 		gameflow.addOptionsMenu(optionsMenu);
 #endif
 
 		mMenu = new Menu(mController, gsys->mConsFont);
 
-		mMenu->mAnchorPoint.mMinX = glnWidth / 2;
-		mMenu->mAnchorPoint.mMinY = glnHeight / 2 + 80;
+		mMenu->mCenterPoint.mMinX = glnWidth / 2;
+		mMenu->mCenterPoint.mMinY = glnHeight / 2 + 80;
 
-		mMenu->addKeyEvent(Menu::KeyEventType::Navigate, KBBTN_START | KBBTN_A,
+		mMenu->addKeyEvent(Menu::KeyEventType::OnConfirm, KBBTN_START | KBBTN_A,
 		                   new Delegate1<TitleSetupSection, Menu&>(this, &menuSelectOption));
-		mMenu->addKeyEvent(Menu::KeyEventType::SpecialRelease, KBBTN_B, new Delegate1<Menu, Menu&>(mMenu, &Menu::menuCloseMenu));
+		mMenu->addKeyEvent(Menu::KeyEventType::OnCancel, KBBTN_B, new Delegate1<Menu, Menu&>(mMenu, &Menu::menuCloseMenu));
 
 #if defined(DEVELOP) || defined(WIN32)
 		mMenu->addOption(PACK_NEXT_ONEPLAYER(ONEPLAYER_GameSetup), "Start GL Game", nullptr);
@@ -582,7 +582,7 @@ struct TitleSetupSection : public Node {
 
 	void drawMenu(Graphics& gfx, Menu* menu, f32 p3)
 	{
-		if (menu->mUseCustomPosition) {
+		if (menu->mAlignToParentItem) {
 			drawMenu(gfx, menu->mParentMenu, p3 * 0.5f);
 		}
 

@@ -712,7 +712,7 @@ protected:
 	u16 mCollisionCount;        // _28
 	u16 _2A;                    // _2A
 	f32 mRandomBridgeWidth;     // _2C
-	s16 mStageIdx;              // _30
+	s16 mStageID;               // _30
 	bool mClimbingBridge;       // _32
 	u8 _33;                     // _33
 	Vector3f mBridgeWallNormal; // _34

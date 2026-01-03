@@ -63,8 +63,8 @@ void GeneratorCache::initGame()
 	int idx = 0;
 	FOREACH_NODE(Cache, mDeadCacheList.mChild, cache)
 	{
-		cache->mCourseIdx         = idx;
-		cache->mHeapOffset        = 0;
+		cache->mStageID           = idx;
+		cache->mCacheHeapOffset   = 0;
 		cache->mTotalCacheSize    = 0;
 		cache->mGenCacheSize      = 0;
 		cache->mCreatureCacheSize = 0;
@@ -81,10 +81,10 @@ void GeneratorCache::initGame()
 /**
  * @todo: Documentation
  */
-void GeneratorCache::addOne(u32 stageIdx)
+void GeneratorCache::addOne(u32 stageID)
 {
-	if (!findCache(mAliveCacheList, stageIdx) && !findCache(mDeadCacheList, stageIdx)) {
-		Cache* cache = new Cache(stageIdx);
+	if (!findCache(mAliveCacheList, stageID) && !findCache(mDeadCacheList, stageID)) {
+		Cache* cache = new Cache(stageID);
 		mDeadCacheList.add(cache);
 	}
 }
@@ -155,7 +155,7 @@ void GeneratorCache::loadCard(RandomAccessStream& input)
 			PRINT("NO CACHE %d in DeadList\n", i);
 			FOREACH_NODE(Cache, mDeadCacheList.mChild, dead)
 			{
-				PRINT_GLOBAL("deadList : id %d", dead->mCourseIdx);
+				PRINT_GLOBAL("deadList : id %d", dead->mStageID);
 			}
 			ERROR("bikkuri %d", i);
 		}
@@ -176,8 +176,8 @@ void GeneratorCache::loadCard(RandomAccessStream& input)
 		Cache* minCache = nullptr;
 		FOREACH_NODE(Cache, tempList.mChild, subCache)
 		{
-			if (minVal > subCache->mHeapOffset) {
-				minVal   = subCache->mHeapOffset;
+			if (minVal > subCache->mCacheHeapOffset) {
+				minVal   = subCache->mCacheHeapOffset;
 				minCache = subCache;
 			}
 		}
@@ -195,8 +195,8 @@ void GeneratorCache::loadCard(RandomAccessStream& input)
  */
 void GeneratorCache::Cache::saveCard(RandomAccessStream& output)
 {
-	output.writeInt(mCourseIdx);
-	output.writeInt(mHeapOffset);
+	output.writeInt(mStageID);
+	output.writeInt(mCacheHeapOffset);
 	output.writeInt(mTotalCacheSize);
 	output.writeInt(mGenCacheSize);
 	output.writeInt(mCreatureCacheSize);
@@ -211,8 +211,8 @@ void GeneratorCache::Cache::saveCard(RandomAccessStream& output)
  */
 void GeneratorCache::Cache::loadCard(RandomAccessStream& input)
 {
-	mCourseIdx         = input.readInt();
-	mHeapOffset        = input.readInt();
+	mStageID           = input.readInt();
+	mCacheHeapOffset   = input.readInt();
 	mTotalCacheSize    = input.readInt();
 	mGenCacheSize      = input.readInt();
 	mCreatureCacheSize = input.readInt();
@@ -225,11 +225,11 @@ void GeneratorCache::Cache::loadCard(RandomAccessStream& input)
 /**
  * @todo: Documentation
  */
-GeneratorCache::Cache* GeneratorCache::findCache(GeneratorCache::Cache& list, u32 stageIdx)
+GeneratorCache::Cache* GeneratorCache::findCache(GeneratorCache::Cache& list, u32 stageID)
 {
 	FOREACH_NODE(Cache, list.mChild, cache)
 	{
-		if (cache->mCourseIdx == stageIdx) {
+		if (cache->mStageID == stageID) {
 			return cache;
 		}
 	}
@@ -240,19 +240,19 @@ GeneratorCache::Cache* GeneratorCache::findCache(GeneratorCache::Cache& list, u3
 /**
  * @todo: Documentation
  */
-void GeneratorCache::preload(u32 stageIdx)
+void GeneratorCache::preload(u32 stageID)
 {
 	for (int i = 0; i < 10; i++) {
 		PRINT("************** PRELOAD **************\n"); // lol
 	}
 
-	Cache* cache = findCache(mAliveCacheList, stageIdx);
+	Cache* cache = findCache(mAliveCacheList, stageID);
 	if (cache) {
 		PRINT("cache = %x\n", cache);
-		u8* heapedCache = &mCacheHeap[cache->mHeapOffset];
-		PRINT("load from %x : %d generators\n", heapedCache, cache->mGenCount);
+		u8* cacheHeapEntry = &mCacheHeap[cache->mCacheHeapOffset];
+		PRINT("load from %x : %d generators\n", cacheHeapEntry, cache->mGenCount);
 
-		RamStream stream(heapedCache, cache->mTotalCacheSize);
+		RamStream stream(cacheHeapEntry, cache->mTotalCacheSize);
 		for (int i = 0; i < cache->mGenCount; i++) {
 			PRINT("reading generator %d from ram : %x\n", i, stream.getPosition());
 			Generator* gen = new Generator();
@@ -268,7 +268,7 @@ void GeneratorCache::preload(u32 stageIdx)
 
 		prepareUfoParts(cache);
 	} else {
-		PRINT("no data for stage %d\n", stageIdx);
+		PRINT("no data for stage %d\n", stageID);
 	}
 
 	for (int i = 0; i < 10; i++) {
@@ -281,11 +281,11 @@ void GeneratorCache::preload(u32 stageIdx)
 /**
  * @todo: Documentation
  */
-bool GeneratorCache::hasUfoParts(u32 stageIdx, u32 ufoPartIdx)
+bool GeneratorCache::hasUfoParts(u32 stageID, u32 ufoPartIdx)
 {
-	Cache* cache = findCache(mAliveCacheList, stageIdx);
+	Cache* cache = findCache(mAliveCacheList, stageID);
 	if (cache) {
-		void* heap = (void*)(((u32)mCacheHeap + cache->mHeapOffset + cache->mGenCacheSize) + cache->mCreatureCacheSize);
+		void* heap = (void*)(((u32)mCacheHeap + cache->mCacheHeapOffset + cache->mGenCacheSize) + cache->mCreatureCacheSize);
 		RamStream stream(heap, cache->mUfoPartsCacheSize);
 		for (int i = 0; i < cache->mUfoPartsCount; i++) {
 			int thisPartIdx = stream.readInt();
@@ -310,14 +310,14 @@ bool GeneratorCache::hasUfoParts(u32 stageIdx, u32 ufoPartIdx)
 /**
  * @todo: Documentation
  */
-void GeneratorCache::load(u32 stageIdx)
+void GeneratorCache::load(u32 stageID)
 {
-	PRINT("loading stage %d ...\n", stageIdx);
-	Cache* cache = findCache(mAliveCacheList, stageIdx);
+	PRINT("loading stage %d ...\n", stageID);
+	Cache* cache = findCache(mAliveCacheList, stageID);
 	PRINT("cahce = %x\n", cache);
 	if (cache) {
 		PRINT("cache = %x\n", cache);
-		void* heap = (void*)(((u32)mCacheHeap + cache->mHeapOffset + cache->mGenCacheSize));
+		void* heap = (void*)(((u32)mCacheHeap + cache->mCacheHeapOffset + cache->mGenCacheSize));
 		PRINT("load from %x : %d creatures\n", heap, cache->mCreatureCount);
 		RamStream stream(heap, cache->mCreatureCacheSize);
 		for (int i = 0; i < cache->mCreatureCount; i++) {
@@ -347,16 +347,16 @@ void GeneratorCache::load(u32 stageIdx)
 			PRINT("** n = %x n->sibling = %x\n", node, node->mNext);
 			PRINT("** start slide : length = %x size = %x\n", nextCache->mTotalCacheSize, size);
 
-			u8* srcCache = mCacheHeap + nextCache->mHeapOffset;
+			u8* srcCache = mCacheHeap + nextCache->mCacheHeapOffset;
 			u8* dstCache = srcCache - size;
 			PRINT("heap is %x to %x\n", mCacheHeap, mCacheHeap + GENCACHE_HEAP_SIZE);
 
-			PRINT("** COPY SRC %x(offset %x) TO DST %x\n", srcCache, nextCache->mHeapOffset, dstCache);
+			PRINT("** COPY SRC %x(offset %x) TO DST %x\n", srcCache, nextCache->mCacheHeapOffset, dstCache);
 			for (int i = 0; i < nextCache->mTotalCacheSize; i++) {
 				dstCache[i] = srcCache[i];
 			}
 
-			nextCache->mHeapOffset -= size;
+			nextCache->mCacheHeapOffset -= size;
 			PRINT("** (%d) length : copy done\n", nextCache->mTotalCacheSize);
 		}
 
@@ -373,21 +373,21 @@ void GeneratorCache::load(u32 stageIdx)
 /**
  * @todo: Documentation
  */
-void GeneratorCache::beginSave(u32 stageIdx)
+void GeneratorCache::beginSave(u32 stageID)
 {
-	Cache* cache = findCache(mDeadCacheList, stageIdx);
+	Cache* cache = findCache(mDeadCacheList, stageID);
 	if (!cache) {
-		cache = findCache(mAliveCacheList, stageIdx);
+		cache = findCache(mAliveCacheList, stageID);
 		if (cache) {
-			PRINT("try to write alive cache (%d)! \n", stageIdx);
-			ERROR("try to write alive cache %d\n", stageIdx);
+			PRINT("try to write alive cache (%d)! \n", stageID);
+			ERROR("try to write alive cache %d\n", stageID);
 		} else {
-			PRINT("cache id %d is not valid!\n", stageIdx);
-			ERROR("cache id %d is not valid\n", stageIdx);
+			PRINT("cache id %d is not valid!\n", stageID);
+			ERROR("cache id %d is not valid\n", stageID);
 		}
 	}
 
-	cache->mHeapOffset        = mUsedSize;
+	cache->mCacheHeapOffset   = mUsedSize;
 	cache->mTotalCacheSize    = 0;
 	cache->mGenCacheSize      = 0;
 	cache->mCreatureCacheSize = 0;
@@ -395,7 +395,7 @@ void GeneratorCache::beginSave(u32 stageIdx)
 	cache->mGenCount          = 0;
 	cache->mCreatureCount     = 0;
 	cache->mUfoPartsCount     = 0;
-	mCurrentSaveCacheIdx      = stageIdx;
+	mCurrentSaveCacheIdx      = stageID;
 }
 
 /**
@@ -460,7 +460,7 @@ void GeneratorCache::prepareUfoParts(GeneratorCache::Cache* cache)
 {
 	PRINT("prepare ufo parts ** %d\n", cache->mUfoPartsCount);
 
-	void* heap = (void*)(((u32)mCacheHeap + cache->mHeapOffset + cache->mGenCacheSize) + cache->mCreatureCacheSize);
+	void* heap = (void*)(((u32)mCacheHeap + cache->mCacheHeapOffset + cache->mGenCacheSize) + cache->mCreatureCacheSize);
 	RamStream stream(heap, cache->mUfoPartsCacheSize);
 
 	for (int i = 0; i < cache->mUfoPartsCount; i++) {
@@ -491,7 +491,7 @@ void GeneratorCache::prepareUfoParts(GeneratorCache::Cache* cache)
  */
 void GeneratorCache::loadUfoParts(GeneratorCache::Cache* cache)
 {
-	void* heap = (void*)(((u32)mCacheHeap + cache->mHeapOffset + cache->mGenCacheSize) + cache->mCreatureCacheSize);
+	void* heap = (void*)(((u32)mCacheHeap + cache->mCacheHeapOffset + cache->mGenCacheSize) + cache->mCreatureCacheSize);
 	PRINT("load from %x : %d ufo parts\n", (u32)heap, cache->mUfoPartsCount);
 	RamStream stream(heap, cache->mUfoPartsCacheSize);
 	PRINT("********* LOAD UFO PARTS (%d)*************************\n", cache->mUfoPartsCount);
@@ -592,8 +592,8 @@ void GeneratorCache::saveGeneratorCreature(Generator* gen)
  */
 void GeneratorCache::Cache::dump()
 {
-	PRINT("\tcourse %d\n", mCourseIdx);
-	PRINT("\t%x - %x : (%.2fK)\n", mHeapOffset, mTotalCacheSize + mHeapOffset, mTotalCacheSize / 1024.0f);
+	PRINT("\tcourse %d\n", mStageID);
+	PRINT("\t%x - %x : (%.2fK)\n", mCacheHeapOffset, mTotalCacheSize + mCacheHeapOffset, mTotalCacheSize / 1024.0f);
 	PRINT("\tgenerator = %d size = %d\n", mGenCount, mGenCacheSize);
 	PRINT("\tcreature  = %d size = %d\n", mCreatureCount, mCreatureCacheSize);
 	PRINT("\tufo parts  = %d size = %d\n", mUfoPartsCount, mUfoPartsCacheSize);
@@ -629,7 +629,7 @@ void GeneratorCache::assertValid()
 	Cache* cache = static_cast<Cache*>(mAliveCacheList.mChild);
 	u32 heapPos  = 0;
 	for (cache; cache; cache = static_cast<Cache*>(cache->mNext)) {
-		if (cache->mHeapOffset != heapPos) {
+		if (cache->mCacheHeapOffset != heapPos) {
 			dump();
 			PRINT("right offset = %x\n", heapPos);
 			ERROR("GenCache Broken!");

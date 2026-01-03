@@ -122,12 +122,12 @@ struct AgeServer : public AtxStream {
 		writeProp(COLOUR_PROP, col);
 	}
 
-	void NewEditor(char* name, char* val, int a)
+	void NewEditor(char* name, char* val, int len)
 	{
 		writeInt(AGE_CMD_NEW_EDITOR);
 		writeString(name);
 		writeProp(CHAR_PTR_PROP, val);
-		writeInt(a - 1);
+		writeInt(len - 1);
 	}
 
 	void NewEditor(char* name, char* val, int min, int max, int step)

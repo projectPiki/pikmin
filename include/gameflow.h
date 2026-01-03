@@ -1,7 +1,6 @@
 #ifndef _GAMEFLOW_H
 #define _GAMEFLOW_H
 
-#include "Ayu.h"
 #include "Common/String.h"
 #include "GlobalGameOptions.h"
 #include "LoadIdler.h"

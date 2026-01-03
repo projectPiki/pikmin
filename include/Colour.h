@@ -65,6 +65,10 @@ struct Colour {
 
 	bool operator!=(u32 other) { return !(*this == other); }
 
+#ifdef WIN32
+	void genAge(AgeServer& server, immut char* name) { server.NewEditor(name, this); }
+#endif
+
 	u8 r, g, b, a; // _00-_04
 };
 

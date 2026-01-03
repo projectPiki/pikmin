@@ -80,8 +80,8 @@ struct MapSelectSetupSection : public Node {
 
 		makeMapsMenu();
 
-		parent.mPreviousMenu = mMapListMenu;
-		STACK_PAD_TERNARY(parent.mPreviousMenu, 1);
+		parent.mReturnMenu = mMapListMenu;
+		STACK_PAD_TERNARY(parent.mReturnMenu, 1);
 	}
 
 	/**
@@ -98,24 +98,23 @@ struct MapSelectSetupSection : public Node {
 
 		makeMapsMenu();
 
-		parent.mPreviousMenu = mMapListMenu;
-		STACK_PAD_TERNARY(parent.mPreviousMenu, 1);
+		parent.mReturnMenu = mMapListMenu;
+		STACK_PAD_TERNARY(parent.mReturnMenu, 1);
 	}
 
 	/// Constructs map select debug menu, adding any stages that are open (and marked visible in their .ini files).
 	void makeMapsMenu()
 	{
 		mMapListMenu                     = new Menu(mController, mConsFont);
-		mMapListMenu->mAnchorPoint.mMinX = glnWidth / 2;
-		mMapListMenu->mAnchorPoint.mMinY = glnHeight / 2 + 30;
+		mMapListMenu->mCenterPoint.mMinX = glnWidth / 2;
+		mMapListMenu->mCenterPoint.mMinY = glnHeight / 2 + 30;
 
 		// select with A or START
-		mMapListMenu->addKeyEvent(Menu::KeyEventType::Navigate, KBBTN_START | KBBTN_A,
+		mMapListMenu->addKeyEvent(Menu::KeyEventType::OnConfirm, KBBTN_START | KBBTN_A,
 		                          new Delegate1<MapSelectSetupSection, Menu&>(this, &menuSelectOption));
 
 		// exit menu/submenu with B
-		mMapListMenu->addKeyEvent(Menu::KeyEventType::SpecialRelease, KBBTN_B,
-		                          new Delegate1<Menu, Menu&>(mMapListMenu, &Menu::menuCloseMenu));
+		mMapListMenu->addKeyEvent(Menu::KeyEventType::OnCancel, KBBTN_B, new Delegate1<Menu, Menu&>(mMapListMenu, &Menu::menuCloseMenu));
 
 		// load in all stages, both challenge mode and story mode
 		for (StageInfo* inf = (StageInfo*)flowCont.mStageList.mChild; inf; inf = (StageInfo*)inf->mNext) {

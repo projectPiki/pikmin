@@ -1827,50 +1827,49 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 
 		// set up options debug menu
 		Menu* optionsMenu               = new Menu(mController, gsys->mConsFont);
-		optionsMenu->mAnchorPoint.mMinX = glnWidth / 2;
-		optionsMenu->mAnchorPoint.mMinY = glnHeight / 2;
-		optionsMenu->mDiffuseColour.set(128, 32, 32, 255);
-		optionsMenu->mHighlightColour.set(32, 32, 32, 128);
-		optionsMenu->addKeyEvent(Menu::KeyEventType::SpecialRelease, KBBTN_B,
-		                         new Delegate1<Menu, Menu&>(optionsMenu, &Menu::menuCloseMenu));
+		optionsMenu->mCenterPoint.mMinX = glnWidth / 2;
+		optionsMenu->mCenterPoint.mMinY = glnHeight / 2;
+		optionsMenu->mGradBGTopColour.set(MENU_COLOUR_DARK_RED);
+		optionsMenu->mGradBGBottomColour.set(MENU_COLOUR_MEDIUM_GREY);
+		optionsMenu->addKeyEvent(Menu::KeyEventType::OnCancel, KBBTN_B, new Delegate1<Menu, Menu&>(optionsMenu, &Menu::menuCloseMenu));
 
 		gameflow.addOptionsMenu(optionsMenu);
 
 		// set up movie player debug menu
 		Menu* movieMenu               = new Menu(mController, gsys->mConsFont);
-		movieMenu->mAnchorPoint.mMinX = glnWidth - 110;
-		movieMenu->mAnchorPoint.mMinY = glnHeight - 88;
-		movieMenu->mDiffuseColour.set(128, 32, 32, 255);
-		movieMenu->mHighlightColour.set(32, 32, 32, 128);
-		movieMenu->addKeyEvent(Menu::KeyEventType::SpecialRelease, KBBTN_B, new Delegate1<Menu, Menu&>(movieMenu, Menu::menuCloseMenu));
+		movieMenu->mCenterPoint.mMinX = glnWidth - 110;
+		movieMenu->mCenterPoint.mMinY = glnHeight - 88;
+		movieMenu->mGradBGTopColour.set(MENU_COLOUR_DARK_RED);
+		movieMenu->mGradBGBottomColour.set(MENU_COLOUR_MEDIUM_GREY);
+		movieMenu->addKeyEvent(Menu::KeyEventType::OnCancel, KBBTN_B, new Delegate1<Menu, Menu&>(movieMenu, Menu::menuCloseMenu));
 
 		char* movieBuf = new char[0x40];
 		sprintf(movieBuf, "Movie #%d", movieIndex);
 		movieMenu->addOption(0, movieBuf, nullptr);
-		movieMenu->addKeyEvent(Menu::KeyEventType::Input, KBBTN_Y, new NPGSSDelegate1(this, &menuDecreaseMovie));
-		movieMenu->addKeyEvent(Menu::KeyEventType::Input, KBBTN_X, new NPGSSDelegate1(this, &menuIncreaseMovie));
+		movieMenu->addKeyEvent(Menu::KeyEventType::WhileInputHeld, KBBTN_Y, new NPGSSDelegate1(this, &menuDecreaseMovie));
+		movieMenu->addKeyEvent(Menu::KeyEventType::WhileInputHeld, KBBTN_X, new NPGSSDelegate1(this, &menuIncreaseMovie));
 		movieMenu->addOption(MENU_FAKE_OPTION_FOR_GAP);
 		movieMenu->addOption(0, "Play / Stop", new NPGSSDelegate1(this, &menuPlayMovie));
 		movieMenu->addOption(0, "Pause / Frame Step", nullptr);
-		movieMenu->addKeyEvent(Menu::KeyEventType::Release, KBBTN_A, new NPGSSDelegate1(this, &menuPauseMovie));
-		movieMenu->addKeyEvent(Menu::KeyEventType::Input, KBBTN_X, new NPGSSDelegate1(this, &menuIncreaseFrame));
-		movieMenu->addKeyEvent(Menu::KeyEventType::Input, KBBTN_Y, new NPGSSDelegate1(this, &menuDecreaseFrame));
+		movieMenu->addKeyEvent(Menu::KeyEventType::OnInputRelease, KBBTN_A, new NPGSSDelegate1(this, &menuPauseMovie));
+		movieMenu->addKeyEvent(Menu::KeyEventType::WhileInputHeld, KBBTN_X, new NPGSSDelegate1(this, &menuIncreaseFrame));
+		movieMenu->addKeyEvent(Menu::KeyEventType::WhileInputHeld, KBBTN_Y, new NPGSSDelegate1(this, &menuDecreaseFrame));
 
 		// set up vertical filter menu
 		Menu* filterMenu               = new Menu(mController, gsys->mConsFont);
-		filterMenu->mAnchorPoint.mMinX = glnWidth / 2;
-		filterMenu->mAnchorPoint.mMinY = glnHeight / 2;
-		filterMenu->mDiffuseColour.set(128, 32, 32, 255);
-		filterMenu->mHighlightColour.set(32, 32, 32, 128);
-		filterMenu->addKeyEvent(Menu::KeyEventType::SpecialRelease, KBBTN_B, new Delegate1<Menu, Menu&>(filterMenu, Menu::menuCloseMenu));
+		filterMenu->mCenterPoint.mMinX = glnWidth / 2;
+		filterMenu->mCenterPoint.mMinY = glnHeight / 2;
+		filterMenu->mGradBGTopColour.set(MENU_COLOUR_DARK_RED);
+		filterMenu->mGradBGBottomColour.set(MENU_COLOUR_MEDIUM_GREY);
+		filterMenu->addKeyEvent(Menu::KeyEventType::OnCancel, KBBTN_B, new Delegate1<Menu, Menu&>(filterMenu, Menu::menuCloseMenu));
 
 		gameflow.addFilterMenu(filterMenu);
 
 		// set up overall debug menu
 		mDebugMenu                     = new Menu(mController, gsys->mConsFont);
-		mDebugMenu->mAnchorPoint.mMinX = glnWidth / 2;
-		mDebugMenu->mAnchorPoint.mMinY = glnHeight / 2;
-		mDebugMenu->addKeyEvent(Menu::KeyEventType::SpecialRelease, KBBTN_B, new Delegate1<Menu, Menu&>(mDebugMenu, &Menu::menuCloseMenu));
+		mDebugMenu->mCenterPoint.mMinX = glnWidth / 2;
+		mDebugMenu->mCenterPoint.mMinY = glnHeight / 2;
+		mDebugMenu->addKeyEvent(Menu::KeyEventType::OnCancel, KBBTN_B, new Delegate1<Menu, Menu&>(mDebugMenu, &Menu::menuCloseMenu));
 
 		mDebugMenu->addOption(0, "Change Course", new NPGSSDelegate1(this, &menuChangeCourse));
 		mDebugMenu->addOption(0, "Day End", new NPGSSDelegate1(this, &menuDayEnd));
@@ -2439,7 +2438,7 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 		if (movieIndex > TERNARY_BUGFIX(DEMOID_COUNT - 1, DEMOID_EndOfDayRedOnyon)) {
 			movieIndex = TERNARY_BUGFIX(DEMOID_COUNT - 1, DEMOID_EndOfDayRedOnyon);
 		}
-		sprintf(parent.mCurrentItem->mName, "Movie #%d", movieIndex);
+		sprintf(parent.mCurrentItem->mLabel, "Movie #%d", movieIndex);
 	}
 
 	/**
@@ -2467,7 +2466,7 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 		if (movieIndex < 0) {
 			movieIndex = 0;
 		}
-		sprintf(parent.mCurrentItem->mName, "Movie #%d", movieIndex);
+		sprintf(parent.mCurrentItem->mLabel, "Movie #%d", movieIndex);
 	}
 
 	/**

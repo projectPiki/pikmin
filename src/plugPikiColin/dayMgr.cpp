@@ -70,38 +70,38 @@ struct PositionMenu : public Menu {
 	PositionMenu(Vector3f* pos, Controller* controller, Font* font, bool p4, bool smlAdjust)
 	    : Menu(controller, font, p4)
 	{
-		mPosition          = pos;
-		mIsSmallAdjustment = smlAdjust;
-		mIsCustomMenu      = TRUE;
-		mAnchorPoint.mMinX = glnWidth / 2;
-		mAnchorPoint.mMinY = glnHeight / 2;
-		mDiffuseColour.set(32, 128, 128, 192);
-		mHighlightColour.set(32, 64, 32, 64);
-		addKeyEvent(KeyEventType::SpecialRelease, KBBTN_B, new Delegate1<Menu, Menu&>(this, &menuCloseMenu));
+		mPosition           = pos;
+		mIsSmallAdjustment  = smlAdjust;
+		mLabelAlignmentType = Menu::LabelAlignmentType::LeftAligned;
+		mCenterPoint.mMinX  = glnWidth / 2;
+		mCenterPoint.mMinY  = glnHeight / 2;
+		mGradBGTopColour.set(MENU_COLOUR_TEAL);
+		mGradBGBottomColour.set(MENU_COLOUR_GREEN_GREY);
+		addKeyEvent(KeyEventType::OnCancel, KBBTN_B, new Delegate1<Menu, Menu&>(this, &menuCloseMenu));
 
 		char* str = new char[0x40];
 		sprintf(str, "X = %.2f", mPosition->x);
 		addOption(0, str, nullptr);
-		addKeyEvent(KeyEventType::Press, KBBTN_NONE, new Delegate1<PositionMenu, Menu&>(this, &menuEnterX));
-		addKeyEvent(KeyEventType::Input, KBBTN_Y, new Delegate1<PositionMenu, Menu&>(this, &menuDecrease));
-		addKeyEvent(KeyEventType::Input, KBBTN_X, new Delegate1<PositionMenu, Menu&>(this, &menuIncrease));
+		addKeyEvent(KeyEventType::OnFocusGained, KBBTN_NONE, new Delegate1<PositionMenu, Menu&>(this, &menuEnterX));
+		addKeyEvent(KeyEventType::WhileInputHeld, KBBTN_Y, new Delegate1<PositionMenu, Menu&>(this, &menuDecrease));
+		addKeyEvent(KeyEventType::WhileInputHeld, KBBTN_X, new Delegate1<PositionMenu, Menu&>(this, &menuIncrease));
 
 		str = new char[0x40];
 		sprintf(str, "Y = %.2f", mPosition->y);
 		addOption(0, str, nullptr);
-		addKeyEvent(KeyEventType::Press, KBBTN_NONE, new Delegate1<PositionMenu, Menu&>(this, &menuEnterY));
-		addKeyEvent(KeyEventType::Input, KBBTN_Y, new Delegate1<PositionMenu, Menu&>(this, &menuDecrease));
-		addKeyEvent(KeyEventType::Input, KBBTN_X, new Delegate1<PositionMenu, Menu&>(this, &menuIncrease));
+		addKeyEvent(KeyEventType::OnFocusGained, KBBTN_NONE, new Delegate1<PositionMenu, Menu&>(this, &menuEnterY));
+		addKeyEvent(KeyEventType::WhileInputHeld, KBBTN_Y, new Delegate1<PositionMenu, Menu&>(this, &menuDecrease));
+		addKeyEvent(KeyEventType::WhileInputHeld, KBBTN_X, new Delegate1<PositionMenu, Menu&>(this, &menuIncrease));
 
 		str = new char[0x40];
 		sprintf(str, "Z = %.2f", mPosition->z);
 		addOption(0, str, nullptr);
-		addKeyEvent(KeyEventType::Press, KBBTN_NONE, new Delegate1<PositionMenu, Menu&>(this, &menuEnterZ));
-		addKeyEvent(KeyEventType::Input, KBBTN_Y, new Delegate1<PositionMenu, Menu&>(this, &menuDecrease));
-		addKeyEvent(KeyEventType::Input, KBBTN_X, new Delegate1<PositionMenu, Menu&>(this, &menuIncrease));
+		addKeyEvent(KeyEventType::OnFocusGained, KBBTN_NONE, new Delegate1<PositionMenu, Menu&>(this, &menuEnterZ));
+		addKeyEvent(KeyEventType::WhileInputHeld, KBBTN_Y, new Delegate1<PositionMenu, Menu&>(this, &menuDecrease));
+		addKeyEvent(KeyEventType::WhileInputHeld, KBBTN_X, new Delegate1<PositionMenu, Menu&>(this, &menuIncrease));
 	}
 
-	void updateComponent(Menu& menu, immut char* name, f32* valuePtr) { sprintf(menu.mCurrentItem->mName, "%s = %.2f", name, *valuePtr); }
+	void updateComponent(Menu& menu, immut char* name, f32* valuePtr) { sprintf(menu.mCurrentItem->mLabel, "%s = %.2f", name, *valuePtr); }
 
 	// _00     = VTBL
 	// _00-_B4 = Menu
@@ -157,44 +157,44 @@ struct ColourMenu : public Menu {
 	ColourMenu(Colour* color, Controller* controller, Font* font, bool p4)
 	    : Menu(controller, font, p4)
 	{
-		mColour            = color;
-		mIsCustomMenu      = TRUE;
-		mAnchorPoint.mMinX = glnWidth / 2;
-		mAnchorPoint.mMinY = glnHeight / 2;
-		mDiffuseColour.set(32, 128, 128, 192);
-		mHighlightColour.set(32, 64, 32, 64);
-		addKeyEvent(KeyEventType::SpecialRelease, KBBTN_B, new Delegate1<Menu, Menu&>(this, &menuCloseMenu));
+		mColour             = color;
+		mLabelAlignmentType = Menu::LabelAlignmentType::LeftAligned;
+		mCenterPoint.mMinX  = glnWidth / 2;
+		mCenterPoint.mMinY  = glnHeight / 2;
+		mGradBGTopColour.set(MENU_COLOUR_TEAL);
+		mGradBGBottomColour.set(MENU_COLOUR_GREEN_GREY);
+		addKeyEvent(KeyEventType::OnCancel, KBBTN_B, new Delegate1<Menu, Menu&>(this, &menuCloseMenu));
 
 		char* str = new char[0x40];
 		sprintf(str, "R = %d", mColour->r);
 		addOption(0, str, nullptr);
-		addKeyEvent(KeyEventType::Press, KBBTN_NONE, new Delegate1<ColourMenu, Menu&>(this, &menuEnterR));
-		addKeyEvent(KeyEventType::Input, KBBTN_Y, new Delegate1<ColourMenu, Menu&>(this, &menuDecrease));
-		addKeyEvent(KeyEventType::Input, KBBTN_X, new Delegate1<ColourMenu, Menu&>(this, &menuIncrease));
+		addKeyEvent(KeyEventType::OnFocusGained, KBBTN_NONE, new Delegate1<ColourMenu, Menu&>(this, &menuEnterR));
+		addKeyEvent(KeyEventType::WhileInputHeld, KBBTN_Y, new Delegate1<ColourMenu, Menu&>(this, &menuDecrease));
+		addKeyEvent(KeyEventType::WhileInputHeld, KBBTN_X, new Delegate1<ColourMenu, Menu&>(this, &menuIncrease));
 
 		str = new char[0x40];
 		sprintf(str, "G = %d", mColour->g);
 		addOption(0, str, nullptr);
-		addKeyEvent(KeyEventType::Press, KBBTN_NONE, new Delegate1<ColourMenu, Menu&>(this, &menuEnterG));
-		addKeyEvent(KeyEventType::Input, KBBTN_Y, new Delegate1<ColourMenu, Menu&>(this, &menuDecrease));
-		addKeyEvent(KeyEventType::Input, KBBTN_X, new Delegate1<ColourMenu, Menu&>(this, &menuIncrease));
+		addKeyEvent(KeyEventType::OnFocusGained, KBBTN_NONE, new Delegate1<ColourMenu, Menu&>(this, &menuEnterG));
+		addKeyEvent(KeyEventType::WhileInputHeld, KBBTN_Y, new Delegate1<ColourMenu, Menu&>(this, &menuDecrease));
+		addKeyEvent(KeyEventType::WhileInputHeld, KBBTN_X, new Delegate1<ColourMenu, Menu&>(this, &menuIncrease));
 
 		str = new char[0x40];
 		sprintf(str, "B = %d", mColour->b);
 		addOption(0, str, nullptr);
-		addKeyEvent(KeyEventType::Press, KBBTN_NONE, new Delegate1<ColourMenu, Menu&>(this, &menuEnterB));
-		addKeyEvent(KeyEventType::Input, KBBTN_Y, new Delegate1<ColourMenu, Menu&>(this, &menuDecrease));
-		addKeyEvent(KeyEventType::Input, KBBTN_X, new Delegate1<ColourMenu, Menu&>(this, &menuIncrease));
+		addKeyEvent(KeyEventType::OnFocusGained, KBBTN_NONE, new Delegate1<ColourMenu, Menu&>(this, &menuEnterB));
+		addKeyEvent(KeyEventType::WhileInputHeld, KBBTN_Y, new Delegate1<ColourMenu, Menu&>(this, &menuDecrease));
+		addKeyEvent(KeyEventType::WhileInputHeld, KBBTN_X, new Delegate1<ColourMenu, Menu&>(this, &menuIncrease));
 
 		str = new char[0x40];
 		sprintf(str, "A = %d", mColour->a);
 		addOption(0, str, nullptr);
-		addKeyEvent(KeyEventType::Press, KBBTN_NONE, new Delegate1<ColourMenu, Menu&>(this, &menuEnterA));
-		addKeyEvent(KeyEventType::Input, KBBTN_Y, new Delegate1<ColourMenu, Menu&>(this, &menuDecrease));
-		addKeyEvent(KeyEventType::Input, KBBTN_X, new Delegate1<ColourMenu, Menu&>(this, &menuIncrease));
+		addKeyEvent(KeyEventType::OnFocusGained, KBBTN_NONE, new Delegate1<ColourMenu, Menu&>(this, &menuEnterA));
+		addKeyEvent(KeyEventType::WhileInputHeld, KBBTN_Y, new Delegate1<ColourMenu, Menu&>(this, &menuDecrease));
+		addKeyEvent(KeyEventType::WhileInputHeld, KBBTN_X, new Delegate1<ColourMenu, Menu&>(this, &menuIncrease));
 	}
 
-	void updateComponent(Menu& menu, immut char* name, u8* valuePtr) { sprintf(menu.mCurrentItem->mName, "%s = %d", name, *valuePtr); }
+	void updateComponent(Menu& menu, immut char* name, u8* valuePtr) { sprintf(menu.mCurrentItem->mLabel, "%s = %d", name, *valuePtr); }
 
 	// _00     = VTBL
 	// _00-_B4 = Menu
@@ -233,33 +233,33 @@ struct FogMenu : public Menu {
 	FogMenu(Colour* color, f32* near, f32* far, Controller* controller, Font* font, bool p6)
 	    : Menu(controller, font, p6)
 	{
-		mNear              = near;
-		mFar               = far;
-		mIsCustomMenu      = TRUE;
-		mAnchorPoint.mMinX = glnWidth / 2;
-		mAnchorPoint.mMinY = glnHeight / 2;
-		mDiffuseColour.set(32, 128, 128, 192);
-		mHighlightColour.set(32, 64, 32, 64);
-		addKeyEvent(KeyEventType::SpecialRelease, KBBTN_B, new Delegate1<Menu, Menu&>(this, &menuCloseMenu));
+		mNear               = near;
+		mFar                = far;
+		mLabelAlignmentType = Menu::LabelAlignmentType::LeftAligned;
+		mCenterPoint.mMinX  = glnWidth / 2;
+		mCenterPoint.mMinY  = glnHeight / 2;
+		mGradBGTopColour.set(MENU_COLOUR_TEAL);
+		mGradBGBottomColour.set(MENU_COLOUR_GREEN_GREY);
+		addKeyEvent(KeyEventType::OnCancel, KBBTN_B, new Delegate1<Menu, Menu&>(this, &menuCloseMenu));
 
 		addMenu(new ColourMenu(color, mController, gsys->mConsFont, true), 0, "fog colour");
 
 		char* str = new char[0x40];
 		sprintf(str, "Near = %.2f", *near);
 		addOption(0, str, nullptr);
-		addKeyEvent(KeyEventType::Press, KBBTN_NONE, new Delegate1<FogMenu, Menu&>(this, &menuEnterNear));
-		addKeyEvent(KeyEventType::Input, KBBTN_Y, new Delegate1<FogMenu, Menu&>(this, &menuDecrease));
-		addKeyEvent(KeyEventType::Input, KBBTN_X, new Delegate1<FogMenu, Menu&>(this, &menuIncrease));
+		addKeyEvent(KeyEventType::OnFocusGained, KBBTN_NONE, new Delegate1<FogMenu, Menu&>(this, &menuEnterNear));
+		addKeyEvent(KeyEventType::WhileInputHeld, KBBTN_Y, new Delegate1<FogMenu, Menu&>(this, &menuDecrease));
+		addKeyEvent(KeyEventType::WhileInputHeld, KBBTN_X, new Delegate1<FogMenu, Menu&>(this, &menuIncrease));
 
 		str = new char[0x40];
 		sprintf(str, "Far = %.2f", *far);
 		addOption(0, str, nullptr);
-		addKeyEvent(KeyEventType::Press, KBBTN_NONE, new Delegate1<FogMenu, Menu&>(this, &menuEnterFar));
-		addKeyEvent(KeyEventType::Input, KBBTN_Y, new Delegate1<FogMenu, Menu&>(this, &menuDecrease));
-		addKeyEvent(KeyEventType::Input, KBBTN_X, new Delegate1<FogMenu, Menu&>(this, &menuIncrease));
+		addKeyEvent(KeyEventType::OnFocusGained, KBBTN_NONE, new Delegate1<FogMenu, Menu&>(this, &menuEnterFar));
+		addKeyEvent(KeyEventType::WhileInputHeld, KBBTN_Y, new Delegate1<FogMenu, Menu&>(this, &menuDecrease));
+		addKeyEvent(KeyEventType::WhileInputHeld, KBBTN_X, new Delegate1<FogMenu, Menu&>(this, &menuIncrease));
 	}
 
-	void updateComponent(Menu& menu, immut char* name, f32* valuePtr) { sprintf(menu.mCurrentItem->mName, "%s = %.2f", name, *valuePtr); }
+	void updateComponent(Menu& menu, immut char* name, f32* valuePtr) { sprintf(menu.mCurrentItem->mLabel, "%s = %.2f", name, *valuePtr); }
 
 	// _00     = VTBL
 	// _00-_B4 = Menu
@@ -287,11 +287,11 @@ struct LightMenu : public Menu {
 		mLightAttachType   = attachType;
 		mLight->mLightType = mLight->mLightType & 0xFFFFFF00 | lightTypes[mSelectedLightType];
 
-		mAnchorPoint.mMinX = glnWidth / 2;
-		mAnchorPoint.mMinY = glnHeight / 2;
-		mDiffuseColour.set(32, 128, 128, 192);
-		mHighlightColour.set(32, 64, 32, 64);
-		addKeyEvent(KeyEventType::SpecialRelease, KBBTN_B, new Delegate1<Menu, Menu&>(this, &menuCloseMenu));
+		mCenterPoint.mMinX = glnWidth / 2;
+		mCenterPoint.mMinY = glnHeight / 2;
+		mGradBGTopColour.set(MENU_COLOUR_TEAL);
+		mGradBGBottomColour.set(MENU_COLOUR_GREEN_GREY);
+		addKeyEvent(KeyEventType::OnCancel, KBBTN_B, new Delegate1<Menu, Menu&>(this, &menuCloseMenu));
 
 		addOptions();
 	}
@@ -340,9 +340,9 @@ struct LightMenu : public Menu {
 			char* str = new char[0x40];
 			sprintf(str, "Fov = %.2f", *mSpotFov);
 			addOption(0, str, nullptr);
-			addKeyEvent(KeyEventType::Press, KBBTN_NONE, new Delegate1<LightMenu, Menu&>(this, menuEnterNear));
-			addKeyEvent(KeyEventType::Input, KBBTN_Y, new Delegate1<LightMenu, Menu&>(this, menuDecrease));
-			addKeyEvent(KeyEventType::Input, KBBTN_X, new Delegate1<LightMenu, Menu&>(this, menuIncrease));
+			addKeyEvent(KeyEventType::OnFocusGained, KBBTN_NONE, new Delegate1<LightMenu, Menu&>(this, menuEnterNear));
+			addKeyEvent(KeyEventType::WhileInputHeld, KBBTN_Y, new Delegate1<LightMenu, Menu&>(this, menuDecrease));
+			addKeyEvent(KeyEventType::WhileInputHeld, KBBTN_X, new Delegate1<LightMenu, Menu&>(this, menuIncrease));
 		}
 
 		if ((int)(u8)mLight->mLightType != 1) {
@@ -356,7 +356,7 @@ struct LightMenu : public Menu {
 		addMenu(new ColourMenu(&mLight->mDiffuseColour, mController, gsys->mConsFont, true), 0, "colour");
 	}
 
-	void updateComponent(Menu& menu, immut char* name, f32* valuePtr) { sprintf(menu.mCurrentItem->mName, "%s = %.2f", name, *valuePtr); }
+	void updateComponent(Menu& menu, immut char* name, f32* valuePtr) { sprintf(menu.mCurrentItem->mLabel, "%s = %.2f", name, *valuePtr); }
 
 	// _00     = VTBL
 	// _00-_B4 = Menu
@@ -373,11 +373,11 @@ struct DaySetMenu : public Menu {
 	    : Menu(control, font, flag)
 	{
 		mTimeSettings      = time;
-		mAnchorPoint.mMinX = glnWidth / 2;
-		mAnchorPoint.mMinY = glnHeight / 2 + 60;
-		mDiffuseColour.set(32, 128, 32, 192);
-		mHighlightColour.set(32, 64, 32, 64);
-		addKeyEvent(KeyEventType::SpecialRelease, KBBTN_B, new Delegate1<Menu, Menu&>(this, &menuCloseMenu));
+		mCenterPoint.mMinX = glnWidth / 2;
+		mCenterPoint.mMinY = glnHeight / 2 + 60;
+		mGradBGTopColour.set(MENU_COLOUR_GREEN);
+		mGradBGBottomColour.set(MENU_COLOUR_GREEN_GREY);
+		addKeyEvent(KeyEventType::OnCancel, KBBTN_B, new Delegate1<Menu, Menu&>(this, &menuCloseMenu));
 		addMenu(new ColourMenu(&mTimeSettings->mAmbientColour, mController, gsys->mConsFont, true), 0, "ambient colour");
 		addMenu(
 		    new FogMenu(&mTimeSettings->mFogColour, &mTimeSettings->mFogNear, &mTimeSettings->mFogFar, mController, gsys->mConsFont, true),
@@ -410,7 +410,7 @@ struct DaySetMenu : public Menu {
  */
 void DayMgr::updateComponent(Menu& menu, immut char* name, int* valuePtr)
 {
-	sprintf(menu.mCurrentItem->mName, "%s = %d", name, *valuePtr);
+	sprintf(menu.mCurrentItem->mLabel, "%s = %d", name, *valuePtr);
 }
 
 /**
@@ -445,25 +445,25 @@ DayMgr::DayMgr(MapMgr* map, Controller* control)
 	mMaxLights    = 7;
 	mTimeSettings = new TimeSetting[5];
 
-	mMenu                     = new Menu(control, gsys->mConsFont);
-	mMenu->mIsCustomMenu      = TRUE;
-	mMenu->mAnchorPoint.mMinX = glnWidth / 2;
-	mMenu->mAnchorPoint.mMinY = glnHeight / 2 + 90;
-	mMenu->mDiffuseColour.set(32, 128, 32, 192);
-	mMenu->mHighlightColour.set(32, 64, 32, 64);
-	mMenu->addKeyEvent(Menu::KeyEventType::SpecialRelease, KBBTN_B, new Delegate1<Menu, Menu&>(mMenu, &Menu::menuCloseMenu));
+	mMenu                      = new Menu(control, gsys->mConsFont);
+	mMenu->mLabelAlignmentType = Menu::LabelAlignmentType::LeftAligned;
+	mMenu->mCenterPoint.mMinX  = glnWidth / 2;
+	mMenu->mCenterPoint.mMinY  = glnHeight / 2 + 90;
+	mMenu->mGradBGTopColour.set(MENU_COLOUR_GREEN);
+	mMenu->mGradBGBottomColour.set(MENU_COLOUR_GREEN_GREY);
+	mMenu->addKeyEvent(Menu::KeyEventType::OnCancel, KBBTN_B, new Delegate1<Menu, Menu&>(mMenu, &Menu::menuCloseMenu));
 
 	char* str = new char[0x40];
 	sprintf(str, "Light Count %d", mLightCount);
 	mMenu->addOption(0, str, nullptr);
-	mMenu->addKeyEvent(Menu::KeyEventType::Release, KBBTN_Y, new Delegate1<DayMgr, Menu&>(this, &menuDecreaseLights));
-	mMenu->addKeyEvent(Menu::KeyEventType::Release, KBBTN_X, new Delegate1<DayMgr, Menu&>(this, &menuIncreaseLights));
+	mMenu->addKeyEvent(Menu::KeyEventType::OnInputRelease, KBBTN_Y, new Delegate1<DayMgr, Menu&>(this, &menuDecreaseLights));
+	mMenu->addKeyEvent(Menu::KeyEventType::OnInputRelease, KBBTN_X, new Delegate1<DayMgr, Menu&>(this, &menuIncreaseLights));
 
 	str = new char[0x40];
 	sprintf(str, "Time : % 2.1f", gameflow.mWorldClock.mTimeOfDay);
 	mMenu->addOption(0, str, nullptr);
-	mMenu->addKeyEvent(Menu::KeyEventType::Input, KBBTN_Y, new Delegate1<DayMgr, Menu&>(this, &menuDecreaseTime));
-	mMenu->addKeyEvent(Menu::KeyEventType::Input, KBBTN_X, new Delegate1<DayMgr, Menu&>(this, &menuIncreaseTime));
+	mMenu->addKeyEvent(Menu::KeyEventType::WhileInputHeld, KBBTN_Y, new Delegate1<DayMgr, Menu&>(this, &menuDecreaseTime));
+	mMenu->addKeyEvent(Menu::KeyEventType::WhileInputHeld, KBBTN_X, new Delegate1<DayMgr, Menu&>(this, &menuIncreaseTime));
 
 	mMenu->addOption(MENU_FAKE_OPTION_FOR_GAP);
 	mMenu->addOption(0, "Dump Settings", new Delegate1<DayMgr, Menu&>(this, &menuDumpSettings));
@@ -489,8 +489,8 @@ DayMgr::DayMgr(MapMgr* map, Controller* control)
 		str = new char[0x40];
 		sprintf(str, "Blur = %d", mMapMgr->mBlur);
 		mMenu->addOption(0, str, nullptr);
-		mMenu->addKeyEvent(Menu::KeyEventType::Input, KBBTN_Y, new Delegate1<DayMgr, Menu&>(this, &menuBDecrease));
-		mMenu->addKeyEvent(Menu::KeyEventType::Input, KBBTN_X, new Delegate1<DayMgr, Menu&>(this, &menuBIncrease));
+		mMenu->addKeyEvent(Menu::KeyEventType::WhileInputHeld, KBBTN_Y, new Delegate1<DayMgr, Menu&>(this, &menuBDecrease));
+		mMenu->addKeyEvent(Menu::KeyEventType::WhileInputHeld, KBBTN_X, new Delegate1<DayMgr, Menu&>(this, &menuBIncrease));
 	}
 }
 
@@ -500,7 +500,7 @@ DayMgr::DayMgr(MapMgr* map, Controller* control)
  */
 void DayMgr::updateLightCount(Menu& menu)
 {
-	sprintf(menu.mCurrentItem->mName, "Light Count %d", mLightCount);
+	sprintf(menu.mCurrentItem->mLabel, "Light Count %d", mLightCount);
 }
 
 /**
@@ -535,7 +535,7 @@ void DayMgr::menuDecreaseLights(Menu& menu)
  */
 void DayMgr::updateTime(Menu& menu)
 {
-	sprintf(menu.mCurrentItem->mName, "Time : % 2.1f", gameflow.mWorldClock.mTimeOfDay);
+	sprintf(menu.mCurrentItem->mLabel, "Time : % 2.1f", gameflow.mWorldClock.mTimeOfDay);
 }
 
 /**
