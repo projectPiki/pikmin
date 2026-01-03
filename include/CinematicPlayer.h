@@ -4,11 +4,11 @@
 #include "Animator.h"
 #include "Camera.h"
 #include "CoreNode.h"
-#include "Dolphin/arith.h"
 #include "EffectMgr.h"
 #include "Light.h"
 #include "Shape.h"
 #include "types.h"
+#include <stdlib.h>
 #include <string.h>
 
 #define ADD_ACTOR_PIKMIN_TYPE(flags, color) (flags) |= 1 << ((color) + 12)

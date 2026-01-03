@@ -8,9 +8,9 @@
 #include "PikiInfo.h"
 #include "PikiMgr.h"
 #include "PlayerState.h"
-#include "PowerPC_EABI_Support/MSL_C/MSL_Common/arith.h"
 #include "ViewPiki.h"
 #include "gameflow.h"
+#include <stdlib.h>
 
 static bool newVer = true;
 

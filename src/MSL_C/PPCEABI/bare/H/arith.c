@@ -1,4 +1,4 @@
-#include "Dolphin/arith.h"
+#include "PowerPC_EABI_Support/MSL_C/MSL_Common/arith.h"
 
 /**
  * @TODO: Documentation
@@ -15,7 +15,7 @@ s32 abs(s32 __x)
  * @TODO: Documentation
  * @note UNUSED Size: 000010
  */
-void labs(void)
+s32 labs(s32 __x)
 {
 	// UNUSED FUNCTION
 }
@@ -33,7 +33,7 @@ void llabs(void)
  * @TODO: Documentation
  * @note UNUSED Size: 000064
  */
-void div(void)
+div_t div(s32 __numer, s32 __denom)
 {
 	// UNUSED FUNCTION
 }
