@@ -218,7 +218,6 @@ void ActWeed::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 		if (mState == STATE_Attack) {
 			mAnimationFinished = true;
 		}
-
 		break;
 	}
 }

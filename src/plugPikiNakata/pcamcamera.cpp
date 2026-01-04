@@ -678,8 +678,22 @@ void PcamCamera::makePolar()
  */
 void PcamCamera::printInfo(Graphics& gfx, Font* font)
 {
-	// there's more to this, but this is enough to generate the right string for data
-	gfx.texturePrintf(font, 20, 400, "%2d,%3d,%4.0f,%4.0f,%4.0f,%3.2f,%3.2f,%3.2f", 90 - NMathF::r2d(mPolarDir.mInclination), mCurrDistance,
-	                  mPolarDir.mRadius, mStoredRadius);
-	// UNUSED FUNCTION
+	// UNUSED FUNCTION (It's way over-size and I don't know why)
+
+	int x = 20, y = 400;
+
+	NVector3f vec1(mCamera->mViewZAxis.x, 0.0f, mCamera->mViewZAxis.z);
+	vec1.normalise();
+	f32 angle1 = NMathF::atan2(vec1.x, -vec1.z);
+
+	// This isn't even used for anything.
+	NVector3f vec2(mTargetCreature->mVelocity.x, 0.0f, mTargetCreature->mVelocity.z);
+	vec2.normalizeCheck();
+	// Maybe they wanted a second `atan2` angle here and that explains the missing printf argument below?
+
+	gfx.setColour(Colour(255, 255, 255, 255), true);
+	// Why are there only 7 arguments for a format string with 8 conversion specifiers?  Ugh.
+	gfx.texturePrintf(font, x, y, "%2d,%3d,%4.0f,%4.0f,%4.0f,%3.2f,%3.2f,%3.2f", 90 - int(NMathF::r2d(mPolarDir.mInclination)),
+	                  int(getFov()), mCurrDistance, mPolarDir.mRadius, mStoredRadius, angle1,
+	                  getTargetDirection() TERNARY_BUGFIX(MACRO_ARG(, 0.0f), ));
 }

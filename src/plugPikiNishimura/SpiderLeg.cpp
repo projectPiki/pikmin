@@ -826,6 +826,7 @@ void SpiderLeg::checkGroundTimer()
 			break;
 		case SpiderLegMotionType::BodyShake:
 			setBodyShakeNewParameter();
+			break;
 		}
 	}
 	// UNUSED FUNCTION

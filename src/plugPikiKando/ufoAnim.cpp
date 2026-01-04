@@ -148,15 +148,19 @@ void UfoAnimator::initFlagMotions(int id)
 	case 4:
 	case 5:
 		setMotionLastFrame(6);
+		// fallthrough
 	case 3:
 		setMotionLastFrame(7);
 		setMotionLastFrame(3);
+		// fallthrough
 	case 2:
 		setMotionLastFrame(4);
 		setMotionLastFrame(5);
+		// fallthrough
 	case 1:
 		setMotionLastFrame(1);
 		setMotionLastFrame(2);
+		// fallthrough
 	default:
 		playerState->startAfterMotions();
 		if (id == 5) {
@@ -175,14 +179,18 @@ void UfoAnimator::startFlagMotions(int id)
 	case 5:
 		startMotion(7, &PaniMotionInfo(UfoMotion::Henka4b));
 		playerState->startSpecialMotions();
+		// fallthrough
 	case 4:
 		setMotionSpeed(6, 30.0f);
+		// fallthrough
 	case 3:
 		setMotionSpeed(7, 30.0f);
 		setMotionSpeed(3, 30.0f);
+		// fallthrough
 	case 2:
 		setMotionSpeed(4, 30.0f);
 		setMotionSpeed(5, 30.0f);
+		// fallthrough
 	case 1:
 		setMotionSpeed(1, 30.0f);
 		setMotionSpeed(2, 30.0f);

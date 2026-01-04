@@ -611,7 +611,7 @@ void GameFlow::softReset()
 {
 	// make sure we don't debug-print all this while soft-resetting.
 	BOOL togglePrint   = gsys->mTogglePrint;
-	gsys->mTogglePrint = FALSE;
+	gsys->mTogglePrint = TERNARY_DEVELOP(TRUE, FALSE);
 
 	if (mNextGameSectionID != mCurrGameSectionID) {
 		// use the overlap heap for section change

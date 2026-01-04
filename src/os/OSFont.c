@@ -49,6 +49,7 @@ u16 OSGetFontEncode(void)
 	case VI_EURGB60:
 	default:
 		fontEncode = OS_FONT_ENCODE_ANSI;
+		break;
 	}
 
 	return fontEncode;

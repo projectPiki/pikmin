@@ -72,15 +72,16 @@ zen::ogRaderMgr::ogRaderMgr()
 
 	PRINT("----- RADER MAP (%d) -----\n", flowCont.mCurrentStage->mStageID);
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
-	switch (flowCont.mCurrentStage->mStageID) {
+	switch (flowCont.mCurrentStage->mStageID)
 #else
 	s16 stage = flowCont.mCurrentStage->mStageID;
 	_24       = map_area_data[stage][0];
 	_28       = map_area_data[stage][1];
 	_2C       = map_area_data[stage][2];
 
-	switch (stage) {
+	switch (stage)
 #endif
+	{
 	case 0:
 		_54 = 0;
 		screen->set("screen/blo/p_map00.blo", true);
@@ -609,7 +610,6 @@ void zen::ogRaderMgr::updateMenu(Controller* input)
 		}
 	} else if (_02) {
 		switch (se) {
-
 		case 0:
 			seSystem->stopSysSe(SYSSE_YMENU_ZOOMOUT);
 			break;

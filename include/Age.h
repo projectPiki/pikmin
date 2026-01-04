@@ -416,6 +416,7 @@ struct AgeServer : public AtxStream {
 				u32 win = readInt();
 				writeInt(win); // this might be wrong, if win is supposed to be a struct with a virtual func then idk what it is
 				Done();
+			} break;
 			case AGE_SRV_CMD_0xCD: {
 				u32 win = readInt();
 				writeInt(win);
@@ -437,7 +438,6 @@ struct AgeServer : public AtxStream {
 				writeInt(win);
 				Done();
 			} break;
-			}
 			}
 		}
 	}

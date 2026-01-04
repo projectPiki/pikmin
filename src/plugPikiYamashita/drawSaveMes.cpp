@@ -113,6 +113,7 @@ void zen::DrawSaveMes::hide()
 bool zen::DrawSaveMes::update(Controller* controller)
 {
 	bool res = false;
+	f32 tmp1, tmp2;
 	switch (mMode) {
 	case MODE_Sleep:
 	case MODE_Unk6:
@@ -121,7 +122,6 @@ bool zen::DrawSaveMes::update(Controller* controller)
 
 	case MODE_Unk5:
 		_04 += gsys->getFrameTime();
-		f32 tmp1;
 		if (_04 > 0.5f) {
 			tmp1 = 0.0f;
 			setMode(MODE_Unk6);
@@ -193,7 +193,6 @@ bool zen::DrawSaveMes::update(Controller* controller)
 	case MODE_Unk2:
 		_04 += gsys->getFrameTime();
 		tmp1 = 1.0f;
-		f32 tmp2;
 		if (_04 > tmp1) {
 			tmp1 = 1.0f;
 			tmp2 = 0.0f;

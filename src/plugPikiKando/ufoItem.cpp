@@ -644,7 +644,7 @@ void UfoItem::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 					effectMgr->create(EffectMgr::EFF_Rocket_Bst1da, mSRT.t, nullptr, nullptr);
 					break;
 				}
-				// no break here?
+				// fallthrough (was this intended?)
 			case 9:
 				if (playerState->mShipUpgradeLevel == 5) {
 					CollPart* coll = mCollInfo->getSphere('gcen');
@@ -660,6 +660,7 @@ void UfoItem::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 				}
 				break;
 			}
+			break;
 		}
 		break;
 	}

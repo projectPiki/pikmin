@@ -71,7 +71,7 @@ struct DrawCMscoreMgr {
 public:
 	typedef bool (DrawCMscoreMgr::*ModeFunc)();
 
-	enum Mode {
+	enum modeFlag {
 		MODE_Sleep  = -1,
 		MODE_Appear = 0,
 		MODE_Unk1   = 1,
@@ -80,7 +80,7 @@ public:
 	DrawCMscoreMgr()
 	{
 		mScoreObjs    = nullptr;
-		mMode         = -1;
+		mMode         = MODE_Sleep;
 		mModeFunction = nullptr;
 		mEventFlag    = 0;
 	}
@@ -106,7 +106,7 @@ protected:
 	static const int MEMORY_BEST_SCORE;
 
 	DrawCMscoreObj* mScoreObjs; // _00
-	int mMode;                  // _04
+	modeFlag mMode;             // _04
 	ModeFunc mModeFunction;     // _08
 	u8 _14[0x8];                // _14, unknown
 	u32 mEventFlag;             // _1C

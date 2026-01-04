@@ -741,7 +741,7 @@ s32 OSCheckActiveThreads(void)
 		// need to not have spaces around the plus in the line below
 		// clang-format off
 		ASSERTREPORT(0x584, OS_PRIORITY_MIN <= thread->priority && thread->priority <= OS_PRIORITY_MAX+1);
-		// clang-format reset
+		// clang-format on
 
 		ASSERTREPORT(0x585, 0 <= thread->suspend);
 		ASSERTREPORT(0x586, CheckThreadQueue(&thread->queueJoin));

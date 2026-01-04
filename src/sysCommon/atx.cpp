@@ -141,7 +141,6 @@ void AtxStream::flush()
  * @return TRUE if a command was processed, FALSE otherwise.
  * @note UNUSED Size: 0000D0
  */
-#ifdef WIN32
 BOOL AtxCommandStream::checkCommands()
 {
 	if (!getPending()) {
@@ -167,14 +166,12 @@ BOOL AtxCommandStream::checkCommands()
 
 	return TRUE;
 }
-#endif
 
 /**
  * @brief Opens a file stream over ATX.
  * @param path The path of the file to open.
  * @note UNUSED Size: 000170
  */
-#ifdef WIN32
 bool AtxFileStream::open(immut char* path, u32)
 {
 	if (!mAtxStream.open(ATX_SERVICE_FILE, 3)) {
@@ -195,7 +192,6 @@ bool AtxFileStream::open(immut char* path, u32)
 	mPath = path;
 	return true;
 }
-#endif
 
 /**
  * @brief Sets the current position in the file stream.

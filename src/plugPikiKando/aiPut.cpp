@@ -454,6 +454,7 @@ void ActPutBomb::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 		if (mState == STATE_Put || mState == STATE_Throw) {
 			mAnimationFinished = true;
 		}
+		break;
 	}
 }
 

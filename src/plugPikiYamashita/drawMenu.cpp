@@ -409,9 +409,10 @@ void zen::DrawMenu::updateMenuPanes()
 			mMenuItems[i].update(false, mCharColor, mGradColor);
 		}
 
+		f32 yScale;
 		switch (mState) {
 		case STATUS_FadeIn:
-			f32 yScale = 2.0f * (mRatio - 0.5f);
+			yScale = 2.0f * (mRatio - 0.5f);
 			if (yScale < 0.0f) {
 				yScale = 0.0f;
 			}

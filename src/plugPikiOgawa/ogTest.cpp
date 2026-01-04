@@ -189,18 +189,20 @@ void OgTestScreen::modeSelectSub()
 
 	if (mSelectedMode == TESTMODE_Tutorial) {
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
-		if (mController->keyClick(KBBTN_MSTICK_RIGHT | KBBTN_CSTICK_RIGHT) && mTutorialMode < 152) {
+		if (mController->keyClick(KBBTN_MSTICK_RIGHT | KBBTN_CSTICK_RIGHT) && mTutorialMode < 152)
 #else
-		if (mZenController->keyRepeat(KBBTN_MSTICK_RIGHT | KBBTN_CSTICK_RIGHT) && mTutorialMode < 152) {
+		if (mZenController->keyRepeat(KBBTN_MSTICK_RIGHT | KBBTN_CSTICK_RIGHT) && mTutorialMode < 152)
 #endif
+		{
 			mTutorialMode++;
 		}
 
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
-		if (mController->keyClick(KBBTN_MSTICK_LEFT | KBBTN_CSTICK_LEFT) && mTutorialMode > 0) {
+		if (mController->keyClick(KBBTN_MSTICK_LEFT | KBBTN_CSTICK_LEFT) && mTutorialMode > 0)
 #else
-		if (mZenController->keyRepeat(KBBTN_MSTICK_LEFT | KBBTN_CSTICK_LEFT) && mTutorialMode > 0) {
+		if (mZenController->keyRepeat(KBBTN_MSTICK_LEFT | KBBTN_CSTICK_LEFT) && mTutorialMode > 0)
 #endif
+		{
 			mTutorialMode--;
 		}
 	}

@@ -1330,7 +1330,6 @@ public:
 		setSelectCourse(startStageID);
 	}
 
-	// might be appear
 	void start(WorldMapName id)
 	{
 		mMode = CoursePointMode::Operation;
@@ -2103,6 +2102,7 @@ bool zen::DrawWorldMap::modeAppear(Controller* controller)
 			break;
 		default:
 			PRINT("Illegal startMode. %d \n", mStartMode);
+			break;
 		}
 
 		int x, y;

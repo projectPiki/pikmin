@@ -108,11 +108,12 @@ public:
 	void update(P2DPane* pane)
 	{
 		P2DPicture* pic = (P2DPicture*)pane;
+		f32 t;
 		switch (mPanelMgr->getStatusFlag()) {
 		case MenuPanelMgr::STATE_Wait:
 		case MenuPanelMgr::STATE_Start:
-			f32 t = mPanelMgr->getRatio();
-			t     = (1.0f - NMathF::cos(PI * t)) * 0.5f;
+			t = mPanelMgr->getRatio();
+			t = (1.0f - NMathF::cos(PI * t)) * 0.5f;
 			move(pane, mCurrentPos, t);
 
 			if (t < 0.7f) {

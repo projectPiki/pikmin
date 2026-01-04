@@ -70,7 +70,7 @@ struct PikiHeadItem : public ItemCreature {
 	int mSeedColor;                 // _3CC
 	int mFlowerStage;               // _3D0
 	Vector3f mGlowEffectPos;        // _3D4
-	Creature* mParentOnion;         // _3E0
+	GoalItem* mParentOnion;         // _3E0
 	PermanentEffect mSparkleEffect; // _3E4
 	RippleEffect* mRippleEfx;       // _3F4
 };

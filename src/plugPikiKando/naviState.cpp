@@ -3066,7 +3066,6 @@ void NaviStartingState::exec(Navi* navi)
 			_30 = 1;
 			navi->mOdoMeter.start(1.0f, 10.0f);
 		}
-
 		return;
 
 	case 1:

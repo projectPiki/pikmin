@@ -679,7 +679,6 @@ Vector3f HinderRock::getVertex(int vtx)
 		break;
 	case 3:
 		id = 'vtx3';
-	default:
 		break;
 	}
 

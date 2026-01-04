@@ -589,22 +589,16 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 		checkErrNitaku(mNitakuMgr, input);
 		break;
 
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
-#else
 	case CardFull:
 	case FileNotMade:
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
+		// fallthrough
 #else
 		SetNitaku_W_R();
-#endif
 		checkErrNitaku(mNitakuMgr, input);
 		break;
 #endif
 
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
-	case CardFull:
-	case FileNotMade:
-#endif
 	case NotACard:
 	case UnusableCard:
 		checkErrNitaku(mNitakuMgr, input);
@@ -689,10 +683,11 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 		DispYesNo(false);
 		DispAcup(true);
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
-		if (mWaitTimer > 3.0f) {
+		if (mWaitTimer > 3.0f)
 #else
-		if (checkTypingAll() && mWaitTimer > 6.0f) {
+		if (checkTypingAll() && mWaitTimer > 6.0f)
 #endif
+		{
 			mEfxA->finish();
 			mEfxB->finish();
 			bool format = true;
@@ -774,10 +769,11 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 		DispYesNo(false);
 		DispAcup(true);
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
-		if (checkTypingAll() && mWaitTimer > 5.0f) {
+		if (checkTypingAll() && mWaitTimer > 5.0f)
 #else
-		if (checkTypingAll() && mWaitTimer > 10.0f) {
+		if (checkTypingAll() && mWaitTimer > 10.0f)
 #endif
+		{
 			int fail = !gameflow.mMemoryCard.didSaveFail();
 			if (fail) {
 				mStatus = RepairSuccess;

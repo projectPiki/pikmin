@@ -227,7 +227,6 @@ void ActStone::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 		if (mState == STATE_Attack) {
 			mIsAttackReady = true;
 		}
-
 		break;
 	}
 }

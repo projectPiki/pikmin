@@ -199,21 +199,25 @@ Creature* GenObjectItem::birth(BirthInfo& info)
 			wall->mNumStages   = mParameterD();
 			break;
 		case OBJTYPE_RockGen:
+		{
 			RockGen* rock = (RockGen*)item;
 			f32 size      = mParameterA();
-			if ((f32)mParameterA() <= 0.0f) {
+			if (size <= 0.0f) {
 				size = 30.0f;
 			}
 			rock->setSizeAndNum(size, mParameterD());
 			break;
+		}
 		case OBJTYPE_GrassGen:
+		{
 			GrassGen* grass = (GrassGen*)item;
-			size            = mParameterA();
+			f32 size        = mParameterA();
 			if (size <= 0.0f) {
 				size = 30.0f;
 			}
 			grass->setSizeAndNum(size, mParameterD());
 			break;
+		}
 		case OBJTYPE_Weeds:
 			WeedsGen* weeds    = (WeedsGen*)item;
 			weeds->mWeedsCount = mParameterD();
@@ -242,16 +246,14 @@ Creature* GenObjectItem::birth(BirthInfo& info)
 		}
 
 		if (item->mObjType == OBJTYPE_BombGen) {
-			s16 val        = mParameterA.mValue;
 			BombItem* bomb = (BombItem*)item;
-			bomb->_3CA     = val;
-			bomb->_3C8     = val;
+			bomb->_3C8 = bomb->_3CA = mParameterA();
 			bomb->mGrid.updateGrid(item->mSRT.t);
 		}
 
 		if (item->mObjType == OBJTYPE_Pikihead) {
 			Iterator it(itemMgr);
-			Creature* goal = nullptr;
+			GoalItem* goal = nullptr;
 			f32 maxDist    = 12800.0f;
 			CI_LOOP(it)
 			{
@@ -260,7 +262,7 @@ Creature* GenObjectItem::birth(BirthInfo& info)
 					f32 dist = sphereDist(obj, item);
 					if (dist < maxDist) {
 						maxDist = dist;
-						goal    = obj;
+						goal    = (GoalItem*)obj;
 					}
 				}
 			}

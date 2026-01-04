@@ -98,24 +98,16 @@ void __OSUnhandledException(__OSException exception, OSContext* context, u32 dsi
 
 	switch (exception) {
 	case __OS_EXCEPTION_DSI:
-		OSReport("\nInstruction at 0x%x (read from SRR0) attempted to access "
-		         "invalid address 0x%x (read from DAR)\n",
-		         context->srr0, dar);
+		OSReport("\nInstruction at 0x%x (read from SRR0) attempted to access invalid address 0x%x (read from DAR)\n", context->srr0, dar);
 		break;
 	case __OS_EXCEPTION_ISI:
-		OSReport("\nAttempted to fetch instruction from invalid address 0x%x "
-		         "(read from SRR0)\n",
-		         context->srr0);
+		OSReport("\nAttempted to fetch instruction from invalid address 0x%x (read from SRR0)\n", context->srr0);
 		break;
 	case __OS_EXCEPTION_ALIGNMENT:
-		OSReport("\nInstruction at 0x%x (read from SRR0) attempted to access "
-		         "unaligned address 0x%x (read from DAR)\n",
-		         context->srr0, dar);
+		OSReport("\nInstruction at 0x%x (read from SRR0) attempted to access unaligned address 0x%x (read from DAR)\n", context->srr0, dar);
 		break;
 	case __OS_EXCEPTION_PROGRAM:
-		OSReport("\nProgram exception : Possible illegal instruction/operation "
-		         "at or around 0x%x (read from SRR0)\n",
-		         context->srr0, dar);
+		OSReport("\nProgram exception : Possible illegal instruction/operation at or around 0x%x (read from SRR0)\n", context->srr0, dar);
 		break;
 	case OS_ERROR_PROTECTION:
 		OSReport("\n");

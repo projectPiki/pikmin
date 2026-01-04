@@ -276,10 +276,10 @@ void PaniTestNode::update()
 	int amt = 0;
 	switch (mTestMode) {
 	case PANITEST_Piki:
-		amt = 90;
+		amt = PIKIANIM_COUNT;
 		break;
 	case PANITEST_Teki:
-		amt = 15;
+		amt = TekiMotion::COUNT;
 		break;
 	}
 

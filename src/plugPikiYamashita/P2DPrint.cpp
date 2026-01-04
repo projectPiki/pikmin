@@ -416,12 +416,12 @@ u16 P2DPrint::doEscapeCode(const u8** textPtr)
 void P2DPrint::doCtrlCode(int inputChar)
 {
 	switch (inputChar) {
-	case 0x8: // backspace
+	case '\b': // backspace
 		mCursorX -= mCurrCharWidth;
 		mCurrCharWidth = 0.0f;
 		break;
 
-	case 0x9: // horizontal tab
+	case '\t': // horizontal tab
 		int width = mCharTabWidth;
 		if (width > 0) {
 			f32 oldX       = mCursorX;
@@ -430,30 +430,30 @@ void P2DPrint::doCtrlCode(int inputChar)
 		}
 		break;
 
-	case 0xA: // line feed
+	case '\n': // line feed
 		mCurrCharWidth = 0.0f;
 		mCursorX       = mInitX;
 		mCursorY       = mCursorY + mCharLeading;
 		break;
 
-	case 0xD: // carriage return
+	case '\r': // carriage return
 		mCurrCharWidth = 0.0f;
 		mCursorX       = mInitX;
 		break;
 
-	case 0x1C: // file separator
+	case '\x1C': // file separator
 		mCursorX += 1.0f;
 		break;
 
-	case 0x1D: // group separator
+	case '\x1D': // group separator
 		mCursorX -= 1.0f;
 		break;
 
-	case 0x1E: // record separator
+	case '\x1E': // record separator
 		mCursorY -= 1.0f;
 		break;
 
-	case 0x1F: // unit separator
+	case '\x1F': // unit separator
 		mCursorY += 1.0f;
 		break;
 	}

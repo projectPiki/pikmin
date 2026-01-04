@@ -752,10 +752,9 @@ struct TitleSetupSection : public Node {
 	u8 _A38[0x4];               ///< _A38, unknown/unused.
 	DayMgr* mDayMgr;            ///< _A3C, lighting manager for the title screen.
 	Vector3f mCameraFocusPoint; ///< _A40, target/watch position for unused title screen camera.
-
-#if defined(WIN32)
-	CoreNode _A4C; ///< _A4C, DLL-exclusive but unused.
-	CoreNode _A60; ///< _A60, DLL-exclusive but unused.
+#if defined(WIN32)              //
+	CoreNode _A4C;              ///< _A4C, DLL-exclusive but unused.
+	CoreNode _A60;              ///< _A60, DLL-exclusive but unused.
 #endif
 };
 
