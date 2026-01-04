@@ -51,10 +51,7 @@ struct String {
 	static char* dup(immut char*);
 	char* dup() immut { return dup(mString); }
 
-	static bool isWhiteSpace(char c)
-	{
-		return c == ' ' || c == '\t' || c == '\r' || c == '\n' || c < ' ';
-	}
+	static bool isWhiteSpace(char c) { return c == ' ' || c == '\t' || c == '\r' || c == '\n' || c < ' '; }
 
 	// There isn't a static version of this function (probably because it's unimplemented).
 	float toFloat() immut;

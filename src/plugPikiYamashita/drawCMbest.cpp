@@ -37,9 +37,9 @@ public:
 	{
 		mRootPane = nullptr;
 		mWaitTime = mAppearTime = 0.0f;
-		mModeFunction = nullptr;
-		mMode         = MODE_Sleep;
-		_1C           = 0.0f;
+		mModeFunction           = nullptr;
+		mMode                   = MODE_Sleep;
+		_1C                     = 0.0f;
 	}
 
 	// this is DLL, but has to be above the weak inlines for data ordering reasons.
@@ -104,7 +104,7 @@ protected:
 
 		case MODE_Appear:
 			mWaitTime = 0.0f;
-			_1C = 0.0f;
+			_1C       = 0.0f;
 			mRootPane->setScale(0.0f);
 			mModeFunction = &modeAppear;
 			break;

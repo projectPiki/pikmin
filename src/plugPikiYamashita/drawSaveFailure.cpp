@@ -105,7 +105,7 @@ void zen::DrawSaveFailure::setMode(zen::DrawSaveFailure::modeFlag mode)
 	mMode = mode;
 	switch (mMode) {
 	case MODE_Unk0:
-		_08 = 0.0f;
+		_08                 = 0.0f;
 		mTransitionDuration = 0.0f;
 		mSaveFailPane->setScale(0.0f);
 		mBackIcon->setAlpha(0);

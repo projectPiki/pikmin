@@ -10,8 +10,8 @@
 struct Event {
 	Event(int unk, u32 id)
 	{
-		_00       = unk;
-		mId       = id;
+		_00 = unk;
+		mId = id;
 	}
 
 	int _00; // _00, not used anywhere.

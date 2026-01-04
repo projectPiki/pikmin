@@ -135,12 +135,12 @@ void Kontroller::write(RandomAccessStream& stream)
 void Kontroller::read(RandomAccessStream& stream)
 {
 	mCurrentKeyStatus = stream.readInt();
-	mMainStickX = stream.readByte();
-	mMainStickY = stream.readByte();
-	mSubStickX  = stream.readByte();
-	mSubStickY  = stream.readByte();
-	mAnalogA    = stream.readByte();
-	mAnalogB    = stream.readByte();
-	mTriggerL   = stream.readByte();
-	mTriggerR   = stream.readByte();
+	mMainStickX       = stream.readByte();
+	mMainStickY       = stream.readByte();
+	mSubStickX        = stream.readByte();
+	mSubStickY        = stream.readByte();
+	mAnalogA          = stream.readByte();
+	mAnalogB          = stream.readByte();
+	mTriggerL         = stream.readByte();
+	mTriggerR         = stream.readByte();
 }
