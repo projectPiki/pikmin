@@ -612,7 +612,9 @@ bool MemoryCard::getCardStatus(int channel)
 				return false;
 			}
 			res = waitWhileBusy(channel);
+			break;
 		}
+
 		switch (res) {
 		case CARD_RESULT_NOCARD:
 			mErrorCode = CARD_RESULT_BUSY;

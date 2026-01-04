@@ -338,7 +338,7 @@ void PikiNormalState::init(Piki* piki)
 	_UNUSED10 = 0;
 	_UNUSED14 = 0.0f;
 	_UNUSED1C = C_PIKI_PROP(piki).mUnusedDynWallPushTime();
-	mPushPiki = 0;
+	mPushPiki = nullptr;
 }
 
 /**
@@ -390,7 +390,7 @@ void PikiNormalState::procCollideMsg(Piki* piki, MsgCollide* msg)
 	if (!piki->isKinoko()) {
 		Creature* collider = msg->mEvent.mCollider;
 		int type           = collider->mObjType;
-		mPushPiki          = 0;
+		mPushPiki          = nullptr;
 		if (!piki->isDamaged() && piki->mMode != PikiMode::TransportMode) {
 			// Only handle a few special collisions in Normal; everything else stays AI-driven.
 			switch (type) {

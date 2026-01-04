@@ -419,10 +419,11 @@ setTenmetuAlpha::TenmetuMode setTenmetuAlpha::update()
 		return mMode;
 	}
 
+	f32 t;
 	switch (mMode) {
 	case MODE_FadeIn:
 		mFadeTimer += gsys->getFrameTime();
-		f32 t = mFadeTimer / mFadeDuration;
+		t = mFadeTimer / mFadeDuration;
 		if (t < 0.0f) {
 			t = 0.0f;
 		}

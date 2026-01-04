@@ -348,6 +348,7 @@ void Jac_SceneExit(u32 nextSceneID, u32 stage)
 		break;
 	case 1:
 		newBgm = tbl_stage_to_bgm[stage];
+		// fallthrough
 	default:
 		if (now_loading) {
 			do {
@@ -359,6 +360,7 @@ void Jac_SceneExit(u32 nextSceneID, u32 stage)
 		DVDT_CheckPass(newBgm, 0, __Loaded);
 		now_loading   = 1;
 		current_ready = newBgm;
+		break;
 	}
 	Jac_SetProcessStatus(3);
 }

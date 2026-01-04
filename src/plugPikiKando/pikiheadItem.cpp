@@ -1,6 +1,7 @@
 #include "PikiHeadItem.h"
 #include "DebugLog.h"
 #include "GameStat.h"
+#include "GoalItem.h"
 #include "Graphics.h"
 #include "Interactions.h"
 #include "KEffect.h"

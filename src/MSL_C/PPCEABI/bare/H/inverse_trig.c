@@ -119,7 +119,6 @@ f32 atanf(f32 x)
 			if ((*(int*)&x) >= 0x3F521801)
 				index++; // 0.8206788
 			break;
-			break;
 		case 0x3F800000: /* 1 <= x < 2    */
 			index += 2;
 			if ((*(int*)&x) >= 0x3F9bf7ec)

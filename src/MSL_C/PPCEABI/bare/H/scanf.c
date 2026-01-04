@@ -94,6 +94,7 @@ static const char* parse_format(const char* format_string, scan_format* format)
 		break;
 	default:
 		flag_found = 0;
+		break;
 	}
 
 	if (flag_found) {
@@ -307,6 +308,7 @@ static int __sformatter(int (*ReadProc)(void*, int, int), void* ReadProcArg, con
 			goto signed_int;
 		case 'i':
 			base = 0;
+			// fallthrough
 		signed_int:
 			if ((format.argument_options == long_long_argument))
 				u_long_long_num = __strtoull(base, format.field_width, ReadProc, ReadProcArg, &num_chars, &negative, &overflow);
@@ -323,6 +325,7 @@ static int __sformatter(int (*ReadProc)(void*, int, int), void* ReadProcArg, con
 				long_long_num = (negative ? -u_long_long_num : u_long_long_num);
 			else
 				long_num = (negative ? -u_long_num : u_long_num);
+			// fallthrough
 
 		signed_int_assign:
 
@@ -359,6 +362,7 @@ static int __sformatter(int (*ReadProc)(void*, int, int), void* ReadProcArg, con
 		case 'x':
 		case 'X':
 			base = 16;
+			// fallthrough
 		unsigned_int:
 			if ((format.argument_options == long_long_argument))
 				u_long_long_num = __strtoull(base, format.field_width, ReadProc, ReadProcArg, &num_chars, &negative, &overflow);
@@ -377,6 +381,7 @@ static int __sformatter(int (*ReadProc)(void*, int, int), void* ReadProcArg, con
 				else
 					u_long_num = -u_long_num;
 			}
+			// fallthrough
 
 		unsigned_int_assign:
 
@@ -418,6 +423,7 @@ static int __sformatter(int (*ReadProc)(void*, int, int), void* ReadProcArg, con
 			}
 
 			chars_read += num_chars;
+			// fallthrough
 
 		assign_float:
 

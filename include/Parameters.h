@@ -87,7 +87,7 @@ struct Parameters {
 	 * @brief Constructs an empty (named) parameters list (DLL only).
 	 * @param name Name for this collection of parameters.
 	 */
-	Parameters(char* name)
+	Parameters(immut char* name)
 	    : mFirstParm(nullptr)
 	{
 		mName = name;

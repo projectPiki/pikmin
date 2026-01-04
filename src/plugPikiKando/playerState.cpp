@@ -941,12 +941,12 @@ void PlayerState::UfoParts::stopMotion()
  */
 void PlayerState::UfoParts::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
-	int anim     = mAnimator.mLowerAnimator.mMotionIdx;
-	UfoItem* ufo = itemMgr->getUfo();
+	int motionIdx = mAnimator.mLowerAnimator.mMotionIdx;
+	UfoItem* ufo  = itemMgr->getUfo();
 
 	switch (event.mEventType) {
 	case KEY_LoopEnd:
-		if (anim == 3) {
+		if (motionIdx == PelletMotion::Piston) {
 			switch (mModelID) {
 			case UFOID_WhimsicalRadar:
 				ufo->playEventSound(ufo, SE_UFO_ANTENNA);
@@ -962,6 +962,7 @@ void PlayerState::UfoParts::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 			switch (mModelID) {
 			case UFOID_MainEngine:
 				ufo->playEventSound(ufo, SE_UFO_ENGINE);
+				// fallthrough (seems like a bug)
 			case UFOID_WhimsicalRadar:
 				ufo->playEventSound(ufo, SE_UFO_RADER);
 				break;
@@ -976,7 +977,7 @@ void PlayerState::UfoParts::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 		break;
 
 	case KEY_PlayEffect:
-		if (anim == 1) {
+		if (motionIdx == PelletMotion::Appear) {
 			PRINT("UFO PARTS * GOT EFFECT KEY : index=%d\n", event.mValue);
 			switch (event.mValue) {
 			case 0:
@@ -989,6 +990,7 @@ void PlayerState::UfoParts::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 				break;
 			}
 		}
+		break;
 	}
 
 	STACK_PAD_VAR(2);

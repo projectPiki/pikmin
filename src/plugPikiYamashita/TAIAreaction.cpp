@@ -82,6 +82,7 @@ bool TAIAdying::act(Teki& teki)
 		switch (teki.mTekiType) {
 		case TEKI_Mar:
 			teki.clearTekiOption(BTeki::TEKI_OPTION_SHADOW_VISIBLE);
+			// fallthrough
 		case TEKI_Dororo:
 			teki.spawnItems();
 			break;

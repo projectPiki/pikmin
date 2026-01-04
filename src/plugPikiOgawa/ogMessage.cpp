@@ -693,10 +693,11 @@ zen::ogScrMessageMgr::MessageStatus zen::ogScrMessageMgr::update(Controller* inp
 
 		case PANETYPE_TextBox:
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
-			if (mTextAnimationProgress >= 0.04f) {
+			if (mTextAnimationProgress >= 0.04f)
 #else
-			if (mTextAnimationProgress >= 0.029639998f) {
+			if (mTextAnimationProgress >= 0.029639998f)
 #endif
+			{
 				mActivePaneId          = mNextPaneId;
 				mTextAnimationProgress = 0.0f;
 

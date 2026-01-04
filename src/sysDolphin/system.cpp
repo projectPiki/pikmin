@@ -574,7 +574,7 @@ void System::hardReset()
 System::System()
 {
 	mTimerState       = TS_Off;
-	mTogglePrint      = FALSE;
+	mTogglePrint      = TERNARY_DEVELOP(TRUE, FALSE);
 	mToggleDebugInfo  = FALSE;
 	mToggleDebugExtra = FALSE;
 	mToggleBlur       = TRUE;

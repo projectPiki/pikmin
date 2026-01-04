@@ -976,34 +976,34 @@ int TexImg::calcDataSize(int format, int width, int height)
 	s32 size = 0;
 
 	switch (format) {
-	case 1:
+	case TEX_FMT_S3TC:
 		size = (width * height / 8) * 4;
 		break;
-	case 2:
+	case TEX_FMT_RGB5A3:
 		size = width * height * 2;
 		break;
-	case 0:
+	case TEX_FMT_RGB565:
 		size = width * height * 2;
 		break;
-	case 3:
+	case TEX_FMT_I4:
 		size = width * height / 2;
 		break;
-	case 4:
+	case TEX_FMT_I8:
 		size = width * height;
 		break;
-	case 5:
+	case TEX_FMT_IA4:
 		size = width * height;
 		break;
-	case 6:
+	case TEX_FMT_IA8:
 		size = width * height * 2;
 		break;
-	case 7:
+	case TEX_FMT_RGBA8:
 		size = width * height * 4;
 		break;
-	case 8:
+	case TEX_FMT_Z8:
 		size = width * height;
 		break;
-	case 9:
+	case TEX_FMT_COUNT: // what?
 		size = width * height;
 		break;
 	}

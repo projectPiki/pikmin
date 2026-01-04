@@ -29,7 +29,6 @@ static u8 __GetTrigger(jc_* jc, u8 n)
 	case 2:
 		return jc->note;
 	}
-
 	return 0;
 }
 

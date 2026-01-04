@@ -1566,6 +1566,7 @@ int DGXGraphics::setCBlending(int blendMode)
 		GXSetTevAlphaOp(GX_TEVSTAGE3, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);
 
 		GXSetAlphaCompare(GX_GEQUAL, 0, GX_AOP_AND, GX_LESS, 0xff);
+		break;
 	}
 	return old;
 }

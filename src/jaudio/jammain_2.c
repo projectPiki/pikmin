@@ -363,6 +363,7 @@ static u32 LoadTbl(seqp_* track, u32 ofs, u32 idx, u32 param_4)
 		break;
 	case 7:
 		idx = idx * 4;
+		// fallthrough
 	case 8:
 		result = __LongReadOfs(track, ofs + idx);
 		break;
@@ -425,6 +426,7 @@ void Jam_WriteRegParam(seqp_* track, u8 param_2)
 		break;
 	case 16:
 		r30_newRegValue = -1;
+		break;
 	}
 
 	r23_oldRegValue = Jam_ReadRegDirect(track, r29_regIdx);
@@ -1171,6 +1173,7 @@ static f32 __PanCalc(f32 param_1, f32 param_2, f32 param_3, u8 param_4)
 		return param_2;
 	case 2:
 		result = param_1 * (1.0f - param_3) + (param_2 * param_3);
+		break;
 	}
 	return result;
 }

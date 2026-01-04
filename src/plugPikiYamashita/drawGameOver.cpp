@@ -292,12 +292,10 @@ bool zen::DrawGameOver::update(Controller* controller)
 			if (controller->keyClick(KBBTN_START | KBBTN_A)) {
 				isInputPeriodDone = true;
 			}
-
 			if (mStateTimer > mInputWaitTime) {
 				mStateTimer       = mInputWaitTime;
 				isInputPeriodDone = true;
 			}
-
 			break;
 		}
 

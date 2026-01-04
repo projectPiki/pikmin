@@ -340,10 +340,11 @@ void __VIInit(VITVMode mode)
 	__VIRegs[VI_DISP_INT_0]  = vct;
 
 #if defined(VERSION_G98E01_PIKIDEMO)
-	if (mode != VI_TVMODE_NTSC_PROG && mode != VI_TVMODE_NTSC_3D) {
+	if (mode != VI_TVMODE_NTSC_PROG && mode != VI_TVMODE_NTSC_3D)
 #else
-	if (mode != VI_TVMODE_NTSC_PROG) {
+	if (mode != VI_TVMODE_NTSC_PROG)
 #endif
+	{
 		__VIRegs[VI_DISP_CONFIG] = (1 << 0) | (0 << 1) | (nonInter << 2) | (0 << 3) | (0 << 4) | (0 << 6) | (tv << 8);
 		__VIRegs[VI_CLOCK_SEL]   = 0;
 

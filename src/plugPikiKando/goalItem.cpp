@@ -87,16 +87,12 @@ void GoalItem::playEffect(int id)
 			effectMgr->create(EffectMgr::EFF_Rocket_LandS, mSRT.t, nullptr, nullptr);
 			break;
 		case 1:
-			CollPart* part = mCollInfo->getSphere('bas1');
-			effectMgr->create(EffectMgr::EFF_Rocket_SmokeD, part->mCentre, nullptr, nullptr);
+			effectMgr->create(EffectMgr::EFF_Rocket_SmokeD, mCollInfo->getSphere('bas1')->mCentre, nullptr, nullptr);
 			break;
 		case 2:
-			part = mCollInfo->getSphere('bas1');
-			effectMgr->create(EffectMgr::EFF_Rocket_SmokeD, part->mCentre, nullptr, nullptr);
-			part = mCollInfo->getSphere('bas2');
-			effectMgr->create(EffectMgr::EFF_Rocket_SmokeD, part->mCentre, nullptr, nullptr);
-			part = mCollInfo->getSphere('bas3');
-			effectMgr->create(EffectMgr::EFF_Rocket_SmokeD, part->mCentre, nullptr, nullptr);
+			effectMgr->create(EffectMgr::EFF_Rocket_SmokeD, mCollInfo->getSphere('bas1')->mCentre, nullptr, nullptr);
+			effectMgr->create(EffectMgr::EFF_Rocket_SmokeD, mCollInfo->getSphere('bas2')->mCentre, nullptr, nullptr);
+			effectMgr->create(EffectMgr::EFF_Rocket_SmokeD, mCollInfo->getSphere('bas3')->mCentre, nullptr, nullptr);
 			break;
 		case 3:
 			setFlowEffect(false);

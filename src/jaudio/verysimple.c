@@ -124,7 +124,6 @@ void Jac_PlaySystemSe(s32 id)
 		if (Jac_DemoCheck() == TRUE || Jac_PauseCheck() == TRUE || Jac_GetCurrentScene() != SCENE_Course) {
 			return;
 		}
-
 		break;
 	case JACSYS_Countdown:
 		++countdown_count;

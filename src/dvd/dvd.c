@@ -1670,6 +1670,7 @@ BOOL DVDCheckDisk()
 		} else {
 			result = TRUE;
 		}
+		break;
 	}
 
 	OSRestoreInterrupts(enabled);

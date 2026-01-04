@@ -219,8 +219,7 @@ public:
 			teki.setRunAwaySwitch(false);
 			break;
 
-		// ... why is this down here?
-		case KEY_Action0:
+		case KEY_Action0: // ... why is this down here?
 			if (teki.getCreaturePointer(2) != nullptr) {
 				teki.setCreaturePointer(2, nullptr);
 			}
@@ -283,7 +282,6 @@ protected:
 
 		// frankly this is a bizarre way of doing this but whatever i guess
 		for (i = 0; i < 3; i++) {
-			steamEffectPart;
 			switch (collPartIDs[i]) {
 			case 0:
 				steamEffectPart = teki.mCollInfo->getSphere('stm0');

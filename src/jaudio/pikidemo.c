@@ -532,8 +532,8 @@ void Jac_StartDemo(u32 cinID)
 		break;
 
 	default:
-		while (now_loading < 3)
-			;
+		while (now_loading < 3) { }
+		break;
 	}
 
 	now_loading = 0;
@@ -694,6 +694,7 @@ void Jac_DemoBGMForceStop()
 		break;
 	case 10:
 		WaveScene_Erase(0xd, 8);
+		break;
 	}
 	current_seq_bgm = 0;
 }
@@ -892,6 +893,7 @@ void __Prepare_BGM(u32 cinID)
 			now_loading = 0;
 			return;
 		}
+		break;
 	}
 
 	DVDT_CheckPass(0x80000000, 0, __Loaded);

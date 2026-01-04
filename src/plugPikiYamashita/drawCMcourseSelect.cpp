@@ -143,7 +143,7 @@ protected:
 		DrawMenuBase::setModeFunc(mode);
 		switch (mMode) {
 		case MODE_Unk2:
-			mModeFunction = (ModeFunc)&modeAppear;
+			mModeFunction = static_cast<ModeFunc>(&modeAppear);
 			for (int i = 0; i < mOptionCount; i++) {
 				Vector3f pos(mMenuExpansions[i].getDefaultPos());
 				bool check = false;
