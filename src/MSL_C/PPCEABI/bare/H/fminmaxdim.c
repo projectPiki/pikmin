@@ -27,7 +27,8 @@ void fmin(void)
 int __fpclassifyd__Fd(f64 x)
 {
 	switch (__HI(x) & 0x7FF00000) {
-	case 0x7FF00000: {
+	case 0x7FF00000:
+	{
 		if ((__HI(x) & 0x000FFFFF) || (__LO(x) & 0xFFFFFFFF)) {
 			return FP_NAN;
 		} else {
@@ -35,7 +36,8 @@ int __fpclassifyd__Fd(f64 x)
 		}
 		break;
 	}
-	case 0: {
+	case 0:
+	{
 		if ((__HI(x) & 0x000FFFFF) || (__LO(x) & 0xFFFFFFFF)) {
 			return FP_SUBNORMAL;
 		} else {

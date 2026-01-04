@@ -189,7 +189,8 @@ void SeWin::update()
 	STACK_PAD_VAR(2); // sigh
 
 	switch (mStatus) {
-	case GMWIN_Opening: {
+	case GMWIN_Opening:
+	{
 		mAnimFramesRemaining--;
 		mPosY += 32;
 		if (!mAnimFramesRemaining) {
@@ -200,7 +201,8 @@ void SeWin::update()
 		}
 		return;
 	}
-	case GMWIN_Closing: {
+	case GMWIN_Closing:
+	{
 		mAnimFramesRemaining--;
 		mPosY += 32;
 		if (!mAnimFramesRemaining) {
@@ -208,7 +210,8 @@ void SeWin::update()
 		}
 		return;
 	}
-	case GMWIN_Active: {
+	case GMWIN_Active:
+	{
 		if (mStickWasPushed) {
 			if (absF(mController->getMainStickY()) > 0.5f) {
 				return;

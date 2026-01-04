@@ -340,19 +340,22 @@ u16 P2DPrint::doEscapeCode(const u8** textPtr)
 		}
 		break;
 
-	case 'CA': { // char color, preserve alpha
+	case 'CA': // char color, preserve alpha
+	{
 		// set char top colour (default font top colour, no change if invalid format)
 		u32ToColour(getNumber(textPtr, ColourTou32(mFontTopColour), ColourTou32(mCharTopColour), 16), &mCharTopColour);
 		mFont->setGradColor(mCharTopColour, (mCharGradientActive) ? mCharBottomColour : mCharTopColour);
 	} break;
 
-	case 'GA': { // grad color, preserve alpha
+	case 'GA': // grad color, preserve alpha
+	{
 		// set char bottom colour (default font bottom colour, no change if invalid format)
 		u32ToColour(getNumber(textPtr, ColourTou32(mFontBottomColour), ColourTou32(mCharBottomColour), 16), &mCharBottomColour);
 		mFont->setGradColor(mCharTopColour, (mCharGradientActive) ? mCharBottomColour : mCharTopColour);
 	} break;
 
-	case 'CC': { // char color, use font alpha
+	case 'CC': // char color, use font alpha
+	{
 		// set char top colour (default font top colour, no change if invalid format)
 		u32ToColour(getNumber(textPtr, ColourTou32(mFontTopColour), ColourTou32(mCharTopColour), 16), &mCharTopColour);
 		u8 alpha            = mFont->getAlpha();
@@ -361,7 +364,8 @@ u16 P2DPrint::doEscapeCode(const u8** textPtr)
 		mFont->setGradColor(mCharTopColour, (mCharGradientActive) ? mCharBottomColour : mCharTopColour);
 	} break;
 
-	case 'GC': { // grad color, use font alpha
+	case 'GC': // grad color, use font alpha
+	{
 		// set char bottom colour (default font bottom colour, no change if invalid format)
 		u32ToColour(getNumber(textPtr, ColourTou32(mFontBottomColour), ColourTou32(mCharBottomColour), 16), &mCharBottomColour);
 		u8 alpha            = mFont->getAlpha();
@@ -370,7 +374,8 @@ u16 P2DPrint::doEscapeCode(const u8** textPtr)
 		mFont->setGradColor(mCharTopColour, (mCharGradientActive) ? mCharBottomColour : mCharTopColour);
 	} break;
 
-	case 'FX': {                                                    // fix x (change width)
+	case 'FX': // fix x (change width)
+	{
 		int width = getNumber(textPtr, mFontWidth, mCharWidth, 10); // default = font width, invalid = no change
 		if (width >= 0) {
 			mCharWidth = width;
@@ -392,7 +397,8 @@ u16 P2DPrint::doEscapeCode(const u8** textPtr)
 		mCharLeading = getNumber(textPtr, mFontLeading, mCharLeading, 10); // default = font leading, invalid = no change
 		break;
 
-	case 'GM': { // gradient marker? switch gradient on/off
+	case 'GM': // gradient marker? switch gradient on/off
+	{
 		mCharGradientActive
 		    = getNumber(textPtr, !mCharGradientActive, mCharGradientActive, 10) != 0; // default = switch to opposite, invalid = no change
 		mFont->setGradColor(mCharTopColour, (mCharGradientActive) ? mCharBottomColour : mCharTopColour);

@@ -559,17 +559,20 @@ void StdSystem::loadBundle(immut char* pPath, bool loadWithCache)
 		fs->readString(path);
 
 		switch (type) {
-		case 2: { // DCA Animation
+		case 2: // DCA Animation
+		{
 			AnimData* dca = mCurrentShape->loadDca(path.mString, *fs);
 			addAnimation(dca, path.mString);
 			break;
 		}
-		case 3: { // DCK Animation
+		case 3: // DCK Animation
+		{
 			AnimData* dck = mCurrentShape->loadDck(path.mString, *fs);
 			addAnimation(dck, path.mString);
 			break;
 		}
-		case 1: { // Texture
+		case 1: // Texture
+		{
 			TexImg* texImg = new TexImg();
 			Texture* newTex;
 
@@ -602,7 +605,8 @@ void StdSystem::loadBundle(immut char* pPath, bool loadWithCache)
 			gsys->addGfxObject(newInfo);
 			break;
 		}
-		default: {
+		default:
+		{
 			int pos = fs->getPosition();
 			fs->setPosition(pos + size);
 			break;

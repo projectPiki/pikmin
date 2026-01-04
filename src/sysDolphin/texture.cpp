@@ -51,14 +51,16 @@ void Texture::offsetGLtoGX(int, int)
 u8 Texture::getAlpha(int x, int y)
 {
 	switch (mTexFormat) {
-	case TEX_FMT_IA4: {
+	case TEX_FMT_IA4:
+	{
 		int tileArea = mTileSizeX * mTileSizeY;
 		int x2       = x / mTileSizeX;
 		int y2       = y / mTileSizeY;
 		return ((u8*)mPixelData)[x2 * tileArea + (x % mTileSizeX) + mTileSizeX * (y % mTileSizeY) + y2 * ((mWidth / mTileSizeX) * tileArea)]
 		     & 0xF0;
 	}
-	default: {
+	default:
+	{
 		int tileArea = mTileSizeX * mTileSizeY;
 		int blockX   = (x / mTileSizeX) * (mWidth / mTileSizeX) * tileArea;
 		int blockY   = (y / mTileSizeY) * tileArea;

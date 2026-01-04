@@ -109,7 +109,8 @@ static s32 DoMount(s32 chan, void* workArea)
 	s32 res                    = CARDMount(chan, (CARDMemoryCard*)workArea, nullptr);
 	switch (res) {
 	case CARD_RESULT_READY:
-	case CARD_RESULT_BROKEN: {
+	case CARD_RESULT_BROKEN:
+	{
 		// fetch sector size for utility purposes (+ check card is accessible as a side effect)
 		s32 sectorRes = CARDGetSectorSize(chan, CardUtilSectorSize());
 		if (sectorRes < 0) {
@@ -121,7 +122,8 @@ static s32 DoMount(s32 chan, void* workArea)
 		res = CARDCheck(chan);
 	} break;
 
-	case CARD_RESULT_ENCODING: {
+	case CARD_RESULT_ENCODING:
+	{
 		// fetch sector size for utility purposes (+ check card is accessible as a side effect)
 		s32 sectorRes = CARDGetSectorSize(chan, CardUtilSectorSize());
 		if (sectorRes < 0) {

@@ -2074,7 +2074,8 @@ void BaseShape::read(RandomAccessStream& stream)
 		}
 
 		switch (chunkType) {
-		case BaseShapeChunk::Header: {
+		case BaseShapeChunk::Header:
+		{
 			stream.skipPadding(0x20);
 			int unused   = stream.readInt();
 			mSystemFlags = stream.readInt();
@@ -2082,7 +2083,8 @@ void BaseShape::read(RandomAccessStream& stream)
 			break;
 		}
 
-		case BaseShapeChunk::Vertex: {
+		case BaseShapeChunk::Vertex:
+		{
 			before = gsys->getHeap(SYSHEAP_App)->getFree();
 
 			mVertexCount = stream.readInt();
@@ -2098,7 +2100,8 @@ void BaseShape::read(RandomAccessStream& stream)
 			break;
 		}
 
-		case BaseShapeChunk::VertexNormal: {
+		case BaseShapeChunk::VertexNormal:
+		{
 			before = gsys->getHeap(SYSHEAP_App)->getFree();
 
 			mNormalCount = stream.readInt();
@@ -2114,7 +2117,8 @@ void BaseShape::read(RandomAccessStream& stream)
 			break;
 		}
 
-		case BaseShapeChunk::VertexNBT: {
+		case BaseShapeChunk::VertexNBT:
+		{
 			before = gsys->getHeap(SYSHEAP_App)->getFree();
 
 			mNBTCount = stream.readInt();
@@ -2132,7 +2136,8 @@ void BaseShape::read(RandomAccessStream& stream)
 			break;
 		}
 
-		case BaseShapeChunk::VertexColour: {
+		case BaseShapeChunk::VertexColour:
+		{
 			before = gsys->getHeap(SYSHEAP_App)->getFree();
 
 			mVtxColorCount = stream.readInt();
@@ -2155,7 +2160,8 @@ void BaseShape::read(RandomAccessStream& stream)
 		case BaseShapeChunk::TexCoord4:
 		case BaseShapeChunk::TexCoord5:
 		case BaseShapeChunk::TexCoord6:
-		case BaseShapeChunk::TexCoord7: {
+		case BaseShapeChunk::TexCoord7:
+		{
 			before    = gsys->getHeap(SYSHEAP_App)->getFree();
 			int index = chunkType - BaseShapeChunk::TexCoord0;
 
@@ -2174,7 +2180,8 @@ void BaseShape::read(RandomAccessStream& stream)
 			break;
 		}
 
-		case BaseShapeChunk::Texture: {
+		case BaseShapeChunk::Texture:
+		{
 			before = gsys->getHeap(SYSHEAP_App)->getFree();
 
 			mTextureCount = stream.readInt();
@@ -2190,7 +2197,8 @@ void BaseShape::read(RandomAccessStream& stream)
 			break;
 		}
 
-		case BaseShapeChunk::TextureAttribute: {
+		case BaseShapeChunk::TextureAttribute:
+		{
 			before = gsys->getHeap(SYSHEAP_App)->getFree();
 
 			mTexAttrCount = stream.readInt();
@@ -2206,7 +2214,8 @@ void BaseShape::read(RandomAccessStream& stream)
 			break;
 		}
 
-		case BaseShapeChunk::Material: {
+		case BaseShapeChunk::Material:
+		{
 			before = gsys->getHeap(SYSHEAP_App)->getFree();
 
 			mMaterialCount = stream.readInt();
@@ -2240,7 +2249,8 @@ void BaseShape::read(RandomAccessStream& stream)
 			break;
 		}
 
-		case BaseShapeChunk::VertexMatrix: {
+		case BaseShapeChunk::VertexMatrix:
+		{
 			before = gsys->getHeap(SYSHEAP_App)->getFree();
 
 			mVtxMatrixCount = stream.readInt();
@@ -2256,7 +2266,8 @@ void BaseShape::read(RandomAccessStream& stream)
 			break;
 		}
 
-		case BaseShapeChunk::MatrixEnvelope: {
+		case BaseShapeChunk::MatrixEnvelope:
+		{
 			before = gsys->getHeap(SYSHEAP_App)->getFree();
 
 			mEnvelopeCount = stream.readInt();
@@ -2272,7 +2283,8 @@ void BaseShape::read(RandomAccessStream& stream)
 			break;
 		}
 
-		case BaseShapeChunk::Mesh: {
+		case BaseShapeChunk::Mesh:
+		{
 			before = gsys->getHeap(SYSHEAP_App)->getFree();
 
 			mMeshCount = stream.readInt();
@@ -2288,7 +2300,8 @@ void BaseShape::read(RandomAccessStream& stream)
 			break;
 		}
 
-		case BaseShapeChunk::Joint: {
+		case BaseShapeChunk::Joint:
+		{
 			before = gsys->getHeap(SYSHEAP_App)->getFree();
 
 			mJointCount = stream.readInt();
@@ -2342,7 +2355,8 @@ void BaseShape::read(RandomAccessStream& stream)
 			break;
 		}
 
-		case BaseShapeChunk::JointName: {
+		case BaseShapeChunk::JointName:
+		{
 			before = gsys->getHeap(SYSHEAP_App)->getFree();
 
 			mJointCount = stream.readInt();
@@ -2357,7 +2371,8 @@ void BaseShape::read(RandomAccessStream& stream)
 			break;
 		}
 
-		case BaseShapeChunk::CollisionPrism: {
+		case BaseShapeChunk::CollisionPrism:
+		{
 			before = gsys->getHeap(SYSHEAP_App)->getFree();
 
 			mTriCount      = stream.readInt();
@@ -2383,7 +2398,8 @@ void BaseShape::read(RandomAccessStream& stream)
 			break;
 		}
 
-		case BaseShapeChunk::CollisionGrid: {
+		case BaseShapeChunk::CollisionGrid:
+		{
 			before = gsys->getHeap(SYSHEAP_App)->getFree();
 			stream.skipPadding(0x20);
 			mCourseExtents.read(stream);
@@ -2468,7 +2484,8 @@ void BaseShape::read(RandomAccessStream& stream)
 			break;
 		}
 
-		default: {
+		default:
+		{
 			skipChunk(stream, length);
 		}
 		}

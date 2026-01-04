@@ -224,28 +224,32 @@ void Quat::fromMat3f(immut Matrix3f& mtx)
 	}
 
 	switch (type) {
-	case 0: {
+	case 0:
+	{
 		s     = std::sqrtf(a);
 		f32 t = 0.25f / s;
 		v.x   = t * (mtx.mMtx[2][1] - mtx.mMtx[1][2]);
 		v.y   = t * (mtx.mMtx[0][2] - mtx.mMtx[2][0]);
 		v.z   = t * (mtx.mMtx[1][0] - mtx.mMtx[0][1]);
 	} break;
-	case 1: {
+	case 1:
+	{
 		v.x   = std::sqrtf(b);
 		f32 t = 0.25f / v.x;
 		s     = t * (mtx.mMtx[2][1] - mtx.mMtx[1][2]);
 		v.y   = t * (mtx.mMtx[0][1] + mtx.mMtx[1][0]);
 		v.z   = t * (mtx.mMtx[0][2] + mtx.mMtx[2][0]);
 	} break;
-	case 2: {
+	case 2:
+	{
 		v.y   = std::sqrtf(c);
 		f32 t = 0.25f / v.y;
 		s     = t * (mtx.mMtx[0][2] - mtx.mMtx[2][0]);
 		v.z   = t * (mtx.mMtx[1][2] + mtx.mMtx[2][1]);
 		v.x   = t * (mtx.mMtx[1][0] + mtx.mMtx[0][1]);
 	} break;
-	case 3: {
+	case 3:
+	{
 		v.z   = std::sqrtf(d);
 		f32 t = 0.25f / v.z;
 		s     = t * (mtx.mMtx[1][0] - mtx.mMtx[0][1]);
