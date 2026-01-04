@@ -129,7 +129,7 @@ public:
 
 	void forceFinishLook()
 	{
-		mLookAtPosPtr = nullptr;
+		mLookAtPosPtr     = nullptr;
 		mHeadYawOffsetRel = mHeadPitchOffset = 0.0f;
 		mLookTimer                           = 0;
 	}
@@ -246,17 +246,17 @@ public:
 	int _934;                            // _934, unused
 
 	///////// Whistle /////////
-	Vector3f mWhistleFxPosArr[32];                   // _938
-	f32 mWhistleTimer;                            // _AB8
-	int mWhistleCircleMode;                       // _ABC
-	f32 mWhistleRadiusFrac;                       // _AC0
-	f32 _AC4;                            // _AC4
-	f32 mWhistleCircleRadius;            // _AC8
-	bool _ACC;                           // _ACC, unused
-	CollTriInfo* _AD0;                   // _AD0, functionally unused
-	u8 _AD4[0x4];                        // _AD4, unknown
-	f32 _AD8;                            // _AD8, cliff distance?
-	AState<Navi>* mCurrState;            // _ADC
+	Vector3f mWhistleFxPosArr[32]; // _938
+	f32 mWhistleTimer;             // _AB8
+	int mWhistleCircleMode;        // _ABC
+	f32 mWhistleRadiusFrac;        // _AC0
+	f32 _AC4;                      // _AC4
+	f32 mWhistleCircleRadius;      // _AC8
+	bool _ACC;                     // _ACC, unused
+	CollTriInfo* _AD0;             // _AD0, functionally unused
+	u8 _AD4[0x4];                  // _AD4, unknown
+	f32 _AD8;                      // _AD8, cliff distance?
+	AState<Navi>* mCurrState;      // _ADC
 };
 
 /**

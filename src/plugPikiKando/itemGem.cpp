@@ -157,9 +157,9 @@ void GemItem::startAI(int)
 	// Is this an idiom for something?
 	startMotion(0);
 	stopMotion();
-	mIsRising = false;
+	mIsRising    = false;
 	mRouteTracer = nullptr;
-	mIsFree   = false;
+	mIsFree      = false;
 }
 
 /**
