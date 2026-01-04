@@ -23,6 +23,11 @@ AlignOperands: AlignAfterOperator
 AllowShortFunctionsOnASingleLine: InlineOnly
 AllowShortIfStatementsOnASingleLine: Never
 
+BreakBeforeBraces: Custom
+BraceWrapping:
+  AfterCaseLabel: true
+  AfterFunction: true
+
 Cpp11BracedListStyle: false
 
 AlwaysBreakTemplateDeclarations: true
