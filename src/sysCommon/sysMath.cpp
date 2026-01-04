@@ -231,7 +231,8 @@ void Quat::fromMat3f(immut Matrix3f& mtx)
 		v.x   = t * (mtx.mMtx[2][1] - mtx.mMtx[1][2]);
 		v.y   = t * (mtx.mMtx[0][2] - mtx.mMtx[2][0]);
 		v.z   = t * (mtx.mMtx[1][0] - mtx.mMtx[0][1]);
-	} break;
+		break;
+	}
 	case 1:
 	{
 		v.x   = std::sqrtf(b);
@@ -239,7 +240,8 @@ void Quat::fromMat3f(immut Matrix3f& mtx)
 		s     = t * (mtx.mMtx[2][1] - mtx.mMtx[1][2]);
 		v.y   = t * (mtx.mMtx[0][1] + mtx.mMtx[1][0]);
 		v.z   = t * (mtx.mMtx[0][2] + mtx.mMtx[2][0]);
-	} break;
+		break;
+	}
 	case 2:
 	{
 		v.y   = std::sqrtf(c);
@@ -247,7 +249,8 @@ void Quat::fromMat3f(immut Matrix3f& mtx)
 		s     = t * (mtx.mMtx[0][2] - mtx.mMtx[2][0]);
 		v.z   = t * (mtx.mMtx[1][2] + mtx.mMtx[2][1]);
 		v.x   = t * (mtx.mMtx[1][0] + mtx.mMtx[0][1]);
-	} break;
+		break;
+	}
 	case 3:
 	{
 		v.z   = std::sqrtf(d);
@@ -255,7 +258,8 @@ void Quat::fromMat3f(immut Matrix3f& mtx)
 		s     = t * (mtx.mMtx[1][0] - mtx.mMtx[0][1]);
 		v.x   = t * (mtx.mMtx[2][0] + mtx.mMtx[0][2]);
 		v.y   = t * (mtx.mMtx[2][1] + mtx.mMtx[1][2]);
-	} break;
+		break;
+	}
 	}
 
 	if (s < 0.0f) {

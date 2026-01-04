@@ -642,8 +642,8 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 				mWaitTimer = 0.0f;
 			}
 		}
-	} break;
-
+		break;
+	}
 	case FormatConfirmation:
 		if (checkTypingAll()) {
 			mStatus = DoYouFormat;
@@ -679,8 +679,8 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 				mStatus    = WritingFormatMsg;
 			}
 		}
-	} break;
-
+		break;
+	}
 	case Formatting:
 		DispYesNo(false);
 		DispAcup(true);
@@ -758,8 +758,8 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 			mWaitTimer = 0.0f;
 #endif
 		}
-	} break;
-
+		break;
+	}
 	case RepairFile:
 		DispYesNo(false);
 		DispAcup(true);

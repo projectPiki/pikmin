@@ -3113,8 +3113,8 @@ void PikiEmotionState::init(Piki* piki)
 		piki->startMotion(PaniMotionInfo(motionID, piki), PaniMotionInfo(motionID));
 		piki->mPikiAnimMgr.finishMotion(piki);
 		PRINT("play sound %d\n", TERNARY_BUGFIX(soundChoices[randIdx], motionID)); // wrong variable kando
-	} break;
-
+		break;
+	}
 	case PikiEmotion::Happy:
 	{
 		immut Choice motionChoices[3] = {
@@ -3134,8 +3134,8 @@ void PikiEmotionState::init(Piki* piki)
 		seSystem->playPikiSound(soundChoices[randIdx], piki->mSRT.t);
 		piki->startMotion(PaniMotionInfo(motionID, piki), PaniMotionInfo(motionID));
 		piki->mPikiAnimMgr.finishMotion(piki);
-	} break;
-
+		break;
+	}
 	case PikiEmotion::Searching:
 	{
 		immut Choice motionChoices[2] = {
@@ -3146,8 +3146,8 @@ void PikiEmotionState::init(Piki* piki)
 		int motionID = selectRandomly(motionChoices, 2);
 		piki->startMotion(PaniMotionInfo(motionID, piki), PaniMotionInfo(motionID));
 		piki->mPikiAnimMgr.finishMotion(piki);
-	} break;
-
+		break;
+	}
 	case PikiEmotion::Confused:
 	{
 		immut Choice motionChoices[2] = {
@@ -3165,36 +3165,36 @@ void PikiEmotionState::init(Piki* piki)
 		seSystem->playPikiSound(soundChoices[randIdx], piki->mSRT.t);
 		piki->startMotion(PaniMotionInfo(motionID, piki), PaniMotionInfo(motionID));
 		piki->mPikiAnimMgr.finishMotion(piki);
-	} break;
-
+		break;
+	}
 	case PikiEmotion::Sad:
 	{
 		piki->startMotion(PaniMotionInfo(PIKIANIM_Gakkari, piki), PaniMotionInfo(PIKIANIM_Gakkari));
 		piki->mPikiAnimMgr.finishMotion(piki);
 		seSystem->playPikiSound(SEF_PIKI_GAKKARI, piki->mSRT.t);
-	} break;
-
+		break;
+	}
 	case PikiEmotion::ShookDry:
 	{
 		piki->startMotion(PaniMotionInfo(PIKIANIM_Mizuage, piki), PaniMotionInfo(PIKIANIM_Mizuage));
 		piki->mPikiAnimMgr.finishMotion(piki);
 		seSystem->playPikiSound(SEF_PIKI_BURUBURU, piki->mSRT.t);
-	} break;
-
+		break;
+	}
 	case PikiEmotion::Victorious:
 	{
 		piki->startMotion(PaniMotionInfo(PIKIANIM_Jump_B1, piki), PaniMotionInfo(PIKIANIM_Jump_B1));
 		piki->mPikiAnimMgr.finishMotion(piki);
 		seSystem->playPikiSound(SEF_PIKI_YATTA, piki->mSRT.t);
-	} break;
-
+		break;
+	}
 	case PikiEmotion::ShipPartGaze:
 	{
 		piki->startMotion(PaniMotionInfo(PIKIANIM_Wait, piki), PaniMotionInfo(PIKIANIM_Wait));
 		piki->startLook(&piki->mCarryingShipPart->mSRT.t);
 		mGazeFlag = EGP_Gazing;
-	} break;
-
+		break;
+	}
 	case PikiEmotion::ShipPartCheer:
 	{
 		immut Choice motionChoices[5] = {
@@ -3217,7 +3217,8 @@ void PikiEmotionState::init(Piki* piki)
 			piki->startLook(&piki->mCarryingShipPart->mSRT.t);
 			mGazeFlag = EGP_Gazing;
 		}
-	} break;
+		break;
+	}
 	}
 }
 

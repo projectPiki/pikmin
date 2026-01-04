@@ -407,44 +407,51 @@ struct AgeServer : public AtxStream {
 				NewPropWindow("Props", win);
 				writeInt(win);
 				Done();
-			} break;
+				break;
+			}
 			case AGE_SRV_CMD_APPLY_PROP_VALUE_TO_PTR:
 			{
 				PROP_TYPE type = (PROP_TYPE)readInt();
 				void* data     = (void*)readInt();
 				readPropValue(type, data);
-			} break;
+				break;
+			}
 			case AGE_SRV_CMD_0xCC:
 			{
 				u32 win = readInt();
 				writeInt(win); // this might be wrong, if win is supposed to be a struct with a virtual func then idk what it is
 				Done();
-			} break;
+				break;
+			}
 			case AGE_SRV_CMD_0xCD:
 			{
 				u32 win = readInt();
 				writeInt(win);
 				Done();
-			} break;
+				break;
+			}
 			case AGE_SRV_CMD_REQUEST_PROP_VALUE_FROM_PTR:
 			{
 				PROP_TYPE type = (PROP_TYPE)readInt();
 				void* data     = (void*)readInt();
 				writePropValue(type, data);
-			} break;
+				break;
+			}
 			case AGE_SRV_CMD_0xD1:
 			{
 				u32 win = readInt();
 				writeInt(win);
 				Done();
-			} break;
+				break;
+			}
 			case AGE_SRV_CMD_0xD2:
 			{
 				// PRINT("got update genage command\n");
 				u32 win = readInt();
 				writeInt(win);
 				Done();
-			} break;
+				break;
+			}
 			}
 		}
 	}
