@@ -173,13 +173,13 @@ Creature* GenObjectMapParts::birth(BirthInfo& info)
 
 	if (ent) {
 		if (mUseStartOffset == 1) {
-			MapPartsPart* part   = new MapPartsPart(); // this is wrong
-			part->mStartPosition = mStartPosition + info.mPosition;
-			part->mEndPosition   = mEndPosition + info.mPosition;
-			PRINT("start(%.1f %.1f %.1f)\n", part->mStartPosition.x, part->mStartPosition.y, part->mStartPosition.z);
+			LinePath* path       = new LinePath();
+			path->mStartPosition = mStartPosition + info.mPosition;
+			path->mEndPosition   = mEndPosition + info.mPosition;
+			PRINT("start(%.1f %.1f %.1f)\n", path->mStartPosition.x, path->mStartPosition.y, path->mStartPosition.z);
 			PRINT("start (%.1f %.1f %.1f) + info(%.1f %.1f %.1f)\n", mStartPosition.x, mStartPosition.y, mStartPosition.z, info.mPosition.x,
 			      info.mPosition.y, info.mPosition.z);
-			ent->mCurrentPart = part;
+			ent->mLinePath = path;
 		}
 		ent->init();
 		mapMgr->mCollShape->add(ent);

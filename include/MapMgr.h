@@ -181,13 +181,11 @@ struct MapObjectPart : public DynCollShape {
 };
 
 /**
- * @brief TODO
+ * @brief This struct is mentioned literally once in the ILK (its compiler-generated default constructor).
  *
  * @note Size: 0x18.
  */
-struct MapPartsPart {
-	// Fabricated.
-
+struct LinePath {
 	Vector3f mStartPosition; // _00
 	Vector3f mEndPosition;   // _0C
 };
@@ -199,7 +197,7 @@ struct MapParts : public DynCollShape {
 	MapParts(Shape* shape)
 	    : DynCollShape(shape)
 	{
-		mCurrentPart = nullptr;
+		mLinePath = nullptr;
 	}
 
 	virtual void read(RandomAccessStream&) { }                                  // _0C
@@ -213,7 +211,7 @@ struct MapParts : public DynCollShape {
 
 	// _00      = VTBL
 	// _00-_140 = DynCollShape
-	MapPartsPart* mCurrentPart; // _140
+	LinePath* mLinePath;        // _140
 	Vector3f mVelocity;         // _144
 };
 

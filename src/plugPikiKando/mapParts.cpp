@@ -77,8 +77,8 @@ MapSlider::MapSlider(Shape* shape, int activationCount, int triggerCount, f32 ho
  */
 void MapSlider::init()
 {
-	if (mCurrentPart) {
-		mPosition = mCurrentPart->mStartPosition;
+	if (mLinePath) {
+		mPosition = mLinePath->mStartPosition;
 		PRINT("MapSlider init() : t(%.1f %.1f %.1f)\n", mPosition.x, mPosition.y, mPosition.z);
 		mTimer         = mHoldTime1;
 		mStateMode     = 2;
@@ -101,11 +101,11 @@ void MapSlider::update()
 		holdTime = mHoldTime2;
 	}
 
-	if (mCurrentPart) {
+	if (mLinePath) {
 		mPosition = mPosition + mVelocity * gsys->getFrameTime();
 
 		Vector3f targetPosition;
-		targetPosition = (mDirectionMode == 1) ? mCurrentPart->mStartPosition : mCurrentPart->mEndPosition;
+		targetPosition = (mDirectionMode == 1) ? mLinePath->mStartPosition : mLinePath->mEndPosition;
 
 		Vector3f dir = targetPosition - mPosition;
 		f32 distance = dir.normalise();
