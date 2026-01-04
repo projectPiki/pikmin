@@ -345,15 +345,15 @@ u16 P2DPrint::doEscapeCode(const u8** textPtr)
 		// set char top colour (default font top colour, no change if invalid format)
 		u32ToColour(getNumber(textPtr, ColourTou32(mFontTopColour), ColourTou32(mCharTopColour), 16), &mCharTopColour);
 		mFont->setGradColor(mCharTopColour, (mCharGradientActive) ? mCharBottomColour : mCharTopColour);
-	} break;
-
+		break;
+	}
 	case 'GA': // grad color, preserve alpha
 	{
 		// set char bottom colour (default font bottom colour, no change if invalid format)
 		u32ToColour(getNumber(textPtr, ColourTou32(mFontBottomColour), ColourTou32(mCharBottomColour), 16), &mCharBottomColour);
 		mFont->setGradColor(mCharTopColour, (mCharGradientActive) ? mCharBottomColour : mCharTopColour);
-	} break;
-
+		break;
+	}
 	case 'CC': // char color, use font alpha
 	{
 		// set char top colour (default font top colour, no change if invalid format)
@@ -362,8 +362,8 @@ u16 P2DPrint::doEscapeCode(const u8** textPtr)
 		mCharTopColour.a    = alpha;
 		mCharBottomColour.a = alpha;
 		mFont->setGradColor(mCharTopColour, (mCharGradientActive) ? mCharBottomColour : mCharTopColour);
-	} break;
-
+		break;
+	}
 	case 'GC': // grad color, use font alpha
 	{
 		// set char bottom colour (default font bottom colour, no change if invalid format)
@@ -372,16 +372,16 @@ u16 P2DPrint::doEscapeCode(const u8** textPtr)
 		mCharTopColour.a    = alpha;
 		mCharBottomColour.a = alpha;
 		mFont->setGradColor(mCharTopColour, (mCharGradientActive) ? mCharBottomColour : mCharTopColour);
-	} break;
-
+		break;
+	}
 	case 'FX': // fix x (change width)
 	{
 		int width = getNumber(textPtr, mFontWidth, mCharWidth, 10); // default = font width, invalid = no change
 		if (width >= 0) {
 			mCharWidth = width;
 		}
-	} break;
-
+		break;
+	}
 	case 'FY':                                                         // fix y (change height)
 		int height = getNumber(textPtr, mFontHeight, mCharHeight, 10); // default = font height, invalid = no change
 		if (height >= 0) {
@@ -402,8 +402,8 @@ u16 P2DPrint::doEscapeCode(const u8** textPtr)
 		mCharGradientActive
 		    = getNumber(textPtr, !mCharGradientActive, mCharGradientActive, 10) != 0; // default = switch to opposite, invalid = no change
 		mFont->setGradColor(mCharTopColour, (mCharGradientActive) ? mCharBottomColour : mCharTopColour);
-	} break;
-
+		break;
+	}
 	case 'HM': // ??
 		break;
 

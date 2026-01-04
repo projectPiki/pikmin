@@ -830,9 +830,8 @@ int ActTransport::exec()
 			mPiki->mPikiAnimMgr.finishMotion(this);
 			mPiki->endStickObject();
 		}
-
-	} break;
-
+		break;
+	}
 	case STATE_Move:
 		return moveToWayPoint();
 

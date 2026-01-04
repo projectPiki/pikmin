@@ -537,9 +537,8 @@ int ActJumpAttack::exec()
 		}
 
 		mPiki->mFaceDirection = roundAng(mPiki->mFaceDirection + 0.2f * angle);
-
-	} break;
-
+		break;
+	}
 	case 0:
 	{
 		Vector3f direction = getAttackPos() - mPiki->mSRT.t;
@@ -576,9 +575,8 @@ int ActJumpAttack::exec()
 			mPiki->playEventSound(target, SE_PIKI_ATTACK_VOICE);
 			mAttackState = 0;
 		}
-
-	} break;
-
+		break;
+	}
 	case 4:
 	{
 		mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
@@ -640,7 +638,8 @@ int ActJumpAttack::exec()
 		if (mAttackState == 4) {
 			return ACTOUT_Success;
 		}
-	} break;
+		break;
+	}
 	case 5:
 	{
 		mPiki->mVelocity.set(0.0f, 0.0f, 0.0f);
@@ -698,7 +697,8 @@ int ActJumpAttack::exec()
 			mState = 0;
 			return ACTOUT_Continue;
 		}
-	} break;
+		break;
+	}
 	}
 
 	return ACTOUT_Continue;

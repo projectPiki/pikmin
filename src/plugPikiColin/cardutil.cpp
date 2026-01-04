@@ -120,8 +120,8 @@ static s32 DoMount(s32 chan, void* workArea)
 
 		// double check card is valid and working
 		res = CARDCheck(chan);
-	} break;
-
+		break;
+	}
 	case CARD_RESULT_ENCODING:
 	{
 		// fetch sector size for utility purposes (+ check card is accessible as a side effect)
@@ -130,7 +130,8 @@ static s32 DoMount(s32 chan, void* workArea)
 			// throw error
 			return sectorRes;
 		}
-	} break;
+		break;
+	}
 	}
 
 	// if everything is fine, calc what's free on memory card and update our values

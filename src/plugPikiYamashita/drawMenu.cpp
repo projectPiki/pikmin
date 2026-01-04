@@ -189,7 +189,8 @@ bool zen::DrawMenuTitle::update(f32 dt)
 		case MODE_Wait:
 		{
 			mTitlePane->setScale(0.0f);
-		} break;
+			break;
+		}
 		case MODE_Start:
 		{
 			xScale = (1.0f - NMathF::sin(HALF_PI * dt)) * 3.0f + 1.0f;
@@ -198,11 +199,13 @@ bool zen::DrawMenuTitle::update(f32 dt)
 				tmp = 0.0f;
 			}
 			mTitlePane->setScale(xScale, NMathF::sin(HALF_PI * tmp), 1.0f);
-		} break;
+			break;
+		}
 		case MODE_Operation:
 		{
 			mTitlePane->setScale(1.0f);
-		} break;
+			break;
+		}
 		case MODE_End:
 		{
 			dt     = 1.0f - dt;
@@ -212,11 +215,13 @@ bool zen::DrawMenuTitle::update(f32 dt)
 				tmp = 0.0f;
 			}
 			mTitlePane->setScale(xScale, NMathF::sin(HALF_PI * tmp), 1.0f);
-		} break;
+			break;
+		}
 		default:
 		{
 			ERROR("Unknown Status %d \n", mMode);
-		} break;
+			break;
+		}
 		}
 	}
 
