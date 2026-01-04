@@ -277,9 +277,12 @@ void ActTransport::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
 	case KEY_Action0:
+	{
 		mIsLiftActionDone = true;
 		break;
+	}
 	case KEY_LoopEnd:
+	{
 		if (mState == STATE_Lift) {
 			Pellet* pel  = mPellet.getPtr();
 			int numStick = getNumStickers();
@@ -291,7 +294,9 @@ void ActTransport::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 			}
 		}
 		break;
+	}
 	case KEY_Finished:
+	{
 		if (mState == STATE_Put) {
 			mFinishPutting = true;
 			break;
@@ -302,6 +307,7 @@ void ActTransport::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 			mLiftRetryCount   = int(3.0f * gsys->getRand(1.0f)) + 5;
 		}
 		break;
+	}
 	}
 }
 
@@ -717,9 +723,11 @@ int ActTransport::exec()
 
 	switch (mState) {
 	case STATE_Wait:
+	{
 		return exeWait();
-
+	}
 	case STATE_Go:
+	{
 		if (gotoLiftPos()) {
 			break;
 		}
@@ -728,14 +736,16 @@ int ActTransport::exec()
 			return ACTOUT_Fail;
 		}
 		return ACTOUT_Fail;
-
+	}
 	case STATE_Jump:
+	{
 		return execJump();
-
+	}
 	case STATE_Lift:
+	{
 		doLift();
 		break;
-
+	}
 	case STATE_Goal:
 	{
 		Stickers stuckList(pel);
@@ -833,11 +843,13 @@ int ActTransport::exec()
 		break;
 	}
 	case STATE_Move:
+	{
 		return moveToWayPoint();
-
+	}
 	case STATE_Guru:
+	{
 		return moveGuruGuru();
-
+	}
 	case STATE_Put:
 	{
 		if (!mFinishPutting) {

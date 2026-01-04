@@ -82,45 +82,68 @@ void GoalItem::playEffect(int id)
 	case 9:
 	case 10:
 	case 11:
+	{
 		switch (id) {
 		case 0:
+		{
 			effectMgr->create(EffectMgr::EFF_Rocket_LandS, mSRT.t, nullptr, nullptr);
 			break;
+		}
 		case 1:
+		{
 			effectMgr->create(EffectMgr::EFF_Rocket_SmokeD, mCollInfo->getSphere('bas1')->mCentre, nullptr, nullptr);
 			break;
+		}
 		case 2:
+		{
 			effectMgr->create(EffectMgr::EFF_Rocket_SmokeD, mCollInfo->getSphere('bas1')->mCentre, nullptr, nullptr);
 			effectMgr->create(EffectMgr::EFF_Rocket_SmokeD, mCollInfo->getSphere('bas2')->mCentre, nullptr, nullptr);
 			effectMgr->create(EffectMgr::EFF_Rocket_SmokeD, mCollInfo->getSphere('bas3')->mCentre, nullptr, nullptr);
 			break;
+		}
 		case 3:
+		{
 			setFlowEffect(false);
 			break;
+		}
 		case 4:
+		{
 			setFlightLight(false);
 			break;
 		}
+		}
 		break;
+	}
 	case 6:
 	case 7:
 	case 8:
+	{
 		switch (id) {
 		case 0:
+		{
 			setFlowEffect(true);
 			break;
+		}
 		case 1:
+		{
 			startConeShrink();
 			break;
+		}
 		case 2:
+		{
 			effectMgr->create(EffectMgr::EFF_Rocket_TakeS, mSRT.t, nullptr, nullptr);
 			break;
+		}
 		case 3:
+		{
 			setFlightLight(true);
 			break;
 		}
+		}
 		break;
+	}
 	case 12:
+	{
 		if (aiCullable()) {
 			Vector3f pos[4];
 			pos[0] = mCollInfo->getSphere('eff1')->mCentre;
@@ -143,11 +166,14 @@ void GoalItem::playEffect(int id)
 			playEventSound(this, EffectMgr::EFF_Bridge_FinishStage);
 		}
 		break;
+	}
 	case 3:
 	case 4:
 	case 5:
+	{
 		switch (id) {
 		case 0:
+		{
 			CollPart* coll = mCollInfo->getSphere('piki');
 			if (!coll) {
 				ERROR("no flow!\n");
@@ -156,7 +182,9 @@ void GoalItem::playEffect(int id)
 			effectMgr->create(EffectMgr::EFF_UfoPart_KafunB, pos, nullptr, nullptr);
 			effectMgr->create(EffectMgr::EFF_Kafun_BS, pos, nullptr, nullptr);
 			break;
+		}
 		case 1:
+		{
 			Vector3f pos2(mSRT.t);
 			if (mOnionColour == Blue) {
 				effectMgr->create(EffectMgr::EFF_Onyon_Bubbles, pos2, nullptr, nullptr);
@@ -173,7 +201,9 @@ void GoalItem::playEffect(int id)
 				effectMgr->create(EffectMgr::EFF_Onyon_Suck2, pos2, nullptr, nullptr);
 			}
 			break;
+		}
 		case 2:
+		{
 			routeMgr->getWayPoint('test', mWaypointIdx)->setFlag(true);
 			if (mOnionColour == Blue) {
 				effectMgr->create(EffectMgr::EFF_Onyon_BubblesSmall, mCollInfo->getSphere('bas1')->mCentre, nullptr, nullptr);
@@ -181,7 +211,9 @@ void GoalItem::playEffect(int id)
 				effectMgr->create(EffectMgr::EFF_SmokeRing_M, mCollInfo->getSphere('bas1')->mCentre, nullptr, nullptr);
 			}
 			break;
+		}
 		case 3:
+		{
 			if (mOnionColour == Blue) {
 				effectMgr->create(EffectMgr::EFF_Onyon_BubblesSmall, mCollInfo->getSphere('bas1')->mCentre, nullptr, nullptr);
 				effectMgr->create(EffectMgr::EFF_Onyon_BubblesSmall, mCollInfo->getSphere('bas2')->mCentre, nullptr, nullptr);
@@ -192,12 +224,16 @@ void GoalItem::playEffect(int id)
 				effectMgr->create(EffectMgr::EFF_SmokeRing_M, mCollInfo->getSphere('bas3')->mCentre, nullptr, nullptr);
 			}
 			break;
+		}
 		case 4:
+		{
 			enableColorAnim();
 			mColourFadeRate = 20.0f;
 			break;
 		}
+		}
 		break;
+	}
 	}
 
 	STACK_PAD_TERNARY(id, 1);

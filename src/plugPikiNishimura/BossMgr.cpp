@@ -557,35 +557,55 @@ void BossMgr::init(int bossID, int count)
 
 	switch (bossID) {
 	case BOSS_Spider:
+	{
 		initSpider(count);
 		break;
+	}
 	case BOSS_Snake:
+	{
 		initSnake(count);
 		break;
+	}
 	case BOSS_BoxSnake:
+	{
 		initBoxSnake(count);
 		break;
+	}
 	case BOSS_Slime:
+	{
 		initSlime(count);
 		break;
+	}
 	case BOSS_King:
+	{
 		initKing(count);
 		break;
+	}
 	case BOSS_Kogane:
+	{
 		initKogane(count);
 		break;
+	}
 	case BOSS_Pom:
+	{
 		initPom(count);
 		break;
+	}
 	case BOSS_KingBack:
+	{
 		initKingBack(count);
 		break;
+	}
 	case BOSS_Mizu:
+	{
 		initMizu(count);
 		break;
+	}
 	case BOSS_Geyzer:
+	{
 		initGeyzer(count);
 		break;
+	}
 	}
 
 	mInitialisedBossCounts[bossID] = count;
@@ -599,6 +619,7 @@ Creature* BossMgr::create(int genBossID, BirthInfo& birthInfo, GenObjectBoss* ge
 	Boss* boss = nullptr;
 	switch (genBossID) {
 	case GENBOSS_Spider:
+	{
 		boss = createBoss(BOSS_Spider);
 		if (boss) {
 			boss->initBoss(birthInfo, OBJTYPE_Spider);
@@ -606,8 +627,9 @@ Creature* BossMgr::create(int genBossID, BirthInfo& birthInfo, GenObjectBoss* ge
 			setBossParam(boss, genBoss);
 		}
 		break;
-
+	}
 	case GENBOSS_Snake:
+	{
 		boss = createBoss(BOSS_Snake);
 		if (boss) {
 			boss->initBoss(birthInfo, OBJTYPE_Snake);
@@ -615,8 +637,9 @@ Creature* BossMgr::create(int genBossID, BirthInfo& birthInfo, GenObjectBoss* ge
 			setBossParam(boss, genBoss);
 		}
 		break;
-
+	}
 	case GENBOSS_BoxSnake:
+	{
 		boss = createBoss(BOSS_BoxSnake);
 		if (boss) {
 			boss->initBoss(birthInfo, OBJTYPE_Snake);
@@ -625,8 +648,9 @@ Creature* BossMgr::create(int genBossID, BirthInfo& birthInfo, GenObjectBoss* ge
 			static_cast<Snake*>(boss)->setBossType(false);
 		}
 		break;
-
+	}
 	case GENBOSS_Slime:
+	{
 		boss = createBoss(BOSS_Slime);
 		if (boss) {
 			boss->initBoss(birthInfo, OBJTYPE_Slime);
@@ -647,8 +671,9 @@ Creature* BossMgr::create(int genBossID, BirthInfo& birthInfo, GenObjectBoss* ge
 			static_cast<CoreNucleus*>(nucleus)->mSlime = static_cast<Slime*>(boss);
 		}
 		break;
-
+	}
 	case GENBOSS_King:
+	{
 		boss = createBoss(BOSS_King);
 		if (boss) {
 			boss->initBoss(birthInfo, OBJTYPE_King);
@@ -656,8 +681,9 @@ Creature* BossMgr::create(int genBossID, BirthInfo& birthInfo, GenObjectBoss* ge
 			setBossParam(boss, genBoss);
 		}
 		break;
-
+	}
 	case GENBOSS_Kogane:
+	{
 		boss = createBoss(BOSS_Kogane);
 		if (boss) {
 			boss->initBoss(birthInfo, OBJTYPE_Kogane);
@@ -665,8 +691,9 @@ Creature* BossMgr::create(int genBossID, BirthInfo& birthInfo, GenObjectBoss* ge
 			setBossParam(boss, genBoss);
 		}
 		break;
-
+	}
 	case GENBOSS_Pom:
+	{
 		if (playerState->hasContainer(genBoss->mItemColour)) {
 			boss = createBoss(BOSS_Pom);
 			if (boss) {
@@ -677,8 +704,9 @@ Creature* BossMgr::create(int genBossID, BirthInfo& birthInfo, GenObjectBoss* ge
 			}
 		}
 		break;
-
+	}
 	case GENBOSS_KingBack:
+	{
 		boss = createBoss(BOSS_KingBack);
 		if (boss) {
 			boss->initBoss(birthInfo, OBJTYPE_KingBack);
@@ -686,8 +714,9 @@ Creature* BossMgr::create(int genBossID, BirthInfo& birthInfo, GenObjectBoss* ge
 			setBossParam(boss, genBoss);
 		}
 		break;
-
+	}
 	case GENBOSS_Mizu:
+	{
 		boss = createBoss(BOSS_Mizu);
 		if (boss) {
 			boss->initBoss(birthInfo, OBJTYPE_Mizu);
@@ -695,7 +724,9 @@ Creature* BossMgr::create(int genBossID, BirthInfo& birthInfo, GenObjectBoss* ge
 			setBossParam(boss, genBoss);
 		}
 		break;
+	}
 	case GENBOSS_Geyzer:
+	{
 		boss = createBoss(BOSS_Geyzer);
 		if (boss) {
 			boss->initBoss(birthInfo, OBJTYPE_Mizu);
@@ -703,6 +734,7 @@ Creature* BossMgr::create(int genBossID, BirthInfo& birthInfo, GenObjectBoss* ge
 			setBossParam(boss, genBoss);
 		}
 		break;
+	}
 	}
 
 	return boss;

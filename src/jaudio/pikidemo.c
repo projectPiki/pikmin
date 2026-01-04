@@ -233,7 +233,9 @@ BOOL Jac_DemoWalkCheck()
 	case DEMOID_LandingForest:
 	case DEMOID_LandingCaveLast:
 	case DEMOID_LandingYakushima:
+	{
 		return TRUE;
+	}
 	}
 	return FALSE;
 }
@@ -250,12 +252,14 @@ BOOL Jac_DemoCheckEvent(u8 evt)
 		case DEMOID_DayEndForest:
 		case DEMOID_DayEndCaveLast:
 		case DEMOID_DayEndYakushima:
+		{
 #if defined(VERSION_GPIJ01_01)
 			if (evt == 3)
 				return TRUE;
 #endif
 
 			return FALSE;
+		}
 		}
 
 		if (DEMO_STATUS[current_demo_no].mGameplayFlags == 2) {
@@ -290,11 +294,15 @@ static void DoSequence(u32 cinID, u32 a2)
 		if (REF_flag[1] == 0xfff9) {
 			switch (cinID) {
 			case DEMOID_CollectFirstPartPractice:
+			{
 				__Prepare_BGM(DEMOID_ShipUpgradePractice);
 				break;
+			}
 			case DEMOID_Unk24:
+			{
 				__Prepare_BGM(DEMOID_ShipUpgradeLast);
 				break;
+			}
 			}
 		} else if (REF_flag[1] == 0xfffa) {
 			if (DEMO_STATUS[cinID].mAudioConfig & 0x80) {
@@ -372,10 +380,13 @@ void Jac_StartDemo(u32 cinID)
 		case DEMOID_Unk94:
 		case DEMOID_GoodEndingTakeOff:
 		case DEMOID_NeutralEndingLeaveOK:
+		{
 			break;
-
+		}
 		default:
+		{
 			return;
+		}
 		}
 	}
 
@@ -384,7 +395,9 @@ void Jac_StartDemo(u32 cinID)
 	case DEMOID_TakeOffForest:
 	case DEMOID_TakeOffCaveLast:
 	case DEMOID_TakeOffYakushima:
+	{
 		return;
+	}
 	}
 
 	if (current_demo_no != -1 && cinID == current_demo_no) {
@@ -397,7 +410,9 @@ void Jac_StartDemo(u32 cinID)
 		case DEMOID_Unk37:
 		case DEMOID_Unk38:
 		case DEMOID_Unk39:
+		{
 			return;
+		}
 		}
 	}
 
@@ -417,18 +432,26 @@ void Jac_StartDemo(u32 cinID)
 	case DEMOID_ShipUpgradeCave:
 	case DEMOID_ShipUpgradeYakushima:
 	case DEMOID_Unk80:
+	{
 		switch (demo_parts_num) {
 		case 4:
+		{
 			cinID = DEMOID_ShipUpgradeForest;
 			break;
+		}
 		case 7:
+		{
 			cinID = DEMOID_ShipUpgradeCave;
 			break;
+		}
 		case 29:
+		{
 			cinID = DEMOID_ShipUpgradeYakushima;
 			break;
 		}
+		}
 		break;
+	}
 #endif
 
 	case DEMOID_CollectPartForest:
@@ -436,42 +459,47 @@ void Jac_StartDemo(u32 cinID)
 	case DEMOID_CollectPartYakushima:
 	case DEMOID_Unk24:
 	case DEMOID_CollectPartPractice:
+	{
 		if (parts_bright_table[demo_parts_id] == 0) {
 			status = &DEMO_STATUS[DEMOID_ShipUpgradeNonSparkling];
 			cinID  = DEMOID_ShipUpgradeNonSparkling;
 		}
 		break;
-
+	}
 	case DEMOID_ChalDayEndPractice:
 	case DEMOID_ChalDayEndForest:
 	case DEMOID_ChalDayEndCave:
 	case DEMOID_ChalDayEndYakushima:
 	case DEMOID_ChalDayEndLast:
+	{
 		if (Jac_TellChgMode()) {
 			status = &DEMO_STATUS[DEMOID_GenericDayEndChal];
 			cinID  = DEMOID_GenericDayEndChal;
 		}
 		break;
-
+	}
 	case DEMOID_LandingPractice:
 	case DEMOID_LandingForest:
 	case DEMOID_LandingCaveLast:
 	case DEMOID_LandingYakushima:
 	case DEMOID_GenericLanding:
+	{
 		if (demo_onyon_num == 3) {
 			status = &DEMO_STATUS[DEMOID_Unk100];
 			cinID  = DEMOID_Unk100;
 		}
 		break;
-
+	}
 	case DEMOID_DayEndPractice:
 	case DEMOID_DayEndForest:
 	case DEMOID_DayEndCaveLast:
 	case DEMOID_DayEndYakushima:
 	case DEMOID_GenericDayEnd:
+	{
 		Jac_PlayOrimaSe(JACORIMA_PikiHit);
 		Jac_Delete_CurrentBgmWave();
 		break;
+	}
 	}
 
 	if (status->mPlayStartSound) {
@@ -491,49 +519,70 @@ void Jac_StartDemo(u32 cinID)
 
 	switch (status->mBgmFadeMode) {
 	case 0:
+	{
 		Jac_StopBgm(0);
 		Jac_StopBgm(1);
 		break;
+	}
 	case 1:
+	{
 		break;
+	}
 	case 2:
+	{
 		Jac_DemoFade(1, 15, 0.01f);
 		break;
+	}
 	case 4:
+	{
 		Jac_FadeOutBgm(0, 15);
 		Jac_FadeOutBgm(1, 15);
 		break;
+	}
 	case 5:
+	{
 		Jac_DemoFade(1, 30, 0.5f);
 		break;
+	}
 	case 3:
+	{
 		Jac_DemoFade(1, 8, 0.0f);
 		break;
+	}
 	}
 
 	switch (status->mGameplayFlags) {
 	case 0:
+	{
 		break;
+	}
 	case 1:
+	{
 		event_pause_counter = 0;
 		seqp_* track        = Jam_GetTrackHandle(0x20000);
 		seqp_** tp          = &track;
 		Jam_PauseTrack(track, 1);
 		break;
+	}
 	case 2:
+	{
 		Jac_InitAllEvent();
 		Jac_Orima_Formation(0, 0);
 		break;
+	}
 	}
 
 	switch (cinID) {
 	case 0:
 	case 1:
+	{
 		break;
-
+	}
 	default:
+	{
 		while (now_loading < 3) { }
 		break;
+	}
 	}
 
 	now_loading = 0;
@@ -576,13 +625,19 @@ void Jac_StartDemo(u32 cinID)
 
 	switch (status->mSequenceFlags) {
 	case 0:
+	{
 		break;
+	}
 	case 1:
+	{
 		demo_mml_active = 0;
 		break;
+	}
 	case 3:
+	{
 		demo_mml_active = 0;
 		break;
+	}
 	}
 
 	Jam_WritePortAppDirect(demo_seqp, 0, cinID);
@@ -638,14 +693,20 @@ void Jac_BgmAnimEndRecover()
 	switch (status->mBgmFadeMode) {
 	case 0:
 	case 1:
+	{
 		break;
+	}
 	case 2:
 	case 5:
+	{
 		Jac_DemoFade(2, 70, 0.5);
 		break;
+	}
 	case 3:
+	{
 		Jac_DemoFade(2, 70, 0.5);
 		break;
+	}
 	}
 }
 
@@ -675,26 +736,40 @@ void Jac_DemoBGMForceStop()
 
 	switch (current_seq_bgm) {
 	case 1:
+	{
 		WaveScene_Erase(0xd, 7);
 		break;
+	}
 	case 5:
+	{
 		WaveScene_Erase(0xd, 3);
 		break;
+	}
 	case 6:
+	{
 		WaveScene_Erase(0xd, 4);
 		break;
+	}
 	case 7:
+	{
 		WaveScene_Erase(0xd, 5);
 		break;
+	}
 	case 8:
+	{
 		WaveScene_Erase(0xd, 6);
 		break;
+	}
 	case 9:
+	{
 		WaveScene_Erase(0xd, 1);
 		break;
+	}
 	case 10:
+	{
 		WaveScene_Erase(0xd, 8);
 		break;
+	}
 	}
 	current_seq_bgm = 0;
 }
@@ -713,25 +788,37 @@ void __Jac_FinishDemo()
 	switch (status->mBgmFadeMode) {
 	case 0:
 	case 1:
+	{
 		break;
+	}
 	case 2:
 	case 5:
+	{
 		Jac_DemoFade(0, 70, 1.0f);
 		break;
+	}
 	case 3:
+	{
 		Jac_DemoFade(0, 70, 1.0f);
 		break;
+	}
 	}
 
 	switch (status->mGameplayFlags) {
 	case 2:
+	{
 		Jac_Orima_Formation(0, 0);
 		break;
+	}
 	case 1:
+	{
 		event_pause_counter = 6;
 		break;
+	}
 	case 0:
+	{
 		break;
+	}
 	}
 
 	int flag = status->mAudioConfig;
@@ -766,19 +853,23 @@ void Jac_FinishDemo(void)
 		case DEMOID_ShipUpgradePractice:
 		case DEMOID_CollectFirstPartPractice:
 		case DEMOID_Unk24: // collect final ship part?
+		{
 			break;
-
+		}
 		case DEMOID_GenericDayEnd:
 		case DEMOID_DayEndPractice:
 		case DEMOID_DayEndForest:
 		case DEMOID_DayEndCaveLast:
 		case DEMOID_DayEndYakushima:
+		{
 			demo_end_delay = 100;
 			break;
-
+		}
 		default:
+		{
 			now_loading = 0;
 			break;
+		}
 		}
 	}
 
@@ -828,10 +919,13 @@ void __Prepare_BGM(u32 cinID)
 		case DEMOID_GenericDayEndChal:
 		case DEMOID_GoodEndingTakeOff:
 		case DEMOID_NeutralEndingLeaveOK:
+		{
 			break;
-
+		}
 		default:
+		{
 			return;
+		}
 		}
 	}
 
@@ -841,16 +935,20 @@ void __Prepare_BGM(u32 cinID)
 	case DEMOID_TakeOffForest:
 	case DEMOID_TakeOffCaveLast:
 	case DEMOID_TakeOffYakushima:
+	{
 		return;
+	}
 	}
 
 	flag = status->mAudioConfig;
 	switch (flag & 0x7F) {
 	case 0x40:
 	case 0x0:
+	{
 		break;
-
+	}
 	default:
+	{
 		if (flag & 0x80) {
 			Jac_PrepareDemoSound(flag & 0xf);
 			now_loading = 3;
@@ -864,29 +962,45 @@ void __Prepare_BGM(u32 cinID)
 
 		switch (flag & 0xf) {
 		case 1:
+		{
 			set = WaveScene_Set(0xd, 7);
 			break;
+		}
 		case 5:
+		{
 			set = WaveScene_Set(0xd, 3);
 			break;
+		}
 		case 6:
+		{
 			set = WaveScene_Set(0xd, 4);
 			break;
+		}
 		case 7:
+		{
 			set = WaveScene_Set(0xd, 5);
 			break;
+		}
 		case 8:
+		{
 			set = WaveScene_Set(0xd, 6);
 			break;
+		}
 		case 9:
+		{
 			set = WaveScene_Set(0xd, 1);
 			break;
+		}
 		case 10:
+		{
 			set = WaveScene_Set(0xd, 8);
 			break;
+		}
 		case 0:
+		{
 			now_loading = 3;
 			return;
+		}
 		}
 
 		if (set == FALSE) {
@@ -894,6 +1008,7 @@ void __Prepare_BGM(u32 cinID)
 			return;
 		}
 		break;
+	}
 	}
 
 	DVDT_CheckPass(0x80000000, 0, __Loaded);
@@ -922,10 +1037,13 @@ void Jac_PrepareDemo(u32 cinID)
 		case DEMOID_GenericDayEndChal:
 		case DEMOID_GoodEndingTakeOff:
 		case DEMOID_NeutralEndingLeaveOK:
+		{
 			break;
-
+		}
 		default:
+		{
 			return;
+		}
 		}
 	}
 
@@ -934,7 +1052,9 @@ void Jac_PrepareDemo(u32 cinID)
 	case DEMOID_TakeOffForest:
 	case DEMOID_TakeOffCaveLast:
 	case DEMOID_TakeOffYakushima:
+	{
 		return;
+	}
 	}
 
 	if (now_loading == 0) {
@@ -1004,6 +1124,7 @@ void Jac_StartTextDemo(int textID)
 	if (text_demo_state != 1 && current_demo_no == DEMOID_FINISHED) {
 		switch (parts_find_demo_state) {
 		case 0:
+		{
 			event_pause_counter = 0;
 			Jam_PauseTrack(Jam_GetTrackHandle(0x20000), 1);
 			Jac_Orima_Formation(0, 0);
@@ -1011,6 +1132,7 @@ void Jac_StartTextDemo(int textID)
 			Jac_DemoFade(1, 0x1e, 0.5f);
 			text_demo_state = 1;
 			break;
+		}
 		}
 	}
 }
@@ -1023,11 +1145,13 @@ void Jac_FinishTextDemo(void)
 	if (text_demo_state != 0 && current_demo_no == DEMOID_FINISHED) {
 		switch (parts_find_demo_state) {
 		case 0:
+		{
 			event_pause_counter = 3;
 			Jac_UnPauseOrimaSe();
 			Jac_DemoFade(0, 0x46, 1.0f);
 			text_demo_state = 0;
 			break;
+		}
 		}
 	}
 }

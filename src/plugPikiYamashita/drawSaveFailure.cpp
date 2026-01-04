@@ -39,10 +39,12 @@ bool zen::DrawSaveFailure::update(Controller* controller)
 	bool res = false;
 	switch (mMode) {
 	case MODE_Unk0:
+	{
 		res = true;
 		break;
-
+	}
 	case MODE_Unk1:
+	{
 		f32 frame = calcFrame(mTransitionDuration);
 		if (frame == 1.0f) {
 			setMode(MODE_Unk2);
@@ -51,15 +53,17 @@ bool zen::DrawSaveFailure::update(Controller* controller)
 			mBackIcon->setAlpha(RoundOff(180.0f * frame));
 		}
 		break;
-
+	}
 	case MODE_Unk2:
+	{
 		if (controller->keyClick(KBBTN_START | KBBTN_A)) {
 			setMode(MODE_Unk3);
 			SeSystem::playSysSe(SYSSE_DECIDE1);
 		}
 		break;
-
+	}
 	case MODE_Unk3:
+	{
 		f32 frame2 = calcFrame(mTransitionDuration);
 		if (frame2 == 1.0f) {
 			setMode(MODE_Unk0);
@@ -69,6 +73,7 @@ bool zen::DrawSaveFailure::update(Controller* controller)
 			mBackIcon->setAlpha(RoundOff(180.0f * cframe));
 		}
 		break;
+	}
 	}
 
 	STACK_PAD_TERNARY(controller, 1);
@@ -105,24 +110,29 @@ void zen::DrawSaveFailure::setMode(zen::DrawSaveFailure::modeFlag mode)
 	mMode = mode;
 	switch (mMode) {
 	case MODE_Unk0:
+	{
 		_08                 = 0.0f;
 		mTransitionDuration = 0.0f;
 		mSaveFailPane->setScale(0.0f);
 		mBackIcon->setAlpha(0);
 		break;
-
+	}
 	case MODE_Unk1:
+	{
 		_08 = 0.0f;
 		break;
-
+	}
 	case MODE_Unk2:
+	{
 		mSaveFailPane->setScale(1.0f);
 		mBackIcon->setAlpha(180);
 		break;
-
+	}
 	case MODE_Unk3:
+	{
 		_08 = 0.0f;
 		break;
+	}
 	}
 }
 

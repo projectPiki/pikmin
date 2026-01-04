@@ -60,27 +60,39 @@ static const char* parse_format(const char* format_string, va_list* arg, print_f
 
 		switch (c) {
 		case '-':
+		{
 			f.justification_options = left_justification;
 			break;
+		}
 		case '+':
+		{
 			f.sign_options = sign_always;
 			break;
+		}
 		case ' ':
+		{
 			if (f.sign_options != sign_always) {
 				f.sign_options = space_holder;
 			}
 			break;
+		}
 		case '#':
+		{
 			f.alternate_form = 1;
 			break;
+		}
 		case '0':
+		{
 			if (f.justification_options != left_justification) {
 				f.justification_options = zero_fill;
 			}
 			break;
+		}
 		default:
+		{
 			flag_found = 0;
 			break;
+		}
 		}
 
 		if (flag_found) {
@@ -131,6 +143,7 @@ static const char* parse_format(const char* format_string, va_list* arg, print_f
 
 	switch (c) {
 	case 'h':
+	{
 		f.argument_options = short_argument;
 
 		if (s[1] == 'h') {
@@ -139,8 +152,9 @@ static const char* parse_format(const char* format_string, va_list* arg, print_f
 		}
 
 		break;
-
+	}
 	case 'l':
+	{
 		f.argument_options = long_argument;
 
 		if (s[1] == 'l') {
@@ -149,13 +163,17 @@ static const char* parse_format(const char* format_string, va_list* arg, print_f
 		}
 
 		break;
-
+	}
 	case 'L':
+	{
 		f.argument_options = long_double_argument;
 		break;
+	}
 	default:
+	{
 		flag_found = 0;
 		break;
+	}
 	}
 
 	if (flag_found) {
@@ -171,6 +189,7 @@ static const char* parse_format(const char* format_string, va_list* arg, print_f
 	case 'o':
 	case 'x':
 	case 'X':
+	{
 		if (f.argument_options == long_double_argument) {
 			f.conversion_char = 0xFF;
 			break;
@@ -182,8 +201,9 @@ static const char* parse_format(const char* format_string, va_list* arg, print_f
 			f.justification_options = right_justification;
 		}
 		break;
-
+	}
 	case 'f':
+	{
 		if (f.argument_options == short_argument || f.argument_options == long_long_argument) {
 			f.conversion_char = 0xFF;
 			break;
@@ -193,15 +213,17 @@ static const char* parse_format(const char* format_string, va_list* arg, print_f
 			f.precision = 6;
 		}
 		break;
-
+	}
 	case 'g':
 	case 'G':
+	{
 		if (!f.precision) {
 			f.precision = 1;
 		}
-
+	}
 	case 'e':
 	case 'E':
+	{
 		if (f.argument_options == short_argument || f.argument_options == long_long_argument || f.argument_options == char_argument) {
 			f.conversion_char = 0xFF;
 			break;
@@ -211,15 +233,17 @@ static const char* parse_format(const char* format_string, va_list* arg, print_f
 			f.precision = 6;
 		}
 		break;
-
+	}
 	case 'p':
+	{
 		f.conversion_char  = 'x';
 		f.alternate_form   = 1;
 		f.argument_options = long_argument;
 		f.precision        = 8;
 		break;
-
+	}
 	case 'c':
+	{
 		if (f.argument_options == long_argument) {
 			f.argument_options = wchar_argument;
 		} else {
@@ -229,8 +253,9 @@ static const char* parse_format(const char* format_string, va_list* arg, print_f
 		}
 
 		break;
-
+	}
 	case 's':
+	{
 		if (f.argument_options == long_argument) {
 			f.argument_options = wchar_argument;
 		} else {
@@ -240,17 +265,20 @@ static const char* parse_format(const char* format_string, va_list* arg, print_f
 		}
 
 		break;
-
+	}
 	case 'n':
+	{
 		if (f.argument_options == long_double_argument) {
 			f.conversion_char = 0xFF;
 		}
 
 		break;
-
+	}
 	default:
+	{
 		f.conversion_char = 0xFF;
 		break;
+	}
 	}
 
 	*format = f;
@@ -280,6 +308,7 @@ static char* long2str(s32 num, char* buff, print_format* format)
 	switch (format->conversion_char) {
 	case 'd':
 	case 'i':
+	{
 		base = 10;
 
 		if (num < 0) {
@@ -287,22 +316,26 @@ static char* long2str(s32 num, char* buff, print_format* format)
 			minus        = 1;
 		}
 		break;
-
+	}
 	case 'o':
+	{
 		base                 = 8;
 		format->sign_options = only_minus;
 		break;
-
+	}
 	case 'u':
+	{
 		base                 = 10;
 		format->sign_options = only_minus;
 		break;
-
+	}
 	case 'x':
 	case 'X':
+	{
 		base                 = 16;
 		format->sign_options = only_minus;
 		break;
+	}
 	}
 
 	do {
@@ -389,6 +422,7 @@ static char* longlong2str(s64 num, char* pBuf, print_format* format)
 	switch (format->conversion_char) {
 	case 'd':
 	case 'i':
+	{
 		base = 10;
 
 		if (num < 0) {
@@ -396,19 +430,26 @@ static char* longlong2str(s64 num, char* pBuf, print_format* format)
 			minus        = 1;
 		}
 		break;
+	}
 	case 'o':
+	{
 		base                 = 8;
 		format->sign_options = only_minus;
 		break;
+	}
 	case 'u':
+	{
 		base                 = 10;
 		format->sign_options = only_minus;
 		break;
+	}
 	case 'x':
 	case 'X':
+	{
 		base                 = 16;
 		format->sign_options = only_minus;
 		break;
+	}
 	}
 
 	do {
@@ -565,9 +606,12 @@ static char* float2str(va_list arg, char* buff, print_format* format, int unused
 
 	switch (*dec.sig.text) {
 	case '0':
+	{
 		dec.exp = 0;
 		break;
+	}
 	case 'I':
+	{
 		if (num < 0) {
 			p = buff - 5;
 			strcpy(p, "-Inf");
@@ -577,12 +621,14 @@ static char* float2str(va_list arg, char* buff, print_format* format, int unused
 		}
 
 		return p;
-
+	}
 	case 'N':
+	{
 		p = buff - 4;
 		strcpy(p, "NaN");
 
 		return p;
+	}
 	}
 
 	dec.exp += dec.sig.length - 1;
@@ -592,7 +638,7 @@ static char* float2str(va_list arg, char* buff, print_format* format, int unused
 	switch (format->conversion_char) {
 	case 'g':
 	case 'G':
-
+	{
 		if (dec.sig.length > format->precision) {
 			round_decimal(&dec, format->precision);
 		}
@@ -622,11 +668,11 @@ static char* float2str(va_list arg, char* buff, print_format* format, int unused
 		}
 
 		goto f_format;
-
+	}
 	case 'e':
 	case 'E':
 	e_format:
-
+	{
 		if (dec.sig.length > format->precision + 1) {
 			round_decimal(&dec, format->precision + 1);
 		}
@@ -676,10 +722,10 @@ static char* float2str(va_list arg, char* buff, print_format* format, int unused
 		}
 
 		break;
-
+	}
 	case 'f':
 	f_format:
-
+	{
 		if ((frac_digits = -dec.exp + dec.sig.length - 1) < 0) {
 			frac_digits = 0;
 		}
@@ -740,6 +786,7 @@ static char* float2str(va_list arg, char* buff, print_format* format, int unused
 
 		break;
 	}
+	}
 
 	return p;
 }
@@ -788,6 +835,7 @@ static int __pformatter(void* (*WriteProc)(void*, const char*, size_t), void* Wr
 		switch (format.conversion_char) {
 		case 'd':
 		case 'i':
+		{
 			if (format.argument_options == long_argument) {
 				long_num = va_arg(arg, signed long);
 			} else if (format.argument_options == long_long_argument) {
@@ -816,11 +864,12 @@ static int __pformatter(void* (*WriteProc)(void*, const char*, size_t), void* Wr
 
 			num_chars = buff + 512 - 1 - buff_ptr;
 			break;
-
+		}
 		case 'o':
 		case 'u':
 		case 'x':
 		case 'X':
+		{
 			if (format.argument_options == long_argument) {
 				long_num = va_arg(arg, unsigned long);
 			} else if (format.argument_options == long_long_argument) {
@@ -849,20 +898,22 @@ static int __pformatter(void* (*WriteProc)(void*, const char*, size_t), void* Wr
 
 			num_chars = buff + 512 - 1 - buff_ptr;
 			break;
-
+		}
 		case 'f':
 		case 'e':
 		case 'E':
 		case 'g':
 		case 'G':
+		{
 			if (!(buff_ptr = float2str(arg, buff + 512, &format, 0))) {
 				goto conversion_error;
 			}
 
 			num_chars = buff + 512 - 1 - buff_ptr;
 			break;
-
+		}
 		case 's':
+		{
 			if (format.argument_options == wchar_argument) {
 				wchar_t* wcs_ptr = va_arg(arg, wchar_t*);
 
@@ -900,42 +951,54 @@ static int __pformatter(void* (*WriteProc)(void*, const char*, size_t), void* Wr
 			}
 
 			break;
-
+		}
 		case 'n':
+		{
 			buff_ptr = va_arg(arg, char*);
 
 			switch (format.argument_options) {
 			case normal_argument:
+			{
 				*(int*)buff_ptr = chars_written;
 				break;
+			}
 			case short_argument:
+			{
 				*(signed short*)buff_ptr = chars_written;
 				break;
+			}
 			case long_argument:
+			{
 				*(signed long*)buff_ptr = chars_written;
 				break;
+			}
 			case long_long_argument:
+			{
 				*(signed long long*)buff_ptr = chars_written;
 				break;
 			}
+			}
 
 			continue;
-
+		}
 		case 'c':
+		{
 			buff_ptr  = buff;
 			*buff_ptr = va_arg(arg, int);
 			num_chars = 1;
 			break;
-
+		}
 		case '%':
+		{
 			buff_ptr  = buff;
 			*buff_ptr = '%';
 			num_chars = 1;
 			break;
-
+		}
 		case 0xFF:
 		default:
 		conversion_error:
+		{
 			num_chars = strlen(curr_format);
 			chars_written += num_chars;
 
@@ -945,6 +1008,7 @@ static int __pformatter(void* (*WriteProc)(void*, const char*, size_t), void* Wr
 
 			return chars_written;
 			break;
+		}
 		}
 
 		field_width = num_chars;

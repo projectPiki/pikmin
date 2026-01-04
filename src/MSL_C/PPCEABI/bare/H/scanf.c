@@ -73,6 +73,7 @@ static const char* parse_format(const char* format_string, scan_format* format)
 
 	switch (c) {
 	case 'h':
+	{
 		f.argument_options = short_argument;
 
 		if (s[1] == 'h') {
@@ -81,7 +82,9 @@ static const char* parse_format(const char* format_string, scan_format* format)
 		}
 
 		break;
+	}
 	case 'l':
+	{
 		f.argument_options = long_argument;
 
 		if (s[1] == 'l') {
@@ -89,12 +92,17 @@ static const char* parse_format(const char* format_string, scan_format* format)
 			c                  = *++s;
 		}
 		break;
+	}
 	case 'L':
+	{
 		f.argument_options = long_double_argument;
 		break;
+	}
 	default:
+	{
 		flag_found = 0;
 		break;
+	}
 	}
 
 	if (flag_found) {
@@ -110,19 +118,21 @@ static const char* parse_format(const char* format_string, scan_format* format)
 	case 'o':
 	case 'x':
 	case 'X':
+	{
 		if (f.argument_options == long_double_argument) {
 			f.conversion_char = 0xFF;
 			break;
 		}
 
 		break;
-
+	}
 	case 'a':
 	case 'f':
 	case 'e':
 	case 'E':
 	case 'g':
 	case 'G':
+	{
 		if (f.argument_options == char_argument || f.argument_options == short_argument || f.argument_options == long_long_argument) {
 			f.conversion_char = 0xFF;
 			break;
@@ -133,13 +143,15 @@ static const char* parse_format(const char* format_string, scan_format* format)
 		}
 
 		break;
-
+	}
 	case 'p':
+	{
 		f.argument_options = long_argument;
 		f.conversion_char  = 'x';
 		break;
-
+	}
 	case 'c':
+	{
 		if (f.argument_options == long_argument) {
 			f.argument_options = wchar_argument;
 		} else {
@@ -149,8 +161,9 @@ static const char* parse_format(const char* format_string, scan_format* format)
 		}
 
 		break;
-
+	}
 	case 's':
+	{
 		if (f.argument_options == long_argument) {
 			f.argument_options = wchar_argument;
 		} else {
@@ -172,11 +185,13 @@ static const char* parse_format(const char* format_string, scan_format* format)
 		}
 
 		break;
-
+	}
 	case 'n':
+	{
 		break;
-
+	}
 	case '[':
+	{
 		if (f.argument_options == long_argument) {
 			f.argument_options = wchar_argument;
 		} else {
@@ -230,9 +245,12 @@ static const char* parse_format(const char* format_string, scan_format* format)
 		}
 
 		break;
+	}
 	default:
+	{
 		f.conversion_char = 0xFF;
 		break;
+	}
 	}
 
 	*format = f;
@@ -304,12 +322,17 @@ static int __sformatter(int (*ReadProc)(void*, int, int), void* ReadProcArg, con
 
 		switch (format.conversion_char) {
 		case 'd':
+		{
 			base = 10;
 			goto signed_int;
+		}
 		case 'i':
+		{
 			base = 0;
 			// fallthrough
+		}
 		signed_int:
+		{
 			if ((format.argument_options == long_long_argument))
 				u_long_long_num = __strtoull(base, format.field_width, ReadProc, ReadProcArg, &num_chars, &negative, &overflow);
 			else
@@ -326,9 +349,9 @@ static int __sformatter(int (*ReadProc)(void*, int, int), void* ReadProcArg, con
 			else
 				long_num = (negative ? -u_long_num : u_long_num);
 			// fallthrough
-
+		}
 		signed_int_assign:
-
+		{
 			if (arg_ptr) {
 				switch (format.argument_options) {
 				case normal_argument:
@@ -353,17 +376,25 @@ static int __sformatter(int (*ReadProc)(void*, int, int), void* ReadProcArg, con
 
 			conversions++;
 			break;
+		}
 		case 'o':
+		{
 			base = 8;
 			goto unsigned_int;
+		}
 		case 'u':
+		{
 			base = 10;
 			goto unsigned_int;
+		}
 		case 'x':
 		case 'X':
+		{
 			base = 16;
 			// fallthrough
+		}
 		unsigned_int:
+		{
 			if ((format.argument_options == long_long_argument))
 				u_long_long_num = __strtoull(base, format.field_width, ReadProc, ReadProcArg, &num_chars, &negative, &overflow);
 			else
@@ -382,9 +413,9 @@ static int __sformatter(int (*ReadProc)(void*, int, int), void* ReadProcArg, con
 					u_long_num = -u_long_num;
 			}
 			// fallthrough
-
+		}
 		unsigned_int_assign:
-
+		{
 			if (arg_ptr) {
 				switch (format.argument_options) {
 				case normal_argument:
@@ -409,6 +440,7 @@ static int __sformatter(int (*ReadProc)(void*, int, int), void* ReadProcArg, con
 
 			conversions++;
 			break;
+		}
 		case 'a':
 		case 'f':
 		case 'e':
@@ -416,6 +448,7 @@ static int __sformatter(int (*ReadProc)(void*, int, int), void* ReadProcArg, con
 		case 'g':
 		case 'G':
 		flt:
+		{
 			long_double_num = __strtold(format.field_width, ReadProc, ReadProcArg, &num_chars, &overflow);
 
 			if (!num_chars) {
@@ -424,9 +457,9 @@ static int __sformatter(int (*ReadProc)(void*, int, int), void* ReadProcArg, con
 
 			chars_read += num_chars;
 			// fallthrough
-
+		}
 		assign_float:
-
+		{
 			if (arg_ptr) {
 				switch (format.argument_options) {
 				case normal_argument:
@@ -445,9 +478,9 @@ static int __sformatter(int (*ReadProc)(void*, int, int), void* ReadProcArg, con
 
 			conversions++;
 			break;
-
+		}
 		case 'c':
-
+		{
 			if (!format.field_width_specified)
 				format.field_width = 1;
 
@@ -483,7 +516,9 @@ static int __sformatter(int (*ReadProc)(void*, int, int), void* ReadProcArg, con
 
 			conversions++;
 			break;
+		}
 		case '%':
+		{
 			while (isspace(c = (*ReadProc)(ReadProcArg, 0, __GetAChar)))
 				chars_read++;
 
@@ -494,7 +529,9 @@ static int __sformatter(int (*ReadProc)(void*, int, int), void* ReadProcArg, con
 
 			chars_read++;
 			break;
+		}
 		case 's':
+		{
 			c = (*ReadProc)(ReadProcArg, 0, __GetAChar);
 			while (isspace(c)) {
 				chars_read++;
@@ -502,7 +539,9 @@ static int __sformatter(int (*ReadProc)(void*, int, int), void* ReadProcArg, con
 			}
 
 			(*ReadProc)(ReadProcArg, c, __UngetAChar);
+		}
 		case '[':
+		{
 			if (arg_ptr) {
 				num_chars = 0;
 
@@ -551,29 +590,44 @@ static int __sformatter(int (*ReadProc)(void*, int, int), void* ReadProcArg, con
 
 			conversions++;
 			break;
+		}
 		case 'n':
+		{
 			if (arg_ptr)
 				switch (format.argument_options) {
 				case normal_argument:
+				{
 					*(int*)arg_ptr = chars_read;
 					break;
+				}
 				case short_argument:
+				{
 					*(s16*)arg_ptr = chars_read;
 					break;
+				}
 				case long_argument:
+				{
 					*(s32*)arg_ptr = chars_read;
 					break;
+				}
 				case char_argument:
+				{
 					*(char*)arg_ptr = chars_read;
 					break;
+				}
 				case long_long_argument:
+				{
 					*(s64*)arg_ptr = chars_read;
 					break;
 				}
+				}
 			continue;
+		}
 		case 0xFF:
 		default:
+		{
 			goto exit;
+		}
 		}
 	}
 

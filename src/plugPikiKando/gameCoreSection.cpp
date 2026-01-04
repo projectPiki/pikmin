@@ -95,11 +95,14 @@ void GameCoreSection::updateTextDemo()
 	}
 	switch (textDemoState) {
 	case 2:
+	{
 		textDemoTimer = 60;
 		attentionCamera->finish();
 		textDemoState = 3;
 		break;
+	}
 	case 1:
+	{
 		textDemoTimer--;
 		attentionCamera->update();
 		if (textDemoTimer == 0) {
@@ -107,13 +110,16 @@ void GameCoreSection::updateTextDemo()
 			textDemoState = 2;
 		}
 		break;
+	}
 	case 3:
+	{
 		textDemoTimer--;
 		attentionCamera->update();
 		if (textDemoTimer == 0) {
 			textDemoState = 0;
 		}
 		break;
+	}
 	}
 }
 
@@ -407,8 +413,10 @@ void GameCoreSection::clearDeadlyPikmins()
 		case PIKISTATE_WaterHanged:
 		case PIKISTATE_Kinoko:
 		case PIKISTATE_Drown:
+		{
 			kill = true;
 			break;
+		}
 		}
 		if (piki->isKinoko()) {
 			kill = true;
@@ -494,17 +502,25 @@ void GameCoreSection::cleanupDayEnd()
 
 	switch (flowCont.mCurrentStage->mStageID) {
 	case STAGE_Practice:
+	{
 		playerState->mResultFlags.setOn(zen::RESFLAG_EndFirstDay);
 		playerState->mResultFlags.setOn(zen::RESFLAG_UnusedControls2);
 		break;
+	}
 	case STAGE_Forest:
+	{
 		playerState->mResultFlags.setOn(zen::RESFLAG_FirstVisitForest);
 		break;
+	}
 	case STAGE_Yakushima:
+	{
 		playerState->mResultFlags.setOn(zen::RESFLAG_FirstVisitYakushima);
 		break;
+	}
 	case STAGE_Last:
+	{
 		break;
+	}
 	}
 	if (playerState->getCurrDay() + 1 == playerState->getTotalDays() - 1) {
 		playerState->mResultFlags.setOn(zen::RESFLAG_FinalDay);
@@ -841,17 +857,27 @@ void GameCoreSection::initStage()
 	// this switch
 	switch (flowCont.mCurrentStage->mStageID) {
 	case STAGE_Practice:
+	{
 		break;
+	}
 	case STAGE_Forest:
+	{
 		break;
+	}
 	case STAGE_Last:
+	{
 		break;
+	}
 	case STAGE_Cave:
+	{
 		playerState->mResultFlags.setOn(zen::RESFLAG_FirstVisitCave);
 		break;
+	}
 	case STAGE_Yakushima:
+	{
 		playerState->mResultFlags.setOn(zen::RESFLAG_FirstVisitYakushima);
 		break;
+	}
 	}
 
 	if (gameflow.mWorldClock.mCurrentDay >= 10 && gameflow.mWorldClock.mCurrentDay <= 20) {

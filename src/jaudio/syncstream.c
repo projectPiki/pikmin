@@ -229,10 +229,13 @@ static void LoadADPCM(StreamCtrl_* ctrl, int r28)
 
 	switch (ctrl->isFromFile) {
 	case 0:
+	{
 		Jac_GetStreamData((u8*)buff->mLength, size);
 		__LoadFin(size, &ctrl->fileinfo);
 		break;
+	}
 	case 1:
+	{
 		u8* data = (u8*)buff->mLength;
 		data[0]  = 0xff;
 		data[1]  = 0xad;
@@ -250,6 +253,7 @@ static void LoadADPCM(StreamCtrl_* ctrl, int r28)
 		DVDReadAsyncPrio2(&ctrl->fileinfo, (void*)buff->mLength, size, oldSize, __LoadFin, 1);
 
 		break;
+	}
 	}
 }
 
@@ -349,19 +353,25 @@ BOOL StreamAudio_Start(u32 ctrlID, int soundId, immut char* name, int r6, int r7
 
 	switch (ctrl->header.audioFormat) {
 	case AUDIOFRMT_16BIT_PCM:
+	{
 		ctrl->chunkSize = 0x2400;
 		break;
+	}
 	case AUDIOFRMT_8BIT_PCM:
+	{
 		ctrl->chunkSize = 0x1200;
 		break;
-
+	}
 	case AUDIOFRMT_ADPCM:
+	{
 		ctrl->chunkSize = 0x2400;
 		break;
-
+	}
 	case AUDIOFRMT_ADPCM4X:
+	{
 		ctrl->chunkSize = 0x2400;
 		break;
+	}
 	}
 
 	ctrl->autoStart        = r6;
@@ -596,16 +606,19 @@ static s32 StreamAudio_Callback(void* data)
 #else
 					switch (mode) {
 					case 0:
+					{
 						DSP_SetMixerInitVolume(ctrl->dspch[channelIdx]->buffer_idx, channelIdx, ctrl->volume[channelIdx] * 0xBFFD / 0x10000,
 						                       0);
 						DSP_SetMixerInitVolume(ctrl->dspch[channelIdx]->buffer_idx, 1 - channelIdx,
 						                       ctrl->volume[channelIdx] * 0xBFFD / 0x10000, 0);
 						break;
-
+					}
 					default:
+					{
 						DSP_SetMixerInitVolume(ctrl->dspch[channelIdx]->buffer_idx, channelIdx, ctrl->volume[channelIdx], 0);
 						DSP_SetMixerInitVolume(ctrl->dspch[channelIdx]->buffer_idx, 1 - channelIdx, 0, 0);
 						break;
+					}
 					}
 #endif
 					DSP_SetPitch(ctrl->dspch[channelIdx]->buffer_idx, pitch);
@@ -816,11 +829,15 @@ static u32 __Decode(StreamCtrl_* ctrl)
 	u32 size;
 	switch (ctrl->header.audioFormat) {
 	case AUDIOFRMT_ADPCM:
+	{
 		size = __DecodeADPCM(ctrl);
 		break;
+	}
 	case AUDIOFRMT_ADPCM4X:
+	{
 		size = __DecodeADPCM4X(ctrl);
 		break;
+	}
 	}
 	return size;
 }
@@ -886,7 +903,9 @@ BOOL StreamSyncCheckReadyID(u32 ctrlID, u32 r4)
 		switch (ctrl->playbackState) {
 		case 0:
 		case 2:
+		{
 			return TRUE;
+		}
 		}
 	}
 	return FALSE;
@@ -995,14 +1014,17 @@ static void __StreamChgVolume(StreamCtrl_* ctrl)
 		for (i = 0; i < 2; i++) {
 			switch (mode) {
 			case 0:
+			{
 				DSP_SetMixerVolume(ctrl->dspch[i]->buffer_idx, i, ctrl->volume[i] * 0xBFFD / 0x10000, 0);
 				DSP_SetMixerVolume(ctrl->dspch[i]->buffer_idx, 1 - i, ctrl->volume[i] * 0xBFFD / 0x10000, 0);
 				break;
-
+			}
 			default:
+			{
 				DSP_SetMixerVolume(ctrl->dspch[i]->buffer_idx, i, ctrl->volume[i], 0);
 				DSP_SetMixerVolume(ctrl->dspch[i]->buffer_idx, 1 - i, 0, 0);
 				break;
+			}
 			}
 		}
 	}
@@ -1048,16 +1070,22 @@ int StreamGetCurrentFrame(u32 streamId, u32 id2)
 
 	switch (id2) {
 	case 0:
+	{
 		return ctrl->samplesDecoded * ctrl->header.frameRate / ctrl->header.sampleRate;
+	}
 	case 1:
+	{
 		f32 subframeRate = JAC_DAC_RATE * JAC_SUBFRAMES / JAC_FRAMESAMPLES;
 		return ctrl->header.frameRate / subframeRate * ctrl->frameCounter;
+	}
 	case 2:
+	{
 		if (ctrl->frameCounter == 0) {
 			return 0;
 		}
 		u32 size = ctrl->totalSamples - Get_DirectPCM_Remain(GetDspHandle(dspCh->buffer_idx));
 		return size * (f32)ctrl->header.frameRate / ctrl->header.sampleRate + 0.499f;
+	}
 	}
 
 	STACK_PAD_VAR(3);

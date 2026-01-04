@@ -91,20 +91,24 @@ public:
 	{
 		switch (mState) {
 		case 0:
+		{
 			if (updateSelect(controller)) {
 				mState = 1;
 			}
 			break;
-
+		}
 		case 1:
+		{
 			if (mModes[mCurrentSelect]->update(controller)) {
 				mState = 0;
 			}
 			break;
-
+		}
 		default:
+		{
 			ERROR("ITTE YOSI!\n");
 			break;
+		}
 		}
 
 		return false;
@@ -113,16 +117,20 @@ public:
 	{
 		switch (mState) {
 		case 0:
+		{
 			drawSelect(gfx, font);
 			break;
-
+		}
 		case 1:
+		{
 			mModes[mCurrentSelect]->draw(gfx);
 			break;
-
+		}
 		default:
+		{
 			ERROR("ITTE YOSI!\n");
 			break;
+		}
 		}
 	}
 	void setGameMode(int idx, GameModeBase* mode)
@@ -269,16 +277,20 @@ public:
 			}
 			switch (mContainerColor) {
 			case 0:
+			{
 				mContainerMenu.start(zen::DrawContainer::COLOR_Blue, 0, 0, 0, 0, 0, 0);
 				break;
-
+			}
 			case 1:
+			{
 				mContainerMenu.start(zen::DrawContainer::COLOR_Red, 0, 0, 0, 0, 0, 0);
 				break;
-
+			}
 			case 2:
+			{
 				mContainerMenu.start(zen::DrawContainer::COLOR_Yellow, 0, 0, 0, 0, 0, 0);
 				break;
+			}
 			}
 		}
 		int unused;
@@ -427,11 +439,15 @@ public:
 			}
 			switch (_0C) {
 			case 0:
+			{
 				mGameOverScreen.start(zen::DrawGameOver::MODE_Extinction, 40.0f);
 				break;
+			}
 			case 1:
+			{
 				mGameOverScreen.start(zen::DrawGameOver::MODE_NaviDown, 40.0f);
 				break;
+			}
 			}
 		}
 		mGameOverScreen.update(controller);
@@ -580,11 +596,15 @@ public:
 		if (controller->keyUnClick(KBBTN_Y)) {
 			switch (mSaveMesScreen.getModeFlag()) {
 			case zen::DrawSaveMes::MODE_Unk3:
+			{
 				mSaveMesScreen.saveFinish();
 				break;
+			}
 			default:
+			{
 				mSaveMesScreen.mesAppear();
 				break;
+			}
 			}
 		}
 

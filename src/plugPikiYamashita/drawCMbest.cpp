@@ -98,22 +98,26 @@ protected:
 		mMode = mode;
 		switch (mMode) {
 		case MODE_Sleep:
+		{
 			mModeFunction = &modeSleep;
 			mRootPane->setScale(0.0f);
 			break;
-
+		}
 		case MODE_Appear:
+		{
 			mWaitTime = 0.0f;
 			_1C       = 0.0f;
 			mRootPane->setScale(0.0f);
 			mModeFunction = &modeAppear;
 			break;
-
+		}
 		case MODE_Wait:
+		{
 			mWaitTime     = 0.0f;
 			mAppearTime   = 4.0f;
 			mModeFunction = &modeWait;
 			break;
+		}
 		}
 	}
 
@@ -233,26 +237,30 @@ void zen::DrawCMbest::setMode(zen::DrawCMbest::modeFlag mode)
 	mMode = mode;
 	switch (mMode) {
 	case MODE_Sleep:
+	{
 		mModeFunction = &modeSleep;
 		for (i = 0; i < _0C; i++) {
 			mPicObjs[i].sleep();
 		}
 		break;
-
+	}
 	case MODE_Wait:
+	{
 		mModeFunction = &modeWait;
 		show();
 		for (i = 0; i < _0C; i++) {
 			mPicObjs[i].wait((_0C - i - 1) * 0.25f);
 		}
 		break;
-
+	}
 	case MODE_Appear:
+	{
 		mModeFunction = &modeAppear;
 		show();
 		for (i = 0; i < _0C; i++) {
 			mPicObjs[i].appear(i * 0.25f);
 		}
 		break;
+	}
 	}
 }

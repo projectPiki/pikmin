@@ -150,14 +150,20 @@ int ActMine::exec()
 	int res = ACTOUT_Continue;
 	switch (mState) {
 	case STATE_Watch:
+	{
 		res = exeWatch();
 		break;
+	}
 	case STATE_Go:
+	{
 		res = exeGo();
 		break;
+	}
 	case STATE_Mine:
+	{
 		res = exeMine();
 		break;
+	}
 	}
 
 	return res;
@@ -177,15 +183,19 @@ void ActMine::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
 	case KEY_Finished:
+	{
 		if (mState == STATE_Watch) {
 			initGo();
 			mState = STATE_Go;
 		}
 		break;
+	}
 	case KEY_Action0:
+	{
 		if (mState == STATE_Mine) {
 			mIsMineActionReady = true;
 		}
 		break;
+	}
 	}
 }

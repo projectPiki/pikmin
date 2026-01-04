@@ -841,27 +841,49 @@ char* SIGetTypeString(u32 type)
 {
 	switch (SIDecodeType(type)) {
 	case SI_ERROR_NO_RESPONSE:
+	{
 		return "No response";
+	}
 	case SI_N64_CONTROLLER:
+	{
 		return "N64 controller";
+	}
 	case SI_N64_MIC:
+	{
 		return "N64 microphone";
+	}
 	case SI_N64_KEYBOARD:
+	{
 		return "N64 keyboard";
+	}
 	case SI_N64_MOUSE:
+	{
 		return "N64 mouse";
+	}
 	case SI_GBA:
+	{
 		return "GameBoy Advance";
+	}
 	case SI_GC_CONTROLLER:
+	{
 		return "Standard controller";
+	}
 	case SI_GC_RECEIVER:
+	{
 		return "Wireless receiver";
+	}
 	case SI_GC_WAVEBIRD:
+	{
 		return "WaveBird controller";
+	}
 	case SI_GC_KEYBOARD:
+	{
 		return "Keyboard";
+	}
 		// case SI_GC_STEERING:
-		//	return "Steering";
+		// {
+		// 	return "Steering";
+		// }
 	}
 }
 

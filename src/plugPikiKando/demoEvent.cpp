@@ -58,12 +58,15 @@ void DemoEventMgr::act(int cmd, int type)
 {
 	switch (cmd) {
 	case 5:
+	{
 		switch (type) {
 		case 0:
+		{
 			gameflow.mWorldClock.setTime(gameflow.mParameters->mEndHour());
 			break;
-
+		}
 		case 1:
+		{
 			int count = 0;
 			Iterator it(pikiMgr);
 			CI_LOOP(it)
@@ -80,28 +83,42 @@ void DemoEventMgr::act(int cmd, int type)
 			PRINT("***** FORCE ENTERPIKIS %d\n", count);
 			break;
 		}
+		}
 		break;
+	}
 	case 0:
+	{
 		switch (type) {
 		case 0:
+		{
 			naviMgr->getNavi()->enterAllPikis();
 			break;
 		}
+		}
 		break;
+	}
 	case 1:
+	{
 		UfoItem* ufo = itemMgr->getUfo();
 		if (ufo) {
 			switch (type) {
 			case 0:
+			{
 				ufo->startConeEffect(0);
 				break;
+			}
 			case 4:
+			{
 				ufo->startConeEffect(1);
 				break;
+			}
 			case 5:
+			{
 				ufo->startConeEffect(2);
 				break;
+			}
 			case 6:
+			{
 				ufo->finishConeEffect();
 				ufo->setSpotActive(false);
 				playerState->setNavi(true);
@@ -111,58 +128,80 @@ void DemoEventMgr::act(int cmd, int type)
 					navi->rideUfo();
 				}
 				break;
+			}
 			case 1:
+			{
 				ufo->startTakeoff();
 				pikiMgr->dumpAll();
 				break;
+			}
 			case 2:
+			{
 				ufo->startLevelFlag(playerState->mShipUpgradeLevel);
 				break;
+			}
 			case 3:
+			{
 				PRINT("__________________________________________________\n");
 				PRINT("******************* START YOZORA *****************\n");
 				PRINT("__________________________________________________\n");
 				ufo->startYozora();
 				break;
+			}
 			case 7:
+			{
 				PRINT("__________________________________________________\n");
 				PRINT("******************* START GALAXY *****************\n");
 				PRINT("__________________________________________________\n");
 				ufo->startGalaxy();
 				break;
 			}
+			}
 		}
 		break;
+	}
 	case 2:
 	case 3:
 	case 4:
+	{
 		int goalID     = cmd - 2;
 		GoalItem* goal = itemMgr->getContainer(goalID);
 		if (goal) {
 			switch (type) {
 			case 0:
+			{
 				goal->mCurrAnimId++;
 				goal->emitPiki();
 				break;
+			}
 			case 2:
+			{
 				goal->startConeShrink();
 				break;
+			}
 			case 4:
+			{
 				if (playerState->hasContainer(goalID + 3)) {
 					goal->startConeEmit();
 				}
 				break;
+			}
 			case 1:
+			{
 				if (playerState->hasContainer(goalID)) {
 					goal->startTakeoff();
 				}
 				break;
+			}
 			case 3:
+			{
 				if (playerState->hasContainer(goalID)) {
 					goal->startLand();
 				}
 				break;
+			}
 			case 5:
+			{
 				PRINT("boot onion\n");
 				goal->startBoot();
 				playerState->setContainer(goalID + 3);
@@ -179,7 +218,9 @@ void DemoEventMgr::act(int cmd, int type)
 					PRINT("*** FINISH MOTION \n");
 				}
 				break;
+			}
 			case 6:
+			{
 				if (playerState->hasContainer(goalID) && GameStat::allPikis[goalID] == 0) {
 					PRINT("***** SUPPLY 1 PiKI (COLOR = %d)\n", goalID);
 					playerState->mResultFlags.setOn(zen::RESFLAG_PikminSeedStageUp);
@@ -188,7 +229,9 @@ void DemoEventMgr::act(int cmd, int type)
 				}
 				break;
 			}
+			}
 		}
 		break;
+	}
 	}
 }

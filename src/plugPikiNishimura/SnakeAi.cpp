@@ -71,20 +71,30 @@ void SnakeAi::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
 	case KEY_Action0:
+	{
 		keyAction0();
 		break;
+	}
 	case KEY_Action1:
+	{
 		keyAction1();
 		break;
+	}
 	case KEY_LoopEnd:
+	{
 		keyLoopEnd();
 		break;
+	}
 	case KEY_Finished:
+	{
 		keyFinished();
 		break;
+	}
 	case KEY_PlaySound:
+	{
 		playSound(event.mValue);
 		break;
+	}
 	}
 }
 
@@ -1614,10 +1624,12 @@ void SnakeAi::update()
 	setEveryFrame();
 	switch (mSnake->getCurrentState()) {
 	case SNAKEAI_Die:
+	{
 		dieState();
 		break;
-
+	}
 	case SNAKEAI_Struggle:
+	{
 		struggleState();
 		if (dieTransit()) {
 			initDie(SNAKEAI_Die);
@@ -1631,8 +1643,9 @@ void SnakeAi::update()
 			}
 		}
 		break;
-
+	}
 	case SNAKEAI_ChaseNavi:
+	{
 		chaseState();
 		if (dieTransit()) {
 			initDie(SNAKEAI_Die);
@@ -1652,8 +1665,9 @@ void SnakeAi::update()
 			initWait(SNAKEAI_Wait);
 		}
 		break;
-
+	}
 	case SNAKEAI_ChasePiki:
+	{
 		chaseState();
 		if (dieTransit()) {
 			initDie(SNAKEAI_Die);
@@ -1673,8 +1687,9 @@ void SnakeAi::update()
 			initWait(SNAKEAI_Wait);
 		}
 		break;
-
+	}
 	case SNAKEAI_Attack:
+	{
 		attackState();
 		if (dieTransit()) {
 			initDie(SNAKEAI_Die);
@@ -1684,8 +1699,9 @@ void SnakeAi::update()
 			initWait(SNAKEAI_Wait);
 		}
 		break;
-
+	}
 	case SNAKEAI_Eat:
+	{
 		eatState();
 		if (dieTransit()) {
 			initDie(SNAKEAI_Die);
@@ -1695,8 +1711,9 @@ void SnakeAi::update()
 			initWait(SNAKEAI_Wait);
 		}
 		break;
-
+	}
 	case SNAKEAI_Wait:
+	{
 		waitState();
 		if (dieTransit()) {
 			initDie(SNAKEAI_Die);
@@ -1712,8 +1729,9 @@ void SnakeAi::update()
 			initChase(SNAKEAI_ChaseNavi);
 		}
 		break;
-
+	}
 	case SNAKEAI_GoInto:
+	{
 		gointoState();
 		if (dieTransit()) {
 			initDie(SNAKEAI_Die);
@@ -1721,20 +1739,23 @@ void SnakeAi::update()
 			initUnder(SNAKEAI_Under);
 		}
 		break;
-
+	}
 	case SNAKEAI_Under:
+	{
 		underState();
 		if (underTimerTransit() && appearTransit()) {
 			initAppear(SNAKEAI_Appear);
 		}
 		break;
-
+	}
 	case SNAKEAI_Appear:
+	{
 		if (dieTransit()) {
 			initDie(SNAKEAI_Die);
 		} else if (mSnake->getMotionFinish()) {
 			initWait(SNAKEAI_Wait);
 		}
 		break;
+	}
 	}
 }

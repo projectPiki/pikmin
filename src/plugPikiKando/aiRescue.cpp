@@ -65,26 +65,31 @@ int ActRescue::exec()
 
 	switch (mState) {
 	case STATE_Approach:
+	{
 		if (mTargetSurviveTimer > 20) {
 			// target survived on their own for long enough
 			mPiki->mEmotion = PikiEmotion::Victorious;
 			return ACTOUT_Success;
 		}
 		return exeApproach();
-
+	}
 	case STATE_Go:
+	{
 		if (mTargetSurviveTimer > 20) {
 			// target survived on their own for long enough
 			mPiki->mEmotion = PikiEmotion::Victorious;
 			return ACTOUT_Success;
 		}
 		return exeGo();
-
+	}
 	case STATE_Throw:
+	{
 		return exeThrow();
-
+	}
 	case STATE_Rescue:
+	{
 		return exeRescue();
+	}
 	}
 
 	return ACTOUT_Continue;
@@ -97,15 +102,19 @@ void ActRescue::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
 	case KEY_Action0:
+	{
 		if (mState == STATE_Rescue || (!mThrowReady && mState == STATE_Throw)) {
 			mGotAnimationAction = true;
 		}
 		break;
+	}
 	case KEY_Finished:
+	{
 		if (!mThrowReady && mState == STATE_Throw) {
 			mAnimationFinished = true;
 		}
 		break;
+	}
 	}
 }
 

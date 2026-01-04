@@ -42,6 +42,7 @@ bool zen::MenuPanelMgr::update()
 	switch (mState) {
 	case STATE_Start:
 	case STATE_End:
+	{
 		f32 v = mTimer += gsys->getFrameTime();
 		if (v > mDuration) {
 			mTimer = mDuration;
@@ -50,10 +51,12 @@ bool zen::MenuPanelMgr::update()
 			res = false;
 		}
 		break;
-
+	}
 	default:
+	{
 		res = true;
 		break;
+	}
 	}
 
 	updateRatio();
@@ -69,14 +72,17 @@ bool zen::MenuPanelMgr::checkFinish()
 	switch (mState) {
 	case STATE_Start:
 	case STATE_End:
+	{
 		if (mTimer >= mDuration) {
 			res = true;
 		}
 		break;
-
+	}
 	default:
+	{
 		res = true;
 		break;
+	}
 	}
 
 	return res;

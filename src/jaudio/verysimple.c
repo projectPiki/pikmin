@@ -116,28 +116,34 @@ void Jac_PlaySystemSe(s32 id)
 
 	switch (id) {
 	case JACSYS_ContainerOK:
+	{
 		Jac_PlayOrimaSe(JACORIMA_Unk14);
 		return;
-
+	}
 	case JACSYS_OrimaLifeDim:
 	case JACSYS_ViewChange:
+	{
 		if (Jac_DemoCheck() == TRUE || Jac_PauseCheck() == TRUE || Jac_GetCurrentScene() != SCENE_Course) {
 			return;
 		}
 		break;
+	}
 	case JACSYS_Countdown:
+	{
 		++countdown_count;
 		if (countdown_count == 10) {
 			Jac_FadeOutBgm(0, 60);
 			Jac_FadeOutBgm(1, 60);
 		}
 		break;
-
+	}
 	case JACSYS_EveningAlert:
+	{
 		Jac_SetBgmModeFlag(0, 2, 1);
 		break;
-
+	}
 	case JACSYS_MenuOn:
+	{
 		Jac_SetBgmModeFlag(0, 4, 1);
 		Jac_SetBgmModeFlag(1, 4, 1);
 		container = TRUE;
@@ -145,8 +151,9 @@ void Jac_PlaySystemSe(s32 id)
 		Jac_PauseOrimaSe();
 		Jam_PauseTrack(Jam_GetTrackHandle(0x20000), 1);
 		break;
-
+	}
 	case JACSYS_MenuOff:
+	{
 		if (container == TRUE) {
 			Jac_SetBgmModeFlag(0, 4, 0);
 			Jac_SetBgmModeFlag(1, 4, 0);
@@ -161,8 +168,9 @@ void Jac_PlaySystemSe(s32 id)
 			break;
 		}
 		return;
-
+	}
 	case JACSYS_Pause:
+	{
 		if (container == FALSE) {
 			Jac_SetBgmModeFlag(0, 4, 1);
 			Jac_SetBgmModeFlag(1, 4, 1);
@@ -172,8 +180,9 @@ void Jac_PlaySystemSe(s32 id)
 		}
 		pausemode = TRUE;
 		break;
-
+	}
 	case JACSYS_Unpause:
+	{
 		if (pausemode != FALSE) {
 			if (container == FALSE) {
 				Jac_SetBgmModeFlag(0, 4, 0);
@@ -188,21 +197,24 @@ void Jac_PlaySystemSe(s32 id)
 			return;
 		}
 		break;
-
+	}
 	case JACSYS_PartsAppear:
+	{
 		WaveScene_Set(0xd, 6);
 		Jac_PlayDemoSequenceDirect(8);
 		return;
-
+	}
 	case JACSYS_ChgHiScore:
+	{
 		if (sys_voldown_flag == FALSE) {
 			Jac_DemoFade(1, 5, 0.15f);
 		}
 		Jac_StartDemoSound(5);
 		sys_voldown_flag = 0x14;
 		return;
-
+	}
 	case JACSYS_DVDPause:
+	{
 		Jam_PauseTrack(Jam_GetTrackHandle(0x20000), 1);
 		Jam_PauseTrack(Jam_GetTrackHandle(0x1000f), 1);
 		Jac_PauseOrimaSe();
@@ -212,8 +224,9 @@ void Jac_PlaySystemSe(s32 id)
 		StreamSetDVDPause(0, 1);
 		id = JACSYS_CardError;
 		break;
-
+	}
 	case JACSYS_DVDUnpause:
+	{
 		Jam_UnPauseTrack(Jam_GetTrackHandle(0x20000), 1);
 		Jam_UnPauseTrack(Jam_GetTrackHandle(0x1000f), 1);
 		Jac_UnPauseOrimaSe();
@@ -221,12 +234,14 @@ void Jac_PlaySystemSe(s32 id)
 		Jac_SetBgmModeFlag(0, 4, 0);
 		Jac_SetBgmModeFlag(1, 4, 0);
 		return;
-
+	}
 	case JACSYS_Unk40:
+	{
 		Jam_PauseTrack(Jam_GetTrackHandle(0x20000), 1);
 		Jac_Orima_Formation(0, 0);
 		pausemode = TRUE;
 		return;
+	}
 	}
 
 	if (cmdqueue_reset == TRUE) {
@@ -245,13 +260,16 @@ void Jac_StopSystemSe(s32 id)
 
 	switch (id) {
 	case JACSYS_ContainerOK:
+	{
 		Jac_StopOrimaSe(14);
 		break;
-
+	}
 	default:
+	{
 		if (cmdqueue_reset == TRUE) {
 			Jal_SendCmdQueue_Noblock(&system_se_stop, id);
 		}
+	}
 	}
 }
 

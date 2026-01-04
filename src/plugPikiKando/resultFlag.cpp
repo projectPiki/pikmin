@@ -273,11 +273,15 @@ int ResultFlags::getDocument(int& pageCount)
 			if (getFlag(id) == true) {
 				switch (flagTable[i].mStore) {
 				case FlagInfo::Store_Forget:
+				{
 					setFlag(id, 2);
 					break;
+				}
 				case FlagInfo::Store_Reset:
+				{
 					setFlag(id, 0);
 					break;
+				}
 				}
 			}
 		}
@@ -333,17 +337,25 @@ void ResultFlags::dump()
 
 		switch (info.type()) {
 		case 0:
+		{
 			strs[3] = "GEN";
 			break;
+		}
 		case 200:
+		{
 			strs[3] = "SET";
 			break;
+		}
 		case 400:
+		{
 			strs[3] = "TEK";
 			break;
+		}
 		case 600:
+		{
 			strs[3] = "ETC";
 			break;
+		}
 		}
 #endif
 

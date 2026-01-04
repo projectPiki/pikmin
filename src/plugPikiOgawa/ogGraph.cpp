@@ -146,16 +146,20 @@ void ogGraphMgr::MakeData()
 			if (mHasColor[color]) {
 				switch (color) {
 				case Blue:
+				{
 					line = LinePointB;
 					break;
-
+				}
 				case Red:
+				{
 					line = LinePointR;
 					break;
-
+				}
 				case Yellow:
+				{
 					line = LinePointY;
 					break;
+				}
 				}
 
 				for (hour = start; hour <= end; hour++) {
@@ -178,16 +182,20 @@ void ogGraphMgr::MakeData()
 			if (mHasColor[color]) {
 				switch (color) {
 				case Blue:
+				{
 					line = LinePointB;
 					break;
-
+				}
 				case Red:
+				{
 					line = LinePointR;
 					break;
-
+				}
 				case Yellow:
+				{
 					line = LinePointY;
 					break;
+				}
 				}
 
 				for (hour = start; hour <= end; hour++) {

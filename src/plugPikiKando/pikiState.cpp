@@ -247,6 +247,7 @@ void PikiLookAtState::exec(Piki* piki)
 	// Animation-driven reaction: delay -> notice -> turn -> wait -> return.
 	switch (mState) {
 	case LAS_Delay:
+	{
 		// Randomized delay before starting the notice animation.
 		mTimer -= gsys->getFrameTime();
 		if (mTimer < 0.0f) {
@@ -255,22 +256,26 @@ void PikiLookAtState::exec(Piki* piki)
 			mState = LAS_Noticing;
 		}
 		break;
-
+	}
 	case LAS_Noticing:
+	{
 		// Wait for animation key events to advance (turn/wait/finish).
 		break;
-
+	}
 	case LAS_Turning:
+	{
 		// Step-turn toward the player.
 		piki->mFaceDirection += mRotationStep;
 		piki->mSRT.r.set(0.0f, mRotationStep, 0.0f);
 		break;
-
+	}
 	case LAS_Waiting:
+	{
 		// Hold position/facing; KEY_Finished will move to LAS_Returning.
 		break;
-
+	}
 	default:
+	{
 		// Return timer: bail immediately if stuck to something, otherwise exit when it elapses.
 		mTimer -= gsys->getFrameTime();
 		if (piki->mStickTarget) {
@@ -285,6 +290,7 @@ void PikiLookAtState::exec(Piki* piki)
 			transit(piki, PIKISTATE_Normal);
 		}
 		break;
+	}
 	}
 }
 
@@ -303,21 +309,25 @@ void PikiLookAtState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
 	switch (msg->mKeyEvent->mEventType) {
 	case KEY_Action0:
+	{
 		// Compute a smooth multi-frame turn toward the player.
 		mState        = LAS_Turning;
 		Vector3f dir  = piki->mNavi->mSRT.t - piki->mSRT.t;
 		mRotationStep = angDist(atan2f(dir.x, dir.z), piki->mFaceDirection) / 7.0f;
 		break;
-
+	}
 	case KEY_Action1:
+	{
 		// Enter a short wait after turning.
 		mState = LAS_Waiting;
 		break;
-
+	}
 	case KEY_Finished:
+	{
 		// Begin return countdown; state exits when the timer elapses.
 		mState = LAS_Returning;
 		break;
+	}
 	}
 }
 
@@ -395,6 +405,7 @@ void PikiNormalState::procCollideMsg(Piki* piki, MsgCollide* msg)
 			// Only handle a few special collisions in Normal; everything else stays AI-driven.
 			switch (type) {
 			case OBJTYPE_Water:
+			{
 				// Nectar puddles are modeled as water; non-flower Pikmin can drink to grow.
 				if (piki->mHappa != Flower) {
 					piki->changeMode(PikiMode::FreeMode, piki->mNavi);
@@ -402,12 +413,15 @@ void PikiNormalState::procCollideMsg(Piki* piki, MsgCollide* msg)
 					transit(piki, PIKISTATE_Absorb);
 				}
 				break;
+			}
 			case OBJTYPE_Piki:
+			{
 				// Remember a nearby pushing Pikmin so we can be shoved coherently.
 				if (static_cast<Piki*>(collider)->getState() == PIKISTATE_Push) {
 					mPushPiki = static_cast<Piki*>(collider);
 				}
 				break;
+			}
 			}
 		}
 	}
@@ -443,6 +457,7 @@ void PikiAbsorbState::exec(Piki* piki)
 	// Nectar interaction is only applied during the animation's loop window.
 	switch (mState) {
 	case AS_Drinking:
+	{
 		if (mNectar->isAlive()) {
 			MsgUser msg(0);
 			MizuItem* nectar           = static_cast<MizuItem*>(mNectar);
@@ -452,6 +467,7 @@ void PikiAbsorbState::exec(Piki* piki)
 
 		mHasAbsorbedNectar = true;
 		break;
+	}
 	}
 
 	if (piki->getUpperMotionIndex() != PIKIANIM_Mizunomi) {
@@ -470,20 +486,25 @@ void PikiAbsorbState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
 	switch (msg->mKeyEvent->mEventType) {
 	case KEY_LoopStart:
+	{
 		// Start applying the drink interaction each frame during the loop.
 		if (mState != AS_Drinking) {
 			seSystem->playPikiSound(SEF_PIKI_DRINK, piki->mSRT.t);
 		}
 		mState = AS_Drinking;
 		break;
+	}
 	case KEY_LoopEnd:
+	{
 		// If the nectar is gone, cut the loop short and finish the animation.
 		if (!mNectar->isAlive()) {
 			piki->mPikiAnimMgr.finishMotion(piki);
 			mState = AS_Finishing;
 		}
 		break;
+	}
 	case KEY_Finished:
+	{
 		// Grow up only if we actually drank; otherwise return to normal.
 		if (mHasAbsorbedNectar) {
 			transit(piki, PIKISTATE_GrowUp);
@@ -491,6 +512,7 @@ void PikiAbsorbState::procAnimMsg(Piki* piki, MsgAnim* msg)
 			transit(piki, PIKISTATE_Normal);
 		}
 		break;
+	}
 	}
 }
 
@@ -618,6 +640,7 @@ void PikiDrownState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
 	switch (msg->mKeyEvent->mEventType) {
 	case KEY_Finished:
+	{
 		// Advance phase on animation completion: struggle loops, sinking kills.
 		if (mState == DS_Sinking) {
 			seSystem->playSoundDirect(5, SEW_PIKI_DEAD, piki->mSRT.t);
@@ -646,6 +669,7 @@ void PikiDrownState::procAnimMsg(Piki* piki, MsgAnim* msg)
 		}
 
 		break;
+	}
 	}
 }
 
@@ -696,11 +720,15 @@ void PikiKinokoState::exec(Piki* piki)
 	// Infection alternates between wandering (boid) and attack.
 	switch (mState) {
 	case KS_Boid:
+	{
 		exeBoid(piki);
 		break;
+	}
 	case KS_Attack:
+	{
 		exeAttack(piki);
 		break;
+	}
 	}
 }
 
@@ -1080,6 +1108,7 @@ void PikiFlickState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
 	switch (msg->mKeyEvent->mEventType) {
 	case KEY_Finished:
+	{
 		if (mState == FLS_FlyingBack) {
 			piki->startMotion(PaniMotionInfo(PIKIANIM_JKoke, piki), PaniMotionInfo(PIKIANIM_JKoke));
 			mState = FLS_Landing;
@@ -1117,6 +1146,7 @@ void PikiFlickState::procAnimMsg(Piki* piki, MsgAnim* msg)
 
 		transit(piki, PIKISTATE_Normal);
 		break;
+	}
 	}
 }
 
@@ -1219,6 +1249,7 @@ void PikiFlownState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
 	switch (msg->mKeyEvent->mEventType) {
 	case KEY_Finished:
+	{
 		if (mState == FNS_Landing) {
 			mState  = FNS_Downed;
 			f32 min = C_PIKI_PROP(piki).mMinFlickKnockDownTime();
@@ -1251,6 +1282,7 @@ void PikiFlownState::procAnimMsg(Piki* piki, MsgAnim* msg)
 
 		transit(piki, PIKISTATE_Normal);
 		break;
+	}
 	}
 }
 
@@ -1400,6 +1432,7 @@ void PikiFallState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
 	switch (msg->mKeyEvent->mEventType) {
 	case KEY_Finished:
+	{
 		if (mState == FS_Landed) {
 			piki->startMotion(PaniMotionInfo(PIKIANIM_GetUp, piki), PaniMotionInfo(PIKIANIM_GetUp));
 			mState = FS_GetUp;
@@ -1410,6 +1443,7 @@ void PikiFallState::procAnimMsg(Piki* piki, MsgAnim* msg)
 			transit(piki, PIKISTATE_Normal);
 		}
 		break;
+	}
 	}
 }
 
@@ -1511,9 +1545,11 @@ void PikiCliffState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
 	switch (msg->mKeyEvent->mEventType) {
 	case KEY_Finished:
+	{
 		// Some animations end once per phase; interpret finish based on cliff substate.
 		switch (mState) {
 		case CS_SlideStart:
+		{
 			// Initial slip finished: move into edge shuffle loop.
 			if (mCliffHangType >= 2 || mCliffHangType < 0) {
 				return;
@@ -1524,8 +1560,9 @@ void PikiCliffState::procAnimMsg(Piki* piki, MsgAnim* msg)
 			PRINT_KANDO("otikake motion start\n");
 			piki->startMotion(PaniMotionInfo(PIKIANIM_Otikake, piki), PaniMotionInfo(PIKIANIM_Otikake));
 			break;
-
+		}
 		case CS_FallAnim:
+		{
 			// Falling animation finished: either we landed (back to normal) or keep falling.
 			if (!piki->mGroundTriangle) {
 				PRINT_KANDO("piki fall (otiru) %x\n", piki);
@@ -1535,19 +1572,23 @@ void PikiCliffState::procAnimMsg(Piki* piki, MsgAnim* msg)
 			PRINT_KANDO("otiru escaped\n");
 			transit(piki, PIKISTATE_Normal);
 			break;
-
+		}
 		case CS_EdgeShuffle:
+		{
 			// Edge shuffle finished without transitioning into hang/fall: recover.
 			PRINT_KANDO("goto normal !?\n");
 			transit(piki, PIKISTATE_Normal);
 			break;
 		}
+		}
 		break;
-
+	}
 	case KEY_LoopEnd:
+	{
 		// Loop-end is used for repeated edge/hang loops and their exit conditions.
 		switch (mState) {
 		case CS_EdgeShuffle:
+		{
 			// After N loops: attempt hang, otherwise start the fall animation.
 			mLoopCounter--;
 			if (mLoopCounter > 0) {
@@ -1590,8 +1631,9 @@ void PikiCliffState::procAnimMsg(Piki* piki, MsgAnim* msg)
 			PRINT_KANDO("fall start : \n");
 			startFall(piki);
 			break;
-
+		}
 		case CS_Hanging:
+		{
 			// Hanging loops a few times, then drops into the generic fall state.
 			mLoopCounter--;
 			if (mLoopCounter > 0) {
@@ -1603,7 +1645,9 @@ void PikiCliffState::procAnimMsg(Piki* piki, MsgAnim* msg)
 			transit(piki, PIKISTATE_Fall);
 			break;
 		}
+		}
 		break;
+	}
 	}
 }
 
@@ -1671,8 +1715,10 @@ void PikiHangedState::procAnimMsg(Piki*, MsgAnim* msg)
 {
 	switch (msg->mKeyEvent->mEventType) {
 	case KEY_LoopEnd:
+	{
 		SeSystem::playPlayerSe(SE_PIKI_FLYREADY);
 		break;
+	}
 	}
 }
 
@@ -1721,8 +1767,10 @@ void PikiWaterHangedState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
 	switch (msg->mKeyEvent->mEventType) {
 	case KEY_LoopEnd:
+	{
 		SeSystem::playPlayerSe(SE_PIKI_FLYREADY);
 		break;
+	}
 	}
 }
 
@@ -1816,12 +1864,14 @@ void PikiEmitState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
 	switch (msg->mKeyEvent->mEventType) {
 	case KEY_Finished:
+	{
 		if (mHasLanded) {
 			piki->startMotion(PaniMotionInfo(PIKIANIM_WaveJmp, piki), PaniMotionInfo(PIKIANIM_WaveJmp));
 		} else {
 			transit(piki, PIKISTATE_Bury);
 		}
 		break;
+	}
 	}
 }
 
@@ -2212,8 +2262,10 @@ void PikiGrowState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
 	switch (msg->mKeyEvent->mEventType) {
 	case KEY_Finished:
+	{
 		transit(piki, PIKISTATE_Bury);
 		break;
+	}
 	}
 }
 
@@ -2277,6 +2329,7 @@ void PikiKinokoChangeState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
 	switch (msg->mKeyEvent->mEventType) {
 	case KEY_Action0:
+	{
 		if (mDoBecomeKinoko) {
 			piki->startKinoko();
 			piki->playEventSound(piki->mLeaderCreature, SE_KINOKOPIKI_MORPH);
@@ -2284,9 +2337,12 @@ void PikiKinokoChangeState::procAnimMsg(Piki* piki, MsgAnim* msg)
 			piki->endKinoko();
 		}
 		break;
+	}
 	case KEY_Finished:
+	{
 		transit(piki, PIKISTATE_Normal);
 		break;
+	}
 	}
 }
 
@@ -2337,6 +2393,7 @@ void PikiGrowupState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
 	switch (msg->mKeyEvent->mEventType) {
 	case KEY_Action0:
+	{
 		piki->mFloweringTimer++;
 		seSystem->playPikiSound(SEF_PIKI_GROW4, piki->mSRT.t);
 		piki->setFlower(Flower);
@@ -2349,9 +2406,12 @@ void PikiGrowupState::procAnimMsg(Piki* piki, MsgAnim* msg)
 			piki->mNavi->mPlateMgr->changeFlower(piki);
 		}
 		break;
+	}
 	case KEY_Finished:
+	{
 		transit(piki, PIKISTATE_Normal);
 		break;
+	}
 	}
 }
 
@@ -2406,11 +2466,15 @@ void PikiWaveState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
 	switch (msg->mKeyEvent->mEventType) {
 	case KEY_Finished:
+	{
 		transit(piki, PIKISTATE_Normal);
 		break;
+	}
 	case KEY_Action0:
 	case KEY_Action1: // idk, nothing in the DLL about this
+	{
 		break;
+	}
 	}
 }
 
@@ -2498,13 +2562,17 @@ void PikiPushState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
 	switch (msg->mKeyEvent->mEventType) {
 	case KEY_LoopEnd:
+	{
 		if (piki->mWallObj && !AIConstant::_instance->mConstants._64()) {
 			piki->_4D8 = 1;
 		}
 		break;
+	}
 	case KEY_Finished:
+	{
 		transit(piki, PIKISTATE_Normal);
 		break;
+	}
 	}
 }
 
@@ -2578,6 +2646,7 @@ void PikiPushPikiState::procCollideMsg(Piki* piki, MsgCollide* msg)
 	Creature* collider = msg->mEvent.mCollider;
 	switch (collider->mObjType) {
 	case OBJTYPE_Piki:
+	{
 		Piki* other = (Piki*)collider;
 		if (other->getState() == PIKISTATE_Push) {
 			Vector3f pos(other->mPushTargetPos);
@@ -2585,6 +2654,7 @@ void PikiPushPikiState::procCollideMsg(Piki* piki, MsgCollide* msg)
 			piki->mPushTargetPos = pos;
 			mCollisionFrameCount = 1;
 		}
+	}
 	}
 }
 
@@ -2602,15 +2672,19 @@ void PikiPushPikiState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
 	switch (msg->mKeyEvent->mEventType) {
 	case KEY_LoopEnd:
+	{
 		if (piki->mWallObj) {
 			Vector3f dir(sinf(piki->mFaceDirection), 0.0f, cosf(piki->mFaceDirection));
 			dir = dir * 2.0f;
 			// this is just straight up how it is in the DLL, probably commented out code
 		}
 		break;
+	}
 	case KEY_Finished:
+	{
 		transit(piki, PIKISTATE_Normal);
 		break;
+	}
 	}
 }
 
@@ -2808,6 +2882,7 @@ void PikiNukareState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
 	switch (msg->mKeyEvent->mEventType) {
 	case KEY_Action0:
+	{
 		rumbleMgr->start(RUMBLE_Unk0, 0, nullptr);
 		if (piki->mGroundTriangle && MapCode::getAttribute(piki->mGroundTriangle) == ATTR_Water) {
 			effectMgr->create(EffectMgr::EFF_P_Bubbles, piki->mSRT.t, nullptr, nullptr);
@@ -2816,7 +2891,9 @@ void PikiNukareState::procAnimMsg(Piki* piki, MsgAnim* msg)
 			effectMgr->create(EffectMgr::EFF_SD_DirtSpray, piki->mSRT.t, nullptr, nullptr);
 		}
 		break;
+	}
 	case KEY_Finished:
+	{
 		piki->mSRT.r.y       = piki->mNavi->mFaceDirection;
 		piki->mFaceDirection = piki->mSRT.r.y;
 		piki->mSRT.t         = piki->mShadowPos;
@@ -2834,6 +2911,7 @@ void PikiNukareState::procAnimMsg(Piki* piki, MsgAnim* msg)
 			}
 		}
 		break;
+	}
 	}
 }
 
@@ -2886,14 +2964,18 @@ void PikiAutoNukiState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
 	switch (msg->mKeyEvent->mEventType) {
 	case KEY_Action0:
+	{
 		mToCreateEffect = true;
 		SeSystem::playPlayerSe(SE_PIKI_PULLED);
 		break;
+	}
 	case KEY_Finished:
+	{
 		piki->mSRT.t = piki->mShadowPos;
 		transit(piki, PIKISTATE_Normal);
 		piki->changeMode(PikiMode::FormationMode, piki->mNavi);
 		break;
+	}
 	}
 }
 
@@ -3020,12 +3102,14 @@ void PikiDyingState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
 	switch (msg->mKeyEvent->mEventType) {
 	case KEY_Finished:
+	{
 		if (piki->isFired()) {
 			piki->endFire();
 			effectMgr->create(EffectMgr::EFF_Piki_FireRecover, piki->mEffectPos, nullptr, nullptr);
 		}
 		transit(piki, PIKISTATE_Dead);
 		break;
+	}
 	}
 }
 
@@ -3244,6 +3328,7 @@ void PikiEmotionState::exec(Piki* piki)
 	if (piki->mEmotion == PikiEmotion::ShipPartGaze || (piki->mEmotion == PikiEmotion::ShipPartCheer && mCheerCount == 5)) {
 		switch (mGazeFlag) {
 		case EGP_Gazing:
+		{
 			// If the part disappears, keep gazing at its last known position for a moment.
 			if (!piki->mCarryingShipPart->isAlive()) {
 				mGazeFlag     = EGP_HoldLastPos;
@@ -3252,7 +3337,9 @@ void PikiEmotionState::exec(Piki* piki)
 				mTimer = (0.4f * gsys->getRand(1.0f)) + 1.5f;
 			}
 			break;
+		}
 		case EGP_HoldLastPos:
+		{
 			// After a short delay, stop looking and allow the animation to end naturally.
 			mTimer -= gsys->getFrameTime();
 			if (mTimer < 0.0f) {
@@ -3261,9 +3348,12 @@ void PikiEmotionState::exec(Piki* piki)
 				piki->mPikiAnimMgr.finishMotion(piki);
 			}
 			break;
+		}
 		case EGP_Done:
+		{
 			// Nothing to do; wait for procAnimMsg to transition out.
 			break;
+		}
 		}
 	}
 }
@@ -3285,6 +3375,7 @@ void PikiEmotionState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
 	switch (msg->mKeyEvent->mEventType) {
 	case KEY_Finished:
+	{
 		if (piki->mEmotion == PikiEmotion::ShipPartCheer) {
 			mCheerCount--;
 			if (mCheerCount) {
@@ -3296,5 +3387,6 @@ void PikiEmotionState::procAnimMsg(Piki* piki, MsgAnim* msg)
 		mCheerCount = 0;
 		transit(piki, PIKISTATE_Normal);
 		break;
+	}
 	}
 }

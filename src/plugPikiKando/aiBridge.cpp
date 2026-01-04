@@ -115,13 +115,21 @@ int ActBridge::exec()
 	if (mBridge->mDoUseJointSegments) {
 		switch (mState) {
 		case STATE_Approach:
+		{
 			return newExeApproach();
+		}
 		case STATE_Go:
+		{
 			return newExeGo();
+		}
 		case STATE_Work:
+		{
 			return newExeWork();
+		}
 		default:
+		{
 			return ACTOUT_Continue;
+		}
 		}
 	}
 
@@ -267,16 +275,22 @@ void ActBridge::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 	STACK_PAD_VAR(1);
 	switch (event.mEventType) {
 	case KEY_LoopEnd:
+	{
 		mIsAttackReady = TRUE;
 		break;
+	}
 	case KEY_PlayEffect:
+	{
 		if (mPiki->aiCullable() && (AIPerf::optLevel <= 0 || mPiki->mOptUpdateContext.updatable())) {
 			effectMgr->create(EffectMgr::EFF_Piki_WorkCloud, mPiki->mEffectPos, nullptr, nullptr);
 		}
 		break;
+	}
 	case KEY_Finished:
+	{
 		mAnimationFinished = true;
 		break;
+	}
 	}
 }
 

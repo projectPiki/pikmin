@@ -297,21 +297,31 @@ void OSInit(void)
 		} else {
 			switch (inputConsoleType) { // if "first" byte is 2, check "the rest"
 			case OS_CONSOLE_EMULATOR:
+			{
 				OSReport("Mac Emulator\n");
 				break;
+			}
 			case OS_CONSOLE_PC_EMULATOR:
+			{
 				OSReport("PC Emulator\n");
 				break;
+			}
 			case OS_CONSOLE_ARTHUR:
+			{
 				OSReport("EPPC Arthur\n");
 				break;
+			}
 			case OS_CONSOLE_MINNOW:
+			{
 				OSReport("EPPC Minnow\n");
 				break;
+			}
 			default: // if none of the above, just report the info we have
+			{
 				tdev = (u32)inputConsoleType - 0x10000000;
 				OSReport("Development HW%d\n", tdev - 3);
 				break;
+			}
 			}
 		}
 

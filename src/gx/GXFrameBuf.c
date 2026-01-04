@@ -428,11 +428,15 @@ void GXSetTexCopyDst(u16 wd, u16 ht, GXTexFmt fmt, GXBool mipmap)
 	case GX_TF_IA4:
 	case GX_TF_IA8:
 	case GX_CTF_YUVA8:
+	{
 		SET_REG_FIELD(0, gx->cpTex, 2, 15, 3);
 		break;
+	}
 	default:
+	{
 		SET_REG_FIELD(0, gx->cpTex, 2, 15, 2);
 		break;
+	}
 	}
 
 	gx->cpTexZ = (fmt & _GX_TF_ZTF) == _GX_TF_ZTF;

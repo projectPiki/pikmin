@@ -796,37 +796,46 @@ static void* CardUtilMain(void*)
 		// execute command
 		switch (cmd) {
 		case CARDCMD_Mount:
+		{
 			res = DoMount(chan, data);
 			break;
-
+		}
 		case CARDCMD_Unmount:
+		{
 			res = DoUnmount(chan);
 			break;
-
+		}
 		case CARDCMD_Format:
+		{
 			res = DoFormat(chan);
 			break;
-
+		}
 		case CARDCMD_List:
+		{
 			res = DoList(chan, (CardUtilDirent*)data);
 			break;
-
+		}
 		case CARDCMD_Erase:
+		{
 			res = DoErase(chan, (s32)file);
 			break;
-
+		}
 		case CARDCMD_Open:
+		{
 			res = DoOpen(chan, (s32)file, data);
 			break;
-
+		}
 		case CARDCMD_Save:
+		{
 			res = DoSave(chan, (CARDStat*)file, data);
 			break;
-
+		}
 		case CARDCMD_Write:
+		{
 			u32 uLength = length;
 			res         = DoWrite(chan, (s32)file, data, uLength, offset);
 			break;
+		}
 		}
 
 		// update global objects with results

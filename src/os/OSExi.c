@@ -36,26 +36,32 @@ static void SetExiInterruptMask(s32 chan, struct EXIControl* exi)
 
 	switch (chan) {
 	case 0:
+	{
 		if ((exi->exiCallback == 0 && exi2->exiCallback == 0) || exi->state & 0x10) {
 			__OSMaskInterrupts(0x410000U);
 			return;
 		}
 		__OSUnmaskInterrupts(0x410000U);
 		return;
+	}
 	case 1:
+	{
 		if (exi->exiCallback == 0 || exi->state & 0x10) {
 			__OSMaskInterrupts(0x80000U);
 			return;
 		}
 		__OSUnmaskInterrupts(0x80000U);
 		return;
+	}
 	case 2:
+	{
 		if ((__OSGetInterruptHandler(0x19) == 0U) || (exi->state & 0x10)) {
 			__OSMaskInterrupts(0x40U);
 			return;
 		}
 		__OSUnmaskInterrupts(0x40U);
 		return;
+	}
 	}
 }
 
@@ -417,11 +423,15 @@ int EXISelect(s32 chan, u32 dev, u32 freq)
 	if (exi->state & 8) {
 		switch (chan) {
 		case 0:
+		{
 			__OSMaskInterrupts(0x100000U);
 			break;
+		}
 		case 1:
+		{
 			__OSMaskInterrupts(0x20000U);
 			break;
+		}
 		}
 	}
 	OSRestoreInterrupts(enabled);
@@ -447,11 +457,15 @@ int EXIDeselect(s32 chan)
 	if (exi->state & 8) {
 		switch (chan) {
 		case 0:
+		{
 			__OSUnmaskInterrupts(0x100000U);
 			break;
+		}
 		case 1:
+		{
 			__OSUnmaskInterrupts(0x20000U);
 			break;
+		}
 		}
 	}
 	OSRestoreInterrupts(enabled);
@@ -706,26 +720,32 @@ static void SetExiInterruptMask(s32 chan, EXIControl* exi)
 	exi2 = &Ecb[2];
 	switch (chan) {
 	case 0:
+	{
 		if ((exi->exiCallback == 0 && exi2->exiCallback == 0) || (exi->state & EXI_STATE_LOCKED)) {
 			__OSMaskInterrupts(OS_INTERRUPTMASK_EXI_0_EXI | OS_INTERRUPTMASK_EXI_2_EXI);
 		} else {
 			__OSUnmaskInterrupts(OS_INTERRUPTMASK_EXI_0_EXI | OS_INTERRUPTMASK_EXI_2_EXI);
 		}
 		break;
+	}
 	case 1:
+	{
 		if (exi->exiCallback == 0 || (exi->state & EXI_STATE_LOCKED)) {
 			__OSMaskInterrupts(OS_INTERRUPTMASK_EXI_1_EXI);
 		} else {
 			__OSUnmaskInterrupts(OS_INTERRUPTMASK_EXI_1_EXI);
 		}
 		break;
+	}
 	case 2:
+	{
 		if (__OSGetInterruptHandler(__OS_INTERRUPT_PI_DEBUG) == 0 || (exi->state & EXI_STATE_LOCKED)) {
 			__OSMaskInterrupts(OS_INTERRUPTMASK_PI_DEBUG);
 		} else {
 			__OSUnmaskInterrupts(OS_INTERRUPTMASK_PI_DEBUG);
 		}
 		break;
+	}
 	}
 }
 
@@ -1072,11 +1092,15 @@ BOOL EXISelect(s32 chan, u32 dev, u32 freq)
 	if (exi->state & EXI_STATE_ATTACHED) {
 		switch (chan) {
 		case 0:
+		{
 			__OSMaskInterrupts(OS_INTERRUPTMASK_EXI_0_EXT);
 			break;
+		}
 		case 1:
+		{
 			__OSMaskInterrupts(OS_INTERRUPTMASK_EXI_1_EXT);
 			break;
+		}
 		}
 	}
 
@@ -1105,11 +1129,15 @@ BOOL EXIDeselect(s32 chan)
 	if (exi->state & EXI_STATE_ATTACHED) {
 		switch (chan) {
 		case 0:
+		{
 			__OSUnmaskInterrupts(OS_INTERRUPTMASK_EXI_0_EXT);
 			break;
+		}
 		case 1:
+		{
 			__OSUnmaskInterrupts(OS_INTERRUPTMASK_EXI_1_EXT);
 			break;
+		}
 		}
 	}
 

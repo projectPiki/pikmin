@@ -243,6 +243,7 @@ void OnePlayerSection::init()
 		int nextSectionType = gameflow.mNextOnePlayerSectionID;
 		switch (nextSectionType) {
 		case ONEPLAYER_GameSetup:
+		{
 			// loading section! (post-title screen, pre-file select)
 			PRINT("making new SETUP\n");
 			gsys->startLoading(&gameflow.mGameLoadIdler, true, 60);
@@ -279,22 +280,25 @@ void OnePlayerSection::init()
 			currentSection = new GameSetupSection();
 			gsys->endLoading();
 			break;
-
+		}
 		case ONEPLAYER_CardSelect:
+		{
 			// file select section!
 			PRINT("making new CARDSELECT\n");
 			currentSection = new CardSelectSection();
 			break;
-
+		}
 		case ONEPLAYER_MapSelect:
+		{
 			// world map section!
 			PRINT("making new MAPSELECT\n");
 			currentSection = new MapSelectSection();
 			break;
-
+		}
 		// The following three cases are leftovers from the E3 2001 showfloor demo!  At the event, the title screen had a
 		// unique menu that could directly access three different stages: "Tutorial", "Forest Day 1", and "Forest Day 2".
 		case ONEPLAYER_E3Tutorial:
+		{
 			// tutorial level! (impact site for E3 demo)
 			if (!gameflow.mLevelBannerTex) {
 				PRINT("setting banner!\n");
@@ -320,8 +324,9 @@ void OnePlayerSection::init()
 			// next level after this should be forest day 1
 			gameflow.mNextOnePlayerSectionOnDayEnd = ONEPLAYER_E3ForestDay1;
 			break;
-
+		}
 		case ONEPLAYER_E3ForestDay1:
+		{
 			// forest level 1! (forest of hope day 1 for E3 demo)
 			if (!gameflow.mLevelBannerTex) {
 				PRINT("setting banner!\n");
@@ -345,8 +350,9 @@ void OnePlayerSection::init()
 			// next level after this should be forest day 2
 			gameflow.mNextOnePlayerSectionOnDayEnd = ONEPLAYER_E3ForestDay2;
 			break;
-
+		}
 		case ONEPLAYER_E3ForestDay2:
+		{
 			// forest level 2! (forest of hope day 2 for E3 demo)
 			if (!gameflow.mLevelBannerTex) {
 				PRINT("setting banner!\n");
@@ -371,14 +377,16 @@ void OnePlayerSection::init()
 			// next level after this should be the credits (hope you enjoyed the demo!)
 			gameflow.mNextOnePlayerSectionOnDayEnd = ONEPLAYER_GameCredits;
 			break;
-
+		}
 		case ONEPLAYER_IntroGame:
+		{
 			// intro crash landing cutscene!
 			PRINT("making new INTRO\n");
 			currentSection = new IntroGameSection();
 			break;
-
+		}
 		case ONEPLAYER_NewPikiGame:
+		{
 			// gameplay!
 
 			// The exact position of this DLL-exclusive code is unclear because some of the following code is DOL-exclusive.
@@ -414,32 +422,37 @@ void OnePlayerSection::init()
 			PRINT("making new MAINGAME\n");
 			currentSection = new NewPikiGameSection();
 			break;
-
+		}
 		case ONEPLAYER_GameCourseClear:
+		{
 			// this is never actually hit during gameplay
 			PRINT("making new COURSECLEAR\n");
 			currentSection = new GameCourseClearSection();
 			break;
-
+		}
 		case ONEPLAYER_GameStageClear:
+		{
 			// this is never actually hit during gameplay
 			PRINT("making new STAGECLEAR\n");
 			currentSection = new GameStageClearSection();
 			break;
-
+		}
 		case ONEPLAYER_GameCredits:
+		{
 			// this is only hit during the E3 Demo
 			PRINT("making new CREDITS\n");
 			gsys->startLoading(nullptr, true, 60);
 			currentSection = new GameCreditsSection();
 			gsys->endLoading();
 			break;
-
+		}
 		case ONEPLAYER_GameExit:
+		{
 			// going back to title (or credits movie)!
 			PRINT("making new EXIT\n");
 			currentSection = new GameExitSection();
 			break;
+		}
 		}
 
 		// if we adjusted the target section ID during our loop, wipe the section and retry

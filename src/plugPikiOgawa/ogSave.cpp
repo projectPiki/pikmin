@@ -241,6 +241,7 @@ zen::ogSaveMgr::SaveStatus zen::ogSaveMgr::update(Controller* input)
 
 		switch (mStatus) {
 		case FadeIn:
+		{
 			if (mAnimTimer > 0.25f) {
 				mStatus = MainSelectionActive;
 				mWindow1->setScale(1.0f);
@@ -257,8 +258,9 @@ zen::ogSaveMgr::SaveStatus zen::ogSaveMgr::update(Controller* input)
 #endif
 			}
 			break;
-
+		}
 		case PreparingSave:
+		{
 			if (mAnimTimer > 0.25f) {
 				mStatus    = ShowingSaveNotice;
 				mAnimTimer = 0.0f;
@@ -276,8 +278,9 @@ zen::ogSaveMgr::SaveStatus zen::ogSaveMgr::update(Controller* input)
 				mBackPicture->setAlpha(mSaveCenterTextBox->getAlpha() * t);
 			}
 			break;
-
+		}
 		case FadeOut:
+		{
 			if (mAnimTimer > 0.25f) {
 				mStatus = mNextStatus;
 				mWindow1->setScale(0.0f);
@@ -287,8 +290,9 @@ zen::ogSaveMgr::SaveStatus zen::ogSaveMgr::update(Controller* input)
 				mBackPicture->setAlpha(mSaveCenterTextBox->getAlpha() * t);
 			}
 			break;
-
+		}
 		case MainSelectionActive:
+		{
 			if (nikatu1 == 5) {
 				mStatus    = ShowingSaveNotice;
 				mAnimTimer = 0.0f;
@@ -328,8 +332,9 @@ zen::ogSaveMgr::SaveStatus zen::ogSaveMgr::update(Controller* input)
 				mAnimTimer  = 0.0f;
 			}
 			break;
-
+		}
 		case ShowingSaveNotice:
+		{
 			if (mAnimTimer < 1.0f) {
 				f32 scale = 3.0f * mAnimTimer / 1.0f;
 				if (scale > 1.0f) {
@@ -343,8 +348,9 @@ zen::ogSaveMgr::SaveStatus zen::ogSaveMgr::update(Controller* input)
 				gameflow.mMemoryCard.saveCurrentGame();
 			}
 			break;
-
+		}
 		case SavingInProgress:
+		{
 			mNoticePane->setScale(1.0f);
 			seSystem->playSysSe(ogEnumFix(SYSSE_CARDOK, JACSYS_CardOK));
 			if (gameflow.mMemoryCard.didSaveFail()) {
@@ -361,8 +367,9 @@ zen::ogSaveMgr::SaveStatus zen::ogSaveMgr::update(Controller* input)
 				mSaveActionKSFader->start(ogFadeMgr::STATUS_FadeIn, 0.25f);
 			}
 			break;
-
+		}
 		case SaveComplete:
+		{
 			if (mAnimTimer > 1.0f) {
 				mNextStatus = SaveCompletedSuccess;
 				mStatus     = FadeOut;
@@ -371,8 +378,9 @@ zen::ogSaveMgr::SaveStatus zen::ogSaveMgr::update(Controller* input)
 				mSaveActionKSFader->start(ogFadeMgr::STATUS_FadeOut, 0.25f);
 			}
 			break;
-
+		}
 		case MainWindowFadeOut:
+		{
 			if (mAnimTimer > 0.25f) {
 				mWindow1->setScale(0.0f);
 				mStatus    = SecondaryWindowFadeIn;
@@ -381,8 +389,9 @@ zen::ogSaveMgr::SaveStatus zen::ogSaveMgr::update(Controller* input)
 				mWindow1->setScale(1.0f - (mAnimTimer / 0.25f));
 			}
 			break;
-
+		}
 		case SecondaryWindowFadeIn:
+		{
 			if (mAnimTimer > 0.25f) {
 				mStatus = SecondarySelectionActive;
 				mWindow2->setScale(1.0f);
@@ -391,8 +400,9 @@ zen::ogSaveMgr::SaveStatus zen::ogSaveMgr::update(Controller* input)
 				mWindow2->setScale((mAnimTimer / 0.25f));
 			}
 			break;
-
+		}
 		case SecondarySelectionActive:
+		{
 			if (nikatu2 == 5) {
 				mNextStatus = ExitSuccess;
 				mStatus     = SecondaryWindowFadeOut;
@@ -408,8 +418,9 @@ zen::ogSaveMgr::SaveStatus zen::ogSaveMgr::update(Controller* input)
 				mAnimTimer  = 0.0f;
 			}
 			break;
-
+		}
 		case SecondaryWindowFadeOut:
+		{
 			if (mAnimTimer > 0.25f) {
 				mWindow2->setScale(0.0f);
 				mStatus    = mNextStatus;
@@ -418,14 +429,16 @@ zen::ogSaveMgr::SaveStatus zen::ogSaveMgr::update(Controller* input)
 				mWindow2->setScale(1.0f - (mAnimTimer / 0.25f));
 			}
 			break;
-
+		}
 		case HandleSaveFailure:
+		{
 			if (!savefail) {
 				mNextStatus = ExitFailure;
 				mStatus     = FadeOut;
 				mAnimTimer  = 0.0f;
 			}
 			break;
+		}
 		}
 
 		STACK_PAD_TERNARY(mStatus, 2);

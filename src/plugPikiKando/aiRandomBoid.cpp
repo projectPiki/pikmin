@@ -20,9 +20,11 @@ void ActRandomBoid::AnimListener::animationKeyUpdated(immut PaniAnimKeyEvent& ev
 {
 	switch (event.mEventType) {
 	case KEY_Finished:
+	{
 		mAction->mIsAnimFinishing = false;
 		switch (mAction->mState) {
 		case STATE_Boid:
+		{
 			f32 angle = 2.0f * (PI * gsys->getRand(1.0f));
 			if (gsys->getRand(1.0f) > 0.8f) {
 				mPiki->startMotion(PaniMotionInfo(PIKIANIM_Run, this), PaniMotionInfo(PIKIANIM_Run));
@@ -39,18 +41,26 @@ void ActRandomBoid::AnimListener::animationKeyUpdated(immut PaniAnimKeyEvent& ev
 			mPiki->startMotion(PaniMotionInfo(PIKIANIM_Run, this), PaniMotionInfo(PIKIANIM_Run));
 			mPiki->setSpeed(0.0f, Vector3f(cosf(angle), 0.0f, sinf(angle)));
 			break;
+		}
 		case STATE_Stop:
+		{
 			mPiki->startMotion(PaniMotionInfo(PIKIANIM_Run, this), PaniMotionInfo(PIKIANIM_Run));
 			break;
+		}
 		case STATE_Random:
+		{
 			mPiki->startMotion(PaniMotionInfo(PIKIANIM_Run, this), PaniMotionInfo(PIKIANIM_Run));
 			f32 angle2 = 2.0f * (PI * gsys->getRand(1.0f));
 			mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 			break;
 		}
+		}
 		break;
+	}
 	case KEY_Action0:
+	{
 		break;
+	}
 	}
 }
 

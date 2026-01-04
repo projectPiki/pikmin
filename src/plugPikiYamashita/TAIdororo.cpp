@@ -891,15 +891,21 @@ void TAIdororoStrategy::createEffect(Teki& teki, int effType)
 	TekiStrategy::createEffect(teki, effType);
 	switch (effType) {
 	case 0:
+	{
 		createCloudOfDust(teki, mLeftHand);
 		break;
+	}
 	case 1:
+	{
 		createCloudOfDust(teki, mRightHand);
 		break;
+	}
 	case 2:
+	{
 		createCloudOfDust(teki, mLeftHand);
 		createCloudOfDust(teki, mRightHand);
 		break;
+	}
 	}
 }
 

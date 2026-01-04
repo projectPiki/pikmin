@@ -977,35 +977,55 @@ int TexImg::calcDataSize(int format, int width, int height)
 
 	switch (format) {
 	case TEX_FMT_S3TC:
+	{
 		size = (width * height / 8) * 4;
 		break;
+	}
 	case TEX_FMT_RGB5A3:
+	{
 		size = width * height * 2;
 		break;
+	}
 	case TEX_FMT_RGB565:
+	{
 		size = width * height * 2;
 		break;
+	}
 	case TEX_FMT_I4:
+	{
 		size = width * height / 2;
 		break;
+	}
 	case TEX_FMT_I8:
+	{
 		size = width * height;
 		break;
+	}
 	case TEX_FMT_IA4:
+	{
 		size = width * height;
 		break;
+	}
 	case TEX_FMT_IA8:
+	{
 		size = width * height * 2;
 		break;
+	}
 	case TEX_FMT_RGBA8:
+	{
 		size = width * height * 4;
 		break;
+	}
 	case TEX_FMT_Z8:
+	{
 		size = width * height;
 		break;
+	}
 	case TEX_FMT_COUNT: // what?
+	{
 		size = width * height;
 		break;
+	}
 	}
 
 	return size;
@@ -1047,19 +1067,25 @@ void TexImg::getTileSize(int format, u32& xSize, u32& ySize)
 {
 	switch (format) {
 	case 3:
+	{
 		xSize = 8;
 		ySize = 8;
 		break;
+	}
 	case 4:
 	case 5:
 	case 9:
+	{
 		xSize = 8;
 		ySize = 4;
 		break;
+	}
 	default:
+	{
 		xSize = 4;
 		ySize = 4;
 		break;
+	}
 	}
 }
 

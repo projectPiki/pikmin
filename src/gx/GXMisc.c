@@ -13,6 +13,7 @@ void GXSetMisc(GXMiscToken token, u32 val)
 {
 	switch (token) {
 	case GX_MT_XF_FLUSH:
+	{
 		gx->vNum   = val;
 		gx->vNum   = !gx->vNum;
 		gx->bpSent = GX_TRUE;
@@ -21,17 +22,24 @@ void GXSetMisc(GXMiscToken token, u32 val)
 			gx->dirtyState |= 8;
 		}
 		break;
+	}
 	case GX_MT_DL_SAVE_CONTEXT:
+	{
 		ASSERTMSGLINE(210, !gx->inDispList, "GXSetMisc: Cannot change DL context setting while making a display list");
 		gx->dlSaveContext = (val > 0);
 		break;
+	}
 	case GX_MT_NULL:
+	{
 		break;
+	}
 	default:
+	{
 #if DEBUG
 		OSReport("GXSetMisc: bad token %d (val %d)\n", token, val);
 #endif
 		break;
+	}
 	}
 }
 
@@ -476,9 +484,12 @@ u32 GXCompressZ16(u32 z24, GXZFmt16 zfmt)
 	temp = __cntlzw(z24n);
 	switch (zfmt) {
 	case GX_ZC_LINEAR:
+	{
 		z16 = (z24 >> 8) & 0xFFFF;
 		break;
+	}
 	case GX_ZC_NEAR:
+	{
 		if (temp > 3) {
 			exp = 3;
 		} else {
@@ -491,7 +502,9 @@ u32 GXCompressZ16(u32 z24, GXZFmt16 zfmt)
 		}
 		z16 = ((z24 >> shift) & 0x3FFF & ~0xFFFFC000) | (exp << 14);
 		break;
+	}
 	case GX_ZC_MID:
+	{
 		if (temp > 7) {
 			exp = 7;
 		} else {
@@ -504,7 +517,9 @@ u32 GXCompressZ16(u32 z24, GXZFmt16 zfmt)
 		}
 		z16 = ((z24 >> shift) & 0x1FFF & ~0xFFFFE000) | (exp << 13);
 		break;
+	}
 	case GX_ZC_FAR:
+	{
 		if (temp > 12) {
 			exp = 12;
 		} else {
@@ -517,9 +532,12 @@ u32 GXCompressZ16(u32 z24, GXZFmt16 zfmt)
 		}
 		z16 = ((z24 >> shift) & 0xFFF & ~0xFFFFF000) | (exp << 12);
 		break;
+	}
 	default:
+	{
 		OSPanic(__FILE__, 953, "GXCompressZ16: Invalid Z format\n");
 		break;
+	}
 	}
 	return z16;
 }
@@ -544,9 +562,12 @@ u32 GXDecompressZ16(u32 z16, GXZFmt16 zfmt)
 
 	switch (zfmt) {
 	case GX_ZC_LINEAR:
+	{
 		z24 = (z16 << 8) & 0xFFFF00;
 		break;
+	}
 	case GX_ZC_NEAR:
+	{
 		exp = (z16 >> 14) & 3;
 		if (exp == 3) {
 			shift = 7;
@@ -556,7 +577,9 @@ u32 GXDecompressZ16(u32 z16, GXZFmt16 zfmt)
 		cb1 = -1 << (24 - exp);
 		z24 = (cb1 | ((z16 & 0x3FFF) << shift)) & 0xFFFFFF;
 		break;
+	}
 	case GX_ZC_MID:
+	{
 		exp = (z16 >> 13) & 7;
 		if (exp == 7) {
 			shift = 4;
@@ -566,7 +589,9 @@ u32 GXDecompressZ16(u32 z16, GXZFmt16 zfmt)
 		cb1 = -1 << (24 - exp);
 		z24 = (cb1 | ((z16 & 0x1FFF) << shift)) & 0xFFFFFF;
 		break;
+	}
 	case GX_ZC_FAR:
+	{
 		exp = (z16 >> 12) & 0xF;
 		if (exp == 12) {
 			shift = 0;
@@ -576,9 +601,12 @@ u32 GXDecompressZ16(u32 z16, GXZFmt16 zfmt)
 		cb1 = -1 << (24 - exp);
 		z24 = (cb1 | ((z16 & 0xFFF) << shift)) & 0xFFFFFF;
 		break;
+	}
 	default:
+	{
 		OSPanic(__FILE__, 1003, "GXDecompressZ16: Invalid Z format\n");
 		break;
+	}
 	}
 	return z24;
 }

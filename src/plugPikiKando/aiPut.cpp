@@ -428,15 +428,25 @@ int ActPutBomb::exec()
 
 	switch (mState) {
 	case STATE_Set:
+	{
 		return exeSet();
+	}
 	case STATE_Aim:
+	{
 		return exeAim();
+	}
 	case STATE_Wait:
+	{
 		return exeWait();
+	}
 	case STATE_Throw:
+	{
 		return exeThrow();
+	}
 	case STATE_Put:
+	{
 		return exePut();
+	}
 	}
 
 	return ACTOUT_Success;
@@ -449,12 +459,16 @@ void ActPutBomb::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
 	case KEY_Action0:
+	{
 		break;
+	}
 	case KEY_Finished:
+	{
 		if (mState == STATE_Put || mState == STATE_Throw) {
 			mAnimationFinished = true;
 		}
 		break;
+	}
 	}
 }
 

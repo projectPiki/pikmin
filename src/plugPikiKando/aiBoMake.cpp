@@ -53,9 +53,13 @@ int ActBoMake::exec()
 
 	switch (mState) {
 	case STATE_Approach:
+	{
 		return exeApproach();
+	}
 	case STATE_Work:
+	{
 		return exeWork();
+	}
 	}
 
 	return ACTOUT_Continue;
@@ -122,10 +126,14 @@ void ActBoMake::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
 	case KEY_Finished:
+	{
 		break;
+	}
 	case KEY_Action0:
+	{
 		InteractBuild build(mPiki, 0, 1.0f);
 		mBuildObject->stimulate(build); // the one time it's not in the same line, smh
 		break;
+	}
 	}
 }

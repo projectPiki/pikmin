@@ -76,6 +76,7 @@ void AttentionCamera::update()
 {
 	switch (mFadeState) {
 	case 1:
+	{
 		if (!mActiveFader->updateFadeOut()) {
 			return;
 		}
@@ -91,11 +92,14 @@ void AttentionCamera::update()
 		mFadeState = 2;
 		mActiveFader->initFadeIn();
 		break;
+	}
 	case 2:
+	{
 		if (mActiveFader->updateFadeIn()) {
 			mFadeState = 0;
 		}
 		break;
+	}
 	}
 }
 

@@ -218,14 +218,20 @@ void UfoItem::updateTroubleEffect()
 		mTroubleFxState = test;
 		switch (mTroubleFxState) {
 		case 0:
+		{
 			startTroubleEffectOne(2);
 			break;
+		}
 		case 1:
+		{
 			startTroubleEffectOne(4);
 			break;
+		}
 		case 2:
+		{
 			startTroubleEffectOne(3);
 			break;
+		}
 		}
 	}
 
@@ -342,14 +348,16 @@ void UfoItem::setJetEffect(int level, bool doSmokeEffects)
 				CollPart* coll = mCollInfo->getSphere(tags[engine]);
 				switch (type) {
 				case 0:
+				{
 					mEngineParticleGenList[engine][3]
 					    = effectMgr->create(effects[stage + engine * offset][0], coll->mCentre, nullptr, nullptr);
 					if (mEngineParticleGenList[engine][3]) {
 						mEngineParticleGenList[engine][3]->setEmitPosPtr(&coll->mCentre);
 					}
 					break;
-
+				}
 				case 1:
+				{
 					mEngineParticleGenList[engine][2]
 					    = effectMgr->create(effects[stage + engine * offset][1], coll->mCentre, nullptr, nullptr);
 					if (mEngineParticleGenList[engine][2]) {
@@ -357,7 +365,9 @@ void UfoItem::setJetEffect(int level, bool doSmokeEffects)
 						mEngineParticleGenList[engine][2]->setOrientedNormalVector(Vector3f(1.0f, 0.0f, 0.0f));
 					}
 					break;
+				}
 				case 2:
+				{
 					// don't do smoke effect if we've fixed enough of the ship
 					if (doSmokeEffects && playerState->mShipUpgradeLevel != 5) {
 						PRINT("SMOKE * CB *\n");
@@ -368,7 +378,9 @@ void UfoItem::setJetEffect(int level, bool doSmokeEffects)
 						}
 					}
 					break;
+				}
 				case 3:
+				{
 					// don't do smoke effect if we've fixed enough of the ship
 					if (doSmokeEffects && playerState->mShipUpgradeLevel != 5) {
 						PRINT("SMOKE * CA *\n");
@@ -380,6 +392,7 @@ void UfoItem::setJetEffect(int level, bool doSmokeEffects)
 						}
 					}
 					break;
+				}
 				}
 			}
 		}
@@ -556,96 +569,137 @@ void UfoItem::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 	}
 	switch (anim) {
 	case 16:
+	{
 		switch (event.mEventType) {
 		case KEY_Action0:
-			mAnimator.setMotionSpeed(0, 0.0f);
-			break;
-		case KEY_Finished:
+		{
 			mAnimator.setMotionSpeed(0, 0.0f);
 			break;
 		}
-		break;
-	case 0:
-	case 1:
-		switch (event.mEventType) {
-		case KEY_Action0:
+		case KEY_Finished:
+		{
 			mAnimator.setMotionSpeed(0, 0.0f);
 			break;
+		}
+		}
+		break;
+	}
+	case 0:
+	case 1:
+	{
+		switch (event.mEventType) {
+		case KEY_Action0:
+		{
+			mAnimator.setMotionSpeed(0, 0.0f);
+			break;
+		}
 		case KEY_Finished:
+		{
 			playerState->ufoAssignStart();
 			mAnimator.setMotionSpeed(0, 0.0f);
 			PRINT("*** SET UFO MOTION SPEED 000\n");
 			break;
+		}
 		case KEY_PlayEffect:
+		{
 			switch (event.mValue) { // yes this is a switch in a switch in a switch
 			case 0:
+			{
 				if (anim == 0) {
 					effectMgr->create(EffectMgr::EFF_Rocket_Nke1, mSRT.t, nullptr, nullptr);
 					effectMgr->create(EffectMgr::EFF_Rocket_Nke2, mSRT.t, nullptr, nullptr);
 				}
 				break;
+			}
 			case 2:
+			{
 				if (anim == 0) {
 					effectMgr->create(EffectMgr::EFF_CloudOfDust_1, mSRT.t, nullptr, nullptr);
 				} else {
 					effectMgr->create(EffectMgr::EFF_CloudOfDust_1, mSRT.t, nullptr, nullptr);
 				}
 				break;
+			}
 			case 3:
+			{
 				break;
+			}
 			}
 			break;
 		}
+		}
 		break;
+	}
 	case 11:
 	case 12:
 	case 13:
 	case 14:
 	case 15:
+	{
 		switch (event.mEventType) {
 		case KEY_Finished:
+		{
 			break;
+		}
 		case KEY_PlayEffect:
+		{
 			switch (event.mValue) {
 			case 0:
+			{
 				u8 level    = playerState->mShipUpgradeLevel;
 				int vals[6] = { 1, 1, 2, 2, 3, 3 };
 				setJetEffect(vals[level], false);
 				break;
+			}
 			case 2:
+			{
 				if (playerState->hasUfoRightControl()) {
 					setPca2Effect(true);
 				}
 				break;
+			}
 			case 3:
+			{
 				if (playerState->hasUfoLeftControl()) {
 					setPca1Effect(true);
 				}
 				break;
+			}
 			case 1:
+			{
 				switch (playerState->mShipUpgradeLevel) {
 				case 0:
 				case 1:
+				{
 					effectMgr->create(EffectMgr::EFF_Rocket_JetG01, mSRT.t, nullptr, nullptr);
 					effectMgr->create(EffectMgr::EFF_Rocket_Fkm1, mSRT.t, nullptr, nullptr);
 					break;
+				}
 				case 2:
 				case 3:
+				{
 					effectMgr->create(EffectMgr::EFF_Rocket_JetG02, mSRT.t, nullptr, nullptr);
 					effectMgr->create(EffectMgr::EFF_Rocket_Fkm1, mSRT.t, nullptr, nullptr);
 					break;
+				}
 				case 4:
+				{
 					effectMgr->create(EffectMgr::EFF_Rocket_JetG03, mSRT.t, nullptr, nullptr);
 					effectMgr->create(EffectMgr::EFF_Rocket_Fkm1, mSRT.t, nullptr, nullptr);
 					break;
+				}
 				case 5:
+				{
 					effectMgr->create(EffectMgr::EFF_Rocket_Bstg, mSRT.t, nullptr, nullptr);
 					effectMgr->create(EffectMgr::EFF_Rocket_Bst1db, mSRT.t, nullptr, nullptr);
 					effectMgr->create(EffectMgr::EFF_Rocket_Bst1da, mSRT.t, nullptr, nullptr);
 					break;
 				}
+				}
 				// fallthrough (was this intended?)
+			}
 			case 9:
+			{
 				if (playerState->mShipUpgradeLevel == 5) {
 					CollPart* coll = mCollInfo->getSphere('gcen');
 					zen::particleGenerator* efx;
@@ -660,9 +714,12 @@ void UfoItem::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 				}
 				break;
 			}
+			}
 			break;
 		}
+		}
 		break;
+	}
 	}
 }
 

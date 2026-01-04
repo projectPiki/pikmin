@@ -299,14 +299,20 @@ static void SetupTimeoutAlarm(CARDControl* card)
 	OSCancelAlarm(&card->alarm);
 	switch (card->cmd[0]) {
 	case 0xF2:
+	{
 		OSSetAlarm(&card->alarm, OSMillisecondsToTicks(100), TimeoutHandler);
 		break;
+	}
 	case 0xF3:
+	{
 		break;
+	}
 	case 0xF4:
 	case 0xF1:
+	{
 		OSSetAlarm(&card->alarm, OSSecondsToTicks((OSTime)2) * (card->sectorSize / 0x2000), TimeoutHandler);
 		break;
+	}
 	}
 }
 
@@ -374,22 +380,25 @@ static void UnlockedCallback(s32 channel, s32 result)
 	if (result < 0) {
 		switch (card->cmd[0]) {
 		case 0x52:
+		{
 			callback = card->txCallback;
 			if (callback) {
 				card->txCallback = NULL;
 				callback(channel, result);
 			}
-
 			break;
+		}
 		case 0xF2:
 		case 0xF4:
 		case 0xF1:
+		{
 			callback = card->exiCallback;
 			if (callback) {
 				card->exiCallback = NULL;
 				callback(channel, result);
 			}
 			break;
+		}
 		}
 	}
 }

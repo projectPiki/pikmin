@@ -175,12 +175,15 @@ void ActCrowd::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
 	switch (msg->mKeyEvent->mEventType) {
 	case KEY_Action1:
+	{
 		if (mIsTripping) {
 			piki->mVelocity.set(0.0f, 0.0f, 0.0f);
 			piki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 		}
 		break;
+	}
 	case KEY_LoopEnd:
+	{
 		if (mIsTripping) {
 			mTripLoopCounter--;
 			if (mTripLoopCounter <= 0) {
@@ -188,12 +191,15 @@ void ActCrowd::procAnimMsg(Piki* piki, MsgAnim* msg)
 			}
 		}
 		break;
+	}
 	case KEY_Finished:
+	{
 		if (mIsTripping) {
 			mIsTripping = false;
 			piki->startMotion(PaniMotionInfo(PIKIANIM_Walk), PaniMotionInfo(PIKIANIM_Walk));
 		}
 		break;
+	}
 	}
 }
 
@@ -554,14 +560,20 @@ void ActCrowd::startBoredom()
 {
 	switch (mBoredomMotion) {
 	case 0:
+	{
 		startTalk();
 		break;
+	}
 	case 2:
+	{
 		mPiki->startMotion(PaniMotionInfo(PIKIANIM_Akubi), PaniMotionInfo(PIKIANIM_Akubi));
 		break;
+	}
 	case 3:
+	{
 		mPiki->startMotion(PaniMotionInfo(PIKIANIM_Rinbow), PaniMotionInfo(PIKIANIM_Rinbow));
 		break;
+	}
 	}
 }
 

@@ -31,6 +31,7 @@ immut char* P2DStream::getResource(int dataType)
 		switch (refType) {
 		case 0:
 		case 2:
+		{
 			mStream->read(res, resSize);
 			res[resSize] = 0;
 
@@ -38,19 +39,24 @@ immut char* P2DStream::getResource(int dataType)
 			case 'FONT':
 			case 'TIMG':
 			case 'TLUT':
+			{
 				break;
-
+			}
 			default:
+			{
 				PRINT("Unknown dataType.\n");
 				ERROR("can't load.");
 				break;
 			}
+			}
 			break;
-
+		}
 		default:
+		{
 			PRINT("Unknown refType %d \n", refType);
 			ERROR("Screen Data is wrong.\n");
 			break;
+		}
 		}
 	}
 

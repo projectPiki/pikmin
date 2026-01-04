@@ -162,6 +162,7 @@ void ActFlower::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
 	case KEY_Action0:
+	{
 		Creature* held = mPiki->getHoldCreature();
 		held->stimulate(InteractRelease(mPiki, 1.0f));
 		held->kill(false);
@@ -175,9 +176,12 @@ void ActFlower::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 			mPiki->setFlower(Bud);
 		}
 		break;
+	}
 	case KEY_Finished:
+	{
 		mIsAnimationComplete = true;
 		break;
+	}
 	}
 }
 

@@ -60,10 +60,14 @@ static void ReadApploader(DVDCommandBlock* dvdCmd, void* addr, u32 offset, u32 n
 	while (TRUE) {
 		switch (dvdCmd->state) {
 		case 0:
+		{
 			break;
+		}
 		case 1:
 		default:
+		{
 			continue;
+		}
 		case -1:
 		case 2:
 		case 3:
@@ -75,8 +79,10 @@ static void ReadApploader(DVDCommandBlock* dvdCmd, void* addr, u32 offset, u32 n
 		case 9:
 		case 10:
 		case 11:
+		{
 			__OSDoHotReset(OS_HOT_RESET_CODE);
 			continue;
+		}
 		}
 		break;
 	}

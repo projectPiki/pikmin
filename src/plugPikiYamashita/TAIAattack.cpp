@@ -37,6 +37,7 @@ bool TAIAattackWorkObject::act(Teki& teki)
 	bool res = false;
 	switch (teki.getStatus()) {
 	case 0:
+	{
 		if (teki.startNewMotion(_0C)) {
 			if (setTargetPosition(teki)) {
 				teki.setStatus(1);
@@ -46,7 +47,9 @@ bool TAIAattackWorkObject::act(Teki& teki)
 			}
 		}
 		break;
+	}
 	case 1:
+	{
 		if (teki.startNewMotion(_0C)) {
 			if (teki.mTargetPosition.distance(teki.getPosition()) < getAttackPointRadius(teki)) {
 				teki.mTargetVelocity.set(0.0f, 0.0f, 0.0f);
@@ -64,14 +67,19 @@ bool TAIAattackWorkObject::act(Teki& teki)
 			}
 		}
 		break;
+	}
 	case 2:
+	{
 		if (teki.startNewMotion(_10)) {
 			res = attackWorkObject(teki);
 		}
 		break;
+	}
 	default:
+	{
 		ERROR("Unknown status %d \n", teki.getStatus());
 		break;
+	}
 	}
 
 	return res;

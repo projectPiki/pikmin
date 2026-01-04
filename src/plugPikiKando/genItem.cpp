@@ -179,25 +179,33 @@ Creature* GenObjectItem::birth(BirthInfo& info)
 	if (item) {
 		switch (item->mObjType) {
 		case OBJTYPE_Goal:
+		{
 			GoalItem* goal = (GoalItem*)item;
 			goal->setColorType(mParameterA());
 			break;
+		}
 		case OBJTYPE_Rope:
+		{
 			RopeItem* rope = (RopeItem*)item;
 			rope->_2D0     = mParameterA();
 			rope->autoInit();
 			break;
+		}
 		case OBJTYPE_GemItem:
+		{
 			GemItem* gem = (GemItem*)item;
 			gem->setColorType(mParameterA());
 			break;
+		}
 		case OBJTYPE_SluiceSoft:
 		case OBJTYPE_SluiceHard:
 		case OBJTYPE_SluiceBomb:
 		case OBJTYPE_SluiceBombHard:
+		{
 			BuildingItem* wall = (BuildingItem*)item;
 			wall->mNumStages   = mParameterD();
 			break;
+		}
 		case OBJTYPE_RockGen:
 		{
 			RockGen* rock = (RockGen*)item;

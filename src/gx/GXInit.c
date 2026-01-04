@@ -213,18 +213,26 @@ GXFifoObj* GXInit(void* base, u32 size)
 #else
 	switch (VIGetTvFormat()) {
 	case VI_NTSC:
+	{
 		rmode = &GXNtsc480IntDf;
 		break;
+	}
 	case VI_PAL:
+	{
 		rmode = &GXPal528IntDf;
 		break;
+	}
 	case VI_MPAL:
+	{
 		rmode = &GXMpal480IntDf;
 		break;
+	}
 	default:
+	{
 		ASSERTMSGLINE(0x38B, 0, "GXInit: invalid TV format");
 		rmode = &GXNtsc480IntDf;
 		break;
+	}
 	}
 	GXSetCopyClear(clear, 0xFFFFFF);
 	GXSetTexCoordGen2(GX_TEXCOORD0, GX_TG_MTX3X4, GX_TG_TEX0, 0x3CU, GX_FALSE, 125);
@@ -377,18 +385,26 @@ void __GXInitGX()
 
 	switch (VIGetTvFormat()) {
 	case VI_NTSC:
+	{
 		rmode = &GXNtsc480IntDf;
 		break;
+	}
 	case VI_PAL:
+	{
 		rmode = &GXPal528IntDf;
 		break;
+	}
 	case VI_MPAL:
+	{
 		rmode = &GXMpal480IntDf;
 		break;
+	}
 	default:
+	{
 		ASSERTMSGLINE(0x38B, 0, "GXInit: invalid TV format");
 		rmode = &GXNtsc480IntDf;
 		break;
+	}
 	}
 	GXSetCopyClear(clear, 0xFFFFFF);
 	GXSetTexCoordGen2(GX_TEXCOORD0, GX_TG_MTX3X4, GX_TG_TEX0, 0x3CU, GX_FALSE, 125);

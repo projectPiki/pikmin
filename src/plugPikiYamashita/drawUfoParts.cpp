@@ -32,12 +32,14 @@ bool zen::DrawUfoParts::update(Controller* controller)
 		mAlphaWipe.update();
 		switch (mMode) {
 		case MODE_FadeIn:
+		{
 			if (mAlphaWipe.isSleep()) {
 				mMode = MODE_Operation;
 			}
 			break;
-
+		}
 		case MODE_Operation:
+		{
 			if (controller->keyClick(KBBTN_START | KBBTN_A)) {
 				SeSystem::playSysSe(SYSSE_DECIDE1);
 				mReturnState = RETSTATE_Unk2;
@@ -51,13 +53,15 @@ bool zen::DrawUfoParts::update(Controller* controller)
 				mMode = MODE_FadeOut;
 			}
 			break;
-
+		}
 		case MODE_FadeOut:
+		{
 			if (mAlphaWipe.isSleep()) {
 				mMode = MODE_Sleep;
 				res   = true;
 			}
 			break;
+		}
 		}
 
 		mScreen->update();
@@ -76,20 +80,24 @@ void zen::DrawUfoParts::draw(Graphics& gfx)
 	if (mMode != MODE_Sleep) {
 		switch (mMode) {
 		case MODE_FadeIn:
+		{
 			if (mAlphaWipe.isDec()) {
 				check = true;
 			}
 			break;
-
+		}
 		case MODE_Operation:
+		{
 			check = true;
 			break;
-
+		}
 		case MODE_FadeOut:
+		{
 			if (mAlphaWipe.isInc()) {
 				check = true;
 			}
 			break;
+		}
 		}
 
 		if (check) {

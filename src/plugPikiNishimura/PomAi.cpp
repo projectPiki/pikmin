@@ -78,20 +78,30 @@ void PomAi::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
 	case KEY_Action0:
+	{
 		keyAction0();
 		break;
+	}
 	case KEY_Action1:
+	{
 		keyAction1();
 		break;
+	}
 	case KEY_LoopEnd:
+	{
 		keyLoopEnd();
 		break;
+	}
 	case KEY_Finished:
+	{
 		keyFinished();
 		break;
+	}
 	case KEY_PlaySound:
+	{
 		playSound(event.mValue);
 		break;
+	}
 	}
 }
 
@@ -663,15 +673,20 @@ void PomAi::update()
 	setEveryFrame();
 	switch (mPom->getCurrentState()) {
 	case 0:
+	{
 		dieState();
 		break;
+	}
 	case 1:
+	{
 		waitState();
 		if (petalOpenTransit()) {
 			initPetalOpen(2);
 		}
 		break;
+	}
 	case 2:
+	{
 		openState();
 		if (petalCloseTransit()) {
 			initPetalClose(4);
@@ -679,7 +694,9 @@ void PomAi::update()
 			initPetalShake(3);
 		}
 		break;
+	}
 	case 3:
+	{
 		shakeState();
 		if (petalCloseTransit()) {
 			initPetalClose(4);
@@ -687,7 +704,9 @@ void PomAi::update()
 			initPetalShake(3);
 		}
 		break;
+	}
 	case 4:
+	{
 		closeState();
 		if (isMotionFinishTransit()) {
 			if (dischargeTransit()) {
@@ -697,7 +716,9 @@ void PomAi::update()
 			}
 		}
 		break;
+	}
 	case 5:
+	{
 		dischargeState();
 		if (isMotionFinishTransit()) {
 			if (deadTransit()) {
@@ -707,5 +728,6 @@ void PomAi::update()
 			}
 		}
 		break;
+	}
 	}
 }

@@ -68,26 +68,34 @@ void Light::setLightDistAttn(f32 dist, f32 attn, int mode)
 	f32 quadAttn;
 	switch (mode) {
 	case 1:
+	{
 		constAttn  = 1.0f;
 		quadAttn   = 0.0f;
 		linearAttn = (1.0f - attn) / (attn * dist);
 		break;
+	}
 	case 2:
+	{
 		constAttn  = 1.0f;
 		linearAttn = 0.5f * (1.0f - attn) / (attn * dist);
 		quadAttn   = 0.5f * (1.0f - attn) / (dist * (attn * dist));
 		break;
+	}
 	case 3:
+	{
 		constAttn  = 1.0f;
 		linearAttn = 0.0f;
 		quadAttn   = (1.0f - attn) / (dist * (attn * dist));
 		break;
+	}
 	case 0:
 	default:
+	{
 		constAttn  = 1.0f;
 		linearAttn = 0.0f;
 		quadAttn   = 0.0f;
 		break;
+	}
 	}
 
 	mConstantAttn   = constAttn;
@@ -111,42 +119,56 @@ void Light::setLightSpot(f32 angle, int spotMode)
 	f32 quadTerm;
 	switch (spotMode) {
 	case SPOT_Linear:
+	{
 		constTerm  = -1000.0f * cosTheta;
 		linearTerm = 1000.0f;
 		quadTerm   = 0.0f;
 		break;
+	}
 	case SPOT_Smooth:
+	{
 		constTerm  = -cosTheta / (1.0f - cosTheta);
 		linearTerm = 1.0f / (1.0f - cosTheta);
 		quadTerm   = 0.0f;
 		break;
+	}
 	case SPOT_Quadratic:
+	{
 		constTerm  = 0.0f;
 		linearTerm = -cosTheta / (1.0f - cosTheta);
 		quadTerm   = 1.0f / (1.0f - cosTheta);
 		break;
+	}
 	case SPOT_Cubic:
+	{
 		f32 tmp    = SQUARE(1.0f - cosTheta);
 		constTerm  = (cosTheta * (cosTheta - 2.0f)) / tmp;
 		linearTerm = 2.0f / tmp;
 		quadTerm   = -1.0f / tmp;
 		break;
+	}
 	case SPOT_Quartic:
+	{
 		constTerm  = -4.0f * cosTheta / SQUARE(1.0f - cosTheta);
 		linearTerm = 4.0f * (1.0f + cosTheta) / SQUARE(1.0f - cosTheta);
 		quadTerm   = -4.0f / SQUARE(1.0f - cosTheta);
 		break;
+	}
 	case SPOT_Special:
+	{
 		constTerm  = 1.0f - (2.0f * cosTheta * cosTheta) / SQUARE(1.0f - cosTheta);
 		linearTerm = 4.0f * cosTheta / SQUARE(1.0f - cosTheta);
 		quadTerm   = -2.0f / SQUARE(1.0f - cosTheta);
 		break;
+	}
 	case SPOT_NoAttn:
 	default:
+	{
 		constTerm  = 1.0f;
 		linearTerm = 0.0f;
 		quadTerm   = 0.0f;
 		break;
+	}
 	}
 
 	mSpotConstTerm  = constTerm;
@@ -207,21 +229,27 @@ void Light::update()
 {
 	switch (GET_LIGHT_TYPE(mLightFlag)) {
 	case LIGHT_Parallel:
+	{
 		mConstantAttn = 1.0f;
 		mLinearAttn = mQuadAttn = 0.0f;
 		mSpotConstTerm          = 1.0f;
 		mSpotLinearTerm = mSpotQuadTerm = 0.0f;
 		mLightValuesSet                 = 1;
 		break;
+	}
 	case LIGHT_Point:
+	{
 		setLightDistAttn(mDistancedRange, mAttenuation, mMode);
 		mSpotConstTerm  = 1.0f;
 		mSpotLinearTerm = mSpotQuadTerm = 0.0f;
 		break;
+	}
 	case LIGHT_Spot:
+	{
 		setLightSpot(mSpotAngle, mSpotMode);
 		mConstantAttn = 1.0f;
 		mLinearAttn = mQuadAttn = 0.0f;
 		break;
+	}
 	}
 }

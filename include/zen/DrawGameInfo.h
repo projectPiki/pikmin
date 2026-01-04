@@ -66,28 +66,33 @@ public:
 		mScreen.update();
 		switch (mMode) {
 		case MODE_Unk0:
+		{
 			mScreen.hide();
 			break;
-
+		}
 		case MODE_Unk1:
+		{
 			f32 frame;
 			if (addFrame(&frame)) {
 				mMode = MODE_Unk2;
 			}
 			mScreen.setScale(2.0f - 1.0f * frame);
 			break;
-
+		}
 		case MODE_Unk2:
+		{
 			mScreen.setScale(1.0f);
 			break;
-
+		}
 		case MODE_Unk3:
+		{
 			f32 frame2;
 			if (addFrame(&frame2)) {
 				mMode = MODE_Unk0;
 			}
 			mScreen.setScale(1.0f * frame2 + 1.0f);
 			break;
+		}
 		}
 	}
 

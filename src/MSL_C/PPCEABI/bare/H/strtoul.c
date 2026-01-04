@@ -48,6 +48,7 @@ u32 __strtoul(int base, int max_width, int (*ReadProc)(void*, int, int), void* R
 	while (count <= max_width && c != -1 && !final_state(scan_state)) {
 		switch (scan_state) {
 		case start:
+		{
 			if (isspace(c)) {
 				c = fetch();
 				break;
@@ -62,8 +63,9 @@ u32 __strtoul(int base, int max_width, int (*ReadProc)(void*, int, int), void* R
 
 			scan_state = check_for_zero;
 			break;
-
+		}
 		case check_for_zero:
+		{
 			if (base == 0 || base == 16) {
 				if (c == '0') {
 					scan_state = leading_zero;
@@ -74,8 +76,9 @@ u32 __strtoul(int base, int max_width, int (*ReadProc)(void*, int, int), void* R
 
 			scan_state = need_digit;
 			break;
-
+		}
 		case 4:
+		{
 			if (c == 'X' || c == 'x') {
 				base       = 16;
 				scan_state = need_digit;
@@ -89,9 +92,10 @@ u32 __strtoul(int base, int max_width, int (*ReadProc)(void*, int, int), void* R
 
 			scan_state = digit_loop;
 			break;
-
+		}
 		case need_digit:
 		case digit_loop:
+		{
 			if (base == 0) {
 				base = 10;
 			}
@@ -138,6 +142,7 @@ u32 __strtoul(int base, int max_width, int (*ReadProc)(void*, int, int), void* R
 			c          = fetch();
 			break;
 		}
+		}
 	}
 
 	if (!success(scan_state)) {
@@ -182,6 +187,7 @@ u64 __strtoull(int base, int max_width, int (*ReadProc)(void*, int, int), void* 
 	while (count <= max_width && c != -1 && !final_state(scan_state)) {
 		switch (scan_state) {
 		case start:
+		{
 			if (isspace(c)) {
 				c = fetch();
 				spaces++;
@@ -197,8 +203,9 @@ u64 __strtoull(int base, int max_width, int (*ReadProc)(void*, int, int), void* 
 
 			scan_state = check_for_zero;
 			break;
-
+		}
 		case check_for_zero:
+		{
 			if (base == 0 || base == 16) {
 				if (c == '0') {
 					scan_state = leading_zero;
@@ -209,8 +216,9 @@ u64 __strtoull(int base, int max_width, int (*ReadProc)(void*, int, int), void* 
 
 			scan_state = need_digit;
 			break;
-
+		}
 		case leading_zero:
+		{
 			if (c == 'X' || c == 'x') {
 				base       = 16;
 				scan_state = need_digit;
@@ -224,9 +232,10 @@ u64 __strtoull(int base, int max_width, int (*ReadProc)(void*, int, int), void* 
 
 			scan_state = digit_loop;
 			break;
-
+		}
 		case need_digit:
 		case digit_loop:
+		{
 			if (base == 0) {
 				base = 10;
 			}
@@ -272,6 +281,7 @@ u64 __strtoull(int base, int max_width, int (*ReadProc)(void*, int, int), void* 
 			scan_state = digit_loop;
 			c          = fetch();
 			break;
+		}
 		}
 	}
 

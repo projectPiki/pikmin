@@ -159,36 +159,43 @@ void zen::DrawCMresult::setMode(zen::DrawCMresult::modeFlag mode)
 	mMode = mode;
 	switch (mMode) {
 	case MODE_Sleep:
+	{
 		mModeFunction = &modeSleep;
 		break;
-
+	}
 	case MODE_WaitAppear:
+	{
 		_94           = 0.0f;
 		mModeFunction = &modeWaitAppear;
 		mResultScreen->getScreenPtr()->move(0, -480);
 		break;
-
+	}
 	case MODE_Appear:
+	{
 		_94           = 0.0f;
 		mModeFunction = &modeAppear;
 		break;
-
+	}
 	case MODE_Operation:
+	{
 		if (_84 == 0) {
 			mScoreMgr.appear(1.0f);
 		}
 		mModeFunction = &modeOperation;
 		break;
-
+	}
 	case MODE_Save:
+	{
 		mOptionSave->start();
 		mModeFunction = &modeSave;
 		break;
-
+	}
 	case MODE_Unk5:
+	{
 		mMode         = MODE_Operation;
 		mModeFunction = &modeOperation;
 		break;
+	}
 	}
 }
 
@@ -276,25 +283,31 @@ bool zen::DrawCMresult::modeSave(Controller* controller)
 	if (mOptionSave->update(controller)) {
 		switch (mOptionSave->getModeFlag()) {
 		case DrawOptionSave::MODE_Unk6:
+		{
 			res = true;
 			break;
-
+		}
 		case DrawOptionSave::MODE_Unk7:
+		{
 			setMode(MODE_Save);
 			break;
-
+		}
 		case DrawOptionSave::MODE_Unk8:
+		{
 			setMode(MODE_Unk5);
 			break;
-
+		}
 		case DrawOptionSave::MODE_Unk9:
+		{
 			res = true;
 			break;
-
+		}
 		default:
+		{
 			PRINT("Illegal mode:%d \n", mOptionSave->getModeFlag());
 			ERROR("Illegal mode:%d \n", mOptionSave->getModeFlag());
 			break;
+		}
 		}
 	}
 

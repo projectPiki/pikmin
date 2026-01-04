@@ -467,11 +467,15 @@ void Jac_GarbageCollection_St(jaheap_* heap)
 		if (dst != src) {
 			switch (heap->memoryType) {
 			case 0:
+			{
 				ARAM_TO_ARAM_DMA(src, dst, heap_00->size);
 				break;
+			}
 			case 1:
+			{
 				DRAM_TO_DRAM_DMA(src, dst, heap_00->size);
 				break;
+			}
 			}
 			Jac_Move_Children(heap_00, dst - heap_00->startAddress);
 			heap_00->startAddress = dst;

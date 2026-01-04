@@ -127,15 +127,19 @@ void ActPulloutCreature::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
 	case KEY_Action1:
+	{
 		mPulloutSuccess = true;
 		Piki* piki      = static_cast<Piki*>(mTarget.getPtr());
 		if (piki) {
 			piki->changeShape(piki->mFormationPriority);
 		}
 		break;
+	}
 	case KEY_Finished:
+	{
 		mState = STATE_Unk2;
 		break;
+	}
 	}
 }
 
@@ -166,9 +170,11 @@ int ActPulloutCreature::exec()
 	mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 	switch (mState) {
 	case STATE_Unk2:
+	{
 		return ACTOUT_Success;
-
+	}
 	case STATE_Unk0:
+	{
 		Vector3f dir = mTarget.getPtr()->mSRT.t - mPiki->mSRT.t;
 		f32 angleSep = atan2f(dir.x, dir.z);
 		mPiki->mFaceDirection += 0.4f * angDist(angleSep, mPiki->mFaceDirection);
@@ -180,7 +186,9 @@ int ActPulloutCreature::exec()
 			mPulloutTimer = 0.0f;
 		}
 		break;
+	}
 	case STATE_Unk1:
+	{
 		Piki* target = static_cast<Piki*>(mTarget.getPtr());
 		mPulloutTimer += gsys->getFrameTime();
 
@@ -191,6 +199,7 @@ int ActPulloutCreature::exec()
 
 		mPiki->mVelocity.set(0.0f, 0.0f, 0.0f);
 		break;
+	}
 	}
 
 	return ACTOUT_Continue;

@@ -1168,6 +1168,7 @@ bool TAImiurinStrategy::interact(Teki& teki, immut TekiInteractionKey& interacti
 {
 	switch (interaction.mInteractionType) {
 	case TekiInteractType::Attack:
+	{
 		InteractAttack* attack = (InteractAttack*)interaction.mInteraction;
 		if (!teki.getTekiOption(BTeki::TEKI_OPTION_INVINCIBLE)) {
 			teki.mStoredDamage += attack->mDamage;
@@ -1178,6 +1179,7 @@ bool TAImiurinStrategy::interact(Teki& teki, immut TekiInteractionKey& interacti
 
 		teki.setCreaturePointer(1, attack->mOwner);
 		return true;
+	}
 	}
 
 	STACK_PAD_VAR(2);

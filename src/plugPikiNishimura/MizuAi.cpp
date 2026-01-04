@@ -278,22 +278,28 @@ void MizuAi::update()
 
 	switch (mMizu->getCurrentState()) {
 	case 0:
+	{
 		waitState();
 		if (readyTransit()) {
 			initReady(1);
 		}
 		break;
+	}
 	case 1:
+	{
 		readyState();
 		if (jetTransit()) {
 			initJet(2);
 		}
 		break;
+	}
 	case 2:
+	{
 		jetState();
 		if (waitTransit()) {
 			initReady(1);
 		}
 		break;
+	}
 	}
 }

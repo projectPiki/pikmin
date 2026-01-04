@@ -73,6 +73,7 @@ int ActEscape::exec()
 
 	switch (mState) {
 	case STATE_Normal:
+	{
 		Vector3f escapeDirection = mPiki->mSRT.t - target->mSRT.t;
 		Vector3f tmp(escapeDirection);
 		f32 dist = escapeDirection.length();
@@ -90,8 +91,9 @@ int ActEscape::exec()
 			mPiki->setSpeed(1.0f, perpMoveDir);
 		}
 		break;
-
+	}
 	case STATE_Avoid:
+	{
 		if (mPiki->getAvoid(mPiki->mTargetVelocity, mAvoidDirection)) {
 			Vector3f moveDir(-mAvoidDirection.z, 0.0f, mAvoidDirection.x);
 			mPiki->setSpeed(1.0f, moveDir);
@@ -99,6 +101,7 @@ int ActEscape::exec()
 			mState = STATE_Normal;
 		}
 		break;
+	}
 	}
 
 	return ACTOUT_Continue;

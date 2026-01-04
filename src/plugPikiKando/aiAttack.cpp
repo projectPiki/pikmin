@@ -103,11 +103,14 @@ void ActAttack::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
 	case KEY_Finished:
+	{
 		if (mHasLost) {
 			mIsAttackFinished = true;
 		}
 		break;
+	}
 	case KEY_PlayEffect:
+	{
 		if (mPiki->aiCullable() && (AIPerf::optLevel <= 1 || mPiki->mOptUpdateContext.updatable())) {
 			Vector3f vec(mPiki->mEffectPos);
 			if (mIsCriticalHit) {
@@ -118,6 +121,7 @@ void ActAttack::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 			}
 		}
 		break;
+	}
 	}
 }
 
@@ -503,8 +507,10 @@ int ActJumpAttack::exec()
 
 	switch (mState) {
 	case 6:
+	{
 		doClimb();
 		break;
+	}
 	case 2:
 	{
 		Vector3f direction = getAttackPos() - mPiki->mSRT.t;
@@ -728,18 +734,25 @@ void ActJumpAttack::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
 	case KEY_Action0:
+	{
 		mAttackState = 1;
 		break;
+	}
 	case KEY_Action1:
+	{
 		mAttackState = 0;
 		break;
+	}
 	case KEY_Finished:
+	{
 		if (mState == 1) {
 			mState = 0;
 		}
 		mAttackState = 4;
 		break;
+	}
 	case KEY_PlayEffect:
+	{
 		if (mPiki->aiCullable() && (AIPerf::optLevel <= 1 || mPiki->mOptUpdateContext.updatable())) {
 			Vector3f vec(mPiki->mEffectPos);
 			if (mIsCriticalHit) {
@@ -750,6 +763,7 @@ void ActJumpAttack::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 			}
 		}
 		break;
+	}
 	}
 }
 

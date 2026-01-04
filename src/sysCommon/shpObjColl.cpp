@@ -73,6 +73,7 @@ void ObjCollInfo::loadini(CmdStream* cmdStream)
 
 			switch (mCollType) {
 			case OCT_Sphere:
+			{
 				cmdStream->getToken(true);
 				sscanf(cmdStream->getToken(true), "%f", &mRadius);
 
@@ -81,10 +82,13 @@ void ObjCollInfo::loadini(CmdStream* cmdStream)
 				sscanf(cmdStream->getToken(true), "%f", &mCentrePosition.y);
 				sscanf(cmdStream->getToken(true), "%f", &mCentrePosition.z);
 				break;
+			}
 			case OCT_Platform:
+			{
 				cmdStream->getToken(true);
 				mPlatformName = StdSystem::stringDup(cmdStream->getToken(true));
 				break;
+			}
 			}
 		} else if (cmdStream->isToken("getminy")) {
 			mFlags = OCF_GetMinY;

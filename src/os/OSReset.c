@@ -139,8 +139,10 @@ static void KillThreads(void)
 		switch (thread->state) {
 		case 1:
 		case 4:
+		{
 			OSCancelThread(thread);
 			break;
+		}
 		}
 	}
 	// UNUSED FUNCTION

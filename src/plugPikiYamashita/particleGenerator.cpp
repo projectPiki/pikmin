@@ -108,26 +108,40 @@ void zen::particleGenerator::init(u8* data, Texture* tex1, Texture* tex2, immut 
 
 			switch (rotType) {
 			case 0:
+			{
 				mRotAxisCallBack = &RotAxisY;
 				break;
+			}
 			case 1:
+			{
 				mRotAxisCallBack = &RotAxisX;
 				break;
+			}
 			case 2:
+			{
 				mRotAxisCallBack = &RotAxisZ;
 				break;
+			}
 			case 3:
+			{
 				mRotAxisCallBack = &RotAxisXY;
 				break;
+			}
 			case 4:
+			{
 				mRotAxisCallBack = &RotAxisXZ;
 				break;
+			}
 			case 5:
+			{
 				mRotAxisCallBack = &RotAxisYZ;
 				break;
+			}
 			case 6:
+			{
 				mRotAxisCallBack = &RotAxisXYZ;
 				break;
+			}
 			}
 		}
 
@@ -1017,11 +1031,15 @@ void zen::particleGenerator::drawPtclOriented(Graphics& gfx)
 		Vector3f* vec;
 		switch (mOrientedDrawConfig.mOrientationSource) {
 		case 0:
+		{
 			vec = &ptcl->mVelocity;
 			break;
+		}
 		case 1:
+		{
 			vec = &ptcl->mLocalPosition;
 			break;
+		}
 		}
 
 		vec1.x = vec->x;

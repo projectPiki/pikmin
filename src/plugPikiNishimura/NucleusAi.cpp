@@ -43,20 +43,30 @@ void NucleusAi::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
 	case KEY_Action0:
+	{
 		keyAction0();
 		break;
+	}
 	case KEY_Action1:
+	{
 		keyAction1();
 		break;
+	}
 	case KEY_LoopEnd:
+	{
 		keyLoopEnd();
 		break;
+	}
 	case KEY_Finished:
+	{
 		keyFinished();
 		break;
+	}
 	case KEY_PlaySound:
+	{
 		playSound(event.mValue);
 		break;
+	}
 	}
 }
 
@@ -253,10 +263,12 @@ void NucleusAi::update()
 
 	switch (mNucleus->getCurrentState()) {
 	case NUCLEUSAI_Die:
+	{
 		dieState();
 		break;
-
+	}
 	case NUCLEUSAI_Damage:
+	{
 		damageState();
 		if (dieTransit()) {
 			initDie(NUCLEUSAI_Die);
@@ -264,8 +276,9 @@ void NucleusAi::update()
 			initFollow(NUCLEUSAI_Follow);
 		}
 		break;
-
+	}
 	case NUCLEUSAI_Follow:
+	{
 		followState();
 		if (dieTransit()) {
 			initDie(NUCLEUSAI_Die);
@@ -273,6 +286,7 @@ void NucleusAi::update()
 			initDamage(NUCLEUSAI_Damage);
 		}
 		break;
+	}
 	}
 
 	afterProcessing();

@@ -70,9 +70,11 @@ public:
 		bool res = false;
 		switch (mState) {
 		case LetterState::Idle:
+		{
 			break;
-
+		}
 		case LetterState::Wait:
+		{
 			mStateTimer += gsys->getFrameTime();
 			if (mStateTimer > mStartDelay) {
 				mStateTimer = 0.0f;
@@ -80,8 +82,9 @@ public:
 				mLetterPic->setScale(0.5f);
 			}
 			break;
-
+		}
 		case LetterState::Fall:
+		{
 			mVelocityY += gsys->getFrameTime() * 7200.0f * gsys->getFrameTime();
 			mPositionY += gsys->getFrameTime() * mVelocityY * 30.0f;
 			mPositionX += gsys->getFrameTime() * mVelocityX * 30.0f;
@@ -109,8 +112,9 @@ public:
 				mScaleVelocity   = 0.0f;
 			}
 			break;
-
+		}
 		case LetterState::Settle:
+		{
 			mStateTimer += gsys->getFrameTime();
 			if (mStateTimer > 5.0f) {
 				mStateTimer      = 0.0f;
@@ -132,6 +136,7 @@ public:
 			mScaleVelocity *= 0.85f;
 			mLetterPic->setScale(scale.x + mScaleVelocity);
 			break;
+		}
 		}
 
 		return res;
@@ -256,17 +261,21 @@ void zen::DrawGameOver::start(zen::DrawGameOver::modeFlag mode, f32 p2)
 	mInputWaitTime = p2;
 	switch (mMode) {
 	case MODE_NaviDown:
+	{
 		mActiveScreen = mGameOverA;
 		break;
-
+	}
 	case MODE_Extinction:
+	{
 		mActiveScreen = mGameOverB;
 		break;
-
+	}
 	default:
+	{
 		PRINT("Unknown mode %d \n", mMode);
 		ERROR("Unknown mode %d \n", mMode);
 		break;
+	}
 	}
 
 	mActiveScreen->start();
@@ -282,13 +291,15 @@ bool zen::DrawGameOver::update(Controller* controller)
 		mStateTimer += gsys->getFrameTime();
 		switch (mState) {
 		case GameOverState::Start:
+		{
 			if (mStateTimer > 2.0f) {
 				mState      = GameOverState::WaitInput;
 				mStateTimer = 0.0f;
 			}
 			break;
-
+		}
 		case GameOverState::WaitInput:
+		{
 			if (controller->keyClick(KBBTN_START | KBBTN_A)) {
 				isInputPeriodDone = true;
 			}
@@ -297,6 +308,7 @@ bool zen::DrawGameOver::update(Controller* controller)
 				isInputPeriodDone = true;
 			}
 			break;
+		}
 		}
 
 		mActiveScreen->update();

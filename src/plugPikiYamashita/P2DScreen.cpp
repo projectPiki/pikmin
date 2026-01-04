@@ -92,35 +92,43 @@ void P2DScreen::makeHiearachyPanes(P2DPane* parent, RandomAccessStream* input, b
 		u16 paneType = input->readShort();
 		switch (paneType) {
 		case PANETYPE_Unk0:
+		{
 			return;
-
+		}
 		case PANETYPE_Unk1:
+		{
 			input->readShort();
 			makeHiearachyPanes(currPane, input, true, false);
 			break;
-
+		}
 		case PANETYPE_Unk2:
+		{
 			input->readShort();
 			return;
-
+		}
 		case PANETYPE_Pane:
+		{
 			currPane = new P2DPane(parent, input, paneType);
 			if (doExpandBounds) {
 				setBounds(PUTRect(0, 0, currPane->getWidth(), currPane->getHeight()));
 			}
 			break;
-
+		}
 		case PANETYPE_Window:
+		{
 			currPane = new P2DWindow(parent, input, PANETYPE_Window);
 			break;
-
+		}
 		case PANETYPE_Picture:
+		{
 			currPane = new P2DPicture(parent, input, PANETYPE_Picture);
 			break;
-
+		}
 		case PANETYPE_TextBox:
+		{
 			currPane = new P2DTextBox(parent, input, PANETYPE_TextBox);
 			break;
+		}
 		}
 	}
 }

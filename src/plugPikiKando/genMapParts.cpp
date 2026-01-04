@@ -156,17 +156,23 @@ Creature* GenObjectMapParts::birth(BirthInfo& info)
 
 	switch (mPartKind) {
 	case 0: // Slider
+	{
 		ent                                = new MapSlider((Shape*)shape, _18(), _28(), _38(), _48(), _58(), 0);
 		((MapSlider*)ent)->mSliderPosition = info.mPosition;
 		((MapSlider*)ent)->mFaceDirection  = info.mRotation.y;
 		break;
+	}
 	case 1: // Entity
+	{
 		ent            = new MapEntity((Shape*)shape);
 		ent->mPosition = info.mPosition;
 		ent->mRotation = info.mRotation;
 		break;
+	}
 	case 2: // Dynamic
+	{
 		return nullptr;
+	}
 	}
 
 	PRINT("CREATING MAP PARTS #### mp = %x\n", ent);

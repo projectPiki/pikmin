@@ -52,6 +52,7 @@ f128 __strtold(int max_width, int (*ReadProc)(void*, int, int), void* ReadProcAr
 	while (count <= max_width && c != -1 && !final_state(scan_state)) {
 		switch (scan_state) {
 		case start:
+		{
 			if (isspace(c)) {
 				c = fetch();
 				count--;
@@ -67,8 +68,9 @@ f128 __strtold(int max_width, int (*ReadProc)(void*, int, int), void* ReadProcAr
 			}
 			scan_state = sig_start;
 			break;
-
+		}
 		case sig_start:
+		{
 			if (c == dot) {
 				scan_state = frac_start;
 				c          = fetch();
@@ -87,8 +89,9 @@ f128 __strtold(int max_width, int (*ReadProc)(void*, int, int), void* ReadProcAr
 
 			scan_state = int_digit_loop;
 			break;
-
+		}
 		case leading_sig_zeroes:
+		{
 			if (c == '0') {
 				c = fetch();
 
@@ -96,8 +99,9 @@ f128 __strtold(int max_width, int (*ReadProc)(void*, int, int), void* ReadProcAr
 			}
 			scan_state = int_digit_loop;
 			break;
-
+		}
 		case int_digit_loop:
+		{
 			if (!isdigit(c)) {
 				if (c == dot) {
 					scan_state = frac_digit_loop;
@@ -115,8 +119,9 @@ f128 __strtold(int max_width, int (*ReadProc)(void*, int, int), void* ReadProcAr
 
 			c = fetch();
 			break;
-
+		}
 		case frac_start:
+		{
 			if (!isdigit(c)) {
 				scan_state = failure;
 				break;
@@ -124,8 +129,9 @@ f128 __strtold(int max_width, int (*ReadProc)(void*, int, int), void* ReadProcAr
 
 			scan_state = frac_digit_loop;
 			break;
-
+		}
 		case frac_digit_loop:
+		{
 			if (!isdigit(c)) {
 				scan_state = sig_end;
 				break;
@@ -140,8 +146,9 @@ f128 __strtold(int max_width, int (*ReadProc)(void*, int, int), void* ReadProcAr
 			}
 			c = fetch();
 			break;
-
+		}
 		case sig_end:
+		{
 			if (c == 'E' || c == 'e') {
 				scan_state = exp_start;
 				c          = fetch();
@@ -149,8 +156,9 @@ f128 __strtold(int max_width, int (*ReadProc)(void*, int, int), void* ReadProcAr
 			}
 			scan_state = finished;
 			break;
-
+		}
 		case exp_start:
+		{
 			if (c == '+') {
 				c = fetch();
 			} else if (c == '-') {
@@ -160,8 +168,9 @@ f128 __strtold(int max_width, int (*ReadProc)(void*, int, int), void* ReadProcAr
 
 			scan_state = leading_exp_digit;
 			break;
-
+		}
 		case leading_exp_digit:
+		{
 			if (!isdigit(c)) {
 				scan_state = failure;
 				break;
@@ -175,8 +184,9 @@ f128 __strtold(int max_width, int (*ReadProc)(void*, int, int), void* ReadProcAr
 
 			scan_state = exp_digit_loop;
 			break;
-
+		}
 		case leading_exp_zeroes:
+		{
 			if (c == '0') {
 				c = fetch();
 				break;
@@ -184,8 +194,9 @@ f128 __strtold(int max_width, int (*ReadProc)(void*, int, int), void* ReadProcAr
 
 			scan_state = exp_digit_loop;
 			break;
-
+		}
 		case exp_digit_loop:
+		{
 			if (!isdigit(c)) {
 				scan_state = finished;
 				break;
@@ -198,6 +209,7 @@ f128 __strtold(int max_width, int (*ReadProc)(void*, int, int), void* ReadProcAr
 
 			c = fetch();
 			break;
+		}
 		}
 	}
 

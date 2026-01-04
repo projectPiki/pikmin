@@ -296,14 +296,20 @@ BOOL Jaq_StopSeq(s32 index)
 
 	switch (track->trackState) {
 	case 0:
+	{
 		break;
+	}
 	case 2:
+	{
 		BackTrack(track);
 		DeAllocRoot(track);
 		break;
+	}
 	default:
+	{
 		track->trackState = 3;
 		break;
+	}
 	}
 	return TRUE;
 }
@@ -357,9 +363,12 @@ s32 Jaq_SetSeqData_Limit(seqp_* track, u8* param_2, u32 param_3, u32 param_4, u8
 	track->dataSourceMode = param_4;
 	switch (param_4) {
 	case 0:
+	{
 		puVar2 = param_2;
 		break;
+	}
 	case 1:
+	{
 		track->fileHandle = FAT_AllocateMemory(param_3);
 		if (track->fileHandle == 0xffff) { // Isn't this literally impossible?
 			return -1;
@@ -367,10 +376,13 @@ s32 Jaq_SetSeqData_Limit(seqp_* track, u8* param_2, u32 param_3, u32 param_4, u8
 		FAT_StoreBlock(param_2, track->fileHandle, 0, param_3);
 		puVar2 = NULL;
 		break;
+	}
 	case 2:
+	{
 		track->fileHandle = (u8)param_2;
 		puVar2            = NULL;
 		break;
+	}
 	}
 	track->trackId = root;
 	track->flags   = 3;
@@ -424,13 +436,21 @@ BOOL Jaq_StartSeq(u32 param_1)
 	// This feels like a fakematch, but oh well.
 	switch (*(pTrackState = &track->trackState)) {
 	case 0:
+	{
 		return FALSE;
+	}
 	case 1:
+	{
 		return FALSE;
+	}
 	case 3:
+	{
 		return FALSE;
+	}
 	case 2:
+	{
 		*pTrackState = 1;
+	}
 	}
 	Jac_RegisterDspPlayerCallback(&Jaq_RootCallback, rootseq[param_1]);
 	return TRUE;

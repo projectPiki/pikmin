@@ -86,12 +86,14 @@ bool zen::DrawHiScore::update(Controller* controller)
 	mAlphaWipe.update();
 	switch (mMode) {
 	case MODE_FadeIn:
+	{
 		if (mAlphaWipe.isSleep()) {
 			mMode = MODE_Operation;
 		}
 		break;
-
+	}
 	case MODE_Operation:
+	{
 		if (controller->keyClick(KBBTN_B)) {
 			SeSystem::playSysSe(SYSSE_CANCEL);
 			mMode = MODE_FadeOut;
@@ -99,13 +101,15 @@ bool zen::DrawHiScore::update(Controller* controller)
 			mAlphaWipe.start(0.5f, 0.25f, AlphaWipe::TYPE_Normal);
 		}
 		break;
-
+	}
 	case MODE_FadeOut:
+	{
 		if (mAlphaWipe.isSleep()) {
 			mMode = MODE_Sleep;
 			res   = true;
 		}
 		break;
+	}
 	}
 
 	return res;
@@ -119,20 +123,24 @@ void zen::DrawHiScore::draw(Graphics& gfx)
 	bool check = false;
 	switch (mMode) {
 	case MODE_FadeIn:
+	{
 		if (mAlphaWipe.isDec()) {
 			check = true;
 		}
 		break;
-
+	}
 	case MODE_Operation:
+	{
 		check = true;
 		break;
-
+	}
 	case MODE_FadeOut:
+	{
 		if (mAlphaWipe.isInc()) {
 			check = true;
 		}
 		break;
+	}
 	}
 
 	if (check) {

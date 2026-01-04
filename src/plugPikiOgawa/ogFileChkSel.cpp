@@ -124,20 +124,30 @@ zen::ogScrFileChkSelMgr::returnStatusFlag zen::ogScrFileChkSelMgr::update(Contro
 		mDataBScreen->update();
 		switch (mFileSelectMgr->update(controller, cardInfo)) {
 		case zen::ogScrFileSelectMgr::PostSaveAction:
+		{
 			mState = ErrorOrCompleted;
 			break;
+		}
 		case zen::ogScrFileSelectMgr::SelectionA:
+		{
 			mState = SelectionA;
 			break;
+		}
 		case zen::ogScrFileSelectMgr::SelectionB:
+		{
 			mState = SelectionB;
 			break;
+		}
 		case zen::ogScrFileSelectMgr::SelectionC:
+		{
 			mState = SelectionC;
 			break;
+		}
 		case zen::ogScrFileSelectMgr::ReturnToIPL:
+		{
 			mState = ForceExit;
 			break;
+		}
 		}
 	}
 

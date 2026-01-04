@@ -185,6 +185,7 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 
 	switch (mCurrentMenuID) {
 	case MENU_MainMenu:
+	{
 		mMainMenu->update(input);
 		int flag0         = mMainMenu->getStatusFlag();
 		mCurrentSelection = mMainMenu->getSelectMenu();
@@ -215,8 +216,9 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 			return mStatus;
 		}
 		break;
-
+	}
 	case MENU_Options:
+	{
 		mOptionsMenu->update(input);
 		int flag1         = mOptionsMenu->getStatusFlag();
 		mCurrentSelection = mOptionsMenu->getSelectMenu();
@@ -290,14 +292,16 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 			mCurrentMenuID = MENU_MainMenu;
 		}
 		break;
-
+	}
 	case MENU_Sound:
+	{
 		mSoundMenu->update(input);
 		int flag2         = mSoundMenu->getStatusFlag();
 		mCurrentSelection = mSoundMenu->getSelectMenu();
 		if (mInput->keyRepeat(KBBTN_MSTICK_LEFT)) {
 			switch (mCurrentSelection) {
 			case 0:
+			{
 				// Stereo/Mono
 				if (!mStereoMode) {
 					mStereoMode = true;
@@ -314,8 +318,9 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 #endif
 				}
 				break;
-
+			}
 			case 1:
+			{
 				// Music Volume
 				if (mBgmVol > 0) {
 					mBgmVol--;
@@ -329,8 +334,9 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 #endif
 				}
 				break;
-
+			}
 			case 2:
+			{
 				// SGX Volume
 				if (mSfxVol > 0) {
 					mSfxVol--;
@@ -345,10 +351,12 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 				}
 				break;
 			}
+			}
 		}
 		if (mInput->keyRepeat(KBBTN_MSTICK_RIGHT)) {
 			switch (mCurrentSelection) {
 			case 0:
+			{
 				// Stereo/Mono
 				if (mStereoMode) {
 					mStereoMode = false;
@@ -362,8 +370,9 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 #endif
 				}
 				break;
-
+			}
 			case 1:
+			{
 				// Music Volume
 				if (mBgmVol < 10) {
 					mBgmVol++;
@@ -377,8 +386,9 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 #endif
 				}
 				break;
-
+			}
 			case 2:
+			{
 				// SFX Volume
 				if (mSfxVol < 10) {
 					mSfxVol++;
@@ -392,6 +402,7 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 #endif
 				}
 				break;
+			}
 			}
 		}
 
@@ -415,8 +426,9 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 			mCurrentMenuID = MENU_Options;
 		}
 		break;
-
+	}
 	case MENU_Rumble:
+	{
 		mRumbleMenu->update(input);
 		int flag3         = mRumbleMenu->getStatusFlag();
 		mCurrentSelection = mRumbleMenu->getSelectMenu();
@@ -448,8 +460,9 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 			mCurrentMenuID = MENU_Options;
 		}
 		break;
-
+	}
 	case MENU_Language:
+	{
 		mLanguageMenu->update(input);
 		int flag4         = mLanguageMenu->getStatusFlag();
 		mCurrentSelection = mLanguageMenu->getSelectMenu();
@@ -481,6 +494,7 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 		return mStatus;
 		break;
 	}
+	}
 
 	return mStatus;
 }
@@ -493,20 +507,30 @@ void zen::ogScrTitleMgr::draw(Graphics& gfx)
 	if (mStatus != STATUS_Null && mStatus != STATUS_Starting) {
 		switch (mCurrentMenuID) {
 		case MENU_MainMenu:
+		{
 			mMainMenu->draw(gfx);
 			break;
+		}
 		case MENU_Options:
+		{
 			mOptionsMenu->draw(gfx);
 			break;
+		}
 		case MENU_Sound:
+		{
 			mSoundMenu->draw(gfx);
 			break;
+		}
 		case MENU_Rumble:
+		{
 			mRumbleMenu->draw(gfx);
 			break;
+		}
 		case MENU_Language:
+		{
 			mLanguageMenu->draw(gfx);
 			break;
+		}
 		}
 	}
 }

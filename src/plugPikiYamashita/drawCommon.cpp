@@ -116,13 +116,19 @@ void zen::P2DPaneLibrary::setAlpha(P2DPane* pane, u8 alpha)
 {
 	switch (pane->getTypeID()) {
 	case PANETYPE_Window:
+	{
 		break;
+	}
 	case PANETYPE_Picture:
+	{
 		static_cast<P2DPicture*>(pane)->setAlpha(alpha);
 		break;
+	}
 	case PANETYPE_TextBox:
+	{
 		static_cast<P2DTextBox*>(pane)->setAlpha(alpha);
 		break;
+	}
 	}
 }
 
@@ -134,13 +140,19 @@ void zen::P2DPaneLibrary::setMirror(P2DPane* pane, P2DMirror mirror)
 {
 	switch (pane->getTypeID()) {
 	case PANETYPE_Window:
+	{
 		break;
+	}
 	case PANETYPE_Picture:
+	{
 		P2DPicture* pic = (P2DPicture*)pane;
 		pic->setMirror(mirror);
 		break;
+	}
 	case PANETYPE_TextBox:
+	{
 		break;
+	}
 	}
 }
 

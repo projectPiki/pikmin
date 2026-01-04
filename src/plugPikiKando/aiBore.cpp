@@ -60,16 +60,22 @@ void ActFreeSelect::finishRest()
 {
 	switch (mCurrActionIdx) {
 	case CHILD_BoreRest:
+	{
 		static_cast<ActBoreRest*>(mChildActions[mCurrActionIdx].mAction)->finishRest();
 		mIsChildActionActive = true;
 		break;
+	}
 	case CHILD_BoreOneshot:
+	{
 		static_cast<ActBoreOneshot*>(mChildActions[mCurrActionIdx].mAction)->finish();
 		mIsChildActionActive = true;
 		break;
+	}
 	default:
+	{
 		mIsFinished = true;
 		break;
+	}
 	}
 }
 
@@ -160,7 +166,7 @@ void ActFreeSelect::determine()
 	target         = nullptr;
 	switch (randIdx) {
 	case CHILD_Watch:
-
+	{
 		nearestTeki = (tekiMgr) ? tekiMgr->findClosest(mPiki->mSRT.t, nullptr) : nullptr;
 
 		nearestItem = itemMgr->findClosest(mPiki->mSRT.t, nullptr);
@@ -194,8 +200,11 @@ void ActFreeSelect::determine()
 
 		target = nearestNavi;
 		break;
+	}
 	case CHILD_BoreTalk:
+	{
 		break;
+	}
 	}
 
 	mChildActions[mCurrActionIdx].initialise(target);
@@ -322,8 +331,10 @@ void ActBoreSelect::procAnimMsg(Piki* piki, MsgAnim* msg)
 
 	switch (msg->mKeyEvent->mEventType) {
 	case KEY_Finished:
+	{
 		piki->startMotion(PaniMotionInfo(PIKIANIM_Wait, piki), PaniMotionInfo(PIKIANIM_Wait));
 		break;
+	}
 	}
 }
 
@@ -360,7 +371,7 @@ void ActBoreSelect::determine()
 	target         = nullptr;
 	switch (randIdx) {
 	case CHILD_Watch:
-
+	{
 		nearestTeki = (tekiMgr) ? tekiMgr->findClosest(mPiki->mSRT.t, nullptr) : nullptr;
 
 		nearestItem = itemMgr->findClosest(mPiki->mSRT.t, nullptr);
@@ -390,8 +401,11 @@ void ActBoreSelect::determine()
 
 		target = nearestNavi;
 		break;
+	}
 	case CHILD_BoreTalk:
+	{
 		break;
+	}
 	}
 
 	mChildActions[mCurrActionIdx].initialise(target);
@@ -635,13 +649,17 @@ void ActBoreRest::sitDown()
 {
 	switch (mRestState) {
 	case 0:
+	{
 		mPiki->startMotion(PaniMotionInfo(PIKIANIM_Suwaru, this), PaniMotionInfo(PIKIANIM_Suwaru));
 		mRestState = 1;
 		break;
+	}
 	case 1:
+	{
 		mPiki->startMotion(PaniMotionInfo(PIKIANIM_Neru, this), PaniMotionInfo(PIKIANIM_Neru));
 		mRestState = 3;
 		break;
+	}
 	}
 }
 
@@ -653,13 +671,17 @@ void ActBoreRest::standUp()
 {
 	switch (mRestState) {
 	case 1:
+	{
 		mPiki->mPikiAnimMgr.finishMotion(this);
 		mIsAnimFinished = true;
 		break;
+	}
 	case 3:
+	{
 		mPiki->mPikiAnimMgr.finishMotion(this);
 		mIsAnimFinished = true;
 		break;
+	}
 	}
 }
 
@@ -711,14 +733,18 @@ void ActBoreRest::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
 	case KEY_Finished:
+	{
 		if (mIsAnimFinished) {
 			switch (mRestState) {
 			case 1:
+			{
 				mIsAnimFinished = false;
 				mRestState      = 0;
 				mForceComplete  = true;
 				break;
+			}
 			case 3:
+			{
 				mIsAnimFinished = false;
 				mRestState      = 1;
 				mPiki->startMotion(PaniMotionInfo(PIKIANIM_Suwaru, this), PaniMotionInfo(PIKIANIM_Suwaru));
@@ -726,9 +752,13 @@ void ActBoreRest::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 				mPiki->mPikiAnimMgr.getLowerAnimator().mAnimationCounter = 30.0f;
 				break;
 			}
+			}
 		}
 		break;
+	}
 	case KEY_LoopEnd:
+	{
 		break;
+	}
 	}
 }

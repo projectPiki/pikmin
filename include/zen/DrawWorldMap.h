@@ -90,18 +90,24 @@ public:
 	{
 		switch (mAnimState) {
 		case TitleAnimState::Idle:
+		{
 			break;
+		}
 		case TitleAnimState::Appearing:
+		{
 			if (move(0.25f)) {
 				mAnimState = TitleAnimState::Idle;
 			}
 			break;
+		}
 		case TitleAnimState::Hiding:
+		{
 			if (move(0.5f)) {
 				mAnimState = TitleAnimState::Idle;
 				hide();
 			}
 			break;
+		}
 		}
 		STACK_PAD_VAR(1);
 	}
@@ -366,9 +372,12 @@ public:
 		mEventFlag = EVENT_NONE;
 		switch (mAppearState) {
 		case CourseAppearState::Ready:
+		{
 			res = true;
 			break;
+		}
 		case CourseAppearState::RocketIncoming:
+		{
 			f32 timer1 = mAppearTimer += gsys->getFrameTime();
 			if (timer1 > 0.5f) {
 				Vector3f vec1;
@@ -381,7 +390,9 @@ public:
 				mAppearTimer = 0.0f;
 			}
 			break;
+		}
 		case CourseAppearState::Exploding:
+		{
 			f32 timer2 = mAppearTimer += gsys->getFrameTime();
 			if (timer2 > 1.0f) {
 				mAppearTimer = 0.0f;
@@ -389,7 +400,9 @@ public:
 				mOpenedPic->show();
 			}
 			break;
+		}
 		case CourseAppearState::Revealing:
+		{
 			f32 timer3 = mAppearTimer += gsys->getFrameTime();
 			if (timer3 > 1.0f) {
 				mAppearTimer = 0.0f;
@@ -398,6 +411,7 @@ public:
 				res = true;
 			}
 			break;
+		}
 		}
 
 		return res;

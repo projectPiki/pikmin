@@ -264,13 +264,17 @@ void Jac_HVQM_Init(immut char* movieFilePath, u8* data, u32 bufferSize)
 	fileSize    = file_header.mFileSize;
 	switch (audioFormat) {
 	case AUDIOFRMT_ADPCM:
+	{
 		// 16 samples in 18 bytes
 		sampleCount = fileSize * 16 / 18;
 		break;
+	}
 	case AUDIOFRMT_16BIT_PCM:
+	{
 		// 2 bytes per sample
 		sampleCount = fileSize / 2;
 		break;
+	}
 	case AUDIOFRMT_8BIT_PCM:
 		// 1 byte per sample
 		sampleCount = fileSize;
@@ -402,8 +406,11 @@ BOOL Jac_HVQM_Update(void)
 
 		switch (rec_header.mRecordType) {
 		default:
+		{
 			return -1;
+		}
 		case 0:
+		{
 			if (Jac_CheckStreamFree(rec_header.mDataSize) == 0) {
 				record_ok = 0;
 			} else {
@@ -416,7 +423,9 @@ BOOL Jac_HVQM_Update(void)
 				arcoffset += rec_header.mDataSize;
 			}
 			break;
+		}
 		case 1:
+		{
 			if (playback_first_wait && PIC_FRAME == PIC_BUFFERS) {
 				if (StreamSyncCheckReady(0)) {
 					StreamSyncPlayAudio(1.0f, 0, 0x3fff, 0x3fff);
@@ -429,26 +438,32 @@ BOOL Jac_HVQM_Update(void)
 
 			switch (vh_state) {
 			case 0:
+			{
 				if (__VirtualLoad(arcoffset, 4, (u8*)&v_header) == 0) {
 					record_ok = 0;
 					goto end;
 				}
 				vh_state += 1;
 				// fallthrough
+			}
 			case 1:
+			{
 				if (__VirtualLoad(arcoffset + 4, rec_header.mDataSize - 4, data) == 0) {
 					record_ok = 0;
 					goto end;
 				}
 				vh_state += 1;
 				// fallthrough
+			}
 			case 2:
+			{
 				if (CheckDraw(v_header + gop_baseframe) == 0) {
 					record_ok = 0;
 					goto end;
 				}
 				vh_state = 0;
 				break;
+			}
 			}
 
 			record_ok = 1;
@@ -466,6 +481,7 @@ BOOL Jac_HVQM_Update(void)
 				}
 			}
 			break;
+		}
 		}
 
 		if (gop_frame == file_header.mTotalFrames) {
@@ -633,18 +649,24 @@ static int Decode1(u8* data, u32 frameId, u8 frameType)
 
 	switch (frameType) {
 	case 0x10: // IPIC chunk
+	{
 		HVQM4DecodeIpic(hvqm_obj, data, (u8*)ref);
 		ref2 = ref1;
 		ref1 = ref;
 		break;
+	}
 	case 0x20: // PPIC chunk
+	{
 		HVQM4DecodePpic(hvqm_obj, data, (u8*)ref, (u8*)ref1);
 		ref2 = ref1;
 		ref1 = ref;
 		break;
+	}
 	case 0x30: // BPIC chunk
+	{
 		HVQM4DecodeBpic(hvqm_obj, data, (u8*)ref, (u8*)ref2, (u8*)ref1);
 		break;
+	}
 	}
 
 	pic_ctrl[id].mFrameNumber = frameId;

@@ -20,35 +20,47 @@ static void UpdateIconOffsets(CARDDir* entry, CARDStat* state)
 	iconTlut = FALSE;
 	switch (CARDGetBannerFormat(entry)) {
 	case CARD_STAT_BANNER_C8:
+	{
 		state->offsetBanner = offset;
 		offset += CARD_BANNER_WIDTH * CARD_BANNER_HEIGHT;
 		state->offsetBannerTlut = offset;
 		offset += 2 * 256;
 		break;
+	}
 	case CARD_STAT_BANNER_RGB5A3:
+	{
 		state->offsetBanner = offset;
 		offset += 2 * CARD_BANNER_WIDTH * CARD_BANNER_HEIGHT;
 		state->offsetBannerTlut = 0xffffffff;
 		break;
+	}
 	default:
+	{
 		state->offsetBanner     = 0xffffffff;
 		state->offsetBannerTlut = 0xffffffff;
 		break;
 	}
+	}
 	for (i = 0; i < CARD_ICON_MAX; ++i) {
 		switch (CARDGetIconFormat(entry, i)) {
 		case CARD_STAT_ICON_C8:
+		{
 			state->offsetIcon[i] = offset;
 			offset += CARD_ICON_WIDTH * CARD_ICON_HEIGHT;
 			iconTlut = TRUE;
 			break;
+		}
 		case CARD_STAT_ICON_RGB5A3:
+		{
 			state->offsetIcon[i] = offset;
 			offset += 2 * CARD_ICON_WIDTH * CARD_ICON_HEIGHT;
 			break;
+		}
 		default:
+		{
 			state->offsetIcon[i] = 0xffffffff;
 			break;
+		}
 		}
 	}
 	if (iconTlut) {

@@ -222,14 +222,20 @@ void zen::ogScrResultMgr::ogScrResultMgrSub()
 
 	switch (gameflow.mGamePrefs.mMostRecentFileSlot) {
 	case 0:
+	{
 		mPaneFileNum1->show();
 		break;
+	}
 	case 1:
+	{
 		mPaneFileNum2->show();
 		break;
+	}
 	case 2:
+	{
 		mPaneFileNum3->show();
 		break;
+	}
 	}
 
 	_94 = (P2DTextBox*)mMainScreen->search('getp', true);

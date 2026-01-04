@@ -58,6 +58,7 @@ public:
 		{
 			switch (mMode) {
 			case MODE_Unk1:
+			{
 				_04 += gsys->getFrameTime();
 				f32 t, tComp;
 				if (_04 > _08) {
@@ -71,6 +72,7 @@ public:
 				}
 				mRootPane->move(RoundOff(_1C.x * tComp + _28.x * t), RoundOff(_1C.y * tComp + _28.y * t));
 				break;
+			}
 			}
 			return mMode;
 		}
@@ -143,6 +145,7 @@ protected:
 		DrawMenuBase::setModeFunc(mode);
 		switch (mMode) {
 		case MODE_Unk2:
+		{
 			mModeFunction = static_cast<ModeFunc>(&modeAppear);
 			for (int i = 0; i < mOptionCount; i++) {
 				Vector3f pos(mMenuExpansions[i].getDefaultPos());
@@ -165,6 +168,7 @@ protected:
 			mLeftCursorMgr.initScale(0.0f);
 			mRightCursorMgr.initScale(0.0f);
 			break;
+		}
 		}
 	}
 
@@ -275,6 +279,7 @@ bool zen::DrawCMcourseSelect::update(Controller* controller)
 	bool res = false;
 	switch (mMode) {
 	case MODE_Unk1:
+	{
 		if (mTitleObj.getEvent() & 0x1) {
 			mMode = MODE_Unk2;
 			mMenu->start();
@@ -282,16 +287,19 @@ bool zen::DrawCMcourseSelect::update(Controller* controller)
 			mBest.appear();
 		}
 		break;
-
+	}
 	case MODE_Unk2:
+	{
 		if (modeOperation(controller)) {
 			mMode = MODE_Unk3;
 		}
 		break;
-
+	}
 	case MODE_Unk3:
+	{
 		res = true;
 		break;
+	}
 	}
 
 	mTitleObj.update();

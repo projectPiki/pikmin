@@ -83,36 +83,48 @@ zen::ogRaderMgr::ogRaderMgr()
 #endif
 	{
 	case 0:
+	{
 		_54 = 0;
 		screen->set("screen/blo/p_map00.blo", true);
 		_4C = (P2DPicture*)screen->search('map0', true);
 		break;
+	}
 	case 1:
+	{
 		_54 = 1;
 		screen->set("screen/blo/p_map01.blo", true);
 		_4C = (P2DPicture*)screen->search('map1', true);
 		break;
+	}
 	case 2:
+	{
 		_54 = 2;
 		screen->set("screen/blo/p_map02.blo", true);
 		_4C = (P2DPicture*)screen->search('map2', true);
 		break;
+	}
 	case 3:
+	{
 		_54 = 3;
 		screen->set("screen/blo/p_map03.blo", true);
 		_4C = (P2DPicture*)screen->search('map3', true);
 		break;
+	}
 	case 4:
+	{
 		_54 = 4;
 		screen->set("screen/blo/p_map04.blo", true);
 		_4C = (P2DPicture*)screen->search('map4', true);
 		break;
+	}
 	default:
+	{
 		PRINT("----- UNKNOWN MAP !!! -----\n");
 		_54 = 0;
 		screen->set("screen/blo/p_map00.blo", true);
 		_4C = (P2DPicture*)screen->search('map0', true);
 		break;
+	}
 	}
 
 	_50         = new PikaAlphaMgr(screen);
@@ -488,21 +500,29 @@ void zen::ogRaderMgr::updateGame(Controller* input)
 	if (input->keyClick(KBBTN_DPAD_UP)) {
 		switch (mStatus) {
 		case 0:
+		{
 			_42C    = 2.0f;
 			mStatus = STATE_1;
 			break;
+		}
 		case 1:
+		{
 			_42C    = 4.0f;
 			mStatus = STATE_2;
 			break;
+		}
 		case 2:
+		{
 			_42C    = 8.0f;
 			mStatus = STATE_3;
 			break;
+		}
 		case 3:
+		{
 			mStatus = STATE_5;
 			_50->startFadeOut(0.2f);
 			break;
+		}
 		}
 	} else if (input->keyDown(KBBTN_DPAD_LEFT) && _45A > 0) {
 		_45A--;
@@ -602,49 +622,63 @@ void zen::ogRaderMgr::updateMenu(Controller* input)
 	if (_01) {
 		switch (se) {
 		case 0:
+		{
 			seSystem->stopSysSe(SYSSE_YMENU_ZOOMIN);
 			break;
+		}
 		case -1:
+		{
 			seSystem->playSysSe(SYSSE_YMENU_ZOOMOUT);
 			break;
+		}
 		}
 	} else if (_02) {
 		switch (se) {
 		case 0:
+		{
 			seSystem->stopSysSe(SYSSE_YMENU_ZOOMOUT);
 			break;
-
+		}
 		case 1:
+		{
 			seSystem->playSysSe(SYSSE_YMENU_ZOOMIN);
 			break;
+		}
 		}
 	} else {
 		switch (se) {
 		case -1:
+		{
 			seSystem->playSysSe(SYSSE_YMENU_ZOOMOUT);
 			break;
-
+		}
 		case 1:
+		{
 			seSystem->playSysSe(SYSSE_YMENU_ZOOMIN);
 			break;
+		}
 		}
 	}
 
 	switch (se) {
 	case 0:
+	{
 		_02 = 0;
 		_01 = 0;
 		break;
-
+	}
 	case 1:
+	{
 		_02 = 0;
 		_01 = 1;
 		break;
-
+	}
 	case -1:
+	{
 		_02 = 1;
 		_01 = 0;
 		break;
+	}
 	}
 
 	if (x != _428) {
@@ -857,25 +891,33 @@ zen::ogRaderMgr::RaderStatus zen::ogRaderMgr::update(Controller* input)
 		u8 alpha;
 		switch (data->mColor) {
 		case Blue:
+		{
 			col1  = _5C->getWhite();
 			col2  = _5C->getBlack();
 			alpha = _5C->getAlpha();
 			break;
+		}
 		case Red:
+		{
 			col1  = _60->getWhite();
 			col2  = _60->getBlack();
 			alpha = _60->getAlpha();
 			break;
+		}
 		case Yellow:
+		{
 			col1  = _64->getWhite();
 			col2  = _64->getBlack();
 			alpha = _64->getAlpha();
 			break;
+		}
 		default: // seeds
+		{
 			col1  = _68->getWhite();
 			col2  = _68->getBlack();
 			alpha = _68->getAlpha();
 			break;
+		}
 		}
 		data->mPic->setWhite(col1);
 		data->mPic->setBlack(col2);

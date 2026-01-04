@@ -637,28 +637,37 @@ void ActorInstance::checkEventKeys(f32 curTime, f32 prevTime, Vector3f& pos)
 				PRINT("cine effect (frame %d) %d at %f, %f, %f\n", key->mFrameIndex, key->mKeyType, pos.x, pos.y, pos.z);
 				switch (key->mKeyType) {
 				case 0:
+				{
 					if (mapMgr) {
 						pos.y = mapMgr->getMinY(pos.x, pos.z, true);
 					}
 					effectMgr->create(EffectMgr::EFF_SmokeRing_S, pos, nullptr, nullptr);
 					break;
+				}
 				case 1:
+				{
 					if (mapMgr) {
 						pos.y = mapMgr->getMinY(pos.x, pos.z, true);
 					}
 					effectMgr->create(EffectMgr::EFF_SmokeRing_M, pos, nullptr, nullptr);
 					break;
+				}
 				case 2:
+				{
 					effectMgr->create(EffectMgr::EFF_Rocket_Sparkles1, Vector3f(0.0f, 0.0f, 0.0f), nullptr, nullptr);
 					break;
+				}
 				case 3:
+				{
 					effectMgr->create(EffectMgr::EFF_Rocket_BeBomC, pos, nullptr, nullptr);
 					effectMgr->create(EffectMgr::EFF_Rocket_BeBomW, pos, nullptr, nullptr);
 					effectMgr->create(EffectMgr::EFF_Rocket_BeBomH, pos, nullptr, nullptr);
 					effectMgr->create(EffectMgr::EFF_Rocket_BeBomP, pos, nullptr, nullptr);
 					effectMgr->create(EffectMgr::EFF_Rocket_BeBomK, pos, nullptr, nullptr);
 					break;
+				}
 				case 4:
+				{
 					mEffectList[0] = effectMgr->create(EffectMgr::EFF_Rocket_Tbc1, mJointPositions[0], nullptr, nullptr);
 					mEffectList[0]->setEmitPosPtr(&mJointPositions[0]);
 					mEffectList[1] = effectMgr->create(EffectMgr::EFF_Rocket_Tbf1, mJointPositions[0], nullptr, nullptr);
@@ -666,7 +675,9 @@ void ActorInstance::checkEventKeys(f32 curTime, f32 prevTime, Vector3f& pos)
 					mEffectList[2] = effectMgr->create(EffectMgr::EFF_Rocket_Tbf2, mJointPositions[0], nullptr, nullptr);
 					mEffectList[2]->setEmitPosPtr(&mJointPositions[0]);
 					break;
+				}
 				case 5:
+				{
 					mEffectList[3] = effectMgr->create(EffectMgr::EFF_Rocket_Tbc1, mJointPositions[1], nullptr, nullptr);
 					mEffectList[3]->setEmitPosPtr(&mJointPositions[1]);
 					mEffectList[4] = effectMgr->create(EffectMgr::EFF_Rocket_Tbf1, mJointPositions[1], nullptr, nullptr);
@@ -674,7 +685,9 @@ void ActorInstance::checkEventKeys(f32 curTime, f32 prevTime, Vector3f& pos)
 					mEffectList[5] = effectMgr->create(EffectMgr::EFF_Rocket_Tbf2, mJointPositions[1], nullptr, nullptr);
 					mEffectList[5]->setEmitPosPtr(&mJointPositions[1]);
 					break;
+				}
 				case 6:
+				{
 					for (int i = 0; i < 6; i++) {
 						if (mEffectList[i]) {
 							effectMgr->kill(mEffectList[i], false);
@@ -685,19 +698,25 @@ void ActorInstance::checkEventKeys(f32 curTime, f32 prevTime, Vector3f& pos)
 						itemMgr->getUfo()->setJetEffect(0, false);
 					}
 					break;
+				}
 				case 7:
+				{
 					Vector3f pos7(64.0f, 44.0f, 1913.0f);
 					effectMgr->create(EffectMgr::EFF_Rocket_WakeK1, pos7, nullptr, nullptr);
 					effectMgr->create(EffectMgr::EFF_Rocket_WakeK2, pos7, nullptr, nullptr);
 					effectMgr->create(EffectMgr::EFF_Rocket_WakeP1, pos7, nullptr, nullptr);
 					effectMgr->create(EffectMgr::EFF_Rocket_WakeP2, pos7, nullptr, nullptr);
 					break;
+				}
 				case 8:
+				{
 					Vector3f pos8(53.0f, 1164.0f, 848.0f);
 					effectMgr->create(EffectMgr::EFF_MC_Bang, pos8, nullptr, nullptr);
 					effectMgr->create(EffectMgr::EFF_MC_Debris, pos8, nullptr, nullptr);
 					break;
+				}
 				case 9:
+				{
 					mMeteorFlag = false;
 					for (int i = 0; i < 4; i++) {
 						for (int j = 0; j < 4; j++) {
@@ -729,7 +748,9 @@ void ActorInstance::checkEventKeys(f32 curTime, f32 prevTime, Vector3f& pos)
 					mEffectList[6]->setEmitPosPtr(&mCenterPosition);
 					_19C = true;
 					break;
+				}
 				case 10:
+				{
 					mEffectList[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT01, mJointPositions[0], nullptr, nullptr);
 					mEffectList[0]->setEmitPosPtr(&mJointPositions[0]);
 					mEffectList[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT02, mJointPositions[0], nullptr, nullptr);
@@ -737,7 +758,9 @@ void ActorInstance::checkEventKeys(f32 curTime, f32 prevTime, Vector3f& pos)
 					mEffectList[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT03, mJointPositions[0], nullptr, nullptr);
 					mEffectList[0]->setEmitPosPtr(&mJointPositions[0]);
 					break;
+				}
 				case 11:
+				{
 					mEffectList[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT01C, mJointPositions[1], nullptr, nullptr);
 					mEffectList[0]->setEmitPosPtr(&mJointPositions[1]);
 					mEffectList[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT02C, mJointPositions[1], nullptr, nullptr);
@@ -745,7 +768,9 @@ void ActorInstance::checkEventKeys(f32 curTime, f32 prevTime, Vector3f& pos)
 					mEffectList[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT01CC, mJointPositions[1], nullptr, nullptr);
 					mEffectList[0]->setEmitPosPtr(&mJointPositions[1]);
 					break;
+				}
 				case 12:
+				{
 					mEffectList[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT03C, mJointPositions[2], nullptr, nullptr);
 					mEffectList[0]->setEmitPosPtr(&mJointPositions[2]);
 					mEffectList[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT02CC, mJointPositions[2], nullptr, nullptr);
@@ -753,7 +778,9 @@ void ActorInstance::checkEventKeys(f32 curTime, f32 prevTime, Vector3f& pos)
 					mEffectList[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT03CC, mJointPositions[2], nullptr, nullptr);
 					mEffectList[0]->setEmitPosPtr(&mJointPositions[2]);
 					break;
+				}
 				case 13:
+				{
 					mEffectList[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT01C, mJointPositions[3], nullptr, nullptr);
 					mEffectList[0]->setEmitPosPtr(&mJointPositions[3]);
 					mEffectList[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT02C, mJointPositions[3], nullptr, nullptr);
@@ -761,7 +788,9 @@ void ActorInstance::checkEventKeys(f32 curTime, f32 prevTime, Vector3f& pos)
 					mEffectList[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT01CC, mJointPositions[3], nullptr, nullptr);
 					mEffectList[0]->setEmitPosPtr(&mJointPositions[3]);
 					break;
+				}
 				case 14:
+				{
 					mEffectList[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT03C, mJointPositions[4], nullptr, nullptr);
 					mEffectList[0]->setEmitPosPtr(&mJointPositions[4]);
 					mEffectList[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT02CC, mJointPositions[4], nullptr, nullptr);
@@ -769,7 +798,9 @@ void ActorInstance::checkEventKeys(f32 curTime, f32 prevTime, Vector3f& pos)
 					mEffectList[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT03CC, mJointPositions[4], nullptr, nullptr);
 					mEffectList[0]->setEmitPosPtr(&mJointPositions[4]);
 					break;
+				}
 				case 15:
+				{
 					mEffectList[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT03C, mJointPositions[5], nullptr, nullptr);
 					mEffectList[0]->setEmitPosPtr(&mJointPositions[5]);
 					mEffectList[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT02CC, mJointPositions[5], nullptr, nullptr);
@@ -777,7 +808,9 @@ void ActorInstance::checkEventKeys(f32 curTime, f32 prevTime, Vector3f& pos)
 					mEffectList[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT03CC, mJointPositions[5], nullptr, nullptr);
 					mEffectList[0]->setEmitPosPtr(&mJointPositions[5]);
 					break;
+				}
 				case 16:
+				{
 					mEffectList[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT01C, mJointPositions[6], nullptr, nullptr);
 					mEffectList[0]->setEmitPosPtr(&mJointPositions[6]);
 					mEffectList[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT02C, mJointPositions[6], nullptr, nullptr);
@@ -785,7 +818,9 @@ void ActorInstance::checkEventKeys(f32 curTime, f32 prevTime, Vector3f& pos)
 					mEffectList[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT01CC, mJointPositions[6], nullptr, nullptr);
 					mEffectList[0]->setEmitPosPtr(&mJointPositions[6]);
 					break;
+				}
 				case 17:
+				{
 					mEffectList[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT03C, mJointPositions[7], nullptr, nullptr);
 					mEffectList[0]->setEmitPosPtr(&mJointPositions[7]);
 					mEffectList[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT02CC, mJointPositions[7], nullptr, nullptr);
@@ -793,7 +828,9 @@ void ActorInstance::checkEventKeys(f32 curTime, f32 prevTime, Vector3f& pos)
 					mEffectList[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT03CC, mJointPositions[7], nullptr, nullptr);
 					mEffectList[0]->setEmitPosPtr(&mJointPositions[7]);
 					break;
+				}
 				case 18:
+				{
 					mEffectList[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT03C, mJointPositions[8], nullptr, nullptr);
 					mEffectList[0]->setEmitPosPtr(&mJointPositions[8]);
 					mEffectList[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT02CC, mJointPositions[8], nullptr, nullptr);
@@ -801,7 +838,9 @@ void ActorInstance::checkEventKeys(f32 curTime, f32 prevTime, Vector3f& pos)
 					mEffectList[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT03CC, mJointPositions[8], nullptr, nullptr);
 					mEffectList[0]->setEmitPosPtr(&mJointPositions[8]);
 					break;
+				}
 				case 19:
+				{
 					mJointPositions[0].set(-25000.0f, -25000.0f, -25000.0f);
 					mEffectList[1] = effectMgr->create(EffectMgr::EFF_Rocket_Bst1fb, mJointPositions[0], nullptr, nullptr);
 					mEffectList[1]->setEmitPosPtr(&mJointPositions[0]);
@@ -822,13 +861,16 @@ void ActorInstance::checkEventKeys(f32 curTime, f32 prevTime, Vector3f& pos)
 					}
 					mMeteorFlag = true;
 					break;
+				}
 				case 20:
+				{
 					mEffectList[0] = effectMgr->create(EffectMgr::EFF_MTotl01, mCenterPosition, nullptr, nullptr);
 					mEffectList[0]->setEmitPosPtr(&mCenterPosition);
 					mEffectList[1] = effectMgr->create(EffectMgr::EFF_MTotl03, mCenterPosition, nullptr, nullptr);
 					mEffectList[1]->setEmitPosPtr(&mCenterPosition);
 					_19E = true;
 					break;
+				}
 				case 21:
 				case 22:
 				case 23:
@@ -837,9 +879,12 @@ void ActorInstance::checkEventKeys(f32 curTime, f32 prevTime, Vector3f& pos)
 				case 26:
 				case 27:
 				case 28:
+				{
 					effectMgr->create(EffectMgr::EFF_Rocket_SCT00N, mJointPositions[key->mKeyType - 21], nullptr, nullptr);
 					break;
+				}
 				case 29:
+				{
 					mRocketLightPosList[0].set(-25000.0f, -25000.0f, -25000.0f);
 					mRocketLightPosList[1].set(-25000.0f, -25000.0f, -25000.0f);
 					mRocketLightPosList[2].set(-25000.0f, -25000.0f, -25000.0f);
@@ -854,16 +899,21 @@ void ActorInstance::checkEventKeys(f32 curTime, f32 prevTime, Vector3f& pos)
 					    ->setEmitPosPtr(&mRocketLightPosList[3]);
 					mUsingRocketLightPos = true;
 					break;
+				}
 				case 30:
+				{
 					effectMgr->create(EffectMgr::EFF_Rocket_Opa1, mCenterPosition, nullptr, nullptr);
 					break;
+				}
 				case 31:
+				{
 					effectMgr->create(EffectMgr::EFF_Rocket_BeBomC, mJointPositions[0], nullptr, nullptr);
 					effectMgr->create(EffectMgr::EFF_Rocket_BeBomW, mJointPositions[0], nullptr, nullptr);
 					effectMgr->create(EffectMgr::EFF_Rocket_BeBomH, mJointPositions[0], nullptr, nullptr);
 					effectMgr->create(EffectMgr::EFF_Rocket_BeBomP, mJointPositions[0], nullptr, nullptr);
 					effectMgr->create(EffectMgr::EFF_Rocket_BeBomK, mJointPositions[0], nullptr, nullptr);
 					break;
+				}
 				}
 			}
 		}

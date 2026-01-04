@@ -205,12 +205,14 @@ static OSThread* SetEffectivePriority(OSThread* thread, OSPriority priority)
 {
 	switch (thread->state) {
 	case OS_THREAD_STATE_READY:
+	{
 		UnsetRun(thread);
 		thread->priority = priority;
 		SetRun(thread);
 		break;
-
+	}
 	case OS_THREAD_STATE_WAITING:
+	{
 		RemoveItem(thread->queue, thread, link);
 		thread->priority = priority;
 		AddPrio(thread->queue, thread, link);
@@ -218,11 +220,13 @@ static OSThread* SetEffectivePriority(OSThread* thread, OSPriority priority)
 			return thread->mutex->thread;
 		}
 		break;
-
+	}
 	case OS_THREAD_STATE_RUNNING:
+	{
 		RunQueueHint     = TRUE;
 		thread->priority = priority;
 		break;
+	}
 	}
 	return NULL;
 }
@@ -437,23 +441,31 @@ void OSCancelThread(OSThread* thread)
 
 	switch (thread->state) {
 	case OS_THREAD_STATE_READY:
+	{
 		if (!(0 < thread->suspend)) {
 			UnsetRun(thread);
 		}
 		break;
+	}
 	case OS_THREAD_STATE_RUNNING:
+	{
 		RunQueueHint = TRUE;
 		break;
+	}
 	case OS_THREAD_STATE_WAITING:
+	{
 		RemoveItem(thread->queue, thread, link);
 		thread->queue = NULL;
 		if (!(0 < thread->suspend) && thread->mutex) {
 			UpdatePriority(thread->mutex->thread);
 		}
 		break;
+	}
 	default:
+	{
 		OSRestoreInterrupts(enabled);
 		return;
+	}
 	}
 
 	OSClearContext(&thread->context);
@@ -526,10 +538,13 @@ s32 OSResumeThread(OSThread* thread)
 	} else if (thread->suspend == 0) {
 		switch (thread->state) {
 		case OS_THREAD_STATE_READY:
+		{
 			thread->priority = __OSGetEffectivePriority(thread);
 			SetRun(thread);
 			break;
+		}
 		case OS_THREAD_STATE_WAITING:
+		{
 			RemoveItem(thread->queue, thread, link);
 			thread->priority = __OSGetEffectivePriority(thread);
 			AddPrio(thread->queue, thread, link);
@@ -537,6 +552,7 @@ s32 OSResumeThread(OSThread* thread)
 				UpdatePriority(thread->mutex->thread);
 			}
 			break;
+		}
 		}
 		__OSReschedule();
 	}
@@ -557,13 +573,18 @@ s32 OSSuspendThread(OSThread* thread)
 	if (suspendCount == 0) {
 		switch (thread->state) {
 		case OS_THREAD_STATE_RUNNING:
+		{
 			RunQueueHint  = TRUE;
 			thread->state = OS_THREAD_STATE_READY;
 			break;
+		}
 		case OS_THREAD_STATE_READY:
+		{
 			UnsetRun(thread);
 			break;
+		}
 		case OS_THREAD_STATE_WAITING:
+		{
 			RemoveItem(thread->queue, thread, link);
 			thread->priority = 32;
 			AddTail(thread->queue, thread, link);
@@ -571,6 +592,7 @@ s32 OSSuspendThread(OSThread* thread)
 				UpdatePriority(thread->mutex->thread);
 			}
 			break;
+		}
 		}
 
 		__OSReschedule();
@@ -748,18 +770,23 @@ s32 OSCheckActiveThreads(void)
 
 		switch (thread->state) {
 		case 1:
+		{
 			if (thread->suspend <= 0) {
 				ASSERTREPORT(0x58C, thread->queue == &RunQueue[thread->priority]);
 				ASSERTREPORT(0x58D, IsMember(&RunQueue[thread->priority], thread));
 				ASSERTREPORT(0x58E, thread->priority == __OSGetEffectivePriority(thread));
 			}
 			break;
+		}
 		case 2:
+		{
 			ASSERTREPORT(0x592, !IsSuspended(thread->suspend));
 			ASSERTREPORT(0x593, thread->queue == NULL);
 			ASSERTREPORT(0x594, thread->priority == __OSGetEffectivePriority(thread));
 			break;
+		}
 		case 4:
+		{
 			ASSERTREPORT(0x597, thread->queue != NULL);
 			ASSERTREPORT(0x598, CheckThreadQueue(thread->queue));
 			ASSERTREPORT(0x599, IsMember(thread->queue, thread));
@@ -770,12 +797,17 @@ s32 OSCheckActiveThreads(void)
 			}
 			ASSERTREPORT(0x5A2, !__OSCheckDeadLock(thread));
 			break;
+		}
 		case 8:
+		{
 			ASSERTREPORT(0x5A6, thread->queueMutex.head == NULL && thread->queueMutex.tail == NULL);
 			break;
+		}
 		default:
+		{
 			OSReport("OSCheckActiveThreads: Failed. unkown thread state (%d) of thread %p\n", thread->state, thread);
 			OSPanic("OSThread.c", 0x5AC, "");
+		}
 		}
 		ASSERTREPORT(0x5B1, __OSCheckMutexes(thread));
 		thread = thread->linkActive.next;

@@ -632,19 +632,23 @@ public:
 
 		switch (color) {
 		case DrawContainer::COLOR_Red:
+		{
 			mRedTextBoxes[msg]   = tBox1;
 			mRedShadowBoxes[msg] = tBox2;
 			break;
-
+		}
 		case DrawContainer::COLOR_Blue:
+		{
 			mBlueTextBoxes[msg]   = tBox1;
 			mBlueShadowBoxes[msg] = tBox2;
 			break;
-
+		}
 		case DrawContainer::COLOR_Yellow:
+		{
 			mYellowTextBoxes[msg]   = tBox1;
 			mYellowShadowBoxes[msg] = tBox2;
 			break;
+		}
 		}
 
 		tBox1->hide();
@@ -662,8 +666,10 @@ public:
 			case MSG_NotEnoughInSquad:
 			case MSG_ContainerEmpty:
 			case MSG_NothingToTransfer:
+			{
 				SeSystem::playSysSe(SYSSE_CMENU_ERROR);
 				break;
+			}
 			}
 		}
 		mCurrentTime = 0.0f;
@@ -673,19 +679,23 @@ public:
 		if (msg != MSG_NULL) {
 			switch (mColorMode) {
 			case DrawContainer::COLOR_Red:
+			{
 				mRedTextBoxes[mMessage]->show();
 				mRedShadowBoxes[mMessage]->show();
 				break;
-
+			}
 			case DrawContainer::COLOR_Blue:
+			{
 				mBlueTextBoxes[mMessage]->show();
 				mBlueShadowBoxes[mMessage]->show();
 				break;
-
+			}
 			case DrawContainer::COLOR_Yellow:
+			{
 				mYellowTextBoxes[mMessage]->show();
 				mYellowShadowBoxes[mMessage]->show();
 				break;
+			}
 			}
 		}
 	}
@@ -716,6 +726,7 @@ public:
 			case MSG_ContainerOnly:
 			case MSG_SquadOnly:
 			case MSG_NeitherHave:
+			{
 				if (mMessage == MSG_NULL) {
 					if (containerNum > 0) {
 						if (squadNum > 0) {
@@ -734,10 +745,12 @@ public:
 					setMessage(MSG_WaitInput, -1.0f);
 				}
 				break;
-
+			}
 			default:
+			{
 				setMessage(MSG_NULL, 0.0f);
 				break;
+			}
 			}
 		}
 
@@ -745,19 +758,23 @@ public:
 		P2DTextBox** tBox2;
 		switch (mColorMode) {
 		case DrawContainer::COLOR_Red:
+		{
 			tBox1 = mRedTextBoxes;
 			tBox2 = mRedShadowBoxes;
 			break;
-
+		}
 		case DrawContainer::COLOR_Blue:
+		{
 			tBox1 = mBlueTextBoxes;
 			tBox2 = mBlueShadowBoxes;
 			break;
-
+		}
 		case DrawContainer::COLOR_Yellow:
+		{
 			tBox1 = mYellowTextBoxes;
 			tBox2 = mYellowShadowBoxes;
 			break;
+		}
 		}
 
 		for (int i = 0; i < mMessageCount; i++, tBox1++, tBox2++) {
@@ -837,17 +854,21 @@ public:
 	{
 		switch (mode) {
 		case MODE_Idle:
+		{
 			break;
-
+		}
 		case MODE_SlideIn:
+		{
 			mPane->move(RoundOff(mBasePosition.x * t + (mBasePosition.x + 640.0f) * tComp),
 			            RoundOff(mBasePosition.y * t + (mBasePosition.y - 0.0f) * tComp));
 			break;
-
+		}
 		case MODE_SlideOut:
+		{
 			mPane->move(RoundOff(mBasePosition.x * tComp + (mBasePosition.x - 640.0f) * t),
 			            RoundOff(mBasePosition.y * tComp + (mBasePosition.y - 0.0f) * t));
 			break;
+		}
 		}
 
 		Vector3f vec1;

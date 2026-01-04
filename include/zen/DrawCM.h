@@ -180,16 +180,19 @@ public:
 	{
 		switch (_04) {
 		case 1:
+		{
 			if (_08 < 255) {
 				_08++;
 			}
 			break;
-
+		}
 		case 2:
+		{
 			if (_08 != 0) {
 				_08--;
 			}
 			break;
+		}
 		}
 		return false;
 	}

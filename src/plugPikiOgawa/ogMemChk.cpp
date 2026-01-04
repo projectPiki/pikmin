@@ -253,6 +253,7 @@ void zen::ogScrMemChkMgr::StatusCheck()
 
 	switch (mStatus) {
 	case UnformattedCard:
+	{
 		mPrevStatusCheck = UnformattedCard;
 		mStatus          = WritingFormatMsg;
 		setPCtex(mDoFixUnformattedTextMgr);
@@ -261,7 +262,9 @@ void zen::ogScrMemChkMgr::StatusCheck()
 		SetNitaku_F_N();
 #endif
 		break;
+	}
 	case BrokenCard:
+	{
 		mPrevStatusCheck = BrokenCard;
 		mStatus          = WritingFormatMsg;
 		setPCtex(mNeedFormatTextMgr);
@@ -271,20 +274,28 @@ void zen::ogScrMemChkMgr::StatusCheck()
 #endif
 		break;
 	}
+	}
 
 	// Because the first switch wasnt good enough
 	switch (mStatus) {
 	case WritingFormatMsg:
+	{
 		break;
+	}
 	case NoCard:
+	{
 		setPCtex(mNoCardTextMgr);
 		PRINT("<<<<<<<<<< ERR_NOCARD in ogMemChk >>>>>>>>>>\n");
 		break;
+	}
 	case NotACard:
+	{
 		setPCtex(mNotACardTextMgr);
 		PRINT("<<<<<<<<<< ERR_NOTACARD in ogMemChk >>>>>>>>>>\n");
 		break;
+	}
 	case UnformattedCard:
+	{
 		setPCtex(mUnformattedCardTextMgr);
 		PRINT("<<<<<<<<<< ERR_ENCODING in ogMemChk >>>>>>>>>>\n");
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
@@ -292,7 +303,9 @@ void zen::ogScrMemChkMgr::StatusCheck()
 		SetNitaku_W_R();
 #endif
 		break;
+	}
 	case BrokenCard:
+	{
 		setPCtex(mBrokenCardTextMgr);
 		PRINT("<<<<<<<<<< ERR_BROKEN in ogMemChk >>>>>>>>>>\n");
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
@@ -300,33 +313,48 @@ void zen::ogScrMemChkMgr::StatusCheck()
 		SetNitaku_W_R();
 #endif
 		break;
+	}
 	case CardFull:
+	{
 		setPCtex(mCardFullTextMgr);
 		PRINT("<<<<<<<<<< ERR_FULLUP in ogMemChk >>>>>>>>>>\n");
 		break;
+	}
 	case UnusableCard:
+	{
 		setPCtex(mUnusableCardTextMgr);
 		PRINT("<<<<<<<<<< ERR_UNUSABLE in ogMemChk >>>>>>>>>>\n");
 		break;
+	}
 	case FileNotMade:
+	{
 		setPCtex(mFileNotMadeTextMgr);
 		PRINT("<<<<<<<<<< ERR_NOFILE in ogMemChk >>>>>>>>>>\n");
 		break;
+	}
 	case RepairFile:
+	{
 		setPCtex(mRepairFileTextMgr);
 		PRINT("<<<<<<<<<< REPAIR_NOW in ogMemChk >>>>>>>>>>\n");
 		break;
+	}
 	case RepairSuccess:
+	{
 		setPCtex(mRepairSuccessTextMgr);
 		PRINT("<<<<<<<<<< REPAIR_END in ogMemChk >>>>>>>>>>\n");
 		break;
+	}
 	case RepairFail:
+	{
 		setPCtex(mRepairFailTextMgr);
 		PRINT("<<<<<<<<<< REPAIR_MISS in ogMemChk >>>>>>>>>>\n");
 		break;
+	}
 	default:
+	{
 		mActiveTextMgr->off();
 		break;
+	}
 	}
 
 	mWaitTimer = 0.0f;
@@ -564,14 +592,16 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 
 	switch (mStatus) {
 	case NoCard:
+	{
 		if (hasCard) {
 			start();
 			return mStatus;
 		}
 		checkErrNitaku(mNitakuMgr, input);
 		break;
-
+	}
 	case UnformattedCard:
+	{
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 #else
 		SetNitaku_W_R();
@@ -579,8 +609,9 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 		PRINT("##### MEMCHK_DISP_ERR_KAIGAI  ######\n");
 		checkErrNitaku(mNitakuMgr, input);
 		break;
-
+	}
 	case BrokenCard:
+	{
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 #else
 		SetNitaku_W_R();
@@ -588,9 +619,10 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 		PRINT("##### MEMCHK_DISP_ERR_IJYOU  ######\n");
 		checkErrNitaku(mNitakuMgr, input);
 		break;
-
+	}
 	case CardFull:
 	case FileNotMade:
+	{
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 		// fallthrough
 #else
@@ -598,13 +630,15 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 		checkErrNitaku(mNitakuMgr, input);
 		break;
 #endif
-
+	}
 	case NotACard:
 	case UnusableCard:
+	{
 		checkErrNitaku(mNitakuMgr, input);
 		break;
-
+	}
 	case WritingFormatMsg:
+	{
 		if (checkTypingAll()) {
 			mStatus = DoFormatSelection;
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
@@ -617,7 +651,7 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 			DispYesNo(false);
 		}
 		break;
-
+	}
 	case DoFormatSelection:
 	{
 		ogNitakuMgr::NitakuStatus stat = mNitakuMgr->update(input);
@@ -645,6 +679,7 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 		break;
 	}
 	case FormatConfirmation:
+	{
 		if (checkTypingAll()) {
 			mStatus = DoYouFormat;
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
@@ -657,7 +692,7 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 			DispYesNo(false);
 		}
 		break;
-
+	}
 	case DoYouFormat:
 	{
 		int stat = mNitakuMgr->update(input);
@@ -682,6 +717,7 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 		break;
 	}
 	case Formatting:
+	{
 		DispYesNo(false);
 		DispAcup(true);
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
@@ -710,8 +746,9 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 			}
 		}
 		break;
-
+	}
 	case FormatSuccess:
+	{
 		DispYesNo(false);
 		DispAcup(true);
 		mAButtonAlphaMgr->update();
@@ -730,8 +767,9 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 			}
 		}
 		break;
-
+	}
 	case FormatFail:
+	{
 		mAButtonAlphaMgr->update();
 		if (input->keyClick(KBBTN_A | KBBTN_START)) {
 			seSystem->playSysSe(ogEnumFix(SYSSE_DECIDE1, JACSYS_Decide1));
@@ -740,7 +778,7 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 			start();
 		}
 		break;
-
+	}
 	case MakeDefaultFile:
 	{
 		int stat = mMakeDefaultMgr->update(input);
@@ -761,6 +799,7 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 		break;
 	}
 	case RepairFile:
+	{
 		DispYesNo(false);
 		DispAcup(true);
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
@@ -781,8 +820,9 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 			mAButtonAlphaMgr->start();
 		}
 		break;
-
+	}
 	case RepairSuccess:
+	{
 		DispYesNo(false);
 		DispAcup(true);
 		if (checkTypingAll()) {
@@ -794,8 +834,9 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 			}
 		}
 		break;
-
+	}
 	case RepairFail:
+	{
 		DispYesNo(false);
 		DispAcup(true);
 		if (checkTypingAll()) {
@@ -816,6 +857,7 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 			}
 		}
 		break;
+	}
 	}
 
 	setErrorMessage();
@@ -861,18 +903,22 @@ void zen::ogScrMemChkMgr::draw(Graphics& gfx)
 
 	switch (mStatus) {
 	case MakeDefaultFile:
+	{
 		mMakeDefaultMgr->draw(gfx);
 		break;
-
+	}
 	case ExitFailure:
 	case Finished:
+	{
 		break;
-
+	}
 	case NoCard:
 	default:
+	{
 		mMainScreen->draw(0, 0, &graf);
 		mEfxMgr->draw(gfx);
 		break;
+	}
 	}
 }
 
@@ -891,25 +937,39 @@ void zen::ogScrMemChkMgr::setErrorMessage()
 
 	switch (mStatus) {
 	case NoCard:
+	{
 		mNoCardTextBox->show();
 		break;
+	}
 	case NotACard:
+	{
 		mNotACardTextBox->show();
 		break;
+	}
 	case UnformattedCard:
+	{
 		mUnformattedCardTextBox->show();
 		break;
+	}
 	case BrokenCard:
+	{
 		mBrokenCardTextBox->show();
 		break;
+	}
 	case CardFull:
+	{
 		mCardFullTextBox->show();
 		break;
+	}
 	case UnusableCard:
+	{
 		mUnusableCardTextBox->show();
 		break;
+	}
 	case FileNotMade:
+	{
 		mFileNotMadeTextBox->show();
 		break;
+	}
 	}
 }

@@ -46,11 +46,15 @@ static void DoTask()
 		DSPCallback cb   = dspTask->callback;
 		switch (dspTask->target) {
 		case DSPTARGET_IPL:
+		{
 			DiplSec(cmd);
 			break;
+		}
 		case DSPTARGET_AGB:
+		{
 			DagbSec(cmd);
 			break;
+		}
 		}
 
 		if (cb) {

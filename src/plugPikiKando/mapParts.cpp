@@ -114,12 +114,15 @@ void MapSlider::update()
 		switch (mStateMode) {
 		case 0:
 		case 1:
+		{
 			if (distance < 1.0f) {
 				mStateMode = 3;
 				mTimer     = holdTime;
 			}
 			break;
+		}
 		case 2:
+		{
 			mTimer -= gsys->getFrameTime();
 			mVelocity.set(0.0f, 0.0f, 0.0f);
 			if (mMoveMode == 1 || mDirectionMode == 1) {
@@ -134,13 +137,16 @@ void MapSlider::update()
 				mStateMode     = mDirectionMode;
 			}
 			break;
+		}
 		case 3:
+		{
 			mVelocity.set(0.0f, 0.0f, 0.0f);
 			if (!mContactCount) {
 				mStateMode = 2;
 				mTimer     = holdTime;
 			}
 			break;
+		}
 		}
 	} else {
 		mFaceDirection += gsys->getFrameTime();

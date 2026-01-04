@@ -547,12 +547,15 @@ bool MemoryCard::attemptFormatCard(int channel)
 
 		switch (waitWhileBusy(channel)) {
 		default:
+		{
 			CARDUnmount(channel);
 			mErrorCode = CARD_RESULT_BROKEN;
 			return false;
+		}
 		case CARD_RESULT_READY:
 		case CARD_RESULT_BROKEN:
 		case CARD_RESULT_ENCODING:
+		{
 			if (CARDFormatAsync(channel, 0) < 0) {
 				CARDUnmount(channel);
 				mErrorCode = CARD_RESULT_BROKEN;
@@ -569,6 +572,7 @@ bool MemoryCard::attemptFormatCard(int channel)
 				}
 			}
 			break;
+		}
 		}
 	}
 	mErrorCode = CARD_RESULT_BUSY;
@@ -601,11 +605,14 @@ bool MemoryCard::getCardStatus(int channel)
 		s32 res = waitWhileBusy(channel);
 		switch (res) {
 		case CARD_RESULT_ENCODING:
+		{
 			CARDUnmount(channel);
 			mErrorCode = CARD_RESULT_IOERROR;
 			return false;
+		}
 		case CARD_RESULT_READY:
 		case CARD_RESULT_BROKEN:
+		{
 			if (CARDCheckAsync(channel, 0) < 0) {
 				CARDUnmount(channel);
 				mErrorCode = CARD_RESULT_NOFILE;
@@ -614,22 +621,27 @@ bool MemoryCard::getCardStatus(int channel)
 			res = waitWhileBusy(channel);
 			break;
 		}
+		}
 
 		switch (res) {
 		case CARD_RESULT_NOCARD:
+		{
 			mErrorCode = CARD_RESULT_BUSY;
 			return false;
-
+		}
 		case CARD_RESULT_BROKEN:
+		{
 			CARDUnmount(channel);
 			mErrorCode = CARD_RESULT_NOFILE;
 			return false;
-
+		}
 		default:
+		{
 			mErrorCode = CARD_RESULT_EXIST;
 			return false;
-
+		}
 		case CARD_RESULT_READY:
+		{
 			if (CARDGetSectorSize(channel, &mSectorSize) < 0) {
 				CARDUnmount(channel);
 				mErrorCode = CARD_RESULT_NOFILE;
@@ -642,6 +654,7 @@ bool MemoryCard::getCardStatus(int channel)
 				return false;
 			}
 			return true;
+		}
 		}
 	}
 	PRINT("no card inserted!!!\n");

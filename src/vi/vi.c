@@ -244,37 +244,61 @@ static VITimingInfo* getTiming(VITVMode mode)
 {
 	switch (mode) {
 	case VI_TVMODE_NTSC_INT:
+	{
 		return &timing[0];
+	}
 	case VI_TVMODE_NTSC_DS:
+	{
 		return &timing[1];
+	}
 
 	case VI_TVMODE_PAL_INT:
+	{
 		return &timing[2];
+	}
 	case VI_TVMODE_PAL_DS:
+	{
 		return &timing[3];
+	}
 
 #if defined(VERSION_G98E01_PIKIDEMO)
 	case VI_TVMODE_EURGB60_INT:
+	{
 		return &timing[0];
+	}
 	case VI_TVMODE_EURGB60_DS:
+	{
 		return &timing[1];
+	}
 #endif
 
 	case VI_TVMODE_MPAL_INT:
+	{
 		return &timing[4];
+	}
 	case VI_TVMODE_MPAL_DS:
+	{
 		return &timing[5];
+	}
 
 	case VI_TVMODE_NTSC_PROG:
+	{
 		return &timing[6];
+	}
 
 #if defined(VERSION_G98E01_PIKIDEMO)
 	case VI_TVMODE_NTSC_3D:
+	{
 		return &timing[7];
+	}
 	case VI_TVMODE_DEBUG_PAL_INT:
+	{
 		return &timing[2];
+	}
 	case VI_TVMODE_DEBUG_PAL_DS:
+	{
 		return &timing[3];
+	}
 #endif
 	}
 
@@ -1086,16 +1110,22 @@ u32 VIGetTvFormat(void)
 	switch (CurrTvMode) {
 	case 3:
 	case 0:
+	{
 		format = 0;
 		break;
+	}
 	case 4:
 	case 1:
+	{
 		format = 1;
 		break;
+	}
 	case 5:
 	case 2:
+	{
 		format = CurrTvMode;
 		break;
+	}
 	}
 	OSRestoreInterrupts(enabled);
 	return format;

@@ -233,27 +233,37 @@ static void UpdateOrigin(s32 chan)
 	case 0x00000500u:
 	case 0x00000600u:
 	case 0x00000700u:
+	{
 		origin->triggerLeft &= ~15;
 		origin->triggerRight &= ~15;
 		origin->analogA &= ~15;
 		origin->analogB &= ~15;
 		break;
+	}
 	case 0x00000100u:
+	{
 		origin->substickX &= ~15;
 		origin->substickY &= ~15;
 		origin->analogA &= ~15;
 		origin->analogB &= ~15;
 		break;
+	}
 	case 0x00000200u:
+	{
 		origin->substickX &= ~15;
 		origin->substickY &= ~15;
 		origin->triggerLeft &= ~15;
 		origin->triggerRight &= ~15;
 		break;
+	}
 	case 0x00000300u:
+	{
 		break;
+	}
 	case 0x00000400u:
+	{
 		break;
+	}
 	}
 
 	origin->stickX -= 128;
@@ -609,13 +619,19 @@ void PADSetSamplingRate(u32 msec)
 	switch (tv) {
 	case VI_NTSC:
 	case VI_MPAL:
+	{
 		xy = XYNTSC;
 		break;
+	}
 	case VI_PAL:
+	{
 		xy = XYPAL;
 		break;
+	}
 	default:
+	{
 		OSPanic("Pad.c", 1296, "PADSetSamplingRate: unknown TV format");
+	}
 	}
 	SISetXY(xy[msec].line, xy[msec].count);
 	SIEnablePolling(EnabledBits);
@@ -683,17 +699,23 @@ void PADSetSpec(u32 spec)
 	__PADSpec = 0;
 	switch (spec) {
 	case PAD_SPEC_0:
+	{
 		MakeStatus = SPEC0_MakeStatus;
 		break;
+	}
 	case PAD_SPEC_1:
+	{
 		MakeStatus = SPEC1_MakeStatus;
 		break;
+	}
 	case PAD_SPEC_2:
 	case PAD_SPEC_3:
 	case PAD_SPEC_4:
 	case PAD_SPEC_5:
+	{
 		MakeStatus = SPEC2_MakeStatus;
 		break;
+	}
 	}
 	Spec = spec;
 }
@@ -817,6 +839,7 @@ static void SPEC2_MakeStatus(s32 chan, PADStatus* status, u32 data[2])
 	case 0x00000500:
 	case 0x00000600:
 	case 0x00000700:
+	{
 		status->substickX    = (s8)(data[1] >> 24);
 		status->substickY    = (s8)(data[1] >> 16);
 		status->triggerLeft  = (u8)(((data[1] >> 12) & 0x0f) << 4);
@@ -824,7 +847,9 @@ static void SPEC2_MakeStatus(s32 chan, PADStatus* status, u32 data[2])
 		status->analogA      = (u8)(((data[1] >> 4) & 0x0f) << 4);
 		status->analogB      = (u8)(((data[1] >> 0) & 0x0f) << 4);
 		break;
+	}
 	case 0x00000100:
+	{
 		status->substickX    = (s8)(((data[1] >> 28) & 0x0f) << 4);
 		status->substickY    = (s8)(((data[1] >> 24) & 0x0f) << 4);
 		status->triggerLeft  = (u8)(data[1] >> 16);
@@ -832,7 +857,9 @@ static void SPEC2_MakeStatus(s32 chan, PADStatus* status, u32 data[2])
 		status->analogA      = (u8)(((data[1] >> 4) & 0x0f) << 4);
 		status->analogB      = (u8)(((data[1] >> 0) & 0x0f) << 4);
 		break;
+	}
 	case 0x00000200:
+	{
 		status->substickX    = (s8)(((data[1] >> 28) & 0x0f) << 4);
 		status->substickY    = (s8)(((data[1] >> 24) & 0x0f) << 4);
 		status->triggerLeft  = (u8)(((data[1] >> 20) & 0x0f) << 4);
@@ -840,7 +867,9 @@ static void SPEC2_MakeStatus(s32 chan, PADStatus* status, u32 data[2])
 		status->analogA      = (u8)(data[1] >> 8);
 		status->analogB      = (u8)(data[1] >> 0);
 		break;
+	}
 	case 0x00000300:
+	{
 		status->substickX    = (s8)(data[1] >> 24);
 		status->substickY    = (s8)(data[1] >> 16);
 		status->triggerLeft  = (u8)(data[1] >> 8);
@@ -848,7 +877,9 @@ static void SPEC2_MakeStatus(s32 chan, PADStatus* status, u32 data[2])
 		status->analogA      = 0;
 		status->analogB      = 0;
 		break;
+	}
 	case 0x00000400:
+	{
 		status->substickX    = (s8)(data[1] >> 24);
 		status->substickY    = (s8)(data[1] >> 16);
 		status->triggerLeft  = 0;
@@ -856,6 +887,7 @@ static void SPEC2_MakeStatus(s32 chan, PADStatus* status, u32 data[2])
 		status->analogA      = (u8)(data[1] >> 8);
 		status->analogB      = (u8)(data[1] >> 0);
 		break;
+	}
 	}
 
 	status->stickX -= 128;

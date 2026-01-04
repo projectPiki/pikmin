@@ -696,108 +696,123 @@ void Piki::actOnSituaton()
 
 	switch (graspSituation(&target)) {
 	case PIKISITCH_Unk1:
+	{
 		seSystem->playPikiSound(SEF_PIKI_FIND, mSRT.t);
 		mActiveAction->abandon(nullptr);
 		mActiveAction->mCurrActionIdx = PikiAction::Attack;
 		mActiveAction->mChildActions[PikiAction::Attack].initialise(target);
 		mMode = PikiMode::AttackMode;
 		break;
-
+	}
 	case PIKISITCH_Unk2:
+	{
 		ERROR("U CAN'T DO IT RIGHT !\n"); // LOL
 		break;
-
+	}
 	case PIKISITCH_Unk14:
+	{
 		seSystem->playPikiSound(SEF_PIKI_FIND, mSRT.t);
 		mActiveAction->abandon(nullptr);
 		mActiveAction->mCurrActionIdx = PikiAction::Bou;
 		mActiveAction->mChildActions[PikiAction::Bou].initialise(target);
 		mMode = PikiMode::BoMode;
 		break;
-
+	}
 	case PIKISITCH_Unk9:
+	{
 		seSystem->playPikiSound(SEF_PIKI_FIND, mSRT.t);
 		mActiveAction->abandon(nullptr);
 		mActiveAction->mCurrActionIdx = PikiAction::Transport;
 		mActiveAction->mChildActions[PikiAction::Transport].initialise(target);
 		mMode = PikiMode::TransportMode;
 		break;
-
+	}
 	case PIKISITCH_Unk10:
+	{
 		seSystem->playPikiSound(SEF_PIKI_FIND, mSRT.t);
 		mActiveAction->abandon(nullptr);
 		mActiveAction->mCurrActionIdx = PikiAction::Rescue;
 		mActiveAction->mChildActions[PikiAction::Rescue].initialise(target);
 		mMode = PikiMode::RescueMode;
 		break;
-
+	}
 	case PIKISITCH_Unk11:
+	{
 		seSystem->playPikiSound(SEF_PIKI_FIND, mSRT.t);
 		mActiveAction->abandon(nullptr);
 		mActiveAction->mCurrActionIdx = PikiAction::Weed;
 		mActiveAction->mChildActions[PikiAction::Weed].initialise(target);
 		mMode = PikiMode::WeedMode;
 		break;
-
+	}
 	case PIKISITCH_Unk13:
+	{
 		seSystem->playPikiSound(SEF_PIKI_FIND, mSRT.t);
 		mActiveAction->abandon(nullptr);
 		mActiveAction->mCurrActionIdx = PikiAction::BoMake;
 		mActiveAction->mChildActions[PikiAction::BoMake].initialise(target);
 		mMode = PikiMode::BomakeMode;
 		break;
-
+	}
 	case PIKISITCH_Unk12:
+	{
 		seSystem->playPikiSound(SEF_PIKI_FIND, mSRT.t);
 		mActiveAction->abandon(nullptr);
 		mActiveAction->mCurrActionIdx = PikiAction::Stone;
 		mActiveAction->mChildActions[PikiAction::Stone].initialise(target);
 		mMode = PikiMode::PebbleMode;
 		break;
-
+	}
 	case PIKISITCH_Unk4:
+	{
 		seSystem->playPikiSound(SEF_PIKI_FIND, mSRT.t);
 		mActiveAction->abandon(nullptr);
 		mActiveAction->mCurrActionIdx = PikiAction::Mine;
 		mActiveAction->mChildActions[PikiAction::Mine].initialise(target);
 		mMode = PikiMode::MineMode;
 		break;
-
+	}
 	case PIKISITCH_Unk3:
+	{
 		seSystem->playPikiSound(SEF_PIKI_FIND, mSRT.t);
 		mActiveAction->abandon(nullptr);
 		mActiveAction->mCurrActionIdx = PikiAction::PickItem;
 		mActiveAction->mChildActions[PikiAction::PickItem].initialise(target);
 		mMode = PikiMode::PickMode;
 		break;
-
+	}
 	case PIKISITCH_Unk7:
+	{
 		seSystem->playPikiSound(SEF_PIKI_FIND, mSRT.t);
 		mActiveAction->abandon(nullptr);
 		mActiveAction->mCurrActionIdx = PikiAction::Bridge;
 		mActiveAction->mChildActions[PikiAction::Bridge].initialise(target);
 		mMode = PikiMode::BridgeMode;
 		break;
-
+	}
 	case PIKISITCH_Unk8:
+	{
 		seSystem->playPikiSound(SEF_PIKI_FIND, mSRT.t);
 		mActiveAction->abandon(nullptr);
 		mActiveAction->mCurrActionIdx = PikiAction::Push;
 		mActiveAction->mChildActions[PikiAction::Push].initialise(target);
 		mMode = PikiMode::PushstoneMode;
 		break;
-
+	}
 	case PIKISITCH_Unk6:
+	{
 		seSystem->playPikiSound(SEF_PIKI_FIND, mSRT.t);
 		mActiveAction->abandon(nullptr);
 		mActiveAction->mCurrActionIdx = PikiAction::BreakWall;
 		mActiveAction->mChildActions[PikiAction::BreakWall].initialise(target);
 		mMode = PikiMode::BreakwallMode;
 		break;
-
+	}
 	default:
+	{
 		changeMode(PikiMode::FreeMode, mNavi);
 		break;
+	}
 	}
 }
 
@@ -824,10 +839,13 @@ bool Piki::doDoAI()
 	case PIKISTATE_Wave:
 	case PIKISTATE_Push:
 	case PIKISTATE_PushPiki:
+	{
 		return true;
-
+	}
 	default:
+	{
 		return false;
+	}
 	}
 }
 
@@ -1246,14 +1264,20 @@ void Piki::initColor(int color)
 	if (flowCont.mIsVersusMode == TRUE) {
 		switch (color) {
 		case Blue:
+		{
 			mPlayerId = 0;
 			break;
+		}
 		case Red:
+		{
 			mPlayerId = 1;
 			break;
+		}
 		default:
+		{
 			mPlayerId = -1;
 			break;
+		}
 		}
 	} else {
 		mPlayerId = 0;
@@ -1409,21 +1433,26 @@ int Piki::getFormationPri()
 	// Only ever 0
 	switch (mNavi->mFormationPriMode) {
 	case 0:
+	{
 		return mFormationPriority;
-
+	}
 	case 1:
+	{
 		if (mFormationPriority == 1) {
 			return 0;
 		} else if (mFormationPriority == 2) {
 			return 1;
 		}
 		return 2;
-
+	}
 	case 2:
+	{
 		return -mFormationPriority;
-
+	}
 	default:
+	{
 		return mFormationPriority;
+	}
 	}
 }
 
@@ -1840,6 +1869,7 @@ void Piki::startMotion(immut PaniMotionInfo& motion1, immut PaniMotionInfo& moti
 	case PIKIANIM_Wait:
 	case PIKIANIM_Iraira:
 	case PIKIANIM_Suwaru:
+	{
 		Creature* target = mLookAtCreature.getPtr();
 		if (!isLooking()) {
 			if (!target) {
@@ -1875,10 +1905,12 @@ void Piki::startMotion(immut PaniMotionInfo& motion1, immut PaniMotionInfo& moti
 			mLookAtCreature.set(target);
 		}
 		return;
-
+	}
 	default:
+	{
 		finishLook();
 		return;
+	}
 	}
 
 	STACK_PAD_VAR(2); // idk what this is from
@@ -2739,66 +2771,79 @@ void Piki::changeMode(int newMode, Navi* navi)
 	mActiveAction->abandon(nullptr);
 	switch (newMode) {
 	case PikiMode::FreeMode:
+	{
 		mActiveAction->mCurrActionIdx = PikiAction::Free;
 		mActiveAction->mChildActions[mActiveAction->mCurrActionIdx].initialise(mNavi);
 		break;
-
+	}
 	case PikiMode::DecoyMode:
+	{
 		mActiveAction->mCurrActionIdx = PikiAction::Decoy;
 		mActiveAction->mChildActions[mActiveAction->mCurrActionIdx].initialise(nullptr);
 		break;
-
+	}
 	case PikiMode::FormationMode:
+	{
 		mActiveAction->mCurrActionIdx = PikiAction::Crowd;
 		mActiveAction->mChildActions[mActiveAction->mCurrActionIdx].initialise(mNavi);
 		break;
-
+	}
 	case PikiMode::PutbombMode:
+	{
 		mActiveAction->mCurrActionIdx = PikiAction::PutBomb;
 		mActiveAction->mChildActions[mActiveAction->mCurrActionIdx].initialise(nullptr);
 		break;
-
+	}
 	case PikiMode::NukuMode:
+	{
 		mActiveAction->startAction(PikiAction::Pullout, nullptr);
 		break;
-
+	}
 	case PikiMode::PickMode:
+	{
 		mActiveAction->mCurrActionIdx = PikiAction::PickItem;
 		mActiveAction->mChildActions[mActiveAction->mCurrActionIdx].initialise(nullptr);
 		PRINT("pick mode start?\n");
 		break;
-
+	}
 	case PikiMode::ArrowMode:
+	{
 		mActiveAction->mCurrActionIdx = PikiAction::Shoot;
 		break;
-
+	}
 	case PikiMode::RopeMode:
+	{
 		mActiveAction->mCurrActionIdx = PikiAction::Rope;
 		mActiveAction->mChildActions[mActiveAction->mCurrActionIdx].initialise(nullptr);
 		break;
-
+	}
 	case PikiMode::EnterMode:
+	{
 		mActiveAction->mCurrActionIdx = PikiAction::Enter;
 		mActiveAction->mChildActions[mActiveAction->mCurrActionIdx].initialise(mNavi->mGoalItem);
 		break;
-
+	}
 	case PikiMode::ExitMode:
+	{
 		mActiveAction->mCurrActionIdx = PikiAction::Exit;
 		mActiveAction->mChildActions[mActiveAction->mCurrActionIdx].initialise(mNavi->mGoalItem);
 		break;
-
+	}
 	case PikiMode::AttackMode:
+	{
 		if (playerState->inDayEnd()) {
 			return;
 		}
 		mActiveAction->mCurrActionIdx = PikiAction::Attack;
 		mActiveAction->mChildActions[mActiveAction->mCurrActionIdx].initialise(mNavi);
 		break;
-
+	}
 	case PikiMode::GuardMode:
+	{
 		mActiveAction->mCurrActionIdx = PikiAction::Guard;
 		PRINT("guard mode %x\n", this);
 		break;
+	}
 	}
 
 	mMode = newMode;

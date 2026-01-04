@@ -61,9 +61,11 @@ void StreamMain()
 
 	switch (J_STREAM.state) {
 	case JSTREAM_STATE_STOPPED:
+	{
 		break;
-
+	}
 	case JSTREAM_STATE_REQUEST_STREAM:
+	{
 		J_STREAM.now_stream_id = J_STREAM.req_stream_id;
 		J_STREAM.req_stream_id = JSTREAM_NO_TRACK_ID;
 		if (J_STREAM.now_stream_id == JSTREAM_NO_TRACK_ID) {
@@ -89,16 +91,18 @@ void StreamMain()
 			}
 		}
 		break;
-
+	}
 	case JSTREAM_STATE_START:
+	{
 		if (DVDGetDriveStatus() == DVD_STATE_END) {
 			AIResetStreamSampleCount();
 			AISetStreamPlayState(AI_STREAM_START);
 			J_STREAM.state = JSTREAM_STATE_PLAYING;
 		}
 		break;
-
+	}
 	case JSTREAM_STATE_PLAYING:
+	{
 		streamed_samples = AIGetStreamSampleCount();
 		trigger          = AIGetStreamTrigger();
 
@@ -127,9 +131,10 @@ void StreamMain()
 			J_STREAM.fadeout_timer = JSTREAM_FADEOUT_TIMER;
 		}
 		break;
-
+	}
 	case JSTREAM_STATE_CANCELLED:
 	case JSTREAM_STATE_FADEOUT:
+	{
 		u32 streamed_samples = AIGetStreamSampleCount();
 		if (J_STREAM.fadeout_timer != 0 && (J_STREAM.total_samples - streamed_samples) != 0) {
 			f32 vol = -J_STREAM.stream_vol;
@@ -143,15 +148,17 @@ void StreamMain()
 			J_STREAM.state = JSTREAM_STATE_STOP;
 		}
 		break;
-
+	}
 	case JSTREAM_STATE_STOP:
+	{
 		if (DVDGetDriveStatus() == DVD_STATE_END) {
 			AISetStreamPlayState(AI_STREAM_STOP);
 			J_STREAM.state = JSTREAM_STATE_CLEANUP;
 		}
 		break;
-
+	}
 	case JSTREAM_STATE_CLEANUP:
+	{
 		if (DVDGetDriveStatus() == DVD_STATE_END) {
 			DVDClose(&finfo);
 			J_STREAM.now_stream_id = -1;
@@ -159,6 +166,7 @@ void StreamMain()
 			AISetStreamPlayState(AI_STREAM_STOP);
 		}
 		break;
+	}
 	}
 
 	STACK_PAD_VAR(4);

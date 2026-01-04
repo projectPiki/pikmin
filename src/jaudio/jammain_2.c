@@ -62,10 +62,14 @@ void* Jam_OfsToAddr(seqp_* track, u32 ofs)
 	// TODO: What do 0, 1, and 2 mean?
 	switch (track->dataSourceMode) {
 	case 0:
+	{
 		return track->seqData + ofs;
+	}
 	case 1:
 	case 2:
+	{
 		return FAT_GetPointer(track->fileHandle, ofs);
+	}
 	}
 	return 0;
 }
@@ -78,10 +82,14 @@ static u8 __ByteReadOfs(seqp_* track, u32 ofs)
 	// TODO: What do 0, 1, and 2 mean?
 	switch (track->dataSourceMode) {
 	case 0:
+	{
 		return track->seqData[ofs];
+	}
 	case 1:
 	case 2:
+	{
 		return FAT_ReadByte(track->fileHandle, ofs);
+	}
 	}
 	return 0;
 }
@@ -128,10 +136,14 @@ static u8 __ByteRead(seqp_* track)
 	// TODO: What do 0, 1, and 2 mean?
 	switch (track->dataSourceMode) {
 	case 0:
+	{
 		return track->seqData[track->programCounter++];
+	}
 	case 1:
 	case 2:
+	{
 		return FAT_ReadByte(track->fileHandle, track->programCounter++);
+	}
 	}
 	return 0;
 }
@@ -185,33 +197,45 @@ static BOOL __ConditionCheck(seqp_* track, u8 param_2)
 
 	switch (param_2 & 0x0f) {
 	case 0:
+	{
 		result = TRUE;
 		break;
+	}
 	case 1:
+	{
 		if (uVar1 == 0) {
 			result = TRUE;
 		}
 		break;
+	}
 	case 2:
+	{
 		if (uVar1 != 0) {
 			result = TRUE;
 		}
 		break;
+	}
 	case 3:
+	{
 		if (uVar1 == 1) {
 			result = TRUE;
 		}
 		break;
+	}
 	case 4:
+	{
 		if (uVar1 >= 0x8000) {
 			result = TRUE;
 		}
 		break;
+	}
 	case 5:
+	{
 		if (uVar1 < 0x8000) {
 			result = TRUE;
 		}
 		break;
+	}
 	}
 	return result;
 }
@@ -263,33 +287,49 @@ void Jam_WriteTimeParam(seqp_* track, u8 controlByte)
 	// Extract target value based on controlByte[3:2]
 	switch (controlByte & 0x0C) {
 	case 0x00: // Use register value
+	{
 		targetValue = track->regParam.reg[__ByteRead(track)];
 		break;
+	}
 	case 0x04: // 8-bit immediate value
+	{
 		targetValue = __ByteRead(track);
 		break;
+	}
 	case 0x08: // 8-bit value shifted to high byte
+	{
 		targetValue = __ByteRead(track) << 8;
 		break;
+	}
 	case 0x0C: // 16-bit immediate value
+	{
 		targetValue = __WordRead(track);
 		break;
+	}
 	}
 
 	// Determine time over which to interpolate the parameter
 	switch (controlByte & 0x03) {
 	case 0: // Immediate (no interpolation)
+	{
 		duration = -1;
 		break;
+	}
 	case 1: // Time from register
+	{
 		duration = track->regParam.reg[__ByteRead(track)];
 		break;
+	}
 	case 2: // 8-bit immediate duration
+	{
 		duration = __ByteRead(track);
 		break;
+	}
 	case 3: // 16-bit immediate duration
+	{
 		duration = __WordRead(track);
 		break;
+	}
 	}
 
 	param              = &track->timedParam.move[paramIndex];
@@ -321,21 +361,29 @@ void Jam_WriteRegDirect(seqp_* track, u8 index, u16 value)
 	case 0:
 	case 1:
 	case 2:
+	{
 		value = value & 0xff;
 		uVar1 = Extend8to16(value);
 		break;
+	}
 	case 32:
 	case 33:
+	{
 		return;
+	}
 	case 34:
+	{
 		Jam_WriteRegDirect(track, 0, value >> 8);
 		uVar1 = value;
 		value = value & 0xff;
 		index = 1;
 		break;
+	}
 	default:
+	{
 		uVar1 = value;
 		break;
+	}
 	}
 
 	track->regParam.reg[index]  = value;
@@ -351,22 +399,32 @@ static u32 LoadTbl(seqp_* track, u32 ofs, u32 idx, u32 param_4)
 
 	switch (param_4) {
 	case 4:
+	{
 		result = __ByteReadOfs(track, ofs + idx);
 		break;
+	}
 	case 5:
+	{
 		idx    = idx * 2;
 		result = __WordReadOfs(track, ofs + idx);
 		break;
+	}
 	case 6:
+	{
 		idx    = idx * 2 + idx; // Roundabout way to multiply by 3.
 		result = __24ReadOfs(track, ofs + idx);
 		break;
+	}
 	case 7:
+	{
 		idx = idx * 4;
 		// fallthrough
+	}
 	case 8:
+	{
 		result = __LongReadOfs(track, ofs + idx);
 		break;
+	}
 	}
 	return result;
 }
@@ -413,43 +471,64 @@ void Jam_WriteRegParam(seqp_* track, u8 param_2)
 	}
 	switch (r26) {
 	case 0:
+	{
 		r30_newRegValue = Jam_ReadRegDirect(track, __ByteRead(track));
 		break;
+	}
 	case 4:
+	{
 		r30_newRegValue = __ByteRead(track);
 		break;
+	}
 	case 8:
+	{
 		r30_newRegValue = __ByteRead(track) << 8;
 		break;
+	}
 	case 12:
+	{
 		r30_newRegValue = __WordRead(track);
 		break;
+	}
 	case 16:
+	{
 		r30_newRegValue = -1;
 		break;
+	}
 	}
 
 	r23_oldRegValue = Jam_ReadRegDirect(track, r29_regIdx);
 	switch (r25) {
 	case 0x00:
+	{
 		break;
+	}
 	case 0x01:
+	{
 		if (r26 == 4) {
 			r30_newRegValue = Extend8to16(r30_newRegValue);
 		}
 		r30_newRegValue = r23_oldRegValue + r30_newRegValue;
 		break;
+	}
 	case 0x02:
+	{
 		unaff_r27 = r23_oldRegValue * r30_newRegValue;
 		Jam_WriteRegXY(track, unaff_r27);
 		return;
+	}
 	case 0x03:
+	{
 		track->regParam.param.value = r23_oldRegValue - r30_newRegValue;
 		return;
+	}
 	case 0x0B:
+	{
 		r30_newRegValue = r23_oldRegValue - r30_newRegValue;
 		break;
+	}
 	case 0x10:
+	{
 		if (r26 == 4) {
 			r30_newRegValue = Extend8to16(r30_newRegValue);
 		}
@@ -459,7 +538,9 @@ void Jam_WriteRegParam(seqp_* track, u8 param_2)
 			r30_newRegValue = (u16)r23_oldRegValue << r30_newRegValue;
 		}
 		break;
+	}
 	case 0x20:
+	{
 		if (r26 == 4) {
 			r30_newRegValue = Extend8to16(r30_newRegValue);
 		}
@@ -469,66 +550,95 @@ void Jam_WriteRegParam(seqp_* track, u8 param_2)
 			r30_newRegValue = r23_oldRegValue << r30_newRegValue;
 		}
 		break;
+	}
 	case 0x30:
+	{
 		r30_newRegValue = r23_oldRegValue & r30_newRegValue;
 		break;
+	}
 	case 0x40:
+	{
 		r30_newRegValue = r23_oldRegValue | r30_newRegValue;
 		break;
+	}
 	case 0x50:
+	{
 		r30_newRegValue = r23_oldRegValue ^ r30_newRegValue;
 		break;
+	}
 	case 0x60:
+	{
 		r30_newRegValue = -r23_oldRegValue;
 		break;
+	}
 	case 0x90:
+	{
 		unaff_r27       = GetRandom_s32();
 		r30_newRegValue = unaff_r27 % (u16)r30_newRegValue;
 		break;
+	}
 	case 0xA:
+	{
 		unaff_r27       = LoadTbl(track, unaff_r27, r30_newRegValue, unaff_r24);
 		r30_newRegValue = (u16)unaff_r27;
 		break;
+	}
 	}
 
 	switch (r29_regIdx) {
 	case 0:
 	case 1:
 	case 2:
+	{
 		r30_newRegValue = r30_newRegValue & 0xff;
 		r28             = Extend8to16(r30_newRegValue);
 		break;
+	}
 	case 0x21:
+	{
 		r29_regIdx      = 6;
 		r30_newRegValue = track->regParam.param.bankNumber & 0xff00 | r30_newRegValue & 0x00ff;
 		break;
+	}
 	case 0x20:
+	{
 		r29_regIdx      = 6;
 		r30_newRegValue = track->regParam.param.bankNumber & 0x00ff | r30_newRegValue << 8;
 		break;
+	}
 	case 0x2E:
+	{
 		r29_regIdx      = 0xd;
 		r30_newRegValue = track->regParam.param.basePriority & 0xff00 | r30_newRegValue & 0x00ff;
 		break;
+	}
 	case 0x2F:
+	{
 		r29_regIdx      = 0xd;
 		r30_newRegValue = track->regParam.param.basePriority & 0x00ff | r30_newRegValue << 8;
 		break;
+	}
 	case 0x22:
+	{
 		Jam_WriteRegDirect(track, 0, r30_newRegValue >> 8);
 		r30_newRegValue = r30_newRegValue & 0xff;
 		r28             = r30_newRegValue;
 		r29_regIdx      = 1;
 		break;
+	}
 	case 0x28:
 	case 0x29:
 	case 0x2A:
 	case 0x2B:
+	{
 		track->regParam.param.extendedRegs[r29_regIdx - 0x28] = unaff_r27;
 		return;
+	}
 	default:
+	{
 		r28 = r30_newRegValue;
 		break;
+	}
 	}
 
 	track->regParam.reg[r29_regIdx] = r30_newRegValue;
@@ -559,14 +669,19 @@ u16 Jam_ReadRegDirect(seqp_* track, u8 regIdx)
 	switch (regIdx) {
 	case 0x20:
 	case 0x21:
+	{
 		result = track->regParam.param.bankNumber;
 		break;
+	}
 	case 0x22:
+	{
 		regDirectLo = Jam_ReadRegDirect(track, 1);
 		regDirectHi = Jam_ReadRegDirect(track, 0);
 		result      = regDirectHi << 8 | regDirectLo;
 		break;
+	}
 	case 0x2C:
+	{
 		result = 0;
 		for (i = 15; i >= 0; --i) {
 			result = result << 1; // For some reason, `<<=` prevents `srawi`.
@@ -575,34 +690,45 @@ u16 Jam_ReadRegDirect(seqp_* track, u8 regIdx)
 			}
 		}
 		break;
+	}
 	case 0x2D:
+	{
 		result = 0;
 		for (i = 7; i >= 0; --i) {
 			result = result << 1; // For some reason, `<<=` prevents `srawi`.
 			result |= (u8)CheckNoteStop(track, i);
 		}
 		break;
+	}
 	case 0x30:
+	{
 		if (track->callStackDepth == 0) {
 			result = 0;
 		} else {
 			result = track->loopCounters[track->callStackDepth - 1];
 		}
 		break;
+	}
 	default:
+	{
 		result = track->regParam.reg[regIdx];
 		break;
+	}
 	}
 	switch (regIdx) {
 	case 0x00:
 	case 0x01:
 	case 0x02:
 	case 0x21:
+	{
 		result = result & 0xff;
 		break;
+	}
 	case 0x20:
+	{
 		result = result >> 8;
 		break;
+	}
 	}
 	return result;
 }
@@ -625,9 +751,13 @@ u32 Jam_ReadReg32(seqp_* track, u8 index)
 	case 41:
 	case 42:
 	case 43:
+	{
 		return track->regParam.param.extendedRegs[index - 40];
+	}
 	case 35:
+	{
 		return Jam_ReadRegXY(track);
+	}
 	}
 
 	return Jam_ReadRegDirect(track, index);
@@ -765,15 +895,19 @@ BOOL Jam_CheckPortAppDirect(seqp_* track, u32 param_2, u16 param_3)
 	// Again with the cast to u8... what is it?
 	switch ((u8)param_3) {
 	case FALSE:
+	{
 		if (track->trackPort[param_2].exportFlag == FALSE) {
 			return FALSE;
 		}
 		return TRUE;
+	}
 	case TRUE:
+	{
 		if (track->trackPort[param_2].importFlag == TRUE) {
 			return FALSE;
 		}
 		return TRUE;
+	}
 	}
 	return FALSE;
 }
@@ -971,25 +1105,39 @@ void Jam_SetExtParamD(f32 value, OuterParam_* ext, u8 updateFlags)
 
 	switch (updateFlags) {
 	case OuterParamFlag_Volume:
+	{
 		member = &ext->volume;
 		break;
+	}
 	case OuterParamFlag_Pitch:
+	{
 		member = &ext->pitch;
 		break;
+	}
 	case OuterParamFlag_Fxmix:
+	{
 		member = &ext->fxMix;
 		break;
+	}
 	case OuterParamFlag_Dolby:
+	{
 		member = &ext->dolby;
 		break;
+	}
 	case OuterParamFlag_Pan:
+	{
 		member = &ext->pan;
 		break;
+	}
 	case OuterParamFlag_Tempo:
+	{
 		member = &ext->tempo;
 		break;
+	}
 	default:
+	{
 		return;
+	}
 	}
 
 	*member = value;
@@ -1168,12 +1316,18 @@ static f32 __PanCalc(f32 param_1, f32 param_2, f32 param_3, u8 param_4)
 
 	switch (param_4) {
 	case 0:
+	{
 		return param_1;
+	}
 	case 1:
+	{
 		return param_2;
+	}
 	case 2:
+	{
 		result = param_1 * (1.0f - param_3) + (param_2 * param_3);
 		break;
+	}
 	}
 	return result;
 }
@@ -1432,20 +1586,30 @@ void Jam_UpdateTrack(seqp_* track, u32 updateFlags)
 				offset = Bank_OscToOfs(&track->oscillators[i], &track->oscillatorParams[i]);
 				switch (track->oscillators[i].mode) {
 				case 1:
+				{
 					unaff_f30 = unaff_f30 * offset;
 					break;
+				}
 				case 0:
+				{
 					computedVolume = computedVolume * offset;
 					break;
+				}
 				case 2:
+				{
 					unaff_f29 = unaff_f29 * offset;
 					break;
+				}
 				case 3:
+				{
 					unaff_f28 = unaff_f28 * offset;
 					break;
+				}
 				case 4:
+				{
 					unaff_f27 = unaff_f27 * offset;
 					break;
+				}
 				}
 			}
 		}
@@ -2353,9 +2517,11 @@ static u32 Cmd_Printf()
 			}
 			switch (fmtStr[i]) {
 			case 'n':
+			{
 				// Convert newlines to... carriage returns?
 				fmtStr[i] = '\r';
 				break;
+			}
 			}
 			continue;
 		}
@@ -2370,26 +2536,38 @@ static u32 Cmd_Printf()
 			}
 			switch (fmtStr[i]) {
 			case 'd': // Decimal
+			{
 				fmtFlags[fmtCount] = 0;
 				break;
+			}
 			case 'x': // Hexadecimal
+			{
 				fmtFlags[fmtCount] = 1;
 				break;
+			}
 			case 's': // String
+			{
 				fmtFlags[fmtCount] = 2;
 				break;
+			}
 			case 'r': // ?
+			{
 				fmtFlags[fmtCount] = 3;
 				fmtStr[i]          = 'd';
 				break;
+			}
 			case 'R': // ?
+			{
 				fmtFlags[fmtCount] = 4;
 				fmtStr[i]          = 'x';
 				break;
+			}
 			case 't': // ?
+			{
 				fmtFlags[fmtCount] = 5;
 				fmtStr[i]          = 'x';
 				break;
+			}
 			}
 			++fmtCount;
 			continue;
@@ -2570,17 +2748,25 @@ u32 Cmd_Process(seqp_* track, u8 cmd, u16 param_3)
 	for (i = 0; i < argpair.argCount; ++i) {
 		switch (argTypes & 0x03) {
 		case 0: // 8-bit immediate value
+		{
 			arg = __ByteRead(track);
 			break;
+		}
 		case 1: // 16-bit immediate value
+		{
 			arg = __WordRead(track);
 			break;
+		}
 		case 2: // 24-bit immediate value
+		{
 			arg = __24Read(track);
 			break;
+		}
 		case 3: // Register value
+		{
 			arg = __ExchangeRegisterValue(track, __ByteRead(track));
 			break;
+		}
 		}
 
 		argTypes   = argTypes >> 2;

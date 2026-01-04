@@ -92,6 +92,7 @@ void NaviDemoSunsetState::GoState::procAnimMsg(NaviDemoSunsetState* state, MsgAn
 {
 	switch (msg->mKeyEvent->mEventType) {
 	case 6:
+	{
 		if (_14) {
 			_10--;
 			state->mNavi->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
@@ -101,10 +102,13 @@ void NaviDemoSunsetState::GoState::procAnimMsg(NaviDemoSunsetState* state, MsgAn
 			}
 		}
 		break;
+	}
 	case 0:
+	{
 		state->mNavi->mNaviAnimMgr.startMotion(PaniMotionInfo(PIKIANIM_Walk, state->mNavi), PaniMotionInfo(PIKIANIM_Walk));
 		_14 = false;
 		break;
+	}
 	}
 }
 
@@ -145,12 +149,14 @@ void NaviDemoSunsetState::LookState::procAnimMsg(NaviDemoSunsetState* state, Msg
 {
 	switch (msg->mKeyEvent->mEventType) {
 	case 0:
+	{
 		if (GameStat::allPikis == 0) {
 			transit(state, DEMOSTATE_Sit);
 		} else {
 			transit(state, DEMOSTATE_Whistle);
 		}
 		break;
+	}
 	}
 }
 
@@ -178,6 +184,7 @@ void NaviDemoSunsetState::WhistleState::procAnimMsg(NaviDemoSunsetState* state, 
 {
 	switch (msg->mKeyEvent->mEventType) {
 	case 6:
+	{
 		_10++;
 		if (_10 == 8) {
 			enterAllPikis(state);
@@ -186,9 +193,12 @@ void NaviDemoSunsetState::WhistleState::procAnimMsg(NaviDemoSunsetState* state, 
 			state->mNavi->mNaviAnimMgr.finishMotion(state->mNavi);
 		}
 		break;
+	}
 	case 0:
+	{
 		transit(state, 3);
 		break;
+	}
 	}
 }
 

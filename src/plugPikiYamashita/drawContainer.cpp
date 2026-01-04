@@ -358,20 +358,25 @@ bool zen::DrawContainer::update(int& delta)
 		mZenController.update();
 		switch (mState) {
 		case STATE_Wait:
+		{
 			res = waitStatus();
 			break;
-
+		}
 		case STATE_Start:
+		{
 			res = startStatus();
 			break;
-
+		}
 		case STATE_Operation:
+		{
 			res = operationStatus();
 			break;
-
+		}
 		case STATE_End:
+		{
 			res = endStatus();
 			break;
+		}
 		}
 		delta = mTransferDelta;
 		mMessageMgr->update(mController, mContainerPikiNum, mSquadPikiNum);

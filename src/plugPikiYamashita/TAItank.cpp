@@ -558,6 +558,7 @@ bool TAItankStrategy::interact(Teki& teki, immut TekiInteractionKey& key)
 {
 	switch (key.mInteractionType) {
 	case TekiInteractType::Attack:
+	{
 		InteractAttack* attack = (InteractAttack*)key.mInteraction;
 		if (!teki.getTekiOption(BTeki::TEKI_OPTION_INVINCIBLE)) {
 			teki.mStoredDamage += attack->mDamage;
@@ -568,6 +569,7 @@ bool TAItankStrategy::interact(Teki& teki, immut TekiInteractionKey& key)
 
 		teki.setCreaturePointer(1, attack->mOwner);
 		return true;
+	}
 	}
 
 	STACK_PAD_VAR(2);

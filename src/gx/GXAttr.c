@@ -45,77 +45,121 @@ static inline void SETVCDATTR(GXAttr Attr, GXAttrType Type)
 {
 	switch (Attr) {
 	case GX_VA_PNMTXIDX:
+	{
 		SET_REG_FIELD(0xA8, gx->vcdLo, 1, 0, Type);
 		break;
+	}
 	case GX_VA_TEX0MTXIDX:
+	{
 		SET_REG_FIELD(0xA9, gx->vcdLo, 1, 1, Type);
 		break;
+	}
 	case GX_VA_TEX1MTXIDX:
+	{
 		SET_REG_FIELD(0xAA, gx->vcdLo, 1, 2, Type);
 		break;
+	}
 	case GX_VA_TEX2MTXIDX:
+	{
 		SET_REG_FIELD(0xAB, gx->vcdLo, 1, 3, Type);
 		break;
+	}
 	case GX_VA_TEX3MTXIDX:
+	{
 		SET_REG_FIELD(0xAC, gx->vcdLo, 1, 4, Type);
 		break;
+	}
 	case GX_VA_TEX4MTXIDX:
+	{
 		SET_REG_FIELD(0xAD, gx->vcdLo, 1, 5, Type);
 		break;
+	}
 	case GX_VA_TEX5MTXIDX:
+	{
 		SET_REG_FIELD(0xAE, gx->vcdLo, 1, 6, Type);
 		break;
+	}
 	case GX_VA_TEX6MTXIDX:
+	{
 		SET_REG_FIELD(0xAf, gx->vcdLo, 1, 7, Type);
 		break;
+	}
 	case GX_VA_TEX7MTXIDX:
+	{
 		SET_REG_FIELD(0xB0, gx->vcdLo, 1, 8, Type);
 		break;
+	}
 	case GX_VA_POS:
+	{
 		SET_REG_FIELD(0xB1, gx->vcdLo, 2, 9, Type);
 		break;
+	}
 	case GX_VA_NRM:
+	{
 		gx->hasNrms = (Type != 0);
 		if (Type != GX_NONE) {
 			gx->nrmType = Type;
 		}
 		break;
+	}
 	case GX_VA_NBT:
+	{
 		gx->hasBiNrms = (Type != 0);
 		if (Type != GX_NONE) {
 			gx->nrmType = Type;
 		}
 		break;
+	}
 	case GX_VA_CLR0:
+	{
 		SET_REG_FIELD(0xBA, gx->vcdLo, 2, 13, Type);
 		break;
+	}
 	case GX_VA_CLR1:
+	{
 		SET_REG_FIELD(0xBB, gx->vcdLo, 2, 15, Type);
 		break;
+	}
 	case GX_VA_TEX0:
+	{
 		SET_REG_FIELD(0xBC, gx->vcdHi, 2, 0, Type);
 		break;
+	}
 	case GX_VA_TEX1:
+	{
 		SET_REG_FIELD(0xBD, gx->vcdHi, 2, 2, Type);
 		break;
+	}
 	case GX_VA_TEX2:
+	{
 		SET_REG_FIELD(0xBE, gx->vcdHi, 2, 4, Type);
 		break;
+	}
 	case GX_VA_TEX3:
+	{
 		SET_REG_FIELD(0xBF, gx->vcdHi, 2, 6, Type);
 		break;
+	}
 	case GX_VA_TEX4:
+	{
 		SET_REG_FIELD(0xC0, gx->vcdHi, 2, 8, Type);
 		break;
+	}
 	case GX_VA_TEX5:
+	{
 		SET_REG_FIELD(0xC1, gx->vcdHi, 2, 10, Type);
 		break;
+	}
 	case GX_VA_TEX6:
+	{
 		SET_REG_FIELD(0xC2, gx->vcdHi, 2, 12, Type);
 		break;
+	}
 	case GX_VA_TEX7:
+	{
 		SET_REG_FIELD(0xC3, gx->vcdHi, 2, 14, Type);
 		break;
+	}
 	}
 }
 
@@ -216,74 +260,120 @@ void GXGetVtxDesc(GXAttr attr, GXAttrType* type)
 
 	switch (attr) {
 	case GX_VA_PNMTXIDX:
+	{
 		cpType = GET_REG_FIELD(gx->vcdLo, 1, 0);
 		break;
+	}
 	case GX_VA_TEX0MTXIDX:
+	{
 		cpType = GET_REG_FIELD(gx->vcdLo, 1, 1);
 		break;
+	}
 	case GX_VA_TEX1MTXIDX:
+	{
 		cpType = GET_REG_FIELD(gx->vcdLo, 1, 2);
 		break;
+	}
 	case GX_VA_TEX2MTXIDX:
+	{
 		cpType = GET_REG_FIELD(gx->vcdLo, 1, 3);
 		break;
+	}
 	case GX_VA_TEX3MTXIDX:
+	{
 		cpType = GET_REG_FIELD(gx->vcdLo, 1, 4);
 		break;
+	}
 	case GX_VA_TEX4MTXIDX:
+	{
 		cpType = GET_REG_FIELD(gx->vcdLo, 1, 5);
 		break;
+	}
 	case GX_VA_TEX5MTXIDX:
+	{
 		cpType = GET_REG_FIELD(gx->vcdLo, 1, 6);
 		break;
+	}
 	case GX_VA_TEX6MTXIDX:
+	{
 		cpType = GET_REG_FIELD(gx->vcdLo, 1, 7);
 		break;
+	}
 	case GX_VA_TEX7MTXIDX:
+	{
 		cpType = GET_REG_FIELD(gx->vcdLo, 1, 8);
 		break;
+	}
 	case GX_VA_POS:
+	{
 		cpType = GET_REG_FIELD(gx->vcdLo, 2, 9);
 		break;
+	}
 	case GX_VA_NRM:
+	{
 		cpType = gx->hasNrms ? GET_REG_FIELD(gx->vcdLo, 2, 11) : 0;
 		break;
+	}
 	case GX_VA_NBT:
+	{
 		cpType = gx->hasBiNrms ? GET_REG_FIELD(gx->vcdLo, 2, 11) : 0;
 		break;
+	}
 	case GX_VA_CLR0:
+	{
 		cpType = GET_REG_FIELD(gx->vcdLo, 2, 13);
 		break;
+	}
 	case GX_VA_CLR1:
+	{
 		cpType = GET_REG_FIELD(gx->vcdLo, 2, 15);
 		break;
+	}
 	case GX_VA_TEX0:
+	{
 		cpType = GET_REG_FIELD(gx->vcdHi, 2, 0);
 		break;
+	}
 	case GX_VA_TEX1:
+	{
 		cpType = GET_REG_FIELD(gx->vcdHi, 2, 2);
 		break;
+	}
 	case GX_VA_TEX2:
+	{
 		cpType = GET_REG_FIELD(gx->vcdHi, 2, 4);
 		break;
+	}
 	case GX_VA_TEX3:
+	{
 		cpType = GET_REG_FIELD(gx->vcdHi, 2, 6);
 		break;
+	}
 	case GX_VA_TEX4:
+	{
 		cpType = GET_REG_FIELD(gx->vcdHi, 2, 8);
 		break;
+	}
 	case GX_VA_TEX5:
+	{
 		cpType = GET_REG_FIELD(gx->vcdHi, 2, 10);
 		break;
+	}
 	case GX_VA_TEX6:
+	{
 		cpType = GET_REG_FIELD(gx->vcdHi, 2, 12);
 		break;
+	}
 	case GX_VA_TEX7:
+	{
 		cpType = GET_REG_FIELD(gx->vcdHi, 2, 14);
 		break;
+	}
 	default:
+	{
 		cpType = 0;
 		break;
+	}
 	}
 	*type = cpType;
 }
@@ -323,12 +413,15 @@ static inline void SETVAT(u32* va, u32* vb, u32* vc, GXAttr attr, GXCompCnt cnt,
 {
 	switch (attr) {
 	case GX_VA_POS:
+	{
 		SET_REG_FIELD(511, *va, 1, 0, cnt);
 		SET_REG_FIELD(512, *va, 3, 1, type);
 		SET_REG_FIELD(513, *va, 5, 4, shft);
 		break;
+	}
 	case GX_VA_NRM:
 	case GX_VA_NBT:
+	{
 		SET_REG_FIELD(521, *va, 3, 10, type);
 		if (cnt == GX_NRM_NBT3) {
 			SET_REG_FIELD(0, *va, 1, 9, 1);
@@ -338,54 +431,75 @@ static inline void SETVAT(u32* va, u32* vb, u32* vc, GXAttr attr, GXCompCnt cnt,
 			SET_REG_FIELD(528, *va, 1, 31, 0);
 		}
 		break;
+	}
 	case GX_VA_CLR0:
+	{
 		SET_REG_FIELD(0x215, *va, 1, 13, cnt);
 		SET_REG_FIELD(0x216, *va, 3, 14, type);
 		break;
+	}
 	case GX_VA_CLR1:
+	{
 		SET_REG_FIELD(0x219, *va, 1, 0x11, cnt);
 		SET_REG_FIELD(0x21A, *va, 3, 18, type);
 		break;
+	}
 	case GX_VA_TEX0:
+	{
 		SET_REG_FIELD(0x21D, *va, 1, 0x15, cnt);
 		SET_REG_FIELD(0x21E, *va, 3, 0x16, type);
 		SET_REG_FIELD(0x21F, *va, 5, 0x19, shft);
 		break;
+	}
 	case GX_VA_TEX1:
+	{
 		SET_REG_FIELD(0x222, *vb, 1, 0, cnt);
 		SET_REG_FIELD(0x223, *vb, 3, 1, type);
 		SET_REG_FIELD(0x224, *vb, 5, 4, shft);
 		break;
+	}
 	case GX_VA_TEX2:
+	{
 		SET_REG_FIELD(0x227, *vb, 1, 9, cnt);
 		SET_REG_FIELD(0x228, *vb, 3, 10, type);
 		SET_REG_FIELD(0x229, *vb, 5, 13, shft);
 		break;
+	}
 	case GX_VA_TEX3:
+	{
 		SET_REG_FIELD(0x22C, *vb, 1, 18, cnt);
 		SET_REG_FIELD(0x22D, *vb, 3, 19, type);
 		SET_REG_FIELD(0x22E, *vb, 5, 22, shft);
 		break;
+	}
 	case GX_VA_TEX4:
+	{
 		SET_REG_FIELD(0x231, *vb, 1, 27, cnt);
 		SET_REG_FIELD(0x232, *vb, 3, 28, type);
 		SET_REG_FIELD(0x233, *vc, 5, 0, shft);
 		break;
+	}
 	case GX_VA_TEX5:
+	{
 		SET_REG_FIELD(0x236, *vc, 1, 5, cnt);
 		SET_REG_FIELD(0x237, *vc, 3, 6, type);
 		SET_REG_FIELD(0x238, *vc, 5, 9, shft);
 		break;
+	}
 	case GX_VA_TEX6:
+	{
 		SET_REG_FIELD(0x23B, *vc, 1, 14, cnt);
 		SET_REG_FIELD(0x23C, *vc, 3, 15, type);
 		SET_REG_FIELD(0x23D, *vc, 5, 18, shft);
 		break;
+	}
 	case GX_VA_TEX7:
+	{
 		SET_REG_FIELD(0x240, *vc, 1, 23, cnt);
 		SET_REG_FIELD(0x241, *vc, 3, 24, type);
 		SET_REG_FIELD(0x242, *vc, 5, 27, shft);
 		break;
+	}
 	}
 }
 
@@ -469,12 +583,15 @@ void GXGetVtxAttrFmt(GXVtxFmt fmt, GXAttr attr, GXCompCnt* cnt, GXCompType* type
 	vc = &gx->vatC[fmt];
 	switch (attr) {
 	case GX_VA_POS:
+	{
 		*cnt  = GET_REG_FIELD(*va, 1, 0);
 		*type = GET_REG_FIELD(*va, 3, 1);
 		*frac = GET_REG_FIELD(*va, 5, 4);
 		return;
+	}
 	case GX_VA_NRM:
 	case GX_VA_NBT:
+	{
 		*cnt = GET_REG_FIELD(*va, 1, 9);
 		if (*cnt == GX_TEX_ST && (u8)(*va >> 0x1F) != 0) {
 			*cnt = GX_NRM_NBT3;
@@ -482,61 +599,84 @@ void GXGetVtxAttrFmt(GXVtxFmt fmt, GXAttr attr, GXCompCnt* cnt, GXCompType* type
 		*type = GET_REG_FIELD(*va, 3, 10);
 		*frac = 0;
 		return;
+	}
 	case GX_VA_CLR0:
+	{
 		*cnt  = GET_REG_FIELD(*va, 1, 13);
 		*type = GET_REG_FIELD(*va, 3, 14);
 		*frac = 0;
 		return;
+	}
 	case GX_VA_CLR1:
+	{
 		*cnt  = GET_REG_FIELD(*va, 1, 17);
 		*type = GET_REG_FIELD(*va, 3, 18);
 		*frac = 0;
 		return;
+	}
 	case GX_VA_TEX0:
+	{
 		*cnt  = GET_REG_FIELD(*va, 1, 21);
 		*type = GET_REG_FIELD(*va, 3, 22);
 		*frac = (u8)(*va >> 0x19U) & 0x1F;
 		return;
+	}
 	case GX_VA_TEX1:
+	{
 		*cnt  = GET_REG_FIELD(*vb, 1, 0);
 		*type = GET_REG_FIELD(*vb, 3, 1);
 		*frac = (u8)(*vb >> 4U) & 0x1F;
 		return;
+	}
 	case GX_VA_TEX2:
+	{
 		*cnt  = GET_REG_FIELD(*vb, 1, 9);
 		*type = GET_REG_FIELD(*vb, 3, 10);
 		*frac = (u8)(*vb >> 0xDU) & 0x1F;
 		return;
+	}
 	case GX_VA_TEX3:
+	{
 		*cnt  = GET_REG_FIELD(*vb, 1, 18);
 		*type = GET_REG_FIELD(*vb, 3, 19);
 		*frac = (u8)(*vb >> 0x16U) & 0x1F;
 		return;
+	}
 	case GX_VA_TEX4:
+	{
 		*cnt  = GET_REG_FIELD(*vb, 1, 27);
 		*type = GET_REG_FIELD(*vb, 3, 28);
 		*frac = GET_REG_FIELD(*vc, 5, 0);
 		return;
+	}
 	case GX_VA_TEX5:
+	{
 		*cnt  = GET_REG_FIELD(*vc, 1, 5);
 		*type = GET_REG_FIELD(*vc, 3, 6);
 		*frac = (u8)(*vc >> 9U) & 0x1F;
 		return;
+	}
 	case GX_VA_TEX6:
+	{
 		*cnt  = GET_REG_FIELD(*vc, 1, 14);
 		*type = GET_REG_FIELD(*vc, 3, 15);
 		*frac = (u8)(*vc >> 0x12) & 0x1F;
 		return;
+	}
 	case GX_VA_TEX7:
+	{
 		*cnt  = GET_REG_FIELD(*vc, 1, 23);
 		*type = GET_REG_FIELD(*vc, 3, 24);
 		*frac = (int)(*vc >> 0x1BU);
 		return;
+	}
 	default:
+	{
 		*cnt  = GX_TEX_ST;
 		*type = GX_RGB565;
 		*frac = 0;
 		return;
+	}
 	}
 }
 
@@ -607,89 +747,137 @@ void GXSetTexCoordGen2(GXTexCoordID dst_coord, GXTexGenType func, GXTexGenSrc sr
 	row  = 5;
 	switch (src_param) {
 	case GX_TG_POS:
+	{
 		row  = 0;
 		form = 1;
 		break;
+	}
 	case GX_TG_NRM:
+	{
 		row  = 1;
 		form = 1;
 		break;
+	}
 	case GX_TG_BINRM:
+	{
 		row  = 3;
 		form = 1;
 		break;
+	}
 	case GX_TG_TANGENT:
+	{
 		row  = 4;
 		form = 1;
 		break;
+	}
 	case GX_TG_COLOR0:
+	{
 		row = 2;
 		break;
+	}
 	case GX_TG_COLOR1:
+	{
 		row = 2;
 		break;
+	}
 	case GX_TG_TEX0:
+	{
 		row = 5;
 		break;
+	}
 	case GX_TG_TEX1:
+	{
 		row = 6;
 		break;
+	}
 	case GX_TG_TEX2:
+	{
 		row = 7;
 		break;
+	}
 	case GX_TG_TEX3:
+	{
 		row = 8;
 		break;
+	}
 	case GX_TG_TEX4:
+	{
 		row = 9;
 		break;
+	}
 	case GX_TG_TEX5:
+	{
 		row = 10;
 		break;
+	}
 	case GX_TG_TEX6:
+	{
 		row = 11;
 		break;
+	}
 	case GX_TG_TEX7:
+	{
 		row = 12;
 		break;
+	}
 	case GX_TG_TEXCOORD0:
+	{
 		bumprow;
 		break;
+	}
 	case GX_TG_TEXCOORD1:
+	{
 		bumprow;
 		break;
+	}
 	case GX_TG_TEXCOORD2:
+	{
 		bumprow;
 		break;
+	}
 	case GX_TG_TEXCOORD3:
+	{
 		bumprow;
 		break;
+	}
 	case GX_TG_TEXCOORD4:
+	{
 		bumprow;
 		break;
+	}
 	case GX_TG_TEXCOORD5:
+	{
 		bumprow;
 		break;
+	}
 	case GX_TG_TEXCOORD6:
+	{
 		bumprow;
 		break;
+	}
 	default:
+	{
 		ASSERTMSGLINE(965, 0, "GXSetTexCoordGen: Invalid source parameter");
 		break;
 	}
+	}
 	switch (func) {
 	case GX_TG_MTX3X4:
+	{
 		SET_REG_FIELD(974, reg, 1, 1, 0);
 		SET_REG_FIELD(975, reg, 1, 2, form);
 		SET_REG_FIELD(976, reg, 3, 4, 0);
 		SET_REG_FIELD(977, reg, 5, 7, row);
 		break;
+	}
 	case GX_TG_MTX2X4:
+	{
 		SET_REG_FIELD(981, reg, 1, 1, 1);
 		SET_REG_FIELD(982, reg, 1, 2, form);
 		SET_REG_FIELD(983, reg, 3, 4, 0);
 		SET_REG_FIELD(984, reg, 5, 7, row);
 		break;
+	}
 	case 2:
 	case 3:
 	case 4:
@@ -698,6 +886,7 @@ void GXSetTexCoordGen2(GXTexCoordID dst_coord, GXTexGenType func, GXTexGenSrc sr
 	case 7:
 	case 8:
 	case 9:
+	{
 		ASSERTMSGLINE(997, src_param >= 12 && src_param <= 18, "GXSetTexCoordGen:  Bump source texture value is invalid");
 		SET_REG_FIELD(998, reg, 1, 1, 0);
 		SET_REG_FIELD(999, reg, 1, 2, form);
@@ -706,7 +895,9 @@ void GXSetTexCoordGen2(GXTexCoordID dst_coord, GXTexGenType func, GXTexGenSrc sr
 		SET_REG_FIELD(1002, reg, 3, 12, src_param - 12);
 		SET_REG_FIELD(1003, reg, 3, 15, func - 2);
 		break;
+	}
 	case GX_TG_SRTG:
+	{
 		SET_REG_FIELD(1007, reg, 1, 1, 0);
 		SET_REG_FIELD(1008, reg, 1, 2, form);
 		if (src_param == GX_TG_COLOR0) {
@@ -716,9 +907,12 @@ void GXSetTexCoordGen2(GXTexCoordID dst_coord, GXTexGenType func, GXTexGenSrc sr
 		}
 		SET_REG_FIELD(0, reg, 5, 7, 2);
 		break;
+	}
 	default:
+	{
 		ASSERTMSGLINE(1019, 0, "GXSetTexCoordGen:  Invalid function");
 		break;
+	}
 	}
 	GX_WRITE_XF_REG(dst_coord + 0x40, reg);
 	reg = 0;
@@ -727,29 +921,45 @@ void GXSetTexCoordGen2(GXTexCoordID dst_coord, GXTexGenType func, GXTexGenSrc sr
 	GX_WRITE_XF_REG(dst_coord + 0x50, reg);
 	switch (dst_coord) {
 	case GX_TEXCOORD0:
+	{
 		SET_REG_FIELD(1048, gx->matIdxA, 6, 6, mtx);
 		break;
+	}
 	case GX_TEXCOORD1:
+	{
 		SET_REG_FIELD(1049, gx->matIdxA, 6, 12, mtx);
 		break;
+	}
 	case GX_TEXCOORD2:
+	{
 		SET_REG_FIELD(1050, gx->matIdxA, 6, 18, mtx);
 		break;
+	}
 	case GX_TEXCOORD3:
+	{
 		SET_REG_FIELD(1051, gx->matIdxA, 6, 24, mtx);
 		break;
+	}
 	case GX_TEXCOORD4:
+	{
 		SET_REG_FIELD(1052, gx->matIdxB, 6, 0, mtx);
 		break;
+	}
 	case GX_TEXCOORD5:
+	{
 		SET_REG_FIELD(1053, gx->matIdxB, 6, 6, mtx);
 		break;
+	}
 	case GX_TEXCOORD6:
+	{
 		SET_REG_FIELD(1054, gx->matIdxB, 6, 12, mtx);
 		break;
+	}
 	default:
+	{
 		SET_REG_FIELD(1055, gx->matIdxB, 6, 18, mtx);
 		break;
+	}
 	}
 	mtxIdAttr = dst_coord + 1;
 	__GXSetMatrixIndex(mtxIdAttr);

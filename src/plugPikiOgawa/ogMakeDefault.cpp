@@ -137,6 +137,7 @@ zen::ogScrMakeDefaultMgr::MakeDefaultStatus zen::ogScrMakeDefaultMgr::update(Con
 
 	switch (mStatus) {
 	case Processing:
+	{
 #if defined(VERSION_GPIP01_00)
 		if (mStateTimer > 6.0f && gameflow.mMemoryCard.hasCardFinished())
 #else
@@ -166,8 +167,9 @@ zen::ogScrMakeDefaultMgr::MakeDefaultStatus zen::ogScrMakeDefaultMgr::update(Con
 			mAButtonPromptAlphaAnimator->start();
 		}
 		break;
-
+	}
 	case AwaitingConfirmation:
+	{
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 		if (input->keyClick(KBBTN_A)) {
 			seSystem->playSysSe(ogEnumFix(SYSSE_DECIDE1, JACSYS_Decide1));
@@ -185,6 +187,7 @@ zen::ogScrMakeDefaultMgr::MakeDefaultStatus zen::ogScrMakeDefaultMgr::update(Con
 		}
 #endif
 		break;
+	}
 	}
 
 	return mStatus;

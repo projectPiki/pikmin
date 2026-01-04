@@ -117,10 +117,12 @@ bool zen::DrawSaveMes::update(Controller* controller)
 	switch (mMode) {
 	case MODE_Sleep:
 	case MODE_Unk6:
+	{
 		res = true;
 		break;
-
+	}
 	case MODE_Unk5:
+	{
 		_04 += gsys->getFrameTime();
 		if (_04 > 0.5f) {
 			tmp1 = 0.0f;
@@ -139,8 +141,9 @@ bool zen::DrawSaveMes::update(Controller* controller)
 		_14->hide();
 		_14->move(_14->getPosH(), _14->getPosV() + 480);
 		break;
-
+	}
 	case MODE_Unk0:
+	{
 		_04 += gsys->getFrameTime();
 		if (_04 > 0.5f) {
 			tmp1 = 1.0f;
@@ -160,8 +163,9 @@ bool zen::DrawSaveMes::update(Controller* controller)
 		_14->hide();
 		_14->move(_14->getPosH(), _14->getPosV() + 480);
 		break;
-
+	}
 	case MODE_Unk1:
+	{
 		if (controller->keyClick(KBBTN_START | KBBTN_A)) {
 			SeSystem::playSysSe(ogEnumFix(SYSSE_DECIDE1, JACSYS_Decide1));
 			setMode(MODE_Unk2);
@@ -181,8 +185,9 @@ bool zen::DrawSaveMes::update(Controller* controller)
 			P2DPaneLibrary::setFamilyAlpha(_30, RoundOff((1.0f - NMathF::cos(TAU * tmp1)) * 127.5f));
 		}
 		break;
-
+	}
 	case MODE_Unk2:
+	{
 		_04 += gsys->getFrameTime();
 		tmp1 = 1.0f;
 		if (_04 > tmp1) {
@@ -201,15 +206,17 @@ bool zen::DrawSaveMes::update(Controller* controller)
 		_2C->setAlpha(0);
 		_14->move(_14->getPosH(), RoundOff(300.0f * tmp1 + 480.0f * tmp2));
 		break;
-
+	}
 	case MODE_Unk3:
+	{
 		_04 += gsys->getFrameTime();
 		if (_04 > 1.5f) {
 			res = true;
 		}
 		break;
-
+	}
 	case MODE_Unk4:
+	{
 		_04 += gsys->getFrameTime();
 
 		if (_04 > 0.5f) {
@@ -228,12 +235,14 @@ bool zen::DrawSaveMes::update(Controller* controller)
 		_2C->setAlpha(RoundOff(80.0f * tmp1));
 		_14->move(_14->getPosH(), RoundOff(300.0f * tmp2 + 480.0f * tmp1));
 		break;
-
+	}
 	case MODE_Finish:
+	{
 		res = true;
 		break;
-
+	}
 	case MODE_Unk7:
+	{
 		if (mSaveFailure.update(controller)) {
 			_04 += gsys->getFrameTime();
 			if (_04 > 0.5f) {
@@ -247,6 +256,7 @@ bool zen::DrawSaveMes::update(Controller* controller)
 			_14->setScale(tmp1);
 		}
 		break;
+	}
 	}
 
 	STACK_PAD_VAR(1);
@@ -274,11 +284,13 @@ void zen::DrawSaveMes::setMode(zen::DrawSaveMes::modeFlag mode)
 	mMode = mode;
 	switch (mMode) {
 	case MODE_Sleep:
+	{
 		_08->getScreenPtr()->hide();
 		_0C->getScreenPtr()->hide();
 		break;
-
+	}
 	case MODE_Unk0:
+	{
 		_04 = 0.0f;
 		_08->getScreenPtr()->show();
 		_08->getScreenPtr()->setScale(0.0f);
@@ -288,47 +300,56 @@ void zen::DrawSaveMes::setMode(zen::DrawSaveMes::modeFlag mode)
 		mBackIcon->setAlpha(0);
 		mSaveFailure.init();
 		break;
-
+	}
 	case MODE_Unk4:
+	{
 		_04 = 0.0f;
 		_08->getScreenPtr()->show();
 		_0C->getScreenPtr()->show();
 		_14->show();
 		mSaveFailure.init();
 		break;
-
+	}
 	case MODE_Unk1:
+	{
 		_04 = 0.0f;
 		_14->hide();
 		break;
-
+	}
 	case MODE_Unk2:
+	{
 		_04 = 0.0f;
 		_14->setScale(1.0f);
 		_14->show();
 		break;
-
+	}
 	case MODE_Unk5:
+	{
 		_04 = 0.0f;
 		break;
-
+	}
 	case MODE_Unk7:
+	{
 		_04 = 0.0f;
 		mSaveFailure.open(1.0f);
 		break;
-
+	}
 	case MODE_Unk3:
+	{
 		_04 = 0.0f;
 		break;
-
+	}
 	case MODE_Unk6:
 	case MODE_Finish:
+	{
 		PRINT("finish \n");
 		break;
-
+	}
 	default:
+	{
 		PRINT("Unknown mode : %d \n", mMode);
 		ERROR("Unknown mode : %d \n", mMode);
 		break;
+	}
 	}
 }

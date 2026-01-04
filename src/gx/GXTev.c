@@ -17,27 +17,39 @@ void GXSetTevOp(GXTevStageID id, GXTevMode mode)
 
 	switch (mode) {
 	case GX_MODULATE:
+	{
 		GXSetTevColorIn(id, GX_CC_ZERO, GX_CC_TEXC, carg, GX_CC_ZERO);
 		GXSetTevAlphaIn(id, GX_CA_ZERO, GX_CA_TEXA, aarg, GX_CA_ZERO);
 		break;
+	}
 	case GX_DECAL:
+	{
 		GXSetTevColorIn(id, carg, GX_CC_TEXC, GX_CC_TEXA, GX_CC_ZERO);
 		GXSetTevAlphaIn(id, GX_CA_ZERO, GX_CA_ZERO, GX_CA_ZERO, aarg);
 		break;
+	}
 	case GX_BLEND:
+	{
 		GXSetTevColorIn(id, carg, GX_CC_ONE, GX_CC_TEXC, GX_CC_ZERO);
 		GXSetTevAlphaIn(id, GX_CA_ZERO, GX_CA_TEXA, aarg, GX_CA_ZERO);
 		break;
+	}
 	case GX_REPLACE:
+	{
 		GXSetTevColorIn(id, GX_CC_ZERO, GX_CC_ZERO, GX_CC_ZERO, GX_CC_TEXC);
 		GXSetTevAlphaIn(id, GX_CA_ZERO, GX_CA_ZERO, GX_CA_ZERO, GX_CA_TEXA);
 		break;
+	}
 	case GX_PASSCLR:
+	{
 		GXSetTevColorIn(id, GX_CC_ZERO, GX_CC_ZERO, GX_CC_ZERO, carg);
 		GXSetTevAlphaIn(id, GX_CA_ZERO, GX_CA_ZERO, GX_CA_ZERO, aarg);
 		break;
+	}
 	default:
+	{
 		ASSERTMSGLINE(0x8F, 0, "GXSetTevOp: Invalid Tev Mode");
+	}
 	}
 	GXSetTevColorOp(id, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);
 	GXSetTevAlphaOp(id, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);
@@ -368,18 +380,26 @@ void GXSetZTexture(GXZTexOp op, GXTexFmt fmt, u32 bias)
 	zenv1 = 0;
 	switch (fmt) {
 	case GX_TF_Z8:
+	{
 		type = 0;
 		break;
+	}
 	case GX_TF_Z16:
+	{
 		type = 1;
 		break;
+	}
 	case GX_TF_Z24X8:
+	{
 		type = 2;
 		break;
+	}
 	default:
+	{
 		ASSERTMSGLINE(0x2DD, 0, "GXSetZTexture: Invalid z-texture format");
 		type = 2;
 		break;
+	}
 	}
 	SET_REG_FIELD(0x2E0, zenv1, 2, 0, type);
 	SET_REG_FIELD(0x2E1, zenv1, 2, 2, op);

@@ -919,26 +919,40 @@ void Navi::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 		int soundType;
 		switch (attr) {
 		case ATTR_Solid:
+		{
 			soundType = 1;
 			break;
+		}
 		case ATTR_Rock:
+		{
 			soundType = 3;
 			break;
+		}
 		case ATTR_Grass:
+		{
 			soundType = 0;
 			break;
+		}
 		case ATTR_Wood:
+		{
 			soundType = 2;
 			break;
+		}
 		case ATTR_Water:
+		{
 			soundType = 4;
 			break;
+		}
 		case ATTR_Mud:
+		{
 			soundType = 5;
 			break;
+		}
 		default:
+		{
 			soundType = 1;
 			break;
+		}
 		}
 
 		Jac_Orima_Walk(soundType, 0);
@@ -1538,6 +1552,7 @@ void Navi::collisionCallback(immut CollEvent& event)
 	if (collider != mCollidedWorkObj) {
 		switch (collider->mObjType) {
 		case OBJTYPE_WorkObject:
+		{
 			Bridge* bridge = static_cast<Bridge*>(collider);
 			if (bridge->isBridge()) {
 				if (bridge->mDoUseJointSegments && getCollidePlatformCreature() == bridge) {
@@ -1549,11 +1564,13 @@ void Navi::collisionCallback(immut CollEvent& event)
 					return;
 				}
 			}
+		}
 		case OBJTYPE_SluiceSoft:
 		case OBJTYPE_SluiceHard:
 		case OBJTYPE_SluiceBomb:
 		case OBJTYPE_SluiceBombHard:
 		case OBJTYPE_Pellet:
+		{
 			if (mCollidedWorkObj) {
 				mCollidedWorkObjTimer = 0.0f;
 			}
@@ -1565,6 +1582,7 @@ void Navi::collisionCallback(immut CollEvent& event)
 			}
 			break;
 		}
+		}
 	}
 
 	MsgCollide msg(event);
@@ -1574,6 +1592,7 @@ void Navi::collisionCallback(immut CollEvent& event)
 	if (collider->isVisible()) {
 		switch (collider->mObjType) {
 		case OBJTYPE_Key:
+		{
 			if (collider->mGenerator) {
 				PRINT("key->generator->id = %x\n", collider->mGenerator->mGeneratorName.mId);
 			}
@@ -1582,13 +1601,17 @@ void Navi::collisionCallback(immut CollEvent& event)
 			mCurrKeyCount++;
 			collider->kill(false);
 			break;
+		}
 		case OBJTYPE_Gate:
+		{
 			if (mCurrKeyCount > 0 && static_cast<DoorItem*>(collider)->mStateId == DoorState::Active) {
 				mCurrKeyCount--;
 				static_cast<DoorItem*>(collider)->disappear();
 			}
 			break;
+		}
 		case OBJTYPE_Door:
+		{
 			if (mCurrKeyCount > 0 && state != NAVISTATE_Clear) {
 				DoorItem* door = static_cast<DoorItem*>(collider);
 				sprintf(flowCont.mDoorStageFilePath, "%s", door->mDestinationStagePath);
@@ -1600,6 +1623,7 @@ void Navi::collisionCallback(immut CollEvent& event)
 				}
 			}
 			break;
+		}
 		}
 	}
 }
@@ -2082,15 +2106,21 @@ void Navi::renderCircle(Graphics& gfx)
 	f32 rad;
 	switch (mWhistleCircleMode) {
 	case 0:
+	{
 		rad = NAVI_PROP._9C() + mWhistleRadiusFrac * (NAVI_PROP._8C() - NAVI_PROP._9C());
 		break;
+	}
 	case 1:
+	{
 		tmp = (mWhistleTimer / NAVI_PROP._AC());
 		rad = NAVI_PROP._9C() + tmp * (NAVI_PROP._8C() - NAVI_PROP._9C());
 		break;
+	}
 	default:
+	{
 		rad = NAVI_PROP._9C() + mWhistleRadiusFrac * (NAVI_PROP._8C() - NAVI_PROP._9C());
 		break;
+	}
 	}
 
 	mWhistleCircleRadius = rad;

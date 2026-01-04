@@ -61,11 +61,15 @@ void MizuItem::startAI(int)
 
 	switch (mObjType) {
 	case OBJTYPE_Water:
+	{
 		C_SAI(this)->start(this, WaterAI::WATER_Unk3);
 		break;
+	}
 	case OBJTYPE_FallWater:
+	{
 		C_SAI(this)->start(this, FallWaterAI::FALLWATER_Unk0);
 		break;
+	}
 	}
 }
 

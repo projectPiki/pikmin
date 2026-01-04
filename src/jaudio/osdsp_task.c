@@ -39,6 +39,7 @@ void __DSPHandler(__OSInterrupt interrupt, OSContext* context)
 
 	switch (mail) {
 	case 0xDCD10000:
+	{
 		__DSP_curr_task->state = 1;
 		if (__DSP_curr_task == DSP_prior_task) {
 			DSP_prior_yield = 1;
@@ -47,7 +48,9 @@ void __DSPHandler(__OSInterrupt interrupt, OSContext* context)
 			__DSP_curr_task->init_cb(__DSP_curr_task);
 		}
 		break;
+	}
 	case 0xDCD10001:
+	{
 		__DSP_curr_task->state = 1;
 		if (__DSP_curr_task == DSP_prior_task) {
 			DSP_prior_yield = 1;
@@ -58,7 +61,9 @@ void __DSPHandler(__OSInterrupt interrupt, OSContext* context)
 		}
 		Console_printf("Audio Resumed\n");
 		break;
+	}
 	case 0xDCD10002:
+	{
 		Console_printf("Yield Handler\n");
 		DSPSendMailToDSP(0xCDD10001);
 		while (DSPCheckMailToDSP() != 0)
@@ -73,7 +78,9 @@ void __DSPHandler(__OSInterrupt interrupt, OSContext* context)
 			__DSP_curr_task = __DSP_curr_task->next;
 		}
 		break;
+	}
 	case 0xDCD10003:
+	{
 		Console_printf("Done DSP Task  %x \n"); // doesnt actually have another param, very cool
 		if (__DSP_curr_task->done_cb) {
 			__DSP_curr_task->done_cb(__DSP_curr_task);
@@ -92,12 +99,16 @@ void __DSPHandler(__OSInterrupt interrupt, OSContext* context)
 			__DSP_remove_task(__DSP_curr_task->prev);
 		}
 		break;
+	}
 	case 0xDCD10004:
+	{
 		if (__DSP_curr_task->req_cb != nullptr) {
 			__DSP_curr_task->req_cb(__DSP_curr_task);
 		}
 		break;
+	}
 	case 0xDCD10005:
+	{
 		if (__DSP_first_task == nullptr || AUDIO_UPDATE_REQUEST) {
 			DSPSendMailToDSP(0xCDD10003);
 			while (DSPCheckMailToDSP() != 0)
@@ -116,8 +127,11 @@ void __DSPHandler(__OSInterrupt interrupt, OSContext* context)
 			Console_printf("Audio Yield Finish\n");
 		}
 		break;
+	}
 	default:
+	{
 		OSPanic("osdsp_task.c", 0x10b, "__DSPHandler(): Unknown msg from DSP 0x%08X - task sync failed!\n", mail);
+	}
 	}
 }
 #ifdef __cplusplus
