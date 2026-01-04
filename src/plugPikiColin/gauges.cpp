@@ -73,7 +73,8 @@ void GaugeInfo::init()
 void GaugeInfo::update()
 {
 	switch (mState) {
-	case STATE_FadeIn: {
+	case STATE_FadeIn:
+	{
 		// fade in, grow number, increase height offset over ~0.75s
 		mFadeInPhase += gsys->getFrameTime() * 2.0f;
 		if (mFadeInPhase >= HALF_PI) {

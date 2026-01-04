@@ -736,7 +736,8 @@ int ActTransport::exec()
 		doLift();
 		break;
 
-	case STATE_Goal: {
+	case STATE_Goal:
+	{
 		Stickers stuckList(pel);
 		int numStickers = getNumStickers();
 		int minWeight   = pel->mConfig->mCarryMinPikis();
@@ -838,7 +839,8 @@ int ActTransport::exec()
 	case STATE_Guru:
 		return moveGuruGuru();
 
-	case STATE_Put: {
+	case STATE_Put:
+	{
 		if (!mFinishPutting) {
 			break;
 		}

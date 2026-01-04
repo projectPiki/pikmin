@@ -618,7 +618,8 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 		}
 		break;
 
-	case DoFormatSelection: {
+	case DoFormatSelection:
+	{
 		ogNitakuMgr::NitakuStatus stat = mNitakuMgr->update(input);
 		if (stat >= ogNitakuMgr::Status_4) {
 			if (stat == ogNitakuMgr::ExitSuccess) {
@@ -657,7 +658,8 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 		}
 		break;
 
-	case DoYouFormat: {
+	case DoYouFormat:
+	{
 		int stat = mNitakuMgr->update(input);
 		if (stat >= ogNitakuMgr::Status_4) {
 			if (stat == ogNitakuMgr::ExitSuccess) {
@@ -739,7 +741,8 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 		}
 		break;
 
-	case MakeDefaultFile: {
+	case MakeDefaultFile:
+	{
 		int stat = mMakeDefaultMgr->update(input);
 		if (stat == ogScrMakeDefaultMgr::Success) {
 			mStatus = Finished;

@@ -1061,7 +1061,8 @@ bool TAIbeatleStrategy::interact(Teki& teki, immut TekiInteractionKey& key)
 	STACK_PAD_VAR(1);
 
 	switch (key.mInteractionType) {
-	case TekiInteractType::Attack: {
+	case TekiInteractType::Attack:
+	{
 		if (teki.getTekiOption(BTeki::TEKI_OPTION_INVINCIBLE)) {
 			return false;
 		}
@@ -1078,7 +1079,8 @@ bool TAIbeatleStrategy::interact(Teki& teki, immut TekiInteractionKey& key)
 		return false;
 	}
 
-	case TekiInteractType::HitEffect: {
+	case TekiInteractType::HitEffect:
+	{
 		InteractHitEffect* hitEffect = (InteractHitEffect*)key.mInteraction;
 		Piki* piki                   = (Piki*)hitEffect->mOwner;
 		if (piki->mObjType == OBJTYPE_Piki && piki->getState() == PIKISTATE_Flying) {

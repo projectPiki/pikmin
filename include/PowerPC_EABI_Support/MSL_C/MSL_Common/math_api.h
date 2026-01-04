@@ -15,14 +15,16 @@ extern "C" {
 inline int __fpclassifyf(f32 x)
 {
 	switch ((*(s32*)&x) & 0x7f800000) {
-	case 0x7f800000: {
+	case 0x7f800000:
+	{
 		if ((*(s32*)&x) & 0x007fffff)
 			return 1;
 		else
 			return 2;
 		break;
 	}
-	case 0: {
+	case 0:
+	{
 		if ((*(s32*)&x) & 0x007fffff)
 			return 5;
 		else
@@ -35,14 +37,16 @@ inline int __fpclassifyf(f32 x)
 inline int __fpclassifyd(f64 x)
 {
 	switch (__HI(x) & 0x7ff00000) {
-	case 0x7ff00000: {
+	case 0x7ff00000:
+	{
 		if ((__HI(x) & 0x000fffff) || (__LO(x) & 0xffffffff))
 			return 1;
 		else
 			return 2;
 		break;
 	}
-	case 0: {
+	case 0:
+	{
 		if ((__HI(x) & 0x000fffff) || (__LO(x) & 0xffffffff))
 			return 5;
 		else

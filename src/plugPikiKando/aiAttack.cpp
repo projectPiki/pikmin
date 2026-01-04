@@ -505,7 +505,8 @@ int ActJumpAttack::exec()
 	case 6:
 		doClimb();
 		break;
-	case 2: {
+	case 2:
+	{
 		Vector3f direction = getAttackPos() - mPiki->mSRT.t;
 		f32 dist2D         = speedy_sqrtf(direction.x * direction.x + direction.z * direction.z);
 		f32 unused         = direction.normalise();
@@ -539,7 +540,8 @@ int ActJumpAttack::exec()
 
 	} break;
 
-	case 0: {
+	case 0:
+	{
 		Vector3f direction = getAttackPos() - mPiki->mSRT.t;
 		f32 dist2D         = speedy_sqrtf(direction.x * direction.x + direction.z * direction.z);
 		f32 dist3D         = direction.normalise();
@@ -577,7 +579,8 @@ int ActJumpAttack::exec()
 
 	} break;
 
-	case 4: {
+	case 4:
+	{
 		mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 		if (mPiki->isStickTo() && !mPiki->mGroundTriangle) {
 			mState         = 5;
@@ -638,7 +641,8 @@ int ActJumpAttack::exec()
 			return ACTOUT_Success;
 		}
 	} break;
-	case 5: {
+	case 5:
+	{
 		mPiki->mVelocity.set(0.0f, 0.0f, 0.0f);
 		mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 		if (mAttackState == 1) {
