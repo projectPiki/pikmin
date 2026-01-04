@@ -43,20 +43,30 @@ void CoreNucleusAi::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
 	case KEY_Action0:
+	{
 		keyAction0();
 		break;
+	}
 	case KEY_Action1:
+	{
 		keyAction1();
 		break;
+	}
 	case KEY_LoopEnd:
+	{
 		keyLoopEnd();
 		break;
+	}
 	case KEY_Finished:
+	{
 		keyFinished();
 		break;
+	}
 	case KEY_PlaySound:
+	{
 		playSound(event.mValue);
 		break;
+	}
 	}
 }
 
@@ -294,10 +304,12 @@ void CoreNucleusAi::update()
 	setEveryFrame();
 	switch (mCore->getCurrentState()) {
 	case COREAI_Die:
+	{
 		dieState();
 		break;
-
+	}
 	case COREAI_Damage:
+	{
 		damageState();
 		if (dieTransit()) {
 			initDie(COREAI_Die);
@@ -307,8 +319,9 @@ void CoreNucleusAi::update()
 			initFollow(COREAI_Follow);
 		}
 		break;
-
+	}
 	case COREAI_Follow:
+	{
 		followState();
 		if (dieTransit()) {
 			initDie(COREAI_Die);
@@ -318,8 +331,9 @@ void CoreNucleusAi::update()
 			initDamage(COREAI_Damage);
 		}
 		break;
-
+	}
 	case COREAI_Hit:
+	{
 		hitState();
 		if (dieTransit()) {
 			initDie(COREAI_Die);
@@ -327,6 +341,7 @@ void CoreNucleusAi::update()
 			initFollow(COREAI_Follow);
 		}
 		break;
+	}
 	}
 
 	afterProcessing();

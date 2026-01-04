@@ -55,10 +55,13 @@ int ActBou::exec()
 {
 	switch (mState) {
 	case STATE_GotoLeg:
+	{
 		return gotoLeg();
-
+	}
 	case STATE_Climb:
+	{
 		return climb();
+	}
 	}
 
 	return ACTOUT_Continue;

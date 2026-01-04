@@ -49,21 +49,26 @@ zen::DrawProgre::returnStatusFlag zen::DrawProgre::update(Controller* controller
 	if (mMenu->update(controller)) {
 		switch (mMenu->getSelectMenu()) {
 		case 0:
+		{
 			// Yes
 			mProgreMes->start(DrawProgreMes::MES_Progressive);
 			break;
-
+		}
 		case 1:
+		{
 			// No
 			mProgreMes->start(DrawProgreMes::MES_Interlace);
 			break;
+		}
 		}
 	}
 
 	switch (mProgreMes->getModeFlag()) {
 	case DrawProgreMes::MODE_Finished:
+	{
 		mReturnState = (returnStatusFlag)(mMenu->getSelectMenu() + 1);
 		break;
+	}
 	}
 
 	STACK_PAD_VAR(6);

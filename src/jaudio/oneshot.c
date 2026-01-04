@@ -25,9 +25,13 @@ static u8 __GetTrigger(jc_* jc, u8 n)
 {
 	switch (n) {
 	case 1:
+	{
 		return jc->velocity;
+	}
 	case 2:
+	{
 		return jc->note;
+	}
 	}
 	return 0;
 }
@@ -63,20 +67,30 @@ static void __DoEffect(jc_* jc, u8 id, f32 val)
 {
 	switch (id) {
 	case 1:
+	{
 		jc->currentPitch *= val;
 		break;
+	}
 	case 0:
+	{
 		jc->currentVolume *= val;
 		break;
+	}
 	case 2:
+	{
 		jc->panMatrices[1].values[1] = val;
 		break;
+	}
 	case 3:
+	{
 		jc->panMatrices[2].values[1] = val;
 		break;
+	}
 	case 4:
+	{
 		jc->panMatrices[3].values[1] = val;
 		break;
+	}
 	}
 }
 
@@ -854,14 +868,20 @@ jc_* Play_1shot(jcs_* jcs, SOUNDID_ sound, u32 id)
 	int flag = sound.value >> 0x10 | inst->mFlag << 0x18;
 	switch (inst->mFlag & 0xc0) {
 	case 0xc0:
+	{
 		flag |= 0xffffff;
 		break;
+	}
 	case 0x80:
+	{
 		flag |= 0xff;
 		break;
+	}
 	case 0x40:
+	{
 		flag |= Bank_GetInstKeymap(inst, sound.bytes[2]) << 0x10;
 		break;
+	}
 	}
 
 	chan->soundId = 0;

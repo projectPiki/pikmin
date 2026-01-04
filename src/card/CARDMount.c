@@ -144,6 +144,7 @@ void __CARDMountCallback(s32 channel, s32 result)
 
 	switch (result) {
 	case CARD_RESULT_READY:
+	{
 		if (++card->mountStep < CARD_MAX_MOUNT_STEP) {
 			result = DoMount(channel);
 			if (0 <= result) {
@@ -153,16 +154,21 @@ void __CARDMountCallback(s32 channel, s32 result)
 			result = __CARDVerify(card);
 		}
 		break;
+	}
 	case CARD_RESULT_UNLOCKED:
+	{
 		result = DoMount(channel);
 		if (0 <= result) {
 			return;
 		}
 		break;
+	}
 	case CARD_RESULT_IOERROR:
 	case CARD_RESULT_NOCARD:
+	{
 		DoUnmount(channel, result);
 		break;
+	}
 	}
 
 	callback          = card->apiCallback;

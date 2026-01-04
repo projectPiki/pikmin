@@ -394,12 +394,16 @@ void DynMapObject::touchCallback(immut Plane&, immut Vector3f&, immut Vector3f&)
 {
 	switch (mState) {
 	case 0:
+	{
 		mTransitionTimer = 2.0f;
 		mState++;
 		break;
+	}
 	case 4:
+	{
 		mTransitionTimer = 2.0f;
 		break;
+	}
 	}
 }
 
@@ -410,6 +414,7 @@ void DynMapObject::update()
 {
 	switch (mState) {
 	case 1:
+	{
 		mTransitionTimer -= gsys->getFrameTime();
 		if (mTransitionTimer < 0.0f) {
 			mTransitionTimer = 2.0f;
@@ -417,14 +422,18 @@ void DynMapObject::update()
 			mState++;
 		}
 		break;
+	}
 	case 3:
+	{
 		mTransitionTimer -= gsys->getFrameTime();
 		if (mTransitionTimer < 0.0f) {
 			mTransitionTimer = 0.0f;
 			mState++;
 		}
 		break;
+	}
 	case 4:
+	{
 		mTransitionTimer -= gsys->getFrameTime();
 		if (mTransitionTimer < 0.0f) {
 			mTransitionTimer = 0.0f;
@@ -432,9 +441,11 @@ void DynMapObject::update()
 			mState++;
 		}
 		break;
-
+	}
 	default:
+	{
 		break;
+	}
 	}
 
 	mShadowCaster.mSourcePosition.set(mPosition.x + 100.0f, mPosition.y + 300.0f, mPosition.z + 300.0f);

@@ -227,29 +227,34 @@ void PikaAlphaMgr::update()
 	int i;
 	switch (mState) {
 	case 1:
+	{
 		for (i = 0; i < mAlphaCount; i++) {
 			if (mTenmetuAlphas[i]->update() == 1) {
 				mState = 0;
 			}
 		}
 		break;
-
+	}
 	case 2:
+	{
 		for (i = 0; i < mAlphaCount; i++) {
 			if (mTenmetuAlphas[i]->update() == 0) {
 				mState = -1;
 			}
 		}
 		break;
-
+	}
 	case 0:
+	{
 		for (i = 0; i < mAlphaCount; i++) {
 			mTenmetuAlphas[i]->update();
 		}
 		break;
-
+	}
 	case -1:
+	{
 		break;
+	}
 	}
 }
 
@@ -422,6 +427,7 @@ setTenmetuAlpha::TenmetuMode setTenmetuAlpha::update()
 	f32 t;
 	switch (mMode) {
 	case MODE_FadeIn:
+	{
 		mFadeTimer += gsys->getFrameTime();
 		t = mFadeTimer / mFadeDuration;
 		if (t < 0.0f) {
@@ -434,8 +440,9 @@ setTenmetuAlpha::TenmetuMode setTenmetuAlpha::update()
 
 		calcAlpha(mFadeStart + mFadeRange * t);
 		break;
-
+	}
 	case MODE_FadeOut:
+	{
 		mFadeTimer += gsys->getFrameTime();
 		t = mFadeTimer / mFadeDuration;
 		if (t < 0.0f) {
@@ -448,10 +455,12 @@ setTenmetuAlpha::TenmetuMode setTenmetuAlpha::update()
 
 		calcAlpha(mFadeEnd - mFadeRange * t);
 		break;
-
+	}
 	case MODE_Running:
+	{
 		calcAlpha(1.0f);
 		break;
+	}
 	}
 
 	return mMode;
@@ -486,12 +495,15 @@ void ogFadeMgr::start(ogFadeMgr::ogFadeStatusFlag state, f32 p2)
 	mFadeTimer    = 0.0f;
 	switch (mState) {
 	case STATUS_FadeIn:
+	{
 		mCurrentAlpha = mSourceAlpha;
 		break;
-
+	}
 	case STATUS_FadeOut:
+	{
 		mCurrentAlpha = mTargetAlpha;
 		break;
+	}
 	}
 
 	setAlpha();
@@ -504,18 +516,22 @@ void ogFadeMgr::setAlpha()
 {
 	switch (mPaneType) {
 	case PANETYPE_Picture:
+	{
 		P2DPicture* pic = (P2DPicture*)mPane;
 		pic->setAlpha(mCurrentAlpha);
 		break;
-
+	}
 	case PANETYPE_TextBox:
+	{
 		P2DTextBox* tbox = (P2DTextBox*)mPane;
 		tbox->setAlpha(mCurrentAlpha);
 		break;
-
+	}
 	default:
+	{
 		mPane->hide();
 		break;
+	}
 	}
 }
 
@@ -536,12 +552,15 @@ ogFadeMgr::ogFadeStatusFlag ogFadeMgr::update()
 	f32 t = mFadeTimer / mFadeDuration;
 	switch (mState) {
 	case STATUS_FadeIn:
+	{
 		mCurrentAlpha = mSourceAlpha * (1.0f - t) + mTargetAlpha * t;
 		break;
-
+	}
 	case STATUS_FadeOut:
+	{
 		mCurrentAlpha = mTargetAlpha * (1.0f - t) + mSourceAlpha * t;
 		break;
+	}
 	}
 
 	setAlpha();

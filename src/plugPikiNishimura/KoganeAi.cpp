@@ -98,20 +98,30 @@ void KoganeAi::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
 	case KEY_Action0:
+	{
 		keyAction0();
 		break;
+	}
 	case KEY_Action1:
+	{
 		keyAction1();
 		break;
+	}
 	case KEY_LoopEnd:
+	{
 		keyLoopEnd();
 		break;
+	}
 	case KEY_Finished:
+	{
 		keyFinished();
 		break;
+	}
 	case KEY_PlaySound:
+	{
 		playSound(event.mValue);
 		break;
+	}
 	}
 }
 
@@ -208,30 +218,44 @@ void KoganeAi::setMapAttribute()
 	int mapAttr = mKogane->getMapAttribute(mKogane->mSRT.t);
 	switch (mapAttr) {
 	case ATTR_Solid:
+	{
 		mEffectType = EffectMgr::EFF_Kogane_Walk0;
 		break;
+	}
 	case ATTR_Rock:
+	{
 		mEffectType = EffectMgr::EFF_Kogane_Walk2;
 		break;
+	}
 	case ATTR_Grass:
+	{
 		mEffectType = EffectMgr::EFF_Kogane_Walk1;
 		break;
+	}
 	case ATTR_Wood:
+	{
 		mEffectType = EffectMgr::EFF_Kogane_Walk3;
 		break;
+	}
 	case ATTR_Mud:
+	{
 		mEffectType = EffectMgr::EFF_Kogane_Walk0;
 		break;
+	}
 	case ATTR_Water:
+	{
 		if (!mInWater) {
 			mInWater    = true;
 			mEffectType = EffectMgr::EFF_NULL;
 			createWaterEffect();
 		}
 		break;
+	}
 	case ATTR_Hole:
+	{
 		mEffectType = EffectMgr::EFF_Kogane_Walk0;
 		break;
+	}
 	}
 
 	if (mapAttr != ATTR_Water) {
@@ -426,17 +450,25 @@ void KoganeAi::createPellet()
 		int dropType = dropTable[(mDropCount - 1) % 4];
 		switch (dropType) {
 		case KOGANEDROP_1Pellet:
+		{
 			birthItemPellet(NUMPEL_OnePellet);
 			break;
+		}
 		case KOGANEDROP_5Pellet:
+		{
 			birthItemPellet(NUMPEL_FivePellet);
 			break;
+		}
 		case KOGANEDROP_Nectar:
+		{
 			birthItemWater(2, 0.4f);
 			break;
+		}
 		default:
+		{
 			PRINT(" No Such Type Item \n");
 			break;
+		}
 		}
 	}
 }
@@ -720,14 +752,19 @@ void KoganeAi::update()
 	setEveryFrame();
 	switch (mKogane->getCurrentState()) {
 	case 0:
+	{
 		dieState();
 		break;
+	}
 	case 1:
+	{
 		if (appearTransit()) {
 			initAppear(2);
 		}
 		break;
+	}
 	case 2:
+	{
 		walkRandomState();
 		if (dieTransit()) {
 			initDie(0);
@@ -739,7 +776,9 @@ void KoganeAi::update()
 			initWalkRandom(2, false);
 		}
 		break;
+	}
 	case 3:
+	{
 		stopWalkState();
 		if (dieTransit()) {
 			initDie(0);
@@ -749,11 +788,14 @@ void KoganeAi::update()
 			initWalkRandom(2, true);
 		}
 		break;
+	}
 	case 4:
+	{
 		createState();
 		if (isMotionFinishTransit()) {
 			initWalkRandom(2, true);
 		}
 		break;
+	}
 	}
 }

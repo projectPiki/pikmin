@@ -186,11 +186,15 @@ void PaniTestNode::setTestMode(int mode)
 	Creature* camTarget = nullptr;
 	switch (mTestMode) {
 	case PANITEST_Piki:
+	{
 		camTarget = mTestPikiList[0];
 		break;
+	}
 	case PANITEST_Teki:
+	{
 		camTarget = mTestTekiList[mFocusTekiType];
 		break;
+	}
 	}
 
 	mCamMgr->mCamera->startCamera(camTarget, 1, 0);
@@ -252,11 +256,15 @@ void PaniTestNode::update()
 
 	switch (mTestMode) {
 	case PANITEST_Piki:
+	{
 		updatePikis();
 		break;
+	}
 	case PANITEST_Teki:
+	{
 		updateTekis();
 		break;
+	}
 	}
 
 	if (mController->keyDown(KBBTN_CSTICK_UP)) {
@@ -276,11 +284,15 @@ void PaniTestNode::update()
 	int amt = 0;
 	switch (mTestMode) {
 	case PANITEST_Piki:
+	{
 		amt = PIKIANIM_COUNT;
 		break;
+	}
 	case PANITEST_Teki:
+	{
 		amt = TekiMotion::COUNT;
 		break;
+	}
 	}
 
 	if (!mController->keyDown(KBBTN_L) && mController->keyUnClick(KBBTN_CSTICK_LEFT)) {
@@ -423,15 +435,19 @@ void PaniTestNode::draw(Graphics& gfx)
 	gfx.setFog(true, mFogColour, 1.0f, 750.0f, mActiveCamera.mFar);
 	switch (mTestMode) {
 	case PANITEST_Piki:
+	{
 		for (int i = 0; i < mTestPikiCount; i++) {
 			drawPiki((ViewPiki*)mTestPikiList[i], gfx);
 		}
 		pikiMgr->drawShadow(gfx, mShadowTexture);
 		break;
+	}
 	case PANITEST_Teki:
+	{
 		drawTeki(mTestTekiList[mFocusTekiType], gfx);
 		tekiMgr->drawShadow(gfx, mShadowTexture);
 		break;
+	}
 	}
 
 	mapMgr->refresh(gfx);
@@ -459,11 +475,15 @@ void PaniTestNode::draw(Graphics& gfx)
 	const char* motionLabel = nullptr;
 	switch (mTestMode) {
 	case PANITEST_Piki:
+	{
 		motionLabel = PaniPikiAnimator::motionLabels[mMotionId];
 		break;
+	}
 	case PANITEST_Teki:
+	{
 		motionLabel = PaniTekiAnimator::motionLabels[mMotionId];
 		break;
+	}
 	}
 	gfx.texturePrintf(gsys->mConsFont, 0, 420, "Motion:%d:%s", mMotionId, motionLabel);
 
@@ -471,14 +491,17 @@ void PaniTestNode::draw(Graphics& gfx)
 	int frameCount  = 0;
 	switch (mTestMode) {
 	case PANITEST_Piki:
+	{
 		animCounter = mTestPikiList[0]->mPikiAnimMgr.getUpperAnimator().mAnimationCounter;
 		frameCount  = mTestPikiList[0]->mPikiAnimMgr.getUpperAnimator().getFrameCount();
 		break;
-
+	}
 	case PANITEST_Teki:
+	{
 		animCounter = mTestTekiList[mFocusTekiType]->mTekiAnimator->mAnimationCounter;
 		frameCount  = mTestTekiList[mFocusTekiType]->mTekiAnimator->getFrameCount();
 		break;
+	}
 	}
 
 	gfx.texturePrintf(gsys->mConsFont, 0, 410, "Counter:%4.1f/%d", animCounter, frameCount);
@@ -509,7 +532,9 @@ void PaniTestSection::init()
 	Node::init("<PaniTestSection>");
 	switch (gameflow.mNextOnePlayerSectionID) {
 	case ONEPLAYER_GameSetup:
+	{
 		add(new PaniTestNode);
 		break;
+	}
 	}
 }

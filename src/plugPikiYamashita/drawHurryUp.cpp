@@ -213,24 +213,30 @@ bool zen::DrawHurryUp::update()
 	if (mIsVisible) {
 		switch (mMode) {
 		case MODE_Start:
+		{
 			startStatus();
 			break;
-
+		}
 		case MODE_Enlarge:
+		{
 			enlargeStatus();
 			break;
-
+		}
 		case MODE_BrightShot:
+		{
 			brightShotStatus();
 			break;
-
+		}
 		case MODE_Bright:
+		{
 			brightStatus();
 			break;
-
+		}
 		case MODE_End:
+		{
 			res = endStatus();
 			break;
+		}
 		}
 		mScreen.update();
 	}

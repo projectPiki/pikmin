@@ -62,11 +62,15 @@ void* OSAlloc2(u32 size)
 	REF_size = &size;
 	switch (audio_hp_exist) {
 	case FALSE:
+	{
 		alloc = OSAllocFromHeap(__OSCurrHeap, size);
 		break;
+	}
 	case TRUE:
+	{
 		alloc = Nas_HeapAlloc(&audio_hp, size);
 		break;
+	}
 	}
 
 	OSRestoreInterrupts(level);
@@ -349,17 +353,25 @@ void Jac_VframeWork()
 	if (ext_mixcallback != NULL) {
 		switch (ext_mixmode) {
 		case MixMode_Mono:
+		{
 			MixMonoTrack(dac[dacp], DAC_SIZE / 2, ext_mixcallback);
 			break;
+		}
 		case MixMode_MonoWide:
+		{
 			MixMonoTrackWide(dac[dacp], DAC_SIZE / 2, ext_mixcallback);
 			break;
+		}
 		case MixMode_Extra:
+		{
 			MixExtraTrack(dac[dacp], DAC_SIZE / 2, ext_mixcallback);
 			break;
+		}
 		case MixMode_Interleave:
+		{
 			MixInterleaveTrack(dac[dacp], DAC_SIZE / 2, ext_mixcallback);
 			break;
+		}
 		}
 	}
 

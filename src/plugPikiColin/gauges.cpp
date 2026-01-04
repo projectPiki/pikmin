@@ -90,15 +90,16 @@ void GaugeInfo::update()
 		mDigitHalfHeight = sinf(clampedPhase) * 8.0f;   // 0-8
 		break;
 	}
-
 	case STATE_Visible:
+	{
 		// check if gauge has been marked to remove/hide
 		if (mIsPendingRemoval) {
 			mState = STATE_FadeOut;
 		}
 		break;
-
+	}
 	case STATE_FadeOut:
+	{
 		// fade out text REALLY FAST
 		mDisplayAlpha -= gsys->getFrameTime() * 1200.0f;
 		if (mDisplayAlpha < 0.0f) {
@@ -106,6 +107,7 @@ void GaugeInfo::update()
 			// add gauge to inactive list to be reused
 			lgMgr->removeLG(this);
 		}
+	}
 	}
 }
 
@@ -368,6 +370,7 @@ void LifeGauge::refresh(Graphics& gfx)
 
 	switch (mDisplayState) {
 	case STATE_FadeIn:
+	{
 		adjustValue();
 		mFadeTransitionValue += 2.0f * gsys->getFrameTime();
 		if (mFadeTransitionValue > 1.0f) {
@@ -377,8 +380,9 @@ void LifeGauge::refresh(Graphics& gfx)
 			mVisibleHoldTimer    = 5.0f;
 		}
 		break;
-
+	}
 	case STATE_Display:
+	{
 		adjustValue();
 		mVisibleHoldTimer -= gsys->getFrameTime();
 		if (mVisibleHoldTimer <= 0.0f) {
@@ -389,8 +393,9 @@ void LifeGauge::refresh(Graphics& gfx)
 			}
 		}
 		break;
-
+	}
 	case STATE_FadeOut:
+	{
 		mFadeTransitionValue -= 2.0f * gsys->getFrameTime();
 		if (mFadeTransitionValue < 0.0f) {
 			// fade out finished
@@ -398,6 +403,7 @@ void LifeGauge::refresh(Graphics& gfx)
 			mDisplayState        = STATE_Hidden;
 		}
 		break;
+	}
 	}
 
 	if (mDisplayState == STATE_Hidden) {

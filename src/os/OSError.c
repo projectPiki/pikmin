@@ -98,23 +98,33 @@ void __OSUnhandledException(__OSException exception, OSContext* context, u32 dsi
 
 	switch (exception) {
 	case __OS_EXCEPTION_DSI:
+	{
 		OSReport("\nInstruction at 0x%x (read from SRR0) attempted to access invalid address 0x%x (read from DAR)\n", context->srr0, dar);
 		break;
+	}
 	case __OS_EXCEPTION_ISI:
+	{
 		OSReport("\nAttempted to fetch instruction from invalid address 0x%x (read from SRR0)\n", context->srr0);
 		break;
+	}
 	case __OS_EXCEPTION_ALIGNMENT:
+	{
 		OSReport("\nInstruction at 0x%x (read from SRR0) attempted to access unaligned address 0x%x (read from DAR)\n", context->srr0, dar);
 		break;
+	}
 	case __OS_EXCEPTION_PROGRAM:
+	{
 		OSReport("\nProgram exception : Possible illegal instruction/operation at or around 0x%x (read from SRR0)\n", context->srr0, dar);
 		break;
+	}
 	case OS_ERROR_PROTECTION:
+	{
 		OSReport("\n");
 		OSReport("AI DMA Address =   0x%04x%04x\n", __DSPRegs[0x00000018], __DSPRegs[0x00000018 + 1]);
 		OSReport("ARAM DMA Address = 0x%04x%04x\n", __DSPRegs[0x00000010], __DSPRegs[0x00000010 + 1]);
 		OSReport("DI DMA Address =   0x%08x\n", __DIRegs[0x00000005]);
 		break;
+	}
 	}
 
 	OSReport("\nLast interrupt (%d): SRR0 = 0x%08x  TB = 0x%016llx\n", __OSLastInterrupt, __OSLastInterruptSrr0, __OSLastInterruptTime);
@@ -136,17 +146,25 @@ void __OSUnhandledException(__OSException exception, OSContext* context, u32 dsi
 	OSReport("\nDSISR= 0x%08x                   DAR  = 0x%08x\n", dsisr, dar);
 	switch (exception) {
 	case OS_ERROR_DSI:
+	{
 		OSReport("\nInstruction at 0x%x (read from SRR0) attempted to access invalid address 0x%x (read from DAR)\n", context->srr0, dar);
 		break;
+	}
 	case OS_ERROR_ISI:
+	{
 		OSReport("\nAttempted to fetch instruction from invalid address 0x%x (read from SRR0)\n", context->srr0);
 		break;
+	}
 	case OS_ERROR_ALIGNMENT:
+	{
 		OSReport("\nInstruction at 0x%x (read from SRR0) attempted to access unaligned address 0x%x (read from DAR)\n", context->srr0, dar);
 		break;
+	}
 	case OS_ERROR_PROGRAM:
+	{
 		OSReport("\nProgram exception : Possible illegal instruction/operation at or around 0x%x (read from SRR0)\n", context->srr0, dar);
 		break;
+	}
 	}
 #endif
 	PPCHalt();

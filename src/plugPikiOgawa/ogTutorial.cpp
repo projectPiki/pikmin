@@ -39,23 +39,35 @@ zen::ogScrTutorialMgr::TutorialStatus zen::ogScrTutorialMgr::update(Controller* 
 
 	switch (mMessageMgr->update(input)) {
 	case zen::ogScrMessageMgr::STATE_Inactive:
+	{
 		mStatus = STATUS_Inactive;
 		break;
+	}
 	case zen::ogScrMessageMgr::STATE_ActiveDisplay:
+	{
 		mStatus = STATUS_TextActive;
 		break;
+	}
 	case zen::ogScrMessageMgr::STATE_StartDelay:
+	{
 		mStatus = STATUS_Starting;
 		break;
+	}
 	case zen::ogScrMessageMgr::STATE_FadingIn:
+	{
 		mStatus = STATUS_FadeIn;
 		break;
+	}
 	case zen::ogScrMessageMgr::STATE_FadingOut:
+	{
 		mStatus = STATUS_FadeOut;
 		break;
+	}
 	case zen::ogScrMessageMgr::STATE_Exiting:
+	{
 		mStatus = STATUS_Exiting;
 		break;
+	}
 	}
 	return mStatus;
 }

@@ -1715,11 +1715,15 @@ void PelletMgr::read(RandomAccessStream& input)
 {
 	switch (mReadStage) {
 	case 0:
+	{
 		readConfigs(input);
 		break;
+	}
 	case 1:
+	{
 		readAnimInfos(input);
 		break;
+	}
 	}
 }
 
@@ -1784,17 +1788,25 @@ void PelletMgr::createShapeObjects()
 		bool doCreate        = false;
 		switch (info->mCreationType) {
 		case PCT_Resident:
+		{
 			doCreate = true;
 			break;
+		}
 		case PCT_LoadIfExists:
+		{
 			doCreate = useShape(info->mID.mId);
 			break;
+		}
 		case PCT_LoadOnTeki:
+		{
 			doCreate = tekiMgr->mUsingType[info->mTekiType];
 			break;
+		}
 		case PCT_LoadOnBoss:
+		{
 			PRINT("NOT YET\n");
 			break;
+		}
 		}
 
 		if (doCreate) {

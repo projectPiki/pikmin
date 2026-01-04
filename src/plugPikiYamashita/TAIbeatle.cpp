@@ -176,6 +176,7 @@ public:
 
 		switch (teki.mCurrentAnimEvent) {
 		case KEY_Action1:
+		{
 			teki.enableStick();
 
 			if (kutiPart != nullptr) {
@@ -191,8 +192,9 @@ public:
 				}
 			}
 			break;
-
+		}
 		case KEY_Action2:
+		{
 			teki.disableStick();
 
 			ptclGen = teki.getPtclGenPtr(YTeki::PTCL_Unk2);
@@ -218,21 +220,25 @@ public:
 			teki.stopEventSound(&teki, SE_KABUTO_COOLDOWN);
 			teki.setRunAwaySwitch(false);
 			break;
-
+		}
 		case KEY_Action0: // ... why is this down here?
+		{
 			if (teki.getCreaturePointer(2) != nullptr) {
 				teki.setCreaturePointer(2, nullptr);
 			}
 			break;
-
+		}
 		case KEY_Action3:
+		{
 			teki.playEventSound(&teki, SE_KABUTO_COOLDOWN);
 			createSteamEffect(teki);
 			break;
-
+		}
 		case KEY_LoopStart:
+		{
 			teki.setRunAwaySwitch(true);
 			break;
+		}
 		}
 
 		if (teki.getRunAwaySwitch()) {
@@ -284,32 +290,40 @@ protected:
 		for (i = 0; i < 3; i++) {
 			switch (collPartIDs[i]) {
 			case 0:
+			{
 				steamEffectPart = teki.mCollInfo->getSphere('stm0');
 				break;
-
+			}
 			case 1:
+			{
 				steamEffectPart = teki.mCollInfo->getSphere('stm1');
 				break;
-
+			}
 			case 2:
+			{
 				steamEffectPart = teki.mCollInfo->getSphere('stm2');
 				break;
-
+			}
 			case 3:
+			{
 				steamEffectPart = teki.mCollInfo->getSphere('stm3');
 				break;
-
+			}
 			case 4:
+			{
 				steamEffectPart = teki.mCollInfo->getSphere('stm4');
 				break;
-
+			}
 			case 5:
+			{
 				steamEffectPart = teki.mCollInfo->getSphere('stm5');
 				break;
-
+			}
 			default:
+			{
 				ERROR("illegal index");
 				break;
+			}
 			}
 
 			if (steamEffectPart != nullptr) {
@@ -1078,7 +1092,6 @@ bool TAIbeatleStrategy::interact(Teki& teki, immut TekiInteractionKey& key)
 
 		return false;
 	}
-
 	case TekiInteractType::HitEffect:
 	{
 		InteractHitEffect* hitEffect = (InteractHitEffect*)key.mInteraction;

@@ -62,20 +62,30 @@ void SpiderAi::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
 	case KEY_Action0:
+	{
 		keyAction0();
 		break;
+	}
 	case KEY_Action1:
+	{
 		keyAction1();
 		break;
+	}
 	case KEY_LoopEnd:
+	{
 		keyLoopEnd();
 		break;
+	}
 	case KEY_Finished:
+	{
 		keyFinished();
 		break;
+	}
 	case KEY_PlaySound:
+	{
 		playSound(event.mValue);
 		break;
+	}
 	}
 }
 
@@ -559,10 +569,12 @@ void SpiderAi::update()
 	setEveryFrame();
 	switch (mSpider->getCurrentState()) {
 	case SPIDERAI_Die:
+	{
 		dieState();
 		break;
-
+	}
 	case SPIDERAI_WalkRandom:
+	{
 		walkRandomState();
 		if (dieTransit()) {
 			initDie(SPIDERAI_Die);
@@ -576,8 +588,9 @@ void SpiderAi::update()
 			initWalk(SPIDERAI_ChasePiki);
 		}
 		break;
-
+	}
 	case SPIDERAI_ChaseNavi:
+	{
 		chaseNaviState();
 		if (dieTransit()) {
 			initDie(SPIDERAI_Die);
@@ -593,8 +606,9 @@ void SpiderAi::update()
 			initWalk(SPIDERAI_ChasePiki);
 		}
 		break;
-
+	}
 	case SPIDERAI_ChasePiki:
+	{
 		chasePikiState();
 		if (dieTransit()) {
 			initDie(SPIDERAI_Die);
@@ -612,8 +626,9 @@ void SpiderAi::update()
 			initWalk(SPIDERAI_ChasePiki);
 		}
 		break;
-
+	}
 	case SPIDERAI_WalkGoHome:
+	{
 		walkGoHomeState();
 		if (dieTransit()) {
 			initDie(SPIDERAI_Die);
@@ -625,8 +640,9 @@ void SpiderAi::update()
 			initWalk(SPIDERAI_WalkRandom);
 		}
 		break;
-
+	}
 	case SPIDERAI_ShakeOff:
+	{
 		shakeOffState();
 		if (isMotionFinishTransit()) {
 			if (dieTransit()) {
@@ -636,14 +652,16 @@ void SpiderAi::update()
 			}
 		}
 		break;
-
+	}
 	case SPIDERAI_Start:
+	{
 		if (appearTransit()) {
 			initAppear(SPIDERAI_Appear);
 		}
 		break;
-
+	}
 	case SPIDERAI_Appear:
+	{
 		appearState();
 		if (dieTransit()) {
 			initDie(SPIDERAI_Die);
@@ -651,8 +669,9 @@ void SpiderAi::update()
 			initWalk(SPIDERAI_WalkRandom);
 		}
 		break;
-
+	}
 	case SPIDERAI_Wait:
+	{
 		waitState();
 		if (dieTransit()) {
 			initDie(SPIDERAI_Die);
@@ -662,5 +681,6 @@ void SpiderAi::update()
 			initWalk(SPIDERAI_WalkRandom);
 		}
 		break;
+	}
 	}
 }

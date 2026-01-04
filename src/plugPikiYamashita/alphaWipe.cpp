@@ -81,14 +81,18 @@ void zen::AlphaWipe::update()
 
 		switch (mWipeType) {
 		case TYPE_Normal:
+		{
 			mStartColor.a = zen::RoundOff(startAlpha);
 			mEndColor.a   = zen::RoundOff(endAlpha);
 			break;
+		}
 		case TYPE_Reverse:
+		{
 			// flip the color order
 			mStartColor.a = zen::RoundOff(endAlpha);
 			mEndColor.a   = zen::RoundOff(startAlpha);
 			break;
+		}
 		}
 	}
 }

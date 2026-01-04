@@ -112,11 +112,17 @@ int ActEnter::exec()
 
 	switch (mState) {
 	case STATE_RouteMove:
+	{
 		return routeMove();
+	}
 	case STATE_GotoLeg:
+	{
 		return gotoLeg();
+	}
 	case STATE_Climb:
+	{
 		return climb();
+	}
 	}
 
 	return ACTOUT_Continue;

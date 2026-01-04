@@ -217,6 +217,7 @@ Creature* WorkObjectMgr::birth(int wObjType, int p2)
 
 	switch (wObjType) {
 	case 0:
+	{
 		object                             = new Bridge(shape, true);
 		static_cast<Bridge*>(object)->_400 = p2;
 		if (p2 == 4) {
@@ -225,10 +226,13 @@ Creature* WorkObjectMgr::birth(int wObjType, int p2)
 			object->mGrid.setNeighbourSize(1);
 		}
 		break;
+	}
 	case 1:
+	{
 		object = new HinderRock(shape);
 		object->mGrid.setNeighbourSize(1);
 		break;
+	}
 	}
 
 	if (!object) {
@@ -669,17 +673,25 @@ Vector3f HinderRock::getVertex(int vtx)
 	u32 id;
 	switch (vtx) {
 	case 0:
+	{
 		id = 'vtx0';
 		break;
+	}
 	case 1:
+	{
 		id = 'vtx1';
 		break;
+	}
 	case 2:
+	{
 		id = 'vtx2';
 		break;
+	}
 	case 3:
+	{
 		id = 'vtx3';
 		break;
+	}
 	}
 
 	CollPart* part = mCollInfo->getSphere(id);

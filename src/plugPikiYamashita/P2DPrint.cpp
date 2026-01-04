@@ -117,30 +117,38 @@ void P2DPrint::printReturn(const char* textBuffer, int boxWidth, int boxHeight, 
 	blockHeight += mFontHeight;
 	switch (vBind) {
 	case TBOXVBIND_Top:
+	{
 		break;
-
+	}
 	case TBOXVBIND_Bottom:
+	{
 		yOffset += boxHeight - int(blockHeight + 0.5f);
 		break;
-
+	}
 	case TBOXVBIND_Center:
+	{
 		yOffset += (boxHeight - int(blockHeight + 0.5f)) / 2;
 		break;
+	}
 	}
 
 	for (int i = 0; xPosBuffer[i] != 0xFFFF; i++) {
 		switch (hBind) {
 		case TBOXHBIND_Left:
+		{
 			xPosBuffer[i] = 0;
 			break;
-
+		}
 		case TBOXHBIND_Right:
+		{
 			xPosBuffer[i] = boxWidth - xPosBuffer[i];
 			break;
-
+		}
 		case TBOXHBIND_Center:
+		{
 			xPosBuffer[i] = (boxWidth - xPosBuffer[i]) / 2;
 			break;
+		}
 		}
 	}
 
@@ -309,37 +317,44 @@ u16 P2DPrint::doEscapeCode(const u8** textPtr)
 	(*textPtr) += 2;
 
 	switch (code) {
-	case 'CU':                                    // cursor up
+	case 'CU': // cursor up
+	{
 		mCursorY -= getNumber(textPtr, 1, 0, 10); // default 1, 0 if invalid
 		break;
-
-	case 'CD':                                    // cursor down
+	}
+	case 'CD': // cursor down
+	{
 		mCursorY += getNumber(textPtr, 1, 0, 10); // default 1, 0 if invalid
 		break;
-
-	case 'CL':                                    // cursor left
+	}
+	case 'CL': // cursor left
+	{
 		mCursorX -= getNumber(textPtr, 1, 0, 10); // default 1, 0 if invalid
 		break;
-
-	case 'CR':                                    // cursor right
+	}
+	case 'CR': // cursor right
+	{
 		mCursorX += getNumber(textPtr, 1, 0, 10); // default 1, 0 if invalid
 		break;
-
+	}
 	case 'LU': // current line up
+	{
 		mCursorY -= mCharLeading;
 		break;
-
+	}
 	case 'LD': // current line down
+	{
 		mCursorY += mCharLeading;
 		break;
-
-	case 'ST':                                                            // string terminator
+	}
+	case 'ST': // string terminator
+	{
 		s32 width = getNumber(textPtr, mCharTabWidth, mCharTabWidth, 10); // default tab, tab if invalid
 		if (width > 0) {
 			mCharTabWidth = width;
 		}
 		break;
-
+	}
 	case 'CA': // char color, preserve alpha
 	{
 		// set char top colour (default font top colour, no change if invalid format)
@@ -382,21 +397,24 @@ u16 P2DPrint::doEscapeCode(const u8** textPtr)
 		}
 		break;
 	}
-	case 'FY':                                                         // fix y (change height)
+	case 'FY': // fix y (change height)
+	{
 		int height = getNumber(textPtr, mFontHeight, mCharHeight, 10); // default = font height, invalid = no change
 		if (height >= 0) {
 			mCharHeight = height;
 		}
 		break;
-
-	case 'SH':                                                             // scale horizontal
+	}
+	case 'SH': // scale horizontal
+	{
 		mCharSpacing = getNumber(textPtr, mFontSpacing, mCharSpacing, 10); // default = font spacing, invalid = no change
 		break;
-
-	case 'SV':                                                             // scale vertical
+	}
+	case 'SV': // scale vertical
+	{
 		mCharLeading = getNumber(textPtr, mFontLeading, mCharLeading, 10); // default = font leading, invalid = no change
 		break;
-
+	}
 	case 'GM': // gradient marker? switch gradient on/off
 	{
 		mCharGradientActive
@@ -405,12 +423,15 @@ u16 P2DPrint::doEscapeCode(const u8** textPtr)
 		break;
 	}
 	case 'HM': // ??
+	{
 		break;
-
+	}
 	default:
+	{
 		(*textPtr) -= 2; // reset string
 		code = 0;
 		break;
+	}
 	}
 
 	return code;
@@ -423,11 +444,13 @@ void P2DPrint::doCtrlCode(int inputChar)
 {
 	switch (inputChar) {
 	case '\b': // backspace
+	{
 		mCursorX -= mCurrCharWidth;
 		mCurrCharWidth = 0.0f;
 		break;
-
+	}
 	case '\t': // horizontal tab
+	{
 		int width = mCharTabWidth;
 		if (width > 0) {
 			f32 oldX       = mCursorX;
@@ -435,33 +458,40 @@ void P2DPrint::doCtrlCode(int inputChar)
 			mCurrCharWidth = mCursorX - oldX;
 		}
 		break;
-
+	}
 	case '\n': // line feed
+	{
 		mCurrCharWidth = 0.0f;
 		mCursorX       = mInitX;
 		mCursorY       = mCursorY + mCharLeading;
 		break;
-
+	}
 	case '\r': // carriage return
+	{
 		mCurrCharWidth = 0.0f;
 		mCursorX       = mInitX;
 		break;
-
+	}
 	case '\x1C': // file separator
+	{
 		mCursorX += 1.0f;
 		break;
-
+	}
 	case '\x1D': // group separator
+	{
 		mCursorX -= 1.0f;
 		break;
-
+	}
 	case '\x1E': // record separator
+	{
 		mCursorY -= 1.0f;
 		break;
-
+	}
 	case '\x1F': // unit separator
+	{
 		mCursorY += 1.0f;
 		break;
+	}
 	}
 }
 

@@ -114,21 +114,27 @@ f32 atanf(f32 x)
 		index++; // index is now 0
 		switch (__HI(x) & 0x7f800000) {
 		case 0x3F000000: /* .5  <= x < 1 */
+		{
 			if ((*(int*)&x) >= 0x3F08D5B9)
 				index++; // 0.5345111 == tan(5pi/32)
 			if ((*(int*)&x) >= 0x3F521801)
 				index++; // 0.8206788
 			break;
+		}
 		case 0x3F800000: /* 1 <= x < 2    */
+		{
 			index += 2;
 			if ((*(int*)&x) >= 0x3F9bf7ec)
 				index++; // 1.2185035
 			if ((*(int*)&x) >= 0x3FEF789E)
 				index++; // 1.8708684
 			break;
+		}
 		case 0x40000000: /* 2 <= x <  2.414213565f   */
+		{
 			index += 4;
 			break;
+		}
 		}
 
 		z = 1.0f / (one_over_xi_hi[index] + (one_over_xi_lo[index] + x));

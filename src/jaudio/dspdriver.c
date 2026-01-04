@@ -97,16 +97,22 @@ int DeAllocDSPchannel(dspch_* chan, u32 id)
 	switch (chan->allocState) {
 	case DSPCHAN_MonoAllocated:
 	case DSPCHAN_Stopping:
+	{
 		chan->allocState = DSPCHAN_Free;
 		break;
+	}
 	case DSPCHAN_StereoLeft:
+	{
 		chan->allocState = DSPCHAN_Free;
 		DeAllocDSPchannel(&DSPCH[chan->buffer_idx + 1], id);
 		break;
+	}
 	case DSPCHAN_StereoRight:
+	{
 		chan->allocState = DSPCHAN_Free;
 		DeAllocDSPchannel(&DSPCH[chan->buffer_idx - 1], id);
 		break;
+	}
 	}
 	chan->prio          = 0;
 	chan->logicalChanCb = NULL;

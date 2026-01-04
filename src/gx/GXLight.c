@@ -115,44 +115,58 @@ void GXInitLightSpot(GXLightObj* lt_obj, f32 cutoff, GXSpotFn spot_func)
 	cr = cosf(r);
 	switch (spot_func) {
 	case GX_SP_FLAT:
+	{
 		a0 = -1000.0f * cr;
 		a1 = 1000.0f;
 		a2 = 0.0f;
 		break;
+	}
 	case GX_SP_COS:
+	{
 		a0 = -cr / (1.0f - cr);
 		a1 = 1.0f / (1.0f - cr);
 		a2 = 0.0f;
 		break;
+	}
 	case GX_SP_COS2:
+	{
 		a0 = 0.0f;
 		a1 = -cr / (1.0f - cr);
 		a2 = 1.0f / (1.0f - cr);
 		break;
+	}
 	case GX_SP_SHARP:
+	{
 		d  = (1.0f - cr) * (1.0f - cr);
 		a0 = (cr * (cr - 2.0f)) / d;
 		a1 = 2.0f / d;
 		a2 = -1.0f / d;
 		break;
+	}
 	case GX_SP_RING1:
+	{
 		d  = (1.0f - cr) * (1.0f - cr);
 		a0 = (-4.0f * cr) / d;
 		a1 = (4.0f * (1.0f + cr)) / d;
 		a2 = -4.0f / d;
 		break;
+	}
 	case GX_SP_RING2:
+	{
 		d  = (1.0f - cr) * (1.0f - cr);
 		a0 = 1.0f - ((2.0f * cr * cr) / d);
 		a1 = (4.0f * cr) / d;
 		a2 = -2.0f / d;
 		break;
+	}
 	case GX_SP_OFF:
 	default:
+	{
 		a0 = 1.0f;
 		a1 = 0.0f;
 		a2 = 0.0f;
 		break;
+	}
 	}
 	obj->a[0] = a0;
 	obj->a[1] = a1;
@@ -179,26 +193,34 @@ void GXInitLightDistAttn(GXLightObj* lt_obj, f32 ref_dist, f32 ref_br, GXDistAtt
 
 	switch (dist_func) {
 	case GX_DA_GENTLE:
+	{
 		k0 = 1.0f;
 		k1 = (1.0f - ref_br) / (ref_br * ref_dist);
 		k2 = 0.0f;
 		break;
+	}
 	case GX_DA_MEDIUM:
+	{
 		k0 = 1.0f;
 		k1 = (0.5f * (1.0f - ref_br)) / (ref_br * ref_dist);
 		k2 = (0.5f * (1.0f - ref_br)) / (ref_br * ref_dist * ref_dist);
 		break;
+	}
 	case GX_DA_STEEP:
+	{
 		k0 = 1.0f;
 		k1 = 0.0f;
 		k2 = (1.0f - ref_br) / (ref_br * ref_dist * ref_dist);
 		break;
+	}
 	case GX_DA_OFF:
 	default:
+	{
 		k0 = 1.0f;
 		k1 = 0.0f;
 		k2 = 0.0f;
 		break;
+	}
 	}
 
 	obj->k[0] = k0;
@@ -383,33 +405,51 @@ void GXLoadLightObjImm(GXLightObj* lt_obj, GXLightID light)
 
 	switch (light) {
 	case GX_LIGHT0:
+	{
 		idx = 0;
 		break;
+	}
 	case GX_LIGHT1:
+	{
 		idx = 1;
 		break;
+	}
 	case GX_LIGHT2:
+	{
 		idx = 2;
 		break;
+	}
 	case GX_LIGHT3:
+	{
 		idx = 3;
 		break;
+	}
 	case GX_LIGHT4:
+	{
 		idx = 4;
 		break;
+	}
 	case GX_LIGHT5:
+	{
 		idx = 5;
 		break;
+	}
 	case GX_LIGHT6:
+	{
 		idx = 6;
 		break;
+	}
 	case GX_LIGHT7:
+	{
 		idx = 7;
 		break;
+	}
 	default:
+	{
 		idx = 0;
 		ASSERTMSGLINE(0x1DA, 0, "GXLoadLightStateImm: Invalid Light Id");
 		break;
+	}
 	}
 
 	addr = idx * 0x10 + 0x600;
@@ -450,33 +490,51 @@ void GXLoadLightObjIndx(u32 lt_obj_indx, GXLightID light)
 
 	switch (light) {
 	case GX_LIGHT0:
+	{
 		idx = 0;
 		break;
+	}
 	case GX_LIGHT1:
+	{
 		idx = 1;
 		break;
+	}
 	case GX_LIGHT2:
+	{
 		idx = 2;
 		break;
+	}
 	case GX_LIGHT3:
+	{
 		idx = 3;
 		break;
+	}
 	case GX_LIGHT4:
+	{
 		idx = 4;
 		break;
+	}
 	case GX_LIGHT5:
+	{
 		idx = 5;
 		break;
+	}
 	case GX_LIGHT6:
+	{
 		idx = 6;
 		break;
+	}
 	case GX_LIGHT7:
+	{
 		idx = 7;
 		break;
+	}
 	default:
+	{
 		idx = 0;
 		ASSERTMSGLINE(0x216, 0, "GXLoadLightObjIndx: Invalid Light Id");
 		break;
+	}
 	}
 
 	addr = idx * 0x10 + 0x600;
@@ -505,6 +563,7 @@ void GXSetChanAmbColor(GXChannelID chan, GXColor amb_color)
 
 	switch (chan) {
 	case GX_COLOR0:
+	{
 		alpha = gx->ambColor[0] & 0xFF;
 		SET_REG_FIELD(0x23E, reg, 8, 0, alpha);
 		SET_REG_FIELD(0x23F, reg, 8, 8, amb_color.b);
@@ -512,7 +571,9 @@ void GXSetChanAmbColor(GXChannelID chan, GXColor amb_color)
 		SET_REG_FIELD(0x241, reg, 8, 24, amb_color.r);
 		colIdx = 0;
 		break;
+	}
 	case GX_COLOR1:
+	{
 		alpha = gx->ambColor[1] & 0xFF;
 		SET_REG_FIELD(0x247, reg, 8, 0, alpha);
 		SET_REG_FIELD(0x248, reg, 8, 8, amb_color.b);
@@ -520,33 +581,44 @@ void GXSetChanAmbColor(GXChannelID chan, GXColor amb_color)
 		SET_REG_FIELD(0x24A, reg, 8, 24, amb_color.r);
 		colIdx = 1;
 		break;
+	}
 	case GX_ALPHA0:
+	{
 		reg = gx->ambColor[0];
 		SET_REG_FIELD(0x250, reg, 8, 0, amb_color.a);
 		colIdx = 0;
 		break;
+	}
 	case GX_ALPHA1:
+	{
 		reg = gx->ambColor[1];
 		SET_REG_FIELD(0x256, reg, 8, 0, amb_color.a);
 		colIdx = 1;
 		break;
+	}
 	case GX_COLOR0A0:
+	{
 		SET_REG_FIELD(0x25B, reg, 8, 0, amb_color.a);
 		SET_REG_FIELD(0x25C, reg, 8, 8, amb_color.b);
 		SET_REG_FIELD(0x25D, reg, 8, 16, amb_color.g);
 		SET_REG_FIELD(0x25E, reg, 8, 24, amb_color.r);
 		colIdx = 0;
 		break;
+	}
 	case GX_COLOR1A1:
+	{
 		SET_REG_FIELD(0x263, reg, 8, 0, amb_color.a);
 		SET_REG_FIELD(0x264, reg, 8, 8, amb_color.b);
 		SET_REG_FIELD(0x265, reg, 8, 16, amb_color.g);
 		SET_REG_FIELD(0x266, reg, 8, 24, amb_color.r);
 		colIdx = 1;
 		break;
+	}
 	default:
+	{
 		ASSERTMSGLINE(0x26B, 0, "GXSetChanAmbColor: Invalid Channel Id");
 		return;
+	}
 	}
 
 	GX_WRITE_XF_REG(colIdx + 10, reg);
@@ -567,6 +639,7 @@ void GXSetChanMatColor(GXChannelID chan, GXColor mat_color)
 
 	switch (chan) {
 	case GX_COLOR0:
+	{
 		alpha = gx->matColor[0] & 0xFF;
 		SET_REG_FIELD(0x28F, reg, 8, 0, alpha);
 		SET_REG_FIELD(0x290, reg, 8, 8, mat_color.b);
@@ -574,7 +647,9 @@ void GXSetChanMatColor(GXChannelID chan, GXColor mat_color)
 		SET_REG_FIELD(0x292, reg, 8, 24, mat_color.r);
 		colIdx = 0;
 		break;
+	}
 	case GX_COLOR1:
+	{
 		alpha = gx->matColor[1] & 0xFF;
 		SET_REG_FIELD(0x298, reg, 8, 0, alpha);
 		SET_REG_FIELD(0x299, reg, 8, 8, mat_color.b);
@@ -582,33 +657,44 @@ void GXSetChanMatColor(GXChannelID chan, GXColor mat_color)
 		SET_REG_FIELD(0x29B, reg, 8, 24, mat_color.r);
 		colIdx = 1;
 		break;
+	}
 	case GX_ALPHA0:
+	{
 		reg = gx->matColor[0];
 		SET_REG_FIELD(0x2A1, reg, 8, 0, mat_color.a);
 		colIdx = 0;
 		break;
+	}
 	case GX_ALPHA1:
+	{
 		reg = gx->matColor[1];
 		SET_REG_FIELD(0x2A7, reg, 8, 0, mat_color.a);
 		colIdx = 1;
 		break;
+	}
 	case GX_COLOR0A0:
+	{
 		SET_REG_FIELD(0x2AC, reg, 8, 0, mat_color.a);
 		SET_REG_FIELD(0x2AD, reg, 8, 8, mat_color.b);
 		SET_REG_FIELD(0x2AE, reg, 8, 16, mat_color.g);
 		SET_REG_FIELD(0x2AF, reg, 8, 24, mat_color.r);
 		colIdx = 0;
 		break;
+	}
 	case GX_COLOR1A1:
+	{
 		SET_REG_FIELD(0x2B4, reg, 8, 0, mat_color.a);
 		SET_REG_FIELD(0x2B5, reg, 8, 8, mat_color.b);
 		SET_REG_FIELD(0x2B6, reg, 8, 16, mat_color.g);
 		SET_REG_FIELD(0x2B7, reg, 8, 24, mat_color.r);
 		colIdx = 1;
 		break;
+	}
 	default:
+	{
 		ASSERTMSGLINE(0x2BC, 0, "GXSetChanMatColor: Invalid Channel Id");
 		return;
+	}
 	}
 
 	GX_WRITE_XF_REG(colIdx + 12, reg);

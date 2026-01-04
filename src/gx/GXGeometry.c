@@ -136,14 +136,20 @@ void GXSetCullMode(GXCullMode mode)
 	CHECK_GXBEGIN(0x21D, "GXSetCullMode");
 	switch (mode) {
 	case GX_CULL_FRONT:
+	{
 		hwMode = GX_CULL_BACK;
 		break;
+	}
 	case GX_CULL_BACK:
+	{
 		hwMode = GX_CULL_FRONT;
 		break;
+	}
 	default:
+	{
 		hwMode = mode;
 		break;
+	}
 	}
 	SET_REG_FIELD(0x225, gx->genMode, 2, 14, hwMode);
 	gx->dirtyState |= 4;
@@ -159,14 +165,20 @@ void GXGetCullMode(GXCullMode* mode)
 
 	switch (hwMode) {
 	case GX_CULL_FRONT:
+	{
 		*mode = GX_CULL_BACK;
 		break;
+	}
 	case GX_CULL_BACK:
+	{
 		*mode = GX_CULL_FRONT;
 		break;
+	}
 	default:
+	{
 		*mode = hwMode;
 		break;
+	}
 	}
 }
 

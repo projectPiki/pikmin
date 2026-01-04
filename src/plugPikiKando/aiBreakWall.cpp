@@ -77,17 +77,24 @@ void ActBreakWall::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
 	case KEY_Action0:
+	{
 		mIsAttackReady = true;
 		break;
+	}
 	case KEY_Action1:
+	{
 		mIsAttackReady = false;
 		break;
+	}
 	case KEY_Finished:
+	{
 		mWorkTimer = (4.0f * gsys->getRand(1.0f));
 		startWorkMotion();
 		mIsAttackReady = false;
 		break;
+	}
 	case KEY_PlayEffect:
+	{
 		if (!mPiki->isCreatureFlag(CF_UseAICulling) && (AIPerf::optLevel <= 0 || mPiki->mOptUpdateContext.updatable())) {
 			Vector3f vec = mPiki->mEffectPos;
 			EffectParm parm(vec);
@@ -100,6 +107,7 @@ void ActBreakWall::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 			}
 		}
 		break;
+	}
 	}
 
 	STACK_PAD_VAR(1);
@@ -116,15 +124,18 @@ int ActBreakWall::exec()
 
 	switch (mState) {
 	case STATE_GotoWall:
+	{
 		return gotoWall();
-
+	}
 	case STATE_BreakWall:
+	{
 		Vector3f sep = mHitPikminPosition - mPiki->mSRT.t;
 		if (sep.length() > 5.0f) {
 			mState = STATE_GotoWall;
 			break;
 		}
 		return breakWall();
+	}
 	}
 
 	return ACTOUT_Continue;

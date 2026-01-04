@@ -1064,6 +1064,7 @@ Creature* GenObjectPiki::birth(BirthInfo& info)
 
 	switch (mSpawnState()) {
 	case 0: // buried, so spawn a PikiHeadItem
+	{
 		PikiHeadItem* sprout = static_cast<PikiHeadItem*>(itemMgr->birth(OBJTYPE_Pikihead));
 		if (sprout) {
 			sprout->init(info.mPosition);
@@ -1074,9 +1075,10 @@ Creature* GenObjectPiki::birth(BirthInfo& info)
 			piki = sprout;
 		}
 		break;
-
+	}
 	case 1:
 	case 2: // free or in party, so spawn piki
+	{
 		piki = pikiMgr->birth();
 		if (piki) {
 			GameStat::workPikis.inc(color);
@@ -1091,6 +1093,7 @@ Creature* GenObjectPiki::birth(BirthInfo& info)
 			}
 		}
 		break;
+	}
 	}
 
 	return piki;

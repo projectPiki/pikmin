@@ -79,27 +79,39 @@ void KIO::readMailbox()
 
 	switch (mail) {
 	case 0x100000:
+	{
 		kontMode  = 0;
 		mIsActive = false;
 		break;
+	}
 	case 0x100002:
+	{
 		kontMode  = 1;
 		mIsActive = false;
 		break;
+	}
 	case 0x100001:
+	{
 		kontMode  = 2;
 		mIsActive = false;
 		break;
+	}
 	case 0x100006:
+	{
 		mContext.write();
 		break;
+	}
 	case 0x100003:
+	{
 		fbCopy    = true;
 		mIsActive = true;
 		break;
+	}
 	default:
+	{
 		kontMode = 2;
 		break;
+	}
 	}
 }
 

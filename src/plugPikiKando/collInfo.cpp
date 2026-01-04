@@ -436,21 +436,31 @@ void CollPart::update(Graphics& gfx, bool drawDebug)
 
 		switch (mPartType) {
 		case PART_BoundSphere:
+		{
 			gfx.setColour(Colour(255, 180, 180, 255), true); // pink
 			break;
+		}
 		case PART_Collision:
+		{
 			gfx.setColour(Colour(255, 0, 0, 255), true); // red
 			break;
+		}
 		case PART_Tube:
 		case PART_TubeChild:
+		{
 			gfx.setColour(Colour(255, 0, 255, 255), true); // purple
 			break;
+		}
 		case PART_Reference:
+		{
 			gfx.setColour(Colour(255, 215, 20, 255), true); // yellow
 			break;
-		case PART_Platform:                                 // this is never called
+		}
+		case PART_Platform: // this is never called
+		{
 			gfx.setColour(Colour(50, 150, 255, 255), true); // blue
 			break;
+		}
 		}
 
 		gfx.useMatrix(gfx.mCamera->mLookAtMtx, 0);

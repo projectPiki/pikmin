@@ -33,13 +33,17 @@ static void cb(s32 type, DVDCommandBlock* cmdBlock)
 	if (type > 0) {
 		switch (status) {
 		case 0:
+		{
 			status = 1;
 			DVDReadAbsAsyncForBS(cmdBlock, bb2, 0x20, 0x420, cb);
 			break;
+		}
 		case 1:
+		{
 			status = 2;
 			DVDReadAbsAsyncForBS(cmdBlock, bb2->addr, OSRoundUp32B(bb2->length), bb2->offset, cb);
 			break;
+		}
 		}
 	} else if (type == -1) {
 	} else if (type == -4) {

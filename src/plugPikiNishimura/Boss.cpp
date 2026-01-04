@@ -582,22 +582,27 @@ bool InteractAttack::actBoss(Boss* boss) immut
 	if (boss->getAlive() && !boss->getInvincible()) {
 		switch (getDamagePortion()) {
 		case 0:
+		{
 			boss->addFlickDamageCount(1);
 			return false;
-
+		}
 		case 1:
+		{
 			boss->addFlickDamageCount(1);
 			boss->addDamagePoint(mDamage);
 			return true;
-
+		}
 		case 2:
+		{
 			boss->addFlickDamageCount(C_BOSS_PROP(boss)._15C());
 			boss->addDamagePoint(mDamage * C_BOSS_PROP(boss)._CC());
 			return true;
-
+		}
 		default:
+		{
 			boss->addFlickDamageCount(1);
 			return boss->attackDefaultPortion();
+		}
 		}
 	}
 
@@ -640,23 +645,28 @@ bool InteractHitEffect::actBoss(Boss* boss) immut
 {
 	switch (boss->mObjType) {
 	case OBJTYPE_Spider:
+	{
 		effectMgr->create(EffectMgr::EFF_Piki_BigHit, mEffectPos, nullptr, nullptr);
 		return true;
-
+	}
 	case OBJTYPE_Snake:
+	{
 		effectMgr->create(EffectMgr::EFF_Piki_BigHit, mEffectPos, nullptr, nullptr);
 		return true;
-
+	}
 	case OBJTYPE_King:
+	{
 		effectMgr->create(EffectMgr::EFF_Piki_BigHit, mEffectPos, nullptr, nullptr);
 		if (mCollPart && boss->mSeContext && mCollPart->isBouncy()) {
 			boss->mSeContext->playSound(SE_MUSH_GETUP);
 		}
 		return true;
-
+	}
 	case OBJTYPE_Pom:
+	{
 		effectMgr->create(EffectMgr::EFF_Piki_BigHit, mEffectPos, nullptr, nullptr);
 		return true;
+	}
 	}
 
 	return false;

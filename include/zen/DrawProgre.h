@@ -59,12 +59,14 @@ public:
 	{
 		switch (mMode) {
 		case MODE_Wait:
+		{
 			mMenuTitle.wait();
 			mMenuPanelMgr.wait();
 			mMenuTitle.update(0.0f);
 			break;
-
+		}
 		case MODE_FadeIn:
+		{
 			mFadeTimer += gsys->getFrameTime();
 			if (mFadeTimer > mMaxFadeTime) {
 				setMode(MODE_Operation);
@@ -72,15 +74,17 @@ public:
 				mMenuTitle.update(mFadeTimer / mMaxFadeTime);
 			}
 			break;
-
+		}
 		case MODE_Operation:
+		{
 			if (controller->keyClick(KBBTN_START | KBBTN_A)) {
 				SeSystem::playSysSe(SYSSE_DECIDE1);
 				setMode(MODE_FadeOut);
 			}
 			break;
-
+		}
 		case MODE_FadeOut:
+		{
 			mFadeTimer += gsys->getFrameTime();
 			if (mFadeTimer > mMaxFadeTime) {
 				setMode(MODE_Finished);
@@ -88,9 +92,11 @@ public:
 				mMenuTitle.update(mFadeTimer / mMaxFadeTime);
 			}
 			break;
-
+		}
 		case MODE_Finished:
+		{
 			break;
+		}
 		}
 
 		mMenuPanelMgr.update();
@@ -105,12 +111,15 @@ public:
 		mProgressiveModeMsg->hide();
 		switch (mes) {
 		case MES_Progressive:
+		{
 			mProgressiveModeMsg->show();
 			break;
-
+		}
 		case MES_Interlace:
+		{
 			mInterlaceModeMsg->show();
 			break;
+		}
 		}
 
 		setMode(MODE_FadeIn);
@@ -125,27 +134,32 @@ protected:
 		mMode = mode;
 		switch (mMode) {
 		case MODE_Wait:
+		{
 			mFadeTimer   = 0.0f;
 			mMaxFadeTime = 0.0f;
 			break;
-
+		}
 		case MODE_FadeIn:
+		{
 			mFadeTimer   = 0.0f;
 			mMaxFadeTime = 0.5f;
 			mMenuPanelMgr.start(mMaxFadeTime);
 			mMenuTitle.start();
 			break;
-
+		}
 		case MODE_Operation:
+		{
 			mMenuPanelMgr.operation();
 			break;
-
+		}
 		case MODE_FadeOut:
+		{
 			mFadeTimer   = 0.0f;
 			mMaxFadeTime = 0.5f;
 			mMenuPanelMgr.end(mMaxFadeTime);
 			mMenuTitle.end();
 			break;
+		}
 		}
 	}
 

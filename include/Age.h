@@ -325,29 +325,43 @@ struct AgeServer : public AtxStream {
 	{
 		switch (type) {
 		case CHAR_PROP:
+		{
 			*((u8*)val) = readInt();
 			break;
+		}
 		case SHORT_PROP:
+		{
 			*((u16*)val) = readInt();
 			break;
+		}
 		case INT_PROP:
+		{
 			*((int*)val) = readInt();
 			break;
+		}
 		case FLOAT_PROP:
+		{
 			*((f32*)val) = readFloat();
 			break;
+		}
 		case COLOUR_PROP:
+		{
 			*((u8*)val + 0) = readInt();
 			*((u8*)val + 1) = readInt();
 			*((u8*)val + 2) = readInt();
 			*((u8*)val + 3) = readInt();
 			break;
+		}
 		case CHAR_PTR_PROP:
+		{
 			readString((char*)val, 10000);
 			break;
+		}
 		default:
+		{
 			// ERROR("Unsupported PropType");
 			break;
+		}
 		}
 	}
 
@@ -398,8 +412,10 @@ struct AgeServer : public AtxStream {
 
 			switch (cmd) {
 			default:
+			{
 				// ERROR("Age cmd unknown %d", cmd);
 				break;
+			}
 			case AGE_SRV_CMD_0xCA:
 			{
 				u32 win = readInt();
@@ -467,32 +483,48 @@ struct AgeServer : public AtxStream {
 	{
 		switch (type) {
 		case CHAR_PROP:
+		{
 			writeInt(*(u8*)data);
 			break;
+		}
 		case SHORT_PROP:
+		{
 			writeInt(*(u16*)data);
 			break;
+		}
 		case INT_PROP:
+		{
 			writeInt(*(int*)data);
 			break;
+		}
 		case FLOAT_PROP:
+		{
 			writeFloat(*(f32*)data);
 			break;
+		}
 		case COLOUR_PROP:
+		{
 			writeInt(*((u8*)data));
 			writeInt(*((u8*)data + 1));
 			writeInt(*((u8*)data + 2));
 			writeInt(*((u8*)data + 3));
 			break;
+		}
 		case UNK7:
 		case UNK9:
+		{
 			break;
+		}
 		case CHAR_PTR_PROP:
+		{
 			writeString((char*)data);
 			break;
+		}
 		default:
+		{
 			// ERROR("Unsupported PropType");
 			break;
+		}
 		}
 	}
 

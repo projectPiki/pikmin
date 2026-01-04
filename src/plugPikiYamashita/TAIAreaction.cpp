@@ -55,19 +55,25 @@ void TAIAdying::start(Teki& teki)
 	teki.mHealth = 0.0f;
 	switch (teki.mTekiType) {
 	case TEKI_Mar:
+	{
 		teki.clearTekiOption(BTeki::TEKI_OPTION_LIFE_GAUGE_VISIBLE);
 		teki.createDeadEffect();
 		break;
+	}
 	case TEKI_Dororo:
+	{
 		teki.clearTekiOption(BTeki::TEKI_OPTION_LIFE_GAUGE_VISIBLE);
 		teki.clearTekiOption(BTeki::TEKI_OPTION_SHADOW_VISIBLE);
 		teki.createDeadEffect();
 		break;
+	}
 	default:
+	{
 		teki.clearTekiOption(BTeki::TEKI_OPTION_SHADOW_VISIBLE);
 		teki.createDeadEffect();
 		teki.spawnItems();
 		break;
+	}
 	}
 
 	teki.releasePlatCollisions();
@@ -81,15 +87,20 @@ bool TAIAdying::act(Teki& teki)
 	if (teki.animationFinished()) {
 		switch (teki.mTekiType) {
 		case TEKI_Mar:
+		{
 			teki.clearTekiOption(BTeki::TEKI_OPTION_SHADOW_VISIBLE);
 			// fallthrough
+		}
 		case TEKI_Dororo:
+		{
 			teki.spawnItems();
 			break;
-
+		}
 		case TEKI_Miurin:
+		{
 			teki.createDeadEffect();
 			break;
+		}
 		}
 
 		teki.die();
@@ -145,8 +156,10 @@ bool TAIAdamage::act(Teki& teki)
 			teki.startDamageMotion(teki.getParameterF(TPF_DamageMotionPeriod), teki.getParameterF(TPF_DamageMotionAmplitude));
 			switch (teki.mTekiType) {
 			case TEKI_Tank:
+			{
 				teki.playEventSound(&teki, SE_TANK_DAMAGE);
 				break;
+			}
 			}
 		}
 	}
@@ -198,15 +211,19 @@ bool TAIAinWaterDamage::act(Teki& teki)
 			int attr = MapCode::getAttribute(teki.mGroundTriangle);
 			switch (attr) {
 			case ATTR_Water:
+			{
 				if (teki.getMapCode() != ATTR_Water) {
 					createEffect(teki);
 				}
 				break;
+			}
 			default:
+			{
 				if (teki.getMapCode() == ATTR_Water) {
 					createEffect(teki);
 				}
 				break;
+			}
 			}
 
 			teki.setMapCode(attr);

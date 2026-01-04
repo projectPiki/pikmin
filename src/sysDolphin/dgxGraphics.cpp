@@ -1470,20 +1470,30 @@ void DGXGraphics::setBlendMode(u8 blendFactor, u8 zMode, u8 blendMode)
 
 	switch (blendMode) {
 	case 0:
+	{
 		GXSetTevColorIn(GX_TEVSTAGE0, GX_CC_C0, GX_CC_ONE, GX_CC_TEXC, GX_CC_ZERO);
 		break;
+	}
 	case 1:
+	{
 		GXSetTevColorIn(GX_TEVSTAGE0, GX_CC_ZERO, GX_CC_C0, GX_CC_TEXC, GX_CC_ZERO);
 		break;
+	}
 	case 2:
+	{
 		GXSetTevColorIn(GX_TEVSTAGE0, GX_CC_C2, GX_CC_C0, GX_CC_TEXC, GX_CC_ZERO);
 		break;
+	}
 	case 3:
+	{
 		GXSetTevColorIn(GX_TEVSTAGE0, GX_CC_ZERO, GX_CC_TEXC, GX_CC_C0, GX_CC_C2);
 		break;
+	}
 	case 4:
+	{
 		GXSetTevColorIn(GX_TEVSTAGE0, GX_CC_ZERO, GX_CC_ZERO, GX_CC_ZERO, GX_CC_C0);
 		break;
+	}
 	}
 }
 
@@ -1503,37 +1513,50 @@ int DGXGraphics::setCBlending(int blendMode)
 
 	switch (blendMode) {
 	case BLEND_Alpha:
+	{
 		GXSetTevOp(GX_TEVSTAGE0, GX_MODULATE);
 		GXSetBlendMode(GX_BM_BLEND, GX_BL_SRCALPHA, GX_BL_INVSRCALPHA, GX_LO_CLEAR);
 		GXSetZMode(GX_TRUE, GX_LEQUAL, GX_TRUE);
 		break;
+	}
 	case BLEND_Additive:
+	{
 		GXSetTevOp(GX_TEVSTAGE0, GX_MODULATE);
 		GXSetBlendMode(GX_BM_BLEND, GX_BL_ONE, GX_BL_ONE, GX_LO_SET);
 		GXSetZMode(GX_TRUE, GX_LEQUAL, GX_FALSE);
 		break;
+	}
 	case BLEND_InverseColor:
+	{
 		GXSetTevOp(GX_TEVSTAGE0, GX_MODULATE);
 		GXSetBlendMode(GX_BM_BLEND, GX_BL_ZERO, GX_BL_INVSRCCOL, GX_LO_CLEAR);
 		GXSetZMode(GX_FALSE, GX_LEQUAL, GX_FALSE);
 		break;
+	}
 	case BLEND_AlphaAdditive:
+	{
 		GXSetTevOp(GX_TEVSTAGE0, GX_MODULATE);
 		GXSetBlendMode(GX_BM_BLEND, GX_BL_SRCALPHA, GX_BL_ONE, GX_LO_SET);
 		GXSetZMode(GX_TRUE, GX_LEQUAL, GX_FALSE);
 		break;
+	}
 	case BLEND_AdditiveNoZ:
+	{
 		GXSetTevOp(GX_TEVSTAGE0, GX_MODULATE);
 		GXSetBlendMode(GX_BM_BLEND, GX_BL_ONE, GX_BL_ONE, GX_LO_SET);
 		GXSetZMode(GX_FALSE, GX_LEQUAL, GX_FALSE);
 		break;
+	}
 	case BLEND_AlphaTest:
+	{
 		GXSetTevOp(GX_TEVSTAGE0, GX_MODULATE);
 		GXSetBlendMode(GX_BM_BLEND, GX_BL_SRCALPHA, GX_BL_INVSRCALPHA, GX_LO_CLEAR);
 		GXSetZMode(GX_TRUE, GX_LEQUAL, GX_TRUE);
 		GXSetAlphaCompare(GX_GEQUAL, 0x80, GX_AOP_AND, GX_LEQUAL, 0xff);
 		break;
+	}
 	case BLEND_MultiTexture:
+	{
 		GXSetBlendMode(GX_BM_BLEND, GX_BL_SRCALPHA, GX_BL_INVSRCALPHA, GX_LO_CLEAR);
 		GXSetZMode(GX_FALSE, GX_LEQUAL, GX_FALSE);
 		GXSetNumTexGens(2);
@@ -1567,6 +1590,7 @@ int DGXGraphics::setCBlending(int blendMode)
 
 		GXSetAlphaCompare(GX_GEQUAL, 0, GX_AOP_AND, GX_LESS, 0xff);
 		break;
+	}
 	}
 	return old;
 }

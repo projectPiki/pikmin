@@ -22,11 +22,13 @@ void ActFormation::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
 	case KEY_Action0:
+	{
 		mPiki->mVelocity.set(0.0f, 0.0f, 0.0f);
 		mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 		break;
-
+	}
 	case KEY_Finished:
+	{
 		if (mIsIdling || mHasStartedIdleAnim) {
 			if (mHasStartedIdleAnim) {
 				mIdleTimer          = (15.0f * gsys->getRand(1.0f)) + 15.0f;
@@ -61,6 +63,7 @@ void ActFormation::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 		}
 
 		break;
+	}
 	}
 }
 

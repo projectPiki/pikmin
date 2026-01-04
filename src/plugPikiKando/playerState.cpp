@@ -946,51 +946,69 @@ void PlayerState::UfoParts::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 
 	switch (event.mEventType) {
 	case KEY_LoopEnd:
+	{
 		if (motionIdx == PelletMotion::Piston) {
 			switch (mModelID) {
 			case UFOID_WhimsicalRadar:
+			{
 				ufo->playEventSound(ufo, SE_UFO_ANTENNA);
 				break;
+			}
 			case UFOID_GuardSatellite:
+			{
 				ufo->playEventSound(ufo, SE_UFO_SATELLITE);
 				break;
+			}
 			case UFOID_Bowsprit:
+			{
 				break;
+			}
 			}
 		} else {
 			ID32(mModelID).mStringID;
 			switch (mModelID) {
 			case UFOID_MainEngine:
+			{
 				ufo->playEventSound(ufo, SE_UFO_ENGINE);
 				// fallthrough (seems like a bug)
+			}
 			case UFOID_WhimsicalRadar:
+			{
 				ufo->playEventSound(ufo, SE_UFO_RADER);
 				break;
 			}
+			}
 		}
 		break;
-
+	}
 	case KEY_Finished:
+	{
 		startMotion(PelletMotion::After, PelletMotion::After);
 		mMotionSpeed = 30.0f;
 		PRINT("*** AFTER MOTION START * (%s)\n", ID32(mModelID).mStringID);
 		break;
-
+	}
 	case KEY_PlayEffect:
+	{
 		if (motionIdx == PelletMotion::Appear) {
 			PRINT("UFO PARTS * GOT EFFECT KEY : index=%d\n", event.mValue);
 			switch (event.mValue) {
 			case 0:
+			{
 				effectMgr->create(EffectMgr::EFF_UfoPart_ASN01, mRepairEffectPosition, nullptr, nullptr);
 				PRINT("assign effect 01\n");
 				break;
+			}
 			case 1:
+			{
 				effectMgr->create(EffectMgr::EFF_UfoPart_ASN02, mRepairEffectPosition, nullptr, nullptr);
 				PRINT("assign effect 02\n");
 				break;
 			}
+			}
 		}
 		break;
+	}
 	}
 
 	STACK_PAD_VAR(2);
@@ -1084,6 +1102,7 @@ void PlayerState::getUfoParts(u32 partID, bool isInvisiblePart)
 
 	switch (partID) {
 	case UFOID_WhimsicalRadar:
+	{
 		mShipEffectPartFlag |= 1;
 		for (int i = 0; i < 10; i++) {
 			PRINT("U GOT RADAR !\n");
@@ -1092,8 +1111,9 @@ void PlayerState::getUfoParts(u32 partID, bool isInvisiblePart)
 			ERROR("sonna!");
 		}
 		break;
-
+	}
 	case UFOID_IoniumJet1:
+	{
 		mShipEffectPartFlag |= 2;
 		for (int i = 0; i < 10; i++) {
 			PRINT("U GOT LEFT HORN !\n");
@@ -1102,8 +1122,9 @@ void PlayerState::getUfoParts(u32 partID, bool isInvisiblePart)
 			ERROR("sonna!\n");
 		}
 		break;
-
+	}
 	case UFOID_IoniumJet2:
+	{
 		mShipEffectPartFlag |= 4;
 		for (int i = 0; i < 10; i++) {
 			PRINT("U GOT RIGHT HORN !\n");
@@ -1112,6 +1133,7 @@ void PlayerState::getUfoParts(u32 partID, bool isInvisiblePart)
 			ERROR("sonna!\n");
 		}
 		break;
+	}
 	}
 
 	mStagePartsCollected[flowCont.mCurrentStage->mStageID]++;

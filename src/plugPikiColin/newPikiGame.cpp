@@ -1110,6 +1110,7 @@ ModeState* MessageModeState::update(u32& result)
 		// you killed your captain!
 		switch (mState) {
 		case STATE_Starting:
+		{
 			// start the timer.
 			mStateTimer -= gsys->getFrameTime();
 			if (mStateTimer < 0.0f) {
@@ -1121,8 +1122,9 @@ ModeState* MessageModeState::update(u32& result)
 				mState = STATE_Desaturate;
 			}
 			break;
-
+		}
 		case STATE_Desaturate:
+		{
 			mStateTimer -= gsys->getFrameTime();
 			if (mStateTimer < 0.0f) {
 				mStateTimer              = 3.0f;
@@ -1130,16 +1132,18 @@ ModeState* MessageModeState::update(u32& result)
 				mState                   = STATE_FadeOut;
 			}
 			break;
-
+		}
 		case STATE_FadeOut:
+		{
 			mStateTimer -= gsys->getFrameTime();
 			if (mStateTimer < 0.0f) {
 				mStateTimer = 2.0f;
 				mState      = STATE_ForceDayEnd;
 			}
 			break;
-
+		}
 		case STATE_ForceDayEnd:
+		{
 			mapMgr->mTargetFadeLevel    = 0.0f;
 			mapMgr->mTargetDesaturation = 0.0f;
 			PRINT("DOING FORCE RESULTS SCREEN !!!\n");
@@ -1163,6 +1167,7 @@ ModeState* MessageModeState::update(u32& result)
 				gameoverWindow = nullptr;
 			}
 			break;
+		}
 		}
 
 	} else if (flowCont.mGameEndFlag == GAMEEND_None) {
@@ -1226,22 +1231,25 @@ ModeState* DayOverModeState::update(u32& result)
 		ModeState* nextState = nullptr;
 		switch (mState) {
 		case STATE_PhaseZero:
+		{
 #if defined(VERSION_GPIP01_00)
 			OSReport("!!!!!!!!!!!!!! INITIALISE PHASE ONE!!!!\n");
 			OSReport("!!!!!!!!!!!!!! INITIALISE PHASE ONE!!!!\n");
 #endif
 			nextState = initialisePhaseOne();
 			break;
-
+		}
 		case STATE_PhaseOne:
+		{
 #if defined(VERSION_GPIP01_00)
 			OSReport("!!!!!!!!!!!!!! INITIALISE PHASE TWO!!!!\n");
 			OSReport("!!!!!!!!!!!!!! INITIALISE PHASE TWO!!!!\n");
 #endif
 			nextState = initialisePhaseTwo();
 			break;
-
+		}
 		case STATE_PhaseTwo:
+		{
 #if defined(VERSION_GPIP01_00)
 			OSReport("!!!!!!!!!!!!!! INITIALISE PHASE THREE!!!!\n");
 			OSReport("!!!!!!!!!!!!!! INITIALISE PHASE THREE!!!!\n");
@@ -1249,14 +1257,16 @@ ModeState* DayOverModeState::update(u32& result)
 			// in reality, we only end up here if none of the below checks transit us to a QuittingGameModeState
 			nextState = initialisePhaseThree();
 			break;
-
+		}
 		case STATE_PhaseThree:
+		{
 #if defined(VERSION_GPIP01_00)
 			OSReport("!!!!!!!!!!!!!! INITIALISE PHASE FOUR!!!!\n");
 			OSReport("!!!!!!!!!!!!!! INITIALISE PHASE FOUR!!!!\n");
 #endif
 			nextState = initialisePhaseFour();
 			break;
+		}
 		}
 
 		if (nextState) {
@@ -2555,6 +2565,7 @@ void GameMovieInterface::parse(GameMovieInterface::SimpleMessage& msg)
 
 	switch (cmd) {
 	case MOVIECMD_TextDemo:
+	{
 		// open a text window - data here should use the zen::ogScrTutorialMgr::EnumTutorial enum (text ID)
 		PRINT("***** START TUTORIAL WINDOW\n");
 		int ufoPartID = -1;
@@ -2610,29 +2621,34 @@ void GameMovieInterface::parse(GameMovieInterface::SimpleMessage& msg)
 		createTutorialWindow(data, ufoPartID, hasAudio);
 		gameflow.mIsUIOverlayActive = TRUE;
 		break;
-
+	}
 	case MOVIECMD_Unused:
+	{
 		// bad!
 		ERROR("SHOULD NOT GET THIS COMMAND!!!\n");
 		break;
-
+	}
 	case MOVIECMD_ForceDayEnd:
+	{
 		// force day to end
 		gamecore->forceDayEnd();
 		gameflow.mIsDayEndTriggered = TRUE;
 		break;
-
+	}
 	case MOVIECMD_HideHUD:
+	{
 		// hide the game HUD with a 0.5s fade-out
 		showFrame(false, 0.5f);
 		break;
-
+	}
 	case MOVIECMD_ShowHUD:
+	{
 		// show the game HUD with a 0.5s fade-in
 		showFrame(true, 0.5f);
 		break;
-
+	}
 	case MOVIECMD_GameEndCondition:
+	{
 		// cause the day to end. data here should use `GameEndCause` enum.
 		if (data == ENDCAUSE_PikminZero) {
 			// pikmin zero!
@@ -2669,21 +2685,24 @@ void GameMovieInterface::parse(GameMovieInterface::SimpleMessage& msg)
 			PRINT("got navi dead flag!!\n");
 		}
 		break;
-
+	}
 	case MOVIECMD_ForceResults:
+	{
 		// force going to results screen - in practice, this does nothing.
 		PRINT("got FORCE RESULTS SCREEN !!!\n");
 		flowCont.mGameEndFlag = GAMEEND_None;
 		break;
-
+	}
 	case MOVIECMD_StartMovie:
+	{
 		// start playing a cutscene
 		bool useNaviView = (data & CinePlayerFlags::UseNaviView) != 0;
 		gamecore->startMovie(data & ~CinePlayerFlags::UseNaviView, useNaviView);
 		PRINT("%s\n", useNaviView ? "HIDING NAVI!!!" : "not hiding!");
 		break;
-
+	}
 	case MOVIECMD_EndMovie:
+	{
 		// stop playing a cutscene
 #if defined(VERSION_PIKIDEMO)
 		// demo version takes no parameter because it has no cutscene-specific behaviour
@@ -2693,67 +2712,78 @@ void GameMovieInterface::parse(GameMovieInterface::SimpleMessage& msg)
 		gamecore->endMovie(data);
 #endif
 		break;
-
+	}
 	case MOVIECMD_FadeOut:
+	{
 		// start a fade-out from gameplay
 		mSetupSection->mTargetFade = 0.0f;
 		mSetupSection->mFadeSpeed  = 4.5f;
 		break;
-
+	}
 	case MOVIECMD_FadeIn:
+	{
 		// start a fade-in to gameplay
 		mSetupSection->mCurrentFade = 0.0f;
 		mSetupSection->mTargetFade  = 1.0f;
 		mSetupSection->mFadeSpeed   = 2.5f;
 		break;
-
+	}
 	case MOVIECMD_CleanupDayEnd:
+	{
 		// cleanup day end! we clearly should not get this message.
 		PRINT("MESSAGE CLEANUPDAYEND!!!!\n");
 		PRINT("wwwwwhhhhyyyyyy??????|!!!\n");
 		gamecore->cleanupDayEnd();
 		break;
-
+	}
 	case MOVIECMD_StartTotalResults:
+	{
 		// start the final results for story mode
 		PRINT("starting total results!!\n");
 		totalWindow->start();
 		Jac_SceneSetup(SCENE_Results, JACRES_FinalResult);
 		break;
-
+	}
 	case MOVIECMD_SpecialDayEnd:
+	{
 		// we collected all the parts! end the day and show the happy ending.
 		gamecore->forceDayEnd();
 		gameflow.mIsDayEndTriggered = TRUE;
 		flowCont.mEndingType        = ENDING_Happy;
 		break;
-
+	}
 	case MOVIECMD_SetPauseAllowed:
+	{
 		// allow/disallow pausing. data here is a BOOL for whether to allow pausing.
 		gameflow.mIsPauseAllowed = data;
 		break;
-
+	}
 	case MOVIECMD_CountDownLastSecond:
+	{
 		// this does nothing - maybe commented out code, or some flexibility for handling things last-second?
 		break;
-
+	}
 	case MOVIECMD_StageFinish:
+	{
 		// game over! pikmin extinction or navi dead, end the day.
 		PRINT("GOT STAGE FINISH MESSAGE!!!\n");
 		gamecore->forceDayEnd();
 		break;
-
+	}
 	case MOVIECMD_CreateMenuWindow:
+	{
 		// open the Y menu (map and controls etc)
 		createMenuWindow();
 		break;
-
+	}
 #if defined(VERSION_G98E01_PIKIDEMO)
 	case MOVIECMD_DemoFinish:
+	{
 		// show the happy ending text at the end of the demo :)
 		createTutorialWindow(zen::ogScrTutorialMgr::TUT_HappyEnding, -1, false);
 		gameflow.mIsUIOverlayActive = TRUE;
 		break;
+	}
 #else
 #endif
 	}

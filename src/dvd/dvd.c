@@ -426,6 +426,7 @@ static void stateCheckID()
 {
 	switch (CurrCommand) {
 	case 3:
+	{
 		if (memcmp(tmpBuffer, executing->id, 0x1C) != FALSE) {
 			DVDLowStopMotor(cbForStateCheckID1);
 		} else {
@@ -436,7 +437,9 @@ static void stateCheckID()
 			stateCheckID2(executing);
 		}
 		break;
+	}
 	default:
+	{
 		if (memcmp(tmpBuffer, currID, sizeof(DVDDiskID)) != 0) {
 			DVDLowStopMotor(cbForStateCheckID1);
 		} else {
@@ -444,6 +447,7 @@ static void stateCheckID()
 			stateCheckID3(executing);
 		}
 		break;
+	}
 	}
 }
 
@@ -554,6 +558,7 @@ static void stateCoverClosed()
 	case 5:
 	case 13:
 	case 15:
+	{
 		__DVDClearWaitingQueue();
 		cmdBlock  = executing;
 		executing = &DummyCommandBlock;
@@ -562,11 +567,14 @@ static void stateCoverClosed()
 		}
 		stateReady();
 		break;
+	}
 	default:
+	{
 		DVDReset();
 		OSCreateAlarm(&ResetAlarm);
 		OSSetAlarm(&ResetAlarm, OSMillisecondsToTicks(1150), AlarmHandler);
 		break;
+	}
 	}
 }
 
@@ -651,39 +659,47 @@ void stateReady()
 	if (ResumeFromHere) {
 		switch (ResumeFromHere) {
 		case 1:
+		{
 			executing->state = 6;
 			stateMotorStopped();
 			break;
-
+		}
 		case 2:
+		{
 			executing->state = 11;
 			stateMotorStopped();
 			break;
-
+		}
 		case 3:
+		{
 			executing->state = 4;
 			stateMotorStopped();
 			break;
-
+		}
 		case 7:
+		{
 			executing->state = 7;
 			stateMotorStopped();
 			break;
-
+		}
 		case 4:
+		{
 			executing->state = 5;
 			stateMotorStopped();
 			break;
-
+		}
 		case 6:
+		{
 			executing->state = 3;
 			stateCoverClosed();
 			break;
-
+		}
 		case 5:
+		{
 			executing->state = -1;
 			stateError(CancelLastError);
 			break;
+		}
 		}
 
 		ResumeFromHere = 0;
@@ -706,32 +722,39 @@ void stateBusy(DVDCommandBlock* block)
 	LastState = stateBusy;
 	switch (block->command) {
 	case 5:
+	{
 		__DIRegs[DI_COVER_STATUS] = __DIRegs[DI_COVER_STATUS];
 		block->currTransferSize   = sizeof(DVDDiskID);
 		DVDLowReadDiskID(block->addr, cbForStateBusy);
 		break;
+	}
 	case 1:
 	case 4:
+	{
 		__DIRegs[DI_COVER_STATUS] = __DIRegs[DI_COVER_STATUS];
 		block->currTransferSize   = DVDMIN(block->length - block->transferredSize, 0x80000);
 		DVDLowRead((void*)((u8*)block->addr + block->transferredSize), block->currTransferSize, block->offset + block->transferredSize,
 		           cbForStateBusy);
 		break;
-
+	}
 	case 2:
+	{
 		__DIRegs[DI_COVER_STATUS] = __DIRegs[DI_COVER_STATUS];
 		DVDLowSeek(block->offset, cbForStateBusy);
 		break;
-
+	}
 	case 3:
+	{
 		DVDLowStopMotor(cbForStateBusy);
 		break;
-
+	}
 	case 15:
+	{
 		DVDLowStopMotor(cbForStateBusy);
 		break;
-
+	}
 	case 6:
+	{
 		__DIRegs[DI_COVER_STATUS] = __DIRegs[DI_COVER_STATUS];
 		if (AutoFinishing) {
 			executing->currTransferSize = 0;
@@ -741,48 +764,57 @@ void stateBusy(DVDCommandBlock* block)
 			DVDLowAudioStream(0, block->length, block->offset, cbForStateBusy);
 		}
 		break;
-
+	}
 	case 7:
+	{
 		__DIRegs[DI_COVER_STATUS] = __DIRegs[DI_COVER_STATUS];
 		DVDLowAudioStream(0x10000, 0, 0, cbForStateBusy);
 		break;
-
+	}
 	case 8:
+	{
 		__DIRegs[DI_COVER_STATUS] = __DIRegs[DI_COVER_STATUS];
 		AutoFinishing             = TRUE;
 		DVDLowAudioStream(0, 0, 0, cbForStateBusy);
 		break;
-
+	}
 	case 9:
+	{
 		__DIRegs[DI_COVER_STATUS] = __DIRegs[DI_COVER_STATUS];
 		DVDLowRequestAudioStatus(0, cbForStateBusy);
 		break;
-
+	}
 	case 10:
+	{
 		__DIRegs[DI_COVER_STATUS] = __DIRegs[DI_COVER_STATUS];
 		DVDLowRequestAudioStatus(0x10000, cbForStateBusy);
 		break;
-
+	}
 	case 11:
+	{
 		__DIRegs[DI_COVER_STATUS] = __DIRegs[DI_COVER_STATUS];
 		DVDLowRequestAudioStatus(0x20000, cbForStateBusy);
 		break;
-
+	}
 	case 12:
+	{
 		__DIRegs[DI_COVER_STATUS] = __DIRegs[DI_COVER_STATUS];
 		DVDLowRequestAudioStatus(0x30000, cbForStateBusy);
 		break;
-
+	}
 	case 13:
+	{
 		__DIRegs[DI_COVER_STATUS] = __DIRegs[DI_COVER_STATUS];
 		DVDLowAudioBufferConfig(block->offset, block->length, cbForStateBusy);
 		break;
-
+	}
 	case 14:
+	{
 		__DIRegs[DI_COVER_STATUS] = __DIRegs[DI_COVER_STATUS];
 		block->currTransferSize   = sizeof(DVDDriveInfo);
 		DVDLowInquiry(block->addr, cbForStateBusy);
 		break;
+	}
 	}
 }
 
@@ -1429,11 +1461,13 @@ BOOL DVDCancelAsync(DVDCommandBlock* block, DVDCBCallback callback)
 	case -1:
 	case 0:
 	case 10:
+	{
 		if (callback)
 			(*callback)(0, block);
 		break;
-
+	}
 	case 1:
+	{
 		if (Canceling) {
 			OSRestoreInterrupts(enabled);
 			return FALSE;
@@ -1445,8 +1479,9 @@ BOOL DVDCancelAsync(DVDCommandBlock* block, DVDCBCallback callback)
 			DVDLowBreak();
 		}
 		break;
-
+	}
 	case 2:
+	{
 		__DVDDequeueWaitingQueue(block);
 		block->state = 10;
 		if (block->callback)
@@ -1454,18 +1489,21 @@ BOOL DVDCancelAsync(DVDCommandBlock* block, DVDCBCallback callback)
 		if (callback)
 			(*callback)(0, block);
 		break;
-
+	}
 	case 3:
+	{
 		switch (block->command) {
 		case 5:
 		case 4:
 		case 13:
 		case 15:
+		{
 			if (callback)
 				(*callback)(0, block);
 			break;
-
+		}
 		default:
+		{
 			if (Canceling) {
 				OSRestoreInterrupts(enabled);
 				return FALSE;
@@ -1474,13 +1512,15 @@ BOOL DVDCancelAsync(DVDCommandBlock* block, DVDCBCallback callback)
 			CancelCallback = callback;
 			break;
 		}
+		}
 		break;
-
+	}
 	case 4:
 	case 5:
 	case 6:
 	case 7:
 	case 11:
+	{
 		old = DVDLowClearCallback();
 		if (old != cbForStateMotorStopped) {
 			OSRestoreInterrupts(enabled);
@@ -1507,6 +1547,7 @@ BOOL DVDCancelAsync(DVDCommandBlock* block, DVDCBCallback callback)
 		}
 		stateReady();
 		break;
+	}
 	}
 
 	OSRestoreInterrupts(enabled);
@@ -1649,9 +1690,10 @@ BOOL DVDCheckDisk()
 	case 9:
 	case 10:
 	case 2:
+	{
 		result = TRUE;
 		break;
-
+	}
 	case -1:
 	case 11:
 	case 7:
@@ -1659,11 +1701,13 @@ BOOL DVDCheckDisk()
 	case 4:
 	case 5:
 	case 6:
+	{
 		result = FALSE;
 		break;
-
+	}
 	case 0:
 	case 8:
+	{
 		coverReg = __DIRegs[1];
 		if (((coverReg >> 2) & 1) || (coverReg & 1)) {
 			result = FALSE;
@@ -1671,6 +1715,7 @@ BOOL DVDCheckDisk()
 			result = TRUE;
 		}
 		break;
+	}
 	}
 
 	OSRestoreInterrupts(enabled);

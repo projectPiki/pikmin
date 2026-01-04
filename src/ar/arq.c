@@ -170,25 +170,25 @@ void ARQPostRequest(ARQRequest* task, u32 owner, u32 type, u32 priority, u32 sou
 
 	switch (priority) {
 	case ARQ_PRIORITY_LOW:
+	{
 		if (__ARQRequestQueueLo) {
 			__ARQRequestTailLo->next = task;
 		} else {
 			__ARQRequestQueueLo = task;
 		}
 		__ARQRequestTailLo = task;
-
 		break;
-
+	}
 	case ARQ_PRIORITY_HIGH:
+	{
 		if (__ARQRequestQueueHi) {
 			__ARQRequestTailHi->next = task;
 		} else {
 			__ARQRequestQueueHi = task;
 		}
-
 		__ARQRequestTailHi = task;
-
 		break;
+	}
 	}
 
 	if ((__ARQRequestPendingHi == NULL) && (__ARQRequestPendingLo == NULL)) {

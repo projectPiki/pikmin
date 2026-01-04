@@ -292,22 +292,27 @@ f32 Bank_OscToOfs(Osc_* osc, Oscbuf_* buf)
 
 	switch (buf->curveType) {
 	case 0:
+	{
 		break;
+	}
 	case 1:
+	{
 		if (calc > 0.0f) {
 			calc = calc * calc;
 		} else {
 			calc = -calc * calc;
 		}
 		break;
-
+	}
 	case 2:
+	{
 		if (calc > 0.0f) {
 			calc = sqrtf2(calc);
 		} else {
 			calc = -sqrtf2(-calc);
 		}
 		break;
+	}
 	}
 	return calc * osc->width + osc->vertex;
 }

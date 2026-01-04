@@ -178,18 +178,23 @@ zen::ogNitakuMgr::NitakuStatus zen::ogNitakuMgr::update(Controller* input)
 
 	switch (mStatus) {
 	case Status_1:
+	{
 		mWaitTimer += gsys->getFrameTime();
 		if (mWaitTimer >= 0.2f) {
 			mStatus = Status_3;
 		}
 		break;
+	}
 	case Exiting:
+	{
 		mWaitTimer += gsys->getFrameTime();
 		if (mWaitTimer >= 0.2f) {
 			mStatus = mStatus2;
 		}
 		break;
+	}
 	case Status_3:
+	{
 		if (input->keyClick(KBBTN_MSTICK_UP)) {
 			if (mIsYes) {
 				MoveCursorNo(0.25f);
@@ -222,6 +227,7 @@ zen::ogNitakuMgr::NitakuStatus zen::ogNitakuMgr::update(Controller* input)
 			cursorDisable(0.2f);
 		}
 		break;
+	}
 	}
 
 	if (mStatus >= Status_4) {

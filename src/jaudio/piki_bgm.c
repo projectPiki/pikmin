@@ -345,17 +345,25 @@ void Jac_SetBgmModeFlag(u32 trackNo, u8 flag, u8 doSet)
 	BgmControl_* thisBgm = &bgm[trackNo];
 	switch (flag) {
 	case 2:
+	{
 		thisBgm->battleMixEnabled = doSet;
 		break;
+	}
 	case 1:
+	{
 		thisBgm->normalMixEnabled = doSet;
 		break;
+	}
 	case 4:
+	{
 		thisBgm->trackIntensity = doSet;
 		break;
+	}
 	case 8:
+	{
 		thisBgm->isFadeOut = doSet;
 		break;
+	}
 	}
 	z = thisBgm->isFadeOut << 3;
 	x = thisBgm->battleMixEnabled << 1;
@@ -449,12 +457,15 @@ void Jac_ChangeBgmTrackVol(BgmControl_* control)
 	for (i = 0; i < 16; i++) {
 		switch ((mute >> i) & 0x1) {
 		case 0:
+		{
 			control->trackVolumes[i] = 0.0f;
 			break;
-
+		}
 		case 1:
+		{
 			control->trackVolumes[i] = vol;
 			break;
+		}
 		}
 	}
 
@@ -519,22 +530,26 @@ void Jac_EasyCrossFade(u8 mode, u32 fadeTime)
 	u32* REF_val = &fadeTime;
 	switch (mode) {
 	case 0: // exit boss mode
+	{
 		bgm[0].gameVolume = game_bgm_volume;
 		bgm[1].gameVolume = 0.0f;
 		Jam_MuteTrack(Jaf_HandleToSeq(bgm[0].trackHandle), 0);
 		last_crossmode = 0;
 		break;
-
+	}
 	case 1: // enter boss mode
+	{
 		bgm[1].gameVolume = game_bgm_volume;
 		bgm[0].gameVolume = 0.0f;
 		Jam_MuteTrack(Jaf_HandleToSeq(bgm[1].trackHandle), 0);
 		break;
-
+	}
 	case 2: // volume changed
+	{
 		bgm[last_crossmode].gameVolume = game_bgm_volume;
 		bgm[last_crossmode].crossfade  = fadeTime;
 		return;
+	}
 	}
 
 	bgm[0].crossfade = fadeTime;
@@ -554,26 +569,31 @@ void Jac_DemoFade(u8 type, u32 val, f32 multiplier)
 
 	switch (type) {
 	case 0:
+	{
 		bgm[0].gameVolume = bgm[0].prevVolume;
 		bgm[1].gameVolume = bgm[1].prevVolume;
 		break;
-
+	}
 	case 1:
+	{
 		bgm[0].prevVolume = bgm[0].gameVolume;
 		bgm[1].prevVolume = bgm[1].gameVolume;
 		bgm[0].gameVolume = multiplier * bgm[0].gameVolume;
 		bgm[1].gameVolume = multiplier * bgm[1].gameVolume;
 		break;
-
+	}
 	case 2:
+	{
 		bgm[0].gameVolume = multiplier * bgm[0].prevVolume;
 		bgm[1].gameVolume = multiplier * bgm[1].prevVolume;
 		break;
-
+	}
 	case 3:
+	{
 		bgm[0].gameVolume = multiplier;
 		bgm[1].gameVolume = multiplier;
 		break;
+	}
 	}
 
 	bgm[0].crossfade = val;

@@ -192,14 +192,20 @@ struct TitleSetupSection : public Node {
 
 			switch (i) {
 			case 0:
+			{
 				light->mCamera.mPosition.set(500.0f, 300.0f, -25.0f);
 				break;
+			}
 			case 1:
+			{
 				light->mCamera.mPosition.set(25.0f, 300.0f, -12.0f);
 				break;
+			}
 			case 2:
+			{
 				light->mCamera.mPosition.set(500.0f, 300.0f, 500.0f);
 				break;
+			}
 			}
 			light->mCamera.mFocus.set(0.0f, 0.0f, 0.0f);
 			light->mCamera.mFocus.y = 10.0f;
@@ -769,9 +775,11 @@ void TitlesMovieInterface::message(int cmd, int)
 {
 	switch (cmd) {
 	case TITLECMD_ShowStartMenu:
+	{
 		startWindow->start();
 		startWindowOn = true;
 		break;
+	}
 	}
 }
 
@@ -834,9 +842,11 @@ void TitlesSection::init()
 
 	switch (gameflow.mNextOnePlayerSectionID) {
 	case ONEPLAYER_GameSetup:
+	{
 		// do the actual setup and control handling
 		add(new TitleSetupSection);
 		break;
+	}
 	}
 
 	PRINT("ending loading!\n");

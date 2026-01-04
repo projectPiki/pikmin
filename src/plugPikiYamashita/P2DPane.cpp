@@ -309,14 +309,20 @@ void P2DPane::makeMatrix(int x, int y)
 	Vector3f rotAxis;
 	switch (mFlag.mRotationAxis) {
 	case PANEAXIS_X:
+	{
 		rotAxis.set(mRotation, 0.0f, 0.0f);
 		break;
+	}
 	case PANEAXIS_Y:
+	{
 		rotAxis.set(0.0f, mRotation, 0.0f);
 		break;
+	}
 	case PANEAXIS_Z:
+	{
 		rotAxis.set(0.0f, 0.0f, mRotation);
 		break;
+	}
 	}
 
 	mLocalMtx.makeSRT(mScale, rotAxis, Vector3f(f32(mOffsetX) + f32(x), f32(mOffsetY) + f32(y), mPaneZ));

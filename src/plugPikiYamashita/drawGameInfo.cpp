@@ -606,21 +606,25 @@ zen::DrawGameInfo::DrawGameInfo(zen::DrawGameInfo::playModeFlag playMode)
 
 	switch (playMode) {
 	case MODE_Story:
+	{
 		mModeScreenMgr = new DGIScreenMgr("screen/blo/play_day.blo");
 		break;
-
+	}
 	case MODE_Challenge:
+	{
 #if defined(VERSION_PIKIDEMO)
 		mModeScreenMgr = new DGIScreenMgr("screen/blo/ot_play.blo");
 #else
 		mModeScreenMgr = new DGIScreenMgr("screen/blo/play_cha.blo");
 #endif
 		break;
-
+	}
 	default:
+	{
 		PRINT("ERROR! unknown play mode %d \n", playMode);
 		ERROR("ERROR! unknown play mode %d \n", playMode);
 		break;
+	}
 	}
 
 	pGameInfo = &mInfo;

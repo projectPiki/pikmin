@@ -166,11 +166,13 @@ void NaviPelletState::procAnimMsg(Navi* navi, MsgAnim* msg)
 {
 	switch (msg->mKeyEvent->mEventType) {
 	case KEY_Finished:
+	{
 		if (mIsFinished) {
 			PRINT("exit pellet state\n");
 			transit(navi, NAVISTATE_Walk);
 		}
 		break;
+	}
 	}
 }
 
@@ -408,6 +410,7 @@ void NaviBuryState::exec(Navi* navi)
 
 	switch (mBuryState) {
 	case 0:
+	{
 		if ((stickMag > 0.8f && mPreviousStickInput.dot(stickInput) < 0.5f) || navi->mKontroller->keyClick(KBBTN_A)
 		    || navi->mKontroller->keyClick(KBBTN_B)) {
 			mPreviousStickInput   = stickInput;
@@ -417,8 +420,10 @@ void NaviBuryState::exec(Navi* navi)
 			navi->startMotion(PaniMotionInfo(PIKIANIM_GFuri1, navi), PaniMotionInfo(PIKIANIM_GFuri1));
 		}
 		break;
+	}
 	case 1:
 	case 2:
+	{
 		if ((stickMag > 0.8f && mPreviousStickInput.dot(stickInput) < -0.6f) || navi->mKontroller->keyClick(KBBTN_A)
 		    || navi->mKontroller->keyClick(KBBTN_B)) {
 			mEscapeAttemptCounter++;
@@ -432,6 +437,7 @@ void NaviBuryState::exec(Navi* navi)
 			}
 		}
 		break;
+	}
 	}
 
 	if (mEscapeTimer) {
@@ -452,16 +458,20 @@ void NaviBuryState::procAnimMsg(Navi* navi, MsgAnim* msg)
 	switch (msg->mKeyEvent->mEventType) {
 	case KEY_Finished:
 	case KEY_LoopEnd:
+	{
 		switch (mBuryState) {
 		case 0:
+		{
 			if (gsys->getRand(1.0f) > 0.66f) {
 				navi->startMotion(PaniMotionInfo(PIKIANIM_GWait2, navi), PaniMotionInfo(PIKIANIM_GWait2));
 			} else {
 				navi->startMotion(PaniMotionInfo(PIKIANIM_GWait1, navi), PaniMotionInfo(PIKIANIM_GWait1));
 			}
 			break;
+		}
 		case 1:
 		case 2:
+		{
 			if (mEscapeAttemptCounter == 0) {
 				navi->startMotion(PaniMotionInfo(PIKIANIM_GWait1, navi), PaniMotionInfo(PIKIANIM_GWait1));
 				mBuryState = 0;
@@ -479,26 +489,36 @@ void NaviBuryState::procAnimMsg(Navi* navi, MsgAnim* msg)
 				mEscapeAttemptCounter = 0;
 			}
 			break;
+		}
 		case 3:
+		{
 			transit(navi, NAVISTATE_Walk);
 			break;
 		}
+		}
 		break;
+	}
 	case KEY_PlayEffect:
+	{
 		switch (mBuryState) {
 		case 2:
+		{
 			f32 randAngle = 2.0f * (PI * gsys->getRand(1.0f));
 			f32 height    = 80.0f;
 			Vector3f dir(40.0f * sinf(randAngle), height, 40.0f * cosf(randAngle));
 			EffectParm parm(navi->mSRT.t, dir);
 			UtEffectMgr::cast(KandoEffect::SmokeSoil, parm);
 			break;
+		}
 		case 3:
+		{
 			effectMgr->create(EffectMgr::EFF_SD_DirtCloud, navi->mSRT.t, nullptr, nullptr);
 			effectMgr->create(EffectMgr::EFF_SD_DirtSpray, navi->mSRT.t, nullptr, nullptr);
 			break;
 		}
+		}
 		break;
+	}
 	}
 }
 
@@ -1258,8 +1278,10 @@ void NaviFunbariState::procAnimMsg(Navi* navi, MsgAnim* msg)
 {
 	switch (msg->mKeyEvent->mEventType) {
 	case KEY_Finished:
+	{
 		transit(navi, NAVISTATE_Walk);
 		break;
+	}
 	}
 }
 
@@ -1328,12 +1350,14 @@ void NaviIdleState::procAnimMsg(Navi* navi, MsgAnim* msg)
 {
 	switch (msg->mKeyEvent->mEventType) {
 	case KEY_Finished:
+	{
 		if (mStopBeingIdle) {
 			transit(navi, NAVISTATE_Walk);
 		} else {
 			init(navi);
 		}
 		break;
+	}
 	}
 }
 
@@ -1404,6 +1428,7 @@ void NaviFlickState::procAnimMsg(Navi* navi, MsgAnim* msg)
 {
 	switch (msg->mKeyEvent->mEventType) {
 	case KEY_Finished:
+	{
 		if (mFlickState == 0) {
 			navi->mNaviAnimMgr.startMotion(PaniMotionInfo(PIKIANIM_JKoke, navi), PaniMotionInfo(PIKIANIM_JKoke));
 			mFlickState = 1;
@@ -1421,6 +1446,7 @@ void NaviFlickState::procAnimMsg(Navi* navi, MsgAnim* msg)
 
 		transit(navi, NAVISTATE_Walk);
 		break;
+	}
 	}
 }
 
@@ -1510,6 +1536,7 @@ void NaviGeyzerState::procAnimMsg(Navi* navi, MsgAnim* msg)
 {
 	switch (msg->mKeyEvent->mEventType) {
 	case KEY_Finished:
+	{
 		if (mGeyserState == 1) {
 			navi->mNaviAnimMgr.startMotion(PaniMotionInfo(PIKIANIM_JKoke, navi), PaniMotionInfo(PIKIANIM_JKoke));
 			mGeyserState = 2;
@@ -1525,6 +1552,7 @@ void NaviGeyzerState::procAnimMsg(Navi* navi, MsgAnim* msg)
 			transit(navi, NAVISTATE_Walk);
 		}
 		break;
+	}
 	}
 }
 
@@ -1729,14 +1757,20 @@ void NaviGatherState::procAnimMsg(Navi* navi, MsgAnim* msg)
 {
 	switch (msg->mKeyEvent->mEventType) {
 	case KEY_LoopEnd:
+	{
 		break;
+	}
 	case KEY_LoopStart:
+	{
 		_10 = 1;
 		break;
+	}
 	case KEY_Finished:
+	{
 		_10 = 2;
 		transit(navi, NAVISTATE_Walk);
 		break;
+	}
 	}
 }
 
@@ -1802,15 +1836,21 @@ void NaviReleaseState::procAnimMsg(Navi* navi, MsgAnim* msg)
 {
 	switch (msg->mKeyEvent->mEventType) {
 	case KEY_LoopStart:
+	{
 		_10 = true;
 		navi->mNaviAnimMgr.finishMotion(navi);
 		navi->releasePikis();
 		break;
+	}
 	case KEY_LoopEnd:
+	{
 		break;
+	}
 	case KEY_Finished:
+	{
 		transit(navi, NAVISTATE_Walk);
 		break;
+	}
 	}
 }
 
@@ -1896,14 +1936,18 @@ void NaviThrowWaitState::procAnimMsg(Navi* navi, MsgAnim* msg)
 {
 	switch (msg->mKeyEvent->mEventType) {
 	case KEY_Action0:
+	{
 		_1C = true;
 		_10->mFSM->transit(_10, PIKISTATE_Hanged);
 		break;
+	}
 	case KEY_LoopEnd:
+	{
 		if (_18 < 3) {
 			_18++;
 		}
 		break;
+	}
 	}
 
 	_20 = 0;
@@ -2074,6 +2118,7 @@ void NaviThrowState::procAnimMsg(Navi* navi, MsgAnim* msg)
 {
 	switch (msg->mKeyEvent->mEventType) {
 	case KEY_Action0:
+	{
 		_14->mFSM->transit(_14, 14);
 		rumbleMgr->start(RUMBLE_Unk2, 0, nullptr);
 
@@ -2087,9 +2132,12 @@ void NaviThrowState::procAnimMsg(Navi* navi, MsgAnim* msg)
 		navi->throwPiki(_14, speed);
 		_10 = true;
 		break;
+	}
 	case KEY_Finished:
+	{
 		transit(navi, NAVISTATE_Walk);
 		break;
+	}
 	}
 }
 
@@ -2197,16 +2245,20 @@ void NaviPushState::procAnimMsg(Navi* navi, MsgAnim* msg)
 {
 	switch (msg->mKeyEvent->mEventType) {
 	case KEY_LoopEnd:
+	{
 		if (navi->mWallCollObj && !AIConstant::_instance->mConstants._64()) {
 			Vector3f dir(sinf(navi->mFaceDirection), 0.0f, cosf(navi->mFaceDirection));
 			dir = dir * 4.0f;
 			navi->mWallCollObj->applyVelocity(*navi->mWallPlane, navi->mSRT.t, dir);
 		}
 		break;
+	}
 	case KEY_Finished:
+	{
 		PRINT("got anim finished\n");
 		transit(navi, NAVISTATE_Walk);
 		break;
+	}
 	}
 }
 
@@ -2272,15 +2324,19 @@ void NaviPushPikiState::procAnimMsg(Navi* navi, MsgAnim* msg)
 {
 	switch (msg->mKeyEvent->mEventType) {
 	case KEY_LoopEnd:
+	{
 		if (navi->mWallCollObj) {
 			Vector3f dir(sinf(navi->mFaceDirection), 0.0f, cosf(navi->mFaceDirection));
 			dir = dir * 4.0f;
 			navi->mWallCollObj->applyVelocity(*navi->mWallPlane, navi->mSRT.t, dir);
 		}
 		break;
+	}
 	case KEY_Finished:
+	{
 		transit(navi, NAVISTATE_Walk);
 		break;
+	}
 	}
 }
 
@@ -2381,6 +2437,7 @@ void NaviNukuState::procAnimMsg(Navi* navi, MsgAnim* msg)
 {
 	switch (msg->mKeyEvent->mEventType) {
 	case KEY_Action0:
+	{
 		_15        = true;
 		navi->_930 = false;
 		seSystem->playPlayerSe(SE_PIKI_PULLED2);
@@ -2392,7 +2449,9 @@ void NaviNukuState::procAnimMsg(Navi* navi, MsgAnim* msg)
 			_12 = true;
 		}
 		break;
+	}
 	case KEY_Finished:
+	{
 		navi->_810 = 0;
 		if (_14) {
 			if (!navi->procActionButton()) {
@@ -2406,6 +2465,7 @@ void NaviNukuState::procAnimMsg(Navi* navi, MsgAnim* msg)
 		}
 		navi->_770 = 0;
 		break;
+	}
 	}
 }
 
@@ -2766,15 +2826,19 @@ void NaviAttackState::procAnimMsg(Navi* navi, MsgAnim* msg)
 {
 	switch (msg->mKeyEvent->mEventType) {
 	case KEY_Action0:
+	{
 		_10 = 1;
 		break;
+	}
 	case KEY_Finished:
+	{
 		if (_12) {
 			transit(navi, NAVISTATE_Gather);
 		} else {
 			transit(navi, NAVISTATE_Walk);
 		}
 		break;
+	}
 	}
 }
 
@@ -2940,8 +3004,10 @@ void NaviDeadState::procAnimMsg(Navi* navi, MsgAnim* msg)
 {
 	switch (msg->mKeyEvent->mEventType) {
 	case 0:
+	{
 		gameflow.mGameInterface->message(MOVIECMD_GameEndCondition, ENDCAUSE_NaviDown);
 		break;
+	}
 	}
 }
 
@@ -3061,14 +3127,16 @@ void NaviStartingState::exec(Navi* navi)
 
 	switch (_30) {
 	case 0:
+	{
 		_10 -= gsys->getFrameTime();
 		if (_10 < 0.0f) {
 			_30 = 1;
 			navi->mOdoMeter.start(1.0f, 10.0f);
 		}
 		return;
-
+	}
 	case 1:
+	{
 		Vector3f diff         = _14 - navi->mSRT.t;
 		f32 len               = diff.normalise();
 		navi->mVelocity       = diff * 25.0f;
@@ -3086,10 +3154,13 @@ void NaviStartingState::exec(Navi* navi)
 			_32 = false;
 		}
 		break;
+	}
 	case 2:
+	{
 		if (_32)
 			transit(navi, NAVISTATE_Walk);
 		break;
+	}
 	}
 
 	_34 = navi->mSRT.t;
@@ -3103,10 +3174,12 @@ void NaviStartingState::procAnimMsg(Navi* navi, MsgAnim* msg)
 	switch (msg->mKeyEvent->mEventType) {
 	case KEY_Finished:
 	case KEY_LoopEnd:
+	{
 		if (_30 == 2) {
 			_32 = true;
 		}
 		break;
+	}
 	}
 }
 
@@ -3172,6 +3245,7 @@ void NaviPartsAccessState::procAnimMsg(Navi* navi, MsgAnim* msg)
 {
 	switch (msg->mKeyEvent->mEventType) {
 	case 0:
+	{
 		if (!_10) {
 			_10                      = true;
 			Pellet* pelt             = navi->mSelectedShipPart;
@@ -3182,6 +3256,7 @@ void NaviPartsAccessState::procAnimMsg(Navi* navi, MsgAnim* msg)
 			playerState->mDemoFlags.setFlag(id + DEMOFLAG_UfoPartDiscoveryOffset, pelt);
 		}
 		break;
+	}
 	}
 }
 
@@ -3237,6 +3312,7 @@ void NaviUfoAccessState::procAnimMsg(Navi* navi, MsgAnim* msg)
 	PRINT("GOT ANIMATION ?\n");
 	switch (msg->mKeyEvent->mEventType) {
 	case 0:
+	{
 		if (!_10) {
 			_10                      = true;
 			gameflow.mShipTextType   = SHIPTEXT_PartCollect;
@@ -3244,5 +3320,6 @@ void NaviUfoAccessState::procAnimMsg(Navi* navi, MsgAnim* msg)
 			gameflow.mGameInterface->message(MOVIECMD_TextDemo, zen::ogScrTutorialMgr::TUT_GetParts);
 		}
 		break;
+	}
 	}
 }

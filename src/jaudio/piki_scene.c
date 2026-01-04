@@ -96,17 +96,23 @@ static void __Loaded(u32 a)
 
 	switch (hi) {
 	case 0x20000:
+	{
 		first_load = 1;
 		break;
+	}
 	case 0:
+	{
 		now_loading = 0;
 		break;
+	}
 	case 0x10000:
+	{
 		if (current_bgm == a) {
 			Collect_AramMotherHeap();
 			Jac_PlayBgm(0, current_bgm);
 		}
 		break;
+	}
 	}
 }
 
@@ -238,15 +244,19 @@ void Jac_SceneSetup(u32 sceneID, u32 stage)
 
 	switch (bgm2) {
 	case BGM_PikiSE:
+	{
 		break;
+	}
 	case BGM_SysEvent:
+	{
 		bgm2 = tbl_stage_to_bgm[stage];
 		if (stage) {
 			closeScene = TRUE;
 		}
 		Jam_PauseTrack(Jam_GetTrackHandle(0x20000), 1);
-
+	}
 	default:
+	{
 		if (same != TRUE) {
 			if (current_ready != bgm2) {
 				Jac_ReadyBgm(bgm2);
@@ -265,6 +275,7 @@ void Jac_SceneSetup(u32 sceneID, u32 stage)
 			}
 		}
 		break;
+	}
 	}
 
 	if (bgm2) {
@@ -345,11 +356,16 @@ void Jac_SceneExit(u32 nextSceneID, u32 stage)
 	newBgm = tbl_scene_to_bgm[nextSceneID];
 	switch (newBgm) {
 	case 0:
+	{
 		break;
+	}
 	case 1:
+	{
 		newBgm = tbl_stage_to_bgm[stage];
 		// fallthrough
+	}
 	default:
+	{
 		if (now_loading) {
 			do {
 			} while (now_loading != 0);
@@ -361,6 +377,7 @@ void Jac_SceneExit(u32 nextSceneID, u32 stage)
 		now_loading   = 1;
 		current_ready = newBgm;
 		break;
+	}
 	}
 	Jac_SetProcessStatus(3);
 }

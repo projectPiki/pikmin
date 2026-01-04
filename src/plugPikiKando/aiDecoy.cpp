@@ -99,12 +99,14 @@ int ActDecoy::exec()
 	Creature* teki = update();
 	switch (mState) {
 	case 3:
+	{
 		mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 		mDecoyTimer -= gsys->getFrameTime();
 		if (mDecoyTimer < 0.0f) {
 			return ACTOUT_Success;
 		}
 		break;
+	}
 	case 2:
 	{
 		Vector3f dir = mPiki->mSRT.t - teki->mSRT.t;

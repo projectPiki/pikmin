@@ -35,6 +35,7 @@ s16* DspbufProcess(DSPBUF_EVENTS event)
 
 	switch (event) {
 	case DSPBUF_EVENT_INIT:
+	{
 		write_buffer = 2;
 		read_buffer  = 0;
 		for (i = 0; i < DSPBUF_NUM; i++) {
@@ -48,7 +49,9 @@ s16* DspbufProcess(DSPBUF_EVENTS event)
 
 		dspstatus = 0;
 		break;
+	}
 	case DSPBUF_EVENT_FRAME_END:
+	{
 #if defined(VERSION_GPIP01_00)
 #else
 		DspExtraTaskCheck();
@@ -74,7 +77,9 @@ s16* DspbufProcess(DSPBUF_EVENTS event)
 			UpdateDSP();
 		}
 		break;
+	}
 	case DSPBUF_EVENT_MIX:
+	{
 		u8 read = read_buffer + 1;
 		if (read == DSPBUF_NUM) {
 			read = 0;
@@ -104,6 +109,7 @@ s16* DspbufProcess(DSPBUF_EVENTS event)
 		}
 
 		return dsp_buf[read_buffer];
+	}
 	}
 
 	return NULL;

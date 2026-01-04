@@ -632,32 +632,39 @@ void GameFlow::softReset()
 
 		switch (mNextGameSectionID) {
 		case SECTION_NinLogo:
+		{
 			mGameSection = new NinLogoSection();
 			break;
-
+		}
 		case SECTION_Titles:
+		{
 			mGameSection = new TitlesSection();
 			break;
-
+		}
 		case SECTION_MovSample:
+		{
 			mGameSection = new MovSampleSection();
 			break;
-
+		}
 		case SECTION_OnePlayer:
+		{
 			mGameSection = new OnePlayerSection();
 			break;
-
+		}
 		case SECTION_PaniTest:
+		{
 #if defined(VERSION_GPIP01_00)
 			mGameSection = new GameCourseClearSection();
 #else
 			mGameSection = new PaniTestSection();
 #endif
 			break;
-
+		}
 		case SECTION_OgTest:
+		{
 			mGameSection = new zen::OgTestSection();
 			break;
+		}
 		}
 
 		gsys->getHeap(gsys->getHeapNum())->setAllocType(AYU_STACK_GROW_UP);

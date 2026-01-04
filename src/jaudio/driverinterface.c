@@ -326,13 +326,19 @@ static f32 PanCalc(const PanMatrix_* mtx1, const PanMatrix_* mtx2, u8 a)
 	for (int i = 0; i < 3; i++) {
 		switch (vals[i]) {
 		case 0:
+		{
 			break;
+		}
 		case 1:
+		{
 			calc += mtx1->values[i];
 			break;
+		}
 		case 2:
+		{
 			calc += (mtx1->values[i] * mtx2->values[i]);
 			break;
+		}
 		}
 	}
 	return calc;
@@ -556,12 +562,14 @@ void UpdateEffecterParam(jc_* jc)
 
 	switch (JAC_SYSTEM_OUTPUT_MODE) {
 	case 0:
+	{
 		pan   = 0.5f;
 		dolby = 0.0f;
 		fxmix = PanCalc(&jc->panMatrices[2], &jc->panMatrices[0], jc->panCalcTypes[1]);
 		break;
-
+	}
 	case 1:
+	{
 		if (jc->panCalcTypes[0] == 0) {
 			pan = 0.5f;
 		} else {
@@ -570,6 +578,7 @@ void UpdateEffecterParam(jc_* jc)
 		fxmix = PanCalc(&jc->panMatrices[2], &jc->panMatrices[0], jc->panCalcTypes[1]);
 		dolby = PanCalc(&jc->panMatrices[3], &jc->panMatrices[0], jc->panCalcTypes[2]);
 		break;
+	}
 	}
 
 	volume = jc->currentVolume * jc->volumeModifier * jc->managerVolume;
@@ -607,23 +616,35 @@ void UpdateEffecterParam(jc_* jc)
 		if (config.parts.lower0) {
 			switch (config.parts.lower0) {
 			case 1:
+			{
 				angle = pan;
 				break;
+			}
 			case 2:
+			{
 				angle = fxmix;
 				break;
+			}
 			case 3:
+			{
 				angle = dolby;
 				break;
+			}
 			case 5:
+			{
 				angle = 1.0f - pan;
 				break;
+			}
 			case 6:
+			{
 				angle = 1.0f - fxmix;
 				break;
+			}
 			case 7:
+			{
 				angle = 1.0f - dolby;
 				break;
+			}
 			}
 			tmp *= sinf3(angle);
 		}
@@ -631,23 +652,35 @@ void UpdateEffecterParam(jc_* jc)
 		if (config.parts.lower1) {
 			switch (config.parts.lower1) {
 			case 1:
+			{
 				angle = pan;
 				break;
+			}
 			case 2:
+			{
 				angle = fxmix;
 				break;
+			}
 			case 3:
+			{
 				angle = dolby;
 				break;
+			}
 			case 5:
+			{
 				angle = 1.0f - pan;
 				break;
+			}
 			case 6:
+			{
 				angle = 1.0f - fxmix;
 				break;
+			}
 			case 7:
+			{
 				angle = 1.0f - dolby;
 				break;
+			}
 			}
 			tmp *= sinf3(angle);
 		}
@@ -668,20 +701,30 @@ void DoEffectOsc(jc_* jc, u8 id, f32 val)
 {
 	switch (id) {
 	case 1:
+	{
 		jc->pitchModifier *= val;
 		break;
+	}
 	case 0:
+	{
 		jc->volumeModifier *= val;
 		break;
+	}
 	case 2:
+	{
 		jc->panMatrices[1].values[1] = val;
 		break;
+	}
 	case 3:
+	{
 		jc->panMatrices[2].values[1] = val;
 		break;
+	}
 	case 4:
+	{
 		jc->panMatrices[3].values[1] = val;
 		break;
+	}
 	}
 }
 
@@ -904,13 +947,19 @@ BOOL PlayLogicalChannel(jc_* jc)
 
 	switch (jc->logicalChanType) {
 	case 0:
+	{
 		DSP_SetWaveInfo(jc->dspChannel->buffer_idx, jc->waveData, jc->chanData);
 		break;
+	}
 	case 1:
+	{
 		break;
+	}
 	case 2:
+	{
 		DSP_SetOscInfo(jc->dspChannel->buffer_idx, jc->chanData);
 		break;
+	}
 	}
 
 	for (u32 i = 0; i < 6; i++) {
@@ -920,11 +969,15 @@ BOOL PlayLogicalChannel(jc_* jc)
 		if (JAC_SYSTEM_OUTPUT_MODE == 0) {
 			switch (bus.parts.upper) {
 			case 8:
+			{
 				bus.parts.upper = 11;
 				break;
+			}
 			case 9:
+			{
 				bus.parts.upper = 2;
 				break;
+			}
 			}
 		}
 #endif

@@ -361,11 +361,14 @@ bool TAIAlookAround::act(Teki& teki)
 {
 	switch (teki.getStatus()) {
 	case 2:
+	{
 		if (TAIAreserveMotion::act(teki)) {
 			teki.setStatus(1);
 		}
 		break;
+	}
 	case 0:
+	{
 		int motionID;
 		if (angDist(teki.mTargetAngle, teki.mFaceDirection) > 0.0f) {
 			motionID = _0C;
@@ -386,7 +389,9 @@ bool TAIAlookAround::act(Teki& teki)
 			teki.setStatus(1);
 		}
 		break;
+	}
 	case 1:
+	{
 		if (teki.mTekiAnimator->getCurrentMotionIndex() != mMotionID || teki.mTekiAnimator->isFinished()) {
 			if (!teki.mTekiAnimator->isFinished()) {
 				teki.mTekiAnimator->finishMotion(PaniMotionInfo(PANI_NO_MOTION, &teki));
@@ -404,6 +409,7 @@ bool TAIAlookAround::act(Teki& teki)
 			}
 		}
 		break;
+	}
 	}
 
 	STACK_PAD_VAR(2);
@@ -604,12 +610,16 @@ void TAIApatrol::changeStatus(int status, Teki& teki)
 	teki.setStatus(status);
 	switch (teki.getStatus()) {
 	case 1:
+	{
 		teki.mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 		teki.setFlag400();
 		break;
+	}
 	case 0:
+	{
 		teki.resetFlag400();
 		break;
+	}
 	}
 }
 
@@ -668,11 +678,14 @@ bool TAIApatrol::act(Teki& teki)
 {
 	switch (teki.getStatus()) {
 	case 1:
+	{
 		if (TAIAturnToTarget::act(teki)) {
 			changeStatus(0, teki);
 		}
 		break;
+	}
 	case 0:
+	{
 		if (teki.mTekiAnimator->getCurrentMotionIndex() != _20 || teki.mTekiAnimator->isFinished()) {
 			if (!teki.mTekiAnimator->isFinished()) {
 				teki.mTekiAnimator->finishMotion(PaniMotionInfo(PANI_NO_MOTION, &teki));
@@ -696,9 +709,12 @@ bool TAIApatrol::act(Teki& teki)
 			}
 		}
 		break;
+	}
 	default:
+	{
 		ERROR("unknown status %d \n", teki.getStatus());
 		break;
+	}
 	}
 
 	STACK_PAD_TERNARY(&teki, 1);

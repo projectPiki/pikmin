@@ -439,14 +439,16 @@ Menu* Menu::doUpdate(bool selectItem)
 
 	switch (mState) {
 	case MenuStateType::FadeIn:
+	{
 		mFadeTimer += 8.0f * gsys->getFrameTime();
 		if (mFadeTimer >= 1.0f) {
 			mFadeTimer = 1.0f;
 			mState     = MenuStateType::Open;
 		}
 		break;
-
+	}
 	case MenuStateType::FadeOut:
+	{
 		mFadeTimer -= 8.0f * gsys->getFrameTime();
 		if (mFadeTimer < 0.0f) {
 			mFadeTimer = 0.0f;
@@ -454,8 +456,9 @@ Menu* Menu::doUpdate(bool selectItem)
 			activeMenu = mPendingMenu;
 		}
 		break;
-
+	}
 	case MenuStateType::Open:
+	{
 		if (selectItem) {
 			mHasNewFocus = true;
 		}
@@ -510,6 +513,7 @@ Menu* Menu::doUpdate(bool selectItem)
 		}
 		break;
 	}
+	}
 
 	return activeMenu;
 }
@@ -533,24 +537,28 @@ bool Menu::MenuItem::checkEvents(Menu* parentMenu, int eventMask)
 
 		switch (event->mEventType) {
 		case KeyEventType::OnFocusGained:
+		{
 			// when item is freshly highlighted - triggered once
 			event->mEventCallback->invoke(*parentMenu);
 			break;
-
+		}
 		case KeyEventType::OnFocusLost:
+		{
 			// when item stops being highlighted - triggered once
 			event->mEventCallback->invoke(*parentMenu);
 			break;
-
+		}
 		case KeyEventType::WhileInputHeld:
+		{
 			// when trigger input is held down - triggered every frame
 			if (parentMenu->mController->keyDown(event->mTriggerKeys)) {
 				event->mEventCallback->invoke(*parentMenu);
 			}
 			break;
-
+		}
 		case KeyEventType::OnInputRelease:
 		case KeyEventType::OnCancel:
+		{
 			// when releasing an input that will cause a gameplay or data change OR
 			// when hitting the cancel (B) button - triggered once, and will halt further event processing
 			if (parentMenu->mController->keyUnClick(event->mTriggerKeys)) {
@@ -558,8 +566,9 @@ bool Menu::MenuItem::checkEvents(Menu* parentMenu, int eventMask)
 				return true;
 			}
 			break;
-
+		}
 		case KeyEventType::OnConfirm:
+		{
 			// when hitting the confirm (A) button - triggered once, and will halt further event processing
 			if (parentMenu->mController->keyUnClick(event->mTriggerKeys)) {
 				// if the current item is a submenu, open it
@@ -591,6 +600,7 @@ bool Menu::MenuItem::checkEvents(Menu* parentMenu, int eventMask)
 				return true;
 			}
 			break;
+		}
 		}
 	}
 

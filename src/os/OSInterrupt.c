@@ -129,6 +129,7 @@ static u32 SetInterruptMask(OSInterruptMask mask, OSInterruptMask current)
 #if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
 	case __OS_INTERRUPT_MEM_ADDRESS:
 #endif
+	{
 		reg = 0;
 		if (!(current & OS_INTERRUPTMASK_MEM_0)) {
 			reg |= 0x1;
@@ -148,10 +149,11 @@ static u32 SetInterruptMask(OSInterruptMask mask, OSInterruptMask current)
 		__MEMRegs[MEM_INTRPT_MASK] = (u16)reg;
 		mask &= ~OS_INTERRUPTMASK_MEM;
 		break;
-
+	}
 	case __OS_INTERRUPT_DSP_AI:
 	case __OS_INTERRUPT_DSP_ARAM:
 	case __OS_INTERRUPT_DSP_DSP:
+	{
 		reg = __DSPRegs[DSP_CONTROL_STATUS];
 		reg &= ~0x1F8;
 		if (!(current & OS_INTERRUPTMASK_DSP_AI)) {
@@ -166,8 +168,9 @@ static u32 SetInterruptMask(OSInterruptMask mask, OSInterruptMask current)
 		__DSPRegs[DSP_CONTROL_STATUS] = (u16)reg;
 		mask &= ~OS_INTERRUPTMASK_DSP;
 		break;
-
+	}
 	case __OS_INTERRUPT_AI_AI:
+	{
 		reg = __AIRegs[AI_CONTROL];
 		reg &= ~0x2C;
 		if (!(current & OS_INTERRUPTMASK_AI_AI)) {
@@ -176,10 +179,11 @@ static u32 SetInterruptMask(OSInterruptMask mask, OSInterruptMask current)
 		__AIRegs[AI_CONTROL] = reg;
 		mask &= ~OS_INTERRUPTMASK_AI;
 		break;
-
+	}
 	case __OS_INTERRUPT_EXI_0_EXI:
 	case __OS_INTERRUPT_EXI_0_TC:
 	case __OS_INTERRUPT_EXI_0_EXT:
+	{
 		reg = __EXIRegs[EXI_CHAN_0_STAT];
 		reg &= ~0x2C0F;
 		if (!(current & OS_INTERRUPTMASK_EXI_0_EXI)) {
@@ -194,10 +198,11 @@ static u32 SetInterruptMask(OSInterruptMask mask, OSInterruptMask current)
 		__EXIRegs[EXI_CHAN_0_STAT] = reg;
 		mask &= ~OS_INTERRUPTMASK_EXI_0;
 		break;
-
+	}
 	case __OS_INTERRUPT_EXI_1_EXI:
 	case __OS_INTERRUPT_EXI_1_TC:
 	case __OS_INTERRUPT_EXI_1_EXT:
+	{
 		reg = __EXIRegs[EXI_CHAN_1_STAT];
 		reg &= ~0xC0F;
 
@@ -213,9 +218,10 @@ static u32 SetInterruptMask(OSInterruptMask mask, OSInterruptMask current)
 		__EXIRegs[EXI_CHAN_1_STAT] = reg;
 		mask &= ~OS_INTERRUPTMASK_EXI_1;
 		break;
-
+	}
 	case __OS_INTERRUPT_EXI_2_EXI:
 	case __OS_INTERRUPT_EXI_2_TC:
+	{
 		reg = __EXIRegs[EXI_CHAN_2_STAT];
 		reg &= ~0xF;
 		if (!(current & OS_INTERRUPTMASK_EXI_2_EXI)) {
@@ -228,7 +234,7 @@ static u32 SetInterruptMask(OSInterruptMask mask, OSInterruptMask current)
 		__EXIRegs[EXI_CHAN_2_STAT] = reg;
 		mask &= ~OS_INTERRUPTMASK_EXI_2;
 		break;
-
+	}
 	case __OS_INTERRUPT_PI_CP:
 	case __OS_INTERRUPT_PI_SI:
 	case __OS_INTERRUPT_PI_DI:
@@ -239,6 +245,7 @@ static u32 SetInterruptMask(OSInterruptMask mask, OSInterruptMask current)
 	case __OS_INTERRUPT_PI_PE_TOKEN:
 	case __OS_INTERRUPT_PI_PE_FINISH:
 	case __OS_INTERRUPT_PI_HSP:
+	{
 		reg = 0xF0;
 
 		if (!(current & OS_INTERRUPTMASK_PI_CP)) {
@@ -274,9 +281,11 @@ static u32 SetInterruptMask(OSInterruptMask mask, OSInterruptMask current)
 		__PIRegs[PI_INTRPT_MASK] = reg;
 		mask &= ~OS_INTERRUPTMASK_PI;
 		break;
-
+	}
 	default:
+	{
 		break;
+	}
 	}
 
 	return mask;

@@ -142,6 +142,7 @@ bool zen::DrawTotalScore::update(Controller* controller)
 	bool res = false;
 	switch (mMode) {
 	case MODE_Start:
+	{
 		_04 += gsys->getFrameTime();
 		if (_04 > _08) {
 			setMode(MODE_Appear);
@@ -157,17 +158,20 @@ bool zen::DrawTotalScore::update(Controller* controller)
 			}
 		}
 		break;
-
+	}
 	case MODE_Appear:
+	{
 		_04 += gsys->getFrameTime();
 		if (_04 > _08) {
 			setMode(MODE_Operation);
 		}
 		break;
-
+	}
 	case MODE_Operation:
+	{
 		res = true;
 		break;
+	}
 	}
 	mResultScreen->update();
 	mEffectMgr2D->update();
@@ -213,13 +217,15 @@ void zen::DrawTotalScore::setMode(zen::DrawTotalScore::modeFlag mode)
 	mMode = mode;
 	switch (mMode) {
 	case MODE_Sleep:
+	{
 		_08 = 0.0f;
 		_04 = 0.0f;
 		mBest.sleep();
 		mResultScreen->getScreenPtr()->hide();
 		break;
-
+	}
 	case MODE_Start:
+	{
 		_04 = 0.0f;
 		_08 = 2.0f;
 		mBest.sleep();
@@ -227,8 +233,9 @@ void zen::DrawTotalScore::setMode(zen::DrawTotalScore::modeFlag mode)
 		mResultScreen->getScreenPtr()->show();
 		mResultScreen->getScreenPtr()->move(0, -960);
 		break;
-
+	}
 	case MODE_Appear:
+	{
 		_04 = 0.0f;
 		_08 = 2.0f;
 		mBest.appear();
@@ -237,10 +244,12 @@ void zen::DrawTotalScore::setMode(zen::DrawTotalScore::modeFlag mode)
 		playRankInFanfare();
 		mResultScreen->getScreenPtr()->show();
 		break;
-
+	}
 	case MODE_Operation:
+	{
 		mResultScreen->getScreenPtr()->show();
 		break;
+	}
 	}
 }
 
@@ -352,16 +361,19 @@ bool zen::DrawFinalResult::update(Controller* controller)
 	bool res = false;
 	switch (mMode) {
 	case MODE_Sleep:
+	{
 		mScoreScreen->sleep();
 		break;
-
+	}
 	case MODE_Start:
+	{
 		if (mScoreScreen->update(controller)) {
 			setMode(MODE_Scores);
 		}
 		break;
-
+	}
 	case MODE_Scores:
+	{
 		if (controller->keyClick(KBBTN_START | KBBTN_A)) {
 			SeSystem::playSysSe(SYSSE_DECIDE1);
 			setMode(MODE_Parts);
@@ -369,54 +381,68 @@ bool zen::DrawFinalResult::update(Controller* controller)
 			mScoreScreen->update(controller);
 		}
 		break;
-
+	}
 	case MODE_Parts:
+	{
 		if (mUfoPartsScreen.update(controller)) {
 			switch (mUfoPartsScreen.getReturnStatusFlag()) {
 			case DrawUfoParts::RETSTATE_Unk1:
+			{
 				setMode(MODE_Scores);
 				break;
-
+			}
 			case DrawUfoParts::RETSTATE_Unk2:
+			{
 				setMode(MODE_SaveStart);
 				break;
 			}
+			}
 		}
 		break;
-
+	}
 	case MODE_SaveStart:
+	{
 		if (mSaveScreen.update(controller)) {
 			switch (mSaveScreen.getModeFlag()) {
 			case DrawOptionSave::MODE_Unk6:
+			{
 				setMode(MODE_SaveSuccess);
 				break;
-
+			}
 			case DrawOptionSave::MODE_Unk7:
+			{
 				setMode(MODE_SaveStart);
 				break;
-
+			}
 			case DrawOptionSave::MODE_Unk8:
+			{
 				setMode(MODE_PartsFromSave);
 				break;
-
+			}
 			case DrawOptionSave::MODE_Unk9:
+			{
 				setMode(MODE_SaveSuccess);
 				break;
-
+			}
 			default:
+			{
 				PRINT("ERR! Illegal mode: %d \n", mSaveScreen.getModeFlag());
 				ERROR("ERR! Illegal mode: %d \n", mSaveScreen.getModeFlag());
 				break;
 			}
+			}
 		}
 		break;
-
+	}
 	case MODE_SaveSuccess:
+	{
 		res = true;
 		break;
-
+	}
 	case MODE_PartsFromSave:
+	{
 		break;
+	}
 	}
 
 	return res;
@@ -429,35 +455,42 @@ void zen::DrawFinalResult::draw(Graphics& gfx)
 {
 	switch (mMode) {
 	case MODE_Start:
+	{
 		mSaveScreen.init();
 		mScoreScreen->draw(gfx);
 		break;
-
+	}
 	case MODE_Scores:
+	{
 		mScoreScreen->draw(gfx);
 		break;
-
+	}
 	case MODE_Parts:
+	{
 		if (mUfoPartsScreen.getModeFlag() != DrawUfoParts::MODE_FadeOut
 		    || mUfoPartsScreen.getReturnStatusFlag() == DrawUfoParts::RETSTATE_Unk1) {
 			mScoreScreen->draw(gfx);
 		}
 		mUfoPartsScreen.draw(gfx);
 		break;
-
+	}
 	case MODE_SaveStart:
+	{
 		mUfoPartsScreen.draw(gfx);
 		mSaveScreen.draw(gfx);
 		break;
-
+	}
 	case MODE_SaveSuccess:
+	{
 		mUfoPartsScreen.draw(gfx);
 		mSaveScreen.draw(gfx);
 		break;
-
+	}
 	case MODE_Sleep:
 	case MODE_PartsFromSave:
+	{
 		break;
+	}
 	}
 }
 
@@ -477,29 +510,36 @@ void zen::DrawFinalResult::setMode(zen::DrawFinalResult::modeFlag mode)
 	mMode = mode;
 	switch (mMode) {
 	case MODE_Sleep:
+	{
 		mScoreScreen->sleep();
 		mUfoPartsScreen.sleep();
 		break;
-
+	}
 	case MODE_Start:
+	{
 		mScoreScreen->start();
 		break;
-
+	}
 	case MODE_Parts:
+	{
 		mUfoPartsScreen.start();
 		break;
-
+	}
 	case MODE_SaveStart:
+	{
 		mSaveScreen.start();
 		break;
-
+	}
 	case MODE_PartsFromSave:
+	{
 		mUfoPartsScreen.operation();
 		mMode = MODE_Parts;
 		break;
-
+	}
 	case MODE_Scores:
 	case MODE_SaveSuccess:
+	{
 		break;
+	}
 	}
 }

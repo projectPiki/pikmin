@@ -373,14 +373,20 @@ void CamDataInfo::update(f32 currentFrame, immut Matrix4f& mtx)
 		AnimParam& thisParam = params1[i];
 		switch (thisParam.mEntryNum) {
 		case 0:
+		{
 			((f32*)&mCamera.mPosition)[i] = 0.0f;
 			break;
+		}
 		case 1:
+		{
 			((f32*)&mCamera.mPosition)[i] = mSceneData->mCameraAnimations->mData[thisParam.mDataOffset];
 			break;
+		}
 		default:
+		{
 			((f32*)&mCamera.mPosition)[i] = extract(currentFrame, thisParam, *mSceneData->mCameraAnimations);
 			break;
+		}
 		}
 	}
 
@@ -389,14 +395,20 @@ void CamDataInfo::update(f32 currentFrame, immut Matrix4f& mtx)
 		AnimParam& thisParam = params2[i];
 		switch (thisParam.mEntryNum) {
 		case 0:
+		{
 			((f32*)&mCamera.mFocus)[i] = 0.0f;
 			break;
+		}
 		case 1:
+		{
 			((f32*)&mCamera.mFocus)[i] = mSceneData->mCameraAnimations->mData[thisParam.mDataOffset];
 			break;
+		}
 		default:
+		{
 			((f32*)&mCamera.mFocus)[i] = extract(currentFrame, thisParam, *mSceneData->mCameraAnimations);
 			break;
+		}
 		}
 	}
 
@@ -405,14 +417,20 @@ void CamDataInfo::update(f32 currentFrame, immut Matrix4f& mtx)
 		AnimParam& thisParam = params3[i];
 		switch (thisParam.mEntryNum) {
 		case 0:
+		{
 			val1 = 1.0f;
 			break;
+		}
 		case 1:
+		{
 			val1 = mSceneData->mCameraAnimations->mData[thisParam.mDataOffset];
 			break;
+		}
 		default:
+		{
 			val1 = extract(currentFrame, thisParam, *mSceneData->mCameraAnimations);
 			break;
+		}
 		}
 	}
 
@@ -421,14 +439,20 @@ void CamDataInfo::update(f32 currentFrame, immut Matrix4f& mtx)
 		AnimParam& thisParam = params4[i];
 		switch (thisParam.mEntryNum) {
 		case 0:
+		{
 			val2 = 1.0f;
 			break;
+		}
 		case 1:
+		{
 			val2 = mSceneData->mCameraAnimations->mData[thisParam.mDataOffset];
 			break;
+		}
 		default:
+		{
 			val2 = extract(currentFrame, thisParam, *mSceneData->mCameraAnimations);
 			break;
+		}
 		}
 	}
 
@@ -469,14 +493,20 @@ void LightDataInfo::update(f32 currentFrame)
 		AnimParam& thisParam = params1[i];
 		switch (thisParam.mEntryNum) {
 		case 0:
+		{
 			((f32*)&vec1)[i] = 1.0f;
 			break;
+		}
 		case 1:
+		{
 			((f32*)&vec1)[i] = mSceneData->mLightAnimations->mData[thisParam.mDataOffset];
 			break;
+		}
 		default:
+		{
 			((f32*)&vec1)[i] = extract(currentFrame, thisParam, *mSceneData->mLightAnimations);
 			break;
+		}
 		}
 	}
 
@@ -486,14 +516,20 @@ void LightDataInfo::update(f32 currentFrame)
 		AnimParam& thisParam = params2[i];
 		switch (thisParam.mEntryNum) {
 		case 0:
+		{
 			tmp2[i] = 1.0f;
 			break;
+		}
 		case 1:
+		{
 			tmp2[i] = mSceneData->mLightAnimations->mData[thisParam.mDataOffset];
 			break;
+		}
 		default:
+		{
 			tmp2[i] = extract(currentFrame, thisParam, *mSceneData->mLightAnimations);
 			break;
+		}
 		}
 	}
 
@@ -502,14 +538,20 @@ void LightDataInfo::update(f32 currentFrame)
 		AnimParam& thisParam = params3[i];
 		switch (thisParam.mEntryNum) {
 		case 0:
+		{
 			((f32*)&vec2)[i - 1] = 1.0f;
 			break;
+		}
 		case 1:
+		{
 			((f32*)&vec2)[i - 1] = mSceneData->mLightAnimations->mData[thisParam.mDataOffset];
 			break;
+		}
 		default:
+		{
 			((f32*)&vec2)[i - 1] = extract(currentFrame, thisParam, *mSceneData->mLightAnimations);
 			break;
+		}
 		}
 	}
 
@@ -1377,14 +1419,19 @@ void AnimDck::parse(CmdStream* stream)
 			int* param = (int*)&mAnimInfo[i].mRotation[j];
 			switch (param[0]) {
 			case 0:
+			{
 				break;
+			}
 			case 1:
+			{
 				if (!checks[param[1]]) {
 					mRotateDataBlock->mData[param[1]] = mRotateDataBlock->mData[param[1]] * PI / 180.0f;
 					checks[param[1]]                  = true;
 				}
 				break;
+			}
 			default:
+			{
 				int size   = (param[2] == 0) ? 3 : 4;
 				int offset = param[1] + 1;
 				for (int k = 0; k < param[0]; k++) {
@@ -1399,6 +1446,7 @@ void AnimDck::parse(CmdStream* stream)
 					offset += size;
 				}
 				break;
+			}
 			}
 		}
 	}
@@ -1447,14 +1495,20 @@ void AnimDck::extractSRT(SRT& srt, int, AnimDataInfo* anim, f32 time)
 			AnimParam* param = &anim->mScale[i];
 			switch (param->mEntryNum) {
 			case 0: // 0 entries, default to 1.0
+			{
 				s[i] = 1.0f;
 				break;
+			}
 			case 1: // 1 entry, use the value of that entry alone
+			{
 				s[i] = mScaleDataBlock->mData[param->mDataOffset];
 				break;
+			}
 			default: // multiple entries, use the extract method
+			{
 				s[i] = extract(time, *param, *mScaleDataBlock);
 				break;
+			}
 			}
 		}
 
@@ -1472,14 +1526,20 @@ void AnimDck::extractSRT(SRT& srt, int, AnimDataInfo* anim, f32 time)
 			AnimParam& p = param[i];
 			switch (param[i].mEntryNum) {
 			case 0: // 0 entries, default to 1.0
+			{
 				r[i] = 0.0f;
 				break;
+			}
 			case 1: // 1 entry, use the value of that entry alone
+			{
 				r[i] = mRotateDataBlock->mData[param[i].mDataOffset];
 				break;
+			}
 			default: // multiple entries, use the extract method
+			{
 				r[i] = extract(time, p, *mRotateDataBlock);
 				break;
+			}
 			}
 		}
 
@@ -1497,14 +1557,20 @@ void AnimDck::extractSRT(SRT& srt, int, AnimDataInfo* anim, f32 time)
 			AnimParam& p = param[i];
 			switch (param[i].mEntryNum) {
 			case 0: // 0 entries, default to 1.0
+			{
 				t[i] = 1.0f;
 				break;
+			}
 			case 1: // 1 entry, use the value of that entry alone
+			{
 				t[i] = mTranslationDataBlock->mData[param[i].mDataOffset];
 				break;
+			}
 			default: // multiple entries, use the extract method
+			{
 				t[i] = extract(time, p, *mTranslationDataBlock);
 				break;
+			}
 			}
 		}
 
@@ -2082,7 +2148,6 @@ void BaseShape::read(RandomAccessStream& stream)
 			stream.skipPadding(0x20);
 			break;
 		}
-
 		case BaseShapeChunk::Vertex:
 		{
 			before = gsys->getHeap(SYSHEAP_App)->getFree();
@@ -2099,7 +2164,6 @@ void BaseShape::read(RandomAccessStream& stream)
 			stream.skipPadding(0x20);
 			break;
 		}
-
 		case BaseShapeChunk::VertexNormal:
 		{
 			before = gsys->getHeap(SYSHEAP_App)->getFree();
@@ -2116,7 +2180,6 @@ void BaseShape::read(RandomAccessStream& stream)
 			stream.skipPadding(0x20);
 			break;
 		}
-
 		case BaseShapeChunk::VertexNBT:
 		{
 			before = gsys->getHeap(SYSHEAP_App)->getFree();
@@ -2135,7 +2198,6 @@ void BaseShape::read(RandomAccessStream& stream)
 			stream.skipPadding(0x20);
 			break;
 		}
-
 		case BaseShapeChunk::VertexColour:
 		{
 			before = gsys->getHeap(SYSHEAP_App)->getFree();
@@ -2152,7 +2214,6 @@ void BaseShape::read(RandomAccessStream& stream)
 			stream.skipPadding(0x20);
 			break;
 		}
-
 		case BaseShapeChunk::TexCoord0:
 		case BaseShapeChunk::TexCoord1:
 		case BaseShapeChunk::TexCoord2:
@@ -2179,7 +2240,6 @@ void BaseShape::read(RandomAccessStream& stream)
 			mTotalActiveTexCoords++;
 			break;
 		}
-
 		case BaseShapeChunk::Texture:
 		{
 			before = gsys->getHeap(SYSHEAP_App)->getFree();
@@ -2196,7 +2256,6 @@ void BaseShape::read(RandomAccessStream& stream)
 			stream.skipPadding(0x20);
 			break;
 		}
-
 		case BaseShapeChunk::TextureAttribute:
 		{
 			before = gsys->getHeap(SYSHEAP_App)->getFree();
@@ -2213,7 +2272,6 @@ void BaseShape::read(RandomAccessStream& stream)
 			stream.skipPadding(0x20);
 			break;
 		}
-
 		case BaseShapeChunk::Material:
 		{
 			before = gsys->getHeap(SYSHEAP_App)->getFree();
@@ -2248,7 +2306,6 @@ void BaseShape::read(RandomAccessStream& stream)
 			stream.skipPadding(0x20);
 			break;
 		}
-
 		case BaseShapeChunk::VertexMatrix:
 		{
 			before = gsys->getHeap(SYSHEAP_App)->getFree();
@@ -2265,7 +2322,6 @@ void BaseShape::read(RandomAccessStream& stream)
 			stream.skipPadding(0x20);
 			break;
 		}
-
 		case BaseShapeChunk::MatrixEnvelope:
 		{
 			before = gsys->getHeap(SYSHEAP_App)->getFree();
@@ -2282,7 +2338,6 @@ void BaseShape::read(RandomAccessStream& stream)
 			stream.skipPadding(0x20);
 			break;
 		}
-
 		case BaseShapeChunk::Mesh:
 		{
 			before = gsys->getHeap(SYSHEAP_App)->getFree();
@@ -2299,7 +2354,6 @@ void BaseShape::read(RandomAccessStream& stream)
 			stream.skipPadding(0x20);
 			break;
 		}
-
 		case BaseShapeChunk::Joint:
 		{
 			before = gsys->getHeap(SYSHEAP_App)->getFree();
@@ -2354,7 +2408,6 @@ void BaseShape::read(RandomAccessStream& stream)
 			((before - after) / 1024.0f); // The DLL does nothing here but this is clearly resembles a stripped KB print
 			break;
 		}
-
 		case BaseShapeChunk::JointName:
 		{
 			before = gsys->getHeap(SYSHEAP_App)->getFree();
@@ -2370,7 +2423,6 @@ void BaseShape::read(RandomAccessStream& stream)
 			stream.skipPadding(0x20);
 			break;
 		}
-
 		case BaseShapeChunk::CollisionPrism:
 		{
 			before = gsys->getHeap(SYSHEAP_App)->getFree();
@@ -2397,7 +2449,6 @@ void BaseShape::read(RandomAccessStream& stream)
 			stream.skipPadding(0x20);
 			break;
 		}
-
 		case BaseShapeChunk::CollisionGrid:
 		{
 			before = gsys->getHeap(SYSHEAP_App)->getFree();
@@ -2483,7 +2534,6 @@ void BaseShape::read(RandomAccessStream& stream)
 			stream.skipPadding(0x20);
 			break;
 		}
-
 		default:
 		{
 			skipChunk(stream, length);

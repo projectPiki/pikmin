@@ -168,9 +168,12 @@ public:
 		mIsActive = false;
 		switch (int state = mState) {
 		case WipeState::Idle:
+		{
 			break;
+		}
 		case WipeState::Closing:
 		case WipeState::Opening:
+		{
 			mTimer += gsys->getFrameTime();
 			if (mTimer > mDuration) {
 				mTimer = mDuration;
@@ -192,6 +195,7 @@ public:
 			mState    = state;
 			mIsActive = true;
 			break;
+		}
 		}
 
 		return mIsActive;
@@ -500,10 +504,12 @@ public:
 	{
 		switch (mUfoStatus) {
 		case UFO_Hovering:
+		{
 			stayUfo();
 			break;
-
+		}
 		case UFO_Moving:
+		{
 			if (moveUfo()) {
 				if (mIsForcedMove) {
 					forceMove();
@@ -514,8 +520,11 @@ public:
 				}
 			}
 			break;
+		}
 		case UFO_Landed:
+		{
 			break;
+		}
 		}
 
 		updateOnyons();
@@ -546,16 +555,20 @@ public:
 		if (p3) {
 			switch (mUfoStatus) {
 			case UFO_Hovering:
+			{
 				mLandingTimer = 0.0f;
 				check         = true;
 				setLandingFlag(true);
 				break;
+			}
 			case UFO_Moving:
+			{
 				if (!mIsLanding) {
 					mIsForcedMove = true;
 					mForceMoveTarget.set(x, y, 0.0f);
 				}
 				break;
+			}
 			}
 		} else if (!mIsLanding) {
 			check = true;
@@ -813,10 +826,14 @@ protected:
 		mUfoStatus = status;
 		switch (mUfoStatus) {
 		case UFO_Hovering:
+		{
 			mRotationSpeed = 0.0f;
 			break;
+		}
 		case UFO_Moving:
+		{
 			break;
+		}
 		}
 	}
 
@@ -903,56 +920,80 @@ public:
 		} else if (playerState) {
 			switch (id) {
 			case WM_Practice:
+			{
 				max  = MAX_PARTS_PRACTICE;
 				curr = playerState->getPartsGetCount(WM_Practice);
 				break;
+			}
 			case WM_Forest:
+			{
 				max  = MAX_PARTS_FOREST;
 				curr = playerState->getPartsGetCount(WM_Forest);
 				break;
+			}
 			case WM_Cave:
+			{
 				max  = MAX_PARTS_CAVE;
 				curr = playerState->getPartsGetCount(WM_Cave);
 				break;
+			}
 			case WM_Yakushima:
+			{
 				max  = MAX_PARTS_YAKUSHIMA;
 				curr = playerState->getPartsGetCount(WM_Yakushima);
 				break;
+			}
 			case WM_Last:
+			{
 				max  = MAX_PARTS_LAST;
 				curr = playerState->getPartsGetCount(WM_Last);
 				break;
+			}
 			default:
+			{
 				max  = 0;
 				curr = 0;
 				break;
 			}
+			}
 		} else {
 			switch (id) {
 			case WM_Practice:
+			{
 				max  = MAX_PARTS_PRACTICE;
 				curr = 1;
 				break;
+			}
 			case WM_Forest:
+			{
 				max  = MAX_PARTS_FOREST;
 				curr = 2;
 				break;
+			}
 			case WM_Cave:
+			{
 				max  = MAX_PARTS_CAVE;
 				curr = 3;
 				break;
+			}
 			case WM_Yakushima:
+			{
 				max  = MAX_PARTS_YAKUSHIMA;
 				curr = 4;
 				break;
+			}
 			case WM_Last:
+			{
 				max  = MAX_PARTS_LAST;
 				curr = 0;
 				break;
+			}
 			default:
+			{
 				max  = 0;
 				curr = 0;
 				break;
+			}
 			}
 		}
 
@@ -1142,6 +1183,7 @@ public:
 	{
 		switch (mStatus) {
 		case Appearing:
+		{
 			mAnimTimer += gsys->getFrameTime();
 			f32 a;
 			if (mAnimTimer > 0.25f) {
@@ -1161,13 +1203,17 @@ public:
 			mConfirmScreen->getScreenPtr()->moveZ(mAnimPos.z);
 			mConfirmScreen->getScreenPtr()->rotate(P2DROTATE_Unk1, TAU - (angle1 - HALF_PI));
 			break;
+		}
 		case Active:
+		{
 			if (modeOperation(controller)) {
 				mStatus    = Disappearing;
 				mAnimTimer = 0.0f;
 			}
 			break;
+		}
 		case Disappearing:
+		{
 			mAnimTimer += gsys->getFrameTime();
 			f32 b;
 			if (mAnimTimer > 0.25f) {
@@ -1191,6 +1237,7 @@ public:
 				mConfirmScreen->getScreenPtr()->rotate(P2DROTATE_Unk1, TAU - (angle2 - HALF_PI));
 			}
 			break;
+		}
 		}
 
 		mConfirmScreen->update();
@@ -1381,19 +1428,25 @@ public:
 		mEventFlag = 0;
 		switch (mMode) {
 		case CoursePointMode::Operation:
+		{
 			res = modeOperation(controller, p2);
 			break;
+		}
 		case CoursePointMode::Appear:
+		{
 			res = modeAppear();
 			if (res == true) {
 				mMode      = CoursePointMode::Operation;
 				mEventFlag = 0x40;
 			}
 			break;
+		}
 		default:
+		{
 			PRINT("unknown mode %d \n", mMode);
 			ERROR("unknown mode %d \n", mMode);
 			break;
+		}
 		}
 		return res;
 	}
@@ -1544,12 +1597,16 @@ public:
 	{
 		switch (mState) {
 		case MapImageState::Shown:
+		{
 			mAnimTimer = 0.0f;
 			mState     = MapImageState::Closing;
 			break;
+		}
 		case MapImageState::Opening:
+		{
 			mDelayedClose = 1;
 			break;
+		}
 		}
 	}
 
@@ -1557,17 +1614,23 @@ public:
 	{
 		switch (mState) {
 		case MapImageState::Shown:
+		{
 			if (mActiveMapIndex != -1) {
 				mMapImagePanes[mActiveMapIndex]->show();
 				mMapImagePanes[mActiveMapIndex]->setScale(1.0f);
 			}
 			break;
+		}
 		case MapImageState::Closing:
+		{
 			modeClose();
 			break;
+		}
 		case MapImageState::Opening:
+		{
 			modeOpen();
 			break;
+		}
 		}
 	}
 
@@ -1816,6 +1879,7 @@ bool zen::DrawWorldMap::update(Controller* controller)
 		} else {
 			switch (mCurrentMode) {
 			case DrawWorldMapMode::DiaryClosing:
+			{
 				if (!mWipeMgr->isActive()) {
 					mCurrentMode = DrawWorldMapMode::Diary;
 					mSelectDiary.start();
@@ -1823,14 +1887,18 @@ bool zen::DrawWorldMap::update(Controller* controller)
 				mCursorMgr->update();
 				updateScreens();
 				break;
+			}
 			case DrawWorldMapMode::DiaryOpening:
+			{
 				if (!mWipeMgr->isActive()) {
 					mCurrentMode = DrawWorldMapMode::Operation;
 				}
 				mCursorMgr->update();
 				updateScreens();
 				break;
+			}
 			case DrawWorldMapMode::Start:
+			{
 				if (modeStart(controller)) {
 					if (mStartMode) {
 						mCurrentMode = DrawWorldMapMode::Appear;
@@ -1839,17 +1907,23 @@ bool zen::DrawWorldMap::update(Controller* controller)
 					}
 				}
 				break;
+			}
 			case DrawWorldMapMode::Appear:
+			{
 				if (modeAppear(controller)) {
 					mCurrentMode = DrawWorldMapMode::Operation;
 				}
 				break;
+			}
 			case DrawWorldMapMode::Confirm:
+			{
 				if (modeConfirm(controller)) {
 					mCurrentMode = DrawWorldMapMode::Operation;
 				}
 				break;
+			}
 			case DrawWorldMapMode::Operation:
+			{
 				if (controller->keyClick(KBBTN_START)) {
 					mPause.start();
 					mCurrentMode = DrawWorldMapMode::Paused;
@@ -1864,12 +1938,15 @@ bool zen::DrawWorldMap::update(Controller* controller)
 					mCurrentMode = DrawWorldMapMode::End;
 				}
 				break;
+			}
 			case DrawWorldMapMode::End:
+			{
 				if (modeEnd(controller)) {
 					mCurrentMode = DrawWorldMapMode::Null;
 					res          = true;
 				}
 				break;
+			}
 			}
 
 			if (mCursorMgr->getStatusFlag() == WorldMapCursorMgr::UFO_Hovering || mCursorMgr->isLanding()) {
@@ -1931,24 +2008,36 @@ void zen::DrawWorldMap::setCoursePoint(zen::DrawWorldMap::startPlaceFlag placeFl
 {
 	switch (placeFlag) {
 	case ImpactSite:
+	{
 		mCoursePointMgr->start(WM_Practice);
 		break;
+	}
 	case ForestHope:
+	{
 		mCoursePointMgr->start(WM_Forest);
 		break;
+	}
 	case ForestNavel:
+	{
 		mCoursePointMgr->start(WM_Cave);
 		break;
+	}
 	case DistantSpring:
+	{
 		mCoursePointMgr->start(WM_Yakushima);
 		break;
+	}
 	case FinalTrial:
+	{
 		mCoursePointMgr->start(WM_Last);
 		break;
+	}
 	default:
+	{
 		PRINT("unknown place no : %d \n", placeFlag);
 		mCoursePointMgr->start(WM_Practice);
 		break;
+	}
 	}
 }
 
@@ -1987,22 +2076,32 @@ void zen::DrawWorldMap::start(zen::DrawWorldMap::startModeFlag modeFlag, zen::Dr
 	if (mStartMode != None) {
 		switch (mStartMode) {
 		case ForestUnlock:
+		{
 			mCoursePointMgr->appear(WM_Forest);
 			break;
+		}
 		case CaveUnlock:
+		{
 			mCoursePointMgr->appear(WM_Cave);
 			break;
+		}
 		case SpringUnlock:
+		{
 			mCoursePointMgr->appear(WM_Yakushima);
 			break;
+		}
 		case FinalUnlock:
+		{
 			mCoursePointMgr->appear(WM_Last);
 			mShootingStarMgr->rapidFire();
 			break;
+		}
 		default:
+		{
 			PRINT("unknown startMode %d \n", mStartMode);
 			ERROR("unknown startMode %d \n", mStartMode);
 			break;
+		}
 		}
 	}
 
@@ -2089,20 +2188,30 @@ bool zen::DrawWorldMap::modeAppear(Controller* controller)
 
 		switch (mStartMode) {
 		case ForestUnlock:
+		{
 			setCoursePoint(ForestHope);
 			break;
+		}
 		case CaveUnlock:
+		{
 			setCoursePoint(ForestNavel);
 			break;
+		}
 		case SpringUnlock:
+		{
 			setCoursePoint(DistantSpring);
 			break;
+		}
 		case FinalUnlock:
+		{
 			setCoursePoint(FinalTrial);
 			break;
+		}
 		default:
+		{
 			PRINT("Illegal startMode. %d \n", mStartMode);
 			break;
+		}
 		}
 
 		int x, y;

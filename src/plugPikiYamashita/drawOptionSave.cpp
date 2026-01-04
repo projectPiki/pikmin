@@ -31,30 +31,40 @@ bool zen::DrawOptionSave::update(Controller* controller)
 	bool res = false;
 	switch (mMode) {
 	case MODE_Sleep:
+	{
 		break;
-
+	}
 	case MODE_Start:
+	{
 		if (mSaveMes.update(controller)) {
 			switch (mSaveMes.getModeFlag()) {
 			case DrawSaveMes::MODE_Unk3:
+			{
 				setMode(MODE_CardCheck, controller);
 				break;
+			}
 			case DrawSaveMes::MODE_Unk6:
+			{
 				setMode(MODE_Unk8, nullptr);
 				break;
+			}
 			default:
+			{
 				PRINT("MODE ERROR \n");
 				ERROR("MODE ERROR \n");
 				break;
 			}
+			}
 		}
 		break;
-
+	}
 	case MODE_CardCheck:
+	{
 		modeCardCheck(controller);
 		break;
-
+	}
 	case MODE_Saving:
+	{
 		gameflow.mMemoryCard.saveOptions();
 		if (gameflow.mMemoryCard.didSaveFail()) {
 			setMode(MODE_SaveFail, nullptr);
@@ -62,8 +72,9 @@ bool zen::DrawOptionSave::update(Controller* controller)
 			setMode(MODE_SaveOK, nullptr);
 		}
 		break;
-
+	}
 	case MODE_SaveOK:
+	{
 		if (mSaveMes.update(controller)) {
 			if (mSaveMes.getModeFlag() == DrawSaveMes::MODE_Finish) {
 				setMode(MODE_Unk6, nullptr);
@@ -73,8 +84,9 @@ bool zen::DrawOptionSave::update(Controller* controller)
 			}
 		}
 		break;
-
+	}
 	case MODE_SaveFail:
+	{
 		if (mSaveMes.update(controller)) {
 			if (mSaveMes.getModeFlag() == DrawSaveMes::MODE_Finish) {
 				setMode(MODE_Unk7, nullptr);
@@ -84,17 +96,20 @@ bool zen::DrawOptionSave::update(Controller* controller)
 			}
 		}
 		break;
-
+	}
 	case MODE_Unk6:
 	case MODE_Unk7:
 	case MODE_Unk8:
 	case MODE_Unk9:
+	{
 		res = true;
 		break;
-
+	}
 	default:
+	{
 		PRINT("Unknown mode:%d \n", mMode);
 		break;
+	}
 	}
 
 	return res;
@@ -121,14 +136,20 @@ void zen::DrawOptionSave::modeCardCheck(Controller* controller)
 	if (controller) {
 		switch (mMemChkMgr.update(controller)) {
 		case ogScrMemChkMgr::ExitFailure:
+		{
 			setMode(MODE_Unk7, nullptr);
 			break;
+		}
 		case ogScrMemChkMgr::ExitSuccess:
+		{
 			setMode(MODE_Unk9, nullptr);
 			break;
+		}
 		case ogScrMemChkMgr::Finished:
+		{
 			setMode(MODE_Saving, nullptr);
 			break;
+		}
 		}
 	} else {
 		PRINT("Controller is NULL. \n");
@@ -160,39 +181,49 @@ void zen::DrawOptionSave::setMode(u32 mode, Controller* controller)
 	mMode = mode;
 	switch (mMode) {
 	case MODE_Sleep:
+	{
 		mSaveMes.sleep();
 		break;
-
+	}
 	case MODE_Start:
+	{
 		mSaveMes.mesAppear();
 		break;
-
+	}
 	case MODE_CardCheck:
+	{
 		mMemChkMgr.start();
 		modeCardCheck(controller);
 		break;
-
+	}
 	case MODE_Saving:
+	{
 		SeSystem::playSysSe(ogEnumFix(SYSSE_CARDACCESS, SE_PIKI_DAMAGED));
 		break;
-
+	}
 	case MODE_SaveFail:
+	{
 		SeSystem::playSysSe(ogEnumFix(SYSSE_CARDERROR, SE_WALL_HIT));
 		mSaveMes.saveError();
 		break;
-
+	}
 	case MODE_SaveOK:
+	{
 		SeSystem::playSysSe(ogEnumFix(SYSSE_CARDOK, SE_PIKI_PRESSED));
 		mSaveMes.saveFinish();
 		break;
-
+	}
 	case MODE_Unk6:
 	case MODE_Unk7:
 	case MODE_Unk8:
 	case MODE_Unk9:
+	{
 		break;
+	}
 	default:
+	{
 		PRINT("Unknown set mode:%d \n", mMode);
 		break;
+	}
 	}
 }

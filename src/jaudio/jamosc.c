@@ -23,23 +23,35 @@ void Osc_Update_Param(seqp_* track, u8 id, f32 val)
 
 	switch (id) {
 	case 6:
+	{
 		track->oscillators[0].width = val;
 		break;
+	}
 	case 7:
+	{
 		track->oscillators[0].rate = val;
 		break;
+	}
 	case 8:
+	{
 		track->oscillators[0].vertex = val;
 		break;
+	}
 	case 9:
+	{
 		track->oscillators[1].width = val;
 		break;
+	}
 	case 10:
+	{
 		track->oscillators[1].rate = val;
 		break;
+	}
 	case 11:
+	{
 		track->oscillators[1].vertex = val;
 		break;
+	}
 	}
 }
 
@@ -66,14 +78,20 @@ void Osc_Setup_Simple(seqp_* track, u8 id)
 {
 	switch (id) {
 	case 0:
+	{
 		Osc_Setup_Vibrato(track, 1);
 		break;
+	}
 	case 1:
+	{
 		Osc_Setup_Tremolo(track, 0);
 		break;
+	}
 	case 2:
+	{
 		Osc_Setup_Tremolo(track, 1);
 		break;
+	}
 	}
 }
 
@@ -104,13 +122,16 @@ void Osc_Setup_SimpleEnv(seqp_* track, u8 id, u32 val)
 	STACK_PAD_VAR(2);
 	switch (id) {
 	case 0:
+	{
 		track->oscillators[0]                 = ENVELOPE_DEF;
 		track->oscillators[0].attackVecOffset = (s16*)Jam_OfsToAddr(track, val);
 		break;
-
+	}
 	case 1:
+	{
 		track->oscillators[0].releaseVecOffset = (s16*)Jam_OfsToAddr(track, val);
 		break;
+	}
 	}
 }
 
@@ -155,8 +176,10 @@ void Osc_Setup_Full(seqp_* track, u8 flag, u32 offs1, u32 offs2)
 		track->oscillators[idx].mode = a;
 		switch (a) {
 		case 1:
+		{
 			track->oscillators[idx].vertex = 1.0f;
 			break;
+		}
 		}
 	}
 

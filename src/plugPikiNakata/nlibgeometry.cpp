@@ -1848,17 +1848,29 @@ f32 NAlpha::getValue(f32 input)
 
 	switch (mMode) {
 	case NAlphaMode::Linear:
+	{
 		return normalisedValue;
+	}
 	case NAlphaMode::FadeIn:
+	{
 		return fadeInValue(normalisedValue);
+	}
 	case NAlphaMode::FadeOut:
+	{
 		return fadeOutValue(normalisedValue);
+	}
 	case NAlphaMode::FadeInOut:
+	{
 		return fadeInOutValue(normalisedValue);
+	}
 	case NAlphaMode::FadeOutIn:
+	{
 		return fadeOutInValue(normalisedValue);
+	}
 	default:
+	{
 		return normalisedValue;
+	}
 	}
 }
 

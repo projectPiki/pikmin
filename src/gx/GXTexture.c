@@ -21,9 +21,11 @@ void __GXGetTexTileShift(GXTexFmt fmt, u32* rowTileS, u32* colTileS)
 	case GX_TF_CMPR:
 	case GX_CTF_R4:
 	case GX_CTF_Z4:
+	{
 		*rowTileS = 3;
 		*colTileS = 3;
 		break;
+	}
 	case GX_TF_I8:
 	case GX_TF_IA4:
 	case 0x9:
@@ -35,9 +37,11 @@ void __GXGetTexTileShift(GXTexFmt fmt, u32* rowTileS, u32* colTileS)
 	case GX_CTF_RG8:
 	case GX_CTF_Z8M:
 	case GX_CTF_Z8L:
+	{
 		*rowTileS = 3;
 		*colTileS = 2;
 		break;
+	}
 	case GX_TF_IA8:
 	case GX_TF_RGB565:
 	case GX_TF_RGB5A3:
@@ -49,13 +53,17 @@ void __GXGetTexTileShift(GXTexFmt fmt, u32* rowTileS, u32* colTileS)
 	case GX_CTF_GB8:
 	case 0x2C:
 	case GX_CTF_Z16L:
+	{
 		*rowTileS = 2;
 		*colTileS = 2;
 		break;
+	}
 	default:
+	{
 		*rowTileS = *colTileS = 0;
 		ASSERTMSGLINEV(0x184, 0, "%s: invalid texture format", "GX");
 		break;
+	}
 	}
 }
 
@@ -184,41 +192,53 @@ void GXInitTexObj(GXTexObj* obj, void* image_ptr, u16 width, u16 height, GXTexFm
 	switch (format & 0xF) {
 	case 0:
 	case 8:
+	{
 		t->loadFormat = 1;
 		rowT          = 3;
 		colT          = 3;
 		break;
+	}
 	case 1:
 	case 2:
 	case 9:
+	{
 		t->loadFormat = 2;
 		rowT          = 3;
 		colT          = 2;
 		break;
+	}
 	case 3:
 	case 4:
 	case 5:
 	case 10:
+	{
 		t->loadFormat = 2;
 		rowT          = 2;
 		colT          = 2;
 		break;
+	}
 	case 6:
+	{
 		t->loadFormat = 3;
 		rowT          = 2;
 		colT          = 2;
 		break;
+	}
 	case 14:
+	{
 		t->loadFormat = 0;
 		rowT          = 3;
 		colT          = 3;
 		break;
+	}
 	default:
+	{
 		ASSERTMSGLINEV(0x275, 0, "%s: invalid texture format", "GXPreLoadEntireTexture");
 		t->loadFormat = 2;
 		rowT          = 2;
 		colT          = 2;
 		break;
+	}
 	}
 	rowC         = (width + (1 << rowT) - 1) >> rowT;
 	colC         = (height + (1 << colT) - 1) >> colT;
@@ -760,17 +780,25 @@ void GXInitTexCacheRegion(GXTexRegion* region, u8 is_32b_mipmap, u32 tmem_even, 
 	ASSERTMSGLINEV(0x4DE, (tmem_odd & 0x1F) == 0, "%s: %s pointer not aligned to 32B", "GXInitTexCacheRegion", "tmem odd");
 	switch (size_even) {
 	case GX_TEXCACHE_32K:
+	{
 		WidthExp2 = 3;
 		break;
+	}
 	case GX_TEXCACHE_128K:
+	{
 		WidthExp2 = 4;
 		break;
+	}
 	case GX_TEXCACHE_512K:
+	{
 		WidthExp2 = 5;
 		break;
+	}
 	default:
+	{
 		ASSERTMSGLINEV(0x4E6, 0, "%s: Invalid %s size", "GXInitTexCacheRegion", "tmem even");
 		break;
+	}
 	}
 	t->image1 = 0;
 	SET_REG_FIELD(0x4EB, t->image1, 15, 0, tmem_even >> 5);
@@ -779,20 +807,30 @@ void GXInitTexCacheRegion(GXTexRegion* region, u8 is_32b_mipmap, u32 tmem_even, 
 	t->image1 &= 0xFFDFFFFF;
 	switch (size_odd) {
 	case GX_TEXCACHE_32K:
+	{
 		WidthExp2 = 3;
 		break;
+	}
 	case GX_TEXCACHE_128K:
+	{
 		WidthExp2 = 4;
 		break;
+	}
 	case GX_TEXCACHE_512K:
+	{
 		WidthExp2 = 5;
 		break;
+	}
 	case GX_TEXCACHE_NONE:
+	{
 		WidthExp2 = 0;
 		break;
+	}
 	default:
+	{
 		ASSERTMSGLINEV(0x4F6, 0, "%s: Invalid %s size", "GXInitTexCacheRegion", "tmem odd");
 		break;
+	}
 	}
 	t->image2 = 0;
 	SET_REG_FIELD(0x4FB, t->image2, 15, 0, tmem_odd >> 5);
@@ -848,31 +886,47 @@ void GXGetTexRegionAll(const GXTexRegion* region, u8* is_cached, u8* is_32b_mipm
 	if (t->isCached) {
 		switch (GET_REG_FIELD(t->image1, 3, 15)) {
 		case 3:
+		{
 			*size_even = 0x8000;
 			break;
+		}
 		case 4:
+		{
 			*size_even = 0x20000;
 			break;
+		}
 		case 5:
+		{
 			*size_even = 0x80000;
 			break;
+		}
 		default:
+		{
 			*size_even = 0;
 			break;
 		}
+		}
 		switch (GET_REG_FIELD(t->image2, 3, 15)) {
 		case 3:
+		{
 			*size_odd = 0x8000;
 			break;
+		}
 		case 4:
+		{
 			*size_odd = 0x20000;
 			break;
+		}
 		case 5:
+		{
 			*size_odd = 0x80000;
 			break;
+		}
 		default:
+		{
 			*size_odd = 0;
 			break;
+		}
 		}
 	} else {
 		*size_even = t->sizeEven << 5;
@@ -1272,21 +1326,29 @@ void __GXSetSUTexRegs(void)
 		for (i = 0; i < nIndStages; i++) {
 			switch (i) {
 			case 0:
+			{
 				tmap  = GET_REG_FIELD(gx->iref, 3, 0);
 				coord = GET_REG_FIELD(gx->iref, 3, 3);
 				break;
+			}
 			case 1:
+			{
 				tmap  = GET_REG_FIELD(gx->iref, 3, 6);
 				coord = GET_REG_FIELD(gx->iref, 3, 9);
 				break;
+			}
 			case 2:
+			{
 				tmap  = GET_REG_FIELD(gx->iref, 3, 12);
 				coord = GET_REG_FIELD(gx->iref, 3, 15);
 				break;
+			}
 			case 3:
+			{
 				tmap  = GET_REG_FIELD(gx->iref, 3, 18);
 				coord = GET_REG_FIELD(gx->iref, 3, 21);
 				break;
+			}
 			}
 			if (!(gx->tcsManEnab & (1 << coord))) {
 				__SetSURegs(tmap, coord);

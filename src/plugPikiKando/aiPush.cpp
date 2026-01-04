@@ -83,9 +83,13 @@ int ActPush::exec()
 	_44 = 0;
 	switch (mState) {
 	case STATE_Approach:
+	{
 		return exeApproach();
+	}
 	case STATE_Go:
+	{
 		return exeGo();
+	}
 	}
 
 	return ACTOUT_Continue;
@@ -122,23 +126,29 @@ int ActPush::exeApproach()
 	case 0x1 | 0x2:
 	case 0x8:
 	case 0x8 | 0x1:
+	{
 		return ACTOUT_Fail;
-
+	}
 	case 0:
+	{
 		moveDir = mHinderRock->getZVector();
 		break;
-
+	}
 	case 0x2 | 0x4:
+	{
 		moveDir = mHinderRock->getXVector();
 		moveDir.multiply(-1.0f);
 		break;
-
+	}
 	case 0x4 | 0x8:
+	{
 		moveDir = mHinderRock->getXVector();
 		break;
-
+	}
 	case 0x1:
+	{
 		return ACTOUT_Fail;
+	}
 	}
 
 	mPiki->setSpeed(0.8f, moveDir);
@@ -220,9 +230,12 @@ void ActPush::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
 	case KEY_LoopStart:
+	{
 		break;
+	}
 	case KEY_Action0:
 	case KEY_Action1:
+	{
 		if (mPushAnimationState == 0 && mHinderRock && mHinderRock->isMoving()) {
 			mPiki->startMotion(PaniMotionInfo(PIKIANIM_Osu_Walk, this), PaniMotionInfo(PIKIANIM_Osu_Walk));
 			f32 frame = 11.0f;
@@ -235,7 +248,9 @@ void ActPush::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 			mPushAnimationState                                      = 1;
 		}
 		break;
+	}
 	case KEY_LoopEnd:
+	{
 		if (mPushAnimationState == 1 && mHinderRock && !mHinderRock->isMoving()) {
 			mPiki->startMotion(PaniMotionInfo(PIKIANIM_Osu, this), PaniMotionInfo(PIKIANIM_Osu));
 			mPushCount                                               = int(5.0f * gsys->getRand(1.0f)) + 5;
@@ -255,7 +270,9 @@ void ActPush::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 
 		_24 = 1;
 		break;
+	}
 	case KEY_Finished:
+	{
 		if (_44) {
 			_44 = 2;
 			break;
@@ -267,6 +284,7 @@ void ActPush::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 			mPushCount = int(5.0f * gsys->getRand(1.0f)) + 5;
 		}
 		break;
+	}
 	}
 }
 

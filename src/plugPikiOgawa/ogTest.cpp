@@ -293,63 +293,76 @@ void OgTestScreen::modeSelectSub()
 
 	switch (mSelectedMode) {
 	case TESTMODE_Title:
+	{
 		mTitleMgr->start(mTitleMode);
 		mActiveMode = TESTMODE_Title;
 		break;
-
+	}
 	case TESTMODE_Tutorial:
+	{
 		mTutorialMgr->start((ogScrTutorialMgr::EnumTutorial)mTutorialMode);
 		mActiveMode = TESTMODE_Tutorial;
 		break;
-
+	}
 	case TESTMODE_Diary:
+	{
 		mDrawSelectDiary->start();
 		mActiveMode = TESTMODE_Diary;
 		break;
-
+	}
 	case 8:
+	{
 		mPauseMgr->start(mChallengeModePause);
 		mActiveMode = 8;
 		break;
-
+	}
 	case TESTMODE_Map:
+	{
 		mMapMgr->start(mMapMode);
 		mActiveMode = TESTMODE_Map;
 		break;
-
+	}
 	case TESTMODE_Result:
+	{
 		mResultMgr->start();
 		mActiveMode = TESTMODE_Result;
 		break;
-
+	}
 	case TESTMODE_MemChk:
+	{
 		mMemChkMgr->DebugStart(mMemChkMode);
 		mActiveMode = TESTMODE_MemChk;
 		break;
-
+	}
 	case TESTMODE_FileChkSel:
+	{
 		mFileChkSelMgr->start(mFileChkSelMode);
 		mActiveMode = TESTMODE_FileChkSel;
 		break;
-
+	}
 	case TESTMODE_Save:
+	{
 		mFileChkSelMgr->startSave();
 		mActiveMode = TESTMODE_Save;
 		break;
-
+	}
 	case TESTMODE_TotalScore:
+	{
 		mTotalScoreMgr->start();
 		mActiveMode = TESTMODE_TotalScore;
 		break;
-
+	}
 	case TESTMODE_Unused11:
+	{
 		mActiveMode = TESTMODE_Unused11;
 		break;
-
+	}
 	case TESTMODE_Start:
+	{
 		mStartMgr->start();
 		mActiveMode = TESTMODE_Start;
 		break;
+	}
 	}
 }
 

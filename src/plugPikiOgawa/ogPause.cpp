@@ -125,6 +125,7 @@ zen::ogScrPauseMgr::PauseStatus zen::ogScrPauseMgr::update(Controller* controlle
 
 	switch (mState) {
 	case PAUSE_FadeIn:
+	{
 		// fading menu in/starting up
 		if (mFrameTimer < 0.5f) {
 			mFadeAlpha = 128.0f * mFrameTimer / 0.5f;
@@ -134,8 +135,9 @@ zen::ogScrPauseMgr::PauseStatus zen::ogScrPauseMgr::update(Controller* controlle
 			mState = PAUSE_Active;
 		}
 		break;
-
+	}
 	case PAUSE_FadeOut:
+	{
 		// fading menu out/exiting
 		if (mFrameTimer < 0.5f) {
 			mFadeAlpha = 128.0f * mFrameTimer / 0.5f;
@@ -146,8 +148,9 @@ zen::ogScrPauseMgr::PauseStatus zen::ogScrPauseMgr::update(Controller* controlle
 			mIsActive = false;
 		}
 		break;
-
+	}
 	case PAUSE_Active:
+	{
 		// actively choosing/scrolling
 		DrawMenu::StatusFlag status = mMainMenu->getStatusFlag();
 		int selectMenu              = mMainMenu->getSelectMenu();
@@ -188,9 +191,10 @@ zen::ogScrPauseMgr::PauseStatus zen::ogScrPauseMgr::update(Controller* controlle
 			break;
 		}
 		break;
-
+	}
 	case PAUSE_SunsetSubmenu:
 	case PAUSE_QuitGameSubmenu:
+	{
 		int subStatus     = mSubMenu->getStatusFlag();
 		int selectSubMenu = mSubMenu->getSelectMenu();
 		if (subStatus == DrawMenu::STATUS_Inactive) {
@@ -199,11 +203,15 @@ zen::ogScrPauseMgr::PauseStatus zen::ogScrPauseMgr::update(Controller* controlle
 				// we hit yes!
 				switch (mState) {
 				case PAUSE_SunsetSubmenu:
+				{
 					mPendingExitState = PAUSE_ExitToSunset;
 					break;
+				}
 				case PAUSE_QuitGameSubmenu:
+				{
 					mPendingExitState = PAUSE_ExitToTitle;
 					break;
+				}
 				}
 
 				mState      = PAUSE_FadeOut;
@@ -220,6 +228,7 @@ zen::ogScrPauseMgr::PauseStatus zen::ogScrPauseMgr::update(Controller* controlle
 			}
 		}
 		break;
+	}
 	}
 
 	STACK_PAD_VAR(1);

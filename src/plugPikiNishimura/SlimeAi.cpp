@@ -94,20 +94,25 @@ void SlimeAi::calcBubblePiki()
 	CollPart* part = nullptr;
 	switch (mBubbleCheckIndex) {
 	case 0:
+	{
 		part = mSlime->mCollInfo->getSphere('stk1');
 		break;
-
+	}
 	case 1:
+	{
 		part = mSlime->mCollInfo->getSphere('stk2');
 		break;
-
+	}
 	case 2:
+	{
 		part = mSlime->mCollInfo->getSphere('stk3');
 		break;
-
+	}
 	default:
+	{
 		part = mSlime->mCollInfo->getSphere('stk4');
 		break;
+	}
 	}
 
 	if (part) {
@@ -1180,13 +1185,15 @@ void SlimeAi::update()
 	setEveryFrame();
 	switch (mSlime->getCurrentState()) {
 	case SLIMEAI_Die:
+	{
 		dieState();
 		if (disAppearTransit()) {
 			initDisAppear(SLIMEAI_Disappear);
 		}
 		break;
-
+	}
 	case SLIMEAI_WalkRandom:
+	{
 		walkRandomState();
 		if (dieTransit()) {
 			initDie(SLIMEAI_Die);
@@ -1200,8 +1207,9 @@ void SlimeAi::update()
 			initChase(SLIMEAI_ChasePiki);
 		}
 		break;
-
+	}
 	case SLIMEAI_ChaseNavi:
+	{
 		chaseNaviState();
 		if (dieTransit()) {
 			initDie(SLIMEAI_Die);
@@ -1217,8 +1225,9 @@ void SlimeAi::update()
 			initWalk(SLIMEAI_WalkRandom);
 		}
 		break;
-
+	}
 	case SLIMEAI_ChasePiki:
+	{
 		chasePikiState();
 		if (dieTransit()) {
 			initDie(SLIMEAI_Die);
@@ -1236,8 +1245,9 @@ void SlimeAi::update()
 			initWalk(SLIMEAI_WalkRandom);
 		}
 		break;
-
+	}
 	case SLIMEAI_WalkGoHome:
+	{
 		walkGoHomeState();
 		if (dieTransit()) {
 			initDie(SLIMEAI_Die);
@@ -1249,8 +1259,9 @@ void SlimeAi::update()
 			initWalk(SLIMEAI_WalkRandom);
 		}
 		break;
-
+	}
 	case SLIMEAI_Contract:
+	{
 		contractState();
 		if (dieTransit()) {
 			initDie(SLIMEAI_Die);
@@ -1258,8 +1269,9 @@ void SlimeAi::update()
 			initExpansion(SLIMEAI_Expansion);
 		}
 		break;
-
+	}
 	case SLIMEAI_Expansion:
+	{
 		expansionState();
 		if (dieTransit()) {
 			initDie(SLIMEAI_Die);
@@ -1269,24 +1281,28 @@ void SlimeAi::update()
 			initWalk(SLIMEAI_WalkRandom);
 		}
 		break;
-
+	}
 	case SLIMEAI_Stay:
+	{
 		stayState();
 		if (appearTransit()) {
 			initAppear(SLIMEAI_Appear);
 		}
 		break;
-
+	}
 	case SLIMEAI_Appear:
+	{
 		appearState();
 		if (motionFinishTransit()) {
 			initWalk(SLIMEAI_WalkRandom);
 		}
 		break;
-
+	}
 	case SLIMEAI_Disappear:
+	{
 		disAppearState();
 		break;
+	}
 	}
 
 	afterProcessing();

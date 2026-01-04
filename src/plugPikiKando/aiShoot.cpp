@@ -159,16 +159,22 @@ void ActShootCreature::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
 	case KEY_Action0:
+	{
 		mState = STATE_PrepareShoot;
 		break;
+	}
 	case KEY_Action1:
+	{
 		mState = STATE_ReadyToShoot;
 		break;
+	}
 	case KEY_Finished:
+	{
 		mState      = STATE_Chasing;
 		mChaseTimer = 1.8f;
 		mPiki->startMotion(PaniMotionInfo(PIKIANIM_Walk), PaniMotionInfo(PIKIANIM_Walk));
 		break;
+	}
 	}
 }
 

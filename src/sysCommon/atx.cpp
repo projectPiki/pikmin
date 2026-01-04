@@ -150,18 +150,22 @@ BOOL AtxCommandStream::checkCommands()
 	int command = readInt();
 	switch (command) {
 	case ATX_CMD_ID:
+	{
 		PRINT("Atx - Sending identification information\n");
 		writeString(mPath);
 		break;
-
+	}
 	case ATX_CMD_CLOSE:
+	{
 		PRINT("Atx - Server is closing\n");
 		mParentApp->stopAgeServer();
 		break;
-
+	}
 	case ATX_CMD_START:
+	{
 		mParentApp->startAgeServer();
 		break;
+	}
 	}
 
 	return TRUE;

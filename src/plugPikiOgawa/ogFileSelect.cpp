@@ -195,16 +195,20 @@ void zen::ogScrFileSelectMgr::setOperateMode(zen::ogScrFileSelectMgr::FileOperat
 	mOperation = mode;
 	switch (mOperation) {
 	case Normal:
+	{
 		setOperateMode_Normal();
 		break;
-
+	}
 	case Copy:
+	{
 		setOperateMode_Copy();
 		break;
-
+	}
 	case Delete:
+	{
 		setOperateMode_Delete();
 		break;
+	}
 	}
 }
 
@@ -539,56 +543,70 @@ void zen::ogScrFileSelectMgr::SetTitleMsg(zen::ogScrFileSelectMgr::titleMessageF
 
 	switch (flag) {
 	case SelectDataToSave:
+	{
 		mPromptSelectSavePane->show();
 		break;
-
+	}
 	case DataCorrupted:
+	{
 		mCorruptText->show();
 		break;
-
+	}
 	case NoMemoryCardInserted:
+	{
 		mPromptNoCardPane->show();
 		break;
-
+	}
 	case MemoryCardErrorOccurred:
+	{
 		mPromptCardErrPane->show();
 		break;
-
+	}
 	case SelectSourceFileForCopy:
+	{
 		mPromptSelectCopySrcPane->show();
 		break;
-
+	}
 	case ConfirmFileCopy:
+	{
 		mConfirmCopyText->show();
 		break;
-
+	}
 	case SelectFileForDelete:
+	{
 		mOpInProgressPane->show();
 		break;
-
+	}
 	case ConfirmFileDelete:
+	{
 		mPromptConfirmDelPane->show();
 		break;
-
+	}
 	case FormattingInProgress:
+	{
 		mOpCompletePane->show();
 		break;
-
+	}
 	case FormatComplete:
+	{
 		mFormatDoneText->show();
 		break;
-
+	}
 	case SaveFailedError:
+	{
 		mPromptSaveFailPane->show();
 		break;
-
+	}
 	case SaveSuccessful:
+	{
 		mPromptSaveOKPane->show();
 		break;
-
+	}
 	case MemoryCardFullError:
+	{
 		mPromptCardFullPane->show();
 		break;
+	}
 	}
 }
 
@@ -645,16 +663,20 @@ void zen::ogScrFileSelectMgr::setDataNumber(int dataNum)
 
 	switch (dataNum) {
 	case 0:
+	{
 		mFileInfoPane1->show();
 		break;
-
+	}
 	case 1:
+	{
 		mFileInfoPane2->show();
 		break;
-
+	}
 	case 2:
+	{
 		mFileInfoPane3->show();
 		break;
+	}
 	}
 
 	ChkNewData();
@@ -1190,20 +1212,25 @@ zen::ogScrFileSelectMgr::returnStatusFlag zen::ogScrFileSelectMgr::update(Contro
 			} else {
 				switch (mCurrSlotIdx) {
 				case 0:
+				{
 					mSelectState = SelectionA;
 					break;
-
+				}
 				case 1:
+				{
 					mSelectState = SelectionB;
 					break;
-
+				}
 				case 2:
+				{
 					mSelectState = SelectionC;
 					break;
-
+				}
 				default:
+				{
 					mSelectState = ReturnToIPL;
 					break;
+				}
 				}
 			}
 		} else {
@@ -1277,16 +1304,20 @@ zen::ogScrFileSelectMgr::returnStatusFlag zen::ogScrFileSelectMgr::update(Contro
 	if (mMainInteractTimer > 1.0f) {
 		switch (mOperation) {
 		case Normal:
+		{
 			OperateSelect(controller);
 			break;
-
+		}
 		case Copy:
+		{
 			OperateCopy(controller);
 			break;
-
+		}
 		case Delete:
+		{
 			OperateDelete(controller);
 			break;
+		}
 		}
 	}
 

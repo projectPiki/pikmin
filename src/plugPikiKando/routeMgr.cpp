@@ -1231,17 +1231,21 @@ void WayPoint::initLinkInfos()
 			case 0: // Red onion
 			case 1: // Blue onion
 			case 2: // Yellow onion
+			{
 				GoalItem* container = itemMgr->getContainer(goalIdx);
 				if (container) {
 					wpIdx = container->mWaypointIdx;
 				}
 				break;
+			}
 			case 3: // Ship
+			{
 				UfoItem* ufo = itemMgr->getUfo();
 				if (ufo) {
 					wpIdx = ufo->mWaypointID;
 				}
 				break;
+			}
 			}
 
 			if (wpIdx != -1) {
@@ -1317,16 +1321,20 @@ int PathFinder::findSyncOnyon(immut Vector3f& startPos, PathFinder::Buffer* buff
 	case 0: // Red onion
 	case 1: // Blue onion
 	case 2: // Yellow onion
+	{
 		GoalItem* container = itemMgr->getContainer(goalType);
 		if (container) {
 			destWPIdx = container->mWaypointIdx;
 		}
 		break;
+	}
 	case 3: // UFO
+	{
 		UfoItem* ufo = itemMgr->getUfo();
 		if (ufo) {
 			destWPIdx = ufo->mWaypointID;
 		}
+	}
 	}
 
 	// If no valid destination found, return 0 (no path)

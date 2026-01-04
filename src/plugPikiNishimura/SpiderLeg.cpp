@@ -817,16 +817,22 @@ void SpiderLeg::checkGroundTimer()
 	if (mIsMoving) {
 		switch (mMotionType) {
 		case SpiderLegMotionType::Walk:
+		{
 			setWalkNewParameter();
 			setNextDirAndCent();
 			setWalkNewPosition();
 			break;
+		}
 		case SpiderLegMotionType::ShakeOff:
+		{
 			setShakeOffNewParameter();
 			break;
+		}
 		case SpiderLegMotionType::BodyShake:
+		{
 			setBodyShakeNewParameter();
 			break;
+		}
 		}
 	}
 	// UNUSED FUNCTION

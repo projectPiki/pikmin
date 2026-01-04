@@ -71,13 +71,16 @@ void Kontroller::update()
 {
 	switch (mState) {
 	case 2:
+	{
 		read(*mDataStream);
 		if (--mDuration <= 0) {
 			stop();
 		}
 		updateCont(mCurrentKeyStatus);
 		break;
+	}
 	case 1:
+	{
 		Controller::update();
 		write(*mDataStream);
 		if (--mDuration <= 0) {
@@ -97,9 +100,12 @@ void Kontroller::update()
 			stop();
 		}
 		break;
+	}
 	case 0:
+	{
 		Controller::update();
 		break;
+	}
 	}
 
 	STACK_PAD_VAR(2);

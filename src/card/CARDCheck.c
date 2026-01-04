@@ -188,11 +188,17 @@ s32 __CARDVerify(CARDControl* card)
 	errors += VerifyFAT(card, NULL);
 	switch (errors) {
 	case 0:
+	{
 		return CARD_RESULT_READY;
+	}
 	case 1:
+	{
 		return CARD_RESULT_BROKEN;
+	}
 	default:
+	{
 		return CARD_RESULT_BROKEN;
+	}
 	}
 }
 
@@ -244,8 +250,11 @@ s32 CARDCheckExAsync(s32 channel, s32* xferBytes, CARDCallback callback)
 
 	switch (errors) {
 	case 0:
+	{
 		break;
+	}
 	case 1:
+	{
 		if (!card->currentDir) {
 			card->currentDir = dir[currentDir];
 			memcpy(dir[currentDir], dir[currentDir ^ 1], CARD_SYSTEM_BLOCK_SIZE);
@@ -256,6 +265,7 @@ s32 CARDCheckExAsync(s32 channel, s32* xferBytes, CARDCallback callback)
 			updateFat = TRUE;
 		}
 		break;
+	}
 	}
 
 	map = (u16*)fat[currentFat ^ 1];

@@ -47,13 +47,21 @@ int ActKinoko::exec()
 {
 	switch (mState) {
 	case STATE_Boid:
+	{
 		return exeBoid();
+	}
 	case STATE_Attack:
+	{
 		return exeAttack();
+	}
 	case STATE_Jump:
+	{
 		return exeJump();
+	}
 	case STATE_Stick:
+	{
 		return exeStick();
+	}
 	}
 
 	return ACTOUT_Continue;

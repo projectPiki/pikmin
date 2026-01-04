@@ -190,6 +190,7 @@ void MeltingPotMgr::prepare(int objType)
 	case OBJTYPE_SluiceHard:
 	case OBJTYPE_SluiceBomb:
 	case OBJTYPE_SluiceBombHard:
+	{
 		if (!mSluiceAI) {
 			mSluiceAI = new SluiceAI();
 		}
@@ -197,7 +198,9 @@ void MeltingPotMgr::prepare(int objType)
 			mBuildProps = new BuildingItemProp();
 		}
 		break;
+	}
 	case OBJTYPE_Kusa:
+	{
 		if (!mBouShape) {
 			mBouShape = static_cast<Shape*>(gameflow.loadShape("objects/rope/bou.mod", true));
 		}
@@ -208,10 +211,13 @@ void MeltingPotMgr::prepare(int objType)
 			mKusaProps = new KusaItemProp();
 		}
 		break;
+	}
 	case OBJTYPE_Rocket:
 	case OBJTYPE_SunsetStart:
 	case OBJTYPE_SunsetGoal:
+	{
 		break;
+	}
 	}
 }
 
@@ -223,38 +229,60 @@ Creature* MeltingPotMgr::birth(int objType)
 	Creature* creature = nullptr;
 	switch (objType) {
 	case OBJTYPE_Fish:
+	{
 		creature = new FishGenerator();
 		break;
+	}
 	case OBJTYPE_Goal:
+	{
 		creature = new GoalItem(mGoalProps, mItemMgr->mItemShapes[7], mItemMgr->mItemShapes[7], mItemMgr->mItemShapes[7], mGoalAI);
 		break;
+	}
 	case OBJTYPE_Ufo:
+	{
 		creature = new UfoItem(mUfoProps, mItemMgr->mUfoShape);
 		break;
+	}
 	case OBJTYPE_Kusa:
+	{
 		creature = new KusaItem(mKusaProps, mBouShape);
 		break;
+	}
 	case OBJTYPE_BoBase:
+	{
 		creature = new BoBaseItem(mKusaProps, mBoBaseShape);
 		break;
+	}
 	case OBJTYPE_SluiceSoft:
+	{
 		creature = new BuildingItem(objType, mBuildProps, mItemMgr->mItemShapes[8], mSluiceAI);
 		break;
+	}
 	case OBJTYPE_SluiceHard:
+	{
 		creature = new BuildingItem(objType, mBuildProps, mItemMgr->mItemShapes[8], mSluiceAI);
 		break;
+	}
 	case OBJTYPE_SluiceBomb:
+	{
 		creature = new BuildingItem(objType, mBuildProps, mItemMgr->mItemShapes[9], mSluiceAI);
 		break;
+	}
 	case OBJTYPE_SluiceBombHard:
+	{
 		creature = new BuildingItem(objType, mBuildProps, mItemMgr->mItemShapes[9], mSluiceAI);
 		break;
+	}
 	case OBJTYPE_RockGen:
+	{
 		creature = new RockGen(nullptr, nullptr);
 		break;
+	}
 	case OBJTYPE_GrassGen:
+	{
 		creature = new GrassGen(nullptr, nullptr);
 		break;
+	}
 	}
 
 #if defined(VERSION_GPIJ01_01)
@@ -806,11 +834,15 @@ bool InteractBomb::actItem(ItemCreature* item) immut
 		PRINT_GLOBAL("sluice got bomb by %x\n", mOwner);
 		switch (item->mObjType) {
 		case OBJTYPE_SluiceSoft:
+		{
 			item->playEventSound(item, SEB_SOFTWALL_HIT);
 			break;
+		}
 		case OBJTYPE_SluiceHard:
+		{
 			item->playEventSound(item, SEB_HARDWALL_HIT);
 			break;
+		}
 		}
 
 		item->mHealth -= mDamage;
@@ -860,12 +892,14 @@ void BuildingItem::playEffect(int id)
 {
 	switch (id) {
 	case 0:
+	{
 		if (mCurrStage >= mNumStages) {
 			cameraMgr->startVibrationEvent(4, mSRT.t);
 		} else {
 			cameraMgr->startVibrationEvent(2, mSRT.t);
 		}
 		break;
+	}
 	}
 }
 
@@ -1185,8 +1219,9 @@ Creature* ItemMgr::birth(int objType)
 {
 	switch (objType) {
 	case OBJTYPE_Pikihead:
+	{
 		return mPikiHeadMgr->birth();
-
+	}
 	case OBJTYPE_Goal:
 	case OBJTYPE_SluiceSoft:
 	case OBJTYPE_SluiceHard:
@@ -1198,10 +1233,13 @@ Creature* ItemMgr::birth(int objType)
 	case OBJTYPE_GrassGen:
 	case OBJTYPE_BoBase:
 	case OBJTYPE_Fish:
+	{
 		return mMeltingPotMgr->birth(objType);
-
+	}
 	default:
+	{
 		return PolyObjectMgr::birth(objType);
+	}
 	}
 }
 
@@ -1253,18 +1291,22 @@ void ItemMgr::kill(Creature* item)
 {
 	switch (item->mObjType) {
 	case OBJTYPE_Pikihead:
+	{
 		mPikiHeadMgr->kill(item);
 		return;
-
+	}
 	case OBJTYPE_Goal:
 	case OBJTYPE_Ufo:
+	{
 		PRINT("********* CANNOT KILL CONTAINER / UFO !!!\n");
 		ERROR("GAKKARI\n");
 		return;
-
+	}
 	default:
+	{
 		PolyObjectMgr::kill(item);
 		return;
+	}
 	}
 }
 

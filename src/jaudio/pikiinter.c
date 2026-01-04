@@ -340,8 +340,10 @@ int Jac_CreateEvent(u32 eventType, struct SVector_* p2)
 
 	switch (eventType) {
 	case 7:
+	{
 		Jac_PlayEventAction(idx, 4);
 		break;
+	}
 	}
 
 	return idx;
