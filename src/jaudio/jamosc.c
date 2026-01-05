@@ -1,5 +1,6 @@
 #include "jaudio/jamosc.h"
 #include "jaudio/jammain_2.h"
+#include <stddef.h>
 
 s16 VIB_TABLE[] = { 0, 0, 0, 0, 20, 0x7fff, 0, 20, 0, 0, 0x14, 0xc000, 0, 20, 0, 13, 0, 1 };
 s16 TRE_TABLE[] = { 0, 0, 0x7fff, 0, 20, 0, 0, 20, 0x8001, 0, 0x14, 0, 0, 0x14, 0x7fff, 13, 0, 1 };

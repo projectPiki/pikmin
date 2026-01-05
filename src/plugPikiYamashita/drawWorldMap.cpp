@@ -7,6 +7,7 @@
 #include "sysNew.h"
 #include "zen/DrawCommon.h"
 #include "zen/EffectMgr2D.h"
+#include <stddef.h>
 
 #define MAX_PARTS_PRACTICE  (2)
 #define MAX_PARTS_FOREST    (8)

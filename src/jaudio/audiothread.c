@@ -17,6 +17,7 @@
 #include "jaudio/playercall.h"
 #include "jaudio/rate.h"
 #include "jaudio/stackchecker.h"
+#include <stddef.h>
 
 DspFinishWork(u16);
 

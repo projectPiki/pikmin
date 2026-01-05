@@ -1,5 +1,7 @@
 #include "Dolphin/dsp.h"
 #include "jaudio/dspboot.h"
+#include <stddef.h>
+
 #if defined(VERSION_GPIP01_00)
 
 static DSPTaskInfo audio_task;

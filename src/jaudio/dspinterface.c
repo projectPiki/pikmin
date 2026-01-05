@@ -8,6 +8,7 @@
 #include "jaudio/sample.h"
 
 #include "limits.h"
+#include <stddef.h>
 
 #define CH_BUF_LENGTH (64)
 #define FX_BUF_LENGTH (4)

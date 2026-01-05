@@ -1,6 +1,7 @@
 #include "Dolphin/OS/OSAlloc.h"
 
 #include "Dolphin/os.h"
+#include <stddef.h>
 
 typedef struct HeapCell {
 	struct HeapCell* prev;

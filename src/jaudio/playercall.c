@@ -1,4 +1,5 @@
 #include "jaudio/playercall.h"
+#include <stddef.h>
 
 static PLAYER_CALL PLAYER_CALLLIST[16];
 

@@ -1,5 +1,6 @@
 #include "Dolphin/gx.h"
 #include "Dolphin/os.h"
+#include <stddef.h>
 
 #define CHECK_ATTRPTR(line, attrPtr) ASSERTMSGLINE(line, (attrPtr) != NULL, "GXSetVtxDescv: attrPtr is NULL")
 #define CHECK_ATTRNAME(line, attr) \

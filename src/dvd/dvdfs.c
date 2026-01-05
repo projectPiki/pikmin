@@ -1,5 +1,6 @@
 #include "Dolphin/dvd.h"
 #include "Dolphin/os.h"
+#include <stddef.h>
 
 typedef struct FSTEntry FSTEntry;
 
@@ -23,10 +24,6 @@ static void cbForSeekAsync(s32 result, DVDCommandBlock* block);
 static void cbForSeekSync(s32 result, DVDCommandBlock* block);
 static void cbForPrepareStreamAsync(s32 result, DVDCommandBlock* block);
 static void cbForPrepareStreamSync(s32 result, DVDCommandBlock* block);
-
-#ifndef offsetof
-#define offsetof(type, memb) ((u32) & ((type*)0)->memb)
-#endif
 
 /**
  * @TODO: Documentation

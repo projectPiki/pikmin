@@ -1,6 +1,7 @@
 #include "jaudio/dspproc.h"
 #include "Dolphin/dsp.h"
 #include "Dolphin/os.h"
+#include <stddef.h>
 
 static u16 DSP_MIXERLEVEL = 0x4000;
 #if defined(VERSION_GPIP01_00)

@@ -3,6 +3,7 @@
 #include "Dolphin/gx.h"
 #include "P2D/Font.h"
 #include "P2D/Print.h"
+#include <stddef.h>
 #include <stdlib.h>
 
 /**

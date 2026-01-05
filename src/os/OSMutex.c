@@ -1,4 +1,5 @@
 #include "Dolphin/os.h"
+#include <stddef.h>
 
 /**
  * @TODO: Documentation

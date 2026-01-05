@@ -3,6 +3,7 @@
 #include "jaudio/jammain_2.h"
 #include "jaudio/playercall.h"
 #include "jaudio/verysimple.h"
+#include <stddef.h>
 
 /**
  * @TODO: Documentation

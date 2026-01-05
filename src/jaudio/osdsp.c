@@ -1,5 +1,6 @@
 #include "Dolphin/dsp.h"
 #include "Dolphin/os.h"
+#include <stddef.h>
 
 #if defined(VERSION_GPIP01_00)
 

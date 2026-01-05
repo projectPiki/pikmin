@@ -4,6 +4,7 @@
 #include "jaudio/driverinterface.h"
 #include "jaudio/dspinterface.h"
 #include "jaudio/rate.h"
+#include <stddef.h>
 
 #define DSPCH_LENGTH (64)
 static dspch_ DSPCH[DSPCH_LENGTH] ATTRIBUTE_ALIGN(32);

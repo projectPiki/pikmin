@@ -2,6 +2,7 @@
 
 #include "Dolphin/hw_regs.h"
 #include "Dolphin/os.h"
+#include <stddef.h>
 #include <string.h>
 
 // forward declarations for local functions, as needed:

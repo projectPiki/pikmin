@@ -1,4 +1,5 @@
 #include "hvqm4.h"
+#include <stddef.h>
 
 /*
  * Initial code attempts + comments + function arguments/naming guides taken from

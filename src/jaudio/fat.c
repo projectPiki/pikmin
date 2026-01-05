@@ -1,6 +1,7 @@
 #include "jaudio/fat.h"
 #include "jaudio/aictrl.h"
 #include "jaudio/sample.h"
+#include <stddef.h>
 
 static int ACTIVE_FATS;
 static int USEFAT_TAIL;

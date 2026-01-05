@@ -1,5 +1,6 @@
 #include "Dolphin/db.h"
 #include "Dolphin/os.h"
+#include <stddef.h>
 
 // necessary for some asm functions
 extern void __RAS_OSDisableInterrupts_begin();

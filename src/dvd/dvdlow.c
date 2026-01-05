@@ -1,5 +1,6 @@
 #include "Dolphin/dvd.h"
 #include "Dolphin/os.h"
+#include <stddef.h>
 
 static BOOL FirstRead                    = TRUE;
 static volatile BOOL StopAtNextInt       = FALSE;

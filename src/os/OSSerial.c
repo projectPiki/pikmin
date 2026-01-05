@@ -1,5 +1,6 @@
 #include "Dolphin/hw_regs.h"
 #include "Dolphin/os.h"
+#include <stddef.h>
 
 static SIControl Si = { -1, 0, 0, NULL, NULL };
 static SIPacket Packet[SI_MAX_CHAN];

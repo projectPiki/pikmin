@@ -8,6 +8,7 @@
 #include "jaudio/interleave.h"
 #include "jaudio/playercall.h"
 #include "jaudio/rate.h"
+#include <stddef.h>
 
 // fabricated, size 0x14.
 struct UNK_STRUCT {

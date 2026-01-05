@@ -13,6 +13,7 @@
 #include "jaudio/pikidemo.h"
 #include "system.h"
 #include "zen/ogTutorial.h"
+#include <stddef.h>
 
 /**
  * @todo: Documentation

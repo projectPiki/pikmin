@@ -5,6 +5,7 @@
 #include <errno.h>
 #include <limits.h>
 #include <locale.h>
+#include <stddef.h>
 
 enum scan_states {
 	start          = 0x01,

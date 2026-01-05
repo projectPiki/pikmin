@@ -1,4 +1,5 @@
 #include "Dolphin/card.h"
+#include <stddef.h>
 
 static void EraseCallback(s32 chan, s32 result);
 

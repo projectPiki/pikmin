@@ -1,6 +1,7 @@
 #include "jaudio/ipldec.h"
 #include "jaudio/audiostruct.h"
 #include "jaudio/dspproc.h"
+#include <stddef.h>
 
 DSPTask EX_DSPTASK[4];
 

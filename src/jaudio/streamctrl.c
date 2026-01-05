@@ -2,6 +2,7 @@
 #include "Dolphin/ai.h"
 #include "Dolphin/dvd.h"
 #include "jaudio/rate.h"
+#include <stddef.h>
 
 char J_STREAMNAME[8][16] = {
 	"/stream00.adp", "/stream01.adp", "/stream02.adp", "/stream03.adp", "/stream04.adp", "/stream05.adp", "/stream06.adp", "/stream07.adp",

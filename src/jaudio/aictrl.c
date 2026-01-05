@@ -11,6 +11,7 @@
 #include "jaudio/rate.h"
 #include "jaudio/sample.h"
 #include "jaudio/streamctrl.h"
+#include <stddef.h>
 
 u32 UNIVERSAL_DACCOUNTER = 0;
 

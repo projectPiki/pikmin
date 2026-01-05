@@ -24,6 +24,7 @@
 #include "teki.h"
 #include "zen/Math.h"
 #include "zen/ogTutorial.h"
+#include <stddef.h>
 
 /**
  * @todo: Documentation

@@ -11,6 +11,7 @@
 #include "jaudio/pikiinter.h"
 #include "jaudio/verysimple.h"
 #include "jaudio/waveread.h"
+#include <stddef.h>
 
 void __Prepare_BGM(u32);
 void Jac_BgmAnimEndStop();
