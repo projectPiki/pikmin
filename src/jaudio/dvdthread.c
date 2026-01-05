@@ -88,7 +88,7 @@ void DVDT_SetRootPath(immut char* path)
  */
 void DVDT_ExtendPath(char* dst, immut char* ext)
 {
-	if (*audio_root_path != NULL) {
+	if (*audio_root_path != '\0') {
 		strcpy(dst, audio_root_path);
 		if (*ext == '/') {
 			strcat(dst, ext + 1);

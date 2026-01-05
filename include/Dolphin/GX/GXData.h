@@ -3,14 +3,14 @@
 
 #include "types.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
-
 #include "Dolphin/GX/GXEnum.h"
 #include "Dolphin/GX/GXTexture.h"
 #include "Dolphin/GX/GXTypes.h"
 #include "Dolphin/os.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif // ifdef __cplusplus
 
 /////////////// CONTROL ENUMS //////////////
 typedef enum _CPStatus {

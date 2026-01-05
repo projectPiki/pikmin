@@ -73,9 +73,9 @@ u32 WriteUARTN(const void* buf, u32 len)
 	}
 
 #if defined(VERSION_G98E01_PIKIDEMO)
-	for (ptr = (char*)buf; ptr - buf < len; ptr++) {
+	for (ptr = (char*)buf; ptr - (char*)buf < len; ptr++) {
 #else
-	for (ptr = (u8*)buf; ptr - buf < len; ptr++) {
+	for (ptr = (u8*)buf; ptr - (u8*)buf < len; ptr++) {
 #endif
 		if (*ptr == '\n')
 			*ptr = '\r';

@@ -3,12 +3,12 @@
 
 #include "types.h"
 
+#include "Dolphin/GX/GXEnum.h"
+#include "Dolphin/vi.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif // ifdef __cplusplus
-
-#include "Dolphin/GX/GXEnum.h"
-#include "Dolphin/vi.h"
 
 ///////////// USEFUL HELPERS ///////////////
 // Set bitfields manually.

@@ -837,8 +837,11 @@ void GoalAI::EmitPiki::act(AICreature* item)
 
 	if (item->mCounter > 0) {
 		Vector3f pos = item->mSRT.t;
-		pos.y += 110.0f; // some dll exclusive unused stuff here
-		rand();
+		pos.y += 110.0f;
+
+		f32 unused1 = gsys->getRand(1.0f) * PI * 2;
+		f32 unused2 = 145.0f;
+		f32 unused3 = 400.0f;
 
 		effectMgr->create(EffectMgr::EFF_Onyon_FireworkTrail, item->mSRT.t, nullptr, nullptr);
 		effectMgr->create(EffectMgr::EFF_Onyon_FireworkMain, item->mSRT.t, nullptr, nullptr);
@@ -846,8 +849,6 @@ void GoalAI::EmitPiki::act(AICreature* item)
 		effectMgr->create(EffectMgr::EFF_Onyon_FireworkSmall, item->mSRT.t, nullptr, nullptr);
 		item->mCounter--;
 	}
-
-	STACK_PAD_VAR(3);
 
 	if (item->mCurrAnimId > 0) {
 		if (item->mObjType != OBJTYPE_Goal) {
@@ -888,7 +889,7 @@ void GoalAI::EmitPiki::act(AICreature* item)
 		obj->finishMotion();
 	}
 
-	STACK_PAD_VAR(4);
+	STACK_PAD_VAR(2);
 }
 
 /**
@@ -915,6 +916,7 @@ void GoalAI::Effect::act(AICreature* item)
  */
 GemAI::GemAI()
 {
+	// UNUSED FUNCTION (Matching by size)
 	SAIUserEvent* evt = new SAIUserEvent(0);
 
 	create(GEM_COUNT);

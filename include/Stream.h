@@ -143,12 +143,12 @@ struct RamStream : public RandomAccessStream {
 	virtual void setLength(int len) { mLength = len; }       // _64 (weak)
 	virtual void read(void* dest, int size)                  // _3C (weak)
 	{
-		memcpy(dest, (const void*)((int)mBufferAddr + mPosition), size);
+		memcpy(dest, (char*)mBufferAddr + mPosition, size);
 		mPosition += size;
 	}
 	virtual void write(immut void* src, int size) // _40 (weak)
 	{
-		memcpy((void*)((int)mBufferAddr + mPosition), src, size);
+		memcpy((char*)mBufferAddr + mPosition, src, size);
 		mPosition += size;
 	}
 

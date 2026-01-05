@@ -1,3 +1,4 @@
+#include "PowerPC_EABI_Support/MetroTRK/dstypes.h"
 #include "PowerPC_EABI_Support/MetroTRK/trk.h"
 #include <stddef.h>
 
@@ -49,7 +50,6 @@ static u16 TRK_saved_exceptionID              = 0;
 ProcessorState_PPC gTRKCPUState;
 TRKState gTRKState;
 
-typedef unsigned char u128[16];
 u128 TRKvalue128_temp;
 
 Default_PPC gTRKSaveState;

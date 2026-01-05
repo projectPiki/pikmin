@@ -279,7 +279,6 @@ private:
  */
 struct KingBody {
 	friend struct KingAi;
-	friend struct KingBody;
 
 	friend struct KingGenDamageStarCallBack;
 	friend struct KingGenRippleCallBack;

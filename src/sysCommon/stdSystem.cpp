@@ -656,9 +656,9 @@ void TextureCacher::purgeAll()
  */
 void TextureCacher::removeOldest()
 {
-	TexCacheInfo* oldest = ((TexCacheInfo*)mPrev);
+	TexCacheInfo* oldest = static_cast<TexCacheInfo*>(mPrev);
 	mPrev->remove();
-	*(u32*)oldest->_0C = nullptr;
+	oldest->_0C->mPrev = nullptr;
 	mCache->cacheFree(oldest);
 }
 

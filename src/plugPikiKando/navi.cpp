@@ -1564,6 +1564,7 @@ void Navi::collisionCallback(immut CollEvent& event)
 					return;
 				}
 			}
+			// fallthrough
 		}
 		case OBJTYPE_SluiceSoft:
 		case OBJTYPE_SluiceHard:

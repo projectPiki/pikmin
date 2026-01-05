@@ -146,7 +146,7 @@ struct TexImg : public CoreNode {
 	static immut char* formatName(u32 texFmt);
 
 	// unused/inlined:
-	u32 convFormat(u32);
+	TexImgFormat convFormat(u32);
 	void setColour(immut Colour&);
 	void readTexData(Texture*, RandomAccessStream&, u8*);
 	void dumpBti(Texture*, immut char*, RandomAccessStream&, RandomAccessStream&);
