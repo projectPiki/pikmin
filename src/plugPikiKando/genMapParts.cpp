@@ -116,7 +116,7 @@ void GenObjectMapParts::render(Graphics& gfx, Generator* gen)
 
 	Colour color1;
 	color1.set(255, 0, 0, 255);
-	GlobalShape::markerShape->mMaterialList->Colour() = color1;
+	GlobalShape::markerShape->mMaterialList->getColour() = color1;
 	GlobalShape::markerShape->drawshape(gfx, *gfx.mCamera, nullptr);
 	Vector3f globalPos2 = mEndPosition + gen->getPos();
 	mtx0.makeSRT(scale, Vector3f(0.0f, 0.0f, 0.0f), globalPos2);
@@ -124,7 +124,7 @@ void GenObjectMapParts::render(Graphics& gfx, Generator* gen)
 	gfx.useMatrix(mtx4, 0);
 
 	color1.set(0, 0, 255, 255);
-	GlobalShape::markerShape->mMaterialList->Colour() = color1;
+	GlobalShape::markerShape->mMaterialList->getColour() = color1;
 	GlobalShape::markerShape->drawshape(gfx, *gfx.mCamera, nullptr);
 
 	bool light = gfx.setLighting(false, nullptr);

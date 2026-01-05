@@ -35,7 +35,7 @@ struct Material : public CoreNode {
 		mAttribute     = nullptr;
 		mEnvMapTexture = nullptr;
 		mFlags         = MATFLAG_OPAQUE;
-		Colour().set(0xFF, 0xFF, 0xFF, 0xFF);
+		getColour().set(0xFF, 0xFF, 0xFF, 0xFF);
 		mTevInfoIndex   = 0;
 		mDisplayListPtr = nullptr;
 	}
@@ -55,7 +55,9 @@ struct Material : public CoreNode {
 		}
 	}
 
-	Colour& Colour() { return mColourInfo.mColour; }
+	// This function is called `Colour` according to the ILK, but that's confusing, inconsistent with `setColour`,
+	// and an issue for code portability (e.g. "-Wchanges-meaning" in GCC, which is an error without "-fpermissive").
+	Colour& getColour() { return mColourInfo.mColour; }
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode

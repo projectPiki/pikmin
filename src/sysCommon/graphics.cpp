@@ -546,7 +546,7 @@ void Material::read(RandomAccessStream& input)
 {
 	mFlags        = input.readInt();
 	mTextureIndex = input.readInt();
-	Colour().read(input);
+	getColour().read(input);
 
 	if (mFlags & MATFLAG_PVW) {
 		mTevInfoIndex = input.readInt();
