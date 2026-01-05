@@ -714,11 +714,7 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 		DispAcup(true);
 		mAButtonAlphaMgr->update();
 		if (input->keyClick(KBBTN_A | KBBTN_START)) {
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
-			seSystem->playSysSe(JACSYS_Decide1); // this is the wrong enum, devs.
-#else
-			seSystem->playSysSe(SYSSE_DECIDE1);
-#endif
+			seSystem->playSysSe(ogEnumFix(SYSSE_DECIDE1, JACSYS_Decide1));
 			_UNUSEDC4 = 0.0f;
 			if (gameflow.mMemoryCard.mSaveFileIndex < 0) {
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
@@ -736,11 +732,7 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 	case FormatFail:
 		mAButtonAlphaMgr->update();
 		if (input->keyClick(KBBTN_A | KBBTN_START)) {
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
-			seSystem->playSysSe(JACSYS_Decide1);
-#else
-			seSystem->playSysSe(SYSSE_DECIDE1);
-#endif
+			seSystem->playSysSe(ogEnumFix(SYSSE_DECIDE1, JACSYS_Decide1));
 			_UNUSEDC4 = 0.0f;
 			mStatus   = Inactive;
 			start();
@@ -794,11 +786,7 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 			mAButtonPane->show();
 			mAButtonAlphaMgr->update();
 			if (input->keyClick(KBBTN_A | KBBTN_START)) {
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
-				seSystem->playSysSe(JACSYS_Decide1);
-#else
-				seSystem->playSysSe(SYSSE_DECIDE1);
-#endif
+				seSystem->playSysSe(ogEnumFix(SYSSE_DECIDE1, JACSYS_Decide1));
 				mStatus = Finished;
 			}
 		}
@@ -811,11 +799,10 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 			mAButtonPane->show();
 			mAButtonAlphaMgr->update();
 			if (input->keyClick(KBBTN_A | KBBTN_START)) {
+				seSystem->playSysSe(ogEnumFix(SYSSE_DECIDE1, JACSYS_Decide1));
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
-				seSystem->playSysSe(JACSYS_Decide1);
 				start();
 #else
-				seSystem->playSysSe(SYSSE_DECIDE1);
 				setPCtex(mBrokenCardTextMgr);
 				mStatus = BrokenCard;
 				SetNitaku_W_R();

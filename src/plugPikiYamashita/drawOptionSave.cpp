@@ -173,28 +173,16 @@ void zen::DrawOptionSave::setMode(u32 mode, Controller* controller)
 		break;
 
 	case MODE_Saving:
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
-		SeSystem::playSysSe(SE_PIKI_DAMAGED);
-#else
-		SeSystem::playSysSe(SYSSE_CARDACCESS);
-#endif
+		SeSystem::playSysSe(ogEnumFix(SYSSE_CARDACCESS, SE_PIKI_DAMAGED));
 		break;
 
 	case MODE_SaveFail:
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
-		SeSystem::playSysSe(SE_WALL_HIT);
-#else
-		SeSystem::playSysSe(SYSSE_CARDERROR);
-#endif
+		SeSystem::playSysSe(ogEnumFix(SYSSE_CARDERROR, SE_WALL_HIT));
 		mSaveMes.saveError();
 		break;
 
 	case MODE_SaveOK:
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
-		SeSystem::playSysSe(SE_PIKI_PRESSED);
-#else
-		SeSystem::playSysSe(SYSSE_CARDOK);
-#endif
+		SeSystem::playSysSe(ogEnumFix(SYSSE_CARDOK, SE_PIKI_PRESSED));
 		mSaveMes.saveFinish();
 		break;
 

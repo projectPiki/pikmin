@@ -196,22 +196,14 @@ zen::ogNitakuMgr::NitakuStatus zen::ogNitakuMgr::update(Controller* input)
 			} else {
 				MoveCursorYes(0.25f);
 			}
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
-			seSystem->playSysSe(JACSYS_Move1); // Wrong enum
-#else
-			seSystem->playSysSe(SYSSE_MOVE1);
-#endif
+			seSystem->playSysSe(ogEnumFix(SYSSE_MOVE1, JACSYS_Move1));
 		} else if (input->keyClick(KBBTN_MSTICK_DOWN)) {
 			if (mIsYes) {
 				MoveCursorNo(0.25f);
 			} else {
 				MoveCursorYes(0.25f);
 			}
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
-			seSystem->playSysSe(JACSYS_Move1); // Wrong enum
-#else
-			seSystem->playSysSe(SYSSE_MOVE1);
-#endif
+			seSystem->playSysSe(ogEnumFix(SYSSE_MOVE1, JACSYS_Move1));
 		} else if (input->keyClick(KBBTN_START | KBBTN_A)) {
 			if (mIsYes) {
 				mStatus2 = ExitSuccess;
@@ -222,11 +214,7 @@ zen::ogNitakuMgr::NitakuStatus zen::ogNitakuMgr::update(Controller* input)
 			mWaitTimer = 0.0f;
 			mStatus    = Exiting;
 			cursorDisable(0.2f);
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
-			seSystem->playSysSe(JACSYS_Decide1); // Wrong enum
-#else
-			seSystem->playSysSe(SYSSE_DECIDE1);
-#endif
+			seSystem->playSysSe(ogEnumFix(SYSSE_DECIDE1, JACSYS_Decide1));
 		} else if (mCanCancel && input->keyClick(KBBTN_B)) {
 			mStatus2   = Status_4;
 			mWaitTimer = 0.0f;

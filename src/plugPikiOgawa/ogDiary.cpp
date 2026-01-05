@@ -347,18 +347,10 @@ zen::ogDrawDiary::DiaryStatus zen::ogDrawDiary::update(Controller* input)
 		if (input->keyClick(KBBTN_B)) {
 			mStatus = Closing;
 			mEfxMgr->killAll(true);
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
-			seSystem->playSysSe(JACSYS_Cancel);
-#else
-			seSystem->playSysSe(SYSSE_CANCEL);
-#endif
+			seSystem->playSysSe(ogEnumFix(SYSSE_CANCEL, JACSYS_Cancel));
 		} else if (input->keyClick(KBBTN_A)) {
 			if (mDiaryMgr->nextPage()) {
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
-				seSystem->playSysSe(JACSYS_MessageClose);
-#else
-				seSystem->playSysSe(YMENU_SELECT2);
-#endif
+				seSystem->playSysSe(ogEnumFix(YMENU_SELECT2, JACSYS_MessageClose));
 			}
 		}
 	}
@@ -556,11 +548,7 @@ zen::ogDrawSelectDiary::SelectDiaryStatus zen::ogDrawSelectDiary::update(Control
 			f32 x         = pane->getPosH() + pane->getWidth() / 2;
 			f32 y         = pane->getPosV() + pane->getHeight() / 2;
 			mDiaryInstance->open(x, y, mSelectionIndex + 1);
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
-			seSystem->playSysSe(JACSYS_Decide1);
-#else
-			seSystem->playSysSe(SYSSE_DECIDE1);
-#endif
+			seSystem->playSysSe(ogEnumFix(SYSSE_DECIDE1, JACSYS_Decide1));
 			mStatus = ViewingSingleDiary;
 			return mStatus;
 		}
@@ -576,44 +564,28 @@ zen::ogDrawSelectDiary::SelectDiaryStatus zen::ogDrawSelectDiary::update(Control
 			if (MoveCursor()) {
 				mSelectedColumnIndex++;
 			} else {
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
-				seSystem->playSysSe(JACSYS_Move1);
-#else
-				seSystem->playSysSe(SYSSE_MOVE1);
-#endif
+				seSystem->playSysSe(ogEnumFix(SYSSE_MOVE1, JACSYS_Move1));
 			}
 		} else if (mController->keyRepeat(KBBTN_MSTICK_RIGHT) && mSelectedColumnIndex < 9) {
 			mSelectedColumnIndex++;
 			if (MoveCursor()) {
 				mSelectedColumnIndex--;
 			} else {
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
-				seSystem->playSysSe(JACSYS_Move1);
-#else
-				seSystem->playSysSe(SYSSE_MOVE1);
-#endif
+				seSystem->playSysSe(ogEnumFix(SYSSE_MOVE1, JACSYS_Move1));
 			}
 		} else if (mController->keyRepeat(KBBTN_MSTICK_UP) && mSelectedRowIndex > 0) {
 			mSelectedRowIndex--;
 			if (MoveCursor()) {
 				mSelectedRowIndex++;
 			} else {
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
-				seSystem->playSysSe(JACSYS_Move1);
-#else
-				seSystem->playSysSe(SYSSE_MOVE1);
-#endif
+				seSystem->playSysSe(ogEnumFix(SYSSE_MOVE1, JACSYS_Move1));
 			}
 		} else if (mController->keyRepeat(KBBTN_MSTICK_DOWN) && mSelectedRowIndex < 2) {
 			mSelectedRowIndex++;
 			if (MoveCursor()) {
 				mSelectedRowIndex--;
 			} else {
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
-				seSystem->playSysSe(JACSYS_Move1);
-#else
-				seSystem->playSysSe(SYSSE_MOVE1);
-#endif
+				seSystem->playSysSe(ogEnumFix(SYSSE_MOVE1, JACSYS_Move1));
 			}
 		}
 		mLeftCursorMgr.update();

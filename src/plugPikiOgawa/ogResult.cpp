@@ -630,11 +630,7 @@ zen::ogScrResultMgr::returnStatusFlag zen::ogScrResultMgr::update(Controller* in
 			mStatus    = Status_6;
 		} else if (mSaveStatus == -1) {
 			if (input->keyClick(KBBTN_START | KBBTN_A | KBBTN_B)) {
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
-				seSystem->playSysSe(JACSYS_Decide1);
-#else
-				seSystem->playSysSe(SYSSE_DECIDE1);
-#endif
+				seSystem->playSysSe(ogEnumFix(SYSSE_DECIDE1, JACSYS_Decide1));
 				mWaitTimer = 0.0f;
 				mSaveMgr->start();
 				PRINT("<<<<<<<<< SAVE Mgr START! >>>>>>>>>>>\n");

@@ -1002,33 +1002,21 @@ int zen::ogScrFileSelectMgr::CanToCopy(int fileSlot)
 void zen::ogScrFileSelectMgr::OperateSelect(Controller* controller)
 {
 	if (controller->keyClick(KBBTN_MSTICK_LEFT) && mCurrSlotIdx > 0) {
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
-		SeSystem::playSysSe(JACSYS_Move1);
-#else
-		SeSystem::playSysSe(SYSSE_MOVE1);
-#endif
+		SeSystem::playSysSe(ogEnumFix(SYSSE_MOVE1, JACSYS_Move1));
 		mCurrSlotIdx--;
 		setDataNumber(mCurrSlotIdx);
 		return;
 	}
 
 	if (controller->keyClick(KBBTN_MSTICK_RIGHT) && mCurrSlotIdx < 2) {
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
-		SeSystem::playSysSe(JACSYS_Move1);
-#else
-		SeSystem::playSysSe(SYSSE_MOVE1);
-#endif
+		SeSystem::playSysSe(ogEnumFix(SYSSE_MOVE1, JACSYS_Move1));
 		mCurrSlotIdx++;
 		setDataNumber(mCurrSlotIdx);
 		return;
 	}
 
 	if (controller->keyClick(KBBTN_A)) {
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
-		SeSystem::playSysSe(JACSYS_Decide1);
-#else
-		SeSystem::playSysSe(SYSSE_DECIDE1);
-#endif
+		SeSystem::playSysSe(ogEnumFix(SYSSE_DECIDE1, JACSYS_Decide1));
 		KetteiEffectStart();
 		if (mSaveMode) {
 			mSelectState                 = ExitRequested;
@@ -1053,11 +1041,7 @@ void zen::ogScrFileSelectMgr::OperateSelect(Controller* controller)
 	if (controller->keyClick(KBBTN_B)) {
 		mIsTailMoveEffectActive = true;
 		BeginFadeOut();
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
-		SeSystem::playSysSe(JACSYS_Cancel);
-#else
-		SeSystem::playSysSe(SYSSE_CANCEL);
-#endif
+		SeSystem::playSysSe(ogEnumFix(SYSSE_CANCEL, JACSYS_Cancel));
 		if (mCursorMoveEffectOnyon) {
 			mCursorMoveEffectOnyon->forceFinish();
 		}
@@ -1069,11 +1053,7 @@ void zen::ogScrFileSelectMgr::OperateSelect(Controller* controller)
 
 	if (controller->keyClick(KBBTN_Y)) {
 		if (!mFileSlotSelectionStates[mCurrSlotIdx] && !mSaveMode) {
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
-			SeSystem::playSysSe(JACSYS_Decide1);
-#else
-			SeSystem::playSysSe(SYSSE_DECIDE1);
-#endif
+			SeSystem::playSysSe(ogEnumFix(SYSSE_DECIDE1, JACSYS_Decide1));
 			setOperateMode(Copy);
 		}
 		return;
@@ -1081,11 +1061,7 @@ void zen::ogScrFileSelectMgr::OperateSelect(Controller* controller)
 
 	if (controller->keyClick(KBBTN_X)) {
 		if (!mFileSlotSelectionStates[mCurrSlotIdx] && !mSaveMode) {
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
-			SeSystem::playSysSe(JACSYS_Decide1);
-#else
-			SeSystem::playSysSe(SYSSE_DECIDE1);
-#endif
+			SeSystem::playSysSe(ogEnumFix(SYSSE_DECIDE1, JACSYS_Decide1));
 			setOperateMode(Delete);
 		}
 	}

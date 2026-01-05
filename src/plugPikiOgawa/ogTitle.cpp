@@ -106,18 +106,11 @@ zen::ogScrTitleMgr::ogScrTitleMgr()
 	mNoInputTimer = 0.0f;
 	mStartDelay   = 3;
 
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
-	mLanguageMenu->setCancelSE(JACSYS_Decide1);
-	mRumbleMenu->setCancelSE(JACSYS_Decide1);
-	mSoundMenu->setCancelSE(JACSYS_Decide1);
-#elif defined(VERSION_GPIP01_00)
-	mLanguageMenu->setCancelSE(SYSSE_DECIDE1);
-	mRumbleMenu->setCancelSE(SYSSE_DECIDE1);
-	mSoundMenu->setCancelSE(SYSSE_DECIDE1);
+	mLanguageMenu->setCancelSE(ogEnumFix(SYSSE_DECIDE1, JACSYS_Decide1));
+	mRumbleMenu->setCancelSE(ogEnumFix(SYSSE_DECIDE1, JACSYS_Decide1));
+	mSoundMenu->setCancelSE(ogEnumFix(SYSSE_DECIDE1, JACSYS_Decide1));
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01) || defined(VERSION_GPIP01_00)
 #else
-	mLanguageMenu->setCancelSE(SYSSE_DECIDE1);
-	mRumbleMenu->setCancelSE(SYSSE_DECIDE1);
-	mSoundMenu->setCancelSE(SYSSE_DECIDE1);
 	mOptionsMenu->setMenuItemActiveSw(1, false);
 #endif
 
@@ -138,11 +131,7 @@ void zen::ogScrTitleMgr::start(bool hasChallenge)
 		mMainMenu = mMenuNoChallenge;
 	}
 
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
-	SeSystem::playSysSe(SE_PIKI_ATTACK_VOICE);
-#else
-	SeSystem::playSysSe(YMENU_SELECT2);
-#endif
+	SeSystem::playSysSe(ogEnumFix(YMENU_SELECT2, SE_PIKI_ATTACK_VOICE));
 
 	mMainMenu->start(-1);
 	mCurrentMenuID     = MENU_MainMenu;

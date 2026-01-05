@@ -322,11 +322,7 @@ zen::ogSaveMgr::SaveStatus zen::ogSaveMgr::update(Controller* input)
 				mStatus    = MainWindowFadeOut;
 				mAnimTimer = 0.0f;
 			} else if (nikatu1 == 4) {
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
-				seSystem->playSysSe(JACSYS_Cancel);
-#else
-				seSystem->playSysSe(SYSSE_CANCEL);
-#endif
+				seSystem->playSysSe(ogEnumFix(SYSSE_CANCEL, JACSYS_Cancel));
 				mNextStatus = ExitFailure;
 				mStatus     = FadeOut;
 				mAnimTimer  = 0.0f;
@@ -343,22 +339,14 @@ zen::ogSaveMgr::SaveStatus zen::ogSaveMgr::update(Controller* input)
 			} else {
 				mStatus    = SavingInProgress;
 				mAnimTimer = 0.0f;
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
-				seSystem->playSysSe(JACSYS_CardAccess);
-#else
-				seSystem->playSysSe(SYSSE_CARDACCESS);
-#endif
+				seSystem->playSysSe(ogEnumFix(SYSSE_CARDACCESS, JACSYS_CardAccess));
 				gameflow.mMemoryCard.saveCurrentGame();
 			}
 			break;
 
 		case SavingInProgress:
 			mNoticePane->setScale(1.0f);
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
-			seSystem->playSysSe(JACSYS_CardOK);
-#else
-			seSystem->playSysSe(SYSSE_CARDOK);
-#endif
+			seSystem->playSysSe(ogEnumFix(SYSSE_CARDOK, JACSYS_CardOK));
 			if (gameflow.mMemoryCard.didSaveFail()) {
 				mSaveFail->open(1.0f);
 				mNextStatus = ExitFailure;
@@ -414,11 +402,7 @@ zen::ogSaveMgr::SaveStatus zen::ogSaveMgr::update(Controller* input)
 				mStatus     = SecondaryWindowFadeOut;
 				mAnimTimer  = 0.0f;
 			} else if (nikatu2 == 4) {
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
-				seSystem->playSysSe(JACSYS_Cancel);
-#else
-				seSystem->playSysSe(SYSSE_CANCEL);
-#endif
+				seSystem->playSysSe(ogEnumFix(SYSSE_CANCEL, JACSYS_Cancel));
 				mNextStatus = FadeIn;
 				mStatus     = SecondaryWindowFadeOut;
 				mAnimTimer  = 0.0f;

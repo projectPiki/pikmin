@@ -98,7 +98,7 @@ void zen::ogScrFileSelectMgr::OperateDelete(Controller* input)
 
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 		if (mTailEffectSpawnTimer < 0.0f && gameflow.mMemoryCard.hasCardFinished()) {
-			seSystem->playSysSe(JACSYS_CardOK);
+			seSystem->playSysSe(ogEnumFix(SYSSE_CARDOK, JACSYS_CardOK));
 			copyCardInfosSub();
 			ChkNewData();
 			mCanCreateNewFile     = false;
@@ -128,18 +128,10 @@ void zen::ogScrFileSelectMgr::OperateDelete(Controller* input)
 		CloseYesNoWindow();
 	}
 	if (status == ogNitakuMgr::Status_4) {
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
-		seSystem->playSysSe(JACSYS_Cancel);
-#else
-		seSystem->playSysSe(SYSSE_CANCEL);
-#endif
+		seSystem->playSysSe(ogEnumFix(SYSSE_CANCEL, JACSYS_Cancel));
 		setOperateMode(Normal);
 	} else if (status == ogNitakuMgr::ExitSuccess) {
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
-		seSystem->playSysSe(JACSYS_CardAccess);
-#else
-		seSystem->playSysSe(SYSSE_CARDACCESS);
-#endif
+		seSystem->playSysSe(ogEnumFix(SYSSE_CARDACCESS, JACSYS_CardAccess));
 		gameflow.mMemoryCard.delFile(mCardInfo[mCurrSlotIdx]);
 		DeleteEffectStart();
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)

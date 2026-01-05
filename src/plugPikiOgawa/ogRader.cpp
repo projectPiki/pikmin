@@ -671,12 +671,11 @@ void zen::ogRaderMgr::updateMenu(Controller* input)
 #endif
 		} else {
 			if (!_01) {
+				seSystem->playSysSe(ogEnumFix(SYSSE_YMENU_ZOOMIN, JACSYS_MenuZoomIn));
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
-				seSystem->playSysSe(JACSYS_MenuZoomIn);
 			}
 			_01 = true;
 #else
-				seSystem->playSysSe(SYSSE_YMENU_ZOOMIN);
 				_01 = true;
 			}
 #endif
@@ -692,12 +691,11 @@ void zen::ogRaderMgr::updateMenu(Controller* input)
 #endif
 		} else {
 			if (!_02) {
+				seSystem->playSysSe(ogEnumFix(SYSSE_YMENU_ZOOMOUT, JACSYS_MenuZoomOut));
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
-				seSystem->playSysSe(JACSYS_MenuZoomOut);
 			}
 			_02 = true;
 #else
-				seSystem->playSysSe(SYSSE_YMENU_ZOOMOUT);
 				_02 = true;
 			}
 #endif
@@ -709,7 +707,7 @@ void zen::ogRaderMgr::updateMenu(Controller* input)
 	if (input->keyDown(KBBTN_MSTICK_UP)) {
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 		if (!_00) {
-			seSystem->playSysSe(JACSYS_MenuScroll);
+			seSystem->playSysSe(ogEnumFix(SYSSE_YMENU_SCROLL, JACSYS_MenuScroll));
 		}
 		_00 = true;
 		_34 -= 20.0f * s;
@@ -720,7 +718,7 @@ void zen::ogRaderMgr::updateMenu(Controller* input)
 	} else if (input->keyDown(KBBTN_MSTICK_DOWN)) {
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 		if (!_00) {
-			seSystem->playSysSe(JACSYS_MenuScroll);
+			seSystem->playSysSe(ogEnumFix(SYSSE_YMENU_SCROLL, JACSYS_MenuScroll));
 		}
 		_00 = true;
 		_34 += 20.0f * s;
@@ -732,7 +730,7 @@ void zen::ogRaderMgr::updateMenu(Controller* input)
 	if (input->keyDown(KBBTN_MSTICK_LEFT)) {
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 		if (!_00) {
-			seSystem->playSysSe(JACSYS_MenuScroll);
+			seSystem->playSysSe(ogEnumFix(SYSSE_YMENU_SCROLL, JACSYS_MenuScroll));
 		}
 		_00 = true;
 		_34 -= 20.0f * c;
@@ -743,7 +741,7 @@ void zen::ogRaderMgr::updateMenu(Controller* input)
 	} else if (input->keyDown(KBBTN_MSTICK_RIGHT)) {
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 		if (!_00) {
-			seSystem->playSysSe(JACSYS_MenuScroll);
+			seSystem->playSysSe(ogEnumFix(SYSSE_YMENU_SCROLL, JACSYS_MenuScroll));
 		}
 		_00 = true;
 		_34 += 20.0f * c;
@@ -754,21 +752,17 @@ void zen::ogRaderMgr::updateMenu(Controller* input)
 	}
 
 	if (_00 && !input->keyDown(KBBTN_MSTICK_UP | KBBTN_MSTICK_DOWN | KBBTN_MSTICK_RIGHT | KBBTN_MSTICK_LEFT)) {
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
-		seSystem->stopSysSe(JACSYS_MenuScroll);
-#else
-		seSystem->stopSysSe(SYSSE_YMENU_SCROLL);
-#endif
+		seSystem->stopSysSe(ogEnumFix(SYSSE_YMENU_SCROLL, JACSYS_MenuScroll));
 		_00 = false;
 	}
 
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 	if (_01 && !(y < 0.2f)) {
-		seSystem->stopSysSe(JACSYS_MenuZoomIn);
+		seSystem->stopSysSe(ogEnumFix(SYSSE_YMENU_ZOOMIN, JACSYS_MenuZoomIn));
 		_01 = false;
 	}
 	if (_02 && !(y > -0.2f)) {
-		seSystem->stopSysSe(JACSYS_MenuZoomOut);
+		seSystem->stopSysSe(ogEnumFix(SYSSE_YMENU_ZOOMOUT, JACSYS_MenuZoomOut));
 		_02 = false;
 	}
 	if (_34 < -4096.0f) {
