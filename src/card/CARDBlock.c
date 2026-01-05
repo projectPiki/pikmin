@@ -1,4 +1,5 @@
 #include "Dolphin/card.h"
+#include <stddef.h>
 
 static void WriteCallback(s32 channel, s32 result);
 static void EraseCallback(s32 channel, s32 result);

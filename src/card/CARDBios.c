@@ -1,4 +1,5 @@
 #include "Dolphin/card.h"
+#include <stddef.h>
 
 DVDDiskID* __CARDDiskID;
 DVDDiskID __CARDDiskNone;

@@ -1,4 +1,5 @@
 #include "jaudio/memory.h"
+#include <stddef.h>
 
 /**
  * @TODO: Documentation

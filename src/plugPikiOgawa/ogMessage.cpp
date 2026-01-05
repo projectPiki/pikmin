@@ -9,6 +9,7 @@
 #include "sysNew.h"
 #include "zen/DrawCommon.h"
 #include "zen/ogSub.h"
+#include <stddef.h>
 
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01) // these tables aren't here in demo
 #else

@@ -1,5 +1,6 @@
 #include "Dolphin/ai.h"
 #include "Dolphin/os.h"
+#include <stddef.h>
 
 #if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
 static void* SaveStart = NULL;

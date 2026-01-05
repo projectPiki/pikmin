@@ -23,6 +23,7 @@
 #include "jaudio/seqsetup.h"
 #include "jaudio/syncstream.h"
 #include "jaudio/waveread.h"
+#include <stddef.h>
 
 static CmdQueue system_se;      // TODO: type uncertain
 static CmdQueue system_se_stop; // TODO: type undertain

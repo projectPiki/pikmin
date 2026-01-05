@@ -1,4 +1,5 @@
 #include "Dolphin/gx.h"
+#include <stddef.h>
 
 static struct __GXData_struct gxData;
 struct __GXData_struct* gx = &gxData;

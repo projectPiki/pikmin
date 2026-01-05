@@ -9,6 +9,7 @@
 #include "jaudio/rate.h"
 #include "jaudio/tables.h"
 #include "jaudio/waveread.h"
+#include <stddef.h>
 
 static int Jesus1Shot_Update(jc_*, JCSTATUS);
 

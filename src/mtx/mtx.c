@@ -3,6 +3,7 @@
 #include "Dolphin/os.h"
 #include "fdlibm.h"
 #include <math.h>
+#include <stddef.h>
 
 static f32 Unit01[] = { 0.0f, 1.0f };
 

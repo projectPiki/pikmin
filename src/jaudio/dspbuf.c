@@ -9,6 +9,7 @@
 #include "jaudio/ipldec.h"
 #include "jaudio/playercall.h"
 #include "jaudio/rate.h"
+#include <stddef.h>
 
 static u8 write_buffer      = 0;
 static u8 read_buffer       = 0;

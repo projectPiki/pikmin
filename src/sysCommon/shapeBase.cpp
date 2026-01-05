@@ -20,6 +20,7 @@
 #include "sysNew.h"
 #include "system.h"
 #include "timers.h"
+#include <stddef.h>
 
 /**
  * @todo: Documentation

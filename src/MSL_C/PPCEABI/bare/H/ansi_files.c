@@ -1,5 +1,6 @@
 #include "PowerPC_EABI_Support/MSL_C/MSL_Common/ansi_files.h"
 #include "PowerPC_EABI_Support/MSL_C/MSL_Common/file_io.h"
+#include <stddef.h>
 
 extern FILE __files[3] = {
 	{

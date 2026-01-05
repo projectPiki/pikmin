@@ -4,6 +4,7 @@
 #include "PikiAI.h"
 #include "PikiMgr.h"
 #include "PikiState.h"
+#include <stddef.h>
 
 /**
  * @todo: Documentation

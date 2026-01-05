@@ -4,6 +4,7 @@
 #include "jaudio/ja_calc.h"
 #include "jaudio/random.h"
 #include "jaudio/rate.h"
+#include <stddef.h>
 
 static u32 FORCE_RELEASE_TABLE[3] = { 5, 15, 0 };
 

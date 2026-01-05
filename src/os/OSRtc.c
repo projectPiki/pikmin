@@ -1,4 +1,5 @@
 #include "Dolphin/os.h"
+#include <stddef.h>
 
 // forward declarations.
 static BOOL WriteSram(void* buffer, u32 offset, u32 size);

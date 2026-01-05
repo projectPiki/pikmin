@@ -9,6 +9,7 @@
 #include "jaudio/piki_player.h"
 #include "jaudio/pikidemo.h"
 #include "jaudio/verysimple.h"
+#include <stddef.h>
 
 // rename better later
 typedef struct SEvent_UnkC {

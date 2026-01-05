@@ -5,6 +5,7 @@
 #include "jaudio/driverinterface.h"
 #include "jaudio/jammain_2.h"
 #include "jaudio/oneshot.h"
+#include <stddef.h>
 
 /**
  * @TODO: Documentation

@@ -1,4 +1,5 @@
 #include "Dolphin/gx.h"
+#include <stddef.h>
 
 static GXDrawSyncCallback TokenCB;
 static GXDrawDoneCallback DrawDoneCB;

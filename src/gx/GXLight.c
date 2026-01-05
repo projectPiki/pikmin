@@ -1,5 +1,6 @@
 #include "Dolphin/gx.h"
 #include "math.h"
+#include <stddef.h>
 
 struct __GXLightObjInt_struct {
 	u32 reserved[3];

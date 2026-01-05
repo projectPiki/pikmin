@@ -2,6 +2,7 @@
 #include "SoundMgr.h"
 #include "gameflow.h"
 #include "zen/DrawSave.h"
+#include <stddef.h>
 
 /**
  * @todo: Documentation

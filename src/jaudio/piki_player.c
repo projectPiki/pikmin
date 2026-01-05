@@ -7,6 +7,7 @@
 #include "jaudio/pikidemo.h"
 #include "jaudio/random.h"
 #include "jaudio/verysimple.h"
+#include <stddef.h>
 
 static u32 gaya_timer;
 

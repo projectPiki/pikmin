@@ -1,6 +1,7 @@
 #include "Dolphin/ai.h"
 #include "Dolphin/hw_regs.h"
 #include "Dolphin/os.h"
+#include <stddef.h>
 
 static AISCallback __AIS_Callback = NULL;
 static AIDCallback __AID_Callback = NULL;

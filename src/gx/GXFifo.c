@@ -1,5 +1,6 @@
 #include "Dolphin/gx.h"
 #include "Dolphin/os.h"
+#include <stddef.h>
 
 static OSThread* __GXCurrentThread;
 static GXBool CPGPLinked;

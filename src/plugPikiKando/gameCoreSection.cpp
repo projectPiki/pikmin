@@ -52,6 +52,7 @@
 #include "zen/DrawGameInfo.h"
 #include "zen/DrawHurryUp.h"
 #include "zen/ogTutorial.h"
+#include <stddef.h>
 
 static bool lastDamage;
 static bool currDamage;

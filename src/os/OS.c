@@ -1,6 +1,7 @@
 #include "Dolphin/os.h"
 #include "Dolphin/PPCArch.h"
 #include "Dolphin/hw_regs.h"
+#include <stddef.h>
 
 DECL_SECT(".init") extern char _db_stack_end[];
 

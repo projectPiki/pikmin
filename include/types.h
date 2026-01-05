@@ -103,13 +103,8 @@ typedef u32 HWND;
 #undef FALSE
 #define FALSE (0)
 
-#if !defined(__cplusplus)
-#define NULL    ((void*)0)
-#define nullptr 0
-#elif __cplusplus >= 201103L
-#define NULL nullptr
-#else
-#define NULL    0
+// We yearn for modernity.
+#if __cplusplus < 201103L
 #define nullptr 0
 #endif
 

@@ -1,5 +1,6 @@
 #include "Dolphin/AmcExi2.h"
 #include "Dolphin/hw_regs.h"
+#include <stddef.h>
 #include <stdio.h>
 
 static u8 ucEXI2InputPending;

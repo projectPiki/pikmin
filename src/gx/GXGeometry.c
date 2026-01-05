@@ -1,4 +1,5 @@
 #include "Dolphin/gx.h"
+#include <stddef.h>
 
 /**
  * @TODO: Documentation

@@ -2,6 +2,7 @@
 #include "Dolphin/gx.h"
 #include "Dolphin/hw_regs.h"
 #include "Dolphin/os.h"
+#include <stddef.h>
 
 // Useful macros.
 #define CLAMP(x, l, h)    (((x) > (h)) ? (h) : (((x) < (l)) ? (l) : (x)))

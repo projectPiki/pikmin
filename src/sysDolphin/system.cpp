@@ -19,6 +19,7 @@
 #include "jaudio/verysimple.h"
 #include "sysNew.h"
 #include "timers.h"
+#include <stddef.h>
 
 /**
  * @todo: Documentation
