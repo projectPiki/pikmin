@@ -227,7 +227,7 @@ int AnimInfo::getKeyValue(int idx)
 		}
 	}
 
-	return nullptr;
+	return 0;
 }
 
 /**

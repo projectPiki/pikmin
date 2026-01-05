@@ -733,7 +733,6 @@ void GXInvalidateVtxCache(void)
 /**
  * @TODO: Documentation
  */
-
 void GXSetTexCoordGen2(GXTexCoordID dst_coord, GXTexGenType func, GXTexGenSrc src_param, u32 mtx, GXBool normalize, u32 pt_texmtx)
 {
 	u32 reg = 0;

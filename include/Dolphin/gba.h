@@ -75,7 +75,6 @@ void GBAInit();
 BOOL __GBATransfer(s32 portIndex, u32, u32, GBAProcHandler);
 int __GBASync(s32 portIndex);
 void __GBASyncCallback(s32 portIndex, int);
-BOOL OnReset();
 void ShortCommandProc(s32 portIndex);
 void ReadProc(s32 portIndex);
 int GBAReset(s32 portIndex, u8* p2);

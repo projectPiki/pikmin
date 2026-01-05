@@ -280,6 +280,6 @@ void DoorItem::refresh(Graphics& gfx)
 
 	gfx.setCBlending(blend);
 	gfx.setLighting(set, nullptr);
-	gfx.useMatrix(mtx, nullptr);
+	gfx.useMatrix(mtx, 0);
 	ItemCreature::refresh(gfx);
 }

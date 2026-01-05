@@ -110,6 +110,4 @@ struct GameCoreSection : public Node {
 	zen::DrawGameInfo* mDrawGameInfo; // _344
 };
 
-extern GameCoreSection* gamecore;
-
 #endif

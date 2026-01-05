@@ -859,7 +859,7 @@ void Graphics::initRender(int, int)
  */
 void Graphics::resetMatrixBuffer()
 {
-	mActiveMatrixIdx = nullptr;
+	mActiveMatrixIdx = 0;
 }
 
 /**
@@ -884,7 +884,7 @@ void Graphics::resetCacheBuffer()
 	mShapeCache.mNext = &mShapeCache;
 	mShapeCache.mPrev = &mShapeCache;
 
-	mCachedShapeCount = nullptr;
+	mCachedShapeCount = 0;
 }
 
 /**
@@ -940,7 +940,7 @@ void Graphics::flushCachedShapes()
 	mRenderState = oldRenderState;
 }
 
-static u32 convFmts[] = {
+static TexImgFormat convFmts[] = {
 	TEX_FMT_I4,   TEX_FMT_I8,   TEX_FMT_IA4,  TEX_FMT_IA8,  TEX_FMT_RGB565, TEX_FMT_RGB5A3, TEX_FMT_RGBA8, TEX_FMT_NULL,
 	TEX_FMT_NULL, TEX_FMT_NULL, TEX_FMT_NULL, TEX_FMT_NULL, TEX_FMT_NULL,   TEX_FMT_NULL,   TEX_FMT_S3TC,
 };
@@ -949,7 +949,7 @@ static u32 convFmts[] = {
  * @todo: Documentation
  * @note UNUSED Size: 000018
  */
-u32 TexImg::convFormat(u32 inFmt)
+TexImgFormat TexImg::convFormat(u32 inFmt)
 {
 	return convFmts[inFmt];
 	// UNUSED FUNCTION
@@ -1167,7 +1167,7 @@ void TexImg::importBti(Texture* tex, RandomAccessStream& input, u8* data)
 	BtiHeader bti;
 	bti.read(input);
 
-	mFormat = (TexImgFormat)convFormat(bti.mImageFormat);
+	mFormat = convFormat(bti.mImageFormat);
 	mWidth  = bti.mWidth;
 	mHeight = bti.mHeight;
 

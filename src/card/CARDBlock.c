@@ -16,7 +16,7 @@ CARDFatBlock* __CARDGetFatBlock(CARDControl* card)
 /**
  * @TODO: Documentation
  */
-void WriteCallback(s32 channel, s32 result)
+static void WriteCallback(s32 channel, s32 result)
 {
 	CARDControl* card;
 	CARDCallback callback;
@@ -52,7 +52,7 @@ void WriteCallback(s32 channel, s32 result)
 /**
  * @TODO: Documentation
  */
-void EraseCallback(s32 channel, s32 result)
+static void EraseCallback(s32 channel, s32 result)
 {
 	CARDControl* card;
 	CARDCallback callback;

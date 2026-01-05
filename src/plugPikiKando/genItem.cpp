@@ -227,9 +227,11 @@ Creature* GenObjectItem::birth(BirthInfo& info)
 			break;
 		}
 		case OBJTYPE_Weeds:
+		{
 			WeedsGen* weeds    = (WeedsGen*)item;
 			weeds->mWeedsCount = mParameterD();
 			break;
+		}
 		}
 
 		int health = mParameterC() + mParameterB() * (int)gameflow.mWorldClock.mHoursInDay;

@@ -4,6 +4,7 @@
 #include "Dolphin/OS/OSContext.h"
 #include "Dolphin/OS/OSUtil.h"
 #include "types.h"
+#include <stddef.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -143,12 +144,12 @@ enum OS_THREAD_STATE {
 		OSThread* prev;                 \
                                         \
 		prev = (queue)->tail;           \
-		if (prev == nullptr)            \
+		if (prev == NULL)               \
 			(queue)->head = (thread);   \
 		else                            \
 			prev->link.next = (thread); \
 		(thread)->link.prev = prev;     \
-		(thread)->link.next = nullptr;  \
+		(thread)->link.next = NULL;     \
 		(queue)->tail       = (thread); \
 	} while (0)
 
@@ -159,14 +160,14 @@ enum OS_THREAD_STATE {
                                                                                                        \
 		for (next = (queue)->head; next && next->priority <= thread->priority; next = next->link.next) \
 			;                                                                                          \
-		if (next == nullptr)                                                                           \
+		if (next == NULL)                                                                              \
 			AddTail(queue, thread, link);                                                              \
 		else {                                                                                         \
 			(thread)->link.next = next;                                                                \
 			prev                = next->link.prev;                                                     \
 			next->link.prev     = (thread);                                                            \
 			(thread)->link.prev = prev;                                                                \
-			if (prev == nullptr)                                                                       \
+			if (prev == NULL)                                                                          \
 				(queue)->head = (thread);                                                              \
 			else                                                                                       \
 				prev->link.next = (thread);                                                            \
@@ -179,27 +180,27 @@ enum OS_THREAD_STATE {
 		OSThread *next, *prev;          \
 		next = (thread)->link.next;     \
 		prev = (thread)->link.prev;     \
-		if (next == nullptr)            \
+		if (next == NULL)               \
 			(queue)->tail = prev;       \
 		else                            \
 			next->link.prev = prev;     \
-		if (prev == nullptr)            \
+		if (prev == NULL)               \
 			(queue)->head = next;       \
 		else                            \
 			prev->link.next = next;     \
 	} while (0)
 
 // Remove head link from queue.
-#define RemoveHead(queue, thread, link)  \
-	do {                                 \
-		OSThread* __next;                \
-		(thread) = (queue)->head;        \
-		__next   = (thread)->link.next;  \
-		if (__next == nullptr)           \
-			(queue)->tail = nullptr;     \
-		else                             \
-			__next->link.prev = nullptr; \
-		(queue)->head = __next;          \
+#define RemoveHead(queue, thread, link) \
+	do {                                \
+		OSThread* __next;               \
+		(thread) = (queue)->head;       \
+		__next   = (thread)->link.next; \
+		if (__next == NULL)             \
+			(queue)->tail = NULL;       \
+		else                            \
+			__next->link.prev = NULL;   \
+		(queue)->head = __next;         \
 	} while (0)
 
 //////////////////////////////////
@@ -211,12 +212,12 @@ enum OS_THREAD_STATE {
 		OSMutex* prev;                   \
                                          \
 		prev = (queue)->tail;            \
-		if (prev == nullptr)             \
+		if (prev == NULL)                \
 			(queue)->head = (mutex);     \
 		else                             \
 			prev->link.next = (mutex);   \
 		(mutex)->link.prev = prev;       \
-		(mutex)->link.next = nullptr;    \
+		(mutex)->link.next = NULL;       \
 		(queue)->tail      = (mutex);    \
 	} while (0)
 
@@ -227,10 +228,10 @@ enum OS_THREAD_STATE {
                                             \
 		(mutex) = (queue)->head;            \
 		next    = (mutex)->link.next;       \
-		if (next == nullptr)                \
-			(queue)->tail = nullptr;        \
+		if (next == NULL)                   \
+			(queue)->tail = NULL;           \
 		else                                \
-			next->link.prev = nullptr;      \
+			next->link.prev = NULL;         \
 		(queue)->head = next;               \
 	} while (0)
 
@@ -243,12 +244,12 @@ enum OS_THREAD_STATE {
 		next = (mutex)->link.next;          \
 		prev = (mutex)->link.prev;          \
                                             \
-		if (next == nullptr)                \
+		if (next == NULL)                   \
 			(queue)->tail = prev;           \
 		else                                \
 			next->link.prev = prev;         \
                                             \
-		if (prev == nullptr)                \
+		if (prev == NULL)                   \
 			(queue)->head = next;           \
 		else                                \
 			prev->link.next = next;         \

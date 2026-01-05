@@ -5,6 +5,7 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+
 typedef void (*voidfunctionptr)(); // pointer to function returning void
 DECL_SECT(".ctors") extern voidfunctionptr _ctors[];
 DECL_SECT(".dtors") extern voidfunctionptr _dtors[];
@@ -85,6 +86,7 @@ void _ExitProcess(void)
 {
 	PPCHalt();
 }
+
 #ifdef __cplusplus
 }
 #endif

@@ -513,7 +513,7 @@ zen::ogScrMessageMgr::ogScrMessageMgr(immut char* path)
 	mButtonMarkupColours[6]    = "808080";
 	mButtonMarkupColours[7]    = "808080";
 #endif
-	P2DPaneLibrary::setFamilyAlpha(mBaseScreen, nullptr);
+	P2DPaneLibrary::setFamilyAlpha(mBaseScreen, 0);
 }
 
 /**
