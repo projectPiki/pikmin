@@ -155,7 +155,7 @@ struct MapSelectSetupSection : public Node {
 
 		// start fade-out
 		mSectionState = Exit;
-		gsys->setFade(0.0f, 3.0f);
+		gsys->setFade(0.0f);
 	}
 
 	/// Constructs a map select helper object; also sets up the relevant selection screen (story mode or challenge mode) and the debug menu.
@@ -214,7 +214,7 @@ struct MapSelectSetupSection : public Node {
 			selectWindow                     = new zen::DrawCMcourseSelect;
 			selectWindow->start();
 		}
-		gsys->setFade(1.0f, 3.0f);
+		gsys->setFade(1.0f);
 		// default target is to exit back to title unless we positively confirm otherwise
 		mNextSectionsFlag = PACK_NEXT_ONEPLAYER(ONEPLAYER_GameExit);
 	}
@@ -261,7 +261,7 @@ struct MapSelectSetupSection : public Node {
 					if (chalStatus == zen::DrawCMcourseSelect::Exit) {
 						// exit back to previous screen (in this case title)
 						mSectionState = Exit;
-						gsys->setFade(0.0f, 3.0f);
+						gsys->setFade(0.0f);
 
 					} else {
 						// we made a positive selection
@@ -273,7 +273,7 @@ struct MapSelectSetupSection : public Node {
 
 								gameflow.mWorldClock.setTime(gameflow.mParameters->mStartHour());
 								mSectionState = Exit;
-								gsys->setFade(0.0f, 3.0f);
+								gsys->setFade(0.0f);
 								break;
 							}
 						}
@@ -286,7 +286,7 @@ struct MapSelectSetupSection : public Node {
 					if (returnStatus == zen::DrawWorldMap::RET_ReturnToTitle) {
 						// player wants to exit, so exit
 						mSectionState = Exit;
-						gsys->setFade(0.0f, 3.0f);
+						gsys->setFade(0.0f);
 					} else {
 						// player made a positive selection
 						for (StageInfo* stage = (StageInfo*)flowCont.mStageList.mChild; stage; stage = (StageInfo*)stage->mNext) {
@@ -297,7 +297,7 @@ struct MapSelectSetupSection : public Node {
 
 								gameflow.mWorldClock.setTime(gameflow.mParameters->mStartHour());
 								mSectionState = Exit;
-								gsys->setFade(0.0f, 3.0f);
+								gsys->setFade(0.0f);
 								break;
 							}
 						}

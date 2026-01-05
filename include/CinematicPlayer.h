@@ -369,6 +369,7 @@ struct CinematicPlayer {
 	/// STRIPPED - sets up new scene with given .dsk file path, reads in data, and sets as current scene.
 	SceneData* addScene(immut char* dskFilePath);
 
+#if defined(WIN32)
 	// DLL exclusive functions (use -DWIN32)
 	void genAge(AgeServer&);
 	void ageAddActor(AgeServer&);
@@ -382,6 +383,7 @@ struct CinematicPlayer {
 	void genSection(AgeServer&);
 	void saveCin(immut char*);
 	static void truncateName(char*);
+#endif
 
 	/// Retrieves actor information from overall actor list based on .mod file path.
 	CineShapeObject* findActor(immut char* modFilePath)

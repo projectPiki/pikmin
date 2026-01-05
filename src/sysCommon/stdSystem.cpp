@@ -41,8 +41,8 @@ StdSystem::StdSystem()
 	mLanguageID = LANG_English;
 #endif
 	mCurrentFade      = 0.0f;
-	mFadeStart        = 0.0f;
-	mFadeEnd          = 1.0;
+	mTargetFade       = 0.0f;
+	mFadeRate         = 1.0;
 	mToggleFileInfo   = 1;
 	mForcePrint       = FALSE;
 	mGfxobjInfo.mPrev = &mGfxobjInfo;

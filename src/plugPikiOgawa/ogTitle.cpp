@@ -1,4 +1,5 @@
 #include "zen/ogTitle.h"
+
 #include "DebugLog.h"
 #include "P2D/TextBox.h"
 #include "SoundID.h"
@@ -11,13 +12,11 @@
 #include "zen/ogSub.h"
 
 /**
- * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("OgTitleSection")
@@ -54,32 +53,32 @@ void zen::ogScrTitleMgr::setGamePrefs()
  */
 zen::ogScrTitleMgr::ogScrTitleMgr()
 {
-	mMenu1   = new DrawMenu("screen/blo/m_select.blo", false, false);
-	mMenu2   = new DrawMenu("screen/blo/m_selec2.blo", false, false);
-	mUseMenu = mMenu1;
+	mMenuNoChallenge   = new DrawMenu("screen/blo/m_select.blo", false, false);
+	mMenuWithChallenge = new DrawMenu("screen/blo/m_selec2.blo", false, false);
+	mMainMenu          = mMenuNoChallenge;
 
-	mOptionsMenu     = new DrawMenu("screen/blo/option.blo", false, false);
-	mSoundSelectMenu = new DrawMenu("screen/blo/s_select.blo", false, false);
-	mVSelectMenu     = new DrawMenu("screen/blo/v_select.blo", false, false);
-	mMsSelectMenu    = new DrawMenu("screen/blo/ms_selec.blo", false, false);
+	mOptionsMenu  = new DrawMenu("screen/blo/option.blo", false, false);
+	mSoundMenu    = new DrawMenu("screen/blo/s_select.blo", false, false);
+	mRumbleMenu   = new DrawMenu("screen/blo/v_select.blo", false, false);
+	mLanguageMenu = new DrawMenu("screen/blo/ms_selec.blo", false, false);
 
 	mInput = new ZenController(nullptr);
 	mInput->setRepeatTime(0.2f);
 
-	static_cast<P2DPicture*>(mMenu1->getScreenPtr()->search('back', true))->setAlpha(0);
-	static_cast<P2DPicture*>(mMenu2->getScreenPtr()->search('back', true))->setAlpha(0);
+	static_cast<P2DPicture*>(mMenuNoChallenge->getScreenPtr()->search('back', true))->setAlpha(0);
+	static_cast<P2DPicture*>(mMenuWithChallenge->getScreenPtr()->search('back', true))->setAlpha(0);
 	static_cast<P2DPicture*>(mOptionsMenu->getScreenPtr()->search('back', true))->setAlpha(0);
-	static_cast<P2DPicture*>(mSoundSelectMenu->getScreenPtr()->search('back', true))->setAlpha(0);
-	static_cast<P2DPicture*>(mVSelectMenu->getScreenPtr()->search('back', true))->setAlpha(0);
-	static_cast<P2DPicture*>(mMsSelectMenu->getScreenPtr()->search('back', true))->setAlpha(0);
+	static_cast<P2DPicture*>(mSoundMenu->getScreenPtr()->search('back', true))->setAlpha(0);
+	static_cast<P2DPicture*>(mRumbleMenu->getScreenPtr()->search('back', true))->setAlpha(0);
+	static_cast<P2DPicture*>(mLanguageMenu->getScreenPtr()->search('back', true))->setAlpha(0);
 
-	mSoundSelectScreen = mSoundSelectMenu->getScreenPtr();
-	_30                = static_cast<P2DPicture*>(mSoundSelectScreen->search('on21', true));
-	_34                = static_cast<P2DPicture*>(mSoundSelectScreen->search('on22', true));
-	_38                = static_cast<P2DTextBox*>(mSoundSelectScreen->search('on_c', true));
-	_3C                = static_cast<P2DTextBox*>(mSoundSelectScreen->search('offc', true));
+	mSoundScreen      = mSoundMenu->getScreenPtr();
+	mStereoButton     = static_cast<P2DPicture*>(mSoundScreen->search('on21', true));
+	mMonoButton       = static_cast<P2DPicture*>(mSoundScreen->search('on22', true));
+	mSelectedButton   = static_cast<P2DTextBox*>(mSoundScreen->search('on_c', true));
+	mUnselectedButton = static_cast<P2DTextBox*>(mSoundScreen->search('offc', true));
 
-	mAlphaMgr = new setTenmetuAlpha(_30, 0.5f, 0.0f, 0, 255);
+	mAlphaMgr = new setTenmetuAlpha(mStereoButton, 0.5f, 0.0f, 0, 255);
 
 #if defined(VERSION_GPIP01_00)
 	char path[4];
@@ -88,37 +87,37 @@ zen::ogScrTitleMgr::ogScrTitleMgr()
 #endif
 	for (int i = 0; i < 10; i++) {
 		sprintf(path, "on%02d", i + 1);
-		u32 test        = RGBA_TO_U32(path[0], path[1], path[2], path[3]);
-		mBgmVolPanes[i] = (P2DPicture*)mSoundSelectScreen->search(test, true);
+		u32 test          = RGBA_TO_U32(path[0], path[1], path[2], path[3]);
+		mBgmVolButtons[i] = (P2DPicture*)mSoundScreen->search(test, true);
 	}
 	for (int i = 0; i < 10; i++) {
 		sprintf(path, "on%02d", i + 11);
-		u32 test        = RGBA_TO_U32(path[0], path[1], path[2], path[3]);
-		mSfxVolPanes[i] = (P2DPicture*)mSoundSelectScreen->search(test, true);
+		u32 test          = RGBA_TO_U32(path[0], path[1], path[2], path[3]);
+		mSfxVolButtons[i] = (P2DPicture*)mSoundScreen->search(test, true);
 	}
 
-	mStatus           = Status_Null;
-	_04               = mStatus;
-	mCurrentSelection = 0;
-	mCurrentMenu      = 0;
+	mStatus            = STATUS_Null;
+	mPendingExitStatus = mStatus;
+	mCurrentSelection  = 0;
+	mCurrentMenuID     = MENU_MainMenu;
 	getGamePrefs();
 	_A4           = 0;
 	_A6           = 0;
 	mNoInputTimer = 0.0f;
-	_9A           = 3;
+	mStartDelay   = 3;
 
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
-	mMsSelectMenu->setCancelSE(JACSYS_Decide1);
-	mVSelectMenu->setCancelSE(JACSYS_Decide1);
-	mSoundSelectMenu->setCancelSE(JACSYS_Decide1);
+	mLanguageMenu->setCancelSE(JACSYS_Decide1);
+	mRumbleMenu->setCancelSE(JACSYS_Decide1);
+	mSoundMenu->setCancelSE(JACSYS_Decide1);
 #elif defined(VERSION_GPIP01_00)
-	mMsSelectMenu->setCancelSE(SYSSE_DECIDE1);
-	mVSelectMenu->setCancelSE(SYSSE_DECIDE1);
-	mSoundSelectMenu->setCancelSE(SYSSE_DECIDE1);
+	mLanguageMenu->setCancelSE(SYSSE_DECIDE1);
+	mRumbleMenu->setCancelSE(SYSSE_DECIDE1);
+	mSoundMenu->setCancelSE(SYSSE_DECIDE1);
 #else
-	mMsSelectMenu->setCancelSE(SYSSE_DECIDE1);
-	mVSelectMenu->setCancelSE(SYSSE_DECIDE1);
-	mSoundSelectMenu->setCancelSE(SYSSE_DECIDE1);
+	mLanguageMenu->setCancelSE(SYSSE_DECIDE1);
+	mRumbleMenu->setCancelSE(SYSSE_DECIDE1);
+	mSoundMenu->setCancelSE(SYSSE_DECIDE1);
 	mOptionsMenu->setMenuItemActiveSw(1, false);
 #endif
 
@@ -134,9 +133,9 @@ void zen::ogScrTitleMgr::start(bool hasChallenge)
 {
 	getGamePrefs();
 	if (hasChallenge) {
-		mUseMenu = mMenu2;
+		mMainMenu = mMenuWithChallenge;
 	} else {
-		mUseMenu = mMenu1;
+		mMainMenu = mMenuNoChallenge;
 	}
 
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
@@ -145,14 +144,14 @@ void zen::ogScrTitleMgr::start(bool hasChallenge)
 	SeSystem::playSysSe(YMENU_SELECT2);
 #endif
 
-	mUseMenu->start(-1);
-	mCurrentMenu  = 0;
-	_A4           = 0;
-	_A6           = 0;
-	mNoInputTimer = 0.0f;
-	_04           = Status_3;
-	mStatus       = Status_1;
-	_9A           = 3;
+	mMainMenu->start(-1);
+	mCurrentMenuID     = MENU_MainMenu;
+	_A4                = 0;
+	_A6                = 0;
+	mNoInputTimer      = 0.0f;
+	mPendingExitStatus = STATUS_ExitToStart;
+	mStatus            = STATUS_Starting;
+	mStartDelay        = 3;
 }
 
 /**
@@ -161,25 +160,25 @@ void zen::ogScrTitleMgr::start(bool hasChallenge)
 zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 {
 	STACK_PAD_VAR(8);
-	if (mStatus == -1) {
+	if (mStatus == STATUS_Null) {
 		return mStatus;
 	}
 
-	if (mStatus == 1) {
-		_9A--;
-		if (_9A <= 0) {
-			mStatus = Status_0;
+	if (mStatus == STATUS_Starting) {
+		mStartDelay--;
+		if (mStartDelay <= 0) {
+			mStatus = STATUS_Active;
 		}
 		return mStatus;
 	}
 
-	if (mStatus == 2) {
-		mStatus = _04;
+	if (mStatus == STATUS_Exiting) {
+		mStatus = mPendingExitStatus;
 		return mStatus;
 	}
 
-	if (mStatus >= 3) {
-		mStatus = Status_Null;
+	if (mStatus >= STATUS_ExitToStart) {
+		mStatus = STATUS_Null;
 		return mStatus;
 	}
 
@@ -192,39 +191,43 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 	mNoInputTimer += gsys->getFrameTime();
 	if (mNoInputTimer >= 60.0f) {
 		input->updateCont(KBBTN_B);
-		mUseMenu->update(input);
+		mMainMenu->update(input);
 	}
 
-	switch (mCurrentMenu) {
-	case 0:
-		mUseMenu->update(input);
-		int flag0         = mUseMenu->getStatusFlag();
-		mCurrentSelection = mUseMenu->getSelectMenu();
+	switch (mCurrentMenuID) {
+	case MENU_MainMenu:
+		mMainMenu->update(input);
+		int flag0         = mMainMenu->getStatusFlag();
+		mCurrentSelection = mMainMenu->getSelectMenu();
 		if (flag0 != 0) {
 			break;
 		}
 		if (mCurrentSelection == 0) {
-			_04     = Status_4;
-			mStatus = Status_2;
+			// Start
+			mPendingExitStatus = STATUS_ExitToStoryMode;
+			mStatus            = STATUS_Exiting;
 			return mStatus;
 		}
 		if (mCurrentSelection == 1) {
-			mCurrentMenu = 1;
+			// Options
+			mCurrentMenuID = MENU_Options;
 			mOptionsMenu->start(0);
 			break;
 		}
 		if (mCurrentSelection == 2) {
-			_04     = Status_6;
-			mStatus = Status_2;
+			// Challenge Mode
+			mPendingExitStatus = STATUS_ExitToChallengeMode;
+			mStatus            = STATUS_Exiting;
 			return mStatus;
 		}
-		if (mUseMenu->checkSelectMenuCancel()) {
-			_04     = Status_3;
-			mStatus = Status_2;
+		if (mMainMenu->checkSelectMenuCancel()) {
+			mPendingExitStatus = STATUS_ExitToStart;
+			mStatus            = STATUS_Exiting;
 			return mStatus;
 		}
 		break;
-	case 1:
+
+	case MENU_Options:
 		mOptionsMenu->update(input);
 		int flag1         = mOptionsMenu->getStatusFlag();
 		mCurrentSelection = mOptionsMenu->getSelectMenu();
@@ -232,37 +235,42 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 			break;
 		}
 		if (mCurrentSelection == 0) {
-			mCurrentMenu = 2;
-			mSoundSelectMenu->start(0);
+			// Sound
+			mCurrentMenuID = MENU_Sound;
+			mSoundMenu->start(0);
 			break;
 		}
 		if (mCurrentSelection == 1) {
-			mCurrentMenu = 4;
+			// Language
+			mCurrentMenuID = MENU_Language;
 #if defined(VERSION_GPIP01_00)
-			mMsSelectMenu->start(mChildMode);
+			mLanguageMenu->start(mChildMode);
 #else
 			if (mChildMode) {
-				mMsSelectMenu->start(1);
+				mLanguageMenu->start(1);
 			} else {
-				mMsSelectMenu->start(0);
+				mLanguageMenu->start(0);
 			}
 #endif
 			break;
 		}
 		if (mCurrentSelection == 2) {
-			mCurrentMenu = 3;
+			// Rumble
+			mCurrentMenuID = MENU_Rumble;
 			if (mVibeMode) {
-				mVSelectMenu->start(0);
+				mRumbleMenu->start(0);
 			} else {
-				mVSelectMenu->start(1);
+				mRumbleMenu->start(1);
 			}
 			break;
 		}
 		if (mCurrentSelection == 3) {
-			_04     = Status_7;
-			mStatus = Status_2;
+			// High Scores
+			mPendingExitStatus = STATUS_ExitToHiScore;
+			mStatus            = STATUS_Exiting;
 			return mStatus;
 		}
+
 		if (mOptionsMenu->checkSelectMenuCancel()) {
 #if defined(VERSION_PIKIDEMO)
 			STACK_PAD_VAR(2);
@@ -289,17 +297,19 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 #endif
 
 			mOptionsMenu->setCancelSelectMenuNo(-1);
-			mUseMenu->start(-1);
-			mCurrentMenu = 0;
+			mMainMenu->start(-1);
+			mCurrentMenuID = MENU_MainMenu;
 		}
 		break;
-	case 2:
-		mSoundSelectMenu->update(input);
-		int flag2         = mSoundSelectMenu->getStatusFlag();
-		mCurrentSelection = mSoundSelectMenu->getSelectMenu();
+
+	case MENU_Sound:
+		mSoundMenu->update(input);
+		int flag2         = mSoundMenu->getStatusFlag();
+		mCurrentSelection = mSoundMenu->getSelectMenu();
 		if (mInput->keyRepeat(KBBTN_MSTICK_LEFT)) {
 			switch (mCurrentSelection) {
 			case 0:
+				// Stereo/Mono
 				if (!mStereoMode) {
 					mStereoMode = true;
 					setGamePrefs();
@@ -317,6 +327,7 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 				break;
 
 			case 1:
+				// Music Volume
 				if (mBgmVol > 0) {
 					mBgmVol--;
 					setGamePrefs();
@@ -331,6 +342,7 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 				break;
 
 			case 2:
+				// SGX Volume
 				if (mSfxVol > 0) {
 					mSfxVol--;
 					setGamePrefs();
@@ -348,6 +360,7 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 		if (mInput->keyRepeat(KBBTN_MSTICK_RIGHT)) {
 			switch (mCurrentSelection) {
 			case 0:
+				// Stereo/Mono
 				if (mStereoMode) {
 					mStereoMode = false;
 					setGamePrefs();
@@ -362,6 +375,7 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 				break;
 
 			case 1:
+				// Music Volume
 				if (mBgmVol < 10) {
 					mBgmVol++;
 					setGamePrefs();
@@ -376,6 +390,7 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 				break;
 
 			case 2:
+				// SFX Volume
 				if (mSfxVol < 10) {
 					mSfxVol++;
 					setGamePrefs();
@@ -401,25 +416,27 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 
 		if (mCurrentSelection >= 0) {
 			mOptionsMenu->start(-1);
-			mCurrentMenu = 1;
+			mCurrentMenuID = MENU_Options;
 			break;
 		}
 
-		if (mSoundSelectMenu->checkSelectMenuCancel()) {
-			mSoundSelectMenu->setCancelSelectMenuNo(-1);
+		if (mSoundMenu->checkSelectMenuCancel()) {
+			mSoundMenu->setCancelSelectMenuNo(-1);
 			mOptionsMenu->start(-1);
-			mCurrentMenu = 1;
+			mCurrentMenuID = MENU_Options;
 		}
 		break;
 
-	case 3:
-		mVSelectMenu->update(input);
-		int flag3         = mVSelectMenu->getStatusFlag();
-		mCurrentSelection = mVSelectMenu->getSelectMenu();
+	case MENU_Rumble:
+		mRumbleMenu->update(input);
+		int flag3         = mRumbleMenu->getStatusFlag();
+		mCurrentSelection = mRumbleMenu->getSelectMenu();
 		if (input->keyClick(KBBTN_MSTICK_UP | KBBTN_MSTICK_DOWN)) {
 			if (mCurrentSelection == 0) {
+				// ON
 				mVibeMode = true;
 			} else {
+				// OFF
 				mVibeMode = false;
 			}
 
@@ -432,21 +449,21 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 
 		if (mCurrentSelection >= 0) {
 			mOptionsMenu->start(-1);
-			mCurrentMenu = 1;
+			mCurrentMenuID = MENU_Options;
 			break;
 		}
 
-		if (mVSelectMenu->checkSelectMenuCancel()) {
-			mVSelectMenu->setCancelSelectMenuNo(-1);
+		if (mRumbleMenu->checkSelectMenuCancel()) {
+			mRumbleMenu->setCancelSelectMenuNo(-1);
 			mOptionsMenu->start(-1);
-			mCurrentMenu = 1;
+			mCurrentMenuID = MENU_Options;
 		}
 		break;
 
-	case 4:
-		mMsSelectMenu->update(input);
-		int flag4         = mMsSelectMenu->getStatusFlag();
-		mCurrentSelection = mMsSelectMenu->getSelectMenu();
+	case MENU_Language:
+		mLanguageMenu->update(input);
+		int flag4         = mLanguageMenu->getStatusFlag();
+		mCurrentSelection = mLanguageMenu->getSelectMenu();
 #if defined(VERSION_GPIP01_00)
 		if (mCurrentSelection >= 0) {
 			mChildMode = mCurrentSelection;
@@ -470,8 +487,8 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 			break;
 		}
 #endif
-		_04     = Status_3;
-		mStatus = Status_2;
+		mPendingExitStatus = STATUS_ExitToStart;
+		mStatus            = STATUS_Exiting;
 		return mStatus;
 		break;
 	}
@@ -484,22 +501,22 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
  */
 void zen::ogScrTitleMgr::draw(Graphics& gfx)
 {
-	if (mStatus != Status_Null && mStatus != Status_1) {
-		switch (mCurrentMenu) {
-		case 0:
-			mUseMenu->draw(gfx);
+	if (mStatus != STATUS_Null && mStatus != STATUS_Starting) {
+		switch (mCurrentMenuID) {
+		case MENU_MainMenu:
+			mMainMenu->draw(gfx);
 			break;
-		case 1:
+		case MENU_Options:
 			mOptionsMenu->draw(gfx);
 			break;
-		case 2:
-			mSoundSelectMenu->draw(gfx);
+		case MENU_Sound:
+			mSoundMenu->draw(gfx);
 			break;
-		case 3:
-			mVSelectMenu->draw(gfx);
+		case MENU_Rumble:
+			mRumbleMenu->draw(gfx);
 			break;
-		case 4:
-			mMsSelectMenu->draw(gfx);
+		case MENU_Language:
+			mLanguageMenu->draw(gfx);
 			break;
 		}
 	}
@@ -508,23 +525,23 @@ void zen::ogScrTitleMgr::draw(Graphics& gfx)
 /**
  * @todo: Documentation
  */
-void zen::ogScrTitleMgr::StereoOnOff(bool set)
+void zen::ogScrTitleMgr::StereoOnOff(bool isSelected)
 {
 	if (mStereoMode) {
-		setTextColor(_38, _30);
-		setTextColor(_3C, _34);
-		if (set) {
-			mAlphaMgr->update(_30);
+		setTextColor(mSelectedButton, mStereoButton);
+		setTextColor(mUnselectedButton, mMonoButton);
+		if (isSelected) {
+			mAlphaMgr->update(mStereoButton);
 		} else {
-			_30->setAlpha(255);
+			mStereoButton->setAlpha(255);
 		}
 	} else {
-		setTextColor(_3C, _30);
-		setTextColor(_38, _34);
-		if (set) {
-			mAlphaMgr->update(_34);
+		setTextColor(mUnselectedButton, mStereoButton);
+		setTextColor(mSelectedButton, mMonoButton);
+		if (isSelected) {
+			mAlphaMgr->update(mMonoButton);
 		} else {
-			_34->setAlpha(255);
+			mMonoButton->setAlpha(255);
 		}
 	}
 }
@@ -532,21 +549,21 @@ void zen::ogScrTitleMgr::StereoOnOff(bool set)
 /**
  * @todo: Documentation
  */
-void zen::ogScrTitleMgr::DispBarBGM(bool set)
+void zen::ogScrTitleMgr::DispBarBGM(bool isSelected)
 {
 	for (int i = 0; i < 10; i++) {
 		if (i < mBgmVol - 1) {
-			setTextColor(_38, mBgmVolPanes[i]);
-			mBgmVolPanes[i]->setAlpha(255);
+			setTextColor(mSelectedButton, mBgmVolButtons[i]);
+			mBgmVolButtons[i]->setAlpha(255);
 		} else if (i == mBgmVol - 1) {
-			setTextColor(_38, mBgmVolPanes[i]);
-			if (set) {
-				mAlphaMgr->update(mBgmVolPanes[i]);
+			setTextColor(mSelectedButton, mBgmVolButtons[i]);
+			if (isSelected) {
+				mAlphaMgr->update(mBgmVolButtons[i]);
 			} else {
-				mBgmVolPanes[i]->setAlpha(255);
+				mBgmVolButtons[i]->setAlpha(255);
 			}
 		} else {
-			setTextColor(_3C, mBgmVolPanes[i]);
+			setTextColor(mUnselectedButton, mBgmVolButtons[i]);
 		}
 	}
 }
@@ -554,21 +571,21 @@ void zen::ogScrTitleMgr::DispBarBGM(bool set)
 /**
  * @todo: Documentation
  */
-void zen::ogScrTitleMgr::DispBarSE(bool set)
+void zen::ogScrTitleMgr::DispBarSE(bool isSelected)
 {
 	for (int i = 0; i < 10; i++) {
 		if (i < mSfxVol - 1) {
-			setTextColor(_38, mSfxVolPanes[i]);
-			mSfxVolPanes[i]->setAlpha(255);
+			setTextColor(mSelectedButton, mSfxVolButtons[i]);
+			mSfxVolButtons[i]->setAlpha(255);
 		} else if (i == mSfxVol - 1) {
-			setTextColor(_38, mSfxVolPanes[i]);
-			if (set) {
-				mAlphaMgr->update(mSfxVolPanes[i]);
+			setTextColor(mSelectedButton, mSfxVolButtons[i]);
+			if (isSelected) {
+				mAlphaMgr->update(mSfxVolButtons[i]);
 			} else {
-				mSfxVolPanes[i]->setAlpha(255);
+				mSfxVolButtons[i]->setAlpha(255);
 			}
 		} else {
-			setTextColor(_3C, mSfxVolPanes[i]);
+			setTextColor(mUnselectedButton, mSfxVolButtons[i]);
 		}
 	}
 }

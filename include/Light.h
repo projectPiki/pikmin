@@ -16,6 +16,44 @@ struct SceneData;
 struct Shape;
 struct Texture;
 
+#define GET_LIGHT_TYPE(flag)       (int)((flag) & 0xFF)
+#define SET_LIGHT_TYPE(flag, type) (flag) = (((flag) & 0xFFFFFF00) | (type))
+#define IS_LIGHT_TYPE(flag, type)  (GET_LIGHT_TYPE(flag) == (type))
+
+/**
+ * @brief Types of lights. Stored in final byte of `Light::mLightFlag`. See `LIGHT_TYPE` macros.
+ */
+enum LightType {
+	LIGHT_None     = 0, ///< 0, no light.
+	LIGHT_Parallel = 1, ///< 1, parallel rays, no attenuation or spot effect.
+	LIGHT_Point    = 2, ///< 2, attenuates with distance, no spot effect.
+	LIGHT_Spot     = 3, ///< 3, directional with a cone/angle, uses spot attenuation.
+};
+
+/**
+ * @brief Types of attenuation used for spotlights. Used with `Light::mSpotMode`. Only `SPOT_Smooth` is ever used in code.
+ */
+enum SpotMode {
+	SPOT_NoAttn    = 0, ///< 0, no attenuation to the edge - becomes a point light.
+	SPOT_Linear    = 1, ///< 1, linear fall-off from center to edge of cone.
+	SPOT_Smooth    = 2, ///< 2, smooth non-linear fall-off - same as default OpenGL spotlight attenuation.
+	SPOT_Quadratic = 3, ///< 3, quadratic fall-off - harder edge than the above.
+	SPOT_Cubic     = 4, ///< 4, cubic fall-off - even harder edge than quadratic.
+	SPOT_Quartic   = 5, ///< 5, quartic fall-off - extremely hard edge.
+	SPOT_Special   = 6, ///< 6, very tailored fall-off, mix between quadratic and quartic.
+};
+
+/**
+ * @brief Unknown additional flags sometimes stored with `LightType` in `Light::mLightFlag`.
+ *
+ * These are a guess, as they're never used, only set. Could also be a plain enum shifted by 8 when stored.
+ */
+enum LightFlag {
+	LIGHTFLAG_None   = 0x000, ///< 0, no flags set.
+	LIGHTFLAG_Unk100 = 0x100, ///< 0x100, unknown.
+	LIGHTFLAG_Unk200 = 0x200, ///< 0x200, unknown.
+};
+
 // this is in here to avoid include looping with Graphics.h
 
 /**
@@ -134,7 +172,7 @@ struct Light : public CoreNode {
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	u32 mLightType;              // _14
+	u32 mLightFlag;              // _14
 	f32 mDistancedRange;         // _18
 	f32 mAttenuation;            // _1C
 	f32 mSpotAngle;              // _20

@@ -140,7 +140,7 @@ OgTestScreen::OgTestScreen()
 	Texture* fontTex    = gsys->loadTexture("bigFont.bti", true);
 	mFont               = new Font();
 	mFont->setTexture(fontTex, 21, 42);
-	gsys->setFade(1.0f, 3.0f);
+	gsys->setFade(1.0f);
 
 	for (int i = 0; i < 100; i++) {
 		setSpecialNumber(i, -123);

@@ -75,7 +75,7 @@ struct CardSelectSetupSection : public Node {
 		memcardWindow = new zen::ogScrFileChkSelMgr();
 		memcardWindow->start(gameflow.mIsChallengeMode); // challenge mode skips file select
 
-		gsys->setFade(1.0f, 3.0f);
+		gsys->setFade(1.0f);
 		mNextSectionsFlag = 0; // indicates we haven't set a destination yet (we're past setup)
 	}
 
@@ -86,7 +86,7 @@ struct CardSelectSetupSection : public Node {
 		if (!memcardWindow && mState == Active) {
 			// fade out
 			mState = Exit;
-			gsys->setFade(0.0f, 3.0f);
+			gsys->setFade(0.0f);
 		}
 
 		if (memcardWindow && gameflow.mIsChallengeMode && mJacSetupCountdown != 0) {
@@ -197,13 +197,13 @@ struct CardSelectSetupSection : public Node {
 				// back out to title screen
 				mNextSectionsFlag = PACK_NEXT_ONEPLAYER(ONEPLAYER_GameExit);
 				mState            = Exit;
-				gsys->setFade(0.0f, 3.0f);
+				gsys->setFade(0.0f);
 
 			} else if (returnCode == zen::ogScrFileChkSelMgr::ForceExit) {
 				// force close and let update sort out where we go
 				mNextSectionsFlag = 0;
 				mState            = Exit;
-				gsys->setFade(0.0f, 3.0f);
+				gsys->setFade(0.0f);
 
 			} else {
 				// we selected a a save file (A, B, or C)
@@ -217,7 +217,7 @@ struct CardSelectSetupSection : public Node {
 				      gameflow.mSaveGameCrc, gameflow.mGamePrefs.mSpareMemCardSaveIndex);
 				gameflow.mWorldClock.mCurrentDay = card.mCurrentDay;
 				mState                           = Exit;
-				gsys->setFade(0.0f, 3.0f);
+				gsys->setFade(0.0f);
 			}
 		}
 

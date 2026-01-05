@@ -270,7 +270,7 @@ struct FogMenu : public Menu {
 };
 
 static char* lightTypeNames[4] = { "OFF", "PARALLEL", "POINT", "SPOT" };
-static int lightTypes[2]       = { 1, 3 };
+static int lightTypes[2]       = { LIGHT_Parallel, LIGHT_Spot };
 static int lightConv[4]        = { 0, 0, 0, 1 };
 static char* lightMoveNames[2] = { "global", "attach to navi" };
 
@@ -285,7 +285,7 @@ struct LightMenu : public Menu {
 		mLight             = light;
 		mSelectedLightType = 0;
 		mLightAttachType   = attachType;
-		mLight->mLightType = mLight->mLightType & 0xFFFFFF00 | lightTypes[mSelectedLightType];
+		SET_LIGHT_TYPE(mLight->mLightFlag, lightTypes[mSelectedLightType]);
 
 		mCenterPoint.mMinX = glnWidth / 2;
 		mCenterPoint.mMinY = glnHeight / 2;
@@ -315,7 +315,7 @@ struct LightMenu : public Menu {
 	void menuChangeType(Menu& menu)
 	{
 		mSelectedLightType = mSelectedLightType ^ 1;
-		mLight->mLightType = mLight->mLightType & 0xFFFFFF00 | lightTypes[mSelectedLightType];
+		SET_LIGHT_TYPE(mLight->mLightFlag, lightTypes[mSelectedLightType]);
 		resetOptions();
 		addOptions();
 		open(false);
@@ -330,10 +330,10 @@ struct LightMenu : public Menu {
 
 	void addOptions()
 	{
-		mSelectedLightType = lightConv[(u8)mLight->mLightType];
-		addOption(0, lightTypeNames[(u8)mLight->mLightType], new Delegate1<LightMenu, Menu&>(this, menuChangeType));
+		mSelectedLightType = lightConv[GET_LIGHT_TYPE(mLight->mLightFlag)];
+		addOption(0, lightTypeNames[GET_LIGHT_TYPE(mLight->mLightFlag)], new Delegate1<LightMenu, Menu&>(this, menuChangeType));
 		addOption(MENU_FAKE_OPTION_FOR_GAP);
-		if ((int)(u8)mLight->mLightType == 3) {
+		if (GET_LIGHT_TYPE(mLight->mLightFlag) == LIGHT_Spot) {
 			mSpotFov = &mLight->mSpotAngle;
 			addOption(0, lightMoveNames[mLightAttachType[0]], new Delegate1<LightMenu, Menu&>(this, menuChangeMove));
 
@@ -345,11 +345,11 @@ struct LightMenu : public Menu {
 			addKeyEvent(KeyEventType::WhileInputHeld, KBBTN_X, new Delegate1<LightMenu, Menu&>(this, menuIncrease));
 		}
 
-		if ((int)(u8)mLight->mLightType != 1) {
+		if (GET_LIGHT_TYPE(mLight->mLightFlag) != LIGHT_Parallel) {
 			addMenu(new PositionMenu(&mLight->mPosition, mController, gsys->mConsFont, true, false), 0, "position");
 		}
 
-		if ((int)(u8)mLight->mLightType == 3) {
+		if (GET_LIGHT_TYPE(mLight->mLightFlag) == LIGHT_Spot) {
 			addMenu(new PositionMenu(&mLight->mDirection, mController, gsys->mConsFont, true, true), 0, "direction");
 		}
 
@@ -623,7 +623,7 @@ void DayMgr::refresh(Graphics& gfx, f32 time, int numLights)
 	for (int i = 0; i < lights; i++) {
 		timeSettingStart->mDayPhaseLights[i].mDiffuseColour.lerpTo(timeSettingEnd->mDayPhaseLights[i].mDiffuseColour, blendRatio,
 		                                                           mCurrentTimeSetting.mDayPhaseLights[i].mDiffuseColour);
-		mCurrentTimeSetting.mDayPhaseLights[i].mLightType = timeSettingStart->mDayPhaseLights[i].mLightType;
+		mCurrentTimeSetting.mDayPhaseLights[i].mLightFlag = timeSettingStart->mDayPhaseLights[i].mLightFlag;
 		mCurrentTimeSetting.mAttachType[i]                = timeSettingStart->mAttachType[i];
 		mCurrentTimeSetting.mDayPhaseLights[i].mDistancedRange
 		    = timeSettingStart->mDayPhaseLights[i].mDistancedRange
@@ -658,7 +658,7 @@ void DayMgr::refresh(Graphics& gfx, f32 time, int numLights)
 	}
 
 	for (int i = 0; i < lights; i++) {
-		if (int(mCurrentTimeSetting.mDayPhaseLights[i].mLightType & 0xFF) == 1) {
+		if (GET_LIGHT_TYPE(mCurrentTimeSetting.mDayPhaseLights[i].mLightFlag) == LIGHT_Parallel) {
 			if (!(i & 1)) {
 				mCurrentTimeSetting.mDayPhaseLights[i].mPosition.set(mSunPosition.x, mSunPosition.y, mSunPosition.z);
 				mCurrentTimeSetting.mDayPhaseLights[i].mDirection.set(-mSunPosition.x, -mSunPosition.y, -mSunPosition.z);
@@ -707,29 +707,36 @@ void DayMgr::menuDumpSettings(Menu&)
 	PRINT("\n------- cut here -----------------\n\n");
 	PRINT("dayMgr {\n");
 	PRINT("numsettings %d\n\n", 5);
+
 	for (int i = 0; i < 5; i++) {
+
 		PRINT("timesetting %d {\t// %s\n", i, settingnames[i]);
 		for (int j = 0; j < mLightCount; j++) {
 			PRINT("\tlight %d {\t// %s\n", j, lightnames[j]);
-			PRINT("\t\ttype\t%d\n", mTimeSettings[i].mDayPhaseLights[j].mLightType);
+			PRINT("\t\ttype\t%d\n", mTimeSettings[i].mDayPhaseLights[j].mLightFlag);
 			PRINT("\t\tattach\t%d\n", mTimeSettings[i].mAttachType[j]);
-			u8 type = mTimeSettings[i].mDayPhaseLights[j].mLightType;
-			if ((int)type == 3) {
+
+			if (GET_LIGHT_TYPE(mTimeSettings[i].mDayPhaseLights[j].mLightFlag) == LIGHT_Spot) {
 				PRINT("\t\tfov\t%.1f\n", mTimeSettings[i].mDayPhaseLights[j].mSpotAngle);
 			}
-			if ((int)type != 1) {
+
+			if (GET_LIGHT_TYPE(mTimeSettings[i].mDayPhaseLights[j].mLightFlag) != LIGHT_Parallel) {
 				PRINT("\t\tposition\t%.2f %.2f %.2f\n", mTimeSettings[i].mDayPhaseLights[j].mPosition.x,
 				      mTimeSettings[i].mDayPhaseLights[j].mPosition.y, mTimeSettings[i].mDayPhaseLights[j].mPosition.z);
 			}
-			if ((int)type == 3) {
+
+			if (GET_LIGHT_TYPE(mTimeSettings[i].mDayPhaseLights[j].mLightFlag) == LIGHT_Spot) {
 				PRINT("\t\tdirection\t%.2f %.2f %.2f\n", mTimeSettings[i].mDayPhaseLights[j].mDirection.x,
 				      mTimeSettings[i].mDayPhaseLights[j].mDirection.y, mTimeSettings[i].mDayPhaseLights[j].mDirection.z);
 			}
+
 			PRINT("\t\tcolour\t%d %d %d %d\n", mTimeSettings[i].mDayPhaseLights[j].mDiffuseColour.r,
 			      mTimeSettings[i].mDayPhaseLights[j].mDiffuseColour.g, mTimeSettings[i].mDayPhaseLights[j].mDiffuseColour.b,
 			      mTimeSettings[i].mDayPhaseLights[j].mDiffuseColour.a);
+
 			PRINT("\t\t}\n");
 		}
+
 		PRINT("\tambient {\n");
 		PRINT("\t\tcolour\t%d %d %d %d\n", mTimeSettings[i].mAmbientColour.r, mTimeSettings[i].mAmbientColour.g,
 		      mTimeSettings[i].mAmbientColour.b, mTimeSettings[i].mAmbientColour.a);
@@ -739,6 +746,7 @@ void DayMgr::menuDumpSettings(Menu&)
 		PRINT("\t\tcolour\t%d %d %d %d\n", mTimeSettings[i].mFogColour.r, mTimeSettings[i].mFogColour.g, mTimeSettings[i].mFogColour.b,
 		      mTimeSettings[i].mFogColour.a);
 		PRINT("\t\tdist\t%.2f %.2f\n", mTimeSettings[i].mFogNear, mTimeSettings[i].mFogFar);
+
 		PRINT("\t\t}\n");
 		PRINT("\t}\n");
 	}
@@ -783,8 +791,7 @@ void DayMgr::init(CmdStream* stream)
 						if (stream->isToken("type")) {
 							u32 type;
 							sscanf(stream->getToken(true), "%d", &type);
-							mTimeSettings[settingType].mDayPhaseLights[lightNum].mLightType
-							    = type | (mTimeSettings[settingType].mDayPhaseLights[lightNum].mLightType & ~0xFF);
+							SET_LIGHT_TYPE(mTimeSettings[settingType].mDayPhaseLights[lightNum].mLightFlag, type);
 							continue;
 						}
 

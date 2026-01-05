@@ -1407,7 +1407,7 @@ GameCoreSection::GameCoreSection(Controller* controller, MapMgr* mgr, Camera& ca
 	camera.mPosition.x = 500.0f * sinf(camera.mRotation.x);
 	camera.mPosition.y = 140.0f;
 	camera.mPosition.z = 500.0f * cosf(camera.mRotation.x);
-	gsys->setFade(1.0f, 3.0f);
+	gsys->setFade(1.0f);
 	cameraMgr = new PcamCameraManager(&camera, mNavi->mKontroller);
 	gameflow.addGenNode("cameraMgr", cameraMgr);
 	memStat->end("gamecore");

@@ -169,7 +169,7 @@ PaniTestNode::PaniTestNode()
 	mConsFont        = new Font();
 	mConsFont->setTexture(fontTex, 16, 8);
 
-	gsys->setFade(1.0f, 3.0f);
+	gsys->setFade(1.0f);
 	mCamMgr         = new PcamCameraManager(&mActiveCamera, mController);
 	mAnimationSpeed = 30.0f;
 	_68C            = 0;
@@ -300,7 +300,7 @@ void PaniTestNode::update()
 	if (mFadeState == 0) {
 		if (mController->keyUnClick(KBBTN_START)) {
 			mFadeState = 1;
-			gsys->setFade(0.0f, 3.0f);
+			gsys->setFade(0.0f);
 		}
 		Node::update();
 	} else if (mFadeState == 1) {

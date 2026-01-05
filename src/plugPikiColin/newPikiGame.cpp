@@ -365,7 +365,7 @@ struct QuittingGameModeState : public ModeState {
 	virtual void postUpdate() // _10
 	{
 		// force transit to next section (if we're not already)
-		if (!gsys->mSysOpPending) {
+		if (!gsys->mSoftResetPending) {
 			PRINT("sending softreset!\n");
 			gamecore->exitStage();
 			gameflow.mNextOnePlayerSectionID       = mParentSection->mPendingOnePlayerSectionID;
@@ -1003,7 +1003,7 @@ ModeState* RunningModeState::update(u32& result)
 		// take us back to card select
 		// (this ends up as file select for story mode, or a quick transit to map select for challenge mode)
 		mParentSection->mPendingOnePlayerSectionID = ONEPLAYER_CardSelect;
-		gsys->setFade(0.0f, 3.0f);
+		gsys->setFade(0.0f);
 		// transit to quitter
 		return new QuittingGameModeState(mParentSection);
 
@@ -1272,7 +1272,7 @@ ModeState* DayOverModeState::update(u32& result)
 	if (challengeWindow && challengeWindow->update(mParentSection->mController)) {
 		// we want to go back to map select after exiting
 		mParentSection->mPendingOnePlayerSectionID = ONEPLAYER_MapSelect;
-		gsys->setFade(0.0f, 3.0f);
+		gsys->setFade(0.0f);
 		return new QuittingGameModeState(mParentSection);
 	}
 
@@ -1308,7 +1308,7 @@ ModeState* DayOverModeState::update(u32& result)
 				mParentSection->mPendingOnePlayerSectionID = ONEPLAYER_MapSelect;
 			}
 			// transit to quitter to handle changing subsection
-			gsys->setFade(0.0f, 3.0f);
+			gsys->setFade(0.0f);
 			return new QuittingGameModeState(mParentSection);
 #if defined(VERSION_G98E01_PIKIDEMO)
 #else
@@ -1327,7 +1327,7 @@ ModeState* DayOverModeState::update(u32& result)
 			totalWindow = nullptr;
 			// next section will be title screen, but queue up exit section first to clean up
 			mParentSection->mPendingOnePlayerSectionID = ONEPLAYER_GameExit;
-			gsys->setFade(0.0f, 3.0f);
+			gsys->setFade(0.0f);
 			return new QuittingGameModeState(mParentSection);
 		}
 	}
@@ -1358,7 +1358,7 @@ ModeState* DayOverModeState::update(u32& result)
 				gsys->mTogglePrint = printSetting;
 				STACK_PAD_VAR(1);
 			}
-			gsys->setFade(0.0f, 3.0f);
+			gsys->setFade(0.0f);
 			return new QuittingGameModeState(mParentSection);
 		}
 	}
@@ -1729,7 +1729,7 @@ ModeState* DayOverModeState::initialisePhaseFour()
 	} else {
 		// we're done with all other endings, start the quitter to go back to title
 		mParentSection->mPendingOnePlayerSectionID = ONEPLAYER_GameExit;
-		gsys->setFade(0.0f, 3.0f);
+		gsys->setFade(0.0f);
 		return new QuittingGameModeState(mParentSection); // When this happens, the heap isnt restored, potential bug?
 	}
 
@@ -1926,7 +1926,7 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 			// landing cutscene if we have a valid stage!
 			gameflow.mMoviePlayer->startMovie(DEMOID_Landing, 0, nullptr, nullptr, nullptr, CAF_AllVisibleMask, true);
 		}
-		gsys->setFade(1.0f, 3.0f);
+		gsys->setFade(1.0f);
 	}
 
 	/// Opens the debug menu.
@@ -2325,7 +2325,7 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 		// UNUSED FUNCTION (DLL inline)
 		parent.close();
 		mPendingOnePlayerSectionID = ONEPLAYER_GameExit;
-		gsys->setFade(0.0f, 3.0f);
+		gsys->setFade(0.0f);
 		mNextModeState = new QuittingGameModeState(this);
 	}
 
@@ -2338,7 +2338,7 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 		// UNUSED FUNCTION (DLL inline)
 		parent.close();
 		mPendingOnePlayerSectionID = ONEPLAYER_MapSelect;
-		gsys->setFade(0.0f, 3.0f);
+		gsys->setFade(0.0f);
 		mNextModeState = new QuittingGameModeState(this);
 	}
 
