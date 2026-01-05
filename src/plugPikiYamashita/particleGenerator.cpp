@@ -90,7 +90,7 @@ void zen::particleGenerator::init(u8* data, Texture* tex1, Texture* tex2, immut 
 
 		if (data[6]) {
 			mAnimData.set(&data[8]);
-			mDrawCallBack = &drawPtclBillboard;
+			mDrawCallBack = &particleGenerator::drawPtclBillboard;
 		} else {
 			STACK_PAD_VAR(1);
 			mLengthScale  = u32ToFloat(((u32*)data)[2]);
@@ -104,42 +104,42 @@ void zen::particleGenerator::init(u8* data, Texture* tex1, Texture* tex2, immut 
 			mOrientedDrawConfig.mIsDoubleSided     = mAnimData.mFlags.bits.mIsDoubleSided;
 			mOrientedDrawConfig.mFlipNormal        = 0;
 			mAnimData.mFlags.all &= 0x1;
-			mDrawCallBack = &drawPtclOriented;
+			mDrawCallBack = &particleGenerator::drawPtclOriented;
 
 			switch (rotType) {
 			case 0:
 			{
-				mRotAxisCallBack = &RotAxisY;
+				mRotAxisCallBack = &particleGenerator::RotAxisY;
 				break;
 			}
 			case 1:
 			{
-				mRotAxisCallBack = &RotAxisX;
+				mRotAxisCallBack = &particleGenerator::RotAxisX;
 				break;
 			}
 			case 2:
 			{
-				mRotAxisCallBack = &RotAxisZ;
+				mRotAxisCallBack = &particleGenerator::RotAxisZ;
 				break;
 			}
 			case 3:
 			{
-				mRotAxisCallBack = &RotAxisXY;
+				mRotAxisCallBack = &particleGenerator::RotAxisXY;
 				break;
 			}
 			case 4:
 			{
-				mRotAxisCallBack = &RotAxisXZ;
+				mRotAxisCallBack = &particleGenerator::RotAxisXZ;
 				break;
 			}
 			case 5:
 			{
-				mRotAxisCallBack = &RotAxisYZ;
+				mRotAxisCallBack = &particleGenerator::RotAxisYZ;
 				break;
 			}
 			case 6:
 			{
-				mRotAxisCallBack = &RotAxisXYZ;
+				mRotAxisCallBack = &particleGenerator::RotAxisXYZ;
 				break;
 			}
 			}

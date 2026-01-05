@@ -111,7 +111,7 @@ struct MapSelectSetupSection : public Node {
 
 		// select with A or START
 		mMapListMenu->addKeyEvent(Menu::KeyEventType::OnConfirm, KBBTN_START | KBBTN_A,
-		                          new Delegate1<MapSelectSetupSection, Menu&>(this, &menuSelectOption));
+		                          new Delegate1<MapSelectSetupSection, Menu&>(this, &MapSelectSetupSection::menuSelectOption));
 
 		// exit menu/submenu with B
 		mMapListMenu->addKeyEvent(Menu::KeyEventType::OnCancel, KBBTN_B, new Delegate1<Menu, Menu&>(mMapListMenu, &Menu::menuCloseMenu));
@@ -180,8 +180,9 @@ struct MapSelectSetupSection : public Node {
 		makeMapsMenu();
 		mMapListMenu->addOption(MENU_FAKE_OPTION_FOR_GAP);
 		mMapListMenu->addOption(0, "Open All Maps",
-		                        !gameflow.mIsChallengeMode ? new Delegate1<MapSelectSetupSection, Menu&>(this, &openAllMaps)
-		                                                   : new Delegate1<MapSelectSetupSection, Menu&>(this, &openAllChMaps));
+		                        !gameflow.mIsChallengeMode
+		                            ? new Delegate1<MapSelectSetupSection, Menu&>(this, &MapSelectSetupSection::openAllMaps)
+		                            : new Delegate1<MapSelectSetupSection, Menu&>(this, &MapSelectSetupSection::openAllChMaps));
 		mActiveOverlayMenu = nullptr;
 
 		// decide if we need to set up a world map screen or challenge mode map select screen

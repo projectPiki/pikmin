@@ -23,7 +23,7 @@ void zen::DrawCMtitleObj::init(P2DScreen* screen)
 	mTitlePane = screen->search('titl', true);
 	mTitlePane->setOffset(mTitlePane->getWidth() >> 1, mTitlePane->getHeight() >> 1);
 	mPosition.set(mTitlePane->getPosH(), mTitlePane->getPosV(), 0.0f);
-	mModeFunction = &modeSleep;
+	mModeFunction = &DrawCMtitleObj::modeSleep;
 	P2DPane* mark = screen->search('mark', true);
 	mark->setCallBack(new BalloonPane(mark, 3.0f));
 	mEventFlag = 2;
@@ -46,7 +46,7 @@ void zen::DrawCMtitleObj::wait(f32 p1)
 	_20           = 0.0f;
 	_24           = p1;
 	_10           = 1;
-	mModeFunction = &modeWait;
+	mModeFunction = &DrawCMtitleObj::modeWait;
 	mTitlePane->setScale(1.0f);
 }
 
@@ -58,7 +58,7 @@ void zen::DrawCMtitleObj::appear(f32 p1)
 	_20           = 0.0f;
 	_24           = p1;
 	_10           = 0;
-	mModeFunction = &modeAppear;
+	mModeFunction = &DrawCMtitleObj::modeAppear;
 	mTitlePane->setScale(2.0f);
 }
 

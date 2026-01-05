@@ -244,13 +244,13 @@ struct TitleSetupSection : public Node {
 		mDebugMenu->mCenterPoint.mMinY = glnHeight / 2 + 80; // offset downwards from screen center
 
 		mDebugMenu->addKeyEvent(Menu::KeyEventType::OnConfirm, KBBTN_START | KBBTN_A,
-		                        new Delegate1<TitleSetupSection, Menu&>(this, &menuSelectOption));
+		                        new Delegate1<TitleSetupSection, Menu&>(this, &TitleSetupSection::menuSelectOption));
 		mDebugMenu->addKeyEvent(Menu::KeyEventType::OnCancel, KBBTN_B, new Delegate1<Menu, Menu&>(mDebugMenu, &Menu::menuCloseMenu));
 
 #if defined(DEVELOP) || defined(WIN32)
 		mDebugMenu->addOption(PACK_NEXT_ONEPLAYER(ONEPLAYER_GameSetup), "Start GL Game", nullptr);
 		mDebugMenu->addOption(PACK_NEXT_ONEPLAYER(ONEPLAYER_GameSetup), "Challenge Mode",
-		                      new Delegate1<TitleSetupSection, Menu&>(this, &menuChallengeOption));
+		                      new Delegate1<TitleSetupSection, Menu&>(this, &TitleSetupSection::menuChallengeOption));
 		mDebugMenu->addOption(PACK_NEXT_SECTION(SECTION_MovSample), "Movie Sample", nullptr);
 		mDebugMenu->addOption(PACK_NEXT_SECTION(SECTION_OgTest), "Rumble", nullptr);
 		mDebugMenu->addOption(PACK_NEXT_SECTION(SECTION_PaniTest), "TestScreen", nullptr);

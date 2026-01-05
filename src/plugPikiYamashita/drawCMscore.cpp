@@ -74,14 +74,14 @@ public:
 			mScoreDigitOnes = (P2DPicture*)pane;
 		}
 		mMode         = MODE_Wait;
-		mModeFunction = &modeWait;
+		mModeFunction = &DrawCMscoreObj::modeWait;
 	}
 	void appear(f32 p1)
 	{
 		_18           = 0.0f;
 		_1C           = p1;
 		mMode         = MODE_Appear;
-		mModeFunction = &modeMove;
+		mModeFunction = &DrawCMscoreObj::modeMove;
 		_2C.set(_20);
 		_2C.x += 640.0f;
 		_38.set(_20);
@@ -91,7 +91,7 @@ public:
 	{
 		_18           = 0.0f;
 		mMode         = MODE_Wait;
-		mModeFunction = &modeWait;
+		mModeFunction = &DrawCMscoreObj::modeWait;
 	}
 
 	void update() { (this->*mModeFunction)(); }
@@ -151,7 +151,7 @@ void zen::DrawCMscoreMgr::init(P2DScreen* screen)
 	}
 
 	mMode         = MODE_Sleep;
-	mModeFunction = &modeSleep;
+	mModeFunction = &DrawCMscoreMgr::modeSleep;
 }
 
 /**
@@ -194,7 +194,7 @@ void zen::DrawCMscoreMgr::sleep()
 {
 	hide();
 	mMode         = MODE_Sleep;
-	mModeFunction = &modeSleep;
+	mModeFunction = &DrawCMscoreMgr::modeSleep;
 }
 
 /**
@@ -203,7 +203,7 @@ void zen::DrawCMscoreMgr::sleep()
 void zen::DrawCMscoreMgr::appear(f32 p1)
 {
 	mMode         = MODE_Appear;
-	mModeFunction = &modeAppear;
+	mModeFunction = &DrawCMscoreMgr::modeAppear;
 	for (int i = 0; i < MEMORY_BEST_SCORE; i++) {
 		mScoreObjs[i].show();
 		mScoreObjs[i].appear(p1 + (MEMORY_BEST_SCORE - i - 1) * 0.25f);
@@ -232,7 +232,7 @@ bool zen::DrawCMscoreMgr::modeAppear()
 
 	if (scoresWaiting == MEMORY_BEST_SCORE) {
 		mMode         = MODE_Unk1;
-		mModeFunction = &modeWait;
+		mModeFunction = &DrawCMscoreMgr::modeWait;
 		mEventFlag |= 0x1;
 	}
 
