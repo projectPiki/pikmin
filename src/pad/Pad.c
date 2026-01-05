@@ -2,6 +2,7 @@
 #include "Dolphin/os.h"
 #include "Dolphin/vi.h"
 #include <stddef.h>
+#include <string.h>
 
 #define LATENCY 8
 

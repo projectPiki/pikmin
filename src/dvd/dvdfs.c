@@ -1,5 +1,6 @@
 #include "Dolphin/dvd.h"
 #include "Dolphin/os.h"
+#include <ctype.h>
 #include <stddef.h>
 
 typedef struct FSTEntry FSTEntry;

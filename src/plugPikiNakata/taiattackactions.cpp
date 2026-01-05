@@ -5,7 +5,7 @@
 #include "PikiMgr.h"
 #include "PikiState.h"
 #include "Stickers.h"
-#include "Tai/AttackActions.h"
+#include "TAI/AttackActions.h"
 #include "TekiConditions.h"
 #include "TekiParameters.h"
 #include "TekiPersonality.h"

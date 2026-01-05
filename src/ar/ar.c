@@ -2,6 +2,7 @@
 #include "Dolphin/hw_regs.h"
 #include "Dolphin/os.h"
 #include <stddef.h>
+#include <string.h>
 
 static ARCallback __AR_Callback;
 static u32 __AR_Size;

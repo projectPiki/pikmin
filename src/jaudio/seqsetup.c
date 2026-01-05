@@ -9,6 +9,7 @@
 #include "jaudio/playercall.h"
 
 #include "Dolphin/OS/OSInterrupt.h"
+#include <stddef.h>
 
 #include <stddef.h>
 

@@ -1,5 +1,6 @@
 #include "Dolphin/card.h"
 #include <stddef.h>
+#include <string.h>
 
 /**
  * @TODO: Documentation
@@ -103,7 +104,7 @@ s32 CARDCreateAsync(s32 channel, const char* fileName, u32 size, CARDFileInfo* f
 	card->freeNo      = freeNo;
 	ent               = &dir->entries[freeNo];
 	ent->length       = (u16)(size / card->sectorSize);
-	strncpy(ent->fileName, fileName, CARD_FILENAME_MAX);
+	strncpy((char*)ent->fileName, fileName, CARD_FILENAME_MAX);
 
 	card->fileInfo   = fileInfo;
 	fileInfo->chan   = channel;

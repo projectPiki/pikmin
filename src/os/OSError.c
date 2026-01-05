@@ -5,6 +5,7 @@
 #include "Dolphin/hw_regs.h"
 
 #include <stddef.h>
+#include <stdarg.h>
 #include <stdio.h>
 
 #if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)

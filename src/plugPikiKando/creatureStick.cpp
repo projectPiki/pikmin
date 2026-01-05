@@ -3,11 +3,11 @@
 #include "Creature.h"
 #include "DebugLog.h"
 #include "Interactions.h"
-#include "Iterator.h"
 #include "KMath.h"
 #include "Pellet.h"
 #include "RopeCreature.h"
 #include "Stickers.h"
+#include "Traversable.h"
 
 /**
  * @todo: Documentation

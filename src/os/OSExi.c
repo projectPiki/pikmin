@@ -1,5 +1,6 @@
 #include "Dolphin/os.h"
 #include <stddef.h>
+#include <string.h>
 
 // This OS file in particular is really fussy, so I'm just seperating the whole thing for v37 (USA) and v47 (USA Demo)
 #if defined(VERSION_G98E01_PIKIDEMO)
