@@ -2,6 +2,7 @@
 #define MSL_ALGORITHM_H_
 
 #include "PowerPC_EABI_Support/MSL_C/MSL_Common/mem.h"
+#include <stddef.h>
 
 namespace std {
 template <class ForwardIterator, class T>

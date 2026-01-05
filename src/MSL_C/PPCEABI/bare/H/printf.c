@@ -5,6 +5,7 @@
 #include "stdarg.h"
 #include "types.h"
 #include <limits.h>
+#include <stddef.h>
 #include <stdio.h>
 #include <string.h>
 

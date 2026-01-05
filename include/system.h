@@ -11,6 +11,7 @@
 #include "GfxObject.h"
 #include "Stream.h"
 #include "types.h"
+#include <stddef.h>
 #include <stdlib.h>
 
 struct DGXGraphics;

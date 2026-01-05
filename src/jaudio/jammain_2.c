@@ -13,6 +13,8 @@
 
 #include "Dolphin/OS/OSError.h"
 
+#include <stddef.h>
+
 // TODO IN THIS FILE: What do the return values for the `Cmd_` functions signify?
 // 0 is probably success / "no error".  Return values 1 and 2 have been observed.
 // This just breaking: Cmd_LoopE returns 0x80.

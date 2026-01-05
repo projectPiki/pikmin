@@ -4,6 +4,7 @@
 #include "jaudio/seqsetup.h"
 #include "jaudio/virload.h"
 
+#include <stddef.h>
 #include <string.h>
 
 /**

@@ -1,4 +1,5 @@
 #include "PowerPC_EABI_Support/MetroTRK/trk.h"
+#include <stddef.h>
 
 typedef struct memRange {
 	u8* start;

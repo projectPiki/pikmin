@@ -1,5 +1,6 @@
 #include "PowerPC_EABI_Support/MSL_C/MSL_Common/direct_io.h"
 #include "PowerPC_EABI_Support/MSL_C/MSL_Common/ansi_files.h"
+#include <stddef.h>
 
 /**
  * @TODO: Documentation

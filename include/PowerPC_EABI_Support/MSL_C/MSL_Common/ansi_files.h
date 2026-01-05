@@ -3,6 +3,7 @@
 
 #include "stdio.h"
 #include "types.h"
+#include <stddef.h>
 
 typedef struct _files {
 	FILE _stdin;

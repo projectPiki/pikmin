@@ -2,6 +2,7 @@
 #define _RUNTIME_MWCPLUSLIB_H
 
 #include "types.h"
+#include <stddef.h>
 
 #ifdef __cplusplus
 extern "C" {

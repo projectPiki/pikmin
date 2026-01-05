@@ -5,6 +5,7 @@
 #include "Stream.h"
 #include "sysNew.h"
 #include "system.h"
+#include <stddef.h>
 #include <string.h>
 
 /**

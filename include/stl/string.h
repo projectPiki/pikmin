@@ -4,6 +4,8 @@
 #include "PowerPC_EABI_Support/MSL_C/MSL_Common/mem.h"
 #include "extras.h"
 #include "types.h"
+#include <stddef.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
