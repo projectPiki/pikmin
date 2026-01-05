@@ -1,5 +1,6 @@
 #include "PowerPC_EABI_Support/MSL_C/MSL_Common/ansi_files.h"
 #include "PowerPC_EABI_Support/MSL_C/MSL_Common/ansi_fp.h"
+#include "PowerPC_EABI_Support/MSL_C/MSL_Common/wchar.h"
 #include "ctype.h"
 #include "stdarg.h"
 #include "types.h"

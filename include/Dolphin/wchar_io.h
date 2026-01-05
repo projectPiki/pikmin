@@ -1,6 +1,7 @@
 #ifndef _WCHAR_IO_H
 #define _WCHAR_IO_H
 
+#include "PowerPC_EABI_Support/MSL_C/MSL_Common/wchar.h"
 #include "types.h"
 
 enum __file_kinds { __closed_file, __disk_file, __console_file, __unavailable_file };
@@ -17,8 +18,6 @@ typedef struct {
 } __file_modes;
 
 typedef struct _FILE FILE;
-
-typedef u16 wchar_t;
 
 struct _FILE {
 	int handle;

@@ -1,7 +1,9 @@
 #ifndef _MSL_MBSTRING_H
 #define _MSL_MBSTRING_H
 
+#include "PowerPC_EABI_Support/MSL_C/MSL_Common/wchar.h"
 #include "types.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
