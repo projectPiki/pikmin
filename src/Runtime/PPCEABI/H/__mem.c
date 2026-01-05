@@ -1,4 +1,5 @@
 #include "PowerPC_EABI_Support/Runtime/__mem.h"
+#include <stddef.h>
 
 void* memcpy(void* dst, const void* src, size_t n)
 {

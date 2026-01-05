@@ -8,6 +8,7 @@
 #include "Texture.h"
 #include "sysNew.h"
 #include "system.h"
+#include <stddef.h>
 
 /**
  * @todo: Documentation

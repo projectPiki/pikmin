@@ -3,6 +3,7 @@
 
 #include "PowerPC_EABI_Support/MSL_C/MSL_Common/ansi_files.h"
 #include "types.h"
+#include <stddef.h>
 
 enum __ReadProcActions { __GetAChar, __UngetAChar, __TestForError };
 

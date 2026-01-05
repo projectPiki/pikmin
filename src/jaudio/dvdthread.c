@@ -3,6 +3,7 @@
 #include "Dolphin/os.h"
 #include "jaudio/aictrl.h"
 #include "jaudio/sample.h"
+#include <stddef.h>
 #include <string.h>
 
 static char audio_root_path[32] = "";

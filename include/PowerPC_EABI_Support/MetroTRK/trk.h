@@ -4,6 +4,7 @@
 #include "PowerPC_EABI_Support/MetroTRK/ppc_reg.h"
 #include "PowerPC_EABI_Support/MetroTRK/trktypes.h"
 #include "types.h"
+#include <stddef.h>
 
 #ifdef __cplusplus
 extern "C" {

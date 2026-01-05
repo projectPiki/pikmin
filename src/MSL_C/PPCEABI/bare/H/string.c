@@ -1,4 +1,5 @@
 #include "types.h"
+#include <stddef.h>
 
 static s32 K1 = 0x80808080;
 static s32 K2 = 0xFEFEFEFF;

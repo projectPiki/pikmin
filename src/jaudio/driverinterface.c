@@ -7,6 +7,8 @@
 #include "jaudio/dspinterface.h"
 #include "jaudio/ja_calc.h"
 
+#include <stddef.h>
+
 #define CHANNEL_SIZE (0x100)
 
 static jcs_ GLOBAL_CHANNEL;

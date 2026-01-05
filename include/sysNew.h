@@ -3,6 +3,7 @@
 
 #include "system.h"
 #include "types.h"
+#include <stddef.h>
 
 inline void* operator new(u32 size)
 {

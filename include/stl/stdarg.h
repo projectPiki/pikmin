@@ -2,6 +2,7 @@
 #define _DOLPHIN_STL_H
 
 #include "types.h"
+#include <stddef.h>
 
 #ifdef __cplusplus
 extern "C" {

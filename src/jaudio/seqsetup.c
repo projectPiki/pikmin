@@ -10,6 +10,8 @@
 
 #include "Dolphin/OS/OSInterrupt.h"
 
+#include <stddef.h>
+
 #define SEQ_SIZE             (256)
 #define ROOT_OUTER_SIZE      (16)
 #define ROOTSEQ_SIZE         (16)

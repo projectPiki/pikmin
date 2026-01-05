@@ -2,6 +2,7 @@
 #define _MSL_MEM_FUNCS_H
 
 #include "types.h"
+#include <stddef.h>
 
 void __copy_longs_aligned(void* dst, const void* src, size_t len);
 void __copy_longs_rev_aligned(void* dst, const void* src, size_t len);
