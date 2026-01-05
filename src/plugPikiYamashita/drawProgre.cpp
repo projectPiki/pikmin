@@ -35,7 +35,7 @@ zen::DrawProgre::DrawProgre()
 void zen::DrawProgre::start()
 {
 	mMenu->start(0);
-	mReturnState = RETSTATE_Unk0;
+	mReturnState = RETSTATE_Active;
 	SeSystem::playSysSe(SYSSE_PAUSE);
 	mProgreMes->init();
 }
@@ -49,17 +49,19 @@ zen::DrawProgre::returnStatusFlag zen::DrawProgre::update(Controller* controller
 	if (mMenu->update(controller)) {
 		switch (mMenu->getSelectMenu()) {
 		case 0:
-			mProgreMes->start(DrawProgreMes::MES_Unk0);
+			// Yes
+			mProgreMes->start(DrawProgreMes::MES_Progressive);
 			break;
 
 		case 1:
-			mProgreMes->start(DrawProgreMes::MES_Unk1);
+			// No
+			mProgreMes->start(DrawProgreMes::MES_Interlace);
 			break;
 		}
 	}
 
 	switch (mProgreMes->getModeFlag()) {
-	case DrawProgreMes::MODE_Unk4:
+	case DrawProgreMes::MODE_Finished:
 		mReturnState = (returnStatusFlag)(mMenu->getSelectMenu() + 1);
 		break;
 	}

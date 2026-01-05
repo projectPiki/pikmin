@@ -696,9 +696,9 @@ struct GameFlow : public Node {
 	u32 _2B8;                           ///< _2B8, unknown/unused - set to 0 and never touched.
 	u32 mGenFlowUpdateTickCount;        ///< _2BC, counter for how many times the flow manager has been updated.
 	f32 mLoadTimeSeconds;               ///< _2C0, how long the last load took, in seconds.
-	f32 mCurrentEffectAlpha;            ///< _2C4, current load fade alpha when game state is "soft reset".
-	vf32 mTargetEffectAlpha;            ///< _2C8, target load fade alpha when game state is "soft reset".
-	f32 mEffectDurationTimer;           ///< _2CC, how long load fade should last, at most (unsure of this).
+	f32 mCurrLoadTextAlpha;             ///< _2C4, current alpha for (unused) debug text of how long a load took.
+	vf32 mTargetLoadTextAlpha;          ///< _2C8, target alpha for (unused) debug text of how long a load took.
+	f32 mLoadTextDisplayTimer;          ///< _2CC, how long (unused) load length debug text should display for (sec).
 	int mAppTickCounter;                ///< _2D0, counter for number of frames game application has been active for.
 	BOOL mIsNintendoLoadLogo;           ///< _2D4, is the load logo the Nintendo logo on bootup?
 	WorldClock mWorldClock;             ///< _2D8, global in-game time tracker/calculator.

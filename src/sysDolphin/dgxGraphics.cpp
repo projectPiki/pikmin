@@ -542,7 +542,7 @@ void DGXGraphics::waitRetrace()
 	VIWaitForRetrace();
 	GXSetZMode(GX_TRUE, GX_LEQUAL, GX_TRUE);
 
-	bool set = (gsys->mIsLoadScreenActive || gsys->mSysOpPending) ? false : true;
+	bool set = (gsys->mIsLoadScreenActive || gsys->mSoftResetPending) ? false : true;
 	GXCopyDisp(mDisplayBuffer, set);
 
 	mRetraceCount    = VIGetRetraceCount();
@@ -716,12 +716,12 @@ void DGXGraphics::setLight(Light* light, int idx)
 	GXInitLightPos(gxLight, lightPos.x, lightPos.y, lightPos.z);
 
 	Vector3f lightDir;
-	if (int(light->mLightType & 0xFF) == 3) {
+	if (GET_LIGHT_TYPE(light->mLightFlag) == LIGHT_Spot) {
 		lightDir = light->mDirection;
 		lightDir.normalise();
 		lightDir.rotate(mCamera->mLookAtMtx);
 		GXInitLightDir(gxLight, lightDir.x, lightDir.y, lightDir.z);
-	} else if (int(light->mLightType & 0xFF) == 1) {
+	} else if (GET_LIGHT_TYPE(light->mLightFlag) == LIGHT_Parallel) {
 		lightDir = light->mPosition;
 		lightDir.normalise();
 		lightDir.rotate(mCamera->mLookAtMtx);

@@ -575,10 +575,10 @@ void GameFlow::hardReset(BaseApp* baseApp)
 	gsys->startLoading(&mGameLoadIdler, true, 0);
 	PRINT("done starting loading\n");
 
-	mEffectDurationTimer = 0.0f;
-	mTargetEffectAlpha   = 0.0f;
-	mCurrentEffectAlpha  = 0.0f;
-	mAppTickCounter      = 2;
+	mLoadTextDisplayTimer = 0.0f;
+	mTargetLoadTextAlpha  = 0.0f;
+	mCurrLoadTextAlpha    = 0.0f;
+	mAppTickCounter       = 2;
 
 	PRINT("reading parms\n");
 	PRINT("load params\n");
@@ -707,9 +707,9 @@ void GameFlow::softReset()
 		mLoadTimeSeconds = diff / 1000.0f;
 	}
 
-	mEffectDurationTimer = 15.0f;
-	mTargetEffectAlpha   = 255.0f;
-	mAppTickCounter      = 0;
+	mLoadTextDisplayTimer = 15.0f;
+	mTargetLoadTextAlpha  = 255.0f;
+	mAppTickCounter       = 0;
 
 	// always print load time reporting
 	gsys->mTogglePrint = TRUE;
@@ -731,6 +731,8 @@ void GameFlow::softReset()
 
 	// restore the user's debug print setting
 	gsys->mTogglePrint = togglePrint;
+
+	// hook game section up to flow manager, so it gets updated every frame
 	mFlowManager->add(mGameSection);
 	mPauseAll          = FALSE;
 	mIsUIOverlayActive = FALSE;

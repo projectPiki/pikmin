@@ -13,7 +13,7 @@ struct Menu;
  * These may have sub-sections within them, which have their own enums (such as for OnePlayerSection).
  */
 enum GameSectionID {
-	SECTION_NinLogo   = 0, ///< 0, Nintendo logo - `NinLogoSection`.
+	SECTION_NinLogo   = 0, ///< 0, progressive mode + setup during Nintendo logo - `NinLogoSection`.
 	SECTION_Titles    = 1, ///< 1, title screen - `TitlesSection`.
 	SECTION_MovSample = 2, ///< 2, player for h4m cutscenes - `MovSampleSection`.
 	SECTION_PaniTest  = 3, ///< 3, test section for enemies, not accessible in retail - `PaniTestSection`.

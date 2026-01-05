@@ -186,7 +186,7 @@ struct IntroGameSetupSection : public BaseGameSection {
 		gsys->mHeaps[SYSHEAP_Movie].init("movie", AYU_STACK_GROW_UP, new u8[size], size);
 		gameflow.mMoviePlayer->startMovie(DEMOID_OpeningIntroPt1, 0, nullptr, nullptr, nullptr, CAF_AllVisibleMask, true);
 		gameflow.mMoviePlayer->startMovie(DEMOID_OpeningIntroPt2, 0, nullptr, nullptr, nullptr, CAF_AllVisibleMask, true);
-		gsys->setFade(1.0f, 3.0f);
+		gsys->setFade(1.0f);
 		STACK_PAD_TERNARY(size, 1);
 	}
 

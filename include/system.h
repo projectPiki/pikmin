@@ -40,15 +40,16 @@ struct CacheInfo;
  * @brief Used to seperate the memory arenas held in StdSystem.
  */
 enum SystemHeapType {
-	SYSHEAP_Sys     = 0, // General system heap
-	SYSHEAP_Ovl     = 1, // Overlay heap
-	SYSHEAP_App     = 2, // Application heap
-	SYSHEAP_Load    = 3, // Load heap
-	SYSHEAP_Teki    = 4, // Enemy heap
-	SYSHEAP_Movie   = 5, // Movie heap
-	SYSHEAP_Message = 6, // Message heap
-	SYSHEAP_Lang    = 7, // Language heap
-	SYSHEAP_COUNT,       // 8, total number of heaps
+	SYSHEAP_NULL    = -1, // No heap active
+	SYSHEAP_Sys     = 0,  // General system heap
+	SYSHEAP_Ovl     = 1,  // Overlay heap
+	SYSHEAP_App     = 2,  // Application heap
+	SYSHEAP_Load    = 3,  // Load heap
+	SYSHEAP_Teki    = 4,  // Enemy heap
+	SYSHEAP_Movie   = 5,  // Movie heap
+	SYSHEAP_Message = 6,  // Message heap
+	SYSHEAP_Lang    = 7,  // Language heap
+	SYSHEAP_COUNT,        // 8, total number of heaps
 };
 
 /**
@@ -64,6 +65,7 @@ enum TimerState {
  * @brief Language ID. For PAL, these are mapped to OS languages in `GamePrefs::Initialise()`.
  */
 enum LanguageID {
+	LANG_FORCE_CHANGE = -1, ///< -1, index to set if language requires re-loading.
 #if defined(VERSION_GPIP01_00)
 	LANG_English = 0, ///< 0, PAL English. NB: for PAL, Dutch OS language also maps to this.
 	LANG_French  = 1, ///< 1, PAL French.
@@ -199,10 +201,10 @@ struct StdSystem {
 	// Inline functions
 	f32 getRand(f32 max) { return max * (f32(rand()) / 32767.0f); }
 	inline f32 getFade() { return mCurrentFade; }
-	inline void setFade(f32 start, f32 end)
+	inline void setFade(f32 target, f32 rate = 3.0f)
 	{
-		mFadeStart = start;
-		mFadeEnd   = end;
+		mTargetFade = target;
+		mFadeRate   = rate;
 	}
 	void set2DRoot(immut char* bloDir, immut char* texDir)
 	{
@@ -215,17 +217,16 @@ struct StdSystem {
 		mTextureBase2 = base2;
 	}
 	inline void setDataRoot(immut char* dir) { mDataRoot = dir; }
-	inline void softReset() { mSysOpPending = true; }
-	inline void clearPending() { mSysOpPending = false; } // no idea what this should be called
+	inline void softReset() { mSoftResetPending = true; }
 	inline void Shutdown() { mSystemFlags = SystemFlags::Shutdown; }
-	inline bool resetPending() { return mSysOpPending; }
+	inline bool resetPending() { return mSoftResetPending; }
 	inline void setFrameClamp(s32 frameRate) { mFrameRate = frameRate; }
 	inline int getHeapNum() { return mActiveHeapIdx; }
 
-	bool mSysOpPending;            // _00
+	bool mSoftResetPending;        // _00
 	f32 mCurrentFade;              // _04
-	f32 mFadeStart;                // _08
-	f32 mFadeEnd;                  // _0C
+	f32 mTargetFade;               // _08
+	f32 mFadeRate;                 // _0C
 	Font* mConsFont;               // _10
 	s32 mFrameRate;                // _14
 	u32 mTimerState;               // _18, see TimerState enum

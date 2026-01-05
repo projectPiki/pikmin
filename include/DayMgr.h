@@ -24,7 +24,7 @@ struct TimeSetting {
 		mDayPhaseLights[0].mDirection.set(0.0f, -1.0f, 0.0f);
 		mDayPhaseLights[0].mDistancedRange = 450.0f;
 		mDayPhaseLights[0].mSpotAngle      = 45.0f;
-		mDayPhaseLights[0].mLightType      = 1;
+		mDayPhaseLights[0].mLightFlag      = LIGHT_Parallel;
 		mDayPhaseLights[0].update();
 
 		mDayPhaseLights[1].mDiffuseColour.set(255, 255, 255, 255);
@@ -32,7 +32,7 @@ struct TimeSetting {
 		mDayPhaseLights[1].mDirection.set(0.0f, 1.0f, 0.0f);
 		mDayPhaseLights[1].mDistancedRange = 3300.0f;
 		mDayPhaseLights[1].mSpotAngle      = 45.0f;
-		mDayPhaseLights[1].mLightType      = 1;
+		mDayPhaseLights[1].mLightFlag      = LIGHT_Parallel;
 		mDayPhaseLights[1].update();
 
 		mDayPhaseLights[2].mDiffuseColour.set(255, 255, 255, 255);
@@ -40,7 +40,7 @@ struct TimeSetting {
 		mDayPhaseLights[2].mDirection.set(0.0f, -1.0f, 0.0f);
 		mDayPhaseLights[2].mDistancedRange = 450.0f;
 		mDayPhaseLights[2].mSpotAngle      = 45.0f;
-		mDayPhaseLights[2].mLightType      = 1;
+		mDayPhaseLights[2].mLightFlag      = LIGHT_Parallel;
 		mDayPhaseLights[2].update();
 
 		mDayPhaseLights[3].mDiffuseColour.set(255, 255, 255, 255);
@@ -48,7 +48,7 @@ struct TimeSetting {
 		mDayPhaseLights[3].mDirection.set(0.0f, -1.0f, 0.0f);
 		mDayPhaseLights[3].mDistancedRange = 3300.0f;
 		mDayPhaseLights[3].mSpotAngle      = 45.0f;
-		mDayPhaseLights[3].mLightType      = 1;
+		mDayPhaseLights[3].mLightFlag      = LIGHT_Parallel;
 		mDayPhaseLights[3].update();
 
 		mDayPhaseLights[4].mDiffuseColour.set(255, 255, 255, 255);
@@ -56,7 +56,7 @@ struct TimeSetting {
 		mDayPhaseLights[4].mDirection.set(0.0f, -1.0f, 0.0f);
 		mDayPhaseLights[4].mDistancedRange = 450.0f;
 		mDayPhaseLights[4].mSpotAngle      = 45.0f;
-		mDayPhaseLights[4].mLightType      = 1;
+		mDayPhaseLights[4].mLightFlag      = LIGHT_Parallel;
 		mDayPhaseLights[4].update();
 
 		mDayPhaseLights[5].mDiffuseColour.set(255, 255, 255, 255);
@@ -64,7 +64,7 @@ struct TimeSetting {
 		mDayPhaseLights[5].mDirection.set(0.0f, -1.0f, 0.0f);
 		mDayPhaseLights[5].mDistancedRange = 3300.0f;
 		mDayPhaseLights[5].mSpotAngle      = 45.0f;
-		mDayPhaseLights[5].mLightType      = 1;
+		mDayPhaseLights[5].mLightFlag      = LIGHT_Parallel;
 		mDayPhaseLights[5].update();
 
 		mDayPhaseLights[6].mDiffuseColour.set(255, 255, 255, 255);
@@ -72,7 +72,7 @@ struct TimeSetting {
 		mDayPhaseLights[6].mDirection.set(0.0f, -1.0f, 0.0f);
 		mDayPhaseLights[6].mDistancedRange = 450.0f;
 		mDayPhaseLights[6].mSpotAngle      = 45.0f;
-		mDayPhaseLights[6].mLightType      = 1;
+		mDayPhaseLights[6].mLightFlag      = LIGHT_Parallel;
 		mDayPhaseLights[6].update();
 
 		mAmbientColour.set(48, 48, 48, 48);

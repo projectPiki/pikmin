@@ -154,7 +154,7 @@ struct MovSampleSetupSection : public Node {
 		_28 = 160;
 #endif
 		_30 = 0;
-		gsys->setFade(1.0f, 3.0f);
+		gsys->setFade(1.0f);
 
 		static const char* movieNames[MOV_COUNT] = {
 			"../MovieData/cntA_S.h4m", "../MovieData/cntB_S.h4m", "../MovieData/cntC_S.h4m",

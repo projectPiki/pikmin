@@ -734,7 +734,7 @@ struct GameCourseClearScreen : public Node {
 		mMainMenu->addKeyEvent(Menu::KeyEventType::OnCancel, KBBTN_B, new Delegate1<Menu, Menu&>(mMainMenu, &Menu::menuCloseMenu));
 		mMainMenu->addOption(0, "Quit", new Delegate1<GameCourseClearScreen, Menu&>(this, &menuQuitGame));
 		mActiveMenu = nullptr;
-		gsys->setFade(1.0f, 3.0f);
+		gsys->setFade(1.0f);
 		mFlags = 0xB0000;
 
 		PRINT("パーティクルパックのテスト開始\n");
@@ -829,7 +829,7 @@ struct GameCourseClearScreen : public Node {
 		PRINT("Chose quit menu!!\n");
 		mState = 1;
 		mFlags = 0xB;
-		gsys->setFade(0.0f, 3.0f);
+		gsys->setFade(0.0f);
 	}
 
 	// _00     = VTBL
