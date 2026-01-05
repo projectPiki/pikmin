@@ -147,11 +147,7 @@ void zen::ogScrFileSelectMgr::OperateCopy(Controller* input)
 		mCopyAnimTimer -= gsys->getFrameTime();
 
 		if (mCopyAnimTimer < 0.0f && gameflow.mMemoryCard.hasCardFinished()) {
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
-			seSystem->playSysSe(JACSYS_CardOK);
-#else
-			seSystem->playSysSe(SYSSE_CARDOK);
-#endif
+			seSystem->playSysSe(ogEnumFix(SYSSE_CARDOK, JACSYS_CardOK));
 			copyCardInfosSub();
 			ChkNewData();
 			mIsCopyingFileActive         = false;
@@ -171,18 +167,10 @@ void zen::ogScrFileSelectMgr::OperateCopy(Controller* input)
 
 	if (mIsCopyTargetSelectionActive) {
 		if (input->keyClick(KBBTN_B)) {
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
-			seSystem->playSysSe(JACSYS_Cancel);
-#else
-			seSystem->playSysSe(SYSSE_CANCEL);
-#endif
+			seSystem->playSysSe(ogEnumFix(SYSSE_CANCEL, JACSYS_Cancel));
 			setOperateMode(Normal);
 		} else if (input->keyClick(KBBTN_A)) {
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
-			seSystem->playSysSe(JACSYS_Decide1);
-#else
-			seSystem->playSysSe(SYSSE_DECIDE1);
-#endif
+			seSystem->playSysSe(ogEnumFix(SYSSE_DECIDE1, JACSYS_Decide1));
 			mIsCopyTargetSelectionActive = false;
 			mYesNoDialogPane->show();
 			mYesNoDialogImage->show();
@@ -194,11 +182,7 @@ void zen::ogScrFileSelectMgr::OperateCopy(Controller* input)
 		} else if (input->keyClick(KBBTN_MSTICK_LEFT)) {
 			for (int i = 0; i < 3; i++) {
 				if (i != mCurrSlotIdx) {
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
-					seSystem->playSysSe(JACSYS_Move1);
-#else
-					seSystem->playSysSe(SYSSE_MOVE1);
-#endif
+					seSystem->playSysSe(ogEnumFix(SYSSE_MOVE1, JACSYS_Move1));
 					mCopyTargetFileIndex = i;
 					break;
 				}
@@ -207,11 +191,7 @@ void zen::ogScrFileSelectMgr::OperateCopy(Controller* input)
 		} else if (input->keyClick(KBBTN_MSTICK_RIGHT)) {
 			for (int i = 2; i >= 0; i--) {
 				if (i != mCurrSlotIdx) {
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
-					seSystem->playSysSe(JACSYS_Move1);
-#else
-					seSystem->playSysSe(SYSSE_MOVE1);
-#endif
+					seSystem->playSysSe(ogEnumFix(SYSSE_MOVE1, JACSYS_Move1));
 					mCopyTargetFileIndex = i;
 					break;
 				}
@@ -227,20 +207,12 @@ void zen::ogScrFileSelectMgr::OperateCopy(Controller* input)
 		CloseYesNoWindow();
 	}
 	if (status == ogNitakuMgr::Status_4) {
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
-		seSystem->playSysSe(JACSYS_Cancel);
-#else
-		seSystem->playSysSe(SYSSE_CANCEL);
-#endif
+		seSystem->playSysSe(ogEnumFix(SYSSE_CANCEL, JACSYS_Cancel));
 		setOperateMode(Normal);
 	} else if (status == ogNitakuMgr::ExitSuccess) {
 		mIsCopyingFileActive = true;
 		mCopyAnimTimer       = 3.0f;
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
-		seSystem->playSysSe(JACSYS_CardAccess);
-#else
-		seSystem->playSysSe(SYSSE_CARDACCESS);
-#endif
+		seSystem->playSysSe(ogEnumFix(SYSSE_CARDACCESS, JACSYS_CardAccess));
 		gameflow.mMemoryCard.copyFile(mCardInfo[mCurrSlotIdx], mCardInfo[mCopyTargetFileIndex]);
 		CopyEffectStart();
 		mConfirmCopyText->hide();

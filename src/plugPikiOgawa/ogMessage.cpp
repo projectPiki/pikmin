@@ -649,11 +649,7 @@ zen::ogScrMessageMgr::MessageStatus zen::ogScrMessageMgr::update(Controller* inp
 				mCurrentMessageId = 0;
 				mScreenFadeTimer  = 0.0f;
 				mState            = STATE_FadingOut;
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
-				SeSystem::playSysSe(JACSYS_MessageClose); // this is the wrong enum, devs.
-#else
-				SeSystem::playSysSe(SYSSE_MESSAGE_CLOSE);
-#endif
+				SeSystem::playSysSe(ogEnumFix(SYSSE_MESSAGE_CLOSE, JACSYS_MessageClose));
 				PRINT("END MESSAGE!\n");
 				return mState;
 			}

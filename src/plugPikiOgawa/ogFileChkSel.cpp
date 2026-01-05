@@ -115,13 +115,8 @@ zen::ogScrFileChkSelMgr::returnStatusFlag zen::ogScrFileChkSelMgr::update(Contro
 
 	} else if (memChkState == ogScrMemChkMgr::Inactive) {
 		if (!ogCheckInsCard()) {
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
-			SeSystem::stopSysSe(JACSYS_CardAccess);
-			SeSystem::playSysSe(JACSYS_CardError);
-#else
-			SeSystem::stopSysSe(SYSSE_CARDACCESS);
-			SeSystem::playSysSe(SYSSE_CARDERROR);
-#endif
+			SeSystem::stopSysSe(ogEnumFix(SYSSE_CARDACCESS, JACSYS_CardAccess));
+			SeSystem::playSysSe(ogEnumFix(SYSSE_CARDERROR, JACSYS_CardError));
 			mState = ErrorOrCompleted;
 			return mState;
 		}

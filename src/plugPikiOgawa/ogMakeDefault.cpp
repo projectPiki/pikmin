@@ -170,7 +170,7 @@ zen::ogScrMakeDefaultMgr::MakeDefaultStatus zen::ogScrMakeDefaultMgr::update(Con
 	case AwaitingConfirmation:
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 		if (input->keyClick(KBBTN_A)) {
-			seSystem->playSysSe(JACSYS_Decide1);
+			seSystem->playSysSe(ogEnumFix(SYSSE_DECIDE1, JACSYS_Decide1));
 			mStatus     = Exiting;
 			mStateTimer = 0.0f;
 		}

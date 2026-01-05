@@ -635,9 +635,9 @@ zen::ogScrMenuMgr::returnStatusFlag zen::ogScrMenuMgr::update(Controller* input)
 		mTransitionTimer = 0.0f;
 		mStatus          = STATE_FadingOut;
 		seSystem->playSysSe(SYSSE_CMENU_OFF); // why is this one using the right enum.
-		seSystem->stopSysSe(JACSYS_MenuScroll);
-		seSystem->stopSysSe(JACSYS_MenuZoomIn);
-		seSystem->stopSysSe(JACSYS_MenuZoomOut);
+		seSystem->stopSysSe(ogEnumFix(SYSSE_YMENU_SCROLL, JACSYS_MenuScroll));
+		seSystem->stopSysSe(ogEnumFix(SYSSE_YMENU_ZOOMIN, JACSYS_MenuZoomIn));
+		seSystem->stopSysSe(ogEnumFix(SYSSE_YMENU_ZOOMOUT, JACSYS_MenuZoomOut));
 	}
 #endif
 

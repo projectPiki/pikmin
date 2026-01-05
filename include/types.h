@@ -138,6 +138,13 @@ typedef u32 HWND;
 // using a different compiler, this const-correctness fix might generate worse code.
 #define NRef TERNARY_BUILD_MATCHING(&, )
 
+// In early revisions of Pikmin 1, Ogawa was confused on which enum he was supposed to use for `SeSystem::playSysSe`/`stopSysSe`.
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
+#define ogEnumFix(right, wrong) TERNARY_BUGFIX(right, wrong)
+#else
+#define ogEnumFix(right, wrong) right
+#endif
+
 // Random and useful macros
 #define PATH_MAX  (256)                     // Max path length
 #define MAX(a, b) (((a) > (b)) ? (a) : (b)) // Returns the maximum of a and b
