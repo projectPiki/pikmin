@@ -199,17 +199,17 @@ void zen::DrawMenuBase::setModeFunc(int mode)
 	switch (mMode) {
 	case MODE_Sleep:
 	{
-		mModeFunction = &modeSleep;
+		mModeFunction = &DrawMenuBase::modeSleep;
 		break;
 	}
 	case MODE_Operation:
 	{
-		mModeFunction = &modeOperation;
+		mModeFunction = &DrawMenuBase::modeOperation;
 		break;
 	}
 	default:
 	{
-		mModeFunction = &modeDefault;
+		mModeFunction = &DrawMenuBase::modeDefault;
 		break;
 	}
 	}

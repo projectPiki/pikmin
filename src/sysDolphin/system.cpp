@@ -920,7 +920,7 @@ void System::Initialise()
 
 	bigFont = new Font;
 	bigFont->setTexture(loadTexture("bigFont.bti", true), 21, 42);
-	mDvdErrorCallback = new Delegate1<System, Graphics&>(this, showDvdError);
+	mDvdErrorCallback = new Delegate1<System, Graphics&>(this, &System::showDvdError);
 	startLoading(nullptr, true, 0);
 
 	u32 audioHeapSize = 0x80000;

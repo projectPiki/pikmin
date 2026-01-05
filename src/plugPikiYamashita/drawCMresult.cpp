@@ -160,20 +160,20 @@ void zen::DrawCMresult::setMode(zen::DrawCMresult::modeFlag mode)
 	switch (mMode) {
 	case MODE_Sleep:
 	{
-		mModeFunction = &modeSleep;
+		mModeFunction = &DrawCMresult::modeSleep;
 		break;
 	}
 	case MODE_WaitAppear:
 	{
 		_94           = 0.0f;
-		mModeFunction = &modeWaitAppear;
+		mModeFunction = &DrawCMresult::modeWaitAppear;
 		mResultScreen->getScreenPtr()->move(0, -480);
 		break;
 	}
 	case MODE_Appear:
 	{
 		_94           = 0.0f;
-		mModeFunction = &modeAppear;
+		mModeFunction = &DrawCMresult::modeAppear;
 		break;
 	}
 	case MODE_Operation:
@@ -181,19 +181,19 @@ void zen::DrawCMresult::setMode(zen::DrawCMresult::modeFlag mode)
 		if (_84 == 0) {
 			mScoreMgr.appear(1.0f);
 		}
-		mModeFunction = &modeOperation;
+		mModeFunction = &DrawCMresult::modeOperation;
 		break;
 	}
 	case MODE_Save:
 	{
 		mOptionSave->start();
-		mModeFunction = &modeSave;
+		mModeFunction = &DrawCMresult::modeSave;
 		break;
 	}
 	case MODE_Unk5:
 	{
 		mMode         = MODE_Operation;
-		mModeFunction = &modeOperation;
+		mModeFunction = &DrawCMresult::modeOperation;
 		break;
 	}
 	}
