@@ -1,4 +1,4 @@
-#include "gameFlow.h"
+#include "gameflow.h"
 
 #include "DebugLog.h"
 #include "Dolphin/os.h"

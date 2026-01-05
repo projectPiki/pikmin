@@ -1,4 +1,5 @@
 #include "Dolphin/__start.h"
+#include <string.h>
 
 #pragma section code_type ".init"
 

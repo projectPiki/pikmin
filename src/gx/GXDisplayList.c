@@ -1,4 +1,5 @@
 #include "Dolphin/gx.h"
+#include <string.h>
 
 static struct __GXFifoObj DisplayListFifo;
 static volatile struct __GXFifoObj* OldCPUFifo;

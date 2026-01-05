@@ -6,6 +6,7 @@
 #include "jaudio/dspdriver.h"
 #include "jaudio/dspinterface.h"
 #include "jaudio/ja_calc.h"
+#include <stddef.h>
 
 #include <stddef.h>
 

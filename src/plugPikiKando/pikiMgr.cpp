@@ -5,7 +5,7 @@
 #include "ItemMgr.h"
 #include "MemStat.h"
 #include "Navi.h"
-#include "PikiAi.h"
+#include "PikiAI.h"
 #include "gameflow.h"
 #include "sysNew.h"
 

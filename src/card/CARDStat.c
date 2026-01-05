@@ -1,4 +1,5 @@
 #include "Dolphin/card.h"
+#include <string.h>
 
 /**
  * @TODO: Documentation

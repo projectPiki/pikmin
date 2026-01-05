@@ -2,14 +2,13 @@
 #include "DebugLog.h"
 #include "P2D/Screen.h"
 #include "P2D/TextBox.h"
-#include "PowerPC_EABI_Support/MSL_C/MSL_Common/strtold.h"
-#include "PowerPC_EABI_Support/MSL_C/MSL_Common/strtoul.h"
 #include "SoundMgr.h"
 #include "gameflow.h"
 #include "nlib/Math.h"
 #include "sysNew.h"
 #include "zen/DrawCommon.h"
 #include "zen/Number.h"
+#include <stdlib.h>
 
 /**
  * @todo: Documentation

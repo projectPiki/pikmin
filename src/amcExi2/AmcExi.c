@@ -1,5 +1,6 @@
 #include "Dolphin/AmcExi2.h"
 #include "Dolphin/hw_regs.h"
+#include <string.h>
 
 static ECB Ecb;
 static ECB* exi = &Ecb;

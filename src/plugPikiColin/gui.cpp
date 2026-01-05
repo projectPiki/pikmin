@@ -4,8 +4,8 @@
 #include "Font.h"
 #include "Geometry.h"
 #include "Graphics.h"
-#include "PowerPC_EABI_Support/MSL_C/MSL_Common/printf.h"
 #include "sysNew.h"
+#include <stdio.h>
 
 /// Total height to allow for each menu item, including padding, in pixels.
 #define MENU_ITEM_HEIGHT (14)

@@ -1,4 +1,5 @@
 #include "types.h"
+#include <string.h>
 
 #if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
 static u8 DSPInitCode[] = {

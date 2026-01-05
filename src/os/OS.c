@@ -2,6 +2,7 @@
 #include "Dolphin/PPCArch.h"
 #include "Dolphin/hw_regs.h"
 #include <stddef.h>
+#include <string.h>
 
 DECL_SECT(".init") extern char _db_stack_end[];
 
@@ -136,31 +137,31 @@ u32 OSGetConsoleType(void)
 }
 
 #if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
-extern u32 BOOT_REGION_START : 0x812FDFF0; //(*(u32 *)0x812fdff0)
-extern u32 BOOT_REGION_END : 0x812FDFEC;   //(*(u32 *)0x812fdfec)
+extern void* BOOT_REGION_START : 0x812FDFF0; //(*(void *)0x812fdff0)
+extern void* BOOT_REGION_END : 0x812FDFEC;   //(*(void *)0x812fdfec)
 
 void ClearArena()
 {
 	void *start, *end;
 	if ((u32)(OSGetResetCode() + 0x80000000) != 0U) {
-		memset(OSGetArenaLo(), 0U, (u32)OSGetArenaHi() - (u32)OSGetArenaLo());
+		memset(OSGetArenaLo(), 0U, (char*)OSGetArenaHi() - (char*)OSGetArenaLo());
 		return;
 	}
-	start = (void*)BOOT_REGION_START;
-	end   = (void*)BOOT_REGION_END;
-	if (BOOT_REGION_START == 0U) {
-		memset(OSGetArenaLo(), 0U, (u32)OSGetArenaHi() - (u32)OSGetArenaLo());
+	start = BOOT_REGION_START;
+	end   = BOOT_REGION_END;
+	if (BOOT_REGION_START == NULL) {
+		memset(OSGetArenaLo(), 0U, (char*)OSGetArenaHi() - (char*)OSGetArenaLo());
 		return;
 	}
 
-	if ((u32)OSGetArenaLo() < (u32)start) {
-		if ((u32)OSGetArenaHi() <= (u32)start) {
-			memset((u32)OSGetArenaLo(), 0U, (u32)OSGetArenaHi() - (u32)OSGetArenaLo());
+	if (OSGetArenaLo() < start) {
+		if (OSGetArenaHi() <= start) {
+			memset(OSGetArenaLo(), 0U, (char*)OSGetArenaHi() - (char*)OSGetArenaLo());
 			return;
 		}
-		memset(OSGetArenaLo(), 0U, (u32)start - (u32)OSGetArenaLo());
-		if ((u32)OSGetArenaHi() > (u32)end) {
-			memset((u32)end, 0, (u32)OSGetArenaHi() - (u32)end);
+		memset(OSGetArenaLo(), 0U, (char*)start - (char*)OSGetArenaLo());
+		if (OSGetArenaHi() > end) {
+			memset(end, 0, (char*)OSGetArenaHi() - (char*)end);
 		}
 	}
 }
