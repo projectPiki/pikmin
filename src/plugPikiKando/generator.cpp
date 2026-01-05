@@ -686,7 +686,7 @@ void Generator::render(Graphics& gfx)
 		Colour colour;
 		colour.set(255, 125, 0, 255);
 
-		GlobalShape::markerShape->mMaterialList->Colour() = colour;
+		GlobalShape::markerShape->mMaterialList->getColour() = colour;
 		GlobalShape::markerShape->drawshape(gfx, *gfx.mCamera, nullptr);
 
 		if (mGenArea) {

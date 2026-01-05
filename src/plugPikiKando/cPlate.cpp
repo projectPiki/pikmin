@@ -404,7 +404,7 @@ void CPlate::render(Graphics& gfx)
 	Colour colour;
 	colour.set(125, 255, 0, 255);
 
-	GlobalShape::markerShape->mMaterialList->Colour() = colour;
+	GlobalShape::markerShape->mMaterialList->getColour() = colour;
 	GlobalShape::markerShape->drawshape(gfx, *gfx.mCamera, nullptr);
 
 	mtx1.makeSRT(scale, Vector3f(0.0f, 0.0f, 0.0f), mPlateCenter);
@@ -413,7 +413,7 @@ void CPlate::render(Graphics& gfx)
 	gfx.useMatrix(mtx2, 0);
 
 	colour.set(125, 175, 200, 255);
-	GlobalShape::markerShape->mMaterialList->Colour() = colour;
+	GlobalShape::markerShape->mMaterialList->getColour() = colour;
 	GlobalShape::markerShape->drawshape(gfx, *gfx.mCamera, nullptr);
 
 	for (int i = 0; i < mUsedSlotCount; i++) {
@@ -429,7 +429,7 @@ void CPlate::render(Graphics& gfx)
 		gfx.useMatrix(mtx2, 0);
 
 		colour.set(0, 255, 10, 255);
-		GlobalShape::markerShape->mMaterialList->Colour() = colour;
+		GlobalShape::markerShape->mMaterialList->getColour() = colour;
 		GlobalShape::markerShape->drawshape(gfx, *gfx.mCamera, nullptr);
 	}
 }

@@ -844,7 +844,7 @@ MapMgr::MapMgr(Controller* controller)
 	mProjHandler                   = new MapProjMatHandler(nullptr);
 	mProjHandler->mProjMat->mFlags = MATFLAG_INVERT_BLEND | MATFLAG_OPAQUE;
 
-	mProjHandler->mProjMat->Colour().set(255, 255, 255, 255);
+	mProjHandler->mProjMat->getColour().set(255, 255, 255, 255);
 	memStat->end("shadMats");
 
 	memStat->start("blurTextures");

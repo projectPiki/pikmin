@@ -56,7 +56,7 @@ struct MapShadMatHandler : public MaterialHandler {
 	MapShadMatHandler()
 	{
 		mShadMat = new Material();
-		mShadMat->Colour().set(255, 255, 255, 255);
+		mShadMat->getColour().set(255, 255, 255, 255);
 	}
 
 	virtual void setMaterial(Material*) // _08
@@ -80,7 +80,7 @@ struct MapProjMatHandler : public MaterialHandler {
 		mLightCamera       = nullptr;
 		mProjMat           = new Material();
 		mProjMat->mTexture = tex;
-		mProjMat->Colour().set(128, 128, 128, 32);
+		mProjMat->getColour().set(128, 128, 128, 32);
 	}
 
 	virtual void setMaterial(Material*) // _08
