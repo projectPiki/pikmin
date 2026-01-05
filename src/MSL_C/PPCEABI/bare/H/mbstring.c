@@ -1,3 +1,4 @@
+#include "PowerPC_EABI_Support/MSL_C/MSL_Common/wchar.h"
 #include "types.h"
 
 /**
