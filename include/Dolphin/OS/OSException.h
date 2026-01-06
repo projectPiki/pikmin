@@ -64,9 +64,6 @@ __OSExceptionHandler __OSGetExceptionHandler(__OSException exception);
 	mfspr r0, GQR7;                                   \
 	stw r0, OS_CONTEXT_GQR7(context);
 
-// Moved from OSContext.h due to include looping.
-void OSSwitchFPUContext(__OSException exception, OSContext* context);
-
 //////////////////////////////////
 
 END_SCOPE_EXTERN_C

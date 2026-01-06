@@ -65,7 +65,6 @@ BOOL EXIDetach(s32 channel);
 BOOL EXISelect(s32 channel, u32 device, u32 frequency);
 BOOL EXIDeselect(s32 channel);
 
-void EXIIntrruptHandler(__OSInterrupt interrupt, OSContext* context);
 BOOL EXILock(s32 channel, u32 device, EXICallback callback);
 BOOL EXIUnlock(s32 channel);
 u32 EXIGetState(s32 channel);

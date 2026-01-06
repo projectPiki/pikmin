@@ -46,9 +46,7 @@ extern void GXDrawDone();
 // Other syncs/interrupts.
 extern void GXPixModeSync();
 extern GXDrawSyncCallback GXSetDrawSyncCallback(GXDrawSyncCallback callback);
-extern void GXTokenInterruptHandler(__OSInterrupt interrupt, OSContext* context);
 extern GXDrawDoneCallback GXSetDrawDoneCallback(GXDrawDoneCallback callback);
-extern void GXFinishInterruptHandler(__OSInterrupt interrupt, OSContext* context);
 
 // Poke functions.
 extern void GXPokeAlphaMode(GXCompare func, u8 threshold);
@@ -61,9 +59,6 @@ extern void GXPokeDither(GXBool doDither);
 extern void GXPokeZMode(GXBool doCompare, GXCompare func, GXBool doUpdate);
 
 // Unused/inlined in P2.
-extern BOOL IsWriteGatherBufferEmpty();
-extern void EnableWriteGatherPipe();
-extern void DisableWriteGatherPipe();
 extern void GXResetWriteGatherPipe();
 
 extern u16 GXReadDrawSync();

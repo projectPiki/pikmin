@@ -3,6 +3,9 @@
 
 #pragma section code_type ".init"
 
+static void __init_registers(void);
+static void __init_data(void);
+
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
 static void __check_pad3(void)
 {
