@@ -1,3 +1,5 @@
+#include "Dolphin/GX/GXAttr.h"
+
 #include "Dolphin/gx.h"
 #include "Dolphin/os.h"
 #include <stddef.h>
