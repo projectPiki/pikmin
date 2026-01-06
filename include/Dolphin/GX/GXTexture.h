@@ -3,12 +3,10 @@
 
 #include "types.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
-
 #include "Dolphin/GX/GXEnum.h"
 #include "Dolphin/GX/GXTypes.h"
+
+BEGIN_SCOPE_EXTERN_C
 
 //////////// TEXTURE CALLBACKS /////////////
 
@@ -65,8 +63,6 @@ extern void __GetImageTileCount(GXTexFmt format, u16 width, u16 height, u32* a, 
 
 ////////////////////////////////////////////
 
-#ifdef __cplusplus
-};
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C
 
 #endif

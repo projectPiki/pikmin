@@ -1,12 +1,10 @@
 #ifndef _DOLPHIN_PAD_H
 #define _DOLPHIN_PAD_H
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #include "Dolphin/os.h"
 #include "types.h"
+
+BEGIN_SCOPE_EXTERN_C
 
 typedef struct PADStatus {
 	u16 button;      // _00, Or-ed PAD_BUTTON_* bits
@@ -107,8 +105,6 @@ PADSamplingCallback PADSetSamplingCallback(PADSamplingCallback callback);
 
 extern u32 __PADFixBits;
 
-#ifdef __cplusplus
-}
-#endif
+END_SCOPE_EXTERN_C
 
 #endif

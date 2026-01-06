@@ -3,9 +3,7 @@
 
 #include "types.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+BEGIN_SCOPE_EXTERN_C
 
 #define CTORARG_TYPE     int
 #define CTORARG_PARTIAL  (0)
@@ -29,8 +27,6 @@ void __destroy_global_chain(void);
 
 int __register_atexit(void (*)(void));
 
-#ifdef __cplusplus
-}
-#endif
+END_SCOPE_EXTERN_C
 
 #endif

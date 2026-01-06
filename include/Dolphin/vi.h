@@ -3,9 +3,7 @@
 
 #include "types.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
+BEGIN_SCOPE_EXTERN_C
 
 ////// VIDEO INTERFACE DEFINES /////
 // Display pixel size.
@@ -202,8 +200,6 @@ void VISet3D(); // unsure on arguments
 
 ////////////////////////////////////
 
-#ifdef __cplusplus
-};
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C
 
 #endif

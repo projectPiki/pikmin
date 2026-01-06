@@ -134,9 +134,7 @@ void __DSPHandler(__OSInterrupt interrupt, OSContext* context)
 	}
 	}
 }
-#ifdef __cplusplus
-}
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C
 
 /**
  * @TODO: Documentation

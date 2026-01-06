@@ -4,9 +4,7 @@
 #include "types.h"
 // #include "PowerPC_EABI_Support/MSL_C/MSL_Common/math_api.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
+BEGIN_SCOPE_EXTERN_C
 
 #define signbit(x)    ((int)(__HI(x) & 0x80000000))
 #define ispositive(x) ((((u8*)&x)[0] & 0x80) != 0)
@@ -134,9 +132,7 @@ inline f32 sqrtf(f32 x)
 	return x;
 }
 
-#ifdef __cplusplus
-};
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C
 
 #ifdef __cplusplus
 namespace std {

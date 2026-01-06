@@ -5,9 +5,7 @@
 #include "Dolphin/OS/OSUtil.h"
 #include "types.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
+BEGIN_SCOPE_EXTERN_C
 
 ////////// MUTEX TYPES ///////////
 // Main mutually exclusive (mutex) locking struct.
@@ -41,8 +39,6 @@ void OSSignalCond(OSCond* cond);
 
 //////////////////////////////////
 
-#ifdef __cplusplus
-};
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C
 
 #endif

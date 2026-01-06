@@ -3,15 +3,11 @@
 
 #include "types.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+BEGIN_SCOPE_EXTERN_C
 
 void __init_cpp_exceptions(void);
 void __fini_cpp_exceptions(void);
 
-#ifdef __cplusplus
-}
-#endif
+END_SCOPE_EXTERN_C
 
 #endif

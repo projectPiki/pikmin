@@ -5,9 +5,7 @@
 #include "locale.h"
 #include "types.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+BEGIN_SCOPE_EXTERN_C
 
 int tolower(int c);
 int toupper(int c);
@@ -57,7 +55,5 @@ inline int isxdigit(u8 c)
 	return (int)(__ctype_map[c] & __hex_digit);
 }
 
-#ifdef __cplusplus
-}
-#endif
+END_SCOPE_EXTERN_C
 #endif

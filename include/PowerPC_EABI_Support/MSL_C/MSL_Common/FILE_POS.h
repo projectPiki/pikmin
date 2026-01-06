@@ -4,17 +4,13 @@
 #include "PowerPC_EABI_Support/MSL_C/MSL_Common/ansi_files.h"
 #include "types.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
+BEGIN_SCOPE_EXTERN_C
 
 int fseek(FILE* stream, u32 offset, int whence);
 int _fseek(FILE* stream, u32 offset, int whence);
 int ftell(FILE* stream);
 int _ftell(FILE* stream);
 
-#ifdef __cplusplus
-};
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C
 
 #endif

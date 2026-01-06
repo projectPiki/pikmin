@@ -3,14 +3,10 @@
 
 #include "types.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
+BEGIN_SCOPE_EXTERN_C
 
 int __CARDUnlock(int chan, u8 flashID[12]);
 
-#ifdef __cplusplus
-};
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C
 
 #endif

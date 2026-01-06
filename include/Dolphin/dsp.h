@@ -6,9 +6,7 @@
 #include "Dolphin/OS/OSUtil.h"
 #include "types.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
+BEGIN_SCOPE_EXTERN_C
 
 //////////////// DSP TYPES /////////////////
 typedef struct STRUCT_DSP_TASK DSPTaskInfo;
@@ -88,9 +86,7 @@ void DSPReset();
 DSPTaskInfo* DSPAddTask(DSPTaskInfo*);
 #endif
 
-#ifdef __cplusplus
-}
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C
 
 typedef void (*CommandTask)(u16);
 

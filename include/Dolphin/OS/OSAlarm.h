@@ -5,9 +5,7 @@
 #include "Dolphin/OS/OSUtil.h"
 #include "types.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
+BEGIN_SCOPE_EXTERN_C
 
 /////////// ALARM TYPES //////////
 typedef struct OSAlarm OSAlarm;
@@ -48,8 +46,6 @@ void OSCancelAlarms(u32 tag);
 
 //////////////////////////////////
 
-#ifdef __cplusplus
-};
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C
 
 #endif

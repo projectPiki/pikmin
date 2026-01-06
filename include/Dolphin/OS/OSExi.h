@@ -6,9 +6,7 @@
 #include "Dolphin/hw_regs.h"
 #include "types.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
+BEGIN_SCOPE_EXTERN_C
 
 /////////// EXI DEFINES //////////
 // Useful numbers.
@@ -75,8 +73,6 @@ s32 EXIGetID(s32 channel, u32 device, u32* id);
 
 //////////////////////////////////
 
-#ifdef __cplusplus
-};
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C
 
 #endif

@@ -3,9 +3,7 @@
 
 #include "types.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
+BEGIN_SCOPE_EXTERN_C
 
 void Jac_HVQM_Init(immut char* filepath, u8*, u32);
 void Jac_HVQM_ThreadStart(void);
@@ -14,9 +12,7 @@ void Jac_HVQM_ForceStop(void);
 void Jac_CountReadyPictures(void);
 int Jac_GetPicture(void*, int*, int*); // TODO: types unsure (return can be -1 though)
 
-#ifdef __cplusplus
-};
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C
 
 static void __LoadFin(u32);
 

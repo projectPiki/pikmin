@@ -3,9 +3,7 @@
 
 #include "types.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
+BEGIN_SCOPE_EXTERN_C
 
 ///// USEFUL MACROS/DEFINES //////
 
@@ -89,8 +87,6 @@ vu16 __OSDeviceCode AT_ADDRESS(OS_BASE_CACHED | 0x30E6);
 
 //////////////////////////////////
 
-#ifdef __cplusplus
-};
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C
 
 #endif

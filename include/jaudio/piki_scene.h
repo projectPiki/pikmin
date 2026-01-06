@@ -32,9 +32,7 @@ void Jac_StopDemoSound(u32);
 void Jac_PrepareDemoSound(u32);
 void Jac_StartDemoSound(u32);
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
+BEGIN_SCOPE_EXTERN_C
 
 void Jac_Delete_CurrentBgmWave();
 u32 Jac_GetCurrentScene();
@@ -45,9 +43,7 @@ void Jac_SetStreamLevel(u16 stream, u16 se);
 void Jac_UpdateStreamLevel();
 void Jac_InitStreamSystem();
 
-#ifdef __cplusplus
-};
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C
 
 ///////////////////////////////////////////////////////
 

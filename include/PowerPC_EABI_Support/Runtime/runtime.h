@@ -4,17 +4,13 @@
 #include "types.h"
 #include <stddef.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
+BEGIN_SCOPE_EXTERN_C
 
 u32 __cvt_fp2unsigned(f64);
 // TODO: The rest
 
 void* __copy(char*, char*, size_t);
 
-#ifdef __cplusplus
-};
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C
 
 #endif

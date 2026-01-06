@@ -5,9 +5,7 @@
 #include "Dolphin/dvd.h"
 #include "types.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
+BEGIN_SCOPE_EXTERN_C
 
 //////// BOOT INFO TYPES /////////
 // Struct for boot information (size 0x40).
@@ -47,8 +45,6 @@ typedef struct BI2Debug {
 
 //////////////////////////////////
 
-#ifdef __cplusplus
-};
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C
 
 #endif

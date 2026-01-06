@@ -3,9 +3,7 @@
 
 #include "types.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
+BEGIN_SCOPE_EXTERN_C
 
 typedef struct seqp_ seqp_;
 
@@ -20,8 +18,6 @@ BOOL Jaq_StartSeq(u32);
 s32 Jaq_OpenTrack(seqp_*, u32, u32);
 u32 Jaq_CloseTrack(seqp_*);
 
-#ifdef __cplusplus
-};
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C
 
 #endif

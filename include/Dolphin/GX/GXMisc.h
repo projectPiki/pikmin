@@ -3,14 +3,12 @@
 
 #include "types.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
-
 #include "Dolphin/GX/GXEnum.h"
 #include "Dolphin/GX/GXFifo.h"
 #include "Dolphin/GX/GXTypes.h"
 #include "Dolphin/OS/OSInterrupt.h"
+
+BEGIN_SCOPE_EXTERN_C
 
 //////////////// CALLBACKS /////////////////
 typedef void (*GXDrawSyncCallback)(u16 token);
@@ -83,8 +81,6 @@ struct OSThread* GXSetCurrentGXThread();
 
 ////////////////////////////////////////////
 
-#ifdef __cplusplus
-};
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C
 
 #endif

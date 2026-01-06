@@ -3,12 +3,10 @@
 
 #include "types.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
-
 #include "Dolphin/GX/GXEnum.h"
 #include "Dolphin/GX/GXTypes.h"
+
+BEGIN_SCOPE_EXTERN_C
 
 ////// TEXTURE ENVIRONMENT FUNCTIONS ///////
 extern void GXSetTevOp(GXTevStageID stage, GXTevMode mode);
@@ -37,8 +35,6 @@ extern void GXSetTevClampMode(GXTevStageID stage, GXTevClampMode mode);
 
 ////////////////////////////////////////////
 
-#ifdef __cplusplus
-};
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C
 
 #endif

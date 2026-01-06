@@ -76,6 +76,19 @@ typedef u32 HWND;
 	Type;             \
 	}
 
+// Do you ever get tired of typing this?  Well do I have good news for you:
+#ifdef __cplusplus
+#define BEGIN_SCOPE_EXTERN_C extern "C" {
+#else
+#define BEGIN_SCOPE_EXTERN_C
+#endif
+
+#ifdef __cplusplus
+#define END_SCOPE_EXTERN_C }
+#else
+#define END_SCOPE_EXTERN_C
+#endif
+
 // For bugfixes that can fit sub-statement, use this instead of a clunky #if #else #endif.
 #if defined(BUGFIX)
 #define TERNARY_BUGFIX(fixed, buggy) fixed

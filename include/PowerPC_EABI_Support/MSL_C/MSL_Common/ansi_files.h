@@ -5,15 +5,13 @@
 #include "types.h"
 #include <stddef.h>
 
+BEGIN_SCOPE_EXTERN_C
+
 typedef struct _files {
 	FILE _stdin;
 	FILE _stdout;
 	FILE _stderr;
 } files;
-
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
 
 extern int __close_console(__file_handle file);
 extern int __write_console(__file_handle file, char* buf, size_t* count, __idle_proc idle_fn);
@@ -27,8 +25,6 @@ int __flush_buffer(FILE* file, size_t* length);
 void __prep_buffer(FILE* file);
 u32 __flush_all();
 
-#ifdef __cplusplus
-};
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C
 
 #endif

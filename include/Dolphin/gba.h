@@ -4,10 +4,9 @@
 #include "Dolphin/db.h"
 #include "Dolphin/dsp.h"
 #include "Dolphin/os.h"
+#include "types.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
+BEGIN_SCOPE_EXTERN_C
 
 /////////// GBA TYPES ////////////
 
@@ -96,8 +95,6 @@ extern BOOL __GBAReset;
 
 //////////////////////////////////
 
-#ifdef __cplusplus
-}
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C
 
 #endif

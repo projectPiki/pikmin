@@ -5,9 +5,7 @@
 
 #include "jaudio/audiostruct.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
+BEGIN_SCOPE_EXTERN_C
 
 //! NOTE from intns:
 //! There's something iffy going on with the value 0xC0.
@@ -351,8 +349,6 @@ BOOL Jam_TryInterrupt(seqp_*);
 s32 Jam_SeqmainNote(seqp_*, u8);
 void SeqUpdate(seqp_*, u32);
 
-#ifdef __cplusplus
-};
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C
 
 #endif

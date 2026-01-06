@@ -5,9 +5,7 @@
 #include "PowerPC_EABI_Support/Runtime/exception.h"
 #include "types.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+BEGIN_SCOPE_EXTERN_C
 
 typedef s16 vbase_ctor_arg_type;
 typedef char local_cond_type;
@@ -38,8 +36,6 @@ extern void __unexpected(CatchInfo* catchinfo);
 extern int __register_fragment(struct __eti_init_info* info, char* TOC);
 extern void __unregister_fragment(int fragmentID);
 
-#ifdef __cplusplus
-}
-#endif
+END_SCOPE_EXTERN_C
 
 #endif // _NMWEXCEPTION

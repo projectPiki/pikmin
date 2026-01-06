@@ -3,9 +3,7 @@
 
 #include "types.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+BEGIN_SCOPE_EXTERN_C
 
 // #define HID0              0x3f0
 #define HID0_ICE       0x8000
@@ -112,8 +110,6 @@ u32 PPCMfdmaL(void);        // Get Direct Memory Access Lower Register (DMAL)
 void PPCMtdmaL(u32 value);  // Set Direct Memory Access Lower Register (DMAL)
 u32 PPCMfpvr(void);         // TODO
 
-#ifdef __cplusplus
-}
-#endif
+END_SCOPE_EXTERN_C
 
 #endif

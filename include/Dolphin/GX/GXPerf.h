@@ -3,12 +3,10 @@
 
 #include "types.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
-
 #include "Dolphin/GX/GXEnum.h"
 #include "Dolphin/GX/GXTypes.h"
+
+BEGIN_SCOPE_EXTERN_C
 
 ///////////// METRIC FUNCTIONS /////////////
 extern void GXSetGPMetric(GXPerf0 perf0, GXPerf1 perf1);
@@ -32,8 +30,6 @@ extern u32 GXReadClksPerVtx();
 
 ////////////////////////////////////////////
 
-#ifdef __cplusplus
-};
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C
 
 #endif

@@ -7,9 +7,7 @@
 #include "Dolphin/GX/GXTypes.h"
 #include "Dolphin/mtx.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
+BEGIN_SCOPE_EXTERN_C
 
 ////////////// BUMP FUNCTIONS //////////////
 // Flush functions.
@@ -39,8 +37,6 @@ extern void GXSetTevIndRepeat(GXTevStageID stage);
 
 ////////////////////////////////////////////
 
-#ifdef __cplusplus
-};
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C
 
 #endif

@@ -14,9 +14,7 @@
 
 #include "types.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
+BEGIN_SCOPE_EXTERN_C
 
 /* Sometimes it's necessary to define __LITTLE_ENDIAN explicitly
    but these catch some common cases. */
@@ -223,8 +221,6 @@ extern f64 __kernel_cos __P((f64, f64));
 extern f64 __kernel_tan __P((f64, f64, int));
 extern int __kernel_rem_pio2 __P((f64*, f64*, int, int, int, const int*));
 
-#ifdef __cplusplus
-};
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C
 
 #endif // _FDLIBM_H

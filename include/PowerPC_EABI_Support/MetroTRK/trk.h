@@ -6,9 +6,7 @@
 #include "types.h"
 #include <stddef.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
+BEGIN_SCOPE_EXTERN_C
 
 ////// MSG HANDLING FUNCTIONS //////
 DSError TRKDoConnect(TRKBuffer*);
@@ -218,8 +216,6 @@ static inline DSError TRKAppendBuffer1_ui8(TRKBuffer* buffer, const u8 data)
 }
 ////////////////////////////////////
 
-#ifdef __cplusplus
-};
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C
 
 #endif

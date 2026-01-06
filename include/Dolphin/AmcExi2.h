@@ -4,9 +4,7 @@
 #include "Dolphin/os.h"
 #include "types.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
+BEGIN_SCOPE_EXTERN_C
 
 // EXI callback function pointer type
 typedef __OSInterruptHandler AmcEXICallback;
@@ -48,8 +46,6 @@ AmcExiError EXI2_WriteN(const void*, u32);
 void EXI2_Reserve(void);
 void EXI2_Unreserve(void);
 
-#ifdef __cplusplus
-};
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C
 
 #endif

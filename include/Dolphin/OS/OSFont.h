@@ -4,9 +4,7 @@
 #include "Dolphin/OS/OSContext.h"
 #include "types.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
+BEGIN_SCOPE_EXTERN_C
 
 /////////// FONT HEADER //////////
 // Struct for holding font information (size 0x30).
@@ -82,8 +80,6 @@ typedef enum {
 
 //////////////////////////////////
 
-#ifdef __cplusplus
-};
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C
 
 #endif

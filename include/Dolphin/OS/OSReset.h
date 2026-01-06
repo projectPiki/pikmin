@@ -4,9 +4,7 @@
 #include "Dolphin/OS/OSContext.h"
 #include "types.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
+BEGIN_SCOPE_EXTERN_C
 
 /////////// RESET INFO ///////////
 typedef struct OSResetFunctionInfo OSResetFunctionInfo;
@@ -85,8 +83,6 @@ extern BOOL __OSIsGcam;
 
 //////////////////////////////////
 
-#ifdef __cplusplus
-};
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C
 
 #endif

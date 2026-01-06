@@ -3,9 +3,7 @@
 
 #include "types.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
+BEGIN_SCOPE_EXTERN_C
 
 typedef struct seqp_ seqp_;
 
@@ -17,8 +15,6 @@ void Osc_Setup_SimpleEnv(seqp_* track, u8, u32);
 void Osc_Setup_ADSR(seqp_* track, s16*);
 void Osc_Setup_Full(seqp_* track, u8, u32, u32);
 
-#ifdef __cplusplus
-};
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C
 
 #endif

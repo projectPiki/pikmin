@@ -4,9 +4,7 @@
 #include "types.h"
 #include <stddef.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+BEGIN_SCOPE_EXTERN_C
 
 #define CTORARG_TYPE     int
 #define CTORARG_PARTIAL  (0)
@@ -28,8 +26,6 @@ extern void __destroy_new_array(void* block, ConstructorDestructor dtor);
 extern void __destroy_new_array2();
 extern void __destroy_new_array3();
 
-#ifdef __cplusplus
-}
-#endif
+END_SCOPE_EXTERN_C
 
 #endif

@@ -5,9 +5,7 @@
 #include "types.h"
 #include <stddef.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
+BEGIN_SCOPE_EXTERN_C
 
 //////////////// GD TYPES //////////////////
 // Overflow callback function type.
@@ -124,8 +122,6 @@ static inline void GDAdvCurrOffset(s32 distance)
 
 ////////////////////////////////////////////
 
-#ifdef __cplusplus
-};
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C
 
 #endif

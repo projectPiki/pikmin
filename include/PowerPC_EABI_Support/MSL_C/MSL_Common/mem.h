@@ -4,9 +4,7 @@
 #include "types.h"
 #include <stddef.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
+BEGIN_SCOPE_EXTERN_C
 
 int memcmp(const void*, const void*, size_t);
 void* memchr(u8*, int, size_t);
@@ -14,8 +12,6 @@ void* memmove(void*, const void*, size_t);
 void* memcpy(void* dest, const void* src, size_t n);
 void* memset(void* dest, int val, size_t count);
 
-#ifdef __cplusplus
-};
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C
 
 #endif

@@ -6,9 +6,7 @@
 #include "Dolphin/GX/GXEnum.h"
 #include "Dolphin/vi.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
+BEGIN_SCOPE_EXTERN_C
 
 ///////////// USEFUL HELPERS ///////////////
 // Set bitfields manually.
@@ -151,8 +149,6 @@ typedef struct _GXFogAdjTable {
 
 ////////////////////////////////////////////
 
-#ifdef __cplusplus
-};
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C
 
 #endif

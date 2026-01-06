@@ -3,9 +3,7 @@
 
 #include "types.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
+BEGIN_SCOPE_EXTERN_C
 
 extern const u8 __ctype_map[256];
 extern const u8 __lower_map[256];
@@ -27,8 +25,6 @@ extern const u8 __upper_map[256];
 #define __whitespace   (__motion_char | __space_char)
 #define __control      (__motion_char | __control_char)
 
-#ifdef __cplusplus
-};
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C
 
 #endif

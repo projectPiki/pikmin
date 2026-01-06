@@ -3,9 +3,7 @@
 
 #include "types.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
+BEGIN_SCOPE_EXTERN_C
 
 typedef struct Default_PPC {
 	u32 GPR[32];
@@ -235,8 +233,6 @@ typedef ProcessorState_PPC_6xx_7xx ProcessorState_PPC;
 #define PPC_1F00Exception              0x1F00 // Non maskable development port?
 #define PPC_2000Exception              0x2000
 
-#ifdef __cplusplus
-};
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C
 
 #endif

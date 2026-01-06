@@ -4,9 +4,7 @@
 #include "Dolphin/GX/GXTypes.h"
 #include "types.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
+BEGIN_SCOPE_EXTERN_C
 
 /**
  * Documentation from:
@@ -123,7 +121,5 @@ extern "C" {
 		GX_XF_LOAD_REG_HDR(cmd);       \
 	}
 
-#ifdef __cplusplus
-}
-#endif
+END_SCOPE_EXTERN_C
 #endif

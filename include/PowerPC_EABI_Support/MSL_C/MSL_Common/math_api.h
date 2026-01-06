@@ -4,9 +4,7 @@
 #include "types.h"
 #include <fdlibm.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
+BEGIN_SCOPE_EXTERN_C
 
 // int __fpclassifyf(f32);
 // int __signbitd(f64);
@@ -62,8 +60,6 @@ inline int __fpclassifyd(f64 x)
 #define isinf(x)    ((fpclassify(x) == 2))
 #define isfinite(x) ((fpclassify(x) > 2))
 
-#ifdef __cplusplus
-};
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C
 
 #endif

@@ -5,9 +5,7 @@
 #include "Dolphin/OS/OSUtil.h"
 #include "types.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
+BEGIN_SCOPE_EXTERN_C
 
 ///////// MESSAGE TYPES //////////
 typedef struct OSMesgQueue_s OSMesgQueue_s;
@@ -45,8 +43,6 @@ BOOL OSReceiveMessage(OSMessageQueue* queue, OSMessage* msgPtr, s32 flags);
 
 //////////////////////////////////
 
-#ifdef __cplusplus
-};
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C
 
 #endif

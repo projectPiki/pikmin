@@ -4,9 +4,7 @@
 #include "Dolphin/OS/OSContext.h"
 #include "types.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
+BEGIN_SCOPE_EXTERN_C
 
 ////////// PROTECT INFO //////////
 // Protect function.
@@ -33,8 +31,6 @@ void OSProtectRange(u32 channel, void* addr, u32 numBytes, u32 control);
 
 //////////////////////////////////
 
-#ifdef __cplusplus
-};
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C
 
 #endif

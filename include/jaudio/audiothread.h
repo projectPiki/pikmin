@@ -4,9 +4,7 @@
 #include "Dolphin/OS/OSMessage.h"
 #include "types.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
+BEGIN_SCOPE_EXTERN_C
 
 /////////// JAUDIO AUDIO THREAD DEFINITIONS ///////////
 // Defines.
@@ -34,8 +32,6 @@ static void OSInitFastCast(); // idk why this is in here tbh, but it needs to be
 
 ///////////////////////////////////////////////////////
 
-#ifdef __cplusplus
-};
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C
 
 #endif

@@ -6,9 +6,7 @@
 #include "types.h"
 #include <stddef.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+BEGIN_SCOPE_EXTERN_C
 
 char* strcpy(char* dst, const char* src);
 char* strncpy(char* dst, const char* src, size_t n);
@@ -23,7 +21,6 @@ char* strstr(const char* str, const char* substr);
 char* strrchr(const char* str, int chr);
 size_t strlen(const char* str);
 
-#ifdef __cplusplus
-}
-#endif
+END_SCOPE_EXTERN_C
+
 #endif

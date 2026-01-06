@@ -5,10 +5,6 @@
 #include "Dolphin/dvd.h"
 #include "types.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
-
 #include "Dolphin/OS/OSAlarm.h"
 #include "Dolphin/OS/OSAlloc.h"
 #include "Dolphin/OS/OSBootInfo.h"
@@ -29,6 +25,8 @@ extern "C" {
 #include "Dolphin/OS/OSReset.h"
 #include "Dolphin/OS/OSSerial.h"
 #include "Dolphin/OS/OSThread.h"
+
+BEGIN_SCOPE_EXTERN_C
 
 ///////// OS FUNCTIONS ///////////
 // Initialisers.
@@ -280,8 +278,6 @@ extern BOOL __OSInIPL;
 
 #endif // _DEBUG
 
-#ifdef __cplusplus
-};
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C
 
 #endif

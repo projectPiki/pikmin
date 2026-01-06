@@ -3,13 +3,11 @@
 
 #include "types.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
-
 #include "Dolphin/GX/GXEnum.h"
 #include "Dolphin/GX/GXTypes.h"
 #include "Dolphin/mtx.h"
+
+BEGIN_SCOPE_EXTERN_C
 
 ///////////// PIXEL FUNCTIONS //////////////
 // Fog functions.
@@ -35,8 +33,6 @@ extern void GXSetFieldMode(GXBool doFieldMode, GXBool doHalfAspectRatio);
 
 ////////////////////////////////////////////
 
-#ifdef __cplusplus
-};
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C
 
 #endif

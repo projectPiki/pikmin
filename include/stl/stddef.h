@@ -1,9 +1,9 @@
 #ifndef STL_STDDEF_H
 #define STL_STDDEF_H
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include "types.h"
+
+BEGIN_SCOPE_EXTERN_C
 
 typedef unsigned long size_t;
 
@@ -15,8 +15,6 @@ typedef unsigned long size_t;
 
 #define offsetof(type, memb) ((size_t)&((type*)0)->memb)
 
-#ifdef __cplusplus
-};
-#endif
+END_SCOPE_EXTERN_C
 
 #endif

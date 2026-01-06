@@ -3,13 +3,11 @@
 
 #include "types.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
-
 #include "Dolphin/GX/GXEnum.h"
 #include "Dolphin/GX/GXTypes.h"
 #include "Dolphin/mtx.h"
+
+BEGIN_SCOPE_EXTERN_C
 
 /////////// TRANSFORM FUNCTIONS ////////////
 // Matrix and projection functions.
@@ -55,8 +53,6 @@ static inline void GXSetViewportv(f32* port)
 
 ////////////////////////////////////////////
 
-#ifdef __cplusplus
-};
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C
 
 #endif
