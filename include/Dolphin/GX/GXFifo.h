@@ -211,6 +211,7 @@ void __GXFifoReadDisable();
 void __GXFifoLink(u8);
 void __GXWriteFifoIntEnable(u8, u8);
 void __GXWriteFifoIntReset(u8, u8);
+void __GXCleanGPFifo(void);
 
 // Unused/inlined in P2.
 extern void GXSaveGPFifo(GXFifoObj* obj);

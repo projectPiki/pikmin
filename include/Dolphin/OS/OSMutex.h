@@ -31,6 +31,9 @@ void OSUnlockMutex(OSMutex* mutex);
 BOOL OSTryLockMutex(OSMutex* mutex);
 
 void __OSUnlockAllMutex(OSThread* thread);
+BOOL __OSCheckMutex(OSMutex* mutex);
+BOOL __OSCheckDeadLock(OSThread* thread);
+BOOL __OSCheckMutexes(OSThread* thread);
 
 // Cond functions.
 void OSInitCond(OSCond* cond);

@@ -29,6 +29,7 @@ extern void InitMetroTRK_BBA(void);
 extern void OSInit(void);
 extern void OSResetSystem(BOOL reset, u32 resetCode, BOOL forceMenu);
 extern void __init_hardware(void);
+extern void __flush_cache(void*, int);
 
 DECL_SECT(".init") extern void __check_pad3(void);
 DECL_SECT(".init") extern void __set_debug_bba(void);

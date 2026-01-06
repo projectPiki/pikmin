@@ -299,6 +299,7 @@ s32 __CARDPutControlBlock(CARDControl* card, s32 result);
 s32 __CARDSync(s32 channel);
 void __CARDCheckSum(void* data, int length, u16* checksum, u16* checksumInv);
 s32 __CARDVerify(CARDControl* card);
+BOOL __CARDCompareFileName(CARDDir* entry, const char* fileName);
 s32 __CARDAccess(CARDDir* ent);
 s32 __CARDIsPublic(CARDDir* ent);
 BOOL __CardIsOpened(CARDControl* card, s32 fileNo);
@@ -306,9 +307,16 @@ s32 __CARDRead(s32 channel, u32 addr, s32 length, void* dst, CARDCallback callba
 s32 __CARDWrite(s32 channel, u32 addr, s32 length, void* dst, CARDCallback callback);
 
 CARDDirectoryBlock* __CARDGetDirBlock(CARDControl* card);
+s32 __CARDUpdateDir(s32 channel, CARDCallback callback);
+s32 __CARDAllocBlock(s32 channel, u32 cBlock, CARDCallback callback);
 s32 __CARDFreeBlock(s32 channel, u16 nBlock, CARDCallback callback);
 CARDFatBlock* __CARDGetFatBlock(CARDControl* card);
 s32 __CARDUpdateFatBlock(s32 channel, CARDFatBlock* fat, CARDCallback callback);
+
+// These also need function prototypes, but I'm not sure where is best to insert them above.
+BOOL __CARDIsOpened(CARDControl* card, s32 fileNo);
+int __CARDUnlock(int chan, u8 flashID[12]);
+s32 __CARDSeek(CARDFileInfo* fileInfo, s32 length, s32 offset, CARDControl** outCard);
 
 ////////////////////////////////////////////
 
