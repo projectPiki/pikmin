@@ -4,6 +4,7 @@
 #include "types.h"
 
 #include "Dolphin/GX/GXEnum.h"
+#include "Dolphin/GX/GXFifo.h"
 #include "Dolphin/GX/GXTexture.h"
 #include "Dolphin/GX/GXTypes.h"
 #include "Dolphin/os.h"
