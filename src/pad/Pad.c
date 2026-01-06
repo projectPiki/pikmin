@@ -12,7 +12,7 @@
 
 #define RES_WIRELESS_LITE 0x40000
 
-u16 __OSWirelessPadFixMode AT_ADDRESS(0x800030E0);
+u16 __OSWirelessPadFixMode AT_ADDRESS(OS_BASE_CACHED | 0x30E0);
 
 static int Initialized;     // size: 0x4, address: 0x0
 static u32 EnabledBits;     // size: 0x4, address: 0x4

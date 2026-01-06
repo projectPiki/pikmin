@@ -21,7 +21,6 @@ void* OSGetArenaLo(void)
  * @TODO: Documentation
  */
 void OSSetArenaHi(void* arena_hi)
-
 {
 	__OSArenaHi = arena_hi;
 	return;
@@ -31,7 +30,6 @@ void OSSetArenaHi(void* arena_hi)
  * @TODO: Documentation
  */
 void OSSetArenaLo(void* arena_lo)
-
 {
 	__OSArenaLo = arena_lo;
 	return;
