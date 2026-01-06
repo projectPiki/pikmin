@@ -17,7 +17,7 @@ extern "C" {
 
 extern void InitMetroTRK();
 
-u16 Pad3Button : PAD3_BUTTON_ADDR;
+u16 Pad3Button AT_ADDRESS(PAD3_BUTTON_ADDR);
 
 #if defined(VERSION_GPIP01_00)
 #else

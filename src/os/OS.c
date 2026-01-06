@@ -51,7 +51,7 @@ extern char* __OSResetSWInterruptHandler[];
 #define OS_EXCEPTIONTABLE_ADDR 0x3000
 #define OS_DBJUMPPOINT_ADDR    0x60
 
-vu16 __OSDeviceCode : (OS_BASE_CACHED | OS_DVD_DEVICECODE);
+vu16 __OSDeviceCode AT_ADDRESS(OS_BASE_CACHED | OS_DVD_DEVICECODE);
 
 // flags and system info
 static OSBootInfo* BootInfo;

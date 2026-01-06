@@ -8,13 +8,6 @@ extern "C" {
 #endif // ifdef __cplusplus
 
 ///// USEFUL MACROS/DEFINES //////
-// Macro for making clear things are addresses.
-// if-def for future proofing and so VSCode doesn't yell.
-#ifdef __MWERKS__
-#define AT_ADDRESS(addr) : (addr)
-#else
-#define AT_ADDRESS(addr)
-#endif
 
 // Defines for cached and uncached memory.
 #define OS_BASE_CACHED   (0x80000000)

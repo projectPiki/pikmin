@@ -191,10 +191,12 @@ inline void padStack(void)
 #define STACK_PAD_TERNARY(expr, n) TERNARY_BUILD_MATCHING(REPEAT((expr) ? "fake" : "fake", n), (void)0)
 
 #ifdef __MWERKS__
+#define AT_ADDRESS(addr) : (addr)
 #define WEAKFUNC        __declspec(weak)
 #define DECL_SECT(name) __declspec(section name)
 #define ASM             asm
 #else
+#define AT_ADDRESS(addr)
 #define WEAKFUNC
 #define DECL_SECT(name)
 #define ASM
