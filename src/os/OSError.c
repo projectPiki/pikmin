@@ -1,4 +1,5 @@
 #include "Dolphin/OS/OSError.h"
+
 #include "Dolphin/OS/OSException.h"
 #include "Dolphin/OS/OSInterrupt.h"
 #include "Dolphin/PPCArch.h"

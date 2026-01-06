@@ -42,13 +42,6 @@ extern void __OSInitMemoryProtection();
 
 void OSInit();
 
-// OS logging and reporting.
-void OSReport(const char* message, ...);
-void OSPanic(const char* file, int line, const char* message, ...);
-
-#define OSError(...)           OSPanic(__FILE__, __LINE__, __VA_ARGS__)
-#define OSErrorLine(line, ...) OSPanic(__FILE__, line, __VA_ARGS__)
-
 // Other OS functions.
 #define OS_CONSOLE_RETAIL4     0x00000004
 #define OS_CONSOLE_RETAIL3     0x00000003
@@ -182,83 +175,6 @@ extern u8 _stack_end[];
 extern BOOL __OSInIPL;
 
 //////////////////////////////////
-
-#ifdef DEBUG // Currently necessary for dsp_cardunlock.c
-
-#ifndef ASSERTLINE
-#define ASSERTLINE(line, exp) (void)((exp) || (OSPanic(__FILE__, line, "Failed assertion " #exp), 0))
-#endif
-
-#ifndef ASSERTMSGLINE
-#define ASSERTMSGLINE(line, cond, msg) ((cond) || (OSPanic(__FILE__, line, msg), 0))
-#endif
-
-#ifndef ASSERT
-#define ASSERT(exp) ASSERTLINE(__LINE__, exp)
-#endif
-
-#ifndef ASSERTMSG
-#if defined(__STDC_VERSION__) && (199901L <= __STDC_VERSION__) || defined(__MWERKS__) || defined(__SN__)
-#define ASSERTMSG(exp, ...) (void)((exp) || (OSPanic(__FILE__, __LINE__, __VA_ARGS__), 0))
-#else
-#define ASSERTMSG(exp, msg) (void)((exp) || (OSPanic(__FILE__, __LINE__, (msg)), 0))
-#endif
-#endif
-
-#ifndef ASSERTMSG1
-#define ASSERTMSG1(exp, msg, param1) (void)((exp) || (OSPanic(__FILE__, __LINE__, (msg), (param1)), 0))
-#endif
-
-#ifndef ASSERTMSG2
-#define ASSERTMSG2(exp, msg, param1, param2) (void)((exp) || (OSPanic(__FILE__, __LINE__, (msg), (param1), (param2)), 0))
-#endif
-
-#ifndef ASSERTMSG3
-#define ASSERTMSG3(exp, msg, param1, param2, param3) (void)((exp) || (OSPanic(__FILE__, __LINE__, (msg), (param1), (param2), (param3)), 0))
-#endif
-
-#ifndef ASSERTMSG4
-#define ASSERTMSG4(exp, msg, param1, param2, param3, param4) \
-	(void)((exp) || (OSPanic(__FILE__, __LINE__, (msg), (param1), (param2), (param3), (param4)), 0))
-#endif
-
-#else // _DEBUG
-
-#ifndef ASSERT
-#define ASSERT(exp)                     ((void)0)
-#define ASSERTMSGLINEV(line, cond, ...) (void)0
-#endif
-
-#ifndef ASSERTLINE
-#define ASSERTLINE(line, exp) ((void)0)
-#endif
-
-#ifndef ASSERTMSGLINE
-#define ASSERTMSGLINE(line, cond, msg) ((void)0)
-#endif
-
-#ifndef ASSERTMSG
-#if defined(__STDC_VERSION__) && (199901L <= __STDC_VERSION__) || defined(__MWERKS__) || defined(__SN__)
-#define ASSERTMSG(exp, ...) ((void)0)
-#else
-#define ASSERTMSG(exp, msg) ((void)0)
-#endif
-#endif
-
-#ifndef ASSERTMSG1
-#define ASSERTMSG1(exp, msg, param1) ((void)0)
-#endif
-#ifndef ASSERTMSG2
-#define ASSERTMSG2(exp, msg, param1, param2) ((void)0)
-#endif
-#ifndef ASSERTMSG3
-#define ASSERTMSG3(exp, msg, param1, param2, param3) ((void)0)
-#endif
-#ifndef ASSERTMSG4
-#define ASSERTMSG4(exp, msg, param1, param2, param3, param4) ((void)0)
-#endif
-
-#endif // _DEBUG
 
 END_SCOPE_EXTERN_C
 
