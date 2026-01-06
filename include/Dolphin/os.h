@@ -5,6 +5,7 @@
 
 #include "Dolphin/OS/OSAlarm.h"
 #include "Dolphin/OS/OSAlloc.h"
+#include "Dolphin/OS/OSArena.h"
 #include "Dolphin/OS/OSBootInfo.h"
 #include "Dolphin/OS/OSCache.h"
 #include "Dolphin/OS/OSContext.h"
@@ -64,26 +65,9 @@ void OSInit();
 
 u32 OSGetConsoleType();
 
-// Arena functions.
-void* OSGetArenaHi(void);
-void* OSGetArenaLo(void);
-void OSSetArenaHi(void* addr);
-void OSSetArenaLo(void* addr);
-
-#define OS_SYS_CALL_HANDLER  ((void*)0x80000C00)
-#define OS_HANDLER_SLOT_SIZE (0x100)
-
-void __OSSystemCallVectorStart();
-void __OSSystemCallVectorEnd();
-
-u8 GameChoice AT_ADDRESS(OS_BASE_CACHED | 0x30E3);
-
-volatile int __OSTVMode AT_ADDRESS(OS_BASE_CACHED | 0xCC);
-
 //////////////////////////////////
 
 // extern things.
-extern OSThreadQueue __DVDThreadQueue;
 extern u8 _stack_addr[];
 extern u8 _stack_end[];
 

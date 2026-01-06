@@ -8,6 +8,8 @@ static BOOL LastState;
 static OSTime HoldUp;
 static OSTime HoldDown;
 
+u8 GameChoice AT_ADDRESS(OS_BASE_CACHED | 0x30E3);
+
 /**
  * @TODO: Documentation
  */

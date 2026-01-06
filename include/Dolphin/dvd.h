@@ -1,6 +1,7 @@
 #ifndef _DOLPHIN_DVD_H
 #define _DOLPHIN_DVD_H
 
+#include "Dolphin/OS/OSThread.h"
 #include "types.h"
 
 BEGIN_SCOPE_EXTERN_C
@@ -195,6 +196,10 @@ void DVDDumpWaitingQueue();
 #define DVD_RESULT_CANCELED    -3
 
 #define DVD_AIS_SUCCESS 0
+
+//////////////////////////////////
+
+extern OSThreadQueue __DVDThreadQueue;
 
 //////////////////////////////////
 

@@ -10,6 +10,7 @@
 #include "jaudio/dspbuf.h"
 #include "jaudio/dspinterface.h"
 #include "jaudio/dspproc.h"
+#include "jaudio/dsptask.h"
 #include "jaudio/dummyprobe.h"
 #include "jaudio/dummyrom.h"
 #include "jaudio/dvdthread.h"
@@ -18,8 +19,6 @@
 #include "jaudio/rate.h"
 #include "jaudio/stackchecker.h"
 #include <stddef.h>
-
-DspFinishWork(u16);
 
 // this is purely for comm bullshit to match. pretty sure it's not the comm bug, just wacky.
 typedef struct Jac_AudioThread {
