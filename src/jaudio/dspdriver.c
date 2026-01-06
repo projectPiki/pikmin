@@ -1,9 +1,11 @@
 #include "jaudio/dspdriver.h"
 
+#include "Dolphin/PPCArch.h"
 #include "jaudio/audiothread.h"
 #include "jaudio/driverinterface.h"
 #include "jaudio/dspinterface.h"
 #include "jaudio/rate.h"
+
 #include <stddef.h>
 
 #define DSPCH_LENGTH (64)

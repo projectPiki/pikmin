@@ -1,8 +1,6 @@
 #ifndef _DOLPHIN_OS_H
 #define _DOLPHIN_OS_H
 
-#include "Dolphin/PPCArch.h"
-#include "Dolphin/dvd.h"
 #include "types.h"
 
 #include "Dolphin/OS/OSAlarm.h"
@@ -14,8 +12,6 @@
 #include "Dolphin/OS/OSException.h"
 #include "Dolphin/OS/OSExi.h"
 #include "Dolphin/OS/OSExpansion.h"
-#include "Dolphin/OS/OSUtil.h"
-// #include "Dolphin/OS/OSFastCast.h" // need to comment this out for jaudio bc paired single asm instructions mess with proc 750
 #include "Dolphin/OS/OSFont.h"
 #include "Dolphin/OS/OSInterrupt.h"
 #include "Dolphin/OS/OSMemory.h"
@@ -25,6 +21,9 @@
 #include "Dolphin/OS/OSReset.h"
 #include "Dolphin/OS/OSSerial.h"
 #include "Dolphin/OS/OSThread.h"
+#include "Dolphin/OS/OSUtil.h"
+
+// #include "Dolphin/OS/OSFastCast.h" // Is intentionally omitted for jaudio bc paired single asm instructions mess with proc 750
 
 BEGIN_SCOPE_EXTERN_C
 
@@ -40,7 +39,6 @@ extern void __OSModuleInit();
 extern void __OSInitAudioSystem();
 extern void __OSStopAudioSystem();
 extern void __OSInitMemoryProtection();
-extern void __OSInitAlarm();
 
 void OSInit();
 
@@ -52,7 +50,6 @@ void OSPanic(const char* file, int line, const char* message, ...);
 #define OSErrorLine(line, ...) OSPanic(__FILE__, line, __VA_ARGS__)
 
 // Other OS functions.
-void OSRegisterVersion(const char*);
 #define OS_CONSOLE_RETAIL4     0x00000004
 #define OS_CONSOLE_RETAIL3     0x00000003
 #define OS_CONSOLE_RETAIL2     0x00000002
@@ -101,18 +98,10 @@ u32 OSGetEuRgb60Mode();
 void OSSetEuRgb60Mode(u32 on);
 
 // Arena functions.
-extern void* __OSArenaHi;
-
 void* OSGetArenaHi(void);
 void* OSGetArenaLo(void);
 void OSSetArenaHi(void* addr);
 void OSSetArenaLo(void* addr);
-
-// targsupp
-extern u32 TRKAccessFile(u32, u32, u32*, u8*);
-extern u32 TRKOpenFile(u32, u32, u32*, u8*);
-extern u32 TRKCloseFile(u32, u32);
-extern u32 TRKPositionFile(u32, u32, u32*, u8*);
 
 #define OS_SYS_CALL_HANDLER  ((void*)0x80000C00)
 #define OS_HANDLER_SLOT_SIZE (0x100)
@@ -120,16 +109,9 @@ extern u32 TRKPositionFile(u32, u32, u32*, u8*);
 void __OSSystemCallVectorStart();
 void __OSSystemCallVectorEnd();
 
-void OSFillFPUContext(OSContext*);
-extern u32 __OSFpscrEnableBits; /** TODO: find a wrapper for this. Symbol is defined in OSError.c. */
-
-u16 __OSWirelessPadFixMode AT_ADDRESS(OS_BASE_CACHED | 0x30E0);
 u8 GameChoice AT_ADDRESS(OS_BASE_CACHED | 0x30E3);
 
 volatile int __OSTVMode AT_ADDRESS(OS_BASE_CACHED | 0xCC);
-
-// u32 GameCode : 0x80000000;
-// u32 FSTLocationInRam : 0x80000038;
 
 //////////////////////////////////
 
