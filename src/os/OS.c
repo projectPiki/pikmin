@@ -34,7 +34,6 @@ void SIInit();
 void __OSContextInit();
 void __OSInitAudioSystem();
 void __OSInitMemoryProtection();
-void __OSInitSram();
 void __OSInitSystemCall();
 void __OSInterruptInit();
 void __OSThreadInit();
