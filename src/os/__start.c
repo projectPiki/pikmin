@@ -126,7 +126,7 @@ DECL_SECT(".init") extern __bss_init_info _bss_init_info[];
 
 // clang-format on
 
-inline static void __copy_rom_section(void* dst, const void* src, u32 size)
+static void __copy_rom_section(void* dst, const void* src, u32 size)
 {
 	if (size && (dst != src)) {
 		memcpy(dst, src, size);
@@ -134,14 +134,14 @@ inline static void __copy_rom_section(void* dst, const void* src, u32 size)
 	}
 }
 
-inline static void __init_bss_section(void* dst, u32 size)
+static void __init_bss_section(void* dst, u32 size)
 {
 	if (size) {
 		memset(dst, 0, size);
 	}
 }
 
-void __init_data(void)
+static void __init_data(void)
 {
 	__rom_copy_info* dci;
 	__bss_init_info* bii;

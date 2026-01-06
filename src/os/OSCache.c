@@ -1,6 +1,5 @@
 #include "Dolphin/db.h"
 #include "Dolphin/os.h"
-#define PPCSYNC sc // system call performs PPCSync()
 
 /**
  * @TODO: Documentation
@@ -144,7 +143,7 @@ _loop:
 	addi    addr,addr,32
 	bdnz    _loop
 
-	PPCSYNC
+	sc
 
 	blr
 #endif // clang-format on
@@ -170,7 +169,7 @@ _loop:
 	addi    addr,addr,32
 	bdnz    _loop
 
-	PPCSYNC
+	sc
 
 	blr
 #endif // clang-format on

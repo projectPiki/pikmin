@@ -287,7 +287,7 @@ void OSSetSoundMode(u32 mode)
 	__OSUnlockSram(TRUE);
 }
 
-inline OSSram* __OSLockSramHACK()
+static inline OSSram* __OSLockSramHACK()
 {
 	return LockSram(0);
 }
