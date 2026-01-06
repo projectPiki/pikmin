@@ -3,6 +3,7 @@
 
 #include "Dolphin/OS/OSContext.h"
 #include "Dolphin/OS/OSException.h"
+#include "Dolphin/OS/OSTime.h"
 #include "Dolphin/OS/OSUtil.h"
 #include "types.h"
 

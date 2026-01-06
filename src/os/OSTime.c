@@ -1,3 +1,5 @@
+#include "Dolphin/OS/OSTime.h"
+
 #include "Dolphin/os.h"
 
 #define OS_TIME_MONTH_MAX    12
