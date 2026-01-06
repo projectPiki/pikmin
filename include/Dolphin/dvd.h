@@ -163,6 +163,39 @@ void DVDDumpWaitingQueue();
 
 //////////////////////////////////
 
+////////// PRIVATE DVD FUNCTIONS //////////
+
+// In no particular order; these are otherwise implicitly used.
+// TODO: A lot of these aren't actually private, I was just being lazy.
+
+void __DVDFSInit();
+void __DVDClearWaitingQueue();
+void __DVDInitWA(void);
+void __fstLoad(void);
+BOOL DVDLowRead(void* addr, u32 length, u32 offset, DVDLowCallback callback);
+void __DVDStoreErrorCode(u32 error);
+BOOL DVDLowStopMotor(DVDLowCallback callback);
+BOOL DVDLowRequestError(DVDLowCallback callback);
+BOOL DVDLowSeek(u32 offset, DVDLowCallback callback);
+BOOL DVDLowAudioBufferConfig(BOOL enable, u32 size, DVDLowCallback callback);
+BOOL DVDLowReadDiskID(DVDDiskID* diskID, DVDLowCallback callback);
+BOOL DVDLowWaitCoverClose(DVDLowCallback callback);
+BOOL __DVDCheckWaitingQueue();
+BOOL DVDLowRequestAudioStatus(u32 subcmd, DVDLowCallback callback);
+BOOL DVDLowAudioStream(u32 subcmd, u32 length, u32 offset, DVDLowCallback callback);
+BOOL DVDLowInquiry(DVDDriveInfo* info, DVDLowCallback callback);
+BOOL __DVDPushWaitingQueue(int idx, struct DVDQueue* newTail);
+void DVDLowReset();
+BOOL DVDLowBreak();
+BOOL __DVDDequeueWaitingQueue(DVDQueue* queue);
+BOOL DVDReadDiskID(DVDCommandBlock* block, DVDDiskID* diskID, DVDCBCallback callback);
+void DVDSeekAbsAsyncPrio(DVDCommandBlock* block, void* addr, DVDCBCallback callback, s32 prio);
+BOOL DVDPrepareStreamAbsAsync(DVDCommandBlock* block, u32 length, u32 offset, DVDCBCallback callback);
+BOOL DVDReadAbsAsyncForBS(DVDCommandBlock* block, void* addr, s32 length, s32 offset, DVDCBCallback callback);
+void __DVDPrepareResetAsync(DVDCBCallback callback);
+
+///////////////////////////////////////////
+
 ////// USEFUL DVD DEFINES ////////
 // Macro for reading.
 #define DVDReadAsync(fileInfo, addr, length, offset, callback) DVDReadAsyncPrio((fileInfo), (addr), (length), (offset), (callback), 2)

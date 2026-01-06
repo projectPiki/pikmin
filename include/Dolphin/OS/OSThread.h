@@ -113,6 +113,11 @@ OSThread* OSSetIdleFunction(OSIdleFunction idleFunc, void* param, void* stack, u
 OSThread* OSGetIdleFunction();
 s32 OSCheckActiveThreads();
 
+// Private
+void __OSReschedule(void);
+OSPriority __OSGetEffectivePriority(OSThread* thread);
+void __OSPromoteThread(OSThread* thread, OSPriority priority);
+
 //////////////////////////////////
 
 ///////// THREAD DEFINES /////////

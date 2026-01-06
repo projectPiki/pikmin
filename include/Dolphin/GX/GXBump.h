@@ -35,6 +35,9 @@ extern void GXSetTevIndBumpST(GXTevStageID tevStage, GXIndTexStageID indStage, G
 extern void GXSetTevIndBumpXYZ(GXTevStageID tevStage, GXIndTexStageID indStage, GXIndTexMtxID mtx);
 extern void GXSetTevIndRepeat(GXTevStageID stage);
 
+// Private
+void __GXUpdateBPMask(void);
+
 ////////////////////////////////////////////
 
 END_SCOPE_EXTERN_C
