@@ -6,9 +6,7 @@
 #include "types.h"
 #include <stddef.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
+BEGIN_SCOPE_EXTERN_C
 
 ////////// THREAD TYPES //////////
 // Forward declarations.
@@ -256,8 +254,6 @@ enum OS_THREAD_STATE {
 	} while (0)
 //////////////////////////////////
 
-#ifdef __cplusplus
-};
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C
 
 #endif

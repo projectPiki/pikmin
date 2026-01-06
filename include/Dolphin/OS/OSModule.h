@@ -4,9 +4,7 @@
 #include "Dolphin/OS/OSContext.h"
 #include "types.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
+BEGIN_SCOPE_EXTERN_C
 
 ////////// MODULE TYPES //////////
 // Forward declarations.
@@ -105,8 +103,6 @@ OSModuleInfo* OSSearchModule(void* ptr, u32* section, u32* offset);
 
 //////////////////////////////////
 
-#ifdef __cplusplus
-};
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C
 
 #endif

@@ -5,9 +5,7 @@
 #include "Dolphin/os.h"
 #include "types.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
+BEGIN_SCOPE_EXTERN_C
 
 //////////// BASIC CARD DEFINES ////////////
 // Encodings.
@@ -416,8 +414,6 @@ s32 __CARDUpdateFatBlock(s32 channel, CARDFatBlock* fat, CARDCallback callback);
 #define CARDGetFatBlock(card, i)       ((CARDFatBlock*)((u8*)card->workArea + (3 + i) * CARD_SYSTEM_BLOCK_SIZE))
 
 ////////////////////////////////////////////
-#ifdef __cplusplus
-}
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C
 
 #endif

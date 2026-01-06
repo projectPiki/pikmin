@@ -4,15 +4,11 @@
 #include "types.h"
 #include <stddef.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+BEGIN_SCOPE_EXTERN_C
 
 DECL_SECT(".init") void* memcpy(void* dest, const void* src, size_t n);
 DECL_SECT(".init") void __fill_mem(void* dest, int val, size_t count);
 DECL_SECT(".init") void* memset(void* dest, int val, size_t count);
 
-#ifdef __cplusplus
-}
-#endif
+END_SCOPE_EXTERN_C
 #endif

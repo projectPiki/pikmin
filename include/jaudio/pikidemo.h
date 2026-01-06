@@ -14,9 +14,7 @@ void Jac_DemoBGMForceStop();
 
 ////////////////////////////////////////////////////////////
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
+BEGIN_SCOPE_EXTERN_C
 
 //////////// JAUDIO PIKMIN DEMO FUNCTIONS (C) ////////////
 void Jac_DemoSceneInit(void);                               // args
@@ -35,8 +33,6 @@ void Jac_SetDemoPartsCount(int);                            // args
 
 /////////////////////////////////////////////////////////
 
-#ifdef __cplusplus
-};
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C
 
 #endif

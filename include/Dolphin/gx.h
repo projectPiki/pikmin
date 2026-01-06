@@ -1,12 +1,6 @@
 #ifndef _DOLPHIN_GX_H
 #define _DOLPHIN_GX_H
 
-#include "types.h"
-
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
-
 #include "Dolphin/GX/GXBump.h"
 #include "Dolphin/GX/GXData.h"
 #include "Dolphin/GX/GXEnum.h"
@@ -23,9 +17,5 @@ extern "C" {
 #include "Dolphin/GX/GXTypes.h"
 #include "Dolphin/mtx.h"
 #include "Dolphin/vi.h"
-
-#ifdef __cplusplus
-};
-#endif // ifdef __cplusplus
 
 #endif

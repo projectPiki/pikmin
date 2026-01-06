@@ -3,9 +3,7 @@
 
 #include "types.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
+BEGIN_SCOPE_EXTERN_C
 
 typedef struct Vec {
 	f32 x;
@@ -26,8 +24,6 @@ f32 PSVECMag(Vec*);
 f32 VECMag(Vec*);
 #endif
 
-#ifdef __cplusplus
-}
-#endif
+END_SCOPE_EXTERN_C
 
 #endif

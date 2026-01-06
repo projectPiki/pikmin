@@ -3,9 +3,7 @@
 
 #include "types.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
+BEGIN_SCOPE_EXTERN_C
 
 unsigned int TRKTargetContinue(void);
 void TRKTargetSetStopped(unsigned int);
@@ -14,8 +12,6 @@ void TRKSwapAndGo();
 void UnreserveEXI2Port();
 void ReserveEXI2Port();
 
-#ifdef __cplusplus
-};
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C
 
 #endif

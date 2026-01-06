@@ -5,9 +5,7 @@
 #include "Dolphin/OS/OSUtil.h"
 #include "types.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
+BEGIN_SCOPE_EXTERN_C
 
 ///////// CACHE FUNCTIONS ////////
 // Data cache functions.
@@ -54,8 +52,6 @@ void L2SetWriteThrough(BOOL doWriteThrough);
 
 //////////////////////////////////
 
-#ifdef __cplusplus
-};
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C
 
 #endif

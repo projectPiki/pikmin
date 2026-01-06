@@ -5,9 +5,7 @@
 #include "Dolphin/OS/OSUtil.h"
 #include "types.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
+BEGIN_SCOPE_EXTERN_C
 
 //////// EXCEPTION TYPES /////////
 // Useful typedef for exceptions.
@@ -71,8 +69,6 @@ void OSSwitchFPUContext(__OSException exception, OSContext* context);
 
 //////////////////////////////////
 
-#ifdef __cplusplus
-};
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C
 
 #endif

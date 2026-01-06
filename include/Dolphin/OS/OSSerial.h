@@ -4,9 +4,7 @@
 #include "Dolphin/OS/OSContext.h"
 #include "types.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
+BEGIN_SCOPE_EXTERN_C
 
 ///////////////// SI TYPES /////////////////
 // SI callback function type.
@@ -150,8 +148,6 @@ u32 SIProbe(s32 chan);
 
 //////////////////////////////////
 
-#ifdef __cplusplus
-};
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C
 
 #endif

@@ -3,9 +3,7 @@
 
 #include "types.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
+BEGIN_SCOPE_EXTERN_C
 
 f64 nan(const char*);
 f32 cosf(f32 __x);
@@ -13,8 +11,6 @@ f32 sinf(f32 __x);
 f32 tanf(f32 __x);
 f32 atan2f(f32 __x, f32 __y);
 
-#ifdef __cplusplus
-};
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C
 
 #endif

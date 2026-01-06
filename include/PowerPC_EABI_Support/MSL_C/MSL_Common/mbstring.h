@@ -5,9 +5,7 @@
 #include "types.h"
 #include <stddef.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+BEGIN_SCOPE_EXTERN_C
 
 int __mbtowc_noconv(wchar_t*, const char*, size_t);
 int __wctomb_noconv(char*, wchar_t);
@@ -18,7 +16,5 @@ static int unicode_to_UTF8(char* s, wchar_t wchar);
 int mbtowc(wchar_t* pwc, const char* s, size_t n);
 static int is_utf8_complete(const char* s, size_t n);
 
-#ifdef __cplusplus
-}
-#endif
+END_SCOPE_EXTERN_C
 #endif

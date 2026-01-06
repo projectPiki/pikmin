@@ -3,9 +3,7 @@
 
 #include "types.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
+BEGIN_SCOPE_EXTERN_C
 
 /////////// JAUDIO AI CONTROL DEFINITIONS ///////////
 // Callbacks.
@@ -43,8 +41,6 @@ void Jac_SetMixerLevel(f32, f32);
 
 /////////////////////////////////////////////////////
 
-#ifdef __cplusplus
-};
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C
 
 #endif

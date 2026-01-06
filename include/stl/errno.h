@@ -1,9 +1,9 @@
 #ifndef _ERRNO_H
 #define _ERRNO_H
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include "types.h"
+
+BEGIN_SCOPE_EXTERN_C
 
 // Error constants
 #define E2BIG        7
@@ -52,8 +52,6 @@ extern "C" {
 
 extern int errno;
 
-#ifdef __cplusplus
-}
-#endif
+END_SCOPE_EXTERN_C
 
 #endif

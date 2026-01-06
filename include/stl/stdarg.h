@@ -4,9 +4,7 @@
 #include "types.h"
 #include <stddef.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
+BEGIN_SCOPE_EXTERN_C
 
 DECL_SECT(".init") void* memcpy(void*, const void*, size_t);
 DECL_SECT(".init") void __fill_mem(void*, int, size_t);
@@ -45,8 +43,6 @@ typedef char* va_list;
 #define va_end(ap)      (ap = (va_list)0)
 #endif
 
-#ifdef __cplusplus
-};
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C
 
 #endif

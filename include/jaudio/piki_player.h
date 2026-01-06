@@ -47,9 +47,7 @@ void Jac_UpdatePikiGaya();
 
 ////////////////////////////////////////////////////////////
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
+BEGIN_SCOPE_EXTERN_C
 
 //////////// JAUDIO PIKMIN DEMO FUNCTIONS (C) ////////////
 void Jac_Orima_Walk(s32 groundSoundID, u32 p2); // args uncertain
@@ -60,8 +58,6 @@ void Jac_Piki_Number(u32);                      // args
 
 /////////////////////////////////////////////////////////
 
-#ifdef __cplusplus
-};
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C
 
 #endif

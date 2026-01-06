@@ -6,6 +6,8 @@
 
 #include "types.h"
 
+BEGIN_SCOPE_EXTERN_C
+
 typedef struct cmdqueue_ CmdQueue;
 
 struct cmdqueue_ {
@@ -17,10 +19,6 @@ struct cmdqueue_ {
 	CmdQueue* next;            // _68;
 };
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
-
 extern CmdQueue* queue_list; // Pointer to the start of a linked list
 
 void Jal_AddCmdQueue(CmdQueue*, seqp_*, u8); // TODO: Types uncertain
@@ -28,8 +26,6 @@ void Jal_SendCmdQueue_Noblock(CmdQueue* queue, u16 msg);
 void Jal_SendCmdQueue_Force(CmdQueue* queue, u16 msg);
 void Jal_CmdQueue_Init(void);
 
-#ifdef __cplusplus
-};
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C
 
 #endif

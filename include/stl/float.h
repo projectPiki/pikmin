@@ -3,9 +3,7 @@
 
 #include "types.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
+BEGIN_SCOPE_EXTERN_C
 
 extern int __double_min[];
 extern int __double_max[];
@@ -56,8 +54,6 @@ extern int __float_epsilon[];
 #define LDBL_MAX (*(f128*)__extended_max)
 #define LDBL_MIN (*(f128*)__extended_min)
 
-#ifdef __cplusplus
-};
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C
 
 #endif

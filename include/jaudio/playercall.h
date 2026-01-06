@@ -3,9 +3,7 @@
 
 #include "types.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
+BEGIN_SCOPE_EXTERN_C
 
 //////////// JAUDIO PLAYER CALL (C) DEFINITIONS ////////////
 // Structs and function typedefs.
@@ -29,9 +27,7 @@ s32 Jac_RegisterPlayerCallback(PlayerCallBack, void*);
 
 ////////////////////////////////////////////////////////////
 
-#ifdef __cplusplus
-};
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C
 
 /////////// JAUDIO PLAYER CALL (C++) DEFINITIONS ///////////
 // Global functions.

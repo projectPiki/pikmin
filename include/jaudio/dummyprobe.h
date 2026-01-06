@@ -3,9 +3,7 @@
 
 #include "types.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
+BEGIN_SCOPE_EXTERN_C
 
 //////////// JAUDIO DUMMY PROBE FUNCTIONS ////////////
 void Probe_Start(s32 id, immut char* label);
@@ -14,8 +12,6 @@ void Console_printf(immut char*, ...);
 
 ///////////////////////////////////////////////////////
 
-#ifdef __cplusplus
-};
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C
 
 #endif

@@ -1,9 +1,7 @@
 #include "Dolphin/db.h"
 #include "types.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
+BEGIN_SCOPE_EXTERN_C
 
 #define PAD3_BUTTON_ADDR        0x800030E4
 #define OS_RESET_RESTART        0
@@ -58,6 +56,4 @@ typedef struct __bss_init_info {
 
 DECL_SECT(".init") extern __bss_init_info _bss_init_info[];
 
-#ifdef __cplusplus
-};
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C

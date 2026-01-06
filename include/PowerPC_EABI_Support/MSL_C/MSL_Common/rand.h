@@ -3,17 +3,13 @@
 
 #include "types.h"
 
-#define RAND_MAX (0x7fff)
+BEGIN_SCOPE_EXTERN_C
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
+#define RAND_MAX (0x7fff)
 
 int rand();
 void srand(u32 seed);
 
-#ifdef __cplusplus
-};
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C
 
 #endif

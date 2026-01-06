@@ -3,14 +3,12 @@
 
 #include "types.h"
 
+BEGIN_SCOPE_EXTERN_C
+
 typedef struct JPorthead_ {
 	u32 _00; // _00
 	u32 _04; // _04
 } JPorthead_;
-
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
 
 void Add_PortcmdOnce(u32*);
 void Add_PortcmdStay(void); // UNUSED but we know it's extern "C"
@@ -26,9 +24,7 @@ void JP_Pitch1Shot(void); // UNUSED but we know it's extern "C"
 void JP_Start1Shot(void); // UNUSED but we know it's extern "C"
 void JP_Stop1Shot(void);  // UNUSED but we know it's extern "C"
 
-#ifdef __cplusplus
-}
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C
 
 static int Get_Portcmd(JPorthead_* port);
 static s32 Portcmd_Main(void* a);

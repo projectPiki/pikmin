@@ -6,9 +6,7 @@
 #include "types.h"
 #include <stddef.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+BEGIN_SCOPE_EXTERN_C
 
 typedef int (*__decode_mbyte)(wchar_t*, const char*, size_t);
 typedef int (*__encode_mbyte)(char*, wchar_t);
@@ -118,7 +116,6 @@ struct __locale {
 extern struct __locale _current_locale;
 extern struct lconv __lconv;
 
-#ifdef __cplusplus
-}
-#endif
+END_SCOPE_EXTERN_C
+
 #endif

@@ -8,9 +8,7 @@
 #include "Dolphin/GX/GXTypes.h"
 #include "Dolphin/os.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
+BEGIN_SCOPE_EXTERN_C
 
 /////////////// CONTROL ENUMS //////////////
 typedef enum _CPStatus {
@@ -284,8 +282,6 @@ static inline u32 GXReadPIReg(u32 addrLo, u32 addrHi)
 
 ////////////////////////////////////////////
 
-#ifdef __cplusplus
-};
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C
 
 #endif

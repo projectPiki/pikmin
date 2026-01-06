@@ -3,12 +3,10 @@
 
 #include "types.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
-
 #include "Dolphin/GX/GXEnum.h"
 #include "Dolphin/GX/GXTypes.h"
+
+BEGIN_SCOPE_EXTERN_C
 
 //////////// GEOMETRY FUNCTIONS ////////////
 // Basic GX functions.
@@ -49,8 +47,6 @@ extern void GXGetCullMode(GXCullMode* mode);
 
 ////////////////////////////////////////////
 
-#ifdef __cplusplus
-};
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C
 
 #endif

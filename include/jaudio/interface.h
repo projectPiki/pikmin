@@ -3,9 +3,7 @@
 
 #include "types.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
+BEGIN_SCOPE_EXTERN_C
 
 //////////// JAUDIO GLOBAL INTERFACE FUNCTIONS ////////////
 void Jac_OutputMode(int mode);
@@ -14,8 +12,6 @@ void Jac_SetSEVolume(u8 vol);
 void Jac_Gsync();
 void Jac_SetProcessStatus(u32 processStat);
 
-#ifdef __cplusplus
-};
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C
 
 #endif

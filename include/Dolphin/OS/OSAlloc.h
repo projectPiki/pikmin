@@ -4,9 +4,7 @@
 #include "Dolphin/OS/OSUtil.h"
 #include "types.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
+BEGIN_SCOPE_EXTERN_C
 
 /////////// HEAP TYPES ///////////
 // Useful typedef for heap locations.
@@ -39,8 +37,6 @@ void* OSAllocFromHeap(OSHeapHandle heap, u32 size);
 
 //////////////////////////////////
 
-#ifdef __cplusplus
-};
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C
 
 #endif

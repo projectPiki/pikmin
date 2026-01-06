@@ -3,9 +3,7 @@
 
 #include "types.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
+BEGIN_SCOPE_EXTERN_C
 
 //////////////// HIO TYPES /////////////////
 // Callback function types.
@@ -27,8 +25,6 @@ BOOL HIOReadStatus(u32* status);
 
 ////////////////////////////////////////////
 
-#ifdef __cplusplus
-}
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C
 
 #endif

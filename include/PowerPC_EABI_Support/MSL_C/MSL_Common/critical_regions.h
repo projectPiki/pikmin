@@ -3,9 +3,7 @@
 
 #include "types.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
+BEGIN_SCOPE_EXTERN_C
 
 enum critical_regions {
 	atexit_funcs_access,
@@ -25,8 +23,6 @@ void __kill_critical_regions(void);
 void __begin_critical_region(int region);
 void __end_critical_region(int region);
 
-#ifdef __cplusplus
-};
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C
 
 #endif

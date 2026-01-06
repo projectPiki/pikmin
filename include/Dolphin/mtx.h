@@ -3,11 +3,9 @@
 
 #include "types.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
-
 #include "Dolphin/vec.h"
+
+BEGIN_SCOPE_EXTERN_C
 
 /////////////// TYPE DEFINES ///////////////
 #define MTXDegToRad(a) ((a) * 0.01745329252f)
@@ -65,8 +63,6 @@ static inline void MTXSetPosition(Mtx mtx, const Vec* pos)
 
 ////////////////////////////////////////////
 
-#ifdef __cplusplus
-}
-#endif
+END_SCOPE_EXTERN_C
 
 #endif

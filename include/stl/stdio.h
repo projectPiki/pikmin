@@ -6,9 +6,7 @@
 #include <stdarg.h>
 #include <stddef.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
+BEGIN_SCOPE_EXTERN_C
 
 typedef u32 __file_handle;
 typedef u32 fpos_t;
@@ -128,8 +126,6 @@ extern FILE __files[3];
 // #include "PowerPC_EABI_Support/MSL_C/MSL_Common/printf.h"
 // #include "PowerPC_EABI_Support/MSL_C/MSL_Common/scanf.h"
 
-#ifdef __cplusplus
-};
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C
 
 #endif

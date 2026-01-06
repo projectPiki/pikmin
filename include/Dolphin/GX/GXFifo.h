@@ -3,12 +3,10 @@
 
 #include "types.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
-
 #include "Dolphin/GX/GXEnum.h"
 #include "Dolphin/GX/GXTypes.h"
+
+BEGIN_SCOPE_EXTERN_C
 
 /////////////// FIFO STRUCTS ///////////////
 #define GX_FIFO_MINSIZE  (64 * 1024)
@@ -229,8 +227,6 @@ extern void GXDisableBreakPt();
 
 ////////////////////////////////////////////
 
-#ifdef __cplusplus
-};
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C
 
 #endif

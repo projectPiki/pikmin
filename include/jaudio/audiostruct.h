@@ -5,9 +5,7 @@
 #include "jaudio/bx.h"
 #include "types.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
+BEGIN_SCOPE_EXTERN_C
 
 ///////////////// JAUDIO STRUCTURES /////////////////
 // Members and names from AC and SMS Decomp with gratitude.
@@ -190,8 +188,6 @@ struct jc_ {
 
 /////////////////////////////////////////////////////
 
-#ifdef __cplusplus
-};
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C
 
 #endif

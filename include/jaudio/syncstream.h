@@ -4,15 +4,13 @@
 #include "jaudio/dspinterface.h"
 #include "types.h"
 
+BEGIN_SCOPE_EXTERN_C
+
 typedef struct dspch_ dspch_;
 typedef struct DSPchannel_ DSPchannel_;
 typedef struct StreamCtrl_ StreamCtrl_;
 typedef struct StreamHeader_ StreamHeader_;
 typedef struct BufControl_ BufControl_;
-
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
 
 typedef int (*StreamCallback)(u32, s32);
 
@@ -115,8 +113,6 @@ struct StreamCtrl_ {
 	s32 bufferMargin;             // _21A4C
 };
 
-#ifdef __cplusplus
-};
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C
 
 #endif

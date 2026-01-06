@@ -5,9 +5,7 @@
 #include "PowerPC_EABI_Support/MetroTRK/trkenum.h"
 #include "types.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
+BEGIN_SCOPE_EXTERN_C
 
 /////// TRK STRUCTS AND TYPES //////
 // Function types for DB communications.
@@ -137,8 +135,6 @@ typedef struct ProcessorRestoreFlags_PPC {
 
 ////////////////////////////////////
 
-#ifdef __cplusplus
-};
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C
 
 #endif

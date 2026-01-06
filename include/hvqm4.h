@@ -3,9 +3,7 @@
 
 #include "types.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
+BEGIN_SCOPE_EXTERN_C
 
 /*
  * Hybrid Vector Quantization Movie 4 (HVQM4) Video Decoder
@@ -235,8 +233,6 @@ void HVQM4DecodeIpic(SeqObj* obj, void* code, void* outbuf);
 void HVQM4DecodePpic(SeqObj* obj, void* code, void* outbuf, void* ref1);
 void HVQM4DecodeBpic(SeqObj* obj, void* code, void* outbuf, void* ref2, void* ref1);
 
-#ifdef __cplusplus
-};
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C
 
 #endif

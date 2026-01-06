@@ -4,9 +4,7 @@
 #include "Dolphin/OS/OSUtil.h"
 #include "types.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
+BEGIN_SCOPE_EXTERN_C
 
 #define HW_REG(reg, type) *(volatile type*)(u32)(reg) // generic HW_REG macro (please do not use this)
 
@@ -236,8 +234,6 @@ vu32 __AIRegs[8] AT_ADDRESS(0xCC006C00);
 
 //////////////////////////////////
 
-#ifdef __cplusplus
-};
-#endif // ifdef __cplusplus
+END_SCOPE_EXTERN_C
 
 #endif

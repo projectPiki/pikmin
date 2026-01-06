@@ -1,11 +1,10 @@
 #ifndef _LIMITS_H
 #define _LIMITS_H
+
 #include "types.h"
 #include <iterator.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+BEGIN_SCOPE_EXTERN_C
 
 #define CHAR_BIT 8
 
@@ -32,9 +31,9 @@ extern "C" {
 #define LLONG_MAX  0x7FFFFFFFFFFFFFFFLL
 #define ULLONG_MAX 0xFFFFFFFFFFFFFFFFULL
 
-#ifdef __cplusplus
-}
+END_SCOPE_EXTERN_C
 
+#ifdef __cplusplus
 namespace std {
 template <typename T>
 class numeric_limits {

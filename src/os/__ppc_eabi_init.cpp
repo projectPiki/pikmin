@@ -2,9 +2,7 @@
 #include "Dolphin/os.h"
 #include "types.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+BEGIN_SCOPE_EXTERN_C
 
 typedef void (*voidfunctionptr)(); // pointer to function returning void
 DECL_SECT(".ctors") extern voidfunctionptr _ctors[];
@@ -87,6 +85,4 @@ void _ExitProcess(void)
 	PPCHalt();
 }
 
-#ifdef __cplusplus
-}
-#endif
+END_SCOPE_EXTERN_C
