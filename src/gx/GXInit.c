@@ -230,7 +230,7 @@ GXFifoObj* GXInit(void* base, u32 size)
 	}
 	default:
 	{
-		ASSERTMSGLINE(0x38B, 0, "GXInit: invalid TV format");
+		OSAssertMsgLine(0x38B, 0, "GXInit: invalid TV format");
 		rmode = &GXNtsc480IntDf;
 		break;
 	}
@@ -402,7 +402,7 @@ void __GXInitGX()
 	}
 	default:
 	{
-		ASSERTMSGLINE(0x38B, 0, "GXInit: invalid TV format");
+		OSAssertMsgLine(0x38B, 0, "GXInit: invalid TV format");
 		rmode = &GXNtsc480IntDf;
 		break;
 	}

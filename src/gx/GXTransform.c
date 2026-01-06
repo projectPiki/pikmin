@@ -12,7 +12,7 @@ void GXProject(f32 x, f32 y, f32 z, const Mtx mtx, f32* pm, f32* vp, f32* sx, f3
 	f32 zc;
 	f32 wc;
 
-	ASSERTMSGLINE(0x93, pm && vp && sx && sy && sz, "GXGet*: invalid null pointer");
+	OSAssertMsgLine(0x93, pm && vp && sx && sy && sz, "GXGet*: invalid null pointer");
 
 	peye.x = mtx[0][3] + ((mtx[0][2] * z) + ((mtx[0][0] * x) + (mtx[0][1] * y)));
 	peye.y = mtx[1][3] + ((mtx[1][2] * z) + ((mtx[1][0] * x) + (mtx[1][1] * y)));
@@ -107,7 +107,7 @@ void GXSetProjectionv(const f32* ptr)
  */
 void GXGetProjectionv(f32* ptr)
 {
-	ASSERTMSGLINE(0x12E, ptr, "GXGet*: invalid null pointer");
+	OSAssertMsgLine(0x12E, ptr, "GXGet*: invalid null pointer");
 
 	ptr[0] = gx->projType;
 	ptr[1] = gx->projMtx[0];
@@ -234,10 +234,10 @@ void GXLoadPosMtxImm(const Mtx mtx, u32 id)
 }
 
 // this one uses cmpwi instead of cmplwi for some reason
-#define SET_REG_FIELD_(line, reg, size, shift, val)                                                                \
-	do {                                                                                                           \
-		ASSERTMSGLINE(line, ((s32)(val) & ~((1 << (size)) - 1)) == 0, "GX Internal: Register field out of range"); \
-		(reg) = ((u32)(reg) & ~(((1 << (size)) - 1) << (shift))) | ((u32)(val) << (shift));                        \
+#define SET_REG_FIELD_(line, reg, size, shift, val)                                                                  \
+	do {                                                                                                             \
+		OSAssertMsgLine(line, ((s32)(val) & ~((1 << (size)) - 1)) == 0, "GX Internal: Register field out of range"); \
+		(reg) = ((u32)(reg) & ~(((1 << (size)) - 1) << (shift))) | ((u32)(val) << (shift));                          \
 	} while (0)
 
 /**
@@ -368,7 +368,7 @@ void GXLoadTexMtxImm(const Mtx mtx, u32 id, GXTexMtxType type)
 
 	if (id >= GX_PTTEXMTX0) {
 		addr = (id - GX_PTTEXMTX0) * 4 + 0x500;
-		ASSERTMSGLINE(0x2CC, type == GX_MTX3x4, "GXLoadTexMtx: Invalid matrix type");
+		OSAssertMsgLine(0x2CC, type == GX_MTX3x4, "GXLoadTexMtx: Invalid matrix type");
 	} else {
 		addr = id * 4;
 	}
@@ -415,7 +415,7 @@ void GXLoadTexMtxIndx(u16 mtx_indx, u32 id, GXTexMtxType type)
 
 	if (id >= GX_PTTEXMTX0) {
 		offset = (id - GX_PTTEXMTX0) * 4 + 0x500;
-		ASSERTMSGLINE(0x314, type == GX_MTX3x4, "GXLoadTexMtx: Invalid matrix type");
+		OSAssertMsgLine(0x314, type == GX_MTX3x4, "GXLoadTexMtx: Invalid matrix type");
 	} else {
 		offset = id * 4;
 	}
@@ -495,7 +495,7 @@ void GXSetViewport(f32 left, f32 top, f32 wd, f32 ht, f32 nearz, f32 farz)
  */
 void GXGetViewportv(f32* vp)
 {
-	ASSERTMSGLINE(0x397, vp, "GXGet*: invalid null pointer");
+	OSAssertMsgLine(0x397, vp, "GXGet*: invalid null pointer");
 
 	vp[0] = gx->vpLeft;
 	vp[1] = gx->vpTop;
@@ -517,10 +517,10 @@ void GXSetScissor(u32 left, u32 top, u32 wd, u32 ht)
 
 	CHECK_GXBEGIN(0x3B4, "GXSetScissor");
 
-	ASSERTMSGLINE(0x3B5, left < 1708, "GXSetScissor: Left origin > 1708");
-	ASSERTMSGLINE(0x3B6, top < 1708, "GXSetScissor: top origin > 1708");
-	ASSERTMSGLINE(0x3B7, left + wd < 1708, "GXSetScissor: right edge > 1708");
-	ASSERTMSGLINE(0x3B8, top + ht < 1708, "GXSetScissor: bottom edge > 1708");
+	OSAssertMsgLine(0x3B5, left < 1708, "GXSetScissor: Left origin > 1708");
+	OSAssertMsgLine(0x3B6, top < 1708, "GXSetScissor: top origin > 1708");
+	OSAssertMsgLine(0x3B7, left + wd < 1708, "GXSetScissor: right edge > 1708");
+	OSAssertMsgLine(0x3B8, top + ht < 1708, "GXSetScissor: bottom edge > 1708");
 
 	tp = top + 340;
 	lf = left + 340;
@@ -548,7 +548,7 @@ void GXGetScissor(u32* left, u32* top, u32* wd, u32* ht)
 	u32 bm;
 	u32 rt;
 
-	ASSERTMSGLINE(0x3DD, left && top && wd && ht, "GXGet*: invalid null pointer");
+	OSAssertMsgLine(0x3DD, left && top && wd && ht, "GXGet*: invalid null pointer");
 
 	tp = gx->suScis0 & 0x7FF;
 	lf = (gx->suScis0 & 0x7FF000) >> 12;
@@ -572,8 +572,8 @@ void GXSetScissorBoxOffset(s32 x_off, s32 y_off)
 
 	CHECK_GXBEGIN(0x3FB, "GXSetScissorBoxOffset");
 
-	ASSERTMSGLINE(0x3FE, (u32)(x_off + 340) < 2048, "GXSetScissorBoxOffset: x offset > 2048");
-	ASSERTMSGLINE(0x400, (u32)(y_off + 340) < 2048, "GXSetScissorBoxOffset: y offset > 2048");
+	OSAssertMsgLine(0x3FE, (u32)(x_off + 340) < 2048, "GXSetScissorBoxOffset: x offset > 2048");
+	OSAssertMsgLine(0x400, (u32)(y_off + 340) < 2048, "GXSetScissorBoxOffset: y offset > 2048");
 
 	hx = (u32)(x_off + 340) >> 1;
 	hy = (u32)(y_off + 340) >> 1;

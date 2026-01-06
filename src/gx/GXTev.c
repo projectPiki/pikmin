@@ -48,7 +48,7 @@ void GXSetTevOp(GXTevStageID id, GXTevMode mode)
 	}
 	default:
 	{
-		ASSERTMSGLINE(0x8F, 0, "GXSetTevOp: Invalid Tev Mode");
+		OSAssertMsgLine(0x8F, 0, "GXSetTevOp: Invalid Tev Mode");
 	}
 	}
 	GXSetTevColorOp(id, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);
@@ -63,11 +63,11 @@ void GXSetTevColorIn(GXTevStageID stage, GXTevColorArg a, GXTevColorArg b, GXTev
 	u32* pTevReg;
 
 	CHECK_GXBEGIN(0xE5, "GXSetTevColorIn");
-	ASSERTMSGLINE(0xE6, stage < 16, "GXSetTevColor: Invalid Tev Stage Index");
-	ASSERTMSGLINE(0xE7, a <= 15, "GXSetTev*In: A/B/C/D argument out of range");
-	ASSERTMSGLINE(0xE8, b <= 15, "GXSetTev*In: A/B/C/D argument out of range");
-	ASSERTMSGLINE(0xE9, c <= 15, "GXSetTev*In: A/B/C/D argument out of range");
-	ASSERTMSGLINE(0xEA, d <= 15, "GXSetTev*In: A/B/C/D argument out of range");
+	OSAssertMsgLine(0xE6, stage < 16, "GXSetTevColor: Invalid Tev Stage Index");
+	OSAssertMsgLine(0xE7, a <= 15, "GXSetTev*In: A/B/C/D argument out of range");
+	OSAssertMsgLine(0xE8, b <= 15, "GXSetTev*In: A/B/C/D argument out of range");
+	OSAssertMsgLine(0xE9, c <= 15, "GXSetTev*In: A/B/C/D argument out of range");
+	OSAssertMsgLine(0xEA, d <= 15, "GXSetTev*In: A/B/C/D argument out of range");
 
 	pTevReg = &gx->tevc[stage];
 	SET_REG_FIELD(0xED, *pTevReg, 4, 12, a);
@@ -87,11 +87,11 @@ void GXSetTevAlphaIn(GXTevStageID stage, GXTevAlphaArg a, GXTevAlphaArg b, GXTev
 	u32* pTevReg;
 
 	CHECK_GXBEGIN(0x108, "GXSetTevAlphaIn");
-	ASSERTMSGLINE(0x109, stage < 16, "GXSetTevAlpha: Invalid Tev Stage Index");
-	ASSERTMSGLINE(0x10A, a <= 7, "GXSetTev*In: A/B/C/D argument out of range");
-	ASSERTMSGLINE(0x10B, b <= 7, "GXSetTev*In: A/B/C/D argument out of range");
-	ASSERTMSGLINE(0x10C, c <= 7, "GXSetTev*In: A/B/C/D argument out of range");
-	ASSERTMSGLINE(0x10D, d <= 7, "GXSetTev*In: A/B/C/D argument out of range");
+	OSAssertMsgLine(0x109, stage < 16, "GXSetTevAlpha: Invalid Tev Stage Index");
+	OSAssertMsgLine(0x10A, a <= 7, "GXSetTev*In: A/B/C/D argument out of range");
+	OSAssertMsgLine(0x10B, b <= 7, "GXSetTev*In: A/B/C/D argument out of range");
+	OSAssertMsgLine(0x10C, c <= 7, "GXSetTev*In: A/B/C/D argument out of range");
+	OSAssertMsgLine(0x10D, d <= 7, "GXSetTev*In: A/B/C/D argument out of range");
 
 	pTevReg = &gx->teva[stage];
 	SET_REG_FIELD(0x110, *pTevReg, 3, 13, a);
@@ -111,7 +111,7 @@ void GXSetTevColorOp(GXTevStageID stage, GXTevOp op, GXTevBias bias, GXTevScale 
 	u32* pTevReg;
 
 	CHECK_GXBEGIN(0x12E, "GXSetTevColorOp");
-	ASSERTMSGLINE(0x12F, stage < 16, "GXSetTevColor: Invalid Tev Stage Index");
+	OSAssertMsgLine(0x12F, stage < 16, "GXSetTevColor: Invalid Tev Stage Index");
 
 	pTevReg = &gx->tevc[stage];
 	SET_REG_FIELD(0x137, *pTevReg, 1, 18, op & 1);
@@ -137,7 +137,7 @@ void GXSetTevAlphaOp(GXTevStageID stage, GXTevOp op, GXTevBias bias, GXTevScale 
 	u32* pTevReg;
 
 	CHECK_GXBEGIN(0x15A, "GXSetTevAlphaOp");
-	ASSERTMSGLINE(0x15B, stage < 16, "GXSetTevAlpha: Invalid Tev Stage Index");
+	OSAssertMsgLine(0x15B, stage < 16, "GXSetTevAlpha: Invalid Tev Stage Index");
 
 	pTevReg = &gx->teva[stage];
 	SET_REG_FIELD(0x163, *pTevReg, 1, 18, op & 1);
@@ -190,10 +190,10 @@ void GXSetTevColorS10(GXTevRegID id, GXColorS10 color)
 	u32 regRA;
 	u32 regBG;
 
-	ASSERTMSGLINE(0x1A7, color.r >= -1024 && color.r < 1024, "GXSetTevColorS10: Color not in range -1024 to +1023");
-	ASSERTMSGLINE(0x1A8, color.g >= -1024 && color.g < 1024, "GXSetTevColorS10: Color not in range -1024 to +1023");
-	ASSERTMSGLINE(0x1A9, color.b >= -1024 && color.b < 1024, "GXSetTevColorS10: Color not in range -1024 to +1023");
-	ASSERTMSGLINE(0x1AA, color.a >= -1024 && color.a < 1024, "GXSetTevColorS10: Color not in range -1024 to +1023");
+	OSAssertMsgLine(0x1A7, color.r >= -1024 && color.r < 1024, "GXSetTevColorS10: Color not in range -1024 to +1023");
+	OSAssertMsgLine(0x1A8, color.g >= -1024 && color.g < 1024, "GXSetTevColorS10: Color not in range -1024 to +1023");
+	OSAssertMsgLine(0x1A9, color.b >= -1024 && color.b < 1024, "GXSetTevColorS10: Color not in range -1024 to +1023");
+	OSAssertMsgLine(0x1AA, color.a >= -1024 && color.a < 1024, "GXSetTevColorS10: Color not in range -1024 to +1023");
 
 	CHECK_GXBEGIN(0x1AC, "GXSetTevColorS10");
 
@@ -249,7 +249,7 @@ void GXSetTevKColorSel(GXTevStageID stage, GXTevKColorSel sel)
 	u32* Kreg;
 
 	CHECK_GXBEGIN(0x204, "GXSetTevKColorSel");
-	ASSERTMSGLINE(0x205, stage < 16, "GXSetTevKColor*: Invalid Tev Stage Index");
+	OSAssertMsgLine(0x205, stage < 16, "GXSetTevKColor*: Invalid Tev Stage Index");
 
 	Kreg = &gx->tevKsel[stage >> 1];
 	if (stage & 1) {
@@ -270,7 +270,7 @@ void GXSetTevKAlphaSel(GXTevStageID stage, GXTevKAlphaSel sel)
 	u32* Kreg;
 
 	CHECK_GXBEGIN(0x225, "GXSetTevKAlphaSel");
-	ASSERTMSGLINE(0x226, stage < 16, "GXSetTevKColor*: Invalid Tev Stage Index");
+	OSAssertMsgLine(0x226, stage < 16, "GXSetTevKColor*: Invalid Tev Stage Index");
 
 	Kreg = &gx->tevKsel[stage >> 1];
 	if (stage & 1) {
@@ -291,7 +291,7 @@ void GXSetTevSwapMode(GXTevStageID stage, GXTevSwapSel ras_sel, GXTevSwapSel tex
 	u32* pTevReg;
 
 	CHECK_GXBEGIN(0x24A, "GXSetTevSwapMode");
-	ASSERTMSGLINE(0x24B, stage < 16, "GXSetTevSwapMode: Invalid Tev Stage Index");
+	OSAssertMsgLine(0x24B, stage < 16, "GXSetTevSwapMode: Invalid Tev Stage Index");
 
 	pTevReg = &gx->teva[stage];
 	SET_REG_FIELD(0x24E, *pTevReg, 2, 0, ras_sel);
@@ -313,7 +313,7 @@ void GXSetTevSwapModeTable(GXTevSwapSel table, GXTevColorChan red, GXTevColorCha
 #endif
 
 	CHECK_GXBEGIN(0x26E, "GXSetTevSwapModeTable");
-	ASSERTMSGLINE(0x26F, table < 4, "GXSetTevSwapModeTable: Invalid Swap Selection Index");
+	OSAssertMsgLine(0x26F, table < 4, "GXSetTevSwapModeTable: Invalid Swap Selection Index");
 
 #if DEBUG
 	Kreg = &gx->tevKsel[table * 2];
@@ -339,7 +339,7 @@ void GXSetTevSwapModeTable(GXTevSwapSel table, GXTevColorChan red, GXTevColorCha
  */
 void GXSetTevClampMode(GXTevStageID stage, GXTevClampMode mode)
 {
-	ASSERTMSGLINE(0x290, 0, "GXSetTevClampMode: not available on this hardware");
+	OSAssertMsgLine(0x290, 0, "GXSetTevClampMode: not available on this hardware");
 }
 
 /**
@@ -396,7 +396,7 @@ void GXSetZTexture(GXZTexOp op, GXTexFmt fmt, u32 bias)
 	}
 	default:
 	{
-		ASSERTMSGLINE(0x2DD, 0, "GXSetZTexture: Invalid z-texture format");
+		OSAssertMsgLine(0x2DD, 0, "GXSetZTexture: Invalid z-texture format");
 		type = 2;
 		break;
 	}
@@ -421,7 +421,7 @@ void GXSetTevOrder(GXTevStageID stage, GXTexCoordID coord, GXTexMapID map, GXCha
 	static int c2r[] = { 0, 1, 0, 1, 0, 1, 7, 5, 6 };
 
 	CHECK_GXBEGIN(0x307, "GXSetTevOrder");
-	ASSERTMSGLINE(0x308, stage < 16, "GXSetTevColor: Invalid Tev Stage Index");
+	OSAssertMsgLine(0x308, stage < 16, "GXSetTevColor: Invalid Tev Stage Index");
 
 	ptref               = &gx->tref[stage / 2];
 	gx->texmapId[stage] = map;
@@ -454,7 +454,7 @@ void GXSetNumTevStages(u8 nStages)
 {
 	CHECK_GXBEGIN(0x331, "GXSetNumTevStages");
 
-	ASSERTMSGLINE(0x333, nStages != 0 && nStages <= 16, "GXSetNumTevStages: Exceed max number of tex stages");
+	OSAssertMsgLine(0x333, nStages != 0 && nStages <= 16, "GXSetNumTevStages: Exceed max number of tex stages");
 	SET_REG_FIELD(0x334, gx->genMode, 4, 10, nStages - 1);
 	gx->dirtyState |= 4;
 }

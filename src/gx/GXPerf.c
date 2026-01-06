@@ -69,7 +69,7 @@ void GXSetGPMetric(GXPerf0 perf0, GXPerf1 perf1)
 	}
 	default:
 	{
-		ASSERTMSGLINE(0xA6, 0, "GXSetGPMetric: Invalid GXPerf0 metric name");
+		OSAssertMsgLine(0xA6, 0, "GXSetGPMetric: Invalid GXPerf0 metric name");
 		break;
 	}
 	}
@@ -118,7 +118,7 @@ void GXSetGPMetric(GXPerf0 perf0, GXPerf1 perf1)
 	}
 	default:
 	{
-		ASSERTMSGLINE(0xD8, 0, "GXSetGPMetric: Invalid GXPerf1 metric name");
+		OSAssertMsgLine(0xD8, 0, "GXSetGPMetric: Invalid GXPerf1 metric name");
 		break;
 	}
 	}
@@ -341,7 +341,7 @@ void GXSetGPMetric(GXPerf0 perf0, GXPerf1 perf1)
 	}
 	default:
 	{
-		ASSERTMSGLINE(0x1DA, 0, "GXSetGPMetric: Invalid GXPerf0 metric name");
+		OSAssertMsgLine(0x1DA, 0, "GXSetGPMetric: Invalid GXPerf0 metric name");
 		break;
 	}
 	}
@@ -486,7 +486,7 @@ void GXSetGPMetric(GXPerf0 perf0, GXPerf1 perf1)
 	}
 	default:
 	{
-		ASSERTMSGLINE(0x26B, 0, "GXSetGPMetric: Invalid GXPerf1 metric name");
+		OSAssertMsgLine(0x26B, 0, "GXSetGPMetric: Invalid GXPerf1 metric name");
 		break;
 	}
 	}
@@ -503,7 +503,7 @@ void GXReadGPMetric(u32* cnt0, u32* cnt1)
 	u32 ctrl, ctrh;
 	u32 cpCtr0, cpCtr1, cpCtr2, cpCtr3;
 
-	ASSERTMSGLINE(0x286, !gx->inDispList, "GXReadGPMetric: don't use in a display list");
+	OSAssertMsgLine(0x286, !gx->inDispList, "GXReadGPMetric: don't use in a display list");
 
 	ctrl   = __cpReg[32];
 	ctrh   = __cpReg[33];
@@ -572,7 +572,7 @@ void GXReadGPMetric(u32* cnt0, u32* cnt1)
 	}
 	default:
 	{
-		ASSERTMSGLINE(0x2CF, 0, "GXReadGPMetric: Invalid GXPerf0 metric name");
+		OSAssertMsgLine(0x2CF, 0, "GXReadGPMetric: Invalid GXPerf0 metric name");
 		*cnt0 = 0;
 		break;
 	}
@@ -636,7 +636,7 @@ void GXReadGPMetric(u32* cnt0, u32* cnt1)
 	}
 	default:
 	{
-		ASSERTMSGLINE(0x30A, 0, "GXReadGPMetric: Invalid GXPerf1 metric name");
+		OSAssertMsgLine(0x30A, 0, "GXReadGPMetric: Invalid GXPerf1 metric name");
 		*cnt1 = 0;
 		break;
 	}
@@ -650,7 +650,7 @@ void GXClearGPMetric(void)
 {
 	u32 reg;
 
-	ASSERTMSGLINE(0x322, !gx->inDispList, "GXClearGPMetric: don't use in a display list");
+	OSAssertMsgLine(0x322, !gx->inDispList, "GXClearGPMetric: don't use in a display list");
 	reg        = 4;
 	__cpReg[2] = reg;
 }
@@ -688,7 +688,7 @@ void GXReadMemMetric(u32* cp_req, u32* tc_req, u32* cpu_rd_req, u32* cpu_wr_req,
 {
 	u32 ctrl, ctrh;
 
-	ASSERTMSGLINE(0x380, !gx->inDispList, "GXReadMemMetric: don't use in a display list");
+	OSAssertMsgLine(0x380, !gx->inDispList, "GXReadMemMetric: don't use in a display list");
 
 	ctrl    = __memReg[26];
 	ctrh    = __memReg[25];
@@ -737,7 +737,7 @@ void GXReadMemMetric(u32* cp_req, u32* tc_req, u32* cpu_rd_req, u32* cpu_wr_req,
  */
 void GXClearMemMetric(void)
 {
-	ASSERTMSGLINE(0x3B9, !gx->inDispList, "GXClearMemMetric: don't use in a display list");
+	OSAssertMsgLine(0x3B9, !gx->inDispList, "GXClearMemMetric: don't use in a display list");
 
 	__memReg[25] = 0;
 	__memReg[26] = 0;
@@ -769,7 +769,7 @@ void GXReadPixMetric(u32* top_pixels_in, u32* top_pixels_out, u32* bot_pixels_in
 {
 	u32 ctrl, ctrh;
 
-	ASSERTMSGLINE(0x3F1, !gx->inDispList, "GXReadPixMetric: don't use in a display list");
+	OSAssertMsgLine(0x3F1, !gx->inDispList, "GXReadPixMetric: don't use in a display list");
 
 	ctrl           = __peReg[12];
 	ctrh           = __peReg[13];

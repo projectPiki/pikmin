@@ -65,7 +65,7 @@ static u32 bitrev(u32 data)
  */
 static s32 ReadArrayUnlock(s32 chan, u32 data, void* rbuf, s32 length, BOOL mode)
 {
-	ASSERTLINE(216, 0 <= chan && chan < 2);
+	OSAssertLine(216, 0 <= chan && chan < 2);
 	CARDControl* card = &__CARDBlock[chan];
 
 	if (!EXISelect(chan, 0, 4))
@@ -254,7 +254,7 @@ static void DoneCallback(void* dspTask)
 			break;
 		}
 	}
-	ASSERTLINE(548, 0 <= chan && chan < 2);
+	OSAssertLine(548, 0 <= chan && chan < 2);
 
 	// The nonsense
 	CARDDecodeParameters* param = (CARDDecodeParameters*)card->workArea;

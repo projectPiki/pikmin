@@ -29,8 +29,8 @@ void __GXSetDirtyState(void)
  */
 void GXBegin(GXPrimitive type, GXVtxFmt vtxfmt, u16 nverts)
 {
-	ASSERTMSGLINE(0x157, vtxfmt < 8, "GXBegin: Format Index is out of range");
-	ASSERTMSGLINE(0x158, !__GXinBegin, "GXBegin: called inside another GXBegin/GXEnd");
+	OSAssertMsgLine(0x157, vtxfmt < 8, "GXBegin: Format Index is out of range");
+	OSAssertMsgLine(0x158, !__GXinBegin, "GXBegin: called inside another GXBegin/GXEnd");
 
 	if (gx->dirtyState != 0) {
 		__GXSetDirtyState();
@@ -82,7 +82,7 @@ void GXSetLineWidth(u8 width, GXTexOffset texOffsets)
  */
 void GXGetLineWidth(u8* width, GXTexOffset* texOffsets)
 {
-	ASSERTMSGLINE(0x1BF, width != NULL && texOffsets != NULL, "GXGet*: invalid null pointer");
+	OSAssertMsgLine(0x1BF, width != NULL && texOffsets != NULL, "GXGet*: invalid null pointer");
 
 	*width      = GET_REG_FIELD(gx->lpSize, 8, 0);
 	*texOffsets = GET_REG_FIELD(gx->lpSize, 3, 16);
@@ -106,7 +106,7 @@ void GXSetPointSize(u8 pointSize, GXTexOffset texOffsets)
  */
 void GXGetPointSize(u8* pointSize, GXTexOffset* texOffsets)
 {
-	ASSERTMSGLINE(0x1EB, pointSize != NULL && texOffsets != NULL, "GXGet*: invalid null pointer");
+	OSAssertMsgLine(0x1EB, pointSize != NULL && texOffsets != NULL, "GXGet*: invalid null pointer");
 
 	*pointSize  = (int)GET_REG_FIELD(gx->lpSize, 8, 8);
 	*texOffsets = GET_REG_FIELD(gx->lpSize, 3, 19);
@@ -119,7 +119,7 @@ void GXEnableTexOffsets(GXTexCoordID coord, u8 line_enable, u8 point_enable)
 {
 	CHECK_GXBEGIN(0x201, "GXEnableTexOffsets");
 
-	ASSERTMSGLINE(0x203, coord < 8, "GXEnableTexOffsets: Invalid coordinate Id");
+	OSAssertMsgLine(0x203, coord < 8, "GXEnableTexOffsets: Invalid coordinate Id");
 
 	SET_REG_FIELD(0x205, gx->suTs0[coord], 1, 18, line_enable);
 	SET_REG_FIELD(0x206, gx->suTs0[coord], 1, 19, point_enable);

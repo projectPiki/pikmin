@@ -154,7 +154,7 @@ void GXSetIndTexCoordScale(GXIndTexStageID ind_state, GXIndTexScale scale_s, GXI
 	}
 	default:
 	{
-		ASSERTMSGLINE(0x102, 0, "GXSetIndTexCoordScale: Invalid Indirect Stage Id");
+		OSAssertMsgLine(0x102, 0, "GXSetIndTexCoordScale: Invalid Indirect Stage Id");
 		break;
 	}
 	}
@@ -169,8 +169,8 @@ void GXSetIndTexOrder(GXIndTexStageID ind_stage, GXTexCoordID tex_coord, GXTexMa
 {
 	CHECK_GXBEGIN(0x11B, "GXSetIndTexOrder");
 
-	ASSERTMSGLINE(0x11D, tex_map < 8, "GXSetIndTexOrder: Invalid direct texture Id");
-	ASSERTMSGLINE(0x11E, tex_coord < 8, "GXSetIndTexOrder: Invalid texture coord");
+	OSAssertMsgLine(0x11D, tex_map < 8, "GXSetIndTexOrder: Invalid direct texture Id");
+	OSAssertMsgLine(0x11E, tex_coord < 8, "GXSetIndTexOrder: Invalid texture coord");
 
 	switch (ind_stage) {
 	case GX_IND_TEX_STAGE_0:
@@ -199,7 +199,7 @@ void GXSetIndTexOrder(GXIndTexStageID ind_stage, GXTexCoordID tex_coord, GXTexMa
 	}
 	default:
 	{
-		ASSERTMSGLINE(0x132, 0, "GXSetIndTexOrder: Invalid Indirect Stage Id");
+		OSAssertMsgLine(0x132, 0, "GXSetIndTexOrder: Invalid Indirect Stage Id");
 		break;
 	}
 	}
@@ -214,7 +214,7 @@ void GXSetIndTexOrder(GXIndTexStageID ind_stage, GXTexCoordID tex_coord, GXTexMa
 void GXSetNumIndStages(u8 nIndStages)
 {
 	CHECK_GXBEGIN(0x144, "GXSetNumIndStages");
-	ASSERTMSGLINE(0x146, nIndStages <= 4, "GXSetNumIndStages: Exceeds max. number of indirect texture stages");
+	OSAssertMsgLine(0x146, nIndStages <= 4, "GXSetNumIndStages: Exceeds max. number of indirect texture stages");
 	SET_REG_FIELD(0x147, gx->genMode, 3, 16, nIndStages);
 	gx->dirtyState |= 6;
 }
@@ -253,8 +253,8 @@ void GXSetTevIndTile(GXTevStageID tev_stage, GXIndTexStageID ind_stage, u16 tile
 	f32 mtx[2][3];
 
 	CHECK_GXBEGIN(0x190, "GXSetTevIndTile");
-	ASSERTMSGLINE(0x191, tev_stage < 16, "GXSetTevIndTile: Invalid tev stage id");
-	ASSERTMSGLINE(0x192, ind_stage < 4, "GXSetTevIndTile: Invalid indirect stage id");
+	OSAssertMsgLine(0x191, tev_stage < 16, "GXSetTevIndTile: Invalid tev stage id");
+	OSAssertMsgLine(0x192, ind_stage < 4, "GXSetTevIndTile: Invalid indirect stage id");
 	switch (tilesize_s) {
 	case 256:
 	{
@@ -283,7 +283,7 @@ void GXSetTevIndTile(GXTevStageID tev_stage, GXIndTexStageID ind_stage, u16 tile
 	}
 	default:
 	{
-		ASSERTMSGLINE(0x19B, 0, "GXSetTevIndTile: Invalid tilesize for S coordinate");
+		OSAssertMsgLine(0x19B, 0, "GXSetTevIndTile: Invalid tilesize for S coordinate");
 		wrap_s = GX_ITW_OFF;
 		break;
 	}
@@ -316,7 +316,7 @@ void GXSetTevIndTile(GXTevStageID tev_stage, GXIndTexStageID ind_stage, u16 tile
 	}
 	default:
 	{
-		ASSERTMSGLINE(0x1A7, 0, "GXSetTevIndTile: Invalid tilesize for T coordinate");
+		OSAssertMsgLine(0x1A7, 0, "GXSetTevIndTile: Invalid tilesize for T coordinate");
 		wrap_t = GX_ITW_OFF;
 		break;
 	}
@@ -360,7 +360,7 @@ void GXSetTevIndBumpST(GXTevStageID tev_stage, GXIndTexStageID ind_stage, GXIndT
 	}
 	default:
 	{
-		ASSERTMSGLINE(0x1E0, 0, "GXSetTevIndBumpST: Invalid matrix selection");
+		OSAssertMsgLine(0x1E0, 0, "GXSetTevIndBumpST: Invalid matrix selection");
 		break;
 	}
 	}
@@ -438,7 +438,7 @@ void __GXUpdateBPMask(void)
 			new_dmask |= 1 << tmap;
 		}
 	}
-	ASSERTMSGLINE(0x269, !(new_imask & new_dmask), "GXSetTevOrder/GXSetIndTexOrder: Same texture map cannot be specified in both");
+	OSAssertMsgLine(0x269, !(new_imask & new_dmask), "GXSetTevOrder/GXSetIndTexOrder: Same texture map cannot be specified in both");
 #endif
 
 	if ((u8)gx->bpMask != new_imask) {
