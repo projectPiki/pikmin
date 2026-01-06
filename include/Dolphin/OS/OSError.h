@@ -13,10 +13,27 @@ typedef u16 OSError;
 
 // Error handler function type.
 typedef void (*OSErrorHandler)(OSError error, OSContext* context, ...);
-typedef void (*OSErrorHandlerNoVARG)(OSError error, OSContext* context, u32 p1, u32 p2);
 
 // Error functions.
 OSErrorHandler OSSetErrorHandler(OSError error, OSErrorHandler handler);
+
+// OS logging and reporting.
+void OSReport(const char* message, ...);
+void OSPanic(const char* file, int line, const char* message, ...);
+
+#define OSError(...)           OSPanic(__FILE__, __LINE__, __VA_ARGS__)
+#define OSErrorLine(line, ...) OSPanic(__FILE__, line, __VA_ARGS__)
+
+#ifdef DEBUG // Currently necessary for dsp_cardunlock.c
+#define ASSERTMSGLINE(line, cond, ...) ((void)((cond) || (OSErrorLine(line, __VA_ARGS__), 0)))
+#else
+#define ASSERTMSGLINE(line, cond, ...) ((void)(0))
+#endif
+
+#define ASSERTMSGLINEV(line, cond, ...) ASSERTMSGLINE(line, cond, __VA_ARG__)
+#define ASSERTMSG(cond, ...)            ASSERTMSGLINE(__LINE__, cond, __VA_ARGS__)
+#define ASSERTLINE(line, cond)          ASSERTMSGLINE(line, cond, "Failed assertion " #cond)
+#define ASSERT(cond)                    ASSERTLINE(__LINE__, cond)
 
 // Error defines.
 #define OS_ERROR_SYSTEM_RESET       (0)
