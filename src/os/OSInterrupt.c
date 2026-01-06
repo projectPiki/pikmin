@@ -4,9 +4,6 @@
 
 ASM static void ExternalInterruptHandler(register __OSException exception, register OSContext* context);
 
-extern void __RAS_OSDisableInterrupts_begin(void);
-extern void __RAS_OSDisableInterrupts_end(void);
-
 static __OSInterruptHandler* InterruptHandlerTable;
 
 static OSInterruptMask InterruptPrioTable[] = {

@@ -3,10 +3,6 @@
 #include "Dolphin/os.h"
 #include <stddef.h>
 
-// necessary for some asm functions
-extern void __RAS_OSDisableInterrupts_begin();
-extern void __RAS_OSDisableInterrupts_end();
-
 /**
  * @TODO: Documentation
  */
