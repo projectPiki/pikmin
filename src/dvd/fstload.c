@@ -12,7 +12,7 @@ struct bb2struct {
 
 static u32 status;
 static struct bb2struct* bb2; // pointer?
-static u8* idTmp;             // also pointer
+static DVDDiskID* idTmp;      // also pointer
 static u8 bb2Buf[0x3F];
 
 struct blah {
@@ -59,7 +59,7 @@ static void cb(s32 type, DVDCommandBlock* cmdBlock)
  */
 void __fstLoad(void)
 {
-	static u8 block[0x30];
+	static DVDCommandBlock block;
 
 	int status;
 	char* onStr;
@@ -78,7 +78,7 @@ void __fstLoad(void)
 	di                   = (void*)OS_BASE_CACHED;
 	di->FSTLocationInRam = bb2->addr;
 	di->FSTMaxLength     = bb2->maxLength;
-	memcpy(di, idTmp, 32);
+	memcpy(di, idTmp, sizeof(DVDDiskID));
 	OSReport("\n");
 #if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
 	OSReport("  Game Name ... %c%c%c%c\n", di->Gamecode[0], di->Gamecode[1], di->Gamecode[2], di->Gamecode[3]);

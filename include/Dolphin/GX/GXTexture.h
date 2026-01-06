@@ -17,22 +17,6 @@ typedef GXTlutRegion* (*GXTlutRegionCallback)(u32 idx);
 
 ////////////////////////////////////////////
 
-////////////// TEXTURE MODES ///////////////
-// Texture mode IDs.
-extern u8 GXTexMode0Ids[8];
-extern u8 GXTexMode1Ids[8];
-extern u8 GXTexImage0Ids[8];
-extern u8 GXTexImage1Ids[8];
-extern u8 GXTexImage2Ids[8];
-extern u8 GXTexImage3Ids[8];
-extern u8 GXTexTlutIds[8];
-
-// Filter conversion arrays (HW2GX unused in P2).
-extern u8 GX2HWFiltConv[6];
-// extern u8 HW2GXFiltConv[8];
-
-////////////////////////////////////////////
-
 //////////// TEXTURE FUNCTIONS /////////////
 // Init functions.
 extern void GXInitTexObj(GXTexObj* obj, void* imagePtr, u16 width, u16 height, GXTexFmt format, GXTexWrapMode sWrap, GXTexWrapMode tWrap,

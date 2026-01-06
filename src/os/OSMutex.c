@@ -134,7 +134,7 @@ void OSSignalCond(OSCond* cond)
  * @TODO: Documentation
  * @note UNUSED Size: 00002C
  */
-void IsMember(void)
+static void IsMember(void)
 {
 	// UNUSED FUNCTION
 }
@@ -142,7 +142,7 @@ void IsMember(void)
 /**
  * @TODO: Documentation
  */
-int __OSCheckMutex(OSMutex* mutex)
+BOOL __OSCheckMutex(OSMutex* mutex)
 {
 	OSThread* thread;
 	OSThreadQueue* queue;
@@ -187,7 +187,7 @@ int __OSCheckMutex(OSMutex* mutex)
 /**
  * @TODO: Documentation
  */
-int __OSCheckDeadLock(OSThread* thread)
+BOOL __OSCheckDeadLock(OSThread* thread)
 {
 	OSMutex* mutex = thread->mutex;
 
@@ -203,7 +203,7 @@ int __OSCheckDeadLock(OSThread* thread)
 /**
  * @TODO: Documentation
  */
-int __OSCheckMutexes(OSThread* thread)
+BOOL __OSCheckMutexes(OSThread* thread)
 {
 	OSMutex* mutex = thread->queueMutex.head;
 
