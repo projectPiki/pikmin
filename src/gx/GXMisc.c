@@ -26,7 +26,7 @@ void GXSetMisc(GXMiscToken token, u32 val)
 	}
 	case GX_MT_DL_SAVE_CONTEXT:
 	{
-		ASSERTMSGLINE(210, !gx->inDispList, "GXSetMisc: Cannot change DL context setting while making a display list");
+		OSAssertMsgLine(210, !gx->inDispList, "GXSetMisc: Cannot change DL context setting while making a display list");
 		gx->dlSaveContext = (val > 0);
 		break;
 	}

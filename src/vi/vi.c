@@ -1104,8 +1104,8 @@ u32 VIGetTvFormat(void)
 	s32 enabled;
 	s32 format;
 
-	ASSERTMSGLINE(0x80D, format == 0 || format == 1 || format == 2,
-	              "VIGetTvFormat(): Wrong format is stored in lo mem. Maybe lo mem is trashed");
+	OSAssertMsgLine(0x80D, format == 0 || format == 1 || format == 2,
+	                "VIGetTvFormat(): Wrong format is stored in lo mem. Maybe lo mem is trashed");
 
 	enabled = OSDisableInterrupts();
 	switch (CurrTvMode) {

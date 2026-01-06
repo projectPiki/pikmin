@@ -393,7 +393,7 @@ void GXSetDispCopyDst(u16 wd, u16 ht)
 {
 	u16 stride;
 
-	ASSERTMSGLINE(0x3F3, (wd & 0xF) == 0, "GXSetDispCopyDst: Width must be a multiple of 16");
+	OSAssertMsgLine(0x3F3, (wd & 0xF) == 0, "GXSetDispCopyDst: Width must be a multiple of 16");
 	CHECK_GXBEGIN(0x3F4, "GXSetDispCopyDst");
 
 	stride           = (int)wd * 2;
@@ -417,7 +417,7 @@ void GXSetTexCopyDst(u16 wd, u16 ht, GXTexFmt fmt, GXBool mipmap)
 
 	gx->cpTexZ = 0;
 	peTexFmt   = fmt & 0xF;
-	ASSERTMSGLINEV(0x434, peTexFmt < 13, "%s: invalid texture format", "GXSetTexCopyDst");
+	OSAssertMsgLine(0x434, peTexFmt < 13, "%s: invalid texture format", "GXSetTexCopyDst");
 
 	if (fmt == GX_TF_Z16) {
 		peTexFmt = 0xB;
@@ -496,7 +496,7 @@ u32 GXSetDispCopyYScale(f32 vscale)
 
 	CHECK_GXBEGIN(0x49B, "GXSetDispCopyYScale");
 
-	ASSERTMSGLINE(0x49D, vscale >= 1.0f, "GXSetDispCopyYScale: Vertical scale must be >= 1.0");
+	OSAssertMsgLine(0x49D, vscale >= 1.0f, "GXSetDispCopyYScale: Vertical scale must be >= 1.0");
 
 	iScale = (u32)(256.0f / vscale) & 0x1FF;
 	fScale = 256.0f / (f32)iScale;
@@ -520,7 +520,7 @@ void GXSetCopyClear(GXColor clear_clr, u32 clear_z)
 	u32 reg;
 
 	CHECK_GXBEGIN(0x4C4, "GXSetCopyClear");
-	ASSERTMSGLINE(0x4C6, clear_z <= 0xFFFFFF, "GXSetCopyClear: Z clear value is out of range");
+	OSAssertMsgLine(0x4C6, clear_z <= 0xFFFFFF, "GXSetCopyClear: Z clear value is out of range");
 
 	reg = 0;
 	SET_REG_FIELD(0x4C9, reg, 8, 0, clear_clr.r);
@@ -653,22 +653,22 @@ static void __GXVerifCopy(void* dest, u8 clear)
 	y0    = GET_REG_FIELD(gx->cpDispSrc, 10, 10);
 	dy    = GET_REG_FIELD(gx->cpDispSize, 10, 10) + 1;
 
-	ASSERTMSGLINE(0x574, clmpT || y0 != 0, "GXCopy: Have to set GX_CLAMP_TOP if source top == 0");
-	ASSERTMSGLINE(0x576, clmpB || y0 + dy <= 528, "GXCopy: Have to set GX_CLAMP_BOTTOM if source bottom > 528");
-	ASSERTMSGLINE(0x57B, (gx->peCtrl & 7) != 3 || clear == 0, "GXCopy: Can not do clear while pixel type is Z");
+	OSAssertMsgLine(0x574, clmpT || y0 != 0, "GXCopy: Have to set GX_CLAMP_TOP if source top == 0");
+	OSAssertMsgLine(0x576, clmpB || y0 + dy <= 528, "GXCopy: Have to set GX_CLAMP_BOTTOM if source bottom > 528");
+	OSAssertMsgLine(0x57B, (gx->peCtrl & 7) != 3 || clear == 0, "GXCopy: Can not do clear while pixel type is Z");
 	if ((u32)(gx->peCtrl & 7) == 5) {
-		ASSERTMSGLINE(0x581, clear == 0, "GXCopy: Can not clear YUV framebuffer");
-		ASSERTMSGLINE(0x583, (x0 & 3) == 0, "GXCopy: Source x is not multiple of 4 for YUV copy");
-		ASSERTMSGLINE(0x585, (y0 & 3) == 0, "GXCopy: Source y is not multiple of 4 for YUV copy");
-		ASSERTMSGLINE(0x587, (dx & 3) == 0, "GXCopy: Source width is not multiple of 4 for YUV copy");
-		ASSERTMSGLINE(0x589, (dy & 3) == 0, "GXCopy: Source height is not multiple of 4 for YUV copy");
+		OSAssertMsgLine(0x581, clear == 0, "GXCopy: Can not clear YUV framebuffer");
+		OSAssertMsgLine(0x583, (x0 & 3) == 0, "GXCopy: Source x is not multiple of 4 for YUV copy");
+		OSAssertMsgLine(0x585, (y0 & 3) == 0, "GXCopy: Source y is not multiple of 4 for YUV copy");
+		OSAssertMsgLine(0x587, (dx & 3) == 0, "GXCopy: Source width is not multiple of 4 for YUV copy");
+		OSAssertMsgLine(0x589, (dy & 3) == 0, "GXCopy: Source height is not multiple of 4 for YUV copy");
 	} else {
-		ASSERTMSGLINE(0x58D, (x0 & 1) == 0, "GXCopy: Source x is not multiple of 2 for RGB copy");
-		ASSERTMSGLINE(0x58F, (y0 & 1) == 0, "GXCopy: Source y is not multiple of 2 for RGB copy");
-		ASSERTMSGLINE(0x591, (dx & 1) == 0, "GXCopy: Source width is not multiple of 2 for RGB copy");
-		ASSERTMSGLINE(0x593, (dy & 1) == 0, "GXCopy: Source height is not multiple of 2 for RGB copy");
+		OSAssertMsgLine(0x58D, (x0 & 1) == 0, "GXCopy: Source x is not multiple of 2 for RGB copy");
+		OSAssertMsgLine(0x58F, (y0 & 1) == 0, "GXCopy: Source y is not multiple of 2 for RGB copy");
+		OSAssertMsgLine(0x591, (dx & 1) == 0, "GXCopy: Source width is not multiple of 2 for RGB copy");
+		OSAssertMsgLine(0x593, (dy & 1) == 0, "GXCopy: Source height is not multiple of 2 for RGB copy");
 	}
-	ASSERTMSGLINE(0x597, ((u32)dest & 0x1F) == 0, "GXCopy: Display destination address not 32B aligned");
+	OSAssertMsgLine(0x597, ((u32)dest & 0x1F) == 0, "GXCopy: Display destination address not 32B aligned");
 }
 #endif
 

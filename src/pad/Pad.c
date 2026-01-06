@@ -146,7 +146,7 @@ static void PADEnable(s32 chan)
 	chanBit = 0x80000000 >> chan;
 	EnabledBits |= chanBit;
 	SIGetResponse(chan, &data);
-	ASSERTLINE(0x1C4, !(Type[chan] & RES_WIRELESS_LITE));
+	OSAssertLine(0x1C4, !(Type[chan] & RES_WIRELESS_LITE));
 	cmd = (AnalogMode | 0x400000);
 	SISetCommand(chan, cmd);
 	SIEnablePolling(EnabledBits);
@@ -184,8 +184,8 @@ static void ProbeWireless(s32 chan)
  */
 static void PADProbeCallback(s32 chan, u32 error, OSContext* context)
 {
-	ASSERTLINE(0x1F5, 0 <= ResettingChan && ResettingChan < SI_MAX_CHAN);
-	ASSERTLINE(0x1F6, chan == ResettingChan);
+	OSAssertLine(0x1F5, 0 <= ResettingChan && ResettingChan < SI_MAX_CHAN);
+	OSAssertLine(0x1F6, chan == ResettingChan);
 	if (!(error & (SI_ERROR_UNDER_RUN | SI_ERROR_OVER_RUN | SI_ERROR_NO_RESPONSE | SI_ERROR_COLLISION))) {
 		u32 type;
 		type = Type[chan];
@@ -283,8 +283,8 @@ static void UpdateOrigin(s32 chan)
  */
 static void PADOriginCallback(s32 chan, u32 error, OSContext* context)
 {
-	ASSERTLINE(0x267, 0 <= ResettingChan && ResettingChan < SI_MAX_CHAN);
-	ASSERTLINE(0x268, chan == ResettingChan);
+	OSAssertLine(0x267, 0 <= ResettingChan && ResettingChan < SI_MAX_CHAN);
+	OSAssertLine(0x268, chan == ResettingChan);
 	if (!(error & (SI_ERROR_UNDER_RUN | SI_ERROR_OVER_RUN | SI_ERROR_NO_RESPONSE | SI_ERROR_COLLISION))) {
 		UpdateOrigin(ResettingChan);
 		PADEnable(ResettingChan);
@@ -297,7 +297,7 @@ static void PADOriginCallback(s32 chan, u32 error, OSContext* context)
  */
 static void PADOriginUpdateCallback(s32 chan, u32 error, OSContext* context)
 {
-	ASSERTLINE(0x285, 0 <= chan && chan < SI_MAX_CHAN);
+	OSAssertLine(0x285, 0 <= chan && chan < SI_MAX_CHAN);
 	if (!(EnabledBits & (PAD_CHAN0_BIT >> chan)))
 		return;
 	if (!(error & (SI_ERROR_UNDER_RUN | SI_ERROR_OVER_RUN | SI_ERROR_NO_RESPONSE | SI_ERROR_COLLISION)))
@@ -313,7 +313,7 @@ static void PADFixCallback(s32 unused, u32 error, struct OSContext* context)
 	u32 id;
 	u32 frame;
 
-	ASSERTLINE(0x2A9, 0 <= ResettingChan && ResettingChan < SI_MAX_CHAN);
+	OSAssertLine(0x2A9, 0 <= ResettingChan && ResettingChan < SI_MAX_CHAN);
 
 	if (!(error & 0xF)) {
 		type = Type[ResettingChan];
@@ -346,7 +346,7 @@ static void PADResetCallback(s32 unused, u32 error, struct OSContext* context)
 	u32 chanBit;
 	int fix;
 
-	ASSERTLINE(0x2E9, 0 <= ResettingChan && ResettingChan < SI_MAX_CHAN);
+	OSAssertLine(0x2E9, 0 <= ResettingChan && ResettingChan < SI_MAX_CHAN);
 
 	if (error & 0xF) {
 		Type[ResettingChan] = 0;
@@ -427,7 +427,7 @@ int PADReset(u32 mask)
 	int rc;
 
 	rc = 0;
-	ASSERTMSGLINE(0x392, !(mask & 0x0FFFFFFF), "PADReset(): invalid mask");
+	OSAssertMsgLine(0x392, !(mask & 0x0FFFFFFF), "PADReset(): invalid mask");
 	enabled = OSDisableInterrupts();
 	mask    = mask & ~(CheckingBits | (ProbingBits | WaitingBits));
 	ResettingBits |= mask;
@@ -453,7 +453,7 @@ BOOL PADRecalibrate(u32 mask)
 	BOOL ret;
 
 	ret = FALSE;
-	ASSERTMSGLINE(0x3BD, !(mask & 0x0FFFFFFF), "PADReset(): invalid mask");
+	OSAssertMsgLine(0x3BD, !(mask & 0x0FFFFFFF), "PADReset(): invalid mask");
 	intrEnabled = OSDisableInterrupts();
 	mask &= ~(CheckingBits | (ProbingBits | WaitingBits));
 	ResettingBits |= mask;
@@ -613,7 +613,7 @@ void PADSetSamplingRate(u32 msec)
 	u32 tv;
 	XY* xy;
 
-	ASSERTMSGLINE(0x4CE, (msec <= 0xB), "PADSetSamplingRate(): out of rage (0 <= msec <= 11)");
+	OSAssertMsgLine(0x4CE, (msec <= 0xB), "PADSetSamplingRate(): out of rage (0 <= msec <= 11)");
 	if (msec > 0xB) {
 		msec = 0xB;
 	}
@@ -658,7 +658,7 @@ void PADControlAllMotors(const u32* commandArray)
 		chanBit = PAD_CHAN0_BIT >> chan;
 		if ((EnabledBits & chanBit) && !(ProbingBits & chanBit) && !(Type[chan] & 0x20000000)) {
 			command = *commandArray;
-			ASSERTMSGLINE(0x545, !(command & 0xFFFFFFFC), "PADControlAllMotors(): invalid command");
+			OSAssertMsgLine(0x545, !(command & 0xFFFFFFFC), "PADControlAllMotors(): invalid command");
 			if (Spec < PAD_SPEC_2 && command == PAD_MOTOR_STOP_HARD)
 				command = PAD_MOTOR_STOP;
 			SISetCommand(chan, (0x40 << 16) | AnalogMode | (command & (0x00000001 | 0x00000002)));
@@ -679,7 +679,7 @@ void PADControlMotor(s32 chan, u32 command)
 	BOOL enabled;
 	u32 chanBit;
 
-	ASSERTMSGLINE(0x568, !(command & 0xFFFFFFFC), "PADControlMotor(): invalid command");
+	OSAssertMsgLine(0x568, !(command & 0xFFFFFFFC), "PADControlMotor(): invalid command");
 
 	enabled = OSDisableInterrupts();
 	chanBit = PAD_CHAN0_BIT >> chan;
@@ -697,7 +697,7 @@ void PADControlMotor(s32 chan, u32 command)
  */
 void PADSetSpec(u32 spec)
 {
-	ASSERTLINE(0x58C, !Initialized);
+	OSAssertLine(0x58C, !Initialized);
 	__PADSpec = 0;
 	switch (spec) {
 	case PAD_SPEC_0:
@@ -942,7 +942,7 @@ void PADSetAnalogMode(u32 mode)
 	BOOL enabled;
 	u32 mask;
 
-	ASSERTMSGLINE(0x6C9, (mode < 8), "PADSetAnalogMode(): invalid mode");
+	OSAssertMsgLine(0x6C9, (mode < 8), "PADSetAnalogMode(): invalid mode");
 
 	enabled    = OSDisableInterrupts();
 	AnalogMode = mode << 8;

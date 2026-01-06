@@ -162,13 +162,13 @@ extern u16* __peReg;
 
 #define GET_REG_FIELD(reg, size, shift) ((int)((reg) >> (shift)) & ((1 << (size)) - 1))
 
-#define SET_REG_FIELD(line, reg, size, shift, val)                                                                 \
-	do {                                                                                                           \
-		ASSERTMSGLINE(line, ((u32)(val) & ~((1 << (size)) - 1)) == 0, "GX Internal: Register field out of range"); \
-		(reg) = ((u32)(reg) & ~(((1 << (size)) - 1) << (shift))) | ((u32)(val) << (shift));                        \
+#define SET_REG_FIELD(line, reg, size, shift, val)                                                                   \
+	do {                                                                                                             \
+		OSAssertMsgLine(line, ((u32)(val) & ~((1 << (size)) - 1)) == 0, "GX Internal: Register field out of range"); \
+		(reg) = ((u32)(reg) & ~(((1 << (size)) - 1) << (shift))) | ((u32)(val) << (shift));                          \
 	} while (0)
 
-#define CHECK_GXBEGIN(line, name) ASSERTMSGLINE(line, !__GXinBegin, "'" name "' is not allowed between GXBegin/GXEnd")
+#define CHECK_GXBEGIN(line, name) OSAssertMsgLine(line, !__GXinBegin, "'" name "' is not allowed between GXBegin/GXEnd")
 #define VERIF_XF_REG_alt(addr, value) \
 	do {                              \
 		s32 xfAddr = (addr);          \

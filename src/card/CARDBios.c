@@ -79,7 +79,7 @@ void __CARDExiHandler(s32 channel, OSContext* context)
 	u8 status;
 	s32 result;
 
-	ASSERTLINE(0xDC, 0 <= chan && chan < 2);
+	OSAssertLine(0xDC, 0 <= chan && chan < 2);
 
 	card = &__CARDBlock[channel];
 

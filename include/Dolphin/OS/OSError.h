@@ -25,15 +25,14 @@ void OSPanic(const char* file, int line, const char* message, ...);
 #define OSErrorLine(line, ...) OSPanic(__FILE__, line, __VA_ARGS__)
 
 #ifdef DEBUG // Currently necessary for dsp_cardunlock.c
-#define ASSERTMSGLINE(line, cond, ...) ((void)((cond) || (OSErrorLine(line, __VA_ARGS__), 0)))
+#define OSAssertMsgLine(line, cond, ...) ((void)((cond) || (OSErrorLine(line, __VA_ARGS__), 0)))
 #else
-#define ASSERTMSGLINE(line, cond, ...) ((void)(0))
+#define OSAssertMsgLine(line, cond, ...) ((void)(0))
 #endif
 
-#define ASSERTMSGLINEV(line, cond, ...) ASSERTMSGLINE(line, cond, __VA_ARG__)
-#define ASSERTMSG(cond, ...)            ASSERTMSGLINE(__LINE__, cond, __VA_ARGS__)
-#define ASSERTLINE(line, cond)          ASSERTMSGLINE(line, cond, "Failed assertion " #cond)
-#define ASSERT(cond)                    ASSERTLINE(__LINE__, cond)
+#define OSAssertMsg(cond, ...)   OSAssertMsgLine(__LINE__, cond, __VA_ARGS__)
+#define OSAssertLine(line, cond) OSAssertMsgLine(line, cond, "Failed assertion " #cond)
+#define OSAssert(cond)           OSAssertLine(__LINE__, cond)
 
 // Error defines.
 #define OS_ERROR_SYSTEM_RESET       (0)

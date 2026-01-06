@@ -11,9 +11,9 @@
 void C_VECAdd(Vec* a, Vec* b, Vec* c)
 {
 	// UNUSED FUNCTION
-	ASSERTMSGLINE(0x57, a, "VECAdd():  NULL VecPtr 'a' ");
-	ASSERTMSGLINE(0x58, b, "VECAdd():  NULL VecPtr 'b' ");
-	ASSERTMSGLINE(0x59, c, "VECAdd():  NULL VecPtr 'ab' ");
+	OSAssertMsgLine(0x57, a, "VECAdd():  NULL VecPtr 'a' ");
+	OSAssertMsgLine(0x58, b, "VECAdd():  NULL VecPtr 'b' ");
+	OSAssertMsgLine(0x59, c, "VECAdd():  NULL VecPtr 'ab' ");
 	c->x = a->x + b->x;
 	c->y = a->y + b->y;
 	c->z = a->z + b->z;
@@ -43,9 +43,9 @@ ASM void PSVECAdd(register Vec* a, register Vec* b, register Vec* c)
  */
 void C_VECSubtract(Vec* a, Vec* b, Vec* c)
 {
-	ASSERTMSGLINE(0x9C, a, "VECSubtract():  NULL VecPtr 'a' ");
-	ASSERTMSGLINE(0x9D, b, "VECSubtract():  NULL VecPtr 'b' ");
-	ASSERTMSGLINE(0x9E, c, "VECSubtract():  NULL VecPtr 'a_b' ");
+	OSAssertMsgLine(0x9C, a, "VECSubtract():  NULL VecPtr 'a' ");
+	OSAssertMsgLine(0x9D, b, "VECSubtract():  NULL VecPtr 'b' ");
+	OSAssertMsgLine(0x9E, c, "VECSubtract():  NULL VecPtr 'a_b' ");
 	c->x = a->x - b->x;
 	c->y = a->y - b->y;
 	c->z = a->z - b->z;
@@ -75,8 +75,8 @@ ASM void PSVECSubtract(register Vec* a, register Vec* b, register Vec* c)
  */
 void C_VECScale(Vec* src, Vec* dst, f32 scale)
 {
-	ASSERTMSGLINE(0xE2, src, "VECScale():  NULL VecPtr 'src' ");
-	ASSERTMSGLINE(0xE3, dst, "VECScale():  NULL VecPtr 'dst' ");
+	OSAssertMsgLine(0xE2, src, "VECScale():  NULL VecPtr 'src' ");
+	OSAssertMsgLine(0xE3, dst, "VECScale():  NULL VecPtr 'dst' ");
 	dst->x = (src->x * scale);
 	dst->y = (src->y * scale);
 	dst->z = (src->z * scale);
@@ -106,10 +106,10 @@ void C_VECNormalize(Vec* src, Vec* unit)
 {
 	f32 mag;
 
-	ASSERTMSGLINE(0x127, src, "VECNormalize():  NULL VecPtr 'src' ");
-	ASSERTMSGLINE(0x128, unit, "VECNormalize():  NULL VecPtr 'unit' ");
+	OSAssertMsgLine(0x127, src, "VECNormalize():  NULL VecPtr 'src' ");
+	OSAssertMsgLine(0x128, unit, "VECNormalize():  NULL VecPtr 'unit' ");
 	mag = (src->z * src->z) + ((src->x * src->x) + (src->y * src->y));
-	ASSERTMSGLINE(0x12D, 0.0f != mag, "VECNormalize():  zero magnitude vector ");
+	OSAssertMsgLine(0x12D, 0.0f != mag, "VECNormalize():  zero magnitude vector ");
 
 	mag     = 1.0f / sqrtf(mag);
 	unit->x = src->x * mag;
@@ -162,7 +162,7 @@ f32 C_VECSquareMag(Vec* v)
 {
 	f32 sqmag;
 
-	ASSERTMSGLINE(0x182, v, "VECMag():  NULL VecPtr 'v' ");
+	OSAssertMsgLine(0x182, v, "VECMag():  NULL VecPtr 'v' ");
 
 	sqmag = v->z * v->z + ((v->x * v->x) + (v->y * v->y));
 	return sqmag;
@@ -217,8 +217,8 @@ f32 C_VECDotProduct(Vec* a, Vec* b)
 {
 	f32 dot;
 
-	ASSERTMSGLINE(0x1D1, a, "VECDotProduct():  NULL VecPtr 'a' ");
-	ASSERTMSGLINE(0x1D2, b, "VECDotProduct():  NULL VecPtr 'b' ");
+	OSAssertMsgLine(0x1D1, a, "VECDotProduct():  NULL VecPtr 'a' ");
+	OSAssertMsgLine(0x1D2, b, "VECDotProduct():  NULL VecPtr 'b' ");
 	dot = (a->z * b->z) + ((a->x * b->x) + (a->y * b->y));
 	return dot;
 }
@@ -248,9 +248,9 @@ void C_VECCrossProduct(Vec* a, Vec* b, Vec* axb)
 {
 	Vec vTmp;
 
-	ASSERTMSGLINE(0x20F, a, "VECCrossProduct():  NULL VecPtr 'a' ");
-	ASSERTMSGLINE(0x210, b, "VECCrossProduct():  NULL VecPtr 'b' ");
-	ASSERTMSGLINE(0x211, axb, "VECCrossProduct():  NULL VecPtr 'axb' ");
+	OSAssertMsgLine(0x20F, a, "VECCrossProduct():  NULL VecPtr 'a' ");
+	OSAssertMsgLine(0x210, b, "VECCrossProduct():  NULL VecPtr 'b' ");
+	OSAssertMsgLine(0x211, axb, "VECCrossProduct():  NULL VecPtr 'axb' ");
 
 	vTmp.x = (a->y * b->z) - (a->z * b->y);
 	vTmp.y = (a->z * b->x) - (a->x * b->z);
@@ -294,9 +294,9 @@ void VECHalfAngle(Vec* a, Vec* b, Vec* half)
 	Vec bTmp;
 	Vec hTmp;
 
-	ASSERTMSGLINE(0x27F, a, "VECHalfAngle():  NULL VecPtr 'a' ");
-	ASSERTMSGLINE(0x280, b, "VECHalfAngle():  NULL VecPtr 'b' ");
-	ASSERTMSGLINE(0x281, half, "VECHalfAngle():  NULL VecPtr 'half' ");
+	OSAssertMsgLine(0x27F, a, "VECHalfAngle():  NULL VecPtr 'a' ");
+	OSAssertMsgLine(0x280, b, "VECHalfAngle():  NULL VecPtr 'b' ");
+	OSAssertMsgLine(0x281, half, "VECHalfAngle():  NULL VecPtr 'half' ");
 	aTmp.x = -a->x;
 	aTmp.y = -a->y;
 	aTmp.z = -a->z;
@@ -323,9 +323,9 @@ void VECReflect(Vec* src, Vec* normal, Vec* dst)
 	Vec uI;
 	Vec uN;
 
-	ASSERTMSGLINE(0x2B7, src, "VECReflect():  NULL VecPtr 'src' ");
-	ASSERTMSGLINE(0x2B8, normal, "VECReflect():  NULL VecPtr 'normal' ");
-	ASSERTMSGLINE(0x2B9, dst, "VECReflect():  NULL VecPtr 'dst' ");
+	OSAssertMsgLine(0x2B7, src, "VECReflect():  NULL VecPtr 'src' ");
+	OSAssertMsgLine(0x2B8, normal, "VECReflect():  NULL VecPtr 'normal' ");
+	OSAssertMsgLine(0x2B9, dst, "VECReflect():  NULL VecPtr 'dst' ");
 
 	uI.x = -src->x;
 	uI.y = -src->y;

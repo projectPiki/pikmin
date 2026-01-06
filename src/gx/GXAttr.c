@@ -2,18 +2,18 @@
 #include "Dolphin/os.h"
 #include <stddef.h>
 
-#define CHECK_ATTRPTR(line, attrPtr) ASSERTMSGLINE(line, (attrPtr) != NULL, "GXSetVtxDescv: attrPtr is NULL")
+#define CHECK_ATTRPTR(line, attrPtr) OSAssertMsgLine(line, (attrPtr) != NULL, "GXSetVtxDescv: attrPtr is NULL")
 #define CHECK_ATTRNAME(line, attr) \
-	ASSERTMSGLINE(line, (attr) >= GX_VA_PNMTXIDX && (attr) < GX_VA_MAX_ATTR, "GXSetVtxDesc: Invalid vertex attribute name")
+	OSAssertMsgLine(line, (attr) >= GX_VA_PNMTXIDX && (attr) < GX_VA_MAX_ATTR, "GXSetVtxDesc: Invalid vertex attribute name")
 #define CHECK_ATTRNAME2(line, attr) \
-	ASSERTMSGLINE(line, (attr) >= GX_VA_POS && (attr) <= GX_VA_MAX_ATTR, "GXSetVtxAttrFmt: Invalid vertex attribute name")
+	OSAssertMsgLine(line, (attr) >= GX_VA_POS && (attr) <= GX_VA_MAX_ATTR, "GXSetVtxAttrFmt: Invalid vertex attribute name")
 #define CHECK_ATTRNAME3(line, attr) \
-	ASSERTMSGLINE(line, (attr) >= GX_VA_POS && (attr) <= GX_LIGHT_ARRAY, "GXSetArray: Invalid vertex attribute name")
+	OSAssertMsgLine(line, (attr) >= GX_VA_POS && (attr) <= GX_LIGHT_ARRAY, "GXSetArray: Invalid vertex attribute name")
 #define CHECK_ATTRTYPE(line, type) \
-	ASSERTMSGLINE(line, (type) >= GX_NONE && (type) <= GX_INDEX16, "GXSetVtxDesc: Invalid vertex attribute type")
-#define CHECK_VTXFMT(line, vtxfmt) ASSERTMSGLINE(line, (vtxfmt) < GX_MAX_VTXFMT, "GXSetVtxAttrFmt: Format Index is out of range")
-#define CHECK_FRAC(line, frac)     ASSERTMSGLINE(line, (frac) < 32, "GXSetVtxAttrFmt: Frac value is >= 32")
-#define CHECK_LISTPTR(line, list)  ASSERTMSGLINE(line, (list) != NULL, "GXSetVtxAttrFmt: list pointer is NULL")
+	OSAssertMsgLine(line, (type) >= GX_NONE && (type) <= GX_INDEX16, "GXSetVtxDesc: Invalid vertex attribute type")
+#define CHECK_VTXFMT(line, vtxfmt) OSAssertMsgLine(line, (vtxfmt) < GX_MAX_VTXFMT, "GXSetVtxAttrFmt: Format Index is out of range")
+#define CHECK_FRAC(line, frac)     OSAssertMsgLine(line, (frac) < 32, "GXSetVtxAttrFmt: Frac value is >= 32")
+#define CHECK_LISTPTR(line, list)  OSAssertMsgLine(line, (list) != NULL, "GXSetVtxAttrFmt: list pointer is NULL")
 
 /**
  * @TODO: Documentation
@@ -742,7 +742,7 @@ void GXSetTexCoordGen2(GXTexCoordID dst_coord, GXTexGenType func, GXTexGenSrc sr
 	GXAttr mtxIdAttr;
 
 	CHECK_GXBEGIN(936, "GXSetTexCoordGen");
-	ASSERTMSGLINE(937, dst_coord < 8, "GXSetTexCoordGen: Invalid coordinate Id");
+	OSAssertMsgLine(937, dst_coord < 8, "GXSetTexCoordGen: Invalid coordinate Id");
 	form = 0;
 	row  = 5;
 	switch (src_param) {
@@ -857,7 +857,7 @@ void GXSetTexCoordGen2(GXTexCoordID dst_coord, GXTexGenType func, GXTexGenSrc sr
 	}
 	default:
 	{
-		ASSERTMSGLINE(965, 0, "GXSetTexCoordGen: Invalid source parameter");
+		OSAssertMsgLine(965, 0, "GXSetTexCoordGen: Invalid source parameter");
 		break;
 	}
 	}
@@ -887,7 +887,7 @@ void GXSetTexCoordGen2(GXTexCoordID dst_coord, GXTexGenType func, GXTexGenSrc sr
 	case 8:
 	case 9:
 	{
-		ASSERTMSGLINE(997, src_param >= 12 && src_param <= 18, "GXSetTexCoordGen:  Bump source texture value is invalid");
+		OSAssertMsgLine(997, src_param >= 12 && src_param <= 18, "GXSetTexCoordGen:  Bump source texture value is invalid");
 		SET_REG_FIELD(998, reg, 1, 1, 0);
 		SET_REG_FIELD(999, reg, 1, 2, form);
 		SET_REG_FIELD(1000, reg, 3, 4, 1);
@@ -910,7 +910,7 @@ void GXSetTexCoordGen2(GXTexCoordID dst_coord, GXTexGenType func, GXTexGenSrc sr
 	}
 	default:
 	{
-		ASSERTMSGLINE(1019, 0, "GXSetTexCoordGen:  Invalid function");
+		OSAssertMsgLine(1019, 0, "GXSetTexCoordGen:  Invalid function");
 		break;
 	}
 	}

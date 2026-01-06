@@ -26,8 +26,8 @@ void GXSetFog(GXFogType type, f32 startz, f32 endz, f32 nearz, f32 farz, GXColor
 
 	CHECK_GXBEGIN(0x6E, "GXSetFog");
 
-	ASSERTMSGLINE(0x70, farz >= 0.0f, "GXSetFog: The farz should be positive value");
-	ASSERTMSGLINE(0x71, farz >= nearz, "GXSetFog: The farz should be larger than nearz");
+	OSAssertMsgLine(0x70, farz >= 0.0f, "GXSetFog: The farz should be positive value");
+	OSAssertMsgLine(0x71, farz >= nearz, "GXSetFog: The farz should be larger than nearz");
 
 	if (farz == nearz || endz == startz) {
 		A = 0.0f;
@@ -108,8 +108,8 @@ void GXInitFogAdjTable(GXFogAdjTable* table, u16 width, const Mtx44 projmtx)
 	u32 i;
 
 	CHECK_GXBEGIN(0xCE, "GXInitFogAdjTable");
-	ASSERTMSGLINE(0xCF, table != NULL, "GXInitFogAdjTable: table pointer is null");
-	ASSERTMSGLINE(0xD0, width <= 640, "GXInitFogAdjTable: invalid width value");
+	OSAssertMsgLine(0xCF, table != NULL, "GXInitFogAdjTable: table pointer is null");
+	OSAssertMsgLine(0xD0, width <= 640, "GXInitFogAdjTable: invalid width value");
 
 	if (0.0 == projmtx[3][3]) {
 		nearZ = projmtx[2][3] / (projmtx[2][2] - 1.0f);
@@ -141,7 +141,7 @@ void GXSetFogRangeAdj(GXBool enable, u16 center, GXFogAdjTable* table)
 	CHECK_GXBEGIN(0x106, "GXSetFogRangeAdj");
 
 	if (enable) {
-		ASSERTMSGLINE(0x109, table != NULL, "GXSetFogRangeAdj: table pointer is null");
+		OSAssertMsgLine(0x109, table != NULL, "GXSetFogRangeAdj: table pointer is null");
 		for (i = 0; i < 10; i += 2) {
 			range_adj = 0;
 			SET_REG_FIELD(0x10D, range_adj, 12, 0, table->fogVals[i]);
@@ -233,7 +233,7 @@ void GXSetPixelFmt(GXPixelFmt pix_fmt, GXZFmt16 z_fmt)
 
 	CHECK_GXBEGIN(0x1A1, "GXSetPixelFmt");
 	oldPeCtrl = gx->peCtrl;
-	ASSERTMSGLINE(0x1A5, pix_fmt >= 0 && pix_fmt <= 7, "Invalid Pixel format");
+	OSAssertMsgLine(0x1A5, pix_fmt >= 0 && pix_fmt <= 7, "Invalid Pixel format");
 	SET_REG_FIELD(0x1A7, gx->peCtrl, 3, 0, p2f[pix_fmt]);
 	SET_REG_FIELD(0x1A8, gx->peCtrl, 3, 3, z_fmt);
 	if (oldPeCtrl != gx->peCtrl) {
