@@ -130,7 +130,7 @@ void __DSPHandler(__OSInterrupt interrupt, OSContext* context)
 	}
 	default:
 	{
-		OSPanic("osdsp_task.c", 0x10b, "__DSPHandler(): Unknown msg from DSP 0x%08X - task sync failed!\n", mail);
+		OSErrorLine(0x10b, "__DSPHandler(): Unknown msg from DSP 0x%08X - task sync failed!\n", mail);
 	}
 	}
 }

@@ -536,7 +536,7 @@ u32 GXCompressZ16(u32 z24, GXZFmt16 zfmt)
 	}
 	default:
 	{
-		OSPanic(__FILE__, 953, "GXCompressZ16: Invalid Z format\n");
+		OSErrorLine(953, "GXCompressZ16: Invalid Z format\n");
 		break;
 	}
 	}
@@ -605,7 +605,7 @@ u32 GXDecompressZ16(u32 z16, GXZFmt16 zfmt)
 	}
 	default:
 	{
-		OSPanic(__FILE__, 1003, "GXDecompressZ16: Invalid Z format\n");
+		OSErrorLine(1003, "GXDecompressZ16: Invalid Z format\n");
 		break;
 	}
 	}

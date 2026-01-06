@@ -170,7 +170,7 @@ void KIOContext::write()
 	// Check if there is data left to write
 	if (mBufferSize <= 0) {
 		if (KIO::haltMessage) {
-			OSPanic(__FILE__, 166, KIO::haltMessage);
+			OSErrorLine(166, KIO::haltMessage);
 		}
 		return;
 	}
