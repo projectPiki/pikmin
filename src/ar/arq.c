@@ -1,4 +1,5 @@
 #include "Dolphin/ar.h"
+#include "Dolphin/os.h"
 #include <stddef.h>
 
 static ARQRequest* __ARQRequestQueueHi;

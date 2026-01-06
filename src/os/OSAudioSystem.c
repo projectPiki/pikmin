@@ -1,3 +1,4 @@
+#include "Dolphin/os.h"
 #include "types.h"
 #include <string.h>
 
@@ -21,7 +22,6 @@ static u8 DSPInitCode[] = {
 };
 #endif
 
-vu16 __DSPRegs[] : 0xCC005000;
 #define __DSPWorkBuffer (void*)0x81000000
 
 /**
