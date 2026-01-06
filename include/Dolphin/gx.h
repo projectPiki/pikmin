@@ -1,6 +1,7 @@
 #ifndef _DOLPHIN_GX_H
 #define _DOLPHIN_GX_H
 
+#include "Dolphin/GX/GXAttr.h"
 #include "Dolphin/GX/GXBump.h"
 #include "Dolphin/GX/GXData.h"
 #include "Dolphin/GX/GXEnum.h"

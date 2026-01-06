@@ -37,10 +37,6 @@ extern void GXSetCullMode(GXCullMode mode);
 extern void GXSetCoPlanar(GXBool doEnable);
 
 // Unused/inlined in P2.
-extern void GXSetVtxDescv(GXVtxDescList* attrList);
-extern void GXGetVtxDesc(GXAttr attr, GXAttrType* type);
-extern void GXGetVtxDescv(GXVtxDescList* list);
-extern void GXGetVtxAttrFmtv(GXVtxFmt format, GXVtxAttrFmtList* list);
 extern void GXGetLineWidth(u8* width, GXTexOffset* offset);
 extern void GXGetPointSize(u8* pointSize, GXTexOffset* offset);
 extern void GXGetCullMode(GXCullMode* mode);
