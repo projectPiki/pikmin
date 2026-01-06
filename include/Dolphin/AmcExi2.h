@@ -33,7 +33,6 @@ void AmcEXIClearInterrupts(s32, s32);
 void* AmcEXISetExiCallback(EXICallback cb);
 s32 AmcEXISelect(u32 freq);
 s32 AmcEXIDeselect();
-void AmcDebugIntHandler(__OSInterrupt intr, OSContext* context);
 void AmcEXIEnableInterrupts();
 void AmcEXIInit();
 

@@ -49,7 +49,6 @@ extern GXTlutRegionCallback GXSetTlutRegionCallback(GXTlutRegionCallback func);
 
 // Unknown arg functions.
 // TODO: work these out.
-extern void __SetSURegs();
 extern void __GXSetSUTexRegs();
 extern void __GXSetTmemConfig(u32 config);
 

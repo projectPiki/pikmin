@@ -33,9 +33,6 @@ extern void __init_hardware(void);
 DECL_SECT(".init") extern void __check_pad3(void);
 DECL_SECT(".init") extern void __set_debug_bba(void);
 DECL_SECT(".init") extern u8 __get_debug_bba(void);
-DECL_SECT(".init") extern void __start(void);
-DECL_SECT(".init") extern void __init_registers(void);
-DECL_SECT(".init") extern void __init_data(void);
 
 DECL_SECT(".init") extern u8 _stack_addr[];
 DECL_SECT(".init") extern char _SDA_BASE_[];

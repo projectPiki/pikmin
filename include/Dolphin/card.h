@@ -289,7 +289,6 @@ int __CARDReadNintendoID(s32 channel, u32* id);
 s32 __CARDEnableInterrupt(s32 channel, BOOL enable);
 s32 __CARDReadStatus(s32 channel, u8* status);
 s32 __CARDClearStatus(s32 channel);
-s32 __CARDStart(s32 channel, CARDCallback txCallback, CARDCallback exiCallback);
 s32 __CARDReadSegment(s32 channel, CARDCallback callback);
 s32 __CARDWritePage(s32 channel, CARDCallback callback);
 s32 __CARDEraseSector(s32 channel, u32 addr, CARDCallback callback);
