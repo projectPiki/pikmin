@@ -4,7 +4,7 @@
 #include "types.h"
 
 #include "Dolphin/GX/GXEnum.h"
-#include "Dolphin/vi.h"
+#include "Dolphin/vitypes.h"
 
 BEGIN_SCOPE_EXTERN_C
 
