@@ -2,6 +2,7 @@
 #define _DOLPHIN_OS_OSALARM_H
 
 #include "Dolphin/OS/OSContext.h"
+#include "Dolphin/OS/OSTime.h"
 #include "Dolphin/OS/OSUtil.h"
 #include "types.h"
 

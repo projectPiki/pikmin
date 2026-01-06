@@ -22,6 +22,7 @@
 #include "Dolphin/OS/OSRtc.h"
 #include "Dolphin/OS/OSSerial.h"
 #include "Dolphin/OS/OSThread.h"
+#include "Dolphin/OS/OSTime.h"
 #include "Dolphin/OS/OSUtil.h"
 
 // #include "Dolphin/OS/OSFastCast.h" // Is intentionally omitted for jaudio bc paired single asm instructions mess with proc 750
@@ -85,7 +86,9 @@ volatile int __OSTVMode AT_ADDRESS(OS_BASE_CACHED | 0xCC);
 extern OSThreadQueue __DVDThreadQueue;
 extern u8 _stack_addr[];
 extern u8 _stack_end[];
+
 extern BOOL __OSInIPL;
+extern OSTime __OSStartTime;
 
 //////////////////////////////////
 
