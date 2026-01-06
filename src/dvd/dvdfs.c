@@ -145,13 +145,10 @@ s32 DVDConvertPathToEntrynum(const char* pathPtr)
 			}
 
 			if (illegal) {
-				OSPanic(__FILE__, 376,
-				        "DVDConvertEntrynumToPath(possibly DVDOpen or "
-				        "DVDChangeDir or DVDOpenDir): "
-				        "specified directory or file (%s) doesn't match "
-				        "standard 8.3 format. This is a "
-				        "temporary restriction and will be removed soon\n",
-				        origPathPtr);
+				OSErrorLine(376,
+				            "DVDConvertEntrynumToPath(possibly DVDOpen or DVDChangeDir or DVDOpenDir): specified directory or file "
+				            "(%s) doesn't match standard 8.3 format. This is a temporary restriction and will be removed soon\n",
+				            origPathPtr);
 			}
 		} else {
 			for (ptr = pathPtr; (*ptr != '\0') && (*ptr != '/'); ptr++)

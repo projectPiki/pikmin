@@ -632,7 +632,7 @@ void PADSetSamplingRate(u32 msec)
 	}
 	default:
 	{
-		OSPanic("Pad.c", 1296, "PADSetSamplingRate: unknown TV format");
+		OSErrorLine(1296, "PADSetSamplingRate: unknown TV format");
 	}
 	}
 	SISetXY(xy[msec].line, xy[msec].count);

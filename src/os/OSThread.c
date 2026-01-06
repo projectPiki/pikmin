@@ -724,7 +724,7 @@ static BOOL IsMember(OSThreadQueue* queue, OSThread* thread)
 #define ASSERTREPORT(line, cond)                                          \
 	if (!(cond)) {                                                        \
 		OSReport("OSCheckActiveThreads: Failed " #cond " in %d\n", line); \
-		OSPanic(__FILE__, line, "");                                      \
+		OSErrorLine(line, "");                                            \
 	}
 
 #define IsSuspended(suspend) (suspend > 0)
@@ -807,7 +807,7 @@ s32 OSCheckActiveThreads(void)
 		default:
 		{
 			OSReport("OSCheckActiveThreads: Failed. unkown thread state (%d) of thread %p\n", thread->state, thread);
-			OSPanic("OSThread.c", 0x5AC, "");
+			OSErrorLine(0x5AC, "");
 		}
 		}
 		ASSERTREPORT(0x5B1, __OSCheckMutexes(thread));

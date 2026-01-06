@@ -11,5 +11,5 @@ TERNARY_BUILD_MATCHING(void, int) main(int argc, char* argv[])
 	nodeMgr = new NodeMgr();
 	gsys->run(new PlugPikiApp());
 
-	OSPanic(__FILE__, 29, "End of demo");
+	OSErrorLine(29, "End of demo");
 }

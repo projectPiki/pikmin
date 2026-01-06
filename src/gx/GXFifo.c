@@ -660,7 +660,7 @@ volatile void* GXRedirectWriteGatherPipe(void* ptr)
 	__piReg[4]     = 0x04000000;
 	SET_REG_FIELD(0x5C8, reg, 21, 5, ((u32)ptr & 0x3FFFFFFF) >> 5);
 	/*if (((u32)ptr >> 5) & 0x1E00000)
-	    OSPanic(__FILE__, 0x5FB, "GX Internal: Register field out of range");
+	    OSErrorLine(0x5FB, "GX Internal: Register field out of range");
 	//SET_REG_FIELD(0x5C8, reg, 25, 5, ((u32)ptr & 0x3FFFFFFF) >> 5);*/
 	// reg = (reg & ~0x3FFFFE0) | ((u32)ptr & 0x3FFFFFE0);
 	reg &= 0xFBFFFFFF;
@@ -695,7 +695,7 @@ void GXRestoreWriteGatherPipe(void)
 	__piReg[4] = (u32)CPUFifo->top & 0x3FFFFFFF;
 	SET_REG_FIELD(0x5FB, reg, 21, 5, ((u32)CPUFifo->wrPtr & 0x3FFFFFFF) >> 5);
 	/*if ((((u32)CPUFifo->wrPtr & 0x3FFFFFFF) >> 5) & 0x7E00000)
-	    OSPanic(__FILE__, 0x5FB, "GX Internal: Register field out of range");
+	    OSErrorLine(0x5FB, "GX Internal: Register field out of range");
 	reg = (reg & ~0x3FFFFE0) | (((u32)CPUFifo->wrPtr & 0x3FFFFFFF) & ~0x1F);*/
 	// SET_REG_FIELD(0x5FB, reg, 25, 5, ((u32)CPUFifo->wrPtr & 0x3FFFFFFF) >> 5);
 	reg &= 0xFBFFFFFF;

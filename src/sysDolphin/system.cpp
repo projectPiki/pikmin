@@ -982,7 +982,7 @@ void System::halt(immut char* file, int line, immut char* message)
 #else
 
 #if defined(VERSION_GPIJ01_01)
-	OSPanic(__FILE__, 1075, message);
+	OSErrorLine(1075, message);
 	return;
 #endif
 	OSPanic(file, line, message);
