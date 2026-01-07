@@ -508,7 +508,7 @@ struct GamePrefs : public CoreNode {
 		mMemCardSaveIndex      = 0;
 		mSpareMemCardSaveIndex = 0;
 		_1F                    = 0; // unused
-		mChalCourseOpenFlags   = 0;
+		mChalCourseOpenFlags   = TERNARY_DEVELOP(0b11111, 0); // All stages are unlocked in the DLL
 		mChangesPending        = false;
 		mHiscores.Initialise();
 	}
