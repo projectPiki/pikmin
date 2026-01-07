@@ -266,15 +266,12 @@ void GameSetupSection::update()
 		}
 		stage = (StageInfo*)stage->mNext;
 	}
-
-	// force transit to new subsection
-	gsys->softReset();
 #else
 	PRINT("reset!\n");
 	// queue up card select as the next section (either for story mode or challenge mode, doesn't matter)
 	gameflow.mNextOnePlayerSectionID = ONEPLAYER_CardSelect;
+#endif
 
 	// force transit to new subsection
 	gsys->softReset();
-#endif
 }
