@@ -68,8 +68,8 @@ struct Timers {
 	}
 
 	TimerInf* mTimerList; // _00
-	s32 mFrameCount;      // _04
-	u32 mTimerCount;      // _08
+	int mFrameCount;      // _04
+	int mTimerCount;      // _08
 };
 
 // For some reason, certain functions cannot have known timers added to them without messing up matching.  At the same time, other functions

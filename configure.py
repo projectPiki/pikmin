@@ -426,7 +426,7 @@ config.libs = [
             Object(Matching, "sysCommon/matMath.cpp"),
             Object(Matching, "sysCommon/stdSystem.cpp"),
             Object(Matching, "sysCommon/node.cpp"),
-            Object(not MatchingFor("G98E01_PIKIDEMO"), "sysCommon/timers.cpp"),
+            Object(Matching, "sysCommon/timers.cpp"),
             Object(Matching, "sysCommon/controller.cpp"),
             Object(Matching, "sysCommon/cmdStream.cpp"),
             Object(Matching, "sysCommon/camera.cpp"),

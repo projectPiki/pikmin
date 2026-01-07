@@ -147,7 +147,7 @@ void Timers::draw(Graphics& gfx, Font* font)
 	immut f32 local_1c = gfx.mScreenWidth - local_10;            // Chart Width
 	immut f32 local_20 = local_1c / local_14;                    // Chart Tick Width
 	immut f32 local_24 = local_1c;                               // unused
-	immut f32 local_28 = mTimerCount * local_18 + 32.0f;         // Chart Height
+	immut f32 local_28 = (f32)mTimerCount * local_18 + 32.0f;    // Chart Height
 	immut f32 local_2c = gfx.mScreenWidth / 2 - local_1c / 2.0f; // Drawing Origin X
 	immut f32 local_30 = gfx.mScreenHeight - local_28;           // Drawing Origin Y
 
@@ -169,7 +169,7 @@ void Timers::draw(Graphics& gfx, Font* font)
 			gfx.setColour(Colour(local_50, local_50, local_50, 128), true);
 			gfx.setAuxColour(Colour(local_50, local_50, local_50, 128));
 
-			gfx.fillRectangle(RectArea(local_3c, local_40, local_3c + local_20, local_18 + local_40));
+			gfx.fillRectangle(RectArea(local_3c, local_40, local_3c + local_20, local_40 + local_18));
 			local_3c += local_20;
 		}
 		local_40 += local_18;
@@ -194,7 +194,8 @@ void Timers::draw(Graphics& gfx, Font* font)
 		local_58 *= local_20;
 		gfx.fillRectangle(RectArea(local_3c, local_40, local_3c + local_58, int(local_40) + local_18 - 4));
 
-		f32 local_5c = local_54->mPeakTime / 16.666666f * local_20;
+		f32 local_5c = local_54->mPeakTime / 16.666666f;
+		local_5c *= local_20;
 		gfx.setColour(Colour(0xff, 0xc0, 0x40, 0x60), true);
 		gfx.setAuxColour(Colour(0x20, 0, 0, 0x60));
 		gfx.fillRectangle(RectArea(local_3c + local_58, local_40, local_3c + local_5c, int(local_40) + local_18 - 4));
