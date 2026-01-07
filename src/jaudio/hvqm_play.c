@@ -590,7 +590,7 @@ int Jac_GetPicture(void* data, int* x, int* y)
 				pic_ctrl[index].mBufferState = 0;
 			}
 			if (frame < 3) {
-				*(int*)data = NULL;
+				*(int*)data = 0;
 			}
 			return frame + 1;
 		}
@@ -601,7 +601,7 @@ int Jac_GetPicture(void* data, int* x, int* y)
 	if (index != -1) {
 		*(void**)data = pic_ctrl[index].mPicBuffer;
 		if (frame < 3) {
-			*(int*)data = NULL;
+			*(int*)data = 0;
 		}
 		return offset + 1;
 	}
@@ -609,7 +609,7 @@ int Jac_GetPicture(void* data, int* x, int* y)
 	if (gop_frame == file_header.mTotalFrames) {
 		StreamSyncStopAudio(0);
 	}
-	*(int*)data = NULL;
+	*(int*)data = 0;
 	return FALSE;
 }
 

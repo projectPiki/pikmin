@@ -1,5 +1,6 @@
 #include "Dolphin/db.h"
 
+#include "Dolphin/PPCArch.h"
 #include "Dolphin/os.h"
 
 BOOL DBVerbose;

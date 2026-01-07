@@ -308,11 +308,11 @@ struct MovSampleSetupSection : public Node {
 	// not in the DLL, but needed for stack ordering
 	void setTevColors()
 	{
-		GXSetTevColorS10(GX_TEVREG0, (GXColorS10) { 0xFF91, 0x00, 0xFF76, 0x44 });
-		GXSetTevKColor(GX_KCOLOR0, (GXColor) { 0x66, 0, 0xFF, 0x32 });
-		GXSetTevKColor(GX_KCOLOR1, (GXColor) { 0x94, 0, 0x94, 0x94 });
-		GXSetTevKColor(GX_KCOLOR2, (GXColor) { 0xCB, 0, 5, 0xCF });
-		GXSetTevKColor(GX_KCOLOR3, (GXColor) { 0, 0xFF, 0, 0 });
+		GXSetTevColorS10(GX_TEVREG0, (GXColorS10) { -111, 0, -138, 68 });
+		GXSetTevKColor(GX_KCOLOR0, (GXColor) { 102, 0, 255, 50 });
+		GXSetTevKColor(GX_KCOLOR1, (GXColor) { 148, 0, 148, 148 });
+		GXSetTevKColor(GX_KCOLOR2, (GXColor) { 203, 0, 5, 207 });
+		GXSetTevKColor(GX_KCOLOR3, (GXColor) { 0, 255, 0, 0 });
 	}
 
 	// _00     = VTBL

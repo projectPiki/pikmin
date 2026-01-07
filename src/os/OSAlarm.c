@@ -1,3 +1,4 @@
+#include "Dolphin/PPCArch.h"
 #include "Dolphin/os.h"
 #include <stddef.h>
 

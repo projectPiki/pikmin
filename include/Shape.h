@@ -27,7 +27,6 @@ struct CmdStream;
 struct DispList;
 struct Graphics;
 struct Joint;
-struct Joint::MatPoly;
 struct LFlareGroup;
 struct NBT;
 struct PVWTevInfo;
