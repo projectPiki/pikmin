@@ -159,6 +159,7 @@ void SplineInterpolator::addFrame(SplineKeyFrame*)
  * @todo: Documentation
  * @note UNUSED Size: 000038
  */
+template <>
 void NArray<SplineKeyFrame>::add(SplineKeyFrame*)
 {
 	// UNUSED FUNCTION
@@ -177,6 +178,7 @@ void SplineInterpolator::addSegment()
  * @todo: Documentation
  * @note UNUSED Size: 000038
  */
+template <>
 void NArray<SplineSegment>::add(SplineSegment*)
 {
 	// UNUSED FUNCTION
@@ -186,6 +188,7 @@ void NArray<SplineSegment>::add(SplineSegment*)
  * @todo: Documentation
  * @note UNUSED Size: 000038
  */
+template <>
 void NPool<SplineSegment>::newObject()
 {
 	// UNUSED FUNCTION
@@ -204,6 +207,7 @@ void SplineInterpolator::removeAllFrames()
  * @todo: Documentation
  * @note UNUSED Size: 000034
  */
+template <>
 void NArray<SplineSegment>::removeAll()
 {
 	// UNUSED FUNCTION
@@ -213,6 +217,7 @@ void NArray<SplineSegment>::removeAll()
  * @todo: Documentation
  * @note UNUSED Size: 00013C
  */
+template <>
 void NArray<SplineSegment>::remove(int, int)
 {
 	// UNUSED FUNCTION
@@ -222,6 +227,7 @@ void NArray<SplineSegment>::remove(int, int)
  * @todo: Documentation
  * @note UNUSED Size: 000054
  */
+template <>
 void NPool<SplineSegment>::deleteObject(SplineSegment*)
 {
 	// UNUSED FUNCTION
@@ -231,6 +237,7 @@ void NPool<SplineSegment>::deleteObject(SplineSegment*)
  * @todo: Documentation
  * @note UNUSED Size: 00006C
  */
+template <>
 void NPool<SplineSegment>::deleteObject(int)
 {
 	// UNUSED FUNCTION
@@ -240,6 +247,7 @@ void NPool<SplineSegment>::deleteObject(int)
  * @todo: Documentation
  * @note UNUSED Size: 000030
  */
+template <>
 void NPool<SplineSegment>::indexOf(SplineSegment*)
 {
 	// UNUSED FUNCTION
@@ -249,6 +257,7 @@ void NPool<SplineSegment>::indexOf(SplineSegment*)
  * @todo: Documentation
  * @note UNUSED Size: 000044
  */
+template <>
 void NPool<SplineSegment>::indexOf(SplineSegment*, int)
 {
 	// UNUSED FUNCTION
@@ -258,6 +267,7 @@ void NPool<SplineSegment>::indexOf(SplineSegment*, int)
  * @todo: Documentation
  * @note UNUSED Size: 000034
  */
+template <>
 void NArray<SplineKeyFrame>::removeAll()
 {
 	// UNUSED FUNCTION
@@ -267,6 +277,7 @@ void NArray<SplineKeyFrame>::removeAll()
  * @todo: Documentation
  * @note UNUSED Size: 00013C
  */
+template <>
 void NArray<SplineKeyFrame>::remove(int, int)
 {
 	// UNUSED FUNCTION
@@ -378,6 +389,7 @@ void SplineCurve::makeFunctions(int, f32*, f32*, NPolynomialFunction**)
  * @todo: Documentation
  * @note UNUSED Size: 000054
  */
+template <>
 int NArray<SplineKeyFrame>::indexOf(SplineKeyFrame*, int)
 {
 	// UNUSED FUNCTION
@@ -387,6 +399,7 @@ int NArray<SplineKeyFrame>::indexOf(SplineKeyFrame*, int)
  * @todo: Documentation
  * @note UNUSED Size: 00003C
  */
+template <>
 void NArray<SplineKeyFrame>::set(int, SplineKeyFrame*)
 {
 	// UNUSED FUNCTION
@@ -396,6 +409,7 @@ void NArray<SplineKeyFrame>::set(int, SplineKeyFrame*)
  * @todo: Documentation
  * @note UNUSED Size: 000050
  */
+template <>
 void NArray<SplineKeyFrame>::remove(int)
 {
 	// UNUSED FUNCTION
@@ -405,6 +419,7 @@ void NArray<SplineKeyFrame>::remove(int)
  * @todo: Documentation
  * @note UNUSED Size: 000114
  */
+template <>
 void NArray<SplineKeyFrame>::insert(int, SplineKeyFrame*)
 {
 	// UNUSED FUNCTION
@@ -414,6 +429,7 @@ void NArray<SplineKeyFrame>::insert(int, SplineKeyFrame*)
  * @todo: Documentation
  * @note UNUSED Size: 000030
  */
+template <>
 SplineKeyFrame* NArray<SplineKeyFrame>::firstElement()
 {
 	// UNUSED FUNCTION
@@ -423,6 +439,7 @@ SplineKeyFrame* NArray<SplineKeyFrame>::firstElement()
  * @todo: Documentation
  * @note UNUSED Size: 000034
  */
+template <>
 SplineKeyFrame* NArray<SplineKeyFrame>::lastElement()
 {
 	// UNUSED FUNCTION
@@ -432,6 +449,7 @@ SplineKeyFrame* NArray<SplineKeyFrame>::lastElement()
  * @todo: Documentation
  * @note UNUSED Size: 000054
  */
+template <>
 int NArray<SplineSegment>::indexOf(SplineSegment*, int)
 {
 	// UNUSED FUNCTION
@@ -441,6 +459,7 @@ int NArray<SplineSegment>::indexOf(SplineSegment*, int)
  * @todo: Documentation
  * @note UNUSED Size: 00003C
  */
+template <>
 void NArray<SplineSegment>::set(int, SplineSegment*)
 {
 	// UNUSED FUNCTION
@@ -450,6 +469,7 @@ void NArray<SplineSegment>::set(int, SplineSegment*)
  * @todo: Documentation
  * @note UNUSED Size: 000050
  */
+template <>
 void NArray<SplineSegment>::remove(int)
 {
 	// UNUSED FUNCTION
@@ -459,6 +479,7 @@ void NArray<SplineSegment>::remove(int)
  * @todo: Documentation
  * @note UNUSED Size: 000114
  */
+template <>
 void NArray<SplineSegment>::insert(int, SplineSegment*)
 {
 	// UNUSED FUNCTION
@@ -468,6 +489,7 @@ void NArray<SplineSegment>::insert(int, SplineSegment*)
  * @todo: Documentation
  * @note UNUSED Size: 000030
  */
+template <>
 SplineSegment* NArray<SplineSegment>::firstElement()
 {
 	// UNUSED FUNCTION
@@ -477,6 +499,7 @@ SplineSegment* NArray<SplineSegment>::firstElement()
  * @todo: Documentation
  * @note UNUSED Size: 000034
  */
+template <>
 SplineSegment* NArray<SplineSegment>::lastElement()
 {
 	// UNUSED FUNCTION
@@ -486,6 +509,7 @@ SplineSegment* NArray<SplineSegment>::lastElement()
  * @todo: Documentation
  * @note UNUSED Size: 000050
  */
+template <>
 void NArray<SplineSegment>::remove(SplineSegment*)
 {
 	// UNUSED FUNCTION
@@ -495,6 +519,7 @@ void NArray<SplineSegment>::remove(SplineSegment*)
  * @todo: Documentation
  * @note UNUSED Size: 000050
  */
+template <>
 void NArray<SplineSegment>::add(int, SplineSegment*)
 {
 	// UNUSED FUNCTION
@@ -504,6 +529,7 @@ void NArray<SplineSegment>::add(int, SplineSegment*)
  * @todo: Documentation
  * @note UNUSED Size: 000030
  */
+template <>
 int NArray<SplineSegment>::indexOf(SplineSegment*)
 {
 	// UNUSED FUNCTION
@@ -513,6 +539,7 @@ int NArray<SplineSegment>::indexOf(SplineSegment*)
  * @todo: Documentation
  * @note UNUSED Size: 000044
  */
+template <>
 bool NArray<SplineSegment>::contains(SplineSegment*)
 {
 	// UNUSED FUNCTION
@@ -522,6 +549,7 @@ bool NArray<SplineSegment>::contains(SplineSegment*)
  * @todo: Documentation
  * @note UNUSED Size: 000050
  */
+template <>
 void NArray<SplineKeyFrame>::remove(SplineKeyFrame*)
 {
 	// UNUSED FUNCTION
@@ -531,6 +559,7 @@ void NArray<SplineKeyFrame>::remove(SplineKeyFrame*)
  * @todo: Documentation
  * @note UNUSED Size: 000050
  */
+template <>
 void NArray<SplineKeyFrame>::add(int, SplineKeyFrame*)
 {
 	// UNUSED FUNCTION
@@ -540,6 +569,7 @@ void NArray<SplineKeyFrame>::add(int, SplineKeyFrame*)
  * @todo: Documentation
  * @note UNUSED Size: 000030
  */
+template <>
 int NArray<SplineKeyFrame>::indexOf(SplineKeyFrame*)
 {
 	// UNUSED FUNCTION
@@ -549,6 +579,7 @@ int NArray<SplineKeyFrame>::indexOf(SplineKeyFrame*)
  * @todo: Documentation
  * @note UNUSED Size: 000044
  */
+template <>
 bool NArray<SplineKeyFrame>::contains(SplineKeyFrame*)
 {
 	// UNUSED FUNCTION
