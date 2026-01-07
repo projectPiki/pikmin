@@ -373,7 +373,7 @@ BOOL Jac_DeleteHeap(jaheap_* heap)
 		if (heap2 == heap) {
 			heap->parent->firstChild = heap->nextSibling;
 			if (heap->nextSibling == NULL) {
-				heap->parent->usedSize = NULL;
+				heap->parent->usedSize = 0;
 			}
 		} else {
 			while (TRUE) {
