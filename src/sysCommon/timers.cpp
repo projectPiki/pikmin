@@ -110,72 +110,109 @@ void Timers::draw(Graphics& gfx, Font* font)
 {
 #if defined(DEVELOP) || defined(VERSION_G98E01_PIKIDEMO)
 	gfx.useTexture(nullptr, GX_TEXMAP0);
-	for (TimerInf* info = mTimerList; info; info = info->mNext) {
-		info->mSampleTime++;
-		if (info->mSampleTime == 10) {
-			info->mAverageTime = info->mDuration / 10.0f;
-			if (info->mAverageTime < 0.0f) {
-				info->mAverageTime = 0.0f;
+
+	// I'm leaving the variables with their Ghidra names for now because they were helpful for navigating the function's stack.  This
+	// should be all of the variables in the exact order they were defined, which Ghidra bungles and I had to read assembly to learn.
+
+	for (TimerInf* local_c = mTimerList; local_c; local_c = local_c->mNext) {
+		local_c->mSampleTime++;
+		if (local_c->mSampleTime == 10) {
+			local_c->mAverageTime = local_c->mDuration / 10.0f;
+			if (local_c->mAverageTime < 0.0f) {
+				local_c->mAverageTime = 0.0f;
 			}
-			if (info->mAverageTime > info->mPeakTime) {
-				info->mDecayTime = 10.0f;
-				info->mPeakTime  = info->mAverageTime;
+			if (local_c->mAverageTime > local_c->mPeakTime) {
+				local_c->mDecayTime = 10.0f;
+				local_c->mPeakTime  = local_c->mAverageTime;
 			}
-			info->mDuration   = 0.0f;
-			info->mSampleTime = 0;
+			local_c->mDuration   = 0.0f;
+			local_c->mSampleTime = 0;
 		}
 
-		info->mDecayTime -= gsys->getFrameTime();
-		if (info->mDecayTime < 0.0f && info->mPeakTime > 0.0f) {
-			info->mPeakTime -= 6.0f * gsys->getFrameTime();
-			if (info->mPeakTime < 0.0f) {
-				info->mPeakTime = 0.0f;
+		local_c->mDecayTime -= gsys->getFrameTime();
+		if (local_c->mDecayTime < 0.0f && local_c->mPeakTime > 0.0f) {
+			local_c->mPeakTime -= 6.0f * gsys->getFrameTime();
+			if (local_c->mPeakTime < 0.0f) {
+				local_c->mPeakTime = 0.0f;
 			}
 		}
 	}
 
-	f32 a    = 192.0f;
-	int b    = 4;
-	f32 xPos = gfx.mScreenWidth - 192.0f;
-	f32 d    = xPos / 4.0f;
-	f32 e    = xPos;
-	f32 f    = mTimerCount * 12.0f + 32.0f;
-	f32 g    = (gfx.mScreenWidth / 2) - xPos / 2.0f;
-	f32 yPos = gfx.mScreenHeight - f;
-	f32 h    = g;
-	f32 x    = xPos;
-	f32 y    = yPos;
-	int z    = 0;
+	// Making any of the following named constants `const` breaks the stack for matching.  Lovely `const` memes!
 
-	for (TimerInf* info = mTimerList; info; info = info->mNext) {
-		f32 x0 = h;
-		for (int i = 0; i < b; i++) {
-			f32 val;
-			if (((z & 1) + i) & 1) {
-				val = 0.1f;
-			} else {
-				val = 0.3f;
-			}
-			u8 v8 = int(val * 255.0f);
-			gfx.setColour(Colour(v8, v8, v8, 128), true);
-			gfx.setAuxColour(Colour(v8, v8, v8, 128));
+	immut f32 local_10 = TERNARY_BUGFIX(256.0f, 192.0f);         // Chart Horizontal Margin Size (Combined)
+	immut int local_14 = 4;                                      // Chart Horizontal Scale
+	immut int local_18 = 12;                                     // Chart Vertical Scale
+	                                                             // ------------------------------
+	immut f32 local_1c = gfx.mScreenWidth - local_10;            // Chart Width
+	immut f32 local_20 = local_1c / local_14;                    // Chart Tick Width
+	immut f32 local_24 = local_1c;                               // unused
+	immut f32 local_28 = mTimerCount * local_18 + 32.0f;         // Chart Height
+	immut f32 local_2c = gfx.mScreenWidth / 2 - local_1c / 2.0f; // Drawing Origin X
+	immut f32 local_30 = gfx.mScreenHeight - local_28;           // Drawing Origin Y
 
-			gfx.fillRectangle(RectArea(x0, y, x0 + d, y + 12.0f));
-			x0 += d;
+	// These really didn't need to exist, but they do according to the DLL.
+	immut f32 local_34 = local_2c; // Replaces `local_2c` in usage
+	immut f32 local_38 = local_30; // unused
+
+	f32 local_3c;
+	f32 local_40 = local_30;
+	int local_44 = 0;
+
+	for (TimerInf* local_48 = mTimerList; local_48; local_48 = local_48->mNext) {
+		local_3c = local_34;
+		for (int local_4c = 0; local_4c < local_14; ++local_4c) {
+			// Something horrendous is going here.  Based on my understanding of stack variables in the DLL, there are no more
+			// lvalues in this function, therefore this must be a ternary.  Just what is going on with this condition, though?
+			int local_50 = (((local_44 & 1) + local_4c & 1) ? 0.1f : 0.3f) * 255.0f;
+
+			gfx.setColour(Colour(local_50, local_50, local_50, 128), true);
+			gfx.setAuxColour(Colour(local_50, local_50, local_50, 128));
+
+			gfx.fillRectangle(RectArea(local_3c, local_40, local_3c + local_20, local_18 + local_40));
+			local_3c += local_20;
 		}
-
-		y += 12.0f;
-		z++;
+		local_40 += local_18;
+		++local_44;
 	}
 
-	f32 x1 = h;
-	f32 y1 = yPos + 2.0f;
-	for (TimerInf* info = mTimerList; info; info = info->mNext) { }
+	local_3c = local_34;
+	local_40 = local_30 + 2.0f;
 
-	char buf[PATH_MAX];
-	sprintf(buf, "%.1f fps", gsys->getFrameRate());
-	gfx.setColour(COLOUR_WHITE, true);
+	for (TimerInf* local_54 = mTimerList; local_54; local_54 = local_54->mNext) {
+		f32 local_58 = local_54->mAverageTime / 16.666666f;
 
-	gfx.texturePrintf(font, gfx.mScreenWidth / 2 - font->stringWidth(buf) + 30, yPos - 1.0f, buf);
+		if (local_58 > local_14) {
+			gfx.setColour(Colour(255, 0, 0, 255), true);
+			gfx.setAuxColour(Colour(32, 0, 0, 255));
+			local_58 = local_14;
+		} else {
+			gfx.setColour(Colour(128, 255, 128, 255), true);
+			gfx.setAuxColour(Colour(0, 32, 0, 255));
+		}
+
+		local_58 *= local_20;
+		gfx.fillRectangle(RectArea(local_3c, local_40, local_3c + local_58, int(local_40) + local_18 - 4));
+
+		f32 local_5c = local_54->mPeakTime / 16.666666f * local_20;
+		gfx.setColour(Colour(0xff, 0xc0, 0x40, 0x60), true);
+		gfx.setAuxColour(Colour(0x20, 0, 0, 0x60));
+		gfx.fillRectangle(RectArea(local_3c + local_58, local_40, local_3c + local_5c, int(local_40) + local_18 - 4));
+
+		local_40 += local_18;
+	}
+	local_40 = local_30 - 1.0f;
+
+	char local_15c[PATH_MAX];
+	sprintf(local_15c, "%.1f fps", gsys->getFrameRate());
+	gfx.setColour(Colour(255, 255, 255, 255), true);
+	gfx.texturePrintf(font, gfx.mScreenWidth / 2 - font->stringWidth(local_15c) + 30, int(local_40) - 14, "%s", local_15c);
+
+	gfx.setColour(Colour(255, 255, 255, 128), true);
+	for (TimerInf* local_160 = mTimerList; local_160; local_160 = local_160->mNext) {
+		gfx.texturePrintf(font, int(local_10 * 0.5f) - font->stringWidth(local_160->mTimerName), local_40, "%s", local_160->mTimerName);
+		gfx.texturePrintf(font, gfx.mScreenWidth - int(local_10 * 0.5f), local_40, "%.4f", local_160->mAverageTime / 16.666666f);
+		local_40 += local_18;
+	}
 #endif
 }
