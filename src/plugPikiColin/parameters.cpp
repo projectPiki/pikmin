@@ -154,6 +154,7 @@ void Parameters::read(RandomAccessStream& input)
  * @param input File stream to read from.
  * @note UNUSED Size: 000094
  */
+template <>
 void Parm<Colour>::read(RandomAccessStream& input)
 {
 	mValue.read(input);
@@ -165,12 +166,14 @@ void Parm<Colour>::read(RandomAccessStream& input)
  * @param output File stream to write to.
  * @note UNUSED Size: 000024
  */
+template <>
 void Parm<Colour>::write(RandomAccessStream& output)
 {
 	mValue.write(output);
 }
 
 #ifdef WIN32
+template <>
 void Parm<Colour>::genAge(AgeServer& server)
 {
 	mValue.genAge(server, mName);
@@ -183,6 +186,7 @@ void Parm<Colour>::genAge(AgeServer& server)
  * @param input File stream to read from.
  * @note UNUSED Size: 00007C
  */
+template <>
 void Parm<Vector3f>::read(RandomAccessStream& input)
 {
 	mValue.read(input);
@@ -194,12 +198,14 @@ void Parm<Vector3f>::read(RandomAccessStream& input)
  * @param output File stream to write to.
  * @note UNUSED Size: 00007C
  */
+template <>
 void Parm<Vector3f>::write(RandomAccessStream& output)
 {
 	mValue.write(output);
 }
 
 #ifdef WIN32
+template <>
 void Parm<Vector3f>::genAge(AgeServer& server)
 {
 	mValue.genAge(server, mName, mMinValue, mMaxValue);
@@ -211,6 +217,7 @@ void Parm<Vector3f>::genAge(AgeServer& server)
  *
  * @param input File stream to read from.
  */
+template <>
 void Parm<f32>::read(RandomAccessStream& input)
 {
 	mValue = input.readFloat();
@@ -221,12 +228,14 @@ void Parm<f32>::read(RandomAccessStream& input)
  *
  * @param output File stream to write to.
  */
+template <>
 void Parm<f32>::write(RandomAccessStream& output)
 {
 	output.writeFloat(mValue);
 }
 
 #ifdef WIN32
+template <>
 void Parm<f32>::genAge(AgeServer& server)
 {
 	server.NewEditor(mName, &mValue, mMinValue, mMaxValue, 320);
@@ -238,6 +247,7 @@ void Parm<f32>::genAge(AgeServer& server)
  *
  * @param input File stream to read from.
  */
+template <>
 void Parm<int>::read(RandomAccessStream& input)
 {
 	mValue = input.readInt();
@@ -248,12 +258,14 @@ void Parm<int>::read(RandomAccessStream& input)
  *
  * @param output File stream to write to.
  */
+template <>
 void Parm<int>::write(RandomAccessStream& output)
 {
 	output.writeInt(mValue);
 }
 
 #ifdef WIN32
+template <>
 void Parm<int>::genAge(AgeServer& server)
 {
 	server.NewEditor(mName, &mValue, mMinValue, mMaxValue, 320);
@@ -265,6 +277,7 @@ void Parm<int>::genAge(AgeServer& server)
  *
  * @param input File stream to read from.
  */
+template <>
 void Parm<String>::read(RandomAccessStream& input)
 {
 	mValue = String(input.readString(), 0);
@@ -275,13 +288,14 @@ void Parm<String>::read(RandomAccessStream& input)
  *
  * @param output File stream to write to.
  */
+template <>
 void Parm<String>::write(RandomAccessStream& output)
 {
 	output.writeString(mValue);
 }
 
 #ifdef WIN32
-
+template <>
 void Parm<String>::genAge(AgeServer& server)
 {
 	if (mValue.mLength == 0) {

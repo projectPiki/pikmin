@@ -82,7 +82,7 @@ public:
 	    , FigureTex<T>(amountPtr, digit)
 	{
 		mUseShadowTex    = p4;
-		mCurrentValue    = *mNumberPtr;
+		mCurrentValue    = *FigureTex<T>::mNumberPtr;
 		mValueDifference = 0;
 		mAnimTimer       = 0.0f;
 		setTexture(pane);
@@ -91,9 +91,9 @@ public:
 
 	virtual bool invoke(P2DPane* pane) // _08
 	{
-		if (getNumber() != getNumber(mCurrentValue)) {
+		if (FigureTex<T>::getNumber() != FigureTex<T>::getNumber(mCurrentValue)) {
 			setTexture(pane);
-			mValueDifference = *mNumberPtr - mCurrentValue;
+			mValueDifference = *FigureTex<T>::mNumberPtr - mCurrentValue;
 			mAnimTimer       = 0.0f;
 		}
 
@@ -115,7 +115,7 @@ public:
 			}
 		}
 
-		mCurrentValue = *mNumberPtr;
+		mCurrentValue = *FigureTex<T>::mNumberPtr;
 		STACK_PAD_VAR(2);
 		return true;
 	}
@@ -124,10 +124,10 @@ public:
 	{
 		if (mUseShadowTex) {
 			P2DPicture* pic = (P2DPicture*)pane;
-			pic->setTexture(getShadowTexPtr(), 0);
+			pic->setTexture(FigureTex<T>::getShadowTexPtr(), 0);
 		} else {
 			P2DPicture* pic = (P2DPicture*)pane;
-			pic->setTexture(getTexPtr(), 0);
+			pic->setTexture(FigureTex<T>::getTexPtr(), 0);
 		}
 	}
 
