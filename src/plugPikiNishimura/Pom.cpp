@@ -79,8 +79,8 @@ void Pom::setColor(int color)
  */
 void Pom::doKill()
 {
-	mIsAlive = 0;
-	mIsAtari = 0;
+	setIsAlive(false);
+	setIsAtari(false);
 	mPomAi->killCallBackEffect(false);
 	bossMgr->kill(this);
 }

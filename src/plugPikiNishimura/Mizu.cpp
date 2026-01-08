@@ -82,8 +82,8 @@ void Mizu::initGeyzer(immut Vector3f&)
  */
 void Mizu::doKill()
 {
-	setIsAlive(0);
-	setIsAtari(0);
+	setIsAlive(false);
+	setIsAtari(false);
 	mMizuAi->killCallBackEffect(false);
 	bossMgr->kill(this);
 }

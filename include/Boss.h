@@ -292,8 +292,8 @@ protected:
 	f32 mCurrentLife;               // _2C4, current health (but there's a creature variable for that too)
 	f32 mMaxLife;                   // _2C8, max health (but there's a creature variable for that too)
 	f32 mLifeRecoveryTimer;         // _2CC
-	f32 mWalkTimer;                 // _2D0, walk timer
-	f32 mAttackTimer;               // _2D4, either mAttackTimer or mWalkTimer, unsure
+	f32 mWalkTimer;                 // _2D0
+	f32 mAttackTimer;               // _2D4
 	f32 mAnimTimer;                 // _2D8
 	f32 mSearchAngle;               // _2DC
 	f32 mShadowSize;                // _2E0

@@ -157,8 +157,8 @@ void PomAi::keyLoopEnd()
 void PomAi::keyFinished()
 {
 	if (mPom->getCurrentState() == 0) {
-		mPom->setIsAlive(0);
-		mPom->setIsAtari(0);
+		mPom->setIsAlive(false);
+		mPom->setIsAtari(false);
 		effectMgr->create(EffectMgr::EFF_Teki_DeathSmokeS, mPom->mSRT.t, nullptr, nullptr);
 		effectMgr->create(EffectMgr::EFF_Teki_DeathGlowS, mPom->mSRT.t, nullptr, nullptr);
 		effectMgr->create(EffectMgr::EFF_Teki_DeathWaveS, mPom->mSRT.t, nullptr, nullptr);

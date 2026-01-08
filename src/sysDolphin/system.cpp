@@ -1030,7 +1030,7 @@ void* loadFunc(void* idler)
 		OSMessage msg;
 		OSReceiveMessage(&loadMesgQueue, &msg, OS_MESSAGE_BLOCK);
 		if ((u32)msg == 'QUIT') {
-			OSSendMessage(&sysMesgQueue, (void*)'CONT', OS_MESSAGE_NOBLOCK);
+			OSSendMessage(&sysMesgQueue, (OSMessage)'CONT', OS_MESSAGE_NOBLOCK);
 			break;
 		}
 

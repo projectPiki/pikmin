@@ -80,8 +80,8 @@ void Spider::init(immut Vector3f&)
 void Spider::doKill()
 {
 	mIsBossBgm = false;
-	setIsAlive(0);
-	setIsAtari(0);
+	setIsAlive(false);
+	setIsAtari(false);
 	mSpiderLeg->killCallBackEffect(false);
 	mShadowCaster.del();
 	bossMgr->kill(this);

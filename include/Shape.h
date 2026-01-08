@@ -325,36 +325,38 @@ struct BaseShape : public CoreNode {
 	s32 _70;                            // _70
 	s32 mTextureCount;                  // _74
 	TexImg* mTextureList;               // _78
-	// NB: there's an extra AnimData debugData; here in the DLL, so everything is shifted by 0x44.
-	LightGroup mLightGroup;         // _7C
-	ObjCollInfo mCollisionInfo;     // _E8
-	u32 mVertexCacheFlags;          // _13C, see VertexCacheFlags enum
-	BoundBox mCourseExtents;        // _140
-	f32 mGridSize;                  // _158
-	int mGridSizeX;                 // _15C
-	int mGridSizeY;                 // _160
-	CollGroup** mCollGroups;        // _164
-	int mTriCount;                  // _168
-	CollTriInfo* mTriList;          // _16C
-	s32 mBaseRoomCount;             // _170
-	RoomInfo* mRoomInfoList;        // _174
-	RouteGroup mRouteGroup;         // _178
-	s32 mVertexCount;               // _238
-	Vector3f* mVertexList;          // _23C
-	int mVtxColorCount;             // _240
-	Colour* mVtxColorList;          // _244
-	s32 mTotalActiveTexCoords;      // _248
-	s32 mTexCoordCounts[8];         // _24C
-	Vector2f* mTexCoordList[8];     // _26C
-	s32 mNormalCount;               // _28C
-	Vector3f* mNormalList;          // _290
-	int mNBTCount;                  // _294
-	NBT* mNBTList;                  // _298
-	int mFallbackTexAttrCount;      // _29C
-	Texture** mResolvedTextureList; // _2A0
-	int mAttrListMatCount;          // _2A4
-	char (*mTextureNameList)[32];   // _2A8
-	u8 _2AC;                        // _2AC
+#if defined(WIN32)                      //
+	AnimData mDebugData;                // This extra member exists in the DLL
+#endif                                  //
+	LightGroup mLightGroup;             // _7C
+	ObjCollInfo mCollisionInfo;         // _E8
+	u32 mVertexCacheFlags;              // _13C, see VertexCacheFlags enum
+	BoundBox mCourseExtents;            // _140
+	f32 mGridSize;                      // _158
+	int mGridSizeX;                     // _15C
+	int mGridSizeY;                     // _160
+	CollGroup** mCollGroups;            // _164
+	int mTriCount;                      // _168
+	CollTriInfo* mTriList;              // _16C
+	s32 mBaseRoomCount;                 // _170
+	RoomInfo* mRoomInfoList;            // _174
+	RouteGroup mRouteGroup;             // _178
+	s32 mVertexCount;                   // _238
+	Vector3f* mVertexList;              // _23C
+	int mVtxColorCount;                 // _240
+	Colour* mVtxColorList;              // _244
+	s32 mTotalActiveTexCoords;          // _248
+	s32 mTexCoordCounts[8];             // _24C
+	Vector2f* mTexCoordList[8];         // _26C
+	s32 mNormalCount;                   // _28C
+	Vector3f* mNormalList;              // _290
+	int mNBTCount;                      // _294
+	NBT* mNBTList;                      // _298
+	int mFallbackTexAttrCount;          // _29C
+	Texture** mResolvedTextureList;     // _2A0
+	int mAttrListMatCount;              // _2A4
+	char (*mTextureNameList)[32];       // _2A8
+	u8 _2AC;                            // _2AC
 };
 
 /**
