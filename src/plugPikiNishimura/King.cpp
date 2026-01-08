@@ -78,8 +78,8 @@ void King::init(immut Vector3f&)
  */
 void King::doKill()
 {
-	setIsAlive(0);
-	setIsAtari(0);
+	setIsAlive(false);
+	setIsAtari(false);
 	mIsBossBgm = false;
 	mKingBody->killCallBackEffect(false);
 	mPlatMgr.release();

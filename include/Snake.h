@@ -326,7 +326,7 @@ private:
 	// _00      = VTBL
 	// _00-_3B8 = Boss
 	BoundSphereUpdater* mBoundsUpdater; // _3B8
-	bool mBossType;                     // _3BC
+	bool mBossType;                     // _3BC, `true` for sphere snake, `false` for box snake
 	f32 _3C0;                           // _3C0
 	f32 _3C4;                           // _3C4
 	SnakeAi* mSnakeAi;                  // _3C8

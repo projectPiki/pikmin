@@ -67,8 +67,8 @@ void Kogane::init(immut Vector3f&)
  */
 void Kogane::doKill()
 {
-	mIsAlive = 0;
-	mIsAtari = 0;
+	setIsAlive(false);
+	setIsAtari(false);
 	mKoganeAi->killCallBackEffect(false);
 	bossMgr->kill(this);
 }

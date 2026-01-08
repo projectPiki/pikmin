@@ -147,8 +147,8 @@ void MizuAi::initWait(int stateID)
 	mMizu->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Wait1, this));
 	mMizu->_3B8       = true;
 	mMizu->mIsVisible = true;
-	mMizu->setIsAlive(1);
-	mMizu->setIsOrganic(1);
+	mMizu->setIsAlive(true);
+	mMizu->setIsOrganic(true);
 	mMizu->setAttackTimer(0.0f);
 	mMizu->setFlickDamageCount(0);
 	if (_0C) {
@@ -168,8 +168,8 @@ void MizuAi::initReady(int stateID)
 	mMizu->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Wait1, this));
 	mMizu->_3B8       = false;
 	mMizu->mIsVisible = false;
-	mMizu->setIsAlive(0);
-	mMizu->setIsOrganic(0);
+	mMizu->setIsAlive(false);
+	mMizu->setIsOrganic(false);
 	mMizu->setAttackTimer(0.0f);
 	mMizu->setFlickDamageCount(0);
 	if (_0C) {

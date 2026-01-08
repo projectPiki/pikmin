@@ -55,9 +55,9 @@ void CoreNucleus::init(immut Vector3f& pos)
 {
 	mCollisionRadius = 20.0f;
 	mSRT.s.set(0.0f, 0.0f, 0.0f);
-	setIsAlive(0);
-	setIsOrganic(0);
-	setShadowNeed(1);
+	setIsAlive(false);
+	setIsOrganic(false);
+	setShadowNeed(true);
 	setShadowSize(40.0f);
 	mCoreAi->initAI(this);
 }
@@ -67,8 +67,8 @@ void CoreNucleus::init(immut Vector3f& pos)
  */
 void CoreNucleus::doKill()
 {
-	mIsAlive = 0;
-	mIsAtari = 0;
+	setIsAlive(false);
+	setIsAtari(false);
 	bossMgr->kill(this);
 }
 

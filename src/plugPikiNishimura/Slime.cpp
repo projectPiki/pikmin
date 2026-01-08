@@ -121,8 +121,8 @@ void Slime::init(immut Vector3f& pos)
  */
 void Slime::doKill()
 {
-	setIsAlive(0);
-	setIsAtari(0);
+	setIsAlive(false);
+	setIsAtari(false);
 	bossMgr->kill(this);
 }
 

@@ -300,7 +300,7 @@ bool Creature::startStick(Creature* stickTarget, CollPart* stickPart)
 		return false;
 	}
 
-	PRINT_KANDO("piki%x :::: stick ! : standType = %s\n", _standType[getStandType()]);
+	PRINT_KANDO("piki%x :::: stick ! : standType = %s\n", this, _standType[getStandType()]);
 
 	mStickTarget = stickTarget;
 	if (!stickTarget->mStickListHead) {

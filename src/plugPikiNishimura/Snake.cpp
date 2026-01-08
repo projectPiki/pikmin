@@ -39,6 +39,7 @@ Snake::Snake(CreatureProp* props)
 
 /**
  * @todo: Documentation
+ * @param type `true` for sphere snake, `false` for box snake
  */
 void Snake::setBossType(bool type)
 {
@@ -83,8 +84,8 @@ void Snake::init(immut Vector3f& pos)
  */
 void Snake::doKill()
 {
-	setIsAlive(0);
-	setIsAtari(0);
+	setIsAlive(false);
+	setIsAtari(false);
 	mSnakeBody->killCallBackEffect(false);
 	bossMgr->kill(this);
 }
