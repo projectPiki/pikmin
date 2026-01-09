@@ -689,6 +689,19 @@ void NaviWalkState::exec(Navi* navi)
 		}
 	}
 
+#if defined(VERSION_PIKIDEMO)
+	if (AIPerf::kandoOnly && navi->mKontroller->keyClick(KBBTN_X)) {
+		Pellet* pellet = pelletMgr->newNumberPellet(Blue, 4.0f * gsys->getRand(1.0f));
+		if (pellet) {
+			Vector3f pelPos(navi->mCursorWorldPos);
+			pellet->init(pelPos);
+			pellet->startAI(0);
+			pellet->mVelocity.y -= 1000.0f;
+		}
+	}
+#else
+#endif
+
 	if (navi->mKontroller->keyClick(KeyConfig::_instance->mSetCursorKey.mBind)) {
 		if (KeyConfig::_instance->mSetCursorKey.mBind == KeyConfig::_instance->mExtractKey.mBind) {
 			if (navi->procActionButton() && navi->mIsCursorVisible) {

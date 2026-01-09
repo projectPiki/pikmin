@@ -1074,7 +1074,7 @@ void ActorInstance::refresh(immut Matrix4f& mtx, Graphics& gfx, f32* p3)
 	}
 
 #if defined(VERSION_G98E01_PIKIDEMO)
-	STACK_PAD_STRUCT(12);
+	STACK_PAD_TERNARY(modelType, 12);
 #else
 #endif
 

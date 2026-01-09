@@ -1035,7 +1035,7 @@ void SeSystem::exitCourse()
  */
 void SeSystem::playSysSe(int soundID)
 {
-	Jac_PlaySystemSe(seSystem->getJacID(soundID));
+	Jac_PlaySystemSe(soundTable[soundID].mJacID);
 }
 
 /**
@@ -1043,7 +1043,7 @@ void SeSystem::playSysSe(int soundID)
  */
 void SeSystem::stopSysSe(int soundID)
 {
-	Jac_StopSystemSe(seSystem->getJacID(soundID));
+	Jac_StopSystemSe(soundTable[soundID].mJacID);
 }
 
 /**
@@ -1051,7 +1051,7 @@ void SeSystem::stopSysSe(int soundID)
  */
 void SeSystem::playPlayerSe(int soundID)
 {
-	Jac_PlayOrimaSe(seSystem->getJacID(soundID));
+	Jac_PlayOrimaSe(soundTable[soundID].mJacID);
 }
 
 /**
@@ -1059,5 +1059,5 @@ void SeSystem::playPlayerSe(int soundID)
  */
 void SeSystem::stopPlayerSe(int soundID)
 {
-	Jac_StopOrimaSe(seSystem->getJacID(soundID));
+	Jac_StopOrimaSe(soundTable[soundID].mJacID);
 }

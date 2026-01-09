@@ -658,6 +658,9 @@ static immut char* e_errorMessages[] = {
 	nullptr,
 };
 
+static immut char* f_msg0 = "Le disque ne peut \xEAtre lu.";
+static immut char* f_msg1 = "Veuillez ins\xE9rer un";
+
 static immut char* f_errorMessages[] = {
 	"Lecture du disque...",
 	nullptr,
@@ -673,7 +676,7 @@ static immut char* f_errorMessages[] = {
 	"NINTENDO GAMECUBE",
 	"pour plus d'informations.",
 	nullptr,
-	"Veuillez ins\xEArer un",
+	"Veuillez ins\xE9rer un",
 	"disque Pikmin.",
 	nullptr,
 	"Veuillez refermer le",
@@ -685,6 +688,9 @@ static immut char* f_errorMessages[] = {
 	"disque Pikmin.",
 	nullptr,
 };
+
+static immut char* g_msg0 = "Bedienungsanleitung f\xFCr";
+static immut char* g_msg1 = "Bitte schlie\xDF\x65n Sie den";
 
 static immut char* g_errorMessages[] = {
 	"Disc wird gelesen...",
@@ -704,7 +710,7 @@ static immut char* g_errorMessages[] = {
 	"Bitte legen Sie eine",
 	"Pikmin Game Disc ein.",
 	nullptr,
-	"Bitte schlieen Sie den",
+	"Bitte schlie\xDF\x65n Sie den",
 	"Disc-Deckel.",
 	nullptr,
 	"Diese Disc beinhaltet",
@@ -714,6 +720,9 @@ static immut char* g_errorMessages[] = {
 	nullptr,
 };
 
+static immut char* s_msg0 = "para obtener m\xE1s informaci\xF3n.";
+static immut char* s_msg1 = "\xC9ste no es el";
+
 static immut char* s_errorMessages[] = {
 	"Leyendo el disco...",
 	nullptr,
@@ -721,13 +730,13 @@ static immut char* s_errorMessages[] = {
 	"Apaga la consola y consulta",
 	"el manual de instrucciones",
 	"de NINTENDO GAMECUBE",
-	"para obtener más información.",
+	"para obtener m\xE1s informaci\xF3n.",
 	nullptr,
 	"No se puede leer el disco.",
 	"Consulta el manual de",
 	"instrucciones de",
 	"NINTENDO GAMECUBE",
-	"para obtener más información.",
+	"para obtener m\xE1s informaci\xF3n.",
 	nullptr,
 	"Coloca el disco",
 	"de Pikmin.",
@@ -735,17 +744,20 @@ static immut char* s_errorMessages[] = {
 	"Cierra la tapa",
 	"de la consola.",
 	nullptr,
-	"Éste no es el",
+	"\xC9ste no es el",
 	"disco de Pikmin.",
 	"Coloca el disco",
 	"apropiado.",
 	nullptr,
 };
 
+static immut char* i_msg0 = "Si \xE8 verificato un errore.";
+static immut char* i_msg1 = "Questo non \xE8 un";
+
 static immut char* i_errorMessages[] = {
 	"Lettura del disco...",
 	nullptr,
-	"Si è verificato un errore.",
+	"Si \xE8 verificato un errore.",
 	"Spegnere il",
 	"NINTENDO GAMECUBE",
 	"e consultare il",
@@ -755,6 +767,7 @@ static immut char* i_errorMessages[] = {
 	"Consultare il",
 	"manuale d'istruzioni",
 	"del NINTENDO GAMECUBE.",
+	"",
 	nullptr,
 	"Inserire il",
 	"disco di Pikmin.",
@@ -762,7 +775,7 @@ static immut char* i_errorMessages[] = {
 	"Chiudere il coperchio",
 	"del disco.",
 	nullptr,
-	"Questo non è un",
+	"Questo non \xE8 un",
 	"disco di Pikmin.",
 	"Inserire un",
 	"disco di Pikmin.",
@@ -772,7 +785,7 @@ static immut char* i_errorMessages[] = {
 static immut char** errorList[30] = {
 	&e_errorMessages[0], &e_errorMessages[2], &e_errorMessages[8], &e_errorMessages[14], &e_errorMessages[17], &e_errorMessages[20],
 	&f_errorMessages[0], &f_errorMessages[2], &f_errorMessages[8], &f_errorMessages[14], &f_errorMessages[17], &f_errorMessages[20],
-	&g_errorMessages[0], &g_errorMessages[3], &g_errorMessages[8], &g_errorMessages[14], &g_errorMessages[17], &g_errorMessages[20],
+	&g_errorMessages[0], &g_errorMessages[2], &g_errorMessages[9], &g_errorMessages[14], &g_errorMessages[17], &g_errorMessages[20],
 	&s_errorMessages[0], &s_errorMessages[2], &s_errorMessages[8], &s_errorMessages[14], &s_errorMessages[17], &s_errorMessages[20],
 	&i_errorMessages[0], &i_errorMessages[2], &i_errorMessages[8], &i_errorMessages[14], &i_errorMessages[17], &i_errorMessages[20],
 };
@@ -880,7 +893,12 @@ void System::Initialise()
 	mHeapStart = OSRoundUp32B(OSInitAlloc(lo, hi, 1));
 	hi         = (void*)OSRoundDown32B(hi);
 	mHeapEnd   = (u32)hi - mHeapStart;
-	if (mHeapEnd < 0x1800000) {
+#if defined(VERSION_GPIP01_00)
+	if (mHeapEnd <= 0x1800000)
+#else
+	if (mHeapEnd < 0x1800000)
+#endif
+	{
 		useSymbols = false;
 	}
 	mHeaps[SYSHEAP_Sys].init("sys", AYU_STACK_GROW_DOWN, (void*)mHeapStart, mHeapEnd);

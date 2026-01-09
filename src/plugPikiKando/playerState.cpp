@@ -95,10 +95,11 @@ void TimeGraph::set(u16 time, int color, int num)
  */
 int TimeGraph::get(u16 time, int color)
 {
-	if (time - mStartTime < 0 || time - mStartTime >= (mEndTime - mStartTime + 1)) {
+	int timeDiff = time - mStartTime;
+	if (timeDiff < 0 || timeDiff >= (mEndTime - mStartTime + 1)) {
 		ERROR("illegal time int %d\n", time);
 	}
-	return mEntries[time - mStartTime].get(color);
+	return mEntries[timeDiff].get(color);
 }
 
 /**

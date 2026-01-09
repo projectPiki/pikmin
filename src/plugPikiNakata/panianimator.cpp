@@ -222,12 +222,15 @@ void PaniAnimator::animate(f32 speed)
  */
 void PaniAnimator::checkConstantKeys()
 {
+	int iKeyCount;
 	if (mCurrentKeyIndex < 0) {
-		ERROR("checkConstantKeys:nextKeyInfoIndex:%d,%d\n", mCurrentKeyIndex, mAnimInfo->countIKeys());
+		iKeyCount = mAnimInfo->countIKeys();
+		ERROR("checkConstantKeys:nextKeyInfoIndex:%d,%d\n", mCurrentKeyIndex, iKeyCount);
 	}
 
 	if (mAnimInfo->countIKeys() > 16) {
-		ERROR("checkConstantKeys:getKeyInfoCount():%d,%d\n", mCurrentKeyIndex, mAnimInfo->countIKeys());
+		iKeyCount = mAnimInfo->countIKeys();
+		ERROR("checkConstantKeys:getKeyInfoCount():%d,%d\n", mCurrentKeyIndex, iKeyCount);
 	}
 
 	for (; mCurrentKeyIndex < mAnimInfo->countIKeys(); mCurrentKeyIndex++) {
