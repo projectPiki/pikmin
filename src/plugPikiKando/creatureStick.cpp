@@ -230,7 +230,7 @@ void Creature::startStickObjectPellet(Pellet* pellet, int slotIdx, f32 offset)
  */
 void Creature::startStickObject(Creature* obj, CollPart* stickPart, int slot, f32 p4)
 {
-	mCollPlatNormal = nullptr;
+	mCollNormal = nullptr;
 	if (obj->mObjType == OBJTYPE_Pellet && slot != -1) {
 		startStickObjectPellet(static_cast<Pellet*>(obj), slot, p4);
 		if (mPelletStickSlot != -1 && startStick(obj, nullptr)) {
@@ -349,7 +349,7 @@ bool Creature::isStickLeader()
  */
 void Creature::endStick()
 {
-	mCollPlatNormal = nullptr;
+	mCollNormal = nullptr;
 	if (!mStickTarget) {
 		return;
 	}
@@ -529,14 +529,14 @@ bool Stickers::isDone(int idx)
  */
 void Creature::updateStickPlatform()
 {
-	if (mCollPlatNormal && mClimbingTri) {
+	if (mCollNormal && mPikiPlatformTriangle) {
 		if (mStickPart->isClimbable() && isCreatureFlag(CF_IsClimbing)) {
 			Vector3f pos(mSRT.t);
 			moveNew(gsys->getFrameTime());
 			moveAttach();
 		}
 
-		Vector3f normal(*mCollPlatNormal);
+		Vector3f normal(*mCollNormal);
 		Vector3f zVec(normal);
 		zVec = -1.0f * zVec;
 		Vector3f dir(sinf(mFaceDirection), 0.0f, cosf(mFaceDirection));

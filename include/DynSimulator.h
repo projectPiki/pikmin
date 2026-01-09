@@ -14,6 +14,15 @@ struct RigidBody;
 struct Shape;
 struct LightCamera;
 
+/// Rest length of a spring, used in harmonic oscillator calculations.
+#define SPRING_REST_LENGTH (20.0f)
+
+/// Interval at which to update the world's physics.
+#define PHYSICS_UPDATE_STEP_TIME (1 / 60.0f)
+
+/// Interval at which to perform physics sub-steps.
+#define PHYSICS_INTEGRATION_STEP_TIME (1 / 80.0f)
+
 /**
  * @brief A spring attached to a "hook" point on a rigid body.
  *
@@ -24,15 +33,21 @@ struct WorldSpring {
 	/// Default constructor (trivial).
 	WorldSpring() { }
 
-	/// Initialises the hook with an index and offset position (x,y,z).
+	/**
+	 * @brief Initialises the hook with a given body point index to attach to, and an anchor position.
+	 * @param hookIdx Index of point on rigid body to attach this spring to.
+	 * @param x World space x coordinate of anchor position for (other end of) spring.
+	 * @param y World space y coordinate of anchor position for (other end of) spring.
+	 * @param z World space z coordinate of anchor position for (other end of) spring.
+	 */
 	void init(int hookIdx, f32 x, f32 y, f32 z)
 	{
 		mHookIdx = hookIdx;
-		mOffset.set(x, y, z);
+		mAnchorPoint.set(x, y, z);
 	}
 
-	int mHookIdx;     ///< _00, index of hook point spring is attached to.
-	Vector3f mOffset; ///< _04, offset vector from hook point.
+	int mHookIdx;          ///< _00, index of rigid body hook point that spring is attached to.
+	Vector3f mAnchorPoint; ///< _04, world-space position the other end of the spring is attached to.
 };
 
 /**
@@ -61,15 +76,15 @@ struct RigidBody : public Node {
 		Vector3f mAngularVel;        ///< _4C, angular velocity of rigid body (in world space).
 		Vector3f mLocalAngularVel;   ///< _58, angular velocity of rigid body (in local space).
 		Matrix3f mInertiaTensor;     ///< _64, inertia tensor (in world space).
-		u32 _unused88;               ///< _88, unknown - only ever set to 0.
-		Vector3f mBodyPoints[0x400]; ///< _8C, transformed body points (in world space).
+		u32 _88;                     ///< _88, unknown/unused - only ever set to 0.
+		Vector3f mBodyPoints[0x400]; ///< _8C, transformed body points (in world space) - hook points then bounding points.
 	};
 
 	/// Default constructor. Sets all basic counts to 0.
 	RigidBody()
 	    : Node("rigidBody")
 	{
-		mIntegrationStates[0]._unused88 = mIntegrationStates[1]._unused88 = 0;
+		mIntegrationStates[0]._88 = mIntegrationStates[1]._88 = 0;
 
 		mMass               = 0.0f;
 		mHookPointCount     = 0;
@@ -77,11 +92,24 @@ struct RigidBody : public Node {
 		mSpringCount        = 0;
 	}
 
-	virtual void render(Graphics& gfx);                           // _18
+	virtual void render(Graphics& gfx); // _18
+
+	/**
+	 * @brief Initialises dimensions of the object.
+	 * @param width Width of object.
+	 * @param height Height of object.
+	 * @param depth Depth of object.
+	 */
 	virtual void initDimensions(f32 width, f32 height, f32 depth) // _30
 	{
 		mDimensions.set(width, height, depth);
 	}
+
+	/**
+	 * @brief Calculates and applies forces to object due to accelerations.
+	 * @param configIdx Current configuration index.
+	 * @param timeStep Time step to calculate over.
+	 */
 	virtual void computeForces(int configIdx, f32 timeStep) // _34
 	{
 		// apply gravity and nothing else.

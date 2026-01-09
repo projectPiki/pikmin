@@ -122,38 +122,38 @@ struct GoalItem : public Suckable, public zen::CallBack2<zen::particleGenerator*
 	// _00       = VTBL
 	// _00-_3C8  = Suckable
 	// _3C8-_3CC = zen::CallBack2
-	u8 _3CC;                          // _3CC
-	f32 mColourFadeRate;              // _3D0
-	f32 mColourAnimProgress;          // _3D4
-	bool mColourAnimationEnabled;     // _3D8
-	bool mSpotEffectActive;           // _3D9
-	zen::particleGenerator* mSpotEfx; // _3DC
-	zen::particleGenerator* mHaloEfx; // _3E0
-	bool _3E4;                        // _3E4
-	zen::particleGenerator* mSuckEfx; // _3E8
-	bool _3EC;                        // _3EC
-	int _3F0;                         // _3F0
-	bool _3F4;                        // _3F4
-	bool _3F5;                        // _3F5
-	bool mIsClosing;                  // _3F6
-	f32 mConeSizeTimer;               // _3F8
-	Vector3f _3FC;                    // _3FC
-	bool mIsConeEmit;                 // _408
-	EffShpInst* mSpotModelEff;        // _40C
-	bool mIsDispensingPikis;          // _410
-	int mPikisToExit;                 // _414
-	f32 mPikiSpawnTimer;              // _418
-	Vector3f _41C;                    // _41C
-	u16 mOnionColour;                 // _428
-	s16 mWaypointIdx;                 // _42A
-	u32 mHeldPikis[3];                // _42C, contains counts for leaf/bud/flower
-	ItemShapeObject* _438[3];         // _438
-	GoalLeg* _444;                    // _444
-	RopeItem* mRope[3];               // _448
-	u32 _454;                         // _454
-	u32 _458;                         // _458
-	SeContext _45C;                   // _45C
-	ShapeDynMaterials mDynMaterial;   // _484
+	u8 _3CC;                              // _3CC
+	f32 mColourFadeRate;                  // _3D0
+	f32 mColourAnimProgress;              // _3D4
+	bool mColourAnimationEnabled;         // _3D8
+	bool mSpotEffectActive;               // _3D9
+	zen::particleGenerator* mSpotEfx;     // _3DC
+	zen::particleGenerator* mHaloEfx;     // _3E0
+	bool _3E4;                            // _3E4
+	zen::particleGenerator* mSuckEfx;     // _3E8
+	bool _3EC;                            // _3EC
+	int _3F0;                             // _3F0
+	bool _3F4;                            // _3F4
+	bool _3F5;                            // _3F5
+	bool mIsClosing;                      // _3F6
+	f32 mConeSizeTimer;                   // _3F8
+	Vector3f _3FC;                        // _3FC
+	bool mIsConeEmit;                     // _408
+	EffShpInst* mSpotModelEff;            // _40C
+	bool mIsDispensingPikis;              // _410
+	int mPikisToExit;                     // _414
+	f32 mPikiSpawnTimer;                  // _418
+	Vector3f _41C;                        // _41C
+	u16 mOnionColour;                     // _428
+	s16 mWaypointIdx;                     // _42A
+	u32 mHeldPikis[3];                    // _42C, contains counts for leaf/bud/flower
+	ItemShapeObject* _438[3];             // _438
+	GoalLeg* _444;                        // _444
+	RopeItem* mRope[3];                   // _448
+	u32 _454;                             // _454
+	u32 _458;                             // _458
+	SeContext _45C;                       // _45C
+	ShapeDynMaterials mAnimatedMaterials; // _484
 };
 
 /**

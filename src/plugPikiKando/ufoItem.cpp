@@ -417,10 +417,10 @@ void UfoItem::setJetEffect(int level, bool doSmokeEffects)
  */
 UfoItem::LightAnimator::LightAnimator()
 {
-	mDyn   = nullptr;
-	mSpeed = 0.0f;
-	mFrame = 0.0f;
-	mType  = 0;
+	mAnimatedMaterials = nullptr;
+	mSpeed             = 0.0f;
+	mFrame             = 0.0f;
+	mType              = 0;
 }
 
 /**
@@ -456,7 +456,7 @@ void UfoItem::LightAnimator::update()
 			mFrame = frame;
 		}
 	}
-	mDyn->animate(&mFrame);
+	mAnimatedMaterials->animate(&mFrame);
 }
 
 /**
@@ -742,27 +742,27 @@ UfoItem::UfoItem(CreatureProp* prop, UfoShapeObject* shape)
 	}
 	mShipModel = shape;
 	mSRT.s.set(1.0f, 1.0f, 1.0f);
-	mDynMat = nullptr;
+	mAnimatedMaterialsList = nullptr;
 
-	ShapeDynMaterials* mat = shape->mShape->instanceMaterials(15);
-	mLightAnims[0].mDyn    = mat;
-	mat->mParent           = mDynMat;
-	mDynMat                = mat;
+	ShapeDynMaterials* mat            = shape->mShape->instanceMaterials(15);
+	mLightAnims[0].mAnimatedMaterials = mat;
+	mat->mNext                        = mAnimatedMaterialsList;
+	mAnimatedMaterialsList            = mat;
 
-	mat                 = shape->mShape->instanceMaterials(52);
-	mLightAnims[1].mDyn = mat;
-	mat->mParent        = mDynMat;
-	mDynMat             = mat;
+	mat                               = shape->mShape->instanceMaterials(52);
+	mLightAnims[1].mAnimatedMaterials = mat;
+	mat->mNext                        = mAnimatedMaterialsList;
+	mAnimatedMaterialsList            = mat;
 
-	mat                 = shape->mShape->instanceMaterials(51);
-	mLightAnims[2].mDyn = mat;
-	mat->mParent        = mDynMat;
-	mDynMat             = mat;
+	mat                               = shape->mShape->instanceMaterials(51);
+	mLightAnims[2].mAnimatedMaterials = mat;
+	mat->mNext                        = mAnimatedMaterialsList;
+	mAnimatedMaterialsList            = mat;
 
-	mat                 = shape->mShape->instanceMaterials(40);
-	mLightAnims[3].mDyn = mat;
-	mat->mParent        = mDynMat;
-	mDynMat             = mat;
+	mat                               = shape->mShape->instanceMaterials(40);
+	mLightAnims[3].mAnimatedMaterials = mat;
+	mat->mNext                        = mAnimatedMaterialsList;
+	mAnimatedMaterialsList            = mat;
 }
 
 /**
@@ -996,7 +996,7 @@ void UfoItem::demoDraw(Graphics& gfx, immut Matrix4f* mtx)
 	mShipModel->mShape->updateAnim(gfx, *mtx, nullptr);
 
 	if (gameflow.mMoviePlayer->mIsActive || aiCullable()) {
-		mShipModel->mShape->drawshape(gfx, *gfx.mCamera, mDynMat);
+		mShipModel->mShape->drawshape(gfx, *gfx.mCamera, mAnimatedMaterialsList);
 		playerState->renderParts(gfx, mShipModel->mShape);
 	}
 

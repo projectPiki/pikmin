@@ -1114,8 +1114,8 @@ ModeState* MessageModeState::update(u32& result)
 			// start the timer.
 			mStateTimer -= gsys->getFrameTime();
 			if (mStateTimer < 0.0f) {
-				mStateTimer                 = 2.0f;
-				mapMgr->mTargetDesaturation = 1.0f;
+				mStateTimer                      = 2.0f;
+				mapMgr->mTargetDesaturationLevel = 1.0f;
 				if ((gameflow.mIsChallengeMode || gameflow.mWorldClock.mCurrentDay == MAX_DAYS) && gameoverWindow) {
 					gameoverWindow->start(zen::DrawGameOver::MODE_NaviDown, 40.0f);
 				}
@@ -1144,8 +1144,8 @@ ModeState* MessageModeState::update(u32& result)
 		}
 		case STATE_ForceDayEnd:
 		{
-			mapMgr->mTargetFadeLevel    = 0.0f;
-			mapMgr->mTargetDesaturation = 0.0f;
+			mapMgr->mTargetFadeLevel         = 0.0f;
+			mapMgr->mTargetDesaturationLevel = 0.0f;
 			PRINT("DOING FORCE RESULTS SCREEN !!!\n");
 			// set up day end state
 			DayOverModeState* state = new DayOverModeState(mParentSection, DayOverModeState::STATE_PhaseOne);
@@ -1899,7 +1899,7 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 
 		_3A8.set(96, 128, 255, 0); // unused color
 
-		// initialise lights and effects
+		// "initialise" lights and effects (these do absolutely nothing)
 		memStat->start("effects");
 		mapMgr->initEffects();
 		memStat->end("effects");
@@ -2320,7 +2320,7 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 		Matrix4f unused;
 		unused.makeSRT(Vector3f(0.1f, 0.1f, 0.1f), Vector3f(0.0f, 0.0f, 0.0f), Vector3f(0.0f, 0.0f, -5.0f));
 
-		gfx.mRenderState = (GFXRENDER_Unk1 | GFXRENDER_Unk2 | GFXRENDER_Unk3);
+		gfx.mMatRenderMask = (MATFLAG_Opaque | MATFLAG_AlphaTest | MATFLAG_AlphaBlend);
 		mCurrentModeState->postRender(gfx);
 		Matrix4f orthoMtx;
 		gfx.setOrthogonal(orthoMtx.mMtx, AREA_FULL_SCREEN(gfx));

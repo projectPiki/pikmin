@@ -1,264 +1,141 @@
 #ifndef _MAPMGR_H
 #define _MAPMGR_H
 
-#include "Animator.h"
-#include "DynColl.h"
 #include "Graphics.h"
 #include "Material.h"
+#include "ShadowCaster.h"
 #include "Shape.h"
 #include "types.h"
 
 struct Controller;
 struct CreatureCollPart;
 struct DayMgr;
-struct DynMapObject;
 struct DynSimulator;
-struct MapObjectPart;
 struct MapLightMgr;
 
+/// How many cells to divide the map into, both horizontally and vertically (4096 total).
+#define MAP_GRID_SIZE (64)
+
+/// Types of "shape" objects stored in MapMgr, "used" in genMapParts.cpp. Never properly instantiated.
+enum MapShapeTypes {
+	MAPSHAPE_Box = 0, ///< 0, never instantiated, just taken from name array in genMapParts.cpp.
+	MAPSHAPE_1   = 1, ///< 1, never instantiated, just taken from name array in genMapParts.cpp.
+	MAPSHAPE_2   = 2, ///< 2, never instantiated, just taken from name array in genMapParts.cpp.
+	MAPSHAPE_3   = 3, ///< 3, never instantiated, just taken from name array in genMapParts.cpp.
+	MAPSHAPE_Log = 4, ///< 4, never instantiated, just taken from name array in genMapParts.cpp.
+	MAPSHAPE_Count,   ///< 5, total number of shape types.
+};
+
 /**
- * @brief TODO
+ * @brief Holds information for simulating object movement for the next step, to resolve collisions and physics.
+ *
+ * Setting to ignore dynamic collision is only ever true for sprouts.
+ *
+ * @note Size: 0x28.
  */
 struct MoveTrace {
-	MoveTrace(immut Vector3f& position, immut Vector3f& velocity, f32 radius, bool p4)
+
+	/**
+	 * @brief Constructs a new trace with key physical information, but no parent object.
+	 * @param position Current position of the object to be traced.
+	 * @param velocity Current velocity of the object to be traced.
+	 * @param radius Radius of the collision sphere to trace.
+	 * @param ignoreDynColl Whether to ignore dynamic collision when tracing (i.e. just resolve static map collision).
+	 */
+	MoveTrace(immut Vector3f& position, immut Vector3f& velocity, f32 radius, bool ignoreDynColl)
 	{
-		mIgnoreDynamic = p4;
-		mPosition      = position;
-		mVelocity      = velocity;
-		mRadius        = radius;
-		mObject        = nullptr;
-		mStepFraction  = 1.0f;
+		mIgnoreDynamicCollision = ignoreDynColl;
+		mPosition               = position;
+		mVelocity               = velocity;
+		mRadius                 = radius;
+		mObject                 = nullptr;
+		mStepFraction           = 1.0f;
 	}
 
-	Vector3f mPosition;  // _00
-	Vector3f mVelocity;  // _0C
-	f32 mRadius;         // _18
-	f32 mStepFraction;   // _1C
-	bool mIgnoreDynamic; // _20
-	Creature* mObject;   // _24, the thing moving
+	Vector3f mPosition;           ///< _00, position of the object; begins as current position, ends up as target position.
+	Vector3f mVelocity;           ///< _0C, velocity of the object; begins as current velocity, ends up as target velocity.
+	f32 mRadius;                  ///< _18, radius to test for collision in.
+	f32 mStepFraction;            ///< _1C, fraction of total movement to perform in each substep.
+	bool mIgnoreDynamicCollision; ///< _20, whether to just resolve static (map) collision, or include dynamic collision.
+	Creature* mObject;            ///< _24, the object whose movement is being traced.
 };
 
 /**
- * @brief Stripped struct used in one ctor, but needed for genning a weak ctor
- */
-struct MapAnimShapeObject {
-	Shape* mShape;            // _00
-	AnimContext mAnimContext; // _04
-	AnimMgr* mMgr;            // _14
-};
-
-/**
- * @brief TODO
+ * @brief Material handler for setting up shadow light cameras.
  *
  * @note Size: 0xC.
  */
 struct MapShadMatHandler : public MaterialHandler {
+
+	/// Constructs a new material handler and basic plain white material.
 	MapShadMatHandler()
 	{
-		mShadMat = new Material();
-		mShadMat->getColour().set(255, 255, 255, 255);
+		// set up a new white material - will be made opaque before use
+		mShadowLightMat = new Material();
+		mShadowLightMat->getColour().set(255, 255, 255, 255); // white
 	}
 
+	/// Sets the current graphics pipeline material to the stored one.
 	virtual void setMaterial(Material*) // _08
 	{
-		mGfx->setMaterial(mShadMat, true);
+		mGfx->setMaterial(mShadowLightMat, true);
 	}
 
 	// _00     = VTBL
 	// _00-_08 = MaterialHandler
-	Material* mShadMat; // _08
+	Material* mShadowLightMat; ///< _08, material to use when setting up each shadow's light camera.
 };
 
 /**
- * @brief TODO
+ * @brief Material handler for projecting models and rendering shadows.
  *
  * @note Size: 0x10.
  */
 struct MapProjMatHandler : public MaterialHandler {
+
+	/**
+	 * @brief Constructs a new material handler for projecting a supplied texture.
+	 * @param tex
+	 */
 	MapProjMatHandler(Texture* tex)
 	{
-		mLightCamera       = nullptr;
+		mProjectionCamera  = nullptr;
 		mProjMat           = new Material();
 		mProjMat->mTexture = tex;
-		mProjMat->getColour().set(128, 128, 128, 32);
+		mProjMat->getColour().set(128, 128, 128, 32); // very light grey
 	}
 
+	/// Sets the current graphics pipeline material to the stored one.
 	virtual void setMaterial(Material*) // _08
 	{
 		mGfx->setMaterial(mProjMat, true);
 	}
-	virtual void setTexMatrix(bool set) // _0C
+
+	/**
+	 * @brief Constructs and sets the GX tex matrix by projecting using the stored camera.
+	 * @param enableProj Whether to construct the matrix via projection.
+	 */
+	virtual void setTexMatrix(bool enableProj) // _0C
 	{
-		mGfx->initProjTex(set, mLightCamera);
+		mGfx->initProjTex(enableProj, mProjectionCamera);
 	}
 
 	// _00     = VTBL
 	// _00-_08 = MaterialHandler
-	Material* mProjMat;        // _08
-	LightCamera* mLightCamera; // _0C
+	Material* mProjMat;             ///< _08, material to use when projecting shadows.
+	LightCamera* mProjectionCamera; ///< _0C, camera to use when projecting shadows.
 };
 
 /**
- * @brief TODO
+ * @brief Completely unused structure, only used to set up an array in MapMgr and generate a ctor.
  *
- * @note Size: 0x398.
- */
-struct ShadowCaster : public CoreNode {
-	ShadowCaster();
-
-	void initShadow();
-
-	// _00     = VTBL
-	// _00-_14 = CoreNode
-	LightCamera mLightCamera; // _14
-	Vector3f mSourcePosition; // _37C
-	Vector3f mTargetPosition; // _388
-	Node* mDrawer;            // _394, usually cast to something else.
-};
-
-/**
- * @brief TODO
- */
-struct MapObjAnimator : public Animator {
-	virtual void finishOneShot(); // _10
-
-	// _30     = VTBL
-	// _00-_34 = Animator
-	DynMapObject* mMapObj; // _34
-};
-
-/**
- * @brief TODO
- */
-struct DynMapObject : public DynCollShape {
-	DynMapObject(MapMgr*, MapAnimShapeObject*);
-
-	virtual void update();                                                      // _10
-	virtual void draw(Graphics&);                                               // _14
-	virtual void touchCallback(immut Plane&, immut Vector3f&, immut Vector3f&); // _38
-	virtual void refresh(Graphics&);                                            // _44
-
-	void nextState();
-
-	// _00     = VTBL
-	// _00-_140 = DynCollShape
-	MapAnimShapeObject* mShapeObject; // _140
-	MapObjAnimator mAnimator;         // _144
-	MapMgr* mMapMgr;                  // _17C
-	ShadowCaster mShadowCaster;       // _180, cast mDrawer to DynMapObject*
-	int mState;                       // _518
-	f32 mTransitionTimer;             // _51C
-	Vector3f mScale;                  // _520, this is an SRT according to the DLL
-	Vector3f mRotation;               // _52C
-	Vector3f mPosition;               // _538
-	int mObjCount;                    // _544
-	MapObjectPart** mObjects;         // _548
-};
-
-/**
- * @brief TODO
- */
-struct MapObjectPart : public DynCollShape {
-	MapObjectPart(Shape* shape)
-	    : DynCollShape(shape)
-	{
-		mJointIndex = 0;
-		mMapParent  = 0;
-	}
-
-	virtual void update() { }                                                              // _10
-	virtual void refresh(Graphics&) { }                                                    // _44
-	virtual void touchCallback(immut Plane& plane, immut Vector3f& a1, immut Vector3f& a2) // _38
-	{
-		if (mMapParent)
-			mMapParent->touchCallback(plane, a1, a2);
-	}
-
-	// _00     = VTBL
-	// _00-_140 = DynCollShape
-	int mJointIndex;          // _140
-	DynMapObject* mMapParent; // _144 might be wrong
-};
-
-/**
- * @brief This struct is mentioned literally once in the ILK (its compiler-generated default constructor).
- *
- * @note Size: 0x18.
- */
-struct LinePath {
-	Vector3f mStartPosition; // _00
-	Vector3f mEndPosition;   // _0C
-};
-
-/**
- * @brief TODO
- */
-struct MapParts : public DynCollShape {
-	MapParts(Shape* shape)
-	    : DynCollShape(shape)
-	{
-		mLinePath = nullptr;
-	}
-
-	virtual void read(RandomAccessStream&) { }                                  // _0C
-	virtual void update() { }                                                   // _10
-	virtual void applyVelocity(immut Plane&, immut Vector3f&, immut Vector3f&); // _34
-	virtual void init() { }                                                     // _48
-
-	static immut char* getShapeFile(int);
-
-	static immut char* shapeFiles[4];
-
-	// _00      = VTBL
-	// _00-_140 = DynCollShape
-	LinePath* mLinePath;        // _140
-	Vector3f mVelocity;         // _144
-};
-
-/**
- * @brief TODO
- */
-struct MapEntity : public MapParts {
-	MapEntity(Shape*);
-
-	virtual void update(); // _10
-
-	// _00      = VTBL
-	// _00-_150 = MapParts
-	// TODO: members
-};
-
-/**
- * @brief TODO
- */
-struct MapSlider : public MapParts {
-	MapSlider(Shape*, int, int, f32, f32, f32, int);
-
-	virtual void update();           // _10
-	virtual void refresh(Graphics&); // _44
-	virtual void init();             // _48
-
-	// _00      = VTBL
-	// _00-_150 = MapParts
-	Vector3f mSliderPosition; // _150
-	f32 mFaceDirection;       // _15C
-	int mActivationCount;     // _160
-	int mTriggerCount;        // _164
-	f32 mHoldTime1;           // _168
-	f32 mHoldTime2;           // _16C
-	f32 mMoveSpeed;           // _170
-	int mMoveMode;            // _174
-	int mStateMode;           // _178
-	int mDirectionMode;       // _17C
-	f32 mTimer;               // _180
-};
-
-/**
- * @brief TODO
+ * No additional code associated with it in the DLL thus far, either.
  *
  * @note Size: 0xC.
  */
 struct MapRoom {
+
+	/// Constructs an unused map room with some unknown default values.
 	MapRoom()
 	{
 		_08 = 0;
@@ -266,96 +143,107 @@ struct MapRoom {
 		_00 = 1.0f;
 	}
 
-	f32 _00; // _00, all unknown
-	f32 _04; // _04, all unknown
-	u32 _08; // _08, all unknown
+	f32 _00; ///< _00, unknown/unused.
+	f32 _04; ///< _04, unknown/unused.
+	u32 _08; ///< _08, unknown/unused.
 };
 
 /**
- * @brief TODO
+ * @brief Stores information for rendering a debug collision triangle.
  *
- * @note Fabricated. Has to be this structure, but no idea what it was called. Has no ctor.
+ * @note Fabricated name. Has to be this structure, but no idea what it was called. Has no ctor.
  * @note Size: 0xC.
  */
 struct MapColls {
-	CollGroup* mCollisions; // _00
-	CollTriInfo* mTriangle; // _04
-	int mColorCategory;     // _08
+	CollGroup* mParentCollGroup; ///< _00, collision group this triangle is a part of.
+	CollTriInfo* mTriangle;      ///< _04, collision triangle to render.
+	int mColorCategory;          ///< _08, colour to draw triangle borders with - see `MapMgr::DebugColourTypes` enum.
 };
 
 /**
- * @brief TODO
+ * @brief Manager for a course/area map, handling collision, drawing, and some shadows.
  *
  * @note Size: 0x4D4.
  */
 struct MapMgr {
-	MapMgr(Controller*);
+
+	/// Colour types used to render debug collision triangles.
+	enum DebugColourTypes {
+		DCLR_Yellow = 0, ///< 0, colour for close (not far-culled) triangles. Also default colour.
+		DCLR_Red    = 1, ///< 1, colour for far-culled triangles with >= 16 distance.
+		DCLR_Blue   = 2, ///< 2, colour for far-culled triangles with < 16 distance.
+		DCLR_COUNT,      ///< 3, number of debug triangle colours.
+	};
+
+	MapMgr(Controller* controller);
 
 	void initEffects();
 	void initShape();
 	void createLights();
 	void updateSimulation();
 	void update();
-	void preRender(Graphics&);
-	void drawShadowCasters(Graphics&);
-	void refresh(Graphics&);
-	void showCollisions(immut Vector3f&);
-	void drawXLU(Graphics&);
-	void postrefresh(Graphics&);
-	void updatePos(f32, f32);
+	void preRender(Graphics& gfx);
+	void drawShadowCasters(Graphics& gfx);
+	void refresh(Graphics& gfx);
+	void showCollisions(immut Vector3f& focusPos);
+	void drawXLU(Graphics& gfx);
+	void postrefresh(Graphics& gfx);
+	void updatePos(f32 x, f32 z);
 	f32 getLight(f32, f32);
-	CollGroup* getCollGroupList(f32, f32, bool);
-	f32 getMinY(f32, f32, bool);
-	f32 getMaxY(f32, f32, bool);
-	CollTriInfo* getCurrTri(f32, f32, bool);
-	f32 findEdgePenetration(CollTriInfo&, immut Vector3f*, immut Vector3f&, f32, Vector3f&);
-	void recTraceMove(CollGroup*, MoveTrace&, f32);
-	void traceMove(Creature*, MoveTrace&, f32);
-	Shape* loadPlatshape(immut char*);
-	CreatureCollPart* requestCollPart(ObjCollInfo*, Creature*);
+	CollGroup* getCollGroupList(f32 x, f32 z, bool includePlatColl);
+	f32 getMinY(f32 x, f32 z, bool includePlatColl);
+	f32 getMaxY(f32 x, f32 z, bool includePlatColl);
+	CollTriInfo* getCurrTri(f32 x, f32 z, bool includePlatColl);
+	f32 findEdgePenetration(CollTriInfo& tri, immut Vector3f* vertexList, immut Vector3f& sphereCenter, f32 sphereRadius,
+	                        Vector3f& outNormal);
+	void recTraceMove(CollGroup* collGroupList, MoveTrace& trace, f32 timeStep);
+	void traceMove(Creature* creature, MoveTrace& trace, f32 timeStep);
+	Shape* loadPlatshape(immut char* modelFilePath);
+	CreatureCollPart* requestCollPart(ObjCollInfo* info, Creature* obj);
 
 	// unused/inlined:
-	bool closeCollTri(CollGroup*, CollTriInfo*);
 
-	Controller* mController;            // _00
-	DayMgr* mDayMgr;                    // _04
-	Vector3f _UNUSED08;                 // _08
-	MapRoom* mMapRooms;                 // _14, array of 256 MapRooms
-	int mVertRayCount;                  // _18
-	int mGroundTriRayCount;             // _1C
-	u8 _20[0x60 - 0x20];                // _20, unknown
-	Shape* mMapShape;                   // _60
-	ShapeDynMaterials mDynMaterials;    // _64
-	BaseShape* mPartShapes[5];          // _74
-	DynCollShape* mCollShape;           // _88
-	MapLightMgr* mLightMgr;             // _8C
-	BoundBox mMapBounds;                // _90
-	int mDebugCollCount;                // _A8
-	int mActiveTriCount;                // _AC
-	int mMaxDebugColls;                 // _B0
-	Vector3f mDebugFocusPoint;          // _B4
-	BoundBox mBroadPhaseBox;            // _C0
-	BoundBox mQueryBox;                 // _D8
-	MapColls* mCollisions;              // _F0
-	f32 mLastPhysicsTime;               // _F4
-	f32 mAccumPhysicsTime;              // _F8
-	f32 mFixedTimeStep;                 // _FC
-	f32 mIntegrationStep;               // _100
-	bool mResetPending;                 // _104
-	DynSimulator* mDynSimulator;        // _108
-	int mCollCheckCount;                // _10C
-	int mShadowCountdown;               // _110
-	ShadowCaster mShadowCaster;         // _114
-	MapShadMatHandler* mShadowHandler;  // _4AC
-	MapProjMatHandler* mProjHandler;    // _4B0
-	Texture* mCaptureTexture;           // _4B4
-	Texture* mBlurredTexture;           // _4B8
-	int mBlur;                          // _4BC
-	f32 mDesaturationLevel;             // _4C0
-	f32 mFadeProgress;                  // _4C4
-	f32 mTargetDesaturation;            // _4C8
-	f32 mTargetFadeLevel;               // _4CC
-	CreatureCollPart* mDefaultCollPart; // _4D0
+	bool closeCollTri(CollGroup* collGroup, CollTriInfo* tri);
+
+	Controller* mController;                  ///< _000, active player controller.
+	DayMgr* mDayMgr;                          ///< _004, day manager for handling time-based lighting.
+	Vector3f _08;                             ///< _008, unknown/unused - set by day manager then never used.
+	MapRoom* mMapRooms;                       ///< _014, completely unused array of 256 MapRooms.
+	int mMinMaxYQueryCount;                   ///< _018, number of getMinY and getMaxY calls performed in a given frame - never used.
+	int mCurrTriQueryCount;                   ///< _01C, number of getCurrTri calls performed in a given frame - never used.
+	u8 _20[0x60 - 0x20];                      ///< _020, unknown/unused.
+	Shape* mMapModel;                         ///< _060, model for the current map.
+	ShapeDynMaterials mAnimatedMaterials;     ///< _064, container for instances of all animated materials used by the map model.
+	BaseShape* mMapShapes[MAPSHAPE_Count];    ///< _074, unused map shapes - see `MapShapeTypes` enum. Also see genMapParts.cpp.
+	DynCollShape* mCollShapeList;             ///< _088, parent of list of all active dynamic collision models on the map.
+	MapLightMgr* mSoftLightMgr;               ///< _08C, unused manager for (also unused) interactable soft lights.
+	BoundBox mMapBounds;                      ///< _090, bounding box for map model.
+	int mDebugCollCount;                      ///< _0A8, how many debug collision triangles to show this frame.
+	int mActiveTriCount;                      ///< _0AC, number of collision triangles that are not far-culled this frame.
+	int mMaxDebugColls;                       ///< _0B0, maximum number of debug triangles to show per frame (default: 300).
+	Vector3f mDebugFocusPosition;             ///< _0B4, position to render any debug collision around - only ever set as navi position.
+	BoundBox mOuterCollRenderBounds;          ///< _0C0, bounding box for drawing the outer (cyan) debug collision column.
+	BoundBox mActiveCollisionBounds;          ///< _0D8, bounding box for drawing the inner (magenta) debug collision column.
+	MapColls* mDebugCollisions;               ///< _0F0, array of render information for debug triangles.
+	f32 mLastPhysicsTime;                     ///< _0F4, last time (counting secs from init) that the world's physics was updated.
+	f32 mAccumPhysicsTime;                    ///< _0F8, total time (counting secs from init) that the world's physics has been running.
+	f32 mPhysicsStepInterval;                 ///< _0FC, interval (in secs) between physics simulation steps - 1/60 by default.
+	f32 mPhysicsSubStepInterval;              ///< _100, interval (in secs) to run integration sub-steps - 1/80 by default.
+	bool mSimulationResetPending;             ///< _104, whether game world simulation needs to be reset.
+	DynSimulator* mWorldSimulator;            ///< _108, physics manager for simulating game world dynamics.
+	int mCurrTraceTick;                       ///< _10C, counter for how many traceMoves have been run, to prevent double-up collisions.
+	int mShadowDelayCounter;                  ///< _110, frame delay to prevent shadows rendering too early - 3 frames by default.
+	ShadowCaster mGlobalShadowList;           ///< _114, list of all shadow casters that need to move with the sun (large objects).
+	MapShadMatHandler* mShadowCamMatHandler;  ///< _4AC, material handler for setting up each shadow's light camera.
+	MapProjMatHandler* mShadowProjMatHandler; ///< _4B0, material handler for actually projecting/drawing each shadow.
+	Texture* mBlurSourceTexture;              ///< _4B4, texture with the current frame's (pre-blur) rendering as pixel data.
+	Texture* mBlurResultTexture;              ///< _4B8, texture from current frame's blur (multi-tex of last blur + current non-blur).
+	int mBlur;                                ///< _4BC, unused value - adjusted by DayMgr's "blur" debug menu option but does nothing.
+	f32 mCurrDesaturationLevel;               ///< _4C0, current desaturation (greyed blur) level - 0=no desaturation, 1=fully grey.
+	f32 mCurrFadeLevel;                       ///< _4C4, current fade level - 0=no fade, 1=blacked out.
+	f32 mTargetDesaturationLevel;             ///< _4C8, target desaturation level to transit to - 0=no desaturation, 1=fully grey.
+	f32 mTargetFadeLevel;                     ///< _4CC, target fade level to transit to - 0=no fade, 1=blacked out.
+	CreatureCollPart* mCollParts;             ///< _4D0, unused - object is created but never properly initialised or used again.
 };
 
 extern MapMgr* mapMgr;

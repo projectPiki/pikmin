@@ -219,11 +219,13 @@ void Creature::moveNew(f32 deltaTime)
 		}
 
 		if (mObjType == OBJTYPE_Pikihead) {
+			// ignore dynamic collisions when moving
 			MoveTrace trace(adjustedPos, mVelocity, mCollisionRadius, true);
 			mapMgr->traceMove(this, trace, deltaTime);
 			mVelocity = trace.mVelocity;
 			mSRT.t    = trace.mPosition;
 		} else {
+			// don't ignore dynamic collisions when moving
 			MoveTrace trace(adjustedPos, mVelocity, mCollisionRadius, false);
 			mapMgr->traceMove(this, trace, deltaTime);
 			mVelocity = trace.mVelocity;
@@ -247,6 +249,7 @@ void Creature::moveNew(f32 deltaTime)
 			Vector3f tmpHeightVec = heightVector;
 			heightVector          = heightVector + mSRT.t;
 
+			// don't ignore dynamic collisions when moving
 			MoveTrace movePath(heightVector, mVelocity, 0.5f * cylinderHeight + grabOffset, false);
 			traceMove2(this, movePath, deltaTime);
 
@@ -259,6 +262,7 @@ void Creature::moveNew(f32 deltaTime)
 				adjustedPos.y -= mGroundOffset;
 			}
 
+			// don't ignore dynamic collisions when moving
 			MoveTrace trace(adjustedPos, mVelocity, mCollisionRadius, false);
 			mapMgr->traceMove(this, trace, deltaTime);
 
@@ -298,7 +302,7 @@ void Creature::moveNew(f32 deltaTime)
 			if (planeIdx < 0) {
 				jumpCallback();
 			} else {
-				CollTriInfo* tri = &mapMgr->mMapShape->mTriList[planeIdx];
+				CollTriInfo* tri = &mapMgr->mMapModel->mTriList[planeIdx];
 				if (tri->mTriangle.mNormal.DP(mPreviousTriangle->mTriangle.mNormal)
 				    < cosf(AIConstant::_instance->mConstants.mJumpTriangleAngleThreshold() / 180.0f * PI)) {
 					jumpCallback();
@@ -382,7 +386,7 @@ void traceMove2(Creature* target, MoveTrace& trace, f32 p3)
 		PRINT("Too many iterations [cr %08x : rad = %f : spd = %f]!!\n", target, trace.mRadius, trace.mVelocity.length() * p3);
 	}
 
-	mapMgr->mCollCheckCount++;
+	mapMgr->mCurrTraceTick++;
 
 	trace.mStepFraction = 1.0f / stepMultiplier;
 
@@ -395,26 +399,26 @@ void traceMove2(Creature* target, MoveTrace& trace, f32 p3)
 		trace.mObject = target;
 
 		CollGroup* prevColl = nullptr;
-		FOREACH_NODE(DynCollShape, mapMgr->mCollShape->mChild, collShape)
+		FOREACH_NODE(DynCollShape, mapMgr->mCollShapeList->mChild, collShape)
 		{
 			if ((!collShape->mCreature || collShape->mCreature != target) && box.intersects(collShape->mBoundingBox)) {
-				for (int i = 0; i < collShape->mColliderCount; i++) {
-					if (collShape->mVisibleList[collShape->mColliderList[i]->mRoomIndex]) {
-						collShape->mColliderList[i]->mModel         = collShape->mShape;
-						collShape->mColliderList[i]->mVertexList    = collShape->mVertexList;
-						collShape->mColliderList[i]->mPlatCollider  = collShape;
-						collShape->mColliderList[i]->mNextCollGroup = prevColl;
-						prevColl                                    = collShape->mColliderList[i];
+				for (int i = 0; i < collShape->mCollGroupCount; i++) {
+					if (collShape->mJointVisibility[collShape->mCollGroupList[i]->mJointIndex]) {
+						collShape->mCollGroupList[i]->mModel         = collShape->mCollisionModel;
+						collShape->mCollGroupList[i]->mVertexList    = collShape->mVertexList;
+						collShape->mCollGroupList[i]->mPlatCollision = collShape;
+						collShape->mCollGroupList[i]->mNextCollGroup = prevColl;
+						prevColl                                     = collShape->mCollGroupList[i];
 					}
 				}
 			}
 		}
 
-		CollGroup* coll = mapMgr->mMapShape->getCollTris(trace.mPosition);
+		CollGroup* coll = mapMgr->mMapModel->getCollTris(trace.mPosition);
 		if (coll && coll->mTriCount) {
-			coll->mModel         = mapMgr->mMapShape;
-			coll->mVertexList    = mapMgr->mMapShape->mVertexList;
-			coll->mPlatCollider  = nullptr;
+			coll->mModel         = mapMgr->mMapModel;
+			coll->mVertexList    = mapMgr->mMapModel->mVertexList;
+			coll->mPlatCollision = nullptr;
 			coll->mNextCollGroup = prevColl;
 			prevColl             = coll;
 		}

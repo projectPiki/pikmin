@@ -28,16 +28,6 @@ struct Texture;
 struct Vector2f;
 struct Vector3f;
 
-/**
- * @brief Enum for graphics manager render state flags.
- */
-enum GraphicsRenderFlags {
-	GFXRENDER_Unk1 = 1 << 8,  ///< 0x100, unknown.
-	GFXRENDER_Unk2 = 1 << 9,  ///< 0x200, unknown.
-	GFXRENDER_Unk3 = 1 << 10, ///< 0x400, unknown.
-	GFXRENDER_Unk4 = 1 << 15, ///< 0x8000, unknown.
-};
-
 struct GColor {
 	GColor()
 	{
@@ -88,7 +78,7 @@ struct Graphics {
 
 	// _3B4 = VTBL
 	int mRenderMode;                          // _00, 0 = localNtsc480IntDf, 1 = progressiveRenderMode
-	u32 mRenderState;                         // _04
+	u32 mMatRenderMask;                       // _04, see MaterialFlags enum.
 	immut Matrix4f* mLastModelMatrix;         // _08
 	immut Matrix4f* mActiveMatrix;            // _0C
 	Light mLight;                             // _10
@@ -124,9 +114,9 @@ struct Graphics {
 	u32 mActiveLightMask;                     // _378
 	f32 mLineWidth;                           // _37C
 	Vector3f* mCustomScale;                   // _380
-	Matrix4f* mSystemMatrices;                // _384
+	Matrix4f* mMatrixBuffer;                  // _384
 	int mMaxMatrixCount;                      // _388
-	int mActiveMatrixIdx;                     // _38C
+	int mNextFreeMatrixIdx;                   // _38C
 	CachedShape mShapeCache;                  // _390
 	CachedShape* mCachedShapes;               // _3A8
 	int mCachedShapeMax;                      // _3AC
@@ -258,7 +248,7 @@ struct DGXGraphics : public Graphics {
 	virtual void blatRectangle(immut RectArea&);                                                                      // _D8
 	virtual void lineRectangle(immut RectArea&);                                                                      // _DC
 	virtual void testRectangle(immut RectArea&);                                                                      // _E0
-	virtual void initProjTex(bool, LightCamera*);                                                                     // _E4
+	virtual void initProjTex(bool enableProj, LightCamera* projCamera);                                               // _E4
 	virtual void initReflectTex(bool);                                                                                // _E8
 	virtual void texturePrintf(Font* font, int x, int y, immut char* format, ...);                                    // _EC
 	virtual void useMatrixQuick(immut Matrix4f&, int);                                                                // _F4

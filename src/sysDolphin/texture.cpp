@@ -245,9 +245,9 @@ void Texture::createBuffer(int width, int height, int texFmt, void* buf)
 /**
  * @todo: Documentation
  */
-void Texture::grabBuffer(int width, int height, bool doClear, bool useMIPmap)
+void Texture::grabBuffer(int width, int height, bool enableDepth, bool useMIPmap)
 {
-	if (doClear) {
+	if (enableDepth) {
 		GXSetZMode(GX_TRUE, GX_LEQUAL, GX_TRUE);
 	}
 
@@ -259,11 +259,11 @@ void Texture::grabBuffer(int width, int height, bool doClear, bool useMIPmap)
 		GXSetTexCopyDst((u16)width, (u16)height, gxTexFmts[mTexFormat], GX_FALSE);
 	}
 
-	if (!doClear) {
+	if (!enableDepth) {
 		GXSetCopyFilter(GX_FALSE, nullptr, GX_FALSE, nullptr);
 	}
 
-	GXCopyTex(mPixelData, doClear);
+	GXCopyTex(mPixelData, enableDepth);
 	GXPixModeSync();
 	GXSetZMode(GX_TRUE, GX_LESS, GX_TRUE);
 }

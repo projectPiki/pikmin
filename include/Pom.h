@@ -99,10 +99,10 @@ public:
 private:
 	// _00      = VTBL
 	// _00-_3B8 = Boss
-	bool mIsPikiOrPlayerTouching;   // _3B8
-	int mColor;                     // _3BC
-	PomAi* mPomAi;                  // _3C0
-	ShapeDynMaterials mDynMaterial; // _3C4
+	bool mIsPikiOrPlayerTouching;         // _3B8
+	int mColor;                           // _3BC
+	PomAi* mPomAi;                        // _3C0
+	ShapeDynMaterials mAnimatedMaterials; // _3C4
 };
 
 /**

@@ -167,7 +167,8 @@ void KingAi::keyAction0()
 	case KINGAI_Appear:
 	{
 		if (!mKing->needShadow()) {
-			mapMgr->mShadowCaster.add(&mKing->mShadowCaster);
+			// add shadow to global list to be rendered
+			mapMgr->mGlobalShadowList.add(&mKing->mShadowCaster);
 			mKing->setShadowNeed(true);
 		}
 		break;
@@ -980,6 +981,7 @@ bool KingAi::missAttackNextTransit()
 	attackCentre.z += C_KING_PROP(mKing)._314() * cosf(mKing->mFaceDirection);
 
 	bool res = false;
+	// don't ignore dynamic collisions when tracing
 	MoveTrace trace(attackCentre, Vector3f(0.0f, 0.0f, 0.0f), C_KING_PROP(mKing)._334(), false);
 	mapMgr->traceMove(mKing, trace, gsys->getFrameTime());
 	if (attackCentre.x != trace.mPosition.x || attackCentre.y != trace.mPosition.y || attackCentre.z != trace.mPosition.z) {
@@ -1435,7 +1437,8 @@ void KingAi::initAppear(int nextState)
 		// Emperor Bulblax's shadow is... difficult.  I swear it can sometimes appear in USA rev 1, but frankly I don't know how.
 		// In any case, this code originally from the demo versions works much better than the solution in `KingAi::keyAction0`.
 #if defined(BUGFIX) || defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
-		mapMgr->mShadowCaster.add(&mKing->mShadowCaster);
+		// add shadow to global list to be rendered
+		mapMgr->mGlobalShadowList.add(&mKing->mShadowCaster);
 		mKing->setShadowNeed(true);
 #endif
 	}

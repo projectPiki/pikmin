@@ -986,7 +986,7 @@ f32 BuildingItem::getBoundingSphereRadius()
  */
 void BuildingItem::startAI(int)
 {
-	mItemShapeObject->mShape->makeInstance(mDynMats, 0);
+	mItemShapeObject->mShape->makeInstance(mAnimatedMaterials, 0);
 	mCounter    = 0;
 	mCurrAnimId = 0;
 	_3C4        = true;
@@ -1083,7 +1083,7 @@ void BuildingItem::refresh(Graphics& gfx)
 		val = 2.0f;
 	}
 
-	mDynMats.animate(&val);
+	mAnimatedMaterials.animate(&val);
 
 	bool isOffCamera = false;
 	if (!gfx.mCamera->isPointVisible(mSRT.t, getBoundingSphereRadius())) {
@@ -1102,7 +1102,7 @@ void BuildingItem::refresh(Graphics& gfx)
 		mItemShapeObject->mShape->updateAnim(gfx, mtx, nullptr);
 		if (!isOffCamera) {
 			gfx.useMatrix(Matrix4f::ident, 0);
-			mItemShapeObject->mShape->drawshape(gfx, *gfx.mCamera, &mDynMats);
+			mItemShapeObject->mShape->drawshape(gfx, *gfx.mCamera, &mAnimatedMaterials);
 		}
 	}
 

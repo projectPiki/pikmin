@@ -2,6 +2,7 @@
 
 #include "Age.h"
 #include "DebugLog.h"
+#include "DynColl.h"
 #include "DynObject.h"
 #include "DynSimulator.h"
 #include "MapMgr.h"
@@ -111,7 +112,7 @@ Creature* GenObjectMapObject::birth(BirthInfo& birthInfo)
 		// (it also generates assembly in the DLL, which is where this is drawn from)
 		DynObjBridge* bridge = new DynObjBridge();
 
-		bridge->mStaticEnvironmentShape = mapMgr->mMapShape;
+		bridge->mMapShape = mapMgr->mMapModel;
 		bridge->readScript(mapMgr, "objects/mapobjs/faller.ini");
 		bridge->initBodyCollisions();
 		bridge->mInitPosition.set(
@@ -119,8 +120,8 @@ Creature* GenObjectMapObject::birth(BirthInfo& birthInfo)
 		bridge->mInitOrientationX = Vector3f(0.0f, 0.0f, 1.0f);
 		bridge->mInitOrientationY = Vector3f(0.0f, 1.0f, 0.0f);
 		bridge->mInitOrientationZ = Vector3f(1.0f, 0.0f, 0.0f);
-		mapMgr->mDynSimulator->add(bridge);
-		mapMgr->mCollShape->add(bridge->mCollObj);
+		mapMgr->mWorldSimulator->add(bridge);
+		mapMgr->mCollShapeList->add(bridge->mCollObj);
 	}
 
 	// this is purely a fix to get the RigidBody ctor to spawn in this file, and isn't part of the DLL or DOL code.

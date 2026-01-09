@@ -143,7 +143,7 @@ struct PcamCamera : public NCamera {
 
 	bool timerElapsed(int idx) { return mTimers[idx] <= 0.0f; }
 	NPolar3f& getPolar() { return mPolarDir; }
-	void setBlur(f32 blur) { mCamera->mBlur = blur; }
+	void setBlur(f32 blur) { mCamera->mBlurAlpha = blur; }
 
 	// DLL inlines to do:
 	f32 getDirection();

@@ -85,10 +85,10 @@ public:
 
 		void setSpeed(f32 speed) { mSpeed = speed; }
 
-		ShapeDynMaterials* mDyn; // _00
-		f32 mFrame;              // _04
-		f32 mSpeed;              // _08
-		u16 mType;               // _0C
+		ShapeDynMaterials* mAnimatedMaterials; // _00
+		f32 mFrame;                            // _04
+		f32 mSpeed;                            // _08
+		u16 mType;                             // _0C
 	};
 
 	/**
@@ -181,7 +181,7 @@ public:
 	int mWaypointID;                                      // _558
 	UfoShapeObject* mShipModel;                           // _55C
 	SeContext mShipSe;                                    // _560
-	ShapeDynMaterials* mDynMat;                           // _588
+	ShapeDynMaterials* mAnimatedMaterialsList;            // _588
 	LightAnimator mLightAnims[4];                         // _58C
 	bool mNeedPathfindRefresh;                            // _5CC
 };

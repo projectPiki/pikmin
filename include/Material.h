@@ -10,15 +10,15 @@ struct Graphics;
 struct Colour;
 
 /**
- * @brief Enum for material flags.
+ * @brief Material flags for controlling rendering passes and blend types.
  */
 enum MaterialFlags {
-	MATFLAG_PVW          = 1 << 0,  ///< 0x0001, Enables programmable vertex/pixel features.
-	MATFLAG_OPAQUE       = 1 << 8,  ///< 0x0100, Opaque material (no blending).
-	MATFLAG_ALPHA_TEST   = 1 << 9,  ///< 0x0200, Hard-edged alpha cutout.
-	MATFLAG_ALPHA_BLEND  = 1 << 10, ///< 0x0400, Smooth alpha blending.
-	MATFLAG_INVERT_BLEND = 1 << 15, ///< 0x8000, Invert blend mode (e.g., for shadows).
-	MATFLAG_SKIP         = 1 << 16, ///< 0x10000, Skip rendering this material.
+	MATFLAG_PVW               = 1 << 0,  ///< 0x0001, Enables programmable vertex/pixel features.
+	MATFLAG_Opaque            = 1 << 8,  ///< 0x0100, Opaque material (no blending).
+	MATFLAG_AlphaTest         = 1 << 9,  ///< 0x0200, Hard-edged alpha cutout.
+	MATFLAG_AlphaBlend        = 1 << 10, ///< 0x0400, Smooth alpha blending.
+	MATFLAG_InverseColorBlend = 1 << 15, ///< 0x8000, Invert blend mode (e.g., for shadows).
+	MATFLAG_Skip              = 1 << 16, ///< 0x10000, Skip rendering this material.
 };
 
 /**
@@ -34,7 +34,7 @@ struct Material : public CoreNode {
 		mTexture       = nullptr;
 		mAttribute     = nullptr;
 		mEnvMapTexture = nullptr;
-		mFlags         = MATFLAG_OPAQUE;
+		mFlags         = MATFLAG_Opaque;
 		getColour().set(0xFF, 0xFF, 0xFF, 0xFF);
 		mTevInfoIndex   = 0;
 		mDisplayListPtr = nullptr;

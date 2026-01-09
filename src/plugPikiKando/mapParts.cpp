@@ -1,7 +1,8 @@
+#include "MapParts.h"
+
 #include "DebugLog.h"
 #include "Font.h"
 #include "Graphics.h"
-#include "MapMgr.h"
 
 /**
  * @todo: Documentation
@@ -33,9 +34,9 @@ immut char* MapParts::getShapeFile(int idx)
 /**
  * @todo: Documentation
  */
-void MapParts::applyVelocity(immut Plane&, immut Vector3f&, immut Vector3f& force)
+void MapParts::applyVelocity(immut Plane&, immut Vector3f&, immut Vector3f& velocity)
 {
-	mVelocity = mVelocity + force;
+	mVelocity = mVelocity + velocity;
 }
 
 /**
@@ -52,8 +53,8 @@ MapEntity::MapEntity(Shape* shape)
  */
 void MapEntity::update()
 {
-	mPosition = mPosition + gsys->getFrameTime() * mVelocity;
-	mVelocity = mVelocity - mVelocity * 0.1f;
+	mLocalSRT.t = mLocalSRT.t + gsys->getFrameTime() * mVelocity;
+	mVelocity   = mVelocity - mVelocity * 0.1f;
 	DynCollShape::update();
 }
 
@@ -78,8 +79,8 @@ MapSlider::MapSlider(Shape* shape, int activationCount, int triggerCount, f32 ho
 void MapSlider::init()
 {
 	if (mLinePath) {
-		mPosition = mLinePath->mStartPosition;
-		PRINT("MapSlider init() : t(%.1f %.1f %.1f)\n", mPosition.x, mPosition.y, mPosition.z);
+		mLocalSRT.t = mLinePath->mStartPosition;
+		PRINT("MapSlider init() : t(%.1f %.1f %.1f)\n", mLocalSRT.t.x, mLocalSRT.t.y, mLocalSRT.t.z);
 		mTimer         = mHoldTime1;
 		mStateMode     = 2;
 		mDirectionMode = 1;
@@ -91,8 +92,8 @@ void MapSlider::init()
  */
 void MapSlider::update()
 {
-	bool activationReached = mContactCount >= mActivationCount;
-	bool triggerReached    = mContactCount >= mTriggerCount;
+	bool activationReached = mContactTickCount >= mActivationCount;
+	bool triggerReached    = mContactTickCount >= mTriggerCount;
 
 	f32 holdTime;
 	if (mDirectionMode == 1) {
@@ -102,12 +103,12 @@ void MapSlider::update()
 	}
 
 	if (mLinePath) {
-		mPosition = mPosition + mVelocity * gsys->getFrameTime();
+		mLocalSRT.t = mLocalSRT.t + mVelocity * gsys->getFrameTime();
 
 		Vector3f targetPosition;
 		targetPosition = (mDirectionMode == 1) ? mLinePath->mStartPosition : mLinePath->mEndPosition;
 
-		Vector3f dir = targetPosition - mPosition;
+		Vector3f dir = targetPosition - mLocalSRT.t;
 		f32 distance = dir.normalise();
 		mVelocity    = dir * mMoveSpeed;
 
@@ -141,7 +142,7 @@ void MapSlider::update()
 		case 3:
 		{
 			mVelocity.set(0.0f, 0.0f, 0.0f);
-			if (!mContactCount) {
+			if (mContactTickCount == 0) {
 				mStateMode = 2;
 				mTimer     = holdTime;
 			}
@@ -150,10 +151,10 @@ void MapSlider::update()
 		}
 	} else {
 		mFaceDirection += gsys->getFrameTime();
-		mRotation.z = mFaceDirection * 0.5f;
-		mPosition.x = mSliderPosition.x;
-		mPosition.y = mSliderPosition.y;
-		mPosition.z = mSliderPosition.z;
+		mLocalSRT.r.z = mFaceDirection * 0.5f;
+		mLocalSRT.t.x = mSliderPosition.x;
+		mLocalSRT.t.y = mSliderPosition.y;
+		mLocalSRT.t.z = mSliderPosition.z;
 	}
 
 	DynCollShape::update();
@@ -165,7 +166,7 @@ void MapSlider::update()
 void MapSlider::refresh(Graphics& gfx)
 {
 	Vector3f textPos(0.0f, 20.0f, 0.0f);
-	textPos.multMatrix(mWorldMatrix);
+	textPos.multMatrix(mViewMtx);
 	bool light = gfx.setLighting(false, nullptr);
 	gfx.useMatrix(Matrix4f::ident, 0);
 	gfx.setColour(COLOUR_WHITE, true);
@@ -173,17 +174,17 @@ void MapSlider::refresh(Graphics& gfx)
 	int blend = gfx.setCBlending(BLEND_Alpha);
 
 	char buf[256];
-	int dist = mActivationCount - mContactCount;
-	if (dist < 0) {
-		dist = 0;
+	int remaining = mActivationCount - mContactTickCount;
+	if (remaining < 0) {
+		remaining = 0;
 	}
 
-	sprintf(buf, "%d to go!\n", dist);
+	sprintf(buf, "%d to go!\n", remaining);
 	int width = -(gsys->mConsFont->stringWidth(buf) / 2);
 	gfx.perspPrintf(gsys->mConsFont, textPos, width, 0, buf);
 
 	gfx.setCBlending(blend);
 	gfx.setLighting(light, nullptr);
-	gfx.useMatrix(mWorldMatrix, 0);
+	gfx.useMatrix(mViewMtx, 0);
 	DynCollShape::refresh(gfx);
 }

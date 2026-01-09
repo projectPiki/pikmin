@@ -556,7 +556,8 @@ void SpiderAi::appearState()
 	if (!mSpider->mHasShadow) {
 		if (mSpider->mCollInfo->getBoundingSphere()->mCentre.y < mSpider->mSRT.t.y + 1200.0f) {
 			mSpider->mHasShadow = true;
-			mapMgr->mShadowCaster.add(&mSpider->mShadowCaster);
+			// add shadow to global list to be rendered
+			mapMgr->mGlobalShadowList.add(&mSpider->mShadowCaster);
 		}
 	}
 }

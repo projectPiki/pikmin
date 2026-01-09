@@ -127,6 +127,7 @@ void FishGenerator::moveFish(Fish* fish)
 		fish->mVelocity = currentHeading * 0.9f + schoolDirection * 0.1f;
 	}
 
+	// don't ignore dynamic collisions when moving
 	MoveTrace trace(fish->mPosition, fish->mVelocity, 1.0f, false);
 	mapMgr->traceMove(nullptr, trace, gsys->getFrameTime());
 	fish->mPosition = trace.mPosition;

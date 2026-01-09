@@ -2,6 +2,7 @@
 #include "DayMgr.h"
 #include "DebugLog.h"
 #include "Graphics.h"
+#include "MapMgr.h"
 
 /**
  * @todo: Documentation
@@ -36,7 +37,7 @@ Spider::Spider(CreatureProp* props)
 	mSpiderLeg = new SpiderLeg(this);
 	mShadowCaster.initCore("");
 	mShadowCaster.initShadow();
-	mShadowCaster.mDrawer = new SpiderDrawer(this);
+	mShadowCaster.mShadowDrawer = new SpiderDrawer(this);
 }
 
 /**

@@ -214,7 +214,7 @@ struct ActorInstance : public CoreNode {
 	// _00     = VTBL
 	// _00-_14 = CoreNode
 	Animator mAnimator;                        ///< _14
-	ShapeDynMaterials mDynMats;                ///< _48
+	ShapeDynMaterials mAnimatedMaterials;      ///< _48
 	Shape* mLeafModel;                         ///< _58
 	CineShapeObject* mActiveActor;             ///< _5C, animating actor information.
 	CineShapeObject* mDefaultActor;            ///< _60, default actor information.

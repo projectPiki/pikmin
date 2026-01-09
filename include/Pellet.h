@@ -410,7 +410,7 @@ public:
 	u16 mCarrierCounter;                  // _570
 	CollInfo* mPelletCollInfo;            // _574
 	SearchData mSearchData[4];            // _578
-	ShapeDynMaterials mShapeDynMaterials; // _5A8
+	ShapeDynMaterials mAnimatedMaterials; // _5A8
 	bool mIsAlive;                        // _5B8
 	bool mIsAIActive;                     // _5B9, name is a guess
 };

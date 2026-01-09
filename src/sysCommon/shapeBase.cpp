@@ -56,15 +56,15 @@ void Envelope::read(RandomAccessStream& stream)
 	mIndexCount = stream.readShort();
 
 	// Allocate a single block for both indices and weights
-	void* arr = new u8[8 * mIndexCount];
-	mIndices  = (s32*)arr;
+	void* arr     = new u8[8 * mIndexCount];
+	mJointIndices = (s32*)arr;
 
 	// Point weights to after indices in that block
 	mWeights = (f32*)&((f32*)arr)[mIndexCount];
 
 	for (int i = 0; i < mIndexCount; i++) {
-		mIndices[i] = stream.readShort();
-		mWeights[i] = stream.readFloat();
+		mJointIndices[i] = stream.readShort();
+		mWeights[i]      = stream.readFloat();
 	}
 }
 
@@ -1715,17 +1715,17 @@ void ShapeDynMaterials::updateContext()
 	for (int i = 0; i < mMatCount; i++) {
 		Material& mat = mMaterials[i];
 		if (mat.mFlags & MATFLAG_PVW) {
-			mShape->mMaterialList[mat.mIndex].getColour() = mat.getColour();
+			mModel->mMaterialList[mat.mIndex].getColour() = mat.getColour();
 
 			for (int j = 0; j < 3; j++) {
 				if (mat.mTevInfo->mTevColRegs[j].mAnimFrameCount) {
-					mShape->mMaterialList[mat.mIndex].mTevInfo->mTevColRegs[j].mAnimatedColor = mat.mTevInfo->mTevColRegs[j].mAnimatedColor;
+					mModel->mMaterialList[mat.mIndex].mTevInfo->mTevColRegs[j].mAnimatedColor = mat.mTevInfo->mTevColRegs[j].mAnimatedColor;
 				}
 			}
 
 			for (int j = 0; j < (int)mat.mTextureInfo.mTextureDataCount; j++) {
 				if (mat.mTextureInfo.mTextureData[j].mAnimationFactor != 255) {
-					mShape->mMaterialList[mat.mIndex].mTextureInfo.mTextureData[j].mAnimatedTexMtx
+					mModel->mMaterialList[mat.mIndex].mTextureInfo.mTextureData[j].mAnimatedTexMtx
 					    = mat.mTextureInfo.mTextureData[j].mAnimatedTexMtx;
 				}
 			}
@@ -1740,7 +1740,7 @@ BaseShape::BaseShape()
 {
 	mName             = "noname";
 	mAnimMatrices     = nullptr;
-	mAnimMatrixId     = 0;
+	mAnimMtxCount     = 0;
 	mSystemFlags      = 0;
 	mVertexCacheFlags = VertexCacheFlags::None;
 	_2AC              = 1;
@@ -1802,39 +1802,39 @@ BaseShape::BaseShape()
 /**
  * @todo: Documentation
  */
-void BaseShape::countMaterials(Joint* joint, u32 p2)
+void BaseShape::countMaterials(Joint* joint, u32)
 {
 	for (int i = 0; i < mTotalMatpolyCount; i++) {
 		if (mMatpolyList[i]->mJointList == joint) {
-			bool check = false;
+			bool alreadyCounted = false;
 			for (int j = 0; j < matIndex; j++) {
 				if (matUsed[j] == (int)mMatpolyList[i]->mMaterial->mIndex) {
-					check = true;
+					alreadyCounted = true;
 					break;
 				}
 			}
 
-			if (!check) {
-				Material* mat = mMatpolyList[i]->mMaterial;
-				bool check2   = false;
+			if (!alreadyCounted) {
+				Material* mat   = mMatpolyList[i]->mMaterial;
+				bool isAnimated = false;
 				if (mat->mFlags & MATFLAG_PVW) {
 					if (mat->mColourInfo.mTotalFrameCount) {
-						check2 = true;
+						isAnimated = true;
 					}
 					for (int j = 0; j < 3; j++) {
 						if (mat->mTevInfo->mTevColRegs[j].mAnimFrameCount) {
-							check2 = true;
+							isAnimated = true;
 						}
 					}
 					for (int j = 0; j < (int)mat->mTextureInfo.mTextureDataCount; j++) {
 						if (mat->mTextureInfo.mTextureData[j].mAnimationFactor != 255) {
-							check2 = true;
+							isAnimated = true;
 						}
 					}
 				}
 
 				usedIndex++;
-				if (check2) {
+				if (isAnimated) {
 					matUsed[matIndex] = mMatpolyList[i]->mMaterial->mIndex;
 					matIndex++;
 				}
@@ -1870,9 +1870,9 @@ ShapeDynMaterials* BaseShape::instanceMaterials(int jointIdx)
 /**
  * @todo: Documentation
  */
-void BaseShape::makeInstance(ShapeDynMaterials& dynMats, int jointIdx)
+void BaseShape::makeInstance(ShapeDynMaterials& animatedMats, int jointIdx)
 {
-	dynMats.mShape = this;
+	animatedMats.mModel = this;
 	for (int i = 0; i < 0x100; i++) {
 		matUsed[i] = 0;
 	}
@@ -1886,11 +1886,11 @@ void BaseShape::makeInstance(ShapeDynMaterials& dynMats, int jointIdx)
 		recTraverseMaterials((Joint*)joint->mChild, &Delegate2<BaseShape, Joint*, u32>(this, &BaseShape::countMaterials));
 	}
 
-	dynMats.mMatCount  = matIndex;
-	dynMats.mMaterials = new Material[dynMats.mMatCount];
+	animatedMats.mMatCount  = matIndex;
+	animatedMats.mMaterials = new Material[animatedMats.mMatCount];
 
-	for (int i = 0; i < dynMats.mMatCount; i++) {
-		Material* mat = &dynMats.mMaterials[i];
+	for (int i = 0; i < animatedMats.mMatCount; i++) {
+		Material* mat = &animatedMats.mMaterials[i];
 		memcpy(mat, &mMaterialList[matUsed[i]], sizeof(Material));
 		if (mat->mFlags & MATFLAG_PVW) {
 			mat->mTevInfo = new PVWTevInfo();
@@ -1952,7 +1952,7 @@ void BaseShape::drawculled(Graphics& gfx, Camera& cam, ShapeDynMaterials* dynMat
 	gfx.initMesh((Shape*)this);
 	int culledJointCount = 0;
 	if (dynMats) {
-		for (ShapeDynMaterials* iMat = dynMats; iMat; iMat = iMat->mParent) {
+		for (ShapeDynMaterials* iMat = dynMats; iMat; iMat = iMat->mNext) {
 			iMat->updateContext();
 		}
 	}
@@ -2006,17 +2006,18 @@ void BaseShape::drawculled(Graphics& gfx, Camera& cam, ShapeDynMaterials* dynMat
 void BaseShape::drawshape(Graphics& gfx, Camera& cam, ShapeDynMaterials* dynMats)
 {
 	gsys->mTimer->start("drawShape", true);
-	u32 prevRender = gfx.mRenderState;
+	u32 prevRender = gfx.mMatRenderMask;
 	if (mMeshCount) {
 		if (!(mSystemFlags & ShapeFlags::AlwaysRedraw) && (mSystemFlags & ShapeFlags::AllowCaching)
-		    && (gfx.mRenderState & GFXRENDER_Unk3)) {
+		    && (gfx.mMatRenderMask & MATFLAG_AlphaBlend)) {
 			gfx.cacheShape(this, dynMats);
-			gfx.mRenderState &= ~GFXRENDER_Unk3;
+			gfx.mMatRenderMask &= ~MATFLAG_AlphaBlend;
 		}
 
-		if ((mSystemFlags & ShapeFlags::AlwaysRedraw) || (gfx.mRenderState & (GFXRENDER_Unk1 | GFXRENDER_Unk2 | GFXRENDER_Unk4))) {
+		if ((mSystemFlags & ShapeFlags::AlwaysRedraw)
+		    || (gfx.mMatRenderMask & (MATFLAG_Opaque | MATFLAG_AlphaTest | MATFLAG_InverseColorBlend))) {
 			if (dynMats) {
-				for (ShapeDynMaterials* iMat = dynMats; iMat; iMat = iMat->mParent) {
+				for (ShapeDynMaterials* iMat = dynMats; iMat; iMat = iMat->mNext) {
 					iMat->updateContext();
 				}
 			}
@@ -2025,14 +2026,14 @@ void BaseShape::drawshape(Graphics& gfx, Camera& cam, ShapeDynMaterials* dynMats
 			gfx.drawMeshes(cam, (Shape*)this);
 			gfx.useMatrix(*activeMtx, 0);
 			drawlights(gfx, cam);
-			if (gsys->mToggleDebugInfo && (gfx.mRenderState & GFXRENDER_Unk3)) {
+			if (gsys->mToggleDebugInfo && (gfx.mMatRenderMask & MATFLAG_AlphaBlend)) {
 				gfx.useMatrix(gfx.mCamera->mLookAtMtx, 0);
 				drawroutes(gfx, cam);
 			}
 		}
 	}
 
-	gfx.mRenderState = prevRender;
+	gfx.mMatRenderMask = prevRender;
 	gsys->mTimer->stop("drawShape");
 }
 
@@ -2397,9 +2398,9 @@ void BaseShape::read(RandomAccessStream& stream)
 			// 2. Alpha-test materials (cutout transparency).
 			// 3. Opaque materials (no transparency, needs to be first).
 			// This is to handle transparency correctly without per-frame depth sorting.
-			recAddMatpoly(mJointList, 4); // MATFLAG_ALPHA_BLEND
-			recAddMatpoly(mJointList, 2); // MATFLAG_ALPHA_TEST
-			recAddMatpoly(mJointList, 1); // MATFLAG_OPAQUE
+			recAddMatpoly(mJointList, 4); // MATFLAG_AlphaBlend
+			recAddMatpoly(mJointList, 2); // MATFLAG_AlphaTest
+			recAddMatpoly(mJointList, 1); // MATFLAG_Opaque
 
 			for (int i = 0; i < mTotalMatpolyCount; i++) {
 				mMatpolyList[i]->mJointList = mMatpolyList[i]->mMesh->mJointList;
@@ -2546,7 +2547,8 @@ void BaseShape::read(RandomAccessStream& stream)
 		importIni(stream);
 	}
 
-	mAnimMatrixId = mJointCount + mEnvelopeCount;
+	// one matrix for each joint and for each envelope
+	mAnimMtxCount = mJointCount + mEnvelopeCount;
 
 	// i don't even care anymore. i am numb to this.
 	STACK_PAD_TERNARY(chunkType, 11);
@@ -3144,11 +3146,14 @@ AnimData* BaseShape::loadAnimation(immut char* name, bool isRelativePath)
 }
 
 /**
- * @todo: Documentation
+ * @brief Gets reference to animation matrix by index.
+ *
+ * @param animIdx Index of animation matrix to get (indexed by joint indices, then envelope indices).
+ * @return Reference to animation matrix.
  */
-Matrix4f& BaseShape::getAnimMatrix(int i)
+Matrix4f& BaseShape::getAnimMatrix(int animIdx)
 {
-	return mAnimMatrices[i];
+	return mAnimMatrices[animIdx];
 }
 
 /**
@@ -3254,7 +3259,7 @@ void BaseShape::updateAnim(Graphics& gfx, immut Matrix4f& mtx, f32* p3)
 {
 	gsys->mTimer->start("updateAnim", true);
 	gsys->mAnimatedPolygons++;
-	mAnimMatrices = gfx.getMatrices(mAnimMatrixId);
+	mAnimMatrices = gfx.getMatrices(mAnimMtxCount);
 
 	if (mCurrentAnimation->mData) {
 		if (!p3) {
@@ -3320,7 +3325,7 @@ void BaseShape::calcWeightedMatrices()
 		}
 
 		for (int j = 0; j < mEnvelopeList[i].mIndexCount; j++) {
-			int idx    = mEnvelopeList[i].mIndices[j];
+			int idx    = mEnvelopeList[i].mJointIndices[j];
 			f32 weight = mEnvelopeList[i].mWeights[j];
 
 			// this is some bullshit right here.
@@ -3329,7 +3334,7 @@ void BaseShape::calcWeightedMatrices()
 			PSMTXConcat(getAnimMatrix(idx).mMtx, mJointList[idx].mInverseAnimMatrix.mMtx, weighted.mMtx);
 
 			register immut Matrix4f& mtx1 = weighted;
-			register Matrix4f& mtx2       = mAnimMatrices[mJointCount + i];
+			register Matrix4f& animMtx    = mAnimMatrices[mJointCount + i];
 
 			f32 weights[2]         = {};
 			register f32* weightsR = weights;
@@ -3340,35 +3345,35 @@ void BaseShape::calcWeightedMatrices()
 			ASM
 			{
 				psq_l f0, 0x0(weightsR), 0, 0;
-				psq_l f1, 0x0(mtx2), 0, 0;
+				psq_l f1, 0x0(animMtx), 0, 0;
 				psq_l f2, 0x0(mtx1), 0, 0;
 				ps_madd f1, f2, f0, f1;
-				psq_st f1, 0x0(mtx2), 0, 0;
+				psq_st f1, 0x0(animMtx), 0, 0;
 
-				psq_l f3, 0x8(mtx2), 0, 0;
+				psq_l f3, 0x8(animMtx), 0, 0;
 				psq_l f2, 0x8(mtx1), 0, 0;
 				ps_madd f3, f2, f0, f3;
-				psq_st f3, 0x8(mtx2), 0, 0;
+				psq_st f3, 0x8(animMtx), 0, 0;
 
-				psq_l f1, 0x10(mtx2), 0, 0;
+				psq_l f1, 0x10(animMtx), 0, 0;
 				psq_l f2, 0x10(mtx1), 0, 0;
 				ps_madd f1, f2, f0, f1;
-				psq_st f1, 0x10(mtx2), 0, 0;
+				psq_st f1, 0x10(animMtx), 0, 0;
 
-				psq_l f3, 0x18(mtx2), 0, 0;
+				psq_l f3, 0x18(animMtx), 0, 0;
 				psq_l f2, 0x18(mtx1), 0, 0;
 				ps_madd f3, f2, f0, f3;
-				psq_st f3, 0x18(mtx2), 0, 0;
+				psq_st f3, 0x18(animMtx), 0, 0;
 
-				psq_l f1, 0x20(mtx2), 0, 0;
+				psq_l f1, 0x20(animMtx), 0, 0;
 				psq_l f2, 0x20(mtx1), 0, 0;
 				ps_madd f1, f2, f0, f1;
-				psq_st f1, 0x20(mtx2), 0, 0;
+				psq_st f1, 0x20(animMtx), 0, 0;
 
-				psq_l f3, 0x28(mtx2), 0, 0;
+				psq_l f3, 0x28(animMtx), 0, 0;
 				psq_l f2, 0x28(mtx1), 0, 0;
 				ps_madd f3, f2, f0, f3;
-				psq_st f3, 0x28(mtx2), 0, 0;
+				psq_st f3, 0x28(animMtx), 0, 0;
 			};
 		}
 	}
