@@ -166,7 +166,7 @@ struct Graphics {
 	virtual void setAuxColour(immut Colour&)                                                                         = 0; // _AC
 	virtual void setPrimEnv(immut Colour* primColor, immut Colour* envColor)                                         = 0; // _B0
 	virtual void setClearColour(immut Colour&)                                                                       = 0; // _B4
-	virtual void setFog(bool)                                                                                        = 0; // _B8
+	virtual void setFog(bool) /* For whatever reason, these `setFog` overloads are swapped in the DLL */             = 0; // _B8
 	virtual void setFog(bool, immut Colour&, f32, f32, f32)                                                          = 0; // _BC
 	virtual void setMatHandler(MaterialHandler* handler)                                                                  // _C0
 	{
@@ -239,7 +239,7 @@ struct DGXGraphics : public Graphics {
 	virtual void setAuxColour(immut Colour&);                                                                         // _AC
 	virtual void setPrimEnv(immut Colour*, immut Colour*);                                                            // _B0
 	virtual void setClearColour(immut Colour&);                                                                       // _B4
-	virtual void setFog(bool);                                                                                        // _B8
+	virtual void setFog(bool); /* For whatever reason, these `setFog` overloads are swapped in the DLL */             // _B8
 	virtual void setFog(bool, immut Colour&, f32, f32, f32);                                                          // _BC
 	virtual void setMaterial(Material*, bool);                                                                        // _C4
 	virtual void useTexture(Texture*, int);                                                                           // _CC

@@ -161,6 +161,8 @@ public:
  * @note Size: 0x20.
  */
 struct SlimeBody {
+	friend struct Slime;
+
 public:
 	SlimeBody(Slime*);
 
