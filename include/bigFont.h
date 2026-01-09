@@ -4,5 +4,5 @@
 #elif defined(VERSION_GPIP01_00)
 #include "bigFont_PAL.h"
 #else
-#include "bigFont_NTSC.h"
+#include "bigFont_USA.h"
 #endif
