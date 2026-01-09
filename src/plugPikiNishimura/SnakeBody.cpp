@@ -158,7 +158,7 @@ void SnakeBody::copyAnimPosition()
 	if (mSnake->getCurrentState() >= SNAKEAI_ChaseNavi && mSnake->getCurrentState() <= SNAKEAI_ChasePiki) {
 		for (int i = 0; i < SnakeJointType::SegmentCount; i++) {
 			for (int j = 0; j < 4; j++) {
-				mSegmentMatrices[i].getColumn(j, mAnimPosList[i][j]);
+				NsCalculation::calcMtxTrans(mSegmentMatrices[i], j, mAnimPosList[i][j]);
 			}
 		}
 	}
@@ -807,7 +807,7 @@ void SnakeBody::makeBodySize()
 		Vector3f tmpVecs[8];
 		int i;
 		for (i = 0; i < 8; i++) {
-			mSegmentMatrices[i].getColumn(3, tmpVecs[i]);
+			NsCalculation::calcMtxTrans(mSegmentMatrices[i], 3, tmpVecs[i]);
 		}
 
 		for (i = 0; i < 7; i++) {
@@ -908,7 +908,7 @@ void SnakeBody::makeAnimMatrix()
 		int j;
 		for (i = 0; i < 8; i++) {
 			for (j = 0; j < 4; j++) {
-				mSegmentMatrices[i].getColumn(j, vecArray[i][j]);
+				NsCalculation::calcMtxTrans(mSegmentMatrices[i], j, vecArray[i][j]);
 			}
 		}
 		for (i = 0; i < 7; i++) {
@@ -923,7 +923,7 @@ void SnakeBody::makeAnimMatrix()
 
 		for (i = 0; i < 7; i++) {
 			for (j = 0; j < 3; j++) {
-				mSegmentMatrices[i].setColumn(j, vecArray[i][j]);
+				NsCalculation::calcVectorTrans(vecArray[i][j], j, mSegmentMatrices[i]);
 			}
 		}
 	}
@@ -937,7 +937,7 @@ void SnakeBody::caseOfMatrix(Matrix4f* animMatrices)
 	if (mSnake->getCurrentState() >= SNAKEAI_ChaseNavi && mSnake->getCurrentState() <= SNAKEAI_ChasePiki) {
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 4; j++) {
-				animMatrices[i].setColumn(j, mAnimPosList[i][j]);
+				NsCalculation::calcVectorTrans(mAnimPosList[i][j], j, animMatrices[i]);
 			}
 			NsCalculation::calcMtxBotIdent(animMatrices[i]);
 		}

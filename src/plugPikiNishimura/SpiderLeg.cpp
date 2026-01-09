@@ -1088,7 +1088,7 @@ void SpiderLeg::setJointMatrix(const BossShapeObject* shapeObj, immut Matrix4f& 
 			animMtx.multiplyTo(shapeObj->mShape->getAnimMatrix(Kumo::leg_index[i][j]), mJointMatrices[i][j]);
 
 			if (j != 0 || mSpider->getCurrentState() >= SPIDERAI_Start) {
-				mJointMatrices[i][j].getColumn(3, mJointPositions[i][j]);
+				NsCalculation::calcMtxTrans(mJointMatrices[i][j], 3, mJointPositions[i][j]);
 			}
 		}
 	}
@@ -1399,7 +1399,7 @@ void SpiderLeg::create3Joint(BossShapeObject* shapeObj, Graphics& gfx)
 		getJointMatrix(mJointPositions[i][2], mJointPositions[i][1], vec, mJointMatrices[i][2]);
 		getJointMatrix(mJointPositions[i][1], mJointPositions[i][0], vec, mJointMatrices[i][1]);
 		calcQuatToMatrix(i);
-		mJointMatrices[i][0].setColumn(3, mJointPositions[i][0]);
+		NsCalculation::calcVectorTrans(mJointPositions[i][0], 3, mJointMatrices[i][0]);
 
 		for (int j = 0; j < 3; j++) {
 			gfx.mCamera->mLookAtMtx.multiplyTo(mJointMatrices[i][j], shapeObj->mShape->getAnimMatrix(Kumo::leg_index[i][j]));
@@ -1417,9 +1417,9 @@ void SpiderLeg::createMatrixScale(BossShapeObject* shapeObj, Graphics& gfx)
 		Vector3f col;
 		for (int i = 0; i <= 15; i++) {
 			for (int j = 0; j < 3; j++) {
-				shapeObj->mShape->getAnimMatrix(i).getColumn(j, col);
+				NsCalculation::calcMtxTrans(shapeObj->mShape->getAnimMatrix(i), j, col);
 				col.multiply(mSegmentScale[i]);
-				shapeObj->mShape->getAnimMatrix(i).setColumn(j, col);
+				NsCalculation::calcVectorTrans(col, j, shapeObj->mShape->getAnimMatrix(i));
 			}
 		}
 	}

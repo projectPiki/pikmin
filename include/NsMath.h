@@ -8,18 +8,31 @@
 struct NsCalculation {
 	static void calcLagrange(f32, const Vector3f*, Vector3f&);
 	static void calcMatrix(const Vector3f&, const Vector3f&, const Vector3f&, const Vector3f&, Matrix4f&);
-	static void calcJointPos(const Vector3f&, const Vector3f&, f32, f32, Vector3f&, Vector3f&);
-	static void calcMat4toMat3(const Matrix4f&, Matrix3f&);
-
-	// unused/inlined:
 	static void calcMatrix3f(const Vector3f&, const Vector3f&, const Vector3f&, Matrix3f&);
+	static void calcJointPos(const Vector3f&, const Vector3f&, f32, f32, Vector3f&, Vector3f&);
 	static int calcMtxDirect(const Matrix4f&, const Matrix4f&);
+	static void calcMat4toMat3(const Matrix4f&, Matrix3f&);
 	static void calcMat3toMat4(const Matrix3f&, Matrix4f&);
 
-	// other existing (inline) functions according to the DLL:
-	static f32 calcInnerRatio(const Vector3f&, const Vector3f&);
-	static void calcMtxTrans(const Matrix4f&, int, Vector3f&);
-	static void calcVectorTrans(const Vector3f&, int, Matrix4f&);
+	static f32 calcInnerRatio(const Vector3f& lhs, const Vector3f& rhs)
+	{
+		// This is just a fancy way of saying "calculate dot product".
+		return lhs.x * rhs.x + lhs.y * rhs.y + lhs.z * rhs.z;
+	}
+
+	static void calcMtxTrans(const Matrix4f& mtx, int col, Vector3f& vec)
+	{
+		vec.x = mtx.mMtx[0][col];
+		vec.y = mtx.mMtx[1][col];
+		vec.z = mtx.mMtx[2][col];
+	}
+
+	static void calcVectorTrans(const Vector3f& vec, int col, Matrix4f& mtx)
+	{
+		mtx.mMtx[0][col] = vec.x;
+		mtx.mMtx[1][col] = vec.y;
+		mtx.mMtx[2][col] = vec.z;
+	}
 
 	// Calculates the cross product
 	static void calcOuterPro(const Vector3f& a, const Vector3f& b, Vector3f& result)
