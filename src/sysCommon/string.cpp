@@ -3,11 +3,10 @@
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000070
+ * @note UNUSED Size: 000070 (Matching by size)
  */
 bool String::isSame(immut char* str) immut
 {
-	// UNUSED FUNCTION (Matching by size)
 	const char* currentChar = mString;
 	while (*currentChar && *str) {
 		if (*currentChar++ != *str++) {
@@ -40,21 +39,19 @@ int String::getLength() immut
 
 /**
  * @brief This function was never implemented; it just returns 0.0f.
- * @note UNUSED Size: 000008
+ * @note UNUSED Size: 000008 (Matching by size)
  */
 float String::toFloat() immut
 {
-	// UNUSED FUNCTION (Matching by size)
 	return 0.0f;
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 00012C
+ * @note UNUSED Size: 00012C (Matching by size)
  */
 int String::toInt() immut
 {
-	// UNUSED FUNCTION (Matching by size)
 	char c;
 	int result;
 
@@ -119,33 +116,30 @@ int String::toInt() immut
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000024
+ * @note UNUSED Size: 000024 (Matching by size)
  */
 int String::getLength(immut char* str)
 {
-	// UNUSED FUNCTION (Matching by size)
 	String tempStr(const_cast<char*>(str), 0);
 	return tempStr.getLength();
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 00006C
+ * @note UNUSED Size: 00006C (Matching by size)
  */
 bool String::isSame(immut char* a, immut char* b)
 {
-	// UNUSED FUNCTION (Matching by size)
 	String aStr(const_cast<char*>(a), 0);
 	return aStr.isSame(b);
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 00005C
+ * @note UNUSED Size: 00005C (Matching by size)
  */
 char* String::dup(immut char* str)
 {
-	// UNUSED FUNCTION (Matching by size)
 	char* newStr = new char[getLength(str) + 1];
 	copy(newStr, str);
 	return newStr;
@@ -153,11 +147,10 @@ char* String::dup(immut char* str)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000058
+ * @note UNUSED Size: 000058 (Matching by size)
  */
 bool String::contains(immut char* str, immut char* substr)
 {
-	// UNUSED FUNCTION (Matching by size)
 #if defined(BUGFIX)
 	const char* submatchStart = str;
 #endif
@@ -182,22 +175,20 @@ bool String::contains(immut char* str, immut char* substr)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 00001C
+ * @note UNUSED Size: 00001C (Matching by size)
  */
 char* String::copy(char* out, immut char* str)
 {
-	// UNUSED FUNCTION (Matching by size)
 	while ((*out++ = *str++)) { }
 	return out;
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000058
+ * @note UNUSED Size: 000058 (Matching by size)
  */
 bool String::copyUntil(char* out, immut char* str, char delim, immut char** end)
 {
-	// UNUSED FUNCTION (Matching by size)
 	while (*str != delim && *str != '\0') {
 		*out++ = *str++;
 	}
@@ -210,11 +201,10 @@ bool String::copyUntil(char* out, immut char* str, char delim, immut char** end)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000030
+ * @note UNUSED Size: 000030 (Matching by size)
  */
 void String::concat(char* out, immut char* str)
 {
-	// UNUSED FUNCTION (Matching by size)
 	while (*out++) { }          // Loop until one-past-end of `out`.
 	out--;                      // Backtrack by one character.
 	while (*out++ = *str++) { } // Concatenate.
@@ -222,22 +212,20 @@ void String::concat(char* out, immut char* str)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000030
+ * @note UNUSED Size: 000030 (Matching by size)
  */
 u32 String::calcHash(immut char* str)
 {
-	// UNUSED FUNCTION (Matching by size)
 	String tempStr(const_cast<char*>(str), 0);
 	return tempStr.calcHash();
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000040
+ * @note UNUSED Size: 000040 (Matching by size)
  */
 u32 String::calcHash() immut
 {
-	// UNUSED FUNCTION (Matching by size)
 	u32 hash                = 0;
 	const char* currentChar = mString;
 	while (*currentChar) {
@@ -254,22 +242,20 @@ u32 String::calcHash() immut
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000030
+ * @note UNUSED Size: 000030 (Matching by size)
  */
 int String::toInt(immut char* str)
 {
-	// UNUSED FUNCTION (Matching by size)
 	String tempStr(const_cast<char*>(str), 0);
 	return tempStr.toInt();
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 0000A0
+ * @note UNUSED Size: 0000A0 (Matching by size)
  */
 void StringArray::read(Stream& stream)
 {
-	// UNUSED FUNCTION (Matching by size)
 	mSize = stream.readInt();
 	for (int i = 0; i < mSize; ++i) {
 		stream.readString(mElems[i].mString, 10000);
@@ -278,11 +264,10 @@ void StringArray::read(Stream& stream)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 00009C
+ * @note UNUSED Size: 00009C (Matching by size)
  */
 void StringArray::write(Stream& stream)
 {
-	// UNUSED FUNCTION (Matching by size)
 	stream.writeInt(mSize);
 	for (int i = 0; i < mSize; ++i) {
 		stream.writeString(mElems[i].mString);

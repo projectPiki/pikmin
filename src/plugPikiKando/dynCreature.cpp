@@ -27,11 +27,10 @@ DynParticleHeap* particleHeap;
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000004
+ * @note UNUSED Size: 000004 (Matching by size)
  */
 static void printMatrix(immut char* name, immut Matrix4f& mat)
 {
-	// UNUSED FUNCTION (Matching by size)
 	// According to the DLL, this TU's implementation of this function was genuinely empty / commented-out.
 	// If you implement it anyway, it spams the ever-loving hell out of the console, so that's probably why.
 }

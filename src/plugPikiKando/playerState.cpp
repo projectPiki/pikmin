@@ -606,11 +606,10 @@ void PlayerState::setDisplayPikiCount(int color)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 0000F0
+ * @note UNUSED Size: 0000F0 (Matching by size)
  */
 void PlayerState::init()
 {
-	// UNUSED FUNCTION (Matching by size)
 	setNavi(false);
 	if (!preloadUFO) {
 		memStat->start("pellet");
@@ -756,11 +755,10 @@ int PlayerState::getFinalDeadPikis()
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000008
+ * @note UNUSED Size: 000008 (Matching by size)
  */
 int PlayerState::getFinalBornPikis()
 {
-	// UNUSED FUNCTION (Matching by size)
 	return mTotalBornPikiNum;
 }
 
