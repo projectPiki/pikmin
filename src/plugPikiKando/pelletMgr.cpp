@@ -1679,11 +1679,10 @@ PelletConfig* PelletMgr::getConfigFromIdx(int idx)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 0000F4
+ * @note UNUSED Size: 0000F4 (Matching by size)
  */
 ID32 PelletMgr::getConfigIdAt(int idx)
 {
-	// UNUSED FUNCTION (matching by size)
 	PelletConfig* config = getConfigFromIdx(idx);
 	if (config) {
 		return config->mModelId;

@@ -30,11 +30,10 @@ DEFINE_PRINT("gemItem")
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 00003C
+ * @note UNUSED Size: 00003C (Matching by size)
  */
 bool GemItem::ignoreAtari(Creature* creature)
 {
-	// UNUSED FUNCTION (Matching by size)
 	if (creature->getStickObject() == this) {
 		return true;
 	}
@@ -46,22 +45,20 @@ bool GemItem::ignoreAtari(Creature* creature)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000030
+ * @note UNUSED Size: 000030 (Matching by size)
  */
 void GemItem::setAtariFree()
 {
-	// UNUSED FUNCTION (Matching by size)
 	mIsFree = true;
 	playEventSound(this, SE_PELLET_BORN);
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000054
+ * @note UNUSED Size: 000054 (Matching by size)
  */
 void GemItem::bounceCallback()
 {
-	// UNUSED FUNCTION (Matching by size)
 	if (mIsFree) {
 		effectMgr->create(EffectMgr::EFF_BigDustRing, mSRT.t, nullptr, nullptr);
 	}
@@ -70,13 +67,12 @@ void GemItem::bounceCallback()
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000108
+ * @note UNUSED Size: 000108 (Matching by size)
  */
 GemItem::GemItem(CreatureProp* props, int gemType, Shape** shapes, Shape**, Shape**, SimpleAI* ai, f32 sizeScale, int, int)
     : ItemCreature(OBJTYPE_GemItem, props, nullptr)
     , mGemCollInfo(0)
 {
-	// UNUSED FUNCTION (Matching by size)
 	mGemType         = gemType;
 	mColor           = 0;
 	mItemShapeObject = itemMgr->getPelletShapeObject(mColor, gemType);
@@ -94,11 +90,10 @@ GemItem::GemItem(CreatureProp* props, int gemType, Shape** shapes, Shape**, Shap
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000068
+ * @note UNUSED Size: 000068 (Matching by size)
  */
 void GemItem::initParam(int type)
 {
-	// UNUSED FUNCTION (Matching by size)
 	setColorType(type);
 
 	const GemTable& tableEntry = table[mGemType];
@@ -137,11 +132,10 @@ void GemItem::setColorType(int color)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 0000FC
+ * @note UNUSED Size: 0000FC (Matching by size)
  */
 void GemItem::startAI(int)
 {
-	// UNUSED FUNCTION (Matching by size)
 	mSeContext = &mGemSe;
 	mSeContext->setContext(this, JACEVENT_Pellet);
 
@@ -164,11 +158,10 @@ void GemItem::startAI(int)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000278
+ * @note UNUSED Size: 000278 (Matching by size)
  */
 void GemItem::update()
 {
-	// UNUSED FUNCTION (Matching by size)
 	f32 motionScl = 0.5f;
 
 	if (mIsRising) {
@@ -205,11 +198,10 @@ void GemItem::update()
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000050
+ * @note UNUSED Size: 000050 (Matching by size)
  */
 bool GemItem::reachCapacity()
 {
-	// UNUSED FUNCTION (Matching by size)
 	Stickers stick(this);
 	if (stick.getNumStickers() >= mMaxStickers) {
 		return true;
@@ -219,11 +211,10 @@ bool GemItem::reachCapacity()
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 00019C
+ * @note UNUSED Size: 00019C (Matching by size)
  */
 void GemItem::updateLiftup()
 {
-	// UNUSED FUNCTION (Matching by size)
 	f32 prevHeight = mCurrentHeight;
 	mCurrentHeight += gsys->getFrameTime() * 3.333333f;
 	if (mCurrentHeight > mTargetHeight) {
@@ -243,11 +234,10 @@ void GemItem::updateLiftup()
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000098
+ * @note UNUSED Size: 000098 (Matching by size)
  */
 void GemItem::startPick(f32 val)
 {
-	// UNUSED FUNCTION (Matching by size)
 	startMotion(0);
 	setMotionSpeed(30.0f);
 	setFree(false);
@@ -261,11 +251,10 @@ void GemItem::startPick(f32 val)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 00003C
+ * @note UNUSED Size: 00003C (Matching by size)
  */
 void GemItem::finishPick()
 {
-	// UNUSED FUNCTION (Matching by size)
 	PRINT("FINISH PICK ++++++++++++++\n");
 	mIsRising     = false;
 	mTargetHeight = 0.0f;
@@ -277,21 +266,19 @@ void GemItem::finishPick()
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000018
+ * @note UNUSED Size: 000018 (Matching by size)
  */
 f32 GemItem::getSize()
 {
-	// UNUSED FUNCTION (Matching by size)
 	return mSizeScale * 41.0f / 0.4f;
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000008
+ * @note UNUSED Size: 000008 (Matching by size)
  */
 f32 GemItem::getiMass()
 {
-	// UNUSED FUNCTION (Matching by size)
 	return 0.0f;
 }
 
@@ -339,33 +326,30 @@ void GemItem::split()
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000048
+ * @note UNUSED Size: 000048 (Matching by size)
  */
 void GemItem::refresh(Graphics& gfx)
 {
-	// UNUSED FUNCTION (Matching by size)
 	ItemCreature::refresh(gfx);
 	mCollInfo->updateInfo(gfx, false);
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000014
+ * @note UNUSED Size: 000014 (Matching by size)
  */
 void GemItem::doStore(CreatureInf* inf)
 {
-	// UNUSED FUNCTION (Matching by size)
 	inf->mObjInfo1 = mGemType;
 	inf->mObjInfo2 = mColor;
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000064
+ * @note UNUSED Size: 000064 (Matching by size)
  */
 void GemItem::doRestore(CreatureInf* inf)
 {
-	// UNUSED FUNCTION (Matching by size)
 	mGemType = inf->mObjInfo1;
 	mColor   = inf->mObjInfo2;
 	initParam(mColor);
@@ -375,31 +359,28 @@ void GemItem::doRestore(CreatureInf* inf)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000038
+ * @note UNUSED Size: 000038 (Matching by size)
  */
 void GemItem::doKill()
 {
-	// UNUSED FUNCTION (Matching by size)
 	mSeContext->releaseEvent();
 	ItemCreature::doKill();
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000008
+ * @note UNUSED Size: 000008 (Matching by size)
  */
 bool GemItem::isAlive()
 {
-	// UNUSED FUNCTION (Matching by size)
 	return mIsAlive;
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000008
+ * @note UNUSED Size: 000008 (Matching by size)
  */
 void GemItem::setRouteTracer(RouteTracer* routeTracer)
 {
-	// UNUSED FUNCTION (Matching by size)
 	mRouteTracer = routeTracer;
 }

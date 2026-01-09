@@ -26,11 +26,10 @@ ActorMgr::ActorMgr(MapMgr*)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000050
+ * @note UNUSED Size: 000050 (Matching by size)
  */
 Creature* ActorMgr::createObject()
 {
-	// UNUSED FUNCTION (Matching by size)
 	Actor* actor = new Actor();
 	actor->mMgr  = this;
 	return actor;

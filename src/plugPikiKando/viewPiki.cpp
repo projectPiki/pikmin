@@ -679,10 +679,9 @@ void ViewPiki::refresh(Graphics& gfx)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 00001C
+ * @note UNUSED Size: 00001C (Matching by size)
  */
 void ViewPiki::refresh2d(Graphics&, int)
 {
-	// UNUSED FUNCTION (Matching by size)
 	mLifeGauge.mPosition = mSRT.t;
 }

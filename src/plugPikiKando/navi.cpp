@@ -508,11 +508,10 @@ Navi::Navi(CreatureProp* props, int naviID)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 0000F8
+ * @note UNUSED Size: 0000F8 (Matching by size)
  */
 void Navi::Locus::update()
 {
-	// UNUSED FUNCTION (matching by size)
 	f32 speed = gsys->getFrameTime() * 2.4f;
 	mPosition = mPosition + mVelocity * speed;
 	mEffect.updatePos(mPosition);

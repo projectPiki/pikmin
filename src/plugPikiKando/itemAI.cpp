@@ -912,11 +912,10 @@ void GoalAI::Effect::act(AICreature* item)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 0001AC
+ * @note UNUSED Size: 0001AC (Matching by size)
  */
 GemAI::GemAI()
 {
-	// UNUSED FUNCTION (Matching by size)
 	SAIUserEvent* evt = new SAIUserEvent(0);
 
 	create(GEM_COUNT);

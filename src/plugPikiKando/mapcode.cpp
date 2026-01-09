@@ -18,11 +18,10 @@ static immut char* mapcodeNames[] = {
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000018
+ * @note UNUSED Size: 000018 (Matching by size)
  */
 immut char* MapCode::getAttributeName(int num)
 {
-	// UNUSED FUNCTION (matching by size)
 	return mapcodeNames[num];
 };
 

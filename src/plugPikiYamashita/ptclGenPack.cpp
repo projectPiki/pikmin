@@ -39,11 +39,10 @@ particleGenerator* PtclGenPack::getPtclGenPtr(u32 idx)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000048
+ * @note UNUSED Size: 000048 (Matching by size)
  */
 void PtclGenPack::setEmitPos(immut Vector3f& pos)
 {
-	// UNUSED FUNCTION (matching by size)
 	u32 i;
 	particleGenerator** genList = mGeneratorList;
 	for (i = 0; i < mLimit; i++, genList++) {
@@ -69,11 +68,10 @@ void PtclGenPack::setEmitPosPtr(immut Vector3f* posPtr)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000048
+ * @note UNUSED Size: 000048 (Matching by size)
  */
 void PtclGenPack::setEmitDir(immut Vector3f& pos)
 {
-	// UNUSED FUNCTION (matching by size)
 	u32 i;
 	particleGenerator** genList = mGeneratorList;
 	for (i = 0; i < mLimit; i++, genList++) {
