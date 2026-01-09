@@ -38,26 +38,34 @@ void NsCalculation::calcMatrix(const Vector3f& xVec, const Vector3f& yVec, const
 {
 	Vector3f inXVec, inYVec, inZVec;
 
-	mtx.getColumn(0, inXVec);
-	mtx.getColumn(1, inYVec);
-	mtx.getColumn(2, inZVec);
+	calcMtxTrans(mtx, 0, inXVec);
+	calcMtxTrans(mtx, 1, inYVec);
+	calcMtxTrans(mtx, 2, inZVec);
 
-	mtx.setColumn(0, xVec);
-	mtx.setColumn(1, yVec);
-	mtx.setColumn(2, zVec);
+	calcVectorTrans(xVec, 0, mtx);
+	calcVectorTrans(yVec, 1, mtx);
+	calcVectorTrans(zVec, 2, mtx);
 
 	mtx.scale(Vector3f(inXVec.length(), inYVec.length(), inZVec.length()));
 
-	mtx.setTranslation(transVec);
+	calcVectorTrans(transVec, 3, mtx);
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 00004C
+ * @note UNUSED Size: 00004C (Matching by size)
  */
-void NsCalculation::calcMatrix3f(const Vector3f&, const Vector3f&, const Vector3f&, Matrix3f&)
+void NsCalculation::calcMatrix3f(const Vector3f& vec1, const Vector3f& vec2, const Vector3f& vec3, Matrix3f& mtx)
 {
-	// UNUSED FUNCTION
+	mtx.mMtx[0][0] = vec1.x;
+	mtx.mMtx[0][3] = vec1.y;
+	mtx.mMtx[1][2] = vec1.z;
+	mtx.mMtx[0][1] = vec2.x;
+	mtx.mMtx[1][0] = vec2.y;
+	mtx.mMtx[1][3] = vec2.z;
+	mtx.mMtx[0][2] = vec3.x;
+	mtx.mMtx[1][1] = vec3.y;
+	mtx.mMtx[2][0] = vec3.z;
 }
 
 /**
@@ -103,8 +111,8 @@ void NsCalculation::calcJointPos(const Vector3f& topPosition, const Vector3f& bo
 		(void)adjSqr;
 
 		if (!(adjSqr <= 0.0f)) {
-			NsCalculation::calcOuterPro(middleJointPos, botToTop, adjBotToTop);
-			NsCalculation::calcOuterPro(botToTop, adjBotToTop, middleJointPos);
+			calcOuterPro(middleJointPos, botToTop, adjBotToTop);
+			calcOuterPro(botToTop, adjBotToTop, middleJointPos);
 			f32 midJointSqr = SQUARE(middleJointPos.x) + SQUARE(middleJointPos.y) + SQUARE(middleJointPos.z);
 			if (midJointSqr != 0.0f) {
 				factor                = std::sqrtf(adjSqr / midJointSqr);
@@ -127,11 +135,39 @@ void NsCalculation::calcJointPos(const Vector3f& topPosition, const Vector3f& bo
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 0001E8
+ * @note UNUSED Size: 0001E8 (Matching by size)
  */
-int NsCalculation::calcMtxDirect(const Matrix4f&, const Matrix4f&)
+int NsCalculation::calcMtxDirect(const Matrix4f& param_1, const Matrix4f& param_2)
 {
-	// UNUSED FUNCTION
+	Vector3f local_28[3];
+
+	Vector3f local_34;
+	Vector3f local_40;
+	Vector3f local_4c;
+
+	float maxInnerRatio = 0.0f;
+
+	int i; // Nishimura, why?
+	for (i = 0; i < 3; i++) {
+		calcMtxTrans(param_1, i, local_28[i]);
+		local_28[i].normalise();
+	}
+	calcMtxTrans(param_1, 3, local_34);
+	calcMtxTrans(param_2, 3, local_40);
+	local_4c.x = local_40.x - local_34.x;
+	local_4c.y = local_40.y - local_34.y;
+	local_4c.z = local_40.z - local_34.z;
+	local_4c.normalise();
+
+	int maxIdx;
+	for (i = 0; i < 3; i++) {
+		float innerRatio = calcInnerRatio(local_28[i], local_4c);
+		if (maxInnerRatio < innerRatio) {
+			maxIdx        = i;
+			maxInnerRatio = innerRatio;
+		}
+	}
+	return maxIdx;
 }
 
 /**
@@ -154,9 +190,19 @@ void NsCalculation::calcMat4toMat3(const Matrix4f& inMtx, Matrix3f& outMtx)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 00004C
+ * @note UNUSED Size: 00004C (Matching by size)
  */
 void NsCalculation::calcMat3toMat4(const Matrix3f& inMtx, Matrix4f& outMtx)
 {
-	// UNUSED FUNCTION
+	outMtx.mMtx[0][0] = inMtx.mMtx[0][0];
+	outMtx.mMtx[1][0] = inMtx.mMtx[1][0];
+	outMtx.mMtx[2][0] = inMtx.mMtx[2][0];
+
+	outMtx.mMtx[0][1] = inMtx.mMtx[0][1];
+	outMtx.mMtx[1][1] = inMtx.mMtx[1][1];
+	outMtx.mMtx[2][1] = inMtx.mMtx[2][1];
+
+	outMtx.mMtx[0][2] = inMtx.mMtx[0][2];
+	outMtx.mMtx[1][2] = inMtx.mMtx[1][2];
+	outMtx.mMtx[2][2] = inMtx.mMtx[2][2];
 }

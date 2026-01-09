@@ -1,5 +1,6 @@
 #include "DebugLog.h"
 #include "Graphics.h"
+#include "NsMath.h"
 #include "Shape.h"
 #include "Slime.h"
 #include "sysMath.h"
@@ -44,7 +45,7 @@ void SlimeBody::init(Slime* slime)
 	for (i = 1; i < mSlime->mShapeObject->mShape->mJointCount; i++) {
 		f32 minDist = 12800.0f;
 		Vector3f jointAnimPos;
-		mSlime->mShapeObject->mShape->mJointList[i].mAnimMatrix.getColumn(3, jointAnimPos);
+		NsCalculation::calcMtxTrans(mSlime->mShapeObject->mShape->mJointList[i].mAnimMatrix, 3, jointAnimPos);
 
 		for (int j = 0; j < mSlime->mShapeObject->mShape->mVertexCount; j++) {
 			f32 dist = jointAnimPos.distance(mSlime->mShapeObject->mShape->mVertexList[j]);
@@ -236,13 +237,13 @@ void SlimeBody::setJointPosition(BossShapeObject* shape, Graphics& gfx)
 
 	// do "centre" (main slime)
 	invLookAtMtx.multiplyTo(shape->mShape->getAnimMatrix(0), tmpAnimMtx);
-	tmpAnimMtx.setColumn(3, mSlime->mSRT.t);
+	NsCalculation::calcVectorTrans(mSlime->mSRT.t, 3, tmpAnimMtx);
 	gfx.mCamera->mLookAtMtx.multiplyTo(tmpAnimMtx, shape->mShape->getAnimMatrix(0));
 
 	// do each slime creature
 	for (int i = 0, j = 1; i < 4; i++, j++) {
 		invLookAtMtx.multiplyTo(shape->mShape->getAnimMatrix(j), tmpAnimMtx);
-		tmpAnimMtx.setColumn(3, mSlime->mSlimeCreatures[i]->mSRT.t);
+		NsCalculation::calcVectorTrans(mSlime->mSlimeCreatures[i]->mSRT.t, 3, tmpAnimMtx);
 		gfx.mCamera->mLookAtMtx.multiplyTo(tmpAnimMtx, shape->mShape->getAnimMatrix(j));
 	}
 }

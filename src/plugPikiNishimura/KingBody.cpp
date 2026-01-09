@@ -421,9 +421,10 @@ void KingBody::makeBlending(Matrix4f* animMatrices)
 			Vector3f colX;
 			Vector3f colY;
 			Vector3f colZ;
-			animMatrices[i].getColumn(0, colX);
-			animMatrices[i].getColumn(1, colY);
-			animMatrices[i].getColumn(2, colZ);
+
+			NsCalculation::calcMtxTrans(animMatrices[i], 0, colX);
+			NsCalculation::calcMtxTrans(animMatrices[i], 1, colY);
+			NsCalculation::calcMtxTrans(animMatrices[i], 2, colZ);
 
 			f32 xLen = colX.length();
 			f32 yLen = colY.length();
@@ -456,26 +457,25 @@ void KingBody::copyJointPosition(immut Matrix4f* animMatrices)
 	mOldFootPosList[0] = mFootPosList[0];
 	mOldFootPosList[1] = mFootPosList[1];
 
-	animMatrices[3].getColumn(3, mFootPosList[0]);
-	animMatrices[6].getColumn(3, mFootPosList[1]);
-	animMatrices[31].getColumn(1, mNormalisedJointDir);
+	NsCalculation::calcMtxTrans(animMatrices[3], 3, mFootPosList[0]);
+	NsCalculation::calcMtxTrans(animMatrices[6], 3, mFootPosList[1]);
+	NsCalculation::calcMtxTrans(animMatrices[31], 1, mNormalisedJointDir);
 
 	mNormalisedJointDir.multiply(-1.0f);
 	mNormalisedJointDir.normalise();
 
-	animMatrices[14].getColumn(3, mSalivaJointPositions[3]);
-	animMatrices[15].getColumn(3, mSalivaJointPositions[2]);
-	animMatrices[16].getColumn(3, mSalivaJointPositions[1]);
-	animMatrices[17].getColumn(3, mSalivaJointPositions[0]);
+	for (int i = 3, j = 14; i > -1; --i, ++j) {
+		NsCalculation::calcMtxTrans(animMatrices[j], 3, mSalivaJointPositions[i]);
+	}
 
 	mPrevSalivaEffectPos = mSalivaEffectPos;
 
-	animMatrices[31].getColumn(3, mSalivaEffectPos);
-	animMatrices[45].getColumn(3, mEyePositions[0]);
-	animMatrices[51].getColumn(3, mEyePositions[1]);
-	animMatrices[10].getColumn(3, mCheekPositions[0]);
-	animMatrices[9].getColumn(3, mCheekPositions[1]);
-	animMatrices[13].getColumn(3, mMouthPos);
+	NsCalculation::calcMtxTrans(animMatrices[31], 3, mSalivaEffectPos);
+	NsCalculation::calcMtxTrans(animMatrices[45], 3, mEyePositions[0]);
+	NsCalculation::calcMtxTrans(animMatrices[51], 3, mEyePositions[1]);
+	NsCalculation::calcMtxTrans(animMatrices[10], 3, mCheekPositions[0]);
+	NsCalculation::calcMtxTrans(animMatrices[9], 3, mCheekPositions[1]);
+	NsCalculation::calcMtxTrans(animMatrices[13], 3, mMouthPos);
 }
 
 /**
