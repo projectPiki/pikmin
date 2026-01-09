@@ -548,8 +548,38 @@ void Boss::refreshViewCulling(Graphics& gfx)
 /**
  * @todo: Documentation
  */
-void Boss::drawShape(Graphics&)
+void Boss::drawShape(Graphics& gfx)
 {
+#if defined(DEVELOP) || defined(WIN32)
+	// This is really distracting to be enabled by default, so I've taken the liberty of adding a toggle.
+#if !defined(BUILD_MATCHING)
+	if (gsys->mToggleDebugInfo)
+#endif
+	{
+		Matrix4f transformMtx;
+		mWorldMtx.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), Vector3f(0.0f, 0.0f, 0.0f), Vector3f(0.0f, 0.0f, 0.0f));
+		gfx.mCamera->mLookAtMtx.multiplyTo(mWorldMtx, transformMtx);
+
+		gfx.setLighting(false, nullptr);
+		gfx.setFog(false);
+		gfx.useTexture(nullptr, GX_TEXMAP0);
+
+		Vector3f renderSphereCentre(mSRT.t);
+		renderSphereCentre.y += BOSS_PROP.mRenderSphereHeight();
+		gfx.setColour(Colour(255, 255, 255, 255), true);
+		gfx.drawSphere(renderSphereCentre, BOSS_PROP.mRenderSphereRadius(), transformMtx);
+
+		CollPart* boundingSphere = mCollInfo->getBoundingSphere();
+		gfx.setColour(Colour(0, 255, 255, 255), true);
+		gfx.drawSphere(boundingSphere->mCentre, boundingSphere->mRadius, transformMtx);
+
+		gfx.setColour(Colour(255, 255, 0, 255), true);
+		gfx.drawSphere(mInitPosition, BOSS_PROP.mTerritoryRadius(), transformMtx);
+
+		gfx.setColour(Colour(0, 255, 0, 255), true);
+		gfx.drawSphere(mTargetPosition, 10.0f, transformMtx);
+	}
+#endif
 }
 
 /**

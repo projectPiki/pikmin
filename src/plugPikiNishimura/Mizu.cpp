@@ -3,6 +3,7 @@
 #include "DebugLog.h"
 #include "EffectMgr.h"
 #include "Graphics.h"
+#include "MapMgr.h"
 #include "Shape.h"
 
 /**
@@ -125,6 +126,29 @@ void Mizu::drawShape(Graphics& gfx)
 {
 	gfx.useMatrix(Matrix4f::ident, 0);
 	mShapeObject->mShape->drawshape(gfx, *gfx.mCamera, nullptr);
+
+#if defined(DEVELOP) || defined(WIN32)
+	Boss::drawShape(gfx);
+
+	// This is really distracting to be enabled by default, so I've taken the liberty of adding a toggle.
+#if !defined(BUILD_MATCHING)
+	if (gsys->mToggleDebugInfo)
+#endif
+	{
+		Matrix4f transformMtx;
+		mWorldMtx.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), Vector3f(0.0f, 0.0f, 0.0f), Vector3f(0.0f, 0.0f, 0.0f));
+		gfx.mCamera->mLookAtMtx.multiplyTo(mWorldMtx, transformMtx);
+
+		// See also: `MizuAi::naviGeyzerJump`
+		Vector3f dir(sinf(mFaceDirection), 0.0f, cosf(mFaceDirection));
+		dir.multiply(BOSS_PROP.mTerritoryRadius());
+		Vector3f targetPos = mSRT.t + dir;
+		targetPos.y        = mapMgr->getMinY(targetPos.x, targetPos.z, true);
+
+		gfx.setColour(Colour(255, 0, 0, 255), true);
+		gfx.drawSphere(targetPos, 15.0f, transformMtx);
+	}
+#endif
 }
 
 /**

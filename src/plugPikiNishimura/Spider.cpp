@@ -141,6 +141,55 @@ void Spider::drawShape(Graphics& gfx)
 	mShapeObject->mShape->calcWeightedMatrices();
 	gfx.useMatrix(Matrix4f::ident, 0);
 	mShapeObject->mShape->drawshape(gfx, *gfx.mCamera, nullptr);
+
+#if defined(DEVELOP) || defined(WIN32)
+	Boss::drawShape(gfx);
+
+	// This is really distracting to be enabled by default, so I've taken the liberty of adding a toggle.
+#if !defined(BUILD_MATCHING)
+	if (gsys->mToggleDebugInfo)
+#endif
+	{
+		Matrix4f transformMtx;
+		// In the DLL, the red debug spheres specific to Beady Long Legs are wrongly rotated and translated due to this mistake.
+		mWorldMtx.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), TERNARY_BUGFIX(MACRO_ARG(Vector3f(0.0f, 0.0f, 0.0f), Vector3f(0.0f, 0.0f, 0.0f)),
+		                                                             MACRO_ARG(Vector3f(1.0f, 1.0f, 1.0f), Vector3f(1.0f, 1.0f, 1.0f))));
+		gfx.mCamera->mLookAtMtx.multiplyTo(mWorldMtx, transformMtx);
+
+		if (getCurrentState() == SPIDERAI_Start) {
+			gfx.setColour(Colour(255, 0, 0, 255), true);
+			gfx.drawSphere(*getInitPosition(), SPIDER_PROP.mSpawnTriggerDist(), transformMtx);
+		}
+		CollPart* body = mCollInfo->getSphere('tama');
+		gfx.setColour(Colour(255, 0, 0, 255), true);
+		gfx.drawSphere(body->mCentre, body->mRadius, transformMtx);
+
+		for (int i = 0; i < 4; i++) {
+			// Fabricated name
+			static int matrixIndices[7][3] = {
+				{ 12, 11, 10 }, { 15, 14, 13 }, { 6, 5, 4 }, { 9, 8, 7 }, { 3, 2, 0 }, { 1, -1, 2 }, { 3, 0, 1 },
+			};
+
+			Vector3f local_5c(0.0f, 0.0f, 0.0f);
+			Vector3f local_68(0.0f, 0.0f, 0.0f);
+			Vector3f local_74(0.0f, 0.0f, 0.0f);
+
+			local_5c.multMatrix(mShapeObject->mShape->getAnimMatrix(matrixIndices[i][2]));
+			local_68.multMatrix(mShapeObject->mShape->getAnimMatrix(matrixIndices[i][1]));
+			local_74.multMatrix(mShapeObject->mShape->getAnimMatrix(matrixIndices[i][0]));
+
+			// Why are these inside the for loop?
+			gfx.useMatrix(Matrix4f::ident, 0);
+			gfx.setLighting(false, nullptr);
+			gfx.setFog(false);
+			gfx.useTexture(nullptr, GX_TEXMAP0);
+
+			gfx.setColour(Colour(255, 255, 255, 255), true);
+			gfx.drawLine(local_5c, local_68);
+			gfx.drawLine(local_68, local_74);
+		}
+	}
+#endif
 }
 
 /**

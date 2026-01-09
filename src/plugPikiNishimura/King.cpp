@@ -152,6 +152,80 @@ void King::drawShape(Graphics& gfx)
 	mShapeObject->mShape->calcWeightedMatrices();
 	gfx.useMatrix(Matrix4f::ident, 0);
 	mShapeObject->mShape->drawshape(gfx, *gfx.mCamera, nullptr);
+
+#if defined(DEVELOP) || defined(WIN32)
+	Boss::drawShape(gfx);
+
+	// This is really distracting to be enabled by default, so I've taken the liberty of adding a toggle.
+#if !defined(BUILD_MATCHING)
+	if (gsys->mToggleDebugInfo)
+#endif
+	{
+		Matrix4f transformMtx;
+		mWorldMtx.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), Vector3f(0.0f, 0.0f, 0.0f), Vector3f(0.0f, 0.0f, 0.0f));
+		gfx.mCamera->mLookAtMtx.multiplyTo(mWorldMtx, transformMtx);
+
+		// This is certainly *one* way of doing things.
+		if (getCurrentState() != KINGAI_Stay) {
+			gfx.setColour(Colour(255, 255, 0, 255), true);
+			gfx.drawSphere(mSRT.t, KING_PROP.mHiddenUnderneathRadius(), transformMtx);
+		}
+		if (getCurrentState() == KINGAI_Attack && mKingAi->mIsTongueOut) {
+			Vector3f a(mCollInfo->getSphere('slt2')->mCentre);
+			Vector3f b(mCollInfo->getSphere('slt2')->mCentre);
+			a.y -= KING_PROP.mTongueRangeY();
+			b.y += KING_PROP.mTongueRangeY();
+
+			gfx.setColour(Colour(0, 0, 255, 255), true);
+			gfx.drawCylinder(a, b, KING_PROP.mTongueRangeXZ(), transformMtx);
+		}
+		if (getCurrentState() == KINGAI_Flick) {
+			gfx.setColour(Colour(0, 0, 255, 255), true);
+			gfx.drawSphere(mSRT.t, KING_PROP.mPressAttackRadius(), transformMtx);
+		}
+		if (getCurrentState() == KINGAI_Stay) {
+			gfx.setColour(Colour(255, 0, 0, 255), true);
+			gfx.drawSphere(mSRT.t, KING_PROP.mDetectionRadius(), transformMtx);
+		}
+		if (getCurrentState() == KINGAI_Stay) {
+			gfx.setColour(Colour(0, 255, 255, 255), true);
+			gfx.drawSphere(mSRT.t, KING_PROP.mDispelRadius(), transformMtx);
+		}
+		if (getCurrentState() != KINGAI_Stay) {
+			Vector3f a(mKingAi->mAttackPosition.x, mKingAi->mAttackPosition.y + KING_PROP.mNormalAttackRangeY(),
+			           mKingAi->mAttackPosition.z);
+			Vector3f b(mKingAi->mAttackPosition.x, mKingAi->mAttackPosition.y - KING_PROP.mNormalAttackRangeY(),
+			           mKingAi->mAttackPosition.z);
+
+			gfx.setColour(Colour(255, 0, 0, 255), true);
+			gfx.drawCylinder(a, b, KING_PROP.mNormalAttackRangeXZ(), transformMtx);
+		}
+		if (getCurrentState() != KINGAI_Stay) {
+			gfx.setColour(Colour(255, 255, 255, 255), true);
+			gfx.drawSphere(*getInitPosition(), KING_PROP.mAttackTerritoryRadius(), transformMtx);
+		}
+		if (getCurrentState() == KINGAI_Attack) {
+			Vector3f centre(mCollInfo->getSphere('slt2')->mCentre);
+			centre.x += sinf(mFaceDirection) * KING_PROP._314();
+			centre.y += KING_PROP._324();
+			centre.z += cosf(mFaceDirection) * KING_PROP._314();
+
+			gfx.setColour(Colour(255, 255, 255, 255), true);
+			gfx.drawSphere(centre, KING_PROP._334(), transformMtx);
+		}
+		if (getCurrentState() == KINGAI_Attack && !mKingAi->mIsTongueOut) {
+			CollPart* collPart = mCollInfo->getSphere('slt3');
+
+			Vector3f centre(collPart->mCentre);
+			centre.x += sinf(mFaceDirection) * 30.0f;
+			centre.y += 15.0f;
+			centre.z += cosf(mFaceDirection) * 30.0f;
+
+			gfx.setColour(Colour(0, 255, 0, 255), true);
+			gfx.drawSphere(centre, collPart->mRadius, transformMtx);
+		}
+	}
+#endif
 }
 
 /**
