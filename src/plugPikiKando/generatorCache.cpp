@@ -98,13 +98,14 @@ void GeneratorCache::saveCard(RandomAccessStream& output)
 	output.writeInt(mFreeSize);
 	PRINT("heap saved @ %d\n", output.getPosition());
 
-	for (int i = 0; i < GENCACHE_HEAP_SIZE; i++) {
+	int i;
+	for (i = 0; i < GENCACHE_HEAP_SIZE; i++) {
 		output.writeByte(mCacheHeap[i]);
 	}
 
 	int aliveCount;
 	int deadCount;
-	for (int i = STAGE_START; i < STAGE_COUNT; i++) {
+	for (i = STAGE_START; i < STAGE_COUNT; i++) {
 		Cache* cache = findCache(mAliveCacheList, i);
 		if (cache) {
 			output.writeByte(0);
@@ -470,7 +471,7 @@ void GeneratorCache::prepareUfoParts(GeneratorCache::Cache* cache)
 
 		PelletConfig* config = pelletMgr->getConfig(id);
 		if (!config) {
-			ERROR("unknown pellet id %c%c%c%c\n", 0, 0, 0, (u8)id);
+			ERROR("unknown pellet id %c%c%c%c\n", (u8)(id << 24), (u8)(id << 16), (u8)(id << 8), (u8)id);
 		}
 
 		stream.readFloat();

@@ -533,7 +533,8 @@ void GameCoreSection::cleanupDayEnd()
 	playerState->setDayCollectCount(day, playerState->getCurrParts());
 	playerState->setDayPowerupCount(day, playerState->getNextPowerupNumber());
 
-	for (int i = 0; i < 3; i++) {
+	int i;
+	for (i = 0; i < 3; i++) {
 		GoalItem* goal = itemMgr->getContainer(i);
 		if (goal) {
 			goal->setSpotActive(false);
@@ -683,7 +684,7 @@ void GameCoreSection::cleanupDayEnd()
 
 	effectMgr->killAll();
 
-	for (int i = 0; i < PikiColorCount; i++) {
+	for (i = 0; i < PikiColorCount; i++) {
 		GoalItem* goal = itemMgr->getContainer(i);
 		if (goal && playerState->hasContainer(goal->mOnionColour)) {
 			goal->mSpotModelEff
@@ -835,7 +836,10 @@ ASM void asmTest(f32, f32)
  */
 void GameCoreSection::initStage()
 {
+#if defined(VERSION_PIKIDEMO)
+#else
 	STACK_PAD_VAR(2);
+#endif
 	playerState->setDayEnd(false);
 	if (playerState->isChallengeMode()) {
 		pikiInfMgr.initGame();
@@ -1308,7 +1312,7 @@ GameCoreSection::GameCoreSection(Controller* controller, MapMgr* mgr, Camera& ca
 	mBigFont->setTexture(gsys->loadTexture("bigFont.bti", true), 21, 36);
 
 	memStat->start("dynamics");
-#if defined(VERSION_GPIJ01_01)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 	particleHeap = new DynParticleHeap(0x200);
 #else
 	particleHeap = new DynParticleHeap(0x400);
@@ -1670,9 +1674,16 @@ void GameCoreSection::updateAI()
 				bossMgr->postUpdate(0, deltaTime);
 			}
 		}
+#if defined(VERSION_PIKIDEMO)
+		MATCHING_STOP_TIMER("post");
+		gsys->mTimer->stop("GameCore");
 	}
+#else
+	}
+	// ... did they mess up the scope for this deliberately??
 	MATCHING_STOP_TIMER("post"); // Wrong scope, but if the tekiMgr doesn't exist you probably have bigger problems.
 	gsys->mTimer->stop("GameCore");
+#endif
 }
 
 /**

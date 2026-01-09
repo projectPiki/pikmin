@@ -704,11 +704,6 @@ void Piki::actOnSituaton()
 		mMode = PikiMode::AttackMode;
 		break;
 	}
-	case PIKISITCH_Unk2:
-	{
-		ERROR("U CAN'T DO IT RIGHT !\n"); // LOL
-		break;
-	}
 	case PIKISITCH_Unk14:
 	{
 		seSystem->playPikiSound(SEF_PIKI_FIND, mSRT.t);
@@ -725,6 +720,11 @@ void Piki::actOnSituaton()
 		mActiveAction->mCurrActionIdx = PikiAction::Transport;
 		mActiveAction->mChildActions[PikiAction::Transport].initialise(target);
 		mMode = PikiMode::TransportMode;
+		break;
+	}
+	case PIKISITCH_Unk2:
+	{
+		ERROR("U CAN'T DO IT RIGHT !\n"); // LOL
 		break;
 	}
 	case PIKISITCH_Unk10:

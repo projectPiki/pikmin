@@ -25,22 +25,14 @@ void* System::alloc(size_t size)
 		size = (size + 3) & ~0x3;
 	}
 
-	if (gsys->mActiveHeapIdx < 0) {
-#if 0
-		// The DLL uses `GlobalAlloc` here and has an ERROR if that fails.  This branch of code is probably DLL exclusive,
-		// since the GCN can't just ask WinAPI for unlimited memory.  We'll see once JPN Demo version matching begins.
-		if (!result) {
-			ERROR("new[] %d failed", size);
-		}
-#endif
-	} else {
+	if (gsys->mActiveHeapIdx >= 0) {
 		AyuHeap* heap = &gsys->mHeaps[gsys->mActiveHeapIdx];
 		if (size == 0) {
 			PRINT("trying to allocate %d bytes on heap\n", 0);
 		}
 		result = heap->push(size);
 		if (!result) {
-			ERROR("new[] %d failed in heap '%s'", gsys->mActiveHeapIdx, size);
+			ERROR("new[] %d failed in heap '%s'", size, heap->mName);
 		}
 
 		if (size == 0 || gsys->mForcePrint) {
@@ -56,13 +48,24 @@ void* System::alloc(size_t size)
 		}
 
 		if ((u32)result & 0x3) {
-			((u32)result); // idek man
+			ERROR("acquired memory not long aligned %08x!!\n", (u32)result);
 		}
 
-		int length = size / 4;
+		u32* resPtr = (u32*)result;
+		int length  = size / 4;
 		for (int i = 0; i < length; i++) {
-			((u32*)result)[i] = 0;
+			resPtr[i] = 0;
 		}
+	} else {
+#if defined(WIN32)
+		// The DLL uses `GlobalAlloc` here and has an ERROR if that fails.  This branch of code is probably DLL exclusive,
+		// since the GCN can't just ask WinAPI for unlimited memory.  We'll see once JPN Demo version matching begins.
+		if (!result) {
+			ERROR("new[] %d failed", size);
+		}
+#else
+		ERROR("no heap specified\n");
+#endif
 	}
 
 	return result;

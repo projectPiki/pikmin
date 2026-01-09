@@ -63,8 +63,16 @@ void AyuStack::reset()
  */
 void AyuStack::checkStack()
 {
-	if (mAllocType & AYU_STACK_GROW_UP && mStackTop - *((u32*)mStackTop - 2) != mInitialStackTop) {
-		ERROR("trashed memory stack (%s)\n", mName);
+	if ((mAllocType & AYU_STACK_GROW_UP)) {
+		u32 newTop = mStackTop - *(u32*)(mStackTop - 8);
+#if defined(VERSION_GPIJ01_01)
+		if (newTop != mInitialStackTop)
+#else
+		if (newTop > mInitialStackTop)
+#endif
+		{
+			ERROR("trashed memory stack (%s)\n", mName);
+		}
 	}
 }
 
@@ -132,10 +140,7 @@ void* AyuStack::push(int requestedSizeBytes)
 		mStackTop += (requestedSizeBytes + 8);
 		*(u32*)(mStackTop - 8) = previousSize + (requestedSizeBytes + 8);
 
-		// > is supposed to be != but ONLY THEN does it regswap :crying:
-		if ((mAllocType & AYU_STACK_GROW_UP) && (mStackTop - *(u32*)(mStackTop - 8) > mInitialStackTop)) {
-			ERROR("trashed memory stack (%s)\n", mName);
-		}
+		checkStack();
 
 		return (void*)stackStart;
 	} else {

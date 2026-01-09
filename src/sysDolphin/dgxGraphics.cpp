@@ -10,7 +10,7 @@
  * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
-DEFINE_ERROR(__LINE__) // Never used in the DLL
+DEFINE_ERROR(24)
 
 /**
  * @todo: Documentation
@@ -112,7 +112,7 @@ GXRenderModeObj localNtsc480IntDf = {
 static GXRenderModeObj* sScreenMode[2] = { &localNtsc480IntDf, &progressiveRenderMode };
 #endif
 
-#if defined(VERSION_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 static int sFirstFrame = 2;
 #else
 static int sFirstFrame = 4;
@@ -218,14 +218,18 @@ DGXGraphics::DGXGraphics(bool flag)
 	gsys->getHeap(gsys->mActiveHeapIdx)->setAllocType(AYU_STACK_GROW_UP);
 
 	mDisplayBuffer = new (0x20) u8[sFrameSize];
-	u16* test      = (u16*)mDisplayBuffer;
+
+#if defined(VERSION_GPIJ01_01)
+#else
+	u16* test = (u16*)mDisplayBuffer;
 	for (int i = 0; i < sFrameSize / 2; i++) {
 		test[i] = 0x1080;
 	}
+#endif
 
 	DCFlushRange(mDisplayBuffer, sFrameSize);
 	gsys->getHeap(gsys->mActiveHeapIdx)->mAllocType = backup;
-#if defined(VERSION_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 	VISetNextFrameBuffer(mDisplayBuffer);
 #else
 	VISetBlack(TRUE);
@@ -233,6 +237,12 @@ DGXGraphics::DGXGraphics(bool flag)
 	VIFlush();
 	VIWaitForRetrace();
 #endif
+
+#if defined(VERSION_GPIJ01_01)
+	directErase(AREA_FULL_SCREEN(*this), true);
+#else
+#endif
+
 	setupRender();
 	gfx                   = this;
 	mPostRetraceWaitCount = 0;
@@ -241,7 +251,15 @@ DGXGraphics::DGXGraphics(bool flag)
 	mRetraceCallback      = VISetPostRetraceCallback(retraceProc);
 	OSInitMessageQueue(&mPostRetraceMsgQueue, &mPostRetraceMsgBuffer, 1);
 
+#if defined(VERSION_GPIJ01_01)
+	VISetBlack(TRUE);
+	VIFlush();
+	VIWaitForRetrace();
+
+	STACK_PAD_INLINE(1);
+#else
 	STACK_PAD_VAR(2);
+#endif
 }
 
 /**
@@ -277,22 +295,25 @@ void DGXGraphics::getVerticalFilter(u8* vf)
  */
 void DGXGraphics::videoReset()
 {
-#if defined(VERSION_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 #else
 	static int videoModeAsIs = -1;
 
 	if (videoModeAsIs != mRenderMode) {
 		videoModeAsIs = mRenderMode;
 #endif
+
 	sFirstFrame = 2;
-#if defined(VERSION_GPIE01_00)
+
+#if defined(VERSION_GPIE01_00) || defined(VERSION_GPIJ01_01)
 	__VIInit(mRenderMode == 0 ? VI_TVMODE_NTSC_INT : VI_TVMODE_NTSC_PROG);
 #endif
+
 	VIConfigure(sScreenMode[mRenderMode]);
 	VIFlush();
 	VIWaitForRetrace();
 	VIWaitForRetrace();
-#if defined(VERSION_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 #else
 	}
 #endif
@@ -343,6 +364,9 @@ u32 DGXGraphics::getDListRemainSize()
  */
 void DGXGraphics::useDList(u32 num)
 {
+	if (mDisplayListPtr + num >= mDefaultDLBuffer + kDefaultDLSize) {
+		ERROR("Used too much displaylist buffer");
+	}
 	mDisplayListSize -= num;
 	mDisplayListPtr += num;
 }
@@ -356,7 +380,10 @@ u32 DGXGraphics::compileMaterial(Material* mat)
 		return 0;
 	}
 
-	gsys->mIsRendering;
+	if (gsys->mIsRendering) {
+		ERROR("Cannot make material DL when using GP\n");
+	}
+
 	u8* dl               = gsys->mDGXGfx->getDListPtr();
 	mat->mDisplayListPtr = dl;
 	GXBeginDisplayList(dl, getDListRemainSize());
@@ -501,7 +528,9 @@ void DGXGraphics::initRender(int a1, int a2)
  */
 void DGXGraphics::beginRender()
 {
-	gsys->mIsRendering; // volatile ints are very cool
+	if (gsys->mIsRendering) {
+		ERROR("still busy with GP!\n");
+	}
 	gsys->mIsRendering = 1;
 	GXInvalidateTexAll();
 	GXInvalidateVtxCache();
@@ -535,6 +564,10 @@ void DGXGraphics::waitRetrace()
 	if (sFirstFrame) {
 		sFirstFrame--;
 		if (sFirstFrame == 0) {
+#if defined(VERSION_GPIJ01_01)
+			VISetBlack(FALSE);
+#else
+#endif
 			sFirstFrame = 0;
 		}
 	}
@@ -1431,7 +1464,7 @@ void DGXGraphics::clearBuffer(int, bool)
 void DGXGraphics::setFog(bool set)
 {
 	if (set) {
-#if defined(VERSION_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 		GXSetFog(GX_FOG_LINEAR, mFogStart, mFogEnd, mCamera->mNear, mCamera->mFar, *(GXColor*)&mFogColour);
 #else
 		if (mCamera->mNear < mCamera->mFar) {
@@ -1629,6 +1662,10 @@ bool DGXGraphics::initParticle(bool a)
  */
 void DGXGraphics::drawRotParticle(Camera& cam, immut Vector3f& pos, u16 angle, f32 radius)
 {
+	if (!mActiveTexture[0]) {
+		ERROR("no texture set!!");
+	}
+
 	gsys->mPolygonCount += 2;
 
 	// max - 0x2000
@@ -1662,13 +1699,16 @@ void DGXGraphics::drawRotParticle(Camera& cam, immut Vector3f& pos, u16 angle, f
  */
 void DGXGraphics::drawParticle(Camera& cam, immut Vector3f& pos, f32 size)
 {
+	if (!mActiveTexture[0]) {
+		ERROR("no texture set!!");
+	}
 	gsys->mPolygonCount += 2;
-	u32 primClr = *(u32*)&mPrimaryColour;
 
 	Vector3f vec1(-size, size, 0.0f);
 	Vector3f vec2(size, size, 0.0f);
 	Vector3f vec3(size, -size, 0.0f);
 	Vector3f vec4(-size, -size, 0.0f);
+	u32 primClr = *(u32*)&mPrimaryColour;
 
 	GXBegin(GX_QUADS, GX_VTXFMT0, 4);
 
@@ -1696,6 +1736,10 @@ void DGXGraphics::drawParticle(Camera& cam, immut Vector3f& pos, f32 size)
  */
 void DGXGraphics::drawCamParticle(Camera& cam, immut Vector3f& pos, immut Vector2f& extents, immut Vector2f& uvMin, immut Vector2f& uvMax)
 {
+	if (!mActiveTexture[0]) {
+		ERROR("no texture set!!");
+	}
+
 	gsys->mPolygonCount += 2;
 
 	f32 y0, z, x1, y1, x0;
@@ -1819,6 +1863,9 @@ void DGXGraphics::drawOneTri(immut Vector3f* vertices, immut Vector3f* normals, 
  */
 void DGXGraphics::blatRectangle(immut RectArea& rect)
 {
+	if (!mActiveTexture[0]) {
+		ERROR("no texture set!!");
+	}
 	GXClearVtxDesc();
 	GXSetVtxDesc(GX_VA_POS, GX_DIRECT);
 	GXSetVtxDesc(GX_VA_CLR0, GX_DIRECT);
@@ -1900,6 +1947,9 @@ void DGXGraphics::testRectangle(immut RectArea& rect)
  */
 void DGXGraphics::drawRectangle(immut RectArea& bounds, immut RectArea& texCoords, immut Vector3f* offset)
 {
+	if (!mActiveTexture[0]) {
+		ERROR("no texture set!!");
+	}
 	GXClearVtxDesc();
 	GXSetVtxDesc(GX_VA_POS, GX_DIRECT);
 	GXSetVtxDesc(GX_VA_CLR0, GX_DIRECT);
@@ -2025,30 +2075,24 @@ void DGXGraphics::texturePrintf(Font* font, int x, int y, immut char* format, ..
 	int yPos           = y;
 	const char* bufPtr = buf;
 	while (*bufPtr) {
+
+		int idx;
 #if defined(VERSION_GPIP01_00)
-		char z = *bufPtr;
-		STACK_PAD_VAR(2);
-		int idx;
-		if (z >= 0xa0) {
-			idx = font->charToIndex(z);
+		if (*bufPtr >= 0xa0) {
+			STACK_PAD_VAR(1);
+			idx = font->charToIndex(*bufPtr);
 			bufPtr++;
-		} else if (z & 0x80) {
-			idx = font->charToIndex(u16(bufPtr[0] << 8 | bufPtr[1]));
-			bufPtr += 2;
-		} else {
-			idx = font->charToIndex(z);
-			bufPtr++;
-		}
+		} else
 #else
-		int idx;
-		if (*bufPtr & 0x80) {
-			idx = font->charToIndex(u16(bufPtr[0] << 8 | bufPtr[1]));
+#endif
+		    if (*bufPtr & 0x80) {
+			u16 c = (bufPtr[0] << 8 | bufPtr[1]);
+			idx   = font->charToIndex(c);
 			bufPtr += 2;
 		} else {
 			idx = font->charToIndex(*bufPtr);
 			bufPtr++;
 		}
-#endif
 
 		RectArea& texCoords = font->mChars[idx].mTextureCoords;
 
@@ -2161,12 +2205,40 @@ void DGXGraphics::directPrint(int, int, immut char*, ...)
 	// UNUSED FUNCTION
 }
 
+// idk about these names
+#define UNPACK_DISPLAY_BYTE_1(a) ((a >> 8) - 0x10)
+#define UNPACK_DISPLAY_BYTE_2(b) ((b & 0xFF) - 0x80)
+#define PACK_DISPLAY_BYTE(a, b)  (((((a) + 0x10) << 8) & 0xFF00) | (u8)((b) + 0x80))
+
 /**
  * @todo: Documentation
  * @note UNUSED Size: 000108
  */
-void DGXGraphics::directErase(RectArea&, bool)
+void DGXGraphics::directErase(RectArea& bounds, bool set)
 {
+	// NON-MATCHING (JP)
+	u16* screen = (u16*)(mDisplayBuffer + u32(bounds.mMinX + bounds.mMinY * 640 << 1));
+	for (int i = 0; i < bounds.height(); i++) {
+		u16* screenPtr = screen;
+		if (set) {
+			for (int i = 0; i < bounds.width(); i++) {
+				screenPtr[i] = PACK_DISPLAY_BYTE(0, 0);
+			}
+			continue;
+		}
+
+		for (int i = 0; i < bounds.width(); i++) {
+			int val12 = UNPACK_DISPLAY_BYTE_1(screenPtr[i]);
+			val12 >>= 2;
+			int val31 = UNPACK_DISPLAY_BYTE_2(screenPtr[i]);
+			val31 >>= 2;
+			screenPtr[i] = PACK_DISPLAY_BYTE(val12, val31);
+		}
+
+		screen += 640;
+	}
+
+	DCFlushRange(mDisplayBuffer, sFrameSize);
 	// UNUSED FUNCTION
 }
 
