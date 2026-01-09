@@ -908,7 +908,7 @@ void HinderRock::startAI(int)
 	mSRT.r.set(0.0f, y, 0.0f);
 	mWorldMtx.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), mSRT.r, mSRT.t);
 	mBuildShape->mTransformMtx = mWorldMtx;
-	mapMgr->mCollShape->add(mBuildShape);
+	mapMgr->mCollShapeList->add(mBuildShape);
 	mTotalPushStrength = 0;
 	mState             = 0;
 	mPushMoveTimer     = 0.0f;
@@ -1023,10 +1023,10 @@ void Bridge::refresh(Graphics& gfx)
 	gfx.mCamera->mLookAtMtx.multiplyTo(mWorldMtx, animMtx);
 	mBridgeShape->updateAnim(gfx, animMtx, nullptr);
 	mBuildShape->mTransformMtx.inverse(&mBuildShape->mInverseMatrix);
-	mDynMaterial.animate(nullptr);
+	mAnimatedMaterials.animate(nullptr);
 	gfx.useMatrix(Matrix4f::ident, 0);
 	mBuildShape->updateContext();
-	mBridgeShape->drawshape(gfx, *gfx.mCamera, &mDynMaterial);
+	mBridgeShape->drawshape(gfx, *gfx.mCamera, &mAnimatedMaterials);
 
 	if (!mDoUseJointSegments) {
 		mCollInfo->updateInfo(gfx, false);
@@ -1078,19 +1078,19 @@ void Bridge::startAI(int)
 	if (!mDoUseJointSegments) {
 		mCollInfo->initInfo(mBridgeShape, nullptr, nullptr);
 	}
-	mBridgeShape->makeInstance(mDynMaterial, 0);
+	mBridgeShape->makeInstance(mAnimatedMaterials, 0);
 	mWorldMtx.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), mSRT.r, mSRT.t);
 	mBuildShape->mTransformMtx = mWorldMtx;
-	mapMgr->mCollShape->add(mBuildShape);
+	mapMgr->mCollShapeList->add(mBuildShape);
 
 	if (mDoUseJointSegments) {
 		for (int i = 0; i < mStageCount; i++) {
 			mStageProgressList[i] = 0.0f;
 		}
 		for (int i = 0; i < mStageCount * 2; i++) {
-			mBuildShape->jointVisible(mStageJoints[i]->mIndex, false);
+			mBuildShape->jointVisible(mStageJoints[i]->mIndex, Joint::NotVisible);
 		}
-		mBuildShape->jointVisible(mStageJoints[0]->mIndex, true);
+		mBuildShape->jointVisible(mStageJoints[0]->mIndex, Joint::Visible);
 	} else {
 		for (int i = 0; i < mStageCount; i++) {
 			mStageProgressList[i] = 0.0f;
@@ -1236,10 +1236,10 @@ bool Bridge::isStageFinished(int id)
 		if (id < 0 || id >= mStageCount) {
 			return true;
 		}
-		return mBuildShape->mVisibleList[mStageJoints[id * 2 + 1]->mIndex];
+		return mBuildShape->mJointVisibility[mStageJoints[id * 2 + 1]->mIndex];
 	}
 	int jointIdx = getJointIndex(id);
-	return mBuildShape->mVisibleList[jointIdx];
+	return mBuildShape->mJointVisibility[jointIdx];
 }
 
 /**
@@ -1249,8 +1249,8 @@ void Bridge::flatten()
 {
 	for (int i = 0; i < mStageCount; i++) {
 		int index = mStageJoints[i * 2]->mIndex;
-		if (mBuildShape->mVisibleList[mStageJoints[i * 2 + 1]->mIndex] && mBuildShape->mVisibleList[index]) {
-			mBuildShape->jointVisible(index, false);
+		if (mBuildShape->mJointVisibility[mStageJoints[i * 2 + 1]->mIndex] && mBuildShape->mJointVisibility[index]) {
+			mBuildShape->jointVisible(index, Joint::NotVisible);
 			PRINT_GLOBAL("flatten bridge");
 		}
 	}
@@ -1262,8 +1262,8 @@ void Bridge::flatten()
 void Bridge::dump()
 {
 	for (int i = 0; i < mStageCount; i++) {
-		const char* a = mBuildShape->mVisibleList[mStageJoints[i * 2 + 1]->mIndex] ? "|" : "x";
-		const char* b = mBuildShape->mVisibleList[mStageJoints[i * 2]->mIndex] ? "|" : "x";
+		const char* a = mBuildShape->mJointVisibility[mStageJoints[i * 2 + 1]->mIndex] ? "|" : "x";
+		const char* b = mBuildShape->mJointVisibility[mStageJoints[i * 2]->mIndex] ? "|" : "x";
 		PRINT_GLOBAL("brd %d : %d%%(w%s:p%s)\n", i, (int)(mStageProgressList[i] / mMaxHealth * 100.0f), a, b);
 	}
 }
@@ -1284,24 +1284,24 @@ void Bridge::setStageFinished(int stageIndex, bool isFinished)
 
 		int prevID = 2 * stageIndex - 1;
 		if (isFinished) {
-			mBuildShape->jointVisible(wIdx, 0);
-			mBuildShape->jointVisible(pIdx, 1);
+			mBuildShape->jointVisible(wIdx, Joint::NotVisible);
+			mBuildShape->jointVisible(pIdx, Joint::Visible);
 			if (nextIdx != -1) {
-				mBuildShape->jointVisible(nextIdx, 1);
+				mBuildShape->jointVisible(nextIdx, Joint::Visible);
 			}
 		} else {
 			if (prevID > 0) {
-				if (mBuildShape->mVisibleList[mStageJoints[prevID]->mIndex]) {
-					mBuildShape->jointVisible(wIdx, 1);
+				if (mBuildShape->mJointVisibility[mStageJoints[prevID]->mIndex]) {
+					mBuildShape->jointVisible(wIdx, Joint::Visible);
 				} else {
-					mBuildShape->jointVisible(wIdx, 0);
+					mBuildShape->jointVisible(wIdx, Joint::NotVisible);
 				}
 			} else {
-				mBuildShape->jointVisible(wIdx, 1);
+				mBuildShape->jointVisible(wIdx, Joint::Visible);
 			}
-			mBuildShape->jointVisible(pIdx, 0);
+			mBuildShape->jointVisible(pIdx, Joint::NotVisible);
 			if (nextIdx != -1) {
-				mBuildShape->jointVisible(nextIdx, 0);
+				mBuildShape->jointVisible(nextIdx, Joint::NotVisible);
 			}
 		}
 

@@ -421,7 +421,7 @@ Camera::Camera()
 	mRotation.set(0.0f, 4.363323f, 0.0f);
 	_32C.set(0.0f, 0.0f, 0.0f);
 	mAspectRatio = 1.0f;
-	mBlur        = 110.0f;
+	mBlurAlpha   = 110.0f;
 }
 
 /**

@@ -431,9 +431,12 @@ Navi::Navi(CreatureProp* props, int naviID)
 {
 	mLowerMotionCooldown = 4;
 	memStat->start("naviCaster");
+
+	// never added to the global draw list, so never used
 	mShadowCaster.initCore("");
-	mShadowCaster.mDrawer           = new NaviDrawer(this);
+	mShadowCaster.mShadowDrawer     = new NaviDrawer(this);
 	mShadowCaster.mLightCamera.mFov = 20.0f;
+
 	memStat->end("naviCaster");
 
 	memStat->start("naviEff");
@@ -575,7 +578,7 @@ void Navi::reset()
 		mWhistleFxPosArr[i].set(0.0f, 0.0f, 0.0f);
 	}
 
-	GlobalShape::cursorShape->makeInstance(mNaviDynMats, 0);
+	GlobalShape::cursorShape->makeInstance(mAnimatedMaterials, 0);
 
 	mWithinContainer = false;
 	mStateMachine->transit(this, NAVISTATE_Walk);
@@ -847,7 +850,7 @@ void Navi::update()
 		mIsInWater = false;
 	}
 
-	mNaviDynMats.animate(nullptr);
+	mAnimatedMaterials.animate(nullptr);
 
 	Vector3f cursorMoveDir = mCursorTargetPosition - mCursorPosition;
 	f32 cursorMoveDist     = cursorMoveDir.normalise();
@@ -2010,7 +2013,7 @@ void Navi::refresh(Graphics& gfx)
 
 			gfx.useMatrix(viewMtx, 0);
 
-			mNaviDynMats.updateContext();
+			mAnimatedMaterials.updateContext();
 			GlobalShape::cursorShape->drawshape(gfx, *gfx.mCamera, nullptr);
 
 			Colour markerColour;

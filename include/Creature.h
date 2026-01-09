@@ -80,6 +80,17 @@ enum CreatureStandType {
 };
 
 /**
+ * @brief Wrapper for local-space position when a creature is attached to a dynamic collision object.
+ *
+ * (Default) constructor is exposed and lines up with the order in the ILK.
+ *
+ * @note Size: 0xC.
+ */
+struct DynCollAttachment {
+	Vector3f mCollSpacePosition; ///< _00, position of creature in collision object's local space.
+};
+
+/**
  * @brief TODO
  *
  * @note Size: 0x2B5.
@@ -401,10 +412,10 @@ public:
 	f32 _268;                            // _268
 	f32 mSize;                           // _26C
 	f32 mCollisionRadius;                // _270
-	Vector3f mPositionInShapeSpace;      // _274, this is actually a wrapper around a Vector3f in the DLL, but idk what yet.
+	DynCollAttachment mCollAttachment;   // _274
 	DynCollObject* mCollPlatform;        // _280
-	Vector3f* mCollPlatNormal;           // _284
-	CollTriInfo* mClimbingTri;           // _288
+	Vector3f* mCollNormal;               // _284
+	CollTriInfo* mPikiPlatformTriangle;  // _288
 	CollTriInfo* mGroundTriangle;        // _28C
 	CollTriInfo* mPreviousTriangle;      // _290
 	Shape* mCurrCollisionModel;          // _294

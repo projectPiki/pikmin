@@ -371,19 +371,19 @@ u32 DGXGraphics::compileMaterial(Material* mat)
 
 		GXSetZMode((mat->mPeInfo.mDepthTestFlags & 1) != 0, (GXCompare)(mat->mPeInfo.mDepthTestFlags >> 8 & 0xFF),
 		           (mat->mPeInfo.mDepthTestFlags & 2) != 0);
-	} else if (mat->mFlags & MATFLAG_INVERT_BLEND) {
+	} else if (mat->mFlags & MATFLAG_InverseColorBlend) {
 		GXSetBlendMode(GX_BM_BLEND, GX_BL_ZERO, GX_BL_INVSRCCOL, GX_LO_CLEAR);
 		GXSetAlphaCompare(GX_ALWAYS, 0, GX_AOP_OR, GX_ALWAYS, 0);
 		GXSetZMode(GX_TRUE, GX_LEQUAL, GX_FALSE);
-	} else if (mat->mFlags & MATFLAG_OPAQUE) {
+	} else if (mat->mFlags & MATFLAG_Opaque) {
 		GXSetBlendMode(GX_BM_NONE, GX_BL_ONE, GX_BL_ZERO, GX_LO_COPY);
 		GXSetAlphaCompare(GX_ALWAYS, 0, GX_AOP_OR, GX_ALWAYS, 0);
 		GXSetZMode(GX_TRUE, GX_LEQUAL, GX_TRUE);
-	} else if (mat->mFlags & MATFLAG_ALPHA_TEST) {
+	} else if (mat->mFlags & MATFLAG_AlphaTest) {
 		GXSetBlendMode(GX_BM_NONE, GX_BL_ONE, GX_BL_ZERO, GX_LO_COPY);
 		GXSetAlphaCompare(GX_GEQUAL, 0x80, GX_AOP_AND, GX_LEQUAL, 255);
 		GXSetZMode(GX_TRUE, GX_LEQUAL, GX_TRUE);
-	} else if (mat->mFlags & MATFLAG_ALPHA_BLEND) {
+	} else if (mat->mFlags & MATFLAG_AlphaBlend) {
 		GXSetBlendMode(GX_BM_BLEND, GX_BL_SRCALPHA, GX_BL_INVSRCALPHA, GX_LO_COPY);
 		GXSetAlphaCompare(GX_ALWAYS, 0, GX_AOP_OR, GX_ALWAYS, 0);
 		GXSetZMode(GX_TRUE, GX_LEQUAL, GX_FALSE);
@@ -470,7 +470,7 @@ void DGXGraphics::initRender(int a1, int a2)
 	mCullFlip       = 0;
 	useTexture(nullptr, GX_TEXMAP0);
 	setMatHandler(nullptr);
-	mRenderState      = (GFXRENDER_Unk1 | GFXRENDER_Unk2 | GFXRENDER_Unk3);
+	mMatRenderMask    = (MATFLAG_Opaque | MATFLAG_AlphaTest | MATFLAG_AlphaBlend);
 	mCurrentMatrixId  = 0;
 	mTexMtxBaseID     = 30;
 	oldVerts          = 0;
@@ -822,22 +822,22 @@ void DGXGraphics::initReflectTex(bool)
 /**
  * @todo: Documentation
  */
-void DGXGraphics::initProjTex(bool set, LightCamera* cam)
+void DGXGraphics::initProjTex(bool enableProj, LightCamera* projCamera)
 {
 	STACK_PAD_VAR(0x40);
-	Mtx mtx;
-	if (set) {
+	Mtx finalProjTexMtx;
+	if (enableProj) {
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
-		C_MTXLightPerspective(mProjectionTextureMatrix, cam->mFov, cam->mAspectRatio, cam->mProjectionScale.x, -cam->mProjectionScale.y,
-		                      0.5f, 0.5f);
+		C_MTXLightPerspective(mProjectionTextureMatrix, projCamera->mFov, projCamera->mAspectRatio, projCamera->mProjectionScale.x,
+		                      -projCamera->mProjectionScale.y, 0.5f, 0.5f);
 #else
-		MTXLightPerspective(mProjectionTextureMatrix, cam->mFov, cam->mAspectRatio, cam->mProjectionScale.x, -cam->mProjectionScale.y, 0.5f,
-		                    0.5f);
+		MTXLightPerspective(mProjectionTextureMatrix, projCamera->mFov, projCamera->mAspectRatio, projCamera->mProjectionScale.x,
+		                    -projCamera->mProjectionScale.y, 0.5f, 0.5f);
 #endif
-		immut Matrix4f& camMtx = cam->mLookAtMtx;
+		immut Matrix4f& camMtx = projCamera->mLookAtMtx;
 		PSMTXConcat(mProjectionTextureMatrix, camMtx.mMtx, mProjectionTextureMatrix);
-		PSMTXConcat(mProjectionTextureMatrix, Matrix4f::ident.mMtx, mtx);
-		GXLoadTexMtxImm(mtx, 30, GX_MTX3x4);
+		PSMTXConcat(mProjectionTextureMatrix, Matrix4f::ident.mMtx, finalProjTexMtx);
+		GXLoadTexMtxImm(finalProjTexMtx, 30, GX_MTX3x4);
 		GXSetTexCoordGen2(GX_TEXCOORD0, GX_TG_MTX2X4, GX_TG_POS, 30, GX_FALSE, 125);
 	} else {
 		GXSetTexCoordGen2(GX_TEXCOORD0, GX_TG_MTX3X4, GX_TG_TEX0, 60, GX_FALSE, 125);
@@ -1003,19 +1003,22 @@ void DGXGraphics::setMaterial(Material* mat, bool p2)
 
 					GXSetZMode((mat->mPeInfo.mDepthTestFlags & 1) != 0, (GXCompare)(mat->mPeInfo.mDepthTestFlags >> 8 & 0xFF),
 					           (mat->mPeInfo.mDepthTestFlags & 2) != 0);
-				} else if (mat->mFlags & MATFLAG_INVERT_BLEND) {
+				} else if (mat->mFlags & MATFLAG_InverseColorBlend) {
 					GXSetBlendMode(GX_BM_BLEND, GX_BL_ZERO, GX_BL_INVSRCCOL, GX_LO_CLEAR);
 					GXSetAlphaCompare(GX_ALWAYS, 0, GX_AOP_OR, GX_ALWAYS, 0);
 					GXSetZMode(GX_TRUE, GX_LEQUAL, GX_FALSE);
-				} else if (mat->mFlags & MATFLAG_OPAQUE) {
+
+				} else if (mat->mFlags & MATFLAG_Opaque) {
 					GXSetBlendMode(GX_BM_NONE, GX_BL_ONE, GX_BL_ZERO, GX_LO_COPY);
 					GXSetAlphaCompare(GX_ALWAYS, 0, GX_AOP_OR, GX_ALWAYS, 0);
 					GXSetZMode(GX_TRUE, GX_LEQUAL, GX_TRUE);
-				} else if (mat->mFlags & MATFLAG_ALPHA_TEST) {
+
+				} else if (mat->mFlags & MATFLAG_AlphaTest) {
 					GXSetBlendMode(GX_BM_NONE, GX_BL_ONE, GX_BL_ZERO, GX_LO_COPY);
 					GXSetAlphaCompare(GX_GEQUAL, 0x80, GX_AOP_AND, GX_LEQUAL, 255);
 					GXSetZMode(GX_TRUE, GX_LEQUAL, GX_TRUE);
-				} else if (mat->mFlags & MATFLAG_ALPHA_BLEND) {
+
+				} else if (mat->mFlags & MATFLAG_AlphaBlend) {
 					GXSetBlendMode(GX_BM_BLEND, GX_BL_SRCALPHA, GX_BL_INVSRCALPHA, GX_LO_COPY);
 					GXSetAlphaCompare(GX_ALWAYS, 0, GX_AOP_OR, GX_ALWAYS, 0);
 					GXSetZMode(GX_TRUE, GX_LEQUAL, GX_FALSE);
@@ -1083,19 +1086,22 @@ void DGXGraphics::setMaterial(Material* mat, bool p2)
 		}
 
 		mCustomScale = nullptr;
-		if (mat->mFlags & MATFLAG_INVERT_BLEND) {
+		if (mat->mFlags & MATFLAG_InverseColorBlend) {
 			GXSetBlendMode(GX_BM_BLEND, GX_BL_ZERO, GX_BL_INVSRCCOL, GX_LO_CLEAR);
 			GXSetAlphaCompare(GX_ALWAYS, 0, GX_AOP_OR, GX_ALWAYS, 0);
 			GXSetZMode(GX_TRUE, GX_LEQUAL, GX_FALSE);
-		} else if (mat->mFlags & MATFLAG_OPAQUE) {
+
+		} else if (mat->mFlags & MATFLAG_Opaque) {
 			GXSetBlendMode(GX_BM_NONE, GX_BL_ONE, GX_BL_ZERO, GX_LO_COPY);
 			GXSetAlphaCompare(GX_ALWAYS, 0, GX_AOP_OR, GX_ALWAYS, 0);
 			GXSetZMode(GX_TRUE, GX_LEQUAL, GX_TRUE);
-		} else if (mat->mFlags & MATFLAG_ALPHA_TEST) {
+
+		} else if (mat->mFlags & MATFLAG_AlphaTest) {
 			GXSetBlendMode(GX_BM_NONE, GX_BL_ONE, GX_BL_ZERO, GX_LO_COPY);
 			GXSetAlphaCompare(GX_GEQUAL, 0x80, GX_AOP_AND, GX_LEQUAL, 255);
 			GXSetZMode(GX_TRUE, GX_LEQUAL, GX_TRUE);
-		} else if (mat->mFlags & MATFLAG_ALPHA_BLEND) {
+
+		} else if (mat->mFlags & MATFLAG_AlphaBlend) {
 			GXSetBlendMode(GX_BM_BLEND, GX_BL_SRCALPHA, GX_BL_INVSRCALPHA, GX_LO_COPY);
 			GXSetAlphaCompare(GX_ALWAYS, 0, GX_AOP_OR, GX_ALWAYS, 0);
 			GXSetZMode(GX_TRUE, GX_LEQUAL, GX_FALSE);
@@ -1305,15 +1311,15 @@ void DGXGraphics::drawSingleMatpoly(Shape* model, Joint::MatPoly* matPoly)
 	Mesh& mesh    = model->mMeshList[matPoly->mMeshIndex];
 	Material& mat = model->mMaterialList[matPoly->mIndex];
 
-	if (!mesh.mJointList || mat.mFlags & MATFLAG_SKIP) {
+	if (!mesh.mJointList || mat.mFlags & MATFLAG_Skip) {
 		return;
 	}
 
-	if ((!mesh.mJointList->mFlags) & 0x1) { // is this a typo? feels like a typo.
+	if ((!mesh.mJointList->mVisibilityFlag) & Joint::Visible) { // is this a typo? feels like a typo.
 		return;
 	}
 
-	if (!(mat.mFlags & mRenderState)) {
+	if (!(mat.mFlags & mMatRenderMask)) {
 		return;
 	}
 

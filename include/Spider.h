@@ -2,7 +2,7 @@
 #define _SPIDER_H
 
 #include "Boss.h"
-#include "MapMgr.h"
+#include "ShadowCaster.h"
 #include "types.h"
 #include "zen/CallBack.h"
 #include "zen/particle.h"

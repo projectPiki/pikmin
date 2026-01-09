@@ -532,7 +532,7 @@ void EffectShape::initShape(immut char* modelFile)
 {
 	mModel = gameflow.loadShape(modelFile, true);
 	mModel->mSystemFlags |= ShapeFlags::AlwaysRedraw;
-	mModel->makeInstance(mDynMats, 0);
+	mModel->makeInstance(mAnimatedMaterials, 0);
 }
 
 /**
@@ -553,10 +553,10 @@ void EffectShape::refresh(Graphics& gfx, Matrix4f& mtx, f32* p4)
 	if (mModel->mCurrentAnimation->mData->mTotalFrameCount == 0) {
 		p4 = nullptr;
 	}
-	mDynMats.animate(p4);
+	mAnimatedMaterials.animate(p4);
 	mModel->updateAnim(gfx, mtx, p4);
 	gfx.useMatrix(Matrix4f::ident, 0);
-	mModel->drawshape(gfx, *gfx.mCamera, &mDynMats);
+	mModel->drawshape(gfx, *gfx.mCamera, &mAnimatedMaterials);
 }
 
 /**

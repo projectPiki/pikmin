@@ -71,7 +71,7 @@ void RigidBody::initializeBody()
 	mRestitutionFactor = 0.4f;
 
 	for (int i = 0; i < 2; i++) {
-		mIntegrationStates[i]._unused88 = 0;
+		mIntegrationStates[i]._88 = 0;
 		mIntegrationStates[i].mOrientationMtx.identity();
 
 		mIntegrationStates[i].mLinearVel.set(0.0f, 0.0f, 0.0f);
@@ -98,7 +98,7 @@ void RigidBody::initializeBody()
 
 	for (int i = 0; i < mSpringCount; i++) {
 		Vector3f hookWorldPos = mBodyPoints[mSprings[i].mHookIdx] + mInitPosition;
-		mSprings[i].mOffset.add(hookWorldPos);
+		mSprings[i].mAnchorPoint.add(hookWorldPos);
 	}
 }
 

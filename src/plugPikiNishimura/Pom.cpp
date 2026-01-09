@@ -71,7 +71,7 @@ void Pom::setColor(int color)
 		mColor = NsMathI::getRand(3);
 	}
 
-	mShapeObject->mShape->makeInstance(mDynMaterial, 0);
+	mShapeObject->mShape->makeInstance(mAnimatedMaterials, 0);
 }
 
 /**
@@ -114,7 +114,7 @@ void Pom::refresh(Graphics& gfx)
 		mAnimator.updateContext();
 
 		f32 dynAnimType = mColor;
-		mDynMaterial.animate(&dynAnimType);
+		mAnimatedMaterials.animate(&dynAnimType);
 		mShapeObject->mShape->updateAnim(gfx, mtx, nullptr);
 		mCollInfo->updateInfo(gfx, false);
 	}
@@ -127,7 +127,7 @@ void Pom::drawShape(Graphics& gfx)
 {
 	if (isAlive()) {
 		gfx.useMatrix(Matrix4f::ident, 0);
-		mShapeObject->mShape->drawshape(gfx, *gfx.mCamera, &mDynMaterial);
+		mShapeObject->mShape->drawshape(gfx, *gfx.mCamera, &mAnimatedMaterials);
 	}
 }
 

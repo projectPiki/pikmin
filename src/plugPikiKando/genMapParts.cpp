@@ -1,9 +1,10 @@
+#include "MapParts.h"
+
 #include "Age.h"
 #include "DebugLog.h"
 #include "Generator.h"
 #include "GlobalShape.h"
 #include "Graphics.h"
-#include "MapMgr.h"
 #include "sysNew.h"
 
 /**
@@ -24,9 +25,10 @@ int numShapes = 5;
 static char* shapeNames[] = { "box", "1", "2", "3", "log" };
 
 #ifdef WIN32
-int numKinds             = 3;
-static char* partNames[] = { "mapparts/cone.mod", "mapparts/cylinder.mod", "mapparts/cube.mod", "mapparts/board.mod" };
 int numParts             = 4;
+static char* partNames[] = { "mapparts/cone.mod", "mapparts/cylinder.mod", "mapparts/cube.mod", "mapparts/board.mod" };
+
+int numKinds = 3;
 #endif
 static char* kindNames[] = { "slider", "entity", "dynamic" };
 
@@ -79,7 +81,7 @@ void GenObjectMapParts::render(Graphics& gfx, Generator* gen)
 	// int id = _70;
 	BaseShape* shape;
 	if (mShapeIndex < numShapes) {
-		shape = mapMgr->mPartShapes[mShapeIndex];
+		shape = mapMgr->mMapShapes[mShapeIndex];
 	} else {
 		shape = mapMgr->loadPlatshape(MapParts::getShapeFile(mShapeIndex - numShapes));
 	}
@@ -145,7 +147,7 @@ Creature* GenObjectMapParts::birth(BirthInfo& info)
 	PRINT("kind is %d\n", mPartKind);
 	BaseShape* shape;
 	if (mShapeIndex < numShapes) {
-		shape = mapMgr->mPartShapes[mShapeIndex];
+		shape = mapMgr->mMapShapes[mShapeIndex];
 	} else {
 		shape = mapMgr->loadPlatshape(MapParts::getShapeFile(mShapeIndex - numShapes));
 		if (!shape) {
@@ -164,9 +166,9 @@ Creature* GenObjectMapParts::birth(BirthInfo& info)
 	}
 	case 1: // Entity
 	{
-		ent            = new MapEntity((Shape*)shape);
-		ent->mPosition = info.mPosition;
-		ent->mRotation = info.mRotation;
+		ent              = new MapEntity((Shape*)shape);
+		ent->mLocalSRT.t = info.mPosition;
+		ent->mLocalSRT.r = info.mRotation;
 		break;
 	}
 	case 2: // Dynamic
@@ -188,7 +190,7 @@ Creature* GenObjectMapParts::birth(BirthInfo& info)
 			ent->mLinePath = path;
 		}
 		ent->init();
-		mapMgr->mCollShape->add(ent);
+		mapMgr->mCollShapeList->add(ent);
 	}
 
 	return nullptr;
@@ -203,7 +205,7 @@ void GenObjectMapParts::doGenAge(AgeServer& server)
 	}
 	server.EndOptionBox();
 
-	server.StartOptionBox("シェイプ", &mShapeIndex, 252);
+	server.StartOptionBox("シェイプ", &mShapeIndex, 252); // Shape
 	for (int i = 0; i < numShapes; i++) {
 		server.NewOption(shapeNames[i], i);
 	}

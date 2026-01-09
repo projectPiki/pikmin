@@ -794,7 +794,7 @@ void ActJumpAttack::doClimb()
 	}
 
 	PRINT_KANDO("climbing ...\n");
-	if (!mPiki->mClimbingTri) {
+	if (!mPiki->mPikiPlatformTriangle) {
 		mState = 0;
 		mPiki->endClimb();
 		return;
@@ -802,9 +802,9 @@ void ActJumpAttack::doClimb()
 
 	bool check = true;
 	for (int i = 0; i < 3; i++) {
-		if (mPiki->mClimbingTri->mEdgePlanes[i].dist(mPiki->mSRT.t) < -2.0f * mPiki->getCentreSize()) {
-			PRINT_KANDO("out of tri : dist is %.1f | centre * -2.0f = %.1f\n", mPiki->mClimbingTri->mEdgePlanes[i].dist(mPiki->mSRT.t),
-			            -2.0f * mPiki->getCentreSize());
+		if (mPiki->mPikiPlatformTriangle->mEdgePlanes[i].dist(mPiki->mSRT.t) < -2.0f * mPiki->getCentreSize()) {
+			PRINT_KANDO("out of tri : dist is %.1f | centre * -2.0f = %.1f\n",
+			            mPiki->mPikiPlatformTriangle->mEdgePlanes[i].dist(mPiki->mSRT.t), -2.0f * mPiki->getCentreSize());
 			check = false;
 		}
 	}
@@ -818,7 +818,7 @@ void ActJumpAttack::doClimb()
 
 	Vector3f normal(0.0f, 1.0f, 0.0f);
 	Vector3f sep;
-	Vector3f cpNorm(*mPiki->mCollPlatNormal);
+	Vector3f cpNorm(*mPiki->mCollNormal);
 	cpNorm.normalise();
 	cpNorm = normal - (normal.DP(cpNorm) * cpNorm); // this is completely unused lol.
 	sep    = normal;

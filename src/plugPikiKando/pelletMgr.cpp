@@ -821,9 +821,9 @@ void Pellet::initPellet(PelletShapeObject* shapeObj, PelletConfig* config)
 	f32 scale = config->mPelletScale();
 	mSRT.s.set(scale, scale, scale);
 	if (config->mPelletColor() != PELCOLOR_NULL || isUfoParts()) {
-		mShapeObject->mShape->makeInstance(mShapeDynMaterials, 0);
+		mShapeObject->mShape->makeInstance(mAnimatedMaterials, 0);
 	}
-	PRINT("*** MATERIAL : %d\n", mShapeDynMaterials.mParent);
+	PRINT("*** MATERIAL : %d\n", mAnimatedMaterials.mNext);
 }
 
 /**
@@ -1376,9 +1376,9 @@ void Pellet::doRender(Graphics& gfx, Matrix4f& mtx)
 
 	if (mConfig->mPelletColor() != PELCOLOR_NULL) {
 		f32 val = mConfig->mPelletColor();
-		mShapeDynMaterials.animate(&val);
+		mAnimatedMaterials.animate(&val);
 	} else if (isUfoParts()) {
-		mShapeDynMaterials.animate(nullptr);
+		mAnimatedMaterials.animate(nullptr);
 	}
 
 	mShapeObject->mShape->updateAnim(gfx, mtx, nullptr);
@@ -1387,7 +1387,7 @@ void Pellet::doRender(Graphics& gfx, Matrix4f& mtx)
 	}
 
 	if (aiCullable()) {
-		mShapeObject->mShape->drawshape(gfx, *gfx.mCamera, &mShapeDynMaterials);
+		mShapeObject->mShape->drawshape(gfx, *gfx.mCamera, &mAnimatedMaterials);
 	}
 }
 

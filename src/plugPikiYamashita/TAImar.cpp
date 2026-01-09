@@ -69,6 +69,7 @@ struct TAIeffectAttackEventCallBackMar : public TAIeffectAttackEventCallBack {
 		bool res = false;
 		Vector3f vec1;
 		if (!param->mSubEmitter1 && !param->mSubEmitter2) {
+			// don't ignore dynamic collisions when tracing
 			MoveTrace trace(param->mPosition, param->mVelocity, 10.0f, false);
 			mapMgr->traceMove(nullptr, trace, gsys->getFrameTime());
 			if (param->mVelocity.x != trace.mVelocity.x || param->mVelocity.y != trace.mVelocity.y

@@ -14,20 +14,20 @@ struct TexobjInfo;
 struct SystemCache;
 
 /**
- * @brief TODO
+ * @brief Texture formats for reading in and sizing data. See `gxTexFmts` array in texture.cpp for GX conversions.
  */
 enum TexImgFormat {
-	TEX_FMT_NULL   = -1,
-	TEX_FMT_RGB565 = 0,
-	TEX_FMT_S3TC   = 1,
-	TEX_FMT_RGB5A3 = 2,
-	TEX_FMT_I4     = 3,
-	TEX_FMT_I8     = 4,
-	TEX_FMT_IA4    = 5,
-	TEX_FMT_IA8    = 6,
-	TEX_FMT_RGBA8  = 7,
-	TEX_FMT_Z8     = 8,
-	TEX_FMT_COUNT, // 9
+	TEX_FMT_NULL   = -1, ///< -1, invalid format.
+	TEX_FMT_RGB565 = 0,  ///< 0, 16-bit color, max alpha (5 red, 6 green, 5 blue).
+	TEX_FMT_S3TC   = 1,  ///< 1, S3 texture compression (block-based, supports alpha).
+	TEX_FMT_RGB5A3 = 2,  ///< 2, either 15-bit color max alpha, or 12-bit color with 3-bit alpha, depending on first bit (1=max alpha).
+	TEX_FMT_I4     = 3,  ///< 3, grey with 4-bit intensities + max alpha (each RGB is value * 0x11).
+	TEX_FMT_I8     = 4,  ///< 4, grey with 8-bit intensities + max alpha.
+	TEX_FMT_IA4    = 5,  ///< 5, grey with 4-bit intensities + 4-bit alpha (each RGB is lower 4 * 0x11, alpha is higher 4 * 0x11).
+	TEX_FMT_IA8    = 6,  ///< 6, grey with 8-bit intensities + 8-bit alpha (alpha = first byte, RGB = second byte).
+	TEX_FMT_RGBA8  = 7,  ///< 7, 24-bit depth true color + 8-bit alpha channel (AR alternating block, then GB alternating block).
+	TEX_FMT_Z8     = 8,  ///< 8, unsigned 8-bit Z values.
+	TEX_FMT_COUNT,       ///< 9, number of supported texture formats.
 };
 
 /**

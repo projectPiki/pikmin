@@ -493,7 +493,7 @@ void GoalItem::setColorType(int type)
 	}
 	mOnionColour     = type;
 	mItemShapeObject = _438[type];
-	mItemShapeObject->mShape->makeInstance(mDynMaterial, 0);
+	mItemShapeObject->mShape->makeInstance(mAnimatedMaterials, 0);
 }
 
 /**
@@ -784,10 +784,10 @@ void GoalItem::refresh(Graphics& gfx)
 	} else {
 		rate = int(mOnionColour << 1);
 	}
-	mDynMaterial.animate(&rate);
+	mAnimatedMaterials.animate(&rate);
 	mItemShapeObject->mShape->updateAnim(gfx, mtx1, nullptr);
 	if (aiCullable()) {
-		mItemShapeObject->mShape->drawshape(gfx, *gfx.mCamera, &mDynMaterial);
+		mItemShapeObject->mShape->drawshape(gfx, *gfx.mCamera, &mAnimatedMaterials);
 	}
 	mCollInfo->updateInfo(gfx, false);
 

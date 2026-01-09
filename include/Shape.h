@@ -74,16 +74,16 @@ struct VtxMatrix {
 struct Envelope {
 	Envelope()
 	{
-		mIndexCount = 0;
-		mIndices    = nullptr;
-		mWeights    = nullptr;
+		mIndexCount   = 0;
+		mJointIndices = nullptr;
+		mWeights      = nullptr;
 	}
 
 	void read(RandomAccessStream& stream);
 
-	s32 mIndexCount; // _00
-	s32* mIndices;   // _04
-	f32* mWeights;   // _08
+	s32 mIndexCount;    // _00
+	s32* mJointIndices; // _04
+	f32* mWeights;      // _08
 };
 
 /**
@@ -106,25 +106,28 @@ struct MtxGroup {
 };
 
 /**
- * @brief TODO
+ * @brief Container for the set of materials for a model instance, allowing for per-object animation and modification.
+ *
  * @note Size: 0x10.
  */
 struct ShapeDynMaterials {
+
+	/// Constructs an empty animated material container with no connections.
 	ShapeDynMaterials()
-	    : mParent(nullptr)
+	    : mNext(nullptr)
 	    , mMatCount(0)
 	    , mMaterials(nullptr)
-	    , mShape(nullptr)
+	    , mModel(nullptr)
 	{
 	}
 
 	void animate(f32*);
 	void updateContext();
 
-	ShapeDynMaterials* mParent; // _00
-	int mMatCount;              // _04
-	Material* mMaterials;       // _08
-	BaseShape* mShape;          // _0C
+	ShapeDynMaterials* mNext; ///< _00, next `ShapeDynMaterials` in the (singly-linked) list, if any.
+	int mMatCount;            ///< _04, number of materials in container.
+	Material* mMaterials;     ///< _08, array of `mMatCount` materials.
+	BaseShape* mModel;        ///< _0C, model the materials are attached to.
 };
 
 BEGIN_ENUM_TYPE(DisplayListFlags)
@@ -302,7 +305,7 @@ struct BaseShape : public CoreNode {
 	AnimContext** mBackupAnimOverrides; // _20
 	AnimFrameCacher* mFrameCacher;      // _24
 	Matrix4f* mAnimMatrices;            // _28
-	u32 mAnimMatrixId;                  // _2C
+	u32 mAnimMtxCount;                  // _2C
 	s32 mEnvelopeCount;                 // _30
 	Envelope* mEnvelopeList;            // _34
 	s32 mVtxMatrixCount;                // _38
@@ -385,12 +388,12 @@ struct CachedShape {
 		mNext        = other;
 	}
 
-	CachedShape* mPrev;               // _00
-	CachedShape* mNext;               // _04
-	ShapeDynMaterials* mDynMaterials; // _08
-	Shape* mParentShape;              // _0C
-	Matrix4f* mAnimMatrices;          // _10
-	f32 mDistanceFromOrigin;          // _14
+	CachedShape* mPrev;                    // _00
+	CachedShape* mNext;                    // _04
+	ShapeDynMaterials* mAnimatedMaterials; // _08
+	Shape* mParentShape;                   // _0C
+	Matrix4f* mAnimMatrices;               // _10
+	f32 mDistanceFromOrigin;               // _14
 };
 
 #endif

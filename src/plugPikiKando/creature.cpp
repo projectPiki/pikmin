@@ -117,10 +117,10 @@ Creature* Creature::getCollidePlatformCreature()
  */
 Vector3f Creature::getCollidePlatformNormal()
 {
-	if (!mCollPlatNormal) {
+	if (!mCollNormal) {
 		return Vector3f(0.0, 0.0f, 0.0f);
 	}
-	return *mCollPlatNormal;
+	return *mCollNormal;
 }
 
 /**
@@ -590,9 +590,9 @@ Creature::Creature(CreatureProp* props)
 	disableFaceDirAdjust();
 	setRebirthDay(0);
 
-	mCollPlatNormal = nullptr;
-	mClimbingTri    = 0;
-	mGenerator      = nullptr;
+	mCollNormal           = nullptr;
+	mPikiPlatformTriangle = nullptr;
+	mGenerator            = nullptr;
 
 	mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 	_B0.set(0.0f, 0.0f, 0.0f);
@@ -1051,7 +1051,7 @@ void showTri(Graphics& gfx, immut Vector3f& vec, CollTriInfo* tri)
 
 	f32 val = (30.0f / checkRadius) * (1.0f / 64.0f);
 	for (int i = 0; i < 3; i++) {
-		tmpV3[i] = tri->mTriangle.mNormal * 0.1f + mapMgr->mMapShape->mVertexList[tri->mVertexIndices[i]];
+		tmpV3[i] = tri->mTriangle.mNormal * 0.1f + mapMgr->mMapModel->mVertexList[tri->mVertexIndices[i]];
 		tmpV2[i].set((tmpV3[i].x - vec.x) * val + 0.5f, (tmpV3[i].z - vec.z) * val + 0.5f);
 	}
 
@@ -1072,7 +1072,7 @@ static void recTraceShadowTris(Graphics& gfx, immut Vector3f& vec, CollTriInfo* 
 				continue;
 			}
 
-			CollTriInfo* currTri = &mapMgr->mMapShape->mTriList[idx];
+			CollTriInfo* currTri = &mapMgr->mMapModel->mTriList[idx];
 			if (baseTri->mTriangle.mNormal.DP(currTri->mTriangle.mNormal) > 0.5f) {
 				bool check = false;
 				for (int j = 0; j < numTris; j++) {
@@ -1107,10 +1107,14 @@ void calcShadowTris(Graphics& gfx, immut Vector3f& vec, f32 rad)
 }
 
 /**
- * @todo: Documentation
+ * @brief Starts the render cascade for the creature's shadow. If small enough, render it as a simple polygon with texture;
+ * if large, recursively draw all required triangles.
+ *
+ * @param gfx Graphics context for rendering.
  */
 void Creature::drawShadow(Graphics& gfx)
 {
+	// don't draw shadows we don't need, or shadows for culled objects
 	if (!needShadow()) {
 		return;
 	}
@@ -1119,79 +1123,104 @@ void Creature::drawShadow(Graphics& gfx)
 		return;
 	}
 
-	Vector3f shadowPos = getShadowPos();
-	f32 size           = getShadowSize();
-	CollTriInfo* tri   = mapMgr->getCurrTri(shadowPos.x, shadowPos.z, true);
-	if (!tri) {
+	Vector3f shadowPos     = getShadowPos();
+	f32 size               = getShadowSize();
+	CollTriInfo* groundTri = mapMgr->getCurrTri(shadowPos.x, shadowPos.z, true);
+	if (!groundTri) {
 		return;
 	}
 
-	Vector3f clampedPos(shadowPos.x, 0.0f, shadowPos.z);
-	tri->inTriClampTo(clampedPos);
+	// clamp shadow position to the ground
+	Vector3f groundPos(shadowPos.x, 0.0f, shadowPos.z);
+	groundTri->inTriClampTo(groundPos);
 
-	f32 y = clampedPos.y;
-	if (shadowPos.y < clampedPos.y - 5.0f) {
+	f32 groundY = groundPos.y;
+
+	// if we have to clamp too far, don't draw it
+	if (shadowPos.y < groundPos.y - 5.0f) {
 		return;
 	}
 
+	// small shadows: render simple projected polygon
 	if (size < 20.0f) {
-		Vector2f tmpV2[6];
-		Vector3f tmpV3[6];
+		Vector2f texCoords[6];
+		Vector3f vertices[6];
 
-		Vector3f pos(shadowPos);
-		pos.y     = y + 0.1f;
-		f32 yDiff = shadowPos.y - y;
-		f32 alpha = (yDiff < 200.0f) ? 1.0f - yDiff / 200.0f : 0.0f;
+		Vector3f renderPos(shadowPos);
+		renderPos.y           = groundY + 0.1f;
+		f32 heightAboveGround = shadowPos.y - groundY;
 
-		if (alpha <= 0.0f) {
+		// adjust alpha of shadow based on how close to the ground it is
+		f32 alphaFactor = (heightAboveGround < 200.0f) ? 1.0f - heightAboveGround / 200.0f : 0.0f;
+
+		// (but don't bother rendering shadows from objects that are too high above the ground)
+		if (alphaFactor <= 0.0f) {
 			return;
 		}
 
-		gfx.setColour(Colour(255, 255, 255, u8(255.0f * alpha)), true);
+		gfx.setColour(Colour(255, 255, 255, u8(255.0f * alphaFactor)), true);
 
-		Vector3f diff1 = gfx.mSunPosition - shadowPos;
-		f32 diff1Y     = diff1.y;
-		diff1.project(Vector3f(0.0f, 1.0f, 0.0f));
-		f32 yRatio    = diff1.length() / diff1Y;
-		f32 diff1Dist = diff1.length() / 4.0f;
-		if (diff1Dist > 30.0f) {
-			diff1Dist = 30.0f;
+		// get direction sun is in from object
+		Vector3f sunDirection = gfx.mSunPosition - shadowPos;
+		f32 unusedVertical    = sunDirection.y;
+
+		// project to flat direction
+		sunDirection.project(Vector3f(0.0f, 1.0f, 0.0f));
+
+		f32 unusedRatio = sunDirection.length() / unusedVertical;
+
+		// calc how far we should stretch the shadow - further away it is horizontally, further we stretch
+		f32 stretchDist = sunDirection.length() / 4.0f;
+		if (stretchDist > 30.0f) {
+			stretchDist = 30.0f;
 		}
 
-		diff1Dist *= (yDiff < 30.0f) ? 1.0f - yDiff / 30.0f : 0.0f;
-		diff1.normalise();
+		stretchDist *= (heightAboveGround < 30.0f) ? 1.0f - heightAboveGround / 30.0f : 0.0f;
+		sunDirection.normalise();
 
-		f32 factor1   = diff1Dist / 30.0f * 0.5f + 1.0f;
-		f32 factor2   = size * (1.0f - alpha + 1.0f);
-		Vector3f vec1 = diff1 * factor2;
-		Vector3f vec2 = diff1 * (factor2 + diff1Dist);
-		Vector3f vec3(diff1.z, 0.0f, -diff1.x);
-		vec3.multiply(factor2);
-		pos.sub(diff1);
+		f32 stretchFactor = stretchDist / 30.0f * 0.5f + 1.0f;
+		f32 sizeFactor    = size * (1.0f - alphaFactor + 1.0f); // increase size if we're far away from ground
 
-		tmpV2[0].set(0.5f, 0.5f);
-		tmpV3[0] = pos;
+		Vector3f smallSide = sunDirection * sizeFactor;                 // will be toward sun
+		Vector3f longSide  = sunDirection * (sizeFactor + stretchDist); // will be away from sun (always subtracted)
 
-		tmpV2[1].set(0.0f, 0.0f);
-		tmpV3[1] = pos + (-vec3 + vec1);
+		Vector3f perpSide(sunDirection.z, 0.0f, -sunDirection.x); // perpendicular to sun
+		perpSide.multiply(sizeFactor);
 
-		tmpV2[2].set(0.0f, 1.0f);
-		tmpV3[2] = pos + (-(vec3 * factor1) - vec2);
+		renderPos.sub(sunDirection); // offset so shadow is "behind" object
 
-		tmpV2[3].set(1.0f, 1.0f);
-		tmpV3[3] = pos + (vec3 * factor1 - vec2);
+		// shadow center
+		texCoords[0].set(0.5f, 0.5f);
+		vertices[0] = renderPos;
 
-		tmpV2[4].set(1.0f, 0.0f);
-		tmpV3[4] = pos + (vec3 + vec1);
+		// shadow "top left" - toward sun, clockwise from sun direction
+		texCoords[1].set(0.0f, 0.0f);
+		vertices[1] = renderPos + (-perpSide + smallSide);
 
-		tmpV2[5].set(0.0f, 0.0f);
-		tmpV3[5] = pos + (-vec3 + vec1);
+		// shadow "top right" - away from sun, clockwise from sun direction
+		texCoords[2].set(0.0f, 1.0f);
+		vertices[2] = renderPos + (-(perpSide * stretchFactor) - longSide);
 
-		gfx.drawOneTri(tmpV3, nullptr, tmpV2, 6);
+		// shadow "bottom right" - away from sun, counterclockwise from sun direction
+		texCoords[3].set(1.0f, 1.0f);
+		vertices[3] = renderPos + (perpSide * stretchFactor - longSide);
+
+		// shadow "bottom left" - toward sun, clockwise from sun direction
+		texCoords[4].set(1.0f, 0.0f);
+		vertices[4] = renderPos + (perpSide + smallSide);
+
+		// shadow "top left" again
+		texCoords[5].set(0.0f, 0.0f);
+		vertices[5] = renderPos + (-perpSide + smallSide);
+
+		// draw texture using the above vertices/coordinates
+		gfx.drawOneTri(vertices, nullptr, texCoords, 6);
+
 		STACK_PAD_VAR(1);
 		return;
 	}
 
+	// shadow is large, render triangle-by-triangle
 	MATCHING_START_TIMER("shadow", true);
 	calcShadowTris(gfx, shadowPos, getShadowSize());
 	MATCHING_STOP_TIMER("shadow");

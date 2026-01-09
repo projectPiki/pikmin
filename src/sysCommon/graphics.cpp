@@ -834,7 +834,7 @@ Graphics::Graphics()
 	mDefaultMaterialHandler = new MaterialHandler();
 
 	mMaxMatrixCount = gsys->mMatrixCount;
-	mSystemMatrices = gsys->mMatrices;
+	mMatrixBuffer   = gsys->mMatrices;
 
 	mCachedShapeMax = 1000;
 	mCachedShapes   = new CachedShape[mCachedShapeMax];
@@ -859,7 +859,7 @@ void Graphics::initRender(int, int)
  */
 void Graphics::resetMatrixBuffer()
 {
-	mActiveMatrixIdx = 0;
+	mNextFreeMatrixIdx = 0;
 }
 
 /**
@@ -867,12 +867,12 @@ void Graphics::resetMatrixBuffer()
  */
 Matrix4f* Graphics::getMatrices(int requestedMatrixCount)
 {
-	if (mActiveMatrixIdx + requestedMatrixCount > mMaxMatrixCount) {
+	if (mNextFreeMatrixIdx + requestedMatrixCount > mMaxMatrixCount) {
 		ERROR("using too many matrices!!\n");
 	}
 
-	Matrix4f* mtx = &mSystemMatrices[mActiveMatrixIdx];
-	mActiveMatrixIdx += requestedMatrixCount;
+	Matrix4f* mtx = &mMatrixBuffer[mNextFreeMatrixIdx];
+	mNextFreeMatrixIdx += requestedMatrixCount;
 	return mtx;
 }
 
@@ -913,9 +913,9 @@ void Graphics::cacheShape(BaseShape* shape, ShapeDynMaterials* mats)
 		mShapeCache.insertAfter(cache);
 	}
 
-	cache->mDynMaterials = mats;
-	cache->mParentShape  = (Shape*)shape;
-	cache->mAnimMatrices = shape->mAnimMatrices;
+	cache->mAnimatedMaterials = mats;
+	cache->mParentShape       = (Shape*)shape;
+	cache->mAnimMatrices      = shape->mAnimMatrices;
 	mCachedShapeCount++;
 }
 
@@ -924,12 +924,12 @@ void Graphics::cacheShape(BaseShape* shape, ShapeDynMaterials* mats)
  */
 void Graphics::flushCachedShapes()
 {
-	u32 oldRenderState = mRenderState;
+	u32 oldRenderState = mMatRenderMask;
 
-	mRenderState = GFXRENDER_Unk3;
+	mMatRenderMask = MATFLAG_AlphaBlend;
 	for (CachedShape* i = mShapeCache.mPrev; i != &mShapeCache; i = i->mPrev) {
-		if (i->mDynMaterials) {
-			for (ShapeDynMaterials* j = i->mDynMaterials; j; j = j->mParent) {
+		if (i->mAnimatedMaterials) {
+			for (ShapeDynMaterials* j = i->mAnimatedMaterials; j; j = j->mNext) {
 				j->updateContext();
 			}
 		}
@@ -937,7 +937,7 @@ void Graphics::flushCachedShapes()
 		i->mParentShape->mAnimMatrices = i->mAnimMatrices;
 		drawMeshes(*mCamera, i->mParentShape);
 	}
-	mRenderState = oldRenderState;
+	mMatRenderMask = oldRenderState;
 }
 
 static TexImgFormat convFmts[] = {

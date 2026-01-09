@@ -225,7 +225,7 @@ struct IntroGameSetupSection : public BaseGameSection {
 		unused.makeSRT(Vector3f(0.1f, 0.1f, 0.1f), Vector3f(0.0f, 0.0f, 0.0f), Vector3f(0.0f, 0.0f, -5.0f));
 
 		Matrix4f orthoMtx;
-		gfx.mRenderState = (GFXRENDER_Unk1 | GFXRENDER_Unk2 | GFXRENDER_Unk3);
+		gfx.mMatRenderMask = (MATFLAG_Opaque | MATFLAG_AlphaTest | MATFLAG_AlphaBlend);
 		mCurrentModeState->postRender(gfx);
 		gfx.setOrthogonal(orthoMtx.mMtx, AREA_FULL_SCREEN(gfx));
 	}

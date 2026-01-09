@@ -316,7 +316,7 @@ void BTeki::reset()
 		clearTekiOption(TEKIOPT_Visible | TEKIOPT_ShadowVisible | TEKIOPT_LifeGaugeVisible | TEKIOPT_Atari | TEKIOPT_Alive
 		                | TEKIOPT_Organic);
 	} else {
-		mTekiShape->mShape->makeInstance(mDynamicMaterials, 0);
+		mTekiShape->mShape->makeInstance(mAnimatedMaterials, 0);
 		mCollInfo->initInfo(mTekiShape->mShape, nullptr, nullptr);
 		mTekiAnimator->init(&mTekiShape->mAnimContext, mTekiShape->mAnimMgr, tekiMgr->mMotionTable);
 	}
@@ -1915,12 +1915,12 @@ void BTeki::drawTekiShape(Graphics& gfx)
 		int animType = getParameterI(TPI_AnimationType);
 		if (animType == 1) {
 			f32 val = _3BC;
-			mDynamicMaterials.animate(&val);
+			mAnimatedMaterials.animate(&val);
 		} else {
-			mDynamicMaterials.animate(nullptr);
+			mAnimatedMaterials.animate(nullptr);
 		}
 
-		mTekiShape->mShape->drawshape(gfx, *gfx.mCamera, &mDynamicMaterials);
+		mTekiShape->mShape->drawshape(gfx, *gfx.mCamera, &mAnimatedMaterials);
 		if (lightType == 1) {
 			gfx.calcLighting(1.0f);
 		}

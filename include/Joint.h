@@ -18,6 +18,12 @@ struct Joint;
  * @brief TODO
  */
 struct Joint : public CoreNode {
+
+	enum VisibilityFlags {
+		NotVisible = 0,
+		Visible    = 1,
+	};
+
 	struct MatPoly : public CoreNode {
 		MatPoly()
 		    : CoreNode("matpoly")
@@ -44,8 +50,8 @@ struct Joint : public CoreNode {
 	Joint()
 	    : CoreNode(nullptr)
 	{
-		mFlags = 1;
-		_10C   = 0;
+		mVisibilityFlag = Visible;
+		_10C            = 0;
 	}
 
 	virtual void read(RandomAccessStream&); // _0C
@@ -62,7 +68,7 @@ struct Joint : public CoreNode {
 	int mIndex;                  // _14
 	int mParentIndex;            // _18
 	int mType;                   // _1C
-	int mFlags;                  // _20
+	int mVisibilityFlag;         // _20, see `VisibilityFlags` emum.
 	SRT mSRT;                    // _24 scale, _30 rotation, _3C translation (position)
 	Matrix4f mAnimMatrix;        // _48
 	Matrix4f mInverseAnimMatrix; // _88

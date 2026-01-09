@@ -92,8 +92,8 @@ struct EffectShape : public CoreNode {
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	Shape* mModel;              // _14
-	ShapeDynMaterials mDynMats; // _18
+	Shape* mModel;                        // _14
+	ShapeDynMaterials mAnimatedMaterials; // _18
 };
 
 /**

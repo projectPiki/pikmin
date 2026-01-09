@@ -497,7 +497,7 @@ void CinematicPlayer::refresh(Graphics& gfx)
 	Matrix4f mtx;
 	STACK_PAD_VAR(1);
 	gfx.calcViewMatrix(mWorldMtx, mtx);
-	gfx.mRenderState = (GFXRENDER_Unk1 | GFXRENDER_Unk2 | GFXRENDER_Unk3);
+	gfx.mMatRenderMask = (MATFLAG_Opaque | MATFLAG_AlphaTest | MATFLAG_AlphaBlend);
 
 	if (mCurrentScene) {
 		for (ActorInstance* actor = (ActorInstance*)mCurrentScene->mActorList.mChild; actor; actor = (ActorInstance*)actor->mNext) {
@@ -542,7 +542,7 @@ int SceneCut::countEKeys()
 void ActorInstance::onceInit()
 {
 	mLeafModel = gameflow.loadShape("pikis/happas/leaf.mod", true);
-	mDefaultActor->mModel->makeInstance(mDynMats, 0);
+	mDefaultActor->mModel->makeInstance(mAnimatedMaterials, 0);
 	// UNUSED FUNCTION
 }
 
@@ -992,12 +992,12 @@ void ActorInstance::refresh(immut Matrix4f& mtx, Graphics& gfx, f32* p3)
 
 		if (itemMgr && itemMgr->getUfo()) {
 			if (mFlags & CAF_DummyUfo) {
-				gfx.mRenderState = 0;
+				gfx.mMatRenderMask = 0;
 			}
 
-			gfx.mRenderState = (GFXRENDER_Unk1 | GFXRENDER_Unk2 | GFXRENDER_Unk3);
+			gfx.mMatRenderMask = (MATFLAG_Opaque | MATFLAG_AlphaTest | MATFLAG_AlphaBlend);
 			itemMgr->getUfo()->demoDraw(gfx, &animMtx);
-			gfx.mRenderState = (GFXRENDER_Unk1 | GFXRENDER_Unk2 | GFXRENDER_Unk3);
+			gfx.mMatRenderMask = (MATFLAG_Opaque | MATFLAG_AlphaTest | MATFLAG_AlphaBlend);
 		}
 	} else if (mFlags & CAF_MoveAiPiki) {
 		check2 = false;
@@ -1034,26 +1034,26 @@ void ActorInstance::refresh(immut Matrix4f& mtx, Graphics& gfx, f32* p3)
 	if (strcmp(mActiveActor->mModel->mName, "pikis/bluModel.mod") == 0) {
 		modelType = 1;
 		mActiveActor->mModel->mMaterialList[0].setColour(Colour(0, 50, 255, 255));
-		mDynMats.animate(nullptr);
+		mAnimatedMaterials.animate(nullptr);
 
 	} else if (strcmp(mActiveActor->mModel->mName, "pikis/redModel.mod") == 0) {
 		modelType = 1;
 		mActiveActor->mModel->mMaterialList[0].setColour(Colour(255, 30, 0, 255));
-		mDynMats.animate(nullptr);
+		mAnimatedMaterials.animate(nullptr);
 
 	} else if (strcmp(mActiveActor->mModel->mName, "pikis/yelModel.mod") == 0) {
 		modelType = 1;
 		mActiveActor->mModel->mMaterialList[0].setColour(Colour(255, 210, 0, 255));
-		mDynMats.animate(nullptr);
+		mAnimatedMaterials.animate(nullptr);
 
 	} else if (strcmp(mActiveActor->mModel->mName, "objects/pikihead/navihead.mod") == 0) {
 		modelType = 2;
-		mDynMats.animate(nullptr);
+		mAnimatedMaterials.animate(nullptr);
 	}
 
 	if (modelType == 0) {
 		if (mFlags & CAF_MultiColour) {
-			mDynMats.animate(&mColourValue);
+			mAnimatedMaterials.animate(&mColourValue);
 		} else {
 			// Blue, Red, Yellow models have a special colour value
 			int v = (mFlags >> 1) & 0xF;
@@ -1066,9 +1066,9 @@ void ActorInstance::refresh(immut Matrix4f& mtx, Graphics& gfx, f32* p3)
 					mColourValue = 4.0f;
 				}
 
-				mDynMats.animate(&mColourValue);
+				mAnimatedMaterials.animate(&mColourValue);
 			} else {
-				mDynMats.animate(nullptr);
+				mAnimatedMaterials.animate(nullptr);
 			}
 		}
 	}
@@ -1185,7 +1185,7 @@ void ActorInstance::refresh(immut Matrix4f& mtx, Graphics& gfx, f32* p3)
 		if (mFlags & CAF_NoXluSort) {
 			mActiveActor->mModel->mSystemFlags |= ShapeFlags::AlwaysRedraw;
 		}
-		mActiveActor->mModel->drawshape(gfx, *gfx.mCamera, &mDynMats);
+		mActiveActor->mModel->drawshape(gfx, *gfx.mCamera, &mAnimatedMaterials);
 		mActiveActor->mModel->mSystemFlags = flags;
 	}
 

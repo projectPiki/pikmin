@@ -500,7 +500,7 @@ public:
 	f32 mTimers[5];                               // _3C4
 	zen::particleGenerator** mParticleGenerators; // _3D8
 	zen::PtclGenPack* mParticleGenPack;           // _3DC
-	ShapeDynMaterials mDynamicMaterials;          // _3E0, unknown
+	ShapeDynMaterials mAnimatedMaterials;         // _3E0, unknown
 	int mCorpsePartJoints[8];                     // _3F0
 	int mTekiOptions;                             // _410
 	int mAnimKeyOptions;                          // _414

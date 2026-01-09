@@ -131,22 +131,22 @@ protected:
 public:
 	// _00      = VTBL
 	// _00-_3C8 = WorkObject
-	bool mDoUseJointSegments;       // _3C8
-	s16 _3CA;                       // _3CA
-	u8 _3CC;                        // _3CC
-	f32* mStageProgressList;        // _3D0, stage items?
-	Joint** mStageJoints;           // _3D4, unknown
-	PermanentEffect _3D8;           // _3D8
-	PermanentEffect _3E8;           // _3E8
-	WayPoint* mStartWaypoint;       // _3F8
-	WayPoint* mEndWaypoint;         // _3FC
-	u8 _400;                        // _400
-	int mStageCount;                // _404
-	DynBuildShape* mBuildShape;     // _408
-	Shape* mBridgeShape;            // _40C
-	CollPart* _410;                 // _410
-	ShapeDynMaterials mDynMaterial; // _414
-	u8 _424;                        // _424, flags (3 = final setup)
+	bool mDoUseJointSegments;             // _3C8
+	s16 _3CA;                             // _3CA
+	u8 _3CC;                              // _3CC
+	f32* mStageProgressList;              // _3D0, stage items?
+	Joint** mStageJoints;                 // _3D4, unknown
+	PermanentEffect _3D8;                 // _3D8
+	PermanentEffect _3E8;                 // _3E8
+	WayPoint* mStartWaypoint;             // _3F8
+	WayPoint* mEndWaypoint;               // _3FC
+	u8 _400;                              // _400
+	int mStageCount;                      // _404
+	DynBuildShape* mBuildShape;           // _408
+	Shape* mBridgeShape;                  // _40C
+	CollPart* _410;                       // _410
+	ShapeDynMaterials mAnimatedMaterials; // _414
+	u8 _424;                              // _424, flags (3 = final setup)
 };
 
 /**

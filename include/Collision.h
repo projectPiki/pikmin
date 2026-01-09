@@ -56,9 +56,9 @@ enum CollPartType {
  * @brief Minimal room identifier parsed from a stream.
  */
 struct BaseRoomInfo {
-	void read(RandomAccessStream& input) { mIndex = input.readInt(); }
+	void read(RandomAccessStream& input) { mJointIndex = input.readInt(); }
 
-	int mIndex; // _00, room index
+	int mJointIndex; // _00, room index
 };
 
 /**
@@ -85,7 +85,7 @@ struct ObjCollInfo : public CoreNode {
 		mCentrePosition.set(0.0f, 0.0f, 0.0f);
 		mParentShape  = nullptr;
 		mPlatformName = nullptr;
-		mPlatShape    = 0;
+		mPlatShape    = nullptr;
 		mFlags        = OCF_None;
 	}
 
@@ -288,7 +288,7 @@ struct BaseCollTriInfo {
 		mVertexIndices[0]      = input.readInt();
 		mVertexIndices[1]      = input.readInt();
 		mVertexIndices[2]      = input.readInt();
-		mCollRoomId            = input.readShort();
+		mCollRoomIndex         = input.readShort();
 		mAdjacentTriIndices[0] = input.readShort();
 		mAdjacentTriIndices[1] = input.readShort();
 		mAdjacentTriIndices[2] = input.readShort();
@@ -297,7 +297,7 @@ struct BaseCollTriInfo {
 
 	u32 mMapCode;               // _00, map attribute code (see MapAttributes in MapCode.h)
 	u32 mVertexIndices[3];      // _04, indices into a vertex array
-	s16 mCollRoomId;            // _10, room id associated with this triangle
+	s16 mCollRoomIndex;         // _10, room id associated with this triangle
 	s16 mAdjacentTriIndices[3]; // _12, adjacency indices for triangle neighbors
 	Plane mTriangle;            // _18, triangle plane
 };
@@ -327,7 +327,7 @@ struct CollTriInfo : public BaseCollTriInfo {
 	}
 
 	// _00-_28 = BaseCollTriInfo
-	Plane mEdgePlanes[3]; // _28, edge half-space planes derived from triangle vertices
+	Plane mEdgePlanes[3]; // _28, edge half-space planes derived from triangle vertices - normals face inwards.
 };
 
 /**
@@ -342,20 +342,20 @@ struct CollGroup {
 	{
 		mTriangleList          = nullptr;
 		mTriCount              = 0;
-		mRoomIndex             = 0;
+		mJointIndex            = 0;
 		mFarCulledTriDistances = nullptr;
 	}
 
-	u8 _unused00[0x4];           ///< _00, unknown/unused.
-	s16 mTriCount;               ///< _04, number of triangles in group (both culled and not).
-	s16 mFarCulledTriCount;      ///< _06, number of far-culled triangles.
-	CollTriInfo** mTriangleList; ///< _08, list of pointers to all triangles in group.
-	u8* mFarCulledTriDistances;  ///< _0C, per-triangle distance metadata (for far culling).
-	Shape* mModel;               ///< _10, model that owns the collision triangles.
-	Vector3f* mVertexList;       ///< _14, vertex array for triangle indices.
-	int mRoomIndex;              ///< _18, room index for this group.
-	DynCollShape* mPlatCollider; ///< _1C, source collider (if from platform collision).
-	CollGroup* mNextCollGroup;   ///< _20, next group in singly linked list.
+	u8 _unused00[0x4];            ///< _00, unknown/unused.
+	s16 mTriCount;                ///< _04, number of triangles in group (both culled and not).
+	s16 mFarCulledTriCount;       ///< _06, number of far-culled triangles.
+	CollTriInfo** mTriangleList;  ///< _08, list of pointers to all triangles in group.
+	u8* mFarCulledTriDistances;   ///< _0C, per-triangle distance metadata (for far culling).
+	Shape* mModel;                ///< _10, model that owns the collision triangles.
+	Vector3f* mVertexList;        ///< _14, vertex array for triangle indices.
+	int mJointIndex;              ///< _18, room index for this group.
+	DynCollShape* mPlatCollision; ///< _1C, source collider (if from platform collision).
+	CollGroup* mNextCollGroup;    ///< _20, next group in singly linked list.
 };
 
 /**

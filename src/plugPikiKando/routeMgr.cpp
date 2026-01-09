@@ -955,7 +955,7 @@ void WayPoint::setFlag(bool flag)
  */
 void RouteMgr::construct(MapMgr* map)
 {
-	mRouteCount = map->mMapShape->mRouteGroup.getChildCount();
+	mRouteCount = map->mMapModel->mRouteGroup.getChildCount();
 	if (!mRouteCount) {
 		PRINT("no routes set\n");
 		return;
@@ -964,7 +964,7 @@ void RouteMgr::construct(MapMgr* map)
 	mRouteGroupIDs         = new u32[mRouteCount];
 	mGroupList             = new RouteMgr::Group[mRouteCount];
 	mPathFinders           = new PathFinder*[mRouteCount];
-	RouteGroup* routeGroup = static_cast<RouteGroup*>(map->mMapShape->mRouteGroup.mChild);
+	RouteGroup* routeGroup = static_cast<RouteGroup*>(map->mMapModel->mRouteGroup.mChild);
 	for (int i = 0; i < mRouteCount; i++) {
 		Group& group      = mGroupList[i];
 		mRouteGroupIDs[i] = routeGroup->mIntID;
