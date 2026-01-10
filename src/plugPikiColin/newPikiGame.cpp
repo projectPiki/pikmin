@@ -2283,7 +2283,7 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 		gfx.setPerspective(gfx.mCamera->mPerspectiveMatrix.mMtx, gfx.mCamera->mFov, gfx.mCamera->mAspectRatio, gfx.mCamera->mNear,
 		                   gfx.mCamera->mFar, 1.0f);
 #if defined(VERSION_G98E01_PIKIDEMO)
-		if (!(gameflow.mDemoFlags & CinePlayerFlags::UseLights))
+		if (!(gameflow.mDemoFlags & CinePlayerFlags::NonGameMovie))
 #else
 		if (!memcardWindow && !(gameflow.mDemoFlags & CinePlayerFlags::NonGameMovie))
 #endif
