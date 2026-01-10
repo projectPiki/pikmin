@@ -88,20 +88,6 @@ enum LanguageFileType {
 };
 
 /**
- * @brief Game flow state flags for handling behaviour during cutscenes.
- */
-enum GameflowDemoFlags {
-	GFDEMO_None           = 0,         ///< 0x0, no flags set.
-	GFDEMO_HideNavi       = (1 << 2),  ///< 0x4, hide the player.
-	GFDEMO_HideBluePiki   = (1 << 3),  ///< 0x8, hide blue pikmin.
-	GFDEMO_HideRedPiki    = (1 << 4),  ///< 0x10, hide red pikmin.
-	GFDEMO_HideYellowPiki = (1 << 5),  ///< 0x20, hide yellow pikmin.
-	GFDEMO_MovieMode      = (1 << 6),  ///< 0x40, disables the player control.
-	GFDEMO_InMenu         = (1 << 7),  ///< 0x80, check for if a menu is open.
-	GFDEMO_ShowTekis      = (1 << 10), ///< 0x400, show enemies even in demo mode.
-};
-
-/**
  * @brief Type of ship-related text cutscene to play.
  */
 enum ShipTextType {
@@ -507,7 +493,7 @@ struct GamePrefs : public CoreNode {
 		mHasSaveGame           = false;
 		mMemCardSaveIndex      = 0;
 		mSpareMemCardSaveIndex = 0;
-		_1F                    = 0; // unused
+		_1F                    = 0;                           // unused
 		mChalCourseOpenFlags   = TERNARY_DEVELOP(0b11111, 0); // All stages are unlocked in the DLL
 		mChangesPending        = false;
 		mHiscores.Initialise();
@@ -613,9 +599,10 @@ struct GameFlow : public Node {
 		    , mMorningStart(this, 7.0f, 0.0f, 0.0f, "p01", "mornStart")
 		    , mMorningMid(this, 8.0f, 0.0f, 0.0f, "s01", "mornMid")
 		    , mMorningEnd(this, 9.0f, 0.0f, 0.0f, "p02", "mornEnd")
-		    , mNightStart(this, 17.5f, 0.0f, 0.0f, "p03", "nightStart")
-		    , mNightMid(this, 18.5f, 0.0f, 0.0f, "s03", "nightMid")
-		    , mNightEnd(this, 19.5f, 0.0f, 0.0f, "p04", "nightEnd")
+		    // yes, game calls these nightStart etc, but they don't work well with the time setting names
+		    , mEveningStart(this, 17.5f, 0.0f, 0.0f, "p03", "nightStart")
+		    , mEveningMid(this, 18.5f, 0.0f, 0.0f, "s03", "nightMid")
+		    , mEveningEnd(this, 19.5f, 0.0f, 0.0f, "p04", "nightEnd")
 		    , mNightWarning(this, 16.0f, 0.0f, 0.0f, "p05", "nightWarning")
 		    , mNightCountdown(this, 18.5f, 0.0f, 0.0f, "p06", "nightTimer")
 		    , mTekiAbility(this, 1, 0, 0, "x99", "tekiAbility")
@@ -624,17 +611,17 @@ struct GameFlow : public Node {
 		}
 
 		// _00-_04 = Parameters
-		Parm<f32> mStartHour;             ///< _04, t00 - time set to when entering stage at the start of the day.
-		Parm<f32> mEndHour;               ///< _14, t01 - time when day ends and end-of-day sequence starts.
-		Parm<f32> mRealMinutesPerGameDay; ///< _24, p00 - how many real-life minutes correspond to one (24-hr) in-game "day".
-		Parm<f32> mMorningStart;          ///< _34, p01 - timesetting 0 end time (start blending from 0 to 1).
-		Parm<f32> mMorningMid;            ///< _44, s01 - timesetting 1 time (start blending from 1 to 2).
-		Parm<f32> mMorningEnd;            ///< _54, p02 - timesetting 2 start time (steady midday lighting).
-		Parm<f32> mNightStart;            ///< _64, p03 - timesetting 2 end time (start blending from 2 to 3).
-		Parm<f32> mNightMid;              ///< _74, s03 - timesetting 3 time (start blending from 3 to 0).
-		Parm<f32> mNightEnd;              ///< _84, p04 - timesetting 0 start time.
-		Parm<f32> mNightWarning;          ///< _94, p05 - Hurry Up! time.
-		Parm<f32> mNightCountdown;        ///< _A4, p06 - time 10s countdown starts.
+		Parm<f32> mStartHour;             ///< _04, t00 - time set to when entering stage at the start of the day - def: 7am.
+		Parm<f32> mEndHour;               ///< _14, t01 - time when day ends and end-of-day sequence starts - def: 7pm.
+		Parm<f32> mRealMinutesPerGameDay; ///< _24, p00 - how many real-life minutes correspond to one (24-hr) in-game "day" - def: 27 mins.
+		Parm<f32> mMorningStart;          ///< _34, p01 - "night" timesetting end time (start blending from night to morning) - def: 5:15am.
+		Parm<f32> mMorningMid;            ///< _44, s01 - "morning" timesetting time (start blending from morning to day) - def: 7am.
+		Parm<f32> mMorningEnd;            ///< _54, p02 - "day" timesetting start time (steady midday lighting) - def: 8am.
+		Parm<f32> mEveningStart;          ///< _64, p03 - "day" timesetting end time (start blending from day to evening) - def: 3pm.
+		Parm<f32> mEveningMid;            ///< _74, s03 - "evening" timesetting time (start blending from evening to night) - def: 4:30pm.
+		Parm<f32> mEveningEnd;            ///< _84, p04 - "night" timesetting start time - 7pm.
+		Parm<f32> mNightWarning;          ///< _94, p05 - Hurry Up! time - def: 6pm.
+		Parm<f32> mNightCountdown;        ///< _A4, p06 - time 10s countdown starts - def: 6:30pm.
 		Parm<int> mTekiAbility;           ///< _B4, x99 - unused.
 		Parm<String> mGameTitle;          ///< _C4, x98 - P I K M I N (unused).
 	};
@@ -674,7 +661,7 @@ struct GameFlow : public Node {
 	int mCurrentStageID;                ///< _1CC, current selected stage, to show ship at on next map screen - see `StageID` enum.
 	int mPendingStageUnlockID;          ///< _1D0, unlock anim to play on next map screen - see `zen::DrawWorldMap::startModeFlag` enum.
 	u32 _1D4;                           ///< _1D4, unused - set to 0 in hardReset but otherwise untouched.
-	u32 mDemoFlags;                     ///< _1D8, game state flags during cutscenes - see `GameflowDemoFlags` enum.
+	u32 mDemoFlags;                     ///< _1D8, game state flags during cutscenes - see `CinePlayerFlags` enum.
 	MoviePlayer* mMoviePlayer;          ///< _1DC, pointer to global movie/cutscene player.
 	s16 mShipTextPartID;                ///< _1E0, ship part ID for the latest part collection/interaction text - see `UfoPartIndex` enum.
 	s16 mShipTextType;                  ///< _1E2, type of ship-related text to display - see `ShipTextType` enum.

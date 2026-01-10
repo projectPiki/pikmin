@@ -147,7 +147,7 @@ void Navi::startMovieInf()
  */
 bool Navi::movieMode()
 {
-	return (gameflow.mDemoFlags & GFDEMO_MovieMode) != 0;
+	return (gameflow.mDemoFlags & CinePlayerFlags::NaviNoAI) != 0;
 }
 
 /**
@@ -1258,7 +1258,7 @@ void Navi::releasePikis()
  */
 void Navi::doAI()
 {
-	if (gameflow.mDemoFlags & GFDEMO_MovieMode) {
+	if (gameflow.mDemoFlags & CinePlayerFlags::NaviNoAI) {
 		return;
 	}
 
@@ -2093,7 +2093,7 @@ void Navi::draw(Graphics& gfx)
 	}
 
 	updateHeadMatrix();
-	if (!(gameflow.mDemoFlags & GFDEMO_HideNavi) && !mIsRidingUfo) {
+	if (!(gameflow.mDemoFlags & CinePlayerFlags::HideNavi) && !mIsRidingUfo) {
 		demoDraw(gfx, nullptr);
 	}
 

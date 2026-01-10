@@ -107,7 +107,7 @@ struct Graphics {
 	f32 mFogEnd;                              // _35C
 	f32 mFogDensity;                          // _360
 	Colour mFogColour;                        // _364
-	Colour mAmbientFogColour;                 // _368
+	Colour mAmbientColour;                    // _368
 	Colour _36C;                              // _36C
 	f32 mLightDistance;                       // _370
 	f32 mLightIntensity;                      // _374

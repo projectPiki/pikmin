@@ -539,7 +539,7 @@ bool TaiPalmFlowerDamageAction::act(Teki& teki)
  */
 bool TaiPalmSunflowerAction::act(Teki& teki)
 {
-	teki.turnTo(mapMgr->mDayMgr->mSunPosition);
+	teki.turnTo(mapMgr->mDayMgr->mCurrentSunPosition);
 	return false;
 }
 

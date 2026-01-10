@@ -571,7 +571,7 @@ void MoviePlayer::initMovieFlags(MovieInfo* info)
 			}
 		}
 	}
-	if (info->mPlayer->mFlags & CinePlayerFlags::UseLights) {
+	if (info->mPlayer->mFlags & CinePlayerFlags::NonGameMovie) {
 		PRINT("Killing all effects!!!\n");
 		effectMgr->killAll();
 	}
@@ -624,7 +624,7 @@ void MoviePlayer::sndStopMovie(MovieInfo* info)
  */
 void MoviePlayer::update()
 {
-	gameflow.mDemoFlags = GFDEMO_None;
+	gameflow.mDemoFlags = CinePlayerFlags::Empty;
 	if (gsys->mDvdErrorCode >= DvdError::ReadingDisc) {
 		return;
 	}
@@ -639,7 +639,7 @@ void MoviePlayer::update()
 		gameflow.mDemoFlags
 		    |= info->mPlayer->mFlags
 		     & (CinePlayerFlags::HideNavi | CinePlayerFlags::HideBluePiki | CinePlayerFlags::HideRedPiki | CinePlayerFlags::HideYellowPiki
-		        | CinePlayerFlags::NaviNoAI | CinePlayerFlags::UseLights | CinePlayerFlags::ShowTekis);
+		        | CinePlayerFlags::NaviNoAI | CinePlayerFlags::NonGameMovie | CinePlayerFlags::ShowTekis);
 		if (mInitialCamBlend > 0.0f) {
 			mInitialCamBlend -= gsys->getFrameTime() * 0.6f;
 			if (mInitialCamBlend < 0.0f) {
@@ -689,7 +689,7 @@ void MoviePlayer::update()
 
 			if (mPlayInfoList.getChildCount() == 0) {
 				mIsActive           = false;
-				gameflow.mDemoFlags = GFDEMO_None;
+				gameflow.mDemoFlags = CinePlayerFlags::Empty;
 				if (gameflow.mGameInterface) {
 					gameflow.mGameInterface->message(MOVIECMD_ShowHUD, 0);
 				}
@@ -771,7 +771,7 @@ void MoviePlayer::addLights(Graphics& gfx)
 	while (info) {
 		CinematicPlayer* cin = info->mPlayer;
 		MovieInfo* next      = (MovieInfo*)info->mNext;
-		if (cin->mFlags & CinePlayerFlags::UseLights) {
+		if (cin->mFlags & CinePlayerFlags::NonGameMovie) {
 			cin->addLights(gfx);
 		}
 		info = next;

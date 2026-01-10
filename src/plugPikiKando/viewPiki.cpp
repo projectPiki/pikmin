@@ -280,15 +280,15 @@ void ViewPiki::update()
 	Creature::update();
 	realAI();
 
-	if (mColor == Blue && gameflow.mDemoFlags & GFDEMO_HideBluePiki) {
+	if (mColor == Blue && gameflow.mDemoFlags & CinePlayerFlags::HideBluePiki) {
 		return;
 	}
 
-	if (mColor == Red && gameflow.mDemoFlags & GFDEMO_HideRedPiki) {
+	if (mColor == Red && gameflow.mDemoFlags & CinePlayerFlags::HideRedPiki) {
 		return;
 	}
 
-	if (mColor == Yellow && gameflow.mDemoFlags & GFDEMO_HideYellowPiki) {
+	if (mColor == Yellow && gameflow.mDemoFlags & CinePlayerFlags::HideYellowPiki) {
 		return;
 	}
 
@@ -522,13 +522,13 @@ void ViewPiki::refresh(Graphics& gfx)
 {
 	STACK_PAD_VAR(2);
 	u32 color = mColor;
-	if (color == Blue && gameflow.mDemoFlags & GFDEMO_HideBluePiki) {
+	if (color == Blue && gameflow.mDemoFlags & CinePlayerFlags::HideBluePiki) {
 		return;
 	}
-	if (color == Red && gameflow.mDemoFlags & GFDEMO_HideRedPiki) {
+	if (color == Red && gameflow.mDemoFlags & CinePlayerFlags::HideRedPiki) {
 		return;
 	}
-	if (color == Yellow && gameflow.mDemoFlags & GFDEMO_HideYellowPiki) {
+	if (color == Yellow && gameflow.mDemoFlags & CinePlayerFlags::HideYellowPiki) {
 		return;
 	}
 	if (mMode == PikiMode::FreeMode && !pikiMgr->isUpdating(PMUPDATE_FreePiki)) {

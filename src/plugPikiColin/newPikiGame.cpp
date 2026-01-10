@@ -1062,7 +1062,7 @@ void RunningModeState::postRender(Graphics& gfx)
 
 		// calc how "far" we are until the end of day - negative = not at countdown yet; 0 = countdown just started; 1 = end of day
 		f32 countDownProgress = (gameflow.mWorldClock.mTimeOfDay - gameflow.mParameters->mNightCountdown())
-		                      / (gameflow.mParameters->mNightEnd() - gameflow.mParameters->mNightCountdown());
+		                      / (gameflow.mParameters->mEveningEnd() - gameflow.mParameters->mNightCountdown());
 		if (countDownProgress >= 0.0f && countDownProgress < 1.0f) {
 			// we're in the countdown window! draw the overlay
 			countWindow->update();
@@ -1886,7 +1886,7 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 		mDebugMenu->addMenu(optionsMenu, 0, "Options");
 		mDebugMenu->addMenu(gamecore->mAiPerfDebugMenu, 0, "Kando Options");
 		if (mapMgr->mDayMgr) {
-			mDebugMenu->addMenu(mapMgr->mDayMgr->mMenu, 0, "Lighting");
+			mDebugMenu->addMenu(mapMgr->mDayMgr->mDebugMenu, 0, "Lighting");
 		}
 		mDebugMenu->addMenu(movieMenu, 0, "Movie Player");
 		mDebugMenu->addOption(MENU_FAKE_OPTION_FOR_GAP);
@@ -2059,8 +2059,8 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 			mGameCamera.update(f32(gfx.mScreenWidth) / f32(gfx.mScreenHeight), mGameCamera.mFov, 100.0f, mCameraFarClip);
 		}
 
-		// do any pre-rendering, assuming we're not in a menu
-		if (!(gameflow.mDemoFlags & GFDEMO_InMenu)) {
+		// do any pre-rendering, assuming we're not in a cutscene
+		if (!(gameflow.mDemoFlags & CinePlayerFlags::NonGameMovie)) {
 			gsys->mTimer->start("preRender", true);
 			preRender(gfx);
 			gsys->mTimer->stop("preRender");
@@ -2111,7 +2111,7 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 		}
 
 		// do any 2D post-rendering (for overlays and windows)
-		if (!(gameflow.mDemoFlags & GFDEMO_InMenu)) {
+		if (!(gameflow.mDemoFlags & CinePlayerFlags::NonGameMovie)) {
 #if defined(VERSION_G98E01_PIKIDEMO)
 			gsys->mTimer->start("postRender", true);
 #endif
@@ -2175,7 +2175,7 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 				}
 				// update the HUD
 				gamecore->mDrawGameInfo->update();
-				if (mUpdateFlags & UPDATE_AI && !(gameflow.mDemoFlags & GFDEMO_InMenu)) {
+				if (mUpdateFlags & UPDATE_AI && !(gameflow.mDemoFlags & CinePlayerFlags::NonGameMovie)) {
 					// update enemy/boss/pikmin/etc AI
 					gamecore->updateAI();
 				}
@@ -2224,7 +2224,7 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 
 		memStat->end("gui");
 
-		countWindow->init(gameflow.mParameters->mNightCountdown(), gameflow.mParameters->mNightEnd() - 0.01f, nullptr);
+		countWindow->init(gameflow.mParameters->mNightCountdown(), gameflow.mParameters->mEveningEnd() - 0.01f, nullptr);
 	}
 
 	/**
@@ -2283,9 +2283,9 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 		gfx.setPerspective(gfx.mCamera->mPerspectiveMatrix.mMtx, gfx.mCamera->mFov, gfx.mCamera->mAspectRatio, gfx.mCamera->mNear,
 		                   gfx.mCamera->mFar, 1.0f);
 #if defined(VERSION_G98E01_PIKIDEMO)
-		if (!(gameflow.mDemoFlags & GFDEMO_InMenu))
+		if (!(gameflow.mDemoFlags & CinePlayerFlags::UseLights))
 #else
-		if (!memcardWindow && !(gameflow.mDemoFlags & GFDEMO_InMenu))
+		if (!memcardWindow && !(gameflow.mDemoFlags & CinePlayerFlags::NonGameMovie))
 #endif
 		{
 			bool isTimeMoving = true;

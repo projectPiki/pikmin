@@ -1086,7 +1086,9 @@ MapMgr::MapMgr(Controller* controller)
 
 	effectMgr = nullptr;
 
-	mBlur = 145; // this is adjusted by the Blur day manager debug menu, but doesn't actually affect anything
+	// this is adjusted by the Blur day manager debug menu, but doesn't actually affect anything
+	// (bug fix is to align it with the actual default blur, usually handled by the camera)
+	mBlur = TERNARY_BUGFIX(110, 145);
 
 	// set up day manager, to handle lighting
 	memStat->start("dayMgr");
@@ -1646,6 +1648,13 @@ void MapMgr::postrefresh(Graphics& gfx)
 			mBlurSourceTexture->grabBuffer(mBlurSourceTexture->mWidth, mBlurSourceTexture->mHeight, false, true);
 			gfx.useTexture(mBlurResultTexture, GX_TEXMAP0); // previous frame's blur
 			gfx.useTexture(mBlurSourceTexture, GX_TEXMAP1); // current frame's data
+
+			// Fun fact: the map manager's blur setting does *nothing* to adjust the blur, despite there being a
+			// day manager debug menu option for it. This re-hooks it up as the actual blur alpha, to let you adjust it.
+#if defined(BUGFIX)
+			gfx.mCamera->mBlurAlpha = mBlur;
+#endif
+
 #if defined(VERSION_PIKIDEMO)
 #else
 			if (gameflow.mMoviePlayer->mIsActive) {

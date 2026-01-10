@@ -27,6 +27,7 @@ struct ActorInstance;
  */
 BEGIN_ENUM_TYPE(CinePlayerFlags)
 enum {
+	Empty          = 0,       // 0
 	Localized      = 1 << 0,  // 0x1
 	Unknown        = 1 << 1,  // 0x2
 	HideNavi       = 1 << 2,  // 0x4
@@ -34,7 +35,7 @@ enum {
 	HideRedPiki    = 1 << 4,  // 0x10
 	HideYellowPiki = 1 << 5,  // 0x20
 	NaviNoAI       = 1 << 6,  // 0x40
-	UseLights      = 1 << 7,  // 0x80, originally called "NonGameMovie"
+	NonGameMovie   = 1 << 7,  // 0x80, time doesn't move, AI doesn't update, sometimes use custom "movie" lighting depending on mode.
 	Concurrent     = 1 << 8,  // 0x100, use special takeoff cutscene logic
 	CameraBlend    = 1 << 9,  // 0x200, fade in from black when starting a scene
 	ShowTekis      = 1 << 10, // 0x400

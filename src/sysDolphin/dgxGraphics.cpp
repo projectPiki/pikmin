@@ -685,10 +685,10 @@ int DGXGraphics::setCullFront(int cull)
  */
 void DGXGraphics::setAmbient()
 {
-	GColors[0].mAmbColor.r = mAmbientFogColour.r;
-	GColors[0].mAmbColor.g = mAmbientFogColour.g;
-	GColors[0].mAmbColor.b = mAmbientFogColour.b;
-	GColors[0].mAmbColor.a = f32(mAmbientFogColour.a) * mLightIntensity;
+	GColors[0].mAmbColor.r = mAmbientColour.r;
+	GColors[0].mAmbColor.g = mAmbientColour.g;
+	GColors[0].mAmbColor.b = mAmbientColour.b;
+	GColors[0].mAmbColor.a = f32(mAmbientColour.a) * mLightIntensity;
 
 	GXSetChanAmbColor(GX_COLOR0A0, GColors[0].mAmbColor);
 	GXSetChanMatColor(GX_COLOR1A1, GColors[0].mMatColor);
