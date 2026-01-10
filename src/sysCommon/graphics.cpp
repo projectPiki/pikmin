@@ -839,7 +839,7 @@ Graphics::Graphics()
 	mCachedShapeMax = 1000;
 	mCachedShapes   = new CachedShape[mCachedShapeMax];
 
-	mAmbientFogColour.set(0, 0, 0x30, 0xFF);
+	mAmbientColour.set(0, 0, 48, 255);
 	mLightIntensity = 1.0f;
 }
 

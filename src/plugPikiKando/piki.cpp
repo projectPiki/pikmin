@@ -134,11 +134,11 @@ void Piki::finishDemo()
  */
 bool Piki::appearDemo()
 {
-	if (mColor == Blue && gameflow.mDemoFlags & GFDEMO_HideBluePiki) {
+	if (mColor == Blue && gameflow.mDemoFlags & CinePlayerFlags::HideBluePiki) {
 		return false;
-	} else if (mColor == Red && gameflow.mDemoFlags & GFDEMO_HideRedPiki) {
+	} else if (mColor == Red && gameflow.mDemoFlags & CinePlayerFlags::HideRedPiki) {
 		return false;
-	} else if (mColor == Yellow && gameflow.mDemoFlags & GFDEMO_HideYellowPiki) {
+	} else if (mColor == Yellow && gameflow.mDemoFlags & CinePlayerFlags::HideYellowPiki) {
 		return false;
 	} else if (mMode == PikiMode::FreeMode && !pikiMgr->isUpdating(PMUPDATE_FreePiki)) {
 		return false;
@@ -1373,13 +1373,13 @@ void Piki::updateColor()
  */
 bool Piki::needShadow()
 {
-	if (mColor == Blue && (gameflow.mDemoFlags & GFDEMO_HideBluePiki)) {
+	if (mColor == Blue && (gameflow.mDemoFlags & CinePlayerFlags::HideBluePiki)) {
 		return false;
 	}
-	if (mColor == Red && (gameflow.mDemoFlags & GFDEMO_HideRedPiki)) {
+	if (mColor == Red && (gameflow.mDemoFlags & CinePlayerFlags::HideRedPiki)) {
 		return false;
 	}
-	if (mColor == Yellow && (gameflow.mDemoFlags & GFDEMO_HideYellowPiki)) {
+	if (mColor == Yellow && (gameflow.mDemoFlags & CinePlayerFlags::HideYellowPiki)) {
 		return false;
 	}
 

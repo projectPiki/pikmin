@@ -286,7 +286,7 @@ struct IntroGameSetupSection : public BaseGameSection {
 		}
 
 		// do any 2D overlay rendering - we never have any, so this is a bit pointless
-		if (!(gameflow.mDemoFlags & GFDEMO_InMenu)) {
+		if (!(gameflow.mDemoFlags & CinePlayerFlags::NonGameMovie)) {
 			gsys->mTimer->start("postRender", true);
 			gfx.setOrthogonal(orthoMtx.mMtx, AREA_FULL_SCREEN(gfx));
 			postRender(gfx);

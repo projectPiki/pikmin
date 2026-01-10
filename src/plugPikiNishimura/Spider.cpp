@@ -113,7 +113,7 @@ void Spider::update()
  */
 void Spider::draw(Graphics& gfx)
 {
-	Vector3f lightDirection = mapMgr->mDayMgr->mSunPosition - mSRT.t;
+	Vector3f lightDirection = mapMgr->mDayMgr->mCurrentSunPosition - mSRT.t;
 	lightDirection.y        = 0.0f;
 	lightDirection.normalise();
 	lightDirection.multiply(500.0f);

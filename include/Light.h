@@ -28,6 +28,7 @@ enum LightType {
 	LIGHT_Parallel = 1, ///< 1, parallel rays, no attenuation or spot effect.
 	LIGHT_Point    = 2, ///< 2, attenuates with distance, no spot effect.
 	LIGHT_Spot     = 3, ///< 3, directional with a cone/angle, uses spot attenuation.
+	LIGHT_TYPECOUNT,    ///< 4, number of types of light.
 };
 
 /**
@@ -268,30 +269,35 @@ struct LightGroup : public CoreNode {
 	LFlareGroup* mFlareGroup; // _68
 };
 
+/**
+ * @brief `LightPoolFlags`: Flags to control light pool properties. None are ever set.
+ */
 BEGIN_ENUM_TYPE(LightPoolFlags)
 enum {
-	DrawFrustum = 1,
+	DrawDebugFrustum = 1, ///< 1, draws a wireframe frustum for the light pool's camera, for debugging.
 } END_ENUM_TYPE;
 
 /**
- * @brief TODO
- * @note 1001F2A0 in plugPiki.dll might allude to some members.
+ * @brief Single light source with a dedicated camera that slowly rotates around a position. Supports beam and particle textures.
+ *
+ * Never actually used in retail, but some title screen pool code remains from development.
+ *
  * @note Size: 0x670.
  */
 struct LightPool : public Node {
 	LightPool();
 
-	virtual void draw(Graphics&); // _14
+	virtual void draw(Graphics& gfx); // _14
 
 	// _00     = VTBL
 	// _00-_20 = Node
-	Light mLight;              // _20
-	LightCamera mCamera;       // _2F4
-	f32 mFocusRotationAngle;   // _65C
-	Colour mColour;            // _660
-	Texture* mBoxTexture;      // _664
-	Texture* mParticleTexture; // _668
-	u8 mFlags;                 // _66C, use LightPoolFlags
+	Light mLight;              ///< _020, actual light source.
+	LightCamera mCamera;       ///< _2F4, camera for controlling viewpoint and projection.
+	f32 mFocusRotationAngle;   ///< _65C, angle for rotating around the camera's focus point.
+	Colour mColour;            ///< _660, colour of the light.
+	Texture* mBeamTexture;     ///< _664, texture to use for the light's beam.
+	Texture* mParticleTexture; ///< _668, texture to use for any particles.
+	u8 mFlags;                 ///< _66C, flags to control debug drawing - see `LightPoolFlags` enum.
 };
 
 /**

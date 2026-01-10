@@ -52,7 +52,7 @@ static const char* timopts[] = { " [off]", "  [on]", "[full]" };
  */
 void GameLoadIdler::draw(Graphics& gfx)
 {
-	gfx.mAmbientFogColour.set(48, 48, 48, 255); // very dark grey, but not perfect black
+	gfx.mAmbientColour.set(48, 48, 48, 255); // very dark grey, but not perfect black
 	gfx.setViewport(AREA_FULL_SCREEN(gfx));
 	gfx.setScissor(AREA_FULL_SCREEN(gfx));
 	gfx.setClearColour(COLOUR_TRANSPARENT);
@@ -587,7 +587,7 @@ void GameFlow::hardReset(BaseApp* baseApp)
 	load("parms/", "gamePrms.bin", 1);
 
 	// reset movie player and movie flags
-	mDemoFlags   = GFDEMO_None;
+	mDemoFlags   = CinePlayerFlags::Empty;
 	mMoviePlayer = new MoviePlayer();
 
 	// set up controller rumble manager

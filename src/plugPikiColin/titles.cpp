@@ -256,7 +256,7 @@ struct TitleSetupSection : public Node {
 		mDebugMenu->addOption(PACK_NEXT_SECTION(SECTION_PaniTest), "TestScreen", nullptr);
 
 		mDebugMenu->addOption(MENU_FAKE_OPTION_FOR_GAP);
-		mDebugMenu->addMenu(mDayMgr->mMenu, 0, "Lighting");
+		mDebugMenu->addMenu(mDayMgr->mDebugMenu, 0, "Lighting");
 		mDebugMenu->addOption(MENU_FAKE_OPTION_FOR_GAP);
 		mDebugMenu->addMenu(optionsMenu, 0, "Options");
 #endif
@@ -565,7 +565,7 @@ struct TitleSetupSection : public Node {
 		gfx.setScissor(AREA_FULL_SCREEN(gfx));
 		gfx.setClearColour(COLOUR_TRANSPARENT);
 		gfx.clearBuffer(3, false);
-		gfx.mAmbientFogColour.set(48, 48, 48, 255);
+		gfx.mAmbientColour.set(48, 48, 48, 255);
 
 		// (this is a wacky way of resetting the graphics context's last model matrix to the identity)
 		Matrix4f tmpViewMtx1;
@@ -583,9 +583,9 @@ struct TitleSetupSection : public Node {
 
 		STACK_PAD_VAR(1);
 
-		if (!(gameflow.mDemoFlags & GFDEMO_InMenu)) {
+		if (!(gameflow.mDemoFlags & CinePlayerFlags::NonGameMovie)) {
 			// use special Movie time setting (lighting)
-			mDayMgr->refresh(gfx, 25.0f, 8);
+			mDayMgr->refresh(gfx, MOVIE_TIME, 8);
 			mDayMgr->setFog(gfx, nullptr);
 		} else {
 			mPlayer->addLights(gfx);
