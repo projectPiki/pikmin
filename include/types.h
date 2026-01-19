@@ -49,6 +49,21 @@ typedef u32 HWND;
 #define BUILD_MATCHING
 #endif
 
+// The following version group macro is for conditionally-compiled code shared among Japanese retail versions.
+#if defined(VERSION_GPIJ01_01) || defined(VERSION_GPIJ01_02)
+#define VERSION_GPIJ01
+#endif
+
+// The following version group macro is for conditionally-compiled code shared among American retail versions.
+#if defined(VERSION_GPIE01_00) || defined(VERSION_GPIE01_01)
+#define VERSION_GPIE01
+#endif
+
+// The following version group macro is for conditionally-compiled code shared among European retail versions.
+#if defined(VERSION_GPIP01_00) // A bit redundant, but I want consistency.
+#define VERSION_GPIP01
+#endif
+
 // The following version group macro is for conditionally-compiled code shared among all three demo versions.
 #if defined(VERSION_DPIJ01_PIKIDEMO) || defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO)
 #define VERSION_PIKIDEMO

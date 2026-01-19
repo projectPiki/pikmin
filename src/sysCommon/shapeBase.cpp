@@ -885,7 +885,7 @@ void AnimData::makeAnimSRT(int boneId, immut Matrix4f* parent, Matrix4f* output,
 		}
 	}
 
-	PSMTXConcat(parent->mMtx, boneTransform->mMtx, output->mMtx);
+	MTXConcat(parent->mMtx, boneTransform->mMtx, output->mMtx);
 }
 
 /**
@@ -1593,7 +1593,7 @@ void AnimDck::makeAnimSRT(int a, immut Matrix4f* mtx1, Matrix4f* mtx2, AnimDataI
 			anim->mMtx.makeSRT(srt.s, srt.r, srt.t);
 			anim->mFlags |= AnimDataFlags::MatrixCalculated;
 		}
-		PSMTXConcat(mtx1->mMtx, anim->mMtx.mMtx, mtx2->mMtx);
+		MTXConcat(mtx1->mMtx, anim->mMtx.mMtx, mtx2->mMtx);
 	} else {
 		Matrix4f mtx;
 		mtx2->makeConcatSRT(mtx1, mtx, srt);
@@ -3290,7 +3290,7 @@ void BaseShape::updateAnim(Graphics& gfx, immut Matrix4f& mtx, f32* p3)
 
 				data->makeAnimSRT(data->mAnimJointIndices[i], &srt, &mAnimMatrices[i], &data->mAnimInfo[i], *frame);
 			} else {
-				PSMTXConcat(mtx.mMtx, mJointList[i].mAnimMatrix.mMtx, mAnimMatrices[i].mMtx);
+				MTXConcat(mtx.mMtx, mJointList[i].mAnimMatrix.mMtx, mAnimMatrices[i].mMtx);
 			}
 		}
 
@@ -3387,7 +3387,7 @@ void BaseShape::calcWeightedMatrices()
 				animMtxFloats++;
 			}
 #else
-			PSMTXConcat(getAnimMatrix(idx).mMtx, mJointList[idx].mInverseAnimMatrix.mMtx, weightedMtx.mMtx);
+			MTXConcat(getAnimMatrix(idx).mMtx, mJointList[idx].mInverseAnimMatrix.mMtx, weightedMtx.mMtx);
 			weightedMtxFloats = (f32*)&weightedMtx;
 			animMtxFloats     = (f32*)&mAnimMatrices[mJointCount + i];
 			f32 weights[2]    = { weight, weight };

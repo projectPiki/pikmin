@@ -165,7 +165,7 @@ void Matrix4f::multiply(immut Matrix4f& other)
  */
 void Matrix4f::multiplyTo(immut Matrix4f& mtxB, Matrix4f& outMtx) immut
 {
-	PSMTXConcat(mMtx, mtxB.mMtx, outMtx.mMtx);
+	MTXConcat(mMtx, mtxB.mMtx, outMtx.mMtx);
 }
 
 /**
@@ -247,7 +247,7 @@ void Matrix4f::makeConcatSRT(immut Matrix4f* a, Matrix4f& b, immut SRT& srt)
 	b.mMtx[3][2] = 0.0f;
 	b.mMtx[3][3] = 1.0f;
 
-	PSMTXConcat(a->mMtx, b.mMtx, mMtx);
+	MTXConcat(a->mMtx, b.mMtx, mMtx);
 }
 
 /**

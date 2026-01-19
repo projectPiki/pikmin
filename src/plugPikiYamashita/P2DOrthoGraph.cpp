@@ -41,13 +41,8 @@ void P2DOrthoGraph::setPort()
 {
 	P2DGrafContext::setPort();
 
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
-	C_MTXOrtho(mProjectionMtx.mMtx, mLogicalViewBounds.mMinY, mLogicalViewBounds.mMaxY, mLogicalViewBounds.mMinX, mLogicalViewBounds.mMaxX,
-	           mLogicalNearZ, mLogicalFarZ);
-#else
 	MTXOrtho(mProjectionMtx.mMtx, mLogicalViewBounds.mMinY, mLogicalViewBounds.mMaxY, mLogicalViewBounds.mMinX, mLogicalViewBounds.mMaxX,
 	         mLogicalNearZ, mLogicalFarZ);
-#endif
 	GXSetProjection(mProjectionMtx.mMtx, GX_ORTHOGRAPHIC);
 }
 

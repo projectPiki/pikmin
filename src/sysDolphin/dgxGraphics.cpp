@@ -780,11 +780,7 @@ void DGXGraphics::setLight(Light* light, int idx)
  */
 void DGXGraphics::setPerspective(Mtx mtx, f32 a1, f32 a2, f32 a3, f32 a4, f32 a5)
 {
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
-	C_MTXPerspective(mtx, a1, a2, a3, a4);
-#else
 	MTXPerspective(mtx, a1, a2, a3, a4);
-#endif
 	GXSetProjection(mtx, GX_PERSPECTIVE);
 	f32 a     = 1.0f / (a4 - a3);
 	mtx[2][2] = a * -(a4 + a3);
@@ -802,11 +798,7 @@ void DGXGraphics::setPerspective(Mtx mtx, f32 a1, f32 a2, f32 a3, f32 a4, f32 a5
  */
 void DGXGraphics::setOrthogonal(Mtx orthoMtx, immut RectArea& bounds)
 {
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
-	C_MTXOrtho(orthoMtx, bounds.mMinY, bounds.mMaxY, bounds.mMinX, bounds.mMaxX, 0.0f, -1.0f);
-#else
 	MTXOrtho(orthoMtx, bounds.mMinY, bounds.mMaxY, bounds.mMinX, bounds.mMaxX, 0.0f, -1.0f);
-#endif
 	GXSetProjection(orthoMtx, GX_ORTHOGRAPHIC);
 	GXLoadPosMtxImm(Matrix4f::ident.mMtx, 0);
 	GXSetCurrentMtx(0);
@@ -860,16 +852,11 @@ void DGXGraphics::initProjTex(bool enableProj, LightCamera* projCamera)
 	STACK_PAD_VAR(0x40);
 	Mtx finalProjTexMtx;
 	if (enableProj) {
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
-		C_MTXLightPerspective(mProjectionTextureMatrix, projCamera->mFov, projCamera->mAspectRatio, projCamera->mProjectionScale.x,
-		                      -projCamera->mProjectionScale.y, 0.5f, 0.5f);
-#else
 		MTXLightPerspective(mProjectionTextureMatrix, projCamera->mFov, projCamera->mAspectRatio, projCamera->mProjectionScale.x,
 		                    -projCamera->mProjectionScale.y, 0.5f, 0.5f);
-#endif
 		immut Matrix4f& camMtx = projCamera->mLookAtMtx;
-		PSMTXConcat(mProjectionTextureMatrix, camMtx.mMtx, mProjectionTextureMatrix);
-		PSMTXConcat(mProjectionTextureMatrix, Matrix4f::ident.mMtx, finalProjTexMtx);
+		MTXConcat(mProjectionTextureMatrix, camMtx.mMtx, mProjectionTextureMatrix);
+		MTXConcat(mProjectionTextureMatrix, Matrix4f::ident.mMtx, finalProjTexMtx);
 		GXLoadTexMtxImm(finalProjTexMtx, 30, GX_MTX3x4);
 		GXSetTexCoordGen2(GX_TEXCOORD0, GX_TG_MTX2X4, GX_TG_POS, 30, GX_FALSE, 125);
 	} else {
@@ -892,14 +879,10 @@ void DGXGraphics::useMatrixQuick(immut Matrix4f& mtx, int id)
 		Mtx mtx4; // 0xB0
 		Mtx mtx5; // 0x80
 
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
-		PSMTXScale(mtx2, mCustomScale->x, mCustomScale->y, mCustomScale->z);
-#else
 		MTXScale(mtx2, mCustomScale->x, mCustomScale->y, mCustomScale->z);
-#endif
-		PSMTXInverse(mtx.mMtx, mtx5);
-		PSMTXTranspose(mtx5, mtx3);
-		PSMTXConcat(mtx3, mtx2, mtx4);
+		MTXInverse(mtx.mMtx, mtx5);
+		MTXTranspose(mtx5, mtx3);
+		MTXConcat(mtx3, mtx2, mtx4);
 		GXLoadNrmMtxImm(mtx4, gxID);
 	} else {
 		GXLoadNrmMtxImm(mtx.mMtx, gxID);
@@ -907,18 +890,14 @@ void DGXGraphics::useMatrixQuick(immut Matrix4f& mtx, int id)
 
 	if (mLightCam) {
 		Mtx tmpLightMtx;
-		PSMTXConcat(mProjectionTextureMatrix, Matrix4f::ident.mMtx, tmpLightMtx);
+		MTXConcat(mProjectionTextureMatrix, Matrix4f::ident.mMtx, tmpLightMtx);
 		GXLoadTexMtxImm(tmpLightMtx, 30, GX_MTX3x4);
 		return;
 	}
 
 	if (mHasTexGen) {
 		Mtx texMtx;
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
-		f32 mag = 0.5f / PSVECMag((Vec*)mtx.mMtx);
-#else
-		f32 mag = 0.5f / VECMag((Vec*)mtx.mMtx);
-#endif
+		f32 mag      = 0.5f / VECMag((Vec*)mtx.mMtx);
 		texMtx[0][0] = mag * mtx.mMtx[0][0];
 		texMtx[0][1] = mag * mtx.mMtx[0][1];
 		texMtx[0][2] = mag * mtx.mMtx[0][2];
