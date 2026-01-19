@@ -1,6 +1,6 @@
 #include "Dolphin/gx.h"
-#include <stddef.h>
 #include <math.h>
+#include <stddef.h>
 
 /**
  * @TODO: Documentation
