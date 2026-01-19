@@ -38,64 +38,64 @@ namespace std {
 template <typename T>
 class numeric_limits {
 public:
-	inline static T min();
-	inline static T max();
+	static inline T min();
+	static inline T max();
 };
 
 template <>
 class numeric_limits<char> {
 public:
-	inline static char min() { return -0x80; }
-	inline static char max() { return 0x7F; }
+	static inline char min() { return -0x80; }
+	static inline char max() { return 0x7F; }
 };
 
 template <>
 class numeric_limits<s16> {
 public:
-	inline static s16 min() { return -0x8000; }
-	inline static s16 max() { return 0x7FFF; }
+	static inline s16 min() { return -0x8000; }
+	static inline s16 max() { return 0x7FFF; }
 };
 
 template <>
 class numeric_limits<int> {
 public:
-	inline static int min() { return -0x80000000; }
-	inline static int max() { return 0x7FFFFFFF; }
+	static inline int min() { return -0x80000000; }
+	static inline int max() { return 0x7FFFFFFF; }
 };
 
 template <>
 class numeric_limits<s32> {
 public:
-	inline static s32 min() { return -0x80000000; }
-	inline static s32 max() { return 0x7FFFFFFF; }
+	static inline s32 min() { return -0x80000000; }
+	static inline s32 max() { return 0x7FFFFFFF; }
 };
 
 template <>
 class numeric_limits<u8> {
 public:
-	inline static u8 min() { return 0x0; }
-	inline static u8 max() { return 0xFF; }
+	static inline u8 min() { return 0x0; }
+	static inline u8 max() { return 0xFF; }
 };
 
 template <>
 class numeric_limits<u16> {
 public:
-	inline static u16 min() { return 0x0; }
-	inline static u16 max() { return 0xFFFF; }
+	static inline u16 min() { return 0x0; }
+	static inline u16 max() { return 0xFFFF; }
 };
 
 template <>
 class numeric_limits<uint> {
 public:
-	inline static uint min() { return 0x0; }
-	inline static uint max() { return 0xFFFFFFFF; }
+	static inline uint min() { return 0x0; }
+	static inline uint max() { return 0xFFFFFFFF; }
 };
 
 template <>
 class numeric_limits<u32> {
 public:
-	inline static u32 min() { return 0x0; }
-	inline static u32 max() { return 0xFFFFFFFF; }
+	static inline u32 min() { return 0x0; }
+	static inline u32 max() { return 0xFFFFFFFF; }
 };
 
 } // namespace std

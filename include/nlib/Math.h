@@ -47,9 +47,9 @@ typedef NMath<f32> NMathf;
 struct NMathF {
 
 	static f32 error;
-	static f32 const pi;
-	static f32 const degreePerRadian;
-	static f32 const radianPerDegree;
+	static const f32 pi;
+	static const f32 degreePerRadian;
+	static const f32 radianPerDegree;
 
 	static f32 cos(f32 x) { return cosf(x); }
 	static f32 sin(f32 x) { return sinf(x); }
