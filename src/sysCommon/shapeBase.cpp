@@ -3313,68 +3313,87 @@ void BaseShape::updateAnim(Graphics& gfx, immut Matrix4f& mtx, f32* p3)
 }
 
 /**
+ * @brief Likely fabricated static inline function useful for DOL-exclusive code in `BaseShape::calcWeightedMatrices`.
+ */
+static inline void addMatrixWeights(register f32* animMtx, register f32* weightedMtx, register f32 weights[2])
+{
+#ifdef __MWERKS__
+	asm {
+		psq_l    f0, 0x0(weights), 0, 0;
+		psq_l    f1, 0x0(animMtx), 0, 0;
+		psq_l    f2, 0x0(weightedMtx), 0, 0;
+		ps_madd  f1, f2, f0, f1;
+		psq_st   f1, 0x0(animMtx), 0, 0;
+
+		psq_l    f3, 0x8(animMtx), 0, 0;
+		psq_l    f2, 0x8(weightedMtx), 0, 0;
+		ps_madd  f3, f2, f0, f3;
+		psq_st   f3, 0x8(animMtx), 0, 0;
+
+		psq_l    f1, 0x10(animMtx), 0, 0;
+		psq_l    f2, 0x10(weightedMtx), 0, 0;
+		ps_madd  f1, f2, f0, f1;
+		psq_st   f1, 0x10(animMtx), 0, 0;
+
+		psq_l    f3, 0x18(animMtx), 0, 0;
+		psq_l    f2, 0x18(weightedMtx), 0, 0;
+		ps_madd  f3, f2, f0, f3;
+		psq_st   f3, 0x18(animMtx), 0, 0;
+
+		psq_l    f1, 0x20(animMtx), 0, 0;
+		psq_l    f2, 0x20(weightedMtx), 0, 0;
+		ps_madd  f1, f2, f0, f1;
+		psq_st   f1, 0x20(animMtx), 0, 0;
+
+		psq_l    f3, 0x28(animMtx), 0, 0;
+		psq_l    f2, 0x28(weightedMtx), 0, 0;
+		ps_madd  f3, f2, f0, f3;
+		psq_st   f3, 0x28(animMtx), 0, 0;
+	}
+#endif
+}
+
+/**
  * @todo: Documentation
  */
 void BaseShape::calcWeightedMatrices()
 {
 	for (int i = 0; i < mEnvelopeCount; i++) {
-		f32* mtx = (f32*)&mAnimMatrices[mJointCount + i];
-		for (int j = 0; j < 12; j++) {
-			*mtx = 0.0f;
-			mtx++;
+		f32* animMtxFloats = (f32*)&mAnimMatrices[mJointCount + i];
+#ifdef WIN32
+		for (int j = 0; j < 16; j++)
+#else
+		for (int j = 0; j < 12; j++)
+#endif
+		{
+			*animMtxFloats = 0.0f;
+			animMtxFloats++;
 		}
 
 		for (int j = 0; j < mEnvelopeList[i].mIndexCount; j++) {
 			int idx    = mEnvelopeList[i].mJointIndices[j];
 			f32 weight = mEnvelopeList[i].mWeights[j];
 
-			// this is some bullshit right here.
+			Matrix4f weightedMtx;
+			f32* weightedMtxFloats;
 
-			Matrix4f weighted;
-			PSMTXConcat(getAnimMatrix(idx).mMtx, mJointList[idx].mInverseAnimMatrix.mMtx, weighted.mMtx);
-
-			register immut Matrix4f& mtx1 = weighted;
-			register Matrix4f& animMtx    = mAnimMatrices[mJointCount + i];
-
-			f32 weights[2]         = {};
-			register f32* weightsR = weights;
-			weights[0]             = weight;
-			weights[1]             = weight;
-
-			// could probably make this a static inline but eh.
-			ASM
-			{
-				psq_l f0, 0x0(weightsR), 0, 0;
-				psq_l f1, 0x0(animMtx), 0, 0;
-				psq_l f2, 0x0(mtx1), 0, 0;
-				ps_madd f1, f2, f0, f1;
-				psq_st f1, 0x0(animMtx), 0, 0;
-
-				psq_l f3, 0x8(animMtx), 0, 0;
-				psq_l f2, 0x8(mtx1), 0, 0;
-				ps_madd f3, f2, f0, f3;
-				psq_st f3, 0x8(animMtx), 0, 0;
-
-				psq_l f1, 0x10(animMtx), 0, 0;
-				psq_l f2, 0x10(mtx1), 0, 0;
-				ps_madd f1, f2, f0, f1;
-				psq_st f1, 0x10(animMtx), 0, 0;
-
-				psq_l f3, 0x18(animMtx), 0, 0;
-				psq_l f2, 0x18(mtx1), 0, 0;
-				ps_madd f3, f2, f0, f3;
-				psq_st f3, 0x18(animMtx), 0, 0;
-
-				psq_l f1, 0x20(animMtx), 0, 0;
-				psq_l f2, 0x20(mtx1), 0, 0;
-				ps_madd f1, f2, f0, f1;
-				psq_st f1, 0x20(animMtx), 0, 0;
-
-				psq_l f3, 0x28(animMtx), 0, 0;
-				psq_l f2, 0x28(mtx1), 0, 0;
-				ps_madd f3, f2, f0, f3;
-				psq_st f3, 0x28(animMtx), 0, 0;
-			};
+#ifdef WIN32
+			getAnimMatrix(idx).multiplyTo(mJointList[idx].mInverseAnimMatrix, weightedMtx);
+			weightedMtxFloats = (f32*)&weightedMtx;
+			animMtxFloats     = (f32*)&mAnimMatrices[mJointCount + i];
+			for (int k = 0; k < 12; k++) {
+				*animMtxFloats += *weightedMtxFloats * weight;
+				weightedMtxFloats++;
+				animMtxFloats++;
+			}
+#else
+			PSMTXConcat(getAnimMatrix(idx).mMtx, mJointList[idx].mInverseAnimMatrix.mMtx, weightedMtx.mMtx);
+			weightedMtxFloats = (f32*)&weightedMtx;
+			animMtxFloats     = (f32*)&mAnimMatrices[mJointCount + i];
+			f32 weights[2]    = { weight, weight };
+			f32* REF_weights  = weights; // This indicates to me that this inline asm was probably not in a static inline, but idc.
+			addMatrixWeights(animMtxFloats, weightedMtxFloats, weights);
+#endif
 		}
 	}
 }
