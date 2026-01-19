@@ -1960,7 +1960,7 @@ static void initMCBtype(BitBufferWithTree* code, RLDecoder* flag)
  */
 static int getMCBtype(BitBufferWithTree* code, RLDecoder* flag)
 {
-	const static u32 mcbtypetrans[2][3] = {
+	static const u32 mcbtypetrans[2][3] = {
 		{ 1, 2, 0 },
 		{ 2, 0, 1 },
 	};

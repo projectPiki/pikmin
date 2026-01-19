@@ -35,3 +35,6 @@ BreakStringLiterals: true
 ReflowComments: true
 
 InsertNewlineAtEOF: true
+
+QualifierAlignment: Custom
+QualifierOrder: [static, constexpr, inline, const, volatile, type]
