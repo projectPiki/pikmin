@@ -87,12 +87,8 @@ void P2DPerspGraph::setPort()
 	Matrix4f perspMtx;
 	f32 width  = f32(mViewportBounds.getWidth());
 	f32 height = f32(mViewportBounds.getHeight());
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
-	C_MTXPerspective(perspMtx.mMtx, mFovy, width / height, mNearClipZ, mFarClipZ);
-#else
-	MTXPerspective(perspMtx.mMtx, mFovy, width / height, mNearClipZ, mFarClipZ);
-#endif
 
+	MTXPerspective(perspMtx.mMtx, mFovy, width / height, mNearClipZ, mFarClipZ);
 	GXSetProjection(perspMtx.mMtx, GX_PERSPECTIVE);
 
 	for (int i = 0; i < 4; i++) {

@@ -1012,21 +1012,16 @@ void zen::particleGenerator::drawPtclOriented(Graphics& gfx)
 		           RoundOff(ptcl->mPrimaryColor.a * ptcl->mAlphaFactor));
 		gfx.setPrimEnv(&col, &ptcl->mEnvColor);
 
-		PSMTXIdentity(mtx2);
+		MTXIdentity(mtx2);
 
 		f32 a  = ptcl->mSize * ptcl->mScaleFactor;
 		cosVal = cosShort(ptcl->mRotAngle);
 		sinVal = sinShort(ptcl->mRotAngle);
 		(this->*mRotAxisCallBack)(mtx3, sinVal, cosVal);
 
-#if defined(VERSION_G98E01_PIKIDEMO)
-		PSMTXTrans(mtx1.mMtx, ptcl->mLocalPosition.x + ptcl->mGlobalPosition.x, ptcl->mLocalPosition.y + ptcl->mGlobalPosition.y,
-		           ptcl->mLocalPosition.z + ptcl->mGlobalPosition.z);
-#else
 		MTXTrans(mtx1.mMtx, ptcl->mLocalPosition.x + ptcl->mGlobalPosition.x, ptcl->mLocalPosition.y + ptcl->mGlobalPosition.y,
 		         ptcl->mLocalPosition.z + ptcl->mGlobalPosition.z);
-#endif
-		PSMTXConcat(gfx.mCamera->mLookAtMtx.mMtx, mtx1.mMtx, mtx1.mMtx);
+		MTXConcat(gfx.mCamera->mLookAtMtx.mMtx, mtx1.mMtx, mtx1.mMtx);
 
 		Vector3f* vec;
 		switch (mOrientedDrawConfig.mOrientationSource) {
@@ -1090,8 +1085,8 @@ void zen::particleGenerator::drawPtclOriented(Graphics& gfx)
 			continue;
 		}
 
-		PSMTXConcat(mtx2, mtx3, mtx2);
-		PSMTXConcat(mtx1.mMtx, mtx2, mtx1.mMtx);
+		MTXConcat(mtx2, mtx3, mtx2);
+		MTXConcat(mtx1.mMtx, mtx2, mtx1.mMtx);
 
 		GXLoadPosMtxImm(mtx1.mMtx, 0);
 
