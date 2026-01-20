@@ -5,7 +5,6 @@
 
 BEGIN_SCOPE_EXTERN_C
 
-// #define HID0              0x3f0
 #define HID0_ICE       0x8000
 #define HID0_ICFI      0x800
 #define HID0_DCE       0x4000
@@ -16,12 +15,91 @@ BEGIN_SCOPE_EXTERN_C
 #define LC_BASE        (LC_BASE_PREFIX << 16)
 #define DBAT3L         3
 #define DBAT3U         3
-// #define DMA_U             0x39a
-// #define DMA_L             0x39b
 #define DMA_L_STORE       0
 #define DMA_L_TRIGGER     2
 #define LC_MAX_DMA_BLOCKS 128
 #define LC_MAX_DMA_BYTES  0x1000
+
+/////////////// Encodings for the user- and supervisor-level SPRs /////////////////////////////////////////////////////////////////////////
+
+#define SPR_CTR    9
+#define SPR_DABR   1013
+#define SPR_DAR    19
+#define SPR_DBAT0L 537
+#define SPR_DBAT0U 536
+#define SPR_DBAT1L 539
+#define SPR_DBAT1U 538
+#define SPR_DBAT2L 541
+#define SPR_DBAT2U 540
+#define SPR_DBAT3L 543
+#define SPR_DBAT3U 542
+#define SPR_DEC    22
+#define SPR_DSISR  18
+#define SPR_EAR    282
+#define SPR_IBAT0L 529
+#define SPR_IBAT0U 528
+#define SPR_IBAT1L 531
+#define SPR_IBAT1U 530
+#define SPR_IBAT2L 533
+#define SPR_IBAT2U 532
+#define SPR_IBAT3L 535
+#define SPR_IBAT3U 534
+#define SPR_LR     8
+#define SPR_PVR    287
+#define SPR_SDR1   25
+#define SPR_SPRG0  272
+#define SPR_SPRG1  273
+#define SPR_SPRG2  274
+#define SPR_SPRG3  275
+#define SPR_SRR0   26
+#define SPR_SRR1   27
+#define SPR_TBL    284
+#define SPR_TBU    285
+#define SPR_UTBL   268
+#define SPR_UTBU   269
+#define SPR_XER    1
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////// Encodings for the Gekko-specific SPRs /////////////////////////////////////////////////////////////////////////////////////
+
+#define SPR_DABR   1013
+#define SPR_DMAL   923
+#define SPR_DMAU   922
+#define SPR_GQR0   912
+#define SPR_GQR1   913
+#define SPR_GQR2   914
+#define SPR_GQR3   915
+#define SPR_GQR4   916
+#define SPR_GQR5   917
+#define SPR_GQR6   918
+#define SPR_GQR7   919
+#define SPR_HID0   1008
+#define SPR_HID1   1009
+#define SPR_HID2   920
+#define SPR_IABR   1010
+#define SPR_ICTC   1019
+#define SPR_L2CR   1017
+#define SPR_MMCR0  952
+#define SPR_MMCR1  956
+#define SPR_PMC1   953
+#define SPR_PMC2   954
+#define SPR_PMC3   957
+#define SPR_PMC4   958
+#define SPR_SIA    955
+#define SPR_THRM1  1020
+#define SPR_THRM2  1021
+#define SPR_THRM3  1022
+#define SPR_UMMCR0 936
+#define SPR_UMMCR1 940
+#define SPR_UPMC1  937
+#define SPR_UPMC2  938
+#define SPR_UPMC3  941
+#define SPR_UPMC4  942
+#define SPR_USIA   939
+#define SPR_WPAR   921
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #define LCGetBase() ((void*)LC_BASE)
 
@@ -108,7 +186,7 @@ u32 PPCMfdmaU(void);        // Get Direct Memory Access Upper Register (DMAU)
 void PPCMtdmaU(u32 value);  // Set Direct Memory Access Upper Register (DMAU)
 u32 PPCMfdmaL(void);        // Get Direct Memory Access Lower Register (DMAL)
 void PPCMtdmaL(u32 value);  // Set Direct Memory Access Lower Register (DMAL)
-u32 PPCMfpvr(void);         // TODO
+u32 PPCMfpvr(void);         // Get Processor Version Register (PVR)
 
 END_SCOPE_EXTERN_C
 
