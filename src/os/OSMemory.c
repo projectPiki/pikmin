@@ -1,7 +1,5 @@
 #include "types.h"
 
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
-
 #include "Dolphin/OS/OSError.h"
 #include "Dolphin/os.h"
 
@@ -87,7 +85,7 @@ void OSProtectRange(u32 chan, void* addr, u32 nBytes, u32 control)
 	OSRestoreInterrupts(enabled);
 }
 
-ASM void Config24MB()
+static ASM void Config24MB()
 {
 #ifdef __MWERKS__ // clang-format off
   nofralloc
@@ -136,7 +134,7 @@ ASM void Config24MB()
 #endif // clang-format on
 }
 
-ASM void Config48MB()
+static ASM void Config48MB()
 {
 #ifdef __MWERKS__ // clang-format off
   nofralloc
@@ -185,7 +183,7 @@ ASM void Config48MB()
 #endif // clang-format on
 }
 
-ASM void RealMode(register u32 addr)
+static ASM void RealMode(register u32 addr)
 {
 #ifdef __MWERKS__ // clang-format off
   nofralloc
@@ -229,4 +227,3 @@ void __OSInitMemoryProtection()
 	__OSUnmaskInterrupts(OS_INTERRUPTMASK_MEM_ADDRESS);
 	OSRestoreInterrupts(enabled);
 }
-#endif

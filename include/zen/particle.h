@@ -250,7 +250,7 @@ public:
 	void init(u32, u32);
 
 	// unused/inlined:
-	~particleMdlManager();
+	~particleMdlManager() { }
 
 	int getSleepPtclNum() { return mSleepPtclList.getListNum(); }
 	int getSleepPtclChildNum() { return mSleepPtclChildList.getListNum(); }
@@ -591,7 +591,7 @@ public:
 	u8* load(immut char*, bool);
 
 	// unused/inlined:
-	~particleLoader();
+	~particleLoader() { }
 
 protected:
 	u8* pmFind(immut char*);
@@ -621,7 +621,7 @@ public:
 	zen::particleMdl* create(Texture* simpleTex, s16 lifeTime, const Vector3f& globalPos, const Vector3f& vel, const Vector3f& accel,
 	                         f32 size, f32 rotSpeed, const Colour& primColor, const Colour& envColor,
 	                         zen::CallBack1<zen::particleMdl*>* cbPtcl);
-	~simplePtclManager();
+	~simplePtclManager() { }
 
 	void init(particleMdlManager* mdlMgr) { mMdlMgr = mdlMgr; }
 
@@ -665,7 +665,7 @@ public:
 	void killGenerator(CallBack1<particleGenerator*>* cb1, CallBack2<particleGenerator*, particleMdl*>* cb2, bool doForceFinish);
 
 	// unused/inlined:
-	~particleManager();
+	~particleManager() { }
 	void debugUpdate();
 	void debugDraw(Graphics&);
 

@@ -10,7 +10,7 @@ BEGIN_SCOPE_EXTERN_C
 
 /////// HARDWARE REGISTERS ///////
 // Video Interface registers.
-vu16 __VIRegs[59] AT_ADDRESS(0xCC002000);
+extern vu16 __VIRegs[59] AT_ADDRESS(0xCC002000);
 
 // offsets for __VIRegs[i]
 #define VI_VERT_TIMING        (0)
@@ -77,7 +77,7 @@ vu16 __VIRegs[59] AT_ADDRESS(0xCC002000);
 #define VI_WIDTH (56)
 
 // Processor Interface registers.
-vu32 __PIRegs[12] AT_ADDRESS(0xCC003000);
+extern vu32 __PIRegs[12] AT_ADDRESS(0xCC003000);
 
 // offsets for __PIRegs[i]
 #define PI_INTRPT_SRC  (0) // interrupt cause
@@ -106,7 +106,7 @@ vu32 __PIRegs[12] AT_ADDRESS(0xCC003000);
 #define PI_INTRPT_RSWST     (0x10000) // reset switch state (1 when pressed)
 
 // Memory Interface registers.
-vu16 __MEMRegs[64] AT_ADDRESS(0xCC004000);
+extern vu16 __MEMRegs[64] AT_ADDRESS(0xCC004000);
 
 // offsets for __MEMRegs[i]
 #define MEM_PROT_1    (0) // protected region 1
@@ -124,7 +124,7 @@ vu16 __MEMRegs[64] AT_ADDRESS(0xCC004000);
 #define MEM_UNK_FLAG (20) // unknown memory flag, set in __OSInitMemoryProtection
 
 // Digital Signal Processor registers (for audio mixing).
-vu16 __DSPRegs[32] AT_ADDRESS(0xCC005000);
+extern vu16 __DSPRegs[32] AT_ADDRESS(0xCC005000);
 
 // offsets for __DSPRegs[i]
 #define DSP_MAILBOX_IN_HI  (0)
@@ -151,7 +151,7 @@ vu16 __DSPRegs[32] AT_ADDRESS(0xCC005000);
 #define DSP_DMA_START_FLAG (0x8000) // set to start DSP
 
 // DVD Interface registers.
-vu32 __DIRegs[16] AT_ADDRESS(0xCC006000);
+extern vu32 __DIRegs[16] AT_ADDRESS(0xCC006000);
 
 // offsets for __DIRegs[i]
 #define DI_STATUS       (0)
@@ -166,7 +166,7 @@ vu32 __DIRegs[16] AT_ADDRESS(0xCC006000);
 #define DI_CONFIG       (9)
 
 // Serial Interface registers.
-vu32 __SIRegs[64] AT_ADDRESS(0xCC006400);
+extern vu32 __SIRegs[64] AT_ADDRESS(0xCC006400);
 
 // offsets for __SIRegs[i]
 // Channel 0/Joy-channel 1
@@ -194,7 +194,7 @@ vu32 __SIRegs[64] AT_ADDRESS(0xCC006400);
 #define SI_IO_BUFFER (32) // start of buffer (32 to 63)
 
 // Expansion/External Interface registers.
-vu32 __EXIRegs[16] AT_ADDRESS(0xCC006800);
+extern vu32 __EXIRegs[16] AT_ADDRESS(0xCC006800);
 
 // offsets for __EXIRegs[i]
 // Channel 0
@@ -217,7 +217,7 @@ vu32 __EXIRegs[16] AT_ADDRESS(0xCC006800);
 #define EXI_CHAN_2_IMM      (14) // immediate data
 
 // Audio Streaming Interface registers.
-vu32 __AIRegs[8] AT_ADDRESS(0xCC006C00);
+extern vu32 __AIRegs[8] AT_ADDRESS(0xCC006C00);
 
 // offsets for __AIRegs[i]
 #define AI_CONTROL        (0) // control

@@ -43,7 +43,7 @@ public:
 	void draw(Graphics&);
 
 	// unused/inlined:
-	~DrawHurryUp();
+	~DrawHurryUp() { }
 
 protected:
 	void initPanes();

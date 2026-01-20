@@ -34,7 +34,7 @@ static ApploaderHeader Header ATTRIBUTE_ALIGN(32);
 /**
  * @TODO: Documentation
  */
-static ASM void Run(register u32 addr)
+static ASM void Run(register void (*entrypoint)())
 {
 #ifdef __MWERKS__ // clang-format off
 	fralloc
@@ -42,7 +42,7 @@ static ASM void Run(register u32 addr)
 	bl ICFlashInvalidate
 	sync
 	isync
-	mtlr addr
+	mtlr entrypoint
 	blr
 	frfree
 	blr
@@ -144,5 +144,5 @@ void __OSReboot(u32 resetCode, u32 bootDol)
 	ReadApploader(&dvdCmd2, (void*)OS_BOOTROM_ADDR, offset, numBytes);
 
 	ICInvalidateRange((void*)OS_BOOTROM_ADDR, numBytes);
-	Run(OS_BOOTROM_ADDR);
+	Run((void (*)())OS_BOOTROM_ADDR);
 }

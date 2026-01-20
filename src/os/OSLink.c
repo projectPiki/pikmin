@@ -72,8 +72,8 @@ struct OSModuleQueue { /* Relocatable Module Queue @ 800030c8 */
 	int* pLast;
 };
 
-struct OSModuleQueue __OSModuleInfoList AT_ADDRESS(OS_BASE_CACHED | OS_MODULE_LIST_ADDR);
-const void* __OSStringTable AT_ADDRESS(OS_BASE_CACHED | OS_STRING_TABLE_ADDR);
+extern struct OSModuleQueue __OSModuleInfoList AT_ADDRESS(OS_BASE_CACHED | OS_MODULE_LIST_ADDR);
+extern const void* __OSStringTable AT_ADDRESS(OS_BASE_CACHED | OS_STRING_TABLE_ADDR);
 
 /**
  * @TODO: Documentation

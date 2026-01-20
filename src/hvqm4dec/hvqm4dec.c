@@ -1301,7 +1301,7 @@ static void setMCTarget(MCHandler* mch, int direct)
 /**
  * @note Copy 4x4 samples without interpolation.
  */
-inline void _MotionComp_00(u8* cP, int cWidth, u8* tP, int tWidth)
+static inline void _MotionComp_00(u8* cP, int cWidth, u8* tP, int tWidth)
 {
 	cP[0] = tP[0];
 	cP[1] = tP[1];
@@ -1335,7 +1335,7 @@ inline void _MotionComp_00(u8* cP, int cWidth, u8* tP, int tWidth)
 /**
  * @note Offset vertically by half a sample
  */
-inline void _MotionComp_01(u8* cP, int cWidth, u8* tP, int tWidth)
+static inline void _MotionComp_01(u8* cP, int cWidth, u8* tP, int tWidth)
 {
 	u8* up = (u8*)tP;
 	u8* dn = (u8*)tP + tWidth;
@@ -1376,7 +1376,7 @@ inline void _MotionComp_01(u8* cP, int cWidth, u8* tP, int tWidth)
 /**
  * @note Offset vertically by half a sample
  */
-inline void _MotionComp_10(u8* cP, int cWidth, u8* tP, int tWidth)
+static inline void _MotionComp_10(u8* cP, int cWidth, u8* tP, int tWidth)
 {
 	cP[0] = (tP[0] + tP[1] + 1) >> 1;
 	cP[1] = (tP[1] + tP[2] + 1) >> 1;
@@ -1410,7 +1410,7 @@ inline void _MotionComp_10(u8* cP, int cWidth, u8* tP, int tWidth)
 /**
  * @note Offset by half a sample in both directions
  */
-inline void _MotionComp_11(u8* cP, int cWidth, u8* tP, int tWidth)
+static inline void _MotionComp_11(u8* cP, int cWidth, u8* tP, int tWidth)
 {
 	u8* up = (u8*)tP;
 	u8* dn = (u8*)tP + tWidth;
