@@ -72,7 +72,7 @@ static void __init_cpp(void)
  * @todo: Documentation
  * @note UNUSED Size: 000054
  */
-void __fini_cpp(void)
+static void __fini_cpp(void)
 {
 	// UNUSED FUNCTION
 }

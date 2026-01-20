@@ -6,7 +6,7 @@
 
 unsigned int TRKTargetContinue(void)
 {
-	TRKTargetSetStopped(0);
+	TRKTargetSetStopped(FALSE);
 	UnreserveEXI2Port();
 	TRKSwapAndGo();
 	ReserveEXI2Port();
