@@ -103,7 +103,7 @@ void Timers::showTimes()
 	}
 }
 
-// BUG: This assumes the game is running at 60fps, when (most of the time) it is not.
+// NB: Even through the game does not run at 60fps, this isn't really about the game's framerate.  It's about time budgets.
 #define MILLISEC_PER_FRAME (1000.0f / 60.0f)
 
 /**

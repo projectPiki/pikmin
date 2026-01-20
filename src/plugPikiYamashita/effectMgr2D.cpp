@@ -81,6 +81,7 @@ PtclLoadInfo ptclInfo[52] =
  */
 zen::EffectMgr2D::~EffectMgr2D()
 {
+	mParticleManager.killAllGenarator(true);
 }
 
 /**

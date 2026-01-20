@@ -58,7 +58,7 @@ struct ActorMgr : public MonoObjectMgr {
 public:
 	ActorMgr(MapMgr*); // unused/inlined
 
-	virtual ~ActorMgr(); // _48
+	virtual ~ActorMgr() { } // _48
 
 	Actor* newActor(int);
 

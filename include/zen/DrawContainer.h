@@ -61,7 +61,7 @@ public:
 	bool update(int&);
 
 	// unused/inlined:
-	~DrawContainer();
+	~DrawContainer() { }
 
 	statusFlag getStatus() { return mState; }
 	int getContainerPikiDisp() { return mContainerPikiNum; }

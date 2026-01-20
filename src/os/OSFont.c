@@ -1,7 +1,7 @@
 #include "Dolphin/os.h"
 #include "Dolphin/vi.h"
 
-volatile int __OSTVMode AT_ADDRESS(OS_BASE_CACHED | 0xCC);
+extern volatile int __OSTVMode AT_ADDRESS(OS_BASE_CACHED | 0xCC);
 
 /**
  * @TODO: Documentation

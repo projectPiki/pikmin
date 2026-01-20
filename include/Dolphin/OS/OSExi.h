@@ -24,7 +24,7 @@ BEGIN_SCOPE_EXTERN_C
 #define EXI_CPR_CS(x)  ((1u << (x)) << 7)
 #define EXI_CPR_CLK(x) ((x) << 4)
 
-s32 __EXIProbeStartTime[2] AT_ADDRESS(OS_BASE_CACHED | 0x30C0);
+extern s32 __EXIProbeStartTime[2] AT_ADDRESS(OS_BASE_CACHED | 0x30C0);
 
 //////////////////////////////////
 

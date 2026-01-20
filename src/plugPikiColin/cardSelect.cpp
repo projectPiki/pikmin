@@ -155,7 +155,7 @@ struct CardSelectSetupSection : public Node {
 				gameflow.mPendingStageUnlockID = -1;
 			}
 
-#ifdef __MWERKS__
+#ifndef WIN32
 			Jac_SceneExit(SCENE_Exit, 0);
 #endif
 

@@ -71,7 +71,7 @@ void Matrix4f::makePerspective(f32, f32, f32, f32)
 	// UNUSED FUNCTION
 }
 
-/*
+/**
  * @note ChatGPT 1 shotted this, props to our assistant dev!
  */
 void Matrix4f::makeRotate(immut Vector3f& axis, f32 angleSin, f32 angleCos)

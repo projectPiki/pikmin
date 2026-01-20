@@ -48,12 +48,3 @@ Actor* ActorMgr::newActor(int unused)
 
 	return actor;
 }
-
-/**
- * @todo: Documentation
- * @note UNUSED Size: 000084
- */
-ActorMgr::~ActorMgr()
-{
-	// UNUSED FUNCTION
-}

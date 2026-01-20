@@ -1674,14 +1674,14 @@ void GameCoreSection::updateAI()
 				bossMgr->postUpdate(0, deltaTime);
 			}
 		}
-#if defined(VERSION_PIKIDEMO)
 		MATCHING_STOP_TIMER("post");
-		gsys->mTimer->stop("GameCore");
-	}
+#if defined(BUGFIX)
 #else
+		gsys->mTimer->stop("GameCore");
+#endif
 	}
-	// ... did they mess up the scope for this deliberately??
-	MATCHING_STOP_TIMER("post"); // Wrong scope, but if the tekiMgr doesn't exist you probably have bigger problems.
+	// Wrong scope, Kando.
+#if defined(BUGFIX)
 	gsys->mTimer->stop("GameCore");
 #endif
 }

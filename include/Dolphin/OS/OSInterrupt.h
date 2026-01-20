@@ -25,8 +25,8 @@ extern vu32 __OSLastInterruptSrr0;               // SRR0 value at time of interr
 extern volatile OSTime __OSLastInterruptTime;    // time of interrupt (from OSGetTime()).
 
 // Interrupt global addresses.
-volatile OSInterruptMask __OSPriorInterruptMask AT_ADDRESS((u32)OSPhysicalToCached(0x00C4));
-volatile OSInterruptMask __OSCurrentInterruptMask AT_ADDRESS((u32)OSPhysicalToCached(0x00C8));
+extern volatile OSInterruptMask __OSPriorInterruptMask AT_ADDRESS((u32)OSPhysicalToCached(0x00C4));
+extern volatile OSInterruptMask __OSCurrentInterruptMask AT_ADDRESS((u32)OSPhysicalToCached(0x00C8));
 
 //////////////////////////////////
 

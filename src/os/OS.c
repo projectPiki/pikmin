@@ -49,14 +49,14 @@ extern char* __OSResetSWInterruptHandler[];
 #define OS_EXCEPTIONTABLE_ADDR 0x3000
 #define OS_DBJUMPPOINT_ADDR    0x60
 
-vu16 __OSDeviceCode AT_ADDRESS(OS_BASE_CACHED | OS_DVD_DEVICECODE);
+extern vu16 __OSDeviceCode AT_ADDRESS(OS_BASE_CACHED | OS_DVD_DEVICECODE);
 
 // flags and system info
 static OSBootInfo* BootInfo;
 static vu32* BI2DebugFlag;
 static u32* BI2DebugFlagHolder;
 WEAKFUNC BOOL __OSIsGcam = FALSE;
-static f64 ZeroF;
+static f64 ZeroF         = 0.0;
 static f32 ZeroPS[2];
 static BOOL AreWeInitialized = FALSE;
 static __OSExceptionHandler* OSExceptionTable;
@@ -134,8 +134,8 @@ u32 OSGetConsoleType(void)
 }
 
 #if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
-extern void* BOOT_REGION_START : 0x812FDFF0; //(*(void *)0x812fdff0)
-extern void* BOOT_REGION_END : 0x812FDFEC;   //(*(void *)0x812fdfec)
+extern void* BOOT_REGION_START AT_ADDRESS(0x812FDFF0); //(*(void *)0x812fdff0)
+extern void* BOOT_REGION_END AT_ADDRESS(0x812FDFEC);   //(*(void *)0x812fdfec)
 
 void ClearArena()
 {
@@ -331,7 +331,9 @@ void OSInit(void)
 
 		// if location of debug flag exists, and flag is >= 2, enable MetroTRKInterrupts
 		if (BI2DebugFlag && ((*BI2DebugFlag) >= 2)) {
+#ifdef __MWERKS__
 			EnableMetroTRKInterrupts();
+#endif
 		}
 
 // free up memory and re-enable things
@@ -471,7 +473,7 @@ entry __OSDBINTSTART
 	lwz     r3, DB_EXCEPTIONDEST_OFFSET(r5)
 	oris    r3, r3, OS_CACHED_REGION_PREFIX
 	mtlr    r3
-	li      r3, 0x30 // MSR_IR | MSR_DR     // turn on memory addressing
+	li      r3, MSR_IR | MSR_DR     // turn on memory addressing
 	mtmsr   r3
 	blr
 entry __OSDBINTEND

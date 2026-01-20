@@ -538,7 +538,7 @@ static ASM void OSSwitchFPUContext(register __OSException exception, register OS
 	lwz     r5, OS_CONTEXT_SRR1(context)
 	ori     r5, r5, 0x2000
 	mtsrr1  r5
-	addis   r3, r0, OS_CACHED_REGION_PREFIX
+	lis     r3, OS_CACHED_REGION_PREFIX
 	lwz     r5, 0x00D8(r3)
 	stw     context, 0x00D8(r3)
 	cmpw    r5, r4
