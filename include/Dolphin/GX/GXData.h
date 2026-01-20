@@ -276,9 +276,9 @@ static inline u32 GXReadPIReg(u32 addrLo, u32 addrHi)
 #define GX_CHECK_FLUSH() (!(*(u32*)(&gx->vNumNot)))
 
 // do the damn rlwimi thing
-#define FAST_FLAG_SET(regOrg, newFlag, shift, size)                                                                \
-	do {                                                                                                           \
-		(regOrg) = (u32)__rlwimi((int)(regOrg), (int)(newFlag), (shift), (32 - (shift) - (size)), (31 - (shift))); \
+#define FAST_FLAG_SET(regOrg, newFlag, shift, size)                                                                       \
+	do {                                                                                                                  \
+		(regOrg) = (u32)__mwerks_rlwimi((int)(regOrg), (int)(newFlag), (shift), (32 - (shift) - (size)), (31 - (shift))); \
 	} while (0);
 
 ////////////////////////////////////////////

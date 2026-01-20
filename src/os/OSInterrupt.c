@@ -119,7 +119,7 @@ static u32 SetInterruptMask(OSInterruptMask mask, OSInterruptMask current)
 {
 	u32 reg;
 
-	switch (__cntlzw(mask)) {
+	switch (__mwerks_cntlzw(mask)) {
 	case __OS_INTERRUPT_MEM_0:
 	case __OS_INTERRUPT_MEM_1:
 	case __OS_INTERRUPT_MEM_2:
@@ -459,7 +459,7 @@ void __OSDispatchInterrupt(__OSException exception, OSContext* context)
 	if (unmasked) {
 		for (prio = InterruptPrioTable;; ++prio) {
 			if (unmasked & *prio) {
-				interrupt = (__OSInterrupt)__cntlzw(unmasked & *prio);
+				interrupt = (__OSInterrupt)__mwerks_cntlzw(unmasked & *prio);
 				break;
 			}
 		}

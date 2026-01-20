@@ -38,6 +38,6 @@ void __OSInitSystemCall(void)
 	memcpy(handler, __OSSystemCallVectorStart, (u32)__OSSystemCallVectorEnd - (u32)__OSSystemCallVectorStart);
 
 	DCFlushRangeNoSync(handler, OS_HANDLER_SLOT_SIZE);
-	__sync();
+	__mwerks_sync();
 	ICInvalidateRange(handler, OS_HANDLER_SLOT_SIZE);
 }

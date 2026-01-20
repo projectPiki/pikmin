@@ -514,9 +514,9 @@ void L2Init(void)
 
 	oldMSR = PPCMfmsr();
 
-	__sync();
+	__mwerks_sync();
 	PPCMtmsr(MSR_IR | MSR_DR);
-	__sync();
+	__mwerks_sync();
 
 	L2Disable();
 
@@ -542,9 +542,9 @@ void L2Enable(void)
  */
 void L2Disable(void)
 {
-	__sync();
+	__mwerks_sync();
 	PPCMtl2cr(PPCMfl2cr() & ~L2CR_L2E);
-	__sync();
+	__mwerks_sync();
 	// UNUSED FUNCTION
 }
 

@@ -93,9 +93,9 @@ u32 GXGetTexBufferSize(u16 width, u16 height, u32 format, u8 mipmap, u8 max_lod)
 		tileBytes = 32;
 	}
 	if (mipmap == 1) {
-		nx = 1 << (31 - __cntlzw(width));
+		nx = 1 << (31 - __mwerks_cntlzw(width));
 		OSAssertMsgLine(0x1A7, width == nx, "%s: width must be a power of 2", "GXGetTexBufferSize");
-		ny = 1 << (31 - __cntlzw(height));
+		ny = 1 << (31 - __mwerks_cntlzw(height));
 		OSAssertMsgLine(0x1AA, height == ny, "%s: height must be a power of 2", "GXGetTexBufferSize");
 
 		bufferSize = 0;
@@ -158,11 +158,11 @@ void GXInitTexObj(GXTexObj* obj, void* image_ptr, u16 width, u16 height, GXTexFm
 	OSAssertMsgLine(0x203, !(format & 0x20), "%s: invalid texture format", "GXInitTexObj");
 #if DEBUG
 	if (wrap_s != GX_CLAMP || mipmap != 0) {
-		u32 mask = 1 << (31 - __cntlzw(width));
+		u32 mask = 1 << (31 - __mwerks_cntlzw(width));
 		OSAssertMsgLine(0x20D, width == mask, "%s: width must be a power of 2", "GXInitTexObj");
 	}
 	if (wrap_t != GX_CLAMP || mipmap != 0) {
-		u32 mask = 1 << (31 - __cntlzw(height));
+		u32 mask = 1 << (31 - __mwerks_cntlzw(height));
 		OSAssertMsgLine(0x212, height == mask, "%s: height must be a power of 2", "GXInitTexObj");
 	}
 #endif
@@ -175,9 +175,9 @@ void GXInitTexObj(GXTexObj* obj, void* image_ptr, u16 width, u16 height, GXTexFm
 		t->flags |= 1;
 		t->mode0 = (t->mode0 & 0xFFFFFF1F) | 0xC0;
 		if (width > height) {
-			maxLOD = 31 - __cntlzw(width);
+			maxLOD = 31 - __mwerks_cntlzw(width);
 		} else {
-			maxLOD = 31 - __cntlzw(height);
+			maxLOD = 31 - __mwerks_cntlzw(height);
 		}
 		lmax = 16.0f * maxLOD;
 		SET_REG_FIELD(0x234, t->mode1, 8, 8, lmax);
@@ -1136,9 +1136,9 @@ void GXPreLoadEntireTexture(GXTexObj* tex_obj, GXTexRegion* region)
 		wd = GET_REG_FIELD(t->image0, 10, 0) + 1;
 		ht = GET_REG_FIELD(t->image0, 10, 10) + 1;
 		if (wd > ht) {
-			maxLevelIndex = (u16)(31 - __cntlzw(wd));
+			maxLevelIndex = (u16)(31 - __mwerks_cntlzw(wd));
 		} else {
-			maxLevelIndex = (u16)(31 - __cntlzw(ht));
+			maxLevelIndex = (u16)(31 - __mwerks_cntlzw(ht));
 		}
 #if DEBUG
 		count    = nTiles;

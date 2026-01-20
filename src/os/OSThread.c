@@ -294,7 +294,7 @@ static OSThread* SelectThread(BOOL yield)
 	if (currentThread) {
 		if (currentThread->state == OS_THREAD_STATE_RUNNING) {
 			if (!yield) {
-				priority = __cntlzw(RunQueueBits);
+				priority = __mwerks_cntlzw(RunQueueBits);
 				if (currentThread->priority <= priority) {
 					return 0;
 				}
@@ -323,7 +323,7 @@ static OSThread* SelectThread(BOOL yield)
 
 	RunQueueHint = FALSE;
 
-	priority = __cntlzw(RunQueueBits);
+	priority = __mwerks_cntlzw(RunQueueBits);
 	queue    = &RunQueue[priority];
 	RemoveHead(queue, nextThread, link);
 	if (queue->head == 0) {

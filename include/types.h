@@ -233,6 +233,29 @@ inline void padStack(void)
 #define INIT  DECL_SECT(".init")
 #define CTORS DECL_SECT(".ctors")
 
+// Documenting MetroWerks intrinsic functions for PowerPC and placing them behind macros for portability.
+#ifdef __MWERKS__
+#define __mwerks_eieio()                  /* void   */ __eieio()                  //
+#define __mwerks_sync()                   /* void   */ __sync()                   //
+#define __mwerks_isync()                  /* void   */ __isync()                  //
+#define __mwerks_abs(value)               /* int    */ __abs(value)               // int
+#define __mwerks_fabs(value)              /* float  */ __fabs(value)              // float
+#define __mwerks_fnabs(value)             /* float  */ __fnabs(value)             // float
+#define __mwerks_labs(value)              /* long   */ __labs(value)              // long
+#define __mwerks_cntlzw(value)            /* int    */ __cntlzw(value)            // int
+#define __mwerks_lhbrx(base, idx)         /* int    */ __lhbrx(base, idx)         // void*, int
+#define __mwerks_lwbrx(base, idx)         /* int    */ __lwbrx(base, idx)         // void*, int
+#define __mwerks_sthbrx(value, base, idx) /* void   */ __sthbrx(value, base, idx) // unsigned short, void*, int
+#define __mwerks_stwbrx(value, base, idx) /* void   */ __stwbrx(value, base, idx) // unsigned int, void*, int
+#define __mwerks_setflm(value)            /* float  */ __setflm(value)            // float
+#define __mwerks_fres(B)                  /* float  */ __fres(B)                  // float
+#define __mwerks_fsqrte(B)                /* double */ __fsqrte(B)                // double
+#define __mwerks_fsel(A, C, B)            /* double */ __fsel(A, C, B)            // double, double, double
+#define __mwerks_rlwinm(S, SH, MB, ME)    /* int    */ __rlwinm(S, SH, MB, ME)    // int, int, int, int
+#define __mwerks_rlwnm(S, SH, MB, ME)     /* int    */ __rlwnm(S, SH, MB, ME)     // int, int, int, int
+#define __mwerks_rlwimi(A, S, SH, MB, ME) /* int    */ __rlwimi(A, S, SH, MB, ME) // int, int, int, int, int
+#endif
+
 // Disable clangd warnings
 #ifdef __clang__
 // Allow string literals to be converted to char*
