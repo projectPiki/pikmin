@@ -148,7 +148,7 @@ void PPCEieio(void)
  */
 void PPCHalt(void)
 {
-	__sync();
+	__mwerks_sync();
 	for (;;) {
 #ifdef __MWERKS__
 		asm {

@@ -117,7 +117,7 @@ static int DoReset(void)
 	u32 chanBit;
 
 	rc            = 1;
-	ResettingChan = __cntlzw(ResettingBits);
+	ResettingChan = __mwerks_cntlzw(ResettingBits);
 	if ((ResettingChan >= 0) && (ResettingChan < 4)) {
 		memset(&Origin[ResettingChan], 0, 0xC);
 		Type[ResettingChan]    = 0;

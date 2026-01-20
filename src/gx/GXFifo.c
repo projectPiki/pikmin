@@ -202,7 +202,7 @@ void GXSetCPUFifo(GXFifoObj* fifo)
 		__piReg[5] = reg;
 	}
 
-	__sync();
+	__mwerks_sync();
 
 	OSRestoreInterrupts(enabled);
 }
@@ -234,7 +234,7 @@ void GXSetGPFifo(GXFifoObj* fifo)
 	__cpReg[21] = (u32)realFifo->hiWatermark >> 16;
 	__cpReg[23] = (u32)realFifo->loWatermark >> 16;
 
-	__sync();
+	__mwerks_sync();
 
 	if (CPUFifo == GPFifo) {
 		CPGPLinked = GX_TRUE;
@@ -666,7 +666,7 @@ volatile void* GXRedirectWriteGatherPipe(void* ptr)
 	// reg = (reg & ~0x3FFFFE0) | ((u32)ptr & 0x3FFFFFE0);
 	reg &= 0xFBFFFFFF;
 	__piReg[5] = reg;
-	__sync();
+	__mwerks_sync();
 	OSRestoreInterrupts(enabled);
 	return (volatile void*)GXFIFO_ADDR;
 }
@@ -706,6 +706,6 @@ void GXRestoreWriteGatherPipe(void)
 		__GXWriteFifoIntEnable(1, 0);
 		__GXFifoLink(1);
 	}
-	__sync();
+	__mwerks_sync();
 	OSRestoreInterrupts(enabled);
 }

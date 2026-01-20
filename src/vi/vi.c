@@ -98,13 +98,13 @@ static int cntlzd(u64 bit)
 
 	hi    = (u32)(bit >> 32);
 	lo    = (u32)(bit & 0xFFFFFFFF);
-	value = __cntlzw(hi);
+	value = __mwerks_cntlzw(hi);
 
 	if (value < 32) {
 		return value;
 	}
 
-	return (32 + __cntlzw(lo));
+	return (32 + __mwerks_cntlzw(lo));
 	// UNUSED FUNCTION
 }
 
