@@ -6,7 +6,7 @@
 static void __init_registers(void);
 static void __init_data(void);
 
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01)
 static void __check_pad3(void)
 {
 	if ((Pad3Button & 0x0eef) == 0x0eef) {
@@ -89,7 +89,7 @@ _no_args:
 _end_of_parseargs:
 	bl DBInit
 	bl OSInit
-#if BUILD_VERSION == 0 || defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01)
 	lis r4, 0x8000
 	addi r4, r4, 0x30e6
 	lhz r3, 0x0(r4)

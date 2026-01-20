@@ -1218,7 +1218,7 @@ void TRKTargetSetStopped(uint stopped)
  */
 u32 TRKTargetStop()
 {
-	TRKTargetSetStopped(1);
+	TRKTargetSetStopped(TRUE);
 	return 0;
 }
 
