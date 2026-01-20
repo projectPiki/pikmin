@@ -8,6 +8,8 @@
 #define ExceptionHookDestination 0x80000048
 #define IsDebuggerPresent        0x80000040
 
+typedef void (*MTRCallbackType)(int);
+
 typedef struct DBInterface {
 	u8 filler0[4];
 	u32 unk4;
@@ -17,16 +19,17 @@ extern DBInterface* __DBInterface;
 extern BOOL DBVerbose;
 
 void DBInit(void);
-int DBInitComm(vu8**, AmcEXICallback); // possibly not this type, but some similar construction
-int DBInitInterrupts();
+void DBInitComm(vu8**, MTRCallbackType);
+void DBInitInterrupts(void);
 
-int DBQueryData();
-BOOL DBRead(u8*, int);
-BOOL DBWrite(const u8*, int);
-BOOL DBOpen();
-BOOL DBClose();
+int DBQueryData(void);
+BOOL DBRead(void*, int);
+BOOL DBWrite(const void*, int);
+void DBOpen(void);
+void DBClose(void);
 
 void __DBExceptionDestination(void);
+int __DBIsExceptionMarked(u8);
 void DBPrintf(const char* format, ...);
 
 #endif

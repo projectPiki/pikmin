@@ -1,8 +1,7 @@
+#include "Dolphin/db.h"
 #include "Dolphin/hw_regs.h"
 #include "Dolphin/os.h"
 #include "types.h"
-
-typedef void (*MTRCallbackType)(int);
 
 static MTRCallbackType MTRCallback;
 static void (*DBGCallback)(u32, OSContext*);
@@ -164,7 +163,7 @@ static BOOL DBGReadMailbox(u32* p1)
 /**
  * @TODO: Documentation
  */
-static BOOL DBGRead(u32 count, u32* buffer, s32 param3)
+static BOOL DBGRead(u32 count, void* buffer, s32 param3)
 {
 	BOOL total = FALSE;
 	u32* buf_p = (u32*)buffer;
@@ -329,7 +328,7 @@ static void CheckMailBox(void)
 /**
  * @TODO: Documentation
  */
-u32 DBQueryData(void)
+int DBQueryData(void)
 {
 	BOOL interrupts;
 
@@ -345,7 +344,7 @@ u32 DBQueryData(void)
 /**
  * @TODO: Documentation
  */
-BOOL DBRead(u32* buffer, s32 count)
+BOOL DBRead(void* buffer, int count)
 {
 	u32 interrupts = OSDisableInterrupts();
 	u32 v          = SendMailData & 0x10000 ? 0x1000 : 0;
@@ -363,7 +362,7 @@ BOOL DBRead(u32* buffer, s32 count)
 /**
  * @TODO: Documentation
  */
-BOOL DBWrite(const void* src, u32 size)
+BOOL DBWrite(const void* src, int size)
 {
 	u32 v;
 	u32 busyFlag;

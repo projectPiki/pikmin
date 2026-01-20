@@ -1,5 +1,6 @@
 #include "Dolphin/os.h"
 #include "Dolphin/PPCArch.h"
+#include "Dolphin/db.h"
 #include "Dolphin/hw_regs.h"
 #include <stddef.h>
 #include <string.h>
@@ -39,7 +40,6 @@ void __OSInterruptInit();
 void __OSThreadInit();
 OSTime __OSGetSystemTime();
 void DBPrintf(const char*, ...);
-BOOL __DBIsExceptionMarked(u8);
 void __OSUnhandledException(__OSException exception, OSContext* context, u32 dsisr, u32 dar);
 extern char* __OSResetSWInterruptHandler[];
 
