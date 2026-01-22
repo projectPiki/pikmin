@@ -879,7 +879,7 @@ void TRKPostInterruptEvent(void)
 /**
  * @TODO: Documentation
  */
-ASM void TRKSwapAndGo()
+ASM void TRKSwapAndGo(void)
 {
 #ifdef __MWERKS__ // clang-format off
     nofralloc
