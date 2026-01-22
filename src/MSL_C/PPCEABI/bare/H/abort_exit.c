@@ -4,7 +4,8 @@
 void __destroy_global_chain(void);
 void _ExitProcess(void);
 
-extern void (*_dtors[])(void);
+typedef void (*voidfunctionptr)(); // pointer to function returning void
+DECL_SECT(".dtors") extern voidfunctionptr _dtors[];
 
 int __aborting = 0;
 
@@ -50,7 +51,7 @@ void __atexit(void)
 void exit(int status)
 {
 	int i;
-	void (**dtor)(void);
+	voidfunctionptr* dtor;
 
 	if (!__aborting) {
 		while (atexit_curr_func > 0)

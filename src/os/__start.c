@@ -1,10 +1,27 @@
-#include "Dolphin/__start.h"
+#include "Dolphin/db.h"
+#include "Dolphin/os.h"
+#include "PowerPC_EABI_Support/MetroTRK/trk.h"
+#include "PowerPC_EABI_Support/Runtime/__ppc_eabi_init.h"
+#include "PowerPC_EABI_Support/Runtime/__ppc_eabi_linker.h"
+#include <stdlib.h>
 #include <string.h>
 
 #pragma section code_type ".init"
 
+#define PAD3_BUTTON_ADDR        0x800030E4
+#define EXCEPTIONMASK_ADDR      0x80000044
+#define BOOTINFO2_ADDR          0x800000F4
+#define OS_BI2_DEBUGFLAG_OFFSET 0xC
+#define ARENAHI_ADDR            0x80000034
+#define DEBUGFLAG_ADDR          0x800030E8
+#define DVD_DEVICECODE_ADDR     0x800030E6
+#define DOL_ADDR_LIMIT          0x80700000
+
+extern int main(int argc, char* argv[]);
 static void __init_registers(void);
 static void __init_data(void);
+
+extern u16 Pad3Button AT_ADDRESS(PAD3_BUTTON_ADDR);
 
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01)
 static void __check_pad3(void)
@@ -123,9 +140,6 @@ ASM static void __init_registers(void)
 	blr
 #endif // clang-format on
 }
-
-DECL_SECT(".init") extern __rom_copy_info _rom_copy_info[];
-DECL_SECT(".init") extern __bss_init_info _bss_init_info[];
 
 // clang-format on
 
