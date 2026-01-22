@@ -1,14 +1,14 @@
-#include "Dolphin/trk.h"
+#include "PowerPC_EABI_Support/MetroTRK/trk.h"
 
 /**
  * @TODO: Documentation
  */
 
-unsigned int TRKTargetContinue(void)
+DSError TRKTargetContinue(void)
 {
 	TRKTargetSetStopped(FALSE);
 	UnreserveEXI2Port();
 	TRKSwapAndGo();
 	ReserveEXI2Port();
-	return 0;
+	return DS_NoError;
 }
