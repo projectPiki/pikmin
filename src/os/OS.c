@@ -2,6 +2,7 @@
 #include "Dolphin/PPCArch.h"
 #include "Dolphin/db.h"
 #include "Dolphin/hw_regs.h"
+#include "PowerPC_EABI_Support/Runtime/__ppc_eabi_linker.h"
 #include <stddef.h>
 #include <string.h>
 

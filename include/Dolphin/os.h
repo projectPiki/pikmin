@@ -68,9 +68,6 @@ u32 OSGetConsoleType();
 //////////////////////////////////
 
 // extern things.
-extern u8 _stack_addr[];
-extern u8 _stack_end[];
-
 extern BOOL __OSInIPL;
 extern OSTime __OSStartTime;
 

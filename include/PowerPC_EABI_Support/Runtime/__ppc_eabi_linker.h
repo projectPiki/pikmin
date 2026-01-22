@@ -3,6 +3,10 @@
 
 #include "types.h"
 
+BEGIN_SCOPE_EXTERN_C
+
+DECL_SECT(".init") extern char _db_stack_addr[];
+DECL_SECT(".init") extern char _db_stack_end[];
 DECL_SECT(".init") extern char _stack_addr[];
 DECL_SECT(".init") extern char _stack_end[];
 DECL_SECT(".init") extern char _heap_addr[];
@@ -70,5 +74,7 @@ DECL_SECT(".init") extern char _f_PPC_EMB_sdata0[];
 DECL_SECT(".init") extern char _e_PPC_EMB_sdata0[];
 DECL_SECT(".init") extern char _f_PPC_EMB_sbss0[];
 DECL_SECT(".init") extern char _e_PPC_EMB_sbss0[];
+
+END_SCOPE_EXTERN_C
 
 #endif // __PPC_EABI_LINKER
