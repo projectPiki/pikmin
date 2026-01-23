@@ -1,6 +1,6 @@
-#include "PowerPC_EABI_Support/Runtime/NMWException.h"
-#include "PowerPC_EABI_Support/Runtime/MWCPlusLib.h"
 #include "PowerPC_EABI_Support/Runtime/Gecko_ExceptionPPC.h"
+#include "PowerPC_EABI_Support/Runtime/MWCPlusLib.h"
+#include "PowerPC_EABI_Support/Runtime/NMWException.h"
 
 typedef struct ThrowContext ThrowContext;
 typedef struct MWExceptionInfo MWExceptionInfo;
