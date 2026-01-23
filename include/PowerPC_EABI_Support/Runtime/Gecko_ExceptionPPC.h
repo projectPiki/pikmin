@@ -1,6 +1,8 @@
 #ifndef _RUNTIME_GECKO_EXCEPTIONPPC_H
 #define _RUNTIME_GECKO_EXCEPTIONPPC_H
 
+#include "types.h"
+
 typedef u8 exaction_type;
 
 #define EXACTION_ENDBIT 0x80

@@ -237,12 +237,12 @@ void OSResetSystem(int reset, u32 resetCode, BOOL forceMenu)
 }
 
 #if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
-volatile u8 DAT_800030e2 : 0x800030e2;
+extern volatile u8 DAT_800030e2 AT_ADDRESS(0x800030e2);
 typedef struct Unk {
 	u8 pad[0x24];
 	u32 resetCode;
 } Unk;
-volatile Unk DAT_cc003000 : 0xcc003000;
+extern volatile Unk DAT_cc003000 AT_ADDRESS(0xcc003000);
 
 /**
  * @TODO: Documentation

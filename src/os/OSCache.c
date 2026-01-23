@@ -387,22 +387,21 @@ void LCEnable(void)
  */
 ASM void LCDisable(void)
 {
+	// UNUSED FUNCTION
 #ifdef __MWERKS__ // clang-format off
-  nofralloc
-  lis     r3, LC_BASE_PREFIX
-  li      r4, LC_LINES
-  mtctr r4
+	nofralloc
+	lis     r3, LC_BASE_PREFIX
+	li      r4, LC_LINES
+	mtctr   r4
 @1
-  dcbi r0, r3
-  addi r3, r3, 32
-  bdnz @1
-  mfspr r4, HID2
-  rlwinm r4, r4, 0, 4, 2
-  mtspr HID2, r4
-  blr
-
-#endif // clang-format on \
-    // UNUSED FUNCTION
+	dcbi    r0, r3
+	addi    r3, r3, 32
+	bdnz    @1
+	mfspr   r4, HID2
+	rlwinm  r4, r4, 0, 4, 2
+	mtspr   HID2, r4
+	blr
+#endif // clang-format on
 }
 
 /**

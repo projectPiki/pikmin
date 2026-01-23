@@ -357,7 +357,7 @@ void PPCMtwpar(register u32 value)
 u32 PPCMfdmaU(void)
 {
 	register u32 result;
-	MOVE_FROM_SPR(SPR_DMAU, result);
+	MOVE_FROM_SPR(SPR_DMA_U, result);
 	return result;
 }
 
@@ -368,7 +368,7 @@ u32 PPCMfdmaU(void)
 u32 PPCMfdmaL(void)
 {
 	register u32 result;
-	MOVE_FROM_SPR(SPR_DMAL, result);
+	MOVE_FROM_SPR(SPR_DMA_L, result);
 	return result;
 }
 
@@ -378,7 +378,7 @@ u32 PPCMfdmaL(void)
  */
 void PPCMtdmaU(register u32 value)
 {
-	MOVE_TO_SPR(SPR_DMAU, value);
+	MOVE_TO_SPR(SPR_DMA_U, value);
 }
 
 /**
@@ -387,7 +387,7 @@ void PPCMtdmaU(register u32 value)
  */
 void PPCMtdmaL(register u32 value)
 {
-	MOVE_TO_SPR(SPR_DMAL, value);
+	MOVE_TO_SPR(SPR_DMA_L, value);
 }
 
 /**
