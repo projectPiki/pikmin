@@ -72,8 +72,8 @@ void ItemObject::update()
 BombGenItem::BombGenItem(Shape* shape)
     : ItemObject(OBJTYPE_BombGen, shape)
 {
-	_3C8 = -1;
-	_3CA = 1;
+	mCapacity  = -1;
+	mRemaining = 1;
 }
 
 /**
@@ -93,9 +93,10 @@ bool BombGenItem::pick()
 		return false;
 	}
 
-	if (_3C8 > 0) {
-		if (_3CA > 0) {
-			PRINT("BOMB LEFT %d\n", _3CA--);
+	if (mCapacity > 0) {
+		if (mRemaining > 0) {
+			--mRemaining;
+			PRINT("BOMB LEFT %d\n", mRemaining);
 		} else {
 			return false;
 		}

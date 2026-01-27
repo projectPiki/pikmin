@@ -39,13 +39,14 @@ void GXBegin(GXPrimitive type, GXVtxFmt vtxfmt, u16 nverts)
 	if (!gx->inDispList) {
 		__GXVerifyState(vtxfmt);
 	}
-	__GXinBegin = 1;
+	__GXinBegin = TRUE;
 #endif
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
-	if (*(u32*)&gx->_00 == 0) { // checks both vNum and bpSent
+	if (*(u32*)&gx->_00 == 0) // checks both _00 and bpSent
 #else
-	if (*(u32*)&gx->vNum != 0) { // checks both vNum and bpSent
+	if (*(u32*)&gx->vNum != 0) // checks both vNum and bpSent
 #endif
+	{
 		__GXSendFlushPrim();
 	}
 	GX_WRITE_U8(vtxfmt | type);
