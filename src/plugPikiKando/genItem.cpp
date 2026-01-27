@@ -7,6 +7,7 @@
 #include "Generator.h"
 #include "GoalItem.h"
 #include "ItemMgr.h"
+#include "ItemObject.h"
 #include "PikiHeadItem.h"
 #include "PlayerState.h"
 #include "WeedsItem.h"
@@ -157,7 +158,6 @@ void GenObjectItem::updateUseList(Generator*, int)
  */
 Creature* GenObjectItem::birth(BirthInfo& info)
 {
-
 	if (mObjType == -1) {
 		return nullptr;
 	}
@@ -256,9 +256,9 @@ Creature* GenObjectItem::birth(BirthInfo& info)
 		}
 
 		if (item->mObjType == OBJTYPE_BombGen) {
-			BombItem* bomb = (BombItem*)item;
-			bomb->_3C8 = bomb->_3CA = mParameterA();
-			bomb->mGrid.updateGrid(item->mSRT.t);
+			BombGenItem* bombGen = (BombGenItem*)item;
+			bombGen->mCapacity = bombGen->mRemaining = mParameterA();
+			bombGen->mGrid.updateGrid(item->mSRT.t);
 		}
 
 		if (item->mObjType == OBJTYPE_Pikihead) {

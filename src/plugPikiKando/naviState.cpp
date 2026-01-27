@@ -689,7 +689,7 @@ void NaviWalkState::exec(Navi* navi)
 		}
 	}
 
-#if defined(VERSION_PIKIDEMO)
+#if defined(DEVELOP) || defined(VERSION_PIKIDEMO)
 	if (AIPerf::kandoOnly && navi->mKontroller->keyClick(KBBTN_X)) {
 		Pellet* pellet = pelletMgr->newNumberPellet(Blue, 4.0f * gsys->getRand(1.0f));
 		if (pellet) {
@@ -699,7 +699,6 @@ void NaviWalkState::exec(Navi* navi)
 			pellet->mVelocity.y -= 1000.0f;
 		}
 	}
-#else
 #endif
 
 	if (navi->mKontroller->keyClick(KeyConfig::_instance->mSetCursorKey.mBind)) {

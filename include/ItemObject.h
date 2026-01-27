@@ -81,11 +81,11 @@ struct BombGenItem : public ItemObject {
 
 	inline bool isValid()
 	{
-		if (_3C8 == -1) {
+		if (mCapacity == -1) {
 			return true;
 		}
 
-		if (_3CA > 0) {
+		if (mRemaining > 0) {
 			return true;
 		}
 
@@ -94,8 +94,8 @@ struct BombGenItem : public ItemObject {
 
 	// _00      = VTBL
 	// _00-_3C8 = ItemObject
-	s16 _3C8; // _3C8
-	s16 _3CA; // _3CA
+	s16 mCapacity;  // _3C8, a capacity of -1 gives infinite bombs.
+	s16 mRemaining; // _3CA
 };
 
 /**
