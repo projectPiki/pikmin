@@ -293,7 +293,7 @@ config.linker_version = "GC/1.2.5"
 # Helper function for Dolphin libraries
 def DolphinLib(lib_name: str, objects: List[Object]) -> Dict[str, Any]:
     mw_version = "GC/1.2.5"
-    if version_num == 0 or version_num == 7 or ((lib_name == "card" or lib_name == "hio" or lib_name == "mtx") and version_num == 3):  # JPN demo, PAL, and SOMETIMES usa demo
+    if version_num in (0,7) or ((lib_name in ("card","hio","mtx") and version_num == 3)):  # JPN demo, PAL, and SOMETIMES usa demo
         mw_version = "GC/1.2.5n"
     return {
         "lib": lib_name,
