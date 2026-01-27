@@ -41,7 +41,11 @@ static void __GXXfVtxSpecs(void)
 	nTex += GET_REG_FIELD(gx->vcdHi, 2, 14) ? 1 : 0;
 	reg = (nCols) | (nNrm << 2) | (nTex << 4);
 	GX_WRITE_XF_REG(8, reg);
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+	gx->bpSent = 1;
+#else
 	gx->bpSent = 0;
+#endif
 }
 
 static inline void SETVCDATTR(GXAttr Attr, GXAttrType Type)
@@ -97,6 +101,26 @@ static inline void SETVCDATTR(GXAttr Attr, GXAttrType Type)
 		SET_REG_FIELD(0xB1, gx->vcdLo, 2, 9, Type);
 		break;
 	}
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+	case GX_VA_NRM:
+		if (Type != GX_NONE) {
+			gx->hasNrms   = 1;
+			gx->hasBiNrms = 0;
+			gx->nrmType   = Type;
+		} else {
+			gx->hasNrms = 0;
+		}
+		break;
+	case GX_VA_NBT:
+		if (Type != GX_NONE) {
+			gx->hasBiNrms = 1;
+			gx->hasNrms   = 0;
+			gx->nrmType   = Type;
+		} else {
+			gx->hasBiNrms = 0;
+		}
+		break;
+#else
 	case GX_VA_NRM:
 	{
 		gx->hasNrms = (Type != 0);
@@ -113,6 +137,7 @@ static inline void SETVCDATTR(GXAttr Attr, GXAttrType Type)
 		}
 		break;
 	}
+#endif
 	case GX_VA_CLR0:
 	{
 		SET_REG_FIELD(0xBA, gx->vcdLo, 2, 13, Type);

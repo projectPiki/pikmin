@@ -40,12 +40,16 @@ typedef enum _CPClear {
 // size: 0x5B0
 struct __GXData_struct {
 	// total size: 0x4F4
-	unsigned short vNum;                                      // offset 0x0, size 0x2
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)   //
+	u8 _00[2];                                                // _00
 	unsigned short bpSent;                                    // offset 0x2, size 0x2
-#if defined(VERSION_GPIP01_00)                                //
-	u8 _04[0x08 - 0x04];                                      // _04, TODO: Confirm where this member actually is.
+	unsigned short vNum;                                      // offset 0x4, size 0x2
+	unsigned short vLim;                                      // offset 0x6, size 0x4
+#else                                                         //
+	unsigned short vNum;   // offset 0x0, size 0x2
+	unsigned short bpSent; // offset 0x2, size 0x2
+	unsigned long vLim;    // offset 0x4, size 0x4
 #endif                                                        //
-	unsigned long vLim;                                       // offset 0x4, size 0x4
 	unsigned long cpEnable;                                   // offset 0x8, size 0x4
 	unsigned long cpStatus;                                   // offset 0xC, size 0x4
 	unsigned long cpClr;                                      // offset 0x10, size 0x4
@@ -111,6 +115,9 @@ struct __GXData_struct {
 	unsigned long tMode0[8];                                  // offset 0x47C, size 0x20
 	unsigned long texmapId[16];                               // offset 0x49C, size 0x40
 	unsigned long tcsManEnab;                                 // offset 0x4DC, size 0x4
+#if defined(VERSION_GPIP01_00)                                //
+	unsigned long tevTcEnab;                                  //
+#endif                                                        //
 	GXPerf0 perf0;                                            // offset 0x4E0, size 0x4
 	GXPerf1 perf1;                                            // offset 0x4E4, size 0x4
 	unsigned long perfSel;                                    // offset 0x4E8, size 0x4

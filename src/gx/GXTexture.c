@@ -173,7 +173,15 @@ void GXInitTexObj(GXTexObj* obj, void* image_ptr, u16 width, u16 height, GXTexFm
 	if (mipmap != 0) {
 		u8 lmax;
 		t->flags |= 1;
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+		if (format - 8 <= 2U) {
+			t->mode0 = (t->mode0 & 0xFFFFFF1F) | 0xA0;
+		} else {
+			t->mode0 = (t->mode0 & 0xFFFFFF1F) | 0xC0;
+		}
+#else
 		t->mode0 = (t->mode0 & 0xFFFFFF1F) | 0xC0;
+#endif
 		if (width > height) {
 			maxLOD = 31 - __mwerks_cntlzw(width);
 		} else {
@@ -656,7 +664,11 @@ void GXLoadTexObjPreLoaded(GXTexObj* obj, GXTexRegion* region, GXTexMapID id)
 	gx->tImage0[id] = t->image0;
 	gx->tMode0[id]  = t->mode0;
 	gx->dirtyState |= 1;
-	gx->bpSent = 1;
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+	gx->bpSent = GX_FALSE;
+#else
+	gx->bpSent = GX_TRUE;
+#endif
 }
 
 /**
@@ -1306,7 +1318,11 @@ static void __SetSURegs(u32 tmap, u32 tcoord)
 	SET_REG_FIELD(0x73D, gx->suTs1[tcoord], 1, 16, t_bias);
 	GX_WRITE_RAS_REG(gx->suTs0[tcoord]);
 	GX_WRITE_RAS_REG(gx->suTs1[tcoord]);
-	gx->bpSent = 1;
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+	gx->bpSent = GX_FALSE;
+#else
+	gx->bpSent = GX_TRUE;
+#endif
 }
 
 /**
@@ -1366,7 +1382,11 @@ void __GXSetSUTexRegs(void)
 			} else {
 				coord = GET_REG_FIELD(*ptref, 3, 3);
 			}
+#if defined(VERSION_GPIP01_00)
+			if ((tmap != 0xFF) && !(gx->tcsManEnab & (1 << coord)) && (gx->tevTcEnab & (1 << i))) {
+#else
 			if ((tmap != 0xFF) && !(gx->tcsManEnab & (1 << coord))) {
+#endif
 				__SetSURegs(tmap, coord);
 			}
 		}
@@ -1382,3 +1402,84 @@ void __GXGetSUTexSize(GXTexCoordID coord, u16* width, u16* height)
 	*width  = (u16)gx->suTs0[coord] + 1;
 	*height = (u16)gx->suTs1[coord] + 1;
 }
+
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+void __GXSetTmemConfig(u32 arg0)
+{
+	switch (arg0) {
+	case 1:
+	{
+		GX_WRITE_U8(0x61);
+		GX_WRITE_U32(0x8C0D8000);
+		GX_WRITE_U8(0x61);
+		GX_WRITE_U32(0x900DC000);
+		GX_WRITE_U8(0x61);
+		GX_WRITE_U32(0x8D0D8800);
+		GX_WRITE_U8(0x61);
+		GX_WRITE_U32(0x910DC800);
+		GX_WRITE_U8(0x61);
+		GX_WRITE_U32(0x8E0D9000);
+		GX_WRITE_U8(0x61);
+		GX_WRITE_U32(0x920DD000);
+		GX_WRITE_U8(0x61);
+		GX_WRITE_U32(0x8F0D9800);
+		GX_WRITE_U8(0x61);
+		GX_WRITE_U32(0x930DD800);
+		GX_WRITE_U8(0x61);
+		GX_WRITE_U32(0xAC0DA000);
+		GX_WRITE_U8(0x61);
+		GX_WRITE_U32(0xB00DE000);
+		GX_WRITE_U8(0x61);
+		GX_WRITE_U32(0xAD0DA800);
+		GX_WRITE_U8(0x61);
+		GX_WRITE_U32(0xB10DE800);
+		GX_WRITE_U8(0x61);
+		GX_WRITE_U32(0xAE0DB000);
+		GX_WRITE_U8(0x61);
+		GX_WRITE_U32(0xB20DF000);
+		GX_WRITE_U8(0x61);
+		GX_WRITE_U32(0xAF0DB800);
+		GX_WRITE_U8(0x61);
+		GX_WRITE_U32(0xB30DF800);
+		break;
+	}
+	case 0:
+	default:
+	{
+		GX_WRITE_U8(0x61);
+		GX_WRITE_U32(0x8C0D8000);
+		GX_WRITE_U8(0x61);
+		GX_WRITE_U32(0x900DC000);
+		GX_WRITE_U8(0x61);
+		GX_WRITE_U32(0x8D0D8400);
+		GX_WRITE_U8(0x61);
+		GX_WRITE_U32(0x910DC400);
+		GX_WRITE_U8(0x61);
+		GX_WRITE_U32(0x8E0D8800);
+		GX_WRITE_U8(0x61);
+		GX_WRITE_U32(0x920DC800);
+		GX_WRITE_U8(0x61);
+		GX_WRITE_U32(0x8F0D8C00);
+		GX_WRITE_U8(0x61);
+		GX_WRITE_U32(0x930DCC00);
+		GX_WRITE_U8(0x61);
+		GX_WRITE_U32(0xAC0D9000);
+		GX_WRITE_U8(0x61);
+		GX_WRITE_U32(0xB00DD000);
+		GX_WRITE_U8(0x61);
+		GX_WRITE_U32(0xAD0D9400);
+		GX_WRITE_U8(0x61);
+		GX_WRITE_U32(0xB10DD400);
+		GX_WRITE_U8(0x61);
+		GX_WRITE_U32(0xAE0D9800);
+		GX_WRITE_U8(0x61);
+		GX_WRITE_U32(0xB20DD800);
+		GX_WRITE_U8(0x61);
+		GX_WRITE_U32(0xAF0D9C00);
+		GX_WRITE_U8(0x61);
+		GX_WRITE_U32(0xB30DDC00);
+		break;
+	}
+	}
+}
+#endif

@@ -902,7 +902,7 @@ BOOL EXISync(s32 chan)
 /**
  * @TODO: Documentation
  */
-int EXIClearInterrupts(s32 chan, BOOL exi, BOOL tc, BOOL ext)
+BOOL EXIClearInterrupts(s32 chan, BOOL exi, BOOL tc, BOOL ext)
 {
 	u32 cpr;
 	u32 prev;

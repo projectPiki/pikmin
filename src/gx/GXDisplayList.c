@@ -87,7 +87,12 @@ void GXCallDisplayList(void* list, u32 nbytes)
 #if DEBUG
 	__GXShadowDispList(list, nbytes);
 #endif
+
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+	if (*(u32*)&gx->_00 == 0) {
+#else
 	if (*(u32*)&gx->vNum != 0) { // checks both vNum and bpSent
+#endif
 		__GXSendFlushPrim();
 	}
 	GX_WRITE_U8(0x40);

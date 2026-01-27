@@ -322,6 +322,22 @@ GXRenderModeObj GXRmHW         = { 1,
 	                               { 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6 },
 	                               { 0, 0, 21, 22, 21, 0, 0 } };
 
+#if defined(VERSION_GPIP01_00)
+GXRenderModeObj GXEurgb60Hz480IntDf = { 20,
+	                                    640,
+	                                    480,
+	                                    480,
+	                                    40,
+	                                    0,
+	                                    640,
+	                                    480,
+	                                    1,
+	                                    0,
+	                                    0,
+	                                    { 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6 },
+	                                    { 8, 8, 10, 12, 10, 8, 8 } };
+#endif
+
 /**
  * @TODO: Documentation
  * @note UNUSED Size: 000120
@@ -483,6 +499,34 @@ void GXSetCopyClamp(GXFBClamp clamp)
 	SET_REG_FIELD(0x485, gx->cpTex, 1, 1, clmpB);
 }
 
+static u32 __GXGetNumXfbLines(u32 efbHt, u32 iScale)
+{
+	u32 count;
+	u32 realHt;
+	u32 iScaleD;
+
+	count  = (efbHt - 1) * 0x100;
+	realHt = (count / iScale) + 1;
+
+	iScaleD = iScale;
+
+	if (iScaleD > 0x80 && iScaleD < 0x100) {
+		while (iScaleD % 2 == 0) {
+			iScaleD /= 2;
+		}
+
+		if (efbHt % iScaleD == 0) {
+			realHt++;
+		}
+	}
+
+	if (realHt > 0x400) {
+		realHt = 0x400;
+	}
+
+	return realHt;
+}
+
 /**
  * @TODO: Documentation
  */
@@ -499,17 +543,29 @@ u32 GXSetDispCopyYScale(f32 vscale)
 	OSAssertMsgLine(0x49D, vscale >= 1.0f, "GXSetDispCopyYScale: Vertical scale must be >= 1.0");
 
 	iScale = (u32)(256.0f / vscale) & 0x1FF;
+#if defined(VERSION_GPIP01_00)
+#else
 	fScale = 256.0f / (f32)iScale;
+#endif
 	enable = (iScale != 256);
 
 	reg = 0;
 	SET_REG_FIELD(0x4A6, reg, 9, 0, iScale);
 	SET_REG_FIELD(0x4A7, reg, 8, 24, 0x4E);
 	GX_WRITE_RAS_REG(reg);
-	gx->bpSent = 1;
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+	gx->bpSent = GX_FALSE;
+#else
+	gx->bpSent = GX_TRUE;
+#endif
 	SET_REG_FIELD(0x4AB, gx->cpDisp, 1, 10, enable);
-	ht = GET_REG_FIELD(gx->cpDispSize, 10, 10) + 1;
+	ht = (u32)GET_REG_FIELD(gx->cpDispSize, 10, 10) + 1;
+
+#if defined(VERSION_GPIP01_00)
+	return __GXGetNumXfbLines(ht, iScale);
+#else
 	return ht * fScale;
+#endif
 }
 
 /**
@@ -538,7 +594,11 @@ void GXSetCopyClear(GXColor clear_clr, u32 clear_z)
 	SET_REG_FIELD(0x4D5, reg, 24, 0, clear_z);
 	SET_REG_FIELD(0x4D6, reg, 8, 24, 0x51);
 	GX_WRITE_RAS_REG(reg);
-	gx->bpSent = 1;
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+	gx->bpSent = GX_FALSE;
+#else
+	gx->bpSent = GX_TRUE;
+#endif
 }
 
 /**
@@ -622,7 +682,11 @@ void GXSetCopyFilter(GXBool aa, const u8 sample_pattern[12][2], GXBool vf, const
 	}
 	GX_WRITE_RAS_REG(coeff0);
 	GX_WRITE_RAS_REG(coeff1);
-	gx->bpSent = 1;
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+	gx->bpSent = GX_FALSE;
+#else
+	gx->bpSent = GX_TRUE;
+#endif
 }
 
 /**
@@ -727,7 +791,11 @@ void GXCopyDisp(void* dest, GXBool clear)
 	if (changePeCtrl) {
 		GX_WRITE_RAS_REG(gx->peCtrl);
 	}
-	gx->bpSent = 1;
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+	gx->bpSent = GX_FALSE;
+#else
+	gx->bpSent = GX_TRUE;
+#endif
 }
 
 /**
@@ -791,7 +859,11 @@ void GXCopyTex(void* dest, GXBool clear)
 	if (changePeCtrl) {
 		GX_WRITE_RAS_REG(gx->peCtrl);
 	}
-	gx->bpSent = 1;
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+	gx->bpSent = GX_FALSE;
+#else
+	gx->bpSent = GX_TRUE;
+#endif
 }
 
 /**
@@ -806,7 +878,11 @@ void GXClearBoundingBox(void)
 	GX_WRITE_RAS_REG(reg);
 	reg = 0x560003FF;
 	GX_WRITE_RAS_REG(reg);
-	gx->bpSent = 1;
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+	gx->bpSent = GX_FALSE;
+#else
+	gx->bpSent = GX_TRUE;
+#endif
 }
 
 /**

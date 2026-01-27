@@ -102,18 +102,23 @@ struct CARDDirCheck {
 
 // Struct for CARD information (size 0x110).
 struct CARDControl {
-	BOOL attached;                  // _00
-	s32 result;                     // _04
-	u16 size;                       // _08, size in Mbits.
-	u16 pageSize;                   // _0A, program size in bytes.
-	s32 sectorSize;                 // _0C, erase size in bytes.
-	u16 cBlock;                     // _10, # blocks.
-	u16 vendorID;                   // _12, 0xC243 for MX, 0xECE6 for Samsung
-	s32 latency;                    // _14, read latency in bytes.
-	u8 id[0xC];                     // _18
-	int mountStep;                  // _24
-	int formatStep;                 // _28
-	u32 scramble;                   // _2C, for __CARDUnlock().
+	BOOL attached;             // _00
+	s32 result;                // _04
+	u16 size;                  // _08, size in Mbits.
+	u16 pageSize;              // _0A, program size in bytes.
+	s32 sectorSize;            // _0C, erase size in bytes.
+	u16 cBlock;                // _10, # blocks.
+	u16 vendorID;              // _12, 0xC243 for MX, 0xECE6 for Samsung
+	s32 latency;               // _14, read latency in bytes.
+	u8 id[0xC];                // _18
+	int mountStep;             // _24
+#if defined(VERSION_GPIP01_00) // somethings fishy with this...
+	u32 scramble;              // _28, for __CARDUnlock().
+	int formatStep;            // _2C
+#else
+	int formatStep; // _28
+	u32 scramble;   // _2C, for __CARDUnlock().
+#endif
 	DSPTaskInfo task;               // _30
 	CARDMemoryCard* workArea;       // _80, void* in docs.
 	CARDDirectoryBlock* currentDir; // _84, CARDDir* in docs.
@@ -138,8 +143,11 @@ struct CARDControl {
 	CARDCallback eraseCallback;     // _D8
 	CARDCallback unlockCallback;    // _DC
 	OSAlarm alarm;                  // _E0, for timeout.
-	                                // u32 cid;                        // _108
-	                                // const DVDDiskID* diskID;        // _10C
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+	u32 cid;                 // _108
+	const DVDDiskID* diskID; // _10C
+#endif
+	// while these members DO clearly exist in demo, dsp_cardunlock.c in jaudio seems to disagree
 };
 
 // CARD identification struct (size 0x200).
@@ -300,7 +308,11 @@ s32 __CARDSync(s32 channel);
 void __CARDCheckSum(void* data, int length, u16* checksum, u16* checksumInv);
 s32 __CARDVerify(CARDControl* card);
 BOOL __CARDCompareFileName(CARDDir* entry, const char* fileName);
-s32 __CARDAccess(CARDDir* ent);
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+s32 __CARDAccess(CARDControl* card, CARDDir* ent);
+#else
+s32 __CARDAccess(CARDDir* entry);
+#endif
 s32 __CARDIsPublic(CARDDir* ent);
 BOOL __CardIsOpened(CARDControl* card, s32 fileNo);
 s32 __CARDRead(s32 channel, u32 addr, s32 length, void* dst, CARDCallback callback);

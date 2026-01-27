@@ -21,8 +21,13 @@ static void CreateCallbackFat(s32 channel, s32 result)
 
 	dir = __CARDGetDirBlock(card);
 	ent = &dir->entries[card->freeNo];
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+	memcpy(ent->gameName, card->diskID->gameName, sizeof(ent->gameName));
+	memcpy(ent->company, card->diskID->company, sizeof(ent->company));
+#else
 	memcpy(ent->gameName, __CARDDiskID->gameName, sizeof(ent->gameName));
 	memcpy(ent->company, __CARDDiskID->company, sizeof(ent->company));
+#endif
 	ent->permission = CARD_ATTR_PUBLIC;
 	ent->copyTimes  = 0;
 	ent->startBlock = card->startBlock;
@@ -86,8 +91,13 @@ s32 CARDCreateAsync(s32 channel, const char* fileName, u32 size, CARDFileInfo* f
 			if (freeNo == (u16)-1) {
 				freeNo = fileNo;
 			}
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+		} else if (memcmp(ent->gameName, card->diskID->gameName, sizeof(ent->gameName)) == 0
+		           && memcmp(ent->company, card->diskID->company, sizeof(ent->company)) == 0 && __CARDCompareFileName(ent, fileName)) {
+#else
 		} else if (memcmp(ent->gameName, __CARDDiskID->gameName, sizeof(ent->gameName)) == 0
 		           && memcmp(ent->company, __CARDDiskID->company, sizeof(ent->company)) == 0 && __CARDCompareFileName(ent, fileName)) {
+#endif
 			return __CARDPutControlBlock(card, CARD_RESULT_EXIST);
 		}
 	}

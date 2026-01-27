@@ -56,9 +56,15 @@ void GXFlush(void)
 	if (gx->dirtyState) {
 		__GXSetDirtyState();
 	}
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+	for (i = 8; i > 0; i--) {
+		GX_WRITE_U32(0);
+	}
+#else
 	for (i = 32; i > 0; i--) {
 		GX_WRITE_U8(0);
 	}
+#endif
 	PPCSync();
 }
 
@@ -185,7 +191,11 @@ void GXPixModeSync(void)
 {
 	CHECK_GXBEGIN(550, "GXPixModeSync");
 	GX_WRITE_RAS_REG(gx->peCtrl);
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+	gx->bpSent = GX_FALSE;
+#else
 	gx->bpSent = GX_TRUE;
+#endif
 }
 
 /**

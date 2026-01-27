@@ -293,7 +293,7 @@ config.linker_version = "GC/1.2.5"
 # Helper function for Dolphin libraries
 def DolphinLib(lib_name: str, objects: List[Object]) -> Dict[str, Any]:
     mw_version = "GC/1.2.5"
-    if version_num == 0 or version_num == 7:  # JPN demo and PAL
+    if version_num == 0 or version_num == 7 or ((lib_name == "card" or lib_name == "hio") and version_num == 3):  # JPN demo, PAL, and SOMETIMES usa demo
         mw_version = "GC/1.2.5n"
     return {
         "lib": lib_name,
@@ -354,7 +354,7 @@ config.libs = [
             Object(Matching, "jaudio/osdsp.c"),
             Object(not MatchingFor("GPIP01_00"), "jaudio/osdsp_task.c"),
             Object(Matching, "jaudio/ipldec.c"),
-            Object(Matching, "jaudio/dsp_cardunlock.c"),
+            Object(not MatchingFor("G98E01_PIKIDEMO"), "jaudio/dsp_cardunlock.c"),
             Object(Matching, "jaudio/driverinterface.c"),
             Object(Matching, "jaudio/dspdriver.c"),
             Object(Matching, "jaudio/dspinterface.c"),
@@ -950,71 +950,61 @@ config.libs = [
     DolphinLib(
         "card",
         [
-            Object(not MatchingFor("G98E01_PIKIDEMO", "GPIP01_00"), "card/CARDBios.c"),
-            Object(not MatchingFor("GPIP01_00"), "card/CARDUnlock.c"),
-            Object(not MatchingFor("G98E01_PIKIDEMO", "GPIP01_00"), "card/CARDRdwr.c"),
-            Object(not MatchingFor("G98E01_PIKIDEMO", "GPIP01_00"), "card/CARDBlock.c"),
-            Object(not MatchingFor("G98E01_PIKIDEMO", "GPIP01_00"), "card/CARDDir.c"),
-            Object(not MatchingFor("G98E01_PIKIDEMO", "GPIP01_00"), "card/CARDCheck.c"),
-            Object(not MatchingFor("G98E01_PIKIDEMO", "GPIP01_00"), "card/CARDMount.c"),
-            Object(
-                not MatchingFor("G98E01_PIKIDEMO", "GPIP01_00"), "card/CARDFormat.c"
-            ),
-            Object(not MatchingFor("G98E01_PIKIDEMO", "GPIP01_00"), "card/CARDOpen.c"),
-            Object(
-                not MatchingFor("G98E01_PIKIDEMO", "GPIP01_00"), "card/CARDCreate.c"
-            ),
-            Object(not MatchingFor("G98E01_PIKIDEMO", "GPIP01_00"), "card/CARDRead.c"),
-            Object(not MatchingFor("G98E01_PIKIDEMO", "GPIP01_00"), "card/CARDWrite.c"),
-            Object(
-                not MatchingFor("G98E01_PIKIDEMO", "GPIP01_00"), "card/CARDDelete.c"
-            ),
-            Object(not MatchingFor("G98E01_PIKIDEMO", "GPIP01_00"), "card/CARDStat.c"),
-            Object(
-                not MatchingFor("G98E01_PIKIDEMO", "GPIP01_00"), "card/CARDRename.c"
-            ),
-            Object(not MatchingFor("G98E01_PIKIDEMO", "GPIP01_00"), "card/CARDNet.c"),
+            Object(Matching, "card/CARDBios.c"),
+            Object(Matching, "card/CARDUnlock.c"),
+            Object(Matching, "card/CARDRdwr.c"),
+            Object(Matching, "card/CARDBlock.c"),
+            Object(Matching, "card/CARDDir.c"),
+            Object(Matching, "card/CARDCheck.c"),
+            Object(not MatchingFor("GPIP01_00"), "card/CARDMount.c"),
+            Object(Matching, "card/CARDFormat.c"),
+            Object(Matching, "card/CARDOpen.c"),
+            Object(Matching, "card/CARDCreate.c"),
+            Object(Matching, "card/CARDRead.c"),
+            Object(Matching, "card/CARDWrite.c"),
+            Object(Matching, "card/CARDDelete.c"),
+            Object(Matching, "card/CARDStat.c"),
+            Object(Matching, "card/CARDRename.c"),
+            Object(Matching, "card/CARDNet.c"),
         ],
     ),
     DolphinLib(
         "si",
         [
-            Object(not MatchingFor("GPIP01_00"), "si/SIBios.c"),
-            Object(not MatchingFor("GPIP01_00"), "si/SISamplingRate.c"),
+            Object(Matching, "si/SIBios.c"),
+            Object(Matching, "si/SISamplingRate.c"),
         ],
     ),
     DolphinLib(
         "exi",
         [
-            Object(not MatchingFor("GPIP01_00"), "exi/EXIBios.c"),
-            Object(not MatchingFor("GPIP01_00"), "exi/EXIUart.c"),
+            Object(Matching, "exi/EXIBios.c"),
+            Object(Matching, "exi/EXIUart.c"),
         ],
     ),
     DolphinLib(
         "hio",
         [
-            Object(not MatchingFor("G98E01_PIKIDEMO", "GPIP01_00"), "hio/hio.c"),
+            Object(Matching, "hio/hio.c"),
         ],
     ),
     DolphinLib(
         "gx",
         [
-            Object(not MatchingFor("G98E01_PIKIDEMO", "GPIP01_00"), "gx/GXInit.c"),
-            Object(not MatchingFor("G98E01_PIKIDEMO", "GPIP01_00"), "gx/GXFifo.c"),
-            Object(not MatchingFor("G98E01_PIKIDEMO", "GPIP01_00"), "gx/GXAttr.c"),
-            Object(not MatchingFor("G98E01_PIKIDEMO", "GPIP01_00"), "gx/GXMisc.c"),
-            Object(not MatchingFor("G98E01_PIKIDEMO", "GPIP01_00"), "gx/GXGeometry.c"),
-            Object(not MatchingFor("G98E01_PIKIDEMO", "GPIP01_00"), "gx/GXFrameBuf.c"),
-            Object(not MatchingFor("G98E01_PIKIDEMO", "GPIP01_00"), "gx/GXLight.c"),
-            Object(not MatchingFor("G98E01_PIKIDEMO", "GPIP01_00"), "gx/GXTexture.c"),
-            Object(not MatchingFor("G98E01_PIKIDEMO", "GPIP01_00"), "gx/GXBump.c"),
-            Object(not MatchingFor("G98E01_PIKIDEMO", "GPIP01_00"), "gx/GXTev.c"),
-            Object(not MatchingFor("G98E01_PIKIDEMO", "GPIP01_00"), "gx/GXPixel.c"),
+            Object(Matching, "gx/GXInit.c"),
+            Object(Matching, "gx/GXFifo.c"),
+            Object(Matching, "gx/GXAttr.c"),
+            Object(Matching, "gx/GXMisc.c"),
+            Object(Matching, "gx/GXGeometry.c"),
+            Object(Matching, "gx/GXFrameBuf.c"),
+            Object(Matching, "gx/GXLight.c"),
+            Object(Matching, "gx/GXTexture.c"),
+            Object(Matching, "gx/GXBump.c"),
+            Object(Matching, "gx/GXTev.c"),
+            Object(Matching, "gx/GXPixel.c"),
             Object(Matching, "gx/GXStubs.c"),
-            Object(
-                not MatchingFor("G98E01_PIKIDEMO", "GPIP01_00"), "gx/GXDisplayList.c"
-            ),
-            Object(not MatchingFor("G98E01_PIKIDEMO", "GPIP01_00"), "gx/GXTransform.c"),
+            Object(Matching, "gx/GXDisplayList.c"),
+            Object(Matching, "gx/GXTransform.c"),
             Object(not MatchingFor("GPIP01_00"), "gx/GXPerf.c"),
         ],
     ),

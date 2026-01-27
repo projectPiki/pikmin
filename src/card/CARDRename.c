@@ -32,8 +32,13 @@ s32 CARDRenameAsync(s32 channel, const char* oldName, const char* newName, CARDC
 			continue;
 		}
 
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+		if (memcmp(ent->gameName, card->diskID->gameName, sizeof(ent->gameName)) != 0
+		    || memcmp(ent->company, card->diskID->company, sizeof(ent->company)) != 0) {
+#else
 		if (memcmp(ent->gameName, __CARDDiskID->gameName, sizeof(ent->gameName)) != 0
 		    || memcmp(ent->company, __CARDDiskID->company, sizeof(ent->company)) != 0) {
+#endif
 			continue;
 		}
 
@@ -52,8 +57,12 @@ s32 CARDRenameAsync(s32 channel, const char* oldName, const char* newName, CARDC
 		return __CARDPutControlBlock(card, CARD_RESULT_EXIST);
 	}
 
-	ent    = &dir->entries[oldNo];
+	ent = &dir->entries[oldNo];
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+	result = __CARDAccess(card, ent);
+#else
 	result = __CARDAccess(ent);
+#endif
 	if (result < 0) {
 		return __CARDPutControlBlock(card, result);
 	}

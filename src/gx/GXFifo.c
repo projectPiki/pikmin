@@ -3,6 +3,11 @@
 #include "Dolphin/os.h"
 #include <stddef.h>
 
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+static struct __GXFifoObj* CPUFifo;
+static struct __GXFifoObj* GPFifo;
+#endif
+
 static OSThread* __GXCurrentThread;
 static GXBool CPGPLinked;
 static BOOL GXOverflowSuspendInProgress;
@@ -12,8 +17,12 @@ static u32 __GXOverflowCount;
 static int IsWGPipeRedirected;
 #endif
 
-struct __GXFifoObj* CPUFifo;
-struct __GXFifoObj* GPFifo;
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#else
+static struct __GXFifoObj* GPFifo;
+static struct __GXFifoObj* CPUFifo;
+#endif
+
 void* __GXCurrentBP;
 
 #if DEBUG
@@ -477,6 +486,10 @@ void __GXFifoInit(void)
 	__OSUnmaskInterrupts(0x4000);
 	__GXCurrentThread           = OSGetCurrentThread();
 	GXOverflowSuspendInProgress = FALSE;
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+	CPUFifo = NULL;
+	GPFifo  = NULL;
+#endif
 }
 
 /**

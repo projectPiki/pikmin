@@ -69,7 +69,7 @@ void SITransferCommands(void);
 u32 SISetXY(u32 x, u32 y);
 u32 SIEnablePolling(u32 poll);
 u32 SIDisablePolling(u32 poll);
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
 BOOL SIGetResponse(s32 chan, void* data);
 #else
 void SIGetResponse(s32 chan, void* data);

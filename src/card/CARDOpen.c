@@ -32,17 +32,28 @@ BOOL __CARDCompareFileName(CARDDir* entry, const char* fileName)
 /**
  * @TODO: Documentation
  */
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+s32 __CARDAccess(CARDControl* card, CARDDir* entry)
+#else
 s32 __CARDAccess(CARDDir* entry)
+#endif
 {
 	if (entry->gameName[0] == 0xFF) {
 		return CARD_RESULT_NOFILE;
 	}
 
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+	if (card->diskID == &__CARDDiskNone
+	    || (memcmp(entry->gameName, card->diskID->gameName, sizeof(entry->gameName)) == 0
+	        && memcmp(entry->company, card->diskID->company, sizeof(entry->company)) == 0)) {
+		return CARD_RESULT_READY;
+	}
+#else
 	if (__CARDDiskID == &__CARDDiskNone
 	    || (memcmp(entry->gameName, __CARDDiskID->gameName, 4) == 0 && memcmp(entry->company, __CARDDiskID->company, 2) == 0)) {
 		return CARD_RESULT_READY;
 	}
-
+#endif
 	return CARD_RESULT_NOPERM;
 }
 
@@ -77,8 +88,12 @@ s32 __CARDGetFileNo(CARDControl* card, const char* fileName, s32* outFileNo)
 
 	dir = __CARDGetDirBlock(card);
 	for (fileNo = 0; fileNo < CARD_MAX_FILE; fileNo++) {
-		entry  = &dir->entries[fileNo];
+		entry = &dir->entries[fileNo];
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+		result = __CARDAccess(card, entry);
+#else
 		result = __CARDAccess(entry);
+#endif
 		if (result < 0) {
 			continue;
 		}
@@ -112,9 +127,13 @@ s32 CARDFastOpen(s32 channel, s32 fileNo, CARDFileInfo* fileInfo)
 		return result;
 	}
 
-	dir    = __CARDGetDirBlock(card);
-	ent    = &dir->entries[fileNo];
+	dir = __CARDGetDirBlock(card);
+	ent = &dir->entries[fileNo];
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+	result = __CARDAccess(card, ent);
+#else
 	result = __CARDAccess(ent);
+#endif
 	if (result == CARD_RESULT_NOPERM) {
 		result = __CARDIsPublic(ent);
 	}

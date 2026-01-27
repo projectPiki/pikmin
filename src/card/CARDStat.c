@@ -91,9 +91,13 @@ s32 CARDGetStatus(s32 channel, s32 fileNo, CARDStat* state)
 		return result;
 	}
 
-	dir    = __CARDGetDirBlock(card);
-	ent    = &dir->entries[fileNo];
+	dir = __CARDGetDirBlock(card);
+	ent = &dir->entries[fileNo];
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+	result = __CARDAccess(card, ent);
+#else
 	result = __CARDAccess(ent);
+#endif
 	if (result == CARD_RESULT_NOPERM) {
 		result = __CARDIsPublic(ent);
 	}
@@ -135,9 +139,13 @@ s32 CARDSetStatusAsync(s32 channel, s32 fileNo, CARDStat* state, CARDCallback ca
 		return result;
 	}
 
-	dir    = __CARDGetDirBlock(card);
-	ent    = &dir->entries[fileNo];
+	dir = __CARDGetDirBlock(card);
+	ent = &dir->entries[fileNo];
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+	result = __CARDAccess(card, ent);
+#else
 	result = __CARDAccess(ent);
+#endif
 	if (result < 0) {
 		return __CARDPutControlBlock(card, result);
 	}

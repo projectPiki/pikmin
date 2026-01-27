@@ -105,9 +105,13 @@ s32 CARDWriteAsync(CARDFileInfo* fileInfo, void* buffer, s32 length, s32 offset,
 		return __CARDPutControlBlock(card, CARD_RESULT_FATAL_ERROR);
 	}
 
-	dir    = __CARDGetDirBlock(card);
-	ent    = &dir->entries[fileInfo->fileNo];
+	dir = __CARDGetDirBlock(card);
+	ent = &dir->entries[fileInfo->fileNo];
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+	result = __CARDAccess(card, ent);
+#else
 	result = __CARDAccess(ent);
+#endif
 	if (result < 0) {
 		return __CARDPutControlBlock(card, result);
 	}

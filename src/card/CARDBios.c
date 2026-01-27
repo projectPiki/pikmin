@@ -1,7 +1,11 @@
 #include "Dolphin/card.h"
 #include <stddef.h>
 
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#else
 DVDDiskID* __CARDDiskID;
+#endif
+
 DVDDiskID __CARDDiskNone;
 CARDControl __CARDBlock[2];
 
@@ -42,7 +46,7 @@ void __CARDExtHandler(s32 channel, OSContext* context)
 	card = &__CARDBlock[channel];
 	if (card->attached) {
 		card->attached = FALSE;
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
 #else
 		card->result = CARD_RESULT_NOCARD;
 #endif
@@ -55,7 +59,7 @@ void __CARDExtHandler(s32 channel, OSContext* context)
 			callback(channel, CARD_RESULT_NOCARD);
 		}
 
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
 		if (card->result != CARD_RESULT_BUSY) {
 			card->result = CARD_RESULT_NOCARD;
 		}
@@ -409,8 +413,15 @@ static void UnlockedCallback(s32 channel, s32 result)
  */
 static s32 __CARDStart(s32 channel, CARDCallback txCallback, CARDCallback exiCallback)
 {
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+	BOOL enabled;
+#endif
 	CARDControl* card;
 	s32 result;
+
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+	enabled = OSDisableInterrupts();
+#endif
 
 	card = &__CARDBlock[channel];
 	if (!card->attached) {
@@ -439,6 +450,10 @@ static s32 __CARDStart(s32 channel, CARDCallback txCallback, CARDCallback exiCal
 		}
 	}
 
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+	OSRestoreInterrupts(enabled);
+#endif
+
 	return result;
 }
 
@@ -465,6 +480,23 @@ s32 __CARDReadSegment(s32 channel, CARDCallback callback)
 		return CARD_RESULT_READY;
 	}
 
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+	if (result >= 0) {
+		if (!EXIImmEx(channel, card->cmd, card->cmdlen, 1)
+		    || !EXIImmEx(channel, card->workArea->header.buffer, card->latency,
+		                 1)
+		    || // XXX use DMA if possible
+		    !EXIDma(channel, card->buffer, 512, card->mode, __CARDTxHandler)) {
+			card->txCallback = 0;
+			EXIDeselect(channel);
+			EXIUnlock(channel);
+			result = CARD_RESULT_NOCARD;
+		} else {
+			result = CARD_RESULT_READY;
+		}
+	}
+	return result;
+#else
 	if (result < 0) {
 		return result;
 	}
@@ -480,6 +512,7 @@ s32 __CARDReadSegment(s32 channel, CARDCallback callback)
 		return CARD_RESULT_NOCARD;
 	}
 	return CARD_RESULT_READY;
+#endif
 }
 
 /**
@@ -501,6 +534,20 @@ s32 __CARDWritePage(s32 channel, CARDCallback callback)
 	card->retry  = 3;
 
 	result = __CARDStart(channel, NULL, callback);
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+	if (result == CARD_RESULT_BUSY) {
+		result = CARD_RESULT_READY;
+	} else if (result >= 0) {
+		if (!EXIImmEx(channel, card->cmd, card->cmdlen, 1) || !EXIDma(channel, card->buffer, 128, card->mode, __CARDTxHandler)) {
+			card->exiCallback = 0;
+			EXIDeselect(channel);
+			EXIUnlock(channel);
+			result = CARD_RESULT_NOCARD;
+		} else
+			result = CARD_RESULT_READY;
+	}
+	return result;
+#else
 	if (result == CARD_RESULT_BUSY) {
 		return CARD_RESULT_READY;
 	}
@@ -514,6 +561,7 @@ s32 __CARDWritePage(s32 channel, CARDCallback callback)
 		return CARD_RESULT_NOCARD;
 	}
 	return CARD_RESULT_READY;
+#endif
 }
 
 /**
@@ -543,6 +591,22 @@ s32 __CARDEraseSector(s32 channel, u32 addr, CARDCallback callback)
 
 	result = __CARDStart(channel, NULL, callback);
 
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+	if (result == CARD_RESULT_BUSY) {
+		result = CARD_RESULT_READY;
+	} else if (result >= 0) {
+		result = CARD_RESULT_READY;
+		if (!EXIImmEx(channel, card->cmd, card->cmdlen, 1)) {
+			result            = CARD_RESULT_NOCARD;
+			card->exiCallback = NULL;
+		} else {
+			result = CARD_RESULT_READY;
+		}
+		EXIDeselect(channel);
+		EXIUnlock(channel);
+	}
+#else
+
 	if (result == CARD_RESULT_BUSY) {
 		return CARD_RESULT_READY;
 	}
@@ -556,9 +620,9 @@ s32 __CARDEraseSector(s32 channel, u32 addr, CARDCallback callback)
 		result            = CARD_RESULT_NOCARD;
 		card->exiCallback = NULL;
 	}
-
 	EXIDeselect(channel);
 	EXIUnlock(channel);
+#endif
 	return result;
 }
 
@@ -569,7 +633,11 @@ void CARDInit(void)
 {
 	s32 channel;
 
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+	if (__CARDBlock[0].diskID && __CARDBlock[1].diskID) {
+#else
 	if (__CARDDiskID) {
+#endif
 		return;
 	}
 
@@ -594,7 +662,12 @@ void CARDInit(void)
  */
 void __CARDSetDiskID(DVDDiskID* diskID)
 {
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+	__CARDBlock[0].diskID = diskID ? diskID : &__CARDDiskNone;
+	__CARDBlock[1].diskID = diskID ? diskID : &__CARDDiskNone;
+#else
 	__CARDDiskID = diskID ? diskID : &__CARDDiskNone;
+#endif
 }
 
 /**
@@ -605,13 +678,21 @@ s32 __CARDGetControlBlock(s32 channel, CARDControl** card)
 	BOOL enabled;
 	s32 result;
 	CARDControl* reqCard;
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+	reqCard = &__CARDBlock[channel];
+	if (channel < 0 || channel >= 2 || reqCard->diskID == NULL) {
+		return CARD_RESULT_FATAL_ERROR;
+	}
 
+	enabled = OSDisableInterrupts();
+#else
 	if (channel < 0 || channel >= 2 || __CARDDiskID == NULL) {
 		return CARD_RESULT_FATAL_ERROR;
 	}
 
 	enabled = OSDisableInterrupts();
 	reqCard = &__CARDBlock[channel];
+#endif
 	if (!reqCard->attached) {
 		result = CARD_RESULT_NOCARD;
 	} else if (reqCard->result == CARD_RESULT_BUSY) {
@@ -634,9 +715,19 @@ s32 __CARDPutControlBlock(CARDControl* card, s32 result)
 	BOOL enabled;
 
 	enabled = OSDisableInterrupts();
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+	if (card->attached) {
+		card->result = result;
+	} else if (card->result == CARD_RESULT_BUSY) {
+		card->result = result;
+	} else {
+		OSAssertLine(0x442, card->result == CARD_RESULT_NOCARD);
+	}
+#else
 	if (card->attached) {
 		card->result = result;
 	}
+#endif
 	OSRestoreInterrupts(enabled);
 	return result;
 }
