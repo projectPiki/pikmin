@@ -293,7 +293,7 @@ config.linker_version = "GC/1.2.5"
 # Helper function for Dolphin libraries
 def DolphinLib(lib_name: str, objects: List[Object]) -> Dict[str, Any]:
     mw_version = "GC/1.2.5"
-    if version_num == 0 or version_num == 7 or ((lib_name == "card" or lib_name == "hio") and version_num == 3):  # JPN demo, PAL, and SOMETIMES usa demo
+    if version_num == 0 or version_num == 7 or ((lib_name == "card" or lib_name == "hio" or lib_name == "mtx") and version_num == 3):  # JPN demo, PAL, and SOMETIMES usa demo
         mw_version = "GC/1.2.5n"
     return {
         "lib": lib_name,
@@ -891,17 +891,14 @@ config.libs = [
             Object(Matching, "db/db.c"),
         ],
     ),
-    {
-        "lib": "mtx",
-        "mw_version": "GC/1.2.5",
-        "cflags": cflags_base,
-        "progress_category": "sdk",
-        "objects": [
-            Object(not MatchingFor("G98E01_PIKIDEMO", "GPIP01_00"), "mtx/mtx.c"),
+    DolphinLib(
+        "mtx",
+        [
+            Object(Matching, "mtx/mtx.c"),
             Object(Matching, "mtx/mtx44.c"),
             Object(Matching, "mtx/vec.c"),
         ],
-    },
+    ),
     DolphinLib(
         "dvd",
         [
