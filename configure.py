@@ -293,7 +293,7 @@ config.linker_version = "GC/1.2.5"
 # Helper function for Dolphin libraries
 def DolphinLib(lib_name: str, objects: List[Object]) -> Dict[str, Any]:
     mw_version = "GC/1.2.5"
-    if version_num in (0, 7) or ((lib_name in ("card", "hio", "mtx") and version_num == 3)):  # JPN demo, PAL, and SOMETIMES USA demo
+    if version_num in (0, 7) or ((lib_name in ("card", "hio", "mtx", "pad") and version_num == 3)):  # JPN demo, PAL, and SOMETIMES USA demo
         mw_version = "GC/1.2.5n"
     return {
         "lib": lib_name,
@@ -919,8 +919,8 @@ config.libs = [
     DolphinLib(
         "pad",
         [
-            Object(not MatchingFor("G98E01_PIKIDEMO"), "pad/Padclamp.c"),
-            Object(not MatchingFor("G98E01_PIKIDEMO", "GPIP01_00"), "pad/Pad.c"),
+            Object(Matching, "pad/Padclamp.c"),
+            Object(not MatchingFor("G98E01_PIKIDEMO"), "pad/Pad.c"),
         ],
     ),
     DolphinLib(
@@ -932,16 +932,16 @@ config.libs = [
     DolphinLib(
         "ar",
         [
-            Object(not MatchingFor("GPIP01_00"), "ar/ar.c"),
+            Object(Matching, "ar/ar.c"),
             Object(Matching, "ar/arq.c"),
         ],
     ),
     DolphinLib(
         "dsp",
         [
-            Object(not MatchingFor("GPIP01_00"), "dsp/dsp.c"),
-            Object(not MatchingFor("GPIP01_00"), "dsp/dsp_debug.c"),
-            Object(not MatchingFor("GPIP01_00"), "dsp/dsp_task.c"),
+            Object(Matching, "dsp/dsp.c"),
+            Object(Matching, "dsp/dsp_debug.c"),
+            Object(Matching, "dsp/dsp_task.c"),
         ],
     ),
     DolphinLib(

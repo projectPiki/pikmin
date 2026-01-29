@@ -120,3 +120,36 @@ void DSPAssertTask(void)
 {
 	// UNUSED FUNCTION
 }
+
+#if defined(VERSION_GPIP01_00)
+
+static int __DSP_init_flag;
+
+void DSPInit(void)
+{
+	BOOL old;
+	u16 tmp;
+
+	__DSP_debug_printf("DSPInit(): Build Date: %s %s\n", "Dec 17 2001", "18:25:00");
+
+	if (__DSP_init_flag == 1)
+		return;
+
+	old = OSDisableInterrupts();
+	__OSSetInterruptHandler(7, __DSPHandler);
+	__OSUnmaskInterrupts(OS_INTERRUPTMASK_DSP_DSP);
+
+	tmp          = __DSPRegs[5];
+	tmp          = (tmp & ~0xA8) | 0x800;
+	__DSPRegs[5] = tmp;
+
+	tmp          = __DSPRegs[5];
+	__DSPRegs[5] = tmp = tmp & ~0xAC;
+
+	__DSP_first_task = __DSP_last_task = __DSP_curr_task = __DSP_tmp_task = NULL;
+	__DSP_init_flag                                                       = 1;
+
+	OSRestoreInterrupts(old);
+}
+
+#endif
