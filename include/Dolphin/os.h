@@ -13,6 +13,7 @@
 #include "Dolphin/OS/OSException.h"
 #include "Dolphin/OS/OSExi.h"
 #include "Dolphin/OS/OSExpansion.h"
+#include "Dolphin/OS/OSFastCast.h"
 #include "Dolphin/OS/OSFont.h"
 #include "Dolphin/OS/OSInterrupt.h"
 #include "Dolphin/OS/OSMemory.h"
@@ -25,8 +26,6 @@
 #include "Dolphin/OS/OSThread.h"
 #include "Dolphin/OS/OSTime.h"
 #include "Dolphin/OS/OSUtil.h"
-
-// #include "Dolphin/OS/OSFastCast.h" // Is intentionally omitted for jaudio bc paired single asm instructions mess with proc 750
 
 BEGIN_SCOPE_EXTERN_C
 

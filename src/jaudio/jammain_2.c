@@ -53,9 +53,6 @@ static seqp_* SEQ_P;
 static u8 SEQ_CMD;
 static u32 SEQ_ARG[8];
 
-// predeclare this so Jam_UpdateTrackAll can use this stupid function.
-extern "C" static void OSf32tos8(f32* in, s8* out);
-
 /**
  * @TODO: Documentation
  */
@@ -1444,21 +1441,6 @@ void Jam_UpdateTrackAll(seqp_* track)
 			track->parentController.distFilter = track->timedParam.inner.distFilter.currentValue * 32767.0f;
 		}
 	}
-}
-
-#define OS_FASTCAST_S8 (4)
-
-/**
- * @TODO: Documentation
- */
-static void OSf32tos8(register f32* in, register s8* out)
-{
-#ifdef __MWERKS__
-	asm {
-		lfs       f1, 0 (in)
-		psq_st    f1, 0 (out), 0x1, OS_FASTCAST_S8
-	}
-#endif
 }
 
 /**
