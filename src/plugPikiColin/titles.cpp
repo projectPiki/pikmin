@@ -127,7 +127,7 @@ struct TitleSetupSection : public Node {
 		seSystem = new SeSystem();
 #endif
 
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 		// if you spend 30 minutes on the demo title screen, the game reboots and freezes lol
 		mIdleMovieTimer = 1800.0f;
 #else
@@ -302,7 +302,7 @@ struct TitleSetupSection : public Node {
 			// play pre-rendered tutorial movie
 			if (mIdleMovieTimer < 0.0f) {
 				mIdleMovieTimer = 0.0f;
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 				// demo takes 30 minutes to trigger this, but no movies - hard reset and freeze
 				gsys->forceHardReset();
 				while (true) { }
@@ -381,7 +381,7 @@ struct TitleSetupSection : public Node {
 
 					// handle pressing A or START on PRESS START screen
 					if (startWindowOn && !titleWindowOn && mController->keyClick(KBBTN_START | KBBTN_A)) {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 						// demo doesn't use the title menu, jump straight into Forest of Hope challenge mode
 						mNextSectionsFlag                = PACK_NEXT_ONEPLAYER(ONEPLAYER_GameSetup);
 						gameflow.mGamePrefs.mHasSaveGame = false;
@@ -435,7 +435,7 @@ struct TitleSetupSection : public Node {
 
 					} else if (titleState == zen::ogScrTitleMgr::STATUS_Unk5 || titleState == zen::ogScrTitleMgr::STATUS_ExitToStart) {
 						// cancel out of menu back to PRESS START, save all preferences and check if language restart required
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 						STACK_PAD_VAR(1);
 						if (gameflow.mGamePrefs.mChangesPending)
 							gameflow.mMemoryCard.saveOptions();
@@ -804,7 +804,7 @@ void TitlesSection::init()
 	gameflow.mLevelBannerTex         = nullptr;
 	gameflow.mLevelBannerFadeValue   = 1.0f;
 	gameflow.mGamePrefs.mHasSaveGame = true;
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 	// no save games/memory card for demo
 #else
 	if (gameflow.mMemoryCard.getMemoryCardState(true) == CARD_RESULT_READY && gameflow.mMemoryCard.mSaveFileIndex >= 0) {

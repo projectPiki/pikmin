@@ -123,7 +123,7 @@ private:
 	P2DPane* mFormatEffPane;                                // _A8
 	P2DTextBox* mYesPane;                                   // _AC
 	P2DTextBox* mNoPane;                                    // _B0
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01) //
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01) //
 #else                                                       //
 	P2DTextBox* mYesPane2; // _B4
 	P2DTextBox* mNoPane2;  // _B8
@@ -135,7 +135,7 @@ private:
 	int _CC;                                                // _CC
 	int _D0;                                                // _D0
 	ogNitakuMgr* mNitakuMgr;                                // _D4
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01) //
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01) //
 #else                                                       //
 	char* mYesText;            // _D8
 	char* mNoText;             // _DC

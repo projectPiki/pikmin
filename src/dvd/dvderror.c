@@ -1,7 +1,7 @@
 #include "Dolphin/dvd.h"
 #include "Dolphin/os.h"
 
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01_00) || defined(VERSION_G98P01_PIKIDEMO)
 u32 ErrorTable[18] = { 0x00000000, 0x00023A00, 0x00062800, 0x00030200, 0x00031100, 0x00052000, 0x00052001, 0x00052100, 0x00052400,
 	                   0x00052401, 0x00052402, 0x000B5A01, 0x00056300, 0x00020401, 0x00020400, 0x00040800, 0x00100007, 0x00000000 };
 #else
@@ -21,7 +21,7 @@ u8 ErrorCode2Num(u32 errorCode)
 		}
 	}
 
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01_00) || defined(VERSION_G98P01_PIKIDEMO)
 	if ((errorCode >= 0x00100000) && (errorCode <= 0x00100008)) {
 		return 17;
 	}

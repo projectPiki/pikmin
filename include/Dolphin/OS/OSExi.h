@@ -38,7 +38,7 @@ typedef struct EXIControl {
 	int immLen;              // _10
 	u8* immBuf;              // _14
 	u32 dev;                 // _18
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_GPIP01_00)
 	u32 id;
 	s32 idTime;
 #endif
@@ -58,7 +58,7 @@ BOOL EXIImm(s32 channel, void* buffer, s32 length, u32 type, EXICallback callbac
 BOOL EXIImmEx(s32 channel, void* buffer, s32 length, u32 type);
 BOOL EXIDma(s32 channel, void* buffer, s32 length, u32 type, EXICallback callback);
 BOOL EXISync(s32 channel);
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01_00) || defined(VERSION_G98P01_PIKIDEMO)
 u32 EXIClearInterrupts(s32 channel, BOOL clearExiBit, BOOL clearTcBit, BOOL clearExtBit);
 #else
 BOOL EXIClearInterrupts(s32 channel, BOOL clearExiBit, BOOL clearTcBit, BOOL clearExtBit);

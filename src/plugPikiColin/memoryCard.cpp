@@ -884,7 +884,7 @@ void MemoryCard::saveCurrentGame()
  */
 void MemoryCard::writeCurrentGame(RandomAccessStream* output, PlayState& playState)
 {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 	if (playerState) {
 		playState.mRedPikiCount    = playerState->hasContainer(Red) ? playerState->getCardPikiCount(Red) : -1;
 		playState.mYellowPikiCount = playerState->hasContainer(Yellow) ? playerState->getCardPikiCount(Yellow) : -1;
@@ -933,10 +933,10 @@ void MemoryCard::initBannerArea(CARDStat& state, immut char* p2)
 	char comment2[0x20];
 
 	RamStream stream(cardData, state.length);
-#if defined(VERSION_GPIJ01_01)
+#if defined(VERSION_GPIJ01)
 	sprintf(comment1, "ピクミン");
 	sprintf(comment2, "ブロック");
-#elif defined(VERSION_G98E01_PIKIDEMO)
+#elif defined(VERSION_PIKIDEMO)
 	sprintf(comment1, "ピクミン");
 	sprintf(comment2, p2);
 #else

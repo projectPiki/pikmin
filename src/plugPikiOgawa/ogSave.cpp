@@ -31,7 +31,7 @@ DEFINE_PRINT("OgSaveSection")
  */
 zen::ogSaveMgr::ogSaveMgr()
 {
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
 #else
 	mFileChkSelected = false;
 #endif
@@ -155,7 +155,7 @@ zen::ogSaveMgr::SaveStatus zen::ogSaveMgr::update(Controller* input)
 		mStatus = Inactive;
 		return mStatus;
 	}
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
 	mFileChkSelected = true;
 #endif
 
@@ -169,7 +169,7 @@ zen::ogSaveMgr::SaveStatus zen::ogSaveMgr::update(Controller* input)
 	if (fileChkSelRes == ogScrFileChkSelMgr::SelectionA || fileChkSelRes == ogScrFileChkSelMgr::SelectionB
 	    || fileChkSelRes == ogScrFileChkSelMgr::SelectionC) {
 		gameflow.mPlayState.mSaveSlot = mFileChkData.mGameSaveSlot;
-#if defined(VERSION_GPIJ01_01)
+#if defined(VERSION_GPIJ01)
 		gameflow.mGamePrefs.mMemCardSaveIndex = mFileChkData.mMemCardSaveIndex + 1;
 #else
 		gameflow.mGamePrefs.mSpareMemCardSaveIndex = mFileChkData.mMemCardSaveIndex + 1;
@@ -180,7 +180,7 @@ zen::ogSaveMgr::SaveStatus zen::ogSaveMgr::update(Controller* input)
 
 	} else if (fileChkSelRes == ogScrFileChkSelMgr::ForceExit) {
 		mStatus = ExitSuccess;
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
 #else
 		mFileChkSelected = false;
 #endif
@@ -188,14 +188,14 @@ zen::ogSaveMgr::SaveStatus zen::ogSaveMgr::update(Controller* input)
 
 	} else if (fileChkSelRes == ogScrFileChkSelMgr::ErrorOrCompleted) {
 		mStatus = ExitFailure;
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
 #else
 		mFileChkSelected = false;
 #endif
 		return mStatus;
 
 	} else if (fileChkSelRes != ogScrFileChkSelMgr::Null) {
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
 		mFileChkSelected = false;
 #else
 		mFileChkSelected = true;
@@ -206,7 +206,7 @@ zen::ogSaveMgr::SaveStatus zen::ogSaveMgr::update(Controller* input)
 	zen::ogScrMemChkMgr::MemChkStatus memCheckRes = mMemCheckMgr->update(input);
 	if (memCheckRes == ogScrMemChkMgr::Finished) {
 		mFileChkSelMgr->startSave();
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
 #else
 		mFileChkSelected = true;
 #endif
@@ -221,7 +221,7 @@ zen::ogSaveMgr::SaveStatus zen::ogSaveMgr::update(Controller* input)
 		mStatus = ExitFailure;
 		return mStatus;
 	}
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
 	else if (memCheckRes == ogScrMemChkMgr::Inactive)
 #else
 	else if (memCheckRes != ogScrMemChkMgr::Inactive) {
@@ -252,7 +252,7 @@ zen::ogSaveMgr::SaveStatus zen::ogSaveMgr::update(Controller* input)
 				mWindow1->setScale(t);
 				f32 alpha = f32(mSaveCenterTextBox->getAlpha() * t);
 				mBackPicture->setAlpha(alpha);
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
 #else
 				PRINT("SAVE FADEIN alpha = %d\n", (int)alpha);
 #endif
@@ -459,7 +459,7 @@ void zen::ogSaveMgr::draw(Graphics& gfx)
 	P2DPerspGraph graf(0, 0, 640, 480, 30.0f, 1.0f, 5000.0f);
 	graf.setPort();
 
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
 	if (!mFileChkSelected) {
 		mBlackScreen->draw(0, 0, &graf);
 		mFileChkSelMgr->draw(gfx);

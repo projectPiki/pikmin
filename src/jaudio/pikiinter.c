@@ -34,7 +34,7 @@ typedef struct SEvent_ {
 	u8 _148[0x160 - 0x148];        // _148, unknown
 	f32 volume;                    // _160
 	f32 pan;                       // _164
-#if defined(VERSION_GPIJ01_01)
+#if defined(VERSION_GPIJ01_01) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_DPIJ01_PIKIDEMO)
 	u8 _168[0x170 - 0x16C]; // _168, unknown
 #else
 	u8 _168[0x170 - 0x168]; // _168, unknown
@@ -119,7 +119,11 @@ static struct ActionStatus {
 	{ 0x14, 0x00, 0x08, 0x36 },  { 0x14, 0x01, 0x09, 0x37 },  { 0x14, 0x01, 0x09, 0x38 },  { 0x14, 0x00, 0x08, 0x39 },
 	{ 0x14, 0x00, 0x08, 0x90 },  { 0x10, 0x02, 0x07, 0x3A },  { 0x10, 0x00, 0x07, 0x3B },  { 0x00, 0x04, 0x07, 0x112 },
 	{ 0x14, 0x01, 0x07, 0x3C },  { 0x34, 0x00, 0x03, 0x2B },  { 0x00, 0x01, 0x04, 0x2C },  { 0x34, 0x00, 0x03, 0x1B },
+#if defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_DPIJ01_PIKIDEMO)
+	{ 0x34, 0x00, 0x03, 0x8B },  { 0x00, 0x00, 0x04, 0x91 },  { 0x14, 0x00, 0x03, 0x2B },  { 0x13, 0x00, 0x03, 0xDD },
+#else
 	{ 0x34, 0x00, 0x03, 0x8B },  { 0x00, 0x00, 0x04, 0x91 },  { 0x34, 0x00, 0x03, 0x2B },  { 0x13, 0x00, 0x03, 0xDD },
+#endif
 	{ 0x13, 0x01, 0x03, 0xDE },  { 0x12, 0x00, 0x03, 0xDF },  { 0x00, 0x01, 0x05, 0xEA },  { 0x00, 0x00, 0x03, 0x90 },
 	{ 0x32, 0x00, 0x04, 0xD9 },  { 0x00, 0x00, 0x04, 0x29 },  { 0x00, 0x00, 0x04, 0x8F },  { 0x20, 0x01, 0x05, 0xA0 },
 	{ 0x20, 0x00, 0x01, 0xA1 },  { 0x20, 0x00, 0x04, 0xA2 },  { 0x20, 0x00, 0x01, 0xA3 },  { 0x20, 0x02, 0x04, 0xA4 },
@@ -334,7 +338,7 @@ int Jac_CreateEvent(u32 eventType, struct SVector_* p2)
 		event->statusEntries[i].timeStamp = event->statusEntries[i].actionGroup = event->statusEntries[i].statusIdx = 0;
 	}
 
-#if defined(VERSION_GPIJ01_01)
+#if defined(VERSION_GPIJ01_01) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_DPIJ01_PIKIDEMO)
 #else
 	event->frameTimer = 100;
 #endif
@@ -364,7 +368,7 @@ BOOL Jac_UpdateEventPosition(int idx, struct SVector_* p2)
 	}
 
 	EVENT[idx].position = *p2;
-#if defined(VERSION_GPIJ01_01)
+#if defined(VERSION_GPIJ01_01) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_DPIJ01_PIKIDEMO)
 #else
 	EVENT[idx].frameTimer = 100;
 #endif
@@ -523,7 +527,11 @@ BOOL Jac_StopEventAction(int a1, int a2)
 	for (i = 0; i < 16; i++) {
 		SEvent_UnkC* c = &event->statusEntries[i];
 		if (c->statusIdx == offset) {
+#if defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_DPIJ01_PIKIDEMO)
+			Jal_SendCmdQueue(&event->cmdQueue, i * 0x1000);
+#else
 			Jal_SendCmdQueue_Force(&event->cmdQueue, i * 0x1000);
+#endif
 			c->statusIdx = 0;
 		}
 	}
@@ -584,7 +592,12 @@ BOOL Jac_DestroyEvent(s32 idx)
 		event->statusEntries[i].statusIdx = 0;
 	}
 
+#if defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_DPIJ01_PIKIDEMO)
+	Jal_SendCmdQueue(&event->cmdQueue, 0xFFFF);
+#else
 	Jal_SendCmdQueue_Force(&event->cmdQueue, 0xFFFF);
+#endif
+
 	event->eventType = 0;
 	return TRUE;
 }

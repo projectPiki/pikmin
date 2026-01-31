@@ -24,7 +24,7 @@ static void SetTimer(OSAlarm* alarm)
 {
 	OSTime delta;
 
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
 	delta = alarm->fire - __OSGetSystemTime();
 #else
 	delta = alarm->fire - OSGetTime();
@@ -68,7 +68,7 @@ static void InsertAlarm(OSAlarm* alarm, OSTime fire, OSAlarmHandler handler)
 	OSAlarm* prev;
 
 	if (alarm->period > 0) {
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
 		OSTime time = __OSGetSystemTime();
 #else
 		OSTime time = OSGetTime();
@@ -120,7 +120,7 @@ void OSSetAlarm(OSAlarm* alarm, OSTime tick, OSAlarmHandler handler)
 	BOOL enabled;
 	enabled       = OSDisableInterrupts();
 	alarm->period = 0;
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
 	InsertAlarm(alarm, __OSGetSystemTime() + tick, handler);
 #else
 	InsertAlarm(alarm, OSGetTime() + tick, handler);
@@ -194,7 +194,7 @@ static void DecrementerExceptionCallback(__OSException exception, OSContext* con
 	OSAlarmHandler handler;
 	OSTime time;
 
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
 	OSContext exceptionContext;
 	time = __OSGetSystemTime();
 #else
@@ -229,12 +229,12 @@ static void DecrementerExceptionCallback(__OSException exception, OSContext* con
 	}
 
 	OSDisableScheduler();
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
 	OSClearContext(&exceptionContext);
 	OSSetCurrentContext(&exceptionContext);
 #endif
 	handler(alarm, context);
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
 	OSClearContext(&exceptionContext);
 	OSSetCurrentContext(context);
 #endif

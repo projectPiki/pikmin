@@ -65,7 +65,7 @@ void AyuStack::checkStack()
 {
 	if ((mAllocType & AYU_STACK_GROW_UP)) {
 		u32 newTop = mStackTop - *(u32*)(mStackTop - 8);
-#if defined(VERSION_GPIJ01_01)
+#if defined(VERSION_GPIJ01) || defined(VERSION_DPIJ01_PIKIDEMO)
 		if (newTop != mInitialStackTop)
 #else
 		if (newTop > mInitialStackTop)

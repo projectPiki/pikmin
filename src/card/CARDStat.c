@@ -93,7 +93,7 @@ s32 CARDGetStatus(s32 channel, s32 fileNo, CARDStat* state)
 
 	dir = __CARDGetDirBlock(card);
 	ent = &dir->entries[fileNo];
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_GPIP01_00)
 	result = __CARDAccess(card, ent);
 #else
 	result = __CARDAccess(ent);
@@ -141,7 +141,7 @@ s32 CARDSetStatusAsync(s32 channel, s32 fileNo, CARDStat* state, CARDCallback ca
 
 	dir = __CARDGetDirBlock(card);
 	ent = &dir->entries[fileNo];
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_GPIP01_00)
 	result = __CARDAccess(card, ent);
 #else
 	result = __CARDAccess(ent);

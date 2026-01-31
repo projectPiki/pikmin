@@ -143,7 +143,7 @@ struct CARDControl {
 	CARDCallback eraseCallback;     // _D8
 	CARDCallback unlockCallback;    // _DC
 	OSAlarm alarm;                  // _E0, for timeout.
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_GPIP01_00)
 	u32 cid;                 // _108
 	const DVDDiskID* diskID; // _10C
 #endif
@@ -308,7 +308,7 @@ s32 __CARDSync(s32 channel);
 void __CARDCheckSum(void* data, int length, u16* checksum, u16* checksumInv);
 s32 __CARDVerify(CARDControl* card);
 BOOL __CARDCompareFileName(CARDDir* entry, const char* fileName);
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_GPIP01_00)
 s32 __CARDAccess(CARDControl* card, CARDDir* ent);
 #else
 s32 __CARDAccess(CARDDir* entry);

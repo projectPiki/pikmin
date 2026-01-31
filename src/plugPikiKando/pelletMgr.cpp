@@ -138,7 +138,7 @@ void PelletConfig::read(RandomAccessStream& input)
 	mRepairAnimJointIndex = input.readInt();
 }
 
-#if defined(VERSION_GPIJ01_01)
+#if defined(VERSION_GPIJ01)
 #else
 // see PelletBounceSoundID in Pellet.h
 static u32 bounceSounds[] = {
@@ -923,7 +923,7 @@ void Pellet::doLoad(RandomAccessStream& input)
 		PRINT("UFO PARTS DIDN'T MOVE!\n");
 		mSRT.t = mSpawnPosition;
 	}
-#if defined(VERSION_GPIE01_00) || defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
+#if defined(VERSION_GPIE01_00) || defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
 	// This isn't in the USA versions' DLL, meaning that DLL is based on rev 0 instead of rev 1 (it was not recompiled between revisions).
 #else
 	else if (isNan(mSRT.t.x) || isNan(mSRT.t.y) || isNan(mSRT.t.z)) {
@@ -1058,7 +1058,7 @@ void Pellet::startAI(int doSpawnScaleOff)
 	mIsAIActive = true;
 }
 
-#if defined(VERSION_GPIJ01_01)
+#if defined(VERSION_GPIJ01)
 // see PelletBounceSoundID in Pellet.h
 static u32 bounceSounds[] = {
 	SE_PELLET_BOUND,   SE_UFOPARTS_BOUND, SE_UFOPARTS_SPRING, SE_UFOPARTS_MONEYBOX, SE_UFOPARTS_BOUND, SE_UFOPARTS_BOUND,
@@ -1765,7 +1765,7 @@ void PelletMgr::initTekiNakaParts()
 		if (useShape(info->mID.mId) && !info->mPelletShapeObject && info->mID.match('un**')) {
 			PRINT("*** NAKA PARTS (%s)\n", info->mID.mStringID);
 			if (info->createShapeObject()) {
-#if defined(VERSION_GPIJ01_01)
+#if defined(VERSION_GPIJ01) || defined(VERSION_DPIJ01_PIKIDEMO)
 #else
 				PRINT("NAKA (%s) create done !\n", info->mID.mStringID);
 #endif

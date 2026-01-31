@@ -12,7 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        version: [GPIE01_01, G98E01_PIKIDEMO, GPIE01_00, GPIP01_00, GPIJ01_01] # TODO: other versions
+        version: [GPIE01_01, G98E01_PIKIDEMO, GPIE01_00, GPIP01_00, GPIJ01_01, GPIJ01_02, DPIJ01_PIKIDEMO, G98P01_PIKIDEMO]
 
     steps:
     # Checkout the repository (shallow clone)

@@ -406,7 +406,7 @@ Piki* GoalItem::exitPiki()
 	Piki* piki                 = (Piki*)pikiMgr->birth();
 	pikiMgr->containerExitMode = false;
 	if (!piki) {
-#if defined(VERSION_GPIJ01_01)
+#if defined(VERSION_GPIJ01) || defined(VERSION_DPIJ01_PIKIDEMO)
 #else
 		ERROR("*** PIKI BIRTH FAILED !!!\n");
 #endif

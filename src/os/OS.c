@@ -134,7 +134,7 @@ u32 OSGetConsoleType(void)
 	return BootInfo->consoleType;
 }
 
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
 extern void* BOOT_REGION_START AT_ADDRESS(0x812FDFF0); //(*(void *)0x812fdff0)
 extern void* BOOT_REGION_END AT_ADDRESS(0x812FDFEC);   //(*(void *)0x812fdfec)
 
@@ -186,7 +186,7 @@ void OSInit(void)
 		AreWeInitialized = TRUE;           // flag to make sure we don't have to do this again
 
 // SYSTEM //
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
 		__OSStartTime = __OSGetSystemTime();
 #endif
 
@@ -203,7 +203,7 @@ void OSInit(void)
 		// the address for where the BI2 debug info is, is stored at OS_BI2_DEBUG_ADDRESS
 		DebugInfo = (BI2Debug*)*((u32*)OS_BI2_DEBUG_ADDRESS);
 
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
 		// if the debug info address exists, grab some debug info
 		if (DebugInfo != NULL) {
 			BI2DebugFlag               = &DebugInfo->debugFlag;     // debug flag from DVD BI2
@@ -245,7 +245,7 @@ void OSInit(void)
 		// initialise a whole bunch of OS stuff
 		OSExceptionInit();
 		__OSInitSystemCall();
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
 		OSInitAlarm();
 #endif
 		__OSModuleInit();
@@ -258,7 +258,7 @@ void OSInit(void)
 		__OSInitSram();
 		__OSThreadInit();
 		__OSInitAudioSystem();
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
 		PPCMthid2(PPCMfhid2() & 0xBFFFFFFF);
 #endif
 		if ((BootInfo->consoleType & OS_CONSOLE_DEVELOPMENT) != 0) {
@@ -267,12 +267,17 @@ void OSInit(void)
 			BootInfo->consoleType = OS_CONSOLE_RETAIL1;
 		}
 		BootInfo->consoleType += (__PIRegs[11] & 0xF0000000) >> 28;
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01_00) || defined(VERSION_G98P01_PIKIDEMO)
 		if (__OSInIPL == FALSE)
 			__OSInitMemoryProtection();
 		// begin OS reporting
 		OSReport("\nDolphin OS $Revision: 49 $.\n");
 		OSReport("Kernel built : %s %s\n", "Dec 17 2001", "18:46:45");
+#elif defined(VERSION_DPIJ01_PIKIDEMO)
+		__OSInitMemoryProtection();
+		// begin OS reporting
+		OSReport("\nDolphin OS $Revision: 47 $.\n");
+		OSReport("Kernel built : %s %s\n", "Oct  2 2001", "11:02:22");
 #elif defined(VERSION_G98E01_PIKIDEMO)
 		__OSInitMemoryProtection();
 		// begin OS reporting
@@ -338,7 +343,7 @@ void OSInit(void)
 		}
 
 // free up memory and re-enable things
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
 		ClearArena();
 #endif
 		OSEnableInterrupts();

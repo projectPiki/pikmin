@@ -1,5 +1,6 @@
 #include "jaudio/cmdqueue.h"
 
+#include "jaudio/audiomesg.h"
 #include "jaudio/jammain_2.h"
 #include "jaudio/playercall.h"
 #include "jaudio/verysimple.h"
@@ -63,9 +64,9 @@ void Jal_RemoveCmdQueue(void)
  * @TODO: Documentation
  * @note UNUSED Size: 000024
  */
-void Jal_SendCmdQueue(void)
+void Jal_SendCmdQueue(CmdQueue* queue, u16 msg)
 {
-	// UNUSED FUNCTION
+	Jac_SendMessageBlock(&queue->msgQueue, (OSMessage)msg);
 }
 
 /**
@@ -107,7 +108,7 @@ static s32 Jal_FrameWork(void* a)
 	STACK_PAD_VAR(1);
 
 	for (curr = queue_list; curr; curr = curr->next) {
-#if defined(VERSION_GPIJ01_01)
+#if defined(VERSION_GPIJ01_01) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_DPIJ01_PIKIDEMO)
 		if (Jam_CheckPortIndirect(curr->track, curr->_64, 1) == 1) {
 #else
 		if (Jam_CheckPortAppDirect(curr->track, curr->_64, 1) == 1) {

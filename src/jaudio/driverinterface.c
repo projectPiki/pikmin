@@ -967,7 +967,7 @@ BOOL PlayLogicalChannel(jc_* jc)
 
 	for (u32 i = 0; i < 6; i++) {
 		MixConfig bus = jc->busRouting[i];
-#if defined(VERSION_GPIE01_00) || defined(VERSION_GPIJ01_01)
+#if defined(VERSION_GPIE01_00) || defined(VERSION_GPIJ01_01) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_DPIJ01_PIKIDEMO)
 #else
 		if (JAC_SYSTEM_OUTPUT_MODE == 0) {
 			switch (bus.parts.upper) {

@@ -142,6 +142,13 @@ void zen::particleGenerator::init(u8* data, Texture* tex1, Texture* tex2, immut 
 				mRotAxisCallBack = &particleGenerator::RotAxisXYZ;
 				break;
 			}
+#if defined(VERSION_GPIJ01_02)
+			default:
+			{
+				ERROR("Unknown RotAxis Type:%d \n", rotType);
+				break;
+			}
+#endif
 			}
 		}
 

@@ -117,7 +117,7 @@ void zen::ogScrFileSelectMgr::OperateCopy(Controller* input)
 
 		f32 rate = mCopyAnimTimer;
 		int x, y;
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
 		if (rate > 2.25f) {
 			y = mCardAccessIcon->getPosV();
 			x = f32((rate - 2.25f) / 0.75) * 640.0f;
@@ -152,7 +152,7 @@ void zen::ogScrFileSelectMgr::OperateCopy(Controller* input)
 			ChkNewData();
 			mIsCopyingFileActive         = false;
 			mIsCopyCompleteMessageActive = true;
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
 			mCopyAnimTimer = 2.0f;
 #else
 			mCopyAnimTimer = 1.0f;

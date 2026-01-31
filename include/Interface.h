@@ -29,7 +29,7 @@ enum GameMovieCommand {
 	MOVIECMD_StageFinish         = 16, ///< 16, Forced day end (navi down or extinction). No data.
 	MOVIECMD_CreateMenuWindow    = 17, ///< 17, Open radar and controls menu. No data.
 
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 	MOVIECMD_DemoFinish = 18, ///< 18, Demo Forest of Hope ending - opens happy ending text. No data.
 #endif
 };

@@ -161,7 +161,7 @@ zen::ogScrMakeDefaultMgr::MakeDefaultStatus zen::ogScrMakeDefaultMgr::update(Con
 			mDefaultMessageTextBox->hide();
 			mStatus     = AwaitingConfirmation;
 			mStateTimer = 0.0f;
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
 			mAButtonPromptPicture->show();
 #endif
 			mAButtonPromptAlphaAnimator->start();
@@ -170,7 +170,7 @@ zen::ogScrMakeDefaultMgr::MakeDefaultStatus zen::ogScrMakeDefaultMgr::update(Con
 	}
 	case AwaitingConfirmation:
 	{
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
 		if (input->keyClick(KBBTN_A)) {
 			seSystem->playSysSe(ogEnumFix(SYSSE_DECIDE1, JACSYS_Decide1));
 			mStatus     = Exiting;

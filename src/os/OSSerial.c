@@ -14,7 +14,7 @@ static BOOL __SITransfer(s32 chan, void* output, u32 outputBytes, void* input, u
 static BOOL SIGetResponseRaw(s32 chan);
 static void GetTypeCallback(s32 chan, u32 error, OSContext* context);
 
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 static u32 Type[SI_MAX_CHAN] = {
 	SI_ERROR_NO_RESPONSE,
 	SI_ERROR_NO_RESPONSE,
@@ -43,7 +43,7 @@ BOOL SIBusy(void)
 	return Si.chan != -1 ? TRUE : FALSE;
 }
 
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 BOOL SIIsChanBusy(s32 chan)
 {
 	return (Packet[chan].chan != -1 || Si.chan == chan);
@@ -65,7 +65,7 @@ static void SIClearTCInterrupt()
  */
 static u32 CompleteTransfer(void)
 {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 
 	u32 sr;
 	u32 i;
@@ -159,7 +159,7 @@ void SITransferNext(s32 chan)
 		++chan;
 		chan %= SI_MAX_CHAN;
 		packet = &Packet[chan];
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 		if (packet->chan != -1 && packet->fire <= __OSGetSystemTime()) {
 #else
 		if (packet->chan != -1 && packet->fire <= OSGetTime()) {
@@ -173,7 +173,7 @@ void SITransferNext(s32 chan)
 	}
 }
 
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 static void SIInterruptHandler(__OSInterrupt interrupt, OSContext* context)
 {
 	u32 reg;
@@ -353,14 +353,14 @@ void SIInit(void)
 
 	__SIRegs[SI_CC_STAT] = 0x80000000;
 
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 	__OSSetInterruptHandler(__OS_INTERRUPT_PI_SI, SIInterruptHandler);
 #else
 	__OSSetInterruptHandler(__OS_INTERRUPT_PI_SI, SIIntrruptHandler);
 #endif
 	__OSUnmaskInterrupts(OS_INTERRUPTMASK_PI_SI);
 
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 	SIGetType(0);
 	SIGetType(1);
 	SIGetType(2);
@@ -399,7 +399,7 @@ static BOOL __SITransfer(s32 chan, void* output, u32 outputBytes, void* input, u
 		__SIRegs[SI_IO_BUFFER + i] = ((u32*)output)[i];
 	}
 
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 	comcsr.val = __SIRegs[13];
 #else
 	comcsr.val = 0;
@@ -431,7 +431,7 @@ void SISync(void)
  */
 u32 SIGetStatus(s32 chan)
 {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 	BOOL enabled;
 	u32 sr;
 	int chanShift;
@@ -559,7 +559,7 @@ u32 SIDisablePolling(u32 poll)
 	return poll;
 }
 
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 static BOOL SIGetResponseRaw(s32 chan)
 {
 	u32 sr;
@@ -578,7 +578,7 @@ static BOOL SIGetResponseRaw(s32 chan)
 /**
  * @TODO: Documentation
  */
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 BOOL SIGetResponse(s32 chan, void* data)
 {
 	BOOL rc;
@@ -625,7 +625,7 @@ static void AlarmHandler(OSAlarm* alarm, OSContext* context)
  */
 BOOL SITransfer(s32 chan, void* output, u32 outputBytes, void* input, u32 inputBytes, SICallback callback, OSTime delay)
 {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 	BOOL enabled;
 	SIPacket* packet = &Packet[chan];
 	OSTime now;
@@ -697,7 +697,7 @@ BOOL SITransfer(s32 chan, void* output, u32 outputBytes, void* input, u32 inputB
 #endif
 }
 
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 
 static void CallTypeAndStatusCallback(s32 chan, u32 type)
 {

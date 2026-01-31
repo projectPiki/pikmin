@@ -127,7 +127,7 @@ void GameSetupSection::preCacheShapes()
 	// Colin: "lemme yell at you real quick"
 	BOOL print         = gsys->mTogglePrint;
 	gsys->mTogglePrint = TRUE;
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 	_Print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
 	_Print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
 	_Print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
@@ -230,7 +230,7 @@ GameSetupSection::GameSetupSection()
  */
 void GameSetupSection::update()
 {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 	// the only thing the demo will load into is the Forest of Hope challenge mode
 
 	STACK_PAD_VAR(1);

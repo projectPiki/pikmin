@@ -157,7 +157,7 @@ typedef u32 HWND;
 #define NRef TERNARY_BUILD_MATCHING(&, )
 
 // In early revisions of Pikmin 1, Ogawa was confused on which enum he was supposed to use for `SeSystem::playSysSe`/`stopSysSe`.
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
 #define ogEnumFix(right, wrong) TERNARY_BUGFIX(right, wrong)
 #else
 #define ogEnumFix(right, wrong) right

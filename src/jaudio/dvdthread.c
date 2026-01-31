@@ -234,7 +234,7 @@ s32 DVDT_LoadtoDRAM_Main(void* dvdCall)
 
 	if (call->length == 0) {
 		call->length = infoLength;
-#if defined(VERSION_GPIJ01_01)
+#if defined(VERSION_GPIJ01_01) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_DPIJ01_PIKIDEMO)
 #else
 		call->length -= call->src;
 #endif
@@ -408,7 +408,7 @@ s32 DVDT_LoadtoARAM_Main(void* dvdCall)
 	if (call->length == 0) {
 		call->length = len;
 
-#if defined(VERSION_GPIJ01_01)
+#if defined(VERSION_GPIJ01_01) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_DPIJ01_PIKIDEMO)
 #else
 		call->length -= call->src;
 #endif

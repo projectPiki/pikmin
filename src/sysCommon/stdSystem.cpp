@@ -61,7 +61,7 @@ StdSystem::StdSystem()
  */
 void StdSystem::onceInit()
 {
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
 	mMatrixCount = 0x1000;
 #else
 	mMatrixCount = 0x2000;

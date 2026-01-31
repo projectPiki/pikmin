@@ -26,6 +26,7 @@ void Jac_InitMessageQueue(Jac_MessageQueue* queue, OSMessage* msgArray, s32 coun
 BOOL Jac_SendMessage(Jac_MessageQueue* queue, OSMessage message);
 BOOL Jac_ReceiveMessage(Jac_MessageQueue* queue, OSMessage* outMsg);
 BOOL Jac_ReceiveMessage_Fast(Jac_MessageQueue* queue, OSMessage* outMsg);
+BOOL Jac_SendMessageBlock(Jac_MessageQueue* queue, OSMessage mesg);
 
 //////////////////////////////////////////////////
 

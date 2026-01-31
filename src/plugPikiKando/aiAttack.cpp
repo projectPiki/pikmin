@@ -44,7 +44,7 @@ ActAttack::ActAttack(Piki* piki)
 void ActAttack::init(Creature* creature)
 {
 	if (playerState->inDayEnd()) {
-#if defined(VERSION_GPIJ01_01)
+#if defined(VERSION_GPIJ01) || defined(VERSION_DPIJ01_PIKIDEMO)
 #else
 		PRINT("DAY END ATTACK!\n");
 		ERROR("day end attack!\n");

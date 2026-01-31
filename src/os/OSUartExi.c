@@ -56,7 +56,7 @@ u32 WriteUARTN(const void* buf, u32 len)
 	u32 cmd;
 	int qLen;
 	s32 xLen;
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 	char* ptr;
 #else
 	u8* ptr;
@@ -72,7 +72,7 @@ u32 WriteUARTN(const void* buf, u32 len)
 		return 0;
 	}
 
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 	for (ptr = (char*)buf; ptr - (char*)buf < len; ptr++) {
 #else
 	for (ptr = (u8*)buf; ptr - (u8*)buf < len; ptr++) {

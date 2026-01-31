@@ -17,7 +17,12 @@
  * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
+#if defined(VERSION_GPIJ01)
 DEFINE_ERROR(38)
+#else
+DEFINE_ERROR(40)
+#endif
+
 
 /**
  * @todo: Documentation

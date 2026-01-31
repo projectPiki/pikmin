@@ -293,7 +293,7 @@ config.linker_version = "GC/1.2.5"
 # Helper function for Dolphin libraries
 def DolphinLib(lib_name: str, objects: List[Object]) -> Dict[str, Any]:
     mw_version = "GC/1.2.5"
-    if version_num in (0, 7) or ((lib_name in ("card", "hio", "mtx", "pad") and version_num == 3)):  # JPN demo, PAL, and SOMETIMES USA demo
+    if version_num in (6, 7) or (lib_name in ("card", "hio", "mtx", "pad") and version_num == 3) or (lib_name in ("os", "mtx", "pad") and version_num == 0):  # JPN demo, PAL, and SOMETIMES USA demo
         mw_version = "GC/1.2.5n"
     return {
         "lib": lib_name,
@@ -346,7 +346,7 @@ config.libs = [
             Object(Matching, "jaudio/playercall.c"),
             Object(Matching, "jaudio/dvdthread.c"),
             Object(Matching, "jaudio/rate.c"),
-            Object(Matching, "jaudio/audiomesg.c"),
+            Object(not MatchingFor("G98P01_PIKIDEMO", "DPIJ01_PIKIDEMO"), "jaudio/audiomesg.c"),
             Object(Matching, "jaudio/stackchecker.c"),
             Object(Matching, "jaudio/dspboot.c"),
             Object(Matching, "jaudio/dspproc.c"),
@@ -354,7 +354,7 @@ config.libs = [
             Object(Matching, "jaudio/osdsp.c"),
             Object(not MatchingFor("GPIP01_00"), "jaudio/osdsp_task.c"),
             Object(Matching, "jaudio/ipldec.c"),
-            Object(not MatchingFor("G98E01_PIKIDEMO"), "jaudio/dsp_cardunlock.c"),
+            Object(not MatchingFor("G98E01_PIKIDEMO", "G98P01_PIKIDEMO"), "jaudio/dsp_cardunlock.c"),
             Object(Matching, "jaudio/driverinterface.c"),
             Object(Matching, "jaudio/dspdriver.c"),
             Object(Matching, "jaudio/dspinterface.c"),
@@ -367,11 +367,11 @@ config.libs = [
             Object(Matching, "jaudio/random.c"),
             Object(Matching, "jaudio/aramcall.c"),
             Object(Matching, "jaudio/ja_calc.c"),
-            Object(not MatchingFor("GPIJ01_01"), "jaudio/fat.c"),
+            Object(not MatchingFor("GPIJ01_01", "G98P01_PIKIDEMO", "DPIJ01_PIKIDEMO"), "jaudio/fat.c"),
             Object(Matching, "jaudio/cmdstack.c"),
             Object(Matching, "jaudio/virload.c"),
             Object(Matching, "jaudio/heapctrl.c"),
-            Object(not MatchingFor("GPIJ01_01"), "jaudio/jammain_2.c"),
+            Object(not MatchingFor("GPIJ01_01", "G98P01_PIKIDEMO", "DPIJ01_PIKIDEMO"), "jaudio/jammain_2.c"),
             Object(Matching, "jaudio/midplay.c"),
             Object(Matching, "jaudio/noteon.c"),
             Object(Matching, "jaudio/seqsetup.c"),
@@ -411,10 +411,10 @@ config.libs = [
         "mw_version": "GC/1.2.5n",
         "progress_category": "game",
         "objects": [
-            Object(Matching, "sysCommon/ayuStack.cpp"),
-            Object(Matching, "sysCommon/baseApp.cpp"),
-            Object(Matching, "sysCommon/stream.cpp"),
-            Object(Matching, "sysCommon/streamBufferedInput.cpp"),
+            Object(not MatchingFor("G98P01_PIKIDEMO"), "sysCommon/ayuStack.cpp"),
+            Object(not MatchingFor("G98P01_PIKIDEMO"), "sysCommon/baseApp.cpp"),
+            Object(not MatchingFor("G98P01_PIKIDEMO"), "sysCommon/stream.cpp"),
+            Object(not MatchingFor("G98P01_PIKIDEMO"), "sysCommon/streamBufferedInput.cpp"),
             Object(Matching, "sysCommon/string.cpp"),
             Object(Matching, "sysCommon/graphics.cpp"),
             Object(Matching, "sysCommon/grLight.cpp"),
@@ -441,10 +441,10 @@ config.libs = [
         "progress_category": "game",
         "objects": [
             Object(Equivalent, "sysDolphin/texture.cpp"),
-            Object(Matching, "sysDolphin/system.cpp"),
+            Object(not MatchingFor("DPIJ01_PIKIDEMO"), "sysDolphin/system.cpp"),
             Object(Matching, "sysDolphin/sysNew.cpp"),
             Object(Matching, "sysDolphin/controllerMgr.cpp"),
-            Object(not MatchingFor("GPIJ01_01"), "sysDolphin/dgxGraphics.cpp"),
+            Object(not MatchingFor("GPIJ01_01", "GPIJ01_02", "G98P01_PIKIDEMO", "DPIJ01_PIKIDEMO"), "sysDolphin/dgxGraphics.cpp"),
             Object(Matching, "sysDolphin/gameApp.cpp"),
         ],
     },
@@ -498,7 +498,7 @@ config.libs = [
             Object(Equivalent, "plugPikiKando/simpleAI.cpp"),
             Object(Matching, "plugPikiKando/formationMgr.cpp"),
             Object(Matching, "plugPikiKando/globalShapes.cpp"),
-            Object(not MatchingFor("GPIJ01_01"), "plugPikiKando/playerState.cpp"),
+            Object(not MatchingFor("GPIJ01_01", "GPIJ01_02", "DPIJ01_PIKIDEMO"), "plugPikiKando/playerState.cpp"),
             Object(Matching, "plugPikiKando/gameDemo.cpp"),
             Object(Matching, "plugPikiKando/demoInvoker.cpp"),
             Object(Matching, "plugPikiKando/demoEvent.cpp"),
@@ -522,7 +522,7 @@ config.libs = [
             Object(Matching, "plugPikiKando/fastGrid.cpp"),
             Object(Matching, "plugPikiKando/ropeCreature.cpp"),
             Object(Matching, "plugPikiKando/objectTypes.cpp"),
-            Object(Matching, "plugPikiKando/pelletMgr.cpp"),
+            Object(not MatchingFor("DPIJ01_PIKIDEMO"), "plugPikiKando/pelletMgr.cpp"),
             Object(Matching, "plugPikiKando/animPellet.cpp"),
             Object(Matching, "plugPikiKando/genPellet.cpp"),
             Object(Matching, "plugPikiKando/pelletState.cpp"),
@@ -870,13 +870,13 @@ config.libs = [
             Object(Matching, "os/OSInterrupt.c"),
             Object(Matching, "os/OSLink.c"),
             Object(Matching, "os/OSMessage.c"),
-            Object(Matching, "os/OSMemory.c"),
+            Object(not MatchingFor("DPIJ01_PIKIDEMO"), "os/OSMemory.c"),
             Object(Matching, "os/OSMutex.c"),
             Object(Matching, "os/OSReboot.c"),
             Object(Matching, "os/OSReset.c"),
             Object(Matching, "os/OSResetSW.c"),
             Object(Matching, "os/OSRtc.c"),
-            Object(Matching, "os/OSSerial.c"),
+            Object(not MatchingFor("DPIJ01_PIKIDEMO"), "os/OSSerial.c"),
             Object(Matching, "os/OSSync.c"),
             Object(Matching, "os/OSThread.c"),
             Object(Matching, "os/OSTime.c"),
@@ -900,6 +900,12 @@ config.libs = [
         ],
     ),
     DolphinLib(
+        "mtxD",
+        [
+            Object(Matching, "mtxD/mtx44.c"),
+        ],
+    ),
+    DolphinLib(
         "dvd",
         [
             Object(Matching, "dvd/dvdlow.c"),
@@ -913,14 +919,14 @@ config.libs = [
     DolphinLib(
         "vi",
         [
-            Object(not MatchingFor("G98E01_PIKIDEMO", "GPIP01_00"), "vi/vi.c"),
+            Object(not MatchingFor("DPIJ01_PIKIDEMO", "G98E01_PIKIDEMO", "GPIP01_00", "G98P01_PIKIDEMO"), "vi/vi.c"),
         ],
     ),
     DolphinLib(
         "pad",
         [
             Object(Matching, "pad/Padclamp.c"),
-            Object(not MatchingFor("G98E01_PIKIDEMO"), "pad/Pad.c"),
+            Object(not MatchingFor("DPIJ01_PIKIDEMO", "G98E01_PIKIDEMO", "G98P01_PIKIDEMO"), "pad/Pad.c"),
         ],
     ),
     DolphinLib(
@@ -953,7 +959,7 @@ config.libs = [
             Object(Matching, "card/CARDBlock.c"),
             Object(Matching, "card/CARDDir.c"),
             Object(Matching, "card/CARDCheck.c"),
-            Object(not MatchingFor("GPIP01_00"), "card/CARDMount.c"),
+            Object(not MatchingFor("GPIP01_00", "G98P01_PIKIDEMO"), "card/CARDMount.c"),
             Object(Matching, "card/CARDFormat.c"),
             Object(Matching, "card/CARDOpen.c"),
             Object(Matching, "card/CARDCreate.c"),
@@ -1002,7 +1008,7 @@ config.libs = [
             Object(Matching, "gx/GXStubs.c"),
             Object(Matching, "gx/GXDisplayList.c"),
             Object(Matching, "gx/GXTransform.c"),
-            Object(not MatchingFor("GPIP01_00"), "gx/GXPerf.c"),
+            Object(not MatchingFor("GPIP01_00", "G98P01_PIKIDEMO"), "gx/GXPerf.c"),
         ],
     ),
     {
@@ -1144,6 +1150,25 @@ config.libs = [
         "cflags": cflags_base,
         "objects": [
             Object(Matching, "odenotstub/odenotstub.c"),
+        ],
+    },
+    # PAL Demo exclusive libs
+    {
+        "lib": "odemustubs",
+        "mw_version": "GC/1.2.5",
+        "progress_category": "sdk",
+        "cflags": cflags_base,
+        "objects": [
+            Object(Matching, "odemustubs/odemustubs.c"),
+        ],
+    },
+    {
+        "lib": "amcstubs",
+        "mw_version": "GC/1.2.5",
+        "progress_category": "sdk",
+        "cflags": cflags_base,
+        "objects": [
+            Object(Matching, "amcstubs/AmcExi2Stubs.c"),
         ],
     },
 ]

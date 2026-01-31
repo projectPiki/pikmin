@@ -730,7 +730,7 @@ void cnvSpecialNumber(char* str)
 			if (strncmp(tmp + 1, "TM", 2) == 0) {
 				tmp += 3;
 			} else if (b == 'Z') {
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
 #else
 				if (c == 0) {
 					break;
@@ -747,13 +747,13 @@ void cnvSpecialNumber(char* str)
 					}
 					PRINT("formatStr = '%s'\n", formatStr);
 				} else {
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
 #else
 					tmp++;
 #endif
 				}
 			} else if (b == 'd') {
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
 #else
 				if (c == 0) {
 					break;
@@ -839,14 +839,14 @@ ogMsgCtrlTagMgr::ogMsgCtrlTagMgr()
 
 	P2DTextBox* onesBox = (P2DTextBox*)screen->search('maru', true);
 	P2DTextBox* tensBox = (P2DTextBox*)screen->search('ten', true);
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
 #else
 	P2DTextBox* hundredsBox = (P2DTextBox*)screen->search('han', true);
 #endif
 
 	strcpy(mOnesWaitChar, onesBox->getString());
 	strcpy(mTensWaitChar, tensBox->getString());
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
 #else
 	strcpy(mHankakuWaitChars, hundredsBox->getString());
 #endif
@@ -857,7 +857,7 @@ ogMsgCtrlTagMgr::ogMsgCtrlTagMgr()
  */
 bool ogMsgCtrlTagMgr::CheckCtrlTag(immut char* text, s16* indexPtr, f32* waitTimePtr)
 {
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
 	char ch;
 	int charIndex      = *indexPtr;
 	const char* cursor = &text[*indexPtr];
@@ -917,7 +917,7 @@ bool ogMsgCtrlTagMgr::CheckCtrlTag(immut char* text, s16* indexPtr, f32* waitTim
 		nextIndex = charIndex + 2;
 		SeSystem::playSysSe(SYSSE_TYPEWRITER);
 	}
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
 #else
 	else if (strchr(mHankakuWaitChars, ch)) {
 		PRINT("Hit HANKAKU WAIT!!\n");
@@ -951,7 +951,7 @@ void TypingTextMgr::update()
 	}
 
 	mTypeTimer += gsys->getFrameTime();
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIJ01_01)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
 	if (mTypeTimer >= 0.04f) {
 		mTypeTimer -= 0.04f;
 #else
@@ -1021,7 +1021,7 @@ void cnvSpecialNumberHyphen(char* str)
 							char buf[PATH_MAX];
 							STACK_PAD_VAR(1);
 							for (int i = 0; i < num; i++) {
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIJ01_01)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
 								buf[i] = '-';
 #else
 								buf[i] = '*';
@@ -1041,7 +1041,7 @@ void cnvSpecialNumberHyphen(char* str)
 						} else {
 							char buf[PATH_MAX];
 							for (int i = 0; i < num; i++) {
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIJ01_01)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
 								buf[i] = '-';
 #else
 								buf[i] = '*';

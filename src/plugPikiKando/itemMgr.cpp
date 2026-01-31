@@ -285,7 +285,7 @@ Creature* MeltingPotMgr::birth(int objType)
 	}
 	}
 
-#if defined(VERSION_GPIJ01_01)
+#if defined(VERSION_GPIJ01) || defined(VERSION_DPIJ01_PIKIDEMO)
 	if (!creature) {
 		ERROR("DAME DAME\n");
 	}

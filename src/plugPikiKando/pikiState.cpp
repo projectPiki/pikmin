@@ -232,6 +232,10 @@ void PikiLookAtState::init(Piki* piki)
 	seSystem->playPikiSound(SEF_PIKI_CALLED, piki->mSRT.t);
 	piki->endStickObject();
 	piki->endStick();
+#if defined(VERSION_GPIJ01_02)
+	piki->changeMode(PikiMode::FormationMode, piki->mNavi);
+#else
+#endif
 }
 
 /**
@@ -299,7 +303,10 @@ void PikiLookAtState::exec(Piki* piki)
  */
 void PikiLookAtState::cleanup(Piki* piki)
 {
+#if defined(VERSION_GPIJ01_02)
+#else
 	piki->changeMode(PikiMode::FormationMode, piki->mNavi);
+#endif
 }
 
 /**
@@ -472,7 +479,7 @@ void PikiAbsorbState::exec(Piki* piki)
 
 	if (piki->getUpperMotionIndex() != PIKIANIM_Mizunomi) {
 		transit(piki, PIKISTATE_Normal);
-#if defined(VERSION_GPIJ01_01)
+#if defined(VERSION_GPIJ01) || defined(VERSION_DPIJ01_PIKIDEMO)
 #else
 		ERROR("mizunomi err!\n");
 #endif

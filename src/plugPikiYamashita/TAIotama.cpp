@@ -36,7 +36,7 @@ public:
 	{
 		TAIAreserveMotion::start(teki);
 		setTargetPosition(teki);
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIJ01_01)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
 #else
 		teki.setAnimSpeed(50.0f);
 #endif
@@ -46,7 +46,7 @@ public:
 		bool res = false;
 		if (TAIAreserveMotion::act(teki)) {
 			if (setTargetPosition(teki)) {
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIJ01_01)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
 #else
 				teki.setManualAnimation(false);
 #endif
@@ -153,7 +153,7 @@ protected:
 /**
  * @brief TODO
  */
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIJ01_01)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
 struct TAIAwaitOtama : public TAIAwait {
 public:
 	TAIAwaitOtama(int nextState, int motionID)
@@ -174,7 +174,7 @@ public:
 	virtual void start(Teki& teki) // _08
 	{
 		// What the purpose of this change is, I have no idea
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIJ01_01)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
 		TAIAwait::start(teki);
 		mWaitCounterMax
 		    = teki.getParameterF(TAIotamaFloatParams::MinWaitTime)
@@ -187,7 +187,7 @@ public:
 		    + zen::Rand(teki.getParameterF(TAIotamaFloatParams::MaxWaitTime) - teki.getParameterF(TAIotamaFloatParams::MinWaitTime)));
 #endif
 	}
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIJ01_01)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
 // This function is completely absent in the demo
 #else
 	virtual bool act(Teki& teki) // _10
@@ -209,7 +209,7 @@ public:
 protected:
 	// _04     = VTBL
 	// _00-_0C = TAIAreserveMotion
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIJ01_01)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
 	f32 mWaitCounterMax; // _10
 
 	virtual f32 getWaitCounterMax(Teki&) { return mWaitCounterMax; }
@@ -317,7 +317,7 @@ TAIotamaStrategy::TAIotamaStrategy()
 	TAIAappealOtama* appeal1              = new TAIAappealOtama(TAIotamaStateID::GoTarget, TekiMotion::WaitAct1);
 	TAIAvisibleNavi* visibleNavi          = new TAIAvisibleNavi(TAIotamaStateID::AppealRun);
 	TAIAappealOtama* appeal2              = new TAIAappealOtama(TAIotamaStateID::RunAway, TekiMotion::WaitAct1);
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIJ01_01)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
 	TAIArunAwayOtama* runAway = new TAIArunAwayOtama(TAIotamaStateID::Wait, TekiMotion::Move1);
 	TAIAtimerReaction* timer  = new TAIAtimerReaction(TAIotamaStateID::SetTarget, 3.0f);
 #else

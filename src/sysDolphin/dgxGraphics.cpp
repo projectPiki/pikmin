@@ -112,7 +112,7 @@ GXRenderModeObj localNtsc480IntDf = {
 static GXRenderModeObj* sScreenMode[2] = { &localNtsc480IntDf, &progressiveRenderMode };
 #endif
 
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
 static int sFirstFrame = 2;
 #else
 static int sFirstFrame = 4;
@@ -207,7 +207,7 @@ DGXGraphics::DGXGraphics(bool flag)
 	sFrameSize = (sScreenMode[mRenderMode]->fbWidth + 0xf & 0xfff0) * sScreenMode[mRenderMode]->xfbHeight * 2;
 #endif
 
-#if defined(VERSION_PIKIDEMO)
+#if defined(VERSION_G98E01_PIKIDEMO)
 	VISetBlack(TRUE);
 	VIFlush();
 	VIWaitForRetrace();
@@ -219,7 +219,7 @@ DGXGraphics::DGXGraphics(bool flag)
 
 	mDisplayBuffer = new (0x20) u8[sFrameSize];
 
-#if defined(VERSION_GPIJ01_01)
+#if defined(VERSION_GPIJ01) || defined(VERSION_G98P01_PIKIDEMO)
 #else
 	u16* test = (u16*)mDisplayBuffer;
 	for (int i = 0; i < sFrameSize / 2; i++) {
@@ -229,7 +229,7 @@ DGXGraphics::DGXGraphics(bool flag)
 
 	DCFlushRange(mDisplayBuffer, sFrameSize);
 	gsys->getHeap(gsys->mActiveHeapIdx)->mAllocType = backup;
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
 	VISetNextFrameBuffer(mDisplayBuffer);
 #else
 	VISetBlack(TRUE);
@@ -238,7 +238,7 @@ DGXGraphics::DGXGraphics(bool flag)
 	VIWaitForRetrace();
 #endif
 
-#if defined(VERSION_GPIJ01_01)
+#if defined(VERSION_GPIJ01) || defined(VERSION_G98P01_PIKIDEMO)
 	directErase(AREA_FULL_SCREEN(*this), true);
 #else
 #endif
@@ -251,7 +251,7 @@ DGXGraphics::DGXGraphics(bool flag)
 	mRetraceCallback      = VISetPostRetraceCallback(retraceProc);
 	OSInitMessageQueue(&mPostRetraceMsgQueue, &mPostRetraceMsgBuffer, 1);
 
-#if defined(VERSION_GPIJ01_01)
+#if defined(VERSION_GPIJ01) || defined(VERSION_G98P01_PIKIDEMO)
 	VISetBlack(TRUE);
 	VIFlush();
 	VIWaitForRetrace();
@@ -295,7 +295,7 @@ void DGXGraphics::getVerticalFilter(u8* vf)
  */
 void DGXGraphics::videoReset()
 {
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
 #else
 	static int videoModeAsIs = -1;
 
@@ -305,7 +305,7 @@ void DGXGraphics::videoReset()
 
 	sFirstFrame = 2;
 
-#if defined(VERSION_GPIE01_00) || defined(VERSION_GPIJ01_01)
+#if defined(VERSION_GPIE01_00) || defined(VERSION_GPIJ01) || defined(VERSION_G98P01_PIKIDEMO)
 	__VIInit(mRenderMode == 0 ? VI_TVMODE_NTSC_INT : VI_TVMODE_NTSC_PROG);
 #endif
 
@@ -313,7 +313,7 @@ void DGXGraphics::videoReset()
 	VIFlush();
 	VIWaitForRetrace();
 	VIWaitForRetrace();
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
 #else
 	}
 #endif
@@ -564,7 +564,7 @@ void DGXGraphics::waitRetrace()
 	if (sFirstFrame) {
 		sFirstFrame--;
 		if (sFirstFrame == 0) {
-#if defined(VERSION_GPIJ01_01)
+#if defined(VERSION_GPIJ01) || defined(VERSION_G98P01_PIKIDEMO)
 			VISetBlack(FALSE);
 #else
 #endif
@@ -1443,7 +1443,7 @@ void DGXGraphics::clearBuffer(int, bool)
 void DGXGraphics::setFog(bool set)
 {
 	if (set) {
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
 		GXSetFog(GX_FOG_LINEAR, mFogStart, mFogEnd, mCamera->mNear, mCamera->mFar, *(GXColor*)&mFogColour);
 #else
 		if (mCamera->mNear < mCamera->mFar) {

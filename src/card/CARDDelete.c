@@ -52,7 +52,7 @@ s32 CARDFastDeleteAsync(s32 channel, s32 fileNo, CARDCallback callback)
 
 	dir = __CARDGetDirBlock(card);
 	ent = &dir->entries[fileNo];
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_GPIP01_00)
 	result = __CARDAccess(card, ent);
 #else
 	result = __CARDAccess(ent);

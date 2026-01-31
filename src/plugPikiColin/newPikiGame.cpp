@@ -102,7 +102,7 @@ static zen::ogScrResultMgr* resultWindow;
 /// Story mode final results screen.
 static zen::DrawFinalResult* totalWindow;
 
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 #else
 /// Memory card screen (mostly for errors) - not present in the demo (no need to save).
 static zen::ogScrFileChkSelMgr* memcardWindow;
@@ -129,7 +129,7 @@ static bool hasDemoSound;
 /// Whether or not to force the HUD frame to hide, even after a text box finishes (just for final part collection).
 static bool dontShowFrame;
 
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 #else
 /// Table to hold indices of today's diary entry pages - gets overwritten + reused each day end. Not present in demo (no results screen).
 static zen::EnumResult resultTable[MAX_DIARY_ENTRY_PAGES + 1];
@@ -862,7 +862,7 @@ ModeState* RunningModeState::update(u32& result)
 	// trigger day end when time expires
 	if (!gameflow.mIsDayEndActive && !gameflow.mMoviePlayer->mIsActive
 	    && gameflow.mWorldClock.mTimeOfDay >= gameflow.mParameters->mEndHour()) {
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIJ01_01)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 #else
 		gameflow.mIsPauseAllowed = FALSE;
 #endif
@@ -909,7 +909,7 @@ ModeState* RunningModeState::update(u32& result)
 		}
 		// I added a bugfix to prevent the OgRader screen from opening in the background when the debug menu is active.  Many
 		// debug menus also use the Y button, and both being open at the same time can even cause crashes in the Movie Player.
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 		else if (mController->keyClick(KBBTN_Y)
 		         && gameflow.mWorldClock.mTimeOfDay < gameflow.mParameters->mEndHour() - MAP_MENU_SUNSET_LOCKOUT
 		         && !gameflow.mIsUIOverlayActive && !mesgsPending && TERNARY_BUGFIX(!mParentSection->mActiveMenu, true))
@@ -987,7 +987,7 @@ ModeState* RunningModeState::update(u32& result)
 	} else if (state == zen::ogScrPauseMgr::PAUSE_ExitToSunset) {
 		// go to sunset selected - end the day
 		gamecore->forceDayEnd();
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIJ01_01)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
 #else
 		gameflow.mIsPauseAllowed = FALSE;
 #endif
@@ -996,7 +996,7 @@ ModeState* RunningModeState::update(u32& result)
 
 	} else if (state == zen::ogScrPauseMgr::PAUSE_ExitToTitle) {
 		// continue from last save/quit challenge mode selected
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 		// demo creates a fresh bootup, very dramatic
 		gsys->forceHardReset();
 #else
@@ -1304,7 +1304,7 @@ ModeState* DayOverModeState::update(u32& result)
 			gsys->setHeap(heapIdx);
 			gsys->endLoading();
 
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 			// demo doesn't interact with the memory card
 #else
 			if (!memcardWindow) {
@@ -1320,7 +1320,7 @@ ModeState* DayOverModeState::update(u32& result)
 			// transit to quitter to handle changing subsection
 			gsys->setFade(0.0f);
 			return new QuittingGameModeState(mParentSection);
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 #else
 			}
 #endif
@@ -1342,7 +1342,7 @@ ModeState* DayOverModeState::update(u32& result)
 		}
 	}
 
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 	// no memory card screens in demo
 #else
 
@@ -2010,7 +2010,7 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 				f32 camFov   = cameraMgr->mCamera->getFov();
 				f32 movieFov = gameflow.mMoviePlayer->mTargetFov;
 
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 				Vector3f camViewPt(cameraMgr->mCamera->getViewpoint());
 				Vector3f movieViewPt(gameflow.mMoviePlayer->mTargetViewpoint);
 				Vector3f camWatchPt(cameraMgr->mCamera->getWatchpoint());
@@ -2069,13 +2069,13 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 		// do the main frame render
 
 // need these to be commented out, otherwise gsys does weird things in the next if block.
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 		gsys->mTimer->start("mainRender", true);
 #else
 		MATCHING_START_TIMER("mainRender", true);
 #endif
 		mainRender(gfx);
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 		gsys->mTimer->stop("mainRender");
 #else
 		MATCHING_STOP_TIMER("mainRender");
@@ -2085,7 +2085,7 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 		if (effectMgr) {
 			if (!gameflow.mPauseAll && !gameflow.mIsUIOverlayActive || gameflow.mIsTutorialTextActive) {
 
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 				gsys->mTimer->start("effect", true);
 #endif
 				bool isDVDNormal = true;
@@ -2096,23 +2096,23 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 				if (isDVDNormal) {
 					effectMgr->update();
 				}
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 				gsys->mTimer->stop("effect");
 #endif
 			}
 
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 			gsys->mTimer->start("eff draw", true);
 #endif
 			effectMgr->draw(gfx);
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 			gsys->mTimer->stop("eff draw");
 #endif
 		}
 
 		// do any 2D post-rendering (for overlays and windows)
 		if (!(gameflow.mDemoFlags & CinePlayerFlags::NonGameMovie)) {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 			gsys->mTimer->start("postRender", true);
 #endif
 			menuOn = false;
@@ -2121,7 +2121,7 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 			if (!mActiveMenu && menuWindow) {
 				menuOn = menuWindow->draw(gfx);
 			}
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 			gsys->mTimer->stop("postRender");
 #endif
 		}
@@ -2151,7 +2151,7 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 				gfx.setOrthogonal(orthoMtx.mMtx, AREA_FULL_SCREEN(gfx));
 				totalWindow->draw(gfx);
 			}
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 #else
 			if (memcardWindow) {
 				gfx.setOrthogonal(orthoMtx.mMtx, AREA_FULL_SCREEN(gfx));
@@ -2208,7 +2208,7 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 		resultWindow    = nullptr;
 		totalWindow     = nullptr;
 		challengeWindow = nullptr;
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 #else
 		memcardWindow = nullptr;
 #endif
@@ -2282,7 +2282,7 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 		gfx.clearBuffer(3, false);
 		gfx.setPerspective(gfx.mCamera->mPerspectiveMatrix.mMtx, gfx.mCamera->mFov, gfx.mCamera->mAspectRatio, gfx.mCamera->mNear,
 		                   gfx.mCamera->mFar, 1.0f);
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 		if (!(gameflow.mDemoFlags & CinePlayerFlags::NonGameMovie))
 #else
 		if (!memcardWindow && !(gameflow.mDemoFlags & CinePlayerFlags::NonGameMovie))
@@ -2776,7 +2776,7 @@ void GameMovieInterface::parse(GameMovieInterface::SimpleMessage& msg)
 		createMenuWindow();
 		break;
 	}
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 	case MOVIECMD_DemoFinish:
 	{
 		// show the happy ending text at the end of the demo :)

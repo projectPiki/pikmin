@@ -3,7 +3,7 @@
 #include <string.h>
 
 // exi was added in PAL version
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01_00) || defined(VERSION_G98P01_PIKIDEMO)
 
 #define MAX_DEV  3
 #define MAX_CHAN 3

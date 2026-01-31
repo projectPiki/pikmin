@@ -112,7 +112,7 @@ struct EffectMgr2D {
 	// unused/inlined:
 	~EffectMgr2D();
 
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 	// returns true if there are zero active particles, exclusive to demo(?)
 	// these names come from the demo .ilk, except checkChildPtclZero
 	inline bool isKillAll()

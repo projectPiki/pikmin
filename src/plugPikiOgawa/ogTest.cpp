@@ -83,7 +83,7 @@ private:
 	u32 _20;                 // _20, unknown
 	u32 mActiveMode;         // _24, active mode, see TestMode enum
 	Controller* mController; // _28
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
 #else
 	ZenController* mZenController; // _2C
 #endif
@@ -163,7 +163,7 @@ OgTestScreen::OgTestScreen()
 	mFileChkSelMgr   = new ogScrFileChkSelMgr();
 	mTotalScoreMgr   = new ogScrTotalScoreMgr(nullptr);
 	mStartMgr        = new ogScrStartMgr();
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
 #else
 	mZenController        = new ZenController(nullptr);
 	KeyRepeat::repeatTime = 0.5f;
@@ -188,7 +188,7 @@ void OgTestScreen::modeSelectSub()
 	}
 
 	if (mSelectedMode == TESTMODE_Tutorial) {
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
 		if (mController->keyClick(KBBTN_MSTICK_RIGHT | KBBTN_CSTICK_RIGHT) && mTutorialMode < 152)
 #else
 		if (mZenController->keyRepeat(KBBTN_MSTICK_RIGHT | KBBTN_CSTICK_RIGHT) && mTutorialMode < 152)
@@ -197,7 +197,7 @@ void OgTestScreen::modeSelectSub()
 			mTutorialMode++;
 		}
 
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
 		if (mController->keyClick(KBBTN_MSTICK_LEFT | KBBTN_CSTICK_LEFT) && mTutorialMode > 0)
 #else
 		if (mZenController->keyRepeat(KBBTN_MSTICK_LEFT | KBBTN_CSTICK_LEFT) && mTutorialMode > 0)
@@ -372,7 +372,7 @@ void OgTestScreen::modeSelectSub()
 void OgTestScreen::update()
 {
 	mController->update();
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
 #else
 	mZenController->setContPtr(mController);
 	mZenController->update();

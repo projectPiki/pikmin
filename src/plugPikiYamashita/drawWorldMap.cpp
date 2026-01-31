@@ -1979,7 +1979,7 @@ void zen::DrawWorldMap::draw(Graphics& gfx)
 		mMoniScreen->draw();
 		mIconScreen->draw();
 		mTitleScreen->draw();
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 		if (mCurrentMode == DrawWorldMapMode::DiaryClosing || mCurrentMode == DrawWorldMapMode::DiaryOpening) {
 			mEffectMgr2D->draw(gfx);
 			mConfirmMgr->draw(gfx);
@@ -2256,7 +2256,7 @@ bool zen::DrawWorldMap::modeOperation(Controller* controller)
 		mEffectMgr2D->killAll(false);
 		mCoursePointMgr->createCourseInEffect();
 		mWipeMgr->setDefault();
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 		mWipeMgr->close(2.0f, 320, 240);
 #else
 		mWipeMgr->close(0.5f, 320, 240);
@@ -2295,7 +2295,7 @@ bool zen::DrawWorldMap::modeEnd(Controller*)
 {
 	bool res = false;
 	if (!mWipeMgr->isActive()) {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 		if (WMeffMgr->isKillAll()) {
 			res = true;
 		}

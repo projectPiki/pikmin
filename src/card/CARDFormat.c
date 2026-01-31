@@ -125,7 +125,7 @@ s32 __CARDFormatRegionAsync(s32 chan, u16 encode, CARDCallback callback)
  */
 s32 CARDFormatAsync(s32 channel, CARDCallback callback)
 {
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_GPIP01_00)
 	return __CARDFormatRegionAsync(channel, OSGetFontEncode(), callback);
 #else
 	CARDControl* card;

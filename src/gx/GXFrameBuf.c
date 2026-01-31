@@ -322,7 +322,7 @@ GXRenderModeObj GXRmHW         = { 1,
 	                               { 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6 },
 	                               { 0, 0, 21, 22, 21, 0, 0 } };
 
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01_00) || defined(VERSION_G98P01_PIKIDEMO)
 GXRenderModeObj GXEurgb60Hz480IntDf = { 20,
 	                                    640,
 	                                    480,
@@ -543,7 +543,7 @@ u32 GXSetDispCopyYScale(f32 vscale)
 	OSAssertMsgLine(0x49D, vscale >= 1.0f, "GXSetDispCopyYScale: Vertical scale must be >= 1.0");
 
 	iScale = (u32)(256.0f / vscale) & 0x1FF;
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01_00) || defined(VERSION_G98P01_PIKIDEMO)
 #else
 	fScale = 256.0f / (f32)iScale;
 #endif
@@ -561,7 +561,7 @@ u32 GXSetDispCopyYScale(f32 vscale)
 	SET_REG_FIELD(0x4AB, gx->cpDisp, 1, 10, enable);
 	ht = (u32)GET_REG_FIELD(gx->cpDispSize, 10, 10) + 1;
 
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01_00) || defined(VERSION_G98P01_PIKIDEMO)
 	return __GXGetNumXfbLines(ht, iScale);
 #else
 	return ht * fScale;

@@ -12,7 +12,11 @@
  * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
+#if defined(VERSION_GPIJ01)
+DEFINE_ERROR(12)
+#else
 DEFINE_ERROR(14)
+#endif
 
 /**
  * @todo: Documentation
@@ -146,6 +150,8 @@ u8 Texture::getAlpha(int x, int y)
  */
 u8 Texture::getRed(int, int)
 {
+	// TODO: this is present in JPN Demo
+
 	// UNUSED FUNCTION
 }
 

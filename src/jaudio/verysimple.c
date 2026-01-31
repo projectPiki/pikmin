@@ -161,7 +161,7 @@ void Jac_PlaySystemSe(s32 id)
 			container = FALSE;
 			Jam_UnPauseTrack(Jam_GetTrackHandle(0x20000), 1);
 			Jac_UnPauseOrimaSe();
-#if defined(VERSION_GPIJ01_01)
+#if defined(VERSION_GPIJ01_01) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_DPIJ01_PIKIDEMO)
 #else
 			Jac_StopSystemSe(JACSYS_MenuScroll);
 			Jac_StopSystemSe(JACSYS_MenuZoomIn);
@@ -246,7 +246,11 @@ void Jac_PlaySystemSe(s32 id)
 	}
 
 	if (cmdqueue_reset == TRUE) {
+#if defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_DPIJ01_PIKIDEMO)
+		Jal_SendCmdQueue(&system_se, id);
+#else
 		Jal_SendCmdQueue_Noblock(&system_se, id);
+#endif
 	}
 }
 
@@ -268,7 +272,11 @@ void Jac_StopSystemSe(s32 id)
 	default:
 	{
 		if (cmdqueue_reset == TRUE) {
+#if defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_DPIJ01_PIKIDEMO)
+			Jal_SendCmdQueue(&system_se_stop, id);
+#else
 			Jal_SendCmdQueue_Noblock(&system_se_stop, id);
+#endif
 		}
 	}
 	}

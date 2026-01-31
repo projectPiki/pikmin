@@ -24,7 +24,7 @@ DEFINE_PRINT("OgNitakuSection")
 zen::ogNitakuMgr::ogNitakuMgr(P2DScreen* screen, P2DTextBox* text1, P2DTextBox* text2, P2DTextBox* text3, bool startYes, bool canCancel)
 {
 	mScreen = screen;
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
 #else
 	mTextBoxA = text1;
 	mTextBoxB = text2;
@@ -50,7 +50,7 @@ zen::ogNitakuMgr::ogNitakuMgr(P2DScreen* screen, P2DTextBox* text1, P2DTextBox* 
 	mLeftCursorMgr.init(mScreen, mRootPane, 'z00l', _48, _4C);
 	mRightCursorMgr.init(mScreen, mRootPane, 'z00r', _88, _8C);
 	cursorDisable(0.001f);
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
 	mMesgColorA = new TextColorCallBack(text1);
 	text1->setCallBack(mMesgColorA);
 	mMesgColorB = new TextColorCallBack(text2);

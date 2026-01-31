@@ -203,7 +203,7 @@ void FlowController::readMapList(immut char* fileName)
 	file->close();
 }
 
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 /// Load banner textures for each map (as well as one for entering from title).
 static immut char* levNames[]
     = { "intro/map0.bti", "intro/ot_map.bti", "intro/map2.bti", "intro/map3.bti", "intro/map4.bti", "intro/loading.bti" };
@@ -247,7 +247,7 @@ void OnePlayerSection::init()
 			// loading section! (post-title screen, pre-file select)
 			PRINT("making new SETUP\n");
 			gsys->startLoading(&gameflow.mGameLoadIdler, true, 60);
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 			// the demo has a single loading banner for the setup section
 			gameflow.mLevelBannerTex       = gameflow.setLoadBanner(levNames[5]);
 			gameflow.mLevelBannerFadeValue = 0.0f;

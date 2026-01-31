@@ -11,7 +11,12 @@
  * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
+#if defined(VERSION_GPIJ01)
 DEFINE_ERROR(14)
+#else
+DEFINE_ERROR(15)
+#endif
+
 
 /**
  * @todo: Documentation
@@ -24,10 +29,14 @@ DEFINE_PRINT("drawCMresult")
  */
 zen::DrawCMresult::DrawCMresult()
 {
-	mEffectMgr2D  = new EffectMgr2D(8, 0x80, 0x80);
+	mEffectMgr2D = new EffectMgr2D(8, 0x80, 0x80);
+#if defined(VERSION_DPIJ01_PIKIDEMO)
+	mResultScreen = new DrawScreen("screen/blo/ot_re.blo", nullptr, true, true);
+#else
 	mResultScreen = new DrawScreen("screen/blo/cha_re.blo", nullptr, true, true);
-	mScoreScreen  = new DrawScreen("screen/blo/cha_rank.blo", nullptr, true, true);
-	mBestScreen   = new DrawScreen("screen/blo/cha_best.blo", nullptr, true, true);
+#endif
+	mScoreScreen = new DrawScreen("screen/blo/cha_rank.blo", nullptr, true, true);
+	mBestScreen  = new DrawScreen("screen/blo/cha_best.blo", nullptr, true, true);
 
 	P2DScreen* titleScreen = mResultScreen->getScreenPtr();
 	P2DScreen* scoreScreen = mScoreScreen->getScreenPtr();

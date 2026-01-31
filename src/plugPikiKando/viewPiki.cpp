@@ -165,7 +165,7 @@ void ViewPiki::initBirth()
 	mSRT.s.set(scale, scale, scale);
 	setFlower(0);
 
-#if defined(VERSION_GPIJ01_01)
+#if defined(VERSION_GPIJ01) || defined(VERSION_DPIJ01_PIKIDEMO)
 	STACK_PAD_VAR(2);
 #else
 	STACK_PAD_VAR(4);

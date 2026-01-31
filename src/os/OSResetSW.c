@@ -78,18 +78,28 @@ BOOL OSGetResetButtonState(void)
 	}
 
 	LastState = state;
-
+#if defined(VERSION_DPIJ01_PIKIDEMO)
+	if (LastState == FALSE && GameChoice & 0x3f) {
+#else
 	if (GameChoice & 0x3f) {
+#endif
 		OSTime fire = (GameChoice & 0x3f) * 60;
 		fire        = __OSStartTime + OSSecondsToTicks(fire);
 		if (fire < now) {
 			now -= fire;
 			now = OSTicksToSeconds(now) / 2;
+
+#if defined(VERSION_DPIJ01_PIKIDEMO)
+			if ((now & 1) == 0 || Down) {
+				state = TRUE;
+			}
+#else
 			if ((now & 1) == 0) {
 				state = TRUE;
 			} else {
 				state = FALSE;
 			}
+#endif
 		}
 	}
 
@@ -106,7 +116,7 @@ BOOL OSGetResetSwitchState(void)
 	BOOL state;
 	u32 reg;
 
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_GPIP01_00)
 	return OSGetResetButtonState();
 #endif
 

@@ -176,7 +176,7 @@ void DynCreature::addParticle(f32 mass, immut Vector3f& position)
 		mMass += mass;
 		mParticleCount++;
 	} else {
-#if defined(VERSION_GPIE01_00) || defined(VERSION_GPIE01_01) || defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIE01_00) || defined(VERSION_GPIE01_01) || defined(VERSION_GPIP01_00) || defined(VERSION_GPIJ01_02)
 #else
 		PRINT("PARTICLE ADD FAILED ! (%s)\n", ObjType::getName(mObjType));
 		ERROR("ZANNEN !\n");

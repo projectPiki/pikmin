@@ -144,7 +144,11 @@ void Jac_PlayOrimaSe(u32 id)
 			}
 		}
 	} else {
+#if defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_DPIJ01_PIKIDEMO)
+		Jal_SendCmdQueue(&player_se, (u16)id);
+#else
 		Jal_SendCmdQueue_Noblock(&player_se, (u16)id);
+#endif
 		if (id == JACORIMA_PikiPulled2) {
 			u32 randomVariationId = (u16)GetRandom_ulimit(4);
 			u32 variantSoundId    = 0x800b;
@@ -229,7 +233,11 @@ void Jac_StopOrimaSe(s32 id)
 	}
 
 	if (!(id & JACORIMA_PIKISOUND)) {
-		Jal_SendCmdQueue_Noblock(&player_se_stop, id);
+#if defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_DPIJ01_PIKIDEMO)
+		Jal_SendCmdQueue(&player_se_stop, (u16)id);
+#else
+		Jal_SendCmdQueue_Noblock(&player_se_stop, (u16)id);
+#endif
 	}
 }
 

@@ -3,7 +3,7 @@
 #include <string.h>
 
 // This OS file in particular is really fussy, so I'm just seperating the whole thing for v37 (USA) and v47 (USA Demo)
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO)
 typedef void (*EXICallback)(s32, OSContext*);
 
 #define EXI_0LENGTH_EXILENGTH_MASK 0x03FFFFE0

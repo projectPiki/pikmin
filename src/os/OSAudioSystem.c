@@ -2,7 +2,7 @@
 #include "types.h"
 #include <string.h>
 
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
 static u8 DSPInitCode[] = {
 	0x02, 0x9F, 0x00, 0x10, 0x02, 0x9F, 0x00, 0x33, 0x02, 0x9F, 0x00, 0x34, 0x02, 0x9F, 0x00, 0x35, 0x02, 0x9F, 0x00, 0x36, 0x02, 0x9F,
 	0x00, 0x37, 0x02, 0x9F, 0x00, 0x38, 0x02, 0x9F, 0x00, 0x39, 0x12, 0x06, 0x12, 0x03, 0x12, 0x04, 0x12, 0x05, 0x00, 0x80, 0x80, 0x00,
@@ -33,7 +33,7 @@ void __OSInitAudioSystem(void)
 	u16 r3;
 
 	u32 padding;
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
 	memcpy((void*)((u8*)OSGetArenaHi() - 128), __DSPWorkBuffer, 128);
 #endif
 	memcpy(__DSPWorkBuffer, (void*)DSPInitCode, 128);
@@ -88,7 +88,7 @@ void __OSInitAudioSystem(void)
 	__DSPRegs[5] |= 1;
 	while (__DSPRegs[5] & 1)
 		;
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
 	memcpy(__DSPWorkBuffer, (void*)((u8*)OSGetArenaHi() - 128), 128);
 #endif
 }

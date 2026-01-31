@@ -545,7 +545,7 @@ void MoviePlayer::sndStartMovie(MovieInfo* info)
 	}
 	Jac_SetDemoOnyons(onyons);
 	effectMgr->cullingOff();
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
 #else
 	Jac_SetDemoPartsCount(playerState ? playerState->getCurrParts() : 0);
 #endif

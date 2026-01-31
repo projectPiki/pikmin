@@ -746,11 +746,11 @@ void EffectMgr::initEffectGeometry(int effShpCount)
  */
 void EffectMgr::update()
 {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 	gsys->mTimer->start("ptcl", true);
 #endif
 	mPtclMgr.update();
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 	gsys->mTimer->stop("ptcl");
 #endif
 

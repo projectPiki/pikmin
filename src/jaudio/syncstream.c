@@ -4,6 +4,7 @@
 #include "jaudio/audiostruct.h"
 #include "jaudio/dspdriver.h"
 #include "jaudio/dspinterface.h"
+#include "jaudio/dummyprobe.h"
 #include "jaudio/dvdthread.h"
 #include "jaudio/interleave.h"
 #include "jaudio/playercall.h"
@@ -107,22 +108,22 @@ u32 Get_DirectPCM_Remain(DSPchannel_* channel)
 /**
  * @TODO: Documentation
  */
-static void __DVDReadAsyncRetry()
+static BOOL __DVDReadAsyncRetry()
 {
-	DVDReadAsyncPrio(copy->fileinfo, copy->addr, copy->length, copy->offset, copy->callback, 1);
+	return DVDReadAsyncPrio(copy->fileinfo, copy->addr, copy->length, copy->offset, copy->callback, 1);
 }
 
 /**
  * @TODO: Documentation
  */
-static void DVDReadAsyncPrio2(DVDFileInfo* info, void* addr, s32 length, s32 offs, DVDCallback callback, s32 prio)
+static BOOL DVDReadAsyncPrio2(DVDFileInfo* info, void* addr, s32 length, s32 offs, DVDCallback callback, s32 prio)
 {
 	copy->fileinfo = info;
 	copy->addr     = addr;
 	copy->length   = length;
 	copy->offset   = offs;
 	copy->callback = callback;
-	__DVDReadAsyncRetry();
+	return __DVDReadAsyncRetry();
 }
 
 static void LoadADPCM(StreamCtrl_*, int);
@@ -185,7 +186,10 @@ static void LoadADPCM(StreamCtrl_* ctrl, int r28)
 	u32 idx           = ctrl->buffCtrlMain.currentBufIdx;
 	BufControl_* buff = &ctrl->buffCtrl[idx];
 	u32 oldsize;
+#if defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_DPIJ01_PIKIDEMO)
+#else
 	STACK_PAD_VAR(2);
+#endif
 
 	if (ctrl->isLoadInProgress) {
 		return;
@@ -251,8 +255,11 @@ static void LoadADPCM(StreamCtrl_* ctrl, int r28)
 
 		ctrl->isLoadInProgress = 1;
 
-		DVDReadAsyncPrio2(&ctrl->fileinfo, (void*)buff->mLength, size, oldSize, __LoadFin, 1);
-
+		if (DVDReadAsyncPrio2(&ctrl->fileinfo, (void*)buff->mLength, size, oldSize, __LoadFin, 1) == FALSE) {
+#if defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_DPIJ01_PIKIDEMO)
+			Console_printf("Error:: DVDREAD Async is missed\n");
+#endif
+		}
 		break;
 	}
 	}
@@ -500,6 +507,9 @@ static s32 StreamAudio_Callback(void* data)
 		DSP_FlushChannel(ctrl->dspch[1]->buffer_idx);
 
 		ctrl->playbackState = 6;
+#if defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_DPIJ01_PIKIDEMO)
+		Console_printf("Pausing... DELAY2 \n");
+#endif
 		return 0;
 	}
 
@@ -530,6 +540,11 @@ static s32 StreamAudio_Callback(void* data)
 
 			ctrl->playbackState = 5;
 		}
+#if defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_DPIJ01_PIKIDEMO)
+		else if (ctrl->samplesLoaded - size > 0x1000) {
+			Console_printf("Error:: Over Decode %d\n", ctrl->samplesLoaded - size);
+		}
+#endif
 	}
 
 	if (ctrl->playbackState == 5) {
@@ -594,14 +609,14 @@ static s32 StreamAudio_Callback(void* data)
 			} else {
 				ctrl->playbackState = 1;
 				ctrl->frameCounter++;
-#if defined(VERSION_GPIJ01_01)
+#if defined(VERSION_GPIJ01_01) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_DPIJ01_PIKIDEMO)
 #else
 				u32 mode = Jac_GetOutputMode();
 #endif
 				for (channelIdx = 0; channelIdx < 2; channelIdx++) {
 					u16 pitch = (4096.0f * ctrl->header.sampleRate * ctrl->pitchRatio) / JAC_DAC_RATE;
 					Play_DirectPCM(ctrl->dspch[channelIdx], ctrl->loopBufs[channelIdx], ctrl->loopSize, ctrl->totalSamples);
-#if defined(VERSION_GPIJ01_01)
+#if defined(VERSION_GPIJ01_01) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_DPIJ01_PIKIDEMO)
 					DSP_SetMixerInitVolume(ctrl->dspch[channelIdx]->buffer_idx, channelIdx, ctrl->volume[channelIdx], 0);
 					DSP_SetMixerInitVolume(ctrl->dspch[channelIdx]->buffer_idx, 1 - channelIdx, 0, 0);
 #else
@@ -1001,7 +1016,7 @@ void StreamChgPitch(void)
  */
 static void __StreamChgVolume(StreamCtrl_* ctrl)
 {
-#if defined(VERSION_GPIJ01_01)
+#if defined(VERSION_GPIJ01_01) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_DPIJ01_PIKIDEMO)
 	if (ctrl->dspch[0]) {
 		for (u32 i = 0; i < 2; i++) {
 			DSP_SetMixerVolume(ctrl->dspch[i]->buffer_idx, i, ctrl->volume[i], 0);

@@ -147,7 +147,7 @@ RandomAccessStream* System::openFile(immut char* path, bool isRelativePath, bool
 		}
 	}
 
-#if defined(VERSION_GPIJ01_01)
+#if defined(VERSION_GPIJ01) || defined(VERSION_DPIJ01_PIKIDEMO)
 	if (DVDStream::numOpen) {
 		ERROR("Cannot open '%s' while '%s' is open!!\n", path, lastName);
 	}
@@ -176,7 +176,7 @@ RandomAccessStream* System::openFile(immut char* path, bool isRelativePath, bool
 	dvdBufferedStream.init(&dvdStream, dvdStream.readBuffer, mDvdBufferSize);
 	return &dvdBufferedStream;
 
-#if defined(VERSION_GPIJ01_01)
+#if defined(VERSION_GPIJ01) || defined(VERSION_DPIJ01_PIKIDEMO)
 #else
 	STACK_PAD_VAR(2);
 #endif
@@ -789,7 +789,7 @@ static immut char** errorList[30] = {
 	&s_errorMessages[0], &s_errorMessages[2], &s_errorMessages[8], &s_errorMessages[14], &s_errorMessages[17], &s_errorMessages[20],
 	&i_errorMessages[0], &i_errorMessages[2], &i_errorMessages[8], &i_errorMessages[14], &i_errorMessages[17], &i_errorMessages[20],
 };
-#elif defined(VERSION_GPIJ01_01)
+#elif defined(VERSION_GPIJ01) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_DPIJ01_PIKIDEMO)
 static immut char* errorMessages[] = {
 	"ディスクを読み込んでいます。",
 	nullptr,
@@ -893,7 +893,7 @@ void System::Initialise()
 	mHeapStart = OSRoundUp32B(OSInitAlloc(lo, hi, 1));
 	hi         = (void*)OSRoundDown32B(hi);
 	mHeapEnd   = (u32)hi - mHeapStart;
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01)
 	if (mHeapEnd <= 0x1800000)
 #else
 	if (mHeapEnd < 0x1800000)
@@ -999,7 +999,7 @@ void System::halt(immut char* file, int line, immut char* message)
 	exit(0); // Failure!
 #else
 
-#if defined(VERSION_GPIJ01_01)
+#if defined(VERSION_GPIJ01)
 	OSErrorLine(1075, message);
 	return;
 #endif
@@ -1018,7 +1018,7 @@ void* loadFunc(void* idler)
 	}
 
 	int frameCount = 0; // r23
-#if defined(VERSION_PIKIDEMO)
+#if defined(VERSION_G98E01_PIKIDEMO)
 	int b = 4; // r22
 #else
 	int b = 2; // r22
@@ -1097,7 +1097,7 @@ void System::startLoading(LoadIdler* idler, bool useLoadScreen, u32 loadDelay)
 	if (mIsLoadingActive == 0) {
 		mLoadTimeBeforeIdling = loadDelay;
 		mIsLoadScreenActive   = useLoadScreen;
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
 		// demo removes the loading thread after it's finished, while other versions maintain it.
 		OSCreateThread(&Thread, loadFunc, idler, ThreadStack + sizeof(ThreadStack), sizeof(ThreadStack), 15, OS_THREAD_ATTR_DETACH);
 #else
@@ -1124,7 +1124,7 @@ void System::endLoading()
 	gsys->mPrevAllocType = TRUE;
 	if (mIsLoadingActive) {
 		OSSendMessage(&loadMesgQueue, (OSMessage)'QUIT', OS_MESSAGE_BLOCK);
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
 		OSReceiveMessage(&sysMesgQueue, nullptr, OS_MESSAGE_BLOCK);
 		OSCancelThread(&Thread);
 #else
@@ -1317,6 +1317,13 @@ void* dvdFunc(void*)
 	while (true) {
 		OSReceiveMessage(&dvdMesgQueue, nullptr, OS_MESSAGE_BLOCK);
 		if (!stopped) {
+#if defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_DPIJ01_PIKIDEMO)
+			if (gsys->mIsDemoTimeUp) {
+				Jac_Freeze_Precall();
+				stopped = true;
+			}
+#endif
+
 			if (gsys->mControllerMgr.keyDown(KBBTN_DPAD_UP) && gsys->mControllerMgr.keyDown(KBBTN_DPAD_RIGHT)
 			    && gsys->mControllerMgr.keyDown(KBBTN_A)) {
 				inputCounter++;
@@ -1327,8 +1334,10 @@ void* dvdFunc(void*)
 			} else {
 				inputCounter = 0;
 			}
-#if defined(VERSION_PIKIDEMO)
+#if defined(VERSION_G98E01_PIKIDEMO)
 			if (gsys->mIsDemoTimeUp || OSGetResetSwitchState())
+#elif defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_DPIJ01_PIKIDEMO)
+			if (OSGetResetButtonState())
 #else
 			if (OSGetResetSwitchState())
 #endif
@@ -1337,10 +1346,14 @@ void* dvdFunc(void*)
 				stopped = true;
 			}
 		} else {
+#if defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_DPIJ01_PIKIDEMO)
+			if (!OSGetResetButtonState() && !gsys->mIsRendering && !gsys->mIsCardSaving) {
+#else
 			if (!OSGetResetSwitchState() && !gsys->mIsRendering && !gsys->mIsCardSaving) {
+#endif
 				PADRecalibrate(0xf0000000);
 				Jac_Freeze();
-#if defined(VERSION_GPIJ01_01)
+#if defined(VERSION_GPIJ01) || defined(VERSION_DPIJ01_PIKIDEMO)
 				GXAbortFrame();
 #else
 #endif

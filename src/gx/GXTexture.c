@@ -1382,7 +1382,7 @@ void __GXSetSUTexRegs(void)
 			} else {
 				coord = GET_REG_FIELD(*ptref, 3, 3);
 			}
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01_00) || defined(VERSION_G98P01_PIKIDEMO)
 			if ((tmap != 0xFF) && !(gx->tcsManEnab & (1 << coord)) && (gx->tevTcEnab & (1 << i))) {
 #else
 			if ((tmap != 0xFF) && !(gx->tcsManEnab & (1 << coord))) {

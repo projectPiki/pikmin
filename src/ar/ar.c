@@ -6,7 +6,7 @@
 
 static ARCallback __AR_Callback;
 static u32 __AR_Size;
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01_00) || defined(VERSION_G98P01_PIKIDEMO)
 static u32 __AR_InternalSize;
 static u32 __AR_ExpansionSize;
 #endif
@@ -100,7 +100,7 @@ void ARCheckInit(void)
 u32 ARInit(u32* stack_index_addr, u32 num_entries)
 {
 	BOOL old;
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01_00) || defined(VERSION_G98P01_PIKIDEMO)
 #else
 	u16 refresh;
 #endif
@@ -120,7 +120,7 @@ u32 ARInit(u32* stack_index_addr, u32 num_entries)
 	__AR_FreeBlocks   = num_entries;
 	__AR_BlockLength  = stack_index_addr;
 
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01_00) || defined(VERSION_G98P01_PIKIDEMO)
 	// WHY?
 	__DSPRegs[DSP_ARAM_REFRESH] = __DSPRegs[DSP_ARAM_REFRESH] & 0xff | __DSPRegs[DSP_ARAM_REFRESH] & ~0xff;
 #else
@@ -230,7 +230,7 @@ void __ARWriteDMA(u32 mmem_addr, u32 aram_addr, u32 length)
 	do {
 	} while ((__DSPRegs[DSP_CONTROL_STATUS] & 0x200));
 
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01_00) || defined(VERSION_G98P01_PIKIDEMO)
 	__DSPRegs[DSP_CONTROL_STATUS] = __DSPRegs[DSP_CONTROL_STATUS] & ~0x88 | 0x20;
 #endif
 }
@@ -260,7 +260,7 @@ void __ARReadDMA(u32 mmem_addr, u32 aram_addr, u32 length)
 	do {
 	} while ((__DSPRegs[DSP_CONTROL_STATUS] & 0x200));
 
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01_00) || defined(VERSION_G98P01_PIKIDEMO)
 	__DSPRegs[DSP_CONTROL_STATUS] = __DSPRegs[DSP_CONTROL_STATUS] & ~0x88 | 0x20;
 #endif
 }
@@ -280,7 +280,7 @@ void __ARChecksize(void)
 	u32 ARAM_size;
 	u32 i;
 
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01_00) || defined(VERSION_G98P01_PIKIDEMO)
 	do {
 	} while (!(__DSPRegs[DSP_ARAM_MODE] & 1));
 
@@ -322,7 +322,7 @@ void __ARChecksize(void)
 	__DSPRegs[DSP_ARAM_SIZE] = ((__DSPRegs[DSP_ARAM_SIZE] & 0xFFFFFFC0) | 4) | 0x20;
 #endif
 
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01_00) || defined(VERSION_G98P01_PIKIDEMO)
 	__ARWriteDMA((u32)dummy_data, ARAM_size + 0x0, 0x20U);
 	__ARWriteDMA((u32)dummy_data, ARAM_size + 0x200000, 0x20U);
 	__ARWriteDMA((u32)dummy_data, ARAM_size + 0x1000000, 0x20U);
@@ -487,14 +487,14 @@ void __ARChecksize(void)
 					if (*buffer == *test_data) {
 						ARAM_mode |= 0x18;
 						ARAM_size += 0x01000000;
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01_00) || defined(VERSION_G98P01_PIKIDEMO)
 						__AR_ExpansionSize = 0x1000000;
 #endif
 
 					} else {
 						ARAM_mode |= 0x20;
 						ARAM_size += 0x02000000;
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01_00) || defined(VERSION_G98P01_PIKIDEMO)
 						__AR_ExpansionSize = 0x2000000;
 #endif
 					}

@@ -18,7 +18,7 @@ static void DoUnmount(s32 channel, s32 result);
  */
 BOOL CARDProbe(s32 channel)
 {
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
 	if (GameChoice & 0x80) {
 		return 0;
 	}
@@ -29,7 +29,7 @@ BOOL CARDProbe(s32 channel)
 
 static inline BOOL IsCard(u32 id)
 {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 	if ((id == 0x80000004 && __CARDVendorID != 0xFFFF) || !(id & 0xFFFF0000) && !(id & 3)) {
 		return TRUE;
 	}
@@ -150,7 +150,7 @@ static s32 DoMount(s32 channel)
 
 	if (card->mountStep == 0) {
 
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_GPIP01_00)
 		if (EXIGetID(channel, 0, &id) == 0) {
 			result = CARD_RESULT_NOCARD;
 		} else if ((id == 0x80000004 && __CARDVendorID != 0xFFFF) || (!(id & 0xFFFF0000) && !(id & 3))) {
@@ -165,7 +165,7 @@ static s32 DoMount(s32 channel)
 			goto error;
 		}
 
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_GPIP01_00)
 		card->cid = id;
 #endif
 		card->size       = (u16)(id & 0xFC);
@@ -226,7 +226,7 @@ static s32 DoMount(s32 channel)
 	}
 
 	if (card->mountStep == 1) {
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_GPIP01_00)
 		if (card->cid == 0x80000004) {
 			u16 vendorID;
 
@@ -323,7 +323,7 @@ s32 CARDMountAsync(s32 channel, CARDMemoryCard* workArea, CARDCallback detachCal
 	if (channel < 0 || 2 <= channel) {
 		return CARD_RESULT_FATAL_ERROR;
 	}
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
 	if (GameChoice & 0x80)
 		return CARD_RESULT_NOCARD;
 #endif

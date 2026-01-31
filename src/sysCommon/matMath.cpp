@@ -268,7 +268,7 @@ void Matrix4f::inverse(Matrix4f* inv)
 	                - mMtx[2][0] * mMtx[1][1] * mMtx[0][2] - mMtx[1][0] * mMtx[0][1] * mMtx[2][2] - mMtx[0][0] * mMtx[2][1] * mMtx[1][2];
 
 	if (determinant == 0.0f) {
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
 		return;
 #else
 		temp->makeIdentity();

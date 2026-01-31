@@ -1025,7 +1025,7 @@ void ActorInstance::refresh(immut Matrix4f& mtx, Graphics& gfx, f32* p3)
 		mActiveActor->mModel->overrideAnim(0, &mActiveActor->mContext);
 	}
 
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 	STACK_PAD_STRUCT(50);
 #else
 #endif
@@ -1073,7 +1073,7 @@ void ActorInstance::refresh(immut Matrix4f& mtx, Graphics& gfx, f32* p3)
 		}
 	}
 
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 	STACK_PAD_TERNARY(modelType, 12);
 #else
 #endif

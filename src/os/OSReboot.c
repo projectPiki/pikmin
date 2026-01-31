@@ -2,7 +2,7 @@
 #include "Dolphin/os.h"
 #include <stddef.h>
 
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
 static void* SaveStart = NULL;
 static void* SaveEnd   = NULL;
 #endif
@@ -113,14 +113,14 @@ void __OSReboot(u32 resetCode, u32 bootDol)
 	OS_HOT_RESET_CODE = resetCode;
 	OS_UNK_CODE       = 0;
 	OS_REBOOT_BOOL    = TRUE;
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
 	BOOT_REGION_START = SaveStart;
 	BOOT_REGION_END   = SaveEnd;
 #endif
 	OSClearContext(&exceptionContext);
 	OSSetCurrentContext(&exceptionContext);
 	DVDInit();
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
 	DVDSetAutoInvalidation(TRUE);
 #endif
 

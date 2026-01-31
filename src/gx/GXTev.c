@@ -481,7 +481,7 @@ void GXSetTevOrder(GXTevStageID stage, GXTexCoordID coord, GXTexMapID map, GXCha
 	tmap = map & ~0x100;
 	tmap = (tmap >= GX_MAX_TEXMAP) ? GX_TEXMAP0 : tmap;
 
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01_00) || defined(VERSION_G98P01_PIKIDEMO)
 	if (coord >= GX_MAX_TEXCOORD) {
 		tcoord        = GX_TEXCOORD0;
 		gx->tevTcEnab = gx->tevTcEnab & ~(1 << stage);

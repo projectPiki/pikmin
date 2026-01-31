@@ -100,7 +100,7 @@ GXFifoObj* GXInit(void* base, u32 size)
 	__GXinBegin = FALSE;
 #endif
 	gx->tcsManEnab = FALSE;
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01_00) || defined(VERSION_G98P01_PIKIDEMO)
 	gx->tevTcEnab = GX_FALSE;
 #endif
 	gx->vNum = 0;
@@ -415,7 +415,7 @@ void __GXInitGX()
 		rmode = &GXPal528IntDf;
 		break;
 	}
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01_00) || defined(VERSION_G98P01_PIKIDEMO)
 	case VI_EURGB60:
 	{
 		rmode = &GXEurgb60Hz480IntDf;
@@ -447,7 +447,7 @@ void __GXInitGX()
 	GXClearVtxDesc();
 	GXInvalidateVtxCache();
 
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01_00) || defined(VERSION_G98P01_PIKIDEMO)
 	for (i = GX_VA_POS; i <= GX_LIGHT_ARRAY; i++) {
 		GXSetArray(i, gx, 0);
 	}

@@ -676,7 +676,7 @@ public:
 	}
 
 	static const f32 DEFAULT_FRAME_RATE;
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 	bool isKillAllGenerator() { return (int)mActivePtclGenCount == 0 && (int)mActiveParticleCount == 0; }
 	bool checkChildPtclZero() { return (int)mActiveChildParticleCount == 0; }
 
@@ -684,7 +684,7 @@ public:
 #endif
 
 protected:
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 #else
 	void calcActiveList();
 #endif

@@ -184,7 +184,7 @@ public:
 private:
 	char mOnesWaitChar[8];                                  // _00
 	char mTensWaitChar[8];                                  // _08
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01) //
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01) //
 #else                                                       //
 	char mHankakuWaitChars[8]; // _10
 #endif                                                      //

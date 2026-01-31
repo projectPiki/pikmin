@@ -127,7 +127,7 @@ void ActFree::init(Creature*)
 void ActFree::cleanup()
 {
 	// This might not be right but its the only way the stack will co-operate with the error
-#if defined(VERSION_GPIJ01_01)
+#if defined(VERSION_GPIJ01) || defined(VERSION_DPIJ01_PIKIDEMO)
 	mPiki->mCreatureFlags &= ~CF_AllowFixPosition;
 #else
 	mPiki->disableFixPos();
@@ -136,7 +136,7 @@ void ActFree::cleanup()
 	mPiki->mFreeLightEffect->kill();
 	GameStat::workPikis.inc(mPiki->mColor);
 	GameStat::freePikis.dec(mPiki->mColor);
-#if defined(VERSION_GPIJ01_01)
+#if defined(VERSION_GPIJ01) || defined(VERSION_DPIJ01_PIKIDEMO)
 	if (GameStat::freePikis < 0) {
 		ERROR("counter minus(fp)");
 	}

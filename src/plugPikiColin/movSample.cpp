@@ -149,7 +149,7 @@ struct MovSampleSetupSection : public Node {
 	{
 		mName       = "MovSample section";
 		mController = new Controller(1);
-#if defined(VERSION_GPIJ01_01)
+#if defined(VERSION_GPIJ01) || defined(VERSION_DPIJ01_PIKIDEMO)
 #else
 		_28 = 160;
 #endif
@@ -192,7 +192,7 @@ struct MovSampleSetupSection : public Node {
 		}
 
 		if (a && pic) {
-#if defined(VERSION_GPIJ01_01)
+#if defined(VERSION_GPIJ01) || defined(VERSION_DPIJ01_PIKIDEMO)
 			convHVQM4TexY8UV8(b, c, a, _48[_3C]);
 #else
 			convHVQM4TexY8UV8(b, c, a, _48[_3C ^ 1]);
@@ -319,7 +319,7 @@ struct MovSampleSetupSection : public Node {
 	// _00-_20 = Node
 	int _20; // _20
 	int _24; // _24
-#if defined(VERSION_GPIJ01_01)
+#if defined(VERSION_GPIJ01) || defined(VERSION_DPIJ01_PIKIDEMO)
 #else
 	int _28; // _28
 #endif
@@ -339,8 +339,12 @@ struct MovSampleSetupSection : public Node {
 void MovSampleSection::init()
 {
 	Node::init("<MovSampleSection>");
-	// run h4m movies at 60 fps
+// run h4m movies at 60 fps
+#if defined(VERSION_DPIJ01_PIKIDEMO)
+	gsys->setFrameClamp(2);
+#else
 	gsys->setFrameClamp(1);
+#endif
 
 	gsys->mTimerState = TS_Off;
 	gsys->startLoading(nullptr, true, 60);

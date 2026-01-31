@@ -36,7 +36,7 @@ u32 demo_end_delay;
 static CmdQueue demo_q;
 
 // table for which parts play the sparkle sound on collect
-#if defined(VERSION_GPIJ01_01)
+#if defined(VERSION_GPIJ01_01) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_DPIJ01_PIKIDEMO)
 static u8 parts_bright_table[] = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 #else
 static u8 parts_bright_table[] = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
@@ -84,13 +84,13 @@ static s16 demo12[] = { 4, 0, 600, -1 };
 static s16 demo16[] = { 4, -6, 10, 1, 19, 2, 31, 1, 42, 2, 52, 2, 64, 3, 120, 6, 300, -1 };
 static s16 demo17[] = { 8, -6,  56, 10,  64, 11,  80, 12,  98, 13,  128, 14,  140, 8,   163, 1,   172, 2,   183, 1,   192,
 	                    2, 200, 0,  203, 1,  213, 2,  224, 1,  232, 2,   250, 3,   270, 4,   294, 5,   310, 9,   365, -2 };
-#if defined(VERSION_GPIJ01_01)
+#if defined(VERSION_GPIJ01_01) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_DPIJ01_PIKIDEMO)
 static s16 demo18[] = { 8, -6, 20, 8, 80, 0, 365, -2 };
 #else
 static s16 demo18[] = { 8, -6, 140, 8, 200, 0, 365, -2 };
 #endif
 
-#if defined(VERSION_GPIJ01_01)
+#if defined(VERSION_GPIJ01_01) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_DPIJ01_PIKIDEMO)
 static s16 demo19[] = { 8, -6, 10, 10, 20, 8, 45, 11, 65, 14, 80, 0, 84, 15, 98, 16, 102, 12, 108, 13, 365, -2 };
 #else
 static s16 demo19[] = { 8, -6, 10, 10, 45, 11, 65, 14, 84, 15, 98, 16, 102, 12, 108, 13, 140, 8, 200, 0, 365, -2 };
@@ -98,7 +98,7 @@ static s16 demo19[] = { 8, -6, 10, 10, 45, 11, 65, 14, 84, 15, 98, 16, 102, 12, 
 static s16 demo20[] = { 4, -6, 10, 0, 48, 1, 65, 2, 80, 3, 92, 4, 96, 5, 120, 7, 185, 6, 300, -1 };
 static s16 demo21[] = { 4, -6, 10, 0, 48, 1, 65, 2, 80, 3, 92, 4, 96, 5, 100, 7, 148, 6, 300, -1 };
 static s16 demo24[] = { 4, -6, 10, 0, 48, 1, 65, 2, 80, 3, 92, 4, 96, 5, 100, 7, 148, 6, 300, -1 };
-#if defined(VERSION_GPIJ01_01)
+#if defined(VERSION_GPIJ01_01) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_DPIJ01_PIKIDEMO)
 static s16 demo25[] = { 8, -6, 14, 10, 18, 11, 20, 8, 80, 0, 90, 12, 123, 13, 365, -2 };
 #else
 static s16 demo25[] = { 8, -6, 14, 10, 18, 11, 90, 12, 123, 13, 140, 8, 200, 0, 365, -2 };
@@ -254,7 +254,7 @@ BOOL Jac_DemoCheckEvent(u8 evt)
 		case DEMOID_DayEndCaveLast:
 		case DEMOID_DayEndYakushima:
 		{
-#if defined(VERSION_GPIJ01_01)
+#if defined(VERSION_GPIJ01_01) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_DPIJ01_PIKIDEMO)
 			if (evt == 3)
 				return TRUE;
 #endif
@@ -427,7 +427,7 @@ void Jac_StartDemo(u32 cinID)
 	Jac_SetProcessStatus(4);
 
 	switch (cinID) {
-#if defined(VERSION_GPIJ01_01)
+#if defined(VERSION_GPIJ01_01) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_DPIJ01_PIKIDEMO)
 #else
 	case DEMOID_ShipUpgradeForest:
 	case DEMOID_ShipUpgradeCave:
@@ -648,7 +648,7 @@ void Jac_StartDemo(u32 cinID)
 	Jac_Orima_Formation(0, 0);
 	Jac_SetProcessStatus(5);
 
-#if defined(VERSION_GPIJ01_01)
+#if defined(VERSION_GPIJ01_01) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_DPIJ01_PIKIDEMO)
 	STACK_PAD_VAR(12);
 #else
 	STACK_PAD_VAR(14);
@@ -665,7 +665,11 @@ void Jac_DemoSound(int id)
 
 	if (current_demo_no != DEMOID_FINISHED) {
 		REF_id = &id;
+#if defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_DPIJ01_PIKIDEMO)
+		Jal_SendCmdQueue(&demo_q, id);
+#else
 		Jal_SendCmdQueue_Noblock(&demo_q, id);
+#endif
 	}
 }
 
