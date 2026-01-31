@@ -341,20 +341,14 @@ void Jac_HVQM_Init(immut char* movieFilePath, u8* data, u32 bufferSize)
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 00003C
+ * @note UNUSED Size: 00003C (Nonmatching)
  */
-void hvqm_proc(void* data)
+static void* hvqm_proc(void* data)
 {
-	// UNUSED FUNCTION
-}
-
-/**
- * @TODO: Documentation
- * @note UNUSED Size: 000034
- */
-void OSInitFastCast(void)
-{
-	// UNUSED FUNCTION
+	// We can infer this call to `OSInitFastCast` was here due to the fact that a deadstripped copy of it
+	// appears next in the linker map.  Other context clues tell us that this is an `OSThreadStartFunction`
+	// type of function.  Beyond that, it's anyone's guess what this function actually did.
+	OSInitFastCast();
 }
 
 /**

@@ -103,8 +103,6 @@ void GXSetProjectionv(const f32* ptr)
 	gx->bpSent = 0;
 }
 
-#define qr0 0
-
 /**
  * @TODO: Documentation
  * @note UNUSED Size: 000078
@@ -127,18 +125,18 @@ void GXGetProjectionv(f32* ptr)
  */
 ASM void WriteMTXPS4x3(register const Mtx mtx, register volatile f32* dest) {
 #ifdef __MWERKS__ // clang-format off
-    psq_l f0, 0x00(mtx), 0, qr0
-    psq_l f1, 0x08(mtx), 0, qr0
-    psq_l f2, 0x10(mtx), 0, qr0
-    psq_l f3, 0x18(mtx), 0, qr0
-    psq_l f4, 0x20(mtx), 0, qr0
-    psq_l f5, 0x28(mtx), 0, qr0
-    psq_st f0, 0(dest), 0, qr0
-    psq_st f1, 0(dest), 0, qr0
-    psq_st f2, 0(dest), 0, qr0
-    psq_st f3, 0(dest), 0, qr0
-    psq_st f4, 0(dest), 0, qr0
-    psq_st f5, 0(dest), 0, qr0
+    psq_l f0, 0x00(mtx), 0, 0
+    psq_l f1, 0x08(mtx), 0, 0
+    psq_l f2, 0x10(mtx), 0, 0
+    psq_l f3, 0x18(mtx), 0, 0
+    psq_l f4, 0x20(mtx), 0, 0
+    psq_l f5, 0x28(mtx), 0, 0
+    psq_st f0, 0(dest), 0, 0
+    psq_st f1, 0(dest), 0, 0
+    psq_st f2, 0(dest), 0, 0
+    psq_st f3, 0(dest), 0, 0
+    psq_st f4, 0(dest), 0, 0
+    psq_st f5, 0(dest), 0, 0
 	#endif // clang-format on
 }
 
@@ -147,17 +145,17 @@ ASM void WriteMTXPS4x3(register const Mtx mtx, register volatile f32* dest) {
  */
 ASM void WriteMTXPS3x3from3x4(register const Mtx mtx, register volatile f32* dest) {
 #ifdef __MWERKS__ // clang-format off
-    psq_l f0, 0x00(mtx), 0, qr0
+    psq_l f0, 0x00(mtx), 0, 0
     lfs   f1, 0x08(mtx)
-    psq_l f2, 0x10(mtx), 0, qr0
+    psq_l f2, 0x10(mtx), 0, 0
     lfs   f3, 0x18(mtx)
-    psq_l f4, 0x20(mtx), 0, qr0
+    psq_l f4, 0x20(mtx), 0, 0
     lfs   f5, 0x28(mtx)
-    psq_st f0, 0(dest), 0, qr0
+    psq_st f0, 0(dest), 0, 0
     stfs   f1, 0(dest)
-    psq_st f2, 0(dest), 0, qr0
+    psq_st f2, 0(dest), 0, 0
     stfs   f3, 0(dest)
-    psq_st f4, 0(dest), 0, qr0
+    psq_st f4, 0(dest), 0, 0
     stfs   f5, 0(dest)
 	#endif // clang-format on
 }
@@ -168,15 +166,15 @@ ASM void WriteMTXPS3x3from3x4(register const Mtx mtx, register volatile f32* des
  */
 ASM void WriteMTXPS3x3(register const Mtx33 mtx, register volatile f32* dest) {
 #ifdef __MWERKS__ // clang-format off
-    psq_l f0, 0x00(mtx), 0, qr0
-    psq_l f1, 0x08(mtx), 0, qr0
-    psq_l f2, 0x10(mtx), 0, qr0
-    psq_l f3, 0x18(mtx), 0, qr0
+    psq_l f0, 0x00(mtx), 0, 0
+    psq_l f1, 0x08(mtx), 0, 0
+    psq_l f2, 0x10(mtx), 0, 0
+    psq_l f3, 0x18(mtx), 0, 0
     lfs   f4, 0x20(mtx)
-    psq_st f0, 0(dest), 0, qr0
-    psq_st f1, 0(dest), 0, qr0
-    psq_st f2, 0(dest), 0, qr0
-    psq_st f3, 0(dest), 0, qr0
+    psq_st f0, 0(dest), 0, 0
+    psq_st f1, 0(dest), 0, 0
+    psq_st f2, 0(dest), 0, 0
+    psq_st f3, 0(dest), 0, 0
     stfs   f4, 0(dest)
 	#endif // clang-format on
 }
@@ -186,14 +184,14 @@ ASM void WriteMTXPS3x3(register const Mtx33 mtx, register volatile f32* dest) {
  */
 ASM void WriteMTXPS4x2(register const Mtx mtx, register volatile f32* dest) {
 #ifdef __MWERKS__ // clang-format off
-    psq_l f0, 0x00(mtx), 0, qr0
-    psq_l f1, 0x08(mtx), 0, qr0
-    psq_l f2, 0x10(mtx), 0, qr0
-    psq_l f3, 0x18(mtx), 0, qr0
-    psq_st f0, 0(dest), 0, qr0
-    psq_st f1, 0(dest), 0, qr0
-    psq_st f2, 0(dest), 0, qr0
-    psq_st f3, 0(dest), 0, qr0
+    psq_l f0, 0x00(mtx), 0, 0
+    psq_l f1, 0x08(mtx), 0, 0
+    psq_l f2, 0x10(mtx), 0, 0
+    psq_l f3, 0x18(mtx), 0, 0
+    psq_st f0, 0(dest), 0, 0
+    psq_st f1, 0(dest), 0, 0
+    psq_st f2, 0(dest), 0, 0
+    psq_st f3, 0(dest), 0, 0
 	#endif // clang-format on
 }
 

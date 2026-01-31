@@ -28,8 +28,6 @@ int DspSyncCountCheck();
 void StopAudioThread();
 void StartAudioThread(void* heap, s32 heapSize, u32 aramSize, u32 flags);
 
-static void OSInitFastCast(); // idk why this is in here tbh, but it needs to be.
-
 ///////////////////////////////////////////////////////
 
 END_SCOPE_EXTERN_C

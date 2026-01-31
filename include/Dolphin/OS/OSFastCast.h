@@ -1,28 +1,34 @@
 #ifndef _DOLPHIN_OS_OSFASTCAST_H
 #define _DOLPHIN_OS_OSFASTCAST_H
 
-#include "Dolphin/OS/OSUtil.h"
+#include "Dolphin/PPCArch.h"
 #include "types.h"
 
 BEGIN_SCOPE_EXTERN_C
 
-/////// FAST CAST DEFINES ////////
-// GQR formats.
-#define OS_GQR_U8  (0x0004) // GQR 1
-#define OS_GQR_U16 (0x0005) // GQR 2
-#define OS_GQR_S8  (0x0006) // GQR 3
-#define OS_GQR_S16 (0x0007) // GQR 4
+/////////////// FAST CAST DEFINES /////////////////////////////////////////////////////////////////
 
-// GQRs for fast casting.
+// Paired-singles quantization TYPE and SCALE encodings for GPRs for fast-casting
+//  - Types 1-3 are reserved by PowerPC 750cl.
+//  - Fast-casting exclusively uses SCALE = 0.
+
+#define OS_GQR_F32 (0x0000) // Single-precision floating-point (no conversion)
+#define OS_GQR_U8  (0x0004) // Unsigned 8-bit integer
+#define OS_GQR_U16 (0x0005) // Unsigned 16-bit integer
+#define OS_GQR_S8  (0x0006) // Signed 8-bit integer
+#define OS_GQR_S16 (0x0007) // Signed 16-bit integer
+
+// GQRs reserved for fast-casting (0-1 are reserved by the compiler)
+
 #define OS_FASTCAST_U8  (2)
 #define OS_FASTCAST_U16 (3)
 #define OS_FASTCAST_S8  (4)
 #define OS_FASTCAST_S16 (5)
 
-//////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
-/////// FAST CAST INLINES ////////
-// Initialise fast casting.
+/////////////// FAST CAST INLINES /////////////////////////////////////////////////////////////////
+
 static inline void OSInitFastCast()
 {
 #ifdef __MWERKS__
@@ -43,72 +49,103 @@ static inline void OSInitFastCast()
 #endif
 }
 
-// f32 to int.
-// NB: should theoretically have these for u8/u16/s8/s16 eventually.
-static inline s16 __OSf32tos16(register f32 inF)
+static inline void OSf32tou8(register f32* in, register u8* out)
 {
-	register s16 out;
-	u32 tmp;
-	register u32* tmpPtr = &tmp;
 #ifdef __MWERKS__
 	asm {
-		psq_st    inF, 0 (tmpPtr), 0x1, OS_FASTCAST_S16
-		lha       out, 0 (tmpPtr)
+		lfs      f1, 0 (in)
+		psq_st   f1, 0 (out), 1, OS_FASTCAST_U8
 	}
+#else
+	*out = *in;
 #endif
-	return out;
 }
 
-static inline void OSf32tos16(f32* f, s16* out)
+static inline void OSf32tou16(register f32* in, register u16* out)
 {
-	*out = __OSf32tos16(*f);
-}
-
-static inline u8 __OSf32tou8(register f32 inF)
-{
-	register u8 out;
-	u32 tmp;
-	register u32* tmpPtr = &tmp;
 #ifdef __MWERKS__
 	asm {
-		psq_st    inF, 0 (tmpPtr), 0x1, OS_FASTCAST_U8
-		lbz       out, 0 (tmpPtr)
+		lfs      f1, 0 (in)
+		psq_st   f1, 0 (out), 1, OS_FASTCAST_U16
 	}
+#else
+	*out = *in;
 #endif
-	return out;
 }
 
-static inline void OSf32tou8(f32* f, u8* out)
+static inline void OSf32tos8(register f32* in, register s8* out)
 {
-	*out = __OSf32tou8(*f);
-}
-
-static inline s8 __OSf32tos8(register f32 inF)
-{
-	register s8 out;
-	u32 tmp;
-	register u32* tmpPtr = &tmp;
 #ifdef __MWERKS__
 	asm {
-		psq_st    inF, 0(tmpPtr), 0x1, OS_FASTCAST_S8
-		lbz       out, 0(tmpPtr)
-		extsb     out, out
+		lfs      fp1, 0 (in)
+		psq_st   fp1, 0 (out), 1, OS_FASTCAST_S8
 	}
+#else
+	*out = *in;
 #endif
-	return out;
 }
 
-static inline void OSf32tos8(f32* f, s8* out)
+static inline void OSf32tos16(register f32* in, register s16* out)
 {
-	*out = __OSf32tos8(*f);
+#ifdef __MWERKS__
+	asm {
+		lfs      fp1, 0 (in)
+		psq_st   fp1, 0 (out), 1, OS_FASTCAST_S16
+	}
+#else
+	*out = *in;
+#endif
 }
 
-// Int to f32.
-// NB: should have these for u8/u16/s8/s16 eventually.
+static inline void OSu8tof32(register u8* in, register f32* out)
+{
+#ifdef __MWERKS__
+	asm {
+		psq_l    fp1, 0 (in), 1, OS_FASTCAST_U8
+		stfs     fp1, 0 (out)
+	}
+#else
+	*out = *in;
+#endif
+}
 
-// TODO: make these based on above/as necessary.
+static inline void OSu16tof32(register u16* in, register f32* out)
+{
+#ifdef __MWERKS__
+	asm {
+		psq_l    fp1, 0 (in), 1, OS_FASTCAST_U16
+		stfs     fp1, 0 (out)
+	}
+#else
+	*out = *in;
+#endif
+}
 
-//////////////////////////////////
+static inline void OSs8tof32(register s8* in, register f32* out)
+{
+#ifdef __MWERKS__
+	asm {
+		psq_l    fp1, 0 (in), 1, OS_FASTCAST_S8
+		stfs     fp1, 0 (out)
+	}
+#else
+	*out = *in;
+#endif
+}
+
+static inline void OSs16tof32(register s16* in, register f32* out)
+{
+#ifdef __MWERKS__
+	asm {
+		psq_l    fp1, 0 (in), 1, OS_FASTCAST_S16
+		stfs     fp1, 0 (out)
+	}
+#else
+	*out = *in;
+#endif
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 END_SCOPE_EXTERN_C
 
