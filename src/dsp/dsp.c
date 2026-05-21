@@ -121,6 +121,10 @@ void DSPAssertTask(void)
 	// UNUSED FUNCTION
 }
 
+// TODO: The presence of this function (but not necessarily its contents) is not a revisional
+// difference, but is instead an instance of an UNREFERENCED DUPLICATE func,global.  This only
+// happens when linking static libraries rather than individual objects, but I don't know how
+// to / if it's possible to do that within Decomp Toolkit yet.
 #if defined(VERSION_GPIP01_00)
 
 static int __DSP_init_flag;

@@ -15,7 +15,7 @@ static void CreateCallbackFat(s32 channel, s32 result)
 	card              = &__CARDBlock[channel];
 	callback          = card->apiCallback;
 	card->apiCallback = NULL;
-	if (result < 0) {
+	if (result < CARD_RESULT_READY) {
 		goto error;
 	}
 
@@ -45,7 +45,7 @@ static void CreateCallbackFat(s32 channel, s32 result)
 
 	ent->time = (u32)OSTicksToSeconds(OSGetTime());
 	result    = __CARDUpdateDir(channel, callback);
-	if (result < 0) {
+	if (result < CARD_RESULT_READY) {
 		goto error;
 	}
 	return;
@@ -75,7 +75,7 @@ s32 CARDCreateAsync(s32 channel, const char* fileName, u32 size, CARDFileInfo* f
 	}
 
 	result = __CARDGetControlBlock(channel, &card);
-	if (result < 0) {
+	if (result < CARD_RESULT_READY) {
 		return result;
 	}
 
@@ -91,13 +91,15 @@ s32 CARDCreateAsync(s32 channel, const char* fileName, u32 size, CARDFileInfo* f
 			if (freeNo == (u16)-1) {
 				freeNo = fileNo;
 			}
+		}
 #if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_GPIP01_00)
-		} else if (memcmp(ent->gameName, card->diskID->gameName, sizeof(ent->gameName)) == 0
-		           && memcmp(ent->company, card->diskID->company, sizeof(ent->company)) == 0 && __CARDCompareFileName(ent, fileName)) {
+		else if (memcmp(ent->gameName, card->diskID->gameName, sizeof(ent->gameName)) == 0
+		         && memcmp(ent->company, card->diskID->company, sizeof(ent->company)) == 0 && __CARDCompareFileName(ent, fileName))
 #else
-		} else if (memcmp(ent->gameName, __CARDDiskID->gameName, sizeof(ent->gameName)) == 0
-		           && memcmp(ent->company, __CARDDiskID->company, sizeof(ent->company)) == 0 && __CARDCompareFileName(ent, fileName)) {
+		else if (memcmp(ent->gameName, __CARDDiskID->gameName, sizeof(ent->gameName)) == 0
+		         && memcmp(ent->company, __CARDDiskID->company, sizeof(ent->company)) == 0 && __CARDCompareFileName(ent, fileName))
 #endif
+		{
 			return __CARDPutControlBlock(card, CARD_RESULT_EXIST);
 		}
 	}
@@ -121,7 +123,7 @@ s32 CARDCreateAsync(s32 channel, const char* fileName, u32 size, CARDFileInfo* f
 	fileInfo->fileNo = freeNo;
 
 	result = __CARDAllocBlock(channel, size / card->sectorSize, CreateCallbackFat);
-	if (result < 0) {
+	if (result < CARD_RESULT_READY) {
 		return __CARDPutControlBlock(card, result);
 	}
 	return result;
@@ -133,7 +135,7 @@ s32 CARDCreateAsync(s32 channel, const char* fileName, u32 size, CARDFileInfo* f
 s32 CARDCreate(s32 channel, const char* fileName, u32 size, CARDFileInfo* fileInfo)
 {
 	s32 result = CARDCreateAsync(channel, fileName, size, fileInfo, __CARDSyncCallback);
-	if (result < 0) {
+	if (result < CARD_RESULT_READY) {
 		return result;
 	}
 	return __CARDSync(channel);

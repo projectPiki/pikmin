@@ -525,7 +525,7 @@ void GameFlow::hardReset(BaseApp* baseApp)
 	                           "screen/kodomo_blo/", "screen/kodomo_tex/");
 	gsys->set2DRoot("screen/sys_blo/", "screen/otona_tex/");
 
-#elif defined(VERSION_GPIE01_00) || defined(VERSION_GPIE01_01)
+#elif defined(VERSION_GPIE01)
 	// in the US retail releases, there's no difference between these two settings - just a holdover from demo/jp
 	mLanguageIndex = LANG_Adult;
 	mLangModes[LANG_Adult].set("archives/blo_eng.dir", "dataDir/archives/blo_eng.arc", "screen/eng_tex/screen.bun", "screen/eng_blo/",

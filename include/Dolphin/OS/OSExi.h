@@ -58,11 +58,7 @@ BOOL EXIImm(s32 channel, void* buffer, s32 length, u32 type, EXICallback callbac
 BOOL EXIImmEx(s32 channel, void* buffer, s32 length, u32 type);
 BOOL EXIDma(s32 channel, void* buffer, s32 length, u32 type, EXICallback callback);
 BOOL EXISync(s32 channel);
-#if defined(VERSION_GPIP01_00) || defined(VERSION_G98P01_PIKIDEMO)
 u32 EXIClearInterrupts(s32 channel, BOOL clearExiBit, BOOL clearTcBit, BOOL clearExtBit);
-#else
-BOOL EXIClearInterrupts(s32 channel, BOOL clearExiBit, BOOL clearTcBit, BOOL clearExtBit);
-#endif
 EXICallback EXISetExiCallback(s32 channel, EXICallback callback);
 BOOL EXIAttach(s32 channel, EXICallback callback);
 BOOL EXIDetach(s32 channel);

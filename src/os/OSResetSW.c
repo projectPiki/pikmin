@@ -42,6 +42,11 @@ OSResetCallback OSSetResetCallback(OSResetCallback)
 	// UNUSED FUNCTION
 }
 
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01)
+
+/**
+ * @TODO: Documentation
+ */
 BOOL OSGetResetButtonState(void)
 {
 	BOOL enabled;
@@ -79,10 +84,11 @@ BOOL OSGetResetButtonState(void)
 
 	LastState = state;
 #if defined(VERSION_DPIJ01_PIKIDEMO)
-	if (LastState == FALSE && GameChoice & 0x3f) {
+	if (LastState == FALSE && GameChoice & 0x3f)
 #else
-	if (GameChoice & 0x3f) {
+	if (GameChoice & 0x3f)
 #endif
+	{
 		OSTime fire = (GameChoice & 0x3f) * 60;
 		fire        = __OSStartTime + OSSecondsToTicks(fire);
 		if (fire < now) {
@@ -107,18 +113,19 @@ BOOL OSGetResetButtonState(void)
 	return state;
 }
 
+#endif
+
 /**
  * @TODO: Documentation
  */
 BOOL OSGetResetSwitchState(void)
 {
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+	return OSGetResetButtonState();
+#else
 	BOOL enabled;
 	BOOL state;
 	u32 reg;
-
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_GPIP01_00)
-	return OSGetResetButtonState();
-#endif
 
 	enabled = OSDisableInterrupts();
 
@@ -148,4 +155,5 @@ BOOL OSGetResetSwitchState(void)
 
 	OSRestoreInterrupts(enabled);
 	return state;
+#endif
 }

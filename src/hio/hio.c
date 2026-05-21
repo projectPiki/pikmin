@@ -176,10 +176,11 @@ BOOL HIOInit(s32 chan, HIOCallback callback)
 	TxCallback  = NULL;
 	RxCallback  = NULL;
 #if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_GPIP01_00)
-	if (chan < 2 && Dev == 0) {
+	if (chan < 2 && Dev == 0)
 #else
-	if (chan < 2) {
+	if (chan < 2)
 #endif
+	{
 		while (EXIProbeEx(Chan) == 0) { }
 		if (EXIAttach(Chan, ExtHandler) == FALSE) {
 			Chan = -1;
@@ -190,10 +191,11 @@ BOOL HIOInit(s32 chan, HIOCallback callback)
 		}
 	}
 #if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_GPIP01_00)
-	if (EXILock(Chan, Dev, NULL) == FALSE) {
+	if (EXILock(Chan, Dev, NULL) == FALSE)
 #else
-	if (EXILock(Chan, 0, NULL) == FALSE) {
+	if (EXILock(Chan, 0, NULL) == FALSE)
 #endif
+	{
 		EXIDetach(Chan);
 		Chan = -1;
 #if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_GPIP01_00)
@@ -202,10 +204,11 @@ BOOL HIOInit(s32 chan, HIOCallback callback)
 		return FALSE;
 	}
 #if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_GPIP01_00)
-	if (EXISelect(Chan, Dev, 0) == FALSE) {
+	if (EXISelect(Chan, Dev, 0) == FALSE)
 #else
-	if (EXISelect(Chan, 0, 0) == FALSE) {
+	if (EXISelect(Chan, 0, 0) == FALSE)
 #endif
+	{
 		EXIUnlock(Chan);
 		EXIDetach(Chan);
 		Chan = -1;
@@ -224,10 +227,11 @@ BOOL HIOInit(s32 chan, HIOCallback callback)
 	EXIUnlock(Chan);
 	if (err != 0 || id != 0x1010000) {
 #if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_GPIP01_00)
-		if (chan < 2 && Dev == 0) {
+		if (chan < 2 && Dev == 0)
 #else
-		if (chan < 2) {
+		if (chan < 2)
 #endif
+		{
 			EXIDetach(Chan);
 		}
 		EXIUnlock(Chan);
@@ -270,16 +274,20 @@ BOOL HIOReadMailbox(u32* word)
 	}
 
 #if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_GPIP01_00)
-	if (EXILock(Chan, Dev, NULL) == FALSE) {
-		return FALSE;
-	}
-	if (EXISelect(Chan, Dev, 4) == FALSE) {
+	if (EXILock(Chan, Dev, NULL) == FALSE)
 #else
-	if (EXILock(Chan, 0, NULL) == FALSE) {
+	if (EXILock(Chan, 0, NULL) == FALSE)
+#endif
+	{
 		return FALSE;
 	}
-	if (EXISelect(Chan, 0, 4) == FALSE) {
+
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+	if (EXISelect(Chan, Dev, 4) == FALSE)
+#else
+	if (EXISelect(Chan, 0, 4) == FALSE)
 #endif
+	{
 		EXIUnlock(Chan);
 		return FALSE;
 	}
@@ -306,17 +314,22 @@ BOOL HIOWriteMailbox(u32 word)
 	if (Chan == -1 || __OSGetDIConfig() == 0xFF) {
 		return FALSE;
 	}
+
 #if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_GPIP01_00)
-	if (EXILock(Chan, Dev, NULL) == FALSE) {
-		return FALSE;
-	}
-	if (EXISelect(Chan, Dev, 4) == FALSE) {
+	if (EXILock(Chan, Dev, NULL) == FALSE)
 #else
-	if (EXILock(Chan, 0, NULL) == FALSE) {
+	if (EXILock(Chan, 0, NULL) == FALSE)
+#endif
+	{
 		return FALSE;
 	}
-	if (EXISelect(Chan, 0, 4) == FALSE) {
+
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+	if (EXISelect(Chan, Dev, 4) == FALSE)
+#else
+	if (EXISelect(Chan, 0, 4) == FALSE)
 #endif
+	{
 		EXIUnlock(Chan);
 		return FALSE;
 	}
@@ -351,19 +364,24 @@ BOOL HIOWrite(u32 addr, void* buffer, s32 size)
 	}
 
 #if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_GPIP01_00)
-	if (EXILock(Chan, Dev, NULL) == FALSE) {
-		return FALSE;
-	}
-	if (EXISelect(Chan, Dev, 4) == FALSE) {
+	if (EXILock(Chan, Dev, NULL) == FALSE)
 #else
-	if (EXILock(Chan, 0, NULL) == FALSE) {
+	if (EXILock(Chan, 0, NULL) == FALSE)
+#endif
+	{
 		return FALSE;
 	}
-	if (EXISelect(Chan, 0, 4) == FALSE) {
+
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+	if (EXISelect(Chan, Dev, 4) == FALSE)
+#else
+	if (EXISelect(Chan, 0, 4) == FALSE)
 #endif
+	{
 		EXIUnlock(Chan);
 		return FALSE;
 	}
+
 	cmd = ((addr << 8) & 0x01FFFC00) | 0xA0000000;
 	err = 0;
 	err |= !EXIImm(Chan, &cmd, 4, 1, NULL);

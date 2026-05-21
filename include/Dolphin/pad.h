@@ -103,8 +103,6 @@ typedef void (*PADSamplingCallback)(void);
 
 PADSamplingCallback PADSetSamplingCallback(PADSamplingCallback callback);
 
-extern u32 __PADFixBits;
-
 END_SCOPE_EXTERN_C
 
 #endif

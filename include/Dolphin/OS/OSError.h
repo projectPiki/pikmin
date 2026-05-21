@@ -21,8 +21,8 @@ OSErrorHandler OSSetErrorHandler(OSError error, OSErrorHandler handler);
 void OSReport(const char* message, ...);
 void OSPanic(const char* file, int line, const char* message, ...);
 
-#define OSError(...)           OSPanic(__FILE__, __LINE__, __VA_ARGS__)
 #define OSErrorLine(line, ...) OSPanic(__FILE__, line, __VA_ARGS__)
+#define OSError(...)           OSErrorLine(__LINE__, __VA_ARGS__)
 
 #ifdef DEBUG // Currently necessary for dsp_cardunlock.c
 #define OSAssertMsgLine(line, cond, ...) ((void)((cond) || (OSErrorLine(line, __VA_ARGS__), 0)))
@@ -54,7 +54,7 @@ void OSPanic(const char* file, int line, const char* message, ...);
 #define OS_ERROR_MAX                (OS_ERROR_PROTECTION + 1)
 
 // Error table.
-extern OSErrorHandler __OSErrorTable[16];
+extern OSErrorHandler __OSErrorTable[OS_ERROR_MAX];
 
 //////////////////////////////////
 

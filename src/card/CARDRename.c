@@ -21,7 +21,7 @@ s32 CARDRenameAsync(s32 channel, const char* oldName, const char* newName, CARDC
 		return CARD_RESULT_NAMETOOLONG;
 	}
 	result = __CARDGetControlBlock(channel, &card);
-	if (result < 0) {
+	if (result < CARD_RESULT_READY) {
 		return result;
 	}
 	newNo = oldNo = -1;
@@ -34,11 +34,12 @@ s32 CARDRenameAsync(s32 channel, const char* oldName, const char* newName, CARDC
 
 #if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_GPIP01_00)
 		if (memcmp(ent->gameName, card->diskID->gameName, sizeof(ent->gameName)) != 0
-		    || memcmp(ent->company, card->diskID->company, sizeof(ent->company)) != 0) {
+		    || memcmp(ent->company, card->diskID->company, sizeof(ent->company)) != 0)
 #else
 		if (memcmp(ent->gameName, __CARDDiskID->gameName, sizeof(ent->gameName)) != 0
-		    || memcmp(ent->company, __CARDDiskID->company, sizeof(ent->company)) != 0) {
+		    || memcmp(ent->company, __CARDDiskID->company, sizeof(ent->company)) != 0)
 #endif
+		{
 			continue;
 		}
 
@@ -63,7 +64,7 @@ s32 CARDRenameAsync(s32 channel, const char* oldName, const char* newName, CARDC
 #else
 	result = __CARDAccess(ent);
 #endif
-	if (result < 0) {
+	if (result < CARD_RESULT_READY) {
 		return __CARDPutControlBlock(card, result);
 	}
 
@@ -71,7 +72,7 @@ s32 CARDRenameAsync(s32 channel, const char* oldName, const char* newName, CARDC
 	ent->time = (u32)OSTicksToSeconds(OSGetTime());
 
 	result = __CARDUpdateDir(channel, callback);
-	if (result < 0) {
+	if (result < CARD_RESULT_READY) {
 		__CARDPutControlBlock(card, result);
 	}
 
@@ -85,7 +86,7 @@ s32 CARDRename(s32 channel, const char* oldName, const char* newName)
 {
 	s32 result = CARDRenameAsync(channel, oldName, newName, __CARDSyncCallback);
 
-	if (result < 0) {
+	if (result < CARD_RESULT_READY) {
 		return result;
 	}
 	return __CARDSync(channel);

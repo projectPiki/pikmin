@@ -250,7 +250,7 @@ void Jac_SceneSetup(u32 sceneID, u32 stage)
 	case BGM_SysEvent:
 	{
 		bgm2 = tbl_stage_to_bgm[stage];
-		if (stage) {
+		if (stage != STAGE_Practice) {
 			closeScene = TRUE;
 		}
 		Jam_PauseTrack(Jam_GetTrackHandle(0x20000), 1);

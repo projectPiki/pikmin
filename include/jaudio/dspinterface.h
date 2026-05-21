@@ -40,6 +40,9 @@ void DSP_FlushBuffer();
 void DSP_FlushChannel(u8 idx);
 void DSP_InvalChannelAll();
 void DSP_ClearBuffer();
+#if defined(VERSION_GPIP01)
+u64 DSP_CreateMap();
+#endif
 void DSP_SetupBuffer();
 void DSP_InitBuffer();
 

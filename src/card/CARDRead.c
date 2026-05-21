@@ -13,7 +13,7 @@ s32 __CARDSeek(CARDFileInfo* fileInfo, s32 length, s32 offset, CARDControl** out
 	CARDFatBlock* fat;
 
 	result = __CARDGetControlBlock(fileInfo->chan, &card);
-	if (result < 0) {
+	if (result < CARD_RESULT_READY) {
 		return result;
 	}
 
@@ -63,7 +63,7 @@ static void ReadCallback(s32 channel, s32 result)
 	s32 length;
 
 	card = &__CARDBlock[channel];
-	if (result < 0) {
+	if (result < CARD_RESULT_READY) {
 		goto error;
 	}
 
@@ -89,7 +89,7 @@ static void ReadCallback(s32 channel, s32 result)
 
 	result = __CARDRead(channel, card->sectorSize * (u32)fileInfo->iBlock,
 	                    (fileInfo->length < card->sectorSize) ? fileInfo->length : card->sectorSize, card->buffer, ReadCallback);
-	if (result < 0) {
+	if (result < CARD_RESULT_READY) {
 		goto error;
 	}
 
@@ -116,7 +116,7 @@ s32 CARDReadAsync(CARDFileInfo* fileInfo, void* buffer, s32 length, s32 offset, 
 		return CARD_RESULT_FATAL_ERROR;
 	}
 	result = __CARDSeek(fileInfo, length, offset, &card);
-	if (result < 0) {
+	if (result < CARD_RESULT_READY) {
 		return result;
 	}
 
@@ -131,7 +131,7 @@ s32 CARDReadAsync(CARDFileInfo* fileInfo, void* buffer, s32 length, s32 offset, 
 		result = __CARDIsPublic(ent);
 	}
 
-	if (result < 0) {
+	if (result < CARD_RESULT_READY) {
 		return __CARDPutControlBlock(card, result);
 	}
 
@@ -141,7 +141,7 @@ s32 CARDReadAsync(CARDFileInfo* fileInfo, void* buffer, s32 length, s32 offset, 
 	offset = (s32)OFFSET(fileInfo->offset, card->sectorSize);
 	length = (length < card->sectorSize - offset) ? length : card->sectorSize - offset;
 	result = __CARDRead(fileInfo->chan, card->sectorSize * (u32)fileInfo->iBlock + offset, length, buffer, ReadCallback);
-	if (result < 0) {
+	if (result < CARD_RESULT_READY) {
 		__CARDPutControlBlock(card, result);
 	}
 	return result;
@@ -154,7 +154,7 @@ s32 CARDRead(CARDFileInfo* fileInfo, void* buffer, s32 length, s32 offset)
 {
 	s32 result = CARDReadAsync(fileInfo, buffer, length, offset, __CARDSyncCallback);
 
-	if (result < 0) {
+	if (result < CARD_RESULT_READY) {
 		return result;
 	}
 

@@ -903,7 +903,7 @@ void VIFlush(void)
 {
 	BOOL enabled;
 	s32 regIndex;
-	u32 val; // for stack.
+	STACK_PAD_VAR(1); // for stack.
 
 	enabled = OSDisableInterrupts();
 #if defined(VERSION_GPIE01_00) || defined(VERSION_GPIJ01_01)

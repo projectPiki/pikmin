@@ -619,7 +619,7 @@ void initBigFont()
 	img->mFormat      = TEX_FMT_IA4;
 	img->mWidth       = 504;
 	img->mHeight      = 1008;
-	tex->mTexFlags    = 0x101;
+	tex->mTexFlags    = Texture::TEX_CLAMP_S | Texture::TEX_CLAMP_T;
 	img->mDataSize    = img->calcDataSize(img->mFormat, img->mWidth, img->mHeight);
 	img->mTextureData = bigFont_data;
 	img->getTileSize(img->mFormat, tex->mTileSizeX, tex->mTileSizeY);

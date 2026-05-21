@@ -14,12 +14,12 @@ static void DeleteCallback(s32 channel, s32 result)
 	callback          = card->apiCallback;
 	card->apiCallback = NULL;
 
-	if (result < 0) {
+	if (result < CARD_RESULT_READY) {
 		goto error;
 	}
 
 	result = __CARDFreeBlock(channel, card->startBlock, callback);
-	if (result < 0) {
+	if (result < CARD_RESULT_READY) {
 		goto error;
 	}
 	return;
@@ -46,7 +46,7 @@ s32 CARDFastDeleteAsync(s32 channel, s32 fileNo, CARDCallback callback)
 	}
 
 	result = __CARDGetControlBlock(channel, &card);
-	if (result < 0) {
+	if (result < CARD_RESULT_READY) {
 		return result;
 	}
 
@@ -57,7 +57,7 @@ s32 CARDFastDeleteAsync(s32 channel, s32 fileNo, CARDCallback callback)
 #else
 	result = __CARDAccess(ent);
 #endif
-	if (result < 0) {
+	if (result < CARD_RESULT_READY) {
 		return __CARDPutControlBlock(card, result);
 	}
 
@@ -70,7 +70,7 @@ s32 CARDFastDeleteAsync(s32 channel, s32 fileNo, CARDCallback callback)
 
 	card->apiCallback = callback ? callback : __CARDDefaultApiCallback;
 	result            = __CARDUpdateDir(channel, DeleteCallback);
-	if (result < 0) {
+	if (result < CARD_RESULT_READY) {
 		__CARDPutControlBlock(card, result);
 	}
 	return result;
@@ -83,7 +83,7 @@ s32 CARDFastDelete(s32 channel, s32 fileNo)
 {
 	s32 result = CARDFastDeleteAsync(channel, fileNo, __CARDSyncCallback);
 
-	if (result < 0) {
+	if (result < CARD_RESULT_READY) {
 		return result;
 	}
 	return __CARDSync(channel);

@@ -259,7 +259,7 @@ u32 OSGetSoundMode(void)
 {
 	OSSram* sram;
 	u32 mode;
-	u32 tmp; // dumbass compiler
+	STACK_PAD_VAR(1); // dumbass compiler
 
 	sram = LockSram(0);
 	mode = (sram->flags & 0x4) ? OS_SOUND_MODE_STEREO : OS_SOUND_MODE_MONO;
@@ -273,7 +273,7 @@ u32 OSGetSoundMode(void)
 void OSSetSoundMode(u32 mode)
 {
 	OSSram* sram;
-	u32 tmp; // dumbass compiler
+	STACK_PAD_VAR(1); // dumbass compiler
 
 	mode <<= 2;
 	mode &= 4;
@@ -311,8 +311,7 @@ u32 OSGetProgressiveMode(void)
 
 	OSSram* sram;
 	u32 mode;
-	u32 tmp;  // dumbass compiler
-	u32 tmp2; // dumbass compiler
+	STACK_PAD_VAR(2); // dumbass compiler
 
 	sram = LockSram(0);
 	if (sram->flags & 0x80) {
@@ -331,7 +330,7 @@ u32 OSGetProgressiveMode(void)
 void OSSetProgressiveMode(u32 mode)
 {
 	OSSram* sram;
-	u32 tmp; // dumbass compiler
+	STACK_PAD_VAR(1); // dumbass compiler
 
 	mode <<= 7;
 	mode &= 0x80;

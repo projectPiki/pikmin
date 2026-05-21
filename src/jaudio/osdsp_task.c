@@ -1,6 +1,7 @@
 #include "Dolphin/dsp.h"
 #include "Dolphin/os.h"
 #include "jaudio/dspproc.h"
+#include "jaudio/dummyprobe.h"
 
 #if defined(VERSION_GPIP01_00)
 
@@ -10,10 +11,7 @@ static u32 sync_stack[3];
 
 static void Dsp_Update_Request();
 
-#ifdef __cplusplus
-extern "C" {
-void Console_printf(char*, ...);
-#endif // ifdef __cplusplus
+BEGIN_SCOPE_EXTERN_C
 
 /**
  * @TODO: Documentation
@@ -21,7 +19,7 @@ void Console_printf(char*, ...);
 void __DSPHandler(__OSInterrupt interrupt, OSContext* context)
 {
 	OSContext funcContext;
-	int stack[3];
+	STACK_PAD_VAR(3);
 
 	__DSPRegs[5] = ((u16)(__DSPRegs[5]) & ~0x28) | 0x80;
 

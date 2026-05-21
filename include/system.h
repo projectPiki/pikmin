@@ -197,10 +197,10 @@ struct StdSystem {
 
 	// Static functions
 	static char* stringDup(immut char*);
-	static f32 getHalfRand(f32 max) { return max * (f32(rand()) / 32767.0f - 0.5f); }
+	static f32 getHalfRand(f32 max) { return max * (rand() / f32(RAND_MAX) - 0.5f); }
 
 	// Inline functions
-	f32 getRand(f32 max) { return max * (f32(rand()) / 32767.0f); }
+	f32 getRand(f32 max) { return max * (rand() / f32(RAND_MAX)); }
 	inline f32 getFade() { return mCurrentFade; }
 	inline void setFade(f32 target, f32 rate = 3.0f)
 	{
