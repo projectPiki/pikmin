@@ -1180,7 +1180,7 @@ void MapMgr::initShape()
 
 	// set up model
 	mMapModel = gameflow.loadShape(flowCont.mMapModelFilePath, true);
-	mMapModel->mSystemFlags |= ShapeFlags::AlwaysRedraw;
+	mMapModel->mShapeFlags |= ShapeFlags::AlwaysRedraw;
 
 	// set up instances for every animated material used by the map model
 	mMapModel->makeInstance(mAnimatedMaterials, 0);
@@ -1857,7 +1857,7 @@ CollGroup* MapMgr::getCollGroupList(f32 x, f32 z, bool includePlatColl)
 		FOREACH_NODE(DynCollShape, mCollShapeList->mChild, coll)
 		{
 			if (x >= coll->mBoundingBox.mMin.x && x < coll->mBoundingBox.mMax.x && z >= coll->mBoundingBox.mMin.z
-			    && z < coll->mBoundingBox.mMax.z && coll->mCollisionModel->mSystemFlags & ShapeFlags::IsPlatform) {
+			    && z < coll->mBoundingBox.mMax.z && coll->mCollisionModel->mShapeFlags & ShapeFlags::IsPlatform) {
 				for (int i = 0; i < coll->mCollGroupCount; i++) {
 					if (coll->mJointVisibility[coll->mCollGroupList[i]->mJointIndex]) {
 						coll->mCollGroupList[i]->mNextCollGroup = collList;

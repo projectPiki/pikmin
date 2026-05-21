@@ -177,7 +177,8 @@ public:
 	bool hasContainer(int color) { return mContainerFlag & (1 << color); }
 
 	void setBootContainer(int color) { mContainerFlag |= 1 << color + 3; }
-	bool bootContainer(int color) { return mContainerFlag & (1 << color + 3); }
+	// This member function is named `bootContainer` according to the ILK, but that's inconsistent.
+	bool hasBootContainer(int color) { return mContainerFlag & (1 << color + 3); }
 
 	int getLastPikmins() { return mLivingPikiNum; }
 
