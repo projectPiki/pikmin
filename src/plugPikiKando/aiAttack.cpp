@@ -153,27 +153,31 @@ bool ActAttack::resumable()
 }
 
 /**
- * @todo: Documentation
+ * @brief This is a stubbed function, closely related to the unused `ActAttack::decideTarget`.
+ * @return `nullptr`
  */
 Creature* ActAttack::findTarget()
 {
-	// yep.
-	if (false) {
-		Iterator iter(tekiMgr);
-		CI_LOOP(iter)
-		{
-			Creature* teki = *iter;
-			if (roughCull(teki, mPiki, 30.0f)) {
-				continue;
-			}
-			// i'm bad at reading the DLL assembly, but it's genuinely something like this
-			// (IDA and ghidra both don't try it bc it's inaccessible)
-			if (qdist2(teki, mPiki) < 50.0f && teki->isAlive() && teki->isVisible() && !teki->isBuried() && !teki->isFlying()) {
-				return teki;
-			}
+	return nullptr; // yep.
+
+	f32 minDist = 12800.0f; // The DLL says this was uninitialized, but that can't be right...
+	Creature* target;
+	// In the DLL, this iterator is also somehow uninitialized?  Gonna assume it's a quirk of
+	// unreachable code, but that means we don't actually know what was being iterated over.
+	Iterator iter(_20);
+	CI_LOOP(iter)
+	{
+		Creature* creature = *iter;
+		if (roughCull(mPiki, creature, minDist)) {
+			continue;
+		}
+		f32 dist = qdist2(creature, mPiki);
+		if (creature->isAlive() && creature->isVisible() && !creature->isFlying() && dist < minDist) {
+			target  = creature;
+			minDist = dist;
 		}
 	}
-	return nullptr;
+	return target;
 }
 
 /**
