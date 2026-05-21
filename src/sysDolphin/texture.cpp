@@ -36,7 +36,7 @@ Texture::Texture()
 	_30          = 0;
 	_34          = 0;
 	_20          = -1;
-	mTextureData = nullptr;
+	mLODCount    = 0;
 	mLODBias     = 0.0f;
 	mTexObj      = new GXTexObj();
 }
@@ -215,7 +215,7 @@ void Texture::attach()
 	GXTexFmt texFmt = gxTexFmts[mTexFormat];
 
 	GXBool useMIPmap;
-	if (mTextureData) {
+	if (mLODCount != 0) {
 		useMIPmap = GX_TRUE;
 	} else {
 		useMIPmap = GX_FALSE;
@@ -223,8 +223,8 @@ void Texture::attach()
 
 	GXInitTexObj(mTexObj, mPixelData, mWidth, mHeight, texFmt, sWrap, tWrap, useMIPmap);
 
-	if (mTextureData) {
-		GXInitTexObjLOD(mTexObj, GX_LIN_MIP_LIN, GX_LINEAR, 0.0f, (u32)mTextureData, mLODBias, GX_FALSE, GX_FALSE, GX_ANISO_1);
+	if (mLODCount != 0) {
+		GXInitTexObjLOD(mTexObj, GX_LIN_MIP_LIN, GX_LINEAR, 0.0f, mLODCount, mLODBias, GX_FALSE, GX_FALSE, GX_ANISO_1);
 	}
 }
 

@@ -299,7 +299,7 @@ struct BaseShape : public CoreNode {
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	u32 mSystemFlags;                   // _14, see BaseShapeFlags enum
+	u32 mShapeFlags;                    // _14, see ShapeFlags enum
 	AnimContext* mCurrentAnimation;     // _18
 	AnimContext** mAnimOverrides;       // _1C
 	AnimContext** mBackupAnimOverrides; // _20

@@ -181,7 +181,7 @@ void DemoEventMgr::act(int cmd, int type)
 			}
 			case 4:
 			{
-				if (playerState->hasContainer(goalID + 3)) {
+				if (playerState->hasBootContainer(goalID)) {
 					goal->startConeEmit();
 				}
 				break;
@@ -204,7 +204,7 @@ void DemoEventMgr::act(int cmd, int type)
 			{
 				PRINT("boot onion\n");
 				goal->startBoot();
-				playerState->setContainer(goalID + 3);
+				playerState->setBootContainer(goalID);
 				if (playerState->isTutorial() && playerState->mShipEffectPartFlag & 8) {
 					Navi* navi = naviMgr->getNavi();
 					playerState->mShipEffectPartFlag &= ~8;

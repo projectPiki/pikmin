@@ -1181,12 +1181,12 @@ void ActorInstance::refresh(immut Matrix4f& mtx, Graphics& gfx, f32* p3)
 			naviMgr->getNavi()->demoDraw(gfx, nullptr);
 		}
 	} else {
-		u32 flags = mActiveActor->mModel->mSystemFlags;
+		u32 flags = mActiveActor->mModel->mShapeFlags;
 		if (mFlags & CAF_NoXluSort) {
-			mActiveActor->mModel->mSystemFlags |= ShapeFlags::AlwaysRedraw;
+			mActiveActor->mModel->mShapeFlags |= ShapeFlags::AlwaysRedraw;
 		}
 		mActiveActor->mModel->drawshape(gfx, *gfx.mCamera, &mAnimatedMaterials);
-		mActiveActor->mModel->mSystemFlags = flags;
+		mActiveActor->mModel->mShapeFlags = flags;
 	}
 
 	if (modelType == 1) {

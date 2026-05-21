@@ -1049,7 +1049,7 @@ void TexImg::read(RandomAccessStream& stream)
 	mWidth         = stream.readShort();
 	mHeight        = stream.readShort();
 	mFormat        = static_cast<TexImgFormat>(stream.readInt());
-	mDataPtrOffset = stream.readInt();
+	mImageCount    = stream.readInt();
 
 	s32 _ = stream.readInt();
 	_     = stream.readInt();
@@ -1222,10 +1222,10 @@ void TexAttr::initImage()
 	TexImg::getTileSize(mImage->mFormat, mTexture->mTileSizeX, mTexture->mTileSizeY);
 
 	if (mUseOffsetImgData) {
-		mTexture->mTextureData = (u32*)(mImage->mDataPtrOffset - 1);
+		mTexture->mLODCount    = mImage->mImageCount - 1;
 		mTexture->mLODBias     = mLODBias;
 	} else {
-		mTexture->mTextureData = nullptr;
+		mTexture->mLODCount    = 0;
 		mTexture->mLODBias     = 0.0f;
 	}
 

@@ -647,7 +647,7 @@ void GoalItem::startAI(int)
 	}
 
 	WayPoint* wp = routeMgr->getWayPoint('test', mWaypointIdx);
-	if (!playerState->bootContainer(mOnionColour) || playerState->isTutorial()) {
+	if (!playerState->hasBootContainer(mOnionColour) || playerState->isTutorial()) {
 		setMotionSpeed(0.0f);
 		C_SAI(this)->start(this, GoalAI::GOAL_BootInit);
 		startConeShrink();

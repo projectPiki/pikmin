@@ -1741,7 +1741,7 @@ BaseShape::BaseShape()
 	mName             = "noname";
 	mAnimMatrices     = nullptr;
 	mAnimMtxCount     = 0;
-	mSystemFlags      = 0;
+	mShapeFlags       = ShapeFlags::None;
 	mVertexCacheFlags = VertexCacheFlags::None;
 	_2AC              = 1;
 	mVtxMatrixCount   = 0;
@@ -2008,13 +2008,13 @@ void BaseShape::drawshape(Graphics& gfx, Camera& cam, ShapeDynMaterials* dynMats
 	gsys->mTimer->start("drawShape", true);
 	u32 prevRender = gfx.mMatRenderMask;
 	if (mMeshCount) {
-		if (!(mSystemFlags & ShapeFlags::AlwaysRedraw) && (mSystemFlags & ShapeFlags::AllowCaching)
+		if (!(mShapeFlags & ShapeFlags::AlwaysRedraw) && (mShapeFlags & ShapeFlags::AllowCaching)
 		    && (gfx.mMatRenderMask & MATFLAG_AlphaBlend)) {
 			gfx.cacheShape(this, dynMats);
 			gfx.mMatRenderMask &= ~MATFLAG_AlphaBlend;
 		}
 
-		if ((mSystemFlags & ShapeFlags::AlwaysRedraw)
+		if ((mShapeFlags & ShapeFlags::AlwaysRedraw)
 		    || (gfx.mMatRenderMask & (MATFLAG_Opaque | MATFLAG_AlphaTest | MATFLAG_InverseColorBlend))) {
 			if (dynMats) {
 				for (ShapeDynMaterials* iMat = dynMats; iMat; iMat = iMat->mNext) {
@@ -2146,7 +2146,7 @@ void BaseShape::read(RandomAccessStream& stream)
 		{
 			stream.skipPadding(0x20);
 			int unused   = stream.readInt();
-			mSystemFlags = stream.readInt();
+			mShapeFlags  = stream.readInt();
 			stream.skipPadding(0x20);
 			break;
 		}
@@ -2608,7 +2608,7 @@ void BaseShape::initIni(bool usePlatforms)
 				coll->mPlatShape->createCollisions(32);
 			}
 			if (coll->mFlags) {
-				coll->mPlatShape->mSystemFlags |= ShapeFlags::IsPlatform;
+				coll->mPlatShape->mShapeFlags |= ShapeFlags::IsPlatform;
 			}
 		}
 
@@ -2619,7 +2619,7 @@ void BaseShape::initIni(bool usePlatforms)
 					childColl->mPlatShape->createCollisions(32);
 				}
 				if (childColl->mFlags) {
-					childColl->mPlatShape->mSystemFlags |= ShapeFlags::IsPlatform;
+					childColl->mPlatShape->mShapeFlags |= ShapeFlags::IsPlatform;
 				}
 			}
 		}

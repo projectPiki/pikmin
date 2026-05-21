@@ -531,7 +531,7 @@ EffectParticleRegistration::EffectParticleRegistration(immut char* pcrFile, immu
 void EffectShape::initShape(immut char* modelFile)
 {
 	mModel = gameflow.loadShape(modelFile, true);
-	mModel->mSystemFlags |= ShapeFlags::AlwaysRedraw;
+	mModel->mShapeFlags |= ShapeFlags::AlwaysRedraw;
 	mModel->makeInstance(mAnimatedMaterials, 0);
 }
 
