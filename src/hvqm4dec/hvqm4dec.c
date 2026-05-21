@@ -174,10 +174,10 @@ static inline s16 getByte(BitBuffer* str)
  */
 static s16 _readTree(Tree* const dst, BitBuffer* const str)
 {
-	int _FAKE[2]; // Doesn't exist, but used to match stack alignment
 	int node;
 	s16 no;
 	s16 val;
+	STACK_PAD_VAR(2); // Doesn't exist, but used to match stack alignment
 
 	if (getBit(str)) {
 		// Branch node (0/1)

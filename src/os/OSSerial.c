@@ -15,6 +15,7 @@ static BOOL SIGetResponseRaw(s32 chan);
 static void GetTypeCallback(s32 chan, u32 error, OSContext* context);
 
 #if defined(VERSION_PIKIDEMO)
+
 static u32 Type[SI_MAX_CHAN] = {
 	SI_ERROR_NO_RESPONSE,
 	SI_ERROR_NO_RESPONSE,
@@ -53,10 +54,10 @@ static void SIClearTCInterrupt()
 {
 	u32 reg;
 
-	reg = __SIRegs[13];
+	reg = __SIRegs[SI_CC_STAT];
 	reg |= 0x80000000;
 	reg &= ~0x00000001;
-	__SIRegs[13] = reg;
+	__SIRegs[SI_CC_STAT] = reg;
 }
 #endif
 
@@ -71,8 +72,9 @@ static u32 CompleteTransfer(void)
 	u32 i;
 	u32 rLen;
 	u8* input;
+	u32 temp;
 
-	sr = __SIRegs[14];
+	sr = __SIRegs[SI_STAT];
 	SIClearTCInterrupt();
 
 	if (Si.chan != -1) {
@@ -82,19 +84,19 @@ static u32 CompleteTransfer(void)
 
 		rLen = Si.inputBytes / 4;
 		for (i = 0; i < rLen; i++) {
-			*(u32*)input = __SIRegs[32 + i];
+			*(u32*)input = __SIRegs[SI_IO_BUFFER + i];
 			input += 4;
 		}
 
 		rLen = Si.inputBytes & 3;
 		if (rLen) {
-			u32 temp = __SIRegs[32 + i];
+			temp = __SIRegs[SI_IO_BUFFER + i];
 			for (i = 0; i < rLen; i++) {
 				*input++ = (u8)((temp >> ((3 - i) * 8)) & 0xff);
 			}
 		}
 
-		if (__SIRegs[13] & 0x20000000) {
+		if (__SIRegs[SI_CC_STAT] & 0x20000000) {
 			sr >>= 8 * (3 - Si.chan);
 			sr &= 0xf;
 
@@ -127,12 +129,12 @@ static u32 CompleteTransfer(void)
 		input = Si.input;
 		rLen  = (Si.inputBytes / 4);
 		for (i = 0; i < rLen; i++) {
-			*((u32*)input)++ = __SIRegs[i + 0x20];
+			*((u32*)input)++ = __SIRegs[i + SI_IO_BUFFER];
 		}
 
 		rLen = Si.inputBytes & 3;
 		if (rLen != 0) {
-			temp = __SIRegs[i + 32];
+			temp = __SIRegs[i + SI_IO_BUFFER];
 			for (i = 0; i < rLen; i++) {
 				*(input++) = temp >> ((3 - i) * 8);
 			}
@@ -160,10 +162,11 @@ void SITransferNext(s32 chan)
 		chan %= SI_MAX_CHAN;
 		packet = &Packet[chan];
 #if defined(VERSION_PIKIDEMO)
-		if (packet->chan != -1 && packet->fire <= __OSGetSystemTime()) {
+		if (packet->chan != -1 && packet->fire <= __OSGetSystemTime())
 #else
-		if (packet->chan != -1 && packet->fire <= OSGetTime()) {
+		if (packet->chan != -1 && packet->fire <= OSGetTime())
 #endif
+		{
 			if (__SITransfer(packet->chan, packet->output, packet->outputBytes, packet->input, packet->inputBytes, packet->callback)) {
 				OSCancelAlarm(&Alarm[chan]);
 				packet->chan = -1;
@@ -178,7 +181,7 @@ static void SIInterruptHandler(__OSInterrupt interrupt, OSContext* context)
 {
 	u32 reg;
 
-	reg = __SIRegs[13];
+	reg = __SIRegs[SI_CC_STAT];
 
 	if ((reg & 0xc0000000) == 0xc0000000) {
 		s32 chan;
@@ -196,9 +199,9 @@ static void SIInterruptHandler(__OSInterrupt interrupt, OSContext* context)
 			callback(chan, sr, context);
 		}
 
-		sr = __SIRegs[14];
+		sr = __SIRegs[SI_STAT];
 		sr &= 0xf000000 >> (8 * chan);
-		__SIRegs[14] = sr;
+		__SIRegs[SI_STAT] = sr;
 
 		if (Type[chan] == SI_ERROR_BUSY && !SIIsChanBusy(chan)) {
 			static u32 cmdTypeAndStatus = 0 << 24;
@@ -250,7 +253,7 @@ static BOOL SIEnablePollingInterrupt(BOOL enable)
 	int i;
 
 	enabled = OSDisableInterrupts();
-	reg     = __SIRegs[13];
+	reg     = __SIRegs[SI_CC_STAT];
 	rc      = (reg & 0x08000000) ? TRUE : FALSE;
 	if (enable) {
 		reg |= 0x08000000;
@@ -261,7 +264,7 @@ static BOOL SIEnablePollingInterrupt(BOOL enable)
 		reg &= ~0x08000000;
 	}
 	reg &= ~0x80000001;
-	__SIRegs[13] = reg;
+	__SIRegs[SI_CC_STAT] = reg;
 	OSRestoreInterrupts(enabled);
 	return rc;
 }
@@ -400,7 +403,7 @@ static BOOL __SITransfer(s32 chan, void* output, u32 outputBytes, void* input, u
 	}
 
 #if defined(VERSION_PIKIDEMO)
-	comcsr.val = __SIRegs[13];
+	comcsr.val = __SIRegs[SI_CC_STAT];
 #else
 	comcsr.val = 0;
 #endif
@@ -437,7 +440,7 @@ u32 SIGetStatus(s32 chan)
 	int chanShift;
 
 	enabled   = OSDisableInterrupts();
-	sr        = __SIRegs[14];
+	sr        = __SIRegs[SI_STAT];
 	chanShift = 8 * (SI_MAX_CHAN - 1 - chan);
 	sr >>= chanShift;
 	if (sr & SI_ERROR_NO_RESPONSE) {
@@ -560,6 +563,9 @@ u32 SIDisablePolling(u32 poll)
 }
 
 #if defined(VERSION_PIKIDEMO)
+/**
+ * @TODO: Documentation
+ */
 static BOOL SIGetResponseRaw(s32 chan)
 {
 	u32 sr;
@@ -580,7 +586,11 @@ static BOOL SIGetResponseRaw(s32 chan)
  */
 #if defined(VERSION_PIKIDEMO)
 BOOL SIGetResponse(s32 chan, void* data)
+#else
+void SIGetResponse(s32 chan, void* data)
+#endif
 {
+#if defined(VERSION_PIKIDEMO)
 	BOOL rc;
 	BOOL enabled;
 
@@ -595,8 +605,6 @@ BOOL SIGetResponse(s32 chan, void* data)
 	OSRestoreInterrupts(enabled);
 	return rc;
 #else
-void SIGetResponse(s32 chan, void* data)
-{
 	((u32*)data)[0] = __SIRegs[chan * 3 + 1];
 	((u32*)data)[1] = __SIRegs[chan * 3 + 2];
 #endif
@@ -881,10 +889,12 @@ char* SIGetTypeString(u32 type)
 	{
 		return "Keyboard";
 	}
-		// case SI_GC_STEERING:
-		// {
-		// 	return "Steering";
-		// }
+#if 0
+	case SI_GC_STEERING:
+	{
+		return "Steering";
+	}
+#endif
 	}
 }
 

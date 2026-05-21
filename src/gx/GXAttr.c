@@ -103,6 +103,7 @@ static inline void SETVCDATTR(GXAttr Attr, GXAttrType Type)
 	}
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
 	case GX_VA_NRM:
+	{
 		if (Type != GX_NONE) {
 			gx->hasNrms   = 1;
 			gx->hasBiNrms = 0;
@@ -111,7 +112,9 @@ static inline void SETVCDATTR(GXAttr Attr, GXAttrType Type)
 			gx->hasNrms = 0;
 		}
 		break;
+	}
 	case GX_VA_NBT:
+	{
 		if (Type != GX_NONE) {
 			gx->hasBiNrms = 1;
 			gx->hasNrms   = 0;
@@ -120,6 +123,7 @@ static inline void SETVCDATTR(GXAttr Attr, GXAttrType Type)
 			gx->hasBiNrms = 0;
 		}
 		break;
+	}
 #else
 	case GX_VA_NRM:
 	{

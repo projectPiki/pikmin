@@ -94,7 +94,7 @@ s32 __CARDGetFileNo(CARDControl* card, const char* fileName, s32* outFileNo)
 #else
 		result = __CARDAccess(entry);
 #endif
-		if (result < 0) {
+		if (result < CARD_RESULT_READY) {
 			continue;
 		}
 		if (__CARDCompareFileName(entry, fileName)) {
@@ -123,7 +123,7 @@ s32 CARDFastOpen(s32 channel, s32 fileNo, CARDFileInfo* fileInfo)
 
 	fileInfo->chan = -1;
 	result         = __CARDGetControlBlock(channel, &card);
-	if (result < 0) {
+	if (result < CARD_RESULT_READY) {
 		return result;
 	}
 
@@ -137,7 +137,7 @@ s32 CARDFastOpen(s32 channel, s32 fileNo, CARDFileInfo* fileInfo)
 	if (result == CARD_RESULT_NOPERM) {
 		result = __CARDIsPublic(ent);
 	}
-	if (result >= 0) {
+	if (result >= CARD_RESULT_READY) {
 		if (!CARDIsValidBlockNo(card, ent->startBlock)) {
 			result = CARD_RESULT_BROKEN;
 		} else {
@@ -163,7 +163,7 @@ s32 CARDOpen(s32 chan, const char* fileName, CARDFileInfo* fileInfo)
 
 	fileInfo->chan = -1;
 	result         = __CARDGetControlBlock(chan, &card);
-	if (result < 0) {
+	if (result < CARD_RESULT_READY) {
 		return result;
 	}
 	result = __CARDGetFileNo(card, fileName, &fileNo);
@@ -191,7 +191,7 @@ s32 CARDClose(CARDFileInfo* fileInfo)
 	s32 result;
 
 	result = __CARDGetControlBlock(fileInfo->chan, &card);
-	if (result < 0) {
+	if (result < CARD_RESULT_READY) {
 		return result;
 	}
 

@@ -51,4 +51,7 @@ void SISetSamplingRate(u32 msec)
 	OSRestoreInterrupts(enabled);
 }
 
-void SIRefreshSamplingRate() { SISetSamplingRate(SamplingRate); }
+void SIRefreshSamplingRate()
+{
+	SISetSamplingRate(SamplingRate);
+}

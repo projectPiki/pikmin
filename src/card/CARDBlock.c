@@ -25,7 +25,7 @@ static void WriteCallback(s32 channel, s32 result)
 
 	card = &__CARDBlock[channel];
 
-	if (result >= 0) {
+	if (result >= CARD_RESULT_READY) {
 		fat     = &card->workArea->blockAllocMap;
 		fatBack = &card->workArea->blockAllocMapBackup;
 
@@ -56,19 +56,19 @@ static void EraseCallback(s32 channel, s32 result)
 {
 	CARDControl* card;
 	CARDCallback callback;
-	u32 temp[2]; /* this compiler sucks */
 	CARDFatBlock* fat;
 	u32 addr;
+	STACK_PAD_VAR(2); /* this compiler sucks */
 
 	card = &__CARDBlock[channel];
-	if (result < 0) {
+	if (result < CARD_RESULT_READY) {
 		goto error;
 	}
 
 	fat    = __CARDGetFatBlock(card);
 	addr   = ((u32)fat - (u32)card->workArea) / CARD_SYSTEM_BLOCK_SIZE * card->sectorSize;
 	result = __CARDWrite(channel, addr, CARD_SYSTEM_BLOCK_SIZE, fat, WriteCallback);
-	if (result < 0) {
+	if (result < CARD_RESULT_READY) {
 		goto error;
 	}
 

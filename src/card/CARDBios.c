@@ -104,7 +104,7 @@ void __CARDExiHandler(s32 channel, OSContext* context)
 
 	if ((result = (status & 0x18) ? CARD_RESULT_IOERROR : CARD_RESULT_READY) == CARD_RESULT_IOERROR && --card->retry > 0) {
 		result = Retry(channel);
-		if (result >= 0) {
+		if (result >= CARD_RESULT_READY) {
 			return;
 		}
 		goto fatal;
@@ -372,7 +372,7 @@ static void UnlockedCallback(s32 channel, s32 result)
 	CARDControl* card;
 
 	card = &__CARDBlock[channel];
-	if (result >= 0) {
+	if (result >= CARD_RESULT_READY) {
 		card->unlockCallback = UnlockedCallback;
 		if (!EXILock(channel, 0, __CARDUnlockedHandler)) {
 			result = CARD_RESULT_READY;
@@ -382,7 +382,7 @@ static void UnlockedCallback(s32 channel, s32 result)
 		}
 	}
 
-	if (result < 0) {
+	if (result < CARD_RESULT_READY) {
 		switch (card->cmd[0]) {
 		case 0x52:
 		{
@@ -481,7 +481,7 @@ s32 __CARDReadSegment(s32 channel, CARDCallback callback)
 	}
 
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
-	if (result >= 0) {
+	if (result >= CARD_RESULT_READY) {
 		if (!EXIImmEx(channel, card->cmd, card->cmdlen, 1)
 		    || !EXIImmEx(channel, card->workArea->header.buffer, card->latency,
 		                 1)
@@ -497,7 +497,7 @@ s32 __CARDReadSegment(s32 channel, CARDCallback callback)
 	}
 	return result;
 #else
-	if (result < 0) {
+	if (result < CARD_RESULT_READY) {
 		return result;
 	}
 
@@ -537,7 +537,7 @@ s32 __CARDWritePage(s32 channel, CARDCallback callback)
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
 	if (result == CARD_RESULT_BUSY) {
 		result = CARD_RESULT_READY;
-	} else if (result >= 0) {
+	} else if (result >= CARD_RESULT_READY) {
 		if (!EXIImmEx(channel, card->cmd, card->cmdlen, 1) || !EXIDma(channel, card->buffer, 128, card->mode, __CARDTxHandler)) {
 			card->exiCallback = 0;
 			EXIDeselect(channel);
@@ -551,7 +551,7 @@ s32 __CARDWritePage(s32 channel, CARDCallback callback)
 	if (result == CARD_RESULT_BUSY) {
 		return CARD_RESULT_READY;
 	}
-	if (result < 0) {
+	if (result < CARD_RESULT_READY) {
 		return result;
 	}
 	if (!EXIImmEx(channel, card->cmd, card->cmdlen, 1) || !EXIDma(channel, card->buffer, 128, card->mode, __CARDTxHandler)) {
@@ -594,7 +594,7 @@ s32 __CARDEraseSector(s32 channel, u32 addr, CARDCallback callback)
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
 	if (result == CARD_RESULT_BUSY) {
 		result = CARD_RESULT_READY;
-	} else if (result >= 0) {
+	} else if (result >= CARD_RESULT_READY) {
 		result = CARD_RESULT_READY;
 		if (!EXIImmEx(channel, card->cmd, card->cmdlen, 1)) {
 			result            = CARD_RESULT_NOCARD;
@@ -611,7 +611,7 @@ s32 __CARDEraseSector(s32 channel, u32 addr, CARDCallback callback)
 		return CARD_RESULT_READY;
 	}
 
-	if (result < 0) {
+	if (result < CARD_RESULT_READY) {
 		return result;
 	}
 
@@ -634,10 +634,11 @@ void CARDInit(void)
 	s32 channel;
 
 #if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_GPIP01_00)
-	if (__CARDBlock[0].diskID && __CARDBlock[1].diskID) {
+	if (__CARDBlock[0].diskID && __CARDBlock[1].diskID)
 #else
-	if (__CARDDiskID) {
+	if (__CARDDiskID)
 #endif
+	{
 		return;
 	}
 
@@ -760,7 +761,7 @@ s32 CARDFreeBlocks(s32 channel, s32* byteNotUsed, s32* filesNotUsed)
 	u16 fileNo;
 
 	result = __CARDGetControlBlock(channel, &card);
-	if (result < 0) {
+	if (result < CARD_RESULT_READY) {
 		return result;
 	}
 
@@ -814,7 +815,7 @@ s32 CARDGetSectorSize(s32 channel, u32* size)
 	s32 result;
 
 	result = __CARDGetControlBlock(channel, &card);
-	if (result < 0) {
+	if (result < CARD_RESULT_READY) {
 		return result;
 	}
 	*size = card->sectorSize;

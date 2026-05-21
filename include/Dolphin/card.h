@@ -102,23 +102,18 @@ struct CARDDirCheck {
 
 // Struct for CARD information (size 0x110).
 struct CARDControl {
-	BOOL attached;             // _00
-	s32 result;                // _04
-	u16 size;                  // _08, size in Mbits.
-	u16 pageSize;              // _0A, program size in bytes.
-	s32 sectorSize;            // _0C, erase size in bytes.
-	u16 cBlock;                // _10, # blocks.
-	u16 vendorID;              // _12, 0xC243 for MX, 0xECE6 for Samsung
-	s32 latency;               // _14, read latency in bytes.
-	u8 id[0xC];                // _18
-	int mountStep;             // _24
-#if defined(VERSION_GPIP01_00) // somethings fishy with this...
-	u32 scramble;              // _28, for __CARDUnlock().
-	int formatStep;            // _2C
-#else
-	int formatStep; // _28
-	u32 scramble;   // _2C, for __CARDUnlock().
-#endif
+	BOOL attached;                  // _00
+	s32 result;                     // _04
+	u16 size;                       // _08, size in Mbits.
+	u16 pageSize;                   // _0A, program size in bytes.
+	s32 sectorSize;                 // _0C, erase size in bytes.
+	u16 cBlock;                     // _10, # blocks.
+	u16 vendorID;                   // _12, 0xC243 for MX, 0xECE6 for Samsung
+	s32 latency;                    // _14, read latency in bytes.
+	u8 id[0xC];                     // _18
+	int mountStep;                  // _24
+	u32 scramble;                   // _28, for __CARDUnlock().
+	int formatStep;                 // _2C
 	DSPTaskInfo task;               // _30
 	CARDMemoryCard* workArea;       // _80, void* in docs.
 	CARDDirectoryBlock* currentDir; // _84, CARDDir* in docs.

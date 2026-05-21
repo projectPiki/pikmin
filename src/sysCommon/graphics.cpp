@@ -754,10 +754,11 @@ int Font::stringWidth(immut char* str)
 		if (*str >= 0xa0) {
 			idx = *str - 0x20;
 			str++;
-		} else if (*str & 0x80) {
+		} else if (*str & 0x80)
 #else
-		if (*str & 0x80) {
+		if (*str & 0x80)
 #endif
+		{
 			u16 c = (str[0] << 8) | (str[1] & 0xFF);
 			idx   = charToIndex(c);
 			str += 2;
@@ -1181,7 +1182,7 @@ void TexImg::importBti(Texture* tex, RandomAccessStream& input, u8* data)
 		ERROR("Bti file has imageData at offset %d!!!\n", bti.mImageDataOffset);
 	}
 
-	tex->mTexFlags = (!bti.mWrapS ? 0x1 : 0) | (!bti.mWrapT ? 0x100 : 0);
+	tex->mTexFlags = (!bti.mWrapS ? Texture::TEX_CLAMP_S : 0) | (!bti.mWrapT ? Texture::TEX_CLAMP_T : 0);
 
 	readTexData(tex, input, data);
 }

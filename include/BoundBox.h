@@ -75,12 +75,6 @@ struct BoundBox {
 		return false;
 	}
 
-	// void resetBound()
-	// {
-	// 	mMax.set(32768.0f, 32768.0f, 32768.0f);
-	// 	mMin.set(-32768.0f, -32768.0f, -32768.0f);
-	// }
-
 	// void setBoundZero()
 	// {
 	// 	mMax.set(0.0f, 0.0f, 0.0f);

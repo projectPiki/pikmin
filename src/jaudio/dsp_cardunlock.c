@@ -154,16 +154,13 @@ int __CARDUnlock(int chan, u8 flashID[12])
 	if (ReadArrayUnlock(chan, data, rbuf, rlen, FALSE) < CARD_RESULT_READY)
 		return CARD_RESULT_NOCARD;
 
-	// TODO: Pikmin uses `card->formatStep`, but every other
-	// decomp uses `card->scramble`. What's up with that?
-
 	u32 shift;
 	u32 wk;
 
 	shift            = dummy * 8 + 1;
 	wk               = exnor_1st(data, shift);
-	card->formatStep = wk | (DATA_SCRAMBLE_R(wk) << 31 & 0x80000000);
-	card->formatStep = bitrev(card->formatStep);
+	card->scramble   = wk | (DATA_SCRAMBLE_R(wk) << 31 & 0x80000000);
+	card->scramble   = bitrev(card->scramble);
 
 	data  = 0;
 	dummy = DummyLen();
@@ -176,35 +173,35 @@ int __CARDUnlock(int chan, u8 flashID[12])
 	Ans1       = *(u32*)(rbuf + 8);
 	u32 para2A = *(u32*)(rbuf + 12);
 	u32 para2B = *(u32*)(rbuf + 16);
-	para1A ^= card->formatStep;
+	para1A ^= card->scramble;
 
 	shift            = 32;
-	wk               = exnor(card->formatStep, shift);
-	card->formatStep = wk | (DATA_SCRAMBLE_L(wk) >> 31 & 0x00000001);
-	para1B ^= card->formatStep;
+	wk               = exnor(card->scramble, shift);
+	card->scramble   = wk | (DATA_SCRAMBLE_L(wk) >> 31 & 0x00000001);
+	para1B ^= card->scramble;
 
 	shift            = 32;
-	wk               = exnor(card->formatStep, shift);
-	card->formatStep = wk | (DATA_SCRAMBLE_L(wk) >> 31 & 0x00000001);
-	Ans1 ^= card->formatStep;
+	wk               = exnor(card->scramble, shift);
+	card->scramble   = wk | (DATA_SCRAMBLE_L(wk) >> 31 & 0x00000001);
+	Ans1 ^= card->scramble;
 
 	shift            = 32;
-	wk               = exnor(card->formatStep, shift);
-	card->formatStep = wk | (DATA_SCRAMBLE_L(wk) >> 31 & 0x00000001);
-	para2A ^= card->formatStep;
+	wk               = exnor(card->scramble, shift);
+	card->scramble   = wk | (DATA_SCRAMBLE_L(wk) >> 31 & 0x00000001);
+	para2A ^= card->scramble;
 
 	shift            = 32;
-	wk               = exnor(card->formatStep, shift);
-	card->formatStep = wk | (DATA_SCRAMBLE_L(wk) >> 31 & 0x00000001);
-	para2B ^= card->formatStep;
+	wk               = exnor(card->scramble, shift);
+	card->scramble   = wk | (DATA_SCRAMBLE_L(wk) >> 31 & 0x00000001);
+	para2B ^= card->scramble;
 
 	shift            = dummy * 8;
-	wk               = exnor(card->formatStep, shift);
-	card->formatStep = wk | (DATA_SCRAMBLE_L(wk) >> 31 & 0x00000001);
+	wk               = exnor(card->scramble, shift);
+	card->scramble   = wk | (DATA_SCRAMBLE_L(wk) >> 31 & 0x00000001);
 
 	shift            = 32 + 1;
-	wk               = exnor(card->formatStep, shift);
-	card->formatStep = wk | (DATA_SCRAMBLE_L(wk) >> 31 & 0x00000001);
+	wk               = exnor(card->scramble, shift);
+	card->scramble   = wk | (DATA_SCRAMBLE_L(wk) >> 31 & 0x00000001);
 
 	*(u32*)(input + 0) = para2A;
 	*(u32*)(input + 4) = para2B;
@@ -263,16 +260,13 @@ static void DoneCallback(void* dspTask)
 	u8* output                  = input + 32;
 	Ans2                        = *(u32*)output;
 
-	// TODO: Pikmin uses `card->formatStep`, but every other
-	// decomp uses `card->scramble`. What's up with that?
-
 	s32 dummy;
 	s32 rlen;
 	u32 data;
 
 	dummy = DummyLen();
 	rlen  = dummy;
-	data  = (Ans2 ^ card->formatStep) & 0xffff0000;
+	data  = (Ans2 ^ card->scramble) & 0xffff0000;
 	if (ReadArrayUnlock(chan, data, rbuf, rlen, TRUE) < CARD_RESULT_READY) {
 		EXIUnlock(chan);
 		__CARDMountCallback(chan, CARD_RESULT_NOCARD);
@@ -283,12 +277,12 @@ static void DoneCallback(void* dspTask)
 	u32 wk, wk1;
 
 	shift            = (rlen + 4 + card->latency) * 8 + 1;
-	wk               = exnor(card->formatStep, shift);
-	card->formatStep = wk | ((DATA_SCRAMBLE_L(wk) >> 31) & 0x00000001);
+	wk               = exnor(card->scramble, shift);
+	card->scramble   = wk | ((DATA_SCRAMBLE_L(wk) >> 31) & 0x00000001);
 
 	dummy = DummyLen();
 	rlen  = dummy;
-	data  = ((Ans2 << 16) ^ card->formatStep) & 0xffff0000;
+	data  = ((Ans2 << 16) ^ card->scramble) & 0xffff0000;
 	if (ReadArrayUnlock(chan, data, rbuf, rlen, TRUE) < CARD_RESULT_READY) {
 		EXIUnlock(chan);
 		__CARDMountCallback(chan, CARD_RESULT_NOCARD);

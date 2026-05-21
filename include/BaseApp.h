@@ -33,7 +33,7 @@ public:
 	 * @brief Gets a random float between 0 and 1. Unused in DOL.
 	 * @return Random value between 0 and 1.
 	 */
-	f32 rnd() { return rand() / 32767.0f; }
+	f32 rnd() { return rand() / f32(RAND_MAX); }
 
 	void startAgeServer();
 	void stopAgeServer();

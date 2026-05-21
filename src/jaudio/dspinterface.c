@@ -373,9 +373,8 @@ void DSP_ClearBuffer()
 /**
  * @TODO: Documentation
  */
-void DSP_CreateMap()
+u64 DSP_CreateMap()
 {
-	// This is accomplishing nothing...
 	u64 map = 0;
 	for (u32 i = 0; i < 64; i++) {
 		map <<= 1;
@@ -383,7 +382,7 @@ void DSP_CreateMap()
 			map |= 1;
 		}
 	}
-	// UNUSED FUNCTION
+	return map;
 }
 #endif
 

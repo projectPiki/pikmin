@@ -10,7 +10,7 @@ static void BlockReadCallback(s32 channel, s32 result)
 	CARDCallback callback;
 
 	card = &__CARDBlock[channel];
-	if (result < 0) {
+	if (result < CARD_RESULT_READY) {
 		goto error;
 	}
 
@@ -23,7 +23,7 @@ static void BlockReadCallback(s32 channel, s32 result)
 	}
 
 	result = __CARDReadSegment(channel, BlockReadCallback);
-	if (result < 0) {
+	if (result < CARD_RESULT_READY) {
 		goto error;
 	}
 	return;
@@ -67,7 +67,7 @@ static void BlockWriteCallback(s32 channel, s32 result)
 	CARDCallback callback;
 
 	card = &__CARDBlock[channel];
-	if (result < 0) {
+	if (result < CARD_RESULT_READY) {
 		goto error;
 	}
 
@@ -80,7 +80,7 @@ static void BlockWriteCallback(s32 channel, s32 result)
 	}
 
 	result = __CARDWritePage(channel, BlockWriteCallback);
-	if (result < 0) {
+	if (result < CARD_RESULT_READY) {
 		goto error;
 	}
 	return;

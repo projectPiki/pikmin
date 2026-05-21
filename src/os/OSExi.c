@@ -4,13 +4,12 @@
 
 // This OS file in particular is really fussy, so I'm just seperating the whole thing for v37 (USA) and v47 (USA Demo)
 #if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO)
-typedef void (*EXICallback)(s32, OSContext*);
 
 #define EXI_0LENGTH_EXILENGTH_MASK 0x03FFFFE0
 
 static EXIControl Ecb[EXI_MAX_CHAN];
 
-static void SetExiInterruptMask(s32 chan, struct EXIControl* exi);
+static void SetExiInterruptMask(s32 chan, EXIControl* exi);
 static void CompleteTransfer(s32 chan);
 int EXIImm(s32 chan, void* buf, s32 len, u32 type, EXICallback callback);
 int EXIImmEx(s32 chan, void* buf, s32 len, u32 mode);
@@ -20,21 +19,21 @@ EXICallback EXISetExiCallback(s32 chan, EXICallback exiCallback);
 void EXIProbeReset();
 static int __EXIProbe(s32 chan);
 int EXIProbe(s32 chan);
-int EXIAttach(s32 chan, EXICallback extCallback);
+BOOL EXIAttach(s32 chan, EXICallback extCallback);
 int EXIDetach(s32 chan);
 int EXISelect(s32 chan, u32 dev, u32 freq);
 int EXIDeselect(s32 chan);
-static void EXIIntrruptHandler(signed short interrupt, struct OSContext* context);
-static void TCIntrruptHandler(signed short interrupt, struct OSContext* context);
-static void EXTIntrruptHandler(signed short interrupt, struct OSContext* context);
+static void EXIIntrruptHandler(signed short interrupt, OSContext* context);
+static void TCIntrruptHandler(signed short interrupt, OSContext* context);
+static void EXTIntrruptHandler(signed short interrupt, OSContext* context);
 void EXIInit();
-int EXILock(s32 chan, u32 dev, void (*unlockedCallback)(s32, struct OSContext*));
+int EXILock(s32 chan, u32 dev, EXICallback unlockedCallback);
 int EXIUnlock(s32 chan);
 u32 EXIGetState(s32 chan);
 
-static void SetExiInterruptMask(s32 chan, struct EXIControl* exi)
+static void SetExiInterruptMask(s32 chan, EXIControl* exi)
 {
-	struct EXIControl* exi2 = &Ecb[2];
+	EXIControl* exi2 = &Ecb[2];
 
 	switch (chan) {
 	case 0:
@@ -69,7 +68,7 @@ static void SetExiInterruptMask(s32 chan, struct EXIControl* exi)
 
 static void CompleteTransfer(s32 chan)
 {
-	struct EXIControl* exi;
+	EXIControl* exi;
 	unsigned char* buf;
 	u32 data;
 	int i;
@@ -94,7 +93,7 @@ static void CompleteTransfer(s32 chan)
 
 int EXIImm(s32 chan, void* buf, s32 len, u32 type, EXICallback callback)
 {
-	struct EXIControl* exi;
+	EXIControl* exi;
 	int enabled;
 	u32 data;
 	int i;
@@ -149,7 +148,7 @@ int EXIImmEx(s32 chan, void* buf, s32 len, u32 mode)
 
 int EXIDma(s32 chan, void* buf, s32 len, u32 type, EXICallback callback)
 {
-	struct EXIControl* exi;
+	EXIControl* exi;
 	int enabled;
 
 	exi = &Ecb[chan];
@@ -178,14 +177,9 @@ int EXIDma(s32 chan, void* buf, s32 len, u32 type, EXICallback callback)
 	return 1;
 }
 
-#define EXI_REG_MAX       5
-#define EXI_USB_ADAPTER   0x01010000
-#define EXI_FREQ_1M       0
-#define EXIREG(chan, idx) (__EXIRegs[((chan) * EXI_REG_MAX) + (idx)])
-
 int EXISync(s32 chan)
 {
-	struct EXIControl* exi;
+	EXIControl* exi;
 	int rc;
 	int enabled;
 
@@ -210,7 +204,7 @@ int EXISync(s32 chan)
 	return rc;
 }
 
-BOOL EXIClearInterrupts(s32 chan, int exi, int tc, int ext)
+u32 EXIClearInterrupts(s32 chan, BOOL exi, BOOL tc, BOOL ext)
 {
 	u32 cpr;
 	u32 prev;
@@ -233,7 +227,7 @@ BOOL EXIClearInterrupts(s32 chan, int exi, int tc, int ext)
 
 EXICallback EXISetExiCallback(s32 chan, EXICallback exiCallback)
 {
-	struct EXIControl* exi;
+	EXIControl* exi;
 	EXICallback prev;
 	int enabled;
 
@@ -261,7 +255,7 @@ void EXIProbeReset()
 
 static int __EXIProbe(s32 chan)
 {
-	struct EXIControl* exi;
+	EXIControl* exi;
 	int enabled;
 	int rc;
 	u32 cpr;
@@ -307,7 +301,7 @@ static int __EXIProbe(s32 chan)
 int EXIProbe(s32 chan)
 {
 	int var_r3;
-	struct EXIControl* exi = &Ecb[chan];
+	EXIControl* exi = &Ecb[chan];
 
 	if ((var_r3 = __EXIProbe(chan))) {
 		u32 id;
@@ -333,15 +327,15 @@ s32 EXIProbeEx(s32 chan)
 	return -1;
 }
 
-static int __EXIAttach(s32 chan, EXICallback extCallback)
+static BOOL __EXIAttach(s32 chan, EXICallback extCallback)
 {
-	struct EXIControl* exi = &Ecb[chan];
+	EXIControl* exi = &Ecb[chan];
 	int enabled            = OSDisableInterrupts();
-	int result;
+	BOOL result;
 
 	if (exi->state & 8 || __EXIProbe(chan) == 0) {
 		OSRestoreInterrupts(enabled);
-		result = 0;
+		result = FALSE;
 	} else {
 		u32 intr;
 		EXIClearInterrupts(chan, 1, 0, 0);
@@ -349,16 +343,16 @@ static int __EXIAttach(s32 chan, EXICallback extCallback)
 		__OSUnmaskInterrupts(0x100000U >> (chan * 3));
 		exi->state |= 8;
 		OSRestoreInterrupts(enabled);
-		result = 1;
+		result = TRUE;
 	}
 	return result;
 }
 
-int EXIAttach(s32 chan, EXICallback extCallback)
+BOOL EXIAttach(s32 chan, EXICallback extCallback)
 {
-	struct EXIControl* exi;
+	EXIControl* exi;
 	int enabled;
-	int result;
+	BOOL result;
 
 	exi = &Ecb[chan];
 	OSAssertLine(0x2AE, 0 <= chan && chan < 2);
@@ -368,7 +362,7 @@ int EXIAttach(s32 chan, EXICallback extCallback)
 	enabled = OSDisableInterrupts();
 	if (exi->idTime == 0) {
 		OSRestoreInterrupts(enabled);
-		return 0;
+		return FALSE;
 	}
 	result = __EXIAttach(chan, extCallback);
 
@@ -378,7 +372,7 @@ int EXIAttach(s32 chan, EXICallback extCallback)
 
 int EXIDetach(s32 chan)
 {
-	struct EXIControl* exi;
+	EXIControl* exi;
 	int enabled;
 
 	exi = &Ecb[chan];
@@ -400,7 +394,7 @@ int EXIDetach(s32 chan)
 
 int EXISelect(s32 chan, u32 dev, u32 freq)
 {
-	struct EXIControl* exi;
+	EXIControl* exi;
 	u32 cpr;
 	int enabled;
 
@@ -442,7 +436,7 @@ int EXISelect(s32 chan, u32 dev, u32 freq)
 
 int EXIDeselect(s32 chan)
 {
-	struct EXIControl* exi;
+	EXIControl* exi;
 	u32 cpr;
 	int enabled;
 
@@ -480,13 +474,12 @@ int EXIDeselect(s32 chan)
 	return 1;
 }
 
-static void EXIIntrruptHandler(signed short interrupt, struct OSContext* context)
+static void EXIIntrruptHandler(signed short interrupt, OSContext* context)
 {
 	s32 chan;
-	struct EXIControl* exi;
+	EXIControl* exi;
 	EXICallback callback;
 	OSContext old;
-	int stack, stack2;
 
 	chan = (interrupt - 9) / 3;
 
@@ -503,13 +496,12 @@ static void EXIIntrruptHandler(signed short interrupt, struct OSContext* context
 	}
 }
 
-static void TCIntrruptHandler(signed short interrupt, struct OSContext* context)
+static void TCIntrruptHandler(signed short interrupt, OSContext* context)
 {
 	s32 chan;
-	struct EXIControl* exi;
+	EXIControl* exi;
 	EXICallback callback;
 	OSContext old;
-	int stack, stack2;
 
 	chan = (interrupt - 10) / 3;
 
@@ -529,10 +521,10 @@ static void TCIntrruptHandler(signed short interrupt, struct OSContext* context)
 	}
 }
 
-static void EXTIntrruptHandler(signed short interrupt, struct OSContext* context)
+static void EXTIntrruptHandler(signed short interrupt, OSContext* context)
 {
 	s32 chan;
-	struct EXIControl* exi;
+	EXIControl* exi;
 	EXICallback callback;
 	OSContext old;
 
@@ -575,9 +567,9 @@ void EXIInit()
 	}
 }
 
-int EXILock(s32 chan, u32 dev, void (*unlockedCallback)(s32, struct OSContext*))
+int EXILock(s32 chan, u32 dev, EXICallback unlockedCallback)
 {
-	struct EXIControl* exi;
+	EXIControl* exi;
 	int enabled;
 	int i;
 
@@ -612,7 +604,7 @@ int EXILock(s32 chan, u32 dev, void (*unlockedCallback)(s32, struct OSContext*))
 
 int EXIUnlock(s32 chan)
 {
-	struct EXIControl* exi;
+	EXIControl* exi;
 	int enabled;
 	EXICallback unlockedCallback;
 
@@ -638,7 +630,7 @@ int EXIUnlock(s32 chan)
 
 u32 EXIGetState(s32 chan)
 {
-	struct EXIControl* exi;
+	EXIControl* exi;
 
 	exi = &Ecb[chan];
 	OSAssertLine(0x446, 0 <= chan && chan < EXI_MAX_CHAN);
@@ -655,7 +647,7 @@ s32 EXIGetID(s32 chan, u32 dev, u32* id)
 {
 	int err;
 	u32 cmd;
-	struct EXIControl* exi = &Ecb[chan];
+	EXIControl* exi = &Ecb[chan];
 	s32 startTime;
 
 	OSAssertLine(0x45A, 0 <= chan && chan < EXI_MAX_CHAN);
@@ -902,7 +894,7 @@ BOOL EXISync(s32 chan)
 /**
  * @TODO: Documentation
  */
-BOOL EXIClearInterrupts(s32 chan, BOOL exi, BOOL tc, BOOL ext)
+u32 EXIClearInterrupts(s32 chan, BOOL exi, BOOL tc, BOOL ext)
 {
 	u32 cpr;
 	u32 prev;
@@ -1018,8 +1010,6 @@ BOOL EXIAttach(s32 chan, EXICallback extCallback)
 {
 	EXIControl* exi = &Ecb[chan];
 	BOOL enabled;
-	u32 stack1; // unused, just stack filling
-	u32 stack2; // unused, just stack filling
 
 	enabled = OSDisableInterrupts();
 	if ((exi->state & EXI_STATE_ATTACHED)) {
@@ -1178,7 +1168,6 @@ static void TCIntrruptHandler(__OSInterrupt interrupt, OSContext* context)
 	s32 chan;
 	EXIControl* exi;
 	EXICallback callback;
-	int pad, pad2;
 
 	chan = (interrupt - __OS_INTERRUPT_EXI_0_TC) / 3;
 	exi  = &Ecb[chan];

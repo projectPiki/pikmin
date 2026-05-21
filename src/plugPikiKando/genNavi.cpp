@@ -20,10 +20,10 @@ DEFINE_PRINT("genNavi");
  * @todo: Documentation
  * @note UNUSED Size: 000060
  */
-// GenObjectNavi::GenObjectNavi()
-//     : GenObject('navi', "プレイヤー２を生む")
-// {
-// }
+GenObjectNavi::GenObjectNavi()
+    : GenObject('navi', "プレイヤー２を生む") // 'generate player 2'
+{
+}
 
 /**
  * @todo: Documentation

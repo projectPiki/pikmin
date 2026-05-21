@@ -31,8 +31,8 @@ void __OSInitAudioSystem(void)
 {
 	u32 r28;
 	u16 r3;
-
-	u32 padding;
+	STACK_PAD_VAR(1);
+	
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
 	memcpy((void*)((u8*)OSGetArenaHi() - 128), __DSPWorkBuffer, 128);
 #endif

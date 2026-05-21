@@ -169,7 +169,7 @@ void OSResetSystem(int reset, u32 resetCode, BOOL forceMenu)
 	BOOL disableRecalibration;
 	BOOL enabled;
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
-	int stack, stack2;
+	STACK_PAD_VAR(2);
 #endif
 	OSDisableScheduler();
 	__OSStopAudioSystem();
@@ -185,10 +185,11 @@ void OSResetSystem(int reset, u32 resetCode, BOOL forceMenu)
 	}
 
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
-	if (reset == OS_RESET_HOTRESET && forceMenu) {
+	if (reset == OS_RESET_HOTRESET && forceMenu)
 #else
-	if (reset && forceMenu) {
+	if (reset && forceMenu)
 #endif
+	{
 		OSSram* sram;
 
 		sram = __OSLockSram();
@@ -211,11 +212,13 @@ void OSResetSystem(int reset, u32 resetCode, BOOL forceMenu)
 #endif
 	if (reset == OS_RESET_HOTRESET) {
 		__OSDoHotReset(resetCode);
+	}
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
-	} else if (reset == OS_RESET_RESTART) {
+	else if (reset == OS_RESET_RESTART)
 #else
-	} else {
+	else
 #endif
+	{
 		KillThreads();
 		OSEnableScheduler();
 		__OSReboot(resetCode, forceMenu);
@@ -241,7 +244,6 @@ void OSResetSystem(int reset, u32 resetCode, BOOL forceMenu)
 #endif
 }
 
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
 extern volatile u8 DAT_800030e2 AT_ADDRESS(0x800030e2);
 typedef struct Unk {
 	u8 pad[0x24];
@@ -261,4 +263,3 @@ u32 OSGetResetCode(void)
 	return ((DAT_cc003000.resetCode & ~7) >> 3);
 	// UNUSED FUNCTION
 }
-#endif

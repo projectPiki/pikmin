@@ -336,7 +336,7 @@ BOOL Jac_ChangeBgmMode(u32 trackNo, u8 mode)
 void Jac_SetBgmModeFlag(u32 trackNo, u8 flag, u8 doSet)
 {
 #if defined(VERSION_GPIP01_00)
-	int stack[2];
+	STACK_PAD_VAR(2);
 	if (call_counter < 6000 && Jac_GetCurrentScene() == SCENE_Course && flag != 8 && flag != 4) {
 		return;
 	}

@@ -567,10 +567,7 @@ struct GenObjectMapParts : public GenObject {
  * @brief TODO
  */
 struct GenObjectNavi : public GenObject {
-	GenObjectNavi()
-	    : GenObject('navi', "プレイヤー２を生む") // 'generate player 2'
-	{
-	}
+	GenObjectNavi(); // unused/inlined
 
 	virtual void doRead(RandomAccessStream&); // _14
 	virtual Creature* birth(BirthInfo&);      // _34

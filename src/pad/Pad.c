@@ -57,7 +57,7 @@ static void UpdateOrigin(s32 chan);
 static void PADOriginCallback(s32 chan, u32 error, OSContext* context);
 static void PADFixCallback(s32 unused, u32 error, struct OSContext* context);
 static void PADResetCallback(s32 unused, u32 error, struct OSContext* context);
-int PADReset(u32 mask);
+BOOL PADReset(u32 mask);
 BOOL PADRecalibrate(u32 mask);
 BOOL PADInit();
 static void PADTypeAndStatusCallback(s32 chan, u32 type);
@@ -501,6 +501,7 @@ static void PADFixCallback(s32 unused, u32 error, struct OSContext* context)
 }
 
 #if defined(VERSION_GPIP01_00)
+extern u32 __PADFixBits; // This was moved to SIBios.c
 #else
 u32 __PADFixBits; // size: 0x4, address: 0x24
 
@@ -591,7 +592,7 @@ static void PADResetCallback(s32 unused, u32 error, struct OSContext* context)
 /**
  * @TODO: Documentation
  */
-int PADReset(u32 mask)
+BOOL PADReset(u32 mask)
 {
 #if defined(VERSION_GPIP01_00)
 	BOOL enabled;
@@ -617,10 +618,10 @@ int PADReset(u32 mask)
 
 	return TRUE;
 #else
-	int enabled;
-	int rc;
+	BOOL enabled;
+	BOOL rc;
 
-	rc = 0;
+	rc = FALSE;
 	OSAssertMsgLine(0x392, !(mask & 0x0FFFFFFF), "PADReset(): invalid mask");
 
 	enabled = OSDisableInterrupts();
@@ -812,7 +813,7 @@ u32 PADRead(PADStatus* status)
 		}
 
 		if (!(EnabledBits & chanBit)) {
-			status->err = (s8)PAD_ERR_NO_CONTROLLER;
+			status->err = PAD_ERR_NO_CONTROLLER;
 			memset(status, 0, offsetof(PADStatus, err));
 			continue;
 		}
@@ -828,7 +829,7 @@ u32 PADRead(PADStatus* status)
 			SIGetResponse(chan, data);
 
 			if (WaitingBits & chanBit) {
-				status->err = (s8)PAD_ERR_NONE;
+				status->err = PAD_ERR_NONE;
 				memset(status, 0, offsetof(PADStatus, err));
 
 				if (!(CheckingBits & chanBit)) {
@@ -840,7 +841,7 @@ u32 PADRead(PADStatus* status)
 
 			PADDisable(chan);
 
-			status->err = (s8)PAD_ERR_NO_CONTROLLER;
+			status->err = PAD_ERR_NO_CONTROLLER;
 			memset(status, 0, offsetof(PADStatus, err));
 			continue;
 		}

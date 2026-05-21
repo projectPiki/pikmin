@@ -1,5 +1,5 @@
-#ifndef _JAUDIO_DSKTASK_H
-#define _JAUDIO_DSKTASK_H
+#ifndef _JAUDIO_DSPTASK_H
+#define _JAUDIO_DSPTASK_H
 
 #include "types.h"
 

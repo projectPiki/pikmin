@@ -264,7 +264,6 @@ void DemoFlags::setFlag(int index, Creature* obj)
 		Vector3f rotation(0.0f, yRotation, 0.0f);
 		gameflow.mGameInterface->movie(getDemoFlag(index)->mMovieIndex, 0, obj, obj ? &obj->mSRT.t : nullptr, &rotation, CAF_AllVisibleMask,
 		                               true);
-
 	} else {
 		if (obj && obj->mObjType != OBJTYPE_Goal) {
 			Vector3f objPosition = obj->mSRT.t;

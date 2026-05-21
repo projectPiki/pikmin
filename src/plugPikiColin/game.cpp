@@ -251,32 +251,24 @@ void OnePlayerSection::init()
 			// the demo has a single loading banner for the setup section
 			gameflow.mLevelBannerTex       = gameflow.setLoadBanner(levNames[5]);
 			gameflow.mLevelBannerFadeValue = 0.0f;
-
-#elif defined(VERSION_GPIP01_00)
-			// only show a loading banner during setup for the E3 demos
-			if (gameflow.mNextOnePlayerSectionOnDayEnd >= ONEPLAYER_E3_MIN && gameflow.mNextOnePlayerSectionOnDayEnd <= ONEPLAYER_E3_MAX) {
-				PRINT("setting banner!\n");
-				char bannerTex[128];
-				sprintf(bannerTex, "%s/%s", dirNames[gameflow.mGamePrefs.getChildMode()],
-				        levNames[gameflow.mNextOnePlayerSectionOnDayEnd - ONEPLAYER_E3_STAGE_OFFSET]);
-
-				gameflow.mLevelBannerTex       = gameflow.setLoadBanner(bannerTex);
-				gameflow.mLevelBannerFadeValue = 0.0f;
-			} else {
-				gameflow.mLevelBannerTex = nullptr;
-			}
 #else
 			// only show a loading banner during setup for the E3 demos
 			if (gameflow.mNextOnePlayerSectionOnDayEnd >= ONEPLAYER_E3_MIN && gameflow.mNextOnePlayerSectionOnDayEnd <= ONEPLAYER_E3_MAX) {
 				PRINT("setting banner!\n");
+#if defined(VERSION_GPIP01_00)
+				char bannerTex[128];
+				sprintf(bannerTex, "%s/%s", dirNames[gameflow.mGamePrefs.getChildMode()],
+				        levNames[gameflow.mNextOnePlayerSectionOnDayEnd - ONEPLAYER_E3_STAGE_OFFSET]);
+				gameflow.mLevelBannerTex = gameflow.setLoadBanner(bannerTex);
+#else
 				gameflow.mLevelBannerTex
 				    = gameflow.setLoadBanner(levNames[gameflow.mNextOnePlayerSectionOnDayEnd - ONEPLAYER_E3_STAGE_OFFSET]);
+#endif
 				gameflow.mLevelBannerFadeValue = 0.0f;
 			} else {
 				gameflow.mLevelBannerTex = nullptr;
 			}
 #endif
-
 			currentSection = new GameSetupSection();
 			gsys->endLoading();
 			break;
@@ -338,6 +330,7 @@ void OnePlayerSection::init()
 				gameflow.mLevelBannerTex = gameflow.setLoadBanner(levNames[nextSectionType - 2]);
 #endif
 			}
+
 			gsys->startLoading(&gameflow.mGameLoadIdler, true, 60);
 			flowCont.setStage("stages/stage1.ini");
 

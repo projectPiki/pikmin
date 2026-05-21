@@ -182,7 +182,7 @@ s32 __CARDVerify(CARDControl* card)
 	int errors;
 
 	result = VerifyID(card);
-	if (result < 0) {
+	if (result < CARD_RESULT_READY) {
 		return result;
 	}
 
@@ -230,12 +230,12 @@ s32 CARDCheckExAsync(s32 channel, s32* xferBytes, CARDCallback callback)
 	}
 
 	result = __CARDGetControlBlock(channel, &card);
-	if (result < 0) {
+	if (result < CARD_RESULT_READY) {
 		return result;
 	}
 
 	result = VerifyID(card);
-	if (result < 0) {
+	if (result < CARD_RESULT_READY) {
 		return __CARDPutControlBlock(card, result);
 	}
 
@@ -369,7 +369,7 @@ s32 CARDCheck(s32 channel)
 
 	result = CARDCheckExAsync(channel, &xferBytes, __CARDSyncCallback);
 
-	if (result < 0 || &xferBytes == NULL) {
+	if (result < CARD_RESULT_READY || &xferBytes == NULL) {
 		return result;
 	}
 

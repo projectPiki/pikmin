@@ -570,7 +570,6 @@ void Generator::init()
 
 	if (!ramMode) {
 		mAliveCount = 0;
-
 	} else if (!(mCarryOverFlags & GENCARRY_SaveSpawnCount)) {
 		// do nothing.
 		mAliveCount = 0;

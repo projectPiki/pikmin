@@ -11,7 +11,7 @@ static void FormatCallback(s32 channel, s32 result)
 	CARDCallback callback;
 
 	card = &__CARDBlock[channel];
-	if (result < 0) {
+	if (result < CARD_RESULT_READY) {
 		goto error;
 	}
 
@@ -25,7 +25,7 @@ static void FormatCallback(s32 channel, s32 result)
 		int step = card->mountStep - CARD_NUM_SYSTEM_BLOCK;
 		result   = __CARDWrite(channel, (u32)card->sectorSize * step, CARD_SYSTEM_BLOCK_SIZE,
 		                       (u8*)card->workArea + (CARD_SYSTEM_BLOCK_SIZE * step), FormatCallback);
-		if (result >= 0) {
+		if (result >= CARD_RESULT_READY) {
 			return;
 		}
 	} else {
@@ -60,7 +60,7 @@ s32 __CARDFormatRegionAsync(s32 chan, u16 encode, CARDCallback callback)
 	OSAssertLine(0x9A, 0 <= chan && chan < 2);
 
 	result = __CARDGetControlBlock(chan, &card);
-	if (result < 0)
+	if (result < CARD_RESULT_READY)
 		return result;
 
 	id = (CARDID*)card->workArea;
@@ -115,7 +115,7 @@ s32 __CARDFormatRegionAsync(s32 chan, u16 encode, CARDCallback callback)
 	// melee uses formatStep here, is this wrong? I dont know anymore, its what matches
 	card->mountStep = 0;
 	result          = __CARDEraseSector(chan, (u32)card->sectorSize * card->mountStep, FormatCallback);
-	if (result < 0)
+	if (result < CARD_RESULT_READY)
 		__CARDPutControlBlock(card, result);
 	return result;
 }
@@ -141,7 +141,7 @@ s32 CARDFormatAsync(s32 channel, CARDCallback callback)
 	OSTime rand;
 
 	result = __CARDGetControlBlock(channel, &card);
-	if (result < 0) {
+	if (result < CARD_RESULT_READY) {
 		return result;
 	}
 
@@ -196,7 +196,7 @@ s32 CARDFormatAsync(s32 channel, CARDCallback callback)
 
 	card->mountStep = 0;
 	result          = __CARDEraseSector(channel, (u32)card->sectorSize * card->mountStep, FormatCallback);
-	if (result < 0) {
+	if (result < CARD_RESULT_READY) {
 		__CARDPutControlBlock(card, result);
 	}
 	return result;
@@ -209,7 +209,7 @@ s32 CARDFormatAsync(s32 channel, CARDCallback callback)
 s32 CARDFormat(s32 channel)
 {
 	s32 result = CARDFormatAsync(channel, __CARDSyncCallback);
-	if (result < 0) {
+	if (result < CARD_RESULT_READY) {
 		return result;
 	}
 	return __CARDSync(channel);

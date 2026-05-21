@@ -891,8 +891,7 @@ void SeSystem::update(Graphics& gfx, immut Vector3f& listenerPos)
 		return;
 	}
 
-#if defined(VERSION_GPIE01_00) || defined(VERSION_GPIE01_01) || defined(VERSION_GPIP01_00) || defined(VERSION_GPIJ01)
-#else
+#if defined(VERSION_PIKIDEMO)
 	++mClock;
 	if (mClock >= 30 * 60 * 60) {
 		mClock = 0; // Reset the clock every hour (30 Hz * 60 seconds * 60 minutes)
@@ -968,10 +967,11 @@ void SeSystem::calcCameraPos(immut Vector3f& objectPos, Vector3f& normalisedCamD
 int SeSystem::getJacID(int soundID)
 {
 #if defined(VERSION_GPIJ01) || defined(VERSION_DPIJ01_PIKIDEMO)
-	if (soundID < 0 || soundID >= mMaxSoundID) {
+	if (soundID < 0 || soundID >= mMaxSoundID)
 #else
-	if (soundID < 0 || soundID > mMaxSoundID) {
+	if (soundID < 0 || soundID > mMaxSoundID)
 #endif
+	{
 		PRINT("soundID = %d\n", soundID);
 		ERROR("go to HELL!\n"); // rude.
 	}

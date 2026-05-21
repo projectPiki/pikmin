@@ -583,29 +583,33 @@ s32 DVDGetFileInfoStatus(DVDFileInfo* fileInfo)
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 000084
+ * @note UNUSED Size: 000084 (OS_BUILD_VERSION <  200110L) (Matching by size)
+ * @note UNUSED Size: 0000c0 (OS_BUILD_VERSION >= 200110L) (Matching by size)
  */
 BOOL DVDOpenDir(const char* dirName, DVDDir* dir)
 {
-	// something is making this function in particular compile this warning string in demo, this probably isnt right but it gets the job
-	// done
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
-
-	long entry;
+	s32 entry;
 	char currentDir[128];
 
 	entry = DVDConvertPathToEntrynum(dirName);
-	if (entry <= 0)
-		OSErrorLine(0x409, "Warning: DVDOpenDir(): file '%s' was not found under %s.\n", dirName,
-		            (DVDGetCurrentDir(currentDir, 128), currentDir));
-	if (entry < 0 || !entryIsDir(entry)) {
-		return 0;
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+	if (entry < 0) {
+		DVDGetCurrentDir(currentDir, sizeof(currentDir));
+		OSReport("Warning: DVDOpenDir(): file '%s' was not found under %s.\n", dirName, currentDir);
+		return FALSE;
 	}
+	if (!entryIsDir(entry)) {
+		return FALSE;
+	}
+#else
+	if (entry < 0 || !entryIsDir(entry)) {
+		return FALSE;
+	}
+#endif
 	dir->entryNum = entry;
 	dir->location = entry + 1;
 	dir->next     = nextDir(entry);
-	return 1;
-#endif
+	return TRUE;
 	// UNUSED FUNCTION
 }
 

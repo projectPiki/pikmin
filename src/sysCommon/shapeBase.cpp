@@ -2628,7 +2628,7 @@ void BaseShape::initIni(bool usePlatforms)
 	for (RouteGroup* route = (RouteGroup*)mRouteGroup.Child(); route; route = (RouteGroup*)route->mNext) {
 #ifdef WIN32
 		route->mDebugWaypointTexture            = gsys->loadTexture("rootRing.txe", true);
-		route->mDebugWaypointTexture->mTexFlags = (0x100 | 0x1);
+		route->mDebugWaypointTexture->mTexFlags = Texture::TEX_CLAMP_S | Texture::TEX_CLAMP_T;
 #else
 		route->mDebugWaypointTexture = nullptr;
 #endif

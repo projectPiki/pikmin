@@ -82,9 +82,7 @@ void DSPHalt();
 void DSPReset();
 ////////////////////////////////////////////
 
-#if defined(VERSION_GPIP01_00)
 DSPTaskInfo* DSPAddTask(DSPTaskInfo*);
-#endif
 
 END_SCOPE_EXTERN_C
 
@@ -92,11 +90,10 @@ typedef void (*CommandTask)(u16);
 
 #if defined(VERSION_GPIP01_00)
 void Dsp_Running_Start();
-u64 DSP_CreateMap();
 u32 DSPSendCommands2(u32*, u32, CommandTask);
 static void DspInitWork();
 void DSPAddPriorTask(DSPTaskInfo*);
-int Dsp_Running_Check();
+BOOL Dsp_Running_Check();
 int DspStartWork(u32, CommandTask);
 
 extern DSPTaskInfo* DSP_prior_task;

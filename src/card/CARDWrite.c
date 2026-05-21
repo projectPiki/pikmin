@@ -16,7 +16,7 @@ static void WriteCallback(s32 channel, s32 result)
 	CARDFileInfo* fileInfo;
 
 	card = &__CARDBlock[channel];
-	if (result < 0) {
+	if (result < CARD_RESULT_READY) {
 		goto error;
 	}
 
@@ -46,7 +46,7 @@ static void WriteCallback(s32 channel, s32 result)
 		result = __CARDEraseSector(channel, card->sectorSize * (u32)fileInfo->iBlock, EraseCallback);
 	}
 
-	if (result < 0) {
+	if (result < CARD_RESULT_READY) {
 		goto error;
 	}
 	return;
@@ -68,13 +68,13 @@ void EraseCallback(s32 channel, s32 result)
 	CARDFileInfo* fileInfo;
 
 	card = &__CARDBlock[channel];
-	if (result < 0) {
+	if (result < CARD_RESULT_READY) {
 		goto error;
 	}
 
 	fileInfo = card->fileInfo;
 	result   = __CARDWrite(channel, card->sectorSize * (u32)fileInfo->iBlock, card->sectorSize, card->buffer, WriteCallback);
-	if (result < 0) {
+	if (result < CARD_RESULT_READY) {
 		goto error;
 	}
 	return;
@@ -97,7 +97,7 @@ s32 CARDWriteAsync(CARDFileInfo* fileInfo, void* buffer, s32 length, s32 offset,
 	CARDDir* ent;
 
 	result = __CARDSeek(fileInfo, length, offset, &card);
-	if (result < 0) {
+	if (result < CARD_RESULT_READY) {
 		return result;
 	}
 
@@ -112,7 +112,7 @@ s32 CARDWriteAsync(CARDFileInfo* fileInfo, void* buffer, s32 length, s32 offset,
 #else
 	result = __CARDAccess(ent);
 #endif
-	if (result < 0) {
+	if (result < CARD_RESULT_READY) {
 		return __CARDPutControlBlock(card, result);
 	}
 
@@ -120,7 +120,7 @@ s32 CARDWriteAsync(CARDFileInfo* fileInfo, void* buffer, s32 length, s32 offset,
 	card->apiCallback = callback ? callback : __CARDDefaultApiCallback;
 	card->buffer      = buffer;
 	result            = __CARDEraseSector(fileInfo->chan, card->sectorSize * (u32)fileInfo->iBlock, EraseCallback);
-	if (result < 0) {
+	if (result < CARD_RESULT_READY) {
 		__CARDPutControlBlock(card, result);
 	}
 	return result;
@@ -132,7 +132,7 @@ s32 CARDWriteAsync(CARDFileInfo* fileInfo, void* buffer, s32 length, s32 offset,
 s32 CARDWrite(CARDFileInfo* fileInfo, void* buffer, s32 length, s32 offset)
 {
 	s32 result = CARDWriteAsync(fileInfo, buffer, length, offset, __CARDSyncCallback);
-	if (result < 0) {
+	if (result < CARD_RESULT_READY) {
 		return result;
 	}
 

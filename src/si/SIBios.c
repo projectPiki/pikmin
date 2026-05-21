@@ -1,31 +1,9 @@
 #include "Dolphin/os.h"
 #include "Dolphin/vi.h"
 
-extern OSTime __OSGetSystemTime();
-
 static SIControl Si = {
 	-1, 0, 0, NULL, NULL,
 };
-
-typedef struct SIComm_s {
-	u32 tcint : 1;
-	u32 tcintmsk : 1;
-	u32 comerr : 1;
-	u32 rdstint : 1;
-	u32 rdstintmsk : 1;
-	u32 pad0 : 4;
-	u32 outlngth : 7;
-	u32 pad1 : 1;
-	u32 inlngth : 7;
-	u32 pad2 : 5;
-	u32 channel : 2;
-	u32 tstart : 1;
-} SIComm_s;
-
-typedef union SIComm_u {
-	u32 val;
-	SIComm_s f;
-} SIComm_u;
 
 static SIPacket Packet[SI_MAX_CHAN];
 static OSAlarm Alarm[SI_MAX_CHAN];
@@ -313,7 +291,7 @@ static BOOL __SITransfer(s32 chan, void* output, u32 outputBytes, void* input, u
 	u32 rLen;
 	u32 i;
 	u32 sr;
-	SIComm_u comcsr;
+	SIComm comcsr;
 
 	enabled = OSDisableInterrupts();
 	if (Si.chan != -1) {
@@ -336,12 +314,12 @@ static BOOL __SITransfer(s32 chan, void* output, u32 outputBytes, void* input, u
 	}
 
 	comcsr.val        = __SIRegs[13];
-	comcsr.f.tcint    = 1;
-	comcsr.f.tcintmsk = callback ? 1 : 0;
-	comcsr.f.outlngth = (outputBytes == SI_MAX_COMCSR_OUTLNGTH) ? 0 : outputBytes;
-	comcsr.f.inlngth  = (inputBytes == SI_MAX_COMCSR_INLNGTH) ? 0 : inputBytes;
-	comcsr.f.channel  = chan;
-	comcsr.f.tstart   = 1;
+	comcsr.flags.tcint    = 1;
+	comcsr.flags.tcintmsk = callback ? 1 : 0;
+	comcsr.flags.outlngth = (outputBytes == SI_MAX_COMCSR_OUTLNGTH) ? 0 : outputBytes;
+	comcsr.flags.inlngth  = (inputBytes == SI_MAX_COMCSR_INLNGTH) ? 0 : inputBytes;
+	comcsr.flags.channel  = chan;
+	comcsr.flags.tstart   = 1;
 	__SIRegs[13]      = comcsr.val;
 
 	OSRestoreInterrupts(enabled);

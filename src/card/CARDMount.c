@@ -27,6 +27,9 @@ BOOL CARDProbe(s32 channel)
 	return EXIProbe(channel);
 }
 
+/**
+ * This inline is not used anywhere, but we have a revisional difference for it?  Okay...
+ */
 static inline BOOL IsCard(u32 id)
 {
 #if defined(VERSION_PIKIDEMO)
@@ -161,7 +164,7 @@ static s32 DoMount(s32 channel)
 #else
 		result = __CARDReadNintendoID(channel, &id);
 #endif
-		if (result < 0) {
+		if (result < CARD_RESULT_READY) {
 			goto error;
 		}
 
@@ -180,11 +183,11 @@ static s32 DoMount(s32 channel)
 		}
 #endif
 		result = __CARDClearStatus(channel);
-		if (result < 0) {
+		if (result < CARD_RESULT_READY) {
 			goto error;
 		}
 		result = __CARDReadStatus(channel, &status);
-		if (result < 0) {
+		if (result < CARD_RESULT_READY) {
 			goto error;
 		}
 
@@ -195,7 +198,7 @@ static s32 DoMount(s32 channel)
 
 		if (!(status & 0x40)) {
 			result = __CARDUnlock(channel, card->id);
-			if (result < 0) {
+			if (result < CARD_RESULT_READY) {
 				goto error;
 			}
 
@@ -244,7 +247,7 @@ static s32 DoMount(s32 channel)
 		card->mountStep = 2;
 
 		result = __CARDEnableInterrupt(channel, TRUE);
-		if (result < 0) {
+		if (result < CARD_RESULT_READY) {
 			goto error;
 		}
 
@@ -256,7 +259,7 @@ static s32 DoMount(s32 channel)
 	step   = card->mountStep - 2;
 	result = __CARDRead(channel, (u32)card->sectorSize * step, CARD_SYSTEM_BLOCK_SIZE,
 	                    (u8*)card->workArea + (CARD_SYSTEM_BLOCK_SIZE * step), __CARDMountCallback);
-	if (result < 0) {
+	if (result < CARD_RESULT_READY) {
 		__CARDPutControlBlock(card, result);
 	}
 	return result;
@@ -378,7 +381,7 @@ s32 CARDMountAsync(s32 channel, CARDMemoryCard* workArea, CARDCallback detachCal
 s32 CARDMount(s32 channel, CARDMemoryCard* workArea, CARDCallback detachCallback)
 {
 	s32 result = CARDMountAsync(channel, workArea, detachCallback, __CARDSyncCallback);
-	if (result < 0) {
+	if (result < CARD_RESULT_READY) {
 		return result;
 	}
 
@@ -415,7 +418,7 @@ s32 CARDUnmount(s32 channel)
 	s32 result;
 
 	result = __CARDGetControlBlock(channel, &card);
-	if (result < 0) {
+	if (result < CARD_RESULT_READY) {
 		return result;
 	}
 	DoUnmount(channel, CARD_RESULT_NOCARD);

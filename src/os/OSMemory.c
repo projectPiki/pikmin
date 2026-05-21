@@ -202,17 +202,14 @@ static ASM void RealMode(register u32 addr)
 void __OSInitMemoryProtection()
 {
 #if defined(VERSION_DPIJ01_PIKIDEMO)
-	u32 padding[4];
+	STACK_PAD_VAR(4);
 #else
-	u32 padding[8];
 	u32 simulatedSize;
 	BOOL enabled;
-	simulatedSize = OSGetConsoleSimulatedMemSize();
-#endif
+	STACK_PAD_VAR(8);
 
-#if defined(VERSION_DPIJ01_PIKIDEMO)
-#else
-	enabled = OSDisableInterrupts();
+	simulatedSize = OSGetConsoleSimulatedMemSize();
+	enabled       = OSDisableInterrupts();
 	if (simulatedSize <= 0x1800000) {
 		RealMode((u32)&Config24MB);
 	} else if (simulatedSize <= 0x3000000) {

@@ -80,8 +80,8 @@ zen::ogScrTitleMgr::ogScrTitleMgr()
 
 	mAlphaMgr = new setTenmetuAlpha(mStereoButton, 0.5f, 0.0f, 0, 255);
 
-#if defined(VERSION_GPIP01_00)
-	char path[4];
+#if !defined(BUGFIX) && defined(VERSION_GPIP01_00)
+	char path[4]; // You made it undefined behavior?!
 #else
 	char path[12];
 #endif

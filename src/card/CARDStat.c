@@ -87,7 +87,7 @@ s32 CARDGetStatus(s32 channel, s32 fileNo, CARDStat* state)
 		return CARD_RESULT_FATAL_ERROR;
 	}
 	result = __CARDGetControlBlock(channel, &card);
-	if (result < 0) {
+	if (result < CARD_RESULT_READY) {
 		return result;
 	}
 
@@ -102,7 +102,7 @@ s32 CARDGetStatus(s32 channel, s32 fileNo, CARDStat* state)
 		result = __CARDIsPublic(ent);
 	}
 
-	if (result >= 0) {
+	if (result >= CARD_RESULT_READY) {
 		memcpy(state->gameName, ent->gameName, sizeof(state->gameName));
 		memcpy(state->company, ent->company, sizeof(state->company));
 		state->length = (u32)ent->length * card->sectorSize;
@@ -135,7 +135,7 @@ s32 CARDSetStatusAsync(s32 channel, s32 fileNo, CARDStat* state, CARDCallback ca
 		return CARD_RESULT_FATAL_ERROR;
 	}
 	result = __CARDGetControlBlock(channel, &card);
-	if (result < 0) {
+	if (result < CARD_RESULT_READY) {
 		return result;
 	}
 
@@ -146,7 +146,7 @@ s32 CARDSetStatusAsync(s32 channel, s32 fileNo, CARDStat* state, CARDCallback ca
 #else
 	result = __CARDAccess(ent);
 #endif
-	if (result < 0) {
+	if (result < CARD_RESULT_READY) {
 		return __CARDPutControlBlock(card, result);
 	}
 
@@ -163,7 +163,7 @@ s32 CARDSetStatusAsync(s32 channel, s32 fileNo, CARDStat* state, CARDCallback ca
 
 	ent->time = (u32)OSTicksToSeconds(OSGetTime());
 	result    = __CARDUpdateDir(channel, callback);
-	if (result < 0) {
+	if (result < CARD_RESULT_READY) {
 		__CARDPutControlBlock(card, result);
 	}
 	return result;
@@ -175,7 +175,7 @@ s32 CARDSetStatusAsync(s32 channel, s32 fileNo, CARDStat* state, CARDCallback ca
 s32 CARDSetStatus(s32 channel, s32 fileNo, CARDStat* state)
 {
 	s32 result = CARDSetStatusAsync(channel, fileNo, state, __CARDSyncCallback);
-	if (result < 0) {
+	if (result < CARD_RESULT_READY) {
 		return result;
 	}
 

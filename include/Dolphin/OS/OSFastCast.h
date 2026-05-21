@@ -29,7 +29,7 @@ BEGIN_SCOPE_EXTERN_C
 
 /////////////// FAST CAST INLINES /////////////////////////////////////////////////////////////////
 
-static inline void OSInitFastCast()
+static inline void OSInitFastCast(void)
 {
 #ifdef __MWERKS__
 	asm {
