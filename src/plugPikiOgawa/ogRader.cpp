@@ -571,7 +571,7 @@ void zen::ogRaderMgr::AreaScroll(f32* p1, f32* p2, f32 p3, f32 p4)
  */
 void zen::ogRaderMgr::updateMenu(Controller* input)
 {
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01)
 	if (mStatus == -1) {
 		return;
 	}

@@ -67,7 +67,7 @@ enum TimerState {
  */
 enum LanguageID {
 	LANG_FORCE_CHANGE = -1, ///< -1, index to set if language requires re-loading.
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01)
 	LANG_English = 0, ///< 0, PAL English. NB: for PAL, Dutch OS language also maps to this.
 	LANG_French  = 1, ///< 1, PAL French.
 	LANG_German  = 2, ///< 2, PAL Italian.
@@ -249,7 +249,7 @@ struct StdSystem {
 	int mActiveHeapIdx;            // _194
 	BOOL mForcePrint;              // _198
 	MemInfo* mCurrMemInfo;         // _19C
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01)
 	LanguageID mLanguageID; // _1A0, language ID for PAL.
 #endif
 

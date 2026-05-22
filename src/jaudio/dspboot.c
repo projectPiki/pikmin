@@ -7,7 +7,7 @@
 // Fun Fact: Prior to Dolphin Emulator 5.0-16483, USA Demo's early DSP microcode required DSP LLE to run.
 // This wasn't because it was difficult to support or anything, it was just so obscure that nobody thought to add it yet.
 // https://dolphin-emu.org/download/dev/8b3517a9f943b7379805a5a6a5a4d77c60d366f9/
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01)
 // for PAL, this data is contained in dsptask.c
 #else
 u16 jdsp[] ATTRIBUTE_ALIGN(32) = {

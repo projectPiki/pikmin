@@ -212,7 +212,7 @@ s32 DVDT_LoadtoDRAM_Main(void* dvdCall)
 	s32 readStatus = 0;
 	DVDCall* call  = (DVDCall*)dvdCall;
 
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01)
 	static DVDFileInfo finfo;
 	if (Jac_DVDOpen(call->fileName, &finfo) == FALSE) {
 #else

@@ -62,7 +62,7 @@ struct FlowController {
 	char mDoorStageFilePath[0x80]; ///< _1B0, likely stage unused "door" item would've led to - same as above + unused in reality.
 	BOOL mIsVersusMode;            ///< _230, indicator of an (unimplemented) VS mode - never TRUE because we never spawn a second navi.
 	int mGameEndFlag;              ///< _234, type of situation forcing the day/gameplay to end - see `GameEndFlag` enum.
-#if defined(VERSION_GPIP01_00)     ///
+#if defined(VERSION_GPIP01)        ///
 	BOOL mIsDayEndSkippable;       ///< _238, day ends from extinction and navi down aren't skippable.
 	BOOL mIsDayEndSkipped;         ///< _23C, has day end cutscene been skipped?
 #endif                             ///

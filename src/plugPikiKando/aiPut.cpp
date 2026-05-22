@@ -58,7 +58,7 @@ void ActPutBomb::findTeki()
 #if defined(VERSION_GPIJ01_01) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_DPIJ01_PIKIDEMO)
 // surely the tekiMgr is fine...
 #else
-#if defined(VERSION_GPIE01) || defined(VERSION_GPIP01_00) || defined(VERSION_GPIJ01_02)
+#if defined(VERSION_GPIE01) || defined(VERSION_GPIP01) || defined(VERSION_GPIJ01_02)
 	if (!tekiMgr)
 #else // VERSION_G98E01_PIKIDEMO
 	if (!tekiMgr || !bossMgr)

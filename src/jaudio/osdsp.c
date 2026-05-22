@@ -2,7 +2,7 @@
 #include "Dolphin/os.h"
 #include <stddef.h>
 
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01)
 
 DSPTaskInfo* __DSP_tmp_task;
 

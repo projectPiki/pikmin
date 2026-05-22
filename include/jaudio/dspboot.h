@@ -34,7 +34,7 @@ END_SCOPE_EXTERN_C
 // Global functions.
 s32 __DSPCheckMXICBoot2(DSPTaskInfo2* task);
 void DSPInit2(DSPTaskInfo2* task);
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01)
 void DspBoot(DSPCallback);
 #else
 void DspBoot();

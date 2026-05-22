@@ -138,7 +138,7 @@ zen::ogScrMakeDefaultMgr::MakeDefaultStatus zen::ogScrMakeDefaultMgr::update(Con
 	switch (mStatus) {
 	case Processing:
 	{
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01)
 		if (mStateTimer > 6.0f && gameflow.mMemoryCard.hasCardFinished())
 #else
 		if (mStateTimer > 2.0f && gameflow.mMemoryCard.hasCardFinished())

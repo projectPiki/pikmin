@@ -629,7 +629,7 @@ void initBigFont()
 	tex->attach();
 }
 
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01)
 static immut char* e_errorMessages[] = {
 	"Reading Game Disc...",
 	nullptr,
@@ -869,7 +869,7 @@ void System::showDvdError(Graphics& gfx)
 
 	if (mDvdErrorCode) { // DvdError::ReadingDisc or higher
 		int y = 160;
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01)
 		immut char** errors = errorList[mDvdErrorCode + mLanguageID * 6];
 #else
 		immut char** errors = errorList[mDvdErrorCode];

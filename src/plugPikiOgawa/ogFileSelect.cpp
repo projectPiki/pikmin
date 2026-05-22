@@ -45,7 +45,7 @@ bool zen::ogScrFileSelectMgr::getCardFileInfos()
 #else
 		bool vibe   = gameflow.mGamePrefs.getVibeMode();
 		bool stereo = gameflow.mGamePrefs.getStereoMode();
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01)
 		int child = gameflow.mGamePrefs.getChildMode();
 #else
 		bool child = gameflow.mGamePrefs.getChildMode();
@@ -153,7 +153,7 @@ void zen::ogScrFileSelectMgr::UpDateYesNoWindow()
 	if (mDataAnimationTimer < 0.25f) {
 		mDataAnimationTimer += gsys->getFrameTime();
 		f32 t = mDataAnimationTimer / 0.25f;
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01)
 		if (t >= 1.0f) {
 			t = 1.0f;
 		}
@@ -734,7 +734,7 @@ void zen::ogScrFileSelectMgr::init()
 zen::ogScrFileSelectMgr::ogScrFileSelectMgr()
 {
 	init();
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01)
 	mFxMgr = new EffectMgr2D(16, 0x800, 0x800);
 #else
 	mFxMgr = new EffectMgr2D(16, 0x400, 0x400);

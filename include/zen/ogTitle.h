@@ -82,7 +82,7 @@ private:
 	s16 mBgmVol;                    // _9E
 	s16 mSfxVol;                    // _A0
 	bool mVibeMode;                 // _A2
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01)
 	int mChildMode; // _A4
 #else
 	bool mChildMode; // _A3

@@ -3,7 +3,7 @@
 #include "jaudio/dspproc.h"
 #include "jaudio/dummyprobe.h"
 
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01)
 
 static vu8 DSP_prior_yield;
 static int AUDIO_UPDATE_REQUEST;

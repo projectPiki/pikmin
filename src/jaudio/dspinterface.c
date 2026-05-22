@@ -369,7 +369,7 @@ void DSP_ClearBuffer()
 	}
 }
 
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01)
 /**
  * @TODO: Documentation
  */

@@ -55,7 +55,7 @@ static s16 sjis_convert_table[0x258] ATTRIBUTE_ALIGN(32) = {
 // doesn't want to match  when copy-pasted from anywhere in the actual code (there seems to be dozens
 // of "・"s in the shift-jis table and its using the wrong one  if you dont manually specify it)
 static char kanji_convert_table[] ATTRIBUTE_ALIGN(32) = {
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01)
 	"日目時私未知星大地\x85\x20名前宇宙旅途中流墜落愛機号多失無残姿動一重迎教気猛毒酸素含生命維持装置限度修復考船探検奇妙物体待立上何械観察"
 	"芽光放"
 #else
@@ -356,7 +356,7 @@ void zen::ogScrMessageMgr::cnvButtonIcon(char* str)
 			tmp2[1] = 0;
 
 			char buf1[PATH_MAX];
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01)
 			sprintf(buf1, "%sCC[%s]%s%sCC[%s]", tmp2, mButtonMarkupColours[offset], tmp1, tmp2, mDefaultButtonMarkupColour);
 #else
 			sprintf(buf1, "%sFX[32]%sFY[28]%sCC[%s]%s%sCC[%s]%sFX[24]%sFY[24]", tmp2, tmp2, tmp2, mButtonMarkupColours[offset], tmp1, tmp2,

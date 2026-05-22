@@ -470,7 +470,7 @@ void OgTestScreen::draw(Graphics& gfx)
 		gfx.setAuxColour(Colour(255, 255, 0, 255));
 
 		char scrnSelectorText[PATH_MAX];
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01)
 		sprintf(scrnSelectorText, "２Ｄ Screen checker"); // '2D screen selector'
 #else
 		sprintf(scrnSelectorText, "２Ｄスクリーン・セレクター"); // '2D screen selector'
@@ -482,7 +482,7 @@ void OgTestScreen::draw(Graphics& gfx)
 
 		char optionsTexts[11][PATH_MAX];
 
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01)
 		sprintf(optionsTexts[0], "title (%d)", mTitleMode);              // 'Title (%d)'
 		sprintf(optionsTexts[1], "tutorial (%d)", mTutorialMode);        // 'Tutorial (%d)'
 		sprintf(optionsTexts[2], "save select (%d)", mSaveMode);         // 'Save Select (%d)'
@@ -528,7 +528,7 @@ void OgTestScreen::draw(Graphics& gfx)
 
 		ogScrMessageMgr* msgMgr = mTutorialMgr->getScrMsgMgr();
 		char tutorialText[PATH_MAX];
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01)
 		sprintf(tutorialText, "<<< tutorial >>> tx(%d)", msgMgr->getTxtLineMax()); // '<<< Tutorial >>> Number of tx?? (%d)'
 #else
 		sprintf(tutorialText, "<<< チュ−トリアル >>> tx??の数(%d個)", msgMgr->getTxtLineMax()); // '<<< Tutorial >>> Number of tx?? (%d)'
