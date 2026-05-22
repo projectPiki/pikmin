@@ -80,7 +80,7 @@ void __fstLoad(void)
 	di->FSTMaxLength     = bb2->maxLength;
 	memcpy(di, idTmp, sizeof(DVDDiskID));
 	OSReport("\n");
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011002L
 	OSReport("  Game Name ... %c%c%c%c\n", di->Gamecode[0], di->Gamecode[1], di->Gamecode[2], di->Gamecode[3]);
 	OSReport("  Company ..... %c%c\n", di->Company[0], di->Company[1]);
 #else

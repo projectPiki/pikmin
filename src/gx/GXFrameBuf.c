@@ -384,7 +384,7 @@ GXRenderModeObj GXRmHW = {
 	{ 0, 0, 21, 22, 21, 0, 0 },
 };
 
-#if defined(VERSION_GPIP01_00) || defined(VERSION_G98P01_PIKIDEMO)
+#if OS_BUILD_VERSION >= 20011217L
 GXRenderModeObj GXEurgb60Hz480IntDf = {
 	20,
 	640,
@@ -607,7 +607,7 @@ u32 GXSetDispCopyYScale(f32 vscale)
 	OSAssertMsgLine(0x49D, vscale >= 1.0f, "GXSetDispCopyYScale: Vertical scale must be >= 1.0");
 
 	iScale = (u32)(256.0f / vscale) & 0x1FF;
-#if defined(VERSION_GPIP01_00) || defined(VERSION_G98P01_PIKIDEMO)
+#if OS_BUILD_VERSION >= 20011217L
 #else
 	fScale = 256.0f / (f32)iScale;
 #endif
@@ -617,7 +617,7 @@ u32 GXSetDispCopyYScale(f32 vscale)
 	SET_REG_FIELD(0x4A6, reg, 9, 0, iScale);
 	SET_REG_FIELD(0x4A7, reg, 8, 24, 0x4E);
 	GX_WRITE_RAS_REG(reg);
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011002L
 	gx->bpSent = GX_FALSE;
 #else
 	gx->bpSent = GX_TRUE;
@@ -625,7 +625,7 @@ u32 GXSetDispCopyYScale(f32 vscale)
 	SET_REG_FIELD(0x4AB, gx->cpDisp, 1, 10, enable);
 	ht = (u32)GET_REG_FIELD(gx->cpDispSize, 10, 10) + 1;
 
-#if defined(VERSION_GPIP01_00) || defined(VERSION_G98P01_PIKIDEMO)
+#if OS_BUILD_VERSION >= 20011217L
 	return __GXGetNumXfbLines(ht, iScale);
 #else
 	return ht * fScale;
@@ -658,7 +658,7 @@ void GXSetCopyClear(GXColor clear_clr, u32 clear_z)
 	SET_REG_FIELD(0x4D5, reg, 24, 0, clear_z);
 	SET_REG_FIELD(0x4D6, reg, 8, 24, 0x51);
 	GX_WRITE_RAS_REG(reg);
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011002L
 	gx->bpSent = GX_FALSE;
 #else
 	gx->bpSent = GX_TRUE;
@@ -746,7 +746,7 @@ void GXSetCopyFilter(GXBool aa, const u8 sample_pattern[12][2], GXBool vf, const
 	}
 	GX_WRITE_RAS_REG(coeff0);
 	GX_WRITE_RAS_REG(coeff1);
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011002L
 	gx->bpSent = GX_FALSE;
 #else
 	gx->bpSent = GX_TRUE;
@@ -855,7 +855,7 @@ void GXCopyDisp(void* dest, GXBool clear)
 	if (changePeCtrl) {
 		GX_WRITE_RAS_REG(gx->peCtrl);
 	}
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011002L
 	gx->bpSent = GX_FALSE;
 #else
 	gx->bpSent = GX_TRUE;
@@ -923,7 +923,7 @@ void GXCopyTex(void* dest, GXBool clear)
 	if (changePeCtrl) {
 		GX_WRITE_RAS_REG(gx->peCtrl);
 	}
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011002L
 	gx->bpSent = GX_FALSE;
 #else
 	gx->bpSent = GX_TRUE;
@@ -942,7 +942,7 @@ void GXClearBoundingBox(void)
 	GX_WRITE_RAS_REG(reg);
 	reg = 0x560003FF;
 	GX_WRITE_RAS_REG(reg);
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011002L
 	gx->bpSent = GX_FALSE;
 #else
 	gx->bpSent = GX_TRUE;

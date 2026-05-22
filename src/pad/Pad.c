@@ -17,7 +17,7 @@ extern u16 __OSWirelessPadFixMode AT_ADDRESS(OS_BASE_CACHED | 0x30E0);
 static int Initialized;   // size: 0x4, address: 0x0
 static u32 EnabledBits;   // size: 0x4, address: 0x4
 static u32 ResettingBits; // size: 0x4, address: 0x8
-#if defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011217L
 #else
 static u32 ProbingBits; // size: 0x4, address: 0xC
 #endif
@@ -25,19 +25,19 @@ static u32 RecalibrateBits; // size: 0x4, address: 0x10
 static u32 WaitingBits;     // size: 0x4, address: 0x14
 static u32 CheckingBits;    // size: 0x4, address: 0x18
 
-#if defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011112L
 static u32 PendingBits;
 #else
 static u32 cmdTypeAndStatus;
 #endif
 
-#if defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011217L
 #else
 static u32 PADType[PAD_MAX_CONTROLLERS]; // size: 0x10, address: 0x0
 #endif
 static u32 Type[PAD_MAX_CONTROLLERS];                // size: 0x10, address: 0x0
 static struct PADStatus Origin[PAD_MAX_CONTROLLERS]; // size: 0x30, address: 0x10
-#if defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011217L
 static u32 CmdProbeDevice[PAD_MAX_CONTROLLERS];
 static void (*SamplingCallback)();
 #else
@@ -61,7 +61,7 @@ BOOL PADReset(u32 mask);
 BOOL PADRecalibrate(u32 mask);
 BOOL PADInit();
 static void PADTypeAndStatusCallback(s32 chan, u32 type);
-#if defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011112L
 static void PADReceiveCheckCallback(s32 chan, u32 type);
 #else
 static void PADReceiveCheckCallback(s32 chan, u32 error, OSContext* arg2);
@@ -88,7 +88,7 @@ static u32 XPatchBits                                   = PAD_CHAN0_BIT | PAD_CH
 static u32 AnalogMode                                   = 0x00000300;       // size: 0x4, address: 0x4
 static u32 Spec                                         = 0x00000005;       // size: 0x4, address: 0x8
 static void (*MakeStatus)(s32, struct PADStatus*, u32*) = SPEC2_MakeStatus; // size: 0x4, address: 0xC
-#if defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011217L
 static u32 CmdReadOrigin = 0x41000000;
 static u32 CmdCalibrate  = 0x42000000;
 #else
@@ -139,7 +139,7 @@ static void SetWirelessID(s32 chan, u16 id)
  */
 static int DoReset(void)
 {
-#if defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011217L
 	u32 chanBit;
 #else
 	int rc;
@@ -149,7 +149,7 @@ static int DoReset(void)
 
 	ResettingChan = __mwerks_cntlzw(ResettingBits);
 
-#if defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011217L
 	if (ResettingChan != 0x20) {
 		chanBit = PAD_CHAN0_BIT >> ResettingChan;
 		ResettingBits &= ~chanBit;
@@ -192,7 +192,7 @@ static void PADEnable(s32 chan)
 	SIEnablePolling(EnabledBits);
 }
 
-#if defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011112L
 #else
 /**
  * @TODO: Documentation
@@ -222,7 +222,7 @@ static void ProbeWireless(s32 chan)
 }
 #endif
 
-#if defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011217L
 #else
 /**
  * @TODO: Documentation
@@ -261,7 +261,7 @@ static void PADDisable(s32 chan)
 	EnabledBits &= ~chanBit;
 	WaitingBits &= ~chanBit;
 	CheckingBits &= ~chanBit;
-#if defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011217L
 	PendingBits &= ~chanBit;
 	OSSetWirelessID(chan, 0);
 #else
@@ -325,7 +325,7 @@ static void UpdateOrigin(s32 chan)
 	origin->substickX -= 128;
 	origin->substickY -= 128;
 
-#if defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011217L
 	if ((XPatchBits & chanBit) != 0 && origin->stickX > 64 && (SIGetType(chan) & 0xFFFF0000) == SI_GC_CONTROLLER) {
 #else
 	if ((XPatchBits & chanBit) != 0 && origin->stickX > 64 && (Type[chan] & 0xFFFF0000) == SI_GC_CONTROLLER) {
@@ -359,13 +359,13 @@ static void PADOriginUpdateCallback(s32 chan, u32 error, OSContext* context)
 	if (!(error & (SI_ERROR_UNDER_RUN | SI_ERROR_OVER_RUN | SI_ERROR_NO_RESPONSE | SI_ERROR_COLLISION)))
 		UpdateOrigin(chan);
 
-#if defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011217L
 	if ((error & SI_ERROR_NO_RESPONSE))
 		PADDisable(chan);
 #endif
 }
 
-#if defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011217L
 /**
  * @TODO: Documentation
  */
@@ -382,7 +382,7 @@ static void PADProbeCallback(s32 chan, u32 error, OSContext* context)
 }
 #endif
 
-#if defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011217L
 static void PADTypeAndStatusCallback(s32 chan, u32 type)
 {
 	u32 chanBit;
@@ -482,7 +482,7 @@ static void PADFixCallback(s32 unused, u32 error, struct OSContext* context)
 			return;
 		}
 		if ((type & 0x40000000) && !(type & 0x80000) && !(type & 0x40000)) {
-#if defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011217L
 			SITransfer(ResettingChan, &CmdReadOrigin, 1, &Origin[ResettingChan], 0xA, PADOriginCallback, 0);
 #else
 			SITransfer(ResettingChan, &cmdReadOrigin, 1, &Origin[ResettingChan], 0xA, PADOriginCallback, 0);
@@ -490,7 +490,7 @@ static void PADFixCallback(s32 unused, u32 error, struct OSContext* context)
 			return;
 		}
 		frame = (ResettingChan << 0x16) | 0x4D000000 | (__OSWirelessPadFixMode << 8) & 0x3FFF00u;
-#if defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011217L
 		SITransfer(ResettingChan, &CmdProbeDevice[ResettingChan], 3, &Origin[ResettingChan], 8, PADProbeCallback, 0);
 #else
 		SITransfer(ResettingChan, &cmdProbeDevice[ResettingChan], 3, &Origin[ResettingChan], 8, PADProbeCallback, 0);
@@ -500,7 +500,7 @@ static void PADFixCallback(s32 unused, u32 error, struct OSContext* context)
 	DoReset();
 }
 
-#if defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011217L
 extern u32 __PADFixBits; // This was moved to SIBios.c
 #else
 u32 __PADFixBits; // size: 0x4, address: 0x24
@@ -594,7 +594,7 @@ static void PADResetCallback(s32 unused, u32 error, struct OSContext* context)
  */
 BOOL PADReset(u32 mask)
 {
-#if defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011217L
 	BOOL enabled;
 	u32 disabledBits;
 
@@ -655,13 +655,13 @@ BOOL PADRecalibrate(u32 mask)
 
 	ret = FALSE;
 
-#if defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011217L
 #else
 	OSAssertMsgLine(0x3BD, !(mask & 0x0FFFFFFF), "PADReset(): invalid mask");
 #endif
 
 	intrEnabled = OSDisableInterrupts();
-#if defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011217L
 	mask |= PendingBits;
 	PendingBits = 0;
 	mask &= ~(WaitingBits | CheckingBits);
@@ -674,7 +674,7 @@ BOOL PADRecalibrate(u32 mask)
 
 	EnabledBits &= ~mask;
 
-#if defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011217L
 	if (!(GameChoice & 0x40)) {
 		RecalibrateBits |= mask;
 	}
@@ -684,7 +684,7 @@ BOOL PADRecalibrate(u32 mask)
 	SIDisablePolling(ResettingBits);
 #endif
 
-#if defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011217L
 	if ((s32)ResettingChan == 32)
 		DoReset();
 	OSRestoreInterrupts(intrEnabled);
@@ -706,7 +706,7 @@ BOOL PADInit()
 {
 	s32 chan;
 
-#if defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011217L
 	if (Initialized)
 		return TRUE;
 
@@ -753,7 +753,7 @@ BOOL PADInit()
 	return PADReset(PAD_CHAN0_BIT | PAD_CHAN1_BIT | PAD_CHAN2_BIT | PAD_CHAN3_BIT);
 }
 
-#if defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011112L
 #else
 static void PADReceiveCheckCallback(s32 chan, u32 error, OSContext* arg2)
 {
@@ -957,7 +957,7 @@ u32 PADRead(PADStatus* status)
 #endif
 }
 
-#if defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011217L
 #else
 
 typedef struct XY {
@@ -1006,7 +1006,7 @@ void PADSetSamplingRate(u32 msec)
 }
 #endif
 
-#if defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011217L
 #else
 /**
  * @TODO: Documentation
@@ -1053,7 +1053,7 @@ void PADControlMotor(s32 chan, u32 command)
 
 	enabled = OSDisableInterrupts();
 	chanBit = PAD_CHAN0_BIT >> chan;
-#if defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011217L
 	if ((EnabledBits & chanBit) && !(SIGetType(chan) & SI_GC_NOMOTOR)) {
 #else
 	if ((EnabledBits & chanBit) && !(ProbingBits & chanBit) && !(Type[chan] & 0x20000000)) {
@@ -1307,7 +1307,7 @@ BOOL PADSync(void)
 	// UNUSED FUNCTION
 }
 
-#if defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011217L
 #else
 /**
  * @TODO: Documentation
@@ -1342,7 +1342,7 @@ static BOOL OnReset(BOOL f)
 	BOOL sync;
 	static BOOL recalibrated = FALSE;
 
-#if defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011217L
 	if (SamplingCallback)
 		PADSetSamplingCallback(NULL);
 #endif
@@ -1369,7 +1369,7 @@ void __PADDisableXPatch(void)
 	XPatchBits = 0;
 }
 
-#if defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011217L
 static void SamplingHandler(__OSInterrupt interrupt, OSContext* context)
 {
 	OSContext exceptionContext;

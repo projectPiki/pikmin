@@ -474,7 +474,7 @@ void GXLoadLightObjImm(GXLightObj* lt_obj, GXLightID light)
 	WRITE_SOME_LIGHT_REG2(obj->ldir[1], addr + 14);
 	WRITE_SOME_LIGHT_REG2(obj->ldir[2], addr + 15);
 
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011002L
 	gx->bpSent = GX_TRUE;
 #else
 	gx->bpSent = GX_FALSE;
@@ -553,7 +553,7 @@ void GXLoadLightObjIndx(u32 lt_obj_indx, GXLightID light)
 	__GXShadowIndexState(7, reg);
 #endif
 
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011002L
 	gx->bpSent = GX_FALSE;
 #else
 	gx->bpSent = GX_TRUE;
@@ -633,7 +633,7 @@ void GXSetChanAmbColor(GXChannelID chan, GXColor amb_color)
 
 	GX_WRITE_XF_REG(colIdx + 10, reg);
 
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011002L
 	gx->bpSent = GX_TRUE;
 #else
 	gx->bpSent = GX_FALSE;
@@ -713,7 +713,7 @@ void GXSetChanMatColor(GXChannelID chan, GXColor mat_color)
 	}
 
 	GX_WRITE_XF_REG(colIdx + 12, reg);
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011002L
 	gx->bpSent = GX_TRUE;
 #else
 	gx->bpSent = GX_FALSE;
@@ -771,7 +771,7 @@ void GXSetChanCtrl(GXChannelID chan, GXBool enable, GXColorSrc amb_src, GXColorS
 	SET_REG_FIELD(0x310, reg, 1, 10, (attn_fn != 0));
 
 	GX_WRITE_XF_REG(idx + 14, reg);
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011002L
 	gx->bpSent = GX_TRUE;
 #else
 	gx->bpSent = GX_FALSE;

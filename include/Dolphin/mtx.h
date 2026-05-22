@@ -3,6 +3,7 @@
 
 #include "types.h"
 
+#include "Dolphin/OS/OSVersion.h"
 #include "Dolphin/vec.h"
 
 BEGIN_SCOPE_EXTERN_C
@@ -82,24 +83,7 @@ typedef struct Quaternion {
 // to juggle these version differences while still producing a useable codebase: for matching Japanese and American retail versions,
 // certain `C_`-prefixed function implementations are renamed via macros, and the paired-singles implementations and C functions
 // from the future Dolphin OS revisions that shouldn't be accessible are not given function alias macros.
-#if defined(BUILD_MATCHING) && (defined(VERSION_GPIJ01) || defined(VERSION_GPIE01))
-#define C_MTXRotRad           MTXRotRad
-#define C_MTXRotTrig          MTXRotTrig
-#define C_MTXRotAxisRad       MTXRotAxisRad
-#define C_MTXTrans            MTXTrans
-#define C_MTXTransApply       MTXTransApply
-#define C_MTXScale            MTXScale
-#define C_MTXScaleApply       MTXScaleApply
-#define C_MTXQuat             MTXQuat
-#define C_MTXReflect          MTXReflect
-#define C_MTXLookAt           MTXLookAt
-#define C_MTXLightFrustum     MTXLightFrustum
-#define C_MTXLightPerspective MTXLightPerspective
-#define C_MTXLightOrtho       MTXLightOrtho
-#define C_MTXFrustum          MTXFrustum
-#define C_MTXPerspective      MTXPerspective
-#define C_MTXOrtho            MTXOrtho
-#else // VERSION_PIKIDEMO, VERSION_GPIP01, Non-Matching builds
+#if OS_BUILD_VERSION >= 20011002L
 #define MTXRotRad           PSMTXRotRad
 #define MTXRotTrig          PSMTXRotTrig
 #define MTXRotAxisRad       PSMTXRotAxisRad
@@ -128,6 +112,23 @@ typedef struct Quaternion {
 #define MTX44RotRad         PSMTX44RotRad
 #define MTX44RotTrig        PSMTX44RotTrig
 #define MTX44RotAxisRad     PSMTX44RotAxisRad
+#else
+#define C_MTXRotRad           MTXRotRad
+#define C_MTXRotTrig          MTXRotTrig
+#define C_MTXRotAxisRad       MTXRotAxisRad
+#define C_MTXTrans            MTXTrans
+#define C_MTXTransApply       MTXTransApply
+#define C_MTXScale            MTXScale
+#define C_MTXScaleApply       MTXScaleApply
+#define C_MTXQuat             MTXQuat
+#define C_MTXReflect          MTXReflect
+#define C_MTXLookAt           MTXLookAt
+#define C_MTXLightFrustum     MTXLightFrustum
+#define C_MTXLightPerspective MTXLightPerspective
+#define C_MTXLightOrtho       MTXLightOrtho
+#define C_MTXFrustum          MTXFrustum
+#define C_MTXPerspective      MTXPerspective
+#define C_MTXOrtho            MTXOrtho
 #endif
 
 #endif

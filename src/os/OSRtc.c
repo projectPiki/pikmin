@@ -299,7 +299,7 @@ static inline OSSram* __OSLockSramHACK()
  */
 u32 OSGetProgressiveMode(void)
 {
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO)
+#if OS_BUILD_VERSION >= 20011112L
 	OSSram* sram;
 	u32 mode;
 
@@ -405,7 +405,7 @@ void __OSSetBootMode(void)
 {
 	// UNUSED FUNCTION
 }
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011002L
 u16 OSGetWirelessID(s32 channel)
 {
 	OSSramEx* sram;

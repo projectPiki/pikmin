@@ -23,7 +23,7 @@ static void __init_data(void);
 
 extern u16 Pad3Button AT_ADDRESS(PAD3_BUTTON_ADDR);
 
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01)
+#if OS_BUILD_VERSION >= 20011002L
 static void __check_pad3(void)
 {
 	if ((Pad3Button & 0x0eef) == 0x0eef) {
@@ -106,7 +106,7 @@ _no_args:
 _end_of_parseargs:
 	bl DBInit
 	bl OSInit
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01)
+#if OS_BUILD_VERSION >= 20011002L
 	lis r4, 0x8000
 	addi r4, r4, 0x30e6
 	lhz r3, 0x0(r4)

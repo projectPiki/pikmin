@@ -42,7 +42,7 @@ static vu16 shdwRegs[59];
 
 static VIPositionInfo HorVer;
 
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if OS_BUILD_VERSION >= 20011112L
 static VITimingInfo* CurrTiming;
 static s32 CurrTvMode;
 #endif
@@ -134,7 +134,7 @@ static BOOL VISetRegs(void)
 		shdwChangeMode = 0;
 #endif
 
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if OS_BUILD_VERSION >= 20011112L
 		CurrTiming = HorVer.timing;
 		CurrTvMode = HorVer.tv;
 #endif
@@ -194,7 +194,7 @@ static void __VIRetraceHandler(__OSInterrupt interrupt, OSContext* context)
 		if (VISetRegs()) {
 			flushFlag = 0;
 
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if OS_BUILD_VERSION >= 20011112L
 			__PADRefreshSamplingRate();
 #endif
 		}
@@ -262,7 +262,7 @@ static VITimingInfo* getTiming(VITVMode mode)
 		return &timing[3];
 	}
 
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if OS_BUILD_VERSION >= 20011112L
 	case VI_TVMODE_EURGB60_INT:
 	{
 		return &timing[0];
@@ -287,7 +287,7 @@ static VITimingInfo* getTiming(VITVMode mode)
 		return &timing[6];
 	}
 
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if OS_BUILD_VERSION >= 20011112L
 	case VI_TVMODE_NTSC_3D:
 	{
 		return &timing[7];
@@ -364,7 +364,7 @@ void __VIInit(VITVMode mode)
 	__VIRegs[VI_DISP_INT_0U] = hct << 0;
 	__VIRegs[VI_DISP_INT_0]  = vct;
 
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if OS_BUILD_VERSION >= 20011112L
 	if (mode != VI_TVMODE_NTSC_PROG && mode != VI_TVMODE_NTSC_3D)
 #else
 	if (mode != VI_TVMODE_NTSC_PROG)
@@ -770,7 +770,7 @@ void VIConfigure(const GXRenderModeObj* obj)
 	u32 regDspCfg;
 	BOOL enabled;
 	u32 newNonInter, tvInBootrom, tvInGame;
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if OS_BUILD_VERSION >= 20011112L
 	static u32 message = FALSE;
 #endif
 
@@ -806,7 +806,7 @@ void VIConfigure(const GXRenderModeObj* obj)
 	}
 #endif
 
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if OS_BUILD_VERSION >= 20011112L
 	if (tvInGame == VI_DEBUG_PAL && message == FALSE) {
 		message = TRUE;
 		OSReport("***************************************\n");
@@ -983,7 +983,7 @@ u32 VIGetRetraceCount(void)
  */
 static u32 getCurrentHalfLine(void)
 {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if OS_BUILD_VERSION >= 20011112L
 
 	u32 hcount;
 	u32 vcount0;
@@ -1018,7 +1018,7 @@ static u32 getCurrentHalfLine(void)
  */
 static u32 getCurrentFieldEvenOdd()
 {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if OS_BUILD_VERSION >= 20011112L
 	u16 value;
 	u32 nin;
 	u32 fmt;
@@ -1078,7 +1078,7 @@ u32 VIGetNextField(void)
  */
 u32 VIGetCurrentLine(void)
 {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if OS_BUILD_VERSION >= 20011112L
 	u32 halfLine;
 	VITimingInfo* tm;
 	BOOL enabled;
@@ -1100,7 +1100,7 @@ u32 VIGetCurrentLine(void)
  */
 u32 VIGetTvFormat(void)
 {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if OS_BUILD_VERSION >= 20011112L
 	s32 enabled;
 	s32 format;
 

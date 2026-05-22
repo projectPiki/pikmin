@@ -65,7 +65,7 @@ void GXSetProjection(const Mtx44 mtx, GXProjectionType type)
 	GX_WRITE_XF_REG_F(36, gx->projMtx[4]);
 	GX_WRITE_XF_REG_F(37, gx->projMtx[5]);
 	GX_WRITE_XF_REG_2(38, gx->projType);
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011002L
 	gx->bpSent = GX_TRUE;
 #else
 	gx->bpSent = GX_FALSE;
@@ -456,7 +456,7 @@ void GXSetViewportJitter(f32 left, f32 top, f32 wd, f32 ht, f32 nearz, f32 farz,
 	}
 	sx = wd / 2.0f;
 	sy = -ht / 2.0f;
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011002L
 	ox = 342.0f + (left + (wd / 2.0f));
 	oy = 342.0f + (top + (ht / 2.0f));
 #else
@@ -485,7 +485,7 @@ void GXSetViewportJitter(f32 left, f32 top, f32 wd, f32 ht, f32 nearz, f32 farz,
 	GX_WRITE_F32(ox);
 	GX_WRITE_F32(oy);
 	GX_WRITE_F32(oz);
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011002L
 	gx->bpSent = GX_TRUE;
 #else
 	gx->bpSent = GX_FALSE;
@@ -533,7 +533,7 @@ void GXSetScissor(u32 left, u32 top, u32 wd, u32 ht)
 	OSAssertMsgLine(0x3B7, left + wd < 1708, "GXSetScissor: right edge > 1708");
 	OSAssertMsgLine(0x3B8, top + ht < 1708, "GXSetScissor: bottom edge > 1708");
 
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011002L
 	tp = top + 342;
 	lf = left + 342;
 #else
@@ -550,7 +550,7 @@ void GXSetScissor(u32 left, u32 top, u32 wd, u32 ht)
 
 	GX_WRITE_RAS_REG(gx->suScis0);
 	GX_WRITE_RAS_REG(gx->suScis1);
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011002L
 	gx->bpSent = GX_FALSE;
 #else
 	gx->bpSent = GX_TRUE;
@@ -595,7 +595,7 @@ void GXSetScissorBoxOffset(s32 x_off, s32 y_off)
 	OSAssertMsgLine(0x3FE, (u32)(x_off + 340) < 2048, "GXSetScissorBoxOffset: x offset > 2048");
 	OSAssertMsgLine(0x400, (u32)(y_off + 340) < 2048, "GXSetScissorBoxOffset: y offset > 2048");
 
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011002L
 	hx = (u32)(x_off + 342) >> 1;
 	hy = (u32)(y_off + 342) >> 1;
 #else
@@ -607,7 +607,7 @@ void GXSetScissorBoxOffset(s32 x_off, s32 y_off)
 	SET_REG_FIELD(0x406, reg, 10, 10, hy);
 	SET_REG_FIELD(0x407, reg, 8, 24, 0x59);
 	GX_WRITE_RAS_REG(reg);
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011002L
 	gx->bpSent = GX_FALSE;
 #else
 	gx->bpSent = GX_TRUE;
@@ -621,7 +621,7 @@ void GXSetClipMode(GXClipMode mode)
 {
 	CHECK_GXBEGIN(0x41B, "GXSetClipMode");
 	GX_WRITE_XF_REG(5, mode);
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011002L
 	gx->bpSent = GX_TRUE;
 #else
 	gx->bpSent = GX_FALSE;
@@ -640,7 +640,7 @@ void __GXSetMatrixIndex(GXAttr matIdxAttr)
 		GX_WRITE_SOME_REG4(8, 0x40, gx->matIdxB, -12);
 		GX_WRITE_XF_REG(25, gx->matIdxB);
 	}
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011002L
 	gx->bpSent = GX_TRUE;
 #else
 	gx->bpSent = GX_FALSE;

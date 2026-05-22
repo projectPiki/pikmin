@@ -173,7 +173,7 @@ void GXInitTexObj(GXTexObj* obj, void* image_ptr, u16 width, u16 height, GXTexFm
 	if (mipmap != 0) {
 		u8 lmax;
 		t->flags |= 1;
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011002L
 		if (format - 8 <= 2U) {
 			t->mode0 = (t->mode0 & 0xFFFFFF1F) | 0xA0;
 		} else {
@@ -664,7 +664,7 @@ void GXLoadTexObjPreLoaded(GXTexObj* obj, GXTexRegion* region, GXTexMapID id)
 	gx->tImage0[id] = t->image0;
 	gx->tMode0[id]  = t->mode0;
 	gx->dirtyState |= 1;
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011002L
 	gx->bpSent = GX_FALSE;
 #else
 	gx->bpSent = GX_TRUE;
@@ -1318,7 +1318,7 @@ static void __SetSURegs(u32 tmap, u32 tcoord)
 	SET_REG_FIELD(0x73D, gx->suTs1[tcoord], 1, 16, t_bias);
 	GX_WRITE_RAS_REG(gx->suTs0[tcoord]);
 	GX_WRITE_RAS_REG(gx->suTs1[tcoord]);
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011002L
 	gx->bpSent = GX_FALSE;
 #else
 	gx->bpSent = GX_TRUE;
@@ -1382,7 +1382,7 @@ void __GXSetSUTexRegs(void)
 			} else {
 				coord = GET_REG_FIELD(*ptref, 3, 3);
 			}
-#if defined(VERSION_GPIP01_00) || defined(VERSION_G98P01_PIKIDEMO)
+#if OS_BUILD_VERSION >= 20011217L
 			if ((tmap != 0xFF) && !(gx->tcsManEnab & (1 << coord)) && (gx->tevTcEnab & (1 << i)))
 #else
 			if ((tmap != 0xFF) && !(gx->tcsManEnab & (1 << coord)))
@@ -1404,7 +1404,7 @@ void __GXGetSUTexSize(GXTexCoordID coord, u16* width, u16* height)
 	*height = (u16)gx->suTs1[coord] + 1;
 }
 
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011002L
 void __GXSetTmemConfig(u32 arg0)
 {
 	switch (arg0) {

@@ -40,8 +40,7 @@ static void MEMIntrruptHandler(__OSInterrupt interrupt, OSContext* context)
 	addr            = (((u32)__MEMRegs[0x12] & 0x3ff) << 16) | __MEMRegs[0x11];
 	__MEMRegs[0x10] = 0;
 
-#if defined(VERSION_DPIJ01_PIKIDEMO)
-#else
+#if OS_BUILD_VERSION >= 20011112L
 	if (__OSErrorTable[OS_ERROR_PROTECTION]) {
 		__OSErrorTable[OS_ERROR_PROTECTION](OS_ERROR_PROTECTION, context, cause, addr);
 		return;
@@ -201,9 +200,7 @@ static ASM void RealMode(register u32 addr)
 
 void __OSInitMemoryProtection()
 {
-#if defined(VERSION_DPIJ01_PIKIDEMO)
-	STACK_PAD_VAR(4);
-#else
+#if OS_BUILD_VERSION >= 20011112L
 	u32 simulatedSize;
 	BOOL enabled;
 	STACK_PAD_VAR(8);
@@ -215,6 +212,8 @@ void __OSInitMemoryProtection()
 	} else if (simulatedSize <= 0x3000000) {
 		RealMode((u32)&Config48MB);
 	}
+#else
+	STACK_PAD_VAR(4);
 #endif
 
 	__MEMRegs[16] = 0;
@@ -234,8 +233,7 @@ void __OSInitMemoryProtection()
 
 	__OSUnmaskInterrupts(OS_INTERRUPTMASK_MEM_ADDRESS);
 
-#if defined(VERSION_DPIJ01_PIKIDEMO)
-#else
+#if OS_BUILD_VERSION >= 20011112L
 	OSRestoreInterrupts(enabled);
 #endif
 }

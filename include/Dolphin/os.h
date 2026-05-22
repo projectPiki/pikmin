@@ -26,6 +26,7 @@
 #include "Dolphin/OS/OSThread.h"
 #include "Dolphin/OS/OSTime.h"
 #include "Dolphin/OS/OSUtil.h"
+#include "Dolphin/OS/OSVersion.h"
 
 BEGIN_SCOPE_EXTERN_C
 

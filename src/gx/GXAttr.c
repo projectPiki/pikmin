@@ -41,7 +41,7 @@ static void __GXXfVtxSpecs(void)
 	nTex += GET_REG_FIELD(gx->vcdHi, 2, 14) ? 1 : 0;
 	reg = (nCols) | (nNrm << 2) | (nTex << 4);
 	GX_WRITE_XF_REG(8, reg);
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011002L
 	gx->bpSent = 1;
 #else
 	gx->bpSent = 0;
@@ -101,7 +101,7 @@ static inline void SETVCDATTR(GXAttr Attr, GXAttrType Type)
 		SET_REG_FIELD(0xB1, gx->vcdLo, 2, 9, Type);
 		break;
 	}
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011002L
 	case GX_VA_NRM:
 	{
 		if (Type != GX_NONE) {

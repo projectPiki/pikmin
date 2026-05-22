@@ -76,7 +76,7 @@ void GXSetTevColorIn(GXTevStageID stage, GXTevColorArg a, GXTevColorArg b, GXTev
 	SET_REG_FIELD(0xF0, *pTevReg, 4, 0, d);
 
 	GX_WRITE_RAS_REG(*pTevReg);
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011002L
 	gx->bpSent = GX_FALSE;
 #else
 	gx->bpSent = GX_TRUE;
@@ -104,7 +104,7 @@ void GXSetTevAlphaIn(GXTevStageID stage, GXTevAlphaArg a, GXTevAlphaArg b, GXTev
 	SET_REG_FIELD(0x113, *pTevReg, 3, 4, d);
 
 	GX_WRITE_RAS_REG(*pTevReg);
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011002L
 	gx->bpSent = GX_FALSE;
 #else
 	gx->bpSent = GX_TRUE;
@@ -134,7 +134,7 @@ void GXSetTevColorOp(GXTevStageID stage, GXTevOp op, GXTevBias bias, GXTevScale 
 	SET_REG_FIELD(0x141, *pTevReg, 2, 22, out_reg);
 
 	GX_WRITE_RAS_REG(*pTevReg);
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011002L
 	gx->bpSent = GX_FALSE;
 #else
 	gx->bpSent = GX_TRUE;
@@ -164,7 +164,7 @@ void GXSetTevAlphaOp(GXTevStageID stage, GXTevOp op, GXTevBias bias, GXTevScale 
 	SET_REG_FIELD(0x16D, *pTevReg, 2, 22, out_reg);
 
 	GX_WRITE_RAS_REG(*pTevReg);
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011002L
 	gx->bpSent = GX_FALSE;
 #else
 	gx->bpSent = GX_TRUE;
@@ -195,7 +195,7 @@ void GXSetTevColor(GXTevRegID id, GXColor color)
 	GX_WRITE_RAS_REG(regBG);
 	GX_WRITE_RAS_REG(regBG);
 	GX_WRITE_RAS_REG(regBG);
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011002L
 	gx->bpSent = GX_FALSE;
 #else
 	gx->bpSent = GX_TRUE;
@@ -231,7 +231,7 @@ void GXSetTevColorS10(GXTevRegID id, GXColorS10 color)
 	GX_WRITE_RAS_REG(regBG);
 	GX_WRITE_RAS_REG(regBG);
 	GX_WRITE_RAS_REG(regBG);
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011002L
 	gx->bpSent = GX_FALSE;
 #else
 	gx->bpSent = GX_TRUE;
@@ -262,7 +262,7 @@ void GXSetTevKColor(GXTevKColorID id, GXColor color)
 
 	GX_WRITE_RAS_REG(regRA);
 	GX_WRITE_RAS_REG(regBG);
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011002L
 	gx->bpSent = GX_FALSE;
 #else
 	gx->bpSent = GX_TRUE;
@@ -287,7 +287,7 @@ void GXSetTevKColorSel(GXTevStageID stage, GXTevKColorSel sel)
 	}
 
 	GX_WRITE_RAS_REG(*Kreg);
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011002L
 	gx->bpSent = GX_FALSE;
 #else
 	gx->bpSent = GX_TRUE;
@@ -312,7 +312,7 @@ void GXSetTevKAlphaSel(GXTevStageID stage, GXTevKAlphaSel sel)
 	}
 
 	GX_WRITE_RAS_REG(*Kreg);
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011002L
 	gx->bpSent = GX_FALSE;
 #else
 	gx->bpSent = GX_TRUE;
@@ -334,7 +334,7 @@ void GXSetTevSwapMode(GXTevStageID stage, GXTevSwapSel ras_sel, GXTevSwapSel tex
 	SET_REG_FIELD(0x24F, *pTevReg, 2, 2, tex_sel);
 
 	GX_WRITE_RAS_REG(*pTevReg);
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011002L
 	gx->bpSent = GX_FALSE;
 #else
 	gx->bpSent = GX_TRUE;
@@ -370,7 +370,7 @@ void GXSetTevSwapModeTable(GXTevSwapSel table, GXTevColorChan red, GXTevColorCha
 	SET_REG_FIELD(0x278, *Kreg, 2, 2, alpha);
 
 	GX_WRITE_RAS_REG(*Kreg);
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011002L
 	gx->bpSent = GX_FALSE;
 #else
 	gx->bpSent = GX_TRUE;
@@ -403,7 +403,7 @@ void GXSetAlphaCompare(GXCompare comp0, u8 ref0, GXAlphaOp op, GXCompare comp1, 
 	SET_REG_FIELD(0x2B9, reg, 8, 24, 0xF3);
 
 	GX_WRITE_RAS_REG(reg);
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011002L
 	gx->bpSent = GX_FALSE;
 #else
 	gx->bpSent = GX_TRUE;
@@ -455,7 +455,7 @@ void GXSetZTexture(GXZTexOp op, GXTexFmt fmt, u32 bias)
 
 	GX_WRITE_RAS_REG(zenv0);
 	GX_WRITE_RAS_REG(zenv1);
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011002L
 	gx->bpSent = GX_FALSE;
 #else
 	gx->bpSent = GX_TRUE;
@@ -481,7 +481,7 @@ void GXSetTevOrder(GXTevStageID stage, GXTexCoordID coord, GXTexMapID map, GXCha
 	tmap = map & ~0x100;
 	tmap = (tmap >= GX_MAX_TEXMAP) ? GX_TEXMAP0 : tmap;
 
-#if defined(VERSION_GPIP01_00) || defined(VERSION_G98P01_PIKIDEMO)
+#if OS_BUILD_VERSION >= 20011217L
 	if (coord >= GX_MAX_TEXCOORD) {
 		tcoord        = GX_TEXCOORD0;
 		gx->tevTcEnab = gx->tevTcEnab & ~(1 << stage);
@@ -506,7 +506,7 @@ void GXSetTevOrder(GXTevStageID stage, GXTexCoordID coord, GXTexMapID map, GXCha
 	}
 
 	GX_WRITE_RAS_REG(*ptref);
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011002L
 	gx->bpSent = GX_FALSE;
 #else
 	gx->bpSent = GX_TRUE;
