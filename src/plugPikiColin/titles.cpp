@@ -457,7 +457,7 @@ struct TitleSetupSection : public Node {
 							titleWindowOn = false;
 						}
 #else
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01)
 						int lang = gameflow.mGamePrefs.getChildMode();
 						STACK_PAD_VAR(1);
 						PRINT("got language index %d\n", lang);
@@ -467,7 +467,7 @@ struct TitleSetupSection : public Node {
 						if (gameflow.mGamePrefs.mChangesPending) {
 							bool vibe   = gameflow.mGamePrefs.getVibeMode();
 							bool stereo = gameflow.mGamePrefs.getStereoMode();
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01)
 							int lang = gameflow.mGamePrefs.getChildMode();
 #else
 							bool lang = gameflow.mGamePrefs.getChildMode();
@@ -818,7 +818,7 @@ void TitlesSection::init()
 
 	// check if we need to reload the language, in case the preference has changed since last load
 	int beforeLang = gameflow.mLanguageIndex;
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01)
 	gameflow.mLanguageIndex = gameflow.mGamePrefs.getChildMode();
 	if (gameflow.mLanguageIndex < LANG_MIN || gameflow.mLanguageIndex > LANG_MAX) {
 		PRINT("trying to load language %d\n", gameflow.mLanguageIndex);

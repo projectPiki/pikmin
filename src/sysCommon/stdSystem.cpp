@@ -38,7 +38,7 @@ StdSystem::StdSystem()
     , mAramRoot("CoreNode")
 {
 	mConsFont = nullptr;
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01)
 	mLanguageID = LANG_English;
 #endif
 	mCurrentFade      = 0.0f;

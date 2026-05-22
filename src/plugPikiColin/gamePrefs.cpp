@@ -41,7 +41,7 @@ void PlayState::openStage(int storyStageID)
 }
 
 // This is a weak inline in US but a full function in PAL
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01)
 /**
  * @brief Initialises game preferences with basic default values.
  */
@@ -141,7 +141,7 @@ void GamePrefs::setVibeMode(bool set)
 	rumbleMgr->rumbleOption(set);
 }
 
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01)
 /**
  * @brief Gets language preference - PAL exclusive version.
  *
@@ -388,7 +388,7 @@ void GamePrefs::read(RandomAccessStream& input)
 	STACK_PAD_VAR(1);
 #endif
 
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01)
 	STACK_PAD_VAR(2);
 	LanguageID lang = (LanguageID)(UNPACK_LANG_FLAG(mFlags));
 	if (lang < LANG_English || lang > LANG_Italian) {

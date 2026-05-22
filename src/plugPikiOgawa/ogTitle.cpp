@@ -80,7 +80,7 @@ zen::ogScrTitleMgr::ogScrTitleMgr()
 
 	mAlphaMgr = new setTenmetuAlpha(mStereoButton, 0.5f, 0.0f, 0, 255);
 
-#if !defined(BUGFIX) && defined(VERSION_GPIP01_00)
+#if !defined(BUGFIX) && defined(VERSION_GPIP01)
 	char path[4]; // You made it undefined behavior?!
 #else
 	char path[12];
@@ -109,7 +109,7 @@ zen::ogScrTitleMgr::ogScrTitleMgr()
 	mLanguageMenu->setCancelSE(ogEnumFix(SYSSE_DECIDE1, JACSYS_Decide1));
 	mRumbleMenu->setCancelSE(ogEnumFix(SYSSE_DECIDE1, JACSYS_Decide1));
 	mSoundMenu->setCancelSE(ogEnumFix(SYSSE_DECIDE1, JACSYS_Decide1));
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01) || defined(VERSION_GPIP01_00)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01) || defined(VERSION_GPIP01)
 #else
 	mOptionsMenu->setMenuItemActiveSw(1, false);
 #endif
@@ -234,7 +234,7 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 		if (mCurrentSelection == 1) {
 			// Language
 			mCurrentMenuID = MENU_Language;
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01)
 			mLanguageMenu->start(mChildMode);
 #else
 			if (mChildMode) {
@@ -268,7 +268,7 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 #else
 			bool vibe   = gameflow.mGamePrefs.getVibeMode();
 			bool stereo = gameflow.mGamePrefs.getStereoMode();
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01)
 			int child = gameflow.mGamePrefs.getChildMode();
 #else
 			bool child = gameflow.mGamePrefs.getChildMode();
@@ -309,7 +309,7 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 
 					// For every time this sound is played here, it worked correctly in USA demo, then broken in final USA (Jac_PlaySystemSe
 					// is meant to use its own sound ids for system sounds), then fixed AGAIN in a different way for PAL
-#if defined(BUGFIX) || defined(VERSION_GPIP01_00)
+#if defined(BUGFIX) || defined(VERSION_GPIP01)
 					seSystem->playSysSe(Sound_Config);
 #elif defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
 					Jac_PlaySystemSe(JACSYS_SoundConfig);
@@ -325,7 +325,7 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 				if (mBgmVol > 0) {
 					mBgmVol--;
 					setGamePrefs();
-#if defined(BUGFIX) || defined(VERSION_GPIP01_00)
+#if defined(BUGFIX) || defined(VERSION_GPIP01)
 					seSystem->playSysSe(Sound_Config);
 #elif defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
 					Jac_PlaySystemSe(JACSYS_SoundConfig);
@@ -341,7 +341,7 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 				if (mSfxVol > 0) {
 					mSfxVol--;
 					setGamePrefs();
-#if defined(BUGFIX) || defined(VERSION_GPIP01_00)
+#if defined(BUGFIX) || defined(VERSION_GPIP01)
 					seSystem->playSysSe(Sound_Config);
 #elif defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
 					Jac_PlaySystemSe(JACSYS_SoundConfig);
@@ -361,7 +361,7 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 				if (mStereoMode) {
 					mStereoMode = false;
 					setGamePrefs();
-#if defined(BUGFIX) || defined(VERSION_GPIP01_00)
+#if defined(BUGFIX) || defined(VERSION_GPIP01)
 					seSystem->playSysSe(Sound_Config);
 #elif defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
 					Jac_PlaySystemSe(JACSYS_SoundConfig);
@@ -377,7 +377,7 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 				if (mBgmVol < 10) {
 					mBgmVol++;
 					setGamePrefs();
-#if defined(BUGFIX) || defined(VERSION_GPIP01_00)
+#if defined(BUGFIX) || defined(VERSION_GPIP01)
 					seSystem->playSysSe(Sound_Config);
 #elif defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
 					Jac_PlaySystemSe(JACSYS_SoundConfig);
@@ -393,7 +393,7 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 				if (mSfxVol < 10) {
 					mSfxVol++;
 					setGamePrefs();
-#if defined(BUGFIX) || defined(VERSION_GPIP01_00)
+#if defined(BUGFIX) || defined(VERSION_GPIP01)
 					seSystem->playSysSe(Sound_Config);
 #elif defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
 					Jac_PlaySystemSe(JACSYS_SoundConfig);
@@ -466,7 +466,7 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 		mLanguageMenu->update(input);
 		int flag4         = mLanguageMenu->getStatusFlag();
 		mCurrentSelection = mLanguageMenu->getSelectMenu();
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01)
 		if (mCurrentSelection >= 0) {
 			mChildMode = mCurrentSelection;
 		}

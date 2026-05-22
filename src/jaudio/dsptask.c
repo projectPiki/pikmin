@@ -4,7 +4,7 @@
 #include "jaudio/dspboot.h"
 #include <stddef.h>
 
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01)
 
 static DSPTaskInfo audio_task;
 static u32 AUDIO_YIELD_BUFFER[0x800] ATTRIBUTE_ALIGN(32);

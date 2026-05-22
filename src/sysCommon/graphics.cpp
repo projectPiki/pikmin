@@ -682,7 +682,7 @@ static u16 sjis_convert_table[0x258] = {
 };
 
 static char kanji_convert_table[] ATTRIBUTE_ALIGN(32) = {
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01)
 	"日目時私未知星大地\x85\x20名前宇宙旅途中流墜落愛機号多失無残姿動一重迎教気猛毒酸素含生命維持装置限度修復考船探検奇妙物体待立上何械観察"
 	"芽光放"
 #else
@@ -749,7 +749,7 @@ int Font::stringWidth(immut char* str)
 	int width = 0;
 	while (*str) {
 		int idx;
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01)
 		STACK_PAD_VAR(4);
 		if (*str >= 0xa0) {
 			idx = *str - 0x20;

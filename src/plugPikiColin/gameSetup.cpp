@@ -82,7 +82,7 @@ static immut char* arambundleList[][2] = {
 	{ "archives/bosses.dir", "dataDir/archives/bosses.arc" },
 	{ "archives/tekipara.dir", "dataDir/archives/tekipara.arc" },
 	{ "archives/tekikey.dir", "dataDir/archives/tekikey.arc" },
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01)
 #else
 	{ "archives/plants.dir", "dataDir/archives/plants.arc" },
 #endif

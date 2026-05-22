@@ -125,7 +125,7 @@ void DSPAssertTask(void)
 // difference, but is instead an instance of an UNREFERENCED DUPLICATE func,global.  This only
 // happens when linking static libraries rather than individual objects, but I don't know how
 // to / if it's possible to do that within Decomp Toolkit yet.
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01)
 
 static int __DSP_init_flag;
 

@@ -272,14 +272,14 @@ void Jac_PlayBgm(u32 trackNo, u32 bgmID)
 	bgm[trackNo].songId          = bgmID - 2;
 	bgm[trackNo].trackHandle     = trackNo + 3;
 
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01)
 	call_counter = 6000;
 #endif
 	Jac_SetBgmModeFlag(trackNo, 2, 0);
 	Jac_SetBgmModeFlag(trackNo, 1, 0);
 	Jac_SetBgmModeFlag(trackNo, 4, 0);
 	Jac_SetBgmModeFlag(trackNo, 8, 0);
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01)
 	call_counter = 0;
 #endif
 	Jaf_ReadySeq(trackNo + 3, bgmID);
@@ -335,7 +335,7 @@ BOOL Jac_ChangeBgmMode(u32 trackNo, u8 mode)
  */
 void Jac_SetBgmModeFlag(u32 trackNo, u8 flag, u8 doSet)
 {
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01)
 	STACK_PAD_VAR(2);
 	if (call_counter < 6000 && Jac_GetCurrentScene() == SCENE_Course && flag != 8 && flag != 4) {
 		return;

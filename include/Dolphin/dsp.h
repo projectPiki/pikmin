@@ -88,7 +88,7 @@ END_SCOPE_EXTERN_C
 
 typedef void (*CommandTask)(u16);
 
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01)
 void Dsp_Running_Start();
 u32 DSPSendCommands2(u32*, u32, CommandTask);
 static void DspInitWork();

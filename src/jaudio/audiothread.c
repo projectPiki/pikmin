@@ -75,7 +75,7 @@ static void DspSync()
 	}
 }
 
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01)
 /**
  * @TODO: Documentation
  */
@@ -175,7 +175,7 @@ static void* audioproc(void*)
 	OSInitFastCast();
 	OSInitMessageQueue(&audioproc_mq, msgbuf, AUDIOPROC_MQ_BUF_COUNT);
 	audioproc_mq_init = TRUE;
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01)
 	ResetPlayerCallback();
 	Jac_Init();
 	Jac_InitSinTable();
@@ -186,7 +186,7 @@ static void* audioproc(void*)
 #endif
 	DspbufProcess(DSPBUF_EVENT_INIT);
 	CpubufProcess(DSPBUF_EVENT_INIT);
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01)
 	DspBoot(DspSync2);
 	DSP_InitBuffer();
 #else

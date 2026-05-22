@@ -534,7 +534,7 @@ void GameFlow::hardReset(BaseApp* baseApp)
 	                           "screen/eng_tex/");
 	gsys->set2DRoot("screen/sys_blo/", "screen/otona_tex/");
 
-#elif defined(VERSION_GPIP01_00)
+#elif defined(VERSION_GPIP01)
 	mLanguageIndex = LANG_English;
 	mLangModes[LANG_English].set("archives/blo__eng.dir", "dataDir/archives/blo__eng.arc", "screen/eng_tex/screen.bun", "screen/eng_blo/",
 	                             "screen/eng_tex/");
@@ -655,7 +655,7 @@ void GameFlow::softReset()
 		}
 		case SECTION_PaniTest:
 		{
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01)
 			mGameSection = new GameCourseClearSection();
 #else
 			mGameSection = new PaniTestSection();
@@ -723,7 +723,7 @@ void GameFlow::softReset()
 	// always print load time reporting
 	gsys->mTogglePrint = TRUE;
 
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01)
 	int size  = (u32)gsys->getHeap(SYSHEAP_App)->getFree();
 	int size2 = size - 0x1800000;
 	if (size2 < 0) {

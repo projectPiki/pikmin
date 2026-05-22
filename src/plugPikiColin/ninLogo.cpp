@@ -43,7 +43,7 @@ struct NinLogoSetupSection : public Node {
 		mController   = new Controller(1);
 		progresWindow = nullptr;
 
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01)
 		// no progressive mode for PAL
 #else
 		if ((VIGetDTVStatus() && OSGetProgressiveMode()) || (VIGetDTVStatus() && gsys->mControllerMgr.keyDown(KBBTN_DPAD_RIGHT))) {

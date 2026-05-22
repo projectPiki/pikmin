@@ -479,7 +479,7 @@ struct GamePrefs : public CoreNode {
 	virtual void read(RandomAccessStream& input);   // _0C
 	virtual void write(RandomAccessStream& output); // _10
 
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01)
 	void Initialise();
 #else
 
@@ -504,7 +504,7 @@ struct GamePrefs : public CoreNode {
 	void setSfxVol(u8 vol);
 	void setStereoMode(bool set);
 	void setVibeMode(bool set);
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01)
 	void setChildMode(int lang);
 #else
 	void setChildMode(bool set);
@@ -542,7 +542,7 @@ struct GamePrefs : public CoreNode {
 	/// Checks if sound is in stereo mode.
 	bool getStereoMode() { return (mFlags & GAMEPREF_Stereo) != 0; }
 
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01)
 	int getChildMode();
 #else
 

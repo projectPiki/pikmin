@@ -24,7 +24,7 @@ GXRenderModeObj progressiveRenderMode = {
 	480,                 // efbHeight
 	480,                 // xfbHeight
 	40,                  // viXOrigin
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01)
 	47, // viYOrigin
 #else
 	0, // viYOrigin
@@ -50,7 +50,7 @@ GXRenderModeObj progressiveRenderMode = {
 	},
 	{ 0, 0, 21, 22, 21, 0, 0 }, // vfilter
 };
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01)
 GXRenderModeObj localGXPal528IntDf = {
 	VI_TVMODE_PAL_INT, // viTVmode
 	640,               // fbWidth
@@ -178,7 +178,7 @@ DGXGraphics::DGXGraphics(bool flag)
 	}
 
 	mScreenWidth = sScreenMode[mRenderMode]->fbWidth;
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01)
 	mScreenHeight = 480;
 
 	GXSetDispCopySrc(0, 0, sScreenMode[mRenderMode]->fbWidth, mScreenHeight);
@@ -201,7 +201,7 @@ DGXGraphics::DGXGraphics(bool flag)
 	VIInit();
 	videoReset();
 
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01)
 	sFrameSize = (sScreenMode[mRenderMode]->fbWidth + 0xf & 0xfff0) * (sScreenMode[mRenderMode]->xfbHeight + 2) * 2;
 #else
 	sFrameSize = (sScreenMode[mRenderMode]->fbWidth + 0xf & 0xfff0) * sScreenMode[mRenderMode]->xfbHeight * 2;
@@ -1449,7 +1449,7 @@ void DGXGraphics::setFog(bool set)
 		if (mCamera->mNear < mCamera->mFar) {
 			GXSetFog(GX_FOG_LINEAR, mFogStart, mFogEnd, mCamera->mNear, mCamera->mFar, *(GXColor*)&mFogColour);
 		} else {
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01)
 			OSReport("%s:%d Warning: cam->vNear >= cam->vFar\n", __FILE__, 1732);
 #else
 			OSReport("%s:%d Warning: cam->vNear >= cam->vFar\n", __FILE__, 1683);
@@ -2056,7 +2056,7 @@ void DGXGraphics::texturePrintf(Font* font, int x, int y, immut char* format, ..
 	while (*bufPtr) {
 
 		int idx;
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01)
 		if (*bufPtr >= 0xa0) {
 			STACK_PAD_VAR(1);
 			idx = font->charToIndex(*bufPtr);

@@ -483,7 +483,7 @@ struct DayOverModeState : public ModeState {
 		gamecore->mDrawGameInfo->lowerFrameOut(0.5f, true);
 
 		if (startState == STATE_PhaseZero) {
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01)
 			OSReport("!!!!!!!!!!!!!! CLEANUPDAYEND!!!!\n");
 			OSReport("!!!!!!!!!!!!!! CLEANUPDAYEND!!!!\n");
 			OSReport("!!!!!!!!!!!!!! CLEANUPDAYEND!!!!\n");
@@ -937,7 +937,7 @@ ModeState* RunningModeState::update(u32& result)
 	if (flowCont.mGameEndFlag != GAMEEND_None) {
 		if (flowCont.mGameEndFlag == GAMEEND_NaviDown) {
 			// you killed your captain!
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01)
 			// can't skip the end of day cutscene in PAL if you kill your captain - shame! shame! shame!
 			flowCont.mIsDayEndSkippable = FALSE;
 #endif
@@ -948,7 +948,7 @@ ModeState* RunningModeState::update(u32& result)
 
 		if (flowCont.mGameEndFlag == GAMEEND_PikminExtinction) {
 			// you killed all your pikmin!
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01)
 			// can't skip the end of day cutscene in PAL if you kill all your pikmin - shame! shame! shame!
 			flowCont.mIsDayEndSkippable = FALSE;
 #endif
@@ -1202,7 +1202,7 @@ ModeState* DayOverModeState::update(u32& result)
 	// handle any text windows we might have open, such as during endings
 	handleTutorialWindow(result, mParentSection->mController);
 
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01)
 
 	// PAL-exclusive day end cutscene skipping code!
 	bool skipped = false;
@@ -1232,7 +1232,7 @@ ModeState* DayOverModeState::update(u32& result)
 		switch (mState) {
 		case STATE_PhaseZero:
 		{
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01)
 			OSReport("!!!!!!!!!!!!!! INITIALISE PHASE ONE!!!!\n");
 			OSReport("!!!!!!!!!!!!!! INITIALISE PHASE ONE!!!!\n");
 #endif
@@ -1241,7 +1241,7 @@ ModeState* DayOverModeState::update(u32& result)
 		}
 		case STATE_PhaseOne:
 		{
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01)
 			OSReport("!!!!!!!!!!!!!! INITIALISE PHASE TWO!!!!\n");
 			OSReport("!!!!!!!!!!!!!! INITIALISE PHASE TWO!!!!\n");
 #endif
@@ -1250,7 +1250,7 @@ ModeState* DayOverModeState::update(u32& result)
 		}
 		case STATE_PhaseTwo:
 		{
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01)
 			OSReport("!!!!!!!!!!!!!! INITIALISE PHASE THREE!!!!\n");
 			OSReport("!!!!!!!!!!!!!! INITIALISE PHASE THREE!!!!\n");
 #endif
@@ -1260,7 +1260,7 @@ ModeState* DayOverModeState::update(u32& result)
 		}
 		case STATE_PhaseThree:
 		{
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01)
 			OSReport("!!!!!!!!!!!!!! INITIALISE PHASE FOUR!!!!\n");
 			OSReport("!!!!!!!!!!!!!! INITIALISE PHASE FOUR!!!!\n");
 #endif
@@ -2559,7 +2559,7 @@ void GameMovieInterface::parse(GameMovieInterface::SimpleMessage& msg)
 	int cmd  = msg.mCommand;
 	int data = msg.mData;
 
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01)
 	OSReport("!!!!!!!!!!! Got message %d : %d\n", cmd, data);
 #endif
 
@@ -2822,7 +2822,7 @@ NewPikiGameSection::NewPikiGameSection()
 	}
 
 	flowCont.mGameEndFlag = GAMEEND_None;
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01)
 	// in PAL, day end is skippable unless it's a special day end
 	flowCont.mIsDayEndSkippable = TRUE;
 	flowCont.mIsDayEndSkipped   = FALSE;

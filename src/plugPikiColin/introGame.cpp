@@ -169,7 +169,7 @@ struct IntroGameSetupSection : public BaseGameSection {
 		gameflow.mIsDayEndActive = FALSE;
 		_44                      = 0; // unused
 
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01)
 		mDrawCounter = 0;
 #endif
 
@@ -244,7 +244,7 @@ struct IntroGameSetupSection : public BaseGameSection {
 	{
 		Matrix4f orthoMtx;
 
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01)
 		// this does nothing but loop. never referenced.
 		mDrawCounter++;
 		if (mDrawCounter == 5) {
@@ -330,7 +330,7 @@ struct IntroGameSetupSection : public BaseGameSection {
 	Colour _3A0;          ///< _3A0, unused/unknown.
 	bool mIsInitialSetup; ///< _3A4, are we still in the initial setup phase? Cannot do certain actions til we're done.
 
-#if defined(VERSION_GPIP01_00)
+#if defined(VERSION_GPIP01)
 	int mDrawCounter; ///< _3A8, looping 5-frame draw counter - tracked but never referenced.
 #endif
 };
