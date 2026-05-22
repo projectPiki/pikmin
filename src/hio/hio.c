@@ -4,7 +4,7 @@
 #include <stddef.h>
 
 static s32 Chan = -1;
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011002L
 static u32 Dev;
 #endif
 static HIOCallback ExiCallback;
@@ -17,7 +17,7 @@ static HIOCallback RxCallback;
 static void ExtHandler(s32 chan, OSContext* context)
 {
 	Chan = -1;
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011112L
 	Dev = 0;
 	if ((chan < 2)) {
 		EXISetExiCallback(chan, NULL);
@@ -41,13 +41,13 @@ static void ExiHandler(s32 chan, OSContext* context)
  */
 static void DbgHandler(__OSInterrupt interrupt, OSContext* context)
 {
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011112L
 	OSContext exceptionContext;
 #endif
 
 	__PIRegs[0] = 0x1000;
 	if (ExiCallback) {
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011112L
 		OSClearContext(&exceptionContext);
 		OSSetCurrentContext(&exceptionContext);
 		ExiCallback();
@@ -82,7 +82,7 @@ static void RxHandler(s32 chan, OSContext* context)
  */
 BOOL HIOEnumDevices(HIOEnumCallback callback)
 {
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011112L
 	s32 chan;
 	u32 id;
 
@@ -161,7 +161,7 @@ BOOL HIOInit(s32 chan, HIOCallback callback)
 
 	if (__OSGetDIConfig() == 0xFF) {
 		Chan = -1;
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011112L
 		Dev = 0;
 #endif
 		return FALSE;
@@ -175,7 +175,7 @@ BOOL HIOInit(s32 chan, HIOCallback callback)
 	ExiCallback = callback;
 	TxCallback  = NULL;
 	RxCallback  = NULL;
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011112L
 	if (chan < 2 && Dev == 0)
 #else
 	if (chan < 2)
@@ -184,13 +184,13 @@ BOOL HIOInit(s32 chan, HIOCallback callback)
 		while (EXIProbeEx(Chan) == 0) { }
 		if (EXIAttach(Chan, ExtHandler) == FALSE) {
 			Chan = -1;
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011112L
 			Dev = 0;
 #endif
 			return FALSE;
 		}
 	}
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011112L
 	if (EXILock(Chan, Dev, NULL) == FALSE)
 #else
 	if (EXILock(Chan, 0, NULL) == FALSE)
@@ -198,12 +198,12 @@ BOOL HIOInit(s32 chan, HIOCallback callback)
 	{
 		EXIDetach(Chan);
 		Chan = -1;
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011112L
 		Dev = 0;
 #endif
 		return FALSE;
 	}
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011112L
 	if (EXISelect(Chan, Dev, 0) == FALSE)
 #else
 	if (EXISelect(Chan, 0, 0) == FALSE)
@@ -212,7 +212,7 @@ BOOL HIOInit(s32 chan, HIOCallback callback)
 		EXIUnlock(Chan);
 		EXIDetach(Chan);
 		Chan = -1;
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011112L
 		Dev = 0;
 #endif
 		return FALSE;
@@ -226,7 +226,7 @@ BOOL HIOInit(s32 chan, HIOCallback callback)
 	err |= !EXIDeselect(Chan);
 	EXIUnlock(Chan);
 	if (err != 0 || id != 0x1010000) {
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011112L
 		if (chan < 2 && Dev == 0)
 #else
 		if (chan < 2)
@@ -236,14 +236,14 @@ BOOL HIOInit(s32 chan, HIOCallback callback)
 		}
 		EXIUnlock(Chan);
 		Chan = -1;
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011112L
 		Dev = 0;
 #endif
 		return FALSE;
 	}
 	if (ExiCallback) {
 		if (chan < 2) {
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011112L
 			if (Dev == 0) {
 				EXISetExiCallback(Chan, ExiHandler);
 			} else {
@@ -273,7 +273,7 @@ BOOL HIOReadMailbox(u32* word)
 		return FALSE;
 	}
 
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011112L
 	if (EXILock(Chan, Dev, NULL) == FALSE)
 #else
 	if (EXILock(Chan, 0, NULL) == FALSE)
@@ -282,7 +282,7 @@ BOOL HIOReadMailbox(u32* word)
 		return FALSE;
 	}
 
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011112L
 	if (EXISelect(Chan, Dev, 4) == FALSE)
 #else
 	if (EXISelect(Chan, 0, 4) == FALSE)
@@ -315,7 +315,7 @@ BOOL HIOWriteMailbox(u32 word)
 		return FALSE;
 	}
 
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011112L
 	if (EXILock(Chan, Dev, NULL) == FALSE)
 #else
 	if (EXILock(Chan, 0, NULL) == FALSE)
@@ -324,7 +324,7 @@ BOOL HIOWriteMailbox(u32 word)
 		return FALSE;
 	}
 
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011112L
 	if (EXISelect(Chan, Dev, 4) == FALSE)
 #else
 	if (EXISelect(Chan, 0, 4) == FALSE)
@@ -363,7 +363,7 @@ BOOL HIOWrite(u32 addr, void* buffer, s32 size)
 		return FALSE;
 	}
 
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011112L
 	if (EXILock(Chan, Dev, NULL) == FALSE)
 #else
 	if (EXILock(Chan, 0, NULL) == FALSE)
@@ -372,7 +372,7 @@ BOOL HIOWrite(u32 addr, void* buffer, s32 size)
 		return FALSE;
 	}
 
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011112L
 	if (EXISelect(Chan, Dev, 4) == FALSE)
 #else
 	if (EXISelect(Chan, 0, 4) == FALSE)

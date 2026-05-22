@@ -107,7 +107,7 @@ s32 CARDWriteAsync(CARDFileInfo* fileInfo, void* buffer, s32 length, s32 offset,
 
 	dir = __CARDGetDirBlock(card);
 	ent = &dir->entries[fileInfo->fileNo];
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011112L
 	result = __CARDAccess(card, ent);
 #else
 	result = __CARDAccess(ent);

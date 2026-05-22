@@ -40,7 +40,7 @@ typedef enum _CPClear {
 // size: 0x5B0
 struct __GXData_struct {
 	// total size: 0x4F4
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)        //
+#if OS_BUILD_VERSION >= 20011002L                                  //
 	u8 _00[2];                                                     // _00
 	unsigned short bpSent;                                         // offset 0x2, size 0x2
 	unsigned short vNum;                                           // offset 0x4, size 0x2
@@ -115,7 +115,7 @@ struct __GXData_struct {
 	unsigned long tMode0[8];                                       // offset 0x47C, size 0x20
 	unsigned long texmapId[16];                                    // offset 0x49C, size 0x40
 	unsigned long tcsManEnab;                                      // offset 0x4DC, size 0x4
-#if defined(VERSION_GPIP01_00) || defined(VERSION_G98P01_PIKIDEMO) //
+#if OS_BUILD_VERSION >= 20011217L                                  //
 	unsigned long tevTcEnab;                                       //
 #endif                                                             //
 	GXPerf0 perf0;                                                 // offset 0x4E0, size 0x4

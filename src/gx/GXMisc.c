@@ -56,7 +56,7 @@ void GXFlush(void)
 	if (gx->dirtyState) {
 		__GXSetDirtyState();
 	}
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011002L
 	for (i = 8; i > 0; i--) {
 		GX_WRITE_U32(0);
 	}
@@ -191,7 +191,7 @@ void GXPixModeSync(void)
 {
 	CHECK_GXBEGIN(550, "GXPixModeSync");
 	GX_WRITE_RAS_REG(gx->peCtrl);
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011002L
 	gx->bpSent = GX_FALSE;
 #else
 	gx->bpSent = GX_TRUE;

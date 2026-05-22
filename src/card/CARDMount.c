@@ -18,7 +18,7 @@ static void DoUnmount(s32 channel, s32 result);
  */
 BOOL CARDProbe(s32 channel)
 {
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011002L
 	if (GameChoice & 0x80) {
 		return 0;
 	}
@@ -32,7 +32,7 @@ BOOL CARDProbe(s32 channel)
  */
 static inline BOOL IsCard(u32 id)
 {
-#if defined(VERSION_PIKIDEMO)
+#if OS_BUILD_VERSION >= 20011002L
 	if ((id == 0x80000004 && __CARDVendorID != 0xFFFF) || !(id & 0xFFFF0000) && !(id & 3)) {
 		return TRUE;
 	}
@@ -153,7 +153,7 @@ static s32 DoMount(s32 channel)
 
 	if (card->mountStep == 0) {
 
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011112L
 		if (EXIGetID(channel, 0, &id) == 0) {
 			result = CARD_RESULT_NOCARD;
 		} else if ((id == 0x80000004 && __CARDVendorID != 0xFFFF) || (!(id & 0xFFFF0000) && !(id & 3))) {
@@ -168,14 +168,14 @@ static s32 DoMount(s32 channel)
 			goto error;
 		}
 
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011112L
 		card->cid = id;
 #endif
 		card->size       = (u16)(id & 0xFC);
 		card->sectorSize = SectorSizeTable[(id & 0x00003800) >> 11];
 		card->cBlock     = (u16)((card->size * 1024 * 1024 / 8) / card->sectorSize);
 		card->latency    = LatencyTable[(id & 0x00000700) >> 8];
-#if defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011217L
 #else
 		if (card->sectorSize == 0 || card->cBlock < 8) {
 			result = CARD_RESULT_WRONGDEVICE;
@@ -229,7 +229,7 @@ static s32 DoMount(s32 channel)
 	}
 
 	if (card->mountStep == 1) {
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011112L
 		if (card->cid == 0x80000004) {
 			u16 vendorID;
 
@@ -326,7 +326,7 @@ s32 CARDMountAsync(s32 channel, CARDMemoryCard* workArea, CARDCallback detachCal
 	if (channel < 0 || 2 <= channel) {
 		return CARD_RESULT_FATAL_ERROR;
 	}
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011002L
 	if (GameChoice & 0x80)
 		return CARD_RESULT_NOCARD;
 #endif

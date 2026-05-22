@@ -82,7 +82,7 @@ GXFifoObj FifoObj;
  */
 GXFifoObj* GXInit(void* base, u32 size)
 {
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011002L
 #else
 	GXRenderModeObj* rmode;
 	Mtx identity_mtx;
@@ -100,7 +100,7 @@ GXFifoObj* GXInit(void* base, u32 size)
 	__GXinBegin = FALSE;
 #endif
 	gx->tcsManEnab = FALSE;
-#if defined(VERSION_GPIP01_00) || defined(VERSION_G98P01_PIKIDEMO)
+#if OS_BUILD_VERSION >= 20011217L
 	gx->tevTcEnab = GX_FALSE;
 #endif
 	gx->vNum = 0;
@@ -204,7 +204,7 @@ GXFifoObj* GXInit(void* base, u32 size)
 		SET_REG_FIELD(0, reg, 8, 24, 0x58);
 		GX_WRITE_RAS_REG(reg);
 	}
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011002L
 	for (i = 0; i < 8; i++)
 		GXInitTexCacheRegion(&gx->TexRegions[i], 0, i * 0x8000, 0, 0x80000 + i * 0x8000, 0);
 	for (i = 0; i < 4; i++)
@@ -394,7 +394,7 @@ GXFifoObj* GXInit(void* base, u32 size)
 	return &FifoObj;
 }
 
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011002L
 void __GXInitGX()
 {
 	GXRenderModeObj* rmode;
@@ -415,7 +415,7 @@ void __GXInitGX()
 		rmode = &GXPal528IntDf;
 		break;
 	}
-#if defined(VERSION_GPIP01_00) || defined(VERSION_G98P01_PIKIDEMO)
+#if OS_BUILD_VERSION >= 20011217L
 	case VI_EURGB60:
 	{
 		rmode = &GXEurgb60Hz480IntDf;
@@ -447,7 +447,7 @@ void __GXInitGX()
 	GXClearVtxDesc();
 	GXInvalidateVtxCache();
 
-#if defined(VERSION_GPIP01_00) || defined(VERSION_G98P01_PIKIDEMO)
+#if OS_BUILD_VERSION >= 20011217L
 	for (i = GX_VA_POS; i <= GX_LIGHT_ARRAY; i++) {
 		GXSetArray(i, gx, 0);
 	}

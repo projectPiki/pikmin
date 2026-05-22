@@ -2,6 +2,7 @@
 #define _DOLPHIN_OS_OSSERIAL_H
 
 #include "Dolphin/OS/OSContext.h"
+#include "Dolphin/OS/OSVersion.h"
 #include "types.h"
 
 BEGIN_SCOPE_EXTERN_C
@@ -69,7 +70,7 @@ void SITransferCommands(void);
 u32 SISetXY(u32 x, u32 y);
 u32 SIEnablePolling(u32 poll);
 u32 SIDisablePolling(u32 poll);
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011002L
 BOOL SIGetResponse(s32 chan, void* data);
 #else
 void SIGetResponse(s32 chan, void* data);

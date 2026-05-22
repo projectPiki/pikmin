@@ -3,6 +3,7 @@
 
 #include "Dolphin/OS/OSExpansion.h"
 #include "Dolphin/OS/OSInterrupt.h"
+#include "Dolphin/OS/OSVersion.h"
 #include "Dolphin/hw_regs.h"
 #include "types.h"
 
@@ -38,7 +39,7 @@ typedef struct EXIControl {
 	int immLen;              // _10
 	u8* immBuf;              // _14
 	u32 dev;                 // _18
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011112L
 	u32 id;
 	s32 idTime;
 #endif

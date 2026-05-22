@@ -88,7 +88,7 @@ void GXCallDisplayList(void* list, u32 nbytes)
 	__GXShadowDispList(list, nbytes);
 #endif
 
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011002L
 	if (*(u32*)&gx->_00 == 0) {
 #else
 	if (*(u32*)&gx->vNum != 0) { // checks both vNum and bpSent

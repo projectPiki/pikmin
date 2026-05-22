@@ -3,7 +3,7 @@
 #include "Dolphin/os.h"
 #include <stddef.h>
 
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011002L
 static struct __GXFifoObj* CPUFifo;
 static struct __GXFifoObj* GPFifo;
 #endif
@@ -17,7 +17,7 @@ static u32 __GXOverflowCount;
 static int IsWGPipeRedirected;
 #endif
 
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011002L
 #else
 static struct __GXFifoObj* GPFifo;
 static struct __GXFifoObj* CPUFifo;
@@ -486,7 +486,7 @@ void __GXFifoInit(void)
 	__OSUnmaskInterrupts(0x4000);
 	__GXCurrentThread           = OSGetCurrentThread();
 	GXOverflowSuspendInProgress = FALSE;
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011002L
 	CPUFifo = NULL;
 	GPFifo  = NULL;
 #endif

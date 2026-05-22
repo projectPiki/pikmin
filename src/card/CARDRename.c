@@ -32,7 +32,7 @@ s32 CARDRenameAsync(s32 channel, const char* oldName, const char* newName, CARDC
 			continue;
 		}
 
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011112L
 		if (memcmp(ent->gameName, card->diskID->gameName, sizeof(ent->gameName)) != 0
 		    || memcmp(ent->company, card->diskID->company, sizeof(ent->company)) != 0)
 #else
@@ -59,7 +59,7 @@ s32 CARDRenameAsync(s32 channel, const char* oldName, const char* newName, CARDC
 	}
 
 	ent = &dir->entries[oldNo];
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011112L
 	result = __CARDAccess(card, ent);
 #else
 	result = __CARDAccess(ent);

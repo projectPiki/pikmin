@@ -3,6 +3,8 @@
 
 #include "types.h"
 
+#include "Dolphin/OS/OSVersion.h"
+
 BEGIN_SCOPE_EXTERN_C
 
 /////////////// TYPE DEFINES //////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -49,16 +51,16 @@ typedef struct SVec {
 #define VECCrossProduct   PSVECCrossProduct
 #define VECSquareDistance PSVECSquareDistance
 // Handling Dolphin OS revision 37 vs 47, see longer comment in "mtx.h" for an explanation to what's going on.
-#if defined(BUILD_MATCHING) && (defined(VERSION_GPIJ01) || defined(VERSION_GPIE01))
-#define C_VECMag       VECMag
-#define C_VECHalfAngle VECHalfAngle
-#define C_VECReflect   VECReflect
-#define C_VECDistance  VECDistance
-#else
+#if OS_BUILD_VERSION >= 20011002L
 #define VECMag       PSVECMag
 #define VECHalfAngle C_VECHalfAngle // No paired-singles implementation
 #define VECReflect   C_VECReflect   // No paired-singles implementation
 #define VECDistance  PSVECDistance
+#else
+#define C_VECMag       VECMag
+#define C_VECHalfAngle VECHalfAngle
+#define C_VECReflect   VECReflect
+#define C_VECDistance  VECDistanc
 #endif
 
 #endif

@@ -42,7 +42,7 @@ OSResetCallback OSSetResetCallback(OSResetCallback)
 	// UNUSED FUNCTION
 }
 
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01)
+#if OS_BUILD_VERSION >= 20011002L
 
 /**
  * @TODO: Documentation
@@ -83,10 +83,10 @@ BOOL OSGetResetButtonState(void)
 	}
 
 	LastState = state;
-#if defined(VERSION_DPIJ01_PIKIDEMO)
-	if (LastState == FALSE && GameChoice & 0x3f)
-#else
+#if OS_BUILD_VERSION >= 20011112L
 	if (GameChoice & 0x3f)
+#else
+	if (LastState == FALSE && GameChoice & 0x3f)
 #endif
 	{
 		OSTime fire = (GameChoice & 0x3f) * 60;
@@ -95,15 +95,15 @@ BOOL OSGetResetButtonState(void)
 			now -= fire;
 			now = OSTicksToSeconds(now) / 2;
 
-#if defined(VERSION_DPIJ01_PIKIDEMO)
-			if ((now & 1) == 0 || Down) {
-				state = TRUE;
-			}
-#else
+#if OS_BUILD_VERSION >= 20011112L
 			if ((now & 1) == 0) {
 				state = TRUE;
 			} else {
 				state = FALSE;
+			}
+#else
+			if ((now & 1) == 0 || Down) {
+				state = TRUE;
 			}
 #endif
 		}
@@ -120,7 +120,7 @@ BOOL OSGetResetButtonState(void)
  */
 BOOL OSGetResetSwitchState(void)
 {
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011112L
 	return OSGetResetButtonState();
 #else
 	BOOL enabled;

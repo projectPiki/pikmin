@@ -1,6 +1,7 @@
 #ifndef _DOLPHIN_OS_OSCONTEXT_H
 #define _DOLPHIN_OS_OSCONTEXT_H
 
+#include "Dolphin/OS/OSVersion.h"
 #include "types.h"
 
 BEGIN_SCOPE_EXTERN_C
@@ -21,7 +22,7 @@ typedef struct OSContext {
 	u16 mode;      // _1A0, context mode.
 	u16 state;     // _1A2, |'d OS_CONTEXT_STATE_*
 	u32 gqr[8];    // _1A4, Gekko additional registers.
-#if defined(VERSION_PIKIDEMO)
+#if OS_BUILD_VERSION >= 20011002L
 	u32 psf_pad;
 #endif
 	f64 psf[32]; // _1C8, Gekko additional registers.

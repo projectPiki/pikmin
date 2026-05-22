@@ -366,13 +366,13 @@ ASM u32 PSMTXInverse(register const Mtx src, register Mtx inv) {
 	blr
 
 _regular:
-#if defined(BUILD_MATCHING) && (defined(VERSION_GPIJ01) || defined(VERSION_GPIE01))
+#if OS_BUILD_VERSION >= 20011002L
+	fres        fp0, fp7
+#else
 	ps_res      fp0, fp7
 	ps_add      fp6, fp0, fp0
 	ps_mul      fp5, fp0, fp0
 	ps_nmsub    fp0, fp7, fp5, fp6
-#else // VERSION_PIKIDEMO, VERSION_GPIP01, Non-Matching builds
-	fres        fp0, fp7
 #endif
 	ps_add      fp6, fp0, fp0
 	ps_mul      fp5, fp0, fp0
@@ -497,9 +497,9 @@ ASM u32 PSMTXInvXpose(register const Mtx src, register Mtx inv)
 	blr
 
 _regular:
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01)
+#if OS_BUILD_VERSION >= 20011002L
 	fres        fp0, fp7
-#else// VERSION_PIKIDEMO, VERSION_GPIP01, Non-Matching builds
+#else
 	ps_res      f0, f7
 	ps_add      f6, f0, f0
 	ps_mul      f5, f0, f0

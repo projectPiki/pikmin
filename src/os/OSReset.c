@@ -168,13 +168,13 @@ void OSResetSystem(int reset, u32 resetCode, BOOL forceMenu)
 	BOOL rc;
 	BOOL disableRecalibration;
 	BOOL enabled;
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011002L
 	STACK_PAD_VAR(2);
 #endif
 	OSDisableScheduler();
 	__OSStopAudioSystem();
 
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011112L
 	if (reset == OS_RESET_SHUTDOWN) {
 		disableRecalibration = __PADDisableRecalibration(TRUE);
 	}
@@ -184,7 +184,7 @@ void OSResetSystem(int reset, u32 resetCode, BOOL forceMenu)
 		;
 	}
 
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011002L
 	if (reset == OS_RESET_HOTRESET && forceMenu)
 #else
 	if (reset && forceMenu)
@@ -201,19 +201,19 @@ void OSResetSystem(int reset, u32 resetCode, BOOL forceMenu)
 		}
 	}
 
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011112L
 	OSDisableInterrupts();
 #else
 	enabled = OSDisableInterrupts();
 #endif
 	CallResetFunctions(TRUE);
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011002L
 	LCDisable();
 #endif
 	if (reset == OS_RESET_HOTRESET) {
 		__OSDoHotReset(resetCode);
 	}
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011002L
 	else if (reset == OS_RESET_RESTART)
 #else
 	else
@@ -224,7 +224,7 @@ void OSResetSystem(int reset, u32 resetCode, BOOL forceMenu)
 		__OSReboot(resetCode, forceMenu);
 	}
 
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if OS_BUILD_VERSION >= 20011002L
 	KillThreads();
 	memset(OSPhysicalToCached(0x40), 0, 0xcc - 0x40);
 	memset(OSPhysicalToCached(0xd4), 0, 0xe8 - 0xd4);
@@ -233,8 +233,7 @@ void OSResetSystem(int reset, u32 resetCode, BOOL forceMenu)
 	memset(OSPhysicalToCached(0x30c8), 0, 0xd4 - 0xc8);
 	// memset(OSPhysicalToCached(0x30e2), 0, 1);
 
-#if defined(VERSION_DPIJ01_PIKIDEMO)
-#else
+#if OS_BUILD_VERSION >= 20011112L
 	__PADDisableRecalibration(disableRecalibration);
 #endif
 
