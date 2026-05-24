@@ -56,11 +56,7 @@ u32 WriteUARTN(const void* buf, u32 len)
 	u32 cmd;
 	int qLen;
 	s32 xLen;
-#if defined(VERSION_PIKIDEMO)
 	char* ptr;
-#else
-	u8* ptr;
-#endif
 	BOOL locked;
 	u32 error;
 
@@ -72,11 +68,7 @@ u32 WriteUARTN(const void* buf, u32 len)
 		return 0;
 	}
 
-#if defined(VERSION_PIKIDEMO)
 	for (ptr = (char*)buf; ptr - (char*)buf < len; ptr++) {
-#else
-	for (ptr = (u8*)buf; ptr - (u8*)buf < len; ptr++) {
-#endif
 		if (*ptr == '\n')
 			*ptr = '\r';
 	}
@@ -106,7 +98,7 @@ u32 WriteUARTN(const void* buf, u32 len)
 				break;
 			xLen = (len < 4) ? (s32)len : 4;
 			EXIImm(0, (void*)buf, xLen, EXI_WRITE, NULL);
-			(u8*)buf += xLen;
+			(char*)buf += xLen;
 			len -= xLen;
 			qLen -= xLen;
 			EXISync(0);

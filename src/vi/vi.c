@@ -983,11 +983,15 @@ u32 VIGetRetraceCount(void)
  */
 static u32 getCurrentHalfLine(void)
 {
-#if OS_BUILD_VERSION >= 20011112L
-
 	u32 hcount;
 	u32 vcount0;
 	u32 vcount;
+
+#if OS_BUILD_VERSION >= 20011112L
+#else
+	VITimingInfo* tm;
+	tm = HorVer.timing;
+#endif
 
 	vcount = __VIRegs[22] & 0x7FF;
 	do {
@@ -995,20 +999,10 @@ static u32 getCurrentHalfLine(void)
 		hcount  = __VIRegs[23] & 0x7FF;
 		vcount  = __VIRegs[22] & 0x7FF;
 	} while (vcount0 != vcount);
+
+#if OS_BUILD_VERSION >= 20011112L
 	return ((vcount - 1) * 2) + ((hcount - 1) / CurrTiming->hlw);
 #else
-	u32 hcount;
-	u32 vcount0;
-	u32 vcount;
-	VITimingInfo* tm;
-
-	tm     = HorVer.timing;
-	vcount = __VIRegs[22] & 0x7FF;
-	do {
-		vcount0 = vcount;
-		hcount  = __VIRegs[23] & 0x7FF;
-		vcount  = __VIRegs[22] & 0x7FF;
-	} while (vcount0 != vcount);
 	return ((vcount - 1) * 2) + ((hcount - 1) / tm->hlw);
 #endif
 }
@@ -1018,27 +1012,18 @@ static u32 getCurrentHalfLine(void)
  */
 static u32 getCurrentFieldEvenOdd()
 {
+	u16 value;
+	u32 nin;
+	u32 fmt;
+	VITVMode tvMode;
+	u32 nhlines;
+	VITimingInfo* tm;
+
 #if OS_BUILD_VERSION >= 20011112L
-	u16 value;
-	u32 nin;
-	u32 fmt;
-	VITVMode tvMode;
-	u32 nhlines;
-	VITimingInfo* tm;
-
 	if (getCurrentHalfLine() < CurrTiming->numHalfLines) {
-		return 1U;
+		return 1;
 	}
-	return 0U;
 #else
-
-	u16 value;
-	u32 nin;
-	u32 fmt;
-	VITVMode tvMode;
-	u32 nhlines;
-	VITimingInfo* tm;
-
 	if (__VIRegs[54] & 1) {
 		tm = getTiming(VI_TVMODE_NTSC_PROG);
 	} else {
@@ -1052,8 +1037,8 @@ static u32 getCurrentFieldEvenOdd()
 	if (getCurrentHalfLine() < nhlines) {
 		return 1;
 	}
-	return 0;
 #endif
+	return 0;
 }
 
 /**

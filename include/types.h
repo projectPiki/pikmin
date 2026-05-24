@@ -82,6 +82,10 @@ typedef u32 HWND;
 // For when you have to pass something as a macro argument that contains commas.
 #define MACRO_ARG(...) __VA_ARGS__
 
+// Your tyical stringification macros
+#define TO_STRING(x) STRINGIFY(x)
+#define STRINGIFY(x) #x
+
 // Workaround to introduce scoped enums (A feature of C++11 and onward).
 #define BEGIN_ENUM_TYPE(name) \
 	struct name {             \

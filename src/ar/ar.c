@@ -265,6 +265,15 @@ void __ARReadDMA(u32 mmem_addr, u32 aram_addr, u32 length)
 #endif
 }
 
+// Really repetitive changes to the following function that are better represented by macros.
+#if OS_BUILD_VERSION >= 20011217L
+#define __ARWaitForDMAToFinish(buffer, size) PPCSync()
+#define __ARSetExpansionSize(value)          (__AR_ExpansionSize = (value))
+#else
+#define __ARWaitForDMAToFinish(buffer, size) DCInvalidateRange(buffer, size)
+#define __ARSetExpansionSize(value)          ((void)0)
+#endif
+
 /**
  * @TODO: Documentation
  */
@@ -288,22 +297,10 @@ void __ARChecksize(void)
 	ARAM_size = __AR_InternalSize = 0x1000000;
 
 	__DSPRegs[DSP_ARAM_SIZE] = ((__DSPRegs[DSP_ARAM_SIZE] & 0xFFFFFFC0) | ARAM_mode) | 0x20;
-
-	test_data  = (void*)ALIGN_NEXT((u32)test_data_pad, 0x20);
-	dummy_data = (void*)ALIGN_NEXT((u32)dummy_data_pad, 0x20);
-	buffer     = (void*)ALIGN_NEXT((u32)buffer_pad, 0x20);
-	for (i = 0; i < 8; i++) {
-		test_data[i]  = 0xDEADBEEF;
-		dummy_data[i] = 0xBAD0BAD0;
-	}
-
-	DCFlushRange(test_data, 0x20);
-	DCFlushRange(dummy_data, 0x20);
-
-	__AR_ExpansionSize = 0;
 #else
 	ARAM_mode = 0;
 	ARAM_size = 0;
+#endif
 
 	test_data  = (u32*)(OSRoundUp32B((u32)(test_data_pad)));
 	dummy_data = (u32*)(OSRoundUp32B((u32)(dummy_data_pad)));
@@ -316,67 +313,14 @@ void __ARChecksize(void)
 
 	DCFlushRange(test_data, 0x20);
 	DCFlushRange(dummy_data, 0x20);
+
+#if OS_BUILD_VERSION >= 20011217L
+#else
 	do {
 	} while (!(__DSPRegs[DSP_ARAM_MODE] & 1));
 
 	__DSPRegs[DSP_ARAM_SIZE] = ((__DSPRegs[DSP_ARAM_SIZE] & 0xFFFFFFC0) | 4) | 0x20;
-#endif
 
-#if OS_BUILD_VERSION >= 20011217L
-	__ARWriteDMA((u32)dummy_data, ARAM_size + 0x0, 0x20U);
-	__ARWriteDMA((u32)dummy_data, ARAM_size + 0x200000, 0x20U);
-	__ARWriteDMA((u32)dummy_data, ARAM_size + 0x1000000, 0x20U);
-	__ARWriteDMA((u32)dummy_data, ARAM_size + 0x200, 0x20U);
-	__ARWriteDMA((u32)dummy_data, ARAM_size + 0x400000, 0x20U);
-
-	memset(buffer, 0, 0x20);
-	DCFlushRange(buffer, 0x20);
-
-	__ARWriteDMA((u32)test_data, ARAM_size, 0x20U);
-	DCInvalidateRange(buffer, 0x20);
-
-	__ARReadDMA((u32)buffer, ARAM_size, 0x20U);
-	PPCSync();
-
-	if (*buffer == *test_data) {
-		memset(buffer, 0, 0x20);
-		DCFlushRange(buffer, 0x20);
-
-		__ARReadDMA((u32)buffer, ARAM_size + 0x200000, 0x20U);
-		PPCSync();
-
-		if (*buffer == *test_data) {
-			ARAM_size += 0x200000;
-			__AR_ExpansionSize = 0x200000;
-		} else {
-			memset(buffer, 0, 0x20);
-			DCFlushRange(buffer, 0x20);
-
-			__ARReadDMA((u32)buffer, ARAM_size + 0x01000000, 0x20U);
-			PPCSync();
-
-			if (*buffer == *test_data) {
-				ARAM_mode |= 8;
-				ARAM_size += 0x400000;
-				__AR_ExpansionSize = 0x400000;
-			} else {
-				memset(buffer, 0, 0x20);
-				DCFlushRange(buffer, 0x20);
-
-				__ARReadDMA((u32)buffer, ARAM_size + 0x200, 0x20U);
-				PPCSync();
-
-				if (*buffer == *test_data) {
-					ARAM_mode |= 0x10;
-					ARAM_size += 0x800000;
-					__AR_ExpansionSize = 0x800000;
-				} else {
-					memset(buffer, 0, 0x20);
-					DCFlushRange(buffer, 0x20);
-
-					__ARReadDMA((u32)buffer, ARAM_size + 0x400000, 0x20U);
-					PPCSync();
-#else
 	__ARWriteDMA((u32)dummy_data, ARAM_size + 0x0, 0x20U);
 	__ARWriteDMA((u32)dummy_data, ARAM_size + 0x200000, 0x20U);
 	__ARWriteDMA((u32)dummy_data, ARAM_size + 0x200, 0x20U);
@@ -437,6 +381,10 @@ void __ARChecksize(void)
 	}
 
 	__DSPRegs[DSP_ARAM_SIZE] = (u16)((__DSPRegs[DSP_ARAM_SIZE] & 0xFFFFFFC0) | 0x20) | ARAM_mode;
+#endif
+
+	__ARSetExpansionSize(0);
+
 	__ARWriteDMA((u32)dummy_data, ARAM_size, 0x20U);
 	__ARWriteDMA((u32)dummy_data, ARAM_size + 0x200000, 0x20U);
 	__ARWriteDMA((u32)dummy_data, ARAM_size + 0x01000000, 0x20U);
@@ -446,57 +394,55 @@ void __ARChecksize(void)
 	memset(buffer, 0, 0x20);
 	DCFlushRange(buffer, 0x20);
 	__ARWriteDMA((u32)test_data, ARAM_size, 0x20U);
+#if OS_BUILD_VERSION >= 20011217L
+	DCInvalidateRange(buffer, 0x20U); // Probably related to the revisional difference in `__ARWaitForDMAToFinish`.
+#endif
 	__ARReadDMA((u32)buffer, ARAM_size, 0x20U);
-	DCInvalidateRange(buffer, 0x20);
+	__ARWaitForDMAToFinish(buffer, 0x20);
 
 	if (*buffer == *test_data) {
 		memset(buffer, 0, 0x20);
 		DCFlushRange(buffer, 0x20);
 		__ARReadDMA((u32)buffer, ARAM_size + 0x200000, 0x20U);
-		DCInvalidateRange(buffer, 0x20);
+		__ARWaitForDMAToFinish(buffer, 0x20);
 
 		if (*buffer == *test_data) {
 			ARAM_size += 0x200000;
-
+			__ARSetExpansionSize(0x200000);
 		} else {
 			memset(buffer, 0, 0x20);
 			DCFlushRange(buffer, 0x20);
 			__ARReadDMA((u32)buffer, ARAM_size + 0x01000000, 0x20U);
-			DCInvalidateRange(buffer, 0x20);
+			__ARWaitForDMAToFinish(buffer, 0x20);
 
 			if (*buffer == *test_data) {
 				ARAM_mode |= 8;
 				ARAM_size += 0x400000;
-
+				__ARSetExpansionSize(0x400000);
 			} else {
 				memset(buffer, 0, 0x20);
 				DCFlushRange(buffer, 0x20);
 				__ARReadDMA((u32)buffer, ARAM_size + 0x200, 0x20U);
-				DCInvalidateRange(buffer, 0x20);
+				__ARWaitForDMAToFinish(buffer, 0x20);
 
 				if (*buffer == *test_data) {
 					ARAM_mode |= 0x10;
 					ARAM_size += 0x800000;
-
+					__ARSetExpansionSize(0x800000);
 				} else {
 					memset(buffer, 0, 0x20);
 					DCFlushRange(buffer, 0x20);
 					__ARReadDMA((u32)buffer, ARAM_size + 0x400000, 0x20U);
-					DCInvalidateRange(buffer, 0x20);
-#endif
+					__ARWaitForDMAToFinish(buffer, 0x20);
+
 					if (*buffer == *test_data) {
 						ARAM_mode |= 0x18;
 						ARAM_size += 0x01000000;
-#if OS_BUILD_VERSION >= 20011217L
-						__AR_ExpansionSize = 0x1000000;
-#endif
-
+						__ARSetExpansionSize(0x1000000);
 					} else {
 						ARAM_mode |= 0x20;
 						ARAM_size += 0x02000000;
-#if OS_BUILD_VERSION >= 20011217L
-						__AR_ExpansionSize = 0x2000000;
-#endif
+						__ARSetExpansionSize(0x2000000);
 					}
 				}
 			}
@@ -506,3 +452,6 @@ void __ARChecksize(void)
 	*(u32*)OSPhysicalToUncached(0xD0) = ARAM_size;
 	__AR_Size                         = ARAM_size;
 }
+
+#undef __ARWaitForDMAToFinish
+#undef __ARSetExpansionSize

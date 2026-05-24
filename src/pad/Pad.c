@@ -4,6 +4,15 @@
 #include <stddef.h>
 #include <string.h>
 
+#if OS_BUILD_VERSION >= 20011112L
+// For ease of implementing multiple revisions, static variables that were renamed go by their final
+// names everywhere in this file and are silently renamed for older revisions via the below macros.
+#else
+#define CmdTypeAndStatus cmdTypeAndStatus // This one was renamed only to go unused, lol.
+#define CmdReadOrigin    cmdReadOrigin
+#define CmdCalibrate     cmdCalibrate
+#endif
+
 #define LATENCY 8
 
 #define PAD_ALL                                                                                                                          \
@@ -27,9 +36,8 @@ static u32 CheckingBits;    // size: 0x4, address: 0x18
 
 #if OS_BUILD_VERSION >= 20011112L
 static u32 PendingBits;
-#else
-static u32 cmdTypeAndStatus;
 #endif
+static u32 CmdTypeAndStatus;
 
 #if OS_BUILD_VERSION >= 20011217L
 #else
@@ -88,13 +96,8 @@ static u32 XPatchBits                                   = PAD_CHAN0_BIT | PAD_CH
 static u32 AnalogMode                                   = 0x00000300;       // size: 0x4, address: 0x4
 static u32 Spec                                         = 0x00000005;       // size: 0x4, address: 0x8
 static void (*MakeStatus)(s32, struct PADStatus*, u32*) = SPEC2_MakeStatus; // size: 0x4, address: 0xC
-#if OS_BUILD_VERSION >= 20011217L
 static u32 CmdReadOrigin = 0x41000000;
 static u32 CmdCalibrate  = 0x42000000;
-#else
-static u32 cmdReadOrigin = 0x41000000;
-static u32 cmdCalibrate  = 0x42000000;
-#endif
 
 static OSResetFunctionInfo ResetFunctionInfo = {
 	OnReset,
@@ -161,7 +164,7 @@ static int DoReset(void)
 		memset(&Origin[ResettingChan], 0, 0xC);
 		Type[ResettingChan]    = 0;
 		PADType[ResettingChan] = 0;
-		rc                     = SITransfer(ResettingChan, &cmdTypeAndStatus, 1, &Type[ResettingChan], 3, PADResetCallback, 0);
+		rc                     = SITransfer(ResettingChan, &CmdTypeAndStatus, 1, &Type[ResettingChan], 3, PADResetCallback, 0);
 		chanBit                = (0x80000000 >> ResettingChan);
 		ResettingBits &= ~chanBit;
 		if (rc == 0) {
@@ -482,11 +485,7 @@ static void PADFixCallback(s32 unused, u32 error, struct OSContext* context)
 			return;
 		}
 		if ((type & 0x40000000) && !(type & 0x80000) && !(type & 0x40000)) {
-#if OS_BUILD_VERSION >= 20011217L
 			SITransfer(ResettingChan, &CmdReadOrigin, 1, &Origin[ResettingChan], 0xA, PADOriginCallback, 0);
-#else
-			SITransfer(ResettingChan, &cmdReadOrigin, 1, &Origin[ResettingChan], 0xA, PADOriginCallback, 0);
-#endif
 			return;
 		}
 		frame = (ResettingChan << 0x16) | 0x4D000000 | (__OSWirelessPadFixMode << 8) & 0x3FFF00u;
@@ -545,10 +544,10 @@ static void PADResetCallback(s32 unused, u32 error, struct OSContext* context)
 			return;
 		}
 		if (recalibrate != 0) {
-			SITransfer(ResettingChan, &cmdCalibrate, 3, &Origin[ResettingChan], 0xA, PADOriginCallback, 0);
+			SITransfer(ResettingChan, &CmdCalibrate, 3, &Origin[ResettingChan], 0xA, PADOriginCallback, 0);
 			return;
 		}
-		SITransfer(ResettingChan, &cmdReadOrigin, 1, &Origin[ResettingChan], 0xA, PADOriginCallback, 0);
+		SITransfer(ResettingChan, &CmdReadOrigin, 1, &Origin[ResettingChan], 0xA, PADOriginCallback, 0);
 		return;
 	}
 	id = (GetWirelessID(ResettingChan) << 8);
@@ -569,7 +568,7 @@ static void PADResetCallback(s32 unused, u32 error, struct OSContext* context)
 			return;
 		}
 		if ((type & 0x40000000) && !(type & 0x80000) && !(type & 0x40000)) {
-			SITransfer(ResettingChan, &cmdReadOrigin, 1, &Origin[ResettingChan], 0xA, PADOriginCallback, 0);
+			SITransfer(ResettingChan, &CmdReadOrigin, 1, &Origin[ResettingChan], 0xA, PADOriginCallback, 0);
 			return;
 		}
 		SITransfer(ResettingChan, &cmdProbeDevice[ResettingChan], 3, &Origin[ResettingChan], 8, PADProbeCallback, 0);
@@ -769,7 +768,7 @@ static void PADReceiveCheckCallback(s32 chan, u32 error, OSContext* arg2)
 
 	if (EnabledBits & chanBit) {
 		if (!(error & 0xF) && (type & 0x80000000) && (type & 0x02000000) && (type & 0x40000000) && !(type & 0x04000000)) {
-			SITransfer(chan, &cmdReadOrigin, 1, &Origin[chan], 0xA, PADOriginUpdateCallback, 0);
+			SITransfer(chan, &CmdReadOrigin, 1, &Origin[chan], 0xA, PADOriginUpdateCallback, 0);
 			return;
 		}
 		PADDisable(chan);
@@ -782,7 +781,6 @@ static void PADReceiveCheckCallback(s32 chan, u32 error, OSContext* arg2)
  */
 u32 PADRead(PADStatus* status)
 {
-#if defined(VERSION_GPIP01_00)
 	BOOL enabled;
 	s32 chan;
 	u32 data[2];
@@ -791,7 +789,9 @@ u32 PADRead(PADStatus* status)
 	int chanShift;
 	u32 motor;
 
+#if OS_BUILD_VERSION >= 20011112L
 	enabled = OSDisableInterrupts();
+#endif
 
 	motor = 0;
 
@@ -799,12 +799,14 @@ u32 PADRead(PADStatus* status)
 		chanBit   = PAD_CHAN0_BIT >> chan;
 		chanShift = 8 * (SI_MAX_CHAN - 1 - chan);
 
+#if OS_BUILD_VERSION >= 20011112L
 		if (PendingBits & chanBit) {
 			PADReset(0);
 			status->err = PAD_ERR_NOT_READY;
 			memset(status, 0, offsetof(PADStatus, err));
 			continue;
 		}
+#endif
 
 		if ((ResettingBits & chanBit) || ResettingChan == chan) {
 			status->err = PAD_ERR_NOT_READY;
@@ -818,49 +820,88 @@ u32 PADRead(PADStatus* status)
 			continue;
 		}
 
+#if OS_BUILD_VERSION >= 20011112L
 		if (SIIsChanBusy(chan)) {
 			status->err = PAD_ERR_TRANSFER;
 			memset(status, 0, offsetof(PADStatus, err));
 			continue;
 		}
+#endif
 
+#if OS_BUILD_VERSION >= 20011112L
 		sr = SIGetStatus(chan);
-		if (sr & SI_ERROR_NO_RESPONSE) {
+		if (sr & SI_ERROR_NO_RESPONSE)
+#else
+		sr = SIGetStatus(SI_MAX_CHAN - 1 - chan);
+		if (sr & (SI_ERROR_NO_RESPONSE << chanShift))
+#endif
+		{
+#if OS_BUILD_VERSION >= 20011112L
 			SIGetResponse(chan, data);
+#endif
 
 			if (WaitingBits & chanBit) {
 				status->err = PAD_ERR_NONE;
 				memset(status, 0, offsetof(PADStatus, err));
 
 				if (!(CheckingBits & chanBit)) {
+#if OS_BUILD_VERSION >= 20011112L
 					CheckingBits |= chanBit;
 					SIGetTypeAsync(chan, PADReceiveCheckCallback);
+#else
+					enabled = OSDisableInterrupts();
+					if (SITransfer(chan, &CmdTypeAndStatus, 1, &Type[chan], 3, PADReceiveCheckCallback, 0) != 0) {
+						CheckingBits |= chanBit;
+					}
+					OSRestoreInterrupts(enabled);
+#endif
 				}
-				continue;
+			} else {
+				PADDisable(chan);
+				status->err = PAD_ERR_NO_CONTROLLER;
+				memset(status, 0, offsetof(PADStatus, err));
 			}
-
-			PADDisable(chan);
-
-			status->err = PAD_ERR_NO_CONTROLLER;
-			memset(status, 0, offsetof(PADStatus, err));
 			continue;
 		}
 
-		if (!(SIGetType(chan) & SI_GC_NOMOTOR)) {
+#if OS_BUILD_VERSION >= 20011112L
+		if (!(SIGetType(chan) & SI_GC_NOMOTOR))
+#else
+		if (!(ProbingBits & chanBit) && !(Type[chan] & SI_GC_NOMOTOR))
+#endif
+		{
 			motor |= chanBit;
 		}
 
-		if (!SIGetResponse(chan, data)) {
+#if OS_BUILD_VERSION >= 20011112L
+		if (!SIGetResponse(chan, data))
+#else
+		if (!(sr & (0x20 << chanShift)))
+#endif
+		{
 			status->err = PAD_ERR_TRANSFER;
 			memset(status, 0, offsetof(PADStatus, err));
 			continue;
 		}
+#if OS_BUILD_VERSION >= 20011112L
+#else
+		SIGetResponse(chan, &data);
+#endif
 
 		if (data[0] & 0x80000000) {
 			status->err = PAD_ERR_TRANSFER;
 			memset(status, 0, offsetof(PADStatus, err));
 			continue;
 		}
+
+#if OS_BUILD_VERSION >= 20011112L
+#else
+		if (ProbingBits & chanBit) {
+			status->err = PAD_ERR_NO_CONTROLLER;
+			memset(status, 0, offsetof(PADStatus, err));
+			continue;
+		}
+#endif
 
 		MakeStatus(chan, status, data);
 
@@ -882,79 +923,10 @@ u32 PADRead(PADStatus* status)
 		status->button &= ~0x0080;
 	}
 
+#if OS_BUILD_VERSION >= 20011112L
 	OSRestoreInterrupts(enabled);
-
-	return motor;
-#else
-	s32 chan;
-	u32 data[2];
-	u32 chanBit;
-	u32 sr;
-	int chanShift;
-	int enabled;
-	u32 motor;
-
-	motor = 0;
-
-	for (chan = 0; chan < 4; chan++, status++) {
-		chanBit   = 0x80000000 >> chan;
-		chanShift = (3 - chan) * 8;
-		if ((ResettingBits & chanBit) || (ResettingChan == chan)) {
-			status->err = -2;
-			memset(status, 0, 0xA);
-		} else if (!(EnabledBits & chanBit)) {
-			status->err = -1;
-			memset(status, 0, 0xA);
-		} else {
-			sr = SIGetStatus(3 - chan);
-			if (sr & (8 << chanShift)) {
-				if (WaitingBits & chanBit) {
-					status->err = 0;
-					memset(status, 0, 0xA);
-					if (!(CheckingBits & chanBit)) {
-						enabled = OSDisableInterrupts();
-						if (SITransfer(chan, &cmdTypeAndStatus, 1, &Type[chan], 3, PADReceiveCheckCallback, 0) != 0) {
-							CheckingBits |= chanBit;
-						}
-						OSRestoreInterrupts(enabled);
-					}
-				} else {
-					PADDisable(chan);
-					status->err = -1;
-					memset(status, 0, 0xA);
-				}
-			} else {
-				if (!(ProbingBits & chanBit) && !(Type[chan] & SI_GC_NOMOTOR)) {
-					motor |= chanBit;
-				}
-				if (!(sr & (0x20 << chanShift))) {
-					status->err = -3;
-					memset(status, 0, 0xA);
-				} else {
-					SIGetResponse(chan, &data);
-					if (data[0] & 0x80000000) {
-						status->err = -3;
-						memset(status, 0, 0xA);
-					} else if (ProbingBits & chanBit) {
-						status->err = -1;
-						memset(status, 0, 0xA);
-					} else {
-						MakeStatus(chan, status, data);
-						if (status->button & 0x2000) {
-							status->err = -3;
-							memset(status, 0, 0xA);
-							SITransfer(chan, &cmdReadOrigin, 1, &Origin[chan], 0xA, PADOriginUpdateCallback, 0);
-						} else {
-							status->err = 0;
-							status->button &= 0xFFFFFF7F;
-						}
-					}
-				}
-			}
-		}
-	}
-	return motor;
 #endif
+	return motor;
 }
 
 #if OS_BUILD_VERSION >= 20011217L

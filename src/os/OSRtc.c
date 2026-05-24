@@ -299,18 +299,13 @@ static inline OSSram* __OSLockSramHACK()
  */
 u32 OSGetProgressiveMode(void)
 {
-#if OS_BUILD_VERSION >= 20011112L
 	OSSram* sram;
 	u32 mode;
 
+#if OS_BUILD_VERSION >= 20011112L
 	sram = __OSLockSramHACK();
 	mode = (sram->flags & 0x80) >> 7;
-	__OSUnlockSram(FALSE);
-	return mode;
 #else
-
-	OSSram* sram;
-	u32 mode;
 	STACK_PAD_VAR(2); // dumbass compiler
 
 	sram = LockSram(0);
@@ -319,9 +314,9 @@ u32 OSGetProgressiveMode(void)
 	} else {
 		mode = 0;
 	}
+#endif
 	__OSUnlockSram(FALSE);
 	return mode;
-#endif
 }
 
 /**
