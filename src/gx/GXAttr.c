@@ -101,9 +101,9 @@ static inline void SETVCDATTR(GXAttr Attr, GXAttrType Type)
 		SET_REG_FIELD(0xB1, gx->vcdLo, 2, 9, Type);
 		break;
 	}
-#if OS_BUILD_VERSION >= 20011002L
 	case GX_VA_NRM:
 	{
+#if OS_BUILD_VERSION >= 20011002L
 		if (Type != GX_NONE) {
 			gx->hasNrms   = 1;
 			gx->hasBiNrms = 0;
@@ -111,10 +111,17 @@ static inline void SETVCDATTR(GXAttr Attr, GXAttrType Type)
 		} else {
 			gx->hasNrms = 0;
 		}
+#else
+		gx->hasNrms = (Type != 0);
+		if (Type != GX_NONE) {
+			gx->nrmType = Type;
+		}
+#endif
 		break;
 	}
 	case GX_VA_NBT:
 	{
+#if OS_BUILD_VERSION >= 20011002L
 		if (Type != GX_NONE) {
 			gx->hasBiNrms = 1;
 			gx->hasNrms   = 0;
@@ -122,26 +129,14 @@ static inline void SETVCDATTR(GXAttr Attr, GXAttrType Type)
 		} else {
 			gx->hasBiNrms = 0;
 		}
-		break;
-	}
 #else
-	case GX_VA_NRM:
-	{
-		gx->hasNrms = (Type != 0);
-		if (Type != GX_NONE) {
-			gx->nrmType = Type;
-		}
-		break;
-	}
-	case GX_VA_NBT:
-	{
 		gx->hasBiNrms = (Type != 0);
 		if (Type != GX_NONE) {
 			gx->nrmType = Type;
 		}
+#endif
 		break;
 	}
-#endif
 	case GX_VA_CLR0:
 	{
 		SET_REG_FIELD(0xBA, gx->vcdLo, 2, 13, Type);

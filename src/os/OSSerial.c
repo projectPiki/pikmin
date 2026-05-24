@@ -66,8 +66,6 @@ static void SIClearTCInterrupt()
  */
 static u32 CompleteTransfer(void)
 {
-#if defined(VERSION_PIKIDEMO)
-
 	u32 sr;
 	u32 i;
 	u32 rLen;
@@ -75,27 +73,34 @@ static u32 CompleteTransfer(void)
 	u32 temp;
 
 	sr = __SIRegs[SI_STAT];
+
+#if OS_BUILD_VERSION >= 20011002L
 	SIClearTCInterrupt();
+#else
+	__SIRegs[SI_CC_STAT] = 1 << 31;
+#endif
 
 	if (Si.chan != -1) {
+#if OS_BUILD_VERSION >= 20011002L
 		XferTime[Si.chan] = __OSGetSystemTime();
+#endif
 
 		input = Si.input;
-
-		rLen = Si.inputBytes / 4;
+		rLen  = Si.inputBytes / 4;
 		for (i = 0; i < rLen; i++) {
 			*(u32*)input = __SIRegs[SI_IO_BUFFER + i];
 			input += 4;
 		}
 
 		rLen = Si.inputBytes & 3;
-		if (rLen) {
+		if (rLen != 0) {
 			temp = __SIRegs[SI_IO_BUFFER + i];
 			for (i = 0; i < rLen; i++) {
-				*input++ = (u8)((temp >> ((3 - i) * 8)) & 0xff);
+				*(input++) = temp >> ((3 - i) * 8);
 			}
 		}
 
+#if OS_BUILD_VERSION >= 20011002L
 		if (__SIRegs[SI_CC_STAT] & 0x20000000) {
 			sr >>= 8 * (3 - Si.chan);
 			sr &= 0xf;
@@ -110,42 +115,13 @@ static u32 CompleteTransfer(void)
 			TypeTime[Si.chan] = __OSGetSystemTime();
 			sr                = 0;
 		}
-
-		Si.chan = -1;
-	}
-	return sr;
-
 #else
-	u32 sr;
-	u32 i;
-	u32 rLen;
-	u8* input;
-	u32 temp;
-
-	sr                   = __SIRegs[SI_STAT];
-	__SIRegs[SI_CC_STAT] = 1 << 31;
-
-	if (Si.chan != -1) {
-		input = Si.input;
-		rLen  = (Si.inputBytes / 4);
-		for (i = 0; i < rLen; i++) {
-			*((u32*)input)++ = __SIRegs[i + SI_IO_BUFFER];
-		}
-
-		rLen = Si.inputBytes & 3;
-		if (rLen != 0) {
-			temp = __SIRegs[i + SI_IO_BUFFER];
-			for (i = 0; i < rLen; i++) {
-				*(input++) = temp >> ((3 - i) * 8);
-			}
-		}
-		sr >>= ((3 - Si.chan) * 8);
+		sr >>= 8 * (3 - Si.chan);
 		sr &= 0xF;
+#endif
 		Si.chan = -1;
 	}
-
 	return sr;
-#endif
 }
 
 /**
@@ -633,53 +609,39 @@ static void AlarmHandler(OSAlarm* alarm, OSContext* context)
  */
 BOOL SITransfer(s32 chan, void* output, u32 outputBytes, void* input, u32 inputBytes, SICallback callback, OSTime delay)
 {
-#if OS_BUILD_VERSION >= 20011002L
 	BOOL enabled;
-	SIPacket* packet = &Packet[chan];
+	SIPacket* packet;
 	OSTime now;
+#if OS_BUILD_VERSION >= 20011002L
 	OSTime fire;
+#endif
 
+	packet  = &Packet[chan];
 	enabled = OSDisableInterrupts();
-	if (packet->chan != -1 || Si.chan == chan) {
+
+#if OS_BUILD_VERSION >= 20011002L
+	if (packet->chan != -1 || Si.chan == chan)
+#else
+	if (packet->chan != -1)
+#endif
+	{
 		OSRestoreInterrupts(enabled);
 		return FALSE;
 	}
 
+#if OS_BUILD_VERSION >= 20011002L
 	now = __OSGetSystemTime();
 	if (delay == 0) {
 		fire = now;
 	} else {
 		fire = XferTime[chan] + delay;
 	}
+
 	if (now < fire) {
 		delay = fire - now;
 		OSSetAlarm(&Alarm[chan], delay, AlarmHandler);
-	} else if (__SITransfer(chan, output, outputBytes, input, inputBytes, callback)) {
-		OSRestoreInterrupts(enabled);
-		return TRUE;
 	}
-
-	packet->chan        = chan;
-	packet->output      = output;
-	packet->outputBytes = outputBytes;
-	packet->input       = input;
-	packet->inputBytes  = inputBytes;
-	packet->callback    = callback;
-	packet->fire        = fire;
-
-	OSRestoreInterrupts(enabled);
-	return TRUE;
 #else
-	BOOL enabled;
-	SIPacket* packet = &Packet[chan];
-	OSTime now;
-
-	enabled = OSDisableInterrupts();
-	if (packet->chan != -1) {
-		OSRestoreInterrupts(enabled);
-		return FALSE;
-	}
-
 	now = OSGetTime();
 	if (delay == 0) {
 		delay = now;
@@ -687,7 +649,9 @@ BOOL SITransfer(s32 chan, void* output, u32 outputBytes, void* input, u32 inputB
 
 	if (now < delay) {
 		OSSetAbsAlarm(&Alarm[chan], delay, AlarmHandler);
-	} else if (__SITransfer(chan, output, outputBytes, input, inputBytes, callback)) {
+	}
+#endif
+	else if (__SITransfer(chan, output, outputBytes, input, inputBytes, callback)) {
 		OSRestoreInterrupts(enabled);
 		return TRUE;
 	}
@@ -698,11 +662,14 @@ BOOL SITransfer(s32 chan, void* output, u32 outputBytes, void* input, u32 inputB
 	packet->input       = input;
 	packet->inputBytes  = inputBytes;
 	packet->callback    = callback;
-	packet->fire        = delay;
+#if OS_BUILD_VERSION >= 20011002L
+	packet->fire = fire;
+#else
+	packet->fire = delay;
+#endif
 
 	OSRestoreInterrupts(enabled);
 	return TRUE;
-#endif
 }
 
 #if OS_BUILD_VERSION >= 20011002L

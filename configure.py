@@ -880,7 +880,7 @@ config.libs = [
             Object(Matching, "os/OSSync.c"),
             Object(Matching, "os/OSThread.c"),
             Object(Matching, "os/OSTime.c"),
-            Object(Matching, "os/OSUartExi.c"),
+            Object(Matching, "os/OSUartExi.c", extra_cflags=["-char signed" if version_num in (0, 3, 6, 7) else "-char unsigned"]),
             Object(Matching, "os/__start.c"),
             Object(Matching, "os/__ppc_eabi_init.cpp"),
         ],
@@ -909,11 +909,11 @@ config.libs = [
         "dvd",
         [
             Object(Matching, "dvd/dvdlow.c"),
-            Object(Matching, "dvd/dvdfs.c"),
+            Object(Matching, "dvd/dvdfs.c", extra_cflags=["-char signed" if version_num in (0, 3, 6, 7) else "-char unsigned"]),
             Object(Matching, "dvd/dvd.c"),
             Object(Matching, "dvd/dvdqueue.c"),
             Object(Matching, "dvd/dvderror.c"),
-            Object(Matching, "dvd/fstload.c"),
+            Object(Matching, "dvd/fstload.c", extra_cflags=["-char signed" if version_num in (0, 3, 6, 7) else "-char unsigned"]),
         ],
     ),
     DolphinLib(

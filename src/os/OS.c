@@ -267,27 +267,15 @@ void OSInit(void)
 			BootInfo->consoleType = OS_CONSOLE_RETAIL1;
 		}
 		BootInfo->consoleType += (__PIRegs[11] & 0xF0000000) >> 28;
+#if OS_BUILD_VERSION >= 20011002L
 #if OS_BUILD_VERSION >= 20011217L
 		if (__OSInIPL == FALSE)
-			__OSInitMemoryProtection();
-		// begin OS reporting
-		OSReport("\nDolphin OS $Revision: 49 $.\n");
-		OSReport("Kernel built : %s %s\n", "Dec 17 2001", "18:46:45");
-#elif OS_BUILD_VERSION >= 20011112L
-		__OSInitMemoryProtection();
-		// begin OS reporting
-		OSReport("\nDolphin OS $Revision: 47 $.\n");
-		OSReport("Kernel built : %s %s\n", "Nov 12 2001", "01:46:17");
-#elif OS_BUILD_VERSION >= 20011002L
-		__OSInitMemoryProtection();
-		// begin OS reporting
-		OSReport("\nDolphin OS $Revision: 47 $.\n");
-		OSReport("Kernel built : %s %s\n", "Oct  2 2001", "11:02:22");
-#else
-		// begin OS reporting
-		OSReport("\nDolphin OS $Revision: 37 $.\n");
-		OSReport("Kernel built : %s %s\n", "Jul 19 2001", "05:43:42");
 #endif
+			__OSInitMemoryProtection();
+#endif
+		// begin OS reporting
+		OSReport("\nDolphin OS $Revision: " TO_STRING(OS_BUILD_REVISION) " $.\n");
+		OSReport("Kernel built : %s %s\n", OS_BUILD_DATE, OS_BUILD_TIME);
 		OSReport("Console Type : ");
 		if (BootInfo == NULL || (inputConsoleType = BootInfo->consoleType) == 0) {
 			inputConsoleType = OS_CONSOLE_ARTHUR; // default console type

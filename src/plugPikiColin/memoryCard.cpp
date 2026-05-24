@@ -885,21 +885,18 @@ void MemoryCard::saveCurrentGame()
  */
 void MemoryCard::writeCurrentGame(RandomAccessStream* output, PlayState& playState)
 {
-#if defined(VERSION_PIKIDEMO)
 	if (playerState) {
+#if defined(VERSION_PIKIDEMO)
 		playState.mRedPikiCount    = playerState->hasContainer(Red) ? playerState->getCardPikiCount(Red) : -1;
 		playState.mYellowPikiCount = playerState->hasContainer(Yellow) ? playerState->getCardPikiCount(Yellow) : -1;
 		playState.mBluePikiCount   = playerState->hasContainer(Blue) ? playerState->getCardPikiCount(Blue) : -1;
-		playState.mShipPartsCount  = playerState->getCardUfoPartsCount();
-	}
 #else
-	if (playerState) {
 		playState.mRedPikiCount    = playerState->hasContainer(Red) ? pikiInfMgr.getColorTotal(Red) : -1;
 		playState.mYellowPikiCount = playerState->hasContainer(Yellow) ? pikiInfMgr.getColorTotal(Yellow) : -1;
 		playState.mBluePikiCount   = playerState->hasContainer(Blue) ? pikiInfMgr.getColorTotal(Blue) : -1;
+#endif
 		playState.mShipPartsCount  = playerState->getCardUfoPartsCount();
 	}
-#endif
 
 	playState.write(*output);
 	if (playState.mSaveStatus == PlayState::ReadyToSave && playerState) {

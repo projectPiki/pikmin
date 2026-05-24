@@ -54,7 +54,6 @@ void __DVDFSInit()
  */
 static BOOL isSame(const char* path, const char* string)
 {
-#if OS_BUILD_VERSION >= 20011002L
 	while (*string != '\0') {
 		if (tolower(*path++) != tolower(*string++)) {
 			return FALSE;
@@ -64,17 +63,6 @@ static BOOL isSame(const char* path, const char* string)
 	if ((*path == '/') || (*path == '\0')) {
 		return TRUE;
 	}
-#else
-	while ((u8)*string != '\0') {
-		if (tolower((u8)*path++) != tolower((u8)*string++)) {
-			return FALSE;
-		}
-	}
-
-	if (((u8)*path == '/') || ((u8)*path == '\0')) {
-		return TRUE;
-	}
-#endif
 	return FALSE;
 	// UNUSED FUNCTION
 }
@@ -97,7 +85,6 @@ s32 DVDConvertPathToEntrynum(const char* pathPtr)
 
 	dirLookAt = currentDirectory;
 
-#if OS_BUILD_VERSION >= 20011002L
 	while (1) {
 		if (*pathPtr == '\0') {
 			return (s32)dirLookAt;
@@ -145,10 +132,17 @@ s32 DVDConvertPathToEntrynum(const char* pathPtr)
 			}
 
 			if (illegal) {
+#if OS_BUILD_VERSION >= 20011002L
 				OSErrorLine(376,
 				            "DVDConvertEntrynumToPath(possibly DVDOpen or DVDChangeDir or DVDOpenDir): specified directory or file "
 				            "(%s) doesn't match standard 8.3 format. This is a temporary restriction and will be removed soon\n",
 				            origPathPtr);
+#else
+				OSErrorLine(373,
+				            "DVDConvertEntrynumToPath(possibly DVDOpen or DVDChangeDir or DVDOpenDir): specified directory or file "
+				            "(%s) doesn't match standard 8.3 format. This is a temporary restriction and will be removed soon\n",
+				            origPathPtr);
+#endif
 			}
 		} else {
 			for (ptr = pathPtr; (*ptr != '\0') && (*ptr != '/'); ptr++)
@@ -182,90 +176,6 @@ s32 DVDConvertPathToEntrynum(const char* pathPtr)
 		dirLookAt = i;
 		pathPtr += length + 1;
 	}
-#else
-	while (1) {
-		if ((u8)*pathPtr == '\0') {
-			return (s32)dirLookAt;
-		} else if ((u8)*pathPtr == '/') {
-			dirLookAt = 0;
-			pathPtr++;
-			continue;
-		} else if ((u8)*pathPtr == '.') {
-			if ((u8) * (pathPtr + 1) == '.') {
-				if ((u8) * (pathPtr + 2) == '/') {
-					dirLookAt = parentDir(dirLookAt);
-					pathPtr += 3;
-					continue;
-				} else if ((u8) * (pathPtr + 2) == '\0') {
-					return (s32)parentDir(dirLookAt);
-				}
-			} else if ((u8) * (pathPtr + 1) == '/') {
-				pathPtr += 2;
-				continue;
-			} else if ((u8) * (pathPtr + 1) == '\0') {
-				return (s32)dirLookAt;
-			}
-		}
-
-		if (__DVDLongFileNameFlag == 0) {
-			extention = FALSE;
-			illegal   = FALSE;
-
-			for (ptr = pathPtr; ((u8)*ptr != '\0') && ((u8)*ptr != '/'); ptr++) {
-				if ((u8)*ptr == '.') {
-					if ((ptr - pathPtr > 8) || (extention == TRUE)) {
-						illegal = TRUE;
-						break;
-					}
-					extention      = TRUE;
-					extentionStart = ptr + 1;
-
-				} else if ((u8)*ptr == ' ')
-					illegal = TRUE;
-			}
-
-			if ((extention == TRUE) && (ptr - extentionStart > 3))
-				illegal = TRUE;
-
-			if (illegal)
-				OSErrorLine(373,
-				            "DVDConvertEntrynumToPath(possibly DVDOpen or DVDChangeDir or DVDOpenDir): "
-				            "specified directory or file (%s) doesn't match standard 8.3 format. This is a "
-				            "temporary restriction and will be removed soon\n",
-				            origPathPtr);
-		} else {
-			for (ptr = pathPtr; ((u8)*ptr != '\0') && ((u8)*ptr != '/'); ptr++)
-				;
-		}
-
-		isDir  = ((u8)*ptr == '\0') ? FALSE : TRUE;
-		length = (u32)(ptr - pathPtr);
-
-		ptr = pathPtr;
-
-		for (i = dirLookAt + 1; i < nextDir(dirLookAt); i = entryIsDir(i) ? nextDir(i) : (i + 1)) {
-			if ((entryIsDir(i) == FALSE) && (isDir == TRUE)) {
-				continue;
-			}
-
-			stringPtr = FstStringStart + stringOff(i);
-
-			if (isSame(ptr, stringPtr) == TRUE) {
-				goto next_hier;
-			}
-		}
-
-		return -1;
-
-	next_hier:
-		if (!isDir) {
-			return (s32)i;
-		}
-
-		dirLookAt = i;
-		pathPtr += length + 1;
-	}
-#endif
 }
 
 /**
@@ -330,11 +240,7 @@ static u32 myStrncpy(char* dest, const char* src, u32 maxlen)
 {
 	u32 i = maxlen;
 
-#if OS_BUILD_VERSION >= 20011002L
 	while ((i > 0) && (*src != 0)) {
-#else
-	while ((i > 0) && ((u8)*src != 0)) {
-#endif
 		*dest++ = *src++;
 		i--;
 	}

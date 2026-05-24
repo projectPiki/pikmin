@@ -12,6 +12,8 @@
 
 #if OS_BUILD_VERSION >= 20011112L
 OSErrorHandler __OSErrorTable[OS_ERROR_MAX];
+// For ease of implementing revisional differences.
+#define OSErrorTable __OSErrorTable
 #else
 static OSErrorHandler OSErrorTable[OS_ERROR_MAX];
 #endif
@@ -59,15 +61,9 @@ void OSPanic(const char* file, int line, const char* msg, ...)
  */
 OSErrorHandler OSSetErrorHandler(OSError error, OSErrorHandler handler)
 {
-#if OS_BUILD_VERSION >= 20011112L
-	OSErrorHandler prevHandler = __OSErrorTable[error];
-
-	__OSErrorTable[error] = handler;
-#else
 	OSErrorHandler prevHandler = OSErrorTable[error];
 
 	OSErrorTable[error] = handler;
-#endif
 	return prevHandler;
 }
 
@@ -76,15 +72,18 @@ OSErrorHandler OSSetErrorHandler(OSError error, OSErrorHandler handler)
  */
 void __OSUnhandledException(__OSException exception, OSContext* context, u32 dsisr, u32 dar)
 {
-#if OS_BUILD_VERSION >= 20011112L
 	if (!(context->srr1 & MSR_RI)) {
 		OSReport("Non-recoverable Exception %d", exception);
 	} else {
-		if (__OSErrorTable[exception]) {
+		if (OSErrorTable[exception] != NULL) {
+#if OS_BUILD_VERSION >= 20011112L
 			OSDisableScheduler();
-			__OSErrorTable[exception](exception, context, dsisr, dar);
+#endif
+			OSErrorTable[exception](exception, context, dsisr, dar);
+#if OS_BUILD_VERSION >= 20011112L
 			OSEnableScheduler();
 			__OSReschedule();
+#endif
 			OSLoadContext(context);
 		}
 
@@ -97,57 +96,13 @@ void __OSUnhandledException(__OSException exception, OSContext* context, u32 dsi
 
 	OSReport("\n");
 	OSDumpContext(context);
+#if OS_BUILD_VERSION >= 20011112L
 	OSReport("\nDSISR = 0x%08x                   DAR  = 0x%08x\n", dsisr, dar);
 	OSReport("TB = 0x%016llx\n", OSGetTime());
-
-	switch (exception) {
-	case __OS_EXCEPTION_DSI:
-	{
-		OSReport("\nInstruction at 0x%x (read from SRR0) attempted to access invalid address 0x%x (read from DAR)\n", context->srr0, dar);
-		break;
-	}
-	case __OS_EXCEPTION_ISI:
-	{
-		OSReport("\nAttempted to fetch instruction from invalid address 0x%x (read from SRR0)\n", context->srr0);
-		break;
-	}
-	case __OS_EXCEPTION_ALIGNMENT:
-	{
-		OSReport("\nInstruction at 0x%x (read from SRR0) attempted to access unaligned address 0x%x (read from DAR)\n", context->srr0, dar);
-		break;
-	}
-	case __OS_EXCEPTION_PROGRAM:
-	{
-		OSReport("\nProgram exception : Possible illegal instruction/operation at or around 0x%x (read from SRR0)\n", context->srr0, dar);
-		break;
-	}
-	case OS_ERROR_PROTECTION:
-	{
-		OSReport("\n");
-		OSReport("AI DMA Address =   0x%04x%04x\n", __DSPRegs[0x00000018], __DSPRegs[0x00000018 + 1]);
-		OSReport("ARAM DMA Address = 0x%04x%04x\n", __DSPRegs[0x00000010], __DSPRegs[0x00000010 + 1]);
-		OSReport("DI DMA Address =   0x%08x\n", __DIRegs[0x00000005]);
-		break;
-	}
-	}
-
-	OSReport("\nLast interrupt (%d): SRR0 = 0x%08x  TB = 0x%016llx\n", __OSLastInterrupt, __OSLastInterruptSrr0, __OSLastInterruptTime);
 #else
-	if (!(context->srr1 & (1 << 1)))
-		OSReport("Non-recoverable Exception %d", exception);
-	else {
-		if (OSErrorTable[exception] != NULL) {
-			OSErrorTable[exception](exception, context, dsisr, dar);
-			OSLoadContext(context);
-		}
-		if (exception == OS_ERROR_DECREMENTER)
-			OSLoadContext(context);
-		OSReport("Unhandled Exception %d", exception);
-	}
-
-	OSReport("\n");
-	OSDumpContext(context);
 	OSReport("\nDSISR= 0x%08x                   DAR  = 0x%08x\n", dsisr, dar);
+#endif
+
 	switch (exception) {
 	case OS_ERROR_DSI:
 	{
@@ -169,7 +124,21 @@ void __OSUnhandledException(__OSException exception, OSContext* context, u32 dsi
 		OSReport("\nProgram exception : Possible illegal instruction/operation at or around 0x%x (read from SRR0)\n", context->srr0, dar);
 		break;
 	}
+#if OS_BUILD_VERSION >= 20011112L
+	case OS_ERROR_PROTECTION:
+	{
+		OSReport("\n");
+		OSReport("AI DMA Address =   0x%04x%04x\n", __DSPRegs[0x00000018], __DSPRegs[0x00000018 + 1]);
+		OSReport("ARAM DMA Address = 0x%04x%04x\n", __DSPRegs[0x00000010], __DSPRegs[0x00000010 + 1]);
+		OSReport("DI DMA Address =   0x%08x\n", __DIRegs[0x00000005]);
+		break;
 	}
 #endif
+	}
+
+#if OS_BUILD_VERSION >= 20011112L
+	OSReport("\nLast interrupt (%d): SRR0 = 0x%08x  TB = 0x%016llx\n", __OSLastInterrupt, __OSLastInterruptSrr0, __OSLastInterruptTime);
+#endif
+
 	PPCHalt();
 }
