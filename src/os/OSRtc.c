@@ -400,7 +400,12 @@ void __OSSetBootMode(void)
 {
 	// UNUSED FUNCTION
 }
+
 #if OS_BUILD_VERSION >= 20011002L
+
+/**
+ * This was moved from Pad.c
+ */
 u16 OSGetWirelessID(s32 channel)
 {
 	OSSramEx* sram;
@@ -412,6 +417,9 @@ u16 OSGetWirelessID(s32 channel)
 	return id;
 }
 
+/**
+ * This was moved from Pad.c
+ */
 void OSSetWirelessID(s32 channel, u16 id)
 {
 	OSSramEx* sram;
@@ -425,4 +433,5 @@ void OSSetWirelessID(s32 channel, u16 id)
 
 	__OSUnlockSramEx(FALSE);
 }
+
 #endif

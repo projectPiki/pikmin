@@ -926,7 +926,7 @@ config.libs = [
         "pad",
         [
             Object(Matching, "pad/Padclamp.c"),
-            Object(not MatchingFor("DPIJ01_PIKIDEMO", "G98E01_PIKIDEMO", "G98P01_PIKIDEMO"), "pad/Pad.c"),
+            Object(Matching, "pad/Pad.c"),
         ],
     ),
     DolphinLib(

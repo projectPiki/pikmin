@@ -90,18 +90,27 @@ BOOL PADInit(void);
 BOOL PADReset(u32 mask);
 u32 PADRead(PADStatus* status);
 void PADSetSamplingRate(u32 msec);
+#if OS_BUILD_VERSION >= 20011002L && OS_BUILD_VERSION < 20011217L
+void __PADRefreshSamplingRate(void);
+#endif
 void PADClamp(PADStatus* status);
 void PADClampCircle(PADStatus* status);
-void PADControlAllMotors(const u32* command);
+void PADControlAllMotors(const u32* commandArray);
 void PADControlMotor(s32 chan, u32 command);
 BOOL PADRecalibrate(u32 mask);
 BOOL PADSync(void);
 void PADSetAnalogMode(u32 mode);
 void PADSetSpec(u32 spec);
+u32 PADGetSpec(void);
+int PADGetType(s32 chan, u32* type);
 
 typedef void (*PADSamplingCallback)(void);
 
+#if OS_BUILD_VERSION >= 20011112L
 PADSamplingCallback PADSetSamplingCallback(PADSamplingCallback callback);
+#else
+void PADSetSamplingCallback(PADSamplingCallback callback);
+#endif
 
 END_SCOPE_EXTERN_C
 

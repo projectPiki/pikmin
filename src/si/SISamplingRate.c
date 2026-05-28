@@ -18,6 +18,9 @@ static XY XYPAL[12] = {
 	{ 78, 4 },       { 104, 3 }, { 104, 3 }, { 104, 3 }, { 104, 3 }, { 156, 2 },
 };
 
+/**
+ * This implementation was moved from Pad.c (`PADSetSamplingRate`)
+ */
 void SISetSamplingRate(u32 msec)
 {
 	XY* xy;
@@ -51,6 +54,9 @@ void SISetSamplingRate(u32 msec)
 	OSRestoreInterrupts(enabled);
 }
 
+/**
+ * This implementation was moved from Pad.c (`__PADRefreshSamplingRate`)
+ */
 void SIRefreshSamplingRate()
 {
 	SISetSamplingRate(SamplingRate);

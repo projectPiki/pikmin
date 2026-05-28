@@ -64,7 +64,11 @@ BOOL SIRegisterPollingHandler(__OSInterruptHandler handler);
 BOOL SIUnregisterPollingHandler(__OSInterruptHandler handler);
 
 void SIInit(void);
+#if OS_BUILD_VERSION >= 20011002L && OS_BUILD_VERSION < 20011112L
+u32 SIGetStatus(void); // WHAT?
+#else
 u32 SIGetStatus(s32 chan);
+#endif
 void SISetCommand(s32 chan, u32 command);
 void SITransferCommands(void);
 u32 SISetXY(u32 x, u32 y);
