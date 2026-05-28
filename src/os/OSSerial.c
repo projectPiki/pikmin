@@ -408,9 +408,14 @@ void SISync(void)
 /**
  * @TODO: Documentation
  */
+#if OS_BUILD_VERSION >= 20011002L && OS_BUILD_VERSION < 20011112L
+u32 SIGetStatus(void)
+#else
 u32 SIGetStatus(s32 chan)
+#endif
 {
 #if OS_BUILD_VERSION >= 20011002L
+#if OS_BUILD_VERSION >= 20011112L
 	BOOL enabled;
 	u32 sr;
 	int chanShift;
@@ -426,6 +431,9 @@ u32 SIGetStatus(s32 chan)
 	}
 	OSRestoreInterrupts(enabled);
 	return sr;
+#else
+	// Something else
+#endif
 #else
 	return __SIRegs[SI_STAT];
 #endif
@@ -546,7 +554,11 @@ static BOOL SIGetResponseRaw(s32 chan)
 {
 	u32 sr;
 
+#if OS_BUILD_VERSION >= 20011002L && OS_BUILD_VERSION < 20011112L
+	sr = SIGetStatus();
+#else
 	sr = SIGetStatus(chan);
+#endif
 	if (sr & SI_ERROR_RDST) {
 		InputBuffer[chan][0]   = __SIRegs[3 * chan + 1];
 		InputBuffer[chan][1]   = __SIRegs[3 * chan + 2];
