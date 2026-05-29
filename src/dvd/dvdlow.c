@@ -1,4 +1,5 @@
 #include "Dolphin/dvd.h"
+#include "Dolphin/hw_regs.h"
 #include "Dolphin/os.h"
 #include <stddef.h>
 

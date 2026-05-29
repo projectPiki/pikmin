@@ -3,6 +3,7 @@
 #define DEBUG
 
 #include "Dolphin/card.h"
+#include "Dolphin/exi.h"
 #include "Dolphin/os.h"
 #include "jaudio/ipldec.h"
 #include <stdlib.h>

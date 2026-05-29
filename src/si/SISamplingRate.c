@@ -1,3 +1,4 @@
+#include "Dolphin/hw_regs.h"
 #include "dolphin/os.h"
 #include "dolphin/vi.h"
 

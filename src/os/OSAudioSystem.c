@@ -1,3 +1,4 @@
+#include "Dolphin/hw_regs.h"
 #include "Dolphin/os.h"
 #include "types.h"
 #include <string.h>
