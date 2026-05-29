@@ -5,7 +5,7 @@
 #include "StateMachine.h"
 #include "types.h"
 
-#define C_SAI(obj) static_cast<SimpleAI*>(obj->mStateMachine)
+#define C_SAI(obj) static_cast<SimpleAI*>(obj->mSAICtx.mStateMachine)
 
 struct SAIEvent;
 

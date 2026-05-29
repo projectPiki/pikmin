@@ -467,8 +467,8 @@ void PikiAbsorbState::exec(Piki* piki)
 	{
 		if (mNectar->isAlive()) {
 			MsgUser msg(0);
-			MizuItem* nectar           = static_cast<MizuItem*>(mNectar);
-			nectar->mCollidingCreature = piki;
+			MizuItem* nectar                   = static_cast<MizuItem*>(mNectar);
+			nectar->mSAICtx.mCollidingCreature = piki;
 			C_SAI(nectar)->procMsg(nectar, &msg);
 		}
 
@@ -1382,8 +1382,8 @@ void PikiFallMeckState::procBounceMsg(Piki* piki, MsgBounce*)
 			AICreature* ai = (AICreature*)held;
 			if (ai->getCurrState()->getID() != 1) {
 				MsgUser msg(1);
-				BombItem* bomb    = (BombItem*)held;
-				bomb->mCurrAnimId = 1;
+				BombItem* bomb            = (BombItem*)held;
+				bomb->mSAICtx.mCurrAnimId = 1;
 				C_SAI(bomb)->procMsg(bomb, &msg);
 			}
 		}

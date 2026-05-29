@@ -351,13 +351,13 @@ void GoalItem::suckMe(Pellet* item)
 	}
 
 	if (pikiNum < 0) {
-		mCounter += 2;
+		mSAICtx.mCounter += 2;
 		MsgUser msg(0);
 		C_SAI(this)->procMsg(this, &msg);
 		playEventSound(this, SE_CONTAINER_HANABI);
 		playEventSound(this, SE_CONTAINER_PELLETIN2);
 	} else {
-		mCurrAnimId += pikiNum;
+		mSAICtx.mCurrAnimId += pikiNum;
 		MsgUser msg(0);
 		C_SAI(this)->procMsg(this, &msg);
 		playEventSound(this, SE_CONTAINER_PELLETIN2);
@@ -459,17 +459,17 @@ bool GoalItem::needShadow()
 GoalItem::GoalItem(CreatureProp* prop, ItemShapeObject* shape1, ItemShapeObject* shape2, ItemShapeObject* shape3, SimpleAI* ai)
     : Suckable(16, prop)
 {
-	mOnionColour     = 0;
-	mItemShapeObject = nullptr;
-	_438[0]          = shape1;
-	_438[1]          = shape2;
-	_438[2]          = shape3;
-	mItemShapeObject = _438[0];
-	mStateMachine    = ai;
-	mCollInfo        = new CollInfo(15);
-	mHaloEfx         = nullptr;
-	mSpotEfx         = nullptr;
-	mSuckEfx         = nullptr;
+	mOnionColour          = 0;
+	mItemShapeObject      = nullptr;
+	_438[0]               = shape1;
+	_438[1]               = shape2;
+	_438[2]               = shape3;
+	mItemShapeObject      = _438[0];
+	mSAICtx.mStateMachine = ai;
+	mCollInfo             = new CollInfo(15);
+	mHaloEfx              = nullptr;
+	mSpotEfx              = nullptr;
+	mSuckEfx              = nullptr;
 }
 
 /**
@@ -618,8 +618,8 @@ void GoalItem::startAI(int)
 	                                  Vector3f(rotateX[0], rotateY[0], rotateZ[0]));
 	f32 scale     = 1.0f;
 	mSRT.s.set(scale, scale, scale);
-	mCurrAnimId = 0;
-	mCounter    = 0;
+	mSAICtx.mCurrAnimId = 0;
+	mSAICtx.mCounter    = 0;
 
 	int i;
 	for (i = 0; i < 3; i++) {

@@ -108,13 +108,13 @@ bool PikiHeadItem::isAlive()
 PikiHeadItem::PikiHeadItem(CreatureProp* props, ItemShapeObject* shape, SimpleAI* ai)
     : ItemCreature(15, props, nullptr)
 {
-	mItemShapeObject = shape;
-	mStateMachine    = ai;
-	mSeedColor       = 0;
-	mFlowerStage     = 0;
-	mParentOnion     = nullptr;
-	mFreeLightEfx    = new FreeLightEffect;
-	mRippleEfx       = new RippleEffect;
+	mItemShapeObject      = shape;
+	mSAICtx.mStateMachine = ai;
+	mSeedColor            = 0;
+	mFlowerStage          = 0;
+	mParentOnion          = nullptr;
+	mFreeLightEfx         = new FreeLightEffect;
+	mRippleEfx            = new RippleEffect;
 }
 
 /**

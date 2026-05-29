@@ -574,9 +574,9 @@ ItemCreature::ItemCreature(int objType, CreatureProp* props, Shape* shape)
 	resetCreatureFlag(CF_DisableAutoFaceDir);
 	setCreatureFlag(CF_Unk1);
 	mSearchBuffer.init(mItemSearchData, 8);
-	mObjType         = (EObjType)objType;
-	mItemShapeObject = nullptr;
-	mStateMachine    = nullptr;
+	mObjType              = (EObjType)objType;
+	mItemShapeObject      = nullptr;
+	mSAICtx.mStateMachine = nullptr;
 }
 
 /**
@@ -700,8 +700,8 @@ void ItemCreature::update()
  */
 void ItemCreature::doAI()
 {
-	if (mStateMachine && !isCreatureFlag(CF_IsAiDisabled)) {
-		mStateMachine->exec(this);
+	if (mSAICtx.mStateMachine && !isCreatureFlag(CF_IsAiDisabled)) {
+		mSAICtx.mStateMachine->exec(this);
 	}
 }
 
@@ -872,12 +872,12 @@ bool InteractBomb::actItem(ItemCreature* item) immut
 
 	if (item->mObjType == OBJTYPE_Bomb) {
 		BombItem* bomb = static_cast<BombItem*>(item);
-		int state      = item->mStateMachine->getCurrID(item);
+		int state      = item->mSAICtx.mStateMachine->getCurrID(item);
 		PRINT("bomb got bomb interaction!\n");
 		if (state != BombAI::BOMB_Bomb && state != BombAI::BOMB_Mizu && state != BombAI::BOMB_Die) {
 			MsgUser msg(1);
 			PRINT("bomb renbaku!\n");
-			item->mCurrAnimId = 1;
+			item->mSAICtx.mCurrAnimId = 1;
 			C_SAI(item)->procMsg(item, &msg);
 		}
 	}
@@ -962,7 +962,7 @@ BuildingItem::BuildingItem(int objType, CreatureProp* props, ItemShapeObject* it
     , mBuildCollision(0)
 {
 	mItemShapeObject        = itemShape;
-	mStateMachine           = ai;
+	mSAICtx.mStateMachine   = ai;
 	mLifeGauge.mRenderStyle = LifeGauge::Wheel;
 }
 
@@ -987,10 +987,10 @@ f32 BuildingItem::getBoundingSphereRadius()
 void BuildingItem::startAI(int)
 {
 	mItemShapeObject->mShape->makeInstance(mAnimatedMaterials, 0);
-	mCounter    = 0;
-	mCurrAnimId = 0;
-	_3C4        = true;
-	mSeContext  = &mBuildSFX;
+	mSAICtx.mCounter    = 0;
+	mSAICtx.mCurrAnimId = 0;
+	_3C4                = true;
+	mSeContext          = &mBuildSFX;
 	mSeContext->setContext(this, JACEVENT_Build);
 	PRINT("*** \n");
 	enableFaceDirAdjust();
@@ -1135,7 +1135,7 @@ void BuildingItem::doSave(RandomAccessStream& output)
 	output.writeFloat(mMaxHealth);
 	output.writeInt(mCurrStage);
 	output.writeInt(mNumStages);
-	output.writeInt(mCurrAnimId);
+	output.writeInt(mSAICtx.mCurrAnimId);
 	PRINT_KANDO("\t life=%.1f maxLife=%.1f curr/num=%d/%d\n", mHealth, mMaxHealth, mCurrStage, mNumStages);
 }
 
@@ -1144,11 +1144,11 @@ void BuildingItem::doSave(RandomAccessStream& output)
  */
 void BuildingItem::doLoad(RandomAccessStream& input)
 {
-	mHealth     = input.readFloat();
-	mMaxHealth  = input.readFloat();
-	mCurrStage  = input.readInt();
-	mNumStages  = input.readInt();
-	mCurrAnimId = input.readInt();
+	mHealth             = input.readFloat();
+	mMaxHealth          = input.readFloat();
+	mCurrStage          = input.readInt();
+	mNumStages          = input.readInt();
+	mSAICtx.mCurrAnimId = input.readInt();
 
 	PRINT_KANDO("currStage %d numStages %d\n", mCurrStage, mNumStages);
 

@@ -81,7 +81,7 @@ BombItem::BombItem(CreatureProp* props, ItemShapeObject* shape, SimpleAI* ai)
 {
 	mLifeGauge.mSnapToTargetHealth = true;
 	mItemShapeObject               = shape;
-	mStateMachine                  = ai;
+	mSAICtx.mStateMachine          = ai;
 	mLifeGauge.mRenderStyle        = LifeGauge::Wheel;
 }
 
@@ -142,7 +142,7 @@ void BombItem::update()
 	if (state != BombAI::BOMB_Die && state != BombAI::BOMB_Bomb && state != BombAI::BOMB_Mizu && mGroundTriangle
 	    && MapCode::getAttribute(mGroundTriangle) == ATTR_Water) {
 		PRINT("BOMB WATER START **********\n");
-		mStateMachine->transit(this, BombAI::BOMB_Mizu);
+		mSAICtx.mStateMachine->transit(this, BombAI::BOMB_Mizu);
 	}
 
 	if (state == BombAI::BOMB_Unk1 && mGroundTriangle) {
@@ -165,7 +165,7 @@ void BombItem::refresh2d(Graphics& gfx)
 	int state = getCurrState()->getID();
 
 	if (state == 2) {
-		mLifeGauge.updValue(mCurrentItemHealth, mMaxItemHealth);
+		mLifeGauge.updValue(mSAICtx.mCurrentItemHealth, mSAICtx.mMaxItemHealth);
 		mLifeGauge.mPosition = mSRT.t;
 		mLifeGauge.mScale    = 5000.0f / gfx.mCamera->mNear;
 		mLifeGauge.refresh(gfx);

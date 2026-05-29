@@ -20,16 +20,8 @@ DEFINE_PRINT("simpleAI");
 AICreature::AICreature(CreatureProp* props)
     : Creature(props)
 {
-	// this is all apparently the ctor of a struct
-	mCollidingCreature = 0;
-	_2C4.set(0.0f, 0.0f, 0.0f);
-	mCurrAnimId = mCounter = 0;
-	mCurrentState          = nullptr;
-	mCurrentItemHealth     = 0.0f;
-
-	// then this is THIS ctor
-	mCurrentState  = nullptr; // hm.
-	mMaxEventCount = 16;
+	mSAICtx.mCurrentState  = nullptr; // hm.
+	mSAICtx.mMaxEventCount = ARRAY_SIZE(mSAICtx.mEventFlags);
 	clearEventFlags();
 }
 
@@ -40,9 +32,9 @@ void AICreature::collisionCallback(immut CollEvent& event)
 {
 	Creature* collider = event.mCollider;
 	MsgCollide msg(event);
-	mCollidingCreature = collider;
-	if (mStateMachine) {
-		static_cast<SimpleAI*>(mStateMachine)->procMsg(this, &msg);
+	mSAICtx.mCollidingCreature = collider;
+	if (mSAICtx.mStateMachine) {
+		C_SAI(this)->procMsg(this, &msg);
 	}
 }
 
@@ -52,8 +44,8 @@ void AICreature::collisionCallback(immut CollEvent& event)
 void AICreature::bounceCallback()
 {
 	MsgBounce msg(Vector3f(0.0f, 1.0f, 0.0f));
-	if (mStateMachine) {
-		static_cast<SimpleAI*>(mStateMachine)->procMsg(this, &msg);
+	if (mSAICtx.mStateMachine) {
+		C_SAI(this)->procMsg(this, &msg);
 	}
 }
 
@@ -66,8 +58,8 @@ void AICreature::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 
 	MsgAnim msg(&event);
 
-	if (mStateMachine) {
-		static_cast<SimpleAI*>(mStateMachine)->procMsg(this, &msg);
+	if (mSAICtx.mStateMachine) {
+		C_SAI(this)->procMsg(this, &msg);
 	}
 
 	if (event.mEventType == KEY_PlaySound) {
@@ -84,11 +76,11 @@ void AICreature::animationKeyUpdated(immut PaniAnimKeyEvent& event)
  */
 void AICreature::clearEventFlags()
 {
-	for (int i = 0; i < mMaxEventCount; i++) {
-		mEventFlags[i] = 0;
+	for (int i = 0; i < mSAICtx.mMaxEventCount; i++) {
+		mSAICtx.mEventFlags[i] = false;
 	}
 
-	mCurrentEventCount = 0;
+	mSAICtx.mCurrentEventCount = 0;
 }
 
 /**
@@ -96,16 +88,16 @@ void AICreature::clearEventFlags()
  */
 void AICreature::setEventFlag(int flagID, bool value)
 {
-	if (mCurrentEventCount >= mMaxEventCount) {
+	if (mSAICtx.mCurrentEventCount >= mSAICtx.mMaxEventCount) {
 		PRINT("############ too many events!\n");
 		ERROR("too many events");
 		return;
 	}
 
-	if (flagID >= mMaxEventCount) {
+	if (flagID >= mSAICtx.mMaxEventCount) {
 		ERROR("EVENT %d flag = %s\n", flagID, value ? "true" : "false");
 	}
-	mEventFlags[flagID] = value;
+	mSAICtx.mEventFlags[flagID] = value;
 }
 
 /**
@@ -118,7 +110,7 @@ bool AICreature::checkEventFlag(int flag)
 		PRINT("##### idx == -1 : checkEventFlag!\n");
 		ERROR("checkEventFlg -1");
 	}
-	return mEventFlags[flag];
+	return mSAICtx.mEventFlags[flag];
 }
 
 /**
