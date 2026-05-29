@@ -1,4 +1,5 @@
 #include "Dolphin/pad.h"
+#include "Dolphin/hw_regs.h"
 #include "Dolphin/os.h"
 #include "Dolphin/vi.h"
 #include <stddef.h>
@@ -33,7 +34,6 @@ static BOOL OnReset(BOOL f);
 
 extern u16 __OSWirelessPadFixMode AT_ADDRESS(OS_BASE_CACHED | 0x30E0);
 extern u8 GameChoice AT_ADDRESS(OS_BASE_CACHED | 0x30E3);
-extern u16 DAT_CC00206C AT_ADDRESS(0xCC00206C); // Which hardware register?
 
 static BOOL Initialized = FALSE;
 
@@ -1022,7 +1022,7 @@ void PADSetSamplingRate(u32 msec)
 	}
 	}
 #if OS_BUILD_VERSION >= 20011002L
-	SISetXY(((DAT_CC00206C & 1) ? 2 : 1) * xy[msec].line, xy[msec].count);
+	SISetXY((__VIRegs[VI_CLOCK_SEL] & 1 ? 2u : 1u) * xy[msec].line, xy[msec].count);
 #else
 	SISetXY(xy[msec].line, xy[msec].count);
 #endif
@@ -1036,7 +1036,7 @@ void PADSetSamplingRate(u32 msec)
 
 #if OS_BUILD_VERSION >= 20011002L && OS_BUILD_VERSION < 20011217L
 /**
- * @TODO: Documentation
+ * This implementation was moved to SISamplingRate.c (`SIRefreshSamplingRate`)
  */
 void __PADRefreshSamplingRate(void)
 {

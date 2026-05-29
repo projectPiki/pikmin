@@ -187,6 +187,7 @@ struct Texture : public GfxObject {
 	virtual void makeResident() { } // _10 (weak)
 
 	u8 getAlpha(int x, int y);
+	u8 getRed(int x, int y);
 	void read(RandomAccessStream& input);
 	void createBuffer(int width, int height, int texFmt, void* buf);
 	void grabBuffer(int width, int height, bool doClear, bool useMIPmap);
@@ -194,7 +195,10 @@ struct Texture : public GfxObject {
 
 	// unused/inlined:
 	void offsetGLtoGX(int, int);
-	u8 getRed(int, int);
+	static void offsetGXtoGL(int, int, int, int);
+	void offsetGXtoGL(int, int);
+	void write(Stream*);
+	static void decodeS3TC(int, int, u8*, u8*);
 
 	// _00 = VTBL
 	u16 mTexFormat;    // _04, see TexImgFormat enum

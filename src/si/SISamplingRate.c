@@ -51,7 +51,7 @@ void SISetSamplingRate(u32 msec)
 		break;
 	}
 
-	SISetXY((__VIRegs[54] & 1 ? 2u : 1u) * xy[msec].line, xy[msec].count);
+	SISetXY((__VIRegs[VI_CLOCK_SEL] & 1 ? 2u : 1u) * xy[msec].line, xy[msec].count);
 	OSRestoreInterrupts(enabled);
 }
 

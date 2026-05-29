@@ -543,7 +543,7 @@ int Jac_GetPicture(void* data, int* x, int* y)
 
 	if (playback_first_wait) {
 		*(int*)data = 0;
-		return TRUE;
+		return 1;
 	}
 
 	int frame = StreamGetCurrentFrame(0, 2);
@@ -604,7 +604,7 @@ int Jac_GetPicture(void* data, int* x, int* y)
 		StreamSyncStopAudio(0);
 	}
 	*(int*)data = 0;
-	return FALSE;
+	return 0;
 }
 
 /**
