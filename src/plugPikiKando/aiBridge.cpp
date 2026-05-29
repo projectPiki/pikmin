@@ -544,14 +544,14 @@ int ActBridge::newExeWork()
 	}
 
 	if (absF(xDist) > 0.3f * mBridge->getStageWidth()) {
-		STACK_PAD_STRUCT(2); // Vector3f unused(xVec); // This would be more accurate, but it makes the stack worse.
+		Vector3f unused(xVec); // `STACK_PAD_STRUCT(2)` is a nicer fakematch, but this unused `Vector3f` is accurate to the DLL.
 		if (xDist < 0.0f) {
 			xVec.multiply(-1.0f);
 		}
 		zVec = zVec + xVec;
 		zVec.normalise();
 	}
-	f32 unused = mBridge->getStageDepth(); // It looks like this unused result was stored in a variable in the DLL.
+	f32 unused = mBridge->getStageDepth(); // It looks like this unused result was stored in a variable in the DLL (affects stack).
 	mPiki->setSpeed(0.5f, zVec);
 	return ACTOUT_Continue;
 	/*
