@@ -68,8 +68,8 @@ SluiceAI::SluiceAI()
  */
 void SluiceAI::Init::act(AICreature* item)
 {
-	item->mCounter = 0;
-	item->mStateMachine->transit(item, Sluice_WaitInit);
+	item->mSAICtx.mCounter = 0;
+	item->mSAICtx.mStateMachine->transit(item, Sluice_WaitInit);
 }
 
 /**
@@ -77,14 +77,14 @@ void SluiceAI::Init::act(AICreature* item)
  */
 void SluiceAI::MotionDone::act(AICreature* item)
 {
-	PRINT("GATE ** MOTION DONE ** %d\n", item->mCounter);
+	PRINT("GATE ** MOTION DONE ** %d\n", item->mSAICtx.mCounter);
 
-	if (item->mCounter <= 0) {
-		item->mCounter = 0;
-		item->mStateMachine->transit(item, Sluice_WaitInit);
+	if (item->mSAICtx.mCounter <= 0) {
+		item->mSAICtx.mCounter = 0;
+		item->mSAICtx.mStateMachine->transit(item, Sluice_WaitInit);
 	} else {
-		item->mCounter--;
-		item->mStateMachine->transit(item, Sluice_ChangeInit);
+		item->mSAICtx.mCounter--;
+		item->mSAICtx.mStateMachine->transit(item, Sluice_ChangeInit);
 	}
 }
 
@@ -93,8 +93,8 @@ void SluiceAI::MotionDone::act(AICreature* item)
  */
 void SluiceAI::AddCount::act(AICreature* item)
 {
-	PRINT("GATE ** COUNTER became %d\n", item->mCounter);
-	item->mCounter++;
+	PRINT("GATE ** COUNTER became %d\n", item->mSAICtx.mCounter);
+	item->mSAICtx.mCounter++;
 }
 
 /**
@@ -122,15 +122,15 @@ void SluiceAI::WaitInit::act(AICreature* item)
 void SluiceAI::ChangeInit::act(AICreature* item)
 {
 	BuildingItem* obj = (BuildingItem*)item;
-	PRINT("******* CHANGE INIT ******** aiContext.int=%d curr=%d\n", obj->mCurrStage, obj->mCurrAnimId);
+	PRINT("******* CHANGE INIT ******** aiContext.int=%d curr=%d\n", obj->mCurrStage, obj->mSAICtx.mCurrAnimId);
 
 	item->setMotionSpeed(30.0f);
-	item->startMotion(obj->mCurrAnimId);
+	item->startMotion(obj->mSAICtx.mCurrAnimId);
 	obj->startBreakEffect();
-	if (obj->mCurrAnimId == obj->mNumStages - 1) {
+	if (obj->mSAICtx.mCurrAnimId == obj->mNumStages - 1) {
 		obj->mWayPoint->setFlag(true);
 	}
-	obj->mCurrAnimId++;
+	obj->mSAICtx.mCurrAnimId++;
 }
 
 /**
@@ -142,7 +142,7 @@ void SluiceAI::DamageInit::act(AICreature* item)
 
 	if (obj->mCurrStage < obj->mNumStages) {
 		item->setMotionSpeed(30.0f);
-		item->startMotion(obj->mCurrAnimId + 3);
+		item->startMotion(obj->mSAICtx.mCurrAnimId + 3);
 	}
 }
 
@@ -249,7 +249,7 @@ void PikiHeadAI::BuryExec2::act(AICreature* item)
 	PRINT("to save or not to save ....\n"); // Alright mr shakespeare over here
 
 	PikiHeadItem* obj = (PikiHeadItem*)item;
-	obj->mStateMachine->transit(item, PIKIHEAD_Dead);
+	obj->mSAICtx.mStateMachine->transit(item, PIKIHEAD_Dead);
 }
 
 /**
@@ -259,8 +259,8 @@ void PikiHeadAI::BuryInit::act(AICreature* item)
 {
 	PikiHeadItem* obj = (PikiHeadItem*)item;
 	obj->startFix();
-	obj->mFlowerStage       = Leaf;
-	obj->mCurrentItemHealth = pikiMgr->mPikiParms->mPikiParms.mSeedUpTime() + gsys->getRand(1.0f) * 2.0f;
+	obj->mFlowerStage               = Leaf;
+	obj->mSAICtx.mCurrentItemHealth = pikiMgr->mPikiParms->mPikiParms.mSeedUpTime() + gsys->getRand(1.0f) * 2.0f;
 
 	STACK_PAD_VAR(2);
 }
@@ -271,11 +271,11 @@ void PikiHeadAI::BuryInit::act(AICreature* item)
 void PikiHeadAI::BuryExec::act(AICreature* item)
 {
 	// stupid but fixes a regswap
-	f32& health = item->mCurrentItemHealth;
+	f32& health = item->mSAICtx.mCurrentItemHealth;
 	health -= gsys->getFrameTime();
 	if (health < 0.0f) {
 		item->startMotion(PikiHeadMotion::TaneUp);
-		item->mStateMachine->transit(item, PIKIHEAD_Tane);
+		item->mSAICtx.mStateMachine->transit(item, PIKIHEAD_Tane);
 	}
 }
 
@@ -284,7 +284,7 @@ void PikiHeadAI::BuryExec::act(AICreature* item)
  */
 void PikiHeadAI::TaneInit::act(AICreature* item)
 {
-	item->mCurrentItemHealth = pikiMgr->mPikiParms->mPikiParms.mPluckWaitTime() + gsys->getRand(1.0f) * 2.0f;
+	item->mSAICtx.mCurrentItemHealth = pikiMgr->mPikiParms->mPikiParms.mPluckWaitTime() + gsys->getRand(1.0f) * 2.0f;
 }
 
 /**
@@ -292,10 +292,10 @@ void PikiHeadAI::TaneInit::act(AICreature* item)
  */
 void PikiHeadAI::TaneExec::act(AICreature* item)
 {
-	f32& health = item->mCurrentItemHealth;
+	f32& health = item->mSAICtx.mCurrentItemHealth;
 	health -= gsys->getFrameTime();
 	if (health < 0.0f) {
-		item->mStateMachine->transit(item, PIKIHEAD_Unk5);
+		item->mSAICtx.mStateMachine->transit(item, PIKIHEAD_Unk5);
 	}
 }
 
@@ -307,11 +307,11 @@ void PikiHeadAI::WaitInit::act(AICreature* item)
 	PikiHeadItem* obj = (PikiHeadItem*)item;
 
 	if (obj->mFlowerStage == Flower) {
-		item->mCurrentItemHealth = pikiMgr->mPikiParms->mPikiParms.mWiltTime() + gsys->getRand(1.0f) * 2.0f;
+		item->mSAICtx.mCurrentItemHealth = pikiMgr->mPikiParms->mPikiParms.mWiltTime() + gsys->getRand(1.0f) * 2.0f;
 	} else {
-		item->mCurrentItemHealth = pikiMgr->mPikiParms->mPikiParms.mGrowUpTime() + gsys->getRand(1.0f) * 2.0f;
+		item->mSAICtx.mCurrentItemHealth = pikiMgr->mPikiParms->mPikiParms.mGrowUpTime() + gsys->getRand(1.0f) * 2.0f;
 	}
-	item->mCounter = 0;
+	item->mSAICtx.mCounter = 0;
 }
 
 /**
@@ -323,20 +323,20 @@ void PikiHeadAI::WaitExec::act(AICreature* item)
 
 	PikiHeadItem* obj = (PikiHeadItem*)item;
 
-	f32& health = item->mCurrentItemHealth;
+	f32& health = item->mSAICtx.mCurrentItemHealth;
 	health -= gsys->getFrameTime();
 	if (health < 0.0f) {
 		if (obj->mFlowerStage == Flower) {
-			item->mStateMachine->transit(item, PIKIHEAD_Unk10);
+			item->mSAICtx.mStateMachine->transit(item, PIKIHEAD_Unk10);
 		} else {
-			item->mStateMachine->transit(item, PIKIHEAD_Unk7);
+			item->mSAICtx.mStateMachine->transit(item, PIKIHEAD_Unk7);
 		}
-	} else if (health < 2.0f && obj->mCounter == 0 && obj->mFlowerStage != Flower) {
+	} else if (health < 2.0f && obj->mSAICtx.mCounter == 0 && obj->mFlowerStage != Flower) {
 		Vector3f pos = obj->mSRT.t;
 		pos.y += 13.0f;
 		EffectParm parm(pos);
 		utEffectMgr->cast(KandoEffect::PikiGrowup1, parm);
-		obj->mCounter = 1;
+		obj->mSAICtx.mCounter = 1;
 	}
 }
 
@@ -368,7 +368,7 @@ void PikiHeadAI::GrowupedExec::act(AICreature* item)
  */
 void PikiHeadAI::GrowEffect::act(AICreature* item)
 {
-	item->mStateMachine->transit(item, PIKIHEAD_Wait);
+	item->mSAICtx.mStateMachine->transit(item, PIKIHEAD_Wait);
 }
 
 /**
@@ -378,8 +378,8 @@ void PikiHeadAI::KaretaInit::act(AICreature* item)
 {
 	PikiHeadItem* obj = (PikiHeadItem*)item;
 
-	item->mCurrentItemHealth = pikiMgr->mPikiParms->mPikiParms.mRebirthSeedTime() + 2.0f * gsys->getRand(1.0f);
-	obj->mFlowerStage        = Leaf;
+	item->mSAICtx.mCurrentItemHealth = pikiMgr->mPikiParms->mPikiParms.mRebirthSeedTime() + 2.0f * gsys->getRand(1.0f);
+	obj->mFlowerStage                = Leaf;
 }
 
 /**
@@ -387,10 +387,10 @@ void PikiHeadAI::KaretaInit::act(AICreature* item)
  */
 void PikiHeadAI::KaretaExec::act(AICreature* item)
 {
-	f32& health = item->mCurrentItemHealth;
+	f32& health = item->mSAICtx.mCurrentItemHealth;
 	health -= gsys->getFrameTime();
 	if (health < 0.0f) {
-		item->mStateMachine->transit(item, PIKIHEAD_Bury);
+		item->mSAICtx.mStateMachine->transit(item, PIKIHEAD_Bury);
 	}
 }
 
@@ -430,9 +430,9 @@ BombAI::BombAI()
  */
 void BombAI::SetInit::act(AICreature* item)
 {
-	item->mCurrentItemHealth = pikiMgr->mPikiParms->mPikiParms.mBombSetFuseTime() * (gsys->getRand(1.0f) * 0.05f + 1.0f);
-	item->mMaxItemHealth     = item->mCurrentItemHealth;
-	PRINT("BOMB * %f/%f\n", item->mCurrentItemHealth, item->mMaxItemHealth);
+	item->mSAICtx.mCurrentItemHealth = pikiMgr->mPikiParms->mPikiParms.mBombSetFuseTime() * (gsys->getRand(1.0f) * 0.05f + 1.0f);
+	item->mSAICtx.mMaxItemHealth     = item->mSAICtx.mCurrentItemHealth;
+	PRINT("BOMB * %f/%f\n", item->mSAICtx.mCurrentItemHealth, item->mSAICtx.mMaxItemHealth);
 
 	if (item->mObjType != OBJTYPE_Bomb) {
 		ERROR("this is not bomb %s\n", "setInit");
@@ -444,12 +444,12 @@ void BombAI::SetInit::act(AICreature* item)
  */
 void BombAI::SetExec::act(AICreature* item)
 {
-	item->mCurrentItemHealth -= gsys->getFrameTime();
-	PRINT("BOMB TIMER = %.1f\n", item->mCurrentItemHealth);
-	if (item->mCurrentItemHealth < 0.0f) {
+	item->mSAICtx.mCurrentItemHealth -= gsys->getFrameTime();
+	PRINT("BOMB TIMER = %.1f\n", item->mSAICtx.mCurrentItemHealth);
+	if (item->mSAICtx.mCurrentItemHealth < 0.0f) {
 		PRINT("send bomb event ... %x\n", item);
 		MsgUser msg(1);
-		item->mCurrAnimId = 0;
+		item->mSAICtx.mCurrAnimId = 0;
 		C_SAI(item)->procMsg(item, &msg);
 	}
 
@@ -477,7 +477,7 @@ void BombAI::BombInit::act(AICreature* item)
 	playerState->mResultFlags.setOn(zen::RESFLAG_YellowWithBomb);
 	rumbleMgr->start(RUMBLE_Unk8, 0, item->mSRT.t);
 	EffectParm parm(item->mSRT.t);
-	if (item->mCurrAnimId == 1) {
+	if (item->mSAICtx.mCurrAnimId == 1) {
 		utEffectMgr->cast(KandoEffect::BombLight, parm);
 		PRINT("USE LIGHTWEIGHT BOMB EFFECT\n");
 	} else {
@@ -489,7 +489,7 @@ void BombAI::BombInit::act(AICreature* item)
 		playerState->mDemoFlags.setTimer(1.5f, DEMOFLAG_FirstBombExplode, nullptr);
 	}
 	item->playEventSound(item, SE_BOMB);
-	item->mCurrentItemHealth = 0.0f;
+	item->mSAICtx.mCurrentItemHealth = 0.0f;
 
 	Iterator naviIt(naviMgr);
 	CI_LOOP(naviIt)
@@ -620,7 +620,7 @@ void BombAI::BombInit::act(AICreature* item)
  */
 void BombAI::BombExec::act(AICreature* item)
 {
-	item->mStateMachine->transit(item, BOMB_Die);
+	item->mSAICtx.mStateMachine->transit(item, BOMB_Die);
 }
 
 /**
@@ -628,7 +628,7 @@ void BombAI::BombExec::act(AICreature* item)
  */
 void BombAI::MizuInit::act(AICreature* item)
 {
-	item->mCurrentItemHealth = 1.0f;
+	item->mSAICtx.mCurrentItemHealth = 1.0f;
 }
 
 /**
@@ -636,11 +636,11 @@ void BombAI::MizuInit::act(AICreature* item)
  */
 void BombAI::MizuExec::act(AICreature* item)
 {
-	item->mCurrentItemHealth -= gsys->getFrameTime();
-	PRINT("bomb in water ! %f\n", item->mCurrentItemHealth);
-	f32 health = item->mCurrentItemHealth;
+	item->mSAICtx.mCurrentItemHealth -= gsys->getFrameTime();
+	PRINT("bomb in water ! %f\n", item->mSAICtx.mCurrentItemHealth);
+	f32 health = item->mSAICtx.mCurrentItemHealth;
 	if (health <= 0.0f) {
-		item->mStateMachine->transit(item, BOMB_Die);
+		item->mSAICtx.mStateMachine->transit(item, BOMB_Die);
 	}
 	item->mSRT.s.set(health, health, health);
 }
@@ -650,7 +650,7 @@ void BombAI::MizuExec::act(AICreature* item)
  */
 void BombAI::DieInit::act(AICreature* item)
 {
-	item->mCurrentItemHealth = 5.0f;
+	item->mSAICtx.mCurrentItemHealth = 5.0f;
 	item->mSRT.s.set(0.0f, 0.0f, 0.0f);
 }
 
@@ -661,8 +661,8 @@ void BombAI::DieExec::act(AICreature* item)
 {
 	f32 time = gsys->getFrameTime();
 	item->setMotionSpeed(0.0f);
-	item->mCurrentItemHealth -= time;
-	if (item->mCurrentItemHealth <= 0.0f) {
+	item->mSAICtx.mCurrentItemHealth -= time;
+	if (item->mSAICtx.mCurrentItemHealth <= 0.0f) {
 		item->kill(false);
 	}
 }
@@ -703,7 +703,7 @@ GoalAI::GoalAI()
  */
 bool GoalAI::NotFinished::satisfy(AICreature* item)
 {
-	if (item->mCurrAnimId > 0 || item->mCounter > 0) {
+	if (item->mSAICtx.mCurrAnimId > 0 || item->mSAICtx.mCounter > 0) {
 		return true;
 	}
 	return false;
@@ -835,7 +835,7 @@ void GoalAI::EmitPiki::act(AICreature* item)
 {
 	GoalItem* obj = (GoalItem*)item;
 
-	if (item->mCounter > 0) {
+	if (item->mSAICtx.mCounter > 0) {
 		Vector3f pos = item->mSRT.t;
 		pos.y += 110.0f;
 
@@ -847,10 +847,10 @@ void GoalAI::EmitPiki::act(AICreature* item)
 		effectMgr->create(EffectMgr::EFF_Onyon_FireworkMain, item->mSRT.t, nullptr, nullptr);
 		effectMgr->create(EffectMgr::EFF_Onyon_FireworkKisek, item->mSRT.t, nullptr, nullptr);
 		effectMgr->create(EffectMgr::EFF_Onyon_FireworkSmall, item->mSRT.t, nullptr, nullptr);
-		item->mCounter--;
+		item->mSAICtx.mCounter--;
 	}
 
-	if (item->mCurrAnimId > 0) {
+	if (item->mSAICtx.mCurrAnimId > 0) {
 		if (item->mObjType != OBJTYPE_Goal) {
 			char buf[256];
 			sprintf(buf, "%d : not goal", item->mObjType);
@@ -883,9 +883,9 @@ void GoalAI::EmitPiki::act(AICreature* item)
 			PRINT("COUNTER UP!\n");
 		}
 
-		obj->mCurrAnimId--;
+		obj->mSAICtx.mCurrAnimId--;
 	}
-	if (obj->mCurrAnimId == 0 && obj->mCounter == 0) {
+	if (obj->mSAICtx.mCurrAnimId == 0 && obj->mSAICtx.mCounter == 0) {
 		obj->finishMotion();
 	}
 
@@ -931,16 +931,16 @@ GemAI::GemAI()
  */
 void GemAI::RiseInit::act(AICreature* item)
 {
-	item->mCurrentItemHealth = 0.0f;
-	item->mMaxItemHealth     = 1.5f;
+	item->mSAICtx.mCurrentItemHealth = 0.0f;
+	item->mSAICtx.mMaxItemHealth     = 1.5f;
 	item->disableGravity();
 
 	Vector3f pos = item->mSRT.t;
 	EffectParm parm(pos);
 	utEffectMgr->cast(KandoEffect::Goal, parm);
-	item->playEventSound(item->mTargetCreature, SE_CONTAINER_PELLETIN);
-	item->mVelocity.y = 0.0f;
-	item->mCurrAnimId = 0;
+	item->playEventSound(item->mSAICtx.mTargetCreature, SE_CONTAINER_PELLETIN);
+	item->mVelocity.y         = 0.0f;
+	item->mSAICtx.mCurrAnimId = 0;
 }
 
 /**
@@ -948,34 +948,34 @@ void GemAI::RiseInit::act(AICreature* item)
  */
 void GemAI::RiseExec::act(AICreature* item)
 {
-	if (item->mTargetCreature->mObjType != OBJTYPE_Goal) {
+	if (item->mSAICtx.mTargetCreature->mObjType != OBJTYPE_Goal) {
 		ERROR("mail to good monkey!\n");
 	}
 
-	if (item->mMaxItemHealth > 0.0f) {
+	if (item->mSAICtx.mMaxItemHealth > 0.0f) {
 		item->mVelocity.set(0.0f, 0.0f, 0.0f);
-		item->mMaxItemHealth -= gsys->getFrameTime();
+		item->mSAICtx.mMaxItemHealth -= gsys->getFrameTime();
 		return;
 	}
 
-	if (item->mCurrAnimId == 0) {
-		item->mCurrAnimId = 1;
+	if (item->mSAICtx.mCurrAnimId == 0) {
+		item->mSAICtx.mCurrAnimId = 1;
 	}
 
-	Vector3f diff = item->mTargetCreature->mSRT.t - item->mSRT.t;
+	Vector3f diff = item->mSAICtx.mTargetCreature->mSRT.t - item->mSRT.t;
 	diff.y        = 0.0f;
 	diff.normalise();
 	diff              = diff * 60.0f;
 	item->mVelocity.x = diff.x;
 	item->mVelocity.z = diff.z;
-	item->mCurrentItemHealth += gsys->getFrameTime() * item->mVelocity.y;
+	item->mSAICtx.mCurrentItemHealth += gsys->getFrameTime() * item->mVelocity.y;
 	item->mVelocity.y += gsys->getFrameTime() * 720.0f;
 
-	f32 div = item->mCurrentItemHealth / 74.0f;
+	f32 div = item->mSAICtx.mCurrentItemHealth / 74.0f;
 	f32 b   = 1.0f - div * 1.0f;
 	item->mSRT.s.set(b, b, b);
 	if (div >= 1.0f) {
-		item->mStateMachine->transit(item, GEM_Die);
+		item->mSAICtx.mStateMachine->transit(item, GEM_Die);
 		GameStat::getPellets.inc();
 	}
 }
@@ -986,7 +986,7 @@ void GemAI::RiseExec::act(AICreature* item)
 void GemAI::Die::act(AICreature* item)
 {
 	GemItem* obj   = (GemItem*)item;
-	GoalItem* goal = (GoalItem*)item->mTargetCreature;
+	GoalItem* goal = (GoalItem*)item->mSAICtx.mTargetCreature;
 	int seeds;
 	if (goal->mOnionColour == obj->mColor) {
 		seeds = obj->mMatchingSeeds;
@@ -995,9 +995,9 @@ void GemAI::Die::act(AICreature* item)
 	}
 	MsgUser msg(0);
 	PRINT("gem item : ### add %d pikis\n", seeds);
-	goal->mCurrAnimId += seeds;
+	goal->mSAICtx.mCurrAnimId += seeds;
 
-	if (goal->mStateMachine) {
+	if (goal->mSAICtx.mStateMachine) {
 		C_SAI(goal)->procMsg(goal, &msg);
 	}
 	obj->mIsAlive = false;
@@ -1033,7 +1033,7 @@ WaterAI::WaterAI()
  */
 bool WaterAI::CollideChar::satisfy(AICreature* item)
 {
-	if (item->mCollidingCreature->mObjType == OBJTYPE_Navi) {
+	if (item->mSAICtx.mCollidingCreature->mObjType == OBJTYPE_Navi) {
 		seSystem->playPlayerSe(SE_PLAYER_TOUCHHONEY);
 		return true;
 	}

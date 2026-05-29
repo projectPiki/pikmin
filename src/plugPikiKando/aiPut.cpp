@@ -333,7 +333,7 @@ void ActPutBomb::initPut()
 	held->mVelocity.add(vel);
 	MsgUser msg(0);
 	BombItem* bomb = static_cast<BombItem*>(held);
-	static_cast<SimpleAI*>(bomb->mStateMachine)->procMsg(bomb, &msg);
+	C_SAI(bomb)->procMsg(bomb, &msg);
 	mAnimationFinished = false;
 	mState             = STATE_Put;
 }
@@ -368,10 +368,10 @@ int ActPutBomb::exeThrow()
 			InteractRelease release(mPiki, 1.0f);
 			Creature* held = mPiki->getHoldCreature();
 			held->stimulate(release);
-			held->mVelocity       = throwVel;
-			held->mTargetVelocity = throwVel;
-			BombItem* bomb        = static_cast<BombItem*>(held);
-			bomb->mCurrAnimId     = 0;
+			held->mVelocity           = throwVel;
+			held->mTargetVelocity     = throwVel;
+			BombItem* bomb            = static_cast<BombItem*>(held);
+			bomb->mSAICtx.mCurrAnimId = 0;
 			C_SAI(bomb)->start(bomb, BombAI::BOMB_Unk1);
 			bomb->disableFixPos();
 

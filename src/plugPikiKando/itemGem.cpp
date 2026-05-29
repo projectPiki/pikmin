@@ -73,11 +73,11 @@ GemItem::GemItem(CreatureProp* props, int gemType, Shape** shapes, Shape**, Shap
     : ItemCreature(OBJTYPE_GemItem, props, nullptr)
     , mGemCollInfo(0)
 {
-	mGemType         = gemType;
-	mColor           = 0;
-	mItemShapeObject = itemMgr->getPelletShapeObject(mColor, gemType);
-	mStateMachine    = ai;
-	mSizeScale       = sizeScale;
+	mGemType              = gemType;
+	mColor                = 0;
+	mItemShapeObject      = itemMgr->getPelletShapeObject(mColor, gemType);
+	mSAICtx.mStateMachine = ai;
+	mSizeScale            = sizeScale;
 
 	const GemTable& tableEntry = table[mGemType];
 
