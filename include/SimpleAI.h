@@ -225,8 +225,6 @@ struct SimpleAI : public StateMachine<AICreature> {
 	void start(AICreature*, int);
 	void checkEvent(AICreature*);
 
-	inline SAIState* getState(int idx) { return static_cast<SAIState*>(mStates[idx]); }
-
 	// _00     = VTBL
 	// _00-_1C = StateMachine
 };
