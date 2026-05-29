@@ -463,7 +463,7 @@ void ActBridge::newInitWork()
 	mCollisionCount = 0;
 	_2A             = 0;
 
-	if (mActionCounter) {
+	if (mActionCounter != 0) {
 		return;
 	}
 

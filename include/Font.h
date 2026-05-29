@@ -11,6 +11,8 @@ struct Texture;
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x1C.
  */
 struct FontChar {
 	FontChar()

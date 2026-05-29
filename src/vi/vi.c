@@ -469,7 +469,7 @@ void VIInit(void)
 	HorVer.panSizeX    = 0x280;
 	HorVer.panSizeY    = 0x1E0;
 	HorVer.xfbMode     = 0;
-	dspCfg             = __VIRegs[1];
+	dspCfg             = __VIRegs[VI_DISP_CONFIG];
 	HorVer.nonInter    = (s32)((dspCfg >> 2U) & 1);
 	HorVer.tv          = (u32)((dspCfg >> 8U) & 3);
 	tv                 = (HorVer.tv == 3) ? 0 : HorVer.tv;
@@ -482,10 +482,10 @@ void VIInit(void)
 	HorVer.isBlack     = 1;
 	HorVer.is3D        = 0;
 	OSInitThreadQueue(&retraceQueue);
-	value = __VIRegs[24];
+	value = __VIRegs[VI_DISP_INT_0];
 	value &= ~0x8000;
 	value        = (u16)value;
-	__VIRegs[24] = value;
+	__VIRegs[VI_DISP_INT_0] = value;
 
 	value                   = __VIRegs[VI_DISP_INT_1];
 	value                   = (((u32)(value)) & ~0x00008000) | (((0)) << 15);
@@ -993,11 +993,11 @@ static u32 getCurrentHalfLine(void)
 	tm = HorVer.timing;
 #endif
 
-	vcount = __VIRegs[22] & 0x7FF;
+	vcount = __VIRegs[VI_VERT_COUNT] & 0x7FF;
 	do {
 		vcount0 = vcount;
-		hcount  = __VIRegs[23] & 0x7FF;
-		vcount  = __VIRegs[22] & 0x7FF;
+		hcount  = __VIRegs[VI_HORIZ_COUNT] & 0x7FF;
+		vcount  = __VIRegs[VI_VERT_COUNT] & 0x7FF;
 	} while (vcount0 != vcount);
 
 #if OS_BUILD_VERSION >= 20011112L
@@ -1024,10 +1024,10 @@ static u32 getCurrentFieldEvenOdd()
 		return 1;
 	}
 #else
-	if (__VIRegs[54] & 1) {
+	if (__VIRegs[VI_CLOCK_SEL] & 1) {
 		tm = getTiming(VI_TVMODE_NTSC_PROG);
 	} else {
-		value  = __VIRegs[1];
+		value  = __VIRegs[VI_DISP_CONFIG];
 		nin    = ((value >> 2U) & 1);
 		fmt    = ((value >> 8U) & 3);
 		tvMode = (fmt << 2) + nin;
