@@ -168,7 +168,7 @@ SAIArrow* SimpleAI::addArrow(int stateIdId, SAIEvent* event, int nextStateId)
 		return nullptr;
 	}
 
-	SAIState* state  = getState(stateIdx);
+	SAIState* state  = static_cast<SAIState*>(mStates[stateIdx]);
 	arrow->mArrowIdx = state->mArrowCount;
 	state->mRootArrow.add(arrow);
 	state->mArrowCount++;
