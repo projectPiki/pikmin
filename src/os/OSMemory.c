@@ -1,6 +1,7 @@
 #include "types.h"
 
 #include "Dolphin/OS/OSError.h"
+#include "Dolphin/hw_regs.h"
 #include "Dolphin/os.h"
 
 #define TRUNC(n, a) (((u32)(n)) & ~((a) - 1))

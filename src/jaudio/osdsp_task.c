@@ -1,4 +1,5 @@
 #include "Dolphin/dsp.h"
+#include "Dolphin/hw_regs.h"
 #include "Dolphin/os.h"
 #include "jaudio/dspproc.h"
 #include "jaudio/dummyprobe.h"

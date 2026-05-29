@@ -1,4 +1,5 @@
 #include "Dolphin/card.h"
+#include "Dolphin/hw_regs.h"
 #include <stddef.h>
 #include <string.h>
 

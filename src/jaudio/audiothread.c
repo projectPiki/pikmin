@@ -2,6 +2,7 @@
 #include "Dolphin/OS/OSThread.h"
 #include "Dolphin/ai.h"
 #include "Dolphin/dsp.h"
+#include "Dolphin/hw_regs.h"
 #include "Dolphin/os.h"
 #include "jaudio/aictrl.h"
 #include "jaudio/audiocommon.h"
