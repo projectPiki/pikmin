@@ -167,9 +167,7 @@ void Texture::read(RandomAccessStream& input)
 		TexImg* img = new TexImg;
 		img->importBti(this, input, nullptr);
 	} else {
-		// this is wrong, but I cant figure it out
-		size_t len = strlen(input.mPath);
-		ERROR("Unknown texture extension (%s)!!\n", input.mPath - 3 + len);
+		ERROR("Unknown texture extension (%s)!!\n", strlen(input.mPath) - 3 + input.mPath);
 	}
 	gsys->addTexture(this, input.mPath);
 }
