@@ -650,9 +650,6 @@ bool PlayerState::hasUfoParts(u32 idx)
  */
 void PlayerState::update()
 {
-
-	STACK_PAD_VAR(2);
-
 	bool isCM = isChallengeMode();
 	if (!isCM) {
 		mDemoFlags.update();
@@ -664,15 +661,11 @@ void PlayerState::update()
 			GameStat::update();
 			mLastUpdatedTime = time;
 
-			// When I'm in a WTF competition and my opponent is this
-			int* b = (int*)(&GameStat::allPikis) + Blue;
-			int* r = (int*)(&GameStat::allPikis) + Red;
-			int* y = (int*)(&GameStat::allPikis) + Yellow;
-
-			mPerHourGraph.set(mLastUpdatedTime, Blue, *b);
-			mPerHourGraph.set(mLastUpdatedTime, Red, *r);
-			mPerHourGraph.set(mLastUpdatedTime, Yellow, *y);
-			PRINT("record (%d %d %d) = %d\n", GameStat::allPikis, GameStat::allPikis[0], GameStat::allPikis[1], GameStat::allPikis[2]);
+			mPerHourGraph.set(mLastUpdatedTime, Blue, GameStat::allPikis[Blue]);
+			mPerHourGraph.set(mLastUpdatedTime, Red, GameStat::allPikis[Red]);
+			mPerHourGraph.set(mLastUpdatedTime, Yellow, GameStat::allPikis[Yellow]);
+			PRINT("record (%d %d %d) = %d\n", GameStat::allPikis[Blue], GameStat::allPikis[Red], GameStat::allPikis[Yellow],
+			      (int)GameStat::allPikis);
 		}
 	}
 }

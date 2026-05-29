@@ -498,7 +498,7 @@ config.libs = [
             Object(Equivalent, "plugPikiKando/simpleAI.cpp"),
             Object(Matching, "plugPikiKando/formationMgr.cpp"),
             Object(Matching, "plugPikiKando/globalShapes.cpp"),
-            Object(not MatchingFor("GPIJ01_01", "GPIJ01_02", "DPIJ01_PIKIDEMO"), "plugPikiKando/playerState.cpp"),
+            Object(Matching, "plugPikiKando/playerState.cpp"),
             Object(Matching, "plugPikiKando/gameDemo.cpp"),
             Object(Matching, "plugPikiKando/demoInvoker.cpp"),
             Object(Matching, "plugPikiKando/demoEvent.cpp"),
