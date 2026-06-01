@@ -449,11 +449,11 @@ void SISetCommand(s32 chan, u32 command)
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 000014
+ * @note UNUSED Size: 000014 (Matching by size)
  */
-void SIGetCommand(void)
+u32 SIGetCommand(s32 chan)
 {
-	// UNUSED FUNCTION
+	return __SIRegs[3 * chan];
 }
 
 /**

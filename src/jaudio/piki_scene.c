@@ -467,7 +467,7 @@ void Jac_PrepareDemoSound(u32 id)
 		} while (stop_ready == 0);
 	}
 	DVDT_ExtendPath(buffer, filelist[id]);
-	StreamAudio_Start(0, id, buffer, 1, 0, 0);
+	StreamAudio_Start(0, id, buffer, TRUE, FALSE, NULL);
 	Jac_UpdateStreamLevel();
 	current_prepare = id;
 }

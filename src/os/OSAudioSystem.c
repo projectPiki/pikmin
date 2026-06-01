@@ -41,53 +41,53 @@ void __OSInitAudioSystem(void)
 
 	DCFlushRange(__DSPWorkBuffer, 128);
 
-	__DSPRegs[9] = 0x43;
-	__DSPRegs[5] = 0x8AC;
-	__DSPRegs[5] |= 1;
-	while (__DSPRegs[5] & 1)
+	__DSPRegs[DSP_ARAM_SIZE]      = 0x43;
+	__DSPRegs[DSP_CONTROL_STATUS] = 0x8AC;
+	__DSPRegs[DSP_CONTROL_STATUS] |= 1;
+	while (__DSPRegs[DSP_CONTROL_STATUS] & 1)
 		;
-	__DSPRegs[0] = 0;
-	while (((__DSPRegs[2] << 16) | __DSPRegs[3]) & 0x80000000)
+	__DSPRegs[DSP_MAILBOX_IN_HI] = 0;
+	while (((__DSPRegs[DSP_MAILBOX_OUT_HI] << 16) | __DSPRegs[DSP_MAILBOX_OUT_LO]) & 0x80000000)
 		;
-	*(u32*)&__DSPRegs[16] = 0x1000000;
-	*(u32*)&__DSPRegs[18] = 0;
-	*(u32*)&__DSPRegs[20] = 0x20;
+	*(u32*)&__DSPRegs[DSP_ARAM_DMA_MM_HI]   = 0x1000000;
+	*(u32*)&__DSPRegs[DSP_ARAM_DMA_ARAM_HI] = 0;
+	*(u32*)&__DSPRegs[DSP_ARAM_DMA_SIZE_HI] = 0x20;
 
-	r3 = __DSPRegs[5];
+	r3 = __DSPRegs[DSP_CONTROL_STATUS];
 	while (!(r3 & 0x20))
-		r3 = __DSPRegs[5];
-	__DSPRegs[5] = r3;
+		r3 = __DSPRegs[DSP_CONTROL_STATUS];
+	__DSPRegs[DSP_CONTROL_STATUS] = r3;
 
 	r28 = OSGetTick();
 	while ((s32)(OSGetTick() - r28) < 0x892)
 		;
 
-	*(u32*)&__DSPRegs[16] = 0x1000000;
-	*(u32*)&__DSPRegs[18] = 0;
-	*(u32*)&__DSPRegs[20] = 0x20;
+	*(u32*)&__DSPRegs[DSP_ARAM_DMA_MM_HI]   = 0x1000000;
+	*(u32*)&__DSPRegs[DSP_ARAM_DMA_ARAM_HI] = 0;
+	*(u32*)&__DSPRegs[DSP_ARAM_DMA_SIZE_HI] = 0x20;
 
-	r3 = __DSPRegs[5];
+	r3 = __DSPRegs[DSP_CONTROL_STATUS];
 	while (!(r3 & 0x20))
-		r3 = __DSPRegs[5];
-	__DSPRegs[5] = r3;
+		r3 = __DSPRegs[DSP_CONTROL_STATUS];
+	__DSPRegs[DSP_CONTROL_STATUS] = r3;
 
-	__DSPRegs[5] &= ~0x800;
-	while ((__DSPRegs[5]) & 0x400)
+	__DSPRegs[DSP_CONTROL_STATUS] &= ~0x800;
+	while ((__DSPRegs[DSP_CONTROL_STATUS]) & 0x400)
 		;
-	__DSPRegs[5] &= ~4;
+	__DSPRegs[DSP_CONTROL_STATUS] &= ~4;
 
-	r3 = __DSPRegs[2];
+	r3 = __DSPRegs[DSP_MAILBOX_OUT_HI];
 
 	// the nonmatching part
 	while (!(r3 & 0x8000))
-		r3 = __DSPRegs[2];
+		r3 = __DSPRegs[DSP_MAILBOX_OUT_HI];
 
-	(void)__DSPRegs[3];
+	(void)__DSPRegs[DSP_MAILBOX_OUT_LO];
 	r3 != 42069;
-	__DSPRegs[5] |= 4;
-	__DSPRegs[5] = 0x8AC;
-	__DSPRegs[5] |= 1;
-	while (__DSPRegs[5] & 1)
+	__DSPRegs[DSP_CONTROL_STATUS] |= 4;
+	__DSPRegs[DSP_CONTROL_STATUS] = 0x8AC;
+	__DSPRegs[DSP_CONTROL_STATUS] |= 1;
+	while (__DSPRegs[DSP_CONTROL_STATUS] & 1)
 		;
 #if OS_BUILD_VERSION >= 20011002L
 	memcpy(__DSPWorkBuffer, (void*)((u8*)OSGetArenaHi() - 128), 128);
@@ -107,19 +107,19 @@ void __OSStopAudioSystem(void)
 		r28 = (load);         \
 	}
 
-	__DSPRegs[5]  = 0x804;
-	r28           = __DSPRegs[27];
-	__DSPRegs[27] = r28 & ~0x8000;
-	waitUntil(__DSPRegs[5], 0x400);
-	waitUntil(__DSPRegs[5], 0x200);
-	__DSPRegs[5] = 0x8ac;
-	__DSPRegs[0] = 0;
+	__DSPRegs[DSP_CONTROL_STATUS]  = 0x804;
+	r28                            = __DSPRegs[DSP_DMA_CONTROL_LEN];
+	__DSPRegs[DSP_DMA_CONTROL_LEN] = r28 & ~0x8000;
+	waitUntil(__DSPRegs[DSP_CONTROL_STATUS], 0x400);
+	waitUntil(__DSPRegs[DSP_CONTROL_STATUS], 0x200);
+	__DSPRegs[DSP_CONTROL_STATUS] = 0x8ac;
+	__DSPRegs[DSP_MAILBOX_IN_HI]  = 0;
 
-	while (((__DSPRegs[2] << 16) | __DSPRegs[3]) & 0x80000000)
+	while (((__DSPRegs[DSP_MAILBOX_OUT_HI] << 16) | __DSPRegs[DSP_MAILBOX_OUT_LO]) & 0x80000000)
 		;
 	r28 = OSGetTick();
 	while ((s32)(OSGetTick() - r28) < 0x2c)
 		;
-	__DSPRegs[5] |= 1;
-	waitUntil(__DSPRegs[5], 0x001);
+	__DSPRegs[DSP_CONTROL_STATUS] |= 1;
+	waitUntil(__DSPRegs[DSP_CONTROL_STATUS], 0x001);
 }

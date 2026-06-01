@@ -53,8 +53,8 @@ dspch_* AllocDSPchannel(u32 param_1, u32 param_2)
 
 	s32 i;
 	STACK_PAD_VAR(1);
-	u32* p2 = &param_2;
-	s32* ip = &i;
+	u32* REF_param_2 = &param_2;
+	s32* REF_i       = &i;
 	if (param_1 == 0) {
 
 		for (i = 0; i < DSPCH_LENGTH; ++i) {

@@ -109,10 +109,11 @@ static s32 Jal_FrameWork(void* a)
 
 	for (curr = queue_list; curr; curr = curr->next) {
 #if defined(VERSION_GPIJ01_01) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_DPIJ01_PIKIDEMO)
-		if (Jam_CheckPortIndirect(curr->track, curr->_64, 1) == 1) {
+		if (Jam_CheckPortIndirect(curr->track, curr->_64, 1) == 1)
 #else
-		if (Jam_CheckPortAppDirect(curr->track, curr->_64, 1) == 1) {
+		if (Jam_CheckPortAppDirect(curr->track, curr->_64, 1) == 1)
 #endif
+		{
 			if (Jac_ReceiveMessage_Fast(&curr->msgQueue, &message) == 1) {
 				Jam_WritePortAppDirect(curr->track, curr->_64, (u16)message);
 			}

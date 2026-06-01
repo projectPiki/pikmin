@@ -235,7 +235,7 @@ static s32 DoMount(s32 channel)
 
 			sram     = __OSLockSramEx();
 			vendorID = *(u16*)sram->flashID[channel];
-			__OSUnlockSramEx(0);
+			__OSUnlockSramEx(FALSE);
 
 			if (__CARDVendorID == 0xFFFF || vendorID != __CARDVendorID) {
 				result = CARD_RESULT_WRONGDEVICE;

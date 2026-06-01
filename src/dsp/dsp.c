@@ -143,15 +143,17 @@ void DSPInit(void)
 	__OSSetInterruptHandler(7, __DSPHandler);
 	__OSUnmaskInterrupts(OS_INTERRUPTMASK_DSP_DSP);
 
-	tmp          = __DSPRegs[5];
-	tmp          = (tmp & ~0xA8) | 0x800;
-	__DSPRegs[5] = tmp;
+	tmp                           = __DSPRegs[DSP_CONTROL_STATUS];
+	__DSPRegs[DSP_CONTROL_STATUS] = (tmp & ~0xA8) | 0x800;
 
-	tmp          = __DSPRegs[5];
-	__DSPRegs[5] = tmp = tmp & ~0xAC;
+	tmp                           = __DSPRegs[DSP_CONTROL_STATUS];
+	__DSPRegs[DSP_CONTROL_STATUS] = tmp & ~0xAC;
 
-	__DSP_first_task = __DSP_last_task = __DSP_curr_task = __DSP_tmp_task = NULL;
-	__DSP_init_flag                                                       = 1;
+	__DSP_tmp_task   = NULL;
+	__DSP_curr_task  = NULL;
+	__DSP_last_task  = NULL;
+	__DSP_first_task = NULL;
+	__DSP_init_flag  = 1;
 
 	OSRestoreInterrupts(old);
 }

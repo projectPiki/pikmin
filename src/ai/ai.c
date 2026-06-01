@@ -354,8 +354,8 @@ static void __AISHandler(s16 interrupt, OSContext* context)
 static void __AIDHandler(s16 interrupt, OSContext* context)
 {
 	OSContext tempContext;
-	u32 temp     = __DSPRegs[5];
-	__DSPRegs[5] = (temp & ~0xA0) | 8;
+	u32 temp                      = __DSPRegs[DSP_CONTROL_STATUS];
+	__DSPRegs[DSP_CONTROL_STATUS] = (temp & ~0xA0) | 8;
 	OSClearContext(&tempContext);
 	OSSetCurrentContext(&tempContext);
 	if (__AID_Callback) {

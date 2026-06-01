@@ -179,6 +179,7 @@ typedef u32 HWND;
 #define IS_NOT_ALIGNED(X, N) (((X) & ((N) - 1)) != 0)       // True if X is not aligned to N bytes, else false
 #define ATTRIBUTE_ALIGN(num) __attribute__((aligned(num)))  // Align object to num bytes (num should be power of two)
 
+// Makes the compiler averse to using that register for the entire function.
 #define BUMP_REGISTER(reg) TERNARY_BUILD_MATCHING(MACRO_ARG({ asm { mr reg, reg } }), (void)0)
 
 // clang-format off

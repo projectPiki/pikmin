@@ -348,7 +348,7 @@ enum {
 /**
  * @brief FABRICATED - No other class we currently know of has a virtual table like this.
  */
-struct System_Class_250 {
+struct SystemClass250 {
 	virtual void method(Graphics& gfx) = 0; // _00
 
 	// _00     = VTBL
@@ -420,7 +420,7 @@ struct System : public StdSystem {
 	u32 mHeapStart;                                  // _244
 	u32 mHeapEnd;                                    // _248
 	Graphics* mDGXGfx;                               // _24C, cast to DGXGraphics in DOL
-	System_Class_250* _250;                          // _250, a vestigial pointer related to `System::halt`
+	SystemClass250* _250;                            // _250, a vestigial pointer related to `System::halt`
 	Delegate1<System, Graphics&>* mDvdErrorCallback; // _254
 	int mDvdErrorCode;                               // _258
 	u32 mDvdBufferSize;                              // _25C
