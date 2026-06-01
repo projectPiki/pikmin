@@ -52,31 +52,47 @@ void Texture::offsetGLtoGX(int, int)
 
 /**
  * @todo: Documentation
+ * @note NONMATCHING
  */
 u8 Texture::getAlpha(int x, int y)
 {
+	// These two switch cases seem like they should contain identical math, with the only difference being the size of a pixel (u8 vs u16).
 	switch (mTexFormat) {
 	case TEX_FMT_IA4:
 	{
+		// int a    = (x / mTileSizeX * mTileSizeX) * mTileSizeY;
+		// int b    = (x % mTileSizeX);
+		// int c    = (y / mTileSizeY * mTileSizeY) * (mWidth / mTileSizeX * mTileSizeX);
+		// int d    = (y % mTileSizeY) * mTileSizeX;
+		// u8 pixel = ((u8*)mPixelData)[a + b + d + c];
+
 		int tileArea = mTileSizeX * mTileSizeY;
 		int x2       = x / mTileSizeX;
 		int y2       = y / mTileSizeY;
-		return ((u8*)mPixelData)[x2 * tileArea + (x % mTileSizeX) + mTileSizeX * (y % mTileSizeY) + y2 * ((mWidth / mTileSizeX) * tileArea)]
-		     & 0xF0;
+		u8 pixel
+		    = ((u8*)mPixelData)[x2 * tileArea + (x % mTileSizeX) + mTileSizeX * (y % mTileSizeY) + y2 * ((mWidth / mTileSizeX) * tileArea)];
+
+		return pixel & 0xF0;
 	}
-	default:
+	default: // TEX_FMT_RGB5A3 assumed
 	{
+		// int a     = (x / mTileSizeX * mTileSizeX) * mTileSizeY;
+		// int b     = (x % mTileSizeX);
+		// int c     = (y / mTileSizeY * mTileSizeY) * (mWidth / mTileSizeX * mTileSizeX);
+		// int d     = (y % mTileSizeY) * mTileSizeX;
+		// u16 pixel = ((u16*)mPixelData)[a + b + d + c];
+
 		int tileArea = mTileSizeX * mTileSizeY;
 		int blockX   = (x / mTileSizeX) * (mWidth / mTileSizeX) * tileArea;
 		int blockY   = (y / mTileSizeY) * tileArea;
 		x %= mTileSizeX;
 		y %= mTileSizeY;
-		u16 alpha = ((u16*)mPixelData)[blockX + x + mTileSizeX * y + blockY];
+		u16 pixel = ((u16*)mPixelData)[blockX + x + mTileSizeX * y + blockY];
 
-		if (alpha & 0x8000) {
+		if (pixel & 0x8000) {
 			return 255;
 		}
-		return (alpha >> 7) & 0xE0;
+		return (pixel >> 7) & 0xE0;
 	}
 	}
 
@@ -147,12 +163,49 @@ u8 Texture::getAlpha(int x, int y)
 /**
  * @todo: Documentation
  * @note UNUSED Size: 0000D4
+ * @note NONMATCHING
  */
-u8 Texture::getRed(int, int)
+u8 Texture::getRed(int x, int y)
 {
-	// TODO: this is present in JPN Demo
+	// These two switch cases seem like they should contain identical math, with the only difference being the size of a pixel (u8 vs u16).
+	switch (mTexFormat) {
+	case TEX_FMT_IA4:
+	{
+		// int a    = (x / mTileSizeX * mTileSizeX) * mTileSizeY;
+		// int b    = (x % mTileSizeX);
+		// int c    = (y / mTileSizeY * mTileSizeY) * (mWidth / mTileSizeX * mTileSizeX);
+		// int d    = (y % mTileSizeY) * mTileSizeX;
+		// u8 pixel = ((u8*)mPixelData)[a + b + d + c];
 
-	// UNUSED FUNCTION
+		int tileArea = mTileSizeX * mTileSizeY;
+		int x2       = x / mTileSizeX;
+		int y2       = y / mTileSizeY;
+		u8 pixel
+		    = ((u8*)mPixelData)[x2 * tileArea + (x % mTileSizeX) + mTileSizeX * (y % mTileSizeY) + y2 * ((mWidth / mTileSizeX) * tileArea)];
+
+		return pixel & 0x0F;
+	}
+	default: // TEX_FMT_RGB5A3 assumed
+	{
+		// int a     = (x / mTileSizeX * mTileSizeX) * mTileSizeY;
+		// int b     = (x % mTileSizeX);
+		// int c     = (y / mTileSizeY * mTileSizeY) * (mWidth / mTileSizeX * mTileSizeX);
+		// int d     = (y % mTileSizeY) * mTileSizeX;
+		// u16 pixel = ((u16*)mPixelData)[a + b + d + c];
+
+		int tileArea = mTileSizeX * mTileSizeY;
+		int blockX   = (x / mTileSizeX) * (mWidth / mTileSizeX) * tileArea;
+		int blockY   = (y / mTileSizeY) * tileArea;
+		x %= mTileSizeX;
+		y %= mTileSizeY;
+		u16 pixel = ((u16*)mPixelData)[blockX + x + mTileSizeX * y + blockY];
+
+		if (pixel & 0x8000) {
+			return (pixel & 0x7c00) >> 7;
+		}
+		return (pixel & 0x0f00) >> 4;
+	}
+	}
 }
 
 /**
