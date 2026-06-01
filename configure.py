@@ -522,7 +522,7 @@ config.libs = [
             Object(Matching, "plugPikiKando/fastGrid.cpp"),
             Object(Matching, "plugPikiKando/ropeCreature.cpp"),
             Object(Matching, "plugPikiKando/objectTypes.cpp"),
-            Object(not MatchingFor("DPIJ01_PIKIDEMO"), "plugPikiKando/pelletMgr.cpp"),
+            Object(Matching, "plugPikiKando/pelletMgr.cpp"),
             Object(Matching, "plugPikiKando/animPellet.cpp"),
             Object(Matching, "plugPikiKando/genPellet.cpp"),
             Object(Matching, "plugPikiKando/pelletState.cpp"),
