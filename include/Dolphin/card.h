@@ -202,10 +202,18 @@ struct CARDDecodeParameters {
 };
 
 // Enum for 'permission' in CARDDir.
-typedef enum { FilePermPublic = 0x2, FilePermNoCopy = 0x4, FilePermNoMove = 0x8 } CARDFilePermissions;
+typedef enum {
+	FilePermPublic = 0x2,
+	FilePermNoCopy = 0x4,
+	FilePermNoMove = 0x8,
+} CARDFilePermissions;
 
 // Enum for banner format in CARDDir.
-typedef enum { BannerColorCI8 = 0x1, BannerPresent = 0x2, IconAnimationPingPong = 0x4 } CARDBannerFlag;
+typedef enum {
+	BannerColorCI8        = 0x1,
+	BannerPresent         = 0x2,
+	IconAnimationPingPong = 0x4,
+} CARDBannerFlag;
 
 // Managers for both memory card slots (A and B).
 extern CARDControl __CARDBlock[2];

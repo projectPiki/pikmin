@@ -778,7 +778,7 @@ u32 __ExchangeRegisterValue(seqp_* track, u8 reg)
 {
 	u32 res;
 #if defined(VERSION_GPIJ01_01)
-	u8* refReg = &reg;
+	u8* REF_reg = &reg;
 #endif
 	if (reg < 64) {
 		res = Jam_ReadReg32(track, reg);
@@ -786,7 +786,7 @@ u32 __ExchangeRegisterValue(seqp_* track, u8 reg)
 		res = track->trackPort[reg - 64].value;
 	}
 #if defined(VERSION_GPIJ01_01)
-	u32* refRes = &res;
+	u32* REF_res = &res;
 #endif
 	return res;
 }

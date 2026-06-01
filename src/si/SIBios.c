@@ -46,10 +46,10 @@ static void SIClearTCInterrupt()
 {
 	u32 reg;
 
-	reg = __SIRegs[13];
+	reg = __SIRegs[SI_CC_STAT];
 	reg |= 0x80000000;
 	reg &= ~0x00000001;
-	__SIRegs[13] = reg;
+	__SIRegs[SI_CC_STAT] = reg;
 }
 
 static u32 CompleteTransfer()
@@ -59,7 +59,7 @@ static u32 CompleteTransfer()
 	u32 rLen;
 	u8* input;
 
-	sr = __SIRegs[14];
+	sr = __SIRegs[SI_STAT];
 
 	SIClearTCInterrupt();
 
@@ -70,19 +70,19 @@ static u32 CompleteTransfer()
 
 		rLen = Si.inputBytes / 4;
 		for (i = 0; i < rLen; i++) {
-			*(u32*)input = __SIRegs[32 + i];
+			*(u32*)input = __SIRegs[SI_IO_BUFFER + i];
 			input += 4;
 		}
 
 		rLen = Si.inputBytes & 3;
 		if (rLen) {
-			u32 temp = __SIRegs[32 + i];
+			u32 temp = __SIRegs[SI_IO_BUFFER + i];
 			for (i = 0; i < rLen; i++) {
 				*input++ = (u8)((temp >> ((3 - i) * 8)) & 0xff);
 			}
 		}
 
-		if (__SIRegs[13] & 0x20000000) {
+		if (__SIRegs[SI_CC_STAT] & 0x20000000) {
 			sr >>= 8 * (3 - Si.chan);
 			sr &= 0xf;
 
@@ -125,7 +125,7 @@ static void SIInterruptHandler(__OSInterrupt interrupt, OSContext* context)
 {
 	u32 reg;
 
-	reg = __SIRegs[13];
+	reg = __SIRegs[SI_CC_STAT];
 
 	if ((reg & 0xc0000000) == 0xc0000000) {
 		s32 chan;
@@ -143,9 +143,9 @@ static void SIInterruptHandler(__OSInterrupt interrupt, OSContext* context)
 			callback(chan, sr, context);
 		}
 
-		sr = __SIRegs[14];
+		sr = __SIRegs[SI_STAT];
 		sr &= 0xf000000 >> (8 * chan);
-		__SIRegs[14] = sr;
+		__SIRegs[SI_STAT] = sr;
 
 		if (Type[chan] == SI_ERROR_BUSY && !SIIsChanBusy(chan)) {
 			static u32 cmdTypeAndStatus = 0 << 24;
@@ -197,7 +197,7 @@ static BOOL SIEnablePollingInterrupt(BOOL enable)
 	int i;
 
 	enabled = OSDisableInterrupts();
-	reg     = __SIRegs[13];
+	reg     = __SIRegs[SI_CC_STAT];
 	rc      = (reg & 0x08000000) ? TRUE : FALSE;
 	if (enable) {
 		reg |= 0x08000000;
@@ -208,7 +208,7 @@ static BOOL SIEnablePollingInterrupt(BOOL enable)
 		reg &= ~0x08000000;
 	}
 	reg &= ~0x80000001;
-	__SIRegs[13] = reg;
+	__SIRegs[SI_CC_STAT] = reg;
 	OSRestoreInterrupts(enabled);
 	return rc;
 }
@@ -270,10 +270,10 @@ void SIInit(void)
 	Si.poll = 0;
 	SISetSamplingRate(0);
 
-	while (__SIRegs[13] & 1)
+	while (__SIRegs[SI_CC_STAT] & 1)
 		;
 
-	__SIRegs[13] = 0x80000000;
+	__SIRegs[SI_CC_STAT] = 0x80000000;
 
 	__OSSetInterruptHandler(__OS_INTERRUPT_PI_SI, SIInterruptHandler);
 	__OSUnmaskInterrupts(OS_INTERRUPTMASK_PI_SI);
@@ -300,9 +300,9 @@ static BOOL __SITransfer(s32 chan, void* output, u32 outputBytes, void* input, u
 		return FALSE;
 	}
 
-	sr = __SIRegs[14];
+	sr = __SIRegs[SI_STAT];
 	sr &= (0xf000000) >> (8 * chan);
-	__SIRegs[14] = sr;
+	__SIRegs[SI_STAT] = sr;
 
 	Si.chan       = chan;
 	Si.callback   = callback;
@@ -311,17 +311,17 @@ static BOOL __SITransfer(s32 chan, void* output, u32 outputBytes, void* input, u
 
 	rLen = ROUND(outputBytes, 4) / 4;
 	for (i = 0; i < rLen; i++) {
-		__SIRegs[32 + i] = ((u32*)output)[i];
+		__SIRegs[SI_IO_BUFFER + i] = ((u32*)output)[i];
 	}
 
-	comcsr.val        = __SIRegs[13];
+	comcsr.val                = __SIRegs[SI_CC_STAT];
 	comcsr.flags.tcint    = 1;
 	comcsr.flags.tcintmsk = callback ? 1 : 0;
 	comcsr.flags.outlngth = (outputBytes == SI_MAX_COMCSR_OUTLNGTH) ? 0 : outputBytes;
 	comcsr.flags.inlngth  = (inputBytes == SI_MAX_COMCSR_INLNGTH) ? 0 : inputBytes;
 	comcsr.flags.channel  = chan;
 	comcsr.flags.tstart   = 1;
-	__SIRegs[13]      = comcsr.val;
+	__SIRegs[SI_CC_STAT]  = comcsr.val;
 
 	OSRestoreInterrupts(enabled);
 
@@ -335,7 +335,7 @@ u32 SIGetStatus(s32 chan)
 	int chanShift;
 
 	enabled   = OSDisableInterrupts();
-	sr        = __SIRegs[14];
+	sr        = __SIRegs[SI_STAT];
 	chanShift = 8 * (SI_MAX_CHAN - 1 - chan);
 	sr >>= chanShift;
 	if (sr & SI_ERROR_NO_RESPONSE) {
@@ -354,7 +354,7 @@ void SISetCommand(s32 chan, u32 command)
 
 void SITransferCommands(void)
 {
-	__SIRegs[14] = 0x80000000;
+	__SIRegs[SI_STAT] = 0x80000000;
 }
 
 u32 SISetXY(u32 x, u32 y)
@@ -369,7 +369,7 @@ u32 SISetXY(u32 x, u32 y)
 	Si.poll &= ~(0x03ff0000 | 0x0000ff00);
 	Si.poll |= poll;
 	poll         = Si.poll;
-	__SIRegs[12] = poll;
+	__SIRegs[SI_POLL] = poll;
 	OSRestoreInterrupts(enabled);
 	return poll;
 }
@@ -400,7 +400,7 @@ u32 SIEnablePolling(u32 poll)
 
 	SITransferCommands();
 
-	__SIRegs[12] = poll;
+	__SIRegs[SI_POLL] = poll;
 
 	OSRestoreInterrupts(enabled);
 
@@ -422,7 +422,7 @@ u32 SIDisablePolling(u32 poll)
 
 	poll = Si.poll & ~poll;
 
-	__SIRegs[12] = poll;
+	__SIRegs[SI_POLL] = poll;
 	Si.poll      = poll;
 
 	OSRestoreInterrupts(enabled);

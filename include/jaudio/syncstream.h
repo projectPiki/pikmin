@@ -16,7 +16,7 @@ typedef int (*StreamCallback)(u32, s32);
 
 void Init_StreamAudio(void);
 void Get_StreamAudio_Handle(int);
-BOOL StreamAudio_Start(u32, int, immut char*, int, int, StreamHeader_*);
+BOOL StreamAudio_Start(u32, int, immut char*, BOOL, BOOL, StreamHeader_*);
 void RegisterStreamCallback(StreamCallback);
 void Jac_Decode_ADPCM(u8*, s16*, s16*, u32, u8, s16*);
 BOOL StreamSyncCheckReady(u32);
@@ -34,6 +34,7 @@ u8 StreamCheckAudioFormat(u32);
 void StreamCheckBufferEmpty(void);
 void StreamCheckBufferRemainSize(void);
 
+// size 0x10
 struct BufControl_ {
 	u8 state;         // _00
 	u8 maxBufCount;   // _01
@@ -86,10 +87,10 @@ struct StreamCtrl_ {
 	u32 samplesDecoded;           // _21980
 	u32 playbackState;            // _21984
 	StreamHeader_ header;         // _21988
-	s32 autoStart;                // _219A8
-	s32 stopRequested;            // _219AC
+	BOOL autoStart;               // _219A8
+	BOOL stopRequested;           // _219AC
 	BOOL isPaused;                // _219B0
-	s32 isAtEnd;                  // _219B4
+	BOOL isAtEnd;                 // _219B4
 	DVDFileInfo fileinfo;         // _219B8
 	dspch_* dspch[2];             // _219F4
 	u32 totalSamples;             // _219FC
@@ -108,8 +109,8 @@ struct StreamCtrl_ {
 	u32 updateFlags;              // _21A38
 	u32 _21A3C;                   // _21A3C
 	u32 samplesLoaded;            // _21A40
-	s32 isBufferingComplete;      // _21A44
-	s32 isLoadInProgress;         // _21A48
+	BOOL isBufferingComplete;     // _21A44
+	BOOL isLoadInProgress;        // _21A48
 	s32 bufferMargin;             // _21A4C
 };
 

@@ -173,7 +173,7 @@ static int __VirtualLoad(u32 currentOffs, u32 bytesToRead, u8* data)
 static void InitAudio1(StreamHeader_* header, u8* data, u32 size)
 {
 	Jac_InitStreamData(data, size);
-	StreamAudio_Start(0, 0, 0, 1, 0, header);
+	StreamAudio_Start(0, 0, NULL, TRUE, FALSE, header);
 }
 
 /**

@@ -26,7 +26,7 @@ u32 OSGetConsoleSimulatedMemSize()
 static BOOL OnReset(BOOL final)
 {
 	if (final != FALSE) {
-		__MEMRegs[8] = 0xFF;
+		__MEMRegs[MEM_PROT_TYPE] = 0xFF;
 		__OSMaskInterrupts(0xf0000000);
 	}
 	return TRUE;
@@ -37,9 +37,9 @@ static void MEMIntrruptHandler(__OSInterrupt interrupt, OSContext* context)
 	u32 addr;
 	u32 cause;
 
-	cause           = __MEMRegs[0xf];
-	addr            = (((u32)__MEMRegs[0x12] & 0x3ff) << 16) | __MEMRegs[0x11];
-	__MEMRegs[0x10] = 0;
+	cause                      = __MEMRegs[MEM_INTRPT_SRC];
+	addr                       = (((u32)__MEMRegs[MEM_INTRPT_ADDR_HI] & 0x3ff) << 16) | __MEMRegs[MEM_INTRPT_ADDR_LO];
+	__MEMRegs[MEM_INTRPT_FLAG] = 0;
 
 #if OS_BUILD_VERSION >= 20011112L
 	if (__OSErrorTable[OS_ERROR_PROTECTION]) {
@@ -76,10 +76,10 @@ void OSProtectRange(u32 chan, void* addr, u32 nBytes, u32 control)
 	__MEMRegs[0 + 2 * chan] = (u16)(start >> 10);
 	__MEMRegs[1 + 2 * chan] = (u16)(end >> 10);
 
-	reg = __MEMRegs[8];
+	reg = __MEMRegs[MEM_PROT_TYPE];
 	reg &= ~(OS_PROTECT_CONTROL_RDWR << 2 * chan);
 	reg |= control << 2 * chan;
-	__MEMRegs[8] = reg;
+	__MEMRegs[MEM_PROT_TYPE] = reg;
 
 	if (control != OS_PROTECT_CONTROL_RDWR) {
 		__OSUnmaskInterrupts(OS_INTERRUPTMASK(__OS_INTERRUPT_MEM_0 + chan));
@@ -217,10 +217,10 @@ void __OSInitMemoryProtection()
 	STACK_PAD_VAR(4);
 #endif
 
-	__MEMRegs[16] = 0;
-	__MEMRegs[8]  = 0xFF;
+	__MEMRegs[MEM_INTRPT_FLAG] = 0;
+	__MEMRegs[MEM_PROT_TYPE]   = 0xFF;
 
-	__OSMaskInterrupts(OS_INTERRUPTMASK_MEM_0 | OS_INTERRUPTMASK_MEM_1 | OS_INTERRUPTMASK_MEM_2 | OS_INTERRUPTMASK_MEM_3);
+	__OSMaskInterrupts(OS_INTERRUPTMASK_MEM_RESET);
 	__OSSetInterruptHandler(__OS_INTERRUPT_MEM_0, MEMIntrruptHandler);
 	__OSSetInterruptHandler(__OS_INTERRUPT_MEM_1, MEMIntrruptHandler);
 	__OSSetInterruptHandler(__OS_INTERRUPT_MEM_2, MEMIntrruptHandler);
@@ -229,7 +229,7 @@ void __OSInitMemoryProtection()
 	OSRegisterResetFunction(&ResetFunctionInfo);
 
 	if (OSGetConsoleSimulatedMemSize() < OSGetPhysicalMemSize() && OSGetConsoleSimulatedMemSize() == 0x1800000) {
-		__MEMRegs[20] = 2;
+		__MEMRegs[MEM_UNK_FLAG] = 2;
 	}
 
 	__OSUnmaskInterrupts(OS_INTERRUPTMASK_MEM_ADDRESS);

@@ -665,7 +665,7 @@ void PlayerState::update()
 			mPerHourGraph.set(mLastUpdatedTime, Red, GameStat::allPikis[Red]);
 			mPerHourGraph.set(mLastUpdatedTime, Yellow, GameStat::allPikis[Yellow]);
 			PRINT("record (%d %d %d) = %d\n", GameStat::allPikis[Blue], GameStat::allPikis[Red], GameStat::allPikis[Yellow],
-			      (int)GameStat::allPikis);
+			      static_cast<int>(GameStat::allPikis));
 		}
 	}
 }

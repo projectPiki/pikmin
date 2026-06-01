@@ -519,7 +519,7 @@ void DGXGraphics::initRender(int a1, int a2)
 	mActiveTexture[5] = nullptr;
 	mActiveTexture[6] = nullptr;
 	mActiveTexture[7] = nullptr;
-	mCustomScale      = 0;
+	mCustomScale      = nullptr;
 	gsys->resetLFlares();
 }
 

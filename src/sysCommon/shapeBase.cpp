@@ -1786,7 +1786,7 @@ BaseShape::BaseShape()
 	mTexCoordList[7] = nullptr;
 
 	mNormalList           = nullptr;
-	mNBTList              = 0;
+	mNBTList              = nullptr;
 	mFallbackTexAttrCount = 0;
 	mAttrListMatCount     = 0;
 	mResolvedTextureList  = nullptr;

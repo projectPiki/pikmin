@@ -70,6 +70,7 @@ u32 SIGetStatus(void); // WHAT?
 u32 SIGetStatus(s32 chan);
 #endif
 void SISetCommand(s32 chan, u32 command);
+u32 SIGetCommand(s32 chan);
 void SITransferCommands(void);
 u32 SISetXY(u32 x, u32 y);
 u32 SIEnablePolling(u32 poll);
