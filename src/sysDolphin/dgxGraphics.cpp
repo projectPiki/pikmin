@@ -2125,12 +2125,30 @@ void DGXGraphics::showCrash(u16, OSContext*)
 /**
  * @todo: Documentation
  * @note UNUSED Size: 000184
+ * @note In Dolphin Emulator, this effect looks best with "Store XFB Copies to Texture Only" off.
  */
-void DGXGraphics::showError(immut char* msg1, immut char* fileName, int line)
+void DGXGraphics::showError(immut char* msg, immut char* file, int line)
 {
-	OSReport("ERROR: %s", msg1);
-	OSReport("ERROR: in %s at line %d", fileName, line);
-	// UNUSED FUNCTION
+	RectArea window(32, mScreenWidth - 32, 100, mScreenHeight - 100);
+	directErase(window, false);
+	directPrint(window.mMinX + 8, window.mMinY + 8, "ERROR: %s", msg);
+	directPrint(window.mMinX + 8, window.mMinY + 8 + 16, "ERROR: in %s at line %d", file, line);
+	int y   = 36;
+	int x   = 0;
+	u32* sp = (u32*)OSGetStackPointer();
+	for (int i = 0; *sp != nullptr && *sp != 0xffffffff && i++ < 16;) {
+		if (i > 2) {
+			const char* name = gsys->findAddress(sp[1]);
+			char buffer[PATH_MAX];
+			if (name)
+				sprintf(buffer, "%08x", sp[1]);
+			else
+				sprintf(buffer, "%s", name);
+			directPrint(window.mMinX + 8, window.mMinY + y, "<< %s", buffer);
+			y += 14;
+		}
+		sp = (u32*)*sp;
+	}
 }
 
 static char sAsciiTable[] = {
@@ -2169,19 +2187,58 @@ void DGXGraphics::directDrawChar(int, int, int)
 /**
  * @todo: Documentation
  * @note UNUSED Size: 0000F8
+ * @note In Dolphin Emulator, this effect looks best with "Store XFB Copies to Texture Only" off.
  */
-void DGXGraphics::directDrawChar(RectArea&, RectArea&)
+void DGXGraphics::directDrawChar(RectArea& screenArea, RectArea& textureArea)
 {
-	// UNUSED FUNCTION
+	Texture* tex = gsys->mConsFont->mTexture;
+	u16* screen  = (u16*)(mDisplayBuffer + screenArea.mMinY * 0x500 + screenArea.mMinX * 2);
+	for (int i = 0; i < textureArea.height(); ++i) {
+		int width = textureArea.width();
+		for (int j = 0; j < width; ++j) {
+			if (tex->getAlpha(textureArea.mMinX + j, textureArea.mMinY + i) != 0) {
+				screen[j] = (tex->getRed(textureArea.mMinX + j, textureArea.mMinY + i) != 0) ? 0xeb80 : 0x80;
+			}
+		}
+		screen += 0x280 - width;
+	}
+	FORCE_DONT_INLINE;
 }
 
 /**
  * @todo: Documentation
  * @note UNUSED Size: 0001D8
+ * @note In Dolphin Emulator, this effect looks best with "Store XFB Copies to Texture Only" off.
  */
-void DGXGraphics::directPrint(int, int, immut char*, ...)
+void DGXGraphics::directPrint(int x, int y, immut char* fmt, ...)
 {
-	// UNUSED FUNCTION
+	char buffer[PATH_MAX];
+	va_list args;
+	va_start(args, fmt);
+
+	int length = vsprintf(buffer, fmt, args);
+	Font* font = gsys->mConsFont;
+
+#define CHARFACTS(i) font->mChars[font->charToIndex(buffer[i])] // WHY WOULD YOU DO THIS?
+
+	if (font) {
+		for (int i = 0; i < length; ++i) {
+			int index = font->charToIndex(buffer[i]);
+			if (index >= 0) {
+				directDrawChar(
+				    RectArea(x - CHARFACTS(i).mLeftOffset, y, x - CHARFACTS(i).mLeftOffset + CHARFACTS(i).mWidth, y + CHARFACTS(i).mHeight),
+				    CHARFACTS(i).mTextureCoords);
+				x += CHARFACTS(i).mCharSpacing;
+				if (x > 600)
+					break;
+			}
+		}
+	}
+
+#undef CHARFACTS
+
+	DCFlushRange(mDisplayBuffer, sFrameSize);
+	va_end(args);
 }
 
 // idk about these names
@@ -2192,28 +2249,34 @@ void DGXGraphics::directPrint(int, int, immut char*, ...)
 /**
  * @todo: Documentation
  * @note UNUSED Size: 000108
+ * @note In Dolphin Emulator, this effect looks best with "Store XFB Copies to Texture Only" off.
  */
 void DGXGraphics::directErase(RectArea& bounds, bool set)
 {
 	// NON-MATCHING (JP)
-	u16* screen = (u16*)(mDisplayBuffer + u32(bounds.mMinX + bounds.mMinY * 640 << 1));
+	u16* screen = (u16*)mDisplayBuffer + (bounds.mMinX + bounds.mMinY * 640);
 	for (int i = 0; i < bounds.height(); i++) {
-		u16* screenPtr = screen;
+		int j = 0;
 		if (set) {
-			for (int i = 0; i < bounds.width(); i++) {
-				screenPtr[i] = PACK_DISPLAY_BYTE(0, 0);
+			// for (; j < bounds.width(); j++) {
+			// 	screen[i] = PACK_DISPLAY_BYTE(0, 0);
+			// }
+
+			int a = 0x10;
+			a <<= 8;
+			a |= 0x80;
+			for (; j < bounds.width(); j++) {
+				screen[j] = a;
 			}
-			continue;
+		} else {
+			for (; j < bounds.width(); j++) {
+				int val12 = UNPACK_DISPLAY_BYTE_1(screen[j]);
+				val12 >>= 2;
+				int val31 = UNPACK_DISPLAY_BYTE_2(screen[j]);
+				val31 >>= 2;
+				screen[j] = PACK_DISPLAY_BYTE(val12, val31);
+			}
 		}
-
-		for (int i = 0; i < bounds.width(); i++) {
-			int val12 = UNPACK_DISPLAY_BYTE_1(screenPtr[i]);
-			val12 >>= 2;
-			int val31 = UNPACK_DISPLAY_BYTE_2(screenPtr[i]);
-			val31 >>= 2;
-			screenPtr[i] = PACK_DISPLAY_BYTE(val12, val31);
-		}
-
 		screen += 640;
 	}
 
