@@ -346,6 +346,15 @@ enum {
 } END_ENUM_TYPE;
 
 /**
+ * @brief FABRICATED - No other class we currently know of has a virtual table like this.
+ */
+struct System_Class_250 {
+	virtual void method(Graphics& gfx) = 0; // _00
+
+	// _00     = VTBL
+};
+
+/**
  * @brief FABRICATED - Singly-linked list of symbolic information (See `ParseMapFile`)
  */
 struct SymbolInfo {
@@ -393,7 +402,7 @@ struct System : public StdSystem {
 	RandomAccessStream* createFile(immut char*, BOOL);
 
 	// unused/inlined:
-	void findAddress(u32);
+	immut char* findAddress(u32);
 	bool hasDebugInfo();
 	static void halt(immut char* file, int line, immut char* message);
 
@@ -411,7 +420,7 @@ struct System : public StdSystem {
 	u32 mHeapStart;                                  // _244
 	u32 mHeapEnd;                                    // _248
 	Graphics* mDGXGfx;                               // _24C, cast to DGXGraphics in DOL
-	u32 _250;                                        // _250, unknown/unused - set to 0 by GameFlow::softReset.
+	System_Class_250* _250;                          // _250, a vestigial pointer related to `System::halt`
 	Delegate1<System, Graphics&>* mDvdErrorCallback; // _254
 	int mDvdErrorCode;                               // _258
 	u32 mDvdBufferSize;                              // _25C

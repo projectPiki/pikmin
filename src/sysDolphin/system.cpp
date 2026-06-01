@@ -538,9 +538,17 @@ static void ParseMapFile()
  * @todo: Documentation
  * @note UNUSED Size: 000040
  */
-void System::findAddress(u32)
+immut char* System::findAddress(u32 address)
 {
-	// UNUSED FUNCTION
+	SymbolInfo* curr = mBuildMapFuncList;
+	while (curr != nullptr) {
+		u32 minAddr = curr->mVirtualAddress;
+		u32 maxAddr = curr->mNext->mVirtualAddress;
+		if (address >= minAddr && address < maxAddr)
+			return curr->mDemangledName;
+		curr = curr->mNext;
+	}
+	return nullptr;
 }
 
 /**
@@ -988,22 +996,36 @@ bool System::hasDebugInfo()
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 0000b8
+ * @note UNUSED Size: 000030 (VERSION_GPIJ01 || VERSION_GPIE01 || VERSION_GPIP01)
+ * @note UNUSED Size: 0000b8 (VERSION_PIKIDEMO)
  */
 void System::halt(immut char* file, int line, immut char* message)
 {
-#if 0 // DLL's version
+#ifdef WIN32
 	char buffer[2048];
 	sprintf(buffer, "%s\n\nClick OK to quit now !", message);
 	MessageBox(NULL, buffer, "Error!", MB_ICONEXCLAMATION);
 	exit(0); // Failure!
 #else
 
-#if defined(VERSION_GPIJ01)
-	OSErrorLine(1075, message);
-	return;
+#if defined(VERSION_PIKIDEMO) || defined(DEVELOP)
+	if (gsys->_250) {
+		gsys->_250->method(*gsys->mDGXGfx);
+		const int startTick = OSGetTick();
+		while (OSGetTick() - startTick < OS_TIMER_CLOCK * 5) { }
+	}
+	OSDumpContext(&gsys->mCurrentThread->context);
+	static_cast<DGXGraphics*>(gsys->mDGXGfx)->showError(message, file, line);
 #endif
+
+#if defined(VERSION_GPIJ01) || defined(VERSION_GPIE01) || defined(VERSION_GPIP01)
+	OSErrorLine(1075, message);
+#elif defined(VERSION_PIKIDEMO)
+	OSErrorLine(1077, message);
+#else
 	OSPanic(file, line, message);
+#endif
+
 #endif
 }
 
