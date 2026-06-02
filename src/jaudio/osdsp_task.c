@@ -20,9 +20,12 @@ BEGIN_SCOPE_EXTERN_C
 void __DSPHandler(__OSInterrupt interrupt, OSContext* context)
 {
 	OSContext funcContext;
+	u32 mail;
+	u16 temp;
 	STACK_PAD_VAR(3);
 
-	__DSPRegs[5] = ((u16)(__DSPRegs[5]) & ~0x28) | 0x80;
+	temp                          = __DSPRegs[DSP_CONTROL_STATUS];
+	__DSPRegs[DSP_CONTROL_STATUS] = (temp & ~0x28) | 0x80;
 
 	if (DSP_prior_yield == 1 || DSP_prior_yield == 0) {
 		__DSP_curr_task = DSP_prior_task;
@@ -30,7 +33,7 @@ void __DSPHandler(__OSInterrupt interrupt, OSContext* context)
 
 	while (DSPCheckMailFromDSP() == 0)
 		;
-	u32 mail = DSPReadMailFromDSP();
+	mail = DSPReadMailFromDSP();
 
 	if ((__DSP_curr_task->flags & 2) && mail == 0xDCD10002) {
 		mail = 0xDCD10003;
