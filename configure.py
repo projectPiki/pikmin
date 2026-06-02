@@ -339,7 +339,7 @@ config.libs = [
             Object(Matching, "jaudio/aictrl.c"),
             Object(Matching, "jaudio/sample.c"),
             Object(Matching, "jaudio/dummyrom.c"),
-            Object(not MatchingFor("GPIP01_00"), "jaudio/audiothread.c"),
+            Object(Matching, "jaudio/audiothread.c"),
             Object(Matching, "jaudio/streamctrl.c"),
             Object(Matching, "jaudio/dspbuf.c"),
             Object(Matching, "jaudio/cpubuf.c"),

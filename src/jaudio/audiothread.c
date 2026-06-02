@@ -82,9 +82,11 @@ static void DspSync()
  */
 static void DspSync2(void*)
 {
-	volatile u32 check;
+	u32 check;
 	u32 mesg;
-	u32 stack;
+
+	u32* REF_check = &check;
+	STACK_PAD_VAR(1);
 
 	do {
 		check = DSPCheckMailFromDSP();
@@ -92,11 +94,13 @@ static void DspSync2(void*)
 
 	mesg = DSPReadMailFromDSP();
 	if (mesg >> 0x10 == 0xf355) {
-		stack = 0x10000;
-		if (u16(mesg & 0xff00) == stack - 0x100) {
+		switch (mesg & 0xff00) {
+		case 0xff00:
 			DspSync();
-		} else {
+			break;
+		default:
 			DspFinishWork(mesg);
+			break;
 		}
 	}
 }
