@@ -17,10 +17,8 @@ void Jac_InitMessageQueue(Jac_MessageQueue* queue, OSMessage* msgArray, s32 coun
  */
 BOOL Jac_SendMessageBlock(Jac_MessageQueue* queue, OSMessage mesg)
 {
-	if (Jac_SendMessage(queue, mesg) == TRUE) {
-		return TRUE;
-	}
-	// UNUSED FUNCTION
+	while (Jac_SendMessage(queue, mesg) != TRUE) { }
+	return TRUE;
 }
 
 /**
