@@ -23,9 +23,10 @@ static struct FAT_info2 {
 } FH_TO_FAT[FAT_SIZE];
 
 static FATEntry FAT[FAT_SIZE];
-
-// havent figured this out yet
-static struct FATEntry fattmp[FAT_SIZE];
+#if defined(VERSION_GPIJ01_01) || defined(VERSION_DPIJ01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO)
+#else
+static FATEntry fattmp[FAT_SIZE];
+#endif
 
 /**
  * @TODO: Documentation
@@ -126,6 +127,9 @@ int FAT_FreeMemory(u16 size)
 	u16 size2;
 	u32 count;
 	u16 tail;
+#if defined(VERSION_GPIJ01_01) || defined(VERSION_DPIJ01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO)
+	FATEntry fattmp[FAT_SIZE];
+#endif
 
 	count                      = FH_TO_FAT[size].blockCount;
 	start                      = FH_TO_FAT[size].startBlock;
