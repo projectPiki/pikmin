@@ -354,7 +354,7 @@ config.libs = [
             Object(Matching, "jaudio/osdsp.c"),
             Object(not MatchingFor("GPIP01_00"), "jaudio/osdsp_task.c"),
             Object(Matching, "jaudio/ipldec.c"),
-            Object(not MatchingFor("G98E01_PIKIDEMO", "G98P01_PIKIDEMO"), "jaudio/dsp_cardunlock.c"),
+            Object(Matching, "jaudio/dsp_cardunlock.c"),
             Object(Matching, "jaudio/driverinterface.c"),
             Object(Matching, "jaudio/dspdriver.c"),
             Object(Matching, "jaudio/dspinterface.c"),
