@@ -866,6 +866,18 @@ void Jac_FinishDemo(void)
 		case DEMOID_DayEndForest:
 		case DEMOID_DayEndCaveLast:
 		case DEMOID_DayEndYakushima:
+#if defined(VERSION_GPIP01)
+		case DEMOID_Unk90:
+		case DEMOID_Unk91:
+		case DEMOID_ExtDayEndPractice:
+		case DEMOID_ExtDayEndForest:
+		case DEMOID_ExtDayEndCaveLast:
+		case DEMOID_ExtDayEndYakushima:
+		case DEMOID_OliDownDayEndPractice:
+		case DEMOID_OliDownDayEndForest:
+		case DEMOID_OliDownDayEndCaveLast:
+		case DEMOID_OliDownDayEndYakushima:
+#endif
 		{
 			demo_end_delay = 100;
 			break;
