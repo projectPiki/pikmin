@@ -777,7 +777,7 @@ void Jam_WriteRegXY(seqp_* track, u32 param_2)
 u32 __ExchangeRegisterValue(seqp_* track, u8 reg)
 {
 	u32 res;
-#if defined(VERSION_GPIJ01_01)
+#if defined(VERSION_GPIJ01_01) || defined(VERSION_DPIJ01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO)
 	u8* REF_reg = &reg;
 #endif
 	if (reg < 64) {
@@ -785,7 +785,7 @@ u32 __ExchangeRegisterValue(seqp_* track, u8 reg)
 	} else {
 		res = track->trackPort[reg - 64].value;
 	}
-#if defined(VERSION_GPIJ01_01)
+#if defined(VERSION_GPIJ01_01) || defined(VERSION_DPIJ01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO)
 	u32* REF_res = &res;
 #endif
 	return res;
@@ -849,9 +849,40 @@ void Jam_ReadPortIndirect(void)
  * @TODO: Documentation
  * @note UNUSED Size: 0000A4
  */
-BOOL Jam_CheckPortIndirect(seqp_*, u8, int)
+BOOL Jam_CheckPortIndirect(seqp_* track, u32 param_2, u16 param_3)
 {
-	// UNUSED FUNCTION
+	u8 port;
+	int depth;
+	size_t i;
+
+	port  = (param_2 >> 16) & 0xff;
+	depth = (param_2 >> 28) & 0x0f;
+	for (i = 0; i < depth; ++i) {
+		track = track->children[param_2 & 0x0f];
+		if (!track) {
+			return FALSE;
+		}
+		param_2 >>= 4;
+	}
+
+	// Again with the cast to u8... what is it?
+	switch ((u8)param_3) {
+	case FALSE:
+	{
+		if (track->trackPort[port].exportFlag == FALSE) {
+			return FALSE;
+		}
+		return TRUE;
+	}
+	case TRUE:
+	{
+		if (track->trackPort[port].importFlag == TRUE) {
+			return FALSE;
+		}
+		return TRUE;
+	}
+	}
+	return FALSE;
 }
 
 /**
