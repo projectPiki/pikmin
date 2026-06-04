@@ -424,8 +424,13 @@ static s32 StreamAudio_Callback(void* data)
 
 	if (!ctrl->dspch[0]) {
 		for (channelIdx = 0; channelIdx < 2; channelIdx++) {
-			ctrl->dspch[channelIdx]       = AllocDSPchannel(0, (u32)&ctrl->dspch[channelIdx]);
-			ctrl->dspch[channelIdx]->prio = DSPCHAN_MAX_PRIO;
+			ctrl->dspch[channelIdx] = AllocDSPchannel(0, (u32)&ctrl->dspch[channelIdx]);
+#if defined(VERSION_GPIP01)
+			if (ctrl->dspch[channelIdx])
+#endif
+			{
+				ctrl->dspch[channelIdx]->prio = DSPCHAN_MAX_PRIO;
+			}
 		}
 	}
 
@@ -683,6 +688,34 @@ void RegisterStreamCallback(StreamCallback callback)
 /**
  * @TODO: Documentation
  */
+static u32 __DecodePCM(StreamCtrl_* ctrl)
+{
+	u32 usedSize;
+	s16* psVar9;
+	s16* pasVar4;
+	u32 sampleCount;
+	s16* pasVar6;
+	size_t i;
+
+	usedSize    = ctrl->buffCtrl[ctrl->buffCtrlMain.activeBufIdx].usedSize;
+	sampleCount = ((ctrl->buffCtrl[ctrl->buffCtrlMain.activeBufIdx].pos - usedSize) / 4);
+
+	pasVar6 = ctrl->leftChanBufs[ctrl->buffCtrlMain2.currentBufIdx];
+	pasVar4 = ctrl->rightChanBufs[ctrl->buffCtrlMain2.currentBufIdx];
+	psVar9  = (s16*)&ctrl->data[ctrl->buffCtrlMain.activeBufIdx].data[usedSize];
+	for (i = 0; i < sampleCount; i++) {
+		// This FEELS like it's all optimized array subscripting, but I can't figure it out.
+		*pasVar6++ = psVar9[0];
+		*pasVar4++ = psVar9[1];
+		psVar9 += 2;
+	}
+	ctrl->samplesDecoded += sampleCount;
+	return sampleCount;
+}
+
+/**
+ * @TODO: Documentation
+ */
 void Jac_Decode_ADPCM(u8* src, s16* dst1, s16* dst2, u32 count, u8 arg4, s16* state)
 {
 	s16 sa = state[0];
@@ -844,6 +877,13 @@ static u32 __Decode(StreamCtrl_* ctrl)
 {
 	u32 size;
 	switch (ctrl->header.audioFormat) {
+#if defined(VERSION_GPIP01)
+	case AUDIOFRMT_16BIT_PCM:
+	{
+		size = __DecodePCM(ctrl);
+		break;
+	}
+#endif
 	case AUDIOFRMT_ADPCM:
 	{
 		size = __DecodeADPCM(ctrl);
@@ -1118,6 +1158,10 @@ BOOL StreamSetDVDPause(u32 ctrlID, BOOL isPaused)
 	}
 
 	BOOL tmp = ctrl->isPaused;
+
+#if defined(VERSION_GPIP01)
+	BOOL* REF_isPaused = &isPaused;
+#endif
 
 	ctrl->isPaused = isPaused;
 
