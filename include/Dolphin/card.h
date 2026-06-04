@@ -138,11 +138,10 @@ struct CARDControl {
 	CARDCallback eraseCallback;     // _D8
 	CARDCallback unlockCallback;    // _DC
 	OSAlarm alarm;                  // _E0, for timeout.
-#if OS_BUILD_VERSION >= 20011112L
+#if OS_BUILD_VERSION >= 20011112L && !defined(JAUDIO_BROKEN_CARDUNLOCK)
 	u32 cid;                 // _108
 	const DVDDiskID* diskID; // _10C
 #endif
-	// while these members DO clearly exist in demo, dsp_cardunlock.c in jaudio seems to disagree
 };
 
 // CARD identification struct (size 0x200).

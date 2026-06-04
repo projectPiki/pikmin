@@ -1,6 +1,12 @@
-#include "jaudio/dsp_cardunlock.h"
-
+// This file uses `OSAssert` even in release builds.
 #define DEBUG
+
+// This modifies the struct `CARDControl` in "Dolphin/card.h" to be broken on purpose. Maybe a duplicate definition
+// of `CARDControl` was in a JAudio library header and they forgot to update it after it was changed in the SDK?
+// This probably implies JAudio didn't use the SDK header, but I'd rather not duplicate any more than we already have.
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO)
+#define JAUDIO_BROKEN_CARDUNLOCK
+#endif
 
 #include "Dolphin/card.h"
 #include "Dolphin/exi.h"
