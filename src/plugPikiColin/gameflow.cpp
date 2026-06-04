@@ -94,11 +94,12 @@ void GameFlow::drawLoadLogo(Graphics& gfx, bool force60FPSSpin, Texture* logoTex
 	gfx.setOrthogonal(screenMtx.mMtx, AREA_FULL_SCREEN(gfx));
 
 	if (mIsNintendoLoadLogo) {
-// red - this is just for the Nintendo logo on boot-up.
-#if defined(VERSION_GPIJ01)
+#if defined(VERSION_GPIJ01) || defined(VERSION_DPIJ01_PIKIDEMO)
+		// blue - this is just for the Nintendo logo on boot-up.
 		gfx.setColour(Colour(0, 70, 255, fadeInFactor * 255.0f), true);
 		gfx.setAuxColour(Colour(0, 70, 255, fadeInFactor * 255.0f));
 #else
+		// red - this is just for the Nintendo logo on boot-up.
 		gfx.setColour(Colour(220, 0, 0, fadeInFactor * 255.0f), true);
 		gfx.setAuxColour(Colour(220, 0, 0, fadeInFactor * 255.0f));
 #endif
@@ -732,6 +733,11 @@ void GameFlow::softReset()
 	PRINT("*--------------- %.2fk (%.2fk) free : %d files, %.1fk took %.1f secs : %.1f mb/sec\n", size / 1024.0f, size2 / 1024.0f,
 	      gsys->mDvdOpenFiles, gsys->mDvdBytesRead / 1024.0f, mLoadTimeSeconds,
 	      gsys->mDvdBytesRead / (1024.0f * 1024.0f) / mLoadTimeSeconds);
+#elif defined(VERSION_PIKIDEMO)
+	u32 size = (u32)gsys->getHeap(SYSHEAP_App)->getFree();
+	STACK_PAD_VAR(2);
+	_Print("*--------------- %.2fk free : %d files, %.1fk took %.1f secs : %.1f mb/sec\n", size / 1024.0f, gsys->mDvdOpenFiles,
+	       gsys->mDvdBytesRead / 1024.0f, mLoadTimeSeconds, gsys->mDvdBytesRead / (1024.0f * 1024.0f) / mLoadTimeSeconds);
 #else
 	u32 size = (u32)gsys->getHeap(SYSHEAP_App)->getFree();
 	PRINT("*--------------- %.2fk free : %d files, %.1fk took %.1f secs : %.1f mb/sec\n", size / 1024.0f, gsys->mDvdOpenFiles,
