@@ -367,7 +367,7 @@ config.libs = [
             Object(Matching, "jaudio/random.c"),
             Object(Matching, "jaudio/aramcall.c"),
             Object(Matching, "jaudio/ja_calc.c"),
-            Object(not MatchingFor("GPIJ01_01", "G98P01_PIKIDEMO", "DPIJ01_PIKIDEMO"), "jaudio/fat.c"),
+            Object(Matching, "jaudio/fat.c"),
             Object(Matching, "jaudio/cmdstack.c"),
             Object(Matching, "jaudio/virload.c"),
             Object(Matching, "jaudio/heapctrl.c"),
