@@ -88,6 +88,10 @@ void OSProtectRange(u32 chan, void* addr, u32 nBytes, u32 control)
 	OSRestoreInterrupts(enabled);
 }
 
+// Compiling the following functions when they didn't exist yet (`OS_BUILD_VERSION == 20011002L`) breaks `__OSInitMemoryProtection`.
+
+#if OS_BUILD_VERSION >= 20011112L
+
 static ASM void Config24MB()
 {
 #ifdef __MWERKS__ // clang-format off
@@ -198,6 +202,8 @@ static ASM void RealMode(register u32 addr)
   rfi
 #endif // clang-format on
 }
+
+#endif
 
 void __OSInitMemoryProtection()
 {

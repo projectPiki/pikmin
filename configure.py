@@ -870,7 +870,7 @@ config.libs = [
             Object(Matching, "os/OSInterrupt.c"),
             Object(Matching, "os/OSLink.c"),
             Object(Matching, "os/OSMessage.c"),
-            Object(not MatchingFor("DPIJ01_PIKIDEMO"), "os/OSMemory.c"),
+            Object(Matching, "os/OSMemory.c"),
             Object(Matching, "os/OSMutex.c"),
             Object(Matching, "os/OSReboot.c"),
             Object(Matching, "os/OSReset.c"),
