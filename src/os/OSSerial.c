@@ -432,7 +432,7 @@ u32 SIGetStatus(s32 chan)
 	OSRestoreInterrupts(enabled);
 	return sr;
 #else
-	// Something else
+	FORCE_DONT_INLINE; // TODO: Something else
 #endif
 #else
 	return __SIRegs[SI_STAT];
@@ -555,11 +555,15 @@ static BOOL SIGetResponseRaw(s32 chan)
 	u32 sr;
 
 #if OS_BUILD_VERSION >= 20011002L && OS_BUILD_VERSION < 20011112L
+	int chanShift;
 	sr = SIGetStatus();
+	chanShift = 8 * (SI_MAX_CHAN - 1 - chan);
+	if (sr & (SI_ERROR_RDST << chanShift))
 #else
 	sr = SIGetStatus(chan);
+	if (sr & SI_ERROR_RDST)
 #endif
-	if (sr & SI_ERROR_RDST) {
+	{
 		InputBuffer[chan][0]   = __SIRegs[3 * chan + 1];
 		InputBuffer[chan][1]   = __SIRegs[3 * chan + 2];
 		InputBufferValid[chan] = TRUE;
