@@ -393,7 +393,7 @@ config.libs = [
             Object(Matching, "jaudio/bankloader.c"),
             Object(Matching, "jaudio/interleave.c"),
             Object(Matching, "jaudio/pikiseq.c"),
-            Object(not MatchingFor("GPIP01_00"), "jaudio/hvqm_play.c"),
+            Object(Matching, "jaudio/hvqm_play.c"),
         ],
     },
     {
