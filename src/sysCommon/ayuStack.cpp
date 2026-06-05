@@ -194,8 +194,8 @@ AyuCache::AyuCache(u32 cacheSize)
 	PRINT("Creating cache of size %.2f k\n", cacheSize / 1024.0f);
 
 	s32 alignedSize = OSRoundUp32B(cacheSize);
-	u32 bufAddr     = (u32) new char[(alignedSize / 4) * 4];
-	init(bufAddr, bufAddr + alignedSize);
+	char* bufAddr   = new char[(alignedSize / 4) * 4];
+	init((u32)bufAddr, (u32)bufAddr + alignedSize);
 }
 
 /**
