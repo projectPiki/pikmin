@@ -2,6 +2,7 @@
 #include "Dolphin/os.h"
 #include "hvqm4.h"
 #include "jaudio/dspbuf.h"
+#include "jaudio/dummyprobe.h"
 #include "jaudio/dvdthread.h"
 #include "jaudio/interleave.h"
 #include "jaudio/sample.h"
@@ -86,6 +87,9 @@ static u8 hvqmStack[0x1000] ATTRIBUTE_ALIGN(32);
  */
 static void __ReLoad()
 {
+#if defined(VERSION_GPIP01)
+	STACK_PAD_VAR(2);
+#endif
 	int size = dvdfile_size;
 	if (dvdfile_size == 0) {
 		dvd_loadfinish = 1;
@@ -375,7 +379,11 @@ void Jac_HVQM_ThreadStart(void)
  */
 BOOL Jac_HVQM_Update(void)
 {
+#if defined(VERSION_GPIP01)
+	STACK_PAD_VAR(3);
+#else
 	STACK_PAD_VAR(2);
+#endif
 	u8* data = virtualfile_buf;
 	if (gop_frame == file_header.mTotalFrames) {
 		return TRUE;
@@ -413,9 +421,15 @@ BOOL Jac_HVQM_Update(void)
 					record_ok = 0;
 					return FALSE;
 				}
+#if defined(VERSION_GPIP01)
+				u32 remainBefore = Jac_GetStreamRemain();
+#endif
 				Jac_SendStreamData(data, rec_header.mDataSize);
 				record_ok = 1;
 				arcoffset += rec_header.mDataSize;
+#if defined(VERSION_GPIP01)
+				u32 remainAfter = Jac_GetStreamRemain();
+#endif
 			}
 			break;
 		}
@@ -645,21 +659,39 @@ static int Decode1(u8* data, u32 frameId, u8 frameType)
 	switch (frameType) {
 	case 0x10: // IPIC chunk
 	{
+#if defined(VERSION_GPIP01)
+		Probe_Start(12, "HVQM-I-PIC");
+#endif
 		HVQM4DecodeIpic(hvqm_obj, data, (u8*)ref);
+#if defined(VERSION_GPIP01)
+		Probe_Finish(12);
+#endif
 		ref2 = ref1;
 		ref1 = ref;
 		break;
 	}
 	case 0x20: // PPIC chunk
 	{
+#if defined(VERSION_GPIP01)
+		Probe_Start(11, "HVQM-P-PIC");
+#endif
 		HVQM4DecodePpic(hvqm_obj, data, (u8*)ref, (u8*)ref1);
+#if defined(VERSION_GPIP01)
+		Probe_Finish(11);
+#endif
 		ref2 = ref1;
 		ref1 = ref;
 		break;
 	}
 	case 0x30: // BPIC chunk
 	{
+#if defined(VERSION_GPIP01)
+		Probe_Start(13, "HVQM-B-PIC");
+#endif
 		HVQM4DecodeBpic(hvqm_obj, data, (u8*)ref, (u8*)ref2, (u8*)ref1);
+#if defined(VERSION_GPIP01)
+		Probe_Finish(13);
+#endif
 		break;
 	}
 	}
