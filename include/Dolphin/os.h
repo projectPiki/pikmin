@@ -21,7 +21,6 @@
 #include "Dolphin/OS/OSMutex.h"
 #include "Dolphin/OS/OSReset.h"
 #include "Dolphin/OS/OSRtc.h"
-#include "Dolphin/OS/OSSerial.h"
 #include "Dolphin/OS/OSThread.h"
 #include "Dolphin/OS/OSTime.h"
 #include "Dolphin/OS/OSUtil.h"

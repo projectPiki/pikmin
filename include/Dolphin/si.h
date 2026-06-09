@@ -1,7 +1,9 @@
-#ifndef _DOLPHIN_OS_OSSERIAL_H
-#define _DOLPHIN_OS_OSSERIAL_H
+#ifndef _DOLPHIN_SI_H
+#define _DOLPHIN_SI_H
 
 #include "Dolphin/OS/OSContext.h"
+#include "Dolphin/OS/OSInterrupt.h"
+#include "Dolphin/OS/OSTime.h"
 #include "Dolphin/OS/OSVersion.h"
 #include "types.h"
 
@@ -85,6 +87,10 @@ u32 SIGetType(s32 chan);
 u32 SIGetTypeAsync(s32 chan, SITypeAndStatusCallback callback);
 u32 SIDecodeType(u32 type);
 u32 SIProbe(s32 chan);
+#if OS_BUILD_VERSION >= 20011217L
+void SISetSamplingRate(u32 msec);
+void SIRefreshSamplingRate(void);
+#endif
 
 ////////////////////////////////////////////
 

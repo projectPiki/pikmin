@@ -1,6 +1,7 @@
 #include "Dolphin/pad.h"
 #include "Dolphin/hw_regs.h"
 #include "Dolphin/os.h"
+#include "Dolphin/si.h"
 #include "Dolphin/vi.h"
 #include <stddef.h>
 #include <string.h>

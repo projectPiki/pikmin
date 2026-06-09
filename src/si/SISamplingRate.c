@@ -1,4 +1,5 @@
 #include "Dolphin/hw_regs.h"
+#include "Dolphin/si.h"
 #include "dolphin/os.h"
 #include "dolphin/vi.h"
 
@@ -58,7 +59,7 @@ void SISetSamplingRate(u32 msec)
 /**
  * This implementation was moved from Pad.c (`__PADRefreshSamplingRate`)
  */
-void SIRefreshSamplingRate()
+void SIRefreshSamplingRate(void)
 {
 	SISetSamplingRate(SamplingRate);
 }
