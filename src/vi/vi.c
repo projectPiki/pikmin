@@ -2,6 +2,7 @@
 #include "Dolphin/gx.h"
 #include "Dolphin/hw_regs.h"
 #include "Dolphin/os.h"
+#include "Dolphin/si.h"
 #include <stddef.h>
 
 // Useful macros.
@@ -42,7 +43,7 @@ static vu16 shdwRegs[59];
 
 static VIPositionInfo HorVer;
 
-#if OS_BUILD_VERSION >= 20011112L
+#if OS_BUILD_VERSION >= 20011002L
 static VITimingInfo* CurrTiming;
 static s32 CurrTvMode;
 #endif
@@ -59,7 +60,11 @@ static VITimingInfo timing[] = {
 		5, 287, 35, 36, 1, 0, 13, 12, 11, 10, 619, 618, 617, 620, 625, 432, 64, 75, 106, 172, 380, 133, 420,
 	},
 	{ // PAL DS
+#if OS_BUILD_VERSION >= 20011217L
+		5, 287, 33, 33, 2, 2, 13, 11, 13, 11, 619, 621, 619, 621, 624, 432, 64, 75, 106, 172, 380, 133, 420,
+#else
 		5, 287, 35, 35, 2, 2, 13, 11, 13, 11, 619, 621, 619, 621, 626, 432, 64, 75, 106, 172, 380, 133, 420,
+#endif
 	},
 	{ // MPAL INT
 		6, 240, 24, 25, 3, 2, 16, 15, 14, 13, 518, 517, 516, 519, 525, 429, 64, 78, 112, 162, 373, 122, 412,
@@ -70,6 +75,11 @@ static VITimingInfo timing[] = {
 	{ // NTSC PRO
 		12, 480, 48, 48, 6, 6, 24, 24, 24, 24, 1038, 1038, 1038, 1038, 1050, 429, 64, 71, 105, 162, 373, 122, 412,
 	},
+#if OS_BUILD_VERSION >= 20011112L
+	{ // NTSC 3D
+		12, 480, 44, 44, 10, 10, 24, 24, 24, 24, 1038, 1038, 1038, 1038, 1050, 429, 64, 71, 105, 168, 379, 122, 412,
+	},
+#endif
 };
 // clang-format on
 
@@ -134,8 +144,10 @@ static BOOL VISetRegs(void)
 		shdwChangeMode = 0;
 #endif
 
-#if OS_BUILD_VERSION >= 20011112L
+#if OS_BUILD_VERSION >= 20011002L
 		CurrTiming = HorVer.timing;
+#endif
+#if OS_BUILD_VERSION >= 20011112L
 		CurrTvMode = HorVer.tv;
 #endif
 
@@ -194,7 +206,9 @@ static void __VIRetraceHandler(__OSInterrupt interrupt, OSContext* context)
 		if (VISetRegs()) {
 			flushFlag = 0;
 
-#if OS_BUILD_VERSION >= 20011112L
+#if OS_BUILD_VERSION >= 20011217L
+			SIRefreshSamplingRate();
+#elif OS_BUILD_VERSION >= 20011002L
 			__PADRefreshSamplingRate();
 #endif
 		}
@@ -287,11 +301,13 @@ static VITimingInfo* getTiming(VITVMode mode)
 		return &timing[6];
 	}
 
+#if OS_BUILD_VERSION >= 20011002L
 #if OS_BUILD_VERSION >= 20011112L
 	case VI_TVMODE_NTSC_3D:
 	{
 		return &timing[7];
 	}
+#endif
 	case VI_TVMODE_DEBUG_PAL_INT:
 	{
 		return &timing[2];
@@ -979,7 +995,8 @@ u32 VIGetRetraceCount(void)
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 000058
+ * @note UNUSED Size: 000050 (`OS_BUILD_VERSION >= 20011002L`) (Matching by size)
+ * @note UNUSED Size: 000058 (`OS_BUILD_VERSION <  20011002L`) (Matching by size)
  */
 static u32 getCurrentHalfLine(void)
 {
@@ -987,7 +1004,7 @@ static u32 getCurrentHalfLine(void)
 	u32 vcount0;
 	u32 vcount;
 
-#if OS_BUILD_VERSION >= 20011112L
+#if OS_BUILD_VERSION >= 20011002L
 #else
 	VITimingInfo* tm;
 	tm = HorVer.timing;
@@ -1000,7 +1017,7 @@ static u32 getCurrentHalfLine(void)
 		vcount  = __VIRegs[VI_VERT_COUNT] & 0x7FF;
 	} while (vcount0 != vcount);
 
-#if OS_BUILD_VERSION >= 20011112L
+#if OS_BUILD_VERSION >= 20011002L
 	return ((vcount - 1) * 2) + ((hcount - 1) / CurrTiming->hlw);
 #else
 	return ((vcount - 1) * 2) + ((hcount - 1) / tm->hlw);
@@ -1019,7 +1036,7 @@ static u32 getCurrentFieldEvenOdd()
 	u32 nhlines;
 	VITimingInfo* tm;
 
-#if OS_BUILD_VERSION >= 20011112L
+#if OS_BUILD_VERSION >= 20011002L
 	if (getCurrentHalfLine() < CurrTiming->numHalfLines) {
 		return 1;
 	}
@@ -1063,7 +1080,7 @@ u32 VIGetNextField(void)
  */
 u32 VIGetCurrentLine(void)
 {
-#if OS_BUILD_VERSION >= 20011112L
+#if OS_BUILD_VERSION >= 20011002L
 	u32 halfLine;
 	VITimingInfo* tm;
 	BOOL enabled;
@@ -1076,8 +1093,9 @@ u32 VIGetCurrentLine(void)
 		halfLine -= tm->numHalfLines;
 	}
 	return halfLine >> 1U;
-#endif
+#else
 	// UNUSED FUNCTION
+#endif
 }
 
 /**
@@ -1088,9 +1106,6 @@ u32 VIGetTvFormat(void)
 #if OS_BUILD_VERSION >= 20011112L
 	s32 enabled;
 	s32 format;
-
-	OSAssertMsgLine(0x80D, format == 0 || format == 1 || format == 2,
-	                "VIGetTvFormat(): Wrong format is stored in lo mem. Maybe lo mem is trashed");
 
 	enabled = OSDisableInterrupts();
 	switch (CurrTvMode) {
@@ -1114,6 +1129,12 @@ u32 VIGetTvFormat(void)
 	}
 	}
 	OSRestoreInterrupts(enabled);
+
+	// We have this assert from some other decomp, but originally it was placed before the variable was
+	// initialized?  I moved it down to here for now, but I'm just guessing at where it really belongs.
+	OSAssertMsgLine(0x80D, format == 0 || format == 1 || format == 2,
+	                "VIGetTvFormat(): Wrong format is stored in lo mem. Maybe lo mem is trashed");
+
 	return format;
 #else
 	return *(u32*)OSPhysicalToCached(0xCC);
