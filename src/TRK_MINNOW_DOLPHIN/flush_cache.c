@@ -8,8 +8,8 @@ ASM void TRK_flush_cache(register void* param_1, register int param_2)
 #ifdef __MWERKS__ // clang-format off
 	nofralloc
 
-	lis     r5, 0xFFFF
-	ori     r5, r5, 0xFFF1
+	lis     r5,     0xFFFFFFF1 @h
+	ori     r5, r5, 0xFFFFFFF1 @l
 	and     r5, r5, param_1
 	subf    r3, r5, param_1
 	add     r4, param_2, r3

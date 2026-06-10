@@ -1,4 +1,5 @@
 #include "Dolphin/card.h"
+#include "Dolphin/exi.h"
 #include <stddef.h>
 
 #if OS_BUILD_VERSION >= 20011112L

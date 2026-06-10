@@ -1,6 +1,7 @@
 #include "Dolphin/hw_regs.h"
 #include "Dolphin/os.h"
 #include <stddef.h>
+#include <string.h>
 
 static OSResetQueue ResetFunctionQueue;
 
@@ -106,8 +107,8 @@ _jump2:
 	b       _jump3
 
 _setPIReg:
-	lis     r8,     0xCC003000 @h
-	ori     r8, r8, 0xCC003000 @l
+	lis     r8,     __PIRegs @h
+	ori     r8, r8, __PIRegs @l
 	li      r4, 3
 	stw     r4, 0x24 (r8)
 	stw     r3, 0x24 (r8)
@@ -243,22 +244,15 @@ void OSResetSystem(int reset, u32 resetCode, BOOL forceMenu)
 #endif
 }
 
-extern volatile u8 DAT_800030e2 AT_ADDRESS(0x800030e2);
-typedef struct Unk {
-	u8 pad[0x24];
-	u32 resetCode;
-} Unk;
-extern volatile Unk DAT_cc003000 AT_ADDRESS(0xcc003000);
-
 /**
  * @TODO: Documentation
  * @note UNUSED Size: 000030
  */
 u32 OSGetResetCode(void)
 {
-	if (DAT_800030e2 != 0) {
+	if (OS_REBOOT_BOOL) {
 		return 0x80000000;
 	}
-	return ((DAT_cc003000.resetCode & ~7) >> 3);
+	return ((__PIRegs[PI_RESETCODE] & ~7) >> 3);
 	// UNUSED FUNCTION
 }

@@ -141,7 +141,7 @@ struct DayMgr {
 	void menuIncreaseTime(Menu& parent);
 	void menuDecreaseTime(Menu& parent);
 	void refresh(Graphics& gfx, f32 time, int numLights);
-	void setFog(Graphics& gfx, Colour* fogColour);
+	void setFog(Graphics& gfx, immut Colour* fogColour);
 	void menuDumpSettings(Menu& parent);
 	void init(CmdStream* cmds);
 

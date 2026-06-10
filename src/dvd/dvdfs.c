@@ -431,7 +431,7 @@ s32 DVDReadPrio(DVDFileInfo* fileInfo, void* addr, s32 length, s32 offset, s32 p
 /**
  * @TODO: Documentation
  */
-void cbForReadSync(s32 result, DVDCommandBlock* block)
+static void cbForReadSync(s32 result, DVDCommandBlock* block)
 {
 	OSWakeupThread(&__DVDThreadQueue);
 }
@@ -455,7 +455,7 @@ BOOL DVDSeekAsyncPrio(DVDFileInfo* fileInfo, s32 offset, DVDCallback callback, s
  * @TODO: Documentation
  * @note UNUSED Size: 000030
  */
-void cbForSeekAsync(s32 result, DVDCommandBlock* block)
+static void cbForSeekAsync(s32 result, DVDCommandBlock* block)
 {
 	// UNUSED FUNCTION
 }
@@ -473,7 +473,7 @@ s32 DVDSeekPrio(DVDFileInfo* fileInfo, s32 offset, s32 prio)
  * @TODO: Documentation
  * @note UNUSED Size: 000024
  */
-void cbForSeekSync(s32 result, DVDCommandBlock* block)
+static void cbForSeekSync(s32 result, DVDCommandBlock* block)
 {
 	// UNUSED FUNCTION
 }
@@ -605,7 +605,7 @@ BOOL DVDPrepareStreamAsync(DVDFileInfo* fileInfo, u32 length, u32 offset, DVDCal
 /**
  * @TODO: Documentation
  */
-void cbForPrepareStreamAsync(s32 result, DVDCommandBlock* block)
+static void cbForPrepareStreamAsync(s32 result, DVDCommandBlock* block)
 {
 	struct DVDFileInfo* fileInfo;
 
@@ -685,7 +685,7 @@ s32 DVDPrepareStream(DVDFileInfo* fileInfo, u32 length, u32 offset)
  * @TODO: Documentation
  * @note UNUSED Size: 000024
  */
-void cbForPrepareStreamSync(s32 result, DVDCommandBlock* block)
+static void cbForPrepareStreamSync(s32 result, DVDCommandBlock* block)
 {
 	// UNUSED FUNCTION
 }

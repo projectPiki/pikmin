@@ -140,7 +140,7 @@ void PPCEieio(void)
 #ifdef __MWERKS__
 	asm {
 		mfmsr   r5
-		rlwinm  r6, r5, 0, 17, 15
+		rlwinm  r6, r5, 0, 17, 15 // ~MSR_EE
 		mtmsr   r6
 		mfspr   r3, SPR_HID0
 		ori     r4, r3, 8

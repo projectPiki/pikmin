@@ -44,25 +44,25 @@ __OSExceptionHandler __OSGetExceptionHandler(__OSException exception);
 ///////// CONTEXT SAVING /////////
 // Macro for saving context on exception (for asm functions).
 #define OS_EXCEPTION_SAVE_GPRS(context)               \
-	stw r0, OS_CONTEXT_R0(context);                   \
-	stw r1, OS_CONTEXT_R1(context);                   \
-	stw r2, OS_CONTEXT_R2(context);                   \
-	stmw r6, OS_CONTEXT_R6(context);                  \
+	stw r0, context->gpr[0];                          \
+	stw r1, context->gpr[1];                          \
+	stw r2, context->gpr[2];                          \
+	stmw r6, context->gpr[6];                         \
 	/* Save GQR1 to GQR7. GQR0 must always be zero */ \
 	mfspr r0, GQR1;                                   \
-	stw r0, OS_CONTEXT_GQR1(context);                 \
+	stw r0, context->gqr[1];                          \
 	mfspr r0, GQR2;                                   \
-	stw r0, OS_CONTEXT_GQR2(context);                 \
+	stw r0, context->gqr[2];                          \
 	mfspr r0, GQR3;                                   \
-	stw r0, OS_CONTEXT_GQR3(context);                 \
+	stw r0, context->gqr[3];                          \
 	mfspr r0, GQR4;                                   \
-	stw r0, OS_CONTEXT_GQR4(context);                 \
+	stw r0, context->gqr[4];                          \
 	mfspr r0, GQR5;                                   \
-	stw r0, OS_CONTEXT_GQR5(context);                 \
+	stw r0, context->gqr[5];                          \
 	mfspr r0, GQR6;                                   \
-	stw r0, OS_CONTEXT_GQR6(context);                 \
+	stw r0, context->gqr[6];                          \
 	mfspr r0, GQR7;                                   \
-	stw r0, OS_CONTEXT_GQR7(context);
+	stw r0, context->gqr[7];
 
 //////////////////////////////////
 

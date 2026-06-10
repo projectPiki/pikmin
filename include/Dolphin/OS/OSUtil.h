@@ -11,11 +11,6 @@ BEGIN_SCOPE_EXTERN_C
 #define OS_BASE_CACHED   (0x80000000)
 #define OS_BASE_UNCACHED (0xC0000000)
 
-// Necessary for inline asm functions.
-#define OS_CACHED_REGION_PREFIX   (0x8000)
-#define OS_UNCACHED_REGION_PREFIX (0xC000)
-#define OS_PHYSICAL_MASK          (0x3FFF)
-
 //////////////////////////////////
 
 // Macros for rounding to 32-alignment.

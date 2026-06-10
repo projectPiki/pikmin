@@ -1,3 +1,6 @@
+#ifndef _DOLPHIN_OS_OSVERSION_H
+#define _DOLPHIN_OS_OSVERSION_H
+
 #include "types.h"
 
 // This is a fabricated header with fabricated macros in order to support multiple revisions of the SDK.
@@ -30,3 +33,5 @@
 #endif
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
+
+#endif

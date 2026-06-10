@@ -1,10 +1,6 @@
-#include "Dolphin/OS/OSError.h"
-
-#include "Dolphin/OS/OSException.h"
-#include "Dolphin/OS/OSInterrupt.h"
-#include "Dolphin/OS/OSVersion.h"
 #include "Dolphin/PPCArch.h"
 #include "Dolphin/hw_regs.h"
+#include "Dolphin/os.h"
 
 #include <stdarg.h>
 #include <stddef.h>

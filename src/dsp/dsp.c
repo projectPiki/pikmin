@@ -103,6 +103,15 @@ void DSPGetDMAStatus(void)
 	// UNUSED FUNCTION
 }
 
+// /**
+//  * @TODO: Documentation
+//  * @note UNUSED Size: 000070
+//  */
+// void DSPAddTask(void)
+// {
+// 	// UNUSED FUNCTION
+// }
+
 /**
  * @TODO: Documentation
  * @note UNUSED Size: 000040

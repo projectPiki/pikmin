@@ -1053,7 +1053,7 @@ void DayMgr::refresh(Graphics& gfx, f32 time, int numLights)
  * @param gfx Graphics context to push fog settings to.
  * @param fogColour Colour to override fog colour to, or `nullptr` to use time-based setting.
  */
-void DayMgr::setFog(Graphics& gfx, Colour* fogColour)
+void DayMgr::setFog(Graphics& gfx, immut Colour* fogColour)
 {
 	gfx.setFog(true, fogColour ? *fogColour : mCurrentTimeSetting.mFogColour, 1.0f, mCurrentTimeSetting.mFogNear,
 	           mCurrentTimeSetting.mFogFar);

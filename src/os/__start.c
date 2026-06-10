@@ -13,7 +13,6 @@
 #define BOOTINFO2_ADDR          0x800000F4
 #define OS_BI2_DEBUGFLAG_OFFSET 0xC
 #define ARENAHI_ADDR            0x80000034
-#define DEBUGFLAG_ADDR          0x800030E8
 #define DVD_DEVICECODE_ADDR     0x800030E6
 #define DOL_ADDR_LIMIT          0x80700000
 
@@ -107,8 +106,8 @@ _end_of_parseargs:
 	bl      DBInit
 	bl      OSInit
 #if OS_BUILD_VERSION >= 20011002L
-	lis     r4,     0x8000
-	addi    r4, r4, 0x30e6
+	lis     r4,     DVD_DEVICECODE_ADDR @ha
+	addi    r4, r4, DVD_DEVICECODE_ADDR @l
 	lhz     r3, 0x0 (r4)
 	andi.   r5, r3, 0x8000
 	beq     _check_pad

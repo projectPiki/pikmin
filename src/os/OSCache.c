@@ -381,9 +381,6 @@ void LCEnable(void)
 	// UNUSED FUNCTION
 }
 
-#define LC_LINES    512
-#define CACHE_LINES 1024
-
 /**
  * @TODO: Documentation
  * @note UNUSED Size: 000028
@@ -393,7 +390,7 @@ ASM void LCDisable(void)
 	// UNUSED FUNCTION
 #ifdef __MWERKS__ // clang-format off
 	nofralloc
-	lis     r3, LC_BASE_PREFIX
+	lis     r3, LC_BASE @ha
 	li      r4, LC_LINES
 	mtctr   r4
 @1

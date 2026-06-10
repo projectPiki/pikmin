@@ -1,4 +1,5 @@
 #include "Dolphin/hio.h"
+#include "Dolphin/exi.h"
 #include "Dolphin/hw_regs.h"
 #include "Dolphin/os.h"
 #include <stddef.h>

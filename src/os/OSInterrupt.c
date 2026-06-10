@@ -2,7 +2,7 @@
 #include "Dolphin/os.h"
 #include <string.h>
 
-ASM static void ExternalInterruptHandler(register __OSException exception, register OSContext* context);
+static void ExternalInterruptHandler(register __OSException exception, register OSContext* context);
 
 static __OSInterruptHandler* InterruptHandlerTable;
 
@@ -29,9 +29,9 @@ ASM BOOL OSDisableInterrupts(void) {
 	nofralloc
 entry __RAS_OSDisableInterrupts_begin
 	mfmsr   r3
-	rlwinm  r4, r3, 0, 17, 15
+	rlwinm  r4, r3, 0, 17, 15  // ~MSR_EE
 	mtmsr   r4
-	rlwinm  r3, r3, 17, 31, 31
+	rlwinm  r3, r3, 17, 31, 31  // MSR_EE
 entry __RAS_OSDisableInterrupts_end
 	blr
 #endif // clang-format on
@@ -45,9 +45,9 @@ ASM BOOL OSEnableInterrupts(void) {
 	nofralloc
 
 	mfmsr   r3
-	ori     r4, r3, 0x8000
+	ori     r4, r3, MSR_EE
 	mtmsr   r4
-	rlwinm  r3, r3, 17, 31, 31
+	rlwinm  r3, r3, 17, 31, 31 // MSR_EE
 	blr
 #endif // clang-format on
 }
@@ -62,13 +62,13 @@ ASM BOOL OSRestoreInterrupts(register BOOL level) {
 	cmpwi   level, 0
 	mfmsr   r4
 	beq     _disable
-	ori     r5, r4, 0x8000
+	ori     r5, r4, MSR_EE
 	b       _restore
 _disable:
-	rlwinm  r5, r4, 0, 17, 15
+	rlwinm  r5, r4, 0, 17, 15 // MSR_EE
 _restore:
 	mtmsr   r5
-	rlwinm  r4, r4, 17, 31, 31
+	rlwinm  r4, r4, 17, 31, 31 // MSR_EE
 	blr
 #endif // clang-format on
 }
