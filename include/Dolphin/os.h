@@ -37,6 +37,7 @@ extern void __OSFPRInit();
 extern void __OSCacheInit();
 extern void __OSContextInit();
 extern void __OSInterruptInit();
+extern void __OSThreadInit();
 extern void __OSInitSystemCall();
 extern void __OSModuleInit();
 extern void __OSInitAudioSystem();

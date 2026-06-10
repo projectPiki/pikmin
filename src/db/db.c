@@ -45,7 +45,7 @@ ASM void __DBExceptionDestination(void)
 #ifdef __MWERKS__ // clang-format off
 	nofralloc
 	mfmsr  r3
-	ori    r3, r3, 0x30
+	ori    r3, r3, MSR_IR | MSR_DR
 	mtmsr  r3
 	b      __DBExceptionDestinationAux
 #endif // clang-format on

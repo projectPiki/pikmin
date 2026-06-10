@@ -10,9 +10,9 @@ BEGIN_SCOPE_EXTERN_C
 #define HID0_DCE       0x4000
 #define HID2           0x398
 #define HID2_LCE_BIT   3
-#define MSR_ME         0x1000
-#define LC_BASE_PREFIX (0xE000)
-#define LC_BASE        (LC_BASE_PREFIX << 16)
+#define LC_BASE        0xE0000000
+#define LC_LINES       512
+#define CACHE_LINES    1024
 #define DBAT3L         3
 #define DBAT3U         3
 #define DMA_L_STORE       0
@@ -135,9 +135,38 @@ BEGIN_SCOPE_EXTERN_C
 
 #define LCGetBase() ((void*)LC_BASE)
 
-#define MSR_IR 0x00000020 // instruction relocate
-#define MSR_DR 0x00000010 // data relocate
-#define MSR_RI 0x00000002 // Recoverable interrupt
+#define MSR_00  0x80000000 // reserved (full function)
+#define MSR_01  0x40000000 // reserved (partial function)
+#define MSR_02  0x20000000 // ...
+#define MSR_03  0x10000000 // ...
+#define MSR_04  0x08000000 // ...
+#define MSR_05  0x04000000 // reserved (full function)
+#define MSR_06  0x02000000 // ...
+#define MSR_07  0x01000000 // ...
+#define MSR_08  0x00800000 // ...
+#define MSR_09  0x00400000 // ...
+#define MSR_10  0x00200000 // reserved (partial function)
+#define MSR_11  0x00100000 // ...
+#define MSR_12  0x00080000 // ...
+#define MSR_POW 0x00040000 // power management enable
+#define MSR_14  0x00020000 // reserved (implementation-specific)
+#define MSR_ILE 0x00010000 // exception little-endian mode.
+#define MSR_EE  0x00008000 // external interrupt enable
+#define MSR_PR  0x00004000 // privilege level
+#define MSR_FP  0x00002000 // floating-point available
+#define MSR_ME  0x00001000 // machine check enable
+#define MSR_FE0 0x00000800 // IEEE floating-point exception mode 0
+#define MSR_SE  0x00000400 // single-step trace enable
+#define MSR_BE  0x00000200 // branch trace enable
+#define MSR_FE1 0x00000100 // IEEE floating-point exception mode 1
+#define MSR_24  0x00000080 // reserved (corresponds to the AL bit of the POWER architecture)
+#define MSR_IP  0x00000040 // exception prefix
+#define MSR_IR  0x00000020 // instruction address translation
+#define MSR_DR  0x00000010 // data address translation
+#define MSR_28  0x00000008 // reserved (full function)
+#define MSR_PM  0x00000004 // performance monitor marked mode
+#define MSR_RI  0x00000002 // recoverable interrupt
+#define MSR_LE  0x00000001 // little-endian mode enable
 
 #define HID2_DCHERR 0x00800000 // ERROR: dcbz_l cache hit
 #define HID2_DNCERR 0x00400000 // ERROR: DMA access to normal cache

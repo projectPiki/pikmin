@@ -9,11 +9,6 @@ static void* SaveEnd   = NULL;
 
 static volatile BOOL Prepared;
 
-extern void* BOOT_REGION_START AT_ADDRESS(0x812FDFF0);
-extern void* BOOT_REGION_END AT_ADDRESS(0x812FDFEC);
-extern u32 OS_RESET_CODE AT_ADDRESS(0x800030F0);
-// unknown function, set to true by __OSReboot
-extern u8 OS_REBOOT_BOOL AT_ADDRESS(0x800030E2);
 extern u32 OS_UNK_CODE AT_ADDRESS(0x817FFFF8);
 extern u32 OS_HOT_RESET_CODE AT_ADDRESS(0x817FFFFC);
 
@@ -114,8 +109,8 @@ void __OSReboot(u32 resetCode, u32 bootDol)
 	OS_UNK_CODE       = 0;
 	OS_REBOOT_BOOL    = TRUE;
 #if OS_BUILD_VERSION >= 20011002L
-	BOOT_REGION_START = SaveStart;
-	BOOT_REGION_END   = SaveEnd;
+	OS_BOOT_REGION_START = SaveStart;
+	OS_BOOT_REGION_END   = SaveEnd;
 #endif
 	OSClearContext(&exceptionContext);
 	OSSetCurrentContext(&exceptionContext);

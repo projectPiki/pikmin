@@ -380,7 +380,7 @@ DSError TRKTargetAccessMemory(void* data, u32 start, size_t* length, MemoryAcces
 		*length = 0;
 	} else {
 		target_msr = __TRK_get_MSR();
-		trk_msr    = target_msr | gTRKCPUState.Extended1.MSR & 0x10;
+		trk_msr    = target_msr | gTRKCPUState.Extended1.MSR & MSR_DR;
 
 		if (read) {
 			TRK_ppc_memcpy(data, addr, *length, target_msr, trk_msr);
@@ -694,8 +694,8 @@ ASM void TRKInterruptHandler()
     lis      r2,     gTRKState @h
     ori      r2, r2, gTRKState @l
     lwz      r2, TRKState_PPC.MSR (r2)
-    ori      r2, r2, 0x8002
-    xori     r2, r2, 0x8002
+    ori      r2, r2, MSR_EE | MSR_RI
+    xori     r2, r2, MSR_EE | MSR_RI
     sync
     mtmsr    r2
     sync
@@ -898,8 +898,8 @@ ASM void TRKSwapAndGo(void)
     stw      r0, TRKState_PPC.DSISR (r3)
     mfdar    r0
     stw      r0, TRKState_PPC.DAR (r3)
-    li       r1, -0x7ffe
-    nor      r1, r1, r1
+    li       r1, MSR_EE | MSR_RI
+    nor      r1, r1, r1  // r1 = ~(MSR_EE | MSR_RI)
     mfmsr    r3
     and      r3, r3, r1
     mtmsr    r3
@@ -1036,9 +1036,9 @@ DSError TRKTargetAddExceptionInfo(TRKBuffer* buffer)
 static DSError TRKTargetEnableTrace(BOOL val)
 {
 	if (val) {
-		gTRKCPUState.Extended1.MSR |= 0x400;
+		gTRKCPUState.Extended1.MSR |= MSR_SE;
 	} else {
-		gTRKCPUState.Extended1.MSR &= ~0x400;
+		gTRKCPUState.Extended1.MSR &= ~MSR_SE;
 	}
 	return DS_NoError;
 }

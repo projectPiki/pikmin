@@ -1,5 +1,6 @@
 #include "Dolphin/OS/OSRtc.h"
 
+#include "Dolphin/exi.h"
 #include "Dolphin/os.h"
 #include <stddef.h>
 

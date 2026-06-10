@@ -97,16 +97,16 @@ static ASM void Config24MB()
 #ifdef __MWERKS__ // clang-format off
   nofralloc
 
-  addi    r7, r0, 0
+  li      r7,     0x00000000
 
-  addis   r4, r0, 0x00000002 @ha
+  lis     r4,     0x00000002 @ha
   addi    r4, r4, 0x00000002 @l
-  addis   r3, r0, 0x800001ff @ha
+  lis     r3,     0x800001ff @ha
   addi    r3, r3, 0x800001ff @l
 
-  addis   r6, r0, 0x01000002 @ha
+  lis     r6,     0x01000002 @ha
   addi    r6, r6, 0x01000002 @l
-  addis   r5, r0, 0x810000ff @ha
+  lis     r5,     0x810000ff @ha
   addi    r5, r5, 0x810000ff @l
 
   isync
@@ -132,7 +132,7 @@ static ASM void Config24MB()
   isync
 
   mfmsr   r3
-  ori     r3, r3, 0x30
+  ori     r3, r3, MSR_IR | MSR_DR
   mtsrr1  r3
 
   mflr    r3
@@ -146,16 +146,16 @@ static ASM void Config48MB()
 #ifdef __MWERKS__ // clang-format off
   nofralloc
 
-  addi    r7, r0, 0x0000
+  li      r7,     0x00000000
 
-  addis   r4, r0, 0x00000002 @ha
+  lis     r4,     0x00000002 @ha
   addi    r4, r4, 0x00000002 @l
-  addis   r3, r0, 0x800003ff @ha
+  lis     r3,     0x800003ff @ha
   addi    r3, r3, 0x800003ff @l
 
-  addis   r6, r0, 0x02000002 @ha
+  lis     r6,     0x02000002 @ha
   addi    r6, r6, 0x02000002 @l
-  addis   r5, r0, 0x820001ff @ha
+  lis     r5,     0x820001ff @ha
   addi    r5, r5, 0x820001ff @l
 
   isync
@@ -181,7 +181,7 @@ static ASM void Config48MB()
   isync
 
   mfmsr   r3
-  ori     r3, r3, 0x30
+  ori     r3, r3, MSR_IR | MSR_DR
   mtsrr1  r3
 
   mflr    r3
@@ -197,7 +197,7 @@ static ASM void RealMode(register u32 addr)
   clrlwi  r3, r3, 2
   mtsrr0  r3
   mfmsr   r3
-  rlwinm  r3, r3, 0, 28, 25
+  rlwinm  r3, r3, 0, 28, 25  // ~(MSR_IR | MSR_DR)
   mtsrr1  r3
   rfi
 #endif // clang-format on

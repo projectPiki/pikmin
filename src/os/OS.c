@@ -1,7 +1,10 @@
 #include "Dolphin/os.h"
 #include "Dolphin/PPCArch.h"
 #include "Dolphin/db.h"
+#include "Dolphin/exi.h"
 #include "Dolphin/hw_regs.h"
+#include "Dolphin/si.h"
+#include "PowerPC_EABI_Support/MetroTRK/trk.h"
 #include "PowerPC_EABI_Support/Runtime/__ppc_eabi_linker.h"
 #include <stddef.h>
 #include <string.h>
@@ -11,8 +14,6 @@ DECL_SECT(".init") extern char _db_stack_end[];
 // memory locations for important stuff
 #define OS_DBINTERFACE_ADDR     0x40
 #define OS_BI2_DEBUG_ADDRESS    0x800000F4
-#define OS_BI2_DEBUGFLAG_OFFSET 0xC
-#define PAD3_BUTTON_ADDR        0x800030E4
 #define OS_DVD_DEVICECODE       0x800030E6
 #define DEBUGFLAG_ADDR          0x800030E8
 #define OS_DEBUG_ADDRESS_2      0x800030E9
@@ -25,28 +26,11 @@ extern u8 __ArenaLo[];
 extern u32 __DVDLongFileNameFlag;
 extern u32 __PADSpec;
 
-// main workhorse functions
-void ClearArena();
-void DVDInit();
-void DVDInquiryAsync(void*, void*, void*);
-void EXIInit();
-void EnableMetroTRKInterrupts();
-int OSEnableInterrupts();
-void SIInit();
-void __OSContextInit();
-void __OSInitAudioSystem();
-void __OSInitMemoryProtection();
-void __OSInitSystemCall();
-void __OSInterruptInit();
-void __OSThreadInit();
-OSTime __OSGetSystemTime();
-void DBPrintf(const char*, ...);
+// forward declarations
 void __OSUnhandledException(__OSException exception, OSContext* context, u32 dsisr, u32 dar);
-extern char* __OSResetSWInterruptHandler[];
+void __OSResetSWInterruptHandler(__OSInterrupt interrupt, OSContext* context);
 
-// The exception table.  It points to a location in LoMem.  It is set by
-// OSExceptionInit
-// typedef u32 __OSExceptionHandler;
+// The exception table.  It points to a location in LoMem.  It is set by OSExceptionInit.
 #define OS_EXCEPTIONTABLE_ADDR 0x3000
 #define OS_DBJUMPPOINT_ADDR    0x60
 
@@ -135,8 +119,6 @@ u32 OSGetConsoleType(void)
 }
 
 #if OS_BUILD_VERSION >= 20011002L
-extern void* BOOT_REGION_START AT_ADDRESS(0x812FDFF0); //(*(void *)0x812fdff0)
-extern void* BOOT_REGION_END AT_ADDRESS(0x812FDFEC);   //(*(void *)0x812fdfec)
 
 void ClearArena()
 {
@@ -145,9 +127,9 @@ void ClearArena()
 		memset(OSGetArenaLo(), 0U, (char*)OSGetArenaHi() - (char*)OSGetArenaLo());
 		return;
 	}
-	start = BOOT_REGION_START;
-	end   = BOOT_REGION_END;
-	if (BOOT_REGION_START == NULL) {
+	start = OS_BOOT_REGION_START;
+	end   = OS_BOOT_REGION_END;
+	if (OS_BOOT_REGION_START == NULL) {
 		memset(OSGetArenaLo(), 0U, (char*)OSGetArenaHi() - (char*)OSGetArenaLo());
 		return;
 	}
@@ -250,7 +232,7 @@ void OSInit(void)
 #endif
 		__OSModuleInit();
 		__OSInterruptInit();
-		__OSSetInterruptHandler(__OS_INTERRUPT_PI_RSW, (void*)__OSResetSWInterruptHandler);
+		__OSSetInterruptHandler(__OS_INTERRUPT_PI_RSW, __OSResetSWInterruptHandler);
 		__OSContextInit();
 		__OSCacheInit();
 		EXIInit();
@@ -378,8 +360,7 @@ static void OSExceptionInit(void)
 	__OSException exception;
 	void* destAddr;
 
-	// These two vars help us change the exception number embedded
-	// in the exception handler code.
+	// These two vars help us change the exception number embedded in the exception handler code.
 	u32* opCodeAddr;
 	u32 oldOpCode;
 
@@ -412,8 +393,7 @@ static void OSExceptionInit(void)
 			continue;
 		}
 
-		// Modify the copy of code in text before transferring
-		// to the exception table.
+		// Modify the copy of code in text before transferring to the exception table.
 		*opCodeAddr = oldOpCode | exception;
 
 		// Modify opcodes at __DBVECTOR if necessary
@@ -446,8 +426,7 @@ static void OSExceptionInit(void)
 		__OSSetExceptionHandler(exception, OSDefaultExceptionHandler);
 	}
 
-	// restore the old opcode, so that we can re-start an application without
-	// downloading the text segments
+	// restore the old opcode, so that we can re-start an application without downloading the text segments
 	*opCodeAddr = oldOpCode;
 
 	DBPrintf("Exceptions initialized...\n");
@@ -465,7 +444,7 @@ entry __OSDBINTSTART
 	mflr   r3
 	stw    r3, DB_EXCEPTIONRET_OFFSET (r5)
 	lwz    r3, DB_EXCEPTIONDEST_OFFSET (r5)
-	oris   r3, r3, OS_CACHED_REGION_PREFIX
+	oris   r3, r3, OS_BASE_CACHED @h
 	mtlr   r3
 	li     r3, MSR_IR | MSR_DR  // turn on memory addressing
 	mtmsr  r3
@@ -521,28 +500,28 @@ entry __OSEVStart
 	lwz      r4, OS_CURRENTCONTEXT_PADDR
 
 	// Save r3 - r5 into the current context
-	stw      r3, OS_CONTEXT_R3 (r4)
+	stw      r3, OSContext.gpr[3] (r4)
 	mfsprg   r3, 0
-	stw      r3, OS_CONTEXT_R4 (r4)
-	stw      r5, OS_CONTEXT_R5 (r4)
+	stw      r3, OSContext.gpr[4] (r4)
+	stw      r5, OSContext.gpr[5] (r4)
 
-	lhz      r3, OS_CONTEXT_STATE (r4)
+	lhz      r3, OSContext.state (r4)
 	ori      r3, r3, OS_CONTEXT_STATE_EXC
-	sth      r3, OS_CONTEXT_STATE (r4)
+	sth      r3, OSContext.state (r4)
 
 	// Save misc registers
 	mfcr     r3
-	stw      r3, OS_CONTEXT_CR (r4)
+	stw      r3, OSContext.cr (r4)
 	mflr     r3
-	stw      r3, OS_CONTEXT_LR (r4)
+	stw      r3, OSContext.lr (r4)
 	mfctr    r3
-	stw      r3, OS_CONTEXT_CTR (r4)
+	stw      r3, OSContext.ctr (r4)
 	mfxer    r3
-	stw      r3, OS_CONTEXT_XER (r4)
+	stw      r3, OSContext.xer (r4)
 	mfsrr0   r3
-	stw      r3, OS_CONTEXT_SRR0 (r4)
+	stw      r3, OSContext.srr0 (r4)
 	mfsrr1   r3
-	stw      r3, OS_CONTEXT_SRR1 (r4)
+	stw      r3, OSContext.srr1 (r4)
 	mr       r5, r3
 
 entry __DBVECTOR
@@ -550,12 +529,12 @@ entry __DBVECTOR
 
 	// Set SRR1[IR|DR] to turn on address translation at the next RFI
 	mfmsr    r3
-	ori      r3, r3, 0x30
+	ori      r3, r3, MSR_IR | MSR_DR
 	mtsrr1   r3
 
 	// This lets us change the exception number based on the exception we're installing.
 entry __OSEVSetNumber
-	addi     r3, 0, 0x0000
+	li       r3, 0x0000
 
 	// Load current context virtual address into r4
 	lwz      r4, 0xD4
@@ -563,7 +542,7 @@ entry __OSEVSetNumber
 	// Check non-recoverable interrupt
 	rlwinm.  r5, r5, 0, MSR_RI_BIT, MSR_RI_BIT
 	bne      recoverable
-	addis    r5, 0,  OSDefaultExceptionHandler @ha
+	lis      r5,     OSDefaultExceptionHandler @ha
 	addi     r5, r5, OSDefaultExceptionHandler @l
 	mtsrr0   r5
 	rfi
@@ -580,7 +559,7 @@ recoverable:
 	// r4 - pointer to context
 	// r5 - garbage
 	// srr0 - exception handler
-	// srr1 - address translation enalbed, not yet recoverable
+	// srr1 - address translation enabled, not yet recoverable
 
 	rfi
 	// NOT REACHED HERE
@@ -625,7 +604,6 @@ void __OSPSInit(void)
 #endif
 }
 
-#define DI_CONFIG_IDX         0x9
 #define DI_CONFIG_CONFIG_MASK 0xFF
 
 /**
@@ -633,5 +611,5 @@ void __OSPSInit(void)
  */
 u32 __OSGetDIConfig(void)
 {
-	return (__DIRegs[DI_CONFIG_IDX] & DI_CONFIG_CONFIG_MASK);
+	return (__DIRegs[DI_CONFIG] & DI_CONFIG_CONFIG_MASK);
 }

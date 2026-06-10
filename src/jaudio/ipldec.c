@@ -101,9 +101,11 @@ void Jac_DSPcardDecodeAsync(void* task, void* cmd, DSPCallback callback)
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 00004C
+ * @note UNUSED Size: 00004C (Matching by size)
  */
-void Jac_DSPagbDecodeAsync(void*, void*, void (*)(void*))
+void Jac_DSPagbDecodeAsync(void* task, void* cmd, DSPCallback callback)
 {
-	// UNUSED FUNCTION
+	while (WriteTask(DSPTARGET_AGB, (u32)cmd, task, callback) == NULL) {
+		;
+	}
 }

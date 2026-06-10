@@ -1,4 +1,6 @@
 #include "Dolphin/card.h"
+#include "Dolphin/exi.h"
+#include <string.h>
 
 // This file doesn't exist in earlier releases, where jaudio has a dsp_cardunlock.c file instead
 

@@ -269,9 +269,9 @@ struct DGXGraphics : public Graphics {
 	void showCrash(u16, OSContext*);
 	void showError(immut char*, immut char*, int);
 	void directDrawChar(int, int, int);
-	void directDrawChar(RectArea&, RectArea&);
+	void directDrawChar(immut RectArea&, immut RectArea&);
 	void directPrint(int, int, immut char*, ...);
-	void directErase(RectArea&, bool);
+	void directErase(immut RectArea&, bool);
 
 	static DGXGraphics* gfx;
 

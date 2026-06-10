@@ -155,7 +155,7 @@ ASM void PSMTXConcat(register const Mtx a, register const Mtx b, register Mtx ds
 	psq_l      fp0, 0 (a), 0, 0
 	stfd       fp14, 8 (r1)
 	psq_l      fp6, 0 (b), 0, 0
-	addis      r6, 0, Unit01 @ha
+	lis        r6, Unit01 @ha
 	psq_l      fp7, 8 (b), 0, 0
 	stfd       fp15, 16 (r1)
 	addi       r6, r6, Unit01 @l
@@ -362,7 +362,7 @@ ASM u32 PSMTXInverse(register const Mtx src, register Mtx inv) {
 	ps_madd     fp7,  fp4, fp11, fp7
 	ps_cmpo0    cr0,  fp7, fp6
 	bne         _regular
-	addi        r3, 0, 0
+	li          r3, 0
 	blr
 
 _regular:
@@ -403,7 +403,7 @@ _regular:
 	ps_madd     fp7, fp9,  fp2, fp7
 	psq_st      fp4,  24(inv), 0, 0
 	ps_nmadd    fp7, fp8,  fp3, fp7
-	addi        r3, 0, 1
+	li          r3, 1
 	psq_st      fp7,  44(inv), 1, 0
 	blr
 #endif // clang-format on
@@ -493,7 +493,7 @@ ASM u32 PSMTXInvXpose(register const Mtx src, register Mtx inv)
 	ps_madd     fp7, fp4, fp11, fp7
 	ps_cmpo0    cr0, fp7, fp1
 	bne         _regular
-	addi        r3, 0, 0
+	li          r3, 0
 	blr
 
 _regular:
@@ -521,7 +521,7 @@ _regular:
 	psq_st      fp11,  32(inv), 0, 0
 	psq_st      fp10,  8(inv), 1, 0
 	ps_muls0    fp8,  fp8,  fp0
-	addi        r3, 0, 1
+	li          r3, 1
 	psq_st      fp9,   24(inv), 1, 0
 	psq_st      fp8,   40(inv), 1, 0
 	blr

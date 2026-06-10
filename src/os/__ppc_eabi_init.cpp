@@ -14,7 +14,7 @@ ASM void __init_hardware() {
 #ifdef __MWERKS__ // clang-format off
 	nofralloc
 	mfmsr  r0
-	ori    r0, r0, 0x2000
+	ori    r0, r0, MSR_FP
 	mtmsr  r0
 	mflr   r31
 	bl     __OSPSInit

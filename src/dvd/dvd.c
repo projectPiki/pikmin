@@ -359,7 +359,7 @@ static void cbForUnrecoveredError(u32 p1)
 /**
  * @TODO: Documentation
  */
-void cbForUnrecoveredErrorRetry(u32 p1)
+static void cbForUnrecoveredErrorRetry(u32 p1)
 {
 	if (p1 == 0x10) {
 		executing->state = -1;
@@ -471,7 +471,7 @@ static void stateCheckID2(DVDCommandBlock* block)
 /**
  * @TODO: Documentation
  */
-void cbForStateCheckID1(u32 p1)
+static void cbForStateCheckID1(u32 p1)
 {
 	if (p1 == 16) {
 		executing->state = -1;
@@ -496,7 +496,7 @@ void cbForStateCheckID1(u32 p1)
 /**
  * @TODO: Documentation
  */
-void cbForStateCheckID2(u32 p1)
+static void cbForStateCheckID2(u32 p1)
 {
 	if (p1 == 16) {
 		executing->state = -1;
@@ -582,7 +582,7 @@ static void stateCoverClosed()
 /**
  * @TODO: Documentation
  */
-void stateCoverClosed_CMD(DVDCommandBlock* cmdBlock)
+static void stateCoverClosed_CMD(DVDCommandBlock* cmdBlock)
 {
 	DVDLowReadDiskID((DVDDiskID*)tmpBuffer, cbForStateCoverClosed);
 }
@@ -590,7 +590,7 @@ void stateCoverClosed_CMD(DVDCommandBlock* cmdBlock)
 /**
  * @TODO: Documentation
  */
-void cbForStateCoverClosed(u32 p1)
+static void cbForStateCoverClosed(u32 p1)
 {
 	if (p1 == 16) {
 		executing->state = -1;
@@ -617,7 +617,7 @@ static void stateMotorStopped()
 /**
  * @TODO: Documentation
  */
-void cbForStateMotorStopped(u32 p1)
+static void cbForStateMotorStopped(u32 p1)
 {
 	__DIRegs[DI_COVER_STATUS] = 0;
 	executing->state          = 3;
@@ -627,7 +627,7 @@ void cbForStateMotorStopped(u32 p1)
 /**
  * @TODO: Documentation
  */
-void stateReady()
+static void stateReady()
 {
 	DVDCommandBlock* finished;
 
@@ -717,7 +717,7 @@ void stateReady()
 /**
  * @TODO: Documentation
  */
-void stateBusy(DVDCommandBlock* block)
+static void stateBusy(DVDCommandBlock* block)
 {
 	DVDCommandBlock* finished;
 	LastState = stateBusy;
@@ -822,7 +822,7 @@ void stateBusy(DVDCommandBlock* block)
 /**
  * @TODO: Documentation
  */
-void cbForStateBusy(u32 p1)
+static void cbForStateBusy(u32 p1)
 {
 	DVDCommandBlock* finished;
 
@@ -1156,7 +1156,7 @@ void DVDStopStreamAtEnd(void)
  * @TODO: Documentation
  * @note UNUSED Size: 000028
  */
-void cbForStopStreamAtEndSync(void)
+static void cbForStopStreamAtEndSync(void)
 {
 	// UNUSED FUNCTION
 }
@@ -1210,7 +1210,7 @@ void DVDGetStreamPlayAddr(void)
  * @TODO: Documentation
  * @note UNUSED Size: 000028
  */
-void cbForGetStreamPlayAddrSync(void)
+static void cbForGetStreamPlayAddrSync(void)
 {
 	// UNUSED FUNCTION
 }
@@ -1237,7 +1237,7 @@ void DVDGetStreamStartAddr(void)
  * @TODO: Documentation
  * @note UNUSED Size: 000028
  */
-void cbForGetStreamStartAddrSync(void)
+static void cbForGetStreamStartAddrSync(void)
 {
 	// UNUSED FUNCTION
 }
@@ -1264,7 +1264,7 @@ void DVDGetStreamLength(void)
  * @TODO: Documentation
  * @note UNUSED Size: 000028
  */
-void cbForGetStreamLengthSync(void)
+static void cbForGetStreamLengthSync(void)
 {
 	// UNUSED FUNCTION
 }
@@ -1309,7 +1309,7 @@ s32 DVDChangeDisk(DVDCommandBlock*, DVDDiskID*)
  * @TODO: Documentation
  * @note UNUSED Size: 000024
  */
-void cbForChangeDiskSync(void)
+static void cbForChangeDiskSync(void)
 {
 	// UNUSED FUNCTION
 }
@@ -1336,7 +1336,7 @@ void DVDInquiry(void)
  * @TODO: Documentation
  * @note UNUSED Size: 000024
  */
-void cbForInquirySync(void)
+static void cbForInquirySync(void)
 {
 	// UNUSED FUNCTION
 }

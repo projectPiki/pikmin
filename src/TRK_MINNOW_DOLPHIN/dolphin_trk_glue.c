@@ -16,25 +16,25 @@ DBCommTable gDBCommTable = { NULL, NULL, NULL, NULL, NULL, NULL, NULL };
 /**
  * @TODO: Documentation
  */
-ASM void TRKLoadContext(OSContext* ctx, u32 a)
+ASM void TRKLoadContext(register OSContext* ctx, register u32 a)
 {
 #ifdef __MWERKS__ // clang-format off
     nofralloc
-    lwz      r0, OSContext.gpr[0] (r3)
-    lwz      r1, OSContext.gpr[1] (r3)
-    lwz      r2, OSContext.gpr[2] (r3)
-    lhz      r5, OSContext.state (r3)
-    rlwinm.  r6, r5, 0, 0x1e, 0x1e
+    lwz      r0, OSContext.gpr[0] (ctx)
+    lwz      r1, OSContext.gpr[1] (ctx)
+    lwz      r2, OSContext.gpr[2] (ctx)
+    lhz      r5, OSContext.state (ctx)
+    rlwinm.  r6, r5, 0, 30, 30  // Check `OS_CONTEXT_STATE_EXC` bit
     beq      lbl_80371C1C
-    rlwinm   r5, r5, 0, 0x1f, 0x1d
-    sth      r5, OSContext.state (r3)
-    lmw      r5, OSContext.gpr[5] (r3)
+    rlwinm   r5, r5, 0, 31, 29  // Clear `OS_CONTEXT_STATE_EXC` bit
+    sth      r5, OSContext.state (ctx)
+    lmw      r5, OSContext.gpr[5] (ctx)
     b        lbl_80371C20
 lbl_80371C1C:
-    lmw      r13, OSContext.gpr[13] (r3)
+    lmw      r13, OSContext.gpr[13] (ctx)
 lbl_80371C20:
-    mr       r31, r3
-    mr       r3, r4
+    mr       r31, ctx
+    mr       r3, a
     lwz      r4, OSContext.cr (r31)
     mtcrf    0xff, r4
     lwz      r4, OSContext.lr (r31)
@@ -44,8 +44,8 @@ lbl_80371C20:
     lwz      r4, OSContext.xer (r31)
     mtxer    r4
     mfmsr    r4
-    rlwinm   r4, r4, 0, 0x11, 0xf   // Turn off external exceptions
-    rlwinm   r4, r4, 0, 0x1f, 0x1d  // Turn off recoverable exception flag
+    rlwinm   r4, r4, 0, 17, 15  // Turn off external exceptions (MSR_EE)
+    rlwinm   r4, r4, 0, 31, 29  // Turn off recoverable exception flag (MSR_RI)
     mtmsr    r4
     mtsprg   1, r2
     lwz      r4, OSContext.gpr[3] (r31)
