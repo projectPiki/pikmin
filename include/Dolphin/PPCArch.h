@@ -90,6 +90,8 @@ BEGIN_SCOPE_EXTERN_C
 #define SPR_WPAR   921
 #define SPR_DMA_U  922
 #define SPR_DMA_L  923
+#define SPR_UMMCR2 928 // Used in MetroTRK "mpc_7xx_603e.c"
+#define SPR_UBAMR  935 // Used in MetroTRK "mpc_7xx_603e.c"
 #define SPR_UMMCR0 936
 #define SPR_UPMC1  937
 #define SPR_UPMC2  938
@@ -98,6 +100,8 @@ BEGIN_SCOPE_EXTERN_C
 #define SPR_UPMC3  941
 #define SPR_UPMC4  942
 #define SPR_USDA   943
+#define SPR_MMCR2  944 // Used in MetroTRK "mpc_7xx_603e.c"
+#define SPR_BAMR   951 // Used in MetroTRK "mpc_7xx_603e.c"
 #define SPR_MMCR0  952
 #define SPR_PMC1   953
 #define SPR_PMC2   954
@@ -106,16 +110,26 @@ BEGIN_SCOPE_EXTERN_C
 #define SPR_PMC3   957
 #define SPR_PMC4   958
 #define SPR_SDA    959
+#define SPR_DMISS  976 // Used in MetroTRK "mpc_7xx_603e.c"
+#define SPR_DCMP   977 // Used in MetroTRK "mpc_7xx_603e.c"
+#define SPR_HASH1  978 // Used in MetroTRK "mpc_7xx_603e.c"
+#define SPR_HASH2  979 // Used in MetroTRK "mpc_7xx_603e.c"
+#define SPR_IMISS  980 // Used in MetroTRK "mpc_7xx_603e.c"
+#define SPR_ICMP   981 // Used in MetroTRK "mpc_7xx_603e.c"
+#define SPR_RPA    982 // Used in MetroTRK "mpc_7xx_603e.c"
 #define SPR_HID0   1008
 #define SPR_HID1   1009
 #define SPR_IABR   1010
 #define SPR_HID4   1011
 #define SPR_DABR   1013
+#define SPR_MSSCR0 1014 // Used in MetroTRK "mpc_7xx_603e.c"
+#define SPR_MSSCR1 1015 // Used in MetroTRK "mpc_7xx_603e.c"
 #define SPR_L2CR   1017
 #define SPR_ICTC   1019
 #define SPR_THRM1  1020
 #define SPR_THRM2  1021
 #define SPR_THRM3  1022
+#define SPR_PIR    1023 // Used in MetroTRK "mpc_7xx_603e.c"
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

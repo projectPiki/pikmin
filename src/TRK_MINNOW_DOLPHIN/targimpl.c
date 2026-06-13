@@ -918,7 +918,7 @@ L_802CF930:
     lis      r2,     gTRKExceptionStatus @h
     ori      r2, r2, gTRKExceptionStatus @l
     li       r3, 0
-    stb      r3, 0xc(r2)
+    stb      r3, TRKExceptionStatus.inTRK (r2)
     bl       TRKRestoreExtended1Block
     lis      r2,     gTRKCPUState@h
     ori      r2, r2, gTRKCPUState@l

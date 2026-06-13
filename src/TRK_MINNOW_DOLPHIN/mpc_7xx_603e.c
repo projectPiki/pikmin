@@ -1,3 +1,4 @@
+#include "PowerPC_EABI_Support/MetroTRK/ppc_reg.h"
 #include "PowerPC_EABI_Support/MetroTRK/trk.h"
 
 /**
@@ -7,119 +8,117 @@ ASM void TRKSaveExtended1Block()
 {
 #ifdef __MWERKS__ // clang-format off
 	nofralloc
-	lis r2, gTRKCPUState@h /* 0x8044F338@h */
-	ori r2, r2, gTRKCPUState@l /* 0x8044F338@l */
-	mfsr r16, 0
-	mfsr r17, 1
-	mfsr r18, 2
-	mfsr r19, 3
-	mfsr r20, 4
-	mfsr r21, 5
-	mfsr r22, 6
-	mfsr r23, 7
-	mfsr r24, 8
-	mfsr r25, 9
-	mfsr r26, 0xa
-	mfsr r27, 0xb
-	mfsr r28, 0xc
-	mfsr r29, 0xd
-	mfsr r30, 0xe
-	mfsr r31, 0xf
-	stmw r16, 0x1a8(r2)
-	mftb r10, 0x10c
-	mftbu r11
-	mfspr r12, 0x3f0
-	mfspr r13, 0x3f1
-	mfspr r14, 0x1b
-	mfpvr r15
-	mfibatu r16, 0
-	mfibatl r17, 0
-	mfibatu r18, 1
-	mfibatl r19, 1
-	mfibatu r20, 2
-	mfibatl r21, 2
-	mfibatu r22, 3
-	mfibatl r23, 3
-	mfdbatu r24, 0
-	mfdbatl r25, 0
-	mfdbatu r26, 1
-	mfdbatl r27, 1
-	mfdbatu r28, 2
-	mfdbatl r29, 2
-	mfdbatu r30, 3
-	mfdbatl r31, 3
-	stmw r10, 0x1e8(r2)
-	mfspr r22, 0x19
-	mfdar r23
-	mfdsisr r24
-	mfspr r25, 0x110
-	mfspr r26, 0x111
-	mfspr r27, 0x112
-	mfspr r28, 0x113
-	li r29, 0
-	mfspr r30, 0x3f2
-	mfspr r31, 0x11a
-	stmw r22, 0x25c(r2)
-	mfspr r20, 0x390
-	mfspr r21, 0x391
-	mfspr r22, 0x392
-	mfspr r23, 0x393
-	mfspr r24, 0x394
-	mfspr r25, 0x395
-	mfspr r26, 0x396
-	mfspr r27, 0x397
-	mfspr r28, 0x398
-	mfspr r29, 0x399
-	mfspr r30, 0x39a
-	mfspr r31, 0x39b
-	stmw r20, 0x2fc(r2)
-	b lbl_80371340
-	mfspr r16, 0x3a0
-	mfspr r17, 0x3a7
-	mfspr r18, 0x3a8
-	mfspr r19, 0x3a9
-	mfspr r20, 0x3aa
-	mfspr r21, 0x3ab
-	mfspr r22, 0x3ac
-	mfspr r23, 0x3ad
-	mfspr r24, 0x3ae
-	mfspr r25, 0x3af
-	mfspr r26, 0x3b0
-	mfspr r27, 0x3b7
-	mfspr r28, 0x3bf
-	mfspr r29, 0x3f6
-	mfspr r30, 0x3f7
-	mfspr r31, 0x3ff
-	stmw r16, 0x2b8(r2)
-
-lbl_80371340:
-	mfspr r19, 0x3f5
-	mfspr r20, 0x3b9
-	mfspr r21, 0x3ba
-	mfspr r22, 0x3bd
-	mfspr r23, 0x3be
-	mfspr r24, 0x3bb
-	mfspr r25, 0x3b8
-	mfspr r26, 0x3bc
-	mfspr r27, 0x3fc
-	mfspr r28, 0x3fd
-	mfspr r29, 0x3fe
-	mfspr r30, 0x3FB
-	mfspr r31, 0x3f9
-	stmw r19, 0x284(r2)
-	b end
-
-	mfspr r25, 0x3d0
-	mfspr r26, 0x3d1
-	mfspr r27, 0x3d2
-	mfspr r28, 0x3d3
-	mfspr r29, 0x3D4
-	mfspr r30, 0x3D5
-	mfspr r31, 0x3d6
-	stmw r25, 0x240(r2)
-	mfspr r31, 0x16
-	stw r31, 0x278(r2)
-end:
+	lis    r2,     gTRKCPUState @h
+	ori    r2, r2, gTRKCPUState @l
+	mfsr   r16, 0
+	mfsr   r17, 1
+	mfsr   r18, 2
+	mfsr   r19, 3
+	mfsr   r20, 4
+	mfsr   r21, 5
+	mfsr   r22, 6
+	mfsr   r23, 7
+	mfsr   r24, 8
+	mfsr   r25, 9
+	mfsr   r26, 10
+	mfsr   r27, 11
+	mfsr   r28, 12
+	mfsr   r29, 13
+	mfsr   r30, 14
+	mfsr   r31, 15
+	stmw   r16, ProcessorState_PPC.Extended1.SR (r2)
+	mftb   r10, 268  // There is no mftbl mnemonic?
+	mftbu  r11
+	mfspr  r12, SPR_HID0
+	mfspr  r13, SPR_HID1
+	mfspr  r14, SPR_SRR1
+	mfspr  r15, SPR_PVR
+	mfspr  r16, SPR_IBAT0U
+	mfspr  r17, SPR_IBAT0L
+	mfspr  r18, SPR_IBAT1U
+	mfspr  r19, SPR_IBAT1L
+	mfspr  r20, SPR_IBAT2U
+	mfspr  r21, SPR_IBAT2L
+	mfspr  r22, SPR_IBAT3U
+	mfspr  r23, SPR_IBAT3L
+	mfspr  r24, SPR_DBAT0U
+	mfspr  r25, SPR_DBAT0L
+	mfspr  r26, SPR_DBAT1U
+	mfspr  r27, SPR_DBAT1L
+	mfspr  r28, SPR_DBAT2U
+	mfspr  r29, SPR_DBAT2L
+	mfspr  r30, SPR_DBAT3U
+	mfspr  r31, SPR_DBAT3L
+	stmw   r10, ProcessorState_PPC.Extended1.TBL (r2)
+	mfspr  r22, SPR_SDR1
+	mfspr  r23, SPR_DAR
+	mfspr  r24, SPR_DSISR
+	mfspr  r25, SPR_SPRG0
+	mfspr  r26, SPR_SPRG1
+	mfspr  r27, SPR_SPRG2
+	mfspr  r28, SPR_SPRG3
+	li     r29, 0  // Dummy value for SPR_DEC
+	mfspr  r30, SPR_IABR
+	mfspr  r31, SPR_EAR
+	stmw   r22, ProcessorState_PPC.Extended1.SDR1 (r2)
+	mfspr  r20, SPR_GQR0
+	mfspr  r21, SPR_GQR1
+	mfspr  r22, SPR_GQR2
+	mfspr  r23, SPR_GQR3
+	mfspr  r24, SPR_GQR4
+	mfspr  r25, SPR_GQR5
+	mfspr  r26, SPR_GQR6
+	mfspr  r27, SPR_GQR7
+	mfspr  r28, SPR_HID2
+	mfspr  r29, SPR_WPAR
+	mfspr  r30, SPR_DMA_U
+	mfspr  r31, SPR_DMA_L
+	stmw   r20, ProcessorState_PPC.Extended1.GQR (r2)
+	b      SKIP_SAVE_OTHER1
+	mfspr  r16, SPR_UMMCR2
+	mfspr  r17, SPR_UBAMR
+	mfspr  r18, SPR_UMMCR0
+	mfspr  r19, SPR_UPMC1
+	mfspr  r20, SPR_UPMC2
+	mfspr  r21, SPR_USIA
+	mfspr  r22, SPR_UMMCR1
+	mfspr  r23, SPR_UPMC3
+	mfspr  r24, SPR_UPMC4
+	mfspr  r25, SPR_USDA
+	mfspr  r26, SPR_MMCR2
+	mfspr  r27, SPR_BAMR
+	mfspr  r28, SPR_SDA
+	mfspr  r29, SPR_MSSCR0
+	mfspr  r30, SPR_MSSCR1
+	mfspr  r31, SPR_PIR
+	stmw   r16, ProcessorState_PPC.Extended1.UMMCR2 (r2)
+SKIP_SAVE_OTHER1:
+	mfspr  r19, SPR_DABR
+	mfspr  r20, SPR_PMC1
+	mfspr  r21, SPR_PMC2
+	mfspr  r22, SPR_PMC3
+	mfspr  r23, SPR_PMC4
+	mfspr  r24, SPR_SIA
+	mfspr  r25, SPR_MMCR0
+	mfspr  r26, SPR_MMCR1
+	mfspr  r27, SPR_THRM1
+	mfspr  r28, SPR_THRM2
+	mfspr  r29, SPR_THRM3
+	mfspr  r30, SPR_ICTC
+	mfspr  r31, SPR_L2CR
+	stmw   r19, ProcessorState_PPC.Extended1.DABR (r2)
+	b      SKIP_SAVE_OTHER2
+	mfspr  r25, SPR_DMISS
+	mfspr  r26, SPR_DCMP
+	mfspr  r27, SPR_HASH1
+	mfspr  r28, SPR_HASH2
+	mfspr  r29, SPR_IMISS
+	mfspr  r30, SPR_ICMP
+	mfspr  r31, SPR_RPA
+	stmw   r25, ProcessorState_PPC.Extended1.DMISS (r2)
+	mfspr  r31, SPR_DEC
+	stw    r31, ProcessorState_PPC.Extended1.DEC (r2)
+SKIP_SAVE_OTHER2:
 	blr
 #endif // clang-format on
 }
@@ -131,119 +130,121 @@ ASM void TRKRestoreExtended1Block()
 {
 #ifdef __MWERKS__ // clang-format off
 	nofralloc
-	lis r2, gTRKCPUState@h /* 0x8044F338@h */
-	ori r2, r2, gTRKCPUState@l /* 0x8044F338@l */
-	lis r5, gTRKRestoreFlags@h /* 0x803D3238@h */
-	ori r5, r5, gTRKRestoreFlags@l /* 0x803D3238@l */
-	lbz r3, 0(r5)
-	lbz r6, 1(r5)
-	li r0, 0
-	stb r0, 0(r5)
-	stb r0, 1(r5)
-	cmpwi r3, 0
-	beq lbl_803713E4
-	lwz r24, 0x1e8(r2)
-	lwz r25, 0x1ec(r2)
-	mttbl r24
-	mttbu r25
-lbl_803713E4:
-	lmw r20, 0x2fc(r2)
-	mtspr 0x390, r20
-	mtspr 0x391, r21
-	mtspr 0x392, r22
-	mtspr 0x393, r23
-	mtspr 0x394, r24
-	mtspr 0x395, r25
-	mtspr 0x396, r26
-	mtspr 0x397, r27
-	mtspr 0x398, r28
-	mtspr 0x39a, r30
-	mtspr 0x39b, r31
-	b lbl_80371430
-	lmw r26, 0x2e0(r2)
-	mtspr 0x3b0, r26
-	mtspr 0x3b7, r27
-	mtspr 0x3f6, r29
-	mtspr 0x3f7, r30
-	mtspr 0x3ff, r31
-lbl_80371430:
-	lmw r19, 0x284(r2)
-	mtspr 0x3f5, r19
-	mtspr 0x3b9, r20
-	mtspr 0x3ba, r21
-	mtspr 0x3bd, r22
-	mtspr 0x3be, r23
-	mtspr 0x3bb, r24
-	mtspr 0x3b8, r25
-	mtspr 0x3bc, r26
-	mtspr 0x3fc, r27
-	mtspr 0x3fd, r28
-	mtspr 0x3fe, r29
-	mtspr 0x3FB, r30
-	mtspr 0x3f9, r31
-	b lbl_8037149C
-	cmpwi r6, 0
-	beq lbl_8037147C
-	lwz r26, 0x278(r2)
-	mtspr 0x16, r26
-lbl_8037147C:
-	lmw r25, 0x240(r2)
-	mtspr 0x3d0, r25
-	mtspr 0x3d1, r26
-	mtspr 0x3d2, r27
-	mtspr 0x3d3, r28
-	mtspr 0x3D4, r29
-	mtspr 0x3D5, r30
-	mtspr 0x3d6, r31
-lbl_8037149C:
-	lmw r16, 0x1a8(r2)
-	mtsr 0, r16
-	mtsr 1, r17
-	mtsr 2, r18
-	mtsr 3, r19
-	mtsr 4, r20
-	mtsr 5, r21
-	mtsr 6, r22
-	mtsr 7, r23
-	mtsr 8, r24
-	mtsr 9, r25
-	mtsr 0xa, r26
-	mtsr 0xb, r27
-	mtsr 0xc, r28
-	mtsr 0xd, r29
-	mtsr 0xe, r30
-	mtsr 0xf, r31
-	lmw r12, 0x1f0(r2)
-	mtspr 0x3f0, r12
-	mtspr 0x3f1, r13
-	mtspr 0x1b, r14
-	mtspr 0x11f, r15
-	mtibatu 0, r16
-	mtibatl 0, r17
-	mtibatu 1, r18
-	mtibatl 1, r19
-	mtibatu 2, r20
-	mtibatl 2, r21
-	mtibatu 3, r22
-	mtibatl 3, r23
-	mtdbatu 0, r24
-	mtdbatl 0, r25
-	mtdbatu 1, r26
-	mtdbatl 1, r27
-	mtdbatu 2, r28
-	mtdbatl 2, r29
-	mtdbatu 3, r30
-	mtdbatl 3, r31
-	lmw r22, 0x25c(r2)
-	mtspr 0x19, r22
-	mtdar r23
-	mtdsisr r24
-	mtspr 0x110, r25
-	mtspr 0x111, r26
-	mtspr 0x112, r27
-	mtspr 0x113, r28
-	mtspr 0x3f2, r30
-	mtspr 0x11a, r31
+	lis    r2,     gTRKCPUState @h
+	ori    r2, r2, gTRKCPUState @l
+	lis    r5,     gTRKRestoreFlags @h
+	ori    r5, r5, gTRKRestoreFlags @l
+	lbz    r3, ProcessorRestoreFlags_PPC.TBR (r5)
+	lbz    r6, ProcessorRestoreFlags_PPC.DEC (r5)
+	li     r0, 0
+	stb    r0, ProcessorRestoreFlags_PPC.TBR (r5)
+	stb    r0, ProcessorRestoreFlags_PPC.DEC (r5)
+	cmpwi  r3, 0
+	beq    SKIP_RESTORE_TBR
+	lwz    r24, ProcessorState_PPC.Extended1.TBL (r2)
+	lwz    r25, ProcessorState_PPC.Extended1.TBU (r2)
+	mttbl  r24
+	mttbu  r25
+SKIP_RESTORE_TBR:
+	lmw    r20, ProcessorState_PPC.Extended1.GQR (r2)
+	mtspr  SPR_GQR0, r20
+	mtspr  SPR_GQR1, r21
+	mtspr  SPR_GQR2, r22
+	mtspr  SPR_GQR3, r23
+	mtspr  SPR_GQR4, r24
+	mtspr  SPR_GQR5, r25
+	mtspr  SPR_GQR6, r26
+	mtspr  SPR_GQR7, r27
+	mtspr  SPR_HID2, r28
+//	mtspr  SPR_WPAR, r29  // WPAR is skipped
+	mtspr  SPR_DMA_U, r30
+	mtspr  SPR_DMA_L, r31
+	b      SKIP_RESTORE_OTHER1
+	lmw    r26, ProcessorState_PPC.Extended1.MMCR2 (r2)
+	mtspr  SPR_MMCR2, r26
+	mtspr  SPR_BAMR, r27
+	mtspr  SPR_MSSCR0, r29
+	mtspr  SPR_MSSCR1, r30
+	mtspr  SPR_PIR, r31
+SKIP_RESTORE_OTHER1:
+	lmw    r19, ProcessorState_PPC.Extended1.DABR (r2)
+	mtspr  SPR_DABR, r19
+	mtspr  SPR_PMC1, r20
+	mtspr  SPR_PMC2, r21
+	mtspr  SPR_PMC3, r22
+	mtspr  SPR_PMC4, r23
+	mtspr  SPR_SIA, r24
+	mtspr  SPR_MMCR0, r25
+	mtspr  SPR_MMCR1, r26
+	mtspr  SPR_THRM1, r27
+	mtspr  SPR_THRM2, r28
+	mtspr  SPR_THRM3, r29
+	mtspr  SPR_ICTC, r30
+	mtspr  SPR_L2CR, r31
+	b      SKIP_RESTORE_OTHER2
+	cmpwi  r6, 0
+	beq    SKIP_RESTORE_DEC
+	lwz    r26, ProcessorState_PPC.Extended1.DEC (r2)
+	mtspr  SPR_DEC, r26
+SKIP_RESTORE_DEC:
+	lmw    r25, ProcessorState_PPC.Extended1.DMISS (r2)
+	mtspr  SPR_DMISS, r25
+	mtspr  SPR_DCMP, r26
+	mtspr  SPR_HASH1, r27
+	mtspr  SPR_HASH2, r28
+	mtspr  SPR_IMISS, r29
+	mtspr  SPR_ICMP, r30
+	mtspr  SPR_RPA, r31
+SKIP_RESTORE_OTHER2:
+	lmw    r16, ProcessorState_PPC.Extended1.SR (r2)
+	mtsr   0, r16
+	mtsr   1, r17
+	mtsr   2, r18
+	mtsr   3, r19
+	mtsr   4, r20
+	mtsr   5, r21
+	mtsr   6, r22
+	mtsr   7, r23
+	mtsr   8, r24
+	mtsr   9, r25
+	mtsr   10, r26
+	mtsr   11, r27
+	mtsr   12, r28
+	mtsr   13, r29
+	mtsr   14, r30
+	mtsr   15, r31
+	lmw    r12, ProcessorState_PPC.Extended1.HID0_ (r2)
+	mtspr  SPR_HID0, r12
+	mtspr  SPR_HID1, r13
+	mtspr  SPR_SRR1, r14
+	mtspr  SPR_PVR, r15
+	mtspr  SPR_IBAT0U, r16
+	mtspr  SPR_IBAT0L, r17
+	mtspr  SPR_IBAT1U, r18
+	mtspr  SPR_IBAT1L, r19
+	mtspr  SPR_IBAT2U, r20
+	mtspr  SPR_IBAT2L, r21
+	mtspr  SPR_IBAT3U, r22
+	mtspr  SPR_IBAT3L, r23
+	mtspr  SPR_DBAT0U, r24
+	mtspr  SPR_DBAT0L, r25
+	mtspr  SPR_DBAT1U, r26
+	mtspr  SPR_DBAT1L, r27
+	mtspr  SPR_DBAT2U, r28
+	mtspr  SPR_DBAT2L, r29
+	mtspr  SPR_DBAT3U, r30
+	mtspr  SPR_DBAT3L, r31
+	lmw    r22, ProcessorState_PPC.Extended1.SDR1 (r2)
+	mtspr  SPR_SDR1, r22
+	mtspr  SPR_DAR, r23
+	mtspr  SPR_DSISR, r24
+	mtspr  SPR_SPRG0, r25
+	mtspr  SPR_SPRG1, r26
+	mtspr  SPR_SPRG2, r27
+	mtspr  SPR_SPRG3, r28
+//	mtspr  SPR_DEC, r29  // DEC is skipped
+	mtspr  SPR_IABR, r30
+	mtspr  SPR_EAR, r31
 	blr
 #endif // clang-format on
 }
