@@ -10,7 +10,7 @@ ASM static char* GetR2()
 {
 #ifdef __MWERKS__ // clang-format off
 	nofralloc
-	mr r3, r2
+	mr   r3, r2
 	blr
 #endif // clang-format on
 }

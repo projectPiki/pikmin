@@ -166,7 +166,7 @@ void PPCHalt(void)
 #ifdef __MWERKS__
 		asm {
 			nop
-			li r3, 0
+			li   r3, 0
 			nop
 		}
 #endif

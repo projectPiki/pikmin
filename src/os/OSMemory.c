@@ -97,38 +97,38 @@ static ASM void Config24MB()
 #ifdef __MWERKS__ // clang-format off
   nofralloc
 
-  addi    r7,r0,0
+  addi    r7, r0, 0
 
-  addis   r4,r0,0x00000002@ha
-  addi    r4,r4,0x00000002@l
-  addis   r3,r0,0x800001ff@ha
-  addi    r3,r3,0x800001ff@l
+  addis   r4, r0, 0x00000002 @ha
+  addi    r4, r4, 0x00000002 @l
+  addis   r3, r0, 0x800001ff @ha
+  addi    r3, r3, 0x800001ff @l
 
-  addis   r6,r0,0x01000002@ha
-  addi    r6,r6,0x01000002@l
-  addis   r5,r0,0x810000ff@ha
-  addi    r5,r5,0x810000ff@l
+  addis   r6, r0, 0x01000002 @ha
+  addi    r6, r6, 0x01000002 @l
+  addis   r5, r0, 0x810000ff @ha
+  addi    r5, r5, 0x810000ff @l
 
   isync
 
-  mtspr   dbat0u,r7
-  mtspr   dbat0l,r4
-  mtspr   dbat0u,r3
+  mtspr   dbat0u, r7
+  mtspr   dbat0l, r4
+  mtspr   dbat0u, r3
   isync
 
-  mtspr   ibat0u,r7
-  mtspr   ibat0l,r4
-  mtspr   ibat0u,r3
+  mtspr   ibat0u, r7
+  mtspr   ibat0l, r4
+  mtspr   ibat0u, r3
   isync
 
-  mtspr   dbat2u,r7
-  mtspr   dbat2l,r6
-  mtspr   dbat2u,r5
+  mtspr   dbat2u, r7
+  mtspr   dbat2l, r6
+  mtspr   dbat2u, r5
   isync
 
-  mtspr   ibat2u,r7
-  mtspr   ibat2l,r6
-  mtspr   ibat2u,r5
+  mtspr   ibat2u, r7
+  mtspr   ibat2l, r6
+  mtspr   ibat2u, r5
   isync
 
   mfmsr   r3
@@ -146,38 +146,38 @@ static ASM void Config48MB()
 #ifdef __MWERKS__ // clang-format off
   nofralloc
 
-  addi    r7,r0,0x0000
+  addi    r7, r0, 0x0000
 
-  addis   r4,r0,0x00000002@ha
-  addi    r4,r4,0x00000002@l
-  addis   r3,r0,0x800003ff@ha
-  addi    r3,r3,0x800003ff@l
+  addis   r4, r0, 0x00000002 @ha
+  addi    r4, r4, 0x00000002 @l
+  addis   r3, r0, 0x800003ff @ha
+  addi    r3, r3, 0x800003ff @l
 
-  addis   r6,r0,0x02000002@ha
-  addi    r6,r6,0x02000002@l
-  addis   r5,r0,0x820001ff@ha
-  addi    r5,r5,0x820001ff@l
+  addis   r6, r0, 0x02000002 @ha
+  addi    r6, r6, 0x02000002 @l
+  addis   r5, r0, 0x820001ff @ha
+  addi    r5, r5, 0x820001ff @l
 
   isync
 
-  mtspr   dbat0u,r7
-  mtspr   dbat0l,r4
-  mtspr   dbat0u,r3
+  mtspr   dbat0u, r7
+  mtspr   dbat0l, r4
+  mtspr   dbat0u, r3
   isync
 
-  mtspr   ibat0u,r7
-  mtspr   ibat0l,r4
-  mtspr   ibat0u,r3
+  mtspr   ibat0u, r7
+  mtspr   ibat0l, r4
+  mtspr   ibat0u, r3
   isync
 
-  mtspr   dbat2u,r7
-  mtspr   dbat2l,r6
-  mtspr   dbat2u,r5
+  mtspr   dbat2u, r7
+  mtspr   dbat2l, r6
+  mtspr   dbat2u, r5
   isync
 
-  mtspr   ibat2u,r7
-  mtspr   ibat2l,r6
-  mtspr   ibat2u,r5
+  mtspr   ibat2u, r7
+  mtspr   ibat2l, r6
+  mtspr   ibat2u, r5
   isync
 
   mfmsr   r3
@@ -194,11 +194,11 @@ static ASM void RealMode(register u32 addr)
 {
 #ifdef __MWERKS__ // clang-format off
   nofralloc
-  clrlwi r3, r3, 2
-  mtsrr0 r3
-  mfmsr r3
-  rlwinm r3, r3, 0, 28, 25
-  mtsrr1 r3
+  clrlwi  r3, r3, 2
+  mtsrr0  r3
+  mfmsr   r3
+  rlwinm  r3, r3, 0, 28, 25
+  mtsrr1  r3
   rfi
 #endif // clang-format on
 }

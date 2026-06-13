@@ -286,70 +286,70 @@ ASM void PSMTX44Concat(register const Mtx44 a, register const Mtx44 b, register 
 {
 #ifdef __MWERKS__ // clang-format off
 	nofralloc
-	psq_l      f0, 0x0(a), 0, 0
-	psq_l      f2, 0x0(b), 0, 0
+	psq_l      f0, 0x00 (a), 0, 0
+	psq_l      f2, 0x00 (b), 0, 0
 	ps_muls0   f6, f2, f0
-	psq_l      f3, 0x10(b), 0, 0
-	psq_l      f4, 0x20(b), 0, 0
+	psq_l      f3, 0x10 (b), 0, 0
+	psq_l      f4, 0x20 (b), 0, 0
 	ps_madds1  f6, f3, f0, f6
-	psq_l      f1, 0x8(a), 0, 0
-	psq_l      f5, 0x30(b), 0, 0
+	psq_l      f1, 0x08 (a), 0, 0
+	psq_l      f5, 0x30 (b), 0, 0
 	ps_madds0  f6, f4, f1, f6
-	psq_l      f0, 0x10(a), 0, 0
+	psq_l      f0, 0x10 (a), 0, 0
 	ps_madds1  f6, f5, f1, f6
-	psq_l      f1, 0x18(a), 0, 0
+	psq_l      f1, 0x18 (a), 0, 0
 	ps_muls0   f8, f2, f0
 	ps_madds1  f8, f3, f0, f8
-	psq_l      f0, 0x20(a), 0, 0
+	psq_l      f0, 0x20 (a), 0, 0
 	ps_madds0  f8, f4, f1, f8
 	ps_madds1  f8, f5, f1, f8
-	psq_l      f1, 0x28(a), 0, 0
+	psq_l      f1, 0x28 (a), 0, 0
 	ps_muls0   f10, f2, f0
 	ps_madds1  f10, f3, f0, f10
-	psq_l      f0, 0x30(a), 0, 0
+	psq_l      f0, 0x30 (a), 0, 0
 	ps_madds0  f10, f4, f1, f10
 	ps_madds1  f10, f5, f1, f10
-	psq_l      f1, 0x38(a), 0, 0
+	psq_l      f1, 0x38 (a), 0, 0
 	ps_muls0   f12, f2, f0
-	psq_l      f2, 0x8(b), 0, 0
+	psq_l      f2, 0x08 (b), 0, 0
 	ps_madds1  f12, f3, f0, f12
-	psq_l      f0, 0x0(a), 0, 0
+	psq_l      f0, 0x00 (a), 0, 0
 	ps_madds0  f12, f4, f1, f12
-	psq_l      f3, 0x18(b), 0, 0
+	psq_l      f3, 0x18 (b), 0, 0
 	ps_madds1  f12, f5, f1, f12
-	psq_l      f1, 0x8(a), 0, 0
+	psq_l      f1, 0x08 (a), 0, 0
 	ps_muls0   f7, f2, f0
-	psq_l      f4, 0x28(b), 0, 0
+	psq_l      f4, 0x28 (b), 0, 0
 	ps_madds1  f7, f3, f0, f7
-	psq_l      f5, 0x38(b), 0, 0
+	psq_l      f5, 0x38 (b), 0, 0
 	ps_madds0  f7, f4, f1, f7
-	psq_l      f0, 0x10(a), 0, 0
+	psq_l      f0, 0x10 (a), 0, 0
 	ps_madds1  f7, f5, f1, f7
-	psq_l      f1, 0x18(a), 0, 0
+	psq_l      f1, 0x18 (a), 0, 0
 	ps_muls0   f9, f2, f0
-	psq_st     f6, 0x0(ab), 0, 0
+	psq_st     f6, 0x00 (ab), 0, 0
 	ps_madds1  f9, f3, f0, f9
-	psq_l      f0, 0x20(a), 0, 0
+	psq_l      f0, 0x20 (a), 0, 0
 	ps_madds0  f9, f4, f1, f9
-	psq_st     f8, 0x10(ab), 0, 0
+	psq_st     f8, 0x10 (ab), 0, 0
 	ps_madds1  f9, f5, f1, f9
-	psq_l      f1, 0x28(a), 0, 0
+	psq_l      f1, 0x28 (a), 0, 0
 	ps_muls0   f11, f2, f0
-	psq_st     f10, 0x20(ab), 0, 0
+	psq_st     f10, 0x20 (ab), 0, 0
 	ps_madds1  f11, f3, f0, f11
-	psq_l      f0, 0x30(a), 0, 0
+	psq_l      f0, 0x30 (a), 0, 0
 	ps_madds0  f11, f4, f1, f11
-	psq_st     f12, 0x30(ab), 0, 0
+	psq_st     f12, 0x30 (ab), 0, 0
 	ps_madds1  f11, f5, f1, f11
-	psq_l      f1, 0x38(a), 0, 0
+	psq_l      f1, 0x38 (a), 0, 0
 	ps_muls0   f13, f2, f0
-	psq_st     f7, 0x8(ab), 0, 0
+	psq_st     f7, 0x08 (ab), 0, 0
 	ps_madds1  f13, f3, f0, f13
-	psq_st     f9, 0x18(ab), 0, 0
+	psq_st     f9, 0x18 (ab), 0, 0
 	ps_madds0  f13, f4, f1, f13
-	psq_st     f11, 0x28(ab), 0, 0
+	psq_st     f11, 0x28 (ab), 0, 0
 	ps_madds1  f13, f5, f1, f13
-	psq_st     f13, 0x38(ab), 0, 0
+	psq_st     f13, 0x38 (ab), 0, 0
 	blr
 #endif // clang-format on
 }
@@ -404,30 +404,30 @@ void C_MTX44Transpose(const Mtx44 src, Mtx44 xPose)
 ASM void PSMTX44Transpose(register const Mtx44 src, register Mtx44 xPose) {
 #ifdef __MWERKS__ // clang-format off
 	nofralloc
-	psq_l       f0, 0x0(src), 0, 0
-	psq_l       f1, 0x10(src), 0, 0
+	psq_l       f0, 0x00 (src), 0, 0
+	psq_l       f1, 0x10 (src), 0, 0
 	ps_merge00  f4, f0, f1
-	psq_l       f2, 0x8(src), 0, 0
-	psq_st      f4, 0x0(xPose), 0, 0
+	psq_l       f2, 0x08 (src), 0, 0
+	psq_st      f4, 0x00 (xPose), 0, 0
 	ps_merge11  f5, f0, f1
-	psq_l       f3, 0x18(src), 0, 0
-	psq_st      f5, 0x10(xPose), 0, 0
+	psq_l       f3, 0x18 (src), 0, 0
+	psq_st      f5, 0x10 (xPose), 0, 0
 	ps_merge00  f4, f2, f3
-	psq_l       f0, 0x20(src), 0, 0
-	psq_st      f4, 0x20(xPose), 0, 0
+	psq_l       f0, 0x20 (src), 0, 0
+	psq_st      f4, 0x20 (xPose), 0, 0
 	ps_merge11  f5, f2, f3
-	psq_l       f1, 0x30(src), 0, 0
-	psq_st      f5, 0x30(xPose), 0, 0
+	psq_l       f1, 0x30 (src), 0, 0
+	psq_st      f5, 0x30 (xPose), 0, 0
 	ps_merge00  f4, f0, f1
-	psq_l       f2, 0x28(src), 0, 0
-	psq_st      f4, 0x8(xPose), 0, 0
+	psq_l       f2, 0x28 (src), 0, 0
+	psq_st      f4, 0x08 (xPose), 0, 0
 	ps_merge11  f5, f0, f1
-	psq_l       f3, 0x38(src), 0, 0
-	psq_st      f5, 0x18(xPose), 0, 0
+	psq_l       f3, 0x38 (src), 0, 0
+	psq_st      f5, 0x18 (xPose), 0, 0
 	ps_merge00  f4, f2, f3
-	psq_st      f4, 0x28(xPose), 0, 0
+	psq_st      f4, 0x28 (xPose), 0, 0
 	ps_merge11  f5, f2, f3
-	psq_st      f5, 0x38(xPose), 0, 0
+	psq_st      f5, 0x38 (xPose), 0, 0
 	blr
 #endif // clang-format on
 }
@@ -550,18 +550,18 @@ void PSMTX44Trans(register Mtx44 m, register f32 xT, register f32 yT, register f
 
 #ifdef __MWERKS__
 	asm {
-		stfs        xT, 0xc(m)
-		stfs        yT, 0x1c(m)
+		stfs        xT,     0x0c (m)
+		stfs        yT,     0x1c (m)
 		ps_merge00  c_01, c_zero, c_one
-		stfs        zT, 0x2c(m)
-		psq_st      c_one, 0x0(m), 1, 0
-		psq_st      c_zero, 0x4(m), 0, 0
-		psq_st      c_01, 0x10(m), 0, 0
-		psq_st      c_zero, 0x18(m), 1, 0
-		psq_st      c_zero, 0x20(m), 0, 0
-		psq_st      c_one, 0x28(m), 1, 0
-		psq_st      c_zero, 0x30(m), 0, 0
-		psq_st      c_01, 0x38(m), 0, 0
+		stfs        zT,     0x2c (m)
+		psq_st      c_one,  0x00 (m), 1, 0
+		psq_st      c_zero, 0x04 (m), 0, 0
+		psq_st      c_01,   0x10 (m), 0, 0
+		psq_st      c_zero, 0x18 (m), 1, 0
+		psq_st      c_zero, 0x20 (m), 0, 0
+		psq_st      c_one,  0x28 (m), 1, 0
+		psq_st      c_zero, 0x30 (m), 0, 0
+		psq_st      c_01,   0x38 (m), 0, 0
 	}
 #endif
 }
@@ -608,28 +608,28 @@ ASM void PSMTX44TransApply(register const Mtx44 src, register Mtx44 dst, registe
 {
 #ifdef __MWERKS__ // clang-format off
 	nofralloc
-	psq_l    f4, 0x0(src), 0, 0
+	psq_l    f4, 0x00 (src), 0, 0
 	frsp     xT, xT
-	psq_l    f5, 0x8(src), 0, 0
+	psq_l    f5, 0x08 (src), 0, 0
 	frsp     yT, yT
-	psq_l    f6, 0x10(src), 0, 0
+	psq_l    f6, 0x10 (src), 0, 0
 	frsp     zT, zT
-	psq_l    f7, 0x18(src), 0, 0
-	psq_st   f4, 0x0(dst), 0, 0
+	psq_l    f7, 0x18 (src), 0, 0
+	psq_st   f4, 0x00 (dst), 0, 0
 	ps_sum1  f5, xT, f5, f5
-	psq_l    f4, 0x28(src), 0, 0
-	psq_st   f6, 0x10(dst), 0, 0
+	psq_l    f4, 0x28 (src), 0, 0
+	psq_st   f6, 0x10 (dst), 0, 0
 	ps_sum1  f7, yT, f7, f7
-	psq_l    f8, 0x20(src), 0, 0
-	psq_st   f5, 0x8(dst), 0, 0
+	psq_l    f8, 0x20 (src), 0, 0
+	psq_st   f5, 0x08 (dst), 0, 0
 	ps_sum1  f4, zT, f4, f4
-	psq_st   f7, 0x18(dst), 0, 0
-	psq_st   f8, 0x20(dst), 0, 0
-	psq_l    f5, 0x30(src), 0, 0
-	psq_l    f6, 0x38(src), 0, 0
-	psq_st   f4, 0x28(dst), 0, 0
-	psq_st   f5, 0x30(dst), 0, 0
-	psq_st   f6, 0x38(dst), 0, 0
+	psq_st   f7, 0x18 (dst), 0, 0
+	psq_st   f8, 0x20 (dst), 0, 0
+	psq_l    f5, 0x30 (src), 0, 0
+	psq_l    f6, 0x38 (src), 0, 0
+	psq_st   f4, 0x28 (dst), 0, 0
+	psq_st   f5, 0x30 (dst), 0, 0
+	psq_st   f6, 0x38 (dst), 0, 0
 	blr
 #endif // clang-format on
 }
@@ -677,16 +677,16 @@ void PSMTX44Scale(register Mtx44 m, register f32 xS, register f32 yS, register f
 
 #ifdef __MWERKS__
 	asm {
-		stfs    xS, 0x0(m)
-		psq_st  c_zero, 0x4(m), 0, 0
-		psq_st  c_zero, 0xc(m), 0, 0
-		stfs    yS, 0x14(m)
-		psq_st  c_zero, 0x18(m), 0, 0
-		psq_st  c_zero, 0x20(m), 0, 0
-		stfs    zS, 0x28(m)
-		psq_st  c_zero, 0x2c(m), 0, 0
-		psq_st  c_zero, 0x34(m), 0, 0
-		stfs    c_one, 0x3c(m)
+		stfs    xS,     0x00 (m)
+		psq_st  c_zero, 0x04 (m), 0, 0
+		psq_st  c_zero, 0x0c (m), 0, 0
+		stfs    yS,     0x14 (m)
+		psq_st  c_zero, 0x18 (m), 0, 0
+		psq_st  c_zero, 0x20 (m), 0, 0
+		stfs    zS,     0x28 (m)
+		psq_st  c_zero, 0x2c (m), 0, 0
+		psq_st  c_zero, 0x34 (m), 0, 0
+		stfs    c_one,  0x3c (m)
 	}
 #endif
 }
@@ -729,28 +729,28 @@ ASM void PSMTX44ScaleApply(register const Mtx44 src, register Mtx44 dst, registe
 {
 #ifdef __MWERKS__ // clang-format off
 	nofralloc
-	psq_l     f4, 0x0(src), 0, 0
-	psq_l     f5, 0x8(src), 0, 0
-	psq_l     f6, 0x10(src), 0, 0
+	psq_l     f4, 0x00 (src), 0, 0
+	psq_l     f5, 0x08 (src), 0, 0
+	psq_l     f6, 0x10 (src), 0, 0
 	ps_muls0  f4, f4, xS
-	psq_l     f7, 0x18(src), 0, 0
+	psq_l     f7, 0x18 (src), 0, 0
 	ps_muls0  f5, f5, xS
-	psq_l     f8, 0x20(src), 0, 0
-	psq_st    f4, 0x0(dst), 0, 0
+	psq_l     f8, 0x20 (src), 0, 0
+	psq_st    f4, 0x00 (dst), 0, 0
 	ps_muls0  f6, f6, yS
-	psq_l     f9, 0x28(src), 0, 0
-	psq_st    f5, 0x8(dst), 0, 0
+	psq_l     f9, 0x28 (src), 0, 0
+	psq_st    f5, 0x08 (dst), 0, 0
 	ps_muls0  f7, f7, yS
-	psq_l     f10, 0x30(src), 0, 0
-	psq_st    f6, 0x10(dst), 0, 0
+	psq_l     f10, 0x30 (src), 0, 0
+	psq_st    f6, 0x10 (dst), 0, 0
 	ps_muls0  f8, f8, zS
-	psq_l     f11, 0x38(src), 0, 0
-	psq_st    f7, 0x18(dst), 0, 0
+	psq_l     f11, 0x38 (src), 0, 0
+	psq_st    f7,  0x18 (dst), 0, 0
 	ps_muls0  f9, f9, zS
-	psq_st    f8, 0x20(dst), 0, 0
-	psq_st    f9, 0x28(dst), 0, 0
-	psq_st    f10, 0x30(dst), 0, 0
-	psq_st    f11, 0x38(dst), 0, 0
+	psq_st    f8, 0x20 (dst), 0, 0
+	psq_st    f9, 0x28 (dst), 0, 0
+	psq_st    f10, 0x30 (dst), 0, 0
+	psq_st    f11, 0x38 (dst), 0, 0
 	blr
 #endif // clang-format on
 }
@@ -901,50 +901,50 @@ void PSMTX44RotTrig(register Mtx44 m, register char axis, register f32 sinA, reg
 		b           _end
 
 	_case_x:
-		psq_st      c_one, 0x0(m), 1, 0
-		psq_st      c_zero, 0x4(m), 0, 0
+		psq_st      c_one,  0x00 (m), 1, 0
+		psq_st      c_zero, 0x04 (m), 0, 0
 		ps_neg      ftmp0, sinA
-		psq_st      c_zero, 0xc(m), 0, 0
+		psq_st      c_zero, 0x0c (m), 0, 0
 		ps_merge00  ftmp1, sinA, cosA
-		psq_st      c_zero, 0x1c(m), 0, 0
+		psq_st      c_zero, 0x1c (m), 0, 0
 		ps_merge00  ftmp0, cosA, ftmp0
-		psq_st      c_zero, 0x2c(m), 0, 0
-		psq_st      c_zero, 0x34(m), 0, 0
-		psq_st      ftmp1, 0x24(m), 0, 0
-		psq_st      ftmp0, 0x14(m), 0, 0
-		psq_st      c_one, 0x3c(m), 1, 0
+		psq_st      c_zero, 0x2c (m), 0, 0
+		psq_st      c_zero, 0x34 (m), 0, 0
+		psq_st      ftmp1,  0x24 (m), 0, 0
+		psq_st      ftmp0,  0x14 (m), 0, 0
+		psq_st      c_one,  0x3c (m), 1, 0
 		b           _end
 
 	_case_y:
 		ps_merge00  ftmp1, cosA, c_zero
-		psq_st      c_zero, 0x30(m), 0, 0
+		psq_st      c_zero, 0x30 (m), 0, 0
 		ps_neg      ftmp0, sinA
-		psq_st      c_zero, 0x18(m), 0, 0
+		psq_st      c_zero, 0x18 (m), 0, 0
 		ps_merge00  ftmp3, c_zero, c_one
-		psq_st      ftmp1, 0x0(m), 0, 0
+		psq_st      ftmp1,  0x00 (m), 0, 0
 		ps_merge00  ftmp4, ftmp0, c_zero
 		ps_merge00  ftmp2, sinA, c_zero
-		psq_st      ftmp3, 0x10(m), 0, 0
-		psq_st      ftmp2, 0x8(m), 0, 0
-		psq_st      ftmp4, 0x20(m), 0, 0
-		psq_st      ftmp1, 0x28(m), 0, 0
-		psq_st      ftmp3, 0x38(m), 0, 0
+		psq_st      ftmp3,  0x10 (m), 0, 0
+		psq_st      ftmp2,  0x08 (m), 0, 0
+		psq_st      ftmp4,  0x20 (m), 0, 0
+		psq_st      ftmp1,  0x28 (m), 0, 0
+		psq_st      ftmp3,  0x38 (m), 0, 0
 		b           _end
 
 	_case_z:
-		psq_st      c_zero, 0x8(m), 0, 0
+		psq_st      c_zero, 0x08 (m), 0, 0
 		ps_neg      ftmp0, sinA
-		psq_st      c_zero, 0x18(m), 0, 0
+		psq_st      c_zero, 0x18 (m), 0, 0
 		ps_merge00  ftmp1, sinA, cosA
-		psq_st      c_zero, 0x20(m), 0, 0
+		psq_st      c_zero, 0x20 (m), 0, 0
 		ps_merge00  ftmp2, c_one, c_zero
-		psq_st      c_zero, 0x30(m), 0, 0
+		psq_st      c_zero, 0x30 (m), 0, 0
 		ps_merge00  ftmp3, c_zero, c_one
-		psq_st      ftmp1, 0x10(m), 0, 0
+		psq_st      ftmp1,  0x10 (m), 0, 0
 		ps_merge00  ftmp4, cosA, ftmp0
-		psq_st      ftmp2, 0x28(m), 0, 0
-		psq_st      ftmp3, 0x38(m), 0, 0
-		psq_st      ftmp4, 0x0(m), 0, 0
+		psq_st      ftmp2,  0x28 (m), 0, 0
+		psq_st      ftmp3,  0x38 (m), 0, 0
+		psq_st      ftmp4,  0x00 (m), 0, 0
 
 	_end:
 	}
@@ -1036,9 +1036,9 @@ void PSMTX44RotAxisRad(register Mtx44 m, register const Vec* axis, register f32 
 #ifdef __MWERKS__
 	asm {
         frsp        cosA, cosA
-        psq_l       tmp0, 0x0(axis), 0, 0
+        psq_l       tmp0, 0x00 (axis), 0, 0
         frsp        sinA, sinA
-        lfs         tmp1, 0x8(axis)
+        lfs         tmp1, 0x08 (axis)
         ps_mul      tmp2, tmp0, tmp0
         fadds       tmp7, tmp9, tmp9
         ps_madd     tmp3, tmp1, tmp1, tmp2
@@ -1049,10 +1049,10 @@ void PSMTX44RotAxisRad(register Mtx44 m, register const Vec* axis, register f32 
         ps_merge00  tmp7, fc0, tmp7
         fmuls       tmp2, tmp5, tmp5
         fmuls       tmp3, tmp5, tmp9
-        psq_st      fc0, 0x30(m), 0, 0
+        psq_st      fc0, 0x30 (m), 0, 0
         fnmsubs     tmp2, tmp2, tmp4, tmp8
         fmuls       tmp5, tmp2, tmp3
-        psq_st      tmp7, 0x38(m), 0, 0
+        psq_st      tmp7, 0x38 (m), 0, 0
         ps_merge00  cosA, cosA, cosA
         ps_muls0    tmp0, tmp0, tmp5
         ps_muls0    tmp1, tmp1, tmp5
@@ -1069,16 +1069,16 @@ void PSMTX44RotAxisRad(register Mtx44 m, register const Vec* axis, register f32 
         ps_sum0     tmp2, tmp2, tmp6, cosA
         ps_sum1     tmp3, cosA, tmp7, tmp3
         ps_sum0     tmp6, tmp0, fc0, tmp4
-        psq_st      tmp8, 0x8(m), 0, 0
+        psq_st      tmp8, 0x08 (m), 0, 0
         ps_sum0     tmp0, tmp4, tmp4, tmp0
-        psq_st      tmp2, 0x0(m), 0, 0
+        psq_st      tmp2, 0x00 (m), 0, 0
         ps_muls0    tmp5, tmp5, tmp1
-        psq_st      tmp3, 0x10(m), 0, 0
+        psq_st      tmp3, 0x10 (m), 0, 0
         ps_sum1     tmp4, tmp9, tmp0, tmp4
-        psq_st      tmp6, 0x18(m), 0, 0
+        psq_st      tmp6, 0x18 (m), 0, 0
         ps_sum0     tmp5, tmp5, fc0, cosA
-        psq_st      tmp4, 0x20(m), 0, 0
-        psq_st      tmp5, 0x28(m), 0, 0
+        psq_st      tmp4, 0x20 (m), 0, 0
+        psq_st      tmp5, 0x28 (m), 0, 0
 	}
 #endif
 }

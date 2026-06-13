@@ -3319,36 +3319,36 @@ static inline void addMatrixWeights(register f32* animMtx, register f32* weighte
 {
 #ifdef __MWERKS__
 	asm {
-		psq_l    f0, 0x0(weights), 0, 0;
-		psq_l    f1, 0x0(animMtx), 0, 0;
-		psq_l    f2, 0x0(weightedMtx), 0, 0;
+		psq_l    f0, 0x00 (weights), 0, 0;
+		psq_l    f1, 0x00 (animMtx), 0, 0;
+		psq_l    f2, 0x00 (weightedMtx), 0, 0;
 		ps_madd  f1, f2, f0, f1;
-		psq_st   f1, 0x0(animMtx), 0, 0;
+		psq_st   f1, 0x00 (animMtx), 0, 0;
 
-		psq_l    f3, 0x8(animMtx), 0, 0;
-		psq_l    f2, 0x8(weightedMtx), 0, 0;
+		psq_l    f3, 0x08 (animMtx), 0, 0;
+		psq_l    f2, 0x08 (weightedMtx), 0, 0;
 		ps_madd  f3, f2, f0, f3;
-		psq_st   f3, 0x8(animMtx), 0, 0;
+		psq_st   f3, 0x08 (animMtx), 0, 0;
 
-		psq_l    f1, 0x10(animMtx), 0, 0;
-		psq_l    f2, 0x10(weightedMtx), 0, 0;
+		psq_l    f1, 0x10 (animMtx), 0, 0;
+		psq_l    f2, 0x10 (weightedMtx), 0, 0;
 		ps_madd  f1, f2, f0, f1;
-		psq_st   f1, 0x10(animMtx), 0, 0;
+		psq_st   f1, 0x10 (animMtx), 0, 0;
 
-		psq_l    f3, 0x18(animMtx), 0, 0;
-		psq_l    f2, 0x18(weightedMtx), 0, 0;
+		psq_l    f3, 0x18 (animMtx), 0, 0;
+		psq_l    f2, 0x18 (weightedMtx), 0, 0;
 		ps_madd  f3, f2, f0, f3;
-		psq_st   f3, 0x18(animMtx), 0, 0;
+		psq_st   f3, 0x18 (animMtx), 0, 0;
 
-		psq_l    f1, 0x20(animMtx), 0, 0;
-		psq_l    f2, 0x20(weightedMtx), 0, 0;
+		psq_l    f1, 0x20 (animMtx), 0, 0;
+		psq_l    f2, 0x20 (weightedMtx), 0, 0;
 		ps_madd  f1, f2, f0, f1;
-		psq_st   f1, 0x20(animMtx), 0, 0;
+		psq_st   f1, 0x20 (animMtx), 0, 0;
 
-		psq_l    f3, 0x28(animMtx), 0, 0;
-		psq_l    f2, 0x28(weightedMtx), 0, 0;
+		psq_l    f3, 0x28 (animMtx), 0, 0;
+		psq_l    f2, 0x28 (weightedMtx), 0, 0;
 		ps_madd  f3, f2, f0, f3;
-		psq_st   f3, 0x28(animMtx), 0, 0;
+		psq_st   f3, 0x28 (animMtx), 0, 0;
 	}
 #endif
 }
