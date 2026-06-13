@@ -70,7 +70,7 @@ static BOOL TRKTargetCheckStep();
 ASM u32 __TRK_get_MSR() {
 #ifdef __MWERKS__ // clang-format off
     nofralloc
-    mfmsr r3
+    mfmsr  r3
     blr
 #endif // clang-format on
 }
@@ -81,10 +81,10 @@ ASM u32 __TRK_get_MSR() {
 ASM void __TRK_set_MSR(register u32 msr)
 {
 #ifdef __MWERKS__ // clang-format off
-		nofralloc
-		mtmsr msr
-		blr
-	#endif // clang-format on
+	nofralloc
+	mtmsr  msr
+	blr
+#endif // clang-format on
 }
 
 /**
@@ -328,33 +328,33 @@ static ASM void TRK_ppc_memcpy(register void* dest, register const void* src, re
 #define msr        r8
 #define byte    r9
 #define count    r10
-nofralloc
+	nofralloc
 
-mfmsr msr
-li count, 0
+	mfmsr  msr
+	li     count, 0
 
 top_loop:
-cmpw count, n
-beq out_loop
+	cmpw   count, n
+	beq    out_loop
 
-mtmsr param_5
-sync
+	mtmsr  param_5
+	sync
 
-lbzx byte, count, src
+	lbzx   byte, count, src
 
-mtmsr param_4
-sync
+	mtmsr  param_4
+	sync
 
-stbx byte, count, dest
+	stbx   byte, count, dest
 
-addi count, count, 1
+	addi   count, count, 1
 
-b top_loop
+	b      top_loop
 out_loop:
-mtmsr msr
-sync
+	mtmsr  msr
+	sync
 
-blr
+	blr
 #undef count
 #undef byte
 #undef msr
@@ -686,109 +686,109 @@ ASM void TRKInterruptHandler()
 {
 #ifdef __MWERKS__ // clang-format off
     nofralloc
-    mtsrr0 r2
-    mtsrr1 r4
-    mfsprg r4, 3
-    mfcr r2
-    mtsprg 3, r2
-    lis r2, gTRKState@h
-    ori r2, r2, gTRKState@l
-    lwz r2, TRKState_PPC.MSR(r2)
-    ori r2, r2, 0x8002
-    xori r2, r2, 0x8002
+    mtsrr0   r2
+    mtsrr1   r4
+    mfsprg   r4, 3
+    mfcr     r2
+    mtsprg   3, r2
+    lis      r2,     gTRKState @h
+    ori      r2, r2, gTRKState @l
+    lwz      r2, TRKState_PPC.MSR (r2)
+    ori      r2, r2, 0x8002
+    xori     r2, r2, 0x8002
     sync
-    mtmsr r2
+    mtmsr    r2
     sync
-    lis r2, TRK_saved_exceptionID@h
-    ori r2, r2, TRK_saved_exceptionID@l
-    sth r3, 0(r2)
-    cmpwi r3, 0x500
-    bne L_802CF694
-    lis r2, gTRKCPUState@h
-    ori r2, r2, gTRKCPUState@l
-    mflr r3
-    stw r3, ProcessorState_PPC.transport_handler_saved_ra(r2)
-    bl TRKUARTInterruptHandler
-    lis r2, gTRKCPUState@h
-    ori r2, r2, gTRKCPUState@l
-    lwz r3, ProcessorState_PPC.transport_handler_saved_ra(r2)
-    mtlr r3
-    lis r2, gTRKState@h
-    ori r2, r2, gTRKState@l
-    lwz r2, TRKState_PPC.inputPendingPtr(r2)
-    lbz r2, TRKState_PPC.GPR[0](r2)
-    cmpwi r2, 0
-    beq L_802CF678
-    lis r2, gTRKExceptionStatus@h
-    ori r2, r2, gTRKExceptionStatus@l
-    lbz r2, TRKExceptionStatus.inTRK(r2)
-    cmpwi r2, 1
-    beq L_802CF678
-    lis r2, gTRKState@h
-    ori r2, r2, gTRKState@l
-    li r3, 1
-    stb r3, TRKState_PPC.inputActivated(r2)
-    b L_802CF694
+    lis      r2,     TRK_saved_exceptionID @h
+    ori      r2, r2, TRK_saved_exceptionID @l
+    sth      r3, 0 (r2)
+    cmpwi    r3, 0x500
+    bne      L_802CF694
+    lis      r2,     gTRKCPUState @h
+    ori      r2, r2, gTRKCPUState @l
+    mflr     r3
+    stw      r3, ProcessorState_PPC.transport_handler_saved_ra (r2)
+    bl       TRKUARTInterruptHandler
+    lis      r2,     gTRKCPUState @h
+    ori      r2, r2, gTRKCPUState @l
+    lwz      r3, ProcessorState_PPC.transport_handler_saved_ra (r2)
+    mtlr     r3
+    lis      r2,     gTRKState @h
+    ori      r2, r2, gTRKState @l
+    lwz      r2, TRKState_PPC.inputPendingPtr (r2)
+    lbz      r2, TRKState_PPC.GPR[0] (r2)
+    cmpwi    r2, 0
+    beq      L_802CF678
+    lis      r2,     gTRKExceptionStatus @h
+    ori      r2, r2, gTRKExceptionStatus @l
+    lbz      r2, TRKExceptionStatus.inTRK (r2)
+    cmpwi    r2, 1
+    beq      L_802CF678
+    lis      r2,     gTRKState @h
+    ori      r2, r2, gTRKState @l
+    li       r3, 1
+    stb      r3, TRKState_PPC.inputActivated (r2)
+    b        L_802CF694
 L_802CF678:
-    lis r2, gTRKSaveState@h
-    ori r2, r2, gTRKSaveState@l
-    lwz r3, Default_PPC.CR(r2)
-    mtcrf 0xff, r3
-    lwz r3, Default_PPC.GPR[3](r2)
-    lwz r2, Default_PPC.GPR[2](r2)
+    lis      r2,     gTRKSaveState @h
+    ori      r2, r2, gTRKSaveState @l
+    lwz      r3, Default_PPC.CR (r2)
+    mtcrf    0xff, r3
+    lwz      r3, Default_PPC.GPR[3] (r2)
+    lwz      r2, Default_PPC.GPR[2] (r2)
     rfi
 L_802CF694:
-    lis r2, TRK_saved_exceptionID@h
-    ori r2, r2, TRK_saved_exceptionID@l
-    lhz r3, 0(r2)
-    lis r2, gTRKExceptionStatus@h
-    ori r2, r2, gTRKExceptionStatus@l
-    lbz r2, TRKExceptionStatus.inTRK(r2)
-    cmpwi r2, 0
-    bne TRKExceptionHandler
-    lis r2, gTRKCPUState@h
-    ori r2, r2, gTRKCPUState@l
-    stw r0, ProcessorState_PPC.Default.GPR[0](r2)
-    stw r1, ProcessorState_PPC.Default.GPR[1](r2)
-    mfsprg r0, 1
-    stw r0, ProcessorState_PPC.Default.GPR[2](r2)
-    sth r3, ProcessorState_PPC.Extended1.exceptionID(r2)
-    sth r3, (ProcessorState_PPC.Extended1.exceptionID + 2)(r2)
-    mfsprg r0, 2
-    stw r0, ProcessorState_PPC.Default.GPR[3](r2)
-    stmw r4, ProcessorState_PPC.Default.GPR[4](r2)
-    mfsrr0 r27
-    mflr r28
-    mfsprg r29, 3
-    mfctr r30
-    mfxer r31
-    stmw r27, ProcessorState_PPC.Default.PC(r2)
-    bl TRKSaveExtended1Block
-    lis r2, gTRKExceptionStatus@h
-    ori r2, r2, gTRKExceptionStatus@l
-    li r3, 1
-    stb r3, TRKExceptionStatus.inTRK(r2)
-    lis r2, gTRKState@h
-    ori r2, r2, gTRKState@l
-    lwz r0, TRKState_PPC.MSR(r2)
+    lis      r2,     TRK_saved_exceptionID @h
+    ori      r2, r2, TRK_saved_exceptionID @l
+    lhz      r3, 0 (r2)
+    lis      r2,     gTRKExceptionStatus @h
+    ori      r2, r2, gTRKExceptionStatus @l
+    lbz      r2, TRKExceptionStatus.inTRK (r2)
+    cmpwi    r2, 0
+    bne      TRKExceptionHandler
+    lis      r2,     gTRKCPUState @h
+    ori      r2, r2, gTRKCPUState @l
+    stw      r0, ProcessorState_PPC.Default.GPR[0] (r2)
+    stw      r1, ProcessorState_PPC.Default.GPR[1] (r2)
+    mfsprg   r0, 1
+    stw      r0, ProcessorState_PPC.Default.GPR[2] (r2)
+    sth      r3, ProcessorState_PPC.Extended1.exceptionID (r2)
+    sth      r3, (ProcessorState_PPC.Extended1.exceptionID + 2) (r2)
+    mfsprg   r0, 2
+    stw      r0, ProcessorState_PPC.Default.GPR[3] (r2)
+    stmw     r4, ProcessorState_PPC.Default.GPR[4] (r2)
+    mfsrr0   r27
+    mflr     r28
+    mfsprg   r29, 3
+    mfctr    r30
+    mfxer    r31
+    stmw     r27, ProcessorState_PPC.Default.PC (r2)
+    bl       TRKSaveExtended1Block
+    lis      r2,     gTRKExceptionStatus @h
+    ori      r2, r2, gTRKExceptionStatus @l
+    li       r3, 1
+    stb      r3, TRKExceptionStatus.inTRK (r2)
+    lis      r2,     gTRKState @h
+    ori      r2, r2, gTRKState @l
+    lwz      r0, TRKState_PPC.MSR (r2)
     sync
-    mtmsr r0
+    mtmsr    r0
     sync
-    lwz r0, TRKState_PPC.LR(r2)
-    mtlr r0
-    lwz r0, TRKState_PPC.CTR(r2)
-    mtctr r0
-    lwz r0, TRKState_PPC.XER(r2)
-    mtxer r0
-    lwz r0, TRKState_PPC.DSISR(r2)
-    mtdsisr r0
-    lwz r0, TRKState_PPC.DAR(r2)
-    mtdar r0
-    lmw r3, TRKState_PPC.GPR[3](r2)
-    lwz r0, TRKState_PPC.GPR[0](r2)
-    lwz r1, TRKState_PPC.GPR[1](r2)
-    lwz r2, TRKState_PPC.GPR[2](r2)
-    b TRKPostInterruptEvent
+    lwz      r0, TRKState_PPC.LR (r2)
+    mtlr     r0
+    lwz      r0, TRKState_PPC.CTR (r2)
+    mtctr    r0
+    lwz      r0, TRKState_PPC.XER (r2)
+    mtxer    r0
+    lwz      r0, TRKState_PPC.DSISR (r2)
+    mtdsisr  r0
+    lwz      r0, TRKState_PPC.DAR (r2)
+    mtdar    r0
+    lmw      r3, TRKState_PPC.GPR[3] (r2)
+    lwz      r0, TRKState_PPC.GPR[0] (r2)
+    lwz      r1, TRKState_PPC.GPR[1] (r2)
+    lwz      r2, TRKState_PPC.GPR[2] (r2)
+    b        TRKPostInterruptEvent
 #endif // clang-format on
 }
 
@@ -799,46 +799,46 @@ ASM void TRKExceptionHandler(u16 a)
 {
 #ifdef __MWERKS__ // clang-format off
     nofralloc
-    lis r2, gTRKExceptionStatus@h
-    ori r2, r2, gTRKExceptionStatus@l
-    sth r3, TRKExceptionStatus.exceptionInfo.exceptionID(r2)
-    mfsrr0 r3
-    stw r3, TRKExceptionStatus.exceptionInfo.PC(r2)
-    lhz r3, TRKExceptionStatus.exceptionInfo.exceptionID(r2)
-    cmpwi r3, 0x200
-    beq LAB_00010ba4
-    cmpwi r3, 0x300
-    beq LAB_00010ba4
-    cmpwi r3, 0x400
-    beq LAB_00010ba4
-    cmpwi r3, 0x600
-    beq LAB_00010ba4
-    cmpwi r3, 0x700
-    beq LAB_00010ba4
-    cmpwi r3, 0x800
-    beq LAB_00010ba4
-    cmpwi r3, 0x1000
-    beq LAB_00010ba4
-    cmpwi r3, 0x1100
-    beq LAB_00010ba4
-    cmpwi r3, 0x1200
-    beq LAB_00010ba4
-    cmpwi r3, 0x1300
-    beq LAB_00010ba4
-    b LAB_00010bb0
+    lis     r2,     gTRKExceptionStatus @h
+    ori     r2, r2, gTRKExceptionStatus @l
+    sth     r3, TRKExceptionStatus.exceptionInfo.exceptionID (r2)
+    mfsrr0  r3
+    stw     r3, TRKExceptionStatus.exceptionInfo.PC (r2)
+    lhz     r3, TRKExceptionStatus.exceptionInfo.exceptionID (r2)
+    cmpwi   r3, 0x200
+    beq     LAB_00010ba4
+    cmpwi   r3, 0x300
+    beq     LAB_00010ba4
+    cmpwi   r3, 0x400
+    beq     LAB_00010ba4
+    cmpwi   r3, 0x600
+    beq     LAB_00010ba4
+    cmpwi   r3, 0x700
+    beq     LAB_00010ba4
+    cmpwi   r3, 0x800
+    beq     LAB_00010ba4
+    cmpwi   r3, 0x1000
+    beq     LAB_00010ba4
+    cmpwi   r3, 0x1100
+    beq     LAB_00010ba4
+    cmpwi   r3, 0x1200
+    beq     LAB_00010ba4
+    cmpwi   r3, 0x1300
+    beq     LAB_00010ba4
+    b       LAB_00010bb0
 LAB_00010ba4:
-    mfsrr0 r3
-    addi r3, r3, 0x4
-    mtsrr0 r3
+    mfsrr0  r3
+    addi    r3, r3, 0x4
+    mtsrr0  r3
 LAB_00010bb0:
-    lis r2, gTRKExceptionStatus@h
-    ori r2, r2, gTRKExceptionStatus@l
-    li r3, 0x1
-    stb r3, TRKExceptionStatus.exceptionDetected(r2)
-    mfsprg r3, 3
-    mtcrf 0xff, r3
-    mfsprg r2, 1
-    mfsprg r3, 2
+    lis     r2,     gTRKExceptionStatus @h
+    ori     r2, r2, gTRKExceptionStatus @l
+    li      r3, 0x1
+    stb     r3, TRKExceptionStatus.exceptionDetected (r2)
+    mfsprg  r3, 3
+    mtcrf   0xff, r3
+    mfsprg  r2, 1
+    mfsprg  r3, 2
     rfi
 #endif // clang-format on
 }
@@ -883,55 +883,55 @@ ASM void TRKSwapAndGo(void)
 {
 #ifdef __MWERKS__ // clang-format off
     nofralloc
-    lis r3, gTRKState@h
-    ori r3, r3, gTRKState@l
-    stmw r0, TRKState_PPC.GPR[0](r3)
-    mfmsr r0
-    stw r0, TRKState_PPC.MSR(r3)
-    mflr r0
-    stw r0, TRKState_PPC.LR(r3)
-    mfctr r0
-    stw r0, TRKState_PPC.CTR(r3)
-    mfxer r0
-    stw r0, TRKState_PPC.XER(r3)
-    mfdsisr r0
-    stw r0, TRKState_PPC.DSISR(r3)
-    mfdar r0
-    stw r0, TRKState_PPC.DAR(r3)
-    li r1, -0x7ffe
-    nor r1, r1, r1
-    mfmsr r3
-    and r3, r3, r1
-    mtmsr r3
-    lis r2, gTRKState@h
-    ori r2, r2, gTRKState@l
-    lwz r2, TRKState_PPC.inputPendingPtr(r2)
-    lbz r2, TRKState_PPC.GPR[0](r2)
-    cmpwi r2, 0
-    beq L_802CF930
-    lis r2, gTRKState@h
-    ori r2, r2, gTRKState@l
-    li r3, 1
-    stb r3, TRKState_PPC.inputActivated(r2)
-    b TRKInterruptHandlerEnableInterrupts
+    lis      r3,     gTRKState @h
+    ori      r3, r3, gTRKState @l
+    stmw     r0, TRKState_PPC.GPR[0] (r3)
+    mfmsr    r0
+    stw      r0, TRKState_PPC.MSR (r3)
+    mflr     r0
+    stw      r0, TRKState_PPC.LR (r3)
+    mfctr    r0
+    stw      r0, TRKState_PPC.CTR (r3)
+    mfxer    r0
+    stw      r0, TRKState_PPC.XER (r3)
+    mfdsisr  r0
+    stw      r0, TRKState_PPC.DSISR (r3)
+    mfdar    r0
+    stw      r0, TRKState_PPC.DAR (r3)
+    li       r1, -0x7ffe
+    nor      r1, r1, r1
+    mfmsr    r3
+    and      r3, r3, r1
+    mtmsr    r3
+    lis      r2,     gTRKState @h
+    ori      r2, r2, gTRKState @l
+    lwz      r2, TRKState_PPC.inputPendingPtr (r2)
+    lbz      r2, TRKState_PPC.GPR[0] (r2)
+    cmpwi    r2, 0
+    beq      L_802CF930
+    lis      r2,     gTRKState @h
+    ori      r2, r2, gTRKState @l
+    li       r3, 1
+    stb      r3, TRKState_PPC.inputActivated (r2)
+    b        TRKInterruptHandlerEnableInterrupts
 L_802CF930:
-    lis r2, gTRKExceptionStatus@h
-    ori r2, r2, gTRKExceptionStatus@l
-    li r3, 0
-    stb r3, 0xc(r2)
-    bl TRKRestoreExtended1Block
-    lis r2, gTRKCPUState@h
-    ori r2, r2, gTRKCPUState@l
-    lmw r27, ProcessorState_PPC.Default.PC(r2)
-    mtsrr0 r27
-    mtlr r28
-    mtcrf 0xff, r29
-    mtctr r30
-    mtxer r31
-    lmw r3, ProcessorState_PPC.Default.GPR[3](r2)
-    lwz r0, ProcessorState_PPC.Default.GPR[0](r2)
-    lwz r1, ProcessorState_PPC.Default.GPR[1](r2)
-    lwz r2, ProcessorState_PPC.Default.GPR[2](r2)
+    lis      r2,     gTRKExceptionStatus @h
+    ori      r2, r2, gTRKExceptionStatus @l
+    li       r3, 0
+    stb      r3, 0xc(r2)
+    bl       TRKRestoreExtended1Block
+    lis      r2,     gTRKCPUState@h
+    ori      r2, r2, gTRKCPUState@l
+    lmw      r27, ProcessorState_PPC.Default.PC (r2)
+    mtsrr0   r27
+    mtlr     r28
+    mtcrf    0xff, r29
+    mtctr    r30
+    mtxer    r31
+    lmw      r3, ProcessorState_PPC.Default.GPR[3] (r2)
+    lwz      r0, ProcessorState_PPC.Default.GPR[0] (r2)
+    lwz      r1, ProcessorState_PPC.Default.GPR[1] (r2)
+    lwz      r2, ProcessorState_PPC.Default.GPR[2] (r2)
     rfi
 #endif // clang-format on
 }
@@ -943,27 +943,27 @@ ASM void TRKInterruptHandlerEnableInterrupts(void)
 {
 #ifdef __MWERKS__ // clang-format off
     nofralloc;
-    lis       r2, gTRKState@h
-    ori       r2, r2, gTRKState@l
-    lwz       r0, TRKState_PPC.MSR(r2)
+    lis      r2,     gTRKState @h
+    ori      r2, r2, gTRKState @l
+    lwz      r0, TRKState_PPC.MSR (r2)
     sync
-    mtmsr     r0
+    mtmsr    r0
     sync
-    lwz       r0, TRKState_PPC.LR(r2)
-    mtlr      r0
-    lwz       r0, TRKState_PPC.CTR(r2)
-    mtctr     r0
-    lwz       r0, TRKState_PPC.XER(r2)
-    mtxer     r0
-    lwz       r0, TRKState_PPC.DSISR(r2)
-    mtdsisr   r0
-    lwz       r0, TRKState_PPC.DAR(r2)
-    mtdar     r0
-    lmw       r3, TRKState_PPC.GPR[3](r2)
-    lwz       r0, TRKState_PPC.GPR[0](r2)
-    lwz       r1, TRKState_PPC.GPR[1](r2)
-    lwz       r2, TRKState_PPC.GPR[2](r2)
-    b         TRKPostInterruptEvent
+    lwz      r0, TRKState_PPC.LR (r2)
+    mtlr     r0
+    lwz      r0, TRKState_PPC.CTR (r2)
+    mtctr    r0
+    lwz      r0, TRKState_PPC.XER (r2)
+    mtxer    r0
+    lwz      r0, TRKState_PPC.DSISR (r2)
+    mtdsisr  r0
+    lwz      r0, TRKState_PPC.DAR (r2)
+    mtdar    r0
+    lmw      r3, TRKState_PPC.GPR[3] (r2)
+    lwz      r0, TRKState_PPC.GPR[0] (r2)
+    lwz      r1, TRKState_PPC.GPR[1] (r2)
+    lwz      r2, TRKState_PPC.GPR[2] (r2)
+    b        TRKPostInterruptEvent
 #endif // clang-format on
 }
 

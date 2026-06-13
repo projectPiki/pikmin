@@ -20,8 +20,8 @@ GXBool __GXinBegin;
 static ASM BOOL IsWriteGatherBufferEmpty(void) {
 #ifdef __MWERKS__ // clang-format off
     sync
-    mfspr r3, WPAR
-    andi. r3, r3, 1
+    mfspr  r3, WPAR
+    andi.  r3, r3, 1
 	#endif // clang-format on
 }
 

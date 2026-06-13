@@ -380,25 +380,25 @@ ASM static void __AICallbackStackSwitch(register AIDCallback cb)
 	fralloc
 
 	// Store current stack
-	lis r5, __OldStack@ha
-	addi r5, r5, __OldStack@l
-	stw r1, 0(r5)
+	lis   r5,     __OldStack @ha
+	addi  r5, r5, __OldStack @l
+	stw   r1, 0 (r5)
 
 	// Load stack for callback
-	lis r5, __CallbackStack@ha
-	addi r5, r5, __CallbackStack@l
-	lwz r1,0(r5)
+	lis   r5,     __CallbackStack @ha
+	addi  r5, r5, __CallbackStack @l
+	lwz   r1, 0 (r5)
 
 	// Move stack down 8 bytes
-	subi r1, r1, 8
+	subi  r1, r1, 8
 	// Call callback
-	mtlr cb
+	mtlr  cb
 	blrl
 
 	// Restore old stack
-	lis r5, __OldStack @ha
-	addi r5, r5, __OldStack@l
-	lwz r1,0(r5)
+	lis   r5,     __OldStack @ha
+	addi  r5, r5, __OldStack @l
+	lwz   r1, 0 (r5)
 
 	// Free stack frame
 	frfree

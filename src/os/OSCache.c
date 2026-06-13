@@ -21,9 +21,9 @@ ASM void DCEnable(void)
 
 	sync
 
-	mfspr   r3, HID0
-	ori     r3, r3, HID0_DCE
-	mtspr   HID0, r3
+	mfspr  r3, HID0
+	ori    r3, r3, HID0_DCE
+	mtspr  HID0, r3
 
 	blr
 #endif // clang-format on
@@ -107,19 +107,19 @@ void DCBlockInvalidate(void)
 ASM void DCInvalidateRange(register void* addr, register u32 nBytes) {
 #ifdef __MWERKS__ // clang-format off
 	nofralloc
-	cmplwi  nBytes,0
+	cmplwi   nBytes, 0
 	blelr-
-	rlwinm.  r5,addr,0,27,31
+	rlwinm.  r5, addr, 0, 27, 31
 	beq      _noadd
 	addi     r4, r4, 0x20
 _noadd:
-	addi    nBytes,nBytes,31
-	srwi    nBytes,nBytes,5
-	mtctr   nBytes
+	addi     nBytes, nBytes, 31
+	srwi     nBytes, nBytes, 5
+	mtctr    nBytes
 _loop:
-	dcbi    0,addr
-	addi    addr,addr,32
-	bdnz    _loop
+	dcbi     0, addr
+	addi     addr, addr, 32
+	bdnz     _loop
 	blr
 #endif // clang-format on
 }
@@ -130,19 +130,19 @@ _loop:
 ASM void DCFlushRange(register void* addr, register u32 nBytes) {
 #ifdef __MWERKS__ // clang-format off
 	nofralloc
-	cmplwi  nBytes,0
+	cmplwi   nBytes, 0
 	blelr-
-	rlwinm.  r5,addr,0,27,31
+	rlwinm.  r5, addr, 0, 27, 31
 	beq      _noadd
 	addi     r4, r4, 0x20
 _noadd:
-	addi    nBytes,nBytes,31
-	srwi    nBytes,nBytes,5
-	mtctr   nBytes
+	addi     nBytes, nBytes, 31
+	srwi     nBytes, nBytes, 5
+	mtctr    nBytes
 _loop:
-	dcbf    0,addr
-	addi    addr,addr,32
-	bdnz    _loop
+	dcbf     0, addr
+	addi     addr, addr, 32
+	bdnz     _loop
 
 	sc
 
@@ -156,19 +156,19 @@ _loop:
 ASM void DCStoreRange(register void* addr, register u32 nBytes) {
 #ifdef __MWERKS__ // clang-format off
 	nofralloc
-	cmplwi  nBytes,0
+	cmplwi   nBytes, 0
 	blelr-
-	rlwinm.  r5,addr,0,27,31
+	rlwinm.  r5, addr, 0, 27, 31
 	beq      _noadd
 	addi     r4, r4, 0x20
 _noadd:
-	addi    nBytes,nBytes,31
-	srwi    nBytes,nBytes,5
-	mtctr   nBytes
+	addi     nBytes, nBytes, 31
+	srwi     nBytes, nBytes, 5
+	mtctr    nBytes
 _loop:
-	dcbst   0,addr
-	addi    addr,addr,32
-	bdnz    _loop
+	dcbst    0, addr
+	addi     addr, addr, 32
+	bdnz     _loop
 
 	sc
 
@@ -182,19 +182,19 @@ _loop:
 ASM void DCFlushRangeNoSync(register void* addr, register u32 nBytes) {
 #ifdef __MWERKS__ // clang-format off
 	nofralloc
-	cmplwi  nBytes,0
+	cmplwi   nBytes, 0
 	blelr-
-	rlwinm.  r5,addr,0,27,31
+	rlwinm.  r5, addr, 0, 27, 31
 	beq      _noadd
 	addi     r4, r4, 0x20
 _noadd:
-	addi    nBytes,nBytes,31
-	srwi    nBytes,nBytes,5
-	mtctr   nBytes
+	addi     nBytes, nBytes, 31
+	srwi     nBytes, nBytes, 5
+	mtctr    nBytes
 _loop:
-	dcbf    0,addr
-	addi    addr,addr,32
-	bdnz    _loop
+	dcbf     0, addr
+	addi     addr, addr, 32
+	bdnz     _loop
 
 	blr
 #endif // clang-format on
@@ -206,19 +206,19 @@ _loop:
 ASM void DCStoreRangeNoSync(register void* addr, register u32 nBytes) {
 #ifdef __MWERKS__ // clang-format off
 	nofralloc
-	cmplwi  nBytes,0
+	cmplwi   nBytes, 0
 	blelr-
-	rlwinm.  r5,addr,0,27,31
+	rlwinm.  r5, addr, 0, 27, 31
 	beq      _noadd
 	addi     r4, r4, 0x20
 _noadd:
-	addi    nBytes,nBytes,31
-	srwi    nBytes,nBytes,5
-	mtctr   nBytes
+	addi     nBytes, nBytes, 31
+	srwi     nBytes, nBytes, 5
+	mtctr    nBytes
 _loop:
-	dcbst   0,addr
-	addi    addr,addr,32
-	bdnz    _loop
+	dcbst    0, addr
+	addi     addr, addr, 32
+	bdnz     _loop
 
 	blr
 #endif // clang-format on
@@ -231,19 +231,20 @@ ASM void DCZeroRange(register void* addr, register u32 nBytes)
 {
 #ifdef __MWERKS__ // clang-format off
 	nofralloc
-	cmplwi  nBytes,0
+	cmplwi   nBytes, 0
 	blelr-
-	rlwinm.  r5,addr,0,27,31
+	rlwinm.  r5, addr, 0, 27, 31
 	beq      _noadd
 	addi     r4, r4, 0x20
 _noadd:
-	addi    nBytes,nBytes,31
-	srwi    nBytes,nBytes,5
-	mtctr   nBytes
+	addi     nBytes, nBytes, 31
+	srwi     nBytes, nBytes, 5
+	mtctr    nBytes
 _loop:
-	dcbz    0,addr
-	addi    addr,addr,32
-	bdnz    _loop
+	dcbz     0, addr
+	addi     addr, addr, 32
+	bdnz     _loop
+
 	blr
 #endif // clang-format on
 }
@@ -263,21 +264,23 @@ void DCTouchRange(register void* addr, register u32 nBytes)
 ASM void ICInvalidateRange(register void* addr, register u32 nBytes) {
 #ifdef __MWERKS__ // clang-format off
 	nofralloc
-	cmplwi  nBytes,0
+	cmplwi   nBytes, 0
 	blelr-
-	rlwinm.  r5,addr,0,27,31
+	rlwinm.  r5, addr, 0, 27, 31
 	beq      _noadd
 	addi     r4, r4, 0x20
 _noadd:
-	addi    nBytes,nBytes,31
-	srwi    nBytes,nBytes,5
-	mtctr   nBytes
+	addi     nBytes, nBytes, 31
+	srwi     nBytes, nBytes, 5
+	mtctr    nBytes
 _loop:
-	icbi    0,addr
-	addi    addr,addr,32
-	bdnz    _loop
+	icbi     0, addr
+	addi     addr, addr, 32
+	bdnz     _loop
+
 	sync
 	isync
+
 	blr
 #endif // clang-format on
 }
@@ -289,9 +292,9 @@ ASM void ICFlashInvalidate(void) {
 #ifdef __MWERKS__ // clang-format off
 	nofralloc
 
-	mfspr   r3, HID0
-	ori     r3, r3, HID0_ICFI
-	mtspr   HID0, r3
+	mfspr  r3, HID0
+	ori    r3, r3, HID0_ICFI
+	mtspr  HID0, r3
 
 	blr
 #endif // clang-format on
@@ -307,9 +310,9 @@ ASM void ICEnable(void)
 
 	isync
 
-	mfspr   r3, HID0
-	ori     r3, r3, HID0_ICE
-	mtspr   HID0, r3
+	mfspr  r3, HID0
+	ori    r3, r3, HID0_ICE
+	mtspr  HID0, r3
 
 	blr
 #endif // clang-format on

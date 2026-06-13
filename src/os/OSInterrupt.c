@@ -27,12 +27,12 @@ static OSInterruptMask InterruptPrioTable[] = {
 ASM BOOL OSDisableInterrupts(void) {
 #ifdef __MWERKS__ // clang-format off
 	nofralloc
-entry    __RAS_OSDisableInterrupts_begin
+entry __RAS_OSDisableInterrupts_begin
 	mfmsr   r3
 	rlwinm  r4, r3, 0, 17, 15
 	mtmsr   r4
 	rlwinm  r3, r3, 17, 31, 31
-entry    __RAS_OSDisableInterrupts_end
+entry __RAS_OSDisableInterrupts_end
 	blr
 #endif // clang-format on
 }
@@ -494,6 +494,6 @@ static ASM void ExternalInterruptHandler(register __OSException exception, regis
 #ifdef __MWERKS__ // clang-format off
 	nofralloc
 	OS_EXCEPTION_SAVE_GPRS(context)
-	b __OSDispatchInterrupt
+	b  __OSDispatchInterrupt
 #endif // clang-format on
 }

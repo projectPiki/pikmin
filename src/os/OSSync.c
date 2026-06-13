@@ -15,16 +15,16 @@ static ASM void SystemCallVector(void)
 #ifdef __MWERKS__ // clang-format off
 	nofralloc
 
-	entry __OSSystemCallVectorStart
-	mfspr r9, DBSR
-	ori r10, r9, 8
-	mtspr DBSR, r10
+entry __OSSystemCallVectorStart
+	mfspr  r9, DBSR
+	ori    r10, r9, 8
+	mtspr  DBSR, r10
 	isync
 	sync
-	mtspr DBSR, r9
+	mtspr  DBSR, r9
 	rfi
 
-	entry __OSSystemCallVectorEnd
+entry __OSSystemCallVectorEnd
 	nop
 #endif // clang-format on
 }

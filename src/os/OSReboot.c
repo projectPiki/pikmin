@@ -38,11 +38,11 @@ static ASM void Run(register void (*entrypoint)())
 {
 #ifdef __MWERKS__ // clang-format off
 	fralloc
-	bl OSDisableInterrupts
-	bl ICFlashInvalidate
+	bl     OSDisableInterrupts
+	bl     ICFlashInvalidate
 	sync
 	isync
-	mtlr entrypoint
+	mtlr   entrypoint
 	blr
 	frfree
 	blr

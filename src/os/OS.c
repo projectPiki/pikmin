@@ -87,38 +87,38 @@ u32 __OSIsDebuggerPresent(void)
 static ASM void __OSInitFPRs(void) {
 #ifdef __MWERKS__ // clang-format off
     nofralloc
-    lfd     fp0, ZeroF
-    fmr     fp1, fp0
-    fmr     fp2, fp0
-    fmr     fp3, fp0
-    fmr     fp4, fp0
-    fmr     fp5, fp0
-    fmr     fp6, fp0
-    fmr     fp7, fp0
-    fmr     fp8, fp0
-    fmr     fp9, fp0
-    fmr     fp10, fp0
-    fmr     fp11, fp0
-    fmr     fp12, fp0
-    fmr     fp13, fp0
-    fmr     fp14, fp0
-    fmr     fp15, fp0
-    fmr     fp16, fp0
-    fmr     fp17, fp0
-    fmr     fp18, fp0
-    fmr     fp19, fp0
-    fmr     fp20, fp0
-    fmr     fp21, fp0
-    fmr     fp22, fp0
-    fmr     fp23, fp0
-    fmr     fp24, fp0
-    fmr     fp25, fp0
-    fmr     fp26, fp0
-    fmr     fp27, fp0
-    fmr     fp28, fp0
-    fmr     fp29, fp0
-    fmr     fp30, fp0
-    fmr     fp31, fp0
+    lfd  fp0, ZeroF
+    fmr  fp1, fp0
+    fmr  fp2, fp0
+    fmr  fp3, fp0
+    fmr  fp4, fp0
+    fmr  fp5, fp0
+    fmr  fp6, fp0
+    fmr  fp7, fp0
+    fmr  fp8, fp0
+    fmr  fp9, fp0
+    fmr  fp10, fp0
+    fmr  fp11, fp0
+    fmr  fp12, fp0
+    fmr  fp13, fp0
+    fmr  fp14, fp0
+    fmr  fp15, fp0
+    fmr  fp16, fp0
+    fmr  fp17, fp0
+    fmr  fp18, fp0
+    fmr  fp19, fp0
+    fmr  fp20, fp0
+    fmr  fp21, fp0
+    fmr  fp22, fp0
+    fmr  fp23, fp0
+    fmr  fp24, fp0
+    fmr  fp25, fp0
+    fmr  fp26, fp0
+    fmr  fp27, fp0
+    fmr  fp28, fp0
+    fmr  fp29, fp0
+    fmr  fp30, fp0
+    fmr  fp31, fp0
     blr
 #endif // clang-format on
 }
@@ -461,14 +461,14 @@ static ASM void __OSDBIntegrator(void)
 #ifdef __MWERKS__ // clang-format off
 	nofralloc
 entry __OSDBINTSTART
-	li      r5, OS_DBINTERFACE_ADDR
-	mflr    r3
-	stw     r3, DB_EXCEPTIONRET_OFFSET(r5)
-	lwz     r3, DB_EXCEPTIONDEST_OFFSET(r5)
-	oris    r3, r3, OS_CACHED_REGION_PREFIX
-	mtlr    r3
-	li      r3, MSR_IR | MSR_DR     // turn on memory addressing
-	mtmsr   r3
+	li     r5, OS_DBINTERFACE_ADDR
+	mflr   r3
+	stw    r3, DB_EXCEPTIONRET_OFFSET (r5)
+	lwz    r3, DB_EXCEPTIONDEST_OFFSET (r5)
+	oris   r3, r3, OS_CACHED_REGION_PREFIX
+	mtlr   r3
+	li     r3, MSR_IR | MSR_DR  // turn on memory addressing
+	mtmsr  r3
 	blr
 entry __OSDBINTEND
 #endif // clang-format on
@@ -481,7 +481,7 @@ static ASM void __OSDBJump(void) {
 #ifdef __MWERKS__ // clang-format off
 	nofralloc
 entry __OSDBJUMPSTART
-	bla     OS_DBJUMPPOINT_ADDR
+	bla  OS_DBJUMPPOINT_ADDR
 entry __OSDBJUMPEND
 #endif // clang-format on
 }
@@ -515,67 +515,65 @@ static ASM void OSExceptionVector(void)
 
 entry __OSEVStart
 	// Save r4 into SPRG0
-	mtsprg  0, r4
+	mtsprg   0, r4
 
 	// Load current context physical address into r4
-	lwz     r4, OS_CURRENTCONTEXT_PADDR
+	lwz      r4, OS_CURRENTCONTEXT_PADDR
 
 	// Save r3 - r5 into the current context
-	stw     r3, OS_CONTEXT_R3(r4)
-	mfsprg  r3, 0
-	stw     r3, OS_CONTEXT_R4(r4)
-	stw     r5, OS_CONTEXT_R5(r4)
+	stw      r3, OS_CONTEXT_R3 (r4)
+	mfsprg   r3, 0
+	stw      r3, OS_CONTEXT_R4 (r4)
+	stw      r5, OS_CONTEXT_R5 (r4)
 
-	lhz     r3, OS_CONTEXT_STATE(r4)
-	ori     r3, r3, OS_CONTEXT_STATE_EXC
-	sth     r3, OS_CONTEXT_STATE(r4)
+	lhz      r3, OS_CONTEXT_STATE (r4)
+	ori      r3, r3, OS_CONTEXT_STATE_EXC
+	sth      r3, OS_CONTEXT_STATE (r4)
 
 	// Save misc registers
-	mfcr    r3
-	stw     r3, OS_CONTEXT_CR(r4)
-	mflr    r3
-	stw     r3, OS_CONTEXT_LR(r4)
-	mfctr   r3
-	stw     r3, OS_CONTEXT_CTR(r4)
-	mfxer   r3
-	stw     r3, OS_CONTEXT_XER(r4)
-	mfsrr0  r3
-	stw     r3, OS_CONTEXT_SRR0(r4)
-	mfsrr1  r3
-	stw     r3, OS_CONTEXT_SRR1(r4)
-	mr      r5, r3
+	mfcr     r3
+	stw      r3, OS_CONTEXT_CR (r4)
+	mflr     r3
+	stw      r3, OS_CONTEXT_LR (r4)
+	mfctr    r3
+	stw      r3, OS_CONTEXT_CTR (r4)
+	mfxer    r3
+	stw      r3, OS_CONTEXT_XER (r4)
+	mfsrr0   r3
+	stw      r3, OS_CONTEXT_SRR0 (r4)
+	mfsrr1   r3
+	stw      r3, OS_CONTEXT_SRR1 (r4)
+	mr       r5, r3
 
 entry __DBVECTOR
 	nop
 
-	// Set SRR1[IR|DR] to turn on address
-	// translation at the next RFI
-	mfmsr   r3
-	ori     r3, r3, 0x30
-	mtsrr1  r3
+	// Set SRR1[IR|DR] to turn on address translation at the next RFI
+	mfmsr    r3
+	ori      r3, r3, 0x30
+	mtsrr1   r3
 
-	// This lets us change the exception number based on the
-	// exception we're installing.
+	// This lets us change the exception number based on the exception we're installing.
 entry __OSEVSetNumber
-	addi    r3, 0, 0x0000
+	addi     r3, 0, 0x0000
 
 	// Load current context virtual address into r4
-	lwz     r4, 0xD4
+	lwz      r4, 0xD4
 
 	// Check non-recoverable interrupt
-	rlwinm. r5, r5, 0, MSR_RI_BIT, MSR_RI_BIT
-	bne     recoverable
-	addis   r5, 0,  OSDefaultExceptionHandler@ha
-	addi    r5, r5, OSDefaultExceptionHandler@l
-	mtsrr0  r5
+	rlwinm.  r5, r5, 0, MSR_RI_BIT, MSR_RI_BIT
+	bne      recoverable
+	addis    r5, 0,  OSDefaultExceptionHandler @ha
+	addi     r5, r5, OSDefaultExceptionHandler @l
+	mtsrr0   r5
 	rfi
 	// NOT REACHED HERE
 
 recoverable:
 	// Locate exception handler.
-	rlwinm  r5, r3, 2, 22, 29               // r5 contains exception*4
-	lwz     r5, OS_EXCEPTIONTABLE_ADDR(r5)
-	mtsrr0  r5
+	rlwinm   r5, r3, 2, 22, 29               // r5 contains exception*4
+	lwz      r5, OS_EXCEPTIONTABLE_ADDR (r5)
+	mtsrr0   r5
 
 	// Final state
 	// r3 - exception number
@@ -603,10 +601,10 @@ static ASM void OSDefaultExceptionHandler(register __OSException exception, regi
 	nofralloc
 	OS_EXCEPTION_SAVE_GPRS(context)
 	// Load DSISR and DAR
-	mfdsisr r5
-	mfdar   r6
+	mfdsisr  r5
+	mfdar    r6
 
-	b       __OSUnhandledException
+	b        __OSUnhandledException
 	// NOT REACHED HERE
 #endif // clang-format on
 }
@@ -621,8 +619,8 @@ void __OSPSInit(void)
 	__mwerks_sync();
 #ifdef __MWERKS__
 	asm {
-		li      r3, 0
-		mtspr   GQR0, r3
+		li     r3, 0
+		mtspr  GQR0, r3
 	}
 #endif
 }
