@@ -1,136 +1,106 @@
 #include "PowerPC_EABI_Support/Runtime/runtime.h"
 
-/* macros for GPR/FPR/VR saving and restoring */
-#define SAVE_FPR(reg)    _savefpr_##reg
-#define RESTORE_FPR(reg) _restfpr_##reg
-#define SAVE_GPR(reg)    _savegpr_##reg
-#define RESTORE_GPR(reg) _restgpr_##reg
-#define SAVE_VR(reg)     __savev##reg
-#define RESTORE_VR(reg)  __restv##reg
+void _savefpr_14(void);
+void _savefpr_15(void);
+void _savefpr_16(void);
+void _savefpr_17(void);
+void _savefpr_18(void);
+void _savefpr_19(void);
+void _savefpr_20(void);
+void _savefpr_21(void);
+void _savefpr_22(void);
+void _savefpr_23(void);
+void _savefpr_24(void);
+void _savefpr_25(void);
+void _savefpr_26(void);
+void _savefpr_27(void);
+void _savefpr_28(void);
+void _savefpr_29(void);
+void _savefpr_30(void);
+void _savefpr_31(void);
 
-#define ENTRY_SAVE_FPR(reg)    entry SAVE_FPR(reg)
-#define ENTRY_RESTORE_FPR(reg) entry RESTORE_FPR(reg)
-#define ENTRY_SAVE_GPR(reg)    entry SAVE_GPR(reg)
-#define ENTRY_RESTORE_GPR(reg) entry RESTORE_GPR(reg)
-#define ENTRY_SAVE_VR(reg)     entry SAVE_VR(reg)
-#define ENTRY_RESTORE_VR(reg)  entry RESTORE_VR(reg)
+void _restfpr_14(void);
+void _restfpr_15(void);
+void _restfpr_16(void);
+void _restfpr_17(void);
+void _restfpr_18(void);
+void _restfpr_19(void);
+void _restfpr_20(void);
+void _restfpr_21(void);
+void _restfpr_22(void);
+void _restfpr_23(void);
+void _restfpr_24(void);
+void _restfpr_25(void);
+void _restfpr_26(void);
+void _restfpr_27(void);
+void _restfpr_28(void);
+void _restfpr_29(void);
+void _restfpr_30(void);
+void _restfpr_31(void);
 
-#define save_restore_reg r11
+void _savegpr_14(void);
+void _savegpr_15(void);
+void _savegpr_16(void);
+void _savegpr_17(void);
+void _savegpr_18(void);
+void _savegpr_19(void);
+void _savegpr_20(void);
+void _savegpr_21(void);
+void _savegpr_22(void);
+void _savegpr_23(void);
+void _savegpr_24(void);
+void _savegpr_25(void);
+void _savegpr_26(void);
+void _savegpr_27(void);
+void _savegpr_28(void);
+void _savegpr_29(void);
+void _savegpr_30(void);
+void _savegpr_31(void);
 
-ASM void __div2u(void);
-ASM void __div2i(void);
-ASM void __mod2u(void);
-ASM void __mod2i(void);
-ASM void __shl2i(void);
-ASM void __shr2u(void);
-ASM void __shr2i(void);
-ASM void __cvt_sll_dbl(void);
-ASM void __cvt_ull_dbl(void);
-ASM void __cvt_sll_flt(void);
-ASM void __cvt_ull_flt(void);
-ASM void __cvt_dbl_usll(void);
+void _restgpr_14(void);
+void _restgpr_15(void);
+void _restgpr_16(void);
+void _restgpr_17(void);
+void _restgpr_18(void);
+void _restgpr_19(void);
+void _restgpr_20(void);
+void _restgpr_21(void);
+void _restgpr_22(void);
+void _restgpr_23(void);
+void _restgpr_24(void);
+void _restgpr_25(void);
+void _restgpr_26(void);
+void _restgpr_27(void);
+void _restgpr_28(void);
+void _restgpr_29(void);
+void _restgpr_30(void);
+void _restgpr_31(void);
 
-void SAVE_FPR(14)(void);
-void SAVE_FPR(15)(void);
-void SAVE_FPR(16)(void);
-void SAVE_FPR(17)(void);
-void SAVE_FPR(18)(void);
-void SAVE_FPR(19)(void);
-void SAVE_FPR(20)(void);
-void SAVE_FPR(21)(void);
-void SAVE_FPR(22)(void);
-void SAVE_FPR(23)(void);
-void SAVE_FPR(24)(void);
-void SAVE_FPR(25)(void);
-void SAVE_FPR(26)(void);
-void SAVE_FPR(27)(void);
-void SAVE_FPR(28)(void);
-void SAVE_FPR(29)(void);
-void SAVE_FPR(30)(void);
-void SAVE_FPR(31)(void);
+void __savev20(void);
+void __savev21(void);
+void __savev22(void);
+void __savev23(void);
+void __savev24(void);
+void __savev25(void);
+void __savev26(void);
+void __savev27(void);
+void __savev28(void);
+void __savev29(void);
+void __savev30(void);
+void __savev31(void);
 
-void RESTORE_FPR(14)(void);
-void RESTORE_FPR(15)(void);
-void RESTORE_FPR(16)(void);
-void RESTORE_FPR(17)(void);
-void RESTORE_FPR(18)(void);
-void RESTORE_FPR(19)(void);
-void RESTORE_FPR(20)(void);
-void RESTORE_FPR(21)(void);
-void RESTORE_FPR(22)(void);
-void RESTORE_FPR(23)(void);
-void RESTORE_FPR(24)(void);
-void RESTORE_FPR(25)(void);
-void RESTORE_FPR(26)(void);
-void RESTORE_FPR(27)(void);
-void RESTORE_FPR(28)(void);
-void RESTORE_FPR(29)(void);
-void RESTORE_FPR(30)(void);
-void RESTORE_FPR(31)(void);
-
-void SAVE_GPR(14)(void);
-void SAVE_GPR(15)(void);
-void SAVE_GPR(16)(void);
-void SAVE_GPR(17)(void);
-void SAVE_GPR(18)(void);
-void SAVE_GPR(19)(void);
-void SAVE_GPR(20)(void);
-void SAVE_GPR(21)(void);
-void SAVE_GPR(22)(void);
-void SAVE_GPR(23)(void);
-void SAVE_GPR(24)(void);
-void SAVE_GPR(25)(void);
-void SAVE_GPR(26)(void);
-void SAVE_GPR(27)(void);
-void SAVE_GPR(28)(void);
-void SAVE_GPR(29)(void);
-void SAVE_GPR(30)(void);
-void SAVE_GPR(31)(void);
-
-void RESTORE_GPR(14)(void);
-void RESTORE_GPR(15)(void);
-void RESTORE_GPR(16)(void);
-void RESTORE_GPR(17)(void);
-void RESTORE_GPR(18)(void);
-void RESTORE_GPR(19)(void);
-void RESTORE_GPR(20)(void);
-void RESTORE_GPR(21)(void);
-void RESTORE_GPR(22)(void);
-void RESTORE_GPR(23)(void);
-void RESTORE_GPR(24)(void);
-void RESTORE_GPR(25)(void);
-void RESTORE_GPR(26)(void);
-void RESTORE_GPR(27)(void);
-void RESTORE_GPR(28)(void);
-void RESTORE_GPR(29)(void);
-void RESTORE_GPR(30)(void);
-void RESTORE_GPR(31)(void);
-
-void SAVE_VR(20)(void);
-void SAVE_VR(21)(void);
-void SAVE_VR(22)(void);
-void SAVE_VR(23)(void);
-void SAVE_VR(24)(void);
-void SAVE_VR(25)(void);
-void SAVE_VR(26)(void);
-void SAVE_VR(27)(void);
-void SAVE_VR(28)(void);
-void SAVE_VR(29)(void);
-void SAVE_VR(30)(void);
-void SAVE_VR(31)(void);
-
-void RESTORE_VR(20)(void);
-void RESTORE_VR(21)(void);
-void RESTORE_VR(22)(void);
-void RESTORE_VR(23)(void);
-void RESTORE_VR(24)(void);
-void RESTORE_VR(25)(void);
-void RESTORE_VR(26)(void);
-void RESTORE_VR(27)(void);
-void RESTORE_VR(28)(void);
-void RESTORE_VR(29)(void);
-void RESTORE_VR(30)(void);
-void RESTORE_VR(31)(void);
+void __restv20(void);
+void __restv21(void);
+void __restv22(void);
+void __restv23(void);
+void __restv24(void);
+void __restv25(void);
+void __restv26(void);
+void __restv27(void);
+void __restv28(void);
+void __restv29(void);
+void __restv30(void);
+void __restv31(void);
 
 static const u32 __constants[] = {
 	0x00000000, 0x00000000, 0x41F00000, 0x00000000, 0x41E00000, 0x00000000,
@@ -177,42 +147,42 @@ ASM static void __save_fpr(void)
 {
 #ifdef __MWERKS__ // clang-format off
 	nofralloc
-ENTRY_SAVE_FPR(14)
-	stfd  fp14, -144 (save_restore_reg)
-ENTRY_SAVE_FPR(15)
-	stfd  fp15, -136 (save_restore_reg)
-ENTRY_SAVE_FPR(16)
-	stfd  fp16, -128 (save_restore_reg)
-ENTRY_SAVE_FPR(17)
-	stfd  fp17, -120 (save_restore_reg)
-ENTRY_SAVE_FPR(18)
-	stfd  fp18, -112 (save_restore_reg)
-ENTRY_SAVE_FPR(19)
-	stfd  fp19, -104 (save_restore_reg)
-ENTRY_SAVE_FPR(20)
-	stfd  fp20, -96 (save_restore_reg)
-ENTRY_SAVE_FPR(21)
-	stfd  fp21, -88 (save_restore_reg)
-ENTRY_SAVE_FPR(22)
-	stfd  fp22, -80 (save_restore_reg)
-ENTRY_SAVE_FPR(23)
-	stfd  fp23, -72 (save_restore_reg)
-ENTRY_SAVE_FPR(24)
-	stfd  fp24, -64 (save_restore_reg)
-ENTRY_SAVE_FPR(25)
-	stfd  fp25, -56 (save_restore_reg)
-ENTRY_SAVE_FPR(26)
-	stfd  fp26, -48 (save_restore_reg)
-ENTRY_SAVE_FPR(27)
-	stfd  fp27, -40 (save_restore_reg)
-ENTRY_SAVE_FPR(28)
-	stfd  fp28, -32 (save_restore_reg)
-ENTRY_SAVE_FPR(29)
-	stfd  fp29, -24 (save_restore_reg)
-ENTRY_SAVE_FPR(30)
-	stfd  fp30, -16 (save_restore_reg)
-ENTRY_SAVE_FPR(31)
-	stfd  fp31, -8 (save_restore_reg)
+entry _savefpr_14
+	stfd  fp14, -144 (r11)
+entry _savefpr_15
+	stfd  fp15, -136 (r11)
+entry _savefpr_16
+	stfd  fp16, -128 (r11)
+entry _savefpr_17
+	stfd  fp17, -120 (r11)
+entry _savefpr_18
+	stfd  fp18, -112 (r11)
+entry _savefpr_19
+	stfd  fp19, -104 (r11)
+entry _savefpr_20
+	stfd  fp20, -96 (r11)
+entry _savefpr_21
+	stfd  fp21, -88 (r11)
+entry _savefpr_22
+	stfd  fp22, -80 (r11)
+entry _savefpr_23
+	stfd  fp23, -72 (r11)
+entry _savefpr_24
+	stfd  fp24, -64 (r11)
+entry _savefpr_25
+	stfd  fp25, -56 (r11)
+entry _savefpr_26
+	stfd  fp26, -48 (r11)
+entry _savefpr_27
+	stfd  fp27, -40 (r11)
+entry _savefpr_28
+	stfd  fp28, -32 (r11)
+entry _savefpr_29
+	stfd  fp29, -24 (r11)
+entry _savefpr_30
+	stfd  fp30, -16 (r11)
+entry _savefpr_31
+	stfd  fp31, -8 (r11)
 	blr
 #endif // clang-format on
 }
@@ -232,42 +202,42 @@ void _savevr(void)
 ASM static void __restore_fpr(void) {
 #ifdef __MWERKS__ // clang-format off
 	nofralloc
-ENTRY_RESTORE_FPR(14)
-	lfd  fp14, -144 (save_restore_reg)
-ENTRY_RESTORE_FPR(15)
-	lfd  fp15, -136 (save_restore_reg)
-ENTRY_RESTORE_FPR(16)
-	lfd  fp16, -128 (save_restore_reg)
-ENTRY_RESTORE_FPR(17)
-	lfd  fp17, -120 (save_restore_reg)
-ENTRY_RESTORE_FPR(18)
-	lfd  fp18, -112 (save_restore_reg)
-ENTRY_RESTORE_FPR(19)
-	lfd  fp19, -104 (save_restore_reg)
-ENTRY_RESTORE_FPR(20)
-	lfd  fp20, -96 (save_restore_reg)
-ENTRY_RESTORE_FPR(21)
-	lfd  fp21, -88 (save_restore_reg)
-ENTRY_RESTORE_FPR(22)
-	lfd  fp22, -80 (save_restore_reg)
-ENTRY_RESTORE_FPR(23)
-	lfd  fp23, -72 (save_restore_reg)
-ENTRY_RESTORE_FPR(24)
-	lfd  fp24, -64 (save_restore_reg)
-ENTRY_RESTORE_FPR(25)
-	lfd  fp25, -56 (save_restore_reg)
-ENTRY_RESTORE_FPR(26)
-	lfd  fp26, -48 (save_restore_reg)
-ENTRY_RESTORE_FPR(27)
-	lfd  fp27, -40 (save_restore_reg)
-ENTRY_RESTORE_FPR(28)
-	lfd  fp28, -32 (save_restore_reg)
-ENTRY_RESTORE_FPR(29)
-	lfd  fp29, -24 (save_restore_reg)
-ENTRY_RESTORE_FPR(30)
-	lfd  fp30, -16 (save_restore_reg)
-ENTRY_RESTORE_FPR(31)
-	lfd  fp31, -8 (save_restore_reg)
+entry _restfpr_14
+	lfd  fp14, -144 (r11)
+entry _restfpr_15
+	lfd  fp15, -136 (r11)
+entry _restfpr_16
+	lfd  fp16, -128 (r11)
+entry _restfpr_17
+	lfd  fp17, -120 (r11)
+entry _restfpr_18
+	lfd  fp18, -112 (r11)
+entry _restfpr_19
+	lfd  fp19, -104 (r11)
+entry _restfpr_20
+	lfd  fp20, -96 (r11)
+entry _restfpr_21
+	lfd  fp21, -88 (r11)
+entry _restfpr_22
+	lfd  fp22, -80 (r11)
+entry _restfpr_23
+	lfd  fp23, -72 (r11)
+entry _restfpr_24
+	lfd  fp24, -64 (r11)
+entry _restfpr_25
+	lfd  fp25, -56 (r11)
+entry _restfpr_26
+	lfd  fp26, -48 (r11)
+entry _restfpr_27
+	lfd  fp27, -40 (r11)
+entry _restfpr_28
+	lfd  fp28, -32 (r11)
+entry _restfpr_29
+	lfd  fp29, -24 (r11)
+entry _restfpr_30
+	lfd  fp30, -16 (r11)
+entry _restfpr_31
+	lfd  fp31, -8 (r11)
 	blr
 #endif // clang-format on
 }
@@ -279,42 +249,42 @@ ENTRY_RESTORE_FPR(31)
 ASM static void __save_gpr(void) {
 #ifdef __MWERKS__ // clang-format off
 	nofralloc
-ENTRY_SAVE_GPR(14)
-	stw  r14, -72 (save_restore_reg)
-ENTRY_SAVE_GPR(15)
-	stw  r15, -68 (save_restore_reg)
-ENTRY_SAVE_GPR(16)
-	stw  r16, -64 (save_restore_reg)
-ENTRY_SAVE_GPR(17)
-	stw  r17, -60 (save_restore_reg)
-ENTRY_SAVE_GPR(18)
-	stw  r18, -56 (save_restore_reg)
-ENTRY_SAVE_GPR(19)
-	stw  r19, -52 (save_restore_reg)
-ENTRY_SAVE_GPR(20)
-	stw  r20, -48 (save_restore_reg)
-ENTRY_SAVE_GPR(21)
-	stw  r21, -44 (save_restore_reg)
-ENTRY_SAVE_GPR(22)
-	stw  r22, -40 (save_restore_reg)
-ENTRY_SAVE_GPR(23)
-	stw  r23, -36 (save_restore_reg)
-ENTRY_SAVE_GPR(24)
-	stw  r24, -32 (save_restore_reg)
-ENTRY_SAVE_GPR(25)
-	stw  r25, -28 (save_restore_reg)
-ENTRY_SAVE_GPR(26)
-	stw  r26, -24 (save_restore_reg)
-ENTRY_SAVE_GPR(27)
-	stw  r27, -20 (save_restore_reg)
-ENTRY_SAVE_GPR(28)
-	stw  r28, -16 (save_restore_reg)
-ENTRY_SAVE_GPR(29)
-	stw  r29, -12 (save_restore_reg)
-ENTRY_SAVE_GPR(30)
-	stw  r30, -8 (save_restore_reg)
-ENTRY_SAVE_GPR(31)
-	stw  r31, -4 (save_restore_reg)
+entry _savegpr_14
+	stw  r14, -72 (r11)
+entry _savegpr_15
+	stw  r15, -68 (r11)
+entry _savegpr_16
+	stw  r16, -64 (r11)
+entry _savegpr_17
+	stw  r17, -60 (r11)
+entry _savegpr_18
+	stw  r18, -56 (r11)
+entry _savegpr_19
+	stw  r19, -52 (r11)
+entry _savegpr_20
+	stw  r20, -48 (r11)
+entry _savegpr_21
+	stw  r21, -44 (r11)
+entry _savegpr_22
+	stw  r22, -40 (r11)
+entry _savegpr_23
+	stw  r23, -36 (r11)
+entry _savegpr_24
+	stw  r24, -32 (r11)
+entry _savegpr_25
+	stw  r25, -28 (r11)
+entry _savegpr_26
+	stw  r26, -24 (r11)
+entry _savegpr_27
+	stw  r27, -20 (r11)
+entry _savegpr_28
+	stw  r28, -16 (r11)
+entry _savegpr_29
+	stw  r29, -12 (r11)
+entry _savegpr_30
+	stw  r30, -8 (r11)
+entry _savegpr_31
+	stw  r31, -4 (r11)
 	blr
 #endif // clang-format on
 }
@@ -327,42 +297,42 @@ ASM static void __restore_gpr(void)
 {
 #ifdef __MWERKS__ // clang-format off
 	nofralloc
-ENTRY_RESTORE_GPR(14)
-	lwz  r14, -72 (save_restore_reg)
-ENTRY_RESTORE_GPR(15)
-	lwz  r15, -68 (save_restore_reg)
-ENTRY_RESTORE_GPR(16)
-	lwz  r16, -64 (save_restore_reg)
-ENTRY_RESTORE_GPR(17)
-	lwz  r17, -60 (save_restore_reg)
-ENTRY_RESTORE_GPR(18)
-	lwz  r18, -56 (save_restore_reg)
-ENTRY_RESTORE_GPR(19)
-	lwz  r19, -52 (save_restore_reg)
-ENTRY_RESTORE_GPR(20)
-	lwz  r20, -48 (save_restore_reg)
-ENTRY_RESTORE_GPR(21)
-	lwz  r21, -44 (save_restore_reg)
-ENTRY_RESTORE_GPR(22)
-	lwz  r22, -40 (save_restore_reg)
-ENTRY_RESTORE_GPR(23)
-	lwz  r23, -36 (save_restore_reg)
-ENTRY_RESTORE_GPR(24)
-	lwz  r24, -32 (save_restore_reg)
-ENTRY_RESTORE_GPR(25)
-	lwz  r25, -28 (save_restore_reg)
-ENTRY_RESTORE_GPR(26)
-	lwz  r26, -24 (save_restore_reg)
-ENTRY_RESTORE_GPR(27)
-	lwz  r27, -20 (save_restore_reg)
-ENTRY_RESTORE_GPR(28)
-	lwz  r28, -16 (save_restore_reg)
-ENTRY_RESTORE_GPR(29)
-	lwz  r29, -12 (save_restore_reg)
-ENTRY_RESTORE_GPR(30)
-	lwz  r30, -8 (save_restore_reg)
-ENTRY_RESTORE_GPR(31)
-	lwz  r31, -4 (save_restore_reg)
+entry _restgpr_14
+	lwz  r14, -72 (r11)
+entry _restgpr_15
+	lwz  r15, -68 (r11)
+entry _restgpr_16
+	lwz  r16, -64 (r11)
+entry _restgpr_17
+	lwz  r17, -60 (r11)
+entry _restgpr_18
+	lwz  r18, -56 (r11)
+entry _restgpr_19
+	lwz  r19, -52 (r11)
+entry _restgpr_20
+	lwz  r20, -48 (r11)
+entry _restgpr_21
+	lwz  r21, -44 (r11)
+entry _restgpr_22
+	lwz  r22, -40 (r11)
+entry _restgpr_23
+	lwz  r23, -36 (r11)
+entry _restgpr_24
+	lwz  r24, -32 (r11)
+entry _restgpr_25
+	lwz  r25, -28 (r11)
+entry _restgpr_26
+	lwz  r26, -24 (r11)
+entry _restgpr_27
+	lwz  r27, -20 (r11)
+entry _restgpr_28
+	lwz  r28, -16 (r11)
+entry _restgpr_29
+	lwz  r29, -12 (r11)
+entry _restgpr_30
+	lwz  r30, -8 (r11)
+entry _restgpr_31
+	lwz  r31, -4 (r11)
 	blr
 #endif // clang-format on
 }

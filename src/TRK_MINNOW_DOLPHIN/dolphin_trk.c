@@ -34,60 +34,58 @@ ASM void InitMetroTRK()
 #ifdef __MWERKS__ // clang-format off
 	nofralloc
 
-	addi r1, r1, -4
-	stw r3, 0(r1)
-	lis r3, gTRKCPUState@h
-	ori r3, r3, gTRKCPUState@l
-	stmw r0, ProcessorState_PPC.Default.GPR(r3) //Save the gprs
-	lwz r4, 0(r1)
-	addi r1, r1, 4
-	stw r1, ProcessorState_PPC.Default.GPR[1](r3)
-	stw r4, ProcessorState_PPC.Default.GPR[3](r3)
-	mflr r4
-	stw r4, ProcessorState_PPC.Default.LR(r3)
-	stw r4, ProcessorState_PPC.Default.PC(r3)
-	mfcr r4
-	stw r4, ProcessorState_PPC.Default.CR(r3)
-	//???
-	mfmsr r4
-	ori r3, r4, (1 << (31 - 16))
-	xori r3, r3, (1 << (31 - 16))
-	mtmsr r3
-	mtsrr1 r4 //Copy msr to srr1
-	//Save misc registers to gTRKCPUState
-	bl TRKSaveExtended1Block
-	lis r3, gTRKCPUState@h
-	ori r3, r3, gTRKCPUState@l
-	lmw r0, ProcessorState_PPC.Default.GPR(r3) //Restore the gprs
-	//Reset IABR and DABR
-	li r0, 0
-	mtspr  0x3f2, r0
-	mtspr  0x3f5, r0
-	//Restore stack pointer
-	lis r1, _db_stack_addr@h
-	ori r1, r1, _db_stack_addr@l
-	mr r3, r5
-	bl InitMetroTRKCommTable //Initialize comm table
-	/*
-	If InitMetroTRKCommTable returned 1 (failure), an invalid hardware
-	id or the id for GDEV was somehow passed. Since only BBA or NDEV
-	are supported, we return early. Otherwise, we proceed with
-	starting up TRK.
-	*/
-	cmpwi r3, 1
-	bne initCommTableSuccess
-	/*
-	BUG: The code probably orginally reloaded gTRKCPUState here, but
-	as is it will read the returned value of InitMetroTRKCommTable
-	as a TRKCPUState struct pointer, causing the CPU to return to
-	a garbage code address.
-	*/
-	lwz r4, ProcessorState_PPC.Default.LR(r3)
-	mtlr r4
-	lmw r0, ProcessorState_PPC.Default.GPR(r3) //Restore the gprs
+	addi    r1, r1, -4
+	stw     r3, 0 (r1)
+	lis     r3,     gTRKCPUState @h
+	ori     r3, r3, gTRKCPUState @l
+	stmw    r0, ProcessorState_PPC.Default.GPR (r3)  // Save the gprs
+	lwz     r4, 0 (r1)
+	addi    r1, r1, 4
+	stw     r1, ProcessorState_PPC.Default.GPR[1] (r3)
+	stw     r4, ProcessorState_PPC.Default.GPR[3] (r3)
+	mflr    r4
+	stw     r4, ProcessorState_PPC.Default.LR (r3)
+	stw     r4, ProcessorState_PPC.Default.PC (r3)
+	mfcr    r4
+	stw     r4, ProcessorState_PPC.Default.CR (r3)
+	// Clear the external interrupt enable bit in the MSR
+	mfmsr   r4
+	ori     r3, r4, MSR_EE
+	xori    r3, r3, MSR_EE
+	mtmsr   r3
+	mtsrr1  r4  // SRR1 gets the value of the MSR from before the bit was cleared
+	// Save misc registers to gTRKCPUState
+	bl      TRKSaveExtended1Block
+	lis     r3,     gTRKCPUState @h
+	ori     r3, r3, gTRKCPUState @l
+	lmw     r0, ProcessorState_PPC.Default.GPR (r3)  // Restore the gprs
+	// Reset IABR and DABR
+	li      r0, 0
+	mtspr   SPR_IABR, r0
+	mtspr   SPR_DABR, r0
+	// Restore stack pointer
+	lis     r1,     _db_stack_addr@h
+	ori     r1, r1, _db_stack_addr@l
+	mr      r3, r5
+	bl      InitMetroTRKCommTable  // Initialize comm table
+	// If InitMetroTRKCommTable returned 1 (failure), an invalid hardware id or
+	// the id for GDEV was somehow passed. Since only BBA or NDEV are supported,
+	// we return early. Otherwise, we proceed with starting up TRK.
+	cmpwi   r3, 1
+	bne     initCommTableSuccess
+	// BUG: The code probably orginally reloaded gTRKCPUState here, but as is
+	// it will read the returned value of InitMetroTRKCommTableas a TRKCPUState 
+	// struct pointer, causing the CPU to return to a garbage code address.
+#if defined(BUGFIX)
+	lis     r3,     gTRKCPUState @h
+	ori     r3, r3, gTRKCPUState @l
+#endif
+	lwz     r4, ProcessorState_PPC.Default.LR (r3)
+	mtlr    r4
+	lmw     r0, ProcessorState_PPC.Default.GPR (r3)  // Restore the gprs
 	blr
 initCommTableSuccess:
-	b TRK_main //Jump to TRK_main
+	b TRK_main  // Jump to TRK_main
 #endif // clang-format on
 }
 
