@@ -187,14 +187,56 @@ entry _savefpr_31
 #endif // clang-format on
 }
 
+#pragma altivec_model on
+
 /**
- * @TODO: Documentation
- * @note UNUSED Size: 000064
+ * @brief Stores AltiVec vector registers to the stack.  Used with `-vector on`, which is invalid for GCN/Wii.
+ * @note UNUSED Size: 000064 (Matching by size)
  */
-void _savevr(void)
-{
-	// UNUSED FUNCTION
+ASM static void _savevr(void) {
+#ifdef __MWERKS__ // clang-format off
+	nofralloc
+entry __savev20
+	li    r12, -0xC0
+	stvx  v20, r12, r0
+entry __savev21
+	li    r12, -0xB0
+	stvx  v21, r12, r0
+entry __savev22
+	li    r12, -0xA0
+	stvx  v22, r12, r0
+entry __savev23
+	li    r12, -0x90
+	stvx  v23, r12, r0
+entry __savev24
+	li    r12, -0x80
+	stvx  v24, r12, r0
+entry __savev25
+	li    r12, -0x70
+	stvx  v25, r12, r0
+entry __savev26
+	li    r12, -0x60
+	stvx  v26, r12, r0
+entry __savev27
+	li    r12, -0x50
+	stvx  v27, r12, r0
+entry __savev28
+	li    r12, -0x40
+	stvx  v28, r12, r0
+entry __savev29
+	li    r12, -0x30
+	stvx  v29, r12, r0
+entry __savev30
+	li    r12, -0x20
+	stvx  v30, r12, r0
+entry __savev31
+	li    r12, -0x10
+	stvx  v31, r12, r0
+	blr
+#endif // clang-format on
 }
+
+#pragma altivec_model off
 
 /**
  * @TODO: Documentation
@@ -337,14 +379,56 @@ entry _restgpr_31
 #endif // clang-format on
 }
 
+#pragma altivec_model on
+
 /**
- * @TODO: Documentation
- * @note UNUSED Size: 000064
+ * @brief Loads AltiVec vector registers from the stack.  Used with `-vector on`, which is invalid for GCN/Wii.
+ * @note UNUSED Size: 000064 (Matching by size)
  */
-void _restorevr(void)
-{
-	// UNUSED FUNCTION
+ASM static void _restorevr(void) {
+#ifdef __MWERKS__ // clang-format off
+	nofralloc
+entry __restv20
+	li   r12, -0xC0
+	lvx  v20, r12, r0
+entry __restv21
+	li   r12, -0xB0
+	lvx  v21, r12, r0
+entry __restv22
+	li   r12, -0xA0
+	lvx  v22, r12, r0
+entry __restv23
+	li   r12, -0x90
+	lvx  v23, r12, r0
+entry __restv24
+	li   r12, -0x80
+	lvx  v24, r12, r0
+entry __restv25
+	li   r12, -0x70
+	lvx  v25, r12, r0
+entry __restv26
+	li   r12, -0x60
+	lvx  v26, r12, r0
+entry __restv27
+	li   r12, -0x50
+	lvx  v27, r12, r0
+entry __restv28
+	li   r12, -0x40
+	lvx  v28, r12, r0
+entry __restv29
+	li   r12, -0x30
+	lvx  v29, r12, r0
+entry __restv30
+	li   r12, -0x20
+	lvx  v30, r12, r0
+entry __restv31
+	li   r12, -0x10
+	lvx  v31, r12, r0
+	blr
+#endif // clang-format on
 }
+
+#pragma altivec_model off
 
 /**
  * @TODO: Documentation
