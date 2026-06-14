@@ -16,12 +16,12 @@ static ASM void SystemCallVector(void)
 	nofralloc
 
 entry __OSSystemCallVectorStart
-	mfspr  r9, DBSR
-	ori    r10, r9, 8
-	mtspr  DBSR, r10
+	mfspr  r9, HID0
+	ori    r10, r9, HID0_ABE
+	mtspr  HID0, r10
 	isync
 	sync
-	mtspr  DBSR, r9
+	mtspr  HID0, r9
 	rfi
 
 entry __OSSystemCallVectorEnd

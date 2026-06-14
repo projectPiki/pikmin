@@ -27,7 +27,7 @@ ASM void TRKSaveExtended1Block()
 	mfsr   r30, 14
 	mfsr   r31, 15
 	stmw   r16, ProcessorState_PPC.Extended1.SR (r2)
-	mftb   r10, 268  // There is no mftbl mnemonic?
+	mftb   r10
 	mftbu  r11
 	mfspr  r12, SPR_HID0
 	mfspr  r13, SPR_HID1

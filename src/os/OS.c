@@ -19,7 +19,6 @@ DECL_SECT(".init") extern char _db_stack_end[];
 #define OS_DEBUG_ADDRESS_2      0x800030E9
 #define DB_EXCEPTIONRET_OFFSET  0xC
 #define DB_EXCEPTIONDEST_OFFSET 0x8
-#define MSR_RI_BIT              0x1E
 
 extern u8 __ArenaHi[];
 extern u8 __ArenaLo[];
@@ -241,7 +240,7 @@ void OSInit(void)
 		__OSThreadInit();
 		__OSInitAudioSystem();
 #if OS_BUILD_VERSION >= 20011002L
-		PPCMthid2(PPCMfhid2() & 0xBFFFFFFF);
+		PPCMthid2(PPCMfhid2() & ~HID2_WPE);
 #endif
 		if ((BootInfo->consoleType & OS_CONSOLE_DEVELOPMENT) != 0) {
 			BootInfo->consoleType = OS_CONSOLE_DEVHW1;
@@ -540,7 +539,7 @@ entry __OSEVSetNumber
 	lwz      r4, 0xD4
 
 	// Check non-recoverable interrupt
-	rlwinm.  r5, r5, 0, MSR_RI_BIT, MSR_RI_BIT
+	rlwinm.  r5, r5, 0, 30, 30  // MSR_RI
 	bne      recoverable
 	lis      r5,     OSDefaultExceptionHandler @ha
 	addi     r5, r5, OSDefaultExceptionHandler @l
@@ -593,7 +592,7 @@ static ASM void OSDefaultExceptionHandler(register __OSException exception, regi
  */
 void __OSPSInit(void)
 {
-	PPCMthid2(PPCMfhid2() | 0xA0000000);
+	PPCMthid2(PPCMfhid2() | (HID2_LSQE | HID2_PSE));
 	ICFlashInvalidate();
 	__mwerks_sync();
 #ifdef __MWERKS__

@@ -5,20 +5,31 @@
 
 BEGIN_SCOPE_EXTERN_C
 
-#define HID0_ICE       0x8000
-#define HID0_ICFI      0x800
-#define HID0_DCE       0x4000
-#define HID2           0x398
-#define HID2_LCE_BIT   3
-#define LC_BASE        0xE0000000
-#define LC_LINES       512
-#define CACHE_LINES    1024
-#define DBAT3L         3
-#define DBAT3U         3
+/////////////// Inline ASM snippets to access hardware registers //////////////////////////////////////////////////////////////////////////
+
+#ifdef __MWERKS__
+#define PPC_MOVE_FROM_SPR(name, rD) asm { mfspr rD, name }
+#define PPC_MOVE_TO_SPR(name, rS)   asm { mtspr name, rS }
+#define PPC_MOVE_FROM_MSR(rD)       asm { mfmsr rD }
+#define PPC_MOVE_TO_MSR(rS)         asm { mtmsr rS }
+#else
+#define PPC_MOVE_FROM_SPR(name, rD) (void)0
+#define PPC_MOVE_TO_SPR(name, rS)   (void)0
+#define PPC_MOVE_FROM_MSR(rD)       (void)0
+#define PPC_MOVE_TO_MSR(rS)         (void)0
+#endif
+
+/////////////// Miscellaneous values with meaning /////////////////////////////////////////////////////////////////////////////////////////
+
+#define LC_BASE           0xE0000000
+#define LC_LINES          512
+#define CACHE_LINES       1024
 #define DMA_L_STORE       0
 #define DMA_L_TRIGGER     2
 #define LC_MAX_DMA_BLOCKS 128
 #define LC_MAX_DMA_BYTES  0x1000
+
+#define LCGetBase() ((void*)LC_BASE)
 
 /////////////// Encodings for the user- and supervisor-level SPRs /////////////////////////////////////////////////////////////////////////
 
@@ -133,21 +144,12 @@ BEGIN_SCOPE_EXTERN_C
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-#define LCGetBase() ((void*)LC_BASE)
+/////////////// Machine State Register (MSR) bit settings /////////////////////////////////////////////////////////////////////////////////
 
 #define MSR_00  0x80000000 // reserved (full function)
-#define MSR_01  0x40000000 // reserved (partial function)
-#define MSR_02  0x20000000 // ...
-#define MSR_03  0x10000000 // ...
-#define MSR_04  0x08000000 // ...
-#define MSR_05  0x04000000 // reserved (full function)
-#define MSR_06  0x02000000 // ...
-#define MSR_07  0x01000000 // ...
-#define MSR_08  0x00800000 // ...
-#define MSR_09  0x00400000 // ...
-#define MSR_10  0x00200000 // reserved (partial function)
-#define MSR_11  0x00100000 // ...
-#define MSR_12  0x00080000 // ...
+#define MSR_01  0x78000000 // reserved (partial function)
+#define MSR_05  0x07c00000 // reserved (full function)
+#define MSR_10  0x00380000 // reserved (partial function)
 #define MSR_POW 0x00040000 // power management enable
 #define MSR_14  0x00020000 // reserved (implementation-specific)
 #define MSR_ILE 0x00010000 // exception little-endian mode.
@@ -168,6 +170,57 @@ BEGIN_SCOPE_EXTERN_C
 #define MSR_RI  0x00000002 // recoverable interrupt
 #define MSR_LE  0x00000001 // little-endian mode enable
 
+#define SRR1_DMA_BIT  0x00200000
+#define SRR1_L2DP_BIT 0x00100000
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////// Hardware Implementation-Dependent Register (HID) bit settings /////////////////////////////////////////////////////////////
+
+#define HID0_EMCP   0x80000000 // Enable the machine check input (MCP) signal
+#define HID0_DBP    0x40000000 // Enable 60x bus address and data parity generation
+#define HID0_EBA    0x20000000 // Enable 60x bus address parity checking
+#define HID0_EBD    0x10000000 // Enable 60x bus data parity checking
+#define HID0_BCLK   0x08000000 // CLK_OUT enable (used in conjunction with HID0_ECLK)
+#define HID0_05     0x04000000 // Not used (defined as EICE on some earlier processors)
+#define HID0_ECLK   0x02000000 // CLK_OUT enable (used in conjunction with HID0_BCLK)
+#define HID0_PAR    0x01000000 // Disable precharge of ARTRY
+#define HID0_DOZE   0x00800000 // Doze mode enable
+#define HID0_NAP    0x00400000 // Nap mode enable
+#define HID0_SLEEP  0x00200000 // Sleep mode enable
+#define HID0_DPM    0x00100000 // Dynamic power management enable
+#define HID0_12     0x00080000 // Not used
+#define HID0_13     0x00040000 // ...
+#define HID0_14     0x00020000 // ...
+#define HID0_NHR    0x00010000 // Not hard reset
+#define HID0_ICE    0x00008000 // Instruction cache enable
+#define HID0_DCE    0x00004000 // Data cache enable
+#define HID0_ILOCK  0x00002000 // Instruction cache lock
+#define HID0_DLOCK  0x00001000 // Data cache lock
+#define HID0_ICFI   0x00000800 // Instruction cache flash invalidate
+#define HID0_DCFI   0x00000400 // Data cache flash invalidate
+#define HID0_SPD    0x00000200 // Speculative cache access disable
+#define HID0_IFEM   0x00000100 // Enable M bit on bus for instruction fetches
+#define HID0_SGE    0x00000080 // Store gathering enable
+#define HID0_DCFA   0x00000040 // Data cache flush assist
+#define HID0_BTIC   0x00000020 // Branch Target Instruction Cache enable
+#define HID0_27     0x00000010 // Not used (defined as FBIOB on earlier 603-type processors)
+#define HID0_ABE    0x00000008 // Address broadcast enable
+#define HID0_BHT    0x00000004 // Branch history table enable
+#define HID0_30     0x00000002 // Not used
+#define HID0_NOOPTI 0x00000001 // No-op the data cache touch instructions
+
+#define HID1_PC0 0x80000000 // PLL configuration bit 0 (read-only)
+#define HID1_PC1 0x40000000 // PLL configuration bit 1 (read-only)
+#define HID1_PC2 0x20000000 // PLL configuration bit 2 (read-only)
+#define HID1_PC3 0x10000000 // PLL configuration bit 3 (read-only)
+#define HID1_PC4 0x08000000 // PLL configuration bit 4 (read-only)
+
+#define HID2_LSQE   0x80000000 // Load / store quantized enable for non-indexed paired-singles instructions
+#define HID2_WPE    0x40000000 // Write pipe enable
+#define HID2_PSE    0x20000000 // Paired single enable
+#define HID2_LCE    0x10000000 // Locked cache enable
+#define HID2_DMAQL  0x0F000000 // DMA queue length (read only)
 #define HID2_DCHERR 0x00800000 // ERROR: dcbz_l cache hit
 #define HID2_DNCERR 0x00400000 // ERROR: DMA access to normal cache
 #define HID2_DCMERR 0x00200000 // ERROR: DMA cache miss error
@@ -177,12 +230,36 @@ BEGIN_SCOPE_EXTERN_C
 #define HID2_DCMEE  0x00020000 // DMA cache miss error error enable
 #define HID2_DQOEE  0x00010000 // DMA queue overflow error enable
 
+#define HID4_00      0x80000000 // Reserved
+#define HID4_L2FM    0x60000000 // L2 fetch mode
+#define HID4_BPD     0x18000000 // Bus pipeline depth
+#define HID4_BCO     0x04000000 // L2 second castout buffer enable
+#define HID4_SBE     0x02000000 // Secondary BAT enable
+#define HID4_PS1_CTL 0x01000000 // Paired-singles control bit 1
+#define HID4_08      0x00800000 // Reserved
+#define HID4_DBP     0x00400000 // Data bus parking
+#define HID4_L2_MUM  0x00200000 // L2 miss-under-miss cache enable
+#define HID4_L2_CCFI 0x00100000 // L2 complete castout prior to L2 flash invalidate
+#define HID4_PS2_CTL 0x00080000 // Paired-singles control bit 2
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////// L2 Cache Control Register (L2CR) bit settings /////////////////////////////////////////////////////////////////////////////
+
 #define L2CR_L2E  0x80000000 // L2 Enable
+#define L2CR_L2CE 0x40000000 // L2 Checkstop enable
+#define L2CR_02   0x3f800000 // Reserved
+#define L2CR_L2DO 0x00400000 // L2 data-only
 #define L2CR_L2I  0x00200000 // Global invalidate
+#define L2CR_11   0x00100000 // Reserved
+#define L2CR_L2WT 0x00080000 // L2 write-through
+#define L2CR_L2TS 0x00040000 // L2 test support
+#define L2Cr_14   0x0003fffe // Reserved
 #define L2CR_L2IP 0x00000001 // L2 global invalidate in progress
 
-#define SRR1_DMA_BIT  0x00200000
-#define SRR1_L2DP_BIT 0x00100000
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////// Floating-Point Status and Control Register (FPSCR) bit settings ///////////////////////////////////////////////////////////
 
 #define FPSCR_FX     0x80000000 // Exception summary
 #define FPSCR_FEX    0x40000000 // Enabled exception summary
@@ -208,6 +285,10 @@ BEGIN_SCOPE_EXTERN_C
 #define FPSCR_ZE     0x00000010 // Zero divide exception enable
 #define FPSCR_XE     0x00000008 // Inexact exception enable
 #define FPSCR_NI     0x00000004 // Non-IEEE mode
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////// Functions /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void PPCSync(void);  // Executes a system call to sync data
 void PPCEieio(void); // TODO

@@ -16,8 +16,8 @@ static ASM void __OSLoadFPUContext(register u32, register OSContext* fpuContext)
 
 	lfd      fp0, fpuContext->fpscr
 	mtfsf    0xFF, fp0
-	mfspr    r5, HID2
-	rlwinm.  r5, r5, 3, 31, 31
+	mfspr    r5, SPR_HID2
+	rlwinm.  r5, r5, 3, 31, 31  // HID2_PSE
 	beq      _regular_FPRs
 
 	// fpuContext->psf does not work for paired-singles instructions.
@@ -143,7 +143,7 @@ static ASM void __OSSaveFPUContext(register u32, register u32, register OSContex
 
 	lfd      fp0,  fpuContext->fpr[0]
 
-	mfspr    r3, HID2
+	mfspr    r3, SPR_HID2
 	rlwinm.  r3, r3, 3, 31, 31
 	beq      _return
 

@@ -65,7 +65,7 @@ ASM BOOL OSRestoreInterrupts(register BOOL level) {
 	ori     r5, r4, MSR_EE
 	b       _restore
 _disable:
-	rlwinm  r5, r4, 0, 17, 15 // MSR_EE
+	rlwinm  r5, r4, 0, 17, 15 // ~MSR_EE
 _restore:
 	mtmsr   r5
 	rlwinm  r4, r4, 17, 31, 31 // MSR_EE
