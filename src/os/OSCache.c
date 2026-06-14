@@ -397,9 +397,9 @@ ASM void LCDisable(void)
 	dcbi    r0, r3
 	addi    r3, r3, 32
 	bdnz    @1
-	mfspr   r4, HID2
-	rlwinm  r4, r4, 0, 4, 2
-	mtspr   HID2, r4
+	mfspr   r4, SPR_HID2
+	rlwinm  r4, r4, 0, 4, 2  // HID2_LCE
+	mtspr   SPR_HID2, r4
 	blr
 #endif // clang-format on
 }

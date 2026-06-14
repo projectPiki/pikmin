@@ -34,7 +34,7 @@ static void EnableWriteGatherPipe(void)
 	u32 hid2 = PPCMfhid2();
 
 	PPCMtwpar(OSUncachedToPhysical((void*)GXFIFO_ADDR));
-	hid2 |= 0x40000000;
+	hid2 |= HID2_WPE;
 	PPCMthid2(hid2);
 }
 
@@ -46,7 +46,7 @@ static void DisableWriteGatherPipe(void)
 {
 	u32 hid2 = PPCMfhid2();
 
-	hid2 &= ~0x40000000;
+	hid2 &= ~HID2_WPE;
 	PPCMthid2(hid2);
 }
 

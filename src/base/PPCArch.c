@@ -1,24 +1,12 @@
 #include "Dolphin/PPCArch.h"
 
-#ifdef __MWERKS__
-#define MOVE_FROM_SPR(name, rD) asm { mfspr rD, name }
-#define MOVE_TO_SPR(name, rS)   asm { mtspr name, rS }
-#define MOVE_FROM_MSR(rD)       asm { mfmsr rD }
-#define MOVE_TO_MSR(rS)         asm { mtmsr rS }
-#else
-#define MOVE_FROM_SPR(name, rD) (void)0
-#define MOVE_TO_SPR(name, rS)   (void)0
-#define MOVE_FROM_MSR(rD)       (void)0
-#define MOVE_TO_MSR(rS)         (void)0
-#endif
-
 /**
  * @TODO: Documentation
  */
 u32 PPCMfmsr(void)
 {
 	register u32 result;
-	MOVE_FROM_MSR(result);
+	PPC_MOVE_FROM_MSR(result);
 	return result;
 }
 
@@ -27,7 +15,7 @@ u32 PPCMfmsr(void)
  */
 void PPCMtmsr(register u32 value)
 {
-	MOVE_TO_MSR(value);
+	PPC_MOVE_TO_MSR(value);
 }
 
 /**
@@ -60,7 +48,7 @@ void PPCAndCMsr(void)
 u32 PPCMfhid0(void)
 {
 	register u32 result;
-	MOVE_FROM_SPR(SPR_HID0, result);
+	PPC_MOVE_FROM_SPR(SPR_HID0, result);
 	return result;
 }
 
@@ -70,7 +58,7 @@ u32 PPCMfhid0(void)
  */
 void PPCMthid0(register u32 value)
 {
-	MOVE_TO_SPR(SPR_HID0, value);
+	PPC_MOVE_TO_SPR(SPR_HID0, value);
 }
 
 /**
@@ -80,7 +68,7 @@ void PPCMthid0(register u32 value)
 u32 PPCMfhid1(void)
 {
 	register u32 result;
-	MOVE_FROM_SPR(SPR_HID1, result);
+	PPC_MOVE_FROM_SPR(SPR_HID1, result);
 	return result;
 }
 
@@ -90,7 +78,7 @@ u32 PPCMfhid1(void)
 u32 PPCMfl2cr(void)
 {
 	register u32 result;
-	MOVE_FROM_SPR(SPR_L2CR, result);
+	PPC_MOVE_FROM_SPR(SPR_L2CR, result);
 	return result;
 }
 
@@ -99,7 +87,7 @@ u32 PPCMfl2cr(void)
  */
 void PPCMtl2cr(register u32 value)
 {
-	MOVE_TO_SPR(SPR_L2CR, value);
+	PPC_MOVE_TO_SPR(SPR_L2CR, value);
 }
 
 /**
@@ -107,7 +95,7 @@ void PPCMtl2cr(register u32 value)
  */
 void PPCMtdec(register u32 value)
 {
-	MOVE_TO_SPR(SPR_DEC, value);
+	PPC_MOVE_TO_SPR(SPR_DEC, value);
 }
 
 /**
@@ -117,7 +105,7 @@ void PPCMtdec(register u32 value)
 u32 PPCMfdec(void)
 {
 	register u32 result;
-	MOVE_FROM_SPR(SPR_DEC, result);
+	PPC_MOVE_FROM_SPR(SPR_DEC, result);
 	return result;
 }
 
@@ -142,9 +130,9 @@ void PPCEieio(void)
 		mfmsr   r5
 		rlwinm  r6, r5, 0, 17, 15 // ~MSR_EE
 		mtmsr   r6
-		mfspr   r3, SPR_HID0
+		mfspr   r3, HID0
 		ori     r4, r3, 8
-		mtspr   SPR_HID0, r4
+		mtspr   HID0, r4
 		isync
 		eieio
 		isync
@@ -180,7 +168,7 @@ void PPCHalt(void)
 u32 PPCMfmmcr0(void)
 {
 	register u32 result;
-	MOVE_FROM_SPR(SPR_MMCR0, result);
+	PPC_MOVE_FROM_SPR(SPR_MMCR0, result);
 	return result;
 }
 
@@ -190,7 +178,7 @@ u32 PPCMfmmcr0(void)
  */
 void PPCMtmmcr0(register u32 value)
 {
-	MOVE_TO_SPR(SPR_MMCR0, value);
+	PPC_MOVE_TO_SPR(SPR_MMCR0, value);
 }
 
 /**
@@ -200,7 +188,7 @@ void PPCMtmmcr0(register u32 value)
 u32 PPCMfmmcr1(void)
 {
 	register u32 result;
-	MOVE_FROM_SPR(SPR_MMCR1, result);
+	PPC_MOVE_FROM_SPR(SPR_MMCR1, result);
 	return result;
 }
 
@@ -210,7 +198,7 @@ u32 PPCMfmmcr1(void)
  */
 void PPCMtmmcr1(register u32 value)
 {
-	MOVE_TO_SPR(SPR_MMCR1, value);
+	PPC_MOVE_TO_SPR(SPR_MMCR1, value);
 }
 
 /**
@@ -220,7 +208,7 @@ void PPCMtmmcr1(register u32 value)
 u32 PPCMfpmc1(void)
 {
 	register u32 result;
-	MOVE_FROM_SPR(SPR_PMC1, result);
+	PPC_MOVE_FROM_SPR(SPR_PMC1, result);
 	return result;
 }
 
@@ -230,7 +218,7 @@ u32 PPCMfpmc1(void)
  */
 void PPCMtpmc1(register u32 value)
 {
-	MOVE_TO_SPR(SPR_PMC1, value);
+	PPC_MOVE_TO_SPR(SPR_PMC1, value);
 }
 
 /**
@@ -240,7 +228,7 @@ void PPCMtpmc1(register u32 value)
 u32 PPCMfpmc2(void)
 {
 	register u32 result;
-	MOVE_FROM_SPR(SPR_PMC2, result);
+	PPC_MOVE_FROM_SPR(SPR_PMC2, result);
 	return result;
 }
 
@@ -250,7 +238,7 @@ u32 PPCMfpmc2(void)
  */
 void PPCMtpmc2(register u32 value)
 {
-	MOVE_TO_SPR(SPR_PMC2, value);
+	PPC_MOVE_TO_SPR(SPR_PMC2, value);
 }
 
 /**
@@ -260,7 +248,7 @@ void PPCMtpmc2(register u32 value)
 u32 PPCMfpmc3(void)
 {
 	register u32 result;
-	MOVE_FROM_SPR(SPR_PMC3, result);
+	PPC_MOVE_FROM_SPR(SPR_PMC3, result);
 	return result;
 }
 
@@ -270,7 +258,7 @@ u32 PPCMfpmc3(void)
  */
 void PPCMtpmc3(register u32 value)
 {
-	MOVE_TO_SPR(SPR_PMC3, value);
+	PPC_MOVE_TO_SPR(SPR_PMC3, value);
 }
 
 /**
@@ -280,7 +268,7 @@ void PPCMtpmc3(register u32 value)
 u32 PPCMfpmc4(void)
 {
 	register u32 result;
-	MOVE_FROM_SPR(SPR_PMC4, result);
+	PPC_MOVE_FROM_SPR(SPR_PMC4, result);
 	return result;
 }
 
@@ -290,7 +278,7 @@ u32 PPCMfpmc4(void)
  */
 void PPCMtpmc4(register u32 value)
 {
-	MOVE_TO_SPR(SPR_PMC4, value);
+	PPC_MOVE_TO_SPR(SPR_PMC4, value);
 }
 
 /**
@@ -300,7 +288,7 @@ void PPCMtpmc4(register u32 value)
 u32 PPCMfsia(void)
 {
 	register u32 result;
-	MOVE_FROM_SPR(SPR_SIA, result);
+	PPC_MOVE_FROM_SPR(SPR_SIA, result);
 	return result;
 }
 
@@ -310,7 +298,7 @@ u32 PPCMfsia(void)
  */
 void PPCMtsia(register u32 value)
 {
-	MOVE_TO_SPR(SPR_SIA, value);
+	PPC_MOVE_TO_SPR(SPR_SIA, value);
 }
 
 /**
@@ -319,7 +307,7 @@ void PPCMtsia(register u32 value)
 u32 PPCMfhid2(void)
 {
 	register u32 result;
-	MOVE_FROM_SPR(SPR_HID2, result);
+	PPC_MOVE_FROM_SPR(SPR_HID2, result);
 	return result;
 }
 
@@ -328,7 +316,7 @@ u32 PPCMfhid2(void)
  */
 void PPCMthid2(register u32 value)
 {
-	MOVE_TO_SPR(SPR_HID2, value);
+	PPC_MOVE_TO_SPR(SPR_HID2, value);
 }
 
 /**
@@ -338,7 +326,7 @@ void PPCMthid2(register u32 value)
 u32 PPCMfwpar(void)
 {
 	register u32 result;
-	MOVE_FROM_SPR(SPR_WPAR, result);
+	PPC_MOVE_FROM_SPR(SPR_WPAR, result);
 	return result;
 }
 
@@ -347,7 +335,7 @@ u32 PPCMfwpar(void)
  */
 void PPCMtwpar(register u32 value)
 {
-	MOVE_TO_SPR(SPR_WPAR, value);
+	PPC_MOVE_TO_SPR(SPR_WPAR, value);
 }
 
 /**
@@ -357,7 +345,7 @@ void PPCMtwpar(register u32 value)
 u32 PPCMfdmaU(void)
 {
 	register u32 result;
-	MOVE_FROM_SPR(SPR_DMA_U, result);
+	PPC_MOVE_FROM_SPR(SPR_DMA_U, result);
 	return result;
 }
 
@@ -368,7 +356,7 @@ u32 PPCMfdmaU(void)
 u32 PPCMfdmaL(void)
 {
 	register u32 result;
-	MOVE_FROM_SPR(SPR_DMA_L, result);
+	PPC_MOVE_FROM_SPR(SPR_DMA_L, result);
 	return result;
 }
 
@@ -378,7 +366,7 @@ u32 PPCMfdmaL(void)
  */
 void PPCMtdmaU(register u32 value)
 {
-	MOVE_TO_SPR(SPR_DMA_U, value);
+	PPC_MOVE_TO_SPR(SPR_DMA_U, value);
 }
 
 /**
@@ -387,7 +375,7 @@ void PPCMtdmaU(register u32 value)
  */
 void PPCMtdmaL(register u32 value)
 {
-	MOVE_TO_SPR(SPR_DMA_L, value);
+	PPC_MOVE_TO_SPR(SPR_DMA_L, value);
 }
 
 /**
@@ -397,6 +385,6 @@ void PPCMtdmaL(register u32 value)
 u32 PPCMfpvr(void)
 {
 	register u32 result;
-	MOVE_FROM_SPR(SPR_PVR, result);
+	PPC_MOVE_FROM_SPR(SPR_PVR, result);
 	return result;
 }

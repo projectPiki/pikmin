@@ -83,7 +83,7 @@ static void ASM Reset(register s32 resetCode)
 
 _begin:
 	mfspr   r8, HID0
-	ori     r8, r8, 8
+	ori     r8, r8, HID0_ABE
 	mtspr   HID0, r8
 	isync
 	sync
@@ -94,9 +94,9 @@ _jump1:
 	b       _jump2
 
 _preloop:
-	mftb    r5, 268
+	mftb    r5
 _loop:
-	mftb    r6, 268
+	mftb    r6
 	subf    r7, r5, r6
 	cmplwi  r7, 0x1124
 	blt     _loop
