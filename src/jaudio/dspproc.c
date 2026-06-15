@@ -308,11 +308,12 @@ void DwaitFrame()
 void DiplSec(u32 cmd)
 {
 	u32 commands[2];
-	STACK_PAD_VAR(1);
+	s32 commandResult;
 
 	commands[0] = 0x8B000008;
 	commands[1] = cmd;
-	DSPSendCommands(commands, ARRAY_SIZE(commands));
+
+	commandResult = DSPSendCommands(commands, ARRAY_SIZE(commands));
 	DSPWaitFinish();
 }
 
@@ -322,10 +323,13 @@ void DiplSec(u32 cmd)
 void DagbSec(u32 cmd)
 {
 	u32 commands[2];
-	STACK_PAD_VAR(3);
+	s32 commandResult;
+
+	STACK_PAD_VAR(2);
 
 	commands[0] = 0x8C000008;
 	commands[1] = cmd;
-	DSPSendCommands(commands, ARRAY_SIZE(commands));
+
+	commandResult = DSPSendCommands(commands, ARRAY_SIZE(commands));
 	DSPWaitFinish();
 }
