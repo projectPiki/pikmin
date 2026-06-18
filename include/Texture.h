@@ -228,12 +228,13 @@ struct TexobjInfo : public GfxobjInfo {
 	{
 	}
 
-	virtual void attach() { mTexture->attach(); } // _08
-	virtual void detach() { mTexture->detach(); } // _0C
+	// These `static_cast`s are load-bearing to spawn `GfxObject` virtual methods
+	virtual void attach() { static_cast<GfxObject*>(mTexture)->attach(); } // _08
+	virtual void detach() { static_cast<GfxObject*>(mTexture)->detach(); } // _0C
 
 	// _1C     = VTBL
 	// _00-_1C = GfxobjInfo
-	GfxObject* mTexture; // _20,  yes this is a GfxObject*, not a Texture*
+	Texture* mTexture; // _20
 };
 
 struct CacheInfo {

@@ -195,6 +195,7 @@ int ActBridge::exeClimb()
 		initApproach();
 		mPiki->enableGravity();
 	}
+	return ACTOUT_Continue;
 }
 
 /**

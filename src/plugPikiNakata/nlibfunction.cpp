@@ -76,11 +76,14 @@ f32 NPolynomialFunction::getValue(f32 x)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000028
+ * @note UNUSED Size: 000028 (Matching by size)
  */
-f32 NPolynomialFunction::getCoefficient(int)
+f32 NPolynomialFunction::getCoefficient(int idx)
 {
-	// UNUSED FUNCTION
+	if (getFunctionDimension() < idx) {
+		return 0.0f;
+	}
+	return mData.mValues[idx];
 }
 
 /**

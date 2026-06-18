@@ -153,7 +153,7 @@ bool zen::ogDrawScrMenu::draw(Graphics& gfx)
 	P2DPerspGraph graf(0, 0, 640, 480, 30.0f, 1.0f, 5000.0f);
 	graf.setPort();
 	mScreen->draw(0, 0, &graf);
-	// UNUSED FUNCTION
+	return /* nothing, because they forgot to. */;
 }
 
 /**

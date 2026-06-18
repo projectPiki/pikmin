@@ -7,6 +7,7 @@ struct MemHead {
 	u32 mTagAndSize; // _00, tag in high byte; size in low 24 bits
 	MemHead* mNext;  // _04, next node in list
 	MemHead* mPrev;  // _08, previous node in list
+	u32 mGuardValue; // _10, guard/canary value written into headers/trailers
 };
 
 /**
@@ -27,9 +28,7 @@ struct AyuCache {
 	u32 amountFree();
 
 	MemHead mFreeBlockHead;      // _00, sentinel head for address-sorted free list
-	u8 _0C[0x4];                 // _0C, unused
 	MemHead mAllocatedBlockHead; // _10, sentinel head for allocated list (typically MRU/LRU ordered)
-	u32 mBlockGuardValue;        // _1C, guard/canary value written into headers/trailers
 	u32 mCurrentAllocationTag;   // _20, tag (0-255) applied to new allocations via mallocL
 	u32 mTotalAllocatedUnits;    // _24, allocated size in 16-byte units
 	u32 mTotalCacheSizeBytes;    // _28, total cache size in bytes

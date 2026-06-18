@@ -12,6 +12,116 @@
 #include "UfoItem.h"
 #include "gameflow.h"
 
+/**
+ * @note: Fabricated
+ */
+BEGIN_ENUM_TYPE(DemoEventSender)
+enum {
+	Navi,
+	UFO,
+	BluOnion,
+	RedOnion,
+	YelOnion,
+	Game,
+} END_ENUM_TYPE;
+
+/**
+ * @note: Fabricated
+ */
+BEGIN_ENUM_TYPE(DemoEventGame)
+enum {
+	DayEnd,
+	EnterPikis,
+} END_ENUM_TYPE;
+
+/**
+ * @note: Fabricated
+ */
+BEGIN_ENUM_TYPE(DemoEventNavi)
+enum {
+	Fue,
+} END_ENUM_TYPE;
+
+/**
+ * @note: Fabricated
+ */
+BEGIN_ENUM_TYPE(DemoEventUFO)
+enum {
+	SuckNavi,
+	Takeoff,
+	Henka,
+	BGStart,
+	SuckNaviDown,
+	SuckNaviZERO,
+	SuckFinish,
+	GalaxStart,
+} END_ENUM_TYPE;
+
+/**
+ * @note: Fabricated
+ */
+BEGIN_ENUM_TYPE(DemoEventOnion)
+enum {
+	EmitPiki,
+	Takeoff,
+	EraseCone,
+	Land,
+	EmitCone,
+	Boot,
+	BonusPiki,
+} END_ENUM_TYPE;
+
+/**
+ * @note: Fabricated
+ */
+struct DemoEventInfo {
+	int mIndex;            // _00
+	immut char* mName;     // _04, sender name in `infos`, event name in its children.
+	DemoEventInfo* mChild; // _08
+};
+
+static DemoEventInfo gameInfos[] = {
+	{ DemoEventGame::DayEnd, "dayend" },
+	{ DemoEventGame::EnterPikis, "enterPikis" },
+	{ -1, "end" },
+};
+
+static DemoEventInfo naviInfos[] = {
+	{ DemoEventNavi::Fue, "fue" },
+	{ -1, "end" },
+};
+
+static DemoEventInfo ufoInfos[] = {
+	{ DemoEventUFO::SuckNavi, "SuckNavi" },
+	{ DemoEventUFO::Takeoff, "Takeoff" },
+	{ DemoEventUFO::Henka, "Henka" },
+	{ DemoEventUFO::BGStart, "BG Start" },
+	{ DemoEventUFO::SuckNaviDown, "SuckNaviDown" },
+	{ DemoEventUFO::SuckNaviZERO, "SuckNaviZERO" },
+	{ DemoEventUFO::SuckFinish, "Suck Finish" },
+	{ DemoEventUFO::GalaxStart, "Galax Start" },
+	{ -1, "end" },
+
+};
+
+static DemoEventInfo onionInfos[] = {
+	{ DemoEventOnion::EmitPiki, "EmitPiki" },   { DemoEventOnion::Takeoff, "Takeoff" },
+	{ DemoEventOnion::EraseCone, "EraseCone" }, { DemoEventOnion::Land, "Land" },
+	{ DemoEventOnion::EmitCone, "EmitCone" },   { DemoEventOnion::Boot, "Boot" },
+	{ DemoEventOnion::BonusPiki, "BonusPiki" }, { -1, "end" },
+};
+
+static DemoEventInfo infos[] = {
+	{ DemoEventSender::Navi, "NAVI", naviInfos },           { DemoEventSender::UFO, "UFO", ufoInfos },
+	{ DemoEventSender::BluOnion, "BLU_ONION", onionInfos }, { DemoEventSender::RedOnion, "RED_ONION", onionInfos },
+	{ DemoEventSender::YelOnion, "YEL_ONION", onionInfos }, { DemoEventSender::Game, "GAME", gameInfos },
+};
+
+static immut char* noNames[] = {
+	"0",  "1",  "2",  "3",  "4",  "5",  "6",  "7",  "8",  "9",  "10", "11", "12", "13", "14", "15",
+	"16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31",
+};
+
 DemoEventMgr* demoEventMgr;
 
 /**
@@ -28,20 +138,32 @@ DEFINE_PRINT("demoEvent")
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000090
+ * @note UNUSED Size: 000090 (Matching by size)
  */
-immut char* DemoEventMgr::getEventName(int, int)
+immut char* DemoEventMgr::getEventName(int sender, int event)
 {
-	// UNUSED FUNCTION
+	DemoEventInfo* info = infos[sender].mChild;
+	if (!info) {
+		return noNames[event];
+	}
+	for (int i = 0; i < event; ++i) {
+		if (info[i].mIndex == -1) {
+			return noNames[event];
+		}
+	}
+	if (info[event].mIndex == -1) {
+		return noNames[event];
+	}
+	return info[event].mName;
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000018
+ * @note UNUSED Size: 000018 (Matching by size)
  */
-immut char* DemoEventMgr::getSenderName(int)
+immut char* DemoEventMgr::getSenderName(int sender)
 {
-	// UNUSED FUNCTION
+	return infos[sender].mName;
 }
 
 /**
@@ -54,18 +176,18 @@ DemoEventMgr::DemoEventMgr()
 /**
  * @todo: Documentation
  */
-void DemoEventMgr::act(int cmd, int type)
+void DemoEventMgr::act(int sender, int event)
 {
-	switch (cmd) {
-	case 5:
+	switch (sender) {
+	case DemoEventSender::Game:
 	{
-		switch (type) {
-		case 0:
+		switch (event) {
+		case DemoEventGame::DayEnd:
 		{
 			gameflow.mWorldClock.setTime(gameflow.mParameters->mEndHour());
 			break;
 		}
-		case 1:
+		case DemoEventGame::EnterPikis:
 		{
 			int count = 0;
 			Iterator it(pikiMgr);
@@ -86,10 +208,10 @@ void DemoEventMgr::act(int cmd, int type)
 		}
 		break;
 	}
-	case 0:
+	case DemoEventSender::Navi:
 	{
-		switch (type) {
-		case 0:
+		switch (event) {
+		case DemoEventNavi::Fue:
 		{
 			naviMgr->getNavi()->enterAllPikis();
 			break;
@@ -97,27 +219,27 @@ void DemoEventMgr::act(int cmd, int type)
 		}
 		break;
 	}
-	case 1:
+	case DemoEventSender::UFO:
 	{
 		UfoItem* ufo = itemMgr->getUfo();
 		if (ufo) {
-			switch (type) {
-			case 0:
+			switch (event) {
+			case DemoEventUFO::SuckNavi:
 			{
 				ufo->startConeEffect(0);
 				break;
 			}
-			case 4:
+			case DemoEventUFO::SuckNaviDown:
 			{
 				ufo->startConeEffect(1);
 				break;
 			}
-			case 5:
+			case DemoEventUFO::SuckNaviZERO:
 			{
 				ufo->startConeEffect(2);
 				break;
 			}
-			case 6:
+			case DemoEventUFO::SuckFinish:
 			{
 				ufo->finishConeEffect();
 				ufo->setSpotActive(false);
@@ -129,18 +251,18 @@ void DemoEventMgr::act(int cmd, int type)
 				}
 				break;
 			}
-			case 1:
+			case DemoEventUFO::Takeoff:
 			{
 				ufo->startTakeoff();
 				pikiMgr->dumpAll();
 				break;
 			}
-			case 2:
+			case DemoEventUFO::Henka:
 			{
 				ufo->startLevelFlag(playerState->mShipUpgradeLevel);
 				break;
 			}
-			case 3:
+			case DemoEventUFO::BGStart:
 			{
 				PRINT("__________________________________________________\n");
 				PRINT("******************* START YOZORA *****************\n");
@@ -148,7 +270,7 @@ void DemoEventMgr::act(int cmd, int type)
 				ufo->startYozora();
 				break;
 			}
-			case 7:
+			case DemoEventUFO::GalaxStart:
 			{
 				PRINT("__________________________________________________\n");
 				PRINT("******************* START GALAXY *****************\n");
@@ -160,47 +282,47 @@ void DemoEventMgr::act(int cmd, int type)
 		}
 		break;
 	}
-	case 2:
-	case 3:
-	case 4:
+	case DemoEventSender::BluOnion:
+	case DemoEventSender::RedOnion:
+	case DemoEventSender::YelOnion:
 	{
-		int goalID     = cmd - 2;
+		int goalID     = sender - DemoEventSender::BluOnion;
 		GoalItem* goal = itemMgr->getContainer(goalID);
 		if (goal) {
-			switch (type) {
-			case 0:
+			switch (event) {
+			case DemoEventOnion::EmitPiki:
 			{
 				goal->mSAICtx.mCurrAnimId++;
 				goal->emitPiki();
 				break;
 			}
-			case 2:
+			case DemoEventOnion::EraseCone:
 			{
 				goal->startConeShrink();
 				break;
 			}
-			case 4:
+			case DemoEventOnion::EmitCone:
 			{
 				if (playerState->hasBootContainer(goalID)) {
 					goal->startConeEmit();
 				}
 				break;
 			}
-			case 1:
+			case DemoEventOnion::Takeoff:
 			{
 				if (playerState->hasContainer(goalID)) {
 					goal->startTakeoff();
 				}
 				break;
 			}
-			case 3:
+			case DemoEventOnion::Land:
 			{
 				if (playerState->hasContainer(goalID)) {
 					goal->startLand();
 				}
 				break;
 			}
-			case 5:
+			case DemoEventOnion::Boot:
 			{
 				PRINT("boot onion\n");
 				goal->startBoot();
@@ -219,7 +341,7 @@ void DemoEventMgr::act(int cmd, int type)
 				}
 				break;
 			}
-			case 6:
+			case DemoEventOnion::BonusPiki:
 			{
 				if (playerState->hasContainer(goalID) && GameStat::allPikis[goalID] == 0) {
 					PRINT("***** SUPPLY 1 PiKI (COLOR = %d)\n", goalID);

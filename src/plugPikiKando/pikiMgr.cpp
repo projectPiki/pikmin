@@ -117,11 +117,13 @@ Creature* PikiMgr::createObject()
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000054
+ * @note UNUSED Size: 000054 (Matching by size)
  */
 bool PikiMgr::lostAllPikis()
 {
-	// UNUSED FUNCTION
+	if (_54 == 0 && _5C > 0 && pikiInfMgr.getTotal() == 0)
+		return true;
+	return false;
 }
 
 /**

@@ -1404,6 +1404,8 @@ bool ActTransport::crMove()
 		return true;
 	}
 
+	// MWCC moves the floats from the returned `Vector3f` into `mMoveDir` using GPRs, so r3 now
+	// contains the value of the float `mMoveDir.x`.  See the below BUGFIX for why that matters.
 	mMoveDir = CRSplineTangent(factor, mSplineControlPts);
 	ASSERT_MVDIR_NOTNAN("mvDir nan 5");
 	mMoveDir.normalise();
@@ -1417,12 +1419,25 @@ bool ActTransport::crMove()
 	}
 
 	if (!gameflow.mMoviePlayer->mIsActive) {
-		bool isMoving = mOdometer.moving(pel->mSRT.t, pel->mLastPosition);
-		if (!isMoving) {
+		if (!mOdometer.moving(pel->mSRT.t, pel->mLastPosition)) {
 			PRINT_GLOBAL("pellet %s is not moving", pel->mConfig->mPelletId.mStringID);
 			return false;
 		}
 	}
+
+	// This code path containing no return statement (UB) is reached when the pellet is moving during gameplay or when a
+	// cutscene is active.  The following is an analysis of what happens as a result of that in GCN Pikmin 1 USA Rev 1:
+	// The return value in r3 is either the boolean return value of `OdoMeter::moving`, which must have been true for
+	// this function to not return false, or it is an unrelated floating-point value (see above comment) when a cutscene
+	// is active.  `ActTransport::moveToWayPoint` checks the boolean return value of this function and, if it is false,
+	// tells the Pikmin to put the pellet down.  In MetroWerks (1.2.5 in this case), testing a boolean value is usually
+	// performed by `rlwinm. r0, r3, 0, 24, 31`, which is equivalent to `if (result & 0x000000ff) != 0`. In other words,
+	// this undefined behavior can possibly cause a pellet to be dropped when a cutscene starts, but only if the lowest
+	// eight bits of the float are all zero.  Obviously the intention was not for pellets to be dropped when a cutscene
+	// starts, so we fix this rare glitch by always returning true (indicating that the pellet movement had no issues).
+#if defined(BUGFIX)
+	return true;
+#endif
 
 #undef ASSERT_MVDIR_NOTNAN
 }

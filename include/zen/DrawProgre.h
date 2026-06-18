@@ -57,6 +57,8 @@ public:
 
 	bool update(Controller* controller)
 	{
+		bool result = false; // This is never modified, lol.
+
 		switch (mMode) {
 		case MODE_Wait:
 		{
@@ -101,6 +103,8 @@ public:
 
 		mMenuPanelMgr.update();
 		mScreen->update();
+
+		return result;
 	}
 
 	modeFlag getModeFlag() { return mMode; }

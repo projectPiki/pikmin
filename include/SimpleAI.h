@@ -169,7 +169,11 @@ struct SAIArrow : public CoreNode {
 		mEvent       = nullptr;
 	}
 
-	SAIArrow* addCondition(SAICondition* cond) { mCondition.add(cond); }
+	SAIArrow* addCondition(SAICondition* cond)
+	{
+		mCondition.add(cond);
+		return this;
+	}
 
 	void setEventContext()
 	{

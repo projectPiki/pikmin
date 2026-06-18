@@ -12,8 +12,8 @@ struct CreatureInf;
 struct Piki;
 struct RandomAccessStream;
 
-typedef CreatureInf* (*InfFuncType1)(Creature*); // rename later to something sensible
-typedef Creature* (*InfFuncType2)(CreatureInf*); // rename later to something sensible
+typedef CreatureInf* (*CreatureStoreFun)(Creature*);
+typedef Creature* (*CreatureRestoreFun)(CreatureInf*);
 
 /**
  * @brief TODO
@@ -140,17 +140,27 @@ struct BPikiInfMgr : public MonoInfMgr {
  * @brief TODO
  */
 struct CreatureInfMgr : public MonoInfMgr {
+	struct TypeData {
+		int mType;                      // _04
+		CreatureStoreFun mStoreFun;     // _08
+		CreatureRestoreFun mRestoreFun; // _0C
+	};
+
 	virtual BaseInf* newInf(); // _1C
 
 	// unused/inlined:
-	void registerType(int, InfFuncType1, InfFuncType2);
+	static void beginRegister(int size);
+	static void registerType(int, CreatureStoreFun, CreatureRestoreFun);
+	static void endRegister();
+	static CreatureStoreFun getStoreFun(int);
+	static CreatureRestoreFun getRestoreFun(int);
 	void updateUseList();
 	void restoreAll();
 
-	static void beginRegister(int);
-	static void endRegister();
-	static CreatureInf* getStoreFun(int);
-	static CreatureInf* getRestoreFun(int);
+	static int maxTypes;
+	static int numTypes;
+	static int* idx2type;
+	static TypeData* typeData;
 
 	// _00     = VTBL
 	// _00-_64 = MonoInfMgr

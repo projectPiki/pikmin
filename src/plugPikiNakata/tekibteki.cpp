@@ -1321,11 +1321,14 @@ void BTeki::jumpTo(Vector3f&, f32)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000168
+ * @note UNUSED Size: 000168 (Matching by size)
  */
-bool BTeki::insideDirection(Vector3f&)
+bool BTeki::insideDirection(Vector3f& direction)
 {
-	// UNUSED FUNCTION
+	f32 faceDir = NMathF::roundAngle(getDirection());
+	f32 targDir = NMathF::roundAngle(calcTargetDirection(direction));
+	targDir     = NMathF::calcNearerDirection(faceDir, targDir);
+	return NMath<f32>::absolute(faceDir - targDir) <= getParameterF(TPF_TurnVelocity) * NSystem::getFrameTime();
 }
 
 /**
@@ -1393,20 +1396,39 @@ void BTeki::outputHitCenter(Vector3f& outCenter)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 0001F4
+ * @note UNUSED Size: 0001F4 (Matching by size)
  */
-bool BTeki::attackRangeNaviPiki(immut Interaction&, immut Condition&)
+bool BTeki::attackRangeNaviPiki(immut Interaction& interaction, immut Condition& condition)
 {
-	// UNUSED FUNCTION
+	Vector3f hitCenter;
+	outputHitCenter(hitCenter);
+
+	// Fun Fact: Decompiling this unused function fixed a fakematch related to `TekiAndCondition` in this file.
+	TekiAndCondition andCond(&condition, &TekiPositionSphereDistanceCondition(hitCenter, getAttackHitRange()));
+	return interactNaviPiki(interaction, andCond);
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 00015C
+ * @note UNUSED Size: 00015C (Matching by size)
  */
-bool BTeki::interactTeki(immut Interaction&, immut Condition&)
+bool BTeki::interactTeki(immut Interaction& interaction, immut Condition& condition)
 {
-	// UNUSED FUNCTION
+	bool res = false;
+	Iterator iter(tekiMgr);
+	CI_LOOP(iter)
+	{
+		Creature* teki = *iter;
+		if (!teki) {
+			PRINT("?interactTeki:%08x:creature==null\n", this);
+			break;
+		}
+		if (teki != this && condition.satisfy(teki)) {
+			teki->stimulate(interaction);
+			res = true;
+		}
+	}
+	return res;
 }
 
 /**
@@ -1515,14 +1537,6 @@ void BTeki::flickLower()
 	InteractFlick NRef flick
 	    = InteractFlick(this, getParameterF(TPF_LowerFlickPower), getParameterF(TPF_LowerAttackPower), FLICK_BACKWARDS_ANGLE);
 	flickLower(flick);
-}
-
-// this is to get TekiAndCondition and TekiNotCondition vtables to spawn in the right order.
-// probably related to whatever the hell is happening in flickLower but w/e
-static void fakeFunc()
-{
-	TekiAndCondition andCond(nullptr, nullptr);
-	andCond.satisfy(nullptr);
 }
 
 /**
@@ -2223,9 +2237,9 @@ f32 BTeki::getCollisionSize()
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000038
+ * @note UNUSED Size: 000038 (Matching by size)
  */
 Vector3f BTeki::getCollisionCenter()
 {
-	// UNUSED FUNCTION
+	return getCentre();
 }

@@ -125,23 +125,26 @@ void PikiInfMgr::decPiki(Piki* piki)
  */
 void PikiInfMgr::clear()
 {
-	// leaves
-	mPikiCounts[Blue][Leaf] = mPikiCounts[Red][Leaf] = mPikiCounts[Yellow][Leaf] = 0;
-
-	// buds
-	mPikiCounts[Blue][Bud] = mPikiCounts[Red][Bud] = mPikiCounts[Yellow][Bud] = 0;
-
-	// flowers
-	mPikiCounts[Blue][Flower] = mPikiCounts[Red][Flower] = mPikiCounts[Yellow][Flower] = 0;
+	for (int happa = 0; happa < PikiHappaCount; ++happa) {
+		mPikiCounts[Yellow][happa] = 0;
+		mPikiCounts[Red][happa]    = 0;
+		mPikiCounts[Blue][happa]   = 0;
+	}
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 00004C
+ * @note UNUSED Size: 00004C (Matching by size)
  */
 int PikiInfMgr::getTotal()
 {
-	// UNUSED FUNCTION
+	int total = 0;
+	for (int color = 0; color < PikiColorCount; ++color) {
+		for (int happa = 0; happa < PikiHappaCount; ++happa) {
+			total += mPikiCounts[color][happa];
+		}
+	}
+	return total;
 }
 
 /**
@@ -389,49 +392,75 @@ int BPikiInfMgr::getPikiCount(int color)
 	return count;
 }
 
+// These variable names do not appear in the MW Linker map because every function that uses them is unused.
+
+int CreatureInfMgr::maxTypes;
+int CreatureInfMgr::numTypes;
+int* CreatureInfMgr::idx2type;
+CreatureInfMgr::TypeData* CreatureInfMgr::typeData;
+
 /**
  * @todo: Documentation
- * @note UNUSED Size: 00004C
+ * @note UNUSED Size: 00004C (Matching by size)
  */
-void CreatureInfMgr::beginRegister(int)
+void CreatureInfMgr::beginRegister(int size)
 {
-	// UNUSED FUNCTION
+	maxTypes = size;
+	idx2type = new int[size];
+	typeData = new TypeData[size];
+	numTypes = 0;
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000038
+ * @note UNUSED Size: 000038 (Matching by size)
  */
-void CreatureInfMgr::registerType(int, InfFuncType1, InfFuncType2)
+void CreatureInfMgr::registerType(int type, CreatureStoreFun storeFun, CreatureRestoreFun restoreFun)
 {
-	// UNUSED FUNCTION
+	TypeData* data     = &typeData[numTypes];
+	idx2type[numTypes] = type;
+
+	data->mType       = type;
+	data->mStoreFun   = storeFun;
+	data->mRestoreFun = restoreFun;
+
+	++numTypes;
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000004
+ * @note UNUSED Size: 000004 (Matching by size)
  */
 void CreatureInfMgr::endRegister()
 {
-	// UNUSED FUNCTION
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 00004C
+ * @note UNUSED Size: 00004C (Matching by size)
  */
-CreatureInf* CreatureInfMgr::getStoreFun(int)
+CreatureStoreFun CreatureInfMgr::getStoreFun(int type)
 {
-	// UNUSED FUNCTION
+	for (int i = 0; i < numTypes; ++i) {
+		if (idx2type[i] == type) {
+			return typeData[i].mStoreFun;
+		}
+	}
+	return nullptr;
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 00004C
+ * @note UNUSED Size: 00004C (Matching by size)
  */
-CreatureInf* CreatureInfMgr::getRestoreFun(int)
+CreatureRestoreFun CreatureInfMgr::getRestoreFun(int type)
 {
-	// UNUSED FUNCTION
+	for (int i = 0; i < numTypes; ++i) {
+		if (idx2type[i] == type) {
+			return typeData[i].mRestoreFun;
+		}
+	}
+	return nullptr;
 }
 
 /**

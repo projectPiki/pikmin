@@ -211,13 +211,13 @@ void AyuCache::init(u32 bufferStart, u32 bufferEnd)
 	mAllocatedBlockHead.mNext       = &mAllocatedBlockHead;
 	mAllocatedBlockHead.mPrev       = &mAllocatedBlockHead;
 	mAllocatedBlockHead.mTagAndSize = 0;
-	mBlockGuardValue                = AYU_CACHE_GUARD_WORD;
+	mAllocatedBlockHead.mGuardValue = AYU_CACHE_GUARD_WORD;
 
-	u32* ptr = (u32*)bufferStart;
-	ptr[1]   = (u32)this;
-	ptr[2]   = (u32)this;
-	ptr[0]   = ((bufferEnd - bufferStart) >> 4) - 0x1000001;
-	ptr[3]   = AYU_CACHE_GUARD_WORD;
+	MemHead* head     = (MemHead*)bufferStart;
+	head->mNext       = &mFreeBlockHead;
+	head->mPrev       = &mFreeBlockHead;
+	head->mTagAndSize = ((bufferEnd - bufferStart) >> 4) - 0x1000001;
+	head->mGuardValue = AYU_CACHE_GUARD_WORD;
 
 	mFreeBlockHead.mNext       = (MemHead*)bufferStart;
 	mFreeBlockHead.mPrev       = (MemHead*)bufferStart;
@@ -241,21 +241,20 @@ int AyuCache::getIndex()
 
 /**
  * @brief Attempts to release a page index back to the pool.
- * @note UNUSED Size: 000060
+ * @note UNUSED Size: 000060 (Matching by size)
  */
 void AyuCache::releaseIndex(int index)
 {
-	for (int i = 0;; i++) {
-		if (i >= mNextPageSlot) {
-			ERROR("Could not release the index %d\n", index);
-		}
-
+	for (int i = 0; i < mNextPageSlot; i++) {
 		if (mPageIndexPool[i] == index) {
-			break;
+			int pageIndex                     = mPageIndexPool[i];
+			mPageIndexPool[i]                 = mPageIndexPool[mNextPageSlot - 1];
+			mPageIndexPool[mNextPageSlot - 1] = pageIndex;
+			--mNextPageSlot;
+			return;
 		}
 	}
-
-	// UNUSED FUNCTION
+	ERROR("Could not release the index %d\n", index);
 }
 
 /**
@@ -281,7 +280,7 @@ void* AyuCache::mallocL(u32 sizeBytes)
 	u32 a          = (sizeBytes + 0xF) >> 4;
 	MemHead* chunk = nullptr;
 	for (MemHead* i = mFreeBlockHead.mNext; i != &mFreeBlockHead; i = i->mNext) {
-		int b = (i->mTagAndSize & 0xFFFFFF) - a;
+		int b = (i->mTagAndSize & ~AYU_CACHE_FREE_FLAG) - a;
 		if (b >= 0 && b < 0x7FFFFFFF) {
 			chunk = i;
 			break;
@@ -292,26 +291,25 @@ void* AyuCache::mallocL(u32 sizeBytes)
 		return nullptr;
 	}
 
-	if ((chunk->mTagAndSize & 0xFFFFFF) == a) {
+	if ((chunk->mTagAndSize & ~AYU_CACHE_FREE_FLAG) == a) {
 		chunk->mNext->mPrev = chunk->mPrev;
 		chunk->mPrev->mNext = chunk->mNext;
 	} else {
-		MemHead* tmp           = (MemHead*)((u32)chunk + 16 * a + 16);
-		tmp->mNext             = chunk->mNext;
-		tmp->mPrev             = chunk->mPrev;
-		tmp->mNext->mPrev      = tmp;
-		tmp->mPrev->mNext      = tmp;
-		tmp->mTagAndSize       = chunk->mTagAndSize - a - 1;
-		(tmp + 1)->mTagAndSize = 0x87654321;
+		MemHead* tmp      = chunk + a + 1;
+		tmp->mNext        = chunk->mNext;
+		tmp->mPrev        = chunk->mPrev;
+		tmp->mNext->mPrev = tmp;
+		tmp->mPrev->mNext = tmp;
+		tmp->mTagAndSize  = chunk->mTagAndSize - a - 1;
+		tmp->mGuardValue  = AYU_CACHE_GUARD_WORD;
 	}
 
 	linkChunk(chunk, (mCurrentAllocationTag << 24) + a, &mAllocatedBlockHead);
 
-	mTotalAllocatedUnits += chunk->mTagAndSize & 0xFFFFFF;
-	MemHead* next     = chunk + 1;
-	next->mTagAndSize = AYU_STACK_GUARD_WORD;
+	mTotalAllocatedUnits += chunk->mTagAndSize & ~AYU_CACHE_FREE_FLAG;
+	chunk->mGuardValue = AYU_STACK_GUARD_WORD;
 
-	return ((u32*)chunk + 4);
+	return (void*)(chunk + 1);
 }
 
 /**
@@ -320,8 +318,8 @@ void* AyuCache::mallocL(u32 sizeBytes)
  */
 void AyuCache::cacheFree(void* ptr)
 {
-	MemHead* blockToFree = (MemHead*)((u32)ptr - 16);
-	mTotalAllocatedUnits -= blockToFree->mTagAndSize & 0xFFFFFF;
+	MemHead* blockToFree = (MemHead*)ptr - 1;
+	mTotalAllocatedUnits -= blockToFree->mTagAndSize & ~AYU_CACHE_FREE_FLAG;
 
 	// Find insertion point in the address-sorted free list
 	MemHead* b = &mFreeBlockHead;
@@ -335,40 +333,54 @@ void AyuCache::cacheFree(void* ptr)
 	blockToFree->mPrev->mNext = blockToFree->mNext;
 
 	// Add to free list with updated flags (marking as free)
-	linkChunk(blockToFree, (blockToFree->mTagAndSize & 0xFFFFFF) - 0x1000000, b);
+	linkChunk(blockToFree, (blockToFree->mTagAndSize & ~AYU_CACHE_FREE_FLAG) - 0x1000000, b);
 
 	// Coalesce with adjacent free blocks
 	// Forward coalesce: merge with the next physical block if it's also free
-	if ((MemHead*)((u32)blockToFree + 16 * (blockToFree->mTagAndSize & 0xFFFFFF) + 16) == blockToFree->mNext) {
-		blockToFree->mTagAndSize += (blockToFree->mNext->mTagAndSize & 0xFFFFFF) + 1;
+	if (blockToFree + (blockToFree->mTagAndSize & ~AYU_CACHE_FREE_FLAG) + 1 == blockToFree->mNext) {
+		blockToFree->mTagAndSize += (blockToFree->mNext->mTagAndSize & ~AYU_CACHE_FREE_FLAG) + 1;
 		blockToFree->mNext->mNext->mPrev = blockToFree;
 		blockToFree->mNext               = blockToFree->mNext->mNext;
 	}
 
 	// Backward coalesce: merge with the previous physical block if it's also free
-	if ((MemHead*)((u32)blockToFree->mPrev + (16 * (blockToFree->mPrev->mTagAndSize & 0xFFFFFF)) + 16) == blockToFree) {
-		blockToFree->mPrev->mTagAndSize += (blockToFree->mTagAndSize & 0xFFFFFF) + 1;
+	if (blockToFree->mPrev + (blockToFree->mPrev->mTagAndSize & ~AYU_CACHE_FREE_FLAG) + 1 == blockToFree) {
+		blockToFree->mPrev->mTagAndSize += (blockToFree->mTagAndSize & ~AYU_CACHE_FREE_FLAG) + 1;
 		blockToFree->mNext->mPrev = blockToFree->mPrev;
 		blockToFree->mPrev->mNext = blockToFree->mNext;
 	}
 }
 
 /**
- * @brief Deletes all entries matching an id (unused stub).
- * @note UNUSED Size: 00007C
+ * @brief Deletes all entries with a tag matching the given ID.
+ * @note UNUSED Size: 00007C (Matching by size)
  */
-void AyuCache::deleteIdAll(u32)
+void AyuCache::deleteIdAll(u32 tag)
 {
-	// UNUSED FUNCTION
+	MemHead* currHead;
+	MemHead* nextHead;
+
+	currHead = mAllocatedBlockHead.mNext;
+	while (currHead != &mAllocatedBlockHead) {
+		nextHead = currHead->mNext;
+		if (currHead->mTagAndSize >> 24 == tag) {
+			cacheFree(currHead + 1);
+		}
+		currHead = nextHead;
+	}
 }
 
 /**
- * @brief Returns amount of free cache space (unused stub).
- * @note UNUSED Size: 00002C
+ * @brief Returns amount of free cache space
+ * @note UNUSED Size: 00002C (Matching by size)
  */
 u32 AyuCache::amountFree()
 {
-	// UNUSED FUNCTION
+	u32 amount = 0;
+	for (MemHead* i = mFreeBlockHead.mNext; i != &mFreeBlockHead; i = i->mNext) {
+		amount += sizeof(MemHead) * (i->mTagAndSize & ~AYU_CACHE_FREE_FLAG);
+	}
+	return amount;
 }
 
 /**
@@ -386,10 +398,9 @@ u32 AyuCache::largestBlockFree()
 {
 	u32 max = 0;
 	for (MemHead* i = mFreeBlockHead.mNext; i != &mFreeBlockHead; i = i->mNext) {
-		if (16 * (i->mTagAndSize & 0xFFFFFF) > max) {
-			max = 16 * (i->mTagAndSize & 0xFFFFFF);
+		if (sizeof(MemHead) * (i->mTagAndSize & ~AYU_CACHE_FREE_FLAG) > max) {
+			max = sizeof(MemHead) * (i->mTagAndSize & ~AYU_CACHE_FREE_FLAG);
 		}
 	}
-
 	return max;
 }

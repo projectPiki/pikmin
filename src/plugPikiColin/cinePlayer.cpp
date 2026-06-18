@@ -304,6 +304,8 @@ SceneCut* CinematicPlayer::addCut(int sceneID, int startFrame, int endFrame)
 	scene->mSceneData  = findScene(scene->mSceneID);
 	scene->mStartFrame = startFrame;
 	scene->mEndFrame   = endFrame;
+
+	return scene;
 }
 
 /**

@@ -187,7 +187,8 @@ struct Light : public CoreNode {
 	f32 mSpotQuadTerm;           // _40
 	f32 _44;                     // _44
 	f32 _48;                     // _48
-	u8 _4C[0x8];                 // _4C, unknown
+	f32 mObjRadius;              // _4C
+	f32 mMapRadius;              // _50
 	Vector3f mPosition;          // _54
 	Vector3f mDirection;         // _60
 	Colour mDiffuseColour;       // _6C
