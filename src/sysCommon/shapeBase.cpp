@@ -3487,11 +3487,30 @@ void BaseShape::calcJointWorldScale(Graphics&, int, Vector3f&)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000148
+ * @note UNUSED Size: 000148 (Nonmatching by size)
  */
-CollTriInfo* BaseShape::findCollTri(Vector3f&, Vector3f&, Vector3f&, char*)
+CollTriInfo* BaseShape::findCollTri(Vector3f& vtx1, Vector3f& vtx2, Vector3f& vtx3, char*)
 {
-	// UNUSED FUNCTION
+	Vector3f* searchVertices[3];
+	searchVertices[0] = &vtx1;
+	searchVertices[1] = &vtx2;
+	searchVertices[2] = &vtx3;
+
+	for (int i = 0; i < mTriCount; ++i) {
+		for (int j = 0; j < 3; ++j) {
+			int verticesSame = 0;
+			for (int k = 0; k < 3; ++k) {
+				// This complex operation really trips up Ghidra... Pretty sure it's functionally equivalent?
+				if (mVertexList[mTriList[i].mVertexIndices[2 - (j + k) % 3]].isSame(*searchVertices[k])) {
+					++verticesSame;
+				}
+			}
+			if (verticesSame == 3) {
+				return &mTriList[i];
+			}
+		}
+	}
+	return nullptr;
 }
 
 #ifdef DEVELOP

@@ -299,21 +299,43 @@ Creature* MeltingPotMgr::birth(int objType)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000048
+ * @note UNUSED Size: 000048 (Matching by size)
  */
-ObjectMgr* ItemMgr::getMgr(int)
+ObjectMgr* ItemMgr::getMgr(int objType)
 {
-
-	// UNUSED FUNCTION
+	switch (objType) {
+	case OBJTYPE_Pikihead:
+	{
+		return mPikiHeadMgr;
+	}
+	case OBJTYPE_Goal:
+	case OBJTYPE_Ufo:
+	case OBJTYPE_RockGen:
+	case OBJTYPE_GrassGen:
+	{
+		return mMeltingPotMgr;
+	}
+	}
+	return this;
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000120
+ * @note UNUSED Size: 000120 (Matching by size)
  */
 int ItemMgr::getPikiNum()
 {
-	// UNUSED FUNCTION
+	Iterator iter(itemMgr->getPikiHeadMgr(), nullptr);
+	// This is the only way I can match this function by size.
+	// Does MSVC debug automatically zero-initialize integers?
+	int count TERNARY_BUGFIX(= 0, );
+	CI_LOOP(iter)
+	{
+		if ((*iter)->mObjType == OBJTYPE_Pikihead) {
+			++count;
+		}
+	}
+	return count;
 }
 
 /**

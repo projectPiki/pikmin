@@ -25,12 +25,17 @@ struct NPolynomialFunction : public NFunction {
 	virtual f32 getValue(f32);    // _08
 	virtual void println() immut; // _0C
 
+	int getFunctionDimension() immut { return mData.getDimension() - 1; }
+
 	void construct(f32*, int);
 
 	// unused/inlined:
 	void construct(f32*, NPolynomialFunction&);
 	void mul2(NPolynomialFunction&, NPolynomialFunction&);
 	f32 getCoefficient(int);
+	void inputFunction(NPolynomialFunction&);
+	void add(NPolynomialFunction&);
+	void square(NPolynomialFunction&);
 
 	// _00     = VTBL
 	// _00-_04 = NFunction

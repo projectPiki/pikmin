@@ -573,6 +573,7 @@ protected:
 	{
 		mName    = StdSystem::stringDup(name);
 		mDataBuf = new (0x20) u8[bufSize];
+		return mDataBuf;
 	}
 
 	// _00     = VTBL

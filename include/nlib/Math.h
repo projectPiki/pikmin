@@ -124,10 +124,10 @@ struct NMathF {
 	static inline bool occurred(f32 chance) { return NSystem::random() < chance; }
 	static inline f32 rateRandom(f32 min, f32 range) { return min * (2.0f * (NSystem::random() - 0.5f)) * range + min; }
 	static inline f32 sqrt(f32 x) { return std::sqrtf(x); }
+	static inline int quotient(f32 num, f32 denom) { return num / denom; }
 
 	// inlines from DLL, to be created:
 	static inline f32 acos(f32);
-	static inline int quotient(f32, f32);
 };
 
 struct NMathI {

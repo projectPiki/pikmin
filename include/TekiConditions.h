@@ -21,7 +21,7 @@ struct TekiCondition : public Condition {
  * @brief TODO
  */
 struct TekiAndCondition : public TekiCondition {
-	TekiAndCondition(Condition* condA, Condition* condB)
+	TekiAndCondition(immut Condition* condA, immut Condition* condB)
 	{
 		mConditionA = condA;
 		mConditionB = condB;
@@ -34,15 +34,15 @@ struct TekiAndCondition : public TekiCondition {
 
 	// _00     = VTBL
 	// _00-_04 = TekiCondition
-	Condition* mConditionA; // _04
-	Condition* mConditionB; // _08
+	immut Condition* mConditionA; // _04
+	immut Condition* mConditionB; // _08
 };
 
 /**
  * @brief TODO
  */
 struct TekiOrCondition : public TekiCondition {
-	TekiOrCondition(Condition* condA, Condition* condB)
+	TekiOrCondition(immut Condition* condA, immut Condition* condB)
 	{
 		mConditionA = condA;
 		mConditionB = condB;
@@ -55,21 +55,21 @@ struct TekiOrCondition : public TekiCondition {
 
 	// _00     = VTBL
 	// _00-_04 = TekiCondition
-	Condition* mConditionA; // _04
-	Condition* mConditionB; // _08
+	immut Condition* mConditionA; // _04
+	immut Condition* mConditionB; // _08
 };
 
 /**
  * @brief TODO
  */
 struct TekiNotCondition : public TekiCondition {
-	TekiNotCondition(Condition* notCond) { mNotCondition = notCond; }
+	TekiNotCondition(immut Condition* notCond) { mNotCondition = notCond; }
 
 	virtual bool satisfy(Creature* target) immut { return !mNotCondition->satisfy(target); } // _08
 
 	// _00     = VTBL
 	// _00-_04 = TekiCondition
-	Condition* mNotCondition; // _04
+	immut Condition* mNotCondition; // _04
 };
 
 /**

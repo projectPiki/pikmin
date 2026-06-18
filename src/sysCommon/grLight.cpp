@@ -188,29 +188,53 @@ void Light::setLightParallel()
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000218
+ * @note UNUSED Size: 000218 (Matching by size)
  */
 void Light::calcLightSizes()
 {
-	// UNUSED FUNCTION
+	if (mLightValuesSet) {
+		mObjRadius = -1.0f;
+		mMapRadius = -1.0f;
+		int i;
+		for (i = 0; i < 0x4000; i += 8) {
+			// This exact formula probably isn't written like this, but it's what Ghidra
+			// worked it out to be and the function matches by size with it, so whatever.
+			f32 local_10 = 1.0f / (i * mQuadAttn * i + i * mLinearAttn + mConstantAttn);
+			if (mObjRadius == -1.0f && local_10 < _48) {
+				mObjRadius = i;
+			}
+			if (mMapRadius == -1.0f && local_10 < _44) {
+				mMapRadius = i;
+			}
+		}
+		if (mObjRadius == -1.0f) {
+			mObjRadius = i;
+		}
+		if (mMapRadius == -1.0f) {
+			mMapRadius = i;
+		}
+		mLightValuesSet = 0;
+	}
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000030
+ * @note UNUSED Size: 000030 (Matching by size)
  */
 f32 Light::calcLightMapRadius()
 {
-	// UNUSED FUNCTION
+	calcLightSizes();
+	return mMapRadius;
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000030
+ * @note UNUSED Size: 000030 (Matching by size)
  */
 f32 Light::calcLightObjRadius()
 {
-	// UNUSED FUNCTION
+	calcLightSizes();
+	return mObjRadius;
 }
 
 /**

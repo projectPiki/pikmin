@@ -166,11 +166,15 @@ u16 atan(f32 x, f32 y)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000058
+ * @note UNUSED Size: 000058 (Matching by size)
  */
-f32 NMathF::remainder(f32, f32)
+f32 NMathF::remainder(f32 num, f32 denom)
 {
-	// UNUSED FUNCTION
+	f32 result = num - quotient(num, denom) * denom;
+	if (result >= 0.0f) {
+		return result;
+	}
+	return denom + result;
 }
 
 /**

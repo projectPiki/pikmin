@@ -23,11 +23,13 @@ PSUPtrLink::~PSUPtrLink()
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 00003C
+ * @note UNUSED Size: 00003C (Matching by size)
  */
-PSUPtrList::PSUPtrList(bool)
+PSUPtrList::PSUPtrList(bool initialize)
 {
-	// UNUSED FUNCTION
+	if (initialize) {
+		initiate();
+	}
 }
 
 /**
@@ -71,7 +73,7 @@ void PSUPtrList::setFirst(PSUPtrLink* link)
 bool PSUPtrList::append(PSUPtrLink* link)
 {
 	bool isEmpty = link->mList == nullptr;
-	if (link->mList) {
+	if (!isEmpty) {
 		isEmpty = link->mList->remove(link);
 	}
 
@@ -93,20 +95,65 @@ bool PSUPtrList::append(PSUPtrLink* link)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 0000BC
+ * @note UNUSED Size: 0000BC (Matching by size)
  */
-bool PSUPtrList::prepend(PSUPtrLink*)
+bool PSUPtrList::prepend(PSUPtrLink* link)
 {
-	// UNUSED FUNCTION
+	bool isEmpty = link->mList == nullptr;
+	if (!isEmpty) {
+		isEmpty = link->mList->remove(link);
+	}
+
+	if (isEmpty) {
+		if (mLinkCount == 0) {
+			setFirst(link);
+		} else {
+			link->mList  = this;
+			link->mPrev  = nullptr;
+			link->mNext  = mHead;
+			mHead->mPrev = link;
+			mHead        = link;
+			mLinkCount++;
+		}
+	}
+
+	return isEmpty;
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 0001DC
+ * @note UNUSED Size: 0001DC (Matching by size)
  */
-bool PSUPtrList::insert(PSUPtrLink*, PSUPtrLink*)
+bool PSUPtrList::insert(PSUPtrLink* list, PSUPtrLink* link)
 {
-	// UNUSED FUNCTION
+	if (list == mHead) {
+		return prepend(link);
+	}
+	if (list == nullptr) {
+		return append(link);
+	}
+	if (list->mList != this) {
+		return false;
+	}
+
+	bool isEmpty = link->mList == nullptr;
+	if (!isEmpty) {
+		isEmpty = link->mList->remove(link);
+	}
+
+	if (isEmpty) {
+		// Totally unnecessary variable... necessary for matching.
+		PSUPtrLink* listPrev = list->mPrev;
+
+		link->mList     = this;
+		link->mPrev     = listPrev;
+		link->mNext     = list;
+		listPrev->mNext = link;
+		list->mPrev     = link;
+		mLinkCount++;
+	}
+
+	return isEmpty;
 }
 
 /**
@@ -115,7 +162,7 @@ bool PSUPtrList::insert(PSUPtrLink*, PSUPtrLink*)
 bool PSUPtrList::remove(PSUPtrLink* link)
 {
 	bool isUnlinked = link->mList == this;
-	if (link->mList == this) {
+	if (isUnlinked) {
 		if (mLinkCount == 1) {
 			mHead = nullptr;
 			mTail = nullptr;
@@ -141,9 +188,16 @@ bool PSUPtrList::remove(PSUPtrLink* link)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000088
+ * @note UNUSED Size: 000088 (Matching by size)
  */
-PSUPtrLink* PSUPtrList::getNthLink(u32) const
+PSUPtrLink* PSUPtrList::getNthLink(u32 n) const
 {
-	// UNUSED FUNCTION
+	if (n >= mLinkCount) {
+		return nullptr;
+	}
+	PSUPtrLink* link = mHead;
+	for (u32 i = 0; i < n; ++i) {
+		link = link->mNext;
+	}
+	return link;
 }

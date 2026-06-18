@@ -45,6 +45,7 @@ void PtclGenPack::setEmitPos(immut Vector3f& pos)
 {
 	u32 i;
 	particleGenerator** genList = mGeneratorList;
+
 	for (i = 0; i < mLimit; i++, genList++) {
 		if (*genList) {
 			(*genList)->setEmitPos(pos);
@@ -59,6 +60,7 @@ void PtclGenPack::setEmitPosPtr(immut Vector3f* posPtr)
 {
 	u32 i;
 	particleGenerator** genList = mGeneratorList;
+
 	for (i = 0; i < mLimit; i++, genList++) {
 		if (*genList) {
 			(*genList)->setEmitPosPtr(posPtr);
@@ -83,11 +85,18 @@ void PtclGenPack::setEmitDir(immut Vector3f& pos)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000084
+ * @note UNUSED Size: 000084 (Matching by size)
  */
-void PtclGenPack::setCallBack(zen::CallBack1<zen::particleGenerator*>*, zen::CallBack2<zen::particleGenerator*, zen::particleMdl*>*)
+void PtclGenPack::setCallBack(zen::CallBack1<zen::particleGenerator*>* cb1, zen::CallBack2<zen::particleGenerator*, zen::particleMdl*>* cb2)
 {
-	// UNUSED FUNCTION
+	u32 i;
+	particleGenerator** genList = mGeneratorList;
+
+	for (i = 0; i < mLimit; i++, genList++) {
+		if (*genList) {
+			(*genList)->setCallBack(cb1, cb2);
+		}
+	}
 }
 
 /**
@@ -122,20 +131,34 @@ void PtclGenPack::stopGen()
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 00003C
+ * @note UNUSED Size: 00003C (Matching by size)
  */
 void PtclGenPack::start()
 {
-	// UNUSED FUNCTION
+	u32 i;
+	particleGenerator** genList = mGeneratorList;
+
+	for (i = 0; i < mLimit; i++, genList++) {
+		if (*genList) {
+			(*genList)->start();
+		}
+	}
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 00003C
+ * @note UNUSED Size: 00003C (Matching by size)
  */
 void PtclGenPack::stop()
 {
-	// UNUSED FUNCTION
+	u32 i;
+	particleGenerator** genList = mGeneratorList;
+
+	for (i = 0; i < mLimit; i++, genList++) {
+		if (*genList) {
+			(*genList)->stop();
+		}
+	}
 }
 
 /**
@@ -145,6 +168,7 @@ void PtclGenPack::finish()
 {
 	u32 i;
 	particleGenerator** genList = mGeneratorList;
+
 	for (i = 0; i < mLimit; i++, genList++) {
 		if (*genList) {
 			(*genList)->finish();
@@ -187,28 +211,52 @@ bool PtclGenPack::checkStopGen()
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000044
+ * @note UNUSED Size: 000044 (Matching by size)
  */
 bool PtclGenPack::checkStop()
 {
-	// UNUSED FUNCTION
+	u32 i;
+	particleGenerator** genList = mGeneratorList;
+
+	for (i = 0; i < mLimit; i++, genList++) {
+		if ((*genList) && (!(*genList)->checkStop())) {
+			return false;
+		}
+	}
+	return true;
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000044
+ * @note UNUSED Size: 000044 (Matching by size)
  */
 bool PtclGenPack::checkEmit()
 {
-	// UNUSED FUNCTION
+	u32 i;
+	particleGenerator** genList = mGeneratorList;
+
+	for (i = 0; i < mLimit; i++, genList++) {
+		if ((*genList) && (!(*genList)->checkEmit())) {
+			return false;
+		}
+	}
+	return true;
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000044
+ * @note UNUSED Size: 000044 (Matching by size)
  */
 bool PtclGenPack::checkActive()
 {
-	// UNUSED FUNCTION
+	u32 i;
+	particleGenerator** genList = mGeneratorList;
+
+	for (i = 0; i < mLimit; i++, genList++) {
+		if ((*genList) && (!(*genList)->checkActive())) {
+			return false;
+		}
+	}
+	return true;
 }
 } // namespace zen

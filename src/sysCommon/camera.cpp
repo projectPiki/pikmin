@@ -406,11 +406,29 @@ f32 Camera::projectWorldPoint(Graphics& gfx, Vector3f& point)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000170
+ * @note UNUSED Size: 000170 (Matching by size)
  */
-f32 Camera::projectCamPoint(Vector3f&)
+f32 Camera::projectCamPoint(Vector3f& point)
 {
-	// UNUSED FUNCTION
+	f32 dist = mPerspectiveMatrix.mMtx[3][2] * point.z + mPerspectiveMatrix.mMtx[3][1] * point.y + mPerspectiveMatrix.mMtx[3][0] * point.x
+	         + mPerspectiveMatrix.mMtx[3][3];
+	if (dist <= 0.0f) {
+		return dist;
+	}
+
+	point.multMatrix(mPerspectiveMatrix);
+	f32 norm = 1.0f / dist;
+	point.x *= norm;
+	point.y *= norm;
+	point.z *= norm;
+
+	point.x *= glnWidth / 2.0f;
+	point.y *= -(glnHeight / 2.0f);
+
+	point.x += glnWidth / 2.0f;
+	point.y += glnHeight / 2.0f;
+
+	return dist; // Unlike `Camera::projectWorldPoint`.
 }
 
 /**

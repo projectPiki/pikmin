@@ -155,7 +155,7 @@ Texture* StdSystem::loadTexture(immut char* path, bool isRelativePath)
 {
 	GfxobjInfo* foundObj = findGfxObject(path, '_tex');
 	if (foundObj) {
-		return (Texture*)((TexobjInfo*)foundObj)->mTexture;
+		return static_cast<TexobjInfo*>(foundObj)->mTexture;
 	}
 
 	Texture* loadedTex     = nullptr;
@@ -171,11 +171,17 @@ Texture* StdSystem::loadTexture(immut char* path, bool isRelativePath)
 
 /**
  * @brief Unused stub for finding a texture object.
- * @note UNUSED Size: 000034
+ * @note UNUSED Size: 000034 (Matching by size)
  */
-GfxobjInfo* StdSystem::findTexture(Texture*)
+GfxobjInfo* StdSystem::findTexture(Texture* texture)
 {
-	// UNUSED FUNCTION
+	for (GfxobjInfo* info = mGfxobjInfo.mNext; info != &mGfxobjInfo; info = info->mNext) {
+		if (static_cast<TexobjInfo*>(info)->mTexture == texture) {
+			return info;
+		}
+	}
+
+	return nullptr;
 }
 
 /**
@@ -241,26 +247,37 @@ AnimData* StdSystem::findAnimation(immut char* path)
  * @brief Attempts to find any animation with a matching prefix.
  * @param path Prefix of the animation path.
  *
- * @note UNUSED Size: 0000AC
+ * @note UNUSED Size: 0000AC (Matching by size)
  */
 AnimData* StdSystem::findAnyAnimation(immut char* path)
 {
 	GfxobjInfo* info = findAnyGfxObject(path, '_anm');
 	if (info) {
-		return nullptr; // figure this out eventually
+		return static_cast<AnmobjInfo*>(info)->mAnimation;
 	}
 	return nullptr;
-	// UNUSED FUNCTION
 }
 
 /**
- * @brief Placeholder for index-based animation lookup.
+ * @brief Index-based animation lookup.
  *
- * @note UNUSED Size: 000098
+ * @note UNUSED Size: 000098 (Matching by size)
  */
-AnimData* StdSystem::findIndexAnimation(immut char*, int)
+AnimData* StdSystem::findIndexAnimation(immut char* path, int idx)
 {
-	// UNUSED FUNCTION
+	int foundCount = 0;
+	for (GfxobjInfo* info = mGfxobjInfo.mNext; info != &mGfxobjInfo; info = info->mNext) {
+		if (info->mId == '_anm') {
+			if (!strncmp(info->mString, path, strlen(path))) {
+				if (foundCount == idx) {
+					return static_cast<AnmobjInfo*>(info)->mAnimation;
+				}
+				++foundCount;
+			}
+		}
+	}
+
+	return nullptr;
 }
 
 /**

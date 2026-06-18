@@ -24,20 +24,30 @@ DEFINE_PRINT(nullptr)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 0000C0
+ * @note UNUSED Size: 0000C0 (Matching by size)
  */
 bool Plane::equal(immut Plane& other)
 {
-	// UNUSED FUNCTION
+	if (absVal(other.mNormal.x - mNormal.x) < 1e-05 && absVal(other.mNormal.y - mNormal.y) < 1e-05
+	    && absVal(other.mNormal.z - mNormal.z) < 1e-05 && absVal(other.mOffset - mOffset) < 0.01f) {
+		return true;
+	}
+	return false;
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000148
+ * @note UNUSED Size: 000148 (Matching by size)
  */
 f32 Plane::calcRadScale()
 {
-	// UNUSED FUNCTION
+	if (absVal(mNormal.y) < absVal(mNormal.x) && absVal(mNormal.z) < absVal(mNormal.x)) {
+		return (mNormal.x >= 0.0f) ? 1.0f : -1.0f;
+	}
+	if (absVal(mNormal.x) < absVal(mNormal.y) && absVal(mNormal.z) < absVal(mNormal.y)) {
+		return (mNormal.y >= 0.0f) ? 1.0f : -1.0f;
+	}
+	return (mNormal.z >= 0.0f) ? 1.0f : -1.0f;
 }
 
 /**

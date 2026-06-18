@@ -1500,29 +1500,37 @@ void NVector::makeZero()
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 00003C
+ * @note UNUSED Size: 00003C (Matching by size)
  */
-void NVector::add(immut NVector&)
+void NVector::add(immut NVector& other)
 {
-	// UNUSED FUNCTION
+	for (int i = 0; i < mSize; i++) {
+		mValues[i] += other.mValues[i];
+	}
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000118
+ * @note UNUSED Size: 000118 (Matching by size)
  */
-f32 NVector::dot(immut NVector&) immut
+f32 NVector::dot(immut NVector& other) immut
 {
-	// UNUSED FUNCTION
+	f32 product = 0.0f;
+	for (int i = 0; i < mSize; i++) {
+		product += mValues[i] * other.mValues[i];
+	}
+	return product;
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000034
+ * @note UNUSED Size: 000034 (Matching by size)
  */
-void NVector::input(immut NVector&)
+void NVector::input(immut NVector& other)
 {
-	// UNUSED FUNCTION
+	for (int i = 0; i < mSize; i++) {
+		mValues[i] = other.mValues[i];
+	}
 }
 
 /**
