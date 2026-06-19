@@ -61,11 +61,7 @@ typedef union {
 	f64 f64;
 } PPCWGPipe;
 
-#ifdef __MWERKS__
-volatile PPCWGPipe GXWGFifo AT_ADDRESS(GXFIFO_ADDR);
-#else
-#define GXWGFifo (*(volatile PPCWGPipe*)GXFIFO_ADDR)
-#endif
+extern volatile PPCWGPipe GXWGFifo AT_ADDRESS(GXFIFO_ADDR);
 
 ////////////////////////////////////////////
 

@@ -189,20 +189,28 @@ _return:
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 000008
+ * @note UNUSED Size: 000008 (Matching by size)
  */
-void OSLoadFPUContext(register OSContext* fpuContext)
-{
-	// UNUSED FUNCTION
+ASM void OSLoadFPUContext(register OSContext* fpuContext) {
+#ifdef __MWERKS__ // clang-format off
+	// Just a guess based on the UNUSED size.
+	nofralloc
+	mr  r4, fpuContext
+	b   __OSLoadFPUContext
+#endif // clang-format on
 }
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 000008
+ * @note UNUSED Size: 000008 (Matching by size)
  */
-void OSSaveFPUContext(register OSContext* fpuContext)
-{
-	// UNUSED FUNCTION
+ASM void OSSaveFPUContext(register OSContext* fpuContext) {
+#ifdef __MWERKS__ // clang-format off
+	// Just a guess based on the UNUSED size.
+	nofralloc
+	mr  r5, fpuContext
+	b   __OSSaveFPUContext
+#endif // clang-format on
 }
 
 /**

@@ -4,7 +4,7 @@
 void __destroy_global_chain(void);
 void _ExitProcess(void);
 
-typedef void (*voidfunctionptr)(); // pointer to function returning void
+typedef void (*voidfunctionptr)(void); // pointer to function returning void
 DECL_SECT(".dtors") extern voidfunctionptr _dtors[];
 
 int __aborting = 0;

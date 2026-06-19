@@ -1307,23 +1307,21 @@ ModeState* DayOverModeState::update(u32& result)
 #if defined(VERSION_PIKIDEMO)
 			// demo doesn't interact with the memory card
 #else
-			if (!memcardWindow) {
+			if (!memcardWindow)
 #endif
-			// if we don't have a memory card window open, check if we went back to last save, or continued
-			if (stat == 8) {
-				// return to last save
-				mParentSection->mPendingOnePlayerSectionID = ONEPLAYER_CardSelect;
-			} else {
-				// map select for a new day
-				mParentSection->mPendingOnePlayerSectionID = ONEPLAYER_MapSelect;
+			{
+				// if we don't have a memory card window open, check if we went back to last save, or continued
+				if (stat == 8) {
+					// return to last save
+					mParentSection->mPendingOnePlayerSectionID = ONEPLAYER_CardSelect;
+				} else {
+					// map select for a new day
+					mParentSection->mPendingOnePlayerSectionID = ONEPLAYER_MapSelect;
+				}
+				// transit to quitter to handle changing subsection
+				gsys->setFade(0.0f);
+				return new QuittingGameModeState(mParentSection);
 			}
-			// transit to quitter to handle changing subsection
-			gsys->setFade(0.0f);
-			return new QuittingGameModeState(mParentSection);
-#if defined(VERSION_PIKIDEMO)
-#else
-			}
-#endif
 		}
 	}
 
@@ -2068,26 +2066,15 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 
 		// do the main frame render
 
-// need these to be commented out, otherwise gsys does weird things in the next if block.
-#if defined(VERSION_PIKIDEMO)
-		gsys->mTimer->start("mainRender", true);
-#else
 		MATCHING_START_TIMER("mainRender", true);
-#endif
 		mainRender(gfx);
-#if defined(VERSION_PIKIDEMO)
-		gsys->mTimer->stop("mainRender");
-#else
 		MATCHING_STOP_TIMER("mainRender");
-#endif
 
 		// try and update and draw effects
 		if (effectMgr) {
 			if (!gameflow.mPauseAll && !gameflow.mIsUIOverlayActive || gameflow.mIsTutorialTextActive) {
 
-#if defined(VERSION_PIKIDEMO)
-				gsys->mTimer->start("effect", true);
-#endif
+				MATCHING_START_TIMER("effect", true);
 				bool isDVDNormal = true;
 				if (gsys->mDvdErrorCode >= DvdError::ReadingDisc) {
 					isDVDNormal = false;
@@ -2096,34 +2083,24 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 				if (isDVDNormal) {
 					effectMgr->update();
 				}
-#if defined(VERSION_PIKIDEMO)
-				gsys->mTimer->stop("effect");
-#endif
+				MATCHING_STOP_TIMER("effect");
 			}
 
-#if defined(VERSION_PIKIDEMO)
-			gsys->mTimer->start("eff draw", true);
-#endif
+			MATCHING_START_TIMER("eff draw", true);
 			effectMgr->draw(gfx);
-#if defined(VERSION_PIKIDEMO)
-			gsys->mTimer->stop("eff draw");
-#endif
+			MATCHING_STOP_TIMER("eff draw");
 		}
 
 		// do any 2D post-rendering (for overlays and windows)
 		if (!(gameflow.mDemoFlags & CinePlayerFlags::NonGameMovie)) {
-#if defined(VERSION_PIKIDEMO)
-			gsys->mTimer->start("postRender", true);
-#endif
+			MATCHING_START_TIMER("postRender", true);
 			menuOn = false;
 			gfx.setOrthogonal(orthoMtx.mMtx, AREA_FULL_SCREEN(gfx));
 			postRender(gfx);
 			if (!mActiveMenu && menuWindow) {
 				menuOn = menuWindow->draw(gfx);
 			}
-#if defined(VERSION_PIKIDEMO)
-			gsys->mTimer->stop("postRender");
-#endif
+			MATCHING_STOP_TIMER("postRender");
 		}
 
 		gfx.setOrthogonal(orthoMtx.mMtx, AREA_FULL_SCREEN(gfx));

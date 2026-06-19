@@ -12,13 +12,13 @@ static s32 v1 = 0x0005555;
  */
 s32 GetRandom_s32()
 {
-	BOOL level = OSDisableInterrupts();
+	BOOL enabled = OSDisableInterrupts();
 	s32 tmp;
 
 	tmp = (v1 * V1_MULT) + ((v0 * V0_MULT) >> 4);
 	v0  = v1;
 	v1  = ++tmp;
-	OSRestoreInterrupts(level);
+	OSRestoreInterrupts(enabled);
 	return tmp;
 }
 

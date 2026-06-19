@@ -160,10 +160,10 @@ void ID32::print() immut
  */
 void ID32::sprint(char* buffer) immut
 {
-	buffer[0] = (char)((this->mId & 0xFF000000) >> 24);
-	buffer[1] = (char)((this->mId & 0xFF0000) >> 16);
-	buffer[2] = (char)((this->mId & 0xFF00) >> 8);
-	buffer[3] = (char)(this->mId & 0xFF);
+	buffer[0] = (mId & 0xFF000000) >> 24;
+	buffer[1] = (mId & 0xFF0000) >> 16;
+	buffer[2] = (mId & 0xFF00) >> 8;
+	buffer[3] = (mId & 0xFF);
 	buffer[4] = 0;
 }
 

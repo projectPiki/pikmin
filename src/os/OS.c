@@ -9,8 +9,6 @@
 #include <stddef.h>
 #include <string.h>
 
-DECL_SECT(".init") extern char _db_stack_end[];
-
 // memory locations for important stuff
 #define OS_DBINTERFACE_ADDR     0x40
 #define OS_BI2_DEBUG_ADDRESS    0x800000F4
@@ -26,7 +24,6 @@ extern u32 __DVDLongFileNameFlag;
 extern u32 __PADSpec;
 
 // forward declarations
-void __OSUnhandledException(__OSException exception, OSContext* context, u32 dsisr, u32 dar);
 void __OSResetSWInterruptHandler(__OSInterrupt interrupt, OSContext* context);
 
 // The exception table.  It points to a location in LoMem.  It is set by OSExceptionInit.
@@ -39,9 +36,8 @@ extern vu16 __OSDeviceCode AT_ADDRESS(OS_BASE_CACHED | OS_DVD_DEVICECODE);
 static OSBootInfo* BootInfo;
 static vu32* BI2DebugFlag;
 static u32* BI2DebugFlagHolder;
-WEAKFUNC BOOL __OSIsGcam = FALSE;
-static f64 ZeroF         = 0.0;
-static f32 ZeroPS[2];
+WEAK BOOL __OSIsGcam         = FALSE;
+static f64 ZeroF             = 0.0;
 static BOOL AreWeInitialized = FALSE;
 static __OSExceptionHandler* OSExceptionTable;
 OSTime __OSStartTime;
@@ -59,7 +55,7 @@ static void OSDefaultExceptionHandler(__OSException exception, OSContext* contex
  */
 u32 __OSIsDebuggerPresent(void)
 {
-	return *(u32*)OSPhysicalToCached(0x40);
+	return *(u32*)OSPhysicalToCached(OS_DBINTERFACE_ADDR);
 	// UNUSED FUNCTION
 }
 
@@ -163,10 +159,10 @@ void OSInit(void)
 	u32 tdev;
 
 	// check if we've already done all this or not
-	if ((BOOL)AreWeInitialized == FALSE) { // fantastic name
-		AreWeInitialized = TRUE;           // flag to make sure we don't have to do this again
+	if (!AreWeInitialized) {     // fantastic name
+		AreWeInitialized = TRUE; // flag to make sure we don't have to do this again
 
-// SYSTEM //
+		// SYSTEM //
 #if OS_BUILD_VERSION >= 20011002L
 		__OSStartTime = __OSGetSystemTime();
 #endif
@@ -184,8 +180,8 @@ void OSInit(void)
 		// the address for where the BI2 debug info is, is stored at OS_BI2_DEBUG_ADDRESS
 		DebugInfo = (BI2Debug*)*((u32*)OS_BI2_DEBUG_ADDRESS);
 
-#if OS_BUILD_VERSION >= 20011002L
 		// if the debug info address exists, grab some debug info
+#if OS_BUILD_VERSION >= 20011002L
 		if (DebugInfo != NULL) {
 			BI2DebugFlag               = &DebugInfo->debugFlag;     // debug flag from DVD BI2
 			__PADSpec                  = (u32)DebugInfo->padSpec;   // some other info from DVD BI2
@@ -197,9 +193,8 @@ void OSInit(void)
 			__PADSpec          = (u32) * ((u8*)OS_DEBUG_ADDRESS_2); // pad spec is whatever's at 0x800030E9
 		}
 
-		__DVDLongFileNameFlag = (u32)1;
+		__DVDLongFileNameFlag = 1;
 #else
-		// if the debug info address exists, grab some debug info
 		if (DebugInfo != NULL) {
 			BI2DebugFlag          = &DebugInfo->debugFlag;          // debug flag from DVD BI2
 			__DVDLongFileNameFlag = DebugInfo->dvdLongFileNameFlag; // we made it through debug!
@@ -523,6 +518,7 @@ entry __OSEVStart
 	stw      r3, OSContext.srr1 (r4)
 	mr       r5, r3
 
+	// This instruction may be overwritten by OSExceptionInit
 entry __DBVECTOR
 	nop
 

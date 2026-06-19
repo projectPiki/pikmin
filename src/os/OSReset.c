@@ -110,8 +110,8 @@ _setPIReg:
 	lis     r8,     __PIRegs @h
 	ori     r8, r8, __PIRegs @l
 	li      r4, 3
-	stw     r4, 0x24 (r8)
-	stw     r3, 0x24 (r8)
+	stw     r4, PI_RESETCODE * 4 (r8)
+	stw     resetCode, PI_RESETCODE * 4 (r8)
 	nop
 	b       _noptrap
 

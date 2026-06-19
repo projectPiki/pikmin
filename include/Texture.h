@@ -219,8 +219,6 @@ struct Texture : public GfxObject {
 	TexobjInfo* mInfo; // _38
 };
 
-struct Texture;
-
 /**
  * @brief TODO
  */
@@ -268,8 +266,8 @@ struct TexCacheInfo : public CacheInfo {
 	void initData() { _10 = 0; }
 
 	// _00 - _0C = CacheInfo
-	TexobjInfo* _0C; // _0C
-	u32 _10;         // _10
+	TexCacheInfo** _0C; // _0C
+	u32 _10;            // _10
 };
 
 /**

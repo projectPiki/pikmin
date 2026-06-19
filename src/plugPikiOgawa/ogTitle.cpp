@@ -307,14 +307,12 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 					mStereoMode = true;
 					setGamePrefs();
 
-					// For every time this sound is played here, it worked correctly in USA demo, then broken in final USA (Jac_PlaySystemSe
-					// is meant to use its own sound ids for system sounds), then fixed AGAIN in a different way for PAL
-#if defined(BUGFIX) || defined(VERSION_GPIP01)
-					seSystem->playSysSe(Sound_Config);
-#elif defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
-					Jac_PlaySystemSe(JACSYS_SoundConfig);
+					// For every time this sound is played in this file, it worked correctly in USA demo and retail
+					// JPN, then was broken in retail USA, then was fixed AGAIN in a more proper way for retail PAL.
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01) || defined(VERSION_GPIE01)
+					Jac_PlaySystemSe(TERNARY_BUGFIX(JACSYS_SoundConfig, ogEnumFix(Sound_Config, JACSYS_SoundConfig)));
 #else
-					Jac_PlaySystemSe(Sound_Config);
+					seSystem->playSysSe(Sound_Config);
 #endif
 				}
 				break;
@@ -325,12 +323,10 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 				if (mBgmVol > 0) {
 					mBgmVol--;
 					setGamePrefs();
-#if defined(BUGFIX) || defined(VERSION_GPIP01)
-					seSystem->playSysSe(Sound_Config);
-#elif defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
-					Jac_PlaySystemSe(JACSYS_SoundConfig);
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01) || defined(VERSION_GPIE01)
+					Jac_PlaySystemSe(TERNARY_BUGFIX(JACSYS_SoundConfig, ogEnumFix(Sound_Config, JACSYS_SoundConfig)));
 #else
-					Jac_PlaySystemSe(Sound_Config);
+					seSystem->playSysSe(Sound_Config);
 #endif
 				}
 				break;
@@ -341,12 +337,10 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 				if (mSfxVol > 0) {
 					mSfxVol--;
 					setGamePrefs();
-#if defined(BUGFIX) || defined(VERSION_GPIP01)
-					seSystem->playSysSe(Sound_Config);
-#elif defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
-					Jac_PlaySystemSe(JACSYS_SoundConfig);
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01) || defined(VERSION_GPIE01)
+					Jac_PlaySystemSe(TERNARY_BUGFIX(JACSYS_SoundConfig, ogEnumFix(Sound_Config, JACSYS_SoundConfig)));
 #else
-					Jac_PlaySystemSe(Sound_Config);
+					seSystem->playSysSe(Sound_Config);
 #endif
 				}
 				break;
@@ -361,12 +355,10 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 				if (mStereoMode) {
 					mStereoMode = false;
 					setGamePrefs();
-#if defined(BUGFIX) || defined(VERSION_GPIP01)
-					seSystem->playSysSe(Sound_Config);
-#elif defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
-					Jac_PlaySystemSe(JACSYS_SoundConfig);
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01) || defined(VERSION_GPIE01)
+					Jac_PlaySystemSe(TERNARY_BUGFIX(JACSYS_SoundConfig, ogEnumFix(Sound_Config, JACSYS_SoundConfig)));
 #else
-					Jac_PlaySystemSe(Sound_Config);
+					seSystem->playSysSe(Sound_Config);
 #endif
 				}
 				break;
@@ -377,12 +369,10 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 				if (mBgmVol < 10) {
 					mBgmVol++;
 					setGamePrefs();
-#if defined(BUGFIX) || defined(VERSION_GPIP01)
-					seSystem->playSysSe(Sound_Config);
-#elif defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
-					Jac_PlaySystemSe(JACSYS_SoundConfig);
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01) || defined(VERSION_GPIE01)
+					Jac_PlaySystemSe(TERNARY_BUGFIX(JACSYS_SoundConfig, ogEnumFix(Sound_Config, JACSYS_SoundConfig)));
 #else
-					Jac_PlaySystemSe(Sound_Config);
+					seSystem->playSysSe(Sound_Config);
 #endif
 				}
 				break;
@@ -393,12 +383,10 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 				if (mSfxVol < 10) {
 					mSfxVol++;
 					setGamePrefs();
-#if defined(BUGFIX) || defined(VERSION_GPIP01)
-					seSystem->playSysSe(Sound_Config);
-#elif defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
-					Jac_PlaySystemSe(JACSYS_SoundConfig);
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01) || defined(VERSION_GPIE01)
+					Jac_PlaySystemSe(TERNARY_BUGFIX(JACSYS_SoundConfig, ogEnumFix(Sound_Config, JACSYS_SoundConfig)));
 #else
-					Jac_PlaySystemSe(Sound_Config);
+					seSystem->playSysSe(Sound_Config);
 #endif
 				}
 				break;

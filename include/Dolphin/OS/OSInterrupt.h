@@ -39,7 +39,7 @@ __OSInterruptHandler __OSGetInterruptHandler(__OSInterrupt interrupt);
 void __OSDispatchInterrupt(__OSException exception, OSContext* context);
 BOOL OSEnableInterrupts();
 BOOL OSDisableInterrupts();
-BOOL OSRestoreInterrupts(BOOL level);
+BOOL OSRestoreInterrupts(BOOL enabled);
 
 // Mask functions.
 OSInterruptMask __OSMaskInterrupts(OSInterruptMask mask);

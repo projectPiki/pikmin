@@ -510,8 +510,8 @@ void VIInit(void)
 	PreCB  = NULL;
 	PostCB = NULL;
 
-	__OSSetInterruptHandler(24, __VIRetraceHandler);
-	__OSUnmaskInterrupts((0x80000000u >> (24)));
+	__OSSetInterruptHandler(__OS_INTERRUPT_PI_VI, __VIRetraceHandler);
+	__OSUnmaskInterrupts(OS_INTERRUPTMASK_PI_VI);
 }
 
 /**

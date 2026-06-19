@@ -32,7 +32,7 @@ static void __check_pad3(void)
 }
 #endif
 
-WEAKFUNC ASM void __start(void)
+WEAK ASM void __start(void)
 {
 #ifdef __MWERKS__ // clang-format off
 	nofralloc

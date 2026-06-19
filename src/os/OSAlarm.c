@@ -45,9 +45,9 @@ static void SetTimer(OSAlarm* alarm)
  */
 void OSInitAlarm(void)
 {
-	if (__OSGetExceptionHandler(8) != DecrementerExceptionHandler) {
+	if (__OSGetExceptionHandler(__OS_EXCEPTION_DECREMENTER) != DecrementerExceptionHandler) {
 		AlarmQueue.head = AlarmQueue.tail = NULL;
-		__OSSetExceptionHandler(8, DecrementerExceptionHandler);
+		__OSSetExceptionHandler(__OS_EXCEPTION_DECREMENTER, DecrementerExceptionHandler);
 	}
 }
 

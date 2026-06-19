@@ -2,7 +2,7 @@
 #include "Dolphin/os.h"
 #include <string.h>
 
-static void ExternalInterruptHandler(register __OSException exception, register OSContext* context);
+static void ExternalInterruptHandler(__OSException exception, OSContext* context);
 
 static __OSInterruptHandler* InterruptHandlerTable;
 
@@ -55,11 +55,11 @@ ASM BOOL OSEnableInterrupts(void) {
 /**
  * @TODO: Documentation
  */
-ASM BOOL OSRestoreInterrupts(register BOOL level) {
+ASM BOOL OSRestoreInterrupts(register BOOL enabled) {
 #ifdef __MWERKS__ // clang-format off
 	nofralloc
 
-	cmpwi   level, 0
+	cmpwi   enabled, 0
 	mfmsr   r4
 	beq     _disable
 	ori     r5, r4, MSR_EE
@@ -109,7 +109,7 @@ void __OSInterruptInit(void)
 
 	__OSMaskInterrupts(OS_INTERRUPTMASK_MEM | OS_INTERRUPTMASK_DSP | OS_INTERRUPTMASK_AI | OS_INTERRUPTMASK_EXI | OS_INTERRUPTMASK_PI);
 
-	__OSSetExceptionHandler(4, ExternalInterruptHandler);
+	__OSSetExceptionHandler(__OS_EXCEPTION_EXTERNAL_INTERRUPT, ExternalInterruptHandler);
 }
 
 /**

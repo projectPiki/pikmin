@@ -135,7 +135,7 @@ s32 CARDReadAsync(CARDFileInfo* fileInfo, void* buffer, s32 length, s32 offset, 
 		return __CARDPutControlBlock(card, result);
 	}
 
-	DCInvalidateRange(buffer, (u32)length);
+	DCInvalidateRange(buffer, length);
 	card->apiCallback = callback ? callback : __CARDDefaultApiCallback;
 
 	offset = (s32)OFFSET(fileInfo->offset, card->sectorSize);

@@ -136,7 +136,7 @@ typedef u32 HWND;
 #define FALSE (0)
 
 // We yearn for modernity.
-#if __cplusplus < 201103L
+#if defined(__cplusplus) && __cplusplus < 201103L
 #define nullptr 0
 #endif
 
@@ -225,12 +225,12 @@ inline void padStack(void)
 
 #ifdef __MWERKS__
 #define AT_ADDRESS(addr) : (addr)
-#define WEAKFUNC        __declspec(weak)
+#define WEAK            __declspec(weak)
 #define DECL_SECT(name) __declspec(section name)
 #define ASM             asm
 #else
 #define AT_ADDRESS(addr)
-#define WEAKFUNC
+#define WEAK
 #define DECL_SECT(name)
 #define ASM
 #endif

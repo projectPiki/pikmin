@@ -4,7 +4,7 @@
 
 BEGIN_SCOPE_EXTERN_C
 
-typedef void (*voidfunctionptr)(); // pointer to function returning void
+typedef void (*voidfunctionptr)(void); // pointer to function returning void
 DECL_SECT(".ctors") extern voidfunctionptr _ctors[];
 
 static void __init_cpp();

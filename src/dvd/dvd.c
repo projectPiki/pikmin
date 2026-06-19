@@ -81,8 +81,8 @@ void DVDInit()
 	__DVDInitWA();
 	bootInfo = (OSBootInfo*)OSPhysicalToCached(0x0000);
 	currID   = &(bootInfo->DVDDiskID);
-	__OSSetInterruptHandler(21, __DVDInterruptHandler);
-	__OSUnmaskInterrupts(0x400);
+	__OSSetInterruptHandler(__OS_INTERRUPT_PI_DI, __DVDInterruptHandler);
+	__OSUnmaskInterrupts(OS_INTERRUPTMASK_PI_DI);
 	OSInitThreadQueue(&__DVDThreadQueue);
 	__DIRegs[DI_STATUS]       = 42;
 	__DIRegs[DI_COVER_STATUS] = 0;
@@ -981,14 +981,14 @@ static void cbForStateBusy(u32 p1)
  */
 static BOOL issueCommand(s32 prio, DVDCommandBlock* block)
 {
-	BOOL level;
+	BOOL enabled;
 	BOOL result;
 
 	if (autoInvalidation && (block->command == 1 || block->command == 4 || block->command == 5 || block->command == 14)) {
 		DCInvalidateRange(block->addr, block->length);
 	}
 
-	level = OSDisableInterrupts();
+	enabled = OSDisableInterrupts();
 
 	block->state = 2;
 	result       = __DVDPushWaitingQueue(prio, (DVDQueue*)block);
@@ -997,7 +997,7 @@ static BOOL issueCommand(s32 prio, DVDCommandBlock* block)
 		stateReady();
 	}
 
-	OSRestoreInterrupts(level);
+	OSRestoreInterrupts(enabled);
 
 	return result;
 }
@@ -1423,13 +1423,13 @@ int DVDSetAutoInvalidation(int newValue)
  */
 void DVDPause()
 {
-	BOOL level;
-	level     = OSDisableInterrupts();
+	BOOL enabled;
+	enabled   = OSDisableInterrupts();
 	PauseFlag = TRUE;
 	if (executing == NULL) {
 		PausingFlag = TRUE;
 	}
-	OSRestoreInterrupts(level);
+	OSRestoreInterrupts(enabled);
 }
 
 /**
@@ -1438,14 +1438,14 @@ void DVDPause()
  */
 void DVDResume()
 {
-	BOOL level;
-	level     = OSDisableInterrupts();
+	BOOL enabled;
+	enabled   = OSDisableInterrupts();
 	PauseFlag = FALSE;
 	if (PausingFlag) {
 		PausingFlag = FALSE;
 		stateReady();
 	}
-	OSRestoreInterrupts(level);
+	OSRestoreInterrupts(enabled);
 }
 
 /**

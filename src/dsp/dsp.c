@@ -149,7 +149,7 @@ void DSPInit(void)
 		return;
 
 	old = OSDisableInterrupts();
-	__OSSetInterruptHandler(7, __DSPHandler);
+	__OSSetInterruptHandler(__OS_INTERRUPT_DSP_DSP, __DSPHandler);
 	__OSUnmaskInterrupts(OS_INTERRUPTMASK_DSP_DSP);
 
 	tmp                           = __DSPRegs[DSP_CONTROL_STATUS];

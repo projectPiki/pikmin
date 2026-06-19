@@ -2,6 +2,7 @@
 #define _DOLPHIN_OS_OSERROR_H
 
 #include "Dolphin/OS/OSContext.h"
+#include "Dolphin/OS/OSException.h"
 #include "Dolphin/OS/OSUtil.h"
 #include "types.h"
 
@@ -16,6 +17,7 @@ typedef void (*OSErrorHandler)(OSError error, OSContext* context, ...);
 
 // Error functions.
 OSErrorHandler OSSetErrorHandler(OSError error, OSErrorHandler handler);
+void __OSUnhandledException(__OSException exception, OSContext* context, u32 dsisr, u32 dar);
 
 // OS logging and reporting.
 void OSReport(const char* message, ...);

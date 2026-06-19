@@ -323,9 +323,9 @@ void AIInit(u8* stack)
 	__CallbackStack = stack;
 
 	// Set interrupt handlers and unmask interrupts
-	__OSSetInterruptHandler(5, __AIDHandler);
+	__OSSetInterruptHandler(__OS_INTERRUPT_DSP_AI, __AIDHandler);
 	__OSUnmaskInterrupts(OS_INTERRUPTMASK_DSP_AI);
-	__OSSetInterruptHandler(8, __AISHandler);
+	__OSSetInterruptHandler(__OS_INTERRUPT_AI_AI, __AISHandler);
 	__OSUnmaskInterrupts(OS_INTERRUPTMASK_AI);
 
 	// Set AI initialisation flag to TRUE

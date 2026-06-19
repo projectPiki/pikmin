@@ -518,10 +518,10 @@ void GXGetTexObjLODAll(const GXTexObj* tex_obj, GXTexFilter* min_filt, GXTexFilt
  */
 GXTexFilter GXGetTexObjMinFilt(const GXTexObj* tex_obj)
 {
-	// GXTexObjPriv* t = (GXTexObjPriv*)tex_obj;
+	GXTexObjPriv* t = (GXTexObjPriv*)tex_obj;
 
-	// OSAssertMsgLine(0x3B2, tex_obj, "Texture Object Pointer is null");
-	// return HW2GXFiltConv[GET_REG_FIELD(t->mode0, 3, 5)];
+	OSAssertMsgLine(0x3B2, tex_obj, "Texture Object Pointer is null");
+	return HW2GXFiltConv[GET_REG_FIELD(t->mode0, 3, 5)];
 }
 
 /**

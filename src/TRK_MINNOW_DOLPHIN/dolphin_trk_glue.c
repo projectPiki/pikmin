@@ -1,3 +1,4 @@
+#include "Dolphin/AmcExi2.h"
 #include "Dolphin/db.h"
 #include "PowerPC_EABI_Support/MetroTRK/trk.h"
 #include <stddef.h>

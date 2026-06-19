@@ -254,8 +254,8 @@ BOOL HIOInit(s32 chan, HIOCallback callback)
 			EXISetExiCallback(Chan, ExiHandler);
 #endif
 		} else {
-			__OSSetInterruptHandler(0x19, DbgHandler);
-			__OSUnmaskInterrupts(0x40);
+			__OSSetInterruptHandler(__OS_INTERRUPT_PI_DEBUG, DbgHandler);
+			__OSUnmaskInterrupts(OS_INTERRUPTMASK_PI_DEBUG);
 		}
 	}
 

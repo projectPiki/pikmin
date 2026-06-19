@@ -8,7 +8,7 @@ BEGIN_SCOPE_EXTERN_C
 // TODO: rest of header
 
 typedef void (*AISCallback)(u32 count);
-typedef void (*AIDCallback)();
+typedef void (*AIDCallback)(void);
 
 #define AI_SAMPLERATE_32KHZ 0
 #define AI_SAMPLERATE_48KHZ 1
