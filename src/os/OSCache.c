@@ -102,7 +102,8 @@ void DCBlockInvalidate(void)
 }
 
 /**
- * @TODO: Documentation
+ * @note Dolphin Emulator has a speedhack in its JITs to recognize the instructions in this
+ * loop in order to batch data cache operations.  See `Jit64`/`JitArm64::dcbx` for details.
  */
 ASM void DCInvalidateRange(register void* addr, register u32 nBytes) {
 #ifdef __MWERKS__ // clang-format off
@@ -111,7 +112,7 @@ ASM void DCInvalidateRange(register void* addr, register u32 nBytes) {
 	blelr-
 	rlwinm.  r5, addr, 0, 27, 31
 	beq      _noadd
-	addi     r4, r4, 0x20
+	addi     nBytes, nBytes, 0x20
 _noadd:
 	addi     nBytes, nBytes, 31
 	srwi     nBytes, nBytes, 5
@@ -125,7 +126,8 @@ _loop:
 }
 
 /**
- * @TODO: Documentation
+ * @note Dolphin Emulator has a speedhack in its JITs to recognize the instructions in this
+ * loop in order to batch data cache operations.  See `Jit64`/`JitArm64::dcbx` for details.
  */
 ASM void DCFlushRange(register void* addr, register u32 nBytes) {
 #ifdef __MWERKS__ // clang-format off
@@ -134,7 +136,7 @@ ASM void DCFlushRange(register void* addr, register u32 nBytes) {
 	blelr-
 	rlwinm.  r5, addr, 0, 27, 31
 	beq      _noadd
-	addi     r4, r4, 0x20
+	addi     nBytes, nBytes, 0x20
 _noadd:
 	addi     nBytes, nBytes, 31
 	srwi     nBytes, nBytes, 5
@@ -151,7 +153,8 @@ _loop:
 }
 
 /**
- * @TODO: Documentation
+ * @note Dolphin Emulator has a speedhack in its JITs to recognize the instructions in this
+ * loop in order to batch data cache operations.  See `Jit64`/`JitArm64::dcbx` for details.
  */
 ASM void DCStoreRange(register void* addr, register u32 nBytes) {
 #ifdef __MWERKS__ // clang-format off
@@ -160,7 +163,7 @@ ASM void DCStoreRange(register void* addr, register u32 nBytes) {
 	blelr-
 	rlwinm.  r5, addr, 0, 27, 31
 	beq      _noadd
-	addi     r4, r4, 0x20
+	addi     nBytes, nBytes, 0x20
 _noadd:
 	addi     nBytes, nBytes, 31
 	srwi     nBytes, nBytes, 5
@@ -177,7 +180,8 @@ _loop:
 }
 
 /**
- * @TODO: Documentation
+ * @note Dolphin Emulator has a speedhack in its JITs to recognize the instructions in this
+ * loop in order to batch data cache operations.  See `Jit64`/`JitArm64::dcbx` for details.
  */
 ASM void DCFlushRangeNoSync(register void* addr, register u32 nBytes) {
 #ifdef __MWERKS__ // clang-format off
@@ -186,7 +190,7 @@ ASM void DCFlushRangeNoSync(register void* addr, register u32 nBytes) {
 	blelr-
 	rlwinm.  r5, addr, 0, 27, 31
 	beq      _noadd
-	addi     r4, r4, 0x20
+	addi     nBytes, nBytes, 0x20
 _noadd:
 	addi     nBytes, nBytes, 31
 	srwi     nBytes, nBytes, 5
@@ -201,7 +205,8 @@ _loop:
 }
 
 /**
- * @TODO: Documentation
+ * @note Dolphin Emulator has a speedhack in its JITs to recognize the instructions in this
+ * loop in order to batch data cache operations.  See `Jit64`/`JitArm64::dcbx` for details.
  */
 ASM void DCStoreRangeNoSync(register void* addr, register u32 nBytes) {
 #ifdef __MWERKS__ // clang-format off
@@ -210,7 +215,7 @@ ASM void DCStoreRangeNoSync(register void* addr, register u32 nBytes) {
 	blelr-
 	rlwinm.  r5, addr, 0, 27, 31
 	beq      _noadd
-	addi     r4, r4, 0x20
+	addi     nBytes, nBytes, 0x20
 _noadd:
 	addi     nBytes, nBytes, 31
 	srwi     nBytes, nBytes, 5
@@ -235,7 +240,7 @@ ASM void DCZeroRange(register void* addr, register u32 nBytes)
 	blelr-
 	rlwinm.  r5, addr, 0, 27, 31
 	beq      _noadd
-	addi     r4, r4, 0x20
+	addi     nBytes, nBytes, 0x20
 _noadd:
 	addi     nBytes, nBytes, 31
 	srwi     nBytes, nBytes, 5
@@ -268,7 +273,7 @@ ASM void ICInvalidateRange(register void* addr, register u32 nBytes) {
 	blelr-
 	rlwinm.  r5, addr, 0, 27, 31
 	beq      _noadd
-	addi     r4, r4, 0x20
+	addi     nBytes, nBytes, 0x20
 _noadd:
 	addi     nBytes, nBytes, 31
 	srwi     nBytes, nBytes, 5
@@ -382,7 +387,8 @@ void LCEnable(void)
 }
 
 /**
- * @TODO: Documentation
+ * @note Dolphin Emulator has a speedhack in its JITs to recognize the instructions in this
+ * loop in order to batch data cache operations.  See `Jit64`/`JitArm64::dcbx` for details.
  * @note UNUSED Size: 000028
  */
 ASM void LCDisable(void)

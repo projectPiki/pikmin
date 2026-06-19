@@ -57,9 +57,9 @@ void* OSAlloc2(u32 size)
 	u32* REF_size;
 
 	void* alloc;
-	BOOL level;
+	BOOL enabled;
 
-	level    = OSDisableInterrupts();
+	enabled  = OSDisableInterrupts();
 	REF_size = &size;
 	switch (audio_hp_exist) {
 	case FALSE:
@@ -74,7 +74,7 @@ void* OSAlloc2(u32 size)
 	}
 	}
 
-	OSRestoreInterrupts(level);
+	OSRestoreInterrupts(enabled);
 	return alloc;
 }
 

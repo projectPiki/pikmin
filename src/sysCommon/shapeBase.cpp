@@ -3220,7 +3220,7 @@ void AnimFrameCacher::removeOldest()
 	TexCacheInfo* prev = (TexCacheInfo*)mInfo.mPrev;
 	void* p            = prev;
 	prev->remove();
-	prev->_0C->mPrev = nullptr;
+	*prev->_0C = nullptr;
 	mCache->cacheFree(p);
 	// UNUSED FUNCTION
 }
@@ -3320,6 +3320,7 @@ static inline void addMatrixWeights(register f32* animMtx, register f32* weighte
 #ifdef __MWERKS__
 	asm {
 		psq_l    f0, 0x00 (weights), 0, 0;
+
 		psq_l    f1, 0x00 (animMtx), 0, 0;
 		psq_l    f2, 0x00 (weightedMtx), 0, 0;
 		ps_madd  f1, f2, f0, f1;

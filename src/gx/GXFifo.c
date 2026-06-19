@@ -482,8 +482,8 @@ void GXDisableBreakPt(void)
  */
 void __GXFifoInit(void)
 {
-	__OSSetInterruptHandler(0x11, GXCPInterruptHandler);
-	__OSUnmaskInterrupts(0x4000);
+	__OSSetInterruptHandler(__OS_INTERRUPT_PI_CP, GXCPInterruptHandler);
+	__OSUnmaskInterrupts(OS_INTERRUPTMASK_PI_CP);
 	__GXCurrentThread           = OSGetCurrentThread();
 	GXOverflowSuspendInProgress = FALSE;
 #if OS_BUILD_VERSION >= 20011002L

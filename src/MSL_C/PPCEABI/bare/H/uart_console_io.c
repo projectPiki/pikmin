@@ -47,7 +47,7 @@ int __read_console(__file_handle handle, unsigned char* buffer, size_t* count, _
 /**
  * @TODO: Documentation
  */
-WEAKFUNC BOOL __write_console(__file_handle handle, unsigned char* buffer, size_t* count, __idle_proc idle_proc)
+WEAK BOOL __write_console(__file_handle handle, unsigned char* buffer, size_t* count, __idle_proc idle_proc)
 {
 	if (__init_console() != 0) {
 		return 1;

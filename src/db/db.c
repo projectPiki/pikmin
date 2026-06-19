@@ -12,7 +12,7 @@ DBInterface* __DBInterface;
 void DBInit(void)
 {
 	__DBInterface                   = (void*)IsDebuggerPresent;
-	*(u32*)ExceptionHookDestination = (u32)__DBExceptionDestination - OS_BASE_CACHED;
+	*(u32*)ExceptionHookDestination = OSCachedToPhysical(__DBExceptionDestination);
 	DBVerbose                       = TRUE;
 }
 
@@ -30,8 +30,8 @@ void DBIsDebuggerPresent(void)
  */
 void __DBExceptionDestinationAux(void)
 {
-	u8 dummy[8];
-	OSContext* ctx = (void*)(OS_BASE_CACHED + *(u32*)0xC0); // WTF??
+	OSContext* ctx = OSPhysicalToCached(*(u32*)OS_CURRENTCONTEXT_PADDR);
+	STACK_PAD_VAR(2);
 	OSReport("DBExceptionDestination\n");
 	OSDumpContext(ctx);
 	PPCHalt();

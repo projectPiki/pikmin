@@ -44,7 +44,7 @@ extern void __OSInitAudioSystem();
 extern void __OSStopAudioSystem();
 extern void __OSInitMemoryProtection();
 
-void OSInit();
+void OSInit(void);
 
 // Other OS functions.
 

@@ -24,8 +24,8 @@ static u8 SendCount = 0x80;
  */
 void DBGEXIInit()
 {
-	__OSMaskInterrupts(0x18000);
-	__EXIRegs[10] = 0;
+	__OSMaskInterrupts(OS_INTERRUPTMASK_EXI_2);
+	__EXIRegs[EXI_CHAN_2_STAT] = 0;
 }
 
 /**
@@ -35,10 +35,10 @@ void DBGEXIInit()
 
 static u32 DBGEXISelect(u32 v)
 {
-	u32 regs = __EXIRegs[10];
+	u32 regs = __EXIRegs[EXI_CHAN_2_STAT];
 	regs &= 0x405;
 	regs |= 0x80 | (v << 4);
-	__EXIRegs[10] = regs;
+	__EXIRegs[EXI_CHAN_2_STAT] = regs;
 	return TRUE;
 }
 
@@ -48,7 +48,7 @@ static u32 DBGEXISelect(u32 v)
  */
 BOOL DBGEXIDeselect(void)
 {
-	__EXIRegs[10] &= 0x405;
+	__EXIRegs[EXI_CHAN_2_STAT] &= 0x405;
 	return TRUE;
 }
 
@@ -58,7 +58,7 @@ BOOL DBGEXIDeselect(void)
  */
 static BOOL DBGEXISync()
 {
-	while (__EXIRegs[13] & 1)
+	while (__EXIRegs[EXI_CHAN_2_CONTROL] & 1)
 		;
 
 	return TRUE;
@@ -80,14 +80,14 @@ static BOOL DBGEXIImm(void* buffer, s32 bytecounter, u32 write)
 			u8* temp = ((u8*)buffer) + i;
 			writeOutValue |= *temp << ((3 - i) << 3);
 		}
-		__EXIRegs[14] = writeOutValue;
+		__EXIRegs[EXI_CHAN_2_IMM] = writeOutValue;
 	}
 
-	__EXIRegs[13] = 1 | write << 2 | (bytecounter - 1) << 4;
+	__EXIRegs[EXI_CHAN_2_CONTROL] = 1 | write << 2 | (bytecounter - 1) << 4;
 	DBGEXISync();
 
 	if (!write) {
-		writeOutValue = __EXIRegs[14];
+		writeOutValue = __EXIRegs[EXI_CHAN_2_IMM];
 		tempPointer   = buffer;
 		for (i = 0; i < bytecounter; i++) {
 			*tempPointer++ = writeOutValue >> ((3 - i) << 3);
@@ -298,11 +298,11 @@ void DBInitComm(vu8** a, MTRCallbackType b)
  */
 void DBInitInterrupts(void)
 {
-	__OSMaskInterrupts(0x18000);
-	__OSMaskInterrupts(0x40);
+	__OSMaskInterrupts(OS_INTERRUPTMASK_EXI_2);
+	__OSMaskInterrupts(OS_INTERRUPTMASK_PI_DEBUG);
 	DBGCallback = &MWCallback;
-	__OSSetInterruptHandler(0x19, DBGHandler);
-	__OSUnmaskInterrupts(0x40);
+	__OSSetInterruptHandler(__OS_INTERRUPT_PI_DEBUG, DBGHandler);
+	__OSUnmaskInterrupts(OS_INTERRUPTMASK_PI_DEBUG);
 }
 
 /**

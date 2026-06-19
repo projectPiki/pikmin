@@ -668,7 +668,7 @@ public:
 	}
 
 protected:
-	virtual bool setTargetPosition(Teki& teki) { setTargetPositionCreature(teki); }                           // _1C
+	virtual bool setTargetPosition(Teki& teki) { return setTargetPositionCreature(teki); }                    // _1C
 	virtual f32 getOptionalRange(Teki& teki) { return teki.getParameterF(TAIbeatleFloatParms::AttackRange); } // _20
 
 	// _04     = VTBL
@@ -772,7 +772,7 @@ public:
 			teki.playEventSound(&teki, SE_KABUTO_DEAD);
 		}
 
-		TAIAdying::act(teki);
+		return TAIAdying::act(teki);
 	}
 
 protected:

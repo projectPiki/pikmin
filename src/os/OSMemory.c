@@ -27,7 +27,7 @@ static BOOL OnReset(BOOL final)
 {
 	if (final != FALSE) {
 		__MEMRegs[MEM_PROT_TYPE] = 0xFF;
-		__OSMaskInterrupts(0xf0000000);
+		__OSMaskInterrupts(OS_INTERRUPTMASK_MEM_RESET);
 	}
 	return TRUE;
 }
@@ -95,111 +95,111 @@ void OSProtectRange(u32 chan, void* addr, u32 nBytes, u32 control)
 static ASM void Config24MB()
 {
 #ifdef __MWERKS__ // clang-format off
-  nofralloc
+	nofralloc
 
-  li      r7,     0x00000000
+	li       r7,     0x00000000
 
-  lis     r4,     0x00000002 @ha
-  addi    r4, r4, 0x00000002 @l
-  lis     r3,     0x800001ff @ha
-  addi    r3, r3, 0x800001ff @l
+	lis      r4,     0x00000002 @ha
+	addi     r4, r4, 0x00000002 @l
+	lis      r3,     0x800001ff @ha
+	addi     r3, r3, 0x800001ff @l
 
-  lis     r6,     0x01000002 @ha
-  addi    r6, r6, 0x01000002 @l
-  lis     r5,     0x810000ff @ha
-  addi    r5, r5, 0x810000ff @l
+	lis      r6,     0x01000002 @ha
+	addi     r6, r6, 0x01000002 @l
+	lis      r5,     0x810000ff @ha
+	addi     r5, r5, 0x810000ff @l
 
-  isync
+	isync
 
-  mtspr   dbat0u, r7
-  mtspr   dbat0l, r4
-  mtspr   dbat0u, r3
-  isync
+	mtdbatu  0, r7
+	mtdbatl  0, r4
+	mtdbatu  0, r3
+	isync
 
-  mtspr   ibat0u, r7
-  mtspr   ibat0l, r4
-  mtspr   ibat0u, r3
-  isync
+	mtibatu  0, r7
+	mtibatl  0, r4
+	mtibatu  0, r3
+	isync
 
-  mtspr   dbat2u, r7
-  mtspr   dbat2l, r6
-  mtspr   dbat2u, r5
-  isync
+	mtdbatu  2, r7
+	mtdbatl  2, r6
+	mtdbatu  2, r5
+	isync
 
-  mtspr   ibat2u, r7
-  mtspr   ibat2l, r6
-  mtspr   ibat2u, r5
-  isync
+	mtibatu  2, r7
+	mtibatl  2, r6
+	mtibatu  2, r5
+	isync
 
-  mfmsr   r3
-  ori     r3, r3, MSR_IR | MSR_DR
-  mtsrr1  r3
+	mfmsr    r3
+	ori      r3, r3, MSR_IR | MSR_DR
+	mtsrr1   r3
 
-  mflr    r3
-  mtsrr0  r3
-  rfi
+	mflr     r3
+	mtsrr0   r3
+	rfi
 #endif // clang-format on
 }
 
 static ASM void Config48MB()
 {
 #ifdef __MWERKS__ // clang-format off
-  nofralloc
+	nofralloc
 
-  li      r7,     0x00000000
+	li       r7,     0x00000000
 
-  lis     r4,     0x00000002 @ha
-  addi    r4, r4, 0x00000002 @l
-  lis     r3,     0x800003ff @ha
-  addi    r3, r3, 0x800003ff @l
+	lis      r4,     0x00000002 @ha
+	addi     r4, r4, 0x00000002 @l
+	lis      r3,     0x800003ff @ha
+	addi     r3, r3, 0x800003ff @l
 
-  lis     r6,     0x02000002 @ha
-  addi    r6, r6, 0x02000002 @l
-  lis     r5,     0x820001ff @ha
-  addi    r5, r5, 0x820001ff @l
+	lis      r6,     0x02000002 @ha
+	addi     r6, r6, 0x02000002 @l
+	lis      r5,     0x820001ff @ha
+	addi     r5, r5, 0x820001ff @l
 
-  isync
+	isync
 
-  mtspr   dbat0u, r7
-  mtspr   dbat0l, r4
-  mtspr   dbat0u, r3
-  isync
+	mtdbatu  0, r7
+	mtdbatl  0, r4
+	mtdbatu  0, r3
+	isync
 
-  mtspr   ibat0u, r7
-  mtspr   ibat0l, r4
-  mtspr   ibat0u, r3
-  isync
+	mtibatu  0, r7
+	mtibatl  0, r4
+	mtibatu  0, r3
+	isync
 
-  mtspr   dbat2u, r7
-  mtspr   dbat2l, r6
-  mtspr   dbat2u, r5
-  isync
+	mtdbatu  2, r7
+	mtdbatl  2, r6
+	mtdbatu  2, r5
+	isync
 
-  mtspr   ibat2u, r7
-  mtspr   ibat2l, r6
-  mtspr   ibat2u, r5
-  isync
+	mtibatu  2, r7
+	mtibatl  2, r6
+	mtibatu  2, r5
+	isync
 
-  mfmsr   r3
-  ori     r3, r3, MSR_IR | MSR_DR
-  mtsrr1  r3
+	mfmsr    r3
+	ori      r3, r3, MSR_IR | MSR_DR
+	mtsrr1   r3
 
-  mflr    r3
-  mtsrr0  r3
-  rfi
+	mflr     r3
+	mtsrr0   r3
+	rfi
 #endif // clang-format on
 }
 
 static ASM void RealMode(register u32 addr)
 {
 #ifdef __MWERKS__ // clang-format off
-  nofralloc
-  clrlwi  r3, r3, 2
-  mtsrr0  r3
-  mfmsr   r3
-  rlwinm  r3, r3, 0, 28, 25  // ~(MSR_IR | MSR_DR)
-  mtsrr1  r3
-  rfi
+	nofralloc
+	clrlwi  addr, addr, 2
+	mtsrr0  addr
+	mfmsr   r3
+	rlwinm  r3, r3, 0, 28, 25  // ~(MSR_IR | MSR_DR)
+	mtsrr1  r3
+	rfi
 #endif // clang-format on
 }
 

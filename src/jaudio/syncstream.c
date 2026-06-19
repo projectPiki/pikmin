@@ -1118,6 +1118,8 @@ int StreamGetCurrentFrame(u32 streamId, u32 id2)
 {
 	StreamCtrl_* ctrl = &SC[streamId];
 	dspch_* dspCh     = ctrl->dspch[0];
+	int result;
+	STACK_PAD_VAR(2);
 
 	if (dspCh == NULL) {
 		return -1;
@@ -1126,24 +1128,28 @@ int StreamGetCurrentFrame(u32 streamId, u32 id2)
 	switch (id2) {
 	case 0:
 	{
-		return ctrl->samplesDecoded * ctrl->header.frameRate / ctrl->header.sampleRate;
+		result = ctrl->samplesDecoded * ctrl->header.frameRate / ctrl->header.sampleRate;
+		break;
 	}
 	case 1:
 	{
 		f32 subframeRate = JAC_DAC_RATE * JAC_SUBFRAMES / JAC_FRAMESAMPLES;
-		return ctrl->header.frameRate / subframeRate * ctrl->frameCounter;
+		result           = ctrl->header.frameRate / subframeRate * ctrl->frameCounter;
+		break;
 	}
 	case 2:
 	{
 		if (ctrl->frameCounter == 0) {
-			return 0;
+			result = 0;
+		} else {
+			u32 size = ctrl->totalSamples - Get_DirectPCM_Remain(GetDspHandle(dspCh->buffer_idx));
+			result   = size * (f32)ctrl->header.frameRate / ctrl->header.sampleRate + 0.499f;
 		}
-		u32 size = ctrl->totalSamples - Get_DirectPCM_Remain(GetDspHandle(dspCh->buffer_idx));
-		return size * (f32)ctrl->header.frameRate / ctrl->header.sampleRate + 0.499f;
+		break;
 	}
 	}
 
-	STACK_PAD_VAR(3);
+	return result;
 }
 
 /**

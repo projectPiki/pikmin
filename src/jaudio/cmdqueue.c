@@ -105,7 +105,7 @@ static s32 Jal_FrameWork(void* a)
 {
 	CmdQueue* curr;
 	OSMessage message;
-	STACK_PAD_VAR(1);
+	s32 result;
 
 	for (curr = queue_list; curr; curr = curr->next) {
 #if defined(VERSION_GPIJ01_01) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_DPIJ01_PIKIDEMO)
@@ -115,10 +115,16 @@ static s32 Jal_FrameWork(void* a)
 #endif
 		{
 			if (Jac_ReceiveMessage_Fast(&curr->msgQueue, &message) == 1) {
-				Jam_WritePortAppDirect(curr->track, curr->_64, (u16)message);
+				result = Jam_WritePortAppDirect(curr->track, curr->_64, (u16)message);
 			}
 		}
 	}
+
+	// I think they accidentally wrote UB or something, idk man.  This is effectively what the function does,
+	// but explicitly doing so makes the compiler shuffle the value in and out of a more permanent register.
+#if defined(BUGFIX)
+	return result;
+#endif
 }
 
 /**

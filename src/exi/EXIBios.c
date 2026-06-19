@@ -31,7 +31,7 @@ static void SetExiInterruptMask(s32 chan, EXIControl* exi)
 	switch (chan) {
 	case 0:
 	{
-		if ((exi->exiCallback == 0 && exi2->exiCallback == 0) || (exi->state & EXI_STATE_LOCKED)) {
+		if ((exi->exiCallback == NULL && exi2->exiCallback == NULL) || (exi->state & EXI_STATE_LOCKED)) {
 			__OSMaskInterrupts(OS_INTERRUPTMASK_EXI_0_EXI | OS_INTERRUPTMASK_EXI_2_EXI);
 		} else {
 			__OSUnmaskInterrupts(OS_INTERRUPTMASK_EXI_0_EXI | OS_INTERRUPTMASK_EXI_2_EXI);
@@ -40,7 +40,7 @@ static void SetExiInterruptMask(s32 chan, EXIControl* exi)
 	}
 	case 1:
 	{
-		if (exi->exiCallback == 0 || (exi->state & EXI_STATE_LOCKED)) {
+		if (exi->exiCallback == NULL || (exi->state & EXI_STATE_LOCKED)) {
 			__OSMaskInterrupts(OS_INTERRUPTMASK_EXI_1_EXI);
 		} else {
 			__OSUnmaskInterrupts(OS_INTERRUPTMASK_EXI_1_EXI);
@@ -49,7 +49,7 @@ static void SetExiInterruptMask(s32 chan, EXIControl* exi)
 	}
 	case 2:
 	{
-		if (__OSGetInterruptHandler(__OS_INTERRUPT_PI_DEBUG) == 0 || (exi->state & EXI_STATE_LOCKED)) {
+		if (__OSGetInterruptHandler(__OS_INTERRUPT_PI_DEBUG) == NULL || (exi->state & EXI_STATE_LOCKED)) {
 			__OSMaskInterrupts(OS_INTERRUPTMASK_PI_DEBUG);
 		} else {
 			__OSUnmaskInterrupts(OS_INTERRUPTMASK_PI_DEBUG);

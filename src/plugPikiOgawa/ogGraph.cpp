@@ -64,9 +64,11 @@ void ogGraphMgr::SetDummyLineData()
 	s16 y                = mParent->getPosV();
 	s16 paneFullHeight   = mParent->getHeight();
 
-	// Iterate through the 14 points (13 segments) for the line
+	// The way this was originally written, it describes a line containing 14 points.
+	// That is UB because `ogawa_per_line` only contains 13 elements, but luckily the
+	// erroneous final point is never rendered by `zen::setGraphGX` anyway.
 	s16* pointArray = LinePointR;
-	for (int i = 0; i <= 13; i++) {
+	for (int i = 0; i TERNARY_BUGFIX(<, <=) 13; i++) {
 		int yPercentFromTop = 100 - ogawa_per_line[i];
 		s16 pointY          = y + yPercentFromTop * paneFullHeight / 100;
 		pointArray[0]       = x + i * paneSegmentWidth;
@@ -202,7 +204,7 @@ void ogGraphMgr::MakeData()
 					countAtHour    = playerState->getPikiHourCount(hour, color);
 					s16 yPosScalar = -10;
 					if (countAtHour >= 0) {
-						// Normalize count to a 0-100 scale, assuming minPikis is the baseline
+						// Normalize count to a 0 - 100 scale, assuming minPikis is the baseline
 						// The divisor 100 here means each Pikmin count difference from minPikis contributes 1% to the y-scale.
 						yPosScalar = 100 * (countAtHour - minPikis) / 100;
 					}

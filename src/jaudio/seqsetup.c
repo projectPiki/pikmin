@@ -344,13 +344,13 @@ s32 Jaq_SetSeqData(seqp_* param_1, u8* param_2, u32 param_3, u32 param_4)
 s32 Jaq_SetSeqData_Limit(seqp_* track, u8* param_2, u32 param_3, u32 param_4, u8 param_5)
 {
 	s32 root;
-	BOOL level;
+	BOOL enabled;
 	u8* puVar2;
 
 	if (!track) {
-		level = OSDisableInterrupts();
+		enabled = OSDisableInterrupts();
 		track = GetNewTrack();
-		OSRestoreInterrupts(level);
+		OSRestoreInterrupts(enabled);
 		if (!track) {
 			return -1;
 		}

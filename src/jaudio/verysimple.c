@@ -455,11 +455,11 @@ void Jac_StopSoundAll(void)
  */
 void Jac_Freeze_Precall()
 {
-	BOOL level   = OSDisableInterrupts();
+	BOOL enabled = OSDisableInterrupts();
 	jcs_* handle = Get_GlobalHandle();
 	AllStop_1Shot(handle);
 	FlushRelease_1Shot(handle);
-	OSRestoreInterrupts(level);
+	OSRestoreInterrupts(enabled);
 	__ResetCounter();
 }
 
@@ -468,9 +468,9 @@ void Jac_Freeze_Precall()
  */
 void Jac_Freeze()
 {
-	BOOL level = OSDisableInterrupts();
+	BOOL enabled = OSDisableInterrupts();
 	StopAudioThread();
-	OSRestoreInterrupts(level);
+	OSRestoreInterrupts(enabled);
 }
 
 /**

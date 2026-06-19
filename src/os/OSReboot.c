@@ -2,6 +2,8 @@
 #include "Dolphin/os.h"
 #include <stddef.h>
 
+typedef void (*voidfunctionptr)(void); // pointer to function returning void
+
 #if OS_BUILD_VERSION >= 20011002L
 static void* SaveStart = NULL;
 static void* SaveEnd   = NULL;
@@ -29,7 +31,7 @@ static ApploaderHeader Header ATTRIBUTE_ALIGN(32);
 /**
  * @TODO: Documentation
  */
-static ASM void Run(register void (*entrypoint)())
+static ASM void Run(register voidfunctionptr entrypoint)
 {
 #ifdef __MWERKS__ // clang-format off
 	fralloc
@@ -87,7 +89,7 @@ static void ReadApploader(DVDCommandBlock* dvdCmd, void* addr, u32 offset, u32 n
 /**
  * @TODO: Documentation
  */
-static void Callback(s32 result, struct DVDCommandBlock* block)
+static void Callback(s32 result, DVDCommandBlock* block)
 {
 	Prepared = TRUE;
 }
@@ -125,8 +127,8 @@ void __OSReboot(u32 resetCode, u32 bootDol)
 		__OSDoHotReset(OS_HOT_RESET_CODE);
 	}
 
-	__OSMaskInterrupts(0xffffffe0);
-	__OSUnmaskInterrupts(0x400);
+	__OSMaskInterrupts(OS_INTERRUPTMASK_MEM | OS_INTERRUPTMASK_DSP | OS_INTERRUPTMASK_AI | OS_INTERRUPTMASK_EXI | OS_INTERRUPTMASK_PI);
+	__OSUnmaskInterrupts(OS_INTERRUPTMASK_PI_DI);
 
 	OSEnableInterrupts();
 
@@ -139,5 +141,5 @@ void __OSReboot(u32 resetCode, u32 bootDol)
 	ReadApploader(&dvdCmd2, (void*)OS_BOOTROM_ADDR, offset, numBytes);
 
 	ICInvalidateRange((void*)OS_BOOTROM_ADDR, numBytes);
-	Run((void (*)())OS_BOOTROM_ADDR);
+	Run((voidfunctionptr)OS_BOOTROM_ADDR);
 }

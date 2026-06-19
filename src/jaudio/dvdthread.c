@@ -632,7 +632,7 @@ s32 Jac_RegisterExtFastOpen(immut char* ext)
 {
 	char file[64];
 	DVDT_ExtendPath(file, ext);
-	Jac_RegisterFastOpen(file);
+	return Jac_RegisterFastOpen(file);
 }
 
 static u32 dvdfile_dics;

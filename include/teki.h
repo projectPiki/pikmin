@@ -555,7 +555,11 @@ public:
 		PTCL_Unk5 = 5,
 		PTCL_Unk6 = 6,
 		PTCL_Unk7 = 7,
+#if defined(BUGFIX)
+#else
+		// There are not nine particle generator pointers, Yamashita!
 		PTCL_Unk8 = 8,
+#endif
 		PTCL_COUNT,
 	};
 
@@ -567,7 +571,7 @@ public:
 	{
 		BTeki::init(tekiType);
 		mFrameCounter = 0.0f;
-		for (int i = 0; i < 9; i++) {
+		for (int i = 0; i < PTCL_COUNT; i++) {
 			mPtclGenPtrs[i] = nullptr;
 		}
 	}

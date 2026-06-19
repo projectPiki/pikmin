@@ -197,7 +197,7 @@ static void AlarmHandlerForTimeout(OSAlarm* alarm, OSContext* context)
 {
 	OSContext tmpContext;
 	DVDLowCallback callback;
-	__OSMaskInterrupts(0x400);
+	__OSMaskInterrupts(OS_INTERRUPTMASK_PI_DI);
 	OSClearContext(&tmpContext);
 	OSSetCurrentContext(&tmpContext);
 	callback = Callback;

@@ -23,7 +23,9 @@ AlignOperands: AlignAfterOperator
 AllowShortFunctionsOnASingleLine: InlineOnly
 AllowShortIfStatementsOnASingleLine: Never
 
+BreakAfterAttributes: Leave
 BreakBeforeBraces: Custom
+
 BraceWrapping:
   AfterCaseLabel: true
   AfterFunction: true

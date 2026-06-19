@@ -40,7 +40,7 @@ s32 AmcEXIImm(void* buf, s32 len, u32 type, EXICallback cb)
 	BOOL intrEnable;
 	int immData;
 	int i;
-	int maskType = 2;
+	int chan = 2;
 
 	intrEnable = OSDisableInterrupts();
 
@@ -52,7 +52,7 @@ s32 AmcEXIImm(void* buf, s32 len, u32 type, EXICallback cb)
 	exi->exiCallback2 = cb;
 	if ((u32)exi->exiCallback2 != 0U) {
 		AmcEXIClearInterrupts(0, 1);
-		__OSUnmaskInterrupts(0x200000U >> (maskType * 3));
+		__OSUnmaskInterrupts(OS_INTERRUPTMASK_EXI_0_TC >> (chan * 3));
 	}
 
 	exi->state |= 2;
@@ -129,9 +129,9 @@ void* AmcEXISetExiCallback(EXICallback cb)
 
 	intrEnable = OSDisableInterrupts();
 	if (cb) {
-		__OSUnmaskInterrupts(0x40);
+		__OSUnmaskInterrupts(OS_INTERRUPTMASK_PI_DEBUG);
 	} else {
-		__OSMaskInterrupts(0x40);
+		__OSMaskInterrupts(OS_INTERRUPTMASK_PI_DEBUG);
 	}
 
 	exiCallback      = exi->exiCallback;
@@ -228,9 +228,9 @@ static void AmcDebugIntHandler(__OSInterrupt intr, OSContext* context)
  */
 void AmcEXIEnableInterrupts()
 {
-	__OSMaskInterrupts(0x8000);
+	__OSMaskInterrupts(OS_INTERRUPTMASK_EXI_2_TC);
 	__OSSetInterruptHandler(__OS_INTERRUPT_PI_DEBUG, AmcDebugIntHandler);
-	__OSUnmaskInterrupts(0x40);
+	__OSUnmaskInterrupts(OS_INTERRUPTMASK_PI_DEBUG);
 }
 
 /**
