@@ -400,7 +400,7 @@ s32 DVDReadPrio(DVDFileInfo* fileInfo, void* addr, s32 length, s32 offset, s32 p
 	result = DVDReadAbsAsyncPrio(block, addr, length, (s32)(fileInfo->startAddr + offset), cbForReadSync, prio);
 
 	if (result == FALSE) {
-		return -1;
+		return DVD_RESULT_FATAL_ERROR;
 	}
 
 	enabled = OSDisableInterrupts();
