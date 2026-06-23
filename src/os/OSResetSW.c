@@ -30,7 +30,7 @@ void __OSResetSWInterruptHandler(__OSInterrupt interrupt, OSContext* context)
 			callback();
 		}
 	}
-	__PIRegs[PI_INTRPT_SRC] = 2;
+	__PIRegs[PI_INTRPT_SRC] = PI_INTRPT_RSW;
 }
 
 /**
@@ -58,8 +58,8 @@ BOOL OSGetResetButtonState(void)
 
 	now = __OSGetSystemTime();
 
-	reg = __PIRegs[0];
-	if (!(reg & 0x00010000)) {
+	reg = __PIRegs[PI_INTRPT_SRC];
+	if (!(reg & PI_INTRPT_RSWST)) {
 		if (!Down) {
 			Down     = TRUE;
 			state    = HoldUp ? TRUE : FALSE;

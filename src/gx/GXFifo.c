@@ -1,5 +1,6 @@
 #include "Dolphin/PPCArch.h"
 #include "Dolphin/gx.h"
+#include "Dolphin/hw_regs.h"
 #include "Dolphin/os.h"
 #include <stddef.h>
 
@@ -82,8 +83,8 @@ static void GXBreakPointHandler(s16 interrupt, OSContext* context)
 {
 	OSContext exceptionContext;
 
-	gx->cpEnable = gx->cpEnable & 0xFFFFFFDF;
-	__cpReg[1]   = gx->cpEnable;
+	gx->cpEnable        = gx->cpEnable & 0xFFFFFFDF;
+	__cpReg[CP_CONTROL] = gx->cpEnable;
 	if (BreakPointCB != NULL) {
 		OSClearContext(&exceptionContext);
 		OSSetCurrentContext(&exceptionContext);
@@ -98,7 +99,7 @@ static void GXBreakPointHandler(s16 interrupt, OSContext* context)
  */
 static void GXCPInterruptHandler(s16 interrupt, OSContext* context)
 {
-	gx->cpStatus = __cpReg[0];
+	gx->cpStatus = __cpReg[CP_STATUS];
 	if (GET_REG_FIELD(gx->cpEnable, 1, 3) && GET_REG_FIELD(gx->cpStatus, 1, 1)) {
 		GXUnderflowHandler(interrupt, context);
 	}
@@ -186,12 +187,12 @@ void GXSetCPUFifo(GXFifoObj* fifo)
 	if (CPUFifo == GPFifo) {
 		u32 reg = 0;
 
-		__piReg[3] = (u32)realFifo->base & 0x3FFFFFFF;
-		__piReg[4] = (u32)realFifo->top & 0x3FFFFFFF;
-		SET_REG_FIELD(0x294, reg, 21, 5, ((u32)realFifo->wrPtr & 0x3FFFFFFF) >> 5);
+		__piReg[PI_FIFO_START] = (u32)realFifo->base & ~OS_BASE_UNCACHED;
+		__piReg[PI_FIFO_END]   = (u32)realFifo->top & ~OS_BASE_UNCACHED;
+		SET_REG_FIELD(0x294, reg, 21, 5, ((u32)realFifo->wrPtr & ~OS_BASE_UNCACHED) >> 5);
 		SET_REG_FIELD(0x295, reg, 1, 26, 0);
-		__piReg[5] = reg;
-		CPGPLinked = GX_TRUE;
+		__piReg[PI_FIFO_PTR] = reg;
+		CPGPLinked           = GX_TRUE;
 		__GXWriteFifoIntReset(1, 1);
 		__GXWriteFifoIntEnable(1, 0);
 		__GXFifoLink(1);
@@ -203,12 +204,12 @@ void GXSetCPUFifo(GXFifoObj* fifo)
 			CPGPLinked = GX_FALSE;
 		}
 		__GXWriteFifoIntEnable(0, 0);
-		reg        = 0;
-		__piReg[3] = (u32)realFifo->base & 0x3FFFFFFF;
-		__piReg[4] = (u32)realFifo->top & 0x3FFFFFFF;
-		SET_REG_FIELD(0x2B7, reg, 21, 5, ((u32)realFifo->wrPtr & 0x3FFFFFFF) >> 5);
+		reg                    = 0;
+		__piReg[PI_FIFO_START] = (u32)realFifo->base & ~OS_BASE_UNCACHED;
+		__piReg[PI_FIFO_END]   = (u32)realFifo->top & ~OS_BASE_UNCACHED;
+		SET_REG_FIELD(0x2B7, reg, 21, 5, ((u32)realFifo->wrPtr & ~OS_BASE_UNCACHED) >> 5);
 		SET_REG_FIELD(0x2B8, reg, 1, 26, 0);
-		__piReg[5] = reg;
+		__piReg[PI_FIFO_PTR] = reg;
 	}
 
 	__mwerks_sync();
@@ -228,20 +229,20 @@ void GXSetGPFifo(GXFifoObj* fifo)
 	__GXWriteFifoIntEnable(0, 0);
 	GPFifo = realFifo;
 
-	__cpReg[16] = (u32)realFifo->base & 0xFFFF;
-	__cpReg[18] = (u32)realFifo->top & 0xFFFF;
-	__cpReg[24] = realFifo->count & 0xFFFF;
-	__cpReg[26] = (u32)realFifo->wrPtr & 0xFFFF;
-	__cpReg[28] = (u32)realFifo->rdPtr & 0xFFFF;
-	__cpReg[20] = (u32)realFifo->hiWatermark & 0xFFFF;
-	__cpReg[22] = (u32)realFifo->loWatermark & 0xFFFF;
-	__cpReg[17] = ((u32)realFifo->base & 0x3FFFFFFF) >> 16;
-	__cpReg[19] = ((u32)realFifo->top & 0x3FFFFFFF) >> 16;
-	__cpReg[25] = realFifo->count >> 16;
-	__cpReg[27] = ((u32)realFifo->wrPtr & 0x3FFFFFFF) >> 16;
-	__cpReg[29] = ((u32)realFifo->rdPtr & 0x3FFFFFFF) >> 16;
-	__cpReg[21] = (u32)realFifo->hiWatermark >> 16;
-	__cpReg[23] = (u32)realFifo->loWatermark >> 16;
+	__cpReg[CP_FIFO_BASE_LO]          = (u32)realFifo->base & 0xFFFF;
+	__cpReg[CP_FIFO_END_LO]           = (u32)realFifo->top & 0xFFFF;
+	__cpReg[CP_FIFO_RW_DISTANCE_LO]   = realFifo->count & 0xFFFF;
+	__cpReg[CP_FIFO_WRITE_POINTER_LO] = (u32)realFifo->wrPtr & 0xFFFF;
+	__cpReg[CP_FIFO_READ_POINTER_LO]  = (u32)realFifo->rdPtr & 0xFFFF;
+	__cpReg[CP_FIFO_HI_WATERMARK_LO]  = (u32)realFifo->hiWatermark & 0xFFFF;
+	__cpReg[CP_FIFO_LO_WATERMARK_LO]  = (u32)realFifo->loWatermark & 0xFFFF;
+	__cpReg[CP_FIFO_BASE_HI]          = ((u32)realFifo->base & ~OS_BASE_UNCACHED) >> 16;
+	__cpReg[CP_FIFO_END_HI]           = ((u32)realFifo->top & ~OS_BASE_UNCACHED) >> 16;
+	__cpReg[CP_FIFO_RW_DISTANCE_HI]   = realFifo->count >> 16;
+	__cpReg[CP_FIFO_WRITE_POINTER_HI] = ((u32)realFifo->wrPtr & ~OS_BASE_UNCACHED) >> 16;
+	__cpReg[CP_FIFO_READ_POINTER_HI]  = ((u32)realFifo->rdPtr & ~OS_BASE_UNCACHED) >> 16;
+	__cpReg[CP_FIFO_HI_WATERMARK_HI]  = (u32)realFifo->hiWatermark >> 16;
+	__cpReg[CP_FIFO_LO_WATERMARK_HI]  = (u32)realFifo->loWatermark >> 16;
 
 	__mwerks_sync();
 
@@ -269,18 +270,18 @@ void GXSaveCPUFifo(GXFifoObj* fifo)
 	__GXSaveCPUFifoAux(realFifo);
 }
 
-#define SOME_MACRO1(fifo)                       \
-	do {                                        \
-		u32 temp = __cpReg[29] << 16;           \
-		temp |= __cpReg[28];                    \
-		fifo->rdPtr = OSPhysicalToCached(temp); \
+#define SOME_MACRO1(fifo)                                  \
+	do {                                                   \
+		u32 temp = __cpReg[CP_FIFO_READ_POINTER_HI] << 16; \
+		temp |= __cpReg[CP_FIFO_READ_POINTER_LO];          \
+		fifo->rdPtr = OSPhysicalToCached(temp);            \
 	} while (0)
 
-#define SOME_MACRO2(fifo)             \
-	do {                              \
-		u32 temp = __cpReg[25] << 16; \
-		temp |= __cpReg[24];          \
-		fifo->count = temp;           \
+#define SOME_MACRO2(fifo)                                 \
+	do {                                                  \
+		u32 temp = __cpReg[CP_FIFO_RW_DISTANCE_HI] << 16; \
+		temp |= __cpReg[CP_FIFO_RW_DISTANCE_LO];          \
+		fifo->count = temp;                               \
 	} while (0)
 
 /**
@@ -291,9 +292,9 @@ void __GXSaveCPUFifoAux(struct __GXFifoObj* realFifo)
 	BOOL enabled = OSDisableInterrupts();
 
 	GXFlush();
-	realFifo->base  = OSPhysicalToCached(__piReg[3]);
-	realFifo->top   = OSPhysicalToCached(__piReg[4]);
-	realFifo->wrPtr = OSPhysicalToCached(__piReg[5] & 0xFBFFFFFF);
+	realFifo->base  = OSPhysicalToCached(__piReg[PI_FIFO_START]);
+	realFifo->top   = OSPhysicalToCached(__piReg[PI_FIFO_END]);
+	realFifo->wrPtr = OSPhysicalToCached(__piReg[PI_FIFO_PTR] & 0xFBFFFFFF);
 	if (CPGPLinked) {
 		SOME_MACRO1(realFifo);
 		SOME_MACRO2(realFifo);
@@ -317,7 +318,7 @@ void GXSaveGPFifo(GXFifoObj* fifo)
 	unsigned long temp;
 
 	OSAssertMsgLine(0x36A, realFifo == GPFifo, "GXSaveGPFifo: fifo is not attached to GP");
-	cpStatus = __cpReg[0];
+	cpStatus = __cpReg[CP_STATUS];
 	readIdle = GET_REG_FIELD(cpStatus, 1, 2);
 	OSAssertMsgLine(0x371, readIdle, "GXSaveGPFifo: GP is not idle");
 
@@ -331,7 +332,7 @@ void GXSaveGPFifo(GXFifoObj* fifo)
  */
 void GXGetGPStatus(GXBool* overhi, GXBool* underlow, GXBool* readIdle, GXBool* cmdIdle, GXBool* brkpt)
 {
-	gx->cpStatus = __cpReg[0];
+	gx->cpStatus = __cpReg[CP_STATUS];
 	*overhi      = GET_REG_FIELD(gx->cpStatus, 1, 0);
 	*underlow    = (int)GET_REG_FIELD(gx->cpStatus, 1, 1);
 	*readIdle    = (int)GET_REG_FIELD(gx->cpStatus, 1, 2);
@@ -357,7 +358,7 @@ void GXGetFifoStatus(GXFifoObj* fifo, GXBool* overhi, GXBool* underflow, u32* fi
 	}
 	if (realFifo == CPUFifo) {
 		__GXSaveCPUFifoAux(realFifo);
-		*fifowrap = (int)GET_REG_FIELD(__piReg[5], 1, 26);
+		*fifowrap = (int)GET_REG_FIELD(__piReg[PI_FIFO_PTR], 1, 26);
 	}
 	*overhi    = (realFifo->count > realFifo->hiWatermark);
 	*underflow = (realFifo->count < realFifo->loWatermark);
@@ -376,7 +377,7 @@ void GXGetFifoPtrs(GXFifoObj* fifo, void** readPtr, void** writePtr)
 
 	OSAssertMsgLine(0x3F2, realFifo == CPUFifo || realFifo == GPFifo, "GXGetFifoPtrs: fifo is not CPU or GP fifo");
 	if (realFifo == CPUFifo) {
-		realFifo->wrPtr = OSPhysicalToCached(__piReg[5] & 0xFBFFFFFF);
+		realFifo->wrPtr = OSPhysicalToCached(__piReg[PI_FIFO_PTR] & 0xFBFFFFFF);
 	}
 	if (realFifo == GPFifo) {
 		SOME_MACRO1(realFifo);
@@ -452,12 +453,12 @@ void GXEnableBreakPt(void* break_pt)
 	__GXFifoReadDisable();
 	OSAssertMsgLine(0x44A, (u8*)break_pt >= GPFifo->base && (u8*)break_pt <= GPFifo->top,
 	                "GXEnableBreakPt: Break point value not in fifo range");
-	__cpReg[30]   = (u32)break_pt;
-	__cpReg[31]   = ((u32)break_pt >> 16) & 0x3FFF;
-	gx->cpEnable  = (gx->cpEnable & 0xFFFFFFFD) | 2;
-	gx->cpEnable  = (gx->cpEnable & 0xFFFFFFDF) | 0x20;
-	__cpReg[1]    = gx->cpEnable;
-	__GXCurrentBP = break_pt;
+	__cpReg[CP_FIFO_BP_LO] = (u32)break_pt;
+	__cpReg[CP_FIFO_BP_HI] = ((u32)break_pt >> 16) & 0x3FFF;
+	gx->cpEnable           = (gx->cpEnable & 0xFFFFFFFD) | 2;
+	gx->cpEnable           = (gx->cpEnable & 0xFFFFFFDF) | 0x20;
+	__cpReg[CP_CONTROL]    = gx->cpEnable;
+	__GXCurrentBP          = break_pt;
 	__GXFifoReadEnable();
 	OSRestoreInterrupts(enabled);
 }
@@ -470,10 +471,10 @@ void GXDisableBreakPt(void)
 {
 	BOOL enabled = OSDisableInterrupts();
 
-	gx->cpEnable  = gx->cpEnable & 0xFFFFFFFD;
-	gx->cpEnable  = gx->cpEnable & 0xFFFFFFDF;
-	__cpReg[1]    = gx->cpEnable;
-	__GXCurrentBP = NULL;
+	gx->cpEnable        = gx->cpEnable & 0xFFFFFFFD;
+	gx->cpEnable        = gx->cpEnable & 0xFFFFFFDF;
+	__cpReg[CP_CONTROL] = gx->cpEnable;
+	__GXCurrentBP       = NULL;
 	OSRestoreInterrupts(enabled);
 }
 
@@ -498,7 +499,7 @@ void __GXFifoInit(void)
 void __GXFifoReadEnable(void)
 {
 	SET_REG_FIELD(0, gx->cpEnable, 1, 0, 1);
-	__cpReg[1] = gx->cpEnable;
+	__cpReg[CP_CONTROL] = gx->cpEnable;
 }
 
 /**
@@ -507,7 +508,7 @@ void __GXFifoReadEnable(void)
 void __GXFifoReadDisable(void)
 {
 	SET_REG_FIELD(0, gx->cpEnable, 1, 0, 0);
-	__cpReg[1] = gx->cpEnable;
+	__cpReg[CP_CONTROL] = gx->cpEnable;
 }
 
 /**
@@ -516,7 +517,7 @@ void __GXFifoReadDisable(void)
 void __GXFifoLink(u8 en)
 {
 	SET_REG_FIELD(0x4B0, gx->cpEnable, 1, 4, (en != 0) ? 1 : 0);
-	__cpReg[1] = gx->cpEnable;
+	__cpReg[CP_CONTROL] = gx->cpEnable;
 }
 
 /**
@@ -526,7 +527,7 @@ void __GXWriteFifoIntEnable(u8 hiWatermarkEn, u8 loWatermarkEn)
 {
 	SET_REG_FIELD(0x4C6, gx->cpEnable, 1, 2, hiWatermarkEn);
 	SET_REG_FIELD(0x4C7, gx->cpEnable, 1, 3, loWatermarkEn);
-	__cpReg[1] = gx->cpEnable;
+	__cpReg[CP_CONTROL] = gx->cpEnable;
 }
 
 /**
@@ -536,7 +537,7 @@ void __GXWriteFifoIntReset(u8 hiWatermarkClr, u8 loWatermarkClr)
 {
 	SET_REG_FIELD(0x4DE, gx->cpClr, 1, 0, hiWatermarkClr);
 	SET_REG_FIELD(0x4DF, gx->cpClr, 1, 1, loWatermarkClr);
-	__cpReg[2] = gx->cpClr;
+	__cpReg[CP_CLEAR] = gx->cpClr;
 }
 
 /**
@@ -547,9 +548,9 @@ void __GXInsaneWatermark(void)
 {
 	struct __GXFifoObj* realFifo = GPFifo;
 
-	realFifo->hiWatermark = realFifo->loWatermark + 512;
-	__cpReg[20]           = (realFifo->hiWatermark & 0x3FFFFFFF) & 0xFFFF;
-	__cpReg[21]           = (realFifo->hiWatermark & 0x3FFFFFFF) >> 16;
+	realFifo->hiWatermark            = realFifo->loWatermark + 512;
+	__cpReg[CP_FIFO_HI_WATERMARK_LO] = (realFifo->hiWatermark & ~OS_BASE_UNCACHED) & 0xFFFF;
+	__cpReg[CP_FIFO_HI_WATERMARK_HI] = (realFifo->hiWatermark & ~OS_BASE_UNCACHED) >> 16;
 }
 
 /**
@@ -669,16 +670,18 @@ volatile void* GXRedirectWriteGatherPipe(void* ptr)
 		__GXFifoLink(0);
 		__GXWriteFifoIntEnable(0, 0);
 	}
-	CPUFifo->wrPtr = OSPhysicalToCached(__piReg[5] & 0xFBFFFFFF);
-	__piReg[3]     = 0;
-	__piReg[4]     = 0x04000000;
-	SET_REG_FIELD(0x5C8, reg, 21, 5, ((u32)ptr & 0x3FFFFFFF) >> 5);
-	/*if (((u32)ptr >> 5) & 0x1E00000)
-	    OSErrorLine(0x5FB, "GX Internal: Register field out of range");
-	//SET_REG_FIELD(0x5C8, reg, 25, 5, ((u32)ptr & 0x3FFFFFFF) >> 5);*/
-	// reg = (reg & ~0x3FFFFE0) | ((u32)ptr & 0x3FFFFFE0);
+	CPUFifo->wrPtr         = OSPhysicalToCached(__piReg[PI_FIFO_PTR] & 0xFBFFFFFF);
+	__piReg[PI_FIFO_START] = 0;
+	__piReg[PI_FIFO_END]   = 0x04000000;
+	SET_REG_FIELD(0x5C8, reg, 21, 5, ((u32)ptr & ~OS_BASE_UNCACHED) >> 5);
+#if 0
+	if (((u32)ptr >> 5) & 0x1E00000)
+		OSErrorLine(0x5FB, "GX Internal: Register field out of range");
+	SET_REG_FIELD(0x5C8, reg, 25, 5, ((u32)ptr & ~OS_BASE_UNCACHED) >> 5);
+	reg = (reg & ~0x3FFFFE0) | ((u32)ptr & 0x3FFFFFE0);
+#endif
 	reg &= 0xFBFFFFFF;
-	__piReg[5] = reg;
+	__piReg[PI_FIFO_PTR] = reg;
 	__mwerks_sync();
 	OSRestoreInterrupts(enabled);
 	return (volatile void*)GXFIFO_ADDR;
@@ -705,15 +708,17 @@ void GXRestoreWriteGatherPipe(void)
 	PPCSync();
 	while (PPCMfwpar() & 1) { }
 	PPCMtwpar((u32)OSUncachedToPhysical((void*)GXFIFO_ADDR));
-	__piReg[3] = (u32)CPUFifo->base & 0x3FFFFFFF;
-	__piReg[4] = (u32)CPUFifo->top & 0x3FFFFFFF;
-	SET_REG_FIELD(0x5FB, reg, 21, 5, ((u32)CPUFifo->wrPtr & 0x3FFFFFFF) >> 5);
-	/*if ((((u32)CPUFifo->wrPtr & 0x3FFFFFFF) >> 5) & 0x7E00000)
-	    OSErrorLine(0x5FB, "GX Internal: Register field out of range");
-	reg = (reg & ~0x3FFFFE0) | (((u32)CPUFifo->wrPtr & 0x3FFFFFFF) & ~0x1F);*/
-	// SET_REG_FIELD(0x5FB, reg, 25, 5, ((u32)CPUFifo->wrPtr & 0x3FFFFFFF) >> 5);
+	__piReg[PI_FIFO_START] = (u32)CPUFifo->base & ~OS_BASE_UNCACHED;
+	__piReg[PI_FIFO_END]   = (u32)CPUFifo->top & ~OS_BASE_UNCACHED;
+	SET_REG_FIELD(0x5FB, reg, 21, 5, ((u32)CPUFifo->wrPtr & ~OS_BASE_UNCACHED) >> 5);
+#if 0
+	if ((((u32)CPUFifo->wrPtr & ~OS_BASE_UNCACHED) >> 5) & 0x7E00000)
+		OSErrorLine(0x5FB, "GX Internal: Register field out of range");
+	reg = (reg & ~0x3FFFFE0) | (((u32)CPUFifo->wrPtr & ~OS_BASE_UNCACHED) & ~0x1F);
+	SET_REG_FIELD(0x5FB, reg, 25, 5, ((u32)CPUFifo->wrPtr & ~OS_BASE_UNCACHED) >> 5);
+#endif
 	reg &= 0xFBFFFFFF;
-	__piReg[5] = reg;
+	__piReg[PI_FIFO_PTR] = reg;
 	if (CPGPLinked) {
 		__GXWriteFifoIntReset(1, 1);
 		__GXWriteFifoIntEnable(1, 0);

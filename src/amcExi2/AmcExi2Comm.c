@@ -159,7 +159,7 @@ int EXI2_Poll(void)
 	u32 bufAddr2;
 	u32 stackPad;
 
-	if (!(__PIRegs[PI_INTRPT_SRC] & 0x1000) && (*pucEXI2InputPending == 0)) {
+	if (!(__PIRegs[PI_INTRPT_SRC] & PI_INTRPT_DEBUG) && (*pucEXI2InputPending == 0)) {
 		bufAddr = 0;
 	} else {
 		// yes this looks like EXI2_StartRead. no, using that function fucks with the stack.
@@ -181,7 +181,7 @@ int EXI2_Poll(void)
 		AmcEXIImm(&bufAddr, 4, 0, 0);
 		AmcEXISync();
 		if (*pucEXI2InputPending == 0) {
-			__PIRegs[PI_INTRPT_SRC] &= 0x1000;
+			__PIRegs[PI_INTRPT_SRC] &= PI_INTRPT_DEBUG;
 			*pucEXI2InputPending = 1;
 		}
 	}

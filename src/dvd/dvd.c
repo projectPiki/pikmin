@@ -854,7 +854,7 @@ static void cbForStateBusy(u32 p1)
 	}
 
 	if ((CurrCommand == 1) || (CurrCommand == 4) || (CurrCommand == 5) || (CurrCommand == 14)) {
-		executing->transferredSize += executing->currTransferSize - __DIRegs[6];
+		executing->transferredSize += executing->currTransferSize - __DIRegs[DI_DMA_LENGTH];
 	}
 
 	if (p1 & 8) {
@@ -1708,7 +1708,7 @@ BOOL DVDCheckDisk()
 	case 0:
 	case 8:
 	{
-		coverReg = __DIRegs[1];
+		coverReg = __DIRegs[DI_COVER_STATUS];
 		if (((coverReg >> 2) & 1) || (coverReg & 1)) {
 			result = FALSE;
 		} else {

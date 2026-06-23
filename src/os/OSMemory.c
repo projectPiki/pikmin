@@ -235,7 +235,7 @@ void __OSInitMemoryProtection()
 	OSRegisterResetFunction(&ResetFunctionInfo);
 
 	if (OSGetConsoleSimulatedMemSize() < OSGetPhysicalMemSize() && OSGetConsoleSimulatedMemSize() == 0x1800000) {
-		__MEMRegs[MEM_UNK_FLAG] = 2;
+		__MEMRegs[MEM_20] = 2;
 	}
 
 	__OSUnmaskInterrupts(OS_INTERRUPTMASK_MEM_ADDRESS);

@@ -1,14 +1,14 @@
 #include "Dolphin/PPCArch.h"
 #include "Dolphin/gx.h"
+#include "Dolphin/hw_regs.h"
 #include <stddef.h>
 
 static struct __GXData_struct gxData;
 struct __GXData_struct* gx = &gxData;
-// DWARF info lists all of these as "void *", but these types make more sense.
-u16* __memReg;
-u16* __peReg;
-u16* __cpReg;
-u32* __piReg;
+vu16* __memReg;
+vu16* __peReg;
+vu16* __cpReg;
+vu32* __piReg;
 #if DEBUG
 GXBool __GXinBegin;
 #endif
@@ -214,7 +214,7 @@ GXFifoObj* GXInit(void* base, u32 size)
 	for (i = 0; i < 4; i++)
 		GXInitTlutRegion(&gx->TlutRegions[i + 16], 0xE0000 + i * 0x8000, 64);
 
-	__cpReg[3] = 0;
+	__cpReg[CP_PERF_SELECT] = 0;
 	SET_REG_FIELD(0, gx->perfSel, 4, 4, 0);
 	GXWGFifo.u8  = 8;
 	GXWGFifo.u8  = 0x20;

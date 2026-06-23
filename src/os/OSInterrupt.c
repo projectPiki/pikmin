@@ -105,7 +105,7 @@ void __OSInterruptInit(void)
 
 	__OSCurrentInterruptMask = 0;
 
-	__PIRegs[PI_INTRPT_MASK] = 0xF0;
+	__PIRegs[PI_INTRPT_MASK] = PI_INTRPT_EXI | PI_INTRPT_AI | PI_INTRPT_DSP | PI_INTRPT_MEM;
 
 	__OSMaskInterrupts(OS_INTERRUPTMASK_MEM | OS_INTERRUPTMASK_DSP | OS_INTERRUPTMASK_AI | OS_INTERRUPTMASK_EXI | OS_INTERRUPTMASK_PI);
 
@@ -244,37 +244,37 @@ static u32 SetInterruptMask(OSInterruptMask mask, OSInterruptMask current)
 	case __OS_INTERRUPT_PI_PE_FINISH:
 	case __OS_INTERRUPT_PI_HSP:
 	{
-		reg = 0xF0;
+		reg = PI_INTRPT_EXI | PI_INTRPT_AI | PI_INTRPT_DSP | PI_INTRPT_MEM;
 
 		if (!(current & OS_INTERRUPTMASK_PI_CP)) {
-			reg |= 0x800;
+			reg |= PI_INTRPT_CP;
 		}
 		if (!(current & OS_INTERRUPTMASK_PI_SI)) {
-			reg |= 0x8;
+			reg |= PI_INTRPT_SI;
 		}
 		if (!(current & OS_INTERRUPTMASK_PI_DI)) {
-			reg |= 0x4;
+			reg |= PI_INTRPT_DVD;
 		}
 		if (!(current & OS_INTERRUPTMASK_PI_RSW)) {
-			reg |= 0x2;
+			reg |= PI_INTRPT_RSW;
 		}
 		if (!(current & OS_INTERRUPTMASK_PI_ERROR)) {
-			reg |= 0x1;
+			reg |= PI_INTRPT_ERR;
 		}
 		if (!(current & OS_INTERRUPTMASK_PI_VI)) {
-			reg |= 0x100;
+			reg |= PI_INTRPT_VI;
 		}
 		if (!(current & OS_INTERRUPTMASK_PI_DEBUG)) {
-			reg |= 0x1000;
+			reg |= PI_INTRPT_DEBUG;
 		}
 		if (!(current & OS_INTERRUPTMASK_PI_PE_TOKEN)) {
-			reg |= 0x200;
+			reg |= PI_INTRPT_PE_TOKEN;
 		}
 		if (!(current & OS_INTERRUPTMASK_PI_PE_FINISH)) {
-			reg |= 0x400;
+			reg |= PI_INTRPT_PE_FINISH;
 		}
 		if (!(current & OS_INTERRUPTMASK_PI_HSP)) {
-			reg |= 0x2000;
+			reg |= PI_INTRPT_HSP;
 		}
 		__PIRegs[PI_INTRPT_MASK] = reg;
 		mask &= ~OS_INTERRUPTMASK_PI;
