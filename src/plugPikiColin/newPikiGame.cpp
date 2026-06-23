@@ -1850,19 +1850,24 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 		movieMenu->mCenterPoint.mMinY = glnHeight - 88;
 		movieMenu->mGradBGTopColour.set(MENU_COLOUR_DARK_RED);
 		movieMenu->mGradBGBottomColour.set(MENU_COLOUR_MEDIUM_GREY);
-		movieMenu->addKeyEvent(Menu::KeyEventType::OnCancel, KBBTN_B, new Delegate1<Menu, Menu&>(movieMenu, Menu::menuCloseMenu));
+		movieMenu->addKeyEvent(Menu::KeyEventType::OnCancel, KBBTN_B, new Delegate1<Menu, Menu&>(movieMenu, &Menu::menuCloseMenu));
 
 		char* movieBuf = new char[0x40];
 		sprintf(movieBuf, "Movie #%d", movieIndex);
 		movieMenu->addOption(0, movieBuf, nullptr);
-		movieMenu->addKeyEvent(Menu::KeyEventType::WhileInputHeld, KBBTN_Y, new NPGSSDelegate1(this, &menuDecreaseMovie));
-		movieMenu->addKeyEvent(Menu::KeyEventType::WhileInputHeld, KBBTN_X, new NPGSSDelegate1(this, &menuIncreaseMovie));
+		movieMenu->addKeyEvent(Menu::KeyEventType::WhileInputHeld, KBBTN_Y,
+		                       new NPGSSDelegate1(this, &NewPikiGameSetupSection::menuDecreaseMovie));
+		movieMenu->addKeyEvent(Menu::KeyEventType::WhileInputHeld, KBBTN_X,
+		                       new NPGSSDelegate1(this, &NewPikiGameSetupSection::menuIncreaseMovie));
 		movieMenu->addOption(MENU_FAKE_OPTION_FOR_GAP);
-		movieMenu->addOption(0, "Play / Stop", new NPGSSDelegate1(this, &menuPlayMovie));
+		movieMenu->addOption(0, "Play / Stop", new NPGSSDelegate1(this, &NewPikiGameSetupSection::menuPlayMovie));
 		movieMenu->addOption(0, "Pause / Frame Step", nullptr);
-		movieMenu->addKeyEvent(Menu::KeyEventType::OnInputRelease, KBBTN_A, new NPGSSDelegate1(this, &menuPauseMovie));
-		movieMenu->addKeyEvent(Menu::KeyEventType::WhileInputHeld, KBBTN_X, new NPGSSDelegate1(this, &menuIncreaseFrame));
-		movieMenu->addKeyEvent(Menu::KeyEventType::WhileInputHeld, KBBTN_Y, new NPGSSDelegate1(this, &menuDecreaseFrame));
+		movieMenu->addKeyEvent(Menu::KeyEventType::OnInputRelease, KBBTN_A,
+		                       new NPGSSDelegate1(this, &NewPikiGameSetupSection::menuPauseMovie));
+		movieMenu->addKeyEvent(Menu::KeyEventType::WhileInputHeld, KBBTN_X,
+		                       new NPGSSDelegate1(this, &NewPikiGameSetupSection::menuIncreaseFrame));
+		movieMenu->addKeyEvent(Menu::KeyEventType::WhileInputHeld, KBBTN_Y,
+		                       new NPGSSDelegate1(this, &NewPikiGameSetupSection::menuDecreaseFrame));
 
 		// set up vertical filter menu
 		Menu* filterMenu               = new Menu(mController, gsys->mConsFont);
@@ -1870,7 +1875,7 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 		filterMenu->mCenterPoint.mMinY = glnHeight / 2;
 		filterMenu->mGradBGTopColour.set(MENU_COLOUR_DARK_RED);
 		filterMenu->mGradBGBottomColour.set(MENU_COLOUR_MEDIUM_GREY);
-		filterMenu->addKeyEvent(Menu::KeyEventType::OnCancel, KBBTN_B, new Delegate1<Menu, Menu&>(filterMenu, Menu::menuCloseMenu));
+		filterMenu->addKeyEvent(Menu::KeyEventType::OnCancel, KBBTN_B, new Delegate1<Menu, Menu&>(filterMenu, &Menu::menuCloseMenu));
 
 		gameflow.addFilterMenu(filterMenu);
 
@@ -1880,8 +1885,8 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 		mDebugMenu->mCenterPoint.mMinY = glnHeight / 2;
 		mDebugMenu->addKeyEvent(Menu::KeyEventType::OnCancel, KBBTN_B, new Delegate1<Menu, Menu&>(mDebugMenu, &Menu::menuCloseMenu));
 
-		mDebugMenu->addOption(0, "Change Course", new NPGSSDelegate1(this, &menuChangeCourse));
-		mDebugMenu->addOption(0, "Day End", new NPGSSDelegate1(this, &menuDayEnd));
+		mDebugMenu->addOption(0, "Change Course", new NPGSSDelegate1(this, &NewPikiGameSetupSection::menuChangeCourse));
+		mDebugMenu->addOption(0, "Day End", new NPGSSDelegate1(this, &NewPikiGameSetupSection::menuDayEnd));
 		mDebugMenu->addMenu(optionsMenu, 0, "Options");
 		mDebugMenu->addMenu(gamecore->mAiPerfDebugMenu, 0, "Kando Options");
 		if (mapMgr->mDayMgr) {
@@ -1889,7 +1894,7 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 		}
 		mDebugMenu->addMenu(movieMenu, 0, "Movie Player");
 		mDebugMenu->addOption(MENU_FAKE_OPTION_FOR_GAP);
-		mDebugMenu->addOption(0, "Quit", new NPGSSDelegate1(this, &menuQuitGame));
+		mDebugMenu->addOption(0, "Quit", new NPGSSDelegate1(this, &NewPikiGameSetupSection::menuQuitGame));
 #endif
 
 		// reset more unused values
