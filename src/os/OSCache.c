@@ -21,9 +21,9 @@ ASM void DCEnable(void)
 
 	sync
 
-	mfspr  r3, HID0
+	mfspr  r3, SPR_HID0
 	ori    r3, r3, HID0_DCE
-	mtspr  HID0, r3
+	mtspr  SPR_HID0, r3
 
 	blr
 #endif // clang-format on
@@ -297,9 +297,9 @@ ASM void ICFlashInvalidate(void) {
 #ifdef __MWERKS__ // clang-format off
 	nofralloc
 
-	mfspr  r3, HID0
+	mfspr  r3, SPR_HID0
 	ori    r3, r3, HID0_ICFI
-	mtspr  HID0, r3
+	mtspr  SPR_HID0, r3
 
 	blr
 #endif // clang-format on
@@ -315,9 +315,9 @@ ASM void ICEnable(void)
 
 	isync
 
-	mfspr  r3, HID0
+	mfspr  r3, SPR_HID0
 	ori    r3, r3, HID0_ICE
-	mtspr  HID0, r3
+	mtspr  SPR_HID0, r3
 
 	blr
 #endif // clang-format on

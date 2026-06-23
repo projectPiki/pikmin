@@ -267,19 +267,19 @@ ASM u32 OSSaveContext(register OSContext* context) {
 #ifdef __MWERKS__ // clang-format off
 	nofralloc
 	stmw   r13, context->gpr[13]
-	mfspr  r0, GQR1
+	mfspr  r0, SPR_GQR1
 	stw    r0, context->gqr[1]
-	mfspr  r0, GQR2
+	mfspr  r0, SPR_GQR2
 	stw    r0, context->gqr[2]
-	mfspr  r0, GQR3
+	mfspr  r0, SPR_GQR3
 	stw    r0, context->gqr[3]
-	mfspr  r0, GQR4
+	mfspr  r0, SPR_GQR4
 	stw    r0, context->gqr[4]
-	mfspr  r0, GQR5
+	mfspr  r0, SPR_GQR5
 	stw    r0, context->gqr[5]
-	mfspr  r0, GQR6
+	mfspr  r0, SPR_GQR6
 	stw    r0, context->gqr[6]
-	mfspr  r0, GQR7
+	mfspr  r0, SPR_GQR7
 	stw    r0, context->gqr[7]
 	mfcr   r0
 	stw    r0, context->cr
@@ -338,19 +338,19 @@ notexc:
 misc:
 
 	lwz      r4, context->gqr[1]
-	mtspr    GQR1, r4
+	mtspr    SPR_GQR1, r4
 	lwz      r4, context->gqr[2]
-	mtspr    GQR2, r4
+	mtspr    SPR_GQR2, r4
 	lwz      r4, context->gqr[3]
-	mtspr    GQR3, r4
+	mtspr    SPR_GQR3, r4
 	lwz      r4, context->gqr[4]
-	mtspr    GQR4, r4
+	mtspr    SPR_GQR4, r4
 	lwz      r4, context->gqr[5]
-	mtspr    GQR5, r4
+	mtspr    SPR_GQR5, r4
 	lwz      r4, context->gqr[6]
-	mtspr    GQR6, r4
+	mtspr    SPR_GQR6, r4
 	lwz      r4, context->gqr[7]
-	mtspr    GQR7, r4
+	mtspr    SPR_GQR7, r4
 
 	lwz      r4, context->cr
 	mtcr     r4

@@ -49,19 +49,19 @@ __OSExceptionHandler __OSGetExceptionHandler(__OSException exception);
 	stw r2, context->gpr[2];                          \
 	stmw r6, context->gpr[6];                         \
 	/* Save GQR1 to GQR7. GQR0 must always be zero */ \
-	mfspr r0, GQR1;                                   \
+	mfspr r0, SPR_GQR1;                               \
 	stw r0, context->gqr[1];                          \
-	mfspr r0, GQR2;                                   \
+	mfspr r0, SPR_GQR2;                               \
 	stw r0, context->gqr[2];                          \
-	mfspr r0, GQR3;                                   \
+	mfspr r0, SPR_GQR3;                               \
 	stw r0, context->gqr[3];                          \
-	mfspr r0, GQR4;                                   \
+	mfspr r0, SPR_GQR4;                               \
 	stw r0, context->gqr[4];                          \
-	mfspr r0, GQR5;                                   \
+	mfspr r0, SPR_GQR5;                               \
 	stw r0, context->gqr[5];                          \
-	mfspr r0, GQR6;                                   \
+	mfspr r0, SPR_GQR6;                               \
 	stw r0, context->gqr[6];                          \
-	mfspr r0, GQR7;                                   \
+	mfspr r0, SPR_GQR7;                               \
 	stw r0, context->gqr[7];
 
 //////////////////////////////////

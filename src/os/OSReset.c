@@ -82,9 +82,9 @@ static void ASM Reset(register s32 resetCode)
 	b       _jump1
 
 _begin:
-	mfspr   r8, HID0
+	mfspr   r8, SPR_HID0
 	ori     r8, r8, HID0_ABE
-	mtspr   HID0, r8
+	mtspr   SPR_HID0, r8
 	isync
 	sync
 	nop
