@@ -110,16 +110,16 @@ typedef struct __GXLightObjPriv {
 /////////////// VERTEX INFO ////////////////
 // Struct for vertex descriptive info.
 typedef struct _GXVtxDescList {
-	GXAttr mAttr;     // _00
-	GXAttrType mType; // _04
+	GXAttr attr;     // _00
+	GXAttrType type; // _04
 } GXVtxDescList;
 
 // Struct for vertex attribute formats.
 typedef struct _GXVtxAttrFmtList {
-	GXAttr mAttr;     // _00
-	GXCompCnt mCount; // _04
-	GXCompType mType; // _08
-	u8 mFrac;         // _0C
+	GXAttr attr;     // _00
+	GXCompCnt count; // _04
+	GXCompType type; // _08
+	u8 frac;         // _0C
 } GXVtxAttrFmtList;
 
 ////////////////////////////////////////////
