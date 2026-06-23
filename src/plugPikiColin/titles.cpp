@@ -151,7 +151,7 @@ struct TitleSetupSection : public Node {
 		mPlayer->mIsPlaying = true;
 
 		// load in lighting/time settings
-		RandomAccessStream* data = gsys->openFile("cinemas/opening.ini", true, true);
+		RandomAccessStream* data = gsys->openFile("cinemas/opening.ini");
 		if (data) {
 			CmdStream* stream = new CmdStream(data);
 			while (!stream->endOfCmds() && !stream->endOfSection()) {

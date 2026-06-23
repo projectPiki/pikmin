@@ -102,7 +102,7 @@ CinematicPlayer::CinematicPlayer(immut char* cinFilePath)
 void CinematicPlayer::loadCin(immut char* cinFilePath)
 {
 	mCurrentData = nullptr;
-	Stream* file = gsys->openFile(cinFilePath, true, true);
+	Stream* file = gsys->openFile(cinFilePath);
 	if (!file) {
 		return;
 	}
@@ -268,7 +268,7 @@ void CinematicPlayer::loadCin(immut char* cinFilePath)
  */
 void CinematicPlayer::addScene(SceneData* scene)
 {
-	Stream* data = gsys->openFile(scene->mName, true, true);
+	Stream* data = gsys->openFile(scene->mName);
 	if (data) {
 		CmdStream* cmd = new CmdStream(data);
 		if (cmd) {

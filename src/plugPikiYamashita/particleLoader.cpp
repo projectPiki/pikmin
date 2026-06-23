@@ -27,7 +27,7 @@ u8* zen::particleLoader::load(immut char* fileName, bool p2)
 	if (data) {
 		PRINT("すでにロードされています。\n"); // 'already loaded.'
 	} else {
-		RandomAccessStream* file = gsys->openFile(fileName, p2, true);
+		RandomAccessStream* file = gsys->openFile(fileName, p2);
 		if (file) {
 			int size     = file->getPending();
 			PCRData* pcr = pmCreatePCRData(fileName, size);
