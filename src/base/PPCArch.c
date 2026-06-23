@@ -130,15 +130,15 @@ void PPCEieio(void)
 		mfmsr   r5
 		rlwinm  r6, r5, 0, 17, 15 // ~MSR_EE
 		mtmsr   r6
-		mfspr   r3, HID0
-		ori     r4, r3, 8
-		mtspr   HID0, r4
+		mfspr   r3, SPR_HID0
+		ori     r4, r3, HID0_ABE
+		mtspr   SPR_HID0, r4
 		isync
 		eieio
 		isync
 
-		mtspr  SPR_HID0, r3
-		mtmsr  r5
+		mtspr   SPR_HID0, r3
+		mtmsr   r5
 		isync
 	}
 #endif

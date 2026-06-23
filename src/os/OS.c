@@ -594,7 +594,7 @@ void __OSPSInit(void)
 #ifdef __MWERKS__
 	asm {
 		li     r3, 0
-		mtspr  GQR0, r3
+		mtspr  SPR_GQR0, r3
 	}
 #endif
 }

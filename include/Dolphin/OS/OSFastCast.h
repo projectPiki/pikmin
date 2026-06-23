@@ -35,16 +35,16 @@ static inline void OSInitFastCast(void)
 	asm {
 		li     r3,     OS_GQR_U8
 		oris   r3, r3, OS_GQR_U8
-		mtspr  GQR2, r3
+		mtspr  SPR_GQR2, r3
 		li     r3,     OS_GQR_U16
 		oris   r3, r3, OS_GQR_U16
-		mtspr  GQR3, r3
+		mtspr  SPR_GQR3, r3
 		li     r3,     OS_GQR_S8
 		oris   r3, r3, OS_GQR_S8
-		mtspr  GQR4, r3
+		mtspr  SPR_GQR4, r3
 		li     r3,     OS_GQR_S16
 		oris   r3, r3, OS_GQR_S16
-		mtspr  GQR5, r3
+		mtspr  SPR_GQR5, r3
 	}
 #endif
 }
