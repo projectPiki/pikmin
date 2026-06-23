@@ -215,10 +215,10 @@ void GXSetVtxDescv(GXVtxDescList* attrPtr)
 {
 	CHECK_GXBEGIN(0xF5, "GXSetVtxDescv");
 	CHECK_ATTRPTR(0xF6, attrPtr);
-	while (attrPtr->mAttr != 0xFF) {
-		CHECK_ATTRNAME(0xFB, attrPtr->mAttr);
-		CHECK_ATTRTYPE(0xFE, attrPtr->mType);
-		SETVCDATTR(attrPtr->mAttr, attrPtr->mType);
+	while (attrPtr->attr != 0xFF) {
+		CHECK_ATTRNAME(0xFB, attrPtr->attr);
+		CHECK_ATTRTYPE(0xFE, attrPtr->type);
+		SETVCDATTR(attrPtr->attr, attrPtr->type);
 		attrPtr++;
 	}
 	if (gx->hasNrms || gx->hasBiNrms) {
@@ -416,10 +416,10 @@ void GXGetVtxDescv(GXVtxDescList* vcd)
 	CHECK_GXBEGIN(0x1BA, "GXGetVtxDescv");
 	CHECK_ATTRPTR(0x1BC, vcd);
 	for (attr = 0; attr < GX_VA_MAX_ATTR; attr++) {
-		vcd[attr].mAttr = attr;
-		GXGetVtxDesc(attr, &vcd[attr].mType);
+		vcd[attr].attr = attr;
+		GXGetVtxDesc(attr, &vcd[attr].type);
 	}
-	vcd[attr].mAttr = 0xFF;
+	vcd[attr].attr = 0xFF;
 }
 
 /**
@@ -566,10 +566,10 @@ void GXSetVtxAttrFmtv(GXVtxFmt vtxfmt, GXVtxAttrFmtList* list)
 	va = &gx->vatA[vtxfmt];
 	vb = &gx->vatB[vtxfmt];
 	vc = &gx->vatC[vtxfmt];
-	while (list->mAttr != GX_VA_NULL) {
+	while (list->attr != GX_VA_NULL) {
 		CHECK_ATTRNAME2(0x286, list->attr);
 		CHECK_FRAC(0x287, list->frac);
-		SETVAT(va, vb, vc, list->mAttr, list->mCount, list->mType, list->mFrac);
+		SETVAT(va, vb, vc, list->attr, list->count, list->type, list->frac);
 		list++;
 	}
 	gx->dirtyState |= 0x10;
@@ -719,11 +719,11 @@ void GXGetVtxAttrFmtv(GXVtxFmt fmt, GXVtxAttrFmtList* vat)
 	CHECK_LISTPTR(0x331, vat);
 	CHECK_VTXFMT(0x332, fmt);
 	for (attr = GX_VA_POS; attr < GX_VA_MAX_ATTR; attr++) {
-		vat->mAttr = attr;
-		GXGetVtxAttrFmt(fmt, attr, &vat->mCount, &vat->mType, &vat->mFrac);
+		vat->attr = attr;
+		GXGetVtxAttrFmt(fmt, attr, &vat->count, &vat->type, &vat->frac);
 		vat++;
 	}
-	vat->mAttr = GX_VA_NULL;
+	vat->attr = GX_VA_NULL;
 }
 
 /**
