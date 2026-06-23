@@ -31,33 +31,33 @@ void __CARDDefaultApiCallback(s32, s32)
 /**
  * @TODO: Documentation
  */
-void __CARDSyncCallback(s32 channel, s32 result)
+void __CARDSyncCallback(s32 chan, s32 result)
 {
-	OSWakeupThread(&__CARDBlock[channel].threadQueue);
+	OSWakeupThread(&__CARDBlock[chan].threadQueue);
 }
 
 /**
  * @TODO: Documentation
  */
-void __CARDExtHandler(s32 channel, OSContext* context)
+void __CARDExtHandler(s32 chan, OSContext* context)
 {
 	CARDControl* card;
 	CARDCallback callback;
 
-	card = &__CARDBlock[channel];
+	card = &__CARDBlock[chan];
 	if (card->attached) {
 		card->attached = FALSE;
 #if OS_BUILD_VERSION >= 20011002L
 #else
 		card->result = CARD_RESULT_NOCARD;
 #endif
-		EXISetExiCallback(channel, NULL);
+		EXISetExiCallback(chan, NULL);
 		OSCancelAlarm(&card->alarm);
 		callback = card->exiCallback;
 
 		if (callback) {
 			card->exiCallback = NULL;
-			callback(channel, CARD_RESULT_NOCARD);
+			callback(chan, CARD_RESULT_NOCARD);
 		}
 
 #if OS_BUILD_VERSION >= 20011002L
@@ -69,7 +69,7 @@ void __CARDExtHandler(s32 channel, OSContext* context)
 		callback = card->extCallback;
 		if (callback && CARD_MAX_MOUNT_STEP <= card->mountStep) {
 			card->extCallback = NULL;
-			callback(channel, CARD_RESULT_NOCARD);
+			callback(chan, CARD_RESULT_NOCARD);
 		}
 	}
 }
@@ -77,7 +77,7 @@ void __CARDExtHandler(s32 channel, OSContext* context)
 /**
  * @TODO: Documentation
  */
-void __CARDExiHandler(s32 channel, OSContext* context)
+void __CARDExiHandler(s32 chan, OSContext* context)
 {
 	CARDControl* card;
 	CARDCallback callback;
@@ -86,7 +86,7 @@ void __CARDExiHandler(s32 channel, OSContext* context)
 
 	OSAssertLine(0xDC, 0 <= chan && chan < 2);
 
-	card = &__CARDBlock[channel];
+	card = &__CARDBlock[chan];
 
 	OSCancelAlarm(&card->alarm);
 
@@ -94,17 +94,17 @@ void __CARDExiHandler(s32 channel, OSContext* context)
 		return;
 	}
 
-	if (!EXILock(channel, 0, 0)) {
+	if (!EXILock(chan, 0, 0)) {
 		result = CARD_RESULT_FATAL_ERROR;
 		goto fatal;
 	}
 
-	if ((result = __CARDReadStatus(channel, &status)) < 0 || (result = __CARDClearStatus(channel)) < 0) {
+	if ((result = __CARDReadStatus(chan, &status)) < 0 || (result = __CARDClearStatus(chan)) < 0) {
 		goto error;
 	}
 
 	if ((result = (status & 0x18) ? CARD_RESULT_IOERROR : CARD_RESULT_READY) == CARD_RESULT_IOERROR && --card->retry > 0) {
-		result = Retry(channel);
+		result = Retry(chan);
 		if (result >= CARD_RESULT_READY) {
 			return;
 		}
@@ -112,70 +112,70 @@ void __CARDExiHandler(s32 channel, OSContext* context)
 	}
 
 error:
-	EXIUnlock(channel);
+	EXIUnlock(chan);
 
 fatal:
 	callback = card->exiCallback;
 	if (callback) {
 		card->exiCallback = NULL;
-		callback(channel, result);
+		callback(chan, result);
 	}
 }
 
 /**
  * @TODO: Documentation
  */
-void __CARDTxHandler(s32 channel, OSContext* context)
+void __CARDTxHandler(s32 chan, OSContext* context)
 {
 	CARDControl* card;
 	CARDCallback callback;
 	BOOL err;
 
-	card = &__CARDBlock[channel];
-	err  = !EXIDeselect(channel);
-	EXIUnlock(channel);
+	card = &__CARDBlock[chan];
+	err  = !EXIDeselect(chan);
+	EXIUnlock(chan);
 	callback = card->txCallback;
 	if (callback) {
 		card->txCallback = NULL;
-		callback(channel, (!err && EXIProbe(channel)) ? CARD_RESULT_READY : CARD_RESULT_NOCARD);
+		callback(chan, (!err && EXIProbe(chan)) ? CARD_RESULT_READY : CARD_RESULT_NOCARD);
 	}
 }
 
 /**
  * @TODO: Documentation
  */
-void __CARDUnlockedHandler(s32 channel, OSContext* context)
+void __CARDUnlockedHandler(s32 chan, OSContext* context)
 {
 	CARDControl* card;
 	CARDCallback callback;
 
-	card     = &__CARDBlock[channel];
+	card     = &__CARDBlock[chan];
 	callback = card->unlockCallback;
 	if (callback) {
 		card->unlockCallback = NULL;
-		callback(channel, EXIProbe(channel) ? CARD_RESULT_UNLOCKED : CARD_RESULT_NOCARD);
+		callback(chan, EXIProbe(chan) ? CARD_RESULT_UNLOCKED : CARD_RESULT_NOCARD);
 	}
 }
 
 /**
  * @TODO: Documentation
  */
-int __CARDReadNintendoID(s32 channel, u32* id)
+int __CARDReadNintendoID(s32 chan, u32* id)
 {
 	BOOL err;
 	u32 cmd;
 
-	if (!EXISelect(channel, 0, 0)) {
+	if (!EXISelect(chan, 0, 0)) {
 		return CARD_RESULT_NOCARD;
 	}
 
 	cmd = 0;
 	err = 0;
-	err |= !EXIImm(channel, &cmd, 2, EXI_WRITE, NULL);
-	err |= !EXISync(channel);
-	err |= !EXIImm(channel, id, 4, EXI_READ, NULL);
-	err |= !EXISync(channel);
-	err |= !EXIDeselect(channel);
+	err |= !EXIImm(chan, &cmd, 2, EXI_WRITE, NULL);
+	err |= !EXISync(chan);
+	err |= !EXIImm(chan, id, 4, EXI_READ, NULL);
+	err |= !EXISync(chan);
+	err |= !EXIDeselect(chan);
 
 	if (err) {
 		return CARD_RESULT_NOCARD;
@@ -191,62 +191,62 @@ int __CARDReadNintendoID(s32 channel, u32* id)
 /**
  * @TODO: Documentation
  */
-s32 __CARDEnableInterrupt(s32 channel, BOOL enable)
+s32 __CARDEnableInterrupt(s32 chan, BOOL enable)
 {
 	BOOL err;
 	u32 cmd;
 
-	if (!EXISelect(channel, 0, 4)) {
+	if (!EXISelect(chan, 0, 4)) {
 		return CARD_RESULT_NOCARD;
 	}
 
 	cmd = enable ? 0x81010000 : 0x81000000;
 	err = FALSE;
-	err |= !EXIImm(channel, &cmd, 2, 1, NULL);
-	err |= !EXISync(channel);
-	err |= !EXIDeselect(channel);
+	err |= !EXIImm(chan, &cmd, 2, 1, NULL);
+	err |= !EXISync(chan);
+	err |= !EXIDeselect(chan);
 	return err ? CARD_RESULT_NOCARD : CARD_RESULT_READY;
 }
 
 /**
  * @TODO: Documentation
  */
-s32 __CARDReadStatus(s32 channel, u8* status)
+s32 __CARDReadStatus(s32 chan, u8* status)
 {
 	BOOL err;
 	u32 cmd;
 
-	if (!EXISelect(channel, 0, 4)) {
+	if (!EXISelect(chan, 0, 4)) {
 		return CARD_RESULT_NOCARD;
 	}
 
 	cmd = 0x83000000;
 	err = FALSE;
-	err |= !EXIImm(channel, &cmd, 2, 1, NULL);
-	err |= !EXISync(channel);
-	err |= !EXIImm(channel, status, 1, 0, NULL);
-	err |= !EXISync(channel);
-	err |= !EXIDeselect(channel);
+	err |= !EXIImm(chan, &cmd, 2, 1, NULL);
+	err |= !EXISync(chan);
+	err |= !EXIImm(chan, status, 1, 0, NULL);
+	err |= !EXISync(chan);
+	err |= !EXIDeselect(chan);
 	return err ? CARD_RESULT_NOCARD : CARD_RESULT_READY;
 }
 
 /**
  * @TODO: Documentation
  */
-s32 __CARDClearStatus(s32 channel)
+s32 __CARDClearStatus(s32 chan)
 {
 	BOOL err;
 	u32 cmd;
 
-	if (!EXISelect(channel, 0, 4)) {
+	if (!EXISelect(chan, 0, 4)) {
 		return CARD_RESULT_NOCARD;
 	}
 
 	cmd = 0x89000000;
 	err = FALSE;
-	err |= !EXIImm(channel, &cmd, 1, 1, NULL);
-	err |= !EXISync(channel);
-	err |= !EXIDeselect(channel);
+	err |= !EXIImm(chan, &cmd, 1, 1, NULL);
+	err |= !EXISync(chan);
+	err |= !EXIDeselect(chan);
 
 	return err ? CARD_RESULT_NOCARD : CARD_RESULT_READY;
 }
@@ -274,11 +274,11 @@ void __CARDWakeup(void)
  */
 static void TimeoutHandler(OSAlarm* alarm, OSContext* context)
 {
-	s32 channel;
+	s32 chan;
 	CARDControl* card;
 	CARDCallback callback;
-	for (channel = 0; channel < 2; channel++) {
-		card = &__CARDBlock[channel];
+	for (chan = 0; chan < 2; chan++) {
+		card = &__CARDBlock[chan];
 		if (alarm == &card->alarm) {
 			break;
 		}
@@ -288,11 +288,11 @@ static void TimeoutHandler(OSAlarm* alarm, OSContext* context)
 		return;
 	}
 
-	EXISetExiCallback(channel, NULL);
+	EXISetExiCallback(chan, NULL);
 	callback = card->exiCallback;
 	if (callback) {
 		card->exiCallback = NULL;
-		callback(channel, CARD_RESULT_IOERROR);
+		callback(chan, CARD_RESULT_IOERROR);
 	}
 }
 
@@ -325,39 +325,39 @@ static void SetupTimeoutAlarm(CARDControl* card)
 /**
  * @TODO: Documentation
  */
-static s32 Retry(s32 channel)
+static s32 Retry(s32 chan)
 {
 	CARDControl* card;
-	card = &__CARDBlock[channel];
+	card = &__CARDBlock[chan];
 
-	if (!EXISelect(channel, 0, 4)) {
-		EXIUnlock(channel);
+	if (!EXISelect(chan, 0, 4)) {
+		EXIUnlock(chan);
 		return CARD_RESULT_NOCARD;
 	}
 
 	SetupTimeoutAlarm(card);
 
-	if (!EXIImmEx(channel, card->cmd, card->cmdlen, 1)) {
-		EXIDeselect(channel);
-		EXIUnlock(channel);
+	if (!EXIImmEx(chan, card->cmd, card->cmdlen, 1)) {
+		EXIDeselect(chan);
+		EXIUnlock(chan);
 		return CARD_RESULT_NOCARD;
 	}
 
-	if (card->cmd[0] == 0x52 && !EXIImmEx(channel, card->workArea->header.buffer, card->latency, 1)) {
-		EXIDeselect(channel);
-		EXIUnlock(channel);
+	if (card->cmd[0] == 0x52 && !EXIImmEx(chan, card->workArea->header.buffer, card->latency, 1)) {
+		EXIDeselect(chan);
+		EXIUnlock(chan);
 		return CARD_RESULT_NOCARD;
 	}
 
 	if (card->mode == 0xffffffff) {
-		EXIDeselect(channel);
-		EXIUnlock(channel);
+		EXIDeselect(chan);
+		EXIUnlock(chan);
 		return CARD_RESULT_READY;
 	}
 
-	if (!EXIDma(channel, card->buffer, (s32)((card->cmd[0] == 0x52) ? 512 : 128), card->mode, __CARDTxHandler)) {
-		EXIDeselect(channel);
-		EXIUnlock(channel);
+	if (!EXIDma(chan, card->buffer, (s32)((card->cmd[0] == 0x52) ? 512 : 128), card->mode, __CARDTxHandler)) {
+		EXIDeselect(chan);
+		EXIUnlock(chan);
 		return CARD_RESULT_NOCARD;
 	}
 
@@ -367,19 +367,19 @@ static s32 Retry(s32 channel)
 /**
  * @TODO: Documentation
  */
-static void UnlockedCallback(s32 channel, s32 result)
+static void UnlockedCallback(s32 chan, s32 result)
 {
 	CARDCallback callback;
 	CARDControl* card;
 
-	card = &__CARDBlock[channel];
+	card = &__CARDBlock[chan];
 	if (result >= CARD_RESULT_READY) {
 		card->unlockCallback = UnlockedCallback;
-		if (!EXILock(channel, 0, __CARDUnlockedHandler)) {
+		if (!EXILock(chan, 0, __CARDUnlockedHandler)) {
 			result = CARD_RESULT_READY;
 		} else {
 			card->unlockCallback = NULL;
-			result               = Retry(channel);
+			result               = Retry(chan);
 		}
 	}
 
@@ -390,7 +390,7 @@ static void UnlockedCallback(s32 channel, s32 result)
 			callback = card->txCallback;
 			if (callback) {
 				card->txCallback = NULL;
-				callback(channel, result);
+				callback(chan, result);
 			}
 			break;
 		}
@@ -401,7 +401,7 @@ static void UnlockedCallback(s32 channel, s32 result)
 			callback = card->exiCallback;
 			if (callback) {
 				card->exiCallback = NULL;
-				callback(channel, result);
+				callback(chan, result);
 			}
 			break;
 		}
@@ -412,7 +412,7 @@ static void UnlockedCallback(s32 channel, s32 result)
 /**
  * @TODO: Documentation
  */
-static s32 __CARDStart(s32 channel, CARDCallback txCallback, CARDCallback exiCallback)
+static s32 __CARDStart(s32 chan, CARDCallback txCallback, CARDCallback exiCallback)
 {
 #if OS_BUILD_VERSION >= 20011002L
 	BOOL enabled;
@@ -424,7 +424,7 @@ static s32 __CARDStart(s32 channel, CARDCallback txCallback, CARDCallback exiCal
 	enabled = OSDisableInterrupts();
 #endif
 
-	card = &__CARDBlock[channel];
+	card = &__CARDBlock[chan];
 	if (!card->attached) {
 		result = CARD_RESULT_NOCARD;
 	} else {
@@ -436,13 +436,13 @@ static s32 __CARDStart(s32 channel, CARDCallback txCallback, CARDCallback exiCal
 			card->exiCallback = exiCallback;
 		}
 		card->unlockCallback = UnlockedCallback;
-		if (!EXILock(channel, 0, __CARDUnlockedHandler)) {
+		if (!EXILock(chan, 0, __CARDUnlockedHandler)) {
 			result = CARD_RESULT_BUSY;
 		} else {
 			card->unlockCallback = NULL;
 
-			if (!EXISelect(channel, 0, 4)) {
-				EXIUnlock(channel);
+			if (!EXISelect(chan, 0, 4)) {
+				EXIUnlock(chan);
 				result = CARD_RESULT_NOCARD;
 			} else {
 				SetupTimeoutAlarm(card);
@@ -461,12 +461,12 @@ static s32 __CARDStart(s32 channel, CARDCallback txCallback, CARDCallback exiCal
 /**
  * @TODO: Documentation
  */
-s32 __CARDReadSegment(s32 channel, CARDCallback callback)
+s32 __CARDReadSegment(s32 chan, CARDCallback callback)
 {
 	CARDControl* card;
 	s32 result;
 
-	card         = &__CARDBlock[channel];
+	card         = &__CARDBlock[chan];
 	card->cmd[0] = 0x52;
 	card->cmd[1] = AD1(card->addr);
 	card->cmd[2] = AD2(card->addr);
@@ -476,21 +476,21 @@ s32 __CARDReadSegment(s32 channel, CARDCallback callback)
 	card->mode   = 0;
 	card->retry  = 0;
 
-	result = __CARDStart(channel, callback, 0);
+	result = __CARDStart(chan, callback, 0);
 	if (result == CARD_RESULT_BUSY) {
 		return CARD_RESULT_READY;
 	}
 
 #if OS_BUILD_VERSION >= 20011002L
 	if (result >= CARD_RESULT_READY) {
-		if (!EXIImmEx(channel, card->cmd, card->cmdlen, 1)
-		    || !EXIImmEx(channel, card->workArea->header.buffer, card->latency,
+		if (!EXIImmEx(chan, card->cmd, card->cmdlen, 1)
+		    || !EXIImmEx(chan, card->workArea->header.buffer, card->latency,
 		                 1)
 		    || // XXX use DMA if possible
-		    !EXIDma(channel, card->buffer, 512, card->mode, __CARDTxHandler)) {
+		    !EXIDma(chan, card->buffer, 512, card->mode, __CARDTxHandler)) {
 			card->txCallback = 0;
-			EXIDeselect(channel);
-			EXIUnlock(channel);
+			EXIDeselect(chan);
+			EXIUnlock(chan);
 			result = CARD_RESULT_NOCARD;
 		} else {
 			result = CARD_RESULT_READY;
@@ -502,14 +502,14 @@ s32 __CARDReadSegment(s32 channel, CARDCallback callback)
 		return result;
 	}
 
-	if (!EXIImmEx(channel, card->cmd, card->cmdlen, 1)
-	    || !EXIImmEx(channel, card->workArea->header.buffer, card->latency,
+	if (!EXIImmEx(chan, card->cmd, card->cmdlen, 1)
+	    || !EXIImmEx(chan, card->workArea->header.buffer, card->latency,
 	                 1)
 	    || // XXX use DMA if possible
-	    !EXIDma(channel, card->buffer, 512, card->mode, __CARDTxHandler)) {
+	    !EXIDma(chan, card->buffer, 512, card->mode, __CARDTxHandler)) {
 		card->txCallback = 0;
-		EXIDeselect(channel);
-		EXIUnlock(channel);
+		EXIDeselect(chan);
+		EXIUnlock(chan);
 		return CARD_RESULT_NOCARD;
 	}
 	return CARD_RESULT_READY;
@@ -519,12 +519,12 @@ s32 __CARDReadSegment(s32 channel, CARDCallback callback)
 /**
  * @TODO: Documentation
  */
-s32 __CARDWritePage(s32 channel, CARDCallback callback)
+s32 __CARDWritePage(s32 chan, CARDCallback callback)
 {
 	CARDControl* card;
 	s32 result;
 
-	card         = &__CARDBlock[channel];
+	card         = &__CARDBlock[chan];
 	card->cmd[0] = 0xF2;
 	card->cmd[1] = AD1(card->addr);
 	card->cmd[2] = AD2(card->addr);
@@ -534,15 +534,15 @@ s32 __CARDWritePage(s32 channel, CARDCallback callback)
 	card->mode   = 1;
 	card->retry  = 3;
 
-	result = __CARDStart(channel, NULL, callback);
+	result = __CARDStart(chan, NULL, callback);
 #if OS_BUILD_VERSION >= 20011002L
 	if (result == CARD_RESULT_BUSY) {
 		result = CARD_RESULT_READY;
 	} else if (result >= CARD_RESULT_READY) {
-		if (!EXIImmEx(channel, card->cmd, card->cmdlen, 1) || !EXIDma(channel, card->buffer, 128, card->mode, __CARDTxHandler)) {
+		if (!EXIImmEx(chan, card->cmd, card->cmdlen, 1) || !EXIDma(chan, card->buffer, 128, card->mode, __CARDTxHandler)) {
 			card->exiCallback = 0;
-			EXIDeselect(channel);
-			EXIUnlock(channel);
+			EXIDeselect(chan);
+			EXIUnlock(chan);
 			result = CARD_RESULT_NOCARD;
 		} else
 			result = CARD_RESULT_READY;
@@ -555,10 +555,10 @@ s32 __CARDWritePage(s32 channel, CARDCallback callback)
 	if (result < CARD_RESULT_READY) {
 		return result;
 	}
-	if (!EXIImmEx(channel, card->cmd, card->cmdlen, 1) || !EXIDma(channel, card->buffer, 128, card->mode, __CARDTxHandler)) {
+	if (!EXIImmEx(chan, card->cmd, card->cmdlen, 1) || !EXIDma(chan, card->buffer, 128, card->mode, __CARDTxHandler)) {
 		card->exiCallback = NULL;
-		EXIDeselect(channel);
-		EXIUnlock(channel);
+		EXIDeselect(chan);
+		EXIUnlock(chan);
 		return CARD_RESULT_NOCARD;
 	}
 	return CARD_RESULT_READY;
@@ -577,12 +577,12 @@ void __CARDErase(void)
 /**
  * @TODO: Documentation
  */
-s32 __CARDEraseSector(s32 channel, u32 addr, CARDCallback callback)
+s32 __CARDEraseSector(s32 chan, u32 addr, CARDCallback callback)
 {
 	CARDControl* card;
 	s32 result;
 
-	card         = &__CARDBlock[channel];
+	card         = &__CARDBlock[chan];
 	card->cmd[0] = 0xF1;
 	card->cmd[1] = AD1(addr);
 	card->cmd[2] = AD2(addr);
@@ -590,21 +590,21 @@ s32 __CARDEraseSector(s32 channel, u32 addr, CARDCallback callback)
 	card->mode   = -1;
 	card->retry  = 3;
 
-	result = __CARDStart(channel, NULL, callback);
+	result = __CARDStart(chan, NULL, callback);
 
 #if OS_BUILD_VERSION >= 20011002L
 	if (result == CARD_RESULT_BUSY) {
 		result = CARD_RESULT_READY;
 	} else if (result >= CARD_RESULT_READY) {
 		result = CARD_RESULT_READY;
-		if (!EXIImmEx(channel, card->cmd, card->cmdlen, 1)) {
+		if (!EXIImmEx(chan, card->cmd, card->cmdlen, 1)) {
 			result            = CARD_RESULT_NOCARD;
 			card->exiCallback = NULL;
 		} else {
 			result = CARD_RESULT_READY;
 		}
-		EXIDeselect(channel);
-		EXIUnlock(channel);
+		EXIDeselect(chan);
+		EXIUnlock(chan);
 	}
 #else
 
@@ -617,12 +617,12 @@ s32 __CARDEraseSector(s32 channel, u32 addr, CARDCallback callback)
 	}
 
 	result = CARD_RESULT_READY;
-	if (!EXIImmEx(channel, card->cmd, card->cmdlen, 1)) {
+	if (!EXIImmEx(chan, card->cmd, card->cmdlen, 1)) {
 		result            = CARD_RESULT_NOCARD;
 		card->exiCallback = NULL;
 	}
-	EXIDeselect(channel);
-	EXIUnlock(channel);
+	EXIDeselect(chan);
+	EXIUnlock(chan);
 #endif
 	return result;
 }
@@ -632,7 +632,7 @@ s32 __CARDEraseSector(s32 channel, u32 addr, CARDCallback callback)
  */
 void CARDInit(void)
 {
-	s32 channel;
+	s32 chan;
 
 #if OS_BUILD_VERSION >= 20011112L
 	if (__CARDBlock[0].diskID && __CARDBlock[1].diskID)
@@ -646,8 +646,8 @@ void CARDInit(void)
 	DSPInit();
 	OSInitAlarm();
 
-	for (channel = 0; channel < 2; channel++) {
-		CARDControl* card = &__CARDBlock[channel];
+	for (chan = 0; chan < 2; chan++) {
+		CARDControl* card = &__CARDBlock[chan];
 
 		card->result = CARD_RESULT_NOCARD;
 		OSInitThreadQueue(&card->threadQueue);
@@ -675,25 +675,25 @@ void __CARDSetDiskID(DVDDiskID* diskID)
 /**
  * @TODO: Documentation
  */
-s32 __CARDGetControlBlock(s32 channel, CARDControl** card)
+s32 __CARDGetControlBlock(s32 chan, CARDControl** card)
 {
 	BOOL enabled;
 	s32 result;
 	CARDControl* reqCard;
 #if OS_BUILD_VERSION >= 20011112L
-	reqCard = &__CARDBlock[channel];
-	if (channel < 0 || channel >= 2 || reqCard->diskID == NULL) {
+	reqCard = &__CARDBlock[chan];
+	if (chan < 0 || chan >= 2 || reqCard->diskID == NULL) {
 		return CARD_RESULT_FATAL_ERROR;
 	}
 
 	enabled = OSDisableInterrupts();
 #else
-	if (channel < 0 || channel >= 2 || __CARDDiskID == NULL) {
+	if (chan < 0 || chan >= 2 || __CARDDiskID == NULL) {
 		return CARD_RESULT_FATAL_ERROR;
 	}
 
 	enabled = OSDisableInterrupts();
-	reqCard = &__CARDBlock[channel];
+	reqCard = &__CARDBlock[chan];
 #endif
 	if (!reqCard->attached) {
 		result = CARD_RESULT_NOCARD;
@@ -737,22 +737,22 @@ s32 __CARDPutControlBlock(CARDControl* card, s32 result)
 /**
  * @TODO: Documentation
  */
-s32 CARDGetResultCode(s32 channel)
+s32 CARDGetResultCode(s32 chan)
 {
 	CARDControl* card;
 
-	if (channel < 0 || channel >= 2) {
+	if (chan < 0 || chan >= 2) {
 		return CARD_RESULT_FATAL_ERROR;
 	}
 
-	card = &__CARDBlock[channel];
+	card = &__CARDBlock[chan];
 	return card->result;
 }
 
 /**
  * @TODO: Documentation
  */
-s32 CARDFreeBlocks(s32 channel, s32* byteNotUsed, s32* filesNotUsed)
+s32 CARDFreeBlocks(s32 chan, s32* byteNotUsed, s32* filesNotUsed)
 {
 	CARDControl* card;
 	s32 result;
@@ -761,7 +761,7 @@ s32 CARDFreeBlocks(s32 channel, s32* byteNotUsed, s32* filesNotUsed)
 	CARDDir* ent;
 	u16 fileNo;
 
-	result = __CARDGetControlBlock(channel, &card);
+	result = __CARDGetControlBlock(chan, &card);
 	if (result < CARD_RESULT_READY) {
 		return result;
 	}
@@ -810,12 +810,12 @@ void CARDGetMemSize(void)
 /**
  * @TODO: Documentation
  */
-s32 CARDGetSectorSize(s32 channel, u32* size)
+s32 CARDGetSectorSize(s32 chan, u32* size)
 {
 	CARDControl* card;
 	s32 result;
 
-	result = __CARDGetControlBlock(channel, &card);
+	result = __CARDGetControlBlock(chan, &card);
 	if (result < CARD_RESULT_READY) {
 		return result;
 	}
@@ -826,16 +826,16 @@ s32 CARDGetSectorSize(s32 channel, u32* size)
 /**
  * @TODO: Documentation
  */
-s32 __CARDSync(s32 channel)
+s32 __CARDSync(s32 chan)
 {
 	CARDControl* card;
 	s32 result;
 	BOOL enabled;
 
-	card    = &__CARDBlock[channel];
+	card    = &__CARDBlock[chan];
 	enabled = OSDisableInterrupts();
 
-	while ((result = CARDGetResultCode(channel)) == CARD_RESULT_BUSY) {
+	while ((result = CARDGetResultCode(chan)) == CARD_RESULT_BUSY) {
 		OSSleepThread(&card->threadQueue);
 	}
 
