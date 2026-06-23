@@ -703,7 +703,7 @@ void DynObjBody::initBodyCollisions()
 void DynObjBody::readScript(MapMgr* map, immut char* filePath)
 {
 	// get commands list from file
-	RandomAccessStream* file = gsys->openFile(filePath, true, true);
+	RandomAccessStream* file = gsys->openFile(filePath);
 	if (!file) {
 		return;
 	}

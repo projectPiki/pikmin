@@ -159,7 +159,7 @@ Texture* StdSystem::loadTexture(immut char* path, bool isRelativePath)
 	}
 
 	Texture* loadedTex     = nullptr;
-	RandomAccessStream* fs = openFile(path, isRelativePath, true);
+	RandomAccessStream* fs = openFile(path, isRelativePath);
 	if (fs) {
 		loadedTex = new Texture();
 		loadedTex->read(*fs);
@@ -430,15 +430,15 @@ void StdSystem::initSoftReset()
 
 /**
  * Loads a shape from disk and prepares textures and materials.
- * @param a2 Shape file path to open.
+ * @param filepath Shape file path to open.
  * @param shapeName Name assigned to the shape.
  * @param modelTexturePath Path for resolving texture names.
- * @param a5 Whether to open using cached mode.
+ * @param isRelativePath Whether the path supplied is relative.
  */
-Shape* StdSystem::getShape(immut char* a2, immut char* shapeName, immut char* modelTexturePath, bool a5)
+Shape* StdSystem::getShape(immut char* filepath, immut char* shapeName, immut char* modelTexturePath, bool isRelativePath)
 {
 	Shape* result                  = nullptr;
-	RandomAccessStream* fileStream = gsys->openFile(a2, a5, true);
+	RandomAccessStream* fileStream = gsys->openFile(filepath, isRelativePath);
 
 	// Open the file and read the shape
 	if (fileStream) {
@@ -563,7 +563,7 @@ void StdSystem::flushLFlares(Graphics& gfx)
  */
 void StdSystem::loadBundle(immut char* pPath, bool loadWithCache)
 {
-	RandomAccessStream* fs = openFile(pPath, true, true);
+	RandomAccessStream* fs = openFile(pPath);
 	if (!fs) {
 		return;
 	}

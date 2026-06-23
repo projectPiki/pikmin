@@ -254,20 +254,20 @@ struct StdSystem {
 #endif
 
 	// the vtable has to be at 0x1A0, so it's in the middle, yes.
-	virtual void initSoftReset();                                                                         // _08
-	virtual RandomAccessStream* openFile(immut char* path, bool isRelativePath, bool) { return nullptr; } // _0C
-	virtual u32 copyRamToCache(u32, u32, u32) { return 0; }                                               // _10
-	virtual void copyCacheToRam(u32, u32, u32) { }                                                        // _14
-	virtual void copyWaitUntilDone() { }                                                                  // _18
-	virtual void copyCacheToTexture(CacheTexture*) { }                                                    // _1C
-#if defined(VERSION_PIKIDEMO)                                                                             //
-	virtual void forceHardReset() { }                                                                     // _20
-#endif                                                                                                    //
-	virtual void Activate(bool) { }                                                                       // _20
-	virtual void parseArchiveDirectory(immut char* arcPath, immut char* dirPath) { }                      // _24
-	virtual void sndPlaySe(u32) = 0;                                                                      // _28
-	virtual void startLoading(LoadIdler*, bool, u32) { }                                                  // _2C
-	virtual void endLoading() { }                                                                         // _30
+	virtual void initSoftReset();                                                                                       // _08
+	virtual RandomAccessStream* openFile(immut char* path, bool isRelativePath = true, bool = true) { return nullptr; } // _0C
+	virtual u32 copyRamToCache(u32, u32, u32) { return 0; }                                                             // _10
+	virtual void copyCacheToRam(u32, u32, u32) { }                                                                      // _14
+	virtual void copyWaitUntilDone() { }                                                                                // _18
+	virtual void copyCacheToTexture(CacheTexture*) { }                                                                  // _1C
+#if defined(VERSION_PIKIDEMO)                                                                                           //
+	virtual void forceHardReset() { }                                                                                   // _20
+#endif                                                                                                                  //
+	virtual void Activate(bool) { }                                                                                     // _20
+	virtual void parseArchiveDirectory(immut char* arcPath, immut char* dirPath) { }                                    // _24
+	virtual void sndPlaySe(u32) = 0;                                                                                    // _28
+	virtual void startLoading(LoadIdler*, bool, u32) { }                                                                // _2C
+	virtual void endLoading() { }                                                                                       // _30
 
 	int mPolygonCount;            // _1A4
 	u32 mMaterialCount;           // _1A8
@@ -371,19 +371,19 @@ struct SymbolInfo {
 struct System : public StdSystem {
 	System();
 
-	virtual void initSoftReset();                                                      // _08
-	virtual RandomAccessStream* openFile(immut char* path, bool isRelativePath, bool); // _0C
-	virtual u32 copyRamToCache(u32, u32, u32);                                         // _10
-	virtual void copyCacheToRam(u32, u32, u32);                                        // _14
-	virtual void copyWaitUntilDone();                                                  // _18
-	virtual void copyCacheToTexture(CacheTexture*);                                    // _1C
-#if defined(VERSION_PIKIDEMO)                                                          //
-	virtual void forceHardReset() { mIsDemoTimeUp = TRUE; }                            // _20
-#endif                                                                                 //
-	virtual void parseArchiveDirectory(immut char* arcPath, immut char* dirPath);      // _24
-	virtual void sndPlaySe(u32);                                                       // _28
-	virtual void startLoading(LoadIdler* idler, bool useLoadScreen, u32 loadDelay);    // _2C
-	virtual void endLoading();                                                         // _30
+	virtual void initSoftReset();                                                                    // _08
+	virtual RandomAccessStream* openFile(immut char* path, bool isRelativePath = true, bool = true); // _0C
+	virtual u32 copyRamToCache(u32, u32, u32);                                                       // _10
+	virtual void copyCacheToRam(u32, u32, u32);                                                      // _14
+	virtual void copyWaitUntilDone();                                                                // _18
+	virtual void copyCacheToTexture(CacheTexture*);                                                  // _1C
+#if defined(VERSION_PIKIDEMO)                                                                        //
+	virtual void forceHardReset() { mIsDemoTimeUp = TRUE; }                                          // _20
+#endif                                                                                               //
+	virtual void parseArchiveDirectory(immut char* arcPath, immut char* dirPath);                    // _24
+	virtual void sndPlaySe(u32);                                                                     // _28
+	virtual void startLoading(LoadIdler* idler, bool useLoadScreen, u32 loadDelay);                  // _2C
+	virtual void endLoading();                                                                       // _30
 
 	~System();
 

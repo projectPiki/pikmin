@@ -2213,7 +2213,7 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 	{
 		gsys->getHeap(gsys->mActiveHeapIdx);
 		gameflow.mTimeMultiplier = 1.0f;
-		RandomAccessStream* data = gsys->openFile(flowCont.mCurrStageFilePath, true, true);
+		RandomAccessStream* data = gsys->openFile(flowCont.mCurrStageFilePath);
 		if (data) {
 			CmdStream* stream = new CmdStream(data);
 

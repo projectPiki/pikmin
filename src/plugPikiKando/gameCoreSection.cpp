@@ -954,7 +954,7 @@ void GameCoreSection::initStage()
 	bool useInit    = false;
 	bool usePlant   = false;
 	sprintf(path2, "%sdefault.gen", path);
-	RandomAccessStream* data = gsys->openFile(path2, true, true);
+	RandomAccessStream* data = gsys->openFile(path2);
 	if (data) {
 		PRINT("DEFAULT GEN LOADED **********************************\n");
 		generatorMgr->read(*data, false);
@@ -971,7 +971,7 @@ void GameCoreSection::initStage()
 	mNavi->reset();
 
 	sprintf(path2, "%s%d.gen", path, (gameflow.mWorldClock.mCurrentDay - 1) % MAX_DAYS);
-	data = gsys->openFile(path2, true, true);
+	data = gsys->openFile(path2);
 	if (data) {
 		PRINT("** FILE %s READING\n", path2);
 		dailyGeneratorMgr->read(*data, true);
@@ -986,7 +986,7 @@ void GameCoreSection::initStage()
 		flowCont.mCurrentStage->mHasInitialised = TRUE;
 
 		sprintf(path2, "%sinit.gen", path);
-		data = gsys->openFile(path2, true, true);
+		data = gsys->openFile(path2);
 		if (data) {
 			PRINT("** FILE %s READING\n", path2);
 			onceGeneratorMgr->read(*data, true);
@@ -997,7 +997,7 @@ void GameCoreSection::initStage()
 	}
 
 	sprintf(path2, "%splants.gen", path);
-	data = gsys->openFile(path2, true, true);
+	data = gsys->openFile(path2);
 	if (data) {
 		PRINT("** FILE %s READING\n", path2);
 		plantGeneratorMgr->read(*data, true);
@@ -1013,7 +1013,7 @@ void GameCoreSection::initStage()
 	for (gfInfo = (GenFileInfo*)flowCont.mCurrentStage->mGenFileList.mChild; gfInfo; gfInfo = (GenFileInfo*)gfInfo->mNext) {
 		if (day >= gfInfo->mFirstSpawnDay && day <= gfInfo->mLastSpawnDay && playerState->checkLimitGenFlag(i) == 0) {
 			sprintf(path2, "%s%s", path, gfInfo->mName);
-			data = gsys->openFile(path2, true, true);
+			data = gsys->openFile(path2);
 			if (data) {
 				GeneratorMgr* gen = new GeneratorMgr;
 				gen->setName(gfInfo->mName);
@@ -1156,7 +1156,7 @@ void GameCoreSection::initStage()
 	GameStat::minPikis = GameStat::allPikis;
 	PRINT("*** START WITH %d PIKIS\n", GameStat::minPikis);
 
-	RandomAccessStream* data2 = gsys->openFile("ghost/record.gst", true, true);
+	RandomAccessStream* data2 = gsys->openFile("ghost/record.gst");
 	if (data2) {
 		data2->getPending();
 		// int pend = ;

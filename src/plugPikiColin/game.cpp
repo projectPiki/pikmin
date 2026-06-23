@@ -121,7 +121,7 @@ void FlowController::readMapList(immut char* fileName)
 	mStageList.initCore("stages");
 
 	// try and open file
-	RandomAccessStream* file = gsys->openFile(fileName, true, true);
+	RandomAccessStream* file = gsys->openFile(fileName);
 	if (!file) {
 		return;
 	}

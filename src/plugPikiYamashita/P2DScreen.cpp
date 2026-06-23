@@ -48,7 +48,7 @@ void P2DScreen::set(const char* bloFileName, bool useAlphaMgr, bool useTexAnimMg
 	char path[PATH_MAX];
 	makeResName(bloFileName, path);
 
-	RandomAccessStream* file = gsys->openFile(path, p4, true);
+	RandomAccessStream* file = gsys->openFile(path, p4);
 	if (file) {
 		makeHiearachyPanes(this, file, true, true);
 		file->close();

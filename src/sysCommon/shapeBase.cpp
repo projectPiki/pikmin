@@ -3111,7 +3111,7 @@ void BaseShape::importDca(immut char* name, CmdStream* cmds)
  */
 AnimData* BaseShape::loadAnimation(immut char* name, bool isRelativePath)
 {
-	RandomAccessStream* stream = gsys->openFile(name, isRelativePath, true);
+	RandomAccessStream* stream = gsys->openFile(name, isRelativePath);
 	if (stream) {
 
 		CmdStream* cmds = new CmdStream(stream);

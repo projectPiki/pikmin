@@ -331,7 +331,7 @@ void System::parseArchiveDirectory(immut char* arcPath, immut char* dirPath)
 
 	stream.close();
 
-	RandomAccessStream* file = gsys->openFile(arcPath, true, true);
+	RandomAccessStream* file = gsys->openFile(arcPath);
 	if (file) {
 		file->readInt();
 		u32 num = file->readInt();
@@ -361,7 +361,7 @@ void System::parseArchiveDirectory(immut char* arcPath, immut char* dirPath)
  */
 static void ParseMapFile()
 {
-	RandomAccessStream* file = gsys->openFile("build.map", true, true);
+	RandomAccessStream* file = gsys->openFile("build.map");
 	if (!file) {
 		return;
 	}

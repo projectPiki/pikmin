@@ -97,7 +97,7 @@ void CoreNode::load(immut char* dirPath, immut char* fileName, u32)
 {
 	char filePath[PATH_MAX];
 	sprintf(filePath, "%s%s", dirPath, fileName);
-	RandomAccessStream* stream = gsys->openFile(filePath, true, true);
+	RandomAccessStream* stream = gsys->openFile(filePath);
 	if (stream) {
 		read(*stream);
 		stream->close();
