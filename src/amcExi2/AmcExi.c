@@ -107,8 +107,8 @@ void AmcEXIClearInterrupts(s32 doProcessInterface, s32 doExternalInterface)
 
 	if (doProcessInterface != 0) {
 		piCause = __PIRegs[PI_INTRPT_SRC];
-		piCause &= 0x1000;
-		piCause |= 0x1000;
+		piCause &= PI_INTRPT_DEBUG;
+		piCause |= PI_INTRPT_DEBUG;
 		__PIRegs[PI_INTRPT_SRC] = piCause;
 	}
 	if (doExternalInterface != 0) {

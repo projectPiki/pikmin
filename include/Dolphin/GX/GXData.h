@@ -132,27 +132,14 @@ extern struct __GXData_struct* gx;
 ////////////////////////////////////////////
 
 ///////////// REGISTER DEFINES /////////////
-// Declare registers.
-extern u16* __cpReg;
-extern u32* __piReg;
-extern u16* __memReg;
-extern u16* __peReg;
 
-// Define register addresses.
-#define GX_CP_ADDR  (0x0C000000)
-#define GX_PE_ADDR  (0x0C001000)
-#define GX_PI_ADDR  (0x0C003000)
-#define GX_MEM_ADDR (0x0C004000)
+// In GX, these hardware registers are commonly accessed through these variables rather than what is defined in "hw_regs.h".
+// NOTE: DWARF info lists all of these as "void *", but these types make more sense.
+extern vu16* __cpReg;
+extern vu32* __piReg;
+extern vu16* __memReg;
+extern vu16* __peReg;
 
-#define GX_GET_MEM_REG(offset) (*(vu16*)((vu16*)(__memReg) + (offset)))
-#define GX_GET_CP_REG(offset)  (*(vu16*)((vu16*)(__cpReg) + (offset)))
-#define GX_GET_PE_REG(offset)  (*(vu16*)((vu16*)(__peReg) + (offset)))
-#define GX_GET_PI_REG(offset)  (*(vu32*)((vu32*)(__piReg) + (offset)))
-
-#define GX_SET_MEM_REG(offset, val) (*(vu16*)((vu16*)(__memReg) + (offset)) = val)
-#define GX_SET_CP_REG(offset, val)  (*(vu16*)((vu16*)(__cpReg) + (offset)) = val)
-#define GX_SET_PE_REG(offset, val)  (*(vu16*)((vu16*)(__peReg) + (offset)) = val)
-#define GX_SET_PI_REG(offset, val)  (*(vu32*)((vu32*)(__piReg) + (offset)) = val)
 #define VERIF_RAS_REG(value)        (__gxVerif->rasRegs[((value) & 0xFF000000) >> 24] = value)
 
 #define GX_WRITE_RAS_REG(value) \
@@ -226,11 +213,11 @@ extern u16* __peReg;
 static inline u32 GXReadMEMReg(u32 addrLo, u32 addrHi)
 {
 	u32 hiStart, hiNew, lo;
-	hiStart = GX_GET_MEM_REG(addrHi);
+	hiStart = __memReg[addrHi];
 	do {
 		hiNew   = hiStart;
-		lo      = GX_GET_MEM_REG(addrLo);
-		hiStart = GX_GET_MEM_REG(addrHi);
+		lo      = __memReg[addrLo];
+		hiStart = __memReg[addrHi];
 	} while (hiStart != hiNew);
 
 	return ((hiStart << 16) | lo);
@@ -239,11 +226,11 @@ static inline u32 GXReadMEMReg(u32 addrLo, u32 addrHi)
 static inline u32 GXReadCPReg(u32 addrLo, u32 addrHi)
 {
 	u32 hiStart, hiNew, lo;
-	hiStart = GX_GET_CP_REG(addrHi);
+	hiStart = __cpReg[addrHi];
 	do {
 		hiNew   = hiStart;
-		lo      = GX_GET_CP_REG(addrLo);
-		hiStart = GX_GET_CP_REG(addrHi);
+		lo      = __cpReg[addrLo];
+		hiStart = __cpReg[addrHi];
 	} while (hiStart != hiNew);
 
 	return ((hiStart << 16) | lo);
@@ -252,11 +239,11 @@ static inline u32 GXReadCPReg(u32 addrLo, u32 addrHi)
 static inline u32 GXReadPEReg(u32 addrLo, u32 addrHi)
 {
 	u32 hiStart, hiNew, lo;
-	hiStart = GX_GET_PE_REG(addrHi);
+	hiStart = __peReg[addrHi];
 	do {
 		hiNew   = hiStart;
-		lo      = GX_GET_PE_REG(addrLo);
-		hiStart = GX_GET_PE_REG(addrHi);
+		lo      = __peReg[addrLo];
+		hiStart = __peReg[addrHi];
 	} while (hiStart != hiNew);
 
 	return ((hiStart << 16) | lo);
@@ -265,11 +252,11 @@ static inline u32 GXReadPEReg(u32 addrLo, u32 addrHi)
 static inline u32 GXReadPIReg(u32 addrLo, u32 addrHi)
 {
 	u32 hiStart, hiNew, lo;
-	hiStart = GX_GET_PI_REG(addrHi);
+	hiStart = __piReg[addrHi];
 	do {
 		hiNew   = hiStart;
-		lo      = GX_GET_PI_REG(addrLo);
-		hiStart = GX_GET_PI_REG(addrHi);
+		lo      = __piReg[addrLo];
+		hiStart = __piReg[addrHi];
 	} while (hiStart != hiNew);
 
 	return ((hiStart << 16) | lo);

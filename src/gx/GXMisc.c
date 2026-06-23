@@ -1,5 +1,6 @@
 #include "Dolphin/PPCArch.h"
 #include "Dolphin/gx.h"
+#include "Dolphin/hw_regs.h"
 #include <stddef.h>
 
 static GXDrawSyncCallback TokenCB;
@@ -91,9 +92,9 @@ static inline void __GXAbortWait(u32 clocks)
 
 void __GXAbort(void)
 {
-	__piReg[0x18 / 4] = 1;
+	__piReg[PI_FIFO_RESET] = 1;
 	__GXAbortWait(200);
-	__piReg[0x18 / 4] = 0;
+	__piReg[PI_FIFO_RESET] = 0;
 	__GXAbortWait(20);
 }
 
@@ -135,7 +136,7 @@ void GXSetDrawSync(u16 token)
  */
 u16 GXReadDrawSync(void)
 {
-	u16 token = __peReg[7];
+	u16 token = __peReg[PE_TOKEN];
 	return token;
 }
 
@@ -220,8 +221,8 @@ void GXPokeAlphaMode(GXCompare func, u8 threshold)
 	u32 reg;
 
 	// CHECK_GXBEGIN(0x25F, "GXPokeAlphaMode");
-	reg        = (func << 8) | threshold;
-	__peReg[3] = reg;
+	reg                    = (func << 8) | threshold;
+	__peReg[PE_ALPHA_MODE] = reg;
 }
 
 /**
@@ -235,7 +236,7 @@ void GXPokeAlphaRead(GXAlphaReadMode mode)
 	reg = 0;
 	SET_REG_FIELD(642, reg, 2, 0, mode);
 	SET_REG_FIELD(643, reg, 1, 2, 1);
-	__peReg[4] = reg;
+	__peReg[PE_ALPHA_READ] = reg;
 }
 
 /**
@@ -246,9 +247,9 @@ void GXPokeAlphaUpdate(GXBool update_enable)
 	u32 reg;
 
 	// CHECK_GXBEGIN(0x277, "GXPokeAlphaUpdate");
-	reg = __peReg[1];
+	reg = __peReg[PE_ALPHA_CONFIG];
 	SET_REG_FIELD(653, reg, 1, 4, update_enable);
-	__peReg[1] = reg;
+	__peReg[PE_ALPHA_CONFIG] = reg;
 }
 
 /**
@@ -259,7 +260,7 @@ void GXPokeBlendMode(GXBlendMode type, GXBlendFactor src_factor, GXBlendFactor d
 	u32 reg;
 
 	// CHECK_GXBEGIN(0x284, "GXPokeBlendUpdate");
-	reg = __peReg[1];
+	reg = __peReg[PE_ALPHA_CONFIG];
 	SET_REG_FIELD(669, reg, 1, 0, (type == GX_BM_BLEND) || (type == GX_BM_SUBTRACT));
 	SET_REG_FIELD(670, reg, 1, 11, (type == GX_BM_SUBTRACT));
 	SET_REG_FIELD(672, reg, 1, 1, (type == GX_BM_LOGIC));
@@ -267,7 +268,7 @@ void GXPokeBlendMode(GXBlendMode type, GXBlendFactor src_factor, GXBlendFactor d
 	SET_REG_FIELD(674, reg, 3, 8, src_factor);
 	SET_REG_FIELD(675, reg, 3, 5, dst_factor);
 	SET_REG_FIELD(676, reg, 8, 24, 0x41);
-	__peReg[1] = reg;
+	__peReg[PE_ALPHA_CONFIG] = reg;
 }
 
 /**
@@ -278,9 +279,9 @@ void GXPokeColorUpdate(GXBool update_enable)
 	u32 reg;
 
 	// CHECK_GXBEGIN(0x29D, "GXPokeColorUpdate");
-	reg = __peReg[1];
+	reg = __peReg[PE_ALPHA_CONFIG];
 	SET_REG_FIELD(687, reg, 1, 3, update_enable);
-	__peReg[1] = reg;
+	__peReg[PE_ALPHA_CONFIG] = reg;
 }
 
 /**
@@ -293,7 +294,7 @@ void GXPokeDstAlpha(GXBool enable, u8 alpha)
 	// CHECK_GXBEGIN(0x2A9, "GXPokeDstAlpha");
 	SET_REG_FIELD(696, reg, 8, 0, alpha);
 	SET_REG_FIELD(697, reg, 1, 8, enable);
-	__peReg[2] = reg;
+	__peReg[PE_DEST_ALPHA_CONFIG] = reg;
 }
 
 /**
@@ -304,9 +305,9 @@ void GXPokeDither(GXBool dither)
 	u32 reg;
 
 	// CHECK_GXBEGIN(0x2B5, "GXPokeDither");
-	reg = __peReg[1];
+	reg = __peReg[PE_ALPHA_CONFIG];
 	SET_REG_FIELD(707, reg, 1, 2, dither);
-	__peReg[1] = reg;
+	__peReg[PE_ALPHA_CONFIG] = reg;
 }
 
 /**
@@ -321,7 +322,7 @@ void GXPokeZMode(GXBool compare_enable, GXCompare func, GXBool update_enable)
 	SET_REG_FIELD(716, reg, 1, 0, compare_enable);
 	SET_REG_FIELD(717, reg, 3, 1, func);
 	SET_REG_FIELD(718, reg, 1, 4, update_enable);
-	__peReg[0] = reg;
+	__peReg[PE_Z_CONFIG] = reg;
 }
 
 /**
@@ -405,7 +406,7 @@ static void GXTokenInterruptHandler(__OSInterrupt interrupt, OSContext* context)
 	OSContext exceptionContext;
 	u32 reg;
 
-	token = __peReg[7];
+	token = __peReg[PE_TOKEN];
 	if (TokenCB != NULL) {
 		OSClearContext(&exceptionContext);
 		OSSetCurrentContext(&exceptionContext);
@@ -413,9 +414,9 @@ static void GXTokenInterruptHandler(__OSInterrupt interrupt, OSContext* context)
 		OSClearContext(&exceptionContext);
 		OSSetCurrentContext(context);
 	}
-	reg = __peReg[5];
+	reg = __peReg[PE_CONTROL_REGISTER];
 	SET_REG_FIELD(0, reg, 1, 2, 1);
-	__peReg[5] = reg;
+	__peReg[PE_CONTROL_REGISTER] = reg;
 }
 
 /**
@@ -442,10 +443,10 @@ static void GXFinishInterruptHandler(__OSInterrupt interrupt, OSContext* context
 	OSContext exceptionContext;
 	u32 reg;
 
-	reg = __peReg[5];
+	reg = __peReg[PE_CONTROL_REGISTER];
 	SET_REG_FIELD(0, reg, 1, 3, 1);
-	__peReg[5] = reg;
-	DrawDone   = 1;
+	__peReg[PE_CONTROL_REGISTER] = reg;
+	DrawDone                     = 1;
 	if (DrawDoneCB != NULL) {
 		OSClearContext(&exceptionContext);
 		OSSetCurrentContext(&exceptionContext);
@@ -467,12 +468,12 @@ void __GXPEInit(void)
 	OSInitThreadQueue(&FinishQueue);
 	__OSUnmaskInterrupts(OS_INTERRUPTMASK_PI_PE_TOKEN);
 	__OSUnmaskInterrupts(OS_INTERRUPTMASK_PI_PE_FINISH);
-	reg = __peReg[5];
+	reg = __peReg[PE_CONTROL_REGISTER];
 	SET_REG_FIELD(0, reg, 1, 2, 1);
 	SET_REG_FIELD(0, reg, 1, 3, 1);
 	SET_REG_FIELD(0, reg, 1, 0, 1);
 	SET_REG_FIELD(0, reg, 1, 1, 1);
-	__peReg[5] = reg;
+	__peReg[PE_CONTROL_REGISTER] = reg;
 }
 
 /**

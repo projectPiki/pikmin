@@ -2,6 +2,7 @@
 
 #include "Dolphin/GX/GXData.h"
 #include "Dolphin/GX/GXMisc.h"
+#include "Dolphin/hw_regs.h"
 
 /**
  * @TODO: Documentation
@@ -108,8 +109,8 @@ void GXSetGPMetric(GXPerf0 perf0, GXPerf1 perf1)
 	case GX_PERF1_VC_MISS_REQ:
 	case GX_PERF1_CP_ALL_REQ:
 	{
-		reg        = 0;
-		__cpReg[3] = reg;
+		reg                     = 0;
+		__cpReg[CP_PERF_SELECT] = reg;
 		break;
 	}
 	case GX_PERF1_NONE:
@@ -452,26 +453,26 @@ void GXSetGPMetric(GXPerf0 perf0, GXPerf1 perf1)
 	}
 	case GX_PERF1_FIFO_REQ:
 	{
-		reg        = 2;
-		__cpReg[3] = reg;
+		reg                     = 2;
+		__cpReg[CP_PERF_SELECT] = reg;
 		break;
 	}
 	case GX_PERF1_CALL_REQ:
 	{
-		reg        = 3;
-		__cpReg[3] = reg;
+		reg                     = 3;
+		__cpReg[CP_PERF_SELECT] = reg;
 		break;
 	}
 	case GX_PERF1_VC_MISS_REQ:
 	{
-		reg        = 4;
-		__cpReg[3] = reg;
+		reg                     = 4;
+		__cpReg[CP_PERF_SELECT] = reg;
 		break;
 	}
 	case GX_PERF1_CP_ALL_REQ:
 	{
-		reg        = 5;
-		__cpReg[3] = reg;
+		reg                     = 5;
+		__cpReg[CP_PERF_SELECT] = reg;
 		break;
 	}
 	case GX_PERF1_CLOCKS:
@@ -505,20 +506,20 @@ void GXReadGPMetric(u32* cnt0, u32* cnt1)
 
 	OSAssertMsgLine(0x286, !gx->inDispList, "GXReadGPMetric: don't use in a display list");
 
-	ctrl   = __cpReg[32];
-	ctrh   = __cpReg[33];
+	ctrl   = __cpReg[CP_XF_RASBUSY_LO];
+	ctrh   = __cpReg[CP_XF_RASBUSY_HI];
 	cpCtr0 = (ctrh << 16) | ctrl;
 
-	ctrl   = __cpReg[34];
-	ctrh   = __cpReg[35];
+	ctrl   = __cpReg[CP_XF_CLKS_L0];
+	ctrh   = __cpReg[CP_XF_CLKS_HI];
 	cpCtr1 = (ctrh << 16) | ctrl;
 
-	ctrl   = __cpReg[36];
-	ctrh   = __cpReg[37];
+	ctrl   = __cpReg[CP_XF_WAIT_IN_LO];
+	ctrh   = __cpReg[CP_XF_WAIT_IN_HI];
 	cpCtr2 = (ctrh << 16) | ctrl;
 
-	ctrl   = __cpReg[38];
-	ctrh   = __cpReg[39];
+	ctrl   = __cpReg[CP_XF_WAIT_OUT_LO];
+	ctrh   = __cpReg[CP_XF_WAIT_OUT_HI];
 	cpCtr3 = (ctrh << 16) | ctrl;
 
 	switch (gx->perf0) {
@@ -651,8 +652,8 @@ void GXClearGPMetric(void)
 	u32 reg;
 
 	OSAssertMsgLine(0x322, !gx->inDispList, "GXClearGPMetric: don't use in a display list");
-	reg        = 4;
-	__cpReg[2] = reg;
+	reg               = 4;
+	__cpReg[CP_CLEAR] = reg;
 }
 
 /**
@@ -690,44 +691,44 @@ void GXReadMemMetric(u32* cp_req, u32* tc_req, u32* cpu_rd_req, u32* cpu_wr_req,
 
 	OSAssertMsgLine(0x380, !gx->inDispList, "GXReadMemMetric: don't use in a display list");
 
-	ctrl    = __memReg[26];
-	ctrh    = __memReg[25];
+	ctrl    = __memReg[MEM_TIMER0_LO];
+	ctrh    = __memReg[MEM_TIMER0_HI];
 	*cp_req = (ctrh << 16) | ctrl;
 
-	ctrl    = __memReg[28];
-	ctrh    = __memReg[27];
+	ctrl    = __memReg[MEM_TIMER1_LO];
+	ctrh    = __memReg[MEM_TIMER1_HI];
 	*tc_req = (ctrh << 16) | ctrl;
 
-	ctrl        = __memReg[30];
-	ctrh        = __memReg[29];
+	ctrl        = __memReg[MEM_TIMER2_LO];
+	ctrh        = __memReg[MEM_TIMER2_HI];
 	*cpu_rd_req = (ctrh << 16) | ctrl;
 
-	ctrl        = __memReg[32];
-	ctrh        = __memReg[31];
+	ctrl        = __memReg[MEM_TIMER3_LO];
+	ctrh        = __memReg[MEM_TIMER3_HI];
 	*cpu_wr_req = (ctrh << 16) | ctrl;
 
-	ctrl     = __memReg[34];
-	ctrh     = __memReg[33];
+	ctrl     = __memReg[MEM_TIMER4_LO];
+	ctrh     = __memReg[MEM_TIMER4_HI];
 	*dsp_req = (ctrh << 16) | ctrl;
 
-	ctrl    = __memReg[36];
-	ctrh    = __memReg[35];
+	ctrl    = __memReg[MEM_TIMER5_LO];
+	ctrh    = __memReg[MEM_TIMER5_HI];
 	*io_req = (ctrh << 16) | ctrl;
 
-	ctrl    = __memReg[38];
-	ctrh    = __memReg[37];
+	ctrl    = __memReg[MEM_TIMER6_LO];
+	ctrh    = __memReg[MEM_TIMER6_HI];
 	*vi_req = (ctrh << 16) | ctrl;
 
-	ctrl    = __memReg[40];
-	ctrh    = __memReg[39];
+	ctrl    = __memReg[MEM_TIMER7_LO];
+	ctrh    = __memReg[MEM_TIMER7_HI];
 	*pe_req = (ctrh << 16) | ctrl;
 
-	ctrl    = __memReg[42];
-	ctrh    = __memReg[41];
+	ctrl    = __memReg[MEM_TIMER8_LO];
+	ctrh    = __memReg[MEM_TIMER8_HI];
 	*rf_req = (ctrh << 16) | ctrl;
 
-	ctrl    = __memReg[44];
-	ctrh    = __memReg[43];
+	ctrl    = __memReg[MEM_TIMER9_LO];
+	ctrh    = __memReg[MEM_TIMER9_HI];
 	*fi_req = (ctrh << 16) | ctrl;
 }
 
@@ -739,26 +740,26 @@ void GXClearMemMetric(void)
 {
 	OSAssertMsgLine(0x3B9, !gx->inDispList, "GXClearMemMetric: don't use in a display list");
 
-	__memReg[25] = 0;
-	__memReg[26] = 0;
-	__memReg[27] = 0;
-	__memReg[28] = 0;
-	__memReg[30] = 0;
-	__memReg[29] = 0;
-	__memReg[32] = 0;
-	__memReg[31] = 0;
-	__memReg[34] = 0;
-	__memReg[33] = 0;
-	__memReg[36] = 0;
-	__memReg[35] = 0;
-	__memReg[38] = 0;
-	__memReg[37] = 0;
-	__memReg[40] = 0;
-	__memReg[39] = 0;
-	__memReg[42] = 0;
-	__memReg[41] = 0;
-	__memReg[44] = 0;
-	__memReg[43] = 0;
+	__memReg[MEM_TIMER0_HI] = 0;
+	__memReg[MEM_TIMER0_LO] = 0;
+	__memReg[MEM_TIMER1_HI] = 0;
+	__memReg[MEM_TIMER1_LO] = 0;
+	__memReg[MEM_TIMER2_LO] = 0;
+	__memReg[MEM_TIMER2_HI] = 0;
+	__memReg[MEM_TIMER3_LO] = 0;
+	__memReg[MEM_TIMER3_HI] = 0;
+	__memReg[MEM_TIMER4_LO] = 0;
+	__memReg[MEM_TIMER4_HI] = 0;
+	__memReg[MEM_TIMER5_LO] = 0;
+	__memReg[MEM_TIMER5_HI] = 0;
+	__memReg[MEM_TIMER6_LO] = 0;
+	__memReg[MEM_TIMER6_HI] = 0;
+	__memReg[MEM_TIMER7_LO] = 0;
+	__memReg[MEM_TIMER7_HI] = 0;
+	__memReg[MEM_TIMER8_LO] = 0;
+	__memReg[MEM_TIMER8_HI] = 0;
+	__memReg[MEM_TIMER9_LO] = 0;
+	__memReg[MEM_TIMER9_HI] = 0;
 }
 
 /**
@@ -771,28 +772,28 @@ void GXReadPixMetric(u32* top_pixels_in, u32* top_pixels_out, u32* bot_pixels_in
 
 	OSAssertMsgLine(0x3F1, !gx->inDispList, "GXReadPixMetric: don't use in a display list");
 
-	ctrl           = __peReg[12];
-	ctrh           = __peReg[13];
+	ctrl           = __peReg[PE_PERF_ZCOMP_INPUT_ZCOMPLOC_LO];
+	ctrh           = __peReg[PE_PERF_ZCOMP_INPUT_ZCOMPLOC_HI];
 	*top_pixels_in = ((ctrh << 16) | ctrl) * 4;
 
-	ctrl            = __peReg[14];
-	ctrh            = __peReg[15];
+	ctrl            = __peReg[PE_PERF_ZCOMP_OUTPUT_ZCOMPLOC_LO];
+	ctrh            = __peReg[PE_PERF_ZCOMP_OUTPUT_ZCOMPLOC_HI];
 	*top_pixels_out = ((ctrh << 16) | ctrl) * 4;
 
-	ctrl           = __peReg[16];
-	ctrh           = __peReg[17];
+	ctrl           = __peReg[PE_PERF_ZCOMP_INPUT_LO];
+	ctrh           = __peReg[PE_PERF_ZCOMP_INPUT_HI];
 	*bot_pixels_in = ((ctrh << 16) | ctrl) * 4;
 
-	ctrl            = __peReg[18];
-	ctrh            = __peReg[19];
+	ctrl            = __peReg[PE_PERF_ZCOMP_OUTPUT_LO];
+	ctrh            = __peReg[PE_PERF_ZCOMP_OUTPUT_HI];
 	*bot_pixels_out = ((ctrh << 16) | ctrl) * 4;
 
-	ctrl           = __peReg[20];
-	ctrh           = __peReg[21];
+	ctrl           = __peReg[PE_PERF_BLEND_INPUT_LO];
+	ctrh           = __peReg[PE_PERF_BLEND_INPUT_HI];
 	*clr_pixels_in = ((ctrh << 16) | ctrl) * 4;
 
-	ctrl       = __peReg[22];
-	ctrh       = __peReg[23];
+	ctrl       = __peReg[PE_PERF_EFB_COPY_CLOCKS_LO];
+	ctrh       = __peReg[PE_PERF_EFB_COPY_CLOCKS_HI];
 	*copy_clks = (ctrh << 16) | ctrl;
 }
 
@@ -835,16 +836,16 @@ void GXReadVCacheMetric(u32* check, u32* miss, u32* stall)
 {
 	u32 hi, lo;
 
-	hi     = __cpReg[41];
-	lo     = __cpReg[40];
+	hi     = __cpReg[CP_VCACHE_METRIC_CHECK_HI];
+	lo     = __cpReg[CP_VCACHE_METRIC_CHECK_LO];
 	*check = (hi << 16) | lo;
 
-	hi    = __cpReg[43];
-	lo    = __cpReg[42];
+	hi    = __cpReg[CP_VCACHE_METRIC_MISS_HI];
+	lo    = __cpReg[CP_VCACHE_METRIC_MISS_LO];
 	*miss = (hi << 16) | lo;
 
-	hi     = __cpReg[45];
-	lo     = __cpReg[44];
+	hi     = __cpReg[CP_VCACHE_METRIC_STALL_HI];
+	lo     = __cpReg[CP_VCACHE_METRIC_STALL_LO];
 	*stall = (hi << 16) | lo;
 }
 
@@ -882,20 +883,20 @@ void GXReadXfRasMetric(u32* xf_wait_in, u32* xf_wait_out, u32* ras_busy, u32* cl
 {
 	u32 ctrl, ctrh;
 
-	ctrl      = __cpReg[32];
-	ctrh      = __cpReg[33];
+	ctrl      = __cpReg[CP_XF_RASBUSY_LO];
+	ctrh      = __cpReg[CP_XF_RASBUSY_HI];
 	*ras_busy = (ctrh << 16) | ctrl;
 
-	ctrl    = __cpReg[34];
-	ctrh    = __cpReg[35];
+	ctrl    = __cpReg[CP_XF_CLKS_L0];
+	ctrh    = __cpReg[CP_XF_CLKS_HI];
 	*clocks = (ctrh << 16) | ctrl;
 
-	ctrl        = __cpReg[36];
-	ctrh        = __cpReg[37];
+	ctrl        = __cpReg[CP_XF_WAIT_IN_LO];
+	ctrh        = __cpReg[CP_XF_WAIT_IN_HI];
 	*xf_wait_in = (ctrh << 16) | ctrl;
 
-	ctrl         = __cpReg[38];
-	ctrh         = __cpReg[39];
+	ctrl         = __cpReg[CP_XF_WAIT_OUT_LO];
+	ctrh         = __cpReg[CP_XF_WAIT_OUT_HI];
 	*xf_wait_out = (ctrh << 16) | ctrl;
 }
 
@@ -909,10 +910,10 @@ u32 GXReadClksPerVtx(void)
 	u32 ctrh;
 
 	GXDrawDone();
-	__cpReg[49] = 0x1007;
-	__cpReg[48] = 0x1007;
+	__cpReg[CP_CLKS_PER_VTX_IN_HI] = 0x1007;
+	__cpReg[CP_CLKS_PER_VTX_IN_LO] = 0x1007;
 
-	ctrh    = __cpReg[50];
+	ctrh    = __cpReg[CP_CLKS_PER_VTX_OUT];
 	perfCnt = ctrh >> 8;
 	return perfCnt;
 }

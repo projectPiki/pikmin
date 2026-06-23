@@ -46,7 +46,7 @@ static void DbgHandler(__OSInterrupt interrupt, OSContext* context)
 	OSContext exceptionContext;
 #endif
 
-	__PIRegs[0] = 0x1000;
+	__PIRegs[PI_INTRPT_SRC] = PI_INTRPT_DEBUG;
 	if (ExiCallback) {
 #if OS_BUILD_VERSION >= 20011112L
 		OSClearContext(&exceptionContext);

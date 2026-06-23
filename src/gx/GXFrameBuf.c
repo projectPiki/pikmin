@@ -1,4 +1,5 @@
 #include "Dolphin/gx.h"
+#include "Dolphin/hw_regs.h"
 
 GXRenderModeObj GXNtsc240Ds = {
 	1,
@@ -956,8 +957,8 @@ void GXClearBoundingBox(void)
 void GXReadBoundingBox(u16* left, u16* top, u16* right, u16* bottom)
 {
 	CHECK_GXBEGIN(0x671, "GXReadBoundingBox");
-	*left   = __peReg[8];
-	*top    = __peReg[10];
-	*right  = __peReg[9];
-	*bottom = __peReg[11];
+	*left   = __peReg[PE_BB_LEFT];
+	*top    = __peReg[PE_BB_TOP];
+	*right  = __peReg[PE_BB_RIGHT];
+	*bottom = __peReg[PE_BB_BOTTOM];
 }
