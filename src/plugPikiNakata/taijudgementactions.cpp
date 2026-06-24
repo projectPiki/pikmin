@@ -3,6 +3,7 @@
 #include "Stickers.h"
 #include "TAI/JudgementActions.h"
 #include "TekiConditions.h"
+#include "sysNew.h"
 #include "teki.h"
 
 /**
@@ -123,7 +124,8 @@ bool TaiTargetVisibleNaviPikiAction::act(Teki& teki)
  */
 bool TaiTargetVisibleNaviAction::act(Teki& teki)
 {
-	Creature* navi = naviMgr->findClosest(teki.getPosition(), &TekiAndCondition(&TekiVisibleCondition(&teki), &TekiNaviCondition()));
+	Creature* navi = naviMgr->findClosest(
+	    teki.getPosition(), stack_new(TekiAndCondition)(stack_new(TekiVisibleCondition)(&teki), stack_new(TekiNaviCondition)()));
 	if (!navi) {
 		return false;
 	}

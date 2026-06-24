@@ -18,6 +18,7 @@
 #include "Stickers.h"
 #include "UtEffect.h"
 #include "jaudio/pikiinter.h"
+#include "sysNew.h"
 #include "teki.h"
 #include "zen/Math.h"
 
@@ -854,7 +855,7 @@ void Pellet::finishMotion()
 	if (mPelletView) {
 		mPelletView->viewFinishMotion();
 	} else {
-		mAnimator.finishMotion(&PaniMotionInfo(PANI_NO_MOTION), nullptr);
+		mAnimator.finishMotion(stack_new(PaniMotionInfo)(PANI_NO_MOTION), nullptr);
 	}
 }
 

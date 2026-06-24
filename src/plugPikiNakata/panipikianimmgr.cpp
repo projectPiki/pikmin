@@ -1,5 +1,6 @@
 #include "DebugLog.h"
 #include "PaniPikiAnimator.h"
+#include "sysNew.h"
 
 PaniMotionTable* PaniPikiAnimMgr::motionTable;
 
@@ -95,7 +96,7 @@ void PaniPikiAnimMgr::startMotion(immut PaniMotionInfo& motion1, immut PaniMotio
  */
 void PaniPikiAnimMgr::finishMotion(PaniAnimKeyListener* listener)
 {
-	finishMotion(&PaniMotionInfo(PANI_NO_MOTION, listener), &PaniMotionInfo(PANI_NO_MOTION, nullptr));
+	finishMotion(stack_new(PaniMotionInfo)(PANI_NO_MOTION, listener), stack_new(PaniMotionInfo)(PANI_NO_MOTION, nullptr));
 }
 
 /**

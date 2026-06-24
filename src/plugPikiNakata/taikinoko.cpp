@@ -11,6 +11,7 @@
 #include "TAI/ReactionActions.h"
 #include "TAI/TimerActions.h"
 #include "TekiConditions.h"
+#include "sysNew.h"
 #include "teki.h"
 
 /**
@@ -532,7 +533,8 @@ bool TaiKinokoDischargingSporesAction::act(Teki& teki)
 		} else if (teki.getAnimationKeyOption(BTeki::ANIMATION_KEY_OPTION_ACTION_2)) {
 			PRINT_NAKATA("TaiKinokoDischargingSporesAction:act:%08x:ACTION_2:\n", &teki);
 			InteractSpore NRef spore = InteractSpore(&teki);
-			TekiAndCondition andCond(&TekiRecognitionCondition(&teki), &TekiDistanceCondition(&teki, teki.getAttackRange()));
+			TekiAndCondition andCond(stack_new(TekiRecognitionCondition)(&teki),
+			                         stack_new(TekiDistanceCondition)(&teki, teki.getAttackRange()));
 			teki.interactNaviPiki(spore, andCond);
 			rumbleMgr->start(RUMBLE_Unk6, 0, teki.getPosition());
 		}

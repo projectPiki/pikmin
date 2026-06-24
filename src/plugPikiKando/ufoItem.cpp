@@ -10,6 +10,7 @@
 #include "UtEffect.h"
 #include "gameflow.h"
 #include "jaudio/pikiinter.h"
+#include "sysNew.h"
 
 /**
  * @todo: Documentation
@@ -251,7 +252,7 @@ void UfoItem::startConeEffect(int)
 	EffectParm eff(goal, suck);
 	mConeEffectId = KandoEffect::WhistleTemplate1;
 	utEffectMgr->cast(mConeEffectId, eff);
-	mAnimator.startMotion(0, &PaniMotionInfo(UfoMotion::Wait, this));
+	mAnimator.startMotion(0, stack_new(PaniMotionInfo)(UfoMotion::Wait, this));
 	mAnimator.setMotionSpeed(0, 30.0f);
 	PRINT("*** UFO FUTA OPEN !!!!!!!!!!!!!!________________________________\n");
 }
@@ -496,9 +497,9 @@ void UfoItem::suckMe(Pellet* pelt)
 {
 	PRINT("UFO ** SUCK PELLET\n");
 	if (playerState->isUfoBroken()) {
-		mAnimator.startMotion(0, &PaniMotionInfo(UfoMotion::WaitTutorial, this));
+		mAnimator.startMotion(0, stack_new(PaniMotionInfo)(UfoMotion::WaitTutorial, this));
 	} else {
-		mAnimator.startMotion(0, &PaniMotionInfo(UfoMotion::Wait, this));
+		mAnimator.startMotion(0, stack_new(PaniMotionInfo)(UfoMotion::Wait, this));
 	}
 
 	Navi* navi = naviMgr->getNavi();
@@ -512,7 +513,7 @@ void UfoItem::suckMe(Pellet* pelt)
 void UfoItem::startYozora()
 {
 	// "start night sky"
-	mAnimator.startMotion(0, &PaniMotionInfo(UfoMotion::Wait));
+	mAnimator.startMotion(0, stack_new(PaniMotionInfo)(UfoMotion::Wait));
 	mAnimator.setMotionSpeed(0, 0.0f);
 
 	u8 level    = playerState->mShipUpgradeLevel;
@@ -526,7 +527,7 @@ void UfoItem::startYozora()
  */
 void UfoItem::startGalaxy()
 {
-	mAnimator.startMotion(0, &PaniMotionInfo(UfoMotion::Wait));
+	mAnimator.startMotion(0, stack_new(PaniMotionInfo)(UfoMotion::Wait));
 	mAnimator.setMotionSpeed(0, 0.0f);
 
 	u8 level    = playerState->mShipUpgradeLevel;
@@ -783,7 +784,7 @@ void UfoItem::startTakeoff()
 	if (idx < 0) {
 		idx = 0;
 	}
-	mAnimator.startMotion(0, &PaniMotionInfo(motions[idx], this));
+	mAnimator.startMotion(0, stack_new(PaniMotionInfo)(motions[idx], this));
 	mAnimator.setMotionSpeed(0, 30.0f);
 	UtEffectMgr::kill(mConeEffectId);
 	playerState->startSpecialMotions();
@@ -832,10 +833,10 @@ void UfoItem::startAI(int)
 	mAnimator.init(mShipModel, itemMgr->mUfoMotionTable);
 
 	if (playerState->isUfoBroken()) {
-		mAnimator.startMotion(0, &PaniMotionInfo(UfoMotion::WaitTutorial));
+		mAnimator.startMotion(0, stack_new(PaniMotionInfo)(UfoMotion::WaitTutorial));
 		playEventSound(this, SE_UFO_DESTROY);
 	} else {
-		mAnimator.startMotion(0, &PaniMotionInfo(UfoMotion::Wait));
+		mAnimator.startMotion(0, stack_new(PaniMotionInfo)(UfoMotion::Wait));
 		playEventSound(this, SE_UFO_IDLING);
 	}
 	mAnimator.stopAllMotions();
@@ -898,7 +899,7 @@ void UfoItem::startAccess()
 	mIsMenuOpen = true;
 	startConeEffect(false);
 
-	mAnimator.startMotion(0, &PaniMotionInfo(UfoMotion::OpenClose, this));
+	mAnimator.startMotion(0, stack_new(PaniMotionInfo)(UfoMotion::OpenClose, this));
 	mAnimator.setMotionSpeed(0, 30.0f);
 }
 

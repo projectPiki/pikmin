@@ -1763,7 +1763,7 @@ void GameCoreSection::draw(Graphics& gfx)
 	naviMgr->renderCircle(gfx);
 	mMapMgr->drawXLU(gfx);
 	MATCHING_START_TIMER("shadow draw", true);
-	mMapMgr->mDayMgr->setFog(gfx, &COLOUR_TRANSPARENT);
+	mMapMgr->mDayMgr->setFog(gfx, stack_new(Colour)(0, 0, 0, 0));
 	Matrix4f mtx;
 	gfx.calcViewMatrix(Matrix4f::ident, mtx);
 	gfx.useMatrix(mtx, 0);

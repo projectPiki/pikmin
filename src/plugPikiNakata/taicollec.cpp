@@ -15,6 +15,7 @@
 #include "TAI/ReactionActions.h"
 #include "TAI/TimerActions.h"
 #include "TekiConditions.h"
+#include "sysNew.h"
 #include "teki.h"
 
 /**
@@ -978,9 +979,10 @@ bool TaiCollecTargetPelletAction::act(Teki& teki)
 	Creature* target = teki.getCreaturePointer(3);
 	int carryPower   = teki.getParameterI(COLLECPI_CarryPower);
 	Pellet* nearest  = (Pellet*)pelletMgr->findClosest(
-        teki.getPosition(),
-        &TekiAndCondition(&TekiAndCondition(&TekiVisibleCondition(&teki), &TekiCollecTargetPelletCondition(&teki, carryPower)),
-	                       &TekiNotCondition(&TekiCreaturePointerCondition(target))));
+	    teki.getPosition(),
+	    stack_new(TekiAndCondition)(stack_new(TekiAndCondition)(stack_new(TekiVisibleCondition)(&teki),
+	                                                            stack_new(TekiCollecTargetPelletCondition)(&teki, carryPower)),
+	                                stack_new(TekiNotCondition)(stack_new(TekiCreaturePointerCondition)(target))));
 	if (!nearest) {
 		return false;
 	}
@@ -1040,8 +1042,8 @@ bool TaiCollecPelletLostAction::act(Teki& teki)
 		return true;
 	}
 
-	TekiAndCondition NRef cond
-	    = TekiAndCondition(&TekiVisibleCondition(&teki), &TekiCollecTargetPelletCondition(&teki, teki.getParameterI(COLLECPI_CarryPower)));
+	TekiAndCondition NRef cond = TekiAndCondition(
+	    stack_new(TekiVisibleCondition)(&teki), stack_new(TekiCollecTargetPelletCondition)(&teki, teki.getParameterI(COLLECPI_CarryPower)));
 	if (!cond.satisfy(target)) {
 		teki.clearCreaturePointer(0);
 		return true;
