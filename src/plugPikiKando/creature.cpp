@@ -18,6 +18,7 @@
 #include "SearchSystem.h"
 #include "SoundMgr.h"
 #include "sysMath.h"
+#include "sysNew.h"
 #include "timers.h"
 #include <math.h>
 
@@ -936,7 +937,7 @@ void Creature::collisionCheck(f32 _unused)
 		return;
 	}
 
-	Iterator iter(&mSearchBuffer, &CndIsAtari());
+	Iterator iter(&mSearchBuffer, stack_new(CndIsAtari)());
 	CI_LOOP(iter)
 	{
 		Creature* collider = *iter;

@@ -3,6 +3,7 @@
 #include "Stickers.h"
 #include "TAI/ReactionActions.h"
 #include "TekiConditions.h"
+#include "sysNew.h"
 #include "teki.h"
 
 /**
@@ -215,7 +216,7 @@ bool TaiTargetNearestCollisionAction::actByEvent(immut TekiEvent& event)
 		return false;
 	}
 	Creature* target = event.mOther;
-	TekiAndCondition cond(&TekiRecognitionCondition(event.mTeki), &TekiNaviPikiCondition());
+	TekiAndCondition cond(stack_new(TekiRecognitionCondition)(event.mTeki), stack_new(TekiNaviPikiCondition)());
 	if (!cond.satisfy(target)) {
 		return false;
 	}

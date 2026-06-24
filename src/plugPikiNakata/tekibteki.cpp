@@ -1404,7 +1404,7 @@ bool BTeki::attackRangeNaviPiki(immut Interaction& interaction, immut Condition&
 	outputHitCenter(hitCenter);
 
 	// Fun Fact: Decompiling this unused function fixed a fakematch related to `TekiAndCondition` in this file.
-	TekiAndCondition andCond(&condition, &TekiPositionSphereDistanceCondition(hitCenter, getAttackHitRange()));
+	TekiAndCondition andCond(&condition, stack_new(TekiPositionSphereDistanceCondition)(hitCenter, getAttackHitRange()));
 	return interactNaviPiki(interaction, andCond);
 }
 
@@ -1544,9 +1544,9 @@ void BTeki::flickLower()
  */
 void BTeki::flickLower(InteractFlick& flick)
 {
-	TekiAndCondition andCond(
-	    &TekiAndCondition(&TekiRecognitionCondition(static_cast<Teki*>(this)), &TekiNotCondition(&TekiStickingCondition())),
-	    &TekiDistanceCondition(static_cast<Teki*>(this), getLowerRange()));
+	TekiAndCondition andCond(stack_new(TekiAndCondition)(stack_new(TekiRecognitionCondition)(static_cast<Teki*>(this)),
+	                                                     stack_new(TekiNotCondition)(stack_new(TekiStickingCondition)())),
+	                         stack_new(TekiDistanceCondition)(static_cast<Teki*>(this), getLowerRange()));
 	interactNavi(flick, andCond);
 	flick.mDamage = 0.0f;
 

@@ -1883,7 +1883,7 @@ void BaseShape::makeInstance(ShapeDynMaterials& animatedMats, int jointIdx)
 	countMaterials(joint, 0);
 
 	if (joint->mChild) {
-		recTraverseMaterials((Joint*)joint->mChild, &Delegate2<BaseShape, Joint*, u32>(this, &BaseShape::countMaterials));
+		recTraverseMaterials((Joint*)joint->mChild, stack_new(Delegate2<BaseShape, Joint*, u32>)(this, &BaseShape::countMaterials));
 	}
 
 	animatedMats.mMatCount  = matIndex;

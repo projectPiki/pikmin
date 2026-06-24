@@ -14,6 +14,7 @@
 #include "PlayerState.h"
 #include "UfoItem.h"
 #include "WorkObject.h"
+#include "sysNew.h"
 
 bool AIPerf::useLOD       = true;
 bool AIPerf::showColls    = true;
@@ -420,9 +421,9 @@ void AIPerf::incUfoLevel(Menu& menu)
 
 		if (shipInstance) {
 			if (AIPerf::ufoLevel == 0) {
-				shipInstance->mAnimator.startMotion(0, &PaniMotionInfo(UfoMotion::WaitTutorial, shipInstance));
+				shipInstance->mAnimator.startMotion(0, stack_new(PaniMotionInfo)(UfoMotion::WaitTutorial, shipInstance));
 			} else {
-				shipInstance->mAnimator.startMotion(0, &PaniMotionInfo(UfoMotion::Wait, shipInstance));
+				shipInstance->mAnimator.startMotion(0, stack_new(PaniMotionInfo)(UfoMotion::Wait, shipInstance));
 			}
 
 			shipInstance->mAnimator.setMotionSpeed(0, 30.0f);

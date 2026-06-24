@@ -139,7 +139,7 @@ void UfoAnimator::stopAllMotions()
 void UfoAnimator::initFlagMotions(int id)
 {
 	for (int i = 1; i < 8; i++) {
-		startMotion(i, &PaniMotionInfo(i + 2));
+		startMotion(i, stack_new(PaniMotionInfo)(i + 2));
 		setMotionSpeed(i, 0.0f);
 	}
 	startFlagMotions(id);
@@ -188,7 +188,7 @@ void UfoAnimator::startFlagMotions(int id)
 	switch (id) {
 	case 5:
 	{
-		startMotion(7, &PaniMotionInfo(UfoMotion::Henka4b));
+		startMotion(7, stack_new(PaniMotionInfo)(UfoMotion::Henka4b));
 		playerState->startSpecialMotions();
 		// fallthrough
 	}
@@ -218,7 +218,7 @@ void UfoAnimator::startFlagMotions(int id)
 	case 0:
 	{
 		for (int i = 1; i < 8; i++) {
-			startMotion(i, &PaniMotionInfo(i + UfoMotion::Henka1 - 1));
+			startMotion(i, stack_new(PaniMotionInfo)(i + UfoMotion::Henka1 - 1));
 			setMotionSpeed(i, 0.0f);
 		}
 		break;

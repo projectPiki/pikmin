@@ -150,8 +150,8 @@ void GaugeInfo::showDigits(Vector3f centerPos, immut Colour& colour, int number,
 		f32 uvEnd   = ((num % 10) + 1.0f) * texEntryWidth;
 
 		// draw the colored texture digit (flare)
-		lgMgr->mDigitFlareGroup->addLFlare(colour, centerPos, Vector2f(digitHalfWidth, digitHalfHeight), &Vector2f(uvStart, 0.0f),
-		                                   &Vector2f(uvEnd, 1.0f));
+		lgMgr->mDigitFlareGroup->addLFlare(colour, centerPos, Vector2f(digitHalfWidth, digitHalfHeight), stack_new(Vector2f)(uvStart, 0.0f),
+		                                   stack_new(Vector2f)(uvEnd, 1.0f));
 
 		// get tens digit, in case it's a 2-digit number
 		num /= 10;
@@ -192,8 +192,8 @@ void GaugeInfo::refresh(Graphics& gfx)
 	f32 uvEnd   = 1.0f;
 	f32 uvStart = 10.0f / 11.0f;
 	// add to flare queue to draw
-	lgMgr->mDigitFlareGroup->addLFlare(colour, pos, Vector2f(mDigitHalfWidth, mDigitHalfHeight), &Vector2f(uvStart, 0.0f),
-	                                   &Vector2f(uvEnd, 1.0f));
+	lgMgr->mDigitFlareGroup->addLFlare(colour, pos, Vector2f(mDigitHalfWidth, mDigitHalfHeight), stack_new(Vector2f)(uvStart, 0.0f),
+	                                   stack_new(Vector2f)(uvEnd, 1.0f));
 
 	// draw center of top number (blue, static value showing target amount to move object) 10 units above line
 	pos.y += 10.0f;

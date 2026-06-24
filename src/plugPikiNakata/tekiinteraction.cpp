@@ -1,5 +1,6 @@
 #include "DebugLog.h"
 #include "Interactions.h"
+#include "sysNew.h"
 #include "teki.h"
 
 /**
@@ -38,7 +39,8 @@ bool InteractAttack::actTeki(Teki* teki) immut
 bool InteractBomb::actTeki(Teki* teki) immut
 {
 	f32 bombFactor = teki->getParameterF(TPF_BombDamageRate);
-	return teki->interact(TekiInteractionKey(TekiInteractType::Attack, &InteractAttack(mOwner, nullptr, mDamage * bombFactor, false)));
+	return teki->interact(
+	    TekiInteractionKey(TekiInteractType::Attack, stack_new(InteractAttack)(mOwner, nullptr, mDamage * bombFactor, false)));
 }
 
 /**

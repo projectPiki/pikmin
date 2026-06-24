@@ -1,6 +1,7 @@
 #include "DebugLog.h"
 #include "Dolphin/gx.h"
 #include "P2D/Graph.h"
+#include "sysNew.h"
 
 /**
  * @todo: Documentation
@@ -148,7 +149,7 @@ void P2DPerspGraph::makeLookat()
 	upDir.z = 0.0f;
 
 	mViewMtx.makeLookat(cameraPos, targetPos, &upDir);
-	mViewMtx.makeLookat(Vector3f(0.0f, 0.0f, 250.0f), Vector3f(0.0f, 0.0f, 0.0f), &Vector3f(0.0f, 1.0f, 0.0f));
+	mViewMtx.makeLookat(Vector3f(0.0f, 0.0f, 250.0f), Vector3f(0.0f, 0.0f, 0.0f), stack_new(Vector3f)(0.0f, 1.0f, 0.0f));
 	mViewMtx.makeLookat(Vector3f(halfWidth, halfHeight, -mDistance), Vector3f(1.0f, 0.0f, 0.0f), Vector3f(0.0f, -1.0f, 0.0f),
 	                    Vector3f(0.0f, 0.0f, -1.0f));
 

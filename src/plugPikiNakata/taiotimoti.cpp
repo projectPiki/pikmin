@@ -16,6 +16,7 @@
 #include "TAI/TimerActions.h"
 #include "TAI/WaitActions.h"
 #include "TekiConditions.h"
+#include "sysNew.h"
 #include "teki.h"
 
 /**
@@ -741,7 +742,7 @@ void TaiOtimotiStartDroppingWaterAction::start(Teki& teki)
  */
 bool TaiOtimotiFlickAction::act(Teki& teki)
 {
-	int pikiNum    = teki.countPikis(TekiAndCondition(&TekiRecognitionCondition(&teki), &TekiLowerRangeCondition(&teki)));
+	int pikiNum = teki.countPikis(TekiAndCondition(stack_new(TekiRecognitionCondition)(&teki), stack_new(TekiLowerRangeCondition)(&teki)));
 	int flickCount = teki.getFlickDamageCount(pikiNum);
 
 	if (teki.mDamageCount >= f32(flickCount)) {
@@ -762,7 +763,7 @@ bool TaiOtimotiFlickAction::act(Teki& teki)
  */
 bool TaiOtimotiFailToJumpAction::act(Teki& teki)
 {
-	int pikiNum = teki.countPikis(TekiAndCondition(&TekiRecognitionCondition(&teki), &TekiLowerCondition(&teki)));
+	int pikiNum = teki.countPikis(TekiAndCondition(stack_new(TekiRecognitionCondition)(&teki), stack_new(TekiLowerCondition)(&teki)));
 	f32 linValues[2];
 	NClampLinearFunction linFunc(linValues);
 	linFunc.makeClampLinearFunction(teki.getParameterF(OTIMOTIPF_MissFuncMinCount), teki.getParameterF(OTIMOTIPF_MissFuncMinChance),
@@ -964,8 +965,9 @@ bool TaiOtimotiPressingAction::actByEvent(immut TekiEvent& event)
 
 		InteractPress NRef press = InteractPress(teki, teki->getParameterF(TPF_AttackPower));
 		TekiAndCondition NRef cond
-		    = TekiAndCondition(&TekiRecognitionCondition(teki), &TekiAndCondition(&TekiDistanceCondition(teki, teki->getAttackRange()),
-		                                                                          &TekiNotCondition(&TekiStickerCondition(teki))));
+		    = TekiAndCondition(stack_new(TekiRecognitionCondition)(teki),
+		                       stack_new(TekiAndCondition)(stack_new(TekiDistanceCondition)(teki, teki->getAttackRange()),
+		                                                   stack_new(TekiNotCondition)(stack_new(TekiStickerCondition)(teki))));
 		teki->interactNaviPiki(press, cond);
 		teki->flickUpper();
 		teki->mDamageCount = 0.0f;

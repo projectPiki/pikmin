@@ -15,6 +15,7 @@
 #include "TAI/TimerActions.h"
 #include "TekiConditions.h"
 #include "nlib/Math.h"
+#include "sysNew.h"
 #include "system.h"
 #include "teki.h"
 
@@ -1072,7 +1073,7 @@ void TaiNapkidWanderingRouteAction::makeTargetPosition(Teki& teki)
  */
 bool TaiNapkidTargetPikiAction::act(Teki& teki)
 {
-	Creature* nearestPiki = pikiMgr->findClosest(teki.getPosition(), &TekiNapkidTargetPikiCondition(&teki));
+	Creature* nearestPiki = pikiMgr->findClosest(teki.getPosition(), stack_new(TekiNapkidTargetPikiCondition)(&teki));
 	if (nearestPiki == nullptr) {
 		return false;
 	} else {
@@ -1312,9 +1313,10 @@ bool TaiNapkidCatchingAction::act(Teki& teki)
 	NVector3f offset;
 	offset.add2(teki.getPosition(), direction);
 
-	TekiAndCondition notStickerAndIsRecognizedCond(&TekiRecognitionCondition(&teki), &TekiNotCondition(&TekiStickerCondition(&teki)));
-	TekiAndCondition posSphereDistAndOtherConds(&notStickerAndIsRecognizedCond,
-	                                            &TekiPositionSphereDistanceCondition(offset, teki.getParameterF(TPF_AttackHitRange)));
+	TekiAndCondition notStickerAndIsRecognizedCond(stack_new(TekiRecognitionCondition)(&teki),
+	                                               stack_new(TekiNotCondition)(stack_new(TekiStickerCondition)(&teki)));
+	TekiAndCondition posSphereDistAndOtherConds(
+	    &notStickerAndIsRecognizedCond, stack_new(TekiPositionSphereDistanceCondition)(offset, teki.getParameterF(TPF_AttackHitRange)));
 
 	Iterator iter(pikiMgr);
 	CI_LOOP(iter)

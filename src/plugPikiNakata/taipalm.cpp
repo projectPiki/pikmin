@@ -305,9 +305,9 @@ void TaiPalmStrategy::start(Teki& teki)
 
 	f32 rad = 2.0f * teki.getParameterF(TPF_CollisionRadius);
 
-	TekiAndCondition NRef cond
-	    = TekiAndCondition(&TekiNotCondition(&TekiCreaturePointerCondition(&teki)),
-	                       &TekiAndCondition(&TekiTypeCondition(teki.mTekiType), &TekiDistanceCondition(&teki, rad)));
+	TekiAndCondition NRef cond = TekiAndCondition(
+	    stack_new(TekiNotCondition)(stack_new(TekiCreaturePointerCondition)(&teki)),
+	    stack_new(TekiAndCondition)(stack_new(TekiTypeCondition)(teki.mTekiType), stack_new(TekiDistanceCondition)(&teki, rad)));
 	Creature* neighbor = tekiMgr->findClosest(teki.getPosition(), &cond);
 	PRINT_NAKATA("TaiPalmStrategy::start:%08x:neighbor:%08x\n", &teki, neighbor);
 

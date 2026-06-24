@@ -351,18 +351,20 @@ void PaniTestNode::updatePikis()
 	}
 
 	if (mController->keyUnClick(KBBTN_A)) {
-		mTestPikiList[0]->mPikiAnimMgr.startMotion(&PaniMotionInfo(mMotionId, this), &PaniMotionInfo(mMotionId));
+		mTestPikiList[0]->mPikiAnimMgr.startMotion(stack_new(PaniMotionInfo)(mMotionId, this), stack_new(PaniMotionInfo)(mMotionId));
 
 		for (i = 1; i < mTestPikiCount; i++) {
-			mTestPikiList[i]->mPikiAnimMgr.startMotion(&PaniMotionInfo(mMotionId, nullptr), &PaniMotionInfo(mMotionId));
+			mTestPikiList[i]->mPikiAnimMgr.startMotion(stack_new(PaniMotionInfo)(mMotionId, nullptr), stack_new(PaniMotionInfo)(mMotionId));
 		}
 	}
 
 	if (mController->keyUnClick(KBBTN_X)) {
-		mTestPikiList[0]->mPikiAnimMgr.finishMotion(&PaniMotionInfo(PANI_NO_MOTION, this), &PaniMotionInfo(PANI_NO_MOTION));
+		mTestPikiList[0]->mPikiAnimMgr.finishMotion(stack_new(PaniMotionInfo)(PANI_NO_MOTION, this),
+		                                            stack_new(PaniMotionInfo)(PANI_NO_MOTION));
 
 		for (i = 1; i < mTestPikiCount; i++) {
-			mTestPikiList[i]->mPikiAnimMgr.finishMotion(&PaniMotionInfo(PANI_NO_MOTION, nullptr), &PaniMotionInfo(PANI_NO_MOTION));
+			mTestPikiList[i]->mPikiAnimMgr.finishMotion(stack_new(PaniMotionInfo)(PANI_NO_MOTION, nullptr),
+			                                            stack_new(PaniMotionInfo)(PANI_NO_MOTION));
 		}
 	}
 }

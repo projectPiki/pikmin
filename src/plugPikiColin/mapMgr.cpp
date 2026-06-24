@@ -1663,7 +1663,7 @@ void MapMgr::postrefresh(Graphics& gfx)
 #endif
 
 			int blend = gfx.setCBlending(BLEND_MultiTexture);
-			gfx.setPrimEnv(&Colour(255, 255, 255, gfx.mCamera->mBlurAlpha), nullptr);
+			gfx.setPrimEnv(stack_new(Colour)(255, 255, 255, gfx.mCamera->mBlurAlpha), nullptr);
 
 			// render multi-texture blend (blur)
 			gfx.blatRectangle(AREA_FULL_SCREEN(gfx));

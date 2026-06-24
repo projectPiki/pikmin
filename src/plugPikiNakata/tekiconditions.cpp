@@ -1,6 +1,7 @@
 #include "TekiConditions.h"
 #include "DebugLog.h"
 #include "Piki.h"
+#include "sysNew.h"
 #include "teki.h"
 
 /**
@@ -214,8 +215,10 @@ bool TekiVisibleHeightCondition::satisfy(Creature* target) immut
 bool TekiLowerCondition::satisfy(Creature* target) immut
 {
 	// fucking amazing work nakata.
-	return TekiAndCondition(&TekiLowerRangeCondition(mTeki), &TekiNotCondition(&TekiStickerCondition(mTeki))).satisfy(target);
-	return TekiAndCondition(&TekiLowerRangeCondition(mTeki), &TekiNotCondition(&TekiStickerCondition(mTeki))).satisfy(target);
+	return TekiAndCondition(stack_new(TekiLowerRangeCondition)(mTeki), stack_new(TekiNotCondition)(stack_new(TekiStickerCondition)(mTeki)))
+	    .satisfy(target);
+	return TekiAndCondition(stack_new(TekiLowerRangeCondition)(mTeki), stack_new(TekiNotCondition)(stack_new(TekiStickerCondition)(mTeki)))
+	    .satisfy(target);
 }
 
 /**

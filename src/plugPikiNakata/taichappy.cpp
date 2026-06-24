@@ -13,6 +13,7 @@
 #include "TAI/ReactionActions.h"
 #include "TAI/TimerActions.h"
 #include "TekiConditions.h"
+#include "sysNew.h"
 #include "teki.h"
 
 /**
@@ -568,10 +569,11 @@ TaiChappyStrategy::TaiChappyStrategy(TekiParameters* params)
  */
 bool TaiChappyCryAction::act(Teki& teki)
 {
-	TekiAndCondition NRef cond = TekiAndCondition(&TekiTypeCondition(TEKI_Swallow),
-	                                              &TekiAndCondition(&TekiOrCondition(&TekiStateCondition(15), &TekiStateCondition(1)),
-	                                                                &TekiDistanceCondition(&teki, teki.getParameterF(TPF_MessageRange))));
-	Creature* bulborb          = tekiMgr->findClosest(teki.getPosition(), &cond);
+	TekiAndCondition NRef cond = TekiAndCondition(
+	    stack_new(TekiTypeCondition)(TEKI_Swallow),
+	    stack_new(TekiAndCondition)(stack_new(TekiOrCondition)(stack_new(TekiStateCondition)(15), stack_new(TekiStateCondition)(1)),
+	                                stack_new(TekiDistanceCondition)(&teki, teki.getParameterF(TPF_MessageRange))));
+	Creature* bulborb = tekiMgr->findClosest(teki.getPosition(), &cond);
 	if (!bulborb) {
 		return false;
 	}
