@@ -17,7 +17,7 @@ static char* FstStringStart;
 static u32 MaxEntryNum;
 static u32 currentDirectory = 0;
 OSThreadQueue __DVDThreadQueue;
-u32 __DVDLongFileNameFlag = 0;
+u32 __DVDLongFileNameFlag = FALSE;
 
 static void cbForReadAsync(s32 result, DVDCommandBlock* block);
 static void cbForReadSync(s32 result, DVDCommandBlock* block);
@@ -109,7 +109,7 @@ s32 DVDConvertPathToEntrynum(const char* pathPtr)
 			}
 		}
 
-		if (__DVDLongFileNameFlag == 0) {
+		if (!__DVDLongFileNameFlag) {
 			extention = FALSE;
 			illegal   = FALSE;
 

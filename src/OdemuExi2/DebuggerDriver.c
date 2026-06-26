@@ -333,7 +333,7 @@ int DBQueryData(void)
 	BOOL interrupts;
 
 	EXIInputFlag = 0;
-	if (!RecvDataLeng) {
+	if (RecvDataLeng == 0) {
 		interrupts = OSDisableInterrupts();
 		CheckMailBox();
 	}

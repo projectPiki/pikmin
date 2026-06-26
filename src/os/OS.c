@@ -174,7 +174,7 @@ void OSInit(void)
 		BI2DebugFlag = 0;                           // debug flag from the DVD BI2 header
 		BootInfo     = (OSBootInfo*)OS_BASE_CACHED; // set pointer to BootInfo
 
-		__DVDLongFileNameFlag = (u32)0; // flag to tell us whether we make it through the debug loading
+		__DVDLongFileNameFlag = FALSE;
 
 		// time to grab a bunch of debug info from the DVD
 		// the address for where the BI2 debug info is, is stored at OS_BI2_DEBUG_ADDRESS
@@ -193,7 +193,7 @@ void OSInit(void)
 			__PADSpec          = (u32) * ((u8*)OS_DEBUG_ADDRESS_2); // pad spec is whatever's at 0x800030E9
 		}
 
-		__DVDLongFileNameFlag = 1;
+		__DVDLongFileNameFlag = TRUE;
 #else
 		if (DebugInfo != NULL) {
 			BI2DebugFlag          = &DebugInfo->debugFlag;          // debug flag from DVD BI2

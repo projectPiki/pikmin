@@ -120,19 +120,19 @@ struct InteractBomb : public Interaction {
  * @brief TODO
  */
 struct InteractBreak : public Interaction {
-	InteractBreak(Creature* owner, int stage, f32 p3)
+	InteractBreak(Creature* owner, int stage, f32 rate)
 	    : Interaction(owner)
 	{
-		mStageIndex = stage;
-		_0C         = p3;
+		mStageIndex   = stage;
+		mProgressRate = rate;
 	}
 
 	virtual bool actBridge(Bridge*) immut; // _24
 
 	// _00     = VTBL
 	// _00-_08 = Interaction
-	int mStageIndex; // _08
-	f32 _0C;         // _0C
+	int mStageIndex;   // _08
+	f32 mProgressRate; // _0C
 };
 
 /**
@@ -160,7 +160,7 @@ struct InteractBuild : public Interaction {
 	InteractBuild(Creature* owner, int stage, f32 rate)
 	    : Interaction(owner)
 	{
-		mCurrentStage = stage;
+		mStageIndex   = stage;
 		mProgressRate = rate;
 	}
 
@@ -169,7 +169,7 @@ struct InteractBuild : public Interaction {
 
 	// _00     = VTBL
 	// _00-_08 = Interaction
-	int mCurrentStage; // _0C
+	int mStageIndex;   // _0C
 	f32 mProgressRate; // _10
 };
 

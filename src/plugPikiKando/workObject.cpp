@@ -1473,14 +1473,14 @@ void Bridge::startStageFinished(int stageIndex, bool isFinished)
  */
 bool InteractBuild::actBridge(Bridge* bridge) immut
 {
-	f32& buildProgress = bridge->mStageProgressList[mCurrentStage];
+	f32& stageProgress = bridge->mStageProgressList[mStageIndex];
 	bridge->playEventSound(bridge, SEB_CONSTRUCTION);
 
-	buildProgress += mProgressRate;
-	if (buildProgress >= bridge->mMaxHealth) {
-		buildProgress = bridge->mMaxHealth;
+	stageProgress += mProgressRate;
+	if (stageProgress >= bridge->mMaxHealth) {
+		stageProgress = bridge->mMaxHealth;
 		if (!bridge->_3CC) {
-			bridge->startStageFinished(mCurrentStage, true);
+			bridge->startStageFinished(mStageIndex, true);
 		}
 	}
 
@@ -1492,10 +1492,10 @@ bool InteractBuild::actBridge(Bridge* bridge) immut
  */
 bool InteractBreak::actBridge(Bridge* bridge) immut
 {
-	f32* progress = &bridge->mStageProgressList[mStageIndex];
-	*progress -= _0C;
-	if (*progress <= 0.0f) {
-		*progress = 0.0f;
+	f32& stageProgress = bridge->mStageProgressList[mStageIndex];
+	stageProgress -= mProgressRate;
+	if (stageProgress <= 0.0f) {
+		stageProgress = 0.0f;
 		for (int i = mStageIndex; i < bridge->getStage(); i++) {
 			bridge->setStageFinished(i, false);
 			bridge->mStageProgressList[i] = 0.0f;

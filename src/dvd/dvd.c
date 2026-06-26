@@ -6,7 +6,6 @@
 #include <string.h>
 
 // forward declarations for local functions, as needed:
-static void AlarmHandler(OSAlarm* alarm, OSContext* context);
 static void cbForCancelSync(s32 result, DVDCommandBlock* block);
 static void cbForStateBusy(u32 p1);
 static void cbForStateCheckID1(u32 p1);

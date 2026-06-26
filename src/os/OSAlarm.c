@@ -1,5 +1,6 @@
 #include "Dolphin/PPCArch.h"
 #include "Dolphin/os.h"
+#include <limits.h>
 #include <stddef.h>
 
 // forward declarations
@@ -32,12 +33,11 @@ static void SetTimer(OSAlarm* alarm)
 
 	if (delta < 0) {
 		PPCMtdec(0);
-	} else if (delta < 0x80000000) {
-		PPCMtdec((u32)delta);
+	} else if (delta < (OSTime)INT_MAX + 1) {
+		PPCMtdec(delta);
 	} else {
-		PPCMtdec(0x7fffffff);
+		PPCMtdec(INT_MAX);
 	}
-	// UNUSED FUNCTION
 }
 
 /**

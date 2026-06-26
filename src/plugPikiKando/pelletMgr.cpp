@@ -1326,7 +1326,7 @@ void Pellet::doRender(Graphics& gfx, Matrix4f& mtx)
 	if (mStuckMouthPart) {
 		Matrix4f jointMtx = mStuckMouthPart->getJointMatrix();
 		Matrix4f transformMtx;
-		f32 scale = 1.0f / reinterpret_cast<Vector3f*>(&jointMtx)->length();
+		f32 scale = 1.0f / reinterpret_cast<Vector3f&>(jointMtx).length();
 		transformMtx.makeSRT(Vector3f(scale, scale, scale), Vector3f(0.0f, 0.0f, 0.0f), Vector3f(0.0f, 0.0f, 0.0f));
 		mSRT.t = mStuckMouthPart->mCentre;
 		jointMtx.multiplyTo(transformMtx, mtx);

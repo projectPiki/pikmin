@@ -35,7 +35,7 @@ typedef struct SEvent_ {
 	f32 volume;                    // _160
 	f32 pan;                       // _164
 #if defined(VERSION_GPIJ01_01) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_DPIJ01_PIKIDEMO)
-	u8 _168[0x170 - 0x16C]; // _168, unknown
+	u8 _168[0x16C - 0x168]; // _168, unknown
 #else
 	u8 _168[0x170 - 0x168]; // _168, unknown
 #endif

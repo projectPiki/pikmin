@@ -1167,7 +1167,7 @@ void GXPreLoadEntireTexture(GXTexObj* tex_obj, GXTexRegion* region)
 				}
 				totalEven += count;
 			}
-			__GetImageTileCount(t->fmt, wd >> (i + 1), ht >> (i + 1), &rowTiles, &colTiles, &cmpTiles);
+			__GetImageTileCount(t->format, wd >> (i + 1), ht >> (i + 1), &rowTiles, &colTiles, &cmpTiles);
 			count = rowTiles * colTiles;
 		}
 #endif
