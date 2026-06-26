@@ -229,6 +229,7 @@ void MoviePlayer::initMovie(MovieInfo* info, int)
 		mIsGameCam       = false;
 	}
 
+	// This has got to be a bug, right?  TODO: Test what side-effects this has.
 	if (heapid != SYSHEAP_App) {
 		gsys->getHeap(SYSHEAP_Movie)->setAllocType(type);
 		gsys->setHeap(heapid);

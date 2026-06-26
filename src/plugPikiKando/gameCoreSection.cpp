@@ -1476,8 +1476,8 @@ void GameCoreSection::update()
 		int id     = navi->getCurrState()->getID();
 		if (id != NAVISTATE_PikiZero && id != NAVISTATE_DemoSunset && id != NAVISTATE_DemoWait && id != NAVISTATE_DemoInf) {
 			PRINT("**** PIKI ZERO GAME OVER *******\n");
-			PRINT("deadpikis %d pellets %d killtekis %d maxpikis %d" MISSING_NEWLINE, GameStat::deadPikis, GameStat::getPellets,
-			      GameStat::killTekis, GameStat::maxPikis);
+			PRINT("deadpikis %d pellets %d killtekis %d maxpikis %d" MISSING_NEWLINE, static_cast<int>(GameStat::deadPikis),
+			      static_cast<int>(GameStat::getPellets), static_cast<int>(GameStat::killTekis), GameStat::maxPikis);
 			navi->mStateMachine->transit(navi, NAVISTATE_PikiZero);
 			playerState->mResultFlags.setOn(zen::RESFLAG_PikminExtinction);
 		}

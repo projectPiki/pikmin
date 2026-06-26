@@ -2810,6 +2810,13 @@ u32 RegCmd_Process(seqp_* track, BOOL isFromRegister, u32 param_3)
 	u16 uVar5;
 	u16 uVar6; // Uninitialized!  Naughty!
 
+	// From a cursory glance at the value held in r30 (representing `uVar6`) whenever this
+	// function is run, it MIRACULOUSLY manages to always be zero-initialized by dumb luck.
+	// Conditional breakpoint used for testing Pikmin 1 USA rev 1: $80012e00 nbc r30 != 0
+#if defined(BUGFIX)
+	uVar6 = 0;
+#endif
+
 	cmd = __ByteRead(track);
 	if (isFromRegister == TRUE) {
 		cmd = __ExchangeRegisterValue(track, cmd);

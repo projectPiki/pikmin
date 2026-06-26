@@ -103,8 +103,8 @@ void GeneratorCache::saveCard(RandomAccessStream& output)
 		output.writeByte(mCacheHeap[i]);
 	}
 
-	int aliveCount;
-	int deadCount;
+	int aliveCount = 0;
+	int deadCount  = 0;
 	for (i = STAGE_START; i < STAGE_COUNT; i++) {
 		Cache* cache = findCache(mAliveCacheList, i);
 		if (cache) {

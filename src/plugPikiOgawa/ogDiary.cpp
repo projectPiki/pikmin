@@ -404,7 +404,7 @@ zen::ogDrawSelectDiary::ogDrawSelectDiary()
 	mCurrentDay           = 0;
 
 	for (int i = 0; i < MAX_DAYS; i++) {
-		char name[4];
+		char name[TERNARY_BUGFIX(5, 4)];
 		sprintf(name, "i%02du", i);
 		mDayIconUpPanes[i] = mScreen->search(P2DPaneLibrary::makeTag(name), true);
 		mDayIconUpPanes[i]->hide();
