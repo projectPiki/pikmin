@@ -94,7 +94,7 @@ static OSMessageQueue dvdMesgQueue;
 static OSMessageQueue loadMesgQueue;
 static OSMessageQueue sysMesgQueue;
 
-u8* DVDStream::readBuffer = 0;
+u8* DVDStream::readBuffer = nullptr;
 int DVDStream::numOpen    = 0;
 static Font* bigFont;
 
@@ -148,7 +148,7 @@ RandomAccessStream* System::openFile(immut char* path, bool isRelativePath, bool
 	}
 
 #if defined(VERSION_GPIJ01) || defined(VERSION_DPIJ01_PIKIDEMO)
-	if (DVDStream::numOpen) {
+	if (DVDStream::numOpen != 0) {
 		ERROR("Cannot open '%s' while '%s' is open!!\n", path, lastName);
 	}
 #endif
@@ -1369,10 +1369,11 @@ void* dvdFunc(void*)
 			}
 		} else {
 #if defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_DPIJ01_PIKIDEMO)
-			if (!OSGetResetButtonState() && !gsys->mIsRendering && !gsys->mIsCardSaving) {
+			if (!OSGetResetButtonState() && !gsys->mIsRendering && !gsys->mIsCardSaving)
 #else
-			if (!OSGetResetSwitchState() && !gsys->mIsRendering && !gsys->mIsCardSaving) {
+			if (!OSGetResetSwitchState() && !gsys->mIsRendering && !gsys->mIsCardSaving)
 #endif
+			{
 				PADRecalibrate(0xf0000000);
 				Jac_Freeze();
 #if defined(VERSION_GPIJ01) || defined(VERSION_DPIJ01_PIKIDEMO)

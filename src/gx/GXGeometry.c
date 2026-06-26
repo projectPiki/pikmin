@@ -41,12 +41,7 @@ void GXBegin(GXPrimitive type, GXVtxFmt vtxfmt, u16 nverts)
 	}
 	__GXinBegin = TRUE;
 #endif
-#if OS_BUILD_VERSION >= 20011002L
-	if (*(u32*)&gx->_00 == 0) // checks both _00 and bpSent
-#else
-	if (*(u32*)&gx->vNum != 0) // checks both vNum and bpSent
-#endif
-	{
+	if (!GX_CHECK_FLUSH(gx)) {
 		__GXSendFlushPrim();
 	}
 	GX_WRITE_U8(vtxfmt | type);

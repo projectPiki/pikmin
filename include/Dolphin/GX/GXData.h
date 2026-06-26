@@ -279,8 +279,12 @@ static inline u32 GXReadPIReg(u32 addrLo, u32 addrHi)
 
 /////////// OTHER USEFUL DEFINES ///////////
 // useful define to check first two GXData members together
-// used in GXDisplayList, saves having a union in the struct
-#define GX_CHECK_FLUSH() (!(*(u32*)(&gx->vNumNot)))
+// used in GXCallDisplayList and GXBegin, saves having a union in the struct
+#if OS_BUILD_VERSION >= 20011002L
+#define GX_CHECK_FLUSH(gx) ((*(u32*)(&gx->_00))) /* checks both _00 and bpSent */
+#else
+#define GX_CHECK_FLUSH(gx) (!(*(u32*)(&gx->vNum))) /* checks both vNum and bpSent */
+#endif
 
 // do the damn rlwimi thing
 #define FAST_FLAG_SET(regOrg, newFlag, shift, size)                                                                       \

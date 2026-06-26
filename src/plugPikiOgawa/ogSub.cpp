@@ -952,10 +952,14 @@ void TypingTextMgr::update()
 
 	mTypeTimer += gsys->getFrameTime();
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
-	if (mTypeTimer >= 0.04f) {
+	if (mTypeTimer >= 0.04f)
+#else
+	if (mTypeTimer >= 0.029639998f)
+#endif
+	{
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
 		mTypeTimer -= 0.04f;
 #else
-	if (mTypeTimer >= 0.029639998f) {
 		mTypeTimer -= 0.029639998f;
 #endif
 		f32 a;
