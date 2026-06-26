@@ -1604,7 +1604,8 @@ ModeState* DayOverModeState::initialisePhaseTwo()
 		} else {
 			// challenge mode - start the challenge mode results window
 			GameChalQuickInfo info;
-			PRINT("starting challenge mode window %d : %d!\n", GameStat::formationPikis, GameStat::containerPikis);
+			PRINT("starting challenge mode window %d : %d!\n", static_cast<int>(GameStat::formationPikis),
+			      static_cast<int>(GameStat::containerPikis));
 			info.mStageID = flowCont.mCurrentStage->mChalStageID;
 			info.mScore   = GameStat::allPikis;
 			// check if we got a new hiscore for this course, and update the info if so

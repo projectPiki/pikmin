@@ -317,7 +317,7 @@ public:
 	    : P2DPaneCallBack(pane, PANETYPE_Picture)
 	{
 		mContainerScreen = container;
-		char buf[8];
+		char buf[TERNARY_BUGFIX(13, 8)];
 
 		// DON'T LOOK AT MY STACK MANIPULATION CRIMES PLEASE.
 		// CRIMES START

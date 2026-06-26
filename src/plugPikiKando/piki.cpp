@@ -2917,8 +2917,8 @@ void Piki::dump()
 		PRINT(" onground = %s\n", isCreatureFlag(CF_IsOnGround) ? "true" : "false");
 		PRINT(" vel(%.1f,%.1f) velocity(%.1f,%.1f)\n", mVelocity.x, mVelocity.z, mTargetVelocity.x, mTargetVelocity.z);
 		PRINT(" inDamage = %s\n", mIsBeingDamaged ? "true" : "false");
-		PRINT(" flags = %x : isVisible=%s isAlive=%s isAtari=%s\n", isVisible() ? "true" : "false", isAlive() ? "true" : "false",
-		      isAtari() ? "true" : "false");
+		PRINT(" flags = %x : isVisible=%s isAlive=%s isAtari=%s\n", mCreatureFlags, isVisible() ? "true" : "false",
+		      isAlive() ? "true" : "false", isAtari() ? "true" : "false");
 		PRINT(" kinoko = %s\n", isKinoko() ? "yes" : "no");
 		PRINT(" emotion = %d\n", mEmotion);
 		static_cast<PikiState*>(getCurrState())->dump();
@@ -2973,8 +2973,8 @@ void Piki::dump()
 		PRINT(" onground = %s\n", isCreatureFlag(CF_IsOnGround) ? "true" : "false");
 		PRINT(" vel(%.1f,%.1f) velocity(%.1f,%.1f)\n", mVelocity.x, mVelocity.z, mTargetVelocity.x, mTargetVelocity.z);
 		PRINT(" inDamage = %s\n", mIsBeingDamaged ? "true" : "false");
-		PRINT(" flags = %x : isVisible=%s isAlive=%s isAtari=%s\n", isVisible() ? "true" : "false", isAlive() ? "true" : "false",
-		      isAtari() ? "true" : "false");
+		PRINT(" flags = %x : isVisible=%s isAlive=%s isAtari=%s\n", mCreatureFlags, isVisible() ? "true" : "false",
+		      isAlive() ? "true" : "false", isAtari() ? "true" : "false");
 		PRINT(" emotion = %d\n", mEmotion);
 		static_cast<PikiState*>(getCurrState())->dump();
 		PRINT(" _stickObject=%x(%d) : _stickToObject=%s\n", getStickObject(), getStickObject() ? getStickObject()->mObjType : -1,

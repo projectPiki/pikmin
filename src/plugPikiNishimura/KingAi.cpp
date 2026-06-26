@@ -924,7 +924,9 @@ bool KingAi::chasePikiTransit()
 			f32 qdist = qdist2(mKing->mSRT.t.x, mKing->mSRT.t.z, piki->mSRT.t.x, piki->mSRT.t.z);
 			if (qdist < C_BOSS_PROP(mKing).mSearchRadius() &&
 			    // typo?? this should be qdist, not dist - they definitely copied and pasted this code lol.
-			    dist < minDist && mKing->inSearchAngle(piki)) {
+			    // It seems like the uninitialized `dist` variable always holds the value 0.0f by dumb luck.
+			    // Conditional breakpoint used to test USA rev 1: $8016e860 nbc f30 != 0.0 && f29 == 12800.0
+			    TERNARY_BUGFIX(qdist, dist) < minDist && mKing->inSearchAngle(piki)) {
 				dist = mKing->mSRT.t.distance(piki->mSRT.t);
 				if (dist > C_KING_PROP(mKing).mHiddenUnderneathRadius() && dist < C_BOSS_PROP(mKing).mSearchRadius() && dist < minDist) {
 					minDist = dist;

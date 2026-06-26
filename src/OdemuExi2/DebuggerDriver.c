@@ -337,6 +337,7 @@ int DBQueryData(void)
 		interrupts = OSDisableInterrupts();
 		CheckMailBox();
 	}
+	// This is surely a bug...
 	OSRestoreInterrupts(interrupts);
 	return RecvDataLeng;
 }

@@ -25,7 +25,7 @@ DEFINE_PRINT("kusa")
  * @todo: Documentation
  */
 KusaItem::KusaItem(CreatureProp* props, Shape* shape)
-    : ItemCreature(OBJTYPE_Kusa, mProps, shape)
+    : ItemCreature(OBJTYPE_Kusa, TERNARY_BUGFIX(props, mProps), shape)
     , mKusaCollision(0)
 {
 	mProps = props;
@@ -137,7 +137,7 @@ void KusaItem::refresh(Graphics& gfx)
  * @todo: Documentation
  */
 BoBaseItem::BoBaseItem(CreatureProp* props, Shape* shape)
-    : ItemCreature(OBJTYPE_BoBase, mProps, shape)
+    : ItemCreature(OBJTYPE_BoBase, TERNARY_BUGFIX(props, mProps), shape)
     , mBaseCollision(0)
 {
 	mProps = props;
