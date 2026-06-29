@@ -292,7 +292,7 @@ BOOL BreakLowerActiveDSPchannel(u8 id)
  */
 void UpdateDSPchannel(dspch_* chan)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**

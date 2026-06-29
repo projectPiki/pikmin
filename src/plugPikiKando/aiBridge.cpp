@@ -152,7 +152,7 @@ void ActBridge::initDetour()
  */
 int ActBridge::exeDetour()
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -216,8 +216,7 @@ void ActBridge::initApproach()
  */
 int ActBridge::exeApproach()
 {
-
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -226,7 +225,7 @@ int ActBridge::exeApproach()
  */
 void ActBridge::initGo()
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -235,7 +234,7 @@ void ActBridge::initGo()
  */
 int ActBridge::exeGo()
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -244,7 +243,7 @@ int ActBridge::exeGo()
  */
 void ActBridge::initWork()
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -253,7 +252,7 @@ void ActBridge::initWork()
  */
 int ActBridge::exeWork()
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**

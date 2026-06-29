@@ -257,7 +257,7 @@ s32 __CARDClearStatus(s32 chan)
  */
 void __CARDSleep(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -266,7 +266,7 @@ void __CARDSleep(void)
  */
 void __CARDWakeup(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -571,7 +571,7 @@ s32 __CARDWritePage(s32 chan, CARDCallback callback)
  */
 void __CARDErase(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -795,7 +795,7 @@ s32 CARDFreeBlocks(s32 chan, s32* byteNotUsed, s32* filesNotUsed)
  */
 void CARDGetEncoding(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -804,7 +804,7 @@ void CARDGetEncoding(void)
  */
 void CARDGetMemSize(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**

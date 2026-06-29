@@ -50,7 +50,7 @@ ASM u32 OSGetTick(void)
  */
 void __SetTime(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -59,7 +59,7 @@ void __SetTime(void)
  */
 void __OSSetTime(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -106,7 +106,7 @@ static BOOL IsLeapYear(s32 year)
  */
 void GetYearDays(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -190,5 +190,5 @@ void OSTicksToCalendarTime(OSTime ticks, OSCalendarTime* cal)
  */
 OSTime OSCalendarTimeToTicks(OSCalendarTime*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }

@@ -79,7 +79,7 @@ s32 AmcEXIImm(void* buf, s32 len, u32 type, EXICallback cb)
  */
 void AmcEXIDma(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -146,7 +146,7 @@ void* AmcEXISetExiCallback(EXICallback cb)
  */
 void AmcEXIEnable32MHz(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -155,7 +155,7 @@ void AmcEXIEnable32MHz(void)
  */
 void AmcEXIDisable32MHz(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -206,7 +206,7 @@ s32 AmcEXIDeselect()
  */
 void AmcTCIntrruptHandler(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**

@@ -1091,7 +1091,7 @@ int RouteMgr::getColinIndex(RouteGroup* group, RoutePoint* point)
  */
 RouteTracer::RouteTracer()
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -1100,7 +1100,7 @@ RouteTracer::RouteTracer()
  */
 RouteTracer::Context::PointInfo::PointInfo()
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -1109,7 +1109,7 @@ RouteTracer::Context::PointInfo::PointInfo()
  */
 void RouteTracer::render(Graphics&)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -1118,7 +1118,7 @@ void RouteTracer::render(Graphics&)
  */
 void RouteTracer::Context::makeContext(RouteTracer*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -1127,7 +1127,7 @@ void RouteTracer::Context::makeContext(RouteTracer*)
  */
 void RouteTracer::Context::setTarget(RouteTracer*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -1136,7 +1136,7 @@ void RouteTracer::Context::setTarget(RouteTracer*)
  */
 int RouteTracer::Context::recognise(RouteTracer*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -1145,7 +1145,7 @@ int RouteTracer::Context::recognise(RouteTracer*)
  */
 bool RouteTracer::noLink()
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -1154,7 +1154,7 @@ bool RouteTracer::noLink()
  */
 void RouteTracer::startConsult(Creature*, PathFinder*, PathFinder::Buffer*, int, Vector3f&)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -1163,7 +1163,7 @@ void RouteTracer::startConsult(Creature*, PathFinder*, PathFinder::Buffer*, int,
  */
 void RouteTracer::updateState()
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -1172,7 +1172,7 @@ void RouteTracer::updateState()
  */
 Vector3f RouteTracer::getTarget()
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**

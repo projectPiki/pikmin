@@ -152,7 +152,7 @@ int SplineInterpolator::searchSegmentIndex(f32 targetParam, int startIdx)
  */
 void SplineInterpolator::addFrame(SplineKeyFrame*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -162,7 +162,7 @@ void SplineInterpolator::addFrame(SplineKeyFrame*)
 template <>
 void NArray<SplineKeyFrame>::add(SplineKeyFrame*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -171,7 +171,7 @@ void NArray<SplineKeyFrame>::add(SplineKeyFrame*)
  */
 void SplineInterpolator::addSegment()
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -181,7 +181,7 @@ void SplineInterpolator::addSegment()
 template <>
 void NArray<SplineSegment>::add(SplineSegment*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -191,7 +191,7 @@ void NArray<SplineSegment>::add(SplineSegment*)
 template <>
 void NPool<SplineSegment>::newObject()
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -200,7 +200,7 @@ void NPool<SplineSegment>::newObject()
  */
 void SplineInterpolator::removeAllFrames()
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -210,7 +210,7 @@ void SplineInterpolator::removeAllFrames()
 template <>
 void NArray<SplineSegment>::removeAll()
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -220,7 +220,7 @@ void NArray<SplineSegment>::removeAll()
 template <>
 void NArray<SplineSegment>::remove(int, int)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -230,7 +230,7 @@ void NArray<SplineSegment>::remove(int, int)
 template <>
 void NPool<SplineSegment>::deleteObject(SplineSegment*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -240,7 +240,7 @@ void NPool<SplineSegment>::deleteObject(SplineSegment*)
 template <>
 void NPool<SplineSegment>::deleteObject(int)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -250,7 +250,7 @@ void NPool<SplineSegment>::deleteObject(int)
 template <>
 void NPool<SplineSegment>::indexOf(SplineSegment*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -260,7 +260,7 @@ void NPool<SplineSegment>::indexOf(SplineSegment*)
 template <>
 void NPool<SplineSegment>::indexOf(SplineSegment*, int)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -270,7 +270,7 @@ void NPool<SplineSegment>::indexOf(SplineSegment*, int)
 template <>
 void NArray<SplineKeyFrame>::removeAll()
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -280,7 +280,7 @@ void NArray<SplineKeyFrame>::removeAll()
 template <>
 void NArray<SplineKeyFrame>::remove(int, int)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -289,7 +289,7 @@ void NArray<SplineKeyFrame>::remove(int, int)
  */
 SplineKeyFrame::SplineKeyFrame()
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -298,7 +298,7 @@ SplineKeyFrame::SplineKeyFrame()
  */
 void SplineKeyFrame::transform(NTransform3D&)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -307,7 +307,7 @@ void SplineKeyFrame::transform(NTransform3D&)
  */
 void SplineKeyFrame::inputPosture(NPosture3D&)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -316,7 +316,7 @@ void SplineKeyFrame::inputPosture(NPosture3D&)
  */
 void SplineKeyFrame::outputPosture(NPosture3D&)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -325,7 +325,7 @@ void SplineKeyFrame::outputPosture(NPosture3D&)
  */
 void SplineKeyFrame::interpolate(SplineKeyFrame&, f32, NPosture3D&)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -334,7 +334,7 @@ void SplineKeyFrame::interpolate(SplineKeyFrame&, f32, NPosture3D&)
  */
 void SplineKeyFrame::readData(Stream&, int)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -355,7 +355,7 @@ SplineSegment::SplineSegment()
  */
 f32 SplineSegment::calcDistance(NVector3f&, f32*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -364,7 +364,7 @@ f32 SplineSegment::calcDistance(NVector3f&, f32*)
  */
 SplineCurve::SplineCurve(int)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -373,7 +373,7 @@ SplineCurve::SplineCurve(int)
  */
 void SplineCurve::makeCurve(f32*, NVector3f**, int)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -382,7 +382,7 @@ void SplineCurve::makeCurve(f32*, NVector3f**, int)
  */
 void SplineCurve::makeFunctions(int, f32*, f32*, NPolynomialFunction**)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -392,7 +392,7 @@ void SplineCurve::makeFunctions(int, f32*, f32*, NPolynomialFunction**)
 template <>
 int NArray<SplineKeyFrame>::indexOf(SplineKeyFrame*, int)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -402,7 +402,7 @@ int NArray<SplineKeyFrame>::indexOf(SplineKeyFrame*, int)
 template <>
 void NArray<SplineKeyFrame>::set(int, SplineKeyFrame*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -412,7 +412,7 @@ void NArray<SplineKeyFrame>::set(int, SplineKeyFrame*)
 template <>
 void NArray<SplineKeyFrame>::remove(int)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -422,7 +422,7 @@ void NArray<SplineKeyFrame>::remove(int)
 template <>
 void NArray<SplineKeyFrame>::insert(int, SplineKeyFrame*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -432,7 +432,7 @@ void NArray<SplineKeyFrame>::insert(int, SplineKeyFrame*)
 template <>
 SplineKeyFrame* NArray<SplineKeyFrame>::firstElement()
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -442,7 +442,7 @@ SplineKeyFrame* NArray<SplineKeyFrame>::firstElement()
 template <>
 SplineKeyFrame* NArray<SplineKeyFrame>::lastElement()
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -452,7 +452,7 @@ SplineKeyFrame* NArray<SplineKeyFrame>::lastElement()
 template <>
 int NArray<SplineSegment>::indexOf(SplineSegment*, int)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -462,7 +462,7 @@ int NArray<SplineSegment>::indexOf(SplineSegment*, int)
 template <>
 void NArray<SplineSegment>::set(int, SplineSegment*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -472,7 +472,7 @@ void NArray<SplineSegment>::set(int, SplineSegment*)
 template <>
 void NArray<SplineSegment>::remove(int)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -482,7 +482,7 @@ void NArray<SplineSegment>::remove(int)
 template <>
 void NArray<SplineSegment>::insert(int, SplineSegment*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -492,7 +492,7 @@ void NArray<SplineSegment>::insert(int, SplineSegment*)
 template <>
 SplineSegment* NArray<SplineSegment>::firstElement()
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -502,7 +502,7 @@ SplineSegment* NArray<SplineSegment>::firstElement()
 template <>
 SplineSegment* NArray<SplineSegment>::lastElement()
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -512,7 +512,7 @@ SplineSegment* NArray<SplineSegment>::lastElement()
 template <>
 void NArray<SplineSegment>::remove(SplineSegment*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -522,7 +522,7 @@ void NArray<SplineSegment>::remove(SplineSegment*)
 template <>
 void NArray<SplineSegment>::add(int, SplineSegment*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -532,7 +532,7 @@ void NArray<SplineSegment>::add(int, SplineSegment*)
 template <>
 int NArray<SplineSegment>::indexOf(SplineSegment*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -542,7 +542,7 @@ int NArray<SplineSegment>::indexOf(SplineSegment*)
 template <>
 bool NArray<SplineSegment>::contains(SplineSegment*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -552,7 +552,7 @@ bool NArray<SplineSegment>::contains(SplineSegment*)
 template <>
 void NArray<SplineKeyFrame>::remove(SplineKeyFrame*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -562,7 +562,7 @@ void NArray<SplineKeyFrame>::remove(SplineKeyFrame*)
 template <>
 void NArray<SplineKeyFrame>::add(int, SplineKeyFrame*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -572,7 +572,7 @@ void NArray<SplineKeyFrame>::add(int, SplineKeyFrame*)
 template <>
 int NArray<SplineKeyFrame>::indexOf(SplineKeyFrame*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -582,5 +582,5 @@ int NArray<SplineKeyFrame>::indexOf(SplineKeyFrame*)
 template <>
 bool NArray<SplineKeyFrame>::contains(SplineKeyFrame*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }

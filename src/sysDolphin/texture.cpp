@@ -47,7 +47,7 @@ Texture::Texture()
  */
 void Texture::offsetGLtoGX(int, int)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**

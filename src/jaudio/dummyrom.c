@@ -17,7 +17,7 @@ static u32 SELECTED_ARAM_SIZE;
  */
 void GetNeosRomTop()
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -26,7 +26,7 @@ void GetNeosRomTop()
  */
 void mesg_finishcall(u32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -35,7 +35,7 @@ void mesg_finishcall(u32)
  */
 void ARAMStartDMAmesg(u32, u32, u32, u32, s32, OSMesgQueue_s*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -44,7 +44,7 @@ void ARAMStartDMAmesg(u32, u32, u32, u32, s32, OSMesgQueue_s*)
  */
 void ARAMStartDMA(u32, u32, u32, u32, s32, u32*, void (*)())
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -61,7 +61,7 @@ void Jac_SetAudioARAMSize(u32 size)
  */
 void ARAlloc2(u32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**

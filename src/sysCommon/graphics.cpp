@@ -1412,7 +1412,7 @@ int Graphics::calcLighting(f32 intensity)
  */
 int Graphics::calcSphereLighting(immut Vector3f&, f32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -1421,7 +1421,7 @@ int Graphics::calcSphereLighting(immut Vector3f&, f32)
  */
 int Graphics::calcBoxLighting(immut BoundBox&)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**

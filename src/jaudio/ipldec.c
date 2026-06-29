@@ -86,7 +86,7 @@ BOOL DspExtraTaskCheck()
  */
 void Jac_IPLDspSec(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**

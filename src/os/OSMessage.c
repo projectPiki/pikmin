@@ -77,5 +77,5 @@ BOOL OSReceiveMessage(OSMessageQueue* queue, OSMessage* buffer, s32 flags)
  */
 BOOL OSJamMessage(OSMessageQueue* queue, OSMessage msg, s32 flags)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }

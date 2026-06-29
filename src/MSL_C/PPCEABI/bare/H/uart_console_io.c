@@ -75,5 +75,5 @@ u32 __close_console(void)
  */
 void __init_uart_console(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }

@@ -91,7 +91,7 @@ static void __OSSwitchThread(OSThread* nextThread)
  */
 BOOL OSIsThreadSuspended(OSThread* thread)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -519,7 +519,7 @@ BOOL OSJoinThread(OSThread* thread, void** val)
  */
 void OSDetachThread(OSThread* thread)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -645,7 +645,7 @@ void OSWakeupThread(OSThreadQueue* threadQueue)
  */
 BOOL OSSetThreadPriority(OSThread*, s32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -662,7 +662,7 @@ OSPriority OSGetThreadPriority(OSThread* thread)
  */
 OSThread* OSSetIdleFunction(OSIdleFunction idleFunc, void* param, void* stack, u32 stackSize)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -671,7 +671,7 @@ OSThread* OSSetIdleFunction(OSIdleFunction idleFunc, void* param, void* stack, u
  */
 OSThread* OSGetIdleFunction(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**

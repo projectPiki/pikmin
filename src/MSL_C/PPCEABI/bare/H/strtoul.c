@@ -304,7 +304,7 @@ u64 __strtoull(int base, int max_width, int (*ReadProc)(void*, int, int), void* 
  */
 void strtoll(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -341,7 +341,7 @@ u32 strtoul(const char* str, char** end, int base)
  */
 void strtoull(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -387,7 +387,7 @@ int atoi(const char* str)
  */
 void atol(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -396,7 +396,7 @@ void atol(void)
  */
 void strtoimax(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -405,5 +405,5 @@ void strtoimax(void)
  */
 void strtoumax(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }

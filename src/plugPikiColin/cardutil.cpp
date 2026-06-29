@@ -67,7 +67,7 @@ s32* CardUtilByteNotUsed()
  */
 s32 CardUtilBlocksNotUsed()
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -874,7 +874,7 @@ void CardUtilInit(void* stack, u32 stackSize, s32 prio)
  */
 void CardUtilDrawIcon(int, int, int, void*, void*, u16, u16, int)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -883,7 +883,7 @@ void CardUtilDrawIcon(int, int, int, void*, void*, u16, u16, int)
  */
 void CardUtilDrawAnimatedIcon(CardUtilDirent*, int, int, int)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -892,5 +892,5 @@ void CardUtilDrawAnimatedIcon(CardUtilDirent*, int, int, int)
  */
 void CardUtilGetProgress(s32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }

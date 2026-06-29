@@ -228,6 +228,13 @@ inline void padStack(void)
 #define INIT  DECL_SECT(".init")
 #define CTORS DECL_SECT(".ctors")
 
+// If an unimplemented function is used by mistake (e.g. in modding), we should trap on that.
+#ifdef __MWERKS__ // clang-format off
+#define TRAP_UNIMPLEMENTED asm { trap } ((void)0)
+#else
+#define TRAP_UNIMPLEMENTED ((void)0) /* Replace me */
+#endif // clang-format on
+
 // Documenting MetroWerks intrinsic functions for PowerPC and placing them behind macros for portability.
 #ifdef __MWERKS__
 #define __mwerks_eieio()                  /* void   */ __eieio()                  //

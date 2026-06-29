@@ -427,7 +427,7 @@ u16 jdsp[] ATTRIBUTE_ALIGN(32) = {
  */
 void WRITEIO(u32, u16)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -436,7 +436,7 @@ void WRITEIO(u32, u16)
  */
 void READIO(u32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -445,7 +445,7 @@ void READIO(u32)
  */
 void CHKCDCR(u8)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -454,7 +454,7 @@ void CHKCDCR(u8)
  */
 void DSPCall()
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**

@@ -7,7 +7,7 @@
  */
 void __copy_mem(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -16,7 +16,7 @@ void __copy_mem(void)
  */
 void __move_mem(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**

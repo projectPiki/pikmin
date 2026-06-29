@@ -201,7 +201,7 @@ void Effecter_Overwrite_1ShotD(jc_* jc, Osc_* osc, u32 id)
  */
 void Effecter_Overwrite_1Shot(jc_* jc, Osc_* osc1, Osc_* osc2)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -646,7 +646,7 @@ void UpdatePanPower_1Shot(jc_* channel, f32 leftPower, f32 rightPower, f32 cente
  */
 void CountChan(jc_* jc)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -655,7 +655,7 @@ void CountChan(jc_* jc)
  */
 void CountChanD(jc_* jc)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -664,7 +664,7 @@ void CountChanD(jc_* jc)
  */
 void CheckChan(jc_* jc)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -673,7 +673,7 @@ void CheckChan(jc_* jc)
  */
 void PrintChan(immut char* str, jc_* jc, u32 id)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -801,7 +801,7 @@ u32 One_CheckInstWave(SOUNDID_ sound)
  */
 void Get_CtrlWave(SOUNDID_ sound)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 typedef struct testPercMap {

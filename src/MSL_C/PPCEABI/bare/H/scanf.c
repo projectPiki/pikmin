@@ -682,7 +682,7 @@ int __StringRead(void* pPtr, int ch, int act)
  */
 void fscanf(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -691,7 +691,7 @@ void fscanf(void)
  */
 void scanf(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**

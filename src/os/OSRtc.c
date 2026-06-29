@@ -15,7 +15,7 @@ static SramControlBlock Scb ATTRIBUTE_ALIGN(32);
  */
 static BOOL GetRTC(u32* rtc)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -24,7 +24,7 @@ static BOOL GetRTC(u32* rtc)
  */
 static BOOL __OSGetRTC(u32* rtc)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -33,7 +33,7 @@ static BOOL __OSGetRTC(u32* rtc)
  */
 static BOOL __OSSetRTC(u32 rtc)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -222,7 +222,7 @@ BOOL __OSSyncSram(void)
  */
 void __OSCheckSram(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -231,7 +231,7 @@ void __OSCheckSram(void)
  */
 BOOL __OSReadROM(void* buffer, s32 length, s32 offset)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -240,7 +240,7 @@ BOOL __OSReadROM(void* buffer, s32 length, s32 offset)
  */
 void __OSReadROMCallback(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -249,7 +249,7 @@ void __OSReadROMCallback(void)
  */
 void __OSReadROMAsync(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -347,7 +347,7 @@ void OSSetProgressiveMode(u32 mode)
  */
 void OSGetVideoMode(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -356,7 +356,7 @@ void OSGetVideoMode(void)
  */
 void OSSetVideoMode(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -380,7 +380,7 @@ u8 OSGetLanguage(void)
  */
 void OSSetLanguage(u8)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -389,7 +389,7 @@ void OSSetLanguage(u8)
  */
 void __OSGetBootMode(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -398,7 +398,7 @@ void __OSGetBootMode(void)
  */
 void __OSSetBootMode(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 #if OS_BUILD_VERSION >= 20011002L

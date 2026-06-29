@@ -31,9 +31,7 @@ DSError TRKInitializeDispatcher()
  */
 DSError TRKOverrideDispatch(TRKBuffer* buffer)
 {
-	return DS_NoError;
-
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**

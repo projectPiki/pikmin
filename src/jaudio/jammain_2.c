@@ -797,7 +797,7 @@ u32 __ExchangeRegisterValue(seqp_* track, u8 reg)
  */
 void Jam_WritePortApp(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -806,7 +806,7 @@ void Jam_WritePortApp(void)
  */
 void Jam_ReadPortApp(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -815,7 +815,7 @@ void Jam_ReadPortApp(void)
  */
 void Jam_CheckExportApp(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -824,7 +824,7 @@ void Jam_CheckExportApp(void)
  */
 void Jam_CheckImportApp(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -833,7 +833,7 @@ void Jam_CheckImportApp(void)
  */
 void Jam_WritePortIndirect(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -842,7 +842,7 @@ void Jam_WritePortIndirect(void)
  */
 void Jam_ReadPortIndirect(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -948,7 +948,7 @@ BOOL Jam_CheckPortAppDirect(seqp_* track, u32 param_2, u16 param_3)
  */
 void Jam_WritePort(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -957,7 +957,7 @@ void Jam_WritePort(void)
  */
 void Jam_ReadPort(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -966,7 +966,7 @@ void Jam_ReadPort(void)
  */
 void Jam_WritePortChild(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -975,7 +975,7 @@ void Jam_WritePortChild(void)
  */
 void Jam_WritePortBros(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -1204,7 +1204,7 @@ void Jam_OffExtSwitchD(OuterParam_* ext, u16 param_2)
  */
 void Jam_SetExtSwitchDirectD(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -1213,7 +1213,7 @@ void Jam_SetExtSwitchDirectD(void)
  */
 void Jam_SetExtFirFilter(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -1255,7 +1255,7 @@ void Jam_OffExtSwitch(seqp_* track, u16 param_2)
  */
 void Jam_SetExtSwitchDirect(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -1264,7 +1264,7 @@ void Jam_SetExtSwitchDirect(void)
  */
 void Jam_SetExtFirFilterP(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -1307,7 +1307,7 @@ void Jam_OffExtSwitchP(seqp_* track, u8 index, u16 param_3)
  */
 void Jam_SetExtSwitchDirectP(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -1316,7 +1316,7 @@ void Jam_SetExtSwitchDirectP(void)
  */
 void Jam_CheckRunningCounter(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -1334,7 +1334,7 @@ BOOL Jam_RegisterTrackCallback(TrackCallback callback)
  */
 void Jam_SetTrackExtPanPower(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -1727,7 +1727,7 @@ void Jam_MuteTrack(seqp_* track, u8 param_2)
  */
 void Jam_MuteChildTracks(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**

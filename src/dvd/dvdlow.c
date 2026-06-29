@@ -249,7 +249,7 @@ static void Read(void* addr, u32 length, u32 offset, DVDLowCallback callback)
  */
 void AudioBufferOn(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -512,7 +512,7 @@ void DVDLowReset()
  */
 void DVDLowSetResetCoverCallback(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -521,7 +521,7 @@ void DVDLowSetResetCoverCallback(void)
  */
 void DoBreak(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -530,7 +530,7 @@ void DoBreak(void)
  */
 void AlarmHandlerForBreak(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -539,7 +539,7 @@ void AlarmHandlerForBreak(void)
  */
 void SetBreakAlarm(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -570,7 +570,7 @@ DVDLowCallback DVDLowClearCallback()
  */
 void DVDLowGetCoverStatus(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**

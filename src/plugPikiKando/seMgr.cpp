@@ -131,7 +131,7 @@ void SeMgr::stopBGM()
  */
 void SeMgr::stopSoundAll()
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**

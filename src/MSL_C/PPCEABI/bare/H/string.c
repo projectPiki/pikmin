@@ -145,7 +145,7 @@ char* strcat(char* dst, const char* src)
  */
 char* strncat(char* dst, const char* src, size_t n)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -267,7 +267,7 @@ char* strchr(const char* str, int chr)
  */
 int strcoll(const char* lhs, const char* rhs)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -276,7 +276,7 @@ int strcoll(const char* lhs, const char* rhs)
  */
 size_t strxfrm(char* dst, const char* src, size_t n)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -285,7 +285,7 @@ size_t strxfrm(char* dst, const char* src, size_t n)
  */
 char* strrchr(const char* str, int ch)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -294,7 +294,7 @@ char* strrchr(const char* str, int ch)
  */
 char* strpbrk(const char* dst, const char* breakset)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -303,7 +303,7 @@ char* strpbrk(const char* dst, const char* breakset)
  */
 size_t strspn(const char* dst, const char* src)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -312,7 +312,7 @@ size_t strspn(const char* dst, const char* src)
  */
 size_t strcspn(const char* dst, const char* src)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -321,7 +321,7 @@ size_t strcspn(const char* dst, const char* src)
  */
 char* strtok(char* str, const char* delim)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -360,7 +360,7 @@ char* strstr(const char* str, const char* substr)
  */
 char* strerror(int errnum)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -369,5 +369,5 @@ char* strerror(int errnum)
  */
 void __strerror(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }

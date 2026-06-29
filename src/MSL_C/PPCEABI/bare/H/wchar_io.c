@@ -6,7 +6,7 @@
  */
 void putwc(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -15,7 +15,7 @@ void putwc(void)
  */
 void putwchar(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -24,7 +24,7 @@ void putwchar(void)
  */
 void fputwc(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -33,7 +33,7 @@ void fputwc(void)
  */
 void getwc(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -42,7 +42,7 @@ void getwc(void)
  */
 void getwchar(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -51,7 +51,7 @@ void getwchar(void)
  */
 void fgetwc(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -60,7 +60,7 @@ void fgetwc(void)
  */
 void ungetwc(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -69,7 +69,7 @@ void ungetwc(void)
  */
 void fputws(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -78,7 +78,7 @@ void fputws(void)
  */
 void fgetws(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**

@@ -262,7 +262,7 @@ DSError TRKAppendBuffer1_ui64(TRKBuffer* buffer, const u64 data)
  */
 void TRKAppendBuffer1_ui128(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -333,7 +333,7 @@ DSError TRKAppendBuffer_ui64(TRKBuffer* buffer, const u64* data, int count)
  */
 void TRKAppendBuffer_ui128(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -445,7 +445,7 @@ DSError TRKReadBuffer1_ui64(TRKBuffer* buffer, u64* data)
  */
 void TRKReadBuffer1_ui128(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -516,5 +516,5 @@ DSError TRKReadBuffer_ui64(TRKBuffer* buffer, u64* data, int count)
  */
 void TRKReadBuffer_ui128(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }

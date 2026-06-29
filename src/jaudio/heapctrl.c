@@ -85,7 +85,7 @@ static void DRAM_TO_DRAM_DMA(u32 src, u32 dst, u32 totalSize)
  */
 void Jac_GetUnlockHeap(jaheap_*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -94,7 +94,7 @@ void Jac_GetUnlockHeap(jaheap_*)
  */
 void Jac_CheckAlloc(jaheap_*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -206,7 +206,7 @@ BOOL Jac_SetGroupHeap(jaheap_* heapA, jaheap_* heapB)
  */
 void Jac_CutdownHeap(jaheap_*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -493,7 +493,7 @@ void Jac_GarbageCollection_St(jaheap_* heap)
  */
 void Jac_CheckFreeHeap_Total(jaheap_*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -502,7 +502,7 @@ void Jac_CheckFreeHeap_Total(jaheap_*)
  */
 void Jac_CheckFreeHeap_Linear(jaheap_*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**

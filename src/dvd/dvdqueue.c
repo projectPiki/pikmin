@@ -43,7 +43,7 @@ BOOL __DVDPushWaitingQueue(int idx, struct DVDQueue* newTail)
  */
 void PopWaitingQueuePrio(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -120,7 +120,7 @@ BOOL __DVDDequeueWaitingQueue(DVDQueue* queue)
  */
 void __DVDIsBlockInWaitingQueue(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -129,5 +129,5 @@ void __DVDIsBlockInWaitingQueue(void)
  */
 void DVDDumpWaitingQueue(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }

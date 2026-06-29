@@ -36,7 +36,7 @@ s32 Jac_CheckPlayerCallback(PlayerCallBack callback, void* arg)
  */
 void Jac_RejectPlayerCallback(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**

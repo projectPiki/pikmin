@@ -17,7 +17,7 @@ s32 abs(s32 __x)
  */
 s32 labs(s32 __x)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -26,7 +26,7 @@ s32 labs(s32 __x)
  */
 void llabs(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -35,7 +35,7 @@ void llabs(void)
  */
 div_t div(s32 __numer, s32 __denom)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -44,7 +44,7 @@ div_t div(s32 __numer, s32 __denom)
  */
 void ldiv(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -53,7 +53,7 @@ void ldiv(void)
  */
 void lldiv(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -62,7 +62,7 @@ void lldiv(void)
  */
 void __add(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -71,7 +71,7 @@ void __add(void)
  */
 void __ladd(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -80,7 +80,7 @@ void __ladd(void)
  */
 void __lladd(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -89,7 +89,7 @@ void __lladd(void)
  */
 void __mul(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -98,7 +98,7 @@ void __mul(void)
  */
 void __lmul(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -107,7 +107,7 @@ void __lmul(void)
  */
 void __llmul(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -116,7 +116,7 @@ void __llmul(void)
  */
 void __div(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -125,7 +125,7 @@ void __div(void)
  */
 void __ldiv(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -134,7 +134,7 @@ void __ldiv(void)
  */
 void __lldiv(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -143,7 +143,7 @@ void __lldiv(void)
  */
 void __mod(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -152,7 +152,7 @@ void __mod(void)
  */
 void __lmod(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -161,5 +161,5 @@ void __lmod(void)
  */
 void __llmod(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }

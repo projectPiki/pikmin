@@ -66,7 +66,7 @@ static void DbgHandler(__OSInterrupt interrupt, OSContext* context)
  */
 static void TxHandler(s32 chan, OSContext* context)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -75,7 +75,7 @@ static void TxHandler(s32 chan, OSContext* context)
  */
 static void RxHandler(s32 chan, OSContext* context)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -349,7 +349,7 @@ BOOL HIOWriteMailbox(u32 word)
  */
 BOOL HIORead(u32 addr, void* buffer, s32 size)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -400,7 +400,7 @@ BOOL HIOWrite(u32 addr, void* buffer, s32 size)
  */
 BOOL HIOReadAsync(u32 addr, void* buffer, s32 size, HIOCallback callback)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -409,7 +409,7 @@ BOOL HIOReadAsync(u32 addr, void* buffer, s32 size, HIOCallback callback)
  */
 BOOL HIOWriteAsync(u32 addr, void* buffer, s32 size, HIOCallback callback)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -418,5 +418,5 @@ BOOL HIOWriteAsync(u32 addr, void* buffer, s32 size, HIOCallback callback)
  */
 BOOL HIOReadStatus(u32* status)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }

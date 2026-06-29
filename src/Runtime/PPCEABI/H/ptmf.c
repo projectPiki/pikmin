@@ -21,7 +21,7 @@ void __ptmf_scall(...);
  */
 void __ptmf_test(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -30,7 +30,7 @@ void __ptmf_test(void)
  */
 void __ptmf_cmpr(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -39,7 +39,7 @@ void __ptmf_cmpr(void)
  */
 void __ptmf_call(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -48,7 +48,7 @@ void __ptmf_call(void)
  */
 void __ptmf_call4(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -79,7 +79,7 @@ loc_0x20:
  */
 void __ptmf_scall4(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -88,5 +88,5 @@ void __ptmf_scall4(void)
  */
 void __ptmf_cast(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }

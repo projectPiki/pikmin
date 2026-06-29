@@ -15,7 +15,7 @@ void __convert_from_newlines(char* p, size_t* n)
  */
 void __convert_to_newlines(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -36,7 +36,7 @@ void __prep_buffer(FILE* file)
  */
 void __load_buffer(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -75,7 +75,7 @@ int __flush_buffer(FILE* file, size_t* length)
  */
 void setvbuf(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -84,5 +84,5 @@ void setvbuf(void)
  */
 void setbuf(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }

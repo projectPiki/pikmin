@@ -9,7 +9,7 @@ static TRKFramingState gTRKFramingState;
  */
 void TRKDiscardFrame(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -18,7 +18,7 @@ void TRKDiscardFrame(void)
  */
 void TRKRejectFrame(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -63,7 +63,7 @@ TRKBufferID TRKTestForPacket(void)
  */
 void TRKProcessFrame(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**

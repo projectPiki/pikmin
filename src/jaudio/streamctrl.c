@@ -27,7 +27,7 @@ JSTREAM J_STREAM = {
  */
 void Jac_PlayStreamBGM(s32, s32, s32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -36,7 +36,7 @@ void Jac_PlayStreamBGM(s32, s32, s32)
  */
 void Jac_StopStreamBGM(s32, s32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -45,9 +45,9 @@ void Jac_StopStreamBGM(s32, s32)
  */
 void Jac_VolMoveStreamBGM(s32 vol, s32)
 {
+	TRAP_UNIMPLEMENTED;
 	// this is just to make the magic int-to-float conversion double spawn earlier.
 	J_STREAM.target_vol1 = vol;
-	// UNUSED FUNCTION
 }
 
 /**

@@ -14,7 +14,7 @@ typedef struct SD_ SD_;
  */
 void Limit16(s32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -23,7 +23,7 @@ void Limit16(s32)
  */
 void Jac_mixcopy(s16*, s16*, s16*, s32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -43,7 +43,7 @@ void Jac_imixcopy(s16* ta, s16* tb, s16* td, s32 s)
  */
 void Jac_bcopyW(s16*, s16*, s32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -174,7 +174,7 @@ void Jac_bzero(void* dest, s32 size)
  */
 void SampleDecoder_Alloc(u8*, s32, DECODER_FORMAT, s32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -183,7 +183,7 @@ void SampleDecoder_Alloc(u8*, s32, DECODER_FORMAT, s32)
  */
 void SampleDecoder_Init(SD_*, s32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -192,7 +192,7 @@ void SampleDecoder_Init(SD_*, s32)
  */
 void SampleGet(SD_*, s32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -201,7 +201,7 @@ void SampleGet(SD_*, s32)
  */
 void SampleDecoder(SD_*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -210,7 +210,7 @@ void SampleDecoder(SD_*)
  */
 void DecodeADPCM(u8*, s16*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -219,5 +219,5 @@ void DecodeADPCM(u8*, s16*)
  */
 void DecodeADPCM2(u8*, s16*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }

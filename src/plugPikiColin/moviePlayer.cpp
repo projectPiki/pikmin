@@ -152,7 +152,7 @@ bool MovieInfo::setCamera(Graphics& gfx)
  */
 void MovieInfo::refresh(Graphics&)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**

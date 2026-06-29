@@ -295,5 +295,5 @@ void EXI2_Unreserve(void)
  */
 void EXI2_GetStatusReg(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }

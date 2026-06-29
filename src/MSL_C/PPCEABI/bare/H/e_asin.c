@@ -14,5 +14,5 @@ f64 fabs__Fd(f64 x)
  */
 void __ieee754_asin(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }

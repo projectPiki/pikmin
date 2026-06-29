@@ -9,7 +9,7 @@
  */
 void fmax(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -18,7 +18,7 @@ void fmax(void)
  */
 void fmin(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -55,5 +55,5 @@ int __fpclassifyd__Fd(f64 x)
  */
 void fdim(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }

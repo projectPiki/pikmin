@@ -726,7 +726,7 @@ DSError TRKTargetCPUType(DSCPUType* cpuType)
  */
 void TRKTargetCheckException(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**

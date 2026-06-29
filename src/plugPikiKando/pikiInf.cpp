@@ -561,7 +561,7 @@ void CreatureInfMgr::updateUseList()
  */
 void CreatureInfMgr::restoreAll()
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**

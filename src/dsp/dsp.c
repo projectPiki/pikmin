@@ -25,7 +25,7 @@ u32 DSPCheckMailFromDSP(void)
  */
 void DSPReadCPUToDSPMbox(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -64,7 +64,7 @@ void DSPAssertInt(void)
  */
 void DSPCheckInit(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -73,7 +73,7 @@ void DSPCheckInit(void)
  */
 void DSPReset(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -82,7 +82,7 @@ void DSPReset(void)
  */
 void DSPHalt(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -91,7 +91,7 @@ void DSPHalt(void)
  */
 void DSPUnhalt(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -100,7 +100,7 @@ void DSPUnhalt(void)
  */
 void DSPGetDMAStatus(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 // /**
@@ -109,7 +109,7 @@ void DSPGetDMAStatus(void)
 //  */
 // void DSPAddTask(void)
 // {
-// 	// UNUSED FUNCTION
+// 	TRAP_UNIMPLEMENTED;
 // }
 
 /**
@@ -118,7 +118,7 @@ void DSPGetDMAStatus(void)
  */
 void DSPCancelTask(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -127,7 +127,7 @@ void DSPCancelTask(void)
  */
 void DSPAssertTask(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 // TODO: The presence of this function (but not necessarily its contents) is not a revisional

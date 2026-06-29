@@ -58,7 +58,7 @@ void Jaq_Reset(void)
  */
 void Jaq_GetRemainFreeTracks(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**

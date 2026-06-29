@@ -39,7 +39,7 @@ void __OSResetSWInterruptHandler(__OSInterrupt interrupt, OSContext* context)
  */
 OSResetCallback OSSetResetCallback(OSResetCallback)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 #if OS_BUILD_VERSION >= 20011002L

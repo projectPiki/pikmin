@@ -8,7 +8,7 @@
  */
 void fread(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**

@@ -10,7 +10,7 @@ extern volatile int __OSTVMode AT_ADDRESS(OS_BASE_CACHED | 0xCC);
  */
 void GetFontCode(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -19,7 +19,7 @@ void GetFontCode(void)
  */
 void Decode(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -28,7 +28,7 @@ void Decode(void)
  */
 void GetFontSize(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -67,7 +67,7 @@ u16 OSGetFontEncode(void)
  */
 void ReadROM(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -76,7 +76,7 @@ void ReadROM(void)
  */
 void ReadFont(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -85,7 +85,7 @@ void ReadFont(void)
  */
 u32 OSLoadFont(OSFontHeader* fontInfo, void* temp)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -94,7 +94,7 @@ u32 OSLoadFont(OSFontHeader* fontInfo, void* temp)
  */
 char* OSGetFontTexel(const char*, void*, s32, s32, s32*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -103,7 +103,7 @@ char* OSGetFontTexel(const char*, void*, s32, s32, s32*)
  */
 void ExpandFontSheet(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -112,7 +112,7 @@ void ExpandFontSheet(void)
  */
 BOOL OSInitFont(OSFontHeader* font)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -121,7 +121,7 @@ BOOL OSInitFont(OSFontHeader* font)
  */
 char* OSGetFontTexture(const char* string, void** image, s32* x, s32* y, s32* width)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -130,5 +130,5 @@ char* OSGetFontTexture(const char* string, void** image, s32* x, s32* y, s32* wi
  */
 char* OSGetFontWidth(const char* string, s32* width)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }

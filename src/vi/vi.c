@@ -909,7 +909,7 @@ void VIConfigure(const GXRenderModeObj* obj)
  */
 void VIConfigurePan(u16 panPosX, u16 panPosY, u16 panSizeX, u16 panSizeY)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -957,7 +957,7 @@ void VISetNextFrameBuffer(void* fb)
  */
 void VISetNextRightFrameBuffer(void* fb)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -982,7 +982,7 @@ void VISetBlack(BOOL isBlack)
  */
 void VISet3D(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -1161,7 +1161,7 @@ u32 VIGetDTVStatus(void)
  */
 void __VISetAdjustingValues(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -1170,5 +1170,5 @@ void __VISetAdjustingValues(void)
  */
 void __VIGetAdjustingValues(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }

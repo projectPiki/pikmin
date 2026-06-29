@@ -128,7 +128,7 @@ Vmap_* Bank_GetPercVmap(Perc_* perc, u8 keyIdx, u8 vel)
  */
 int Bank_GetVoiceMap(Voice_* voice, u16 id)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**

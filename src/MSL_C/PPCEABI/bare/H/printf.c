@@ -1107,7 +1107,7 @@ int printf(const char* format, ...)
  */
 int fprintf(FILE*, const char* format, ...)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -1131,7 +1131,7 @@ int vprintf(const char* format, va_list arg)
  */
 void vfprintf(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -1165,7 +1165,7 @@ int vsprintf(char* s, const char* format, va_list arg)
  */
 int snprintf(char* s, size_t n, const char* format, ...)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**

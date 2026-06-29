@@ -24,7 +24,7 @@ void (*__console_exit)(void) = 0;
  */
 void abort(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -33,7 +33,7 @@ void abort(void)
  */
 void atexit(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -42,7 +42,7 @@ void atexit(void)
  */
 void __atexit(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -90,5 +90,5 @@ void exit(int status)
  */
 void __exit(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }

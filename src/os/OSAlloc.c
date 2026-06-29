@@ -46,7 +46,7 @@ static inline void* DLAddFront(struct HeapCell* neighbor, struct HeapCell* cell)
  */
 void DLLookup(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -110,7 +110,7 @@ static HeapCell* DLInsert(HeapCell* list, HeapCell* cell, void* unused /* needed
  */
 void DLOverlap(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -119,7 +119,7 @@ void DLOverlap(void)
  */
 void DLSize(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -173,7 +173,7 @@ void* OSAllocFromHeap(OSHeapHandle heap, u32 size)
  */
 void OSAllocFixed(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -271,7 +271,7 @@ OSHeapHandle OSCreateHeap(void* start, void* end)
  */
 void OSDestroyHeap(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -280,7 +280,7 @@ void OSDestroyHeap(void)
  */
 void OSAddToHeap(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -289,7 +289,7 @@ void OSAddToHeap(void)
  */
 s32 OSCheckHeap(int)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -298,7 +298,7 @@ s32 OSCheckHeap(int)
  */
 void OSReferentSize(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -307,7 +307,7 @@ void OSReferentSize(void)
  */
 void OSDumpHeap(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -316,5 +316,5 @@ void OSDumpHeap(void)
  */
 void OSVisitAllocated(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }

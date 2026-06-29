@@ -6,7 +6,7 @@
  */
 void TRKMessageAdd(void)
 {
-    // UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -15,7 +15,7 @@ void TRKMessageAdd(void)
  */
 void TRKMessageGet(void)
 {
-    // UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**

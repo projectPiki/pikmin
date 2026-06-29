@@ -168,7 +168,7 @@ s32 GateON(seqp_* track, s32 channelId, s32 key, s32 velocity, s32 playId)
  */
 void ProgramChange(s32 chan)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**

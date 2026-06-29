@@ -356,7 +356,7 @@ s32 CARDCheckAsync(s32 channel, CARDCallback callback)
  */
 void CARDCheckEx(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**

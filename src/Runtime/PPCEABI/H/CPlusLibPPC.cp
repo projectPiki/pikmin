@@ -9,7 +9,7 @@ extern "C" {
  */
 void __dc_arr(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -18,7 +18,7 @@ void __dc_arr(void)
  */
 void __del_arr(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -27,7 +27,7 @@ void __del_arr(void)
  */
 void __new_arr(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -36,7 +36,7 @@ void __new_arr(void)
  */
 void __init_arr(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**

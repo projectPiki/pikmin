@@ -114,7 +114,7 @@ CtrlGroup_* Wave_Test(u8* data)
  */
 void GetSound_Test(u32 id)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**

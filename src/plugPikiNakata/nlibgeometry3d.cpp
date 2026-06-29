@@ -183,7 +183,7 @@ void NLine::println() immut
  */
 NPlane::NPlane()
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -192,7 +192,7 @@ NPlane::NPlane()
  */
 NPlane::NPlane(NVector3f&, f32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -201,7 +201,7 @@ NPlane::NPlane(NVector3f&, f32)
  */
 void NPlane::construct(NVector3f&, f32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -227,7 +227,7 @@ void NPlane::construct(NVector3f& normal, NVector3f& point)
  */
 NPlane::NPlane(NVector3f&, NVector3f&, NVector3f&)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -236,7 +236,7 @@ NPlane::NPlane(NVector3f&, NVector3f&, NVector3f&)
  */
 void NPlane::construct(NVector3f&, NVector3f&, NVector3f&)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -245,7 +245,7 @@ void NPlane::construct(NVector3f&, NVector3f&, NVector3f&)
  */
 NPlane::NPlane(Plane&)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -254,7 +254,7 @@ NPlane::NPlane(Plane&)
  */
 void NPlane::construct(Plane&)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -263,7 +263,7 @@ void NPlane::construct(Plane&)
  */
 NPlane::NPlane(NPlane&)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -272,7 +272,7 @@ NPlane::NPlane(NPlane&)
  */
 void NPlane::construct(NPlane&)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -281,7 +281,7 @@ void NPlane::construct(NPlane&)
  */
 bool NPlane::intersects(NLine&, f32*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -290,7 +290,7 @@ bool NPlane::intersects(NLine&, f32*)
  */
 bool NPlane::outputIntersection(NLine&, NVector3f&)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -299,7 +299,7 @@ bool NPlane::outputIntersection(NLine&, NVector3f&)
  */
 bool NPlane::intersectsRay(NLine&, f32*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -308,7 +308,7 @@ bool NPlane::intersectsRay(NLine&, f32*)
  */
 bool NPlane::outputRayIntersection(NLine&, NVector3f&)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -317,7 +317,7 @@ bool NPlane::outputRayIntersection(NLine&, NVector3f&)
  */
 bool NPlane::intersectsSegment(NSegment&, f32*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -326,7 +326,7 @@ bool NPlane::intersectsSegment(NSegment&, f32*)
  */
 bool NPlane::outputSegmentIntersection(NSegment&, NVector3f&)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -355,7 +355,7 @@ void NPlane::outputVerticalPosition(NVector3f& point, NVector3f& outPos)
  */
 void NPlane::negate()
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -364,7 +364,7 @@ void NPlane::negate()
  */
 bool NPlane::adjustTo(NVector3f&, f32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -373,7 +373,7 @@ bool NPlane::adjustTo(NVector3f&, f32)
  */
 bool NPlane::adjust(NVector3f&)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -382,7 +382,7 @@ bool NPlane::adjust(NVector3f&)
  */
 bool NPlane::outputIntersectionLineY(NPlane&, NLine&)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -391,7 +391,7 @@ bool NPlane::outputIntersectionLineY(NPlane&, NLine&)
  */
 f32 NPlane::calcAngle(NPlane&)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -400,7 +400,7 @@ f32 NPlane::calcAngle(NPlane&)
  */
 f32 NPlane::calcY(f32, f32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -431,7 +431,7 @@ void NPlane::println() immut
  */
 NSegment::NSegment()
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -440,7 +440,7 @@ NSegment::NSegment()
  */
 NSegment::NSegment(NVector3f&, NVector3f&)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -449,7 +449,7 @@ NSegment::NSegment(NVector3f&, NVector3f&)
  */
 void NSegment::construct(NVector3f&, NVector3f&)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -458,7 +458,7 @@ void NSegment::construct(NVector3f&, NVector3f&)
  */
 NSegment::NSegment(NSegment&)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -467,7 +467,7 @@ NSegment::NSegment(NSegment&)
  */
 void NSegment::construct(NSegment&)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -476,7 +476,7 @@ void NSegment::construct(NSegment&)
  */
 f32 NSegment::calcDistanceAsSegment(NVector3f&, f32*, f32*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -485,7 +485,7 @@ f32 NSegment::calcDistanceAsSegment(NVector3f&, f32*, f32*)
  */
 f32 NSegment::calcDistanceAsSegment(NLine&, f32*, f32*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -494,7 +494,7 @@ f32 NSegment::calcDistanceAsSegment(NLine&, f32*, f32*)
  */
 f32 NSegment::calcSegmentDistanceAsSegment(NSegment&, f32*, f32*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -503,7 +503,7 @@ f32 NSegment::calcSegmentDistanceAsSegment(NSegment&, f32*, f32*)
  */
 void NSegment::transform(NTransform3D&)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -512,7 +512,7 @@ void NSegment::transform(NTransform3D&)
  */
 void NSegment::translate(NVector3f&)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -521,7 +521,7 @@ void NSegment::translate(NVector3f&)
  */
 void NSegment::makeProjectionY()
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**

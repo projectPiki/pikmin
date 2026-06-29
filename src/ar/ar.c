@@ -39,7 +39,7 @@ ARCallback ARRegisterDMACallback(ARCallback callback)
  */
 void ARGetDMAStatus(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -73,7 +73,7 @@ void ARStartDMA(u32 type, u32 mainmem_addr, u32 aram_addr, u32 length)
  */
 void ARAlloc(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -82,7 +82,7 @@ void ARAlloc(void)
  */
 void ARFree(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -91,7 +91,7 @@ void ARFree(void)
  */
 void ARCheckInit(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -144,7 +144,7 @@ u32 ARInit(u32* stack_index_addr, u32 num_entries)
  */
 void ARReset(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -153,7 +153,7 @@ void ARReset(void)
  */
 void ARSetSize(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -170,7 +170,7 @@ u32 ARGetBaseAddress()
  */
 void ARGetSize(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**

@@ -357,7 +357,7 @@ static immut char* icon_pals[]  = { p_icon_palette };
  */
 void MemoryCard::GetBlockSize(s32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -1622,10 +1622,10 @@ bool MemoryCard::isFileBroken()
  */
 void MemoryCard::breakFile()
 {
+	TRAP_UNIMPLEMENTED;
 	static const char* sectionNames[] = {
 		"banner", "options 0", "options 1", "gamefile 0", "gamefile 1", "gamefile 2", "gamefile 3",
 	};
-	// UNUSED FUNCTION
 }
 
 /**

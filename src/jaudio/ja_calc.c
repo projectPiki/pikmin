@@ -20,7 +20,7 @@ f32 sqrtf2(f32 x)
  */
 void cosf2(f32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -37,7 +37,7 @@ f32 atanf2(f32 x, f32 y)
  */
 void sinf2(f32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**

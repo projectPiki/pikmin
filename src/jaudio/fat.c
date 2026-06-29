@@ -213,7 +213,7 @@ u16 FAT_ReadWord(u16 a, u32 b)
  */
 void FAT_ReadWordD(u16 a, u32 b)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -232,7 +232,7 @@ u32 FAT_ReadLong(u16 a, u32 b)
  */
 void FAT_ReadLongD(u16 a1, u32 a2)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
