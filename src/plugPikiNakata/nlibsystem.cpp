@@ -132,7 +132,7 @@ void NNode::removeAllChildren()
  */
 NListNode::NListNode()
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -141,7 +141,7 @@ NListNode::NListNode()
  */
 void NListNode::addChild(NListNode*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -150,7 +150,7 @@ void NListNode::addChild(NListNode*)
  */
 void NListNode::removeChild(NListNode*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -159,7 +159,7 @@ void NListNode::removeChild(NListNode*)
  */
 int NListNode::getChildCount()
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -168,7 +168,7 @@ int NListNode::getChildCount()
  */
 void NListNode::addChild(int, NListNode*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -177,7 +177,7 @@ void NListNode::addChild(int, NListNode*)
  */
 void NListNode::toString()
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -186,7 +186,7 @@ void NListNode::toString()
  */
 NList::NList()
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -195,7 +195,7 @@ NList::NList()
  */
 void NList::addList(NList*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -204,7 +204,7 @@ void NList::addList(NList*)
  */
 void NList::toString()
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**

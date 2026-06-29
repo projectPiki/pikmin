@@ -559,5 +559,5 @@ void DynCreature::doKill()
  */
 void DynCreature::simulate2(f32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }

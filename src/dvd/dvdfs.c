@@ -456,7 +456,7 @@ BOOL DVDSeekAsyncPrio(DVDFileInfo* fileInfo, s32 offset, DVDCallback callback, s
  */
 static void cbForSeekAsync(s32 result, DVDCommandBlock* block)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -465,7 +465,7 @@ static void cbForSeekAsync(s32 result, DVDCommandBlock* block)
  */
 s32 DVDSeekPrio(DVDFileInfo* fileInfo, s32 offset, s32 prio)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -474,7 +474,7 @@ s32 DVDSeekPrio(DVDFileInfo* fileInfo, s32 offset, s32 prio)
  */
 static void cbForSeekSync(s32 result, DVDCommandBlock* block)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -483,7 +483,7 @@ static void cbForSeekSync(s32 result, DVDCommandBlock* block)
  */
 s32 DVDGetFileInfoStatus(DVDFileInfo* fileInfo)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -523,7 +523,7 @@ BOOL DVDOpenDir(const char* dirName, DVDDir* dir)
  */
 BOOL DVDReadDir(DVDDir* dir, DVDDirEntry* dirent)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -532,7 +532,7 @@ BOOL DVDReadDir(DVDDir* dir, DVDDirEntry* dirent)
  */
 BOOL DVDCloseDir(DVDDir* dir)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -541,7 +541,7 @@ BOOL DVDCloseDir(DVDDir* dir)
  */
 void* DVDGetFSTLocation()
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 #define RoundUp32KB(x)   (((u32)(x) + 32 * 1024 - 1) & ~(32 * 1024 - 1))
@@ -684,7 +684,7 @@ s32 DVDPrepareStream(DVDFileInfo* fileInfo, u32 length, u32 offset)
  */
 static void cbForPrepareStreamSync(s32 result, DVDCommandBlock* block)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -693,5 +693,5 @@ static void cbForPrepareStreamSync(s32 result, DVDCommandBlock* block)
  */
 s32 DVDGetTransferredSize(DVDFileInfo* fileinfo)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }

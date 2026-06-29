@@ -14,7 +14,7 @@ static void DecrementerExceptionHandler(__OSException exception, OSContext* cont
  */
 int OSCheckAlarmQueue(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -147,7 +147,7 @@ void OSSetAbsAlarm(OSAlarm* alarm, OSTime tick, OSAlarmHandler handler)
  */
 void OSSetPeriodicAlarm(OSAlarm*, OSTime, OSTime, OSAlarmHandler)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**

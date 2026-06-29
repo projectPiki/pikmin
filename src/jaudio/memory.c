@@ -7,7 +7,7 @@
  */
 void __CalcRelf(f32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -16,7 +16,7 @@ void __CalcRelf(f32)
  */
 void MakeReleaseTable()
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -25,7 +25,7 @@ void MakeReleaseTable()
  */
 void Nas_ResetIDtable()
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -34,7 +34,7 @@ void Nas_ResetIDtable()
  */
 void Nas_ForceStopChannel(s32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -43,7 +43,7 @@ void Nas_ForceStopChannel(s32)
  */
 void Nas_ForceReleaseChannel(s32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -52,7 +52,7 @@ void Nas_ForceReleaseChannel(s32)
  */
 void Nas_ForceStopSeq(s32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -61,7 +61,7 @@ void Nas_ForceStopSeq(s32)
  */
 void Nas_CacheOff(u8*, s32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -70,7 +70,7 @@ void Nas_CacheOff(u8*, s32)
  */
 void Nas_2ndHeapAlloc_CL(ALHeap*, s32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -79,7 +79,7 @@ void Nas_2ndHeapAlloc_CL(ALHeap*, s32)
  */
 void Nas_2ndHeapAlloc(ALHeap*, s32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -88,7 +88,7 @@ void Nas_2ndHeapAlloc(ALHeap*, s32)
  */
 void Nas_NcHeapAlloc(ALHeap*, s32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -97,7 +97,7 @@ void Nas_NcHeapAlloc(ALHeap*, s32)
  */
 void Nas_NcHeapAlloc_CL(ALHeap*, s32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -106,7 +106,7 @@ void Nas_NcHeapAlloc_CL(ALHeap*, s32)
  */
 void Nas_HeapAlloc_CL(ALHeap*, s32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -115,7 +115,7 @@ void Nas_HeapAlloc_CL(ALHeap*, s32)
  */
 void Nas_TmpAlloc(ALHeap*, s32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -124,7 +124,7 @@ void Nas_TmpAlloc(ALHeap*, s32)
  */
 void Nas_HeapFree(ALHeap*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -184,7 +184,7 @@ void Nas_HeapInit(ALHeap* heap, u8* p2, s32 p3)
  */
 void Nas_SzStayClear(SZStay_*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -193,7 +193,7 @@ void Nas_SzStayClear(SZStay_*)
  */
 void Nas_SzAutoClear(SZAuto_*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -202,7 +202,7 @@ void Nas_SzAutoClear(SZAuto_*)
  */
 void Nas_SzCustomClear(SZCustom_*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -211,7 +211,7 @@ void Nas_SzCustomClear(SZCustom_*)
  */
 void Nas_SzStayDelete(s32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -220,7 +220,7 @@ void Nas_SzStayDelete(s32)
  */
 void Nas_SzHeapReset(u32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -229,7 +229,7 @@ void Nas_SzHeapReset(u32)
  */
 void Nas_SzHeapDivide(AudioHeapstrc_*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -238,7 +238,7 @@ void Nas_SzHeapDivide(AudioHeapstrc_*)
  */
 void Nas_SzDataDivide(DataHeapstrc_*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -247,7 +247,7 @@ void Nas_SzDataDivide(DataHeapstrc_*)
  */
 void Nas_SzStayDivide(StayHeapstrc_*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -256,7 +256,7 @@ void Nas_SzStayDivide(StayHeapstrc_*)
  */
 void Nas_SzAutoDivide(AutoHeapstrc_*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -265,7 +265,7 @@ void Nas_SzAutoDivide(AutoHeapstrc_*)
  */
 void Nas_SzHeapAlloc(s32, s32, s32, s32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -274,7 +274,7 @@ void Nas_SzHeapAlloc(s32, s32, s32, s32)
  */
 void Nas_SzCacheCheck(s32, s32, s32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -283,7 +283,7 @@ void Nas_SzCacheCheck(s32, s32, s32)
  */
 void __Nas_SzCacheCheck_Inner(s32, s32, s32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -292,7 +292,7 @@ void __Nas_SzCacheCheck_Inner(s32, s32, s32)
  */
 void Nas_InitFilterCoef(f32, f32, u16*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -301,7 +301,7 @@ void Nas_InitFilterCoef(f32, f32, u16*)
  */
 void Nas_ClearFilter(s16*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -310,7 +310,7 @@ void Nas_ClearFilter(s16*)
  */
 void Nas_SetLPFilter(s16*, s32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -319,7 +319,7 @@ void Nas_SetLPFilter(s16*, s32)
  */
 void Nas_SetHPFilter(s16*, s32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -328,7 +328,7 @@ void Nas_SetHPFilter(s16*, s32)
  */
 void Nas_SetBPFilter(s16*, s32, s32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -337,7 +337,7 @@ void Nas_SetBPFilter(s16*, s32, s32)
  */
 void __DownDelay(delay_*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -346,7 +346,7 @@ void __DownDelay(delay_*)
  */
 void __Nas_DelayDown()
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -355,7 +355,7 @@ void __Nas_DelayDown()
  */
 void __Nas_DacClear()
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -364,7 +364,7 @@ void __Nas_DacClear()
  */
 void Nas_SpecChange()
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -373,7 +373,7 @@ void Nas_SpecChange()
  */
 void __Nas_MemoryReconfig()
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -382,7 +382,7 @@ void __Nas_MemoryReconfig()
  */
 void EmemOnCheck(s32, s32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -391,7 +391,7 @@ void EmemOnCheck(s32, s32)
  */
 void EmemAlloc(s32, s32, s32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -400,7 +400,7 @@ void EmemAlloc(s32, s32, s32)
  */
 void Nas_Alloc_Single(s32, s32, u8*, char, s32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -409,7 +409,7 @@ void Nas_Alloc_Single(s32, s32, u8*, char, s32)
  */
 void Nas_Init_Single(s32, s32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -418,7 +418,7 @@ void Nas_Init_Single(s32, s32)
  */
 void __Nas_Alloc_Single_Auto_Inner(s32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -427,7 +427,7 @@ void __Nas_Alloc_Single_Auto_Inner(s32)
  */
 void __SearchBank(SwMember_*, s32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -436,7 +436,7 @@ void __SearchBank(SwMember_*, s32)
  */
 void __KillSwMember(SwMember_*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -445,7 +445,7 @@ void __KillSwMember(SwMember_*)
  */
 void __RomAddrSet(SwMember_*, smzwavetable_*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -454,7 +454,7 @@ void __RomAddrSet(SwMember_*, smzwavetable_*)
  */
 void __Nas_Alloc_Single_Stay_Inner(s32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -463,7 +463,7 @@ void __Nas_Alloc_Single_Stay_Inner(s32)
  */
 void __Do_EmemKill(SwMember_*, s32, s32, s32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -472,7 +472,7 @@ void __Do_EmemKill(SwMember_*, s32, s32, s32)
  */
 void Emem_KillSwMember()
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -481,7 +481,7 @@ void Emem_KillSwMember()
  */
 void __RestoreAddr(Wavelookuptable_*, smzwavetable_*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -490,7 +490,7 @@ void __RestoreAddr(Wavelookuptable_*, smzwavetable_*)
  */
 void DirtyWave(s32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -499,7 +499,7 @@ void DirtyWave(s32)
  */
 void EntryWave(s32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -508,7 +508,7 @@ void EntryWave(s32)
  */
 void __ExchangeWave(s32, s32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -517,7 +517,7 @@ void __ExchangeWave(s32, s32)
  */
 void Dirty_AllWave()
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -526,7 +526,7 @@ void Dirty_AllWave()
  */
 void __Nas_GetCompressBuffer(delay_*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -535,7 +535,7 @@ void __Nas_GetCompressBuffer(delay_*)
  */
 void Nas_SetDelayLineParam(s32, s32, s32, s32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -544,5 +544,5 @@ void Nas_SetDelayLineParam(s32, s32, s32, s32)
  */
 void Nas_SetDelayLine(s32, fxconfig_*, s32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }

@@ -46,7 +46,7 @@ void Jac_HeapSetup(void* heap, s32 size)
  */
 void GetAudioHeapRemain(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -84,7 +84,7 @@ void* OSAlloc2(u32 size)
  */
 void OSFree2(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -121,7 +121,7 @@ u32 Jac_GetCurrentVCounter(void)
  */
 void HaltDSPSignal(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -130,7 +130,7 @@ void HaltDSPSignal(void)
  */
 void HaltDSP(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -139,7 +139,7 @@ void HaltDSP(void)
  */
 void RunDSP(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -148,7 +148,7 @@ void RunDSP(void)
  */
 void CheckHaltDSP(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**

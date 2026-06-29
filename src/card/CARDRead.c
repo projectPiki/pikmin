@@ -167,5 +167,5 @@ s32 CARDRead(CARDFileInfo* fileInfo, void* buffer, s32 length, s32 offset)
  */
 void CARDCancel(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }

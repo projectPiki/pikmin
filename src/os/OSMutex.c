@@ -81,7 +81,7 @@ void __OSUnlockAllMutex(OSThread* thread)
  */
 BOOL OSTryLockMutex(OSMutex* mutex)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -136,7 +136,7 @@ void OSSignalCond(OSCond* cond)
  */
 static void IsMember(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**

@@ -106,7 +106,7 @@ void DVDT_ExtendPath(char* dst, immut char* ext)
  */
 s32 DVDT_AddTaskHigh(TaskCallback, void*, size_t)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -361,7 +361,7 @@ s32 DVDT_CloseBuffer(u8* buf)
  */
 void DVDT_GetCurrentBuffer(u8**)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -478,9 +478,9 @@ s32 DVDT_LoadtoARAM(u32 owner, immut char* path, u32 dst, u32 src, u32 length, u
  */
 void ARAM_DMAfinish2(u32)
 {
+	TRAP_UNIMPLEMENTED;
 	static DVDFileInfo finfo;
 	static ARQRequest req;
-	// UNUSED FUNCTION
 }
 
 /**
@@ -489,10 +489,9 @@ void ARAM_DMAfinish2(u32)
  */
 void DVDT_ARAMtoDRAM_Main(void*)
 {
+	TRAP_UNIMPLEMENTED;
 	static DVDFileInfo finfo;
 	static ARQRequest req;
-
-	// UNUSED FUNCTION
 }
 
 /**
@@ -501,8 +500,8 @@ void DVDT_ARAMtoDRAM_Main(void*)
  */
 void DVDT_DRAMtoARAM_Main(void*)
 {
+	TRAP_UNIMPLEMENTED;
 	// static DVDFileInfo finfo;
-	// UNUSED FUNCTION
 }
 
 /**
@@ -511,8 +510,8 @@ void DVDT_DRAMtoARAM_Main(void*)
  */
 void DVDT_ARAMtoDRAM(u32, u32, u32, u32, u32*, void (*)(u32))
 {
+	TRAP_UNIMPLEMENTED;
 	// static DVDFileInfo finfo;
-	// UNUSED FUNCTION
 }
 
 /**
@@ -521,7 +520,7 @@ void DVDT_ARAMtoDRAM(u32, u32, u32, u32, u32*, void (*)(u32))
  */
 void DVDT_DRAMtoARAM(u32, u32, u32, u32, u32*, void (*)(u32))
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -584,8 +583,8 @@ void DVDT_CheckPass(u32 owner, u32* status, Jac_DVDCallback callback)
  */
 void Jac_CheckFile(immut char*)
 {
+	TRAP_UNIMPLEMENTED;
 	static DVDFileInfo finfo;
-	// UNUSED FUNCTION
 }
 
 /**
@@ -594,8 +593,8 @@ void Jac_CheckFile(immut char*)
  */
 void Jac_LoadFile(immut char*, u8*)
 {
+	TRAP_UNIMPLEMENTED;
 	static DVDFileInfo finfo;
-	// UNUSED FUNCTION
 }
 
 /**
@@ -604,7 +603,7 @@ void Jac_LoadFile(immut char*, u8*)
  */
 void DVDT_Pause()
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -613,7 +612,7 @@ void DVDT_Pause()
  */
 void DVDT_UnPause()
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -622,7 +621,7 @@ void DVDT_UnPause()
  */
 void Jac_RegisterDVDErrorCallback(void (*)(immut char*, u8*))
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**

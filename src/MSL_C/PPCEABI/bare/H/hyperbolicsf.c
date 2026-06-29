@@ -6,7 +6,7 @@
  */
 void sinhf(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -15,7 +15,7 @@ void sinhf(void)
  */
 void coshf(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -32,5 +32,5 @@ f64 fabsf__Ff(f32 f1)
  */
 void tanhf(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }

@@ -65,7 +65,7 @@ void Jac_Gsync()
  */
 void Jac_DebugCall(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -74,7 +74,7 @@ void Jac_DebugCall(void)
  */
 void __print_thread(immut char*, OSThread*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -104,5 +104,5 @@ void Jac_SetProcessStatus(u32 processStat)
  */
 void Jac_CheckStreamBufferEmpty(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }

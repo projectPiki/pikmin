@@ -47,7 +47,7 @@ void OSRegisterResetFunction(OSResetFunctionInfo* info)
  */
 void OSUnregisterResetFunction(OSResetFunctionInfo*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**

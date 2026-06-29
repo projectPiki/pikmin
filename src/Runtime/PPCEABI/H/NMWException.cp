@@ -80,7 +80,7 @@ terminate_handler set_terminate(terminate_handler newHandler)
  */
 void terminate()
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -101,7 +101,7 @@ unexpected_handler set_unexpected(unexpected_handler newHandler)
  */
 void unexpected()
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 } // namespace std
@@ -112,7 +112,7 @@ void unexpected()
  */
 char __throw_catch_compare(const char* throwtype, const char* catchtype, s32* offset_result)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -198,5 +198,5 @@ extern void __destroy_new_array(void* block, ConstructorDestructor dtor)
  */
 void __destroy_new_array2(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }

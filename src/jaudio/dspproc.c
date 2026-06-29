@@ -99,7 +99,7 @@ void DSPWaitFinish()
  */
 void Dswap(u32, u32, u32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -108,7 +108,7 @@ void Dswap(u32, u32, u32)
  */
 void Dmix(u32, u32, u32, s16)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -117,7 +117,7 @@ void Dmix(u32, u32, u32, s16)
  */
 void Dcopy(u32, u32, u32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -126,7 +126,7 @@ void Dcopy(u32, u32, u32)
  */
 void DloadBuffer1(u32, u32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -135,7 +135,7 @@ void DloadBuffer1(u32, u32)
  */
 void DloadBuffer(u32, u32, u32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -144,7 +144,7 @@ void DloadBuffer(u32, u32, u32)
  */
 void DsaveBuffer(u16, u32, u32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -153,7 +153,7 @@ void DsaveBuffer(u16, u32, u32)
  */
 void DsetLoopState(u32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -162,7 +162,7 @@ void DsetLoopState(u32)
  */
 void DadpcmDec(u32, u32, u32, u32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -171,7 +171,7 @@ void DadpcmDec(u32, u32, u32, u32)
  */
 void DloadFilter(u32, u32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -180,7 +180,7 @@ void DloadFilter(u32, u32)
  */
 void DcopyfromARAM(u32, u32, u32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -189,7 +189,7 @@ void DcopyfromARAM(u32, u32, u32)
  */
 void DoscStart(u8, u16, u16)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -198,7 +198,7 @@ void DoscStart(u8, u16, u16)
  */
 void DoscStop(u8)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -207,7 +207,7 @@ void DoscStop(u8)
  */
 void DoscStore(u32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -216,7 +216,7 @@ void DoscStore(u32)
  */
 void Dmixer(u32, u32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -225,7 +225,7 @@ void Dmixer(u32, u32)
  */
 void Dresampletest()
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -234,7 +234,7 @@ void Dresampletest()
  */
 void Dadpcmtest(u32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**

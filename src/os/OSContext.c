@@ -395,7 +395,7 @@ ASM u32 OSGetStackPointer(void) {
  */
 u32 OSSwitchStack(register u32 newsp)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -404,7 +404,7 @@ u32 OSSwitchStack(register u32 newsp)
  */
 int OSSwitchFiber(register u32 pc, register u32 newsp)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -596,5 +596,5 @@ void __OSContextInit(void)
  */
 void OSFillFPUContext(register OSContext* context)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }

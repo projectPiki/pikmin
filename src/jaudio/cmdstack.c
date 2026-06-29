@@ -83,7 +83,7 @@ static Portcmd_* Get_Portcmd(JPorthead_* port)
  */
 void Cancel_Portcmd(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -92,7 +92,7 @@ void Cancel_Portcmd(void)
  */
 void Cancel_PortcmdStay(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -163,7 +163,7 @@ void Jac_Portcmd_Init(void)
  */
 void JP_Pitch1Shot(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -172,7 +172,7 @@ void JP_Pitch1Shot(void)
  */
 void JP_Start1Shot(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -181,5 +181,5 @@ void JP_Start1Shot(void)
  */
 void JP_Stop1Shot(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }

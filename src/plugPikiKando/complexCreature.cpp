@@ -21,7 +21,7 @@ DEFINE_PRINT("TODO: Replace")
  */
 ComplexCreature::ComplexCreature(int, CreatureProp*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -30,7 +30,7 @@ ComplexCreature::ComplexCreature(int, CreatureProp*)
  */
 void ComplexCreature::join(Creature*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -39,7 +39,7 @@ void ComplexCreature::join(Creature*)
  */
 void ComplexCreature::leave(Creature*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -48,7 +48,7 @@ void ComplexCreature::leave(Creature*)
  */
 void ComplexCreature::cleanup()
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -57,7 +57,7 @@ void ComplexCreature::cleanup()
  */
 void ComplexCreature::update()
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -66,7 +66,7 @@ void ComplexCreature::update()
  */
 void ComplexCreature::doAI()
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -75,8 +75,8 @@ void ComplexCreature::doAI()
  */
 void ComplexCreature::postUpdate(int unused, f32 deltaTime)
 {
+	TRAP_UNIMPLEMENTED;
 	// this is just here for the weak function generation
 	mCreatures[0].mPtr->bounceCallback();
 	mCreatures[0].mPtr->collisionCallback(CollEvent(nullptr, nullptr, nullptr));
-	// UNUSED FUNCTION
 }

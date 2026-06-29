@@ -611,7 +611,7 @@ System::System()
  */
 void sysErrorHandler(u16, OSContext*, u32, u32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -990,7 +990,7 @@ System::~System()
  */
 bool System::hasDebugInfo()
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**

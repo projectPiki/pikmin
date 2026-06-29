@@ -418,7 +418,7 @@ static BOOL __SITransfer(s32 chan, void* output, u32 outputBytes, void* input, u
  */
 void SISync(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -861,7 +861,7 @@ u32 SIGetTypeAsync(s32 chan, SITypeAndStatusCallback callback)
  */
 u32 SIDecodeType(u32 type)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 	FORCE_DONT_INLINE;
 }
 
@@ -871,7 +871,7 @@ u32 SIDecodeType(u32 type)
  */
 u32 SIProbe(s32 chan)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**

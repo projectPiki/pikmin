@@ -499,7 +499,7 @@ void Jac_StartDemoSound(u32 id)
  */
 void Jac_CheckReadyDemoSound(u32 a)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -508,7 +508,7 @@ void Jac_CheckReadyDemoSound(u32 a)
  */
 void Jac_StreamSetup(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -517,5 +517,5 @@ void Jac_StreamSetup(void)
  */
 void Jac_StreamUpdate(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }

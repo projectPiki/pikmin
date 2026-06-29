@@ -78,7 +78,7 @@ static char kanji_convert_table[] ATTRIBUTE_ALIGN(32) = {
  */
 void searchKanjiCode(u16 id)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**

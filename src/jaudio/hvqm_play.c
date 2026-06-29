@@ -349,6 +349,7 @@ void Jac_HVQM_Init(immut char* movieFilePath, u8* data, u32 bufferSize)
  */
 static void* hvqm_proc(void* data)
 {
+	TRAP_UNIMPLEMENTED;
 	// We can infer this call to `OSInitFastCast` was here due to the fact that a deadstripped copy of it
 	// appears next in the linker map.  Other context clues tell us that this is an `OSThreadStartFunction`
 	// type of function.  Beyond that, it's anyone's guess what this function actually did.
@@ -371,7 +372,7 @@ static void hvqm_forcestop()
  */
 void Jac_HVQM_ThreadStart(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -542,7 +543,7 @@ void Jac_HVQM_ForceStop(void)
  */
 void Jac_CountReadyPictures(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**

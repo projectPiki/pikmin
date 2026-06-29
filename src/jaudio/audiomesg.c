@@ -79,5 +79,5 @@ BOOL Jac_ReceiveMessage_Fast(Jac_MessageQueue* queue, OSMessage* outMsg)
  */
 void Jac_JamMessage(Jac_MessageQueue*, OSMessage)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }

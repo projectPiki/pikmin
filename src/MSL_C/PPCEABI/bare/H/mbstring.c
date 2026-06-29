@@ -8,7 +8,7 @@
  */
 void mblen(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -41,7 +41,7 @@ int mbtowc(wchar_t* pwc, const char* s, size_t n)
  */
 void wctomb(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -50,7 +50,7 @@ void wctomb(void)
  */
 void mbstowcs(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**

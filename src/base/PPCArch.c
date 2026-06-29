@@ -24,6 +24,7 @@ void PPCMtmsr(register u32 value)
  */
 void PPCOrMsr(void)
 {
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -32,6 +33,7 @@ void PPCOrMsr(void)
  */
 void PPCAndMsr(void)
 {
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -40,6 +42,7 @@ void PPCAndMsr(void)
  */
 void PPCAndCMsr(void)
 {
+	TRAP_UNIMPLEMENTED;
 }
 
 /**

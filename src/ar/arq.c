@@ -107,7 +107,7 @@ void __ARQInterruptServiceRoutine(void)
  */
 void __ARQInitTempQueue(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -116,7 +116,7 @@ void __ARQInitTempQueue(void)
  */
 void __ARQPushTempQueue(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -145,7 +145,7 @@ void ARQInit()
  */
 void ARQReset(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -210,7 +210,7 @@ void ARQPostRequest(ARQRequest* task, u32 owner, u32 type, u32 priority, u32 sou
  */
 void ARQRemoveRequest(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -219,7 +219,7 @@ void ARQRemoveRequest(void)
  */
 void ARQRemoveOwnerRequest(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -228,7 +228,7 @@ void ARQRemoveOwnerRequest(void)
  */
 void ARQFlushQueue(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -237,7 +237,7 @@ void ARQFlushQueue(void)
  */
 void ARQSetChunkSize(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -246,5 +246,5 @@ void ARQSetChunkSize(void)
  */
 void ARQGetChunkSize(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }

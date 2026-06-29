@@ -22,7 +22,7 @@ void DBInit(void)
  */
 void DBIsDebuggerPresent(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -65,7 +65,7 @@ int __DBIsExceptionMarked(u8 a)
  */
 void __DBMarkException(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -74,7 +74,7 @@ void __DBMarkException(void)
  */
 void __DBSetPresent(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**

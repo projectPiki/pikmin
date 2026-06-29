@@ -50,7 +50,7 @@ DSError TRKStandardACK(TRKBuffer* buffer, MessageCommandID commandID, DSReplyErr
  */
 void TRKDoError(TRKBuffer* buffer)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**

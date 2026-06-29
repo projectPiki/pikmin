@@ -800,9 +800,12 @@ void GameCoreSection::exitStage()
  * @todo: Documentation
  * @note UNUSED Size: 000024
  */
-ASM void ps_vec3f_add(Vector3f&, Vector3f&)
-{
-	// UNUSED FUNCTION
+ASM void ps_vec3f_add(Vector3f&, Vector3f&) {
+#ifdef __MWERKS__ // clang-format off
+	nofralloc
+	trap  // TRAP_UNIMPLEMENTED
+	blr
+#endif
 }
 
 /**
@@ -811,7 +814,11 @@ ASM void ps_vec3f_add(Vector3f&, Vector3f&)
  */
 ASM void ps_vec3f_sub(Vector3f&, Vector3f&)
 {
-	// UNUSED FUNCTION
+#ifdef __MWERKS__ // clang-format off
+	nofralloc
+	trap  // TRAP_UNIMPLEMENTED
+	blr
+#endif
 }
 
 /**
@@ -820,7 +827,11 @@ ASM void ps_vec3f_sub(Vector3f&, Vector3f&)
  */
 ASM void ps_vec3f_multiply(Vector3f&, f32&)
 {
-	// UNUSED FUNCTION
+#ifdef __MWERKS__ // clang-format off
+	nofralloc
+	trap  // TRAP_UNIMPLEMENTED
+	blr
+#endif
 }
 
 /**
@@ -829,7 +840,11 @@ ASM void ps_vec3f_multiply(Vector3f&, f32&)
  */
 ASM void asmTest(f32, f32)
 {
-	// UNUSED FUNCTION
+#ifdef __MWERKS__ // clang-format off
+	nofralloc
+	trap  // TRAP_UNIMPLEMENTED
+	blr
+#endif
 }
 
 /**

@@ -461,7 +461,7 @@ void zen::DrawMenu::updateMenuPanes()
  */
 void zen::DrawMenu::setMirror(P2DPane*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -470,7 +470,7 @@ void zen::DrawMenu::setMirror(P2DPane*)
  */
 void zen::DrawMenu::updateSpectPanes(P2DPane*, P2DPicture**, bool)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**

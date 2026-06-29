@@ -30,7 +30,7 @@ DSPchannel_* GetDspHandle(u8 idx)
  */
 DSPchannel_* GetDspHandleNc(u8)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -47,7 +47,7 @@ FXBuffer* GetFxHandle(u8 idx)
  */
 FXBuffer* GetFxHandleNc(u8 idx)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -67,7 +67,7 @@ void DSP_SetPitch(u8 idx, u16 pitch)
  */
 void DSP_SetPitch_Indirect(u8 idx, f32, f32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -330,7 +330,7 @@ void DSP_FlushChannel(u8 idx)
  */
 void DSP_CacheChannel(u8 idx)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -339,7 +339,7 @@ void DSP_CacheChannel(u8 idx)
  */
 void DSP_FlushChannelAll()
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -348,7 +348,7 @@ void DSP_FlushChannelAll()
  */
 void DSP_CacheChannelAll()
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**

@@ -129,7 +129,7 @@ void __unregister_fragment(int fragmentID)
  */
 void ExPPC_FindExceptionFragment(char*, FragmentInfo*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -138,7 +138,7 @@ void ExPPC_FindExceptionFragment(char*, FragmentInfo*)
  */
 void ExPPC_FindExceptionRecord(char*, MWExceptionInfo*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -147,7 +147,7 @@ void ExPPC_FindExceptionRecord(char*, MWExceptionInfo*)
  */
 void ExPPC_PopR31(char*, MWExceptionInfo*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -156,7 +156,7 @@ void ExPPC_PopR31(char*, MWExceptionInfo*)
  */
 void ExPPC_CurrentAction(const ActionIterator*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -165,7 +165,7 @@ void ExPPC_CurrentAction(const ActionIterator*)
  */
 void ExPPC_NextAction(ActionIterator*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -174,7 +174,7 @@ void ExPPC_NextAction(ActionIterator*)
  */
 void ExPPC_PopStackFrame(ThrowContext*, MWExceptionInfo*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -183,7 +183,7 @@ void ExPPC_PopStackFrame(ThrowContext*, MWExceptionInfo*)
  */
 void ExPPC_DestroyLocal(ThrowContext*, const ex_destroylocal*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -192,7 +192,7 @@ void ExPPC_DestroyLocal(ThrowContext*, const ex_destroylocal*)
  */
 void ExPPC_DestroyLocalCond(ThrowContext*, const ex_destroylocalcond*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -201,7 +201,7 @@ void ExPPC_DestroyLocalCond(ThrowContext*, const ex_destroylocalcond*)
  */
 void ExPPC_DestroyLocalPointer(ThrowContext*, const ex_destroylocalpointer*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -210,7 +210,7 @@ void ExPPC_DestroyLocalPointer(ThrowContext*, const ex_destroylocalpointer*)
  */
 void ExPPC_DestroyLocalArray(ThrowContext*, const ex_destroylocalarray*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -219,7 +219,7 @@ void ExPPC_DestroyLocalArray(ThrowContext*, const ex_destroylocalarray*)
  */
 void ExPPC_DestroyMember(ThrowContext*, const ex_destroymember*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -228,7 +228,7 @@ void ExPPC_DestroyMember(ThrowContext*, const ex_destroymember*)
  */
 void ExPPC_DestroyBase(ThrowContext*, const ex_destroymember*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -237,7 +237,7 @@ void ExPPC_DestroyBase(ThrowContext*, const ex_destroymember*)
  */
 void ExPPC_DestroyMemberCond(ThrowContext*, const ex_destroymembercond*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -246,7 +246,7 @@ void ExPPC_DestroyMemberCond(ThrowContext*, const ex_destroymembercond*)
  */
 void ExPPC_DestroyMemberArray(ThrowContext*, const ex_destroymemberarray*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -255,7 +255,7 @@ void ExPPC_DestroyMemberArray(ThrowContext*, const ex_destroymemberarray*)
  */
 void ExPPC_DeletePointer(ThrowContext*, const ex_deletepointer*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -264,7 +264,7 @@ void ExPPC_DeletePointer(ThrowContext*, const ex_deletepointer*)
  */
 void ExPPC_DeletePointerCond(ThrowContext*, const ex_deletepointercond*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -273,7 +273,7 @@ void ExPPC_DeletePointerCond(ThrowContext*, const ex_deletepointercond*)
  */
 void ExPPC_UnwindStack(ThrowContext*, MWExceptionInfo*, void*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -282,7 +282,7 @@ void ExPPC_UnwindStack(ThrowContext*, MWExceptionInfo*, void*)
  */
 void ExPPC_IsInSpecification(char*, ex_specification*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -300,7 +300,7 @@ void ExPPC_IsInSpecification(char*, ex_specification*)
  */
 void __unexpected(CatchInfo* catchinfo)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -309,7 +309,7 @@ void __unexpected(CatchInfo* catchinfo)
  */
 void ExPPC_HandleUnexpected(ThrowContext*, MWExceptionInfo*, ex_specification*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -318,7 +318,7 @@ void ExPPC_HandleUnexpected(ThrowContext*, MWExceptionInfo*, ex_specification*)
  */
 void ExPPC_ThrowHandler(ThrowContext*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -327,7 +327,7 @@ void ExPPC_ThrowHandler(ThrowContext*)
  */
 void __end__catch(CatchInfo* catchinfo)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -336,7 +336,7 @@ void __end__catch(CatchInfo* catchinfo)
  */
 void __throw(char* throwtype, void* location, void* dtor)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -345,5 +345,5 @@ void __throw(char* throwtype, void* location, void* dtor)
  */
 void ExPPC_LongJump(ThrowContext*, void*, void*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }

@@ -171,7 +171,7 @@ BOOL Jaf_StopSeq(u32 index)
  */
 void Jaf_GetJamHandle(u32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -188,7 +188,7 @@ seqp_* Jaf_HandleToSeq(u32 index)
  */
 void Jaf_LoadStartFinish(u32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -253,7 +253,7 @@ u32 __LoadSeqA(u32 param_1, u32 param_2, u8* param_3, void (*param_4)(u32))
  */
 void Jaf_LoadStartSeqA(u32, u32, u8*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**

@@ -72,7 +72,7 @@ int List_CountChannel(jc_** jc)
  */
 void Check_GlobalActiveChannel()
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -81,7 +81,7 @@ void Check_GlobalActiveChannel()
  */
 void Check_GlobalRelease(jc_** jc)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -90,7 +90,7 @@ void Check_GlobalRelease(jc_** jc)
  */
 void List_GlobalChannel()
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**

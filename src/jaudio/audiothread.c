@@ -61,7 +61,7 @@ int DspSyncCountCheck()
  */
 void Jac_GetDacRate(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -142,7 +142,7 @@ static void AudioSync()
  */
 void NeosSync()
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -258,7 +258,7 @@ static volatile OSPriority pri3 = 0;
  */
 void SetAudioThreadPriority(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**

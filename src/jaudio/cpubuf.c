@@ -92,7 +92,7 @@ s16* CpubufProcess(DSPBUF_EVENTS event)
  */
 void MixCpu(s32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**

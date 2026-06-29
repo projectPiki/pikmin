@@ -567,7 +567,7 @@ void Spine::init(Creature* target)
 void Spine::preMove()
 {
 	// i'm not strong enough to do this blind, it's a lot of vector math.
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**

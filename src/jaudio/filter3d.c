@@ -17,7 +17,7 @@ f32 V3D_GetAngle(Vector3D_* input_vec)
  */
 void V3D_Zero(Vector3D_*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -26,7 +26,7 @@ void V3D_Zero(Vector3D_*)
  */
 void V3D_Minus(Vector3D_*, Vector3D_*, Vector3D_*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -43,7 +43,7 @@ f32 V3D_Abs(Vector3D_* input_vec)
  */
 void V3D_Norm(Vector3D_*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -52,7 +52,7 @@ void V3D_Norm(Vector3D_*)
  */
 void V3D_Resize(Vector3D_*, f32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -61,7 +61,7 @@ void V3D_Resize(Vector3D_*, f32)
  */
 void V3D_Copy(Vector3D_*, Vector3D_*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -70,7 +70,7 @@ void V3D_Copy(Vector3D_*, Vector3D_*)
  */
 void V3D_InitObj(Object3D_*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -79,7 +79,7 @@ void V3D_InitObj(Object3D_*)
  */
 void V3D_UpdateObj(Object3D_*, Vector3D_*, Vector3D_*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -88,7 +88,7 @@ void V3D_UpdateObj(Object3D_*, Vector3D_*, Vector3D_*)
  */
 void V3D_TMove(TVector3D_*, f32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -97,7 +97,7 @@ void V3D_TMove(TVector3D_*, f32)
  */
 void V3D_TimeUpdateObj(Object3D_*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -106,7 +106,7 @@ void V3D_TimeUpdateObj(Object3D_*)
  */
 void V3D_Filter_Set(Filter_*, f32*, u32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -115,7 +115,7 @@ void V3D_Filter_Set(Filter_*, f32*, u32)
  */
 void V3D_Filter_Mix(Filter_*, Filter_*, Filter_*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -124,5 +124,5 @@ void V3D_Filter_Mix(Filter_*, Filter_*, Filter_*)
  */
 void V3D_Filter_MixD(Filter_*, f32*, f32*, u32, u32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }

@@ -147,7 +147,7 @@ void KIO::writeHeader()
  */
 void KIO::copyEfb(u8*, u16, u16)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**

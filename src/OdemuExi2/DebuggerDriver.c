@@ -103,7 +103,7 @@ static BOOL DBGEXIImm(void* buffer, s32 bytecounter, u32 write)
  */
 void DBGEXIClearInterrupts(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -112,7 +112,7 @@ void DBGEXIClearInterrupts(void)
  */
 void DBGCheckID(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**

@@ -145,7 +145,6 @@ void Vector3f::rotateTranspose(immut Matrix4f& mtx)
 	vec.z = mtx.mMtx[0][2] * x + mtx.mMtx[1][2] * y + mtx.mMtx[2][2] * z;
 
 	*this = vec;
-	// UNUSED FUNCTION
 }
 
 /**

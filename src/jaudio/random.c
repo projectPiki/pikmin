@@ -44,7 +44,7 @@ u32 GetRandom_ulimit(u32 limit)
  */
 void GetRandom_slimit(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**

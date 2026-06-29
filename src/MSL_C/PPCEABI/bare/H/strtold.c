@@ -281,7 +281,7 @@ f128 __strtold(int max_width, int (*ReadProc)(void*, int, int), void* ReadProcAr
  */
 void strtod(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**

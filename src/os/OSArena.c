@@ -43,7 +43,7 @@ void OSSetArenaLo(void* arena_lo)
  */
 void OSAllocFromArenaLo(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -52,5 +52,5 @@ void OSAllocFromArenaLo(void)
  */
 void OSAllocFromArenaHi(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }

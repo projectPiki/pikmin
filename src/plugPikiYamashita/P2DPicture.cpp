@@ -320,7 +320,7 @@ void P2DPicture::draw(int, int, int, int, bool, bool, bool)
 
 	// Presumably GX function calls follow this point.  Who knows which ones?
 	// In the DLL, OpenGL function calls actually do follow past this point.
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -338,7 +338,7 @@ void P2DPicture::drawOut(const PUTRect&, const PUTRect&)
 	}
 
 	// Presumably GX function calls follow this point.  Who knows which ones?
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -831,5 +831,5 @@ void P2DPicture::drawTest()
 	Vector3f local_38(0.0f, 0.0f, 0.0f);
 
 	// Presumably GX function calls follow this point.  Who knows which ones?
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }

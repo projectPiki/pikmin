@@ -76,7 +76,7 @@ void* memchr(u8* s, int c, size_t n)
  */
 void __memrchr(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**

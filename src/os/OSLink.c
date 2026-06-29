@@ -10,7 +10,7 @@
  */
 void OSNotifyLink(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -19,7 +19,7 @@ void OSNotifyLink(void)
  */
 void OSNotifyUnlink(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -28,7 +28,7 @@ void OSNotifyUnlink(void)
  */
 void OSSetStringTable(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -37,7 +37,7 @@ void OSSetStringTable(void)
  */
 void Relocate(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -46,7 +46,7 @@ void Relocate(void)
  */
 void OSLink(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -55,7 +55,7 @@ void OSLink(void)
  */
 void Undo(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -64,7 +64,7 @@ void Undo(void)
  */
 void OSUnlink(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 struct OSModuleQueue { /* Relocatable Module Queue @ 800030c8 */

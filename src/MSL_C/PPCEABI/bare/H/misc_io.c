@@ -6,7 +6,7 @@
  */
 void clearerr(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -15,7 +15,7 @@ void clearerr(void)
  */
 void feof(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -24,7 +24,7 @@ void feof(void)
  */
 void ferror(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -33,7 +33,7 @@ void ferror(void)
  */
 void perror(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**

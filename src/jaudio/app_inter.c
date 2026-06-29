@@ -12,7 +12,7 @@ static BOOL demo_fade_flag;
  */
 void Jac_Pause(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**

@@ -33,7 +33,7 @@ static void Add_Queue(CmdQueue* cmdQueue)
  */
 void Del_Queue(CmdQueue*)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -57,7 +57,7 @@ void Jal_AddCmdQueue(CmdQueue* cmdQueue, seqp_* track, u8 param_3)
  */
 void Jal_RemoveCmdQueue(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**

@@ -544,7 +544,7 @@ void DGXGraphics::beginRender()
  */
 void DGXGraphics::GXReInit()
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -2120,8 +2120,8 @@ void DGXGraphics::texturePrintf(Font* font, int x, int y, immut char* format, ..
  */
 void DGXGraphics::showCrash(u16, OSContext*)
 {
+	TRAP_UNIMPLEMENTED;
 	OSReport("Unknown addr !!");
-	// UNUSED FUNCTION
 }
 
 /**
@@ -2183,7 +2183,7 @@ static char sFontData[] = {
  */
 void DGXGraphics::directDrawChar(int, int, int)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**

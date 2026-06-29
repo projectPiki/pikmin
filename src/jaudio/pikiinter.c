@@ -154,7 +154,7 @@ static f32 EVENT_DIST_SCALE[8] = { 1.0f, 1.0f, 2.0f, 0.8f, 1.2f, 1.0f, 1.2f, 2.0
  */
 void Jac_Debug_ActionEntry(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -623,7 +623,7 @@ void Jac_InitAllEvent(void)
  */
 void Jac_DestroyNotThisEvent(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**

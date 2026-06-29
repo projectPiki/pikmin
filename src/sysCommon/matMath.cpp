@@ -50,7 +50,7 @@ void Matrix4f::makeIdentity()
  */
 void Matrix4f::blend(immut Matrix4f&, f32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -59,7 +59,7 @@ void Matrix4f::blend(immut Matrix4f&, f32)
  */
 void Matrix4f::makeOrtho(f32, f32, f32, f32, f32, f32, f32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -68,7 +68,7 @@ void Matrix4f::makeOrtho(f32, f32, f32, f32, f32, f32, f32)
  */
 void Matrix4f::makePerspective(f32, f32, f32, f32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -120,7 +120,7 @@ void Matrix4f::makeRotate(immut Vector3f& axis, f32 angle)
  */
 void Matrix4f::makeBallRotate(Vector3f&)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -129,7 +129,7 @@ void Matrix4f::makeBallRotate(Vector3f&)
  */
 void Matrix4f::rotate(Vector3f&, f32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -138,7 +138,7 @@ void Matrix4f::rotate(Vector3f&, f32)
  */
 void Matrix4f::rotate(f32, f32, f32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -312,7 +312,7 @@ void Matrix4f::inverse(Matrix4f* inv)
  */
 void Matrix4f::makeAligned(Vector3f&, f32)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -502,7 +502,7 @@ void Matrix4f::makeLookat(immut Vector3f& cameraPos, immut Vector3f& rightDir, i
  */
 void Matrix4f::makeProjection(Vector3f&, Plane&)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -511,7 +511,7 @@ void Matrix4f::makeProjection(Vector3f&, Plane&)
  */
 void Matrix4f::makeReflection(Plane&)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**

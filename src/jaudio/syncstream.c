@@ -86,7 +86,7 @@ void Play_DirectPCM(dspch_* dspch, s16* baseAddr, u16 loopStart, u32 length)
  */
 void Get_DirectPCM_LoopRemain(DSPchannel_* channel)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -296,7 +296,7 @@ void Init_StreamAudio(void)
  */
 void Get_StreamAudio_Handle(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 static s32 StreamAudio_Callback(void*);
@@ -1047,7 +1047,7 @@ static void __StreamChgPitch(StreamCtrl_* ctrl)
  */
 void StreamChgPitch(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -1180,7 +1180,7 @@ BOOL StreamSetDVDPause(u32 ctrlID, BOOL isPaused)
  */
 void StreamCheckRemainBuffers(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -1198,7 +1198,7 @@ u8 StreamCheckAudioFormat(u32 ctrlID)
  */
 void StreamCheckBufferEmpty(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -1207,5 +1207,5 @@ void StreamCheckBufferEmpty(void)
  */
 void StreamCheckBufferRemainSize(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }

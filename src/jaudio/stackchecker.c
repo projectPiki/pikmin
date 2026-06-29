@@ -17,7 +17,7 @@ void Jac_StackInit(void* stack, s32 size)
  */
 void Jac_StackCheck(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -26,7 +26,7 @@ void Jac_StackCheck(void)
  */
 void Jac_CheckInit(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -35,7 +35,7 @@ void Jac_CheckInit(void)
  */
 void Jac_CheckIn(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -44,7 +44,7 @@ void Jac_CheckIn(void)
  */
 void Jac_CheckOut(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
 
 /**
@@ -53,5 +53,5 @@ void Jac_CheckOut(void)
  */
 void Jac_CheckPrint(void)
 {
-	// UNUSED FUNCTION
+	TRAP_UNIMPLEMENTED;
 }
