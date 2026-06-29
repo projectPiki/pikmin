@@ -4,30 +4,30 @@
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 00009C
+ * @note UNUSED Size: 00009C (Matching by size)
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 0000F0
+ * @note UNUSED Size: 0000F0 (Matching by size)
  */
-DEFINE_PRINT(nullptr)
+DEFINE_PRINT("actor") // Never used in the DLL
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000074
+ * @note UNUSED Size: 000074 (Matching by size)
  */
 Actor::Actor()
     : AICreature(nullptr)
 {
-	// UNUSED FUNCTION
+	mSAICtx.mStateMachine = nullptr;
 }
 
 /**
  * @todo: Documentation
  */
-void Actor::setType(int /*unused*/, PikiShapeObject* shape, CreatureProp* props, SimpleAI* ai)
+void Actor::setType(int, PikiShapeObject* shape, CreatureProp* props, SimpleAI* ai)
 {
 	mProps               = props;
 	mPikiShape           = shape;
@@ -41,16 +41,16 @@ void Actor::setType(int /*unused*/, PikiShapeObject* shape, CreatureProp* props,
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 00002C
+ * @note UNUSED Size: 00002C (Matching by size)
  */
-void Actor::startAI(int state)
+void Actor::startAI(int)
 {
-	C_SAI(this)->start(this, state);
+	C_SAI(this)->start(this, 0);
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 0000E0
+ * @note UNUSED Size: 0000E0 (Matching by size)
  */
 void Actor::refresh(Graphics& gfx)
 {
@@ -58,12 +58,11 @@ void Actor::refresh(Graphics& gfx)
 	gfx.useMatrix(Matrix4f::ident, 0);
 
 	Matrix4f mtx;
-	mtx.multiplyTo(gfx.mCamera->mLookAtMtx, mWorldMtx);
+	gfx.mCamera->mLookAtMtx.multiplyTo(mWorldMtx, mtx);
 
 	mPikiAnimMgr.updateContext();
-	mapMgr->getLight(mSRT.t.x, mSRT.t.z);
-
-	gfx.initRender(1, 0);
+	f32 light = mapMgr->getLight(mSRT.t.x, mSRT.t.z);
+	gfx.setLighting(true, nullptr);
 
 	mPikiShape->mShape->updateAnim(gfx, mtx, nullptr);
 	mPikiShape->mShape->drawshape(gfx, *gfx.mCamera, nullptr);
@@ -71,7 +70,7 @@ void Actor::refresh(Graphics& gfx)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000040
+ * @note UNUSED Size: 000040 (Matching by size)
  */
 void Actor::update()
 {
@@ -81,16 +80,18 @@ void Actor::update()
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000034
+ * @note UNUSED Size: 000034 (Matching by size)
  */
 void Actor::doAnimation()
 {
-	// UNUSED FUNCTION
+	if (mPikiShape) {
+		mPikiAnimMgr.updateAnimation(30.0f);
+	}
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 00003C
+ * @note UNUSED Size: 00003C (Matching by size)
  */
 void Actor::doAI()
 {
@@ -101,45 +102,49 @@ void Actor::doAI()
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000034
+ * @note UNUSED Size: 000034 (Matching by size)
  */
 void Actor::doKill()
 {
-	// UNUSED FUNCTION
+	mMgr->kill(this);
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000080
+ * @note UNUSED Size: 000080 (Matching by size)
  */
-void Actor::startMotion(int)
+void Actor::startMotion(int motionIdx)
 {
-	// UNUSED FUNCTION
+	mPikiAnimMgr.startMotion(PaniMotionInfo(motionIdx, this), PaniMotionInfo(motionIdx));
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000094
+ * @note UNUSED Size: 000094 (Matching by size)
  */
-void Actor::startMotion(int, f32)
+void Actor::startMotion(int motionIdx, f32 speed)
 {
-	// UNUSED FUNCTION
+	mPikiAnimMgr.startMotion(PaniMotionInfo(motionIdx, this), PaniMotionInfo(motionIdx));
+	mPikiAnimMgr.getUpperAnimator().mAnimationCounter = speed;
+	mPikiAnimMgr.getLowerAnimator().mAnimationCounter = speed;
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000034
+ * @note UNUSED Size: 000034 (Matching by size)
  */
 void Actor::finishMotion()
 {
-	// UNUSED FUNCTION
+	mPikiAnimMgr.finishMotion(this);
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000050
+ * @note UNUSED Size: 000050 (Matching by size)
  */
-void Actor::finishMotion(f32)
+void Actor::finishMotion(f32 speed)
 {
-	// UNUSED FUNCTION
+	mPikiAnimMgr.finishMotion(this);
+	mPikiAnimMgr.getUpperAnimator().mAnimationCounter = speed;
+	mPikiAnimMgr.getLowerAnimator().mAnimationCounter = speed;
 }
