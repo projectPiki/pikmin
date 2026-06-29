@@ -630,17 +630,16 @@ protected:
 
 	void updateOnyonPos(Vector3f* bluePos, Vector3f* redPos, Vector3f* yellowPos)
 	{
-		Vector3f orbitCenter;
-		Vector3f newBlueTargetPos;
-		Vector3f orbitVec;
+		Vector3f orbitCenter, newBlueTargetPos, orbitVec;
+		f32 norm, time, cosv, sinv, rocketScale;
 
-		f32 time        = 60.0f * gsys->getFrameTime();
-		f32 rocketScale = mRocketIcon->getScale().x;
+		time        = 60.0f * gsys->getFrameTime();
+		rocketScale = mRocketIcon->getScale().x;
 		orbitCenter.set(mRocketPos.x + ONYON_OFFSET_X, mRocketPos.y + ONYON_OFFSET_Y, mRocketPos.z + ONYON_OFFSET_Z);
 
 		mBlueOnyonPos.add(Vector3f(mOnyonVelocity * time));
 		orbitVec.set(mBlueOnyonPos - orbitCenter);
-		f32 norm = orbitVec.length();
+		norm = orbitVec.length();
 		if (norm < 0.000001f) {
 			orbitVec.set(0.0f, 0.0f, 0.0f);
 		} else {
@@ -655,14 +654,14 @@ protected:
 		bluePos->set(mBlueOnyonPos.x, mBlueOnyonPos.y, 0.0f);
 
 		// calculate red onyon position (120 degrees rotated from blue)
-		f32 cosR = cosf(TORADIANS(120));
-		f32 sinR = sinf(TORADIANS(120));
-		redPos->set(orbitVec.x * cosR + orbitCenter.x - orbitVec.y * sinR, orbitVec.x * sinR + orbitCenter.y + orbitVec.y * cosR, 0.0f);
+		cosv = cosf(TORADIANS(120));
+		sinv = sinf(TORADIANS(120));
+		redPos->set(orbitVec.x * cosv + orbitCenter.x - orbitVec.y * sinv, orbitVec.x * sinv + orbitCenter.y + orbitVec.y * cosv, 0.0f);
 
 		// calculate yellow onyon position (240 degrees rotated from blue)
-		f32 cosY = cosf(TORADIANS(240));
-		f32 sinY = sinf(TORADIANS(240));
-		yellowPos->set(orbitVec.x * cosY + orbitCenter.x - orbitVec.y * sinY, orbitVec.x * sinY + orbitCenter.y + orbitVec.y * cosY, 0.0f);
+		cosv = cosf(TORADIANS(240));
+		sinv = sinf(TORADIANS(240));
+		yellowPos->set(orbitVec.x * cosv + orbitCenter.x - orbitVec.y * sinv, orbitVec.x * sinv + orbitCenter.y + orbitVec.y * cosv, 0.0f);
 	}
 
 	void stayUfo()
