@@ -6,6 +6,8 @@
 #include "Shape.h"
 #include "sysNew.h"
 
+#include <stdint.h>
+
 /**
  * @todo: Documentation
  * @note UNUSED Size: 00009C
@@ -2135,8 +2137,8 @@ void DGXGraphics::showError(immut char* msg, immut char* file, int line)
 	directPrint(window.mMinX + 8, window.mMinY + 8 + 16, "ERROR: in %s at line %d", file, line);
 	int y   = 36;
 	int x   = 0;
-	u32* sp = (u32*)OSGetStackPointer();
-	for (int i = 0; (void*)*sp != nullptr && *sp != 0xffffffff && i++ < 16;) {
+	uintptr_t* sp = reinterpret_cast<uintptr_t*>(OSGetStackPointer());
+	for (int i = 0; reinterpret_cast<uintptr_t*>(*sp) != nullptr && *sp != 0xffffffff && i++ < 16;) {
 		if (i > 2) {
 			const char* name = gsys->findAddress(sp[1]);
 			char buffer[PATH_MAX];
@@ -2147,7 +2149,7 @@ void DGXGraphics::showError(immut char* msg, immut char* file, int line)
 			directPrint(window.mMinX + 8, window.mMinY + y, "<< %s", buffer);
 			y += 14;
 		}
-		sp = (u32*)*sp;
+		sp = reinterpret_cast<uintptr_t*>(*sp);
 	}
 }
 

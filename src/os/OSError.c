@@ -4,6 +4,7 @@
 
 #include <stdarg.h>
 #include <stddef.h>
+#include <stdint.h>
 #include <stdio.h>
 
 #if OS_BUILD_VERSION >= 20011112L
@@ -32,7 +33,7 @@ void OSPanic(const char* file, int line, const char* msg, ...)
 {
 	va_list args;
 	u32 i;
-	u32* sp;
+	uintptr_t* sp;
 
 	OSDisableInterrupts();
 
@@ -44,10 +45,10 @@ void OSPanic(const char* file, int line, const char* msg, ...)
 	// Print stack trace
 	OSReport("\nAddress:      Back Chain    LR Save\n");
 	i  = 0;
-	sp = (u32*)OSGetStackPointer();
-	while (sp != NULL && (u32)sp != 0xFFFFFFFF && i++ < 16) {
-		OSReport("0x%08x:   0x%08x    0x%08x\n", (u32)sp, sp[0], sp[1]);
-		sp = (u32*)sp[0];
+	sp = (uintptr_t*)OSGetStackPointer();
+	while (sp != NULL && (uintptr_t)sp != 0xFFFFFFFF && i++ < 16) {
+		OSReport("0x%08x:   0x%08x    0x%08x\n", (uintptr_t)sp, sp[0], sp[1]);
+		sp = (uintptr_t*)sp[0];
 	}
 	PPCHalt();
 }

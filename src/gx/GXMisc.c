@@ -2,6 +2,7 @@
 #include "Dolphin/gx.h"
 #include "Dolphin/hw_regs.h"
 #include <stddef.h>
+#include <stdint.h>
 
 static GXDrawSyncCallback TokenCB;
 static GXDrawDoneCallback DrawDoneCB;
@@ -331,7 +332,7 @@ void GXPokeZMode(GXBool compare_enable, GXCompare func, GXBool update_enable)
  */
 void GXPeekARGB(u16 x, u16 y, u32* color)
 {
-	u32 addr = (u32)OSPhysicalToUncached(0x08000000);
+	uintptr_t addr = (u32)OSPhysicalToUncached(0x08000000);
 
 	SET_REG_FIELD(741, addr, 10, 2, x);
 	SET_REG_FIELD(742, addr, 10, 12, y);
@@ -345,7 +346,7 @@ void GXPeekARGB(u16 x, u16 y, u32* color)
  */
 void GXPokeARGB(u16 x, u16 y, u32 color)
 {
-	u32 addr = (u32)OSPhysicalToUncached(0x08000000);
+	uintptr_t addr = (u32)OSPhysicalToUncached(0x08000000);
 
 	SET_REG_FIELD(751, addr, 10, 2, x);
 	SET_REG_FIELD(752, addr, 10, 12, y);
@@ -359,7 +360,7 @@ void GXPokeARGB(u16 x, u16 y, u32 color)
  */
 void GXPeekZ(u16 x, u16 y, u32* z)
 {
-	u32 addr = (u32)OSPhysicalToUncached(0x08000000);
+	uintptr_t addr = (u32)OSPhysicalToUncached(0x08000000);
 
 	SET_REG_FIELD(761, addr, 10, 2, x);
 	SET_REG_FIELD(762, addr, 10, 12, y);
@@ -373,7 +374,7 @@ void GXPeekZ(u16 x, u16 y, u32* z)
  */
 void GXPokeZ(u16 x, u16 y, u32 z)
 {
-	u32 addr = (u32)OSPhysicalToUncached(0x08000000);
+	uintptr_t addr = (u32)OSPhysicalToUncached(0x08000000);
 
 	SET_REG_FIELD(771, addr, 10, 2, x);
 	SET_REG_FIELD(772, addr, 10, 12, y);
