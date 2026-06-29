@@ -3,6 +3,7 @@
 #include "jaudio/bx.h"
 #include "jaudio/heapctrl.h"
 #include <stddef.h>
+#include <stdint.h>
 
 static s16 WS_V2P_TABLE[0x100];
 static s16 BNK_V2P_TABLE[0x100];
@@ -167,7 +168,7 @@ WaveID_* __GetSoundHandle(CtrlGroup_* group, u32 id, u32 id2)
 	ctrl = scene->cdf;
 	if (ctrl) {
 		WaveID_* wave = SearchWave(ctrl, wId);
-		if (wave && wave->data && (int)wave->data != 0xffffffff) {
+		if (wave && wave->data && (uintptr_t)wave->data != 0xffffffff) {
 			return wave;
 		}
 	}
@@ -175,14 +176,14 @@ WaveID_* __GetSoundHandle(CtrlGroup_* group, u32 id, u32 id2)
 	ctrl = scene->cex;
 	if (ctrl) {
 		WaveID_* wave = SearchWave(ctrl, wId);
-		if (wave && wave->data && (int)wave->data != 0xffffffff) {
+		if (wave && wave->data && (uintptr_t)wave->data != 0xffffffff) {
 			return wave;
 		}
 	}
 
 	for (u32 i = 0; i < scene->dependencyCount; i++) {
 		WaveID_* wave = __GetSoundHandle(group, id, scene->dependencyIds[i]);
-		if (wave && wave->data && (int)wave->data != 0xffffffff) {
+		if (wave && wave->data && (uintptr_t)wave->data != 0xffffffff) {
 			return wave;
 		}
 	}
