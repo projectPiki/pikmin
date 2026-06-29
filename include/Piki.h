@@ -337,7 +337,8 @@ public:
  * @brief TODO
  */
 struct PikiShapeObject {
-	friend struct NaviMgr; // Needs the protected constructor.
+	friend struct NaviMgr;  // Needs the protected constructor.
+	friend struct ActorMgr; // Needs the protected constructor.
 
 public:
 	static void init();
