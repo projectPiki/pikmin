@@ -171,13 +171,13 @@ void SeMgr::setPikiNum(int pikiNum)
  */
 void SeWin::doRender(Graphics& gfx)
 {
-	char buffer[60];
-	STACK_PAD_VAR(1);
+	char buffer[64];
 	printStart(gfx);
 	printcentre(gfx, 32, "SE テスト"); // "SE Test"
 	sprintf(buffer, "SE %d", mCurrSeIndex);
 	printcentre(gfx, 80, buffer);
-	sprintf(buffer, "%s", seMgr->getIndexInfo(mCurrSeIndex)->mSeName);
+	SeInfo* info = seMgr->getIndexInfo(mCurrSeIndex);
+	sprintf(buffer, "%s", info->mSeName);
 	printcentre(gfx, 140, buffer);
 }
 
@@ -192,8 +192,8 @@ void SeWin::update()
 	case GMWIN_Opening:
 	{
 		mAnimFramesRemaining--;
-		mPosY += 32;
-		if (!mAnimFramesRemaining) {
+		mHome.y += 32;
+		if (mAnimFramesRemaining == 0) {
 			mStatus = GMWIN_Active;
 		}
 		if (absF(mController->getMainStickY()) > 0.5f) {
@@ -204,8 +204,8 @@ void SeWin::update()
 	case GMWIN_Closing:
 	{
 		mAnimFramesRemaining--;
-		mPosY += 32;
-		if (!mAnimFramesRemaining) {
+		mHome.y += 32;
+		if (mAnimFramesRemaining == 0) {
 			mStatus = GMWIN_Inactive;
 		}
 		return;
@@ -253,7 +253,8 @@ void SeWin::update()
 			mUp         = 0;
 			mScrollTime = 0.0f;
 		}
-		if (mUp && flag) {
+
+		if (mUp != 0 && flag) {
 			if (mUp > 0) {
 				mCurrSeIndex += (mUp + mCurrSeIndex >= seMgr->getSENum()) ? seMgr->getSENum() - mCurrSeIndex - 1 : mUp;
 				PRINT(" UP up is %d : curr became %d\n", mUp, mCurrSeIndex);
@@ -292,8 +293,8 @@ void SeWin::open()
 	placeCentre();
 	GmWin::open();
 
-	mAnimFramesRemaining = (mPosY + 120) / 32;
-	mPosY                = -120;
+	mAnimFramesRemaining = (mHome.y + 120) / 32;
+	mHome.y              = -120;
 	mUp                  = 0;
 	mCurrJacSoundID      = 0;
 	mCurrSeIndex         = 0;

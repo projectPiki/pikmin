@@ -3,6 +3,7 @@
 
 #include "Colour.h"
 #include "CoreNode.h"
+#include "ID32.h"
 #include "types.h"
 
 struct Graphics;
@@ -32,15 +33,14 @@ struct GmWin : public CoreNode {
 		virtual void onCloseWindow() { } // _08
 
 		// _00 = VTBL
-		// TODO: members
 	};
 
 	GmWin(); // unused/inlined
 
 	virtual void open();                                                                                          // _10
 	virtual void close();                                                                                         // _14
-	virtual void update();                                                                                        // _18 unused/inlined
-	virtual void doRender(Graphics& gfx);                                                                         // _1C unused/inlined
+	virtual void update() { /* Matching by size */ }                                                              // _18 unused/inlined
+	virtual void doRender(Graphics& gfx) { /* Matching by size */ }                                               // _1C unused/inlined
 	virtual void render(Graphics& gfx);                                                                           // _20
 	virtual void printStart(Graphics& gfx);                                                                       // _24
 	virtual void print(Graphics& gfx, int posX, int posY, immut char* message);                                   // _28
@@ -61,24 +61,19 @@ struct GmWin : public CoreNode {
 	CloseListener* mCloseListener; // _14
 	int mWidth;                    // _18
 	int mHeight;                   // _1C
-	int mPosX;                     // _20
-	int mPosY;                     // _24
+	Vector2i mHome;                // _20
 	int mStatus;                   // _28
-	int _2C;                       // _2C
-	int _30;                       // _30
-	int _34;                       // _34
+	ID32 _2C;                      // _2C
 	Colour mColourA;               // _38
 	Colour mAuxColourA;            // _3C
 	Colour mColourB;               // _40
 	Colour mAuxColourB;            // _44
 };
 
-// NB: these probably inherit GmWin and have the associated virtual functions, but they're so stripped it's whatever
-
 /**
  * @brief TODO
  */
-struct ContainerWin {
+struct ContainerWin : public GmWin {
 
 	/**
 	 * @brief TODO
@@ -89,25 +84,39 @@ struct ContainerWin {
 		// _00 = VTBL
 	};
 
-	// unused/inlined:
-	void doRender(Graphics&);
-	void setWin(int, int, Listener*);
-	void update();
-	void open();
-	void close();
+	virtual void open();              // _10
+	virtual void close();             // _14
+	virtual void update();            // _18
+	virtual void doRender(Graphics&); // _1C
 
-	// TODO: members
+	void setWin(int, int, Listener*);
+
+	// _00     = VTBL
+	// _00-_14 = CoreNode
+	// _14-_48 = GmWin
+	Controller* mController;      // _48
+	Listener* mContainerListener; // _4C
+	int mAnimFramesRemaining;     // _50
+	int mUp;                      // _54
+	f32 mScrollTime;              // _58
+	int mToContainer;             // _5C
+	int _60;                      // _60
+	int _64;                      // _64
+	int _68;                      // _68
+	bool mStickWasPushed;         // _6C
 };
 
 /**
  * @brief TODO
  */
-struct ResultWin {
-	// unused/inlined:
-	void doRender(Graphics&);
-	void update();
+struct ResultWin : public GmWin {
 
-	// TODO: members
+	virtual void update();            // _18
+	virtual void doRender(Graphics&); // _1C
+
+	// _00     = VTBL
+	// _00-_14 = CoreNode
+	// _14-_48 = GmWin
 };
 
 /**
@@ -119,9 +128,11 @@ struct GmWinMgr {
 	void addWindow(GmWin*);
 	void update();
 	void render(Graphics&);
-	void getWindow(u32);
+	GmWin* getWindow(u32);
 
-	// TODO: members
+	GmWin mRoot;
 };
+
+extern GmWinMgr* gmWinMgr;
 
 #endif
