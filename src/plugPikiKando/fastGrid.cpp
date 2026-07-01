@@ -1,12 +1,17 @@
 #include "FastGrid.h"
 #include "AIPerf.h"
 #include "DebugLog.h"
+#include "Font.h"
+#include "Graphics.h"
 #include "MemStat.h"
+#include "WorkObject.h"
 #include "sysNew.h"
+#include "teki.h"
 
 u8* FastGrid::aiGridMap;
 u16 FastGrid::aiGridSize;
 u16 FastGrid::aiGridShift = 12;
+Texture* FastGrid::aiGridTex; // unused
 
 /**
  * @todo: Documentation
@@ -265,19 +270,150 @@ void FastGrid::updateAIGrid(const Vector3f& pos, bool updateMap)
 }
 
 /**
- * @brief Unused.
- * @note UNUSED Size: 000820
- * @note 100BD9A0 in the DLL
+ * @brief Draws a 2D grid onto the screen representing cells of the `FastGrid::aiGridMap` nearby to the creature
+ * whose `FastGrid` invoked the member function.  Navi and/or Piki population counts are shown, and Tekis and/or
+ * WorkObjects occupying the cells of the fastgrid are represented by a filled square (WorkObjects take priority).
+ * A gray square indicates that whatever is occupying that square is being AI culled (`FastGrid::aiCulling`).
+ * A red square represents a teki whose AI is NOT being culled, and green square likewise represents a WorkObject.
+ * The displayed amount of cells in the on-screen display is configurable via the named constant `dispAmount`.
+ * The width and height of individual cells drawn to the screen is configurable via the named constant `cellSize`.
+ * Hooking this function into `GameCoreSection::draw2D` or `Navi::refresh2d` is a good way to see it in action.
+ * @note UNUSED Size: 000820 (Matching by size)
  */
-void FastGrid::renderAIGrid2D(Graphics&)
+void FastGrid::renderAIGrid2D(Graphics& gfx)
 {
+	int i, j;
+
+	gfx.useTexture(nullptr, GX_TEXMAP0);
+	gfx.setColour(Colour(155, 155, 155, 255), true);
+
+	// Making the following named constants actually `const` affects matching.  Lovely `const` memes!
+	immut int dispAmount = 12; // Width and height (in cells) of the displayed square grid of cells.
+	immut int iOffs      = mWidth - (dispAmount >> 1);
+	immut int jOffs      = mHeight - (dispAmount >> 1);
+	immut f32 cellSize   = 20.0f; // Width and height of one single grid cell.
+
+	for (i = 0; i < dispAmount; ++i) {
+		Vector3f a(i * cellSize + 40.0f, 40.0f, 0.0f);
+		Vector3f b(i * cellSize + 40.0f, dispAmount * cellSize + 40.0f, 0.0f);
+		gfx.drawLine(a, b);
+
+		a.set(40.0f, i * cellSize + 40.0f, 0.0f);
+		b.set(dispAmount * cellSize + 40.0f, i * cellSize + 40.0f, 0.0f);
+		gfx.drawLine(a, b);
+	}
+
+	char buffer[8];
+
+	for (i = 0; i < dispAmount; ++i) {
+		for (j = 0; j < dispAmount; ++j) {
+			int myGridCellRow = i + iOffs;
+			int myGridCellCol = j + jOffs;
+			if (myGridCellRow >= 0 && myGridCellCol >= 0 && myGridCellRow < aiGridSize && myGridCellCol < aiGridSize) {
+				Iterator tekiIter(tekiMgr);
+				CI_LOOP(tekiIter)
+				{
+					Creature* teki = *tekiIter;
+					if (teki->mGrid.mWidth == myGridCellRow && teki->mGrid.mHeight == myGridCellCol) {
+						if (teki->mGrid.aiCulling()) {
+							gfx.setColour(Colour(100, 100, 100, 255), true);
+						} else {
+							gfx.setColour(Colour(200, 100, 100, 255), true);
+						}
+						RectArea tekiRect;
+						tekiRect.set(i * cellSize + 1.0f, j * cellSize + 1.0f, i * cellSize + cellSize - 1.0f,
+						             j * cellSize + cellSize - 1.0f);
+						tekiRect.mMinX = tekiRect.mMinX + 40.0f;
+						tekiRect.mMinY = tekiRect.mMinY + 40.0f;
+						tekiRect.mMaxX = tekiRect.mMaxX + 40.0f;
+						tekiRect.mMaxY = tekiRect.mMaxY + 40.0f;
+						gfx.fillRectangle(tekiRect);
+					}
+				}
+
+				Iterator workObjectIter(workObjectMgr);
+				CI_LOOP(workObjectIter)
+				{
+					Creature* workObject = *workObjectIter;
+					if (workObject->mGrid.mWidth == myGridCellRow && workObject->mGrid.mHeight == myGridCellCol) {
+						if (workObject->mGrid.aiCulling()) {
+							gfx.setColour(Colour(100, 100, 100, 255), true);
+
+						} else {
+							gfx.setColour(Colour(100, 200, 100, 255), true);
+						}
+						RectArea workRect;
+						workRect.set(i * cellSize + 1.0f, j * cellSize + 1.0f, i * cellSize + cellSize - 1.0f,
+						             j * cellSize + cellSize - 1.0f);
+						workRect.mMinX = workRect.mMinX + 40.0f;
+						workRect.mMinY = workRect.mMinY + 40.0f;
+						workRect.mMaxX = workRect.mMaxX + 40.0f;
+						workRect.mMaxY = workRect.mMaxY + 40.0f;
+						gfx.fillRectangle(workRect);
+					}
+				}
+
+				u32 local_8c = aiGridMap[myGridCellRow * aiGridSize + myGridCellCol];
+				if (local_8c) {
+					f32 local_90 = i * cellSize + 40.0f;
+					f32 local_94 = j * cellSize + 40.0f;
+					sprintf(buffer, "%d", local_8c);
+					gfx.setColour(Colour(155, 155, 155, 255), true);
+					gfx.texturePrintf(gsys->mConsFont, static_cast<int>(local_90) + 4, static_cast<int>(local_94) + 4, buffer);
+				}
+			}
+		}
+	}
 }
 
 /**
- * @brief Unused.
- * @note UNUSED Size: 000348
- * @note 100BE130 in the DLL
+ * @brief Draws a red border around cells of the `FastGrid::aiGridMap` containing Navis
+ * and/or Pikis, and also prints the population count of said occupied cells above them.
+ * Hooking this function into `GameCoreSection::draw` is a good way to see it in action.
+ * @note UNUSED Size: 000348 (Matching by size)
  */
-void FastGrid::renderAIGrid(Graphics&)
+void FastGrid::renderAIGrid(Graphics& gfx)
 {
+	int i, j;
+
+	gfx.useTexture(nullptr, GX_TEXMAP0);
+	gfx.setColour(Colour(255, 0, 0, 255), true);
+	gfx.useMatrix(gfx.mCamera->mLookAtMtx, 0);
+	bool prevSetting = gfx.setLighting(false, nullptr);
+
+	f32 cellSize = (32768.0f / aiGridSize) * 2;
+	char buffer[PATH_MAX];
+
+	for (i = 0; i < aiGridSize; ++i) {
+		for (j = 0; j < aiGridSize; ++j) {
+			if (aiGridMap[i * aiGridSize + j] != 0) {
+				f32 xPos = (i - (aiGridSize >> 1)) << aiGridShift;
+				f32 zPos = (j - (aiGridSize >> 1)) << aiGridShift;
+				f32 yPos = 4.0f;
+
+				gfx.useMatrix(gfx.mCamera->mLookAtMtx, 0);
+
+				Vector3f northwest(xPos, yPos, zPos);
+				Vector3f southwest(xPos, yPos, zPos + cellSize);
+				Vector3f northeast(xPos + cellSize, yPos, zPos);
+				Vector3f southeast(xPos + cellSize, yPos, zPos + cellSize);
+
+				gfx.drawLine(northwest, southwest); // 1<-----4
+				gfx.drawLine(southwest, southeast); // |      ^
+				gfx.drawLine(southeast, northeast); // v      |
+				gfx.drawLine(northeast, northwest); // 2----->3
+
+				// Check it again just to be sure, lol.
+				if (aiGridMap[i * aiGridSize + j] != 0) {
+					gfx.useMatrix(Matrix4f::ident, 0);
+
+					Vector3f printfPos(xPos + cellSize * 0.5f, yPos + 10.0f, zPos + cellSize * 0.5f);
+					printfPos.multMatrix(gfx.mCamera->mLookAtMtx);
+
+					sprintf(buffer, "%d", aiGridMap[i * aiGridSize + j]);
+					gfx.perspPrintf(gsys->mConsFont, printfPos, -(gsys->mConsFont->stringWidth(buffer) / 2), 0, buffer);
+				}
+			}
+		}
+	}
 }
