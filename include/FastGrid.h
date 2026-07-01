@@ -4,6 +4,7 @@
 #include "types.h"
 
 struct Graphics;
+struct Texture;
 struct Vector3f;
 
 /**
@@ -32,19 +33,20 @@ struct FastGrid {
 	static u16 aiGridShift;
 	static u8* aiGridMap;
 	static u16 aiGridSize;
+	static Texture* aiGridTex;
 
-	s16 mGridPositionX; // _00
-	u16 _02;            // _02
-	s16 mGridPositionY; // _04
-	u16 _06;            // _06
-	s16 mGridPositionZ; // _08
-	u16 _0A;            // _0A
-	s16 mWidth;         // _0C
-	u16 _0E;            // _0E
-	s16 mHeight;        // _10
-	u16 _12;            // _12
-	u16 mNeighbourSize; // _14
-	u16 _16;            // _16
+	s16 mGridPositionX;  // _00
+	u8 _02[0x04 - 0x02]; // _02
+	s16 mGridPositionY;  // _04
+	u8 _06[0x08 - 0x06]; // _06
+	s16 mGridPositionZ;  // _08
+	u8 _0A[0x0C - 0x0A]; // _0A
+	s16 mWidth;          // _0C, TODO: This is misnamed
+	u8 _0E[0x10 - 0x0E]; // _0E
+	s16 mHeight;         // _10, TODO: This is misnamed
+	u8 _12[0x14 - 0x12]; // _12
+	u16 mNeighbourSize;  // _14
+	u8 _16[0x18 - 0x16]; // _16
 };
 
 #endif
