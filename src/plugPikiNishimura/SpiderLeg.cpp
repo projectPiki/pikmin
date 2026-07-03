@@ -585,11 +585,13 @@ void SpiderLeg::initParm(int motionType)
 	mShakeAngle       = 0.0f;
 }
 
+// Suspicious
+#pragma push
+#pragma ppc_unroll_factor_limit 1
+
 /**
  * @todo: Documentation
  */
-#pragma push
-#pragma ppc_unroll_factor_limit 1
 void SpiderLeg::setLegParameter()
 {
 	if (mSpider->getAlive()) {
@@ -611,6 +613,7 @@ void SpiderLeg::setLegParameter()
 		}
 	}
 }
+
 #pragma pop
 
 /**
@@ -807,9 +810,13 @@ void SpiderLeg::setWalkNewPosition()
 	}
 }
 
+// Suspicious
+#pragma push
+#pragma ppc_unroll_factor_limit 1
+
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000210
+ * @note UNUSED Size: 000210 (Matching by size)
  */
 void SpiderLeg::checkGroundTimer()
 {
@@ -835,8 +842,9 @@ void SpiderLeg::checkGroundTimer()
 		}
 		}
 	}
-	// UNUSED FUNCTION
 }
+
+#pragma pop
 
 /**
  * @todo: Documentation
