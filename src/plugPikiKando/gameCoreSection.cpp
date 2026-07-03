@@ -43,6 +43,7 @@
 #include "UpdateMgr.h"
 #include "UtEffect.h"
 #include "WorkObject.h"
+#include "bugprint.h"
 #include "gameflow.h"
 #include "sysNew.h"
 #include "teki.h"
@@ -1265,6 +1266,11 @@ GameCoreSection::GameCoreSection(Controller* controller, MapMgr* mgr, Camera& ca
 	mDrawHideType = 0;
 	textDemoState = 0;
 	finishPause();
+#if defined(WIN32)
+	// Player 2 controller responsible for additional debug controls
+	/* DAT_104c2340 = */ new Controller(2);
+	bugPrintBuffer = new BugPrintBuffer();
+#endif
 	mHideFlags       = 0;
 	demoEventMgr     = new DemoEventMgr();
 	radarInfo        = new RadarInfo();
@@ -1469,6 +1475,9 @@ void GameCoreSection::update()
 
 	if (!gameflow.mPauseAll && !gameflow.mIsUIOverlayActive) {
 		playerState->update();
+#if defined(WIN32)
+		bugPrintBuffer->update();
+#endif
 	}
 
 	if (GameStat::allPikis == 0 && GameStat::maxPikis > 0) {
