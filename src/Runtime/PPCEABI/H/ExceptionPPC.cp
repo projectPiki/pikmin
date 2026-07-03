@@ -85,7 +85,7 @@ typedef void (*DeleteFunc)(void*);
  */
 // void std::bad_exception::what() const
 // {
-// 	// UNUSED FUNCTION
+// 	// This function is defined inline in the `std::bad_exception` class.
 // }
 
 /**
@@ -291,7 +291,7 @@ void ExPPC_IsInSpecification(char*, ex_specification*)
  */
 // std::bad_exception::~bad_exception()
 // {
-// 	// UNUSED FUNCTION
+// 	// This function is defined inline in the `std::bad_exception` class.
 // }
 
 /**

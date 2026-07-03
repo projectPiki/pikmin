@@ -1322,10 +1322,14 @@ static void SPEC2_MakeStatus(s32 chan, PADStatus* status, u32 data[2])
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 000054
+ * @note UNUSED Size: 000074 (OS_BUILD_VERSION >= 20011002L)
+ * @note UNUSED Size: 000054                                 (Matching by size)
  */
 int PADGetType(s32 chan, u32* type)
 {
+#if OS_BUILD_VERSION >= 20011002L
+	TRAP_UNIMPLEMENTED;
+#else
 	u32 chanBit;
 
 	*type   = Type[chan];
@@ -1334,7 +1338,7 @@ int PADGetType(s32 chan, u32* type)
 		return 0;
 	}
 	return 1;
-	// UNUSED FUNCTION
+#endif
 }
 
 /**

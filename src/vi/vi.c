@@ -1076,16 +1076,21 @@ u32 VIGetNextField(void)
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 0000A4
+ * @note UNUSED Size: 000098 (OS_BUILD_VERSION >= 20011002L) (Matching by size)
+ * @note UNUSED Size: 0000A4                                 (Matching by size)
  */
 u32 VIGetCurrentLine(void)
 {
-#if OS_BUILD_VERSION >= 20011002L
 	u32 halfLine;
 	VITimingInfo* tm;
 	BOOL enabled;
 
-	tm       = CurrTiming;
+#if OS_BUILD_VERSION >= 20011002L
+	tm = CurrTiming;
+#else
+	// I am making up this version difference.  It might be something else.
+	tm = HorVer.timing;
+#endif
 	enabled  = OSDisableInterrupts();
 	halfLine = getCurrentHalfLine();
 	OSRestoreInterrupts(enabled);
@@ -1093,9 +1098,6 @@ u32 VIGetCurrentLine(void)
 		halfLine -= tm->numHalfLines;
 	}
 	return halfLine >> 1U;
-#else
-	// UNUSED FUNCTION
-#endif
 }
 
 /**
