@@ -63,7 +63,12 @@ public:
 	void input(immut Vector3f& other) { set(other.x, other.y, other.z); }
 	void output(Vector3f& outVec) immut { outVec.set(x, y, z); }
 
+#if defined(_MSC_VER) && _MSC_VER < 1310
+	// VC6 declares `sqrtf` only at global scope, not in `std`.
+	f32 length() immut { return sqrtf(SQUARE(x) + SQUARE(y) + SQUARE(z)); }
+#else
 	f32 length() immut { return std::sqrtf(SQUARE(x) + SQUARE(y) + SQUARE(z)); }
+#endif
 	f32 squaredLength() immut { return SQUARE(x) + SQUARE(y) + SQUARE(z); }
 
 	// TODO: implementions are guessed, a manual check if accurate required

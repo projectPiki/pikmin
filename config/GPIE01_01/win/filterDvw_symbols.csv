@@ -1,0 +1,4 @@
+target,ordinal,rva,va,real_rva,real_va,forwarder,mangled,demangled
+filterDvw,1,0x0000107d,0x1000107d,0x0000a400,0x1000a400,,AutoStart,AutoStart
+filterDvw,2,0x000010b9,0x100010b9,0x0000a3d0,0x1000a3d0,,GetObjectList,GetObjectList
+filterDvw,3,0x00001145,0x10001145,0x0000a340,0x1000a340,,NewObject,NewObject

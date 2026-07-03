@@ -1,0 +1,4 @@
+target,ordinal,rva,va,real_rva,real_va,forwarder,mangled,demangled
+plugPiki,3,0x0000100f,0x1000100f,0x00001a50,0x10001a50,,NewObject,NewObject
+plugPiki,2,0x00001032,0x10001032,0x00001ae0,0x10001ae0,,GetObjectList,GetObjectList
+plugPiki,1,0x0000106e,0x1000106e,0x00001b10,0x10001b10,,AutoStart,AutoStart

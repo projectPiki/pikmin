@@ -1,0 +1,4 @@
+target,ordinal,rva,va,real_rva,real_va,forwarder,mangled,demangled
+filterJmp,1,0x0000101e,0x1000101e,0x00001b70,0x10001b70,,AutoStart,AutoStart
+filterJmp,2,0x00001023,0x10001023,0x00001b40,0x10001b40,,GetObjectList,GetObjectList
+filterJmp,3,0x00001032,0x10001032,0x00001ab0,0x10001ab0,,NewObject,NewObject

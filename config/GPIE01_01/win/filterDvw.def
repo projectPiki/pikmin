@@ -1,0 +1,5 @@
+LIBRARY filterDvw
+EXPORTS
+    AutoStart @1
+    GetObjectList @2
+    NewObject @3

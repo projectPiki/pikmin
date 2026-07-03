@@ -66,7 +66,12 @@ inline f32 speedy_sqrtf(f32 x)
 	vf32 y;
 	if (x > 0.0f) {
 
+#ifdef __MWERKS__
 		f64 guess = __frsqrte((f64)x);
+#else
+		// `__frsqrte` is a PPC reciprocal-sqrt-estimate intrinsic; off-PPC, compute the reciprocal square root directly.
+		f64 guess = 1.0 / sqrt((f64)x);
+#endif
 		y         = (f32)(x * guess);
 		return y;
 	}

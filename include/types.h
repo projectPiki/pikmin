@@ -96,8 +96,22 @@ typedef int BOOL;
 #define PIKI_USE_DGX TRUE
 #endif
 
+// Variadic function-like macros (`#define X(...)` / `__VA_ARGS__`) are a C99/C++11 feature.  MetroWerks and
+// MSVC 2005+ (`_MSC_VER >= 1400`) support them, but VC6 (`_MSC_VER == 1200`) does not, so its build must supply
+// non-variadic fallbacks for every such macro.  Even an unexpanded variadic *definition* is a parse error on VC6.
+#if !defined(_MSC_VER) || _MSC_VER >= 1400
+#define PIKI_HAS_VARIADIC_MACROS 1
+#else
+#define PIKI_HAS_VARIADIC_MACROS 0
+#endif
+
 // For when you have to pass something as a macro argument that contains commas.
+#if PIKI_HAS_VARIADIC_MACROS
 #define MACRO_ARG(...) __VA_ARGS__
+#else
+// VC6 fallback: only ever used inside `__MWERKS__`/matching-only paths (e.g. BUMP_REGISTER), never expanded here.
+#define MACRO_ARG(x) x
+#endif
 
 // Your tyical stringification macros
 #define TO_STRING(x) STRINGIFY(x)

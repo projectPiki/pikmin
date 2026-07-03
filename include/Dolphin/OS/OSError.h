@@ -23,6 +23,7 @@ void __OSUnhandledException(__OSException exception, OSContext* context, u32 dsi
 void OSReport(const char* message, ...);
 void OSPanic(const char* file, int line, const char* message, ...);
 
+#if PIKI_HAS_VARIADIC_MACROS
 #define OSErrorLine(line, ...) OSPanic(__FILE__, line, __VA_ARGS__)
 #define OSError(...)           OSErrorLine(__LINE__, __VA_ARGS__)
 
@@ -33,6 +34,18 @@ void OSPanic(const char* file, int line, const char* message, ...);
 #endif
 
 #define OSAssertMsg(cond, ...)   OSAssertMsgLine(__LINE__, cond, __VA_ARGS__)
+#else // VC6: single-message fallbacks (no variadic macros).  Unused by the Windows targets built so far.
+#define OSErrorLine(line, msg) OSPanic(__FILE__, line, msg)
+#define OSError(msg)           OSErrorLine(__LINE__, msg)
+
+#ifdef DEBUG // Currently necessary for dsp_cardunlock.c
+#define OSAssertMsgLine(line, cond, msg) ((void)((cond) || (OSErrorLine(line, msg), 0)))
+#else
+#define OSAssertMsgLine(line, cond, msg) ((void)(0))
+#endif
+
+#define OSAssertMsg(cond, msg)   OSAssertMsgLine(__LINE__, cond, msg)
+#endif
 #define OSAssertLine(line, cond) OSAssertMsgLine(line, cond, "Failed assertion " #cond)
 #define OSAssert(cond)           OSAssertLine(__LINE__, cond)
 

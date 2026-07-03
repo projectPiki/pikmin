@@ -1,0 +1,4 @@
+target,ordinal,rva,va,real_rva,real_va,forwarder,mangled,demangled
+plugAtxServer,1,0x000010ff,0x100010ff,0x00011480,0x10011480,,AutoStart,AutoStart
+plugAtxServer,2,0x0000119a,0x1000119a,0x00011450,0x10011450,,GetObjectList,GetObjectList
+plugAtxServer,3,0x000012c1,0x100012c1,0x000113c0,0x100113c0,,NewObject,NewObject

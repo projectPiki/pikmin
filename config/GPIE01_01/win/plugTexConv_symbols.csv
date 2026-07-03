@@ -1,0 +1,4 @@
+target,ordinal,rva,va,real_rva,real_va,forwarder,mangled,demangled
+plugTexConv,1,0x00001122,0x10001122,0x000183c0,0x100183c0,,AutoStart,AutoStart
+plugTexConv,2,0x0000119a,0x1000119a,0x00018390,0x10018390,,GetObjectList,GetObjectList
+plugTexConv,3,0x000012c1,0x100012c1,0x00018300,0x10018300,,NewObject,NewObject
