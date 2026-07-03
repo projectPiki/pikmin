@@ -9,6 +9,7 @@
 #include "Route.h"
 #include "UfoItem.h"
 #include "UtilityKando.h"
+#include "bugprint.h"
 #include "sysNew.h"
 
 /**
@@ -390,7 +391,7 @@ int PathFinder::selectWay(PathFinder::Buffer& buf, int destWPIdx, PathFinder::Bu
 
 		WayPoint* wp = getWayPoint(buf.mWayPointIdx);
 		if (!wp) {
-			PRINT_GLOBAL("buffer.idx=%d", buf.mWayPointIdx);
+			BUGPRINT("buffer.idx=%d", buf.mWayPointIdx);
 			ERROR("wp is null!");
 		}
 
@@ -414,7 +415,7 @@ int PathFinder::selectWay(PathFinder::Buffer& buf, int destWPIdx, PathFinder::Bu
 
 		// Ensure waypoint exists
 		if (!getWayPoint(neighborIdx)) {
-			PRINT_GLOBAL("idx=%d", neighborIdx);
+			BUGPRINT("idx=%d", neighborIdx);
 			ERROR("no getwaypoint!");
 		}
 
@@ -439,7 +440,7 @@ int PathFinder::selectWay(PathFinder::Buffer& buf, int destWPIdx, PathFinder::Bu
 
 		// Sanity check: no more than 8 candidates
 		if (validLinkCount >= 8) {
-			PRINT_GLOBAL("numWays=%d", validLinkCount);
+			BUGPRINT("numWays=%d", validLinkCount);
 			ERROR("numWays>=8");
 		}
 
@@ -534,7 +535,7 @@ Vector3f RouteMgr::getSafePosition(u32, Vector3f& pos)
 
 	// Ensure two valid waypoints were found
 	if (!wp || !wp2) {
-		PRINT_GLOBAL("from=%x to=%x pos(%.1f %.1f %.1f)\n", wp, wp2, pos.x, pos.y, pos.z);
+		BUGPRINT("from=%x to=%x pos(%.1f %.1f %.1f)\n", wp, wp2, pos.x, pos.y, pos.z);
 		ERROR("getSafePos (%.1f %.1f %.1f)", pos.x, pos.y, pos.z);
 	}
 
@@ -1409,7 +1410,7 @@ int PathFinder::findSyncOnyon(immut Vector3f& startPos, PathFinder::Buffer* buff
 			bufIdx         = 0;
 			bestStep       = secondBestRes;
 			secondBestFlag = false;
-			PRINT_GLOBAL("second best route:%d", getWayPoint(getWayPoint(startWPIdx)->mLinkIndices[secondBestRes])->mIndex);
+			BUGPRINT("second best route:%d", getWayPoint(getWayPoint(startWPIdx)->mLinkIndices[secondBestRes])->mIndex);
 			bufferList[0].resetFlag(bestStep);
 		}
 

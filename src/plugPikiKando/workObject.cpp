@@ -11,6 +11,7 @@
 #include "PlayerState.h"
 #include "RumbleMgr.h"
 #include "SoundMgr.h"
+#include "bugprint.h"
 #include "gameflow.h"
 #include "jaudio/pikiinter.h"
 #include "sysNew.h"
@@ -1254,7 +1255,7 @@ void Bridge::flatten()
 		int index = mStageJoints[i * 2]->mIndex;
 		if (mBuildShape->mJointVisibility[mStageJoints[i * 2 + 1]->mIndex] && mBuildShape->mJointVisibility[index]) {
 			mBuildShape->jointVisible(index, Joint::NotVisible);
-			PRINT_GLOBAL("flatten bridge");
+			BUGPRINT("flatten bridge");
 		}
 	}
 }
@@ -1267,7 +1268,7 @@ void Bridge::dump()
 	for (int i = 0; i < mStageCount; i++) {
 		const char* a = mBuildShape->mJointVisibility[mStageJoints[i * 2 + 1]->mIndex] ? "|" : "x";
 		const char* b = mBuildShape->mJointVisibility[mStageJoints[i * 2]->mIndex] ? "|" : "x";
-		PRINT_GLOBAL("brd %d : %d%%(w%s:p%s)\n", i, (int)(mStageProgressList[i] / mMaxHealth * 100.0f), a, b);
+		BUGPRINT("brd %d : %d%%(w%s:p%s)\n", i, (int)(mStageProgressList[i] / mMaxHealth * 100.0f), a, b);
 	}
 }
 

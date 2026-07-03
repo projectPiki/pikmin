@@ -17,6 +17,7 @@
 #include "RadarInfo.h"
 #include "SearchSystem.h"
 #include "SoundMgr.h"
+#include "bugprint.h"
 #include "sysMath.h"
 #include "sysNew.h"
 #include "timers.h"
@@ -683,10 +684,10 @@ void Creature::update()
 #if 0
 	if (mObjType == OBJTYPE_Teki) {
 		if (isNan(mFaceDirection)) {
-			PRINT_GLOBAL("nan detected !");
+			BUGPRINT("nan detected !");
 			dump();
 			if (!wasNanBeforeUpdateAI) {
-				PRINT_GLOBAL("after update AI");
+				BUGPRINT("after update AI");
 			}
 		}
 	}

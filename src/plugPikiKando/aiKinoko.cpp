@@ -4,6 +4,7 @@
 #include "NaviMgr.h"
 #include "PikiAI.h"
 #include "SoundMgr.h"
+#include "bugprint.h"
 
 /**
  * @todo: Documentation
@@ -282,7 +283,7 @@ void ActKinoko::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 			if (!navi) {
 				ERROR("kinoko no navi!\n");
 			}
-			PRINT_GLOBAL("navi=%x", navi);
+			BUGPRINT("navi=%x", navi);
 
 			if (navi->stimulate(InteractSuck(mPiki, 0.5f))) {
 				SeSystem::playPlayerSe(SE_KINOKOPIKI_ATTACK);

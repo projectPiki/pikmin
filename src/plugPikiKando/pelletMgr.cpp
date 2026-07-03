@@ -17,6 +17,7 @@
 #include "StateMachine.h"
 #include "Stickers.h"
 #include "UtEffect.h"
+#include "bugprint.h"
 #include "jaudio/pikiinter.h"
 #include "sysNew.h"
 #include "teki.h"
@@ -919,7 +920,7 @@ void Pellet::doLoad(RandomAccessStream& input)
 	}
 
 	mSRT.t.y = mapMgr->getMinY(mSRT.t.x, mSRT.t.z, true);
-	PRINT_GLOBAL("ufo parts %s : (%.1f %.1f %.1f)", mConfig->mModelId.mStringID, mSRT.t.x, mSRT.t.y, mSRT.t.z);
+	BUGPRINT("ufo parts %s : (%.1f %.1f %.1f)", mConfig->mModelId.mStringID, mSRT.t.x, mSRT.t.y, mSRT.t.z);
 	disableFixPos();
 	enableFixPos();
 	mStateMachine->transit(this, PELSTATE_UfoLoad);
@@ -1495,7 +1496,7 @@ Pellet* PelletMgr::newPellet(u32 pelletID, PelletView* view)
 
 	if (config->mModelId.match('tk**') && !view) {
 		PRINT("** newPellet( %s, 0 ) ! teki : use becomepellet!\n", config->mModelId.mStringID);
-		PRINT_GLOBAL("** newPellet( %s, 0 ) ! teki : use becomepellet!\n", config->mModelId.mStringID);
+		BUGPRINT("** newPellet( %s, 0 ) ! teki : use becomepellet!\n", config->mModelId.mStringID);
 		ERROR("nakata!");
 	}
 

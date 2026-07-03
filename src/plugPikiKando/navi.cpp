@@ -38,6 +38,7 @@
 #include "UfoItem.h"
 #include "UtEffect.h"
 #include "WorkObject.h"
+#include "bugprint.h"
 #include "gameflow.h"
 #include "jaudio/piki_player.h"
 #include "sysMath.h"
@@ -817,7 +818,7 @@ void Navi::update()
 			if (mNoPluckTimer > NAVI_PROP.mPostPluckZoomOutTime()) {
 				mIsPlucking       = false;
 				mFastPluckKeyTaps = 0;
-				PRINT_GLOBAL("< camera FINISH MOTION");
+				BUGPRINT("< camera FINISH MOTION");
 				cameraMgr->mCamera->finishMotion();
 				cameraMgr->mCamera->mControlsEnabled = true;
 				mNoPluckTimer                        = 0;
@@ -1404,7 +1405,7 @@ bool Navi::procActionButton()
 		if (DelayPikiBirth) {
 			mPressedTimer = 0.0f;
 			startMotion(PaniMotionInfo(PIKIANIM_Asibumi), PaniMotionInfo(PIKIANIM_Asibumi));
-			PRINT_GLOBAL("nuki d=%.1f rn=%d", minDist, mFastPluckKeyTaps);
+			BUGPRINT("nuki d=%.1f rn=%d", minDist, mFastPluckKeyTaps);
 			Vector3f sproutSep = closestSprout->mSRT.t - mSRT.t;
 			_7D0               = angDist(roundAng(atan2f(sproutSep.x, sproutSep.z)), mFaceDirection) / 10.0f;
 			f32 dist           = sproutSep.length();
@@ -2247,7 +2248,7 @@ bool InteractWind::actNavi(Navi* navi) immut
  */
 bool InteractSuck::actNavi(Navi* navi) immut
 {
-	PRINT_GLOBAL("actNavi");
+	BUGPRINT("actNavi");
 	if (!navi->isAlive()) {
 		return false;
 	}
@@ -2263,21 +2264,21 @@ bool InteractSuck::actNavi(Navi* navi) immut
 		return false;
 	}
 
-	PRINT_GLOBAL("invicible check false");
+	BUGPRINT("invicible check false");
 	navi->mHealth -= mDamage;
-	PRINT_GLOBAL("life = %.1f", navi->mHealth);
+	BUGPRINT("life = %.1f", navi->mHealth);
 
 	navi->mLifeGauge.updValue(navi->mHealth, C_NAVI_PROP(navi).mHealth());
 	rumbleMgr->start(RUMBLE_Unk15, 0, nullptr);
-	PRINT_GLOBAL("lgauge");
+	BUGPRINT("lgauge");
 	navi->startDamageEffect();
-	PRINT_GLOBAL("dmg eff");
+	BUGPRINT("dmg eff");
 	if (navi->mHealth <= 1.0f) {
 		GameCoreSection::startPause(COREPAUSE_Unk1 | COREPAUSE_Unk3 | COREPAUSE_Unk16);
 		navi->mStateMachine->transit(navi, NAVISTATE_Dead);
-		PRINT_GLOBAL("navi dead");
+		BUGPRINT("navi dead");
 	}
-	PRINT_GLOBAL(">");
+	BUGPRINT(">");
 
 	return true;
 }
@@ -2491,12 +2492,12 @@ bool InteractFire::actNavi(Navi* navi) immut
 void Navi::dump()
 {
 	if (Piki::directDumpMode) {
-		PRINT_GLOBAL("-- navi : mode = %d\n", mStateMachine->getCurrID(this));
-		PRINT_GLOBAL(" onground : %s isFlying %s\n", isCreatureFlag(CF_IsOnGround) ? "true" : "false",
-		             isCreatureFlag(CF_IsFlying) ? "true" : "false");
-		PRINT_GLOBAL(" isAlive=%s isVisible=%s isBuried=%s\n", isAlive() ? "true" : "false", isVisible() ? "true" : "false",
-		             isBuried() ? "true" : "false");
-		PRINT_GLOBAL(" neutralTime = %.2f\n", mNeutralTime);
+		BUGPRINT("-- navi : mode = %d\n", mStateMachine->getCurrID(this));
+		BUGPRINT(" onground : %s isFlying %s\n", isCreatureFlag(CF_IsOnGround) ? "true" : "false",
+		         isCreatureFlag(CF_IsFlying) ? "true" : "false");
+		BUGPRINT(" isAlive=%s isVisible=%s isBuried=%s\n", isAlive() ? "true" : "false", isVisible() ? "true" : "false",
+		         isBuried() ? "true" : "false");
+		BUGPRINT(" neutralTime = %.2f\n", mNeutralTime);
 	} else {
 		PRINT("-- navi : mode = %d\n", mStateMachine->getCurrID(this));
 		PRINT(" onground : %s isFlying %s\n", isCreatureFlag(CF_IsOnGround) ? "true" : "false",

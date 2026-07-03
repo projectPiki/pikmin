@@ -27,6 +27,7 @@
 #include "Stickers.h"
 #include "UfoItem.h"
 #include "UtilityKando.h"
+#include "bugprint.h"
 #include "gameflow.h"
 #include "sysNew.h"
 #include "teki.h"
@@ -210,7 +211,7 @@ void NaviDemoWaitState::init(Navi* navi)
 	if (navi->mGoalItem) {
 		navi->mGoalItem->setSpotActive(false);
 	}
-	PRINT_GLOBAL("orima demo wait start");
+	BUGPRINT("orima demo wait start");
 }
 
 /**
@@ -228,7 +229,7 @@ void NaviDemoWaitState::exec(Navi* navi)
 
 		PRINT("RETURN TO WALK : MOVIE END \n");
 		if (navi->isDamaged()) {
-			PRINT_GLOBAL("finish orima damage");
+			BUGPRINT("finish orima damage");
 			navi->finishDamage();
 		}
 
@@ -887,7 +888,7 @@ void NaviUfoState::exec(Navi* navi)
 			} else {
 				navi->mFaceDirection = roundAng(navi->mFaceDirection + 0.1f * rotDelta);
 				if (--mPunchCooldownTimer <= 0) {
-					PRINT_GLOBAL("ang timer done\n");
+					BUGPRINT("ang timer done\n");
 					navi->startMotion(PaniMotionInfo(PIKIANIM_Punch, navi), PaniMotionInfo(PIKIANIM_Punch));
 					mState = 1;
 					PRINT("ang time out recover !!\n");
@@ -897,7 +898,7 @@ void NaviUfoState::exec(Navi* navi)
 
 		} else if (!navi->mOdoMeter.moving(navi->mSRT.t, mLastPosition)) {
 			PRINT("giveup using odometer!\n");
-			PRINT_GLOBAL("giveup using odometer");
+			BUGPRINT("giveup using odometer");
 			navi->startMotion(PaniMotionInfo(PIKIANIM_Punch, navi), PaniMotionInfo(PIKIANIM_Punch));
 			mState = 1;
 			effectMgr->create(EffectMgr::EFF_Rocket_NaviRecover, navi->mSRT.t, nullptr, nullptr);
@@ -2389,7 +2390,7 @@ void NaviNukuState::init(Navi* navi)
 	_10                 = C_NAVI_PROP(navi)._1CC();
 	if (navi->mIsCursorVisible && !playerState->isChallengeMode() && !navi->mIsPlucking && playerState->mTotalPluckedPikiCount < 100) {
 		cameraMgr->mCamera->startMotion(cameraMgr->mCamera->mAttentionInfo);
-		PRINT_GLOBAL("> camera START MOTION | NUKU");
+		BUGPRINT("> camera START MOTION | NUKU");
 		navi->mIsPlucking                    = true;
 		cameraMgr->mCamera->mControlsEnabled = false;
 	}

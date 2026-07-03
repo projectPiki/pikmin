@@ -16,6 +16,7 @@
 #include "Shape.h"
 #include "UfoItem.h"
 #include "UtEffect.h"
+#include "bugprint.h"
 #include "gameflow.h"
 #include "sysNew.h"
 
@@ -1135,7 +1136,7 @@ void PlayerState::getUfoParts(u32 partID, bool isInvisiblePart)
 		parts->mPartVisType = PARTVIS_Invisible;
 	}
 	mCurrParts++;
-	PRINT_GLOBAL("ufo parts %d/%d", mRequiredUfoPartCount, mCurrParts);
+	BUGPRINT("ufo parts %d/%d", mRequiredUfoPartCount, mCurrParts);
 	for (int i = 0; i < 33; i++) {
 		PRINT("ufoPartsCount = %d\n", mCurrParts);
 	}
@@ -1143,7 +1144,7 @@ void PlayerState::getUfoParts(u32 partID, bool isInvisiblePart)
 	if (mCurrParts >= AICONST._184()) {
 		PRINT("PERFECT !\n");
 		mShipUpgradeLevel = 5;
-		PRINT_GLOBAL("--- perfect 5");
+		BUGPRINT("--- perfect 5");
 	} else if (mCurrParts >= AICONST._174()) {
 		gameflow.mPlayState.openStage(STAGE_Last);
 		playerState->mResultFlags.setSeen(zen::RESFLAG_Collect15Parts);
@@ -1151,7 +1152,7 @@ void PlayerState::getUfoParts(u32 partID, bool isInvisiblePart)
 			PRINT("OPEN STAGE 4 ***\n");
 		}
 		mShipUpgradeLevel = 4;
-		PRINT_GLOBAL("--- level 4");
+		BUGPRINT("--- level 4");
 	} else if (mCurrParts >= AICONST._164()) {
 		gameflow.mPlayState.openStage(STAGE_Yakushima);
 		playerState->mResultFlags.setOn(zen::RESFLAG_UnlockYakushima);
@@ -1159,7 +1160,7 @@ void PlayerState::getUfoParts(u32 partID, bool isInvisiblePart)
 			PRINT("OPEN STAGE 3 ***\n");
 		}
 		mShipUpgradeLevel = 3;
-		PRINT_GLOBAL("--- level 3");
+		BUGPRINT("--- level 3");
 	} else if (mCurrParts >= AICONST._154()) {
 		playerState->mResultFlags.setOn(zen::RESFLAG_UnlockCave);
 		gameflow.mPlayState.openStage(STAGE_Cave);
@@ -1167,13 +1168,13 @@ void PlayerState::getUfoParts(u32 partID, bool isInvisiblePart)
 			PRINT("OPEN STAGE 2 ***\n");
 		}
 		mShipUpgradeLevel = 2;
-		PRINT_GLOBAL("--- level 2");
+		BUGPRINT("--- level 2");
 	} else if (mCurrParts >= 1) {
 		gameflow.mPlayState.openStage(STAGE_Forest);
 		for (int i = 0; i < 10; i++) {
 			PRINT("OPEN STAGE 1 ***\n");
 		}
-		PRINT_GLOBAL("--- level 1"); // Yes, it's before the value assignment here.
+		BUGPRINT("--- level 1"); // Yes, it's before the value assignment here.
 		mShipUpgradeLevel = 1;
 	}
 

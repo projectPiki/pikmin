@@ -12,6 +12,7 @@
 #include "PikiState.h"
 #include "Shape.h"
 #include "UfoItem.h"
+#include "bugprint.h"
 #include "gameflow.h"
 #include "sysNew.h"
 
@@ -598,7 +599,7 @@ void ViewPiki::refresh(Graphics& gfx)
 		Matrix4f mouthMtx = mSwallowMouthPart->getJointMatrix();
 		f32 swallowScale  = 1.0f / reinterpret_cast<Vector3f&>(mouthMtx).length();
 		if (swallowScale <= 0.0f) {
-			PRINT_GLOBAL("swallow scale=%f", swallowScale);
+			BUGPRINT("swallow scale=%f", swallowScale);
 			swallowScale = 1.0f;
 		}
 
