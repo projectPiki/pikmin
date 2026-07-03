@@ -37,10 +37,8 @@ public:
 	}
 };
 
-/*
- * --INFO--
- * Address:	80214C28
- * Size:	000108
+/**
+ * @todo Documentation
  */
 extern void* __construct_new_array(void* block, ConstructorDestructor ctor, ConstructorDestructor dtor, size_t size, size_t n)
 {
@@ -65,10 +63,8 @@ extern void* __construct_new_array(void* block, ConstructorDestructor ctor, Cons
 	return ptr;
 }
 
-/*
- * --INFO--
- * Address:	80214A70
- * Size:	000100
+/**
+ * @todo Documentation
  */
 extern void __construct_array(void* ptr, ConstructorDestructor ctor, ConstructorDestructor dtor, size_t size, size_t n)
 {
@@ -80,10 +76,9 @@ extern void __construct_array(void* ptr, ConstructorDestructor ctor, Constructor
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000078
+/**
+ * @todo Documentation
+ * @note UNUSED Size: 000078
  */
 extern void __destroy_arr(void* block, ConstructorDestructor* dtor, size_t size, size_t n)
 {
@@ -95,10 +90,8 @@ extern void __destroy_arr(void* block, ConstructorDestructor* dtor, size_t size,
 	}
 }
 
-/*
- * --INFO--
- * Address:	802149F4
- * Size:	00007C
+/**
+ * @todo Documentation
  */
 extern void __destroy_new_array(void* block, ConstructorDestructor dtor)
 {
@@ -121,60 +114,54 @@ extern void __destroy_new_array(void* block, ConstructorDestructor dtor)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000080
+/**
+ * @todo Documentation
+ * @note UNUSED Size: 000080
  */
 void __destroy_new_array2(void)
 {
 	// UNUSED FUNCTION
 }
 
-// /*
-//  * --INFO--
-//  * Address:	........
-//  * Size:	00022C
+// /**
+//  * @todo Documentation
+//  * @note UNUSED Size: 00022C
 //  */
 // void __throw_catch_compare(void)
 // {
 // 	// UNUSED FUNCTION
 // }
 
-// /*
-//  * --INFO--
-//  * Address:	........
-//  * Size:	000028
+// /**
+//  * @todo Documentation
+//  * @note UNUSED Size: 000028
 //  */
 // void std::unexpected()
 // {
 // 	// UNUSED FUNCTION
 // }
 
-// /*
-//  * --INFO--
-//  * Address:	........
-//  * Size:	000010
+// /**
+//  * @todo Documentation
+//  * @note UNUSED Size: 000010
 //  */
 // unexpected_handler std::set_unexpected(void (*)())
 // {
 // 	// UNUSED FUNCTION
 // }
 
-// /*
-//  * --INFO--
-//  * Address:	........
-//  * Size:	000028
+// /**
+//  * @todo Documentation
+//  * @note UNUSED Size: 000028
 //  */
 // void std::terminate()
 // {
 // 	// UNUSED FUNCTION
 // }
 
-// /*
-//  * --INFO--
-//  * Address:	........
-//  * Size:	000010
+// /**
+//  * @todo Documentation
+//  * @note UNUSED Size: 000010
 //  */
 // terminate_handler std::set_terminate(void (*)())
 // {

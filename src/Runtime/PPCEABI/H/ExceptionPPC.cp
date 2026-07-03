@@ -79,260 +79,233 @@ typedef void (*DeleteFunc)(void*);
 
 #pragma peephole off
 
-// /*
-//  * --INFO--
-//  * Address:	........
-//  * Size:	000074
+// /**
+//  * @todo Documentation
+//  * @note UNUSED Size: 000074
 //  */
 // void ExPPC_LongJump(ThrowContext*, void*, void*)
 // {
 // 	// UNUSED FUNCTION
 // }
 
-// /*
-//  * --INFO--
-//  * Address:	........
-//  * Size:	0000B4
+// /**
+//  * @todo Documentation
+//  * @note UNUSED Size: 0000B4
 //  */
 // void __throw(void)
 // {
 // 	// UNUSED FUNCTION
 // }
 
-// /*
-//  * --INFO--
-//  * Address:	........
-//  * Size:	000044
+// /**
+//  * @todo Documentation
+//  * @note UNUSED Size: 000044
 //  */
 // void __end__catch(void)
 // {
 // 	// UNUSED FUNCTION
 // }
 
-// /*
-//  * --INFO--
-//  * Address:	........
-//  * Size:	000450
+// /**
+//  * @todo Documentation
+//  * @note UNUSED Size: 000450
 //  */
 // void ExPPC_ThrowHandler(ThrowContext*)
 // {
 // 	// UNUSED FUNCTION
 // }
 
-// /*
-//  * --INFO--
-//  * Address:	........
-//  * Size:	000090
+// /**
+//  * @todo Documentation
+//  * @note UNUSED Size: 000090
 //  */
 // void ExPPC_HandleUnexpected(ThrowContext*, MWExceptionInfo*, ex_specification*)
 // {
 // 	// UNUSED FUNCTION
 // }
 
-// /*
-//  * --INFO--
-//  * Address:	........
-//  * Size:	0001C8
+// /**
+//  * @todo Documentation
+//  * @note UNUSED Size: 0001C8
 //  */
 // void __unexpected(void)
 // {
 // 	// UNUSED FUNCTION
 // }
 
-// /*
-//  * --INFO--
-//  * Address:	........
-//  * Size:	000084
+// /**
+//  * @todo Documentation
+//  * @note UNUSED Size: 000084
 //  */
 // // std::bad_exception::~bad_exception()
 // // {
 // // 	// UNUSED FUNCTION
 // // }
 
-// /*
-//  * --INFO--
-//  * Address:	........
-//  * Size:	000098
+// /**
+//  * @todo Documentation
+//  * @note UNUSED Size: 000098
 //  */
 // void ExPPC_IsInSpecification(char*, ex_specification*)
 // {
 // 	// UNUSED FUNCTION
 // }
 
-// /*
-//  * --INFO--
-//  * Address:	........
-//  * Size:	000574
+// /**
+//  * @todo Documentation
+//  * @note UNUSED Size: 000574
 //  */
 // void ExPPC_UnwindStack(ThrowContext*, MWExceptionInfo*, void*)
 // {
 // 	// UNUSED FUNCTION
 // }
 
-// /*
-//  * --INFO--
-//  * Address:	........
-//  * Size:	000098
+// /**
+//  * @todo Documentation
+//  * @note UNUSED Size: 000098
 //  */
 // void ExPPC_DeletePointerCond(ThrowContext*, const ex_deletepointercond*)
 // {
 // 	// UNUSED FUNCTION
 // }
 
-// // /*
-// //  * --INFO--
-// //  * Address:	........
-// //  * Size:	00005C
+// // /**
+// //  * @todo Documentation
+// //  * @note UNUSED Size: 00005C
 // //  */
 // // void ExPPC_DeletePointer(ThrowContext *, const ex_deletepointer *)
 // // {
 // // 	// UNUSED FUNCTION
 // // }
 
-// // /*
-// //  * --INFO--
-// //  * Address:	........
-// //  * Size:	0000BC
+// // /**
+// //  * @todo Documentation
+// //  * @note UNUSED Size: 0000BC
 // //  */
 // // void ExPPC_DestroyMemberArray(ThrowContext *, const ex_destroymemberarray *)
 // // {
 // // 	// UNUSED FUNCTION
 // // }
 
-// // /*
-// //  * --INFO--
-// //  * Address:	........
-// //  * Size:	0000A4
+// // /**
+// //  * @todo Documentation
+// //  * @note UNUSED Size: 0000A4
 // //  */
 // // void ExPPC_DestroyMemberCond(ThrowContext *, const ex_destroymembercond *)
 // // {
 // // 	// UNUSED FUNCTION
 // // }
 
-// // /*
-// //  * --INFO--
-// //  * Address:	........
-// //  * Size:	000068
+// // /**
+// //  * @todo Documentation
+// //  * @note UNUSED Size: 000068
 // //  */
 // // void ExPPC_DestroyBase(ThrowContext *, const ex_destroymember *)
 // // {
 // // 	// UNUSED FUNCTION
 // // }
 
-// // /*
-// //  * --INFO--
-// //  * Address:	........
-// //  * Size:	000068
+// // /**
+// //  * @todo Documentation
+// //  * @note UNUSED Size: 000068
 // //  */
 // // void ExPPC_DestroyMember(ThrowContext *, const ex_destroymember *)
 // // {
 // // 	// UNUSED FUNCTION
 // // }
 
-// // /*
-// //  * --INFO--
-// //  * Address:	........
-// //  * Size:	000090
+// // /**
+// //  * @todo Documentation
+// //  * @note UNUSED Size: 000090
 // //  */
 // // void ExPPC_DestroyLocalArray(ThrowContext *, const ex_destroylocalarray *)
 // // {
 // // 	// UNUSED FUNCTION
 // // }
 
-// // /*
-// //  * --INFO--
-// //  * Address:	........
-// //  * Size:	000060
+// // /**
+// //  * @todo Documentation
+// //  * @note UNUSED Size: 000060
 // //  */
 // // void ExPPC_DestroyLocalPointer(ThrowContext *, const ex_destroylocalpointer *)
 // // {
 // // 	// UNUSED FUNCTION
 // // }
 
-// // /*
-// //  * --INFO--
-// //  * Address:	........
-// //  * Size:	00007C
+// // /**
+// //  * @todo Documentation
+// //  * @note UNUSED Size: 00007C
 // //  */
 // // void ExPPC_DestroyLocalCond(ThrowContext *, const ex_destroylocalcond *)
 // // {
 // // 	// UNUSED FUNCTION
 // // }
 
-// // /*
-// //  * --INFO--
-// //  * Address:	........
-// //  * Size:	00003C
+// // /**
+// //  * @todo Documentation
+// //  * @note UNUSED Size: 00003C
 // //  */
 // // void ExPPC_DestroyLocal(ThrowContext *, const ex_destroylocal *)
 // // {
 // // 	// UNUSED FUNCTION
 // // }
 
-// // /*
-// //  * --INFO--
-// //  * Address:	........
-// //  * Size:	0001F0
+// // /**
+// //  * @todo Documentation
+// //  * @note UNUSED Size: 0001F0
 // //  */
 // // void ExPPC_PopStackFrame(ThrowContext *, MWExceptionInfo *)
 // // {
 // // 	// UNUSED FUNCTION
 // // }
 
-// // /*
-// //  * --INFO--
-// //  * Address:	........
-// //  * Size:	00021C
+// // /**
+// //  * @todo Documentation
+// //  * @note UNUSED Size: 00021C
 // //  */
 // // void ExPPC_NextAction(ActionIterator *)
 // // {
 // // 	// UNUSED FUNCTION
 // // }
 
-// // /*
-// //  * --INFO--
-// //  * Address:	........
-// //  * Size:	000020
+// // /**
+// //  * @todo Documentation
+// //  * @note UNUSED Size: 000020
 // //  */
 // // void ExPPC_CurrentAction(const ActionIterator *)
 // // {
 // // 	// UNUSED FUNCTION
 // // }
 
-// /*
-//  * --INFO--
-//  * Address:	........
-//  * Size:	00002C
+// /**
+//  * @todo Documentation
+//  * @note UNUSED Size: 00002C
 //  */
 // void ExPPC_PopR31(char*, MWExceptionInfo*)
 // {
 // 	// UNUSED FUNCTION
 // }
 
-// /*
-//  * --INFO--
-//  * Address:	........
-//  * Size:	0001D4
+// /**
+//  * @todo Documentation
+//  * @note UNUSED Size: 0001D4
 //  */
 // void ExPPC_FindExceptionRecord(char*, MWExceptionInfo*)
 // {
 // 	// UNUSED FUNCTION
 // }
 
-// /*
-//  * --INFO--
-//  * Address:	........
-//  * Size:	000098
+// /**
+//  * @todo Documentation
+//  * @note UNUSED Size: 000098
 //  */
 // void ExPPC_FindExceptionFragment(char *, FragmentInfo *)
 // {
 // 	// UNUSED FUNCTION
 // }
 
-/*
- * --INFO--
- * Address:	80214D8C
- * Size:	00003C
+/**
+ * @todo Documentation
  */
 int __register_fragment(struct __eti_init_info* info, char* TOC)
 {
@@ -351,10 +324,8 @@ int __register_fragment(struct __eti_init_info* info, char* TOC)
 	return -1;
 }
 
-/*
- * --INFO--
- * Address:	80214D58
- * Size:	000034
+/**
+ * @todo Documentation
  */
 void __unregister_fragment(int fragmentID)
 {
@@ -368,10 +339,9 @@ void __unregister_fragment(int fragmentID)
 	}
 }
 
-// /*
-//  * --INFO--
-//  * Address:	........
-//  * Size:	00000C
+// /**
+//  * @todo Documentation
+//  * @note UNUSED Size: 00000C
 //  */
 // void std::bad_exception::what() const
 // {
