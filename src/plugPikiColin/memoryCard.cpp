@@ -481,7 +481,7 @@ void MemoryCard::waitPolling()
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000054
+ * @note UNUSED Size: 000054 (Nonmatching by size)
  */
 void MemoryCard::createFile(CARDStat& state)
 {
@@ -490,7 +490,6 @@ void MemoryCard::createFile(CARDStat& state)
 	gameflow.mGamePrefs.mMostRecentSaveIndex    = 0;
 	gsys->mIsCardSaving                         = TRUE;
 	memset(&state, 0, sizeof(CARDStat));
-	// UNUSED FUNCTION
 }
 
 /**

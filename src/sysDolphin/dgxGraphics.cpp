@@ -2283,7 +2283,6 @@ void DGXGraphics::directErase(immut RectArea& bounds, bool set)
 	}
 
 	DCFlushRange(mDisplayBuffer, sFrameSize);
-	// UNUSED FUNCTION
 }
 
 /**

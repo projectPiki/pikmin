@@ -2315,7 +2315,6 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 	 */
 	void menuQuitGame(Menu& parent)
 	{
-		// UNUSED FUNCTION (DLL inline)
 		parent.close();
 		mPendingOnePlayerSectionID = ONEPLAYER_GameExit;
 		gsys->setFade(0.0f);
@@ -2328,7 +2327,6 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 	 */
 	void menuChangeCourse(Menu& parent)
 	{
-		// UNUSED FUNCTION (DLL inline)
 		parent.close();
 		mPendingOnePlayerSectionID = ONEPLAYER_MapSelect;
 		gsys->setFade(0.0f);
@@ -2341,7 +2339,6 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 	 */
 	void menuDayEnd(Menu& parent)
 	{
-		// UNUSED FUNCTION (DLL inline)
 		parent.close();
 		gamecore->forceDayEnd();
 		gameflow.mIsDayEndTriggered = TRUE;
@@ -2353,7 +2350,6 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 	 */
 	void menuDecreaseFrame(Menu& parent)
 	{
-		// UNUSED FUNCTION (DLL inline)
 		if (gameflow.mMoviePlayer->mIsActive) {
 			// pause the current cutscene so we step through frame-by-frame
 			gameflow.mMoviePlayer->mIsPaused = true;
@@ -2383,7 +2379,6 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 	 */
 	void menuIncreaseFrame(Menu& parent)
 	{
-		// UNUSED FUNCTION (DLL inline)
 		if (gameflow.mMoviePlayer->mIsActive) {
 			// pause the current cutscene so we step through frame-by-frame
 			gameflow.mMoviePlayer->mIsPaused = true;
@@ -2412,7 +2407,6 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 	 */
 	void menuIncreaseMovie(Menu& parent)
 	{
-		// UNUSED FUNCTION (DLL inline)
 		// we just had an input, set a delay for the next one to be detected
 		if (mMenuRepeatTimer < -1) {
 			mMenuRepeatDelay = 4;
@@ -2440,7 +2434,6 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 	 */
 	void menuDecreaseMovie(Menu& parent)
 	{
-		// UNUSED FUNCTION (DLL inline)
 		// we just had an input, set a delay for the next one to be detected
 		if (mMenuRepeatTimer < -1) {
 			mMenuRepeatDelay = 4;
@@ -2468,7 +2461,6 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 	 */
 	void menuPlayMovie(Menu& parent)
 	{
-		// UNUSED FUNCTION (DLL inline)
 		if (gameflow.mMoviePlayer->mIsActive) {
 			gameflow.mMoviePlayer->skipScene(SCENESKIP_Skip);
 		} else {
@@ -2483,7 +2475,6 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 	 */
 	void menuPauseMovie(Menu& parent)
 	{
-		// UNUSED FUNCTION (DLL inline)
 		if (gameflow.mMoviePlayer->mIsActive) {
 			gameflow.mMoviePlayer->mIsPaused ^= true;
 			PRINT("movie pause = %s\n", gameflow.mMoviePlayer->mIsPaused ? "On" : "Off");

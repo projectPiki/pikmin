@@ -1129,7 +1129,7 @@ static const char* btipalFmts[] = {
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000004
+ * @note UNUSED Size: 000004 (Matching by size, technically, but not in a satisfying way)
  */
 void TexImg::dumpBti(Texture* tex, immut char* name, RandomAccessStream& input, RandomAccessStream& output)
 {
@@ -1162,7 +1162,6 @@ void TexImg::dumpBti(Texture* tex, immut char* name, RandomAccessStream& input, 
 	output.print("\t};\n\n");
 
 #endif
-	// UNUSED FUNCTION
 }
 
 /**
