@@ -39,6 +39,7 @@ compile_commands.json
 tools/mwcc_compiler
 tools/dtk
 tools/powerpc
+tools/vc6
 *.id0
 *.id1
 *.id2
@@ -49,4 +50,3 @@ mwcc_debugger.py
 /docs
 build.py
 *.lnk
-tools/vc6
