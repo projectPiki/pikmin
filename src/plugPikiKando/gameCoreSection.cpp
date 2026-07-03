@@ -430,7 +430,7 @@ void GameCoreSection::clearDeadlyPikmins()
 		}
 	}
 
-	PRINT_GLOBAL("clearDeadlyPikmins %d", killed);
+	BUGPRINT("clearDeadlyPikmins %d", killed);
 }
 
 /**
@@ -1176,7 +1176,7 @@ void GameCoreSection::initStage()
 void GameCoreSection::finalSetup()
 {
 	PRINT("======================= FINAL SETUP ==============================\n");
-	PRINT_GLOBAL("final setup!\n");
+	BUGPRINT("final setup!\n");
 	routeMgr->initLinks();
 
 	Iterator it(pelletMgr);

@@ -16,6 +16,7 @@
 #include "PlayerState.h"
 #include "Route.h"
 #include "SoundMgr.h"
+#include "bugprint.h"
 #include "gameflow.h"
 #include "jaudio/pikiinter.h"
 
@@ -732,7 +733,7 @@ void GoalItem::update()
 			if (!exitPiki()) {
 				int mapPikis = GameStat::mapPikis;
 				int mePikis  = GameStat::mePikis;
-				PRINT_GLOBAL("map=%d mePiki=%d exitC=%d", mapPikis, mePikis, mPikisToExit);
+				BUGPRINT("map=%d mePiki=%d exitC=%d", mapPikis, mePikis, mPikisToExit);
 				ERROR("2d err %d %d %d", mapPikis, mePikis, mPikisToExit);
 			}
 

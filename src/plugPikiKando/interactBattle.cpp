@@ -12,6 +12,7 @@
 #include "PlayerState.h"
 #include "SoundMgr.h"
 #include "Stickers.h"
+#include "bugprint.h"
 
 /**
  * @todo: Documentation
@@ -80,7 +81,7 @@ bool InteractBury::actPiki(Piki* piki) immut
 
 	if (mMakeFlower && piki->mHappa < Flower) {
 		piki->mHappa = Flower;
-		PRINT_GLOBAL("miurin %d\n", piki->mHappa);
+		BUGPRINT("miurin %d\n", piki->mHappa);
 	}
 
 	piki->mFSM->transit(piki, PIKISTATE_Bury);

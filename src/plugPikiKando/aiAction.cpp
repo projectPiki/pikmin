@@ -6,6 +6,7 @@
 #include "PikiAI.h"
 #include "PikiMgr.h"
 #include "PikiState.h"
+#include "bugprint.h"
 #include "sysNew.h"
 
 /**
@@ -441,7 +442,7 @@ void TopAction::abandon(zen::particleGenerator* particle)
 	if (mCurrActionIdx != PikiAction::NOACTION) {
 		mChildActions[mCurrActionIdx].mAction->cleanup();
 		if (mPiki->isKinoko()) {
-			PRINT_GLOBAL("kinoko %d exit", mCurrActionIdx);
+			BUGPRINT("kinoko %d exit", mCurrActionIdx);
 		}
 
 #if 0 // DLL code, but not present in GC:

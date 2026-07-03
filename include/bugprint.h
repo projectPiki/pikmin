@@ -32,4 +32,10 @@ extern "C" {
 void _bugPrint(immut char* fmt, ...);
 }
 
+#if defined(WIN32)
+#define BUGPRINT(...) _bugPrint(__VA_ARGS__);
+#else
+#define BUGPRINT(...) (__VA_ARGS__)
+#endif
+
 #endif

@@ -28,6 +28,7 @@
 #include "Shape.h"
 #include "UfoItem.h"
 #include "WeedsItem.h"
+#include "bugprint.h"
 #include "gameflow.h"
 #include "jaudio/pikiinter.h"
 #include "sysMath.h"
@@ -853,7 +854,7 @@ bool InteractBomb::actItem(ItemCreature* item) immut
 		}
 
 		PRINT(" GOT BOMB!!!!\n");
-		PRINT_GLOBAL("sluice got bomb by %x\n", mOwner);
+		BUGPRINT("sluice got bomb by %x\n", mOwner);
 		switch (item->mObjType) {
 		case OBJTYPE_SluiceSoft:
 		{

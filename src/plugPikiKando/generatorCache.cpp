@@ -3,6 +3,7 @@
 #include "OnePlayerSection.h"
 #include "Pellet.h"
 #include "PelletState.h"
+#include "bugprint.h"
 #include "gameflow.h"
 #include "sysNew.h"
 
@@ -156,7 +157,7 @@ void GeneratorCache::loadCard(RandomAccessStream& input)
 			PRINT("NO CACHE %d in DeadList\n", i);
 			FOREACH_NODE(Cache, mDeadCacheList.mChild, dead)
 			{
-				PRINT_GLOBAL("deadList : id %d", dead->mStageID);
+				BUGPRINT("deadList : id %d", dead->mStageID);
 			}
 			ERROR("bikkuri %d", i);
 		}

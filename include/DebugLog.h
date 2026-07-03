@@ -43,15 +43,12 @@
 #if defined(DEVELOP)
 #define PRINT(...)        _Print(__VA_ARGS__)
 #define ERROR(...)        _Error(__VA_ARGS__)
-#define PRINT_GLOBAL(...) OSReport(__VA_ARGS__)
 #elif defined(VERSION_DPIJ01_PIKIDEMO) or defined(VERSION_GPIJ01)
 #define PRINT(...)        (__VA_ARGS__)
 #define ERROR(...)        _Error(__VA_ARGS__)
-#define PRINT_GLOBAL(...) (__VA_ARGS__)
 #else
 #define PRINT(...)        (__VA_ARGS__)
 #define ERROR(...)        (__VA_ARGS__)
-#define PRINT_GLOBAL(...) (__VA_ARGS__)
 #endif
 
 // This macro exists to abstract the user PRINTs seen below.  mapMgr.cpp seems to have used this macro as well.
