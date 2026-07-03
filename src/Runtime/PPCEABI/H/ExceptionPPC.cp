@@ -79,227 +79,11 @@ typedef void (*DeleteFunc)(void*);
 
 #pragma peephole off
 
-// /**
-//  * @todo Documentation
-//  * @note UNUSED Size: 000074
-//  */
-// void ExPPC_LongJump(ThrowContext*, void*, void*)
-// {
-// 	// UNUSED FUNCTION
-// }
-
-// /**
-//  * @todo Documentation
-//  * @note UNUSED Size: 0000B4
-//  */
-// void __throw(void)
-// {
-// 	// UNUSED FUNCTION
-// }
-
-// /**
-//  * @todo Documentation
-//  * @note UNUSED Size: 000044
-//  */
-// void __end__catch(void)
-// {
-// 	// UNUSED FUNCTION
-// }
-
-// /**
-//  * @todo Documentation
-//  * @note UNUSED Size: 000450
-//  */
-// void ExPPC_ThrowHandler(ThrowContext*)
-// {
-// 	// UNUSED FUNCTION
-// }
-
-// /**
-//  * @todo Documentation
-//  * @note UNUSED Size: 000090
-//  */
-// void ExPPC_HandleUnexpected(ThrowContext*, MWExceptionInfo*, ex_specification*)
-// {
-// 	// UNUSED FUNCTION
-// }
-
-// /**
-//  * @todo Documentation
-//  * @note UNUSED Size: 0001C8
-//  */
-// void __unexpected(void)
-// {
-// 	// UNUSED FUNCTION
-// }
-
-// /**
-//  * @todo Documentation
-//  * @note UNUSED Size: 000084
-//  */
-// // std::bad_exception::~bad_exception()
-// // {
-// // 	// UNUSED FUNCTION
-// // }
-
-// /**
-//  * @todo Documentation
-//  * @note UNUSED Size: 000098
-//  */
-// void ExPPC_IsInSpecification(char*, ex_specification*)
-// {
-// 	// UNUSED FUNCTION
-// }
-
-// /**
-//  * @todo Documentation
-//  * @note UNUSED Size: 000574
-//  */
-// void ExPPC_UnwindStack(ThrowContext*, MWExceptionInfo*, void*)
-// {
-// 	// UNUSED FUNCTION
-// }
-
-// /**
-//  * @todo Documentation
-//  * @note UNUSED Size: 000098
-//  */
-// void ExPPC_DeletePointerCond(ThrowContext*, const ex_deletepointercond*)
-// {
-// 	// UNUSED FUNCTION
-// }
-
-// // /**
-// //  * @todo Documentation
-// //  * @note UNUSED Size: 00005C
-// //  */
-// // void ExPPC_DeletePointer(ThrowContext *, const ex_deletepointer *)
-// // {
-// // 	// UNUSED FUNCTION
-// // }
-
-// // /**
-// //  * @todo Documentation
-// //  * @note UNUSED Size: 0000BC
-// //  */
-// // void ExPPC_DestroyMemberArray(ThrowContext *, const ex_destroymemberarray *)
-// // {
-// // 	// UNUSED FUNCTION
-// // }
-
-// // /**
-// //  * @todo Documentation
-// //  * @note UNUSED Size: 0000A4
-// //  */
-// // void ExPPC_DestroyMemberCond(ThrowContext *, const ex_destroymembercond *)
-// // {
-// // 	// UNUSED FUNCTION
-// // }
-
-// // /**
-// //  * @todo Documentation
-// //  * @note UNUSED Size: 000068
-// //  */
-// // void ExPPC_DestroyBase(ThrowContext *, const ex_destroymember *)
-// // {
-// // 	// UNUSED FUNCTION
-// // }
-
-// // /**
-// //  * @todo Documentation
-// //  * @note UNUSED Size: 000068
-// //  */
-// // void ExPPC_DestroyMember(ThrowContext *, const ex_destroymember *)
-// // {
-// // 	// UNUSED FUNCTION
-// // }
-
-// // /**
-// //  * @todo Documentation
-// //  * @note UNUSED Size: 000090
-// //  */
-// // void ExPPC_DestroyLocalArray(ThrowContext *, const ex_destroylocalarray *)
-// // {
-// // 	// UNUSED FUNCTION
-// // }
-
-// // /**
-// //  * @todo Documentation
-// //  * @note UNUSED Size: 000060
-// //  */
-// // void ExPPC_DestroyLocalPointer(ThrowContext *, const ex_destroylocalpointer *)
-// // {
-// // 	// UNUSED FUNCTION
-// // }
-
-// // /**
-// //  * @todo Documentation
-// //  * @note UNUSED Size: 00007C
-// //  */
-// // void ExPPC_DestroyLocalCond(ThrowContext *, const ex_destroylocalcond *)
-// // {
-// // 	// UNUSED FUNCTION
-// // }
-
-// // /**
-// //  * @todo Documentation
-// //  * @note UNUSED Size: 00003C
-// //  */
-// // void ExPPC_DestroyLocal(ThrowContext *, const ex_destroylocal *)
-// // {
-// // 	// UNUSED FUNCTION
-// // }
-
-// // /**
-// //  * @todo Documentation
-// //  * @note UNUSED Size: 0001F0
-// //  */
-// // void ExPPC_PopStackFrame(ThrowContext *, MWExceptionInfo *)
-// // {
-// // 	// UNUSED FUNCTION
-// // }
-
-// // /**
-// //  * @todo Documentation
-// //  * @note UNUSED Size: 00021C
-// //  */
-// // void ExPPC_NextAction(ActionIterator *)
-// // {
-// // 	// UNUSED FUNCTION
-// // }
-
-// // /**
-// //  * @todo Documentation
-// //  * @note UNUSED Size: 000020
-// //  */
-// // void ExPPC_CurrentAction(const ActionIterator *)
-// // {
-// // 	// UNUSED FUNCTION
-// // }
-
-// /**
-//  * @todo Documentation
-//  * @note UNUSED Size: 00002C
-//  */
-// void ExPPC_PopR31(char*, MWExceptionInfo*)
-// {
-// 	// UNUSED FUNCTION
-// }
-
-// /**
-//  * @todo Documentation
-//  * @note UNUSED Size: 0001D4
-//  */
-// void ExPPC_FindExceptionRecord(char*, MWExceptionInfo*)
-// {
-// 	// UNUSED FUNCTION
-// }
-
-// /**
-//  * @todo Documentation
-//  * @note UNUSED Size: 000098
-//  */
-// void ExPPC_FindExceptionFragment(char *, FragmentInfo *)
+/**
+ * @todo Documentation
+ * @note UNUSED Size: 00000C
+ */
+// void std::bad_exception::what() const
 // {
 // 	// UNUSED FUNCTION
 // }
@@ -339,11 +123,227 @@ void __unregister_fragment(int fragmentID)
 	}
 }
 
-// /**
-//  * @todo Documentation
-//  * @note UNUSED Size: 00000C
-//  */
-// void std::bad_exception::what() const
+/**
+ * @todo Documentation
+ * @note UNUSED Size: 000098
+ */
+void ExPPC_FindExceptionFragment(char*, FragmentInfo*)
+{
+	// UNUSED FUNCTION
+}
+
+/**
+ * @todo Documentation
+ * @note UNUSED Size: 0001D4
+ */
+void ExPPC_FindExceptionRecord(char*, MWExceptionInfo*)
+{
+	// UNUSED FUNCTION
+}
+
+/**
+ * @todo Documentation
+ * @note UNUSED Size: 00002C
+ */
+void ExPPC_PopR31(char*, MWExceptionInfo*)
+{
+	// UNUSED FUNCTION
+}
+
+/**
+ * @todo Documentation
+ * @note UNUSED Size: 000020
+ */
+void ExPPC_CurrentAction(const ActionIterator*)
+{
+	// UNUSED FUNCTION
+}
+
+/**
+ * @todo Documentation
+ * @note UNUSED Size: 00021C
+ */
+void ExPPC_NextAction(ActionIterator*)
+{
+	// UNUSED FUNCTION
+}
+
+/**
+ * @todo Documentation
+ * @note UNUSED Size: 0001F0
+ */
+void ExPPC_PopStackFrame(ThrowContext*, MWExceptionInfo*)
+{
+	// UNUSED FUNCTION
+}
+
+/**
+ * @todo Documentation
+ * @note UNUSED Size: 00003C
+ */
+void ExPPC_DestroyLocal(ThrowContext*, const ex_destroylocal*)
+{
+	// UNUSED FUNCTION
+}
+
+/**
+ * @todo Documentation
+ * @note UNUSED Size: 00007C
+ */
+void ExPPC_DestroyLocalCond(ThrowContext*, const ex_destroylocalcond*)
+{
+	// UNUSED FUNCTION
+}
+
+/**
+ * @todo Documentation
+ * @note UNUSED Size: 000060
+ */
+void ExPPC_DestroyLocalPointer(ThrowContext*, const ex_destroylocalpointer*)
+{
+	// UNUSED FUNCTION
+}
+
+/**
+ * @todo Documentation
+ * @note UNUSED Size: 000090
+ */
+void ExPPC_DestroyLocalArray(ThrowContext*, const ex_destroylocalarray*)
+{
+	// UNUSED FUNCTION
+}
+
+/**
+ * @todo Documentation
+ * @note UNUSED Size: 000068
+ */
+void ExPPC_DestroyMember(ThrowContext*, const ex_destroymember*)
+{
+	// UNUSED FUNCTION
+}
+
+/**
+ * @todo Documentation
+ * @note UNUSED Size: 000068
+ */
+void ExPPC_DestroyBase(ThrowContext*, const ex_destroymember*)
+{
+	// UNUSED FUNCTION
+}
+
+/**
+ * @todo Documentation
+ * @note UNUSED Size: 0000A4
+ */
+void ExPPC_DestroyMemberCond(ThrowContext*, const ex_destroymembercond*)
+{
+	// UNUSED FUNCTION
+}
+
+/**
+ * @todo Documentation
+ * @note UNUSED Size: 0000BC
+ */
+void ExPPC_DestroyMemberArray(ThrowContext*, const ex_destroymemberarray*)
+{
+	// UNUSED FUNCTION
+}
+
+/**
+ * @todo Documentation
+ * @note UNUSED Size: 00005C
+ */
+void ExPPC_DeletePointer(ThrowContext*, const ex_deletepointer*)
+{
+	// UNUSED FUNCTION
+}
+
+/**
+ * @todo Documentation
+ * @note UNUSED Size: 000098
+ */
+void ExPPC_DeletePointerCond(ThrowContext*, const ex_deletepointercond*)
+{
+	// UNUSED FUNCTION
+}
+
+/**
+ * @todo Documentation
+ * @note UNUSED Size: 000574
+ */
+void ExPPC_UnwindStack(ThrowContext*, MWExceptionInfo*, void*)
+{
+	// UNUSED FUNCTION
+}
+
+/**
+ * @todo Documentation
+ * @note UNUSED Size: 000098
+ */
+void ExPPC_IsInSpecification(char*, ex_specification*)
+{
+	// UNUSED FUNCTION
+}
+
+/**
+ * @todo Documentation
+ * @note UNUSED Size: 000084
+ */
+// std::bad_exception::~bad_exception()
 // {
 // 	// UNUSED FUNCTION
 // }
+
+/**
+ * @todo Documentation
+ * @note UNUSED Size: 0001C8
+ */
+void __unexpected(void)
+{
+	// UNUSED FUNCTION
+}
+
+/**
+ * @todo Documentation
+ * @note UNUSED Size: 000090
+ */
+void ExPPC_HandleUnexpected(ThrowContext*, MWExceptionInfo*, ex_specification*)
+{
+	// UNUSED FUNCTION
+}
+
+/**
+ * @todo Documentation
+ * @note UNUSED Size: 000450
+ */
+void ExPPC_ThrowHandler(ThrowContext*)
+{
+	// UNUSED FUNCTION
+}
+
+/**
+ * @todo Documentation
+ * @note UNUSED Size: 000044
+ */
+void __end__catch(void)
+{
+	// UNUSED FUNCTION
+}
+
+/**
+ * @todo Documentation
+ * @note UNUSED Size: 0000B4
+ */
+void __throw(void)
+{
+	// UNUSED FUNCTION
+}
+
+/**
+ * @todo Documentation
+ * @note UNUSED Size: 000074
+ */
+void ExPPC_LongJump(ThrowContext*, void*, void*)
+{
+	// UNUSED FUNCTION
+}
