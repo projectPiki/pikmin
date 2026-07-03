@@ -11,27 +11,36 @@
 #include "jaudio/verysimple.h"
 #include <stddef.h>
 
+typedef struct SEvent_UnkC SEvent_UnkC;
+typedef struct Portargs_ Portargs_;
+typedef struct SEvent_ SEvent_;
+typedef struct SCamera_ SCamera_;
+typedef struct ActionStatus ActionStatus;
+
 // rename better later
-typedef struct SEvent_UnkC {
+struct SEvent_UnkC {
 	u32 statusIdx;  // _00, unknown
 	u8 actionGroup; // _04
 	u32 timeStamp;  // _08, unknown
-} SEvent_UnkC;
+};
+
+struct Portargs_ {
+	SEvent_* mEvent; // _00
+};
 
 /**
  * @brief TODO
  *
  * @note Size: 0x1B4.
  */
-typedef struct SEvent_ {
+struct SEvent_ {
 	SVector_ position;             // _00
 	SEvent_UnkC statusEntries[16]; // _0C
 	u32 eventType;                 // _CC
 	seqp_* track;                  // _D0
 	CmdQueue cmdQueue;             // _D4
-	SEvent_* selfRef;              // _140
-	int portArgs;                  // _144
-	u8 _148[0x160 - 0x148];        // _148, unknown
+	Portargs_ portArgs;            // _140
+	Portcmd_ portCmd;              // _144
 	f32 volume;                    // _160
 	f32 pan;                       // _164
 #if defined(VERSION_GPIJ01_01) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_DPIJ01_PIKIDEMO)
@@ -41,17 +50,13 @@ typedef struct SEvent_ {
 #endif
 	int frameTimer;         // _170
 	OuterParam_ outerParam; // _174
-} SEvent_;
+};
 
 // fabricated name, need something for the CAMERA .comm entry
 // size 0x24.
-typedef struct SCamera_ {
+struct SCamera_ {
 	u8 pad[0x24]; // _00
-} SCamera_;
-
-typedef struct Portargs_ {
-	SEvent_* mEvent; // _00
-} Portargs_;
+};
 
 static int CURRENT_TIME;
 static int jac_debug_multi_entry;
@@ -59,7 +64,6 @@ static int jac_debug_multi_cancel;
 SEvent_ EVENT[16];
 SCamera_ CAMERA;
 
-typedef struct ActionStatus ActionStatus;
 static int EVENT_OFFSET[] = { 0, 1, 0xad, 0xbe, 0xcd, 0xd7, 0xdb, 0x105 };
 static struct ActionStatus {
 	u8 flags; // _00
@@ -173,9 +177,9 @@ void __SetVolandPan(Portargs_* arg)
  */
 void SendToStack(SEvent_* evt)
 {
-	evt->selfRef = evt;
-	Set_Portcmd(&evt->portArgs, (int)__SetVolandPan, (int)&evt->selfRef);
-	Add_PortcmdOnce((u32*)&evt->portArgs);
+	evt->portArgs.mEvent = evt;
+	Set_Portcmd(&evt->portCmd, __SetVolandPan, &evt->portArgs);
+	Add_PortcmdOnce(&evt->portCmd);
 }
 
 /**

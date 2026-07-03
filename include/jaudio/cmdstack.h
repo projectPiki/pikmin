@@ -5,15 +5,33 @@
 
 BEGIN_SCOPE_EXTERN_C
 
-typedef struct JPorthead_ {
-	u32 _00; // _00
-	u32 _04; // _04
-} JPorthead_;
+typedef struct JPorthead_ JPorthead_;
+typedef struct Portcmd_ Portcmd_;
+typedef struct Portargs_ Portargs_; // Defined in "pikiinter.c"
 
-void Add_PortcmdOnce(u32*);
+struct JPorthead_ {
+	Portcmd_* _00; // _00
+	Portcmd_* _04; // _04
+};
+
+typedef void (*Portfunc)(Portargs_*); // Function signature of `__SetVolandPan`
+
+/**
+ * @note FABRICATED
+ * Name is based on functions that use it + `JPorthead_` and `Portargs_`.
+ */
+struct Portcmd_ {
+	u8 _00[0x0C - 0x00]; // _00
+	JPorthead_* _0C;     // _0C
+	Portcmd_* _10;       // _10
+	Portfunc func;       // _14
+	Portargs_* args;     // _18
+};
+
+void Add_PortcmdOnce(Portcmd_*);
 void Add_PortcmdStay(void); // UNUSED but we know it's extern "C"
-int Set_Portcmd(int*, int, int);
-BOOL Add_Portcmd(JPorthead_*, u32*);
+BOOL Set_Portcmd(Portcmd_*, Portfunc, Portargs_*);
+BOOL Add_Portcmd(JPorthead_*, Portcmd_*);
 void Cancel_Portcmd(void);     // UNUSED but we know it's extern "C"
 void Cancel_PortcmdStay(void); // UNUSED but we know it's extern "C"
 int Jac_Portcmd_Proc_Once(JPorthead_*);

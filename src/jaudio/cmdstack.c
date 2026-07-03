@@ -8,9 +8,9 @@ JPorthead_ cmd_stay;
 /**
  * @TODO: Documentation
  */
-void Add_PortcmdOnce(u32* a1)
+void Add_PortcmdOnce(Portcmd_* cmd)
 {
-	Add_Portcmd(&cmd_once, a1);
+	Add_Portcmd(&cmd_once, cmd);
 }
 
 /**
@@ -25,36 +25,35 @@ void Add_PortcmdStay(void)
 /**
  * @TODO: Documentation
  */
-int Set_Portcmd(int* a1, int a2, int a3)
+BOOL Set_Portcmd(Portcmd_* cmd, Portfunc func, Portargs_* args)
 {
-	// Is this a struct? I have no idea
-	a1[5] = a2;
-	a1[6] = a3;
-	a1[3] = 0;
-	return 1;
+	cmd->func = func;
+	cmd->args = args;
+	cmd->_0C  = NULL;
+	return TRUE;
 }
 
 /**
  * @TODO: Documentation
  */
-BOOL Add_Portcmd(JPorthead_* port, u32* a2)
+BOOL Add_Portcmd(JPorthead_* port, Portcmd_* cmd)
 {
 	BOOL interrupt = OSDisableInterrupts();
 
-	if (a2[3]) {
+	if (cmd->_0C) {
 		OSRestoreInterrupts(interrupt);
 		return FALSE;
 	}
 
 	if (port->_04) {
-		((int*)port->_04)[4] = (int)a2;
+		port->_04->_10 = cmd;
 	} else {
-		port->_00 = (int)a2;
+		port->_00 = cmd;
 	}
 
-	port->_04 = (int)a2;
-	a2[4]     = 0;
-	a2[3]     = (int)port;
+	port->_04 = cmd;
+	cmd->_10  = NULL;
+	cmd->_0C  = port;
 	OSRestoreInterrupts(interrupt);
 	return TRUE;
 }
@@ -62,17 +61,17 @@ BOOL Add_Portcmd(JPorthead_* port, u32* a2)
 /**
  * @TODO: Documentation
  */
-static int Get_Portcmd(JPorthead_* port)
+static Portcmd_* Get_Portcmd(JPorthead_* port)
 {
-	u32 a = port->_00;
+	Portcmd_* a = port->_00;
 	if (a) {
-		port->_00 = ((int*)port->_00)[4];
-		if (port->_00 == 0) {
-			port->_04 = 0;
+		port->_00 = port->_00->_10;
+		if (port->_00 == NULL) {
+			port->_04 = NULL;
 		}
-		((int*)a)[3] = 0;
+		a->_0C = NULL;
 	} else {
-		a = 0;
+		a = NULL;
 	}
 
 	return a;
@@ -101,14 +100,13 @@ void Cancel_PortcmdStay(void)
  */
 int Jac_Portcmd_Proc_Once(JPorthead_* port)
 {
-	u32 p;
+	Portcmd_* p;
 	while (1) {
 		p = Get_Portcmd(port);
 		if (!p) {
 			break;
 		}
-		// Ckit ahh moment unless someone figures out what type Get_Portcmd actually returns
-		((int (*)(int)) * (int*)(p + 0x14))(((int*)p)[6]);
+		p->func(p->args);
 	}
 	return 0;
 }
@@ -118,14 +116,14 @@ int Jac_Portcmd_Proc_Once(JPorthead_* port)
  */
 int Jac_Portcmd_Proc_Stay(JPorthead_* port)
 {
-	u32 p = port->_00;
+	Portcmd_* p = port->_00;
 	while (1) {
 		if (!p) {
 			break;
 		}
-		((int (*)(int)) * (int*)(p + 0x14))(((int*)p)[6]);
+		p->func(p->args);
 
-		p = ((u32*)p)[4];
+		p = p->_10;
 	}
 	return 0;
 }
@@ -145,8 +143,8 @@ static s32 Portcmd_Main(void* a)
  */
 void Jac_Porthead_Init(JPorthead_* port)
 {
-	port->_00 = 0;
-	port->_04 = 0;
+	port->_00 = NULL;
+	port->_04 = NULL;
 }
 
 /**
