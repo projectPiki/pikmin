@@ -18,6 +18,9 @@
 #define AGE_CMD_NEW_NODE          (101)
 #define AGE_CMD_NEW_EDITOR        (102)
 #define AGE_CMD_NEW_PROP_WINDOW   (104)
+// EndNode() at 0x1004c0c0 does `push 0xc8` (=200) before writeInt; value taken from
+// the original binary. (It coincides with AGE_CMD_DONE.)
+#define AGE_CMD_END_NODE          (200)
 #define AGE_CMD_NEW_VIEWER        (107)
 #define AGE_CMD_NEW_LABEL         (108)
 #define AGE_CMD_START_SECTION     (300)
@@ -55,7 +58,7 @@ enum PROP_TYPE {
 
 class Colour;
 
-class AgeServer : public AtxStream {
+class SYSCORE_API AgeServer : public AtxStream {
 public:
 	AgeServer() { }
 

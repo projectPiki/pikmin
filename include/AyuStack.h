@@ -44,7 +44,7 @@ public:
 /**
  * @brief TODO
  */
-class AyuStack {
+class SYSCORE_API AyuStack {
 public:
 	AyuStack() { mIsActive = false; }
 
@@ -86,7 +86,7 @@ public:
  *
  * @note Size: 0x28.
  */
-class AyuHeap : public AyuStack {
+class SYSCORE_API AyuHeap : public AyuStack {
 public:
 	AyuHeap() { }
 

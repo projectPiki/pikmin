@@ -152,9 +152,9 @@ char* String::dup(immut char* str)
 bool String::contains(immut char* str, immut char* substr)
 {
 #if defined(BUGFIX)
-	const char* submatchStart = str;
+	immut char* submatchStart = str; // match `str`'s type so VC6 allows `str = ++submatchStart`
 #endif
-	const char* substrBackup = substr;
+	immut char* substrBackup = substr;
 	while (*str && *substr) {
 		if (*str++ == *substr++) {
 			if (*substr == '\0') {

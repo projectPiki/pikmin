@@ -38,7 +38,7 @@ enum KeyboardButtons {
 /**
  * @brief TODO
  */
-class Controller : public Node {
+class SYSCORE_API Controller : public Node {
 public:
 	// I really wanted to make `int playerNum = 1` since it (almost) always is, but guess what?  SOMEHOW, THAT BREAKS MATCHING!  Yeah,
 	// a DEFAULT ARGUMENT tips the inlining score enough to stop the `Node` base class constructor from inlining.  This compiler, man.

@@ -86,8 +86,13 @@ public:
 	/**
 	 * @brief Constructs an empty (named) parameters list (DLL only).
 	 * @param name Name for this collection of parameters.
+	 *
+	 * @note The default argument lets `Parameters` subclasses whose constructors do
+	 * not (yet) forward a name still default-construct the base under VC6, which -
+	 * unlike MWCC - requires an accessible default. Reconstructing each subclass's
+	 * real name string is a matching-grind TODO.
 	 */
-	Parameters(immut char* name)
+	Parameters(immut char* name = nullptr)
 	    : mFirstParm(nullptr)
 	{
 		mName = name;

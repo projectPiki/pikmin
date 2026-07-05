@@ -52,7 +52,7 @@ extern GColor GColors[];
  *
  * @note Size: 0x3B8.
  */
-class Graphics {
+class SYSCORE_API Graphics {
 public:
 	Graphics();
 

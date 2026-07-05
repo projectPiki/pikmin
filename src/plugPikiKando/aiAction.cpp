@@ -35,7 +35,7 @@ void Action::procMsg(Msg* msg)
 		return;
 	}
 
-	Receiver::procMsg(mPiki, msg);
+	Receiver<Piki>::procMsg(mPiki, msg);
 
 	if (mCurrActionIdx != PikiAction::NOACTION && mCurrActionIdx < mChildCount) {
 		if (mChildActions[mCurrActionIdx].mAction) {

@@ -14,7 +14,7 @@ class Plane;
  * @note Size: 0x40.
  * @note Is sometimes casted to Vector3f*, (Vector3f&), be weary of this.
  */
-class Matrix4f {
+class SYSCORE_API Matrix4f {
 public:
 	Matrix4f() { }
 	Matrix4f(immut Mtx44); // stripped, only in matMath.cpp

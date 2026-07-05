@@ -163,7 +163,7 @@ enum {
  *
  * @note Size: 0x244.
  */
-class StdSystem {
+class SYSCORE_API StdSystem {
 public:
 	StdSystem();
 
@@ -370,7 +370,7 @@ struct SymbolInfo {
  *
  * @note Size: 0x334.
  */
-class System : public StdSystem {
+class SYSCORE_API System : public StdSystem {
 public:
 	System();
 
@@ -459,7 +459,7 @@ public:
 	vu32 mTexComplete;                               // _330
 };
 
-extern System* gsys;
+extern SYSCORE_API System* gsys;
 
 // SYSTEM STREAMS
 
@@ -548,7 +548,7 @@ struct AramStream : public RandomAccessStream {
 	int mPending;     // _10
 };
 
-extern int glnWidth;
-extern int glnHeight;
+extern SYSCORE_API int glnWidth;
+extern SYSCORE_API int glnHeight;
 
 #endif

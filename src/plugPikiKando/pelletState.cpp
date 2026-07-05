@@ -68,7 +68,9 @@ void PelletUfoLoadState::exec(Pellet* pelt)
 
 	Vector3f pos(pelt->mSRT.t);
 	pelt->mSRT.t.y = mapMgr->getMinY(pos.x, pos.z, true);
-	PRINT("setting ufo parts(%s) : y=%f\n", pelt->mConfig->mName, pelt->mSRT.t.y);
+	// PelletConfig multiply-inherits mName (Parameters and CoreNode); qualify to
+	// disambiguate for VC6's stricter lookup. (DOL discards this in non-DEVELOP.)
+	PRINT("setting ufo parts(%s) : y=%f\n", pelt->mConfig->CoreNode::mName, pelt->mSRT.t.y);
 }
 
 /**

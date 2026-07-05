@@ -4,6 +4,12 @@
 #include "DebugLog.h"
 #include "system.h"
 
+#ifdef WIN32
+// TODO: sysCurrWnd is the WIN32 async-socket notification window handle. Its definition has
+// not been recovered yet; declared extern so atx.cpp compiles (a definition is needed to link).
+extern HWND sysCurrWnd;
+#endif
+
 /**
  * @todo: Documentation
  * @note UNUSED Size: 000098

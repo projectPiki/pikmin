@@ -162,7 +162,8 @@ struct MovSampleSetupSection : public Node {
 		};
 		int size  = 0xe00000;
 		u8* store = new (0x20) u8[size];
-		Jac_StreamMovieInit(movieNames[gameflow.mCurrIntroMovieID], store, size);
+		// const_cast: VC6 rejects the const char* -> char* narrowing that MWCC allows.
+		Jac_StreamMovieInit((char*)movieNames[gameflow.mCurrIntroMovieID], store, size);
 		ImgW      = 640;
 		ImgH      = 480;
 		int size2 = 0x70800;
@@ -308,11 +309,13 @@ struct MovSampleSetupSection : public Node {
 	// not in the DLL, but needed for stack ordering
 	void setTevColors()
 	{
+#if PIKI_USE_DGX
 		GXSetTevColorS10(GX_TEVREG0, (GXColorS10) { -111, 0, -138, 68 });
 		GXSetTevKColor(GX_KCOLOR0, (GXColor) { 102, 0, 255, 50 });
 		GXSetTevKColor(GX_KCOLOR1, (GXColor) { 148, 0, 148, 148 });
 		GXSetTevKColor(GX_KCOLOR2, (GXColor) { 203, 0, 5, 207 });
 		GXSetTevKColor(GX_KCOLOR3, (GXColor) { 0, 255, 0, 0 });
+#endif
 	}
 
 	// _00     = VTBL

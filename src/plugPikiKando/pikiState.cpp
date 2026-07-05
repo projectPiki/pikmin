@@ -202,7 +202,7 @@ void PikiStateMachine::transit(Piki* piki, int stateID)
 		// just need something to spawn this properly
 		(getCurrID(piki) == PIKISTATE_Grow);
 	}
-	StateMachine::transit(piki, stateID);
+	StateMachine<Piki>::transit(piki, stateID);
 }
 
 /**
@@ -210,7 +210,7 @@ void PikiStateMachine::transit(Piki* piki, int stateID)
  */
 void PikiState::transit(Piki* piki, int stateID)
 {
-	AState::transit(piki, stateID);
+	AState<Piki>::transit(piki, stateID);
 }
 
 /**

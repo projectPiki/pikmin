@@ -2,7 +2,7 @@
 #define _VECTOR3F_H
 
 #include "Stream.h"
-#include "math.h"
+#include <math.h>
 #include "sysMath.h"
 #include "types.h"
 
@@ -16,7 +16,7 @@ class Quat;
  *
  * @note Size: 0xC.
  */
-class Vector3f {
+class SYSCORE_API Vector3f {
 public:
 	Vector3f() { x = y = z = 0.0f; }
 
@@ -246,7 +246,7 @@ public:
  *
  * @note Size: 0x8.
  */
-class Vector2f {
+class SYSCORE_API Vector2f {
 public:
 	Vector2f() { }
 	Vector2f(const f32& _x, const f32& _y)
@@ -281,7 +281,7 @@ public:
  *
  * @note Size: 0x8.
  */
-class Vector2i {
+class SYSCORE_API Vector2i {
 public:
 	void read(Stream& stream)
 	{
@@ -309,7 +309,7 @@ public:
  *
  * @note Size: 0x10.
  */
-class Quat {
+class SYSCORE_API Quat {
 public:
 	Quat() { }
 

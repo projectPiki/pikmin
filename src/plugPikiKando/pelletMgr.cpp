@@ -1120,13 +1120,12 @@ static u32 bounceSounds[] = {
 void Pellet::update()
 {
 #if defined(VERSION_PIKIDEMO)
-#define ASSERT_POSITION_NOTNAN(...)  \
+#define ASSERT_POSITION_NOTNAN       \
 	/* Yeah, just the X position. */ \
-	if (isNan(mSRT.t.x)) {           \
-		ERROR(__VA_ARGS__);          \
-	}
+	if (isNan(mSRT.t.x))             \
+	ERROR
 #else
-#define ASSERT_POSITION_NOTNAN(...)
+#define ASSERT_POSITION_NOTNAN
 #endif
 
 	mLastPosition   = mSRT.t;

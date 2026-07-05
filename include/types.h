@@ -42,12 +42,42 @@ typedef volatile f32 vf32;
 typedef volatile f64 vf64;
 typedef volatile f128 vf128;
 
+// For Windows-specific types
+#ifdef WIN32
+#include <windows.h>
+#include "win32Compat.h" // VC6 math constants + std:: float helpers (see file)
+#else
+typedef u32 HWND;
 // A boolean value typedef inspired by the Win32 API.
 typedef int BOOL;
 #undef TRUE
 #define TRUE (1)
 #undef FALSE
 #define FALSE (0)
+#endif
+
+// Cross-DLL linkage for sysCore's exported classes / functions / data.
+//
+// The shipped Windows build is split across DLLs: the plugins (plugPiki, ...) and
+// sysBootup.exe import sysCore's symbols through its import library.  On MSVC an
+// exported declaration must therefore carry __declspec(dllexport) while compiling
+// sysCore itself (SYSCORE_EXPORTS, defined only for the sysCore module) and
+// __declspec(dllimport) when seen by an importer.  dllimport is what makes an
+// importer emit the IAT-indirect `call [__imp_...]` / `mov r,[__imp_...]` that the
+// original plugPiki.dll uses for every cross-DLL reference, so decorating sysCore's
+// hot exported types is what lets those ~12k call sites match.
+//
+// It expands to nothing on the MWCC/PPC (DOL) build -- a single relocatable image
+// with no dllimport/dllexport -- so the GameCube codegen is byte-identical.
+#if defined(_MSC_VER)
+#if defined(SYSCORE_EXPORTS)
+#define SYSCORE_API __declspec(dllexport)
+#else
+#define SYSCORE_API __declspec(dllimport)
+#endif
+#else
+#define SYSCORE_API
+#endif
 
 // Here we check if the decomp build system is configured for a non-matching build, and define `BUILD_MATCHING` if it is not.
 // Please do not use the `DTK_CONFIG_NONMATCHING` macro for any other purpose, and instead check if the the `BUILD_MATCHING`
@@ -160,6 +190,19 @@ typedef int BOOL;
 #define TERNARY_BUILD_MATCHING(matching, nonmatching) nonmatching
 #endif
 
+// Some matching aids emit MWCC/PPC-specific code -- inline PPC asm, or stack-padding
+// locals tuned to MWCC's frame layout -- that only makes sense against the PPC target
+// and does not even compile on MSVC/x86 (no PPC asm, no GNU compound literals).  This
+// selects the PPC construct only for a matching *PPC* build and is a no-op elsewhere
+// (any non-matching build, or any MSVC build -- the x86 stack layout is matched
+// separately, as with ATTRIBUTE_ALIGN below).  On the PPC path it is byte-identical to
+// the old TERNARY_BUILD_MATCHING(ppc, (void)0) spelling.
+#if defined(BUILD_MATCHING) && !defined(_MSC_VER)
+#define MATCHING_PPC_CODEGEN(ppc) ppc
+#else
+#define MATCHING_PPC_CODEGEN(ppc) (void)0
+#endif
+
 // We yearn for modernity.
 #if defined(__cplusplus) && __cplusplus < 201103L
 #define nullptr 0
@@ -178,12 +221,20 @@ typedef int BOOL;
 // original codebase is represented as closely as possible, warts and all, but portability (MWCC 1.2.5 was the *last* version of MWCC
 // to allow this non-standard behavior) is also desireable.  Luckily, almost all const-incorrectness in the codebase is merely a result
 // of apathy, so this cv-qualifier macro exists to document and fix the places that could have been const-correct but weren't.
-#define immut TERNARY_BUILD_MATCHING(, const)
+#if defined(BUILD_MATCHING)
+#define immut
+#else
+#define immut const
+#endif
 
 // Nakata had a bad habit of writing mutable references to lifetime-extended rvalues when a value type would have sufficed, so this macro
 // is named for him.  MWCC 1.2.5 sometimes optimizes `Type foo = Type(...)` *really* poorly compared to `Type foo(...)`, so unless you are
 // using a different compiler, this const-correctness fix might generate worse code.
-#define NRef TERNARY_BUILD_MATCHING(&, )
+#if defined(BUILD_MATCHING)
+#define NRef &
+#else
+#define NRef
+#endif
 
 // In early revisions of Pikmin 1, Ogawa was confused on which enum he was supposed to use for `SeSystem::playSysSe`/`stopSysSe`.
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
@@ -202,10 +253,17 @@ typedef int BOOL;
 #define ALIGN_PREV(X, N)     ((X) & ~((N) - 1))             // Align X to the previous N bytes (N must be power of two)
 #define ALIGN_NEXT(X, N)     ALIGN_PREV(((X) + (N) - 1), N) // Align X to the next N bytes (N must be power of two)
 #define IS_NOT_ALIGNED(X, N) (((X) & ((N) - 1)) != 0)       // True if X is not aligned to N bytes, else false
+#if defined(_MSC_VER)
+// VC6 has no trailing alignment attribute (its __declspec(align) must precede the declarator,
+// but ATTRIBUTE_ALIGN is used in trailing position, e.g. `u8 x[N] ATTRIBUTE_ALIGN(32)`). Drop
+// it for now; reproducing the original data alignment is a matching-grind TODO.
+#define ATTRIBUTE_ALIGN(num)
+#else
 #define ATTRIBUTE_ALIGN(num) __attribute__((aligned(num)))  // Align object to num bytes (num should be power of two)
+#endif
 
 // Makes the compiler averse to using that register for the entire function.
-#define BUMP_REGISTER(reg) TERNARY_BUILD_MATCHING(MACRO_ARG({ asm { mr reg, reg } }), (void)0)
+#define BUMP_REGISTER(reg) MATCHING_PPC_CODEGEN(MACRO_ARG({ asm { mr reg, reg } }))
 
 // clang-format off
 #define REPEAT1(x)  x
@@ -229,13 +287,13 @@ typedef int BOOL;
 #define REPEAT(x, n) REPEAT##n(x)
 
 // Somehow this overwhelms the automatic inlining score and stops unwanted function inlining
-#define FORCE_DONT_INLINE TERNARY_BUILD_MATCHING(REPEAT16(REPEAT10((void*)0)), (void)0)
+#define FORCE_DONT_INLINE MATCHING_PPC_CODEGEN(REPEAT16(REPEAT10((void*)0)))
 
 // Add an unused local variable to pad the stack by some number of words
-#define STACK_PAD_VAR(n) TERNARY_BUILD_MATCHING(do { int pad[n]; } while (0), (void)0)
+#define STACK_PAD_VAR(n) MATCHING_PPC_CODEGEN(do { int pad[n]; } while (0))
 
 // Create a temporary struct to pad the stack by some number of words
-#define STACK_PAD_STRUCT(n) TERNARY_BUILD_MATCHING(if (0)(struct { int pad[n]; }) {}, (void)0)
+#define STACK_PAD_STRUCT(n) MATCHING_PPC_CODEGEN(if (0)(struct { int pad[n]; }) {})
 
 inline void padStack(void)
 {
@@ -243,10 +301,10 @@ inline void padStack(void)
 }
 
 // Add an unused variable in an inline function to pad the stack by some number of words
-#define STACK_PAD_INLINE(n) TERNARY_BUILD_MATCHING(REPEAT(padStack(), n), (void)0)
+#define STACK_PAD_INLINE(n) MATCHING_PPC_CODEGEN(REPEAT(padStack(), n))
 
 // Uses a ternary to pad the stack by some number of words
-#define STACK_PAD_TERNARY(expr, n) TERNARY_BUILD_MATCHING(REPEAT((expr) ? "fake" : "fake", n), (void)0)
+#define STACK_PAD_TERNARY(expr, n) MATCHING_PPC_CODEGEN(REPEAT((expr) ? "fake" : "fake", n))
 
 #ifdef __MWERKS__
 #define AT_ADDRESS(addr) : (addr)

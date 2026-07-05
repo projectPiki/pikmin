@@ -4,6 +4,10 @@
 #include "Stream.h"
 #include "types.h"
 
+#ifdef WIN32
+#include "Age.h" // complete AgeServer for the WIN32-only inline genAge() body
+#endif
+
 #define COLOUR_WHITE       Colour(255, 255, 255, 255)
 #define COLOUR_BLACK       Colour(0, 0, 0, 255)
 #define COLOUR_TRANSPARENT Colour(0, 0, 0, 0)
@@ -15,7 +19,7 @@
 /**
  * @brief TODO
  */
-class Colour {
+class SYSCORE_API Colour {
 public:
 	Colour() { }
 

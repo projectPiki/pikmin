@@ -80,15 +80,15 @@ struct DVDStream : public RandomAccessStream {
 System sys;
 
 static bool useSymbols = false;
-System* gsys           = nullptr;
-Stream* sysCon;
+SYSCORE_API System* gsys = nullptr;
+SYSCORE_API Stream* sysCon;
 Stream* errCon;
 static OSMessage dvdMesgBuffer;
 static OSMessage loadMesgBuffer;
 static OSMessage sysMesgBuffer;
 
-int glnWidth  = 640;
-int glnHeight = 480;
+SYSCORE_API int glnWidth = 640;
+SYSCORE_API int glnHeight = 480;
 
 static OSMessageQueue dvdMesgQueue;
 static OSMessageQueue loadMesgQueue;

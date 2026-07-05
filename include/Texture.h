@@ -170,7 +170,7 @@ public:
  *
  * @note Size: 0x3C.
  */
-class Texture : public GfxObject {
+class SYSCORE_API Texture : public GfxObject {
 public:
 	/**
 	 * @brief TODO

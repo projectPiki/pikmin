@@ -34,6 +34,12 @@ struct WorldMapTitleObj;
  *
  * @note Use mapNoGame2Scr to convert to WorldMapScreenID
  */
+// <windows.h> (pulled in on WIN32) defines WM_NULL as a window-message id, which
+// collides with this enumerator; drop the macro so the enum name wins. Self-guarded
+// by #ifdef, so non-Windows builds are untouched.
+#ifdef WM_NULL
+#undef WM_NULL
+#endif
 enum WorldMapName {
 	WM_NULL     = -1,
 	WM_START    = 0,

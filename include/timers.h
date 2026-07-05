@@ -39,7 +39,7 @@ public:
 /**
  * @note Size: 0xC.
  */
-class Timers {
+class SYSCORE_API Timers {
 public:
 	Timers()
 	{

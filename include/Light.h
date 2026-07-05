@@ -112,7 +112,7 @@ public:
 /**
  * @brief TODO
  */
-class LFlareGroup : public CoreNode {
+class SYSCORE_API LFlareGroup : public CoreNode {
 public:
 	LFlareGroup()
 	    : CoreNode("lfgroup")
@@ -160,7 +160,7 @@ public:
  *
  * @note Size: 0x2D4.
  */
-class Light : public CoreNode {
+class SYSCORE_API Light : public CoreNode {
 public:
 	Light();
 
@@ -309,7 +309,7 @@ struct LightPool : public Node {
 /**
  * @brief TODO
  */
-class LightDataInfo {
+class SYSCORE_API LightDataInfo {
 public:
 	LightDataInfo() { mLight.mDistancedRange = 1000.0f; }
 

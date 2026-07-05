@@ -152,7 +152,9 @@ bool zen::ogDrawScrMenu::draw(Graphics& gfx)
 	P2DPerspGraph graf(0, 0, 640, 480, 30.0f, 1.0f, 5000.0f);
 	graf.setPort();
 	mScreen->draw(0, 0, &graf);
-	return /* nothing, because they forgot to. */;
+#ifdef WIN32
+	return false;  // TODO: This shouldn't be required.  This function contains known UB by lacking a return value.
+#endif
 }
 
 /**

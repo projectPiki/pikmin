@@ -32,7 +32,7 @@ public:
 /**
  * @brief TODO
  */
-class RectArea {
+class SYSCORE_API RectArea {
 public:
 	RectArea(int x0, int y0, int x1, int y1)
 	{

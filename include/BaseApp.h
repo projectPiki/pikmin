@@ -16,7 +16,7 @@ class AgeServer;
  *
  * @note Size: 0x54.
  */
-class BaseApp : public Node {
+class SYSCORE_API BaseApp : public Node {
 public:
 	BaseApp();
 

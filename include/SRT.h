@@ -4,7 +4,7 @@
 #include "Vector.h"
 #include "types.h"
 
-class SRT {
+class SYSCORE_API SRT {
 public:
 	SRT() { }
 

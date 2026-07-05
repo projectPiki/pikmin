@@ -1,7 +1,11 @@
 #ifndef _NLIB_GRAPHICS_H
 #define _NLIB_GRAPHICS_H
 
-#include "Camera.h"
+// Angle-bracket so MSVC's include-stack search cannot resolve this to Pcam/Camera.h
+// (a different class sharing the basename) when Pcam/Camera.h is on the stack -- it
+// must be the global Camera.h, whose complete type the inline members below need.
+// MWCC does not stack-search, so its resolution is unchanged.
+#include <Camera.h>
 #include "nlib/Geometry.h"
 #include "types.h"
 

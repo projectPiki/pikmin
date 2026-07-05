@@ -97,8 +97,13 @@ class AtxRouter {
 public:
 	virtual bool openRoute(AtxStream*, int) = 0; // _00
 	virtual void closeRoute(AtxStream*)     = 0; // _04
+#ifdef WIN32
+	virtual void lock();   // _08 - defined out-of-line in atx.cpp for the DLL build
+	virtual void unlock(); // _0C - defined out-of-line in atx.cpp for the DLL build
+#else
 	virtual void lock() { }                      // _08
 	virtual void unlock() { }                    // _0C
+#endif
 	virtual void closeAll() { }                  // _10
 	virtual void reset() = 0;                    // _14
 	virtual bool isConnected() { return false; } // _18
@@ -112,7 +117,7 @@ public:
  *
  * @note Size: 0x10.
  */
-class AtxStream : public Stream {
+class SYSCORE_API AtxStream : public Stream {
 public:
 	AtxStream() { init(); }
 
@@ -136,7 +141,7 @@ public:
  * @brief ATX command stream for handling incoming commands.
  * @details Used by PlugPikiApp to process commands from a connected ATX server.
  */
-class AtxCommandStream : public AtxStream {
+class SYSCORE_API AtxCommandStream : public AtxStream {
 public:
 	AtxCommandStream(BaseApp* app)
 	    : mParentApp(app)
@@ -153,7 +158,7 @@ public:
 /**
  * @brief Wrapper for handling file operations over the ATX protocol.
  */
-class AtxFileStream : public RandomAccessStream {
+class SYSCORE_API AtxFileStream : public RandomAccessStream {
 public:
 	virtual void read(void*, int);        // _3C
 	virtual void write(immut void*, int); // _40

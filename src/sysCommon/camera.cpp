@@ -308,13 +308,13 @@ void CullFrustum::createInvVecs()
 /**
  * @todo: Documentation
  */
-void CullFrustum::update(f32 aspectRatio, f32 fov, f32 near, f32 far)
+void CullFrustum::update(f32 aspectRatio, f32 fov, f32 nearPlane, f32 farPlane)
 {
 	mAspectRatio   = aspectRatio;
 	mVerticalScale = 1.0f;
 	mFov           = fov;
-	mNear          = near;
-	mFar           = far;
+	mNear          = nearPlane; // `near`/`far` are windows.h macros; renamed for the VC6 build
+	mFar           = farPlane;
 
 	createVecs();
 	createInvVecs();

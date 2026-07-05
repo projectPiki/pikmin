@@ -1849,7 +1849,8 @@ void Piki::startMotion(immut PaniMotionInfo& motion1, immut PaniMotionInfo& moti
 
 	if (isDamaged() && motion1.mMotionIdx != PIKIANIM_Damage) {
 		PRINT("DAMAGE : something goes wrong !\n");
-		PRINT("%f\n", 0.1f / 0.0f); // HAHAHAHAHA
+		f32 zero = 0.0f, pointOne = 0.1f;
+		PRINT("%f\n", pointOne / zero); // HAHAHAHAHA
 	}
 
 	if ((state == PIKISTATE_Dying || state == PIKISTATE_Dead) && motion1.mMotionIdx != PIKIANIM_Dead) {
@@ -1913,8 +1914,6 @@ void Piki::startMotion(immut PaniMotionInfo& motion1, immut PaniMotionInfo& moti
 		return;
 	}
 	}
-
-	STACK_PAD_VAR(2); // idk what this is from
 }
 
 /**

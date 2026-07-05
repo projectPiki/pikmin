@@ -315,7 +315,7 @@ public:
  *
  * @note Size: 0x58 (0x64 in the DLL).
  */
-class CollTriInfo : public BaseCollTriInfo {
+class SYSCORE_API CollTriInfo : public BaseCollTriInfo {
 public:
 	CollTriInfo() { }
 
@@ -347,7 +347,7 @@ public:
  *
  * @note Size: 0x24.
  */
-class CollGroup {
+class SYSCORE_API CollGroup {
 public:
 	/// Default constructor - resets lists, counts and room index.
 	CollGroup()
