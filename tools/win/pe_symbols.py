@@ -37,6 +37,15 @@ import sys
 from dataclasses import dataclass
 
 
+IMAGE_SCN_CNT_CODE = 0x00000020
+IMAGE_SCN_MEM_EXECUTE = 0x20000000
+
+# Data directory indices we care about.
+DD_EXPORT = 0
+DD_IMPORT = 1
+DD_IAT = 12
+
+
 @dataclass
 class Section:
     name: str
@@ -44,6 +53,28 @@ class Section:
     vsize: int
     raw_ptr: int
     raw_size: int
+    characteristics: int = 0
+
+    @property
+    def is_code(self) -> bool:
+        return bool(self.characteristics & (IMAGE_SCN_CNT_CODE | IMAGE_SCN_MEM_EXECUTE))
+
+
+@dataclass
+class Import:
+    """One imported symbol (a slot in this module's Import Address Table)."""
+    dll: str          # exporting module, e.g. "sysCore.dll"
+    name: str         # decorated import name ("" if imported by ordinal)
+    ordinal: int      # ordinal if by-ordinal, else -1
+    hint: int         # name-table hint index
+    iat_rva: int      # rva of the IAT slot (where the resolved address is stored)
+    iat_va: int       # ImageBase + iat_rva; the operand in `call [iat_va]` / `mov r,[iat_va]`
+
+    @property
+    def imp_symbol(self) -> str:
+        """The `__imp_`-prefixed COFF symbol MSVC uses for a dllimport reference,
+        so a carved target's IAT relocation pairs with the base object's."""
+        return f"__imp_{self.name}" if self.name else f"__imp_ord{self.ordinal}"
 
 
 @dataclass
@@ -102,10 +133,13 @@ class PEFile:
         else:
             raise PEError(f"unknown optional-header magic 0x{magic:x}")
 
-        self.export_rva = self.export_size = 0
-        if num_dd >= 1:
-            self.export_rva = _u32(data, dd_off + 0)
-            self.export_size = _u32(data, dd_off + 4)
+        # Store every data directory as (rva, size) so DD_IMPORT/DD_IAT are reachable.
+        self.data_dirs: list[tuple[int, int]] = [
+            (_u32(data, dd_off + i * 8), _u32(data, dd_off + i * 8 + 4)) for i in range(num_dd)
+        ]
+        self.export_rva, self.export_size = (
+            self.data_dirs[DD_EXPORT] if num_dd > DD_EXPORT else (0, 0)
+        )
 
         sec_off = opt + size_opt
         self.sections: list[Section] = []
@@ -118,6 +152,7 @@ class PEFile:
                     vsize=_u32(data, s + 8),
                     raw_ptr=_u32(data, s + 20),
                     raw_size=_u32(data, s + 16),
+                    characteristics=_u32(data, s + 36),
                 )
             )
 
@@ -147,6 +182,70 @@ class PEFile:
                 return rva
             rva = target
         return rva
+
+    def section_for_rva(self, rva: int) -> Section | None:
+        for s in self.sections:
+            span = max(s.vsize, s.raw_size)
+            if s.vaddr <= rva < s.vaddr + span:
+                return s
+        return None
+
+    def is_code_rva(self, rva: int) -> bool:
+        s = self.section_for_rva(rva)
+        return bool(s and s.is_code)
+
+    def is_data_rva(self, rva: int) -> bool:
+        s = self.section_for_rva(rva)
+        return bool(s and not s.is_code)
+
+    def imports(self) -> list[Import]:
+        """Walk the import directory into a flat list of imported symbols.
+
+        Each IMAGE_IMPORT_DESCRIPTOR (20 bytes, array 0-terminated) names one exporting
+        DLL and points at two parallel thunk arrays: the ILT (OriginalFirstThunk, the
+        read-only name/ordinal list) and the IAT (FirstThunk, the slots the loader fills
+        with resolved addresses).  We read names from the ILT (falling back to the IAT if
+        the image was bound/stripped) but always report the IAT slot's address, since that
+        is what a `call dword ptr [iat_va]` / `mov r,[iat_va]` operand references.
+        """
+        if len(self.data_dirs) <= DD_IMPORT:
+            return []
+        imp_rva, _ = self.data_dirs[DD_IMPORT]
+        if not imp_rva:
+            return []
+        d = self.data
+        desc = self.rva_to_off(imp_rva)
+        if desc is None:
+            raise PEError("import directory RVA not in any section")
+        out: list[Import] = []
+        while True:
+            oft = _u32(d, desc + 0)  # OriginalFirstThunk -> ILT
+            name_rva = _u32(d, desc + 12)
+            ft = _u32(d, desc + 16)  # FirstThunk -> IAT
+            if oft == 0 and name_rva == 0 and ft == 0:
+                break
+            noff = self.rva_to_off(name_rva)
+            dll = _cstr(d, noff) if noff is not None else ""
+            ilt = self.rva_to_off(oft if oft else ft)
+            i = 0
+            while ilt is not None:
+                thunk = _u32(d, ilt + i * 4)
+                if thunk == 0:
+                    break
+                iat_rva = ft + i * 4
+                iat_va = self.image_base + iat_rva
+                if thunk & 0x80000000:  # PE32 by-ordinal: high bit set, ordinal in low 16
+                    out.append(
+                        Import(dll, "", thunk & 0xFFFF, -1, iat_rva, iat_va)
+                    )
+                else:  # RVA -> IMAGE_IMPORT_BY_NAME { WORD Hint; CHAR Name[]; }
+                    ibn = self.rva_to_off(thunk)
+                    hint = _u16(d, ibn) if ibn is not None else -1
+                    nm = _cstr(d, ibn + 2) if ibn is not None else ""
+                    out.append(Import(dll, nm, -1, hint, iat_rva, iat_va))
+                i += 1
+            desc += 20
+        return out
 
     def exports(self) -> list[Export]:
         if not self.export_rva:
@@ -247,13 +346,59 @@ def write_csv(exports: list[Export], target: str, out) -> None:
         )
 
 
+def write_imports_csv(imports: list[Import], out) -> None:
+    w = csv.writer(out, lineterminator="\n")
+    w.writerow(["dll", "name", "ordinal", "hint", "iat_rva", "iat_va", "imp_symbol"])
+    for im in imports:
+        w.writerow(
+            [
+                im.dll,
+                im.name,
+                im.ordinal if im.ordinal >= 0 else "",
+                im.hint if im.hint >= 0 else "",
+                f"0x{im.iat_rva:08x}",
+                f"0x{im.iat_va:08x}",
+                im.imp_symbol,
+            ]
+        )
+
+
+def _dump_imports(args) -> int:
+    with open(args.pe, "rb") as f:
+        pe = PEFile(f.read())
+    imports = pe.imports()
+    if args.out:
+        with open(args.out, "w", newline="") as f:
+            write_imports_csv(imports, f)
+    else:
+        write_imports_csv(imports, sys.stdout)
+    # Per-DLL summary to stderr (this is the measurement we actually want).
+    by_dll: dict[str, int] = {}
+    for im in imports:
+        by_dll[im.dll] = by_dll.get(im.dll, 0) + 1
+    print(f"{args.pe}: image_base=0x{pe.image_base:08x} imports={len(imports)}", file=sys.stderr)
+    for dll, n in sorted(by_dll.items(), key=lambda kv: -kv[1]):
+        print(f"  {dll}: {n}", file=sys.stderr)
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description="PE export table -> symbol CSV")
     ap.add_argument("pe", help="path to the .dll/.exe")
-    ap.add_argument("--target", required=True, help="logical module name (e.g. sysCore)")
+    ap.add_argument("--target", help="logical module name (e.g. sysCore)")
     ap.add_argument("-o", "--out", help="output CSV path (default: stdout)")
+    ap.add_argument(
+        "--imports",
+        action="store_true",
+        help="dump the import table (IAT slots) instead of exports",
+    )
     args = ap.parse_args(argv)
 
+    if args.imports:
+        return _dump_imports(args)
+
+    if not args.target:
+        ap.error("--target is required for export dumps")
     pe, exports = parse_exports(args.pe)
     named = sum(1 for e in exports if e.mangled)
     fwd = sum(1 for e in exports if e.forwarder)

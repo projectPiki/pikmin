@@ -42,12 +42,19 @@ typedef volatile f32 vf32;
 typedef volatile f64 vf64;
 typedef volatile f128 vf128;
 
+// For Windows-specific types
+#ifdef WIN32
+#include <windows.h>
+#include "win32Compat.h" // VC6 math constants + std:: float helpers (see file)
+#else
+typedef u32 HWND;
 // A boolean value typedef inspired by the Win32 API.
 typedef int BOOL;
 #undef TRUE
 #define TRUE (1)
 #undef FALSE
 #define FALSE (0)
+#endif
 
 // These math constants were seeminly defined somewhere because Nintendo used them often.
 #define TAU        6.2831855f

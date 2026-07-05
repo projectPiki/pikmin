@@ -1465,7 +1465,12 @@ void DGXGraphics::setFog(bool enable)
 		}
 #endif
 	} else {
+#ifdef WIN32
+		GXColor fogColor = { 0, 0, 0, 0 }; // VC6 has no C99 compound literals; hoist to a local
+		GXSetFog(GX_FOG_NONE, 0.0f, 0.0f, 0.0f, 0.0f, fogColor);
+#else
 		GXSetFog(GX_FOG_NONE, 0.0f, 0.0f, 0.0f, 0.0f, (GXColor) { 0, 0, 0, 0 });
+#endif
 	}
 }
 
