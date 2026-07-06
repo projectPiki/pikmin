@@ -52,38 +52,55 @@ f32 Plane::calcRadScale()
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000074
+ * @note UNUSED Size: 000074 (Matching by speed)
  */
-void Plane::reflect(Vector3f&)
+void Plane::reflect(Vector3f& velocity) immut
 {
-	// UNUSED FUNCTION
+	f32 reboundSpeed = (velocity.DP(mNormal) - mOffset) * 2;
+	velocity.x -= mNormal.x * reboundSpeed;
+	velocity.y -= mNormal.y * reboundSpeed;
+	velocity.z -= mNormal.z * reboundSpeed;
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 00006C
+ * @note UNUSED Size: 00006C (Matching by size)
  */
-void Plane::reflectVector(Vector3f&)
+void Plane::reflectVector(Vector3f& velocity) immut
 {
-	// UNUSED FUNCTION
+	f32 reboundSpeed = mNormal.DP(velocity) * 2;
+	velocity.x -= mNormal.x * reboundSpeed;
+	velocity.y -= mNormal.y * reboundSpeed;
+	velocity.z -= mNormal.z * reboundSpeed;
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000078
+ * @note UNUSED Size: 000078 (Matching by size)
  */
-void Plane::bounceVector(Vector3f&, f32)
+void Plane::bounceVector(Vector3f& velocity, f32 bounciness) immut
 {
-	// UNUSED FUNCTION
+	f32 reboundSpeed = -velocity.DP(mNormal) * bounciness;
+	if (reboundSpeed > 0.0f) {
+		velocity.x += mNormal.x * reboundSpeed;
+		velocity.y += mNormal.y * reboundSpeed;
+		velocity.z += mNormal.z * reboundSpeed;
+	}
 }
 
 /**
- * @todo: Documentation
- * @note UNUSED Size: 000084
+ * @brief Applies a simulacrum of friction to a velocity vector
+ * @param velocity the velocity to be reduced; it is both an input and output parameter
+ * @param coefficient the coefficient of friction, but not the one from real-life physics
+ * @note UNUSED Size: 000084 (Matching by size)
  */
-void Plane::frictionVector(Vector3f&, f32)
+void Plane::frictionVector(Vector3f& velocity, f32 coefficient) immut
 {
-	// UNUSED FUNCTION
+	Vector3f parallelVelocity(velocity);
+	parallelVelocity.project(mNormal); // NB: This function gets the vector REJECTION
+	velocity.x -= parallelVelocity.x * coefficient;
+	velocity.y -= parallelVelocity.y * coefficient;
+	velocity.z -= parallelVelocity.z * coefficient;
 }
 
 /**
@@ -120,16 +137,13 @@ void CullingPlane::CheckMinMaxDir()
  * @todo: Documentation
  * @note UNUSED Size: 0000AC
  */
-void Vector3f::rotateTranspose(immut Matrix4f&)
+void Vector3f::rotateTranspose(immut Matrix4f& mtx)
 {
-	// FAKE but easiest way to juggle the float ordering
 	Vector3f vec;
-	vec.x = 1.0f;
-	vec.y = 1.0f;
-	vec.z = 1.0f;
-	vec.x *= 2.0f;
-	vec.y *= 2.0f;
-	vec.z *= 2.0f;
+	vec.x = mtx.mMtx[0][0] * x + mtx.mMtx[1][0] * y + mtx.mMtx[2][0] * z;
+	vec.y = mtx.mMtx[0][1] * x + mtx.mMtx[1][1] * y + mtx.mMtx[2][1] * z;
+	vec.z = mtx.mMtx[0][2] * x + mtx.mMtx[1][2] * y + mtx.mMtx[2][2] * z;
+
 	*this = vec;
 	// UNUSED FUNCTION
 }
@@ -181,20 +195,30 @@ void Vector3f::multMatrixTo(immut Matrix4f& mtx, Vector3f& outVec)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000110
+ * @note UNUSED Size: 000110 (Matching by size)
  */
-void Vector3f::rotate(immut Quat&)
+void Vector3f::rotate(immut Quat& quat)
 {
-	// UNUSED FUNCTION
+	Quat temp;
+
+	temp.v.x = quat.v.y * z - quat.v.z * y + quat.s * x;
+	temp.v.y = -quat.v.x * z + quat.v.z * x + quat.s * y;
+	temp.v.z = quat.v.x * y - quat.v.y * x + quat.s * z;
+	temp.s   = -quat.v.x * x - quat.v.y * y - quat.v.z * z;
+
+	x = (temp.v.x * quat.s) + (temp.v.y * -quat.v.z) - (temp.v.z * -quat.v.y) + (temp.s * -quat.v.x);
+	y = (-temp.v.x * -quat.v.z) + (temp.v.y * quat.s) + (temp.v.z * -quat.v.x) + (temp.s * -quat.v.y);
+	z = (temp.v.x * -quat.v.y) - (temp.v.y * -quat.v.x) + (temp.v.z * quat.s) + (temp.s * -quat.v.z);
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000104
+ * @note UNUSED Size: 000104 (Matching by size)
  */
-void Vector3f::rotateInverse(immut Quat&)
+void Vector3f::rotateInverse(immut Quat& quat)
 {
-	// UNUSED FUNCTION
+	// How is this function smaller than `Vector3f::rotate`?
+	rotate(Quat(-quat.v.x, -quat.v.y, -quat.v.z, -quat.s));
 }
 
 /**
@@ -804,11 +828,10 @@ void KTri::set(immut Vector3f& pointA, immut Vector3f& pointB, immut Vector3f& p
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000020
+ * @note UNUSED Size: 000020 (Matching by size)
  */
 KSegment::KSegment()
 {
-	// UNUSED FUNCTION
 }
 
 f32 gs_fTolerance = 0.00001f;

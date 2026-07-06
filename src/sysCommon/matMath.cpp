@@ -317,38 +317,97 @@ void Matrix4f::makeAligned(Vector3f&, f32)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000100
+ * @note UNUSED Size: 000100 (Matching by size)
  */
-void Matrix4f::rotateX(f32)
+void Matrix4f::rotateX(f32 angle)
 {
-	// UNUSED FUNCTION
+	f32 sinv = sinf(angle);
+	f32 cosv = cosf(angle);
+
+	// It unfortunately was interlaced like this.
+	f32 m10    = mMtx[1][0];
+	mMtx[1][0] = m10 * cosv + mMtx[2][0] * -sinv;
+	f32 m11    = mMtx[1][1];
+	mMtx[1][1] = m11 * cosv + mMtx[2][1] * -sinv;
+	f32 m12    = mMtx[1][2];
+	mMtx[1][2] = m12 * cosv + mMtx[2][2] * -sinv;
+	f32 m13    = mMtx[1][3];
+	mMtx[1][3] = m13 * cosv + mMtx[2][3] * -sinv;
+
+	mMtx[2][0] = mMtx[2][0] * cosv + m10 * sinv;
+	mMtx[2][1] = mMtx[2][1] * cosv + m11 * sinv;
+	mMtx[2][2] = mMtx[2][2] * cosv + m12 * sinv;
+	mMtx[2][3] = mMtx[2][3] * cosv + m13 * sinv;
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000100
+ * @note UNUSED Size: 000100 (Matching by size)
  */
-void Matrix4f::rotateY(f32)
+void Matrix4f::rotateY(f32 angle)
 {
-	// UNUSED FUNCTION
+	f32 sinv = sinf(angle);
+	f32 cosv = cosf(angle);
+
+	// It unfortunately was interlaced like this.
+	f32 m00    = mMtx[0][0];
+	mMtx[0][0] = m00 * cosv + mMtx[2][0] * sinv;
+	f32 m01    = mMtx[0][1];
+	mMtx[0][1] = m01 * cosv + mMtx[2][1] * sinv;
+	f32 m02    = mMtx[0][2];
+	mMtx[0][2] = m02 * cosv + mMtx[2][2] * sinv;
+	f32 m03    = mMtx[0][3];
+	mMtx[0][3] = m03 * cosv + mMtx[2][3] * sinv;
+
+	mMtx[2][2] = mMtx[2][0] * cosv + m00 * -sinv;
+	mMtx[2][1] = mMtx[2][1] * cosv + m01 * -sinv;
+	mMtx[2][2] = mMtx[2][2] * cosv + m02 * -sinv;
+	mMtx[2][3] = mMtx[2][3] * cosv + m03 * -sinv;
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000100
+ * @note UNUSED Size: 000100 (Matching by size)
  */
-void Matrix4f::rotateZ(f32)
+void Matrix4f::rotateZ(f32 angle)
 {
-	// UNUSED FUNCTION
+	f32 sinv = sinf(angle);
+	f32 cosv = cosf(angle);
+
+	// It unfortunately was interlaced like this.
+	f32 m00    = mMtx[0][0];
+	mMtx[0][0] = m00 * cosv + mMtx[1][0] * -sinv;
+	f32 m01    = mMtx[0][1];
+	mMtx[0][1] = m01 * cosv + mMtx[1][1] * -sinv;
+	f32 m02    = mMtx[0][2];
+	mMtx[0][2] = m02 * cosv + mMtx[1][2] * -sinv;
+	f32 m03    = mMtx[0][3];
+	mMtx[0][3] = m03 * cosv + mMtx[1][3] * -sinv;
+
+	mMtx[1][0] = mMtx[1][0] * cosv + m00 * sinv;
+	mMtx[1][1] = mMtx[1][1] * cosv + m01 * sinv;
+	mMtx[1][2] = mMtx[1][2] * cosv + m02 * sinv;
+	mMtx[1][3] = mMtx[1][3] * cosv + m03 * sinv;
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 0000F4
+ * @note UNUSED Size: 0000F4 (Matching by size)
  */
-void Matrix4f::translate(f32, f32, f32)
+void Matrix4f::translate(f32 x, f32 y, f32 z)
 {
-	// UNUSED FUNCTION
+	mMtx[0][0] += mMtx[3][0] * x;
+	mMtx[0][1] += mMtx[3][1] * x;
+	mMtx[0][2] += mMtx[3][2] * x;
+	mMtx[0][3] += mMtx[3][3] * x;
+	mMtx[1][0] += mMtx[3][0] * y;
+	mMtx[1][1] += mMtx[3][1] * y;
+	mMtx[1][2] += mMtx[3][2] * y;
+	mMtx[1][3] += mMtx[3][3] * y;
+	mMtx[2][0] += mMtx[3][0] * z;
+	mMtx[2][1] += mMtx[3][1] * z;
+	mMtx[2][2] += mMtx[3][2] * z;
+	mMtx[2][3] += mMtx[3][3] * z;
 }
 
 /**
@@ -374,11 +433,15 @@ void Matrix4f::scale(immut Vector3f& scaleVector)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 0003C0
+ * @note UNUSED Size: 0003C0 (Matching by size)
  */
-void Matrix4f::makeLookfrom(immut Vector3f&, immut Vector3f&)
+void Matrix4f::makeLookfrom(immut Vector3f& cameraPos, immut Vector3f& targetPos)
 {
-	// UNUSED FUNCTION
+	makeIdentity();
+	translate(-cameraPos.x, -cameraPos.y, -cameraPos.z);
+	rotateY(targetPos.y);
+	rotateX(targetPos.x);
+	rotateZ(targetPos.z);
 }
 
 /**
