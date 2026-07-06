@@ -426,7 +426,7 @@ void PcamCamera::makeWatchObjectViewpoint(NVector3f& watchPt, NVector3f& viewPt)
 		}
 	}
 
-	STACK_PAD_VAR(1);
+	STACK_PAD_VAR(2);
 }
 
 /**

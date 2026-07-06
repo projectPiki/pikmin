@@ -37,9 +37,19 @@ struct NMath {
 		return val;
 	}
 
-	// inlines to make, per the DLL:
-	static f32 maxValue(f32, f32);
-	static T minValue(T x, T y) { return (x < y) ? x : y; }
+	static T maxValue(T x, T y)
+	{
+		if (x < y)
+			return y;
+		return x;
+	}
+
+	static T minValue(T x, T y)
+	{
+		if (x < y)
+			return x;
+		return y;
+	}
 };
 
 typedef NMath<f32> NMathf;
@@ -125,9 +135,7 @@ struct NMathF {
 	static inline f32 rateRandom(f32 min, f32 range) { return min * (2.0f * (NSystem::random() - 0.5f)) * range + min; }
 	static inline f32 sqrt(f32 x) { return std::sqrtf(x); }
 	static inline int quotient(f32 num, f32 denom) { return num / denom; }
-
-	// inlines from DLL, to be created:
-	static inline f32 acos(f32);
+	static inline f32 acos(f32 x) { return NMathF::atan2(std::sqrtf(1.0f - SQUARE(x)), x); }
 };
 
 struct NMathI {

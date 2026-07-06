@@ -17,11 +17,11 @@ DEFINE_PRINT("nlibfunction");
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000074
+ * @note UNUSED Size: 000074 (Matching by size)
  */
-NPolynomialFunction::NPolynomialFunction(f32*, int)
+NPolynomialFunction::NPolynomialFunction(f32* coefficients, int degree)
 {
-	// UNUSED FUNCTION
+	construct(coefficients, degree);
 }
 
 /**
@@ -34,30 +34,40 @@ void NPolynomialFunction::construct(f32* coefficients, int degree)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000074
+ * @note UNUSED Size: 000074 (Matching by size)
  */
-NPolynomialFunction::NPolynomialFunction(f32*, NPolynomialFunction&)
+NPolynomialFunction::NPolynomialFunction(f32* coefficients, immut NPolynomialFunction& other)
 {
-	// UNUSED FUNCTION
+	construct(coefficients, other);
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000050
+ * @note UNUSED Size: 000050 (Matching by size)
  */
-void NPolynomialFunction::construct(f32*, NPolynomialFunction&)
+void NPolynomialFunction::construct(f32* coefficients, immut NPolynomialFunction& other)
 {
-	mData.mValues[0] = 0.0f; // need 0.0f to get used before getValue
-	                         // UNUSED FUNCTION
+	mData.construct(coefficients, other.getFunctionDimension() + 1);
+	mData.input(other.mData);
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 00029C
+ * @note UNUSED Size: 00029C (Matching by size)
  */
-void NPolynomialFunction::mul2(NPolynomialFunction&, NPolynomialFunction&)
+void NPolynomialFunction::mul2(immut NPolynomialFunction& lhs, immut NPolynomialFunction& rhs)
 {
-	// UNUSED FUNCTION
+	if (lhs.getFunctionDimension() + rhs.getFunctionDimension() > getFunctionDimension()) {
+		PRINT_NAKATA("?dimension over:%d+%d>%d\n", lhs.getFunctionDimension(), rhs.getFunctionDimension(), getFunctionDimension());
+		return;
+	}
+
+	for (int i = 0; i < getFunctionDimension(); ++i) {
+		mData.mValues[i] = 0.0f;
+		for (int j = 0; j <= i; ++j) {
+			mData.mValues[i] += rhs.mData.mValues[i - j] * lhs.mData.mValues[j];
+		}
+	}
 }
 
 /**
@@ -99,47 +109,55 @@ void NPolynomialFunction::println() immut
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000070
+ * @note UNUSED Size: 000070 (Matching by size)
  */
-NLinearFunction::NLinearFunction(f32* values)
-    : NPolynomialFunction(values, 1)
+NLinearFunction::NLinearFunction(f32* const coefficients)
 {
-	// UNUSED FUNCTION
+	construct(coefficients);
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000028
+ * @note UNUSED Size: 000028 (Matching by size)
  */
-void NLinearFunction::construct(f32* values)
+void NLinearFunction::construct(f32* const coefficients)
 {
-	// UNUSED FUNCTION
+	NPolynomialFunction::construct(coefficients, 1);
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000068
+ * @note UNUSED Size: 000068 (Matching by size)
  */
-void NLinearFunction::makeLinearFunction(f32, f32, f32, f32)
+void NLinearFunction::makeLinearFunction(f32 x1, f32 y1, f32 x2, f32 y2)
 {
-	// UNUSED FUNCTION
+	f32 dx = x2 - x1;
+	if (NMath<f32>::absolute(dx) <= NMathF::error) {
+		// We want an average rate of change, not an instantaneous rate of change!
+		PRINT_NAKATA("!NLinearFunction::makeLinearFunction:%f,%f\n", x1, x2);
+		mData.mValues[1] = 1.0f;
+	} else {
+		// Slope is dy/dx (rise over run)
+		mData.mValues[1] = (y2 - y1) / dx;
+	}
+	// Convert from point-slope form to slope-intercept form.
+	mData.mValues[0] = y1 - mData.mValues[1] * x1;
 }
 
 /**
  * @todo: Documentation
  */
-NClampLinearFunction::NClampLinearFunction(f32* values)
-    : NLinearFunction(values)
+NClampLinearFunction::NClampLinearFunction(f32* const coefficients)
 {
-	construct(values);
+	construct(coefficients);
 }
 
 /**
  * @todo: Documentation
  */
-void NClampLinearFunction::construct(f32* values)
+void NClampLinearFunction::construct(f32* const coefficients)
 {
-	mData.construct(values, 2);
+	NLinearFunction::construct(coefficients);
 }
 
 /**
@@ -147,18 +165,9 @@ void NClampLinearFunction::construct(f32* values)
  */
 void NClampLinearFunction::makeClampLinearFunction(f32 x1, f32 y1, f32 x2, f32 y2)
 {
-	if (NMathF::isZero(x2 - x1)) {
-		mData.mValues[1] = 1.0f;
-	} else {
-		// Slope is rise (y) over (/) run (x)
-		mData.mValues[1] = (y2 - y1) / (x2 - x1);
-	}
-
-	// Intercept
-	mData.mValues[0] = y1 - mData.mValues[1] * x1;
-
-	mMinValue = y1 < y2 ? y1 : y2;
-	mMaxValue = y1 < y2 ? y2 : y1;
+	makeLinearFunction(x1, y1, x2, y2);
+	mMinValue = NMath<f32>::minValue(y1, y2);
+	mMaxValue = NMath<f32>::maxValue(y1, y2);
 }
 
 /**
@@ -166,8 +175,7 @@ void NClampLinearFunction::makeClampLinearFunction(f32 x1, f32 y1, f32 x2, f32 y
  */
 f32 NClampLinearFunction::getValue(f32 x)
 {
-	f32 val = NPolynomialFunction::getValue(x);
-	return NMathf::clampMinMax(val, mMinValue, mMaxValue);
+	return NMathf::clampMinMax(NPolynomialFunction::getValue(x), mMinValue, mMaxValue);
 }
 
 /**
@@ -175,6 +183,7 @@ f32 NClampLinearFunction::getValue(f32 x)
  */
 void NClampLinearFunction::println() immut
 {
+	PRINT_NAKATA("NClampLinearFunction:%f,%f\n", mMinValue, mMaxValue);
 	NPolynomialFunction::println();
 }
 
@@ -194,7 +203,7 @@ NVibrationFunction::NVibrationFunction()
 void NVibrationFunction::makeVibrationFunction(f32 phase, f32 period, f32 amp)
 {
 	mPhase       = phase;
-	mAngularFreq = (2.0f * NMathF::pi) / period;
+	mAngularFreq = 2.0f * NMathF::pi / period;
 	mAmplitude   = amp;
 }
 
@@ -209,7 +218,7 @@ f32 NVibrationFunction::getValue(f32 x)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000004
+ * @note UNUSED Size: 000004 (Matching by size)
  */
 NFunction3D::NFunction3D()
 {
@@ -217,7 +226,7 @@ NFunction3D::NFunction3D()
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000010
+ * @note UNUSED Size: 000010 (Matching by size)
  */
 void NFunction3D::construct(NFunction* funX, NFunction* funY, NFunction* funZ)
 {
