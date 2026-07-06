@@ -1,6 +1,6 @@
 #include "zen/ogMemChk.h"
 #include "DebugLog.h"
-#include "Dolphin/card.h"
+#include <Dolphin/card.h>
 #include "P2D/Graph.h"
 #include "P2D/Screen.h"
 #include "SoundMgr.h"

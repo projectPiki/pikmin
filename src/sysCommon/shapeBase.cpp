@@ -8,7 +8,7 @@
 #include "Common/String.h"
 #include "DebugLog.h"
 #include "Delegate.h"
-#include "Dolphin/mtx.h"
+#include <Dolphin/mtx.h>
 #include "Font.h"
 #include "Graphics.h"
 #include "Joint.h"

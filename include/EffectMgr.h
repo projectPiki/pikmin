@@ -3,7 +3,7 @@
 
 #include "Node.h"
 #include "Shape.h"
-#include "types.h"
+#include <types.h>
 #include "zen/particle.h"
 
 struct Texture;

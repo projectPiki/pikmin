@@ -2,7 +2,7 @@
 #include "Age.h"
 #include "CreatureProp.h"
 #include "DebugLog.h"
-#include "Dolphin/os.h"
+#include <Dolphin/os.h>
 #include "Generator.h"
 #include "Graphics.h"
 #include "MapMgr.h"

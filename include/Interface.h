@@ -1,7 +1,7 @@
 #ifndef _INTERFACE_H
 #define _INTERFACE_H
 
-#include "types.h"
+#include <types.h>
 
 struct Creature;
 struct Vector3f;

@@ -1,7 +1,7 @@
 #ifndef _ID32_H
 #define _ID32_H
 
-#include "types.h"
+#include <types.h>
 
 struct AgeServer;
 struct RandomAccessStream;

@@ -2,7 +2,7 @@
 #define _NLIB_SYSTEM_H
 
 #include "nlib/Array.h"
-#include "types.h"
+#include <types.h>
 #include <system.h>
 
 struct System;

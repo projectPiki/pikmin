@@ -1,7 +1,7 @@
 #ifndef _JAUDIO_DSPTASK_H
 #define _JAUDIO_DSPTASK_H
 
-#include "types.h"
+#include <types.h>
 
 void DspFinishWork(u16);
 

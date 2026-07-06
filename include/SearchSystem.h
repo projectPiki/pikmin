@@ -3,7 +3,7 @@
 
 #include "ComplexCreature.h"
 #include "Traversable.h"
-#include "types.h"
+#include <types.h>
 
 struct Creature;
 

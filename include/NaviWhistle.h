@@ -3,7 +3,7 @@
 
 #include "Navi.h"
 #include "UtEffect.h"
-#include "types.h"
+#include <types.h>
 
 // NB: had to split this out from UtEffect.h to prevent include looping
 

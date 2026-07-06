@@ -1,6 +1,6 @@
 #include "AIPerf.h"
 #include "DebugLog.h"
-#include "Dolphin/os.h"
+#include <Dolphin/os.h>
 #include "EffectMgr.h"
 #include "Interactions.h"
 #include "PikiAI.h"

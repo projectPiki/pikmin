@@ -1,5 +1,5 @@
 #include "DebugLog.h"
-#include "Dolphin/os.h"
+#include <Dolphin/os.h>
 #include "Interactions.h"
 #include "NaviMgr.h"
 #include "PikiMgr.h"

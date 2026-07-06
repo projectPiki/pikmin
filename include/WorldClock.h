@@ -1,7 +1,7 @@
 #ifndef _WORLDCLOCK_H
 #define _WORLDCLOCK_H
 
-#include "types.h"
+#include <types.h>
 
 /// How many total in-game hours are there in a "full" in-game day - not playable hours!
 #define HOURS_IN_DAY (24)

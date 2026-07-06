@@ -1,5 +1,5 @@
 #include "DebugLog.h"
-#include "Dolphin/os.h"
+#include <Dolphin/os.h>
 #include "PaniAnimator.h"
 #include "sysNew.h"
 

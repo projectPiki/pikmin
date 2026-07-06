@@ -5,7 +5,7 @@
 #include "Peve/IO.h"
 #include "nlib/Geometry.h"
 #include "nlib/Spline.h"
-#include "types.h"
+#include <types.h>
 
 struct NFunction3D;
 struct NPosture3DIO;

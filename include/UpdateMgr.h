@@ -1,7 +1,7 @@
 #ifndef _UPDATEMGR_H
 #define _UPDATEMGR_H
 
-#include "types.h"
+#include <types.h>
 
 struct Graphics;
 struct UpdateMgr;

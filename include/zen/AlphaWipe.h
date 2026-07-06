@@ -2,7 +2,7 @@
 #define _ZEN_ALPHAWIPE_H
 
 #include "Colour.h"
-#include "types.h"
+#include <types.h>
 
 struct Graphics;
 

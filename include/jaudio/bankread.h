@@ -1,7 +1,7 @@
 #ifndef _JAUDIO_BANKREAD_H
 #define _JAUDIO_BANKREAD_H
 
-#include "types.h"
+#include <types.h>
 
 typedef struct Bank_ Bank_;
 

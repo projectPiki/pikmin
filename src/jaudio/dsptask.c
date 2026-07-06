@@ -1,6 +1,6 @@
 #include "jaudio/dsptask.h"
 
-#include "Dolphin/dsp.h"
+#include <Dolphin/dsp.h>
 #include "jaudio/dspboot.h"
 #include <stddef.h>
 

@@ -2,7 +2,7 @@
 #define _FONT_H
 
 #include "Geometry.h"
-#include "types.h"
+#include <types.h>
 
 struct Texture;
 

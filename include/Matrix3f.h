@@ -1,9 +1,9 @@
 #ifndef _MATRIX3F_H
 #define _MATRIX3F_H
 
-#include "Dolphin/mtx.h"
+#include <Dolphin/mtx.h>
 #include "Vector.h"
-#include "types.h"
+#include <types.h>
 
 /**
  * @brief TODO

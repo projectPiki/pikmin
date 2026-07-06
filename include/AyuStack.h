@@ -1,7 +1,7 @@
 #ifndef _AYUSTACK_H
 #define _AYUSTACK_H
 
-#include "types.h"
+#include <types.h>
 
 struct MemHead {
 	u32 mTagAndSize; // _00, tag in high byte; size in low 24 bits

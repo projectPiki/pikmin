@@ -1,7 +1,7 @@
 #ifndef _ZEN_OGRESULT_H
 #define _ZEN_OGRESULT_H
 
-#include "types.h"
+#include <types.h>
 
 struct P2DPane;
 struct Controller;

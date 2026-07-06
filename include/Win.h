@@ -3,7 +3,7 @@
 
 #include "Colour.h"
 #include "CoreNode.h"
-#include "types.h"
+#include <types.h>
 
 struct Graphics;
 struct RectArea;

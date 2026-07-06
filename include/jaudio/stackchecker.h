@@ -1,7 +1,7 @@
 #ifndef _JAUDIO_STACKCHECKER_H
 #define _JAUDIO_STACKCHECKER_H
 
-#include "types.h"
+#include <types.h>
 
 BEGIN_SCOPE_EXTERN_C
 

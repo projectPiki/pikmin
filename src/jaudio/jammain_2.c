@@ -11,7 +11,7 @@
 #include "jaudio/rate.h"
 #include "jaudio/seqsetup.h"
 
-#include "Dolphin/OS/OSError.h"
+#include <Dolphin/OS/OSError.h>
 
 #include <stddef.h>
 

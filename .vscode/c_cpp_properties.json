@@ -4,7 +4,9 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/include",
-                "${workspaceFolder}/include/stl"
+                "${workspaceFolder}/libs/Dolphin/include",
+                "${workspaceFolder}/libs/PowerPC_EABI_Support/include",
+                "${workspaceFolder}/libs/PowerPC_EABI_Support/include/stl"
             ],
             "cStandard": "c99",
             "cppStandard": "c++98",
@@ -19,7 +21,9 @@
             "name": "Win32",
             "includePath": [
                 "${workspaceFolder}/include",
-                "${workspaceFolder}/include/stl"
+                "${workspaceFolder}/libs/Dolphin/include",
+                "${workspaceFolder}/libs/PowerPC_EABI_Support/include",
+                "${workspaceFolder}/libs/PowerPC_EABI_Support/include/stl"
             ],
             "cStandard": "c99",
             "cppStandard": "c++98",
@@ -34,7 +38,9 @@
             "name": "Mac",
             "includePath": [
                 "${workspaceFolder}/include",
-                "${workspaceFolder}/include/stl"
+                "${workspaceFolder}/libs/Dolphin/include",
+                "${workspaceFolder}/libs/PowerPC_EABI_Support/include",
+                "${workspaceFolder}/libs/PowerPC_EABI_Support/include/stl"
             ],
             "cStandard": "c99",
             "cppStandard": "c++98",

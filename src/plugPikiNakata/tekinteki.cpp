@@ -1,6 +1,6 @@
 #include "teki.h"
 #include "DebugLog.h"
-#include "Dolphin/os.h"
+#include <Dolphin/os.h>
 #include "Peve/MotionEvents.h"
 #include "sysNew.h"
 

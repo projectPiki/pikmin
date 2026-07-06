@@ -2,7 +2,7 @@
 #define _DYNOBJECT_H
 
 #include "DynSimulator.h"
-#include "types.h"
+#include <types.h>
 
 struct DynCollObjBody;
 struct MapMgr;

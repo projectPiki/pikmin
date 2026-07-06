@@ -3,7 +3,7 @@
 
 #include "P2D/Picture.h"
 #include "P2D/TextBox.h"
-#include "types.h"
+#include <types.h>
 
 struct Matrix3f;
 struct P2DPane;

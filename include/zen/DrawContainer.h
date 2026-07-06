@@ -9,7 +9,7 @@
 #include "SoundMgr.h"
 #include "nlib/Math.h"
 #include "sysNew.h"
-#include "types.h"
+#include <types.h>
 #include "zen/DrawCommon.h"
 #include "zen/Math.h"
 #include "zen/TexAnim.h"

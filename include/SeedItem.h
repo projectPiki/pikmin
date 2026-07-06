@@ -4,7 +4,7 @@
 #include "Creature.h"
 #include "CreatureProp.h"
 #include "Interactions.h"
-#include "types.h"
+#include <types.h>
 
 struct Shape;
 

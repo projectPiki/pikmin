@@ -1,7 +1,7 @@
 #ifndef _JAUDIO_FILE_SEQ_H
 #define _JAUDIO_FILE_SEQ_H
 
-#include "types.h"
+#include <types.h>
 
 typedef struct seqp_ seqp_;
 

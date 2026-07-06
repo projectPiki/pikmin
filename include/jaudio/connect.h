@@ -1,7 +1,7 @@
 #ifndef _JAUDIO_CONNECT_H
 #define _JAUDIO_CONNECT_H
 
-#include "types.h"
+#include <types.h>
 
 typedef struct WaveArchive_ WaveArchive_;
 typedef struct WaveArchiveBank_ WaveArchiveBank_;

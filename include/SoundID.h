@@ -1,7 +1,7 @@
 #ifndef _SOUNDID_H
 #define _SOUNDID_H
 
-#include "types.h"
+#include <types.h>
 
 /**
  * @brief Sound effect identifiers for use with SeContext and SeSystem.

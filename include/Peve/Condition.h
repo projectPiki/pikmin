@@ -3,7 +3,7 @@
 
 #include "nlib/Node.h"
 #include "nlib/System.h"
-#include "types.h"
+#include <types.h>
 
 struct NVector3fIO;
 

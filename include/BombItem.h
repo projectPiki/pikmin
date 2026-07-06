@@ -5,7 +5,7 @@
 #include "ItemMgr.h"
 #include "SimpleAI.h"
 #include "SoundMgr.h"
-#include "types.h"
+#include <types.h>
 
 struct InteractBikkuri;
 struct InteractSwallow;

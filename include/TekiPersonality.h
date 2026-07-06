@@ -4,7 +4,7 @@
 #include "ID32.h"
 #include "ParaParameters.h"
 #include "Vector.h"
-#include "types.h"
+#include <types.h>
 
 struct RandomAccessStream;
 struct ParaMultiParameters;

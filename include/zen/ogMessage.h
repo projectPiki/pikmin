@@ -3,7 +3,7 @@
 
 #include "P2D/Screen.h"
 #include "P2D/TextBox.h"
-#include "types.h"
+#include <types.h>
 
 struct Controller;
 struct Graphics;

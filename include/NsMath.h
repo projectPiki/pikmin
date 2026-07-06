@@ -3,7 +3,7 @@
 
 #include "Vector.h"
 #include "system.h"
-#include "types.h"
+#include <types.h>
 
 struct NsCalculation {
 	static void calcLagrange(f32, const Vector3f*, Vector3f&);

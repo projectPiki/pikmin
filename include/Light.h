@@ -6,7 +6,7 @@
 #include "Node.h"
 #include "Vector.h"
 #include "system.h"
-#include "types.h"
+#include <types.h>
 
 struct AgeServer;
 struct CmdStream;

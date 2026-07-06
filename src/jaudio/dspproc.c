@@ -1,6 +1,6 @@
 #include "jaudio/dspproc.h"
-#include "Dolphin/dsp.h"
-#include "Dolphin/os.h"
+#include <Dolphin/dsp.h>
+#include <Dolphin/os.h>
 #include "jaudio/dspinterface.h"
 #include <stddef.h>
 

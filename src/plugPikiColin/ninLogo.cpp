@@ -2,15 +2,15 @@
 
 #include "Controller.h"
 #include "DebugLog.h"
-#include "Dolphin/os.h"
-#include "Dolphin/vi.h"
+#include <Dolphin/os.h>
+#include <Dolphin/vi.h>
 #include "Geometry.h"
 #include "Graphics.h"
 #include "Menu.h"
 #include "Section.h"
 #include "gameflow.h"
 #include "sysNew.h"
-#include "types.h"
+#include <types.h>
 #include "zen/DrawProgre.h"
 
 /**

@@ -4,7 +4,7 @@
 #include "Colour.h"
 #include "Node.h"
 #include "Vector.h"
-#include "types.h"
+#include <types.h>
 
 struct Creature;
 struct CmdStream;

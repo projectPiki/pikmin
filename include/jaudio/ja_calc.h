@@ -1,7 +1,7 @@
 #ifndef _JAUDIO_JA_CALC_H
 #define _JAUDIO_JA_CALC_H
 
-#include "types.h"
+#include <types.h>
 
 /////////// JAUDIO MATH DEFINITIONS ///////////
 // Global functions (all C++, so no extern C wrap).

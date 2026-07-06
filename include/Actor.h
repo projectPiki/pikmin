@@ -6,7 +6,7 @@
 #include "MapMgr.h"
 #include "ObjectMgr.h"
 #include "Piki.h"
-#include "types.h"
+#include <types.h>
 
 struct ActorMgr;
 struct SimpleAI;

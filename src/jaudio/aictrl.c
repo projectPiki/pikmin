@@ -1,6 +1,6 @@
 #include "jaudio/aictrl.h"
-#include "Dolphin/ai.h"
-#include "Dolphin/os.h"
+#include <Dolphin/ai.h>
+#include <Dolphin/os.h>
 #include "jaudio/audiocommon.h"
 #include "jaudio/audiostruct.h"
 #include "jaudio/driverinterface.h"

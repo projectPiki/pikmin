@@ -1,4 +1,4 @@
-#include "Dolphin/pad.h"
+#include <Dolphin/pad.h>
 #include "RumbleMgr.h"
 
 /**

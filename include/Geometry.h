@@ -2,7 +2,7 @@
 #define _GEOMETRY_H
 
 #include "Vector.h"
-#include "types.h"
+#include <types.h>
 
 #define AREA_FULL_SCREEN(gfx) RectArea(0, 0, (gfx).mScreenWidth, (gfx).mScreenHeight)
 

@@ -8,7 +8,7 @@
 #include "DayMgr.h"
 #include "DebugLog.h"
 #include "Demo.h"
-#include "Dolphin/pad.h"
+#include <Dolphin/pad.h>
 #include "DynParticle.h"
 #include "FlowController.h"
 #include "Font.h"

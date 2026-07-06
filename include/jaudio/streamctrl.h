@@ -1,7 +1,7 @@
 #ifndef _JAUDIO_STREAMCTRL_H
 #define _JAUDIO_STREAMCTRL_H
 
-#include "types.h"
+#include <types.h>
 
 /////////// JAUDIO STREAM DEFINITIONS ///////////
 // Defines.

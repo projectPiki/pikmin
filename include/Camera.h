@@ -6,7 +6,7 @@
 #include "Plane.h"
 #include "Vector.h"
 #include "sysMath.h"
-#include "types.h"
+#include <types.h>
 
 struct Graphics;
 struct Node;

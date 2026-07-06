@@ -1,7 +1,7 @@
 #ifndef _TEKISTRATEGY_H
 #define _TEKISTRATEGY_H
 
-#include "types.h"
+#include <types.h>
 
 struct Graphics;
 struct Teki;

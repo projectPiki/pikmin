@@ -1,5 +1,5 @@
 #include "jaudio/syncstream.h"
-#include "Dolphin/dvd.h"
+#include <Dolphin/dvd.h>
 #include "jaudio/aictrl.h"
 #include "jaudio/audiostruct.h"
 #include "jaudio/dspdriver.h"

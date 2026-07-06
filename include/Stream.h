@@ -1,7 +1,7 @@
 #ifndef _STREAM_H
 #define _STREAM_H
 
-#include "types.h"
+#include <types.h>
 #include <string.h>
 
 struct String;

@@ -2,7 +2,7 @@
 #define _P2D_STREAM_H
 
 #include "Colour.h"
-#include "types.h"
+#include <types.h>
 #include <Stream.h>
 
 struct Colour;

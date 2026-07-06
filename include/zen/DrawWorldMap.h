@@ -8,7 +8,7 @@
 #include "PlayerState.h"
 #include "SoundMgr.h"
 #include "nlib/Math.h"
-#include "types.h"
+#include <types.h>
 #include "zen/DrawCommon.h"
 #include "zen/DrawMenu.h"
 #include "zen/DrawWMPause.h"

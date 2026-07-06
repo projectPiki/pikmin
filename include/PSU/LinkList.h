@@ -1,7 +1,7 @@
 #ifndef _PSU_LINKLIST_H
 #define _PSU_LINKLIST_H
 
-#include "types.h"
+#include <types.h>
 
 struct PSUPtrList;
 struct PSUPtrLink;

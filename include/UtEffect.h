@@ -6,7 +6,7 @@
 #include "KEffect.h"
 #include "MapMgr.h"
 #include "Matrix3f.h"
-#include "types.h"
+#include <types.h>
 #include "zen/Math.h"
 
 struct Navi;

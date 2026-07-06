@@ -1,6 +1,6 @@
 #include "MizuItem.h"
 #include "DebugLog.h"
-#include "Dolphin/os.h"
+#include <Dolphin/os.h>
 #include "ItemAI.h"
 #include "SimpleAI.h"
 

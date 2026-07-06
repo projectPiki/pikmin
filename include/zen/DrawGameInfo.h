@@ -6,7 +6,7 @@
 #include "P2D/Screen.h"
 #include "nlib/Math.h"
 #include "system.h"
-#include "types.h"
+#include <types.h>
 #include "zen/DamageEffect.h"
 #include "zen/DrawCommon.h"
 #include "zen/Number.h"

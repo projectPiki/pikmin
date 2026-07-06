@@ -5,7 +5,7 @@
 #include "CreatureNode.h"
 #include "ObjectMgr.h"
 #include "SimpleAI.h"
-#include "types.h"
+#include <types.h>
 
 struct BuildingItemProp;
 struct GoalAI;

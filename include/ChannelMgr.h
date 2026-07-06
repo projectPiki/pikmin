@@ -1,7 +1,7 @@
 #ifndef _CHANNELMGR_H
 #define _CHANNELMGR_H
 
-#include "types.h"
+#include <types.h>
 
 struct ChannelMgr {
 	ChannelMgr();

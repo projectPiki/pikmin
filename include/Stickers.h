@@ -2,7 +2,7 @@
 #define _STICKERS_H
 
 #include "Traversable.h"
-#include "types.h"
+#include <types.h>
 
 /**
  * @brief TODO

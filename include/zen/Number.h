@@ -5,7 +5,7 @@
 #include "P2D/Picture.h"
 #include "Texture.h"
 #include "nlib/Math.h"
-#include "types.h"
+#include <types.h>
 
 struct Texture;
 

@@ -2,7 +2,7 @@
 #define _MIZU_H
 
 #include "Boss.h"
-#include "types.h"
+#include <types.h>
 #include "zen/CallBack.h"
 #include "zen/particle.h"
 

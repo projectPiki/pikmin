@@ -1,7 +1,7 @@
 #include "RadarInfo.h"
 #include "Creature.h"
 #include "DebugLog.h"
-#include "Dolphin/os.h"
+#include <Dolphin/os.h>
 #include "Vector.h"
 #include "sysNew.h"
 

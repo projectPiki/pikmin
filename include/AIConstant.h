@@ -4,7 +4,7 @@
 #include "GlobalGameOptions.h"
 #include "Node.h"
 #include "Parameters.h"
-#include "types.h"
+#include <types.h>
 
 /**
  * @brief A node that contains AI constants.

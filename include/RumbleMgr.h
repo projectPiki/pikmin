@@ -1,7 +1,7 @@
 #ifndef _HMRUMBLE_H
 #define _HMRUMBLE_H
 
-#include "types.h"
+#include <types.h>
 
 struct Graphics;
 struct Font;

@@ -1,7 +1,7 @@
 #ifndef _SYSMATH_H
 #define _SYSMATH_H
 
-#include "types.h"
+#include <types.h>
 #include <math.h>
 
 struct Vector3f;

@@ -2,7 +2,7 @@
 #define _ZEN_MATH_H
 
 #include "system.h"
-#include "types.h"
+#include <types.h>
 #include <math.h>
 
 struct Vector3f;

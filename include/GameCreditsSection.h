@@ -2,7 +2,7 @@
 #define _GAMECREDITSSECTION_H
 
 #include "Section.h"
-#include "types.h"
+#include <types.h>
 
 /*
  * @brief TODO

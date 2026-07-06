@@ -4,7 +4,7 @@
 #include "BombItem.h"
 #include "BuildingItem.h"
 #include "DebugLog.h"
-#include "Dolphin/os.h"
+#include <Dolphin/os.h>
 #include "DoorItem.h"
 #include "FishItem.h"
 #include "GameCoreSection.h"

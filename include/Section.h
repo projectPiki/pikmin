@@ -2,7 +2,7 @@
 #define _SECTION_H
 
 #include "Node.h"
-#include "types.h"
+#include <types.h>
 
 struct Controller;
 struct ModeState;

@@ -1,7 +1,7 @@
 #ifndef _ZEN_SPECTRUMCURSORMGR_H
 #define _ZEN_SPECTRUMCURSORMGR_H
 
-#include "types.h"
+#include <types.h>
 
 struct P2DPane;
 struct P2DScreen;

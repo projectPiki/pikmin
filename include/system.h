@@ -5,12 +5,12 @@
 #include "Controller.h"
 #include "CoreNode.h"
 #include "Delegate.h"
-#include "Dolphin/ar.h"
-#include "Dolphin/dvd.h"
-#include "Dolphin/os.h"
+#include <Dolphin/ar.h>
+#include <Dolphin/dvd.h>
+#include <Dolphin/os.h>
 #include "GfxObject.h"
 #include "Stream.h"
-#include "types.h"
+#include <types.h>
 #include <stddef.h>
 #include <stdlib.h>
 

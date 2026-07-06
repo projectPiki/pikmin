@@ -1,7 +1,7 @@
 #ifndef _JAUDIO_ARAMCALL_H
 #define _JAUDIO_ARAMCALL_H
 
-#include "types.h"
+#include <types.h>
 
 typedef struct jaheap_ jaheap_;
 

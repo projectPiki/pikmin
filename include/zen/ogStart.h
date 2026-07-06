@@ -1,7 +1,7 @@
 #ifndef _ZEN_OGSTART_H
 #define _ZEN_OGSTART_H
 
-#include "types.h"
+#include <types.h>
 
 struct Controller;
 struct Graphics;

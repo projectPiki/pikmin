@@ -5,7 +5,7 @@
 #include "P2D/Pane.h"
 #include "P2D/Util.h"
 #include "Texture.h"
-#include "types.h"
+#include <types.h>
 
 struct Texture;
 

@@ -1,7 +1,7 @@
 #ifndef _OBJTYPE_H
 #define _OBJTYPE_H
 
-#include "types.h"
+#include <types.h>
 
 enum EObjType {
 	OBJTYPE_INVALID      = -1, // Invalid object

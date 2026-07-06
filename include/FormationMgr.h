@@ -6,7 +6,7 @@
 #include "Creature.h"
 #include "Traversable.h"
 #include "Vector.h"
-#include "types.h"
+#include <types.h>
 
 struct Graphics;
 struct FormArranger;

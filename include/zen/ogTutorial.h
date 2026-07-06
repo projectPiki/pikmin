@@ -1,7 +1,7 @@
 #ifndef _ZEN_OGTUTORIAL_H
 #define _ZEN_OGTUTORIAL_H
 
-#include "types.h"
+#include <types.h>
 
 struct Controller;
 struct Graphics;

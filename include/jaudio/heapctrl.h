@@ -1,7 +1,7 @@
 #ifndef _JAUDIO_HEAPCTRL_H
 #define _JAUDIO_HEAPCTRL_H
 
-#include "types.h"
+#include <types.h>
 
 typedef struct jaheap_ jaheap_;
 

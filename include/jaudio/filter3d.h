@@ -1,7 +1,7 @@
 #ifndef _JAUDIO_FILTER3D_H
 #define _JAUDIO_FILTER3D_H
 
-#include "types.h"
+#include <types.h>
 
 typedef struct Vector3D_ Vector3D_;
 typedef struct TVector3D_ TVector3D_;

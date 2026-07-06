@@ -1,5 +1,5 @@
 #include "DebugLog.h"
-#include "Dolphin/os.h"
+#include <Dolphin/os.h>
 #include "EffectMgr.h"
 #include "TAI/EffectActions.h"
 #include "teki.h"

@@ -9,7 +9,7 @@
 #include "PlayerState.h"
 #include "Shape.h"
 #include "StateMachine.h"
-#include "types.h"
+#include <types.h>
 
 struct PaniAnimKeyEvent;
 struct PaniMotionTable;

@@ -2,7 +2,7 @@
 #include "BossConditions.h"
 #include "Collision.h"
 #include "DebugLog.h"
-#include "Dolphin/os.h"
+#include <Dolphin/os.h>
 #include "NsMath.h"
 #include "sysNew.h"
 

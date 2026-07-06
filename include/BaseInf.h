@@ -5,7 +5,7 @@
 #include "GlobalGameOptions.h"
 #include "ObjType.h"
 #include "Vector.h"
-#include "types.h"
+#include <types.h>
 
 struct Creature;
 struct CreatureInf;

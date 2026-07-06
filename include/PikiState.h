@@ -4,7 +4,7 @@
 #include "Piki.h"
 #include "StateMachine.h"
 #include "Vector.h"
-#include "types.h"
+#include <types.h>
 
 /**
  * @brief Piki high-level state IDs.

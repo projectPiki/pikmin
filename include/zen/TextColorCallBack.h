@@ -2,7 +2,7 @@
 #define _ZEN_OGGRAPH_H
 
 #include "P2D/TextBox.h"
-#include "types.h"
+#include <types.h>
 #include "zen/Math.h"
 
 struct Colour;

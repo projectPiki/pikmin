@@ -5,7 +5,7 @@
 #include "Pcam/CameraParameters.h"
 #include "nlib/Array.h"
 #include "nlib/Graphics.h"
-#include "types.h"
+#include <types.h>
 
 struct Controller;
 struct Creature;

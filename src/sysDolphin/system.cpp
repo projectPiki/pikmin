@@ -6,11 +6,11 @@
 #include "BaseApp.h"
 #include "DebugLog.h"
 #include "Delegate.h"
-#include "Dolphin/ar.h"
-#include "Dolphin/card.h"
-#include "Dolphin/gx.h"
-#include "Dolphin/os.h"
-#include "Dolphin/pad.h"
+#include <Dolphin/ar.h>
+#include <Dolphin/card.h>
+#include <Dolphin/gx.h>
+#include <Dolphin/os.h>
+#include <Dolphin/pad.h>
 #include "Font.h"
 #include "Graphics.h"
 #include "LoadIdler.h"

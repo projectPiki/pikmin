@@ -2,7 +2,7 @@
 #define _NEWPIKIGAME_H
 
 #include "Section.h"
-#include "types.h"
+#include <types.h>
 
 /**
  * @brief Game section for gameplay, for both challenge mode and story mode.

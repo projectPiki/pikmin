@@ -1,6 +1,6 @@
 #include "jaudio/dummyrom.h"
-#include "Dolphin/ar.h"
-#include "Dolphin/os.h"
+#include <Dolphin/ar.h>
+#include <Dolphin/os.h>
 #include "jaudio/audiocommon.h"
 #include "jaudio/memory.h"
 

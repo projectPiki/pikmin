@@ -1,5 +1,5 @@
 #include "jaudio/hvqm_play.h"
-#include "Dolphin/os.h"
+#include <Dolphin/os.h>
 #include "hvqm4.h"
 #include "jaudio/dspbuf.h"
 #include "jaudio/dummyprobe.h"

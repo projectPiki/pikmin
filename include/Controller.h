@@ -2,7 +2,7 @@
 #define CONTROLLER_H
 
 #include "Node.h"
-#include "types.h"
+#include <types.h>
 
 /**
  * @brief Controller input bit-flags used by `Controller`.  Not the same as Dolphin OS `PAD_XXX` defines.

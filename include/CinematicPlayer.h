@@ -7,7 +7,7 @@
 #include "EffectMgr.h"
 #include "Light.h"
 #include "Shape.h"
-#include "types.h"
+#include <types.h>
 #include <stdlib.h>
 #include <string.h>
 

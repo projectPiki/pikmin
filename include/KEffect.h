@@ -2,7 +2,7 @@
 #define _KEFFECT_H
 
 #include "Vector.h"
-#include "types.h"
+#include <types.h>
 #include "zen/CallBack.h"
 #include "zen/particle.h"
 

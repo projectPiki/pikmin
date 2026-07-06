@@ -3,7 +3,7 @@
 #include "CardSelectSection.h"
 #include "CmdStream.h"
 #include "DebugLog.h"
-#include "Dolphin/os.h"
+#include <Dolphin/os.h>
 #include "FlowController.h"
 #include "GameCourseClearSection.h"
 #include "GameCreditsSection.h"

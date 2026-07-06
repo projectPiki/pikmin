@@ -2,7 +2,7 @@
 #define _ZEN_OGDIARY_H
 
 #include "GlobalGameOptions.h"
-#include "types.h"
+#include <types.h>
 #include "zen/SpectrumCursorMgr.h"
 #include "zen/ogMessage.h"
 

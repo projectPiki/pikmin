@@ -1,7 +1,7 @@
 #ifndef _UTILITYKANDO_H
 #define _UTILITYKANDO_H
 
-#include "types.h"
+#include <types.h>
 
 struct Graphics;
 struct RandomAccessStream;

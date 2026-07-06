@@ -1,6 +1,6 @@
 #include "KeyConfig.h"
 #include "DebugLog.h"
-#include "Dolphin/os.h"
+#include <Dolphin/os.h>
 #include "sysNew.h"
 
 KeyConfig* KeyConfig::_instance;

@@ -1,6 +1,6 @@
 #include "jaudio/streamctrl.h"
-#include "Dolphin/ai.h"
-#include "Dolphin/dvd.h"
+#include <Dolphin/ai.h>
+#include <Dolphin/dvd.h>
 #include "jaudio/rate.h"
 #include <stddef.h>
 

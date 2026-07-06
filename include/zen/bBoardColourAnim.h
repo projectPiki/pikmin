@@ -1,7 +1,7 @@
 #ifndef _ZEN_BBOARDCOLOURANIM_H
 #define _ZEN_BBOARDCOLOURANIM_H
 
-#include "types.h"
+#include <types.h>
 
 struct Colour;
 

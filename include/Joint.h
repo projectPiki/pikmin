@@ -5,7 +5,7 @@
 #include "CoreNode.h"
 #include "Matrix4f.h"
 #include "Vector.h"
-#include "types.h"
+#include <types.h>
 
 struct AnimContext;
 struct Material;

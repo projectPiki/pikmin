@@ -1,7 +1,7 @@
 #ifndef _JAUDIO_JAMMAIN_2_H
 #define _JAUDIO_JAMMAIN_2_H
 
-#include "types.h"
+#include <types.h>
 
 #include "jaudio/audiostruct.h"
 

@@ -2,7 +2,7 @@
 #define _ZEN_OGGRAPH_H
 
 #include "Piki.h"
-#include "types.h"
+#include <types.h>
 
 struct Controller;
 struct Graphics;

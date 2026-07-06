@@ -1,7 +1,7 @@
 #ifndef _JAUDIO_DSPPROC_H
 #define _JAUDIO_DSPPROC_H
 
-#include "types.h"
+#include <types.h>
 
 /////////// JAUDIO DSP PROC DEFINITIONS ///////////
 // Global functions (all C++, so no extern C wrap).

@@ -1,10 +1,10 @@
 #ifndef _NLIB_MATH_H
 #define _NLIB_MATH_H
 
-#include "Dolphin/mtx.h"
+#include <Dolphin/mtx.h>
 #include "Vector.h"
 #include "nlib/System.h"
-#include "types.h"
+#include <types.h>
 #include <system.h>
 
 template <typename T>

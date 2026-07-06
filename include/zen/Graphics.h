@@ -2,7 +2,7 @@
 #define _ZEN_GRAPHICS_H
 
 #include "Vector.h"
-#include "types.h"
+#include <types.h>
 
 struct Colour;
 

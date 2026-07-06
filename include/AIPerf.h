@@ -1,7 +1,7 @@
 #ifndef _AIPERF_H
 #define _AIPERF_H
 
-#include "types.h"
+#include <types.h>
 
 struct Menu;
 

@@ -1,7 +1,7 @@
 #ifndef _JAUDIO_PIKISCENE_H
 #define _JAUDIO_PIKISCENE_H
 
-#include "types.h"
+#include <types.h>
 
 typedef enum JacResultsType {
 	JACRES_EndOfDay    = 0,

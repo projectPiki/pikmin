@@ -4,7 +4,7 @@
 #include "nlib/Array.h"
 #include "nlib/Function.h"
 #include "nlib/Geometry3D.h"
-#include "types.h"
+#include <types.h>
 
 struct NPolynomialFunction;
 struct NPosture3D;

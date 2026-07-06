@@ -5,7 +5,7 @@
 #include "DynColl.h"
 #include "ShadowCaster.h"
 #include "Shape.h"
-#include "types.h"
+#include <types.h>
 
 struct DynMapObject;
 struct MapObjectPart;

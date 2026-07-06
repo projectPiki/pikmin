@@ -3,7 +3,7 @@
 
 #include "AICreature.h"
 #include "StateMachine.h"
-#include "types.h"
+#include <types.h>
 
 #define C_SAI(obj) static_cast<SimpleAI*>(obj->mSAICtx.mStateMachine)
 

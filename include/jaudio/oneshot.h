@@ -1,7 +1,7 @@
 #ifndef _JAUDIO_ONESHOT_H
 #define _JAUDIO_ONESHOT_H
 
-#include "types.h"
+#include <types.h>
 
 typedef struct jc_ jc_;
 typedef struct Inst_ Inst_;

@@ -1,6 +1,6 @@
 #include "jaudio/interface.h"
 
-#include "Dolphin/os.h"
+#include <Dolphin/os.h>
 #include "jaudio/aictrl.h"
 #include "jaudio/piki_bgm.h"
 #include "jaudio/pikidemo.h"

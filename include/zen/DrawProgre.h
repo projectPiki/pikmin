@@ -2,7 +2,7 @@
 #define _ZEN_DRAWPROGRE_H
 
 #include "SoundMgr.h"
-#include "types.h"
+#include <types.h>
 #include "zen/DrawMenu.h"
 
 struct Controller;

@@ -1,7 +1,7 @@
 #ifndef _ZEN_DRAWWMPAUSE_H
 #define _ZEN_DRAWWMPAUSE_H
 
-#include "types.h"
+#include <types.h>
 
 struct Graphics;
 struct Controller;

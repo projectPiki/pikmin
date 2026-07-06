@@ -1,10 +1,10 @@
 #ifndef _CARDUTIL_H
 #define _CARDUTIL_H
 
-#include "Dolphin/OS/OSMutex.h"
-#include "Dolphin/OS/OSThread.h"
-#include "Dolphin/card.h"
-#include "types.h"
+#include <Dolphin/OS/OSMutex.h>
+#include <Dolphin/OS/OSThread.h>
+#include <Dolphin/card.h>
+#include <types.h>
 
 struct CARDStat;
 

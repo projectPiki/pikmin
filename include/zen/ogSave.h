@@ -2,7 +2,7 @@
 #define _ZEN_OGSAVE_H
 
 #include "MemoryCard.h"
-#include "types.h"
+#include <types.h>
 
 struct Controller;
 struct Graphics;

@@ -4,7 +4,7 @@
 #include "jaudio/audiomesg.h"
 #include "jaudio/jammain_2.h"
 
-#include "types.h"
+#include <types.h>
 
 BEGIN_SCOPE_EXTERN_C
 

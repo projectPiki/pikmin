@@ -1,7 +1,7 @@
 #ifndef _JAUDIO_BANKDRV_H
 #define _JAUDIO_BANKDRV_H
 
-#include "types.h"
+#include <types.h>
 
 typedef struct Bank_ Bank_;
 typedef struct Inst_ Inst_;

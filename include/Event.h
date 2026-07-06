@@ -2,7 +2,7 @@
 #define _EVENT_H
 
 #include "CoreNode.h"
-#include "types.h"
+#include <types.h>
 
 /**
  * @brief A generic "event" structure, used solely for the unused Key/Lock system.

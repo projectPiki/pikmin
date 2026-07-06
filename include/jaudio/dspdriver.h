@@ -2,7 +2,7 @@
 #define _JAUDIO_DSPDRIVER_H
 
 #include "jaudio/audiostruct.h"
-#include "types.h"
+#include <types.h>
 
 /////////// JAUDIO DSP DRIVER DEFINITIONS ///////////
 // Global functions (all C++, so no extern C wrap).

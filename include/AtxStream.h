@@ -2,7 +2,7 @@
 #define _ATXSTREAM_H
 
 #include "Stream.h"
-#include "types.h"
+#include <types.h>
 
 // Misc. definitions
 #define ATX_SERVICE_NAME_SIZE (4)     // 3 chars + null terminator

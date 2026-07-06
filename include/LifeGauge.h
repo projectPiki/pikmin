@@ -5,7 +5,7 @@
 #include "CoreNode.h"
 #include "Material.h"
 #include "Vector.h"
-#include "types.h"
+#include <types.h>
 
 struct Colour;
 struct Graphics;

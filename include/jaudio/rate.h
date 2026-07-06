@@ -1,7 +1,7 @@
 #ifndef _JAUDIO_RATE_H
 #define _JAUDIO_RATE_H
 
-#include "types.h"
+#include <types.h>
 
 /////////// JAUDIO GLOBAL RATE SETTINGS ///////////
 extern u32 JAC_AI_SETTING;

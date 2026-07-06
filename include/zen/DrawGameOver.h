@@ -1,7 +1,7 @@
 #ifndef _ZEN_DRAWGAMEOVER_H
 #define _ZEN_DRAWGAMEOVER_H
 
-#include "types.h"
+#include <types.h>
 #include "zen/DrawCommon.h"
 
 struct Graphics;

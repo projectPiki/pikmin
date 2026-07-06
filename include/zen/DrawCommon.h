@@ -2,7 +2,7 @@
 #define _ZEN_DRAWCOMMON_H
 
 #include "P2D/Screen.h"
-#include "types.h"
+#include <types.h>
 
 struct Graphics;
 

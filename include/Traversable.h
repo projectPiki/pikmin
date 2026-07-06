@@ -2,7 +2,7 @@
 #define _TRAVERSABLE_H
 
 #include "Condition.h"
-#include "types.h"
+#include <types.h>
 
 struct Creature;
 

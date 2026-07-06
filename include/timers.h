@@ -1,7 +1,7 @@
 #ifndef _TIMERS_H
 #define _TIMERS_H
 
-#include "types.h"
+#include <types.h>
 
 struct Graphics;
 struct Font;

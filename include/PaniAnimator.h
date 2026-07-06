@@ -2,7 +2,7 @@
 #define _PANIANIMATOR_H
 
 #include "Animator.h"
-#include "types.h"
+#include <types.h>
 
 struct PaniMotion;
 struct PaniMotionTable;

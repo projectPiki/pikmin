@@ -2,7 +2,7 @@
 #include "Camera.h"
 #include "Controller.h"
 #include "DebugLog.h"
-#include "Dolphin/os.h"
+#include <Dolphin/os.h>
 #include "FlowController.h"
 #include "Font.h"
 #include "Geometry.h"

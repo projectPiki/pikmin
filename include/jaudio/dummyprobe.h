@@ -1,7 +1,7 @@
 #ifndef _JAUDIO_DUMMYPROBE_H
 #define _JAUDIO_DUMMYPROBE_H
 
-#include "types.h"
+#include <types.h>
 
 BEGIN_SCOPE_EXTERN_C
 

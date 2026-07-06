@@ -2,7 +2,7 @@
 #define _TAI_ACTION_H
 
 #include "TekiStrategy.h"
-#include "types.h"
+#include <types.h>
 
 struct Teki;
 

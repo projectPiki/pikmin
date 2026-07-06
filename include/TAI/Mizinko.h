@@ -1,7 +1,7 @@
 #ifndef _TAI_MIZINKO_H
 #define _TAI_MIZINKO_H
 
-#include "types.h"
+#include <types.h>
 
 #include "PaniAnimator.h"
 #include "TAI/Action.h"

@@ -1,7 +1,7 @@
 #ifndef _TAI_KABEKUIB_H
 #define _TAI_KABEKUIB_H
 
-#include "types.h"
+#include <types.h>
 
 #include "PaniAnimator.h"
 #include "TAI/Animation.h"

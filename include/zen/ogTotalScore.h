@@ -1,7 +1,7 @@
 #ifndef _ZEN_OGTOTALSCORE_H
 #define _ZEN_OGTOTALSCORE_H
 
-#include "types.h"
+#include <types.h>
 #include "zen/DrawCM.h"
 #include "zen/DrawFinalResult.h"
 

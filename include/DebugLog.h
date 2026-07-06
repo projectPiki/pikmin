@@ -1,10 +1,10 @@
 #ifndef _DEBUGLOG_H
 #define _DEBUGLOG_H
 
-#include "Dolphin/OS/OSError.h"
+#include <Dolphin/OS/OSError.h>
 #include "Stream.h"
 #include "system.h"
-#include "types.h"
+#include <types.h>
 #include <stdarg.h>
 #include <stdio.h>
 #include <string.h>

@@ -1,7 +1,7 @@
 #ifndef _NLIB_ARRAY_H
 #define _NLIB_ARRAY_H
 
-#include "types.h"
+#include <types.h>
 
 /**
  * @brief TODO

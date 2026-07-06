@@ -6,7 +6,7 @@
 #include "Node.h"
 #include "Parameters.h"
 #include "Vector.h"
-#include "types.h"
+#include <types.h>
 
 /// Maximum size of the generator cache heap, in bytes (for all stages combined).
 #define GENCACHE_HEAP_SIZE (0x6C00)

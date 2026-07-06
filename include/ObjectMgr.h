@@ -3,7 +3,7 @@
 
 #include "Node.h"
 #include "Traversable.h"
-#include "types.h"
+#include <types.h>
 
 struct Condition;
 struct Texture;

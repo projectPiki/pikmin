@@ -6,7 +6,7 @@
 #include "Node.h"
 #include "Parameters.h"
 #include "Traversable.h"
-#include "types.h"
+#include <types.h>
 
 struct MapMgr;
 struct Piki;

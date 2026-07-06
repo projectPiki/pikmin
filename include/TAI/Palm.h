@@ -1,7 +1,7 @@
 #ifndef _TAI_PALM_H
 #define _TAI_PALM_H
 
-#include "types.h"
+#include <types.h>
 
 #include "PaniAnimator.h"
 #include "TAI/Action.h"

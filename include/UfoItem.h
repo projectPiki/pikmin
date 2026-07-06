@@ -6,7 +6,7 @@
 #include "Shape.h"
 #include "SoundMgr.h"
 #include "Suckable.h"
-#include "types.h"
+#include <types.h>
 
 struct Piki;
 struct SimpleAI;

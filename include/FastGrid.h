@@ -1,7 +1,7 @@
 #ifndef _FASTGRID_H
 #define _FASTGRID_H
 
-#include "types.h"
+#include <types.h>
 
 struct Graphics;
 struct Vector3f;

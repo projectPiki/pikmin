@@ -1,6 +1,6 @@
 #include "BaseInf.h"
 #include "DebugLog.h"
-#include "Dolphin/os.h"
+#include <Dolphin/os.h>
 #include "GlobalGameOptions.h"
 #include "Piki.h"
 #include "PikiHeadItem.h"

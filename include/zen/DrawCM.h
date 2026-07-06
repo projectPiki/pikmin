@@ -3,7 +3,7 @@
 
 #include "gameflow.h"
 #include "nlib/Math.h"
-#include "types.h"
+#include <types.h>
 #include "zen/DrawMenu.h"
 #include "zen/Number.h"
 #include "zen/ogGraph.h"

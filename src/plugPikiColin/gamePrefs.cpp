@@ -1,7 +1,7 @@
 #include "gameflow.h"
 
 #include "DebugLog.h"
-#include "Dolphin/os.h"
+#include <Dolphin/os.h>
 #include "OnePlayerSection.h"
 #include "RumbleMgr.h"
 #include "jaudio/interface.h"

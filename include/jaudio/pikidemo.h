@@ -1,7 +1,7 @@
 #ifndef _JAUDIO_PIKIDEMO_H
 #define _JAUDIO_PIKIDEMO_H
 
-#include "types.h"
+#include <types.h>
 
 //////////// JAUDIO PIKMIN DEMO FUNCTIONS (C++) ////////////
 void Jac_DemoEventUnPauseCheck();

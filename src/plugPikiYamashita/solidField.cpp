@@ -1,4 +1,4 @@
-#include "types.h"
+#include <types.h>
 
 // texture sizes = 32 x 64?
 static u16 ami[1024] = {

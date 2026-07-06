@@ -6,7 +6,7 @@
 #include "Geometry.h"
 #include "Node.h"
 #include "system.h"
-#include "types.h"
+#include <types.h>
 
 struct TimeSetting;
 struct Controller;

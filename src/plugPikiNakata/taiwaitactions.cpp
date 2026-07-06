@@ -1,5 +1,5 @@
 #include "DebugLog.h"
-#include "Dolphin/os.h"
+#include <Dolphin/os.h>
 #include "TAI/WaitActions.h"
 #include "nlib/Math.h"
 #include "system.h"

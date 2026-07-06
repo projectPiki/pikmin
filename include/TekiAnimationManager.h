@@ -2,7 +2,7 @@
 #define _TEKIANIMATIONMANAGER_H
 
 #include "Node.h"
-#include "types.h"
+#include <types.h>
 
 struct TekiMgr;
 

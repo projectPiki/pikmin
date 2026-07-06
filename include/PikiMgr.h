@@ -4,7 +4,7 @@
 #include "CreatureProp.h"
 #include "ObjectMgr.h"
 #include "ViewPiki.h"
-#include "types.h"
+#include <types.h>
 
 struct Navi;
 struct CPlate;

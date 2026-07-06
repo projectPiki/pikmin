@@ -4,7 +4,7 @@
 #include "Creature.h"
 #include "PaniAnimator.h"
 #include "Vector.h"
-#include "types.h"
+#include <types.h>
 
 template <typename T>
 struct AState;

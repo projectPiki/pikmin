@@ -8,7 +8,7 @@
 #include "Route.h"
 #include "StateMachine.h"
 #include "UtEffect.h"
-#include "types.h"
+#include <types.h>
 
 #define PIKI_PROP()       static_cast<PikiProp*>(mProps)->mPikiParms
 #define C_PIKI_PROP(piki) static_cast<PikiProp*>(piki->mProps)->mPikiParms

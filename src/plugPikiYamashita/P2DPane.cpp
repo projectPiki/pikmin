@@ -1,5 +1,5 @@
 #include "DebugLog.h"
-#include "Dolphin/gx.h"
+#include <Dolphin/gx.h>
 #include "P2D/Graph.h"
 #include "P2D/Pane.h"
 #include "PSU/LinkList.h"

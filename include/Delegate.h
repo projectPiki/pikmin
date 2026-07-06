@@ -1,7 +1,7 @@
 #ifndef _DELEGATE_H
 #define _DELEGATE_H
 
-#include "types.h"
+#include <types.h>
 
 /**
  * @brief Parent class for no argument delegates.  NOTE this is only used in the .dll, not the final game

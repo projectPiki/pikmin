@@ -2,7 +2,7 @@
 #include "AIPerf.h"
 #include "CourseDebug.h"
 #include "DebugLog.h"
-#include "Dolphin/os.h"
+#include <Dolphin/os.h>
 #include "EffectMgr.h"
 #include "PikiAI.h"
 #include "PikiState.h"

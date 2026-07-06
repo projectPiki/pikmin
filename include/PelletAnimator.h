@@ -5,7 +5,7 @@
 #include "CoreNode.h"
 #include "PaniAnimator.h"
 #include "Parameters.h"
-#include "types.h"
+#include <types.h>
 
 struct PaniAnimKeyListener;
 struct PaniMotionInfo;

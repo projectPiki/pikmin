@@ -2,7 +2,7 @@
 #define _NUCLEUS_H
 
 #include "Boss.h"
-#include "types.h"
+#include <types.h>
 
 struct Slime;
 struct NucleusAi;

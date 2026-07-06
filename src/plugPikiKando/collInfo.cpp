@@ -4,7 +4,7 @@
 #include "Geometry.h"
 #include "zen/Math.h"
 
-#include "Dolphin/os.h"
+#include <Dolphin/os.h>
 #include "Graphics.h"
 #include "Shape.h"
 #include "sysNew.h"

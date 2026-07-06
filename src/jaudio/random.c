@@ -1,5 +1,5 @@
 #include "jaudio/random.h"
-#include "Dolphin/os.h"
+#include <Dolphin/os.h>
 
 static s32 v0 = 0x0001000;
 static s32 v1 = 0x0005555;

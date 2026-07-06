@@ -11,7 +11,7 @@
 #include "Stream.h"
 #include "Texture.h"
 #include "system.h"
-#include "types.h"
+#include <types.h>
 
 struct AnimMgr;
 struct BaseShape;

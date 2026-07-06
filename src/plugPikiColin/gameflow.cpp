@@ -4,7 +4,7 @@
 #include "Controller.h"
 #include "DebugLog.h"
 #include "Delegate.h"
-#include "Dolphin/os.h"
+#include <Dolphin/os.h>
 #include "GameCourseClearSection.h"
 #include "Geometry.h"
 #include "Graphics.h"

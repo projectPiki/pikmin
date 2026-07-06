@@ -2,7 +2,7 @@
 #define _ZEN_OGNITAKU_H
 
 #include "Colour.h"
-#include "types.h"
+#include <types.h>
 #include "zen/SpectrumCursorMgr.h"
 
 struct Controller;

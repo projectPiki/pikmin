@@ -2,7 +2,7 @@
 #define _CREATURECOLLPART_H
 
 #include "DynColl.h"
-#include "types.h"
+#include <types.h>
 
 struct CollPart;
 

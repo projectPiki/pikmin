@@ -1,7 +1,7 @@
 #ifndef _PIKIINFO_H
 #define _PIKIINFO_H
 
-#include "types.h"
+#include <types.h>
 
 struct PikiInfo {
 	PikiInfo();

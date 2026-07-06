@@ -6,7 +6,7 @@
 #include "EffectMgr.h"
 #include "GlobalGameOptions.h"
 #include "MapMgr.h"
-#include "types.h"
+#include <types.h>
 #include "zen/CallBack.h"
 #include "zen/particle.h"
 

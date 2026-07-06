@@ -2,7 +2,7 @@
 #define _CREATURENODE_H
 
 #include "ObjectMgr.h"
-#include "types.h"
+#include <types.h>
 
 /**
  * @brief TODO

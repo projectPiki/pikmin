@@ -2,7 +2,7 @@
 #define _MESH_H
 
 #include "CoreNode.h"
-#include "types.h"
+#include <types.h>
 
 struct MtxGroup;
 

@@ -8,7 +8,7 @@
 #include "PelletView.h"
 #include "Piki.h"
 #include "ShadowCaster.h"
-#include "types.h"
+#include <types.h>
 
 struct CPlate;
 struct BurnEffect;

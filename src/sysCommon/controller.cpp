@@ -1,7 +1,7 @@
 #include "Controller.h"
 
 #include "DebugLog.h"
-#include "Dolphin/os.h"
+#include <Dolphin/os.h>
 #include "system.h"
 
 /**

@@ -1,7 +1,7 @@
 #ifndef _COURSEDEBUG_H
 #define _COURSEDEBUG_H
 
-#include "types.h"
+#include <types.h>
 
 namespace CourseDebug {
 

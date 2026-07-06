@@ -1,7 +1,7 @@
 #ifndef _ZEN_OGMAKEDEFAULT_H
 #define _ZEN_OGMAKEDEFAULT_H
 
-#include "types.h"
+#include <types.h>
 
 struct Controller;
 struct Graphics;

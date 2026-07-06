@@ -1,7 +1,7 @@
 #ifndef _JAUDIO_APP_INTER_H
 #define _JAUDIO_APP_INTER_H
 
-#include "types.h"
+#include <types.h>
 
 BEGIN_SCOPE_EXTERN_C
 

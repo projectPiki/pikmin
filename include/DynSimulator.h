@@ -5,7 +5,7 @@
 #include "Collision.h"
 #include "Matrix3f.h"
 #include "Node.h"
-#include "types.h"
+#include <types.h>
 
 struct Collision;
 struct CollGroup;

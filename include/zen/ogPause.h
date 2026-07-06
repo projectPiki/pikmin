@@ -1,7 +1,7 @@
 #ifndef _ZEN_OGPAUSE_H
 #define _ZEN_OGPAUSE_H
 
-#include "types.h"
+#include <types.h>
 
 struct Controller;
 struct Graphics;

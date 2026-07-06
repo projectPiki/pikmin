@@ -4,7 +4,7 @@
 #include "Colour.h"
 #include "P2D/Pane.h"
 #include "P2D/Util.h"
-#include "types.h"
+#include <types.h>
 
 struct Texture;
 struct P2DFont;

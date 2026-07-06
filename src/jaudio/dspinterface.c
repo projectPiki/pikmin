@@ -1,6 +1,6 @@
 #include "jaudio/dspinterface.h"
 
-#include "Dolphin/os.h"
+#include <Dolphin/os.h>
 #include "jaudio/driverinterface.h"
 #include "jaudio/dspdriver.h"
 #include "jaudio/dspproc.h"

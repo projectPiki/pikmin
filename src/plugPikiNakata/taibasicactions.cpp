@@ -1,5 +1,5 @@
 #include "DebugLog.h"
-#include "Dolphin/os.h"
+#include <Dolphin/os.h>
 #include "PlayerState.h"
 #include "TAI/BasicActions.h"
 #include "teki.h"

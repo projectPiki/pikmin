@@ -1,7 +1,7 @@
 #ifndef _ZEN_DRAWFINALRESULT_H
 #define _ZEN_DRAWFINALRESULT_H
 
-#include "types.h"
+#include <types.h>
 #include "zen/DrawCM.h"
 #include "zen/DrawSave.h"
 #include "zen/DrawUfoParts.h"

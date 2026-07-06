@@ -5,7 +5,7 @@
 #include "Collision.h"
 #include "CreatureProp.h"
 #include "DebugLog.h"
-#include "Dolphin/os.h"
+#include <Dolphin/os.h>
 #include "DynColl.h"
 #include "Generator.h"
 #include "Geometry.h"

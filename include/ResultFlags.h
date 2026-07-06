@@ -2,7 +2,7 @@
 #define _RESULTFLAGS_H
 
 #include "GlobalGameOptions.h"
-#include "types.h"
+#include <types.h>
 #include "zen/ogResult.h"
 
 struct RandomAccessStream;

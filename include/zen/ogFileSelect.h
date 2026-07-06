@@ -5,7 +5,7 @@
 #include "MemoryCard.h"
 #include "P2D/TextBox.h"
 #include "Vector.h"
-#include "types.h"
+#include <types.h>
 #include "zen/SpectrumCursorMgr.h"
 #include "zen/ogSub.h"
 #include <string.h>

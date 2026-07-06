@@ -3,7 +3,7 @@
 
 #include "Light.h"
 #include "Node.h"
-#include "types.h"
+#include <types.h>
 
 struct Camera;
 struct Controller;

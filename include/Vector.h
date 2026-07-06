@@ -4,7 +4,7 @@
 #include "Stream.h"
 #include "math.h"
 #include "sysMath.h"
-#include "types.h"
+#include <types.h>
 
 struct AgeServer;
 struct Matrix3f;

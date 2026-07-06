@@ -7,7 +7,7 @@
 #include "Matrix4f.h"
 #include "Plane.h"
 #include "Vector.h"
-#include "types.h"
+#include <types.h>
 
 struct CmdStream;
 struct Creature;

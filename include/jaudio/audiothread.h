@@ -1,8 +1,8 @@
 #ifndef _JAUDIO_AUDIOTHREAD_H
 #define _JAUDIO_AUDIOTHREAD_H
 
-#include "Dolphin/OS/OSMessage.h"
-#include "types.h"
+#include <Dolphin/OS/OSMessage.h>
+#include <types.h>
 
 BEGIN_SCOPE_EXTERN_C
 

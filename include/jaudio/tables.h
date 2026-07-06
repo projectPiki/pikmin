@@ -1,7 +1,7 @@
 #ifndef _JAUDIO_TABLES_H
 #define _JAUDIO_TABLES_H
 
-#include "types.h"
+#include <types.h>
 
 #define C5BASE_PITCHTABLE_LENGTH (128)
 extern f32 C5BASE_PITCHTABLE[C5BASE_PITCHTABLE_LENGTH];

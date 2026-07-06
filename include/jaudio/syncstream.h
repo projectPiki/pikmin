@@ -2,7 +2,7 @@
 #define _JAUDIO_SYNCSTREAM_H
 
 #include "jaudio/dspinterface.h"
-#include "types.h"
+#include <types.h>
 
 BEGIN_SCOPE_EXTERN_C
 

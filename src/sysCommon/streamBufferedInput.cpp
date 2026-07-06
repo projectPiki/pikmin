@@ -1,7 +1,7 @@
 #include "Stream.h"
 
 #include "DebugLog.h"
-#include "Dolphin/os.h"
+#include <Dolphin/os.h>
 #include "sysNew.h"
 #include "system.h"
 #include <string.h>

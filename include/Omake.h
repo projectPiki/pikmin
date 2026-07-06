@@ -5,7 +5,7 @@
 #include "MapMgr.h"
 #include "Vector.h"
 #include "system.h"
-#include "types.h"
+#include <types.h>
 
 struct Creature;
 struct Graphics;

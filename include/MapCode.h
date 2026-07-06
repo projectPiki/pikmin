@@ -1,7 +1,7 @@
 #ifndef _MAPCODE_H
 #define _MAPCODE_H
 
-#include "types.h"
+#include <types.h>
 
 struct CollTriInfo;
 

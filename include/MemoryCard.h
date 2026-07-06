@@ -2,7 +2,7 @@
 #define _MEMORYCARD_H
 
 #include "CoreNode.h"
-#include "types.h"
+#include <types.h>
 
 struct CARDStat;
 struct PlayState;

@@ -1,7 +1,7 @@
 #ifndef _JAUDIO_SAMPLE_H
 #define _JAUDIO_SAMPLE_H
 
-#include "types.h"
+#include <types.h>
 
 /////////// JAUDIO SAMPLE DEFINITIONS ///////////
 // Global functions (all C++, so no extern C wrap).

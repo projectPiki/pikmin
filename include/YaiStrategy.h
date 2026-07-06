@@ -2,7 +2,7 @@
 #define _YAISTRATEGY_H
 
 #include "TekiStrategy.h"
-#include "types.h"
+#include <types.h>
 
 struct TaiState;
 

@@ -2,10 +2,10 @@
 #define _ZEN_PARTICLE_H
 
 #include "Colour.h"
-#include "Dolphin/gx.h"
-#include "Dolphin/mtx.h"
+#include <Dolphin/gx.h>
+#include <Dolphin/mtx.h>
 #include "sysNew.h"
-#include "types.h"
+#include <types.h>
 #include "zen/CallBack.h"
 #include "zen/Math.h"
 #include "zen/bBoardColourAnim.h"

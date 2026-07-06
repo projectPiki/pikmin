@@ -2,7 +2,7 @@
 #define _SHADOWCASTER_H
 
 #include "Camera.h"
-#include "types.h"
+#include <types.h>
 
 /**
  * @brief Manages shadow projections for large dynamic objects or trees of objects that require shadow shapes that match their model.

@@ -2,7 +2,7 @@
 #define _INTERACTIONS_H
 
 #include "Vector.h"
-#include "types.h"
+#include <types.h>
 
 // passing this as the flick angle = flick directly away from enemy
 #define FLICK_BACKWARDS_ANGLE (-1000.0f)

@@ -2,7 +2,7 @@
 #define _COLOUR_H
 
 #include "Stream.h"
-#include "types.h"
+#include <types.h>
 
 #define COLOUR_WHITE       Colour(255, 255, 255, 255)
 #define COLOUR_BLACK       Colour(0, 0, 0, 255)

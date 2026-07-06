@@ -1,9 +1,9 @@
 #ifndef _JAUDIO_AUDIOSTRUCT_H
 #define _JAUDIO_AUDIOSTRUCT_H
 
-#include "Dolphin/os.h"
+#include <Dolphin/os.h>
 #include "jaudio/bx.h"
-#include "types.h"
+#include <types.h>
 
 BEGIN_SCOPE_EXTERN_C
 

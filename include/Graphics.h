@@ -1,11 +1,11 @@
 #ifndef _GRAPHICS_H
 #define _GRAPHICS_H
 
-#include "Dolphin/mtx.h"
+#include <Dolphin/mtx.h>
 #include "Joint.h"
 #include "Light.h"
 #include "Shape.h"
-#include "types.h"
+#include <types.h>
 
 struct BaseShape;
 struct CachedShape;

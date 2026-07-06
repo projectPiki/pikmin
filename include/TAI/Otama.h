@@ -1,7 +1,7 @@
 #ifndef _TAI_OTAMA_H
 #define _TAI_OTAMA_H
 
-#include "types.h"
+#include <types.h>
 
 #include "PaniAnimator.h"
 #include "TAI/Animation.h"

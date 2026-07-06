@@ -3,7 +3,7 @@
 
 #include "CreatureProp.h"
 #include "ItemMgr.h"
-#include "types.h"
+#include <types.h>
 
 struct SimpleAI;
 

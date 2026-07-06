@@ -218,7 +218,8 @@ cflags_base = [
     "-str reuse",
     "-multibyte",
     "-i include",
-    "-i include/stl",
+    "-i libs/Dolphin/include",
+    "-i libs/PowerPC_EABI_Support/include/stl",
     f"-i build/{config.version}/include",
     f"-DBUILD_VERSION={version_num}",
     f"-DVERSION_{config.version}",
@@ -258,7 +259,8 @@ cflags_jaudio = [
     "-str reuse, readonly",
     "-multibyte",
     "-i include",
-    "-i include/stl",
+    "-i libs/Dolphin/include",
+    "-i libs/PowerPC_EABI_Support/include/stl",
     f"-i build/{config.version}/include",
     f"-DBUILD_VERSION={version_num}",
     f"-DVERSION_{config.version}",
@@ -281,6 +283,7 @@ cflags_pikmin = [
 # Metrowerks library flags
 cflags_runtime = [
     *cflags_base,
+    "-i libs/PowerPC_EABI_Support/include",
     "-use_lmw_stmw on",
     "-str reuse,readonly",
     "-common off",
@@ -297,6 +300,7 @@ def DolphinLib(lib_name: str, objects: List[Object]) -> Dict[str, Any]:
         mw_version = "GC/1.2.5n"
     return {
         "lib": lib_name,
+        "src_dir": "libs/Dolphin/src",
         "mw_version": mw_version,
         "cflags": cflags_base,
         "progress_category": "sdk",
@@ -1013,6 +1017,7 @@ config.libs = [
     ),
     {
         "lib": "Runtime.PPCEABI.H",
+        "src_dir": "libs/PowerPC_EABI_Support/src",
         "mw_version": "GC/1.2.5",
         "progress_category": "sdk",
         "cflags": [*cflags_runtime, "-inline deferred"],
@@ -1030,6 +1035,7 @@ config.libs = [
     },
     {
         "lib": "MSL_C.PPCEABI.bare.H",
+        "src_dir": "libs/PowerPC_EABI_Support/src",
         "mw_version": "GC/1.2.5",
         "progress_category": "sdk",
         "cflags": [
@@ -1081,6 +1087,7 @@ config.libs = [
     },
     {
         "lib": "TRK_MINNOW_DOLPHIN",
+        "src_dir": "libs",
         "mw_version": "GC/1.1p1",
         "progress_category": "sdk",
         "cflags": [
@@ -1117,6 +1124,7 @@ config.libs = [
     },
     {
         "lib": "amcExi2",
+        "src_dir": "libs/Dolphin/src",
         "mw_version": "GC/1.2.5",
         "progress_category": "sdk",
         "cflags": cflags_base,
@@ -1127,6 +1135,7 @@ config.libs = [
     },
     {
         "lib": "amcnotstub",
+        "src_dir": "libs/Dolphin/src",
         "mw_version": "GC/1.2.5",
         "progress_category": "sdk",
         "cflags": cflags_base,
@@ -1136,6 +1145,7 @@ config.libs = [
     },
     {
         "lib": "OdemuExi2",
+        "src_dir": "libs/Dolphin/src",
         "mw_version": "GC/1.2.5",
         "progress_category": "sdk",
         "cflags": cflags_base,
@@ -1145,6 +1155,7 @@ config.libs = [
     },
     {
         "lib": "odenotstub",
+        "src_dir": "libs/Dolphin/src",
         "mw_version": "GC/1.2.5",
         "progress_category": "sdk",
         "cflags": cflags_base,
@@ -1155,6 +1166,7 @@ config.libs = [
     # PAL Demo exclusive libs
     {
         "lib": "odemustubs",
+        "src_dir": "libs/Dolphin/src",
         "mw_version": "GC/1.2.5",
         "progress_category": "sdk",
         "cflags": cflags_base,
@@ -1164,6 +1176,7 @@ config.libs = [
     },
     {
         "lib": "amcstubs",
+        "src_dir": "libs/Dolphin/src",
         "mw_version": "GC/1.2.5",
         "progress_category": "sdk",
         "cflags": cflags_base,

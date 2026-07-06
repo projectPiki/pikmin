@@ -1,7 +1,7 @@
 #ifndef _ZEN_TEXANIM_H
 #define _ZEN_TEXANIM_H
 
-#include "types.h"
+#include <types.h>
 
 struct Texture;
 

@@ -2,7 +2,7 @@
 #define _JAUDIO_DSPBOOT_H
 
 #include "jaudio/audiocommon.h"
-#include "types.h"
+#include <types.h>
 
 BEGIN_SCOPE_EXTERN_C
 

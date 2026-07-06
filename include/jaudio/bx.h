@@ -4,7 +4,7 @@
 // This is an invented header containing several structs related to the file structure of pikibank.bx
 
 #include "jaudio/heapctrl.h"
-#include "types.h"
+#include <types.h>
 
 #define BANK_INST_COUNT        (0xF0)
 #define BANK_TEST_INST_COUNT   (0x80)

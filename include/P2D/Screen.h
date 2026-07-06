@@ -3,7 +3,7 @@
 
 #include "P2D/Pane.h"
 #include "P2D/Util.h"
-#include "types.h"
+#include <types.h>
 
 namespace zen {
 struct PikaAlphaMgr;

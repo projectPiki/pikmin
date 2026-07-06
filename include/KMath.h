@@ -2,7 +2,7 @@
 #define _KMATH_H
 
 #include "Vector.h"
-#include "types.h"
+#include <types.h>
 
 struct Matrix4f;
 

@@ -1,6 +1,6 @@
 #include "jaudio/verysimple.h"
 
-#include "Dolphin/os.h"
+#include <Dolphin/os.h>
 #include "jaudio/aictrl.h"
 #include "jaudio/audiothread.h"
 #include "jaudio/bankloader.h"

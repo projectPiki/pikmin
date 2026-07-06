@@ -2,7 +2,7 @@
 #define _STATEMACHINE_H
 
 #include "Receiver.h"
-#include "types.h"
+#include <types.h>
 
 template <typename T>
 struct StateMachine;

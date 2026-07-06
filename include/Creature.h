@@ -10,7 +10,7 @@
 #include "SearchSystem.h"
 #include "UpdateMgr.h"
 #include "Vector.h"
-#include "types.h"
+#include <types.h>
 
 struct CollEvent;
 struct CollInfo;

@@ -6,7 +6,7 @@
 #include "Vector.h"
 #include "nlib/Math.h"
 #include "system.h"
-#include "types.h"
+#include <types.h>
 
 struct Controller;
 struct Graphics;

@@ -1,7 +1,7 @@
 #include "NaviState.h"
 #include "AIConstant.h"
 #include "AIPerf.h"
-#include "Dolphin/os.h"
+#include <Dolphin/os.h>
 #include "EffectMgr.h"
 #include "FlowController.h"
 #include "GameCoreSection.h"

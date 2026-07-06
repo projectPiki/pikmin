@@ -2,7 +2,7 @@
 #define _SYSNEW_H
 
 #include "system.h"
-#include "types.h"
+#include <types.h>
 #include <stddef.h>
 
 inline void* operator new(size_t size)

@@ -1,7 +1,7 @@
 #ifndef _JAUDIO_PIKIPLAYER_H
 #define _JAUDIO_PIKIPLAYER_H
 
-#include "types.h"
+#include <types.h>
 
 typedef enum JacOrimaSoundID {
 	JACORIMA_PikiHit          = 0,

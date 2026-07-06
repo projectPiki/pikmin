@@ -4,7 +4,7 @@
 #include "P2D/Graph.h"
 #include "P2D/Picture.h"
 #include "P2D/Screen.h"
-#include "types.h"
+#include <types.h>
 
 struct Graphics;
 

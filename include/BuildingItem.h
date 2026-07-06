@@ -7,7 +7,7 @@
 #include "Shape.h"
 #include "SoundMgr.h"
 #include "UtEffect.h"
-#include "types.h"
+#include <types.h>
 
 struct ItemShapeObject;
 struct SimpleAI;

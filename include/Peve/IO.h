@@ -4,7 +4,7 @@
 #include "Creature.h"
 #include "Pcam/Camera.h"
 #include "nlib/Geometry.h"
-#include "types.h"
+#include <types.h>
 
 struct Creature;
 struct PcamCamera;

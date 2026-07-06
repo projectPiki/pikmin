@@ -3,7 +3,7 @@
 
 #include "jaudio/pikiseq.h"
 
-#include "types.h"
+#include <types.h>
 
 void JV_InitHeader(immut char*);
 BOOL JV_InitHeader_M(immut char*, u8*, u8*);

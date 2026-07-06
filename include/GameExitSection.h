@@ -2,7 +2,7 @@
 #define _GAMEEXITSECTION_H
 
 #include "Section.h"
-#include "types.h"
+#include <types.h>
 
 /**
  * @brief Game section for cleaning up and exiting back to title.

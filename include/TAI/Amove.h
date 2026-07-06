@@ -3,7 +3,7 @@
 
 #include "NaviMgr.h"
 #include "TAI/Amotion.h"
-#include "types.h"
+#include <types.h>
 
 struct Vector3f;
 

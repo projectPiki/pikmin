@@ -5,7 +5,7 @@
 #include "StateMachine.h"
 #include "Vector.h"
 #include "Win.h"
-#include "types.h"
+#include <types.h>
 
 struct NaviState;
 

@@ -1,6 +1,6 @@
 #include "Age.h"
 #include "DebugLog.h"
-#include "Dolphin/os.h"
+#include <Dolphin/os.h>
 #include "Generator.h"
 #include "TekiParameters.h"
 #include "TekiPersonality.h"

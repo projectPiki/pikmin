@@ -4,7 +4,7 @@
 #include "Boss.h"
 #include "Collision.h"
 #include "sysMath.h"
-#include "types.h"
+#include <types.h>
 
 /////////// Goolix (Slime) ///////////
 // Goolix is comprised of lots of parts:

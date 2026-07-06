@@ -7,7 +7,7 @@
 #include "PSU/Tree.h"
 #include "PUT/Geometry.h"
 #include "Vector.h"
-#include "types.h"
+#include <types.h>
 #include "zen/CallBack.h"
 
 struct P2DGrafContext;

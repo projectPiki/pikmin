@@ -5,7 +5,7 @@
 #include "Navi.h"
 #include "ObjectMgr.h"
 #include "Piki.h"
-#include "types.h"
+#include <types.h>
 
 /**
  * @brief TODO

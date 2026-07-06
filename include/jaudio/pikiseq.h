@@ -1,7 +1,7 @@
 #ifndef _JAUDIO_PIKISEQ_H
 #define _JAUDIO_PIKISEQ_H
 
-#include "types.h"
+#include <types.h>
 
 typedef struct BarcHeader BarcHeader;
 typedef struct BarcEntry BarcEntry;

@@ -2,7 +2,7 @@
 #define _TAI_EFFECTACTIONS_H
 
 #include "TAI/Aeffect.h"
-#include "types.h"
+#include <types.h>
 
 struct Vector3f;
 

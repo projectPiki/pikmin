@@ -1,7 +1,7 @@
 #ifndef _JAUDIO_INTERLEAVE_H
 #define _JAUDIO_INTERLEAVE_H
 
-#include "types.h"
+#include <types.h>
 
 /**
  * @brief TODO

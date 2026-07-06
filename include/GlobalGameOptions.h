@@ -1,7 +1,7 @@
 #ifndef _GLOBALGAMEOPTIONS_H
 #define _GLOBALGAMEOPTIONS_H
 
-#include "types.h"
+#include <types.h>
 
 // NB: raising parts or days over 99 (or field pikis over 999) will cause number display errors
 // you'll have to more seriously edit some of the ogawa and yamashita screens if you wanna do that

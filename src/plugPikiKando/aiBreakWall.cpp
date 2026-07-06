@@ -1,7 +1,7 @@
 #include "AIPerf.h"
 #include "BuildingItem.h"
 #include "DebugLog.h"
-#include "Dolphin/os.h"
+#include <Dolphin/os.h>
 #include "FlowController.h"
 #include "Interactions.h"
 #include "PikiAI.h"

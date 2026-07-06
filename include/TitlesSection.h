@@ -2,7 +2,7 @@
 #define _TITLESECTION_H
 
 #include "Section.h"
-#include "types.h"
+#include <types.h>
 
 /**
  * @brief Game section for the title screen.

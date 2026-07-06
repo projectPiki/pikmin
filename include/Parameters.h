@@ -1,7 +1,7 @@
 #ifndef _PARAMETERS_H
 #define _PARAMETERS_H
 
-#include "types.h"
+#include <types.h>
 
 struct AgeServer;
 struct Parameters;

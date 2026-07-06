@@ -2,7 +2,7 @@
 #define _DAYMGR_H
 
 #include "Light.h"
-#include "types.h"
+#include <types.h>
 
 struct CmdStream;
 struct Colour;

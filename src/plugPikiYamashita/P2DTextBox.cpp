@@ -1,5 +1,5 @@
 #include "DebugLog.h"
-#include "Dolphin/gx.h"
+#include <Dolphin/gx.h>
 #include "P2D/Font.h"
 #include "P2D/Print.h"
 #include "P2D/Stream.h"

@@ -3,7 +3,7 @@
 
 #include "Colour.h"
 #include "P2D/Util.h"
-#include "types.h"
+#include <types.h>
 
 struct P2DFont;
 

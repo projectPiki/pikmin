@@ -1,7 +1,7 @@
 #ifndef _COMMON_STRING_H
 #define _COMMON_STRING_H
 
-#include "types.h"
+#include <types.h>
 #include <stdio.h>
 
 struct Stream;

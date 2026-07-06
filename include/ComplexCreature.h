@@ -1,7 +1,7 @@
 #ifndef _COMPLEXCREATURE_H
 #define _COMPLEXCREATURE_H
 
-#include "types.h"
+#include <types.h>
 
 struct Creature;
 struct CreatureProp;

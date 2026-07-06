@@ -1,6 +1,6 @@
 #include "Collision.h"
 #include "DebugLog.h"
-#include "Dolphin/os.h"
+#include <Dolphin/os.h>
 #include "Graphics.h"
 #include "King.h"
 #include "MapMgr.h"

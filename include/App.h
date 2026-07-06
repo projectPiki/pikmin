@@ -4,7 +4,7 @@
 #include "BaseApp.h"
 #include "gameflow.h"
 #include "timers.h"
-#include "types.h"
+#include <types.h>
 
 /**
  * @brief Intermediate game application structure, for playing specifically on console.

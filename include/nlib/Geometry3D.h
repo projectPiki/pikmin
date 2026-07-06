@@ -2,7 +2,7 @@
 #define _NLIB_GEOMETRY3D_H
 
 #include "nlib/Geometry.h"
-#include "types.h"
+#include <types.h>
 
 struct NSegment;
 struct Plane;

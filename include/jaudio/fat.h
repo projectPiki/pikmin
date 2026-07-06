@@ -1,7 +1,7 @@
 #ifndef _JAUDIO_FAT_H
 #define _JAUDIO_FAT_H
 
-#include "types.h"
+#include <types.h>
 
 void Jac_FatMemory_Init(u32);
 void FAT_InitSystem(u8*, u32);

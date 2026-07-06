@@ -2,7 +2,7 @@
 #define _PELLETVIEW_H
 
 #include "Vector.h"
-#include "types.h"
+#include <types.h>
 
 struct Pellet;
 struct Graphics;

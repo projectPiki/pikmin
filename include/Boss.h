@@ -9,7 +9,7 @@
 #include "Plane.h"
 #include "SearchSystem.h"
 #include "Vector.h"
-#include "types.h"
+#include <types.h>
 
 struct BirthInfo;
 struct BossMgr;

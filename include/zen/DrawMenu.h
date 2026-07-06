@@ -3,7 +3,7 @@
 
 #include "Colour.h"
 #include "P2D/Picture.h"
-#include "types.h"
+#include <types.h>
 #include "zen/DrawCommon.h"
 #include "zen/Math.h"
 #include "zen/MenuPanelMgr.h"

@@ -1,5 +1,5 @@
 #include "DebugLog.h"
-#include "Dolphin/os.h"
+#include <Dolphin/os.h>
 #include "Font.h"
 #include "Graphics.h"
 #include "Mesh.h"

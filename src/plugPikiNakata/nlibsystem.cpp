@@ -1,5 +1,5 @@
 #include "DebugLog.h"
-#include "Dolphin/os.h"
+#include <Dolphin/os.h>
 #include "nlib/Node.h"
 #include "nlib/System.h"
 #include "sysNew.h"

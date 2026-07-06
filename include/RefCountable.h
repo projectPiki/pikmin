@@ -1,7 +1,7 @@
 #ifndef _REFCOUNTABLE_H
 #define _REFCOUNTABLE_H
 
-#include "types.h"
+#include <types.h>
 
 /**
  * @brief Basic struct for countable objects (creatures etc).

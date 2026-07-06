@@ -1,7 +1,7 @@
 #ifndef _TAI_BEATLE_H
 #define _TAI_BEATLE_H
 
-#include "types.h"
+#include <types.h>
 
 #include "PaniAnimator.h"
 #include "TAI/Animation.h"

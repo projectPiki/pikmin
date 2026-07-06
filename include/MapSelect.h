@@ -2,7 +2,7 @@
 #define _MAPSELECT_H
 
 #include "Section.h"
-#include "types.h"
+#include <types.h>
 
 /**
  * @brief Game section for both the challenge mode map select and story mode world map screens.

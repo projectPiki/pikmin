@@ -1,5 +1,5 @@
 #include "jaudio/sample.h"
-#include "Dolphin/os.h"
+#include <Dolphin/os.h>
 
 // unused typedefs
 typedef enum DECODER_FORMAT {

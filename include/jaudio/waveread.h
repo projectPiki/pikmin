@@ -1,7 +1,7 @@
 #ifndef _JAUDIO_WAVEREAD_H
 #define _JAUDIO_WAVEREAD_H
 
-#include "types.h"
+#include <types.h>
 
 typedef struct CtrlGroup_ CtrlGroup_;
 

@@ -6,7 +6,7 @@
 #include "DayMgr.h"
 #include "DebugLog.h"
 #include "Delegate.h"
-#include "Dolphin/card.h"
+#include <Dolphin/card.h>
 #include "Font.h"
 #include "Graphics.h"
 #include "Interface.h"

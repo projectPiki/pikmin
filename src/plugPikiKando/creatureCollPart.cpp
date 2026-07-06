@@ -1,7 +1,7 @@
 #include "CreatureCollPart.h"
 
 #include "DebugLog.h"
-#include "Dolphin/os.h"
+#include <Dolphin/os.h>
 #include "Graphics.h"
 #include "MapMgr.h"
 #include "Shape.h"

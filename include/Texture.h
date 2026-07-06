@@ -3,7 +3,7 @@
 
 #include "AyuStack.h"
 #include "CoreNode.h"
-#include "Dolphin/gx.h"
+#include <Dolphin/gx.h>
 #include "GfxObject.h"
 #include "Stream.h"
 

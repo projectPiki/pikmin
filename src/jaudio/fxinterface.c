@@ -1,6 +1,6 @@
 #include "jaudio/fxinterface.h"
 
-#include "Dolphin/os.h"
+#include <Dolphin/os.h>
 #include "jaudio/sample.h"
 
 static u16 SEND_TABLE[] = {

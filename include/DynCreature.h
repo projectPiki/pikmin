@@ -3,7 +3,7 @@
 
 #include "Creature.h"
 #include "Matrix4f.h"
-#include "types.h"
+#include <types.h>
 
 struct DynParticle;
 

@@ -2,7 +2,7 @@
 #define _INTROGAMESECTION_H
 
 #include "Section.h"
-#include "types.h"
+#include <types.h>
 
 /**
  * @brief Game section for the intro crash landing cutscene when starting a file for the first time.

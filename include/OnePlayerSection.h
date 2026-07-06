@@ -4,7 +4,7 @@
 #include "BaseInf.h"
 #include "GlobalGameOptions.h"
 #include "Section.h"
-#include "types.h"
+#include <types.h>
 
 struct CmdStream;
 

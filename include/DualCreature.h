@@ -4,7 +4,7 @@
 #include "Collision.h"
 #include "DynCreature.h"
 #include "PaniAnimator.h"
-#include "types.h"
+#include <types.h>
 
 struct ItemShapeObject;
 struct MapMgr;

@@ -1,6 +1,6 @@
 #include "Controller.h"
 #include "DebugLog.h"
-#include "Dolphin/gx.h"
+#include <Dolphin/gx.h>
 #include "FlowController.h"
 #include "Graphics.h"
 #include "MovSampleSection.h"

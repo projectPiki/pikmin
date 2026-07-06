@@ -3,7 +3,7 @@
 
 #include "CinematicPlayer.h"
 #include "CoreNode.h"
-#include "types.h"
+#include <types.h>
 
 struct Creature;
 struct Graphics;

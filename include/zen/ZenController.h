@@ -1,7 +1,7 @@
 #ifndef _ZEN_ZENCONTROLLER_H
 #define _ZEN_ZENCONTROLLER_H
 
-#include "types.h"
+#include <types.h>
 
 struct Controller;
 

@@ -2,7 +2,7 @@
 #define _NLIB_NODE_H
 
 #include "nlib/Array.h"
-#include "types.h"
+#include <types.h>
 
 /**
  * @brief TODO

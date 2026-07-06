@@ -15,7 +15,7 @@
 #include "nlib/Function.h"
 #include "nlib/Geometry.h"
 #include "system.h"
-#include "types.h"
+#include <types.h>
 #include "zen/CallBack.h"
 
 struct CollEvent;

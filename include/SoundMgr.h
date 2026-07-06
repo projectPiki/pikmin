@@ -7,7 +7,7 @@
 #include "SoundID.h"
 #include "Win.h"
 #include "jaudio/pikiinter.h"
-#include "types.h"
+#include <types.h>
 
 #define MAX_SOUND_EFFECTS (128)
 #define MAX_SOUND_EVENTS  (16)

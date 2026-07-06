@@ -1,7 +1,7 @@
 #ifndef _CONDITION_H
 #define _CONDITION_H
 
-#include "types.h"
+#include <types.h>
 
 struct Creature;
 

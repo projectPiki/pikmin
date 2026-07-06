@@ -1,7 +1,7 @@
 #ifndef _TAI_EFFECTATTACK_H
 #define _TAI_EFFECTATTACK_H
 
-#include "types.h"
+#include <types.h>
 #include "zen/CallBack.h"
 #include "zen/particle.h"
 

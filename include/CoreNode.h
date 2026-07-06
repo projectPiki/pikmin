@@ -2,7 +2,7 @@
 #define _CORENODE_H
 
 #include "ANode.h"
-#include "types.h"
+#include <types.h>
 
 struct AgeServer;
 struct RandomAccessStream;

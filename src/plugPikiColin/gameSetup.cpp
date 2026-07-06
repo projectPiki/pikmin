@@ -2,7 +2,7 @@
 
 #include "BaseInf.h"
 #include "DebugLog.h"
-#include "Dolphin/os.h"
+#include <Dolphin/os.h>
 #include "FlowController.h"
 #include "Generator.h"
 #include "GlobalShape.h"

@@ -1,7 +1,7 @@
 #ifndef _JAUDIO_NOTEON_H
 #define _JAUDIO_NOTEON_H
 
-#include "types.h"
+#include <types.h>
 
 typedef struct seqp_ seqp_;
 

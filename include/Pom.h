@@ -3,7 +3,7 @@
 
 #include "Boss.h"
 #include "Shape.h"
-#include "types.h"
+#include <types.h>
 #include "zen/CallBack.h"
 #include "zen/particle.h"
 

@@ -1,7 +1,7 @@
 #ifndef _GLOBALSHAPE_H
 #define _GLOBALSHAPE_H
 
-#include "types.h"
+#include <types.h>
 
 struct Shape;
 

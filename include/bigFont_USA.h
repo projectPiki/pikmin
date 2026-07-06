@@ -1,7 +1,7 @@
 #ifndef _BIGFONT_H
 #define _BIGFONT_H // This include guard is intentionally shared with the other bigFont
 
-#include "types.h"
+#include <types.h>
 
 // clang-format off
 

@@ -1,7 +1,7 @@
 #ifndef _TAI_NAPKID_H
 #define _TAI_NAPKID_H
 
-#include "types.h"
+#include <types.h>
 
 #include "PaniAnimator.h"
 #include "TAI/MotionActions.h"

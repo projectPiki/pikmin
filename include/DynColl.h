@@ -3,7 +3,7 @@
 
 #include "BoundBox.h"
 #include "Node.h"
-#include "types.h"
+#include <types.h>
 
 struct Creature;
 struct MapAnimShapeObject;

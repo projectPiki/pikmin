@@ -3,7 +3,7 @@
 
 #include "GlobalGameOptions.h"
 #include "Vector.h"
-#include "types.h"
+#include <types.h>
 
 struct P2DPane;
 struct P2DPicture;

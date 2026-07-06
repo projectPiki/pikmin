@@ -5,7 +5,7 @@
 #include "Piki.h"
 #include "Receiver.h"
 #include "SlotChangeListner.h"
-#include "types.h"
+#include <types.h>
 #include <stdio.h>
 
 struct BombGenItem;

@@ -4,7 +4,7 @@
 #include "EffectMgr.h"
 #include "SoundID.h"
 #include "TAI/Action.h"
-#include "types.h"
+#include <types.h>
 
 struct Vector3f;
 struct CollPart;

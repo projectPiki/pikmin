@@ -2,7 +2,7 @@
 #define _TAI_WAITACTIONS_H
 
 #include "TAI/MotionActions.h"
-#include "types.h"
+#include <types.h>
 
 /**
  * @brief TODO

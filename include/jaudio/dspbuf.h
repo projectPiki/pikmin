@@ -2,7 +2,7 @@
 #define _JAUDIO_DSPBUF_H
 
 #include "jaudio/audiocommon.h"
-#include "types.h"
+#include <types.h>
 
 /////////// JAUDIO DSP BUFFER DEFINITIONS ///////////
 // Defines.

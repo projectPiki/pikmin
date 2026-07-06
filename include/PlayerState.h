@@ -9,7 +9,7 @@
 #include "ResultFlags.h"
 #include "Shape.h"
 #include "UtilityKando.h"
-#include "types.h"
+#include <types.h>
 
 struct Graphics;
 struct PelletShapeObject;

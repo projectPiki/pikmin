@@ -1,6 +1,6 @@
 #include "KusaItem.h"
 #include "DebugLog.h"
-#include "Dolphin/os.h"
+#include <Dolphin/os.h>
 #include "EffectMgr.h"
 #include "Graphics.h"
 #include "Interactions.h"
