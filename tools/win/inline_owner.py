@@ -50,8 +50,13 @@ import csv
 import json
 import os
 import re
+import sys
 from collections import Counter, defaultdict
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from ilk_layout import object_text_ranges  # noqa: E402
+from pe_extract import base_defined_statics  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -91,7 +96,20 @@ def main(argv=None) -> int:
     rank = link_order(ilk)
     INF = 10 ** 9
 
-    # emitter units per decorated name
+    # Internal-linkage (file-static) functions -- `?_Print@@`, `?_Error@@`,
+    # `?printMatrix@@`, ... -- share a decorated name across TUs but are DISTINCT
+    # functions at DISTINCT DLL addresses (the linker keeps every copy). From the
+    # report alone they look identical to a duplicated inline (one name, N units),
+    # so exclude them here by their COFF storage class: a select-any inline COMDAT
+    # is EXTERNAL, a file-static is STATIC. Deduping a static would strip its base
+    # definition and break pe_extract's per-TU static discovery (see the
+    # win-decomp-inline-dedup memory / dedup_comdats.py's matching guard).
+    obj_dir = ROOT / f'build/win/obj/{mod}'
+    statics: set[str] = set()
+    for o in sorted(obj_dir.glob('*.obj')):
+        statics.update(base_defined_statics(o.read_bytes()))
+
+    # emitter units per decorated name (from the objdiff report)
     rep = json.loads(args.report.read_text())
     name_units: dict[str, set] = defaultdict(set)
     for u in rep['units']:
@@ -99,66 +117,86 @@ def main(argv=None) -> int:
             continue
         unit = u['name'].split('/')[-1]
         for f in u.get('functions') or []:
+            if f['name'] in statics:
+                continue  # internal-linkage static: never a dedup-able duplicate
             name_units[f['name']].add(unit)
 
+    # objdiff unit <-> lowercased .ilk object stem (report units carry real case;
+    # OBJ_ALIAS bridges the few renamed backends).
+    stem_of_unit = {u: OBJ_ALIAS.get(u, u).lower()
+                    for us in name_units.values() for u in us}
+    unit_of_stem = {st: u for u, st in stem_of_unit.items()}
+
     def unit_rank(unit: str) -> int:
-        stem = OBJ_ALIAS.get(unit, unit).lower()
-        return rank.get(stem, INF)
+        return rank.get(stem_of_unit.get(unit, unit.lower()), INF)
 
     unmapped = sorted({u for us in name_units.values() for u in us
                        if unit_rank(u) == INF})
 
-    # owner = earliest-link-order emitter
-    owner = {n: min(us, key=lambda u: (unit_rank(u), u))
-             for n, us in name_units.items()}
-    dup = {n: us for n, us in name_units.items() if len(us) > 1}
+    # --- byte-faithful ownership from the .ilk section-contribution table -------
+    # owner(F) = the object whose kept .text contribution actually contains F's
+    # address (the copy the linker kept), mapped back to its objdiff unit. This
+    # replaces the link-order approximation (whose anchor validation was ~50%).
+    ranges = object_text_ranges(ilk.read_bytes())   # stem(lower) -> (lo, hi) RVA
+    ivs = sorted((lo, hi, st) for st, (lo, hi) in ranges.items())
+    istarts = [i[0] for i in ivs]
 
-    # validate against map addresses: owner's anchor span should bracket addr(n)
-    anchor_unit = {n: next(iter(us)) for n, us in name_units.items() if len(us) == 1}
-    addr = {}
+    def object_at(rva: int):
+        i = bisect.bisect_right(istarts, rva) - 1
+        if 0 <= i < len(ivs) and ivs[i][0] <= rva < ivs[i][1]:
+            return ivs[i][2]
+        return None
+
+    rva_of: dict[str, int] = {}
     if mp.exists():
         for row in csv.DictReader(mp.open(newline='')):
             if row['kind'] == 'function' and row.get('name_mangled'):
-                addr[row['name_mangled']] = int(row['va'], 16)
-    apts = sorted((addr[n], anchor_unit[n]) for n in anchor_unit if n in addr)
-    aaddr = [a for a, _ in apts]
+                rva_of[row['name_mangled']] = int(row['rva'], 16)
 
-    def bracket_unit(x):
-        i = bisect.bisect_left(aaddr, x)
-        cands = set()
-        if i > 0:
-            cands.add(apts[i - 1][1])
-        if i < len(apts):
-            cands.add(apts[i][1])
-        return cands
+    dup = {n: us for n, us in name_units.items() if len(us) > 1}
 
-    agree = disagree = novalid = 0
-    for n in dup:
-        if n not in addr:
-            novalid += 1
-            continue
-        if owner[n] in bracket_unit(addr[n]):
-            agree += 1
+    owner: dict[str, str] = {}
+    method: dict[str, str] = {}
+    faithful = fallback = orphan = 0
+    for n, us in name_units.items():
+        st = object_at(rva_of[n]) if n in rva_of else None
+        ow = unit_of_stem.get(st) if st is not None else None
+        # The address-owner is authoritative ONLY when that unit actually emits +
+        # carves n here (ow in us): the surviving copy must be one objdiff can pair.
+        # If the byte-faithful owner has no matchable copy in our build (its object
+        # includes the header but didn't emit/carve n -- the ~13 graphics cases), or
+        # the address maps to no unit-bearing object at all, fall back to the
+        # earliest real emitter so the dedup strip never leaves n with ZERO copies.
+        if ow is not None and ow in us:
+            owner[n], method[n] = ow, 'ilk-range'
+            if len(us) > 1:
+                faithful += 1
         else:
-            disagree += 1
+            if ow is not None and len(us) > 1:
+                orphan += 1  # address-owner exists but isn't a matchable emitter
+            owner[n], method[n] = min(us, key=lambda u: (unit_rank(u), u)), 'link-order'
+            if len(us) > 1:
+                fallback += 1
 
     out.parent.mkdir(parents=True, exist_ok=True)
     with out.open('w', newline='') as fh:
         w = csv.writer(fh)
-        w.writerow(['decorated', 'owner_unit', 'n_emitters'])
+        w.writerow(['decorated', 'owner_unit', 'n_emitters', 'method'])
         for n in sorted(dup):
-            w.writerow([n, owner[n], len(dup[n])])
+            w.writerow([n, owner[n], len(dup[n]), method[n]])
 
     tot_entries = sum(len(us) for us in name_units.values())
-    print(f'=== {mod} inline owner map ===')
-    print(f'link order: {len(rank)} objects; first = '
-          f'{sorted(rank, key=rank.get)[0]}')
+    print(f'=== {mod} inline owner map (byte-faithful, .ilk .text ranges) ===')
+    print(f'link order: {len(rank)} objects; .ilk .text ranges: {len(ranges)} objects')
     print(f'distinct fn names        : {len(name_units)}')
+    print(f'internal-linkage statics : {len(statics)} names excluded (never deduped)')
     print(f'total (unit,fn) entries  : {tot_entries}')
     print(f'duplicated (>1 unit)     : {len(dup)}  '
           f'({tot_entries - len(name_units)} redundant copies to strip)')
-    print(f'address validation       : agree {agree}, disagree {disagree}, '
-          f'no-addr {novalid}')
+    print(f'dup ownership            : ilk-range {faithful} '
+          f'(byte-faithful, owner is a matchable emitter), '
+          f'link-order fallback {fallback} '
+          f'({orphan} of them address-owned by a non-emitting object)')
     if unmapped:
         print(f'units with no link rank ({len(unmapped)}): {unmapped}')
     top = Counter(owner[n] for n in dup)
