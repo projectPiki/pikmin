@@ -31,6 +31,11 @@ ctx.*
 objdiff.json
 compile_commands.json
 
+# Windows-decomp disassembler dumps: regenerable inputs, not deliverables. Only the
+# merged config/*/win/<mod>_map.csv is tracked (see tools/win/README.md).
+/*_ghidra.csv
+/*_ida.csv
+
 # Miscellaneous
 /*.txt
 *.exe
