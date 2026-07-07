@@ -12,9 +12,13 @@ the honest number.
 
 We keep BOTH:
   * `report.json`        - full, un-deduplicated. This is the tooling artifact:
-                           `ilk_reconcile.py` and anything that needs the true
-                           per-unit symbol emission reads this one.
+                           `ilk_reconcile.py`/`inline_owner.py` and anything that
+                           needs the true per-unit symbol emission reads this one.
   * `report_dedup.json`  - deduplicated. The honest progress metric.
+
+Both are generated from the RAW obj/target tree via the `build/win/full`
+objdiff config (NOT the root objdiff.json, which points at the deduped GUI tree
+where each inline already appears once -- inline_owner needs to see every emitter).
 
 Run after `ninja -f build/win/build.ninja target` re-carves the target objects.
 
@@ -32,10 +36,31 @@ ROOT = Path(__file__).resolve().parents[2]
 CLI = ROOT / 'build/tools/objdiff-cli.exe'
 FULL = ROOT / 'build/win/report.json'
 DEDUP = ROOT / 'build/win/report_dedup.json'
+# The raw (un-deduplicated) objdiff project, emitted by configure_win.py; the root
+# objdiff.json points at the deduped GUI tree and would hide the per-unit emitters.
+FULL_PROJ = ROOT / 'build/win/full'
+
+
+def _newest(d: Path) -> float:
+    """Newest mtime of any *.obj under d, or 0.0 if none/absent."""
+    return max((p.stat().st_mtime for p in d.rglob('*.obj')), default=0.0)
+
+
+def warn_if_gui_stale() -> None:
+    """Tripwire for the raw/deduped two-tree split: the objdiff GUI reads the
+    deduped tree, but this report (and inline_owner/ilk_reconcile) read the raw one.
+    Re-carving only `target` leaves the GUI stale -- warn if target_dedup is older
+    than target so a fixed pairing isn't silently invisible in the GUI."""
+    raw = ROOT / 'build/win/target'
+    dedup = ROOT / 'build/win/target_dedup'
+    if dedup.exists() and _newest(dedup) + 1 < _newest(raw):
+        print("\n!! objdiff GUI tree (build/win/target_dedup) is OLDER than the raw "
+              "tree.\n   Run `ninja -f build/win/build.ninja objdiff` to resync both "
+              "(or `dedup`).", file=sys.stderr)
 
 
 def gen(out: Path, dedup: bool) -> None:
-    cmd = [str(CLI), 'report', 'generate', '-o', str(out)]
+    cmd = [str(CLI), 'report', 'generate', '-p', str(FULL_PROJ), '-o', str(out)]
     if dedup:
         cmd.append('--deduplicate')
     subprocess.run(cmd, cwd=ROOT, check=True)
@@ -72,6 +97,7 @@ def main() -> int:
     print(f'{"TOTAL":12s} {ftot[0]:8d}/{ftot[1]:<8d}   {dtot[0]:8d}/{dtot[1]:<8d}'
           f'   fuzzy {dtot[2]}%')
     print('\nreport.json = full (per-unit tooling); report_dedup.json = honest metric')
+    warn_if_gui_stale()
     return 0
 
 

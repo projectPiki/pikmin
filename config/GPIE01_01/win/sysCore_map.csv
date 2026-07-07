@@ -2664,7 +2664,7 @@ rva,va,kind,size,name_mangled,name,source
 0x0004d410,0x1004d410,function,38,?procCmd@BaseApp@@UAEXPAD@Z,BaseApp::procCmd(char *),export+ida
 0x0004d440,0x1004d440,function,150,??0BaseApp@@QAE@ABV0@@Z,BaseApp::BaseApp(BaseApp const &),export+ida
 0x0004d500,0x1004d500,function,141,??4BaseApp@@QAEAAV0@ABV0@@Z,BaseApp::operator=(BaseApp const &),export+ida
-0x0004d620,0x1004d620,function,147,,sub_1004D620,ida
+0x0004d620,0x1004d620,function,147,??_EBaseApp@@UAEPAXI@Z,public: virtual void * __thiscall BaseApp::`vector deleting dtor'(unsigned int),ida
 0x0004d6e0,0x1004d6e0,function,84,?close@AtxStream@@UAEXXZ,AtxStream::close(void),export+ida
 0x0004d750,0x1004d750,function,230,?open@AtxStream@@QAE_NPADH@Z,"AtxStream::open(char *,int)",export+ida
 0x0004d870,0x1004d870,function,210,,sub_1004D870,ida
@@ -2705,7 +2705,7 @@ rva,va,kind,size,name_mangled,name,source
 0x00051420,0x10051420,function,261,?initLightmap@LightCamera@@QAEXHH@Z,"LightCamera::initLightmap(int,int)",export+ida
 0x00051570,0x10051570,function,961,?calcProjection@LightCamera@@QAEXAAVGraphics@@_NPAVNode@@@Z,"LightCamera::calcProjection(Graphics &,bool,Node *)",export+ida
 0x00051a30,0x10051a30,function,106,?genAge@LightCamera@@QAEXAAVAgeServer@@@Z,LightCamera::genAge(AgeServer &),export+ida
-0x00051ac0,0x10051ac0,function,105,,sub_10051AC0,ida
+0x00051ac0,0x10051ac0,function,105,??G@YA?AVVector3f@@ABV0@0@Z,"class Vector3f __cdecl operator-(class Vector3f const &, class Vector3f const &)",ida
 0x00051b50,0x10051b50,function,215,?init@CmdStream@@QAEXPAVStream@@@Z,CmdStream::init(Stream *),export+ida
 0x00051c60,0x10051c60,function,39,??0CmdStream@@QAE@XZ,CmdStream::CmdStream(void),export+ida
 0x00051c90,0x10051c90,function,63,??0CmdStream@@QAE@PAVStream@@@Z,CmdStream::CmdStream(Stream *),export+ida
