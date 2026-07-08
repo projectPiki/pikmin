@@ -40,7 +40,7 @@ regressions of previously-exact functions. Dry-run by default; ``--apply`` write
 the map. Re-carve afterwards (``ninja -f build/win/build.ninja target``).
 
 Usage:
-    python tools/win/backfill_map_names.py \
+    python tools/win/authoring/backfill_map_names.py \
         --dll     orig/GPIE01_01/files/plugins/plugPiki.dll \
         --map     config/GPIE01_01/win/plugPiki_map.csv \
         --obj-dir build/win/obj/plugPiki \
@@ -58,7 +58,7 @@ import sys
 from collections import defaultdict
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
+import _bootstrap  # noqa: E402,F401  (authoring/_bootstrap.py: sys.path + ROOT)
 import capstone  # noqa: E402
 from capstone import x86 as cs_x86  # noqa: E402
 from pe_symbols import PEFile, demangle  # noqa: E402

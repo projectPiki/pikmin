@@ -55,3 +55,4 @@ mwcc_debugger.py
 /docs
 build.py
 *.lnk
+*.zip

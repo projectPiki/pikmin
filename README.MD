@@ -111,3 +111,15 @@ Download the latest release from [encounter/objdiff](https://github.com/encounte
 
 Select an object from the left sidebar to begin diffing. Changes to the project will rebuild automatically: changes to source files, headers, `configure.py`, `splits.txt` or `symbols.txt`.
 
+### Switching diff targets (GameCube DOL / Windows DLLs)
+
+This project has two byte-match targets that share objdiff's single root `objdiff.json`: the GameCube **DOL** (the default, `configure.py`) and the Windows debug **DLLs** (VC6/x86, `configure_win.py`). Only one can be active in objdiff at a time. Switch between them losslessly -- preserving any in-flight objdiff symbol mappings -- with:
+
+```sh
+python objdiff_target.py        # show the active target
+python objdiff_target.py dol    # activate the GameCube DOL diff
+python objdiff_target.py win    # activate the Windows DLL diff
+```
+
+New to the Windows target? See [`tools/win/QUICKSTART.md`](tools/win/QUICKSTART.md) for the match-a-function loop; [`tools/win/README.md`](tools/win/README.md) covers the build/diff internals.
+

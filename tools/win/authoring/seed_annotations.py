@@ -23,12 +23,12 @@ definition omits) and disambiguated by argument count.
 
 Usage:
     # dry run: report what would be annotated for sysCore, no writes
-    python tools/win/seed_annotations.py --target sysCore \
+    python tools/win/authoring/seed_annotations.py --target sysCore \
         --map config/GPIE01_01/win/sysCore_map.csv \
         --src src/sysCommon --src src/sysDolphin --src include
 
     # actually write the markers, and dump a report of the leftovers
-    python tools/win/seed_annotations.py --target sysCore --map ... --src ... \
+    python tools/win/authoring/seed_annotations.py --target sysCore --map ... --src ... \
         --apply --report build/win/seed_sysCore.txt
 
 `--kind` limits to function|data (default both). `--filter <regex>` restricts to

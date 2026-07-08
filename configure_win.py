@@ -91,7 +91,7 @@ def write_objdiff_json(root: Path, build_dir: Path, units: list[dict]) -> Path:
     pairs our compiled base .obj with the carved target .obj; objdiff rebuilds
     both on demand via `ninja -f build/win/build.ninja <path>`.
 
-    For modules with an inline-owner map (build/win/inline_owner_<mod>.csv) the
+    For modules with an inline-owner map (config/<ver>/win/<mod>_inline_owner.csv) the
     base/target here are the DEDUPED objects (redundant inline COMDATs stripped so
     each inline shows once, in its owner unit -- see tools/win/dedup_comdats.py);
     other modules use their raw objects. The raw, un-deduplicated per-unit report
@@ -220,7 +220,7 @@ def main() -> None:
             "target_dir": target_root / name,
             "obj_dedup_dir": build_dir / "obj_dedup" / name,
             "target_dedup_dir": build_dir / "target_dedup" / name,
-            "owner_csv": build_dir / f"inline_owner_{name}.csv",
+            "owner_csv": Path(f"config/{args.version}/win/{name}_inline_owner.csv"),
             "undef_csv": build_dir / f"undef_{name}.csv",
             "stub_obj": build_dir / "stubs" / f"{name}_stubs.obj",
             "carve_names": build_dir / "stubs" / f"{name}_carve.txt",
@@ -366,12 +366,15 @@ def main() -> None:
             # git-ignored original).
             can_objdiff = m["map"].exists() and m["orig"].exists()
             # dedup a module only once its byte-faithful inline-owner map exists
-            # (generate it with tools/win/inline_owner.py); otherwise fall back to
+            # (generate it with tools/win/authoring/inline_owner.py); otherwise fall back to
             # the raw objects in the GUI config.
             dedup_on = can_objdiff and m["owner_csv"].exists()
-            # placeholder target symbols need the .ilk (for byte-faithful TU) too.
-            ilk = m["orig"].with_suffix(".ilk")
-            can_ph = can_objdiff and ilk.exists()
+            # placeholder target symbols need the byte-faithful TU table (exported from
+            # the .ilk to a tracked CSV by `ilk_layout.py --ranges-csv`), NOT the .ilk
+            # itself -- so a clean checkout builds without the original .ilk present.
+            # See tools/win/README.md.
+            text_ranges = Path(f"config/{args.version}/win/{name}_text_ranges.csv")
+            can_ph = can_objdiff and text_ranges.exists()
             ph_dir = build_dir / "placeholders" / name
             ph_stamp = build_dir / "placeholders" / f"{name}.stamp"
 
@@ -385,7 +388,7 @@ def main() -> None:
                             "extra": str(none_csv)}
             if can_ph:
                 n.build(str(ph_stamp), "placeholders", str(m["map"]),
-                        implicit=[str(gen_placeholders), str(ilk)],
+                        implicit=[str(gen_placeholders), str(text_ranges)],
                         variables={"module": name, "outdir": str(ph_dir)})
             objs = []
             targets = []
@@ -550,7 +553,8 @@ def main() -> None:
             print(f"  ninja -f {out_path} objdiff         # BOTH trees (use this so raw + GUI stay in sync)")
         print(f"wrote {objdiff_path} ({len(objdiff_units)} units"
               + (f", {n_dedup} deduped" if n_dedup else "") + ") -- open the repo in objdiff")
-        print("  (this replaces the DOL objdiff.json; re-run configure.py to switch back)")
+        print("  (this replaces the DOL objdiff.json; switch targets losslessly with"
+              " `python objdiff_target.py dol|win`)")
         full_path = write_full_config(build_dir, full_units)
         print(f"wrote {full_path} ({len(full_units)} raw units) -- the un-deduplicated "
               "report source (win_report.py / inline_owner.py)")
