@@ -1733,7 +1733,7 @@ bool BTeki::interactDefault(immut TekiInteractionKey& key)
  */
 f32 BTeki::getGravity()
 {
-	return AIConstant::_instance->mConstants.mGravity();
+	return AICONST.mGravity();
 }
 
 /**

@@ -123,7 +123,7 @@ void ActPutBomb::init(Creature* target)
 	mTouchedPlayer      = false;
 	mState              = STATE_Unk5;
 	mPiki->mActionState = 0;
-	if (AIConstant::_instance->mConstants._124() != 0 && mPiki->isHolding()) {
+	if (AICONST._124() != 0 && mPiki->isHolding()) {
 		findTeki();
 		if (mTarget) {
 			if (!mTarget->isTeki() && !mTarget->isBoss()) {

@@ -715,7 +715,7 @@ void NaviWalkState::exec(Navi* navi)
 
 	if (navi->mKontroller->keyClick(KeyConfig::_instance->mThrowKey.mBind)) {
 
-		if (AIConstant::_instance->mConstants._E4()) {
+		if (AICONST._E4()) {
 			if (KeyConfig::_instance->mThrowKey.mBind == KeyConfig::_instance->mExtractKey.mBind) {
 				if (!navi->procActionButton()) {
 					transit(navi, NAVISTATE_ThrowWait);
@@ -996,8 +996,8 @@ void NaviContainerState::init(Navi* navi)
 	PRINT("START CONAINER WINDOW ***\n");
 	gameflow.mGameInterface->message(MOVIECMD_HideHUD, 0);
 	containerWindow->start((zen::DrawContainer::containerType)navi->mGoalItem->mOnionColour, storedPikisAvailable, 10000,
-	                       numOnionColoredPikis, AIConstant::_instance->mConstants.mMaxPikisOnField(),
-	                       totalExitPendingPikis + GameStat::mapPikis, AIConstant::_instance->mConstants.mMaxPikisOnField());
+	                       numOnionColoredPikis, AICONST.mMaxPikisOnField(), totalExitPendingPikis + GameStat::mapPikis,
+	                       AICONST.mMaxPikisOnField());
 	PRINT("FINISH START CONAINER WINDOW ***\n");
 	gameflow.mPauseAll = TRUE;
 	mContainerWinEvent = 0;
@@ -2235,7 +2235,7 @@ void NaviPushState::exec(Navi* navi)
 		return;
 	}
 
-	if (navi->mWallCollObj && AIConstant::_instance->mConstants._64()) {
+	if (navi->mWallCollObj && AICONST._64()) {
 		Vector3f dir(sinf(navi->mFaceDirection), 0.0f, cosf(navi->mFaceDirection));
 		navi->mWallCollObj->applyVelocity(*navi->mWallPlane, navi->mSRT.t, dir);
 	}
@@ -2259,7 +2259,7 @@ void NaviPushState::procAnimMsg(Navi* navi, MsgAnim* msg)
 	switch (msg->mKeyEvent->mEventType) {
 	case KEY_LoopEnd:
 	{
-		if (navi->mWallCollObj && !AIConstant::_instance->mConstants._64()) {
+		if (navi->mWallCollObj && !AICONST._64()) {
 			Vector3f dir(sinf(navi->mFaceDirection), 0.0f, cosf(navi->mFaceDirection));
 			dir = dir * 4.0f;
 			navi->mWallCollObj->applyVelocity(*navi->mWallPlane, navi->mSRT.t, dir);
@@ -2394,7 +2394,7 @@ void NaviNukuState::init(Navi* navi)
 		cameraMgr->mCamera->mControlsEnabled = false;
 	}
 
-	if (!AIConstant::_instance->mConstants._54()) {
+	if (!AICONST._54()) {
 		navi->_930 = false;
 	}
 	navi->_930 = false;

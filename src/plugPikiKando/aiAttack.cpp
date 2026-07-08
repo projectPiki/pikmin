@@ -282,7 +282,7 @@ int ActAttack::exec()
 		}
 
 		Creature* target = mOther.getPtr();
-		if (AIConstant::_instance->mConstants._C4() == 0) {
+		if (AICONST._C4() == 0) {
 			if (target->isAlive()) {
 				seMgr->leaveBattle();
 				init(target);

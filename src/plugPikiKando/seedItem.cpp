@@ -153,7 +153,7 @@ void SeedItem::update()
 
 		// Apply upward force if below target
 		if (mSRT.t.y < targetHeight && mVelocity.y < 100.0f) {
-			mVelocity.y += AIConstant::_instance->mConstants.mGravity() * gsys->getFrameTime() * 2.5f;
+			mVelocity.y += AICONST.mGravity() * gsys->getFrameTime() * 2.5f;
 		}
 
 		// Check if the seed is close enough to the player to be picked up

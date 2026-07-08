@@ -521,7 +521,7 @@ void Navi::Locus::update()
 		mEffect.kill();
 	}
 
-	mVelocity.y -= AIConstant::_instance->mConstants.mGravity() * speed;
+	mVelocity.y -= AICONST.mGravity() * speed;
 }
 
 /**
@@ -1034,8 +1034,8 @@ void Navi::callPikis(f32 radius)
 			piki->getState();
 		}
 
-		if (AIConstant::_instance->mConstants.mDoPluckWithCursor() && (mNaviID == piki->mPlayerId || piki->mPlayerId == -1)
-		    && piki->isBuried() && piki->getState() == PIKISTATE_Bury && dist < radius) {
+		if (AICONST.mDoPluckWithCursor() && (mNaviID == piki->mPlayerId || piki->mPlayerId == -1) && piki->isBuried()
+		    && piki->getState() == PIKISTATE_Bury && dist < radius) {
 			piki->mNavi = this;
 			piki->mFSM->transit(piki, PIKISTATE_AutoNuki);
 			// Why would you put an `ERROR` here?  Just don't enable it??
@@ -1051,7 +1051,7 @@ void Navi::callPikis(f32 radius)
 			PikiHeadItem* sprout = static_cast<PikiHeadItem*>(maybeSprout);
 			Vector3f sproutSep   = maybeSprout->mSRT.t - mCursorWorldPos;
 			f32 sproutDist       = speedy_sqrtf(sproutSep.x * sproutSep.x + sproutSep.z * sproutSep.z);
-			if (!AIConstant::_instance->mConstants.mDoPluckWithCursor()) {
+			if (!AICONST.mDoPluckWithCursor()) {
 				continue;
 			}
 
@@ -2529,7 +2529,7 @@ void Navi::throwPiki(Piki* piki, immut Vector3f& pos)
 		height = NAVI_PROP._18C() + (mThrowHoldTime / NAVI_PROP._14C()) * (NAVI_PROP._17C() - NAVI_PROP._18C());
 	}
 
-	f32 vSpeed = AIConstant::_instance->mConstants.mGravity() * 0.5f * halfTime + (height / halfTime);
+	f32 vSpeed = AICONST.mGravity() * 0.5f * halfTime + (height / halfTime);
 	f32 hSpeed = throwDist / (2.0f * halfTime);
 
 	piki->mVelocity.set(hSpeed * sinf(throwAngle), vSpeed, hSpeed * cosf(throwAngle));

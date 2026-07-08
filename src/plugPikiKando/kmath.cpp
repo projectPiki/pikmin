@@ -119,7 +119,7 @@ Vector3f getThrowVelocity(immut Vector3f& startPos, f32 horizSpeed, immut Vector
 
 	// calculate y speed using projectile motion
 	f32 vertDisplacement = -(predTargetPos.y - startPos.y);
-	f32 initialYVel      = (vertDisplacement / timeToTarget) - AIConstant::_instance->mConstants.mGravity() * 0.5f * timeToTarget;
+	f32 initialYVel      = (vertDisplacement / timeToTarget) - AICONST.mGravity() * 0.5f * timeToTarget;
 
 	// calculate throw velocity
 	Vector3f throwVel;
