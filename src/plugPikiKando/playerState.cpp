@@ -1140,11 +1140,11 @@ void PlayerState::getUfoParts(u32 partID, bool isInvisiblePart)
 		PRINT("ufoPartsCount = %d\n", mCurrParts);
 	}
 
-	if (mCurrParts >= AIConstant::_instance->mConstants._184()) {
+	if (mCurrParts >= AICONST._184()) {
 		PRINT("PERFECT !\n");
 		mShipUpgradeLevel = 5;
 		PRINT_GLOBAL("--- perfect 5");
-	} else if (mCurrParts >= AIConstant::_instance->mConstants._174()) {
+	} else if (mCurrParts >= AICONST._174()) {
 		gameflow.mPlayState.openStage(STAGE_Last);
 		playerState->mResultFlags.setSeen(zen::RESFLAG_Collect15Parts);
 		for (int i = 0; i < 10; i++) {
@@ -1152,7 +1152,7 @@ void PlayerState::getUfoParts(u32 partID, bool isInvisiblePart)
 		}
 		mShipUpgradeLevel = 4;
 		PRINT_GLOBAL("--- level 4");
-	} else if (mCurrParts >= AIConstant::_instance->mConstants._164()) {
+	} else if (mCurrParts >= AICONST._164()) {
 		gameflow.mPlayState.openStage(STAGE_Yakushima);
 		playerState->mResultFlags.setOn(zen::RESFLAG_UnlockYakushima);
 		for (int i = 0; i < 10; i++) {
@@ -1160,7 +1160,7 @@ void PlayerState::getUfoParts(u32 partID, bool isInvisiblePart)
 		}
 		mShipUpgradeLevel = 3;
 		PRINT_GLOBAL("--- level 3");
-	} else if (mCurrParts >= AIConstant::_instance->mConstants._154()) {
+	} else if (mCurrParts >= AICONST._154()) {
 		playerState->mResultFlags.setOn(zen::RESFLAG_UnlockCave);
 		gameflow.mPlayState.openStage(STAGE_Cave);
 		for (int i = 0; i < 10; i++) {
@@ -1220,10 +1220,10 @@ int PlayerState::getNextPowerupNumber()
 {
 	int counts[6];
 	counts[0] = 1;
-	counts[1] = AIConstant::_instance->mConstants._154();
-	counts[2] = AIConstant::_instance->mConstants._164();
-	counts[3] = AIConstant::_instance->mConstants._174();
-	counts[4] = AIConstant::_instance->mConstants._184();
+	counts[1] = AICONST._154();
+	counts[2] = AICONST._164();
+	counts[3] = AICONST._174();
+	counts[4] = AICONST._184();
 	counts[5] = MAX_UFO_PARTS;
 	return counts[mShipUpgradeLevel] - mCurrParts;
 }
@@ -1237,11 +1237,11 @@ void PlayerState::preloadHenkaMovie()
 	int parts = mCurrParts + 1;
 	if (parts == 1) {
 		level = 1;
-	} else if (AIConstant::_instance->mConstants._154() == parts) {
+	} else if (AICONST._154() == parts) {
 		level = 2;
-	} else if (AIConstant::_instance->mConstants._164() == parts) {
+	} else if (AICONST._164() == parts) {
 		level = 3;
-	} else if (AIConstant::_instance->mConstants._174() == parts) {
+	} else if (AICONST._174() == parts) {
 		level = 4;
 	} else if (MAX_UFO_PARTS == parts) {
 		level = 5;

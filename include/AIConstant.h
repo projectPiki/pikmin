@@ -6,6 +6,8 @@
 #include "Parameters.h"
 #include "types.h"
 
+#define AICONST (AIConstant::_instance->mConstants)
+
 /**
  * @brief A node that contains AI constants.
  *

@@ -320,7 +320,7 @@ void ActTransport::initJump()
 {
 	mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 	mPiki->mVelocity.set(0.0f, 0.0f, 0.0f);
-	mPiki->mVelocity.y = 0.5f * AIConstant::_instance->mConstants.mGravity();
+	mPiki->mVelocity.y = 0.5f * AICONST.mGravity();
 	mJumpRetryTimer    = 0;
 	mState             = STATE_Jump;
 }
@@ -402,7 +402,7 @@ int ActTransport::execJump()
 	if (mPiki->mGroundTriangle) {
 		mJumpRetryTimer++;
 		if (mJumpRetryTimer > 6) {
-			mPiki->mVelocity.y = 0.5f * AIConstant::_instance->mConstants.mGravity();
+			mPiki->mVelocity.y = 0.5f * AICONST.mGravity();
 			mJumpRetryTimer    = 0;
 		}
 	} else {

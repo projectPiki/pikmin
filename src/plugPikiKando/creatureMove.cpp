@@ -138,7 +138,7 @@ void Creature::moveNew(f32 deltaTime)
 
 	if (!isCreatureFlag(CF_IsFlying) && !mRope && (!mStickTarget || !isStickToPlatform() || !mStickPart->isClimbable())
 	    && !isCreatureFlag(CF_IgnoreGravity) && (!mStickTarget || mPelletStickSlot == -1)) {
-		mVelocity.y -= AIConstant::_instance->mConstants.mGravity() * deltaTime;
+		mVelocity.y -= AICONST.mGravity() * deltaTime;
 	}
 
 	if (isCreatureFlag(CF_EnableAirDrag)) {
@@ -304,7 +304,7 @@ void Creature::moveNew(f32 deltaTime)
 			} else {
 				CollTriInfo* tri = &mapMgr->mMapModel->mTriList[planeIdx];
 				if (tri->mTriangle.mNormal.DP(mPreviousTriangle->mTriangle.mNormal)
-				    < cosf(AIConstant::_instance->mConstants.mJumpTriangleAngleThreshold() / 180.0f * PI)) {
+				    < cosf(AICONST.mJumpTriangleAngleThreshold() / 180.0f * PI)) {
 					jumpCallback();
 				}
 			}

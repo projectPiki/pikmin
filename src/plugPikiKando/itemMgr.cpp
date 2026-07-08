@@ -1354,10 +1354,10 @@ Creature* PikiHeadMgr::birth()
 	totalPikis += mItemMgr->getContainerExitCount();
 
 	if (buryMode) {
-		if (totalPikis >= AIConstant::_instance->mConstants.mMaxPikisOnField() + 1) {
+		if (totalPikis >= AICONST.mMaxPikisOnField() + 1) {
 			return nullptr;
 		}
-	} else if (totalPikis >= AIConstant::_instance->mConstants.mMaxPikisOnField()) {
+	} else if (totalPikis >= AICONST.mMaxPikisOnField()) {
 		return nullptr;
 	}
 

@@ -1946,8 +1946,8 @@ void PikiFlyingState::exec(Piki* piki)
 
 	mSparkleEffect.updatePos(piki->mSRT.t);
 
-	f32 startGrav          = AIConstant::_instance->mConstants.mGravity() * 0.8f;
-	f32 glideGrav          = AIConstant::_instance->mConstants.mGravity() * C_PIKI_PROP(piki).mFlowerGravityScale();
+	f32 startGrav          = AICONST.mGravity() * 0.8f;
+	f32 glideGrav          = AICONST.mGravity() * C_PIKI_PROP(piki).mFlowerGravityScale();
 	f32 gravTransitionTime = 0.15f;
 	f32 gravInterp         = startGrav * gravTransitionTime - 0.5f * 0.15f * (startGrav - glideGrav) - glideGrav * gravTransitionTime;
 	if (!mIsFlowerGliding && piki->mHappa == Flower && piki->mVelocity.y <= 0.0f) {
@@ -2010,7 +2010,7 @@ void PikiFlyingState::exec(Piki* piki)
 		gravAdjust = glideGrav;
 	}
 
-	piki->mVelocity.y += ((AIConstant::_instance->mConstants.mGravity() - gravAdjust) * (randomFactor + 1.0f)) * gsys->getFrameTime();
+	piki->mVelocity.y += ((AICONST.mGravity() - gravAdjust) * (randomFactor + 1.0f)) * gsys->getFrameTime();
 
 	STACK_PAD_VAR(4);
 }
@@ -2526,7 +2526,7 @@ void PikiPushState::exec(Piki* piki)
 	if (!mIsFinishing && piki->mNavi->mCStick.length() <= 0.1f) {
 		piki->mPikiAnimMgr.finishMotion(piki);
 		mIsFinishing = true;
-	} else if (piki->mWallObj && AIConstant::_instance->mConstants._64()) {
+	} else if (piki->mWallObj && AICONST._64()) {
 		piki->_4D8 = 1;
 	}
 }
@@ -2570,7 +2570,7 @@ void PikiPushState::procAnimMsg(Piki* piki, MsgAnim* msg)
 	switch (msg->mKeyEvent->mEventType) {
 	case KEY_LoopEnd:
 	{
-		if (piki->mWallObj && !AIConstant::_instance->mConstants._64()) {
+		if (piki->mWallObj && !AICONST._64()) {
 			piki->_4D8 = 1;
 		}
 		break;
