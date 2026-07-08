@@ -32,14 +32,15 @@ struct PikiHeadItem;
 struct Navi : public Creature, public PaniAnimKeyListener, public PelletView {
 public:
 	struct Locus {
-		Locus() { mIsInactive = true; }; // Only the DLL has it, so it was probably inline.
+		Locus() { mCanBeThrown = TRUE; }; // Only the DLL has it, so it was probably inline.
 
 		void update();
 
 		Vector3f mPosition;      // _00
 		Vector3f mVelocity;      // _0C
 		PermanentEffect mEffect; // _18
-		int mIsInactive;         // _28
+		int mCanBeThrown;        // _28
+		MapMgr* mMapMgr;         // _2C
 	};
 
 	Navi(CreatureProp*, int);
@@ -117,7 +118,7 @@ public:
 	void doAttack();
 	bool insideOnyon();
 	void procDamage(f32);
-	void throwLocus(Vector3f&);
+	void throwLocus(immut Vector3f& pos);
 	void renderParabola(Graphics&, f32, f32);
 
 	AState<Navi>* getCurrState() { return mCurrState; }
@@ -224,7 +225,9 @@ public:
 	bool mIsPlucking;                     // _7E4
 	u8 mFastPluckKeyTaps;                 // _7E5, number of times A has been pressed to continue (fast) plucking
 	u8 mNoPluckTimer;                     // _7E6, count after plucking stops to zoom out camera/stop fast pluck
-	u8 _7E7[0x7F8 - 0x7E7];               // _7E7, TODO: work out members
+	u8 _7E7[0x7F0 - 0x7E7];               // _7E7, TODO: work out members
+	int mLociCount;                       // _7F0
+	Locus* mLoci;                         // _7F4
 	Piki* mNextThrowPiki;                 // _7F8
 	bool _7FC;                            // _7FC, unused
 	f32 mThrowHoldTime;                   // _800

@@ -431,6 +431,12 @@ Navi::Navi(CreatureProp* props, int naviID)
     : Creature(props)
 {
 	mLowerMotionCooldown = 4;
+
+#if defined(WIN32)
+	mLociCount = 32;
+	mLoci      = new Locus[mLociCount];
+#endif
+
 	memStat->start("naviCaster");
 
 	// never added to the global draw list, so never used
@@ -513,16 +519,16 @@ Navi::Navi(CreatureProp* props, int naviID)
  */
 void Navi::Locus::update()
 {
-	f32 speed = gsys->getFrameTime() * 2.4f;
-	mPosition = mPosition + mVelocity * speed;
+	f32 time  = gsys->getFrameTime() * 2.4f;
+	mPosition = mPosition + mVelocity * time;
 	mEffect.updatePos(mPosition);
 
-	if (mPosition.y < mapMgr->getMinY(mPosition.x, mPosition.z, true)) {
-		mIsInactive = true;
+	if (mPosition.y < mMapMgr->getMinY(mPosition.x, mPosition.z, true)) {
+		mCanBeThrown = TRUE;
 		mEffect.kill();
 	}
 
-	mVelocity.y -= AICONST.mGravity() * speed;
+	mVelocity.y -= AICONST.mGravity() * time;
 }
 
 /**
@@ -2523,14 +2529,14 @@ void Navi::throwPiki(Piki* piki, immut Vector3f& pos)
 	piki->mFaceDirection = roundAng(throwAngle);
 
 	f32 halfTime = 0.5f * NAVI_PROP._1AC();
-	f32 height;
+	f32 throwHeight;
 	if (piki->mColor == Yellow) {
-		height = NAVI_PROP._19C();
+		throwHeight = NAVI_PROP._19C();
 	} else {
-		height = NAVI_PROP._18C() + (mThrowHoldTime / NAVI_PROP._14C()) * (NAVI_PROP._17C() - NAVI_PROP._18C());
+		throwHeight = NAVI_PROP._18C() + (mThrowHoldTime / NAVI_PROP._14C()) * (NAVI_PROP._17C() - NAVI_PROP._18C());
 	}
 
-	f32 vSpeed = AICONST.mGravity() * 0.5f * halfTime + (height / halfTime);
+	f32 vSpeed = AICONST.mGravity() * 0.5f * halfTime + (throwHeight / halfTime);
 	f32 hSpeed = throwDist / (2.0f * halfTime);
 
 	piki->mVelocity.set(hSpeed * sinf(throwAngle), vSpeed, hSpeed * cosf(throwAngle));
@@ -2542,11 +2548,41 @@ void Navi::throwPiki(Piki* piki, immut Vector3f& pos)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 0001DC
+ * @note UNUSED Size: 0001DC (Matching by size)
  */
-void Navi::throwLocus(Vector3f&)
+void Navi::throwLocus(immut Vector3f& pos)
 {
-	// UNUSED FUNCTION
+	Locus* locus = nullptr;
+	for (int i = 0; i < mLociCount; ++i) {
+		if (mLoci[i].mCanBeThrown == TRUE) {
+			locus = &mLoci[i];
+		}
+	}
+	if (!locus) {
+		return;
+	}
+	locus->mMapMgr = mapMgr;
+
+	f32 unused        = mFaceDirection + PI;
+	locus->mPosition  = mSRT.t + Vector3f(0.0f, 10.0f, 0.0f);
+	Vector3f throwDir = pos - locus->mPosition;
+	f32 throwDist     = speedy_sqrtf(SQUARE(throwDir.x) + SQUARE(throwDir.z));
+	f32 throwAngle    = atan2f(throwDir.x, throwDir.z);
+
+	f32 halfTime = 0.5f * NAVI_PROP._1AC();
+	f32 throwHeight;
+	if (mNextThrowPiki->mColor == Yellow) {
+		throwHeight = NAVI_PROP._19C();
+	} else {
+		throwHeight = NAVI_PROP._18C() + (mThrowHoldTime / NAVI_PROP._14C()) * (NAVI_PROP._17C() - NAVI_PROP._18C());
+	}
+
+	f32 vSpeed = AICONST.mGravity() * 0.5f * halfTime + (throwHeight / halfTime);
+	f32 hSpeed = throwDist / (2.0f * halfTime);
+
+	locus->mVelocity.set(hSpeed * sinf(throwAngle), vSpeed, hSpeed * cosf(throwAngle));
+	locus->mEffect.changeEffect(EffectMgr::EFF_Navi_LightGlow);
+	locus->mCanBeThrown = FALSE;
 }
 
 /**
