@@ -51,9 +51,9 @@ COMDATs all land in ``graphics`` (link #1) -- exactly the byte-faithful attribut
 inline_owner.py needs (replacing its ~50%-consistent link-order approximation).
 
 Usage:
-    python tools/win/ilk_layout.py sysCore                 # link order + objects
-    python tools/win/ilk_layout.py sysCore --text-ranges   # per-object .text ranges
-    python tools/win/ilk_layout.py plugPiki -o out.csv      # also write a CSV
+    python tools/win/authoring/ilk_layout.py sysCore                 # link order + objects
+    python tools/win/authoring/ilk_layout.py sysCore --text-ranges   # per-object .text ranges
+    python tools/win/authoring/ilk_layout.py plugPiki -o out.csv      # also write a CSV
 """
 from __future__ import annotations
 
@@ -64,7 +64,8 @@ import re
 import struct
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[2]
+import _bootstrap  # noqa: E402,F401  (authoring/_bootstrap.py: sys.path + ROOT)
+ROOT = _bootstrap.ROOT
 
 MAGIC = b'Microsoft Linker Database'
 # The whole file is conceptually mapped at this virtual base: an internal pointer's
@@ -202,12 +203,28 @@ def main(argv=None) -> int:
     ap.add_argument('-o', '--out', type=Path, help='write the object table as CSV')
     ap.add_argument('--text-ranges', action='store_true',
                     help='print per-object .text address ranges (byte-faithful)')
+    ap.add_argument('--ranges-csv', type=Path,
+                    help='write per-object .text ranges as CSV (stem,lo_rva,hi_rva); '
+                         'this is the tracked <mod>_text_ranges.csv build input that '
+                         'lets the routine build attribute a function to its TU without '
+                         'parsing the .ilk (see tools/win/README.md)')
     args = ap.parse_args(argv)
 
     ilk = args.ilk or find_ilk(args.module)
     raw = ilk.read_bytes()
     if not raw.startswith(MAGIC):
         raise SystemExit(f'{ilk}: not a Microsoft Linker Database (bad magic)')
+
+    if args.ranges_csv:
+        ranges = object_text_ranges(raw)
+        args.ranges_csv.parent.mkdir(parents=True, exist_ok=True)
+        with args.ranges_csv.open('w', newline='') as fh:
+            w = csv.writer(fh)
+            w.writerow(['stem', 'lo_rva', 'hi_rva'])
+            for stem, (a, b) in sorted(ranges.items(), key=lambda kv: kv[1][0]):
+                w.writerow([stem, f'{a:#x}', f'{b:#x}'])
+        print(f'wrote {len(ranges)} object ranges -> {args.ranges_csv}')
+        return 0
 
     if args.text_ranges:
         recs, lo, hi = text_contributions(raw)

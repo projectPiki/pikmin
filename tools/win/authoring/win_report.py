@@ -23,7 +23,7 @@ where each inline already appears once -- inline_owner needs to see every emitte
 Run after `ninja -f build/win/build.ninja target` re-carves the target objects.
 
 Usage:
-    python tools/win/win_report.py
+    python tools/win/authoring/win_report.py
 """
 from __future__ import annotations
 
@@ -32,7 +32,8 @@ import subprocess
 import sys
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[2]
+import _bootstrap  # noqa: E402,F401  (authoring/_bootstrap.py: sys.path + ROOT)
+ROOT = _bootstrap.ROOT
 CLI = ROOT / 'build/tools/objdiff-cli.exe'
 FULL = ROOT / 'build/win/report.json'
 DEDUP = ROOT / 'build/win/report_dedup.json'

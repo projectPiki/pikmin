@@ -26,8 +26,8 @@ overlap/jaccard/comp_size/alt). VERIFY before trusting -- a correct name re-carv
 byte-identical, a wrong one shows low fuzzy (`--verify` measures this for you).
 
 Usage:
-    python tools/win/autodraft_labels.py plugPiki
-    python tools/win/autodraft_labels.py plugPiki --verify   # carve+score the draft
+    python tools/win/authoring/autodraft_labels.py plugPiki
+    python tools/win/authoring/autodraft_labels.py plugPiki --verify   # carve+score the draft
 """
 from __future__ import annotations
 
@@ -37,12 +37,12 @@ import sys
 from collections import defaultdict
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
+import _bootstrap  # noqa: E402,F401  (authoring/_bootstrap.py: sys.path + ROOT)
 import pydemumble  # noqa: E402
 from pe_extract import load_map, parse_base_coff, IMAGE_REL_I386_REL32  # noqa: E402
 from mapbak import backup  # noqa: E402
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = _bootstrap.ROOT
 
 # Ubiquitous CRT / compiler helpers: called from almost everything, so they carry
 # no discriminating signal -- drop them from both sides' callee sets.

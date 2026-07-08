@@ -33,8 +33,8 @@ Writes `build/win/ilk_functions_<module>.csv` (one row per function) and
 `build/win/ilk_functions_<module>.txt` (the unassigned worklist, by TU).
 
 Usage:
-    python tools/win/ilk_functions.py sysCore plugPiki
-    python tools/win/ilk_functions.py plugPiki --csv --txt
+    python tools/win/authoring/ilk_functions.py sysCore plugPiki
+    python tools/win/authoring/ilk_functions.py plugPiki --csv --txt
 """
 from __future__ import annotations
 
@@ -46,11 +46,11 @@ import sys
 from collections import Counter, defaultdict
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
+import _bootstrap  # noqa: E402,F401  (authoring/_bootstrap.py: sys.path + ROOT)
 from ilk_layout import _u32, object_text_ranges, text_descriptor  # noqa: E402
 from pe_extract import demangled_key, map_label_key  # noqa: E402
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = _bootstrap.ROOT
 
 PLACEHOLDER = ('FUN_', 'sub_', 'loc_', 'DAT_', 'dword_', 'thunk_FUN_', 'unk_',
                'j_', 'byte_', 'off_', 'thunk_')

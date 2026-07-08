@@ -20,11 +20,11 @@ The candidate NAME pool for a TU is the .ilk's un-emitted names for it: see
 `build/win/reconcile_<mod>/B_missing_by_tu.txt` (from ilk_reconcile.py) alongside.
 
 Workflow:
-  1. python tools/win/review_labels.py plugPiki --emit         # writes review CSV
+  1. python tools/win/authoring/review_labels.py plugPiki --emit         # writes review CSV
   2. edit build/win/review/<mod>.csv, filling the `assign` column with either a
      decorated name (`?foo@Bar@@...`) or a demangled label (`Bar::foo`).
-  3. python tools/win/review_labels.py plugPiki --ingest       # dry-run: preview
-     python tools/win/review_labels.py plugPiki --ingest --apply   # write to map
+  3. python tools/win/authoring/review_labels.py plugPiki --ingest       # dry-run: preview
+     python tools/win/authoring/review_labels.py plugPiki --ingest --apply   # write to map
 
 Only rows whose `assign` is non-empty are touched; the map is backed up first.
 """
@@ -36,13 +36,13 @@ import struct
 import sys
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
+import _bootstrap  # noqa: E402,F401  (authoring/_bootstrap.py: sys.path + ROOT)
 from mapbak import backup  # noqa: E402
 from ilk_functions import (find_ilk, inventory, load_map, tu_at, tu_index,  # noqa: E402
                            load_report, emitted_status, label_state)
 import pydemumble  # noqa: E402
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = _bootstrap.ROOT
 
 
 def find_dll(mod: str) -> Path:

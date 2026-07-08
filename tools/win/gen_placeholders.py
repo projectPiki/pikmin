@@ -23,21 +23,43 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import bisect
 import csv
 import re
-import sys
 from collections import defaultdict
 from pathlib import Path
-
-sys.path.insert(0, str(Path(__file__).resolve().parent))
-from ilk_functions import find_ilk, tu_at, tu_index  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[2]
 PLACEHOLDER = re.compile(r"^(FUN_|sub_|loc_|j_|unk_|thunk_FUN_)")
 
 
+def load_tu_index(mod: str):
+    """(sorted [(lo,hi,stem)], [lo...]) from the tracked <mod>_text_ranges.csv.
+
+    That table is the byte-faithful object->.text-range map exported from the .ilk by
+    `ilk_layout.py --ranges-csv`. Reading the committed CSV instead of the .ilk keeps
+    the routine build reproducible on a clean checkout (see tools/win/README.md);
+    `ilk_layout`/`ilk_functions` stay authoring-only tools.
+    """
+    p = ROOT / f"config/GPIE01_01/win/{mod}_text_ranges.csv"
+    if not p.exists():
+        raise SystemExit(f"{p} missing -- regenerate with "
+                         f"`python tools/win/authoring/ilk_layout.py {mod} --ranges-csv {p}`")
+    ivs = [(int(r["lo_rva"], 16), int(r["hi_rva"], 16), r["stem"])
+           for r in csv.DictReader(p.open(newline=""))]
+    ivs.sort()
+    return ivs, [i[0] for i in ivs]
+
+
+def tu_at(rva: int, ivs, starts) -> str | None:
+    i = bisect.bisect_right(starts, rva) - 1
+    if 0 <= i < len(ivs) and ivs[i][0] <= rva < ivs[i][1]:
+        return ivs[i][2]
+    return None
+
+
 def run(mod: str, out: Path) -> None:
-    ivs, starts = tu_index(find_ilk(mod).read_bytes())
+    ivs, starts = load_tu_index(mod)
 
     by_tu: dict[str, list] = defaultdict(list)
     mp = ROOT / f"config/GPIE01_01/win/{mod}_map.csv"

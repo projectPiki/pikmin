@@ -34,7 +34,7 @@ Dry-run by default; ``--apply`` writes the map (a rolling pre-apply backup goes 
 Re-carve afterwards: ``ninja -f build/win/build.ninja target``.
 
 Usage:
-    python tools/win/refresh_map_classkey.py \
+    python tools/win/authoring/refresh_map_classkey.py \
         --map     config/GPIE01_01/win/plugPiki_map.csv \
         --obj-dir build/win/obj/plugPiki \
         [--apply]
@@ -49,11 +49,11 @@ import sys
 from collections import defaultdict
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
+import _bootstrap  # noqa: E402,F401  (authoring/_bootstrap.py: sys.path + ROOT)
 from pe_extract import canon_sig  # noqa: E402
 from mapbak import backup  # noqa: E402
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = _bootstrap.ROOT
 
 
 def defined_symbol_names(data: bytes) -> set[str]:
