@@ -28,9 +28,9 @@ every TU (each name's best fuzzy is taken across all emitting units), so no
 `--deduplicate` report is needed here.
 
 Usage:
-    python tools/win/completeness.py plugPiki sysCore
-    python tools/win/completeness.py plugPiki --report build/win/report.json --canon
-    python tools/win/completeness.py plugPiki -o build/win/completeness.json
+    python tools/win/authoring/completeness.py plugPiki sysCore
+    python tools/win/authoring/completeness.py plugPiki --report build/win/report.json --canon
+    python tools/win/authoring/completeness.py plugPiki -o build/win/completeness.json
 """
 from __future__ import annotations
 

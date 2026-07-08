@@ -40,7 +40,7 @@ Phase 3): strip each shared inline's COMDAT from every base object except its ow
 so objdiff shows it once, in the unit the original linker put it.
 
 Usage:
-    python tools/win/inline_owner.py sysCore
+    python tools/win/authoring/inline_owner.py sysCore
 """
 from __future__ import annotations
 
@@ -54,11 +54,11 @@ import sys
 from collections import Counter, defaultdict
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
+import _bootstrap  # noqa: E402,F401  (authoring/_bootstrap.py: sys.path + ROOT)
 from ilk_layout import object_text_ranges  # noqa: E402
 from pe_extract import base_defined_statics  # noqa: E402
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = _bootstrap.ROOT
 
 # our objdiff-unit stem -> original .ilk object stem, where they differ in name.
 OBJ_ALIAS = {

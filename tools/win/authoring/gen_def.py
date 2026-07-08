@@ -7,13 +7,14 @@ the export directory layout matching under reccmp. Names are the raw MSVC
 decorated symbols exactly as they appear in the original binary.
 
 Usage:
-    python tools/win/gen_def.py <pe-file> --name sysCore [-o sysCore.def]
+    python tools/win/authoring/gen_def.py <pe-file> --name sysCore [-o sysCore.def]
 """
 from __future__ import annotations
 
 import argparse
 import sys
 
+import _bootstrap  # noqa: E402,F401  (authoring/_bootstrap.py: sys.path + ROOT)
 from pe_symbols import parse_exports
 
 

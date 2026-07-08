@@ -26,7 +26,7 @@ For each PE target `<name>` (`sysCore`, `sysBootup`, `plugPiki`, `plugTexConv`,
   with manual disassembler labels (IDA for `sysCore`, Ghidra for `plugPiki`) into
   one RVA-keyed table `rva,va,kind,size,name_mangled,name,source`. This is the
   join key for reccmp `// FUNCTION:`/`// GLOBAL:` seeding and the objdiff
-  extractor. Produced by `tools/win/merge_symbols.py` from `<name>_symbols.csv`
+  extractor. Produced by `tools/win/authoring/merge_symbols.py` from `<name>_symbols.csv`
   plus disassembler dumps (`ghidra/export_symbols.py`, `ida/export_symbols.py`);
   see `tools/win/README.md` for the full workflow and merge policy. The raw
   per-disassembler dumps are regeneratable inputs and are **not** tracked - only
@@ -40,7 +40,7 @@ Originals live (git-ignored) under `orig/GPIE01_01/files/` and
 ```sh
 python tools/win/pe_symbols.py orig/GPIE01_01/files/sysCore.dll \
     --target sysCore -o config/GPIE01_01/win/sysCore_symbols.csv
-python tools/win/gen_def.py orig/GPIE01_01/files/sysCore.dll \
+python tools/win/authoring/gen_def.py orig/GPIE01_01/files/sysCore.dll \
     --name sysCore   -o config/GPIE01_01/win/sysCore.def
 ```
 

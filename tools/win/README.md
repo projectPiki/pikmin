@@ -1,10 +1,20 @@
 # Windows-decomp symbol tooling
 
+> **New contributor?** Start with [`QUICKSTART.md`](QUICKSTART.md) -- the daily
+> match-a-function loop. This file is the maintainer reference for the symbol map + build.
+
 Scripts for building the **master symbol map** of each Windows (VC6/PE) module -
 the RVA-keyed table that drives reccmp annotation seeding and the objdiff
 extractor. Everything downstream is only as good as this map, so it merges three
 streams of truth per module and never lets an automated re-run clobber a human
 label.
+
+> **Layout (2026-07-08):** the map-authoring / analysis scripts documented below now live
+> in [`authoring/`](authoring/) (invocation paths reflect this). The small **build-core**
+> -- `pe_extract.py`, `dedup_comdats.py`, `gen_placeholders.py`, `win_cc.py`,
+> `win_compare.py`, `undef_survey.py`, `gen_link_fillers.py`, `objdiff_mappings.py`, and the
+> `pe_symbols.py` / `mapbak.py` libraries -- stays at the `tools/win/` top level and is all
+> the routine build/diff needs.
 
 ```
                 pe_symbols.py            (exports: ground-truth names, from the PE)
@@ -102,13 +112,13 @@ Folds the export table + disassembler labels into the master map. Merge policy:
 
 ```sh
 # sysCore: authoritative exports + IDA internals
-python tools/win/merge_symbols.py --target sysCore \
+python tools/win/authoring/merge_symbols.py --target sysCore \
     --exports config/GPIE01_01/win/sysCore_symbols.csv \
     --labels  sysCore_ida.csv \
     -o config/GPIE01_01/win/sysCore_map.csv
 
 # plugPiki: exports + Ghidra internals (--labels is repeatable)
-python tools/win/merge_symbols.py --target plugPiki \
+python tools/win/authoring/merge_symbols.py --target plugPiki \
     --exports config/GPIE01_01/win/plugPiki_symbols.csv \
     --labels  plugPiki_ghidra.csv \
     -o config/GPIE01_01/win/plugPiki_map.csv
@@ -134,13 +144,13 @@ placement.
 
 ```sh
 # dry run - see what it would place, and dump the leftovers
-python tools/win/seed_annotations.py --target sysCore \
+python tools/win/authoring/seed_annotations.py --target sysCore \
     --map config/GPIE01_01/win/sysCore_map.csv \
     --src src/sysCommon --src src/sysDolphin --src include \
     --kind both --report build/win/seed_sysCore.txt
 
 # actually write the markers
-python tools/win/seed_annotations.py --target sysCore --map ... --src ... --apply
+python tools/win/authoring/seed_annotations.py --target sysCore --map ... --src ... --apply
 ```
 
 Scope `--src` to the module's own directories (sysCore = `src/sysCommon` +
@@ -239,7 +249,7 @@ collision only the strongest-voted VA keeps it, and export-owned names are
 off-limits - so no duplicate `name_mangled` for `carve_row` to trip on).
 
 ```
-python tools/win/backfill_map_names.py \
+python tools/win/authoring/backfill_map_names.py \
     --dll orig/GPIE01_01/files/plugins/plugPiki.dll \
     --map config/GPIE01_01/win/plugPiki_map.csv \
     --obj-dir build/win/obj/plugPiki [--apply]      # dry-run by default
@@ -270,7 +280,7 @@ flips only rows whose sole drift is the class-key (`U`->`V` for flipped types),
 leaves genuine structs alone, and can never invent a name.
 
 ```
-python tools/win/refresh_map_classkey.py \
+python tools/win/authoring/refresh_map_classkey.py \
     --map config/GPIE01_01/win/plugPiki_map.csv \
     --obj-dir build/win/obj/plugPiki [--apply]      # dry-run by default; backs up to <map>.bak
 ninja -f build/win/build.ninja target               # re-carve with the refreshed names
@@ -303,8 +313,8 @@ list into `build/win/reconcile_<module>/`:
 - **`C_map_placeholders.txt`** - map rows still on `FUN_`/`sub_`/`DAT_` labels.
 
 ```
-python tools/win/ilk_reconcile.py plugPiki       # needs a fresh build/win/report.json
-python tools/win/ilk_reconcile.py sysCore
+python tools/win/authoring/ilk_reconcile.py plugPiki       # needs a fresh build/win/report.json
+python tools/win/authoring/ilk_reconcile.py sysCore
 ```
 
 Caveat: some modules store the `.ilk` name table differently and only a fraction
@@ -329,7 +339,7 @@ already appears once, which would hide the per-unit emitters `inline_owner.py` n
 
 ```
 ninja -f build/win/build.ninja target   # re-carve the raw targets first
-python tools/win/win_report.py
+python tools/win/authoring/win_report.py
 ```
 
 ## Inline ownership - `inline_owner.py`
@@ -351,8 +361,8 @@ columns: `decorated,owner_unit,n_emitters,method` (`method` = `ilk-range` |
 `link-order`).
 
 ```
-python tools/win/inline_owner.py sysCore   # -> build/win/inline_owner_sysCore.csv
-python tools/win/inline_owner.py plugPiki \
+python tools/win/authoring/inline_owner.py sysCore   # -> build/win/inline_owner_sysCore.csv
+python tools/win/authoring/inline_owner.py plugPiki \
     --ilk orig/GPIE01_01/files/plugins/plugPiki.ilk   # plugin .ilk isn't at the default path
 ```
 
@@ -406,7 +416,7 @@ Keying by name inherently deduplicates the inline-COMDAT copies, so no
 `--deduplicate` report is needed.
 
 ```
-python tools/win/completeness.py plugPiki sysCore --canon   # needs build/win/report.json
+python tools/win/authoring/completeness.py plugPiki sysCore --canon   # needs build/win/report.json
 ```
 
 Latest (2026-07-05): plugPiki **33.8%** of real binary byte-exact (55.7% coverage),
@@ -432,8 +442,8 @@ each kept COMDAT is attributed to the exact object the linker placed it in. This
 the byte-faithful ground truth `inline_owner.py` consumes via `object_text_ranges()`.
 
 ```
-python tools/win/ilk_layout.py sysCore -o build/win/ilk_layout_sysCore.csv
-python tools/win/ilk_layout.py sysCore --text-ranges     # per-object .text ranges
+python tools/win/authoring/ilk_layout.py sysCore -o build/win/ilk_layout_sysCore.csv
+python tools/win/authoring/ilk_layout.py sysCore --text-ranges     # per-object .text ranges
 ```
 
 ## Function inventory - `ilk_functions.py`
@@ -450,7 +460,7 @@ TU-grouped **unassigned worklist** (strong = real decomp work; inline = appears 
 its class/header is written).
 
 ```
-python tools/win/ilk_functions.py sysCore plugPiki --csv --txt
+python tools/win/authoring/ilk_functions.py sysCore plugPiki --csv --txt
 ```
 
 ## Vtable labeller - `vtable_labels.py`
@@ -467,8 +477,8 @@ DLL-vs-DOL vtable-reorder risk: `cross` (>=2 vtables agree, immune) / `bracket`
 (anchored both sides) / `isolated` (exposed, not auto-applied).
 
 ```
-python tools/win/vtable_labels.py plugPiki             # dry-run -> build/win/vtable_labels_plugPiki.csv
-python tools/win/vtable_labels.py plugPiki --apply     # writes cross+bracket into the map (backup in build/win/mapbak/)
+python tools/win/authoring/vtable_labels.py plugPiki             # dry-run -> build/win/vtable_labels_plugPiki.csv
+python tools/win/authoring/vtable_labels.py plugPiki --apply     # writes cross+bracket into the map (backup in build/win/mapbak/)
 ```
 
 Validated: 100% holdout; plugPiki applied 304, re-carve gave +243 byte-exact, 0
@@ -486,8 +496,8 @@ demangled labels via the `.ilk` and writes the map (backup in `build/win/mapbak/
 pool per TU: `build/win/reconcile_<mod>/B_missing_by_tu.txt`.
 
 ```
-python tools/win/review_labels.py plugPiki --emit                # -> build/win/review/plugPiki.csv
-python tools/win/review_labels.py plugPiki --ingest [--apply]    # read assignments back
+python tools/win/authoring/review_labels.py plugPiki --emit                # -> build/win/review/plugPiki.csv
+python tools/win/authoring/review_labels.py plugPiki --ingest [--apply]    # read assignments back
 ```
 
 ## Auto-drafting the review list - `autodraft_labels.py`
@@ -514,10 +524,10 @@ wrong and is dropped). Both signals feed the same map, and applying names improv
 the next round's fingerprints + anchors, so iterate to convergence.
 
 ```
-python tools/win/autodraft_labels.py plugPiki --apply --min-confidence MED   # callee
-python tools/win/autodraft_labels.py plugPiki --order --apply                # position
+python tools/win/authoring/autodraft_labels.py plugPiki --apply --min-confidence MED   # callee
+python tools/win/authoring/autodraft_labels.py plugPiki --order --apply                # position
 # refresh + repeat until it stops finding matches:
-python tools/win/review_labels.py plugPiki --emit && ninja -f build/win/build.ninja target
+python tools/win/authoring/review_labels.py plugPiki --emit && ninja -f build/win/build.ninja target
 ```
 
 Result (2026-07-07): callee-match applied 206 (0 wrong; +115 byte-exact); `--order`
@@ -547,7 +557,7 @@ TU attribution of an unplaced name (it has no address of its own):
   plugPiki) are quarantined to `_cross_module.csv` -- not this module's work.
 
 ```
-python tools/win/pair_worklist.py plugPiki    # -> build/win/pairing/plugPiki/<tu>.csv + _summary.csv
+python tools/win/authoring/pair_worklist.py plugPiki    # -> build/win/pairing/plugPiki/<tu>.csv + _summary.csv
 ```
 
 `_summary.csv` is a work-priority list (by address count); TUs with 0 addresses are
@@ -655,6 +665,6 @@ plugPiki 59526/62813 (94.8%)** - with **zero** change to the function metric.
 The raw `<name>_ida.csv` / `<name>_ghidra.csv` are **inputs you regenerate**, not
 tracked artifacts - drop them anywhere (repo root or scratch) and point `--labels`
 at them. Only the merged `config/GPIE01_01/win/<name>_map.csv` is the tracked
-deliverable. See the sibling scripts (`pe_symbols.py`, `gen_def.py`,
-`configure_win.py` + `win_cc.py`, and the per-function `build_slice.ps1` /
-`diff_func.ps1`) for the build/match half of the workflow.
+deliverable. See the sibling scripts (`pe_symbols.py`, `authoring/gen_def.py`,
+`configure_win.py` + `win_cc.py`) and [`QUICKSTART.md`](QUICKSTART.md) for the
+build/match half of the workflow.

@@ -38,8 +38,8 @@ run is low-impact -- but treat a surprisingly low ground-truth count with
 suspicion.
 
 Usage:
-    python tools/win/ilk_reconcile.py plugPiki
-    python tools/win/ilk_reconcile.py sysCore --report build/win/report.json
+    python tools/win/authoring/ilk_reconcile.py plugPiki
+    python tools/win/authoring/ilk_reconcile.py sysCore --report build/win/report.json
 
 Needs pydemumble (a reccmp dependency) for name validation/demangling.
 """
@@ -54,7 +54,8 @@ from pathlib import Path
 
 import pydemumble
 
-ROOT = Path(__file__).resolve().parents[2]
+import _bootstrap  # noqa: E402,F401  (authoring/_bootstrap.py: sys.path + ROOT)
+ROOT = _bootstrap.ROOT
 
 # embedded source path in a file-local static:  ?%c:\...\foo.cpp12345::
 PATHRE = re.compile(r'[\\/]([A-Za-z0-9_]+)\.cpp\d*::')

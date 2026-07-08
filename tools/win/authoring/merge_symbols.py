@@ -29,7 +29,7 @@ Output CSV: rva,va,kind,size,name_mangled,name,source
   source  - all contributing streams, e.g. "export+ida".
 
 Usage:
-    python tools/win/merge_symbols.py --target sysCore \
+    python tools/win/authoring/merge_symbols.py --target sysCore \
         --exports config/GPIE01_01/win/sysCore_symbols.csv \
         --labels  sysCore_ida.csv \
         -o config/GPIE01_01/win/sysCore_map.csv

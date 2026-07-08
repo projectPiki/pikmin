@@ -26,8 +26,8 @@ agreements). With `--apply`, fills `name_mangled` on the matching map function r
 (placeholder / empty only; never overwrites a real name) after backing the map up.
 
 Usage:
-    python tools/win/vtable_labels.py plugPiki                 # dry-run report
-    python tools/win/vtable_labels.py plugPiki --apply         # write into the map
+    python tools/win/authoring/vtable_labels.py plugPiki                 # dry-run report
+    python tools/win/authoring/vtable_labels.py plugPiki --apply         # write into the map
 """
 from __future__ import annotations
 
@@ -39,13 +39,13 @@ import sys
 from collections import defaultdict
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
+import _bootstrap  # noqa: E402,F401  (authoring/_bootstrap.py: sys.path + ROOT)
 from pe_symbols import PEFile  # noqa: E402
 from pe_extract import demangled_key, map_label_key  # noqa: E402
 from mapbak import backup  # noqa: E402
 import pydemumble  # noqa: E402
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = _bootstrap.ROOT
 PLACEHOLDER = ('FUN_', 'sub_', 'loc_', 'DAT_', 'dword_', 'thunk_FUN_', 'unk_',
                'j_', 'byte_', 'off_', 'thunk_')
 

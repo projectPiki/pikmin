@@ -27,7 +27,7 @@ Writes build/win/pairing/<mod>/:
   _unattributed.csv   names with only a guessed TU + the evidence
 
 Usage:
-    python tools/win/pair_worklist.py plugPiki
+    python tools/win/authoring/pair_worklist.py plugPiki
 """
 from __future__ import annotations
 
@@ -45,12 +45,12 @@ from pathlib import Path
 # The .cpp basename lowercases straight to the byte-faithful TU stem -> CERTAIN.
 PATHRE = re.compile(r"[\\/]([A-Za-z0-9_]+)\.cpp\d*(?:::|@)")
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
+import _bootstrap  # noqa: E402,F401  (authoring/_bootstrap.py: sys.path + ROOT)
 from ilk_functions import find_ilk, tu_at, tu_index  # noqa: E402
 from ilk_reconcile import extract_ilk, owner_class  # noqa: E402
 from pe_extract import load_map as pe_load_map  # noqa: E402
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = _bootstrap.ROOT
 
 
 def class_source_stem(cls: str, cache: dict) -> str | None:
