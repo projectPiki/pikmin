@@ -1,7 +1,6 @@
 #include "Stream.h"
 
 #include "Common/String.h"
-#include <stdarg.h>
 #include <string.h>
 
 // operator new[] is used without this header being included.
@@ -157,7 +156,7 @@ void Stream::writeString(immut String& s)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 0000C4
+ * @note UNUSED Size: 0000C4 (Matching by size)
  */
 void Stream::print(immut char* fmt, ...)
 {
@@ -165,6 +164,7 @@ void Stream::print(immut char* fmt, ...)
 	va_list args;
 	va_start(args, fmt);
 	vsprintf(dest, fmt, args);
+	va_end(args);
 	if (strlen(dest)) {
 		write(dest, strlen(dest));
 	}
@@ -172,12 +172,16 @@ void Stream::print(immut char* fmt, ...)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000064
+ * @note UNUSED Size: 000064 (Matching by size)
  */
-// void Stream::vPrintf(char*, std::@class$1stream_cpp*)
-// {
-// 	// UNUSED FUNCTION
-// }
+void Stream::vPrintf(immut char* param_1, va_list args)
+{
+	char dest[1024];
+	vsprintf(dest, param_1, args);
+	if (strlen(dest) != 0) {
+		write(dest, strlen(dest));
+	}
+}
 
 /**
  * @todo: Documentation
@@ -220,36 +224,39 @@ void Stream::close()
  * @todo: Documentation
  * @note UNUSED Size: 00006C
  */
-void RandomAccessStream::writeTo(int _, void*, int)
+void RandomAccessStream::writeTo(int position, immut void* buffer, int length)
 {
-	// this is just here to spawn the weak function setPosition(int);
-	setPosition(_);
-	// UNUSED FUNCTION
+	setPosition(position);
+	write(buffer, length);
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 00006C
+ * @note UNUSED Size: 00006C (Matching by size)
  */
-// void RandomAccessStream::readFrom(int, void*, int)
-// {
-// 	// UNUSED FUNCTION
-// }
+void RandomAccessStream::readFrom(int position, void* buffer, int length)
+{
+	setPosition(position);
+	read(buffer, length);
+}
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 00005C
+ * @note UNUSED Size: 00005C (Matching by size)
  */
-// void RandomAccessStream::writeIntTo(int, int)
-// {
-// 	// UNUSED FUNCTION
-// }
+void RandomAccessStream::writeIntTo(int position, int value)
+{
+	setPosition(position);
+	writeInt(value);
+}
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 00004C
+ * @note UNUSED Size: 00004C (Matching by size)
  */
-// void RandomAccessStream::readIntFrom(int)
-// {
-// 	// UNUSED FUNCTION
-// }
+int RandomAccessStream::readIntFrom(int position)
+{
+	setPosition(position);
+	int value = readInt();
+	return value;
+}
