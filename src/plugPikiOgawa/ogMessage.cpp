@@ -444,7 +444,7 @@ void zen::ogScrMessageMgr::setPageInfoSub()
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000058
+ * @note UNUSED Size: 000058 (Matching by size)
  */
 void zen::ogScrMessageMgr::ReadAllScreen()
 {
@@ -454,7 +454,6 @@ void zen::ogScrMessageMgr::ReadAllScreen()
 		setPageInfoSub();
 	}
 	PRINT("ReadAllScreen() end\n");
-	// UNUSED FUNCTION
 }
 
 /**

@@ -16,12 +16,11 @@ static u32 history[10] = { 0xF4240 };
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 000014
+ * @note UNUSED Size: 000014 (Matching by size)
  */
 dspch_* GetDSPchannelHandle(u32 idx)
 {
 	return &DSPCH[idx];
-	// UNUSED FUNCTION
 }
 
 /**

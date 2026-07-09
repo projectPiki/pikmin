@@ -105,14 +105,13 @@ static BufferedInputStream dvdBufferedStream;
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000044
+ * @note UNUSED Size: 000044 (Matching by size)
  */
 void DVDStream::init()
 {
 	mOffset  = 0;
 	mPending = mFileInfo.length;
 	sprintf(lastName, mPath);
-	// UNUSED FUNCTION
 }
 
 /**

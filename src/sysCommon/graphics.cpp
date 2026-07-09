@@ -948,12 +948,11 @@ static TexImgFormat convFmts[] = {
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000018
+ * @note UNUSED Size: 000018 (Matching by size)
  */
 TexImgFormat TexImg::convFormat(u32 inFmt)
 {
 	return convFmts[inFmt];
-	// UNUSED FUNCTION
 }
 
 static immut char* fmtNames[] = {

@@ -629,12 +629,11 @@ void CollPart::makeCylinder(Cylinder&)
 
 /**
  * @brief True if this part represents @p shape as a platform.
- * @note UNUSED Size: 000048
+ * @note UNUSED Size: 000048 (Matching by size)
  */
 bool CollPart::samePlatShape(Shape* shape)
 {
 	return mPartType == PART_Platform && mCollInfo && mCollInfo->mPlatShape == shape;
-	// UNUSED FUNCTION
 }
 
 /**

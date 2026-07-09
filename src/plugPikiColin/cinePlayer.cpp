@@ -539,13 +539,12 @@ int SceneCut::countEKeys()
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 00005C
+ * @note UNUSED Size: 00005C (Matching by size)
  */
 void ActorInstance::onceInit()
 {
 	mLeafModel = gameflow.loadShape("pikis/happas/leaf.mod", true);
 	mDefaultActor->mModel->makeInstance(mAnimatedMaterials, 0);
-	// UNUSED FUNCTION
 }
 
 /**

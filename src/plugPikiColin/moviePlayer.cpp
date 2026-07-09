@@ -596,12 +596,11 @@ void MoviePlayer::initMovieFlags(MovieInfo* info)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000024
+ * @note UNUSED Size: 000024 (Matching by size)
  */
 void MoviePlayer::sndFrameMovie(MovieInfo*)
 {
 	Jac_DemoFrame(mCurrentFrame);
-	// UNUSED FUNCTION
 }
 
 /**

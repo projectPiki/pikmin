@@ -213,7 +213,7 @@ zen::ogRaderMgr::ogRaderMgr()
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 00003C
+ * @note UNUSED Size: 00003C (Matching by size)
  */
 void zen::ogRaderMgr::setRaderScale(f32 scale)
 {
@@ -221,19 +221,17 @@ void zen::ogRaderMgr::setRaderScale(f32 scale)
 	_42C = scale;
 	_420->setScale(_428);
 	_424->setScale(_428 / 10.0f);
-	// UNUSED FUNCTION
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 00004C
+ * @note UNUSED Size: 00004C (Matching by size)
  */
 void zen::ogRaderMgr::chaseRaderScale(f32 scale)
 {
 	_428 += (scale - _428) / 5.0f;
 	_420->setScale(_428);
 	_424->setScale(_428 / 10.0f);
-	// UNUSED FUNCTION
 }
 
 /**
@@ -937,7 +935,7 @@ zen::ogRaderMgr::RaderStatus zen::ogRaderMgr::update(Controller* input)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000098
+ * @note UNUSED Size: 000098 (Matching by size)
  */
 void zen::ogRaderMgr::RotatePos(f32* x, f32* y)
 {
@@ -953,8 +951,6 @@ void zen::ogRaderMgr::RotatePos(f32* x, f32* y)
 
 	*x = pos.x;
 	*y = pos.y;
-
-	// UNUSED FUNCTION
 }
 
 /**

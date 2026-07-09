@@ -16,9 +16,8 @@ void Probe_Finish(s32 id)
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 000050
+ * @note UNUSED Size: 000050 (Matching by size)
  */
 void Console_printf(immut char*, ...)
 {
-	// UNUSED FUNCTION
 }

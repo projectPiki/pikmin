@@ -75,11 +75,10 @@ void ObjectMgr::store()
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000004
+ * @note UNUSED Size: 000004 (Matching by size)
  */
 void ObjectMgr::restore()
 {
-	// UNUSED FUNCTION
 }
 
 /**

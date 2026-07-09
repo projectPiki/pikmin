@@ -924,13 +924,12 @@ void SlimeAi::initWalk(int nextState)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000018
+ * @note UNUSED Size: 000018 (Matching by size)
  */
 void SlimeAi::initChase(int nextState)
 {
 	mSlime->setNextState(nextState);
 	mSlime->setMotionFinish(false);
-	// UNUSED FUNCTION
 }
 
 /**

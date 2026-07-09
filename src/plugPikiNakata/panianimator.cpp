@@ -54,12 +54,11 @@ PaniMotion::PaniMotion(int animID)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000030
+ * @note UNUSED Size: 000030 (Matching by size)
  */
 PaniMotion::PaniMotion(int animID, int p2)
 {
 	init(animID, p2);
-	// UNUSED FUNCTION
 }
 
 /**

@@ -179,11 +179,10 @@ void UpdateMgr::removeClient(UpdateContext* client)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000004
+ * @note UNUSED Size: 000004 (Matching by size)
  */
-void UpdateMgr::balanceClient(UpdateContext*)
+void UpdateMgr::balanceClient(UpdateContext* client)
 {
-	// UNUSED FUNCTION
 }
 
 /**

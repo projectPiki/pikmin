@@ -103,11 +103,10 @@ void MemStat::end(immut char* name)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000034
+ * @note UNUSED Size: 000034 (Matching by size)
  */
 int MemStat::getMemorySize(immut char* name)
 {
-	// UNUSED FUNCTION
 	if (MemInfo* info = getInfo(name)) {
 		return info->mMemorySize;
 	}
@@ -116,11 +115,10 @@ int MemStat::getMemorySize(immut char* name)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000034
+ * @note UNUSED Size: 000034 (Matching by size)
  */
 int MemStat::getRestMemory()
 {
-	// UNUSED FUNCTION
 	return gsys->getHeap(SYSHEAP_App)->getFree();
 }
 

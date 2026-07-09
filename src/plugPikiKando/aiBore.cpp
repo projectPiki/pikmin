@@ -521,12 +521,11 @@ void ActBoreTalk::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000040
+ * @note UNUSED Size: 000040 (Matching by size)
  */
 ActBoreListen::ActBoreListen(Piki* piki)
     : Action(piki, true)
 {
-	// UNUSED FUNCTION
 }
 
 /**

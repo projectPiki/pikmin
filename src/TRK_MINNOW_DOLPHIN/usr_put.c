@@ -20,11 +20,10 @@ BOOL usr_puts_serial(const char* msg)
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 000004
+ * @note UNUSED Size: 000004 (Matching by size)
  */
 void usr_put_initialize_ram(void)
 {
-	// UNUSED FUNCTION
 }
 
 /**

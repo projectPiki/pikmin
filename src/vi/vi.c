@@ -99,7 +99,7 @@ s32 getEncoderType(void)
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 00005C
+ * @note UNUSED Size: 00005C (Matching by size)
  */
 static int cntlzd(u64 bit)
 {
@@ -115,7 +115,6 @@ static int cntlzd(u64 bit)
 	}
 
 	return (32 + __mwerks_cntlzw(lo));
-	// UNUSED FUNCTION
 }
 
 /**
@@ -406,7 +405,7 @@ void __VIInit(VITVMode mode)
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 000160
+ * @note UNUSED Size: 000160 (Matching by size)
  */
 static void AdjustPosition(u16 acv)
 {
@@ -426,19 +425,17 @@ static void AdjustPosition(u16 acv)
 
 	HorVer.adjPanSizeY = (u16)(HorVer.panSizeY + MIN((s16)HorVer.dispPosY + displayOffsetV - frac, 0) / coeff
 	                           - MAX((s16)HorVer.dispPosY + (s16)HorVer.dispSizeY + displayOffsetV - ((s16)acv * 2 - frac), 0) / coeff);
-	// UNUSED FUNCTION
 }
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 00003C
+ * @note UNUSED Size: 00003C (Matching by size)
  */
 static void ImportAdjustingValues(void)
 {
 	displayOffsetH = __OSLockSram()->displayOffsetH;
 	displayOffsetV = 0;
 	__OSUnlockSram(FALSE);
-	// UNUSED FUNCTION
 }
 
 /**
@@ -541,7 +538,7 @@ void VIWaitForRetrace(void)
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 00007C
+ * @note UNUSED Size: 00007C (Matching by size)
  */
 static void setInterruptRegs(VITimingInfo* tm)
 {
@@ -559,12 +556,11 @@ static void setInterruptRegs(VITimingInfo* tm)
 
 	regs[VI_DISP_INT_0] = (u16)((((u32)(vct))) | (((u32)(1)) << 12) | (((u32)(0)) << 15));
 	changed |= VI_BITMASK(VI_DISP_INT_0);
-	// UNUSED FUNCTION
 }
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 000098
+ * @note UNUSED Size: 000098 (Matching by size)
  */
 static void setPicConfig(u16 fbSizeX, VIXFBMode xfbMode, u16 panPosX, u16 panSizeX, u8* wordPerLine, u8* std, u8* wpl, u8* xof)
 {
@@ -575,12 +571,11 @@ static void setPicConfig(u16 fbSizeX, VIXFBMode xfbMode, u16 panPosX, u16 panSiz
 
 	regs[VI_HSW] = (u16)((((u32)(*std))) | (((u32)(*wpl)) << 8));
 	changed |= VI_BITMASK(VI_HSW);
-	// UNUSED FUNCTION
 }
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 0000BC
+ * @note UNUSED Size: 0000BC (Matching by size)
  */
 static void setBBIntervalRegs(VITimingInfo* tm)
 {
@@ -601,12 +596,11 @@ static void setBBIntervalRegs(VITimingInfo* tm)
 	val               = (u16)((((u32)(tm->bs4))) | (((u32)(tm->be4)) << 5));
 	regs[VI_BBI_EVEN] = val;
 	changed |= VI_BITMASK(VI_BBI_EVEN);
-	// UNUSED FUNCTION
 }
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 00009C
+ * @note UNUSED Size: 00009C (Matching by size)
  */
 static void setScalingRegs(u16 panSizeX, u16 dispSizeX, BOOL is3D)
 {
@@ -626,12 +620,11 @@ static void setScalingRegs(u16 panSizeX, u16 dispSizeX, BOOL is3D)
 		regs[VI_HSR] = (u16)((((u32)(256))) | (((u32)(0)) << 12));
 		changed |= VI_BITMASK(VI_HSR);
 	}
-	// UNUSED FUNCTION
 }
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 000080
+ * @note UNUSED Size: 000080 (Matching by size)
  */
 static void calcFbbs(u32 bufAddr, u16 panPosX, u16 panPosY, u8 wordPerLine, VIXFBMode xfbMode, u16 dispPosY, u32* tfbb, u32* bfbb)
 {
@@ -650,7 +643,6 @@ static void calcFbbs(u32 bufAddr, u16 panPosX, u16 panPosY, u8 wordPerLine, VIXF
 
 	*tfbb = ToPhysical(*tfbb);
 	*bfbb = ToPhysical(*bfbb);
-	// UNUSED FUNCTION
 }
 
 /**
@@ -707,7 +699,7 @@ static void setFbbRegs(VIPositionInfo* hv, u32* tfbb, u32* bfbb, u32* rtfbb, u32
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 0000CC
+ * @note UNUSED Size: 0000CC (Matching by size)
  */
 static void setHorizontalRegs(VITimingInfo* tm, u16 dispPosX, u16 dispSizeX)
 {
@@ -730,7 +722,6 @@ static void setHorizontalRegs(VITimingInfo* tm, u16 dispPosX, u16 dispSizeX)
 
 	regs[VI_HORIZ_TIMING_1L] = (u16)(hbeHi | hbs << 1);
 	changed |= VI_BITMASK(VI_HORIZ_TIMING_1L);
-	// UNUSED FUNCTION
 }
 
 /**
@@ -1069,7 +1060,8 @@ static u32 getCurrentFieldEvenOdd()
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 0000F4
+ * @note UNUSED Size: 0000A8 (OS_BUILD_VERSION >= 20011002L) (Matching by size)
+ * @note UNUSED Size: 0000F4                                 (Matching by size)
  */
 u32 VIGetNextField(void)
 {
@@ -1080,7 +1072,6 @@ u32 VIGetNextField(void)
 	nextField = getCurrentFieldEvenOdd() ^ 1;
 	OSRestoreInterrupts(enabled);
 	return nextField ^ (HorVer.panPosY & 1);
-	// UNUSED FUNCTION
 }
 
 /**

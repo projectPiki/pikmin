@@ -93,12 +93,11 @@ ASM void __OSSetTick(register u32 tick)
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 000088
+ * @note UNUSED Size: 000088 (Matching by size)
  */
 static BOOL IsLeapYear(s32 year)
 {
 	return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
-	// UNUSED FUNCTION
 }
 
 /**
@@ -112,7 +111,7 @@ void GetYearDays(void)
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 000050
+ * @note UNUSED Size: 000050 (Matching by size)
  */
 static s32 GetLeapDays(s32 year)
 {
@@ -120,7 +119,6 @@ static s32 GetLeapDays(s32 year)
 		return 0;
 	}
 	return (year + 3) / 4 - (year - 1) / 100 + (year - 1) / 400;
-	// UNUSED FUNCTION
 }
 
 /**

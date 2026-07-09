@@ -284,11 +284,10 @@ void Jac_StopSystemSe(s32 id)
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 000004
+ * @note UNUSED Size: 000004 (Matching by size)
  */
 void Jac_PlaySe(u32)
 {
-	// UNUSED FUNCTION
 }
 
 /**

@@ -101,12 +101,11 @@ int ActPick::exec()
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000040
+ * @note UNUSED Size: 000040 (Matching by size)
  */
 ActPut::ActPut(Piki* piki)
     : Action(piki, false)
 {
-	// UNUSED FUNCTION
 }
 
 /**

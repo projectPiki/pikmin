@@ -259,9 +259,8 @@ NodeMgr::NodeMgr()
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000040
+ * @note UNUSED Size: 000040 (Matching by size)
  */
 NodeMgr::~NodeMgr()
 {
-	// UNUSED FUNCTION
 }

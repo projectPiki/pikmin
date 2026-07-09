@@ -169,11 +169,10 @@ u32 JV_CheckSize(u32 handle)
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 000004
+ * @note UNUSED Size: 000004 (Matching by size)
  */
 void __JV_Callback(u32)
 {
-	// UNUSED FUNCTION
 }
 
 /**

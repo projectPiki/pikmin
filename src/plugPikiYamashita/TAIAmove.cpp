@@ -334,13 +334,12 @@ bool TAIAapproachTargetPriorityFaceDir::act(Teki& teki)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 0000D0
+ * @note UNUSED Size: 0000D0 (Matching by size)
  */
 void TAIAlookAround::setTargetDirection(Teki& teki, f32 angle)
 {
 	teki.mTargetAngle = (angle + zen::Rand(angle)) * ((zen::Rand(10.0f) > 5.0f) ? 1.0f : -1.0f) + teki.mFaceDirection;
 	teki.mTargetAngle = roundAng(teki.mTargetAngle);
-	// UNUSED FUNCTION
 }
 
 /**

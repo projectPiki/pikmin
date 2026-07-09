@@ -1535,11 +1535,10 @@ void NVector::input(immut NVector& other)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000058
+ * @note UNUSED Size: 000058 (Matching by size)
  */
 void NVector::println() immut
 {
-	// UNUSED FUNCTION
 	for (int i = 0; i < mSize; i++) {
 		PRINT_NAKATA("e[%d]:%f\n", i, mValues[i]);
 	}

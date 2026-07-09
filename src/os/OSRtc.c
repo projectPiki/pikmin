@@ -38,7 +38,7 @@ static BOOL __OSSetRTC(u32 rtc)
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 00011C
+ * @note UNUSED Size: 00011C (Matching by size)
  */
 static BOOL ReadSram(void* buffer)
 {
@@ -65,7 +65,6 @@ static BOOL ReadSram(void* buffer)
 	EXIUnlock(RTC_CHAN);
 
 	return !err;
-	// UNUSED FUNCTION
 }
 
 /**

@@ -258,7 +258,7 @@ int ActBridge::exeWork()
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 0000A8
+ * @note UNUSED Size: 0000A8 (Matching by size)
  */
 void ActBridge::doWork(int mins)
 {
@@ -266,7 +266,6 @@ void ActBridge::doWork(int mins)
 	mBridge->stimulate(build);
 	mStartWorkTime = gameflow.mWorldClock.mCurrentGameMinute;
 	mIsAttackReady = FALSE;
-	// UNUSED FUNCTION
 }
 
 /**

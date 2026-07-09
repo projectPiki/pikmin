@@ -50,12 +50,11 @@ static void OSDefaultExceptionHandler(__OSException exception, OSContext* contex
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 00000C
+ * @note UNUSED Size: 00000C (Matching by size)
  */
 u32 __OSIsDebuggerPresent(void)
 {
 	return *(u32*)OSPhysicalToCached(OS_DBINTERFACE_ADDR);
-	// UNUSED FUNCTION
 }
 
 /**

@@ -36,11 +36,10 @@ void ActPickCreature::init(Creature* target)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000004
+ * @note UNUSED Size: 000004 (Matching by size)
  */
 void ActPickCreature::InitGoto::initialise(Action*, Action*)
 {
-	// UNUSED FUNCTION
 }
 
 /**
