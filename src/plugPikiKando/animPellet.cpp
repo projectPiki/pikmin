@@ -113,7 +113,7 @@ void PelletAnimator::init(AnimContext* context1, AnimContext* context2, AnimMgr*
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000058
+ * @note UNUSED Size: 000058 (Matching by size)
  */
 void PelletAnimator::startMotion(immut PaniMotionInfo* lowerMotionInfo, immut PaniMotionInfo* upperMotionInfo)
 {
@@ -123,7 +123,6 @@ void PelletAnimator::startMotion(immut PaniMotionInfo* lowerMotionInfo, immut Pa
 	if (upperMotionInfo) {
 		mUpperAnimator.startMotion(*upperMotionInfo);
 	}
-	// UNUSED FUNCTION
 }
 
 /**

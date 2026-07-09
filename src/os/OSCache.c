@@ -389,11 +389,10 @@ void LCEnable(void)
 /**
  * @note Dolphin Emulator has a speedhack in its JITs to recognize the instructions in this
  * loop in order to batch data cache operations.  See `Jit64`/`JitArm64::dcbx` for details.
- * @note UNUSED Size: 000028
+ * @note UNUSED Size: 000028 (Matching by size)
  */
 ASM void LCDisable(void)
 {
-	// UNUSED FUNCTION
 #ifdef __MWERKS__ // clang-format off
 	nofralloc
 	lis     r3, LC_BASE @ha
@@ -511,7 +510,7 @@ void LCFlushQueue(void)
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 00004C
+ * @note UNUSED Size: 00004C (Matching by size)
  */
 void L2Init(void)
 {
@@ -528,29 +527,26 @@ void L2Init(void)
 	L2GlobalInvalidate();
 
 	PPCMtmsr(oldMSR);
-	// UNUSED FUNCTION
 }
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 00002C
+ * @note UNUSED Size: 00002C (Matching by size)
  */
 void L2Enable(void)
 {
 	PPCMtl2cr((PPCMfl2cr() | L2CR_L2E) & ~L2CR_L2I);
-	// UNUSED FUNCTION
 }
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 000030
+ * @note UNUSED Size: 000030 (Matching by size)
  */
 void L2Disable(void)
 {
 	__mwerks_sync();
 	PPCMtl2cr(PPCMfl2cr() & ~L2CR_L2E);
 	__mwerks_sync();
-	// UNUSED FUNCTION
 }
 
 /**

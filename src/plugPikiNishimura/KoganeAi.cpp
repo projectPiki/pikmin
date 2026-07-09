@@ -713,7 +713,7 @@ void KoganeAi::dieState()
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000180
+ * @note UNUSED Size: 000180 (Matching by size)
  */
 void KoganeAi::walkRandomState()
 {
@@ -721,7 +721,6 @@ void KoganeAi::walkRandomState()
 	mKogane->changeDirection(C_KOGANE_PROP(mKogane).mTurnSpeed());
 	makeTargetRandom();
 	calcScaleUp();
-	// UNUSED FUNCTION
 }
 
 /**

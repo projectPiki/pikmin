@@ -378,32 +378,29 @@ int MemoryCard::getGameFileOffset(int id)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 00000C
+ * @note UNUSED Size: 00000C (Matching by size)
  */
 void* MemoryCard::getBannerPtr()
 {
 	return cardData;
-	// UNUSED FUNCTION
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000018
+ * @note UNUSED Size: 000018 (Matching by size)
  */
 void* MemoryCard::getOptionsPtr(int idx)
 {
 	return &cardData[getOptionsOffset(idx)];
-	// UNUSED FUNCTION
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000018
+ * @note UNUSED Size: 000018 (Matching by size)
  */
 void* MemoryCard::getGameFilePtr(int idx)
 {
 	return &cardData[getGameFileOffset(idx)];
-	// UNUSED FUNCTION
 }
 
 void* MemoryCard::FAKE_getGameFilePtr(int idx)
@@ -415,17 +412,16 @@ void* MemoryCard::FAKE_getGameFilePtr(int idx)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 00006C
+ * @note UNUSED Size: 00006C (Matching by size)
  */
 RamStream* MemoryCard::getBannerStream()
 {
 	return new RamStream(getBannerPtr(), 0x2000);
-	// UNUSED FUNCTION
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000084
+ * @note UNUSED Size: 000084 (Matching by size)
  */
 RamStream* MemoryCard::getOptionsStream(int idx)
 {
@@ -434,7 +430,7 @@ RamStream* MemoryCard::getOptionsStream(int idx)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000088
+ * @note UNUSED Size: 000088 (Matching by size)
  */
 RamStream* MemoryCard::getGameFileStream(int idx)
 {
@@ -978,7 +974,7 @@ void MemoryCard::initBannerArea(CARDStat& state, immut char* p2)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000404
+ * @note UNUSED Size: 000404 (Matching by size)
  */
 void MemoryCard::initFileArea(int saveSlot, int p2)
 {
@@ -996,7 +992,6 @@ void MemoryCard::initFileArea(int saveSlot, int p2)
 	u32 sum = calcChecksum(getGameFilePtr(p2), 0x7FF8);
 	stream->writeInt(gameflow.mGamePrefs.mMostRecentSaveIndex);
 	stream->writeInt(sum);
-	// UNUSED FUNCTION
 }
 
 /**

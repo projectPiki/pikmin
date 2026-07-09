@@ -2,11 +2,10 @@
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 000004
+ * @note UNUSED Size: 000004 (Matching by size)
  */
 void __init_critical_regions(void)
 {
-	// UNUSED FUNCTION
 }
 
 /**

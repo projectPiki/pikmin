@@ -51,7 +51,7 @@ bool ItemBall::isVisible()
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 00005C
+ * @note UNUSED Size: 00005C (Matching by size)
  */
 ItemObject::ItemObject(int objType, Shape* shape)
     : ItemCreature(objType, nullptr, shape)

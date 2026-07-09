@@ -76,6 +76,8 @@ static inline BOOL IsCard(u32 id)
 
 /**
  * @TODO: Documentation
+ * @note UNUSED Size: 00019C (OS_BUILD_VERSION >= 20011112L) (Matching by size)
+ * @note UNUSED Size: 00017C (OS_BUILD_VERSION >= 20011002L)
  * @note UNUSED Size: 000164
  */
 s32 CARDProbeEx(s32 channel, s32* memSize, s32* sectorSize)
@@ -131,7 +133,6 @@ s32 CARDProbeEx(s32 channel, s32* memSize, s32* sectorSize)
 
 	OSRestoreInterrupts(enabled);
 	return result;
-	// UNUSED FUNCTION
 }
 
 /**

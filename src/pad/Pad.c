@@ -278,7 +278,8 @@ static void PADProbeCallback(s32 chan, u32 error, OSContext* context)
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 0000C0
+ * @note UNUSED Size: 000098 (OS_BUILD_VERSION >= 20011002L) (Matching by size)
+ * @note UNUSED Size: 0000C0                                 (Matching by size)
  */
 static void PADDisable(s32 chan)
 {
@@ -299,7 +300,6 @@ static void PADDisable(s32 chan)
 	SetWirelessID(chan, 0);
 #endif
 	OSRestoreInterrupts(enabled);
-	// UNUSED FUNCTION
 }
 
 /**
@@ -1052,8 +1052,6 @@ void __PADRefreshSamplingRate(void)
  */
 void PADControlAllMotors(const u32* commandArray)
 {
-	// UNUSED FUNCTION
-
 	BOOL enabled;
 	int chan;
 	u32 command;
@@ -1214,7 +1212,7 @@ static void SPEC1_MakeStatus(s32 chan, PADStatus* status, u32 data[2])
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 000054
+ * @note UNUSED Size: 000054 (Matching by size)
  */
 static s8 ClampS8(s8 var, s8 org)
 {
@@ -1228,19 +1226,17 @@ static s8 ClampS8(s8 var, s8 org)
 			var = max;
 	}
 	return var -= org;
-	// UNUSED FUNCTION
 }
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 00001C
+ * @note UNUSED Size: 00001C (Matching by size)
  */
 static u8 ClampU8(u8 var, u8 org)
 {
 	if (var < org)
 		var = org;
 	return var -= org;
-	// UNUSED FUNCTION
 }
 
 /**
@@ -1343,12 +1339,11 @@ int PADGetType(s32 chan, u32* type)
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 000064
+ * @note UNUSED Size: 000064 (Matching by size)
  */
 BOOL PADSync(void)
 {
 	return ResettingBits == 0 && (s32)ResettingChan == 32 && !SIBusy();
-	// UNUSED FUNCTION
 }
 
 /**
@@ -1377,7 +1372,6 @@ void PADSetAnalogMode(u32 mode)
 
 	SIDisablePolling(mask);
 	OSRestoreInterrupts(enabled);
-	// UNUSED FUNCTION
 }
 
 /**

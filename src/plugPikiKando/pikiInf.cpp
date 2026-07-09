@@ -150,14 +150,13 @@ int PikiInfMgr::getTotal()
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 0000A4
+ * @note UNUSED Size: 0000A4 (Matching by size)
  */
 BaseInf::BaseInf()
 {
 	initCore("baseInf");
 	mPosition.set(0.0f, 0.0f, 0.0f);
 	mRotation.set(0.0f, 0.0f, 0.0f);
-	// UNUSED FUNCTION
 }
 
 /**
@@ -472,13 +471,12 @@ CreatureRestoreFun CreatureInfMgr::getRestoreFun(int type)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 0000F4
+ * @note UNUSED Size: 0000F4 (Matching by size)
  */
 CreatureInf::CreatureInf()
 {
 	mObjType    = OBJTYPE_INVALID;
 	mCurrentDay = mRebirthDay = 0;
-	// UNUSED FUNCTION
 }
 
 /**

@@ -35,12 +35,11 @@ DEFINE_PRINT("GameOnePlayer");
 
 /**
  * @brief Stubbed function, appears to be for writing stage info to a file stream.
- * @note UNUSED Size: 000004
+ * @note UNUSED Size: 000004 (Matching by size)
  */
 void StageInfo::write(RandomAccessStream&)
 {
 	PRINT("writing information for stage %d\n", mStageID);
-	// UNUSED FUNCTION
 }
 
 /**

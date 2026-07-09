@@ -50,7 +50,7 @@ void __DVDFSInit()
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 00009C
+ * @note UNUSED Size: 00009C (Matching by size)
  */
 static BOOL isSame(const char* path, const char* string)
 {
@@ -64,7 +64,6 @@ static BOOL isSame(const char* path, const char* string)
 		return TRUE;
 	}
 	return FALSE;
-	// UNUSED FUNCTION
 }
 
 /**
@@ -516,7 +515,6 @@ BOOL DVDOpenDir(const char* dirName, DVDDir* dir)
 	dir->location = entry + 1;
 	dir->next     = nextDir(entry);
 	return TRUE;
-	// UNUSED FUNCTION
 }
 
 /**
@@ -617,7 +615,7 @@ static void cbForPrepareStreamAsync(s32 result, DVDCommandBlock* block)
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 000144
+ * @note UNUSED Size: 000144 (Matching by size)
  */
 s32 DVDPrepareStream(DVDFileInfo* fileInfo, u32 length, u32 offset)
 {
@@ -678,7 +676,6 @@ s32 DVDPrepareStream(DVDFileInfo* fileInfo, u32 length, u32 offset)
 
 	OSRestoreInterrupts(enabled);
 	return retVal;
-	// UNUSED FUNCTION
 }
 
 /**

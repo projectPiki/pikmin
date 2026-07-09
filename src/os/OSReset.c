@@ -52,7 +52,7 @@ void OSUnregisterResetFunction(OSResetFunctionInfo*)
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 00008C
+ * @note UNUSED Size: 00008C (Matching by size)
  */
 BOOL CallResetFunctions(BOOL final)
 {
@@ -69,7 +69,6 @@ BOOL CallResetFunctions(BOOL final)
 		return FALSE;
 	}
 	return TRUE;
-	// UNUSED FUNCTION
 }
 
 /**
@@ -129,7 +128,7 @@ _jump4:
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 000068
+ * @note UNUSED Size: 000068 (Matching by size)
  */
 static void KillThreads(void)
 {
@@ -147,7 +146,6 @@ static void KillThreads(void)
 		}
 		}
 	}
-	// UNUSED FUNCTION
 }
 
 /**
@@ -246,7 +244,7 @@ void OSResetSystem(int reset, u32 resetCode, BOOL forceMenu)
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 000030
+ * @note UNUSED Size: 000030 (Matching by size)
  */
 u32 OSGetResetCode(void)
 {
@@ -254,5 +252,4 @@ u32 OSGetResetCode(void)
 		return 0x80000000;
 	}
 	return ((__PIRegs[PI_RESETCODE] & ~7) >> 3);
-	// UNUSED FUNCTION
 }

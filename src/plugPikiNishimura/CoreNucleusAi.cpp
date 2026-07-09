@@ -86,20 +86,18 @@ void CoreNucleusAi::keyAction1()
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000004
+ * @note UNUSED Size: 000004 (Matching by size)
  */
 void CoreNucleusAi::keyAction2()
 {
-	// UNUSED FUNCTION
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000004
+ * @note UNUSED Size: 000004 (Matching by size)
  */
 void CoreNucleusAi::keyAction3()
 {
-	// UNUSED FUNCTION
 }
 
 /**

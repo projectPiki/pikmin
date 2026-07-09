@@ -161,13 +161,12 @@ static void cbForStateError(u32 intType)
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 00002C
+ * @note UNUSED Size: 00002C (Matching by size)
  */
 static void stateError(u32 error)
 {
 	__DVDStoreErrorCode(error);
 	DVDLowStopMotor(cbForStateError);
-	// UNUSED FUNCTION
 }
 
 /**
@@ -226,7 +225,7 @@ static u32 CategorizeError(u32 error)
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 00009C
+ * @note UNUSED Size: 00009C (Matching by size)
  */
 static BOOL CheckCancel(u32 resume)
 {
@@ -248,7 +247,6 @@ static BOOL CheckCancel(u32 resume)
 		return TRUE;
 	}
 	return FALSE;
-	// UNUSED FUNCTION
 }
 
 /**
@@ -1079,7 +1077,7 @@ BOOL DVDPrepareStreamAbsAsync(DVDCommandBlock* block, u32 length, u32 offset, DV
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 0000BC
+ * @note UNUSED Size: 0000BC (Matching by size)
  */
 BOOL DVDCancelStreamAsync(DVDCommandBlock* block, DVDCBCallback callback)
 {
@@ -1088,7 +1086,6 @@ BOOL DVDCancelStreamAsync(DVDCommandBlock* block, DVDCBCallback callback)
 	block->callback = callback;
 	idle            = issueCommand(1, block);
 	return idle;
-	// UNUSED FUNCTION
 }
 
 /**
@@ -1363,7 +1360,7 @@ void DVDResetRequired(void)
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 00004C
+ * @note UNUSED Size: 00004C (Matching by size)
  */
 s32 DVDGetCommandBlockStatus(const DVDCommandBlock* block)
 {
@@ -1376,7 +1373,6 @@ s32 DVDGetCommandBlockStatus(const DVDCommandBlock* block)
 	}
 	OSRestoreInterrupts(interrupts);
 	return result;
-	// UNUSED FUNCTION
 }
 
 /**
@@ -1604,7 +1600,7 @@ static void cbForCancelSync(s32 result, DVDCommandBlock* block)
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 0000EC
+ * @note UNUSED Size: 0000EC (Matching by size)
  */
 BOOL DVDCancelAllAsync(DVDCBCallback callback)
 {
@@ -1630,7 +1626,6 @@ BOOL DVDCancelAllAsync(DVDCBCallback callback)
 	DVDResume();
 	OSRestoreInterrupts(enabled);
 	return retVal;
-	// UNUSED FUNCTION
 }
 
 /**

@@ -141,7 +141,7 @@ immut char* WorkObjectMgr::getName(int type)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000070
+ * @note UNUSED Size: 000070 (Matching by size)
  */
 int WorkObjectMgr::getShapeNameIndex(immut char* name)
 {
@@ -153,12 +153,11 @@ int WorkObjectMgr::getShapeNameIndex(immut char* name)
 	}
 
 	return -1;
-	// UNUSED FUNCTION
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000038
+ * @note UNUSED Size: 000038 (Matching by size)
  */
 immut char* WorkObjectMgr::getShapeName(int type)
 {
@@ -170,7 +169,6 @@ immut char* WorkObjectMgr::getShapeName(int type)
 	}
 
 	return nullptr;
-	// UNUSED FUNCTION
 }
 
 /**

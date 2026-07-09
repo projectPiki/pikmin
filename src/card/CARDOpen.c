@@ -73,7 +73,7 @@ s32 __CARDIsPublic(CARDDir* ent)
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 000148
+ * @note UNUSED Size: 000148 (Matching by size)
  */
 s32 __CARDGetFileNo(CARDControl* card, const char* fileName, s32* outFileNo)
 {
@@ -104,7 +104,6 @@ s32 __CARDGetFileNo(CARDControl* card, const char* fileName, s32* outFileNo)
 	}
 
 	return CARD_RESULT_NOFILE;
-	// UNUSED FUNCTION
 }
 
 /**

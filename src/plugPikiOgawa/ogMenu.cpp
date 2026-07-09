@@ -63,7 +63,7 @@ zen::ogDrawScrMenu::ogDrawScrMenu()
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000034
+ * @note UNUSED Size: 000034 (Matching by size)
  */
 void zen::ChkAngle(f32* out)
 {
@@ -77,7 +77,6 @@ void zen::ChkAngle(f32* out)
 	}
 
 	*out = angle;
-	// UNUSED FUNCTION
 }
 
 /**
@@ -390,16 +389,15 @@ void zen::ogDrawScrInfo::start()
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000004
+ * @note UNUSED Size: 000004 (Matching by size)
  */
 void zen::ogDrawScrInfo::update(Controller*)
 {
-	// UNUSED FUNCTION
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000170
+ * @note UNUSED Size: 000170 (Matching by size)
  */
 zen::ogDrawScrInfo2::ogDrawScrInfo2()
 {
@@ -409,30 +407,27 @@ zen::ogDrawScrInfo2::ogDrawScrInfo2()
 	mMapAnchorPosition.set(0.0f, 0.0f, 0.0f);
 	mMapsPane           = screen->search('maps', true);
 	mDirectionArrowPane = screen->search('yaji', true);
-	// UNUSED FUNCTION
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000004
+ * @note UNUSED Size: 000004 (Matching by size)
  */
 void zen::ogDrawScrInfo2::start()
 {
-	// UNUSED FUNCTION
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000004
+ * @note UNUSED Size: 000004 (Matching by size)
  */
 void zen::ogDrawScrInfo2::update(Controller*)
 {
-	// UNUSED FUNCTION
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 0000F4
+ * @note UNUSED Size: 0000F4 (Matching by size)
  */
 void zen::ogDrawScrInfo2::drawHougaku(Graphics& gfx)
 {
@@ -452,7 +447,6 @@ void zen::ogDrawScrInfo2::drawHougaku(Graphics& gfx)
 	} else {
 		mDirectionArrowPane->show();
 	}
-	// UNUSED FUNCTION
 }
 
 /**
@@ -512,7 +506,8 @@ void zen::ogScrMenuMgr::start()
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000080
+ * @note UNUSED Size: 000060 (VERSION_PIKIDEMO || VERSION_GPIJ01) (Matching by size)
+ * @note UNUSED Size: 000080                                      (Matching by size)
  */
 void zen::ogScrMenuMgr::updateInfo(Controller* input)
 {
@@ -526,12 +521,12 @@ void zen::ogScrMenuMgr::updateInfo(Controller* input)
 		mRadarManager->end();
 #endif
 	}
-	// UNUSED FUNCTION
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000078
+ * @note UNUSED Size: 000058 (VERSION_PIKIDEMO || VERSION_GPIJ01) (Matching by size)
+ * @note UNUSED Size: 000078                                      (Matching by size)
  */
 void zen::ogScrMenuMgr::updateCont(Controller* input)
 {
@@ -545,7 +540,6 @@ void zen::ogScrMenuMgr::updateCont(Controller* input)
 		mRadarManager->MapOn();
 #endif
 	}
-	// UNUSED FUNCTION
 }
 
 /**
