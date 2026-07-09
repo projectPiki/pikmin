@@ -130,6 +130,8 @@ DSError TRKTargetSupportRequest();
 DSError TRKAppendBuffer_ui8(TRKBuffer*, const u8*, int);
 DSError TRKSetBufferPosition(TRKBuffer*, u32);
 
+void TRKMessageAdd(void);
+void TRKMessageGet(void);
 DSError TRKMessageSend(TRKBuffer*);
 void TRKSwapAndGo(void);
 DSError TRKInitializeNub(void);
