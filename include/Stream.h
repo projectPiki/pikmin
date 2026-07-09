@@ -2,6 +2,7 @@
 #define _STREAM_H
 
 #include "types.h"
+#include <stdarg.h>
 #include <string.h>
 
 struct String;
@@ -39,6 +40,7 @@ struct Stream {
 	virtual void flush() { }                    // _54 (weak)
 
 	void print(immut char*, ...);
+	void vPrintf(immut char*, va_list);
 };
 
 /**
@@ -87,7 +89,10 @@ struct RandomAccessStream : public Stream {
 	}
 
 	// unused/inlined:
-	void writeTo(int, void*, int);
+	void writeTo(int, immut void*, int);
+	void readFrom(int, void*, int);
+	void writeIntTo(int, int);
+	int readIntFrom(int);
 
 	// _04     = VTBL
 	// _00-_08 = Stream
