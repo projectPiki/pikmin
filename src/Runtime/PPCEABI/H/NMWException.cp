@@ -37,6 +37,81 @@ public:
 	}
 };
 
+extern "C" {
+extern void abort();
+}
+
+namespace std {
+
+/**
+ * @todo Documentation
+ * @note UNUSED Size: 0x20
+ */
+static void dthandler()
+{
+	abort();
+}
+
+static terminate_handler thandler = dthandler;
+
+/**
+ * @todo Documentation
+ * @note UNUSED Size: 0x28
+ */
+static void duhandler()
+{
+	terminate();
+}
+
+static unexpected_handler uhandler = duhandler;
+
+/**
+ * @todo Documentation
+ * @note UNUSED Size: 000010
+ */
+terminate_handler set_terminate(terminate_handler)
+{
+	// UNUSED FUNCTION
+}
+
+/**
+ * @todo Documentation
+ * @note UNUSED Size: 000028
+ */
+void terminate()
+{
+	// UNUSED FUNCTION
+}
+
+/**
+ * @todo Documentation
+ * @note UNUSED Size: 000010
+ */
+unexpected_handler set_unexpected(unexpected_handler)
+{
+	// UNUSED FUNCTION
+}
+
+/**
+ * @todo Documentation
+ * @note UNUSED Size: 000028
+ */
+void unexpected()
+{
+	// UNUSED FUNCTION
+}
+
+} // namespace std
+
+/**
+ * @todo Documentation
+ * @note UNUSED Size: 00022C
+ */
+char __throw_catch_compare(const char* throwtype, const char* catchtype, s32* offset_result)
+{
+	// UNUSED FUNCTION
+}
+
 /**
  * @todo Documentation
  */
@@ -122,76 +197,3 @@ void __destroy_new_array2(void)
 {
 	// UNUSED FUNCTION
 }
-
-// /**
-//  * @todo Documentation
-//  * @note UNUSED Size: 00022C
-//  */
-// void __throw_catch_compare(void)
-// {
-// 	// UNUSED FUNCTION
-// }
-
-// /**
-//  * @todo Documentation
-//  * @note UNUSED Size: 000028
-//  */
-// void std::unexpected()
-// {
-// 	// UNUSED FUNCTION
-// }
-
-// /**
-//  * @todo Documentation
-//  * @note UNUSED Size: 000010
-//  */
-// unexpected_handler std::set_unexpected(void (*)())
-// {
-// 	// UNUSED FUNCTION
-// }
-
-// /**
-//  * @todo Documentation
-//  * @note UNUSED Size: 000028
-//  */
-// void std::terminate()
-// {
-// 	// UNUSED FUNCTION
-// }
-
-// /**
-//  * @todo Documentation
-//  * @note UNUSED Size: 000010
-//  */
-// terminate_handler std::set_terminate(void (*)())
-// {
-// 	// UNUSED FUNCTION
-// }
-
-// extern "C" {
-// extern void abort();
-// }
-
-// namespace std {
-// /**
-//  * @note Address: N/A
-//  * @note Size: 0x28
-//  */
-// static void duhandler()
-// {
-// 	terminate();
-// }
-
-// static unexpected_handler uhandler = duhandler;
-
-// /**
-//  * @note Address: N/A
-//  * @note Size: 0x20
-//  */
-// static void dthandler()
-// {
-// 	abort();
-// }
-
-// static terminate_handler thandler = dthandler;
-// } // namespace std
