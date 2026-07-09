@@ -4,23 +4,19 @@
  * @TODO: Documentation
  * @note UNUSED Size: 00002C
  */
-/*
 void TRKMessageAdd(void)
 {
     // UNUSED FUNCTION
 }
-*/
 
 /**
  * @TODO: Documentation
  * @note UNUSED Size: 000008
  */
-/*
 void TRKMessageGet(void)
 {
     // UNUSED FUNCTION
 }
-*/
 
 /**
  * @TODO: Documentation
