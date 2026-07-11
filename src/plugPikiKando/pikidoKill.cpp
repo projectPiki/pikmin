@@ -63,7 +63,7 @@ void Piki::doKill()
 		CollTriInfo* tri = mapMgr->getCurrTri(mSRT.t.x, mSRT.t.z, true);
 		if (tri && !MapCode::isBald(tri) && isSafeMePos(mSRT.t) && MapCode::getAttribute(tri) != ATTR_Water) {
 			if (gsys->getRand(1.0f) >= pikiMgr->mPikiParms->mPikiParms.mPikiLeaveSeedChance()) {
-				PikiHeadItem* item = (PikiHeadItem*)itemMgr->birth(OBJTYPE_Pikihead);
+				PikiHeadItem* item = static_cast<PikiHeadItem*>(itemMgr->birth(OBJTYPE_Pikihead));
 				if (item) {
 					StageInf* inf = &flowCont.mCurrentStage->mStageInf;
 

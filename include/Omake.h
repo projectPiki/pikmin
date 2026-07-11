@@ -227,7 +227,7 @@ struct ClothFader : public AttentionCamera::Fader {
 
 		Colour col;
 		col.set(255, 255, 255, 255);
-		u32 uCol = *(u32*)&col;
+		u32 uCol = *reinterpret_cast<u32*>(&col);
 
 		f32 width  = (640 / (mGridWidth - 1)) / 640.0f;
 		f32 height = (480 / (mGridHeight - 1)) / 480.0f;

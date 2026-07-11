@@ -110,6 +110,7 @@ struct CoreNode : public ANode {
 	CoreNode* mChild;  // _10
 };
 
-#define FOREACH_NODE(type, first, varname) for (type* varname = (type*)(first); varname; varname = (type*)(varname->mNext))
+#define FOREACH_NODE(type, first, varname) \
+	for (type* varname = static_cast<type*>(first); varname; varname = static_cast<type*>(varname->mNext))
 
 #endif

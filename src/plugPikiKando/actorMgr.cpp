@@ -40,7 +40,7 @@ Creature* ActorMgr::createObject()
  */
 Actor* ActorMgr::newActor(int unused)
 {
-	Actor* actor = (Actor*)birth();
+	Actor* actor = static_cast<Actor*>(birth());
 
 	if (actor) {
 		actor->setType(unused, mShapeObjectList[0], mCreaturePropertyList[0], mAiManagerList[0]);

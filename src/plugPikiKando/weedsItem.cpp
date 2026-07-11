@@ -445,7 +445,7 @@ void WeedsGen::refresh(Graphics&)
 void WeedsGen::startAI(int ai)
 {
 	for (int i = 0; i < mWeedsCount; i++) {
-		Weed* gen = (Weed*)itemMgr->birth(OBJTYPE_Weed);
+		Weed* gen = static_cast<Weed*>(itemMgr->birth(OBJTYPE_Weed));
 		if (!gen) {
 			continue;
 		}

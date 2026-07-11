@@ -943,7 +943,7 @@ void BTeki::spawnWaters(int count)
 	}
 
 	for (int i = 0; i < count; i++) {
-		MizuItem* nectar = (MizuItem*)itemMgr->birth(OBJTYPE_FallWater);
+		MizuItem* nectar = static_cast<MizuItem*>(itemMgr->birth(OBJTYPE_FallWater));
 
 		if (!nectar) {
 			PRINT("!spawnWaters::item==null:%08x\n", this);
