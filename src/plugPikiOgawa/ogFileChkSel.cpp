@@ -22,11 +22,14 @@ DEFINE_PRINT("OgFileChkSelectSection")
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 00001C
+ * @note UNUSED Size: 00001C (Matching by size)
  */
 void zen::ogScrFileChkSelMgr::init()
 {
-	// UNUSED FUNCTION
+	mState           = Null;
+	mIsSaveOperation = false;
+	mSkipFileSelect  = false;
+	mIsScreenVisible = false;
 }
 
 /**
@@ -34,10 +37,7 @@ void zen::ogScrFileChkSelMgr::init()
  */
 zen::ogScrFileChkSelMgr::ogScrFileChkSelMgr()
 {
-	mState           = Null;
-	mIsSaveOperation = false;
-	mSkipFileSelect  = false;
-	mIsScreenVisible = false;
+	init();
 	mDataBScreen     = new P2DScreen();
 	mDataBScreen->set("screen/blo/data_b.blo", true, true, true);
 	mMemChkMgr     = new ogScrMemChkMgr();
@@ -46,11 +46,14 @@ zen::ogScrFileChkSelMgr::ogScrFileChkSelMgr()
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000048
+ * @note UNUSED Size: 000048 (Matching by size)
  */
 void zen::ogScrFileChkSelMgr::startSub()
 {
-	// UNUSED FUNCTION
+	mState = MemoryCheckInProgress;
+	mMemChkMgr->start();
+	_UNUSED0C        = false;
+	mIsScreenVisible = false;
 }
 
 /**
@@ -61,10 +64,7 @@ void zen::ogScrFileChkSelMgr::start(bool skipFileSelect)
 	PRINT("********** ogScrFileChkSelMgr %d ***************\n", skipFileSelect);
 	mSkipFileSelect  = skipFileSelect;
 	mIsSaveOperation = false;
-	mState           = MemoryCheckInProgress;
-	mMemChkMgr->start();
-	_UNUSED0C        = false;
-	mIsScreenVisible = false;
+	startSub();
 }
 
 /**
@@ -75,10 +75,7 @@ void zen::ogScrFileChkSelMgr::startSave()
 	PRINT("********** ogScrFileChkSelMgr for <<SAVE>> ***************\n");
 	mSkipFileSelect  = false;
 	mIsSaveOperation = true;
-	mState           = MemoryCheckInProgress;
-	mMemChkMgr->start();
-	_UNUSED0C        = false;
-	mIsScreenVisible = false;
+	startSub();
 }
 
 /**

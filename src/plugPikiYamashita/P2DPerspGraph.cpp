@@ -17,22 +17,23 @@ DEFINE_PRINT("P2DPersGraph") // nice typo
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000054
+ * @note UNUSED Size: 000054 (Matching by size)
  */
 P2DPerspGraph::P2DPerspGraph()
-    : P2DGrafContext(0, 0, 0, 0) // TODO: fix later
+    : P2DGrafContext(0, 0, 0, 0)
 {
-	// UNUSED FUNCTION
+	mGrafType = P2DGRAF_Persp;
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000084
+ * @note UNUSED Size: 000084 (Matching by size)
  */
-P2DPerspGraph::P2DPerspGraph(const PUTRect& rect, f32, f32, f32)
+P2DPerspGraph::P2DPerspGraph(const PUTRect& rect, f32 fovy, f32 nearZ, f32 farZ)
     : P2DGrafContext(rect)
 {
-	// UNUSED FUNCTION
+	set(fovy, nearZ, farZ);
+	mGrafType = P2DGRAF_Persp;
 }
 
 /**

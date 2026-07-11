@@ -338,12 +338,11 @@ int PlayerState::getCardUfoPartsCount()
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000078
+ * @note UNUSED Size: 000078 (Matching by size)
  */
 int PlayerState::getUfoPercentage()
 {
-	return getTotalParts() / (MAX_UFO_PARTS) * 100.0f;
-	// UNUSED FUNCTION
+	return static_cast<f32>(mCurrParts) / static_cast<f32>(getTotalParts()) * 100.0f;
 }
 
 /**

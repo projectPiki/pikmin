@@ -1302,11 +1302,43 @@ void WayPoint::initLinkInfos()
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 00007C
+ * @note UNUSED Size: 00007C (Matching by size)
+ * This appears to be either an unfinished variation of `PathFinder::findSyncOnyon` or an outlined portion of `WayPoint::initLinkInfos`.
+ * In either case, Kando decided to abandon the function and left it containing undefined behavior by not always returning something.
  */
-int PathFinder::findFirstStepOnyon(int, int, PathFinder::Buffer*)
+int PathFinder::findFirstStepOnyon(int startWPIdx, int goalType, PathFinder::Buffer* bufferList)
 {
-	// UNUSED FUNCTION
+	int destWPIdx = -1;
+
+	// Determine the destination waypoint index based on goalType
+	switch (goalType) {
+	case 0: // Red onion
+	case 1: // Blue onion
+	case 2: // Yellow onion
+	{
+		GoalItem* goal = itemMgr->getContainer(goalType);
+		if (goal) {
+			destWPIdx = goal->mWaypointIdx;
+		}
+		break;
+	}
+	case 3: // UFO
+	{
+		UfoItem* ufo = itemMgr->getUfo();
+		if (ufo) {
+			destWPIdx = ufo->mWaypointID;
+		}
+		break;
+	}
+	}
+
+	if (destWPIdx == -1) {
+		return -1;
+	}
+	// Maybe this was the intention?
+#if defined(BUGFIX)
+	return destWPIdx;
+#endif
 }
 
 /**

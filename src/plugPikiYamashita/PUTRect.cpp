@@ -117,11 +117,14 @@ void PUTRect::resize(int width, int height)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000034
+ * @note UNUSED Size: 000034 (Matching by size)
  */
-void PUTRect::reform(int, int, int, int)
+void PUTRect::reform(int adjustMinX, int adjustMinY, int adjustMaxX, int adjustMaxY)
 {
-	// UNUSED FUNCTION
+	mMinX += adjustMinX;
+	mMinY += adjustMinY;
+	mMaxX += adjustMaxX;
+	mMaxY += adjustMaxY;
 }
 
 /**

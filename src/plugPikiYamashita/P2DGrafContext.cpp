@@ -18,11 +18,14 @@ DEFINE_PRINT("P2DGrafContext");
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 00009C
+ * @note UNUSED Size: 00009C (Matching by size)
  */
-P2DGrafContext::P2DGrafContext(const PUTRect&)
+P2DGrafContext::P2DGrafContext(const PUTRect& rect)
+    : mViewportBounds(rect)
+    , mScissorBounds(rect)
 {
-	// UNUSED FUNCTION
+	setColor(COLOUR_WHITE);
+	setLineWidth(6);
 }
 
 /**

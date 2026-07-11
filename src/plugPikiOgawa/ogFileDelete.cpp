@@ -32,7 +32,8 @@ void zen::ogScrFileSelectMgr::setOperateMode_Delete()
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000178
+ * @note UNUSED Size: 000170 (VERSION_PIKIDEMO, VERSION_GPIJ01) (Matching by size)
+ * @note UNUSED Size: 000178                                    (Matching by size)
  */
 void zen::ogScrFileSelectMgr::DeleteEffectStart()
 {
@@ -44,21 +45,13 @@ void zen::ogScrFileSelectMgr::DeleteEffectStart()
 
 	pos1.set(0.0f, 0.0f, 0.0f);
 
-	// this is to fix stack
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
 	pos1.x = mIconOnyonPanes[mCurrSlotIdx]->getPosH() + mIconOnyonPanes[mCurrSlotIdx]->getWidth() / 2.0f;
-#else
-	f32 w  = mIconOnyonPanes[mCurrSlotIdx]->getPosH() + mIconOnyonPanes[mCurrSlotIdx]->getWidth() / 2.0f;
-	pos1.x = w;
-#endif
+	pos1.y = 480.0f - (mIconOnyonPanes[mCurrSlotIdx]->getPosV() + mIconOnyonPanes[mCurrSlotIdx]->getHeight() / 2.0f);
 
-	f32 h  = mIconOnyonPanes[mCurrSlotIdx]->getPosV() + mIconOnyonPanes[mCurrSlotIdx]->getHeight() / 2.0f;
-	pos1.y = 480.0f - h;
 	mFxMgr->create(EFF2D_Unk44, pos1, nullptr, nullptr);
 
 	pos2.set(pos1.x, (480.0f - pos1.y) - 80.0f, 0.0f);
 	mFxMgr->create(EFF2D_Unk43, pos2, nullptr, nullptr);
-	// UNUSED FUNCTION
 }
 
 /**
@@ -133,6 +126,12 @@ void zen::ogScrFileSelectMgr::OperateDelete(Controller* input)
 	} else if (status == ogNitakuMgr::ExitSuccess) {
 		seSystem->playSysSe(ogEnumFix(SYSSE_CARDACCESS, JACSYS_CardAccess));
 		gameflow.mMemoryCard.delFile(mCardInfo[mCurrSlotIdx]);
+
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
+		STACK_PAD_VAR(1);
+#else
+		STACK_PAD_VAR(2);
+#endif
 		DeleteEffectStart();
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
 		mTailEffectSpawnTimer = 1.0f;

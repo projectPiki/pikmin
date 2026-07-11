@@ -42,6 +42,8 @@ struct Node : public CoreNode {
 	void setType(int);
 	void togFlag(int);
 
+	static int currID; // unused
+
 	// _00     = VTBL
 	// _00-_14 = CoreNode
 	s32 mType;  // _14

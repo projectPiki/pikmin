@@ -153,7 +153,7 @@ struct AnimCacheInfo : public CacheInfo {
 	}
 
 	// _00 - _0C = CacheInfo
-	u32 _0C;                    // _0C
+	AnimCacheInfo** _0C;        // _0C
 	CacheInfo* mCachedMtxBlock; // _10
 	Matrix4f* mBoneMatrices;    // _14
 	Matrix4f** mBoneMtxList;    // _18

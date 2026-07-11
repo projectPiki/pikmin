@@ -180,11 +180,17 @@ void Light::setLightSpot(f32 angle, int spotMode)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 00002C
+ * @note UNUSED Size: 00002C (Matching by size)
  */
 void Light::setLightParallel()
 {
-	// UNUSED FUNCTION
+	mConstantAttn   = 1.0f;
+	mQuadAttn       = 0.0f;
+	mLinearAttn     = 0.0f;
+	mSpotConstTerm  = 1.0f;
+	mSpotQuadTerm   = 0.0f;
+	mSpotLinearTerm = 0.0f;
+	mLightValuesSet = 1;
 }
 
 /**
