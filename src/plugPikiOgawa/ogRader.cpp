@@ -423,22 +423,23 @@ void zen::ogRaderMgr::startSub()
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000084
+ * @note UNUSED Size: 000084 (Matching by size)
  */
 void zen::ogRaderMgr::start()
 {
-	if (mStatus == STATE_NULL) {
-		_04  = 0;
-		_45A = 64;
-		_0C  = 320.0f;
-		_10  = 220.0f;
-		_1C  = 155;
-		_20  = 264;
-		_14  = 320 - _1C / 2;
-		_18  = 220 - _20 / 2;
-		startSub();
+	if (mStatus != STATE_NULL) {
+		return;
 	}
-	// UNUSED FUNCTION
+
+	_04  = 0;
+	_45A = 64;
+	_0C  = 320.0f;
+	_10  = 220.0f;
+	_1C  = 155;
+	_20  = 264;
+	_14  = 320 - _1C / 2;
+	_18  = 220 - _20 / 2;
+	startSub();
 }
 
 /**
@@ -446,26 +447,31 @@ void zen::ogRaderMgr::start()
  */
 void zen::ogRaderMgr::startMenu(P2DPane* pane)
 {
-	if (mStatus == STATE_NULL && (!playerState || playerState->hasRadar())) {
-		_04  = 1;
-		_00  = false;
-		_01  = false;
-		_02  = false;
-		_45A = 200;
-
-		int posH = pane->getPosH();
-		int posV = pane->getPosV();
-		int w    = pane->getWidth();
-		int h    = pane->getHeight();
-		_0C      = posH + w / 2;
-		_10      = posV + h / 2;
-		_1C      = w;
-		_20      = h;
-		_14      = posH;
-		_18      = posV;
-		startSub();
-		setRaderScale(2.0f);
+	if (mStatus != STATE_NULL) {
+		return;
 	}
+	if (playerState && !playerState->hasRadar()) {
+		return;
+	}
+
+	_04  = 1;
+	_00  = false;
+	_01  = false;
+	_02  = false;
+	_45A = 200;
+
+	int posH = pane->getPosH();
+	int posV = pane->getPosV();
+	int w    = pane->getWidth();
+	int h    = pane->getHeight();
+	_0C      = posH + w / 2;
+	_10      = posV + h / 2;
+	_1C      = w;
+	_20      = h;
+	_14      = posH;
+	_18      = posV;
+	startSub();
+	setRaderScale(2.0f);
 
 	STACK_PAD_VAR(2);
 }

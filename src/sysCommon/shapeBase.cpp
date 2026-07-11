@@ -3225,12 +3225,10 @@ void AnimFrameCacher::updateInfo(AnimCacheInfo* info)
  */
 void AnimFrameCacher::removeOldest()
 {
-	TexCacheInfo* prev = (TexCacheInfo*)mInfo.mPrev;
-	void* p            = prev;
-	prev->remove();
-	*prev->_0C = nullptr;
-	mCache->cacheFree(p);
-	// UNUSED FUNCTION
+	AnimCacheInfo* oldest = static_cast<AnimCacheInfo*>(mInfo.mPrev);
+	mInfo.mPrev->remove();
+	*oldest->_0C = nullptr;
+	mCache->cacheFree(oldest);
 }
 
 /**
@@ -3486,11 +3484,16 @@ void BaseShape::calcJointWorldDir(Graphics& gfx, int index, Vector3f& worldDir)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000084
+ * @note UNUSED Size: 000084 (Matching by size)
  */
-void BaseShape::calcJointWorldScale(Graphics&, int, Vector3f&)
+void BaseShape::calcJointWorldScale(Graphics& gfx, int jointIdx, Vector3f& outVec)
 {
-	// UNUSED FUNCTION
+	if (jointIdx != -1) {
+		immut Matrix4f& animMtx = getAnimMatrix(jointIdx);
+
+		f32 scale = Vector3f(animMtx.mMtx[0][0], animMtx.mMtx[0][1], animMtx.mMtx[0][2]).length();
+		outVec.set(scale, scale, scale);
+	}
 }
 
 /**

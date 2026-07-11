@@ -270,9 +270,9 @@ void SearchBuffer::init(SearchData* data, int p2)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 0000E4
+ * @note UNUSED Size: 0000E4 (Matching by size)
  */
-void SearchBuffer::operator=(SearchBuffer& other)
+SearchBuffer TERNARY_BUGFIX(&, ) SearchBuffer::operator=(immut SearchBuffer& other)
 {
 	mMaxEntries     = other.mMaxEntries;
 	_20             = other._20;
@@ -283,8 +283,7 @@ void SearchBuffer::operator=(SearchBuffer& other)
 		mDataList[i].mTargetCreature  = other.mDataList[i].mTargetCreature;
 		mDataList[i].mDistance        = other.mDataList[i].mDistance;
 	}
-	invalidate();
-	// UNUSED FUNCTION
+	return *this; // Implicitly generated copy constructor inbound (when building matching).
 }
 
 /**

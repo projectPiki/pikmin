@@ -6,6 +6,8 @@
 
 NodeMgr* nodeMgr;
 
+int Node::currID;
+
 /**
  * @todo: Documentation
  * @note UNUSED Size: 00009C
@@ -149,12 +151,14 @@ void Node::render(Graphics& gfx)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000128
+ * @note UNUSED Size: 000128 (Matching by size)
  */
 SRTNode::SRTNode(immut char* name = "<SRTNode>")
     : Node(name)
 {
-	// UNUSED FUNCTION
+	setPosition(Vector3f(0.0f, 0.0f, 0.0f));
+	setScale(Vector3f(1.0f, 1.0f, 1.0f));
+	setRotation(Vector3f(0.0f, 0.0f, 0.0f));
 }
 
 /**
@@ -200,22 +204,49 @@ void NodeMgr::Del(Node* node)
 	}
 }
 
+static bool foundNode;
+static CoreNode* nodeFound;
+
 /**
  * @todo: Documentation
- * @note UNUSED Size: 0000EC
+ * @note UNUSED Size: 0000EC (Matching by size)
+ * @warning Broken and thread-unsafe
  */
-void NodeMgr::recFindNode(CoreNode*, immut char*)
+void NodeMgr::recFindNode(CoreNode* head, immut char* name)
 {
-	// UNUSED FUNCTION
+	// Shouldn't this condition be somewhere inside the loop?  It only
+	// prevents the recursion from going deeper, meaning other sibling
+	// nodes can still hijack the node found before the loops conclude.
+	if (!foundNode) {
+		for (CoreNode* currNode = head; currNode; currNode = currNode->Next()) {
+			if (!strcmp(name, currNode->mName)) {
+				foundNode = true;
+				nodeFound = currNode;
+				return;
+			}
+			if (currNode->mChild) {
+				recFindNode(currNode->mChild, name);
+			}
+		}
+	}
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 0000A8
+ * @note UNUSED Size: 0000A8 (Matching by size)
+ * @warning Broken and thread-unsafe
  */
-CoreNode* NodeMgr::findNode(immut char*, CoreNode*)
+CoreNode* NodeMgr::findNode(immut char* name, CoreNode* head)
 {
-	// UNUSED FUNCTION
+	nodeFound = nullptr;
+	foundNode = false;
+
+	if (!head) {
+		head = &firstNode();
+	}
+	recFindNode(head, name);
+
+	return nodeFound;
 }
 
 /**

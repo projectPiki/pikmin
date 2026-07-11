@@ -77,9 +77,10 @@ zen::ogScrTutorialMgr::TutorialStatus zen::ogScrTutorialMgr::update(Controller* 
  */
 void zen::ogScrTutorialMgr::draw(Graphics& gfx)
 {
-	if (mStatus != -1) {
-		mMessageMgr->draw(gfx);
+	if (mStatus == -1) {
+		return;
 	}
+	mMessageMgr->draw(gfx);
 }
 
 /**
@@ -116,27 +117,27 @@ void zen::ogScrTutorialMgr::start(EnumTutorial textID)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000024
+ * @note UNUSED Size: 000024 (Matching by size)
  */
 void zen::ogScrTutorialMgr::nextPage()
 {
-	// UNUSED FUNCTION
+	mMessageMgr->nextPage();
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000024
+ * @note UNUSED Size: 000024 (Matching by size)
  */
 void zen::ogScrTutorialMgr::backPage()
 {
-	// UNUSED FUNCTION
+	mMessageMgr->backPage();
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 00002C
+ * @note UNUSED Size: 00002C (Matching by size)
  */
-void zen::ogScrTutorialMgr::setCursorXY(P2DTextBox*)
+void zen::ogScrTutorialMgr::setCursorXY(P2DTextBox* textBox)
 {
-	// UNUSED FUNCTION
+	mMessageMgr->setCursorXY(textBox);
 }

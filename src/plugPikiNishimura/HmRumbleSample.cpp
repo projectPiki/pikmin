@@ -13,11 +13,12 @@ RumbleSample::RumbleSample(int chan)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000010
+ * @note UNUSED Size: 000010 (Matching by size)
  */
 void RumbleSample::init()
 {
-	// UNUSED FUNCTION
+	mCurrentIntensity = 0.0f;
+	mTotalIntensity   = 0.0f;
 }
 
 /**

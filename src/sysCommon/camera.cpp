@@ -244,11 +244,24 @@ void CullFrustum::createViewPlanes()
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 0000BC
+ * @note UNUSED Size: 0000BC (Matching by size)
  */
-void CullFrustum::additionalPlanes(CullFrustum*)
+void CullFrustum::additionalPlanes(CullFrustum* other)
 {
-	// UNUSED FUNCTION
+	if (other) {
+		for (int i = 0; i < other->mTotalPlaneCount; ++i) {
+			mPlanePointers[i] = other->mPlanePointers[i];
+		}
+		for (int i = 0; i < mTotalPlaneCount; ++i) {
+			mPlanePointers[i + other->mTotalPlaneCount] = &mCullPlanes[i];
+		}
+		mActivePlaneCount = mTotalPlaneCount + other->mTotalPlaneCount;
+	} else {
+		mActivePlaneCount = mTotalPlaneCount;
+		for (int i = 0; i < mTotalPlaneCount; ++i) {
+			mPlanePointers[i] = &mCullPlanes[i];
+		}
+	}
 }
 
 /**
@@ -362,20 +375,45 @@ void CullFrustum::calcLookAt(immut Vector3f& cameraPos, immut Vector3f& targetPo
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 00003C
+ * @note UNUSED Size: 00003C (Matching from size)
  */
-void CullFrustum::calcLookFrom(immut Vector3f&, immut Vector3f&)
+void CullFrustum::calcLookFrom(immut Vector3f& cameraPos, immut Vector3f& targetPos)
 {
-	// UNUSED FUNCTION
+	mLookAtMtx.makeLookfrom(cameraPos, targetPos);
+	mLookAtMtx.inverse(&mInverseLookAtMtx);
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 00015C
+ * @note UNUSED Size: 00015C (Matching by size)
  */
-void Camera::camReflect(Camera&, Plane&)
+void Camera::camReflect(Camera& other, Plane& plane) immut
 {
-	// UNUSED FUNCTION
+	other = *this; // Copy everything over.
+	other.mInvZAxis.x *= -1.0f;
+	other.mInvZAxis.y *= -1.0f;
+	other.mInvZAxis.z *= -1.0f;
+
+	plane.reflect(other.mPosition);
+	plane.reflectVector(other.mInvXAxis);
+	plane.reflectVector(other.mInvYAxis);
+	plane.reflectVector(other.mInvZAxis);
+
+	other.mLookAtMtx.makeLookat(other.mPosition, other.mInvXAxis, other.mInvYAxis, other.mInvZAxis);
+	other.mLookAtMtx.inverse(&other.mInverseLookAtMtx);
+
+	other.update(mAspectRatio, mFov, mNear, mFar);
+
+	f32 planeDist = plane.dist(mPosition);
+	Vector3f planeNormal(plane.mNormal);
+	planeNormal.multiply(-planeDist);
+	planeNormal.add(mPosition);
+
+	CullingPlane& cullPlane0  = other.mCullPlanes[0];
+	cullPlane0.mPlane.mNormal = -plane.mNormal;
+	cullPlane0.mPlane.mOffset = -plane.mOffset;
+	cullPlane0.CheckMinMaxDir();
+	cullPlane0.mIsEnabled = true;
 }
 
 /**
@@ -408,7 +446,7 @@ f32 Camera::projectWorldPoint(Graphics& gfx, Vector3f& point) immut
  * @todo: Documentation
  * @note UNUSED Size: 000170 (Matching by size)
  */
-f32 Camera::projectCamPoint(Vector3f& point)
+f32 Camera::projectCamPoint(Vector3f& point) immut
 {
 	f32 dist = mPerspectiveMatrix.mMtx[3][2] * point.z + mPerspectiveMatrix.mMtx[3][1] * point.y + mPerspectiveMatrix.mMtx[3][0] * point.x
 	         + mPerspectiveMatrix.mMtx[3][3];

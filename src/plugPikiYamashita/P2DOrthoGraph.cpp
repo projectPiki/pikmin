@@ -3,22 +3,27 @@
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000088
+ * @note UNUSED Size: 000088 (Matching by size)
  */
 P2DOrthoGraph::P2DOrthoGraph()
-    : P2DGrafContext(0, 0, 0, 0) // TODO: fix later
+    : P2DGrafContext(0, 0, 0, 0)
 {
-	// UNUSED FUNCTION
+	setLookat();
+	mGrafType = P2DGRAF_Ortho;
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 0000C8
+ * @note UNUSED Size: 0000C8 (Matching by size)
  */
 P2DOrthoGraph::P2DOrthoGraph(const PUTRect& rect)
     : P2DGrafContext(rect)
 {
-	// UNUSED FUNCTION
+	mLogicalViewBounds = PUTRect(0, 0, rect.getWidth(), rect.getHeight());
+	mLogicalFarZ       = -1;
+	mLogicalNearZ      = 1;
+	setLookat();
+	mGrafType = P2DGRAF_Ortho;
 }
 
 /**

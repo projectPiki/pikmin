@@ -1034,11 +1034,17 @@ int TexImg::calcDataSize(int format, int width, int height)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 00005C
+ * @note UNUSED Size: 00005C (Matching by size)
  */
-void TexImg::setColour(immut Colour&)
+void TexImg::setColour(immut Colour& colour)
 {
-	// UNUSED FUNCTION
+	mFormat     = TEX_FMT_RGB565;
+	u16* pixels = static_cast<u16*>(mTextureData);
+	for (int i = 0; i < mWidth * mHeight; ++i) {
+		u16 pixel = ((colour.r >> 3) << 11) | ((colour.g >> 2) << 5) | ((colour.b) >> 3);
+		// In the DLL, there is a byteswap here apparently not present in the DOL.
+		pixels[i] = pixel;
+	}
 }
 
 /**

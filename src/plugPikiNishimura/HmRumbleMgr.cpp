@@ -394,10 +394,19 @@ void RumbleMgr::rumbleOption(bool enabled)
 }
 
 /**
- * @todo: Documentation
- * @note UNUSED Size: 000070
+ * @brief Sets whether rumble is temporarily paused
+ * @note UNUSED Size: 000070 (Matching by size)
  */
-void RumbleMgr::rumblePause(bool)
+void RumbleMgr::rumblePause(bool paused)
 {
-	// UNUSED FUNCTION
+	mRumblePaused = paused;
+	if (mRumblePaused) {
+		for (int i = 0; i < 4; ++i) {
+			if (mSamples[i]) {
+				mSamples[i]->simpleStop();
+			}
+		}
+	} else {
+		mRumbleFadeOutTimer = 0.5f;
+	}
 }
