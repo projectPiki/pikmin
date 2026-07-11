@@ -953,13 +953,73 @@ void zen::ogRaderMgr::RotatePos(f32* x, f32* y)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 00045C
+ * @note UNUSED Size: 00045C (Nonmatching)
  */
-void zen::ogRaderMgr::DrawCircle(u8, u8, u8, u8, f32)
+void zen::ogRaderMgr::DrawCircle(u8 r, u8 g, u8 b, u8 a, f32 radius)
 {
-	// No
+	int i;
+	u32 colour = (r << 24) | (g << 16) | (b << 8) | (a << 0);
 
-	// UNUSED FUNCTION
+	immut int nSides = 32;
+
+	s16 xVerts[64];
+	s16 yVerts[64];
+
+	_30 += gsys->getFrameTime();
+	if (_30 > 2.0f) {
+		_30 = 0.0f;
+	}
+
+	// Similar calculations to `zen::ogRaderMgr::ogCalcDispXZ`.
+	f32 dispX = (_24 + 2800.0f) * 310.0f * 10.0f / 5400.0f;
+	f32 dispY = (_28 + 4300.0f) * 528.0f * 10.0f / 9200.0f;
+	f32 x     = dispX;
+	-_34 - _43C.x;
+	f32 y = dispY;
+	-_38 - _43C.z;
+	RotatePos(&x, &y);
+
+	f32 screenXOffset = x * _428 / 10.0f + _0C;
+	f32 screenYOffset = y * _428 / 10.0f + _10;
+	f32 screenRadius  = _428 / 10.0f * _2C * radius * _30 / 2.0f;
+
+	for (i = 0; i < nSides; ++i) {
+		f32 theta = i * TAU / nSides;
+		xVerts[i] = cosf(theta) * screenRadius + screenXOffset;
+		yVerts[i] = sinf(theta) * screenRadius + screenYOffset;
+	}
+
+#if defined(WIN32)
+	// THAT'S RIGHT!  THIS FUNCTION DOES NOTHING!  NOTHING AT ALL!
+	// ...okay well it probably did SOMETHING, because this function
+	// is WAY under-size for matching, but it probably directly used
+	// Dolphin GX function calls, and those don't exist in the DLL.
+#else
+	// So then this is problematic.  I have to decompile DOL-exclusive
+	// code when the function never existed in the DOL?  The following
+	// approximation is based on what `Graphics::drawLine` does to set
+	// up GX and by my best guess at what they did to iterate over the
+	// vertex position arrays that they just filled with data.
+	GXSetNumTexGens(0);
+	GXSetNumTevStages(1);
+	GXSetTevOrder(GX_TEVSTAGE0, GX_TEXCOORD_NULL, GX_TEXMAP_NULL, GX_COLOR0A0);
+	GXSetTevOp(GX_TEVSTAGE0, GX_PASSCLR);
+
+	GXClearVtxDesc();
+	GXSetVtxDesc(GX_VA_POS, GX_DIRECT);
+	GXSetVtxDesc(GX_VA_CLR0, GX_DIRECT);
+	GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_F32, 0);
+	GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
+
+	GXBegin(GX_LINES, GX_VTXFMT0, nSides * 2);
+	for (i = 0; i < nSides; ++i) {
+		GXPosition3f32(xVerts[i], yVerts[i], 0.0f);
+		GXColor1u32(colour);
+		GXPosition3f32(xVerts[(i + 1) % nSides], yVerts[(i + 1) % nSides], 0.0f);
+		GXColor1u32(colour);
+	}
+	GXEnd();
+#endif
 }
 
 /**

@@ -48,21 +48,43 @@ void LightFlare::loadini(CmdStream* commands)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 0000B0
+ * @note UNUSED Size: 0000B0 (Matching by size)
  */
-void LightFlare::saveini(immut char*, RandomAccessStream&)
+void LightFlare::saveini(immut char* indent, RandomAccessStream& stream)
 {
-	mName = "NULL";
-	// UNUSED FUNCTION
+	stream.print("\n%slightflare {\t\t\n", indent);
+	stream.print("%s\tsize %f\n", indent, mSize);
+	stream.print("%s\tpos\t%f %f %f\n", indent, mPosition.x, mPosition.y, mPosition.z);
+	stream.print("%s\t}\n", indent);
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 0001E8
+ * @note UNUSED Size: 0001E8 (Matching by size)
  */
-void LightGroup::saveini(immut char*, RandomAccessStream&)
+void LightGroup::saveini(immut char* indent, RandomAccessStream& stream)
 {
-	// UNUSED FUNCTION
+	stream.print("\n%slightgroup %d {\t\t// %s\n", indent, mJointIndex,
+	             mJointIndex == -1 ? "NULL" : mParentShape->mJointList[mJointIndex].mName);
+	stream.print("%s\ttype %d\n", indent, mType);
+	stream.print("%s\tflags %d\n", indent, mFlags);
+	if (mFlags & 1) {
+		stream.print("%s\tdir\t%f %f %f\n", indent, mDirection.x, mDirection.y, mDirection.z);
+	}
+	stream.print("%s\tcolour\t%d %d %d %d\n", indent, mLightColour.r, mLightColour.g, mLightColour.b, mLightColour.a);
+	stream.print("%s\ttexture\t%s\n", indent, mTexSource);
+	stream.print("%s\tmaterial\t%s\n", indent, mMatSource);
+
+	if (mFlares.Child()) {
+		FOREACH_NODE(LightFlare, mFlares.Child(), flare)
+		{
+			char buffer[PATH_MAX];
+			sprintf(buffer, "%s\t", indent);
+			flare->saveini(buffer, stream);
+		}
+	}
+
+	stream.print("%s\t}\n", indent);
 }
 
 /**

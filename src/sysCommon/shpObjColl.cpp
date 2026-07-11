@@ -2,6 +2,7 @@
 
 #include "CmdStream.h"
 #include "DebugLog.h"
+#include "Graphics.h"
 #include "Shape.h"
 #include "sysNew.h"
 #include "system.h"
@@ -36,20 +37,75 @@ void ObjCollInfo::getCentreSize(Vector3f& centre, f32& radius)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 00016C
+ * @note UNUSED Size: 00016C (Nonmatching by size)
  */
-void ObjCollInfo::showInfo(Graphics&, Matrix4f&)
+void ObjCollInfo::showInfo(Graphics& gfx, immut Matrix4f& vestigialMtx) immut
 {
-	// UNUSED FUNCTION
+	immut Matrix4f* animMtx = &vestigialMtx;
+
+	if (mJointIndex == -1) {
+		return;
+	}
+	animMtx = &mParentShape->getAnimMatrix(mJointIndex);
+	if (!animMtx) {
+		return;
+	}
+
+	bool oldLighting = gfx.setLighting(false, nullptr);
+	gfx.useTexture(nullptr, GX_TEXMAP0);
+	gfx.setColour(Colour(255, 255, 0, 192), true);
+
+	switch (mCollType) {
+	case OCT_Sphere:
+	{
+		gfx.drawSphere(mCentrePosition, mRadius, *animMtx);
+		break;
+	}
+	case OCT_Platform:
+	{
+		gfx.useMatrix(*animMtx, 0);
+		if (mPlatShape) {
+			mPlatShape->drawshape(gfx, *gfx.mCamera, nullptr);
+		}
+		break;
+	}
+	}
+
+	gfx.setLighting(oldLighting, nullptr);
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 0001AC
+ * @note UNUSED Size: 0001AC (Nonmatching by size)
  */
-void ObjCollInfo::saveini(immut char*, RandomAccessStream&)
+void ObjCollInfo::saveini(immut char* indent, RandomAccessStream& stream)
 {
-	// UNUSED FUNCTION
+	stream.print("\n%scollinfo %d {\t\t// %s\n", indent, mJointIndex, mParentShape->mJointList[mJointIndex].mName);
+	stream.print("%s\tid\t\t%s\n", indent, mId.mStringID);
+	stream.print("%s\tcode\t\t%s\n", indent, mCode.mStringID);
+	stream.print("%s\ttype\t%d\n", indent, mCollType);
+
+	if (mCollType == OCT_Sphere) {
+		stream.print("%s\tradius\t%f\n", indent, mRadius);
+		stream.print("%s\tcentre\t%f %f %f\n", indent, mCentrePosition.x, mCentrePosition.y, mCentrePosition.z);
+
+	} else if (mCollType == OCT_Platform) {
+		stream.print("%s\tplatform\t%s\n", indent, mPlatformName);
+	}
+	if (mFlags) {
+		stream.print("%s\tgetminy\n", indent);
+	}
+
+	if (Child()) {
+		FOREACH_NODE(ObjCollInfo, Child(), child)
+		{
+			char buffer[PATH_MAX];
+			sprintf(buffer, "%s\t", indent);
+			child->saveini(buffer, stream);
+		}
+	}
+
+	stream.print("%s\t}\n", indent);
 }
 
 /**

@@ -1,5 +1,6 @@
 #include "Camera.h"
 #include "DebugLog.h"
+#include "Graphics.h"
 #include "Light.h"
 #include "sysMath.h"
 
@@ -238,11 +239,35 @@ f32 Light::calcLightObjRadius()
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 0001C4
+ * @note UNUSED Size: 0001C4 (Matching by size)
  */
-void Light::refresh(Graphics&, LFlareGroup*)
+void Light::refresh(Graphics& gfx, LFlareGroup* flareGroup)
 {
-	// UNUSED FUNCTION
+	switch (GET_LIGHT_TYPE(mLightFlag)) {
+	case LIGHT_Point:
+	{
+		f32 lightMapRadius = calcLightMapRadius();
+		f32 lightObjRadius = calcLightObjRadius();
+
+		gfx.setColour(mDiffuseColour, true);
+		gfx.useTexture(nullptr, GX_TEXMAP0);
+		bool oldLighting = gfx.setLighting(false, nullptr);
+		gfx.drawSphere(mPosition, lightMapRadius, gfx.mCamera->mLookAtMtx);
+		gfx.setLighting(oldLighting, nullptr);
+
+		if (flareGroup) {
+			Vector3f pos(mPosition);
+			pos.multMatrix(gfx.mCamera->mLookAtMtx);
+			flareGroup->addLFlare(mDiffuseColour, pos, Vector2f(lightMapRadius / 4.0f, lightMapRadius / 4.0f), nullptr, nullptr);
+		}
+		break;
+	}
+	case LIGHT_Spot:
+	{
+		mFrustum->draw(gfx);
+		break;
+	}
+	}
 }
 
 /**

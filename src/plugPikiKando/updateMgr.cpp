@@ -1,5 +1,6 @@
 #include "UpdateMgr.h"
 #include "DebugLog.h"
+#include "Graphics.h"
 #include "sysNew.h"
 
 UpdateMgr* pikiUpdateMgr;
@@ -187,9 +188,19 @@ void UpdateMgr::balanceClient(UpdateContext*)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000130
+ * @note UNUSED Size: 000130 (Matching by size)
  */
-void UpdateMgr::showInfo(Graphics&, int, int)
+void UpdateMgr::showInfo(Graphics& gfx, int x, int y)
 {
-	// UNUSED FUNCTION
+	char buffer[PATH_MAX];
+
+	sprintf(buffer, "updateMgr : %d frames total=%d", mSlotCount, mClientTotal);
+	gfx.setColour(COLOUR_WHITE, true);
+	gfx.texturePrintf(gsys->mConsFont, x, y, buffer);
+	y += 16;
+	for (int i = 0; i < mSlotCount; ++i) {
+		sprintf(buffer, "%d : %d (%d)", i, mClientSlotList[i], mActiveClientSlotList[i]);
+		gfx.texturePrintf(gsys->mConsFont, x, y, buffer);
+		y += 16;
+	}
 }

@@ -1901,20 +1901,28 @@ void BaseShape::makeInstance(ShapeDynMaterials& animatedMats, int jointIdx)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 0000B4
+ * @note UNUSED Size: 0000B4 (Matching by size)
  */
-void recShowInfos(Graphics&, ObjCollInfo*)
+void recShowInfos(Graphics& gfx, ObjCollInfo* info)
 {
-	// UNUSED FUNCTION
+	FOREACH_NODE(ObjCollInfo, info, currInfo)
+	{
+		if (currInfo->mCollType != OCT_Invalid) {
+			currInfo->showInfo(gfx, *gfx.mActiveMatrix);
+		}
+		if (currInfo->Child()) {
+			recShowInfos(gfx, static_cast<ObjCollInfo*>(currInfo->Child()));
+		}
+	}
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000074
+ * @note UNUSED Size: 000074 (Matching by size)
  */
-void BaseShape::drawobjcolls(Graphics&, Camera&)
+void BaseShape::drawobjcolls(Graphics& gfx, Camera& cam)
 {
-	// UNUSED FUNCTION
+	recShowInfos(gfx, static_cast<ObjCollInfo*>(mCollisionInfo.Child()));
 }
 
 /**

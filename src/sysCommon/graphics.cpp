@@ -1273,20 +1273,19 @@ void Graphics::drawCylinder(immut Vector3f& start, immut Vector3f& end, f32 radi
 
 	vec2 = vec2 * (distance / 16.0f);
 	for (int i = 0; i < 16; i++) {
-		Matrix4f a;
-		Matrix4f b;
+		Matrix4f mtx1;
+		Matrix4f mtx2;
 
-		a.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), Vector3f(0.0f, f32(i) * (PI / 8.0f), 0.0f), vec1);
-		transformMtx.multiplyTo(a, b);
-		useMatrix(b, 0);
+		mtx1.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), Vector3f(0.0f, i * (PI / 8.0f), 0.0f), vec1);
+		transformMtx.multiplyTo(mtx1, mtx2);
+		useMatrix(mtx2, 0);
 
 		for (int j = 0; j < 16; j++) {
-			// Calculate angles for current and next point
-			f32 currentAngle = f32(j) * (PI / 8.0f);
-			f32 nextAngle    = f32((j + 1) % 32) * (PI / 8.0f);
+			f32 theta0 = j * (PI / 8.0f);
+			f32 theta1 = (j + 1) % 32 * (PI / 8.0f);
 
-			drawLine(Vector3f(sinf(currentAngle) * radius, 0.0f, cosf(currentAngle) * radius),
-			         Vector3f(sinf(nextAngle) * radius, 0.0f, cosf(nextAngle) * radius));
+			drawLine(Vector3f(sinf(theta0) * radius, 0.0f, cosf(theta0) * radius),
+			         Vector3f(sinf(theta1) * radius, 0.0f, cosf(theta1) * radius));
 		}
 
 		vec1 = vec1 + vec2;
@@ -1295,11 +1294,28 @@ void Graphics::drawCylinder(immut Vector3f& start, immut Vector3f& end, f32 radi
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 0001E8
+ * @note UNUSED Size: 0001E8 (Matching by size)
  */
-void Graphics::drawCircle(immut Vector3f&, f32, immut Matrix4f&)
+void Graphics::drawCircle(immut Vector3f& center, f32 radius, immut Matrix4f& transformMtx)
 {
-	// UNUSED FUNCTION
+	useTexture(nullptr, GX_TEXMAP0);
+
+	for (int i = 0; i < 1; i++) {
+		Matrix4f mtx1;
+		Matrix4f mtx2;
+
+		mtx1.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), Vector3f(0.0f, i * (PI / 8.0f), 0.0f), center);
+		transformMtx.multiplyTo(mtx1, mtx2);
+		useMatrix(mtx2, 0);
+
+		for (int j = 0; j < 16; j++) {
+			f32 theta0 = j * (PI / 8.0f);
+			f32 theta1 = (j + 1) % 32 * (PI / 8.0f);
+
+			drawLine(Vector3f(sinf(theta0) * radius, 0.0f, cosf(theta0) * radius),
+			         Vector3f(sinf(theta1) * radius, 0.0f, cosf(theta1) * radius));
+		}
+	}
 }
 
 /**
@@ -1313,13 +1329,13 @@ void Graphics::drawSphere(immut Vector3f& center, f32 radius, immut Matrix4f& tr
 		Matrix4f mtx1;
 		Matrix4f mtx2;
 
-		mtx1.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), Vector3f(0.0f, f32(i) * (PI / 8.0f), 0.0f), center);
+		mtx1.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), Vector3f(0.0f, i * (PI / 8.0f), 0.0f), center);
 		transformMtx.multiplyTo(mtx1, mtx2);
 		useMatrix(mtx2, 0);
 
 		for (int j = 0; j < 16; j++) {
-			f32 theta0 = f32(j) * (PI / 8.0f);
-			f32 theta1 = f32((j + 1) % 32) * (PI / 8.0f);
+			f32 theta0 = j * (PI / 8.0f);
+			f32 theta1 = (j + 1) % 32 * (PI / 8.0f);
 
 			drawLine(Vector3f(sinf(theta0) * radius, cosf(theta0) * radius, 0.0f),
 			         Vector3f(sinf(theta1) * radius, cosf(theta1) * radius, 0.0f));

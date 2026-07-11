@@ -26,6 +26,7 @@ struct Graphics;
  * @brief Collision-info node type.
  */
 enum ObjCollType {
+	OCT_Invalid  = 0, // value seen in `recShowInfos`
 	OCT_Sphere   = 1, // sphere collision primitive
 	OCT_Platform = 2, // platform collision (references an external Shape by name)
 };
@@ -93,7 +94,7 @@ struct ObjCollInfo : public CoreNode {
 
 	// unused/inlined:
 	void getCentreSize(Vector3f& centre, f32& radius);
-	void showInfo(Graphics& gfx, Matrix4f& mtx);
+	void showInfo(Graphics& gfx, immut Matrix4f& mtx) immut;
 	void saveini(immut char* path, RandomAccessStream& output);
 
 	// _00     = VTBL
@@ -305,7 +306,7 @@ struct BaseCollTriInfo {
 /**
  * @brief Triangle collision info with derived edge planes.
  *
- * @note Size: 0x58.
+ * @note Size: 0x58 (0x64 in the DLL).
  */
 struct CollTriInfo : public BaseCollTriInfo {
 	CollTriInfo() { }
@@ -328,6 +329,9 @@ struct CollTriInfo : public BaseCollTriInfo {
 
 	// _00-_28 = BaseCollTriInfo
 	Plane mEdgePlanes[3]; // _28, edge half-space planes derived from triangle vertices - normals face inwards.
+#if defined(WIN32)        //
+	u8 _58[0x64 - 0x58];  // _58
+#endif
 };
 
 /**
