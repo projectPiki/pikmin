@@ -195,8 +195,8 @@ bool FastGrid::doCulling(const FastGrid& other, f32 radius)
 		return true;
 	}
 
-	// When disabled, ignore Y entirely.
-	if (AIPerf::useGrid != true) {
+	// When not in "grid xyz" mode, ignore Y entirely.
+	if (AIPerf::useGrid != 1) {
 		return false;
 	}
 

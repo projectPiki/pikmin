@@ -29,24 +29,24 @@ bool AIPerf::iteratorCull = true;
 bool AIPerf::pikiMabiki   = true;
 int AIPerf::optLevel      = 2;
 
-bool AIPerf::showRoute;
-bool AIPerf::generatorMode;
-int AIPerf::moveType;
-bool AIPerf::kandoOnly;
-bool AIPerf::soundDebug;
-bool AIPerf::updateSearchBuffer;
-bool AIPerf::loopOptimise;
-bool AIPerf::useUpdateMgr;
-int AIPerf::ufoLevel;
-int AIPerf::searchCnt;
-int AIPerf::searchCullCnt;
-int AIPerf::searchInsertCnt;
-int AIPerf::collisionCnt;
-int AIPerf::iteratorCullCnt;
-int AIPerf::aiCullCnt;
-int AIPerf::viewCullCnt;
-int AIPerf::outsideViewCnt;
-int AIPerf::drawshapeCullCnt;
+bool AIPerf::showRoute          = false;
+bool AIPerf::generatorMode      = false;
+int AIPerf::moveType            = false;
+bool AIPerf::kandoOnly          = false;
+bool AIPerf::soundDebug         = false;
+bool AIPerf::updateSearchBuffer = false;
+bool AIPerf::loopOptimise       = false;
+bool AIPerf::useUpdateMgr       = false;
+int AIPerf::ufoLevel            = false;
+int AIPerf::searchCnt           = false;
+int AIPerf::searchCullCnt       = false;
+int AIPerf::searchInsertCnt     = false;
+int AIPerf::collisionCnt        = false;
+int AIPerf::iteratorCullCnt     = false;
+int AIPerf::aiCullCnt           = false;
+int AIPerf::viewCullCnt         = false;
+int AIPerf::outsideViewCnt      = false;
+int AIPerf::drawshapeCullCnt    = false;
 
 /**
  * @todo: Documentation

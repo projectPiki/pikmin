@@ -13,10 +13,10 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("nlibmath");
 
-f32 NMathF::error                 = 0.0001f;
-const f32 NMathF::degreePerRadian = 57.295776f;
-const f32 NMathF::radianPerDegree = 0.017453292f;
-const f32 NMathF::pi              = 3.1415927f;
+immut f32 NMathF::error           = 0.0001f;
+const f32 NMathF::degreePerRadian = 180.0f / PI;
+const f32 NMathF::radianPerDegree = PI / 180.0f;
+const f32 NMathF::pi              = PI;
 
 /**
  * @brief Lookup table for arctangent values.

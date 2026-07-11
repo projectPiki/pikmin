@@ -26,7 +26,4 @@ void JP_Stop1Shot(void);  // UNUSED but we know it's extern "C"
 
 END_SCOPE_EXTERN_C
 
-static int Get_Portcmd(JPorthead_* port);
-static s32 Portcmd_Main(void* a);
-
 #endif

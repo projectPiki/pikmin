@@ -9,7 +9,7 @@ static void* SaveStart = NULL;
 static void* SaveEnd   = NULL;
 #endif
 
-static volatile BOOL Prepared;
+static volatile BOOL Prepared = FALSE;
 
 extern u32 OS_UNK_CODE AT_ADDRESS(0x817FFFF8);
 extern u32 OS_HOT_RESET_CODE AT_ADDRESS(0x817FFFFC);

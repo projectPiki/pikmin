@@ -1511,7 +1511,7 @@ void GameCoreSection::update()
 		// 4-6 = leaf/bud/flower, bomb, blue
 		// 7-12 = ", ", red
 		// 13-18 = ", ", yellow
-		encodedNextThrowType = 6 * color + 3 * isHolding + happa + 1;
+		encodedNextThrowType = (PikiHappaCount * 2) * color + PikiHappaCount * isHolding + happa + 1;
 	} else {
 		// 0 = no next throw piki
 		encodedNextThrowType = 0;

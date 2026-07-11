@@ -501,7 +501,8 @@ LFInfo* StdSystem::getLFlareInfo()
  */
 LFlareGroup* StdSystem::registerLFlare(Texture* tex)
 {
-	for (LFlareGroup* fg = (LFlareGroup*)mFlareGroupList->mChild; fg; fg = (LFlareGroup*)fg->mNext) {
+	FOREACH_NODE(LFlareGroup, mFlareGroupList->mChild, fg)
+	{
 		if (fg->mTexture == tex) {
 			return fg;
 		}

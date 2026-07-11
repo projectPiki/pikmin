@@ -173,8 +173,8 @@ private:
 
 	f32 mRumbleIntensity;            // _00
 	f32 mRumbleFadeOutTimer;         // _04
-	u8 mIsEnabled;                   // _08
-	u8 mIsDisabled;                  // _09
+	bool mRumbleEnable;              // _08
+	bool mRumblePaused;              // _09
 	RumbleSample* mSamples[4];       // _0C
 	ControlerMgr* mControlerMgrs[4]; // _1C
 	ChannelDataMgr* mDataMgr;        // _2C

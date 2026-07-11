@@ -381,7 +381,7 @@ void Camera::camReflect(Camera&, Plane&)
 /**
  * @todo: Documentation
  */
-f32 Camera::projectWorldPoint(Graphics& gfx, Vector3f& point)
+f32 Camera::projectWorldPoint(Graphics& gfx, Vector3f& point) immut
 {
 	f32 dist = mProjectionMatrix.mMtx[3][0] * point.x + mProjectionMatrix.mMtx[3][1] * point.y + mProjectionMatrix.mMtx[3][2] * point.z
 	         + mProjectionMatrix.mMtx[3][3];

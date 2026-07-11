@@ -49,11 +49,8 @@ void* __copy(char* dest, char* src, size_t size)
 	if (dest && size) {
 		p = dest;
 		do {
-			*p = *src;
-			++p;
-			++src;
-			--size;
-		} while (size);
+			*p++ = *src++;
+		} while (--size);
 	}
 
 	return (dest);

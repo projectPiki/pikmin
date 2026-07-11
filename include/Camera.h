@@ -40,7 +40,7 @@ struct CullingPlane {
 struct CullFrustum {
 	CullFrustum()
 	{
-		_155 = 0;
+		_155 = false;
 		mPosition.set(0.0f, 0.0f, 0.0f);
 		mFov  = 60.0f;
 		mNear = 1.0f;
@@ -123,8 +123,8 @@ struct CullFrustum {
 	CullingPlane mCullPlanes[6];     // _0C
 	CullingPlane* mPlanePointers[6]; // _114, idk how many are in this
 	u8 _12C[0x154 - 0x12C];          // _12C, unknown
-	u8 mHasBoundOffset;              // _154
-	u8 _155;                         // _155
+	bool mHasBoundOffset;            // _154
+	bool _155;                       // _155
 	Vector3f mBoundOffset;           // _158
 	Vector3f mPosition;              // _164
 	Vector3f mFocus;                 // _170, aka Target Position
@@ -153,7 +153,7 @@ struct CullFrustum {
 struct Camera : public CullFrustum {
 	Camera();
 
-	f32 projectWorldPoint(Graphics&, Vector3f&);
+	f32 projectWorldPoint(Graphics&, Vector3f&) immut;
 
 	// unused/inlined:
 	void camReflect(Camera&, Plane&);

@@ -206,8 +206,8 @@ void BaseInf::loadCard(RandomAccessStream& card)
  */
 BPikiInf::BPikiInf()
 {
-	mPikiColour = mNextKeyIndex = 0;
-	// UNUSED FUNCTION
+	mNextKeyIndex = 0;
+	mPikiColour   = Blue;
 }
 
 /**

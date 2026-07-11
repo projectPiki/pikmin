@@ -197,9 +197,8 @@ void Light::calcLightSizes()
 		mMapRadius = -1.0f;
 		int i;
 		for (i = 0; i < 0x4000; i += 8) {
-			// This exact formula probably isn't written like this, but it's what Ghidra
-			// worked it out to be and the function matches by size with it, so whatever.
-			f32 local_10 = 1.0f / (i * mQuadAttn * i + i * mLinearAttn + mConstantAttn);
+			f32 local_10 = 1.0f / (mConstantAttn + mLinearAttn * i + mQuadAttn * SQUARE(i));
+
 			if (mObjRadius == -1.0f && local_10 < _48) {
 				mObjRadius = i;
 			}

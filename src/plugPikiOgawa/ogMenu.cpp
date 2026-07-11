@@ -442,7 +442,7 @@ void zen::ogDrawScrInfo2::drawHougaku(Graphics& gfx)
 	f32 angle = atan2f(-gfx.mCamera->mViewZAxis.x, -gfx.mCamera->mViewZAxis.z);
 
 	// final trial check?
-	if (flowCont.mCurrentStage->mStageID == 4) {
+	if (flowCont.mCurrentStage->mStageID == STAGE_Last) {
 		angle += PI;
 	}
 	mDirectionArrowPane->rotateZ(w, h, angle);
