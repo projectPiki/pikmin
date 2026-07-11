@@ -320,20 +320,98 @@ void Creature::moveNew(f32 deltaTime)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 0002E8
+ * @note UNUSED Size: 0002E8 (Matching by size)
  */
-CollTriInfo* Creature::checkForward(immut Vector3f&, f32, f32&)
+CollTriInfo* Creature::checkForward(immut Vector3f& direction, f32 magnitude, f32& out)
 {
-	// UNUSED FUNCTION
+	if (!mGroundTriangle) {
+		PRINT("no floor colltri!\n");
+		return nullptr;
+	}
+
+	Vector3f pos = direction * magnitude;
+	pos          = pos + mSRT.t;
+
+	CollTriInfo* currTri = mGroundTriangle;
+	int nextTriIdx;
+	CollTriInfo* nextTri = getNextTri(mGroundTriangle, pos, nextTriIdx);
+	if (!nextTri) {
+		return nullptr;
+	}
+
+	int loopLimit                         = 10000;
+	CollTriInfo* nextTriFromLastIteration = nullptr;
+	while (nextTri) {
+
+		// Is the next collision triangle's normal facing less than 60 degrees away from to my tri's normal?
+		// See also: code related to `MapCode::getSlipCode` and its concerns over this same slope difference.
+		if (quickABS(nextTri->mTriangle.mNormal.DP(mGroundTriangle->mTriangle.mNormal)) < cosf(THIRD_PI)) {
+			Plane* edgePlane = &currTri->mEdgePlanes[nextTriIdx];
+			out              = edgePlane->dist(mSRT.t) / -direction.DP(edgePlane->mNormal);
+			return nextTri;
+		}
+
+		// Start sounding the alarm if we're about to hit the loop limit.
+		if (loopLimit < 10) {
+			PRINT("next = %x DP(%.1f)\n", nextTri, nextTri->mTriangle.mNormal.DP(mGroundTriangle->mTriangle.mNormal));
+		}
+
+		// Look yonder for yet another collision triangle that might work.
+		int yetAnotherTriIdx;
+		CollTriInfo* yetAnotherTri = getNextTri(nextTri, pos, yetAnotherTriIdx);
+		// And bail if we've reached the end of the line.
+		if (!yetAnotherTri) {
+			Plane* edgePlane = &currTri->mEdgePlanes[nextTriIdx];
+			out              = edgePlane->dist(mSRT.t) / -direction.DP(edgePlane->mNormal);
+			return nextTri;
+		}
+
+		// Did we go nowhere new in our search?  ...Was the `nextTriFromLastIteration` variable even necessary?
+		if (yetAnotherTri == nextTriFromLastIteration) {
+			Plane* edgePlane = &currTri->mEdgePlanes[nextTriIdx];
+			out              = edgePlane->dist(mSRT.t) / -direction.DP(edgePlane->mNormal);
+			return yetAnotherTri;
+		}
+
+		// The search goes on...
+		nextTriIdx               = yetAnotherTriIdx;
+		nextTriFromLastIteration = nextTri;
+		currTri                  = nextTri;
+		nextTri                  = yetAnotherTri;
+
+		// ...unless it's gone on for long enough.
+		if (loopLimit-- < 0) {
+			PRINT("######################################################## loop !?\n");
+			f32* wtf = nullptr;
+			PRINT("%.1f \n", wtf[7]); // What the fuck?
+			return nullptr;
+		}
+	}
+
+	return nullptr;
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000130
+ * @note UNUSED Size: 000130 (Matching by size)
  */
-CollTriInfo* Creature::getNextTri(CollTriInfo*, immut Vector3f&, int&)
+CollTriInfo* Creature::getNextTri(CollTriInfo* tri, immut Vector3f& pos, int& nextTriIdx)
 {
-	// UNUSED FUNCTION
+	int triIdx  = -1;
+	f32 minDist = 12800.0f;
+	for (int i = 0; i < 3; i++) {
+		f32 dist = tri->mEdgePlanes[i].dist(pos);
+		if (dist <= minDist && dist < 0.0f) {
+			triIdx  = tri->mAdjacentTriIndices[i];
+			minDist = dist;
+		}
+	}
+	nextTriIdx = triIdx;
+
+	if (triIdx != -1) {
+		return &mapMgr->mMapModel->mTriList[triIdx];
+	}
+	return nullptr;
 }
 
 /**
@@ -361,11 +439,13 @@ Plane* Creature::getNearestPlane(CollTriInfo* tri)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000010
+ * @note UNUSED Size: 000010 (Nonmatching by size)
  */
-void Creature::renderCollTriInfo(Graphics&, CollTriInfo*, immut Colour&)
+void Creature::renderCollTriInfo(Graphics& gfx, CollTriInfo* tri, immut Colour& colour)
 {
-	// UNUSED FUNCTION
+	// I cannot begin to fathom what this function, which is totally empty in the
+	// DLL, is doing to somehow generate THREE instructions before its return BLR.
+	// Quick reminder that MWCC 1.2.5 didn't yet have the tail call optimization.
 }
 
 /**

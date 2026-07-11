@@ -344,7 +344,7 @@ public:
 	f32 getCollisionSize();
 	void setCorpsePartJoint(int, int);                                // unused
 	void outputDirectionPosition(Vector3f&, f32, f32);                // unused
-	void jumpTo(Vector3f&, f32);                                      // unused
+	void jumpTo(immut Vector3f&, f32);                                // unused
 	bool insideDirection(Vector3f&);                                  // unused
 	bool attackRangeNaviPiki(immut Interaction&, immut Condition&);   // unused
 	bool interactTeki(immut Interaction&, immut Condition&);          // unused

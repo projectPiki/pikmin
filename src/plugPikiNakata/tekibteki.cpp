@@ -1312,11 +1312,33 @@ void BTeki::rotateTeki(f32 speed)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000218
+ * @note UNUSED Size: 000218 (Matching by size)
  */
-void BTeki::jumpTo(Vector3f&, f32)
+void BTeki::jumpTo(immut Vector3f& destination, f32 jumpHeight)
 {
-	// UNUSED FUNCTION
+	startFlying();
+	stopDrive();
+	stopVelocity();
+	turnTo(destination);
+
+	// These units are all over the place.  Let's imagine classical physics.
+	f32 gravity = getGravity();                              // units/sec^2
+	f32 ySpeed  = NMathF::sqrt(2.0f * gravity * jumpHeight); // units/sec (`jumpHeight` is in units)
+	f32 timeTmp = ySpeed / gravity;                          // seconds (yes this is a named temporary)
+	f32 time    = 2.0f * timeTmp;                            // seconds
+
+	Vector3f dest2D(destination);
+	dest2D.y = 0.0f;
+	Vector3f pos2D(getPosition());
+	pos2D.y = 0.0f;
+
+	f32 distance    = dest2D.distance(pos2D);
+	f32 actionSpeed = distance / time; // units/sec
+
+	mActionVelocity.sub2(dest2D, pos2D);
+	mActionVelocity.normalizeCheck();
+	mActionVelocity.scale(actionSpeed);
+	mActionVelocity.y = ySpeed;
 }
 
 /**

@@ -157,11 +157,11 @@ void PelletAnimator::startMotion(immut PaniMotionInfo& motionInfo)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000084
+ * @note UNUSED Size: 000084 (Matching by size)
  */
-void PelletAnimator::finishMotion(immut PaniAnimKeyListener*)
+void PelletAnimator::finishMotion(PaniAnimKeyListener* listener)
 {
-	// UNUSED FUNCTION
+	finishMotion(stack_new(PaniMotionInfo)(PANI_NO_MOTION, listener), stack_new(PaniMotionInfo)(PANI_NO_MOTION, nullptr));
 }
 
 /**

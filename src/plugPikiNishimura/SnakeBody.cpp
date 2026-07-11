@@ -451,11 +451,16 @@ void SnakeBody::makeDeadPattern01()
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000088
+ * @note UNUSED Size: 000088 (Matching by size)
  */
 void SnakeBody::makeDeadPattern02()
 {
-	// UNUSED FUNCTION
+	mSnake->addWalkTimer(gsys->getFrameTime());
+	mSegmentScaleList[SnakeJointType::Segment1]
+	    = NsLibMath<f32>::toGoal(mSegmentScaleList[SnakeJointType::Segment1], 0.0f, gsys->getFrameTime());
+	if (mSnake->getWalkTimer() > 3.0f) {
+		mSegmentScaleList[0] = 0.0f;
+	}
 }
 
 /**
@@ -1053,11 +1058,30 @@ void SnakeBody::setDeadPattern01(Matrix4f* animMatrices)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000268
+ * @note UNUSED Size: 000268 (Matching by size)
  */
-void SnakeBody::setDeadPattern02(Matrix4f*)
+void SnakeBody::setDeadPattern02(Matrix4f* animMatrices)
 {
-	// UNUSED FUNCTION
+	int i;
+
+	for (i = 0; i < SnakeJointType::SegmentCount; ++i) {
+		animMatrices[i].mMtx[0][1] *= mSegmentScaleList[SnakeJointType::Segment1];
+		animMatrices[i].mMtx[1][1] *= mSegmentScaleList[SnakeJointType::Segment1];
+		animMatrices[i].mMtx[2][1] *= mSegmentScaleList[SnakeJointType::Segment1];
+		animMatrices[i].mMtx[0][2] *= mSegmentScaleList[SnakeJointType::Segment1];
+		animMatrices[i].mMtx[1][2] *= mSegmentScaleList[SnakeJointType::Segment1];
+		animMatrices[i].mMtx[2][2] *= mSegmentScaleList[SnakeJointType::Segment1];
+	}
+	if (mSegmentScaleList[SnakeJointType::Segment1] == 0.0f) {
+		for (i = 0; i < SnakeJointType::SegmentCount; i++) {
+			animMatrices[i].mMtx[0][0] = 0.0;
+			animMatrices[i].mMtx[1][0] = 0.0;
+			animMatrices[i].mMtx[2][0] = 0.0;
+			animMatrices[i].mMtx[0][3] = mSnake->mSRT.t.x;
+			animMatrices[i].mMtx[1][3] = mSnake->mSRT.t.y;
+			animMatrices[i].mMtx[2][3] = mSnake->mSRT.t.z;
+		}
+	}
 }
 
 /**

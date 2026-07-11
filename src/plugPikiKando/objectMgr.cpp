@@ -19,11 +19,12 @@ DEFINE_PRINT("objectMgr");
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000080
+ * @note UNUSED Size: 000080 (Matching by size)
  */
-void boundSphereDist(Creature*, Creature*)
+static f32 boundSphereDist(Creature* a, Creature* b)
 {
-	// UNUSED FUNCTION
+	f32 dist = centreDist(a, b);
+	return dist - (a->getBoundingSphereRadius() + b->getBoundingSphereRadius());
 }
 
 /**
@@ -477,9 +478,7 @@ void MonoObjectMgr::search(ObjectMgr* mgr)
 					continue;
 				}
 			}
-			f32 dist = centreDist(obj, obj2);
-			f32 s2   = obj->getBoundingSphereRadius() + obj2->getBoundingSphereRadius();
-			dist     = dist - s2;
+			f32 dist = boundSphereDist(obj, obj2);
 
 			if (dist <= 300.0f && obj->isAlive() && obj->mSearchBuffer.available()) {
 				if (!AIPerf::useUpdateMgr || obj->mSearchContext.updatable()) {
@@ -543,11 +542,7 @@ void MonoObjectMgr::searchSelf()
 					continue;
 				}
 			}
-			f32 dist1 = centreDist(obj, obj2);
-			f32 s1    = obj2->getBoundingSphereRadius();
-			f32 s2    = obj->getBoundingSphereRadius();
-			s1        = s2 + s1;
-			f32 dist  = dist1 - s1;
+			f32 dist = boundSphereDist(obj, obj2);
 
 			if (dist <= 300.0f && obj->isAlive()) {
 				if (obj->isAlive() && obj->mSearchBuffer.available()) {
@@ -563,8 +558,6 @@ void MonoObjectMgr::searchSelf()
 			}
 		}
 	}
-
-	STACK_PAD_VAR(2);
 }
 
 /**
@@ -925,11 +918,7 @@ void PolyObjectMgr::searchSelf()
 					continue;
 				}
 			}
-			f32 dist1 = centreDist(obj, obj2);
-			f32 s1    = obj2->getBoundingSphereRadius();
-			f32 s2    = obj->getBoundingSphereRadius();
-			s1        = s2 + s1;
-			f32 dist  = dist1 - s1;
+			f32 dist = boundSphereDist(obj, obj2);
 
 			if (dist <= 300.0f) {
 				if (obj->isAlive() && obj->mSearchBuffer.available()) {
@@ -945,8 +934,6 @@ void PolyObjectMgr::searchSelf()
 			}
 		}
 	}
-
-	STACK_PAD_VAR(2);
 }
 
 /**
@@ -989,9 +976,7 @@ void ObjectMgr::search(ObjectMgr* otherMgr)
 			}
 
 			// Calculate actual distance between objects (accounting for their sizes)
-			f32 distance       = centreDist(sourceObj, targetObj);
-			f32 combinedRadius = sourceObj->getBoundingSphereRadius() + targetObj->getBoundingSphereRadius();
-			distance           = distance - combinedRadius;
+			f32 distance = boundSphereDist(sourceObj, targetObj);
 
 			// Check if objects are within interaction range
 			const f32 INTERACTION_RANGE = 300.0f;

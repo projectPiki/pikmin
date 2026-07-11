@@ -6,6 +6,7 @@
 #include "PikiHeadItem.h"
 #include "gameflow.h"
 #include "sysNew.h"
+#include "teki.h"
 
 PikiInfMgr pikiInfMgr;
 
@@ -319,11 +320,17 @@ int MonoInfMgr::getFreeNum()
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 00008C
+ * @note UNUSED Size: 00008C (Matching by size)
  */
-void MonoInfMgr::saveCard(RandomAccessStream&)
+void MonoInfMgr::saveCard(RandomAccessStream& stream)
 {
-	// UNUSED FUNCTION
+	int freeNum = getFreeNum();
+	stream.writeInt(freeNum);
+	FOREACH_NODE(BaseInf, mActiveList.mChild, inf)
+	{
+		inf->saveCard(stream);
+	}
+	PRINT(" SAVE CARD ***** %d です\n", freeNum); // " SAVE CARD ***** there are %d\n"
 }
 
 /**
@@ -526,11 +533,28 @@ void CreatureInf::doRestore(Creature* owner)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000084
+ * @note UNUSED Size: 000084 (Matching by size)
  */
 void CreatureInfMgr::updateUseList()
 {
-	// UNUSED FUNCTION
+	FOREACH_NODE(CreatureInf, mActiveList.mChild, inf)
+	{
+		switch (inf->mObjType) {
+		case OBJTYPE_SluiceSoft:
+		case OBJTYPE_SluiceHard:
+		case OBJTYPE_SluiceBomb:
+		case OBJTYPE_SluiceBombHard:
+		{
+			itemMgr->addUseList(inf->mObjType);
+			break;
+		}
+		case OBJTYPE_Teki:
+		{
+			tekiMgr->mUsingType[inf->mObjInfo1] = true;
+			break;
+		}
+		}
+	}
 }
 
 /**

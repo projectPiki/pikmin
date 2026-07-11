@@ -628,18 +628,16 @@ u8 HinderRock::getPlaneFlag(immut Vector3f& pos)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 0000E8
+ * @note UNUSED Size: 0000E8 (Matching by size)
  */
-Vector3f HinderRock::getTangentPos(f32 mod)
+Vector3f HinderRock::getTangentPos(f32 scale)
 {
 	Vector3f v1 = getVertex(2);
 	Vector3f v2 = getVertex(3);
 
 	Vector3f diff = v2 - v1;
-	diff          = diff * mod + v1;
-	diff.normalise();
-	return diff;
-	// UNUSED FUNCTION
+	Vector3f result = diff * scale + v1;
+	return result;
 }
 
 /**

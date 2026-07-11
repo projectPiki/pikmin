@@ -174,11 +174,20 @@ bool Boss::changeDirection(f32 turnSpeed)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 0000FC
+ * @note UNUSED Size: 0000FC (Matching by size)
  */
-void Boss::towardFaceDirection(f32)
+void Boss::towardFaceDirection(f32 speed)
 {
-	// UNUSED FUNCTION
+	f32 sinv      = sinf(mFaceDirection);
+	f32 cosv      = cosf(mFaceDirection);
+	f32 currSpeed = mVelocity.length();
+
+	mTargetVelocity.x = speed * sinv;
+	mTargetVelocity.y = 0.0f;
+	mTargetVelocity.z = speed * cosv;
+
+	mVelocity.x = currSpeed * sinv;
+	mVelocity.z = currSpeed * cosv;
 }
 
 /**
