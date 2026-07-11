@@ -225,26 +225,33 @@ f32 PeveCircleMoveEvent::calcAngle()
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 0000F0
+ * @note UNUSED Size: 0000F0 (Matching by size)
  */
 PeveCircleMoveWatchEvent::PeveCircleMoveWatchEvent()
     : PeveParallelEvent(2)
 {
-	// UNUSED FUNCTION
+	mCircleMoveEvent     = new PeveCircleMoveEvent();
+	mHomingPositionEvent = new PeveHomingPositionEvent();
+	addChild(mCircleMoveEvent);
+	addChild(mHomingPositionEvent);
+	mTimeCondition.construct(1.0f);
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000058
+ * @note UNUSED Size: 000058 (Matching by size)
  */
-void PeveCircleMoveWatchEvent::makeCircleMoveWatchEvent(f32, NVector3fIO*, NVector3fIO*, NVector3fIO*, f32, f32, f32, f32, f32)
+void PeveCircleMoveWatchEvent::makeCircleMoveWatchEvent(f32 timeLimit, NVector3fIO* vecIOA, NVector3fIO* vecIOB, NVector3fIO* vecIOC,
+                                                        f32 param_5, f32 param_6, f32 param_7, f32 param_8, f32 param_9)
 {
-	// UNUSED FUNCTION
+	mCircleMoveEvent->makeCircleMoveEvent(timeLimit, vecIOA, vecIOC, param_5, param_7, param_8, param_9);
+	mTimeCondition.setPeriod(timeLimit);
+	mHomingPositionEvent->makeHomingPositionEvent(&mTimeCondition, vecIOB, vecIOC, param_6);
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000040
+ * @note UNUSED Size: 000040 (Matching by size)
  */
 PeveFunctionCurveEvent::PeveFunctionCurveEvent()
     : PeveEvent(0)
@@ -330,22 +337,26 @@ void PeveHomingPositionEvent::update()
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 0000D0
+ * @note UNUSED Size: 0000D0 (Matching by size)
  */
 PeveHomingPostureEvent::PeveHomingPostureEvent()
-    : PeveParallelEvent(0)
+    : PeveParallelEvent(2)
 {
-	// UNUSED FUNCTION
+	mHomingPositionEvent1 = new PeveHomingPositionEvent();
+	mHomingPositionEvent2 = new PeveHomingPositionEvent();
+	addChild(mHomingPositionEvent1);
+	addChild(mHomingPositionEvent2);
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 00002C
+ * @note UNUSED Size: 00002C (Matching by size)
  */
-void PeveHomingPostureEvent::makeHomingPostureEvent(PeveCondition*, NVector3fIO*, NVector3fIO*, f32, PeveCondition*, NVector3fIO*,
-                                                    NVector3fIO*, f32)
+void PeveHomingPostureEvent::makeHomingPostureEvent(PeveCondition* param_1, NVector3fIO* param_2, NVector3fIO* param_3, f32 param_4,
+                                                    PeveCondition* param_5, NVector3fIO* param_6, NVector3fIO* param_7, f32 param_8)
 {
-	// UNUSED FUNCTION
+	mHomingPositionEvent1->makeHomingPositionEvent(param_1, param_2, param_3, param_4);
+	mHomingPositionEvent2->makeHomingPositionEvent(param_5, param_6, param_7, param_8);
 }
 
 /**

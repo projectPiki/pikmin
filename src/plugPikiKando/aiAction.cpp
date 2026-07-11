@@ -500,11 +500,11 @@ void TopAction::restart()
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000024
+ * @note UNUSED Size: 000024 (Matching by size)
  */
 void TopAction::knowledgeCheck()
 {
-	// UNUSED FUNCTION
+	_30.update();
 }
 
 /**

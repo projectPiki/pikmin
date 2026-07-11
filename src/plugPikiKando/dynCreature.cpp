@@ -407,11 +407,37 @@ void DynCreature::simulate(f32 timeStep)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000254
+ * @note UNUSED Size: 000254 (Matching by size)
  */
-void DynCreature::applyTorque(int, f32)
+void DynCreature::applyTorque(int particleIdx, f32 magnitude)
 {
-	// UNUSED FUNCTION
+	DynParticle* ptcl = mParticleList;
+	for (int i = 0; i < particleIdx; ++i) {
+		ptcl = ptcl->mNextParticle;
+	}
+	if (!ptcl) {
+		return;
+	}
+
+	// Build rotation matrix from current orientation quaternion
+	Matrix4f rotMtx;
+	rotMtx.makeVQS(Vector3f(0.0f, 0.0f, 0.0f), mRotationQuat, Vector3f(1.0f, 1.0f, 1.0f));
+
+	Vector3f yRotation;
+	mRotationQuat.genVectorY(yRotation);
+	if (yRotation.y >= 0.0f) {
+		magnitude *= -1.0f;
+	}
+	Vector3f yTorque = magnitude * yRotation;
+
+	// Not sure what to name this
+	Vector3f local_74(ptcl->mLocalPosition);
+	local_74.multMatrix(rotMtx);
+	local_74.CP(yTorque);
+
+	mAngularMomentum = mAngularMomentum + local_74;
+	mAngularVelocity = mAngularMomentum;
+	mAngularVelocity.multMatrix(mWorldInvInertiaTensor);
 }
 
 /**

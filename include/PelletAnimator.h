@@ -73,7 +73,7 @@ struct PelletAnimator {
 
 	// unused/inlined:
 	void startMotion(immut PaniMotionInfo*, immut PaniMotionInfo*);
-	void finishMotion(immut PaniAnimKeyListener*);
+	void finishMotion(PaniAnimKeyListener*);
 
 	PaniPelletAnimator& getLowerAnimator() { return mLowerAnimator; }
 	PaniPelletAnimator& getUpperAnimator() { return mUpperAnimator; }

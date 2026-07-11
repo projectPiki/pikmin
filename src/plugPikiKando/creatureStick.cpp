@@ -95,11 +95,44 @@ bool Creature::isStickToSphere()
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 0003E8
+ * @note UNUSED Size: 0003E8 (Nonmatching by size)
  */
-void Creature::adjustStickObject(immut Vector3f&)
+void Creature::adjustStickObject(immut Vector3f& adjust)
 {
-	// UNUSED FUNCTION
+	if (!mStickTarget) {
+		return;
+	}
+	if (isStickToSphere()) {
+		return;
+	}
+
+	// I assume this exists solely to promote the pointer to a reference now that it has been proven to be non-null.
+	Creature& stickTargetRef = *mStickTarget;
+	Matrix4f mtx, invMtx;
+
+	if (mStickPart) {
+		mtx.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), Vector3f(0.0f, 0.0f, 0.0f), mStickPart->mCentre);
+	} else {
+		mtx.makeSRT(stickTargetRef.mSRT.s, stickTargetRef.mSRT.r, stickTargetRef.mSRT.t);
+	}
+	mtx.inverse(&invMtx);
+
+	// And you made a copy of the vector because...?
+	Vector3f attachPositionCopy(mAttachPosition);
+	attachPositionCopy.multMatrix(mtx);
+	attachPositionCopy = attachPositionCopy + adjust;
+	mAttachPosition    = attachPositionCopy;
+
+	if (mStickPart) {
+		mAttachPosition = mAttachPosition - mStickPart->mCentre;
+		mAttachPosition.normalise();
+		mAttachPosition = mAttachPosition * mStickPart->mRadius + mStickPart->mCentre;
+	} else {
+		mAttachPosition = mAttachPosition - stickTargetRef.mSRT.t;
+		mAttachPosition.normalise();
+		mAttachPosition = mAttachPosition * stickTargetRef.getCentreSize() + stickTargetRef.mSRT.t;
+	}
+	mAttachPosition.multMatrix(invMtx);
 }
 
 /**

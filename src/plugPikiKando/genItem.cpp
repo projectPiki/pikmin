@@ -136,11 +136,16 @@ void GenObjectItem::doWrite(RandomAccessStream& stream)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000028
+ * @note UNUSED Size: 000028 (Matching by size)
+ * Copied from generator.cpp; it's assumed to be the same.
  */
-static void sprintID(char*, u32)
+static void sprintID(char* buffer, u32 id)
 {
-	// UNUSED FUNCTION
+	buffer[0] = static_cast<char>(id >> 24);
+	buffer[1] = static_cast<char>(id >> 16);
+	buffer[2] = static_cast<char>(id >> 8);
+	buffer[3] = static_cast<char>(id >> 0);
+	buffer[4] = '\0';
 }
 
 /**
