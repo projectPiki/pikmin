@@ -1115,7 +1115,7 @@ void GameCoreSection::initStage()
 		PRINT("@@@@ FREE = %d ACTIVE = %d\n", inf->mBPikiInfMgr.getFreeNum(), inf->mBPikiInfMgr.getActiveNum());
 		BaseInf* a = (BaseInf*)inf->mBPikiInfMgr.mActiveList.mChild;
 		while (a) {
-			PikiHeadItem* item = (PikiHeadItem*)itemMgr->birth(OBJTYPE_Pikihead);
+			PikiHeadItem* item = static_cast<PikiHeadItem*>(itemMgr->birth(OBJTYPE_Pikihead));
 			if (item) {
 				a->restore(item);
 				item->mSRT.t.y = mMapMgr->getMinY(item->mSRT.t.x, item->mSRT.t.z, true);

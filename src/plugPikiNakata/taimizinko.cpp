@@ -660,7 +660,7 @@ void TaiMizinkoComingAction::start(Teki& teki)
 bool TaiMizinkoDropWaterAction::act(Teki& teki)
 {
 	if (teki.getAnimationKeyOption(BTeki::ANIMATION_KEY_OPTION_ACTION_0)) {
-		MizuItem* nectar = (MizuItem*)itemMgr->birth(OBJTYPE_FallWater);
+		MizuItem* nectar = static_cast<MizuItem*>(itemMgr->birth(OBJTYPE_FallWater));
 		if (!nectar) {
 			// I think this was a typo because it doesn't match the pattern other TAI Actions have.
 			PRINT("!TaiMizinkoDropWaterAction::act:%08x\n", TERNARY_BUGFIX(&teki, this));

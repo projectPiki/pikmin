@@ -743,9 +743,9 @@ void GoalAI::BootInit::act(AICreature* item)
  */
 void GoalAI::BootEmit::act(AICreature* item)
 {
-	GoalItem* obj = (GoalItem*)item;
+	GoalItem* obj = static_cast<GoalItem*>(item);
 
-	PikiHeadItem* seed = (PikiHeadItem*)itemMgr->birth(OBJTYPE_Pikihead);
+	PikiHeadItem* seed = static_cast<PikiHeadItem*>(itemMgr->birth(OBJTYPE_Pikihead));
 	if (seed) {
 		GameStat::bornPikis.inc(obj->mOnionColour);
 		Vector3f pos = item->mSRT.t;
@@ -857,7 +857,7 @@ void GoalAI::EmitPiki::act(AICreature* item)
 			ERROR(buf);
 		}
 
-		PikiHeadItem* seed = (PikiHeadItem*)itemMgr->birth(OBJTYPE_Pikihead);
+		PikiHeadItem* seed = static_cast<PikiHeadItem*>(itemMgr->birth(OBJTYPE_Pikihead));
 		GameStat::bornPikis.inc(obj->mOnionColour);
 		if (seed) {
 			Vector3f pos = obj->mSRT.t;

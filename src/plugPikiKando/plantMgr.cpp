@@ -322,7 +322,7 @@ Creature* PlantMgr::birth()
 	CreatureNode* cnode = new CreatureNode();
 	cnode->mCreature    = new Plant();
 	mRootNode.add(cnode);
-	return static_cast<Plant*>(cnode->mCreature);
+	return cnode->mCreature;
 	// UNUSED FUNCTION
 }
 

@@ -1352,7 +1352,7 @@ void PikiFallMeckState::procBounceMsg(Piki* piki, MsgBounce*)
 
 	if (!piki->hasBomb() && Piki::isSafeMePos(piki->mSRT.t) && !MapCode::isBald(piki->mGroundTriangle) && attr != ATTR_Water) {
 		PikiHeadMgr::buryMode = true;
-		PikiHeadItem* sprout  = (PikiHeadItem*)itemMgr->birth(OBJTYPE_Pikihead);
+		PikiHeadItem* sprout  = static_cast<PikiHeadItem*>(itemMgr->birth(OBJTYPE_Pikihead));
 		PikiHeadMgr::buryMode = false;
 
 		if (sprout) {
@@ -2724,10 +2724,11 @@ void PikiBuryState::exec(Piki* piki)
 #ifdef BUGFIX
 	PikiHeadItem* sprout;
 	if ((!piki->mGroundTriangle || MapCode::getAttribute(piki->mGroundTriangle) != ATTR_Water)
-	    && (PikiHeadMgr::buryMode = true, sprout = (PikiHeadItem*)itemMgr->birth(OBJTYPE_Pikihead), PikiHeadMgr::buryMode = false, sprout))
+	    && (PikiHeadMgr::buryMode = true, sprout = static_cast<PikiHeadItem*>(itemMgr->birth(OBJTYPE_Pikihead)),
+	        PikiHeadMgr::buryMode = false, sprout))
 #else
 	PikiHeadMgr::buryMode = true;
-	PikiHeadItem* sprout  = (PikiHeadItem*)itemMgr->birth(OBJTYPE_Pikihead);
+	PikiHeadItem* sprout  = static_cast<PikiHeadItem*>(itemMgr->birth(OBJTYPE_Pikihead));
 	PikiHeadMgr::buryMode = false;
 	int attr              = ATTR_NULL;
 	if (piki->mGroundTriangle) {

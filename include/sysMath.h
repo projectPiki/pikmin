@@ -19,7 +19,7 @@ struct KSegment;
 
 static inline f32 quickABS(f32 x)
 {
-	*(u32*)&x &= ~0x80000000;
+	*reinterpret_cast<u32*>(&x) &= ~0x80000000;
 	return x;
 }
 

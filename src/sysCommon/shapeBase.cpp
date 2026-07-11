@@ -3360,7 +3360,7 @@ static inline void addMatrixWeights(register f32* animMtx, register f32* weighte
 void BaseShape::calcWeightedMatrices()
 {
 	for (int i = 0; i < mEnvelopeCount; i++) {
-		f32* animMtxFloats = (f32*)&mAnimMatrices[mJointCount + i];
+		f32* animMtxFloats = reinterpret_cast<f32*>(&mAnimMatrices[mJointCount + i].mMtx);
 #ifdef WIN32
 		for (int j = 0; j < 16; j++)
 #else

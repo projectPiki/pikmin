@@ -629,11 +629,11 @@ void GoalItem::startAI(int)
 		Vector3f diff   = coll->mCentre - child->mCentre;
 		f32 len         = diff.length();
 
-		leg->mFulcrum = (Fulcrum*)itemMgr->birth(OBJTYPE_Fulcrum);
+		leg->mFulcrum = static_cast<Fulcrum*>(itemMgr->birth(OBJTYPE_Fulcrum));
 		leg->mFulcrum->init(coll->mCentre);
 		leg->mFulcrum->startAI(0);
 
-		leg->mRope = (RopeItem*)itemMgr->birth(OBJTYPE_Rope);
+		leg->mRope = static_cast<RopeItem*>(itemMgr->birth(OBJTYPE_Rope));
 		leg->mRope->init(child->mCentre);
 		leg->mRope->setRope(leg->mFulcrum);
 		leg->mRope->mRopeLength = len;

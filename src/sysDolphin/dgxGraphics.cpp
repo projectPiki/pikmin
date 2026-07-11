@@ -1687,7 +1687,7 @@ void DGXGraphics::drawParticle(Camera& cam, immut Vector3f& pos, f32 size)
 	Vector3f vec2(size, size, 0.0f);
 	Vector3f vec3(size, -size, 0.0f);
 	Vector3f vec4(-size, -size, 0.0f);
-	u32 primClr = *(u32*)&mPrimaryColour;
+	u32 primClr = *reinterpret_cast<u32*>(&mPrimaryColour);
 
 	GXBegin(GX_QUADS, GX_VTXFMT0, 4);
 
@@ -1729,7 +1729,7 @@ void DGXGraphics::drawCamParticle(Camera& cam, immut Vector3f& pos, immut Vector
 	y1 = -extents.y + pos.y;
 	z  = pos.z;
 
-	u32 primClr = *(u32*)&mPrimaryColour;
+	u32 primClr = *reinterpret_cast<u32*>(&mPrimaryColour);
 
 	GXBegin(GX_QUADS, GX_VTXFMT0, 4);
 
@@ -1766,7 +1766,7 @@ void DGXGraphics::drawLine(immut Vector3f& start, immut Vector3f& end)
 	GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_F32, 0);
 	GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
 
-	u32 primClr = *(u32*)&mPrimaryColour;
+	u32 primClr = *reinterpret_cast<u32*>(&mPrimaryColour);
 
 	GXBegin(GX_LINES, GX_VTXFMT0, 2);
 
@@ -1789,7 +1789,7 @@ void DGXGraphics::drawPoints(immut Vector3f* points, int count)
 	GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_F32, 0);
 	GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
 
-	u32 primClr = *(u32*)&mPrimaryColour;
+	u32 primClr = *reinterpret_cast<u32*>(&mPrimaryColour);
 
 	GXBegin(GX_POINTS, GX_VTXFMT0, count);
 
@@ -1822,7 +1822,7 @@ void DGXGraphics::drawOneTri(immut Vector3f* vertices, immut Vector3f* normals, 
 	}
 	GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_F32, 0);
 
-	u32 primClr = *(u32*)&mPrimaryColour;
+	u32 primClr = *reinterpret_cast<u32*>(&mPrimaryColour);
 
 	GXBegin(GX_TRIANGLEFAN, GX_VTXFMT0, count);
 
@@ -1855,8 +1855,8 @@ void DGXGraphics::blatRectangle(immut RectArea& rect)
 	GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_F32, 0);
 	GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX1, GX_TEX_ST, GX_F32, 0);
 
-	u32 primClr = *(u32*)&mPrimaryColour;
-	u32 auxClr  = *(u32*)&mAuxiliaryColour;
+	u32 primClr = *reinterpret_cast<u32*>(&mPrimaryColour);
+	u32 auxClr  = *reinterpret_cast<u32*>(&mAuxiliaryColour);
 	GXBegin(GX_QUADS, GX_VTXFMT0, 4);
 
 	GXPosition3f32(rect.mMinX, rect.mMinY, 0.0f);
@@ -1889,7 +1889,7 @@ void DGXGraphics::blatRectangle(immut RectArea& rect)
  */
 void DGXGraphics::testRectangle(immut RectArea& rect)
 {
-	u32 primClr = *(u32*)&mPrimaryColour;
+	u32 primClr = *reinterpret_cast<u32*>(&mPrimaryColour);
 	GXClearVtxDesc();
 	GXSetVtxDesc(GX_VA_POS, GX_DIRECT);
 	GXSetVtxDesc(GX_VA_CLR0, GX_DIRECT);
@@ -1939,8 +1939,8 @@ void DGXGraphics::drawRectangle(immut RectArea& bounds, immut RectArea& texCoord
 	GXSetTevOp(GX_TEVSTAGE0, GX_MODULATE);
 	GXSetBlendMode(GX_BM_BLEND, GX_BL_SRCALPHA, GX_BL_INVSRCALPHA, GX_LO_CLEAR);
 
-	u32 primClr = *(u32*)&mPrimaryColour;
-	u32 auxClr  = *(u32*)&mAuxiliaryColour;
+	u32 primClr = *reinterpret_cast<u32*>(&mPrimaryColour);
+	u32 auxClr  = *reinterpret_cast<u32*>(&mAuxiliaryColour);
 
 	GXBegin(GX_QUADS, GX_VTXFMT0, 4);
 	GXPosition3f32(bounds.mMinX + ((offset) ? offset->x : 0.0f), bounds.mMinY + ((offset) ? offset->y : 0.0f), (offset) ? offset->z : 0.0f);
@@ -1973,8 +1973,8 @@ void DGXGraphics::lineRectangle(immut RectArea& rect)
 
 	useTexture(nullptr, GX_TEXMAP0);
 
-	u32 primClr = *(u32*)&mPrimaryColour;
-	u32 auxClr  = *(u32*)&mAuxiliaryColour;
+	u32 primClr = *reinterpret_cast<u32*>(&mPrimaryColour);
+	u32 auxClr  = *reinterpret_cast<u32*>(&mAuxiliaryColour);
 	GXBegin(GX_LINESTRIP, GX_VTXFMT0, 5);
 
 	GXPosition3f32(rect.mMinX, rect.mMinY, 0.0f);
@@ -2008,8 +2008,8 @@ void DGXGraphics::fillRectangle(immut RectArea& rect)
 
 	useTexture(nullptr, GX_TEXMAP0);
 
-	u32 primClr = *(u32*)&mPrimaryColour;
-	u32 auxClr  = *(u32*)&mAuxiliaryColour;
+	u32 primClr = *reinterpret_cast<u32*>(&mPrimaryColour);
+	u32 auxClr  = *reinterpret_cast<u32*>(&mAuxiliaryColour);
 	GXBegin(GX_QUADS, GX_VTXFMT0, 4);
 
 	GXPosition3f32(rect.mMinX, rect.mMinY, 0.0f);
@@ -2081,8 +2081,8 @@ void DGXGraphics::texturePrintf(Font* font, int x, int y, immut char* format, ..
 		bounds.mMinX = xPos - font->mChars[idx].mLeftOffset;
 		bounds.mMaxX = xPos - font->mChars[idx].mLeftOffset + font->mChars[idx].mWidth;
 
-		u32 primClr = *(u32*)&mPrimaryColour;
-		u32 auxClr  = *(u32*)&mAuxiliaryColour;
+		u32 primClr = *reinterpret_cast<u32*>(&mPrimaryColour);
+		u32 auxClr  = *reinterpret_cast<u32*>(&mAuxiliaryColour);
 
 		GXBegin(GX_QUADS, GX_VTXFMT0, 4);
 		GXPosition3f32(bounds.mMinX, bounds.mMinY, 0.0f);
