@@ -3,8 +3,8 @@
 #include "Dolphin/PPCArch.h"
 #include "Dolphin/os.h"
 
-BOOL DBVerbose;
-DBInterface* __DBInterface;
+DBInterface* __DBInterface = NULL;
+BOOL DBVerbose             = FALSE;
 
 /**
  * @TODO: Documentation

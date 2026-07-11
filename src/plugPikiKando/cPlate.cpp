@@ -366,7 +366,7 @@ void CPlate::update()
 	Vector3f vec;
 	f32 val = mPlateOffset.y + 2.0f;
 	vec.set(sinf(mDirectionAngle), 0.0f, cosf(mDirectionAngle));
-	if (mHappaCounts[1]) {
+	if (mHappaCounts[Bud] != 0) {
 		val = 0.0f;
 	}
 

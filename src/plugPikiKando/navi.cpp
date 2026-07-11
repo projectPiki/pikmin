@@ -1039,7 +1039,7 @@ void Navi::callPikis(f32 radius)
 			piki->mNavi = this;
 			piki->mFSM->transit(piki, PIKISTATE_AutoNuki);
 			// Why would you put an `ERROR` here?  Just don't enable it??
-			TERNARY_BUGFIX(, ERROR("cursor nuki!\n"));
+			TERNARY_BUILD_MATCHING(ERROR("cursor nuki!\n"), );
 		}
 	}
 
@@ -1057,7 +1057,7 @@ void Navi::callPikis(f32 radius)
 
 			if (sprout->canPullout() && sproutDist < radius) {
 				// Why would you put an `ERROR` here?  Just don't enable it??
-				TERNARY_BUGFIX(, ERROR("cursor nuki!\n"));
+				TERNARY_BUILD_MATCHING(ERROR("cursor nuki!\n"), );
 				PikiMgr::meBirthMode = true;
 				Piki* piki           = static_cast<Piki*>(pikiMgr->birth());
 				PikiMgr::meBirthMode = false;
@@ -2148,7 +2148,7 @@ void Navi::renderCircle(Graphics& gfx)
 /**
  * @todo: Documentation
  */
-void Navi::refresh2d(Graphics&)
+void Navi::refresh2d(Graphics& gfx)
 {
 }
 
@@ -2517,7 +2517,7 @@ void Navi::throwPiki(Piki* piki, immut Vector3f& pos)
 	rumbleMgr->start(RUMBLE_Unk2, 0, nullptr);
 	piki->mSRT.t         = mSRT.t + Vector3f(0.0f, 10.0f, 0.0f);
 	Vector3f throwDir    = pos - piki->mSRT.t;
-	f32 throwDist        = speedy_sqrtf(throwDir.x * throwDir.x + throwDir.z * throwDir.z);
+	f32 throwDist        = speedy_sqrtf(SQUARE(throwDir.x) + SQUARE(throwDir.z));
 	f32 throwAngle       = atan2f(throwDir.x, throwDir.z);
 	piki->mFaceDirection = roundAng(throwAngle);
 

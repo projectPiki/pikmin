@@ -298,7 +298,7 @@ void ExPPC_IsInSpecification(char*, ex_specification*)
  * @todo Documentation
  * @note UNUSED Size: 0001C8
  */
-void __unexpected(void)
+void __unexpected(CatchInfo* catchinfo)
 {
 	// UNUSED FUNCTION
 }
@@ -325,7 +325,7 @@ void ExPPC_ThrowHandler(ThrowContext*)
  * @todo Documentation
  * @note UNUSED Size: 000044
  */
-void __end__catch(void)
+void __end__catch(CatchInfo* catchinfo)
 {
 	// UNUSED FUNCTION
 }
@@ -334,7 +334,7 @@ void __end__catch(void)
  * @todo Documentation
  * @note UNUSED Size: 0000B4
  */
-void __throw(void)
+void __throw(char* throwtype, void* location, void* dtor)
 {
 	// UNUSED FUNCTION
 }

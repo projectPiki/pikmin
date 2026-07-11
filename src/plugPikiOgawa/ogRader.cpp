@@ -28,11 +28,10 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
 DEFINE_PRINT("OgRaderSection")
 
 namespace zen {
-static f32 map_area_data[5][3] = { { -698.0f, 2024.0f, 2880.0f },
-	                               { -334.0f, 2024.0f, 2880.0f },
-	                               { -170.0f, 554.0f, 2654.0f },
-	                               { -480.0f, 160.0f, 3950.0f },
-	                               { -44.0f, 1504.0f, 2322.0f } };
+static f32 map_area_data[5][3] = {
+	{ -698.0f, 2024.0f, 2880.0f }, { -334.0f, 2024.0f, 2880.0f }, { -170.0f, 554.0f, 2654.0f },
+	{ -480.0f, 160.0f, 3950.0f },  { -44.0f, 1504.0f, 2322.0f },
+};
 }; // namespace zen
 
 /**
@@ -82,37 +81,37 @@ zen::ogRaderMgr::ogRaderMgr()
 	switch (stage)
 #endif
 	{
-	case 0:
+	case STAGE_Practice:
 	{
-		_54 = 0;
+		_54 = STAGE_Practice;
 		screen->set("screen/blo/p_map00.blo", true);
 		_4C = (P2DPicture*)screen->search('map0', true);
 		break;
 	}
-	case 1:
+	case STAGE_Forest:
 	{
-		_54 = 1;
+		_54 = STAGE_Forest;
 		screen->set("screen/blo/p_map01.blo", true);
 		_4C = (P2DPicture*)screen->search('map1', true);
 		break;
 	}
-	case 2:
+	case STAGE_Cave:
 	{
-		_54 = 2;
+		_54 = STAGE_Cave;
 		screen->set("screen/blo/p_map02.blo", true);
 		_4C = (P2DPicture*)screen->search('map2', true);
 		break;
 	}
-	case 3:
+	case STAGE_Yakushima:
 	{
-		_54 = 3;
+		_54 = STAGE_Yakushima;
 		screen->set("screen/blo/p_map03.blo", true);
 		_4C = (P2DPicture*)screen->search('map3', true);
 		break;
 	}
-	case 4:
+	case STAGE_Last:
 	{
-		_54 = 4;
+		_54 = STAGE_Last;
 		screen->set("screen/blo/p_map04.blo", true);
 		_4C = (P2DPicture*)screen->search('map4', true);
 		break;
@@ -428,7 +427,7 @@ void zen::ogRaderMgr::startSub()
  */
 void zen::ogRaderMgr::start()
 {
-	if (mStatus == -1) {
+	if (mStatus == STATE_NULL) {
 		_04  = 0;
 		_45A = 64;
 		_0C  = 320.0f;
@@ -447,7 +446,7 @@ void zen::ogRaderMgr::start()
  */
 void zen::ogRaderMgr::startMenu(P2DPane* pane)
 {
-	if (mStatus == -1 && (!playerState || playerState->hasRadar())) {
+	if (mStatus == STATE_NULL && (!playerState || playerState->hasRadar())) {
 		_04  = 1;
 		_00  = false;
 		_01  = false;
@@ -499,25 +498,25 @@ void zen::ogRaderMgr::updateGame(Controller* input)
 {
 	if (input->keyClick(KBBTN_DPAD_UP)) {
 		switch (mStatus) {
-		case 0:
+		case STATE_0:
 		{
 			_42C    = 2.0f;
 			mStatus = STATE_1;
 			break;
 		}
-		case 1:
+		case STATE_1:
 		{
 			_42C    = 4.0f;
 			mStatus = STATE_2;
 			break;
 		}
-		case 2:
+		case STATE_2:
 		{
 			_42C    = 8.0f;
 			mStatus = STATE_3;
 			break;
 		}
-		case 3:
+		case STATE_3:
 		{
 			mStatus = STATE_5;
 			_50->startFadeOut(0.2f);
@@ -553,7 +552,7 @@ void zen::ogRaderMgr::AreaScroll(f32* p1, f32* p2, f32 p3, f32 p4)
 	f32 x1 = a + x - c;
 	f32 z1 = b + z - d;
 	PRINT("scroll(%7.2f, %7.2f)  orima(%7.2f, %7.2f)  area(%7.2f, %7.2f)\n", p3, p4, _430.x, _430.z, _24, _28);
-	f32 dist = std::sqrtf(x1 * x1 + z1 * z1);
+	f32 dist = std::sqrtf(SQUARE(x1) + SQUARE(z1));
 	if (dist < _2C) {
 		*p1 = a;
 		*p2 = b;
@@ -688,7 +687,7 @@ void zen::ogRaderMgr::updateMenu(Controller* input)
 
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
 #else
-	if (mStatus == -1) {
+	if (mStatus == STATE_NULL) {
 		return;
 	}
 #endif

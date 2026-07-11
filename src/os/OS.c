@@ -36,7 +36,6 @@ extern vu16 __OSDeviceCode AT_ADDRESS(OS_BASE_CACHED | OS_DVD_DEVICECODE);
 static OSBootInfo* BootInfo;
 static vu32* BI2DebugFlag;
 static u32* BI2DebugFlagHolder;
-WEAK BOOL __OSIsGcam         = FALSE;
 static f64 ZeroF             = 0.0;
 static BOOL AreWeInitialized = FALSE;
 static __OSExceptionHandler* OSExceptionTable;

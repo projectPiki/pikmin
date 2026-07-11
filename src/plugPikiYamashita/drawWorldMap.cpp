@@ -688,7 +688,7 @@ protected:
 		mRocketPos.add(mVelocity);
 
 		mRocketIcon->move(zen::RoundOff(mRocketPos.x), zen::RoundOff(mRocketPos.y));
-		mRotationSpeed += calcAddAngle(mRocketIcon->getRotate(), 0.0f, 0.017453292f, sec);
+		mRotationSpeed += calcAddAngle(mRocketIcon->getRotate(), 0.0f, PI / 180.0f, sec);
 		mRotationSpeed *= 0.9999f;
 		if (mRotationSpeed > (5.0f * PI / 180.0f)) {
 			mRotationSpeed = (5.0f * PI / 180.0f);

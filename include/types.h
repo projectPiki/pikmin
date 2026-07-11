@@ -1,11 +1,7 @@
 #ifndef _TYPES_H
 #define _TYPES_H
 
-// r2  is 803F0200
-// r13 is 803E4D20
-
-// Custom types
-typedef int BOOL;
+// For compiling code copy-pasted from Ghidra (TODO: remove this)
 typedef unsigned int uint;
 
 // Standard types
@@ -35,12 +31,12 @@ typedef volatile f32 vf32;
 typedef volatile f64 vf64;
 typedef volatile f128 vf128;
 
-// For Windows-specific types
-#ifdef WIN32
-#include <windows.h>
-#else
-typedef u32 HWND;
-#endif
+// A boolean value typedef inspired by the Win32 API.
+typedef int BOOL;
+#undef TRUE
+#define TRUE (1)
+#undef FALSE
+#define FALSE (0)
 
 // Here we check if the decomp build system is configured for a non-matching build, and define `BUILD_MATCHING` if it is not.
 // Please do not use the `DTK_CONFIG_NONMATCHING` macro for any other purpose, and instead check if the the `BUILD_MATCHING`
@@ -128,12 +124,6 @@ typedef u32 HWND;
 #else
 #define TERNARY_BUILD_MATCHING(matching, nonmatching) nonmatching
 #endif
-
-// Workarounds for our version of C++ and other stupidities
-#undef TRUE
-#define TRUE (1)
-#undef FALSE
-#define FALSE (0)
 
 // We yearn for modernity.
 #if defined(__cplusplus) && __cplusplus < 201103L

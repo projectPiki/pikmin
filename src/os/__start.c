@@ -140,8 +140,6 @@ ASM static void __init_registers(void)
 #endif // clang-format on
 }
 
-// clang-format on
-
 static void __copy_rom_section(void* dst, const void* src, u32 size)
 {
 	if (size && (dst != src)) {

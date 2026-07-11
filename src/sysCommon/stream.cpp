@@ -253,8 +253,3 @@ void RandomAccessStream::writeTo(int _, void*, int)
 // {
 // 	// UNUSED FUNCTION
 // }
-
-/**
- * @todo: Documentation
- */
-// bool Stream::getClosing() { return false; }
