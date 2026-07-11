@@ -15,11 +15,11 @@ void Add_PortcmdOnce(Portcmd_* cmd)
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 000028
+ * @note UNUSED Size: 000028 (Matching by size)
  */
-void Add_PortcmdStay(void)
+void Add_PortcmdStay(Portcmd_* cmd)
 {
-	// UNUSED FUNCTION
+	Add_Portcmd(&cmd_stay, cmd);
 }
 
 /**

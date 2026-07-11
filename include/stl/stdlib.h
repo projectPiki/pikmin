@@ -10,6 +10,8 @@
 
 BEGIN_SCOPE_EXTERN_C
 
+void abort(void);
+void atexit(void);
 void exit(int);
 
 END_SCOPE_EXTERN_C

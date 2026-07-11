@@ -226,11 +226,20 @@ static void __VIRetraceHandler(__OSInterrupt interrupt, OSContext* context)
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 000044
+ * @note UNUSED Size: 000044 (Matching by size)
  */
 VIRetraceCallback VISetPreRetraceCallback(VIRetraceCallback callback)
 {
-	// UNUSED FUNCTION
+	BOOL interrupt;
+	VIRetraceCallback oldCallback;
+
+	oldCallback = PreCB;
+
+	interrupt = OSDisableInterrupts();
+	PreCB     = callback;
+	OSRestoreInterrupts(interrupt);
+
+	return oldCallback;
 }
 
 /**

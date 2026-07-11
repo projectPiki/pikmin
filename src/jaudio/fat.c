@@ -195,18 +195,16 @@ u8 FAT_ReadByte(u16 a, u32 b)
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 000034
+ * @note UNUSED Size: 000034 (Matching by size)
+ * Guessing the functionality based on context.
  */
 u16 FAT_ReadWord(u16 a, u32 b)
 {
-	// Guessing based on name/size
-
 	u16* ptr = (u16*)FAT_GetPointer(a, b);
 	if (ptr == NULL) {
 		return 0;
 	}
 	return *ptr;
-	// UNUSED FUNCTION
 }
 
 /**
@@ -220,13 +218,11 @@ void FAT_ReadWordD(u16 a, u32 b)
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 000024
+ * @note UNUSED Size: 000024 (Matching by size)
+ * Guessing the functionality based on context.
  */
 u32 FAT_ReadLong(u16 a, u32 b)
 {
-	// UNUSED FUNCTION
-
-	// Guessing based on name/size
 	return *(u32*)FAT_GetPointer(a, b);
 }
 

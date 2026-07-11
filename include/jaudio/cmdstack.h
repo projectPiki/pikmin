@@ -29,7 +29,7 @@ struct Portcmd_ {
 };
 
 void Add_PortcmdOnce(Portcmd_*);
-void Add_PortcmdStay(void); // UNUSED but we know it's extern "C"
+void Add_PortcmdStay(Portcmd_*); // UNUSED but we know it's extern "C"
 BOOL Set_Portcmd(Portcmd_*, Portfunc, Portargs_*);
 BOOL Add_Portcmd(JPorthead_*, Portcmd_*);
 void Cancel_Portcmd(void);     // UNUSED but we know it's extern "C"

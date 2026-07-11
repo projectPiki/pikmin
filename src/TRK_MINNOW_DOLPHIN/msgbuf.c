@@ -282,11 +282,18 @@ DSError TRKAppendBuffer_ui8(TRKBuffer* buffer, const u8* data, int count)
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 00007C
+ * @note UNUSED Size: 00007C (Matching by size)
  */
-void TRKAppendBuffer_ui16(void)
+DSError TRKAppendBuffer_ui16(TRKBuffer* buffer, const u16* data, int count)
 {
-	// UNUSED FUNCTION
+	DSError err;
+	int i;
+
+	for (i = 0, err = DS_NoError; err == DS_NoError && i < count; i++) {
+		err = TRKAppendBuffer1_ui16(buffer, data[i]);
+	}
+
+	return err;
 }
 
 /**
@@ -306,11 +313,18 @@ DSError TRKAppendBuffer_ui32(TRKBuffer* buffer, const u32* data, int count)
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 000080
+ * @note UNUSED Size: 000080 (Matching by size)
  */
-void TRKAppendBuffer_ui64(void)
+DSError TRKAppendBuffer_ui64(TRKBuffer* buffer, const u64* data, int count)
 {
-	// UNUSED FUNCTION
+	DSError err;
+	int i;
+
+	for (i = 0, err = DS_NoError; err == DS_NoError && i < count; i++) {
+		err = TRKAppendBuffer1_ui64(buffer, data[i]);
+	}
+
+	return err;
 }
 
 /**
@@ -451,11 +465,18 @@ DSError TRKReadBuffer_ui8(TRKBuffer* buffer, u8* data, int count)
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 00007C
+ * @note UNUSED Size: 00007C (Matching by size)
  */
-void TRKReadBuffer_ui16(void)
+DSError TRKReadBuffer_ui16(TRKBuffer* buffer, u16* data, int count)
 {
-	// UNUSED FUNCTION
+	DSError err;
+	s32 i;
+
+	for (i = 0, err = DS_NoError; err == DS_NoError && i < count; i++) {
+		err = TRKReadBuffer1_ui16(buffer, &(data[i]));
+	}
+
+	return err;
 }
 
 /**
@@ -475,11 +496,18 @@ DSError TRKReadBuffer_ui32(TRKBuffer* buffer, u32* data, int count)
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 00007C
+ * @note UNUSED Size: 00007C (Matching by size)
  */
-void TRKReadBuffer_ui64(void)
+DSError TRKReadBuffer_ui64(TRKBuffer* buffer, u64* data, int count)
 {
-	// UNUSED FUNCTION
+	DSError err;
+	s32 i;
+
+	for (i = 0, err = DS_NoError; err == DS_NoError && i < count; i++) {
+		err = TRKReadBuffer1_ui64(buffer, &(data[i]));
+	}
+
+	return err;
 }
 
 /**

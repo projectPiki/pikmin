@@ -78,8 +78,7 @@ ASM u32 __TRK_get_MSR() {
 /**
  * @TODO: Documentation
  */
-ASM void __TRK_set_MSR(register u32 msr)
-{
+ASM void __TRK_set_MSR(register u32 msr) {
 #ifdef __MWERKS__ // clang-format off
 	nofralloc
 	mtmsr  msr
@@ -89,155 +88,206 @@ ASM void __TRK_set_MSR(register u32 msr)
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 000008
+ * @note UNUSED Size: 000008 (Matching by size)
  */
-void __TRK_get_PVR(void)
-{
-	// UNUSED FUNCTION
+ASM u32 __TRK_get_PVR(void) {
+#ifdef __MWERKS__ // clang-format off
+	nofralloc
+	mfspr  r3, SPR_PVR
+	blr
+#endif // clang-format on
 }
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 000008
+ * @note UNUSED Size: 000008 (Matching by size)
  */
-void __TRK_get_IBAT0U(void)
-{
-	// UNUSED FUNCTION
+ASM u32 __TRK_get_IBAT0U(void) {
+#ifdef __MWERKS__ // clang-format off
+	nofralloc
+	mfspr  r3, SPR_IBAT0U
+	blr
+#endif // clang-format on
 }
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 000008
+ * @note UNUSED Size: 000008 (Matching by size)
  */
-void __TRK_get_IBAT0L(void)
-{
-	// UNUSED FUNCTION
+ASM u32 __TRK_get_IBAT0L(void) {
+#ifdef __MWERKS__ // clang-format off
+	nofralloc
+	mfspr  r3, SPR_IBAT0L
+	blr
+#endif // clang-format on
 }
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 000008
+ * @note UNUSED Size: 000008 (Matching by size)
  */
-void __TRK_get_IBAT1U(void)
-{
-	// UNUSED FUNCTION
+ASM u32 __TRK_get_IBAT1U(void) {
+#ifdef __MWERKS__ // clang-format off
+	nofralloc
+	mfspr  r3, SPR_IBAT1U
+	blr
+#endif // clang-format on
 }
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 000008
+ * @note UNUSED Size: 000008 (Matching by size)
  */
-void __TRK_get_IBAT1L(void)
-{
-	// UNUSED FUNCTION
+ASM u32 __TRK_get_IBAT1L(void) {
+#ifdef __MWERKS__ // clang-format off
+	nofralloc
+	mfspr  r3, SPR_IBAT1L
+	blr
+#endif // clang-format on
 }
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 000008
+ * @note UNUSED Size: 000008 (Matching by size)
  */
-void __TRK_get_IBAT2U(void)
-{
-	// UNUSED FUNCTION
+ASM u32 __TRK_get_IBAT2U(void) {
+#ifdef __MWERKS__ // clang-format off
+	nofralloc
+	mfspr  r3, SPR_IBAT2U
+	blr
+#endif // clang-format on
 }
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 000008
+ * @note UNUSED Size: 000008 (Matching by size)
  */
-void __TRK_get_IBAT2L(void)
-{
-	// UNUSED FUNCTION
+ASM u32 __TRK_get_IBAT2L(void) {
+#ifdef __MWERKS__ // clang-format off
+	nofralloc
+	mfspr  r3, SPR_IBAT2L
+	blr
+#endif // clang-format on
 }
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 000008
+ * @note UNUSED Size: 000008 (Matching by size)
  */
-void __TRK_get_IBAT3U(void)
-{
-	// UNUSED FUNCTION
+ASM u32 __TRK_get_IBAT3U(void) {
+#ifdef __MWERKS__ // clang-format off
+	nofralloc
+	mfspr  r3, SPR_IBAT3U
+	blr
+#endif // clang-format on
 }
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 000008
+ * @note UNUSED Size: 000008 (Matching by size)
  */
-void __TRK_get_IBAT3L(void)
-{
-	// UNUSED FUNCTION
+ASM u32 __TRK_get_IBAT3L(void) {
+#ifdef __MWERKS__ // clang-format off
+	nofralloc
+	mfspr  r3, SPR_IBAT3L
+	blr
+#endif // clang-format on
 }
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 000008
+ * @note UNUSED Size: 000008 (Matching by size)
  */
-void __TRK_get_DBAT0U(void)
-{
-	// UNUSED FUNCTION
+ASM u32 __TRK_get_DBAT0U(void) {
+#ifdef __MWERKS__ // clang-format off
+	nofralloc
+	mfspr  r3, SPR_DBAT0U
+	blr
+#endif // clang-format on
 }
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 000008
+ * @note UNUSED Size: 000008 (Matching by size)
  */
-void __TRK_get_DBAT0L(void)
-{
-	// UNUSED FUNCTION
+ASM u32 __TRK_get_DBAT0L(void) {
+#ifdef __MWERKS__ // clang-format off
+	nofralloc
+	mfspr  r3, SPR_DBAT0L
+	blr
+#endif // clang-format on
 }
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 000008
+ * @note UNUSED Size: 000008 (Matching by size)
  */
-void __TRK_get_DBAT1U(void)
-{
-	// UNUSED FUNCTION
+ASM u32 __TRK_get_DBAT1U(void) {
+#ifdef __MWERKS__ // clang-format off
+	nofralloc
+	mfspr  r3, SPR_DBAT1U
+	blr
+#endif // clang-format on
 }
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 000008
+ * @note UNUSED Size: 000008 (Matching by size)
  */
-void __TRK_get_DBAT1L(void)
-{
-	// UNUSED FUNCTION
+ASM u32 __TRK_get_DBAT1L(void) {
+#ifdef __MWERKS__ // clang-format off
+	nofralloc
+	mfspr  r3, SPR_DBAT1L
+	blr
+#endif // clang-format on
 }
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 000008
+ * @note UNUSED Size: 000008 (Matching by size)
  */
-void __TRK_get_DBAT2U(void)
-{
-	// UNUSED FUNCTION
+ASM u32 __TRK_get_DBAT2U(void) {
+#ifdef __MWERKS__ // clang-format off
+	nofralloc
+	mfspr  r3, SPR_DBAT2U
+	blr
+#endif // clang-format on
 }
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 000008
+ * @note UNUSED Size: 000008 (Matching by size)
  */
-void __TRK_get_DBAT2L(void)
-{
-	// UNUSED FUNCTION
+ASM u32 __TRK_get_DBAT2L(void) {
+#ifdef __MWERKS__ // clang-format off
+	nofralloc
+	mfspr  r3, SPR_DBAT2L
+	blr
+#endif // clang-format on
 }
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 000008
+ * @note UNUSED Size: 000008 (Matching by size)
  */
-void __TRK_get_DBAT3U(void)
-{
-	// UNUSED FUNCTION
+ASM u32 __TRK_get_DBAT3U(void) {
+#ifdef __MWERKS__ // clang-format off
+	nofralloc
+	mfspr  r3, SPR_DBAT3U
+	blr
+#endif // clang-format on
 }
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 000008
+ * @note UNUSED Size: 000008 (Matching by size)
  */
-void __TRK_get_DBAT3L(void)
-{
-	// UNUSED FUNCTION
+ASM u32 __TRK_get_DBAT3L(void) {
+#ifdef __MWERKS__ // clang-format off
+	nofralloc
+	mfspr  r3, SPR_DBAT3L
+	blr
+#endif // clang-format on
 }
 
 /**

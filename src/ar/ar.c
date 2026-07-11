@@ -198,11 +198,12 @@ void __ARHandler(__OSInterrupt interrupt, OSContext* context)
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 000018
+ * @note UNUSED Size: 000018 (Matching by size)
  */
 void __ARWaitForDMA(void)
 {
-	// UNUSED FUNCTION
+	do {
+	} while ((__DSPRegs[DSP_CONTROL_STATUS] & 0x200));
 }
 
 /**
@@ -226,9 +227,6 @@ void __ARWriteDMA(u32 mmem_addr, u32 aram_addr, u32 length)
 	__DSPRegs[DSP_ARAM_DMA_SIZE_LO] = (u16)((__DSPRegs[DSP_ARAM_DMA_SIZE_LO] & ~0xffe0) | (u16)(length & 0xffff));
 
 	__ARWaitForDMA();
-
-	do {
-	} while ((__DSPRegs[DSP_CONTROL_STATUS] & 0x200));
 
 #if OS_BUILD_VERSION >= 20011217L
 	__DSPRegs[DSP_CONTROL_STATUS] = __DSPRegs[DSP_CONTROL_STATUS] & ~0x88 | 0x20;
@@ -256,9 +254,6 @@ void __ARReadDMA(u32 mmem_addr, u32 aram_addr, u32 length)
 	__DSPRegs[DSP_ARAM_DMA_SIZE_LO] = (u16)((__DSPRegs[DSP_ARAM_DMA_SIZE_LO] & ~0xffe0) | (u16)(length & 0xffff));
 
 	__ARWaitForDMA();
-
-	do {
-	} while ((__DSPRegs[DSP_CONTROL_STATUS] & 0x200));
 
 #if OS_BUILD_VERSION >= 20011217L
 	__DSPRegs[DSP_CONTROL_STATUS] = __DSPRegs[DSP_CONTROL_STATUS] & ~0x88 | 0x20;
