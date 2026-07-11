@@ -37,6 +37,7 @@ bool AIPerf::soundDebug         = false;
 bool AIPerf::updateSearchBuffer = false;
 bool AIPerf::loopOptimise       = false;
 bool AIPerf::useUpdateMgr       = false;
+bool AIPerf::psOptimise         = false;
 int AIPerf::ufoLevel            = false;
 int AIPerf::searchCnt           = false;
 int AIPerf::searchCullCnt       = false;
@@ -284,12 +285,12 @@ void AIPerf::togglePikiMabiki(Menu& menu)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000078
+ * @note UNUSED Size: 000078 (Matching by size)
  */
 void AIPerf::togglePsOptimise(Menu& menu)
 {
-	// Wrong, no idea what the variable in here is meant to be
-	sprintf(menu.mCurrentItem->mLabel, "%s", AIPerf::pikiMabiki ? "psOptimise [on]" : "psOptimise [off]");
+	AIPerf::psOptimise = AIPerf::psOptimise ? 0 : 1;
+	sprintf(menu.mCurrentItem->mLabel, "%s", AIPerf::psOptimise ? "psOptimise [on]" : "psOptimise [off]");
 }
 
 /**

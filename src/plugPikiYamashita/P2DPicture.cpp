@@ -1,4 +1,5 @@
 #include "DebugLog.h"
+#include "Geometry.h"
 #include "P2D/Picture.h"
 #include "P2D/Stream.h"
 #include "P2D/Util.h"
@@ -305,19 +306,38 @@ void P2DPicture::drawFullSet(int x, int y, int width, int height, P2DBinding bin
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 00040C
+ * @note UNUSED Size: 00040C (Nonmatching)
  */
 void P2DPicture::draw(int, int, int, int, bool, bool, bool)
 {
+	if (!IsVisible()) {
+		return;
+	}
+
+	for (u8 i = 0; i < mTextureCount; ++i) {
+		load(i);
+	}
+
+	// Presumably GX function calls follow this point.  Who knows which ones?
+	// In the DLL, OpenGL function calls actually do follow past this point.
 	// UNUSED FUNCTION
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 0002F4
+ * @note UNUSED Size: 0002F4 (Nonmatching)
  */
 void P2DPicture::drawOut(const PUTRect&, const PUTRect&)
 {
+	if (!IsVisible()) {
+		return;
+	}
+
+	for (u8 i = 0; i < mTextureCount; ++i) {
+		load(i);
+	}
+
+	// Presumably GX function calls follow this point.  Who knows which ones?
 	// UNUSED FUNCTION
 }
 
@@ -799,9 +819,17 @@ void P2DPicture::swap(f32& val1, f32& val2)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 00017C
+ * @note UNUSED Size: 00017C (Nonmatching)
  */
 void P2DPicture::drawTest()
 {
+	Texture* texture = mTextures[0];
+	texture->makeResident();
+
+	RectArea local_1c(mBounds.mMinX, mBounds.mMinY, mBounds.mMaxX, mBounds.mMaxY);
+	RectArea local_2c(0, 0, texture->mWidth, texture->mHeight);
+	Vector3f local_38(0.0f, 0.0f, 0.0f);
+
+	// Presumably GX function calls follow this point.  Who knows which ones?
 	// UNUSED FUNCTION
 }

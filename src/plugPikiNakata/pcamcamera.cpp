@@ -674,12 +674,11 @@ void PcamCamera::makePolar()
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000148
+ * @note UNUSED Size: 000148 (Nonmatching by size)
+ * It's way over-size in the DOL and I don't know why.  It should match the DLL perfectly.
  */
 void PcamCamera::printInfo(Graphics& gfx, Font* font)
 {
-	// UNUSED FUNCTION (It's way over-size and I don't know why)
-
 	int x = 20, y = 400;
 
 	NVector3f vec1(mCamera->mViewZAxis.x, 0.0f, mCamera->mViewZAxis.z);
@@ -689,11 +688,9 @@ void PcamCamera::printInfo(Graphics& gfx, Font* font)
 	// This isn't even used for anything.
 	NVector3f vec2(mTargetCreature->mVelocity.x, 0.0f, mTargetCreature->mVelocity.z);
 	vec2.normalizeCheck();
-	// Maybe they wanted a second `atan2` angle here and that explains the missing printf argument below?
+	// Maybe they wanted a second `atan2` angle here?
 
 	gfx.setColour(Colour(255, 255, 255, 255), true);
-	// Why are there only 7 arguments for a format string with 8 conversion specifiers?  Ugh.
 	gfx.texturePrintf(font, x, y, "%2d,%3d,%4.0f,%4.0f,%4.0f,%3.2f,%3.2f,%3.2f", 90 - int(NMathF::r2d(mPolarDir.mInclination)),
-	                  int(getFov()), mCurrDistance, mPolarDir.mRadius, mStoredRadius, angle1,
-	                  getTargetDirection() TERNARY_BUGFIX(MACRO_ARG(, 0.0f), ));
+	                  int(getFov()), mCurrDistance, mPolarDir.mRadius, mStoredRadius, angle1, getTargetDirection(), mDistanceMultiplier);
 }

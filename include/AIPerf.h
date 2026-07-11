@@ -67,6 +67,7 @@ public:
 	static bool updateSearchBuffer;
 	static bool loopOptimise;
 	static bool useUpdateMgr;
+	static bool psOptimise;
 	static int ufoLevel;
 	static bool showRoute;
 	static bool aiGrid;

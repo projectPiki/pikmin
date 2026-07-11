@@ -89,6 +89,9 @@ void zen::particleManager::update()
 	}
 
 	mSimplePtclMgr.update(timeStep);
+#if defined(WIN32)
+	debugUpdate();
+#endif
 	mInactiveGenList.merge(&_20); // merges _20 into _10
 }
 
@@ -105,11 +108,22 @@ void zen::particleManager::calcActiveList()
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000004
+ * @note UNUSED Size: 000004 (Matching by size)
  */
 void zen::particleManager::debugUpdate()
 {
-	// UNUSED FUNCTION
+#if defined(WIN32)
+	calcActiveList();
+	if (mMaxUsedPtclGenCount < mActivePtclGenCount) {
+		mMaxUsedPtclGenCount = mActivePtclGenCount;
+	}
+	if (mMaxUsedParticleCount < mActiveParticleCount) {
+		mMaxUsedParticleCount = mActiveParticleCount;
+	}
+	if (mMaxUsedChildParticleCount < mActiveChildParticleCount) {
+		mMaxUsedChildParticleCount = mActiveChildParticleCount;
+	}
+#endif
 }
 
 /**
@@ -127,6 +141,9 @@ void zen::particleManager::draw(Graphics& gfx)
 	}
 
 	mSimplePtclMgr.draw(gfx);
+#if defined(WIN32)
+	debugDraw(gfx);
+#endif
 }
 
 /**
@@ -147,15 +164,58 @@ void zen::particleManager::cullingDraw(Graphics& gfx)
 	}
 
 	mSimplePtclMgr.draw(gfx);
+#if defined(WIN32)
+	debugDraw(gfx);
+#endif
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000004
+ * @note UNUSED Size: 000004 (Matching by size)
  */
-void zen::particleManager::debugDraw(Graphics&)
+void zen::particleManager::debugDraw(Graphics& gfx)
 {
-	// UNUSED FUNCTION
+#if defined(WIN32)
+	Matrix4f orthoMtx;
+
+	if (gsys->mToggleDebugExtra) {
+		immut int x          = 40;
+		immut int y          = 200;
+		immut int charHeight = 12;
+
+		gfx.setOrthogonal(orthoMtx.mMtx, AREA_FULL_SCREEN(gfx));
+		gfx.setColour(COLOUR_WHITE, true);
+
+		char buffer[PATH_MAX];
+		sprintf(buffer, "Gens   %6d  %6d / %6d", mActivePtclGenCount, mMaxUsedPtclGenCount, mMaxPtclGens);
+		gfx.texturePrintf(gsys->mConsFont, x, y, buffer);
+		sprintf(buffer, "Ptcls  %6d  %6d / %6d", mActiveParticleCount, mMaxUsedParticleCount, mMaxParticles);
+		gfx.texturePrintf(gsys->mConsFont, x, y + charHeight, buffer);
+		sprintf(buffer, "Child  %6d  %6d / %6d", mActiveChildParticleCount, mMaxUsedChildParticleCount, mMaxChildParticles);
+		gfx.texturePrintf(gsys->mConsFont, x, y + charHeight * 2, buffer);
+	}
+
+	if (mActivePtclGenCount == mMaxPtclGens) {
+		gfx.setOrthogonal(orthoMtx.mMtx, RectArea(AREA_FULL_SCREEN(gfx)));
+		gfx.setColour(COLOUR_WHITE, true);
+
+		gfx.texturePrintf(gsys->mConsFont, 200, 240, "PTCL GEN BUF IS EMPTY");
+	}
+
+	if (mActiveParticleCount == mMaxParticles) {
+		gfx.setOrthogonal(orthoMtx.mMtx, RectArea(AREA_FULL_SCREEN(gfx)));
+		gfx.setColour(COLOUR_WHITE, true);
+
+		gfx.texturePrintf(gsys->mConsFont, 230, 260, "PTCL BUF IS EMPTY");
+	}
+
+	if (mActiveChildParticleCount == mMaxChildParticles) {
+		gfx.setOrthogonal(orthoMtx.mMtx, RectArea(AREA_FULL_SCREEN(gfx)));
+		gfx.setColour(COLOUR_WHITE, true);
+
+		gfx.texturePrintf(gsys->mConsFont, 260, 280, "PTCL CHILD BUF IS EMPTY");
+	}
+#endif
 }
 
 /**
