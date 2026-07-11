@@ -80,11 +80,15 @@ OSTime __OSGetSystemTime(void)
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 000008
+ * @note UNUSED Size: 000008 (Matching by size)
  */
-void __OSSetTick(void)
+ASM void __OSSetTick(register u32 tick)
 {
-	// UNUSED FUNCTION
+#ifdef __MWERKS__ // clang-format off
+	nofralloc
+	mttbl  tick  // An educated guess
+	blr
+#endif // clang-format on
 }
 
 /**

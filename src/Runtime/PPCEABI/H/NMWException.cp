@@ -1,5 +1,6 @@
 #include "PowerPC_EABI_Support/Runtime/MWCPlusLib.h"
 #include "PowerPC_EABI_Support/Runtime/NMWException.h"
+#include <stdlib.h>
 
 #pragma exceptions on
 
@@ -37,10 +38,6 @@ public:
 	}
 };
 
-extern "C" {
-extern void abort();
-}
-
 namespace std {
 
 /**
@@ -67,11 +64,14 @@ static unexpected_handler uhandler = duhandler;
 
 /**
  * @todo Documentation
- * @note UNUSED Size: 000010
+ * @note UNUSED Size: 000010 (Matching by size)
  */
-terminate_handler set_terminate(terminate_handler)
+terminate_handler set_terminate(terminate_handler newHandler)
 {
-	// UNUSED FUNCTION
+	terminate_handler oldHandler = thandler;
+
+	thandler = newHandler;
+	return oldHandler;
 }
 
 /**
@@ -85,11 +85,14 @@ void terminate()
 
 /**
  * @todo Documentation
- * @note UNUSED Size: 000010
+ * @note UNUSED Size: 000010 (Matching by size)
  */
-unexpected_handler set_unexpected(unexpected_handler)
+unexpected_handler set_unexpected(unexpected_handler newHandler)
 {
-	// UNUSED FUNCTION
+	unexpected_handler oldHandler = uhandler;
+
+	uhandler = newHandler;
+	return oldHandler;
 }
 
 /**

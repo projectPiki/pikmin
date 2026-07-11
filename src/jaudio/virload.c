@@ -107,10 +107,8 @@ void JV_GetLogicalHandleS(immut char*, immut char*)
  */
 void JV_GetLogicalHandle(immut char*)
 {
-	// idk what this is or where it's meant to be, but it's static, size 0x3C, and in a function.
-	static struct {
-		u8 pad[0x3C];
-	} finfo;
+	// idk where this is meant to be, but it's static and in a function.
+	static DVDFileInfo finfo;
 	// UNUSED FUNCTION
 }
 

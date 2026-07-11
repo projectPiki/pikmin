@@ -6,6 +6,7 @@ BEGIN_SCOPE_EXTERN_C
 
 typedef void (*voidfunctionptr)(void); // pointer to function returning void
 DECL_SECT(".ctors") extern voidfunctionptr _ctors[];
+DECL_SECT(".dtors") extern voidfunctionptr _dtors[];
 
 static void __init_cpp();
 
@@ -58,22 +59,22 @@ void __init_user(void)
  */
 static void __init_cpp(void)
 {
-	voidfunctionptr* constructor;
-	/**
-	 *	call static initializers
-	 */
-	for (constructor = _ctors; *constructor; constructor++) {
+	// call static initializers
+	for (voidfunctionptr* constructor = _ctors; *constructor; constructor++) {
 		(*constructor)();
 	}
 }
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 000054
+ * @note UNUSED Size: 000054 (Matching by size)
  */
 static void __fini_cpp(void)
 {
-	// UNUSED FUNCTION
+	// call static finalizers
+	for (voidfunctionptr* destructor = _dtors; *destructor; destructor++) {
+		(*destructor)();
+	}
 }
 
 /**
