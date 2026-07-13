@@ -32,39 +32,39 @@ zen::DrawAccount::DrawAccount()
 	P2DPaneLibrary::setFamilyAlpha(mBlakPane, 0);
 
 	P2DPane* pane = mScreen.search('cl_0', true);
-	pane->setCallBack(new NumberPicCallBack<s16>(pane, &mData.mMinPikiNum, 100, false));
+	pane->setCallBack(new NumberPicCallBack<short>(pane, &mData.mMinPikiNum, 100, false));
 	pane = mScreen.search('cc_0', true);
-	pane->setCallBack(new NumberPicCallBack<s16>(pane, &mData.mMinPikiNum, 10, false));
+	pane->setCallBack(new NumberPicCallBack<short>(pane, &mData.mMinPikiNum, 10, false));
 	pane = mScreen.search('cr_0', true);
-	pane->setCallBack(new NumberPicCallBack<s16>(pane, &mData.mMinPikiNum, 1, false));
+	pane->setCallBack(new NumberPicCallBack<short>(pane, &mData.mMinPikiNum, 1, false));
 
 	pane = mScreen.search('cl_1', true);
-	pane->setCallBack(new NumberPicCallBack<s16>(pane, &mData.mMaxPikiNum, 100, false));
+	pane->setCallBack(new NumberPicCallBack<short>(pane, &mData.mMaxPikiNum, 100, false));
 	pane = mScreen.search('cc_1', true);
-	pane->setCallBack(new NumberPicCallBack<s16>(pane, &mData.mMaxPikiNum, 10, false));
+	pane->setCallBack(new NumberPicCallBack<short>(pane, &mData.mMaxPikiNum, 10, false));
 	pane = mScreen.search('cr_1', true);
-	pane->setCallBack(new NumberPicCallBack<s16>(pane, &mData.mMaxPikiNum, 1, false));
+	pane->setCallBack(new NumberPicCallBack<short>(pane, &mData.mMaxPikiNum, 1, false));
 
 	pane = mScreen.search('cl_2', true);
-	pane->setCallBack(new NumberPicCallBack<s16>(pane, &mData.mDeadPikiNum, 100, false));
+	pane->setCallBack(new NumberPicCallBack<short>(pane, &mData.mDeadPikiNum, 100, false));
 	pane = mScreen.search('cc_2', true);
-	pane->setCallBack(new NumberPicCallBack<s16>(pane, &mData.mDeadPikiNum, 10, false));
+	pane->setCallBack(new NumberPicCallBack<short>(pane, &mData.mDeadPikiNum, 10, false));
 	pane = mScreen.search('cr_2', true);
-	pane->setCallBack(new NumberPicCallBack<s16>(pane, &mData.mDeadPikiNum, 1, false));
+	pane->setCallBack(new NumberPicCallBack<short>(pane, &mData.mDeadPikiNum, 1, false));
 
 	pane = mScreen.search('cl_3', true);
-	pane->setCallBack(new NumberPicCallBack<s16>(pane, &mData.mDeadTekiNum, 100, false));
+	pane->setCallBack(new NumberPicCallBack<short>(pane, &mData.mDeadTekiNum, 100, false));
 	pane = mScreen.search('cc_3', true);
-	pane->setCallBack(new NumberPicCallBack<s16>(pane, &mData.mDeadTekiNum, 10, false));
+	pane->setCallBack(new NumberPicCallBack<short>(pane, &mData.mDeadTekiNum, 10, false));
 	pane = mScreen.search('cr_3', true);
-	pane->setCallBack(new NumberPicCallBack<s16>(pane, &mData.mDeadTekiNum, 1, false));
+	pane->setCallBack(new NumberPicCallBack<short>(pane, &mData.mDeadTekiNum, 1, false));
 
 	pane = mScreen.search('cl_4', true);
-	pane->setCallBack(new NumberPicCallBack<s16>(pane, &mData.mPelletNum, 100, false));
+	pane->setCallBack(new NumberPicCallBack<short>(pane, &mData.mPelletNum, 100, false));
 	pane = mScreen.search('cc_4', true);
-	pane->setCallBack(new NumberPicCallBack<s16>(pane, &mData.mPelletNum, 10, false));
+	pane->setCallBack(new NumberPicCallBack<short>(pane, &mData.mPelletNum, 10, false));
 	pane = mScreen.search('cr_4', true);
-	pane->setCallBack(new NumberPicCallBack<s16>(pane, &mData.mPelletNum, 1, false));
+	pane->setCallBack(new NumberPicCallBack<short>(pane, &mData.mPelletNum, 1, false));
 }
 
 /**

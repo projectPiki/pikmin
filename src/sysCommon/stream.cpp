@@ -31,7 +31,7 @@ u8 Stream::readByte()
 /**
  * @todo: Documentation
  */
-s16 Stream::readShort()
+short Stream::readShort()
 {
 	s16 s;
 	read(&s, sizeof(s16));
@@ -107,7 +107,7 @@ void Stream::writeByte(u8 c)
 /**
  * @todo: Documentation
  */
-void Stream::writeShort(s16 _s)
+void Stream::writeShort(short _s)
 {
 	s16 s = _s;
 #ifdef WIN32

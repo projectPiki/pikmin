@@ -40,7 +40,7 @@ public:
 	DiaryStatus update(Controller* pController);
 	void draw(Graphics& gfx);
 	void start(s16 startScreenIndex, s16 day);
-	void setDiarySpecialNumber(s16 day);
+	void setDiarySpecialNumber(short day);
 	void typePage();
 	bool nextPage();
 	void backPage();
@@ -82,7 +82,7 @@ public:
 
 	ogDrawDiary();
 
-	void open(f32 screenCenterX, f32 screenCenterY, s16 day);
+	void open(f32 screenCenterX, f32 screenCenterY, short day);
 	DiaryStatus update(Controller* pController);
 
 	// unused/inlined:

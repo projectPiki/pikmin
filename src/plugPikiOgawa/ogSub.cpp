@@ -78,7 +78,7 @@ void setTextColor(P2DTextBox* tbox, P2DPicture* pic)
 /**
  * @todo: Documentation
  */
-bool getStringCVS(char* outStr, immut char* csvText, s16 fieldIndex)
+bool getStringCVS(char* outStr, immut char* csvText, short fieldIndex)
 {
 	s16 remainingChars = 512;
 	while (fieldIndex > 0) {
@@ -855,7 +855,7 @@ ogMsgCtrlTagMgr::ogMsgCtrlTagMgr()
 /**
  * @todo: Documentation
  */
-bool ogMsgCtrlTagMgr::CheckCtrlTag(immut char* text, s16* indexPtr, f32* waitTimePtr)
+bool ogMsgCtrlTagMgr::CheckCtrlTag(immut char* text, short* indexPtr, f32* waitTimePtr)
 {
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
 	char ch;

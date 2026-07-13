@@ -23,7 +23,6 @@ DEFINE_ERROR(38)
 DEFINE_ERROR(40)
 #endif
 
-
 /**
  * @todo: Documentation
  * @note UNUSED Size: 0000F4
@@ -657,34 +656,34 @@ zen::DrawGameInfo::DrawGameInfo(zen::DrawGameInfo::playModeFlag playMode)
 	pane->setCallBack(new MapPikminWindowCallBack(pane));
 
 	pane = mModeScreenMgr->search('c_ml', true);
-	pane->setCallBack(new NumberPicCallBack<s16>(pane, &pGameInfo->mFormationPikiNum, 100, false));
+	pane->setCallBack(new NumberPicCallBack<short>(pane, &pGameInfo->mFormationPikiNum, 100, false));
 
 	pane = mModeScreenMgr->search('c_mc', true);
-	pane->setCallBack(new NumberPicCallBack<s16>(pane, &pGameInfo->mFormationPikiNum, 10, false));
+	pane->setCallBack(new NumberPicCallBack<short>(pane, &pGameInfo->mFormationPikiNum, 10, false));
 
 	pane = mModeScreenMgr->search('c_mr', true);
-	pane->setCallBack(new NumberPicCallBack<s16>(pane, &pGameInfo->mFormationPikiNum, 1, false));
+	pane->setCallBack(new NumberPicCallBack<short>(pane, &pGameInfo->mFormationPikiNum, 1, false));
 
 	pane = mModeScreenMgr->search('c_ll', true);
-	pane->setCallBack(new NumberPicCallBack<s16>(pane, &pGameInfo->mMapPikiNum, 100, false));
+	pane->setCallBack(new NumberPicCallBack<short>(pane, &pGameInfo->mMapPikiNum, 100, false));
 
 	pane = mModeScreenMgr->search('c_lc', true);
-	pane->setCallBack(new NumberPicCallBack<s16>(pane, &pGameInfo->mMapPikiNum, 10, false));
+	pane->setCallBack(new NumberPicCallBack<short>(pane, &pGameInfo->mMapPikiNum, 10, false));
 
 	pane = mModeScreenMgr->search('c_lr', true);
-	pane->setCallBack(new NumberPicCallBack<s16>(pane, &pGameInfo->mMapPikiNum, 1, false));
+	pane->setCallBack(new NumberPicCallBack<short>(pane, &pGameInfo->mMapPikiNum, 1, false));
 
 	pane = mModeScreenMgr->search('c_sl', true);
-	pane->setCallBack(new NumberPicCallBack<s16>(pane, &pGameInfo->mTotalPikiNum, 1000, false));
+	pane->setCallBack(new NumberPicCallBack<short>(pane, &pGameInfo->mTotalPikiNum, 1000, false));
 
 	pane = mModeScreenMgr->search('c_sc', true);
-	pane->setCallBack(new NumberPicCallBack<s16>(pane, &pGameInfo->mTotalPikiNum, 100, false));
+	pane->setCallBack(new NumberPicCallBack<short>(pane, &pGameInfo->mTotalPikiNum, 100, false));
 
 	pane = mModeScreenMgr->search('c_sr', true);
-	pane->setCallBack(new NumberPicCallBack<s16>(pane, &pGameInfo->mTotalPikiNum, 10, false));
+	pane->setCallBack(new NumberPicCallBack<short>(pane, &pGameInfo->mTotalPikiNum, 10, false));
 
 	pane = mModeScreenMgr->search('c_s1', true);
-	pane->setCallBack(new NumberPicCallBack<s16>(pane, &pGameInfo->mTotalPikiNum, 1, false));
+	pane->setCallBack(new NumberPicCallBack<short>(pane, &pGameInfo->mTotalPikiNum, 1, false));
 
 	P2DPane* startSunPane = mUpperScreenMgr->search('stat', true);
 	P2DPane* goalSunPane  = mUpperScreenMgr->search('goal', true);

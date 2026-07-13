@@ -21,14 +21,14 @@ public:
 
 	virtual int readInt();                      // _08
 	virtual u8 readByte();                      // _0C
-	virtual s16 readShort();                    // _10
+	virtual short readShort();                  // _10
 	virtual f32 readFloat();                    // _14
 	virtual void readString(char*, int);        // _18
 	virtual void readString(String&);           // _1C
 	virtual char* readString();                 // _20
 	virtual void writeInt(int);                 // _24
 	virtual void writeByte(u8);                 // _28
-	virtual void writeShort(s16);               // _2C
+	virtual void writeShort(short);             // _2C
 	virtual void writeFloat(f32);               // _30
 	virtual void writeString(immut char*);      // _34
 	virtual void writeString(immut String&);    // _38

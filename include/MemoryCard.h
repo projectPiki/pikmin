@@ -61,7 +61,7 @@ public:
 	s32 makeDefaultFile();
 	void copyFile(CardQuickInfo&, CardQuickInfo&);
 	void delFile(CardQuickInfo&);
-	int doFormatCard();
+	s32 doFormatCard();
 
 	bool isCardInserted();
 	bool hasCardChanged();

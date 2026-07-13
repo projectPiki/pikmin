@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""Backfill true MSVC ``name_mangled`` into a module's symbol map by positional
+"""DEPRECATED (2026-07-12): superseded by the `.ilk` overlay (see README ★ section /
+ilk_map.py) — the `.ilk` fills every empty ``name_mangled`` authoritatively, not by
+positional guess. Kept for reference only.
+
+Backfill true MSVC ``name_mangled`` into a module's symbol map by positional
 harvest from the compiled base objects.
 
 Part of the Pikmin Windows (VC6/PE32) decomp. plugPiki's map (from Ghidra)

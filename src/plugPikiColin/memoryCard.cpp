@@ -890,7 +890,7 @@ void MemoryCard::writeCurrentGame(RandomAccessStream* output, PlayState& playSta
 		playState.mYellowPikiCount = playerState->hasContainer(Yellow) ? pikiInfMgr.getColorTotal(Yellow) : -1;
 		playState.mBluePikiCount   = playerState->hasContainer(Blue) ? pikiInfMgr.getColorTotal(Blue) : -1;
 #endif
-		playState.mShipPartsCount  = playerState->getCardUfoPartsCount();
+		playState.mShipPartsCount = playerState->getCardUfoPartsCount();
 	}
 
 	playState.write(*output);
@@ -1104,7 +1104,7 @@ void MemoryCard::delFile(CardQuickInfo& target)
 /**
  * @todo: Documentation
  */
-int MemoryCard::doFormatCard()
+s32 MemoryCard::doFormatCard()
 {
 	PRINT("*-----------------------------------------------------------*\n");
 	PRINT("Formatting memory card ....\n");

@@ -44,8 +44,8 @@ typedef volatile f128 vf128;
 
 // For Windows-specific types
 #ifdef WIN32
-#include <windows.h>
 #include "win32Compat.h" // VC6 math constants + std:: float helpers (see file)
+#include <windows.h>
 #else
 typedef u32 HWND;
 // A boolean value typedef inspired by the Win32 API.
@@ -259,7 +259,7 @@ typedef int BOOL;
 // it for now; reproducing the original data alignment is a matching-grind TODO.
 #define ATTRIBUTE_ALIGN(num)
 #else
-#define ATTRIBUTE_ALIGN(num) __attribute__((aligned(num)))  // Align object to num bytes (num should be power of two)
+#define ATTRIBUTE_ALIGN(num) __attribute__((aligned(num))) // Align object to num bytes (num should be power of two)
 #endif
 
 // Makes the compiler averse to using that register for the entire function.

@@ -59,7 +59,7 @@ public:
 
 	// DLL inlines
 	TextInfoType* getPageInfo() { return mPageInfos[mCurrPageNum]; }
-	s16 getTxtLineMax() { return mActivePaneCount; }
+	short getTxtLineMax() { return mActivePaneCount; }
 	P2DScreen* getBaseScreenPtr() { return mBaseScreen; }
 	P2DScreen* getScreenPtr() { return mCurrentScreen; }
 
@@ -86,7 +86,7 @@ public:
 	}
 
 private:
-	s16 SearchTopPage(int);
+	short SearchTopPage(int);
 	void setMessagePage(int);
 	s16 makePageInfo(immut char*** const);
 	void cnvSingleMulti(char*);
@@ -113,7 +113,7 @@ private:
 	s16 mStateEntryDelay;                     // _4E2
 	s16 mCursorTargetX;                       // _4E4
 	s16 mCursorTargetY;                       // _4E6
-	s16 mCurrentTextCharOffset;               // _4E8
+	short mCurrentTextCharOffset;             // _4E8
 	s16 mNextPaneId;                          // _4EA
 	s16 mActivePaneId;                        // _4EC
 	s16 mCurrentMessageId;                    // _4EE

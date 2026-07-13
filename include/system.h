@@ -223,7 +223,7 @@ public:
 	inline void softReset() { mSoftResetPending = true; }
 	inline void Shutdown() { mSystemFlags = SystemFlags::Shutdown; }
 	inline bool resetPending() { return mSoftResetPending; }
-	inline void setFrameClamp(s32 frameRate) { mFrameRate = frameRate; }
+	inline void setFrameClamp(int frameRate) { mFrameRate = frameRate; }
 	inline int getHeapNum() { return mActiveHeapIdx; }
 
 	bool mSoftResetPending;        // _00

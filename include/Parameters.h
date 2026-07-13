@@ -37,9 +37,9 @@ public:
 	 * @brief Gets the fourcc ID.
 	 * @return A reference to the packed integer ID.
 	 */
-	s32& Num() { return mID; };
+	long& Num() { return mID; };
 
-	s32 mID; // _00, fourcc-style (32-bit) packed identifier.
+	long mID; // _00, fourcc-style (32-bit) packed identifier.
 };
 
 /**

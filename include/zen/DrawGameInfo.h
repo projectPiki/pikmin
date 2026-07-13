@@ -32,9 +32,9 @@ public:
 	}
 
 	int mEncodedNextThrowType; // _00
-	s16 mFormationPikiNum;     // _04
-	s16 mMapPikiNum;           // _06
-	s16 mTotalPikiNum;         // _08
+	short mFormationPikiNum;   // _04
+	short mMapPikiNum;         // _06
+	short mTotalPikiNum;       // _08
 };
 
 /**

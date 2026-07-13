@@ -114,7 +114,7 @@ void Kontroller::update()
 /**
  * @todo: Documentation
  */
-u32 Kontroller::getSaveSize(int duration)
+unsigned int Kontroller::getSaveSize(int duration)
 {
 	return duration * 12;
 }
