@@ -419,17 +419,26 @@ def main() -> None:
                             implicit=[str(dedup_comdats), str(m["owner_csv"])],
                             variables={"module": name, "owner": str(m["owner_csv"])})
                     dtgt = m["target_dedup_dir"] / (tu.stem + ".obj")
-                    # the GUI (deduped) target gets the TU's FUN_<addr> placeholders
-                    # for objdiff manual mapping; order-only on the stamp so they are
-                    # generated first (and regenerated when the map changes).
+                    # The GUI (deduped) target also carries the TU's --extra symbols:
+                    # its DLL functions the base carve misses (unwritten source, under
+                    # their decorated names; unlabelled addresses, as FUN_<addr> manual-
+                    # mapping placeholders). See tools/win/gen_placeholders.py.
+                    #
+                    # The stamp is an IMPLICIT dep, not order-only: the per-TU CSVs are
+                    # not themselves ninja outputs (a TU with no extras has no CSV), so
+                    # order-only would let an edit to gen_placeholders.py regenerate them
+                    # while every carved target stayed stale -- the same trap called out
+                    # on the `objdiff` alias below. The stamp is rewritten on every run of
+                    # the rule, so depending on it re-carves whenever the extras can have
+                    # changed (map edit, tool edit).
+                    dimp = list(extract_imp)
                     dvars = extract_vars
-                    dorder = None
                     if can_ph:
                         dvars = {**extract_vars,
                                  "extra": str(ph_dir / (tu.stem.lower() + ".csv"))}
-                        dorder = [str(ph_stamp)]
-                    n.build(str(dtgt), "extract", str(dobj), implicit=extract_imp,
-                            order_only=dorder, variables=dvars)
+                        dimp.append(str(ph_stamp))
+                    n.build(str(dtgt), "extract", str(dobj), implicit=dimp,
+                            variables=dvars)
                     dedup_targets.append(str(dtgt))
                     base_p, tgt_p = str(dobj), str(dtgt)
                 else:
