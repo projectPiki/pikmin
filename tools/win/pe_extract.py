@@ -48,6 +48,7 @@ import re
 import struct
 import sys
 from dataclasses import dataclass, field
+from functools import lru_cache
 from pathlib import Path
 
 # Reuse the dependency-free PE reader that already backs pe_symbols.py.
@@ -71,6 +72,9 @@ IMAGE_SYM_CLASS_STATIC = 3
 IMAGE_SYM_DTYPE_FUNCTION = 0x20  # (DTYPE FUNCTION << 4) | (BTYPE NULL)
 
 TEXT_ALIGN = 16
+
+# Map `kind` values that denote data (as opposed to `function`/`thunk`).
+DATA_KINDS = ("data", "string", "vtable")
 
 
 # Compiler-inserted CRT helpers that the disassembler labelled with a single
@@ -149,6 +153,7 @@ def _split_params(text: str):
     return text[:i], text[i + 1:len(text) - 1]
 
 
+@lru_cache(maxsize=None)
 def demangled_key(decorated: str):
     """A decorated MSVC symbol -> (qualified 'Class::method', argc), or None.
 
@@ -176,6 +181,7 @@ def demangled_key(decorated: str):
 _CLASSKEY_RE = re.compile(r"\b(?:struct|class|union|enum)\s+")
 
 
+@lru_cache(maxsize=None)
 def canon_sig(decorated: str):
     """A decorated MSVC symbol -> its demangled signature with the aggregate
     class-key (struct/class/union) neutralised and whitespace stripped.
@@ -245,6 +251,12 @@ class SymbolMap:
         self.by_demangled: dict[str, list[MapSym]] = {}
         # class-key-insensitive full-signature -> carveable rows (U<->V bridge)
         self.by_canon: dict[str, list[MapSym]] = {}
+        # decorated name -> DATA row, and its class-key-insensitive twin. The `.ilk`
+        # overlay put the linker's own decorated name + real RVA on every external
+        # data symbol (strings, fp-constants, vftables, globals), so data addresses
+        # are a name lookup now -- see data_row().
+        self.data_by_name: dict[str, MapSym] = {}
+        self.data_by_canon: dict[str, list[MapSym]] = {}
         self._exact: dict[int, MapSym] = {}
         starts: list[tuple[int, int, MapSym]] = []  # (start_va, end_va, sym)
         for r in rows:
@@ -260,12 +272,38 @@ class SymbolMap:
                     ck = canon_sig(r.name_mangled)
                     if ck:
                         self.by_canon.setdefault(ck, []).append(r)
+            if r.kind in DATA_KINDS and r.name_mangled:
+                self.data_by_name.setdefault(r.name_mangled, r)
+                ck = canon_sig(r.name_mangled)
+                if ck:
+                    self.data_by_canon.setdefault(ck, []).append(r)
             self._exact.setdefault(r.va, r)
             if r.size > 0:
                 starts.append((r.va, r.va + r.size, r))
         starts.sort()
         self._starts = [s[0] for s in starts]
         self._spans = starts
+
+    def data_row(self, decorated: str):
+        """The map row giving a base DATA symbol's address in the original, or None.
+
+        The address of a string / fp-constant / vftable / global used to have to be
+        *discovered* (from a relocation inside an already byte-matching function, then
+        BFS'd through data->data pointers), which only ever reached data that matched
+        code happened to point at. The `.ilk` knows all of them by name, so this is now
+        a direct lookup -- and it reaches data no code references yet.
+
+        Falls back to the class-key-insensitive signature, since a global's decorated
+        name encodes `struct`(U) vs `class`(V) of its type just as a function's does."""
+        row = self.data_by_name.get(decorated)
+        if row is not None:
+            return row
+        ck = canon_sig(decorated)
+        if ck:
+            cands = self.data_by_canon.get(ck)
+            if cands and len({c.va for c in cands}) == 1:
+                return cands[0]
+        return None
 
     def carve_row(self, decorated: str):
         """The function-body row to carve for a base's decorated symbol name.
@@ -424,9 +462,23 @@ def _iter_symbols_indexed(obj: bytes):
 class BaseData:
     kind: str
     size: int
-    bytes: bytes
-    sec: str                          # base section basename (.rdata/.data/...)
+    bytes: bytes                      # b"" when uninitialised (.bss)
+    sec: str                          # base section basename (.rdata/.data/.bss)
     relocs: dict[int, tuple[str, int]]  # intra-offset -> (target decorated name, type)
+    external: bool = True             # False = file-local static (no `.ilk` record)
+
+    @property
+    def bss(self) -> bool:
+        return self.sec == ".bss"
+
+
+# The data sections a TU contributes that hold *source-visible* content, and so are
+# worth carving and diffing. Deliberately excluded: `.xdata` (EH funcinfo/unwind
+# tables) and `.CRT` (static-initialiser pointer arrays) -- both are compiler/linker
+# bookkeeping, derived mechanically from code that is already being diffed, and both
+# are emitted as file-local statics, so the `.ilk` has no name for them and they could
+# never be located anyway.
+DATA_SECTIONS = (".rdata", ".data", ".bss")
 
 
 def parse_base_coff(obj: bytes):
@@ -434,11 +486,18 @@ def parse_base_coff(obj: bytes):
 
     Returns ``(func_relocs, data)`` where ``func_relocs[name]`` = (section bytes,
     {intra-offset: (target name, reltype)}) for each defined function, and
-    ``data[name]`` = a :class:`BaseData`. VC6 emits one COMDAT section per symbol,
-    so a section with exactly one defined non-section symbol is owned by it; the
-    section's raw bytes and relocations belong to that symbol. Relocation targets
-    are resolved to their symbol names so the carved target can reference the same
-    decorated names the base does (that is what makes objdiff pair them)."""
+    ``data[name]`` = a :class:`BaseData`. Relocation targets are resolved to their
+    symbol names so the carved target can reference the same decorated names the base
+    does (that is what makes objdiff pair them).
+
+    Functions are 1:1 with their section (VC6 gives every COMDAT function its own),
+    but **data is not**: only COMDAT data (strings, fp-constants, vftables, all in
+    `.rdata`) gets a section to itself. Plain globals share one `.data` (initialised)
+    or `.bss` (uninitialised) section per TU, several symbols deep -- so a data section
+    is split at its symbol boundaries, each symbol owning `[value, next value)` and the
+    slice of the section's relocations that falls inside it. Requiring a lone symbol
+    per section (as this once did) skipped every one of those, which is why `.data`
+    reached only a dozen objects and `.bss` none at all."""
     num_sections, sym_ptr, num_syms = struct.unpack_from("<HxxxxII", obj, 2)
     secs = []
     for k in range(num_sections):
@@ -455,37 +514,100 @@ def parse_base_coff(obj: bytes):
         idx_name[idx] = name
         if (secnum > 0 and sclass in (IMAGE_SYM_CLASS_EXTERNAL, IMAGE_SYM_CLASS_STATIC)
                 and name and not name.startswith(".")):
-            members.setdefault(secnum, []).append((name, value, typ))
+            members.setdefault(secnum, []).append((name, value, typ, sclass))
 
     func_relocs: dict[str, tuple[bytes, dict]] = {}
     data: dict[str, BaseData] = {}
     for secnum, mem in members.items():
-        if len(mem) != 1:
-            continue  # not a clean 1:1 COMDAT; functions still carve by name
         sec = secs[secnum - 1]
         base = sec["name"].split("$")[0]
-        if base in (".debug", ".drectve", ".text"):
-            # .text funcs are carved via the map by name; we only need their relocs
-            if base != ".text":
-                continue
-        raw = obj[sec["rawptr"]:sec["rawptr"] + sec["rawsz"]] if sec["rawptr"] else b""
+        if base != ".text" and base not in DATA_SECTIONS:
+            continue
+        seclen = sec["rawsz"]
+        # An uninitialised section stores its length in SizeOfRawData with a NULL
+        # PointerToRawData -- there are no bytes on disk, only a size to reserve.
+        raw = obj[sec["rawptr"]:sec["rawptr"] + seclen] if sec["rawptr"] else b""
         relocs: dict[int, tuple[str, int]] = {}
         for r in range(sec["nrel"]):
             vaddr, symidx, rtype = struct.unpack_from("<IIH", obj, sec["relptr"] + r * 10)
             tn = idx_name.get(symidx)
             if tn:
                 relocs[vaddr] = (tn, rtype)
-        name, value, typ = mem[0]
-        if (typ >> 4) == 0x2:
-            func_relocs[name] = (raw, relocs)
-        elif base not in (".text", ".bss") and sec["rawptr"]:
-            # .bss/uninitialised data has no bytes to carve (increment 1 skips it).
-            data[name] = BaseData(_data_kind(name), sec["rawsz"], raw, base, relocs)
+
+        if base == ".text":
+            # .text bodies are carved from the map by name; we only need their relocs.
+            if len(mem) == 1:
+                name, value, typ, _sc = mem[0]
+                if (typ >> 4) == 0x2:
+                    func_relocs[name] = (raw, relocs)
+            continue
+
+        # Split the data section at its symbol boundaries. Aliases (two names at one
+        # offset) would give the second a zero-length extent; first name wins.
+        mem = sorted(mem, key=lambda m: m[1])
+        for i, (name, value, typ, sclass) in enumerate(mem):
+            if (typ >> 4) == 0x2:
+                continue  # a function living in a data section: not ours to carve
+            end = mem[i + 1][1] if i + 1 < len(mem) else seclen
+            size = end - value
+            if size <= 0 or name in data:
+                continue
+            data[name] = BaseData(
+                _data_kind(name), size, raw[value:value + size] if raw else b"", base,
+                {o - value: t for o, t in relocs.items() if value <= o < end},
+                external=(sclass == IMAGE_SYM_CLASS_EXTERNAL),
+            )
     return func_relocs, data
+
+
+def resolve_ref_name(tsym: MapSym, bridge: dict) -> str | None:
+    """Name to emit for a relocation target: the decorated name when we have one (map
+    export, or a match the base references via the bridge), else the demangled label so
+    the reference is at least named."""
+    if _printable(tsym.name_mangled):
+        return NAME_ALIASES.get(tsym.name_mangled, tsym.name_mangled)
+    key = map_label_key(tsym.name)
+    if key is not None and key in bridge:
+        return bridge[key]
+    return tsym.emit_name()
+
+
+def data_verdict(pe: PEFile, mapping: SymbolMap, bridge: dict,
+                 info: BaseData, va: int) -> bool:
+    """Does our base's copy of a data symbol reproduce the original's, byte for byte?
+
+    The same test the carved target is scored on, factored out so the metric and the
+    carve cannot drift apart. Two things must hold:
+
+      * every byte outside a relocated field is identical (a relocated field
+        legitimately differs -- the base holds an addend, the image a linked address);
+      * every relocated field points at the *same symbol* on both sides -- otherwise a
+        vftable whose slots hold the wrong functions would pass on shape alone.
+
+    Class-key (struct `U` / class `V`) spelling differences are not real differences."""
+    dll = pe.image_bytes(va - pe.image_base, info.size)
+    if dll is None or len(info.bytes) != info.size:
+        return False
+    if not _aligned(dll, info.bytes, info.relocs):
+        return False
+    for off, (tn, _rt) in info.relocs.items():
+        if off + 4 > info.size:
+            return False
+        res = mapping.resolve(struct.unpack_from("<I", dll, off)[0])
+        if res is None:
+            continue  # target unknown to the map: cannot refute, do not invent a diff
+        on = resolve_ref_name(res[0], bridge)
+        if on is None or on == tn:
+            continue
+        ck = canon_sig(on)
+        if ck is None or ck != canon_sig(tn):
+            return False
+    return True
 
 
 # --- Target COFF builder ----------------------------------------------------
 IMAGE_SCN_CNT_INITIALIZED_DATA = 0x00000040
+IMAGE_SCN_CNT_UNINITIALIZED_DATA = 0x00000080
 IMAGE_SCN_MEM_WRITE = 0x80000000
 IMAGE_SCN_ALIGN_4BYTES = 0x00300000
 
@@ -503,6 +625,7 @@ class Section:
     chars: int
     data: bytearray = field(default_factory=bytearray)
     relocs: list[Reloc] = field(default_factory=list)
+    bss: bool = False   # uninitialised: `data` sizes it, but nothing is written out
 
 
 class CoffBuilder:
@@ -520,13 +643,15 @@ class CoffBuilder:
         self._strtab = bytearray()
         self._index_of: dict[str, int] = {}
 
-    def add_data_section(self, name: str, writable: bool = False) -> int:
-        """Append an initialised-data section; return its 1-based section number."""
-        chars = (IMAGE_SCN_CNT_INITIALIZED_DATA | IMAGE_SCN_MEM_READ
-                 | IMAGE_SCN_ALIGN_4BYTES)
+    def add_data_section(self, name: str, writable: bool = False,
+                         bss: bool = False) -> int:
+        """Append a data section; return its 1-based section number."""
+        chars = ((IMAGE_SCN_CNT_UNINITIALIZED_DATA if bss
+                  else IMAGE_SCN_CNT_INITIALIZED_DATA)
+                 | IMAGE_SCN_MEM_READ | IMAGE_SCN_ALIGN_4BYTES)
         if writable:
             chars |= IMAGE_SCN_MEM_WRITE
-        self._sections.append(Section(name, chars, bytearray(), []))
+        self._sections.append(Section(name, chars, bytearray(), [], bss))
         return len(self._sections)
 
     def section(self, secnum: int) -> Section:
@@ -588,6 +713,12 @@ class CoffBuilder:
         cursor = 20 + nsec * 40
         raw_ptr = []
         for s in self._sections:
+            # An uninitialised section is described, not stored: SizeOfRawData still
+            # carries the length to reserve but PointerToRawData is NULL and no bytes
+            # go in the file (this is how the base objects' own `.bss` is encoded).
+            if s.bss:
+                raw_ptr.append(0)
+                continue
             raw_ptr.append(cursor if s.data else 0)
             cursor += len(s.data)
         rel_ptr, stored_nrel, overflow = [], [], []
@@ -609,7 +740,8 @@ class CoffBuilder:
                     + struct.pack("<IIIIIIHHI", 0, 0, len(s.data), raw_ptr[i],
                                   rel_ptr[i], 0, stored_nrel[i], 0, chars))
         for s in self._sections:
-            out += s.data
+            if not s.bss:
+                out += s.data
         for i, s in enumerate(self._sections):
             if overflow[i]:
                 out += struct.pack("<IIH", len(s.relocs) + 1, 0, 0)
@@ -663,16 +795,23 @@ def extract(dll: Path, mapping: SymbolMap, base_obj: Path, out: Path,
         # target's relocations can be emitted under the same name the base references.
         bridge = base_symbol_bridge(base_bytes)
 
+    # MSVC's dllimport COFF symbol is `__imp_` + the *decorated* name, but the PE
+    # import-by-name table stores the undecorated export name (cdecl drops the leading
+    # underscore: import `vsprintf` -> COFF `__imp__vsprintf`). pe_symbols reconstructs
+    # `__imp_<rawname>` and so can miss that underscore. Name each IAT reference exactly
+    # as the base object's own undefined external does, so objdiff pairs it.
+    base_imp = {n for n, _v, sec, _t, _c in _iter_symbols(base_bytes)
+                if sec == 0 and n.startswith("__imp_")} if base_bytes else set()
+
+    def imp_name(imp) -> str:
+        cand = imp.imp_symbol
+        if cand in base_imp or not imp.name:
+            return cand
+        alt = "__imp__" + imp.name              # add the cdecl leading underscore
+        return alt if alt in base_imp else cand
+
     def resolve_name(tsym: MapSym) -> str | None:
-        """Name to emit for a relocation target: the decorated name when we have
-        one (map export, or a match the base references via the bridge), else the
-        demangled label so the reference is at least named."""
-        if _printable(tsym.name_mangled):
-            return NAME_ALIASES.get(tsym.name_mangled, tsym.name_mangled)
-        key = map_label_key(tsym.name)
-        if key is not None and key in bridge:
-            return bridge[key]
-        return tsym.emit_name()
+        return resolve_ref_name(tsym, bridge)
 
     # Resolve each defined name to a carveable body; keep source order stable.
     funcs: list[tuple[str, MapSym]] = []
@@ -775,6 +914,15 @@ def extract(dll: Path, mapping: SymbolMap, base_obj: Path, out: Path,
                     if (row.name or "").endswith(simple):
                         _pin_static(row.va, dec)
                         break
+    # A file-static (`_Print`/`_Error`/...) is both a defined function AND a
+    # discovery target, so it can be pinned more than once; carve each decorated
+    # name only once. Otherwise the duplicate gets a second .text copy, and since
+    # `text_off[name]` is overwritten the reloc pass only rewrites the last copy --
+    # leaving the first un-relocated and unpaired in objdiff. First pin wins (the
+    # base-relocation-aligned one).
+    _seen: set[str] = set()
+    funcs = [(n, s) for n, s in funcs if not (n in _seen or _seen.add(n))]
+
     b = CoffBuilder()
     # Defined function symbols come first (indices 0..n-1); undefined externals
     # for call/data targets are appended during the reloc pass, and the .text
@@ -790,22 +938,44 @@ def extract(dll: Path, mapping: SymbolMap, base_obj: Path, out: Path,
         b.text += pe.data[foff : foff + sym.size]
         b.add_symbol(name, off, 1, IMAGE_SYM_DTYPE_FUNCTION)
 
-    # --- Discover and carve this TU's data (W-DATA) -----------------------------
-    # A base relocation names every symbol a function or vftable references; the
-    # carved DLL bytes at the aligned offset give that symbol's address. So we seed
-    # from code -- only functions that carved byte-identical *modulo relocations*,
-    # so the base reloc offsets line up with the DLL operands -- then BFS through
-    # data->data pointers (pointer arrays, vftable slots) to reach data that code
-    # never names directly. b.text still holds the raw DLL bytes here (the reloc
-    # pass below rewrites the fields), so the operand VAs are readable.
+    # --- Locate and carve this TU's data (W-DATA) -------------------------------
+    # Two ways to learn where a base data symbol lives in the original:
+    #
+    #   1. BY NAME (primary). The `.ilk` overlay gave the map the linker's own record
+    #      of every EXTERNAL data symbol -- decorated name + real RVA -- so a string,
+    #      fp-constant, vftable or global is simply looked up. This reaches data that
+    #      *no matched code points at*, which is what the discovery below could never
+    #      do; it is why `.data` used to appear in a dozen objects out of 400.
+    #   2. BY DISCOVERY (fallback). File-local statics have no `.ilk` record at all
+    #      (the linker never saw a name for them), so their addresses still have to be
+    #      recovered from relocations: seed from functions that carved byte-identical
+    #      *modulo relocations* (so the base's reloc offsets line up with the DLL's
+    #      operands and can be trusted to name what each site references), then BFS
+    #      through data->data pointers (pointer arrays, vftable slots). b.text still
+    #      holds the raw DLL bytes here (the reloc pass below rewrites the fields), so
+    #      the operand VAs are readable.
+    #
+    # The map is ground truth, so it wins any disagreement (counted, and reported by
+    # -v: a nonzero count means a discovered address contradicts the linker's and
+    # something upstream is wrong).
     # (func_base/data_base were parsed once, above the static discovery.)
-    data_va: dict[str, int] = {}  # discovered data symbol name -> start VA
+    data_va: dict[str, int] = {}  # data symbol name -> start VA in the original
+    n_by_name = n_conflict = 0
 
     def _want(name: str, va: int) -> None:
-        if name not in data_va and name in data_base:
-            data_va[name] = va
+        nonlocal n_conflict
+        if name not in data_va:
+            if name in data_base:
+                data_va[name] = va
+        elif data_va[name] != va and name in mapping.data_by_name:
+            n_conflict += 1  # discovery contradicts the .ilk; the .ilk stands
 
     if carve_data:
+        for name in data_base:
+            row = mapping.data_row(name)
+            if row is not None:
+                data_va[name] = row.va
+                n_by_name += 1
         for name, sym in funcs:
             fb = func_base.get(name)
             if fb is None:
@@ -824,10 +994,9 @@ def extract(dll: Path, mapping: SymbolMap, base_obj: Path, out: Path,
             info = data_base[dname]
             if not info.relocs:
                 continue
-            doff = pe.rva_to_off(dva - pe.image_base)
-            if doff is None:
+            dbytes = pe.image_bytes(dva - pe.image_base, info.size)
+            if dbytes is None:
                 continue
-            dbytes = pe.data[doff:doff + info.size]
             for off, (tn, _rt) in info.relocs.items():
                 if tn in data_base and tn not in data_va and off + 4 <= len(dbytes):
                     v = struct.unpack_from("<I", dbytes, off)[0]
@@ -835,21 +1004,27 @@ def extract(dll: Path, mapping: SymbolMap, base_obj: Path, out: Path,
                         _want(tn, v)
                         queue.append((tn, v))
 
-    rdata_sec = data_sec = 0
+    # Grouped into the same sections the base uses -- .rdata (const), .data
+    # (initialised), .bss (uninitialised) -- so objdiff lines each up with its
+    # counterpart. `.bss` has no bytes on disk: the linker merges it into the image's
+    # `.data` as a zero-fill tail past SizeOfRawData, so image_bytes() hands back the
+    # zeros the loader would map, and the section is written out with a NULL
+    # PointerToRawData exactly like the base's. What a .bss diff actually checks is
+    # therefore the *size* of each uninitialised global -- i.e. our struct layouts.
+    secnum_of: dict[str, int] = {}
     data_off: dict[str, int] = {}  # data name -> (secnum, offset in that section)
-    for name, va in list(data_va.items()):
+    for name, va in sorted(data_va.items(),
+                           key=lambda kv: DATA_SECTIONS.index(data_base[kv[0]].sec)):
         info = data_base[name]
-        off = pe.rva_to_off(va - pe.image_base)
-        if off is None:
-            del data_va[name]  # not raw-backed (e.g. straddles .bss); cannot carve
+        dbytes = pe.image_bytes(va - pe.image_base, info.size)
+        if dbytes is None:
+            del data_va[name]  # runs off the end of its section; cannot carve
             continue
-        dbytes = pe.data[off:off + info.size]
-        if info.sec == ".data":
-            data_sec = data_sec or b.add_data_section(".data", writable=True)
-            secnum = data_sec
-        else:
-            rdata_sec = rdata_sec or b.add_data_section(".rdata")
-            secnum = rdata_sec
+        sec = info.sec
+        if sec not in secnum_of:
+            secnum_of[sec] = b.add_data_section(
+                sec, writable=(sec != ".rdata"), bss=(sec == ".bss"))
+        secnum = secnum_of[sec]
         s = b.section(secnum)
         data_off[name] = (secnum, len(s.data))
         s.data += dbytes
@@ -914,7 +1089,7 @@ def extract(dll: Path, mapping: SymbolMap, base_obj: Path, out: Path,
                 if imp is not None:  # reference through our own IAT -> __imp_ symbol
                     fld = insn_off + fld_off
                     struct.pack_into("<i", b.text, fld, 0)
-                    symidx = b.symbol_index(imp.imp_symbol, False)
+                    symidx = b.symbol_index(imp_name(imp), False)
                     b.relocs.append(Reloc(fld, symidx, IMAGE_REL_I386_DIR32))
                     n_iat += 1
                     continue
@@ -941,38 +1116,56 @@ def extract(dll: Path, mapping: SymbolMap, base_obj: Path, out: Path,
                 b.relocs.append(Reloc(fld, symidx, IMAGE_REL_I386_DIR32))
                 n_dir32 += 1
 
-    # --- Data relocations: name each pointer slot after the base's target -------
-    # A vftable slot / pointer-array element is an absolute pointer; the base's data
-    # reloc names it (a function or nested data symbol) and the DLL dword gives its
-    # value. Emit a DIR32 under that name so it pairs; only where the DLL dword is a
-    # real in-image pointer (else it is a mismatch -- leave the bytes, don't fake a
-    # relocation the original never had).
+    # --- Data relocations: name each pointer slot after what the ORIGINAL points at -
+    # A vftable slot / pointer-array element is an absolute pointer. The base's reloc
+    # says which symbol *we* put there and the DLL's dword says which one the original
+    # put there -- and the whole point of diffing a vftable is to find out when those
+    # disagree. So the target's reloc is named after the symbol the original's pointer
+    # resolves to, exactly as the code path names a call site.
+    #
+    # (Naming it after the base's own target instead -- as this did -- makes every slot
+    # pair by construction and report a match no matter which function it actually
+    # holds, which is worth remembering: it hid a whole-vtable slot shift, our virtuals
+    # being declared in the wrong order and one being missing outright.)
+    #
+    # Two cases still defer to the base's name: a target the map cannot name at all
+    # (a file-local static the `.ilk` never recorded -- naming it after the base is
+    # then the best guess available), and a target that differs from the base's only
+    # by the struct(U)/class(V) mangling key, which is the same symbol spelled two ways.
     n_data_rel = 0
     for name, va in data_va.items():
         info = data_base[name]
-        if not info.relocs:
+        if not info.relocs or info.bss:  # uninitialised data cannot hold a pointer
             continue
         secnum, base_o = data_off[name]
         s = b.section(secnum)
-        doff = pe.rva_to_off(va - pe.image_base)
+        dbytes = pe.image_bytes(va - pe.image_base, info.size)
         for off, (tn, _rt) in info.relocs.items():
             if off + 4 > info.size:
                 continue
-            v = struct.unpack_from("<I", pe.data, doff + off)[0]
+            v = struct.unpack_from("<I", dbytes, off)[0]
             if not (lo <= v < hi):
-                continue
+                continue  # not a pointer into the image: leave the bytes, no relocation
             res = mapping.resolve(v)
-            addend = res[1] if res else 0
+            tname = None
+            if res is not None:
+                tname = (static_name_by_va.get(res[0].va) if res[1] == 0 else None) \
+                    or resolve_name(res[0])
+            ck = canon_sig(tname) if tname else None
+            if tname is None or (ck is not None and ck == canon_sig(tn)):
+                tname = tn
+            addend = res[1] if res is not None else 0
             struct.pack_into("<i", s.data, base_o + off, addend)
             s.relocs.append(Reloc(base_o + off,
-                                  b.symbol_index(tn, tn not in data_base),
+                                  b.symbol_index(tname, tname not in data_base),
                                   IMAGE_REL_I386_DIR32))
             n_data_rel += 1
 
     # .text section symbol + aux, then the data section symbols, all with true
     # sizes/reloc counts now that every reference has been emitted.
     b.add_section_symbol(".text", 1, len(b.text), len(b.relocs))
-    for secnum, sname in ((rdata_sec, ".rdata"), (data_sec, ".data")):
+    for sname in DATA_SECTIONS:
+        secnum = secnum_of.get(sname)
         if secnum:
             sec = b.section(secnum)
             b.add_section_symbol(sname, secnum, len(sec.data), len(sec.relocs))
@@ -983,7 +1176,10 @@ def extract(dll: Path, mapping: SymbolMap, base_obj: Path, out: Path,
         "funcs": len(funcs), "candidates": len(names),
         "rel32": n_rel32, "dir32": n_dir32, "iat": n_iat,
         "unresolved_calls": n_unresolved, "bytes": len(b.text),
-        "data_syms": len(data_va), "data_rel": n_data_rel,
+        "data_syms": len(data_va), "data_cands": len(data_base),
+        "data_by_name": n_by_name, "data_rel": n_data_rel,
+        "data_bytes": sum(len(b.section(n).data) for n in secnum_of.values()),
+        "va_conflicts": n_conflict,
     }
 
 
@@ -1023,8 +1219,10 @@ def main(argv: list[str] | None = None) -> int:
               f"{stats['bytes']} .text bytes, {stats['rel32']} REL32, "
               f"{stats['dir32']} DIR32, {stats['iat']} IAT, "
               f"{stats['unresolved_calls']} unresolved calls, "
-              f"{stats['data_syms']} data syms ({stats['data_rel']} data relocs)",
-              file=sys.stderr)
+              f"{stats['data_syms']}/{stats['data_cands']} data syms "
+              f"({stats['data_by_name']} by name, {stats['data_bytes']} bytes, "
+              f"{stats['data_rel']} data relocs, "
+              f"{stats['va_conflicts']} VA conflicts)", file=sys.stderr)
     return 0
 
 

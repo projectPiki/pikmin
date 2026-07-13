@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-r"""Parse the object-contribution structure of a Microsoft incremental-link database
+r"""DEPRECATED (2026-07-12): superseded by ilk.py, which decodes the whole `.ilk`
+correctly (this file's pointer model — two bases, 0x80-stride table — was partly wrong;
+see ILK_FORMAT.md). Use `ilk.py` / `ilk_map.py`. Kept only for callers not yet migrated.
+
+Parse the object-contribution structure of a Microsoft incremental-link database
 (`<module>.ilk`) for the Pikmin Windows (VC6/PE) decomp.
 
 The `.ilk` is the linker's own record of how it built the module. This tool decodes

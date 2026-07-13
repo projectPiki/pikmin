@@ -165,6 +165,32 @@ class PEFile:
                     return off
         return None
 
+    def image_bytes(self, rva: int, size: int) -> bytes | None:
+        """`size` bytes of the *loaded image* at `rva`, or None if it leaves the image.
+
+        Not the same as slicing the file at `rva_to_off`.  A section whose VirtualSize
+        exceeds its SizeOfRawData carries a zero-fill tail -- that tail is where the
+        linker puts uninitialised data (MSVC merges `.bss` into `.data`: sysCore's
+        `.data` is 0x11e3c virtual but only 0x2000 raw).  Those bytes exist in the
+        running image but NOT in the file, so a naive file slice would read straight
+        into whatever section is stored next (`.idata`) and hand back garbage.  Here the
+        raw-backed prefix comes from the file and the tail is zeros, which is exactly
+        what the loader maps -- and is what lets a `.bss` symbol be carved at all."""
+        s = self.section_for_rva(rva)
+        if s is None or size < 0:
+            return None
+        off = rva - s.vaddr
+        if off + size > max(s.vsize, s.raw_size):
+            return None  # would run past this section
+        raw = max(0, min(size, s.raw_size - off))
+        out = b""
+        if raw:
+            fo = s.raw_ptr + off
+            out = self.data[fo : fo + raw]
+            if len(out) < raw:               # truncated file
+                return None
+        return out + b"\x00" * (size - raw)
+
     def resolve_thunk(self, rva: int) -> int:
         """Follow an incremental-link `jmp rel32` thunk to the real body rva.
 

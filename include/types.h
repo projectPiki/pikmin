@@ -44,8 +44,8 @@ typedef volatile f128 vf128;
 
 // For Windows-specific types
 #ifdef WIN32
-#include <windows.h>
 #include "win32Compat.h" // VC6 math constants + std:: float helpers (see file)
+#include <windows.h>
 #else
 typedef u32 HWND;
 // A boolean value typedef inspired by the Win32 API.
