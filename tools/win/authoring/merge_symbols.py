@@ -49,13 +49,20 @@ _PLACEHOLDER = re.compile(
     r"asc|a[A-Z0-9]|jpt|def|nullsub|thunk|thunk_FUN|j|unknown|FUN|DAT|LAB|SUB|UNK|PTR|s|u)_",
 )
 
-# Precedence for the human *label* (`name`): a hand refinement supersedes a raw export.
-_SRC_PRIORITY = {"manual": 3, "ida": 2, "ghidra": 2, "export": 1}
+# Precedence for the human *label* (`name`): a hand refinement supersedes a raw
+# export. `ilk`'s label is an auto-demangle, so it sits with `export` (a curated
+# disassembler label still reads better) — but see `_mangled_priority`: `ilk`'s
+# *decorated* name is the linker's own ground truth and outranks everything.
+_SRC_PRIORITY = {"manual": 3, "ida": 2, "ghidra": 2, "ilk": 1, "export": 1}
 
 
 def _mangled_priority(sources: set) -> int:
-    """Precedence for the *decorated* name — inverted from the label: the PE export
-    table is the authoritative decoration, so it outranks a disassembler's."""
+    """Precedence for the *decorated* name — inverted from the label: the `.ilk`
+    carries the linker's own exact decoration for every symbol (resolving the very
+    struct/class-key, operator and overload-suffix ambiguities the map fought), so
+    it is authoritative; the PE export table is next; a disassembler's is last."""
+    if "ilk" in sources:
+        return 4
     if "export" in sources:
         return 3
     if "manual" in sources:
@@ -159,6 +166,27 @@ def read_labels(path: str) -> list[Sym]:
     return out
 
 
+def read_map(path: str) -> list[Sym]:
+    """Read an existing master `<mod>_map.csv` back in as a base stream, so a new
+    source (e.g. `.ilk`) can be OVERLAID without re-running the full merge from the
+    disassembler dumps (which are regenerate-able inputs, not kept in-tree). The
+    multi-valued `source` column (`export+ida`) is split back into a set so each
+    original stream keeps its precedence."""
+    out: list[Sym] = []
+    with open(path, newline="") as f:
+        for r in csv.DictReader(f):
+            srcs = {s for s in (r.get("source") or "").split("+") if s} or {"manual"}
+            out.append(Sym(
+                rva=int(r["rva"], 16),
+                kind=r.get("kind") or "function",
+                size=int(r["size"]) if r.get("size") else 0,
+                name_mangled=r.get("name_mangled", ""),
+                name=r.get("name", ""),
+                sources=srcs,
+            ))
+    return out
+
+
 def merge(streams: list[list[Sym]]) -> dict[int, Sym]:
     table: dict[int, Sym] = {}
     for stream in streams:
@@ -173,20 +201,24 @@ def merge(streams: list[list[Sym]]) -> dict[int, Sym]:
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--target", required=True, help="logical module name (e.g. sysCore)")
+    ap.add_argument("--map", dest="base_map",
+                    help="existing <mod>_map.csv to overlay onto (preserves its labels/statics)")
     ap.add_argument("--exports", help="pe_symbols.py CSV for this module (authoritative export names)")
-    ap.add_argument("--labels", action="append", default=[], help="disassembler CSV(s); repeatable")
+    ap.add_argument("--labels", action="append", default=[], help="disassembler/.ilk CSV(s); repeatable")
     ap.add_argument("--image-base", type=lambda s: int(s, 0), help="PE image base if no --exports (default 0x10000000)")
     ap.add_argument("-o", "--out", help="output CSV (default: stdout)")
     args = ap.parse_args(argv)
 
     bases: list[int] = []
     streams: list[list[Sym]] = []
+    if args.base_map:
+        streams.append(read_map(args.base_map))
     if args.exports:
         streams.append(read_exports(args.exports, bases))
     for lab in args.labels:
         streams.append(read_labels(lab))
     if not streams:
-        ap.error("need --exports and/or --labels")
+        ap.error("need --map, --exports and/or --labels")
 
     image_base = bases[0] if bases else (args.image_base if args.image_base is not None else 0x10000000)
     table = merge(streams)

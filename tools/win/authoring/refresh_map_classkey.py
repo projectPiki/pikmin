@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-r"""Refresh stale aggregate class-keys in a module's symbol-map ``name_mangled``
+r"""DEPRECATED (2026-07-12): superseded by the `.ilk` overlay (see README ★ section /
+ilk_map.py) — the `.ilk` carries the exact class-key for every symbol. Kept for reference.
+
+Refresh stale aggregate class-keys in a module's symbol-map ``name_mangled``
 column so the carved objdiff *target* spells references the same way the current
 base does.
 

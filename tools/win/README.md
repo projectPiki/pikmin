@@ -29,6 +29,53 @@ label.
                               config/GPIE01_01/win/<name>_map.csv   (crown jewel)
 ```
 
+## ★ The `.ilk` ground-truth overlay (authoritative — 2026-07-12)
+
+The shipped `<module>.ilk` (Microsoft Linker Database) is now **fully decoded** — see
+[`ILK_FORMAT.md`](ILK_FORMAT.md) and the dependency-free reader
+[`authoring/ilk.py`](authoring/ilk.py). It hands us, for **every external symbol**, the
+exact decorated name, real body RVA, incremental thunk, COFF type, and owning object —
+the linker's own ground truth. This supersedes most of the heuristic name→address
+machinery below. The flow:
+
+```
+<module>.ilk --ilk.py/ilk_map.py--> <module>_ilk.csv  (rva,kind,size,name_mangled,name,source=ilk)
+                                            |
+   existing <module>_map.csv --merge_symbols.py --map ... --labels <module>_ilk.csv-->
+                                            |
+                              <module>_map.csv   (ilk name_mangled wins: top precedence)
+```
+
+```sh
+python tools/win/authoring/ilk_map.py plugPiki -o plugPiki_ilk.csv       # emit the .ilk stream
+python tools/win/authoring/merge_symbols.py --target plugPiki \
+    --map config/GPIE01_01/win/plugPiki_map.csv --labels plugPiki_ilk.csv \
+    -o config/GPIE01_01/win/plugPiki_map.csv                              # overlay in place
+ninja -f build/win/build.ninja target                                    # re-carve
+```
+
+Applied 2026-07-12: plugPiki byte-exact **41.2% → 55.8%** of the real binary, sysCore
+30.0% → 30.8%, total **39.5% → 52.1%** (the map gained +8591 addresses + ~6400 exact
+decorations the sparse Ghidra map lacked). `completeness.py` now takes its denominator
+from `ilk_map.ground_truth_functions` (complete + address-anchored), so no module is a
+proxy any more.
+
+**The `.ilk` also acts as a discrepancy oracle.** Where our source's decoration differs
+from the linker's, the overlay reveals it — dominantly the integer-typedef mangling
+(source `unsigned long`/`unsigned char` = `K`/`E` vs the original `__intN` family
+`_I`/`_E`). Those cases are written to `build/win/ilk_signature_fixups_<mod>.txt`,
+grouped by owning TU, as a targeted source-fix worklist (fix the typedefs → those
+functions become byte-matchable).
+
+**Superseded by this overlay** (kept for reference / statics, but no longer the primary
+path): `backfill_map_names.py` (empty `name_mangled` — the overlay fills them
+authoritatively), `refresh_map_classkey.py` (struct/class key — the overlay has the
+exact key), `ilk_layout.py`/`ilk_functions.py` (old, partially-wrong `.ilk` decode —
+use `ilk.py`), and the name half of `ilk_reconcile.py`. The vtable/autodraft/pair
+tools still help for the `.ilk`'s blind spot (file-local statics, which have no `.ilk`
+record). See [`SCAFFOLD_WORKLIST.md`](SCAFFOLD_WORKLIST.md) for the not-yet-started
+modules' source files, derived the same way.
+
 ## Interchange schema
 
 Both disassembler exporters emit the same 6-column CSV so the merge is uniform:
@@ -417,11 +464,34 @@ Keying by name inherently deduplicates the inline-COMDAT copies, so no
 
 ```
 python tools/win/authoring/completeness.py plugPiki sysCore --canon   # needs build/win/report.json
+python tools/win/authoring/completeness.py plugPiki sysCore --data-worklist build/win/data_worklist.txt
 ```
 
-Latest (2026-07-05): plugPiki **33.8%** of real binary byte-exact (55.7% coverage),
-sysCore **36.2%** (58.7%), total **34.1%**. (sysCore's `.ilk` extracts a partial
-1461-fn denominator - see the `ilk_reconcile` caveat - so its number is a proxy.)
+It reports the same thing for **data**, and does not take that from the objdiff report:
+objdiff's `total_data` is again the data we *emit*, and under `/Od` every COMDAT string,
+fp-constant and vftable is emitted in each TU that uses one, so the report counts the
+same bytes dozens of times over. Instead the denominator is every DATA symbol the `.ilk`
+knows (sized by the gap to the next symbol in its PE section) and the numerator is our
+base objects' data symbols **deduped by decorated name**, each judged by
+`pe_extract.data_verdict` - the same test the carved target is scored on, so metric and
+carve cannot drift apart. Three things are reported apart from the byte total, because
+lumping them in would lie in one direction or the other:
+
+* **`.bss`** - uninitialised, so zeros on both sides; counted as globals *located* in the
+  original, never as bytes matched.
+* **file-local statics** - the `.ilk` records no name for them (a documented hard limit),
+  so they can never be name-matched: neither credited nor charged.
+* **our external data with no `.ilk` name** - the linker recorded *every* external, so a
+  miss here is a real disagreement with the original (a wrong type, a stray `const`, a
+  global the original never had), not a tooling gap. `--data-worklist` writes them out;
+  it is the data analogue of the `.ilk` signature fixups. Two found immediately:
+  `gridStrings` is `char const**` where the original has `char**`, and `Reaction::info` is
+  `char**` where the original has `Reaction::Info*`.
+
+Latest (2026-07-13): functions - plugPiki **57.0%** of real binary byte-exact, sysCore
+**33.2%**, total **53.5%** (9878/11848 coverage). Data - total **55.2%** of real-binary
+data bytes byte-exact (156911 / 284325), 59.9% coverage; 153/281 uninitialised globals
+located; 836 external data symbols absent from the original (the worklist).
 
 ## `.ilk` object layout - `ilk_layout.py`
 
@@ -646,19 +716,46 @@ sysCore + plugPiki link clean; sysCore whole-image reccmp 53.52% (/FORCE) -> 77.
 
 ## Data carving - `pe_extract.py --no-data` opt-out (W-DATA carver)
 
-`pe_extract.py` now carves data sections into the objdiff target alongside `.text`,
-so strings, fp-constant pools and vftables are diffed for the first time.
-**Mechanism:** a base relocation names every symbol a function or vftable references
-(`??_C@...`, `??_7X@@6B@`) and the carved DLL bytes at the aligned offset give its
-address - so discovery seeds from code (only functions that carved byte-identical
-*modulo relocations*, so base reloc offsets line up with the DLL operands), then
-BFS's through data->data pointers (pointer arrays, vftable slots). Each discovered
-symbol's bytes are carved from the DLL into `.rdata`/`.data`; code and vftable-slot
-relocations are named after the base's target so objdiff pairs them (`.bss` /
-uninitialised data is skipped in this first slice). `completeness.py` reports the
-result (matched/total data bytes); `--no-data` restores the old `.text`-only carve
-for A/B. Result (2026-07-05): **sysCore 22838/22842 data bytes byte-exact (100%),
-plugPiki 59526/62813 (94.8%)** - with **zero** change to the function metric.
+`pe_extract.py` carves `.rdata` / `.data` / `.bss` into the objdiff target alongside
+`.text`, so strings, fp-constant pools, vftables and globals are diffed like code.
+
+**Finding a data symbol's address in the original.** Primarily *by name*: the `.ilk`
+overlay put the linker's own record of every EXTERNAL data symbol - exact decorated
+name and real RVA - into the map, so a string, fp-constant, vftable or global is now a
+lookup (with the class-key `U`/`V` bridge, since a global's decoration encodes the
+struct-vs-class key of its type just as a function's does). Only **file-local statics**
+still have to be *discovered*, because the `.ilk` records no name for them at all: seed
+from functions that carved byte-identical *modulo relocations* (so the base's reloc
+offsets line up with the DLL's operands and can be trusted to name what each site
+references), then BFS through data->data pointers. The map wins any disagreement, and
+`-v` prints a VA-conflict count that should stay at 0.
+
+**Splitting.** Only COMDAT data (all of `.rdata`) gets a section to itself; plain
+globals share one `.data` / `.bss` section per TU, several symbols deep, so a data
+section is split at its symbol boundaries - each symbol owning `[value, next value)`
+and the slice of the section's relocations inside it.
+
+**`.bss`.** The image has no `.bss` section: MSVC merges it into `.data` as a zero-fill
+tail past `SizeOfRawData` (sysCore's `.data` is 0x11e3c virtual but only 0x2000 raw).
+Those bytes exist in the running image but not in the file, so they are read through
+`PEFile.image_bytes()`, which returns file bytes for the raw-backed prefix and zeros for
+the tail - a naive file slice reads straight into `.idata` and hands back garbage.
+Being uninitialised, `.bss` is **zeros on both sides**, so byte-comparing it is
+vacuously perfect: it is carved for object layout and a real link, and its real content
+as a signal is *which* uninitialised globals exist in the original, which the name
+lookup itself establishes.
+
+**Pointer slots are named after what the ORIGINAL points at**, not after the base's own
+target, and this is the whole point of diffing a vftable. (Naming them after the base -
+as this once did - makes every slot pair by construction and report a match no matter
+which function it actually holds. It was hiding, among other things, a whole-vtable slot
+shift in `CoreNode`/`Node`: our virtuals are declared in the wrong order and `genAgeNode`
+is missing outright.) A target the map cannot name at all, or that differs from the
+base's only by the class key, still defers to the base's name.
+
+`--no-data` restores the `.text`-only carve for A/B. Result (2026-07-13): carved data
+**100 KB -> 282 KB**, byte-exact data bytes **82 KB -> 124 KB**, with **zero** change to
+the function metric (20326/26035 before and after).
 
 ## Where the disassembler dumps live
 

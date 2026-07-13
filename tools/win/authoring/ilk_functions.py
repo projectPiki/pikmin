@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-r"""The per-function inventory of a shipped module, spined on the `.ilk`'s own
+r"""DEPRECATED (2026-07-12): superseded by ilk.py / ilk_map.py, which enumerate the
+`.ilk` symbol table completely (name + real RVA + owning TU) via the hash table. Kept
+for reference. See ILK_FORMAT.md.
+
+The per-function inventory of a shipped module, spined on the `.ilk`'s own
 section-contribution table, for the Pikmin Windows (VC6/PE) decomp.
 
 Where `ilk_reconcile.py` works from the `.ilk` *name* table (partial for sysCore --
