@@ -96,6 +96,7 @@ enum CinPlayBackMode {
  * @note Size: 0x30.
  */
 class SceneData : public CoreNode {
+public:
 	SceneData()
 	    : CoreNode("")
 	{
@@ -176,6 +177,7 @@ enum CineActorFlags {
  * @note Size: 0x1A0.
  */
 class ActorInstance : public CoreNode {
+public:
 	ActorInstance()
 	    : CoreNode("")
 	{
@@ -247,7 +249,7 @@ class ActorInstance : public CoreNode {
  * @note Size: 0x1DC.
  */
 class SceneCut : public CoreNode {
-
+public:
 	/// Default constructor.
 	SceneCut()
 	    : CoreNode("")
@@ -297,7 +299,7 @@ class SceneCut : public CoreNode {
  * @note Size: 0x34.
  */
 class CineShapeObject : public CoreNode {
-
+public:
 	/// Default constructor.
 	CineShapeObject()
 	    : CoreNode("")
@@ -330,7 +332,7 @@ class CineShapeObject : public CoreNode {
  * @note Size: 0x2E8.
  */
 class CinematicPlayer {
-
+public:
 	/// Constructor - initialises given cutscene file.
 	CinematicPlayer(immut char* cinFilePath);
 

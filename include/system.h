@@ -118,6 +118,7 @@ struct DirEntry : public CoreNode {
  * @brief TODO
  */
 class BinobjInfo : public GfxobjInfo {
+public:
 	BinobjInfo()
 	    : mData(nullptr)
 	{
@@ -163,6 +164,7 @@ enum {
  * @note Size: 0x244.
  */
 class StdSystem {
+public:
 	StdSystem();
 
 	void onceInit();
@@ -369,6 +371,7 @@ struct SymbolInfo {
  * @note Size: 0x334.
  */
 class System : public StdSystem {
+public:
 	System();
 
 	virtual void initSoftReset();                                                                    // _08

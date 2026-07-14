@@ -11,6 +11,7 @@ class NVector3fIO;
  * @brief TODO
  */
 class PeveCondition {
+public:
 	PeveCondition();
 
 	virtual bool isMet() = 0; // _08

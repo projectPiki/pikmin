@@ -14,7 +14,7 @@ class TAIeffectAttackParam;
  * @brief TODO
  */
 class TAIeffectAttackEventCallBack {
-
+public:
 	virtual bool hitCreature(TAIeffectAttackParam*, Creature*) { return false; }                                    // _08
 	virtual bool hitCreature(TAIeffectAttackParam*, Creature*, Vector3f) { return false; }                          // _0C
 	virtual bool hitCreature(zen::particleGenerator*, TAIeffectAttackParam*, Creature*, Vector3f) { return false; } // _10
@@ -30,6 +30,7 @@ class TAIeffectAttackEventCallBack {
  * @brief TODO
  */
 class TAIeffectAttackParam {
+public:
 	TAIeffectAttackParam() { init(); }
 
 	void init()

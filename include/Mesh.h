@@ -10,6 +10,7 @@ class MtxGroup;
  * @brief TODO
  */
 class Mesh : public CoreNode {
+public:
 	Mesh()
 	    : CoreNode("mesh")
 	{

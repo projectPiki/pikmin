@@ -26,6 +26,7 @@ class UfoShapeObject;
  * @note Size: 0x18.
  */
 class ItemShapeObject {
+public:
 	ItemShapeObject(Shape*, immut char*, immut char*);
 
 	Shape* mShape;            // _00
@@ -76,7 +77,7 @@ public:
  * @brief TODO.
  */
 class ItemMgr : public PolyObjectMgr {
-
+public:
 	/**
 	 * @brief TODO
 	 *
@@ -142,6 +143,7 @@ class ItemMgr : public PolyObjectMgr {
  * @note Size: 0x64.
  */
 class MeltingPotMgr : public CreatureNodeMgr {
+public:
 	MeltingPotMgr(ItemMgr*);
 
 	virtual ~MeltingPotMgr() { } // _48 (weak)

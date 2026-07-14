@@ -18,13 +18,14 @@ class Joint;
  * @brief TODO
  */
 class Joint : public CoreNode {
-
+public:
 	enum VisibilityFlags {
 		NotVisible = 0,
 		Visible    = 1,
 	};
 
 	class MatPoly : public CoreNode {
+	public:
 		MatPoly()
 		    : CoreNode("matpoly")
 		{

@@ -22,6 +22,7 @@ class RoutePoint;
  * @brief Base node class for editable nodes in the route editor
  */
 class EditNode : public CoreNode {
+public:
 	EditNode(immut char* name)
 	    : CoreNode(name)
 	{
@@ -38,6 +39,7 @@ class EditNode : public CoreNode {
  * @brief Link between route points in the navigation graph
  */
 class RouteLink : public CoreNode {
+public:
 	RouteLink()
 	    : CoreNode("rp")
 	{
@@ -53,6 +55,7 @@ class RouteLink : public CoreNode {
  * @brief Navigation waypoint in the route system
  */
 class RoutePoint : public CoreNode {
+public:
 	RoutePoint();
 
 	void loadini(CmdStream* stream);
@@ -78,6 +81,7 @@ class RoutePoint : public CoreNode {
  * @note Size: 0xC0.
  */
 class RouteGroup : public EditNode {
+public:
 	RouteGroup();
 
 	virtual void render2d(Graphics& gfx, int& textHeight); // _14
@@ -141,7 +145,7 @@ enum {
  * @note Size: 0xC4.
  */
 class WayPoint {
-
+public:
 	/**
 	 * @brief Stores pathfinding costs to each goal type (onions/UFO)
 	 * @note This is completely stripped in retail and is only exposed in the DLL.
@@ -197,6 +201,7 @@ public:
 	 * @brief Container for a group of waypoints
 	 */
 	class Group {
+	public:
 		int getNumPoints() { return mNumPoints; }
 
 		WayPoint* mWayPoints; ///< _00
@@ -260,6 +265,7 @@ public:
 	 * @brief Stores waypoint visit information during pathfinding
 	 */
 	class Buffer {
+	public:
 		Buffer()
 		{
 			mDirection   = 0xFF;
@@ -290,6 +296,7 @@ public:
 	 * @note Size: 0x28.
 	 */
 	class Client {
+	public:
 		Buffer* mBuffer;           ///< _00, Path buffer
 		int mStartWpIdx;           ///< _04, Starting waypoint index
 		int mDestWpIdx;            ///< _08, Destination waypoint index

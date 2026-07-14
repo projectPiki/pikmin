@@ -7,6 +7,7 @@
  * @brief TODO
  */
 class NFunction {
+public:
 	virtual f32 getValue(f32) = 0; // _08
 
 	// _00 = VTBL
@@ -18,6 +19,7 @@ class NFunction {
  * @note Size: 0xC.
  */
 class NPolynomialFunction : public NFunction {
+public:
 	NPolynomialFunction() { }
 	NPolynomialFunction(f32*, int);                  // unused/inlined
 	NPolynomialFunction(f32*, immut NPolynomialFunction&); // unused/inlined
@@ -98,6 +100,7 @@ struct NVibrationFunction : public NFunction {
  * @brief TODO
  */
 class NFunction3D {
+public:
 	NFunction3D(); // unused/inlined
 
 	void outputPosition(f32, NVector3f&);

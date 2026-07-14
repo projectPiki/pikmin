@@ -10,7 +10,7 @@
  * @note Size: 0xF8.
  */
 class KeyConfig : public Node {
-
+public:
 	/**
 	 * @brief TODO
 	 *

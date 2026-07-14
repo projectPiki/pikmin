@@ -31,6 +31,7 @@ enum PcamVibrationEventIDs {
  * @note Size: 0x30.
  */
 class PcamCameraManager : public Node {
+public:
 	PcamCameraManager(Camera*, Controller*);
 
 	virtual void update(); // _10

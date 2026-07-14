@@ -9,6 +9,7 @@ class Creature;
  * @brief TODO
  */
 class Condition {
+public:
 	Condition() { }
 
 	virtual bool satisfy(Creature*) immut { return true; } // _08

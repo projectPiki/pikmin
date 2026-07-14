@@ -17,7 +17,7 @@ class Stream;
  */
 template <typename T>
 class NPool {
-
+public:
 	void newObject();
 	void deleteObject(T*);
 	void deleteObject(int);

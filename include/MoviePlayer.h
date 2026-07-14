@@ -15,6 +15,7 @@ class Vector3f;
  * @note Size: 0x8.
  */
 class MovieListInfo {
+public:
 	int mMovieID;             // _00
 	immut char* mCinFileName; // _04
 };
@@ -35,6 +36,7 @@ struct MovieTransInfo {
  * @note Size: 0x60.
  */
 class MovieInfo : public CoreNode {
+public:
 	MovieInfo()
 	    : CoreNode("")
 	{

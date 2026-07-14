@@ -13,6 +13,7 @@ class String;
  * Size: 0x8.
  */
 class Stream {
+public:
 	Stream() { }
 
 	// _04 = VTBL
@@ -47,6 +48,7 @@ class Stream {
  * @brief TODO
  */
 class RandomAccessStream : public Stream {
+public:
 	virtual int getPosition() { return 0; }                          // _58 (weak)
 	virtual int getPending() { return getLength() - getPosition(); } // _44 (weak)
 	virtual void setPosition(int) { }                                // _5C (weak)
@@ -104,6 +106,7 @@ class RandomAccessStream : public Stream {
  * @note Size: 0x20.
  */
 class BufferedInputStream : public RandomAccessStream {
+public:
 	BufferedInputStream()
 	{
 		mBuffer = nullptr;
@@ -134,6 +137,7 @@ class BufferedInputStream : public RandomAccessStream {
  * @brief TODO
  */
 class RamStream : public RandomAccessStream {
+public:
 	inline RamStream(void* buffer, int size)
 	{
 		mBufferAddr = buffer;

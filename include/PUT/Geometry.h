@@ -8,6 +8,7 @@
  * @brief TODO
  */
 class PUTPoint {
+public:
 	PUTPoint()
 	{
 		x = 0;
@@ -23,6 +24,7 @@ class PUTPoint {
  * @note Size: 0x8.
  */
 class PUTRect {
+public:
 	PUTRect() { set(0, 0, 0, 0); }
 	PUTRect(int maxX, int maxY) { set(0, 0, maxX, maxY); }
 	PUTRect(int x0, int y0, int x1, int y1) { set(x0, y0, x1, y1); }

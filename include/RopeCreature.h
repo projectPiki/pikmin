@@ -27,6 +27,7 @@ struct RopeProp : public CreatureProp {
  * @brief TODO
  */
 class RopeCreature : public Creature {
+public:
 	RopeCreature(CreatureProp*);
 
 	virtual bool needShadow();       // _90 (weak)

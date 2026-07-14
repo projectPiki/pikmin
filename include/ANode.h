@@ -8,6 +8,7 @@
  * @note 'Age' is the system used for debugging in the Windows version.
  */
 class ANode {
+public:
 	virtual int getAgeNodeType() { return 0; } // _08 (weak)
 
 	// _00 = VTBL

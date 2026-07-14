@@ -50,7 +50,7 @@ enum TimeSettingType {
  * @note Size: 0x13F8.
  */
 class TimeSetting {
-
+public:
 	/// Constructs a new time setting, with all default parallel lights, colour, and fog settings.
 	TimeSetting()
 	{
@@ -132,6 +132,7 @@ class TimeSetting {
  * @note Size: 0x1418.
  */
 class DayMgr {
+public:
 	DayMgr(MapMgr* map, Controller* controller);
 
 	void menuBIncrease(Menu& parent);

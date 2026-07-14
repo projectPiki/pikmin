@@ -17,7 +17,7 @@ class RandomAccessStream;
  * @note Size: 0x4.
  */
 class ayuID {
-
+public:
 	/// Constructs a blank ID.
 	ayuID() { mID = 0; }
 
@@ -81,7 +81,7 @@ struct BaseParm {
  * @note Size: 0x4 (0x8 in DLL).
  */
 class Parameters {
-
+public:
 #ifdef WIN32
 	/**
 	 * @brief Constructs an empty (named) parameters list (DLL only).

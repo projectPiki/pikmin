@@ -50,7 +50,7 @@ class Light;
  * @note Size: 0xB4.
  */
 class Menu : public Node {
-
+public:
 	/**
 	 * @brief `MenuStateType`: Operating states that a debug menu can be in.
 	 */
@@ -105,6 +105,7 @@ class Menu : public Node {
 	 * @note Size: 0x14.
 	 */
 	class KeyEvent {
+	public:
 		KeyEvent(int eventType, int triggerKeys, IDelegate1<Menu&>* callback);
 
 		void insertAfter(KeyEvent* event);
@@ -123,6 +124,7 @@ class Menu : public Node {
 	 * @note Size: 0x28.
 	 */
 	class MenuItem {
+	public:
 		MenuItem(int itemType, int data, char* label, IDelegate1<Menu&>* confirmCallback);
 
 		bool checkEvents(Menu* parentMenu, int eventMask);

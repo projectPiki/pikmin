@@ -29,6 +29,7 @@ class particleGenerator;
  * @brief TODO
  */
 class Interaction {
+public:
 	inline Interaction(Creature* owner)
 	    : mOwner(owner)
 	{
@@ -80,6 +81,7 @@ struct InteractAttack : public Interaction {
  * @brief TODO
  */
 class InteractBikkuri : public Interaction {
+public:
 	InteractBikkuri(Creature* owner)
 	    : Interaction(owner)
 	{
@@ -157,6 +159,7 @@ struct InteractBubble : public Interaction {
  * @brief TODO
  */
 class InteractBuild : public Interaction {
+public:
 	InteractBuild(Creature* owner, int stage, f32 rate)
 	    : Interaction(owner)
 	{
@@ -241,6 +244,7 @@ struct InteractFire : public Interaction {
  * @brief TODO
  */
 class InteractFlick : public Interaction {
+public:
 	inline InteractFlick(Creature* owner, f32 knockback, f32 damage, f32 angle)
 	    : Interaction(owner)
 	{
@@ -338,6 +342,7 @@ struct InteractHitEffect : public Interaction {
  * @brief TODO
  */
 class InteractKill : public Interaction {
+public:
 	InteractKill(Creature* owner, int p2)
 	    : Interaction(owner)
 	{
@@ -357,6 +362,7 @@ class InteractKill : public Interaction {
  * @brief TODO
  */
 class InteractPress : public Interaction {
+public:
 	inline InteractPress(Creature* owner, f32 damage)
 	    : Interaction(owner)
 	{
@@ -440,6 +446,7 @@ struct InteractSlimeAttack : public Interaction {
  * @brief TODO
  */
 class InteractSpore : public Interaction {
+public:
 	InteractSpore(Creature* owner)
 	    : Interaction(owner)
 	{
@@ -472,6 +479,7 @@ struct InteractSuck : public Interaction {
  * @brief TODO
  */
 class InteractSwallow : public Interaction {
+public:
 	inline InteractSwallow(Creature* owner, CollPart* mouthPart, int p3)
 	    : Interaction(owner)
 	{

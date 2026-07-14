@@ -17,6 +17,7 @@ class Quat;
  * @note Size: 0xC.
  */
 class Vector3f {
+public:
 	Vector3f() { x = y = z = 0.0f; }
 
 	Vector3f(const f32& _x, const f32& _y, const f32& _z)
@@ -241,6 +242,7 @@ class Vector3f {
  * @note Size: 0x8.
  */
 class Vector2f {
+public:
 	Vector2f() { }
 	Vector2f(const f32& _x, const f32& _y)
 	{
@@ -275,6 +277,7 @@ class Vector2f {
  * @note Size: 0x8.
  */
 class Vector2i {
+public:
 	void read(Stream& stream)
 	{
 		x = stream.readInt();
@@ -302,6 +305,7 @@ class Vector2i {
  * @note Size: 0x10.
  */
 class Quat {
+public:
 	Quat() { }
 
 	Quat(f32 _x, f32 _y, f32 _z, f32 _s) { set(_x, _y, _z, _s); }

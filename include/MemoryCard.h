@@ -18,6 +18,7 @@ extern u8 cardData[CARD_DATA_SIZE];
  * @note Size: 0x28.
  */
 class CardQuickInfo {
+public:
 	CardQuickInfo() { mSaveStatus = 0; }
 
 	int mMemCardSaveIndex;   ///< _00, index of save file on actual memory card (0-indexed).

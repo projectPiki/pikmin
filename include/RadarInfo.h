@@ -11,13 +11,14 @@ class Vector3f;
  * @brief TODO
  */
 class RadarInfo {
-
+public:
 	/**
 	 * @brief TODO
 	 *
 	 * @note Size: 0x18.
 	 */
 	class PartsInfo : public CoreNode {
+	public:
 		PartsInfo()
 		    : mPart(nullptr)
 		{

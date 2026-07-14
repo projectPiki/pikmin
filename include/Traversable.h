@@ -10,6 +10,7 @@ class Creature;
  * @brief TODO.
  */
 class Traversable {
+public:
 	inline Traversable()
 	    : _04(0)
 	{

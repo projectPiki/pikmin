@@ -12,6 +12,7 @@ class Graphics;
  * @note Size: 0x14.
  */
 class LoadIdler : public CoreNode {
+public:
 	LoadIdler()
 	    : CoreNode("")
 	{

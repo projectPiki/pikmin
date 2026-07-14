@@ -13,6 +13,7 @@ class Teki;
  * @brief TODO
  */
 class TaiAction {
+public:
 	inline TaiAction(int nextState)
 	    : mNextState(nextState)
 	{
@@ -163,6 +164,7 @@ struct TaiDependenceAction : public TaiAction {
  * @brief TODO
  */
 class TaiState {
+public:
 	TaiState(int count);
 
 	virtual void start(Teki& teki);                      // _08

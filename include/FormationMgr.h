@@ -58,6 +58,7 @@ struct Spine {
  * @brief TODO
  */
 class FormPoint {
+public:
 	FormPoint(); // unused/inlined
 
 	Vector3f getPos();

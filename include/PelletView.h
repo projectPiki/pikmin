@@ -12,6 +12,7 @@ class Matrix4f;
  * @brief TODO
  */
 class PelletView {
+public:
 	inline PelletView()
 	    : mPellet(nullptr)
 	{

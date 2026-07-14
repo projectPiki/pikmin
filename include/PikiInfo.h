@@ -4,6 +4,7 @@
 #include "types.h"
 
 class PikiInfo {
+public:
 	PikiInfo();
 
 	void addFormationPiki();

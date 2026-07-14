@@ -107,7 +107,7 @@ struct TitlesMovieInterface : public GameInterface {
  * @note Size: 0xA4C.
  */
 class TitleSetupSection : public Node {
-
+public:
 	/**
 	 * @brief Display states the title screen can be in.
 	 */

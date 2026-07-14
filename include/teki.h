@@ -122,6 +122,7 @@ enum {
  * @brief TODO
  */
 class TekiInteractionKey {
+public:
 	TekiInteractionKey(int type, immut Interaction* interaction);
 
 	int mInteractionType;            // _00
@@ -160,6 +161,7 @@ public:
  * @brief TODO
  */
 class TekiShapeObject {
+public:
 	TekiShapeObject(Shape*);
 
 	void genAge(AgeServer&);
@@ -173,6 +175,7 @@ class TekiShapeObject {
  * @brief TODO
  */
 class TekiMessage {
+public:
 	TekiMessage(int, NTeki*);
 
 	int mMsg;     // _00
@@ -735,6 +738,7 @@ protected:
  * @brief TODO
  */
 class Teki : public YTeki {
+public:
 	Teki();
 
 	// _00       = VTBL

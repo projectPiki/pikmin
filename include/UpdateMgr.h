@@ -10,6 +10,7 @@ class UpdateMgr;
  * @brief TODO
  */
 class UpdateContext {
+public:
 	UpdateContext();
 
 	bool updatable();
@@ -29,6 +30,7 @@ class UpdateContext {
  * @brief TODO
  */
 class UpdateMgr {
+public:
 	UpdateMgr();
 
 	void update();

@@ -11,6 +11,7 @@ class Teki;
  * @brief TODO
  */
 class TekiCondition : public Condition {
+public:
 	virtual bool satisfy(Creature*) immut { return true; } // _08
 
 	// _00     = VTBL
@@ -21,6 +22,7 @@ class TekiCondition : public Condition {
  * @brief TODO
  */
 class TekiAndCondition : public TekiCondition {
+public:
 	TekiAndCondition(immut Condition* condA, immut Condition* condB)
 	{
 		mConditionA = condA;
@@ -107,6 +109,7 @@ struct TekiAttackableCondition : public TekiCondition {
  * @brief TODO
  */
 class TekiCollecTargetPelletCondition : public TekiCondition {
+public:
 	TekiCollecTargetPelletCondition(Teki* collec, int carryPower)
 	{
 		mCollec     = collec;
@@ -138,6 +141,7 @@ struct TekiCreaturePointerCondition : public TekiCondition {
  * @brief TODO
  */
 class TekiDistanceCondition : public TekiCondition {
+public:
 	TekiDistanceCondition(Teki* teki, f32 distance)
 	{
 		mTeki     = teki;
@@ -192,6 +196,7 @@ struct TekiLowerRangeCondition : public TekiCondition {
  * @brief TODO
  */
 class TekiNapkidShortRangeCondition : public TekiCondition {
+public:
 	TekiNapkidShortRangeCondition(Teki* teki)
 	    : mTeki(teki)
 	{
@@ -208,6 +213,7 @@ class TekiNapkidShortRangeCondition : public TekiCondition {
  * @brief TODO
  */
 class TekiNapkidTargetPikiCondition : public TekiCondition {
+public:
 	TekiNapkidTargetPikiCondition(Teki* teki)
 	    : mTeki(teki)
 	{
@@ -284,6 +290,7 @@ struct TekiPositionCircleDistanceCondition : public TekiCondition {
  * @brief TODO
  */
 class TekiPositionDistanceCondition : public TekiCondition {
+public:
 	TekiPositionDistanceCondition(Vector3f pos, f32 dist)
 	{
 		mPosition.input(pos);
@@ -397,6 +404,7 @@ struct TekiTypeCondition : public TekiCondition {
  * @brief TODO
  */
 class TekiVisibleCondition : public TekiCondition {
+public:
 	TekiVisibleCondition(Teki* teki) { mTeki = teki; }
 
 	virtual bool satisfy(Creature*) immut; // _08
@@ -410,6 +418,7 @@ class TekiVisibleCondition : public TekiCondition {
  * @brief TODO
  */
 class TekiVisibleHeightCondition : public TekiCondition {
+public:
 	TekiVisibleHeightCondition(Teki* teki) { mTeki = teki; }
 
 	virtual bool satisfy(Creature*) immut; // _08

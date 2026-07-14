@@ -30,6 +30,7 @@ enum PelletCreationType {
  * @note Size: 0x60.
  */
 class PelletAnimInfo : public Parameters, public CoreNode {
+public:
 	PelletAnimInfo();
 
 	PelletShapeObject* createShapeObject();

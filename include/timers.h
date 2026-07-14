@@ -10,6 +10,7 @@ class Font;
  * @note Size: 0x28.
  */
 class TimerInf {
+public:
 	TimerInf(immut char* name)
 	{
 		mNext        = nullptr;
@@ -39,6 +40,7 @@ class TimerInf {
  * @note Size: 0xC.
  */
 class Timers {
+public:
 	Timers()
 	{
 		mTimerList  = nullptr;

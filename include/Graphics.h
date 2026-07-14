@@ -53,6 +53,7 @@ extern GColor GColors[];
  * @note Size: 0x3B8.
  */
 class Graphics {
+public:
 	Graphics();
 
 	void resetMatrixBuffer();
@@ -304,6 +305,7 @@ extern DGXGraphics* gfx;
  * @brief Stripped, only has one unused/inlined function in map
  */
 class GfxInfo {
+public:
 	// unused/inlined:
 	void createCollData(immut Vector3f*, f32);
 

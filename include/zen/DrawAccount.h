@@ -12,6 +12,7 @@ namespace zen {
  * @brief TODO
  */
 class AccountData {
+public:
 	AccountData()
 	{
 		mMinPikiNum  = 0;

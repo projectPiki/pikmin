@@ -12,6 +12,7 @@ namespace zen {
  */
 template <typename A>
 class CallBack1 {
+public:
 	virtual bool invoke(A) = 0; // _08
 
 	// _00 = VTBL
@@ -24,6 +25,7 @@ class CallBack1 {
  */
 template <typename A, typename B>
 class CallBack2 {
+public:
 	virtual bool invoke(A, B) = 0; // _08
 
 	// _00 = VTBL

@@ -58,7 +58,7 @@ struct WorldSpring {
  * @note Size: 0x132B4.
  */
 class RigidBody : public Node {
-
+public:
 	/**
 	 * @brief Stores the physical state of a rigid body at a given simulation step.
 	 *

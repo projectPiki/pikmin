@@ -12,6 +12,7 @@ class NLine;
  * @brief TODO
  */
 class NLine {
+public:
 	NLine(immut NVector3f&, immut NVector3f&);
 	NLine();             // unused/inlined
 	NLine(immut NLine&); // unused/inlined
@@ -49,6 +50,7 @@ class NLine {
  * @brief TODO
  */
 class NPlane {
+public:
 	NPlane(NVector3f& normal, NVector3f& point);
 	NPlane();                                   // unused/inlined
 	NPlane(NVector3f&, f32);                    // unused/inlined
@@ -96,6 +98,7 @@ class NPlane {
  * @brief TODO
  */
 class NSegment : public NLine {
+public:
 	NSegment();                       // unused/inlined
 	NSegment(NVector3f&, NVector3f&); // unused/inlined
 	NSegment(NSegment&);              // unused/inlined

@@ -221,6 +221,7 @@ struct PikiProp : public CreatureProp {
  * @note Size: 0x74.
  */
 class PikiMgr : public MonoObjectMgr {
+public:
 	PikiMgr(Navi*);
 
 	virtual ~PikiMgr() { }                  // _48

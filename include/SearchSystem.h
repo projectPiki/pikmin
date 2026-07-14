@@ -13,6 +13,7 @@ class Creature;
  * @note Size: 0xC.
  */
 class SearchData {
+public:
 	SearchData();
 
 	SmartPtr<Creature> mTargetCreature; // _00

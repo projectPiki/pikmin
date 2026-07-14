@@ -51,6 +51,7 @@ struct NBT {
  * @brief TODO
  */
 class VtxMatrix {
+public:
 	void read(RandomAccessStream& input)
 	{
 		int weights        = input.readShort();
@@ -72,6 +73,7 @@ class VtxMatrix {
  * @brief TODO
  */
 class Envelope {
+public:
 	Envelope()
 	{
 		mIndexCount   = 0;
@@ -90,6 +92,7 @@ class Envelope {
  * @brief TODO
  */
 class MtxGroup {
+public:
 	MtxGroup()
 	{
 		mDepLength  = 0;
@@ -111,7 +114,7 @@ class MtxGroup {
  * @note Size: 0x10.
  */
 class ShapeDynMaterials {
-
+public:
 	/// Constructs an empty animated material container with no connections.
 	ShapeDynMaterials()
 	    : mNext(nullptr)
@@ -142,6 +145,7 @@ enum {
  * @brief TODO
  */
 class DispList : public CoreNode {
+public:
 	DispList()
 	{
 		mFaceNode.initCore("");
@@ -169,6 +173,7 @@ class DispList : public CoreNode {
  * @brief TODO
  */
 class DlobjInfo : public GfxobjInfo {
+public:
 	DlobjInfo();
 };
 
@@ -232,6 +237,7 @@ enum {
  * @brief TODO
  */
 class BaseShape : public CoreNode {
+public:
 	BaseShape();
 
 	virtual void read(RandomAccessStream&); // _0C
@@ -365,6 +371,7 @@ class BaseShape : public CoreNode {
  * @note Size: 0x2B0.
  */
 class Shape : public BaseShape {
+public:
 	Shape();
 
 	virtual void optimize(); // _10
@@ -379,6 +386,7 @@ class Shape : public BaseShape {
  * @note Size: 0x18.
  */
 class CachedShape {
+public:
 	CachedShape() { mPrev = mNext = this; }
 
 	inline void insertAfter(CachedShape* other)

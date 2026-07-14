@@ -57,6 +57,7 @@ enum CollPartType {
  * @brief Minimal room identifier parsed from a stream.
  */
 class BaseRoomInfo {
+public:
 	void read(RandomAccessStream& input) { mJointIndex = input.readInt(); }
 
 	int mJointIndex; // _00, room index
@@ -66,6 +67,7 @@ class BaseRoomInfo {
  * @brief Room descriptor (currently identical to BaseRoomInfo).
  */
 class RoomInfo : public BaseRoomInfo {
+public:
 	// _00-_04 = BaseRoomInfo
 };
 
@@ -75,6 +77,7 @@ class RoomInfo : public BaseRoomInfo {
  * @note Size: 0x54.
  */
 class ObjCollInfo : public CoreNode {
+public:
 	ObjCollInfo()
 	    : CoreNode("")
 	{
@@ -117,6 +120,7 @@ class ObjCollInfo : public CoreNode {
  * @note Size: 0x1C.
  */
 class CollPartUpdater {
+public:
 	virtual Vector3f getPos() = 0; // _08
 	virtual f32 getSize()     = 0; // _0C
 
@@ -133,6 +137,7 @@ class CollPartUpdater {
  * @note Size: 0x68.
  */
 class CollPart {
+public:
 	CollPart();
 
 	bool isStickable();
@@ -189,6 +194,7 @@ class CollPart {
  * @brief Collision event payload linking a collider to the parts involved.
  */
 class CollEvent {
+public:
 	CollEvent(Creature* collider, CollPart* colliderPart, CollPart* selfPart)
 	{
 		mCollider     = collider;
@@ -205,6 +211,7 @@ class CollEvent {
  * @brief Predicate interface for filtering collision parts.
  */
 class CndCollPart {
+public:
 	virtual bool satisfy(CollPart*) { return false; } // _08
 
 	// _00 = VTBL
@@ -282,7 +289,7 @@ private:
  * @brief Serialized triangle collision info.
  */
 class BaseCollTriInfo {
-
+public:
 	void read(RandomAccessStream& input)
 	{
 		mMapCode               = input.readInt();
@@ -309,6 +316,7 @@ class BaseCollTriInfo {
  * @note Size: 0x58 (0x64 in the DLL).
  */
 class CollTriInfo : public BaseCollTriInfo {
+public:
 	CollTriInfo() { }
 
 	void init(RoomInfo* roomInfo, immut Vector3f* vertices);
@@ -340,7 +348,7 @@ class CollTriInfo : public BaseCollTriInfo {
  * @note Size: 0x24.
  */
 class CollGroup {
-
+public:
 	/// Default constructor - resets lists, counts and room index.
 	CollGroup()
 	{
@@ -366,7 +374,7 @@ class CollGroup {
  * @brief Single collision contact.
  */
 class Collision {
-
+public:
 	/// Default constructor (trivial).
 	Collision() { }
 
@@ -383,7 +391,7 @@ class Collision {
  * @note Size: 0x180.
  */
 class CollState {
-
+public:
 	/**
 	 * @brief Status of collision state. Largely guesses from what remains of the functionality.
 	 */

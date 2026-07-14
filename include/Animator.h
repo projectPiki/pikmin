@@ -68,6 +68,7 @@ enum KeyEventTypes {
  * @brief TODO
  */
 class DataChunk {
+public:
 	DataChunk()
 	{
 		mDataIndex = 0;
@@ -144,6 +145,7 @@ class DataChunk {
  * @brief TODO
  */
 class AnimCacheInfo : public CacheInfo {
+public:
 	AnimCacheInfo() { initData(); }
 
 	void initData()
@@ -199,6 +201,7 @@ enum {
  * @brief Information about animation data, read in from a file.
  */
 class AnimDataInfo {
+public:
 	AnimDataInfo() { mFlags = 0; }
 
 	AnimParam mScale[3];       // _00, x y and z
@@ -215,7 +218,7 @@ class AnimDataInfo {
  * @brief TODO
  */
 class AnimData : public CoreNode {
-
+public:
 	AnimData()
 	    : CoreNode("")
 	{
@@ -258,6 +261,7 @@ class AnimData : public CoreNode {
  * @brief TODO
  */
 class AnimDca : public AnimData {
+public:
 	AnimDca(BaseShape*, int)
 	    : AnimData()
 	{
@@ -281,6 +285,7 @@ class AnimDca : public AnimData {
  * @brief TODO
  */
 class AnimDck : public AnimData {
+public:
 	AnimDck(BaseShape*, int);
 	AnimDck(immut char* name)
 	    : AnimData(StdSystem::stringDup(name))
@@ -302,6 +307,7 @@ class AnimDck : public AnimData {
  * @brief TODO
  */
 class AnmobjInfo : public GfxobjInfo {
+public:
 	AnmobjInfo()
 	    : mAnimation(nullptr)
 	{
@@ -322,7 +328,7 @@ class AnmobjInfo : public GfxobjInfo {
  * @note Size: 0x10.
  */
 class AnimKey {
-
+public:
 	/// Default constructor. Initialise everything to 0.
 	AnimKey()
 	{
@@ -377,7 +383,7 @@ class AnimKey {
  * @note Size: 0x74.
  */
 class AnimInfo : public CoreNode {
-
+public:
 #ifdef WIN32
 	virtual void genAge(AgeServer& server);
 #endif
@@ -469,7 +475,7 @@ class AnimInfo : public CoreNode {
  * @note Size: 0x10.
  */
 class AnimContext {
-
+public:
 	/// Default constructor.
 	AnimContext()
 	    : mData(nullptr)
@@ -552,7 +558,7 @@ struct Animator {
  * @note Size: 0xB8.
  */
 class AnimMgr : public CoreNode {
-
+public:
 	/**
 	 * @brief AnimMgr parameters.
 	 *
@@ -619,6 +625,7 @@ struct FrameCacher : public CacheInfo {
  * @note Size: 0x18.
  */
 class AnimFrameCacher {
+public:
 	AnimFrameCacher(int);
 	void updateInfo(AnimCacheInfo*);
 	void removeOldest();

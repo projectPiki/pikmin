@@ -23,6 +23,7 @@ class TotalScoreRecord;
  * @note Why make a whole new identical type when TotalScoreRecord exists.
  */
 class TotalScoreType {
+public:
 	TotalScoreType() { }
 
 	void setDummy()

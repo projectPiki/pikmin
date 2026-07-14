@@ -42,7 +42,7 @@ struct GenFileInfo : public CoreNode {
  * @note Size: 0xA8.
  */
 class StageInfo : public CoreNode {
-
+public:
 	/// Constructed `StageInfo` is for a non-Challenge Mode test map until otherwise overwritten.
 	inline StageInfo()
 	    : CoreNode("stageInfo")

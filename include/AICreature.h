@@ -52,6 +52,7 @@ struct SAIContext {
  * @note Size: 0x304.
  */
 class AICreature : public Creature, public PaniAnimKeyListener {
+public:
 	AICreature(CreatureProp*);
 
 	virtual void collisionCallback(immut CollEvent&);                                       // _A8

@@ -152,6 +152,7 @@ struct particleMdlBase : public zenList {
  * @note Size: 0x80.
  */
 class particleMdl : public particleMdlBase {
+public:
 	particleMdl()
 	{
 		mBBoardColourAnim.mProgress     = 0.0f;
@@ -213,6 +214,7 @@ class particleMdl : public particleMdlBase {
  * @note Size: 0x34.
  */
 class particleChildMdl : public particleMdlBase {
+public:
 	particleChildMdl()
 	{
 		_2C = 0.0f;

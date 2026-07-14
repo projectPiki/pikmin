@@ -9,6 +9,7 @@
  * @brief TODO
  */
 class Grass {
+public:
 	Grass() { }
 
 	bool isAlive() { return mHealth != 0; }
@@ -32,6 +33,7 @@ class Grass {
  * @brief TODO
  */
 class Pebble {
+public:
 	Pebble() { }
 
 	bool isAlive() { return mHealth != 0; }

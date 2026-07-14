@@ -19,6 +19,7 @@ typedef Creature* (*CreatureRestoreFun)(CreatureInf*);
  * @brief TODO
  */
 class BaseInf : public CoreNode {
+public:
 	BaseInf(); // unused/inlined
 
 	virtual void doStore(Creature*) { }         // _10
@@ -61,6 +62,7 @@ struct BPikiInf : public BaseInf {
  * @note Size: 0x4C.
  */
 class CreatureInf : public BaseInf {
+public:
 	CreatureInf(); // unused/inlined
 
 	virtual void doStore(Creature*);   // _10
@@ -173,6 +175,7 @@ struct CreatureInfMgr : public MonoInfMgr {
  * @note Size: 0x24.
  */
 class PikiInfMgr {
+public:
 	PikiInfMgr(); // unused/inlined
 
 	void initGame();

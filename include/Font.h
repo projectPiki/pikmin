@@ -15,6 +15,7 @@ class Texture;
  * @note Size: 0x1C.
  */
 class FontChar {
+public:
 	FontChar()
 	{
 		mTextureX = mTextureY = 0;
@@ -36,6 +37,7 @@ class FontChar {
  * @note Size: 0x10.
  */
 class Font {
+public:
 	void setTexture(Texture*, int, int);
 	int charToIndex(char);
 	int stringWidth(immut char*);

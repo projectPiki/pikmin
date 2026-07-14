@@ -94,6 +94,7 @@ public:
 	 * @note Size: 0xE0.
 	 */
 	class UfoParts : public PaniAnimKeyListener {
+	public:
 		UfoParts() { }
 
 		virtual void animationKeyUpdated(immut PaniAnimKeyEvent&); // _08

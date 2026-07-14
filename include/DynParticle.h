@@ -12,6 +12,7 @@ class Graphics;
  * @note Size: 0xAC.
  */
 class DynParticle : public CoreNode {
+public:
 	DynParticle();
 
 	virtual bool isFree() { return !-mIsFree; }; // _10
@@ -38,6 +39,7 @@ class DynParticle : public CoreNode {
  * @brief TODO
  */
 class DynParticleHeap {
+public:
 	DynParticleHeap(int);
 
 	DynParticle* getFreeOne();

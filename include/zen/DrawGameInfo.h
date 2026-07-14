@@ -22,6 +22,7 @@ namespace zen {
  * @note Size: 0xC.
  */
 class GameInfo {
+public:
 	GameInfo()
 	{
 		mEncodedNextThrowType = 0;

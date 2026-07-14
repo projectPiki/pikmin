@@ -25,7 +25,7 @@ enum GmWinState {
  * @brief Seemingly deprecated window drawing base class.
  */
 class GmWin : public CoreNode {
-
+public:
 	/**
 	 * @brief TODO
 	 */
@@ -79,6 +79,7 @@ struct ContainerWin : public GmWin {
 	 * @brief TODO
 	 */
 	class Listener {
+	public:
 		virtual void informWin(int) = 0; // _08
 
 		// _00 = VTBL
@@ -123,6 +124,7 @@ struct ResultWin : public GmWin {
  * @brief TODO
  */
 class GmWinMgr {
+public:
 	GmWinMgr();
 
 	void addWindow(GmWin*);

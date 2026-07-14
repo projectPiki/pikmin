@@ -104,6 +104,7 @@ enum ShipTextType {
  * @note Size: 0x1C.
  */
 class GameQuickInfo {
+public:
 	u32 mParts;         ///< _00, total number of ship parts collected.
 	u32 mDay;           ///< _04, final in-game day.
 	u32 mBornPikis;     ///< _08, total number of pikmin grown.
@@ -119,6 +120,7 @@ class GameQuickInfo {
  * @note Size: 0x20.
  */
 class GameChalQuickInfo {
+public:
 	int mStageID;                     ///< _00, challenge mode stage ID - see StageID enum.
 	u32 mScore;                       ///< _04, score for this entry.
 	int mRank;                        ///< _08, rank of this score on this course (0-4, 0 being the best).
@@ -184,7 +186,7 @@ struct GameGenNode : public Node {
  * @note Size: 0x24.
  */
 class PlayState : public CoreNode {
-
+public:
 	/**
 	 * @brief Whether we're initialised and ready to save or not.
 	 */
@@ -581,7 +583,7 @@ struct GamePrefs : public CoreNode {
  * @brief TODO
  */
 class GameFlow : public Node {
-
+public:
 	/**
 	 * @brief Global game state parameters, mostly around in-game time.
 	 *

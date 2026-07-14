@@ -4,6 +4,7 @@
 #include "types.h"
 
 class MemHead {
+public:
 	u32 mTagAndSize; // _00, tag in high byte; size in low 24 bits
 	MemHead* mNext;  // _04, next node in list
 	MemHead* mPrev;  // _08, previous node in list
@@ -14,6 +15,7 @@ class MemHead {
  * @brief TODO
  */
 class AyuCache {
+public:
 	AyuCache(u32);
 
 	void init(u32 bufferStart, u32 bufferEnd);
@@ -43,6 +45,7 @@ class AyuCache {
  * @brief TODO
  */
 class AyuStack {
+public:
 	AyuStack() { mIsActive = false; }
 
 	void reset(int resetFlags);
@@ -84,6 +87,7 @@ class AyuStack {
  * @note Size: 0x28.
  */
 class AyuHeap : public AyuStack {
+public:
 	AyuHeap() { }
 
 	void init(immut char* name, int allocFlags, void* stackBase, int stackSizeBytes);

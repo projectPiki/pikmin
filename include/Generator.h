@@ -42,7 +42,7 @@ enum GenCarryOverFlags {
  * @brief Context information for birthing an object via a `Generator`.
  */
 class BirthInfo {
-
+public:
 	/**
 	 * @brief Sets all variables required to birth an object.
 	 *
@@ -199,13 +199,12 @@ struct Factory {
  * @note Size: 0x84.
  */
 class GeneratorCache {
-
 public:
 	/**
 	 * @brief Cache for a particular story mode stage's generator information/state.
 	 */
 	class Cache : public CoreNode {
-
+	public:
 		/// Constructs a blank cache entry with no initialisation (assigned to Impact Site by default).
 		Cache()
 		{
@@ -287,6 +286,7 @@ protected:
  * @note Size: 0x4.
  */
 class GeneratorList {
+public:
 	GeneratorList();
 
 	Generator* findGenerator(int idx);
@@ -333,6 +333,7 @@ struct GenBase : public Parameters {
  * @brief TODO
  */
 class GenObject : public GenBase {
+public:
 	GenObject(u32 id, immut char* name)
 	    : GenBase(id, "object type", name)
 	{
@@ -379,6 +380,7 @@ struct GenObjectActor : public GenObject {
  * @note Size: 0x2C.
  */
 class GenObjectBoss : public GenObject {
+public:
 	GenObjectBoss()
 	    : GenObject('boss', "ボスを生む") // 'generate a boss'
 	{
@@ -520,6 +522,7 @@ struct GenObjectMapObject : public GenObject {
  * @brief TODO
  */
 class GenObjectMapParts : public GenObject {
+public:
 	GenObjectMapParts()
 	    : GenObject('mpar', "マップパーツを生む")                // 'generate map parts',
 	    , _18(this, 1, 1, 1, "p00", "稼動最低人数")              // 'min number of people required'
@@ -680,6 +683,7 @@ struct GenObjectTeki : public GenObject {
  * @brief TODO
  */
 class GenObjectWorkObject : public GenObject {
+public:
 	GenObjectWorkObject(); // unused/inlined
 
 	virtual void doWrite(RandomAccessStream&);           // _08
@@ -732,6 +736,7 @@ public:
  * @brief TODO
  */
 class GenType : public GenBase {
+public:
 	GenType(u32 id, immut char* name)
 	    : GenBase(id, "time type", name)
 	    , mDaysToResurrection(this, 0, 0, 0, "b00", "復活日数") // 'days to resurrection'
@@ -847,6 +852,7 @@ public:
  * @brief TODO
  */
 class GenArea : public GenBase {
+public:
 	GenArea(u32 id, immut char* name)
 	    : GenBase(id, "area type", name)
 	{
@@ -926,6 +932,7 @@ public:
  * @brief TODO
  */
 class Generator : public Node {
+public:
 	Generator();
 	Generator(int);
 

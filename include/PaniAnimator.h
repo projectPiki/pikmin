@@ -14,6 +14,7 @@ class PaniMotionInfo;
  * @brief TODO
  */
 class PaniAnimKeyEvent {
+public:
 	PaniAnimKeyEvent(int eventType)
 	{
 		mEventType = eventType;
@@ -36,7 +37,7 @@ class PaniAnimKeyEvent {
  * @brief TODO
  */
 class PaniAnimKeyListener {
-
+public:
 	virtual void animationKeyUpdated(immut PaniAnimKeyEvent&) = 0; // _08
 
 	// _00 = VTBL
@@ -48,6 +49,7 @@ class PaniAnimKeyListener {
  * @note Size: 0x8.
  */
 class PaniMotion {
+public:
 	PaniMotion(int);
 	PaniMotion(int, int); // unused/inlined
 
@@ -63,6 +65,7 @@ class PaniMotion {
  * @note Size: 0x8.
  */
 class PaniMotionTable {
+public:
 	PaniMotionTable(int);
 
 	PaniMotion* getMotion(int motionIdx) { return mMotions[motionIdx]; }
@@ -193,6 +196,7 @@ enum {
  * @brief TODO
  */
 class PaniPelletAnimator : public PaniAnimator {
+public:
 	PaniPelletAnimator();
 
 	static PaniMotionTable* createMotionTable();
@@ -313,6 +317,7 @@ struct PaniUfoAnimator : public PaniAnimator {
  * @brief TODO
  */
 class PaniMotionInfo {
+public:
 	PaniMotionInfo(int);
 	PaniMotionInfo(int, PaniAnimKeyListener*);
 
@@ -328,6 +333,7 @@ class PaniMotionInfo {
  * @note Size: 0x4.
  */
 class PaniSound {
+public:
 	PaniSound(int soundID)
 	    : mSoundID(soundID)
 	{
@@ -342,6 +348,7 @@ class PaniSound {
  * @note Size: 0x8.
  */
 class PaniSoundTable {
+public:
 	PaniSoundTable(int);
 
 	int getSize() { return mSoundCount; }

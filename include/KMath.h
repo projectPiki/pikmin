@@ -10,6 +10,7 @@ class Matrix4f;
  * @brief TODO
  */
 class KTri {
+public:
 	KTri();
 
 	void set(immut Vector3f& pointA, immut Vector3f& pointB, immut Vector3f& pointC);
@@ -28,6 +29,7 @@ class KTri {
  * @brief TODO
  */
 class KRect {
+public:
 	bool inside(immut Vector3f& point);
 
 	KTri mBotTri; // _00, bottom left point, left side, bottom side
@@ -37,6 +39,7 @@ class KRect {
  * @brief TODO
  */
 class KSegment {
+public:
 	// unused/inlined:
 	KSegment();
 
