@@ -153,8 +153,8 @@ void Spider::drawShape(Graphics& gfx)
 	{
 		Matrix4f transformMtx;
 		// In the DLL, the red debug spheres specific to Beady Long Legs are wrongly rotated and translated due to this mistake.
-		mWorldMtx.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), TERNARY_BUGFIX(MACRO_ARG(Vector3f(0.0f, 0.0f, 0.0f), Vector3f(0.0f, 0.0f, 0.0f)),
-		                                                             MACRO_ARG(Vector3f(1.0f, 1.0f, 1.0f), Vector3f(1.0f, 1.0f, 1.0f))));
+		mWorldMtx.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), TERNARY_BUGFIX(Vector3f(0.0f, 0.0f, 0.0f), Vector3f(1.0f, 1.0f, 1.0f)),
+		                  TERNARY_BUGFIX(Vector3f(0.0f, 0.0f, 0.0f), Vector3f(1.0f, 1.0f, 1.0f)));
 		gfx.mCamera->mLookAtMtx.multiplyTo(mWorldMtx, transformMtx);
 
 		if (getCurrentState() == SPIDERAI_Start) {
