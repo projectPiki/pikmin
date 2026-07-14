@@ -55,6 +55,14 @@ struct WorkObjectNode : public CoreNode {
  */
 class WorkObjectMgr : public ObjectMgr {
 public:
+	/**
+	 * @brief The ILK documents this type.
+	 */
+	struct Info {
+		s32 mType;
+		immut char* mName;
+	};
+
 	WorkObjectMgr();
 
 	virtual Creature* getCreature(int);      // _08

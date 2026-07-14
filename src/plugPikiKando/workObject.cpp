@@ -34,21 +34,13 @@ f32 bridgeFirstPos[5] = { 42.5f, 12.5f, 12.5f, 0.0f, 42.5f };
 f32 bridgeFirstY[5]   = { 10.0f, 0.0f, 0.0f, 0.0f, 10.0f };
 f32 bridgeGrad[5]     = { 0.0f, 8.0f, -8.0f, 0.0f, 0.0f };
 
-/**
- * @brief FABRICATED
- */
-struct WorkObjInfo {
-	s32 mType;
-	immut char* mName;
-};
-
-WorkObjInfo info[] = {
+WorkObjectMgr::Info info[] = {
 	{ 0, "bridge test" },
 	{ 1, "move stone" },
 	{ 2, "..." },
 };
 
-WorkObjInfo shpInfo[] = {
+WorkObjectMgr::Info shpInfo[] = {
 	{ 0, "bridge 4" }, { 1, "slope up 4" }, { 2, "slope down 4" }, { 3, "stone 10" }, { 4, "bridge 13" }, { 5, "meck" },
 };
 
@@ -114,7 +106,7 @@ void WorkObject::doKill()
 int WorkObjectMgr::getNameIndex(immut char* name)
 {
 	// mType == 2 is the end
-	for (WorkObjInfo* i = info; i->mType != 2; i++) {
+	for (Info* i = info; i->mType != 2; i++) {
 		if (!strcmp(i->mName, name)) {
 			return i->mType;
 		}
@@ -130,7 +122,7 @@ int WorkObjectMgr::getNameIndex(immut char* name)
 immut char* WorkObjectMgr::getName(int type)
 {
 	// mType == 2 is the end
-	for (WorkObjInfo* i = info; i->mType != 2; i++) {
+	for (Info* i = info; i->mType != 2; i++) {
 		if (i->mType == type) {
 			return i->mName;
 		}
@@ -146,7 +138,7 @@ immut char* WorkObjectMgr::getName(int type)
 int WorkObjectMgr::getShapeNameIndex(immut char* name)
 {
 	// mType == 5 is the end
-	for (WorkObjInfo* info = shpInfo; info->mType != 5; info++) {
+	for (Info* info = shpInfo; info->mType != 5; info++) {
 		if (!strcmp(info->mName, name)) {
 			return info->mType;
 		}
@@ -162,7 +154,7 @@ int WorkObjectMgr::getShapeNameIndex(immut char* name)
 immut char* WorkObjectMgr::getShapeName(int type)
 {
 	// mType == 5 is the end
-	for (WorkObjInfo* info = shpInfo; info->mType != 5; info++) {
+	for (Info* info = shpInfo; info->mType != 5; info++) {
 		if (info->mType == type) {
 			return info->mName;
 		}
