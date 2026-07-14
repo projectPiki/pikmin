@@ -7,7 +7,7 @@
 /**
  * @brief A generic "event" structure, used solely for the unused Key/Lock system.
  */
-struct Event {
+class Event {
 	Event(int unk, u32 id)
 	{
 		_00 = unk;

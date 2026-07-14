@@ -214,7 +214,7 @@ class AnimDataInfo {
 /**
  * @brief TODO
  */
-struct AnimData : public CoreNode {
+class AnimData : public CoreNode {
 
 	AnimData()
 	    : CoreNode("")
