@@ -6,7 +6,7 @@
 #include "Section.h"
 #include "types.h"
 
-struct CmdStream;
+class CmdStream;
 
 /**
  * @brief Basic context on what in-game days a pattern/file of generators will spawn on.
@@ -41,7 +41,7 @@ struct GenFileInfo : public CoreNode {
  *
  * @note Size: 0xA8.
  */
-struct StageInfo : public CoreNode {
+class StageInfo : public CoreNode {
 
 	/// Constructed `StageInfo` is for a non-Challenge Mode test map until otherwise overwritten.
 	inline StageInfo()

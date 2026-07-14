@@ -3,9 +3,9 @@
 
 #include "types.h"
 
-struct Graphics;
-struct RandomAccessStream;
-struct Vector3f;
+class Graphics;
+class RandomAccessStream;
+class Vector3f;
 
 /**
  * @brief TODO

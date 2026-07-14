@@ -4,11 +4,11 @@
 #include "types.h"
 #include <math.h>
 
-struct Vector3f;
-struct BoundBox;
-struct KTri;
-struct KRect;
-struct KSegment;
+class Vector3f;
+class BoundBox;
+class KTri;
+class KRect;
+class KSegment;
 
 #define SQUARE(v) ((v) * (v))
 

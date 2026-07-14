@@ -10,17 +10,17 @@
 #include "zen/ogSub.h"
 #include <string.h>
 
-struct Controller;
-struct CardQuickInfo;
-struct Graphics;
-struct P2DPicture;
-struct P2DTextBox;
+class Controller;
+class CardQuickInfo;
+class Graphics;
+class P2DPicture;
+class P2DTextBox;
 
 namespace zen {
 
 struct EffectMgr2D;
-struct ogNitakuMgr;
-struct particleGenerator;
+class ogNitakuMgr;
+class particleGenerator;
 
 /**
  * @brief Converts special numeric codes within P2DTextBox strings. Used for dynamic text elements e.g. file numbers in prompts.

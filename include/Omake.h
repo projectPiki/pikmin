@@ -7,13 +7,13 @@
 #include "system.h"
 #include "types.h"
 
-struct Creature;
-struct Graphics;
+class Creature;
+class Graphics;
 
 /**
  * @brief TODO
  */
-struct AttentionCamera {
+class AttentionCamera {
 public:
 	/**
 	 * @brief TODO

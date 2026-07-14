@@ -6,7 +6,7 @@
 #include "P2D/Screen.h"
 #include "types.h"
 
-struct Graphics;
+class Graphics;
 
 namespace zen {
 
@@ -15,7 +15,7 @@ namespace zen {
  *
  * @note Size: 0x154.
  */
-struct DrawHurryUp {
+class DrawHurryUp {
 public:
 	/**
 	 * @brief TODO

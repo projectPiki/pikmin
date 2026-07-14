@@ -4,7 +4,7 @@
 #include "TekiStrategy.h"
 #include "types.h"
 
-struct TaiState;
+class TaiState;
 
 /**
  * @brief TODO

@@ -5,24 +5,24 @@
 #include "zen/DrawCM.h"
 #include "zen/DrawFinalResult.h"
 
-struct Controller;
-struct Graphics;
-struct P2DPane;
-struct P2DScreen;
+class Controller;
+class Graphics;
+class P2DPane;
+class P2DScreen;
 
 namespace zen {
 
 struct EffectMgr2D;
 struct ZenController;
 struct DrawCMbest;
-struct TotalScoreRecord;
+class TotalScoreRecord;
 
 /**
  * @brief TODO
  *
  * @note Why make a whole new identical type when TotalScoreRecord exists.
  */
-struct TotalScoreType {
+class TotalScoreType {
 	TotalScoreType() { }
 
 	void setDummy()

@@ -10,7 +10,7 @@ namespace zen {
  *
  * @note Size: 0xC.
  */
-struct zenList {
+class zenList {
 public:
 	zenList() { mPrev = mNext = this; }
 
@@ -37,7 +37,7 @@ public:
  *
  * @note Size: 0x10.
  */
-struct zenListManager {
+class zenListManager {
 public:
 	zenListManager()
 	{

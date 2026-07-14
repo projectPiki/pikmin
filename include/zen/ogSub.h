@@ -5,13 +5,13 @@
 #include "P2D/TextBox.h"
 #include "types.h"
 
-struct Matrix3f;
-struct P2DPane;
-struct P2DPicture;
-struct P2DScreen;
-struct P2DTextBox;
-struct Vector3f;
-struct Texture;
+class Matrix3f;
+class P2DPane;
+class P2DPicture;
+class P2DScreen;
+class P2DTextBox;
+class Vector3f;
+class Texture;
 
 namespace zen {
 
@@ -195,7 +195,7 @@ private:
  *
  * @note Size: 0x418.
  */
-struct TypingTextMgr {
+class TypingTextMgr {
 public:
 	/**
 	 * @brief Typing text manager states

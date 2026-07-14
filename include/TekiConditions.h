@@ -5,12 +5,12 @@
 #include "Vector.h"
 #include "types.h"
 
-struct Teki;
+class Teki;
 
 /**
  * @brief TODO
  */
-struct TekiCondition : public Condition {
+class TekiCondition : public Condition {
 	virtual bool satisfy(Creature*) immut { return true; } // _08
 
 	// _00     = VTBL
@@ -20,7 +20,7 @@ struct TekiCondition : public Condition {
 /**
  * @brief TODO
  */
-struct TekiAndCondition : public TekiCondition {
+class TekiAndCondition : public TekiCondition {
 	TekiAndCondition(immut Condition* condA, immut Condition* condB)
 	{
 		mConditionA = condA;
@@ -106,7 +106,7 @@ struct TekiAttackableCondition : public TekiCondition {
 /**
  * @brief TODO
  */
-struct TekiCollecTargetPelletCondition : public TekiCondition {
+class TekiCollecTargetPelletCondition : public TekiCondition {
 	TekiCollecTargetPelletCondition(Teki* collec, int carryPower)
 	{
 		mCollec     = collec;
@@ -137,7 +137,7 @@ struct TekiCreaturePointerCondition : public TekiCondition {
 /**
  * @brief TODO
  */
-struct TekiDistanceCondition : public TekiCondition {
+class TekiDistanceCondition : public TekiCondition {
 	TekiDistanceCondition(Teki* teki, f32 distance)
 	{
 		mTeki     = teki;
@@ -191,7 +191,7 @@ struct TekiLowerRangeCondition : public TekiCondition {
 /**
  * @brief TODO
  */
-struct TekiNapkidShortRangeCondition : public TekiCondition {
+class TekiNapkidShortRangeCondition : public TekiCondition {
 	TekiNapkidShortRangeCondition(Teki* teki)
 	    : mTeki(teki)
 	{
@@ -207,7 +207,7 @@ struct TekiNapkidShortRangeCondition : public TekiCondition {
 /**
  * @brief TODO
  */
-struct TekiNapkidTargetPikiCondition : public TekiCondition {
+class TekiNapkidTargetPikiCondition : public TekiCondition {
 	TekiNapkidTargetPikiCondition(Teki* teki)
 	    : mTeki(teki)
 	{
@@ -283,7 +283,7 @@ struct TekiPositionCircleDistanceCondition : public TekiCondition {
 /**
  * @brief TODO
  */
-struct TekiPositionDistanceCondition : public TekiCondition {
+class TekiPositionDistanceCondition : public TekiCondition {
 	TekiPositionDistanceCondition(Vector3f pos, f32 dist)
 	{
 		mPosition.input(pos);
@@ -396,7 +396,7 @@ struct TekiTypeCondition : public TekiCondition {
 /**
  * @brief TODO
  */
-struct TekiVisibleCondition : public TekiCondition {
+class TekiVisibleCondition : public TekiCondition {
 	TekiVisibleCondition(Teki* teki) { mTeki = teki; }
 
 	virtual bool satisfy(Creature*) immut; // _08
@@ -409,7 +409,7 @@ struct TekiVisibleCondition : public TekiCondition {
 /**
  * @brief TODO
  */
-struct TekiVisibleHeightCondition : public TekiCondition {
+class TekiVisibleHeightCondition : public TekiCondition {
 	TekiVisibleHeightCondition(Teki* teki) { mTeki = teki; }
 
 	virtual bool satisfy(Creature*) immut; // _08

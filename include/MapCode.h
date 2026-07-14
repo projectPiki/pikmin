@@ -3,7 +3,7 @@
 
 #include "types.h"
 
-struct CollTriInfo;
+class CollTriInfo;
 
 /**
  * @brief TODO.

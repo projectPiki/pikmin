@@ -9,20 +9,20 @@
 #include <stdio.h>
 
 struct BombGenItem;
-struct Bridge;
+class Bridge;
 struct BuildingItem;
 struct Suckable;
-struct HinderRock;
-struct Pebble;
+class HinderRock;
+class Pebble;
 struct RockGen;
-struct Grass;
-struct CPlate;
+class Grass;
+class CPlate;
 struct GrassGen;
-struct GoalItem;
-struct FormationMgr;
+class GoalItem;
+class FormationMgr;
 
 namespace zen {
-struct particleGenerator;
+class particleGenerator;
 } // namespace zen
 
 /**
@@ -82,7 +82,7 @@ enum {
  *
  * @note Size: 0x14.
  */
-struct Action : public Receiver<Piki> {
+class Action : public Receiver<Piki> {
 public:
 	/**
 	 * @brief TODO
@@ -192,9 +192,9 @@ protected:
 /**
  * @brief TODO
  */
-struct TopAction : public Action {
+class TopAction : public Action {
 	// Another encapsulation fail...  Write a getter for `mIsSuspended`, Kando!
-	friend struct Piki;
+	friend class Piki;
 	friend struct PikiSwallowedState;
 
 public:
@@ -761,10 +761,10 @@ protected:
  */
 struct ActCrowd : public Action, virtual SlotChangeListner {
 	// I want to believe in encapsulation so bad... it's probably to a fault.
-	friend struct Navi;
-	friend struct NaviDemoSunsetState;
-	friend struct Piki;
-	friend struct ViewPiki;
+	friend class Navi;
+	friend class NaviDemoSunsetState;
+	friend class Piki;
+	friend class ViewPiki;
 
 public:
 	/**
@@ -1034,7 +1034,7 @@ protected:
  * @note Size: 0x34.
  */
 struct ActFormation : public Action, public PaniAnimKeyListener {
-	friend struct TopAction; // Brazenly accesses `mInFormation`.
+	friend class TopAction; // Brazenly accesses `mInFormation`.
 
 public:
 	ActFormation(Piki*);
@@ -1697,7 +1697,7 @@ protected:
  *
  * @note Size: 0x28.
  */
-struct ActRandomBoid : public Action {
+class ActRandomBoid : public Action {
 public:
 	/**
 	 * @brief TODO
@@ -2038,7 +2038,7 @@ protected:
  *
  * @note Size: 0x2C.
  */
-struct ActWatch : public Action {
+class ActWatch : public Action {
 public:
 	/**
 	 * @brief TODO
@@ -2135,7 +2135,7 @@ protected:
 /**
  * @brief Completely stripped. This class shows up in the ILK.
  */
-struct AbsStates {
+class AbsStates {
 public:
 	AbsStates(Piki*);
 
@@ -2146,7 +2146,7 @@ public:
 /**
  * @brief Almost completely stripped, uniqueInstance gets set to nullptr in pikiMgr.
  */
-struct AiTable {
+class AiTable {
 public:
 	/**
 	 * @brief Completely stripped. Static member shows up stripped in map.

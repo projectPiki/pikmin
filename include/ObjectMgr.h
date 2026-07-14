@@ -5,14 +5,14 @@
 #include "Traversable.h"
 #include "types.h"
 
-struct Condition;
-struct Texture;
-struct Vector3f;
+class Condition;
+class Texture;
+class Vector3f;
 
 /**
  * @brief TODO.
  */
-struct ObjectMgr : public Traversable, public Node {
+class ObjectMgr : public Traversable, public Node {
 	ObjectMgr()
 	    : Node()
 	{

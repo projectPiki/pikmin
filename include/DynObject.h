@@ -5,7 +5,7 @@
 #include "types.h"
 
 struct DynCollObjBody;
-struct MapMgr;
+class MapMgr;
 
 /**
  * @brief Dynamic rigid body in the game world that can interact with the map and collision systems.

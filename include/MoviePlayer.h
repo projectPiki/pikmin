@@ -5,16 +5,16 @@
 #include "CoreNode.h"
 #include "types.h"
 
-struct Creature;
-struct Graphics;
-struct Vector3f;
+class Creature;
+class Graphics;
+class Vector3f;
 
 /**
  * @brief TODO
  *
  * @note Size: 0x8.
  */
-struct MovieListInfo {
+class MovieListInfo {
 	int mMovieID;             // _00
 	immut char* mCinFileName; // _04
 };
@@ -34,7 +34,7 @@ struct MovieTransInfo {
  *
  * @note Size: 0x60.
  */
-struct MovieInfo : public CoreNode {
+class MovieInfo : public CoreNode {
 	MovieInfo()
 	    : CoreNode("")
 	{

@@ -4,15 +4,15 @@
 #include "ANode.h"
 #include "types.h"
 
-struct AgeServer;
-struct RandomAccessStream;
+class AgeServer;
+class RandomAccessStream;
 
 /**
  * @brief The CoreNode struct represents a node in a core data structure.
  *
  * @note Size: 0x14.
  */
-struct CoreNode : public ANode {
+class CoreNode : public ANode {
 	/**
 	 * @brief Constructs a CoreNode object with the specified name.
 	 * @param name The name of the CoreNode.

@@ -5,7 +5,7 @@
 #include "Matrix4f.h"
 #include "types.h"
 
-struct DynParticle;
+class DynParticle;
 
 /**
  * @brief TODO

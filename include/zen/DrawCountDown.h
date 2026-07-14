@@ -7,8 +7,8 @@
 #include "zen/DrawCommon.h"
 #include "zen/Math.h"
 
-struct Graphics;
-struct P2DPicture;
+class Graphics;
+class P2DPicture;
 
 namespace zen {
 

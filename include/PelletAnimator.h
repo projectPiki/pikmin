@@ -7,10 +7,10 @@
 #include "Parameters.h"
 #include "types.h"
 
-struct PaniAnimKeyListener;
-struct PaniMotionInfo;
-struct PaniMotionTable;
-struct PelletShapeObject;
+class PaniAnimKeyListener;
+class PaniMotionInfo;
+class PaniMotionTable;
+class PelletShapeObject;
 
 /**
  * @brief Enum for pellet types.
@@ -29,7 +29,7 @@ enum PelletCreationType {
  *
  * @note Size: 0x60.
  */
-struct PelletAnimInfo : public Parameters, public CoreNode {
+class PelletAnimInfo : public Parameters, public CoreNode {
 	PelletAnimInfo();
 
 	PelletShapeObject* createShapeObject();

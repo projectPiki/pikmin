@@ -6,12 +6,12 @@
 
 #define AREA_FULL_SCREEN(gfx) RectArea(0, 0, (gfx).mScreenWidth, (gfx).mScreenHeight)
 
-struct Sphere;
+class Sphere;
 
 /**
  * @brief A representation of a cylinder in 3D space.
  */
-struct Cylinder {
+class Cylinder {
 	Cylinder(immut Vector3f& startPoint, immut Vector3f& endPoint, f32 radius = 1.0f)
 	    : mStartPoint(startPoint)
 	    , mEndPoint(endPoint)
@@ -31,7 +31,7 @@ struct Cylinder {
 /**
  * @brief TODO
  */
-struct RectArea {
+class RectArea {
 	RectArea(int x0, int y0, int x1, int y1)
 	{
 		mMinX = x0;
@@ -69,7 +69,7 @@ struct RectArea {
 /**
  * @brief TODO
  */
-struct Sphere {
+class Sphere {
 	Sphere(immut Vector3f& centre, f32 radius)
 	    : mCentre(centre)
 	    , mRadius(radius)
@@ -83,7 +83,7 @@ struct Sphere {
 /**
  * @brief TODO
  */
-struct Tube {
+class Tube {
 	// DLL inlines to do:
 	Tube(immut Vector3f& start, immut Vector3f& end, f32 startRad, f32 endRad)
 	    : mStartPoint(start)

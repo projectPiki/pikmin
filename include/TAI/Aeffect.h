@@ -6,8 +6,8 @@
 #include "TAI/Action.h"
 #include "types.h"
 
-struct Vector3f;
-struct CollPart;
+class Vector3f;
+class CollPart;
 
 /**
  * @brief TODO

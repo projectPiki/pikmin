@@ -9,7 +9,7 @@
  *
  * @note Size: 0xF8.
  */
-struct KeyConfig : public Node {
+class KeyConfig : public Node {
 
 	/**
 	 * @brief TODO

@@ -27,7 +27,7 @@ DEFINE_PRINT(nullptr)
 /**
  * @brief TODO
  */
-struct TAIeffectAttackEventCallBackTank : public TAIeffectAttackEventCallBack {
+class TAIeffectAttackEventCallBackTank : public TAIeffectAttackEventCallBack {
 	virtual bool hitCreature(TAIeffectAttackParam* param, Creature* target) // _08
 	{
 		InteractFire fire(param->mTeki, gsys->getFrameTime() * param->mDamage);

@@ -3,7 +3,7 @@
 
 #include "types.h"
 
-struct Shape;
+class Shape;
 
 /*
  * @brief TODO

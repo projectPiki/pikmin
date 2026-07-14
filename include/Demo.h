@@ -6,7 +6,7 @@
 #include "Parameters.h"
 #include "types.h"
 
-struct Creature;
+class Creature;
 
 /**
  * @brief TODO
@@ -56,7 +56,7 @@ enum EDemoFlags {
 /**
  * @brief TODO
  */
-struct DemoFlag {
+class DemoFlag {
 	// TODO: this - only gets returned by DemoFlags::getDemoFlag smh
 
 	immut char* mName; // _00
@@ -69,7 +69,7 @@ struct DemoFlag {
 /**
  * @brief TODO
  */
-struct DemoParms : public Node {
+class DemoParms : public Node {
 
 	struct Parms : Parameters {
 		Parms();
@@ -125,7 +125,7 @@ struct DemoFlags {
  *
  * @note Size: 0x1 (empty).
  */
-struct DemoEventMgr {
+class DemoEventMgr {
 	DemoEventMgr();
 
 	void act(int, int);

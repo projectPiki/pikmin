@@ -6,22 +6,22 @@
 #include "Vector.h"
 #include "types.h"
 
-struct Creature;
-struct CmdStream;
+class Creature;
+class CmdStream;
 struct DataMsg;
-struct Graphics;
-struct MapMgr;
-struct Plane;
-struct BaseShape;
-struct PathFinder;
-struct Texture;
-struct TexAttr;
-struct RoutePoint;
+class Graphics;
+class MapMgr;
+class Plane;
+class BaseShape;
+class PathFinder;
+class Texture;
+class TexAttr;
+class RoutePoint;
 
 /**
  * @brief Base node class for editable nodes in the route editor
  */
-struct EditNode : public CoreNode {
+class EditNode : public CoreNode {
 	EditNode(immut char* name)
 	    : CoreNode(name)
 	{
@@ -37,7 +37,7 @@ struct EditNode : public CoreNode {
 /**
  * @brief Link between route points in the navigation graph
  */
-struct RouteLink : public CoreNode {
+class RouteLink : public CoreNode {
 	RouteLink()
 	    : CoreNode("rp")
 	{
@@ -52,7 +52,7 @@ struct RouteLink : public CoreNode {
 /**
  * @brief Navigation waypoint in the route system
  */
-struct RoutePoint : public CoreNode {
+class RoutePoint : public CoreNode {
 	RoutePoint();
 
 	void loadini(CmdStream* stream);
@@ -77,7 +77,7 @@ struct RoutePoint : public CoreNode {
  * @brief Container for a group of route points
  * @note Size: 0xC0.
  */
-struct RouteGroup : public EditNode {
+class RouteGroup : public EditNode {
 	RouteGroup();
 
 	virtual void render2d(Graphics& gfx, int& textHeight); // _14
@@ -140,7 +140,7 @@ enum {
  * @brief Runtime waypoint used for pathfinding
  * @note Size: 0xC4.
  */
-struct WayPoint {
+class WayPoint {
 
 	/**
 	 * @brief Stores pathfinding costs to each goal type (onions/UFO)
@@ -191,12 +191,12 @@ struct WayPoint {
 /**
  * @brief Manages all routing and pathfinding functionality
  */
-struct RouteMgr : public Node {
+class RouteMgr : public Node {
 public:
 	/**
 	 * @brief Container for a group of waypoints
 	 */
-	struct Group {
+	class Group {
 		int getNumPoints() { return mNumPoints; }
 
 		WayPoint* mWayPoints; ///< _00
@@ -252,14 +252,14 @@ enum {
 /**
  * @brief Implements pathfinding algorithms for route navigation
  */
-struct PathFinder {
-	friend struct WayPoint;
+class PathFinder {
+	friend class WayPoint;
 
 public:
 	/**
 	 * @brief Stores waypoint visit information during pathfinding
 	 */
-	struct Buffer {
+	class Buffer {
 		Buffer()
 		{
 			mDirection   = 0xFF;
@@ -289,7 +289,7 @@ public:
 	 * @brief Asynchronous pathfinding client
 	 * @note Size: 0x28.
 	 */
-	struct Client {
+	class Client {
 		Buffer* mBuffer;           ///< _00, Path buffer
 		int mStartWpIdx;           ///< _04, Starting waypoint index
 		int mDestWpIdx;            ///< _08, Destination waypoint index
@@ -346,7 +346,7 @@ protected:
 /**
  * @brief Follows routes for creatures (mostly stripped)
  */
-struct RouteTracer {
+class RouteTracer {
 public:
 	/**
 	 * @brief Context for route tracing (mostly stripped)

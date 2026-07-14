@@ -4,8 +4,8 @@
 #include "OnePlayerSection.h"
 #include "types.h"
 
-struct StageInfo;
-struct Navi;
+class StageInfo;
+class Navi;
 
 /**
  * @brief Type of ending reached (in order to play the correct credit movie when required).
@@ -41,7 +41,7 @@ enum GameEndCause {
  *
  * @note Size: 0x25C.
  */
-struct FlowController {
+class FlowController {
 
 	/// Constructs a bare-bones single-player game flow controller.
 	inline FlowController()

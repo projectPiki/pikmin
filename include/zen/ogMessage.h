@@ -5,11 +5,11 @@
 #include "P2D/TextBox.h"
 #include "types.h"
 
-struct Controller;
-struct Graphics;
-struct P2DTextBox;
-struct P2DPicture;
-struct Font;
+class Controller;
+class Graphics;
+class P2DTextBox;
+class P2DPicture;
+class Font;
 
 namespace zen {
 struct ogMsgCtrlTagMgr;
@@ -26,7 +26,7 @@ struct TextInfoType {
  *
  * @note Size: 0xA5F0.
  */
-struct ogScrMessageMgr {
+class ogScrMessageMgr {
 public:
 	/**
 	 * @brief Defines the operational states of the message manager.

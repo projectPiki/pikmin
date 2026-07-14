@@ -7,7 +7,7 @@
 #include "zen/DrawCommon.h"
 #include "zen/Math.h"
 
-struct P2DScreen;
+class P2DScreen;
 
 namespace zen {
 
@@ -16,7 +16,7 @@ namespace zen {
  *
  * @note Size: 0x10.
  */
-struct MenuPanelMgr {
+class MenuPanelMgr {
 public:
 	enum statusFlag {
 		STATE_Wait      = 0,

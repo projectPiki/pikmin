@@ -6,7 +6,7 @@
 /**
  * @todo Documentation
  */
-struct BugPrintBuffer {
+class BugPrintBuffer {
 public:
 	BugPrintBuffer();
 

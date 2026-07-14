@@ -3,16 +3,16 @@
 
 #include "types.h"
 
-struct Controller;
-struct Graphics;
-struct P2DPane;
-struct P2DTextBox;
-struct P2DScreen;
-struct P2DPicture;
+class Controller;
+class Graphics;
+class P2DPane;
+class P2DTextBox;
+class P2DScreen;
+class P2DPicture;
 
 namespace zen {
 
-struct TypingTextMgr;
+class TypingTextMgr;
 
 /**
  * @brief TODO

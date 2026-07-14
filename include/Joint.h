@@ -7,24 +7,24 @@
 #include "Vector.h"
 #include "types.h"
 
-struct AnimContext;
-struct Material;
-struct BaseShape;
-struct Graphics;
-struct Mesh;
-struct Joint;
+class AnimContext;
+class Material;
+class BaseShape;
+class Graphics;
+class Mesh;
+class Joint;
 
 /**
  * @brief TODO
  */
-struct Joint : public CoreNode {
+class Joint : public CoreNode {
 
 	enum VisibilityFlags {
 		NotVisible = 0,
 		Visible    = 1,
 	};
 
-	struct MatPoly : public CoreNode {
+	class MatPoly : public CoreNode {
 		MatPoly()
 		    : CoreNode("matpoly")
 		{

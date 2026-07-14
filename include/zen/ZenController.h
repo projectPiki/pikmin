@@ -3,7 +3,7 @@
 
 #include "types.h"
 
-struct Controller;
+class Controller;
 
 namespace zen {
 

@@ -4,19 +4,19 @@
 #include "MemoryCard.h"
 #include "types.h"
 
-struct Controller;
-struct Graphics;
-struct P2DPane;
-struct P2DTextBox;
-struct P2DPicture;
-struct P2DScreen;
+class Controller;
+class Graphics;
+class P2DPane;
+class P2DTextBox;
+class P2DPicture;
+class P2DScreen;
 
 namespace zen {
 
 struct ogScrFileChkSelMgr;
 struct DrawSaveFailure;
 struct ogScrMemChkMgr;
-struct ogNitakuMgr;
+class ogNitakuMgr;
 struct ogFadeMgr;
 
 /**

@@ -5,7 +5,7 @@
 #include "types.h"
 
 struct CoreNucleusAi;
-struct Slime;
+class Slime;
 
 /**
  * @brief TODO.
@@ -56,12 +56,12 @@ public:
  *
  * @note Size: 0x3C8.
  */
-struct CoreNucleus : public Boss {
+class CoreNucleus : public Boss {
 	friend struct CoreNucleusAi;
 
 	// This feels a little extra but then again so does Goolix as a whole.
 	friend struct SlimeAi;
-	friend struct BossMgr; // To initialize `mSlime`.
+	friend class BossMgr; // To initialize `mSlime`.
 
 public:
 	CoreNucleus(CreatureProp*);

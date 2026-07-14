@@ -5,7 +5,7 @@
 #include "types.h"
 #include <Stream.h>
 
-struct Colour;
+class Colour;
 
 /**
  * @brief TODO

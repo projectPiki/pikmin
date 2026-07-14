@@ -5,7 +5,7 @@
 #include "SimpleAI.h"
 #include "types.h"
 
-struct MapMgr;
+class MapMgr;
 
 /**
  * @brief Descriptions taken from translations or from Minty Meeo's documentation.
@@ -138,7 +138,7 @@ struct PlantAI : public SimpleAI {
 /**
  * @brief TODO
  */
-struct PlantMgr : public CreatureNodeMgr {
+class PlantMgr : public CreatureNodeMgr {
 	friend struct Plant;
 	friend struct PlantShapeObject;
 

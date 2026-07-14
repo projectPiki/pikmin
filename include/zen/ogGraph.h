@@ -4,10 +4,10 @@
 #include "Piki.h"
 #include "types.h"
 
-struct Controller;
-struct Graphics;
-struct P2DScreen;
-struct P2DPane;
+class Controller;
+class Graphics;
+class P2DScreen;
+class P2DPane;
 
 namespace zen {
 

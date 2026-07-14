@@ -4,12 +4,12 @@
 #include "types.h"
 
 struct PSUPtrList;
-struct PSUPtrLink;
+class PSUPtrLink;
 
 /**
  * @brief TODO
  */
-struct PSUPtrLink {
+class PSUPtrLink {
 	friend struct PSUPtrList;
 
 protected:
@@ -26,7 +26,7 @@ protected:
  * @brief TODO
  */
 struct PSUPtrList {
-	friend struct PSUPtrLink;
+	friend class PSUPtrLink;
 
 protected:
 	PSUPtrList() { initiate(); }
@@ -55,7 +55,7 @@ private:
  * @brief TODO
  */
 template <typename T>
-struct PSULink : public PSUPtrLink {
+class PSULink : public PSUPtrLink {
 public:
 	inline PSULink(T* object)
 	    : PSUPtrLink((void*)object)

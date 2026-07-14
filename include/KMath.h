@@ -4,12 +4,12 @@
 #include "Vector.h"
 #include "types.h"
 
-struct Matrix4f;
+class Matrix4f;
 
 /**
  * @brief TODO
  */
-struct KTri {
+class KTri {
 	KTri();
 
 	void set(immut Vector3f& pointA, immut Vector3f& pointB, immut Vector3f& pointC);
@@ -27,7 +27,7 @@ struct KTri {
 /**
  * @brief TODO
  */
-struct KRect {
+class KRect {
 	bool inside(immut Vector3f& point);
 
 	KTri mBotTri; // _00, bottom left point, left side, bottom side
@@ -36,7 +36,7 @@ struct KRect {
 /**
  * @brief TODO
  */
-struct KSegment {
+class KSegment {
 	// unused/inlined:
 	KSegment();
 

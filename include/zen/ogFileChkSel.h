@@ -3,10 +3,10 @@
 
 #include "types.h"
 
-struct Controller;
-struct CardQuickInfo;
-struct Graphics;
-struct P2DScreen;
+class Controller;
+class CardQuickInfo;
+class Graphics;
+class P2DScreen;
 
 namespace zen {
 

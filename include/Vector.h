@@ -6,17 +6,17 @@
 #include "sysMath.h"
 #include "types.h"
 
-struct AgeServer;
-struct Matrix3f;
-struct Matrix4f;
-struct Quat;
+class AgeServer;
+class Matrix3f;
+class Matrix4f;
+class Quat;
 
 /**
  * @brief TODO
  *
  * @note Size: 0xC.
  */
-struct Vector3f {
+class Vector3f {
 	Vector3f() { x = y = z = 0.0f; }
 
 	Vector3f(const f32& _x, const f32& _y, const f32& _z)
@@ -240,7 +240,7 @@ struct Vector3f {
  *
  * @note Size: 0x8.
  */
-struct Vector2f {
+class Vector2f {
 	Vector2f() { }
 	Vector2f(const f32& _x, const f32& _y)
 	{
@@ -274,7 +274,7 @@ struct Vector2f {
  *
  * @note Size: 0x8.
  */
-struct Vector2i {
+class Vector2i {
 	void read(Stream& stream)
 	{
 		x = stream.readInt();
@@ -301,7 +301,7 @@ struct Vector2i {
  *
  * @note Size: 0x10.
  */
-struct Quat {
+class Quat {
 	Quat() { }
 
 	Quat(f32 _x, f32 _y, f32 _z, f32 _s) { set(_x, _y, _z, _s); }

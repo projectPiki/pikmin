@@ -3,13 +3,13 @@
 
 #include "types.h"
 
-struct AgeServer;
-struct RandomAccessStream;
+class AgeServer;
+class RandomAccessStream;
 
 /**
  * @brief A 32-bit identifier often treated as four characters.
  */
-struct ID32 {
+class ID32 {
 	ID32();
 	ID32(u32 id);
 

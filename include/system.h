@@ -15,27 +15,27 @@
 #include <stdlib.h>
 
 struct DGXGraphics;
-struct BaseApp;
-struct CacheTexture;
-struct TextureCacher;
-struct LoadIdler;
-struct Timers;
-struct Font;
-struct BaseShape;
-struct CoreNode;
-struct LFInfo;
-struct LightFlare;
-struct LFlareGroup;
-struct Matrix4f;
-struct AtxRouter;
-struct ControllerMgr;
+class BaseApp;
+class CacheTexture;
+class TextureCacher;
+class LoadIdler;
+class Timers;
+class Font;
+class BaseShape;
+class CoreNode;
+class LFInfo;
+class LightFlare;
+class LFlareGroup;
+class Matrix4f;
+class AtxRouter;
+class ControllerMgr;
 struct OSContext;
 struct OSThread;
-struct Shape;
+class Shape;
 struct AnimData;
-struct AnimFrameCacher;
-struct MemInfo;
-struct CacheInfo;
+class AnimFrameCacher;
+class MemInfo;
+class CacheInfo;
 
 /**
  * @brief Used to seperate the memory arenas held in StdSystem.
@@ -117,7 +117,7 @@ struct DirEntry : public CoreNode {
 /**
  * @brief TODO
  */
-struct BinobjInfo : public GfxobjInfo {
+class BinobjInfo : public GfxobjInfo {
 	BinobjInfo()
 	    : mData(nullptr)
 	{
@@ -162,7 +162,7 @@ enum {
  *
  * @note Size: 0x244.
  */
-struct StdSystem {
+class StdSystem {
 	StdSystem();
 
 	void onceInit();
@@ -368,7 +368,7 @@ struct SymbolInfo {
  *
  * @note Size: 0x334.
  */
-struct System : public StdSystem {
+class System : public StdSystem {
 	System();
 
 	virtual void initSoftReset();                                                                    // _08

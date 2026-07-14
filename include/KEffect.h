@@ -6,12 +6,12 @@
 #include "zen/CallBack.h"
 #include "zen/particle.h"
 
-struct Creature;
+class Creature;
 
 /**
  * @brief TODO
  */
-struct EffectParm {
+class EffectParm {
 	EffectParm(immut Vector3f* pos)
 	{
 		mPositionRef = pos;

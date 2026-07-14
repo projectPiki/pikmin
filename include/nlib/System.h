@@ -5,12 +5,12 @@
 #include "types.h"
 #include <system.h>
 
-struct System;
+class System;
 
 /**
  * @brief TODO
  */
-struct NHeap {
+class NHeap {
 public:
 	NHeap(int); // unused/inlined
 

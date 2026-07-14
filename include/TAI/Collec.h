@@ -7,7 +7,7 @@
 #include "TAI/Action.h"
 #include "TekiParameters.h"
 
-struct NVector3f;
+class NVector3f;
 
 /////////// Breadbug (パンモドキ) ///////////
 

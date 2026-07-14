@@ -5,9 +5,9 @@
 #include "zen/AlphaWipe.h"
 #include "zen/DrawCM.h"
 
-struct Graphics;
-struct Controller;
-struct P2DScreen;
+class Graphics;
+class Controller;
+class P2DScreen;
 
 namespace zen {
 

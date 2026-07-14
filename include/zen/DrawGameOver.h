@@ -4,9 +4,9 @@
 #include "types.h"
 #include "zen/DrawCommon.h"
 
-struct Graphics;
-struct Controller;
-struct P2DPane;
+class Graphics;
+class Controller;
+class P2DPane;
 
 namespace zen {
 

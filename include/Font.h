@@ -4,7 +4,7 @@
 #include "Geometry.h"
 #include "types.h"
 
-struct Texture;
+class Texture;
 
 #define ASCII_PRINTABLE_MIN (0x20) // space
 #define ASCII_PRINTABLE_MAX (0x80) // one more than last printable symbol (0x7F = delete)
@@ -14,7 +14,7 @@ struct Texture;
  *
  * @note Size: 0x1C.
  */
-struct FontChar {
+class FontChar {
 	FontChar()
 	{
 		mTextureX = mTextureY = 0;
@@ -35,7 +35,7 @@ struct FontChar {
  *
  * @note Size: 0x10.
  */
-struct Font {
+class Font {
 	void setTexture(Texture*, int, int);
 	int charToIndex(char);
 	int stringWidth(immut char*);

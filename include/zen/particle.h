@@ -11,10 +11,10 @@
 #include "zen/bBoardColourAnim.h"
 #include "zen/zenList.h"
 
-struct Colour;
-struct Graphics;
-struct Texture;
-struct Vector3f;
+class Colour;
+class Graphics;
+class Texture;
+class Vector3f;
 
 /**
  * @brief TODO
@@ -52,9 +52,9 @@ struct SimplePtclLoadInfo {
 
 namespace zen {
 
-struct particleMdl;
-struct particleMdlManager;
-struct particleGenerator;
+class particleMdl;
+class particleMdlManager;
+class particleGenerator;
 
 typedef void (particleGenerator::*PtclDrawCallBack)(Graphics&);
 typedef void (particleGenerator::*RotAxisCallBack)(Mtx&, f32&, f32&);
@@ -151,7 +151,7 @@ struct particleMdlBase : public zenList {
  *
  * @note Size: 0x80.
  */
-struct particleMdl : public particleMdlBase {
+class particleMdl : public particleMdlBase {
 	particleMdl()
 	{
 		mBBoardColourAnim.mProgress     = 0.0f;
@@ -212,7 +212,7 @@ struct particleMdl : public particleMdlBase {
  *
  * @note Size: 0x34.
  */
-struct particleChildMdl : public particleMdlBase {
+class particleChildMdl : public particleMdlBase {
 	particleChildMdl()
 	{
 		_2C = 0.0f;
@@ -239,7 +239,7 @@ struct particleChildMdl : public particleMdlBase {
 /**
  * @brief TODO
  */
-struct particleMdlManager {
+class particleMdlManager {
 public:
 	particleMdlManager()
 	{
@@ -274,7 +274,7 @@ protected:
  *
  * @note Size: 0x200.
  */
-struct particleGenerator : public zenList {
+class particleGenerator : public zenList {
 public:
 	particleGenerator()
 	{
@@ -560,7 +560,7 @@ protected:
 /**
  * @brief TODO
  */
-struct PCRData : public zenList {
+class PCRData : public zenList {
 public:
 	PCRData(immut char* name, u32 bufSize) { pmSet(name, bufSize); }
 
@@ -587,7 +587,7 @@ protected:
  *
  * @note Size: 0x10.
  */
-struct particleLoader : public zenListManager {
+class particleLoader : public zenListManager {
 public:
 	u8* load(immut char*, bool);
 
@@ -647,7 +647,7 @@ protected:
  *
  * @note Size: 0x9C.
  */
-struct particleManager {
+class particleManager {
 public:
 	particleManager()
 	{

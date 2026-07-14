@@ -7,8 +7,8 @@
 #include "SoundMgr.h"
 #include "types.h"
 
-struct InteractBikkuri;
-struct InteractSwallow;
+class InteractBikkuri;
+class InteractSwallow;
 
 /**
  * @brief TODO

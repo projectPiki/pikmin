@@ -5,7 +5,7 @@
 #include "TAI/Amotion.h"
 #include "types.h"
 
-struct Vector3f;
+class Vector3f;
 
 /**
  * @brief TODO

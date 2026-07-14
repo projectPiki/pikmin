@@ -8,7 +8,7 @@
 /**
  * @brief TODO
  */
-struct PeveEvent : public NNode {
+class PeveEvent : public NNode {
 	PeveEvent(int);
 
 	virtual void reset() // _20 (weak)

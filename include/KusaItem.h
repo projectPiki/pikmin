@@ -7,10 +7,10 @@
 #include "types.h"
 
 namespace zen {
-struct particleGenerator;
+class particleGenerator;
 } // namespace zen
 
-struct InteractBuild;
+class InteractBuild;
 struct BoBaseItem;
 
 /////////// Climbing Stick Item ///////////

@@ -7,7 +7,7 @@
 /**
  * @brief TODO
  */
-struct NNode {
+class NNode {
 	NNode(int);
 
 	virtual void setChild(int, NNode*); // _08
@@ -35,7 +35,7 @@ struct NNode {
 /**
  * @brief TODO
  */
-struct NListNode {
+class NListNode {
 	NListNode(); // unused/inlined
 
 	// unused/inlined:
@@ -51,7 +51,7 @@ struct NListNode {
 /**
  * @brief TODO
  */
-struct NList {
+class NList {
 	NList(); // unused/inlined
 
 	// unused/inlined:

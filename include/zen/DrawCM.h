@@ -9,10 +9,10 @@
 #include "zen/ogGraph.h"
 #include <stdio.h>
 
-struct GameChalQuickInfo;
-struct Graphics;
-struct Controller;
-struct P2DScreen;
+class GameChalQuickInfo;
+class Graphics;
+class Controller;
+class P2DScreen;
 
 namespace zen {
 

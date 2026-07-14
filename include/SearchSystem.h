@@ -5,14 +5,14 @@
 #include "Traversable.h"
 #include "types.h"
 
-struct Creature;
+class Creature;
 
 /**
  * @brief TODO
  *
  * @note Size: 0xC.
  */
-struct SearchData {
+class SearchData {
 	SearchData();
 
 	SmartPtr<Creature> mTargetCreature; // _00
@@ -25,7 +25,7 @@ struct SearchData {
  *
  * @note Size: 0x28.
  */
-struct SearchBuffer : public Traversable {
+class SearchBuffer : public Traversable {
 public:
 	SearchBuffer();
 

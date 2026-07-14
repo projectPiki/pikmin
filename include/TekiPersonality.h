@@ -6,15 +6,15 @@
 #include "Vector.h"
 #include "types.h"
 
-struct RandomAccessStream;
-struct ParaMultiParameters;
+class RandomAccessStream;
+class ParaMultiParameters;
 
 /**
  * @brief TODO
  *
  * @note Size: 0x38.
  */
-struct TekiPersonality {
+class TekiPersonality {
 
 	/**
 	 * @brief TODO

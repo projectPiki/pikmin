@@ -12,30 +12,30 @@
 #include "Vector.h"
 #include "types.h"
 
-struct CollEvent;
-struct CollInfo;
-struct CollTriInfo;
-struct CollPart;
-struct Colour;
-struct Condition;
-struct CreatureInf;
-struct CreatureProp;
-struct DynCollObject;
-struct FormationMgr;
-struct FormPoint;
-struct Generator;
-struct Graphics;
-struct Interaction;
-struct Matrix4f;
-struct MoveTrace;
-struct Msg;
-struct Pellet;
-struct Plane;
-struct RandomAccessStream;
-struct RopeCreature;
-struct RouteTracer;
-struct SeContext;
-struct Sphere;
+class CollEvent;
+class CollInfo;
+class CollTriInfo;
+class CollPart;
+class Colour;
+class Condition;
+class CreatureInf;
+class CreatureProp;
+class DynCollObject;
+class FormationMgr;
+class FormPoint;
+class Generator;
+class Graphics;
+class Interaction;
+class Matrix4f;
+class MoveTrace;
+class Msg;
+class Pellet;
+class Plane;
+class RandomAccessStream;
+class RopeCreature;
+class RouteTracer;
+class SeContext;
+class Sphere;
 
 /**
  * @brief Bitflags stored in Creature::mCreatureFlags.
@@ -95,7 +95,7 @@ struct DynCollAttachment {
  *
  * @note Size: 0x2B5.
  */
-struct Creature : public RefCountable, public EventTalker {
+class Creature : public RefCountable, public EventTalker {
 public:
 	Creature(CreatureProp*);
 

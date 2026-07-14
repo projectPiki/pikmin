@@ -4,10 +4,10 @@
 #include "P2D/Screen.h"
 #include "types.h"
 
-struct Graphics;
+class Graphics;
 
 template <typename T>
-struct IDelegate1;
+class IDelegate1;
 
 namespace zen {
 

@@ -6,14 +6,14 @@
 #include "SRT.h"
 #include "types.h"
 
-struct Graphics;
-struct Vector3f;
+class Graphics;
+class Vector3f;
 struct VQS;
 
 /**
  * @brief TODO
  */
-struct Node : public CoreNode {
+class Node : public CoreNode {
 	Node(immut char* name = "<Node>")
 	    : CoreNode(name)
 	{
@@ -54,7 +54,7 @@ struct Node : public CoreNode {
 /**
  * @brief TODO
  */
-struct FaceNode : public CoreNode {
+class FaceNode : public CoreNode {
 	FaceNode()
 	    : CoreNode("face")
 	{
@@ -102,7 +102,7 @@ struct FaceNode : public CoreNode {
 /**
  * @brief TODO
  */
-struct SRTNode : public Node {
+class SRTNode : public Node {
 	SRTNode(immut char* name); // unused/inlined
 
 	virtual void update();                                    // _10
@@ -128,7 +128,7 @@ struct SRTNode : public Node {
 /**
  * @brief TODO
  */
-struct NodeMgr {
+class NodeMgr {
 	NodeMgr();
 	~NodeMgr();
 

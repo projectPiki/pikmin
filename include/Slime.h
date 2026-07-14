@@ -18,12 +18,12 @@
 // CoreNucleus and Nucleus also have their own state machines (CoreNucleusAi and NucleusAi)
 // that help support the main creature's actions.
 
-struct CoreNucleus;
-struct Nucleus;
+class CoreNucleus;
+class Nucleus;
 struct SlimeAi;
 struct SlimeBody;
-struct SlimeCreature;
-struct Slime;
+class SlimeCreature;
+class Slime;
 
 #define SLIME_PROP          (static_cast<SlimeProp*>(mProps)->mSlimeProps)
 #define C_SLIME_PROP(slime) (static_cast<SlimeProp*>((slime)->mProps)->mSlimeProps)
@@ -161,7 +161,7 @@ public:
  * @note Size: 0x20.
  */
 struct SlimeBody {
-	friend struct Slime;
+	friend class Slime;
 
 public:
 	SlimeBody(Slime*);
@@ -194,7 +194,7 @@ private:
 /**
  * @brief TODO.
  */
-struct SlimeCreature : public Creature {
+class SlimeCreature : public Creature {
 	SlimeCreature(CreatureProp*);
 
 	virtual f32 getiMass();                     // _38
@@ -223,16 +223,16 @@ struct SlimeCreature : public Creature {
 /**
  * @brief TODO.
  */
-struct Slime : public Boss {
+class Slime : public Boss {
 	friend struct SlimeAi;
 	friend struct SlimeBody;
 
 	// This feels a little extra but then again so does Goolix as a whole.
-	friend struct CoreNucleus;
+	friend class CoreNucleus;
 	friend struct CoreNucleusAi;
-	friend struct Nucleus;
+	friend class Nucleus;
 	friend struct NucleusAi;
-	friend struct BossMgr; // To initialize `mNucleus` and `mCore`.
+	friend class BossMgr; // To initialize `mNucleus` and `mCore`.
 
 	/**
 	 * @brief TODO.

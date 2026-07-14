@@ -3,17 +3,17 @@
 
 #include "types.h"
 
-struct Graphics;
-struct Teki;
-struct TekiEvent;
-struct TekiInteractionKey;
+class Graphics;
+class Teki;
+class TekiEvent;
+class TekiInteractionKey;
 
 /**
  * @brief TODO
  *
  * @note Size: 0x4.
  */
-struct TekiStrategy {
+class TekiStrategy {
 	TekiStrategy();
 
 	virtual void start(Teki& teki);                                   // _08

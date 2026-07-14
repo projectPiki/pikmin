@@ -7,15 +7,15 @@
 #include "nlib/Math.h"
 #include "types.h"
 
-struct Stream;
-struct NTransform3D;
+class Stream;
+class NTransform3D;
 
 /**
  * @brief TODO
  *
  * @note Size: 0x8.
  */
-struct NVector {
+class NVector {
 	NVector();
 	NVector(f32*, int); // unused/inlined
 
@@ -37,7 +37,7 @@ struct NVector {
 /**
  * @brief TODO
  */
-struct NVector3f : public Vector3f {
+class NVector3f : public Vector3f {
 	NVector3f();
 	NVector3f(immut Vector3f&);
 	NVector3f(f32, f32, f32);
@@ -76,7 +76,7 @@ struct NVector3f : public Vector3f {
  *
  * @note Size: 0x4.
  */
-struct NVector3fIO {
+class NVector3fIO {
 	virtual void input(immut NVector3f&)  = 0; // _08
 	virtual void output(NVector3f&) immut = 0; // _0C
 
@@ -100,7 +100,7 @@ struct NVector3fIOClass : public NVector3fIO {
 /**
  * @brief TODO
  */
-struct NMatrix4f : public Matrix4f {
+class NMatrix4f : public Matrix4f {
 	NMatrix4f();
 	NMatrix4f(f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32);
 	NMatrix4f(immut Matrix4f&); // unused/inlined
@@ -143,7 +143,7 @@ struct NMatrix4f : public Matrix4f {
 /**
  * @brief TODO
  */
-struct NSpecialMatrix {
+class NSpecialMatrix {
 	NSpecialMatrix() { } // DLL inline
 	NSpecialMatrix(int); // unused/inlined
 
@@ -161,7 +161,7 @@ struct NSpecialMatrix {
 /**
  * @brief TODO
  */
-struct NUpperMatrix : public NSpecialMatrix {
+class NUpperMatrix : public NSpecialMatrix {
 	NUpperMatrix() { }             // DLL inline
 	NUpperMatrix(f32*, f32*, int); // unused/inlined
 
@@ -183,7 +183,7 @@ struct NUpperMatrix : public NSpecialMatrix {
 /**
  * @brief TODO
  */
-struct NLowerMatrix : public NSpecialMatrix {
+class NLowerMatrix : public NSpecialMatrix {
 	NLowerMatrix() { }
 	NLowerMatrix(f32*, int);
 
@@ -203,7 +203,7 @@ struct NLowerMatrix : public NSpecialMatrix {
 /**
  * @brief TODO
  */
-struct LUMatrix : public NSpecialMatrix {
+class LUMatrix : public NSpecialMatrix {
 	LUMatrix(f32*, f32*, f32*, int); // unused/inlined
 
 	virtual void setDimension(int); // _08
@@ -230,7 +230,7 @@ struct LUMatrix : public NSpecialMatrix {
 /**
  * @brief TODO
  */
-struct NOrientation {
+class NOrientation {
 	NOrientation(immut Vector3f&);
 	NOrientation();                                 // unused/inlined
 	NOrientation(immut Vector3f&, immut Vector3f&); // unused/inlined
@@ -272,7 +272,7 @@ struct NOrientation {
 /**
  * @brief TODO
  */
-struct NPolar3f {
+class NPolar3f {
 	NPolar3f();
 	NPolar3f(immut Vector3f&);
 	NPolar3f(f32, f32, f32);   // unused/inlined
@@ -321,7 +321,7 @@ struct NPolar3f {
 /**
  * @brief TODO
  */
-struct NAxisAngle4f {
+class NAxisAngle4f {
 	NAxisAngle4f(); // unused/inlined
 	NAxisAngle4f(immut NVector3f&, f32);
 
@@ -342,7 +342,7 @@ struct NAxisAngle4f {
 /**
  * @brief TODO
  */
-struct NPosture2D {
+class NPosture2D {
 	NPosture2D();                     // unused/inlined
 	NPosture2D(immut Vector3f&, f32); // unused/inlined
 
@@ -372,7 +372,7 @@ struct NPosture2D {
 /**
  * @brief TODO
  */
-struct NPosture3D {
+class NPosture3D {
 	NPosture3D();
 	NPosture3D(immut Vector3f&, immut Vector3f&);
 	NPosture3D(immut NPosture3D&); // unused/inlined
@@ -430,7 +430,7 @@ struct NPosture3D {
 /**
  * @brief TODO
  */
-struct NPosture3DIO {
+class NPosture3DIO {
 	virtual void input(immut NPosture3D&)  = 0; // _08
 	virtual void output(NPosture3D&) immut = 0; // _0C
 
@@ -440,7 +440,7 @@ struct NPosture3DIO {
 /**
  * @brief TODO
  */
-struct NTransform3D : public NMatrix4f {
+class NTransform3D : public NMatrix4f {
 	NTransform3D();
 	NTransform3D(immut NMatrix4f&); // unused/inlined
 

@@ -4,7 +4,7 @@
 #include "Boss.h"
 #include "types.h"
 
-struct Slime;
+class Slime;
 struct NucleusAi;
 
 /**
@@ -53,12 +53,12 @@ public:
 /**
  * @brief TODO.
  */
-struct Nucleus : public Boss {
+class Nucleus : public Boss {
 	friend struct NucleusAi;
 
 	// This feels a little extra but then again so does Goolix as a whole.
 	friend struct SlimeAi;
-	friend struct BossMgr; // To initialize `mSlime`.
+	friend class BossMgr; // To initialize `mSlime`.
 
 public:
 	Nucleus(CreatureProp*);

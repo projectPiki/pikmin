@@ -8,9 +8,9 @@
 #include "Vector.h"
 #include "types.h"
 
-struct Graphics;
+class Graphics;
 struct FormArranger;
-struct FormationMgr;
+class FormationMgr;
 
 /**
  * @brief Stripped struct.
@@ -57,7 +57,7 @@ struct Spine {
 /**
  * @brief TODO
  */
-struct FormPoint {
+class FormPoint {
 	FormPoint(); // unused/inlined
 
 	Vector3f getPos();
@@ -86,8 +86,8 @@ struct FormPoint {
 /**
  * @brief TODO
  */
-struct FormationMgr : public Traversable {
-	friend struct FormPoint;
+class FormationMgr : public Traversable {
+	friend class FormPoint;
 	friend struct PyramidArranger; // Unused code wants to access a member? Whatever.
 
 public:

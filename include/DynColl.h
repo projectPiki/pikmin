@@ -5,20 +5,20 @@
 #include "Node.h"
 #include "types.h"
 
-struct Creature;
-struct MapAnimShapeObject;
-struct CollTriInfo;
-struct CollGroup;
+class Creature;
+class MapAnimShapeObject;
+class CollTriInfo;
+class CollGroup;
 struct DynObjBody;
-struct MapMgr;
-struct Shape;
+class MapMgr;
+class Shape;
 
 /**
  * @brief Base class for all dynamic collision objects, providing a minimal interface for collision detection and response.
  *
  * @note Size: 0x2C.
  */
-struct DynCollObject : public Node {
+class DynCollObject : public Node {
 
 	/// Constructs a collision object with no attached creature.
 	DynCollObject()

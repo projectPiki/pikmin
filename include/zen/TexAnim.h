@@ -3,7 +3,7 @@
 
 #include "types.h"
 
-struct Texture;
+class Texture;
 
 namespace zen {
 

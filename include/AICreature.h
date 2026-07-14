@@ -7,13 +7,13 @@
 #include "types.h"
 
 template <typename T>
-struct AState;
+class AState;
 
 template <typename T>
-struct StateMachine;
+class StateMachine;
 
-struct AICreature;
-struct CollEvent;
+class AICreature;
+class CollEvent;
 
 /**
  * @brief TODO
@@ -51,7 +51,7 @@ struct SAIContext {
  *
  * @note Size: 0x304.
  */
-struct AICreature : public Creature, public PaniAnimKeyListener {
+class AICreature : public Creature, public PaniAnimKeyListener {
 	AICreature(CreatureProp*);
 
 	virtual void collisionCallback(immut CollEvent&);                                       // _A8

@@ -5,7 +5,7 @@
 #include "Vector.h"
 #include "types.h"
 
-struct Pellet;
+class Pellet;
 
 enum PelletStateID {
 	PELSTATE_Normal    = 0,

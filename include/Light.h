@@ -8,13 +8,13 @@
 #include "system.h"
 #include "types.h"
 
-struct AgeServer;
-struct CmdStream;
-struct Graphics;
-struct Material;
-struct SceneData;
-struct Shape;
-struct Texture;
+class AgeServer;
+class CmdStream;
+class Graphics;
+class Material;
+class SceneData;
+class Shape;
+class Texture;
 
 #define GET_LIGHT_TYPE(flag)       (int)((flag) & 0xFF)
 #define SET_LIGHT_TYPE(flag, type) (flag) = (((flag) & 0xFFFFFF00) | (type))
@@ -75,7 +75,7 @@ enum BlendMode {
  *
  * @note Size: 0x2C.
  */
-struct LFInfo {
+class LFInfo {
 	LFInfo() { mPrevInfo = nullptr; }
 
 	Colour mColour;     // _00
@@ -91,7 +91,7 @@ struct LFInfo {
  *
  * @note Size: 0x24.
  */
-struct LightFlare : public CoreNode {
+class LightFlare : public CoreNode {
 	LightFlare()
 	    : CoreNode("")
 	{
@@ -110,7 +110,7 @@ struct LightFlare : public CoreNode {
 /**
  * @brief TODO
  */
-struct LFlareGroup : public CoreNode {
+class LFlareGroup : public CoreNode {
 	LFlareGroup()
 	    : CoreNode("lfgroup")
 	{
@@ -157,7 +157,7 @@ struct LFlareGroup : public CoreNode {
  *
  * @note Size: 0x2D4.
  */
-struct Light : public CoreNode {
+class Light : public CoreNode {
 	Light();
 
 	void setLightDistAttn(f32, f32, int);
@@ -221,7 +221,7 @@ struct Light : public CoreNode {
  *
  * @note Size: 0x6C.
  */
-struct LightGroup : public CoreNode {
+class LightGroup : public CoreNode {
 	LightGroup()
 	{
 		mFlags      = 0;
@@ -304,7 +304,7 @@ struct LightPool : public Node {
 /**
  * @brief TODO
  */
-struct LightDataInfo {
+class LightDataInfo {
 	LightDataInfo() { mLight.mDistancedRange = 1000.0f; }
 
 	void update(f32);

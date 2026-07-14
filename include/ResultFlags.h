@@ -5,8 +5,8 @@
 #include "types.h"
 #include "zen/ogResult.h"
 
-struct RandomAccessStream;
-struct Creature;
+class RandomAccessStream;
+class Creature;
 
 /**
  * @brief TODO

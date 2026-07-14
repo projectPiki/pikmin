@@ -5,7 +5,7 @@
 #include "types.h"
 #include "zen/Math.h"
 
-struct Colour;
+class Colour;
 
 namespace zen {
 

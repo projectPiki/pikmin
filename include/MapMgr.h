@@ -7,9 +7,9 @@
 #include "Shape.h"
 #include "types.h"
 
-struct Controller;
-struct CreatureCollPart;
-struct DayMgr;
+class Controller;
+class CreatureCollPart;
+class DayMgr;
 struct DynSimulator;
 struct MapLightMgr;
 
@@ -33,7 +33,7 @@ enum MapShapeTypes {
  *
  * @note Size: 0x28.
  */
-struct MoveTrace {
+class MoveTrace {
 
 	/**
 	 * @brief Constructs a new trace with key physical information, but no parent object.
@@ -165,7 +165,7 @@ struct MapColls {
  *
  * @note Size: 0x4D4.
  */
-struct MapMgr {
+class MapMgr {
 
 	/// Colour types used to render debug collision triangles.
 	enum DebugColourTypes {

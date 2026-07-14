@@ -5,8 +5,8 @@
 #include "Vector.h"
 #include "types.h"
 
-struct Creature;
-struct PaniAnimKeyEvent;
+class Creature;
+class PaniAnimKeyEvent;
 
 /**
  * @brief TODO
@@ -28,7 +28,7 @@ enum MsgType {
 /**
  * @brief TODO
  */
-struct Msg {
+class Msg {
 	inline Msg(int type)
 	    : mMsgType(type)
 	{
@@ -42,7 +42,7 @@ struct Msg {
  *
  * @note will need to fix saiEvents.cpp when this gets worked out
  */
-struct MsgAnim : public Msg {
+class MsgAnim : public Msg {
 	inline MsgAnim(immut PaniAnimKeyEvent* event) // adjust when type of _04 is known
 	    : Msg(MSG_Anim)
 	    , mKeyEvent(event)
@@ -56,7 +56,7 @@ struct MsgAnim : public Msg {
 /**
  * @brief TODO
  */
-struct MsgBounce : public Msg {
+class MsgBounce : public Msg {
 	inline MsgBounce(immut Vector3f& normal)
 	    : Msg(MSG_Bounce)
 	    , mNormal(normal)
@@ -70,7 +70,7 @@ struct MsgBounce : public Msg {
 /**
  * @brief TODO
  */
-struct MsgCollide : public Msg {
+class MsgCollide : public Msg {
 	inline MsgCollide(immut CollEvent& event)
 	    : Msg(MSG_Collide)
 	    , mEvent(event)
@@ -84,7 +84,7 @@ struct MsgCollide : public Msg {
 /**
  * @brief TODO
  */
-struct MsgDamage : public Msg {
+class MsgDamage : public Msg {
 	inline MsgDamage() // this never gets called, funnily enough
 	    : Msg(MSG_Damage)
 	{
@@ -96,7 +96,7 @@ struct MsgDamage : public Msg {
 /**
  * @brief TODO
  */
-struct MsgGround : public Msg {
+class MsgGround : public Msg {
 	inline MsgGround()
 	    : Msg(MSG_Ground)
 	{
@@ -108,7 +108,7 @@ struct MsgGround : public Msg {
 /**
  * @brief TODO
  */
-struct MsgHang : public Msg {
+class MsgHang : public Msg {
 	inline MsgHang() // this also never gets called
 	    : Msg(MSG_Hang)
 	{
@@ -120,7 +120,7 @@ struct MsgHang : public Msg {
 /**
  * @brief TODO
  */
-struct MsgOffWall : public Msg {
+class MsgOffWall : public Msg {
 	inline MsgOffWall(DynCollObject* object)
 	    : Msg(MSG_OffWall)
 	    , mObject(object)
@@ -134,7 +134,7 @@ struct MsgOffWall : public Msg {
 /**
  * @brief TODO
  */
-struct MsgStick : public Msg {
+class MsgStick : public Msg {
 	inline MsgStick()
 	    : Msg(MSG_Stick)
 	{
@@ -146,7 +146,7 @@ struct MsgStick : public Msg {
 /**
  * @brief TODO
  */
-struct MsgTarget : public Msg {
+class MsgTarget : public Msg {
 	MsgTarget(Creature* target)
 	    : Msg(MSG_Target)
 	{
@@ -160,7 +160,7 @@ struct MsgTarget : public Msg {
 /**
  * @brief TODO
  */
-struct MsgUser : public Msg {
+class MsgUser : public Msg {
 	inline MsgUser(int val)
 	    : Msg(MSG_User)
 	{
@@ -174,7 +174,7 @@ struct MsgUser : public Msg {
 /**
  * @brief TODO
  */
-struct MsgWall : public Msg {
+class MsgWall : public Msg {
 	inline MsgWall(immut Plane& plane, DynCollObject* wall)
 	    : Msg(MSG_Wall)
 	{

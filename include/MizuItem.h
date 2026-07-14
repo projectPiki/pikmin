@@ -5,7 +5,7 @@
 #include "ItemMgr.h"
 #include "types.h"
 
-struct SimpleAI;
+class SimpleAI;
 
 /**
  * @brief TODO

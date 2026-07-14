@@ -3,8 +3,8 @@
 
 #include "types.h"
 
-struct P2DPane;
-struct P2DScreen;
+class P2DPane;
+class P2DScreen;
 
 namespace zen {
 

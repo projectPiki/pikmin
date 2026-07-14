@@ -13,11 +13,11 @@
 #include "system.h"
 #include "types.h"
 
-struct AnimMgr;
-struct BaseShape;
-struct CmdStream;
-struct Shape;
-struct AgeServer;
+class AnimMgr;
+class BaseShape;
+class CmdStream;
+class Shape;
+class AgeServer;
 
 /**
  * @brief Flags controlling a given animation.
@@ -67,7 +67,7 @@ enum KeyEventTypes {
 /**
  * @brief TODO
  */
-struct DataChunk {
+class DataChunk {
 	DataChunk()
 	{
 		mDataIndex = 0;
@@ -143,7 +143,7 @@ struct DataChunk {
 /**
  * @brief TODO
  */
-struct AnimCacheInfo : public CacheInfo {
+class AnimCacheInfo : public CacheInfo {
 	AnimCacheInfo() { initData(); }
 
 	void initData()
@@ -198,7 +198,7 @@ enum {
 /**
  * @brief Information about animation data, read in from a file.
  */
-struct AnimDataInfo {
+class AnimDataInfo {
 	AnimDataInfo() { mFlags = 0; }
 
 	AnimParam mScale[3];       // _00, x y and z
@@ -257,7 +257,7 @@ struct AnimData : public CoreNode {
 /**
  * @brief TODO
  */
-struct AnimDca : public AnimData {
+class AnimDca : public AnimData {
 	AnimDca(BaseShape*, int)
 	    : AnimData()
 	{
@@ -280,7 +280,7 @@ struct AnimDca : public AnimData {
 /**
  * @brief TODO
  */
-struct AnimDck : public AnimData {
+class AnimDck : public AnimData {
 	AnimDck(BaseShape*, int);
 	AnimDck(immut char* name)
 	    : AnimData(StdSystem::stringDup(name))
@@ -301,7 +301,7 @@ struct AnimDck : public AnimData {
 /**
  * @brief TODO
  */
-struct AnmobjInfo : public GfxobjInfo {
+class AnmobjInfo : public GfxobjInfo {
 	AnmobjInfo()
 	    : mAnimation(nullptr)
 	{
@@ -321,7 +321,7 @@ struct AnmobjInfo : public GfxobjInfo {
  *
  * @note Size: 0x10.
  */
-struct AnimKey {
+class AnimKey {
 
 	/// Default constructor. Initialise everything to 0.
 	AnimKey()
@@ -376,7 +376,7 @@ struct AnimKey {
  *
  * @note Size: 0x74.
  */
-struct AnimInfo : public CoreNode {
+class AnimInfo : public CoreNode {
 
 #ifdef WIN32
 	virtual void genAge(AgeServer& server);
@@ -468,7 +468,7 @@ struct AnimInfo : public CoreNode {
  *
  * @note Size: 0x10.
  */
-struct AnimContext {
+class AnimContext {
 
 	/// Default constructor.
 	AnimContext()
@@ -551,7 +551,7 @@ struct Animator {
  *
  * @note Size: 0xB8.
  */
-struct AnimMgr : public CoreNode {
+class AnimMgr : public CoreNode {
 
 	/**
 	 * @brief AnimMgr parameters.
@@ -618,7 +618,7 @@ struct FrameCacher : public CacheInfo {
  *
  * @note Size: 0x18.
  */
-struct AnimFrameCacher {
+class AnimFrameCacher {
 	AnimFrameCacher(int);
 	void updateInfo(AnimCacheInfo*);
 	void removeOldest();

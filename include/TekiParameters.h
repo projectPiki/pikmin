@@ -113,7 +113,7 @@ enum TekiCorpseType {
  *
  * @note Size: 0x88.
  */
-struct TekiParameters : public Node {
+class TekiParameters : public Node {
 	TekiParameters(int iParamNum, int fParamNum);
 
 	virtual void read(RandomAccessStream&); // _0C

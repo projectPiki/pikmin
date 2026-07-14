@@ -9,7 +9,7 @@
  *
  * @note Size: 0x1C.
  */
-struct Fish {
+class Fish {
 	Fish() { }
 
 	Vector3f mPosition; // _00

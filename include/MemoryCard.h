@@ -5,8 +5,8 @@
 #include "types.h"
 
 struct CARDStat;
-struct PlayState;
-struct RamStream;
+class PlayState;
+class RamStream;
 
 #define CARD_DATA_SIZE (0x26000)
 
@@ -17,7 +17,7 @@ extern u8 cardData[CARD_DATA_SIZE];
  *
  * @note Size: 0x28.
  */
-struct CardQuickInfo {
+class CardQuickInfo {
 	CardQuickInfo() { mSaveStatus = 0; }
 
 	int mMemCardSaveIndex;   ///< _00, index of save file on actual memory card (0-indexed).

@@ -11,11 +11,11 @@
 #include "UtilityKando.h"
 #include "types.h"
 
-struct Graphics;
-struct PelletShapeObject;
+class Graphics;
+class PelletShapeObject;
 struct PermanentEffect;
-struct PikiShapeObject;
-struct Shape;
+class PikiShapeObject;
+class Shape;
 
 /**
  * @brief TODO
@@ -86,14 +86,14 @@ struct TimeGraph {
 /**
  * @brief TODO
  */
-struct PlayerState {
+class PlayerState {
 public:
 	/**
 	 * @brief TODO
 	 *
 	 * @note Size: 0xE0.
 	 */
-	struct UfoParts : public PaniAnimKeyListener {
+	class UfoParts : public PaniAnimKeyListener {
 		UfoParts() { }
 
 		virtual void animationKeyUpdated(immut PaniAnimKeyEvent&); // _08

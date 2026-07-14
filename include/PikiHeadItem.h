@@ -7,9 +7,9 @@
 #include "UtEffect.h"
 #include "types.h"
 
-struct InteractBikkuri;
-struct InteractSwallow;
-struct SimpleAI;
+class InteractBikkuri;
+class InteractSwallow;
+class SimpleAI;
 
 BEGIN_ENUM_TYPE(PikiHeadMotion)
 enum {
@@ -319,7 +319,7 @@ struct PikiHeadAI : public SimpleAI {
  *
  * @note Size: 0x48.
  */
-struct PikiHeadMgr : public MonoObjectMgr {
+class PikiHeadMgr : public MonoObjectMgr {
 public:
 	PikiHeadMgr(ItemMgr*);
 

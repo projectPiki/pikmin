@@ -8,14 +8,14 @@
 #include "Texture.h"
 #include "types.h"
 
-struct Texture;
+class Texture;
 
 /**
  * @brief TODO
  *
  * @note Size: 0x114.
  */
-struct P2DPicture : public P2DPane {
+class P2DPicture : public P2DPane {
 public:
 	Texture* getTexture(u8 idx) const
 	{

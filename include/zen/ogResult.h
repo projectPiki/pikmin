@@ -3,18 +3,18 @@
 
 #include "types.h"
 
-struct P2DPane;
-struct Controller;
-struct P2DPicture;
-struct Graphics;
-struct P2DScreen;
-struct P2DTextBox;
+class P2DPane;
+class Controller;
+class P2DPicture;
+class Graphics;
+class P2DScreen;
+class P2DTextBox;
 
 namespace zen {
 
 struct DrawCMbest;
 struct ogSaveMgr;
-struct ogScrMessageMgr;
+class ogScrMessageMgr;
 struct ogGraphMgr;
 struct PikaAlphaMgr;
 

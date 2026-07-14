@@ -5,8 +5,8 @@
 #include "types.h"
 #include "zen/DrawMenu.h"
 
-struct Controller;
-struct Graphics;
+class Controller;
+class Graphics;
 
 // DrawProgre = 'Progressive mode' screen
 

@@ -5,7 +5,7 @@
 #include "nlib/Geometry.h"
 #include "types.h"
 
-struct Camera;
+class Camera;
 
 /**
  * @brief TODO

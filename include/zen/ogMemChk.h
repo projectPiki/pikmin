@@ -3,21 +3,21 @@
 
 #include "types.h"
 
-struct Controller;
-struct Graphics;
-struct P2DScreen;
-struct P2DPane;
-struct P2DPicture;
-struct P2DTextBox;
+class Controller;
+class Graphics;
+class P2DScreen;
+class P2DPane;
+class P2DPicture;
+class P2DTextBox;
 
 namespace zen {
 
-struct ogNitakuMgr;
-struct TypingTextMgr;
+class ogNitakuMgr;
+class TypingTextMgr;
 struct EffectMgr2D;
 struct setTenmetuAlpha;
 struct ogScrMakeDefaultMgr;
-struct particleGenerator;
+class particleGenerator;
 
 /**
  *

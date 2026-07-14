@@ -17,9 +17,9 @@
 #include "zen/SpectrumCursorMgr.h"
 #include "zen/ogDiary.h"
 
-struct Controller;
-struct Graphics;
-struct P2DScreen;
+class Controller;
+class Graphics;
+class P2DScreen;
 
 namespace zen {
 struct EffectMgr2D;

@@ -8,7 +8,7 @@
 /*
  * @brief TODO
  */
-struct Grass {
+class Grass {
 	Grass() { }
 
 	bool isAlive() { return mHealth != 0; }
@@ -31,7 +31,7 @@ struct Grass {
 /*
  * @brief TODO
  */
-struct Pebble {
+class Pebble {
 	Pebble() { }
 
 	bool isAlive() { return mHealth != 0; }

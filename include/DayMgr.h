@@ -4,12 +4,12 @@
 #include "Light.h"
 #include "types.h"
 
-struct CmdStream;
-struct Colour;
-struct Controller;
-struct Graphics;
-struct MapMgr;
-struct Menu;
+class CmdStream;
+class Colour;
+class Controller;
+class Graphics;
+class MapMgr;
+class Menu;
 
 /// Types/names of lights used in `TimeSetting`.
 enum DayLightType {
@@ -49,7 +49,7 @@ enum TimeSettingType {
  *
  * @note Size: 0x13F8.
  */
-struct TimeSetting {
+class TimeSetting {
 
 	/// Constructs a new time setting, with all default parallel lights, colour, and fog settings.
 	TimeSetting()
@@ -131,7 +131,7 @@ struct TimeSetting {
  *
  * @note Size: 0x1418.
  */
-struct DayMgr {
+class DayMgr {
 	DayMgr(MapMgr* map, Controller* controller);
 
 	void menuBIncrease(Menu& parent);

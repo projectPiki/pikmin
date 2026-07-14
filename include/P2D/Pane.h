@@ -10,9 +10,9 @@
 #include "types.h"
 #include "zen/CallBack.h"
 
-struct P2DGrafContext;
-struct P2DPane;
-struct RandomAccessStream;
+class P2DGrafContext;
+class P2DPane;
+class RandomAccessStream;
 
 /**
  * @brief TODO
@@ -55,7 +55,7 @@ struct P2DPaneCallBackBase {
  *
  * @note Size: 0x4.
  */
-struct P2DPaneCallBack : public zen::CallBack1<P2DPane*>, public P2DPaneCallBackBase {
+class P2DPaneCallBack : public zen::CallBack1<P2DPane*>, public P2DPaneCallBackBase {
 public:
 	P2DPaneCallBack(P2DPane* pane, P2DPaneType type)
 	    : P2DPaneCallBackBase(pane, type)
@@ -73,7 +73,7 @@ public:
  *
  * @note Size: 0xEC.
  */
-struct P2DPane {
+class P2DPane {
 public:
 	P2DPane();
 	P2DPane(P2DPane*, u16, bool, u32, const PUTRect&);

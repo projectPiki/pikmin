@@ -3,14 +3,14 @@
 
 #include "types.h"
 
-struct Colour;
+class Colour;
 
 namespace zen {
 
 /*
  * @brief TODO
  */
-struct bBoardColourAnimData {
+class bBoardColourAnimData {
 	bBoardColourAnimData()
 	{
 		mBlendMode       = 0;

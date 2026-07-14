@@ -6,8 +6,8 @@
 #include "PVW.h"
 #include "Stream.h"
 
-struct Graphics;
-struct Colour;
+class Graphics;
+class Colour;
 
 /**
  * @brief Material flags for controlling rendering passes and blend types.
@@ -25,7 +25,7 @@ enum MaterialFlags {
  * @brief TODO
  * @note Size: 0x9C.
  */
-struct Material : public CoreNode {
+class Material : public CoreNode {
 	Material()
 	    : CoreNode("material")
 	{
@@ -80,7 +80,7 @@ struct Material : public CoreNode {
 /**
  * @brief TODO
  */
-struct MatobjInfo : public GfxobjInfo {
+class MatobjInfo : public GfxobjInfo {
 	MatobjInfo()
 	{
 		mTarget = nullptr;
@@ -99,7 +99,7 @@ struct MatobjInfo : public GfxobjInfo {
 /**
  * @brief TODO
  */
-struct MaterialHandler {
+class MaterialHandler {
 	MaterialHandler() { mGfx = nullptr; }
 
 	Graphics* mGfx; // _00

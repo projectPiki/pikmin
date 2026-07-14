@@ -17,11 +17,11 @@
 #include "zen/ogSub.h"
 #include <stdio.h>
 
-struct P2DPicture;
-struct P2DPerspGraph;
-struct P2DTextBox;
-struct Graphics;
-struct Texture;
+class P2DPicture;
+class P2DPerspGraph;
+class P2DTextBox;
+class Graphics;
+class Texture;
 
 namespace zen {
 
@@ -33,7 +33,7 @@ struct WindowPaneMgr;
  *
  * @note Size: 0x1E0.
  */
-struct DrawContainer {
+class DrawContainer {
 public:
 	/**
 	 * @brief TODO
