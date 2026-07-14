@@ -8,7 +8,7 @@
 
 class Creature;
 class CmdStream;
-struct DataMsg;
+class DataMsg;
 class Graphics;
 class MapMgr;
 class Plane;
