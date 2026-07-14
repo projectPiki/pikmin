@@ -27,15 +27,18 @@ protected:
 
 extern BugPrintBuffer* bugPrintBuffer;
 
-// This symbol has no mangling in the ILK.  Maybe it was meant to be accessible to even C code?
+// MSVC appears to "mangle" symbols with C linkage, appending a '_' character like we see this symbol
+// having the ILK, so that must be what happened.  Maybe it was meant to be accessible to even C code?
 extern "C" {
-void _bugPrint(immut char* fmt, ...);
+void bugPrint(immut char* fmt, ...);
 }
 
+// DO NOT define this as a variadic macro (when matching).
+// See the comment in "DebugLog.h" regarding `PRINT` and `ERROR` for the reason why.
 #if defined(WIN32)
-#define BUGPRINT(...) _bugPrint(__VA_ARGS__);
+#define BUGPRINT bugPrint
 #else
-#define BUGPRINT(...) (__VA_ARGS__)
+#define BUGPRINT
 #endif
 
 #endif

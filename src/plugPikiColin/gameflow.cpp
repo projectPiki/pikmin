@@ -33,6 +33,12 @@ BaseApp* app;
 /// Unused load logo "spin" value.
 static f32 llspin;
 
+BOOL _nsPrint = TRUE;
+BOOL _cPrint  = TRUE;
+BOOL _kPrint  = TRUE;
+BOOL _nPrint  = TRUE;
+BOOL _yPrint  = TRUE;
+
 /**
  * @note UNUSED Size: 00009C
  */

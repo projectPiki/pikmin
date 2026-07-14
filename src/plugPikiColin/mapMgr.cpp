@@ -2157,9 +2157,12 @@ void MapMgr::recTraceMove(CollGroup* collGroupList, MoveTrace& trace, f32 timeSt
 			if (trace.mObject) {
 				trace.mObject->mCollisionOccurred = 1;
 			}
-			PRINT_IF(false, ">> before bounce : n(%.1f,%.1f,%.1f) vel(%.1f,%.1f,%.1f) p(%.1f,%.1f,%.1f) %s :%.1f %.1f\n", collNormal.x,
-			         collNormal.y, collNormal.z, stepVelocity.x, stepVelocity.y, stepVelocity.z, proposedPosition.x, proposedPosition.y,
-			         proposedPosition.z, currGroup->mPlatCollision ? "PLATFORM" : "MAP", penDepth, collRadius);
+
+			if (false) {
+				PRINT(">> before bounce : n(%.1f,%.1f,%.1f) vel(%.1f,%.1f,%.1f) p(%.1f,%.1f,%.1f) %s :%.1f %.1f\n", collNormal.x,
+				      collNormal.y, collNormal.z, stepVelocity.x, stepVelocity.y, stepVelocity.z, proposedPosition.x, proposedPosition.y,
+				      proposedPosition.z, currGroup->mPlatCollision ? "PLATFORM" : "MAP", penDepth, collRadius);
+			}
 
 			bool ignorePlatform = false;
 			if (!currGroup->mPlatCollision) {
@@ -2172,7 +2175,9 @@ void MapMgr::recTraceMove(CollGroup* collGroupList, MoveTrace& trace, f32 timeSt
 			} else if (collidedWithMap && lastMapCollNormal.DP(collNormal) < -0.5f) {
 				// we just bounced from map collision into the "wrong side" of a platform, ignore it
 				ignorePlatform = true;
-				PRINT_IF(false, "ignore platform\n");
+				if (false) {
+					("ignore platform\n");
+				}
 
 			} else {
 				if (trace.mObject && currGroup->mPlatCollision && currGroup->mPlatCollision->mCreature) {
@@ -2183,9 +2188,11 @@ void MapMgr::recTraceMove(CollGroup* collGroupList, MoveTrace& trace, f32 timeSt
 				stepVelocity.bounce(collNormal, bounceFactor);
 			}
 
-			PRINT_IF(false, ">> after bounce : n(%.1f,%.1f,%.1f) vel(%.1f,%.1f,%.1f) p(%.1f,%.1f,%.1f) %s\n", collNormal.x, collNormal.y,
-			         collNormal.z, stepVelocity.x, stepVelocity.y, stepVelocity.z, proposedPosition.x, proposedPosition.y,
-			         proposedPosition.z, currGroup->mPlatCollision ? "PLATFORM" : "MAP");
+			if (false) {
+				(">> after bounce : n(%.1f,%.1f,%.1f) vel(%.1f,%.1f,%.1f) p(%.1f,%.1f,%.1f) %s\n", collNormal.x, collNormal.y, collNormal.z,
+				 stepVelocity.x, stepVelocity.y, stepVelocity.z, proposedPosition.x, proposedPosition.y, proposedPosition.z,
+				 currGroup->mPlatCollision ? "PLATFORM" : "MAP");
+			}
 
 			if (!ignorePlatform) {
 				// resolve any penetration

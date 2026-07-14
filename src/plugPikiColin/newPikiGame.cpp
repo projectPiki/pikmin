@@ -2805,7 +2805,7 @@ NewPikiGameSection::NewPikiGameSection()
 	// run gameplay at 30 fps
 	gsys->setFrameClamp(2);
 
-#ifdef WIN32
+#if defined(WIN32) || defined(DEVELOP)
 	_nPrint = FALSE;
 	_kPrint = FALSE;
 #endif

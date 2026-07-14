@@ -1,7 +1,18 @@
 #include "RefCountable.h"
 
-char file[] = __FILE__;
-char name[] = "smartPtr";
+#include "DebugLog.h"
+
+/**
+ * @todo: Documentation
+ * @note UNUSED Size: 00009C
+ */
+DEFINE_ERROR(__LINE__) // Never used in the DLL
+
+/**
+ * @todo: Documentation
+ * @note UNUSED Size: 0000F4
+ */
+DEFINE_PRINT("smartPtr") // Never used in the DLL
 
 /**
  * @todo: Documentation
@@ -25,6 +36,9 @@ void RefCountable::clearCnt()
 void RefCountable::addCnt()
 {
 	mCount++;
+#if defined(WIN32)
+	addCntCallback();
+#endif
 }
 
 /**
@@ -33,9 +47,10 @@ void RefCountable::addCnt()
 void RefCountable::subCnt()
 {
 	mCount--;
-	if (mCount >= 0) {
-		return;
+#if defined(WIN32)
+	subCntCallback();
+#endif
+	if (mCount < 0) {
+		mCount = 0;
 	}
-	mCount = 0;
-	return;
 }

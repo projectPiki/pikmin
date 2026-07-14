@@ -37,8 +37,7 @@ BugPrintBuffer::BugPrintBuffer()
 {
 	mFrame       = 0;
 	mCapacity    = 0x5000;
-	char* buffer = new char[mCapacity];
-	mBuffer      = buffer;
+	mBuffer      = new char[mCapacity];
 	mBufPos      = 0;
 	clear();
 }
@@ -100,7 +99,7 @@ int BugPrintBuffer::findLine(int offset)
 /**
  * @todo Documentation
  */
-void _bugPrint(immut char* fmt, ...)
+void bugPrint(immut char* fmt, ...)
 {
 	va_list args;
 	char message[1024];

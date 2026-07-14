@@ -43,7 +43,7 @@ bool BombItem::isVisible()
 {
 	int state = getCurrState()->getID();
 
-	if (state == BombAI::BOMB_Mizu || state == BombAI::BOMB_Die || state == BombAI::BOMB_Unk1 || state == BombAI::BOMB_Set) {
+	if (state == BombAI::BOMB_Mizu || state == BombAI::BOMB_Die || state == BombAI::BOMB_Set || state == BombAI::BOMB_Unk1) {
 		return false;
 	}
 
@@ -65,7 +65,7 @@ bool BombItem::isAlive()
 {
 	int state = getCurrState()->getID();
 
-	if (state == BombAI::BOMB_Mizu || state == BombAI::BOMB_Die || state == BombAI::BOMB_Unk1 || state == BombAI::BOMB_Set) {
+	if (state == BombAI::BOMB_Mizu || state == BombAI::BOMB_Die || state == BombAI::BOMB_Set || state == BombAI::BOMB_Unk1) {
 		return false;
 	}
 
@@ -139,10 +139,14 @@ void BombItem::update()
 	ItemCreature::update();
 
 	int state = getCurrState()->getID();
-	if (state != BombAI::BOMB_Die && state != BombAI::BOMB_Bomb && state != BombAI::BOMB_Mizu && mGroundTriangle
-	    && MapCode::getAttribute(mGroundTriangle) == ATTR_Water) {
-		PRINT("BOMB WATER START **********\n");
-		mSAICtx.mStateMachine->transit(this, BombAI::BOMB_Mizu);
+	if (state != BombAI::BOMB_Die && state != BombAI::BOMB_Bomb && state != BombAI::BOMB_Mizu) {
+		if (mGroundTriangle) {
+			int attr = MapCode::getAttribute(mGroundTriangle);
+			if (attr == ATTR_Water) {
+				PRINT("BOMB WATER START **********\n");
+				mSAICtx.mStateMachine->transit(this, BombAI::BOMB_Mizu);
+			}
+		}
 	}
 
 	if (state == BombAI::BOMB_Unk1 && mGroundTriangle) {

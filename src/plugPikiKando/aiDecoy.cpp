@@ -52,7 +52,8 @@ Creature* ActDecoy::update()
 {
 	Creature* teki = findTeki();
 	if (teki) {
-		if (qdist2(teki, mPiki) < 60.0f) {
+		f32 dist = qdist2(teki, mPiki);
+		if (dist < 60.0f) {
 			mState = 0;
 		} else {
 			mState = 2;
