@@ -223,9 +223,33 @@ static immut char* levNames[STAGE_COUNT] = {
 #endif
 
 /**
+ * @brief Farbricated inline for DOL-exclusive code that solves matching `OnePlayerSection::init`.
+ */
+static inline Texture* setBannerTex(u32 stageID)
+{
+	// This variable causes problems when this code is not wrapped in this inline.
+	Texture* tex = nullptr;
+
+	// if we're loading into a "valid" story or challenge mode stage, show the area title banner
+	if (stageID <= STAGE_COUNT - 1) {
+#if defined(VERSION_GPIP01)
+		char bannerTex[128];
+		sprintf(bannerTex, "%s/%s", dirNames[gameflow.mGamePrefs.getChildMode()], levNames[stageID]);
+		gameflow.mLevelBannerTex = tex = gameflow.setLoadBanner(bannerTex);
+#else
+		gameflow.mLevelBannerTex = tex = gameflow.setLoadBanner(levNames[stageID]);
+#endif
+		gameflow.mLevelBannerFadeValue = 0.0f;
+	} else {
+		(void)(stageID <= STAGE_COUNT - 1);
+		gameflow.mLevelBannerTex = tex;
+	}
+	(void)(tex);
+	return tex;
+}
+
+/**
  * @brief Initialises the next queued up story or challenge mode game section.
- *
- * @warning NON-MATCHING! Functionally equivalent.
  */
 void OnePlayerSection::init()
 {
@@ -394,23 +418,7 @@ void OnePlayerSection::init()
 				gsys->startLoading(&gameflow.mGameLoadIdler, true, 60);
 			}
 
-			// this tex nullptr does not wanna load properly here, and keeps getting optimised out into the else block
-			Texture* tex = nullptr;
-			u32 stageID  = flowCont.mCurrentStage->mStageID;
-
-			// if we're loading into a "valid" story or challenge mode stage, show the area title banner
-			if (stageID <= STAGE_COUNT - 1) {
-#if defined(VERSION_GPIP01)
-				char bannerTex[128];
-				sprintf(bannerTex, "%s/%s", dirNames[gameflow.mGamePrefs.getChildMode()], levNames[stageID]);
-				gameflow.mLevelBannerTex = tex = gameflow.setLoadBanner(bannerTex);
-#else
-				gameflow.mLevelBannerTex = tex = gameflow.setLoadBanner(levNames[stageID]);
-#endif
-				gameflow.mLevelBannerFadeValue = 0.0f;
-			} else {
-				gameflow.mLevelBannerTex = tex;
-			}
+			setBannerTex(flowCont.mCurrentStage->mStageID);
 			PRINT("making new MAINGAME\n");
 			currentSection = new NewPikiGameSection();
 			break;

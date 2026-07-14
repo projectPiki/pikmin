@@ -249,11 +249,6 @@ public:
 	}
 
 protected:
-	virtual f32 getFrameMax(Teki& teki) // _1C
-	{
-		return teki.getParameterF(TAIbeatleFloatParms::FlickingTime);
-	}
-
 	virtual bool permitFlick(Teki& teki) // _20
 	{
 		if (teki.mCurrentAnimEvent == KEY_Action0) {
@@ -261,6 +256,11 @@ protected:
 		}
 
 		return false;
+	}
+
+	virtual f32 getFrameMax(Teki& teki) // _1C
+	{
+		return teki.getParameterF(TAIbeatleFloatParms::FlickingTime);
 	}
 
 	void createSteamEffect(Teki& teki)
@@ -271,6 +271,8 @@ protected:
 		CollPart* steamEffectPart;
 
 		int i = 0;
+		int firstID;
+		int secondID;
 
 		int collPartIDs[6];
 		for (i = 0; i < 6; i++) {
@@ -278,8 +280,8 @@ protected:
 		}
 
 		for (i = 0; i < 10; i++) {
-			int firstID  = zen::Rand(6.0f);
-			int secondID = zen::Rand(6.0f);
+			firstID  = zen::Rand(6.0f);
+			secondID = zen::Rand(6.0f);
 
 			int temp              = collPartIDs[firstID];
 			collPartIDs[firstID]  = collPartIDs[secondID];
@@ -354,12 +356,12 @@ protected:
 
 	void runAway(Teki& teki)
 	{
-		Navi* navi = naviMgr->getNavi();
-
+		Navi* const navi = naviMgr->getNavi(); // Jesus christ, it's an actual const meme in the wild.
 		Vector3f sep;
+		int safetyParam = TPF_SafetyTerritoryRange;
 		sep.set(teki.getPosition() - navi->getPosition());
 
-		sep.multiply(teki.getParameterF(TPF_SafetyTerritoryRange) / sep.length());
+		sep.multiply(teki.getParameterF(safetyParam) / sep.length());
 
 		teki.mTargetPosition.set(teki.getPosition() + sep);
 

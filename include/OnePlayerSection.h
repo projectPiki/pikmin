@@ -4,6 +4,7 @@
 #include "BaseInf.h"
 #include "GlobalGameOptions.h"
 #include "Section.h"
+#include "gameflow.h"
 #include "types.h"
 
 class CmdStream;

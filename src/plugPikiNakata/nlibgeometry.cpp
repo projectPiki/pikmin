@@ -1193,6 +1193,7 @@ void LUMatrix::println() immut
  * @todo: Documentation
  */
 NTransform3D::NTransform3D()
+    : NMatrix4f()
 {
 }
 
@@ -1234,113 +1235,6 @@ void NTransform3D::rotate(immut Vector3f& point)
 	NTransform3D NRef rotation = NTransform3D();
 	outputRotation(rotation);
 	rotation.rotate(point);
-	STACK_PAD_STRUCT(3);
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x220(r1)
-	  stw       r31, 0x21C(r1)
-	  addi      r31, r3, 0
-	  addi      r3, r1, 0x14C
-	  stw       r30, 0x218(r1)
-	  stw       r29, 0x214(r1)
-	  addi      r29, r4, 0
-	  lfs       f2, -0x5FF0(r2)
-	  stfs      f2, 0x8(r1)
-	  fmr       f3, f2
-	  fmr       f4, f2
-	  stfs      f2, 0xC(r1)
-	  fmr       f5, f2
-	  fmr       f7, f2
-	  lfs       f1, -0x5FEC(r2)
-	  fmr       f8, f2
-	  stfs      f1, 0x10(r1)
-	  fmr       f6, f1
-	  stfs      f2, 0x14(r1)
-	  stfs      f2, 0x18(r1)
-	  stfs      f2, 0x1C(r1)
-	  stfs      f2, 0x20(r1)
-	  stfs      f1, 0x24(r1)
-	  bl        -0xCD4
-	  addi      r3, r1, 0x1CC
-	  addi      r4, r1, 0x14C
-	  bl        -0xF8
-	  addi      r30, r1, 0x1CC
-	  addi      r3, r31, 0
-	  addi      r4, r30, 0
-	  bl        0x16C
-	  addi      r3, r1, 0xCC
-	  bl        -0xDDB74
-	  lfs       f2, -0x5FF0(r2)
-	  addi      r3, r1, 0xCC
-	  stfs      f2, 0x8(r1)
-	  fmr       f3, f2
-	  fmr       f4, f2
-	  stfs      f2, 0xC(r1)
-	  fmr       f5, f2
-	  fmr       f7, f2
-	  lfs       f1, -0x5FEC(r2)
-	  fmr       f8, f2
-	  stfs      f1, 0x10(r1)
-	  fmr       f6, f1
-	  stfs      f2, 0x14(r1)
-	  stfs      f2, 0x18(r1)
-	  stfs      f2, 0x1C(r1)
-	  stfs      f2, 0x20(r1)
-	  stfs      f1, 0x24(r1)
-	  bl        -0xD40
-	  addi      r3, r1, 0x18C
-	  addi      r4, r1, 0xCC
-	  bl        -0x164
-	  addi      r31, r1, 0x18C
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0
-	  bl        0x100
-	  addi      r3, r1, 0x10C
-	  bl        -0xDDBE0
-	  lfs       f2, -0x5FF0(r2)
-	  addi      r3, r1, 0x4C
-	  stfs      f2, 0x8(r1)
-	  fmr       f3, f2
-	  fmr       f4, f2
-	  stfs      f2, 0xC(r1)
-	  fmr       f5, f2
-	  fmr       f7, f2
-	  lfs       f1, -0x5FEC(r2)
-	  fmr       f8, f2
-	  stfs      f1, 0x10(r1)
-	  fmr       f6, f1
-	  stfs      f2, 0x14(r1)
-	  stfs      f2, 0x18(r1)
-	  stfs      f2, 0x1C(r1)
-	  stfs      f2, 0x20(r1)
-	  stfs      f1, 0x24(r1)
-	  bl        -0xEAC
-	  addi      r4, r3, 0
-	  addi      r3, r1, 0x10C
-	  bl        -0xE48
-	  addi      r30, r1, 0x10C
-	  addi      r3, r31, 0
-	  addi      r4, r30, 0
-	  bl        0x94
-	  addi      r3, r1, 0x8C
-	  bl        -0xF70
-	  addi      r31, r1, 0x8C
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0
-	  bl        0x7C
-	  addi      r3, r31, 0
-	  addi      r4, r29, 0
-	  bl        .loc_0x0
-	  lwz       r0, 0x224(r1)
-	  lwz       r31, 0x21C(r1)
-	  lwz       r30, 0x218(r1)
-	  lwz       r29, 0x214(r1)
-	  addi      r1, r1, 0x220
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /**

@@ -702,6 +702,9 @@ protected:
 	void newInitWork();
 	int newExeWork();
 
+	// this is not in the DLL, and is just for matching ActBridge::newExeWork
+	inline void releasePiki() { mPiki->resetCreatureFlag(CF_DisableMovement); }
+
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener ptr
