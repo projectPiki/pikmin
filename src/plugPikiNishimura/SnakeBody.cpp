@@ -156,9 +156,11 @@ void SnakeBody::setInitializePosition()
 void SnakeBody::copyAnimPosition()
 {
 	if (mSnake->getCurrentState() >= SNAKEAI_ChaseNavi && mSnake->getCurrentState() <= SNAKEAI_ChasePiki) {
+		Vector3f* animPos;
+		Matrix4f* matrix;
 		for (int i = 0; i < SnakeJointType::SegmentCount; i++) {
 			for (int j = 0; j < 4; j++) {
-				NsCalculation::calcMtxTrans(mSegmentMatrices[i], j, mAnimPosList[i][j]);
+				NsCalculation::calcMtxTrans(*(matrix = &mSegmentMatrices[i]), j, *(animPos = &mAnimPosList[i][j]));
 			}
 		}
 	}

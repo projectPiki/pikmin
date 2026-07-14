@@ -228,7 +228,7 @@ struct MovSampleSetupSection : public Node {
 		gfx.setClearColour(COLOUR_TRANSPARENT);
 		gfx.clearBuffer(3, false);
 		Matrix4f mtx;
-		STACK_PAD_VAR(64);
+		STACK_PAD_VAR(63);
 		gfx.setOrthogonal(mtx.mMtx, AREA_FULL_SCREEN(gfx));
 
 		GXSetNumTexGens(2);
@@ -291,7 +291,9 @@ struct MovSampleSetupSection : public Node {
 		gfx.setColour(COLOUR_WHITE, true);
 
 		// WHY WONT YOU USE DIFFERENT REGISTERS
-		gfx.testRectangle(RectArea(0, 0, 640, 480));
+		int width = 640;
+		int height;
+		gfx.testRectangle(RectArea(0, 0, width, height = 480));
 
 		GXSetTevSwapModeTable(GX_TEV_SWAP0, GX_CH_RED, GX_CH_GREEN, GX_CH_BLUE, GX_CH_ALPHA);
 		GXSetTevSwapMode(GX_TEVSTAGE0, GX_TEV_SWAP0, GX_TEV_SWAP0);

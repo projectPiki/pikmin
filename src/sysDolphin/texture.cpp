@@ -12,7 +12,7 @@
  * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
-#if defined(VERSION_GPIJ01)
+#if defined(VERSION_GPIJ01) || defined(VERSION_DPIJ01_PIKIDEMO)
 DEFINE_ERROR(12)
 #else
 DEFINE_ERROR(14)
@@ -23,10 +23,6 @@ DEFINE_ERROR(14)
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("Texture");
-
-static GXTexFmt gxTexFmts[TEX_FMT_COUNT] = {
-	GX_TF_RGB565, GX_TF_CMPR, GX_TF_RGB5A3, GX_TF_I4, GX_TF_I8, GX_TF_IA4, GX_TF_IA8, GX_TF_RGBA8, GX_TF_Z8,
-};
 
 /**
  * @todo: Documentation
@@ -51,159 +47,105 @@ void Texture::offsetGLtoGX(int, int)
 }
 
 /**
+ * @brief Fabricated inline for matching DOL-exclusive code.
+ */
+static inline u32 calcQY(Texture* tex, int y)
+{
+	return y / tex->mTileSizeY;
+}
+
+/**
+ * @brief Fabricated inline for matching DOL-exclusive code.
+ */
+static inline u32 calcQX(Texture* tex, int x)
+{
+	return x / tex->mTileSizeX;
+}
+
+/**
+ * @brief Fabricated inline for matching DOL-exclusive code.
+ */
+static inline u32 calcRow(u16 width, const u32& tx, u32 ty)
+{
+	u32 area = tx * ty;
+	u32 wt   = width / tx;
+	return wt * area;
+}
+
+/**
+ * @brief Fabricated inline for matching DOL-exclusive code.
+ */
+static inline u32 calcParts(Texture* tex, int x, int y, u32& area, u32& row)
+{
+	area   = tex->mTileSizeX * tex->mTileSizeY;
+	row    = calcRow(tex->mWidth, tex->mTileSizeX, tex->mTileSizeY);
+	u32 qy = calcQY(tex, y);
+	return qy;
+}
+
+/**
+ * @brief Fabricated inline for matching DOL-exclusive code.
+ */
+static inline int calcOffset(Texture* tex, int x, int y)
+{
+	u32 area;
+	u32 row;
+	u32 qy = calcParts(tex, x, y, area, row);
+	u32 qx = calcQX(tex, x);
+	x -= qx * tex->mTileSizeX;
+	y -= qy * tex->mTileSizeY;
+	int index = x + tex->mTileSizeX * y;
+	qy *= row;
+	int qxTerm = qx * area;
+	index      = qy + (qxTerm + index);
+	return index;
+}
+
+/**
  * @todo: Documentation
- * @note NONMATCHING
  */
 u8 Texture::getAlpha(int x, int y)
 {
-	// These two switch cases seem like they should contain identical math, with the only difference being the size of a pixel (u8 vs u16).
 	switch (mTexFormat) {
 	case TEX_FMT_IA4:
 	{
-		// int a    = (x / mTileSizeX * mTileSizeX) * mTileSizeY;
-		// int b    = (x % mTileSizeX);
-		// int c    = (y / mTileSizeY * mTileSizeY) * (mWidth / mTileSizeX * mTileSizeX);
-		// int d    = (y % mTileSizeY) * mTileSizeX;
-		// u8 pixel = ((u8*)mPixelData)[a + b + d + c];
-
-		int tileArea = mTileSizeX * mTileSizeY;
-		int x2       = x / mTileSizeX;
-		int y2       = y / mTileSizeY;
-		u8 pixel
-		    = ((u8*)mPixelData)[x2 * tileArea + (x % mTileSizeX) + mTileSizeX * (y % mTileSizeY) + y2 * ((mWidth / mTileSizeX) * tileArea)];
-
+		u8* data = (u8*)mPixelData;
+		u8 pixel = data[calcOffset(this, x, y)];
 		return pixel & 0xF0;
 	}
 	default: // TEX_FMT_RGB5A3 assumed
 	{
-		// int a     = (x / mTileSizeX * mTileSizeX) * mTileSizeY;
-		// int b     = (x % mTileSizeX);
-		// int c     = (y / mTileSizeY * mTileSizeY) * (mWidth / mTileSizeX * mTileSizeX);
-		// int d     = (y % mTileSizeY) * mTileSizeX;
-		// u16 pixel = ((u16*)mPixelData)[a + b + d + c];
-
-		int tileArea = mTileSizeX * mTileSizeY;
-		int blockX   = (x / mTileSizeX) * (mWidth / mTileSizeX) * tileArea;
-		int blockY   = (y / mTileSizeY) * tileArea;
-		x %= mTileSizeX;
-		y %= mTileSizeY;
-		u16 pixel = ((u16*)mPixelData)[blockX + x + mTileSizeX * y + blockY];
-
+		u16* data = (u16*)mPixelData;
+		u16 pixel = data[calcOffset(this, x, y)];
 		if (pixel & 0x8000) {
 			return 255;
 		}
 		return (pixel >> 7) & 0xE0;
 	}
 	}
-
-	/*
-	.loc_0x0:
-	  lhz       r0, 0x4(r3)
-	  cmpwi     r0, 0x5
-	  beq-      .loc_0x10
-	  b         .loc_0x68
-
-	.loc_0x10:
-	  lwz       r7, 0x10(r3)
-	  lwz       r10, 0xC(r3)
-	  divwu     r8, r5, r7
-	  lhz       r0, 0x8(r3)
-	  lwz       r3, 0x14(r3)
-	  divwu     r9, r4, r10
-	  mullw     r11, r10, r7
-	  divwu     r6, r0, r10
-	  mullw     r0, r8, r7
-	  mullw     r7, r6, r11
-	  mullw     r6, r9, r10
-	  sub       r0, r5, r0
-	  mullw     r0, r10, r0
-	  sub       r4, r4, r6
-	  mullw     r5, r8, r7
-	  add       r4, r4, r0
-	  mullw     r0, r9, r11
-	  add       r4, r4, r5
-	  add       r4, r0, r4
-	  lbzx      r0, r3, r4
-	  rlwinm    r3,r0,0,24,27
-	  blr
-
-	.loc_0x68:
-	  lwz       r7, 0x10(r3)
-	  lwz       r10, 0xC(r3)
-	  divwu     r8, r5, r7
-	  lhz       r0, 0x8(r3)
-	  lwz       r3, 0x14(r3)
-	  divwu     r6, r0, r10
-	  mullw     r0, r8, r7
-	  mullw     r11, r10, r7
-	  sub       r0, r5, r0
-	  mullw     r7, r6, r11
-	  divwu     r9, r4, r10
-	  mullw     r6, r9, r10
-	  mullw     r0, r10, r0
-	  sub       r4, r4, r6
-	  add       r4, r4, r0
-	  mullw     r5, r8, r7
-	  mullw     r0, r9, r11
-	  add       r4, r4, r5
-	  add       r4, r0, r4
-	  rlwinm    r0,r4,1,0,30
-	  lhzx      r3, r3, r0
-	  rlwinm.   r0,r3,0,16,16
-	  beq-      .loc_0xCC
-	  li        r3, 0xFF
-	  blr
-
-	.loc_0xCC:
-	  rlwinm    r3,r3,25,24,26
-	  blr
-	*/
 }
 
 /**
  * @todo: Documentation
  * @note UNUSED Size: 0000D4
- * @note NONMATCHING
  */
 u8 Texture::getRed(int x, int y)
 {
-	// These two switch cases seem like they should contain identical math, with the only difference being the size of a pixel (u8 vs u16).
 	switch (mTexFormat) {
 	case TEX_FMT_IA4:
 	{
-		// int a    = (x / mTileSizeX * mTileSizeX) * mTileSizeY;
-		// int b    = (x % mTileSizeX);
-		// int c    = (y / mTileSizeY * mTileSizeY) * (mWidth / mTileSizeX * mTileSizeX);
-		// int d    = (y % mTileSizeY) * mTileSizeX;
-		// u8 pixel = ((u8*)mPixelData)[a + b + d + c];
-
-		int tileArea = mTileSizeX * mTileSizeY;
-		int x2       = x / mTileSizeX;
-		int y2       = y / mTileSizeY;
-		u8 pixel
-		    = ((u8*)mPixelData)[x2 * tileArea + (x % mTileSizeX) + mTileSizeX * (y % mTileSizeY) + y2 * ((mWidth / mTileSizeX) * tileArea)];
-
+		u8* data = (u8*)mPixelData;
+		u8 pixel = data[calcOffset(this, x, y)];
 		return pixel & 0x0F;
 	}
 	default: // TEX_FMT_RGB5A3 assumed
 	{
-		// int a     = (x / mTileSizeX * mTileSizeX) * mTileSizeY;
-		// int b     = (x % mTileSizeX);
-		// int c     = (y / mTileSizeY * mTileSizeY) * (mWidth / mTileSizeX * mTileSizeX);
-		// int d     = (y % mTileSizeY) * mTileSizeX;
-		// u16 pixel = ((u16*)mPixelData)[a + b + d + c];
-
-		int tileArea = mTileSizeX * mTileSizeY;
-		int blockX   = (x / mTileSizeX) * (mWidth / mTileSizeX) * tileArea;
-		int blockY   = (y / mTileSizeY) * tileArea;
-		x %= mTileSizeX;
-		y %= mTileSizeY;
-		u16 pixel = ((u16*)mPixelData)[blockX + x + mTileSizeX * y + blockY];
-
+		u16* data = (u16*)mPixelData;
+		u16 pixel = data[calcOffset(this, x, y)];
 		if (pixel & 0x8000) {
-			return (pixel & 0x7c00) >> 7;
+			return (pixel & 0x7C00) >> 7;
 		}
-		return (pixel & 0x0f00) >> 4;
+		return (pixel & 0x0F00) >> 4;
 	}
 	}
 }
@@ -224,6 +166,10 @@ void Texture::read(RandomAccessStream& input)
 	}
 	gsys->addTexture(this, input.mPath);
 }
+
+static GXTexFmt gxTexFmts[TEX_FMT_COUNT] = {
+	GX_TF_RGB565, GX_TF_CMPR, GX_TF_RGB5A3, GX_TF_I4, GX_TF_I8, GX_TF_IA4, GX_TF_IA8, GX_TF_RGBA8, GX_TF_Z8,
+};
 
 /**
  * @todo: Documentation

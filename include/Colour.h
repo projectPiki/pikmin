@@ -8,7 +8,9 @@
 #define COLOUR_BLACK       Colour(0, 0, 0, 255)
 #define COLOUR_TRANSPARENT Colour(0, 0, 0, 0)
 
-#define COLOUR_TO_U32(colour) ((u8)(colour.a) | (((u8)(colour.b) << 8) | (((u8)(colour.g) << 16) | ((u8)(colour.r) << 24))))
+// yes I KNOW the * 0x10000 looks ugly but UNFORTUNATELY it's necessary to match P2DPicture::setTevMode
+#define COLOUR_TO_U32(colour) \
+	((u8)(colour.a) | (((u8)(colour.b) << 8) | ((((u8)(colour.g) * 0x10000) & 0x00FF0000) | ((((u8)(colour.r) << 24) & 0xFF000000)))))
 
 /**
  * @brief TODO

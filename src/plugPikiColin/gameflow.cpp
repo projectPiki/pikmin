@@ -427,14 +427,13 @@ void GameFlow::read(RandomAccessStream& input)
  * @brief Loads language-specific resources and sets up required paths.
  *
  * This is stubbed in the DLL, which makes decompiling some of the unused code tricky.
- *
- * @warning NON-MATCHING! Functionally equivalent.
  */
 void preloadLanguage()
 {
-	int unused; // for r30
+	u32 unused;
+	AyuHeap* oldHeap;
+	int* lang;
 	int heapIdx;
-	int lang;
 
 	gsys->mCacher->purgeAll();
 	heapIdx = gsys->getHeapNum();
@@ -442,18 +441,19 @@ void preloadLanguage()
 	// use the language heap for this action
 	gsys->setHeap(SYSHEAP_Lang);
 	gsys->resetHeap(SYSHEAP_Lang, AYU_STACK_GROW_UP);
-	gsys->getHeap(gsys->getHeapNum())->getFree();
+	oldHeap = gsys->getHeap(gsys->getHeapNum());
+	oldHeap->getFree() != 0;
 
+	lang = &gameflow.mLanguageIndex;
 	gsys->mBaseAramAllocator.reset();
 	gsys->mDvdRoot.initCore("");
-	gsys->mFileList = (DirEntry*)&gsys->mDvdRoot;
-	gsys->setActiveAramAllocator(&gsys->mBaseAramAllocator);
+	gsys->mFileList            = (DirEntry*)&gsys->mDvdRoot;
+	gsys->mActiveAramAllocator = &gsys->mBaseAramAllocator;
 
 	// set and load language-specific file
-	gsys->parseArchiveDirectory(gameflow.mLangModes[gameflow.mLanguageIndex].mDirPath,
-	                            gameflow.mLangModes[gameflow.mLanguageIndex].mArcPath);
-	gsys->loadBundle(gameflow.mLangModes[gameflow.mLanguageIndex].mBunPath, true);
-	gsys->set2DRoot(gameflow.mLangModes[gameflow.mLanguageIndex].mBloPath, gameflow.mLangModes[gameflow.mLanguageIndex].mTexPath);
+	gsys->parseArchiveDirectory(gameflow.mLangModes[*lang].mDirPath, gameflow.mLangModes[*lang].mArcPath);
+	gsys->loadBundle(gameflow.mLangModes[*lang].mBunPath, true);
+	gsys->set2DRoot(gameflow.mLangModes[*lang].mBloPath, gameflow.mLangModes[*lang].mTexPath);
 
 	gsys->getHeap(gsys->getHeapNum())->getFree();
 

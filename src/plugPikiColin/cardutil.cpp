@@ -146,7 +146,7 @@ static s32 DoMount(s32 chan, void* workArea)
  *
  * @param chan Memory card channel (0 or 1 for Slot A or Slot B).
  * @return CARD result code from last operation hit - 0 or 1 if no error, negative if error.
- * @note UNUSED Size: 000064
+ * @note UNUSED Size: 000064 (Matching by size)
  */
 static s32 DoUnmount(s32 chan)
 {
@@ -163,7 +163,7 @@ static s32 DoUnmount(s32 chan)
  *
  * @param chan Memory card channel (0 or 1 for Slot A or Slot B).
  * @return CARD result code from last operation hit - 0 or 1 if no error, negative if error.
- * @note UNUSED Size: 000088
+ * @note UNUSED Size: 000088 (Matching by size)
  */
 static s32 DoFormat(s32 chan)
 {
@@ -399,20 +399,20 @@ static s32 DoOpen(s32 chan, s32 fileNo, void* workBuffer)
 {
 	CARDStat state;
 	CARDFileInfo info;
-	s32 res = CARDGetStatus(chan, fileNo, &state);
-	if (res < 0) {
+	s32 resStat = CARDGetStatus(chan, fileNo, &state);
+	if (resStat < 0) {
 		// throw error
-		return res;
+		return resStat;
 	}
-	res = CARDFastOpen(chan, fileNo, &info);
-	if (res < 0) {
+	s32 resOpen = CARDFastOpen(chan, fileNo, &info);
+	if (resOpen < 0) {
 		// throw error
-		return res;
+		return resOpen;
 	}
 	CardControl.mOperationSize = state.length;
-	res                        = CARDRead(&info, workBuffer, state.length, 0);
+	s32 resRead                = CARDRead(&info, workBuffer, state.length, 0);
 	CARDClose(&info);
-	return res;
+	return resRead;
 }
 
 /**
@@ -430,19 +430,19 @@ static s32 DoWrite(s32 chan, s32 fileNo, void* data, u32 length, u32 offset)
 {
 	CARDStat state;
 	CARDFileInfo info;
-	s32 res = CARDGetStatus(chan, fileNo, &state);
-	if (res < 0) {
+	s32 resStat = CARDGetStatus(chan, fileNo, &state);
+	if (resStat < 0) {
 		// throw error
-		return res;
+		return resStat;
 	}
-	res = CARDFastOpen(chan, fileNo, &info);
-	if (res < 0) {
+	s32 resOpen = CARDFastOpen(chan, fileNo, &info);
+	if (resOpen < 0) {
 		// throw error
-		return res;
+		return resOpen;
 	}
-	res = CARDWrite(&info, data, length, offset);
+	s32 resWrite = CARDWrite(&info, data, length, offset);
 	CARDClose(&info);
-	return res;
+	return resWrite;
 }
 
 /**
@@ -707,7 +707,7 @@ bool CardUtilIsCardBusy()
  */
 void CardUtilIdleWhileBusy()
 {
-	while (CardControl.mChannel != -1) {
+	while (CardUtilIsCardBusy()) {
 		OSYieldThread();
 	}
 }
@@ -765,22 +765,25 @@ void CardUtilWrite(s32 chan, s32 fileNo, void* data, u32 offset, u32 length)
  * on the memory card in a thread-safe manner.
  *
  * @note Parameter and return are unused, but required to align with the `OSThreadStartFunction` typedef.
- * @warning NON-MATCHING! Functionally equivalent.
  */
 static void* CardUtilMain(void*)
 {
-	// I think variable declaration needs jostling, along with maybe some inline adjustments.
-	s32 chan;   // r23
-	void* data; // r22
-	s32 offset; // r21
-	s32 res;    // r20
-	void* file; // r19
-	s32 length; // r17
-	s32 cmd;    // r16
+	s32 res;
+	s32 length;
+	s32 cmd;
+	s32 chan;
+	void* file;
+	void* data;
+	u32 offset;
+	OSMutex* dirMutex = &CardControl.mDirMutex;
+	s32* filesPtr     = &CardControl.mFilesNotUsed;
+	s32* bytesPtr     = &CardControl.mByteNotUsed;
+	s32* channelPtr   = &CardControl.mChannel;
 	while (true) {
 
+		s32 observed; // sub-statement assignment hack for matching
 		OSLockMutex(&CardControl.mMutex);
-		while (!CardUtilIsCardBusy()) {
+		while (TERNARY_BUILD_MATCHING((observed = *channelPtr) == -1, CardUtilIsCardBusy())) {
 			OSWaitCond(&CardControl.mCondition, &CardControl.mMutex);
 		}
 
@@ -802,14 +805,36 @@ static void* CardUtilMain(void*)
 		}
 		case CARDCMD_Unmount:
 		{
+#if defined(BUILD_MATCHING)
+			OSLockMutex(dirMutex);
+			CardControl.mDirentCount = 0;
+			OSUnlockMutex(dirMutex);
+
+			res = CARDUnmount(chan);
+#else
 			res = DoUnmount(chan);
+#endif
 			break;
 		}
 		case CARDCMD_Format:
 		{
+#if defined(BUILD_MATCHING)
+			OSLockMutex(dirMutex);
+			CardControl.mDirentCount = 0;
+			OSUnlockMutex(dirMutex);
+
+			CardControl.mOperationSize = 0xA000;
+			s32 formatRes              = CARDFormat(chan);
+			if (formatRes == CARD_RESULT_READY) {
+				formatRes = CARDFreeBlocks(chan, bytesPtr, filesPtr);
+			}
+			res = formatRes;
+#else
 			res = DoFormat(chan);
+#endif
 			break;
 		}
+
 		case CARDCMD_List:
 		{
 			res = DoList(chan, (CardUtilDirent*)data);
@@ -832,8 +857,11 @@ static void* CardUtilMain(void*)
 		}
 		case CARDCMD_Write:
 		{
-			u32 uLength = length;
-			res         = DoWrite(chan, (s32)file, data, uLength, offset);
+			s32 f   = (s32)file;
+			u32 v   = length;
+			void* a = data;
+
+			res = DoWrite(chan, f, a, v, offset);
 			break;
 		}
 		}
@@ -849,6 +877,7 @@ static void* CardUtilMain(void*)
 		OSUnlockMutex(&CardControl.mMutex);
 
 		STACK_PAD_TERNARY(CardControl.mChannel, 1);
+		STACK_PAD_INLINE(1);
 	}
 }
 
