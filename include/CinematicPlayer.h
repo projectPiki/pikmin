@@ -13,14 +13,14 @@
 
 #define ADD_ACTOR_PIKMIN_TYPE(flags, color) (flags) |= 1 << ((color) + 12)
 
-struct AgeServer;
-struct CmdStream;
-struct Graphics;
-struct Matrix4f;
-struct Vector3f;
-struct CinematicPlayer;
-struct CineShapeObject;
-struct ActorInstance;
+class AgeServer;
+class CmdStream;
+class Graphics;
+class Matrix4f;
+class Vector3f;
+class CinematicPlayer;
+class CineShapeObject;
+class ActorInstance;
 
 /**
  * @brief Enum for cinematic player flags.
@@ -95,7 +95,7 @@ enum CinPlayBackMode {
  *
  * @note Size: 0x30.
  */
-struct SceneData : public CoreNode {
+class SceneData : public CoreNode {
 	SceneData()
 	    : CoreNode("")
 	{
@@ -175,7 +175,7 @@ enum CineActorFlags {
  *
  * @note Size: 0x1A0.
  */
-struct ActorInstance : public CoreNode {
+class ActorInstance : public CoreNode {
 	ActorInstance()
 	    : CoreNode("")
 	{
@@ -246,7 +246,7 @@ struct ActorInstance : public CoreNode {
  *
  * @note Size: 0x1DC.
  */
-struct SceneCut : public CoreNode {
+class SceneCut : public CoreNode {
 
 	/// Default constructor.
 	SceneCut()
@@ -296,7 +296,7 @@ struct SceneCut : public CoreNode {
  *
  * @note Size: 0x34.
  */
-struct CineShapeObject : public CoreNode {
+class CineShapeObject : public CoreNode {
 
 	/// Default constructor.
 	CineShapeObject()
@@ -329,7 +329,7 @@ struct CineShapeObject : public CoreNode {
  *
  * @note Size: 0x2E8.
  */
-struct CinematicPlayer {
+class CinematicPlayer {
 
 	/// Constructor - initialises given cutscene file.
 	CinematicPlayer(immut char* cinFilePath);

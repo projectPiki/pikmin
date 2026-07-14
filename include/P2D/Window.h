@@ -7,7 +7,7 @@
 #include "Texture.h"
 #include "types.h"
 
-struct Texture;
+class Texture;
 
 /**
  * @brief TODO

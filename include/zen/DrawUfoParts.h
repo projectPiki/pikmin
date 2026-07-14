@@ -5,8 +5,8 @@
 #include "zen/AlphaWipe.h"
 #include "zen/DrawCM.h"
 
-struct Graphics;
-struct Controller;
+class Graphics;
+class Controller;
 
 namespace zen {
 

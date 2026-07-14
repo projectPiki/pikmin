@@ -13,7 +13,7 @@
 /**
  * @brief TODO
  */
-struct Colour {
+class Colour {
 	Colour() { }
 
 	Colour(u8 _r, u8 _g, u8 _b, u8 _a) { set(_r, _g, _b, _a); }
@@ -75,7 +75,7 @@ struct Colour {
 /**
  * @brief TODO
  */
-struct ShortColour {
+class ShortColour {
 	void read(RandomAccessStream& input)
 	{
 		r = input.readShort();
@@ -90,7 +90,7 @@ struct ShortColour {
 /**
  * @brief TODO
  */
-struct LShortColour {
+class LShortColour {
 	s16 r, g, b, a; // _00-_0A
 };
 

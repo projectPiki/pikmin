@@ -18,23 +18,23 @@
 #include "types.h"
 #include "zen/CallBack.h"
 
-struct CollEvent;
-struct Colour;
+class CollEvent;
+class Colour;
 struct CreaturePlatMgr;
-struct NTeki;
+class NTeki;
 struct PeveAccelerationEvent;
 struct PeveCircleMoveEvent;
 struct PeveHorizontalSinWaveEvent;
 struct PeveParabolaEvent;
-struct TAIeffectAttackEventCallBack;
-struct Teki;
+class TAIeffectAttackEventCallBack;
+class Teki;
 struct TekiAnimationManager;
-struct TekiMgr;
-struct TekiParameters;
-struct TekiPersonality;
-struct TekiStrategy;
+class TekiMgr;
+class TekiParameters;
+class TekiPersonality;
+class TekiStrategy;
 struct TekiStrategyTable;
-struct WorkObject;
+class WorkObject;
 
 namespace zen {
 struct PtclGenPack;
@@ -121,7 +121,7 @@ enum {
 /**
  * @brief TODO
  */
-struct TekiInteractionKey {
+class TekiInteractionKey {
 	TekiInteractionKey(int type, immut Interaction* interaction);
 
 	int mInteractionType;            // _00
@@ -142,7 +142,7 @@ enum {
  *
  * @note Size: 0xC.
  */
-struct TekiEvent {
+class TekiEvent {
 public:
 	TekiEvent(int eventType, Teki* teki);
 	TekiEvent(int eventType, Teki* teki, Creature* other);
@@ -159,7 +159,7 @@ public:
 /**
  * @brief TODO
  */
-struct TekiShapeObject {
+class TekiShapeObject {
 	TekiShapeObject(Shape*);
 
 	void genAge(AgeServer&);
@@ -172,7 +172,7 @@ struct TekiShapeObject {
 /**
  * @brief TODO
  */
-struct TekiMessage {
+class TekiMessage {
 	TekiMessage(int, NTeki*);
 
 	int mMsg;     // _00
@@ -514,7 +514,7 @@ public:
 /**
  * @brief TODO
  */
-struct NTeki : public BTeki {
+class NTeki : public BTeki {
 public:
 	NTeki();
 
@@ -734,7 +734,7 @@ protected:
 /**
  * @brief TODO
  */
-struct Teki : public YTeki {
+class Teki : public YTeki {
 	Teki();
 
 	// _00       = VTBL
@@ -747,7 +747,7 @@ struct Teki : public YTeki {
  *
  * @note Size: 0x1B4.
  */
-struct TekiMgr : public MonoObjectMgr {
+class TekiMgr : public MonoObjectMgr {
 public:
 	TekiMgr();
 

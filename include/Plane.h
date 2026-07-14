@@ -9,7 +9,7 @@
  *
  * @note Size: 0x10.
  */
-struct Plane {
+class Plane {
 	Plane() { }
 
 	// unused/inlined:

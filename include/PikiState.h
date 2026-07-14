@@ -65,7 +65,7 @@ struct PikiStateMachine : public StateMachine<Piki> {
 /**
  * @brief Base class for all Piki state handlers.
  */
-struct PikiState : public AState<Piki> {
+class PikiState : public AState<Piki> {
 	PikiState(int stateID, immut char* name)
 	    : AState(stateID)
 	{
@@ -241,7 +241,7 @@ protected:
  * @note Size: 0x2C.
  */
 struct PikiDrownState : public PikiState {
-	friend struct Navi;
+	friend class Navi;
 
 public:
 	PikiDrownState();
@@ -310,7 +310,7 @@ protected:
  * @note Size: 0x24.
  */
 struct PikiEmotionState : public PikiState {
-	friend struct Navi;
+	friend class Navi;
 
 public:
 	PikiEmotionState();
@@ -398,7 +398,7 @@ protected:
  * @note Size: 0x24.
  */
 struct PikiFlickState : public PikiState {
-	friend struct Navi;
+	friend class Navi;
 
 public:
 	PikiFlickState();
@@ -424,7 +424,7 @@ protected:
  * @note Size: 0x24.
  */
 struct PikiFlownState : public PikiState {
-	friend struct Navi;
+	friend class Navi;
 
 public:
 	PikiFlownState();
@@ -744,7 +744,7 @@ protected:
  * @note Size: 0x14.
  */
 struct PikiPushState : public PikiState {
-	friend struct Piki;
+	friend class Piki;
 
 public:
 	PikiPushState();

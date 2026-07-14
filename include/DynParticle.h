@@ -4,14 +4,14 @@
 #include "CoreNode.h"
 #include "types.h"
 
-struct Graphics;
+class Graphics;
 
 /**
  * @brief TODO
  *
  * @note Size: 0xAC.
  */
-struct DynParticle : public CoreNode {
+class DynParticle : public CoreNode {
 	DynParticle();
 
 	virtual bool isFree() { return !-mIsFree; }; // _10
@@ -37,7 +37,7 @@ struct DynParticle : public CoreNode {
 /**
  * @brief TODO
  */
-struct DynParticleHeap {
+class DynParticleHeap {
 	DynParticleHeap(int);
 
 	DynParticle* getFreeOne();

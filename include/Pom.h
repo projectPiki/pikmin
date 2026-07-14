@@ -9,7 +9,7 @@
 
 struct PomAi;
 struct PomGenOpenStarCallBack;
-struct ShapeDynMaterials;
+class ShapeDynMaterials;
 
 #define POM_PROP        (static_cast<PomProp*>(mProps)->mPomProps)
 #define C_POM_PROP(pom) (static_cast<PomProp*>((pom)->mProps)->mPomProps)
@@ -77,7 +77,7 @@ public:
  *
  * @note Size: 0x3D4.
  */
-struct Pom : public Boss {
+class Pom : public Boss {
 	friend struct PomAi;
 
 public:

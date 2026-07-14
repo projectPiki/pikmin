@@ -7,12 +7,12 @@
 #include "Node.h"
 #include "types.h"
 
-struct Collision;
-struct CollGroup;
-struct CollState;
-struct RigidBody;
-struct Shape;
-struct LightCamera;
+class Collision;
+class CollGroup;
+class CollState;
+class RigidBody;
+class Shape;
+class LightCamera;
 
 /// Rest length of a spring, used in harmonic oscillator calculations.
 #define SPRING_REST_LENGTH (20.0f)
@@ -57,7 +57,7 @@ struct WorldSpring {
  *
  * @note Size: 0x132B4.
  */
-struct RigidBody : public Node {
+class RigidBody : public Node {
 
 	/**
 	 * @brief Stores the physical state of a rigid body at a given simulation step.

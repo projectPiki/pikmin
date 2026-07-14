@@ -5,7 +5,7 @@
 #include "P2D/Util.h"
 #include "types.h"
 
-struct P2DFont;
+class P2DFont;
 
 /**
  * @brief TODO

@@ -9,18 +9,18 @@
 #include "Vector.h"
 #include "types.h"
 
-struct CmdStream;
-struct Creature;
-struct DynCollObject;
+class CmdStream;
+class Creature;
+class DynCollObject;
 struct DynCollShape;
-struct ObjCollInfo;
-struct CollInfo;
-struct CollPart;
-struct Shape;
-struct BaseShape;
-struct RoomInfo;
-struct RigidBody;
-struct Graphics;
+class ObjCollInfo;
+class CollInfo;
+class CollPart;
+class Shape;
+class BaseShape;
+class RoomInfo;
+class RigidBody;
+class Graphics;
 
 /**
  * @brief Collision-info node type.
@@ -56,7 +56,7 @@ enum CollPartType {
 /**
  * @brief Minimal room identifier parsed from a stream.
  */
-struct BaseRoomInfo {
+class BaseRoomInfo {
 	void read(RandomAccessStream& input) { mJointIndex = input.readInt(); }
 
 	int mJointIndex; // _00, room index
@@ -65,7 +65,7 @@ struct BaseRoomInfo {
 /**
  * @brief Room descriptor (currently identical to BaseRoomInfo).
  */
-struct RoomInfo : public BaseRoomInfo {
+class RoomInfo : public BaseRoomInfo {
 	// _00-_04 = BaseRoomInfo
 };
 
@@ -74,7 +74,7 @@ struct RoomInfo : public BaseRoomInfo {
  *
  * @note Size: 0x54.
  */
-struct ObjCollInfo : public CoreNode {
+class ObjCollInfo : public CoreNode {
 	ObjCollInfo()
 	    : CoreNode("")
 	{
@@ -116,7 +116,7 @@ struct ObjCollInfo : public CoreNode {
  *
  * @note Size: 0x1C.
  */
-struct CollPartUpdater {
+class CollPartUpdater {
 	virtual Vector3f getPos() = 0; // _08
 	virtual f32 getSize()     = 0; // _0C
 
@@ -132,7 +132,7 @@ struct CollPartUpdater {
  *
  * @note Size: 0x68.
  */
-struct CollPart {
+class CollPart {
 	CollPart();
 
 	bool isStickable();
@@ -188,7 +188,7 @@ struct CollPart {
 /**
  * @brief Collision event payload linking a collider to the parts involved.
  */
-struct CollEvent {
+class CollEvent {
 	CollEvent(Creature* collider, CollPart* colliderPart, CollPart* selfPart)
 	{
 		mCollider     = collider;
@@ -204,7 +204,7 @@ struct CollEvent {
 /**
  * @brief Predicate interface for filtering collision parts.
  */
-struct CndCollPart {
+class CndCollPart {
 	virtual bool satisfy(CollPart*) { return false; } // _08
 
 	// _00 = VTBL
@@ -231,8 +231,8 @@ struct CndBombable : public CndCollPart {
  *
  * @note Size: 0x14.
  */
-struct CollInfo {
-	friend struct CollPart; // Accesses `mCollParts` in `CollPart::getChild`/`getChildAt`/`getNext`.
+class CollInfo {
+	friend class CollPart; // Accesses `mCollParts` in `CollPart::getChild`/`getChildAt`/`getNext`.
 
 public:
 	CollInfo(int);
@@ -281,7 +281,7 @@ private:
 /**
  * @brief Serialized triangle collision info.
  */
-struct BaseCollTriInfo {
+class BaseCollTriInfo {
 
 	void read(RandomAccessStream& input)
 	{
@@ -308,7 +308,7 @@ struct BaseCollTriInfo {
  *
  * @note Size: 0x58 (0x64 in the DLL).
  */
-struct CollTriInfo : public BaseCollTriInfo {
+class CollTriInfo : public BaseCollTriInfo {
 	CollTriInfo() { }
 
 	void init(RoomInfo* roomInfo, immut Vector3f* vertices);
@@ -339,7 +339,7 @@ struct CollTriInfo : public BaseCollTriInfo {
  *
  * @note Size: 0x24.
  */
-struct CollGroup {
+class CollGroup {
 
 	/// Default constructor - resets lists, counts and room index.
 	CollGroup()
@@ -365,7 +365,7 @@ struct CollGroup {
 /**
  * @brief Single collision contact.
  */
-struct Collision {
+class Collision {
 
 	/// Default constructor (trivial).
 	Collision() { }
@@ -382,7 +382,7 @@ struct Collision {
  *
  * @note Size: 0x180.
  */
-struct CollState {
+class CollState {
 
 	/**
 	 * @brief Status of collision state. Largely guesses from what remains of the functionality.

@@ -14,7 +14,7 @@ struct DynBuildShape;
 /**
  * @brief TODO
  */
-struct WorkObject : public ItemCreature {
+class WorkObject : public ItemCreature {
 	WorkObject(); // unused/inlined
 
 	virtual bool isVisible() { return true; }               // _74
@@ -52,7 +52,7 @@ struct WorkObjectNode : public CoreNode {
 /**
  * @brief TODO
  */
-struct WorkObjectMgr : public ObjectMgr {
+class WorkObjectMgr : public ObjectMgr {
 public:
 	WorkObjectMgr();
 
@@ -89,7 +89,7 @@ protected:
  *
  * @note Size: 0x428.
  */
-struct Bridge : public WorkObject {
+class Bridge : public WorkObject {
 public:
 	Bridge(Shape*, bool);
 
@@ -154,7 +154,7 @@ public:
  *
  * @note Size: 0x478.
  */
-struct HinderRock : public WorkObject {
+class HinderRock : public WorkObject {
 public:
 	HinderRock(Shape*);
 

@@ -12,7 +12,7 @@
 #define MAX_SOUND_EFFECTS (128)
 #define MAX_SOUND_EVENTS  (16)
 
-struct Creature;
+class Creature;
 
 /**
  * @brief Quick enum-name connection object for player-related sound effects.
@@ -74,8 +74,8 @@ struct SeConstant : public Node {
  *
  * @note Size: 0x28.
  */
-struct SeContext {
-	friend struct SeSystem;
+class SeContext {
+	friend class SeSystem;
 
 public:
 	/// Default constructor, has no emitting creature and defaults to system event type.
@@ -128,7 +128,7 @@ protected:
  *
  * @note Size: 0x30.
  */
-struct SeMgr : public Node {
+class SeMgr : public Node {
 public:
 	/// Constructor, sets up SeInfos for some pikmin and player sounds.
 	SeMgr();
@@ -222,8 +222,8 @@ protected:
  *
  * @note Size: 0x78.
  */
-struct SeSystem {
-	friend struct SeContext;
+class SeSystem {
+	friend class SeContext;
 
 public:
 	/**

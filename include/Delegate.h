@@ -6,7 +6,7 @@
 /**
  * @brief Parent class for no argument delegates.  NOTE this is only used in the .dll, not the final game
  */
-struct IDelegate {
+class IDelegate {
 	virtual void invoke() = 0; // _08
 };
 
@@ -14,7 +14,7 @@ struct IDelegate {
  * @brief Parent class for single argument delegates.
  */
 template <typename A>
-struct IDelegate1 {
+class IDelegate1 {
 	virtual void invoke(A) = 0; // _08
 };
 
@@ -22,7 +22,7 @@ struct IDelegate1 {
  * @brief Parent class for double argument delegates.
  */
 template <typename A, typename B>
-struct IDelegate2 {
+class IDelegate2 {
 	virtual void invoke(A, B) = 0; // _08
 };
 

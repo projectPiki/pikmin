@@ -12,7 +12,7 @@ struct GameStat {
 	/**
 	 * @brief TODO
 	 */
-	struct Counter {
+	class Counter {
 		Counter() { mCount = 0; }
 
 		void init() { mCount = 0; }
@@ -30,7 +30,7 @@ struct GameStat {
 	/**
 	 * @brief TODO
 	 */
-	struct ColCounter {
+	class ColCounter {
 		ColCounter() { mCounts[Blue] = mCounts[Red] = mCounts[Yellow] = 0; }
 
 		void init() { mCounts[Blue] = mCounts[Red] = mCounts[Yellow] = 0; }

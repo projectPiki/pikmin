@@ -4,14 +4,14 @@
 #include "Vector.h"
 #include "types.h"
 
-struct Pellet;
-struct Graphics;
-struct Matrix4f;
+class Pellet;
+class Graphics;
+class Matrix4f;
 
 /**
  * @brief TODO
  */
-struct PelletView {
+class PelletView {
 	inline PelletView()
 	    : mPellet(nullptr)
 	{

@@ -3,7 +3,7 @@
 
 #include "types.h"
 
-struct Graphics;
+class Graphics;
 
 namespace zen {
 

@@ -47,7 +47,7 @@ public:
  *
  * @note Size: 0x3C0.
  */
-struct Mizu : public Boss {
+class Mizu : public Boss {
 	friend struct MizuAi;
 
 	friend struct MizuGenSpringPuffCallBack; // Not actually required, but other bosses do similar.

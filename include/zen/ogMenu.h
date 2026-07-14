@@ -8,11 +8,11 @@
 #include "system.h"
 #include "types.h"
 
-struct Controller;
-struct Graphics;
-struct P2DPicture;
-struct P2DTextBox;
-struct P2DPane;
+class Controller;
+class Graphics;
+class P2DPicture;
+class P2DTextBox;
+class P2DPane;
 
 namespace zen {
 

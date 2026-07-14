@@ -3,14 +3,14 @@
 
 #include "types.h"
 
-struct Graphics;
-struct Texture;
-struct Vector3f;
+class Graphics;
+class Texture;
+class Vector3f;
 
 /**
  * @brief A spatial grid used for AI culling optimizations.
  */
-struct FastGrid {
+class FastGrid {
 	FastGrid();
 
 	void delAIGrid();

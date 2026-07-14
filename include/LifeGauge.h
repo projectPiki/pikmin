@@ -7,10 +7,10 @@
 #include "Vector.h"
 #include "types.h"
 
-struct Colour;
-struct Graphics;
+class Colour;
+class Graphics;
 struct LifeGauge;
-struct LFlareGroup;
+class LFlareGroup;
 
 /**
  * @brief Manages and draws carry numbers (X / Y) - variable text numbers above objects.
@@ -20,7 +20,7 @@ struct LFlareGroup;
  *
  * @note Size: 0x48.
  */
-struct GaugeInfo : public CoreNode {
+class GaugeInfo : public CoreNode {
 
 	/**
 	 * @brief States that gauge numbers go through while updating.
@@ -68,7 +68,7 @@ struct GaugeInfo : public CoreNode {
  *
  * @note Size: 0x130.
  */
-struct LifeGaugeMgr {
+class LifeGaugeMgr {
 
 	/// Constructs a new life gauge manager with up to 66 carry number gauges active at once.
 	LifeGaugeMgr() { init(66); }

@@ -8,12 +8,12 @@
 #include "nlib/Spline.h"
 #include "types.h"
 
-struct NFunction3D;
-struct NPosture3DIO;
-struct NVector3f;
-struct NVector3fIO;
+class NFunction3D;
+class NPosture3DIO;
+class NVector3f;
+class NVector3fIO;
 struct PeveHomingPositionEvent; // I don't feel like reordering the classes right now.
-struct Vector3f;
+class Vector3f;
 
 /**
  * @brief TODO

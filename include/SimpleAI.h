@@ -7,12 +7,12 @@
 
 #define C_SAI(obj) static_cast<SimpleAI*>(obj->mSAICtx.mStateMachine)
 
-struct SAIEvent;
+class SAIEvent;
 
 /**
  * @brief TODO
  */
-struct SAIAction {
+class SAIAction {
 	virtual void act(AICreature*) = 0; // _08
 
 	// _00 = VTBL?
@@ -22,7 +22,7 @@ struct SAIAction {
 /**
  * @brief TODO
  */
-struct SAICondition : public CoreNode {
+class SAICondition : public CoreNode {
 	inline SAICondition()
 	    : CoreNode()
 	{
@@ -39,7 +39,7 @@ struct SAICondition : public CoreNode {
  *
  * @note Size: 0x8.
  */
-struct SAIEvent : public Receiver<AICreature> {
+class SAIEvent : public Receiver<AICreature> {
 	SAIEvent()
 	    : mEventID(-1)
 	{
@@ -61,7 +61,7 @@ struct SAIEvent : public Receiver<AICreature> {
  *
  * @note Size: 0x8.
  */
-struct SAIBounceEvent : public SAIEvent {
+class SAIBounceEvent : public SAIEvent {
 	virtual void procBounceMsg(AICreature*, MsgBounce*); // _0C
 
 	// _00     = VTBL
@@ -73,7 +73,7 @@ struct SAIBounceEvent : public SAIEvent {
  *
  * @note Size: 0x8.
  */
-struct SAICollideEvent : public SAIEvent {
+class SAICollideEvent : public SAIEvent {
 	virtual void procCollideMsg(AICreature*, MsgCollide*); // _1C
 
 	// _00     = VTBL
@@ -85,7 +85,7 @@ struct SAICollideEvent : public SAIEvent {
  *
  * @note Size: 0x8.
  */
-struct SAIGroundEvent : public SAIEvent {
+class SAIGroundEvent : public SAIEvent {
 	virtual void procGroundMsg(AICreature*, MsgGround*); // _34
 
 	// _00     = VTBL
@@ -97,7 +97,7 @@ struct SAIGroundEvent : public SAIEvent {
  *
  * @note Size: 0x8.
  */
-struct SAIMotionAction0Event : public SAIEvent {
+class SAIMotionAction0Event : public SAIEvent {
 	virtual void procAnimMsg(AICreature*, MsgAnim*); // _20
 
 	// _00     = VTBL
@@ -109,7 +109,7 @@ struct SAIMotionAction0Event : public SAIEvent {
  *
  * @note Size: 0x8.
  */
-struct SAIMotionDoneEvent : public SAIEvent {
+class SAIMotionDoneEvent : public SAIEvent {
 	virtual void procAnimMsg(AICreature*, MsgAnim*); // _20
 
 	// _00     = VTBL
@@ -119,7 +119,7 @@ struct SAIMotionDoneEvent : public SAIEvent {
 /**
  * @brief TODO
  */
-struct SAIMotionLoopStartEvent : public SAIEvent {
+class SAIMotionLoopStartEvent : public SAIEvent {
 	virtual void procAnimMsg(AICreature*, MsgAnim*); // _20
 
 	// _00     = VTBL
@@ -130,7 +130,7 @@ struct SAIMotionLoopStartEvent : public SAIEvent {
 /**
  * @brief TODO
  */
-struct SAIMotionLoopEndEvent : public SAIEvent {
+class SAIMotionLoopEndEvent : public SAIEvent {
 	virtual void procAnimMsg(AICreature*, MsgAnim*); // _20
 
 	// _00     = VTBL
@@ -154,7 +154,7 @@ struct SAIUserEvent : public SAIEvent {
 /**
  * @brief TODO
  */
-struct SAIArrow : public CoreNode {
+class SAIArrow : public CoreNode {
 	SAIArrow(SAIEvent* event, int nextState)
 	    : CoreNode("SAIArrow")
 	{
@@ -218,7 +218,7 @@ struct SAIState : public AState<AICreature> {
  *
  * @note Size: 0x1C.
  */
-struct SimpleAI : public StateMachine<AICreature> {
+class SimpleAI : public StateMachine<AICreature> {
 	SimpleAI();
 
 	virtual void procMsg(AICreature*, Msg*); // _10

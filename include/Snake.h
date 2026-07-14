@@ -7,7 +7,7 @@
 #include "zen/CallBack.h"
 #include "zen/particle.h"
 
-struct Snake;
+class Snake;
 struct SnakeAi;
 struct SnakeBody;
 struct SnakeGenBodyOnGroundCallBack;
@@ -269,7 +269,7 @@ public:
  *
  * @note Size: 0x3DC.
  */
-struct Snake : public Boss {
+class Snake : public Boss {
 	friend struct SnakeAi;
 	friend struct SnakeBody;
 

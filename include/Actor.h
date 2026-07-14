@@ -9,10 +9,10 @@
 #include "Piki.h"
 #include "types.h"
 
-struct ActorMgr;
+class ActorMgr;
 struct NaviProp;
 struct PoliceAI;
-struct SimpleAI;
+class SimpleAI;
 
 /**
  * @brief TODO
@@ -20,8 +20,8 @@ struct SimpleAI;
  * @note Fun fact: The vtable for this does spawn, but then gets stripped :')
  * @note Size: 0x3DC.
  */
-struct Actor : public AICreature {
-	friend struct ActorMgr;
+class Actor : public AICreature {
+	friend class ActorMgr;
 
 public:
 	Actor(); // unused/inlined
@@ -55,8 +55,8 @@ protected:
  *
  * @note This also spawns a vtable but it gets stripped.
  */
-struct ActorMgr : public MonoObjectMgr {
-	friend struct Actor;
+class ActorMgr : public MonoObjectMgr {
+	friend class Actor;
 
 public:
 	ActorMgr(MapMgr*); // unused/inlined

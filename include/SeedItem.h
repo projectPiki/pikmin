@@ -6,7 +6,7 @@
 #include "Interactions.h"
 #include "types.h"
 
-struct Shape;
+class Shape;
 
 /**
  * @brief TODO

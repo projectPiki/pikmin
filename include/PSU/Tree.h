@@ -10,7 +10,7 @@
  * @note Size: 0x1C.
  */
 template <typename T>
-struct PSUTree : public PSUList<T>, public PSULink<T> {
+class PSUTree : public PSUList<T>, public PSULink<T> {
 	inline PSUTree(T* owner)
 	    : PSUList<T>()
 	    , PSULink<T>(owner)
@@ -38,7 +38,7 @@ struct PSUTree : public PSUList<T>, public PSULink<T> {
  * @brief TODO
  */
 template <typename T>
-struct PSUTreeIterator {
+class PSUTreeIterator {
 	PSUTreeIterator()
 	    : mTree(nullptr)
 	{

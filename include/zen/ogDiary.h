@@ -6,13 +6,13 @@
 #include "zen/SpectrumCursorMgr.h"
 #include "zen/ogMessage.h"
 
-struct Controller;
-struct Graphics;
-struct P2DTextBox;
-struct P2DPane;
-struct P2DScreen;
-struct P2DPicture;
-struct Font;
+class Controller;
+class Graphics;
+class P2DTextBox;
+class P2DPane;
+class P2DScreen;
+class P2DPicture;
+class Font;
 
 namespace zen {
 

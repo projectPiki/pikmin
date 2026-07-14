@@ -11,12 +11,12 @@
 #include "StateMachine.h"
 #include "types.h"
 
-struct PaniAnimKeyEvent;
-struct PaniMotionTable;
-struct PelletShapeObject;
+class PaniAnimKeyEvent;
+class PaniMotionTable;
+class PelletShapeObject;
 struct PelletStateMachine;
-struct PelletView;
-struct Shape;
+class PelletView;
+class Shape;
 struct RippleEffect;
 struct Suckable;
 
@@ -223,7 +223,7 @@ struct PelletProp : public CreatureProp {
 /**
  * @brief TODO
  */
-struct PelletShapeObject {
+class PelletShapeObject {
 	PelletShapeObject(immut char*, Shape*, immut char*, immut char*, int);
 
 	bool isMotionFlag(u8 flag) { return mMotionFlag & flag; }
@@ -243,7 +243,7 @@ struct PelletShapeObject {
  *
  * @note Size: 0x138.
  */
-struct PelletConfig : public Parameters, public CoreNode {
+class PelletConfig : public Parameters, public CoreNode {
 	PelletConfig();
 
 	// _04     = VTBL
@@ -286,8 +286,8 @@ struct PelletConfig : public Parameters, public CoreNode {
  *
  * @note Size: 0x5BC.
  */
-struct Pellet : public DualCreature, public PaniAnimKeyListener {
-	friend struct PelletMgr;
+class Pellet : public DualCreature, public PaniAnimKeyListener {
+	friend class PelletMgr;
 
 public:
 	Pellet();
@@ -420,8 +420,8 @@ public:
  *
  * @note Size: 0x204.
  */
-struct PelletMgr : public MonoObjectMgr {
-	friend struct Pellet;
+class PelletMgr : public MonoObjectMgr {
+	friend class Pellet;
 
 	// `PlayerState` is one of very few 100% confirmed breaches of interface in the codebase, as the ILK tells us the access modifiers
 	// for all member functions.  `PlayerState::UfoParts` on the other hand is the single worst ambiguous breach of interface I've decided

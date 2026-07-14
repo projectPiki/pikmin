@@ -5,10 +5,10 @@
 #include "types.h"
 #include <math.h>
 
-struct Vector3f;
-struct Matrix3f;
-struct Matrix4f;
-struct Quat;
+class Vector3f;
+class Matrix3f;
+class Matrix4f;
+class Quat;
 
 namespace zen {
 // global utility functions:

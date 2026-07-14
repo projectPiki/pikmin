@@ -6,10 +6,10 @@
 #include "ID32.h"
 #include "types.h"
 
-struct Graphics;
-struct RectArea;
-struct Texture;
-struct Vector2i;
+class Graphics;
+class RectArea;
+class Texture;
+class Vector2i;
 
 /**
  * @brief Status enum for GmWin and associated classes.
@@ -24,7 +24,7 @@ enum GmWinState {
 /**
  * @brief Seemingly deprecated window drawing base class.
  */
-struct GmWin : public CoreNode {
+class GmWin : public CoreNode {
 
 	/**
 	 * @brief TODO
@@ -78,7 +78,7 @@ struct ContainerWin : public GmWin {
 	/**
 	 * @brief TODO
 	 */
-	struct Listener {
+	class Listener {
 		virtual void informWin(int) = 0; // _08
 
 		// _00 = VTBL
@@ -122,7 +122,7 @@ struct ResultWin : public GmWin {
 /**
  * @brief TODO
  */
-struct GmWinMgr {
+class GmWinMgr {
 	GmWinMgr();
 
 	void addWindow(GmWin*);

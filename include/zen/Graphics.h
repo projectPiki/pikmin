@@ -4,7 +4,7 @@
 #include "Vector.h"
 #include "types.h"
 
-struct Colour;
+class Colour;
 
 namespace zen {
 /**

@@ -7,7 +7,7 @@
 #include "Win.h"
 #include "types.h"
 
-struct NaviState;
+class NaviState;
 
 /**
  * @brief TODO
@@ -56,7 +56,7 @@ enum NaviStateID {
 /**
  * @brief TODO
  */
-struct NaviState : public AState<Navi> {
+class NaviState : public AState<Navi> {
 	inline NaviState(int stateID)
 	    : AState(stateID)
 	{
@@ -213,7 +213,7 @@ struct NaviDemoInfState : public NaviState {
  *
  * @note Size: 0x40.
  */
-struct NaviDemoSunsetState : public NaviState {
+class NaviDemoSunsetState : public NaviState {
 	NaviDemoSunsetState();
 
 	/**

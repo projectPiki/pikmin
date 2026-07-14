@@ -5,10 +5,10 @@
 #include "types.h"
 #include "zen/SpectrumCursorMgr.h"
 
-struct Controller;
-struct Graphics;
-struct P2DScreen;
-struct P2DTextBox;
+class Controller;
+class Graphics;
+class P2DScreen;
+class P2DTextBox;
 
 namespace zen {
 
@@ -17,7 +17,7 @@ struct TextColorCallBack;
 /**
  * @brief TODO
  */
-struct ogNitakuMgr {
+class ogNitakuMgr {
 public:
 	/**
 	 * @brief TODO

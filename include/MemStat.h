@@ -7,7 +7,7 @@
 /**
  * @brief TODO
  */
-struct MemInfoNode : public CoreNode {
+class MemInfoNode : public CoreNode {
 	MemInfoNode()
 	    : CoreNode("meminfo")
 	{
@@ -21,7 +21,7 @@ struct MemInfoNode : public CoreNode {
 /**
  * @brief TODO
  */
-struct MemInfo : public MemInfoNode {
+class MemInfo : public MemInfoNode {
 	// _00     = VTBL
 	// _00-_14 = MemInfoNode?
 	int mMemorySize; // _14
@@ -32,7 +32,7 @@ struct MemInfo : public MemInfoNode {
  *
  * @note Size: 0xA0.
  */
-struct MemStat {
+class MemStat {
 public:
 	MemStat();
 

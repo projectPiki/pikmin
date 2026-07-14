@@ -8,13 +8,13 @@
 #include "Suckable.h"
 #include "types.h"
 
-struct Piki;
-struct SimpleAI;
+class Piki;
+class SimpleAI;
 
 /**
  * @brief TODO
  */
-struct UfoShapeObject {
+class UfoShapeObject {
 	UfoShapeObject(Shape*);
 
 	// TODO: members
@@ -70,7 +70,7 @@ protected:
  *
  * @note Size: 0x5D0.
  */
-struct UfoItem : public Suckable {
+class UfoItem : public Suckable {
 public:
 	/**
 	 * @brief TODO

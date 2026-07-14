@@ -15,7 +15,7 @@ struct ogTexAnimMgr;
  *
  * @note Size: 0xF8.
  */
-struct P2DScreen : public P2DPane {
+class P2DScreen : public P2DPane {
 public:
 	P2DScreen()
 	    : P2DPane(nullptr, PANETYPE_Screen, true, 'root', PUTRect(640, 480))

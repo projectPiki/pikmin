@@ -9,23 +9,23 @@
 
 struct BuildingItemProp;
 struct GoalAI;
-struct GoalItem;
+class GoalItem;
 struct GoalItemProp;
 struct KusaItemProp;
-struct MeltingPotMgr;
-struct PelletShapeObject;
-struct PikiHeadMgr;
+class MeltingPotMgr;
+class PelletShapeObject;
+class PikiHeadMgr;
 struct SluiceAI;
-struct UfoItem;
+class UfoItem;
 struct UfoItemProp;
-struct UfoShapeObject;
+class UfoShapeObject;
 
 /**
  * @brief TODO.
  *
  * @note Size: 0x18.
  */
-struct ItemShapeObject {
+class ItemShapeObject {
 	ItemShapeObject(Shape*, immut char*, immut char*);
 
 	Shape* mShape;            // _00
@@ -36,7 +36,7 @@ struct ItemShapeObject {
 /**
  * @brief TODO.
  */
-struct ItemCreature : public AICreature {
+class ItemCreature : public AICreature {
 public:
 	ItemCreature(int objType, CreatureProp*, Shape*);
 
@@ -75,7 +75,7 @@ public:
 /**
  * @brief TODO.
  */
-struct ItemMgr : public PolyObjectMgr {
+class ItemMgr : public PolyObjectMgr {
 
 	/**
 	 * @brief TODO
@@ -141,7 +141,7 @@ struct ItemMgr : public PolyObjectMgr {
  *
  * @note Size: 0x64.
  */
-struct MeltingPotMgr : public CreatureNodeMgr {
+class MeltingPotMgr : public CreatureNodeMgr {
 	MeltingPotMgr(ItemMgr*);
 
 	virtual ~MeltingPotMgr() { } // _48 (weak)

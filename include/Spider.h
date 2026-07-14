@@ -179,7 +179,7 @@ public:
  *
  * @note Size: 0x764
  */
-struct Spider : public Boss {
+class Spider : public Boss {
 	friend struct SpiderAi;
 	friend struct SpiderLeg;
 

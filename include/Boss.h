@@ -11,9 +11,9 @@
 #include "Vector.h"
 #include "types.h"
 
-struct BirthInfo;
-struct BossMgr;
-struct GenObjectBoss;
+class BirthInfo;
+class BossMgr;
+class GenObjectBoss;
 
 #define BOSS_PROP         (static_cast<BossProp*>(mProps)->mBossProps)
 #define C_BOSS_PROP(boss) (static_cast<BossProp*>((boss)->mProps)->mBossProps)
@@ -140,7 +140,7 @@ public:
 /**
  * @brief TODO
  */
-struct BossShapeObject {
+class BossShapeObject {
 	BossShapeObject(Shape*, immut char*);
 
 	Shape* mShape;            // _00
@@ -153,8 +153,8 @@ struct BossShapeObject {
  *
  * @note Size: 0x3B8.
  */
-struct Boss : public Creature {
-	friend struct BossMgr;
+class Boss : public Creature {
+	friend class BossMgr;
 
 public:
 	Boss(CreatureProp*);
@@ -342,7 +342,7 @@ struct BossAnimationManager : public Node {
 /**
  * @brief TODO
  */
-struct BossMgr : public ObjectMgr {
+class BossMgr : public ObjectMgr {
 public:
 	BossMgr();
 

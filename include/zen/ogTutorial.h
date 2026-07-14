@@ -3,13 +3,13 @@
 
 #include "types.h"
 
-struct Controller;
-struct Graphics;
-struct P2DTextBox;
+class Controller;
+class Graphics;
+class P2DTextBox;
 
 namespace zen {
 
-struct ogScrMessageMgr;
+class ogScrMessageMgr;
 
 /**
  * @brief TODO

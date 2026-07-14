@@ -5,11 +5,11 @@
 #include "Vector.h"
 #include "types.h"
 
-struct P2DPane;
-struct P2DPicture;
-struct Controller;
-struct Graphics;
-struct P2DScreen;
+class P2DPane;
+class P2DPicture;
+class Controller;
+class Graphics;
+class P2DScreen;
 
 namespace zen {
 

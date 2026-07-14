@@ -53,9 +53,9 @@ enum PROP_TYPE {
 	UNK9           // 9
 };
 
-struct Colour;
+class Colour;
 
-struct AgeServer : public AtxStream {
+class AgeServer : public AtxStream {
 	AgeServer() { }
 
 // TODO: All of this should be moved to a dedicated ageServer.cpp, I just don't want to yet because of the hacky way you have to add it in

@@ -5,15 +5,15 @@
 #include "types.h"
 
 template <typename T>
-struct StateMachine;
+class StateMachine;
 
-struct Msg;
+class Msg;
 
 /**
  * @brief TODO
  */
 template <typename T>
-struct AState : public Receiver<T> {
+class AState : public Receiver<T> {
 public:
 	inline AState(int stateID)
 	    : mStateID(stateID)
@@ -50,7 +50,7 @@ protected:
  * @note Size: 0x1C.
  */
 template <typename T>
-struct StateMachine {
+class StateMachine {
 	inline StateMachine()
 	    : mLastStateID(-1)
 	{

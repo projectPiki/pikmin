@@ -6,7 +6,7 @@
 #include "types.h"
 #include "zen/particle.h"
 
-struct Texture;
+class Texture;
 struct EffectParticleRegistration;
 struct EffectGeometryRegistration;
 struct EffectSimpleParticleRegistration;
@@ -21,7 +21,7 @@ struct SmokeEmitter : public Node {
 	 *
 	 * @note Size: 0x38.
 	 */
-	struct Smoke {
+	class Smoke {
 		Smoke() { mNext = mPrev = nullptr; }
 
 		void insertAfter(Smoke* newSmoke)
@@ -101,7 +101,7 @@ struct EffectShape : public CoreNode {
  *
  * @note Size: 0x44.
  */
-struct EffShpInst : public CoreNode {
+class EffShpInst : public CoreNode {
 	EffShpInst()
 	    : CoreNode("")
 	{
@@ -138,7 +138,7 @@ struct EffShpInst : public CoreNode {
  *
  * @note Size: 0x6B4
  */
-struct EffectMgr : public CoreNode {
+class EffectMgr : public CoreNode {
 	friend struct EffectParticleRegistration;
 	friend struct EffectGeometryRegistration;
 	friend struct EffectSimpleParticleRegistration;

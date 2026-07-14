@@ -6,15 +6,15 @@
 #include "P2D/Util.h"
 #include "types.h"
 
-struct Texture;
-struct P2DFont;
+class Texture;
+class P2DFont;
 
 /**
  * @brief TODO
  *
  * @note Size: 0x118.
  */
-struct P2DTextBox : public P2DPane {
+class P2DTextBox : public P2DPane {
 public:
 	P2DTextBox(P2DPane*, RandomAccessStream*, u16);
 

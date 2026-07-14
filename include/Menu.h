@@ -8,10 +8,10 @@
 #include "system.h"
 #include "types.h"
 
-struct TimeSetting;
-struct Controller;
-struct Font;
-struct Light;
+class TimeSetting;
+class Controller;
+class Font;
+class Light;
 
 // Menu background colors
 
@@ -49,7 +49,7 @@ struct Light;
  *
  * @note Size: 0xB4.
  */
-struct Menu : public Node {
+class Menu : public Node {
 
 	/**
 	 * @brief `MenuStateType`: Operating states that a debug menu can be in.
@@ -104,7 +104,7 @@ struct Menu : public Node {
 	 *
 	 * @note Size: 0x14.
 	 */
-	struct KeyEvent {
+	class KeyEvent {
 		KeyEvent(int eventType, int triggerKeys, IDelegate1<Menu&>* callback);
 
 		void insertAfter(KeyEvent* event);
@@ -122,7 +122,7 @@ struct Menu : public Node {
 	 *
 	 * @note Size: 0x28.
 	 */
-	struct MenuItem {
+	class MenuItem {
 		MenuItem(int itemType, int data, char* label, IDelegate1<Menu&>* confirmCallback);
 
 		bool checkEvents(Menu* parentMenu, int eventMask);

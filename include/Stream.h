@@ -5,14 +5,14 @@
 #include <stdarg.h>
 #include <string.h>
 
-struct String;
+class String;
 
 /**
  * @brief TODO
  *
  * Size: 0x8.
  */
-struct Stream {
+class Stream {
 	Stream() { }
 
 	// _04 = VTBL
@@ -46,7 +46,7 @@ struct Stream {
 /**
  * @brief TODO
  */
-struct RandomAccessStream : public Stream {
+class RandomAccessStream : public Stream {
 	virtual int getPosition() { return 0; }                          // _58 (weak)
 	virtual int getPending() { return getLength() - getPosition(); } // _44 (weak)
 	virtual void setPosition(int) { }                                // _5C (weak)
@@ -103,7 +103,7 @@ struct RandomAccessStream : public Stream {
  *
  * @note Size: 0x20.
  */
-struct BufferedInputStream : public RandomAccessStream {
+class BufferedInputStream : public RandomAccessStream {
 	BufferedInputStream()
 	{
 		mBuffer = nullptr;
@@ -133,7 +133,7 @@ struct BufferedInputStream : public RandomAccessStream {
 /**
  * @brief TODO
  */
-struct RamStream : public RandomAccessStream {
+class RamStream : public RandomAccessStream {
 	inline RamStream(void* buffer, int size)
 	{
 		mBufferAddr = buffer;

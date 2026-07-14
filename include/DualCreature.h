@@ -6,8 +6,8 @@
 #include "PaniAnimator.h"
 #include "types.h"
 
-struct ItemShapeObject;
-struct MapMgr;
+class ItemShapeObject;
+class MapMgr;
 
 /**
  * @brief TODO

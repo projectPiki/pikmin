@@ -53,7 +53,7 @@ DEFINE_PRINT("MapSelect")
  *
  * @note Size: 0x384.
  */
-struct MapSelectSetupSection : public Node {
+class MapSelectSetupSection : public Node {
 
 	/**
 	 * @brief States that the section can be in, to control transitions and actions.

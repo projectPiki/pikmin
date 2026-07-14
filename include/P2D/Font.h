@@ -11,7 +11,7 @@
 /**
  * @brief TODO
  */
-struct FntobjInfo : public GfxobjInfo {
+class FntobjInfo : public GfxobjInfo {
 	FntobjInfo() { mFont = nullptr; }
 
 	// _1C     = VTBL
@@ -22,7 +22,7 @@ struct FntobjInfo : public GfxobjInfo {
 /**
  * @brief TODO
  */
-struct P2DFont {
+class P2DFont {
 	P2DFont(immut char*);
 
 	Font* loadFont(immut char* fileName, int&, int&);

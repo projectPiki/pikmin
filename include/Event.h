@@ -21,7 +21,7 @@ struct Event {
 /**
  * @brief TODO
  */
-struct EventListener : public CoreNode {
+class EventListener : public CoreNode {
 	inline EventListener()
 	{
 		mParent = mNext = mChild = nullptr;

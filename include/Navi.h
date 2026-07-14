@@ -10,7 +10,7 @@
 #include "ShadowCaster.h"
 #include "types.h"
 
-struct CPlate;
+class CPlate;
 struct BurnEffect;
 struct RippleEffect;
 struct PermanentEffect;
@@ -18,9 +18,9 @@ struct SlimeEffect;
 struct Kontroller;
 struct NaviDrawer;
 struct NaviStateMachine;
-struct GoalItem;
-struct NaviState;
-struct Piki;
+class GoalItem;
+class NaviState;
+class Piki;
 struct PikiHeadItem;
 
 #define NAVI_PROP         (static_cast<NaviProp*>(mProps)->mNaviProps)
@@ -29,7 +29,7 @@ struct PikiHeadItem;
 /**
  * @brief TODO
  */
-struct Navi : public Creature, public PaniAnimKeyListener, public PelletView {
+class Navi : public Creature, public PaniAnimKeyListener, public PelletView {
 public:
 	struct Locus {
 		Locus() { mCanBeThrown = TRUE; }; // Only the DLL has it, so it was probably inline.

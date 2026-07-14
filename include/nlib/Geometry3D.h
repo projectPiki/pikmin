@@ -4,14 +4,14 @@
 #include "nlib/Geometry.h"
 #include "types.h"
 
-struct NSegment;
-struct Plane;
-struct NLine;
+class NSegment;
+class Plane;
+class NLine;
 
 /**
  * @brief TODO
  */
-struct NLine {
+class NLine {
 	NLine(immut NVector3f&, immut NVector3f&);
 	NLine();             // unused/inlined
 	NLine(immut NLine&); // unused/inlined
@@ -48,7 +48,7 @@ struct NLine {
 /**
  * @brief TODO
  */
-struct NPlane {
+class NPlane {
 	NPlane(NVector3f& normal, NVector3f& point);
 	NPlane();                                   // unused/inlined
 	NPlane(NVector3f&, f32);                    // unused/inlined
@@ -95,7 +95,7 @@ struct NPlane {
 /**
  * @brief TODO
  */
-struct NSegment : public NLine {
+class NSegment : public NLine {
 	NSegment();                       // unused/inlined
 	NSegment(NVector3f&, NVector3f&); // unused/inlined
 	NSegment(NSegment&);              // unused/inlined

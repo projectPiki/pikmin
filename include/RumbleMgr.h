@@ -3,9 +3,9 @@
 
 #include "types.h"
 
-struct Graphics;
-struct Font;
-struct Vector3f;
+class Graphics;
+class Font;
+class Vector3f;
 
 /**
  * @brief TODO
@@ -74,7 +74,7 @@ struct ChannelData {
  *
  * @note Size: 0x4.
  */
-struct ChannelDataMgr {
+class ChannelDataMgr {
 public:
 	ChannelDataMgr(); // unused/inlined
 
@@ -151,7 +151,7 @@ private:
  *
  * @note Size: 0x30.
  */
-struct RumbleMgr {
+class RumbleMgr {
 public:
 	RumbleMgr(bool, bool, bool, bool);
 

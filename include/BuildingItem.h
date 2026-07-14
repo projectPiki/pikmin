@@ -9,9 +9,9 @@
 #include "UtEffect.h"
 #include "types.h"
 
-struct ItemShapeObject;
-struct SimpleAI;
-struct WayPoint;
+class ItemShapeObject;
+class SimpleAI;
+class WayPoint;
 
 /**
  * @brief TODO

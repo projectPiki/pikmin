@@ -3,8 +3,8 @@
 
 #include "types.h"
 
-struct Creature;
-struct CreatureProp;
+class Creature;
+class CreatureProp;
 
 /**
  * @brief TODO

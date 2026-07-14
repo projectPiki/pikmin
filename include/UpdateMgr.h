@@ -3,13 +3,13 @@
 
 #include "types.h"
 
-struct Graphics;
-struct UpdateMgr;
+class Graphics;
+class UpdateMgr;
 
 /**
  * @brief TODO
  */
-struct UpdateContext {
+class UpdateContext {
 	UpdateContext();
 
 	bool updatable();
@@ -28,7 +28,7 @@ struct UpdateContext {
 /**
  * @brief TODO
  */
-struct UpdateMgr {
+class UpdateMgr {
 	UpdateMgr();
 
 	void update();

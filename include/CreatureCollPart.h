@@ -4,7 +4,7 @@
 #include "DynColl.h"
 #include "types.h"
 
-struct CollPart;
+class CollPart;
 
 /**
  * @brief Dedicated collision for having individual joints of a creature's model interacting independently with the map, ground or other
@@ -12,7 +12,7 @@ struct CollPart;
  *
  * @note Size: 0x148.
  */
-struct CreatureCollPart : public DynCollShape {
+class CreatureCollPart : public DynCollShape {
 
 	/// Constructs a part with no dedicated collision or owner.
 	CreatureCollPart()

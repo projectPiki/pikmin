@@ -32,15 +32,15 @@ typedef u32 HWND;
 #define ATX_FILE_CMD_SET_POS (102) // Set file position
 #define ATX_FILE_CMD_CLOSE   (103) // Close file
 
-struct AtxStream;
-struct BaseApp;
+class AtxStream;
+class BaseApp;
 
 /**
  * @brief Websocket wrapper for network communication.
  * @details Windows-only code, used by AtxStream for TCP communication.
  * @todo Decompile this struct and its methods.
  */
-struct WSocket {
+class WSocket {
 	/// @brief Initializes the Winsock library. (Called once at program start.)
 	static void init();
 
@@ -65,7 +65,7 @@ struct WSocket {
  * @brief TCP communication stream.
  * @details Used by AtxStream for network communication.
  */
-struct TcpStream : public Stream {
+class TcpStream : public Stream {
 #ifdef WIN32
 	TcpStream();
 	TcpStream(WSocket*);
@@ -91,7 +91,7 @@ struct TcpStream : public Stream {
  * @brief Abstract base class for ATX communication routers.
  * @details Used by AtxStream to route communication over different transports.
  */
-struct AtxRouter {
+class AtxRouter {
 	virtual bool openRoute(AtxStream*, int) = 0; // _00
 	virtual void closeRoute(AtxStream*)     = 0; // _04
 	virtual void lock() { }                      // _08
@@ -109,7 +109,7 @@ struct AtxRouter {
  *
  * @note Size: 0x10.
  */
-struct AtxStream : public Stream {
+class AtxStream : public Stream {
 	AtxStream() { init(); }
 
 	virtual void read(void* buffer, int size);        // _3C
@@ -132,7 +132,7 @@ struct AtxStream : public Stream {
  * @brief ATX command stream for handling incoming commands.
  * @details Used by PlugPikiApp to process commands from a connected ATX server.
  */
-struct AtxCommandStream : public AtxStream {
+class AtxCommandStream : public AtxStream {
 	AtxCommandStream(BaseApp* app)
 	    : mParentApp(app)
 	{
@@ -148,7 +148,7 @@ struct AtxCommandStream : public AtxStream {
 /**
  * @brief Wrapper for handling file operations over the ATX protocol.
  */
-struct AtxFileStream : public RandomAccessStream {
+class AtxFileStream : public RandomAccessStream {
 	virtual void read(void*, int);        // _3C
 	virtual void write(immut void*, int); // _40
 	virtual int getPending();             // _44 (weak)
@@ -171,7 +171,7 @@ struct AtxFileStream : public RandomAccessStream {
 /**
  * @brief Direct router using TCP for AtxStream.
  */
-struct AtxDirectRouter : public AtxRouter {
+class AtxDirectRouter : public AtxRouter {
 	virtual bool openRoute(AtxStream*, int); // _00
 	virtual void closeRoute(AtxStream*);     // _04
 	virtual void lock();                     // _08

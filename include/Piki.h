@@ -13,11 +13,11 @@
 #define PIKI_PROP()       static_cast<PikiProp*>(mProps)->mPikiParms
 #define C_PIKI_PROP(piki) static_cast<PikiProp*>(piki->mProps)->mPikiParms
 
-struct TopAction;
-struct Navi;
+class TopAction;
+class Navi;
 struct PikiStateMachine;
 struct PikiProp;
-struct PikiState;
+class PikiState;
 
 /**
  * @brief TODO
@@ -91,7 +91,7 @@ enum {
 /**
  * @brief TODO
  */
-struct Piki : public Creature, public PaniAnimKeyListener {
+class Piki : public Creature, public PaniAnimKeyListener {
 public:
 	Piki(CreatureProp*);
 
@@ -336,9 +336,9 @@ public:
 /**
  * @brief TODO
  */
-struct PikiShapeObject {
-	friend struct NaviMgr;  // Needs the protected constructor.
-	friend struct ActorMgr; // Needs the protected constructor.
+class PikiShapeObject {
+	friend class NaviMgr;  // Needs the protected constructor.
+	friend class ActorMgr; // Needs the protected constructor.
 
 public:
 	static void init();

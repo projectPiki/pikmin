@@ -9,7 +9,7 @@
 #include "types.h"
 #include "zen/Math.h"
 
-struct Navi;
+class Navi;
 
 // NB: could maybe split these into smaller headers down the line
 // Most of their functions are in uteffect in Kando, so they're here for now.
@@ -453,7 +453,7 @@ struct PermanentEffect {
 /**
  * @brief TODO
  */
-struct UtEffectMgr {
+class UtEffectMgr {
 public:
 	UtEffectMgr();
 

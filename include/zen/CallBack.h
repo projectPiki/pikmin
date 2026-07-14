@@ -11,7 +11,7 @@ namespace zen {
  * @note Size: 0x4.
  */
 template <typename A>
-struct CallBack1 {
+class CallBack1 {
 	virtual bool invoke(A) = 0; // _08
 
 	// _00 = VTBL
@@ -23,7 +23,7 @@ struct CallBack1 {
  * @note Size: 0x4.
  */
 template <typename A, typename B>
-struct CallBack2 {
+class CallBack2 {
 	virtual bool invoke(A, B) = 0; // _08
 
 	// _00 = VTBL

@@ -209,7 +209,7 @@ public:
  *
  * @note Size: 0x7A4.
  */
-struct King : public Boss {
+class King : public Boss {
 	friend struct KingAi;
 	friend struct KingBody;
 

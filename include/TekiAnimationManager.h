@@ -4,7 +4,7 @@
 #include "Node.h"
 #include "types.h"
 
-struct TekiMgr;
+class TekiMgr;
 
 /**
  * @brief TODO

@@ -3,8 +3,8 @@
 
 #include "types.h"
 
-struct Creature;
-struct Vector3f;
+class Creature;
+class Vector3f;
 
 /**
  * @brief Game movie interface message commands.

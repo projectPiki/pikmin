@@ -21,7 +21,7 @@
 #include "zen/ogStart.h"
 #include "zen/ogTitle.h"
 
-struct TitleSetupSection;
+class TitleSetupSection;
 
 // Macros for packing and unpacking the section compression flag, to pass both section and subsection ID together.
 // Realistically, the only section with a subsection ID is OnePlayerSection, so having a dedicated macro for it is easier.
@@ -106,7 +106,7 @@ struct TitlesMovieInterface : public GameInterface {
  *
  * @note Size: 0xA4C.
  */
-struct TitleSetupSection : public Node {
+class TitleSetupSection : public Node {
 
 	/**
 	 * @brief Display states the title screen can be in.

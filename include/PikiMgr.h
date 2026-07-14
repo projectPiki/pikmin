@@ -6,8 +6,8 @@
 #include "ViewPiki.h"
 #include "types.h"
 
-struct Navi;
-struct CPlate;
+class Navi;
+class CPlate;
 
 /**
  * @brief TODO
@@ -220,7 +220,7 @@ struct PikiProp : public CreatureProp {
  *
  * @note Size: 0x74.
  */
-struct PikiMgr : public MonoObjectMgr {
+class PikiMgr : public MonoObjectMgr {
 	PikiMgr(Navi*);
 
 	virtual ~PikiMgr() { }                  // _48

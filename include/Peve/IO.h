@@ -6,8 +6,8 @@
 #include "nlib/Geometry.h"
 #include "types.h"
 
-struct Creature;
-struct PcamCamera;
+class Creature;
+class PcamCamera;
 
 /**
  * @brief TODO

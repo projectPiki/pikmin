@@ -4,7 +4,7 @@
 #include "TAI/Amotion.h"
 #include "types.h"
 
-struct Bridge;
+class Bridge;
 
 /**
  * @brief TODO

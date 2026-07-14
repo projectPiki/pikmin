@@ -8,18 +8,18 @@
 #include "Traversable.h"
 #include "types.h"
 
-struct MapMgr;
-struct Piki;
-struct SlotChangeListner;
+class MapMgr;
+class Piki;
+class SlotChangeListner;
 
 /**
  * @brief TODO
  */
-struct CPlate : public Traversable, public Node {
+class CPlate : public Traversable, public Node {
 	// These all all pretty unsurprising.
-	friend struct Navi;
+	friend class Navi;
 	friend struct NaviThrowWaitState;
-	friend struct NaviDemoSunsetState;
+	friend class NaviDemoSunsetState;
 	friend struct ActCrowd;
 
 public:

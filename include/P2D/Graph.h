@@ -19,8 +19,8 @@ enum P2DGrafType {
  *
  * @note Size: 0xD4.
  */
-struct P2DGrafContext {
-	friend struct P2DPane;
+class P2DGrafContext {
+	friend class P2DPane;
 
 public:
 	P2DGrafContext(int x0, int y0, int width, int height);
@@ -80,7 +80,7 @@ protected:
  *
  * @note Size: 0xE4.
  */
-struct P2DPerspGraph : public P2DGrafContext {
+class P2DPerspGraph : public P2DGrafContext {
 public:
 	P2DPerspGraph(int x0, int y0, int width, int height, f32 fovy, f32, f32);
 	P2DPerspGraph();                              // unused/inlined
@@ -116,7 +116,7 @@ protected:
  * @brief TODO
  */
 struct P2DOrthoGraph : public P2DGrafContext {
-	friend struct P2DPane; // Accesses `scissorBounds` (why is it protected)
+	friend class P2DPane; // Accesses `scissorBounds` (why is it protected)
 
 public:
 	P2DOrthoGraph(int, int, int, int);

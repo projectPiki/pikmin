@@ -4,13 +4,13 @@
 #include "Piki.h"
 #include "types.h"
 
-struct Shape;
-struct MapMgr;
+class Shape;
+class MapMgr;
 
 /**
  * @brief TODO
  */
-struct ViewPiki : public Piki {
+class ViewPiki : public Piki {
 	ViewPiki(CreatureProp*);
 
 	virtual void update();                              // _E0

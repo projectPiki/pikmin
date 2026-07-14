@@ -4,8 +4,8 @@
 #include "Node.h"
 #include "system.h"
 
-struct AtxCommandStream;
-struct AgeServer;
+class AtxCommandStream;
+class AgeServer;
 
 /**
  * @brief Base class for applications, managing app lifecycle, resources, and some debugging.
@@ -16,7 +16,7 @@ struct AgeServer;
  *
  * @note Size: 0x54.
  */
-struct BaseApp : public Node {
+class BaseApp : public Node {
 public:
 	BaseApp();
 

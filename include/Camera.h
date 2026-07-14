@@ -8,18 +8,18 @@
 #include "sysMath.h"
 #include "types.h"
 
-struct Graphics;
-struct Node;
-struct Plane;
-struct Texture;
-struct SceneData;
+class Graphics;
+class Node;
+class Plane;
+class Texture;
+class SceneData;
 
 /**
  * @brief TODO
  *
  * @note Size: 0x2C.
  */
-struct CullingPlane {
+class CullingPlane {
 	CullingPlane() { }
 
 	void CheckMinMaxDir();
@@ -37,7 +37,7 @@ struct CullingPlane {
 /**
  * @brief TODO
  */
-struct CullFrustum {
+class CullFrustum {
 	CullFrustum()
 	{
 		_155 = false;
@@ -150,7 +150,7 @@ struct CullFrustum {
  *
  * @note Size: 0x348.
  */
-struct Camera : public CullFrustum {
+class Camera : public CullFrustum {
 	Camera();
 
 	f32 projectWorldPoint(Graphics&, Vector3f&) immut;
@@ -172,7 +172,7 @@ struct Camera : public CullFrustum {
 /**
  * @brief TODO
  */
-struct LightCamera : public Camera {
+class LightCamera : public Camera {
 	LightCamera() { mLightMap = nullptr; }
 
 	void initLightmap(int size, int texFmt);
@@ -191,7 +191,7 @@ struct LightCamera : public Camera {
  * @brief TODO
  * @note Size: 0x3F8.
  */
-struct CamDataInfo {
+class CamDataInfo {
 	CamDataInfo();
 
 	void update(f32, immut Matrix4f&);

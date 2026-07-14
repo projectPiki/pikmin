@@ -4,16 +4,16 @@
 #include "Animator.h"
 #include "types.h"
 
-struct PaniMotion;
-struct PaniMotionTable;
-struct PaniMotionInfo;
+class PaniMotion;
+class PaniMotionTable;
+class PaniMotionInfo;
 
 #define PANI_NO_MOTION (-1)
 
 /**
  * @brief TODO
  */
-struct PaniAnimKeyEvent {
+class PaniAnimKeyEvent {
 	PaniAnimKeyEvent(int eventType)
 	{
 		mEventType = eventType;
@@ -35,7 +35,7 @@ struct PaniAnimKeyEvent {
 /**
  * @brief TODO
  */
-struct PaniAnimKeyListener {
+class PaniAnimKeyListener {
 
 	virtual void animationKeyUpdated(immut PaniAnimKeyEvent&) = 0; // _08
 
@@ -47,7 +47,7 @@ struct PaniAnimKeyListener {
  *
  * @note Size: 0x8.
  */
-struct PaniMotion {
+class PaniMotion {
 	PaniMotion(int);
 	PaniMotion(int, int); // unused/inlined
 
@@ -62,7 +62,7 @@ struct PaniMotion {
  *
  * @note Size: 0x8.
  */
-struct PaniMotionTable {
+class PaniMotionTable {
 	PaniMotionTable(int);
 
 	PaniMotion* getMotion(int motionIdx) { return mMotions[motionIdx]; }
@@ -192,7 +192,7 @@ enum {
 /**
  * @brief TODO
  */
-struct PaniPelletAnimator : public PaniAnimator {
+class PaniPelletAnimator : public PaniAnimator {
 	PaniPelletAnimator();
 
 	static PaniMotionTable* createMotionTable();
@@ -312,7 +312,7 @@ struct PaniUfoAnimator : public PaniAnimator {
 /**
  * @brief TODO
  */
-struct PaniMotionInfo {
+class PaniMotionInfo {
 	PaniMotionInfo(int);
 	PaniMotionInfo(int, PaniAnimKeyListener*);
 
@@ -327,7 +327,7 @@ struct PaniMotionInfo {
  *
  * @note Size: 0x4.
  */
-struct PaniSound {
+class PaniSound {
 	PaniSound(int soundID)
 	    : mSoundID(soundID)
 	{
@@ -341,7 +341,7 @@ struct PaniSound {
  *
  * @note Size: 0x8.
  */
-struct PaniSoundTable {
+class PaniSoundTable {
 	PaniSoundTable(int);
 
 	int getSize() { return mSoundCount; }

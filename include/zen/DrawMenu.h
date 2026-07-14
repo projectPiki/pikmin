@@ -9,12 +9,12 @@
 #include "zen/MenuPanelMgr.h"
 #include "zen/SpectrumCursorMgr.h"
 
-struct Colour;
-struct Graphics;
-struct Controller;
-struct P2DScreen;
-struct P2DPicture;
-struct P2DTextBox;
+class Colour;
+class Graphics;
+class Controller;
+class P2DScreen;
+class P2DPicture;
+class P2DTextBox;
 
 namespace zen {
 

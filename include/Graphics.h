@@ -7,26 +7,26 @@
 #include "Shape.h"
 #include "types.h"
 
-struct BaseShape;
-struct CachedShape;
-struct Camera;
-struct Colour;
-struct Font;
-struct Light;
-struct LightCamera;
-struct Material;
-struct MaterialHandler;
-struct Matrix4f;
-struct Mesh;
+class BaseShape;
+class CachedShape;
+class Camera;
+class Colour;
+class Font;
+class Light;
+class LightCamera;
+class Material;
+class MaterialHandler;
+class Matrix4f;
+class Mesh;
 struct OSContext;
-struct Plane;
-struct PVWLightingInfo;
-struct RectArea;
-struct Shape;
-struct ShapeDynMaterials;
-struct Texture;
-struct Vector2f;
-struct Vector3f;
+class Plane;
+class PVWLightingInfo;
+class RectArea;
+class Shape;
+class ShapeDynMaterials;
+class Texture;
+class Vector2f;
+class Vector3f;
 
 struct GColor {
 	GColor()
@@ -52,7 +52,7 @@ extern GColor GColors[];
  *
  * @note Size: 0x3B8.
  */
-struct Graphics {
+class Graphics {
 	Graphics();
 
 	void resetMatrixBuffer();
@@ -303,7 +303,7 @@ extern DGXGraphics* gfx;
 /**
  * @brief Stripped, only has one unused/inlined function in map
  */
-struct GfxInfo {
+class GfxInfo {
 	// unused/inlined:
 	void createCollData(immut Vector3f*, f32);
 

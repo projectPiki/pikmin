@@ -5,10 +5,10 @@
 #include "zen/DrawCommon.h"
 #include "zen/ogMemChk.h"
 
-struct Graphics;
-struct Controller;
-struct P2DPicture;
-struct P2DTextBox;
+class Graphics;
+class Controller;
+class P2DPicture;
+class P2DTextBox;
 
 namespace zen {
 

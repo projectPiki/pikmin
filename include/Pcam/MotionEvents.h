@@ -5,7 +5,7 @@
 #include "Peve/MotionEvents.h"
 #include "types.h"
 
-struct PcamCamera;
+class PcamCamera;
 
 /**
  * @brief TODO

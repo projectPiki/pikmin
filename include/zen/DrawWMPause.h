@@ -3,9 +3,9 @@
 
 #include "types.h"
 
-struct Graphics;
-struct Controller;
-struct P2DPicture;
+class Graphics;
+class Controller;
+class P2DPicture;
 
 namespace zen {
 

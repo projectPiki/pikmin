@@ -3,13 +3,13 @@
 
 #include "types.h"
 
-struct Graphics;
-struct Font;
+class Graphics;
+class Font;
 
 /**
  * @note Size: 0x28.
  */
-struct TimerInf {
+class TimerInf {
 	TimerInf(immut char* name)
 	{
 		mNext        = nullptr;
@@ -38,7 +38,7 @@ struct TimerInf {
 /**
  * @note Size: 0xC.
  */
-struct Timers {
+class Timers {
 	Timers()
 	{
 		mTimerList  = nullptr;

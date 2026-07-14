@@ -7,10 +7,10 @@
 #include "Vector.h"
 #include "types.h"
 
-struct Creature;
-struct CreatureInf;
-struct Piki;
-struct RandomAccessStream;
+class Creature;
+class CreatureInf;
+class Piki;
+class RandomAccessStream;
 
 typedef CreatureInf* (*CreatureStoreFun)(Creature*);
 typedef Creature* (*CreatureRestoreFun)(CreatureInf*);
@@ -18,7 +18,7 @@ typedef Creature* (*CreatureRestoreFun)(CreatureInf*);
 /**
  * @brief TODO
  */
-struct BaseInf : public CoreNode {
+class BaseInf : public CoreNode {
 	BaseInf(); // unused/inlined
 
 	virtual void doStore(Creature*) { }         // _10
@@ -60,7 +60,7 @@ struct BPikiInf : public BaseInf {
  *
  * @note Size: 0x4C.
  */
-struct CreatureInf : public BaseInf {
+class CreatureInf : public BaseInf {
 	CreatureInf(); // unused/inlined
 
 	virtual void doStore(Creature*);   // _10
@@ -172,7 +172,7 @@ struct CreatureInfMgr : public MonoInfMgr {
  *
  * @note Size: 0x24.
  */
-struct PikiInfMgr {
+class PikiInfMgr {
 	PikiInfMgr(); // unused/inlined
 
 	void initGame();

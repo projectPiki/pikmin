@@ -7,7 +7,7 @@
 #include "TAI/Animation.h"
 #include "YaiStrategy.h"
 
-struct CollPart;
+class CollPart;
 
 /////////// Smoky Progg (ドドロ) ///////////
 

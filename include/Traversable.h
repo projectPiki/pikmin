@@ -4,12 +4,12 @@
 #include "Condition.h"
 #include "types.h"
 
-struct Creature;
+class Creature;
 
 /**
  * @brief TODO.
  */
-struct Traversable {
+class Traversable {
 	inline Traversable()
 	    : _04(0)
 	{

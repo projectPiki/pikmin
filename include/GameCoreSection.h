@@ -5,14 +5,14 @@
 #include "Node.h"
 #include "types.h"
 
-struct Camera;
-struct Controller;
-struct Creature;
-struct Font;
-struct MapMgr;
-struct Menu;
-struct Navi;
-struct RectArea;
+class Camera;
+class Controller;
+class Creature;
+class Font;
+class MapMgr;
+class Menu;
+class Navi;
+class RectArea;
 struct SearchSystem;
 
 namespace zen {

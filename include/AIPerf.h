@@ -3,12 +3,12 @@
 
 #include "types.h"
 
-struct Menu;
+class Menu;
 
 /*
  * @brief A static class that contains various settings.
  */
-struct AIPerf {
+class AIPerf {
 public:
 	void addMenu(Menu*);
 	static void clearCounts();

@@ -96,7 +96,7 @@ public:
  *
  * @note Size: 0x3C0.
  */
-struct Kogane : public Boss {
+class Kogane : public Boss {
 	friend struct KoganeAi;
 
 	friend struct KoganeGenRippleCallBack;

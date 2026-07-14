@@ -6,16 +6,16 @@
 #include "zen/DrawSave.h"
 #include "zen/DrawUfoParts.h"
 
-struct Graphics;
-struct Controller;
-struct P2DPane;
+class Graphics;
+class Controller;
+class P2DPane;
 
 namespace zen {
 
 /**
  * @brief TODO
  */
-struct TotalScoreRecord {
+class TotalScoreRecord {
 	TotalScoreRecord() { }
 
 	// DLL inlines to do:
