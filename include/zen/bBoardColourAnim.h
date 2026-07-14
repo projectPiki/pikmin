@@ -11,6 +11,7 @@ namespace zen {
  * @brief TODO
  */
 class bBoardColourAnimData {
+public:
 	bBoardColourAnimData()
 	{
 		mBlendMode       = 0;

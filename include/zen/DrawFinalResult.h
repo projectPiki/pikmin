@@ -16,6 +16,7 @@ namespace zen {
  * @brief TODO
  */
 class TotalScoreRecord {
+public:
 	TotalScoreRecord() { }
 
 	// DLL inlines to do:

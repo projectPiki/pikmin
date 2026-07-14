@@ -11,6 +11,7 @@ class MapMgr;
  * @brief TODO
  */
 class ViewPiki : public Piki {
+public:
 	ViewPiki(CreatureProp*);
 
 	virtual void update();                              // _E0

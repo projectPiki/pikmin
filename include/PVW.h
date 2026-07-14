@@ -16,7 +16,7 @@ class Texture;
  * @brief TODO
  */
 class PVWKeyInfoU8 {
-
+public:
 	void read(RandomAccessStream& input)
 	{
 		mTime = input.readByte();
@@ -36,6 +36,7 @@ class PVWKeyInfoU8 {
  * @brief TODO
  */
 class PVWKeyInfoS10 {
+public:
 	void read(RandomAccessStream& input)
 	{
 		mTime       = input.readShort();
@@ -50,6 +51,7 @@ class PVWKeyInfoS10 {
 };
 
 class PVWKeyInfoF32 {
+public:
 	void read(RandomAccessStream& input)
 	{
 		mTime    = input.readFloat();
@@ -92,6 +94,7 @@ struct PVWAnimInfo3Intermediate {
 
 template <typename T>
 class PVWAnimInfo1 {
+public:
 	u32 mSize;                               // _00
 	PVWAnimInfo1Intermediate<T>* mKeyframes; // _04
 
@@ -112,6 +115,7 @@ class PVWAnimInfo1 {
 
 template <typename T>
 class PVWAnimInfo3 {
+public:
 	u32 mSize;                               // _00
 	PVWAnimInfo3Intermediate<T>* mKeyframes; // _04
 
@@ -154,6 +158,7 @@ enum {
  * @note Size: 0xC.
  */
 class PVWLightingInfo {
+public:
 	PVWLightingInfo()
 	{
 		mNumChans = 1;
@@ -169,6 +174,7 @@ class PVWLightingInfo {
 };
 
 class AKeyInfo {
+public:
 	AKeyInfo(f32 pos, f32 val, f32 inTan, f32 outTan)
 	    : mKeyframePosition(pos)
 	    , mValue(val)
@@ -188,6 +194,7 @@ class AKeyInfo {
  * @note Size: 0x8.
  */
 class PVWColourAnimInfo {
+public:
 	void extract(f32, Colour&);
 
 	void read(RandomAccessStream& input) { mAnimInfo.read(input); }
@@ -200,6 +207,7 @@ class PVWColourAnimInfo {
  *
  */
 class PVWAlphaAnimInfo {
+public:
 	void extract(f32, Colour&);
 
 	void read(RandomAccessStream& input) { mAnimInfo.read(input); }
@@ -212,6 +220,7 @@ class PVWAlphaAnimInfo {
  * @note Size: 0x20.
  */
 class PVWPolygonColourInfo {
+public:
 	PVWPolygonColourInfo() { mCurrentFrame = 0.0f; }
 
 	void animate(f32*, Colour&);
@@ -237,6 +246,7 @@ class PVWPolygonColourInfo {
  * @brief TODO
  */
 class PVWColourShortAnimInfo {
+public:
 	void extract(f32, ShortColour&);
 
 	PVWAnimInfo3<PVWKeyInfoS10> mInfo; // _00
@@ -246,6 +256,7 @@ class PVWColourShortAnimInfo {
  * @brief TODO
  */
 class PVWAlphaShortAnimInfo {
+public:
 	void extract(f32, ShortColour&);
 
 	PVWAnimInfo1<PVWKeyInfoS10> mInfo; // _00
@@ -255,6 +266,7 @@ class PVWAlphaShortAnimInfo {
  * @brief TODO
  */
 class PVWTexAnimInfo {
+public:
 	void extract(f32, Vector3f&);
 
 	PVWAnimInfo3<PVWKeyInfoF32> mInfo; // _00
@@ -268,6 +280,7 @@ class PVWTexGenData;
  * @note Size: 0x24.
  */
 class PVWTextureInfo {
+public:
 	PVWTextureInfo()
 	{
 		mTevStageCount   = 0;
@@ -289,6 +302,7 @@ class PVWTextureInfo {
  * @brief TODO
  */
 class PVWTevColReg {
+public:
 	PVWTevColReg() { mCurrentAnimFrame = 0.0f; }
 
 	void animate(f32*, ShortColour&);
@@ -314,6 +328,7 @@ class PVWTevColReg {
  * @brief TODO
  */
 class PVWCombiner {
+public:
 	void read(RandomAccessStream& input)
 	{
 		mInArgA   = input.readByte();
@@ -348,6 +363,7 @@ class PVWCombiner {
  * @brief TODO
  */
 class PVWTevStage {
+public:
 	void read(RandomAccessStream& input)
 	{
 		_UNUSED00     = input.readByte();
@@ -378,6 +394,7 @@ class PVWTevStage {
  * @note Size: 0x84.
  */
 class PVWTevInfo {
+public:
 	void read(RandomAccessStream& input)
 	{
 		mTevColRegs[0].read(input);
@@ -407,6 +424,7 @@ class PVWTevInfo {
  * @note Size: 0x9C.
  */
 class PVWTextureData {
+public:
 	PVWTextureData()
 	{
 		mCurrentFrame  = 0.0f;
@@ -450,6 +468,7 @@ class PVWTextureData {
  * @brief TODO
  */
 class PVWTexGenData {
+public:
 	// unused/inlined:
 	void read(RandomAccessStream& input);
 
@@ -464,6 +483,7 @@ class PVWTexGenData {
  * @note Size: 0x10.
  */
 class PVWPeInfo {
+public:
 	void read(RandomAccessStream& input)
 	{
 		mControlFlags      = input.readInt();

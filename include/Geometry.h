@@ -12,6 +12,7 @@ class Sphere;
  * @brief A representation of a cylinder in 3D space.
  */
 class Cylinder {
+public:
 	Cylinder(immut Vector3f& startPoint, immut Vector3f& endPoint, f32 radius = 1.0f)
 	    : mStartPoint(startPoint)
 	    , mEndPoint(endPoint)
@@ -32,6 +33,7 @@ class Cylinder {
  * @brief TODO
  */
 class RectArea {
+public:
 	RectArea(int x0, int y0, int x1, int y1)
 	{
 		mMinX = x0;
@@ -70,6 +72,7 @@ class RectArea {
  * @brief TODO
  */
 class Sphere {
+public:
 	Sphere(immut Vector3f& centre, f32 radius)
 	    : mCentre(centre)
 	    , mRadius(radius)
@@ -84,6 +87,7 @@ class Sphere {
  * @brief TODO
  */
 class Tube {
+public:
 	// DLL inlines to do:
 	Tube(immut Vector3f& start, immut Vector3f& end, f32 startRad, f32 endRad)
 	    : mStartPoint(start)

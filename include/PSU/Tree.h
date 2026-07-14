@@ -11,6 +11,7 @@
  */
 template <typename T>
 class PSUTree : public PSUList<T>, public PSULink<T> {
+public:
 	inline PSUTree(T* owner)
 	    : PSUList<T>()
 	    , PSULink<T>(owner)
@@ -39,6 +40,7 @@ class PSUTree : public PSUList<T>, public PSULink<T> {
  */
 template <typename T>
 class PSUTreeIterator {
+public:
 	PSUTreeIterator()
 	    : mTree(nullptr)
 	{

@@ -8,6 +8,7 @@
  * @brief TODO
  */
 class NNode {
+public:
 	NNode(int);
 
 	virtual void setChild(int, NNode*); // _08
@@ -36,6 +37,7 @@ class NNode {
  * @brief TODO
  */
 class NListNode {
+public:
 	NListNode(); // unused/inlined
 
 	// unused/inlined:
@@ -52,6 +54,7 @@ class NListNode {
  * @brief TODO
  */
 class NList {
+public:
 	NList(); // unused/inlined
 
 	// unused/inlined:

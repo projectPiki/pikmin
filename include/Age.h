@@ -56,6 +56,7 @@ enum PROP_TYPE {
 class Colour;
 
 class AgeServer : public AtxStream {
+public:
 	AgeServer() { }
 
 // TODO: All of this should be moved to a dedicated ageServer.cpp, I just don't want to yet because of the hacky way you have to add it in

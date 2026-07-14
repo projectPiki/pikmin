@@ -15,7 +15,7 @@ class ParaMultiParameters;
  * @note Size: 0x38.
  */
 class TekiPersonality {
-
+public:
 	/**
 	 * @brief TODO
 	 */

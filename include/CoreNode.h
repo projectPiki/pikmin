@@ -13,6 +13,7 @@ class RandomAccessStream;
  * @note Size: 0x14.
  */
 class CoreNode : public ANode {
+public:
 	/**
 	 * @brief Constructs a CoreNode object with the specified name.
 	 * @param name The name of the CoreNode.

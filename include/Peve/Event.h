@@ -9,6 +9,7 @@
  * @brief TODO
  */
 class PeveEvent : public NNode {
+public:
 	PeveEvent(int);
 
 	virtual void reset() // _20 (weak)

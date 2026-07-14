@@ -15,6 +15,7 @@ class SimpleAI;
  * @brief TODO
  */
 class UfoShapeObject {
+public:
 	UfoShapeObject(Shape*);
 
 	// TODO: members

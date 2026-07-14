@@ -5,6 +5,7 @@
 #include "types.h"
 
 class SRT {
+public:
 	SRT() { }
 
 	SRT(const SRT& other)

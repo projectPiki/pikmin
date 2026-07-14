@@ -13,6 +13,7 @@ class Vector3f;
  * @brief TODO.
  */
 class ObjectMgr : public Traversable, public Node {
+public:
 	ObjectMgr()
 	    : Node()
 	{

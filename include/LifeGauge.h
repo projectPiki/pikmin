@@ -21,7 +21,7 @@ class LFlareGroup;
  * @note Size: 0x48.
  */
 class GaugeInfo : public CoreNode {
-
+public:
 	/**
 	 * @brief States that gauge numbers go through while updating.
 	 */
@@ -69,7 +69,7 @@ class GaugeInfo : public CoreNode {
  * @note Size: 0x130.
  */
 class LifeGaugeMgr {
-
+public:
 	/// Constructs a new life gauge manager with up to 66 carry number gauges active at once.
 	LifeGaugeMgr() { init(66); }
 

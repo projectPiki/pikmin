@@ -177,6 +177,7 @@ struct GameMovieInterface : public GameInterface {
 	 * @note Size: 0x8.
 	 */
 	class SimpleMessage {
+	public:
 		int mCommand; ///< _00, command to action - see `GameMovieCommand` enum.
 		int mData;    ///< _04, any data to pass, which differs by command - documented in `GameMovieCommand` enum also.
 	};
@@ -187,7 +188,7 @@ struct GameMovieInterface : public GameInterface {
 	 * @note Size: 0x2C.
 	 */
 	class ComplexMessage {
-
+	public:
 		/// Constructs a blank message.
 		ComplexMessage() { }
 
@@ -1762,7 +1763,7 @@ ModeState* DayOverModeState::initialisePhaseFour()
  * @note This is required to be this far down in the .cpp file due to .sdata nonsense.
  */
 class NewPikiGameSetupSection : public BaseGameSection {
-
+public:
 	/// Constructs a new control section for gameplay, also setting up a lot of other important gameplay controllers in the process.
 	NewPikiGameSetupSection()
 	{

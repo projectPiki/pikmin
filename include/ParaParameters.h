@@ -11,7 +11,7 @@ class Stream;
  */
 template <typename T>
 class ParaParameterInfo {
-
+public:
 	void init(immut char* name, T min, T max)
 	{
 		mName = name;
@@ -29,6 +29,7 @@ class ParaParameterInfo {
  */
 template <typename T>
 class ParaParameters {
+public:
 	ParaParameters(int count, ParaParameterInfo<T>* info)
 	{
 		mParaCount = count;
@@ -78,6 +79,7 @@ class ParaParameters {
  * @brief TODO
  */
 class ParaParameterInfoI : public ParaParameterInfo<int> {
+public:
 	ParaParameterInfoI()
 	{
 		mName = nullptr;
@@ -105,6 +107,7 @@ struct ParaParametersI : public ParaParameters<int> {
  * @brief TODO
  */
 class ParaParameterInfoF : public ParaParameterInfo<f32> {
+public:
 	ParaParameterInfoF()
 	{
 		mName = nullptr;
@@ -132,6 +135,7 @@ struct ParaParametersF : public ParaParameters<f32> {
  * @brief TODO
  */
 class ParaMultiParameters {
+public:
 	ParaMultiParameters(int, ParaParameterInfoI*, int, ParaParameterInfoF*);
 
 	void input(ParaMultiParameters&);

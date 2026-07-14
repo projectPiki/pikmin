@@ -5,6 +5,7 @@
 
 // Lightweight command stream parser built on top of a Stream.
 class CmdStream {
+public:
 	CmdStream();
 	CmdStream(Stream* stream);
 	immut char* skipLine();

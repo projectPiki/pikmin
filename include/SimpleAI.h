@@ -13,6 +13,7 @@ class SAIEvent;
  * @brief TODO
  */
 class SAIAction {
+public:
 	virtual void act(AICreature*) = 0; // _08
 
 	// _00 = VTBL?
@@ -23,6 +24,7 @@ class SAIAction {
  * @brief TODO
  */
 class SAICondition : public CoreNode {
+public:
 	inline SAICondition()
 	    : CoreNode()
 	{
@@ -40,6 +42,7 @@ class SAICondition : public CoreNode {
  * @note Size: 0x8.
  */
 class SAIEvent : public Receiver<AICreature> {
+public:
 	SAIEvent()
 	    : mEventID(-1)
 	{
@@ -62,6 +65,7 @@ class SAIEvent : public Receiver<AICreature> {
  * @note Size: 0x8.
  */
 class SAIBounceEvent : public SAIEvent {
+public:
 	virtual void procBounceMsg(AICreature*, MsgBounce*); // _0C
 
 	// _00     = VTBL
@@ -74,6 +78,7 @@ class SAIBounceEvent : public SAIEvent {
  * @note Size: 0x8.
  */
 class SAICollideEvent : public SAIEvent {
+public:
 	virtual void procCollideMsg(AICreature*, MsgCollide*); // _1C
 
 	// _00     = VTBL
@@ -86,6 +91,7 @@ class SAICollideEvent : public SAIEvent {
  * @note Size: 0x8.
  */
 class SAIGroundEvent : public SAIEvent {
+public:
 	virtual void procGroundMsg(AICreature*, MsgGround*); // _34
 
 	// _00     = VTBL
@@ -98,6 +104,7 @@ class SAIGroundEvent : public SAIEvent {
  * @note Size: 0x8.
  */
 class SAIMotionAction0Event : public SAIEvent {
+public:
 	virtual void procAnimMsg(AICreature*, MsgAnim*); // _20
 
 	// _00     = VTBL
@@ -110,6 +117,7 @@ class SAIMotionAction0Event : public SAIEvent {
  * @note Size: 0x8.
  */
 class SAIMotionDoneEvent : public SAIEvent {
+public:
 	virtual void procAnimMsg(AICreature*, MsgAnim*); // _20
 
 	// _00     = VTBL
@@ -120,6 +128,7 @@ class SAIMotionDoneEvent : public SAIEvent {
  * @brief TODO
  */
 class SAIMotionLoopStartEvent : public SAIEvent {
+public:
 	virtual void procAnimMsg(AICreature*, MsgAnim*); // _20
 
 	// _00     = VTBL
@@ -131,6 +140,7 @@ class SAIMotionLoopStartEvent : public SAIEvent {
  * @brief TODO
  */
 class SAIMotionLoopEndEvent : public SAIEvent {
+public:
 	virtual void procAnimMsg(AICreature*, MsgAnim*); // _20
 
 	// _00     = VTBL
@@ -155,6 +165,7 @@ struct SAIUserEvent : public SAIEvent {
  * @brief TODO
  */
 class SAIArrow : public CoreNode {
+public:
 	SAIArrow(SAIEvent* event, int nextState)
 	    : CoreNode("SAIArrow")
 	{
@@ -219,6 +230,7 @@ struct SAIState : public AState<AICreature> {
  * @note Size: 0x1C.
  */
 class SimpleAI : public StateMachine<AICreature> {
+public:
 	SimpleAI();
 
 	virtual void procMsg(AICreature*, Msg*); // _10

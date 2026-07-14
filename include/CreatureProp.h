@@ -10,7 +10,7 @@
  * @note Size: 0x58.
  */
 class CreatureProp {
-
+public:
 	/**
 	 * @brief TODO
 	 */

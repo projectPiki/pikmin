@@ -14,6 +14,7 @@
  * @brief TODO
  */
 class Colour {
+public:
 	Colour() { }
 
 	Colour(u8 _r, u8 _g, u8 _b, u8 _a) { set(_r, _g, _b, _a); }
@@ -76,6 +77,7 @@ class Colour {
  * @brief TODO
  */
 class ShortColour {
+public:
 	void read(RandomAccessStream& input)
 	{
 		r = input.readShort();
@@ -91,6 +93,7 @@ class ShortColour {
  * @brief TODO
  */
 class LShortColour {
+public:
 	s16 r, g, b, a; // _00-_0A
 };
 

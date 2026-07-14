@@ -141,6 +141,7 @@ public:
  * @brief TODO
  */
 class BossShapeObject {
+public:
 	BossShapeObject(Shape*, immut char*);
 
 	Shape* mShape;            // _00

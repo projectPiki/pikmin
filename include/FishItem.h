@@ -10,6 +10,7 @@
  * @note Size: 0x1C.
  */
 class Fish {
+public:
 	Fish() { }
 
 	Vector3f mPosition; // _00

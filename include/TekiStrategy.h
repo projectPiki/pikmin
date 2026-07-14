@@ -14,6 +14,7 @@ class TekiInteractionKey;
  * @note Size: 0x4.
  */
 class TekiStrategy {
+public:
 	TekiStrategy();
 
 	virtual void start(Teki& teki);                                   // _08

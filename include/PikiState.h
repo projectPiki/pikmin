@@ -66,6 +66,7 @@ struct PikiStateMachine : public StateMachine<Piki> {
  * @brief Base class for all Piki state handlers.
  */
 class PikiState : public AState<Piki> {
+public:
 	PikiState(int stateID, immut char* name)
 	    : AState(stateID)
 	{

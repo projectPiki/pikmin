@@ -8,6 +8,7 @@
  * @brief TODO
  */
 class MemInfoNode : public CoreNode {
+public:
 	MemInfoNode()
 	    : CoreNode("meminfo")
 	{
@@ -22,6 +23,7 @@ class MemInfoNode : public CoreNode {
  * @brief TODO
  */
 class MemInfo : public MemInfoNode {
+public:
 	// _00     = VTBL
 	// _00-_14 = MemInfoNode?
 	int mMemorySize; // _14

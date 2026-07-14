@@ -7,6 +7,7 @@
  * @brief Parent class for no argument delegates.  NOTE this is only used in the .dll, not the final game
  */
 class IDelegate {
+public:
 	virtual void invoke() = 0; // _08
 };
 
@@ -15,6 +16,7 @@ class IDelegate {
  */
 template <typename A>
 class IDelegate1 {
+public:
 	virtual void invoke(A) = 0; // _08
 };
 
@@ -23,6 +25,7 @@ class IDelegate1 {
  */
 template <typename A, typename B>
 class IDelegate2 {
+public:
 	virtual void invoke(A, B) = 0; // _08
 };
 

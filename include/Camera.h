@@ -20,6 +20,7 @@ class SceneData;
  * @note Size: 0x2C.
  */
 class CullingPlane {
+public:
 	CullingPlane() { }
 
 	void CheckMinMaxDir();
@@ -38,6 +39,7 @@ class CullingPlane {
  * @brief TODO
  */
 class CullFrustum {
+public:
 	CullFrustum()
 	{
 		_155 = false;
@@ -151,6 +153,7 @@ class CullFrustum {
  * @note Size: 0x348.
  */
 class Camera : public CullFrustum {
+public:
 	Camera();
 
 	f32 projectWorldPoint(Graphics&, Vector3f&) immut;
@@ -173,6 +176,7 @@ class Camera : public CullFrustum {
  * @brief TODO
  */
 class LightCamera : public Camera {
+public:
 	LightCamera() { mLightMap = nullptr; }
 
 	void initLightmap(int size, int texFmt);
@@ -192,6 +196,7 @@ class LightCamera : public Camera {
  * @note Size: 0x3F8.
  */
 class CamDataInfo {
+public:
 	CamDataInfo();
 
 	void update(f32, immut Matrix4f&);

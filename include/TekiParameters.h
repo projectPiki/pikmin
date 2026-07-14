@@ -114,6 +114,7 @@ enum TekiCorpseType {
  * @note Size: 0x88.
  */
 class TekiParameters : public Node {
+public:
 	TekiParameters(int iParamNum, int fParamNum);
 
 	virtual void read(RandomAccessStream&); // _0C

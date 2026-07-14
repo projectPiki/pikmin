@@ -224,6 +224,7 @@ struct PelletProp : public CreatureProp {
  * @brief TODO
  */
 class PelletShapeObject {
+public:
 	PelletShapeObject(immut char*, Shape*, immut char*, immut char*, int);
 
 	bool isMotionFlag(u8 flag) { return mMotionFlag & flag; }
@@ -244,6 +245,7 @@ class PelletShapeObject {
  * @note Size: 0x138.
  */
 class PelletConfig : public Parameters, public CoreNode {
+public:
 	PelletConfig();
 
 	// _04     = VTBL

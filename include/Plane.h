@@ -10,6 +10,7 @@
  * @note Size: 0x10.
  */
 class Plane {
+public:
 	Plane() { }
 
 	// unused/inlined:

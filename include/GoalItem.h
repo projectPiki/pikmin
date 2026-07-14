@@ -57,7 +57,7 @@ struct GoalLeg {
  * @note Size: 0x494.
  */
 class GoalItem : public Suckable, public zen::CallBack2<zen::particleGenerator*, zen::particleMdl*> {
-
+public:
 	enum DemoHideFlags {
 		ShowAll         = 0,      ///< 0x0, don't hide any onyons/null flag.
 		HideBlueOnyon   = 1 << 0, ///< 0x1, hide blue onyon during cutscenes. Use `IS_DEMO_HIDE_ONYON` to check with PikiColor.

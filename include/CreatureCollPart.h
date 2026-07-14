@@ -13,7 +13,7 @@ class CollPart;
  * @note Size: 0x148.
  */
 class CreatureCollPart : public DynCollShape {
-
+public:
 	/// Constructs a part with no dedicated collision or owner.
 	CreatureCollPart()
 	    : DynCollShape(nullptr)

@@ -76,6 +76,7 @@ enum BlendMode {
  * @note Size: 0x2C.
  */
 class LFInfo {
+public:
 	LFInfo() { mPrevInfo = nullptr; }
 
 	Colour mColour;     // _00
@@ -92,6 +93,7 @@ class LFInfo {
  * @note Size: 0x24.
  */
 class LightFlare : public CoreNode {
+public:
 	LightFlare()
 	    : CoreNode("")
 	{
@@ -111,6 +113,7 @@ class LightFlare : public CoreNode {
  * @brief TODO
  */
 class LFlareGroup : public CoreNode {
+public:
 	LFlareGroup()
 	    : CoreNode("lfgroup")
 	{
@@ -158,6 +161,7 @@ class LFlareGroup : public CoreNode {
  * @note Size: 0x2D4.
  */
 class Light : public CoreNode {
+public:
 	Light();
 
 	void setLightDistAttn(f32, f32, int);
@@ -222,6 +226,7 @@ class Light : public CoreNode {
  * @note Size: 0x6C.
  */
 class LightGroup : public CoreNode {
+public:
 	LightGroup()
 	{
 		mFlags      = 0;
@@ -305,6 +310,7 @@ struct LightPool : public Node {
  * @brief TODO
  */
 class LightDataInfo {
+public:
 	LightDataInfo() { mLight.mDistancedRange = 1000.0f; }
 
 	void update(f32);

@@ -58,6 +58,7 @@ enum {
  * @note Size: 0x18.
  */
 class PcamMotionInfo {
+public:
 	PcamMotionInfo();
 
 	// unused/inlined:
@@ -76,6 +77,7 @@ class PcamMotionInfo {
  * @brief TODO
  */
 class PcamControlInfo {
+public:
 	PcamControlInfo();
 
 	void init(bool, bool, bool, bool, bool, bool, bool, f32, f32, f32);
@@ -98,6 +100,7 @@ class PcamControlInfo {
  * @note Size: 0x170.
  */
 class PcamCamera : public NCamera {
+public:
 	PcamCamera(Camera*);
 
 	void startCamera(Creature*);

@@ -195,6 +195,7 @@ private:
  * @brief TODO.
  */
 class SlimeCreature : public Creature {
+public:
 	SlimeCreature(CreatureProp*);
 
 	virtual f32 getiMass();                     // _38

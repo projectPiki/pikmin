@@ -22,6 +22,7 @@ struct SmokeEmitter : public Node {
 	 * @note Size: 0x38.
 	 */
 	class Smoke {
+	public:
 		Smoke() { mNext = mPrev = nullptr; }
 
 		void insertAfter(Smoke* newSmoke)
@@ -102,6 +103,7 @@ struct EffectShape : public CoreNode {
  * @note Size: 0x44.
  */
 class EffShpInst : public CoreNode {
+public:
 	EffShpInst()
 	    : CoreNode("")
 	{

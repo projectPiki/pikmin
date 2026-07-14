@@ -12,6 +12,7 @@ class Texture;
  * @brief TODO
  */
 class GfxobjInfo {
+public:
 	GfxobjInfo()
 	{
 		mPrev = mNext = nullptr;
@@ -50,6 +51,7 @@ class GfxobjInfo {
  * @brief TODO
  */
 class GfxObject {
+public:
 	virtual void attach() { } // _08
 	virtual void detach() { } // _0C
 
@@ -57,6 +59,7 @@ class GfxObject {
 };
 
 class ShpobjInfo : public GfxobjInfo {
+public:
 	ShpobjInfo()
 	    : mTarget(nullptr)
 	{

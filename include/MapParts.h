@@ -18,6 +18,7 @@ struct MapObjectPart;
  * @note Size: 0x18.
  */
 class MapAnimShapeObject {
+public:
 	Shape* mModel;            ///< _00, object's model.
 	AnimContext mAnimContext; ///< _04, context info about an object's current animation.
 	AnimMgr* mMgr;            ///< _14, object's animation manager.

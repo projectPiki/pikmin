@@ -26,6 +26,7 @@ enum MaterialFlags {
  * @note Size: 0x9C.
  */
 class Material : public CoreNode {
+public:
 	Material()
 	    : CoreNode("material")
 	{
@@ -81,6 +82,7 @@ class Material : public CoreNode {
  * @brief TODO
  */
 class MatobjInfo : public GfxobjInfo {
+public:
 	MatobjInfo()
 	{
 		mTarget = nullptr;
@@ -100,6 +102,7 @@ class MatobjInfo : public GfxobjInfo {
  * @brief TODO
  */
 class MaterialHandler {
+public:
 	MaterialHandler() { mGfx = nullptr; }
 
 	Graphics* mGfx; // _00

@@ -15,6 +15,7 @@ struct DynBuildShape;
  * @brief TODO
  */
 class WorkObject : public ItemCreature {
+public:
 	WorkObject(); // unused/inlined
 
 	virtual bool isVisible() { return true; }               // _74

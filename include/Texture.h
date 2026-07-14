@@ -34,6 +34,7 @@ enum TexImgFormat {
  * @brief TODO
  */
 class TexAttr : public CoreNode {
+public:
 	enum TilingType {
 		TILING_REPEAT = 0,
 		TILING_CLAMP  = 1,
@@ -130,6 +131,7 @@ struct BtiHeader {
  * @brief TODO
  */
 class TexImg : public CoreNode {
+public:
 	TexImg()
 	    : CoreNode("texImg")
 	{
@@ -169,6 +171,7 @@ class TexImg : public CoreNode {
  * @note Size: 0x3C.
  */
 class Texture : public GfxObject {
+public:
 	/**
 	 * @brief TODO
 	 */
@@ -223,6 +226,7 @@ class Texture : public GfxObject {
  * @brief TODO
  */
 class TexobjInfo : public GfxobjInfo {
+public:
 	TexobjInfo()
 	    : mTexture(nullptr)
 	{
@@ -238,6 +242,7 @@ class TexobjInfo : public GfxobjInfo {
 };
 
 class CacheInfo {
+public:
 	void insertAfter(CacheInfo* other)
 	{
 		other->mNext = mNext;
@@ -262,6 +267,7 @@ class CacheInfo {
  * @note Size: 0x14
  */
 class TexCacheInfo : public CacheInfo {
+public:
 	TexCacheInfo() { initData(); }
 
 	void initData() { _10 = 0; }
@@ -276,6 +282,7 @@ class TexCacheInfo : public CacheInfo {
  * @note Size: 0x4C
  */
 class CacheTexture : public Texture {
+public:
 	CacheTexture()
 	{
 		mSystemCache = nullptr;
@@ -297,6 +304,7 @@ class CacheTexture : public Texture {
  * @brief TODO
  */
 class TextureCacher : public TexCacheInfo {
+public:
 	TextureCacher(u32 size)
 	{
 		mCache = new AyuCache(size);

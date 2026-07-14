@@ -29,6 +29,7 @@ enum MsgType {
  * @brief TODO
  */
 class Msg {
+public:
 	inline Msg(int type)
 	    : mMsgType(type)
 	{
@@ -43,6 +44,7 @@ class Msg {
  * @note will need to fix saiEvents.cpp when this gets worked out
  */
 class MsgAnim : public Msg {
+public:
 	inline MsgAnim(immut PaniAnimKeyEvent* event) // adjust when type of _04 is known
 	    : Msg(MSG_Anim)
 	    , mKeyEvent(event)
@@ -57,6 +59,7 @@ class MsgAnim : public Msg {
  * @brief TODO
  */
 class MsgBounce : public Msg {
+public:
 	inline MsgBounce(immut Vector3f& normal)
 	    : Msg(MSG_Bounce)
 	    , mNormal(normal)
@@ -71,6 +74,7 @@ class MsgBounce : public Msg {
  * @brief TODO
  */
 class MsgCollide : public Msg {
+public:
 	inline MsgCollide(immut CollEvent& event)
 	    : Msg(MSG_Collide)
 	    , mEvent(event)
@@ -85,6 +89,7 @@ class MsgCollide : public Msg {
  * @brief TODO
  */
 class MsgDamage : public Msg {
+public:
 	inline MsgDamage() // this never gets called, funnily enough
 	    : Msg(MSG_Damage)
 	{
@@ -97,6 +102,7 @@ class MsgDamage : public Msg {
  * @brief TODO
  */
 class MsgGround : public Msg {
+public:
 	inline MsgGround()
 	    : Msg(MSG_Ground)
 	{
@@ -109,6 +115,7 @@ class MsgGround : public Msg {
  * @brief TODO
  */
 class MsgHang : public Msg {
+public:
 	inline MsgHang() // this also never gets called
 	    : Msg(MSG_Hang)
 	{
@@ -121,6 +128,7 @@ class MsgHang : public Msg {
  * @brief TODO
  */
 class MsgOffWall : public Msg {
+public:
 	inline MsgOffWall(DynCollObject* object)
 	    : Msg(MSG_OffWall)
 	    , mObject(object)
@@ -135,6 +143,7 @@ class MsgOffWall : public Msg {
  * @brief TODO
  */
 class MsgStick : public Msg {
+public:
 	inline MsgStick()
 	    : Msg(MSG_Stick)
 	{
@@ -147,6 +156,7 @@ class MsgStick : public Msg {
  * @brief TODO
  */
 class MsgTarget : public Msg {
+public:
 	MsgTarget(Creature* target)
 	    : Msg(MSG_Target)
 	{
@@ -161,6 +171,7 @@ class MsgTarget : public Msg {
  * @brief TODO
  */
 class MsgUser : public Msg {
+public:
 	inline MsgUser(int val)
 	    : Msg(MSG_User)
 	{
@@ -175,6 +186,7 @@ class MsgUser : public Msg {
  * @brief TODO
  */
 class MsgWall : public Msg {
+public:
 	inline MsgWall(immut Plane& plane, DynCollObject* wall)
 	    : Msg(MSG_Wall)
 	{

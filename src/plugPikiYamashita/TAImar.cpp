@@ -33,6 +33,7 @@ DEFINE_PRINT("TAImar")
  * @brief TODO
  */
 class TAIeffectAttackEventCallBackMar : public TAIeffectAttackEventCallBack {
+public:
 	virtual bool hitCreature(zen::particleGenerator* ptclGen, TAIeffectAttackParam* param, Creature* target, Vector3f p4) // _10
 	{
 		f32 force = zen::Rand(250.0f) + 150.0f;

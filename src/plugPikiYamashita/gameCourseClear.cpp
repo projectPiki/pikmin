@@ -715,7 +715,7 @@ protected:
  * @note Size: 0x554
  */
 class GameCourseClearScreen : public Node {
-
+public:
 	/**
 	 * @brief TODO
 	 *

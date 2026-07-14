@@ -11,6 +11,7 @@ class Vector3f;
  * @brief A spatial grid used for AI culling optimizations.
  */
 class FastGrid {
+public:
 	FastGrid();
 
 	void delAIGrid();

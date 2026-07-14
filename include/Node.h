@@ -14,6 +14,7 @@ struct VQS;
  * @brief TODO
  */
 class Node : public CoreNode {
+public:
 	Node(immut char* name = "<Node>")
 	    : CoreNode(name)
 	{
@@ -55,6 +56,7 @@ class Node : public CoreNode {
  * @brief TODO
  */
 class FaceNode : public CoreNode {
+public:
 	FaceNode()
 	    : CoreNode("face")
 	{
@@ -103,6 +105,7 @@ class FaceNode : public CoreNode {
  * @brief TODO
  */
 class SRTNode : public Node {
+public:
 	SRTNode(immut char* name); // unused/inlined
 
 	virtual void update();                                    // _10
@@ -129,6 +132,7 @@ class SRTNode : public Node {
  * @brief TODO
  */
 class NodeMgr {
+public:
 	NodeMgr();
 	~NodeMgr();
 

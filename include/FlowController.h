@@ -42,7 +42,7 @@ enum GameEndCause {
  * @note Size: 0x25C.
  */
 class FlowController {
-
+public:
 	/// Constructs a bare-bones single-player game flow controller.
 	inline FlowController()
 	{

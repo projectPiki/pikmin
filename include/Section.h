@@ -105,6 +105,7 @@ struct Section : public Node {
  * @note Size: 0x44.
  */
 class BaseGameSection : public Node {
+public:
 	BaseGameSection();
 
 	virtual void draw(Graphics& gfx); // _14
@@ -133,7 +134,7 @@ class BaseGameSection : public Node {
  * @note Size: 0x8.
  */
 class ModeState {
-
+public:
 	/**
 	 * @brief Construct a new base-class control substate.
 	 *

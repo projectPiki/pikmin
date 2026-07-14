@@ -16,6 +16,7 @@ class SlotChangeListner;
  * @brief TODO
  */
 class CPlate : public Traversable, public Node {
+public:
 	// These all all pretty unsurprising.
 	friend class Navi;
 	friend struct NaviThrowWaitState;

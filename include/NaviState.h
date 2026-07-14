@@ -57,6 +57,7 @@ enum NaviStateID {
  * @brief TODO
  */
 class NaviState : public AState<Navi> {
+public:
 	inline NaviState(int stateID)
 	    : AState(stateID)
 	{
@@ -214,6 +215,7 @@ struct NaviDemoInfState : public NaviState {
  * @note Size: 0x40.
  */
 class NaviDemoSunsetState : public NaviState {
+public:
 	NaviDemoSunsetState();
 
 	/**

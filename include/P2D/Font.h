@@ -12,6 +12,7 @@
  * @brief TODO
  */
 class FntobjInfo : public GfxobjInfo {
+public:
 	FntobjInfo() { mFont = nullptr; }
 
 	// _1C     = VTBL
@@ -23,6 +24,7 @@ class FntobjInfo : public GfxobjInfo {
  * @brief TODO
  */
 class P2DFont {
+public:
 	P2DFont(immut char*);
 
 	Font* loadFont(immut char* fileName, int&, int&);

@@ -51,6 +51,7 @@ protected:
  */
 template <typename T>
 class StateMachine {
+public:
 	inline StateMachine()
 	    : mLastStateID(-1)
 	{

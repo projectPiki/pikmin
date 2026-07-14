@@ -57,6 +57,7 @@ enum EDemoFlags {
  * @brief TODO
  */
 class DemoFlag {
+public:
 	// TODO: this - only gets returned by DemoFlags::getDemoFlag smh
 
 	immut char* mName; // _00
@@ -70,7 +71,7 @@ class DemoFlag {
  * @brief TODO
  */
 class DemoParms : public Node {
-
+public:
 	struct Parms : Parameters {
 		Parms();
 
@@ -126,6 +127,7 @@ struct DemoFlags {
  * @note Size: 0x1 (empty).
  */
 class DemoEventMgr {
+public:
 	DemoEventMgr();
 
 	void act(int, int);

@@ -41,6 +41,7 @@ class BaseApp;
  * @todo Decompile this struct and its methods.
  */
 class WSocket {
+public:
 	/// @brief Initializes the Winsock library. (Called once at program start.)
 	static void init();
 
@@ -66,6 +67,7 @@ class WSocket {
  * @details Used by AtxStream for network communication.
  */
 class TcpStream : public Stream {
+public:
 #ifdef WIN32
 	TcpStream();
 	TcpStream(WSocket*);
@@ -92,6 +94,7 @@ class TcpStream : public Stream {
  * @details Used by AtxStream to route communication over different transports.
  */
 class AtxRouter {
+public:
 	virtual bool openRoute(AtxStream*, int) = 0; // _00
 	virtual void closeRoute(AtxStream*)     = 0; // _04
 	virtual void lock() { }                      // _08
@@ -110,6 +113,7 @@ class AtxRouter {
  * @note Size: 0x10.
  */
 class AtxStream : public Stream {
+public:
 	AtxStream() { init(); }
 
 	virtual void read(void* buffer, int size);        // _3C
@@ -133,6 +137,7 @@ class AtxStream : public Stream {
  * @details Used by PlugPikiApp to process commands from a connected ATX server.
  */
 class AtxCommandStream : public AtxStream {
+public:
 	AtxCommandStream(BaseApp* app)
 	    : mParentApp(app)
 	{
@@ -149,6 +154,7 @@ class AtxCommandStream : public AtxStream {
  * @brief Wrapper for handling file operations over the ATX protocol.
  */
 class AtxFileStream : public RandomAccessStream {
+public:
 	virtual void read(void*, int);        // _3C
 	virtual void write(immut void*, int); // _40
 	virtual int getPending();             // _44 (weak)
@@ -172,6 +178,7 @@ class AtxFileStream : public RandomAccessStream {
  * @brief Direct router using TCP for AtxStream.
  */
 class AtxDirectRouter : public AtxRouter {
+public:
 	virtual bool openRoute(AtxStream*, int); // _00
 	virtual void closeRoute(AtxStream*);     // _04
 	virtual void lock();                     // _08

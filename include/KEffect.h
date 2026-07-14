@@ -12,6 +12,7 @@ class Creature;
  * @brief TODO
  */
 class EffectParm {
+public:
 	EffectParm(immut Vector3f* pos)
 	{
 		mPositionRef = pos;
