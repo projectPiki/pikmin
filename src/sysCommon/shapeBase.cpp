@@ -2551,7 +2551,7 @@ void BaseShape::read(RandomAccessStream& stream)
 		}
 	} while (chunkType != 0xFFFF);
 
-	if (stream.getPending()) {
+	if (stream.getPending() != 0) {
 		importIni(stream);
 	}
 
