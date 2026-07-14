@@ -324,6 +324,8 @@ inline void padStack(void)
 // If an unimplemented function is used by mistake (e.g. in modding), we should trap on that.
 #ifdef __MWERKS__ // clang-format off
 #define TRAP_UNIMPLEMENTED asm { trap } ((void)0)
+#elif defined(_MSC_VER)
+#define TRAP_UNIMPLEMENTED __asm { ud2 } __assume(0)
 #else
 #define TRAP_UNIMPLEMENTED ((void)0) /* Replace me */
 #endif // clang-format on
