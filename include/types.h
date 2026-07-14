@@ -377,4 +377,10 @@ inline void padStack(void)
 #define __mwerks_builtin_va_info(args)    /* void   */ __builtin_va_info(args)    // va_list*
 #endif
 
+// Disable MSVC errors
+// TODO: This is typically done via a compiler flag `/wdXXXX`, but it doesn't appear to work under MSVC 6.0.
+#if defined(_MSC_VER)
+#pragma warning(disable : 4716) // Allow non-void functions to return nothing.
+#endif
+
 #endif // _TYPES_H

@@ -174,16 +174,12 @@ def main() -> None:
     # project headers -- include/stl's PPC/MSL replacements must not shadow VC6's
     # system headers, which we reach via /I tools/vc6/include (so no INCLUDE env
     # is needed and the build stays self-contained under wine).
-    # /wd4003 silences the empty-macro-argument warning C4003 that
-    # TERNARY_BUILD_MATCHING(, const)-style macros (immut/NRef) emit under VC6's
-    # preprocessor -- warning-only, so codegen-neutral. BUILD_MATCHING is defined
-    # because the original was built with it (per project guidance): it selects the
-    # "matching" arm of TERNARY_BUILD_MATCHING, making immut -> (nothing) and
-    # NRef -> &, reproducing the shipped code's const-incorrect rvalue binding
-    # (which VC6 permits by default -- there is no /Zc:referenceBinding in VC6).
+    # BUILD_MATCHING is defined because the original was built with it (per project
+    # guidance): it selects the "matching" arm of TERNARY_BUILD_MATCHING, making
+    # immut -> (nothing) and NRef -> &, reproducing the shipped code's const-incorrect
+    # rvalue binding (which VC6 permits by default).
     cflags = [
-        "/nologo", "/c", "/MDd", "/Od", "/GX", "/GR-", "/GZ", "/ZI", "/W3", "/Zm600",
-        "/wd4003",
+        "/nologo", "/c", "/MDd", "/Od", "/GX", "/GR-", "/GZ", "/ZI", "/w", "/Zm600",
         "/D", "WIN32", "/D", "_DEBUG", "/D", "_WINDOWS", "/D", "_USRDLL", "/D", "_MBCS",
         "/D", "BUILD_MATCHING", "/D", "PIKI_USE_JAUDIO=0", "/D", "PIKI_USE_DGX=0",
         "/D", f"VERSION_{args.version}",
