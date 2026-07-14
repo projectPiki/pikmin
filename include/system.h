@@ -32,7 +32,7 @@ class ControllerMgr;
 struct OSContext;
 struct OSThread;
 class Shape;
-struct AnimData;
+class AnimData;
 class AnimFrameCacher;
 class MemInfo;
 class CacheInfo;

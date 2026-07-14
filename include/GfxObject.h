@@ -3,7 +3,7 @@
 
 #include "ID32.h"
 
-struct AnimData;
+class AnimData;
 class Shape;
 class TexImg;
 class Texture;
