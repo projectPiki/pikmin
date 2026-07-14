@@ -40,6 +40,11 @@
 		va_end(args);                         \
 	}
 
+// <windows.h> defines `ERROR` as `0`; shed it before we redefine.
+#ifdef ERROR
+#undef ERROR
+#endif
+
 // DO NOT define these as variadic macros (when matching).  MSVC 6.0 does not support variadic macros, meaning that cannot be how
 // these macros were originally implemented.  It has been confirmed by a small snippet of the original source code (leaked by the
 // file "sysBootup.opt") that the `PRINT` macro we have created was originally spelled and used in exactly the same way as we have

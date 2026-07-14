@@ -1883,7 +1883,9 @@ void BaseShape::makeInstance(ShapeDynMaterials& animatedMats, int jointIdx)
 	countMaterials(joint, 0);
 
 	if (joint->mChild) {
-		recTraverseMaterials((Joint*)joint->mChild, stack_new(Delegate2<BaseShape, Joint*, u32>)(this, &BaseShape::countMaterials));
+		// We must keep commas out of the `stack_new` macro for building on MSVC 6.0 because it lacks variadic arguments.
+		typedef Delegate2<BaseShape, Joint*, u32> CountMaterialsDelegate;
+		recTraverseMaterials(static_cast<Joint*>(joint->mChild), stack_new(CountMaterialsDelegate)(this, &BaseShape::countMaterials));
 	}
 
 	animatedMats.mMatCount  = matIndex;
