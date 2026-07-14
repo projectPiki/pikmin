@@ -357,4 +357,10 @@ inline void padStack(void)
 #pragma clang diagnostic ignored "-Wc++11-compat-deprecated-writable-strings"
 #endif
 
+// Disable MSVC errors
+// TODO: This is typically done via a compiler flag `/wdXXXX`, but it doesn't appear to work under MSVC 6.0.
+#if defined(_MSC_VER)
+#pragma warning(default : 4716) // Allow non-void functions to return nothing.
+#endif
+
 #endif // _TYPES_H
