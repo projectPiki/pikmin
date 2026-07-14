@@ -613,6 +613,7 @@ void AnimMgr::genAge(AgeServer& server)
 		server.StartSection(buf, true);
 		server.setSectionRefresh(new Delegate1<AnimInfo, AgeServer&>(anim, CoreNode::genAge));
 		server.EndSection();
+		++index;
 	}
 
 	server.EndSection();

@@ -128,12 +128,14 @@ struct Parm : public BaseParm {
 	Parm(Parameters* owner, T value, T min, T max, ayuID id, immut char* name)
 	    : BaseParm(owner, id)
 	{
-		mValue = value;
 #ifdef WIN32
+		mName         = name;
+		mValue        = value;
 		mDefaultValue = value;
 		mMinValue     = min;
 		mMaxValue     = max;
-		mName         = name;
+#else
+		mValue = value;
 #endif
 	}
 

@@ -511,7 +511,7 @@ int ActBridge::newExeWork()
 		return ACTOUT_Fail;
 	}
 
-	if (mActionCounter != 0) {
+	if (mActionCounter > 0) {
 		mActionCounter--;
 		if (mActionCounter == 0) {
 			newInitWork();
