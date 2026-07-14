@@ -49,9 +49,10 @@ public:
  *
  * @note Size: 0xC.
  */
-struct KEffect : public zen::CallBack1<zen::particleGenerator*>,
-                 public zen::CallBack2<zen::particleGenerator*, zen::particleMdl*>,
-                 public zen::CallBack1<zen::particleMdl*> {
+class KEffect : public zen::CallBack1<zen::particleGenerator*>,
+                public zen::CallBack2<zen::particleGenerator*, zen::particleMdl*>,
+                public zen::CallBack1<zen::particleMdl*> {
+public:
 	virtual bool invoke(zen::particleGenerator*) { return false; }                    // _08 (weak)
 	virtual bool invoke(zen::particleGenerator*, zen::particleMdl*) { return false; } // _24 (weak)
 	virtual bool invoke(zen::particleMdl*) { return false; }                          // _28 (weak)

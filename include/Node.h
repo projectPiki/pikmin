@@ -8,7 +8,7 @@
 
 class Graphics;
 class Vector3f;
-struct VQS;
+class VQS;
 
 /**
  * @brief TODO
