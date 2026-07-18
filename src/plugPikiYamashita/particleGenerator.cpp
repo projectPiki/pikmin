@@ -20,7 +20,7 @@ static u8 lpsPos[48] ATTRIBUTE_ALIGN(32) = {
 	0,   0,   0, 25, 255, 231, 0, 0,  0, 25, 0, 25, 0, 0,  255, 231, 0, 25, 0,   0,   255, 231, 255, 231,
 };
 
-static u8 lpsCoord[8] = {
+static u8 lpsCoord[8] ATTRIBUTE_ALIGN(32) = {
 	0, 0, 1, 0, 1, 1, 0, 1,
 };
 
@@ -142,7 +142,7 @@ void zen::particleGenerator::init(u8* data, Texture* tex1, Texture* tex2, immut 
 				mRotAxisCallBack = &particleGenerator::RotAxisXYZ;
 				break;
 			}
-#if defined(VERSION_GPIJ01_02)
+#if defined(VERSION_GPIJ01) || defined(VERSION_PIKIDEMO)
 			default:
 			{
 				ERROR("Unknown RotAxis Type:%d \n", rotType);

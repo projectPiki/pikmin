@@ -770,7 +770,7 @@ config.libs = [
             Object(Matching, "plugPikiYamashita/gameCredits.cpp"),
             Object(Matching, "plugPikiYamashita/zenMath.cpp"),
             Object(Matching, "plugPikiYamashita/effectMgr.cpp"),
-            Object(Equivalent, "plugPikiYamashita/particleGenerator.cpp"),
+            Object(not MatchingFor("GPIJ01_01", "GPIJ01_02", "DPIJ01_PIKIDEMO"), "plugPikiYamashita/particleGenerator.cpp"),
             Object(Matching, "plugPikiYamashita/particleLoader.cpp"),
             Object(Matching, "plugPikiYamashita/solidField.cpp"),
             Object(Matching, "plugPikiYamashita/particleManager.cpp"),
