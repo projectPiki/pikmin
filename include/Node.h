@@ -62,15 +62,16 @@ public:
 	{
 	}
 
-#ifdef WIN32
 	FaceNode(int faceCount)
+	    : CoreNode("face")
 	{
-		mFaceCount        = faceCount;
-		mMtxIdx           = 0;
-		mVtxIdx           = 0;
-		mColIdx           = 0;
-		mNrmIdx           = 0;
-		mTexCoords[0]     = 0;
+		mFaceCount    = faceCount;
+		mMtxIdx       = nullptr;
+		mVtxIdx       = nullptr;
+		mColIdx       = nullptr;
+		mNrmIdx       = nullptr;
+		mTexCoords[0] = nullptr;
+#ifdef WIN32
 		mMtxGroupIndex    = 0;
 		mMtxGroupCount    = 0;
 		mNumMatrices      = 0;
@@ -78,19 +79,18 @@ public:
 		mDisplayListFlags = 0;
 		mCurrentFaceIndex = 0;
 		mHasMatrixData    = 0;
-	}
 #endif
+	}
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	int mFaceCount;     // _14
-	int* mMtxIdx;       // _18
-	int* mVtxIdx;       // _1C
-	int* mColIdx;       // _20
-	int* mNrmIdx;       // _24
-	int* mTexCoords[8]; // _28
-
+	int mFaceCount; // _14
+	int* mMtxIdx;   // _18
+	int* mVtxIdx;   // _1C
+	int* mColIdx;   // _20
+	int* mNrmIdx;   // _24
 #ifdef WIN32
+	int* mTexCoords[1];    // _28, OGLGraphics only supports GX_TEXCOORD0
 	int mMtxGroupIndex;    // _2C
 	int mMtxGroupCount;    // _30
 	int mNumMatrices;      // _34
@@ -98,6 +98,8 @@ public:
 	int mDisplayListFlags; // _3C
 	int mCurrentFaceIndex; // _40
 	int mHasMatrixData;    // _44
+#else
+	int* mTexCoords[8]; // _28, DGXGraphics supports up to 8 texture coordinates
 #endif
 };
 

@@ -336,9 +336,9 @@ public:
 	}
 
 	// _00-_28 = BaseCollTriInfo
-	Plane mEdgePlanes[3]; // _28, edge half-space planes derived from triangle vertices - normals face inwards.
-#if defined(WIN32)        //
-	u8 _58[0x64 - 0x58];  // _58
+	Plane mEdgePlanes[3];  // _28, edge half-space planes derived from triangle vertices - normals face inwards.
+#if defined(WIN32)         //
+	f32 mEdgeSomething[3]; // _58, something to do with triangle edges calculated in `BaseShape::createCollisions`
 #endif
 };
 

@@ -88,9 +88,9 @@ struct Delegate2 : public IDelegate2<A, B> {
 	typedef void (T::*CallbackFunc)(A, B);
 
 	inline Delegate2(T* target, CallbackFunc func)
-	    : mTarget(target)
-	    , mCallback(func)
 	{
+		mTarget = target;
+		mCallback = func;
 	}
 
 	virtual void invoke(A argA, B argB) { (mTarget->*mCallback)(argA, argB); } // _08

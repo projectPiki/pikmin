@@ -65,7 +65,7 @@ public:
 };
 
 template <typename T>
-struct PVWAnimInfo1Intermediate {
+struct PVWAnimKey1 {
 	void read(RandomAccessStream& input)
 	{
 		mTime = input.readInt();
@@ -77,7 +77,7 @@ struct PVWAnimInfo1Intermediate {
 };
 
 template <typename T>
-struct PVWAnimInfo3Intermediate {
+struct PVWAnimKey3 {
 	void read(RandomAccessStream& input)
 	{
 		mTime = input.readInt();
@@ -95,20 +95,18 @@ struct PVWAnimInfo3Intermediate {
 template <typename T>
 class PVWAnimInfo1 {
 public:
-	u32 mSize;                               // _00
-	PVWAnimInfo1Intermediate<T>* mKeyframes; // _04
+	u32 mSize;                  // _00
+	PVWAnimKey1<T>* mKeyframes; // _04
 
 	void read(RandomAccessStream& stream)
 	{
 		mSize = stream.readInt();
 
-		if (!mSize) {
-			return;
-		}
-
-		mKeyframes = new PVWAnimInfo1Intermediate<T>[mSize];
-		for (int i = 0; i < mSize; i++) {
-			mKeyframes[i].read(stream);
+		if (mSize != 0) {
+			mKeyframes = new PVWAnimKey1<T>[mSize];
+			for (int i = 0; i < mSize; i++) {
+				mKeyframes[i].read(stream);
+			}
 		}
 	}
 };
@@ -116,20 +114,18 @@ public:
 template <typename T>
 class PVWAnimInfo3 {
 public:
-	u32 mSize;                               // _00
-	PVWAnimInfo3Intermediate<T>* mKeyframes; // _04
+	u32 mSize;                  // _00
+	PVWAnimKey3<T>* mKeyframes; // _04
 
 	void read(RandomAccessStream& stream)
 	{
 		mSize = stream.readInt();
 
-		if (!mSize) {
-			return;
-		}
-
-		mKeyframes = new PVWAnimInfo3Intermediate<T>[mSize];
-		for (int i = 0; i < (int)mSize; i++) {
-			mKeyframes[i].read(stream);
+		if (mSize != 0) {
+			mKeyframes = new PVWAnimKey3<T>[mSize];
+			for (int i = 0; i < (int)mSize; i++) {
+				mKeyframes[i].read(stream);
+			}
 		}
 	}
 };
@@ -366,14 +362,16 @@ class PVWTevStage {
 public:
 	void read(RandomAccessStream& input)
 	{
+		u8 _;
+
 		_UNUSED00     = input.readByte();
 		mTexCoordID   = input.readByte();
 		mTexMapID     = input.readByte();
 		mChannelID    = input.readByte();
 		mTevKColorSel = input.readByte();
 		mTevKAlphaSel = input.readByte();
-		u8 unused     = input.readByte();
-		u8 unused2    = input.readByte();
+		_             = input.readByte();
+		_             = input.readByte();
 		mTevColorCombiner.read(input);
 		mTevAlphaCombiner.read(input);
 	}
