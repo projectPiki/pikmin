@@ -88,8 +88,10 @@ zen::ogScrTotalScoreMgr::ogScrTotalScoreMgr(zen::TotalScoreType* scores)
 
 	mNewRecordDefaultPane = static_cast<P2DPicture*>(screen->search('newd', true));
 
+	int i;
 	char buf[8];
-	for (int i = 0; i < 5; i++) {
+
+	for (i = 0; i < 5; i++) {
 		sprintf(buf, "pd%02d", i + 1);
 		mPartDayRecordTexts[i] = static_cast<P2DTextBox*>(screen->search(P2DPaneLibrary::makeTag(buf), true));
 		char* str              = mPartsDaysRecordStrings[i];
@@ -98,7 +100,7 @@ zen::ogScrTotalScoreMgr::ogScrTotalScoreMgr(zen::TotalScoreType* scores)
 		mPartDayRecordTexts[i]->setString(str);
 	}
 
-	for (int i = 0; i < 5; i++) {
+	for (i = 0; i < 5; i++) {
 		sprintf(buf, "lp%02d", i + 1);
 		mBornRecordTexts[i] = static_cast<P2DTextBox*>(screen->search(P2DPaneLibrary::makeTag(buf), true));
 		char* str           = mBornRecordStrings[i];
@@ -107,7 +109,7 @@ zen::ogScrTotalScoreMgr::ogScrTotalScoreMgr(zen::TotalScoreType* scores)
 		mBornRecordTexts[i]->setString(str);
 	}
 
-	for (int i = 0; i < 5; i++) {
+	for (i = 0; i < 5; i++) {
 		sprintf(buf, "dp%02d", i + 1);
 		mDeadRecordTexts[i] = static_cast<P2DTextBox*>(screen->search(P2DPaneLibrary::makeTag(buf), true));
 		char* str           = mDeadRecordStrings[i];

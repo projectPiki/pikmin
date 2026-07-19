@@ -560,14 +560,16 @@ void GameCoreSection::cleanupDayEnd()
 		int gens      = 0;
 		int creatures = 0;
 		int ufoParts  = 0;
-		FOREACH_NODE(Generator, generatorList->mGenListHead->mChild, gen)
+
+		Generator* gen;
+		FOREACH_NODE_REUSE(Generator, generatorList->mGenListHead->mChild, gen)
 		{
 			if (gen->mCarryOverFlags & GENCARRY_SaveGenerator) {
 				generatorCache->saveGenerator(gen);
 				gens++;
 			}
 		}
-		FOREACH_NODE(Generator, generatorList->mGenListHead->mChild, gen)
+		FOREACH_NODE_REUSE(Generator, generatorList->mGenListHead->mChild, gen)
 		{
 			if ((gen->mCarryOverFlags & GENCARRY_SaveGenerator) && (gen->mCarryOverFlags & GENCARRY_SaveCreature)) {
 				generatorCache->saveGeneratorCreature(gen);

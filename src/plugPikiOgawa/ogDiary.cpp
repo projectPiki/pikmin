@@ -453,7 +453,9 @@ void zen::ogDrawSelectDiary::start()
 	_UNUSED2E6           = 0;
 	mBlackFadePicture->setAlpha(255);
 
-	for (int i = 0; i < MAX_DAYS; i++) {
+	int i;
+
+	for (i = 0; i < MAX_DAYS; i++) {
 		if (i > mCurrentDay) {
 			P2DPaneLibrary::setFamilyAlpha(mDayDisplayPanes[i], 80);
 		} else {
@@ -461,7 +463,7 @@ void zen::ogDrawSelectDiary::start()
 		}
 	}
 
-	for (int i = mCurrentDay + 1; i < MAX_DAYS; i++) {
+	for (i = mCurrentDay + 1; i < MAX_DAYS; i++) {
 		P2DPicture* obj = static_cast<P2DPicture*>(_248[i]->getPaneTree()->getParent()->getObject());
 		obj->setAlpha(0);
 	}

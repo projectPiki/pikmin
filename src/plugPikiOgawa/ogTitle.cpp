@@ -80,17 +80,18 @@ zen::ogScrTitleMgr::ogScrTitleMgr()
 
 	mAlphaMgr = new setTenmetuAlpha(mStereoButton, 0.5f, 0.0f, 0, 255);
 
+	int i;
 #if !defined(BUGFIX) && defined(VERSION_GPIP01)
 	char path[4]; // You made it undefined behavior?!
 #else
 	char path[12];
 #endif
-	for (int i = 0; i < 10; i++) {
+	for (i = 0; i < 10; i++) {
 		sprintf(path, "on%02d", i + 1);
 		u32 test          = RGBA_TO_U32(path[0], path[1], path[2], path[3]);
 		mBgmVolButtons[i] = static_cast<P2DPicture*>(mSoundScreen->search(test, true));
 	}
-	for (int i = 0; i < 10; i++) {
+	for (i = 0; i < 10; i++) {
 		sprintf(path, "on%02d", i + 11);
 		u32 test          = RGBA_TO_U32(path[0], path[1], path[2], path[3]);
 		mSfxVolButtons[i] = static_cast<P2DPicture*>(mSoundScreen->search(test, true));

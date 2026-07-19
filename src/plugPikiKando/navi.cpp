@@ -1214,44 +1214,44 @@ void Navi::releasePikis()
 		}
 	}
 
-	for (int i = 0; i < PikiColorCount + 1; i++) {
-		if (colorCounts[i] > 0) {
-			Vector3f sepNaviGroup = colorCoMs[i] - mSRT.t;
-			f32 dist              = sepNaviGroup.normalise() - colorSizes[i] - 15.0f;
+	for (int k = 0; k < PikiColorCount + 1; k++) {
+		if (colorCounts[k] > 0) {
+			Vector3f sepNaviGroup = colorCoMs[k] - mSRT.t;
+			f32 dist              = sepNaviGroup.normalise() - colorSizes[k] - 15.0f;
 			if (dist < 18.0f) {
 				dist = 18.0f - dist;
 				Vector3f offsetFromNavi;
 				offsetFromNavi = dist * sepNaviGroup;
-				colorCoMs[i].add(offsetFromNavi);
+				colorCoMs[k].add(offsetFromNavi);
 			}
 		}
 
-		for (int j = i + 1; j < PikiColorCount + 1; j++) {
-			if (colorCounts[i] > 0 && colorCounts[j] > 0) {
-				Vector3f colorColorSep = colorCoMs[i] - colorCoMs[j];
-				f32 colorDist          = colorColorSep.normalise() - colorSizes[i] - colorSizes[j];
+		for (int j = k + 1; j < PikiColorCount + 1; j++) {
+			if (colorCounts[k] > 0 && colorCounts[j] > 0) {
+				Vector3f colorColorSep = colorCoMs[k] - colorCoMs[j];
+				f32 colorDist          = colorColorSep.normalise() - colorSizes[k] - colorSizes[j];
 				if (colorDist < 18.0f) {
 					colorDist = (18.0f - colorDist);
 					Vector3f interColorOffset;
 					interColorOffset = colorDist * colorColorSep;
-					colorCoMs[i].add(interColorOffset);
+					colorCoMs[k].add(interColorOffset);
 					colorCoMs[j].sub(interColorOffset);
 				}
 			}
 		}
 	}
 
-	for (i = 0; i < pikiCount; i++) {
-		pikiList[i]->changeMode(PikiMode::FreeMode, this);
-		int color = pikiList[i]->mColor;
-		if (pikiList[i]->hasBomb()) {
+	for (j = 0; j < pikiCount; j++) {
+		pikiList[j]->changeMode(PikiMode::FreeMode, this);
+		int color = pikiList[j]->mColor;
+		if (pikiList[j]->hasBomb()) {
 			color = PikiColorCount;
 		}
 
-		ActFree* action = static_cast<ActFree*>(pikiList[i]->mActiveAction->getCurrAction());
+		ActFree* action = static_cast<ActFree*>(pikiList[j]->mActiveAction->getCurrAction());
 		action->initBoid(colorCoMs[color], colorSizes[color]);
-		if (flowCont.mIsVersusMode == TRUE && pikiList[i]->mPlayerId == -1) {
-			pikiList[i]->mNavi = nullptr;
+		if (flowCont.mIsVersusMode == TRUE && pikiList[j]->mPlayerId == -1) {
+			pikiList[j]->mNavi = nullptr;
 		}
 	}
 

@@ -382,8 +382,9 @@ int PathFinder::selectWay(PathFinder::Buffer& buf, int destWPIdx, PathFinder::Bu
 	// Current and destination positions (XZ plane)
 	Vector3f currPos = getWayPoint(buf.mWayPointIdx)->mPosition;
 	Vector3f destPos = getWayPoint(destWPIdx)->mPosition;
+	int dir;
 
-	for (int dir = 0; dir < 8; dir++) {
+	for (dir = 0; dir < 8; dir++) {
 		// Skip if this direction is not available
 		if (!buf.check(dir)) {
 			continue;
@@ -461,10 +462,10 @@ int PathFinder::selectWay(PathFinder::Buffer& buf, int destWPIdx, PathFinder::Bu
 
 	// Choose the candidate with minimum squared distance to destination
 	f32 bestDist = 128000.0f;
-	for (int i = 0; i < validLinkCount; i++) {
-		if (distToDestSq[i] < bestDist) {
-			bestDist  = distToDestSq[i];
-			chosenDir = dirIndices[i];
+	for (dir = 0; dir < validLinkCount; dir++) {
+		if (distToDestSq[dir] < bestDist) {
+			bestDist  = distToDestSq[dir];
+			chosenDir = dirIndices[dir];
 		}
 	}
 
@@ -1530,8 +1531,9 @@ int PathFinder::selectWayOnyon(int additionalCost, int goalType, PathFinder::Buf
 	Vector3f wpPos   = getWayPoint(buf.mWayPointIdx)->mPosition;
 	Vector3f destPos = getWayPoint(destWPIdx)->mPosition;
 	////////////////////////////////////////////////////////////
+	int dir;
 
-	for (int dir = 0; dir < 8; dir++) {
+	for (dir = 0; dir < 8; dir++) {
 		// Skip if this direction is not available
 		if (!buf.check(dir)) {
 			continue;
@@ -1585,10 +1587,10 @@ int PathFinder::selectWayOnyon(int additionalCost, int goalType, PathFinder::Buf
 
 	// Phase 2: Find the best (lowest cost) option among all valid links
 	int lowestCost = 128000;
-	for (int i = 0; i < validLinkCount; i++) {
-		if (pathCosts[i] < lowestCost) {
-			lowestCost    = pathCosts[i];
-			bestLinkIndex = validLinkIndices[i];
+	for (dir = 0; dir < validLinkCount; dir++) {
+		if (pathCosts[dir] < lowestCost) {
+			lowestCost    = pathCosts[dir];
+			bestLinkIndex = validLinkIndices[dir];
 		}
 	}
 
@@ -1630,8 +1632,9 @@ int PathFinder::selectSecondBestWayOnyon(immut Vector3f& curPos, int& secondBest
 
 	Vector3f wpPos   = getWayPoint(buf.mWayPointIdx)->mPosition;
 	Vector3f destPos = getWayPoint(destWPIdx)->mPosition;
+	int dir;
 
-	for (int dir = 0; dir < 8; dir++) {
+	for (dir = 0; dir < 8; dir++) {
 		// Skip if this direction is not available
 		if (!buf.check(dir)) {
 			continue;
@@ -1685,23 +1688,22 @@ int PathFinder::selectSecondBestWayOnyon(immut Vector3f& curPos, int& secondBest
 
 	// Phase 2: Find the best (lowest cost) option
 	int lowestCost = 128000;
-	for (int i = 0; i < validLinkCount; i++) {
-		if (pathCosts[i] < lowestCost) {
-			lowestCost    = pathCosts[i];
-			bestLinkIndex = validLinkIndices[i];
+	for (dir = 0; dir < validLinkCount; dir++) {
+		if (pathCosts[dir] < lowestCost) {
+			lowestCost    = pathCosts[dir];
+			bestLinkIndex = validLinkIndices[dir];
 		}
 	}
 
 	// Phase 3: Find the second-best option with geometric validation
-	int i;
 	int secondBestLinkIndex = -1;
 	secondBestCost          = 128000;
 
-	for (i = 0; i < validLinkCount; i++) {
+	for (dir = 0; dir < validLinkCount; dir++) {
 		// Skip the best option and only consider better costs than current second-best
-		if (i != bestLinkIndex && pathCosts[i] < secondBestCost) {
-			WayPoint* wp1 = getWayPoint(buf.mWayPointIdx);                       // Source waypoint
-			WayPoint* wp2 = getWayPoint(wp1->mLinkIndices[validLinkIndices[i]]); // Destination waypoint
+		if (dir != bestLinkIndex && pathCosts[dir] < secondBestCost) {
+			WayPoint* wp1 = getWayPoint(buf.mWayPointIdx);                         // Source waypoint
+			WayPoint* wp2 = getWayPoint(wp1->mLinkIndices[validLinkIndices[dir]]); // Destination waypoint
 
 			bool geometricallyValid = true;
 
@@ -1743,8 +1745,8 @@ int PathFinder::selectSecondBestWayOnyon(immut Vector3f& curPos, int& secondBest
 
 			// Update second-best if this option passes geometric validation
 			if (geometricallyValid) {
-				secondBestLinkIndex = i;
-				secondBestCost      = pathCosts[i];
+				secondBestLinkIndex = dir;
+				secondBestCost      = pathCosts[dir];
 			}
 		}
 	}

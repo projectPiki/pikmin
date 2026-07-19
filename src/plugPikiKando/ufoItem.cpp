@@ -989,7 +989,9 @@ void UfoItem::refresh(Graphics& gfx)
  */
 void UfoItem::demoDraw(Graphics& gfx, immut Matrix4f* mtx)
 {
-	for (int i = 0; i < 4; i++) {
+	int i;
+
+	for (i = 0; i < 4; i++) {
 		mLightAnims[i].update();
 	}
 
@@ -1033,7 +1035,7 @@ void UfoItem::demoDraw(Graphics& gfx, immut Matrix4f* mtx)
 	}
 
 	mCollInfo->updateInfo(gfx, false);
-	for (int i = 0; i < 3; i++) {
+	for (i = 0; i < 3; i++) {
 		CollPart* part = mCollInfo->getSphere('gol1');
 		if (part) {
 			f32 anglePosition = mFaceDirection + mSpots[i].mAngleOffset;

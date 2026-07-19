@@ -101,7 +101,8 @@ void RouteGroup::refresh(Graphics& gfx, EditNode* node)
 	int alpha     = mColour.a;
 	gfx.setCBlending(BLEND_Alpha);
 
-	FOREACH_NODE(RoutePoint, mPointListRoot.mChild, point)
+	RoutePoint* point;
+	FOREACH_NODE_REUSE(RoutePoint, mPointListRoot.mChild, point)
 	{
 		FOREACH_NODE(RouteLink, point->mLink.mChild, link)
 		{
@@ -152,7 +153,7 @@ void RouteGroup::refresh(Graphics& gfx, EditNode* node)
 
 	gfx.setColour(Colour(mColour.r, mColour.g, mColour.b, alpha), true);
 
-	FOREACH_NODE(RoutePoint, mPointListRoot.mChild, point)
+	FOREACH_NODE_REUSE(RoutePoint, mPointListRoot.mChild, point)
 	{
 		gfx.useTexture(nullptr, GX_TEXMAP0);
 		gfx.setColour(Colour(255, 255, 0, 64), true);
@@ -254,7 +255,8 @@ void RouteGroup::saveini(immut char* name, RandomAccessStream& s)
 	s.print("%s\tcolour\t%d %d %d %d\n", name, mColour.r, mColour.g, mColour.b, mColour.a);
 
 	int idx = 0;
-	FOREACH_NODE(RoutePoint, mPointListRoot.mChild, point)
+	RoutePoint* point;
+	FOREACH_NODE_REUSE(RoutePoint, mPointListRoot.mChild, point)
 	{
 		point->mIndex = idx++;
 		s.print("\n%s\tpoint {\n", name);
@@ -265,7 +267,7 @@ void RouteGroup::saveini(immut char* name, RandomAccessStream& s)
 		s.print("%s\t\t}\n", name);
 	}
 	s.print("\n");
-	FOREACH_NODE(RoutePoint, mPointListRoot.mChild, point)
+	FOREACH_NODE_REUSE(RoutePoint, mPointListRoot.mChild, point)
 	{
 		FOREACH_NODE(RouteLink, point->mLink.mChild, link)
 		{

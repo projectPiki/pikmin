@@ -126,4 +126,8 @@ public:
 #define FOREACH_NODE(type, first, varname) \
 	for (type* varname = static_cast<type*>(first); varname; varname = static_cast<type*>(varname->mNext))
 
+// Sometimes a `CoreNode` derivate pointer gets reused and that affects matching.
+#define FOREACH_NODE_REUSE(type, first, varname) \
+	for (varname = static_cast<type*>(first); varname; varname = static_cast<type*>(varname->mNext))
+
 #endif
