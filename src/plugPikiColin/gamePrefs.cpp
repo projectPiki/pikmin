@@ -224,7 +224,9 @@ void GamePrefs::checkIsHiscore(GameChalQuickInfo& info)
 	PRINT("checking challenge info for course %d, top scores are :-\n", info.mStageID);
 #endif
 
-	for (int i = 0; i < MAX_HI_SCORES; i++) {
+	int i;
+
+	for (i = 0; i < MAX_HI_SCORES; i++) {
 #if defined(VERSION_PIKIDEMO)
 		// This somehow doesn't generate a function call.  How.
 		_Print("\t[%d] ... %d\n", i, mHiscores.mChalModeRecords[info.mStageID].mScores[i]);
@@ -234,7 +236,7 @@ void GamePrefs::checkIsHiscore(GameChalQuickInfo& info)
 	}
 
 	// check if score is better than any existing hiscores - if so, store its appropriate rank
-	for (int i = 0; i < MAX_HI_SCORES; i++) {
+	for (i = 0; i < MAX_HI_SCORES; i++) {
 		if (info.mScore > mHiscores.mChalModeRecords[info.mStageID].mScores[i]) {
 			info.mRank = i;
 			break;
@@ -269,8 +271,10 @@ void GamePrefs::checkIsHiscore(GameQuickInfo& info)
 	info.mDeadPikisRank = -1;
 	info.mPartsDaysRank = -1;
 
+	int i;
+
 	// check parts and days - priority is parts, then break ties with lower day count
-	for (int i = 0; i < MAX_HI_SCORES; i++) {
+	for (i = 0; i < MAX_HI_SCORES; i++) {
 		if (info.mParts > mHiscores.mMinDayRecords[i].mNumParts) {
 			info.mPartsDaysRank = i;
 			break;
@@ -293,7 +297,7 @@ void GamePrefs::checkIsHiscore(GameQuickInfo& info)
 	}
 
 	// check born pikmin for a new hiscore
-	for (int i = 0; i < MAX_HI_SCORES; i++) {
+	for (i = 0; i < MAX_HI_SCORES; i++) {
 		if (info.mBornPikis > mHiscores.mBornPikminRecords[i].mNumBorn) {
 			info.mBornPikisRank = i;
 			break;
@@ -310,7 +314,7 @@ void GamePrefs::checkIsHiscore(GameQuickInfo& info)
 
 	// NOTE: we only check/update dead pikmin ranking if we finish the ship!
 	if (info.mParts == MAX_UFO_PARTS) {
-		for (int i = 0; i < MAX_HI_SCORES; i++) {
+		for (i = 0; i < MAX_HI_SCORES; i++) {
 			if (info.mDeadPikis < mHiscores.mDeadPikminRecords[i].mNumDead) {
 				info.mDeadPikisRank = i;
 				break;

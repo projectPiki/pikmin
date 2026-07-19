@@ -107,11 +107,14 @@ ResultFlags::ResultFlags()
 	mScreenToTableList = new u32[max + 110];
 	mActiveCount       = 0;
 	mStates            = new u8[mLength];
-	for (int i = 0; i < mLength; i++) {
+
+	int i;
+
+	for (i = 0; i < mLength; i++) {
 		mStates[i] = false;
 	}
 
-	for (int i = 0; i < mTableSize; i++) {
+	for (i = 0; i < mTableSize; i++) {
 		if (flagTable[i].mScreenId == -1) {
 			break;
 		}
@@ -125,7 +128,7 @@ ResultFlags::ResultFlags()
 		mActiveCount++;
 	}
 
-	for (int i = 0; i < MAX_DAYS; i++) {
+	for (i = 0; i < MAX_DAYS; i++) {
 		mDaysSeen[i] = -1;
 	}
 
@@ -141,11 +144,13 @@ ResultFlags::ResultFlags()
  */
 void ResultFlags::initGame()
 {
-	for (int i = 0; i < mLength; i++) {
+	int i;
+
+	for (i = 0; i < mLength; i++) {
 		mStates[i] = false;
 	}
 
-	for (int i = 0; i < mTableSize; i++) {
+	for (i = 0; i < mTableSize; i++) {
 		if (flagTable[i].mScreenId == -1) {
 			break;
 		}
@@ -156,7 +161,7 @@ void ResultFlags::initGame()
 		}
 	}
 
-	for (int i = 0; i < MAX_DAYS; i++) {
+	for (i = 0; i < MAX_DAYS; i++) {
 		mDaysSeen[i] = -1;
 	}
 

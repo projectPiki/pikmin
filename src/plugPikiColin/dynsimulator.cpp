@@ -446,15 +446,16 @@ void DynSimulator::doSimulation(f32 totalTime, f32 maxTimeStep, Shape* mapModel)
 			// 4. calculate all vertices
 			// 5. reset accelerations
 
-			FOREACH_NODE(RigidBody, mChild, body)
+			RigidBody* body;
+			FOREACH_NODE_REUSE(RigidBody, mChild, body)
 			{
 				body->initCollisions(mCurrentConfigIdx);
 			}
-			FOREACH_NODE(RigidBody, mChild, body)
+			FOREACH_NODE_REUSE(RigidBody, mChild, body)
 			{
 				body->computeForces(mCurrentConfigIdx, dt);
 			}
-			FOREACH_NODE(RigidBody, mChild, body)
+			FOREACH_NODE_REUSE(RigidBody, mChild, body)
 			{
 				body->integrate(mCurrentConfigIdx, mCurrentConfigIdx ^ 1, dt);
 				body->calculateVertices(mCurrentConfigIdx ^ 1);

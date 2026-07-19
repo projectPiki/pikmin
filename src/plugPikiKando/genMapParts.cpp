@@ -199,17 +199,19 @@ Creature* GenObjectMapParts::birth(BirthInfo& info)
 #ifdef WIN32
 void GenObjectMapParts::doGenAge(AgeServer& server)
 {
+	int i;
+
 	server.StartOptionBox("マップパーツ", &mPartKind, 252); // Map Parts
-	for (int i = 0; i < numKinds; i++) {
+	for (i = 0; i < numKinds; i++) {
 		server.NewOption(kindNames[i], i);
 	}
 	server.EndOptionBox();
 
 	server.StartOptionBox("シェイプ", &mShapeIndex, 252); // Shape
-	for (int i = 0; i < numShapes; i++) {
+	for (i = 0; i < numShapes; i++) {
 		server.NewOption(shapeNames[i], i);
 	}
-	for (int i = 0; i < numParts; i++) {
+	for (i = 0; i < numParts; i++) {
 		server.NewOption(partNames[i], i + numShapes);
 	}
 	server.EndOptionBox();

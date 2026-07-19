@@ -64,11 +64,13 @@ void GameStat::init()
  */
 void GameStat::update()
 {
-	for (int i = PikiMinColor; i < PikiColorCount; i++) {
+	int i;
+
+	for (i = PikiMinColor; i < PikiColorCount; i++) {
 		mapPikis.set(formationPikis[i] + freePikis[i] + mePikis[i] + workPikis[i], i);
 	}
 
-	for (int i = PikiMinColor; i < PikiColorCount; i++) {
+	for (i = PikiMinColor; i < PikiColorCount; i++) {
 		allPikis.set(mapPikis[i] + containerPikis[i], i);
 	}
 

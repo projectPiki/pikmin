@@ -1101,10 +1101,11 @@ void NUpperMatrix::solve(immut NVector& inVec, NVector& outVec)
  */
 void NUpperMatrix::println() immut
 {
-	for (int i = 0; i < mDimension; i++) {
+	int i;
+	for (i = 0; i < mDimension; i++) {
 		PRINT_NAKATA("e[%d]:%f\n", i, mCentre[i]);
 	}
-	for (int i = 0; i < mDimension - 1; i++) {
+	for (i = 0; i < mDimension - 1; i++) {
 		PRINT_NAKATA("u[%d]:%f\n", i, mUpper[i]);
 	}
 }
@@ -1161,13 +1162,14 @@ void LUMatrix::solve(immut NVector& inVec, NVector& outVec)
  */
 void LUMatrix::decompose()
 {
+	int i;
 	mUpper.setCenter(0, mCentreVals[0]);
-	for (int i = 1; i < mDimension; i++) {
+	for (i = 1; i < mDimension; i++) {
 		mLower.setLower(i, mLowerVals[i - 1] / mUpper.getCenter(i - 1));
 
 		mUpper.setCenter(i, mCentreVals[i] - mLower.getLower(i) * mUpperVals[i - 1]);
 	}
-	for (int i = 0; i < mDimension - 1; i++) {
+	for (i = 0; i < mDimension - 1; i++) {
 		mUpper.setUpper(i, mUpperVals[i]);
 	}
 }
@@ -1178,13 +1180,14 @@ void LUMatrix::decompose()
  */
 void LUMatrix::println() immut
 {
-	for (int i = 0; i < mDimension; i++) {
+	int i;
+	for (i = 0; i < mDimension; i++) {
 		PRINT_NAKATA("e[%d]:%f\n", i, mCentreVals[i]);
 	}
-	for (int i = 0; i < mDimension - 1; i++) {
+	for (i = 0; i < mDimension - 1; i++) {
 		PRINT_NAKATA("l[%d]:%f\n", i, mLowerVals[i]);
 	}
-	for (int i = 0; i < mDimension - 1; i++) {
+	for (i = 0; i < mDimension - 1; i++) {
 		PRINT_NAKATA("u[%d]:%f\n", i, mUpperVals[i]);
 	}
 }

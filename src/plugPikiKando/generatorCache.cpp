@@ -62,7 +62,7 @@ void GeneratorCache::initGame()
 	}
 
 	int idx = 0;
-	FOREACH_NODE(Cache, mDeadCacheList.mChild, cache)
+	FOREACH_NODE_REUSE(Cache, mDeadCacheList.mChild, cache)
 	{
 		cache->mStageID           = idx;
 		cache->mCacheHeapOffset   = 0;

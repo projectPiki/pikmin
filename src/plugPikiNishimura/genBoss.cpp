@@ -258,8 +258,10 @@ void GenObjectBoss::doGenAge(AgeServer& server)
 	server.NewOption("ランダム", 3);
 	server.EndOptionBox();
 
+	int i;
+
 	server.StartOptionBox("ペレットの数", &mItemCount, 252);
-	for (int i = 0; i < 16; i++) {
+	for (i = 0; i < 16; i++) {
 		char id[4];
 		if (i / 10 < 1) {
 			id[0] = i % 10 + '0';
@@ -275,7 +277,7 @@ void GenObjectBoss::doGenAge(AgeServer& server)
 
 	server.StartOptionBox("ＵＦＯパーツ", &mPelletConfigIdx, 252);
 	server.NewOption("none", -1);
-	for (int i = 0; i < pelletMgr->getNumConfigs(); i++) {
+	for (i = 0; i < pelletMgr->getNumConfigs(); i++) {
 		PelletConfig* config = pelletMgr->getConfigFromIdx(i);
 		server.NewOption(config->mPelletName().mString, config->mPelletId.mId);
 	}

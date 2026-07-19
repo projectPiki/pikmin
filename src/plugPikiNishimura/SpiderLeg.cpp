@@ -336,7 +336,9 @@ void SpiderLeg::init(Spider* spider)
 	mCentreVelocity.set(0.0f, 0.0f, 0.0f);
 	mCurrentCentre = mSpider->mSRT.t;
 
-	for (int i = 0; i < 4; i++) {
+	int i;
+
+	for (i = 0; i < 4; i++) {
 		mStuckPikiCount[i]      = 0;
 		mPrevOnGround[i]        = false;
 		mIsOnGround[i]          = false;
@@ -346,7 +348,7 @@ void SpiderLeg::init(Spider* spider)
 		mBezierPoints[i][0]   = mJointPositions[i][0];
 	}
 
-	for (int i = 0; i < 16; i++) {
+	for (i = 0; i < 16; i++) {
 		mSegmentScale[i] = 1.0f;
 	}
 }

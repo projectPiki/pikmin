@@ -208,8 +208,10 @@ void DynCreature::initialiseSystem()
 	mCenterOfMass.set(0.0f, 0.0f, 0.0f);
 	mMass = 0.0f;
 
+	DynParticle* ptcl;
+
 	// First pass: Calculate total mass and weighted center of mass
-	for (DynParticle* ptcl = mParticleList; ptcl; ptcl = ptcl->mNextParticle) {
+	for (ptcl = mParticleList; ptcl; ptcl = ptcl->mNextParticle) {
 		mCenterOfMass = mCenterOfMass + ptcl->mMass * ptcl->mInitialPosition;
 		mMass += ptcl->mMass;
 	}
@@ -218,7 +220,7 @@ void DynCreature::initialiseSystem()
 	mCenterOfMass = mCenterOfMass * (1.0f / mMass);
 
 	// Second pass: Adjust particle positions relative to center of mass
-	for (DynParticle* ptcl = mParticleList; ptcl; ptcl = ptcl->mNextParticle) {
+	for (ptcl = mParticleList; ptcl; ptcl = ptcl->mNextParticle) {
 		ptcl->mLocalPosition = ptcl->mInitialPosition - mCenterOfMass;
 	}
 

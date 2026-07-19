@@ -280,8 +280,10 @@ DynMapObject::DynMapObject(MapMgr* map, MapAnimShapeObject* shapeObj)
 	mSRT.r.set(0.0f, 0.0f, 0.0f);
 	mSRT.t.set(0.0f, 0.0f, 0.0f);
 
+	ObjCollInfo* info;
+
 	mPlatObjCount = 0;
-	FOREACH_NODE(ObjCollInfo, mCollisionModel->mCollisionInfo.mParentShape->Child(), info)
+	FOREACH_NODE_REUSE(ObjCollInfo, mCollisionModel->mCollisionInfo.Child(), info)
 	{
 		if (info->mPlatShape) {
 			mPlatObjCount++;
@@ -290,7 +292,7 @@ DynMapObject::DynMapObject(MapMgr* map, MapAnimShapeObject* shapeObj)
 
 	mPlatObjects = new MapObjectPart*[mPlatObjCount];
 	int i        = 0;
-	FOREACH_NODE(ObjCollInfo, mCollisionModel->mCollisionInfo.mParentShape->Child(), info)
+	FOREACH_NODE_REUSE(ObjCollInfo, mCollisionModel->mCollisionInfo.Child(), info)
 	{
 		if (info->mPlatShape) {
 			MapObjectPart* part = new MapObjectPart(info->mPlatShape);

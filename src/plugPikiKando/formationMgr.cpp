@@ -279,11 +279,13 @@ void FormationMgr::exit(Creature* target)
  */
 void FormationMgr::clear()
 {
-	for (int i = 0; i < mMax; i++) {
+	int i;
+
+	for (i = 0; i < mMax; i++) {
 		mFormPoints[i].reset();
 	}
 
-	for (int i = 0; i < mCount; i++) {
+	for (i = 0; i < mCount; i++) {
 		if (mFormMembers[i]) {
 			mFormMembers[i]->mFormPoint = nullptr;
 			mFormMembers[i]             = nullptr;

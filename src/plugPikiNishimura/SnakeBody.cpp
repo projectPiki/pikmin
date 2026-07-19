@@ -96,12 +96,14 @@ void SnakeBody::init(immut Vector3f&, Snake* snake)
 	mUseBlend      = false;
 	mBlendingRatio = 0.0f;
 
-	for (int i = 0; i < 7; i++) {
+	int i;
+
+	for (i = 0; i < 7; i++) {
 		mSegmentLengthList[i] = 0.0f;
 		mDeadPtclGens[i]      = nullptr;
 	}
 
-	for (int i = 0; i < 8; i++) {
+	for (i = 0; i < 8; i++) {
 		mSegmentScaleList[i] = 1.0f;
 	}
 

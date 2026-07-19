@@ -99,10 +99,11 @@ void GenObjectItem::doRead(RandomAccessStream& stream)
 	}
 
 	if (mVersion != 'v0.0') {
-		for (int i = 0; i < 32; i++) {
+		int i;
+		for (i = 0; i < 32; i++) {
 			mStageName[i] = stream.readByte();
 		}
-		for (int i = 0; i < 32; i++) {
+		for (i = 0; i < 32; i++) {
 			mPrintName[i] = stream.readByte();
 		}
 	} else {
@@ -123,10 +124,11 @@ void GenObjectItem::doWrite(RandomAccessStream& stream)
 
 	stream.writeString(ObjType::getName(mObjType));
 	if (getLatestVersion() != 'v0.0') {
-		for (int i = 0; i < 32; i++) {
+		int i;
+		for (i = 0; i < 32; i++) {
 			stream.writeByte(mStageName[i]);
 		}
-		for (int i = 0; i < 32; i++) {
+		for (i = 0; i < 32; i++) {
 			stream.writeByte(mPrintName[i]);
 		}
 	}
