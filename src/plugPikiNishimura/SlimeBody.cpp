@@ -169,7 +169,7 @@ void SlimeBody::sortPosition(Vector3f* outVertex, Vector3f* outNormal, immut Vec
 	Vector3f creatureNormals[4];
 	Vector3f minNormal(outVertex->x, outVertex->y, outVertex->z);
 	Vector3f targetNormal(vertical->x, vertical->y, vertical->z);
-	f32 totalScore; // fun fact: declaring this here is load bearing for stack placement.
+	f32 totalScore = 0.0f;
 	f32 creatureScores[4];
 	int i;
 
@@ -180,9 +180,13 @@ void SlimeBody::sortPosition(Vector3f* outVertex, Vector3f* outNormal, immut Vec
 
 		totalScore = calcVertexScore(outVertex, creatureNormals, creatureScores);
 		if (totalScore > C_SLIME_PROP(mSlime).mVertexPositionScore()) {
-			targetNormal.set(*outVertex);
+			targetNormal.x = outVertex->x;
+			targetNormal.y = outVertex->y;
+			targetNormal.z = outVertex->z;
 		} else {
-			minNormal.set(*outVertex);
+			minNormal.x = outVertex->x;
+			minNormal.y = outVertex->y;
+			minNormal.z = outVertex->z;
 		}
 	}
 

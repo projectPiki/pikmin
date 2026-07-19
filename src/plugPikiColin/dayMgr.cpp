@@ -903,13 +903,14 @@ void DayMgr::menuDecreaseTime(Menu& parent)
  */
 void DayMgr::refresh(Graphics& gfx, f32 time, int numLights)
 {
+	TimeSetting* timeSettingStart;
+	TimeSetting* timeSettingEnd;
+
 	// cap number of lights at active light count (default: 2)
-	int lights = (numLights < mActiveLightCount) ? numLights : mActiveLightCount;
+	int lightCount = (numLights < mActiveLightCount) ? numLights : mActiveLightCount;
 
 	// get blending parameters based on time of day
 	f32 blendRatio = 0.0f;
-	TimeSetting* timeSettingStart;
-	TimeSetting* timeSettingEnd;
 	if (time == MOVIE_TIME) {
 		// special movie lighting
 		timeSettingStart = timeSettingEnd = &mTimeSettings[TIME_Movie];
@@ -954,11 +955,10 @@ void DayMgr::refresh(Graphics& gfx, f32 time, int numLights)
 		    = (time - gameflow.mParameters->mEveningMid()) / (gameflow.mParameters->mEveningEnd() - gameflow.mParameters->mEveningMid());
 	}
 
-	// lerp lighting and colour settings the appropriate amount between our parameters for all used lights
-	// ambient colour
+	// lerp lighting and colour settings the appropriate amount between our parameters for all used lights ambient colour
 	timeSettingStart->mAmbientColour.lerpTo(timeSettingEnd->mAmbientColour, blendRatio, mCurrentTimeSetting.mAmbientColour);
 
-	for (int i1 = 0; i1 < lights; i1++) {
+	for (int i1 = 0; i1 < lightCount; i1++) {
 		// light colour
 		timeSettingStart->mLights[i1].mDiffuseColour.lerpTo(timeSettingEnd->mLights[i1].mDiffuseColour, blendRatio,
 		                                                    mCurrentTimeSetting.mLights[i1].mDiffuseColour);
@@ -1010,8 +1010,8 @@ void DayMgr::refresh(Graphics& gfx, f32 time, int numLights)
 		mMapMgr->_08.set(mCurrentSunPosition.x / 20.0f, mCurrentSunPosition.y / 5.0f, mCurrentSunPosition.z / 20.0f);
 	}
 
-	//
-	for (int i2 = 0; i2 < lights; i2++) {
+	// Move and rotate lights based on the sun or the captain
+	for (int i2 = 0; i2 < lightCount; i2++) {
 		if (GET_LIGHT_TYPE(mCurrentTimeSetting.mLights[i2].mLightFlag) == LIGHT_Parallel) {
 			// calculate appropriate parallel light directions/positions for sun and underlighting
 			if (!(i2 & 1)) {
@@ -1038,7 +1038,7 @@ void DayMgr::refresh(Graphics& gfx, f32 time, int numLights)
 	}
 
 	// push lights to graphics unit
-	for (int i3 = 0; i3 < lights; i3++) {
+	for (int i3 = 0; i3 < lightCount; i3++) {
 		mCurrentTimeSetting.mLights[i3].update();
 		gfx.addLight(&mCurrentTimeSetting.mLights[i3]);
 	}

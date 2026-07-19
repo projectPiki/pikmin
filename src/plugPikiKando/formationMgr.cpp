@@ -275,7 +275,7 @@ void FormationMgr::exit(Creature* target)
 
 /**
  * @todo: Documentation
- * @note UNUSED Size: 00008C
+ * @note UNUSED Size: 00008C (Matching by size)
  */
 void FormationMgr::clear()
 {
@@ -284,6 +284,8 @@ void FormationMgr::clear()
 	for (i = 0; i < mMax; i++) {
 		mFormPoints[i].reset();
 	}
+
+	mFormPointCount = 0;
 
 	for (i = 0; i < mCount; i++) {
 		if (mFormMembers[i]) {

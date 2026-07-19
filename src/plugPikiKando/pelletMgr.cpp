@@ -1890,6 +1890,7 @@ void PelletMgr::genAge(AgeServer& server)
 	server.NewButton("new animinfo", new Delegate1<PelletMgr, AgeServer&>(this, addAnimInfo), 221);
 	server.NewButton("Load", new Delegate1<PelletMgr, AgeServer&>(this, animInfoRead), 221);
 	server.NewButton("Save", new Delegate1<PelletMgr, AgeServer&>(this, animInfoWrite), 221);
+	server.EndGroup();
 	FOREACH_NODE_REUSE(CoreNode, mAnimInfoList.mChild, cnode)
 	{
 		PelletAnimInfo* info = static_cast<PelletAnimInfo*>(cnode);
@@ -1904,6 +1905,7 @@ void PelletMgr::genAge(AgeServer& server)
 	server.NewButton("new config", new Delegate1<PelletMgr, AgeServer&>(this, addConfig), 221);
 	server.NewButton("Load", new Delegate1<PelletMgr, AgeServer&>(this, configRead), 221);
 	server.NewButton("Save", new Delegate1<PelletMgr, AgeServer&>(this, configWrite), 221);
+	server.EndGroup();
 	FOREACH_NODE_REUSE(CoreNode, mConfigList.mChild, cnode)
 	{
 		PelletConfig* config = static_cast<PelletConfig*>(cnode);

@@ -57,7 +57,7 @@ DemoFlags::DemoFlags()
 	mStoredFlags      = new u8[mFlagCount];
 	mFlagDataList     = new DemoFlag*[mFlagDataNum];
 
-	int i = 0;
+	int i;
 	for (i = 0; i < mFlagCount; i++) {
 		mStoredFlags[i] = 0;
 	}

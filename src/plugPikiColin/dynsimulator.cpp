@@ -275,48 +275,50 @@ void RigidBody::applyGroundForces(int configIdx, CollGroup* collGroup)
 
 		// check each supplied triangle for a collision
 		for (int triIdx = 0; !skipCollCalc && triIdx < collGroup->mTriCount; triIdx++) {
-			CollTriInfo* triangle  = collGroup->mTriangleList[triIdx];
-			Plane* triPlane        = &triangle->mTriangle;
-			immut Vector3f& comPos = config.mPosition;
+			CollTriInfo* triangle = collGroup->mTriangleList[triIdx];
+			Plane* triPlane       = &triangle->mTriangle;
+			if (true) {
+				immut Vector3f& comPos = config.mPosition;
 
-			f32 boundingPtDist = triPlane->dist(boundingPtPos);
-			f32 comDist        = triPlane->dist(comPos);
+				f32 boundingPtDist = triPlane->dist(boundingPtPos);
+				f32 comDist        = triPlane->dist(comPos);
 
-			// if bounding point is "below" the ground and center of mass if "above" the ground, we're colliding
-			if (boundingPtDist < 0.0f && comDist > 0.0f) {
-				// calc intersection point between object line (CoM to bounding point) and triangle plane
-				f32 intersectRatio = boundingPtDist / (boundingPtDist - comDist);
-				Vector3f intersectPt((comPos.x - boundingPtPos.x) * intersectRatio + boundingPtPos.x,
-				                     (comPos.y - boundingPtPos.y) * intersectRatio + boundingPtPos.y,
-				                     (comPos.z - boundingPtPos.z) * intersectRatio + boundingPtPos.z);
+				// if bounding point is "below" the ground and center of mass if "above" the ground, we're colliding
+				if (boundingPtDist < 0.0f && comDist > 0.0f) {
+					// calc intersection point between object line (CoM to bounding point) and triangle plane
+					f32 intersectRatio = boundingPtDist / (boundingPtDist - comDist);
+					Vector3f intersectPt((comPos.x - boundingPtPos.x) * intersectRatio + boundingPtPos.x,
+					                     (comPos.y - boundingPtPos.y) * intersectRatio + boundingPtPos.y,
+					                     (comPos.z - boundingPtPos.z) * intersectRatio + boundingPtPos.z);
 
-				STACK_PAD_VAR(1);
-
-				// check if intersection point is inside the triangle
-				bool isInsideTri = true;
-				for (int edgeIdx = 0; isInsideTri && edgeIdx < 3; edgeIdx++) {
-					if (triangle->mEdgePlanes[edgeIdx].dist(intersectPt) < 0.0f) {
-						isInsideTri = false;
+					// check if intersection point is inside the triangle
+					bool isInsideTri = true;
+					for (int edgeIdx = 0; isInsideTri && edgeIdx < 3; edgeIdx++) {
+						f32 dist = triangle->mEdgePlanes[edgeIdx].dist(intersectPt);
+						if (dist < 0.0f) {
+							isInsideTri = false;
+						}
 					}
-				}
 
-				if (isInsideTri) {
-					// compute (linear + angular) velocity at bounding point
-					Vector3f offsetToBoundingPt = boundingPtPos - config.mPosition;
-					Vector3f boundingPtVel(config.mAngularVel);
-					boundingPtVel.CP(offsetToBoundingPt);
-					boundingPtVel.x += config.mLinearVel.x;
-					boundingPtVel.y += config.mLinearVel.y;
-					boundingPtVel.z += config.mLinearVel.z;
+					if (isInsideTri) {
+						// compute (linear + angular) velocity at bounding point
+						Vector3f offsetToBoundingPt = boundingPtPos - config.mPosition;
+						Vector3f boundingPtVel(config.mAngularVel);
+						boundingPtVel.CP(offsetToBoundingPt);
+						boundingPtVel.x += config.mLinearVel.x;
+						boundingPtVel.y += config.mLinearVel.y;
+						boundingPtVel.z += config.mLinearVel.z;
 
-					// if we're moving toward the triangle, apply collision response and friction
-					if (boundingPtVel.DP(triPlane->mNormal) < 0.0f) {
-						mBoundingPointHitCounts[vert2]++;
-						Collision coll;
-						coll.mContactPoint = intersectPt;
-						coll.mNormal       = triPlane->mNormal;
-						resolveCollisions(configIdx, coll);
-						applyBodyFriction(configIdx, triPlane->mNormal, intersectPt, boundingPtVel);
+						// if we're moving toward the triangle, apply collision response and friction
+						if (boundingPtVel.DP(triPlane->mNormal) < 0.0f) {
+							mBoundingPointHitCounts[vert2]++;
+							Collision coll;
+							coll.mContactPoint = intersectPt;
+							coll.mNormal       = triPlane->mNormal;
+							resolveCollisions(configIdx, coll);
+							applyBodyFriction(configIdx, triPlane->mNormal, intersectPt, boundingPtVel);
+							continue;
+						}
 					}
 				}
 			}
@@ -432,10 +434,10 @@ void DynSimulator::resetWorld()
  */
 void DynSimulator::doSimulation(f32 totalTime, f32 maxTimeStep, Shape* mapModel)
 {
-	f32 remainingTime, dt;
-	for (remainingTime = totalTime; remainingTime > 0.0f; remainingTime -= dt) {
-		dt = remainingTime;
-		if (remainingTime > maxTimeStep) {
+	f32 remainingTime = totalTime;
+	while (remainingTime > 0.0f) {
+		f32 dt = remainingTime;
+		if (dt > maxTimeStep) {
 			dt = maxTimeStep;
 		}
 		if (!isPaused()) {
@@ -468,6 +470,7 @@ void DynSimulator::doSimulation(f32 totalTime, f32 maxTimeStep, Shape* mapModel)
 			// advance config state to use for next calculations
 			mCurrentConfigIdx ^= 1;
 		}
+		remainingTime -= dt;
 	}
 
 	FOREACH_NODE(RigidBody, mChild, body)

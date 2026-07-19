@@ -71,11 +71,13 @@ void ogGraphMgr::SetDummyLineData()
 	// That is UB because `ogawa_per_line` only contains 13 elements, but luckily the
 	// erroneous final point is never rendered by `zen::setGraphGX` anyway.
 	for (i = 0; i TERNARY_BUGFIX(<, <=) 13; i++) {
-		int yPercentFromTop = 100 - ogawa_per_line[i];
-		s16 pointY          = y + yPercentFromTop * paneFullHeight / 100;
-		pointArray[0]       = x + i * paneSegmentWidth;
-		pointArray[1]       = pointY;
-		pointArray += 2;
+		s16 percent   = ogawa_per_line[i];
+		s16 pointX    = i * paneSegmentWidth + x;
+		s16 pointY    = (100 - percent) * paneFullHeight / 100 + y;
+		*pointArray = pointX;
+		pointArray++;
+		*pointArray = pointY;
+		pointArray++;
 	}
 }
 

@@ -214,8 +214,10 @@ void GamePrefs::getChallengeScores(GameChalQuickInfo& info)
  */
 void GamePrefs::checkIsHiscore(GameChalQuickInfo& info)
 {
-	info.mRank         = -1;
-	gsys->mTogglePrint = TRUE; // "you're gonna wanna hear about this"
+	info.mRank = -1;
+
+	bool oldTogglePrint = gsys->mTogglePrint;
+	gsys->mTogglePrint  = TRUE; // "you're gonna wanna hear about this"
 
 #if defined(VERSION_PIKIDEMO)
 	// This somehow doesn't generate a function call.  How.
@@ -251,7 +253,7 @@ void GamePrefs::checkIsHiscore(GameChalQuickInfo& info)
 		mHiscores.mChalModeRecords[info.mStageID].mScores[info.mRank] = info.mScore;
 	}
 
-	gsys->mTogglePrint = FALSE; // "back to scheduled programming"
+	gsys->mTogglePrint = TERNARY_BUGFIX(oldTogglePrint, FALSE); // "back to scheduled programming"
 
 	// update the leaderboard stored in the quick info
 	getChallengeScores(info);

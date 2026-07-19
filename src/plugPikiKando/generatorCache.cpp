@@ -64,7 +64,7 @@ void GeneratorCache::initGame()
 	int idx = 0;
 	FOREACH_NODE_REUSE(Cache, mDeadCacheList.mChild, cache)
 	{
-		cache->mStageID           = idx;
+		cache->mStageID           = idx++;
 		cache->mCacheHeapOffset   = 0;
 		cache->mTotalCacheSize    = 0;
 		cache->mGenCacheSize      = 0;
@@ -73,7 +73,6 @@ void GeneratorCache::initGame()
 		cache->mGenCount          = 0;
 		cache->mCreatureCount     = 0;
 		cache->mUfoPartsCount     = 0;
-		idx++;
 	}
 
 	PRINT("*********** INIT GAME CALLED !!!!!!!!!!!!!!!!!\n");
