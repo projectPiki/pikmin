@@ -188,12 +188,12 @@ void PlayerState::initGame()
 		mStagePartsCollected[i] = 0;
 	}
 
-	StageInfo* node = (StageInfo*)flowCont.mStageList.mChild;
+	StageInfo* node = static_cast<StageInfo*>(flowCont.mStageList.mChild);
 	for (i = 0; i < STAGE_COUNT; i++) {
 		if (node->mGenFileList.getChildCount() > 0) {
 			mCourseFlags[i]->reset();
 		}
-		node = (StageInfo*)node->mNext;
+		node = static_cast<StageInfo*>(node->mNext);
 	}
 
 	mShipUpgradeLevel = 0;
@@ -242,7 +242,7 @@ PlayerState::PlayerState()
 	}
 	mCourseFlags = new BitFlags*[STAGE_COUNT];
 
-	StageInfo* node = (StageInfo*)flowCont.mStageList.mChild;
+	StageInfo* node = static_cast<StageInfo*>(flowCont.mStageList.mChild);
 	for (i = 0; i < STAGE_COUNT; i++) {
 		int size = node->mGenFileList.getChildCount();
 		if (size > 0) {
@@ -250,7 +250,7 @@ PlayerState::PlayerState()
 			mCourseFlags[i]->create(size, nullptr);
 			mCourseFlags[i]->reset();
 		}
-		node = (StageInfo*)node->mNext;
+		node = static_cast<StageInfo*>(node->mNext);
 	}
 
 	mShipUpgradeLevel = 0;
@@ -353,10 +353,10 @@ int PlayerState::getTotalPikiCount(int color)
 	int total = pikiInfMgr.getColorTotal(color);
 
 	int test        = 0;
-	StageInfo* node = (StageInfo*)flowCont.mStageList.mChild;
+	StageInfo* node = static_cast<StageInfo*>(flowCont.mStageList.mChild);
 	for (int i = 0; i < STAGE_COUNT; i++) {
 		test += node->mStageInf.mBPikiInfMgr.getPikiCount(color);
-		node = (StageInfo*)node->mNext;
+		node = static_cast<StageInfo*>(node->mNext);
 	}
 
 	return total;
@@ -382,10 +382,10 @@ void PlayerState::saveCard(RandomAccessStream& data)
 
 	id.setID('meck');
 	id.write(data);
-	StageInfo* node = (StageInfo*)flowCont.mStageList.mChild;
+	StageInfo* node = static_cast<StageInfo*>(flowCont.mStageList.mChild);
 	for (i = 0; i < STAGE_COUNT; i++) {
 		node->mStageInf.saveCard(data);
-		node = (StageInfo*)node->mNext;
+		node = static_cast<StageInfo*>(node->mNext);
 	}
 
 	id.setID('ufop');
@@ -421,23 +421,23 @@ void PlayerState::saveCard(RandomAccessStream& data)
 	id.setID('limg');
 	id.write(data);
 
-	node = (StageInfo*)flowCont.mStageList.mChild;
+	node = static_cast<StageInfo*>(flowCont.mStageList.mChild);
 	for (i = 0; i < STAGE_COUNT; i++) {
 		if (node->mGenFileList.getChildCount() > 0) {
 			mCourseFlags[i]->saveCard(data);
 		}
-		node = (StageInfo*)node->mNext;
+		node = static_cast<StageInfo*>(node->mNext);
 	}
 
 	id.setID('visf');
 	id.write(data);
 
-	node = (StageInfo*)flowCont.mStageList.mChild;
+	node = static_cast<StageInfo*>(flowCont.mStageList.mChild);
 	PRINT("SAVE VISIT FLAGS FROM %d\n", data.getPosition());
 	for (i = 0; i < STAGE_COUNT; i++) {
 		PRINT("\t++++ STAGE %d as %s\n", i, node->mHasInitialised ? "VISITED" : "NEVER VISITED");
 		data.writeByte(node->mHasInitialised);
-		node = (StageInfo*)node->mNext;
+		node = static_cast<StageInfo*>(node->mNext);
 	}
 
 	for (i = 0; i < MAX_DAYS; i++) {
@@ -466,10 +466,10 @@ void PlayerState::loadCard(RandomAccessStream& data)
 	PRINT("**************** LOAD CARD (%s) ****************\n", "Piki Head");
 	id.read(data);
 	PRINT("___ CARD * <%s> BLOCK ___\n", id.mStringID);
-	StageInfo* node = (StageInfo*)flowCont.mStageList.mChild;
+	StageInfo* node = static_cast<StageInfo*>(flowCont.mStageList.mChild);
 	for (i = 0; i < STAGE_COUNT; i++) {
 		node->mStageInf.loadCard(data);
-		node = (StageInfo*)node->mNext;
+		node = static_cast<StageInfo*>(node->mNext);
 	}
 
 	PRINT("**************** LOAD CARD (%s) ****************\n", "Player State");
@@ -509,22 +509,22 @@ void PlayerState::loadCard(RandomAccessStream& data)
 	id.read(data);
 	PRINT("___ CARD * <%s> BLOCK ___\n", id.mStringID);
 
-	node = (StageInfo*)flowCont.mStageList.mChild;
+	node = static_cast<StageInfo*>(flowCont.mStageList.mChild);
 	for (i = 0; i < STAGE_COUNT; i++) {
 		if (node->mGenFileList.getChildCount() > 0) {
 			mCourseFlags[i]->loadCard(data);
 		}
-		node = (StageInfo*)node->mNext;
+		node = static_cast<StageInfo*>(node->mNext);
 	}
 
 	PRINT("LOAD VISIT FLAGS FROM %d\n", data.getPosition());
 	id.read(data);
 	PRINT("___ CARD * <%s> BLOCK ___\n", id.mStringID);
-	node = (StageInfo*)flowCont.mStageList.mChild;
+	node = static_cast<StageInfo*>(flowCont.mStageList.mChild);
 	for (i = 0; i < STAGE_COUNT; i++) {
 		node->mHasInitialised = data.readByte();
 		PRINT("\t+++++++++ STAGE %d : %s\n", i, node->mHasInitialised ? "VISITED BEFORE" : "NEVER BEFORE");
-		node = (StageInfo*)node->mNext;
+		node = static_cast<StageInfo*>(node->mNext);
 	}
 	PRINT("*******************************************************************************\n");
 	generatorCache->dump();

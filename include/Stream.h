@@ -56,28 +56,27 @@ public:
 
 	void skipPadding(u32 paddingAmount)
 	{
-		int length       = getPosition();
-		int resultAmount = (~(paddingAmount - 1) & (length + paddingAmount - 1)) - length;
-
-		for (int i = 0; i < resultAmount; i++) {
+		int position = getPosition();
+		int count    = ALIGN_NEXT(position, paddingAmount) - position;
+		for (int i = 0; i < count; i++) {
 			readByte();
 		}
 	}
 
 	void padFile(u32 paddingAmount)
 	{
-		int length       = getPosition();
-		int resultAmount = (~(paddingAmount - 1) & (length + paddingAmount - 1)) - length;
-		for (int i = 0; i < resultAmount; i++) {
+		int position = getPosition();
+		int count    = ALIGN_NEXT(position, paddingAmount) - position;
+		for (int i = 0; i < count; i++) {
 			writeByte(0);
 		}
 	}
 
 	void padFileTo(u32 paddingAmount, u32 offset)
 	{
-		int pos          = getPosition();
-		int resultAmount = paddingAmount - pos - offset;
-		for (int i = 0; i < resultAmount; i++) {
+		int position = getPosition();
+		int count    = paddingAmount - position - offset;
+		for (int i = 0; i < count; i++) {
 			writeByte(0);
 		}
 	}

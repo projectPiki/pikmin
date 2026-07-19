@@ -47,22 +47,19 @@ void AnimInfo::initAnimData(AnimData* data)
  */
 void AnimInfo::checkAnimData()
 {
-	AnimKey* animKey = mAnimKeys.mNext;
-	for (animKey; animKey != &mAnimKeys; animKey = animKey->mNext) {
+	for (AnimKey* animKey = mAnimKeys.mNext; animKey != &mAnimKeys; animKey = animKey->mNext) {
 		if (animKey->mFrameIndex > mData->mTotalFrameCount - 1) {
 			animKey->mFrameIndex = mData->mTotalFrameCount - 1;
 		}
 	}
 
-	AnimKey* infoKey = mInfoKeys.mNext;
-	for (infoKey; infoKey != &mInfoKeys; infoKey = infoKey->mNext) {
+	for (AnimKey* infoKey = mInfoKeys.mNext; infoKey != &mInfoKeys; infoKey = infoKey->mNext) {
 		if (infoKey->mFrameIndex >= countAKeys()) {
 			infoKey->mFrameIndex = countAKeys() - 1;
 		}
 	}
 
-	AnimKey* eventKey = mEventKeys.mNext;
-	for (eventKey; eventKey != &mEventKeys; eventKey = eventKey->mNext) {
+	for (AnimKey* eventKey = mEventKeys.mNext; eventKey != &mEventKeys; eventKey = eventKey->mNext) {
 		if (eventKey->mFrameIndex > mData->mTotalFrameCount - 1) {
 			eventKey->mFrameIndex = mData->mTotalFrameCount - 1;
 		}
@@ -132,9 +129,8 @@ void AnimInfo::setAnimFlags(u32 flags)
  */
 int AnimInfo::countAKeys()
 {
-	int count    = 0;
-	AnimKey* key = mAnimKeys.mNext;
-	for (key; key != &mAnimKeys; key = key->mNext) {
+	int count = 0;
+	for (AnimKey* key = mAnimKeys.mNext; key != &mAnimKeys; key = key->mNext) {
 		count++;
 	}
 
@@ -148,9 +144,8 @@ int AnimInfo::countAKeys()
  */
 int AnimInfo::countIKeys()
 {
-	int count    = 0;
-	AnimKey* key = mInfoKeys.mNext;
-	for (key; key != &mInfoKeys; key = key->mNext) {
+	int count = 0;
+	for (AnimKey* key = mInfoKeys.mNext; key != &mInfoKeys; key = key->mNext) {
 		count++;
 	}
 
@@ -164,9 +159,8 @@ int AnimInfo::countIKeys()
  */
 int AnimInfo::countEKeys()
 {
-	int count    = 0;
-	AnimKey* key = mEventKeys.mNext;
-	for (key; key != &mEventKeys; key = key->mNext) {
+	int count = 0;
+	for (AnimKey* key = mEventKeys.mNext; key != &mEventKeys; key = key->mNext) {
 		count++;
 	}
 
@@ -181,9 +175,8 @@ int AnimInfo::countEKeys()
  */
 AnimKey* AnimInfo::getInfoKey(int idx)
 {
-	int i        = 0;
-	AnimKey* key = mInfoKeys.mNext;
-	for (key; key != &mInfoKeys; key = key->mNext, i++) {
+	int i = 0;
+	for (AnimKey* key = mInfoKeys.mNext; key != &mInfoKeys; key = key->mNext, i++) {
 		if (i == idx) {
 			return key;
 		}
@@ -200,9 +193,8 @@ AnimKey* AnimInfo::getInfoKey(int idx)
  */
 AnimKey* AnimInfo::getEventKey(int idx)
 {
-	int i        = 0;
-	AnimKey* key = mEventKeys.mNext;
-	for (key; key != &mEventKeys; key = key->mNext, i++) {
+	int i = 0;
+	for (AnimKey* key = mEventKeys.mNext; key != &mEventKeys; key = key->mNext, i++) {
 		if (i == idx) {
 			return key;
 		}
@@ -219,9 +211,8 @@ AnimKey* AnimInfo::getEventKey(int idx)
  */
 int AnimInfo::getKeyValue(int idx)
 {
-	int i        = 0;
-	AnimKey* key = mAnimKeys.mNext;
-	for (key; key != &mAnimKeys; key = key->mNext, i++) {
+	int i = 0;
+	for (AnimKey* key = mAnimKeys.mNext; key != &mAnimKeys; key = key->mNext, i++) {
 		if (i == idx) {
 			return key->mFrameIndex;
 		}

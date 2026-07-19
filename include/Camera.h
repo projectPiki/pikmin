@@ -206,7 +206,7 @@ public:
 	Vector3f mStaticLookAt;      // _18
 	f32 mTargetFov;              // _24
 	f32 mBlendRatio;             // _28
-	u8 mUseStaticCamera;         // _2C
+	bool mUseStaticCamera;       // _2C
 	AnimParam mCamPosAnims[3];   // _30
 	AnimParam mCamLatAnims[3];   // _54
 	AnimParam mCamTwistAnims[1]; // _78

@@ -634,8 +634,8 @@ void MoviePlayer::update()
 	}
 
 	MovieInfo* next;
-	for (MovieInfo* info = (MovieInfo*)mPlayInfoList.mChild; info; info = next) {
-		next = (MovieInfo*)info->mNext;
+	for (MovieInfo* info = static_cast<MovieInfo*>(mPlayInfoList.mChild); info; info = next) {
+		next = static_cast<MovieInfo*>(info->mNext);
 		gameflow.mDemoFlags
 		    |= info->mPlayer->mFlags
 		     & (CinePlayerFlags::HideNavi | CinePlayerFlags::HideBluePiki | CinePlayerFlags::HideRedPiki | CinePlayerFlags::HideYellowPiki
@@ -726,10 +726,10 @@ void MoviePlayer::skipScene(int sceneSkipFlag)
 		}
 	}
 
-	MovieInfo* info = (MovieInfo*)mPlayInfoList.mChild;
+	MovieInfo* info = static_cast<MovieInfo*>(mPlayInfoList.mChild);
 	while (info) {
 		// apply skip flag to all active cutscenes
-		MovieInfo* next = (MovieInfo*)info->mNext;
+		MovieInfo* next = static_cast<MovieInfo*>(info->mNext);
 		info->mPlayer->skipScene(sceneSkipFlag);
 		info = next;
 	}
@@ -750,8 +750,8 @@ bool MoviePlayer::setCamera(Graphics& gfx)
 {
 	bool res = false;
 	MovieInfo* next;
-	for (MovieInfo* info = (MovieInfo*)mPlayInfoList.mChild; info; info = next) {
-		next = (MovieInfo*)info->mNext;
+	for (MovieInfo* info = static_cast<MovieInfo*>(mPlayInfoList.mChild); info; info = next) {
+		next = static_cast<MovieInfo*>(info->mNext);
 		res |= info->setCamera(gfx);
 	}
 	if (res) {
@@ -767,10 +767,10 @@ bool MoviePlayer::setCamera(Graphics& gfx)
  */
 void MoviePlayer::addLights(Graphics& gfx)
 {
-	MovieInfo* info = (MovieInfo*)mPlayInfoList.mChild;
+	MovieInfo* info = static_cast<MovieInfo*>(mPlayInfoList.mChild);
 	while (info) {
 		CinematicPlayer* cin = info->mPlayer;
-		MovieInfo* next      = (MovieInfo*)info->mNext;
+		MovieInfo* next      = static_cast<MovieInfo*>(info->mNext);
 		if (cin->mFlags & CinePlayerFlags::NonGameMovie) {
 			cin->addLights(gfx);
 		}
@@ -784,9 +784,9 @@ void MoviePlayer::addLights(Graphics& gfx)
 void MoviePlayer::refresh(Graphics& gfx)
 {
 	gfx.setLighting(true, nullptr);
-	MovieInfo* info = (MovieInfo*)mPlayInfoList.mChild;
+	MovieInfo* info = static_cast<MovieInfo*>(mPlayInfoList.mChild);
 	while (info) {
-		MovieInfo* next = (MovieInfo*)info->mNext;
+		MovieInfo* next = static_cast<MovieInfo*>(info->mNext);
 		info->mPlayer->refresh(gfx);
 		info = next;
 	}

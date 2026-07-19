@@ -66,7 +66,7 @@ public:
 			for (list = ptclMgr.getTopList(); list != end; list = next) {
 				next = list->mNext;
 
-				zen::particleMdl* ptcl = (zen::particleMdl*)list;
+				zen::particleMdl* ptcl = static_cast<zen::particleMdl*>(list);
 				f32 t;
 				zen::getDistPointAndLine(ptcl->mLocalPosition + ptcl->mGlobalPosition, ptclGen->getEmitPos(), param->mPosition, t);
 				if (t > 1.0f) { // if we've gone past the "line"

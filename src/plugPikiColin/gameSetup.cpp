@@ -29,50 +29,48 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
 DEFINE_PRINT("GameSetup");
 
 /**
- * @brief First set of model-animation file pairs to index in system lists - Pikmin and pellets.
+ * @brief Models and animations for number pellets, Pikmin, and Olimar that are always loaded.
  *
- * Pikmin models all share the same (blue Pikmin) animation set once loaded.
- * No idea what the pellets are used for.
+ * All Pikmin and Olimar share the same animation bundle (bluModel.anm).
  */
-static immut char* shapeList[10][2] = {
-	{ "objects/pellets/white1.mod", "objects/pellets/white1.anm" }, ///< white1 pellet?
-	{ "objects/pellets/white2.mod", "objects/pellets/white2.anm" }, ///< white2 pellet?
-	{ "objects/pellets/white3.mod", "objects/pellets/white3.anm" }, ///< white3 pellet?
-	{ "objects/pellets/white4.mod", "objects/pellets/white4.anm" }, ///< white4 pellet?
-	{ "pikis/bluModel.mod", "pikis/bluModel.anm" },                 ///< blue Pikmin model and animation.
-	{ "pikis/redModel.mod", nullptr },                              ///< red Pikmin model (reuses blue animation).
-	{ "pikis/yelModel.mod", nullptr },                              ///< yellow Pikmin model (reuses blue animation).
-	{ "pikis/kinModel.mod", nullptr },                              ///< puffmin model (reuses blue animation).
-	{ "pikis/nv3Model.mod", nullptr },                              ///< olimar model.
+static immut char* shapeList[][2] = {
+	{ "objects/pellets/white1.mod", "objects/pellets/white1.anm" }, ///< 1 pellet
+	{ "objects/pellets/white2.mod", "objects/pellets/white2.anm" }, ///< 5 pellet
+	{ "objects/pellets/white3.mod", "objects/pellets/white3.anm" }, ///< 10 pellet
+	{ "objects/pellets/white4.mod", "objects/pellets/white4.anm" }, ///< 20 pellet
+	{ "pikis/bluModel.mod", "pikis/bluModel.anm" },                 ///< Blue Pikmin
+	{ "pikis/redModel.mod", nullptr },                              ///< Red Pikmin
+	{ "pikis/yelModel.mod", nullptr },                              ///< Yellow Pikmin
+	{ "pikis/kinModel.mod", nullptr },                              ///< Puffmin
+	{ "pikis/nv3Model.mod", nullptr },                              ///< Olimar
 	{ nullptr, nullptr },
 };
 
 /**
- * @brief Second set of model-animation file pairs to index in system lists - ship parts with animations.
+ * @brief Ship parts that attach to the S.S. Dolphin and thus should always be loaded.
  *
- * These models and animations are used for attaching ship parts to the Dolphin when collected.
- * "Soto" models are "outside" - they affect the actual hull of the ship.
- * "Fuzoku" models are "close friends" - they make external changes to the ship.
- * "Naka" parts don't affect the ship's appearance/have attaching animations, so don't get loaded here.
+ * Soto - そと (Exterior) - Major cosmetic changes to S.S. Dolphin
+ * Fuzoku - ふぞく (Attached) - Minor cosmetic changes to the S.S. Dolphin
+ * Naka - なか  (Inside) - No cosmetic changes to the S.S. Dolphin (so don't get loaded here)
  */
-static immut char* shapeList2[18][2] = {
+static immut char* shapeList2[][2] = {
 	{ "objects/ufo/ufo0705.mod", "objects/ufo/ufo0705.anm" },             ///< base Dolphin model and animation set.
-	{ "objects/ufoparts/soto1.mod", "objects/ufoparts/soto1.anm" },       ///< Bowsprit ("outside 1").
-	{ "objects/ufoparts/soto2.mod", "objects/ufoparts/soto2.anm" },       ///< Gluon Drive ("outside 2").
-	{ "objects/ufoparts/soto3.mod", "objects/ufoparts/soto3.anm" },       ///< Anti-Dioxin Filter ("outside 3").
-	{ "objects/ufoparts/soto4.mod", "objects/ufoparts/soto4.anm" },       ///< Eternal Fuel Dynamo ("outside 4").
-	{ "objects/ufoparts/soto5.mod", "objects/ufoparts/soto5.anm" },       ///< Main Engine ("outside 5").
-	{ "objects/ufoparts/fuzoku1.mod", "objects/ufoparts/fuzoku1.anm" },   ///< Whimsical Radar ("close friend 1").
-	{ "objects/ufoparts/fuzoku2.mod", "objects/ufoparts/fuzoku2.anm" },   ///< Interstellar Radio ("close friend 2").
-	{ "objects/ufoparts/fuzoku3.mod", "objects/ufoparts/fuzoku3.anm" },   ///< Guard Satellite ("close friend 3").
-	{ "objects/ufoparts/fuzoku4.mod", "objects/ufoparts/fuzoku4.anm" },   ///< Chronos Reactor ("close friend 4").
-	{ "objects/ufoparts/fuzoku5.mod", "objects/ufoparts/fuzoku5.anm" },   ///< Radiation Canopy ("close friend 5").
-	{ "objects/ufoparts/fuzoku6.mod", "objects/ufoparts/fuzoku6.anm" },   ///< Geiger Counter ("close friend 6").
-	{ "objects/ufoparts/fuzoku7.mod", "objects/ufoparts/fuzoku7.anm" },   ///< Sagittarius ("close friend 7").
-	{ "objects/ufoparts/fuzoku8.mod", "objects/ufoparts/fuzoku8.anm" },   ///< Libra ("close friend 8").
-	{ "objects/ufoparts/fuzoku9.mod", "objects/ufoparts/fuzoku9.anm" },   ///< Omega Stabilizer ("close friend 9").
-	{ "objects/ufoparts/fuzoku10.mod", "objects/ufoparts/fuzoku10.anm" }, ///< Ionium Jet #1 ("close friend 10").
-	{ "objects/ufoparts/fuzoku11.mod", "objects/ufoparts/fuzoku11.anm" }, ///< Ionium Jet #2 ("close friend 11").
+	{ "objects/ufoparts/soto1.mod", "objects/ufoparts/soto1.anm" },       ///< Bowsprit
+	{ "objects/ufoparts/soto2.mod", "objects/ufoparts/soto2.anm" },       ///< Gluon Drive
+	{ "objects/ufoparts/soto3.mod", "objects/ufoparts/soto3.anm" },       ///< Anti-Dioxin Filter
+	{ "objects/ufoparts/soto4.mod", "objects/ufoparts/soto4.anm" },       ///< Eternal Fuel Dynamo
+	{ "objects/ufoparts/soto5.mod", "objects/ufoparts/soto5.anm" },       ///< Main Engine
+	{ "objects/ufoparts/fuzoku1.mod", "objects/ufoparts/fuzoku1.anm" },   ///< Whimsical Radar
+	{ "objects/ufoparts/fuzoku2.mod", "objects/ufoparts/fuzoku2.anm" },   ///< Interstellar Radio
+	{ "objects/ufoparts/fuzoku3.mod", "objects/ufoparts/fuzoku3.anm" },   ///< Guard Satellite
+	{ "objects/ufoparts/fuzoku4.mod", "objects/ufoparts/fuzoku4.anm" },   ///< Chronos Reactor
+	{ "objects/ufoparts/fuzoku5.mod", "objects/ufoparts/fuzoku5.anm" },   ///< Radiation Canopy
+	{ "objects/ufoparts/fuzoku6.mod", "objects/ufoparts/fuzoku6.anm" },   ///< Geiger Counter
+	{ "objects/ufoparts/fuzoku7.mod", "objects/ufoparts/fuzoku7.anm" },   ///< Sagittarius
+	{ "objects/ufoparts/fuzoku8.mod", "objects/ufoparts/fuzoku8.anm" },   ///< Libra
+	{ "objects/ufoparts/fuzoku9.mod", "objects/ufoparts/fuzoku9.anm" },   ///< Omega Stabilizer
+	{ "objects/ufoparts/fuzoku10.mod", "objects/ufoparts/fuzoku10.anm" }, ///< Ionium Jet #1
+	{ "objects/ufoparts/fuzoku11.mod", "objects/ufoparts/fuzoku11.anm" }, ///< Ionium Jet #2
 	{ nullptr, nullptr },
 };
 
@@ -106,8 +104,6 @@ static immut char* arambundleList[][2] = {
 
 /**
  * @brief Loads arc/dir file pairs and model/animation pairs to populate the system file lists.
- *
- * @warning NON-MATCHING! Functionally equivalent.
  */
 void GameSetupSection::preCacheShapes()
 {
@@ -230,6 +226,8 @@ GameSetupSection::GameSetupSection()
  */
 void GameSetupSection::update()
 {
+	PRINT("reset!\n");
+
 #if defined(VERSION_PIKIDEMO)
 	// the only thing the demo will load into is the Forest of Hope challenge mode
 
@@ -240,11 +238,10 @@ void GameSetupSection::update()
 	pikiInfMgr.initGame();
 
 	// reset all our story mode stages to be re-initialised
-	StageInfo* stage = (StageInfo*)flowCont.mStageList.mChild;
-	while (stage) {
+	StageInfo* stage;
+	for (stage = static_cast<StageInfo*>(flowCont.mStageList.mChild); stage; stage = static_cast<StageInfo*>(stage->mNext)) {
 		stage->mHasInitialised = FALSE;
 		stage->mStageInf.initGame();
-		stage = (StageInfo*)stage->mNext;
 	}
 
 	gameflow.mGamePrefs.mMemCardSaveIndex = 0;
@@ -253,8 +250,7 @@ void GameSetupSection::update()
 	// put us in challenge mode
 	playerState->setChallengeMode();
 
-	stage = (StageInfo*)flowCont.mStageList.mChild;
-	while (stage) {
+	for (stage = static_cast<StageInfo*>(flowCont.mStageList.mChild); stage; stage = static_cast<StageInfo*>(stage->mNext)) {
 		if ((int)stage->mChalStageID == CHALSTAGE_Forest) {
 			// if we have it, load into Forest of Hope challenge mode!
 			flowCont.mCurrentStage = stage;
@@ -264,10 +260,8 @@ void GameSetupSection::update()
 			gameflow.mWorldClock.setTime(gameflow.mParameters->mStartHour());
 			break;
 		}
-		stage = (StageInfo*)stage->mNext;
 	}
 #else
-	PRINT("reset!\n");
 	// queue up card select as the next section (either for story mode or challenge mode, doesn't matter)
 	gameflow.mNextOnePlayerSectionID = ONEPLAYER_CardSelect;
 #endif

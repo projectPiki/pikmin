@@ -99,8 +99,8 @@ void zen::particleGenerator::init(u8* data, Texture* tex1, Texture* tex2, immut 
 
 			static_cast<bool>(data);
 
-			u32 rotType                            = (mAnimData.mFlags.bits.mRotationType) & 0x7;
-			mOrientedDrawConfig.mOrientationSource = (mAnimData.mFlags.bits.mOrientationSource);
+			u32 rotType                            = mAnimData.mFlags.bits.mRotationType & 0x7;
+			mOrientedDrawConfig.mOrientationSource = mAnimData.mFlags.bits.mOrientationSource;
 			mOrientedDrawConfig.mIsDoubleSided     = mAnimData.mFlags.bits.mIsDoubleSided;
 			mOrientedDrawConfig.mFlipNormal        = 0;
 			mAnimData.mFlags.all &= 0x1;
