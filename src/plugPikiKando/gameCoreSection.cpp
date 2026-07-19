@@ -560,13 +560,15 @@ void GameCoreSection::cleanupDayEnd()
 		int gens      = 0;
 		int creatures = 0;
 		int ufoParts  = 0;
-		for (Generator* gen = (Generator*)generatorList->mGenListHead->mChild; gen; gen = (Generator*)gen->mNext) {
+		FOREACH_NODE(Generator, generatorList->mGenListHead->mChild, gen)
+		{
 			if (gen->mCarryOverFlags & GENCARRY_SaveGenerator) {
 				generatorCache->saveGenerator(gen);
 				gens++;
 			}
 		}
-		for (Generator* gen = (Generator*)generatorList->mGenListHead->mChild; gen; gen = (Generator*)gen->mNext) {
+		FOREACH_NODE(Generator, generatorList->mGenListHead->mChild, gen)
+		{
 			if ((gen->mCarryOverFlags & GENCARRY_SaveGenerator) && (gen->mCarryOverFlags & GENCARRY_SaveCreature)) {
 				generatorCache->saveGeneratorCreature(gen);
 				creatures++;
@@ -1105,7 +1107,8 @@ void GameCoreSection::initStage()
 		plantGeneratorMgr->init();
 	}
 
-	for (GeneratorMgr* gen = (GeneratorMgr*)limitGeneratorMgr->mChild; gen; gen = (GeneratorMgr*)gen->mNext) {
+	FOREACH_NODE(GeneratorMgr, limitGeneratorMgr->mChild, gen)
+	{
 		gen->init();
 	}
 	memStat->end("bobby");

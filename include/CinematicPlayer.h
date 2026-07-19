@@ -391,7 +391,8 @@ public:
 	/// Retrieves actor information from overall actor list based on .mod file path.
 	CineShapeObject* findActor(immut char* modFilePath)
 	{
-		for (CineShapeObject* actor = (CineShapeObject*)mActorList.mChild; actor; actor = (CineShapeObject*)actor->mNext) {
+		FOREACH_NODE(CineShapeObject, mActorList.mChild, actor)
+		{
 			if (!strcmp(actor->mName, modFilePath)) {
 				return actor;
 			}
@@ -403,7 +404,8 @@ public:
 	SceneData* findScene(int sceneID)
 	{
 		int i = 0;
-		for (SceneData* scene = (SceneData*)mDataList.mChild; scene; scene = (SceneData*)scene->mNext) {
+		FOREACH_NODE(SceneData, mDataList.mChild, scene)
+		{
 			if (i == sceneID) {
 				return scene;
 			}
@@ -415,7 +417,8 @@ public:
 	void calcMaxFrames()
 	{
 		mTotalDuration = 0;
-		for (SceneCut* shape = (SceneCut*)mSceneList.mChild; shape; shape = (SceneCut*)shape->mNext) {
+		FOREACH_NODE(SceneCut, mSceneList.mChild, shape)
+		{
 			mTotalDuration += abs(shape->mEndFrame - shape->mStartFrame);
 		}
 

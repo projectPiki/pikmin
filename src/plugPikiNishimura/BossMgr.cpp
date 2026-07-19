@@ -40,13 +40,12 @@ Creature* BossMgr::getCreature(int bossID)
 	int i, count = 0;
 
 	for (i = BOSS_IDSTART; i < BOSS_IDCOUNT; i++) {
-		BossNode* node = static_cast<BossNode*>(mActiveNodes[i].mChild);
-		while (node) {
+		FOREACH_NODE(BossNode, mActiveNodes[i].mChild, node)
+		{
 			if (count == bossID) {
 				return node->mBoss;
 			}
 
-			node = static_cast<BossNode*>(node->mNext);
 			count++;
 		}
 	}

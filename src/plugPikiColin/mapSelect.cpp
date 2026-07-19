@@ -117,7 +117,8 @@ public:
 		mMapListMenu->addKeyEvent(Menu::KeyEventType::OnCancel, KBBTN_B, new Delegate1<Menu, Menu&>(mMapListMenu, &Menu::menuCloseMenu));
 
 		// load in all stages, both challenge mode and story mode
-		for (StageInfo* inf = (StageInfo*)flowCont.mStageList.mChild; inf; inf = (StageInfo*)inf->mNext) {
+		FOREACH_NODE(StageInfo, flowCont.mStageList.mChild, inf)
+		{
 			if (gameflow.mIsChallengeMode) {
 				PRINT("checking map in challenge mode!\n");
 				bool valid = gameflow.mGamePrefs.isStageOpen(inf->mChalStageID);
@@ -266,7 +267,8 @@ public:
 
 					} else {
 						// we made a positive selection
-						for (StageInfo* stage = (StageInfo*)flowCont.mStageList.mChild; stage; stage = (StageInfo*)stage->mNext) {
+						FOREACH_NODE(StageInfo, flowCont.mStageList.mChild, stage)
+						{
 							// if positive selection matches a course ID, prepare to enter that course
 							if (stage->mChalStageID == chalStatus) {
 								enterCourse(stage);
@@ -290,7 +292,8 @@ public:
 						gsys->setFade(0.0f);
 					} else {
 						// player made a positive selection
-						for (StageInfo* stage = (StageInfo*)flowCont.mStageList.mChild; stage; stage = (StageInfo*)stage->mNext) {
+						FOREACH_NODE(StageInfo, flowCont.mStageList.mChild, stage)
+						{
 							if (stage->mStageID == returnStatus) {
 								// prepare to enter selected map
 								enterCourse(stage);
