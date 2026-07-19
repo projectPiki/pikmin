@@ -137,42 +137,44 @@ Vector3f getThrowVelocity(immut Vector3f& startPos, f32 horizSpeed, immut Vector
  */
 f32 getCameraSafeAngle(immut Vector3f& cameraPos, f32 checkDistance, f32 heightWeighting)
 {
-	f32 angleInc = QUARTER_PI;
-	int scores[8]; // visibility scores
+	immut f32 angleInc = TAU / 8; // const meme
+	int visibilityScores[8];
 	int scoreIdx, pointCount;
-	f32 numPointsToCheck = 20.0f;
+	immut int numPointsToCheck = 20; // const meme
+	const f32 distanceToCheck  = checkDistance;
+
 	for (scoreIdx = 0; scoreIdx < 8; scoreIdx++) {
-		scores[scoreIdx] = 0;
+		visibilityScores[scoreIdx] = 0;
 	}
 
 	for (scoreIdx = 0; scoreIdx < 8; scoreIdx++) {
-		f32 currentAngle = angleInc * f32(scoreIdx);
-		Vector3f dir(sinf(currentAngle), 0.0f, cosf(currentAngle));
-		f32 distanceInc = checkDistance / numPointsToCheck;
+		f32 theta = angleInc * scoreIdx;
+		Vector3f dir(sinf(theta), 0.0f, cosf(theta));
+		f32 distanceInc = distanceToCheck / numPointsToCheck;
 
-		// check 20 points along direction vector
-		for (pointCount = 0; pointCount < 20; pointCount++) {
-			f32 heightThreshold = heightWeighting * f32(pointCount) * distanceInc / checkDistance;
+		// check `numPointsToCheck` points along direction vector
+		for (pointCount = 0; pointCount < numPointsToCheck; pointCount++) {
+			f32 heightThreshold = heightWeighting * pointCount * distanceInc / distanceToCheck;
 			Vector3f checkPos;
-			checkPos        = cameraPos + dir * (distanceInc * f32(pointCount));
+			checkPos        = cameraPos + dir * (distanceInc * pointCount);
 			f32 checkHeight = mapMgr->getMinY(checkPos.x, checkPos.z, true);
 			if (checkHeight >= heightThreshold) {
-				scores[scoreIdx] += int(checkHeight - heightThreshold);
+				visibilityScores[scoreIdx] += int(checkHeight - heightThreshold);
 			}
 		}
-		PRINT("score[%d] = %d\n", scoreIdx, scores[scoreIdx]);
+		PRINT("score[%d] = %d\n", scoreIdx, visibilityScores[scoreIdx]);
 	}
 
 	// find angle with lowest score (best visibility):
-	int minScore     = 128000;
-	int bestAngleIdx = -1;
+	int minScore = 128000;
+	int minIndex = -1;
 	for (scoreIdx = 0; scoreIdx < 8; scoreIdx++) {
-		if (scores[scoreIdx] < minScore) {
-			bestAngleIdx = scoreIdx;
-			minScore     = scores[scoreIdx];
+		if (visibilityScores[scoreIdx] < minScore) {
+			minIndex = scoreIdx;
+			minScore = visibilityScores[scoreIdx];
 		}
 	}
 
-	PRINT("minIndex = %d ang = %.1f\n", bestAngleIdx, f32(bestAngleIdx) * angleInc / PI * 180.0f);
-	return f32(bestAngleIdx) * angleInc;
+	PRINT("minIndex = %d ang = %.1f\n", minIndex, minIndex * angleInc / PI * 180.0f);
+	return minIndex * angleInc;
 }

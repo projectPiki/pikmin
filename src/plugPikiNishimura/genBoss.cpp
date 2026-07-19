@@ -262,16 +262,17 @@ void GenObjectBoss::doGenAge(AgeServer& server)
 
 	server.StartOptionBox("ペレットの数", &mItemCount, 252);
 	for (i = 0; i < 16; i++) {
-		char id[4];
-		if (i / 10 < 1) {
-			id[0] = i % 10 + '0';
-			id[1] = 0;
+		char str[4];
+		int tens = i / 10;
+		if (tens > 0) {
+			str[0] = tens + '0';
+			str[1] = i % 10 + '0';
+			str[2] = '\0';
 		} else {
-			id[0] = i / 10 + '0';
-			id[1] = i % 10 + '0';
-			id[2] = 0;
+			str[0] = i % 10 + '0';
+			str[1] = '\0';
 		}
-		server.NewOption(id, i);
+		server.NewOption(str, i);
 	}
 	server.EndOptionBox();
 
@@ -279,7 +280,7 @@ void GenObjectBoss::doGenAge(AgeServer& server)
 	server.NewOption("none", -1);
 	for (i = 0; i < pelletMgr->getNumConfigs(); i++) {
 		PelletConfig* config = pelletMgr->getConfigFromIdx(i);
-		server.NewOption(config->mPelletName().mString, config->mPelletId.mId);
+		server.NewOption(config->mPelletName().mString, i);
 	}
 	server.EndOptionBox();
 }

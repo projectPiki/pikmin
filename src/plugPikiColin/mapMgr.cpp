@@ -76,33 +76,33 @@ void DynCollShape::createDupCollData()
 	}
 
 	// almost every model should have at least 1 "room" (group of collision)
-	if (mCollisionModel->mBaseRoomCount <= 0) {
-		return;
-	}
+	if (mCollisionModel->mBaseRoomCount > 0) {
 
-	mCollGroupCount = mCollisionModel->mBaseRoomCount;
-	mCollGroupList  = new CollGroup*[mCollGroupCount];
+		mCollGroupCount = mCollisionModel->mBaseRoomCount;
+		mCollGroupList  = new CollGroup*[mCollGroupCount];
 
-	// the only common objects that have more than 1 group are bridges (short have 12, long have 30 - 2 groups per stage)
-	for (int i = 0; i < mCollisionModel->mBaseRoomCount; i++) {
-		int triCount = 0;
-		for (int triIdx1 = 0; triIdx1 < mCollisionModel->mTriCount; triIdx1++) {
-			if (i == mCollTriList[triIdx1].mCollRoomIndex) {
-				triCount++;
+		// the only common objects that have more than 1 group are bridges (short have 12, long have 30 - 2 groups per stage)
+		for (int room = 0; room < mCollisionModel->mBaseRoomCount; room++) {
+
+			int triCount = 0;
+			for (int triIdx1 = 0; triIdx1 < mCollisionModel->mTriCount; triIdx1++) {
+				if (mCollTriList[triIdx1].mCollRoomIndex == room) {
+					triCount++;
+				}
 			}
-		}
 
-		mCollGroupList[i]                = new CollGroup;
-		mCollGroupList[i]->mJointIndex   = mCollisionModel->mRoomInfoList[i].mJointIndex;
-		mCollGroupList[i]->mTriCount     = triCount;
-		mCollGroupList[i]->mTriangleList = new CollTriInfo*[mCollGroupList[i]->mTriCount];
+			mCollGroupList[room]                = new CollGroup;
+			mCollGroupList[room]->mJointIndex   = mCollisionModel->mRoomInfoList[room].mJointIndex;
+			mCollGroupList[room]->mTriCount     = triCount;
+			mCollGroupList[room]->mTriangleList = new CollTriInfo*[mCollGroupList[room]->mTriCount];
 
-		// populate triangle list
-		int triIdx = 0;
-		for (int triIdx2 = 0; triIdx2 < mCollisionModel->mTriCount; triIdx2++) {
-			if (mCollTriList[triIdx2].mCollRoomIndex == i) {
-				mCollGroupList[i]->mTriangleList[triIdx] = &mCollTriList[triIdx2];
-				triIdx++;
+			// populate triangle list
+			triCount = 0;
+			for (int triIdx2 = 0; triIdx2 < mCollisionModel->mTriCount; triIdx2++) {
+				if (mCollTriList[triIdx2].mCollRoomIndex == room) {
+					mCollGroupList[room]->mTriangleList[triCount] = &mCollTriList[triIdx2];
+					triCount++;
+				}
 			}
 		}
 	}
@@ -1616,211 +1616,218 @@ void MapMgr::drawXLU(Graphics& gfx)
  */
 void MapMgr::postrefresh(Graphics& gfx)
 {
-	if (mMapModel) {
-		MATCHING_START_TIMER("mapPost", true);
-		mDayMgr->setFog(gfx, nullptr);
+	if (!mMapModel) {
+		return;
+	}
 
-		// draw shadows
-		drawShadowCasters(gfx);
+	MATCHING_START_TIMER("mapPost", true);
+	mDayMgr->setFog(gfx, nullptr);
 
-		// queue up carry info text
-		if (lgMgr) {
-			lgMgr->update();
-			lgMgr->refresh(gfx);
-		}
+	// draw shadows
+	drawShadowCasters(gfx);
 
-		// draw carry info text (and any other light flares)
-		gfx.useMatrix(Matrix4f::ident, 0);
-		gfx.flushCachedShapes();
-		gsys->flushLFlares(gfx);
+	// queue up carry info text
+	if (lgMgr) {
+		lgMgr->update();
+		lgMgr->refresh(gfx);
+	}
 
-		// draw effects
-		if (effectMgr) {
-			gsys->mTimer->start("eff draw", true);
-			effectMgr->drawshapes(gfx);
-			gsys->mTimer->stop("eff draw");
-		}
+	// draw carry info text (and any other light flares)
+	gfx.useMatrix(Matrix4f::ident, 0);
+	gfx.flushCachedShapes();
+	gsys->flushLFlares(gfx);
 
-		// make and draw infamous blur effect - on by default
-		if (gsys->mToggleBlur) {
-			// set up screen environment for drawing
-			Matrix4f orthoMtx;
-			gfx.setOrthogonal(orthoMtx.mMtx, AREA_FULL_SCREEN(gfx));
-			bool lighting = gfx.setLighting(false, nullptr);
-			gfx.setFog(false);
-			gfx.setColour(COLOUR_WHITE, true);
-			gfx.setAuxColour(COLOUR_WHITE);
+	// draw effects
+	if (effectMgr) {
+		gsys->mTimer->start("eff draw", true);
+		effectMgr->drawshapes(gfx);
+		gsys->mTimer->stop("eff draw");
+	}
 
-			// store this frame's non-blurred scene into mBlurSourceTexture's pixel data
-			mBlurSourceTexture->grabBuffer(mBlurSourceTexture->mWidth, mBlurSourceTexture->mHeight, false, true);
-			gfx.useTexture(mBlurResultTexture, GX_TEXMAP0); // previous frame's blur
-			gfx.useTexture(mBlurSourceTexture, GX_TEXMAP1); // current frame's data
+#if PIKI_USE_DGX
+	// make and draw infamous blur effect - on by default
+	if (gsys->mToggleBlur) {
+		// set up screen environment for drawing
+		Matrix4f orthoMtx;
+		gfx.setOrthogonal(orthoMtx.mMtx, AREA_FULL_SCREEN(gfx));
+		bool lighting = gfx.setLighting(false, nullptr);
+		gfx.setFog(false);
+		gfx.setColour(COLOUR_WHITE, true);
+		gfx.setAuxColour(COLOUR_WHITE);
 
-			// Fun fact: the map manager's blur setting does *nothing* to adjust the blur, despite there being a
-			// day manager debug menu option for it. This re-hooks it up as the actual blur alpha, to let you adjust it.
+		// store this frame's non-blurred scene into mBlurSourceTexture's pixel data
+		mBlurSourceTexture->grabBuffer(mBlurSourceTexture->mWidth, mBlurSourceTexture->mHeight, false, true);
+		gfx.useTexture(mBlurResultTexture, GX_TEXMAP0); // previous frame's blur
+		gfx.useTexture(mBlurSourceTexture, GX_TEXMAP1); // current frame's data
+
+		// Fun fact: the map manager's blur setting does *nothing* to adjust the blur, despite there being a
+		// day manager debug menu option for it. This re-hooks it up as the actual blur alpha, to let you adjust it.
 #if defined(BUGFIX)
-			gfx.mCamera->mBlurAlpha = mBlur;
+		gfx.mCamera->mBlurAlpha = mBlur;
 #endif
 
 #if defined(VERSION_PIKIDEMO)
 #else
-			if (gameflow.mMoviePlayer->mIsActive) {
-				gfx.mCamera->mBlurAlpha = 0.0f;
-			}
+		if (gameflow.mMoviePlayer->mIsActive) {
+			gfx.mCamera->mBlurAlpha = 0.0f;
+		}
 #endif
 
-			int blend = gfx.setCBlending(BLEND_MultiTexture);
-			gfx.setPrimEnv(stack_new(Colour)(255, 255, 255, gfx.mCamera->mBlurAlpha), nullptr);
+		int blend = gfx.setCBlending(BLEND_MultiTexture);
+		gfx.setPrimEnv(stack_new(Colour)(255, 255, 255, gfx.mCamera->mBlurAlpha), nullptr);
 
-			// render multi-texture blend (blur)
-			gfx.blatRectangle(AREA_FULL_SCREEN(gfx));
+		// render multi-texture blend (blur)
+		gfx.blatRectangle(AREA_FULL_SCREEN(gfx));
 
-			// clean up graphics settings + store current blur result for use next frame
-			gfx.setCBlending(blend);
-			mBlurResultTexture->grabBuffer(mBlurResultTexture->mWidth, mBlurResultTexture->mHeight, false, true);
-			gfx.resetCopyFilter();
-			gfx.setFog(true);
-			gfx.setLighting(lighting, nullptr);
-			gfx.setPerspective(gfx.mCamera->mPerspectiveMatrix.mMtx, gfx.mCamera->mFov, gfx.mCamera->mAspectRatio, gfx.mCamera->mNear,
-			                   gfx.mCamera->mFar, 1.0f);
-		}
-
-		// handle fading and desaturating
-		if (mCurrFadeLevel < mTargetFadeLevel) {
-			mCurrFadeLevel += 2.0f * gsys->getFrameTime();
-			if (mCurrFadeLevel > mTargetFadeLevel) {
-				mCurrFadeLevel = mTargetFadeLevel;
-			}
-		} else if (mCurrFadeLevel > mTargetFadeLevel) {
-			mCurrFadeLevel -= 2.0f * gsys->getFrameTime();
-			if (mCurrFadeLevel < mTargetFadeLevel) {
-				mCurrFadeLevel = mTargetFadeLevel;
-			}
-		}
-
-		if (mCurrDesaturationLevel < mTargetDesaturationLevel) {
-			mCurrDesaturationLevel += 2.0f * gsys->getFrameTime();
-			if (mCurrDesaturationLevel > mTargetDesaturationLevel) {
-				mCurrDesaturationLevel = mTargetDesaturationLevel;
-			}
-		} else if (mCurrDesaturationLevel > mTargetDesaturationLevel) {
-			mCurrDesaturationLevel -= 2.0f * gsys->getFrameTime();
-			if (mCurrDesaturationLevel < mTargetDesaturationLevel) {
-				mCurrDesaturationLevel = mTargetDesaturationLevel;
-			}
-		}
-
-		// draw any fading or desaturation that's happening
-		if (mCurrDesaturationLevel > 0.0f || mCurrFadeLevel > 0.0f) {
-			Matrix4f orthoMtx;
-			gfx.setOrthogonal(orthoMtx.mMtx, AREA_FULL_SCREEN(gfx));
-
-			// apply desaturated blur texture to desired level
-			GXSetTevSwapModeTable(GX_TEV_SWAP0, GX_CH_RED, GX_CH_RED, GX_CH_RED, GX_CH_ALPHA);
-			gfx.setColour(Colour(160, 160, 160, (int)(mCurrDesaturationLevel * 255.0f)), true);
-			gfx.useTexture(mBlurResultTexture, GX_TEXMAP0);
-			gfx.drawRectangle(AREA_FULL_SCREEN(gfx), RectArea(0, 0, mBlurResultTexture->mWidth, mBlurResultTexture->mHeight), nullptr);
-
-			GXSetTevSwapModeTable(GX_TEV_SWAP0, GX_CH_RED, GX_CH_GREEN, GX_CH_BLUE, GX_CH_ALPHA);
-			gfx.setColour(Colour(0, 0, 0, int(mCurrFadeLevel * 255.0f)), true);
-			gfx.useTexture(nullptr, GX_TEXMAP0);
-			gfx.fillRectangle(AREA_FULL_SCREEN(gfx));
-		}
-
-		// draw debug triangle outlines
-		if (mDebugCollCount) {
-			int blend     = gfx.setCBlending(BLEND_Alpha);
-			bool lighting = gfx.setLighting(false, nullptr);
-			gfx.setFog(false);
-			gfx.useTexture(nullptr, GX_TEXMAP0);
-			gfx.useMatrix(gfx.mCamera->mLookAtMtx, 0);
-
-			Colour colours[DCLR_COUNT];
-			colours[DCLR_Yellow].set(255, 255, 0, 255); // yellow
-			colours[DCLR_Red].set(255, 0, 0, 255);      // red
-			colours[DCLR_Blue].set(0, 0, 255, 255);     // blue
-
-			Vector3f vecs[3];
-
-			for (int collIdx1 = 0; collIdx1 < mDebugCollCount; collIdx1++) {
-				vecs[0] = mDebugCollisions[collIdx1].mTriangle->mTriangle.mNormal * 0.1f
-				        + mDebugCollisions[collIdx1].mParentCollGroup->mVertexList[mDebugCollisions[collIdx1].mTriangle->mVertexIndices[0]];
-				vecs[1] = mDebugCollisions[collIdx1].mTriangle->mTriangle.mNormal * 0.1f
-				        + mDebugCollisions[collIdx1].mParentCollGroup->mVertexList[mDebugCollisions[collIdx1].mTriangle->mVertexIndices[1]];
-				vecs[2] = mDebugCollisions[collIdx1].mTriangle->mTriangle.mNormal * 0.1f
-				        + mDebugCollisions[collIdx1].mParentCollGroup->mVertexList[mDebugCollisions[collIdx1].mTriangle->mVertexIndices[2]];
-
-				for (int vertIdx = 0; vertIdx < 3; vertIdx++) {
-					gfx.setColour(colours[mDebugCollisions[collIdx1].mColorCategory], true);
-					gfx.drawLine(vecs[vertIdx % 3], vecs[(vertIdx + 1) % 3]);
-					gfx.drawPoints(&vecs[vertIdx % 3], 1);
-				}
-			}
-
-			// draw triangle counts to screen
-			gfx.setColour(COLOUR_WHITE, true);
-			Vector3f triCountTextPos(mDebugFocusPosition.x, mDebugFocusPosition.y + 50.0f, mDebugFocusPosition.z);
-			triCountTextPos.multMatrix(gfx.mCamera->mLookAtMtx);
-
-			char debugText[PATH_MAX];
-			if (AIPerf::showColls) {
-				sprintf(debugText, "%d / %d", mActiveTriCount, mDebugCollCount);
-			} else {
-				sprintf(debugText, "%d", mDebugCollCount);
-			}
-
-			gfx.useMatrix(Matrix4f::ident, 0);
-			gfx.perspPrintf(gsys->mConsFont, triCountTextPos, -(gsys->mConsFont->stringWidth(debugText) / 2), 0, debugText);
-
-			// draw each triangle's distance from our local collision box
-			for (int collIdx2 = 0; collIdx2 < mDebugCollCount; collIdx2++) {
-				Vector3f vert1(
-				    mDebugCollisions[collIdx2].mParentCollGroup->mVertexList[mDebugCollisions[collIdx2].mTriangle->mVertexIndices[0]]);
-				Vector3f vert2(
-				    mDebugCollisions[collIdx2].mParentCollGroup->mVertexList[mDebugCollisions[collIdx2].mTriangle->mVertexIndices[1]]);
-				Vector3f vert3(
-				    mDebugCollisions[collIdx2].mParentCollGroup->mVertexList[mDebugCollisions[collIdx2].mTriangle->mVertexIndices[2]]);
-
-				// round vertices down for less jitter I suppose?
-				vert1.x = (int)vert1.x;
-				vert1.z = (int)vert1.z;
-
-				vert2.x = (int)vert2.x;
-				vert2.z = (int)vert2.z;
-
-				vert3.x = (int)vert3.x;
-				vert3.z = (int)vert3.z;
-
-				f32 distFromCaptainCollision = triRectDistance(&vert1, &vert2, &vert3, collExtents, false);
-
-				Vector3f triangleTextPos = vert1 + vert2 + vert3;
-				triangleTextPos.multiply(1.0f / 3.0f);
-				triangleTextPos = triangleTextPos + mDebugCollisions[collIdx2].mTriangle->mTriangle.mNormal * 10.0f;
-				triangleTextPos.multMatrix(gfx.mCamera->mLookAtMtx);
-				sprintf(debugText, "%.1f", distFromCaptainCollision);
-				gfx.perspPrintf(gsys->mConsFont, triangleTextPos, -(gsys->mConsFont->stringWidth(debugText) / 2), 0, debugText);
-			}
-
-			// draw our fun two boxes indicating collision and far culling
-			gfx.useMatrix(gfx.mCamera->mLookAtMtx, 0);
-
-			if (AIPerf::showColls) {
-				gfx.setColour(Colour(255, 128, 255, 255), true); // magenta, inner box
-				mActiveCollisionBounds.draw(gfx);
-			}
-
-			gfx.setColour(Colour(64, 255, 255, 255), true); // cyan, outer box
-			mOuterCollRenderBounds.draw(gfx);
-			gfx.setFog(true);
-			gfx.setLighting(lighting, nullptr);
-			gfx.setCBlending(blend);
-		}
-
-		mDebugCollCount = 0;
-		mActiveTriCount = 0;
-		MATCHING_STOP_TIMER("mapPost");
-		gfx.mHasTexGen = FALSE;
+		// clean up graphics settings + store current blur result for use next frame
+		gfx.setCBlending(blend);
+		mBlurResultTexture->grabBuffer(mBlurResultTexture->mWidth, mBlurResultTexture->mHeight, false, true);
+		gfx.resetCopyFilter();
+		gfx.setFog(true);
+		gfx.setLighting(lighting, nullptr);
+		gfx.setPerspective(gfx.mCamera->mPerspectiveMatrix.mMtx, gfx.mCamera->mFov, gfx.mCamera->mAspectRatio, gfx.mCamera->mNear,
+		                   gfx.mCamera->mFar, 1.0f);
 	}
+#endif
+
+	// handle fading and desaturating
+	if (mCurrFadeLevel < mTargetFadeLevel) {
+		mCurrFadeLevel += 2.0f * gsys->getFrameTime();
+		if (mCurrFadeLevel > mTargetFadeLevel) {
+			mCurrFadeLevel = mTargetFadeLevel;
+		}
+	} else if (mCurrFadeLevel > mTargetFadeLevel) {
+		mCurrFadeLevel -= 2.0f * gsys->getFrameTime();
+		if (mCurrFadeLevel < mTargetFadeLevel) {
+			mCurrFadeLevel = mTargetFadeLevel;
+		}
+	}
+
+	if (mCurrDesaturationLevel < mTargetDesaturationLevel) {
+		mCurrDesaturationLevel += 2.0f * gsys->getFrameTime();
+		if (mCurrDesaturationLevel > mTargetDesaturationLevel) {
+			mCurrDesaturationLevel = mTargetDesaturationLevel;
+		}
+	} else if (mCurrDesaturationLevel > mTargetDesaturationLevel) {
+		mCurrDesaturationLevel -= 2.0f * gsys->getFrameTime();
+		if (mCurrDesaturationLevel < mTargetDesaturationLevel) {
+			mCurrDesaturationLevel = mTargetDesaturationLevel;
+		}
+	}
+
+	// draw any fading or desaturation that's happening
+	if (mCurrDesaturationLevel > 0.0f || mCurrFadeLevel > 0.0f) {
+		Matrix4f orthoMtx;
+		gfx.setOrthogonal(orthoMtx.mMtx, AREA_FULL_SCREEN(gfx));
+
+		// apply desaturated blur texture to desired level
+#if PIKI_USE_DGX
+		GXSetTevSwapModeTable(GX_TEV_SWAP0, GX_CH_RED, GX_CH_RED, GX_CH_RED, GX_CH_ALPHA);
+#endif
+		gfx.setColour(Colour(160, 160, 160, (int)(mCurrDesaturationLevel * 255.0f)), true);
+		gfx.useTexture(mBlurResultTexture, GX_TEXMAP0);
+		gfx.drawRectangle(AREA_FULL_SCREEN(gfx), RectArea(0, 0, mBlurResultTexture->mWidth, mBlurResultTexture->mHeight), nullptr);
+
+#if PIKI_USE_DGX
+		GXSetTevSwapModeTable(GX_TEV_SWAP0, GX_CH_RED, GX_CH_GREEN, GX_CH_BLUE, GX_CH_ALPHA);
+#endif
+		gfx.setColour(Colour(0, 0, 0, int(mCurrFadeLevel * 255.0f)), true);
+		gfx.useTexture(nullptr, GX_TEXMAP0);
+		gfx.fillRectangle(AREA_FULL_SCREEN(gfx));
+	}
+
+	// draw debug triangle outlines
+	if (mDebugCollCount) {
+		int blend     = gfx.setCBlending(BLEND_Alpha);
+		bool lighting = gfx.setLighting(false, nullptr);
+		gfx.setFog(false);
+		gfx.useTexture(nullptr, GX_TEXMAP0);
+		gfx.useMatrix(gfx.mCamera->mLookAtMtx, 0);
+
+		Colour colours[DCLR_COUNT];
+		colours[DCLR_Yellow].set(255, 255, 0, 255); // yellow
+		colours[DCLR_Red].set(255, 0, 0, 255);      // red
+		colours[DCLR_Blue].set(0, 0, 255, 255);     // blue
+
+		Vector3f verts[3];
+		for (int collIdx1 = 0; collIdx1 < mDebugCollCount; collIdx1++) {
+			verts[0] = mDebugCollisions[collIdx1].mTriangle->mTriangle.mNormal * 0.1f
+			         + mDebugCollisions[collIdx1].mParentCollGroup->mVertexList[mDebugCollisions[collIdx1].mTriangle->mVertexIndices[0]];
+			verts[1] = mDebugCollisions[collIdx1].mTriangle->mTriangle.mNormal * 0.1f
+			         + mDebugCollisions[collIdx1].mParentCollGroup->mVertexList[mDebugCollisions[collIdx1].mTriangle->mVertexIndices[1]];
+			verts[2] = mDebugCollisions[collIdx1].mTriangle->mTriangle.mNormal * 0.1f
+			         + mDebugCollisions[collIdx1].mParentCollGroup->mVertexList[mDebugCollisions[collIdx1].mTriangle->mVertexIndices[2]];
+
+			for (int vertIdx = 0; vertIdx < 3; vertIdx++) {
+				gfx.setColour(colours[mDebugCollisions[collIdx1].mColorCategory], true);
+				gfx.drawLine(verts[vertIdx % 3], verts[(vertIdx + 1) % 3]);
+				gfx.drawPoints(&verts[vertIdx % 3], 1);
+			}
+		}
+
+		// draw triangle counts to screen
+		gfx.setColour(COLOUR_WHITE, true);
+		Vector3f triCountTextPos(mDebugFocusPosition.x, mDebugFocusPosition.y + 50.0f, mDebugFocusPosition.z);
+		triCountTextPos.multMatrix(gfx.mCamera->mLookAtMtx);
+
+		char debugText[PATH_MAX];
+		if (AIPerf::showColls) {
+			sprintf(debugText, "%d / %d", mActiveTriCount, mDebugCollCount);
+		} else {
+			sprintf(debugText, "%d", mDebugCollCount);
+		}
+
+		gfx.useMatrix(Matrix4f::ident, 0);
+		gfx.perspPrintf(gsys->mConsFont, triCountTextPos, -(gsys->mConsFont->stringWidth(debugText) / 2), 0, debugText);
+
+		// draw each triangle's distance from our local collision box
+		for (int collIdx2 = 0; collIdx2 < mDebugCollCount; collIdx2++) {
+			Vector3f vert1(
+			    mDebugCollisions[collIdx2].mParentCollGroup->mVertexList[mDebugCollisions[collIdx2].mTriangle->mVertexIndices[0]]);
+			Vector3f vert2(
+			    mDebugCollisions[collIdx2].mParentCollGroup->mVertexList[mDebugCollisions[collIdx2].mTriangle->mVertexIndices[1]]);
+			Vector3f vert3(
+			    mDebugCollisions[collIdx2].mParentCollGroup->mVertexList[mDebugCollisions[collIdx2].mTriangle->mVertexIndices[2]]);
+
+			// round vertices down for less jitter I suppose?
+			vert1.x = (int)vert1.x;
+			vert1.z = (int)vert1.z;
+
+			vert2.x = (int)vert2.x;
+			vert2.z = (int)vert2.z;
+
+			vert3.x = (int)vert3.x;
+			vert3.z = (int)vert3.z;
+
+			f32 distFromCaptainCollision = triRectDistance(&vert1, &vert2, &vert3, collExtents, false);
+
+			Vector3f triangleTextPos = vert1 + vert2 + vert3;
+			triangleTextPos.multiply(1.0f / 3.0f);
+			triangleTextPos = triangleTextPos + mDebugCollisions[collIdx2].mTriangle->mTriangle.mNormal * 10.0f;
+			triangleTextPos.multMatrix(gfx.mCamera->mLookAtMtx);
+			sprintf(debugText, "%.1f", distFromCaptainCollision);
+			gfx.perspPrintf(gsys->mConsFont, triangleTextPos, -(gsys->mConsFont->stringWidth(debugText) / 2), 0, debugText);
+		}
+
+		// draw our fun two boxes indicating collision and far culling
+		gfx.useMatrix(gfx.mCamera->mLookAtMtx, 0);
+
+		if (AIPerf::showColls) {
+			gfx.setColour(Colour(255, 128, 255, 255), true); // magenta, inner box
+			mActiveCollisionBounds.draw(gfx);
+		}
+
+		gfx.setColour(Colour(64, 255, 255, 255), true); // cyan, outer box
+		mOuterCollRenderBounds.draw(gfx);
+		gfx.setFog(true);
+		gfx.setLighting(lighting, nullptr);
+		gfx.setCBlending(blend);
+	}
+
+	mDebugCollCount = 0;
+	mActiveTriCount = 0;
+	MATCHING_STOP_TIMER("mapPost");
+	gfx.mHasTexGen = FALSE;
 }
 
 /**
@@ -2269,10 +2276,11 @@ void MapMgr::traceMove(Creature* creature, MoveTrace& trace, f32 timeStep)
 	// double our step count until we can safely stay within the trace radius on a given step
 	int safeSubStepCount = 1;
 	int doublingCount    = 0;
-	for (f32 travelDistance = trace.mVelocity.length() * timeStep; doublingCount < 100 && travelDistance >= trace.mRadius;
-	     travelDistance *= 0.5f) {
+	f32 travelDistance   = trace.mVelocity.length() * timeStep;
+	while (doublingCount < 100 && travelDistance >= trace.mRadius) {
 		doublingCount++;
 		safeSubStepCount *= 2;
+		travelDistance *= 0.5f;
 	}
 
 	// report if we're in insane "we're tracing this object for WAY too long given its speed" territory
@@ -2290,8 +2298,8 @@ void MapMgr::traceMove(Creature* creature, MoveTrace& trace, f32 timeStep)
 		// for each step, set up a box for checking collision
 		BoundBox collCheckBox;
 		collCheckBox.expandBound(trace.mPosition);
-		collCheckBox.mMin.sub(Vector3f(2.0f * trace.mRadius, 4.0f * trace.mRadius, 2.0f * trace.mRadius));
-		collCheckBox.mMax.add(Vector3f(2.0f * trace.mRadius, 4.0f * trace.mRadius, 2.0f * trace.mRadius));
+		collCheckBox.mMin.sub(Vector3f(trace.mRadius * 2, trace.mRadius * 4, trace.mRadius * 2));
+		collCheckBox.mMax.add(Vector3f(trace.mRadius * 2, trace.mRadius * 4, trace.mRadius * 2));
 
 		trace.mObject = creature;
 
@@ -2302,7 +2310,10 @@ void MapMgr::traceMove(Creature* creature, MoveTrace& trace, f32 timeStep)
 			// (in reality, only pikmin sprouts ignore this)
 			FOREACH_NODE(DynCollShape, mCollShapeList->mChild, coll)
 			{
-				if ((!coll->mCreature || coll->mCreature != creature) && collCheckBox.intersects(coll->mBoundingBox)) {
+				if (coll->mCreature && coll->mCreature == creature) {
+					continue;
+				}
+				if (collCheckBox.intersects(coll->mBoundingBox)) {
 					for (int j = 0; j < coll->mCollGroupCount; j++) {
 						if (coll->mJointVisibility[coll->mCollGroupList[j]->mJointIndex]) {
 							coll->mCollGroupList[j]->mModel         = coll->mCollisionModel;

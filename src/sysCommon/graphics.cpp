@@ -577,7 +577,8 @@ void Font::setTexture(Texture* tex, int numRows, int numCols)
 			for (int pixelX1 = 0; pixelX1 < mCharWidth; pixelX1++) {
 				int alphaCount = 0;
 				for (int pixelY1 = 0; pixelY1 < mCharHeight - 1; pixelY1++) {
-					if (!tex->getAlpha(pixelX1 + (row * mCharWidth), pixelY1 + (col * mCharHeight))) {
+					u8 alpha = tex->getAlpha(row * mCharWidth + pixelX1, col * mCharHeight + pixelY1);
+					if (alpha == 0) {
 						alphaCount++;
 					}
 				}
@@ -593,7 +594,8 @@ void Font::setTexture(Texture* tex, int numRows, int numCols)
 			for (int pixelX2 = mCharWidth - 1; pixelX2 >= 0; pixelX2--) {
 				int alphaCount = 0;
 				for (int pixelY2 = 0; pixelY2 < mCharHeight - 1; pixelY2++) {
-					if (!tex->getAlpha(pixelX2 + (row * mCharWidth), pixelY2 + (col * mCharHeight))) {
+					u8 alpha = tex->getAlpha(row * mCharWidth + pixelX2, col * mCharHeight + pixelY2);
+					if (alpha == 0) {
 						alphaCount++;
 					}
 				}
@@ -609,14 +611,12 @@ void Font::setTexture(Texture* tex, int numRows, int numCols)
 			int baseline    = -1;
 			int baselinePos = mCharWidth;
 			for (int pixelX3 = 0; pixelX3 < mCharWidth; pixelX3++) {
-				int x    = row * mCharWidth;
-				int y    = (mCharHeight + (col * mCharHeight));
-				u8 alpha = tex->getAlpha(pixelX3 + x, y - 1);
+				u8 alpha = tex->getAlpha(row * mCharWidth + pixelX3, col * mCharHeight + (mCharHeight - 1));
 				if (baseline < 0) {
-					if (!alpha) {
+					if (alpha == 0) {
 						baseline = pixelX3;
 					}
-				} else if (alpha) {
+				} else if (alpha != 0) {
 					baselinePos = pixelX3;
 					break;
 				}
@@ -626,7 +626,7 @@ void Font::setTexture(Texture* tex, int numRows, int numCols)
 			// so much indexing, this isn't even an inline function
 			mChars[charIndex].mCharSpacing         = baselinePos - baseline;
 			mChars[charIndex].mLeftOffset          = baseline - leftEdge;
-			mChars[charIndex].mTextureX            = leftEdge + row * mCharWidth;
+			mChars[charIndex].mTextureX            = row * mCharWidth + leftEdge;
 			mChars[charIndex].mWidth               = mCharWidth - leftEdge - rightEdge;
 			mChars[charIndex].mTextureY            = col * mCharHeight;
 			mChars[charIndex].mHeight              = mCharHeight - 1;

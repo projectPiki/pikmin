@@ -93,7 +93,8 @@ zen::ogScrTotalScoreMgr::ogScrTotalScoreMgr(zen::TotalScoreType* scores)
 
 	for (i = 0; i < 5; i++) {
 		sprintf(buf, "pd%02d", i + 1);
-		mPartDayRecordTexts[i] = static_cast<P2DTextBox*>(screen->search(P2DPaneLibrary::makeTag(buf), true));
+		int tag                = P2DPaneLibrary::makeTag(buf);
+		mPartDayRecordTexts[i] = static_cast<P2DTextBox*>(screen->search(tag, true));
 		char* str              = mPartsDaysRecordStrings[i];
 		strcpy(str, mPartDayRecordTexts[i]->getString());
 		cnvSpecialNumber(str);
@@ -102,7 +103,8 @@ zen::ogScrTotalScoreMgr::ogScrTotalScoreMgr(zen::TotalScoreType* scores)
 
 	for (i = 0; i < 5; i++) {
 		sprintf(buf, "lp%02d", i + 1);
-		mBornRecordTexts[i] = static_cast<P2DTextBox*>(screen->search(P2DPaneLibrary::makeTag(buf), true));
+		int tag             = P2DPaneLibrary::makeTag(buf);
+		mBornRecordTexts[i] = static_cast<P2DTextBox*>(screen->search(tag, true));
 		char* str           = mBornRecordStrings[i];
 		strcpy(str, mBornRecordTexts[i]->getString());
 		cnvSpecialNumber(str);
@@ -111,7 +113,8 @@ zen::ogScrTotalScoreMgr::ogScrTotalScoreMgr(zen::TotalScoreType* scores)
 
 	for (i = 0; i < 5; i++) {
 		sprintf(buf, "dp%02d", i + 1);
-		mDeadRecordTexts[i] = static_cast<P2DTextBox*>(screen->search(P2DPaneLibrary::makeTag(buf), true));
+		int tag             = P2DPaneLibrary::makeTag(buf);
+		mDeadRecordTexts[i] = static_cast<P2DTextBox*>(screen->search(tag, true));
 		char* str           = mDeadRecordStrings[i];
 		strcpy(str, mDeadRecordTexts[i]->getString());
 		cnvSpecialNumber(str);
@@ -141,8 +144,6 @@ zen::ogScrTotalScoreMgr::ogScrTotalScoreMgr(zen::TotalScoreType* scores)
 
 	mFrameTimer = 0.0f;
 	mState      = TOTALSCORE_Sleep;
-
-	STACK_PAD_TERNARY(mDeadRecordTexts, 3);
 }
 
 /**

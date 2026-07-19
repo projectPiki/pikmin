@@ -906,7 +906,7 @@ void HinderRock::startAI(int)
 	mPushMoveTimer     = 0.0f;
 	mWayPoint          = routeMgr->findNearestWayPointAll('test', mSRT.t);
 	mWayPoint->setFlag(false);
-	PRINT("********* ROCK WAYPOINT(%d) OFF\n", mWayPoint->mIsOpen);
+	PRINT("********* ROCK WAYPOINT(%d) OFF\n", mWayPoint->mIndex);
 	mIsSoundPlaying = false;
 	mSRT.t.y        = mapMgr->getMinY(mSRT.t.x, mSRT.t.z, false);
 }

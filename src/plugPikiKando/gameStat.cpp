@@ -74,8 +74,7 @@ void GameStat::update()
 		allPikis.set(mapPikis[color] + containerPikis[color], color);
 	}
 
-	int total = allPikis;
-	if (total > maxPikis) {
+	if (allPikis > maxPikis) {
 		maxPikis = allPikis;
 	}
 }

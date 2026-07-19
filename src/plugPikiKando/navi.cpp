@@ -1161,6 +1161,8 @@ void Navi::releasePikis()
 	Iterator iter(mPlateMgr);
 	Piki* pikiList[MAX_PIKI_ON_FIELD * 2]; // This has a capacity of 200 for some reason.
 	int pikiCount = 0;
+	int pikiIdx;
+
 	CI_LOOP(iter)
 	{
 		Piki* piki = static_cast<Piki*>(*iter);
@@ -1177,10 +1179,12 @@ void Navi::releasePikis()
 		// no pikis to dismiss
 		return;
 	}
+
 	Vector3f colorCoMs[PikiColorCount + 1]; // each color + bomb-carriers
 	int colorCounts[PikiColorCount + 1];    // each color + bomb-carriers
 	f32 colorSizes[PikiColorCount + 1];     // each color + bomb-carriers
-	int pikiIdx, colorIdx1;
+	int colorIdx1;
+
 	for (colorIdx1 = 0; colorIdx1 < PikiColorCount + 1; colorIdx1++) {
 		colorCoMs[colorIdx1].set(0.0f, 0.0f, 0.0f);
 		colorCounts[colorIdx1] = 0;
@@ -1189,7 +1193,7 @@ void Navi::releasePikis()
 	for (colorIdx1 = 0; colorIdx1 < PikiColorCount + 1; colorIdx1++) {
 		for (pikiIdx = 0; pikiIdx < pikiCount; pikiIdx++) {
 			if (colorIdx1 == Blue || colorIdx1 == Red) {
-				if (colorIdx1 == pikiList[pikiIdx]->mColor) {
+				if (pikiList[pikiIdx]->mColor == colorIdx1) {
 					colorCounts[colorIdx1]++;
 					colorCoMs[colorIdx1].add(pikiList[pikiIdx]->mSRT.t);
 				}
@@ -1214,13 +1218,16 @@ void Navi::releasePikis()
 		}
 	}
 
-	// They made a new loop variable for some reason.
+	const f32 maxSepDist = 18.0f;  // 100% CONFIRMED CONST MEME!
+	
+	 // They made a new loop variable for some reason.
 	for (int colorIdx2 = 0; colorIdx2 < PikiColorCount + 1; colorIdx2++) {
 		if (colorCounts[colorIdx2] > 0) {
 			Vector3f sepNaviGroup = colorCoMs[colorIdx2] - mSRT.t;
-			f32 dist              = sepNaviGroup.normalise() - colorSizes[colorIdx2] - 15.0f;
-			if (dist < 18.0f) {
-				dist = 18.0f - dist;
+			f32 normaliseResult   = sepNaviGroup.normalise();
+			f32 dist              = normaliseResult - colorSizes[colorIdx2] - 15.0f;
+			if (dist < maxSepDist) {
+				dist = maxSepDist - dist;
 				Vector3f offsetFromNavi;
 				offsetFromNavi = dist * sepNaviGroup;
 				colorCoMs[colorIdx2].add(offsetFromNavi);
@@ -1230,9 +1237,11 @@ void Navi::releasePikis()
 		for (int nextColor = colorIdx2 + 1; nextColor < PikiColorCount + 1; nextColor++) {
 			if (colorCounts[colorIdx2] > 0 && colorCounts[nextColor] > 0) {
 				Vector3f colorColorSep = colorCoMs[colorIdx2] - colorCoMs[nextColor];
-				f32 colorDist          = colorColorSep.normalise() - colorSizes[colorIdx2] - colorSizes[nextColor];
-				if (colorDist < 18.0f) {
-					colorDist = (18.0f - colorDist);
+				f32 normaliseResult    = colorColorSep.normalise();
+				f32 colorDist          = normaliseResult - colorSizes[colorIdx2] - colorSizes[nextColor];
+				if (colorDist < maxSepDist) {
+					colorDist = (maxSepDist - colorDist);
+					colorDist *= 1.0f;
 					Vector3f interColorOffset;
 					interColorOffset = colorDist * colorColorSep;
 					colorCoMs[colorIdx2].add(interColorOffset);
@@ -1255,8 +1264,6 @@ void Navi::releasePikis()
 			pikiList[pikiIdx]->mNavi = nullptr;
 		}
 	}
-
-	STACK_PAD_VAR(2);
 }
 
 /**
