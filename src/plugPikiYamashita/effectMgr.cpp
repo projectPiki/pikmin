@@ -781,7 +781,8 @@ void EffectMgr::draw(Graphics& gfx)
  */
 void EffectMgr::drawshapes(Graphics& gfx)
 {
-	for (EffShpInst* inst = (EffShpInst*)mActiveGeomList.mChild; inst; inst = (EffShpInst*)inst->mNext) {
+	FOREACH_NODE(EffShpInst, mActiveGeomList.mChild, inst)
+	{
 		inst->draw(gfx);
 	}
 }

@@ -138,7 +138,8 @@ void Mesh::read(RandomAccessStream& stream)
  */
 void Joint::recShowHierarchy()
 {
-	for (Joint* joint = this; joint != nullptr; joint = static_cast<Joint*>(joint->mNext)) {
+	FOREACH_NODE(Joint, this, joint)
+	{
 		PRINT("got joint %08x\n", joint);
 
 		if (joint->mChild) {
@@ -161,7 +162,8 @@ void Joint::overrideAnim(AnimContext* anim)
  */
 void Joint::recOverrideAnim(AnimContext* anim)
 {
-	for (Joint* joint = this; joint != nullptr; joint = static_cast<Joint*>(joint->mNext)) {
+	FOREACH_NODE(Joint, this, joint)
+	{
 		joint->overrideAnim(anim);
 
 		if (joint->mChild) {
@@ -212,7 +214,8 @@ void Joint::render(Graphics& gfx)
 	if (!mFlags)
 		return;
 
-	for (Joint::MatPoly* matPoly = (MatPoly*)mMatPoly.mChild; matPoly; matPoly = (MatPoly*)matPoly->mNext) {
+	FOREACH_NODE(Joint::MatPoly, mMatPoly.mChild, matPoly)
+	{
 		Mesh* mesh = matPoly->mMesh;
 		if ((gfx.m_dword8 & matPoly->mMaterial->mFlags) == 0) {
 			continue;
@@ -244,7 +247,8 @@ void Joint::render(Graphics& gfx)
 			for (int l = 0; l < mtxGroup->mDispListLength; ++l, dispList++) {
 				gfx.setCullFront(gfx.m_dword338 ^ dispList->mFlags & 3);
 
-				for (FaceNode* faceNode = (FaceNode*)dispList->mFaceNode.mChild; faceNode; faceNode = (FaceNode*)faceNode->mNext) {
+				FOREACH_NODE(FaceNode, dispList->mFaceNode.mChild, faceNode)
+				{
 					int* vertexIndex   = faceNode->mVtxIdx;
 					int* matrixIndex   = faceNode->mMtxIdx;
 					int* normalIndex   = faceNode->mNrmIdx;
@@ -1609,21 +1613,24 @@ void BaseShape::exportIni(RandomAccessStream& stream, bool doSkipLights)
 	PRINT("*---------------------------- exporting ini!!!!!!!!!!!\n");
 	if (mRouteGroup.Child()) {
 		stream.print("// Route info file for %s", Name());
-		for (RouteGroup* route = (RouteGroup*)mRouteGroup.Child(); route; route = (RouteGroup*)route->mNext) {
+		FOREACH_NODE(RouteGroup, mRouteGroup.Child(), route)
+		{
 			route->saveini("", stream);
 		}
 		stream.print("\n");
 	}
 	if (!doSkipLights && mLightGroup.Child()) {
 		stream.print("// LightGroups info file for %s", Name());
-		for (LightGroup* light = (LightGroup*)mLightGroup.Child(); light; light = (LightGroup*)light->mNext) {
+		FOREACH_NODE(LightGroup, mLightGroup.Child(), light)
+		{
 			light->saveini("", stream);
 		}
 		stream.print("\n");
 	}
 	if (mCollisionInfo.Child()) {
 		stream.print("// Collision info file for %s", Name());
-		for (ObjCollInfo* info = (ObjCollInfo*)mCollisionInfo.Child(); info; info = (ObjCollInfo*)info->mNext) {
+		FOREACH_NODE(ObjCollInfo, mCollisionInfo.Child(), info)
+		{
 			info->saveini("", stream);
 		}
 		stream.print("\n");
@@ -1848,7 +1855,8 @@ void BaseShape::countMaterials(Joint* joint, u32)
  */
 void BaseShape::recTraverseMaterials(Joint* joint, IDelegate2<Joint*, u32>* delegate)
 {
-	for (Joint* jnt = joint; jnt; jnt = (Joint*)jnt->mNext) {
+	FOREACH_NODE(Joint, joint, jnt)
+	{
 		delegate->invoke(jnt, 0);
 		if (!jnt->mChild) {
 			continue;
@@ -1935,7 +1943,8 @@ void BaseShape::drawlights(Graphics& gfx, Camera& cam)
 {
 	immut Matrix4f* activeMtx = gfx.mActiveMatrix;
 	if (mLightGroup.Child()) {
-		for (LightGroup* light = (LightGroup*)mLightGroup.Child(); light; light = (LightGroup*)light->mNext) {
+		FOREACH_NODE(LightGroup, mLightGroup.Child(), light)
+		{
 			light->refresh(gfx, activeMtx);
 		}
 	}
@@ -1947,7 +1956,8 @@ void BaseShape::drawlights(Graphics& gfx, Camera& cam)
  */
 void BaseShape::drawroutes(Graphics& gfx, Camera& cam)
 {
-	for (RouteGroup* route = (RouteGroup*)mRouteGroup.mChild; route; route = (RouteGroup*)route->mNext) {
+	FOREACH_NODE(RouteGroup, mRouteGroup.mChild, route)
+	{
 		gfx.useMatrix(cam.mLookAtMtx, 0);
 		route->refresh(gfx, route);
 	}
@@ -1962,7 +1972,8 @@ void BaseShape::drawculled(Graphics& gfx, Camera& cam, ShapeDynMaterials* dynMat
 	gfx.initMesh((Shape*)this);
 	int culledJointCount = 0;
 	if (dynMats) {
-		for (ShapeDynMaterials* iMat = dynMats; iMat; iMat = iMat->mNext) {
+		FOREACH_NODE(ShapeDynMaterials, dynMats, iMat)
+		{
 			iMat->updateContext();
 		}
 	}
@@ -2027,7 +2038,8 @@ void BaseShape::drawshape(Graphics& gfx, Camera& cam, ShapeDynMaterials* dynMats
 		if ((mShapeFlags & ShapeFlags::AlwaysRedraw)
 		    || (gfx.mMatRenderMask & (MATFLAG_Opaque | MATFLAG_AlphaTest | MATFLAG_InverseColorBlend))) {
 			if (dynMats) {
-				for (ShapeDynMaterials* iMat = dynMats; iMat; iMat = iMat->mNext) {
+				FOREACH_NODE(ShapeDynMaterials, dynMats, iMat)
+				{
 					iMat->updateContext();
 				}
 			}
@@ -2155,8 +2167,8 @@ void BaseShape::read(RandomAccessStream& stream)
 		case BaseShapeChunk::Header:
 		{
 			stream.skipPadding(0x20);
-			int unused   = stream.readInt();
-			mShapeFlags  = stream.readInt();
+			int unused  = stream.readInt();
+			mShapeFlags = stream.readInt();
 			stream.skipPadding(0x20);
 			break;
 		}
@@ -2569,7 +2581,8 @@ void BaseShape::read(RandomAccessStream& stream)
  */
 void BaseShape::initIni(bool usePlatforms)
 {
-	for (LightGroup* light = (LightGroup*)mLightGroup.Child(); light; light = (LightGroup*)light->mNext) {
+	FOREACH_NODE(LightGroup, mLightGroup.Child(), light)
+	{
 		if (!light->mTexSource) {
 			continue;
 		}
@@ -2611,7 +2624,8 @@ void BaseShape::initIni(bool usePlatforms)
 		}
 	}
 
-	for (ObjCollInfo* coll = (ObjCollInfo*)mCollisionInfo.Child(); coll; coll = (ObjCollInfo*)coll->mNext) {
+	FOREACH_NODE(ObjCollInfo, mCollisionInfo.Child(), coll)
+	{
 		if (coll->mCollType == OCT_Platform && usePlatforms) {
 			coll->mPlatShape = gsys->loadShape(coll->mPlatformName, true);
 			if (coll->mPlatShape) {
@@ -2622,7 +2636,8 @@ void BaseShape::initIni(bool usePlatforms)
 			}
 		}
 
-		for (ObjCollInfo* childColl = (ObjCollInfo*)coll->Child(); childColl; childColl = (ObjCollInfo*)childColl->mNext) {
+		FOREACH_NODE(ObjCollInfo, coll->Child(), childColl)
+		{
 			if (childColl->mCollType == OCT_Platform && usePlatforms) {
 				childColl->mPlatShape = gsys->loadShape(childColl->mPlatformName, true);
 				if (childColl->mPlatShape) {
@@ -2635,7 +2650,8 @@ void BaseShape::initIni(bool usePlatforms)
 		}
 	}
 
-	for (RouteGroup* route = (RouteGroup*)mRouteGroup.Child(); route; route = (RouteGroup*)route->mNext) {
+	FOREACH_NODE(RouteGroup, mRouteGroup.Child(), route)
+	{
 #ifdef WIN32
 		route->mDebugWaypointTexture            = gsys->loadTexture("rootRing.txe", true);
 		route->mDebugWaypointTexture->mTexFlags = Texture::TEX_CLAMP_S | Texture::TEX_CLAMP_T;

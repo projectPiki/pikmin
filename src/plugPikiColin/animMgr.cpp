@@ -401,9 +401,9 @@ AnimInfo* AnimMgr::addAnimation(immut char* dataPath, bool isRelativePath)
  */
 AnimInfo* AnimMgr::findAnim(int idx)
 {
-	int i          = 0;
-	AnimInfo* info = static_cast<AnimInfo*>(mAnimList.mChild);
-	for (info; info; info = static_cast<AnimInfo*>(info->mNext), i++) {
+	int i = 0;
+	FOREACH_NODE(AnimInfo, mAnimList.mChild, info)
+	{
 		if (i == idx) {
 			if (!info->mData) {
 				char buf[PATH_MAX];
@@ -413,6 +413,7 @@ AnimInfo* AnimMgr::findAnim(int idx)
 			}
 			return info;
 		}
+		i++;
 	}
 	return nullptr;
 }

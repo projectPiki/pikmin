@@ -251,12 +251,14 @@ void CinematicPlayer::loadCin(immut char* cinFilePath)
 
 	file->close();
 	// set up any scenes we've loaded
-	for (SceneData* data = (SceneData*)mDataList.mChild; data; data = (SceneData*)data->mNext) {
+	FOREACH_NODE(SceneData, mDataList.mChild, data)
+	{
 		addScene(data);
 	}
 
 	// set up any actors we've loaded
-	for (CineShapeObject* actor = (CineShapeObject*)mActorList.mChild; actor; actor = (CineShapeObject*)actor->mNext) {
+	FOREACH_NODE(CineShapeObject, mActorList.mChild, actor)
+	{
 		addActor(actor);
 	}
 
@@ -387,7 +389,8 @@ BOOL CinematicPlayer::update()
 	mCurrentScene         = nullptr;
 
 	// every frame, we loop through all the scenes of this cutscene and calculate what should be playing
-	for (SceneCut* scene = (SceneCut*)mSceneList.mChild; scene; scene = (SceneCut*)scene->mNext) {
+	FOREACH_NODE(SceneCut, mSceneList.mChild, scene)
+	{
 		int sceneStartTime = mTotalDuration;
 		mTotalDuration += abs(scene->mEndFrame - scene->mStartFrame);
 		if (mCurrentPlaybackTime >= (f32)sceneStartTime && mCurrentPlaybackTime < (f32)mTotalDuration) {
@@ -406,14 +409,16 @@ BOOL CinematicPlayer::update()
 	if (mCurrentScene != mPreviousScene) {
 		// we just transitioned to a new scene, clean up old scene
 		if (mPreviousScene) {
-			for (ActorInstance* actor = (ActorInstance*)mPreviousScene->mActorList.mChild; actor; actor = (ActorInstance*)actor->mNext) {
+			FOREACH_NODE(ActorInstance, mPreviousScene->mActorList.mChild, actor)
+			{
 				actor->exitInstance();
 			}
 		}
 
 		if (mCurrentScene) {
 			mPreviousSceneFrame = -1.0f;
-			for (ActorInstance* actor = (ActorInstance*)mCurrentScene->mActorList.mChild; actor; actor = (ActorInstance*)actor->mNext) {
+			FOREACH_NODE(ActorInstance, mCurrentScene->mActorList.mChild, actor)
+			{
 				actor->initInstance();
 			}
 		}
@@ -502,7 +507,8 @@ void CinematicPlayer::refresh(Graphics& gfx)
 	gfx.mMatRenderMask = (MATFLAG_Opaque | MATFLAG_AlphaTest | MATFLAG_AlphaBlend);
 
 	if (mCurrentScene) {
-		for (ActorInstance* actor = (ActorInstance*)mCurrentScene->mActorList.mChild; actor; actor = (ActorInstance*)actor->mNext) {
+		FOREACH_NODE(ActorInstance, mCurrentScene->mActorList.mChild, actor)
+		{
 			actor->refresh(mtx, gfx, !(actor->mFlags & CAF_NoSync) ? &mCurrentSceneFrame : nullptr);
 		}
 	}
