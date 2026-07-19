@@ -249,9 +249,9 @@ protected:
  */
 BEGIN_ENUM_TYPE(PathFinderMode)
 enum {
-	None       = 0,      // No special pathfinding mode
-	AvoidWater = 1 << 0, // Avoid water waypoints when pathfinding
-	Unk2       = 1 << 1, // Avoid specific waypoint index
+	None          = 0,      // No special pathfinding mode
+	AvoidWater    = 1 << 0, // Avoid water waypoints when pathfinding
+	AvoidOwnIndex = 1 << 1, // Avoid own waypoint index when pathfinding
 } END_ENUM_TYPE;
 
 /**

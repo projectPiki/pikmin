@@ -535,7 +535,7 @@ void GameCoreSection::cleanupDayEnd()
 	playerState->setDayPowerupCount(day, playerState->getNextPowerupNumber());
 
 	int i;
-	for (i = 0; i < 3; i++) {
+	for (i = 0; i < PikiColorCount; i++) {
 		GoalItem* goal = itemMgr->getContainer(i);
 		if (goal) {
 			goal->setSpotActive(false);
@@ -626,13 +626,14 @@ void GameCoreSection::cleanupDayEnd()
 				    && !(mode == PikiMode::EnterMode || mode == PikiMode::ExitMode) && state != PIKISTATE_LookAt) {
 					bool isNearOnyonShip = false;
 					if (piki->mMode == PikiMode::FreeMode) {
-						for (int i = 0; i < 3; i++) {
+						for (int i = 0; i < PikiColorCount; i++) {
 							GoalItem* goal = itemMgr->getContainer(i);
-							if (goal
-							    && qdist2(goal->mSRT.t.x, goal->mSRT.t.z, piki->mSRT.t.x, piki->mSRT.t.z)
-							           <= pikiMgr->mPikiParms->mPikiParms.mSunsetSafetyRange()) {
-								isNearOnyonShip = true;
-								break;
+							if (goal) {
+								if (qdist2(goal->mSRT.t.x, goal->mSRT.t.z, piki->mSRT.t.x, piki->mSRT.t.z)
+								    <= pikiMgr->mPikiParms->mPikiParms.mSunsetSafetyRange()) {
+									isNearOnyonShip = true;
+									break;
+								}
 							}
 							UfoItem* ufo = itemMgr->getUfo();
 							if (ufo) {
@@ -942,8 +943,7 @@ void GameCoreSection::initStage()
 	pikiMgr->mMapMgr    = mMapMgr;
 
 	memStat->start("pikiCreate");
-	// This has a capacity of 102 in the vanilla game for some reason.
-	pikiMgr->create(MAX_PIKI_ON_FIELD == 100 ? 102 : MAX_PIKI_ON_FIELD);
+	pikiMgr->create(MAX_PIKI_ON_FIELD + 2); // This has a capacity of 102 for some reason.
 	memStat->end("pikiCreate");
 
 	memStat->end("piki");

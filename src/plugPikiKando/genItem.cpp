@@ -102,7 +102,6 @@ void GenObjectItem::doRead(RandomAccessStream& stream)
 		for (int i = 0; i < 32; i++) {
 			mStageName[i] = stream.readByte();
 		}
-
 		for (int i = 0; i < 32; i++) {
 			mPrintName[i] = stream.readByte();
 		}
@@ -127,7 +126,6 @@ void GenObjectItem::doWrite(RandomAccessStream& stream)
 		for (int i = 0; i < 32; i++) {
 			stream.writeByte(mStageName[i]);
 		}
-
 		for (int i = 0; i < 32; i++) {
 			stream.writeByte(mPrintName[i]);
 		}

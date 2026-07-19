@@ -251,8 +251,7 @@ void Navi::updateDayEnd(immut Vector3f& pos)
  */
 void Navi::enterAllPikis()
 {
-	// This has a capacity of 200 in the vanilla game for some reason.
-	Piki* pikiList[MAX_PIKI_ON_FIELD == 100 ? 200 : MAX_PIKI_ON_FIELD];
+	Piki* pikiList[MAX_PIKI_ON_FIELD * 2]; // This has a capacity of 200 for some reason.
 	GoalItem* onyons[PikiColorCount];
 	int i;
 	for (i = 0; i < PikiColorCount; i++) {
@@ -1160,8 +1159,7 @@ void Navi::callDebugs(f32 radius)
 void Navi::releasePikis()
 {
 	Iterator iter(mPlateMgr);
-	// This has a capacity of 200 in the vanilla game for some reason.
-	Piki* pikiList[MAX_PIKI_ON_FIELD == 100 ? 200 : MAX_PIKI_ON_FIELD];
+	Piki* pikiList[MAX_PIKI_ON_FIELD * 2]; // This has a capacity of 200 for some reason.
 	int pikiCount = 0;
 	CI_LOOP(iter)
 	{
@@ -1181,7 +1179,7 @@ void Navi::releasePikis()
 	}
 	Vector3f colorCoMs[PikiColorCount + 1]; // each color + bomb-carriers
 	int colorCounts[PikiColorCount + 1];    // each color + bomb-carriers
-	f32 colorSizes[PikiColorCount + 1];
+	f32 colorSizes[PikiColorCount + 1];     // each color + bomb-carriers
 	int j, i;
 	for (i = 0; i < PikiColorCount + 1; i++) {
 		colorCoMs[i].set(0.0f, 0.0f, 0.0f);
@@ -1247,7 +1245,7 @@ void Navi::releasePikis()
 		pikiList[i]->changeMode(PikiMode::FreeMode, this);
 		int color = pikiList[i]->mColor;
 		if (pikiList[i]->hasBomb()) {
-			color = 3;
+			color = PikiColorCount;
 		}
 
 		ActFree* action = static_cast<ActFree*>(pikiList[i]->mActiveAction->getCurrAction());

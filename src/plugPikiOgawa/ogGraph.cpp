@@ -64,10 +64,10 @@ void ogGraphMgr::SetDummyLineData()
 	s16 y                = mParent->getPosV();
 	s16 paneFullHeight   = mParent->getHeight();
 
+	s16* pointArray = LinePointR;
 	// The way this was originally written, it describes a line containing 14 points.
 	// That is UB because `ogawa_per_line` only contains 13 elements, but luckily the
 	// erroneous final point is never rendered by `zen::setGraphGX` anyway.
-	s16* pointArray = LinePointR;
 	for (int i = 0; i TERNARY_BUGFIX(<, <=) 13; i++) {
 		int yPercentFromTop = 100 - ogawa_per_line[i];
 		s16 pointY          = y + yPercentFromTop * paneFullHeight / 100;
