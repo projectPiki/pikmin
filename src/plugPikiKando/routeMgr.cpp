@@ -396,7 +396,7 @@ int PathFinder::selectWay(PathFinder::Buffer& buf, int destWPIdx, PathFinder::Bu
 		}
 
 		// Exclude waypoints based on mode flags (e.g., avoid a specific index or water)
-		if ((checkMode(PathFinderMode::Unk2) && avoidWayPointIndex != -1 && wp->mIndex == avoidWayPointIndex)
+		if ((checkMode(PathFinderMode::AvoidOwnIndex) && avoidWayPointIndex != -1 && wp->mIndex == avoidWayPointIndex)
 		    || (checkMode(PathFinderMode::AvoidWater) && wp->inWater())) {
 			continue;
 		}
@@ -1208,7 +1208,7 @@ void WayPoint::resetLinkInfos()
  */
 void WayPoint::initLinkInfos()
 {
-	PathFinder::setMode(PathFinderMode::Unk2);
+	PathFinder::setMode(PathFinderMode::AvoidOwnIndex);
 	PathFinder::avoidWayPointIndex = mIndex;
 
 	for (int i = 0; i < 8; i++) {
@@ -1229,9 +1229,9 @@ void WayPoint::initLinkInfos()
 			int wpIdx = -1;
 
 			switch (goalIdx) {
-			case 0: // Red onion
-			case 1: // Blue onion
-			case 2: // Yellow onion
+			case Blue:
+			case Red:
+			case Yellow:
 			{
 				GoalItem* container = itemMgr->getContainer(goalIdx);
 				if (container) {
@@ -1312,9 +1312,9 @@ int PathFinder::findFirstStepOnyon(int startWPIdx, int goalType, PathFinder::Buf
 
 	// Determine the destination waypoint index based on goalType
 	switch (goalType) {
-	case 0: // Red onion
-	case 1: // Blue onion
-	case 2: // Yellow onion
+	case Blue:
+	case Red:
+	case Yellow:
 	{
 		GoalItem* goal = itemMgr->getContainer(goalType);
 		if (goal) {
@@ -1351,9 +1351,9 @@ int PathFinder::findSyncOnyon(immut Vector3f& startPos, PathFinder::Buffer* buff
 
 	// Determine the destination waypoint index based on goalType
 	switch (goalType) {
-	case 0: // Red onion
-	case 1: // Blue onion
-	case 2: // Yellow onion
+	case Blue:
+	case Red:
+	case Yellow:
 	{
 		GoalItem* container = itemMgr->getContainer(goalType);
 		if (container) {

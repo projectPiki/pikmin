@@ -71,7 +71,6 @@ struct NArray {
 		for (int i = 0; i < numToRemove; i++) {
 			mArray[startIdx + i] = nullptr;
 		}
-
 		for (int i = 0; i < mCount - (startIdx + numToRemove); i++) {
 			mArray[startIdx + i] = mArray[numToRemove + i];
 		}

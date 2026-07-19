@@ -375,7 +375,7 @@ void ResultFlags::dump()
 		STACK_PAD_INLINE(1);
 #endif
 
-		// So as a result of all that, the final game version this PRINT contains brazen (but stripped) undefined behavior (`strs[3]`).
+		// So as a result of all that, this PRINT contains brazen (but stripped) undefined behavior (`strs[3]`) in the retail game.
 		PRINT(" ENUM_RESULT_%s_G%02d_P00 = %s : %d pages\n", strs[3], p++, strs[getFlag(flagTable[i].mScreenId)],
 		      (flagTable[i + 1].mScreenId == -1) ? 1 : flagTable[i + 1].mScreenId - info.mScreenId);
 	}

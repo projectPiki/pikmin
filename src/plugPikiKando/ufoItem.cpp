@@ -1020,7 +1020,6 @@ void UfoItem::demoDraw(Graphics& gfx, immut Matrix4f* mtx)
 		pos.set(-9.2f, -68.1f, 28.6f);
 		mShipModel->mShape->calcJointWorldPos(gfx, 2, pos);
 		mTroubleFxPositionList[1] = pos;
-
 		mTroubleFxPositionList[2] = mTroubleFxPositionList[0];
 		mTroubleFxPositionList[3] = mTroubleFxPositionList[1];
 

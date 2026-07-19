@@ -243,7 +243,7 @@ void GamePrefs::checkIsHiscore(GameChalQuickInfo& info)
 
 	// if we got a new hiscore, shift the current scores and store the new one
 	if (info.mRank >= 0 && info.mRank < MAX_HI_SCORES) {
-		for (int i = 4; i > info.mRank; i--) {
+		for (int i = (MAX_HI_SCORES - 1); i > info.mRank; i--) {
 			mHiscores.mChalModeRecords[info.mStageID].mScores[i] = mHiscores.mChalModeRecords[info.mStageID].mScores[i - 1];
 		}
 		mHiscores.mChalModeRecords[info.mStageID].mScores[info.mRank] = info.mScore;

@@ -1450,9 +1450,9 @@ void DGXGraphics::setFog(bool set)
 			GXSetFog(GX_FOG_LINEAR, mFogStart, mFogEnd, mCamera->mNear, mCamera->mFar, *(GXColor*)&mFogColour);
 		} else {
 #if defined(VERSION_GPIP01)
-			OSReport("%s:%d Warning: cam->vNear >= cam->vFar\n", __FILE__, 1732);
+			OSReport("%s:%d Warning: cam->vNear >= cam->vFar\n", __FILE__, TERNARY_BUILD_MATCHING(1732, __LINE__));
 #else
-			OSReport("%s:%d Warning: cam->vNear >= cam->vFar\n", __FILE__, 1683);
+			OSReport("%s:%d Warning: cam->vNear >= cam->vFar\n", __FILE__, TERNARY_BUILD_MATCHING(1683, __LINE__));
 #endif
 		}
 #endif
@@ -2304,7 +2304,7 @@ void Shape::optimize()
 	mVertexCacheFlags
 	    = VertexCacheFlags::VertexList | VertexCacheFlags::NormalList | VertexCacheFlags::NBTList | VertexCacheFlags::ColorList;
 	for (int i = 0; i < mTotalActiveTexCoords; i++) {
-		mVertexCacheFlags |= (1 << (i + 5));
+		mVertexCacheFlags |= (1 << (i + 5)); // Effectively `(VertexCacheFlags::TexCoord0 << i)`
 	}
 
 	if (!mMeshCount) {

@@ -2787,7 +2787,7 @@ void BaseShape::initialise()
 				!!(&mMaterialList[matIdx].mTextureInfo);
 				mMaterialList[matIdx].mTextureInfo.mTextureData[texDataIdx].mTexture;
 #if 0 // This is what the DLL actually does instead of all this noise.
-				Texture* unused = mMaterialList[matIdx].mTextureInfo.mTextureData[j].mTexture;
+				Texture* unused = mMaterialList[matIdx].mTextureInfo.mTextureData[texDataIdx].mTexture;
 #endif
 			}
 		} else if (mMaterialList[matIdx].mTextureIndex != -1) {

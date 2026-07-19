@@ -108,7 +108,7 @@ public:
 	NMatrix4f();
 	NMatrix4f(f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32);
 	NMatrix4f(immut Matrix4f&); // unused/inlined
-	NMatrix4f(immut Mtx);       // unused/inlined
+	NMatrix4f(immut Mtx44);     // unused/inlined
 
 	void construct(immut Matrix4f&);
 	void input(immut Matrix4f&);
@@ -118,9 +118,9 @@ public:
 
 	// unused/inlined:
 	void construct(f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32);
-	void construct(immut Mtx);
-	void input(immut Mtx);
-	void output(Mtx) immut;
+	void construct(immut Mtx44);
+	void input(immut Mtx44);
+	void output(Mtx44) immut;
 	void setRow(int, f32, f32, f32);
 	void inputRow(int, immut Vector3f&);
 	void inputRow(int, immut Vector3f&, f32);
