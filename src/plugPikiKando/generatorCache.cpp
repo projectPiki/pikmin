@@ -343,7 +343,7 @@ void GeneratorCache::load(u32 stageID)
 		u32 size       = cache->mTotalCacheSize;
 		CoreNode* node = cache;
 		while (node->mNext) {
-			Cache* nextCache = (Cache*)node->mNext;
+			Cache* nextCache = static_cast<Cache*>(node->mNext);
 			node             = node->mNext;
 
 			PRINT("** n = %x n->sibling = %x\n", node, node->mNext);

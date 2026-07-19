@@ -27,7 +27,7 @@ public:
 		Vector3f getPos();
 
 		// DLL inlines:
-		PartsInfo* getNext() { return (PartsInfo*)mNext; }
+		PartsInfo* getNext() { return static_cast<PartsInfo*>(mNext); }
 
 		// _00     = VTBL
 		// _00-_14 = CoreNode

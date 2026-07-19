@@ -47,9 +47,9 @@
 // comma-separated arguments to be left in stead of an actual call to the `_Print` or `_Error` functions for matching.  This was
 // previously done by expanding the (formerly variadic) macros to `(__VA_ARGS__)` when matching the GCN versions of Pikmin 1, but
 // again merely defining a variadic macro when compiling under MSVC 6.0 is a compilation error.  These clues all lead to one
-// conclusion.  The `PRINT` and `ERROR` macros never accepted variadic arguments to begin with, and that's how the (formerly)
-// parenthesized, comma-separated arguments ended up affecting the compiled code: they got left behind when the `PRINT` and `ERROR`
-// macros (accepting zero arguments) expanded to nothing!
+// conclusion.  The `PRINT` and `ERROR` macros never accepted variadic arguments to begin with, and that's how what were formerly
+// their arguments ended up affecting the compiled code: they got left behind when the `PRINT` and `ERROR` macros (accepting zero
+// arguments) expanded to nothing!
 #if defined(WIN32) || defined(DEVELOP)
 #define PRINT _Print
 #define ERROR _Error

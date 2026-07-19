@@ -539,13 +539,11 @@ static void ParseMapFile()
  */
 immut char* System::findAddress(u32 address)
 {
-	SymbolInfo* curr = mBuildMapFuncList;
-	while (curr != nullptr) {
+	for (SymbolInfo* curr = mBuildMapFuncList; curr != nullptr; curr = curr->mNext) {
 		u32 minAddr = curr->mVirtualAddress;
 		u32 maxAddr = curr->mNext->mVirtualAddress;
 		if (address >= minAddr && address < maxAddr)
 			return curr->mDemangledName;
-		curr = curr->mNext;
 	}
 	return nullptr;
 }

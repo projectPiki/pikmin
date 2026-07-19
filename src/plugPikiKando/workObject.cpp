@@ -251,9 +251,9 @@ Creature* WorkObjectMgr::birth(int wObjType, int p2)
  */
 Creature* WorkObjectMgr::getCreature(int index)
 {
-	WorkObjectNode* node = (WorkObjectNode*)mRootNode.mChild;
+	WorkObjectNode* node = static_cast<WorkObjectNode*>(mRootNode.mChild);
 	for (int i = 0; i < index; i++) {
-		node = (WorkObjectNode*)node->mNext;
+		node = static_cast<WorkObjectNode*>(node->mNext);
 	}
 
 	if (!node)

@@ -359,7 +359,7 @@ CamDataInfo::CamDataInfo()
 	mCamera.mNear        = 1.0f;
 	mCamera.mFar         = 15000.0f;
 	mCamera.mAspectRatio = 640.0f / 480.0f;
-	mUseStaticCamera     = 0;
+	mUseStaticCamera     = false;
 };
 
 /**
@@ -2406,9 +2406,9 @@ void BaseShape::read(RandomAccessStream& stream)
 			// 2. Alpha-test materials (cutout transparency).
 			// 3. Opaque materials (no transparency, needs to be first).
 			// This is to handle transparency correctly without per-frame depth sorting.
-			recAddMatpoly(mJointList, 4); // MATFLAG_AlphaBlend
-			recAddMatpoly(mJointList, 2); // MATFLAG_AlphaTest
-			recAddMatpoly(mJointList, 1); // MATFLAG_Opaque
+			recAddMatpoly(mJointList, MATFLAG_AlphaBlend >> 8);
+			recAddMatpoly(mJointList, MATFLAG_AlphaTest >> 8);
+			recAddMatpoly(mJointList, MATFLAG_Opaque >> 8);
 
 			for (int i = 0; i < mTotalMatpolyCount; i++) {
 				mMatpolyList[i]->mJointList = mMatpolyList[i]->mMesh->mJointList;
