@@ -4,7 +4,6 @@
 #include "ANode.h"
 #include "types.h"
 
-class AgeServer;
 class RandomAccessStream;
 
 /**
@@ -21,7 +20,20 @@ public:
 	CoreNode(immut char* name = "CoreNode") { initCore(name); }
 
 #ifdef WIN32
-	virtual void genAge(AgeServer&) { }
+	/**
+	 * @brief TODO
+	 */
+	virtual void genAge(AgeServer& server) { }
+
+	/**
+	 * @brief TODO
+	 */
+	virtual void genAgeNode(AgeServer& server) { }
+
+	/**
+	 * @brief TODO
+	 */
+	virtual void write(RandomAccessStream& stream) { }
 #endif
 
 	/**

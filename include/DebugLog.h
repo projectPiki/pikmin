@@ -36,8 +36,8 @@
 		va_start(args, fmt);                  \
 		char buffer[2048];                    \
 		vsprintf(buffer, fmt, args);          \
-		System::halt(__FILE__, line, buffer); \
 		va_end(args);                         \
+		System::halt(__FILE__, line, buffer); \
 	}
 
 // <windows.h> defines `ERROR` as `0`; shed it before we redefine.

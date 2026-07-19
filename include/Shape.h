@@ -59,7 +59,7 @@ public:
 		if (mHasPartialWeights) {
 			mIndex = weights;
 		} else {
-			mIndex = -1 - weights;
+			mIndex = -weights - 1;
 		}
 	}
 
@@ -156,6 +156,16 @@ public:
 		_20        = -1;
 	}
 
+	DispList(int flags)
+	{
+		mFaceNode.initCore("");
+
+		mNodeCount = 0;
+		mFaceCount = 0;
+		mFlags     = flags & 3;
+		_20        = -1;
+	}
+
 	virtual void read(RandomAccessStream&); // _0C
 
 	// _00     = VTBL
@@ -175,6 +185,10 @@ public:
 class DlobjInfo : public GfxobjInfo {
 public:
 	DlobjInfo();
+
+	// _1C     = VTBL
+	// _00-_20 = GfxobjInfo
+	DispList* _20; // _20
 };
 
 BEGIN_ENUM_TYPE(BaseShapeChunk)

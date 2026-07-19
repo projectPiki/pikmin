@@ -110,24 +110,22 @@ public:
 	void getData(CmdStream* stream)
 	{
 		stream->getToken(true);
-		int dataSize;
 		int tokenCount = 0;
 
 		while (!stream->endOfCmds() && !stream->endOfSection()) {
 			if ((tokenCount & 7) == 0) {
 				stream->getToken(true);
 				if (stream->isToken("size")) {
-					const char* token = stream->getToken(true);
-					sscanf(token, "%d", &dataSize);
+					int dataSize;
+					sscanf(stream->getToken(true), "%d", &dataSize);
 					setDataSize(dataSize);
 					stream->getToken(true);
 				}
 			}
 
-			const char* token = stream->getToken(true);
-			f32 value;
-			sscanf(token, "%f", &value);
-			addData(value);
+			f32 data;
+			sscanf(stream->getToken(true), "%f", &data);
+			addData(data);
 			++tokenCount;
 		}
 

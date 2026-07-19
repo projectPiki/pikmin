@@ -56,6 +56,9 @@ public:
 	}
 
 	virtual void read(RandomAccessStream&); // _0C
+#if defined(WIN32)
+	virtual void write(RandomAccessStream&);
+#endif
 
 	void recOverrideAnim(AnimContext*);
 
@@ -70,7 +73,9 @@ public:
 	int mParentIndex;            // _18
 	int mType;                   // _1C
 	int mVisibilityFlag;         // _20, see `VisibilityFlags` emum.
-	SRT mSRT;                    // _24 scale, _30 rotation, _3C translation (position)
+	Vector3f mScale;             // _24, surprisingly NOT part of an `SRT`
+	Vector3f mRotation;          // _30, surprisingly NOT part of an `SRT`
+	Vector3f mTranslation;       // _3C, surprisingly NOT part of an `SRT`
 	Matrix4f mAnimMatrix;        // _48
 	Matrix4f mInverseAnimMatrix; // _88
 	bool mIsBillboard;           // _C8

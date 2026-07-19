@@ -1246,7 +1246,7 @@ void DGXGraphics::initMesh(Shape* model)
  */
 void DGXGraphics::setupVtxDesc(Shape* model, Material* mat, Mesh* mesh)
 {
-	if (mesh->mVertexDescriptor & 0x1) {
+	if (mesh->mFeatureFlags & Mesh::FeatureFlags::PosAndNrm) {
 		if (!sendMtxIndx) {
 			GXSetVtxDesc(GX_VA_PNMTXIDX, GX_DIRECT);
 			sendMtxIndx = true;
@@ -1258,7 +1258,7 @@ void DGXGraphics::setupVtxDesc(Shape* model, Material* mat, Mesh* mesh)
 		}
 	}
 
-	if (mesh->mVertexDescriptor & 0x2) {
+	if (mesh->mFeatureFlags & Mesh::FeatureFlags::Tex1MtxIdx) {
 		if (!sendTxIndx) {
 			GXSetVtxDesc(GX_VA_TEX1MTXIDX, GX_DIRECT);
 			sendTxIndx = true;
@@ -1289,7 +1289,7 @@ void DGXGraphics::setupVtxDesc(Shape* model, Material* mat, Mesh* mesh)
 	}
 
 	for (int i = 0; i < 8; i++) {
-		if (mesh->mVertexDescriptor & (1 << (i + 3))) {
+		if (mesh->mFeatureFlags & (1 << (i + 3))) {
 			if (!sendTxUVIndx[i]) {
 				GXSetVtxDesc(GXAttr(GX_VA_TEX0 + i), GX_INDEX16);
 				sendTxUVIndx[i] = true;
@@ -1302,7 +1302,7 @@ void DGXGraphics::setupVtxDesc(Shape* model, Material* mat, Mesh* mesh)
 		}
 	}
 
-	if (mesh->mVertexDescriptor & 0x4) {
+	if (mesh->mFeatureFlags & Mesh::FeatureFlags::VtxColor) {
 		if (!sendColIndx) {
 			GXSetVtxDesc(GX_VA_CLR0, GX_INDEX16);
 			sendColIndx = true;
