@@ -1290,7 +1290,7 @@ ModeState* DayOverModeState::update(u32& result)
 	// if we're in the day end results screen, process that logic
 	if (resultWindow) {
 		zen::ogScrResultMgr::returnStatusFlag stat = resultWindow->update(mParentSection->mController);
-		if (stat >= 7) {
+		if (stat >= zen::ogScrResultMgr::RESULT_ExitToMapSelect) {
 			// 2-second loading screen
 			gsys->startLoading(nullptr, true, 120);
 			PRINT("EXITDAYEND!!!!\n");
@@ -1312,7 +1312,7 @@ ModeState* DayOverModeState::update(u32& result)
 #endif
 			{
 				// if we don't have a memory card window open, check if we went back to last save, or continued
-				if (stat == 8) {
+				if (stat == zen::ogScrResultMgr::RESULT_ExitToCardSelect) {
 					// return to last save
 					mParentSection->mPendingOnePlayerSectionID = ONEPLAYER_CardSelect;
 				} else {

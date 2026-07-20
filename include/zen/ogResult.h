@@ -108,14 +108,14 @@ enum EnumResult {
 struct ogScrResultMgr {
 public:
 	enum returnStatusFlag {
-		Status_NULL = -1,
-		Status_0    = 0,
-		Status_3    = 3,
-		Status_4    = 4,
-		Status_5    = 5,
-		Status_6    = 6,
-		Status_7    = 7,
-		Status_8    = 8,
+		Status_NULL             = -1,
+		RESULT_Active           = 0,
+		RESULT_DiaryMessage     = 3,
+		RESULT_StartDelay       = 4,
+		RESULT_SlideIn          = 5,
+		RESULT_FadeOut          = 6,
+		RESULT_ExitToMapSelect  = 7,
+		RESULT_ExitToCardSelect = 8,
 		// TODO: this
 	};
 
@@ -134,7 +134,7 @@ private:
 
 	int _00;                         // _00
 	returnStatusFlag mStatus;        // _04
-	returnStatusFlag mStatus2;       // _08
+	returnStatusFlag mPendingStatus; // _08
 	P2DScreen* mMainScreen;          // _0C
 	int _10;                         // _10
 	ogScrMessageMgr* mMesgScreen;    // _14
@@ -169,32 +169,32 @@ private:
 	P2DPane* mPaneFileNum1;          // _88
 	P2DPane* mPaneFileNum2;          // _8C
 	P2DPane* mPaneFileNum3;          // _90
-	P2DTextBox* _94;                 // _94
-	P2DPane* _98;                    // _98
-	P2DPane* _9C;                    // _9C
-	P2DPane* _A0;                    // _A0
-	P2DPane* _A4;                    // _A4
-	P2DPane* _A8;                    // _A8
-	P2DPane* _AC;                    // _AC
-	P2DPane* _B0;                    // _B0
-	P2DPane* _B4;                    // _B4
-	P2DPane* _B8;                    // _B8
-	P2DPane* _BC;                    // _BC
-	P2DPane* _C0;                    // _C0
-	P2DPane* _C4;                    // _C4
-	P2DPane* _C8;                    // _C8
-	P2DPane* _CC;                    // _CC
-	P2DPane* _D0;                    // _D0
-	P2DPane* _D4;                    // _D4
-	P2DPane* _D8;                    // _D8
-	P2DPane* _DC;                    // _DC
+	P2DTextBox* mDiaryTemplateTextBox;        // _94
+	P2DPane* mPaneBornThousandsDigit;         // _98
+	P2DPane* mPaneDeadThousandsDigit;         // _9C
+	P2DPane* mPaneVictimThousandsDigit;       // _A0
+	P2DPane* mPaneBornOnesDigit;              // _A4
+	P2DPane* mPaneDeadOnesDigit;              // _A8
+	P2DPane* mPaneVictimOnesDigit;            // _AC
+	P2DPane* mPaneSproutedOnesDigit;          // _B0
+	P2DPane* mPaneLostToBattleOnesDigit;      // _B4
+	P2DPane* mPaneLeftBehindOnesDigit;        // _B8
+	P2DPane* mPaneSproutedThousandsDigit;     // _BC
+	P2DPane* mPaneLostToBattleThousandsDigit; // _C0
+	P2DPane* mPaneLeftBehindThousandsDigit;   // _C4
+	P2DPane* mPaneRedThousandsDigit;          // _C8
+	P2DPane* mPaneYellowThousandsDigit;       // _CC
+	P2DPane* mPaneBlueThousandsDigit;         // _D0
+	P2DPane* mPaneRedOnesDigit;               // _D4
+	P2DPane* mPaneBlueOnesDigit;              // _D8
+	P2DPane* mPaneYellowOnesDigit;            // _DC
 	f32 mWaitTimer;                  // _E0
 	f32 mSaveWaitTimer;              // _E4
 	s16 mBgAlpha;                    // _E8
 	s16 mGraphAlpha;                 // _EA
 	int mRedPikis;                   // _EC
 	int mBluePikis;                  // _F0
-	int mYellowsPikis;               // _F4
+	int mYellowPikis;                // _F4
 	int mTotalPikis;                 // _F8
 	int mBornPikis;                  // _FC
 	int mDeadPikis;                  // _100
@@ -215,7 +215,7 @@ private:
 	bool mHasBlue;                   // _13A
 	bool mHasRed;                    // _13B
 	bool mHasYellow;                 // _13C
-	char _13D[16];                   // _13D
+	char mDiaryTemplateTextBuffer[16]; // _13D
 	immut char* mDiaryPathList[256]; // _150
 	immut char** mPageInfoPtr;       // _550
 	int _554;                        // _554
