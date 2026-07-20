@@ -416,10 +416,10 @@ u32 DGXGraphics::compileMaterial(Material* mat)
 		GXSetZMode(GX_TRUE, GX_LEQUAL, GX_FALSE);
 	}
 
-	GXSetTevKColor(GX_KCOLOR0, *((GXColor*)&mat->mTevInfo->mKonstColors[0]));
-	GXSetTevKColor(GX_KCOLOR1, *((GXColor*)&mat->mTevInfo->mKonstColors[1]));
-	GXSetTevKColor(GX_KCOLOR2, *((GXColor*)&mat->mTevInfo->mKonstColors[2]));
-	GXSetTevKColor(GX_KCOLOR3, *((GXColor*)&mat->mTevInfo->mKonstColors[3]));
+	GXSetTevKColor(GX_KCOLOR0, reinterpret_cast<GXColor&>(mat->mTevInfo->mKonstColors[0]));
+	GXSetTevKColor(GX_KCOLOR1, reinterpret_cast<GXColor&>(mat->mTevInfo->mKonstColors[1]));
+	GXSetTevKColor(GX_KCOLOR2, reinterpret_cast<GXColor&>(mat->mTevInfo->mKonstColors[2]));
+	GXSetTevKColor(GX_KCOLOR3, reinterpret_cast<GXColor&>(mat->mTevInfo->mKonstColors[3]));
 	for (int i = 0; i < mat->mTevInfo->mTevStageCount; i++) {
 		PVWTevStage& stage = mat->mTevInfo->mTevStages[i];
 		GXSetTevColorIn((GXTevStageID)i, (GXTevColorArg)stage.mTevColorCombiner.mInArgA, (GXTevColorArg)stage.mTevColorCombiner.mInArgB,
@@ -771,7 +771,7 @@ void DGXGraphics::setLight(Light* light, int idx)
 	}
 
 	lightColour.a *= mLightIntensity;
-	GXInitLightColor(gxLight, *(GXColor*)&lightColour);
+	GXInitLightColor(gxLight, reinterpret_cast<GXColor&>(lightColour));
 	GXLoadLightObjImm(gxLight, GXLightID(1 << idx));
 }
 
@@ -1036,10 +1036,10 @@ void DGXGraphics::setMaterial(Material* mat, bool p2)
 					GXSetZMode(GX_TRUE, GX_LEQUAL, GX_FALSE);
 				}
 
-				GXSetTevKColor(GX_KCOLOR0, *((GXColor*)&mat->mTevInfo->mKonstColors[0]));
-				GXSetTevKColor(GX_KCOLOR1, *((GXColor*)&mat->mTevInfo->mKonstColors[1]));
-				GXSetTevKColor(GX_KCOLOR2, *((GXColor*)&mat->mTevInfo->mKonstColors[2]));
-				GXSetTevKColor(GX_KCOLOR3, *((GXColor*)&mat->mTevInfo->mKonstColors[3]));
+				GXSetTevKColor(GX_KCOLOR0, reinterpret_cast<GXColor&>(mat->mTevInfo->mKonstColors[0]));
+				GXSetTevKColor(GX_KCOLOR1, reinterpret_cast<GXColor&>(mat->mTevInfo->mKonstColors[1]));
+				GXSetTevKColor(GX_KCOLOR2, reinterpret_cast<GXColor&>(mat->mTevInfo->mKonstColors[2]));
+				GXSetTevKColor(GX_KCOLOR3, reinterpret_cast<GXColor&>(mat->mTevInfo->mKonstColors[3]));
 				for (int i = 0; i < mat->mTevInfo->mTevStageCount; i++) {
 					PVWTevStage& stage = mat->mTevInfo->mTevStages[i];
 					GXSetTevColorIn((GXTevStageID)i, (GXTevColorArg)stage.mTevColorCombiner.mInArgA,
@@ -1084,7 +1084,7 @@ void DGXGraphics::setMaterial(Material* mat, bool p2)
 			Colour color;
 			color.set(mat->mColourInfo.mColour.r, mat->mColourInfo.mColour.g, mat->mColourInfo.mColour.b,
 			          mLightIntensity * mat->mColourInfo.mColour.a);
-			GXSetChanMatColor(GX_COLOR0A0, *(GXColor*)&color);
+			GXSetChanMatColor(GX_COLOR0A0, reinterpret_cast<GXColor&>(color));
 
 			if (mat->mTextureInfo.mUseScale) {
 				mCustomScale = &mat->mTextureInfo.mScale;
@@ -1123,7 +1123,7 @@ void DGXGraphics::setMaterial(Material* mat, bool p2)
 		Colour color;
 		color.set(mat->mColourInfo.mColour.r, mat->mColourInfo.mColour.g, mat->mColourInfo.mColour.b,
 		          mLightIntensity * mat->mColourInfo.mColour.a);
-		GXSetChanMatColor(GX_COLOR0A0, *(GXColor*)&color);
+		GXSetChanMatColor(GX_COLOR0A0, reinterpret_cast<GXColor&>(color));
 
 		if (mLightCam) {
 			return;
@@ -1414,10 +1414,10 @@ void DGXGraphics::setAuxColour(immut Colour& color)
 void DGXGraphics::setPrimEnv(immut Colour* col1, immut Colour* col2)
 {
 	if (col1) {
-		GXSetTevColor(GX_TEVREG0, *(GXColor*)col1);
+		GXSetTevColor(GX_TEVREG0, *reinterpret_cast<GXColor*>(col1));
 	}
 	if (col2) {
-		GXSetTevColor(GX_TEVREG1, *(GXColor*)col2);
+		GXSetTevColor(GX_TEVREG1, *reinterpret_cast<GXColor*>(col2));
 	}
 }
 
@@ -1434,7 +1434,7 @@ void DGXGraphics::setClearColour(immut Colour& color)
  */
 void DGXGraphics::clearBuffer(int, bool)
 {
-	GXSetCopyClear(*(GXColor*)&mBufferClearColour, 0xFFFFFF); // max clear_z value
+	GXSetCopyClear(reinterpret_cast<GXColor&>(mBufferClearColour), 0xFFFFFF); // max clear_z value
 }
 
 /**
@@ -1444,10 +1444,10 @@ void DGXGraphics::setFog(bool set)
 {
 	if (set) {
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
-		GXSetFog(GX_FOG_LINEAR, mFogStart, mFogEnd, mCamera->mNear, mCamera->mFar, *(GXColor*)&mFogColour);
+		GXSetFog(GX_FOG_LINEAR, mFogStart, mFogEnd, mCamera->mNear, mCamera->mFar, reinterpret_cast<GXColor&>(mFogColour));
 #else
 		if (mCamera->mNear < mCamera->mFar) {
-			GXSetFog(GX_FOG_LINEAR, mFogStart, mFogEnd, mCamera->mNear, mCamera->mFar, *(GXColor*)&mFogColour);
+			GXSetFog(GX_FOG_LINEAR, mFogStart, mFogEnd, mCamera->mNear, mCamera->mFar, reinterpret_cast<GXColor&>(mFogColour));
 		} else {
 #if defined(VERSION_GPIP01)
 			OSReport("%s:%d Warning: cam->vNear >= cam->vFar\n", __FILE__, TERNARY_BUILD_MATCHING(1732, __LINE__));
@@ -2040,7 +2040,7 @@ void DGXGraphics::texturePrintf(Font* font, int x, int y, immut char* format, ..
 	GXSetBlendMode(GX_BM_BLEND, GX_BL_SRCALPHA, GX_BL_INVSRCALPHA, GX_LO_CLEAR);
 	useTexture(font->mTexture, GX_TEXMAP0);
 
-	GXSetChanMatColor(GX_COLOR0, *(GXColor*)&mPrimaryColour);
+	GXSetChanMatColor(GX_COLOR0, reinterpret_cast<GXColor&>(mPrimaryColour));
 
 	GXClearVtxDesc();
 	GXSetVtxDesc(GX_VA_POS, GX_DIRECT);

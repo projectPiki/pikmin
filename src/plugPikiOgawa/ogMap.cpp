@@ -56,7 +56,7 @@ zen::ogScrMapMgr::ogScrMapMgr()
 	P2DTextBox* textBox = static_cast<P2DTextBox*>(mTest2Screen->search('tx00', true));
 	mTypingTextMgr      = new TypingTextMgr(textBox);
 
-	mCursorPane = (P2DPicture*)mTest2Screen->search('curs', true);
+	mCursorPane = static_cast<P2DPicture*>(mTest2Screen->search('curs', true));
 	mFrameTimer = 0.0f;
 	mState      = Inactive;
 }

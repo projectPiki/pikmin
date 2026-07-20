@@ -123,10 +123,10 @@ public:
 	void setTexture(P2DPane* pane)
 	{
 		if (mUseShadowTex) {
-			P2DPicture* pic = (P2DPicture*)pane;
+			P2DPicture* pic = static_cast<P2DPicture*>(pane);
 			pic->setTexture(FigureTex<T>::getShadowTexPtr(), 0);
 		} else {
-			P2DPicture* pic = (P2DPicture*)pane;
+			P2DPicture* pic = static_cast<P2DPicture*>(pane);
 			pic->setTexture(FigureTex<T>::getTexPtr(), 0);
 		}
 	}

@@ -26,7 +26,7 @@ zen::DrawWMPause::DrawWMPause()
 	mPauseMenu = new DrawMenu("screen/blo/pause_w.blo", false, false);
 	mPauseMenu->setCancelSelectMenuNo(0);
 	P2DScreen* pause = mPauseMenu->getScreenPtr();
-	mBackPane        = (P2DPicture*)pause->search('back', true);
+	mBackPane        = static_cast<P2DPicture*>(pause->search('back', true));
 	mBackPane->setAlpha(0);
 	mReturnFlag = RETURN_NULL;
 }

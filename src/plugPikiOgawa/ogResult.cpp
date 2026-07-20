@@ -190,7 +190,7 @@ void zen::ogScrResultMgr::ogScrResultMgrSub()
 {
 	mBlackScreen = new P2DScreen;
 	mBlackScreen->set("screen/blo/black.blo", false, false, true);
-	mBlackPane = (P2DPicture*)mBlackScreen->search('blck', true);
+	mBlackPane = static_cast<P2DPicture*>(mBlackScreen->search('blck', true));
 	mBlackPane->setAlpha(0);
 
 	mMainScreen = new P2DScreen;
@@ -238,7 +238,7 @@ void zen::ogScrResultMgr::ogScrResultMgrSub()
 	}
 	}
 
-	_94 = (P2DTextBox*)mMainScreen->search('getp', true);
+	_94 = static_cast<P2DTextBox*>(mMainScreen->search('getp', true));
 	mPaneRedPikis->hide();
 	mPaneBluePikis->hide();
 	mPaneYellowPikis->hide();

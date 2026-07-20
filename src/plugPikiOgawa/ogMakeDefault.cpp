@@ -30,14 +30,14 @@ zen::ogScrMakeDefaultMgr::ogScrMakeDefaultMgr()
 
 	mBlackScreen = new P2DScreen;
 	mBlackScreen->set("screen/blo/black.blo", false, false, true);
-	mBlackScreenOverlay = (P2DPicture*)mBlackScreen->search('blck', true);
+	mBlackScreenOverlay = static_cast<P2DPicture*>(mBlackScreen->search('blck', true));
 	mBlackScreenOverlay->setAlpha(255);
 
-	mAButtonPromptPicture       = (P2DPicture*)mScreen->search('abtn', true);
+	mAButtonPromptPicture       = static_cast<P2DPicture*>(mScreen->search('abtn', true));
 	mAButtonPromptAlphaAnimator = new setTenmetuAlpha(mAButtonPromptPicture, 1.0f);
 	mAButtonPromptPicture->hide();
 
-	mDefaultMessageTextBox   = (P2DTextBox*)mScreen->search('tx00', true);
+	mDefaultMessageTextBox   = static_cast<P2DTextBox*>(mScreen->search('tx00', true));
 	mDefaultMessageTypingMgr = new TypingTextMgr(mDefaultMessageTextBox);
 	mActiveTypingTextMgr     = mDefaultMessageTypingMgr;
 
@@ -45,13 +45,13 @@ zen::ogScrMakeDefaultMgr::ogScrMakeDefaultMgr()
 	mTwoSecondDelayPane   = mScreen->search('tx02', true);
 	mThreeSecondDelayPane = mScreen->search('tx03', true);
 
-	mCursorPicture       = (P2DPicture*)mScreen->search('curs', true);
+	mCursorPicture       = static_cast<P2DPicture*>(mScreen->search('curs', true));
 	mCursorAlphaAnimator = new setTenmetuAlpha(mCursorPicture, 0.5f);
 
-	mOkMessageTextBox   = (P2DTextBox*)mScreen->search('pfok', true);
+	mOkMessageTextBox   = static_cast<P2DTextBox*>(mScreen->search('pfok', true));
 	mOkMessageTypingMgr = new TypingTextMgr(mOkMessageTextBox);
 
-	mFailMessageTextBox   = (P2DTextBox*)mScreen->search('pfxx', true);
+	mFailMessageTextBox   = static_cast<P2DTextBox*>(mScreen->search('pfxx', true));
 	mFailMessageTypingMgr = new TypingTextMgr(mFailMessageTextBox);
 
 	mStateTimer = 0.0f;

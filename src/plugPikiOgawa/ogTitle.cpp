@@ -88,12 +88,12 @@ zen::ogScrTitleMgr::ogScrTitleMgr()
 	for (int i = 0; i < 10; i++) {
 		sprintf(path, "on%02d", i + 1);
 		u32 test          = RGBA_TO_U32(path[0], path[1], path[2], path[3]);
-		mBgmVolButtons[i] = (P2DPicture*)mSoundScreen->search(test, true);
+		mBgmVolButtons[i] = static_cast<P2DPicture*>(mSoundScreen->search(test, true));
 	}
 	for (int i = 0; i < 10; i++) {
 		sprintf(path, "on%02d", i + 11);
 		u32 test          = RGBA_TO_U32(path[0], path[1], path[2], path[3]);
-		mSfxVolButtons[i] = (P2DPicture*)mSoundScreen->search(test, true);
+		mSfxVolButtons[i] = static_cast<P2DPicture*>(mSoundScreen->search(test, true));
 	}
 
 	mStatus            = STATUS_Null;

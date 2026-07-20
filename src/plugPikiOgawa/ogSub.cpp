@@ -131,8 +131,8 @@ PikaAlphaMgr::PikaAlphaMgr(P2DScreen* screen)
 			continue;
 		}
 
-		P2DPicture* pic  = (P2DPicture*)parent;
-		P2DTextBox* tbox = (P2DTextBox*)pane;
+		P2DPicture* pic  = static_cast<P2DPicture*>(parent);
+		P2DTextBox* tbox = static_cast<P2DTextBox*>(pane);
 		immut char* text = tbox->getString();
 		tbox->hide();
 		getStringCVS(str, text, 0);
@@ -516,13 +516,13 @@ void ogFadeMgr::setAlpha()
 	switch (mPaneType) {
 	case PANETYPE_Picture:
 	{
-		P2DPicture* pic = (P2DPicture*)mPane;
+		P2DPicture* pic = static_cast<P2DPicture*>(mPane);
 		pic->setAlpha(mCurrentAlpha);
 		break;
 	}
 	case PANETYPE_TextBox:
 	{
-		P2DTextBox* tbox = (P2DTextBox*)mPane;
+		P2DTextBox* tbox = static_cast<P2DTextBox*>(mPane);
 		tbox->setAlpha(mCurrentAlpha);
 		break;
 	}
@@ -602,7 +602,7 @@ ogTexAnimSubMgr::ogTexAnimSubMgr(P2DScreen* screen, P2DPicture* pic, P2DTextBox*
 			break;
 		}
 
-		P2DPicture* pane = (P2DPicture*)screen->search(P2DPaneLibrary::makeTag(tmpStr), true);
+		P2DPicture* pane = static_cast<P2DPicture*>(screen->search(P2DPaneLibrary::makeTag(tmpStr), true));
 		if (!pane) {
 			break;
 		}
@@ -664,8 +664,8 @@ ogTexAnimMgr::ogTexAnimMgr(P2DScreen* screen)
 
 		P2DPane* parent = pane->getPaneTree()->getParent()->getObject();
 		if (parent->getTypeID() == PANETYPE_Picture) {
-			P2DPicture* pic  = (P2DPicture*)parent;
-			P2DTextBox* tbox = (P2DTextBox*)pane;
+			P2DPicture* pic  = static_cast<P2DPicture*>(parent);
+			P2DTextBox* tbox = static_cast<P2DTextBox*>(pane);
 			mSubMgrs[i]      = new ogTexAnimSubMgr(screen, pic, tbox);
 			mSubMgrCount++;
 		}
@@ -837,11 +837,11 @@ ogMsgCtrlTagMgr::ogMsgCtrlTagMgr()
 	P2DScreen* screen = new P2DScreen();
 	screen->set("screen/blo/wait_char.blo", false, false, true);
 
-	P2DTextBox* onesBox = (P2DTextBox*)screen->search('maru', true);
-	P2DTextBox* tensBox = (P2DTextBox*)screen->search('ten', true);
+	P2DTextBox* onesBox = static_cast<P2DTextBox*>(screen->search('maru', true));
+	P2DTextBox* tensBox = static_cast<P2DTextBox*>(screen->search('ten', true));
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
 #else
-	P2DTextBox* hundredsBox = (P2DTextBox*)screen->search('han', true);
+	P2DTextBox* hundredsBox = static_cast<P2DTextBox*>(screen->search('han', true));
 #endif
 
 	strcpy(mOnesWaitChar, onesBox->getString());

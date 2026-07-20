@@ -81,7 +81,7 @@ public:
 	{
 		bool isNotPic = true;
 		if (iconPane->getTypeID() == PANETYPE_Picture) {
-			mIconLPane = (P2DPicture*)iconPane;
+			mIconLPane = static_cast<P2DPicture*>(iconPane);
 			mIconLPane->hide();
 			P2DPaneLibrary::changeParent(mIconLPane, iconParent);
 			isNotPic = false;
@@ -94,7 +94,7 @@ public:
 	{
 		bool isNotPic = true;
 		if (iconPane->getTypeID() == PANETYPE_Picture) {
-			mIconRPane = (P2DPicture*)iconPane;
+			mIconRPane = static_cast<P2DPicture*>(iconPane);
 			mIconRPane->hide();
 			P2DPaneLibrary::changeParent(mIconRPane, iconParent);
 			isNotPic = false;

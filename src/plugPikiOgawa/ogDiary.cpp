@@ -394,11 +394,11 @@ zen::ogDrawSelectDiary::ogDrawSelectDiary()
 	mScreen->set("screen/blo/m_menu_r.blo", true, true, true);
 	mBlackFadeScreen = new P2DScreen;
 	mBlackFadeScreen->set("screen/blo/black.blo", false, false, true);
-	mBlackFadePicture = (P2DPicture*)mBlackFadeScreen->search('blck', true);
+	mBlackFadePicture = static_cast<P2DPicture*>(mBlackFadeScreen->search('blck', true));
 	mBlackFadePicture->setAlpha(255);
 	mController = new ZenController(nullptr);
 	mController->setRepeatTime(0.2f);
-	mAButtonIcon          = (P2DPicture*)mScreen->search('abtn', true);
+	mAButtonIcon          = static_cast<P2DPicture*>(mScreen->search('abtn', true));
 	mAButtonAlphaAnimator = new setTenmetuAlpha(mAButtonIcon, 1.0f);
 	mDiaryInstance        = new ogDrawDiary;
 	mCurrentDay           = 0;
@@ -417,7 +417,7 @@ zen::ogDrawSelectDiary::ogDrawSelectDiary()
 		mDayDisplayPanes[i] = mScreen->search(P2DPaneLibrary::makeTag(name), true);
 
 		sprintf(name, "pk%02d", i + 14);
-		_248[i] = (P2DPicture*)mScreen->search(P2DPaneLibrary::makeTag(name), true);
+		_248[i] = static_cast<P2DPicture*>(mScreen->search(P2DPaneLibrary::makeTag(name), true));
 	}
 
 	mSelectedColumnIndex = 0;
@@ -462,7 +462,7 @@ void zen::ogDrawSelectDiary::start()
 	}
 
 	for (int i = mCurrentDay + 1; i < MAX_DAYS; i++) {
-		P2DPicture* obj = (P2DPicture*)_248[i]->getPaneTree()->getParent()->getObject();
+		P2DPicture* obj = static_cast<P2DPicture*>(_248[i]->getPaneTree()->getParent()->getObject());
 		obj->setAlpha(0);
 	}
 
@@ -597,7 +597,7 @@ zen::ogDrawSelectDiary::SelectDiaryStatus zen::ogDrawSelectDiary::update(Control
 	mDiaryStatus = mDiaryInstance->update(input);
 	mBlackFadeScreen->update();
 	for (int i = mCurrentDay + 1; i < MAX_DAYS; i++) {
-		P2DPicture* obj = (P2DPicture*)_248[i]->getPaneTree()->getParent()->getObject();
+		P2DPicture* obj = static_cast<P2DPicture*>(_248[i]->getPaneTree()->getParent()->getObject());
 		obj->setAlpha(0);
 	}
 

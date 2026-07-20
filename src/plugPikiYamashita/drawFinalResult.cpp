@@ -40,23 +40,23 @@ zen::DrawTotalScore::DrawTotalScore(zen::TotalScoreRecord* record)
 		_14[i] = screen->search(P2DPaneLibrary::makeTag(buf), true);
 	}
 
-	mPartsNumLeft         = (P2DPicture*)screen->search('pa_l', true);
-	mPartsNumRight        = (P2DPicture*)screen->search('pa_r', true);
-	mDaysNumLeft          = (P2DPicture*)screen->search('da_l', true);
-	mDaysNumRight         = (P2DPicture*)screen->search('da_r', true);
-	mLivingPikisThousands = (P2DPicture*)screen->search('lp_4', true);
-	mLivingPikisHundreds  = (P2DPicture*)screen->search('lp_3', true);
-	mLivingPikisTens      = (P2DPicture*)screen->search('lp_2', true);
-	mLivingPikisOnes      = (P2DPicture*)screen->search('lp_1', true);
-	mDeadPikisThousands   = (P2DPicture*)screen->search('dp_4', true);
-	mDeadPikisHundreds    = (P2DPicture*)screen->search('dp_3', true);
-	mDeadPikisTens        = (P2DPicture*)screen->search('dp_2', true);
-	mDeadPikisOnes        = (P2DPicture*)screen->search('dp_1', true);
-	_B0                   = (P2DPicture*)screen->search('pd_s', true);
-	_B4                   = (P2DTextBox*)screen->search('pa_k', true);
-	_B8                   = (P2DTextBox*)screen->search('pa_d', true);
-	_BC                   = (P2DTextBox*)screen->search('lp_h', true);
-	_C0                   = (P2DTextBox*)screen->search('dp_h', true);
+	mPartsNumLeft         = static_cast<P2DPicture*>(screen->search('pa_l', true));
+	mPartsNumRight        = static_cast<P2DPicture*>(screen->search('pa_r', true));
+	mDaysNumLeft          = static_cast<P2DPicture*>(screen->search('da_l', true));
+	mDaysNumRight         = static_cast<P2DPicture*>(screen->search('da_r', true));
+	mLivingPikisThousands = static_cast<P2DPicture*>(screen->search('lp_4', true));
+	mLivingPikisHundreds  = static_cast<P2DPicture*>(screen->search('lp_3', true));
+	mLivingPikisTens      = static_cast<P2DPicture*>(screen->search('lp_2', true));
+	mLivingPikisOnes      = static_cast<P2DPicture*>(screen->search('lp_1', true));
+	mDeadPikisThousands   = static_cast<P2DPicture*>(screen->search('dp_4', true));
+	mDeadPikisHundreds    = static_cast<P2DPicture*>(screen->search('dp_3', true));
+	mDeadPikisTens        = static_cast<P2DPicture*>(screen->search('dp_2', true));
+	mDeadPikisOnes        = static_cast<P2DPicture*>(screen->search('dp_1', true));
+	_B0                   = static_cast<P2DPicture*>(screen->search('pd_s', true));
+	_B4                   = static_cast<P2DTextBox*>(screen->search('pa_k', true));
+	_B8                   = static_cast<P2DTextBox*>(screen->search('pa_d', true));
+	_BC                   = static_cast<P2DTextBox*>(screen->search('lp_h', true));
+	_C0                   = static_cast<P2DTextBox*>(screen->search('dp_h', true));
 
 	setSpecialNumber(1, mTotalScoreRecord->mRecordNumParts[0]);
 	setSpecialNumber(2, mTotalScoreRecord->mRecordNumDays[0]);
@@ -81,7 +81,7 @@ zen::DrawTotalScore::DrawTotalScore(zen::TotalScoreRecord* record)
 
 	for (i = 0; i < 5; i++) {
 		sprintf(buf, "pd%02d", i + 1);
-		mPartsDaysRecordPanes[i] = (P2DTextBox*)screen->search(P2DPaneLibrary::makeTag(buf), true);
+		mPartsDaysRecordPanes[i] = static_cast<P2DTextBox*>(screen->search(P2DPaneLibrary::makeTag(buf), true));
 		char* str                = mPartsDaysRecordTexts[i];
 		strcpy(str, mPartsDaysRecordPanes[i]->getString());
 		cnvSpecialNumberHyphen(str);
@@ -89,7 +89,7 @@ zen::DrawTotalScore::DrawTotalScore(zen::TotalScoreRecord* record)
 	}
 	for (i = 0; i < 5; i++) {
 		sprintf(buf, "lp%02d", i + 1);
-		mLivingPikiRecordPanes[i] = (P2DTextBox*)screen->search(P2DPaneLibrary::makeTag(buf), true);
+		mLivingPikiRecordPanes[i] = static_cast<P2DTextBox*>(screen->search(P2DPaneLibrary::makeTag(buf), true));
 		char* str                 = mLivingPikiRecordTexts[i];
 		strcpy(str, mLivingPikiRecordPanes[i]->getString());
 		cnvSpecialNumberHyphen(str);
@@ -97,7 +97,7 @@ zen::DrawTotalScore::DrawTotalScore(zen::TotalScoreRecord* record)
 	}
 	for (i = 0; i < 5; i++) {
 		sprintf(buf, "dp%02d", i + 1);
-		mDeadPikiRecordPanes[i] = (P2DTextBox*)screen->search(P2DPaneLibrary::makeTag(buf), true);
+		mDeadPikiRecordPanes[i] = static_cast<P2DTextBox*>(screen->search(P2DPaneLibrary::makeTag(buf), true));
 		char* str               = mDeadPikiRecordTexts[i];
 		strcpy(str, mDeadPikiRecordPanes[i]->getString());
 		cnvSpecialNumberHyphen(str);
@@ -125,7 +125,7 @@ zen::DrawTotalScore::DrawTotalScore(zen::TotalScoreRecord* record)
 	setNumberTag(screen, 'tp_2', &mTotalScoreRecord->mTotalPikis, 10);
 	setNumberTag(screen, 'tp_1', &mTotalScoreRecord->mTotalPikis, 1);
 
-	_7C          = (P2DPicture*)screen->search('newd', true);
+	_7C          = static_cast<P2DPicture*>(screen->search('newd', true));
 	mEffectMgr2D = new EffectMgr2D(0x10, 0x40, 0x40);
 	mBest.init(screen);
 	mBest.sleep();

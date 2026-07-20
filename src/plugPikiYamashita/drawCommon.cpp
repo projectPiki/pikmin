@@ -145,7 +145,7 @@ void zen::P2DPaneLibrary::setMirror(P2DPane* pane, P2DMirror mirror)
 	}
 	case PANETYPE_Picture:
 	{
-		P2DPicture* pic = (P2DPicture*)pane;
+		P2DPicture* pic = static_cast<P2DPicture*>(pane);
 		pic->setMirror(mirror);
 		break;
 	}
@@ -273,9 +273,9 @@ void zen::P2DPaneLibrary::printUseTexName(P2DPane* pane, IDelegate1<immut char*>
 	while (iter != pane->getPaneTree()->getEndChild()) {
 		u16 type = iter->getTypeID();
 		if (type == PANETYPE_Window) {
-			P2DWindow* window = (P2DWindow*)iter.getObject();
+			P2DWindow* window = static_cast<P2DWindow*>(iter.getObject());
 		} else if (type == PANETYPE_Picture) {
-			P2DPicture* pic = (P2DPicture*)iter.getObject();
+			P2DPicture* pic = static_cast<P2DPicture*>(iter.getObject());
 			delegate->invoke(pic->getTexName());
 		}
 		printUseTexName(iter.getObject(), delegate);
