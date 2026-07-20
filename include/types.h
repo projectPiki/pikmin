@@ -86,6 +86,16 @@ typedef int BOOL;
 // #define DEVELOP
 #endif
 
+// The value of this macro controls the conditional compilation of all uses for JAudio (audio library) in the codebase.
+#ifndef PIKI_USE_JAUDIO
+#define PIKI_USE_JAUDIO TRUE
+#endif
+
+// The value of this macro controls the conditional compilation of all uses for Dolphin GX (graphics API) in the codebase.
+#ifndef PIKI_USE_DGX
+#define PIKI_USE_DGX TRUE
+#endif
+
 // For when you have to pass something as a macro argument that contains commas.
 #define MACRO_ARG(...) __VA_ARGS__
 

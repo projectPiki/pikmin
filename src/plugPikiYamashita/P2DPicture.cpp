@@ -354,6 +354,7 @@ void P2DPicture::drawTexCoord(int x, int y, int width, int height, f32 uBL, f32 
 	int xEnd = x + width;
 	int yEnd = y + height;
 
+#if PIKI_USE_DGX
 	GXClearVtxDesc();
 	GXSetVtxDesc(GX_VA_POS, GX_DIRECT);
 	GXSetVtxDesc(GX_VA_CLR0, GX_DIRECT);
@@ -395,6 +396,7 @@ void P2DPicture::drawTexCoord(int x, int y, int width, int height, f32 uBL, f32 
 	GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_POS_XYZ, GX_U16, 15);
 
 	GXEnd();
+#endif
 }
 
 /**
@@ -402,6 +404,7 @@ void P2DPicture::drawTexCoord(int x, int y, int width, int height, f32 uBL, f32 
  */
 void P2DPicture::setTevMode()
 {
+#if PIKI_USE_DGX
 	GXColor color;
 	for (int i = 0; i < mTextureCount; i++) {
 		GXSetTexCoordGen2((GXTexCoordID)i, GX_TG_MTX3X4, GX_TG_TEX0, GX_IDENTITY, GX_FALSE, GX_PTIDENTITY);
@@ -464,6 +467,7 @@ void P2DPicture::setTevMode()
 
 	GXSetNumTevStages(i);
 	GXSetBlendMode(GX_BM_BLEND, GX_BL_SRCALPHA, GX_BL_INVSRCALPHA, GX_LO_SET);
+#endif
 }
 
 /**
