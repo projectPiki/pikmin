@@ -4,6 +4,7 @@
 #include "CreatureProp.h"
 #include "GlobalGameOptions.h"
 #include "RopeCreature.h"
+#include "SAIEvent.h"
 #include "Shape.h"
 #include "SimpleAI.h"
 #include "SoundMgr.h"
@@ -11,6 +12,7 @@
 #include "types.h"
 #include "zen/CallBack.h"
 #include "zen/particle.h"
+
 
 #define IS_DEMO_HIDE_ONYON(flag, color) ((flag) & (1 << (color)))
 

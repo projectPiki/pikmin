@@ -2,6 +2,7 @@
 #define _PLANTMGR_H
 
 #include "CreatureNode.h"
+#include "SAIEvent.h"
 #include "SimpleAI.h"
 #include "types.h"
 

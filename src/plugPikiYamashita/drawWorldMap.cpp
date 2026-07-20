@@ -15,222 +15,245 @@
 #define MAX_PARTS_YAKUSHIMA (10)
 #define MAX_PARTS_LAST      (1)
 
+// defined by DEFINE_ERROR/DEFINE_PRINT much further down; the structs above
+// them use ERROR/PRINT in debug builds
+static void _Error(immut char* fmt, ...);
+static void _Print(immut char* fmt, ...);
+
 namespace {
 zen::EffectMgr2D* WMeffMgr;
 
 // idk what's going on with these. mapNoScr2Game has to spit out WorldMapName values, which have to equal StageID values
 u8 mapNoScr2Game[5] = { WM_Yakushima, WM_Forest, WM_Practice, WM_Cave, WM_Last };
 u8 mapNoGame2Scr[5] = { WMSCR_Practice, WMSCR_Forest, WMSCR_Cave, WMSCR_Yakushima, WMSCR_Last };
-} // namespace
 
-/**
- * @todo: Documentation
- * @note UNUSED Size: 00009C
- */
-DEFINE_ERROR(26)
-
-/**
- * @todo: Documentation
- * @note UNUSED Size: 0000F4
- */
-DEFINE_PRINT("drawWorldMap")
-
-namespace zen {
 /**
  * @brief TODO
  *
  * @note Size: 0x28.
  */
-struct WorldMapWipe {
+struct WorldMapTitleObj {
 public:
-	WorldMapWipe() { mWipePane = nullptr; }
-
-	// weak
-	void init(P2DScreen* wipeScreen, u32 tag)
+	WorldMapTitleObj()
 	{
-		P2DPane* pane = wipeScreen->search(tag, true);
-		if (pane->getTypeID() == PANETYPE_Picture) {
-			mWipePane = (P2DPicture*)pane;
-			mDefaultPos.set(mWipePane->getPosH() + (mWipePane->getWidth() >> 1), mWipePane->getPosV() + (mWipePane->getHeight() >> 1),
-			                0.0f);
-			move(mWipePane->getPosH(), mWipePane->getPosV());
+		mTitlePane = nullptr;
+		mAnimState = TitleAnimState::Idle;
+	}
 
-		} else {
-			// these are load bearing, take these out and this inlines :')
-			PRINT("not picture pane.\n");
-			ERROR("not picture pane.\n");
+	// weak:
+	void update()
+	{
+		switch (mAnimState) {
+		case TitleAnimState::Idle:
+		{
+			break;
 		}
+		case TitleAnimState::Appearing:
+		{
+			if (move(0.25f)) {
+				mAnimState = TitleAnimState::Idle;
+			}
+			break;
+		}
+		case TitleAnimState::Hiding:
+		{
+			if (move(0.5f)) {
+				mAnimState = TitleAnimState::Idle;
+				hide();
+			}
+			break;
+		}
+		}
+		STACK_PAD_VAR(1);
 	}
 
-	void move(int x, int y)
+	// DLL requires these inlines, they aren't in the list though, so fabricated name
+	void init(P2DPane* titlePane)
 	{
-		x -= (mWipePane->getWidth() >> 1);
-		y -= (mWipePane->getHeight() >> 1);
-
-		mCurrentPos.set(mWipePane->getPosH(), mWipePane->getPosV(), 0.0f);
-		mTargetPos.set(x, y, 0.0f);
+		mTitlePane = titlePane;
+		mTitlePane->setOffset(mTitlePane->getWidth() >> 1, mTitlePane->getHeight() >> 1);
+		mAnimState = TitleAnimState::Idle;
 	}
-
-	void set(int x, int y)
+	// probably? could be wait, maybe rename later
+	void disappear()
 	{
-		x -= (mWipePane->getWidth() >> 1);
-		y -= (mWipePane->getHeight() >> 1);
-		mWipePane->move(x, y);
-		mCurrentPos.set(x, y, 0.0f);
-		mTargetPos.set(x, y, 0.0f);
+		mTitlePane->move(640, 480);
+		mAnimState = TitleAnimState::Idle;
+		hide();
 	}
+	void hide() { mTitlePane->hide(); }
 
-	void moveDefaultPos() { move(zen::RoundOff(mDefaultPos.x), zen::RoundOff(mDefaultPos.y)); }
-	void update(f32 t, u8 alpha)
+	void show() { mTitlePane->show(); }
+
+	// might be wait
+	void appear()
 	{
-		f32 tComp = 1.0f - t;
-		mWipePane->move(zen::RoundOff(mCurrentPos.x * tComp + mTargetPos.x * t), zen::RoundOff(mCurrentPos.y * tComp + mTargetPos.y * t));
-		mWipePane->setAlpha(alpha);
+		mStartPos.set(640.0f, 30.0f, 0.0f);
+		mTargetPos.set(40.0f, 30.0f, 0.0f);
+		mAnimTimer = 0.0f;
+		mAnimState = TitleAnimState::Appearing;
+		show();
 	}
 
-	void setDefault() { set(zen::RoundOff(mDefaultPos.x), zen::RoundOff(mDefaultPos.y)); }
+	void wait()
+	{
+		mStartPos.set(mTitlePane->getPosH(), mTitlePane->getPosV(), 0.0f);
+		mTargetPos.set(mStartPos.x, mStartPos.y - 320.0f, mStartPos.z);
+		mAnimTimer = 0.0f;
+		mAnimState = TitleAnimState::Hiding;
+		show();
+	}
 
 protected:
-	Vector3f mDefaultPos;  // _00
-	Vector3f mCurrentPos;  // _0C
-	Vector3f mTargetPos;   // _18
-	P2DPicture* mWipePane; // _24
-};
+	bool move(f32 time)
+	{
+		bool res = false;
+		mAnimTimer += gsys->getFrameTime();
+		if (mAnimTimer > time) {
+			mAnimTimer = time;
+			res        = true;
+		}
 
-/**
- * @brief Wipe transition states for world map screen
- */
-BEGIN_ENUM_TYPE(WipeState)
-enum {
-	Idle    = 0, // Wipe is not animating
-	Closing = 1, // Wipe is closing (covering screen)
-	Opening = 2, // Wipe is opening (revealing screen)
-} END_ENUM_TYPE;
+		f32 t     = sinf(mAnimTimer / time * HALF_PI);
+		f32 tComp = 1.0f - t;
+		mTitlePane->move(zen::RoundOff(mStartPos.x * tComp + mTargetPos.x * t), zen::RoundOff(mStartPos.y * tComp + mTargetPos.y * t));
+		return res;
+	}
+
+	int mAnimState;      // _00
+	P2DPane* mTitlePane; // _04, could be a pane subtype
+	f32 mAnimTimer;      // _08
+	u8 _UNUSED0C[0x4];   // _0C, unknown
+	Vector3f mStartPos;  // _10
+	Vector3f mTargetPos; // _1C
+};
 
 /**
  * @brief TODO
  *
- * @note Size: 0xB0.
+ * @note Size: 0x10.
  */
-struct WorldMapWipeMgr {
+struct DrawWorldMapDateCallBack : public P2DPaneCallBack, public zen::NumberTex {
 public:
-	WorldMapWipeMgr()
+	DrawWorldMapDateCallBack(P2DPane* centrePane, P2DPane* leftPane, P2DPane* rightPane)
+	    : P2DPaneCallBack(nullptr, PANETYPE_Pane)
 	{
-		mTimer    = 0.0f;
-		mDuration = 1.0f;
-		mIsActive = false;
+		checkPaneType(centrePane, PANETYPE_Picture);
+		checkPaneType(leftPane, PANETYPE_Picture);
+		checkPaneType(rightPane, PANETYPE_Picture);
+
+		mCentrePane = (P2DPicture*)centrePane;
+		mLeftPane   = (P2DPicture*)leftPane;
+		mRightPane  = (P2DPicture*)rightPane;
+
+		setTex();
 	}
 
-	void init(P2DScreen* wipeScreen)
+	virtual bool invoke(P2DPane*) // _08
 	{
-		mWipes[0].init(wipeScreen, 'wp00');
-		mWipes[1].init(wipeScreen, 'wp01');
-		mWipes[2].init(wipeScreen, 'wp02');
-		mWipes[3].init(wipeScreen, 'wp03');
-		init();
+		setTex();
+		return true;
 	}
 
-	void init()
+	// weak
+	void setTex()
 	{
-		mTimer    = 0.0f;
-		mDuration = 0.8f;
-		mIsActive = false;
-	}
-
-	void set(int x, int y)
-	{
-		for (int i = 0; i < 4; i++) {
-			mWipes[i].set(x, y);
+		int dayNum = playerState->getCurrDay() + 1;
+		if (dayNum > 9) {
+			// need two digits
+			mCentrePane->hide();
+			mLeftPane->show();
+			mLeftPane->setTexture(texTable[dayNum / 10], 0);
+			mRightPane->show();
+			mRightPane->setTexture(texTable[dayNum % 10], 0);
+		} else {
+			mCentrePane->show();
+			mCentrePane->setTexture(texTable[dayNum], 0);
+			mLeftPane->hide();
+			mRightPane->hide();
 		}
-
-		mState = WipeState::Idle;
-	}
-
-	void open(f32 duration)
-	{
-		mTimer    = 0.0f;
-		mDuration = duration;
-		for (int i = 0; i < 4; i++) {
-			mWipes[i].moveDefaultPos();
-		}
-
-		mState    = WipeState::Opening;
-		mIsActive = true;
-	}
-
-	bool isActive() { return mIsActive; }
-
-	bool update()
-	{
-		int i;
-		f32 blendFactor;
-		u8 alpha;
-
-		mIsActive = false;
-		switch (int state = mState) {
-		case WipeState::Idle:
-		{
-			break;
-		}
-		case WipeState::Closing:
-		case WipeState::Opening:
-		{
-			mTimer += gsys->getFrameTime();
-			if (mTimer > mDuration) {
-				mTimer = mDuration;
-				state  = WipeState::Idle;
-			}
-
-			if (mState == WipeState::Opening) {
-				blendFactor = (1.0f - NMathF::cos(mTimer / mDuration * PI)) * 0.5f;
-				alpha       = zen::RoundOff(255.0f * (1.0f - blendFactor));
-			} else {
-				blendFactor = NMathF::sin(mTimer / mDuration * HALF_PI);
-				alpha       = zen::RoundOff(255.0f * blendFactor);
-			}
-
-			for (i = 0; i < 4; i++) {
-				mWipes[i].update(blendFactor, alpha);
-			}
-
-			mState    = state;
-			mIsActive = true;
-			break;
-		}
-		}
-
-		return mIsActive;
-	}
-
-	void close(f32 duration, int p2, int p3)
-	{
-		mTimer    = 0.0f;
-		mDuration = duration;
-
-		for (int i = 0; i < 4; i++) {
-			mWipes[i].move(p2, p3);
-		}
-
-		mState    = WipeState::Closing;
-		mIsActive = true;
-	}
-
-	void setDefault()
-	{
-		for (int i = 0; i < 4; i++) {
-			mWipes[i].setDefault();
-		}
-
-		mState = WipeState::Idle;
 	}
 
 protected:
-	int mState;             // _00
-	f32 mTimer;             // _04
-	f32 mDuration;          // _08
-	WorldMapWipe mWipes[4]; // _0C
-	bool mIsActive;         // _AC
+	// _00     = VTBL
+	// _00-_04 = P2DPaneCallBack
+	// _04     = zen::NumberTex (empty)
+	P2DPicture* mCentrePane; // _04, for single digit dates
+	P2DPicture* mLeftPane;   // _08, for double digit dates
+	P2DPicture* mRightPane;  // _0C, for double digit dates
 };
+
+
+} // namespace
+
+namespace zen {
+
+/**
+ * @brief TODO
+ *
+ * @note Size: 0x8.
+ */
+struct WorldMapTitleMgr {
+public:
+	WorldMapTitleMgr()
+	{
+		mTitleObjects      = new WorldMapTitleObj[OBJ_NUM];
+		mCurrentTitleIndex = -1;
+	}
+
+	// DLL:
+	void init(P2DScreen* titleScreen)
+	{
+		for (int i = 0; i < OBJ_NUM; i++) {
+			char mapStr[8];
+			WorldMapName gameStageID = (WorldMapName)mapNoScr2Game[i];
+			sprintf(mapStr, "map%d", gameStageID + 1);
+			P2DPane* mapPane = titleScreen->search(P2DPaneLibrary::makeTag(mapStr), true);
+			mTitleObjects[i].init(mapPane);
+		}
+
+		init();
+	}
+	void init()
+	{
+		for (int i = 0; i < OBJ_NUM; i++) {
+			mTitleObjects[i].disappear();
+		}
+		mCurrentTitleIndex = -1;
+	}
+
+	void update()
+	{
+		for (int i = 0; i < OBJ_NUM; i++) {
+			mTitleObjects[i].update();
+		}
+	}
+
+	void setTitle(WorldMapName id)
+	{
+		WorldMapScreenID scrID = (WorldMapScreenID)mapNoScr2Game[id];
+		if (mCurrentTitleIndex != scrID) {
+			mCurrentTitleIndex = scrID;
+			mTitleObjects[mCurrentTitleIndex].appear();
+		}
+	}
+
+	void exitTitle()
+	{
+		if (mCurrentTitleIndex != -1) {
+			mTitleObjects[mCurrentTitleIndex].wait();
+			mCurrentTitleIndex = -1;
+		}
+	}
+
+protected:
+	static const int OBJ_NUM;
+
+	WorldMapTitleObj* mTitleObjects; // _00, array of OBJ_NUM objects
+	int mCurrentTitleIndex;          // _04
+};
+
+const int zen::WorldMapTitleMgr::OBJ_NUM = 5;
 
 /**
  * @brief TODO
@@ -266,6 +289,17 @@ public:
 
 		mSparkleGenerator = WMeffMgr->create(EFF2D_MapOnyonSparkle, Vector3f(0.0f, 0.0f, 0.0f), nullptr, nullptr);
 	}
+	void set(f32 x, f32 y, f32 scale)
+	{
+		mCurrentPos.set(x, y, 0.0f);
+		mTargetPos.set(x, y, 0.0f);
+		mBottomPos.set(x, y + bottomLengthDefault, 0.0f);
+		mOnyonIcon->move(mCurrentPos.x, mCurrentPos.y);
+		mOnyonIcon->setScale(Vector3f(scale, scale, 1.0f));
+	}
+
+	void move(f32 x, f32 y) { mTargetPos.set(x, y, 0.0f); }
+
 	void update(immut Vector3f& scale)
 	{
 		Vector3f vec1 = mTargetPos - mCurrentPos;
@@ -299,44 +333,6 @@ public:
 		}
 	}
 
-	// DLL:
-	void init(P2DScreen* iconScreen, u32 tag, bool hideIcon)
-	{
-		P2DPane* icon = iconScreen->search(tag, true);
-		if (icon->getTypeID() == PANETYPE_Picture) {
-			mOnyonIcon = (P2DPicture*)icon;
-			if (hideIcon) {
-				mOnyonIcon->hide();
-			}
-		}
-
-		init();
-	}
-	void show()
-	{
-		mOnyonIcon->show();
-		if (mSparkleGenerator) {
-			mSparkleGenerator->startGen();
-		}
-	}
-	void hide()
-	{
-		mOnyonIcon->hide();
-		if (mSparkleGenerator) {
-			mSparkleGenerator->stopGen();
-		}
-	}
-	void move(f32 x, f32 y) { mTargetPos.set(x, y, 0.0f); }
-	void set(f32 x, f32 y, f32 scale)
-	{
-		mCurrentPos.set(x, y, 0.0f);
-		mTargetPos.set(x, y, 0.0f);
-		mBottomPos.set(x, y + bottomLengthDefault, 0.0f);
-		mOnyonIcon->move(mCurrentPos.x, mCurrentPos.y);
-		mOnyonIcon->setScale(Vector3f(scale, scale, 1.0f));
-	}
-
-protected:
 	void updateBottomPos()
 	{
 		Vector3f vec1;
@@ -369,6 +365,36 @@ protected:
 		mBottomPos.set(vec2);
 	}
 
+
+	void show()
+	{
+		mOnyonIcon->show();
+		if (mSparkleGenerator) {
+			mSparkleGenerator->startGen();
+		}
+	}
+
+	void hide()
+	{
+		mOnyonIcon->hide();
+		if (mSparkleGenerator) {
+			mSparkleGenerator->stopGen();
+		}
+	}
+
+	void init(P2DScreen* iconScreen, u32 tag, bool hideIcon)
+	{
+		P2DPane* icon = iconScreen->search(tag, true);
+		if (icon->getTypeID() == PANETYPE_Picture) {
+			mOnyonIcon = (P2DPicture*)icon;
+			if (hideIcon) {
+				mOnyonIcon->hide();
+			}
+		}
+
+		init();
+	}
+
 	static f32 scaleFrameMax;
 	static f32 bottomLengthMin;
 	static f32 bottomLengthMax;
@@ -382,6 +408,11 @@ protected:
 	f32 mScaleTimer;                      // _34
 	particleGenerator* mSparkleGenerator; // _38
 };
+
+f32 WorldMapCursorOnyon::bottomLengthMin     = 10.0f;
+f32 WorldMapCursorOnyon::bottomLengthDefault = 15.0f;
+f32 WorldMapCursorOnyon::bottomLengthMax     = 20.0f;
+f32 WorldMapCursorOnyon::scaleFrameMax       = 0.8f;
 
 /**
  * @brief TODO
@@ -501,6 +532,26 @@ public:
 		}
 	}
 
+	void set(int x, int y, f32 scale)
+	{
+		mRocketPos.set(x, y, 0.0f);
+		mTargetPos.set(x, y, 0.0f);
+		mRocketIcon->move(x, y);
+		mRocketIcon->setScale(Vector3f(scale, scale, 1.0f));
+		setOnyonPos(scale);
+	}
+
+	void moveCancel(int x, int y)
+	{
+		if (mIsForcedMove || mIsLanding) {
+			mIsForcedMove = false;
+			setLandingFlag(false);
+			setUfoStatus(UFO_Moving);
+			mTargetPos.set(x, y, 0.0f);
+			SeSystem::playSysSe(SYSSE_CANCEL);
+		}
+	}
+
 	void update()
 	{
 		switch (mUfoStatus) {
@@ -532,19 +583,11 @@ public:
 		effect();
 	}
 
+
 	ufoStatusFlag getStatusFlag() { return mUfoStatus; }
 
 	bool isLanding() { return mIsLanding; }
 	bool isMoveOK() { return !mIsForcedMove && !mIsLanding; }
-
-	void set(int x, int y, f32 scale)
-	{
-		mRocketPos.set(x, y, 0.0f);
-		mTargetPos.set(x, y, 0.0f);
-		mRocketIcon->move(x, y);
-		mRocketIcon->setScale(Vector3f(scale, scale, 1.0f));
-		setOnyonPos(scale);
-	}
 
 	void move(int x, int y, bool p3)
 	{
@@ -584,16 +627,6 @@ public:
 		}
 	}
 
-	void moveCancel(int x, int y)
-	{
-		if (mIsForcedMove || mIsLanding) {
-			mIsForcedMove = false;
-			setLandingFlag(false);
-			setUfoStatus(UFO_Moving);
-			mTargetPos.set(x, y, 0.0f);
-			SeSystem::playSysSe(SYSSE_CANCEL);
-		}
-	}
 
 protected:
 	void setLandingFlag(bool doSet)
@@ -619,49 +652,40 @@ protected:
 		}
 	}
 
-	void moveOnyon()
+	void effect()
 	{
-		Vector3f onyonPos[PikiColorCount];
-		updateOnyonPos(&onyonPos[Blue], &onyonPos[Red], &onyonPos[Yellow]);
-		mCursorOnyons[Blue].move(onyonPos[Blue].x, onyonPos[Blue].y);
-		mCursorOnyons[Red].move(onyonPos[Red].x, onyonPos[Red].y);
-		mCursorOnyons[Yellow].move(onyonPos[Yellow].x, onyonPos[Yellow].y);
-	}
+		f32 angle = mRocketIcon->getRotate() - HALF_PI;
+		Vector3f vec1;
+		vec1.set(mRocketIcon->getPosH() + (mRocketIcon->getWidth() >> 1), mRocketIcon->getPosV() + (mRocketIcon->getHeight() >> 1), 0.0f);
+		vec1.add(Vector3f(NMathF::cos(angle) * (-f32(mRocketIcon->getWidth() >> 1) * mRocketIcon->getScale().x),
+		                  NMathF::sin(angle) * (-f32(mRocketIcon->getHeight() >> 1) * mRocketIcon->getScale().y), 0.0f));
+		vec1.y = 480.0f - vec1.y;
 
-	void updateOnyonPos(Vector3f* bluePos, Vector3f* redPos, Vector3f* yellowPos)
-	{
-		Vector3f orbitCenter, newBlueTargetPos, orbitVec;
-		f32 norm, time, cosv, sinv, rocketScale;
-
-		time        = 60.0f * gsys->getFrameTime();
-		rocketScale = mRocketIcon->getScale().x;
-		orbitCenter.set(mRocketPos.x + ONYON_OFFSET_X, mRocketPos.y + ONYON_OFFSET_Y, mRocketPos.z + ONYON_OFFSET_Z);
-
-		mBlueOnyonPos.add(Vector3f(mOnyonVelocity * time));
-		orbitVec.set(mBlueOnyonPos - orbitCenter);
-		norm = orbitVec.length();
-		if (norm < 0.000001f) {
-			orbitVec.set(0.0f, 0.0f, 0.0f);
-		} else {
-			orbitVec.multiply(ONYON_POS_RADIUS * rocketScale / norm);
+		if (mExhaustGenerators[0]) {
+			mExhaustGenerators[0]->visible();
+			mExhaustGenerators[0]->setEmitPos(vec1);
+			mExhaustGenerators[0]->setEmitDir(Vector3f(-NMathF::cos(angle), NMathF::sin(angle), 0.0f));
+			mExhaustGenerators[0]->setScaleSize(mRocketIcon->getScale().x * 0.5f);
+			mExhaustGenerators[0]->setInitVel(mFireInitVel * mRocketIcon->getScale().x * mRocketIcon->getScale().x);
+			if (mUfoStatus == UFO_Hovering) {
+				mExhaustGenerators[0]->setFreqFrm(mFireFreqFrame);
+			} else {
+				mExhaustGenerators[0]->setFreqFrm(2.0f * mFireFreqFrame);
+			}
 		}
 
-		newBlueTargetPos.set(orbitCenter + orbitVec);
-		mOnyonVelocity.add(Vector3f(newBlueTargetPos - mBlueOnyonPos));
-		mBlueOnyonPos.set(newBlueTargetPos);
-
-		// set blue onyon position (just calculated, reference for others)
-		bluePos->set(mBlueOnyonPos.x, mBlueOnyonPos.y, 0.0f);
-
-		// calculate red onyon position (120 degrees rotated from blue)
-		cosv = cosf(TORADIANS(120));
-		sinv = sinf(TORADIANS(120));
-		redPos->set(orbitVec.x * cosv + orbitCenter.x - orbitVec.y * sinv, orbitVec.x * sinv + orbitCenter.y + orbitVec.y * cosv, 0.0f);
-
-		// calculate yellow onyon position (240 degrees rotated from blue)
-		cosv = cosf(TORADIANS(240));
-		sinv = sinf(TORADIANS(240));
-		yellowPos->set(orbitVec.x * cosv + orbitCenter.x - orbitVec.y * sinv, orbitVec.x * sinv + orbitCenter.y + orbitVec.y * cosv, 0.0f);
+		if (mExhaustGenerators[1]) {
+			mExhaustGenerators[1]->visible();
+			mExhaustGenerators[1]->setEmitPos(vec1);
+			mExhaustGenerators[1]->setEmitDir(Vector3f(-NMathF::cos(angle), NMathF::sin(angle), 0.0f));
+			mExhaustGenerators[1]->setScaleSize(mRocketIcon->getScale().x * 0.7f);
+			mExhaustGenerators[1]->setInitVel(mSmokeInitVel * mRocketIcon->getScale().x * mRocketIcon->getScale().x);
+			if (mUfoStatus == UFO_Hovering) {
+				mExhaustGenerators[1]->setFreqFrm(mSmokeFreqFrame * 0.25f);
+			} else {
+				mExhaustGenerators[1]->setFreqFrm(mSmokeFreqFrame);
+			}
+		}
 	}
 
 	void stayUfo()
@@ -785,40 +809,59 @@ protected:
 		return res;
 	}
 
-	void effect()
+	void moveOnyon()
 	{
-		f32 angle = mRocketIcon->getRotate() - HALF_PI;
-		Vector3f vec1;
-		vec1.set(mRocketIcon->getPosH() + (mRocketIcon->getWidth() >> 1), mRocketIcon->getPosV() + (mRocketIcon->getHeight() >> 1), 0.0f);
-		vec1.add(Vector3f(NMathF::cos(angle) * (-f32(mRocketIcon->getWidth() >> 1) * mRocketIcon->getScale().x),
-		                  NMathF::sin(angle) * (-f32(mRocketIcon->getHeight() >> 1) * mRocketIcon->getScale().y), 0.0f));
-		vec1.y = 480.0f - vec1.y;
+		Vector3f onyonPos[PikiColorCount];
+		updateOnyonPos(&onyonPos[Blue], &onyonPos[Red], &onyonPos[Yellow]);
+		mCursorOnyons[Blue].move(onyonPos[Blue].x, onyonPos[Blue].y);
+		mCursorOnyons[Red].move(onyonPos[Red].x, onyonPos[Red].y);
+		mCursorOnyons[Yellow].move(onyonPos[Yellow].x, onyonPos[Yellow].y);
+	}
 
-		if (mExhaustGenerators[0]) {
-			mExhaustGenerators[0]->visible();
-			mExhaustGenerators[0]->setEmitPos(vec1);
-			mExhaustGenerators[0]->setEmitDir(Vector3f(-NMathF::cos(angle), NMathF::sin(angle), 0.0f));
-			mExhaustGenerators[0]->setScaleSize(mRocketIcon->getScale().x * 0.5f);
-			mExhaustGenerators[0]->setInitVel(mFireInitVel * mRocketIcon->getScale().x * mRocketIcon->getScale().x);
-			if (mUfoStatus == UFO_Hovering) {
-				mExhaustGenerators[0]->setFreqFrm(mFireFreqFrame);
-			} else {
-				mExhaustGenerators[0]->setFreqFrm(2.0f * mFireFreqFrame);
-			}
+	void updateOnyonPos(Vector3f* bluePos, Vector3f* redPos, Vector3f* yellowPos)
+	{
+#ifdef _MSC_VER
+		Vector3f orbitCenter, newBlueTargetPos, orbitVec;
+		f32 norm, time, cosv, sinv, rocketScale;
+#else
+		// MWCC assigns stack slots to inlined named locals in declaration order; the GC DOL
+		// needs the f32 group's tiles above the Vector3f locals in both the standalone copy
+		// and the copy inlined into moveOnyon.
+		f32 norm, time, cosv, sinv, rocketScale;
+		Vector3f orbitCenter, newBlueTargetPos, orbitVec;
+#endif
+
+		time        = 60.0f * gsys->getFrameTime();
+		rocketScale = mRocketIcon->getScale().x;
+		orbitCenter.set(mRocketPos.x + ONYON_OFFSET_X, mRocketPos.y + ONYON_OFFSET_Y, mRocketPos.z + ONYON_OFFSET_Z);
+
+		mBlueOnyonPos.add(Vector3f(mOnyonVelocity * time));
+		orbitVec.set(mBlueOnyonPos - orbitCenter);
+		norm = orbitVec.length();
+		if (norm < 0.000001f) {
+			orbitVec.set(0.0f, 0.0f, 0.0f);
+		} else {
+			orbitVec.multiply(ONYON_POS_RADIUS * rocketScale / norm);
 		}
 
-		if (mExhaustGenerators[1]) {
-			mExhaustGenerators[1]->visible();
-			mExhaustGenerators[1]->setEmitPos(vec1);
-			mExhaustGenerators[1]->setEmitDir(Vector3f(-NMathF::cos(angle), NMathF::sin(angle), 0.0f));
-			mExhaustGenerators[1]->setScaleSize(mRocketIcon->getScale().x * 0.7f);
-			mExhaustGenerators[1]->setInitVel(mSmokeInitVel * mRocketIcon->getScale().x * mRocketIcon->getScale().x);
-			if (mUfoStatus == UFO_Hovering) {
-				mExhaustGenerators[1]->setFreqFrm(mSmokeFreqFrame * 0.25f);
-			} else {
-				mExhaustGenerators[1]->setFreqFrm(mSmokeFreqFrame);
-			}
-		}
+		newBlueTargetPos.set(orbitCenter + orbitVec);
+		mOnyonVelocity.add(Vector3f(newBlueTargetPos - mBlueOnyonPos));
+		mBlueOnyonPos.set(newBlueTargetPos);
+
+		// set blue onyon position (just calculated, reference for others)
+		bluePos->set(mBlueOnyonPos.x, mBlueOnyonPos.y, 0.0f);
+
+		// calculate red onyon position (120 degrees rotated from blue)
+		cosv = cosf(TORADIANS(120));
+		sinv = sinf(TORADIANS(120));
+		(void)(sinv = sinv);
+		redPos->set(orbitVec.x * cosv + orbitCenter.x - orbitVec.y * sinv, orbitVec.x * sinv + orbitCenter.y + orbitVec.y * cosv, 0.0f);
+
+		// calculate yellow onyon position (240 degrees rotated from blue)
+		cosv = cosf(TORADIANS(240));
+		sinv = sinf(TORADIANS(240));
+		(void)(sinv = sinv);
+		yellowPos->set(orbitVec.x * cosv + orbitCenter.x - orbitVec.y * sinv, orbitVec.x * sinv + orbitCenter.y + orbitVec.y * cosv, 0.0f);
 	}
 
 	void setUfoStatus(ufoStatusFlag status)
@@ -900,6 +943,11 @@ protected:
 	f32 mSmokeInitVel;                                 // _124
 	f32 _UNUSED128;                                    // _128
 };
+
+const f32 WorldMapCursorMgr::ONYON_POS_RADIUS = 60.0f;
+const f32 WorldMapCursorMgr::ONYON_OFFSET_X   = 0.0f;
+const f32 WorldMapCursorMgr::ONYON_OFFSET_Y   = 20.0f;
+const f32 WorldMapCursorMgr::ONYON_OFFSET_Z   = 0.0f;
 
 /**
  * @brief TODO
@@ -1286,6 +1334,416 @@ enum {
 	Operation = 0, // Normal user interaction mode
 	Appear    = 1, // Course point appearance animation
 } END_ENUM_TYPE;
+
+/**
+ * @brief TODO
+ *
+ * @note Size: 0x28.
+ */
+struct WorldMapWipe {
+public:
+	WorldMapWipe() { mWipePane = nullptr; }
+
+	// weak
+	void init(P2DScreen* wipeScreen, u32 tag)
+	{
+		P2DPane* pane = wipeScreen->search(tag, true);
+		if (pane->getTypeID() == PANETYPE_Picture) {
+			mWipePane = (P2DPicture*)pane;
+			mDefaultPos.set(mWipePane->getPosH() + (mWipePane->getWidth() >> 1), mWipePane->getPosV() + (mWipePane->getHeight() >> 1),
+			                0.0f);
+			move(mWipePane->getPosH(), mWipePane->getPosV());
+
+		} else {
+			// these are load bearing, take these out and this inlines :')
+			PRINT("not picture pane.\n");
+			ERROR("not picture pane.\n");
+		}
+	}
+
+	void move(int x, int y)
+	{
+		x -= (mWipePane->getWidth() >> 1);
+		y -= (mWipePane->getHeight() >> 1);
+
+		mCurrentPos.set(mWipePane->getPosH(), mWipePane->getPosV(), 0.0f);
+		mTargetPos.set(x, y, 0.0f);
+	}
+
+	void set(int x, int y)
+	{
+		x -= (mWipePane->getWidth() >> 1);
+		y -= (mWipePane->getHeight() >> 1);
+		mWipePane->move(x, y);
+		mCurrentPos.set(x, y, 0.0f);
+		mTargetPos.set(x, y, 0.0f);
+	}
+
+	void moveDefaultPos() { move(zen::RoundOff(mDefaultPos.x), zen::RoundOff(mDefaultPos.y)); }
+	void update(f32 t, u8 alpha)
+	{
+		f32 tComp = 1.0f - t;
+		mWipePane->move(zen::RoundOff(mCurrentPos.x * tComp + mTargetPos.x * t), zen::RoundOff(mCurrentPos.y * tComp + mTargetPos.y * t));
+		mWipePane->setAlpha(alpha);
+	}
+
+	void setDefault() { set(zen::RoundOff(mDefaultPos.x), zen::RoundOff(mDefaultPos.y)); }
+
+protected:
+	Vector3f mDefaultPos;  // _00
+	Vector3f mCurrentPos;  // _0C
+	Vector3f mTargetPos;   // _18
+	P2DPicture* mWipePane; // _24
+};
+
+/**
+ * @brief Wipe transition states for world map screen
+ */
+BEGIN_ENUM_TYPE(WipeState)
+enum {
+	Idle    = 0, // Wipe is not animating
+	Closing = 1, // Wipe is closing (covering screen)
+	Opening = 2, // Wipe is opening (revealing screen)
+} END_ENUM_TYPE;
+
+/**
+ * @brief TODO
+ *
+ * @note Size: 0xB0.
+ */
+struct WorldMapWipeMgr {
+public:
+	WorldMapWipeMgr()
+	{
+		mTimer    = 0.0f;
+		mDuration = 1.0f;
+		mIsActive = false;
+	}
+
+	void init(P2DScreen* wipeScreen)
+	{
+		mWipes[0].init(wipeScreen, 'wp00');
+		mWipes[1].init(wipeScreen, 'wp01');
+		mWipes[2].init(wipeScreen, 'wp02');
+		mWipes[3].init(wipeScreen, 'wp03');
+		init();
+	}
+
+	void init()
+	{
+		mTimer    = 0.0f;
+		mDuration = 0.8f;
+		mIsActive = false;
+	}
+
+	void set(int x, int y)
+	{
+		for (int i = 0; i < 4; i++) {
+			mWipes[i].set(x, y);
+		}
+
+		mState = WipeState::Idle;
+	}
+
+	void open(f32 duration)
+	{
+		mTimer    = 0.0f;
+		mDuration = duration;
+		for (int i = 0; i < 4; i++) {
+			mWipes[i].moveDefaultPos();
+		}
+
+		mState    = WipeState::Opening;
+		mIsActive = true;
+	}
+
+	bool isActive() { return mIsActive; }
+
+	bool update()
+	{
+		int i;
+		f32 blendFactor;
+		u8 alpha;
+
+		mIsActive = false;
+		switch (int state = mState) {
+		case WipeState::Idle:
+		{
+			break;
+		}
+		case WipeState::Closing:
+		case WipeState::Opening:
+		{
+			mTimer += gsys->getFrameTime();
+			if (mTimer > mDuration) {
+				mTimer = mDuration;
+				state  = WipeState::Idle;
+			}
+
+			if (mState == WipeState::Opening) {
+				blendFactor = (1.0f - NMathF::cos(mTimer / mDuration * PI)) * 0.5f;
+				alpha       = zen::RoundOff(255.0f * (1.0f - blendFactor));
+			} else {
+				blendFactor = NMathF::sin(mTimer / mDuration * HALF_PI);
+				alpha       = zen::RoundOff(255.0f * blendFactor);
+			}
+
+			for (i = 0; i < 4; i++) {
+				mWipes[i].update(blendFactor, alpha);
+			}
+
+			mState    = state;
+			mIsActive = true;
+			break;
+		}
+		}
+
+		return mIsActive;
+	}
+
+	void close(f32 duration, int p2, int p3)
+	{
+		mTimer    = 0.0f;
+		mDuration = duration;
+
+		for (int i = 0; i < 4; i++) {
+			mWipes[i].move(p2, p3);
+		}
+
+		mState    = WipeState::Closing;
+		mIsActive = true;
+	}
+
+	void setDefault()
+	{
+		for (int i = 0; i < 4; i++) {
+			mWipes[i].setDefault();
+		}
+
+		mState = WipeState::Idle;
+	}
+
+protected:
+	int mState;             // _00
+	f32 mTimer;             // _04
+	f32 mDuration;          // _08
+	WorldMapWipe mWipes[4]; // _0C
+	bool mIsActive;         // _AC
+};
+
+} // namespace zen
+
+namespace {
+
+/**
+ * @brief TODO
+ *
+ * @note Size: 0x3C.
+ */
+struct WorldMapCoursePoint {
+public:
+	/**
+	 * @brief TODO
+	 */
+	enum linkFlag {
+		LINK_Up    = 0,
+		LINK_Down  = 1,
+		LINK_Left  = 2,
+		LINK_Right = 3,
+		LINK_COUNT, // 4
+	};
+
+	WorldMapCoursePoint()
+	{
+		mAppearState   = CourseAppearState::Ready;
+		mAppearTimer   = 0.0f;
+		mIsVisible     = false;
+		mUnselectedPic = nullptr;
+		mSelectedPic   = nullptr;
+		mStayPane      = nullptr;
+		mLandPane      = nullptr;
+		for (int i = 0; i < 4; i++) {
+			mLinkPoints[i] = nullptr;
+		}
+	}
+
+	// weak functions
+	void select()
+	{
+		if (mIsVisible) {
+			mUnselectedPic->hide();
+			mSelectedPic->show();
+			mSelectionLine->show();
+		}
+	}
+	void setPane(P2DScreen* pointScreen, u32 tag1, u32 tag2, u32 tag3, P2DScreen* lineScreen, u32 tag4)
+	{
+		P2DPane* pointPane1 = pointScreen->search(tag1, true);
+		if (pointPane1->getTypeID() == PANETYPE_Picture) {
+			mUnselectedPic = (P2DPicture*)pointPane1;
+			mUnselectedPic->setOffset(mUnselectedPic->getWidth() >> 1, mUnselectedPic->getHeight());
+		}
+		P2DPane* pointPane2 = pointScreen->search(tag2, true);
+		if (pointPane2->getTypeID() == PANETYPE_Picture) {
+			mSelectedPic = (P2DPicture*)pointPane2;
+			mSelectedPic->setOffset(mSelectedPic->getWidth() >> 1, mSelectedPic->getHeight());
+		}
+		P2DPane* pointPane3 = pointScreen->search(tag3, true);
+		if (pointPane3->getTypeID() == PANETYPE_Picture) {
+			mOpenedPic = (P2DPicture*)pointPane3;
+			mOpenedPic->setOffset(mSelectedPic->getWidth() >> 1, mSelectedPic->getHeight());
+			mOpenedPic->hide();
+		}
+		mSelectionLine = lineScreen->search(tag4, true);
+	}
+
+	// DLL:
+	void setLink(WorldMapCoursePoint* upPt, WorldMapCoursePoint* downPt, WorldMapCoursePoint* leftPt, WorldMapCoursePoint* rightPt)
+	{
+		mLinkPoints[LINK_Up]    = upPt;
+		mLinkPoints[LINK_Down]  = downPt;
+		mLinkPoints[LINK_Left]  = leftPt;
+		mLinkPoints[LINK_Right] = rightPt;
+	}
+
+	void setCursorPoint(P2DScreen* pointScreen, u32 onyTag, u32 chaTag)
+	{
+		mStayPane = pointScreen->search(onyTag, true);
+		mLandPane = pointScreen->search(chaTag, true);
+	}
+
+	void setNumber(WorldMapName stageID) { mGameStageID = stageID; }
+
+	void nonSelect()
+	{
+		if (mIsVisible) {
+			mUnselectedPic->show();
+			mSelectedPic->hide();
+			mSelectionLine->hide();
+		}
+	}
+
+	void openCourse()
+	{
+		mIsVisible = true;
+		mUnselectedPic->hide();
+		mSelectedPic->hide();
+		mOpenedPic->show();
+		mSelectionLine->hide();
+	}
+	void closeCourse()
+	{
+		mIsVisible = false;
+		mUnselectedPic->hide();
+		mSelectedPic->hide();
+		mOpenedPic->hide();
+		mSelectionLine->hide();
+	}
+
+	void appear()
+	{
+		mAppearTimer = 0.0f;
+		mAppearState = CourseAppearState::RocketIncoming;
+		mUnselectedPic->hide();
+		mSelectedPic->hide();
+		mOpenedPic->hide();
+		mSelectionLine->hide();
+	}
+
+	P2DPane* getStayPane() { return mStayPane; }
+	P2DPane* getLandPane() { return mLandPane; }
+	WorldMapName getNumber() { return mGameStageID; }
+
+	bool update(bool isSelected)
+	{
+		bool res   = false;
+		mEventFlag = EVENT_NONE;
+		switch (mAppearState) {
+		case CourseAppearState::Ready:
+		{
+			res = true;
+			break;
+		}
+		case CourseAppearState::RocketIncoming:
+		{
+			f32 timer1 = mAppearTimer += gsys->getFrameTime();
+			if (timer1 > 0.5f) {
+				Vector3f vec1;
+				vec1.set(mUnselectedPic->getPosH() + (mUnselectedPic->getWidth() >> 1),
+				         480 - (mUnselectedPic->getPosV() + (mUnselectedPic->getHeight() >> 1)), 0.0f);
+				WMeffMgr->create(EFF2D_MapAppear1, vec1, nullptr, nullptr);
+				WMeffMgr->create(EFF2D_MapAppear2, vec1, nullptr, nullptr);
+				SeSystem::playSysSe(SYSSE_SELECT_COURSEOPEN);
+				mAppearState = CourseAppearState::Exploding;
+				mAppearTimer = 0.0f;
+			}
+			break;
+		}
+		case CourseAppearState::Exploding:
+		{
+			f32 timer2 = mAppearTimer += gsys->getFrameTime();
+			if (timer2 > 1.0f) {
+				mAppearTimer = 0.0f;
+				mAppearState = CourseAppearState::Revealing;
+				mOpenedPic->show();
+			}
+			break;
+		}
+		case CourseAppearState::Revealing:
+		{
+			f32 timer3 = mAppearTimer += gsys->getFrameTime();
+			if (timer3 > 1.0f) {
+				mAppearTimer = 0.0f;
+				mAppearState = CourseAppearState::Ready;
+				mEventFlag |= EVENT_APPEAR_FINISH;
+				res = true;
+			}
+			break;
+		}
+		}
+
+		return res;
+	}
+
+	void createCourseInEffect()
+	{
+		P2DPicture* pic = mUnselectedPic;
+		Vector3f vec1;
+		vec1.set(pic->getPosH() + (pic->getWidth() >> 1), 480 - (pic->getPosV() + (pic->getHeight() >> 1)), 0.0f);
+		WMeffMgr->create(EFF2D_MapRocketIn, vec1, nullptr, nullptr);
+	}
+
+
+	u32 getEventFlag() { return mEventFlag; }
+
+	bool getOpenSw() { return mIsVisible; }
+
+	WorldMapCoursePoint* getLinkCoursePointPtr(linkFlag id) { return mLinkPoints[id]; }
+
+	static const int EVENT_NONE;          // 0
+	static const int EVENT_APPEAR_FINISH; // 1
+
+protected:
+	u32 mEventFlag;                               // _00
+	int mAppearState;                             // _04
+	f32 mAppearTimer;                             // _08
+	bool mIsVisible;                              // _0C
+	WorldMapName mGameStageID;                    // _10
+	P2DPicture* mUnselectedPic;                   // _14, x_N, N=1-5
+	P2DPicture* mSelectedPic;                     // _18, x_Ns, N=1-5
+	P2DPicture* mOpenedPic;                       // _1C, po0N, N=1-5
+	P2DPane* mSelectionLine;                      // _20, sliN, N=1-5 - might be a sub-class
+	P2DPane* mStayPane;                           // _24, onyN, N=1-5 - might be a sub-class
+	P2DPane* mLandPane;                           // _28, chaN, N=1-5 - might be a sub-class - cha for charkuriku = land
+	WorldMapCoursePoint* mLinkPoints[LINK_COUNT]; // _2C, indexed by linkFlag presumably
+};
+
+const int WorldMapCoursePoint::EVENT_NONE          = 0;
+const int WorldMapCoursePoint::EVENT_APPEAR_FINISH = 1;
+
+} // namespace
+
+namespace zen {
 
 /**
  * @brief TODO
@@ -1708,23 +2166,62 @@ protected:
 	u8 mDelayedClose;              // _20
 };
 
+/**
+ * @brief TODO
+ *
+ * @note Size: 0x8.
+ */
+struct WorldMapShootingStarMgr {
+public:
+	WorldMapShootingStarMgr()
+	{
+		mStarFallChance  = 0.2f;
+		mIsRapidFireMode = false;
+	}
+
+	void rapidFire()
+	{
+		mIsRapidFireMode = true;
+
+		// make star falls certain for 0.25 * 100 = 400 frames after opening Final Trial
+		// - chance then drops from 100% by 0.25% per frame, down to a minimum chance of 0.2% per frame
+		mStarFallChance = 200.0f;
+	}
+
+	void update()
+	{
+		if (zen::Rand(100.0f) < mStarFallChance) {
+			WMeffMgr->create(EFF2D_MapShootingStar, Vector3f(zen::Rand(640.0f), 500.0f - zen::Rand(50.0f), -zen::Rand(150.0f)), nullptr,
+			                 nullptr);
+		}
+		if (mIsRapidFireMode) {
+			if (mStarFallChance < 0.0f) {
+				mIsRapidFireMode = false;
+				mStarFallChance  = 0.2f;
+			} else {
+				mStarFallChance -= 0.25f;
+			}
+		}
+	}
+
+protected:
+	f32 mStarFallChance;   // _00, as a percent
+	bool mIsRapidFireMode; // _04
+};
+
 } // namespace zen
 
-const int zen::WorldMapTitleMgr::OBJ_NUM = 5;
+/**
+ * @todo: Documentation
+ * @note UNUSED Size: 00009C
+ */
+DEFINE_ERROR(26)
 
-// probably need to move these around later for ordering
-f32 zen::WorldMapCursorOnyon::bottomLengthMin     = 10.0f;
-f32 zen::WorldMapCursorOnyon::bottomLengthDefault = 15.0f;
-f32 zen::WorldMapCursorOnyon::bottomLengthMax     = 20.0f;
-f32 zen::WorldMapCursorOnyon::scaleFrameMax       = 0.8f;
-
-const f32 zen::WorldMapCursorMgr::ONYON_POS_RADIUS = 60.0f;
-const f32 zen::WorldMapCursorMgr::ONYON_OFFSET_X   = 0.0f;
-const f32 zen::WorldMapCursorMgr::ONYON_OFFSET_Y   = 20.0f;
-const f32 zen::WorldMapCursorMgr::ONYON_OFFSET_Z   = 0.0f;
-
-const int WorldMapCoursePoint::EVENT_NONE          = 0;
-const int WorldMapCoursePoint::EVENT_APPEAR_FINISH = 1;
+/**
+ * @todo: Documentation
+ * @note UNUSED Size: 0000F4
+ */
+DEFINE_PRINT("drawWorldMap")
 
 /**
  * @todo: Documentation

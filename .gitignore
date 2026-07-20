@@ -49,3 +49,4 @@ mwcc_debugger.py
 /docs
 build.py
 *.lnk
+tools/vc6

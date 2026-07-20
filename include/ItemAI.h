@@ -1,6 +1,7 @@
 #ifndef _ITEMAI_H
 #define _ITEMAI_H
 
+#include "SAIEvent.h"
 #include "SimpleAI.h"
 #include "types.h"
 

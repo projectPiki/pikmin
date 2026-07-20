@@ -47,7 +47,8 @@ public:
 	void addChild(int, NListNode*);
 	void toString();
 
-	// TODO: members
+	NListNode* _00; // _00
+	NListNode* _04; // _04
 };
 
 /**
@@ -61,7 +62,7 @@ public:
 	void addList(NList*);
 	void toString();
 
-	// TODO: members
+	NList* _00; // _00
 };
 
 #endif

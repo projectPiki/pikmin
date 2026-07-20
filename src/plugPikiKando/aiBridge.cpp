@@ -153,6 +153,21 @@ void ActBridge::initDetour()
 int ActBridge::exeDetour()
 {
 	TRAP_UNIMPLEMENTED;
+	f32 x;
+	f32 z;
+	mBridge->getBridgePos(mPiki->mSRT.t, x, z);
+	f32 xAbs = absF(x);
+	if (mBridge->getStageWidth() * 0.5f > xAbs) {
+		Vector3f dir = mBridge->getBridgeXVec();
+		if (mPiki) { // not sure what this is
+			dir.multiply(-1.0f);
+		}
+		mPiki->setSpeed(0.7f, dir);
+	} else {
+		initApproach();
+	}
+
+	return ACTOUT_Continue;
 }
 
 /**
@@ -217,6 +232,52 @@ void ActBridge::initApproach()
 int ActBridge::exeApproach()
 {
 	TRAP_UNIMPLEMENTED;
+	if (!mBridge) {
+		mPiki->mEmotion = PikiEmotion::Sad;
+		return ACTOUT_Fail;
+	}
+
+	if (collideBridgeSurface()) {
+		PRINT("INIT GO ************************\n");
+		initGo();
+		return ACTOUT_Continue;
+	}
+
+	Vector3f dir = mBridge->mSRT.t - mPiki->mSRT.t;
+	f32 dist     = dir.normalise();
+	if (dist < 300.0f) {
+		f32 x;
+		f32 z;
+		mBridge->getBridgePos(mPiki->mSRT.t, x, z);
+		f32 xAbs = absF(x);
+		if (mBridge->getStageWidth() * 0.5f > xAbs) {
+			Vector3f stagePos = mBridge->getStagePos(mStageID);
+			stagePos          = stagePos - mPiki->mSRT.t;
+			Vector3f zVec     = mBridge->getBridgeZVec();
+			f32 dotZ          = stagePos.DP(zVec);
+			if (-mBridge->getStageDepth() > dotZ) {
+				initDetour();
+				return ACTOUT_Continue;
+			}
+
+			dir = zVec;
+			mPiki->setSpeed(0.7f, dir);
+		} else {
+			Vector3f dir2;
+			if (z > -10.0f) {
+				dir2 = mBridge->getBridgeZVec();
+				dir2.multiply(-1.0f);
+			} else {
+				dir2 = mBridge->getBridgeXVec();
+				dir2.multiply(-1.0f);
+			}
+			mPiki->setSpeed(0.7f, dir2);
+		}
+	} else {
+		mPiki->setSpeed(0.7f, dir);
+	}
+
+	return ACTOUT_Continue;
 }
 
 /**
