@@ -255,7 +255,7 @@ private:
 	void setHalfDeadEffect(u32, int, int);
 	void setHalfDeadFallEffect(u32);
 	void setDeadBombEffect(u32);
-	void setSmallSparkEffect(u32, int*);
+	void setSmallSparkEffect(u32, int* const);
 	void setPerishEffect(u32, int);
 	void setLegParameter();
 	void setWalkNewParameter();

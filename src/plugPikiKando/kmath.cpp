@@ -71,7 +71,7 @@ f32 calcImpulse(immut Vector3f& relativePos, f32 mass, immut Vector3f& collision
 /**
  * @todo: Documentation
  */
-Vector3f CRSpline(f32 t, immut Vector3f* ctrlPts)
+Vector3f CRSpline(f32 t, immut Vector3f* const ctrlPts)
 {
 	f32 tSqr = t * t;
 	f32 tCub = tSqr * t;
@@ -87,7 +87,7 @@ Vector3f CRSpline(f32 t, immut Vector3f* ctrlPts)
 /**
  * @todo: Documentation
  */
-Vector3f CRSplineTangent(f32 t, immut Vector3f* ctrlPts)
+Vector3f CRSplineTangent(f32 t, immut Vector3f* const ctrlPts)
 {
 	f32 tSqr = t * t;
 	f32 tCub = tSqr * t; // unused but necessary?? CLEARLY copied from above and edited lol

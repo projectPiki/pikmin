@@ -122,7 +122,7 @@ void SpiderLeg::setDeadBombEffect(u32 legCollPartID)
  * @todo: Documentation
  * @note UNUSED Size: 000094
  */
-void SpiderLeg::setSmallSparkEffect(u32 legCollPartID, int* p2)
+void SpiderLeg::setSmallSparkEffect(u32 legCollPartID, int* const p2)
 {
 	CollPart* legPart = mSpider->mCollInfo->getSphere(legCollPartID);
 	for (int i = 0; i < 3; i++) {

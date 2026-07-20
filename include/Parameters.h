@@ -25,7 +25,7 @@ public:
 	 * @brief Construct a new ID from an input string.
 	 * @param id String to convert to a fourcc ID.
 	 */
-	ayuID(immut char* id) { Set(id); }
+	ayuID(immut char* const id) { Set(id); }
 
 	/**
 	 * @brief Converts a string to a fourcc ID and sets it as the ID.

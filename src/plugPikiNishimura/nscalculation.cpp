@@ -21,7 +21,7 @@ DEFINE_PRINT("TODO: Replace")
 /*
  * Aside from arg order and defines, identical to Pikmin 2's NsMathExp::calcLagrange
  */
-void NsCalculation::calcLagrange(f32 t, const Vector3f* controlPts, Vector3f& outPoint)
+void NsCalculation::calcLagrange(f32 t, const Vector3f* const controlPts, Vector3f& outPoint)
 {
 	outPoint.x = (t - 2.0f) * (controlPts[0].x * 0.5f * (t - 1.0f)) - ((t - 2.0f) * (controlPts[1].x * t))
 	           + (t - 1.0f) * (controlPts[2].x * 0.5f * t);

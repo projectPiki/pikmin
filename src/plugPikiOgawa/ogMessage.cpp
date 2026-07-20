@@ -218,7 +218,7 @@ void zen::ogScrMessageMgr::backPage()
 /**
  * @todo: Documentation
  */
-s16 zen::ogScrMessageMgr::makePageInfo(immut char*** data)
+s16 zen::ogScrMessageMgr::makePageInfo(immut char*** const data)
 {
 	int idx = 0;
 	for (int i = 0; i < 0x99; i++) {
@@ -459,7 +459,7 @@ void zen::ogScrMessageMgr::ReadAllScreen()
 /**
  * @todo: Documentation
  */
-void zen::ogScrMessageMgr::MakeAndSetPageInfo(immut char*** data)
+void zen::ogScrMessageMgr::MakeAndSetPageInfo(immut char*** const data)
 {
 	mPageInfoEntryCount = makePageInfo(data);
 	setMessagePage(0);
