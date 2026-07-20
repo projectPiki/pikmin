@@ -189,7 +189,7 @@ public:
 	bool mPlateDirLocked;                 // _718
 	bool mRearrangePending;               // _719
 	int mFormationBand;                   // _71C
-	int _720;                             // _720, functionally unused
+	int mFormationBandStableTimer;        // _720
 	bool mIsCStickNeutral;                // _724
 	u8 _725[0x72C - 0x725];               // _725, TODO: work out members
 	u32 _72C;                             // _72C, functionally unused

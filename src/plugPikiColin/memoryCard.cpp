@@ -710,20 +710,20 @@ s32 MemoryCard::getMemoryCardState(bool flag)
 			mCardChannel = channel;
 			checkUseFile();
 			if (mSaveFileIndex == -1) {
-				s32 temp, temp2;
-				if (CARDFreeBlocks(mCardChannel, &temp, &temp2) < 0) {
+				s32 freeBlocks, freeFileSlots;
+				if (CARDFreeBlocks(mCardChannel, &freeBlocks, &freeFileSlots) < 0) {
 					CARDUnmount(mCardChannel);
 					mCardChannel = -1;
 					mErrorCode   = CARD_RESULT_NOFILE;
 					break;
 				}
-				if (temp2 < 1) {
+				if (freeFileSlots < 1) {
 					CARDUnmount(mCardChannel);
 					mSaveFileIndex = -2;
 					mErrorCode     = CARD_RESULT_NOENT;
 					break;
 				}
-				if (temp < mRequiredFreeSpace) {
+				if (freeBlocks < mRequiredFreeSpace) {
 					CARDUnmount(mCardChannel);
 					mSaveFileIndex = -2;
 					mErrorCode     = CARD_RESULT_NOCARD;

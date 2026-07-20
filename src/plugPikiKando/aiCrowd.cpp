@@ -322,7 +322,7 @@ int ActCrowd::exec()
 	plateDir.normalise();
 
 	if (plateDist2D < 60.0f && mPiki->mNavi->mIsCStickNeutral && mState != STATE_Sort) {
-		if (!mIsWaiting && mPiki->mNavi->mNeutralTime - (2.0f * gsys->getRand(1.0f)) >= C_NAVI_PROP(mPiki->mNavi)._34C()) {
+		if (!mIsWaiting && mPiki->mNavi->mNeutralTime - (2.0f * gsys->getRand(1.0f)) >= C_NAVI_PROP(mPiki->mNavi).mPikiImpatienceTime()) {
 			mIsWaiting = true;
 			return ACTOUT_Continue;
 		}
@@ -385,7 +385,7 @@ int ActCrowd::exec()
 		f32 diff         = atan2f(naviDir.x, naviDir.z);
 		mPiki->mFaceDirection += 0.3f * angDist(diff, mPiki->mFaceDirection);
 		if (!gameflow.mMoviePlayer->mIsActive && !mIsWaiting
-		    && mPiki->mNavi->mNeutralTime - (2.0f * gsys->getRand(1.0f)) >= C_NAVI_PROP(mPiki->mNavi)._34C()) {
+		    && mPiki->mNavi->mNeutralTime - (2.0f * gsys->getRand(1.0f)) >= C_NAVI_PROP(mPiki->mNavi).mPikiImpatienceTime()) {
 			mIsWaiting = true;
 			startZawatuki();
 		}
@@ -420,7 +420,7 @@ int ActCrowd::exec()
 		}
 
 		if (!gameflow.mMoviePlayer->mIsActive && !mIsWaiting
-		    && mPiki->mNavi->mNeutralTime - (5.0f * gsys->getRand(1.0f)) >= C_NAVI_PROP(mPiki->mNavi)._34C()) {
+		    && mPiki->mNavi->mNeutralTime - (5.0f * gsys->getRand(1.0f)) >= C_NAVI_PROP(mPiki->mNavi).mPikiImpatienceTime()) {
 			mIsWaiting = true;
 			startZawatuki();
 		}
@@ -443,7 +443,7 @@ int ActCrowd::exec()
 		if (plateDist2D < val2) {
 			mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 			if (!gameflow.mMoviePlayer->mIsActive && !mIsWaiting
-			    && mPiki->mNavi->mNeutralTime - (5.0f * gsys->getRand(1.0f)) >= C_NAVI_PROP(mPiki->mNavi)._34C()) {
+			    && mPiki->mNavi->mNeutralTime - (5.0f * gsys->getRand(1.0f)) >= C_NAVI_PROP(mPiki->mNavi).mPikiImpatienceTime()) {
 				mIsWaiting = true;
 				startZawatuki();
 			}

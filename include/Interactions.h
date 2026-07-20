@@ -289,7 +289,7 @@ struct InteractFlute : public Interaction {
 struct InteractGeyzer : public Interaction {
 	inline InteractGeyzer(Creature* owner, immut Vector3f& p2)
 	    : Interaction(owner)
-	    , _08(p2)
+	    , mLaunchTargetPos(p2)
 	{
 	}
 
@@ -297,7 +297,7 @@ struct InteractGeyzer : public Interaction {
 
 	// _00     = VTBL
 	// _00-_08 = Interaction
-	Vector3f _08; // _08
+	Vector3f mLaunchTargetPos; // _08
 };
 
 /**
