@@ -74,92 +74,92 @@ zen::ogRaderMgr::ogRaderMgr()
 	switch (flowCont.mCurrentStage->mStageID)
 #else
 	s16 stage = flowCont.mCurrentStage->mStageID;
-	_24       = map_area_data[stage][0];
-	_28       = map_area_data[stage][1];
-	_2C       = map_area_data[stage][2];
+	mMapAreaCenterX       = map_area_data[stage][0];
+	mMapAreaCenterZ       = map_area_data[stage][1];
+	mMapAreaRadius       = map_area_data[stage][2];
 
 	switch (stage)
 #endif
 	{
 	case STAGE_Practice:
 	{
-		_54 = STAGE_Practice;
+		mStageId = STAGE_Practice;
 		screen->set("screen/blo/p_map00.blo", true);
-		_4C = (P2DPicture*)screen->search('map0', true);
+		mStageMapPicture = (P2DPicture*)screen->search('map0', true);
 		break;
 	}
 	case STAGE_Forest:
 	{
-		_54 = STAGE_Forest;
+		mStageId = STAGE_Forest;
 		screen->set("screen/blo/p_map01.blo", true);
-		_4C = (P2DPicture*)screen->search('map1', true);
+		mStageMapPicture = (P2DPicture*)screen->search('map1', true);
 		break;
 	}
 	case STAGE_Cave:
 	{
-		_54 = STAGE_Cave;
+		mStageId = STAGE_Cave;
 		screen->set("screen/blo/p_map02.blo", true);
-		_4C = (P2DPicture*)screen->search('map2', true);
+		mStageMapPicture = (P2DPicture*)screen->search('map2', true);
 		break;
 	}
 	case STAGE_Yakushima:
 	{
-		_54 = STAGE_Yakushima;
+		mStageId = STAGE_Yakushima;
 		screen->set("screen/blo/p_map03.blo", true);
-		_4C = (P2DPicture*)screen->search('map3', true);
+		mStageMapPicture = (P2DPicture*)screen->search('map3', true);
 		break;
 	}
 	case STAGE_Last:
 	{
-		_54 = STAGE_Last;
+		mStageId = STAGE_Last;
 		screen->set("screen/blo/p_map04.blo", true);
-		_4C = (P2DPicture*)screen->search('map4', true);
+		mStageMapPicture = (P2DPicture*)screen->search('map4', true);
 		break;
 	}
 	default:
 	{
 		PRINT("----- UNKNOWN MAP !!! -----\n");
-		_54 = 0;
+		mStageId = 0;
 		screen->set("screen/blo/p_map00.blo", true);
-		_4C = (P2DPicture*)screen->search('map0', true);
+		mStageMapPicture = (P2DPicture*)screen->search('map0', true);
 		break;
 	}
 	}
 
-	_50         = new PikaAlphaMgr(screen);
-	_450        = 0.0f;
+	mAlphaMgr         = new PikaAlphaMgr(screen);
+	mOlimarIconAngle        = 0.0f;
 	mMainScreen = screen;
-	_58         = screen->search('root', true);
-	_5C         = (P2DPicture*)screen->search('mbpi', true);
-	_60         = (P2DPicture*)screen->search('mrpi', true);
-	_64         = (P2DPicture*)screen->search('mypi', true);
-	_68         = (P2DPicture*)screen->search('mmpi', true);
-	_80         = (P2DPicture*)screen->search('part', true);
-	_6C         = (P2DPicture*)screen->search('orim', true);
-	_70         = (P2DPicture*)screen->search('mbci', true);
-	_74         = (P2DPicture*)screen->search('mrci', true);
-	_78         = (P2DPicture*)screen->search('myci', true);
-	_7C         = (P2DPicture*)screen->search('mroi', true);
+	mRootPane         = screen->search('root', true);
+	mBluePikiIconTemplate         = (P2DPicture*)screen->search('mbpi', true);
+	mRedPikiIconTemplate         = (P2DPicture*)screen->search('mrpi', true);
+	mYellowPikiIconTemplate         = (P2DPicture*)screen->search('mypi', true);
+	mSeedIconTemplate         = (P2DPicture*)screen->search('mmpi', true);
+	mPartIconTemplate         = (P2DPicture*)screen->search('part', true);
+	mOlimarIcon         = (P2DPicture*)screen->search('orim', true);
+	mBlueContainerIcon         = (P2DPicture*)screen->search('mbci', true);
+	mRedContainerIcon         = (P2DPicture*)screen->search('mrci', true);
+	mYellowContainerIcon         = (P2DPicture*)screen->search('myci', true);
+	mRocketIcon         = (P2DPicture*)screen->search('mroi', true);
 
-	setOffsetSub(_6C);
-	setOffsetSub(_70);
-	setOffsetSub(_74);
-	setOffsetSub(_78);
-	setOffsetSub(_7C);
+	setOffsetSub(mOlimarIcon);
+	setOffsetSub(mBlueContainerIcon);
+	setOffsetSub(mRedContainerIcon);
+	setOffsetSub(mYellowContainerIcon);
+	setOffsetSub(mRocketIcon);
 
-	_5C->hide();
-	_60->hide();
-	_64->hide();
-	_68->hide();
-	_80->hide();
-	_424 = screen->search('i_bs', true);
+	mBluePikiIconTemplate->hide();
+	mRedPikiIconTemplate->hide();
+	mYellowPikiIconTemplate->hide();
+	mSeedIconTemplate->hide();
+	mPartIconTemplate->hide();
+	mIconPane = screen->search('i_bs', true);
 	Colour white(255, 255, 255, 255);
 	Colour black(0, 0, 0, 0);
 
-	PikiRaderEntry* data = _100;
+	PikiRaderEntry* data = mPikiEntries;
 	for (i = 0; i < MAX_PIKI_ON_FIELD; i++) {
-		data->mPic = new P2DPicture(_5C->getTexture(0));
-		_424->appendChild(data->mPic);
+		data->mPic = new P2DPicture(mBluePikiIconTemplate->getTexture(0));
+		mIconPane->appendChild(data->mPic);
 		data->mPic->move((i % 10) * 10 + 10, (i / 10) * 10 + 10);
 		data->mPic->setScale(10.0f);
 		data->mPic->setWhite(white);
@@ -171,42 +171,42 @@ zen::ogRaderMgr::ogRaderMgr()
 
 	// hardcoded ship part count my beloved
 	for (i = 0; i < MAX_UFO_PARTS; i++) {
-		_84[i] = new P2DPicture(_80->getTexture(0));
-		_424->appendChild(_84[i]);
-		_84[i]->move((i % 10) * 10 + 10, (i / 10) * 10 + 10);
-		_84[i]->setScale(7.5f);
-		_84[i]->setWhite(white);
-		_84[i]->setBlack(black);
-		_84[i]->hide();
-		setOffsetSub(_84[i]);
+		mPartIcons[i] = new P2DPicture(mPartIconTemplate->getTexture(0));
+		mIconPane->appendChild(mPartIcons[i]);
+		mPartIcons[i]->move((i % 10) * 10 + 10, (i / 10) * 10 + 10);
+		mPartIcons[i]->setScale(7.5f);
+		mPartIcons[i]->setWhite(white);
+		mPartIcons[i]->setBlack(black);
+		mPartIcons[i]->hide();
+		setOffsetSub(mPartIcons[i]);
 	}
 
-	int w = _4C->getTexture(0)->mWidth;
-	int h = _4C->getTexture(0)->mHeight;
+	int w = mStageMapPicture->getTexture(0)->mWidth;
+	int h = mStageMapPicture->getTexture(0)->mHeight;
 	PRINT("MAP(%d,%d)\n", w, h);
-	_4C->hide();
-	_420 = _4C;
-	_420->setOffset(0, 0);
-	_424->setOffset(0, 0);
+	mStageMapPicture->hide();
+	mMapPicture = mStageMapPicture;
+	mMapPicture->setOffset(0, 0);
+	mIconPane->setOffset(0, 0);
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
-	_24demo[0].set(-150.0f, 0.0f, -160.0f);
-	_24demo[1].set(150.0f, 0.0f, -160.0f);
-	_24demo[2].set(150.0f, 0.0f, 160.0f);
-	_24demo[3].set(-150.0f, 0.0f, 160.0f);
+	mDemoAreaCorners[0].set(-150.0f, 0.0f, -160.0f);
+	mDemoAreaCorners[1].set(150.0f, 0.0f, -160.0f);
+	mDemoAreaCorners[2].set(150.0f, 0.0f, 160.0f);
+	mDemoAreaCorners[3].set(-150.0f, 0.0f, 160.0f);
 #endif
-	_458 = 0;
-	_420->setAlpha(_458);
+	mCurrentMapAlpha = 0;
+	mMapPicture->setAlpha(mCurrentMapAlpha);
 	white.set(128, 128, 255, 255);
-	_420->setWhite(white);
-	_420->show();
-	_424->show();
+	mMapPicture->setWhite(white);
+	mMapPicture->show();
+	mIconPane->show();
 	setRaderScroll(0, 0);
-	_428 = 2.0f;
-	_34  = 0.0f;
-	_38  = 0.0f;
-	_454 = 0.0f;
-	setRaderAngle(_454);
-	mStatus = STATE_NULL;
+	mCurrentScale = 2.0f;
+	mScrollOffsetX  = 0.0f;
+	mScrollOffsetY  = 0.0f;
+	mMapRotationAngle = 0.0f;
+	setRaderAngle(mMapRotationAngle);
+	mStatus = STATE_INACTIVE;
 
 	STACK_PAD_TERNARY(mStatus, 5);
 }
@@ -217,10 +217,10 @@ zen::ogRaderMgr::ogRaderMgr()
  */
 void zen::ogRaderMgr::setRaderScale(f32 scale)
 {
-	_428 = scale;
-	_42C = scale;
-	_420->setScale(_428);
-	_424->setScale(_428 / 10.0f);
+	mCurrentScale = scale;
+	mTargetScale = scale;
+	mMapPicture->setScale(mCurrentScale);
+	mIconPane->setScale(mCurrentScale / 10.0f);
 }
 
 /**
@@ -229,9 +229,9 @@ void zen::ogRaderMgr::setRaderScale(f32 scale)
  */
 void zen::ogRaderMgr::chaseRaderScale(f32 scale)
 {
-	_428 += (scale - _428) / 5.0f;
-	_420->setScale(_428);
-	_424->setScale(_428 / 10.0f);
+	mCurrentScale += (scale - mCurrentScale) / 5.0f;
+	mMapPicture->setScale(mCurrentScale);
+	mIconPane->setScale(mCurrentScale / 10.0f);
 }
 
 /**
@@ -239,8 +239,8 @@ void zen::ogRaderMgr::chaseRaderScale(f32 scale)
  */
 void zen::ogRaderMgr::setRaderAngle(f32 angle)
 {
-	_58->setOffset(_0C, _10);
-	_58->rotate(P2DROTATE_Unk2, angle);
+	mRootPane->setOffset(mCenterX, mCenterY);
+	mRootPane->rotate(P2DROTATE_Unk2, angle);
 }
 
 /**
@@ -248,10 +248,10 @@ void zen::ogRaderMgr::setRaderAngle(f32 angle)
  */
 void zen::ogRaderMgr::setRaderScroll(int x, int y)
 {
-	x += int(_0C);
-	y += int(_10);
-	_420->move(x, y);
-	_424->move(x, y);
+	x += int(mCenterX);
+	y += int(mCenterY);
+	mMapPicture->move(x, y);
+	mIconPane->move(x, y);
 }
 
 /**
@@ -261,17 +261,17 @@ void zen::ogRaderMgr::setRaderScroll(int x, int y)
 void zen::ogRaderMgr::getOrimaPos()
 {
 	Navi* navi = naviMgr->getNavi();
-	_430       = navi->getPosition();
+	mOlimarWorldPos       = navi->getPosition();
 
-	_43C = ogCalcDispXZ(_430);
-	_448 = _43C.x;
-	_44C = _43C.z;
-	_6C->move(_448, _44C);
-	_6C->setScale(10.0f / _428);
-	_450 = PI - navi->mSRT.r.y;
-	_6C->rotate(P2DROTATE_Unk2, _450);
-	f32 x = (_428 * -(_43C.x + _34)) / 10.0f;
-	f32 y = (_428 * -(_43C.z + _38)) / 10.0f;
+	mOlimarMapPos = ogCalcDispXZ(mOlimarWorldPos);
+	mOlimarMapPosX = mOlimarMapPos.x;
+	mOlimarMapPosY = mOlimarMapPos.z;
+	mOlimarIcon->move(mOlimarMapPosX, mOlimarMapPosY);
+	mOlimarIcon->setScale(10.0f / mCurrentScale);
+	mOlimarIconAngle = PI - navi->mSRT.r.y;
+	mOlimarIcon->rotate(P2DROTATE_Unk2, mOlimarIconAngle);
+	f32 x = (mCurrentScale * -(mOlimarMapPos.x + mScrollOffsetX)) / 10.0f;
+	f32 y = (mCurrentScale * -(mOlimarMapPos.z + mScrollOffsetY)) / 10.0f;
 	setRaderScroll(x, y);
 }
 
@@ -286,11 +286,11 @@ void zen::ogRaderMgr::getContainerPos()
 		if (goal) {
 			Vector3f pos  = goal->getPosition();
 			Vector3f disp = ogCalcDispXZ(pos);
-			_40[i]->move(disp.x, disp.z);
-			_40[i]->setScale(10.0f / _428);
-			_40[i]->show();
+			mContainerIcons[i]->move(disp.x, disp.z);
+			mContainerIcons[i]->setScale(10.0f / mCurrentScale);
+			mContainerIcons[i]->show();
 		} else {
-			_40[i]->hide();
+			mContainerIcons[i]->hide();
 		}
 	}
 }
@@ -306,19 +306,19 @@ void zen::ogRaderMgr::getRocketPos()
 	// Hmm, what a rather unfortunate lack of a nullptr check here.  If you wanted to use the radar in a test
 	// map lacking the SS Dolphin, or wanted to re-enable the radar in Challenge Mode, this would be a problem.
 #if defined(VERSION_PIKIDEMO)
-	_7C->hide();
+	mRocketIcon->hide();
 	return;
 #elif defined(BUGFIX)
 	if (!ufo) {
-		_7C->hide();
+		mRocketIcon->hide();
 		return;
 	}
 #endif
 
 	Vector3f pos  = ufo->getPosition();
 	Vector3f disp = ogCalcDispXZ(pos);
-	_7C->move(disp.x, disp.z);
-	_7C->setScale(10.0f / _428);
+	mRocketIcon->move(disp.x, disp.z);
+	mRocketIcon->setScale(10.0f / mCurrentScale);
 }
 
 /**
@@ -327,7 +327,7 @@ void zen::ogRaderMgr::getRocketPos()
 void zen::ogRaderMgr::getPartsPos()
 {
 	for (int i = 0; i < MAX_UFO_PARTS; i++) {
-		_84[i]->hide();
+		mPartIcons[i]->hide();
 	}
 
 	int i = 0;
@@ -335,9 +335,9 @@ void zen::ogRaderMgr::getPartsPos()
 
 		Vector3f inPos = info->getPos();
 		Vector3f pos   = ogCalcDispXZ(inPos);
-		_84[i]->show();
-		_84[i]->move(pos.x, pos.z);
-		_84[i]->setScale(7.5f / _428);
+		mPartIcons[i]->show();
+		mPartIcons[i]->move(pos.x, pos.z);
+		mPartIcons[i]->setScale(7.5f / mCurrentScale);
 		i++;
 	}
 }
@@ -347,14 +347,14 @@ void zen::ogRaderMgr::getPartsPos()
  */
 void zen::ogRaderMgr::getAllPikiPos()
 {
-	PikiRaderEntry* data = _100;
-	_FC                  = 0;
+	PikiRaderEntry* data = mPikiEntries;
+	mVisiblePikiCount                  = 0;
 	for (int i = 0; i < MAX_PIKI_ON_FIELD; i++) {
 		data->mPic->hide();
 		data++;
 	}
 
-	data = _100;
+	data = mPikiEntries;
 	Iterator iterator(pikiMgr);
 	CI_LOOP(iterator)
 	{
@@ -364,9 +364,9 @@ void zen::ogRaderMgr::getAllPikiPos()
 			data->mColor = piki->mColor;
 			data->mPic->show();
 			data->mPic->move(pos.x, pos.z);
-			data->mPic->setScale(10.0f / _428);
+			data->mPic->setScale(10.0f / mCurrentScale);
 			data++;
-			_FC++;
+			mVisiblePikiCount++;
 		}
 	}
 
@@ -379,9 +379,9 @@ void zen::ogRaderMgr::getAllPikiPos()
 		data->mColor = -1;
 		data->mPic->show();
 		data->mPic->move(pos.x, pos.z);
-		data->mPic->setScale(10.0f / _428);
+		data->mPic->setScale(10.0f / mCurrentScale);
 		data++;
-		_FC++;
+		mVisiblePikiCount++;
 	}
 }
 
@@ -390,33 +390,33 @@ void zen::ogRaderMgr::getAllPikiPos()
  */
 void zen::ogRaderMgr::startSub()
 {
-	mStatus = STATE_4;
-	_50->startFadeIn(0.5f);
-	_458 = 0;
-	_420->setAlpha(_458);
+	mStatus = STATE_FADE_IN;
+	mAlphaMgr->startFadeIn(0.5f);
+	mCurrentMapAlpha = 0;
+	mMapPicture->setAlpha(mCurrentMapAlpha);
 	setRaderScale(2.0f);
 	PRINT("ogRader start!\n");
 
-	_6C->alone();
-	_424->appendChild(_6C);
+	mOlimarIcon->alone();
+	mIconPane->appendChild(mOlimarIcon);
 
-	_40[0] = _70;
-	_40[1] = _74;
-	_40[2] = _78;
+	mContainerIcons[0] = mBlueContainerIcon;
+	mContainerIcons[1] = mRedContainerIcon;
+	mContainerIcons[2] = mYellowContainerIcon;
 	for (int i = 0; i < 3; i++) {
-		_40[i]->alone();
-		_424->appendChild(_40[i]);
+		mContainerIcons[i]->alone();
+		mIconPane->appendChild(mContainerIcons[i]);
 	}
 
-	_7C->alone();
-	_424->appendChild(_7C);
+	mRocketIcon->alone();
+	mIconPane->appendChild(mRocketIcon);
 
 	getOrimaPos();
 	getContainerPos();
 	getRocketPos();
 	getAllPikiPos();
-	_34 = 0.0f;
-	_38 = 0.0f;
+	mScrollOffsetX = 0.0f;
+	mScrollOffsetY = 0.0f;
 }
 
 /**
@@ -425,18 +425,18 @@ void zen::ogRaderMgr::startSub()
  */
 void zen::ogRaderMgr::start()
 {
-	if (mStatus != STATE_NULL) {
+	if (mStatus != STATE_INACTIVE) {
 		return;
 	}
 
-	_04  = 0;
-	_45A = 64;
-	_0C  = 320.0f;
-	_10  = 220.0f;
-	_1C  = 155;
-	_20  = 264;
-	_14  = 320 - _1C / 2;
-	_18  = 220 - _20 / 2;
+	mControlMode  = CONTROL_GAME;
+	mTargetMapAlpha = 64;
+	mCenterX  = 320.0f;
+	mCenterY  = 220.0f;
+	mScissorWidth  = 155;
+	mScissorHeight  = 264;
+	mScissorX  = 320 - mScissorWidth / 2;
+	mScissorY  = 220 - mScissorHeight / 2;
 	startSub();
 }
 
@@ -445,29 +445,29 @@ void zen::ogRaderMgr::start()
  */
 void zen::ogRaderMgr::startMenu(P2DPane* pane)
 {
-	if (mStatus != STATE_NULL) {
+	if (mStatus != STATE_INACTIVE) {
 		return;
 	}
 	if (playerState && !playerState->hasRadar()) {
 		return;
 	}
 
-	_04  = 1;
-	_00  = false;
-	_01  = false;
-	_02  = false;
-	_45A = 200;
+	mControlMode  = CONTROL_MENU;
+	mIsScrollSeActive  = false;
+	mIsZoomInSeActive  = false;
+	mIsZoomOutSeActive  = false;
+	mTargetMapAlpha = 200;
 
 	int posH = pane->getPosH();
 	int posV = pane->getPosV();
 	int w    = pane->getWidth();
 	int h    = pane->getHeight();
-	_0C      = posH + w / 2;
-	_10      = posV + h / 2;
-	_1C      = w;
-	_20      = h;
-	_14      = posH;
-	_18      = posV;
+	mCenterX      = posH + w / 2;
+	mCenterY      = posV + h / 2;
+	mScissorWidth      = w;
+	mScissorHeight      = h;
+	mScissorX      = posH;
+	mScissorY      = posV;
 	startSub();
 	setRaderScale(2.0f);
 
@@ -480,7 +480,7 @@ void zen::ogRaderMgr::startMenu(P2DPane* pane)
 void zen::ogRaderMgr::MapOn()
 {
 	if (!playerState || playerState->hasRadar()) {
-		mStatus = STATE_0;
+		mStatus = STATE_ACTIVE_ZOOM_2;
 	}
 }
 
@@ -491,7 +491,7 @@ void zen::ogRaderMgr::MapOn()
 void zen::ogRaderMgr::MapOff()
 {
 	if (!playerState || playerState->hasRadar()) {
-		mStatus = STATE_6;
+		mStatus = STATE_HIDDEN;
 	}
 }
 
@@ -502,42 +502,42 @@ void zen::ogRaderMgr::updateGame(Controller* input)
 {
 	if (input->keyClick(KBBTN_DPAD_UP)) {
 		switch (mStatus) {
-		case STATE_0:
+		case STATE_ACTIVE_ZOOM_2:
 		{
-			_42C    = 2.0f;
-			mStatus = STATE_1;
+			mTargetScale    = 2.0f;
+			mStatus = STATE_ACTIVE_ZOOM_4;
 			break;
 		}
-		case STATE_1:
+		case STATE_ACTIVE_ZOOM_4:
 		{
-			_42C    = 4.0f;
-			mStatus = STATE_2;
+			mTargetScale    = 4.0f;
+			mStatus = STATE_ACTIVE_ZOOM_8;
 			break;
 		}
-		case STATE_2:
+		case STATE_ACTIVE_ZOOM_8:
 		{
-			_42C    = 8.0f;
-			mStatus = STATE_3;
+			mTargetScale    = 8.0f;
+			mStatus = STATE_ACTIVE_MAX;
 			break;
 		}
-		case STATE_3:
+		case STATE_ACTIVE_MAX:
 		{
-			mStatus = STATE_5;
-			_50->startFadeOut(0.2f);
+			mStatus = STATE_FADE_OUT;
+			mAlphaMgr->startFadeOut(0.2f);
 			break;
 		}
 		}
-	} else if (input->keyDown(KBBTN_DPAD_LEFT) && _45A > 0) {
-		_45A--;
-		_458 = _45A;
-		_420->setAlpha(_458);
-	} else if (input->keyDown(KBBTN_DPAD_RIGHT) && _45A < 255) {
-		_45A++;
-		_458 = _45A;
-		_420->setAlpha(_458);
+	} else if (input->keyDown(KBBTN_DPAD_LEFT) && mTargetMapAlpha > 0) {
+		mTargetMapAlpha--;
+		mCurrentMapAlpha = mTargetMapAlpha;
+		mMapPicture->setAlpha(mCurrentMapAlpha);
+	} else if (input->keyDown(KBBTN_DPAD_RIGHT) && mTargetMapAlpha < 255) {
+		mTargetMapAlpha++;
+		mCurrentMapAlpha = mTargetMapAlpha;
+		mMapPicture->setAlpha(mCurrentMapAlpha);
 	}
 
-	chaseRaderScale(_42C);
+	chaseRaderScale(mTargetScale);
 }
 
 #if defined(VERSION_PIKIDEMO)
@@ -549,22 +549,22 @@ void zen::ogRaderMgr::AreaScroll(f32* p1, f32* p2, f32 p3, f32 p4)
 {
 	f32 a  = *p1 + p3;
 	f32 b  = *p2 + p4;
-	f32 c  = _24;
-	f32 d  = _28;
-	f32 x  = _430.x;
-	f32 z  = _430.z;
+	f32 c  = mMapAreaCenterX;
+	f32 d  = mMapAreaCenterZ;
+	f32 x  = mOlimarWorldPos.x;
+	f32 z  = mOlimarWorldPos.z;
 	f32 x1 = a + x - c;
 	f32 z1 = b + z - d;
-	PRINT("scroll(%7.2f, %7.2f)  orima(%7.2f, %7.2f)  area(%7.2f, %7.2f)\n", p3, p4, _430.x, _430.z, _24, _28);
+	PRINT("scroll(%7.2f, %7.2f)  orima(%7.2f, %7.2f)  area(%7.2f, %7.2f)\n", p3, p4, mOlimarWorldPos.x, mOlimarWorldPos.z, mMapAreaCenterX, mMapAreaCenterZ);
 	f32 dist = std::sqrtf(SQUARE(x1) + SQUARE(z1));
-	if (dist < _2C) {
+	if (dist < mMapAreaRadius) {
 		*p1 = a;
 		*p2 = b;
 		seSystem->playSysSe(SYSSE_YMENU_SCROLL);
-		_00 = true;
+		mIsScrollSeActive = true;
 	} else {
 		seSystem->stopSysSe(SYSSE_YMENU_SCROLL);
-		_00 = false;
+		mIsScrollSeActive = false;
 	}
 }
 #endif
@@ -575,10 +575,10 @@ void zen::ogRaderMgr::AreaScroll(f32* p1, f32* p2, f32 p3, f32 p4)
 void zen::ogRaderMgr::updateMenu(Controller* input)
 {
 #if defined(VERSION_GPIP01)
-	if (mStatus == -1) {
+	if (mStatus == STATE_INACTIVE) {
 		return;
 	}
-	f32 x  = _428;
+	f32 x  = mCurrentScale;
 	f32 y  = input->getSubStickY();
 	int se = 0;
 
@@ -600,29 +600,29 @@ void zen::ogRaderMgr::updateMenu(Controller* input)
 		}
 	}
 
-	f32 c = cosf(_454);
-	f32 s = sinf(_454);
+	f32 c = cosf(mMapRotationAngle);
+	f32 s = sinf(mMapRotationAngle);
 	if (input->keyDown(KBBTN_MSTICK_UP)) {
-		AreaScroll(&_34, &_38, s * -20.0f, c * -20.0f);
+		AreaScroll(&mScrollOffsetX, &mScrollOffsetY, s * -20.0f, c * -20.0f);
 	} else if (input->keyDown(KBBTN_MSTICK_DOWN)) {
-		AreaScroll(&_34, &_38, s * 20.0f, c * 20.0f);
+		AreaScroll(&mScrollOffsetX, &mScrollOffsetY, s * 20.0f, c * 20.0f);
 	}
 	if (input->keyDown(KBBTN_MSTICK_LEFT)) {
-		AreaScroll(&_34, &_38, c * -20.0f, s * 20.0f);
+		AreaScroll(&mScrollOffsetX, &mScrollOffsetY, c * -20.0f, s * 20.0f);
 	} else if (input->keyDown(KBBTN_MSTICK_RIGHT)) {
-		AreaScroll(&_34, &_38, c * 20.0f, s * -20.0f);
+		AreaScroll(&mScrollOffsetX, &mScrollOffsetY, c * 20.0f, s * -20.0f);
 	}
 
-	if (_00 && !input->keyDown(KBBTN_MSTICK_UP | KBBTN_MSTICK_DOWN | KBBTN_MSTICK_RIGHT | KBBTN_MSTICK_LEFT)) {
+	if (mIsScrollSeActive && !input->keyDown(KBBTN_MSTICK_UP | KBBTN_MSTICK_DOWN | KBBTN_MSTICK_RIGHT | KBBTN_MSTICK_LEFT)) {
 		seSystem->stopSysSe(SYSSE_YMENU_SCROLL);
-		_00 = false;
+		mIsScrollSeActive = false;
 	}
 
 	if ((y > -0.2f) && (y < 0.2f)) {
 		se = 0;
 	}
 
-	if (_01) {
+	if (mIsZoomInSeActive) {
 		switch (se) {
 		case 0:
 		{
@@ -635,7 +635,7 @@ void zen::ogRaderMgr::updateMenu(Controller* input)
 			break;
 		}
 		}
-	} else if (_02) {
+	} else if (mIsZoomOutSeActive) {
 		switch (se) {
 		case 0:
 		{
@@ -666,36 +666,36 @@ void zen::ogRaderMgr::updateMenu(Controller* input)
 	switch (se) {
 	case 0:
 	{
-		_02 = 0;
-		_01 = 0;
+		mIsZoomOutSeActive = 0;
+		mIsZoomInSeActive = 0;
 		break;
 	}
 	case 1:
 	{
-		_02 = 0;
-		_01 = 1;
+		mIsZoomOutSeActive = 0;
+		mIsZoomInSeActive = 1;
 		break;
 	}
 	case -1:
 	{
-		_02 = 1;
-		_01 = 0;
+		mIsZoomOutSeActive = 1;
+		mIsZoomInSeActive = 0;
 		break;
 	}
 	}
 
-	if (x != _428) {
+	if (x != mCurrentScale) {
 		setRaderScale(x);
 	}
 #else
 
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
 #else
-	if (mStatus == STATE_NULL) {
+	if (mStatus == STATE_INACTIVE) {
 		return;
 	}
 #endif
-	f32 x = _428;
+	f32 x = mCurrentScale;
 	f32 y = input->getSubStickY();
 	if (y > 0.3f) {
 		x *= 1.1f;
@@ -704,16 +704,16 @@ void zen::ogRaderMgr::updateMenu(Controller* input)
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
 #else
 			seSystem->stopSysSe(SYSSE_YMENU_ZOOMIN);
-			_01 = false;
+			mIsZoomInSeActive = false;
 #endif
 		} else {
-			if (!_01) {
+			if (!mIsZoomInSeActive) {
 				seSystem->playSysSe(ogEnumFix(SYSSE_YMENU_ZOOMIN, JACSYS_MenuZoomIn));
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
 			}
-			_01 = true;
+			mIsZoomInSeActive = true;
 #else
-				_01 = true;
+				mIsZoomInSeActive = true;
 			}
 #endif
 		}
@@ -724,108 +724,108 @@ void zen::ogRaderMgr::updateMenu(Controller* input)
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
 #else
 			seSystem->stopSysSe(SYSSE_YMENU_ZOOMOUT);
-			_02 = false;
+			mIsZoomOutSeActive = false;
 #endif
 		} else {
-			if (!_02) {
+			if (!mIsZoomOutSeActive) {
 				seSystem->playSysSe(ogEnumFix(SYSSE_YMENU_ZOOMOUT, JACSYS_MenuZoomOut));
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
 			}
-			_02 = true;
+			mIsZoomOutSeActive = true;
 #else
-				_02 = true;
+				mIsZoomOutSeActive = true;
 			}
 #endif
 		}
 	}
 
-	f32 c = cosf(_454);
-	f32 s = sinf(_454);
+	f32 c = cosf(mMapRotationAngle);
+	f32 s = sinf(mMapRotationAngle);
 	if (input->keyDown(KBBTN_MSTICK_UP)) {
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
-		if (!_00) {
+		if (!mIsScrollSeActive) {
 			seSystem->playSysSe(ogEnumFix(SYSSE_YMENU_SCROLL, JACSYS_MenuScroll));
 		}
-		_00 = true;
-		_34 -= 20.0f * s;
-		_38 -= 20.0f * c;
+		mIsScrollSeActive = true;
+		mScrollOffsetX -= 20.0f * s;
+		mScrollOffsetY -= 20.0f * c;
 #else
-		AreaScroll(&_34, &_38, s * -20.0f, c * -20.0f);
+		AreaScroll(&mScrollOffsetX, &mScrollOffsetY, s * -20.0f, c * -20.0f);
 #endif
 	} else if (input->keyDown(KBBTN_MSTICK_DOWN)) {
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
-		if (!_00) {
+		if (!mIsScrollSeActive) {
 			seSystem->playSysSe(ogEnumFix(SYSSE_YMENU_SCROLL, JACSYS_MenuScroll));
 		}
-		_00 = true;
-		_34 += 20.0f * s;
-		_38 += 20.0f * c;
+		mIsScrollSeActive = true;
+		mScrollOffsetX += 20.0f * s;
+		mScrollOffsetY += 20.0f * c;
 #else
-		AreaScroll(&_34, &_38, s * 20.0f, c * 20.0f);
+		AreaScroll(&mScrollOffsetX, &mScrollOffsetY, s * 20.0f, c * 20.0f);
 #endif
 	}
 	if (input->keyDown(KBBTN_MSTICK_LEFT)) {
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
-		if (!_00) {
+		if (!mIsScrollSeActive) {
 			seSystem->playSysSe(ogEnumFix(SYSSE_YMENU_SCROLL, JACSYS_MenuScroll));
 		}
-		_00 = true;
-		_34 -= 20.0f * c;
-		_38 += 20.0f * s;
+		mIsScrollSeActive = true;
+		mScrollOffsetX -= 20.0f * c;
+		mScrollOffsetY += 20.0f * s;
 #else
-		AreaScroll(&_34, &_38, c * -20.0f, s * 20.0f);
+		AreaScroll(&mScrollOffsetX, &mScrollOffsetY, c * -20.0f, s * 20.0f);
 #endif
 	} else if (input->keyDown(KBBTN_MSTICK_RIGHT)) {
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
-		if (!_00) {
+		if (!mIsScrollSeActive) {
 			seSystem->playSysSe(ogEnumFix(SYSSE_YMENU_SCROLL, JACSYS_MenuScroll));
 		}
-		_00 = true;
-		_34 += 20.0f * c;
-		_38 -= 20.0f * s;
+		mIsScrollSeActive = true;
+		mScrollOffsetX += 20.0f * c;
+		mScrollOffsetY -= 20.0f * s;
 #else
-		AreaScroll(&_34, &_38, c * 20.0f, s * -20.0f);
+		AreaScroll(&mScrollOffsetX, &mScrollOffsetY, c * 20.0f, s * -20.0f);
 #endif
 	}
 
-	if (_00 && !input->keyDown(KBBTN_MSTICK_UP | KBBTN_MSTICK_DOWN | KBBTN_MSTICK_RIGHT | KBBTN_MSTICK_LEFT)) {
+	if (mIsScrollSeActive && !input->keyDown(KBBTN_MSTICK_UP | KBBTN_MSTICK_DOWN | KBBTN_MSTICK_RIGHT | KBBTN_MSTICK_LEFT)) {
 		seSystem->stopSysSe(ogEnumFix(SYSSE_YMENU_SCROLL, JACSYS_MenuScroll));
-		_00 = false;
+		mIsScrollSeActive = false;
 	}
 
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
-	if (_01 && !(y < 0.2f)) {
+	if (mIsZoomInSeActive && !(y < 0.2f)) {
 		seSystem->stopSysSe(ogEnumFix(SYSSE_YMENU_ZOOMIN, JACSYS_MenuZoomIn));
-		_01 = false;
+		mIsZoomInSeActive = false;
 	}
-	if (_02 && !(y > -0.2f)) {
+	if (mIsZoomOutSeActive && !(y > -0.2f)) {
 		seSystem->stopSysSe(ogEnumFix(SYSSE_YMENU_ZOOMOUT, JACSYS_MenuZoomOut));
-		_02 = false;
+		mIsZoomOutSeActive = false;
 	}
-	if (_34 < -4096.0f) {
-		_34 = -4096.0f;
+	if (mScrollOffsetX < -4096.0f) {
+		mScrollOffsetX = -4096.0f;
 	}
-	if (_34 > 4096.0f) {
-		_34 = 4096.0f;
+	if (mScrollOffsetX > 4096.0f) {
+		mScrollOffsetX = 4096.0f;
 	}
-	if (_38 < -4096.0f) {
-		_38 = -4096.0f;
+	if (mScrollOffsetY < -4096.0f) {
+		mScrollOffsetY = -4096.0f;
 	}
-	if (_38 > 4096.0f) {
-		_38 = 4096.0f;
+	if (mScrollOffsetY > 4096.0f) {
+		mScrollOffsetY = 4096.0f;
 	}
 #else
-	if (_01 && y < 0.2f) {
+	if (mIsZoomInSeActive && y < 0.2f) {
 		seSystem->stopSysSe(SYSSE_YMENU_ZOOMIN);
-		_01 = false;
+		mIsZoomInSeActive = false;
 	}
-	if (_02 && y > -0.2f) {
+	if (mIsZoomOutSeActive && y > -0.2f) {
 		seSystem->stopSysSe(SYSSE_YMENU_ZOOMOUT);
-		_02 = false;
+		mIsZoomOutSeActive = false;
 	}
 #endif
 
-	if (x != _428) {
+	if (x != mCurrentScale) {
 		setRaderScale(x);
 	}
 #endif
@@ -836,47 +836,47 @@ void zen::ogRaderMgr::updateMenu(Controller* input)
  */
 zen::ogRaderMgr::RaderStatus zen::ogRaderMgr::update(Controller* input)
 {
-	if (mStatus == STATE_NULL) {
+	if (mStatus == STATE_INACTIVE) {
 		return mStatus;
 	}
 
-	if (mStatus == STATE_7) {
-		mStatus = STATE_NULL;
+	if (mStatus == STATE_END_PENDING) {
+		mStatus = STATE_INACTIVE;
 		return mStatus;
 	}
 
-	if (mStatus == STATE_5) {
-		if (_458 > 0) {
-			_458 -= 10;
-			if (_458 < 0) {
-				_458 = 0;
+	if (mStatus == STATE_FADE_OUT) {
+		if (mCurrentMapAlpha > 0) {
+			mCurrentMapAlpha -= 10;
+			if (mCurrentMapAlpha < 0) {
+				mCurrentMapAlpha = 0;
 			}
-			_420->setAlpha(_458);
+			mMapPicture->setAlpha(mCurrentMapAlpha);
 		} else {
-			mStatus = STATE_7;
+			mStatus = STATE_END_PENDING;
 		}
 		return mStatus;
 	}
 
-	if (mStatus == STATE_4) {
-		if (_458 < _45A) {
-			_458 += 10;
-			if (_458 > _45A) {
-				_458 = _45A;
+	if (mStatus == STATE_FADE_IN) {
+		if (mCurrentMapAlpha < mTargetMapAlpha) {
+			mCurrentMapAlpha += 10;
+			if (mCurrentMapAlpha > mTargetMapAlpha) {
+				mCurrentMapAlpha = mTargetMapAlpha;
 			}
-			_420->setAlpha(_458);
+			mMapPicture->setAlpha(mCurrentMapAlpha);
 		} else {
-			mStatus = STATE_0;
+			mStatus = STATE_ACTIVE_ZOOM_2;
 		}
 		return mStatus;
 	}
 
-	_50->update();
+	mAlphaMgr->update();
 
-	if (mStatus != STATE_6) {
-		if (_04 == 0) {
+	if (mStatus != STATE_HIDDEN) {
+		if (mControlMode == CONTROL_GAME) {
 			updateGame(input);
-		} else if (_04 == 1) {
+		} else if (mControlMode == CONTROL_MENU) {
 			updateMenu(input);
 		}
 	}
@@ -887,38 +887,38 @@ zen::ogRaderMgr::RaderStatus zen::ogRaderMgr::update(Controller* input)
 	getAllPikiPos();
 	getPartsPos();
 
-	PikiRaderEntry* data = _100;
-	for (int i = 0; i < _FC; i++) {
+	PikiRaderEntry* data = mPikiEntries;
+	for (int i = 0; i < mVisiblePikiCount; i++) {
 		Colour col1;
 		Colour col2;
 		u8 alpha;
 		switch (data->mColor) {
 		case Blue:
 		{
-			col1  = _5C->getWhite();
-			col2  = _5C->getBlack();
-			alpha = _5C->getAlpha();
+			col1  = mBluePikiIconTemplate->getWhite();
+			col2  = mBluePikiIconTemplate->getBlack();
+			alpha = mBluePikiIconTemplate->getAlpha();
 			break;
 		}
 		case Red:
 		{
-			col1  = _60->getWhite();
-			col2  = _60->getBlack();
-			alpha = _60->getAlpha();
+			col1  = mRedPikiIconTemplate->getWhite();
+			col2  = mRedPikiIconTemplate->getBlack();
+			alpha = mRedPikiIconTemplate->getAlpha();
 			break;
 		}
 		case Yellow:
 		{
-			col1  = _64->getWhite();
-			col2  = _64->getBlack();
-			alpha = _64->getAlpha();
+			col1  = mYellowPikiIconTemplate->getWhite();
+			col2  = mYellowPikiIconTemplate->getBlack();
+			alpha = mYellowPikiIconTemplate->getAlpha();
 			break;
 		}
 		default: // seeds
 		{
-			col1  = _68->getWhite();
-			col2  = _68->getBlack();
-			alpha = _68->getAlpha();
+			col1  = mSeedIconTemplate->getWhite();
+			col2  = mSeedIconTemplate->getBlack();
+			alpha = mSeedIconTemplate->getAlpha();
 			break;
 		}
 		}
@@ -941,7 +941,7 @@ void zen::ogRaderMgr::RotatePos(f32* x, f32* y)
 {
 	Matrix4f mtx;
 	mtx.makeIdentity();
-	mtx.rotateZ(-_454);
+	mtx.rotateZ(-mMapRotationAngle);
 
 	Vector3f pos;
 	pos.x = *x;
@@ -967,23 +967,23 @@ void zen::ogRaderMgr::DrawCircle(u8 r, u8 g, u8 b, u8 a, f32 radius)
 	s16 xVerts[64];
 	s16 yVerts[64];
 
-	_30 += gsys->getFrameTime();
-	if (_30 > 2.0f) {
-		_30 = 0.0f;
+	mRangeCirclePulseTimer += gsys->getFrameTime();
+	if (mRangeCirclePulseTimer > 2.0f) {
+		mRangeCirclePulseTimer = 0.0f;
 	}
 
 	// Similar calculations to `zen::ogRaderMgr::ogCalcDispXZ`.
-	f32 dispX = (_24 + 2800.0f) * 310.0f * 10.0f / 5400.0f;
-	f32 dispY = (_28 + 4300.0f) * 528.0f * 10.0f / 9200.0f;
+	f32 dispX = (mMapAreaCenterX + 2800.0f) * 310.0f * 10.0f / 5400.0f;
+	f32 dispY = (mMapAreaCenterZ + 4300.0f) * 528.0f * 10.0f / 9200.0f;
 	f32 x     = dispX;
-	-_34 - _43C.x;
+	-mScrollOffsetX - mOlimarMapPos.x;
 	f32 y = dispY;
-	-_38 - _43C.z;
+	-mScrollOffsetY - mOlimarMapPos.z;
 	RotatePos(&x, &y);
 
-	f32 screenXOffset = x * _428 / 10.0f + _0C;
-	f32 screenYOffset = y * _428 / 10.0f + _10;
-	f32 screenRadius  = _428 / 10.0f * _2C * radius * _30 / 2.0f;
+	f32 screenXOffset = x * mCurrentScale / 10.0f + mCenterX;
+	f32 screenYOffset = y * mCurrentScale / 10.0f + mCenterY;
+	f32 screenRadius  = mCurrentScale / 10.0f * mMapAreaRadius * radius * mRangeCirclePulseTimer / 2.0f;
 
 	for (i = 0; i < nSides; ++i) {
 		f32 theta = i * TAU / nSides;
@@ -1029,7 +1029,7 @@ void zen::ogRaderMgr::DrawCircle(u8 r, u8 g, u8 b, u8 a, f32 radius)
  */
 void zen::ogRaderMgr::end()
 {
-	mStatus = STATE_NULL;
+	mStatus = STATE_INACTIVE;
 	seSystem->stopSysSe(SYSSE_YMENU_SCROLL);
 	seSystem->stopSysSe(SYSSE_YMENU_ZOOMIN);
 	seSystem->stopSysSe(SYSSE_YMENU_ZOOMOUT);
@@ -1040,21 +1040,21 @@ void zen::ogRaderMgr::end()
  */
 void zen::ogRaderMgr::draw(Graphics& gfx)
 {
-	if (mStatus != STATE_NULL) {
-		_454 = atan2f(-gfx.mCamera->mViewZAxis.x, -gfx.mCamera->mViewZAxis.z);
-		setRaderAngle(_454);
+	if (mStatus != STATE_INACTIVE) {
+		mMapRotationAngle = atan2f(-gfx.mCamera->mViewZAxis.x, -gfx.mCamera->mViewZAxis.z);
+		setRaderAngle(mMapRotationAngle);
 
-		if (mStatus != STATE_6) {
+		if (mStatus != STATE_HIDDEN) {
 			GXColor col = { 0 };
 			GXSetFog(GX_FOG_NONE, 0.0f, 1.0f, 0.1f, 1.0f, col);
 			GXSetFogRangeAdj(GX_FALSE, 0, nullptr);
 			P2DPerspGraph graf(0, 0, 640, 480, 30.0f, 1.0f, 5000.0f);
 			graf.setPort();
-			if (_04 == 1) {
-				GXSetScissor(_14, _18, _1C, _20);
+			if (mControlMode == CONTROL_MENU) {
+				GXSetScissor(mScissorX, mScissorY, mScissorWidth, mScissorHeight);
 			}
 			mMainScreen->draw(0, 0, &graf);
-			if (_04 == 1) {
+			if (mControlMode == CONTROL_MENU) {
 				GXSetScissor(0, 0, 640, 480);
 			}
 		}

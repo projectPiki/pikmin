@@ -27,16 +27,21 @@ public:
 	 * @brief TODO
 	 */
 	enum RaderStatus {
-		STATE_NULL = -1,
-		STATE_0    = 0,
-		STATE_1    = 1,
-		STATE_2    = 2,
-		STATE_3    = 3,
-		STATE_4    = 4,
-		STATE_5    = 5,
-		STATE_6    = 6,
-		STATE_7    = 7,
+		STATE_INACTIVE      = -1,
+		STATE_ACTIVE_ZOOM_2 = 0,
+		STATE_ACTIVE_ZOOM_4 = 1,
+		STATE_ACTIVE_ZOOM_8 = 2,
+		STATE_ACTIVE_MAX    = 3,
+		STATE_FADE_IN       = 4,
+		STATE_FADE_OUT      = 5,
+		STATE_HIDDEN        = 6,
+		STATE_END_PENDING   = 7,
 		// TODO: this
+	};
+
+	enum RaderControlMode {
+		CONTROL_GAME = 0,
+		CONTROL_MENU = 1,
 	};
 
 	P2DScreen* getScrPtr() { return mMainScreen; }
@@ -69,57 +74,57 @@ private:
 	void RotatePos(f32*, f32*);
 	void DrawCircle(u8, u8, u8, u8, f32);
 
-	bool _00;            // _00
-	bool _01;            // _01
-	bool _02;            // _02
-	int _04;             // _04
-	RaderStatus mStatus; // _08
-	f32 _0C;             // _0C
-	f32 _10;             // _10
-	int _14;             // _14
-	int _18;             // _18
-	int _1C;             // _1C
-	int _20;             // _20
+	bool mIsScrollSeActive;        // _00
+	bool mIsZoomInSeActive;        // _01
+	bool mIsZoomOutSeActive;       // _02
+	RaderControlMode mControlMode; // _04
+	RaderStatus mStatus;           // _08
+	f32 mCenterX;                  // _0C
+	f32 mCenterY;                  // _10
+	int mScissorX;                 // _14
+	int mScissorY;                 // _18
+	int mScissorWidth;             // _1C
+	int mScissorHeight;            // _20
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
-	Vector3f _24demo[4]; // _24
+	Vector3f mDemoAreaCorners[4]; // _24
 #endif
-	f32 _24;                                // _24
-	f32 _28;                                // _28
-	f32 _2C;                                // _2C
-	f32 _30;                                // _30
-	f32 _34;                                // _34
-	f32 _38;                                // _38
+	f32 mMapAreaCenterX;                    // _24
+	f32 mMapAreaCenterZ;                    // _28
+	f32 mMapAreaRadius;                     // _2C
+	f32 mRangeCirclePulseTimer;             // _30
+	f32 mScrollOffsetX;                     // _34
+	f32 mScrollOffsetY;                     // _38
 	P2DScreen* mMainScreen;                 // _3C
-	P2DPicture* _40[3];                     // _40
-	P2DPicture* _4C;                        // _4C
-	PikaAlphaMgr* _50;                      // _50
-	int _54;                                // _54
-	P2DPane* _58;                           // _58
-	P2DPicture* _5C;                        // _5C
-	P2DPicture* _60;                        // _60
-	P2DPicture* _64;                        // _64
-	P2DPicture* _68;                        // _68
-	P2DPicture* _6C;                        // _6C
-	P2DPicture* _70;                        // _70
-	P2DPicture* _74;                        // _74
-	P2DPicture* _78;                        // _78
-	P2DPicture* _7C;                        // _7C
-	P2DPicture* _80;                        // _80
-	P2DPicture* _84[MAX_UFO_PARTS];         // _84
-	s16 _FC;                                // _FC
-	PikiRaderEntry _100[MAX_PIKI_ON_FIELD]; // _100
-	P2DPicture* _420;                       // _420
-	P2DPane* _424;                          // _424
-	f32 _428;                               // _428
-	f32 _42C;                               // _42C
-	Vector3f _430;                          // _430
-	Vector3f _43C;                          // _43C
-	int _448;                               // _448
-	int _44C;                               // _44C
-	f32 _450;                               // _450
-	f32 _454;                               // _454
-	s16 _458;                               // _458
-	s16 _45A;                               // _45A
+	P2DPicture* mContainerIcons[3];         // _40
+	P2DPicture* mStageMapPicture;           // _4C
+	PikaAlphaMgr* mAlphaMgr;                // _50
+	int mStageId;                           // _54
+	P2DPane* mRootPane;                     // _58
+	P2DPicture* mBluePikiIconTemplate;      // _5C
+	P2DPicture* mRedPikiIconTemplate;       // _60
+	P2DPicture* mYellowPikiIconTemplate;    // _64
+	P2DPicture* mSeedIconTemplate;          // _68
+	P2DPicture* mOlimarIcon;                // _6C
+	P2DPicture* mBlueContainerIcon;         // _70
+	P2DPicture* mRedContainerIcon;          // _74
+	P2DPicture* mYellowContainerIcon;       // _78
+	P2DPicture* mRocketIcon;                // _7C
+	P2DPicture* mPartIconTemplate;          // _80
+	P2DPicture* mPartIcons[MAX_UFO_PARTS];  // _84
+	s16 mVisiblePikiCount;                  // _FC
+	PikiRaderEntry mPikiEntries[MAX_PIKI_ON_FIELD]; // _100
+	P2DPicture* mMapPicture;                        // _420
+	P2DPane* mIconPane;                             // _424
+	f32 mCurrentScale;                              // _428
+	f32 mTargetScale;                               // _42C
+	Vector3f mOlimarWorldPos;                       // _430
+	Vector3f mOlimarMapPos;                         // _43C
+	int mOlimarMapPosX;                             // _448
+	int mOlimarMapPosY;                             // _44C
+	f32 mOlimarIconAngle;                           // _450
+	f32 mMapRotationAngle;                          // _454
+	s16 mCurrentMapAlpha;                           // _458
+	s16 mTargetMapAlpha;                            // _45A
 };
 
 } // namespace zen
