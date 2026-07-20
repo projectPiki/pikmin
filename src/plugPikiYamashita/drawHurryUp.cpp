@@ -36,12 +36,12 @@ zen::DrawHurryUp::DrawHurryUp()
 	mRootScale         = 0.75f;
 	_10C               = 1;
 	mRootPane          = mScreen.search('root', true);
-	mMovingHurryUpPane = (P2DPicture*)mScreen.search('hurr', true);
-	mMovingSundownPane = (P2DPicture*)mScreen.search('sund', true);
-	mFixedHurryUpPane  = (P2DPicture*)mScreen.search('hur2', true);
-	mFixedSundownPane  = (P2DPicture*)mScreen.search('sun2', true);
-	mMsgHaloPane       = (P2DPicture*)mScreen.search('sunl', true);
-	mMsgFillPane       = (P2DPicture*)mScreen.search('sunw', true);
+	mMovingHurryUpPane = static_cast<P2DPicture*>(mScreen.search('hurr', true));
+	mMovingSundownPane = static_cast<P2DPicture*>(mScreen.search('sund', true));
+	mFixedHurryUpPane  = static_cast<P2DPicture*>(mScreen.search('hur2', true));
+	mFixedSundownPane  = static_cast<P2DPicture*>(mScreen.search('sun2', true));
+	mMsgHaloPane       = static_cast<P2DPicture*>(mScreen.search('sunl', true));
+	mMsgFillPane       = static_cast<P2DPicture*>(mScreen.search('sunw', true));
 
 	mHurryUpDefaultPos.set(mMovingHurryUpPane->getPosH(), mMovingHurryUpPane->getPosV(), 0.0f);
 	mSundownDefaultPos.set(mMovingSundownPane->getPosH(), mMovingSundownPane->getPosV(), 0.0f);

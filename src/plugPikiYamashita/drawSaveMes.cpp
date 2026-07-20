@@ -31,13 +31,13 @@ zen::DrawSaveMes::DrawSaveMes()
 	P2DScreen* screen = _08->getScreenPtr();
 	screen->setScale(0.0f);
 	screen->setOffset(screen->getWidth() >> 1, screen->getHeight() >> 1);
-	_18 = (P2DTextBox*)screen->search('savk', true);
-	_1C = (P2DTextBox*)screen->search('save', true);
-	_20 = (P2DTextBox*)screen->search('sakc', true);
-	_24 = (P2DTextBox*)screen->search('sa_c', true);
-	_28 = (P2DTextBox*)screen->search('saks', true);
-	_2C = (P2DTextBox*)screen->search('sa_s', true);
-	_30 = (P2DPicture*)screen->search('abtn', true);
+	_18 = static_cast<P2DTextBox*>(screen->search('savk', true));
+	_1C = static_cast<P2DTextBox*>(screen->search('save', true));
+	_20 = static_cast<P2DTextBox*>(screen->search('sakc', true));
+	_24 = static_cast<P2DTextBox*>(screen->search('sa_c', true));
+	_28 = static_cast<P2DTextBox*>(screen->search('saks', true));
+	_2C = static_cast<P2DTextBox*>(screen->search('sa_s', true));
+	_30 = static_cast<P2DPicture*>(screen->search('abtn', true));
 
 	_18->show();
 	_1C->show();
@@ -48,10 +48,10 @@ zen::DrawSaveMes::DrawSaveMes()
 
 	screen = _0C->getScreenPtr();
 	screen->setOffset(screen->getWidth() >> 1, screen->getHeight() >> 1);
-	mBackIcon = (P2DPicture*)screen->search('back', true);
+	mBackIcon = static_cast<P2DPicture*>(screen->search('back', true));
 	mBackIcon->show();
 	mBackIcon->setAlpha(0);
-	_14 = (P2DPicture*)screen->search('chui', true);
+	_14 = static_cast<P2DPicture*>(screen->search('chui', true));
 	_14->setOffset(_14->getWidth() >> 1, _14->getHeight() >> 1);
 	_04 = 0.0f;
 

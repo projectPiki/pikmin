@@ -52,7 +52,7 @@ void zen::DrawMenuText::init(bool useNewColors, immut Colour& charColor, immut C
 void zen::DrawMenuText::setPane(P2DPane* textPane, P2DPane* parentPane)
 {
 	if (textPane->getTypeID() == PANETYPE_TextBox) {
-		mTextPane  = (P2DTextBox*)textPane;
+		mTextPane  = static_cast<P2DTextBox*>(textPane);
 		mCharColor = mTextPane->getCharColor();
 		mGradColor = mTextPane->getGradColor();
 		mTextPane->setOffset(mTextPane->getWidth() >> 1, mTextPane->getHeight() >> 1);
@@ -62,7 +62,7 @@ void zen::DrawMenuText::setPane(P2DPane* textPane, P2DPane* parentPane)
 
 	if (parentPane) {
 		if (parentPane->getTypeID() == PANETYPE_TextBox) {
-			mParentPane = (P2DTextBox*)parentPane;
+			mParentPane = static_cast<P2DTextBox*>(parentPane);
 			mParentPane->setOffset(mParentPane->getWidth() >> 1, mParentPane->getHeight() >> 1);
 		} else {
 			ERROR("This pane is not Text Box.\n");
@@ -253,7 +253,7 @@ zen::DrawMenu::DrawMenu(immut char* bloFileName, bool useAlphaMgr, bool useTexAn
 	P2DPane* pane;
 	P2DPane* paneAlso = mScreen.search('se_c', true);
 	if (paneAlso->getTypeID() == PANETYPE_TextBox) {
-		P2DTextBox* tBox = (P2DTextBox*)paneAlso;
+		P2DTextBox* tBox = static_cast<P2DTextBox*>(paneAlso);
 		tBox->getFontColor(mCharColor, mGradColor);
 	} else {
 		ERROR("tag<se_c> pane is not text box.\n");
@@ -319,7 +319,7 @@ zen::DrawMenu::DrawMenu(immut char* bloFileName, bool useAlphaMgr, bool useTexAn
 		sprintf(buf, "z%02dl", i);
 		pane = mScreen.search(P2DPaneLibrary::makeTag(buf), true);
 		if (pane->getTypeID() == PANETYPE_Picture) {
-			mLeftCursorIcons[i] = (P2DPicture*)pane;
+			mLeftCursorIcons[i] = static_cast<P2DPicture*>(pane);
 			P2DPaneLibrary::changeParent(mLeftCursorIcons[i], mParentPane);
 			mLeftCursorIcons[i]->move(mMenuItems[mCurrentSelect].getIconLPosH() - 640, mMenuItems[mCurrentSelect].getIconLPosV());
 			mLeftCursorIcons[i]->show();
@@ -335,7 +335,7 @@ zen::DrawMenu::DrawMenu(immut char* bloFileName, bool useAlphaMgr, bool useTexAn
 		sprintf(buf, "z%02dr", i);
 		pane = mScreen.search(P2DPaneLibrary::makeTag(buf), true);
 		if (pane->getTypeID() == PANETYPE_Picture) {
-			mRightCursorIcons[i] = (P2DPicture*)pane;
+			mRightCursorIcons[i] = static_cast<P2DPicture*>(pane);
 			P2DPaneLibrary::changeParent(mRightCursorIcons[i], mParentPane);
 			mRightCursorIcons[i]->move(mMenuItems[mCurrentSelect].getIconRPosH() + 640, mMenuItems[mCurrentSelect].getIconRPosV());
 			mRightCursorIcons[i]->show();

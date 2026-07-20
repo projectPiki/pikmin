@@ -39,14 +39,14 @@ zen::ogSaveMgr::ogSaveMgr()
 	mScreen->set("screen/blo/ac_save.blo", true, true, true);
 	mStatus = Inactive;
 
-	mHeader0TextBox          = (P2DTextBox*)mScreen->search('he00', true);
-	mHeader1TextBox          = (P2DTextBox*)mScreen->search('he01', true);
+	mHeader0TextBox          = static_cast<P2DTextBox*>(mScreen->search('he00', true));
+	mHeader1TextBox          = static_cast<P2DTextBox*>(mScreen->search('he01', true));
 	mHeaderSub0              = mScreen->search('hs00', true);
 	mHeaderSub1              = mScreen->search('hs01', true);
-	mSaveCenterTextBox       = (P2DTextBox*)mScreen->search('se_c', true);
-	mBackPicture             = (P2DPicture*)mScreen->search('back', true);
-	mSaveActionCenterTextBox = (P2DTextBox*)mScreen->search('sa_c', true);
-	mSaveActionSideTextBox   = (P2DTextBox*)mScreen->search('sa_s', true);
+	mSaveCenterTextBox       = static_cast<P2DTextBox*>(mScreen->search('se_c', true));
+	mBackPicture             = static_cast<P2DPicture*>(mScreen->search('back', true));
+	mSaveActionCenterTextBox = static_cast<P2DTextBox*>(mScreen->search('sa_c', true));
+	mSaveActionSideTextBox   = static_cast<P2DTextBox*>(mScreen->search('sa_s', true));
 	mSaveActionKC            = mScreen->search('sakc', true);
 	mSaveActionKS            = mScreen->search('saks', true);
 
@@ -74,20 +74,20 @@ zen::ogSaveMgr::ogSaveMgr()
 
 	mBlackScreen = new P2DScreen;
 	mBlackScreen->set("screen/blo/black.blo", false, false, true);
-	mBlackPicture = (P2DPicture*)mBlackScreen->search('blck', true);
+	mBlackPicture = static_cast<P2DPicture*>(mBlackScreen->search('blck', true));
 	mBlackPicture->setAlpha(255);
 
 	mSecondaryScreen = new P2DScreen;
 	mSecondaryScreen->set("screen/blo/ac_save2.blo", true, true, true);
-	mSecondaryHeader0TextBox = (P2DTextBox*)mSecondaryScreen->search('he00', true);
-	mSecondaryHeader1TextBox = (P2DTextBox*)mSecondaryScreen->search('he01', true);
+	mSecondaryHeader0TextBox = static_cast<P2DTextBox*>(mSecondaryScreen->search('he00', true));
+	mSecondaryHeader1TextBox = static_cast<P2DTextBox*>(mSecondaryScreen->search('he01', true));
 
 	mWindow2 = mSecondaryScreen->search('2win', true);
 	mWindow2->show();
 	mWindow2->setOffset(mWindow2->getWidth() / 2, mWindow2->getHeight() / 2);
 	mWindow2->setScale(0.0f);
 
-	mSecondaryBackPicture = (P2DPicture*)mSecondaryScreen->search('back', true);
+	mSecondaryBackPicture = static_cast<P2DPicture*>(mSecondaryScreen->search('back', true));
 	mSecondaryBackPicture->setAlpha(0);
 
 	mSecondaryNikatuMgr

@@ -162,10 +162,10 @@ zen::ogDrawScrController::ogDrawScrController()
 {
 	mControllerScreenMenu.setScreen("screen/blo/cont_00.blo");
 	P2DScreen* screen = mControllerScreenMenu.getPsc();
-	setTextColor((P2DTextBox*)screen->search('st_c', false), (P2DPicture*)screen->search('st', false));
+	setTextColor(static_cast<P2DTextBox*>(screen->search('st_c', false)), static_cast<P2DPicture*>(screen->search('st', false)));
 	mHighlightWhiteColor.set(255, 255, 255, 255);
 	mHighlightBlackColor.set(0, 0, 0, 0);
-	mMasterBackgroundWindowPane = (P2DPicture*)screen->search('3d_w', true);
+	mMasterBackgroundWindowPane = static_cast<P2DPicture*>(screen->search('3d_w', true));
 
 	static u32 pane_name[9]  = { 'l_m', 'r_m', 'z_m', 'y_m', 'x_m', 'a_m', 'b_m', 'c_m', '3d_m' };
 	static u32 pane_name2[9] = { 'l', 'r', 'z', 'y', 'x', 'a', 'b', 'c', '3d' };
@@ -173,10 +173,10 @@ zen::ogDrawScrController::ogDrawScrController()
 	static u32 pane_name4[9] = { 'l_w', 'r_w', 'z_w', 'y_w', 'x_w', 'a_w', 'b_w', 'c_w', '3d_w' };
 
 	for (int i = 0; i < 9; i++) {
-		mButtonMaskPanes[i]             = (P2DPicture*)screen->search(pane_name[i], true);
-		mButtonBasePanes[i]             = (P2DPicture*)screen->search(pane_name2[i], true);
-		mButtonTextBoxes[i]             = (P2DTextBox*)screen->search(pane_name3[i], true);
-		mButtonBackgroundWindowPanes[i] = (P2DPicture*)screen->search(pane_name4[i], true);
+		mButtonMaskPanes[i]             = static_cast<P2DPicture*>(screen->search(pane_name[i], true));
+		mButtonBasePanes[i]             = static_cast<P2DPicture*>(screen->search(pane_name2[i], true));
+		mButtonTextBoxes[i]             = static_cast<P2DTextBox*>(screen->search(pane_name3[i], true));
+		mButtonBackgroundWindowPanes[i] = static_cast<P2DPicture*>(screen->search(pane_name4[i], true));
 		setTextColor(mButtonTextBoxes[i], mButtonMaskPanes[i]);
 		setTextColor(mButtonTextBoxes[i], mButtonBasePanes[i]);
 	}
@@ -473,9 +473,9 @@ zen::ogScrMenuMgr::ogScrMenuMgr()
 
 	mBlackScreen = new P2DScreen;
 	mBlackScreen->set("screen/blo/black.blo", false, false, true);
-	mFadeOverlayPane = (P2DPicture*)mBlackScreen->search('blck', true);
+	mFadeOverlayPane = static_cast<P2DPicture*>(mBlackScreen->search('blck', true));
 
-	P2DTextBox* txt = (P2DTextBox*)mInfoScreen->mInfoScreenMenu.getPsc()->search('se_c', true);
+	P2DTextBox* txt = static_cast<P2DTextBox*>(mInfoScreen->mInfoScreenMenu.getPsc()->search('se_c', true));
 	mAlpha          = txt->getAlphaChar();
 	PRINT("se_c = %d\n", mAlpha);
 	mFadeOverlayPane->setAlpha(0);

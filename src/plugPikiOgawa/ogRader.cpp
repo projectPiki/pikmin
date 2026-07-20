@@ -85,35 +85,35 @@ zen::ogRaderMgr::ogRaderMgr()
 	{
 		_54 = STAGE_Practice;
 		screen->set("screen/blo/p_map00.blo", true);
-		_4C = (P2DPicture*)screen->search('map0', true);
+		_4C = static_cast<P2DPicture*>(screen->search('map0', true));
 		break;
 	}
 	case STAGE_Forest:
 	{
 		_54 = STAGE_Forest;
 		screen->set("screen/blo/p_map01.blo", true);
-		_4C = (P2DPicture*)screen->search('map1', true);
+		_4C = static_cast<P2DPicture*>(screen->search('map1', true));
 		break;
 	}
 	case STAGE_Cave:
 	{
 		_54 = STAGE_Cave;
 		screen->set("screen/blo/p_map02.blo", true);
-		_4C = (P2DPicture*)screen->search('map2', true);
+		_4C = static_cast<P2DPicture*>(screen->search('map2', true));
 		break;
 	}
 	case STAGE_Yakushima:
 	{
 		_54 = STAGE_Yakushima;
 		screen->set("screen/blo/p_map03.blo", true);
-		_4C = (P2DPicture*)screen->search('map3', true);
+		_4C = static_cast<P2DPicture*>(screen->search('map3', true));
 		break;
 	}
 	case STAGE_Last:
 	{
 		_54 = STAGE_Last;
 		screen->set("screen/blo/p_map04.blo", true);
-		_4C = (P2DPicture*)screen->search('map4', true);
+		_4C = static_cast<P2DPicture*>(screen->search('map4', true));
 		break;
 	}
 	default:
@@ -121,7 +121,7 @@ zen::ogRaderMgr::ogRaderMgr()
 		PRINT("----- UNKNOWN MAP !!! -----\n");
 		_54 = 0;
 		screen->set("screen/blo/p_map00.blo", true);
-		_4C = (P2DPicture*)screen->search('map0', true);
+		_4C = static_cast<P2DPicture*>(screen->search('map0', true));
 		break;
 	}
 	}
@@ -130,16 +130,16 @@ zen::ogRaderMgr::ogRaderMgr()
 	_450        = 0.0f;
 	mMainScreen = screen;
 	_58         = screen->search('root', true);
-	_5C         = (P2DPicture*)screen->search('mbpi', true);
-	_60         = (P2DPicture*)screen->search('mrpi', true);
-	_64         = (P2DPicture*)screen->search('mypi', true);
-	_68         = (P2DPicture*)screen->search('mmpi', true);
-	_80         = (P2DPicture*)screen->search('part', true);
-	_6C         = (P2DPicture*)screen->search('orim', true);
-	_70         = (P2DPicture*)screen->search('mbci', true);
-	_74         = (P2DPicture*)screen->search('mrci', true);
-	_78         = (P2DPicture*)screen->search('myci', true);
-	_7C         = (P2DPicture*)screen->search('mroi', true);
+	_5C         = static_cast<P2DPicture*>(screen->search('mbpi', true));
+	_60         = static_cast<P2DPicture*>(screen->search('mrpi', true));
+	_64         = static_cast<P2DPicture*>(screen->search('mypi', true));
+	_68         = static_cast<P2DPicture*>(screen->search('mmpi', true));
+	_80         = static_cast<P2DPicture*>(screen->search('part', true));
+	_6C         = static_cast<P2DPicture*>(screen->search('orim', true));
+	_70         = static_cast<P2DPicture*>(screen->search('mbci', true));
+	_74         = static_cast<P2DPicture*>(screen->search('mrci', true));
+	_78         = static_cast<P2DPicture*>(screen->search('myci', true));
+	_7C         = static_cast<P2DPicture*>(screen->search('mroi', true));
 
 	setOffsetSub(_6C);
 	setOffsetSub(_70);
@@ -358,7 +358,7 @@ void zen::ogRaderMgr::getAllPikiPos()
 	Iterator iterator(pikiMgr);
 	CI_LOOP(iterator)
 	{
-		Piki* piki = (Piki*)*iterator;
+		Piki* piki = static_cast<Piki*>(*iterator);
 		if (piki->isAlive()) {
 			Vector3f pos = ogCalcDispXZ(piki->mSRT.t);
 			data->mColor = piki->mColor;
@@ -373,7 +373,7 @@ void zen::ogRaderMgr::getAllPikiPos()
 	Iterator iterator2(itemMgr->getPikiHeadMgr());
 	CI_LOOP(iterator2)
 	{
-		PikiHeadItem* piki = (PikiHeadItem*)*iterator2;
+		PikiHeadItem* piki = static_cast<PikiHeadItem*>(*iterator2);
 
 		Vector3f pos = ogCalcDispXZ(piki->mSRT.t);
 		data->mColor = -1;

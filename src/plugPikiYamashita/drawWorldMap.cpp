@@ -142,9 +142,9 @@ public:
 		checkPaneType(leftPane, PANETYPE_Picture);
 		checkPaneType(rightPane, PANETYPE_Picture);
 
-		mCentrePane = (P2DPicture*)centrePane;
-		mLeftPane   = (P2DPicture*)leftPane;
-		mRightPane  = (P2DPicture*)rightPane;
+		mCentrePane = static_cast<P2DPicture*>(centrePane);
+		mLeftPane   = static_cast<P2DPicture*>(leftPane);
+		mRightPane  = static_cast<P2DPicture*>(rightPane);
 
 		setTex();
 	}
@@ -386,7 +386,7 @@ public:
 	{
 		P2DPane* icon = iconScreen->search(tag, true);
 		if (icon->getTypeID() == PANETYPE_Picture) {
-			mOnyonIcon = (P2DPicture*)icon;
+			mOnyonIcon = static_cast<P2DPicture*>(icon);
 			if (hideIcon) {
 				mOnyonIcon->hide();
 			}
@@ -509,7 +509,7 @@ public:
 	{
 		P2DPane* rocket = iconScreen->search('ri', true);
 		if (rocket->getTypeID() == PANETYPE_Picture) {
-			mRocketIcon = (P2DPicture*)rocket;
+			mRocketIcon = static_cast<P2DPicture*>(rocket);
 		}
 
 		mCursorOnyons[Blue].init(iconScreen, 'ci_b', false);
@@ -1066,7 +1066,7 @@ public:
 			sprintf(partStr, "pn%02d", i);
 			P2DPane* pane = dataScreen->search(P2DPaneLibrary::makeTag(partStr), true);
 			if (pane->getTypeID() == PANETYPE_Picture) {
-				mFadedStarIcons[i] = (P2DPicture*)pane;
+				mFadedStarIcons[i] = static_cast<P2DPicture*>(pane);
 				mFadedStarIcons[i]->show();
 				pane = P2DPaneLibrary::getParentPane(mFadedStarIcons[i]);
 				P2DPaneLibrary::changeParent(mFadedStarIcons[i], pane);
@@ -1078,7 +1078,7 @@ public:
 			sprintf(partStr, "pa%02d", i);
 			pane = dataScreen->search(P2DPaneLibrary::makeTag(partStr), true);
 			if (pane->getTypeID() == PANETYPE_Picture) {
-				mGlowingStarIcons[i] = (P2DPicture*)pane;
+				mGlowingStarIcons[i] = static_cast<P2DPicture*>(pane);
 				mGlowingStarIcons[i]->show();
 				pane = P2DPaneLibrary::getParentPane(mGlowingStarIcons[i]);
 				P2DPaneLibrary::changeParent(mGlowingStarIcons[i], pane);
@@ -1349,7 +1349,7 @@ public:
 	{
 		P2DPane* pane = wipeScreen->search(tag, true);
 		if (pane->getTypeID() == PANETYPE_Picture) {
-			mWipePane = (P2DPicture*)pane;
+			mWipePane = static_cast<P2DPicture*>(pane);
 			mDefaultPos.set(mWipePane->getPosH() + (mWipePane->getWidth() >> 1), mWipePane->getPosV() + (mWipePane->getHeight() >> 1),
 			                0.0f);
 			move(mWipePane->getPosH(), mWipePane->getPosV());
@@ -1580,17 +1580,17 @@ public:
 	{
 		P2DPane* pointPane1 = pointScreen->search(tag1, true);
 		if (pointPane1->getTypeID() == PANETYPE_Picture) {
-			mUnselectedPic = (P2DPicture*)pointPane1;
+			mUnselectedPic = static_cast<P2DPicture*>(pointPane1);
 			mUnselectedPic->setOffset(mUnselectedPic->getWidth() >> 1, mUnselectedPic->getHeight());
 		}
 		P2DPane* pointPane2 = pointScreen->search(tag2, true);
 		if (pointPane2->getTypeID() == PANETYPE_Picture) {
-			mSelectedPic = (P2DPicture*)pointPane2;
+			mSelectedPic = static_cast<P2DPicture*>(pointPane2);
 			mSelectedPic->setOffset(mSelectedPic->getWidth() >> 1, mSelectedPic->getHeight());
 		}
 		P2DPane* pointPane3 = pointScreen->search(tag3, true);
 		if (pointPane3->getTypeID() == PANETYPE_Picture) {
-			mOpenedPic = (P2DPicture*)pointPane3;
+			mOpenedPic = static_cast<P2DPicture*>(pointPane3);
 			mOpenedPic->setOffset(mSelectedPic->getWidth() >> 1, mSelectedPic->getHeight());
 			mOpenedPic->hide();
 		}
@@ -2029,23 +2029,23 @@ public:
 	{
 		P2DPane* pane1 = moniScreen->search('mi_1', true);
 		if (pane1->getTypeID() == PANETYPE_Picture) {
-			mMapImagePanes[0] = (P2DPicture*)pane1;
+			mMapImagePanes[0] = static_cast<P2DPicture*>(pane1);
 		}
 		P2DPane* pane2 = moniScreen->search('mi_2', true);
 		if (pane2->getTypeID() == PANETYPE_Picture) {
-			mMapImagePanes[1] = (P2DPicture*)pane2;
+			mMapImagePanes[1] = static_cast<P2DPicture*>(pane2);
 		}
 		P2DPane* pane3 = moniScreen->search('mi_3', true);
 		if (pane3->getTypeID() == PANETYPE_Picture) {
-			mMapImagePanes[2] = (P2DPicture*)pane3;
+			mMapImagePanes[2] = static_cast<P2DPicture*>(pane3);
 		}
 		P2DPane* pane4 = moniScreen->search('mi_4', true);
 		if (pane4->getTypeID() == PANETYPE_Picture) {
-			mMapImagePanes[3] = (P2DPicture*)pane4;
+			mMapImagePanes[3] = static_cast<P2DPicture*>(pane4);
 		}
 		P2DPane* pane5 = moniScreen->search('mi_5', true);
 		if (pane5->getTypeID() == PANETYPE_Picture) {
-			mMapImagePanes[4] = (P2DPicture*)pane5;
+			mMapImagePanes[4] = static_cast<P2DPicture*>(pane5);
 		}
 
 		init();

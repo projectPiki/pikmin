@@ -183,20 +183,20 @@ Creature* GenObjectItem::birth(BirthInfo& info)
 		switch (item->mObjType) {
 		case OBJTYPE_Goal:
 		{
-			GoalItem* goal = (GoalItem*)item;
+			GoalItem* goal = static_cast<GoalItem*>(item);
 			goal->setColorType(mParameterA());
 			break;
 		}
 		case OBJTYPE_Rope:
 		{
-			RopeItem* rope = (RopeItem*)item;
+			RopeItem* rope = static_cast<RopeItem*>(item);
 			rope->_2D0     = mParameterA();
 			rope->autoInit();
 			break;
 		}
 		case OBJTYPE_GemItem:
 		{
-			GemItem* gem = (GemItem*)item;
+			GemItem* gem = static_cast<GemItem*>(item);
 			gem->setColorType(mParameterA());
 			break;
 		}
@@ -205,13 +205,13 @@ Creature* GenObjectItem::birth(BirthInfo& info)
 		case OBJTYPE_SluiceBomb:
 		case OBJTYPE_SluiceBombHard:
 		{
-			BuildingItem* wall = (BuildingItem*)item;
+			BuildingItem* wall = static_cast<BuildingItem*>(item);
 			wall->mNumStages   = mParameterD();
 			break;
 		}
 		case OBJTYPE_RockGen:
 		{
-			RockGen* rock = (RockGen*)item;
+			RockGen* rock = static_cast<RockGen*>(item);
 			f32 size      = mParameterA();
 			if (size <= 0.0f) {
 				size = 30.0f;
@@ -221,7 +221,7 @@ Creature* GenObjectItem::birth(BirthInfo& info)
 		}
 		case OBJTYPE_GrassGen:
 		{
-			GrassGen* grass = (GrassGen*)item;
+			GrassGen* grass = static_cast<GrassGen*>(item);
 			f32 size        = mParameterA();
 			if (size <= 0.0f) {
 				size = 30.0f;
@@ -231,7 +231,7 @@ Creature* GenObjectItem::birth(BirthInfo& info)
 		}
 		case OBJTYPE_Weeds:
 		{
-			WeedsGen* weeds    = (WeedsGen*)item;
+			WeedsGen* weeds    = static_cast<WeedsGen*>(item);
 			weeds->mWeedsCount = mParameterD();
 			break;
 		}
@@ -253,13 +253,13 @@ Creature* GenObjectItem::birth(BirthInfo& info)
 		item->mGenerator->mGeneratorName.sprint(id);
 
 		if (mVersion != 'v0.0' && item->mObjType == OBJTYPE_Door) {
-			DoorItem* door              = (DoorItem*)item;
+			DoorItem* door              = static_cast<DoorItem*>(item);
 			door->mDestinationStagePath = mStageName;
 			door->mLabelText            = mPrintName;
 		}
 
 		if (item->mObjType == OBJTYPE_BombGen) {
-			BombGenItem* bombGen = (BombGenItem*)item;
+			BombGenItem* bombGen = static_cast<BombGenItem*>(item);
 			bombGen->mCapacity = bombGen->mRemaining = mParameterA();
 			bombGen->mGrid.updateGrid(item->mSRT.t);
 		}
@@ -275,11 +275,11 @@ Creature* GenObjectItem::birth(BirthInfo& info)
 					f32 dist = sphereDist(obj, item);
 					if (dist < maxDist) {
 						maxDist = dist;
-						goal    = (GoalItem*)obj;
+						goal    = static_cast<GoalItem*>(obj);
 					}
 				}
 			}
-			((PikiHeadItem*)item)->mParentOnion = goal;
+			static_cast<PikiHeadItem*>(item)->mParentOnion = goal;
 		}
 	}
 	return item;

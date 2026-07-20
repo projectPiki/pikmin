@@ -58,7 +58,7 @@ zen::DrawContainer::DrawContainer()
 #endif
 	mMessageMgr    = new MessageMgr(mScreen);
 	mWindowPaneMgr = new WindowPaneMgr(mScreen.search('pall', true));
-	mMarkerPicture = (P2DPicture*)mScreen.search('maru', true);
+	mMarkerPicture = static_cast<P2DPicture*>(mScreen.search('maru', true));
 	mMarkerPicture->show();
 	mMarkerPicture->setAlpha(0);
 	mMarkerPicture->setScale(3.0f);
@@ -170,15 +170,15 @@ void zen::DrawContainer::start(zen::DrawContainer::containerType color, int p2, 
 		mWindowPaneMgr->init();
 		mMessageMgr->init(mColor);
 
-		P2DWindow* pane = (P2DWindow*)mScreen.search('p264', true);
+		P2DWindow* pane = static_cast<P2DWindow*>(mScreen.search('p264', true));
 		pane->setTexture(mPikminTextures[mColor]);
-		P2DPicture* pic = (P2DPicture*)mScreen.search('ws8c', true);
+		P2DPicture* pic = static_cast<P2DPicture*>(mScreen.search('ws8c', true));
 		pic->setTexture(mWindowTextures[mColor], 0);
-		pic = (P2DPicture*)mScreen.search('p2c4', true);
+		pic = static_cast<P2DPicture*>(mScreen.search('p2c4', true));
 		pic->setTexture(mContainerTextures[mColor], 0);
-		pic = (P2DPicture*)mScreen.search('ws8u', true);
+		pic = static_cast<P2DPicture*>(mScreen.search('ws8u', true));
 		pic->setTexture(mWindowTextures[mColor], 0);
-		pic = (P2DPicture*)mScreen.search('ws8l', true);
+		pic = static_cast<P2DPicture*>(mScreen.search('ws8l', true));
 		pic->setTexture(mWindowTextures[mColor], 0);
 		SeSystem::playSysSe(SYSSE_CMENU_ON);
 	}

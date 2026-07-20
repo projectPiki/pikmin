@@ -27,7 +27,7 @@ zen::DrawSaveFailure::DrawSaveFailure()
 	P2DScreen* screen = mSaveFailScreen->getScreenPtr();
 	mSaveFailPane     = screen->search('saxx', true);
 	mSaveFailPane->setOffset(mSaveFailPane->getWidth() >> 1, mSaveFailPane->getHeight() >> 1);
-	mBackIcon = (P2DPicture*)screen->search('back', true);
+	mBackIcon = static_cast<P2DPicture*>(screen->search('back', true));
 	setMode(MODE_Unk0);
 }
 

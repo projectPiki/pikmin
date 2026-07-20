@@ -40,7 +40,7 @@ public:
 	void detachParts(Creature*);
 
 	// DLL inlines:
-	PartsInfo* getFirst() { return (PartsInfo*)mAlivePartsList.mChild; }
+	PartsInfo* getFirst() { return static_cast<PartsInfo*>(mAlivePartsList.mChild); }
 
 	PartsInfo mAlivePartsList; // _00
 	PartsInfo mDeadPartsList;  // _18

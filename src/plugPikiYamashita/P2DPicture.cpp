@@ -444,8 +444,8 @@ void P2DPicture::setTevMode()
 
 	if (!((COLOUR_TO_U32(mBlack) == 0) ? true : false) || !((COLOUR_TO_U32(mWhite) == 0xFFFFFFFF) ? true : false)) {
 		GXSetTevOrder((GXTevStageID)i, GX_TEXCOORD_NULL, GX_TEXMAP_NULL, GX_COLOR_NULL);
-		GXSetTevColor(GX_TEVREG0, *(GXColor*)&mBlack);
-		GXSetTevColor(GX_TEVREG1, *(GXColor*)&mWhite);
+		GXSetTevColor(GX_TEVREG0, reinterpret_cast<GXColor&>(mBlack));
+		GXSetTevColor(GX_TEVREG1, reinterpret_cast<GXColor&>(mWhite));
 		GXSetTevColorIn((GXTevStageID)i, GX_CC_C0, GX_CC_C2, GX_CC_CPREV, GX_CC_ZERO);
 		GXSetTevAlphaIn((GXTevStageID)i, GX_CA_A0, GX_CA_A1, GX_CA_APREV, GX_CA_ZERO);
 		GXSetTevColorOp((GXTevStageID)i, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);

@@ -27,7 +27,7 @@ zen::DrawMenuBase::DrawMenuBase(immut char* bloFileName, bool useAlphaMgr, bool 
 
 	P2DPane* pane = mScreen.search('se_c', true);
 	if (pane->getTypeID() == PANETYPE_TextBox) {
-		P2DTextBox* tBox = (P2DTextBox*)pane;
+		P2DTextBox* tBox = static_cast<P2DTextBox*>(pane);
 		tBox->getFontColor(mCharColor, mGradColor);
 	} else {
 		ERROR("tag<se_c> pane is not text box.\n");

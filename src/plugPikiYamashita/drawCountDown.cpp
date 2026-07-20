@@ -38,7 +38,7 @@ zen::DrawCountDown::DrawCountDown()
 			PRINT("not picture pane.\n");
 			ERROR("not picture pane.\n");
 		} else {
-			mNumberPics[i] = (P2DPicture*)pane;
+			mNumberPics[i] = static_cast<P2DPicture*>(pane);
 			mNumberPics[i]->setAlpha(0);
 			mNumberPics[i]->hide();
 			mNumberPics[i]->setOffset(mNumberPics[i]->getWidth() >> 1, mNumberPics[i]->getHeight() >> 1);
@@ -50,7 +50,7 @@ zen::DrawCountDown::DrawCountDown()
 		PRINT("not picture pane.\n");
 		ERROR("not picture pane.\n");
 	} else {
-		mGatherYourPikminPane = (P2DPicture*)pane;
+		mGatherYourPikminPane = static_cast<P2DPicture*>(pane);
 		mGatherYourPikminPane->hide();
 	}
 

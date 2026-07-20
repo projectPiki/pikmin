@@ -57,21 +57,21 @@ public:
 		P2DPane* pane = screen->search(P2DPaneLibrary::makeTag(buf), true);
 		pane->setCallBack(new NumberPicCallBack<int>(pane, &mScore, 100, false));
 		if (pane->getTypeID() == PANETYPE_Picture) {
-			mScoreDigitHundreds = (P2DPicture*)pane;
+			mScoreDigitHundreds = static_cast<P2DPicture*>(pane);
 		}
 
 		sprintf(buf, "%di_c", p2);
 		pane = screen->search(P2DPaneLibrary::makeTag(buf), true);
 		pane->setCallBack(new NumberPicCallBack<int>(pane, &mScore, 10, false));
 		if (pane->getTypeID() == PANETYPE_Picture) {
-			mScoreDigitTens = (P2DPicture*)pane;
+			mScoreDigitTens = static_cast<P2DPicture*>(pane);
 		}
 
 		sprintf(buf, "%di_r", p2);
 		pane = screen->search(P2DPaneLibrary::makeTag(buf), true);
 		pane->setCallBack(new NumberPicCallBack<int>(pane, &mScore, 1, false));
 		if (pane->getTypeID() == PANETYPE_Picture) {
-			mScoreDigitOnes = (P2DPicture*)pane;
+			mScoreDigitOnes = static_cast<P2DPicture*>(pane);
 		}
 		mMode         = MODE_Wait;
 		mModeFunction = &DrawCMscoreObj::modeWait;

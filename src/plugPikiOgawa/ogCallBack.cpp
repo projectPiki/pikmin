@@ -19,7 +19,7 @@ DEFINE_PRINT("OgCallBackSection")
 zen::TextColorCallBack::TextColorCallBack(P2DPane* pane)
     : P2DPaneCallBack(pane, PANETYPE_TextBox)
 {
-	mTextBox            = (P2DTextBox*)pane;
+	mTextBox            = static_cast<P2DTextBox*>(pane);
 	mIsTransitionActive = false;
 	mTransitionDuration = 1.0f;
 	mElapsedTime        = 0.0f;
