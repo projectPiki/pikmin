@@ -47,7 +47,7 @@ public:
 	void setPage(int);
 	void nextPage();
 	void backPage();
-	void MakeAndSetPageInfo(immut char***);
+	void MakeAndSetPageInfo(immut char*** const);
 	void dispAll();
 	void fadeOut();
 	MessageStatus update(Controller*);
@@ -88,7 +88,7 @@ public:
 private:
 	s16 SearchTopPage(int);
 	void setMessagePage(int);
-	s16 makePageInfo(immut char***);
+	s16 makePageInfo(immut char*** const);
 	void cnvSingleMulti(char*);
 	void cnvButtonIcon(char*);
 	void setPageInfoSub();

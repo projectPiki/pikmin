@@ -56,7 +56,7 @@ int selectRandomly(immut Choice* choiceList, int numChoices);
 void drawBatten(Graphics&, immut Vector3f&, f32);
 void drawBattenPole(Graphics&, immut Vector3f&, f32, immut char*);
 void drawArrow(Graphics&, immut Vector3f&, immut Vector3f&, f32);
-void CRSplineDraw(Graphics&, int, immut Vector3f*);
+void CRSplineDraw(Graphics&, int, immut Vector3f* const);
 void drawCube(Graphics&, immut Vector3f&, f32);
 
 #endif

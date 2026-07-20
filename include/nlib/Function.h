@@ -52,7 +52,7 @@ struct NLinearFunction : public NPolynomialFunction {
 	NLinearFunction(f32* const); // unused/inlined
 
 	// unused/inlined:
-	void construct(f32*);
+	void construct(f32* const);
 	void makeLinearFunction(f32, f32, f32, f32);
 
 	// _00     = VTBL
