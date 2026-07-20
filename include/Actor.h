@@ -7,7 +7,9 @@
 #include "MapMgr.h"
 #include "ObjectMgr.h"
 #include "Piki.h"
+#include "SAIEvent.h"
 #include "types.h"
+
 
 class ActorMgr;
 struct NaviProp;

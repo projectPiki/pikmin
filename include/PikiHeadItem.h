@@ -3,9 +3,11 @@
 
 #include "CreatureProp.h"
 #include "ItemMgr.h"
+#include "SAIEvent.h"
 #include "SimpleAI.h"
 #include "UtEffect.h"
 #include "types.h"
+
 
 class InteractBikkuri;
 class InteractSwallow;

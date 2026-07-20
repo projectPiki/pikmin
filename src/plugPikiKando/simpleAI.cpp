@@ -1,5 +1,6 @@
 #include "SimpleAI.h"
 #include "DebugLog.h"
+#include "SAIEvent.h" // NB: this has to be after SimpleAI.h for weak function ordering
 #include "sysNew.h"
 
 /**

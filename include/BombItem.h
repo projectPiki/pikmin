@@ -3,6 +3,7 @@
 
 #include "CreatureProp.h"
 #include "ItemMgr.h"
+#include "SAIEvent.h"
 #include "SimpleAI.h"
 #include "SoundMgr.h"
 #include "types.h"

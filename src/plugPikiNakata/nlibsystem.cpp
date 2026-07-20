@@ -132,25 +132,55 @@ void NNode::removeAllChildren()
  */
 NListNode::NListNode()
 {
-	TRAP_UNIMPLEMENTED;
+	_00 = _04 = nullptr;
 }
 
 /**
  * @todo: Documentation
  * @note UNUSED Size: 00003C
  */
-void NListNode::addChild(NListNode*)
+void NListNode::addChild(NListNode* child)
 {
-	TRAP_UNIMPLEMENTED;
+	if (!child) {
+		return;
+	}
+
+	if (!_04) {
+		_04 = child;
+	} else {
+		NListNode* i = _04;
+		while (i->_00) {
+			i = i->_00;
+		}
+		i->_00 = child;
+	}
 }
 
 /**
  * @todo: Documentation
  * @note UNUSED Size: 000050
  */
-void NListNode::removeChild(NListNode*)
+void NListNode::removeChild(NListNode* child)
 {
-	TRAP_UNIMPLEMENTED;
+	if (!child) {
+		return;
+	}
+
+	if (_04 == child) {
+		_04 = _04->_00;
+	} else {
+		NListNode* i = _04;
+		while (i->_00) {
+			if (i->_00 == child) {
+				break;
+			}
+			i = i->_00;
+		}
+		if (!i->_00) {
+			return;
+		}
+		i->_00 = i->_00->_00;
+	}
 }
 
 /**
@@ -159,16 +189,39 @@ void NListNode::removeChild(NListNode*)
  */
 int NListNode::getChildCount()
 {
-	TRAP_UNIMPLEMENTED;
+	int count    = 0;
+	NListNode* i = _04;
+	while (i) {
+		i = i->_00;
+		// nice bug. this should be:
+		// count++;
+	}
+	return count;
 }
 
 /**
  * @todo: Documentation
  * @note UNUSED Size: 000048
  */
-void NListNode::addChild(int, NListNode*)
+void NListNode::addChild(int idx, NListNode* child)
 {
-	TRAP_UNIMPLEMENTED;
+	if (idx == 0) {
+		child->_00 = _04;
+		_04        = child;
+		return;
+	}
+
+	NListNode* node = _04;
+	int i           = 0;
+	for (i; i < idx - 1; i++) {
+		if (!node) {
+			PRINT_NAKATA("!NListNode::insertList\n");
+			break;
+		}
+		node = node->_00;
+	}
+	child->_00 = node->_00;
+	node->_00  = child;
 }
 
 /**
@@ -177,7 +230,7 @@ void NListNode::addChild(int, NListNode*)
  */
 void NListNode::toString()
 {
-	TRAP_UNIMPLEMENTED;
+	PRINT("NListNode::toString:%08x,%08x,%08x\n", this, _04, _00);
 }
 
 /**
@@ -186,16 +239,24 @@ void NListNode::toString()
  */
 NList::NList()
 {
-	TRAP_UNIMPLEMENTED;
+	_00 = nullptr;
 }
 
 /**
  * @todo: Documentation
  * @note UNUSED Size: 000024
  */
-void NList::addList(NList*)
+void NList::addList(NList* list)
 {
-	TRAP_UNIMPLEMENTED;
+	if (!list) {
+		return;
+	}
+
+	NList* i = this;
+	while (i->_00) {
+		i = i->_00;
+	}
+	i->_00 = list;
 }
 
 /**
@@ -204,7 +265,7 @@ void NList::addList(NList*)
  */
 void NList::toString()
 {
-	TRAP_UNIMPLEMENTED;
+	PRINT("NList::toString:%08x,%08x\n", this, _00);
 }
 
 /**
@@ -259,3 +320,20 @@ u32 NSystem::getFreeHeap()
 {
 	return system->getHeap(SYSHEAP_App)->getFree();
 }
+
+#if defined(__MWERKS__) && defined(BUILD_MATCHING)
+/**
+ * @note this is a fake struct to make the weak function emission order line up.
+ * it'll get stripped, so it's "fine" (read: ugly and awful and I hate it)
+ */
+template <typename T>
+struct NArrayInstantiator {
+	bool fake(NArray<T>* array, T* elem);
+};
+template <typename T>
+bool NArrayInstantiator<T>::fake(NArray<T>* array, T* elem)
+{
+	return array->contains(elem);
+}
+template class NArrayInstantiator<NNode>;
+#endif
