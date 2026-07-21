@@ -25,6 +25,9 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("fastGrid")
 
+/**
+ * @brief Initializes grid coordinates and neighbor radius to defaults.
+ */
 FastGrid::FastGrid()
 {
 	mGridPositionX = mGridPositionY = mGridPositionZ = mWidth = mHeight = 0;
@@ -55,8 +58,8 @@ void FastGrid::initAIGrid(u8 shift)
  */
 void FastGrid::clearAIGrid()
 {
-	for (int i = 0; i < aiGridSize * aiGridSize; i++) {
-		aiGridMap[i] = 0;
+	for (int cellIndex = 0; cellIndex < aiGridSize * aiGridSize; cellIndex++) {
+		aiGridMap[cellIndex] = 0;
 	}
 }
 
@@ -66,8 +69,8 @@ void FastGrid::clearAIGrid()
  */
 void FastGrid::addAIGrid()
 {
-	int id = mWidth * aiGridSize + mHeight;
-	aiGridMap[id]++;
+	int cellIndex = mWidth * aiGridSize + mHeight;
+	aiGridMap[cellIndex]++;
 }
 
 /**
@@ -75,9 +78,9 @@ void FastGrid::addAIGrid()
  */
 void FastGrid::delAIGrid()
 {
-	int id = mWidth * aiGridSize + mHeight;
-	if (aiGridMap[id]) {
-		aiGridMap[id]--;
+	int cellIndex = mWidth * aiGridSize + mHeight;
+	if (aiGridMap[cellIndex]) {
+		aiGridMap[cellIndex]--;
 	}
 }
 
@@ -96,50 +99,50 @@ bool FastGrid::aiCulling()
 	}
 
 	// Standard neighbor check (1-cell radius)
-	int offset = mHeight + mWidth * aiGridSize;
-	if (aiGridMap[offset]) {
+	int centerCellIndex = mHeight + mWidth * aiGridSize;
+	if (aiGridMap[centerCellIndex]) {
 		return false;
 	}
 
 	// Check 8 neighboring cells
 	// Right
-	if (mHeight < aiGridSize - 1 && aiGridMap[offset + 1]) {
+	if (mHeight < aiGridSize - 1 && aiGridMap[centerCellIndex + 1]) {
 		return false;
 	}
 
 	// Left
-	if (mHeight > 0 && aiGridMap[offset - 1]) {
+	if (mHeight > 0 && aiGridMap[centerCellIndex - 1]) {
 		return false;
 	}
 
 	// Down
-	if (mWidth < aiGridSize - 1 && aiGridMap[offset + aiGridSize]) {
+	if (mWidth < aiGridSize - 1 && aiGridMap[centerCellIndex + aiGridSize]) {
 		return false;
 	}
 
 	// Up
-	if (mWidth > 0 && aiGridMap[offset - aiGridSize]) {
+	if (mWidth > 0 && aiGridMap[centerCellIndex - aiGridSize]) {
 		return false;
 	}
 
 	// Diagonals
 	// Up-Right
-	if (mHeight < aiGridSize - 1 && mWidth > 0 && aiGridMap[offset + 1 - aiGridSize]) {
+	if (mHeight < aiGridSize - 1 && mWidth > 0 && aiGridMap[centerCellIndex + 1 - aiGridSize]) {
 		return false;
 	}
 
 	// Down-Right
-	if (mHeight < aiGridSize - 1 && mWidth < aiGridSize - 1 && aiGridMap[offset + 1 + aiGridSize]) {
+	if (mHeight < aiGridSize - 1 && mWidth < aiGridSize - 1 && aiGridMap[centerCellIndex + 1 + aiGridSize]) {
 		return false;
 	}
 
 	// Up-Left
-	if (mHeight > 0 && mWidth > 0 && aiGridMap[offset - 1 - aiGridSize]) {
+	if (mHeight > 0 && mWidth > 0 && aiGridMap[centerCellIndex - 1 - aiGridSize]) {
 		return false;
 	}
 
 	// Down-Left
-	if (mHeight > 0 && mWidth < aiGridSize - 1 && aiGridMap[offset - 1 + aiGridSize]) {
+	if (mHeight > 0 && mWidth < aiGridSize - 1 && aiGridMap[centerCellIndex - 1 + aiGridSize]) {
 		return false;
 	}
 
@@ -157,13 +160,14 @@ bool FastGrid::aiCullingLarge(int max)
 	}
 
 	// Check a square area of side length (2*max + 1) around the current cell
-	int offset = mHeight + mWidth * aiGridSize;
-	for (int x = -max; x <= max; x++) {
+	int centerCellIndex = mHeight + mWidth * aiGridSize;
+	for (int widthOffset = -max; widthOffset <= max; widthOffset++) {
 		// Bounds check X
-		if (mWidth + x >= 0 && mWidth + x < aiGridSize) {
-			for (int y = -max; y <= max; y++) {
+		if (mWidth + widthOffset >= 0 && mWidth + widthOffset < aiGridSize) {
+			for (int heightOffset = -max; heightOffset <= max; heightOffset++) {
 				// Bounds check Y
-				if (mHeight + y >= 0 && mHeight + y < aiGridSize && aiGridMap[offset + x * aiGridSize + y]) {
+				if (mHeight + heightOffset >= 0 && mHeight + heightOffset < aiGridSize
+				    && aiGridMap[centerCellIndex + widthOffset * aiGridSize + heightOffset]) {
 					return false;
 				}
 			}
@@ -243,28 +247,28 @@ void FastGrid::updateGrid(const Vector3f& pos)
  */
 void FastGrid::updateAIGrid(const Vector3f& pos, bool updateMap)
 {
-	f32 x      = pos.x;
-	f32 z      = pos.z;
-	int width  = mWidth;
-	int height = mHeight;
+	f32 worldX      = pos.x;
+	f32 worldZ      = pos.z;
+	int previousRow = mWidth;
+	int previousCol = mHeight;
 
 	if (AIPerf::aiGrid) {
 		// Calculate new grid cell indices based on position and grid shift
-		mWidth = x;
+		mWidth = worldX;
 		mWidth = (aiGridSize >> 1) + (mWidth >> aiGridShift);
 
-		mHeight = z;
+		mHeight = worldZ;
 		mHeight = (aiGridSize >> 1) + (mHeight >> aiGridShift);
 
 		// Update map counts if the grid cell has changed
-		if (updateMap && (mWidth != width || mHeight != height)) {
-			int offset = height + width * aiGridSize;
-			if (aiGridMap[offset]) {
-				aiGridMap[offset]--;
+		if (updateMap && (mWidth != previousRow || mHeight != previousCol)) {
+			int previousCellIndex = previousCol + previousRow * aiGridSize;
+			if (aiGridMap[previousCellIndex]) {
+				aiGridMap[previousCellIndex]--;
 			}
 
-			int newOffset = mHeight + mWidth * aiGridSize;
-			aiGridMap[newOffset]++;
+			int currentCellIndex = mHeight + mWidth * aiGridSize;
+			aiGridMap[currentCellIndex]++;
 		}
 	}
 }
@@ -282,33 +286,33 @@ void FastGrid::updateAIGrid(const Vector3f& pos, bool updateMap)
  */
 void FastGrid::renderAIGrid2D(Graphics& gfx)
 {
-	int i, j;
+	int rowIndex, colIndex;
 
 	gfx.useTexture(nullptr, GX_TEXMAP0);
 	gfx.setColour(Colour(155, 155, 155, 255), true);
 
 	// Making the following named constants actually `const` affects matching.  Lovely const memes!
 	immut int dispAmount = 12; // Width and height (in cells) of the displayed square grid of cells.
-	immut int iOffs      = mWidth - (dispAmount >> 1);
-	immut int jOffs      = mHeight - (dispAmount >> 1);
+	immut int rowOffset  = mWidth - (dispAmount >> 1);
+	immut int colOffset  = mHeight - (dispAmount >> 1);
 	immut f32 cellSize   = 20.0f; // Width and height of one single grid cell.
 
-	for (i = 0; i < dispAmount; ++i) {
-		Vector3f a(i * cellSize + 40.0f, 40.0f, 0.0f);
-		Vector3f b(i * cellSize + 40.0f, dispAmount * cellSize + 40.0f, 0.0f);
-		gfx.drawLine(a, b);
+	for (rowIndex = 0; rowIndex < dispAmount; ++rowIndex) {
+		Vector3f lineStart(rowIndex * cellSize + 40.0f, 40.0f, 0.0f);
+		Vector3f lineEnd(rowIndex * cellSize + 40.0f, dispAmount * cellSize + 40.0f, 0.0f);
+		gfx.drawLine(lineStart, lineEnd);
 
-		a.set(40.0f, i * cellSize + 40.0f, 0.0f);
-		b.set(dispAmount * cellSize + 40.0f, i * cellSize + 40.0f, 0.0f);
-		gfx.drawLine(a, b);
+		lineStart.set(40.0f, rowIndex * cellSize + 40.0f, 0.0f);
+		lineEnd.set(dispAmount * cellSize + 40.0f, rowIndex * cellSize + 40.0f, 0.0f);
+		gfx.drawLine(lineStart, lineEnd);
 	}
 
 	char buffer[8];
 
-	for (i = 0; i < dispAmount; ++i) {
-		for (j = 0; j < dispAmount; ++j) {
-			int myGridCellRow = i + iOffs;
-			int myGridCellCol = j + jOffs;
+	for (rowIndex = 0; rowIndex < dispAmount; ++rowIndex) {
+		for (colIndex = 0; colIndex < dispAmount; ++colIndex) {
+			int myGridCellRow = rowIndex + rowOffset;
+			int myGridCellCol = colIndex + colOffset;
 			if (myGridCellRow >= 0 && myGridCellCol >= 0 && myGridCellRow < aiGridSize && myGridCellCol < aiGridSize) {
 				Iterator tekiIter(tekiMgr);
 				CI_LOOP(tekiIter)
@@ -321,8 +325,8 @@ void FastGrid::renderAIGrid2D(Graphics& gfx)
 							gfx.setColour(Colour(200, 100, 100, 255), true);
 						}
 						RectArea tekiRect;
-						tekiRect.set(i * cellSize + 1.0f, j * cellSize + 1.0f, i * cellSize + cellSize - 1.0f,
-						             j * cellSize + cellSize - 1.0f);
+						tekiRect.set(rowIndex * cellSize + 1.0f, colIndex * cellSize + 1.0f,
+						             rowIndex * cellSize + cellSize - 1.0f, colIndex * cellSize + cellSize - 1.0f);
 						tekiRect.mMinX = tekiRect.mMinX + 40.0f;
 						tekiRect.mMinY = tekiRect.mMinY + 40.0f;
 						tekiRect.mMaxX = tekiRect.mMaxX + 40.0f;
@@ -343,8 +347,8 @@ void FastGrid::renderAIGrid2D(Graphics& gfx)
 							gfx.setColour(Colour(100, 200, 100, 255), true);
 						}
 						RectArea workRect;
-						workRect.set(i * cellSize + 1.0f, j * cellSize + 1.0f, i * cellSize + cellSize - 1.0f,
-						             j * cellSize + cellSize - 1.0f);
+						workRect.set(rowIndex * cellSize + 1.0f, colIndex * cellSize + 1.0f,
+						             rowIndex * cellSize + cellSize - 1.0f, colIndex * cellSize + cellSize - 1.0f);
 						workRect.mMinX = workRect.mMinX + 40.0f;
 						workRect.mMinY = workRect.mMinY + 40.0f;
 						workRect.mMaxX = workRect.mMaxX + 40.0f;
@@ -353,13 +357,14 @@ void FastGrid::renderAIGrid2D(Graphics& gfx)
 					}
 				}
 
-				u32 local_8c = aiGridMap[myGridCellRow * aiGridSize + myGridCellCol];
-				if (local_8c) {
-					f32 local_90 = i * cellSize + 40.0f;
-					f32 local_94 = j * cellSize + 40.0f;
-					sprintf(buffer, "%d", local_8c);
+				// Print the population count of the current cell if it's greater than zero.
+				u32 cellPopulation = aiGridMap[myGridCellRow * aiGridSize + myGridCellCol];
+				if (cellPopulation) {
+					f32 textX = rowIndex * cellSize + 40.0f;
+					f32 textY = colIndex * cellSize + 40.0f;
+					sprintf(buffer, "%d", cellPopulation);
 					gfx.setColour(Colour(155, 155, 155, 255), true);
-					gfx.texturePrintf(gsys->mConsFont, static_cast<int>(local_90) + 4, static_cast<int>(local_94) + 4, buffer);
+					gfx.texturePrintf(gsys->mConsFont, static_cast<int>(textX) + 4, static_cast<int>(textY) + 4, buffer);
 				}
 			}
 		}
@@ -374,7 +379,7 @@ void FastGrid::renderAIGrid2D(Graphics& gfx)
  */
 void FastGrid::renderAIGrid(Graphics& gfx)
 {
-	int i, j;
+	int rowIndex, colIndex;
 
 	gfx.useTexture(nullptr, GX_TEXMAP0);
 	gfx.setColour(Colour(255, 0, 0, 255), true);
@@ -384,11 +389,11 @@ void FastGrid::renderAIGrid(Graphics& gfx)
 	f32 cellSize = (32768.0f / aiGridSize) * 2;
 	char buffer[PATH_MAX];
 
-	for (i = 0; i < aiGridSize; ++i) {
-		for (j = 0; j < aiGridSize; ++j) {
-			if (aiGridMap[i * aiGridSize + j] != 0) {
-				f32 xPos = (i - (aiGridSize >> 1)) << aiGridShift;
-				f32 zPos = (j - (aiGridSize >> 1)) << aiGridShift;
+	for (rowIndex = 0; rowIndex < aiGridSize; ++rowIndex) {
+		for (colIndex = 0; colIndex < aiGridSize; ++colIndex) {
+			if (aiGridMap[rowIndex * aiGridSize + colIndex] != 0) {
+				f32 xPos = (rowIndex - (aiGridSize >> 1)) << aiGridShift;
+				f32 zPos = (colIndex - (aiGridSize >> 1)) << aiGridShift;
 				f32 yPos = 4.0f;
 
 				gfx.useMatrix(gfx.mCamera->mLookAtMtx, 0);
@@ -404,13 +409,13 @@ void FastGrid::renderAIGrid(Graphics& gfx)
 				gfx.drawLine(northeast, northwest); // 2----->3
 
 				// Check it again just to be sure, lol.
-				if (aiGridMap[i * aiGridSize + j] != 0) {
+				if (aiGridMap[rowIndex * aiGridSize + colIndex] != 0) {
 					gfx.useMatrix(Matrix4f::ident, 0);
 
 					Vector3f printfPos(xPos + cellSize * 0.5f, yPos + 10.0f, zPos + cellSize * 0.5f);
 					printfPos.multMatrix(gfx.mCamera->mLookAtMtx);
 
-					sprintf(buffer, "%d", aiGridMap[i * aiGridSize + j]);
+					sprintf(buffer, "%d", aiGridMap[rowIndex * aiGridSize + colIndex]);
 					gfx.perspPrintf(gsys->mConsFont, printfPos, -(gsys->mConsFont->stringWidth(buffer) / 2), 0, buffer);
 				}
 			}

@@ -85,9 +85,9 @@ DynParticleHeap::DynParticleHeap(int numParticles)
 	mFreeParticleList.initCore("freeParticles");
 	mUsedParticleList.initCore("useParticles");
 
-	for (int i = 0; i < numParticles; i++) {
-		mHeap[i].mNextParticle = nullptr;
-		mFreeParticleList.add(&mHeap[i]);
+	for (int particleIndex = 0; particleIndex < numParticles; particleIndex++) {
+		mHeap[particleIndex].mNextParticle = nullptr;
+		mFreeParticleList.add(&mHeap[particleIndex]);
 	}
 }
 
@@ -414,7 +414,7 @@ void DynCreature::simulate(f32 timeStep)
 void DynCreature::applyTorque(int particleIdx, f32 magnitude)
 {
 	DynParticle* ptcl = mParticleList;
-	for (int i = 0; i < particleIdx; ++i) {
+	for (int particleListIndex = 0; particleListIndex < particleIdx; ++particleListIndex) {
 		ptcl = ptcl->mNextParticle;
 	}
 	if (!ptcl) {
@@ -432,12 +432,11 @@ void DynCreature::applyTorque(int particleIdx, f32 magnitude)
 	}
 	Vector3f yTorque = magnitude * yRotation;
 
-	// Not sure what to name this
-	Vector3f local_74(ptcl->mLocalPosition);
-	local_74.multMatrix(rotMtx);
-	local_74.CP(yTorque);
+	Vector3f angularImpulse(ptcl->mLocalPosition);
+	angularImpulse.multMatrix(rotMtx);
+	angularImpulse.CP(yTorque);
 
-	mAngularMomentum = mAngularMomentum + local_74;
+	mAngularMomentum = mAngularMomentum + angularImpulse;
 	mAngularVelocity = mAngularMomentum;
 	mAngularVelocity.multMatrix(mWorldInvInertiaTensor);
 }

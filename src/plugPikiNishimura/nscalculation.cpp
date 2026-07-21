@@ -18,8 +18,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("TODO: Replace")
 
-/*
- * Aside from arg order and defines, identical to Pikmin 2's NsMathExp::calcLagrange
+/**
+ * @brief Aside from arg order and defines, identical to Pikmin 2's NsMathExp::calcLagrange
  */
 void NsCalculation::calcLagrange(f32 t, const Vector3f* const controlPts, Vector3f& outPoint)
 {
@@ -32,7 +32,7 @@ void NsCalculation::calcLagrange(f32 t, const Vector3f* const controlPts, Vector
 }
 
 /**
- * @todo: Documentation
+ * @brief Calculates a transformation matrix based on the provided vectors and translation.
  */
 void NsCalculation::calcMatrix(const Vector3f& xVec, const Vector3f& yVec, const Vector3f& zVec, const Vector3f& transVec, Matrix4f& mtx)
 {
@@ -52,7 +52,7 @@ void NsCalculation::calcMatrix(const Vector3f& xVec, const Vector3f& yVec, const
 }
 
 /**
- * @todo: Documentation
+ * @brief Calculates a 3x3 transformation matrix based on the provided vectors.
  * @note UNUSED Size: 00004C (Matching by size)
  */
 void NsCalculation::calcMatrix3f(const Vector3f& vec1, const Vector3f& vec2, const Vector3f& vec3, Matrix3f& mtx)
@@ -69,10 +69,7 @@ void NsCalculation::calcMatrix3f(const Vector3f& vec1, const Vector3f& vec2, con
 }
 
 /**
- * @todo: Documentation
- */
-/**
- * Calculates the position of the middle joint and bottom joint based on the given parameters.
+ * @brief Calculates the position of the middle joint and bottom joint based on the given parameters.
  *
  * @param topPosition The position of the top joint.
  * @param bottomPosition The position of the bottom joint.
@@ -134,44 +131,45 @@ void NsCalculation::calcJointPos(const Vector3f& topPosition, const Vector3f& bo
 }
 
 /**
- * @todo: Documentation
+ * @brief Calculates the direct axis of a transformation matrix relative to another matrix.
  * @note UNUSED Size: 0001E8 (Matching by size)
  */
-int NsCalculation::calcMtxDirect(const Matrix4f& param_1, const Matrix4f& param_2)
+int NsCalculation::calcMtxDirect(const Matrix4f& fromMtx, const Matrix4f& toMtx)
 {
-	Vector3f local_28[3];
+	Vector3f basisVectors[3];
 
-	Vector3f local_34;
-	Vector3f local_40;
-	Vector3f local_4c;
+	Vector3f fromTranslation;
+	Vector3f toTranslation;
+	Vector3f translationDir;
 
 	float maxInnerRatio = 0.0f;
 
-	int i; // Nishimura, why?
-	for (i = 0; i < 3; i++) {
-		calcMtxTrans(param_1, i, local_28[i]);
-		local_28[i].normalise();
+	int axisIdx; // Nishimura, why?
+	for (axisIdx = 0; axisIdx < 3; axisIdx++) {
+		calcMtxTrans(fromMtx, axisIdx, basisVectors[axisIdx]);
+		basisVectors[axisIdx].normalise();
 	}
-	calcMtxTrans(param_1, 3, local_34);
-	calcMtxTrans(param_2, 3, local_40);
-	local_4c.x = local_40.x - local_34.x;
-	local_4c.y = local_40.y - local_34.y;
-	local_4c.z = local_40.z - local_34.z;
-	local_4c.normalise();
+	calcMtxTrans(fromMtx, 3, fromTranslation);
+	calcMtxTrans(toMtx, 3, toTranslation);
+	translationDir.x = toTranslation.x - fromTranslation.x;
+	translationDir.y = toTranslation.y - fromTranslation.y;
+	translationDir.z = toTranslation.z - fromTranslation.z;
+	translationDir.normalise();
 
-	int maxIdx;
-	for (i = 0; i < 3; i++) {
-		float innerRatio = calcInnerRatio(local_28[i], local_4c);
+	// Pick axis from fromMtx that most closely points toward toMtx translation.
+	int bestAxisIdx;
+	for (axisIdx = 0; axisIdx < 3; axisIdx++) {
+		float innerRatio = calcInnerRatio(basisVectors[axisIdx], translationDir);
 		if (maxInnerRatio < innerRatio) {
-			maxIdx        = i;
+			bestAxisIdx   = axisIdx;
 			maxInnerRatio = innerRatio;
 		}
 	}
-	return maxIdx;
+	return bestAxisIdx;
 }
 
 /**
- * @todo: Documentation
+ * @brief Converts a 4x4 matrix to a 3x3 matrix.
  */
 void NsCalculation::calcMat4toMat3(const Matrix4f& inMtx, Matrix3f& outMtx)
 {
@@ -189,7 +187,7 @@ void NsCalculation::calcMat4toMat3(const Matrix4f& inMtx, Matrix3f& outMtx)
 }
 
 /**
- * @todo: Documentation
+ * @brief Converts a 3x3 matrix to a 4x4 matrix.
  * @note UNUSED Size: 00004C (Matching by size)
  */
 void NsCalculation::calcMat3toMat4(const Matrix3f& inMtx, Matrix4f& outMtx)

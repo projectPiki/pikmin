@@ -62,9 +62,9 @@ void Envelope::read(RandomAccessStream& stream)
 	// Point weights to after indices in that block
 	mWeights = &reinterpret_cast<f32*>(arr)[mIndexCount];
 
-	for (int i = 0; i < mIndexCount; i++) {
-		mJointIndices[i] = stream.readShort();
-		mWeights[i]      = stream.readFloat();
+	for (int weightIdx = 0; weightIdx < mIndexCount; weightIdx++) {
+		mJointIndices[weightIdx] = stream.readShort();
+		mWeights[weightIdx]      = stream.readFloat();
 	}
 }
 
@@ -96,19 +96,19 @@ void MtxGroup::read(RandomAccessStream& stream)
 	mDepLength = stream.readInt();
 	if (mDepLength) {
 		mDepList = new int[mDepLength];
-		for (int i = 0; i < mDepLength; i++) {
-			mDepList[i] = stream.readShort();
+		for (int depIdx = 0; depIdx < mDepLength; depIdx++) {
+			mDepList[depIdx] = stream.readShort();
 		}
 	}
 
 	mDispLength = stream.readInt();
 	if (mDispLength) {
 		mDispList = new DispList[mDispLength];
-		for (int i = 0; i < mDispLength; i++) {
-			mDispList[i].read(stream);
+		for (int dispIdx = 0; dispIdx < mDispLength; dispIdx++) {
+			mDispList[dispIdx].read(stream);
 #if defined(WIN32)
 			DlobjInfo* info = new DlobjInfo();
-			info->mDispList = &mDispList[i];
+			info->mDispList = &mDispList[dispIdx];
 			gsys->addGfxObject(info);
 #endif
 		}
@@ -127,11 +127,11 @@ void Mesh::read(RandomAccessStream& stream)
 	if (mMtxGroupCount) {
 		mMtxGroupList = new MtxGroup[mMtxGroupCount];
 		mMtxDepIdx    = 0;
-		for (int i = 0; i < mMtxGroupCount; i++) {
-			mMtxGroupList[i].read(stream);
+		for (int mtxGroupIdx = 0; mtxGroupIdx < mMtxGroupCount; mtxGroupIdx++) {
+			mMtxGroupList[mtxGroupIdx].read(stream);
 
-			if (mMtxGroupList[i].mDepLength > mMtxDepIdx) {
-				mMtxDepIdx = mMtxGroupList[i].mDepLength;
+			if (mMtxGroupList[mtxGroupIdx].mDepLength > mMtxDepIdx) {
+				mMtxDepIdx = mMtxGroupList[mtxGroupIdx].mDepLength;
 			}
 		}
 	}
@@ -403,7 +403,7 @@ static f32 extract(f32 currTime, AnimParam& param, DataChunk& data)
 	int offset    = param.mDataOffset;
 
 	// Early return if current time is not active within any data range
-	for (int i = 0; i < param.mEntryNum - 1; ++i) {
+	for (int rangeIdx = 0; rangeIdx < param.mEntryNum - 1; ++rangeIdx) {
 		if (data.mData[offset] <= currTime && data.mData[offset + dataSize] >= currTime) {
 			isActive = true;
 			break;
@@ -860,18 +860,18 @@ void SceneData::getAnimInfo(CmdStream* stream)
 			sscanf(stream->getToken(true), "%d", &mNumCameras);
 			mCameraData = new CamDataInfo[mNumCameras];
 
-			for (int i = 0; i < mNumCameras; i++) {
-				mCameraData[i].mSceneData = this;
-				mCameraData[i].mCameraIdx = i;
+			for (int cameraIdx = 0; cameraIdx < mNumCameras; cameraIdx++) {
+				mCameraData[cameraIdx].mSceneData = this;
+				mCameraData[cameraIdx].mCameraIdx = cameraIdx;
 			}
 
 		} else if (stream->isToken("numDifLights")) {
 			sscanf(stream->getToken(true), "%d", &mNumLights);
 			mLightData = new LightDataInfo[mNumLights];
 
-			for (int i = 0; i < mNumLights; i++) {
-				mLightData[i].mSceneData = this;
-				mLightData[i].mLightIdx  = i;
+			for (int lightIdx = 0; lightIdx < mNumLights; lightIdx++) {
+				mLightData[lightIdx].mSceneData = this;
+				mLightData[lightIdx].mLightIdx  = lightIdx;
 			}
 
 		} else if (stream->isToken("numframes")) {
@@ -899,8 +899,8 @@ void AnimData::extractSRT(SRT& srt, int, AnimDataInfo* info, f32 time)
 			// Can't make this a reference of f32[3] because what is done below.
 			f32* scale = reinterpret_cast<f32*>(&srt.s);
 
-			for (int i = 0; i < 3; i++) {
-				AnimParam& param = info->mScale[i];
+			for (int axisIdx = 0; axisIdx < 3; axisIdx++) {
+				AnimParam& param = info->mScale[axisIdx];
 
 				int offset = (int(time) < param.mEntryNum) ? param.mDataOffset + int(time) : param.mDataOffset + (param.mEntryNum - 1);
 				*scale++   = mScaleDataBlock->mData[offset]; // YOU HAVE THE LOOP VARIABLE.  WHY?
@@ -916,8 +916,8 @@ void AnimData::extractSRT(SRT& srt, int, AnimDataInfo* info, f32 time)
 			// Can't make this a reference of f32[3] because what is done below.
 			f32* rotation = reinterpret_cast<f32*>(&srt.r);
 
-			for (int i = 0; i < 3; i++) {
-				AnimParam& param = info->mRotation[i];
+			for (int axisIdx = 0; axisIdx < 3; axisIdx++) {
+				AnimParam& param = info->mRotation[axisIdx];
 
 				int offset  = (int(time) < param.mEntryNum) ? param.mDataOffset + int(time) : param.mDataOffset + (param.mEntryNum - 1);
 				*rotation++ = mRotateDataBlock->mData[offset]; // YOU HAVE THE LOOP VARIABLE.  WHY?
@@ -933,8 +933,8 @@ void AnimData::extractSRT(SRT& srt, int, AnimDataInfo* info, f32 time)
 			// Can't make this a reference of f32[3] because what is done below.
 			f32* translation = reinterpret_cast<f32*>(&srt.t);
 
-			for (int i = 0; i < 3; i++) {
-				AnimParam& param = info->mTranslation[i];
+			for (int axisIdx = 0; axisIdx < 3; axisIdx++) {
+				AnimParam& param = info->mTranslation[axisIdx];
 
 				int offset     = (int(time) < param.mEntryNum) ? param.mDataOffset + int(time) : param.mDataOffset + (param.mEntryNum - 1);
 				*translation++ = mTranslationDataBlock->mData[offset]; // YOU HAVE THE LOOP VARIABLE.  WHY?
@@ -1001,8 +1001,8 @@ void AnimData::makeAnimSRT(int boneId, immut Matrix4f* parent, Matrix4f* output,
  */
 void AnimData::detach()
 {
-	for (int i = 0; i < mTotalFrameCount; i++) {
-		mAnimInfoList[i].initData();
+	for (int frameIdx = 0; frameIdx < mTotalFrameCount; frameIdx++) {
+		mAnimInfoList[frameIdx].initData();
 	}
 }
 
@@ -1020,31 +1020,31 @@ void AnimData::initData()
  */
 void AnimData::checkMask()
 {
-	for (int i = 0; i < mJointCount; i++) {
-		mAnimInfo[i].mFlags = 0;
+	for (int jointIdx = 0; jointIdx < mJointCount; jointIdx++) {
+		mAnimInfo[jointIdx].mFlags = 0;
 
 		int bit = 0;
-		int j;
+		int axisIdx;
 
-		for (j = 0; j < 3; j++) {
-			if (mAnimInfo[i].mScale[j].mEntryNum == 1) {
-				mAnimInfo[i].mFlags |= (1 << bit);
+		for (axisIdx = 0; axisIdx < 3; axisIdx++) {
+			if (mAnimInfo[jointIdx].mScale[axisIdx].mEntryNum == 1) {
+				mAnimInfo[jointIdx].mFlags |= (1 << bit);
 			}
 			bit++;
 		}
 		bit++;
 
-		for (j = 0; j < 3; j++) {
-			if (mAnimInfo[i].mRotation[j].mEntryNum == 1) {
-				mAnimInfo[i].mFlags |= (1 << bit);
+		for (axisIdx = 0; axisIdx < 3; axisIdx++) {
+			if (mAnimInfo[jointIdx].mRotation[axisIdx].mEntryNum == 1) {
+				mAnimInfo[jointIdx].mFlags |= (1 << bit);
 			}
 			bit++;
 		}
 		bit++;
 
-		for (j = 0; j < 3; j++) {
-			if (mAnimInfo[i].mTranslation[j].mEntryNum == 1) {
-				mAnimInfo[i].mFlags |= (1 << bit);
+		for (axisIdx = 0; axisIdx < 3; axisIdx++) {
+			if (mAnimInfo[jointIdx].mTranslation[axisIdx].mEntryNum == 1) {
+				mAnimInfo[jointIdx].mFlags |= (1 << bit);
 			}
 			bit++;
 		}
@@ -1088,30 +1088,30 @@ void AnimDca::read(RandomAccessStream& input)
 
 	mAnimInfo = new AnimDataInfo[mJointCount];
 
-	for (int i = 0; i < mJointCount; i++) {
-		mAnimInfo[i].mGroupIndex = input.readInt();
+	for (int jointIdx = 0; jointIdx < mJointCount; jointIdx++) {
+		mAnimInfo[jointIdx].mGroupIndex = input.readInt();
 
 		int parentIndex          = input.readInt();
-		mAnimInfo[i].mParentInfo = parentIndex == -1 ? 0 : &mAnimInfo[parentIndex];
+		mAnimInfo[jointIdx].mParentInfo = parentIndex == -1 ? 0 : &mAnimInfo[parentIndex];
 
 		// Read scale parameters (3 entries for x, y, and z)
-		int j;
-		for (j = 0; j < 3; j++) {
-			AnimParam* scaleParam   = &mAnimInfo[i].mScale[j];
+		int axisIdx;
+		for (axisIdx = 0; axisIdx < 3; axisIdx++) {
+			AnimParam* scaleParam   = &mAnimInfo[jointIdx].mScale[axisIdx];
 			scaleParam->mEntryNum   = input.readInt();
 			scaleParam->mDataOffset = input.readInt();
 		}
 
 		// Read rotation parameters (3 entries for x, y, and z)
-		for (j = 0; j < 3; j++) {
-			AnimParam* rotationParam   = &mAnimInfo[i].mRotation[j];
+		for (axisIdx = 0; axisIdx < 3; axisIdx++) {
+			AnimParam* rotationParam   = &mAnimInfo[jointIdx].mRotation[axisIdx];
 			rotationParam->mEntryNum   = input.readInt();
 			rotationParam->mDataOffset = input.readInt();
 		}
 
 		// Read translation parameters (3 entries for x, y, and z)
-		for (j = 0; j < 3; j++) {
-			AnimParam* translationParam   = &mAnimInfo[i].mTranslation[j];
+		for (axisIdx = 0; axisIdx < 3; axisIdx++) {
+			AnimParam* translationParam   = &mAnimInfo[jointIdx].mTranslation[axisIdx];
 			translationParam->mEntryNum   = input.readInt();
 			translationParam->mDataOffset = input.readInt();
 		}
@@ -1143,9 +1143,9 @@ void AnimDca::parse(CmdStream* stream)
 		} else if (stream->isToken("<ROTATION>")) {
 			mRotateDataBlock = new DataChunk();
 			mRotateDataBlock->getData(stream);
-			for (int i = 0; i < mRotateDataBlock->mDataIndex; i++) {
+			for (int rotateValueIdx = 0; rotateValueIdx < mRotateDataBlock->mDataIndex; rotateValueIdx++) {
 				// convert degrees to radians
-				mRotateDataBlock->mData[i] = mRotateDataBlock->mData[i] * PI / 180.0f;
+				mRotateDataBlock->mData[rotateValueIdx] = mRotateDataBlock->mData[rotateValueIdx] * PI / 180.0f;
 			}
 			if (mRotateDataBlock->mDataSize != mRotateDataBlock->mDataIndex) {
 				PRINT("got %d rotation values\n", mRotateDataBlock->mDataIndex);
@@ -1267,8 +1267,8 @@ void AnimDca::getAnimInfo(CmdStream* stream)
 			sscanf(stream->getToken(true), "%d", &mJointCount);
 			mAnimInfo = new AnimDataInfo[mJointCount];
 
-			for (int i = 0; i < mJointCount; i++) {
-				mAnimInfo[i].mGroupIndex = i;
+			for (int jointIdx = 0; jointIdx < mJointCount; jointIdx++) {
+				mAnimInfo[jointIdx].mGroupIndex = jointIdx;
 			}
 
 		} else if (stream->isToken("numframes")) {
@@ -1294,8 +1294,9 @@ AnimDck::AnimDck(BaseShape* model, int joints)
 	mTotalFrameCount = 0;
 	mAnimInfo        = new AnimDataInfo[mJointCount];
 
-	for (int i = 0; i < joints; i++) {
-		mAnimInfo[i].mParentInfo = (model->mJointList[i].mParentIndex == -1) ? nullptr : &mAnimInfo[model->mJointList[i].mParentIndex];
+	for (int jointIdx = 0; jointIdx < joints; jointIdx++) {
+		mAnimInfo[jointIdx].mParentInfo
+		    = (model->mJointList[jointIdx].mParentIndex == -1) ? nullptr : &mAnimInfo[model->mJointList[jointIdx].mParentIndex];
 	}
 }
 
@@ -1322,32 +1323,32 @@ void AnimDck::read(RandomAccessStream& stream)
 
 	// Read animation info for each joint
 	mAnimInfo = new AnimDataInfo[mJointCount];
-	for (int i = 0; i < mJointCount; i++) {
-		mAnimInfo[i].mGroupIndex = stream.readInt();
+	for (int jointIdx = 0; jointIdx < mJointCount; jointIdx++) {
+		mAnimInfo[jointIdx].mGroupIndex = stream.readInt();
 
 		int parentIndex          = stream.readInt();
-		mAnimInfo[i].mParentInfo = parentIndex == -1 ? 0 : &mAnimInfo[parentIndex];
+		mAnimInfo[jointIdx].mParentInfo = parentIndex == -1 ? 0 : &mAnimInfo[parentIndex];
 
 		// Read scale parameters (3 entries for x, y, and z)
-		int j;
-		for (j = 0; j < 3; j++) {
-			AnimParam* scaleParam   = &mAnimInfo[i].mScale[j];
+		int axisIdx;
+		for (axisIdx = 0; axisIdx < 3; axisIdx++) {
+			AnimParam* scaleParam   = &mAnimInfo[jointIdx].mScale[axisIdx];
 			scaleParam->mEntryNum   = stream.readInt();
 			scaleParam->mDataOffset = stream.readInt();
 			scaleParam->mFlags      = stream.readInt();
 		}
 
 		// Read rotation parameters (3 entries for x, y, and z)
-		for (j = 0; j < 3; j++) {
-			AnimParam* rotationParam   = &mAnimInfo[i].mRotation[j];
+		for (axisIdx = 0; axisIdx < 3; axisIdx++) {
+			AnimParam* rotationParam   = &mAnimInfo[jointIdx].mRotation[axisIdx];
 			rotationParam->mEntryNum   = stream.readInt();
 			rotationParam->mDataOffset = stream.readInt();
 			rotationParam->mFlags      = stream.readInt();
 		}
 
 		// Read translation parameters (3 entries for x, y, and z)
-		for (j = 0; j < 3; j++) {
-			AnimParam* translationParam   = &mAnimInfo[i].mTranslation[j];
+		for (axisIdx = 0; axisIdx < 3; axisIdx++) {
+			AnimParam* translationParam   = &mAnimInfo[jointIdx].mTranslation[axisIdx];
 			translationParam->mEntryNum   = stream.readInt();
 			translationParam->mDataOffset = stream.readInt();
 			translationParam->mFlags      = stream.readInt();
@@ -1504,10 +1505,10 @@ void AnimDck::parse(CmdStream* stream)
 		checks[checkIdx] = false;
 	}
 
-	for (int i = 0; i < mJointCount; i++) {
-		for (int j = 0; j < 3; j++) {
+	for (int jointIdx = 0; jointIdx < mJointCount; jointIdx++) {
+		for (int axisIdx = 0; axisIdx < 3; axisIdx++) {
 			// this is insane but required
-			int* param = reinterpret_cast<int*>(&mAnimInfo[i].mRotation[j]);
+			int* param = reinterpret_cast<int*>(&mAnimInfo[jointIdx].mRotation[axisIdx]);
 			switch (param[0]) {
 			case 0:
 			{
@@ -1525,7 +1526,7 @@ void AnimDck::parse(CmdStream* stream)
 			{
 				int size   = (param[2] == 0) ? 3 : 4;
 				int offset = param[1] + 1;
-				for (int k = 0; k < param[0]; k++) {
+				for (int keyIdx = 0; keyIdx < param[0]; keyIdx++) {
 					if (!checks[offset]) {
 						mRotateDataBlock->mData[offset]     = mRotateDataBlock->mData[offset] * PI / 180.0f;
 						mRotateDataBlock->mData[offset + 1] = mRotateDataBlock->mData[offset + 1] * PI / 180.0f;
@@ -1553,8 +1554,8 @@ void AnimDck::getAnimInfo(CmdStream* stream)
 		if (stream->isToken("numjoints")) {
 			sscanf(stream->getToken(true), "%d", &mJointCount);
 			mAnimInfo = new AnimDataInfo[mJointCount];
-			for (int i = 0; i < mJointCount; i++) {
-				mAnimInfo[i].mGroupIndex = i;
+			for (int jointIdx = 0; jointIdx < mJointCount; jointIdx++) {
+				mAnimInfo[jointIdx].mGroupIndex = jointIdx;
 			}
 		} else if (stream->isToken("numframes")) {
 			sscanf(stream->getToken(true), "%d", &mTotalFrameCount);
@@ -1581,24 +1582,24 @@ void AnimDck::extractSRT(SRT& srt, int, AnimDataInfo* anim, f32 time)
 			f32(&scale)[3]           = reinterpret_cast<f32(&)[3]>(srt.s);
 			AnimParam(&animScale)[3] = anim->mScale;
 
-			for (int i = 0; i < 3; i++) {
+			for (int axisIdx = 0; axisIdx < 3; axisIdx++) {
 
-				AnimParam& thisParam = animScale[i];
+				AnimParam& thisParam = animScale[axisIdx];
 
 				switch (thisParam.mEntryNum) {
 				case 0: // 0 entries, default to 1.0
 				{
-					scale[i] = 1.0f;
+					scale[axisIdx] = 1.0f;
 					break;
 				}
 				case 1: // 1 entry, use the value of that entry alone
 				{
-					scale[i] = mScaleDataBlock->mData[thisParam.mDataOffset];
+					scale[axisIdx] = mScaleDataBlock->mData[thisParam.mDataOffset];
 					break;
 				}
 				default: // multiple entries, use the extract method
 				{
-					scale[i] = extract(time, thisParam, *mScaleDataBlock);
+					scale[axisIdx] = extract(time, thisParam, *mScaleDataBlock);
 					break;
 				}
 				}
@@ -1615,24 +1616,24 @@ void AnimDck::extractSRT(SRT& srt, int, AnimDataInfo* anim, f32 time)
 			f32(&rotation)[3]           = reinterpret_cast<f32(&)[3]>(srt.r);
 			AnimParam(&animRotation)[3] = anim->mRotation;
 
-			for (int i = 0; i < 3; i++) {
+			for (int axisIdx = 0; axisIdx < 3; axisIdx++) {
 
-				AnimParam& thisParam = animRotation[i];
+				AnimParam& thisParam = animRotation[axisIdx];
 
 				switch (thisParam.mEntryNum) {
 				case 0: // 0 entries, default to 1.0
 				{
-					rotation[i] = 0.0f;
+					rotation[axisIdx] = 0.0f;
 					break;
 				}
 				case 1: // 1 entry, use the value of that entry alone
 				{
-					rotation[i] = mRotateDataBlock->mData[thisParam.mDataOffset];
+					rotation[axisIdx] = mRotateDataBlock->mData[thisParam.mDataOffset];
 					break;
 				}
 				default: // multiple entries, use the extract method
 				{
-					rotation[i] = extract(time, thisParam, *mRotateDataBlock);
+					rotation[axisIdx] = extract(time, thisParam, *mRotateDataBlock);
 					break;
 				}
 				}
@@ -1649,24 +1650,24 @@ void AnimDck::extractSRT(SRT& srt, int, AnimDataInfo* anim, f32 time)
 			f32(&translation)[3]           = reinterpret_cast<f32(&)[3]>(srt.t);
 			AnimParam(&animTranslation)[3] = anim->mTranslation;
 
-			for (int i = 0; i < 3; i++) {
+			for (int axisIdx = 0; axisIdx < 3; axisIdx++) {
 
-				AnimParam& thisParam = animTranslation[i];
+				AnimParam& thisParam = animTranslation[axisIdx];
 
 				switch (thisParam.mEntryNum) {
 				case 0: // 0 entries, default to 1.0
 				{
-					translation[i] = 1.0f;
+					translation[axisIdx] = 1.0f;
 					break;
 				}
 				case 1: // 1 entry, use the value of that entry alone
 				{
-					translation[i] = mTranslationDataBlock->mData[thisParam.mDataOffset];
+					translation[axisIdx] = mTranslationDataBlock->mData[thisParam.mDataOffset];
 					break;
 				}
 				default: // multiple entries, use the extract method
 				{
-					translation[i] = extract(time, thisParam, *mTranslationDataBlock);
+					translation[axisIdx] = extract(time, thisParam, *mTranslationDataBlock);
 					break;
 				}
 				}
@@ -1682,10 +1683,10 @@ void AnimDck::extractSRT(SRT& srt, int, AnimDataInfo* anim, f32 time)
 /**
  * @todo: Documentation
  */
-void AnimDck::makeAnimSRT(int a, immut Matrix4f* mtx1, Matrix4f* mtx2, AnimDataInfo* anim, f32 time)
+void AnimDck::makeAnimSRT(int boneAnimIdx, immut Matrix4f* mtx1, Matrix4f* mtx2, AnimDataInfo* anim, f32 time)
 {
 	SRT& srt = anim->mSRT;
-	extractSRT(srt, a, anim, time);
+	extractSRT(srt, boneAnimIdx, anim, time);
 	if ((anim->mFlags & AnimDataFlags::AllComponentsStatic) == AnimDataFlags::AllComponentsStatic) {
 		if (!(anim->mFlags & AnimDataFlags::MatrixCalculated)) {
 			anim->mMtx.makeSRT(srt.s, srt.r, srt.t);
@@ -1788,8 +1789,8 @@ void ShapeDynMaterials::animate(f32* data)
 {
 	gsys->mTimer->start("shpDynMats", true);
 
-	for (int i = 0; i < mMatCount; i++) {
-		Material& mat = mMaterials[i];
+	for (int matIdx = 0; matIdx < mMatCount; matIdx++) {
+		Material& mat = mMaterials[matIdx];
 		if (mat.mFlags & MATFLAG_PVW) {
 			if (mat.mColourInfo.mTotalFrameCount != 0) {
 				mat.mColourInfo.animate(data, mat.getColour());
@@ -1817,8 +1818,8 @@ void ShapeDynMaterials::animate(f32* data)
  */
 void ShapeDynMaterials::updateContext()
 {
-	for (int i = 0; i < mMatCount; i++) {
-		Material& mat = mMaterials[i];
+	for (int matIdx = 0; matIdx < mMatCount; matIdx++) {
+		Material& mat = mMaterials[matIdx];
 		if (mat.mFlags & MATFLAG_PVW) {
 			mModel->mMaterialList[mat.mIndex].getColour() = mat.getColour();
 
@@ -1912,30 +1913,30 @@ BaseShape::BaseShape()
  */
 void BaseShape::countMaterials(Joint* joint, u32)
 {
-	for (int i = 0; i < mTotalMatpolyCount; i++) {
-		if (mMatpolyList[i]->mJointList == joint) {
+	for (int matPolyIdx = 0; matPolyIdx < mTotalMatpolyCount; matPolyIdx++) {
+		if (mMatpolyList[matPolyIdx]->mJointList == joint) {
 			bool alreadyCounted = false;
-			for (int j = 0; j < matIndex; j++) {
-				if (matUsed[j] == (int)mMatpolyList[i]->mMaterial->mIndex) {
+			for (int usedMatIdx = 0; usedMatIdx < matIndex; usedMatIdx++) {
+				if (matUsed[usedMatIdx] == (int)mMatpolyList[matPolyIdx]->mMaterial->mIndex) {
 					alreadyCounted = true;
 					break;
 				}
 			}
 
 			if (!alreadyCounted) {
-				Material* mat   = mMatpolyList[i]->mMaterial;
+				Material* mat   = mMatpolyList[matPolyIdx]->mMaterial;
 				bool isAnimated = false;
 				if (mat->mFlags & MATFLAG_PVW) {
 					if (mat->mColourInfo.mTotalFrameCount) {
 						isAnimated = true;
 					}
-					for (int k1 = 0; k1 < 3; k1++) {
-						if (mat->mTevInfo->mTevColRegs[k1].mAnimFrameCount) {
+					for (int tevRegIdx = 0; tevRegIdx < 3; tevRegIdx++) {
+						if (mat->mTevInfo->mTevColRegs[tevRegIdx].mAnimFrameCount) {
 							isAnimated = true;
 						}
 					}
-					for (int k2 = 0; k2 < (int)mat->mTextureInfo.mTextureDataCount; k2++) {
-						if (mat->mTextureInfo.mTextureData[k2].mAnimationFactor != 255) {
+					for (int texDataIdx = 0; texDataIdx < (int)mat->mTextureInfo.mTextureDataCount; texDataIdx++) {
+						if (mat->mTextureInfo.mTextureData[texDataIdx].mAnimationFactor != 255) {
 							isAnimated = true;
 						}
 					}
@@ -1943,7 +1944,7 @@ void BaseShape::countMaterials(Joint* joint, u32)
 
 				usedIndex++;
 				if (isAnimated) {
-					matUsed[matIndex] = mMatpolyList[i]->mMaterial->mIndex;
+					matUsed[matIndex] = mMatpolyList[matPolyIdx]->mMaterial->mIndex;
 					matIndex++;
 				}
 			}
@@ -1981,8 +1982,8 @@ ShapeDynMaterials* BaseShape::instanceMaterials(int jointIdx)
 void BaseShape::makeInstance(ShapeDynMaterials& animatedMats, int jointIdx)
 {
 	animatedMats.mModel = this;
-	for (int i = 0; i < 0x100; i++) {
-		matUsed[i] = 0;
+	for (int matSlotIdx = 0; matSlotIdx < 0x100; matSlotIdx++) {
+		matUsed[matSlotIdx] = 0;
 	}
 
 	matIndex  = 0;
@@ -2079,30 +2080,30 @@ void BaseShape::drawculled(Graphics& gfx, Camera& cam, ShapeDynMaterials* dynMat
 		}
 	}
 
-	for (int i = 0; i < mJointCount; i++) {
-		BoundBox& box = mJointList[i].mBounds;
+	for (int jointIdx = 0; jointIdx < mJointCount; jointIdx++) {
+		BoundBox& box = mJointList[jointIdx].mBounds;
 		if (cam.isBoundVisible(box, 0x8000 | 0x10 | 0x20 | 0x1 | 0x2 | 0x4 | 0x8)) {
-			for (int j = mTotalMatpolyCount - 1; j >= 0; j--) {
-				if (mMatpolyList[j]->mJointList == &mJointList[i]) {
-					gfx.drawSingleMatpoly((Shape*)this, mMatpolyList[j]);
+			for (int matPolyIdx = mTotalMatpolyCount - 1; matPolyIdx >= 0; matPolyIdx--) {
+				if (mMatpolyList[matPolyIdx]->mJointList == &mJointList[jointIdx]) {
+					gfx.drawSingleMatpoly((Shape*)this, mMatpolyList[matPolyIdx]);
 				}
 			}
 		} else {
 			culledJointCount++;
-			mJointList[i].mCullIndex = -1;
+			mJointList[jointIdx].mCullIndex = -1;
 		}
 	}
 
 	if (gsys->mToggleDebugInfo) {
-		for (int i = 0; i < mJointCount; i++) {
+		for (int jointIdx = 0; jointIdx < mJointCount; jointIdx++) {
 			gfx.useMatrix(gfx.mCamera->mLookAtMtx, 0);
 			gfx.useTexture(nullptr, GX_TEXMAP0);
 			gfx.setColour(Colour(255, 32, 32, 255), true);
 			bool lighting = gfx.setLighting(false, nullptr);
-			mJointList[i].mBounds.draw(gfx);
+			mJointList[jointIdx].mBounds.draw(gfx);
 			gfx.setLighting(lighting, nullptr);
 			gfx.useMatrix(*mtx, 0);
-			BoundBox& box = mJointList[i].mBounds;
+			BoundBox& box = mJointList[jointIdx].mBounds;
 
 			if (cam.isBoundVisible(box, 0x8000 | 0x10 | 0x20 | 0x1 | 0x2 | 0x4 | 0x8) && true) {
 
@@ -2114,7 +2115,7 @@ void BaseShape::drawculled(Graphics& gfx, Camera& cam, ShapeDynMaterials* dynMat
 				                (box.mMax.z + box.mMin.z) * 0.5f);
 				centre.multMatrix(gfx.mCamera->mLookAtMtx);
 				char buf[PATH_MAX];
-				sprintf(buf, "%d", mJointList[i].mCullIndex);
+				sprintf(buf, "%d", mJointList[jointIdx].mCullIndex);
 				gfx.perspPrintf(gsys->mConsFont, centre, -(gsys->mConsFont->stringWidth(buf) / 2), 0, buf);
 				gfx.setCBlending(blend);
 				gfx.setLighting(lighting, nullptr);
@@ -2167,17 +2168,17 @@ void BaseShape::drawshape(Graphics& gfx, Camera& cam, ShapeDynMaterials* dynMats
 void BaseShape::resolveTextureNames()
 {
 	if (mTextureNameList) {
-		for (int i = 0; i < mAttrListMatCount; i++) {
-			const char* texName = mTextureNameList[i];
+		for (int attrMatIdx = 0; attrMatIdx < mAttrListMatCount; attrMatIdx++) {
+			const char* texName = mTextureNameList[attrMatIdx];
 			char filepath[PATH_MAX];
 			sprintf(filepath, "%s%s", gsys->mTextureBase2, texName);
-			mResolvedTextureList[i] = gsys->loadTexture(filepath, true);
-			if (!mResolvedTextureList[i]) {
+			mResolvedTextureList[attrMatIdx] = gsys->loadTexture(filepath, true);
+			if (!mResolvedTextureList[attrMatIdx]) {
 				sprintf(filepath, "%s%s", gsys->mTextureBase1, texName);
-				mResolvedTextureList[i] = gsys->loadTexture(filepath, true);
+				mResolvedTextureList[attrMatIdx] = gsys->loadTexture(filepath, true);
 			}
 
-			if (!mResolvedTextureList[i]) {
+			if (!mResolvedTextureList[attrMatIdx]) {
 				PRINT("Could not load texture %s\n", texName);
 			}
 		}
@@ -2196,8 +2197,8 @@ void BaseShape::resolveTextureNames()
 		Material* matList = new Material[count];
 		if (mMaterialCount == count) {
 			PRINT("ALREADY HAS CORRECT NUMBER OF MATERIALS!!!!\n");
-			for (int i = 0; i < count; i++) {
-				matList[i] = mMaterialList[i];
+			for (int materialCopyIdx = 0; materialCopyIdx < count; materialCopyIdx++) {
+				matList[materialCopyIdx] = mMaterialList[materialCopyIdx];
 			}
 		}
 
@@ -2217,7 +2218,7 @@ void BaseShape::resolveTextureNames()
  */
 void BaseShape::skipChunk(RandomAccessStream& stream, u32 amt)
 {
-	for (u32 i = 0; i < amt; i++) {
+	for (u32 skippedByteIdx = 0; skippedByteIdx < amt; skippedByteIdx++) {
 		stream.readByte();
 	}
 }
@@ -2281,8 +2282,8 @@ void BaseShape::read(RandomAccessStream& stream)
 			mVertexCount = stream.readInt();
 			stream.skipPadding(0x20);
 			mVertexList = reinterpret_cast<Vector3f*>(new (0x20) char[sizeof(Vector3f) * mVertexCount]); // hmm.
-			for (int i = 0; i < mVertexCount; i++) {
-				mVertexList[i].read(stream);
+			for (int vertexIdx = 0; vertexIdx < mVertexCount; vertexIdx++) {
+				mVertexList[vertexIdx].read(stream);
 			}
 
 			// This resembles the math done for the "kilobytes used" PRINT in the `BaseShapeChunk::CollisionGrid` chunk.
@@ -2297,8 +2298,8 @@ void BaseShape::read(RandomAccessStream& stream)
 			mNormalCount = stream.readInt();
 			stream.skipPadding(0x20);
 			mNormalList = reinterpret_cast<Vector3f*>(new (0x20) char[sizeof(Vector3f) * mNormalCount]); // hmm
-			for (int i = 0; i < mNormalCount; i++) {
-				mNormalList[i].read(stream);
+			for (int normalIdx = 0; normalIdx < mNormalCount; normalIdx++) {
+				mNormalList[normalIdx].read(stream);
 			}
 
 			// This resembles the math done for the "kilobytes used" PRINT in the `BaseShapeChunk::CollisionGrid` chunk.
@@ -2313,10 +2314,10 @@ void BaseShape::read(RandomAccessStream& stream)
 			mNBTCount = stream.readInt();
 			stream.skipPadding(0x20);
 			mNBTList = reinterpret_cast<NBT*>(new (0x20) char[(sizeof(Vector3f) * mNBTCount * 3)]); // really
-			for (int i = 0; i < mNBTCount; i++) {
-				reinterpret_cast<Vector3f*>(mNBTList)[3 * i].read(stream);
-				reinterpret_cast<Vector3f*>(mNBTList)[3 * i + 1].read(stream);
-				reinterpret_cast<Vector3f*>(mNBTList)[3 * i + 2].read(stream);
+			for (int nbtIdx = 0; nbtIdx < mNBTCount; nbtIdx++) {
+				reinterpret_cast<Vector3f*>(mNBTList)[3 * nbtIdx].read(stream);
+				reinterpret_cast<Vector3f*>(mNBTList)[3 * nbtIdx + 1].read(stream);
+				reinterpret_cast<Vector3f*>(mNBTList)[3 * nbtIdx + 2].read(stream);
 			}
 
 			// This resembles the math done for the "kilobytes used" PRINT in the `BaseShapeChunk::CollisionGrid` chunk.
@@ -2331,8 +2332,8 @@ void BaseShape::read(RandomAccessStream& stream)
 			mVtxColorCount = stream.readInt();
 			stream.skipPadding(0x20);
 			mVtxColorList = (Colour*)(new (0x20) GXColor[mVtxColorCount]);
-			for (int i = 0; i < mVtxColorCount; i++) {
-				mVtxColorList[i].read(stream);
+			for (int colorIdx = 0; colorIdx < mVtxColorCount; colorIdx++) {
+				mVtxColorList[colorIdx].read(stream);
 			}
 
 			// This resembles the math done for the "kilobytes used" PRINT in the `BaseShapeChunk::CollisionGrid` chunk.
@@ -2356,8 +2357,8 @@ void BaseShape::read(RandomAccessStream& stream)
 			stream.skipPadding(0x20);
 			mTexCoordList[index] = new (0x20) Vector2f[mTexCoordCounts[index]];
 
-			for (int i = 0; i < mTexCoordCounts[index]; i++) {
-				mTexCoordList[index][i].read(stream);
+			for (int texCoordIdx = 0; texCoordIdx < mTexCoordCounts[index]; texCoordIdx++) {
+				mTexCoordList[index][texCoordIdx].read(stream);
 			}
 
 			// This resembles the math done for the "kilobytes used" PRINT in the `BaseShapeChunk::CollisionGrid` chunk.
@@ -2373,8 +2374,8 @@ void BaseShape::read(RandomAccessStream& stream)
 			mTextureCount = stream.readInt();
 			stream.skipPadding(0x20);
 			mTextureList = new TexImg[mTextureCount];
-			for (int i = 0; i < mTextureCount; i++) {
-				mTextureList[i].read(stream);
+			for (int textureIdx = 0; textureIdx < mTextureCount; textureIdx++) {
+				mTextureList[textureIdx].read(stream);
 			}
 
 			// This resembles the math done for the "kilobytes used" PRINT in the `BaseShapeChunk::CollisionGrid` chunk.
@@ -2389,8 +2390,8 @@ void BaseShape::read(RandomAccessStream& stream)
 			mTexAttrCount = stream.readInt();
 			stream.skipPadding(0x20);
 			mTexAttrList = new TexAttr[mTexAttrCount];
-			for (int i = 0; i < mTexAttrCount; i++) {
-				mTexAttrList[i].read(stream);
+			for (int texAttrIdx = 0; texAttrIdx < mTexAttrCount; texAttrIdx++) {
+				mTexAttrList[texAttrIdx].read(stream);
 			}
 
 			// This resembles the math done for the "kilobytes used" PRINT in the `BaseShapeChunk::CollisionGrid` chunk.
@@ -2409,20 +2410,20 @@ void BaseShape::read(RandomAccessStream& stream)
 
 			if (mTevInfoCount) {
 				mTevInfoList = new PVWTevInfo[mTevInfoCount];
-				for (int i = 0; i < mTevInfoCount; i++) {
-					mTevInfoList[i].read(stream);
+				for (int tevInfoIdx = 0; tevInfoIdx < mTevInfoCount; tevInfoIdx++) {
+					mTevInfoList[tevInfoIdx].read(stream);
 				}
 			}
 
 			if (mMaterialCount) {
 				mMaterialList = new Material[mMaterialCount];
-				for (int i = 0; i < mMaterialCount; i++) {
-					mMaterialList[i].mIndex = i;
-					mMaterialList[i].read(stream);
-					mMaterialList[i].mTevInfo = &mTevInfoList[mMaterialList[i].mTevInfoIndex];
+				for (int materialIdx = 0; materialIdx < mMaterialCount; materialIdx++) {
+					mMaterialList[materialIdx].mIndex = materialIdx;
+					mMaterialList[materialIdx].read(stream);
+					mMaterialList[materialIdx].mTevInfo = &mTevInfoList[mMaterialList[materialIdx].mTevInfoIndex];
 
 					MatobjInfo* info = new MatobjInfo;
-					info->mTarget    = &mMaterialList[i];
+					info->mTarget    = &mMaterialList[materialIdx];
 					gsys->addGfxObject(info);
 				}
 			}
@@ -2439,8 +2440,8 @@ void BaseShape::read(RandomAccessStream& stream)
 			mVtxMatrixCount = stream.readInt();
 			stream.skipPadding(0x20);
 			mVtxMatrixList = new VtxMatrix[mVtxMatrixCount];
-			for (int i = 0; i < mVtxMatrixCount; i++) {
-				mVtxMatrixList[i].read(stream);
+			for (int vtxMatrixIdx = 0; vtxMatrixIdx < mVtxMatrixCount; vtxMatrixIdx++) {
+				mVtxMatrixList[vtxMatrixIdx].read(stream);
 			}
 
 			// This resembles the math done for the "kilobytes used" PRINT in the `BaseShapeChunk::CollisionGrid` chunk.
@@ -2455,8 +2456,8 @@ void BaseShape::read(RandomAccessStream& stream)
 			mEnvelopeCount = stream.readInt();
 			stream.skipPadding(0x20);
 			mEnvelopeList = new Envelope[mEnvelopeCount];
-			for (int i = 0; i < mEnvelopeCount; i++) {
-				mEnvelopeList[i].read(stream);
+			for (int envelopeIdx = 0; envelopeIdx < mEnvelopeCount; envelopeIdx++) {
+				mEnvelopeList[envelopeIdx].read(stream);
 			}
 
 			// This resembles the math done for the "kilobytes used" PRINT in the `BaseShapeChunk::CollisionGrid` chunk.
@@ -2471,8 +2472,8 @@ void BaseShape::read(RandomAccessStream& stream)
 			mMeshCount = stream.readInt();
 			stream.skipPadding(0x20);
 			mMeshList = new Mesh[mMeshCount];
-			for (int i = 0; i < mMeshCount; i++) {
-				mMeshList[i].read(stream);
+			for (int meshIdx = 0; meshIdx < mMeshCount; meshIdx++) {
+				mMeshList[meshIdx].read(stream);
 			}
 
 			// This resembles the math done for the "kilobytes used" PRINT in the `BaseShapeChunk::CollisionGrid` chunk.
@@ -2540,10 +2541,10 @@ void BaseShape::read(RandomAccessStream& stream)
 
 			mJointCount = stream.readInt();
 			stream.skipPadding(0x20);
-			for (int i = 0; i < mJointCount; i++) {
+			for (int jointIdx = 0; jointIdx < mJointCount; jointIdx++) {
 				String name(0);
 				stream.readString(name);
-				mJointList[i].setName(name.mString);
+				mJointList[jointIdx].setName(name.mString);
 			}
 
 			stream.skipPadding(0x20);
@@ -2589,24 +2590,24 @@ void BaseShape::read(RandomAccessStream& stream)
 			int maxTrisPerGroup  = 0;
 			CollGroup* tmpGroups = new CollGroup[groupCount];
 
-			for (int i = 0; i < groupCount; i++) {
-				tmpGroups[i].mFarCulledTriCount = stream.readShort();
-				tmpGroups[i].mTriCount          = stream.readShort();
-				tmpGroups[i].mTriangleList      = new CollTriInfo*[tmpGroups[i].mTriCount];
+			for (int groupIdx = 0; groupIdx < groupCount; groupIdx++) {
+				tmpGroups[groupIdx].mFarCulledTriCount = stream.readShort();
+				tmpGroups[groupIdx].mTriCount          = stream.readShort();
+				tmpGroups[groupIdx].mTriangleList      = new CollTriInfo*[tmpGroups[groupIdx].mTriCount];
 
-				if (tmpGroups[i].mTriCount > maxTrisPerGroup) {
-					maxTrisPerGroup = tmpGroups[i].mTriCount;
+				if (tmpGroups[groupIdx].mTriCount > maxTrisPerGroup) {
+					maxTrisPerGroup = tmpGroups[groupIdx].mTriCount;
 				}
 
-				for (int j = 0; j < tmpGroups[i].mTriCount; j++) {
+				for (int triSlotIdx = 0; triSlotIdx < tmpGroups[groupIdx].mTriCount; triSlotIdx++) {
 					int idx                       = stream.readInt();
-					tmpGroups[i].mTriangleList[j] = &mTriList[idx];
+					tmpGroups[groupIdx].mTriangleList[triSlotIdx] = &mTriList[idx];
 				}
 
-				if (tmpGroups[i].mFarCulledTriCount) {
-					tmpGroups[i].mFarCulledTriDistances = new u8[tmpGroups[i].mFarCulledTriCount];
-					for (int j = 0; j < tmpGroups[i].mFarCulledTriCount; j++) {
-						tmpGroups[i].mFarCulledTriDistances[j] = stream.readByte();
+				if (tmpGroups[groupIdx].mFarCulledTriCount) {
+					tmpGroups[groupIdx].mFarCulledTriDistances = new u8[tmpGroups[groupIdx].mFarCulledTriCount];
+					for (int farCullIdx = 0; farCullIdx < tmpGroups[groupIdx].mFarCulledTriCount; farCullIdx++) {
+						tmpGroups[groupIdx].mFarCulledTriDistances[farCullIdx] = stream.readByte();
 					}
 				}
 			}
@@ -2691,9 +2692,9 @@ void BaseShape::initIni(bool usePlatforms)
 
 			int idx = -1;
 			if (light->mMatSource) {
-				for (int i = 0; i < (int)strlen(light->mMatSource); i++) {
-					if (light->mMatSource[i] == ':') {
-						sscanf(&light->mMatSource[i + 1], "%d", &idx);
+				for (int separatorIdx = 0; separatorIdx < (int)strlen(light->mMatSource); separatorIdx++) {
+					if (light->mMatSource[separatorIdx] == ':') {
+						sscanf(&light->mMatSource[separatorIdx + 1], "%d", &idx);
 						break;
 					}
 				}
@@ -2826,64 +2827,71 @@ void BaseShape::createCollisions(int gridSize)
 #if defined(WIN32)
 	// This code could use a cleanup pass on its variable names.
 	for (int triIdx = 0; triIdx < mTriCount; triIdx++) {
-		for (int i = 0; i < 3; i++) {
-			if (mTriList[triIdx].mAdjacentTriIndices[i] >= 0) {
-				Vector3f local_38[2];
+		for (int edgeIdx = 0; edgeIdx < 3; edgeIdx++) {
+			if (mTriList[triIdx].mAdjacentTriIndices[edgeIdx] >= 0) {
+				Vector3f edgeVectors[2];
 				Vector3f unitVecs[2];
 
-				local_38[0].set(
-				    mVertexList[mTriList[triIdx].mVertexIndices[i % 3]].x - mVertexList[mTriList[triIdx].mVertexIndices[(i + 1) % 3]].x,
-				    mVertexList[mTriList[triIdx].mVertexIndices[i % 3]].y - mVertexList[mTriList[triIdx].mVertexIndices[(i + 1) % 3]].y,
-				    mVertexList[mTriList[triIdx].mVertexIndices[i % 3]].z - mVertexList[mTriList[triIdx].mVertexIndices[(i + 1) % 3]].z);
-				local_38[1].set(
-				    mVertexList[mTriList[triIdx].mVertexIndices[(i + 1) % 3]].x - mVertexList[mTriList[triIdx].mVertexIndices[i % 3]].x,
-				    mVertexList[mTriList[triIdx].mVertexIndices[(i + 1) % 3]].y - mVertexList[mTriList[triIdx].mVertexIndices[i % 3]].y,
-				    mVertexList[mTriList[triIdx].mVertexIndices[(i + 1) % 3]].z - mVertexList[mTriList[triIdx].mVertexIndices[i % 3]].z);
+				edgeVectors[0].set(
+				    mVertexList[mTriList[triIdx].mVertexIndices[edgeIdx % 3]].x
+				        - mVertexList[mTriList[triIdx].mVertexIndices[(edgeIdx + 1) % 3]].x,
+				    mVertexList[mTriList[triIdx].mVertexIndices[edgeIdx % 3]].y
+				        - mVertexList[mTriList[triIdx].mVertexIndices[(edgeIdx + 1) % 3]].y,
+				    mVertexList[mTriList[triIdx].mVertexIndices[edgeIdx % 3]].z
+				        - mVertexList[mTriList[triIdx].mVertexIndices[(edgeIdx + 1) % 3]].z);
+				edgeVectors[1].set(
+				    mVertexList[mTriList[triIdx].mVertexIndices[(edgeIdx + 1) % 3]].x
+				        - mVertexList[mTriList[triIdx].mVertexIndices[edgeIdx % 3]].x,
+				    mVertexList[mTriList[triIdx].mVertexIndices[(edgeIdx + 1) % 3]].y
+				        - mVertexList[mTriList[triIdx].mVertexIndices[edgeIdx % 3]].y,
+				    mVertexList[mTriList[triIdx].mVertexIndices[(edgeIdx + 1) % 3]].z
+				        - mVertexList[mTriList[triIdx].mVertexIndices[edgeIdx % 3]].z);
 
-				unitVecs[0] = local_38[0];
+				unitVecs[0] = edgeVectors[0];
 				unitVecs[0].normalise();
 				unitVecs[0].CP(mTriList[triIdx].mTriangle.mNormal);
 
 				// This cross product is never used
-				unitVecs[1] = local_38[1];
+				unitVecs[1] = edgeVectors[1];
 				unitVecs[1].normalise();
-				unitVecs[1].CP(mTriList[mTriList[triIdx].mAdjacentTriIndices[i]].mTriangle.mNormal);
+				unitVecs[1].CP(mTriList[mTriList[triIdx].mAdjacentTriIndices[edgeIdx]].mTriangle.mNormal);
 
-				f32 local_54 = mTriList[triIdx].mTriangle.mNormal.DP(mTriList[mTriList[triIdx].mAdjacentTriIndices[i]].mTriangle.mNormal);
-				f32 local_58 = unitVecs[0].DP(mTriList[mTriList[triIdx].mAdjacentTriIndices[i]].mTriangle.mNormal);
+				f32 adjacentNormalDot = mTriList[triIdx].mTriangle.mNormal.DP(mTriList[mTriList[triIdx].mAdjacentTriIndices[edgeIdx]].mTriangle.mNormal);
+				f32 edgeNormalDot     = unitVecs[0].DP(mTriList[mTriList[triIdx].mAdjacentTriIndices[edgeIdx]].mTriangle.mNormal);
 
-				f32 local_5c = acosf(local_58);
-				if (local_54 < 0.0f) {
-					local_5c = -local_5c;
+				f32 edgeAngle = acosf(edgeNormalDot);
+				if (adjacentNormalDot < 0.0f) {
+					edgeAngle = -edgeAngle;
 				}
 
-				Vector3f local_8c[4];
-				local_8c[0].set(sinf(local_5c + PI) * 100.0f, cosf(local_5c + PI) * 100.0f, 0.0f);
-				local_8c[1].set(0.0f, 0.0f, 0.0f);
-				local_8c[2].set(0.0f, 0.0f, 0.0f);
-				local_8c[3].set(100.0f, 0.0f, 0.0f);
+				Vector3f anglePoints[4];
+				anglePoints[0].set(sinf(edgeAngle + PI) * 100.0f, cosf(edgeAngle + PI) * 100.0f, 0.0f);
+				anglePoints[1].set(0.0f, 0.0f, 0.0f);
+				anglePoints[2].set(0.0f, 0.0f, 0.0f);
+				anglePoints[3].set(100.0f, 0.0f, 0.0f);
 
-				unitVecs[0] = local_8c[1] - local_8c[0];
+				unitVecs[0] = anglePoints[1] - anglePoints[0];
 				unitVecs[0].normalise();
-				unitVecs[1] = local_8c[2] - local_8c[3];
+				unitVecs[1] = anglePoints[2] - anglePoints[3];
 				unitVecs[1].normalise();
 
-				Vector3f local_bc[4];
-				local_bc[0] = local_8c[0] + Vector3f(sinf(local_5c - HALF_PI), cosf(local_5c - HALF_PI), 0.0f);
-				local_bc[1] = local_8c[1] + Vector3f(sinf(local_5c - HALF_PI), cosf(local_5c - HALF_PI), 0.0f);
-				local_bc[2] = local_8c[2] + Vector3f(0.0f, 1.0f, 0.0f);
-				local_bc[3] = local_8c[3] + Vector3f(0.0f, 1.0f, 0.0f);
+				Vector3f offsetPoints[4];
+				offsetPoints[0] = anglePoints[0] + Vector3f(sinf(edgeAngle - HALF_PI), cosf(edgeAngle - HALF_PI), 0.0f);
+				offsetPoints[1] = anglePoints[1] + Vector3f(sinf(edgeAngle - HALF_PI), cosf(edgeAngle - HALF_PI), 0.0f);
+				offsetPoints[2] = anglePoints[2] + Vector3f(0.0f, 1.0f, 0.0f);
+				offsetPoints[3] = anglePoints[3] + Vector3f(0.0f, 1.0f, 0.0f);
 
 				f32 edgeSomething = 0.0f;
-				f32 local_c4      = (-unitVecs[1].x * unitVecs[0].y) - (unitVecs[0].x * -unitVecs[1].y);
-				if (local_c4 != 0.0f) {
+				f32 lineIntersectDenom = (-unitVecs[1].x * unitVecs[0].y) - (unitVecs[0].x * -unitVecs[1].y);
+				if (lineIntersectDenom != 0.0f) {
 					edgeSomething
-					    = ((local_bc[2].x - local_bc[1].x) * unitVecs[1].y + (local_bc[2].y - local_bc[1].y) * -unitVecs[1].x) / local_c4;
+					    = ((offsetPoints[2].x - offsetPoints[1].x) * unitVecs[1].y + (offsetPoints[2].y - offsetPoints[1].y) * -unitVecs[1].x)
+					    / lineIntersectDenom;
 				}
-				mTriList[triIdx].mEdgeSomething[i] = edgeSomething;
+				mTriList[triIdx].mEdgeSomething[edgeIdx] = edgeSomething;
 
 			} else {
-				mTriList[triIdx].mEdgeSomething[i] = 1.0f;
+				mTriList[triIdx].mEdgeSomething[edgeIdx] = 1.0f;
 			}
 		}
 	}
@@ -2915,7 +2923,7 @@ void BaseShape::createCollisions(int gridSize)
 		u32 unused2[768];
 		CollTriInfo* tris[256];
 		int totalTriCount = 0; // Calculation goes unused.
-		int c             = 0;
+		int scannedCellCount = 0;
 		int numUnique     = 0;
 		for (int gridY = 0; gridY < mGridSizeY; gridY++) {
 			for (int gridX = 0; gridX < mGridSizeX; gridX++) {
@@ -2943,8 +2951,9 @@ void BaseShape::createCollisions(int gridSize)
 						CullingPlane unused3[3];
 						bool doVerifyTriCountIsUnderLimit = true;
 						int d                             = 0;
-						for (int i = 0; i < 8; i++) {
-							Vector3f point(bboxVals[bboxIndices[i][0]], bboxVals[bboxIndices[i][1]], bboxVals[bboxIndices[i][2]]);
+						for (int bboxCornerIdx = 0; bboxCornerIdx < 8; bboxCornerIdx++) {
+							Vector3f point(bboxVals[bboxIndices[bboxCornerIdx][0]], bboxVals[bboxIndices[bboxCornerIdx][1]],
+							              bboxVals[bboxIndices[bboxCornerIdx][2]]);
 							if (mTriList[triIdx].mTriangle.dist(point) < 0.0f) {
 								d++;
 							}
@@ -2968,15 +2977,15 @@ void BaseShape::createCollisions(int gridSize)
 					totalTriCount += currCellTriCount;
 					CollGroup* groupA = nullptr;
 
-					for (int i = 0; i < c; i++) {
-						int row = i / mGridSizeX;
-						int col = i % mGridSizeX;
+					for (int prevCellIdx = 0; prevCellIdx < scannedCellCount; prevCellIdx++) {
+						int row = prevCellIdx / mGridSizeX;
+						int col = prevCellIdx % mGridSizeX;
 
 						CollGroup* group = mCollGroups[row * mGridSizeX + col];
 						if (group->mTriCount == currCellTriCount) {
 							bool check2 = true;
-							for (int j = 0; j < currCellTriCount; j++) {
-								if (group->mTriangleList[j] != tris[j]) {
+							for (int triListIdx = 0; triListIdx < currCellTriCount; triListIdx++) {
+								if (group->mTriangleList[triListIdx] != tris[triListIdx]) {
 									check2 = false;
 									break;
 								}
@@ -2993,8 +3002,8 @@ void BaseShape::createCollisions(int gridSize)
 						CollGroup* g     = mCollGroups[gridY * mGridSizeX + gridX];
 						g->mTriCount     = currCellTriCount;
 						g->mTriangleList = new CollTriInfo*[currCellTriCount];
-						for (int i = 0; i < currCellTriCount; i++) {
-							g->mTriangleList[i] = tris[i];
+						for (int triCopyIdx = 0; triCopyIdx < currCellTriCount; triCopyIdx++) {
+							g->mTriangleList[triCopyIdx] = tris[triCopyIdx];
 						}
 
 						numUnique++;
@@ -3004,7 +3013,7 @@ void BaseShape::createCollisions(int gridSize)
 					}
 				}
 
-				c++;
+				scannedCellCount++;
 			}
 		}
 
@@ -3019,17 +3028,17 @@ void BaseShape::createCollisions(int gridSize)
  */
 void BaseShape::calcBasePose(immut Matrix4f& target)
 {
-	for (int i = 0; i < mJointCount; i++) {
+	for (int jointIdx = 0; jointIdx < mJointCount; jointIdx++) {
 		SRT srt;
-		srt.s = mJointList[i].mScale;
-		srt.r = mJointList[i].mRotation;
-		srt.t = mJointList[i].mTranslation;
+		srt.s = mJointList[jointIdx].mScale;
+		srt.r = mJointList[jointIdx].mRotation;
+		srt.t = mJointList[jointIdx].mTranslation;
 
-		int parentIndex = mJointList[i].mParentIndex;
+		int parentIndex = mJointList[jointIdx].mParentIndex;
 		Matrix4f initialPose;
 		immut Matrix4f* currentMatrix = parentIndex == -1 ? &target : &mJointList[parentIndex].mAnimMatrix;
-		mJointList[i].mAnimMatrix.makeConcatSRT(currentMatrix, initialPose, srt);
-		mJointList[i].mAnimMatrix.inverse(&mJointList[i].mInverseAnimMatrix);
+		mJointList[jointIdx].mAnimMatrix.makeConcatSRT(currentMatrix, initialPose, srt);
+		mJointList[jointIdx].mAnimMatrix.inverse(&mJointList[jointIdx].mInverseAnimMatrix);
 	}
 }
 
@@ -3181,8 +3190,8 @@ Matrix4f& BaseShape::getAnimMatrix(int animIdx)
 void BaseShape::backupAnimOverrides(AnimContext** animList)
 {
 	mBackupAnimOverrides = animList;
-	for (int i = 0; i < mJointCount; i++) {
-		mBackupAnimOverrides[i] = mAnimOverrides[i];
+	for (int jointIdx = 0; jointIdx < mJointCount; jointIdx++) {
+		mBackupAnimOverrides[jointIdx] = mAnimOverrides[jointIdx];
 	}
 }
 
@@ -3191,8 +3200,8 @@ void BaseShape::backupAnimOverrides(AnimContext** animList)
  */
 void BaseShape::restoreAnimOverrides()
 {
-	for (int i = 0; i < mJointCount; i++) {
-		mAnimOverrides[i] = mBackupAnimOverrides[i];
+	for (int jointIdx = 0; jointIdx < mJointCount; jointIdx++) {
+		mAnimOverrides[jointIdx] = mBackupAnimOverrides[jointIdx];
 	}
 }
 
@@ -3259,8 +3268,8 @@ void AnimFrameCacher::cacheFrameSpace(int numTextures, AnimCacheInfo* info)
 			cacher->mBoneMatricesEnd = &alloc->mBoneMatrices[numTextures];
 			cacher->mInfo            = &info->mCachedMtxBlock;
 
-			for (int i = 0; i < numTextures; i++) {
-				cacher->mBoneMtxList[i] = 0;
+			for (int boneIdx = 0; boneIdx < numTextures; boneIdx++) {
+				cacher->mBoneMtxList[boneIdx] = 0;
 			}
 
 			info->mCachedMtxBlock = cacher;
@@ -3275,23 +3284,23 @@ void AnimFrameCacher::cacheFrameSpace(int numTextures, AnimCacheInfo* info)
 /**
  * @todo: Documentation
  */
-void BaseShape::updateAnim(Graphics& gfx, immut Matrix4f& mtx, f32* p3)
+void BaseShape::updateAnim(Graphics& gfx, immut Matrix4f& mtx, f32* overrideFrame)
 {
 	gsys->mTimer->start("updateAnim", true);
 	gsys->mAnimatedPolygons++;
 	mAnimMatrices = gfx.getMatrices(mAnimMtxCount);
 
 	if (mCurrentAnimation->mData) {
-		if (!p3) {
+		if (!overrideFrame) {
 			mCurrentAnimation->animate(mCurrentAnimation->mAnimSpeed);
 		}
 
-		for (int i = 0; i < mJointCount; i++) {
-			AnimData* data = mAnimOverrides[i]->mData;
+		for (int jointIdx = 0; jointIdx < mJointCount; jointIdx++) {
+			AnimData* data = mAnimOverrides[jointIdx]->mData;
 			if (!data) {
 				ERROR("no joint anim!!\n");
 			}
-			f32* frame = (p3) ? p3 : &mAnimOverrides[i]->mCurrentFrame;
+			f32* frame = (overrideFrame) ? overrideFrame : &mAnimOverrides[jointIdx]->mCurrentFrame;
 
 			if (mFrameCacher && data->mAnimFlags & ANIMFLAG_UseCache) {
 				int frameNum = int(*frame);
@@ -3306,13 +3315,15 @@ void BaseShape::updateAnim(Graphics& gfx, immut Matrix4f& mtx, f32* p3)
 			}
 
 			if (data->mTotalFrameCount) {
-				immut Matrix4f* srtMtx = (mJointList[i].mParentIndex != -1) ? &mAnimMatrices[mJointList[i].mParentIndex] : &mtx;
-				data->makeAnimSRT(data->mAnimJointIndices[i], srtMtx, &mAnimMatrices[i], &data->mAnimInfo[i], *frame);
+				immut Matrix4f* srtMtx
+				    = (mJointList[jointIdx].mParentIndex != -1) ? &mAnimMatrices[mJointList[jointIdx].mParentIndex] : &mtx;
+				data->makeAnimSRT(data->mAnimJointIndices[jointIdx], srtMtx, &mAnimMatrices[jointIdx], &data->mAnimInfo[jointIdx],
+				                 *frame);
 			} else {
 #if defined(WIN32)
-				mtx.multiplyTo(mJointList[i].mAnimMatrix, mAnimMatrices[i]);
+				mtx.multiplyTo(mJointList[jointIdx].mAnimMatrix, mAnimMatrices[jointIdx]);
 #else
-				MTXConcat(mtx.mMtx, mJointList[i].mAnimMatrix.mMtx, mAnimMatrices[i].mMtx);
+				MTXConcat(mtx.mMtx, mJointList[jointIdx].mAnimMatrix.mMtx, mAnimMatrices[jointIdx].mMtx);
 #endif
 			}
 		}
@@ -3320,7 +3331,7 @@ void BaseShape::updateAnim(Graphics& gfx, immut Matrix4f& mtx, f32* p3)
 		calcWeightedMatrices();
 	} else {
 		Joint* joint = &mJointList[0];
-		for (int i = 0; i < mJointCount; i++) {
+		for (int jointIdx = 0; jointIdx < mJointCount; jointIdx++) {
 			SRT srt;
 			srt.s = joint->mScale;
 			srt.r = joint->mRotation;
@@ -3394,9 +3405,9 @@ void BaseShape::calcWeightedMatrices()
 			animMtxFloats++;
 		}
 
-		for (int i = 0; i < mEnvelopeList[envIdx].mIndexCount; i++) {
-			int idx    = mEnvelopeList[envIdx].mJointIndices[i];
-			f32 weight = mEnvelopeList[envIdx].mWeights[i];
+		for (int weightIdx = 0; weightIdx < mEnvelopeList[envIdx].mIndexCount; weightIdx++) {
+			int idx    = mEnvelopeList[envIdx].mJointIndices[weightIdx];
+			f32 weight = mEnvelopeList[envIdx].mWeights[weightIdx];
 
 			Matrix4f weightedMtx;
 			f32* weightedMtxFloats;
@@ -3428,14 +3439,14 @@ void BaseShape::calcWeightedMatrices()
  */
 void BaseShape::makeNormalIndexes(u16* indices)
 {
-	for (int i = 0; i < mTotalMatpolyCount; i++) {
-		Joint::MatPoly* matPoly = mMatpolyList[i];
+	for (int matPolyIdx = 0; matPolyIdx < mTotalMatpolyCount; matPolyIdx++) {
+		Joint::MatPoly* matPoly = mMatpolyList[matPolyIdx];
 		Mesh* mesh              = &mMeshList[matPoly->mMeshIndex];
 
-		for (int j = 0; j < mesh->mMtxGroupCount; j++) {
-			MtxGroup* group    = &mesh->mMtxGroupList[j];
+		for (int mtxGroupIdx = 0; mtxGroupIdx < mesh->mMtxGroupCount; mtxGroupIdx++) {
+			MtxGroup* group    = &mesh->mMtxGroupList[mtxGroupIdx];
 			DispList* dispList = group->mDispList;
-			for (int k = 0; k < group->mDispLength; k++) {
+			for (int dispListIdx = 0; dispListIdx < group->mDispLength; dispListIdx++) {
 				u8* data    = dispList->mData;
 				u32 dataLen = dispList->mDataLength;
 
@@ -3446,7 +3457,7 @@ void BaseShape::makeNormalIndexes(u16* indices)
 					} else {
 						int count = (data[0] << 8) | data[1];
 						data += 2;
-						for (int m = 0; m < count; m++) {
+						for (int vertexCmdIdx = 0; vertexCmdIdx < count; vertexCmdIdx++) {
 							u8 unused = 0;
 							if (mesh->mFeatureFlags & Mesh::FeatureFlags::PosAndNrm) {
 								unused = *data++;
@@ -3474,14 +3485,14 @@ void BaseShape::makeNormalIndexes(u16* indices)
 /**
  * @todo: Documentation
  */
-f32 BaseShape::calcJointWorldPos(Graphics& gfx, int index, Vector3f& worldPos)
+f32 BaseShape::calcJointWorldPos(Graphics& gfx, int jointIdx, Vector3f& worldPos)
 {
-	if (index == -1) {
+	if (jointIdx == -1) {
 		return 0.0f;
 	}
 
-	immut Matrix4f& orig = getAnimMatrix(index);
-	worldPos.multMatrix(getAnimMatrix(index));
+	immut Matrix4f& orig = getAnimMatrix(jointIdx);
+	worldPos.multMatrix(getAnimMatrix(jointIdx));
 	worldPos.multMatrix(gfx.mCamera->mInverseLookAtMtx);
 	return reinterpret_cast<immut Vector3f*>(&orig)->length();
 }
@@ -3489,11 +3500,11 @@ f32 BaseShape::calcJointWorldPos(Graphics& gfx, int index, Vector3f& worldPos)
 /**
  * @todo: Documentation
  */
-void BaseShape::calcJointWorldDir(Graphics& gfx, int index, Vector3f& worldDir)
+void BaseShape::calcJointWorldDir(Graphics& gfx, int jointIdx, Vector3f& worldDir)
 {
-	if (index != -1) {
-		immut Matrix4f& orig = getAnimMatrix(index); // Clearly copy-pasted, lol.
-		worldDir.rotate(getAnimMatrix(index));
+	if (jointIdx != -1) {
+		immut Matrix4f& orig = getAnimMatrix(jointIdx); // Clearly copy-pasted, lol.
+		worldDir.rotate(getAnimMatrix(jointIdx));
 		worldDir.rotate(gfx.mCamera->mInverseLookAtMtx);
 	}
 }
@@ -3523,17 +3534,17 @@ CollTriInfo* BaseShape::findCollTri(Vector3f& vtx1, Vector3f& vtx2, Vector3f& vt
 	searchVertices[1] = &vtx2;
 	searchVertices[2] = &vtx3;
 
-	for (int i = 0; i < mTriCount; ++i) {
-		for (int j = 0; j < 3; ++j) {
+	for (int triIdx = 0; triIdx < mTriCount; ++triIdx) {
+		for (int windingOffset = 0; windingOffset < 3; ++windingOffset) {
 			int verticesSame = 0;
-			for (int k = 0; k < 3; ++k) {
+			for (int vertexIdx = 0; vertexIdx < 3; ++vertexIdx) {
 				// This complex operation really trips up Ghidra... Pretty sure it's functionally equivalent?
-				if (mVertexList[mTriList[i].mVertexIndices[2 - (j + k) % 3]].isSame(*searchVertices[k])) {
+				if (mVertexList[mTriList[triIdx].mVertexIndices[2 - (windingOffset + vertexIdx) % 3]].isSame(*searchVertices[vertexIdx])) {
 					++verticesSame;
 				}
 			}
 			if (verticesSame == 3) {
-				return &mTriList[i];
+				return &mTriList[triIdx];
 			}
 		}
 	}
