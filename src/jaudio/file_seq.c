@@ -14,10 +14,10 @@
  * @note TODO: Is this invented struct namedropped somewhere?
  */
 struct as_struct {
-	u8 _00;  // _00
-	u32 _04; // _04
+	u8 mInUse;  // _00
+	u32 mSeqIndex; // _04
 	u32 _08; // _08
-	u8* _0C; // _0C
+	u8* mBuffer; // _0C
 };
 typedef struct as_struct as_struct;
 
@@ -216,13 +216,13 @@ u32 __LoadSeqA(u32 param_1, u32 param_2, u8* param_3, void (*param_4)(u32))
 
 	if (first) {
 		for (index = 0; index < AS_SIZE; ++index) {
-			as[index]._00 = 0;
+			as[index].mInUse = 0;
 		}
 		first = FALSE;
 	}
 
 	for (index = 0; index < AS_SIZE; ++index) {
-		if (as[index]._00 == 0) {
+		if (as[index].mInUse == 0) {
 			break;
 		}
 	}
@@ -238,9 +238,9 @@ u32 __LoadSeqA(u32 param_1, u32 param_2, u8* param_3, void (*param_4)(u32))
 		return 0;
 	}
 	u32 val1      = seq_archandle | param_2;
-	as[index]._00 = 1;
-	as[index]._04 = param_2;
-	as[index]._0C = param_3;
+	as[index].mInUse = 1;
+	as[index].mSeqIndex = param_2;
+	as[index].mBuffer = param_3;
 	as[index]._08 = param_1;
 
 	seq_loadbuffer[param_2] = (u8*)1;

@@ -15,7 +15,7 @@ struct cmdqueue_ {
 	OSMessage message;         // _20
 	u8 _24[0x60 - 0x24];       // _24
 	seqp_* track;              // _60
-	u8 _64;                    // _64
+	u8 mPortId;                // _64
 	CmdQueue* next;            // _68;
 };
 

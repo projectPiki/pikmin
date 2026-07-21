@@ -130,7 +130,7 @@ BOOL Wavegroup_Regist(void* wsysData, u32 id)
 	if (wavegroup[id] == NULL) {
 		return FALSE;
 	}
-	wavegroup[id]->_04 = 0;
+	wavegroup[id]->mCurrentSceneIndex = 0;
 	return TRUE;
 }
 

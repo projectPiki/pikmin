@@ -806,9 +806,9 @@ void Get_CtrlWave(SOUNDID_ sound)
 
 typedef struct testPercMap {
 	int _00; // this clearly should one of the existing structs, but Vmap doesnt work so I have no idea
-	int _04;
-	f32 _08;
-	f32 _0C;
+	int mWaveId;
+	f32 mVolumeScale;
+	f32 mPitchScale;
 } testPercMap;
 
 /**
@@ -831,12 +831,12 @@ jc_* Play_1shot(jcs_* jcs, SOUNDID_ sound, u32 id)
 		return NULL;
 	}
 
-	CtrlGroup_* group = WaveidToWavegroup(map->_04, sound.bytes[0]);
+	CtrlGroup_* group = WaveidToWavegroup(map->mWaveId, sound.bytes[0]);
 	if (group == NULL) {
 		return NULL;
 	}
 
-	wave = GetSoundHandle(group, map->_04);
+	wave = GetSoundHandle(group, map->mWaveId);
 	if (wave == NULL) {
 		return NULL;
 	}
@@ -856,9 +856,9 @@ jc_* Play_1shot(jcs_* jcs, SOUNDID_ sound, u32 id)
 	f32 pitch                      = C5BASE_PITCHTABLE[val];
 	chan->velocity                 = sound.bytes[3];
 	chan->note                     = sound.bytes[2];
-	chan->basePitch                = map->_0C * (wave->data->sampleRate / JAC_DAC_RATE) * inst->mGainMultiplier;
+	chan->basePitch                = map->mPitchScale * (wave->data->sampleRate / JAC_DAC_RATE) * inst->mGainMultiplier;
 	chan->currentPitch             = chan->basePitch * pitch;
-	chan->baseVolume               = map->_08 * inst->mFreqMultiplier;
+	chan->baseVolume               = map->mVolumeScale * inst->mFreqMultiplier;
 	chan->currentVolume            = chan->velocity / 127.0f;
 	chan->currentVolume            = chan->currentVolume * chan->currentVolume * chan->baseVolume;
 	chan->panMatrices[1].values[0] = 0.5f;
@@ -926,12 +926,12 @@ jc_* Play_1shot_Perc(jcs_* jcs, SOUNDID_ sound, u32 id)
 
 	u32 x;
 
-	CtrlGroup_* group = WaveidToWavegroup(map->_04, sound.bytes[0]);
+	CtrlGroup_* group = WaveidToWavegroup(map->mWaveId, sound.bytes[0]);
 	if (group == NULL) {
 		return NULL;
 	}
 
-	WaveID_* wave = GetSoundHandle(group, map->_04);
+	WaveID_* wave = GetSoundHandle(group, map->mWaveId);
 	if (wave == NULL) {
 		return NULL;
 	}
@@ -944,10 +944,10 @@ jc_* Play_1shot_Perc(jcs_* jcs, SOUNDID_ sound, u32 id)
 	chan->velocity = sound.bytes[3];
 	chan->note     = sound.bytes[2];
 
-	chan->basePitch    = (wave->data->sampleRate / JAC_DAC_RATE) * map->_0C * perc->mKeyRegions[sound.bytes[2]]->mVolume;
+	chan->basePitch    = (wave->data->sampleRate / JAC_DAC_RATE) * map->mPitchScale * perc->mKeyRegions[sound.bytes[2]]->mVolume;
 	chan->currentPitch = chan->basePitch;
 
-	chan->baseVolume    = map->_08 * perc->mKeyRegions[sound.bytes[2]]->mPitch;
+	chan->baseVolume    = map->mVolumeScale * perc->mKeyRegions[sound.bytes[2]]->mPitch;
 	chan->currentVolume = chan->velocity / 127.0f;
 	chan->currentVolume = chan->currentVolume * chan->currentVolume * chan->baseVolume;
 
