@@ -24,7 +24,7 @@ namespace zen {
 struct DrawCMCSmenu : public DrawMenuBase {
 public:
 	enum ModeCMCS {
-		MODE_Unk2 = 2,
+		MODE_Appear = 2,
 	};
 
 	/**
@@ -35,42 +35,43 @@ public:
 	struct MenuExpansion {
 	public:
 		enum modeFlag {
-			MODE_Unk0 = 0,
-			MODE_Unk1 = 1,
+			MODE_Idle   = 0,
+			MODE_Moving = 1,
 		};
 
 		MenuExpansion()
 		{
 			mRootPane = nullptr;
-			_10.set(0.0f, 0.0f, 0.0f);
-			_1C.set(0.0f, 0.0f, 0.0f);
-			_28.set(0.0f, 0.0f, 0.0f);
-			_04 = _08 = 0.0f;
-			mMode     = MODE_Unk0;
+			mDefaultPosition.set(0.0f, 0.0f, 0.0f);
+			mMoveStartPosition.set(0.0f, 0.0f, 0.0f);
+			mMoveTargetPosition.set(0.0f, 0.0f, 0.0f);
+			mMoveElapsedTime = mMoveDuration = 0.0f;
+			mMode                            = MODE_Idle;
 		}
 
 		void setRootPane(P2DPane* pane)
 		{
 			mRootPane = pane;
-			_10.set(mRootPane->getPosH(), mRootPane->getPosV(), 0.0f);
+			mDefaultPosition.set(mRootPane->getPosH(), mRootPane->getPosV(), 0.0f);
 		}
 		modeFlag update()
 		{
 			switch (mMode) {
-			case MODE_Unk1:
+			case MODE_Moving:
 			{
-				_04 += gsys->getFrameTime();
+				mMoveElapsedTime += gsys->getFrameTime();
 				f32 t, tComp;
-				if (_04 > _08) {
-					_04   = _08;
+				if (mMoveElapsedTime > mMoveDuration) {
+					mMoveElapsedTime = mMoveDuration;
 					t     = 1.0f;
 					tComp = 0.0f;
-					mMode = MODE_Unk0;
+					mMode            = MODE_Idle;
 				} else {
-					t     = NMathF::sin(_04 / _08 * HALF_PI);
+					t     = NMathF::sin(mMoveElapsedTime / mMoveDuration * HALF_PI);
 					tComp = 1.0f - t;
 				}
-				mRootPane->move(RoundOff(_1C.x * tComp + _28.x * t), RoundOff(_1C.y * tComp + _28.y * t));
+				mRootPane->move(RoundOff(mMoveStartPosition.x * tComp + mMoveTargetPosition.x * t),
+				                RoundOff(mMoveStartPosition.y * tComp + mMoveTargetPosition.y * t));
 				break;
 			}
 			}
@@ -82,22 +83,22 @@ public:
 		void setPosition(int x, int y) { mRootPane->move(x, y); }
 		void move(f32 x, f32 y, f32 p3)
 		{
-			mMode = MODE_Unk1;
-			_04   = 0.0f;
-			_08   = p3;
-			_1C.set(mRootPane->getPosH(), mRootPane->getPosV(), 0.0f);
-			_28.set(x, y, 0.0f);
+			mMode            = MODE_Moving;
+			mMoveElapsedTime = 0.0f;
+			mMoveDuration    = p3;
+			mMoveStartPosition.set(mRootPane->getPosH(), mRootPane->getPosV(), 0.0f);
+			mMoveTargetPosition.set(x, y, 0.0f);
 		}
-		Vector3f& getDefaultPos() { return _10; }
+		Vector3f& getDefaultPos() { return mDefaultPosition; }
 
 	protected:
-		modeFlag mMode;     // _00
-		f32 _04;            // _04
-		f32 _08;            // _08
-		P2DPane* mRootPane; // _0C
-		Vector3f _10;       // _10
-		Vector3f _1C;       // _1C
-		Vector3f _28;       // _28
+		modeFlag mMode;               // _00
+		f32 mMoveElapsedTime;         // _04
+		f32 mMoveDuration;            // _08
+		P2DPane* mRootPane;           // _0C
+		Vector3f mDefaultPosition;    // _10
+		Vector3f mMoveStartPosition;  // _1C
+		Vector3f mMoveTargetPosition; // _28
 	};
 
 	DrawCMCSmenu(immut char* bloFileName)
@@ -127,7 +128,7 @@ public:
 	virtual void start() // _18
 	{
 		DrawMenuBase::start();
-		setModeFunc(2);
+		setModeFunc(MODE_Appear);
 	}
 
 	void hide()
@@ -144,7 +145,7 @@ protected:
 	{
 		DrawMenuBase::setModeFunc(mode);
 		switch (mMode) {
-		case MODE_Unk2:
+		case MODE_Appear:
 		{
 			mModeFunction = static_cast<ModeFunc>(&DrawCMCSmenu::modeAppear);
 			for (int i = 0; i < mOptionCount; i++) {
@@ -177,7 +178,7 @@ protected:
 		int i;
 		int numWaiting = 0;
 		for (i = 0; i < mOptionCount; i++) {
-			if (mMenuExpansions[i].update() == MenuExpansion::MODE_Unk0) {
+			if (mMenuExpansions[i].update() == MenuExpansion::MODE_Idle) {
 				numWaiting++;
 			}
 		}
@@ -217,10 +218,10 @@ zen::DrawCMcourseSelect::DrawCMcourseSelect()
 	pane = bestScreen->search('best', true);
 	pane->move(405, 164);
 
-	_8C = selScreen->search('abtn', true);
-	_90 = 0;
-	P2DPaneLibrary::setFamilyAlpha(_8C, _90);
-	mMode        = MODE_Unk0;
+	mABtnPane      = selScreen->search('abtn', true);
+	mABtnPaneAlpha = 0;
+	P2DPaneLibrary::setFamilyAlpha(mABtnPane, mABtnPaneAlpha);
+	mMode        = MODE_Inactive;
 	mReturnState = Inactive;
 
 	mMenu = new DrawCMCSmenu("screen/blo/cha_map.blo");
@@ -235,7 +236,7 @@ zen::DrawCMcourseSelect::DrawCMcourseSelect()
  */
 void zen::DrawCMcourseSelect::start()
 {
-	mMode = MODE_Unk1;
+	mMode = MODE_TitleAppear;
 	mEffectMgr2D->killAll(true);
 	mReturnState = Continue;
 	mTitleObj.appear(2.5f);
@@ -251,8 +252,8 @@ void zen::DrawCMcourseSelect::start()
 	mEffectMgr2D->create(EFF2D_Unk30, Vector3f(320.0f, 240.0f, 0.0), nullptr, nullptr);
 	mEffectMgr2D->create(EFF2D_Unk31, Vector3f(320.0f, 240.0f, 0.0), nullptr, nullptr);
 	mEffectMgr2D->create(EFF2D_Unk32, Vector3f(320.0f, 240.0f, 0.0), nullptr, nullptr);
-	_90 = 0;
-	P2DPaneLibrary::setFamilyAlpha(_8C, _90);
+	mABtnPaneAlpha = 0;
+	P2DPaneLibrary::setFamilyAlpha(mABtnPane, mABtnPaneAlpha);
 	PRINT("start! \n");
 }
 
@@ -278,24 +279,24 @@ bool zen::DrawCMcourseSelect::update(Controller* controller)
 {
 	bool res = false;
 	switch (mMode) {
-	case MODE_Unk1:
+	case MODE_TitleAppear:
 	{
 		if (mTitleObj.getEvent() & 0x1) {
-			mMode = MODE_Unk2;
+			mMode = MODE_Operation;
 			mMenu->start();
 			mScoreMgr.appear(0.5f);
 			mBest.appear();
 		}
 		break;
 	}
-	case MODE_Unk2:
+	case MODE_Operation:
 	{
 		if (modeOperation(controller)) {
-			mMode = MODE_Unk3;
+			mMode = MODE_Finished;
 		}
 		break;
 	}
-	case MODE_Unk3:
+	case MODE_Finished:
 	{
 		res = true;
 		break;
@@ -355,9 +356,9 @@ bool zen::DrawCMcourseSelect::modeOperation(Controller* controller)
 		res = true; // this is... already true if we're here.
 	}
 
-	if (_90 < 255) {
-		_90++;
-		P2DPaneLibrary::setFamilyAlpha(_8C, _90);
+	if (mABtnPaneAlpha < 255) {
+		mABtnPaneAlpha++;
+		P2DPaneLibrary::setFamilyAlpha(mABtnPane, mABtnPaneAlpha);
 	}
 
 	STACK_PAD_VAR(1);
