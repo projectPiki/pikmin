@@ -273,7 +273,7 @@ public:
 	void initData() { _10 = 0; }
 
 	// _00 - _0C = CacheInfo
-	TexCacheInfo** _0C; // _0C
+	TexCacheInfo** mActiveCacheSlot; // _0C
 	u32 _10;            // _10
 };
 

@@ -778,7 +778,7 @@ int Font::stringWidth(immut char* str)
  */
 void GfxInfo::createCollData(immut Vector3f* pos, f32)
 {
-	mTriangles = new CollTriInfo[_1C[0]];
+	mTriangles = new CollTriInfo[mTriangleCountPtr[0]];
 	mBox.resetBound();
 	pos->length(); // this is load-bearing for sdata2 ordering
 	               // more here, but this is enough to get the weak ctors to spawn

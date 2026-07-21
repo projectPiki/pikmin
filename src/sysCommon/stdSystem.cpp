@@ -676,7 +676,7 @@ void TextureCacher::removeOldest()
 {
 	TexCacheInfo* oldest = static_cast<TexCacheInfo*>(mPrev);
 	mPrev->remove();
-	*oldest->_0C = nullptr;
+	*oldest->mActiveCacheSlot = nullptr;
 	mCache->cacheFree(oldest);
 }
 
@@ -698,7 +698,7 @@ void TextureCacher::cacheTexture(CacheTexture* tex)
 			}
 			tex->mTexImage->mTextureData = (void*)OSRoundDown32B((u32)alloc + 0x33);
 			TexCacheInfo* info           = (TexCacheInfo*)alloc;
-			info->_0C                    = &tex->mActiveCache;
+			info->mActiveCacheSlot       = &tex->mActiveCache;
 			tex->mActiveCache            = info;
 			insertAfter(info);
 			break;

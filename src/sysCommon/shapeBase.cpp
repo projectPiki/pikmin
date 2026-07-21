@@ -108,7 +108,7 @@ void MtxGroup::read(RandomAccessStream& stream)
 			mDispList[i].read(stream);
 #if defined(WIN32)
 			DlobjInfo* info = new DlobjInfo();
-			info->_20       = &mDispList[i];
+			info->mDispList = &mDispList[i];
 			gsys->addGfxObject(info);
 #endif
 		}
