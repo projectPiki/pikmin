@@ -192,7 +192,7 @@ Piki* ActGuard::findFriend()
 
 	if (friendPiki) {
 		Vector3f dir = mPiki->mSRT.t - friendPiki->mSRT.t;
-		_2C          = atan2f(dir.x, dir.z);
+		mFormationAngle = atan2f(dir.x, dir.z);
 	}
 
 	return friendPiki;
@@ -263,7 +263,7 @@ Piki* ActGuard::findFriend(int side)
 
 	if (friendPiki) {
 		Vector3f dir = mPiki->mSRT.t - friendPiki->mSRT.t;
-		_2C          = atan2f(dir.x, dir.z);
+		mFormationAngle = atan2f(dir.x, dir.z);
 	}
 
 	return friendPiki;
@@ -293,10 +293,10 @@ void ActGuard::setGoal()
 	Vector3f targetPos(target->mSRT.t);
 	f32 rad = 2.5f * target->getSize();
 
-	f32 angle = (mFormationSide == Right) ? _2C : PI - _2C;
+	f32 angle = (mFormationSide == Right) ? mFormationAngle : PI - mFormationAngle;
 
 	targetPos = targetPos + Vector3f(rad * sinf(angle), 0.0f, rad * cosf(angle));
-	_20       = targetPos;
+	mGoalPosition = targetPos;
 }
 
 /**

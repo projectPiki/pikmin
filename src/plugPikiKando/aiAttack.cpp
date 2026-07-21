@@ -58,17 +58,17 @@ void ActAttack::init(Creature* creature)
 
 	if (!creature) {
 		PRINT("commander is 0 karl gotti!!!!!!!!!!1\n"); // lol
-		mPlayerObject   = nullptr;
-		_20             = nullptr;
-		mTargetIsPlayer = false;
+		mPlayerObject     = nullptr;
+		mTargetObjectPool = nullptr;
+		mTargetIsPlayer   = false;
 	} else if (creature->mObjType == OBJTYPE_Navi) {
 		mPlayerObject   = creature;
 		mTargetIsPlayer = true;
 		creature        = findTarget();
 	} else {
-		mPlayerObject   = nullptr;
-		_20             = nullptr;
-		mTargetIsPlayer = false;
+		mPlayerObject     = nullptr;
+		mTargetObjectPool = nullptr;
+		mTargetIsPlayer   = false;
 	}
 
 	if (creature) {
@@ -164,7 +164,7 @@ Creature* ActAttack::findTarget()
 	Creature* target;
 	// In the DLL, this iterator is also somehow uninitialized?  Gonna assume it's a quirk of
 	// unreachable code, but that means we don't actually know what was being iterated over.
-	Iterator iter(_20);
+	Iterator iter(mTargetObjectPool);
 	CI_LOOP(iter)
 	{
 		Creature* creature = *iter;
@@ -188,7 +188,7 @@ Creature* ActAttack::decideTarget()
 {
 	f32 minDist = 12800.0f;
 	Creature* targetList[MAX_PIKI_ON_FIELD];
-	Iterator iter(_20);
+	Iterator iter(mTargetObjectPool);
 	int count = 0;
 	CI_LOOP(iter)
 	{

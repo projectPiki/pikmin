@@ -61,10 +61,10 @@ void ActCrowd::startSort()
 void ActCrowd::init(Creature* target)
 {
 	mMode      = 5;
-	_30        = 5;
-	_32        = 0;
+	mPrevMode        = 5;
+	mNearSlotCounter = 0;
 	mIsWaiting = false;
-	_7E        = false;
+	mWasWaiting      = false;
 	if (target->mObjType != OBJTYPE_Navi) {
 		PRINT("target is not navi (%d)\n", target->mObjType);
 	}
@@ -82,12 +82,12 @@ void ActCrowd::init(Creature* target)
 		mPiki->startMotion(PaniMotionInfo(PIKIANIM_Run), PaniMotionInfo(PIKIANIM_Run));
 	}
 	mPiki->unsetPastel();
-	_34              = false;
+	mHasRequestedNewSlot = false;
 	_35              = false;
 	_36              = false;
 	mState           = STATE_Unk0;
 	mTripLoopCounter = 0;
-	_60              = 0.0f;
+	mTravelDistance      = 0.0f;
 	mIsTripping      = false;
 	GameStat::formationPikis.inc(mPiki->mColor);
 	GameStat::workPikis.dec(mPiki->mColor);
@@ -163,7 +163,7 @@ void ActCrowd::procCollideMsg(Piki*, MsgCollide* msg)
 void ActCrowd::procWallMsg(Piki*, MsgWall* msg)
 {
 	if (mCPlateSlotID != -1) {
-		_70 = msg->mWallPlane->mNormal;
+		mWallNormal = msg->mWallPlane->mNormal;
 		_35 = true;
 	}
 }
@@ -232,7 +232,7 @@ void ActCrowd::cleanup()
  */
 int ActCrowd::exec()
 {
-	_30   = mMode;
+	mPrevMode = mMode;
 	mMode = 5;
 	if (mHasRoute) {
 		exeRouteMove();
@@ -275,7 +275,7 @@ int ActCrowd::exec()
 		}
 	}
 
-	_7E = mIsWaiting;
+	mWasWaiting = mIsWaiting;
 	if (!mPiki->mNavi) {
 		ERROR("piki->navi 0!\n");
 	}
@@ -298,12 +298,12 @@ int ActCrowd::exec()
 		playerState->mDemoFlags.setFlag(DEMOFLAG_GrabFirstBomb, mPiki);
 	}
 
-	_60 += travelDist;
+	mTravelDistance += travelDist;
 
 	// - yellows with bombs cannot trip
 	// - have to have moved a certain distance
 	// - have to be moving at at least 110 units of speed
-	if (!mPiki->hasBomb() && _60 >= 100.0f && mPiki->mVelocity.length() > 110.0f) {
+	if (!mPiki->hasBomb() && mTravelDistance >= 100.0f && mPiki->mVelocity.length() > 110.0f) {
 
 		// idk why they did this in two rand checks, but go figure
 		// approximately a 0.003% chance of tripping
@@ -314,7 +314,7 @@ int ActCrowd::exec()
 			return ACTOUT_Continue;
 		}
 
-		_60 = 0.0f;
+		mTravelDistance = 0.0f;
 	}
 
 	Vector3f plateDir = platePos - mPiki->mSRT.t;
@@ -370,7 +370,7 @@ int ActCrowd::exec()
 				}
 			} else {
 				mPiki->setSpeed(1.0f, moveDir);
-				if (_7E && !mIsWaiting) {
+				if (mWasWaiting && !mIsWaiting) {
 					mPiki->startMotion(PaniMotionInfo(PIKIANIM_Walk), PaniMotionInfo(PIKIANIM_Walk));
 					finishZawatuki();
 				}
@@ -393,20 +393,20 @@ int ActCrowd::exec()
 	}
 
 	if (plateDist2D <= 7.0f) {
-		_32 = 0;
+		mNearSlotCounter = 0;
 	} else if (plateDist2D < 15.0f) {
-		_32++;
-		if (_30 == 2 && mPiki->mNavi->mNeutralTime > 0.1f) {
-			_32 = 0;
+		mNearSlotCounter++;
+		if (mPrevMode == 2 && mPiki->mNavi->mNeutralTime > 0.1f) {
+			mNearSlotCounter = 0;
 		}
-		if (_32 >= 6) {
-			_32 = 6;
+		if (mNearSlotCounter >= 6) {
+			mNearSlotCounter = 6;
 		}
 	} else {
-		_32 = 0;
+		mNearSlotCounter = 0;
 	}
 
-	if (plateDist2D <= 7.0f || (_32 < 6 && plateDist2D <= 15.0f)) {
+	if (plateDist2D <= 7.0f || (mNearSlotCounter < 6 && plateDist2D <= 15.0f)) {
 		mMode = 2;
 		mOdometer.reset();
 		mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
@@ -504,16 +504,16 @@ int ActCrowd::exec()
 
 	if (plateDist2D < C_PIKI_PROP(mPiki).mFormationSlipRange()) {
 		mLostChildTimer = 0.0f;
-		_34             = false;
+		mHasRequestedNewSlot = false;
 	} else if (plateDist2D < C_PIKI_PROP(mPiki).mFormationBreakRange()) {
 		mLostChildTimer += gsys->getFrameTime();
-		if (!_34) {
+		if (!mHasRequestedNewSlot) {
 			if (mCPlateSlotID != -1) {
 				mPlateMgr->releaseSlot(mPiki, mCPlateSlotID);
 				mCPlateSlotID = mPlateMgr->getSlot(mPiki, this);
 			}
 
-			_34 = true;
+			mHasRequestedNewSlot = true;
 		}
 		if (mCPlateSlotID == -1 || mLostChildTimer > C_PIKI_PROP(mPiki).mMaxLostChildTime()) {
 			return ACTOUT_Fail;
@@ -526,7 +526,7 @@ int ActCrowd::exec()
 	STACK_PAD_VAR(4);
 	STACK_PAD_TERNARY(mPiki, 11);
 
-	if (_7E && !mIsWaiting) {
+	if (mWasWaiting && !mIsWaiting) {
 		mPiki->startMotion(PaniMotionInfo(PIKIANIM_Walk), PaniMotionInfo(PIKIANIM_Walk));
 		finishZawatuki();
 	}

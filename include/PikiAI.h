@@ -296,7 +296,7 @@ protected:
 	int _24;                   // _24
 	u32 _28;                   // _28, unknown
 	f32 _2C;                   // _2C
-	Boredom _30;               // _30
+	Boredom mBoredom;          // _30
 };
 
 /**
@@ -379,8 +379,8 @@ protected:
 	bool mIsAttackFinished;    // _1D
 	bool mIsCriticalHit;       // _1E
 	bool mTargetIsPlayer;      // _1F
-	Traversable* _20;          // _20, idk what this is but it's something inheriting from this
-	SmartPtr<Creature> mOther; // _24
+	Traversable* mTargetObjectPool; // _20, idk what this is but it's something inheriting from this
+	SmartPtr<Creature> mOther;      // _24
 	Creature* mPlayerObject;   // _28
 };
 
@@ -812,9 +812,9 @@ protected:
 	ActBoreSelect* mSelectAction; // _28
 	u16 mState;                   // _2C
 	u16 mMode;                    // _2E
-	u16 _30;                      // _30
-	u16 _32;                      // _32
-	bool _34;                     // _34
+	u16 mPrevMode;                // _30
+	u16 mNearSlotCounter;         // _32
+	bool mHasRequestedNewSlot;    // _34
 	bool _35;                     // _35
 	bool _36;                     // _36
 	u32 _38;                      // _38, unknown
@@ -823,14 +823,14 @@ protected:
 	u8 _54[0x4];                  // _54, unknown
 	int mCPlateSlotID;            // _58
 	int mTripLoopCounter;         // _5C
-	f32 _60;                      // _60
+	f32 mTravelDistance;          // _60
 	bool mIsTripping;             // _64
 	f32 mLostChildTimer;          // _68
 	CPlate* mPlateMgr;            // _6C
-	Vector3f _70;                 // _70
+	Vector3f mWallNormal;         // _70
 	u8 mBoredomMotion;            // _7C, is never initialized to anything
 	bool mIsWaiting;              // _7D
-	bool _7E;                     // _7E
+	bool mWasWaiting;             // _7E
 	bool mHasRoute;               // _7F
 	                              // _80-_88 = SlotChangeListner
 };
@@ -1228,8 +1228,8 @@ protected:
 	SmartPtr<Creature> mTarget;     // _14
 	SmartPtr<Creature> mLeftGuard;  // _18
 	SmartPtr<Creature> mRightGuard; // _1C
-	Vector3f _20;                   // _20
-	f32 _2C;                        // _2C
+	Vector3f mGoalPosition;         // _20
+	f32 mFormationAngle;            // _2C
 	Vector3f mLandPosition;         // _30
 	f32 mFormationSpacing;          // _3C
 	f32 mTimer;                     // _40
