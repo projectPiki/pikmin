@@ -27,7 +27,7 @@ void TAIAappearKabekui::start(Teki& teki)
 {
 	TAIAsetMotionSpeed::start(teki);
 	teki.setStaySwitch(false);
-	if (_10) {
+	if (mKeepVisible) {
 		teki.setTekiOption(BTeki::TEKI_OPTION_VISIBLE);
 	}
 }
@@ -51,7 +51,7 @@ bool TAIAappearKabekui::act(Teki& teki)
 	}
 	if (teki.mCurrentAnimEvent == KEY_Finished) {
 		teki.setManualAnimation(false);
-		if (!_10) {
+		if (!mKeepVisible) {
 			teki.clearTekiOption(BTeki::TEKI_OPTION_VISIBLE);
 		}
 		return true;
@@ -370,9 +370,9 @@ bool TAIAlookAround::act(Teki& teki)
 	{
 		int motionID;
 		if (angDist(teki.mTargetAngle, teki.mFaceDirection) > 0.0f) {
-			motionID = _0C;
+			motionID = mLeftTurnMotionID;
 		} else {
-			motionID = _10;
+			motionID = mRightTurnMotionID;
 		}
 
 		if (teki.mTekiAnimator->getCurrentMotionIndex() != motionID || teki.mTekiAnimator->isFinished()) {
@@ -463,7 +463,7 @@ bool TAIAturnToTarget::act(Teki& teki)
 			ERROR("KOKO NI KURUNO HA OKASIIDE  !!!!!!!!&&&&&&&&&&&&&&&&&&&&\n");
 		} else {
 			if (teki.turnToward(teki.mTargetAngle, getTurnVelocity(teki))) {
-				if (_14) {
+				if (mFinishTurnMotion) {
 					teki.mTekiAnimator->finishMotion(PaniMotionInfo(PANI_NO_MOTION, &teki));
 				}
 				res = true;
@@ -628,9 +628,9 @@ void TAIApatrol::changeStatus(int status, Teki& teki)
 TAIApatrol::TAIApatrol(int nextState, int p2, int leftMotionID, int rightMotionID, immut Vector3f* p5, int p6, bool p7)
     : TAIAturnToTarget(nextState, leftMotionID, rightMotionID, p7)
 {
-	_20 = p2;
-	_18 = p5;
-	_1C = p6;
+	mPatrolMotionID     = p2;
+	mPatrolPointOffsets = p5;
+	mPatrolPointCount   = p6;
 }
 
 /**
@@ -639,7 +639,7 @@ TAIApatrol::TAIApatrol(int nextState, int p2, int leftMotionID, int rightMotionI
  */
 void TAIApatrol::setTargetPosition(Teki& teki)
 {
-	immut Vector3f& vec = _18[teki.getTableIndex()];
+	immut Vector3f& vec = mPatrolPointOffsets[teki.getTableIndex()];
 	f32 rad             = teki.getParameterF(TPF_DangerTerritoryRange);
 	teki.mTargetPosition.set(vec.x * rad + teki.mPersonality->mNestPosition.x, vec.y * rad + teki.mPersonality->mNestPosition.y,
 	                         vec.z * rad + teki.mPersonality->mNestPosition.z);
@@ -652,7 +652,7 @@ void TAIApatrol::setTargetPosition(Teki& teki)
 void TAIApatrol::start(Teki& teki)
 {
 	teki.setTableIndex(0);
-	for (int i = 0; i < _1C; i++) {
+	for (int i = 0; i < mPatrolPointCount; i++) {
 		setTargetPosition(teki);
 
 		f32 sum = zen::Abs(teki.getPosition().x - teki.mTargetPosition.x) + zen::Abs(teki.getPosition().y - teki.mTargetPosition.y)
@@ -685,19 +685,19 @@ bool TAIApatrol::act(Teki& teki)
 	}
 	case 0:
 	{
-		if (teki.mTekiAnimator->getCurrentMotionIndex() != _20 || teki.mTekiAnimator->isFinished()) {
+		if (teki.mTekiAnimator->getCurrentMotionIndex() != mPatrolMotionID || teki.mTekiAnimator->isFinished()) {
 			if (!teki.mTekiAnimator->isFinished()) {
 				teki.mTekiAnimator->finishMotion(PaniMotionInfo(PANI_NO_MOTION, &teki));
 			}
 			if (teki.mTekiAnimator->isFinishing()) {
-				teki.mTekiAnimator->startMotion(PaniMotionInfo(_20, &teki));
+				teki.mTekiAnimator->startMotion(PaniMotionInfo(mPatrolMotionID, &teki));
 			}
 		} else {
 			f32 dist = teki.mTargetPosition.distance(teki.getPosition());
 			teki.addFrameCounter(gsys->getFrameTime());
 			if (dist <= teki.getParameterF(TPF_WalkVelocity) || teki.getFrameCounter() > getTimeout(teki)) {
 				teki.setTableIndex(teki.getTableIndex() + 1);
-				if (teki.getTableIndex() >= _1C) {
+				if (teki.getTableIndex() >= mPatrolPointCount) {
 					teki.setTableIndex(0);
 				}
 				setTargetPosition(teki);
@@ -763,9 +763,9 @@ void TAIAturnHome::start(Teki& teki)
 	teki.mTargetPosition.set(teki.mPersonality->mNestPosition);
 	teki.mTargetAngle = teki.calcTargetDirection(teki.mTargetPosition);
 	if (angDist(teki.mTargetAngle, teki.mFaceDirection) > 0.0f) {
-		mMotionID = _0C;
+		mMotionID = mLeftTurnMotionID;
 	} else {
-		mMotionID = _10;
+		mMotionID = mRightTurnMotionID;
 	}
 
 	TAIAturnOccasion::start(teki);

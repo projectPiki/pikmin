@@ -15,7 +15,7 @@ public:
 	inline TAIAappearKabekui(int nextState, int motionID, f32 motionSpeed, bool p4) // TODO: this is a guess
 	    : TAIAsetMotionSpeed(nextState, motionID, motionSpeed)
 	{
-		_10 = p4;
+		mKeepVisible = p4;
 	}
 
 	virtual void start(Teki&); // _08
@@ -24,7 +24,7 @@ public:
 protected:
 	// _04     = VTBL
 	// _00-_10 = TAIAsetMotionSpeed
-	bool _10; // _10
+	bool mKeepVisible; // _10
 };
 
 /**
@@ -225,8 +225,8 @@ public:
 	TAIAlookAround(int nextState, int motionID, int p3, int p4)
 	    : TAIAreserveMotion(nextState, motionID)
 	{
-		_0C = p3;
-		_10 = p4;
+		mLeftTurnMotionID  = p3;
+		mRightTurnMotionID = p4;
 	}
 
 	virtual void start(Teki&); // _08
@@ -237,8 +237,8 @@ protected:
 
 	// _04     = VTBL
 	// _00-_0C = TAIAreserveMotion
-	int _0C; // _0C
-	int _10; // _10
+	int mLeftTurnMotionID;  // _0C
+	int mRightTurnMotionID; // _10
 };
 
 /**
@@ -251,7 +251,7 @@ public:
 	{
 		mLeftTurnAnimID  = leftMotionID;
 		mRightTurnAnimID = rightMotionID;
-		_14              = p4;
+		mFinishTurnMotion = p4;
 	}
 
 	virtual void start(Teki&); // _08
@@ -269,7 +269,7 @@ protected:
 	// _00-_0C = TAIAreserveMotion
 	int mLeftTurnAnimID;  // _0C
 	int mRightTurnAnimID; // _10
-	bool _14;             // _14
+	bool mFinishTurnMotion; // _14
 };
 
 /**
@@ -392,9 +392,9 @@ protected:
 
 	// _04     = VTBL
 	// _00-_18 = TAIAturnToTarget
-	immut Vector3f* _18; // _18
-	int _1C;             // _1C
-	int _20;             // _20
+	immut Vector3f* mPatrolPointOffsets; // _18
+	int mPatrolPointCount;               // _1C
+	int mPatrolMotionID;                 // _20
 };
 
 /**
@@ -429,8 +429,8 @@ public:
 	TAIAturnHome(int nextState, int motionID, int p3)
 	    : TAIAturnOccasion(nextState, motionID)
 	{
-		_0C = motionID;
-		_10 = p3;
+		mLeftTurnMotionID  = motionID;
+		mRightTurnMotionID = p3;
 	}
 
 	virtual void start(Teki&); // _08
@@ -439,8 +439,8 @@ public:
 protected:
 	// _04     = VTBL
 	// _00-_0C = TAIAturnOccasion
-	int _0C; // _0C
-	int _10; // _10
+	int mLeftTurnMotionID;  // _0C
+	int mRightTurnMotionID; // _10
 };
 
 /**
