@@ -39,8 +39,8 @@ public:
 		mScoreDigitTens     = 0;
 		mScoreDigitHundreds = 0;
 		mScore              = 321;
-		_18                 = 0.0f;
-		_1C                 = 0.0f;
+		mMoveElapsedTime    = 0.0f;
+		mMoveDuration       = 0.0f;
 		mMode               = MODE_Wait;
 		mModeFunction       = nullptr;
 	}
@@ -51,7 +51,7 @@ public:
 		sprintf(buf, "%dban", p2);
 		mScorePane = screen->search(P2DPaneLibrary::makeTag(buf), true);
 		mScorePane->setOffset(mScorePane->getWidth() >> 1, mScorePane->getHeight() >> 1);
-		_20.set(mScorePane->getPosH(), mScorePane->getPosV(), 0.0f);
+		mBasePosition.set(mScorePane->getPosH(), mScorePane->getPosV(), 0.0f);
 
 		sprintf(buf, "%di_l", p2);
 		P2DPane* pane = screen->search(P2DPaneLibrary::makeTag(buf), true);
@@ -78,18 +78,18 @@ public:
 	}
 	void appear(f32 p1)
 	{
-		_18           = 0.0f;
-		_1C           = p1;
+		mMoveElapsedTime = 0.0f;
+		mMoveDuration    = p1;
 		mMode         = MODE_Appear;
 		mModeFunction = &DrawCMscoreObj::modeMove;
-		_2C.set(_20);
-		_2C.x += 640.0f;
-		_38.set(_20);
+		mAppearStartPosition.set(mBasePosition);
+		mAppearStartPosition.x += 640.0f;
+		mAppearTargetPosition.set(mBasePosition);
 	}
 
 	void wait()
 	{
-		_18           = 0.0f;
+		mMoveElapsedTime = 0.0f;
 		mMode         = MODE_Wait;
 		mModeFunction = &DrawCMscoreObj::modeWait;
 	}
@@ -106,20 +106,21 @@ protected:
 	bool modeMove()
 	{
 		bool res = false;
-		_18 += gsys->getFrameTime();
+		mMoveElapsedTime += gsys->getFrameTime();
 		f32 t, tComp;
-		if (_18 > _1C) {
-			_18   = _1C;
+		if (mMoveElapsedTime > mMoveDuration) {
+			mMoveElapsedTime = mMoveDuration;
 			t     = 1.0f;
 			tComp = 0.0f;
 			wait();
 			res = true;
 		} else {
-			t     = NMathF::sin(_18 / _1C * HALF_PI);
+			t     = NMathF::sin(mMoveElapsedTime / mMoveDuration * HALF_PI);
 			tComp = 1.0f - t;
 		}
 
-		mScorePane->move(RoundOff(_38.x * t + _2C.x * tComp), RoundOff(_38.y * t + _2C.y * tComp));
+		mScorePane->move(RoundOff(mAppearTargetPosition.x * t + mAppearStartPosition.x * tComp),
+		                 RoundOff(mAppearTargetPosition.y * t + mAppearStartPosition.y * tComp));
 
 		return res;
 	}
@@ -130,11 +131,11 @@ protected:
 	P2DPicture* mScoreDigitHundreds; // _0C
 	int mScore;                      // _10
 	modeFlag mMode;                  // _14
-	f32 _18;                         // _18
-	f32 _1C;                         // _1C
-	Vector3f _20;                    // _20
-	Vector3f _2C;                    // _24
-	Vector3f _38;                    // _38
+	f32 mMoveElapsedTime;            // _18
+	f32 mMoveDuration;               // _1C
+	Vector3f mBasePosition;          // _20
+	Vector3f mAppearStartPosition;   // _24
+	Vector3f mAppearTargetPosition;  // _38
 	ModeFunc mModeFunction;          // _44
 };
 } // namespace zen
