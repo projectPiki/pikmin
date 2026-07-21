@@ -906,7 +906,7 @@ void HinderRock::startAI(int)
 	mPushMoveTimer     = 0.0f;
 	mWayPoint          = routeMgr->findNearestWayPointAll('test', mSRT.t);
 	mWayPoint->setFlag(false);
-	PRINT("********* ROCK WAYPOINT(%d) OFF\n", mWayPoint->mIsOpen);
+	PRINT("********* ROCK WAYPOINT(%d) OFF\n", mWayPoint->mIndex);
 	mIsSoundPlaying = false;
 	mSRT.t.y        = mapMgr->getMinY(mSRT.t.x, mSRT.t.z, false);
 }
@@ -1076,10 +1076,11 @@ void Bridge::startAI(int)
 	mapMgr->mCollShapeList->add(mBuildShape);
 
 	if (mDoUseJointSegments) {
-		for (int i = 0; i < mStageCount; i++) {
+		int i;
+		for (i = 0; i < mStageCount; i++) {
 			mStageProgressList[i] = 0.0f;
 		}
-		for (int i = 0; i < mStageCount * 2; i++) {
+		for (i = 0; i < mStageCount * 2; i++) {
 			mBuildShape->jointVisible(mStageJoints[i]->mIndex, Joint::NotVisible);
 		}
 		mBuildShape->jointVisible(mStageJoints[0]->mIndex, Joint::Visible);
@@ -1529,14 +1530,16 @@ void GenObjectWorkObject::setNaviPos()
 
 void GenObjectWorkObject::doGenAge(AgeServer& server)
 {
+	int i;
+
 	server.StartOptionBox("仕事オブジェクト", (int*)&mObjectType, 252);
-	for (int i = 0; i < 2; i++) {
+	for (i = 0; i < 2; i++) {
 		server.NewOption(workObjectMgr->getName(i), i);
 	}
 	server.EndOptionBox();
 
 	server.StartOptionBox("シェイプ", &mShapeType, 252);
-	for (int i = 0; i < 5; i++) {
+	for (i = 0; i < 5; i++) {
 		server.NewOption(workObjectMgr->getShapeName(i), i);
 	}
 	server.EndOptionBox();

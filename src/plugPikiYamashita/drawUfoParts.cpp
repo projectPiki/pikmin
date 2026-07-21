@@ -157,9 +157,9 @@ void zen::DrawUfoParts::dataSet()
 	P2DScreen* screen = mScreen->getScreenPtr();
 	for (i = 0; i < MAX_UFO_PARTS; i++) {
 		sprintf(buf, "ui%02d", i + 1);
-		P2DPicture* partIcon = (P2DPicture*)screen->search(P2DPaneLibrary::makeTag(buf), true);
+		P2DPicture* partIcon = static_cast<P2DPicture*>(screen->search(P2DPaneLibrary::makeTag(buf), true));
 		sprintf(buf, "un%02d", i + 1);
-		P2DTextBox* partLabel = (P2DTextBox*)screen->search(P2DPaneLibrary::makeTag(buf), true);
+		P2DTextBox* partLabel = static_cast<P2DTextBox*>(screen->search(P2DPaneLibrary::makeTag(buf), true));
 
 		if (playerState) {
 			if (!playerState->hasUfoParts(PelletMgr::getUfoIDFromIndex(i))) {

@@ -107,11 +107,14 @@ ResultFlags::ResultFlags()
 	mScreenToTableList = new u32[max + 110];
 	mActiveCount       = 0;
 	mStates            = new u8[mLength];
-	for (int i = 0; i < mLength; i++) {
+
+	int i;
+
+	for (i = 0; i < mLength; i++) {
 		mStates[i] = false;
 	}
 
-	for (int i = 0; i < mTableSize; i++) {
+	for (i = 0; i < mTableSize; i++) {
 		if (flagTable[i].mScreenId == -1) {
 			break;
 		}
@@ -125,7 +128,7 @@ ResultFlags::ResultFlags()
 		mActiveCount++;
 	}
 
-	for (int i = 0; i < MAX_DAYS; i++) {
+	for (i = 0; i < MAX_DAYS; i++) {
 		mDaysSeen[i] = -1;
 	}
 
@@ -141,11 +144,13 @@ ResultFlags::ResultFlags()
  */
 void ResultFlags::initGame()
 {
-	for (int i = 0; i < mLength; i++) {
+	int i;
+
+	for (i = 0; i < mLength; i++) {
 		mStates[i] = false;
 	}
 
-	for (int i = 0; i < mTableSize; i++) {
+	for (i = 0; i < mTableSize; i++) {
 		if (flagTable[i].mScreenId == -1) {
 			break;
 		}
@@ -156,7 +161,7 @@ void ResultFlags::initGame()
 		}
 	}
 
-	for (int i = 0; i < MAX_DAYS; i++) {
+	for (i = 0; i < MAX_DAYS; i++) {
 		mDaysSeen[i] = -1;
 	}
 
@@ -359,11 +364,11 @@ void ResultFlags::dump()
 		}
 #endif
 
-		if (prev != flagTable[i].type()) {
+		if (prev != info.type()) {
 			p    = 0;
-			prev = flagTable[i].type();
+			prev = info.type();
 		}
-		prev = flagTable[i].type();
+		prev = info.type();
 
 #if defined(DEVELOP) || defined(WIN32)
 		strs[0] = "OFF";
@@ -375,8 +380,8 @@ void ResultFlags::dump()
 		STACK_PAD_INLINE(1);
 #endif
 
-		// So as a result of all that, the final game version this PRINT contains brazen (but stripped) undefined behavior (`strs[3]`).
-		PRINT(" ENUM_RESULT_%s_G%02d_P00 = %s : %d pages\n", strs[3], p++, strs[getFlag(flagTable[i].mScreenId)],
+		// So as a result of all that, this PRINT contains brazen (but stripped) undefined behavior (`strs[3]`) in the retail game.
+		PRINT(" ENUM_RESULT_%s_G%02d_P00 = %s : %d pages\n", strs[3], p++, strs[getFlag(info.mScreenId)],
 		      (flagTable[i + 1].mScreenId == -1) ? 1 : flagTable[i + 1].mScreenId - info.mScreenId);
 	}
 	PRINT("*************************************************\n");
@@ -389,7 +394,10 @@ u8 ResultFlags::getFlag(int index)
 {
 	int a = mScreenToTableList[index];
 	int b = a >> 2;
-	return mStates[b] >> ((a - b * 4) * 2) & 3;
+	int c = a - b * 4;
+	u8 d = mStates[b];
+	d = d >> (c * 2);
+	return d & 3;
 }
 
 /**

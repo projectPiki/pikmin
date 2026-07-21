@@ -65,12 +65,19 @@ zen::ogScrTitleMgr::ogScrTitleMgr()
 	mInput = new ZenController(nullptr);
 	mInput->setRepeatTime(0.2f);
 
-	static_cast<P2DPicture*>(mMenuNoChallenge->getScreenPtr()->search('back', true))->setAlpha(0);
-	static_cast<P2DPicture*>(mMenuWithChallenge->getScreenPtr()->search('back', true))->setAlpha(0);
-	static_cast<P2DPicture*>(mOptionsMenu->getScreenPtr()->search('back', true))->setAlpha(0);
-	static_cast<P2DPicture*>(mSoundMenu->getScreenPtr()->search('back', true))->setAlpha(0);
-	static_cast<P2DPicture*>(mRumbleMenu->getScreenPtr()->search('back', true))->setAlpha(0);
-	static_cast<P2DPicture*>(mLanguageMenu->getScreenPtr()->search('back', true))->setAlpha(0);
+	P2DPicture* pic;
+	pic = static_cast<P2DPicture*>(mMenuNoChallenge->getScreenPtr()->search('back', true));
+	pic->setAlpha(0);
+	pic = static_cast<P2DPicture*>(mMenuWithChallenge->getScreenPtr()->search('back', true));
+	pic->setAlpha(0);
+	pic = static_cast<P2DPicture*>(mOptionsMenu->getScreenPtr()->search('back', true));
+	pic->setAlpha(0);
+	pic = static_cast<P2DPicture*>(mSoundMenu->getScreenPtr()->search('back', true));
+	pic->setAlpha(0);
+	pic = static_cast<P2DPicture*>(mRumbleMenu->getScreenPtr()->search('back', true));
+	pic->setAlpha(0);
+	pic = static_cast<P2DPicture*>(mLanguageMenu->getScreenPtr()->search('back', true));
+	pic->setAlpha(0);
 
 	mSoundScreen      = mSoundMenu->getScreenPtr();
 	mStereoButton     = static_cast<P2DPicture*>(mSoundScreen->search('on21', true));
@@ -80,20 +87,19 @@ zen::ogScrTitleMgr::ogScrTitleMgr()
 
 	mAlphaMgr = new setTenmetuAlpha(mStereoButton, 0.5f, 0.0f, 0, 255);
 
-#if !defined(BUGFIX) && defined(VERSION_GPIP01)
-	char path[4]; // You made it undefined behavior?!
+	int i;
+#if defined(VERSION_GPIP01)
+	char path[TERNARY_BUGFIX(8, 4)]; // You made it undefined behavior?!
 #else
-	char path[12];
+	char path[8];
 #endif
-	for (int i = 0; i < 10; i++) {
+	for (i = 0; i < 10; i++) {
 		sprintf(path, "on%02d", i + 1);
-		u32 test          = RGBA_TO_U32(path[0], path[1], path[2], path[3]);
-		mBgmVolButtons[i] = (P2DPicture*)mSoundScreen->search(test, true);
+		mBgmVolButtons[i] = static_cast<P2DPicture*>(mSoundScreen->search(P2DPaneLibrary::makeTag(path), true));
 	}
-	for (int i = 0; i < 10; i++) {
+	for (i = 0; i < 10; i++) {
 		sprintf(path, "on%02d", i + 11);
-		u32 test          = RGBA_TO_U32(path[0], path[1], path[2], path[3]);
-		mSfxVolButtons[i] = (P2DPicture*)mSoundScreen->search(test, true);
+		mSfxVolButtons[i] = static_cast<P2DPicture*>(mSoundScreen->search(P2DPaneLibrary::makeTag(path), true));
 	}
 
 	mStatus            = STATUS_Null;

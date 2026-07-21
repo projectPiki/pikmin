@@ -6,7 +6,7 @@
 #include "types.h"
 
 struct NsCalculation {
-	static void calcLagrange(f32, const Vector3f*, Vector3f&);
+	static void calcLagrange(f32, const Vector3f* const, Vector3f&);
 	static void calcMatrix(const Vector3f&, const Vector3f&, const Vector3f&, const Vector3f&, Matrix4f&);
 	static void calcMatrix3f(const Vector3f&, const Vector3f&, const Vector3f&, Matrix3f&);
 	static void calcJointPos(const Vector3f&, const Vector3f&, f32, f32, Vector3f&, Vector3f&);
@@ -60,7 +60,7 @@ struct NsLibMath {
 	static T revice(T value, T min, T max) { return (value < min) ? min : (value > max) ? max : value; }
 
 	// these just exist for f32
-	static T lagrange3(const T* points, T val)
+	static T lagrange3(immut T* const points, T val)
 	{
 		return points[0] * 0.5f * (val - 1.0f) * (val - 2.0f) - points[1] * val * (val - 2.0f) + points[2] * 0.5f * val * (val - 1.0f);
 	}

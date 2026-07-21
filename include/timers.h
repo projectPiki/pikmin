@@ -77,7 +77,7 @@ public:
 // For some reason, certain functions cannot have known timers added to them without messing up matching.  At the same time, other functions
 // require known timers to be added in order to match, so it's not like they were *all* originally behind a macro.  This macro aims to solve
 // the first case (timers that cannot exist in retail but did exist in demo versions), but one should avoid these macros whenever possible.
-#if defined(BUILD_MATCHING) && (defined(VERSION_GPIJ01) || defined(VERSION_GPIE01) || defined(VERSION_GPIP01))
+#if defined(BUILD_MATCHING) && !defined(WIN32) && (defined(VERSION_GPIJ01) || defined(VERSION_GPIE01) || defined(VERSION_GPIP01))
 #define MATCHING_START_TIMER(name, p2) TERNARY_BUILD_MATCHING((void)0, gsys->mTimer->start(name, p2))
 #define MATCHING_STOP_TIMER(name)      TERNARY_BUILD_MATCHING((void)0, gsys->mTimer->stop(name))
 #else

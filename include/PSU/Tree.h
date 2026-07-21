@@ -20,13 +20,13 @@ public:
 
 	~PSUTree() { }
 
-	PSUTree<T>* getFirstChild() const { return (PSUTree<T>*)PSUList<T>::getFirstLink(); }
+	PSUTree<T>* getFirstChild() const { return static_cast<PSUTree<T>*>(PSUList<T>::getFirstLink()); }
 	PSUTree<T>* getEndChild() const { return nullptr; }
-	PSUTree<T>* getNextChild() const { return (PSUTree<T>*)PSULink<T>::mNext; }
-	T* getObject() const { return (T*)PSULink<T>::mObject; }
+	PSUTree<T>* getNextChild() const { return static_cast<PSUTree<T>*>(PSULink<T>::mNext); }
+	T* getObject() const { return static_cast<T*>(PSULink<T>::mObject); }
 
 	bool appendChild(PSUTree<T>* child) { return PSUList<T>::append(child); }
-	PSUTree<T>* getParent() const { return (PSUTree<T>*)PSULink<T>::mList; }
+	PSUTree<T>* getParent() const { return static_cast<PSUTree<T>*>(PSULink<T>::mList); }
 
 	// DLL inlines to do:
 	bool removeChild(PSUTree<T>* child) { return PSUList<T>::remove(child); }

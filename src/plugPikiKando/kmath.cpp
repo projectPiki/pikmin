@@ -71,7 +71,7 @@ f32 calcImpulse(immut Vector3f& relativePos, f32 mass, immut Vector3f& collision
 /**
  * @todo: Documentation
  */
-Vector3f CRSpline(f32 t, immut Vector3f* ctrlPts)
+Vector3f CRSpline(f32 t, immut Vector3f* const ctrlPts)
 {
 	f32 tSqr = t * t;
 	f32 tCub = tSqr * t;
@@ -87,7 +87,7 @@ Vector3f CRSpline(f32 t, immut Vector3f* ctrlPts)
 /**
  * @todo: Documentation
  */
-Vector3f CRSplineTangent(f32 t, immut Vector3f* ctrlPts)
+Vector3f CRSplineTangent(f32 t, immut Vector3f* const ctrlPts)
 {
 	f32 tSqr = t * t;
 	f32 tCub = tSqr * t; // unused but necessary?? CLEARLY copied from above and edited lol
@@ -137,41 +137,44 @@ Vector3f getThrowVelocity(immut Vector3f& startPos, f32 horizSpeed, immut Vector
  */
 f32 getCameraSafeAngle(immut Vector3f& cameraPos, f32 checkDistance, f32 heightWeighting)
 {
-	f32 angleInc = QUARTER_PI;
-	int scores[8]; // visibility scores
-	f32 numPointsToCheck = 20.0f;
-	for (int i = 0; i < 8; i++) {
-		scores[i] = 0;
+	immut f32 angleInc = TAU / 8; // const meme
+	int visibilityScores[8];
+	int scoreIdx, pointCount;
+	immut int numPointsToCheck = 20; // const meme
+	const f32 distanceToCheck  = checkDistance;
+
+	for (scoreIdx = 0; scoreIdx < 8; scoreIdx++) {
+		visibilityScores[scoreIdx] = 0;
 	}
 
-	for (int i = 0; i < 8; i++) {
-		f32 currentAngle = angleInc * f32(i);
-		Vector3f dir(sinf(currentAngle), 0.0f, cosf(currentAngle));
-		f32 distanceInc = checkDistance / numPointsToCheck;
+	for (scoreIdx = 0; scoreIdx < 8; scoreIdx++) {
+		f32 theta = angleInc * scoreIdx;
+		Vector3f dir(sinf(theta), 0.0f, cosf(theta));
+		f32 distanceInc = distanceToCheck / numPointsToCheck;
 
-		// check 20 points along direction vector
-		for (int j = 0; j < 20; j++) {
-			f32 heightThreshold = heightWeighting * f32(j) * distanceInc / checkDistance;
+		// check `numPointsToCheck` points along direction vector
+		for (pointCount = 0; pointCount < numPointsToCheck; pointCount++) {
+			f32 heightThreshold = heightWeighting * pointCount * distanceInc / distanceToCheck;
 			Vector3f checkPos;
-			checkPos        = cameraPos + dir * (distanceInc * f32(j));
+			checkPos        = cameraPos + dir * (distanceInc * pointCount);
 			f32 checkHeight = mapMgr->getMinY(checkPos.x, checkPos.z, true);
 			if (checkHeight >= heightThreshold) {
-				scores[i] += int(checkHeight - heightThreshold);
+				visibilityScores[scoreIdx] += int(checkHeight - heightThreshold);
 			}
 		}
-		PRINT("score[%d] = %d\n", i, scores[i]);
+		PRINT("score[%d] = %d\n", scoreIdx, visibilityScores[scoreIdx]);
 	}
 
 	// find angle with lowest score (best visibility):
-	int minScore     = 128000;
-	int bestAngleIdx = -1;
-	for (int i = 0; i < 8; i++) {
-		if (scores[i] < minScore) {
-			bestAngleIdx = i;
-			minScore     = scores[i];
+	int minScore = 128000;
+	int minIndex = -1;
+	for (scoreIdx = 0; scoreIdx < 8; scoreIdx++) {
+		if (visibilityScores[scoreIdx] < minScore) {
+			minIndex = scoreIdx;
+			minScore = visibilityScores[scoreIdx];
 		}
 	}
 
-	PRINT("minIndex = %d ang = %.1f\n", bestAngleIdx, f32(bestAngleIdx) * angleInc / PI * 180.0f);
-	return f32(bestAngleIdx) * angleInc;
+	PRINT("minIndex = %d ang = %.1f\n", minIndex, minIndex * angleInc / PI * 180.0f);
+	return minIndex * angleInc;
 }

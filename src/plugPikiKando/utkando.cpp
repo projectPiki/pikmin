@@ -221,7 +221,7 @@ void drawArrow(Graphics& gfx, immut Vector3f& from, immut Vector3f& to, f32 size
 /**
  * @todo: Documentation
  */
-void CRSplineDraw(Graphics& gfx, int numSides, immut Vector3f* origin)
+void CRSplineDraw(Graphics& gfx, int numSides, immut Vector3f* const origin)
 {
 	gfx.useMatrix(gfx.mCamera->mLookAtMtx, 0);
 	gfx.setColour(Colour(255, 10, 100, 255), true);

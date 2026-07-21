@@ -202,8 +202,8 @@ void GamePrefs::setChildMode(bool set)
  */
 void GamePrefs::getChallengeScores(GameChalQuickInfo& info)
 {
-	for (int i = 0; i < MAX_HI_SCORES; i++) {
-		info.mCourseScores[i] = mHiscores.mChalModeRecords[info.mStageID].mScores[i];
+	for (int rank = 0; rank < MAX_HI_SCORES; rank++) {
+		info.mCourseScores[rank] = mHiscores.mChalModeRecords[info.mStageID].mScores[rank];
 	}
 }
 
@@ -214,8 +214,10 @@ void GamePrefs::getChallengeScores(GameChalQuickInfo& info)
  */
 void GamePrefs::checkIsHiscore(GameChalQuickInfo& info)
 {
-	info.mRank         = -1;
-	gsys->mTogglePrint = TRUE; // "you're gonna wanna hear about this"
+	info.mRank = -1;
+
+	bool oldTogglePrint = gsys->mTogglePrint;
+	gsys->mTogglePrint  = TRUE; // "you're gonna wanna hear about this"
 
 #if defined(VERSION_PIKIDEMO)
 	// This somehow doesn't generate a function call.  How.
@@ -224,32 +226,34 @@ void GamePrefs::checkIsHiscore(GameChalQuickInfo& info)
 	PRINT("checking challenge info for course %d, top scores are :-\n", info.mStageID);
 #endif
 
-	for (int i = 0; i < MAX_HI_SCORES; i++) {
+	int rank;
+
+	for (rank = 0; rank < MAX_HI_SCORES; rank++) {
 #if defined(VERSION_PIKIDEMO)
 		// This somehow doesn't generate a function call.  How.
-		_Print("\t[%d] ... %d\n", i, mHiscores.mChalModeRecords[info.mStageID].mScores[i]);
+		_Print("\t[%d] ... %d\n", rank, mHiscores.mChalModeRecords[info.mStageID].mScores[rank]);
 #else
-		PRINT("\t[%d] ... %d\n", i, mHiscores.mChalModeRecords[info.mStageID].mScores[i]);
+		PRINT("\t[%d] ... %d\n", rank, mHiscores.mChalModeRecords[info.mStageID].mScores[rank]);
 #endif
 	}
 
 	// check if score is better than any existing hiscores - if so, store its appropriate rank
-	for (int i = 0; i < MAX_HI_SCORES; i++) {
-		if (info.mScore > mHiscores.mChalModeRecords[info.mStageID].mScores[i]) {
-			info.mRank = i;
+	for (rank = 0; rank < MAX_HI_SCORES; rank++) {
+		if (info.mScore > mHiscores.mChalModeRecords[info.mStageID].mScores[rank]) {
+			info.mRank = rank;
 			break;
 		}
 	}
 
 	// if we got a new hiscore, shift the current scores and store the new one
 	if (info.mRank >= 0 && info.mRank < MAX_HI_SCORES) {
-		for (int i = 4; i > info.mRank; i--) {
+		for (int i = (MAX_HI_SCORES - 1); i > info.mRank; i--) {
 			mHiscores.mChalModeRecords[info.mStageID].mScores[i] = mHiscores.mChalModeRecords[info.mStageID].mScores[i - 1];
 		}
 		mHiscores.mChalModeRecords[info.mStageID].mScores[info.mRank] = info.mScore;
 	}
 
-	gsys->mTogglePrint = FALSE; // "back to scheduled programming"
+	gsys->mTogglePrint = TERNARY_BUGFIX(oldTogglePrint, FALSE); // "back to scheduled programming"
 
 	// update the leaderboard stored in the quick info
 	getChallengeScores(info);
@@ -269,15 +273,17 @@ void GamePrefs::checkIsHiscore(GameQuickInfo& info)
 	info.mDeadPikisRank = -1;
 	info.mPartsDaysRank = -1;
 
+	int rank;
+
 	// check parts and days - priority is parts, then break ties with lower day count
-	for (int i = 0; i < MAX_HI_SCORES; i++) {
-		if (info.mParts > mHiscores.mMinDayRecords[i].mNumParts) {
-			info.mPartsDaysRank = i;
+	for (rank = 0; rank < MAX_HI_SCORES; rank++) {
+		if (info.mParts > mHiscores.mMinDayRecords[rank].mNumParts) {
+			info.mPartsDaysRank = rank;
 			break;
 		}
 
-		if (info.mParts == mHiscores.mMinDayRecords[i].mNumParts && info.mDay <= mHiscores.mMinDayRecords[i].mNumDays) {
-			info.mPartsDaysRank = i;
+		if (info.mParts == mHiscores.mMinDayRecords[rank].mNumParts && info.mDay <= mHiscores.mMinDayRecords[rank].mNumDays) {
+			info.mPartsDaysRank = rank;
 			break;
 		}
 	}
@@ -293,9 +299,9 @@ void GamePrefs::checkIsHiscore(GameQuickInfo& info)
 	}
 
 	// check born pikmin for a new hiscore
-	for (int i = 0; i < MAX_HI_SCORES; i++) {
-		if (info.mBornPikis > mHiscores.mBornPikminRecords[i].mNumBorn) {
-			info.mBornPikisRank = i;
+	for (rank = 0; rank < MAX_HI_SCORES; rank++) {
+		if (info.mBornPikis > mHiscores.mBornPikminRecords[rank].mNumBorn) {
+			info.mBornPikisRank = rank;
 			break;
 		}
 	}
@@ -310,9 +316,9 @@ void GamePrefs::checkIsHiscore(GameQuickInfo& info)
 
 	// NOTE: we only check/update dead pikmin ranking if we finish the ship!
 	if (info.mParts == MAX_UFO_PARTS) {
-		for (int i = 0; i < MAX_HI_SCORES; i++) {
-			if (info.mDeadPikis < mHiscores.mDeadPikminRecords[i].mNumDead) {
-				info.mDeadPikisRank = i;
+		for (rank = 0; rank < MAX_HI_SCORES; rank++) {
+			if (info.mDeadPikis < mHiscores.mDeadPikminRecords[rank].mNumDead) {
+				info.mDeadPikisRank = rank;
 				break;
 			}
 		}

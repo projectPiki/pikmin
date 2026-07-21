@@ -409,15 +409,17 @@ void KingBody::checkBlendingParm(Matrix4f* animMatrices)
 void KingBody::makeBlending(Matrix4f* animMatrices)
 {
 	if (mBlendingRatio > 0.0f) {
+		int i;
 		f32 tComp = 1.0f - mBlendingRatio;
 		Vector3f blendPositions[66];
-		for (int i = 0; i < 66; i++) {
+
+		for (i = 0; i < 66; i++) {
 			blendPositions[i].x = mBlendingRatio * animMatrices[i].mMtx[0][3] + tComp * mBlendStartMatrices[i].mMtx[0][3];
 			blendPositions[i].y = mBlendingRatio * animMatrices[i].mMtx[1][3] + tComp * mBlendStartMatrices[i].mMtx[1][3];
 			blendPositions[i].z = mBlendingRatio * animMatrices[i].mMtx[2][3] + tComp * mBlendStartMatrices[i].mMtx[2][3];
 		}
 
-		for (int i = 0; i < 66; i++) {
+		for (i = 0; i < 66; i++) {
 			Vector3f colX;
 			Vector3f colY;
 			Vector3f colZ;

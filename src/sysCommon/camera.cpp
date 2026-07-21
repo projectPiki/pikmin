@@ -249,11 +249,11 @@ void CullFrustum::createViewPlanes()
 void CullFrustum::additionalPlanes(CullFrustum* other)
 {
 	if (other) {
-		for (int i = 0; i < other->mTotalPlaneCount; ++i) {
-			mPlanePointers[i] = other->mPlanePointers[i];
+		for (int i1 = 0; i1 < other->mTotalPlaneCount; ++i1) {
+			mPlanePointers[i1] = other->mPlanePointers[i1];
 		}
-		for (int i = 0; i < mTotalPlaneCount; ++i) {
-			mPlanePointers[i + other->mTotalPlaneCount] = &mCullPlanes[i];
+		for (int i2 = 0; i2 < mTotalPlaneCount; ++i2) {
+			mPlanePointers[i2 + other->mTotalPlaneCount] = &mCullPlanes[i2];
 		}
 		mActivePlaneCount = mTotalPlaneCount + other->mTotalPlaneCount;
 	} else {

@@ -416,10 +416,10 @@ u32 DGXGraphics::compileMaterial(Material* mat)
 		GXSetZMode(GX_TRUE, GX_LEQUAL, GX_FALSE);
 	}
 
-	GXSetTevKColor(GX_KCOLOR0, *((GXColor*)&mat->mTevInfo->mKonstColors[0]));
-	GXSetTevKColor(GX_KCOLOR1, *((GXColor*)&mat->mTevInfo->mKonstColors[1]));
-	GXSetTevKColor(GX_KCOLOR2, *((GXColor*)&mat->mTevInfo->mKonstColors[2]));
-	GXSetTevKColor(GX_KCOLOR3, *((GXColor*)&mat->mTevInfo->mKonstColors[3]));
+	GXSetTevKColor(GX_KCOLOR0, reinterpret_cast<GXColor&>(mat->mTevInfo->mKonstColors[0]));
+	GXSetTevKColor(GX_KCOLOR1, reinterpret_cast<GXColor&>(mat->mTevInfo->mKonstColors[1]));
+	GXSetTevKColor(GX_KCOLOR2, reinterpret_cast<GXColor&>(mat->mTevInfo->mKonstColors[2]));
+	GXSetTevKColor(GX_KCOLOR3, reinterpret_cast<GXColor&>(mat->mTevInfo->mKonstColors[3]));
 	for (int i = 0; i < mat->mTevInfo->mTevStageCount; i++) {
 		PVWTevStage& stage = mat->mTevInfo->mTevStages[i];
 		GXSetTevColorIn((GXTevStageID)i, (GXTevColorArg)stage.mTevColorCombiner.mInArgA, (GXTevColorArg)stage.mTevColorCombiner.mInArgB,
@@ -771,7 +771,7 @@ void DGXGraphics::setLight(Light* light, int idx)
 	}
 
 	lightColour.a *= mLightIntensity;
-	GXInitLightColor(gxLight, *(GXColor*)&lightColour);
+	GXInitLightColor(gxLight, reinterpret_cast<GXColor&>(lightColour));
 	GXLoadLightObjImm(gxLight, GXLightID(1 << idx));
 }
 
@@ -1036,35 +1036,35 @@ void DGXGraphics::setMaterial(Material* mat, bool p2)
 					GXSetZMode(GX_TRUE, GX_LEQUAL, GX_FALSE);
 				}
 
-				GXSetTevKColor(GX_KCOLOR0, *((GXColor*)&mat->mTevInfo->mKonstColors[0]));
-				GXSetTevKColor(GX_KCOLOR1, *((GXColor*)&mat->mTevInfo->mKonstColors[1]));
-				GXSetTevKColor(GX_KCOLOR2, *((GXColor*)&mat->mTevInfo->mKonstColors[2]));
-				GXSetTevKColor(GX_KCOLOR3, *((GXColor*)&mat->mTevInfo->mKonstColors[3]));
-				for (int i = 0; i < mat->mTevInfo->mTevStageCount; i++) {
-					PVWTevStage& stage = mat->mTevInfo->mTevStages[i];
-					GXSetTevColorIn((GXTevStageID)i, (GXTevColorArg)stage.mTevColorCombiner.mInArgA,
+				GXSetTevKColor(GX_KCOLOR0, reinterpret_cast<GXColor&>(mat->mTevInfo->mKonstColors[0]));
+				GXSetTevKColor(GX_KCOLOR1, reinterpret_cast<GXColor&>(mat->mTevInfo->mKonstColors[1]));
+				GXSetTevKColor(GX_KCOLOR2, reinterpret_cast<GXColor&>(mat->mTevInfo->mKonstColors[2]));
+				GXSetTevKColor(GX_KCOLOR3, reinterpret_cast<GXColor&>(mat->mTevInfo->mKonstColors[3]));
+				for (int tevStageIdx = 0; tevStageIdx < mat->mTevInfo->mTevStageCount; tevStageIdx++) {
+					PVWTevStage& stage = mat->mTevInfo->mTevStages[tevStageIdx];
+					GXSetTevColorIn((GXTevStageID)tevStageIdx, (GXTevColorArg)stage.mTevColorCombiner.mInArgA,
 					                (GXTevColorArg)stage.mTevColorCombiner.mInArgB, (GXTevColorArg)stage.mTevColorCombiner.mInArgC,
 					                (GXTevColorArg)stage.mTevColorCombiner.mInArgD);
-					GXSetTevColorOp((GXTevStageID)i, (GXTevOp)stage.mTevColorCombiner.mTevOp, (GXTevBias)stage.mTevColorCombiner.mBias,
-					                (GXTevScale)stage.mTevColorCombiner.mScale, (GXBool)stage.mTevColorCombiner.mDoClamp,
-					                (GXTevRegID)stage.mTevColorCombiner.mOutReg);
-					GXSetTevAlphaIn((GXTevStageID)i, (GXTevAlphaArg)stage.mTevAlphaCombiner.mInArgA,
+					GXSetTevColorOp((GXTevStageID)tevStageIdx, (GXTevOp)stage.mTevColorCombiner.mTevOp,
+					                (GXTevBias)stage.mTevColorCombiner.mBias, (GXTevScale)stage.mTevColorCombiner.mScale,
+					                (GXBool)stage.mTevColorCombiner.mDoClamp, (GXTevRegID)stage.mTevColorCombiner.mOutReg);
+					GXSetTevAlphaIn((GXTevStageID)tevStageIdx, (GXTevAlphaArg)stage.mTevAlphaCombiner.mInArgA,
 					                (GXTevAlphaArg)stage.mTevAlphaCombiner.mInArgB, (GXTevAlphaArg)stage.mTevAlphaCombiner.mInArgC,
 					                (GXTevAlphaArg)stage.mTevAlphaCombiner.mInArgD);
-					GXSetTevAlphaOp((GXTevStageID)i, (GXTevOp)stage.mTevAlphaCombiner.mTevOp, (GXTevBias)stage.mTevAlphaCombiner.mBias,
-					                (GXTevScale)stage.mTevAlphaCombiner.mScale, (GXBool)stage.mTevAlphaCombiner.mDoClamp,
-					                (GXTevRegID)stage.mTevAlphaCombiner.mOutReg);
+					GXSetTevAlphaOp((GXTevStageID)tevStageIdx, (GXTevOp)stage.mTevAlphaCombiner.mTevOp,
+					                (GXTevBias)stage.mTevAlphaCombiner.mBias, (GXTevScale)stage.mTevAlphaCombiner.mScale,
+					                (GXBool)stage.mTevAlphaCombiner.mDoClamp, (GXTevRegID)stage.mTevAlphaCombiner.mOutReg);
 				}
 
 				gsys->mLightingSets++;
 				setLighting((mat->mLightingInfo.mCtrlFlag & LightingControlFlags::EnableColor0) != 0, &mat->mLightingInfo);
 			}
 
-			for (int i = 0; i < mat->mTextureInfo.mTextureDataCount; i++) {
-				if (mat->mTextureInfo.mTextureData[i].mTexture != mActiveTexture[i]) {
-					mActiveTexture[i] = mat->mTextureInfo.mTextureData[i].mTexture;
-					mActiveTexture[i]->makeResident();
-					GXLoadTexObj(mActiveTexture[i]->mTexObj, GXTexMapID(i));
+			for (int texIdx = 0; texIdx < mat->mTextureInfo.mTextureDataCount; texIdx++) {
+				if (mat->mTextureInfo.mTextureData[texIdx].mTexture != mActiveTexture[texIdx]) {
+					mActiveTexture[texIdx] = mat->mTextureInfo.mTextureData[texIdx].mTexture;
+					mActiveTexture[texIdx]->makeResident();
+					GXLoadTexObj(mActiveTexture[texIdx]->mTexObj, GXTexMapID(texIdx));
 				}
 			}
 
@@ -1074,17 +1074,18 @@ void DGXGraphics::setMaterial(Material* mat, bool p2)
 
 			GXSetNumTevStages(mat->mTevInfo->mTevStageCount);
 
-			for (int i = 0; i < mat->mTevInfo->mTevStageCount; i++) {
-				PVWTevStage& stage = mat->mTevInfo->mTevStages[i];
-				GXSetTevOrder(GXTevStageID(i), GXTexCoordID(stage.mTexCoordID), GXTexMapID(stage.mTexMapID), GXChannelID(stage.mChannelID));
-				GXSetTevKColorSel(GXTevStageID(i), GXTevKColorSel(stage.mTevKColorSel));
-				GXSetTevKAlphaSel(GXTevStageID(i), GXTevKAlphaSel(stage.mTevKAlphaSel));
+			for (int tevStageIdx = 0; tevStageIdx < mat->mTevInfo->mTevStageCount; tevStageIdx++) {
+				PVWTevStage& stage = mat->mTevInfo->mTevStages[tevStageIdx];
+				GXSetTevOrder(GXTevStageID(tevStageIdx), GXTexCoordID(stage.mTexCoordID), GXTexMapID(stage.mTexMapID),
+				              GXChannelID(stage.mChannelID));
+				GXSetTevKColorSel(GXTevStageID(tevStageIdx), GXTevKColorSel(stage.mTevKColorSel));
+				GXSetTevKAlphaSel(GXTevStageID(tevStageIdx), GXTevKAlphaSel(stage.mTevKAlphaSel));
 			}
 
 			Colour color;
 			color.set(mat->mColourInfo.mColour.r, mat->mColourInfo.mColour.g, mat->mColourInfo.mColour.b,
 			          mLightIntensity * mat->mColourInfo.mColour.a);
-			GXSetChanMatColor(GX_COLOR0A0, *(GXColor*)&color);
+			GXSetChanMatColor(GX_COLOR0A0, reinterpret_cast<GXColor&>(color));
 
 			if (mat->mTextureInfo.mUseScale) {
 				mCustomScale = &mat->mTextureInfo.mScale;
@@ -1123,7 +1124,7 @@ void DGXGraphics::setMaterial(Material* mat, bool p2)
 		Colour color;
 		color.set(mat->mColourInfo.mColour.r, mat->mColourInfo.mColour.g, mat->mColourInfo.mColour.b,
 		          mLightIntensity * mat->mColourInfo.mColour.a);
-		GXSetChanMatColor(GX_COLOR0A0, *(GXColor*)&color);
+		GXSetChanMatColor(GX_COLOR0A0, reinterpret_cast<GXColor&>(color));
 
 		if (mLightCam) {
 			return;
@@ -1339,27 +1340,27 @@ void DGXGraphics::drawSingleMatpoly(Shape* model, Joint::MatPoly* matPoly)
 	useMaterial(&mat);
 	setupVtxDesc(model, &mat, &mesh);
 
-	for (int i = 0; i < mesh.mMtxGroupCount; i++) {
-		MtxGroup& group = mesh.mMtxGroupList[i];
-		for (int j = 0; j < group.mDepLength; j++) {
-			if (group.mDepList[j] == -1) {
+	for (int mtxGroupIdx = 0; mtxGroupIdx < mesh.mMtxGroupCount; mtxGroupIdx++) {
+		MtxGroup& group = mesh.mMtxGroupList[mtxGroupIdx];
+		for (int depListIdx = 0; depListIdx < group.mDepLength; depListIdx++) {
+			if (group.mDepList[depListIdx] == -1) {
 				continue;
 			}
 
-			VtxMatrix& vtxMtx = model->mVtxMatrixList[group.mDepList[j]];
+			VtxMatrix& vtxMtx = model->mVtxMatrixList[group.mDepList[depListIdx]];
 			if (model->mCurrentAnimation->mData) {
 				if (vtxMtx.mHasPartialWeights) {
-					useMatrixQuick(model->getAnimMatrix(vtxMtx.mIndex), j);
+					useMatrixQuick(model->getAnimMatrix(vtxMtx.mIndex), depListIdx);
 				} else {
-					useMatrixQuick(model->getAnimMatrix(model->mJointCount + vtxMtx.mIndex), j);
+					useMatrixQuick(model->getAnimMatrix(model->mJointCount + vtxMtx.mIndex), depListIdx);
 				}
 			} else {
-				useMatrixQuick(model->mJointList[vtxMtx.mIndex].mAnimMatrix, j);
+				useMatrixQuick(model->mJointList[vtxMtx.mIndex].mAnimMatrix, depListIdx);
 			}
 		}
 
-		for (int j = 0; j < group.mDispLength; j++) {
-			DispList& list = group.mDispList[j];
+		for (int dispListIdx = 0; dispListIdx < group.mDispLength; dispListIdx++) {
+			DispList& list = group.mDispList[dispListIdx];
 			setCullFront((list.mFlags & 3) ^ mCullFlip);
 			gsys->mPolygonCount += list.mFaceCount;
 			gsys->mDispCount++;
@@ -1414,10 +1415,10 @@ void DGXGraphics::setAuxColour(immut Colour& color)
 void DGXGraphics::setPrimEnv(immut Colour* col1, immut Colour* col2)
 {
 	if (col1) {
-		GXSetTevColor(GX_TEVREG0, *(GXColor*)col1);
+		GXSetTevColor(GX_TEVREG0, *reinterpret_cast<GXColor*>(col1));
 	}
 	if (col2) {
-		GXSetTevColor(GX_TEVREG1, *(GXColor*)col2);
+		GXSetTevColor(GX_TEVREG1, *reinterpret_cast<GXColor*>(col2));
 	}
 }
 
@@ -1434,7 +1435,7 @@ void DGXGraphics::setClearColour(immut Colour& color)
  */
 void DGXGraphics::clearBuffer(int, bool)
 {
-	GXSetCopyClear(*(GXColor*)&mBufferClearColour, 0xFFFFFF); // max clear_z value
+	GXSetCopyClear(reinterpret_cast<GXColor&>(mBufferClearColour), 0xFFFFFF); // max clear_z value
 }
 
 /**
@@ -1444,15 +1445,15 @@ void DGXGraphics::setFog(bool set)
 {
 	if (set) {
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
-		GXSetFog(GX_FOG_LINEAR, mFogStart, mFogEnd, mCamera->mNear, mCamera->mFar, *(GXColor*)&mFogColour);
+		GXSetFog(GX_FOG_LINEAR, mFogStart, mFogEnd, mCamera->mNear, mCamera->mFar, reinterpret_cast<GXColor&>(mFogColour));
 #else
 		if (mCamera->mNear < mCamera->mFar) {
-			GXSetFog(GX_FOG_LINEAR, mFogStart, mFogEnd, mCamera->mNear, mCamera->mFar, *(GXColor*)&mFogColour);
+			GXSetFog(GX_FOG_LINEAR, mFogStart, mFogEnd, mCamera->mNear, mCamera->mFar, reinterpret_cast<GXColor&>(mFogColour));
 		} else {
 #if defined(VERSION_GPIP01)
-			OSReport("%s:%d Warning: cam->vNear >= cam->vFar\n", __FILE__, 1732);
+			OSReport("%s:%d Warning: cam->vNear >= cam->vFar\n", __FILE__, TERNARY_BUILD_MATCHING(1732, __LINE__));
 #else
-			OSReport("%s:%d Warning: cam->vNear >= cam->vFar\n", __FILE__, 1683);
+			OSReport("%s:%d Warning: cam->vNear >= cam->vFar\n", __FILE__, TERNARY_BUILD_MATCHING(1683, __LINE__));
 #endif
 		}
 #endif
@@ -2040,7 +2041,7 @@ void DGXGraphics::texturePrintf(Font* font, int x, int y, immut char* format, ..
 	GXSetBlendMode(GX_BM_BLEND, GX_BL_SRCALPHA, GX_BL_INVSRCALPHA, GX_LO_CLEAR);
 	useTexture(font->mTexture, GX_TEXMAP0);
 
-	GXSetChanMatColor(GX_COLOR0, *(GXColor*)&mPrimaryColour);
+	GXSetChanMatColor(GX_COLOR0, reinterpret_cast<GXColor&>(mPrimaryColour));
 
 	GXClearVtxDesc();
 	GXSetVtxDesc(GX_VA_POS, GX_DIRECT);
@@ -2303,18 +2304,18 @@ void Shape::optimize()
 
 	mVertexCacheFlags
 	    = VertexCacheFlags::VertexList | VertexCacheFlags::NormalList | VertexCacheFlags::NBTList | VertexCacheFlags::ColorList;
-	for (int i = 0; i < mTotalActiveTexCoords; i++) {
-		mVertexCacheFlags |= (1 << (i + 5));
+	for (int texCoordNum = 0; texCoordNum < mTotalActiveTexCoords; texCoordNum++) {
+		mVertexCacheFlags |= (1 << (texCoordNum + 5)); // Effectively `(VertexCacheFlags::TexCoord0 << texCoordNum)`
 	}
 
 	if (!mMeshCount) {
 		return;
 	}
 
-	for (int i = 0; i < mMeshCount; i++) {
-		for (int j = 0; j < mMeshList[i].mMtxGroupCount; j++) {
-			DispList* list = mMeshList[i].mMtxGroupList[j].mDispList;
-			for (int k = 0; k < mMeshList[i].mMtxGroupList[j].mDispLength; k++) {
+	for (int meshIdx = 0; meshIdx < mMeshCount; meshIdx++) {
+		for (int mtxGroupIdx = 0; mtxGroupIdx < mMeshList[meshIdx].mMtxGroupCount; mtxGroupIdx++) {
+			DispList* list = mMeshList[meshIdx].mMtxGroupList[mtxGroupIdx].mDispList;
+			for (int dispCount = 0; dispCount < mMeshList[meshIdx].mMtxGroupList[mtxGroupIdx].mDispLength; dispCount++) {
 				DCStoreRange(list->mData, list->mDataLength);
 				list++; // why.
 			}

@@ -1,4 +1,3 @@
-#include "zen/DrawGameInfo.h"
 #include "DebugLog.h"
 #include "Graphics.h"
 #include "NaviMgr.h"
@@ -8,10 +7,12 @@
 #include "gameflow.h"
 #include "nlib/Math.h"
 #include "sysNew.h"
+#include "zen/DrawGameInfo.h"
 #include "zen/Graphics.h"
 #include "zen/Math.h"
 #include "zen/Number.h"
 #include "zen/ogSub.h"
+
 
 /**
  * @todo: Documentation
@@ -22,7 +23,6 @@ DEFINE_ERROR(38)
 #else
 DEFINE_ERROR(40)
 #endif
-
 
 /**
  * @todo: Documentation
@@ -48,7 +48,7 @@ struct PikiIconCallBack : public P2DPaneCallBack {
 	PikiIconCallBack(P2DPane* pane)
 	    : P2DPaneCallBack(pane, PANETYPE_Picture)
 	{
-		P2DPicture* pic = (P2DPicture*)pane;
+		P2DPicture* pic = static_cast<P2DPicture*>(pane);
 		mFrameTimer     = frameMax;
 		for (int i = 0; i < 19; i++) {
 			Texture* tex     = zen::loadTexExp(pikiTexNametable[i], true, true);
@@ -111,12 +111,12 @@ struct DateCallBack : public P2DPaneCallBack, public zen::NumberTex {
 		checkPaneType(slPane, PANETYPE_Picture);
 		checkPaneType(srPane, PANETYPE_Picture);
 
-		mCentreDigit       = (P2DPicture*)cPane;
-		mLeftDigit         = (P2DPicture*)lPane;
-		mRightDigit        = (P2DPicture*)rPane;
-		mCentreDigitShadow = (P2DPicture*)scPane;
-		mLeftDigitShadow   = (P2DPicture*)slPane;
-		mRightDigitShadow  = (P2DPicture*)srPane;
+		mCentreDigit       = static_cast<P2DPicture*>(cPane);
+		mLeftDigit         = static_cast<P2DPicture*>(lPane);
+		mRightDigit        = static_cast<P2DPicture*>(rPane);
+		mCentreDigitShadow = static_cast<P2DPicture*>(scPane);
+		mLeftDigitShadow   = static_cast<P2DPicture*>(slPane);
+		mRightDigitShadow  = static_cast<P2DPicture*>(srPane);
 
 		setTex();
 	}
@@ -174,17 +174,17 @@ struct LifePinchCallBack : public P2DPaneCallBack {
 	LifePinchCallBack(P2DPane* pane)
 	    : P2DPaneCallBack(pane, PANETYPE_Picture)
 	{
-		P2DPicture* pic = (P2DPicture*)pane;
+		P2DPicture* pic  = (P2DPicture*)pane;
 		mPulseAlphaScale = mPulsePhase = 0.0f;
 		mDamagePulseActive             = false;
-		_0C       = 0;
+		_0C                            = 0;
 		pic->setAlpha(0);
 		pic->setOffset(pic->getWidth() >> 1, pic->getHeight() >> 1);
 	}
 
 	virtual bool invoke(P2DPane* pane) // _08
 	{
-		P2DPicture* pic = (P2DPicture*)pane;
+		P2DPicture* pic = static_cast<P2DPicture*>(pane);
 		Navi* navi      = nullptr;
 		f32 healthRatio = 0.0f;
 		if (naviMgr) {
@@ -273,7 +273,7 @@ struct NaviTexCallBack : public P2DPaneCallBack {
 
 	virtual bool invoke(P2DPane* pane) // _08
 	{
-		P2DPicture* pic = (P2DPicture*)pane;
+		P2DPicture* pic = static_cast<P2DPicture*>(pane);
 		if (naviMgr) {
 			Navi* navi = naviMgr->getNavi(0);
 			if (navi->mHealth == 0.0f) {
@@ -302,7 +302,7 @@ struct NaviIconCallBack : public P2DPaneCallBack {
 	    : P2DPaneCallBack(nullptr, PANETYPE_Pane)
 	{
 		mDamageAnimPhase = 0.0f;
-		mIsDamaged = false;
+		mIsDamaged       = false;
 		pane->setOffset(pane->getWidth() >> 1, pane->getHeight() >> 1);
 	}
 
@@ -395,7 +395,7 @@ struct MoonIconCallBack : public P2DPaneCallBack, public SunMove {
 
 	virtual bool invoke(P2DPane* pane) // _08
 	{
-		P2DPicture* pic = (P2DPicture*)pane;
+		P2DPicture* pic = static_cast<P2DPicture*>(pane);
 		if (gameflow.mWorldClock.mTimeOfDay >= 7.0f && gameflow.mWorldClock.mTimeOfDay <= 19.0f) {
 			pic->hide();
 		} else {
@@ -440,7 +440,7 @@ struct SunAnim {
 	// DLL inlines to do:
 	void anim(P2DPane* pane)
 	{
-		P2DPicture* pic = (P2DPicture*)pane;
+		P2DPicture* pic = static_cast<P2DPicture*>(pane);
 		if (gameflow.mWorldClock.mTimeOfDay >= 7.0f && gameflow.mWorldClock.mTimeOfDay <= 19.0f) {
 			pic->show();
 			if (!gameflow.mIsUIOverlayActive) {

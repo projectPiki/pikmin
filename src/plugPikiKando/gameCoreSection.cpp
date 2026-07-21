@@ -534,9 +534,9 @@ void GameCoreSection::cleanupDayEnd()
 	playerState->setDayCollectCount(day, playerState->getCurrParts());
 	playerState->setDayPowerupCount(day, playerState->getNextPowerupNumber());
 
-	int i;
-	for (i = 0; i < 3; i++) {
-		GoalItem* goal = itemMgr->getContainer(i);
+	int goalColor; // Gets reused way later in the function
+	for (goalColor = 0; goalColor < PikiColorCount; goalColor++) {
+		GoalItem* goal = itemMgr->getContainer(goalColor);
 		if (goal) {
 			goal->setSpotActive(false);
 		}
@@ -545,7 +545,8 @@ void GameCoreSection::cleanupDayEnd()
 
 	if (naviMgr->getNavi()) {
 		PRINT("********** KILL RIPPLE EFFECT****\n");
-		naviMgr->getNavi()->mRippleEffect->kill();
+		Navi* navi = naviMgr->getNavi();
+		navi->mRippleEffect->kill();
 	}
 	seSystem->resetSystem();
 
@@ -560,14 +561,16 @@ void GameCoreSection::cleanupDayEnd()
 		int gens      = 0;
 		int creatures = 0;
 		int ufoParts  = 0;
-		FOREACH_NODE(Generator, generatorList->mGenListHead->mChild, gen)
+
+		Generator* gen;
+		FOREACH_NODE_REUSE(Generator, generatorList->mGenListHead->mChild, gen)
 		{
 			if (gen->mCarryOverFlags & GENCARRY_SaveGenerator) {
 				generatorCache->saveGenerator(gen);
 				gens++;
 			}
 		}
-		FOREACH_NODE(Generator, generatorList->mGenListHead->mChild, gen)
+		FOREACH_NODE_REUSE(Generator, generatorList->mGenListHead->mChild, gen)
 		{
 			if ((gen->mCarryOverFlags & GENCARRY_SaveGenerator) && (gen->mCarryOverFlags & GENCARRY_SaveCreature)) {
 				generatorCache->saveGeneratorCreature(gen);
@@ -600,9 +603,10 @@ void GameCoreSection::cleanupDayEnd()
 		{
 			Piki* piki = (Piki*)*it;
 			int mode   = piki->mMode;
+
 			if (piki->isKinoko()) {
 				GameStat::victimPikis.inc(piki->mColor);
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01) || defined(WIN32)
 #else
 				GameStat::deadPikis.inc(piki->mColor);
 #endif
@@ -610,53 +614,65 @@ void GameCoreSection::cleanupDayEnd()
 				piki->kill(false);
 				it.dec();
 				killed++;
-			} else {
-				if (piki->isHolding()) {
-					InteractRelease act(piki, 1.0f);
-					Creature* obj = piki->getHoldCreature();
-					obj->stimulate(act);
-					BombItem* bomb = (BombItem*)obj;
-					C_SAI(bomb)->start(bomb, BombAI::BOMB_Mizu);
-					PRINT("BOMB KILL!\n");
+				continue;
+			}
+
+			if (piki->isHolding()) {
+				InteractRelease act(piki, 1.0f);
+				Creature* obj = piki->getHoldCreature();
+				obj->stimulate(act);
+				BombItem* bomb = (BombItem*)obj;
+				C_SAI(bomb)->start(bomb, BombAI::BOMB_Mizu);
+				PRINT("BOMB KILL!\n");
+			}
+
+			int state = piki->getState();
+			if (mode == PikiMode::FormationMode) {
+				if (state == PIKISTATE_Drown || state == PIKISTATE_Fired || state == PIKISTATE_Dead || state == PIKISTATE_Swallowed
+				    || state == PIKISTATE_Bubble || state == PIKISTATE_Dying || state == PIKISTATE_Flick || !piki->isAlive()) {
+					// do nothing
+				} else {
+					continue;
 				}
-				int state = piki->getState();
-				if ((mode != PikiMode::FormationMode || state == PIKISTATE_Drown || state == PIKISTATE_Fired || state == PIKISTATE_Dead
-				     || state == PIKISTATE_Swallowed || state == PIKISTATE_Bubble || state == PIKISTATE_Dying || state == PIKISTATE_Flick
-				     || !piki->isAlive())
-				    && !(mode == PikiMode::EnterMode || mode == PikiMode::ExitMode) && state != PIKISTATE_LookAt) {
-					bool isNearOnyonShip = false;
-					if (piki->mMode == PikiMode::FreeMode) {
-						for (int i = 0; i < 3; i++) {
-							GoalItem* goal = itemMgr->getContainer(i);
-							if (goal
-							    && qdist2(goal->mSRT.t.x, goal->mSRT.t.z, piki->mSRT.t.x, piki->mSRT.t.z)
-							           <= pikiMgr->mPikiParms->mPikiParms.mSunsetSafetyRange()) {
-								isNearOnyonShip = true;
-								break;
-							}
-							UfoItem* ufo = itemMgr->getUfo();
-							if (ufo) {
-								Vector3f pos = ufo->getGoalPos();
-								if (qdist2(pos.x, pos.z, piki->mSRT.t.x, piki->mSRT.t.z)
-								    <= pikiMgr->mPikiParms->mPikiParms.mSunsetSafetyRange()) {
-									isNearOnyonShip = true;
-									break;
-								}
-							}
+			}
+			if (mode == PikiMode::ExitMode || mode == PikiMode::EnterMode) {
+				continue;
+			} else if (state == PIKISTATE_LookAt) {
+				continue;
+			}
+
+			bool isNearOnyonShip = false;
+			if (piki->mMode == PikiMode::FreeMode) {
+				for (int i = 0; i < PikiColorCount; i++) {
+					GoalItem* goal = itemMgr->getContainer(i);
+					if (goal) {
+						if (qdist2(goal->mSRT.t.x, goal->mSRT.t.z, piki->mSRT.t.x, piki->mSRT.t.z)
+						    <= pikiMgr->mPikiParms->mPikiParms.mSunsetSafetyRange()) {
+							isNearOnyonShip = true;
+							break;
 						}
 					}
-					if (!isNearOnyonShip) {
-						GameStat::victimPikis.inc(piki->mColor);
-#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
-#else
-						GameStat::deadPikis.inc(piki->mColor);
-#endif
-						piki->setEraseKill();
-						piki->kill(false);
-						it.dec();
-						killed++;
+					UfoItem* ufo = itemMgr->getUfo();
+					if (ufo) {
+						Vector3f pos = ufo->getGoalPos();
+						if (qdist2(pos.x, pos.z, piki->mSRT.t.x, piki->mSRT.t.z) <= pikiMgr->mPikiParms->mPikiParms.mSunsetSafetyRange()) {
+							isNearOnyonShip = true;
+							break;
+						}
 					}
 				}
+			}
+
+			if (!isNearOnyonShip) {
+				GameStat::victimPikis.inc(piki->mColor);
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01) || defined(WIN32)
+#else
+				GameStat::deadPikis.inc(piki->mColor);
+#endif
+				piki->setEraseKill();
+				piki->kill(false);
+				it.dec();
+				killed++;
 			}
 		}
 		if (GameStat::victimPikis > 0) {
@@ -687,11 +703,11 @@ void GameCoreSection::cleanupDayEnd()
 
 	effectMgr->killAll();
 
-	for (i = 0; i < PikiColorCount; i++) {
-		GoalItem* goal = itemMgr->getContainer(i);
+	for (goalColor = 0; goalColor < PikiColorCount; goalColor++) {
+		GoalItem* goal = itemMgr->getContainer(goalColor);
 		if (goal && playerState->hasContainer(goal->mOnionColour)) {
-			goal->mSpotModelEff
-			    = effectMgr->create((EffectMgr::modelTypeTable)i, goal->mSRT.t, Vector3f(1.0f, 1.0f, 1.0f), Vector3f(0.0f, 0.0f, 0.0f));
+			goal->mSpotModelEff = effectMgr->create((EffectMgr::modelTypeTable)goalColor, goal->mSRT.t, Vector3f(1.0f, 1.0f, 1.0f),
+			                                        Vector3f(0.0f, 0.0f, 0.0f));
 		}
 	}
 
@@ -754,8 +770,9 @@ void GameCoreSection::cleanupDayEnd()
 	}
 
 	playerState->mSproutedNum += GameStat::bornPikis;
-	int lost = GameStat::deadPikis - GameStat::victimPikis;
-	playerState->mLostBattlePikis += (lost < 0) ? 0 : lost;
+	int lostBattlePikis = GameStat::deadPikis - GameStat::victimPikis;
+	lostBattlePikis     = (lostBattlePikis < 0) ? 0 : lostBattlePikis;
+	playerState->mLostBattlePikis += lostBattlePikis;
 	playerState->mLeftBehindPikis += GameStat::victimPikis;
 }
 
@@ -942,8 +959,7 @@ void GameCoreSection::initStage()
 	pikiMgr->mMapMgr    = mMapMgr;
 
 	memStat->start("pikiCreate");
-	// This has a capacity of 102 in the vanilla game for some reason.
-	pikiMgr->create(MAX_PIKI_ON_FIELD == 100 ? 102 : MAX_PIKI_ON_FIELD);
+	pikiMgr->create(MAX_PIKI_ON_FIELD + 2); // This has a capacity of 102 for some reason.
 	memStat->end("pikiCreate");
 
 	memStat->end("piki");

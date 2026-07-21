@@ -46,14 +46,16 @@ void FishGenerator::startAI(int /*unused*/)
  */
 void FishGenerator::update()
 {
+	int i;
+
 	mSchoolCentre.set(0.0f, 0.0f, 0.0f);
-	for (int i = 0; i < mFishCount; i++) {
+	for (i = 0; i < mFishCount; i++) {
 		mSchoolCentre = mSchoolCentre + mFish[i].mPosition;
 	}
 
 	mSchoolCentre.multiply(1.0f / mFishCount);
 
-	for (int i = 0; i < mFishCount; i++) {
+	for (i = 0; i < mFishCount; i++) {
 		moveFish(&mFish[i]);
 	}
 }

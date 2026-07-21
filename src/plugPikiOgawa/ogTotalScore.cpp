@@ -47,23 +47,23 @@ zen::ogScrTotalScoreMgr::ogScrTotalScoreMgr(zen::TotalScoreType* scores)
 	mDaysEffectPane      = screen->search('win2', true);
 	mBornEffectPane      = screen->search('win3', true);
 	mDeadEffectPane      = screen->search('win4', true);
-	mPartsDigitsTens     = (P2DPicture*)screen->search('pa_l', true);
-	mPartsDigitsOnes     = (P2DPicture*)screen->search('pa_r', true);
-	mDaysDigitsTens      = (P2DPicture*)screen->search('da_l', true);
-	mDaysDigitsOnes      = (P2DPicture*)screen->search('da_r', true);
-	mBornDigitsThousands = (P2DPicture*)screen->search('lp_4', true);
-	mBornDigitsHundreds  = (P2DPicture*)screen->search('lp_3', true);
-	mBornDigitsTens      = (P2DPicture*)screen->search('lp_2', true);
-	mBornDigitsOnes      = (P2DPicture*)screen->search('lp_1', true);
-	mDeadDigitsThousands = (P2DPicture*)screen->search('dp_4', true);
-	mDeadDigitsHundreds  = (P2DPicture*)screen->search('dp_3', true);
-	mDeadDigitsTens      = (P2DPicture*)screen->search('dp_2', true);
-	mDeadDigitsOnes      = (P2DPicture*)screen->search('dp_1', true);
-	mPartsDaysSlash      = (P2DPicture*)screen->search('pd_s', true);
-	mPartsHeading        = (P2DTextBox*)screen->search('pa_k', true);
-	mDaysHeading         = (P2DTextBox*)screen->search('pa_d', true);
-	mBornHeading         = (P2DTextBox*)screen->search('lp_h', true);
-	mDeadHeading         = (P2DTextBox*)screen->search('dp_h', true);
+	mPartsDigitsTens     = static_cast<P2DPicture*>(screen->search('pa_l', true));
+	mPartsDigitsOnes     = static_cast<P2DPicture*>(screen->search('pa_r', true));
+	mDaysDigitsTens      = static_cast<P2DPicture*>(screen->search('da_l', true));
+	mDaysDigitsOnes      = static_cast<P2DPicture*>(screen->search('da_r', true));
+	mBornDigitsThousands = static_cast<P2DPicture*>(screen->search('lp_4', true));
+	mBornDigitsHundreds  = static_cast<P2DPicture*>(screen->search('lp_3', true));
+	mBornDigitsTens      = static_cast<P2DPicture*>(screen->search('lp_2', true));
+	mBornDigitsOnes      = static_cast<P2DPicture*>(screen->search('lp_1', true));
+	mDeadDigitsThousands = static_cast<P2DPicture*>(screen->search('dp_4', true));
+	mDeadDigitsHundreds  = static_cast<P2DPicture*>(screen->search('dp_3', true));
+	mDeadDigitsTens      = static_cast<P2DPicture*>(screen->search('dp_2', true));
+	mDeadDigitsOnes      = static_cast<P2DPicture*>(screen->search('dp_1', true));
+	mPartsDaysSlash      = static_cast<P2DPicture*>(screen->search('pd_s', true));
+	mPartsHeading        = static_cast<P2DTextBox*>(screen->search('pa_k', true));
+	mDaysHeading         = static_cast<P2DTextBox*>(screen->search('pa_d', true));
+	mBornHeading         = static_cast<P2DTextBox*>(screen->search('lp_h', true));
+	mDeadHeading         = static_cast<P2DTextBox*>(screen->search('dp_h', true));
 
 	setSpecialNumber(1, mScores->mRecordNumParts[0]);
 	setSpecialNumber(2, mScores->mRecordNumDays[0]);
@@ -86,30 +86,35 @@ zen::ogScrTotalScoreMgr::ogScrTotalScoreMgr(zen::TotalScoreType* scores)
 	setSpecialNumber(19, mScores->mRecordNumDead[3]);
 	setSpecialNumber(20, mScores->mRecordNumDead[4]);
 
-	mNewRecordDefaultPane = (P2DPicture*)screen->search('newd', true);
+	mNewRecordDefaultPane = static_cast<P2DPicture*>(screen->search('newd', true));
 
+	int i;
 	char buf[8];
-	for (int i = 0; i < 5; i++) {
+
+	for (i = 0; i < 5; i++) {
 		sprintf(buf, "pd%02d", i + 1);
-		mPartDayRecordTexts[i] = (P2DTextBox*)screen->search(P2DPaneLibrary::makeTag(buf), true);
+		int tag                = P2DPaneLibrary::makeTag(buf);
+		mPartDayRecordTexts[i] = static_cast<P2DTextBox*>(screen->search(tag, true));
 		char* str              = mPartsDaysRecordStrings[i];
 		strcpy(str, mPartDayRecordTexts[i]->getString());
 		cnvSpecialNumber(str);
 		mPartDayRecordTexts[i]->setString(str);
 	}
 
-	for (int i = 0; i < 5; i++) {
+	for (i = 0; i < 5; i++) {
 		sprintf(buf, "lp%02d", i + 1);
-		mBornRecordTexts[i] = (P2DTextBox*)screen->search(P2DPaneLibrary::makeTag(buf), true);
+		int tag             = P2DPaneLibrary::makeTag(buf);
+		mBornRecordTexts[i] = static_cast<P2DTextBox*>(screen->search(tag, true));
 		char* str           = mBornRecordStrings[i];
 		strcpy(str, mBornRecordTexts[i]->getString());
 		cnvSpecialNumber(str);
 		mBornRecordTexts[i]->setString(str);
 	}
 
-	for (int i = 0; i < 5; i++) {
+	for (i = 0; i < 5; i++) {
 		sprintf(buf, "dp%02d", i + 1);
-		mDeadRecordTexts[i] = (P2DTextBox*)screen->search(P2DPaneLibrary::makeTag(buf), true);
+		int tag             = P2DPaneLibrary::makeTag(buf);
+		mDeadRecordTexts[i] = static_cast<P2DTextBox*>(screen->search(tag, true));
 		char* str           = mDeadRecordStrings[i];
 		strcpy(str, mDeadRecordTexts[i]->getString());
 		cnvSpecialNumber(str);
@@ -139,8 +144,6 @@ zen::ogScrTotalScoreMgr::ogScrTotalScoreMgr(zen::TotalScoreType* scores)
 
 	mFrameTimer = 0.0f;
 	mState      = TOTALSCORE_Sleep;
-
-	STACK_PAD_TERNARY(mDeadRecordTexts, 3);
 }
 
 /**

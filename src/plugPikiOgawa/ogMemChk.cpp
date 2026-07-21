@@ -33,7 +33,7 @@ zen::ogScrMemChkMgr::ogScrMemChkMgr()
 
 	mBlackScreen = new P2DScreen;
 	mBlackScreen->set("screen/blo/black.blo", false, false, true);
-	mBlackPane = (P2DPicture*)mBlackScreen->search('blck', true);
+	mBlackPane = static_cast<P2DPicture*>(mBlackScreen->search('blck', true));
 	mBlackPane->setAlpha(255);
 
 	mEfxMgr = new EffectMgr2D(0x20, 0x80, 0x80);
@@ -46,72 +46,72 @@ zen::ogScrMemChkMgr::ogScrMemChkMgr()
 	P2DScreen* screen = mMainScreen;
 
 	// "If you format this Memory Card, all saved files will be erased. Is this OK?"
-	mFormatConfirmTextBox = (P2DTextBox*)screen->search('shom', true);
+	mFormatConfirmTextBox = static_cast<P2DTextBox*>(screen->search('shom', true));
 
 	// "The Memory Card has been formatted."
-	mFormattedTextBox = (P2DTextBox*)screen->search('shot', true);
+	mFormattedTextBox = static_cast<P2DTextBox*>(screen->search('shot', true));
 
 	// "Formatting the Memory Card... Do not touch the Memory Card or POWER Button."
-	mFormattingTextBox = (P2DTextBox*)screen->search('shch', true);
+	mFormattingTextBox = static_cast<P2DTextBox*>(screen->search('shch', true));
 
 	// The Memory Card in Slot A is corrupted and needs to be formatted."
-	mNeedFormatTextBox = (P2DTextBox*)screen->search('shoi', true);
+	mNeedFormatTextBox = static_cast<P2DTextBox*>(screen->search('shoi', true));
 
 	// "The Memory Card in Slot A is not formatted for use in this market. It must be formatted. Is this OK?"
-	mDoFixUnformattedTextBox = (P2DTextBox*)screen->search('shok', true);
+	mDoFixUnformattedTextBox = static_cast<P2DTextBox*>(screen->search('shok', true));
 
 	// "The Memory Card could not be formatted."
-	mCantFormatTextBox = (P2DTextBox*)screen->search('shos', true);
+	mCantFormatTextBox = static_cast<P2DTextBox*>(screen->search('shos', true));
 
-	mYesPane = (P2DTextBox*)screen->search('hai', true); // "Yes"
-	mNoPane  = (P2DTextBox*)screen->search('iie', true); // "No"
+	mYesPane = static_cast<P2DTextBox*>(screen->search('hai', true)); // "Yes"
+	mNoPane  = static_cast<P2DTextBox*>(screen->search('iie', true)); // "No"
 
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
 #else
-	mYesPane2 = (P2DTextBox*)screen->search('haic', true); // "Yes"
-	mNoPane2  = (P2DTextBox*)screen->search('iiec', true); // "No"
+	mYesPane2 = static_cast<P2DTextBox*>(screen->search('haic', true)); // "Yes"
+	mNoPane2  = static_cast<P2DTextBox*>(screen->search('iiec', true)); // "No"
 #endif
 
 	// "Some Pikmin save data is corrupted. The Pikmin file will now be repaired. Do not touch the Memory Card or POWER Button."
-	mRepairFileTextBox = (P2DTextBox*)screen->search('shuf', true);
+	mRepairFileTextBox = static_cast<P2DTextBox*>(screen->search('shuf', true));
 
 	// "The Pikmin file has been repaired."
-	mRepairSuccessTextBox = (P2DTextBox*)screen->search('shsi', true);
+	mRepairSuccessTextBox = static_cast<P2DTextBox*>(screen->search('shsi', true));
 
 	// "Some Pikmin save data could not be repaired."
-	mRepairFailTextBox = (P2DTextBox*)screen->search('shxx', true);
+	mRepairFailTextBox = static_cast<P2DTextBox*>(screen->search('shxx', true));
 
 	// There is no Memory Card in Slot A, so you won't be able to save your game. Continue without saving?"
-	mNoCardTextBox = (P2DTextBox*)screen->search('sari', true);
+	mNoCardTextBox = static_cast<P2DTextBox*>(screen->search('sari', true));
 
 	// The Memory Card in Slot A does not have enough space available. Pikmin needs 1 file and 19 blocks of memory to save. Continue
 	// without saving?"
-	mCardFullTextBox = (P2DTextBox*)screen->search('memo', true);
+	mCardFullTextBox = static_cast<P2DTextBox*>(screen->search('memo', true));
 
 	// "The Memory Card in Slot A is not compatible with Pikmin. You can't save.  Continue without saving?"
-	mUnusableCardTextBox = (P2DTextBox*)screen->search('brom', true);
+	mUnusableCardTextBox = static_cast<P2DTextBox*>(screen->search('brom', true));
 
 	// "The Memory Card inserted in Slot A is not formatted for use in this market. It must be formatted. Is this OK?"
-	mUnformattedCardTextBox = (P2DTextBox*)screen->search('kaim', true);
+	mUnformattedCardTextBox = static_cast<P2DTextBox*>(screen->search('kaim', true));
 
 	// "The Memory Card inserted  in Slot A is damaged or corrupted. You can't save. Do you still want to continue?"
-	mBrokenCardTextBox = (P2DTextBox*)screen->search('ijom', true);
+	mBrokenCardTextBox = static_cast<P2DTextBox*>(screen->search('ijom', true));
 
 	// "The device in Slot A cannot be used. You can't save. Is this OK?"
-	mNotACardTextBox = (P2DTextBox*)screen->search('naim', true);
+	mNotACardTextBox = static_cast<P2DTextBox*>(screen->search('naim', true));
 
 	// The Memory Card in Slot A does not have enough space available. Pikmin needs 1 file and 19 blocks of memory to save. Continue
 	// without saving?"
-	mFileNotMadeTextBox = (P2DTextBox*)screen->search('file', true);
+	mFileNotMadeTextBox = static_cast<P2DTextBox*>(screen->search('file', true));
 
 	mYesNoWindow = screen->search('yn_w', true);
 	mCapsulePane = screen->search('cpsl', true);
 
-	mAButtonPane     = (P2DPicture*)mMainScreen->search('abtn', true);
+	mAButtonPane     = static_cast<P2DPicture*>(mMainScreen->search('abtn', true));
 	mAButtonAlphaMgr = new setTenmetuAlpha(mAButtonPane, 1.0f);
 	mAButtonPane->hide();
 
-	mFormatEffPane = (P2DPicture*)mMainScreen->search('main', true);
+	mFormatEffPane = static_cast<P2DPicture*>(mMainScreen->search('main', true));
 
 	mFormatConfirmTextBox->hide();
 	mFormattedTextBox->hide();
@@ -133,7 +133,7 @@ zen::ogScrMemChkMgr::ogScrMemChkMgr()
 
 	mFileNotMadeTextBox->hide();
 
-	mCursorPane     = (P2DPicture*)mMainScreen->search('curs', true);
+	mCursorPane     = static_cast<P2DPicture*>(mMainScreen->search('curs', true));
 	mCursorAlphaMgr = new setTenmetuAlpha(mCursorPane, 0.5f);
 
 	mFormatConfirmTextMgr    = new TypingTextMgr(mFormatConfirmTextBox);
@@ -158,15 +158,15 @@ zen::ogScrMemChkMgr::ogScrMemChkMgr()
 	mPrevStatusCheck = Inactive;
 
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
-	P2DTextBox* yes = (P2DTextBox*)mMainScreen->search('hai', true); // "yes"
-	P2DTextBox* no  = (P2DTextBox*)mMainScreen->search('iie', true); // "no"
-	P2DTextBox* a4  = (P2DTextBox*)mMainScreen->search('se_c', true);
+	P2DTextBox* yes = static_cast<P2DTextBox*>(mMainScreen->search('hai', true)); // "yes"
+	P2DTextBox* no  = static_cast<P2DTextBox*>(mMainScreen->search('iie', true)); // "no"
+	P2DTextBox* a4  = static_cast<P2DTextBox*>(mMainScreen->search('se_c', true));
 	mNitakuMgr      = new ogNitakuMgr(mMainScreen, yes, no, a4, false, false);
 #else
-	P2DTextBox* a1 = (P2DTextBox*)mMainScreen->search('fomt', true); // "Format"
-	P2DTextBox* a2 = (P2DTextBox*)mMainScreen->search('cws', true);  // "Continue without saving"
-	P2DTextBox* a3 = (P2DTextBox*)mMainScreen->search('rtry', true); // "Retry"
-	P2DTextBox* a4 = (P2DTextBox*)mMainScreen->search('se_c', true);
+	P2DTextBox* a1 = static_cast<P2DTextBox*>(mMainScreen->search('fomt', true)); // "Format"
+	P2DTextBox* a2 = static_cast<P2DTextBox*>(mMainScreen->search('cws', true));  // "Continue without saving"
+	P2DTextBox* a3 = static_cast<P2DTextBox*>(mMainScreen->search('rtry', true)); // "Retry"
+	P2DTextBox* a4 = static_cast<P2DTextBox*>(mMainScreen->search('se_c', true));
 	mNitakuMgr     = new ogNitakuMgr(mMainScreen, mYesPane2, mNoPane2, a4, false, false);
 	a1->hide();
 	a2->hide();

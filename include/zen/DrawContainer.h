@@ -208,7 +208,7 @@ public:
 	    : P2DPaneCallBack(pane, PANETYPE_Picture)
 	    , ArrowBasicCallBack(pane, container, p3)
 	{
-		P2DPicture* pic = (P2DPicture*)pane;
+		P2DPicture* pic = static_cast<P2DPicture*>(pane);
 		// There is no file named "ys_u.bti" on the disc, but there is one named "ya_u.bti".
 		pUpTex   = loadTexExp(TERNARY_BUGFIX("ya_u.bti", "ys_u.bti"), true, true);
 		pDownTex = loadTexExp("ya_l.bti", true, true);
@@ -223,7 +223,7 @@ public:
 
 	virtual bool invoke(P2DPane* pane) // _08
 	{
-		P2DPicture* pic = (P2DPicture*)pane;
+		P2DPicture* pic = static_cast<P2DPicture*>(pane);
 		setTexture(pic);
 		update(pic);
 		return true;
@@ -275,7 +275,7 @@ public:
 	    : P2DPaneCallBack(pane, PANETYPE_Picture)
 	    , ArrowBasicCallBack(pane, container, p3)
 	{
-		P2DPicture* pic = (P2DPicture*)pane;
+		P2DPicture* pic = static_cast<P2DPicture*>(pane);
 		judgeArrowType();
 		if (mArrowType != ARROW_Both) {
 			pic->setAlpha(0);
@@ -284,7 +284,7 @@ public:
 
 	virtual bool invoke(P2DPane* pane) // _08
 	{
-		P2DPicture* pic = (P2DPicture*)pane;
+		P2DPicture* pic = static_cast<P2DPicture*>(pane);
 		judgeArrowType();
 		if (mArrowType == ARROW_Both) {
 			active();
@@ -480,7 +480,7 @@ public:
 
 	virtual bool invoke(P2DPane* pane) // _08
 	{
-		P2DPicture* pic = (P2DPicture*)pane;
+		P2DPicture* pic = static_cast<P2DPicture*>(pane);
 		TexAnim* anim;
 		Texture* tex;
 		if (mContainerScreen->getContainerPikiDisp() > 0) {
@@ -623,8 +623,8 @@ public:
 	{
 		P2DPane* parent;
 
-		P2DTextBox* tBox1 = (P2DTextBox*)screen.search(tag1, true);
-		P2DTextBox* tBox2 = (P2DTextBox*)screen.search(tag2, true);
+		P2DTextBox* tBox1 = static_cast<P2DTextBox*>(screen.search(tag1, true));
+		P2DTextBox* tBox2 = static_cast<P2DTextBox*>(screen.search(tag2, true));
 
 		parent = screen.search('pall', true);
 		P2DPaneLibrary::changeParent(tBox2, parent);

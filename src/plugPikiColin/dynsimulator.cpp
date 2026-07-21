@@ -96,9 +96,9 @@ void RigidBody::initializeBody()
 		updateViewInfo(i, i);
 	}
 
-	for (int i = 0; i < mSpringCount; i++) {
-		Vector3f hookWorldPos = mBodyPoints[mSprings[i].mHookIdx] + mInitPosition;
-		mSprings[i].mAnchorPoint.add(hookWorldPos);
+	for (int springIdx = 0; springIdx < mSpringCount; springIdx++) {
+		Vector3f hookWorldPos = mBodyPoints[mSprings[springIdx].mHookIdx] + mInitPosition;
+		mSprings[springIdx].mAnchorPoint.add(hookWorldPos);
 	}
 }
 
@@ -261,62 +261,64 @@ void RigidBody::applyGroundForces(int configIdx, CollGroup* collGroup)
 	configuration& config = mIntegrationStates[configIdx];
 
 	// reset all bounding point hit counts
-	for (int i = 0; i < mBoundingPointCount; i++) {
-		mBoundingPointHitCounts[i] = 0;
+	for (int vert1 = 0; vert1 < mBoundingPointCount; vert1++) {
+		mBoundingPointHitCounts[vert1] = 0;
 	}
 
 	// check for ground collision for each bounding point
-	for (int i = 0; i < mBoundingPointCount; i++) {
-		immut Vector3f& boundingPtPos = config.mBodyPoints[i + mHookPointCount];
+	for (int vert2 = 0; vert2 < mBoundingPointCount; vert2++) {
+		immut Vector3f& boundingPtPos = config.mBodyPoints[vert2 + mHookPointCount];
 
 		// only do collision calculations if we have collision triangles to check
 		// (weird way to do this check but fine)
 		bool skipCollCalc = collGroup ? false : true;
 
 		// check each supplied triangle for a collision
-		for (int j = 0; !skipCollCalc && j < collGroup->mTriCount; j++) {
-			CollTriInfo* triangle  = collGroup->mTriangleList[j];
-			Plane* triPlane        = &triangle->mTriangle;
-			immut Vector3f& comPos = config.mPosition;
+		for (int triIdx = 0; !skipCollCalc && triIdx < collGroup->mTriCount; triIdx++) {
+			CollTriInfo* triangle = collGroup->mTriangleList[triIdx];
+			Plane* triPlane       = &triangle->mTriangle;
+			if (true) {
+				immut Vector3f& comPos = config.mPosition;
 
-			f32 boundingPtDist = triPlane->dist(boundingPtPos);
-			f32 comDist        = triPlane->dist(comPos);
+				f32 boundingPtDist = triPlane->dist(boundingPtPos);
+				f32 comDist        = triPlane->dist(comPos);
 
-			// if bounding point is "below" the ground and center of mass if "above" the ground, we're colliding
-			if (boundingPtDist < 0.0f && comDist > 0.0f) {
-				// calc intersection point between object line (CoM to bounding point) and triangle plane
-				f32 intersectRatio = boundingPtDist / (boundingPtDist - comDist);
-				Vector3f intersectPt((comPos.x - boundingPtPos.x) * intersectRatio + boundingPtPos.x,
-				                     (comPos.y - boundingPtPos.y) * intersectRatio + boundingPtPos.y,
-				                     (comPos.z - boundingPtPos.z) * intersectRatio + boundingPtPos.z);
+				// if bounding point is "below" the ground and center of mass if "above" the ground, we're colliding
+				if (boundingPtDist < 0.0f && comDist > 0.0f) {
+					// calc intersection point between object line (CoM to bounding point) and triangle plane
+					f32 intersectRatio = boundingPtDist / (boundingPtDist - comDist);
+					Vector3f intersectPt((comPos.x - boundingPtPos.x) * intersectRatio + boundingPtPos.x,
+					                     (comPos.y - boundingPtPos.y) * intersectRatio + boundingPtPos.y,
+					                     (comPos.z - boundingPtPos.z) * intersectRatio + boundingPtPos.z);
 
-				STACK_PAD_VAR(1);
-
-				// check if intersection point is inside the triangle
-				bool isInsideTri = true;
-				for (int k = 0; isInsideTri && k < 3; k++) {
-					if (triangle->mEdgePlanes[k].dist(intersectPt) < 0.0f) {
-						isInsideTri = false;
+					// check if intersection point is inside the triangle
+					bool isInsideTri = true;
+					for (int edgeIdx = 0; isInsideTri && edgeIdx < 3; edgeIdx++) {
+						f32 dist = triangle->mEdgePlanes[edgeIdx].dist(intersectPt);
+						if (dist < 0.0f) {
+							isInsideTri = false;
+						}
 					}
-				}
 
-				if (isInsideTri) {
-					// compute (linear + angular) velocity at bounding point
-					Vector3f offsetToBoundingPt = boundingPtPos - config.mPosition;
-					Vector3f boundingPtVel(config.mAngularVel);
-					boundingPtVel.CP(offsetToBoundingPt);
-					boundingPtVel.x += config.mLinearVel.x;
-					boundingPtVel.y += config.mLinearVel.y;
-					boundingPtVel.z += config.mLinearVel.z;
+					if (isInsideTri) {
+						// compute (linear + angular) velocity at bounding point
+						Vector3f offsetToBoundingPt = boundingPtPos - config.mPosition;
+						Vector3f boundingPtVel(config.mAngularVel);
+						boundingPtVel.CP(offsetToBoundingPt);
+						boundingPtVel.x += config.mLinearVel.x;
+						boundingPtVel.y += config.mLinearVel.y;
+						boundingPtVel.z += config.mLinearVel.z;
 
-					// if we're moving toward the triangle, apply collision response and friction
-					if (boundingPtVel.DP(triPlane->mNormal) < 0.0f) {
-						mBoundingPointHitCounts[i]++;
-						Collision coll;
-						coll.mContactPoint = intersectPt;
-						coll.mNormal       = triPlane->mNormal;
-						resolveCollisions(configIdx, coll);
-						applyBodyFriction(configIdx, triPlane->mNormal, intersectPt, boundingPtVel);
+						// if we're moving toward the triangle, apply collision response and friction
+						if (boundingPtVel.DP(triPlane->mNormal) < 0.0f) {
+							mBoundingPointHitCounts[vert2]++;
+							Collision coll;
+							coll.mContactPoint = intersectPt;
+							coll.mNormal       = triPlane->mNormal;
+							resolveCollisions(configIdx, coll);
+							applyBodyFriction(configIdx, triPlane->mNormal, intersectPt, boundingPtVel);
+							continue;
+						}
 					}
 				}
 			}
@@ -324,9 +326,9 @@ void RigidBody::applyGroundForces(int configIdx, CollGroup* collGroup)
 	}
 
 	// debug print to check if any bounding points have gotten hit more than once
-	for (int i = 0; i < mBoundingPointCount; i++) {
-		if (mBoundingPointHitCounts[i] > 1) {
-			PRINT("vert %d hit %d times\n", i, mBoundingPointHitCounts[i]);
+	for (int vert3 = 0; vert3 < mBoundingPointCount; vert3++) {
+		if (mBoundingPointHitCounts[vert3] > 1) {
+			PRINT("vert %d hit %d times\n", vert3, mBoundingPointHitCounts[vert3]);
 		}
 	}
 }
@@ -432,10 +434,10 @@ void DynSimulator::resetWorld()
  */
 void DynSimulator::doSimulation(f32 totalTime, f32 maxTimeStep, Shape* mapModel)
 {
-	f32 remainingTime, dt;
-	for (remainingTime = totalTime; remainingTime > 0.0f; remainingTime -= dt) {
-		dt = remainingTime;
-		if (remainingTime > maxTimeStep) {
+	f32 remainingTime = totalTime;
+	while (remainingTime > 0.0f) {
+		f32 dt = remainingTime;
+		if (dt > maxTimeStep) {
 			dt = maxTimeStep;
 		}
 		if (!isPaused()) {
@@ -446,15 +448,16 @@ void DynSimulator::doSimulation(f32 totalTime, f32 maxTimeStep, Shape* mapModel)
 			// 4. calculate all vertices
 			// 5. reset accelerations
 
-			FOREACH_NODE(RigidBody, mChild, body)
+			RigidBody* body;
+			FOREACH_NODE_REUSE(RigidBody, mChild, body)
 			{
 				body->initCollisions(mCurrentConfigIdx);
 			}
-			FOREACH_NODE(RigidBody, mChild, body)
+			FOREACH_NODE_REUSE(RigidBody, mChild, body)
 			{
 				body->computeForces(mCurrentConfigIdx, dt);
 			}
-			FOREACH_NODE(RigidBody, mChild, body)
+			FOREACH_NODE_REUSE(RigidBody, mChild, body)
 			{
 				body->integrate(mCurrentConfigIdx, mCurrentConfigIdx ^ 1, dt);
 				body->calculateVertices(mCurrentConfigIdx ^ 1);
@@ -467,6 +470,7 @@ void DynSimulator::doSimulation(f32 totalTime, f32 maxTimeStep, Shape* mapModel)
 			// advance config state to use for next calculations
 			mCurrentConfigIdx ^= 1;
 		}
+		remainingTime -= dt;
 	}
 
 	FOREACH_NODE(RigidBody, mChild, body)

@@ -144,7 +144,7 @@ void Timers::draw(Graphics& gfx, Font* font)
 		}
 	}
 
-	// Making these three named constants `const` breaks the stack for matching.  Lovely `const` memes!
+	// Making these three named constants `const` breaks the stack for matching.  Lovely const memes!
 	immut f32 chartMarginSize = TERNARY_BUGFIX(256.0f, 192.0f);
 	immut int chartTimeScale  = 4; // How many multiples of `MILLISEC_PER_FRAME` to fit on the chart
 	immut int chartBarHeight  = 12;

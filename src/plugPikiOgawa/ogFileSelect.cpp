@@ -225,27 +225,27 @@ void zen::ogScrFileSelectMgr::getPane_FileTop1()
 
 	mTitleTextBasePane       = mMainUIScreen->search('p_ma', true);
 	mYesNoDialogPane         = mMainUIScreen->search('yn_w', true);
-	mCardAccessIcon          = (P2DPicture*)mMainUIScreen->search('chui', true);
-	mYesNoDialogImage        = (P2DPicture*)mMainUIScreen->search('back', true);
-	mYesNoDialogPromptText   = (P2DTextBox*)mMainUIScreen->search('se_c', true);
-	mNitakuYesText           = (P2DTextBox*)mMainUIScreen->search('hai', true);
-	mNitakuNoText            = (P2DTextBox*)mMainUIScreen->search('iie', true);
+	mCardAccessIcon          = static_cast<P2DPicture*>(mMainUIScreen->search('chui', true));
+	mYesNoDialogImage        = static_cast<P2DPicture*>(mMainUIScreen->search('back', true));
+	mYesNoDialogPromptText   = static_cast<P2DTextBox*>(mMainUIScreen->search('se_c', true));
+	mNitakuYesText           = static_cast<P2DTextBox*>(mMainUIScreen->search('hai', true));
+	mNitakuNoText            = static_cast<P2DTextBox*>(mMainUIScreen->search('iie', true));
 	mPromptSelectSavePane    = mMainUIScreen->search('dono', true);
-	mCorruptText             = (P2DTextBox*)mMainUIScreen->search('hsho', true);
+	mCorruptText             = static_cast<P2DTextBox*>(mMainUIScreen->search('hsho', true));
 	mPromptNoCardPane        = mMainUIScreen->search('sho', true);
 	mPromptCardErrPane       = mMainUIScreen->search('dsho', true);
 	mPromptSelectCopySrcPane = mMainUIScreen->search('doko', true);
-	mConfirmCopyText         = (P2DTextBox*)mMainUIScreen->search('d1co', true);
+	mConfirmCopyText         = static_cast<P2DTextBox*>(mMainUIScreen->search('d1co', true));
 	mOpInProgressPane        = mMainUIScreen->search('copc', true);
 	mPromptConfirmDelPane    = mMainUIScreen->search('dcxx', true);
 	mOpCompletePane          = mMainUIScreen->search('dcop', true);
-	mFormatDoneText          = (P2DTextBox*)mMainUIScreen->search('dasa', true);
+	mFormatDoneText          = static_cast<P2DTextBox*>(mMainUIScreen->search('dasa', true));
 	mPromptSaveFailPane      = mMainUIScreen->search('dosa', true);
 	mPromptSaveOKPane        = mMainUIScreen->search('savc', true);
 	mPromptCardFullPane      = mMainUIScreen->search('ddxx', true);
-	mAltMsgText1             = (P2DTextBox*)mMainUIScreen->search('uasa', true);
-	mAltMsgText2             = (P2DTextBox*)mMainUIScreen->search('u1co', true);
-	mAltMsgText3             = (P2DTextBox*)mMainUIScreen->search('usho', true);
+	mAltMsgText1             = static_cast<P2DTextBox*>(mMainUIScreen->search('uasa', true));
+	mAltMsgText2             = static_cast<P2DTextBox*>(mMainUIScreen->search('u1co', true));
+	mAltMsgText3             = static_cast<P2DTextBox*>(mMainUIScreen->search('usho', true));
 
 	Colour colour;
 	colour.set(255, 255, 255, 255);
@@ -409,12 +409,12 @@ void zen::ogScrFileSelectMgr::getPane_FileIcon()
 		mSlotScreensNoData[i]->setScale(scale);
 
 		mDayCount1DigitPane[i]  = screen->search('dc_c', true);
-		mDayCount1DigitPic[i]   = (P2DPicture*)screen->search('dcmc', true);
+		mDayCount1DigitPic[i]   = static_cast<P2DPicture*>(screen->search('dcmc', true));
 		mDayCount2DigitLPane[i] = screen->search('dc_l', true);
 		mDayCount2DigitRPane[i] = screen->search('dc_r', true);
-		mDayCount2DigitLPic[i]  = (P2DPicture*)screen->search('dcml', true);
-		mDayCount2DigitRPic[i]  = (P2DPicture*)screen->search('dcmr', true);
-		mDayCountColorSrcPic[i] = (P2DPicture*)screen->search('sm_c', true);
+		mDayCount2DigitLPic[i]  = static_cast<P2DPicture*>(screen->search('dcml', true));
+		mDayCount2DigitRPic[i]  = static_cast<P2DPicture*>(screen->search('dcmr', true));
+		mDayCountColorSrcPic[i] = static_cast<P2DPicture*>(screen->search('sm_c', true));
 
 		Colour white = mDayCountColorSrcPic[i]->getWhite();
 		u8 alpha     = mDayCountColorSrcPic[i]->getAlpha();
@@ -767,7 +767,7 @@ zen::ogScrFileSelectMgr::ogScrFileSelectMgr()
 	mBlackOverlayScreen = new P2DScreen();
 	mBlackOverlayScreen->set("screen/blo/black.blo", false, false, true);
 
-	mDeleteCursorPicture = (P2DPicture*)mBlackOverlayScreen->search('blck', true);
+	mDeleteCursorPicture = static_cast<P2DPicture*>(mBlackOverlayScreen->search('blck', true));
 	mDeleteCursorPicture->setAlpha(255);
 
 	getPane_FileTop1();

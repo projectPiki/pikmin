@@ -394,11 +394,11 @@ zen::ogDrawSelectDiary::ogDrawSelectDiary()
 	mScreen->set("screen/blo/m_menu_r.blo", true, true, true);
 	mBlackFadeScreen = new P2DScreen;
 	mBlackFadeScreen->set("screen/blo/black.blo", false, false, true);
-	mBlackFadePicture = (P2DPicture*)mBlackFadeScreen->search('blck', true);
+	mBlackFadePicture = static_cast<P2DPicture*>(mBlackFadeScreen->search('blck', true));
 	mBlackFadePicture->setAlpha(255);
 	mController = new ZenController(nullptr);
 	mController->setRepeatTime(0.2f);
-	mAButtonIcon          = (P2DPicture*)mScreen->search('abtn', true);
+	mAButtonIcon          = static_cast<P2DPicture*>(mScreen->search('abtn', true));
 	mAButtonAlphaAnimator = new setTenmetuAlpha(mAButtonIcon, 1.0f);
 	mDiaryInstance        = new ogDrawDiary;
 	mCurrentDay           = 0;
@@ -417,7 +417,7 @@ zen::ogDrawSelectDiary::ogDrawSelectDiary()
 		mDayDisplayPanes[i] = mScreen->search(P2DPaneLibrary::makeTag(name), true);
 
 		sprintf(name, "pk%02d", i + 14);
-		_248[i] = (P2DPicture*)mScreen->search(P2DPaneLibrary::makeTag(name), true);
+		_248[i] = static_cast<P2DPicture*>(mScreen->search(P2DPaneLibrary::makeTag(name), true));
 	}
 
 	mSelectedColumnIndex = 0;
@@ -453,7 +453,9 @@ void zen::ogDrawSelectDiary::start()
 	_UNUSED2E6           = 0;
 	mBlackFadePicture->setAlpha(255);
 
-	for (int i = 0; i < MAX_DAYS; i++) {
+	int i;
+
+	for (i = 0; i < MAX_DAYS; i++) {
 		if (i > mCurrentDay) {
 			P2DPaneLibrary::setFamilyAlpha(mDayDisplayPanes[i], 80);
 		} else {
@@ -461,8 +463,8 @@ void zen::ogDrawSelectDiary::start()
 		}
 	}
 
-	for (int i = mCurrentDay + 1; i < MAX_DAYS; i++) {
-		P2DPicture* obj = (P2DPicture*)_248[i]->getPaneTree()->getParent()->getObject();
+	for (i = mCurrentDay + 1; i < MAX_DAYS; i++) {
+		P2DPicture* obj = static_cast<P2DPicture*>(_248[i]->getPaneTree()->getParent()->getObject());
 		obj->setAlpha(0);
 	}
 
@@ -530,7 +532,8 @@ zen::ogDrawSelectDiary::SelectDiaryStatus zen::ogDrawSelectDiary::update(Control
 			return mStatus;
 		}
 
-		mBlackFadePicture->setAlpha((1.0f - mTransitionTimer / 0.5f) * 255.0f);
+		f32 alphaRatio = mTransitionTimer / 0.5f;
+		mBlackFadePicture->setAlpha(255.0f * (1.0f - alphaRatio));
 	}
 
 	if (mStatus == FadingOut) {
@@ -539,15 +542,16 @@ zen::ogDrawSelectDiary::SelectDiaryStatus zen::ogDrawSelectDiary::update(Control
 			return mStatus;
 		}
 
-		mBlackFadePicture->setAlpha((mTransitionTimer / 0.5f) * 255.0f);
+		f32 alphaRatio = mTransitionTimer / 0.5f;
+		mBlackFadePicture->setAlpha(255.0f * alphaRatio);
 	}
 
 	if (mStatus == Active) {
 		if (input->keyClick(KBBTN_A | KBBTN_START)) {
 			P2DPane* pane = mDayDisplayPanes[mSelectionIndex];
-			f32 x         = pane->getPosH() + pane->getWidth() / 2;
-			f32 y         = pane->getPosV() + pane->getHeight() / 2;
-			mDiaryInstance->open(x, y, mSelectionIndex + 1);
+			int centerX   = pane->getPosH() + pane->getWidth() / 2;
+			int centerY   = pane->getPosV() + pane->getHeight() / 2;
+			mDiaryInstance->open(centerX, centerY, mSelectionIndex + 1);
 			seSystem->playSysSe(ogEnumFix(SYSSE_DECIDE1, JACSYS_Decide1));
 			mStatus = ViewingSingleDiary;
 			return mStatus;
@@ -596,21 +600,24 @@ zen::ogDrawSelectDiary::SelectDiaryStatus zen::ogDrawSelectDiary::update(Control
 	mScreen->update();
 	mDiaryStatus = mDiaryInstance->update(input);
 	mBlackFadeScreen->update();
-	for (int i = mCurrentDay + 1; i < MAX_DAYS; i++) {
-		P2DPicture* obj = (P2DPicture*)_248[i]->getPaneTree()->getParent()->getObject();
+	
+	for (int futureDay = mCurrentDay + 1; futureDay < MAX_DAYS; futureDay++) {
+		P2DPicture* obj = static_cast<P2DPicture*>(_248[futureDay]->getPaneTree()->getParent()->getObject());
 		obj->setAlpha(0);
 	}
 
-	for (int i = 0; i <= mCurrentDay; i++) {
+	for (int day = 0; day <= mCurrentDay; day++) {
 		f32 phase = mTransitionTimer;
 		if (phase >= 1.0f) {
 			phase -= 1.0f;
 		}
 
-		phase -= f32(i) * 0.1f;
+		phase -= day * 0.1f;
 		f32 scale = 0.05f * sinf(TAU * phase) + 1.0f;
-		mDayDisplayPanes[i]->setOffset(mDayDisplayPanes[i]->getWidth() / 2, mDayDisplayPanes[i]->getHeight() / 2);
-		mDayDisplayPanes[i]->setScale(scale);
+		int offsetX = mDayDisplayPanes[day]->getWidth() / 2;
+		int offsetY = mDayDisplayPanes[day]->getHeight() / 2;
+		mDayDisplayPanes[day]->setOffset(offsetX, offsetY);
+		mDayDisplayPanes[day]->setScale(scale);
 	}
 
 	if (mStatus == ViewingSingleDiary && mDiaryStatus == ogDrawDiary::Closed) {

@@ -148,7 +148,7 @@ void zen::ogScrMessageMgr::resetPage()
 		switch (mPagePaneList[i]->getTypeID()) {
 		case PANETYPE_TextBox:
 		{
-			((P2DTextBox*)mPagePaneList[i])->setString("");
+			static_cast<P2DTextBox*>(mPagePaneList[i])->setString("");
 			break;
 		}
 		case PANETYPE_Picture:
@@ -218,7 +218,7 @@ void zen::ogScrMessageMgr::backPage()
 /**
  * @todo: Documentation
  */
-s16 zen::ogScrMessageMgr::makePageInfo(immut char*** data)
+s16 zen::ogScrMessageMgr::makePageInfo(immut char*** const data)
 {
 	int idx = 0;
 	for (int i = 0; i < 0x99; i++) {
@@ -417,14 +417,14 @@ void zen::ogScrMessageMgr::setPageInfoSub()
 			case PANETYPE_TextBox:
 			{
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
-				mProcessedTextBoxStrings[id] = ((P2DTextBox*)mPagePaneList[id])->getString();
+				mProcessedTextBoxStrings[id] = static_cast<P2DTextBox*>(mPagePaneList[id])->getString();
 #else
-				sprintf(mRawPageTextBoxStrings[id], "%s", ((P2DTextBox*)mPagePaneList[id])->getString());
+				sprintf(mRawPageTextBoxStrings[id], "%s", static_cast<P2DTextBox*>(mPagePaneList[id])->getString());
 				mProcessedTextBoxStrings[id] = mRawPageTextBoxStrings[id];
 				cnvSingleMulti(mProcessedTextBoxStrings[id]);
 				cnvButtonIcon(mProcessedTextBoxStrings[id]);
 #endif
-				((P2DTextBox*)mPagePaneList[id])->setString("");
+				static_cast<P2DTextBox*>(mPagePaneList[id])->setString("");
 				id++;
 				break;
 			}
@@ -459,7 +459,7 @@ void zen::ogScrMessageMgr::ReadAllScreen()
 /**
  * @todo: Documentation
  */
-void zen::ogScrMessageMgr::MakeAndSetPageInfo(immut char*** data)
+void zen::ogScrMessageMgr::MakeAndSetPageInfo(immut char*** const data)
 {
 	mPageInfoEntryCount = makePageInfo(data);
 	setMessagePage(0);
@@ -485,8 +485,8 @@ zen::ogScrMessageMgr::ogScrMessageMgr(immut char* path)
 	mHasDrawOccurredThisFrame = false;
 	mCurrPageNum              = 0;
 	mCurrentMessageId         = 0;
-	mCursorPane               = (P2DPicture*)mBaseScreen->search('curs', true);
-	mButtonPromptPane         = (P2DPicture*)mBaseScreen->search('a_bt', true);
+	mCursorPane               = static_cast<P2DPicture*>(mBaseScreen->search('curs', true));
+	mButtonPromptPane         = static_cast<P2DPicture*>(mBaseScreen->search('a_bt', true));
 	mCursorBlinker            = new setTenmetuAlpha(mCursorPane, 0.5f);
 	mButtonPromptBlinker      = new setTenmetuAlpha(mButtonPromptPane, 1.0f);
 	mCursorBlinker->start();
@@ -536,7 +536,7 @@ void zen::ogScrMessageMgr::dispAll()
 		switch (mPagePaneList[i]->getTypeID()) {
 		case PANETYPE_Picture:
 		{
-			P2DPicture* pic = (P2DPicture*)mPagePaneList[i];
+			P2DPicture* pic = static_cast<P2DPicture*>(mPagePaneList[i]);
 			pic->show();
 			P2DPaneLibrary::setFamilyAlpha(pic, 255);
 			pic->initWhite();
@@ -547,7 +547,7 @@ void zen::ogScrMessageMgr::dispAll()
 		{
 			strcpy(mFormattedDisplayStrings[i], mProcessedTextBoxStrings[i]);
 			cnvSpecialNumber(mFormattedDisplayStrings[i]);
-			((P2DTextBox*)mPagePaneList[i])->setString(mFormattedDisplayStrings[i]);
+			static_cast<P2DTextBox*>(mPagePaneList[i])->setString(mFormattedDisplayStrings[i]);
 			mActivePaneId = i;
 			break;
 		}
@@ -562,7 +562,7 @@ void zen::ogScrMessageMgr::dispAll()
 		mCursorPane->hide();
 	}
 	if (mActivePaneId >= 0) {
-		setCursorXY((P2DTextBox*)mPagePaneList[mActivePaneId]);
+		setCursorXY(static_cast<P2DTextBox*>(mPagePaneList[mActivePaneId]));
 	}
 }
 
@@ -644,7 +644,7 @@ zen::ogScrMessageMgr::MessageStatus zen::ogScrMessageMgr::update(Controller* inp
 	}
 
 	if (mActivePaneId >= 0) {
-		setCursorXY((P2DTextBox*)mPagePaneList[mActivePaneId]);
+		setCursorXY(static_cast<P2DTextBox*>(mPagePaneList[mActivePaneId]));
 		mCursorPane->move(mCursorTargetX, mCursorTargetY);
 	}
 
@@ -684,7 +684,7 @@ zen::ogScrMessageMgr::MessageStatus zen::ogScrMessageMgr::update(Controller* inp
 		switch (mPagePaneList[mNextPaneId]->getTypeID()) {
 		case PANETYPE_Picture:
 		{
-			P2DPicture* pic = (P2DPicture*)mPagePaneList[mNextPaneId];
+			P2DPicture* pic = static_cast<P2DPicture*>(mPagePaneList[mNextPaneId]);
 			pic->show();
 			if (mTextAnimationProgress < 1.0f) {
 				u8 alpha = 0;

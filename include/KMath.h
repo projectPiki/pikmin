@@ -55,8 +55,8 @@ bool isNan(f32 x);
 void makePostureMatrix(immut Vector3f& col0, immut Vector3f& col1, immut Vector3f& col2, Matrix4f& outMtx);
 f32 calcImpulse(immut Vector3f& relativePos, f32 mass, immut Vector3f& collisionNormal, immut Matrix4f& inertiaTensor,
                 immut Vector3f& relativeVel, immut Vector3f& separationVel);
-Vector3f CRSpline(f32 t, immut Vector3f* ctrlPts);
-Vector3f CRSplineTangent(f32 t, immut Vector3f* ctrlPts);
+Vector3f CRSpline(f32 t, immut Vector3f* const ctrlPts);
+Vector3f CRSplineTangent(f32 t, immut Vector3f* const ctrlPts);
 Vector3f getThrowVelocity(immut Vector3f& startPos, f32 horizSpeed, immut Vector3f& targetPos, Vector3f NRef targetDir);
 f32 getCameraSafeAngle(immut Vector3f& cameraPos, f32 checkDistance, f32 heightWeighting);
 

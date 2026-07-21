@@ -725,11 +725,11 @@ void ActorInstance::checkEventKeys(f32 curTime, f32 prevTime, Vector3f& pos)
 				case 9:
 				{
 					mMeteorFlag = false;
-					for (int i = 0; i < 4; i++) {
-						for (int j = 0; j < 4; j++) {
-							if (mEffectGrid[i][j]) {
-								effectMgr->kill(mEffectGrid[i][j], false);
-								mEffectGrid[i][j] = nullptr;
+					for (int row = 0; row < 4; row++) {
+						for (int col = 0; col < 4; col++) {
+							if (mEffectGrid[row][col]) {
+								effectMgr->kill(mEffectGrid[row][col], false);
+								mEffectGrid[row][col] = nullptr;
 							}
 						}
 					}
@@ -1554,15 +1554,15 @@ void SceneCut::genCutSection(AgeServer& server)
 		if (key->mEventType == ANIMEVENT_Action) {
 			server.setOnChange(new Delegate1<SceneCut, AgeServer&>(this, ageRefresh));
 			server.StartOptionBox("", &key->mEventCmdID, 90);
-			for (int i = 0; i < demoEventMgr->getSenderMax(); i++) {
-				server.NewOption(demoEventMgr->getSenderName(i), i);
+			for (int senderIdx = 0; senderIdx < demoEventMgr->getSenderMax(); senderIdx++) {
+				server.NewOption(demoEventMgr->getSenderName(senderIdx), senderIdx);
 			}
 			server.EndOptionBox();
 			server.setOnChange((IDelegate*)nullptr);
 
 			server.StartOptionBox("", &key->mKeyType, 80);
-			for (int i = 0; i < demoEventMgr->getEventMax(); i++) {
-				server.NewOption(demoEventMgr->getEventName(key->mEventCmdID, i), i);
+			for (int eventIdx = 0; eventIdx < demoEventMgr->getEventMax(); eventIdx++) {
+				server.NewOption(demoEventMgr->getEventName(key->mEventCmdID, eventIdx), eventIdx);
 			}
 			server.EndOptionBox();
 		} else {

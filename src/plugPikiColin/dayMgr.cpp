@@ -903,13 +903,14 @@ void DayMgr::menuDecreaseTime(Menu& parent)
  */
 void DayMgr::refresh(Graphics& gfx, f32 time, int numLights)
 {
+	TimeSetting* timeSettingStart;
+	TimeSetting* timeSettingEnd;
+
 	// cap number of lights at active light count (default: 2)
-	int lights = (numLights < mActiveLightCount) ? numLights : mActiveLightCount;
+	int lightCount = (numLights < mActiveLightCount) ? numLights : mActiveLightCount;
 
 	// get blending parameters based on time of day
 	f32 blendRatio = 0.0f;
-	TimeSetting* timeSettingStart;
-	TimeSetting* timeSettingEnd;
 	if (time == MOVIE_TIME) {
 		// special movie lighting
 		timeSettingStart = timeSettingEnd = &mTimeSettings[TIME_Movie];
@@ -954,33 +955,32 @@ void DayMgr::refresh(Graphics& gfx, f32 time, int numLights)
 		    = (time - gameflow.mParameters->mEveningMid()) / (gameflow.mParameters->mEveningEnd() - gameflow.mParameters->mEveningMid());
 	}
 
-	// lerp lighting and colour settings the appropriate amount between our parameters for all used lights
-	// ambient colour
+	// lerp lighting and colour settings the appropriate amount between our parameters for all used lights ambient colour
 	timeSettingStart->mAmbientColour.lerpTo(timeSettingEnd->mAmbientColour, blendRatio, mCurrentTimeSetting.mAmbientColour);
 
-	for (int i = 0; i < lights; i++) {
+	for (int i1 = 0; i1 < lightCount; i1++) {
 		// light colour
-		timeSettingStart->mLights[i].mDiffuseColour.lerpTo(timeSettingEnd->mLights[i].mDiffuseColour, blendRatio,
-		                                                   mCurrentTimeSetting.mLights[i].mDiffuseColour);
+		timeSettingStart->mLights[i1].mDiffuseColour.lerpTo(timeSettingEnd->mLights[i1].mDiffuseColour, blendRatio,
+		                                                    mCurrentTimeSetting.mLights[i1].mDiffuseColour);
 
 		// light types
-		mCurrentTimeSetting.mLights[i].mLightFlag = timeSettingStart->mLights[i].mLightFlag;
-		mCurrentTimeSetting.mLightMoveTypes[i]    = timeSettingStart->mLightMoveTypes[i];
+		mCurrentTimeSetting.mLights[i1].mLightFlag = timeSettingStart->mLights[i1].mLightFlag;
+		mCurrentTimeSetting.mLightMoveTypes[i1]    = timeSettingStart->mLightMoveTypes[i1];
 
 		// light ranges/angles/positions/directions
-		mCurrentTimeSetting.mLights[i].mDistancedRange
-		    = timeSettingStart->mLights[i].mDistancedRange
-		    + (timeSettingEnd->mLights[i].mDistancedRange - timeSettingStart->mLights[i].mDistancedRange) * blendRatio;
+		mCurrentTimeSetting.mLights[i1].mDistancedRange
+		    = timeSettingStart->mLights[i1].mDistancedRange
+		    + (timeSettingEnd->mLights[i1].mDistancedRange - timeSettingStart->mLights[i1].mDistancedRange) * blendRatio;
 
-		mCurrentTimeSetting.mLights[i].mSpotAngle
-		    = timeSettingStart->mLights[i].mSpotAngle
-		    + (timeSettingEnd->mLights[i].mSpotAngle - timeSettingStart->mLights[i].mSpotAngle) * blendRatio;
+		mCurrentTimeSetting.mLights[i1].mSpotAngle
+		    = timeSettingStart->mLights[i1].mSpotAngle
+		    + (timeSettingEnd->mLights[i1].mSpotAngle - timeSettingStart->mLights[i1].mSpotAngle) * blendRatio;
 
-		timeSettingStart->mLights[i].mPosition.lerpTo(timeSettingEnd->mLights[i].mPosition, blendRatio,
-		                                              mCurrentTimeSetting.mLights[i].mPosition);
+		timeSettingStart->mLights[i1].mPosition.lerpTo(timeSettingEnd->mLights[i1].mPosition, blendRatio,
+		                                               mCurrentTimeSetting.mLights[i1].mPosition);
 
-		timeSettingStart->mLights[i].mDirection.lerpTo(timeSettingEnd->mLights[i].mDirection, blendRatio,
-		                                               mCurrentTimeSetting.mLights[i].mDirection);
+		timeSettingStart->mLights[i1].mDirection.lerpTo(timeSettingEnd->mLights[i1].mDirection, blendRatio,
+		                                                mCurrentTimeSetting.mLights[i1].mDirection);
 	}
 
 	// lerp fog settings
@@ -1010,37 +1010,37 @@ void DayMgr::refresh(Graphics& gfx, f32 time, int numLights)
 		mMapMgr->_08.set(mCurrentSunPosition.x / 20.0f, mCurrentSunPosition.y / 5.0f, mCurrentSunPosition.z / 20.0f);
 	}
 
-	//
-	for (int i = 0; i < lights; i++) {
-		if (GET_LIGHT_TYPE(mCurrentTimeSetting.mLights[i].mLightFlag) == LIGHT_Parallel) {
+	// Move and rotate lights based on the sun or the captain
+	for (int i2 = 0; i2 < lightCount; i2++) {
+		if (GET_LIGHT_TYPE(mCurrentTimeSetting.mLights[i2].mLightFlag) == LIGHT_Parallel) {
 			// calculate appropriate parallel light directions/positions for sun and underlighting
-			if (!(i & 1)) {
+			if (!(i2 & 1)) {
 				// even-numbered lights (main, +1, +3, +5) - sun
-				mCurrentTimeSetting.mLights[i].mPosition.set(mCurrentSunPosition.x, mCurrentSunPosition.y, mCurrentSunPosition.z);
-				mCurrentTimeSetting.mLights[i].mDirection.set(-mCurrentSunPosition.x, -mCurrentSunPosition.y, -mCurrentSunPosition.z);
-				mCurrentTimeSetting.mLights[i].mDirection.normalise();
+				mCurrentTimeSetting.mLights[i2].mPosition.set(mCurrentSunPosition.x, mCurrentSunPosition.y, mCurrentSunPosition.z);
+				mCurrentTimeSetting.mLights[i2].mDirection.set(-mCurrentSunPosition.x, -mCurrentSunPosition.y, -mCurrentSunPosition.z);
+				mCurrentTimeSetting.mLights[i2].mDirection.normalise();
 			} else {
 				// odd-numbered lights (sub, +2, +4) - underlighting
-				mCurrentTimeSetting.mLights[i].mPosition.set(-mCurrentSunPosition.x, -mCurrentSunPosition.y, -mCurrentSunPosition.z);
-				mCurrentTimeSetting.mLights[i].mDirection.set(mCurrentSunPosition.x, mCurrentSunPosition.y, mCurrentSunPosition.z);
-				mCurrentTimeSetting.mLights[i].mDirection.normalise();
+				mCurrentTimeSetting.mLights[i2].mPosition.set(-mCurrentSunPosition.x, -mCurrentSunPosition.y, -mCurrentSunPosition.z);
+				mCurrentTimeSetting.mLights[i2].mDirection.set(mCurrentSunPosition.x, mCurrentSunPosition.y, mCurrentSunPosition.z);
+				mCurrentTimeSetting.mLights[i2].mDirection.normalise();
 			}
-		} else if (mCurrentTimeSetting.mLightMoveTypes[i] == LIGHTMOVE_AttachToNavi && naviMgr && naviMgr->getNavi()) {
+		} else if (mCurrentTimeSetting.mLightMoveTypes[i2] == LIGHTMOVE_AttachToNavi && naviMgr && naviMgr->getNavi()) {
 			// (non-parallel) light moves with captain, calculate directions and positions
 			// calc rotation in navi local coordinates, then move with navi
 			Matrix4f naviLocalMtx;
 			naviLocalMtx.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), Vector3f(0.0f, naviMgr->getNavi()->mFaceDirection, 0.0f),
 			                     Vector3f(0.0f, 0.0f, 0.0f));
-			mCurrentTimeSetting.mLights[i].mDirection.rotate(naviLocalMtx);
-			mCurrentTimeSetting.mLights[i].mPosition.rotate(naviLocalMtx);
-			mCurrentTimeSetting.mLights[i].mPosition.add(naviMgr->getNavi()->mSRT.t);
+			mCurrentTimeSetting.mLights[i2].mDirection.rotate(naviLocalMtx);
+			mCurrentTimeSetting.mLights[i2].mPosition.rotate(naviLocalMtx);
+			mCurrentTimeSetting.mLights[i2].mPosition.add(naviMgr->getNavi()->mSRT.t);
 		}
 	}
 
 	// push lights to graphics unit
-	for (int i = 0; i < lights; i++) {
-		mCurrentTimeSetting.mLights[i].update();
-		gfx.addLight(&mCurrentTimeSetting.mLights[i]);
+	for (int i3 = 0; i3 < lightCount; i3++) {
+		mCurrentTimeSetting.mLights[i3].update();
+		gfx.addLight(&mCurrentTimeSetting.mLights[i3]);
 	}
 
 	// push fog settings to graphics unit

@@ -107,7 +107,7 @@ public:
 
 	void update(P2DPane* pane)
 	{
-		P2DPicture* pic = (P2DPicture*)pane;
+		P2DPicture* pic = static_cast<P2DPicture*>(pane);
 		f32 t;
 		switch (mPanelMgr->getStatusFlag()) {
 		case MenuPanelMgr::STATE_Wait:

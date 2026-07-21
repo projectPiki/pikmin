@@ -989,7 +989,9 @@ void UfoItem::refresh(Graphics& gfx)
  */
 void UfoItem::demoDraw(Graphics& gfx, immut Matrix4f* mtx)
 {
-	for (int i = 0; i < 4; i++) {
+	int i;
+
+	for (i = 0; i < 4; i++) {
 		mLightAnims[i].update();
 	}
 
@@ -1002,39 +1004,39 @@ void UfoItem::demoDraw(Graphics& gfx, immut Matrix4f* mtx)
 	}
 
 	Vector3f pos;
-	STACK_PAD_VAR(1);
+	f32 cjwpret; // `BaseShape::calcJointWorldPos` return value is stored but never used.
+
 	pos.set(0.0f, 14.0f, 0.0f);
-	mShipModel->mShape->calcJointWorldPos(gfx, 48, pos);
+	cjwpret         = mShipModel->mShape->calcJointWorldPos(gfx, 48, pos);
 	mPca2FxPosition = pos;
 
 	pos.set(0.0f, 14.0f, 0.0f);
-	mShipModel->mShape->calcJointWorldPos(gfx, 49, pos);
+	cjwpret         = mShipModel->mShape->calcJointWorldPos(gfx, 49, pos);
 	mPca1FxPosition = pos;
 
 	if (playerState->isTutorial()) {
 
 		pos.set(13.1f, -98.4f, -2.0f);
-		mShipModel->mShape->calcJointWorldPos(gfx, 2, pos);
+		cjwpret                   = mShipModel->mShape->calcJointWorldPos(gfx, 2, pos);
 		mTroubleFxPositionList[0] = pos;
 
 		pos.set(-9.2f, -68.1f, 28.6f);
-		mShipModel->mShape->calcJointWorldPos(gfx, 2, pos);
+		cjwpret                   = mShipModel->mShape->calcJointWorldPos(gfx, 2, pos);
 		mTroubleFxPositionList[1] = pos;
-
 		mTroubleFxPositionList[2] = mTroubleFxPositionList[0];
 		mTroubleFxPositionList[3] = mTroubleFxPositionList[1];
 
 		pos.set(-22.2f, 4.9f, -25.0f);
-		mShipModel->mShape->calcJointWorldPos(gfx, 41, pos);
+		cjwpret                   = mShipModel->mShape->calcJointWorldPos(gfx, 41, pos);
 		mTroubleFxPositionList[4] = pos;
 
 		pos.set(0.0f, -93.0f, 0.0f);
-		mShipModel->mShape->calcJointWorldPos(gfx, 2, pos);
+		cjwpret                   = mShipModel->mShape->calcJointWorldPos(gfx, 2, pos);
 		mTroubleFxPositionList[5] = pos;
 	}
 
 	mCollInfo->updateInfo(gfx, false);
-	for (int i = 0; i < 3; i++) {
+	for (i = 0; i < 3; i++) {
 		CollPart* part = mCollInfo->getSphere('gol1');
 		if (part) {
 			f32 anglePosition = mFaceDirection + mSpots[i].mAngleOffset;

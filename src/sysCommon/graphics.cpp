@@ -568,16 +568,17 @@ void Font::setTexture(Texture* tex, int numRows, int numCols)
 	mCharHeight = mTexture->mHeight / numCols;
 
 	int charIndex = 0;
-	for (int i = 0; i < numCols; i++) {
-		for (int j = 0; j < numRows; j++) {
+	for (int col = 0; col < numCols; col++) {
+		for (int row = 0; row < numRows; row++) {
 			int leftEdge  = 0;
 			int rightEdge = 0;
 
 			// Find left boundary
-			for (int k = 0; k < mCharWidth; k++) {
+			for (int pixelX1 = 0; pixelX1 < mCharWidth; pixelX1++) {
 				int alphaCount = 0;
-				for (int m = 0; m < mCharHeight - 1; m++) {
-					if (!tex->getAlpha(k + (j * mCharWidth), m + (i * mCharHeight))) {
+				for (int pixelY1 = 0; pixelY1 < mCharHeight - 1; pixelY1++) {
+					u8 alpha = tex->getAlpha(row * mCharWidth + pixelX1, col * mCharHeight + pixelY1);
+					if (alpha == 0) {
 						alphaCount++;
 					}
 				}
@@ -586,14 +587,15 @@ void Font::setTexture(Texture* tex, int numRows, int numCols)
 					break;
 				}
 
-				leftEdge = k;
+				leftEdge = pixelX1;
 			}
 
 			// Find right boundary
-			for (int k = mCharWidth - 1; k >= 0; k--) {
+			for (int pixelX2 = mCharWidth - 1; pixelX2 >= 0; pixelX2--) {
 				int alphaCount = 0;
-				for (int m = 0; m < mCharHeight - 1; m++) {
-					if (!tex->getAlpha(k + (j * mCharWidth), m + (i * mCharHeight))) {
+				for (int pixelY2 = 0; pixelY2 < mCharHeight - 1; pixelY2++) {
+					u8 alpha = tex->getAlpha(row * mCharWidth + pixelX2, col * mCharHeight + pixelY2);
+					if (alpha == 0) {
 						alphaCount++;
 					}
 				}
@@ -602,22 +604,20 @@ void Font::setTexture(Texture* tex, int numRows, int numCols)
 					break;
 				}
 
-				rightEdge = mCharWidth - k;
+				rightEdge = mCharWidth - pixelX2;
 			}
 
 			// Find baseline
 			int baseline    = -1;
 			int baselinePos = mCharWidth;
-			for (int k = 0; k < mCharWidth; k++) {
-				int x    = j * mCharWidth;
-				int y    = (mCharHeight + (i * mCharHeight));
-				u8 alpha = tex->getAlpha(k + x, y - 1);
+			for (int pixelX3 = 0; pixelX3 < mCharWidth; pixelX3++) {
+				u8 alpha = tex->getAlpha(row * mCharWidth + pixelX3, col * mCharHeight + (mCharHeight - 1));
 				if (baseline < 0) {
-					if (!alpha) {
-						baseline = k;
+					if (alpha == 0) {
+						baseline = pixelX3;
 					}
-				} else if (alpha) {
-					baselinePos = k;
+				} else if (alpha != 0) {
+					baselinePos = pixelX3;
 					break;
 				}
 			}
@@ -626,9 +626,9 @@ void Font::setTexture(Texture* tex, int numRows, int numCols)
 			// so much indexing, this isn't even an inline function
 			mChars[charIndex].mCharSpacing         = baselinePos - baseline;
 			mChars[charIndex].mLeftOffset          = baseline - leftEdge;
-			mChars[charIndex].mTextureX            = leftEdge + j * mCharWidth;
+			mChars[charIndex].mTextureX            = row * mCharWidth + leftEdge;
 			mChars[charIndex].mWidth               = mCharWidth - leftEdge - rightEdge;
-			mChars[charIndex].mTextureY            = i * mCharHeight;
+			mChars[charIndex].mTextureY            = col * mCharHeight;
 			mChars[charIndex].mHeight              = mCharHeight - 1;
 			mChars[charIndex].mTextureCoords.mMinX = (s16)mChars[charIndex].mTextureX;
 			mChars[charIndex].mTextureCoords.mMinY = (s16)mChars[charIndex].mTextureY;

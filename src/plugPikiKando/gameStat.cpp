@@ -64,16 +64,17 @@ void GameStat::init()
  */
 void GameStat::update()
 {
-	for (int i = PikiMinColor; i < PikiColorCount; i++) {
-		mapPikis.set(formationPikis[i] + freePikis[i] + mePikis[i] + workPikis[i], i);
+	int color;
+
+	for (color = PikiMinColor; color < PikiColorCount; color++) {
+		mapPikis.set(formationPikis[color] + freePikis[color] + mePikis[color] + workPikis[color], color);
 	}
 
-	for (int i = PikiMinColor; i < PikiColorCount; i++) {
-		allPikis.set(mapPikis[i] + containerPikis[i], i);
+	for (color = PikiMinColor; color < PikiColorCount; color++) {
+		allPikis.set(mapPikis[color] + containerPikis[color], color);
 	}
 
-	int total = allPikis;
-	if (total > maxPikis) {
+	if (allPikis > maxPikis) {
 		maxPikis = allPikis;
 	}
 }

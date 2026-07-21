@@ -1,4 +1,3 @@
-#include "zen/ogRader.h"
 #include "DebugLog.h"
 #include "FlowController.h"
 #include "GoalItem.h"
@@ -13,7 +12,9 @@
 #include "UfoItem.h"
 #include "jaudio/verysimple.h"
 #include "sysNew.h"
+#include "zen/ogRader.h"
 #include "zen/ogSub.h"
+
 
 /**
  * @todo: Documentation
@@ -73,10 +74,10 @@ zen::ogRaderMgr::ogRaderMgr()
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
 	switch (flowCont.mCurrentStage->mStageID)
 #else
-	s16 stage = flowCont.mCurrentStage->mStageID;
-	mMapAreaCenterX       = map_area_data[stage][0];
-	mMapAreaCenterZ       = map_area_data[stage][1];
-	mMapAreaRadius       = map_area_data[stage][2];
+	s16 stage       = flowCont.mCurrentStage->mStageID;
+	mMapAreaCenterX = map_area_data[stage][0];
+	mMapAreaCenterZ = map_area_data[stage][1];
+	mMapAreaRadius  = map_area_data[stage][2];
 
 	switch (stage)
 #endif
@@ -126,20 +127,20 @@ zen::ogRaderMgr::ogRaderMgr()
 	}
 	}
 
-	mAlphaMgr         = new PikaAlphaMgr(screen);
+	mAlphaMgr               = new PikaAlphaMgr(screen);
 	mOlimarIconAngle        = 0.0f;
-	mMainScreen = screen;
-	mRootPane         = screen->search('root', true);
-	mBluePikiIconTemplate         = (P2DPicture*)screen->search('mbpi', true);
-	mRedPikiIconTemplate         = (P2DPicture*)screen->search('mrpi', true);
-	mYellowPikiIconTemplate         = (P2DPicture*)screen->search('mypi', true);
-	mSeedIconTemplate         = (P2DPicture*)screen->search('mmpi', true);
-	mPartIconTemplate         = (P2DPicture*)screen->search('part', true);
-	mOlimarIcon         = (P2DPicture*)screen->search('orim', true);
-	mBlueContainerIcon         = (P2DPicture*)screen->search('mbci', true);
-	mRedContainerIcon         = (P2DPicture*)screen->search('mrci', true);
-	mYellowContainerIcon         = (P2DPicture*)screen->search('myci', true);
-	mRocketIcon         = (P2DPicture*)screen->search('mroi', true);
+	mMainScreen             = screen;
+	mRootPane               = screen->search('root', true);
+	mBluePikiIconTemplate   = (P2DPicture*)screen->search('mbpi', true);
+	mRedPikiIconTemplate    = (P2DPicture*)screen->search('mrpi', true);
+	mYellowPikiIconTemplate = (P2DPicture*)screen->search('mypi', true);
+	mSeedIconTemplate       = (P2DPicture*)screen->search('mmpi', true);
+	mPartIconTemplate       = (P2DPicture*)screen->search('part', true);
+	mOlimarIcon             = (P2DPicture*)screen->search('orim', true);
+	mBlueContainerIcon      = (P2DPicture*)screen->search('mbci', true);
+	mRedContainerIcon       = (P2DPicture*)screen->search('mrci', true);
+	mYellowContainerIcon    = (P2DPicture*)screen->search('myci', true);
+	mRocketIcon             = (P2DPicture*)screen->search('mroi', true);
 
 	setOffsetSub(mOlimarIcon);
 	setOffsetSub(mBlueContainerIcon);
@@ -201,9 +202,9 @@ zen::ogRaderMgr::ogRaderMgr()
 	mMapPicture->show();
 	mIconPane->show();
 	setRaderScroll(0, 0);
-	mCurrentScale = 2.0f;
-	mScrollOffsetX  = 0.0f;
-	mScrollOffsetY  = 0.0f;
+	mCurrentScale     = 2.0f;
+	mScrollOffsetX    = 0.0f;
+	mScrollOffsetY    = 0.0f;
 	mMapRotationAngle = 0.0f;
 	setRaderAngle(mMapRotationAngle);
 	mStatus = STATE_INACTIVE;
@@ -218,7 +219,7 @@ zen::ogRaderMgr::ogRaderMgr()
 void zen::ogRaderMgr::setRaderScale(f32 scale)
 {
 	mCurrentScale = scale;
-	mTargetScale = scale;
+	mTargetScale  = scale;
 	mMapPicture->setScale(mCurrentScale);
 	mIconPane->setScale(mCurrentScale / 10.0f);
 }
@@ -260,10 +261,10 @@ void zen::ogRaderMgr::setRaderScroll(int x, int y)
  */
 void zen::ogRaderMgr::getOrimaPos()
 {
-	Navi* navi = naviMgr->getNavi();
-	mOlimarWorldPos       = navi->getPosition();
+	Navi* navi      = naviMgr->getNavi();
+	mOlimarWorldPos = navi->getPosition();
 
-	mOlimarMapPos = ogCalcDispXZ(mOlimarWorldPos);
+	mOlimarMapPos  = ogCalcDispXZ(mOlimarWorldPos);
 	mOlimarMapPosX = mOlimarMapPos.x;
 	mOlimarMapPosY = mOlimarMapPos.z;
 	mOlimarIcon->move(mOlimarMapPosX, mOlimarMapPosY);
@@ -330,15 +331,15 @@ void zen::ogRaderMgr::getPartsPos()
 		mPartIcons[i]->hide();
 	}
 
-	int i = 0;
+	int partIdx = 0;
 	for (RadarInfo::PartsInfo* info = radarInfo->getFirst(); info; info = info->getNext()) {
 
 		Vector3f inPos = info->getPos();
 		Vector3f pos   = ogCalcDispXZ(inPos);
-		mPartIcons[i]->show();
-		mPartIcons[i]->move(pos.x, pos.z);
-		mPartIcons[i]->setScale(7.5f / mCurrentScale);
-		i++;
+		mPartIcons[partIdx]->show();
+		mPartIcons[partIdx]->move(pos.x, pos.z);
+		mPartIcons[partIdx]->setScale(7.5f / mCurrentScale);
+		partIdx++;
 	}
 }
 
@@ -348,7 +349,7 @@ void zen::ogRaderMgr::getPartsPos()
 void zen::ogRaderMgr::getAllPikiPos()
 {
 	PikiRaderEntry* data = mPikiEntries;
-	mVisiblePikiCount                  = 0;
+	mVisiblePikiCount    = 0;
 	for (int i = 0; i < MAX_PIKI_ON_FIELD; i++) {
 		data->mPic->hide();
 		data++;
@@ -358,7 +359,7 @@ void zen::ogRaderMgr::getAllPikiPos()
 	Iterator iterator(pikiMgr);
 	CI_LOOP(iterator)
 	{
-		Piki* piki = (Piki*)*iterator;
+		Piki* piki = static_cast<Piki*>(*iterator);
 		if (piki->isAlive()) {
 			Vector3f pos = ogCalcDispXZ(piki->mSRT.t);
 			data->mColor = piki->mColor;
@@ -373,7 +374,7 @@ void zen::ogRaderMgr::getAllPikiPos()
 	Iterator iterator2(itemMgr->getPikiHeadMgr());
 	CI_LOOP(iterator2)
 	{
-		PikiHeadItem* piki = (PikiHeadItem*)*iterator2;
+		PikiHeadItem* piki = static_cast<PikiHeadItem*>(*iterator2);
 
 		Vector3f pos = ogCalcDispXZ(piki->mSRT.t);
 		data->mColor = -1;
@@ -429,14 +430,14 @@ void zen::ogRaderMgr::start()
 		return;
 	}
 
-	mControlMode  = CONTROL_GAME;
+	mControlMode    = CONTROL_GAME;
 	mTargetMapAlpha = 64;
-	mCenterX  = 320.0f;
-	mCenterY  = 220.0f;
-	mScissorWidth  = 155;
+	mCenterX        = 320.0f;
+	mCenterY        = 220.0f;
+	mScissorWidth   = 155;
 	mScissorHeight  = 264;
-	mScissorX  = 320 - mScissorWidth / 2;
-	mScissorY  = 220 - mScissorHeight / 2;
+	mScissorX       = 320 - mScissorWidth / 2;
+	mScissorY       = 220 - mScissorHeight / 2;
 	startSub();
 }
 
@@ -452,20 +453,20 @@ void zen::ogRaderMgr::startMenu(P2DPane* pane)
 		return;
 	}
 
-	mControlMode  = CONTROL_MENU;
+	mControlMode       = CONTROL_MENU;
 	mIsScrollSeActive  = false;
 	mIsZoomInSeActive  = false;
-	mIsZoomOutSeActive  = false;
-	mTargetMapAlpha = 200;
+	mIsZoomOutSeActive = false;
+	mTargetMapAlpha    = 200;
 
-	int posH = pane->getPosH();
-	int posV = pane->getPosV();
-	int w    = pane->getWidth();
-	int h    = pane->getHeight();
-	mCenterX      = posH + w / 2;
-	mCenterY      = posV + h / 2;
-	mScissorWidth      = w;
-	mScissorHeight      = h;
+	int posH       = pane->getPosH();
+	int posV       = pane->getPosV();
+	int w          = pane->getWidth();
+	int h          = pane->getHeight();
+	mCenterX       = posH + w / 2;
+	mCenterY       = posV + h / 2;
+	mScissorWidth  = w;
+	mScissorHeight = h;
 	mScissorX      = posH;
 	mScissorY      = posV;
 	startSub();
@@ -504,20 +505,20 @@ void zen::ogRaderMgr::updateGame(Controller* input)
 		switch (mStatus) {
 		case STATE_ACTIVE_ZOOM_2:
 		{
-			mTargetScale    = 2.0f;
-			mStatus = STATE_ACTIVE_ZOOM_4;
+			mTargetScale = 2.0f;
+			mStatus      = STATE_ACTIVE_ZOOM_4;
 			break;
 		}
 		case STATE_ACTIVE_ZOOM_4:
 		{
-			mTargetScale    = 4.0f;
-			mStatus = STATE_ACTIVE_ZOOM_8;
+			mTargetScale = 4.0f;
+			mStatus      = STATE_ACTIVE_ZOOM_8;
 			break;
 		}
 		case STATE_ACTIVE_ZOOM_8:
 		{
-			mTargetScale    = 8.0f;
-			mStatus = STATE_ACTIVE_MAX;
+			mTargetScale = 8.0f;
+			mStatus      = STATE_ACTIVE_MAX;
 			break;
 		}
 		case STATE_ACTIVE_MAX:
@@ -555,7 +556,8 @@ void zen::ogRaderMgr::AreaScroll(f32* p1, f32* p2, f32 p3, f32 p4)
 	f32 z  = mOlimarWorldPos.z;
 	f32 x1 = a + x - c;
 	f32 z1 = b + z - d;
-	PRINT("scroll(%7.2f, %7.2f)  orima(%7.2f, %7.2f)  area(%7.2f, %7.2f)\n", p3, p4, mOlimarWorldPos.x, mOlimarWorldPos.z, mMapAreaCenterX, mMapAreaCenterZ);
+	PRINT("scroll(%7.2f, %7.2f)  orima(%7.2f, %7.2f)  area(%7.2f, %7.2f)\n", p3, p4, mOlimarWorldPos.x, mOlimarWorldPos.z, mMapAreaCenterX,
+	      mMapAreaCenterZ);
 	f32 dist = std::sqrtf(SQUARE(x1) + SQUARE(z1));
 	if (dist < mMapAreaRadius) {
 		*p1 = a;
@@ -667,19 +669,19 @@ void zen::ogRaderMgr::updateMenu(Controller* input)
 	case 0:
 	{
 		mIsZoomOutSeActive = 0;
-		mIsZoomInSeActive = 0;
+		mIsZoomInSeActive  = 0;
 		break;
 	}
 	case 1:
 	{
 		mIsZoomOutSeActive = 0;
-		mIsZoomInSeActive = 1;
+		mIsZoomInSeActive  = 1;
 		break;
 	}
 	case -1:
 	{
 		mIsZoomOutSeActive = 1;
-		mIsZoomInSeActive = 0;
+		mIsZoomInSeActive  = 0;
 		break;
 	}
 	}

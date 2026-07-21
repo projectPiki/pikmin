@@ -1065,8 +1065,7 @@ void NaviContainerState::exec(Navi* navi)
 void NaviContainerState::enterPikis(Navi* navi, int countToEnter)
 {
 	PRINT("goal color = %d\n", navi->mGoalItem->mOnionColour);
-	// This has a capacity of 200 in the vanilla game for some reason.
-	Piki* pikiList[MAX_PIKI_ON_FIELD == 100 ? 200 : MAX_PIKI_ON_FIELD];
+	Piki* pikiList[MAX_PIKI_ON_FIELD * 2]; // This has a capacity of 200 for some reason.
 	int numPikis = 0;
 	Iterator it(navi->mPlateMgr);
 

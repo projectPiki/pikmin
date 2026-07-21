@@ -1883,13 +1883,17 @@ void PelletMgr::genAge(AgeServer& server)
 	server.NewButton("new config", new Delegate1<PelletMgr, AgeServer&>(this, addConfig), 221);
 	server.EndGroup();
 
+	CoreNode* cnode;
+
 	server.StartSection("シェイプ管理", true); // shape management
 	server.StartGroup("file");
 	server.NewButton("new animinfo", new Delegate1<PelletMgr, AgeServer&>(this, addAnimInfo), 221);
 	server.NewButton("Load", new Delegate1<PelletMgr, AgeServer&>(this, animInfoRead), 221);
 	server.NewButton("Save", new Delegate1<PelletMgr, AgeServer&>(this, animInfoWrite), 221);
-	FOREACH_NODE(PelletAnimInfo, mAnimInfoList.mChild, info)
+	server.EndGroup();
+	FOREACH_NODE_REUSE(CoreNode, mAnimInfoList.mChild, cnode)
 	{
+		PelletAnimInfo* info = static_cast<PelletAnimInfo*>(cnode);
 		server.StartSection(info->mID.mStringID, true);
 		server.setSectionRefresh(new Delegate1<PelletAnimInfo, AgeServer&>(info, PelletAnimInfo::genAge));
 		server.EndSection();
@@ -1901,8 +1905,10 @@ void PelletMgr::genAge(AgeServer& server)
 	server.NewButton("new config", new Delegate1<PelletMgr, AgeServer&>(this, addConfig), 221);
 	server.NewButton("Load", new Delegate1<PelletMgr, AgeServer&>(this, configRead), 221);
 	server.NewButton("Save", new Delegate1<PelletMgr, AgeServer&>(this, configWrite), 221);
-	FOREACH_NODE(PelletConfig, mConfigList.mChild, config)
+	server.EndGroup();
+	FOREACH_NODE_REUSE(CoreNode, mConfigList.mChild, cnode)
 	{
+		PelletConfig* config = static_cast<PelletConfig*>(cnode);
 		server.StartSection(config->mPelletName().mString, true);
 		server.setSectionRefresh(new Delegate1<PelletConfig, AgeServer&>(config, CoreNode::genAge));
 		server.EndSection();
@@ -1910,8 +1916,9 @@ void PelletMgr::genAge(AgeServer& server)
 	server.EndSection();
 
 	server.StartSection("animMgr", true);
-	FOREACH_NODE(PelletAnimInfo, mAnimInfoList.mChild, info)
+	FOREACH_NODE_REUSE(CoreNode, mAnimInfoList.mChild, cnode)
 	{
+		PelletAnimInfo* info = static_cast<PelletAnimInfo*>(cnode);
 		if (info->mPelletShapeObject) {
 			info->mPelletShapeObject->genAge(server);
 		}

@@ -58,7 +58,7 @@ public:
 			PRINT("not picture pane.\n");
 			ERROR("not picture pane.\n");
 		} else {
-			mLetterPic = (P2DPicture*)pane;
+			mLetterPic = static_cast<P2DPicture*>(pane);
 			mTargetX   = mLetterPic->getPosH();
 			mTargetY   = mLetterPic->getPosV();
 			initParams();

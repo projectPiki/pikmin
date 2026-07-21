@@ -58,7 +58,7 @@ template <typename T>
 class PSULink : public PSUPtrLink {
 public:
 	inline PSULink(T* object)
-	    : PSUPtrLink((void*)object)
+	    : PSUPtrLink(static_cast<void*>(object))
 	{
 	}
 
@@ -80,8 +80,8 @@ public:
 	~PSUList() { } // unused/inlined
 
 	// only DLL inlines:
-	bool append(PSULink<T>* link) { return PSUPtrList::append((PSUPtrLink*)link); }
-	bool remove(PSULink<T>* link) { return PSUPtrList::remove((PSUPtrLink*)link); }
+	bool append(PSULink<T>* link) { return PSUPtrList::append(link); }
+	bool remove(PSULink<T>* link) { return PSUPtrList::remove(link); }
 
 	// _00-_0C = PSUPtrList
 };

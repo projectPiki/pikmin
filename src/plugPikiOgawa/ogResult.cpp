@@ -1,4 +1,3 @@
-#include "zen/ogResult.h"
 #include "DebugLog.h"
 #include "GameStat.h"
 #include "P2D/Graph.h"
@@ -9,8 +8,10 @@
 #include "jaudio/verysimple.h"
 #include "zen/DrawCM.h"
 #include "zen/ogMessage.h"
+#include "zen/ogResult.h"
 #include "zen/ogSave.h"
 #include "zen/ogSub.h"
+
 
 /**
  * @todo: Documentation
@@ -190,7 +191,7 @@ void zen::ogScrResultMgr::ogScrResultMgrSub()
 {
 	mBlackScreen = new P2DScreen;
 	mBlackScreen->set("screen/blo/black.blo", false, false, true);
-	mBlackPane = (P2DPicture*)mBlackScreen->search('blck', true);
+	mBlackPane = static_cast<P2DPicture*>(mBlackScreen->search('blck', true));
 	mBlackPane->setAlpha(0);
 
 	mMainScreen = new P2DScreen;
@@ -319,9 +320,9 @@ void zen::ogScrResultMgr::ogScrResultMgrSub()
 	setNumberTag(screen, 'ti_c', &mRemainingDays, 1);
 	setNumberTag(screen, 'ti_r', &mRemainingDays, 1);
 
-	mPaneDaysL = screen->search('dc_l', true);
-	mPaneDaysC = screen->search('dc_c', true);
-	mPaneDaysR = screen->search('dc_r', true);
+	mPaneDaysL                 = screen->search('dc_l', true);
+	mPaneDaysC                 = screen->search('dc_c', true);
+	mPaneDaysR                 = screen->search('dc_r', true);
 	mPaneBornOnesDigit         = screen->search('bo_r', true);
 	mPaneDeadOnesDigit         = screen->search('ba_r', true);
 	mPaneVictimOnesDigit       = screen->search('sd_r', true);
@@ -621,19 +622,19 @@ zen::ogScrResultMgr::returnStatusFlag zen::ogScrResultMgr::update(Controller* in
 
 		mSaveStatus = mSaveMgr->update(input);
 		if (mSaveStatus == 14) {
-			mWaitTimer = 0.0f;
+			mWaitTimer     = 0.0f;
 			mPendingStatus = RESULT_ExitToMapSelect;
-			mStatus    = RESULT_FadeOut;
+			mStatus        = RESULT_FadeOut;
 		} else if (mSaveStatus == 12) {
 			mWaitTimer = 0.0f;
 			mStatus    = RESULT_Active;
 		} else if (mSaveStatus == 13) {
 			mPendingStatus = RESULT_ExitToMapSelect;
-			mStatus  = RESULT_FadeOut;
+			mStatus        = RESULT_FadeOut;
 		} else if (mSaveStatus == 15) {
-			mWaitTimer = 0.0f;
+			mWaitTimer     = 0.0f;
 			mPendingStatus = RESULT_ExitToCardSelect;
-			mStatus    = RESULT_FadeOut;
+			mStatus        = RESULT_FadeOut;
 		} else if (mSaveStatus == -1) {
 			if (input->keyClick(KBBTN_START | KBBTN_A | KBBTN_B)) {
 				seSystem->playSysSe(ogEnumFix(SYSSE_DECIDE1, JACSYS_Decide1));

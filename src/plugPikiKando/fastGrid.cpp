@@ -287,7 +287,7 @@ void FastGrid::renderAIGrid2D(Graphics& gfx)
 	gfx.useTexture(nullptr, GX_TEXMAP0);
 	gfx.setColour(Colour(155, 155, 155, 255), true);
 
-	// Making the following named constants actually `const` affects matching.  Lovely `const` memes!
+	// Making the following named constants actually `const` affects matching.  Lovely const memes!
 	immut int dispAmount = 12; // Width and height (in cells) of the displayed square grid of cells.
 	immut int iOffs      = mWidth - (dispAmount >> 1);
 	immut int jOffs      = mHeight - (dispAmount >> 1);

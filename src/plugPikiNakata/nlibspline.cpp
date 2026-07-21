@@ -41,23 +41,25 @@ void SplineInterpolator::reset()
  */
 void SplineInterpolator::makeSpline()
 {
-	f32 fVals[16];
 	NVector3f* vecVals[16];
+	f32 fVals[16];
+	int i;
+
 	if (mFrameArray->getSize() < 2) {
 		return;
 	}
 
-	for (int i = 0; i < mFrameArray->getSize(); i++) {
+	for (i = 0; i < mFrameArray->getSize(); i++) {
 		fVals[i] = mFrameArray->get(i)->getParameter();
 	}
 
-	for (int i = 0; i < mFrameArray->getSize(); i++) {
+	for (i = 0; i < mFrameArray->getSize(); i++) {
 		vecVals[i] = &mFrameArray->get(i)->getPosture().getViewpoint();
 	}
 
 	mViewpointCurve->makeCurve(fVals, vecVals, mFrameArray->getSize());
 
-	for (int i = 0; i < mFrameArray->getSize(); i++) {
+	for (i = 0; i < mFrameArray->getSize(); i++) {
 		vecVals[i] = &mFrameArray->get(i)->getPosture().getWatchpoint();
 	}
 

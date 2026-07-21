@@ -871,6 +871,7 @@ void SeSystem::dumpEvents()
 		}
 	}
 
+#if PIKI_USE_JAUDIO
 	u32 test[0x20];
 	u32 max = Jac_GetActiveEvents(test);
 	Jac_CheckFreeEvents();
@@ -879,6 +880,7 @@ void SeSystem::dumpEvents()
 		// probably something like this
 		PRINT("%d\n", test[i]);
 	}
+#endif
 }
 
 /**
