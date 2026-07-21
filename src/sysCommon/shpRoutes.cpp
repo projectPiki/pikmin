@@ -25,7 +25,7 @@ RoutePoint::RoutePoint()
     : CoreNode("rp")
 {
 	mLink.initCore("");
-	_20     = 8.0f;
+	mDebugDrawSize = 8.0f;
 	mIndex  = 0;
 	mIsOpen = true;
 	mRadius = 10.0f;
@@ -39,7 +39,7 @@ void RoutePoint::refresh(Graphics& gfx)
 {
 	gfx.useMatrix(gfx.mCamera->mLookAtMtx, 0);
 	if (gfx.initParticle(true)) {
-		gfx.drawParticle(*gfx.mCamera, Vector3f(mPosition.x, mPosition.y + 12.0f, mPosition.z), _20);
+		gfx.drawParticle(*gfx.mCamera, Vector3f(mPosition.x, mPosition.y + 12.0f, mPosition.z), mDebugDrawSize);
 	}
 	Vector3f pos(mPosition.x, mPosition.y + 12.0f, mPosition.z);
 	mScreenDepth = gfx.mCamera->projectWorldPoint(gfx, pos);
