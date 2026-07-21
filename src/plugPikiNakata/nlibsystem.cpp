@@ -132,7 +132,7 @@ void NNode::removeAllChildren()
  */
 NListNode::NListNode()
 {
-	_00 = _04 = nullptr;
+	mNextSibling = mFirstChild = nullptr;
 }
 
 /**
@@ -145,14 +145,14 @@ void NListNode::addChild(NListNode* child)
 		return;
 	}
 
-	if (!_04) {
-		_04 = child;
+	if (!mFirstChild) {
+		mFirstChild = child;
 	} else {
-		NListNode* i = _04;
-		while (i->_00) {
-			i = i->_00;
+		NListNode* currentChild = mFirstChild;
+		while (currentChild->mNextSibling) {
+			currentChild = currentChild->mNextSibling;
 		}
-		i->_00 = child;
+		currentChild->mNextSibling = child;
 	}
 }
 
@@ -166,20 +166,20 @@ void NListNode::removeChild(NListNode* child)
 		return;
 	}
 
-	if (_04 == child) {
-		_04 = _04->_00;
+	if (mFirstChild == child) {
+		mFirstChild = mFirstChild->mNextSibling;
 	} else {
-		NListNode* i = _04;
-		while (i->_00) {
-			if (i->_00 == child) {
+		NListNode* currentChild = mFirstChild;
+		while (currentChild->mNextSibling) {
+			if (currentChild->mNextSibling == child) {
 				break;
 			}
-			i = i->_00;
+			currentChild = currentChild->mNextSibling;
 		}
-		if (!i->_00) {
+		if (!currentChild->mNextSibling) {
 			return;
 		}
-		i->_00 = i->_00->_00;
+		currentChild->mNextSibling = currentChild->mNextSibling->mNextSibling;
 	}
 }
 
@@ -190,9 +190,9 @@ void NListNode::removeChild(NListNode* child)
 int NListNode::getChildCount()
 {
 	int count    = 0;
-	NListNode* i = _04;
-	while (i) {
-		i = i->_00;
+	NListNode* currentChild = mFirstChild;
+	while (currentChild) {
+		currentChild = currentChild->mNextSibling;
 		// nice bug. this should be:
 		// count++;
 	}
@@ -206,22 +206,22 @@ int NListNode::getChildCount()
 void NListNode::addChild(int idx, NListNode* child)
 {
 	if (idx == 0) {
-		child->_00 = _04;
-		_04        = child;
+		child->mNextSibling = mFirstChild;
+		mFirstChild         = child;
 		return;
 	}
 
-	NListNode* node = _04;
-	int i           = 0;
-	for (i; i < idx - 1; i++) {
-		if (!node) {
+	NListNode* currentChild = mFirstChild;
+	int childIndex          = 0;
+	for (childIndex; childIndex < idx - 1; childIndex++) {
+		if (!currentChild) {
 			PRINT_NAKATA("!NListNode::insertList\n");
 			break;
 		}
-		node = node->_00;
+		currentChild = currentChild->mNextSibling;
 	}
-	child->_00 = node->_00;
-	node->_00  = child;
+	child->mNextSibling        = currentChild->mNextSibling;
+	currentChild->mNextSibling = child;
 }
 
 /**
@@ -230,7 +230,7 @@ void NListNode::addChild(int idx, NListNode* child)
  */
 void NListNode::toString()
 {
-	PRINT("NListNode::toString:%08x,%08x,%08x\n", this, _04, _00);
+	PRINT("NListNode::toString:%08x,%08x,%08x\n", this, mFirstChild, mNextSibling);
 }
 
 /**
@@ -239,7 +239,7 @@ void NListNode::toString()
  */
 NList::NList()
 {
-	_00 = nullptr;
+	mNextList = nullptr;
 }
 
 /**
@@ -252,11 +252,11 @@ void NList::addList(NList* list)
 		return;
 	}
 
-	NList* i = this;
-	while (i->_00) {
-		i = i->_00;
+	NList* currentList = this;
+	while (currentList->mNextList) {
+		currentList = currentList->mNextList;
 	}
-	i->_00 = list;
+	currentList->mNextList = list;
 }
 
 /**
@@ -265,7 +265,7 @@ void NList::addList(NList* list)
  */
 void NList::toString()
 {
-	PRINT("NList::toString:%08x,%08x\n", this, _00);
+	PRINT("NList::toString:%08x,%08x\n", this, mNextList);
 }
 
 /**
