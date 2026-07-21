@@ -598,21 +598,21 @@ zen::ogDrawSelectDiary::SelectDiaryStatus zen::ogDrawSelectDiary::update(Control
 	mScreen->update();
 	mDiaryStatus = mDiaryInstance->update(input);
 	mBlackFadeScreen->update();
-	for (int i = mCurrentDay + 1; i < MAX_DAYS; i++) {
-		P2DPicture* obj = static_cast<P2DPicture*>(_248[i]->getPaneTree()->getParent()->getObject());
+	for (int futureDay = mCurrentDay + 1; futureDay < MAX_DAYS; futureDay++) {
+		P2DPicture* obj = static_cast<P2DPicture*>(_248[futureDay]->getPaneTree()->getParent()->getObject());
 		obj->setAlpha(0);
 	}
 
-	for (int i = 0; i <= mCurrentDay; i++) {
+	for (int day = 0; day <= mCurrentDay; day++) {
 		f32 phase = mTransitionTimer;
 		if (phase >= 1.0f) {
 			phase -= 1.0f;
 		}
 
-		phase -= f32(i) * 0.1f;
+		phase -= f32(day) * 0.1f;
 		f32 scale = 0.05f * sinf(TAU * phase) + 1.0f;
-		mDayDisplayPanes[i]->setOffset(mDayDisplayPanes[i]->getWidth() / 2, mDayDisplayPanes[i]->getHeight() / 2);
-		mDayDisplayPanes[i]->setScale(scale);
+		mDayDisplayPanes[day]->setOffset(mDayDisplayPanes[day]->getWidth() / 2, mDayDisplayPanes[day]->getHeight() / 2);
+		mDayDisplayPanes[day]->setScale(scale);
 	}
 
 	if (mStatus == ViewingSingleDiary && mDiaryStatus == ogDrawDiary::Closed) {

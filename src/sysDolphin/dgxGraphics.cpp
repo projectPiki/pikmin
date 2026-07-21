@@ -1040,31 +1040,31 @@ void DGXGraphics::setMaterial(Material* mat, bool p2)
 				GXSetTevKColor(GX_KCOLOR1, reinterpret_cast<GXColor&>(mat->mTevInfo->mKonstColors[1]));
 				GXSetTevKColor(GX_KCOLOR2, reinterpret_cast<GXColor&>(mat->mTevInfo->mKonstColors[2]));
 				GXSetTevKColor(GX_KCOLOR3, reinterpret_cast<GXColor&>(mat->mTevInfo->mKonstColors[3]));
-				for (int i = 0; i < mat->mTevInfo->mTevStageCount; i++) {
-					PVWTevStage& stage = mat->mTevInfo->mTevStages[i];
-					GXSetTevColorIn((GXTevStageID)i, (GXTevColorArg)stage.mTevColorCombiner.mInArgA,
+				for (int tevStageIdx = 0; tevStageIdx < mat->mTevInfo->mTevStageCount; tevStageIdx++) {
+					PVWTevStage& stage = mat->mTevInfo->mTevStages[tevStageIdx];
+					GXSetTevColorIn((GXTevStageID)tevStageIdx, (GXTevColorArg)stage.mTevColorCombiner.mInArgA,
 					                (GXTevColorArg)stage.mTevColorCombiner.mInArgB, (GXTevColorArg)stage.mTevColorCombiner.mInArgC,
 					                (GXTevColorArg)stage.mTevColorCombiner.mInArgD);
-					GXSetTevColorOp((GXTevStageID)i, (GXTevOp)stage.mTevColorCombiner.mTevOp, (GXTevBias)stage.mTevColorCombiner.mBias,
-					                (GXTevScale)stage.mTevColorCombiner.mScale, (GXBool)stage.mTevColorCombiner.mDoClamp,
-					                (GXTevRegID)stage.mTevColorCombiner.mOutReg);
-					GXSetTevAlphaIn((GXTevStageID)i, (GXTevAlphaArg)stage.mTevAlphaCombiner.mInArgA,
+					GXSetTevColorOp((GXTevStageID)tevStageIdx, (GXTevOp)stage.mTevColorCombiner.mTevOp,
+					                (GXTevBias)stage.mTevColorCombiner.mBias, (GXTevScale)stage.mTevColorCombiner.mScale,
+					                (GXBool)stage.mTevColorCombiner.mDoClamp, (GXTevRegID)stage.mTevColorCombiner.mOutReg);
+					GXSetTevAlphaIn((GXTevStageID)tevStageIdx, (GXTevAlphaArg)stage.mTevAlphaCombiner.mInArgA,
 					                (GXTevAlphaArg)stage.mTevAlphaCombiner.mInArgB, (GXTevAlphaArg)stage.mTevAlphaCombiner.mInArgC,
 					                (GXTevAlphaArg)stage.mTevAlphaCombiner.mInArgD);
-					GXSetTevAlphaOp((GXTevStageID)i, (GXTevOp)stage.mTevAlphaCombiner.mTevOp, (GXTevBias)stage.mTevAlphaCombiner.mBias,
-					                (GXTevScale)stage.mTevAlphaCombiner.mScale, (GXBool)stage.mTevAlphaCombiner.mDoClamp,
-					                (GXTevRegID)stage.mTevAlphaCombiner.mOutReg);
+					GXSetTevAlphaOp((GXTevStageID)tevStageIdx, (GXTevOp)stage.mTevAlphaCombiner.mTevOp,
+					                (GXTevBias)stage.mTevAlphaCombiner.mBias, (GXTevScale)stage.mTevAlphaCombiner.mScale,
+					                (GXBool)stage.mTevAlphaCombiner.mDoClamp, (GXTevRegID)stage.mTevAlphaCombiner.mOutReg);
 				}
 
 				gsys->mLightingSets++;
 				setLighting((mat->mLightingInfo.mCtrlFlag & LightingControlFlags::EnableColor0) != 0, &mat->mLightingInfo);
 			}
 
-			for (int i = 0; i < mat->mTextureInfo.mTextureDataCount; i++) {
-				if (mat->mTextureInfo.mTextureData[i].mTexture != mActiveTexture[i]) {
-					mActiveTexture[i] = mat->mTextureInfo.mTextureData[i].mTexture;
-					mActiveTexture[i]->makeResident();
-					GXLoadTexObj(mActiveTexture[i]->mTexObj, GXTexMapID(i));
+			for (int texIdx = 0; texIdx < mat->mTextureInfo.mTextureDataCount; texIdx++) {
+				if (mat->mTextureInfo.mTextureData[texIdx].mTexture != mActiveTexture[texIdx]) {
+					mActiveTexture[texIdx] = mat->mTextureInfo.mTextureData[texIdx].mTexture;
+					mActiveTexture[texIdx]->makeResident();
+					GXLoadTexObj(mActiveTexture[texIdx]->mTexObj, GXTexMapID(texIdx));
 				}
 			}
 
@@ -1074,11 +1074,12 @@ void DGXGraphics::setMaterial(Material* mat, bool p2)
 
 			GXSetNumTevStages(mat->mTevInfo->mTevStageCount);
 
-			for (int i = 0; i < mat->mTevInfo->mTevStageCount; i++) {
-				PVWTevStage& stage = mat->mTevInfo->mTevStages[i];
-				GXSetTevOrder(GXTevStageID(i), GXTexCoordID(stage.mTexCoordID), GXTexMapID(stage.mTexMapID), GXChannelID(stage.mChannelID));
-				GXSetTevKColorSel(GXTevStageID(i), GXTevKColorSel(stage.mTevKColorSel));
-				GXSetTevKAlphaSel(GXTevStageID(i), GXTevKAlphaSel(stage.mTevKAlphaSel));
+			for (int tevStageIdx = 0; tevStageIdx < mat->mTevInfo->mTevStageCount; tevStageIdx++) {
+				PVWTevStage& stage = mat->mTevInfo->mTevStages[tevStageIdx];
+				GXSetTevOrder(GXTevStageID(tevStageIdx), GXTexCoordID(stage.mTexCoordID), GXTexMapID(stage.mTexMapID),
+				              GXChannelID(stage.mChannelID));
+				GXSetTevKColorSel(GXTevStageID(tevStageIdx), GXTevKColorSel(stage.mTevKColorSel));
+				GXSetTevKAlphaSel(GXTevStageID(tevStageIdx), GXTevKAlphaSel(stage.mTevKAlphaSel));
 			}
 
 			Colour color;
@@ -1339,27 +1340,27 @@ void DGXGraphics::drawSingleMatpoly(Shape* model, Joint::MatPoly* matPoly)
 	useMaterial(&mat);
 	setupVtxDesc(model, &mat, &mesh);
 
-	for (int i = 0; i < mesh.mMtxGroupCount; i++) {
-		MtxGroup& group = mesh.mMtxGroupList[i];
-		for (int j = 0; j < group.mDepLength; j++) {
-			if (group.mDepList[j] == -1) {
+	for (int mtxGroupIdx = 0; mtxGroupIdx < mesh.mMtxGroupCount; mtxGroupIdx++) {
+		MtxGroup& group = mesh.mMtxGroupList[mtxGroupIdx];
+		for (int depListIdx = 0; depListIdx < group.mDepLength; depListIdx++) {
+			if (group.mDepList[depListIdx] == -1) {
 				continue;
 			}
 
-			VtxMatrix& vtxMtx = model->mVtxMatrixList[group.mDepList[j]];
+			VtxMatrix& vtxMtx = model->mVtxMatrixList[group.mDepList[depListIdx]];
 			if (model->mCurrentAnimation->mData) {
 				if (vtxMtx.mHasPartialWeights) {
-					useMatrixQuick(model->getAnimMatrix(vtxMtx.mIndex), j);
+					useMatrixQuick(model->getAnimMatrix(vtxMtx.mIndex), depListIdx);
 				} else {
-					useMatrixQuick(model->getAnimMatrix(model->mJointCount + vtxMtx.mIndex), j);
+					useMatrixQuick(model->getAnimMatrix(model->mJointCount + vtxMtx.mIndex), depListIdx);
 				}
 			} else {
-				useMatrixQuick(model->mJointList[vtxMtx.mIndex].mAnimMatrix, j);
+				useMatrixQuick(model->mJointList[vtxMtx.mIndex].mAnimMatrix, depListIdx);
 			}
 		}
 
-		for (int j = 0; j < group.mDispLength; j++) {
-			DispList& list = group.mDispList[j];
+		for (int dispListIdx = 0; dispListIdx < group.mDispLength; dispListIdx++) {
+			DispList& list = group.mDispList[dispListIdx];
 			setCullFront((list.mFlags & 3) ^ mCullFlip);
 			gsys->mPolygonCount += list.mFaceCount;
 			gsys->mDispCount++;
@@ -2303,18 +2304,18 @@ void Shape::optimize()
 
 	mVertexCacheFlags
 	    = VertexCacheFlags::VertexList | VertexCacheFlags::NormalList | VertexCacheFlags::NBTList | VertexCacheFlags::ColorList;
-	for (int i = 0; i < mTotalActiveTexCoords; i++) {
-		mVertexCacheFlags |= (1 << (i + 5)); // Effectively `(VertexCacheFlags::TexCoord0 << i)`
+	for (int texCoordNum = 0; texCoordNum < mTotalActiveTexCoords; texCoordNum++) {
+		mVertexCacheFlags |= (1 << (texCoordNum + 5)); // Effectively `(VertexCacheFlags::TexCoord0 << texCoordNum)`
 	}
 
 	if (!mMeshCount) {
 		return;
 	}
 
-	for (int i = 0; i < mMeshCount; i++) {
-		for (int j = 0; j < mMeshList[i].mMtxGroupCount; j++) {
-			DispList* list = mMeshList[i].mMtxGroupList[j].mDispList;
-			for (int k = 0; k < mMeshList[i].mMtxGroupList[j].mDispLength; k++) {
+	for (int meshIdx = 0; meshIdx < mMeshCount; meshIdx++) {
+		for (int mtxGroupIdx = 0; mtxGroupIdx < mMeshList[meshIdx].mMtxGroupCount; mtxGroupIdx++) {
+			DispList* list = mMeshList[meshIdx].mMtxGroupList[mtxGroupIdx].mDispList;
+			for (int dispCount = 0; dispCount < mMeshList[meshIdx].mMtxGroupList[mtxGroupIdx].mDispLength; dispCount++) {
 				DCStoreRange(list->mData, list->mDataLength);
 				list++; // why.
 			}
