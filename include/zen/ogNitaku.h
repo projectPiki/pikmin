@@ -52,24 +52,24 @@ private:
 	bool mDoStartYes;                  // _0C
 	bool mCanCancel;                   // _0D
 	SpectrumCursorMgr mLeftCursorMgr;  // _10
-	f32 _40;                           // _40
-	f32 _44;                           // _44
-	f32 _48;                           // _48
-	f32 _4C;                           // _4C
+	f32 mYesLeftCursorX;               // _40
+	f32 mYesLeftCursorY;               // _44
+	f32 mNoLeftCursorX;                // _48
+	f32 mNoLeftCursorY;                // _4C
 	SpectrumCursorMgr mRightCursorMgr; // _50
-	f32 _80;                           // _80
-	f32 _84;                           // _84
-	f32 _88;                           // _88
-	f32 _8C;                           // _8C
+	f32 mYesRightCursorX;              // _80
+	f32 mYesRightCursorY;              // _84
+	f32 mNoRightCursorX;               // _88
+	f32 mNoRightCursorY;               // _8C
 	bool mIsYes;                       // _90
 	P2DTextBox* mTextBoxA;             // _94
 	TextColorCallBack* mMesgColorA;    // _98
 	P2DTextBox* mTextBoxB;             // _9C
 	TextColorCallBack* mMesgColorB;    // _A0
-	Colour _A4;                        // _A4
-	Colour _A8;                        // _A8
-	Colour _AC;                        // _AC
-	Colour _B0;                        // _B0
+	Colour mSelectedTextCharColor;      // _A4
+	Colour mSelectedTextGradColor;      // _A8
+	Colour mUnselectedTextCharColor;    // _AC
+	Colour mUnselectedTextGradColor;    // _B0
 	int _B4;                           // _B4
 	P2DPane* mRootPane;                // _B8
 	f32 mWaitTimer;                    // _BC
