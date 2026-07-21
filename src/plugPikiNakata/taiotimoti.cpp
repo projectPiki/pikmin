@@ -836,7 +836,7 @@ void TaiOtimotiJumpingAction::start(Teki& teki)
 bool TaiOtimotiJumpingAction::act(Teki& teki)
 {
 	NVector3f vec;
-	teki.mParabolaEvent->_2C.output(vec);
+	teki.mParabolaEvent->mClampedVelocityIO.output(vec);
 	if (vec.y <= 0.0f) {
 		vec.y = 0.0f;
 		teki.mActionVelocity.input(vec);

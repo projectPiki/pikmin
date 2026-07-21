@@ -93,12 +93,12 @@ PeveParabolaEvent::PeveParabolaEvent()
  */
 void PeveParabolaEvent::makeParabolaEvent(PeveCondition* cond, NVector3fIO* vecIO, NVector3f& p3, f32 maxLength, f32 p5)
 {
-	_2C.setMaxLength(maxLength);
-	_2C.input(p3);
+	mClampedVelocityIO.setMaxLength(maxLength);
+	mClampedVelocityIO.input(p3);
 
 	NVector3f NRef vec1 = NVector3f(0.0f, -p5, 0.0f);
-	_1C.input(vec1);
-	makeAccelerationEvent(cond, vecIO, &_2C, &_1C);
+	mGravityAccelIO.input(vec1);
+	makeAccelerationEvent(cond, vecIO, &mClampedVelocityIO, &mGravityAccelIO);
 }
 
 /**
@@ -108,8 +108,8 @@ void PeveHorizontalSinWaveEvent::makeHorizontalSinWaveEvent(PeveCondition* cond,
                                                             f32 startTheta, f32 angularVel)
 {
 	makeEvent(cond);
-	_10 = vecIO;
-	_14.input(p3);
+	mPositionIO = vecIO;
+	mLinearVelocity.input(p3);
 	mOffset          = offset;
 	mAmplitude       = amp;
 	mStartingTheta   = startTheta;
@@ -135,15 +135,15 @@ void PeveHorizontalSinWaveEvent::update()
 	f32 y     = mAmplitude * NMathF::sin(mTheta) + mOffset;
 	mTheta += fTime * mAngularVelocity;
 
-	Vector3f vec1(_14);
+	Vector3f vec1(mLinearVelocity);
 	vec1.scale(fTime);
 
 	NVector3f vec2;
-	_10->output(vec2);
+	mPositionIO->output(vec2);
 
 	vec2.add(vec1);
 	vec2.y = y;
-	_10->input(vec2);
+	mPositionIO->input(vec2);
 }
 
 /**
@@ -163,12 +163,12 @@ void PeveCircleMoveEvent::makeCircleMoveEvent(f32 timeLimit, NVector3fIO* vecIOA
 {
 	mTimeCondition.setPeriod(timeLimit);
 	makeEvent(&mTimeCondition);
-	_20 = vecIOA;
-	_24 = vecIOB;
-	_28 = p4;
-	_2C = p5;
-	_30 = p6;
-	_34 = p7;
+	mPositionIO         = vecIOA;
+	mCenterPositionIO   = vecIOB;
+	mPositionLerpFactor = p4;
+	mRadius             = p5;
+	mHeightOffset       = p6;
+	mAngularSpeed       = p7;
 }
 
 /**
@@ -186,16 +186,16 @@ void PeveCircleMoveEvent::reset()
 void PeveCircleMoveEvent::update()
 {
 	PeveEvent::update();
-	mAngle += _34 * NSystem::getFrameTime();
+	mAngle += mAngularSpeed * NSystem::getFrameTime();
 	NVector3f vec1;
-	_20->output(vec1);
+	mPositionIO->output(vec1);
 
 	NVector3f pos;
 	outputPosition(pos);
 	pos.sub(vec1);
-	pos.scale(_28);
+	pos.scale(mPositionLerpFactor);
 	vec1.add(pos);
-	_20->input(vec1);
+	mPositionIO->input(vec1);
 }
 
 /**
@@ -204,8 +204,8 @@ void PeveCircleMoveEvent::update()
 void PeveCircleMoveEvent::outputPosition(Vector3f& outPos)
 {
 	NVector3f vec1;
-	_24->output(vec1);
-	outPos.set(_2C * NMathF::sin(mAngle) + vec1.x, vec1.y + _30, _2C * NMathF::cos(mAngle) + vec1.z);
+	mCenterPositionIO->output(vec1);
+	outPos.set(mRadius * NMathF::sin(mAngle) + vec1.x, vec1.y + mHeightOffset, mRadius * NMathF::cos(mAngle) + vec1.z);
 }
 
 /**
@@ -214,10 +214,10 @@ void PeveCircleMoveEvent::outputPosition(Vector3f& outPos)
 f32 PeveCircleMoveEvent::calcAngle()
 {
 	NVector3f vec1;
-	_24->output(vec1);
+	mCenterPositionIO->output(vec1);
 
 	NVector3f vec2;
-	_20->output(vec2);
+	mPositionIO->output(vec2);
 
 	NVector3f vec3(vec1, vec2);
 	return NMathF::atan2(vec3.x, vec3.z);
@@ -265,11 +265,11 @@ PeveFunctionCurveEvent::PeveFunctionCurveEvent()
 void PeveFunctionCurveEvent::makeFunctionCurveEvent(PeveCondition* cond, NVector3fIO* vecIO, NFunction3D* func, f32 p4, f32 p5, bool p6)
 {
 	makeEvent(cond);
-	_14       = vecIO;
-	mFunction = func;
-	_1C       = p4;
-	_20       = p5;
-	_24       = p6;
+	mPositionIO             = vecIO;
+	mFunction               = func;
+	mStartParam             = p4;
+	mParamStep              = p5;
+	mUseFrameTimeScaledStep = p6;
 }
 
 /**
@@ -277,7 +277,7 @@ void PeveFunctionCurveEvent::makeFunctionCurveEvent(PeveCondition* cond, NVector
  */
 void PeveFunctionCurveEvent::reset()
 {
-	_10 = _1C;
+	mCurrentParam = mStartParam;
 }
 
 /**
@@ -287,12 +287,12 @@ void PeveFunctionCurveEvent::update()
 {
 	PeveEvent::update();
 	NVector3f NRef vec1 = NVector3f();
-	mFunction->outputPosition(_10, vec1);
-	_14->input(vec1);
-	if (_24) {
-		_10 += _20 * NSystem::getFrameTime();
+	mFunction->outputPosition(mCurrentParam, vec1);
+	mPositionIO->input(vec1);
+	if (mUseFrameTimeScaledStep) {
+		mCurrentParam += mParamStep * NSystem::getFrameTime();
 	} else {
-		_10 += _20;
+		mCurrentParam += mParamStep;
 	}
 }
 
@@ -312,9 +312,9 @@ PeveHomingPositionEvent::PeveHomingPositionEvent()
 void PeveHomingPositionEvent::makeHomingPositionEvent(PeveCondition* cond, NVector3fIO* vecIOA, NVector3fIO* vecIOB, f32 p4)
 {
 	makeEvent(cond);
-	_10 = vecIOA;
-	_14 = vecIOB;
-	_18 = p4;
+	mPositionIO       = vecIOA;
+	mTargetPositionIO = vecIOB;
+	mHomingRate       = p4;
 }
 
 /**
@@ -324,15 +324,15 @@ void PeveHomingPositionEvent::update()
 {
 	PeveEvent::update();
 	NVector3f NRef vec1 = NVector3f();
-	_10->output(vec1);
+	mPositionIO->output(vec1);
 
 	NVector3f NRef vec2 = NVector3f();
-	_14->output(vec2);
+	mTargetPositionIO->output(vec2);
 
 	NVector3f NRef vec3 = NVector3f(vec1, vec2);
-	vec3.scale(_18);
+	vec3.scale(mHomingRate);
 	vec1.add(vec3);
-	_10->input(vec1);
+	mPositionIO->input(vec1);
 }
 
 /**
@@ -367,8 +367,8 @@ PeveInterpolationEvent::PeveInterpolationEvent(int size, NPool<SplineSegment>* s
     : PeveEvent(0)
 {
 	mSplineInterpolator = new SplineInterpolator(size, splinePool);
-	_10                 = 0;
-	_14                 = 0;
+	mCurrentFrameIndex  = 0;
+	mNextFrameParam     = 0;
 }
 
 /**
@@ -390,12 +390,12 @@ void PeveInterpolationEvent::reset()
 	PeveEvent::reset();
 	mAlpha.reset();
 	mSplineInterpolator->reset();
-	_10 = 0;
+	mCurrentFrameIndex = 0;
 	mPostureIO->input(getFrame(0)->getPosture());
-	if (_10 == getChildCount() - 1) {
-		_14 = 1.0f;
+	if (mCurrentFrameIndex == getChildCount() - 1) {
+		mNextFrameParam = 1.0f;
 	} else {
-		_14 = getFrame(_10 + 1)->getParameter();
+		mNextFrameParam = getFrame(mCurrentFrameIndex + 1)->getParameter();
 	}
 }
 
@@ -405,14 +405,14 @@ void PeveInterpolationEvent::reset()
 void PeveInterpolationEvent::update()
 {
 	PeveEvent::update();
-	if (mAlpha.getValue() >= _14 && _10 + 1 < getChildCount()) {
-		_10++;
-		mPostureIO->input(getFrame(_10)->getPosture());
-		if (_10 == getChildCount() - 1) {
-			_14 = 1.0f;
+	if (mAlpha.getValue() >= mNextFrameParam && mCurrentFrameIndex + 1 < getChildCount()) {
+		mCurrentFrameIndex++;
+		mPostureIO->input(getFrame(mCurrentFrameIndex)->getPosture());
+		if (mCurrentFrameIndex == getChildCount() - 1) {
+			mNextFrameParam = 1.0f;
 		} else {
-			SplineKeyFrame* frame = getFrame(_10 + 1);
-			_14                   = frame->getParameter();
+			SplineKeyFrame* frame = getFrame(mCurrentFrameIndex + 1);
+			mNextFrameParam       = frame->getParameter();
 		}
 	}
 
