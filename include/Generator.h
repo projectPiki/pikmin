@@ -1041,7 +1041,7 @@ protected:
 	// _00     = VTBL
 	// _00-_20 = Node
 	Generator* mGenListHead;  // _20
-	ID32 _24;                 // _24
+	ID32 _24;                 // _24, unknown, could be latest possible version id?
 	ID32 mGeneratorVersionId; // _30
 	int mGenCount;            // _3C, number of generators in list
 	ID32 _40;                 // _40

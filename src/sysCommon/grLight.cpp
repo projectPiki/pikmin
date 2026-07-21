@@ -39,8 +39,8 @@ Light::Light()
 	mSpotConstTerm  = 1.0f;
 	mSpotLinearTerm = 0.0f;
 	mSpotQuadTerm   = 0.0f;
-	_48             = 0.15f;
-	_44             = 0.05f;
+	mObjAttnThreshold = 0.15f;
+	mMapAttnThreshold = 0.05f;
 	mPosition.set(0.0f, 100.0f, 0.0f);
 	mDirection.set(0.0f, -1.0f, 0.0f);
 	mDiffuseColour.set(255, 255, 255, 255);
@@ -204,12 +204,12 @@ void Light::calcLightSizes()
 		mMapRadius = -1.0f;
 		int i;
 		for (i = 0; i < 0x4000; i += 8) {
-			f32 local_10 = 1.0f / (mConstantAttn + mLinearAttn * i + mQuadAttn * SQUARE(i));
+			f32 attenuationAtDistance = 1.0f / (mConstantAttn + mLinearAttn * i + mQuadAttn * SQUARE(i));
 
-			if (mObjRadius == -1.0f && local_10 < _48) {
+			if (mObjRadius == -1.0f && attenuationAtDistance < mObjAttnThreshold) {
 				mObjRadius = i;
 			}
-			if (mMapRadius == -1.0f && local_10 < _44) {
+			if (mMapRadius == -1.0f && attenuationAtDistance < mMapAttnThreshold) {
 				mMapRadius = i;
 			}
 		}

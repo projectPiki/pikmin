@@ -189,8 +189,8 @@ public:
 	f32 mSpotConstTerm;          // _38
 	f32 mSpotLinearTerm;         // _3C
 	f32 mSpotQuadTerm;           // _40
-	f32 _44;                     // _44
-	f32 _48;                     // _48
+	f32 mMapAttnThreshold;       // _44
+	f32 mObjAttnThreshold;       // _48
 	f32 mObjRadius;              // _4C
 	f32 mMapRadius;              // _50
 	Vector3f mPosition;          // _54
