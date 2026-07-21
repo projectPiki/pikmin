@@ -187,6 +187,7 @@ entry _savefpr_31
 #endif // clang-format on
 }
 
+#pragma push
 #pragma altivec_model on
 
 /**
@@ -236,7 +237,7 @@ entry __savev31
 #endif // clang-format on
 }
 
-#pragma altivec_model off
+#pragma pop
 
 /**
  * @TODO: Documentation
@@ -379,6 +380,7 @@ entry _restgpr_31
 #endif // clang-format on
 }
 
+#pragma push
 #pragma altivec_model on
 
 /**
@@ -428,7 +430,7 @@ entry __restv31
 #endif // clang-format on
 }
 
-#pragma altivec_model off
+#pragma pop
 
 /**
  * @TODO: Documentation

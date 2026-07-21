@@ -820,16 +820,8 @@ protected:
 
 	void updateOnyonPos(Vector3f* bluePos, Vector3f* redPos, Vector3f* yellowPos)
 	{
-#ifdef _MSC_VER
 		Vector3f orbitCenter, newBlueTargetPos, orbitVec;
 		f32 norm, time, cosv, sinv, rocketScale;
-#else
-		// MWCC assigns stack slots to inlined named locals in declaration order; the GC DOL
-		// needs the f32 group's tiles above the Vector3f locals in both the standalone copy
-		// and the copy inlined into moveOnyon.
-		f32 norm, time, cosv, sinv, rocketScale;
-		Vector3f orbitCenter, newBlueTargetPos, orbitVec;
-#endif
 
 		time        = 60.0f * gsys->getFrameTime();
 		rocketScale = mRocketIcon->getScale().x;
