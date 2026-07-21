@@ -1233,8 +1233,8 @@ void PikiFlownState::exec(Piki* piki)
 	}
 
 	if (mState == FNS_Downed) {
-		_10 -= gsys->getFrameTime();
-		if ((_10 < 0.0f || piki->mIsWhistlePending) && piki->isAlive()) {
+		mKnockdownTimer -= gsys->getFrameTime();
+		if ((mKnockdownTimer < 0.0f || piki->mIsWhistlePending) && piki->isAlive()) {
 			piki->startMotion(PaniMotionInfo(PIKIANIM_GetUp, piki), PaniMotionInfo(PIKIANIM_GetUp));
 			mState = FNS_GettingUp;
 		}
@@ -1261,7 +1261,7 @@ void PikiFlownState::procAnimMsg(Piki* piki, MsgAnim* msg)
 			mState  = FNS_Downed;
 			f32 min = C_PIKI_PROP(piki).mMinFlickKnockDownTime();
 			f32 max = C_PIKI_PROP(piki).mMaxFlickKnockDownTime();
-			_10     = (max - min) * gsys->getRand(1.0f) + min;
+			mKnockdownTimer = (max - min) * gsys->getRand(1.0f) + min;
 			if (piki->mHealth <= 0.0f) {
 				PRINT("piki died !\n");
 				transit(piki, PIKISTATE_Dead);

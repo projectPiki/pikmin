@@ -505,10 +505,10 @@ Navi::Navi(CreatureProp* props, int naviID)
 	mObjType = OBJTYPE_Navi;
 	mSearchBuffer.init(mNaviSearchData, 6);
 
-	_72C          = 0;
+	mSeedCollectionCount = 0;
 	_730          = 0;
 	mCurrKeyCount = 0;
-	_7D8.clear();
+	mAttackTarget.clear();
 	_770 = 0;
 }
 
@@ -1004,7 +1004,7 @@ void Navi::callPikis(f32 radius)
 		} else if (state == PIKISTATE_Flick) {
 			static_cast<PikiFlickState*>(piki->getCurrState())->mGetUpTimer = 0.0f;
 		} else if (state == PIKISTATE_Flown) {
-			static_cast<PikiFlownState*>(piki->getCurrState())->_10 = 0.0f;
+			static_cast<PikiFlownState*>(piki->getCurrState())->mKnockdownTimer = 0.0f;
 		}
 
 		if ((piki->mNavi == this || piki->mNavi == nullptr) && !piki->isKinoko() && piki->isAlive() && !piki->isBuried()
@@ -1296,10 +1296,10 @@ void Navi::doAI()
  */
 void Navi::doAttack()
 {
-	Creature* target = _7D8.getPtr();
+	Creature* target = mAttackTarget.getPtr();
 	InteractAttack attack(this, nullptr, 1.0f, false);
 	target->stimulate(attack);
-	_7D8.reset();
+	mAttackTarget.reset();
 }
 
 /**
@@ -2229,7 +2229,7 @@ bool InteractBury::actNavi(Navi* navi) immut
 
 	navi->mStateMachine->transit(navi, NAVISTATE_Bury);
 	rumbleMgr->start(RUMBLE_Unk1, 0, nullptr);
-	navi->mHealth -= _0C;
+	navi->mHealth -= mDamage;
 	navi->startDamageEffect();
 	navi->mLifeGauge.updValue(navi->mHealth, C_NAVI_PROP(navi).mHealth());
 	if (navi->mHealth <= 1.0f) {

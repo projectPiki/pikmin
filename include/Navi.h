@@ -192,7 +192,7 @@ public:
 	int mFormationBandStableTimer;        // _720
 	bool mIsCStickNeutral;                // _724
 	u8 _725[0x72C - 0x725];               // _725, TODO: work out members
-	u32 _72C;                             // _72C, functionally unused
+	u32 mSeedCollectionCount;             // _72C, seeded from flow controller and incremented when seeds are picked up
 	u32 _730;                             // _730, functionally unknown
 	int mCurrKeyCount;                    // _734
 	f32 mNeutralTime;                     // _738, sleep button held timer?
@@ -219,7 +219,7 @@ public:
 	Vector3f _7C4;                        // _7C4, unused
 	f32 _7D0;                             // _7D0, unused
 	u8 _7D4[0x7D8 - 0x7D4];               // _7D4, TODO: work out members
-	SmartPtr<Creature> _7D8;              // _7D8, functionally unused
+	SmartPtr<Creature> mAttackTarget;     // _7D8, target consumed by doAttack
 	f32 mWalkAnimPrevDir;                 // _7DC
 	int mPreBlendLowerMotionID;           // _7E0
 	bool mIsPlucking;                     // _7E4

@@ -439,7 +439,7 @@ public:
 protected:
 	// _00     = VTBL
 	// _00-_10 = PikiState
-	f32 _10;             // _10
+	f32 mKnockdownTimer; // _10
 	f32 mInitialAngle;   // _14
 	f32 mRotationDelta;  // _18
 	f32 mFlickIntensity; // _1C
