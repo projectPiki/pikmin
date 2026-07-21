@@ -119,7 +119,7 @@ private:
 	// _00      = VTBL
 	// _00-_3B8 = Boss
 	bool mIsAppear;      // _3B8
-	bool _3B9;           // _3B9
+	bool mCreatePelletPending; // _3B9
 	KoganeAi* mKoganeAi; // _3BC
 };
 
@@ -186,7 +186,7 @@ public:
 	int mDropCount;                           // _10
 	EffectMgr::effTypeTable mEffectType;      // _14
 	f32 mAppearTimer;                         // _18
-	f32 _1C;                                  // _1C
+	f32 mIdleDuration;                        // _1C
 };
 
 /**

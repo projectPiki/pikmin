@@ -57,7 +57,7 @@ void Kogane::init(immut Vector3f&)
 	mIsInvincible    = true;
 	mNeedShadow      = false;
 	mShadowSize      = 20.0f;
-	_3B9             = false;
+	mCreatePelletPending = false;
 	mIsAppear        = false;
 	mKoganeAi->initAI(this);
 }
@@ -154,7 +154,8 @@ void Kogane::doAnimation()
  */
 void Kogane::collisionCallback(immut CollEvent& event)
 {
-	if (!_3B9 && event.mCollider->mObjType == OBJTYPE_Piki && static_cast<Piki*>(event.mCollider)->getState() == PIKISTATE_Flying) {
-		_3B9 = true;
+	if (!mCreatePelletPending && event.mCollider->mObjType == OBJTYPE_Piki
+	    && static_cast<Piki*>(event.mCollider)->getState() == PIKISTATE_Flying) {
+		mCreatePelletPending = true;
 	}
 }
