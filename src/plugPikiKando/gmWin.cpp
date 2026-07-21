@@ -285,7 +285,7 @@ GmWin* GmWinMgr::getWindow(u32 id)
 {
 	FOREACH_NODE(GmWin, mRoot.mChild, win)
 	{
-		if (win->_2C.mId = id) {
+		if (win->mWindowId.mId = id) {
 			return win;
 		}
 	}

@@ -708,7 +708,7 @@ void GameFlow::softReset()
 		PRINT("doing start load!\n");
 		gsys->startLoading(nullptr, true, 60);
 	}
-	gsys->_250     = nullptr;
+	gsys->mHaltCallback = nullptr;
 	mGameInterface = nullptr;
 	gsys->getHeap(SYSHEAP_Message)->inactivate();
 	mGameSection->init();

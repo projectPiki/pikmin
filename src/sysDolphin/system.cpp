@@ -1006,8 +1006,8 @@ void System::halt(immut char* file, int line, immut char* message)
 #else
 
 #if defined(VERSION_PIKIDEMO) || defined(DEVELOP)
-	if (gsys->_250) {
-		gsys->_250->method(*gsys->mDGXGfx);
+	if (gsys->mHaltCallback) {
+		gsys->mHaltCallback->method(*gsys->mDGXGfx);
 		const int startTick = OSGetTick();
 		while (OSGetTick() - startTick < OS_TIMER_CLOCK * 5) { }
 	}

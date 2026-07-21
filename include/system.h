@@ -423,7 +423,7 @@ public:
 	u32 mHeapStart;                                  // _244
 	u32 mHeapEnd;                                    // _248
 	Graphics* mDGXGfx;                               // _24C, cast to DGXGraphics in DOL
-	SystemClass250* _250;                            // _250, a vestigial pointer related to `System::halt`
+	SystemClass250* mHaltCallback;                   // _250, vestigial callback used by `System::halt`
 	Delegate1<System, Graphics&>* mDvdErrorCallback; // _254
 	int mDvdErrorCode;                               // _258
 	u32 mDvdBufferSize;                              // _25C

@@ -63,7 +63,7 @@ public:
 	int mHeight;                   // _1C
 	Vector2i mHome;                // _20
 	int mStatus;                   // _28
-	ID32 _2C;                      // _2C
+	ID32 mWindowId;                // _2C
 	Colour mColourA;               // _38
 	Colour mAuxColourA;            // _3C
 	Colour mColourB;               // _40

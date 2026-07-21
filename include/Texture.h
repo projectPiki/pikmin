@@ -213,7 +213,7 @@ public:
 	void* mPixelData;  // _14
 	u32 mLODCount;     // _18
 	f32 mLODBias;      // _1C
-	u32 _20;           // _20, -1 if detached, 0 if attached
+	u32 mAttachState;  // _20, -1 if detached, 0 if attached
 	GXTexObj* mTexObj; // _24
 	f32 mWidthFactor;  // _28, 1.0f / width
 	f32 mHeightFactor; // _2C, 1.0f / height
