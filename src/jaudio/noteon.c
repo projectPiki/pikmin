@@ -118,22 +118,22 @@ s32 NoteON(seqp_* track, s32 channel, s32 flag1, s32 flag2, s32 playFlag)
 /**
  * @TODO: Documentation
  */
-s32 NoteOFF_R(seqp_* track, u8 param_2, u16 param_3)
+s32 NoteOFF_R(seqp_* track, u8 channelIndex, u16 releaseFrames)
 {
-	u8* REF_param_2;
+	u8* REF_channelIndex;
 	jc_* jc;
 
-	REF_param_2 = &param_2;
-	if (jc = track->channels[param_2]) {
-		if (jc->channelId == track->activeSoundIds[param_2]) {
-			if (param_3 == 0) {
+	REF_channelIndex = &channelIndex;
+	if (jc = track->channels[channelIndex]) {
+		if (jc->channelId == track->activeSoundIds[channelIndex]) {
+			if (releaseFrames == 0) {
 				Stop_1Shot(jc);
 			} else {
-				Stop_1Shot_R(jc, param_3);
+				Stop_1Shot_R(jc, releaseFrames);
 			}
 		}
-		track->channels[param_2]       = NULL;
-		track->activeSoundIds[param_2] = 0;
+		track->channels[channelIndex]       = NULL;
+		track->activeSoundIds[channelIndex] = 0;
 		return 1;
 	}
 	return 0;
@@ -142,9 +142,9 @@ s32 NoteOFF_R(seqp_* track, u8 param_2, u16 param_3)
 /**
  * @TODO: Documentation
  */
-s32 NoteOFF(seqp_* track, u8 param_2)
+s32 NoteOFF(seqp_* track, u8 channelIndex)
 {
-	return NoteOFF_R(track, param_2, 0);
+	return NoteOFF_R(track, channelIndex, 0);
 }
 
 /**
@@ -174,14 +174,14 @@ void ProgramChange(s32 chan)
 /**
  * @TODO: Documentation
  */
-BOOL CheckNoteStop(seqp_* track, s32 param_2)
+BOOL CheckNoteStop(seqp_* track, s32 channelIndex)
 {
 	jc_* jc;
 
-	if (jc = track->channels[param_2]) {
-		if (jc->channelId != track->activeSoundIds[param_2]) {
-			track->channels[param_2]       = NULL;
-			track->activeSoundIds[param_2] = 0;
+	if (jc = track->channels[channelIndex]) {
+		if (jc->channelId != track->activeSoundIds[channelIndex]) {
+			track->channels[channelIndex]       = NULL;
+			track->activeSoundIds[channelIndex] = 0;
 			return TRUE;
 		}
 		if (jc->note == 0xff) {

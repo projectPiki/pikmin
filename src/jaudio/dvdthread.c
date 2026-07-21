@@ -546,12 +546,12 @@ s32 DVDT_CheckFile(immut char* file)
 /**
  * @TODO: Documentation
  */
-s32 DVDT_LoadFile(immut char* file, u8* p2)
+s32 DVDT_LoadFile(immut char* file, u8* dst)
 {
 	vu32 status           = 0;
 	immut char** REF_file = &file;
 	STACK_PAD_VAR(2);
-	DVDT_LoadtoDRAM(0, file, (u32)p2, 0, 0, (u32*)&status, NULL);
+	DVDT_LoadtoDRAM(0, file, (u32)dst, 0, 0, (u32*)&status, NULL);
 
 	while (status == 0) { }
 

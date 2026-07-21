@@ -311,7 +311,7 @@ public:
 
 	BoundBox mBox;           // _00
 	u8 _18[0x4];             // _18, unknown
-	s16* _1C;                // _1C, this is probably actually a pointer to a struct
+	s16* mTriangleCountPtr;  // _1C, probably a pointer to a structure (there are many unexported/unnamed triangle structs from syscore)
 	CollTriInfo* mTriangles; // _20
 };
 

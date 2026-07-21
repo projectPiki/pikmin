@@ -186,7 +186,7 @@ void KoganeAi::keyFinished()
 {
 	mKogane->setMotionFinish(true);
 	if (mKogane->getCurrentState() == 4) {
-		mKogane->_3B9 = false;
+		mKogane->mCreatePelletPending = false;
 	}
 }
 
@@ -546,7 +546,7 @@ bool KoganeAi::appearTransit()
  */
 bool KoganeAi::startWalkTransit()
 {
-	return mKogane->getWalkTimer() > _1C;
+	return mKogane->getWalkTimer() > mIdleDuration;
 }
 
 /**
@@ -581,7 +581,7 @@ bool KoganeAi::changeTargetTransit()
  */
 bool KoganeAi::createPelletTransit()
 {
-	return mKogane->_3B9;
+	return mKogane->mCreatePelletPending;
 }
 
 /**
@@ -651,8 +651,8 @@ void KoganeAi::initStopWalk(int nextState)
 	mKogane->setWalkTimer(0.0f);
 	mKogane->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Wait1, this));
 	makeStopMoving();
-	_1C = C_KOGANE_PROP(mKogane).mIdleTimeMin()
-	    + NsMathF::getRand(NsLibMath<f32>::abs(C_KOGANE_PROP(mKogane).mIdleTimeMax() - C_KOGANE_PROP(mKogane).mIdleTimeMin()));
+	mIdleDuration = C_KOGANE_PROP(mKogane).mIdleTimeMin()
+	              + NsMathF::getRand(NsLibMath<f32>::abs(C_KOGANE_PROP(mKogane).mIdleTimeMax() - C_KOGANE_PROP(mKogane).mIdleTimeMin()));
 
 	if (mEffectType >= 0) {
 		effectMgr->create(mEffectType, mKogane->mSRT.t, nullptr, nullptr);

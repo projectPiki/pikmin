@@ -313,7 +313,7 @@ static void Jac_Archiver_Init()
 /**
  * @TODO: Documentation
  */
-static u16 TrackReceive(seqp_* track, u16 param_2)
+static u16 TrackReceive(seqp_* track, u16 message)
 {
 	STACK_PAD_VAR(1);
 	u8 childTrackIndex;
@@ -322,18 +322,18 @@ static u16 TrackReceive(seqp_* track, u16 param_2)
 
 	u16 portReadOut;
 
-	if (param_2 == 0x1000) {
+	if (message == 0x1000) {
 		WaveScene_Close(13, 6);
 	}
-	if ((param_2 & 0x8000) == 0x8000) {
+	if ((message & 0x8000) == 0x8000) {
 		childTrackIndex = (track->trackId & 0x00f0) >> 4;
 		childSlotIndex  = (track->trackId & 0x000f) >> 0;
-		eventActionId   = (param_2 & 0x0fff);
+		eventActionId   = (message & 0x0fff);
 		if ((track->trackId & 0x0f00) >> 8 == 1) {
 			MML_StopEventAction(childTrackIndex, childSlotIndex, eventActionId);
 		}
 	}
-	if ((param_2 & 0x9000) == 0x9000) {
+	if ((message & 0x9000) == 0x9000) {
 		Jam_ReadPortAppDirect(track, 2, &portReadOut);
 		MML_StopEventAll(track->trackId & 0xf, portReadOut);
 	}
@@ -492,9 +492,9 @@ void Jac_Silence_Check(void)
 /**
  * @TODO: Documentation
  */
-void Jac_AddDVDBuffer(u8* buf, u32 p2)
+void Jac_AddDVDBuffer(u8* buf, u32 bufferSize)
 {
-	DVDT_SetBuffer(buf, 1, p2);
+	DVDT_SetBuffer(buf, 1, bufferSize);
 	lend_buffer = buf;
 }
 

@@ -130,7 +130,7 @@ BOOL Wavegroup_Regist(void* wsysData, u32 id)
 	if (wavegroup[id] == NULL) {
 		return FALSE;
 	}
-	wavegroup[id]->_04 = 0;
+	wavegroup[id]->mCurrentSceneIndex = 0;
 	return TRUE;
 }
 
@@ -147,16 +147,16 @@ void Wavegroup_Init()
 /**
  * @TODO: Documentation
  */
-CtrlGroup_* WaveidToWavegroup(u32 param_1, u32 param_2)
+CtrlGroup_* WaveidToWavegroup(u32 waveId, u32 fallbackIndex)
 {
-	u16 virtID = param_1 >> 16;
+	u16 virtID = waveId >> 16;
 	u16 index;
 	u16* REF_virtID = &virtID;
 
 	STACK_PAD_VAR(1);
 
 	if (virtID == 0xFFFF) {
-		index = param_2;
+		index = fallbackIndex;
 	} else {
 		index = Jac_WsVirtualToPhysical(virtID);
 	}
@@ -208,7 +208,7 @@ BOOL WaveScene_Load(u32 waveIndex, u32 ctrlIndex)
 /**
  * @TODO: Documentation
  */
-static void __WaveScene_Close(u32 waveIndex, u32 ctrlIndex, BOOL param_3)
+static void __WaveScene_Close(u32 waveIndex, u32 ctrlIndex, BOOL eraseOnly)
 {
 	STACK_PAD_VAR(2);
 	u32* REF_param_1;
@@ -223,7 +223,7 @@ static void __WaveScene_Close(u32 waveIndex, u32 ctrlIndex, BOOL param_3)
 	if (group = wavegroup[waveIndex]) {
 		REF_param_2 = &ctrlIndex;
 		if (ctrlIndex < group->count) {
-			Jac_SceneClose(wavearc[waveIndex], group, ctrlIndex, param_3);
+			Jac_SceneClose(wavearc[waveIndex], group, ctrlIndex, eraseOnly);
 		}
 	}
 }

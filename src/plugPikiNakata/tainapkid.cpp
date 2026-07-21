@@ -35,10 +35,10 @@ DEFINE_PRINT("tainapkid")
  * @brief TODO
  */
 struct TaiNapkidWanderingRouteAction : public TaiContinuousMotionAction {
-	inline TaiNapkidWanderingRouteAction(int motionIdx, f32 p2) // TODO: this is a guess
+	inline TaiNapkidWanderingRouteAction(int motionIdx, f32 moveSpeed) // TODO: this is a guess
 	    : TaiContinuousMotionAction(TAI_NO_TRANSIT, motionIdx)
 	{
-		_0C = p2;
+		mMoveSpeed = moveSpeed;
 	}
 
 	virtual void start(Teki&); // _08
@@ -48,7 +48,7 @@ struct TaiNapkidWanderingRouteAction : public TaiContinuousMotionAction {
 
 	// _04     = VTBL
 	// _00-_0C = TaiContinuousMotionAction
-	f32 _0C;
+	f32 mMoveSpeed;
 };
 
 /**
@@ -103,10 +103,10 @@ struct TaiNapkidShortRangeAction : public TaiAction {
  * @brief TODO
  */
 struct TaiNapkidStraightFlyingAction : public TaiAction {
-	inline TaiNapkidStraightFlyingAction(int nextState, f32 p2) // TODO: this is a guess
+	inline TaiNapkidStraightFlyingAction(int nextState, f32 minTargetDistance) // TODO: this is a guess
 	    : TaiAction(nextState)
 	{
-		_08 = p2;
+		mMinTargetDistance = minTargetDistance;
 	}
 
 	virtual void start(Teki&); // _08
@@ -115,7 +115,7 @@ struct TaiNapkidStraightFlyingAction : public TaiAction {
 	// _04     = VTBL
 	// _00-_08 = TaiAction
 	// TODO: members
-	f32 _08;
+	f32 mMinTargetDistance;
 };
 
 /**
@@ -168,7 +168,7 @@ struct TaiNapkidAscendingAction : public TaiAction {
 	// _04     = VTBL
 	// _00-_08 = TaiAction
 	// TODO: members
-	f32 _08;
+	f32 mVerticalSpeed;
 };
 
 /**
@@ -1029,7 +1029,7 @@ bool TaiNapkidWanderingRouteAction::act(Teki& teki)
 		return false;
 	}
 
-	if (teki.moveToward(currWaypoint->mPosition, _0C)) {
+	if (teki.moveToward(currWaypoint->mPosition, mMoveSpeed)) {
 		PRINT_NAKATA("TaiNapkidWanderingRouteAction::act:%08x,%d/%d\n", &teki, teki.mCurrRouteWayPointID, teki.mRouteWayPointCount);
 		makeTargetPosition(teki);
 	}
@@ -1155,7 +1155,7 @@ bool TaiNapkidStraightFlyingAction::act(Teki& teki)
 	}
 
 	NVector3f targetPosition(targetCreature->getPosition());
-	if (targetPosition.distanceXZ(teki.getPosition()) >= _08) {
+	if (targetPosition.distanceXZ(teki.getPosition()) >= mMinTargetDistance) {
 		return true;
 	}
 
@@ -1268,7 +1268,7 @@ bool TaiNapkidFlyingAction::act(Teki& teki)
  */
 bool TaiNapkidAscendingAction::act(Teki& teki)
 {
-	teki.getPosition().y += NSystem::getFrameTime() * _08;
+	teki.getPosition().y += NSystem::getFrameTime() * mVerticalSpeed;
 	return false;
 }
 

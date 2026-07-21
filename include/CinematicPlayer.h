@@ -188,7 +188,7 @@ public:
 		_19E                 = false;
 		mMeteorFlag          = false;
 		mUsingRocketLightPos = false;
-		_19C                 = false;
+		mUseMeteorFxDir      = false;
 		_6C                  = 0;
 		mAnimPlayState       = 1;
 		mColourAnimIndex     = -1;
@@ -235,7 +235,7 @@ public:
 	Vector3f mRocketLightPosList[4];           ///< _108
 	zen::particleGenerator* mEffectList[9];    ///< _138
 	zen::particleGenerator* mEffectGrid[4][4]; ///< _15C
-	bool _19C;                                 ///< _19C
+	bool mUseMeteorFxDir;                      ///< _19C
 	bool mMeteorFlag;                          ///< _19D
 	bool _19E;                                 ///< _19E
 	bool mUsingRocketLightPos;                 ///< _19F

@@ -188,7 +188,7 @@ public:
 
 	// _1C     = VTBL
 	// _00-_20 = GfxobjInfo
-	DispList* _20; // _20
+	DispList* mDispList; // _20
 };
 
 BEGIN_ENUM_TYPE(BaseShapeChunk)

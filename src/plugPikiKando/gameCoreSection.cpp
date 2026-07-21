@@ -941,7 +941,7 @@ void GameCoreSection::initStage()
 	PRINT("initStage start\n");
 	seMgr->setPikiNum(0);
 	mNavi->_730 = flowCont._250;
-	mNavi->_72C = flowCont.mNaviSeedCount;
+	mNavi->mSeedCollectionCount = flowCont.mNaviSeedCount;
 
 	memStat->start("routeMgr");
 	routeMgr = new RouteMgr;

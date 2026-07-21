@@ -41,7 +41,7 @@ s32 DVDT_CloseBuffer(u8*);
 s32 DVDT_LoadtoARAM_Main(void*);
 s32 DVDT_LoadtoARAM(u32 owner, immut char* name, u32 dst, u32 src, u32 length, u32* status, Jac_DVDCallback callback);
 s32 DVDT_CheckFile(immut char* file);
-s32 DVDT_LoadFile(immut char* file, u8* p2);
+s32 DVDT_LoadFile(immut char* file, u8* dst);
 void DVDT_CheckPass(u32 owner, u32* status, Jac_DVDCallback callback);
 s32 Jac_RegisterExtFastOpen(immut char* ext);
 s32 Jac_RegisterFastOpen(immut char* file);

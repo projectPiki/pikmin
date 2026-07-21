@@ -14,9 +14,9 @@ struct KeyRepeat {
 	KeyRepeat(u32 button)
 	{
 		mButton = button;
-		_04     = 0.0f;
-		_08     = repeatTime;
-		_0C     = 0;
+		mHeldTime         = 0.0f;
+		mRepeatDelay      = repeatTime;
+		mWasHeldLastFrame = 0;
 	}
 
 	bool update(Controller*);
@@ -24,9 +24,9 @@ struct KeyRepeat {
 	static f32 repeatTime;
 
 	u32 mButton; // _00
-	f32 _04;     // _04
-	f32 _08;     // _08
-	u8 _0C;      // _0C
+	f32 mHeldTime;        // _04
+	f32 mRepeatDelay;     // _08
+	u8 mWasHeldLastFrame; // _0C
 };
 
 /**

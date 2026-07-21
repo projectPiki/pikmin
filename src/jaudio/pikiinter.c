@@ -255,7 +255,7 @@ void Jac_EventFrameCheck(void)
 /**
  * @TODO: Documentation
  */
-void Jac_UpdateCamera(struct SVector_* p1, struct SVector_* p2)
+void Jac_UpdateCamera(struct SVector_* listenerPos, struct SVector_* listenerDir)
 {
 	SEvent_* event;
 	u32 i;
@@ -304,7 +304,7 @@ void Jac_UpdateCamera(struct SVector_* p1, struct SVector_* p2)
 /**
  * @TODO: Documentation
  */
-int Jac_CreateEvent(u32 eventType, struct SVector_* p2)
+int Jac_CreateEvent(u32 eventType, struct SVector_* eventPos)
 {
 	u32 i;
 	u32 idx;
@@ -334,9 +334,9 @@ int Jac_CreateEvent(u32 eventType, struct SVector_* p2)
 	event            = &EVENT[idx];
 	event->eventType = eventType;
 
-	event->position.x = p2->x;
-	event->position.y = p2->z;
-	event->position.z = p2->y;
+	event->position.x = eventPos->x;
+	event->position.y = eventPos->z;
+	event->position.z = eventPos->y;
 
 	for (i = 0; i < 16; i++) {
 		event->statusEntries[i].timeStamp = event->statusEntries[i].actionGroup = event->statusEntries[i].statusIdx = 0;
@@ -361,7 +361,7 @@ int Jac_CreateEvent(u32 eventType, struct SVector_* p2)
 /**
  * @TODO: Documentation
  */
-BOOL Jac_UpdateEventPosition(int idx, struct SVector_* p2)
+BOOL Jac_UpdateEventPosition(int idx, struct SVector_* eventPos)
 {
 	if (idx == -1) {
 		return FALSE;
@@ -371,7 +371,7 @@ BOOL Jac_UpdateEventPosition(int idx, struct SVector_* p2)
 		return FALSE;
 	}
 
-	EVENT[idx].position = *p2;
+	EVENT[idx].position = *eventPos;
 #if defined(VERSION_GPIJ01_01) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_DPIJ01_PIKIDEMO)
 #else
 	EVENT[idx].frameTimer = 100;
@@ -515,19 +515,19 @@ BOOL Jac_PlayEventAction(int eventIdx, int actionId)
 /**
  * @TODO: Documentation
  */
-BOOL Jac_StopEventAction(int a1, int a2)
+BOOL Jac_StopEventAction(int eventIdx, int actionId)
 {
 	u32 i;
 	SEvent_* event;
-	if (a1 == -1) {
+	if (eventIdx == -1) {
 		return FALSE;
 	}
-	event = &EVENT[a1];
+	event = &EVENT[eventIdx];
 	if (event->eventType == 0) {
 		return FALSE;
 	}
 
-	int offset = a2 + EVENT_OFFSET[event->eventType];
+	int offset = actionId + EVENT_OFFSET[event->eventType];
 	for (i = 0; i < 16; i++) {
 		SEvent_UnkC* c = &event->statusEntries[i];
 		if (c->statusIdx == offset) {
@@ -545,22 +545,22 @@ BOOL Jac_StopEventAction(int a1, int a2)
 /**
  * @TODO: Documentation
  */
-BOOL MML_StopEventAction(u8 idx, u8 a2, u16 a3)
+BOOL MML_StopEventAction(u8 idx, u8 statusSlot, u16 actionCmd)
 {
 	if (EVENT[idx].eventType == 0) {
 		return FALSE;
 	}
-	if (ACTION_STATUS[EVENT[idx].statusEntries[a2].statusIdx].cmd != a3) {
+	if (ACTION_STATUS[EVENT[idx].statusEntries[statusSlot].statusIdx].cmd != actionCmd) {
 		return FALSE;
 	}
-	EVENT[idx].statusEntries[a2].statusIdx = 0;
+	EVENT[idx].statusEntries[statusSlot].statusIdx = 0;
 	return TRUE;
 }
 
 /**
  * @TODO: Documentation
  */
-void MML_StopEventAll(u8 idx, u16 p2)
+void MML_StopEventAll(u8 idx, u16 activeMask)
 {
 	u32 i;
 	u16 flag = 1;
@@ -569,7 +569,7 @@ void MML_StopEventAll(u8 idx, u16 p2)
 	}
 
 	for (i = 0; i < 16; i++) {
-		if ((p2 & flag) == 0) {
+		if ((activeMask & flag) == 0) {
 			EVENT[idx].statusEntries[i].statusIdx = 0;
 		}
 		flag = (flag << 1) & 0xFFFE;

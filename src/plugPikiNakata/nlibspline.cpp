@@ -21,10 +21,10 @@ DEFINE_PRINT("nlibspline")
 SplineInterpolator::SplineInterpolator(int size, NPool<SplineSegment>* segPool)
 {
 	mFrameArray      = new NArray<SplineKeyFrame>(size);
-	_04              = segPool;
+	mSegmentPool         = segPool;
 	mViewpointCurve  = new SplineCurve(size - 1);
 	mWatchpointCurve = new SplineCurve(size - 1);
-	_10              = 0;
+	mCurrentSegmentIndex      = 0;
 }
 
 /**
@@ -32,7 +32,7 @@ SplineInterpolator::SplineInterpolator(int size, NPool<SplineSegment>* segPool)
  */
 void SplineInterpolator::reset()
 {
-	_10 = 0;
+	mCurrentSegmentIndex = 0;
 }
 
 /**
@@ -93,13 +93,13 @@ bool SplineInterpolator::interpolateNext(f32 t, NPosture3D& outPosture)
 		return true;
 	}
 
-	int idx = searchSegmentIndex(t, _10);
+	int idx = searchSegmentIndex(t, mCurrentSegmentIndex);
 	if (idx < 0) {
 		PRINT("?interpolateNext:nextIndex<0\n");
 		return false;
 	}
 
-	_10 = idx;
+	mCurrentSegmentIndex = idx;
 	outputPosture(t, outPosture);
 	return true;
 }
@@ -110,10 +110,10 @@ bool SplineInterpolator::interpolateNext(f32 t, NPosture3D& outPosture)
  */
 bool SplineInterpolator::interpolateDirect(f32 t, NPosture3D& outPosture)
 {
-	u8 prev  = _10;
-	_10      = 0;
+	u8 prev              = mCurrentSegmentIndex;
+	mCurrentSegmentIndex = 0;
 	bool res = interpolateNext(t, outPosture);
-	_10      = prev;
+	mCurrentSegmentIndex = prev;
 	return res;
 }
 
@@ -122,11 +122,11 @@ bool SplineInterpolator::interpolateDirect(f32 t, NPosture3D& outPosture)
  */
 void SplineInterpolator::outputPosture(f32 t, NPosture3D& outPosture)
 {
-	f32 thisParam = mFrameArray->get(_10)->getParameter();
-	f32 nextParam = mFrameArray->get(_10 + 1)->getParameter();
+	f32 thisParam = mFrameArray->get(mCurrentSegmentIndex)->getParameter();
+	f32 nextParam = mFrameArray->get(mCurrentSegmentIndex + 1)->getParameter();
 	f32 newT      = (t - thisParam) / (nextParam - thisParam);
-	mViewpointCurve->getSegment(_10)->outputPosition(newT, outPosture.getViewpoint());
-	mWatchpointCurve->getSegment(_10)->outputPosition(newT, outPosture.getWatchpoint());
+	mViewpointCurve->getSegment(mCurrentSegmentIndex)->outputPosition(newT, outPosture.getViewpoint());
+	mWatchpointCurve->getSegment(mCurrentSegmentIndex)->outputPosition(newT, outPosture.getWatchpoint());
 }
 
 /**

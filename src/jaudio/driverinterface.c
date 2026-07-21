@@ -508,26 +508,26 @@ static void __UpdateJcToDSPInit(jc_* jc)
  */
 static void __UpdateJcToDSP(jc_* jc)
 {
-	u8 uVar1;
+	u8 dspBufferIndex;
 
-	uVar1 = jc->dspChannel->buffer_idx;
+	dspBufferIndex = jc->dspChannel->buffer_idx;
 	for (u32 i = 0; i < 6; ++i) {
-		DSP_SetMixerVolume(uVar1, i, jc->mixerLevels[i], jc->chanMgr->masterLevels[i]);
+		DSP_SetMixerVolume(dspBufferIndex, i, jc->mixerLevels[i], jc->chanMgr->masterLevels[i]);
 	}
 
-	DSP_SetPitch(uVar1, jc->finalPitch);
+	DSP_SetPitch(dspBufferIndex, jc->finalPitch);
 
 	if ((jc->chanMgr->filterMode & 0x20) != 0) {
-		DSP_SetIIRFilterParam(uVar1, jc->chanMgr->iirCoefficients);
+		DSP_SetIIRFilterParam(dspBufferIndex, jc->chanMgr->iirCoefficients);
 	}
 
 	if ((jc->chanMgr->filterMode & 0x1f) != 0) {
-		DSP_SetFIR8FilterParam(uVar1, jc->chanMgr->firCoefficients);
+		DSP_SetFIR8FilterParam(dspBufferIndex, jc->chanMgr->firCoefficients);
 	}
 
-	DSP_SetFilterMode(uVar1, jc->chanMgr->filterMode);
-	DSP_SetDistFilter(uVar1, jc->chanMgr->distFilter);
-	DSP_SetPauseFlag(uVar1, jc->pauseFlag);
+	DSP_SetFilterMode(dspBufferIndex, jc->chanMgr->filterMode);
+	DSP_SetDistFilter(dspBufferIndex, jc->chanMgr->distFilter);
+	DSP_SetPauseFlag(dspBufferIndex, jc->pauseFlag);
 }
 
 /**

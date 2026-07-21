@@ -160,19 +160,19 @@ struct MovSampleSetupSection : public Node {
 			"../MovieData/cntA_S.h4m", "../MovieData/cntB_S.h4m", "../MovieData/cntC_S.h4m",
 			"../MovieData/cntD_S.h4m", "../MovieData/sr_S.h4m",   "../MovieData/srhp_S.h4m",
 		};
-		int size  = 0xe00000;
-		u8* store = new (0x20) u8[size];
-		Jac_StreamMovieInit(movieNames[gameflow.mCurrIntroMovieID], store, size);
+		int movieBufferSize = 0xe00000;
+		u8* movieBuffer     = new (0x20) u8[movieBufferSize];
+		Jac_StreamMovieInit(movieNames[gameflow.mCurrIntroMovieID], movieBuffer, movieBufferSize);
 		ImgW      = 640;
 		ImgH      = 480;
-		int size2 = 0x70800;
-		_48[0]    = new (0x20) u8[size2];
-		_48[1]    = new (0x20) u8[size2];
+		int yuvBufferSize   = 0x70800;
+		mYuvFrameBuffers[0] = new (0x20) u8[yuvBufferSize];
+		mYuvFrameBuffers[1] = new (0x20) u8[yuvBufferSize];
 		for (int i = 0; i < 2; i++) {
-			void* dest  = _48[i];
-			void* dest2 = &_48[i][ImgW * ImgH];
-			memset(dest, 0x10, ImgW * ImgH);
-			memset(dest2, 0x80, (ImgW / 2) * (ImgH / 2) * 2);
+			u8* frameBuffer  = mYuvFrameBuffers[i];
+			u8* chromaBuffer = &mYuvFrameBuffers[i][ImgW * ImgH];
+			memset(frameBuffer, 0x10, ImgW * ImgH);
+			memset(chromaBuffer, 0x80, (ImgW / 2) * (ImgH / 2) * 2);
 		}
 		OSCreateThread(&playbackThread, &playbackFunc, 0, playbackThreadStack + sizeof(playbackThreadStack), sizeof(playbackThreadStack),
 		               0x14, OS_THREAD_ATTR_DETACH);
@@ -184,28 +184,28 @@ struct MovSampleSetupSection : public Node {
 	{
 		mController->update();
 
-		int pic = 0;
-		u8* a   = nullptr;
-		int b, c;
+		int pictureStatus = 0;
+		u8* pictureData   = nullptr;
+		int pictureWidth, pictureHeight;
 		if (gsys->mDvdErrorCode < DvdError::ReadingDisc) { // AKA: DvdError::None (no issue)
-			pic = Jac_StreamMovieGetPicture(&a, &b, &c);
+			pictureStatus = Jac_StreamMovieGetPicture(&pictureData, &pictureWidth, &pictureHeight);
 		}
 
-		if (a && pic) {
+		if (pictureData && pictureStatus) {
 #if defined(VERSION_GPIJ01) || defined(VERSION_DPIJ01_PIKIDEMO)
-			convHVQM4TexY8UV8(b, c, a, _48[_3C]);
+			convHVQM4TexY8UV8(pictureWidth, pictureHeight, pictureData, mYuvFrameBuffers[mFrameBufferIndex]);
 #else
-			convHVQM4TexY8UV8(b, c, a, _48[_3C ^ 1]);
+			convHVQM4TexY8UV8(pictureWidth, pictureHeight, pictureData, mYuvFrameBuffers[mFrameBufferIndex ^ 1]);
 #endif
-			_3C ^= 1;
+			mFrameBufferIndex ^= 1;
 		}
 
-		bool check = false;
+		bool shouldExit = false;
 		if (flowCont.mEndingType == ENDING_None && mController->keyClick(KBBTN_START | KBBTN_A | KBBTN_B)) {
-			check = true;
+			shouldExit = true;
 		}
 
-		if (check || pic == -1) {
+		if (shouldExit || pictureStatus == -1) {
 			Jac_StreamMovieStop();
 			OSCancelThread(&playbackThread);
 
@@ -278,7 +278,7 @@ struct MovSampleSetupSection : public Node {
 		GXSetTevSwapModeTable(GX_TEV_SWAP1, GX_CH_RED, GX_CH_ALPHA, GX_CH_ALPHA, GX_CH_ALPHA);
 		GXSetTevSwapModeTable(GX_TEV_SWAP2, GX_CH_RED, GX_CH_RED, GX_CH_ALPHA, GX_CH_RED);
 
-		u8* data = _48[_3C];
+		u8* data = mYuvFrameBuffers[mFrameBufferIndex];
 		GXInitTexObj(&YtexObj, data, ImgW, ImgH, GX_TF_I8, GX_CLAMP, GX_CLAMP, GX_FALSE);
 		GXInitTexObjLOD(&YtexObj, GX_NEAR, GX_NEAR, 0.0f, 0.0f, 0.0f, GX_FALSE, GX_FALSE, GX_ANISO_1);
 		GXLoadTexObj(&YtexObj, GX_TEXMAP1);
@@ -327,10 +327,10 @@ struct MovSampleSetupSection : public Node {
 	int _30;                 // _30
 	int _34;                 // _34
 	int _38;                 // _38
-	int _3C;                 // _3C
+	int mFrameBufferIndex;   // _3C
 	int _40;                 // _40
 	int _44;                 // _44
-	u8* _48[2];              // _48
+	u8* mYuvFrameBuffers[2]; // _48
 };
 
 /**

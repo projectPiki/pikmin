@@ -273,11 +273,11 @@ BOOL Jac_DemoCheckEvent(u8 evt)
 /**
  * @TODO: Documentation
  */
-static void DoSequence(u32 cinID, u32 a2)
+static void DoSequence(u32 cinID, u32 frameId)
 {
 	u32 flag;
 	u16* REF_flag;
-	u32* REF_a2 = &a2;
+	u32* REF_frameId = &frameId;
 	u32* data   = (u32*)DEMO_STATUS[cinID].mTimedEvents;
 	STACK_PAD_VAR(2);
 	if (data == NULL) {
@@ -288,7 +288,7 @@ static void DoSequence(u32 cinID, u32 a2)
 	while (1) {
 		flag     = data[demo_seq_active];
 		REF_flag = (u16*)&flag;
-		if (REF_flag[0] > a2) {
+		if (REF_flag[0] > frameId) {
 			break;
 		}
 

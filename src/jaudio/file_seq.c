@@ -14,10 +14,10 @@
  * @note TODO: Is this invented struct namedropped somewhere?
  */
 struct as_struct {
-	u8 _00;  // _00
-	u32 _04; // _04
+	u8 mInUse;  // _00
+	u32 mSeqIndex; // _04
 	u32 _08; // _08
-	u8* _0C; // _0C
+	u8* mBuffer; // _0C
 };
 typedef struct as_struct as_struct;
 
@@ -37,7 +37,7 @@ static u32 first = TRUE;
 /**
  * @TODO: Documentation
  */
-void Jaf_InitSeqArchive2(immut char* barcFilepath, u8* barcData, u8* param_3)
+void Jaf_InitSeqArchive2(immut char* barcFilepath, u8* barcData, u8* archiveWork)
 {
 	STACK_PAD_VAR(2);
 
@@ -51,7 +51,7 @@ void Jaf_InitSeqArchive2(immut char* barcFilepath, u8* barcData, u8* param_3)
 		}
 	}
 
-	JV_InitHeader_M(barcFilepath, barcData, param_3);
+	JV_InitHeader_M(barcFilepath, barcData, archiveWork);
 	seq_archandle = JV_GetArchiveHandle(&barcFilepath[i]);
 
 	for (i = 0; i < SEQ_LOADBUFFER_SIZE; ++i) {
@@ -76,18 +76,18 @@ u32 Jaf_CheckSeqSize(u32 arcHandleMask)
 /**
  * @TODO: Documentation
  */
-u32 Jaf_LoadSeq(u32 param_1, u8* param_2)
+u32 Jaf_LoadSeq(u32 seqIndex, u8* seqBuffer)
 {
 	if (seq_archandle == -1) {
 		return FALSE;
 	}
-	u32 size = Jaf_CheckSeqSize(param_1);
+	u32 size = Jaf_CheckSeqSize(seqIndex);
 	if (size == 0) {
 		return FALSE;
 	}
-	u32 temp                = seq_archandle | param_1;
-	BOOL result             = JV_LoadFile(temp, param_2, 0, size);
-	seq_loadbuffer[param_1] = param_2;
+	u32 seqArchiveHandle    = seq_archandle | seqIndex;
+	BOOL result             = JV_LoadFile(seqArchiveHandle, seqBuffer, 0, size);
+	seq_loadbuffer[seqIndex] = seqBuffer;
 	return result;
 }
 
@@ -110,42 +110,42 @@ u8* Jaf_CheckSeq(u32 index)
 /**
  * @TODO: Documentation
  */
-u32 Jaf_ReadySeq(u32 param_1, u32 param_2)
+u32 Jaf_ReadySeq(u32 rootTrackIndex, u32 seqIndex)
 {
 	STACK_PAD_VAR(1);
-	seqp_* rSeq = &rootseq[param_1];
-	if (param_2 >= SEQ_LOADBUFFER_SIZE) {
+	seqp_* rootTrack = &rootseq[rootTrackIndex];
+	if (seqIndex >= SEQ_LOADBUFFER_SIZE) {
 		return 0;
 	}
-	if (!seq_loadbuffer[param_2]) {
+	if (!seq_loadbuffer[seqIndex]) {
 		return 0;
 	}
 
-	u32 seqSize = Jaf_CheckSeqSize(param_2);
+	u32 seqSize = Jaf_CheckSeqSize(seqIndex);
 	if (seqSize == 0) {
 		return 0;
 	}
 
-	rootseqhandle[param_1] = Jaq_SetSeqData(rSeq, seq_loadbuffer[param_2], seqSize, 0);
-	return rootseqhandle[param_1];
+	rootseqhandle[rootTrackIndex] = Jaq_SetSeqData(rootTrack, seq_loadbuffer[seqIndex], seqSize, 0);
+	return rootseqhandle[rootTrackIndex];
 }
 
 /**
  * @TODO: Documentation
  */
-BOOL Jaf_PlaySeq(u32 index)
+BOOL Jaf_PlaySeq(u32 rootTrackIndex)
 {
-	Jaq_StartSeq(rootseqhandle[index]);
+	Jaq_StartSeq(rootseqhandle[rootTrackIndex]);
 	return TRUE;
 }
 
 /**
  * @TODO: Documentation
  */
-BOOL Jaf_StartSeq(u32 param_1, u32 param_2)
+BOOL Jaf_StartSeq(u32 rootTrackIndex, u32 seqIndex)
 {
-	Jaf_ReadySeq(param_1, param_2);
-	Jaf_PlaySeq(param_1);
+	Jaf_ReadySeq(rootTrackIndex, seqIndex);
+	Jaf_PlaySeq(rootTrackIndex);
 	return TRUE;
 }
 
@@ -169,7 +169,7 @@ BOOL Jaf_StopSeq(u32 index)
  * @TODO: Documentation
  * @note UNUSED Size: 000018
  */
-void Jaf_GetJamHandle(u32)
+void Jaf_GetJamHandle(u32 rootTrackIndex)
 {
 	TRAP_UNIMPLEMENTED;
 }
@@ -186,7 +186,7 @@ seqp_* Jaf_HandleToSeq(u32 index)
  * @TODO: Documentation
  * @note UNUSED Size: 000058
  */
-void Jaf_LoadStartFinish(u32)
+void Jaf_LoadStartFinish(u32 asyncContext)
 {
 	TRAP_UNIMPLEMENTED;
 }
@@ -194,64 +194,64 @@ void Jaf_LoadStartFinish(u32)
 /**
  * @TODO: Documentation
  */
-static void Jaf_LoadFinish(u32 param_1)
+static void Jaf_LoadFinish(u32 asyncContext)
 {
 	// Why is a (known) u32 parameter suddenly a pointer?
-	seq_loadbuffer[*(int*)(param_1 + 4)] = *(u8**)(param_1 + 12);
-	*(u8*)param_1                        = 0;
+	seq_loadbuffer[*(int*)(asyncContext + 4)] = *(u8**)(asyncContext + 12);
+	*(u8*)asyncContext                        = 0;
 }
 
 /**
  * @TODO: Documentation
  */
-u32 __LoadSeqA(u32 param_1, u32 param_2, u8* param_3, void (*param_4)(u32))
+u32 __LoadSeqA(u32 callbackArg, u32 seqIndex, u8* seqBuffer, void (*finishCallback)(u32))
 {
-	u32* REF_param_1 = &param_1;
-	u32* REF_param_2 = &param_2;
-	u8** REF_param_3 = &param_3;
+	u32* REF_callbackArg = &callbackArg;
+	u32* REF_seqIndex    = &seqIndex;
+	u8** REF_seqBuffer   = &seqBuffer;
 
-	u32 index;
+	u32 slotIndex;
 	u32 seqSize;
-	u32 seqArcHandle;
+	u32 seqArchiveHandle;
 
 	if (first) {
-		for (index = 0; index < AS_SIZE; ++index) {
-			as[index]._00 = 0;
+		for (slotIndex = 0; slotIndex < AS_SIZE; ++slotIndex) {
+			as[slotIndex].mInUse = 0;
 		}
 		first = FALSE;
 	}
 
-	for (index = 0; index < AS_SIZE; ++index) {
-		if (as[index]._00 == 0) {
+	for (slotIndex = 0; slotIndex < AS_SIZE; ++slotIndex) {
+		if (as[slotIndex].mInUse == 0) {
 			break;
 		}
 	}
-	if (index == AS_SIZE) {
+	if (slotIndex == AS_SIZE) {
 		return 0;
 	}
 	if (seq_archandle == -1) {
 		return 0;
 	}
 
-	seqSize = Jaf_CheckSeqSize(param_2);
+	seqSize = Jaf_CheckSeqSize(seqIndex);
 	if (seqSize == 0) {
 		return 0;
 	}
-	u32 val1      = seq_archandle | param_2;
-	as[index]._00 = 1;
-	as[index]._04 = param_2;
-	as[index]._0C = param_3;
-	as[index]._08 = param_1;
+	seqArchiveHandle       = seq_archandle | seqIndex;
+	as[slotIndex].mInUse   = 1;
+	as[slotIndex].mSeqIndex = seqIndex;
+	as[slotIndex].mBuffer  = seqBuffer;
+	as[slotIndex]._08      = callbackArg;
 
-	seq_loadbuffer[param_2] = (u8*)1;
-	return JV_LoadFile_Async2(val1, param_3, 0, seqSize, param_4, (u32)&as[index]);
+	seq_loadbuffer[seqIndex] = (u8*)1;
+	return JV_LoadFile_Async2(seqArchiveHandle, seqBuffer, 0, seqSize, finishCallback, (u32)&as[slotIndex]);
 }
 
 /**
  * @TODO: Documentation
  * @note UNUSED Size: 000028
  */
-void Jaf_LoadStartSeqA(u32, u32, u8*)
+void Jaf_LoadStartSeqA(u32 callbackArg, u32 seqIndex, u8* seqBuffer)
 {
 	TRAP_UNIMPLEMENTED;
 }
@@ -259,7 +259,7 @@ void Jaf_LoadStartSeqA(u32, u32, u8*)
 /**
  * @TODO: Documentation
  */
-u32 Jaf_LoadSeqA(u32 param_1, u8* param_2)
+u32 Jaf_LoadSeqA(u32 seqIndex, u8* seqBuffer)
 {
-	return __LoadSeqA(0, param_1, param_2, Jaf_LoadFinish);
+	return __LoadSeqA(0, seqIndex, seqBuffer, Jaf_LoadFinish);
 }

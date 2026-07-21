@@ -504,7 +504,7 @@ void TopAction::restart()
  */
 void TopAction::knowledgeCheck()
 {
-	_30.update();
+	mBoredom.update();
 }
 
 /**

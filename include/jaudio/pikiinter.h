@@ -35,17 +35,17 @@ typedef enum JacEventType {
 //////////// JAUDIO PIKMIN INTERFACE FUNCTIONS ////////////
 void Jac_InitEventSystem(void);                            // args
 void Jac_EventFrameCheck(void);                            // args
-void Jac_UpdateCamera(struct SVector_*, struct SVector_*); // args
-int Jac_CreateEvent(u32, struct SVector_*);                // args
-BOOL Jac_UpdateEventPosition(int, struct SVector_*);       // args
-BOOL Jac_PlayEventAction(int, int);                        // args
-BOOL Jac_StopEventAction(int, int);                        // args
-BOOL MML_StopEventAction(u8, u8, u16);                     // args
-void MML_StopEventAll(u8, u16);                            // args
-BOOL Jac_DestroyEvent(s32);                                // args
+void Jac_UpdateCamera(struct SVector_* listenerPos, struct SVector_* listenerDir); // args
+int Jac_CreateEvent(u32 eventType, struct SVector_* eventPos);                     // args
+BOOL Jac_UpdateEventPosition(int idx, struct SVector_* eventPos);                  // args
+BOOL Jac_PlayEventAction(int eventIdx, int actionId);                              // args
+BOOL Jac_StopEventAction(int eventIdx, int actionId);                              // args
+BOOL MML_StopEventAction(u8 idx, u8 statusSlot, u16 actionCmd);                    // args
+void MML_StopEventAll(u8 idx, u16 activeMask);                                     // args
+BOOL Jac_DestroyEvent(s32 idx);                                                    // args
 void Jac_InitAllEvent(void);                               // args
 int Jac_CheckFreeEvents(void);                             // args
-int Jac_GetActiveEvents(u32*);                             // args
+int Jac_GetActiveEvents(u32* outCount);                    // args
 
 ///////////////////////////////////////////////////////////
 

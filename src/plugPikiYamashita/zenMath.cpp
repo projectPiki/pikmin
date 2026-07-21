@@ -22,36 +22,35 @@ DEFINE_PRINT(nullptr)
  */
 void zen::ZenQuat::GetMatrix(const Quat& quat, Matrix3f& outMtx)
 {
-	// I don't know much about quaternion and matrix math, so I'm leaving these variables unnamed.
-	f32 local_08 = 2.0f / (SQUARE(quat.v.x) + SQUARE(quat.v.y) + SQUARE(quat.v.z) + SQUARE(quat.s));
+	f32 quatScale = 2.0f / (SQUARE(quat.v.x) + SQUARE(quat.v.y) + SQUARE(quat.v.z) + SQUARE(quat.s));
 
-	f32 local_0c = local_08 * quat.v.x;
-	f32 local_10 = local_08 * quat.v.y;
-	f32 local_14 = local_08 * quat.v.z;
+	f32 scaledX = quatScale * quat.v.x;
+	f32 scaledY = quatScale * quat.v.y;
+	f32 scaledZ = quatScale * quat.v.z;
 
-	f32 local_18 = local_0c * quat.s;
-	f32 local_1c = local_10 * quat.s;
-	f32 local_20 = local_14 * quat.s;
+	f32 scaledXw = scaledX * quat.s;
+	f32 scaledYw = scaledY * quat.s;
+	f32 scaledZw = scaledZ * quat.s;
 
-	f32 local_24 = local_0c * quat.v.x;
-	f32 local_28 = local_10 * quat.v.x;
-	f32 local_2c = local_14 * quat.v.x;
+	f32 scaledXx = scaledX * quat.v.x;
+	f32 scaledYx = scaledY * quat.v.x;
+	f32 scaledZx = scaledZ * quat.v.x;
 
-	f32 local_30 = local_10 * quat.v.y;
-	f32 local_34 = local_14 * quat.v.y;
-	f32 local_38 = local_14 * quat.v.z;
+	f32 scaledYy = scaledY * quat.v.y;
+	f32 scaledZy = scaledZ * quat.v.y;
+	f32 scaledZz = scaledZ * quat.v.z;
 
-	outMtx.mMtx[0][0] = 1.0f - (local_30 + local_38);
-	outMtx.mMtx[0][1] = local_28 - local_20;
-	outMtx.mMtx[0][2] = local_2c + local_1c;
+	outMtx.mMtx[0][0] = 1.0f - (scaledYy + scaledZz);
+	outMtx.mMtx[0][1] = scaledYx - scaledZw;
+	outMtx.mMtx[0][2] = scaledZx + scaledYw;
 
-	outMtx.mMtx[1][0] = local_28 + local_20;
-	outMtx.mMtx[1][1] = 1.0f - (local_24 + local_38);
-	outMtx.mMtx[1][2] = local_34 - local_18;
+	outMtx.mMtx[1][0] = scaledYx + scaledZw;
+	outMtx.mMtx[1][1] = 1.0f - (scaledXx + scaledZz);
+	outMtx.mMtx[1][2] = scaledZy - scaledXw;
 
-	outMtx.mMtx[2][0] = local_2c - local_1c;
-	outMtx.mMtx[2][1] = local_34 + local_18;
-	outMtx.mMtx[2][2] = 1.0f - (local_24 + local_30);
+	outMtx.mMtx[2][0] = scaledZx - scaledYw;
+	outMtx.mMtx[2][1] = scaledZy + scaledXw;
+	outMtx.mMtx[2][2] = 1.0f - (scaledXx + scaledYy);
 }
 
 /**
@@ -60,38 +59,37 @@ void zen::ZenQuat::GetMatrix(const Quat& quat, Matrix3f& outMtx)
  */
 void zen::ZenQuat::GetMatrix(const Quat& quat, Matrix4f& outMtx)
 {
-	// I don't know much about quaternion and matrix math, so I'm leaving these variables unnamed.
-	f32 local_08 = 2.0f / (SQUARE(quat.v.x) + SQUARE(quat.v.y) + SQUARE(quat.v.z) + SQUARE(quat.s));
+	f32 quatScale = 2.0f / (SQUARE(quat.v.x) + SQUARE(quat.v.y) + SQUARE(quat.v.z) + SQUARE(quat.s));
 
-	f32 local_0c = local_08 * quat.v.x;
-	f32 local_10 = local_08 * quat.v.y;
-	f32 local_14 = local_08 * quat.v.z;
+	f32 scaledX = quatScale * quat.v.x;
+	f32 scaledY = quatScale * quat.v.y;
+	f32 scaledZ = quatScale * quat.v.z;
 
-	f32 local_18 = local_0c * quat.s;
-	f32 local_1c = local_10 * quat.s;
-	f32 local_20 = local_14 * quat.s;
+	f32 scaledXw = scaledX * quat.s;
+	f32 scaledYw = scaledY * quat.s;
+	f32 scaledZw = scaledZ * quat.s;
 
-	f32 local_24 = local_0c * quat.v.x;
-	f32 local_28 = local_10 * quat.v.x;
-	f32 local_2c = local_14 * quat.v.x;
+	f32 scaledXx = scaledX * quat.v.x;
+	f32 scaledYx = scaledY * quat.v.x;
+	f32 scaledZx = scaledZ * quat.v.x;
 
-	f32 local_30 = local_10 * quat.v.y;
-	f32 local_34 = local_14 * quat.v.y;
-	f32 local_38 = local_14 * quat.v.z;
+	f32 scaledYy = scaledY * quat.v.y;
+	f32 scaledZy = scaledZ * quat.v.y;
+	f32 scaledZz = scaledZ * quat.v.z;
 
-	outMtx.mMtx[0][0] = 1.0f - (local_30 + local_38);
-	outMtx.mMtx[0][1] = local_28 - local_20;
-	outMtx.mMtx[0][2] = local_2c + local_1c;
+	outMtx.mMtx[0][0] = 1.0f - (scaledYy + scaledZz);
+	outMtx.mMtx[0][1] = scaledYx - scaledZw;
+	outMtx.mMtx[0][2] = scaledZx + scaledYw;
 	outMtx.mMtx[0][3] = 0.0f;
 
-	outMtx.mMtx[1][0] = local_28 + local_20;
-	outMtx.mMtx[1][1] = 1.0f - (local_24 + local_38);
-	outMtx.mMtx[1][2] = local_34 - local_18;
+	outMtx.mMtx[1][0] = scaledYx + scaledZw;
+	outMtx.mMtx[1][1] = 1.0f - (scaledXx + scaledZz);
+	outMtx.mMtx[1][2] = scaledZy - scaledXw;
 	outMtx.mMtx[1][3] = 0.0f;
 
-	outMtx.mMtx[2][0] = local_2c - local_1c;
-	outMtx.mMtx[2][1] = local_34 + local_18;
-	outMtx.mMtx[2][2] = 1.0f - (local_24 + local_30);
+	outMtx.mMtx[2][0] = scaledZx - scaledYw;
+	outMtx.mMtx[2][1] = scaledZy + scaledXw;
+	outMtx.mMtx[2][2] = 1.0f - (scaledXx + scaledYy);
 	outMtx.mMtx[2][3] = 0.0f;
 
 	outMtx.mMtx[3][0] = 0.0f;

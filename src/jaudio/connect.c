@@ -134,7 +134,7 @@ BOOL Jac_SceneSet(WaveArchiveBank_* bank, CtrlGroup_* group, u32 id, BOOL set)
 	}
 
 	if (set) {
-		group->_04 = id;
+		group->mCurrentSceneIndex = id;
 	}
 	return TRUE;
 
@@ -195,7 +195,7 @@ WaveID_* __GetSoundHandle(CtrlGroup_* group, u32 id, u32 id2)
 WaveID_* GetSoundHandle(CtrlGroup_* group, u32 flag)
 {
 	u32* flagptr  = &flag;
-	WaveID_* wave = __GetSoundHandle(group, flag, group->_04);
+	WaveID_* wave = __GetSoundHandle(group, flag, group->mCurrentSceneIndex);
 	if (wave == NULL) {
 		return NULL;
 	}

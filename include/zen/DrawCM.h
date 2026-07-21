@@ -314,10 +314,10 @@ public:
 	};
 
 	enum modeFlag {
-		MODE_Unk0 = 0,
-		MODE_Unk1 = 1,
-		MODE_Unk2 = 2,
-		MODE_Unk3 = 3,
+		MODE_Inactive    = 0,
+		MODE_TitleAppear = 1,
+		MODE_Operation   = 2,
+		MODE_Finished    = 3,
 	};
 
 	DrawCMcourseSelect();
@@ -343,8 +343,8 @@ protected:
 	DrawCMscoreMgr mScoreMgr;      // _4C
 	DrawCMbest mBest;              // _6C
 	EffectMgr2D* mEffectMgr2D;     // _88
-	P2DPane* _8C;                  // _8C
-	u8 _90;                        // _90
+	P2DPane* mABtnPane;            // _8C
+	u8 mABtnPaneAlpha;             // _90
 };
 } // namespace zen
 

@@ -225,8 +225,8 @@ u16 jdsp[] ATTRIBUTE_ALIGN(32) = {
 };
 
 static struct TaskWork {
-	u16 _00;
-	CommandTask _04;
+	u16 mTaskId;
+	CommandTask mCallback;
 } taskwork[0x10];
 
 /**
@@ -319,7 +319,7 @@ static u32 taskwritep;
 static void DspInitWork()
 {
 	for (int i = 0; i < 0x10; i++) {
-		taskwork[i]._04 = NULL;
+		taskwork[i].mCallback = NULL;
 	}
 }
 
@@ -336,8 +336,8 @@ int DspStartWork(u32 a, CommandTask task)
 		return 0;
 	}
 
-	taskwork[taskwritep]._00 = (a >> 0x10);
-	taskwork[taskwritep]._04 = task;
+	taskwork[taskwritep].mTaskId = (a >> 0x10);
+	taskwork[taskwritep].mCallback = task;
 
 	taskwritep = (p & 0xf);
 	return p;
@@ -348,9 +348,9 @@ int DspStartWork(u32 a, CommandTask task)
  */
 void DspFinishWork(u16 a)
 {
-	if (a == taskwork[taskreadp]._00) {
-		if (taskwork[taskreadp]._04) {
-			taskwork[taskreadp]._04(taskreadp);
+	if (a == taskwork[taskreadp].mTaskId) {
+		if (taskwork[taskreadp].mCallback) {
+			taskwork[taskreadp].mCallback(taskreadp);
 		}
 		taskreadp = (taskreadp + 1 & 0xf);
 	}

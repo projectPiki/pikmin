@@ -753,7 +753,7 @@ void ActorInstance::checkEventKeys(f32 curTime, f32 prevTime, Vector3f& pos)
 					mEffectList[5]->setEmitPosPtr(&mCenterPosition);
 					mEffectList[6] = effectMgr->create(EffectMgr::EFF_Rocket_1Meteor, mCenterPosition, nullptr, nullptr);
 					mEffectList[6]->setEmitPosPtr(&mCenterPosition);
-					_19C = true;
+					mUseMeteorFxDir = true;
 					break;
 				}
 				case 10:
@@ -1110,7 +1110,7 @@ void ActorInstance::refresh(immut Matrix4f& mtx, Graphics& gfx, f32* p3)
 	if (!mMeteorFlag) {
 		for (int i = 0; i < 9; i++) {
 			if (mEffectList[i]) {
-				if (_19C) {
+				if (mUseMeteorFxDir) {
 					mCenterPosition.set(0.0f, 134.0f, 0.0f);
 					mActiveActor->mModel->calcJointWorldPos(gfx, 0, mCenterPosition);
 					Vector3f dir(mActorWorldDir);

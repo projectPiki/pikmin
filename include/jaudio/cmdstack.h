@@ -10,8 +10,8 @@ typedef struct Portcmd_ Portcmd_;
 typedef struct Portargs_ Portargs_; // Defined in "pikiinter.c"
 
 struct JPorthead_ {
-	Portcmd_* _00; // _00
-	Portcmd_* _04; // _04
+	Portcmd_* mHeadCmd; // _00
+	Portcmd_* mTailCmd; // _04
 };
 
 typedef void (*Portfunc)(Portargs_*); // Function signature of `__SetVolandPan`
@@ -22,8 +22,8 @@ typedef void (*Portfunc)(Portargs_*); // Function signature of `__SetVolandPan`
  */
 struct Portcmd_ {
 	u8 _00[0x0C - 0x00]; // _00
-	JPorthead_* _0C;     // _0C
-	Portcmd_* _10;       // _10
+	JPorthead_* mOwnerPort; // _0C
+	Portcmd_* mNextCmd;      // _10
 	Portfunc func;       // _14
 	Portargs_* args;     // _18
 };

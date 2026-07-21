@@ -207,14 +207,14 @@ void Effecter_Overwrite_1Shot(jc_* jc, Osc_* osc1, Osc_* osc2)
 /**
  * @TODO: Documentation
  */
-static jc_* __Oneshot_Play_Start(jcs_* jcs, jc_* jc, u32 p3)
+static jc_* __Oneshot_Play_Start(jcs_* jcs, jc_* jc, u32 noteId)
 {
 	BOOL play;
 
-	if (p3 == 0) {
-		p3 = -1;
+	if (noteId == 0) {
+		noteId = -1;
 	}
-	jc->noteId         = p3;
+	jc->noteId         = noteId;
 	jc->lastNotePlayed = jc->noteId;
 	jc->updateCallback = Jesus1Shot_Update;
 	jc->dspChannel     = AllocDSPchannel(0, (u32)jc);
@@ -300,45 +300,45 @@ static jc_* __Oneshot_GetLogicalChannel(jcs_* jcs, CtrlWave_* wave)
 /**
  * @TODO: Documentation
  */
-Perc_* PercRead(u32 a1, u32 a2)
+Perc_* PercRead(u32 bankIndex, u32 percIndex)
 {
-	Bank_* bank = Bank_Get(a1);
+	Bank_* bank = Bank_Get(bankIndex);
 	if (bank == NULL) {
 		return NULL;
 	}
 
-	return Bank_PercChange(bank, a2);
+	return Bank_PercChange(bank, percIndex);
 }
 
 /**
  * @TODO: Documentation
  */
-Inst_* InstRead(u32 a1, u32 a2)
+Inst_* InstRead(u32 bankIndex, u32 instIndex)
 {
 
-	Bank_* bank = Bank_Get(a1);
+	Bank_* bank = Bank_Get(bankIndex);
 	if (bank == NULL) {
 		return NULL;
 	}
 
-	return Bank_InstChange(bank, a2);
+	return Bank_InstChange(bank, instIndex);
 }
 
 /**
  * @TODO: Documentation
  */
-Vmap_* VmapRead(Inst_* inst, u8 a1, u8 a2)
+Vmap_* VmapRead(Inst_* inst, u8 key, u8 velocity)
 {
-	Vmap_* map = (Vmap_*)Bank_GetInstVmap(inst, a1, a2);
+	Vmap_* map = (Vmap_*)Bank_GetInstVmap(inst, key, velocity);
 	return !map ? NULL : map;
 }
 
 /**
  * @TODO: Documentation
  */
-static void __Oneshot_WavePause(jc_* jc, u8 a)
+static void __Oneshot_WavePause(jc_* jc, u8 pauseFlag)
 {
-	jc->pauseFlag = a;
+	jc->pauseFlag = pauseFlag;
 	jc->toFlush   = 1;
 }
 
@@ -620,9 +620,9 @@ void Gate_1Shot(jc_* jc, u8 key, u8 velocity, s32 noteId)
 /**
  * @TODO: Documentation
  */
-void UpdatePause_1Shot(jc_* jc, u8 a1)
+void UpdatePause_1Shot(jc_* jc, u8 pauseFlag)
 {
-	jc->pauseFlag = a1;
+	jc->pauseFlag = pauseFlag;
 }
 
 /**
@@ -806,9 +806,9 @@ void Get_CtrlWave(SOUNDID_ sound)
 
 typedef struct testPercMap {
 	int _00; // this clearly should one of the existing structs, but Vmap doesnt work so I have no idea
-	int _04;
-	f32 _08;
-	f32 _0C;
+	int mWaveId;
+	f32 mVolumeScale;
+	f32 mPitchScale;
 } testPercMap;
 
 /**
@@ -831,12 +831,12 @@ jc_* Play_1shot(jcs_* jcs, SOUNDID_ sound, u32 id)
 		return NULL;
 	}
 
-	CtrlGroup_* group = WaveidToWavegroup(map->_04, sound.bytes[0]);
+	CtrlGroup_* group = WaveidToWavegroup(map->mWaveId, sound.bytes[0]);
 	if (group == NULL) {
 		return NULL;
 	}
 
-	wave = GetSoundHandle(group, map->_04);
+	wave = GetSoundHandle(group, map->mWaveId);
 	if (wave == NULL) {
 		return NULL;
 	}
@@ -856,9 +856,9 @@ jc_* Play_1shot(jcs_* jcs, SOUNDID_ sound, u32 id)
 	f32 pitch                      = C5BASE_PITCHTABLE[val];
 	chan->velocity                 = sound.bytes[3];
 	chan->note                     = sound.bytes[2];
-	chan->basePitch                = map->_0C * (wave->data->sampleRate / JAC_DAC_RATE) * inst->mGainMultiplier;
+	chan->basePitch                = map->mPitchScale * (wave->data->sampleRate / JAC_DAC_RATE) * inst->mGainMultiplier;
 	chan->currentPitch             = chan->basePitch * pitch;
-	chan->baseVolume               = map->_08 * inst->mFreqMultiplier;
+	chan->baseVolume               = map->mVolumeScale * inst->mFreqMultiplier;
 	chan->currentVolume            = chan->velocity / 127.0f;
 	chan->currentVolume            = chan->currentVolume * chan->currentVolume * chan->baseVolume;
 	chan->panMatrices[1].values[0] = 0.5f;
@@ -926,12 +926,12 @@ jc_* Play_1shot_Perc(jcs_* jcs, SOUNDID_ sound, u32 id)
 
 	u32 x;
 
-	CtrlGroup_* group = WaveidToWavegroup(map->_04, sound.bytes[0]);
+	CtrlGroup_* group = WaveidToWavegroup(map->mWaveId, sound.bytes[0]);
 	if (group == NULL) {
 		return NULL;
 	}
 
-	WaveID_* wave = GetSoundHandle(group, map->_04);
+	WaveID_* wave = GetSoundHandle(group, map->mWaveId);
 	if (wave == NULL) {
 		return NULL;
 	}
@@ -944,10 +944,10 @@ jc_* Play_1shot_Perc(jcs_* jcs, SOUNDID_ sound, u32 id)
 	chan->velocity = sound.bytes[3];
 	chan->note     = sound.bytes[2];
 
-	chan->basePitch    = (wave->data->sampleRate / JAC_DAC_RATE) * map->_0C * perc->mKeyRegions[sound.bytes[2]]->mVolume;
+	chan->basePitch    = (wave->data->sampleRate / JAC_DAC_RATE) * map->mPitchScale * perc->mKeyRegions[sound.bytes[2]]->mVolume;
 	chan->currentPitch = chan->basePitch;
 
-	chan->baseVolume    = map->_08 * perc->mKeyRegions[sound.bytes[2]]->mPitch;
+	chan->baseVolume    = map->mVolumeScale * perc->mKeyRegions[sound.bytes[2]]->mPitch;
 	chan->currentVolume = chan->velocity / 127.0f;
 	chan->currentVolume = chan->currentVolume * chan->currentVolume * chan->baseVolume;
 

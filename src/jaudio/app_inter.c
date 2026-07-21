@@ -18,13 +18,13 @@ void Jac_Pause(void)
 /**
  * @TODO: Documentation
  */
-void Jac_StreamMovieInit(immut char* filepath, u8* param_2, int param_3)
+void Jac_StreamMovieInit(immut char* filepath, u8* movieWorkBuffer, int movieWorkSize)
 {
 	if (Jac_GetCurrentScene() == SCENE_Title && !demo_fade_flag) {
 		Jac_EasyCrossFade(1, 50);
 		demo_fade_flag = TRUE;
 	}
-	Jac_HVQM_Init(filepath, param_2, param_3);
+	Jac_HVQM_Init(filepath, movieWorkBuffer, movieWorkSize);
 	Jac_UpdateStreamLevel();
 }
 
@@ -51,11 +51,11 @@ void Jac_StreamMovieUpdate(void)
 /**
  * @TODO: Documentation
  */
-int Jac_StreamMovieGetPicture(void* p1, int* p2, int* p3)
+int Jac_StreamMovieGetPicture(void* pictureBuffer, int* widthOut, int* heightOut)
 {
 	int picture;
 
-	picture = Jac_GetPicture(p1, p2, p3);
+	picture = Jac_GetPicture(pictureBuffer, widthOut, heightOut);
 	if (picture == -1) {
 		if (Jac_GetCurrentScene() == SCENE_Title && demo_fade_flag) {
 			Jac_EasyCrossFade(0, 100);

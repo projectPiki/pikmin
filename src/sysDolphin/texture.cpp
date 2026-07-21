@@ -31,7 +31,7 @@ Texture::Texture()
 {
 	_30          = 0;
 	_34          = 0;
-	_20          = -1;
+	mAttachState = -1;
 	mLODCount    = 0;
 	mLODBias     = 0.0f;
 	mTexObj      = new GXTexObj();
@@ -177,7 +177,7 @@ static GXTexFmt gxTexFmts[TEX_FMT_COUNT] = {
 void Texture::detach()
 {
 	BUMP_REGISTER(r0);
-	_20 = -1; // needs to use r4?
+	mAttachState = -1; // needs to use r4?
 }
 
 /**
@@ -185,11 +185,11 @@ void Texture::detach()
  */
 void Texture::attach()
 {
-	if (_20 != -1) {
+	if (mAttachState != -1) {
 		return;
 	}
 
-	_20 = 0;
+	mAttachState = 0;
 
 	GXTexWrapMode sWrap;
 	if (mTexFlags & TEX_CLAMP_S) {

@@ -29,7 +29,7 @@ BOOL Set_Portcmd(Portcmd_* cmd, Portfunc func, Portargs_* args)
 {
 	cmd->func = func;
 	cmd->args = args;
-	cmd->_0C  = NULL;
+	cmd->mOwnerPort = NULL;
 	return TRUE;
 }
 
@@ -40,20 +40,20 @@ BOOL Add_Portcmd(JPorthead_* port, Portcmd_* cmd)
 {
 	BOOL interrupt = OSDisableInterrupts();
 
-	if (cmd->_0C) {
+	if (cmd->mOwnerPort) {
 		OSRestoreInterrupts(interrupt);
 		return FALSE;
 	}
 
-	if (port->_04) {
-		port->_04->_10 = cmd;
+	if (port->mTailCmd) {
+		port->mTailCmd->mNextCmd = cmd;
 	} else {
-		port->_00 = cmd;
+		port->mHeadCmd = cmd;
 	}
 
-	port->_04 = cmd;
-	cmd->_10  = NULL;
-	cmd->_0C  = port;
+	port->mTailCmd = cmd;
+	cmd->mNextCmd  = NULL;
+	cmd->mOwnerPort = port;
 	OSRestoreInterrupts(interrupt);
 	return TRUE;
 }
@@ -63,18 +63,18 @@ BOOL Add_Portcmd(JPorthead_* port, Portcmd_* cmd)
  */
 static Portcmd_* Get_Portcmd(JPorthead_* port)
 {
-	Portcmd_* a = port->_00;
-	if (a) {
-		port->_00 = port->_00->_10;
-		if (port->_00 == NULL) {
-			port->_04 = NULL;
+	Portcmd_* cmd = port->mHeadCmd;
+	if (cmd) {
+		port->mHeadCmd = port->mHeadCmd->mNextCmd;
+		if (port->mHeadCmd == NULL) {
+			port->mTailCmd = NULL;
 		}
-		a->_0C = NULL;
+		cmd->mOwnerPort = NULL;
 	} else {
-		a = NULL;
+		cmd = NULL;
 	}
 
-	return a;
+	return cmd;
 }
 
 /**
@@ -116,14 +116,14 @@ int Jac_Portcmd_Proc_Once(JPorthead_* port)
  */
 int Jac_Portcmd_Proc_Stay(JPorthead_* port)
 {
-	Portcmd_* p = port->_00;
+	Portcmd_* p = port->mHeadCmd;
 	while (1) {
 		if (!p) {
 			break;
 		}
 		p->func(p->args);
 
-		p = p->_10;
+		p = p->mNextCmd;
 	}
 	return 0;
 }
@@ -143,8 +143,8 @@ static s32 Portcmd_Main(void* a)
  */
 void Jac_Porthead_Init(JPorthead_* port)
 {
-	port->_00 = NULL;
-	port->_04 = NULL;
+	port->mHeadCmd = NULL;
+	port->mTailCmd = NULL;
 }
 
 /**

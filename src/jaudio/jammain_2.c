@@ -186,15 +186,15 @@ static u32 __32Read(seqp_* track)
 /**
  * @TODO: Documentation
  */
-static BOOL __ConditionCheck(seqp_* track, u8 param_2)
+static BOOL __ConditionCheck(seqp_* track, u8 conditionCode)
 {
 	BOOL result;
-	u16 uVar1;
+	u16 regValue;
 
-	uVar1  = Jam_ReadRegDirect(track, 3);
+	regValue  = Jam_ReadRegDirect(track, 3);
 	result = FALSE;
 
-	switch (param_2 & 0x0f) {
+	switch (conditionCode & 0x0f) {
 	case 0:
 	{
 		result = TRUE;
@@ -202,35 +202,35 @@ static BOOL __ConditionCheck(seqp_* track, u8 param_2)
 	}
 	case 1:
 	{
-		if (uVar1 == 0) {
+		if (regValue == 0) {
 			result = TRUE;
 		}
 		break;
 	}
 	case 2:
 	{
-		if (uVar1 != 0) {
+		if (regValue != 0) {
 			result = TRUE;
 		}
 		break;
 	}
 	case 3:
 	{
-		if (uVar1 == 1) {
+		if (regValue == 1) {
 			result = TRUE;
 		}
 		break;
 	}
 	case 4:
 	{
-		if (uVar1 >= 0x8000) {
+		if (regValue >= 0x8000) {
 			result = TRUE;
 		}
 		break;
 	}
 	case 5:
 	{
-		if (uVar1 < 0x8000) {
+		if (regValue < 0x8000) {
 			result = TRUE;
 		}
 		break;
@@ -354,7 +354,7 @@ void Jam_WriteRegDirect(seqp_* track, u8 index, u16 value)
 {
 	STACK_PAD_VAR(1);
 
-	u16 uVar1;
+	u16 regValue;
 
 	switch (index) {
 	case 0:
@@ -362,7 +362,7 @@ void Jam_WriteRegDirect(seqp_* track, u8 index, u16 value)
 	case 2:
 	{
 		value = value & 0xff;
-		uVar1 = Extend8to16(value);
+		regValue = Extend8to16(value);
 		break;
 	}
 	case 32:
@@ -373,30 +373,30 @@ void Jam_WriteRegDirect(seqp_* track, u8 index, u16 value)
 	case 34:
 	{
 		Jam_WriteRegDirect(track, 0, value >> 8);
-		uVar1 = value;
+		regValue = value;
 		value = value & 0xff;
 		index = 1;
 		break;
 	}
 	default:
 	{
-		uVar1 = value;
+		regValue = value;
 		break;
 	}
 	}
 
 	track->regParam.reg[index]  = value;
-	track->regParam.param.value = uVar1;
+	track->regParam.param.value = regValue;
 }
 
 /**
  * @TODO: Documentation
  */
-static u32 LoadTbl(seqp_* track, u32 ofs, u32 idx, u32 param_4)
+static u32 LoadTbl(seqp_* track, u32 ofs, u32 idx, u32 valueType)
 {
 	u32 result;
 
-	switch (param_4) {
+	switch (valueType) {
 	case 4:
 	{
 		result = __ByteReadOfs(track, ofs + idx);
@@ -431,7 +431,7 @@ static u32 LoadTbl(seqp_* track, u32 ofs, u32 idx, u32 param_4)
 /**
  * @TODO: Documentation
  */
-void Jam_WriteRegParam(seqp_* track, u8 param_2)
+void Jam_WriteRegParam(seqp_* track, u8 controlByte)
 {
 	STACK_PAD_VAR(1);
 
@@ -444,22 +444,22 @@ void Jam_WriteRegParam(seqp_* track, u8 param_2)
 	u32 unaff_r24;       // r24
 	s16 r23_oldRegValue; // r23
 
-	r26 = param_2 & 0xc;
-	r25 = param_2 & 3;
-	if ((param_2 & 0x0F) == 0x0B) {
+	r26 = controlByte & 0xc;
+	r25 = controlByte & 3;
+	if ((controlByte & 0x0F) == 0x0B) {
 		r26 = 0;
 		r25 = 0xb;
 	}
-	if ((param_2 & 0x0F) == 0x0A) {
-		param_2   = __ByteRead(track);
-		r26       = param_2 & 0x0C;
+	if ((controlByte & 0x0F) == 0x0A) {
+		controlByte = __ByteRead(track);
+		r26         = controlByte & 0x0C;
 		r25       = 0xa;
-		unaff_r24 = (u8)(param_2 >> 4) + 4;
+		unaff_r24 = (u8)(controlByte >> 4) + 4;
 	}
-	if ((param_2 & 0x0F) == 0x09) {
-		param_2 = __ByteRead(track);
-		r26     = param_2 & 0x0c;
-		r25     = param_2 & 0xf0;
+	if ((controlByte & 0x0F) == 0x09) {
+		controlByte = __ByteRead(track);
+		r26         = controlByte & 0x0c;
+		r25         = controlByte & 0xf0;
 		if (r26 == 8) {
 			r26 = 0x10;
 		}
@@ -765,10 +765,10 @@ u32 Jam_ReadReg32(seqp_* track, u8 index)
 /**
  * @TODO: Documentation
  */
-void Jam_WriteRegXY(seqp_* track, u32 param_2)
+void Jam_WriteRegXY(seqp_* track, u32 regXYPacked)
 {
-	Jam_WriteRegDirect(track, 4, (u16)(param_2 >> 16));
-	Jam_WriteRegDirect(track, 5, (u16)(param_2));
+	Jam_WriteRegDirect(track, 4, (u16)(regXYPacked >> 16));
+	Jam_WriteRegDirect(track, 5, (u16)(regXYPacked));
 }
 
 /*
@@ -849,24 +849,24 @@ void Jam_ReadPortIndirect(void)
  * @TODO: Documentation
  * @note UNUSED Size: 0000A4
  */
-BOOL Jam_CheckPortIndirect(seqp_* track, u32 param_2, u16 param_3)
+BOOL Jam_CheckPortIndirect(seqp_* track, u32 portSpec, u16 condition)
 {
 	u8 port;
 	int depth;
 	size_t i;
 
-	port  = (param_2 >> 16) & 0xff;
-	depth = (param_2 >> 28) & 0x0f;
+	port  = (portSpec >> 16) & 0xff;
+	depth = (portSpec >> 28) & 0x0f;
 	for (i = 0; i < depth; ++i) {
-		track = track->children[param_2 & 0x0f];
+		track = track->children[portSpec & 0x0f];
 		if (!track) {
 			return FALSE;
 		}
-		param_2 >>= 4;
+		portSpec >>= 4;
 	}
 
 	// Again with the cast to u8... what is it?
-	switch ((u8)param_3) {
+	switch ((u8)condition) {
 	case FALSE:
 	{
 		if (track->trackPort[port].exportFlag == FALSE) {
@@ -888,17 +888,17 @@ BOOL Jam_CheckPortIndirect(seqp_* track, u32 param_2, u16 param_3)
 /**
  * @TODO: Documentation
  */
-BOOL Jam_WritePortAppDirect(seqp_* track, u32 param_2, u16 param_3)
+BOOL Jam_WritePortAppDirect(seqp_* track, u32 portIndex, u16 value)
 {
 	if (!track) {
 		return FALSE;
 	}
-	track->trackPort[param_2].value      = param_3;
-	track->trackPort[param_2].importFlag = 1;
-	if (param_2 == 0) {
+	track->trackPort[portIndex].value      = value;
+	track->trackPort[portIndex].importFlag = 1;
+	if (portIndex == 0) {
 		Jam_SetInterrupt(track, 3);
 	}
-	if (param_2 == 1) {
+	if (portIndex == 1) {
 		Jam_SetInterrupt(track, 4);
 	}
 	return TRUE;
@@ -907,33 +907,33 @@ BOOL Jam_WritePortAppDirect(seqp_* track, u32 param_2, u16 param_3)
 /**
  * @TODO: Documentation
  */
-BOOL Jam_ReadPortAppDirect(seqp_* track, u32 param_2, u16* param_3)
+BOOL Jam_ReadPortAppDirect(seqp_* track, u32 portIndex, u16* outValue)
 {
 	if (!track) {
 		return FALSE;
 	}
-	*param_3                             = track->trackPort[param_2].value;
-	track->trackPort[param_2].exportFlag = 0;
+	*outValue                             = track->trackPort[portIndex].value;
+	track->trackPort[portIndex].exportFlag = 0;
 	return TRUE;
 }
 
 /**
  * @TODO: Documentation
  */
-BOOL Jam_CheckPortAppDirect(seqp_* track, u32 param_2, u16 param_3)
+BOOL Jam_CheckPortAppDirect(seqp_* track, u32 portIndex, u16 condition)
 {
 	// Again with the cast to u8... what is it?
-	switch ((u8)param_3) {
+	switch ((u8)condition) {
 	case FALSE:
 	{
-		if (track->trackPort[param_2].exportFlag == FALSE) {
+		if (track->trackPort[portIndex].exportFlag == FALSE) {
 			return FALSE;
 		}
 		return TRUE;
 	}
 	case TRUE:
 	{
-		if (track->trackPort[param_2].importFlag == TRUE) {
+		if (track->trackPort[portIndex].importFlag == TRUE) {
 			return FALSE;
 		}
 		return TRUE;
@@ -994,13 +994,13 @@ void Jam_InitRegistTrack(void)
 /**
  * @TODO: Documentation
  */
-void Jam_RegistTrack(seqp_* track, u32 param_2)
+void Jam_RegistTrack(seqp_* track, u32 trackId)
 {
-	u32* REF_param_2;
+	u32* REF_trackId;
 	size_t i;
 
 	for (i = 0; i < T_LISTS; ++i) {
-		if (param_2 == TRACK_LIST[i].id) {
+		if (trackId == TRACK_LIST[i].id) {
 			return;
 		}
 	}
@@ -1017,8 +1017,8 @@ void Jam_RegistTrack(seqp_* track, u32 param_2)
 		i = T_LISTS;
 		++T_LISTS;
 	}
-	REF_param_2         = &param_2;
-	TRACK_LIST[i].id    = param_2;
+	REF_trackId         = &trackId;
+	TRACK_LIST[i].id    = trackId;
 	TRACK_LIST[i].track = track;
 	track->isRegistered = 1;
 }
@@ -1049,12 +1049,12 @@ void Jam_UnRegistTrack(seqp_* track)
 /**
  * @TODO: Documentation
  */
-seqp_* Jam_GetTrackHandle(u32 param_1)
+seqp_* Jam_GetTrackHandle(u32 trackId)
 {
 	size_t i;
 
 	for (i = 0; i < T_LISTS; ++i) {
-		if (param_1 == TRACK_LIST[i].id && TRACK_LIST[i].track) {
+		if (trackId == TRACK_LIST[i].id && TRACK_LIST[i].track) {
 			return TRACK_LIST[i].track;
 		}
 	}
@@ -1108,7 +1108,7 @@ BOOL Jam_AssignExtBufferP(seqp_* track, u8 index, OuterParam_* ext)
 /**
  * @TODO: Documentation
  */
-void Jam_SetExtFirFilterD(OuterParam_* ext, s16* param_2)
+void Jam_SetExtFirFilterD(OuterParam_* ext, s16* coefficients)
 {
 	int i;
 
@@ -1118,7 +1118,7 @@ void Jam_SetExtFirFilterD(OuterParam_* ext, s16* param_2)
 	ext->updateFlags |= OuterParamFlag_FIR8Filter;
 	ext->flags |= OuterParamFlag_FIR8Filter;
 	for (i = 0; i < 8; ++i) {
-		ext->firCoefficients[i] = param_2[i];
+		ext->firCoefficients[i] = coefficients[i];
 	}
 }
 
@@ -1177,25 +1177,25 @@ void Jam_SetExtParamD(f32 value, OuterParam_* ext, u8 updateFlags)
 /**
  * @TODO: Documentation
  */
-void Jam_OnExtSwitchD(OuterParam_* ext, u16 param_2)
+void Jam_OnExtSwitchD(OuterParam_* ext, u16 switchFlags)
 {
 	if (!ext) {
 		return;
 	}
-	ext->flags |= param_2;
-	ext->updateFlags |= param_2;
+	ext->flags |= switchFlags;
+	ext->updateFlags |= switchFlags;
 }
 
 /**
  * @TODO: Documentation
  */
-void Jam_OffExtSwitchD(OuterParam_* ext, u16 param_2)
+void Jam_OffExtSwitchD(OuterParam_* ext, u16 switchFlags)
 {
 	if (!ext) {
 		return;
 	}
-	ext->flags ^= ext->flags & param_2;
-	ext->updateFlags |= param_2;
+	ext->flags ^= ext->flags & switchFlags;
+	ext->updateFlags |= switchFlags;
 }
 
 /**
@@ -1219,34 +1219,34 @@ void Jam_SetExtFirFilter(void)
 /**
  * @TODO: Documentation
  */
-void Jam_SetExtParam(f32 param_1, seqp_* track, u8 param_3)
+void Jam_SetExtParam(f32 value, seqp_* track, u8 parameterFlag)
 {
 	if (!track) {
 		return;
 	}
-	Jam_SetExtParamD(param_1, track->outerParams, param_3);
+	Jam_SetExtParamD(value, track->outerParams, parameterFlag);
 }
 
 /**
  * @TODO: Documentation
  */
-void Jam_OnExtSwitch(seqp_* track, u16 param_2)
+void Jam_OnExtSwitch(seqp_* track, u16 switchFlags)
 {
 	if (!track) {
 		return;
 	}
-	Jam_OnExtSwitchD(track->outerParams, param_2);
+	Jam_OnExtSwitchD(track->outerParams, switchFlags);
 }
 
 /**
  * @TODO: Documentation
  */
-void Jam_OffExtSwitch(seqp_* track, u16 param_2)
+void Jam_OffExtSwitch(seqp_* track, u16 switchFlags)
 {
 	if (!track) {
 		return;
 	}
-	Jam_OffExtSwitchD(track->outerParams, param_2);
+	Jam_OffExtSwitchD(track->outerParams, switchFlags);
 }
 
 /**
@@ -1270,35 +1270,35 @@ void Jam_SetExtFirFilterP(void)
 /**
  * @TODO: Documentation
  */
-void Jam_SetExtParamP(f32 param_1, seqp_* track, u8 index, u8 param_4)
+void Jam_SetExtParamP(f32 value, seqp_* track, u8 childIndex, u8 parameterFlag)
 {
 	if (!track) {
 		return;
 	}
-	Jam_SetExtParamD(param_1, track->childOuterParams[index], param_4);
+	Jam_SetExtParamD(value, track->childOuterParams[childIndex], parameterFlag);
 }
 
 /**
  * @TODO: Documentation
  */
-void Jam_OnExtSwitchP(seqp_* track, u8 index, u16 param_3)
+void Jam_OnExtSwitchP(seqp_* track, u8 childIndex, u16 switchFlags)
 {
 	if (!track) {
 		return;
 	}
-	Jam_OnExtSwitchD(track->childOuterParams[index], param_3);
+	Jam_OnExtSwitchD(track->childOuterParams[childIndex], switchFlags);
 }
 
 /**
  * @TODO: Documentation
  * @note UNUSED Size: 00003C
  */
-void Jam_OffExtSwitchP(seqp_* track, u8 index, u16 param_3)
+void Jam_OffExtSwitchP(seqp_* track, u8 childIndex, u16 switchFlags)
 {
 	if (!track) {
 		return;
 	}
-	Jam_OffExtSwitchD(track->childOuterParams[index], param_3);
+	Jam_OffExtSwitchD(track->childOuterParams[childIndex], switchFlags);
 }
 
 /**
@@ -1340,22 +1340,22 @@ void Jam_SetTrackExtPanPower(void)
 /**
  * @TODO: Documentation
  */
-static f32 __PanCalc(f32 param_1, f32 param_2, f32 param_3, u8 param_4)
+static f32 __PanCalc(f32 fromValue, f32 toValue, f32 blendRatio, u8 calcType)
 {
 	f32 result;
 
-	switch (param_4) {
+	switch (calcType) {
 	case 0:
 	{
-		return param_1;
+		return fromValue;
 	}
 	case 1:
 	{
-		return param_2;
+		return toValue;
 	}
 	case 2:
 	{
-		result = param_1 * (1.0f - param_3) + (param_2 * param_3);
+		result = fromValue * (1.0f - blendRatio) + (toValue * blendRatio);
 		break;
 	}
 	}
@@ -1697,21 +1697,21 @@ void Jam_UpdateTempo(seqp_* track)
 /**
  * @TODO: Documentation
  */
-void Jam_MuteTrack(seqp_* track, u8 param_2)
+void Jam_MuteTrack(seqp_* track, u8 muteFlag)
 {
 	u32 i;
 	u16 mask;
 
 	if (track->parent) {
-		track->isMuted = track->parent->isMuted | param_2;
+		track->isMuted = track->parent->isMuted | muteFlag;
 		mask           = 1 << (track->trackId & 0xf);
-		if (!param_2) {
+		if (!muteFlag) {
 			track->parent->childMuteMask &= ~mask;
 		} else {
 			track->parent->childMuteMask |= mask;
 		}
 	} else {
-		track->isMuted = param_2;
+		track->isMuted = muteFlag;
 	}
 	track->updateFlags |= OuterParamFlag_Volume;
 	if (track->isMuted && (track->pauseStatus & 0x20)) {
@@ -1733,7 +1733,7 @@ void Jam_MuteChildTracks(void)
 /**
  * @TODO: Documentation
  */
-void Jam_PauseTrack(seqp_* track, u8 param_2)
+void Jam_PauseTrack(seqp_* track, u8 recursive)
 {
 	size_t i;
 	jc_* pjVar1;
@@ -1759,7 +1759,7 @@ void Jam_PauseTrack(seqp_* track, u8 param_2)
 		}
 	}
 	Jam_SetInterrupt(track, 0);
-	if (param_2 == TRUE) {
+	if (recursive == TRUE) {
 		for (i = 0; i < 16; ++i) {
 			if (track->children[i] && track->children[i]->trackState) {
 				Jam_PauseTrack(track->children[i], 1);
@@ -1771,7 +1771,7 @@ void Jam_PauseTrack(seqp_* track, u8 param_2)
 /**
  * @TODO: Documentation
  */
-void Jam_UnPauseTrack(seqp_* track, u8 param_2)
+void Jam_UnPauseTrack(seqp_* track, u8 recursive)
 {
 	size_t i;
 	jc_* pjVar1;
@@ -1788,7 +1788,7 @@ void Jam_UnPauseTrack(seqp_* track, u8 param_2)
 		}
 	}
 	Jam_SetInterrupt(track, 1);
-	if (param_2 == TRUE) {
+	if (recursive == TRUE) {
 		for (i = 0; i < 16; ++i) {
 			if (track->children[i] && track->children[i]->trackState) {
 				Jam_UnPauseTrack(track->children[i], 1);
@@ -1870,32 +1870,32 @@ static u32 Cmd_Call()
  */
 static u32 Cmd_CallF()
 {
-	u8 bVar1;
-	u32 uVar2;
-	u32 uVar3;
-	u8 uVar4;
+	u8 flags;
+	u32 targetPc;
+	u32 tableBase;
+	u8 regIndex;
 
-	bVar1 = __ByteRead(SEQ_P);
-	if (bVar1 & 0x80) {
-		uVar4 = __ByteRead(SEQ_P);
-		uVar2 = Jam_ReadRegDirect(SEQ_P, uVar4);
-		if (bVar1 & 0x40) {
-			if (bVar1 & 0x20) {
-				uVar4 = __ByteRead(SEQ_P);
-				uVar3 = Jam_ReadRegDirect(SEQ_P, uVar4);
+	flags = __ByteRead(SEQ_P);
+	if (flags & 0x80) {
+		regIndex = __ByteRead(SEQ_P);
+		targetPc = Jam_ReadRegDirect(SEQ_P, regIndex);
+		if (flags & 0x40) {
+			if (flags & 0x20) {
+				regIndex = __ByteRead(SEQ_P);
+				tableBase = Jam_ReadRegDirect(SEQ_P, regIndex);
 			} else {
-				uVar3 = __24Read(SEQ_P);
+				tableBase = __24Read(SEQ_P);
 			}
-			uVar2 = __24ReadOfs(SEQ_P, uVar3 + uVar2 * 3);
+			targetPc = __24ReadOfs(SEQ_P, tableBase + targetPc * 3);
 		}
 	} else {
-		uVar2 = __24Read(SEQ_P);
+		targetPc = __24Read(SEQ_P);
 	}
-	if ((u8)__ConditionCheck(SEQ_P, bVar1 & 0x0f) == TRUE) {
+	if ((u8)__ConditionCheck(SEQ_P, flags & 0x0f) == TRUE) {
 		if (SEQ_CMD == (0xC0 + CMD_CALL_F)) {
 			SEQ_P->callStack[SEQ_P->callStackDepth++] = SEQ_P->programCounter;
 		}
-		SEQ_P->programCounter = uVar2;
+		SEQ_P->programCounter = targetPc;
 	}
 	return 0;
 }
@@ -1953,22 +1953,22 @@ static u32 Cmd_LoopS()
  */
 static u32 Cmd_LoopE()
 {
-	u16 uVar1;
+	u16 loopCount;
 
 	if (SEQ_P->callStackDepth == 0) {
 		return 0x80;
 	}
 
-	uVar1 = SEQ_P->loopCounters[SEQ_P->callStackDepth - 1];
-	if (uVar1 != 0) {
-		uVar1 -= 1;
+	loopCount = SEQ_P->loopCounters[SEQ_P->callStackDepth - 1];
+	if (loopCount != 0) {
+		loopCount -= 1;
 	}
-	if (uVar1 == 0) {
+	if (loopCount == 0) {
 		SEQ_P->callStackDepth -= 1;
 		return 0;
 	}
 
-	SEQ_P->loopCounters[SEQ_P->callStackDepth - 1] = uVar1;
+	SEQ_P->loopCounters[SEQ_P->callStackDepth - 1] = loopCount;
 	SEQ_P->programCounter                          = SEQ_P->callStack[SEQ_P->callStackDepth - 1];
 	return 0;
 }
@@ -2258,15 +2258,15 @@ static u32 Cmd_ConnectClose()
 static u32 Cmd_SyncCPU()
 {
 	u16 seq_arg;
-	u16 param_3;
+	u16 callbackResult;
 
 	seq_arg = SEQ_ARG[0];
 	if (JAM_CALLBACK_FUNC) {
-		param_3 = JAM_CALLBACK_FUNC(SEQ_P, seq_arg);
+		callbackResult = JAM_CALLBACK_FUNC(SEQ_P, seq_arg);
 	} else {
-		param_3 = 0xffff;
+		callbackResult = 0xffff;
 	}
-	Jam_WriteRegDirect(SEQ_P, 3, param_3);
+	Jam_WriteRegDirect(SEQ_P, 3, callbackResult);
 	return 0;
 }
 
@@ -2446,14 +2446,14 @@ static u32 Cmd_PanSwSet()
 static u32 Cmd_OscRoute()
 {
 	u8 oscRoute;
-	u8 uVar2;
+	u8 oscIndex;
 
 	oscRoute = SEQ_ARG[0] & 0xf;
-	uVar2    = SEQ_ARG[0] >> 4 & 0xf;
+	oscIndex = SEQ_ARG[0] >> 4 & 0xf;
 
-	SEQ_P->oscillatorRouting[uVar2] = oscRoute;
+	SEQ_P->oscillatorRouting[oscIndex] = oscRoute;
 	if (oscRoute == 14) {
-		SEQ_P->oscillatorParams[uVar2].state = 1;
+		SEQ_P->oscillatorParams[oscIndex].state = 1;
 	}
 
 	return 0;
@@ -2495,11 +2495,11 @@ static u32 Cmd_OscFull()
 static u32 Cmd_CheckWave()
 {
 	SOUNDID_ soundID;
-	u32 uVar2;
+	u32 hasWave;
 
 	soundID.value = SEQ_ARG[0] | (Jam_ReadRegDirect(SEQ_P, 6) << 16);
-	uVar2         = One_CheckInstWave(soundID);
-	Jam_WriteRegDirect(SEQ_P, 3, (u8)uVar2);
+	hasWave       = One_CheckInstWave(soundID);
+	Jam_WriteRegDirect(SEQ_P, 3, (u8)hasWave);
 	return 0;
 }
 
@@ -2743,7 +2743,7 @@ static CmdFunction CMDP_LIST[CMD_COUNT] = {
 /**
  * @TODO: Documentation
  */
-u32 Cmd_Process(seqp_* track, u8 cmd, u16 param_3)
+u32 Cmd_Process(seqp_* track, u8 cmd, u16 argTypeMask)
 {
 	ArgListPair argpair;
 	u16 argTypes;
@@ -2759,7 +2759,7 @@ u32 Cmd_Process(seqp_* track, u8 cmd, u16 param_3)
 	REF_cmd   = &cmd;
 
 	argpair  = Arglist[cmd - 0xC0];
-	argTypes = argpair.argTypes | param_3;
+	argTypes = argpair.argTypes | argTypeMask;
 	for (i = 0; i < argpair.argCount; ++i) {
 		switch (argTypes & 0x03) {
 		case 0: // 8-bit immediate value
@@ -2802,19 +2802,19 @@ u32 Cmd_Process(seqp_* track, u8 cmd, u16 param_3)
 /**
  * @TODO: Documentation
  */
-u32 RegCmd_Process(seqp_* track, BOOL isFromRegister, u32 param_3)
+u32 RegCmd_Process(seqp_* track, BOOL isFromRegister, u32 argTypeCount)
 {
 	size_t i;
 	u8 cmd;
-	u8 uVar3;
-	u16 uVar5;
-	u16 uVar6; // Uninitialized!  Naughty!
+	u8 maskBits;
+	u16 bitPair;
+	u16 argMask; // Uninitialized!  Naughty!
 
-	// From a cursory glance at the value held in r30 (representing `uVar6`) whenever this
+	// From a cursory glance at the value held in r30 (representing `argMask`) whenever this
 	// function is run, it MIRACULOUSLY manages to always be zero-initialized by dumb luck.
 	// Conditional breakpoint used for testing Pikmin 1 USA rev 1: $80012e00 nbc r30 != 0
 #if defined(BUGFIX)
-	uVar6 = 0;
+		argMask = 0;
 #endif
 
 	cmd = __ByteRead(track);
@@ -2822,18 +2822,18 @@ u32 RegCmd_Process(seqp_* track, BOOL isFromRegister, u32 param_3)
 		cmd = __ExchangeRegisterValue(track, cmd);
 	}
 
-	if (isFromRegister != TRUE || param_3 != 0) {
-		uVar3 = __ByteRead(track);
-		uVar5 = 0b11;
-		for (i = 0; i < param_3 + 1; ++i) {
-			if (uVar3 & 0b10000000) {
-				uVar6 |= uVar5;
+	if (isFromRegister != TRUE || argTypeCount != 0) {
+		maskBits = __ByteRead(track);
+		bitPair  = 0b11;
+		for (i = 0; i < argTypeCount + 1; ++i) {
+			if (maskBits & 0b10000000) {
+				argMask |= bitPair;
 			}
-			uVar3 = uVar3 << 1;
-			uVar5 = uVar5 << 2;
+			maskBits = maskBits << 1;
+			bitPair  = bitPair << 2;
 		}
 	}
-	return Cmd_Process(track, cmd, uVar6);
+	return Cmd_Process(track, cmd, argMask);
 }
 
 // TODO: These five values appear all over this file. They mean something.
@@ -3202,8 +3202,8 @@ try_interrupt:
 			}
 			// Register commands (0xB0-0xBF)
 			else if ((opcode & 0xf0) == 0xb0) {
-				u32 param_3 = opcode & 7;
-				cmdResult   = RegCmd_Process(track, (opcode & 8) ? TRUE : FALSE, param_3);
+				u32 argTypeCount = opcode & 7;
+				cmdResult        = RegCmd_Process(track, (opcode & 8) ? TRUE : FALSE, argTypeCount);
 			}
 			// Other commands
 			else {

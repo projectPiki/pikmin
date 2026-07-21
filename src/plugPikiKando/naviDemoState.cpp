@@ -48,7 +48,7 @@ void NaviDemoSunsetState::DemoStateMachine::init(NaviDemoSunsetState*)
 void NaviDemoSunsetState::GoState::init(NaviDemoSunsetState* state)
 {
 	state->mNavi->mNaviAnimMgr.startMotion(PaniMotionInfo(PIKIANIM_Run, state->mNavi), PaniMotionInfo(PIKIANIM_Run));
-	_14 = false;
+	mIsStumbling = false;
 }
 
 /**
@@ -56,7 +56,7 @@ void NaviDemoSunsetState::GoState::init(NaviDemoSunsetState* state)
  */
 void NaviDemoSunsetState::GoState::exec(NaviDemoSunsetState* state)
 {
-	if (_14) {
+	if (mIsStumbling) {
 		state->mNavi->mVelocity.multiply(0.9f);
 		state->mNavi->mTargetVelocity = state->mNavi->mVelocity;
 		return;
@@ -67,9 +67,9 @@ void NaviDemoSunsetState::GoState::exec(NaviDemoSunsetState* state)
 	f32 nrm       = diff.normalise() / state->mGoalDistance;
 
 	if (nrm > 0.7f && nrm < 0.71f && gsys->getRand(1.0f) >= 0.9999f) {
-		_14 = true;
+		mIsStumbling = true;
 		state->mNavi->mNaviAnimMgr.startMotion(PaniMotionInfo(PIKIANIM_Korobu, state->mNavi), PaniMotionInfo(PIKIANIM_Korobu));
-		_10 = (int)(4.0f * gsys->getRand(1.0f)) + 2;
+		mStumbleLoopCount = (int)(4.0f * gsys->getRand(1.0f)) + 2;
 		return;
 	}
 
@@ -78,7 +78,7 @@ void NaviDemoSunsetState::GoState::exec(NaviDemoSunsetState* state)
 		transit(state, DEMOSTATE_Look);
 
 	} else {
-		diff                          = (diff * C_NAVI_PROP(state->mNavi)._CC()) * (nrm * 0.6f + 0.4f);
+		diff                          = (diff * C_NAVI_PROP(state->mNavi).mMoveSpeed()) * (nrm * 0.6f + 0.4f);
 		state->mNavi->mTargetVelocity = diff;
 	}
 
@@ -91,22 +91,22 @@ void NaviDemoSunsetState::GoState::exec(NaviDemoSunsetState* state)
 void NaviDemoSunsetState::GoState::procAnimMsg(NaviDemoSunsetState* state, MsgAnim* msg)
 {
 	switch (msg->mKeyEvent->mEventType) {
-	case 6:
+	case KEY_LoopEnd:
 	{
-		if (_14) {
-			_10--;
+		if (mIsStumbling) {
+			mStumbleLoopCount--;
 			state->mNavi->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 			state->mNavi->mVelocity.set(0.0f, 0.0f, 0.0f);
-			if (_10 <= 0) {
+			if (mStumbleLoopCount <= 0) {
 				state->mNavi->mNaviAnimMgr.finishMotion(state->mNavi);
 			}
 		}
 		break;
 	}
-	case 0:
+	case KEY_Finished:
 	{
 		state->mNavi->mNaviAnimMgr.startMotion(PaniMotionInfo(PIKIANIM_Walk, state->mNavi), PaniMotionInfo(PIKIANIM_Walk));
-		_14 = false;
+		mIsStumbling = false;
 		break;
 	}
 	}
@@ -148,7 +148,7 @@ void NaviDemoSunsetState::LookState::cleanup(NaviDemoSunsetState*)
 void NaviDemoSunsetState::LookState::procAnimMsg(NaviDemoSunsetState* state, MsgAnim* msg)
 {
 	switch (msg->mKeyEvent->mEventType) {
-	case 0:
+	case KEY_Finished:
 	{
 		if (GameStat::allPikis == 0) {
 			transit(state, DEMOSTATE_Sit);
@@ -166,7 +166,7 @@ void NaviDemoSunsetState::LookState::procAnimMsg(NaviDemoSunsetState* state, Msg
 void NaviDemoSunsetState::WhistleState::init(NaviDemoSunsetState* state)
 {
 	state->mNavi->startMotion(PaniMotionInfo(PIKIANIM_Fue, state->mNavi), PaniMotionInfo(PIKIANIM_Fue));
-	_10                             = 0;
+	mWhistleLoopCount               = 0;
 	flowCont.mIsSunsetWhistleActive = TRUE;
 }
 
@@ -183,18 +183,18 @@ void NaviDemoSunsetState::WhistleState::exec(NaviDemoSunsetState*)
 void NaviDemoSunsetState::WhistleState::procAnimMsg(NaviDemoSunsetState* state, MsgAnim* msg)
 {
 	switch (msg->mKeyEvent->mEventType) {
-	case 6:
+	case KEY_LoopEnd:
 	{
-		_10++;
-		if (_10 == 8) {
+		mWhistleLoopCount++;
+		if (mWhistleLoopCount == 8) {
 			enterAllPikis(state);
 		}
-		if (_10 == 16) {
+		if (mWhistleLoopCount == 16) {
 			state->mNavi->mNaviAnimMgr.finishMotion(state->mNavi);
 		}
 		break;
 	}
-	case 0:
+	case KEY_Finished:
 	{
 		transit(state, 3);
 		break;

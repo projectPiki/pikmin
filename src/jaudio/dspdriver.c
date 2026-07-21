@@ -47,19 +47,19 @@ void InitDSPchannel()
 /**
  * @TODO: Documentation
  */
-dspch_* AllocDSPchannel(u32 param_1, u32 param_2)
+dspch_* AllocDSPchannel(u32 channelMode, u32 ownerId)
 {
 
 	s32 i;
 	STACK_PAD_VAR(1);
-	u32* REF_param_2 = &param_2;
+	u32* REF_ownerId = &ownerId;
 	s32* REF_i       = &i;
-	if (param_1 == 0) {
+	if (channelMode == 0) {
 
 		for (i = 0; i < DSPCH_LENGTH; ++i) {
 			if (DSPCH[i].allocState == DSPCHAN_Free) {
 				DSPCH[i].allocState  = DSPCHAN_MonoAllocated;
-				DSPCH[i].logicalChan = (jc_*)param_2;
+				DSPCH[i].logicalChan = (jc_*)ownerId;
 				DSPCH[i].prio        = 1;
 				DSP_AllocInit(i);
 				return &DSPCH[i];
@@ -75,8 +75,8 @@ dspch_* AllocDSPchannel(u32 param_1, u32 param_2)
 
 		DSPCH[i].allocState      = DSPCHAN_StereoRight;
 		DSPCH[i - 1].allocState  = DSPCHAN_StereoLeft;
-		DSPCH[i].logicalChan     = (jc_*)param_2;
-		DSPCH[i - 1].logicalChan = (jc_*)param_2;
+		DSPCH[i].logicalChan     = (jc_*)ownerId;
+		DSPCH[i - 1].logicalChan = (jc_*)ownerId;
 		DSP_AllocInit(i);
 		DSP_AllocInit(i - 1);
 		return &DSPCH[i - 1];
@@ -227,18 +227,18 @@ BOOL ForceStopDSPchannel(dspch_* chan)
 /**
  * @TODO: Documentation
  */
-BOOL BreakLowerDSPchannel(u8 param_1)
+BOOL BreakLowerDSPchannel(u8 priority)
 {
-	u8* REF_param_1;
+	u8* REF_priority;
 
 	dspch_* chan;
 	DSPchannel_* buf;
 
 	chan        = GetLowerDSPchannel();
-	REF_param_1 = &param_1;
-	if (chan->prio > param_1)
+	REF_priority = &priority;
+	if (chan->prio > priority)
 		return FALSE;
-	if (chan->prio == param_1) {
+	if (chan->prio == priority) {
 		buf = GetDspHandle(chan->buffer_idx); // UNUSED??
 	}
 	if (chan->allocState != DSPCHAN_Free) {

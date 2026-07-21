@@ -39,13 +39,13 @@ void Del_Queue(CmdQueue*)
 /**
  * @TODO: Documentation
  */
-void Jal_AddCmdQueue(CmdQueue* cmdQueue, seqp_* track, u8 param_3)
+void Jal_AddCmdQueue(CmdQueue* cmdQueue, seqp_* track, u8 portId)
 {
 	BOOL restoreInterrupts;
 
 	restoreInterrupts = OSDisableInterrupts();
 	cmdQueue->track   = track;
-	cmdQueue->_64     = param_3;
+	cmdQueue->mPortId = portId;
 	Jac_InitMessageQueue(&cmdQueue->msgQueue, &cmdQueue->message, 16);
 	Add_Queue(cmdQueue);
 	OSRestoreInterrupts(restoreInterrupts);
@@ -101,7 +101,7 @@ void Jal_SendCmdQueue_Force(CmdQueue* queue, u16 msg)
 /**
  * @TODO: Documentation
  */
-static s32 Jal_FrameWork(void* a)
+static s32 Jal_FrameWork(void* callbackArg)
 {
 	CmdQueue* curr;
 	OSMessage message;
@@ -109,13 +109,13 @@ static s32 Jal_FrameWork(void* a)
 
 	for (curr = queue_list; curr; curr = curr->next) {
 #if defined(VERSION_GPIJ01_01) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_DPIJ01_PIKIDEMO)
-		if (Jam_CheckPortIndirect(curr->track, curr->_64, 1) == 1)
+		if (Jam_CheckPortIndirect(curr->track, curr->mPortId, 1) == 1)
 #else
-		if (Jam_CheckPortAppDirect(curr->track, curr->_64, 1) == 1)
+		if (Jam_CheckPortAppDirect(curr->track, curr->mPortId, 1) == 1)
 #endif
 		{
 			if (Jac_ReceiveMessage_Fast(&curr->msgQueue, &message) == 1) {
-				result = Jam_WritePortAppDirect(curr->track, curr->_64, (u16)message);
+				result = Jam_WritePortAppDirect(curr->track, curr->mPortId, (u16)message);
 			}
 		}
 	}

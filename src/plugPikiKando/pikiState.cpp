@@ -1233,8 +1233,8 @@ void PikiFlownState::exec(Piki* piki)
 	}
 
 	if (mState == FNS_Downed) {
-		_10 -= gsys->getFrameTime();
-		if ((_10 < 0.0f || piki->mIsWhistlePending) && piki->isAlive()) {
+		mKnockdownTimer -= gsys->getFrameTime();
+		if ((mKnockdownTimer < 0.0f || piki->mIsWhistlePending) && piki->isAlive()) {
 			piki->startMotion(PaniMotionInfo(PIKIANIM_GetUp, piki), PaniMotionInfo(PIKIANIM_GetUp));
 			mState = FNS_GettingUp;
 		}
@@ -1261,7 +1261,7 @@ void PikiFlownState::procAnimMsg(Piki* piki, MsgAnim* msg)
 			mState  = FNS_Downed;
 			f32 min = C_PIKI_PROP(piki).mMinFlickKnockDownTime();
 			f32 max = C_PIKI_PROP(piki).mMaxFlickKnockDownTime();
-			_10     = (max - min) * gsys->getRand(1.0f) + min;
+			mKnockdownTimer = (max - min) * gsys->getRand(1.0f) + min;
 			if (piki->mHealth <= 0.0f) {
 				PRINT("piki died !\n");
 				transit(piki, PIKISTATE_Dead);
@@ -1691,7 +1691,7 @@ void PikiGoHangState::exec(Piki* piki)
 	Vector3f dir       = naviHand->mCentre - piki->mSRT.t;
 	f32 dist           = dir.normalise();
 	f32 speedFactor    = 1.0f;
-	if (dist > 2.0f * C_NAVI_PROP(piki->mNavi)._1BC()) {
+	if (dist > 2.0f * C_NAVI_PROP(piki->mNavi).mPluckGrabRange()) {
 		speedFactor = 2.0f;
 	}
 	piki->mTargetVelocity = dir * C_PIKI_PROP(piki).mMaxLeafMoveSpeed() * speedFactor;
@@ -1955,13 +1955,13 @@ void PikiFlyingState::exec(Piki* piki)
 		piki->startMotion(PaniMotionInfo(PIKIANIM_Hang), PaniMotionInfo(PIKIANIM_Hang));
 		f32 glideDist;
 		if (piki->mColor == Yellow) {
-			glideDist = C_NAVI_PROP(piki->mNavi)._19C();
+			glideDist = C_NAVI_PROP(piki->mNavi).mYellowThrowHeight();
 		} else {
-			glideDist = C_NAVI_PROP(piki->mNavi)._17C();
+			glideDist = C_NAVI_PROP(piki->mNavi).mThrowMaxHeight();
 		}
 
 		f32 glideTime        = (speedy_sqrtf(gravInterp * gravInterp + 2.0f * glideDist * glideGrav) + -gravInterp) / glideGrav;
-		f32 glideSpeedXZ     = C_NAVI_PROP(piki->mNavi)._1AC() * 0.5f;
+		f32 glideSpeedXZ     = C_NAVI_PROP(piki->mNavi).mThrowFlightTime() * 0.5f;
 		f32 glideSpeedFactor = glideSpeedXZ / glideTime;
 
 		mHorizontalDirection.x = piki->mVelocity.x;
@@ -2914,7 +2914,7 @@ void PikiNukareState::procAnimMsg(Piki* piki, MsgAnim* msg)
 		piki->changeMode(PikiMode::FormationMode, piki->mNavi);
 		if (piki->mNavi->mIsCursorVisible == FALSE) {
 			piki->mNavi->mPluckCursorVisibilityTimer++;
-			if (piki->mNavi->mPluckCursorVisibilityTimer >= C_NAVI_PROP(piki->mNavi)._3EC()) {
+			if (piki->mNavi->mPluckCursorVisibilityTimer >= C_NAVI_PROP(piki->mNavi).mPluckCursorCount()) {
 				piki->mNavi->mIsCursorVisible = TRUE;
 			}
 		}

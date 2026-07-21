@@ -47,8 +47,8 @@ public:
 	void addChild(int, NListNode*);
 	void toString();
 
-	NListNode* _00; // _00
-	NListNode* _04; // _04
+	NListNode* mNextSibling; // _00
+	NListNode* mFirstChild;  // _04
 };
 
 /**
@@ -62,7 +62,7 @@ public:
 	void addList(NList*);
 	void toString();
 
-	NList* _00; // _00
+	NList* mNextList; // _00
 };
 
 #endif

@@ -37,37 +37,37 @@ zen::ogNitakuMgr::ogNitakuMgr(P2DScreen* screen, P2DTextBox* text1, P2DTextBox* 
 	pane_r0->hide();
 	pane_l1->hide();
 	pane_r1->hide();
-	_40       = pane_l0->getPosH();
-	_44       = pane_l0->getPosV();
-	_48       = pane_l1->getPosH();
-	_4C       = pane_l1->getPosV();
-	_80       = pane_r0->getPosH();
-	_84       = pane_r0->getPosV();
-	_88       = pane_r1->getPosH();
-	_8C       = pane_r1->getPosV();
+	mYesLeftCursorX  = pane_l0->getPosH();
+	mYesLeftCursorY  = pane_l0->getPosV();
+	mNoLeftCursorX   = pane_l1->getPosH();
+	mNoLeftCursorY   = pane_l1->getPosV();
+	mYesRightCursorX = pane_r0->getPosH();
+	mYesRightCursorY = pane_r0->getPosV();
+	mNoRightCursorX  = pane_r1->getPosH();
+	mNoRightCursorY  = pane_r1->getPosV();
 	mRootPane = mScreen->search('root', true);
-	PRINT("Yes(%f, %f)  No(%f,%f)\n", _48, _4C, _88, _8C);
-	mLeftCursorMgr.init(mScreen, mRootPane, 'z00l', _48, _4C);
-	mRightCursorMgr.init(mScreen, mRootPane, 'z00r', _88, _8C);
+	PRINT("Yes(%f, %f)  No(%f,%f)\n", mNoLeftCursorX, mNoLeftCursorY, mNoRightCursorX, mNoRightCursorY);
+	mLeftCursorMgr.init(mScreen, mRootPane, 'z00l', mNoLeftCursorX, mNoLeftCursorY);
+	mRightCursorMgr.init(mScreen, mRootPane, 'z00r', mNoRightCursorX, mNoRightCursorY);
 	cursorDisable(0.001f);
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
 	mMesgColorA = new TextColorCallBack(text1);
 	text1->setCallBack(mMesgColorA);
 	mMesgColorB = new TextColorCallBack(text2);
 	text2->setCallBack(mMesgColorB);
-	_A4 = text3->getCharColor();
-	_A8 = text3->getGradColor();
-	_AC = text1->getCharColor();
-	_B0 = text1->getGradColor();
+	mSelectedTextCharColor = text3->getCharColor();
+	mSelectedTextGradColor = text3->getGradColor();
+	mUnselectedTextCharColor = text1->getCharColor();
+	mUnselectedTextGradColor = text1->getGradColor();
 #else
 	mMesgColorA = new TextColorCallBack(mTextBoxA);
 	mTextBoxA->setCallBack(mMesgColorA);
 	mMesgColorB = new TextColorCallBack(mTextBoxB);
 	mTextBoxB->setCallBack(mMesgColorB);
-	_A4 = text3->getCharColor();
-	_A8 = text3->getGradColor();
-	_AC = mTextBoxA->getCharColor();
-	_B0 = mTextBoxA->getGradColor();
+	mSelectedTextCharColor = text3->getCharColor();
+	mSelectedTextGradColor = text3->getGradColor();
+	mUnselectedTextCharColor = mTextBoxA->getCharColor();
+	mUnselectedTextGradColor = mTextBoxA->getGradColor();
 #endif
 	mDoStartYes = startYes;
 	mCanCancel  = canCancel;
@@ -87,10 +87,10 @@ zen::ogNitakuMgr::ogNitakuMgr(P2DScreen* screen, P2DTextBox* text1, P2DTextBox* 
  */
 void zen::ogNitakuMgr::MoveCursorYes(f32 rate)
 {
-	mMesgColorA->setTargetColor(_A4, _A8, rate);
-	mMesgColorB->setTargetColor(_AC, _B0, rate);
-	mLeftCursorMgr.move(_40, _44, rate);
-	mRightCursorMgr.move(_80, _84, rate);
+	mMesgColorA->setTargetColor(mSelectedTextCharColor, mSelectedTextGradColor, rate);
+	mMesgColorB->setTargetColor(mUnselectedTextCharColor, mUnselectedTextGradColor, rate);
+	mLeftCursorMgr.move(mYesLeftCursorX, mYesLeftCursorY, rate);
+	mRightCursorMgr.move(mYesRightCursorX, mYesRightCursorY, rate);
 	mIsYes = true;
 }
 
@@ -100,10 +100,10 @@ void zen::ogNitakuMgr::MoveCursorYes(f32 rate)
  */
 void zen::ogNitakuMgr::MoveCursorNo(f32 rate)
 {
-	mMesgColorA->setTargetColor(_AC, _B0, rate);
-	mMesgColorB->setTargetColor(_A4, _A8, rate);
-	mLeftCursorMgr.move(_48, _4C, rate);
-	mRightCursorMgr.move(_88, _8C, rate);
+	mMesgColorA->setTargetColor(mUnselectedTextCharColor, mUnselectedTextGradColor, rate);
+	mMesgColorB->setTargetColor(mSelectedTextCharColor, mSelectedTextGradColor, rate);
+	mLeftCursorMgr.move(mNoLeftCursorX, mNoLeftCursorY, rate);
+	mRightCursorMgr.move(mNoRightCursorX, mNoRightCursorY, rate);
 	mIsYes = false;
 }
 
@@ -116,13 +116,13 @@ void zen::ogNitakuMgr::InitCursor()
 	if (mDoStartYes) {
 		mIsYes = true;
 		MoveCursorYes(0.001f);
-		mLeftCursorMgr.initPos(_40, _44);
-		mRightCursorMgr.initPos(_80, _84);
+		mLeftCursorMgr.initPos(mYesLeftCursorX, mYesLeftCursorY);
+		mRightCursorMgr.initPos(mYesRightCursorX, mYesRightCursorY);
 	} else {
 		mIsYes = false;
 		MoveCursorNo(0.001f);
-		mLeftCursorMgr.initPos(_48, _4C);
-		mRightCursorMgr.initPos(_88, _8C);
+		mLeftCursorMgr.initPos(mNoLeftCursorX, mNoLeftCursorY);
+		mRightCursorMgr.initPos(mNoRightCursorX, mNoRightCursorY);
 	}
 	mLeftCursorMgr.initScale(0.0f);
 	mRightCursorMgr.initScale(0.0f);

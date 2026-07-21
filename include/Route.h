@@ -68,7 +68,7 @@ public:
 	f32 mScreenX;       ///< _14
 	f32 mScreenY;       ///< _18
 	f32 mScreenDepth;   ///< _1C
-	f32 _20;            ///< _20
+	f32 mDebugDrawSize; ///< _20
 	f32 mRadius;        ///< _24, Radius of waypoint influence
 	Vector3f mPosition; ///< _28
 	int mIsOpen;        ///< _34

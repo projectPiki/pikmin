@@ -21,19 +21,19 @@ DEFINE_PRINT("zenController")
 bool zen::KeyRepeat::update(Controller* controller)
 {
 	bool res = false;
-	if (controller->keyDown(mButton) && _0C) {
-		_04 += gsys->getFrameTime();
+	if (controller->keyDown(mButton) && mWasHeldLastFrame) {
+		mHeldTime += gsys->getFrameTime();
 	} else {
-		_04 = 0.0f;
-		_08 = repeatTime;
+		mHeldTime    = 0.0f;
+		mRepeatDelay = repeatTime;
 	}
 
-	_0C = controller->keyDown(mButton);
+	mWasHeldLastFrame = controller->keyDown(mButton);
 
-	if (_04 > _08) {
+	if (mHeldTime > mRepeatDelay) {
 		res = true;
-		_04 = 0.0f;
-		_08 *= 0.65f;
+		mHeldTime = 0.0f;
+		mRepeatDelay *= 0.65f;
 	}
 
 	if (controller->keyClick(mButton)) {

@@ -1,4 +1,3 @@
-#include "zen/ogResult.h"
 #include "DebugLog.h"
 #include "GameStat.h"
 #include "P2D/Graph.h"
@@ -9,8 +8,10 @@
 #include "jaudio/verysimple.h"
 #include "zen/DrawCM.h"
 #include "zen/ogMessage.h"
+#include "zen/ogResult.h"
 #include "zen/ogSave.h"
 #include "zen/ogSub.h"
+
 
 /**
  * @todo: Documentation
@@ -238,7 +239,7 @@ void zen::ogScrResultMgr::ogScrResultMgrSub()
 	}
 	}
 
-	_94 = static_cast<P2DTextBox*>(mMainScreen->search('getp', true));
+	mDiaryTemplateTextBox = (P2DTextBox*)mMainScreen->search('getp', true);
 	mPaneRedPikis->hide();
 	mPaneBluePikis->hide();
 	mPaneYellowPikis->hide();
@@ -254,10 +255,10 @@ void zen::ogScrResultMgr::ogScrResultMgrSub()
 	setNumberTag(screen, 'bc_c', &mBluePikis, 10);
 	setNumberTag(screen, 'bc_r', &mBluePikis, 1);
 
-	setNumberTag(screen, '4_yc', &mYellowsPikis, 1000);
-	setNumberTag(screen, 'yc_l', &mYellowsPikis, 100);
-	setNumberTag(screen, 'yc_c', &mYellowsPikis, 10);
-	setNumberTag(screen, 'yc_r', &mYellowsPikis, 1);
+	setNumberTag(screen, '4_yc', &mYellowPikis, 1000);
+	setNumberTag(screen, 'yc_l', &mYellowPikis, 100);
+	setNumberTag(screen, 'yc_c', &mYellowPikis, 10);
+	setNumberTag(screen, 'yc_r', &mYellowPikis, 1);
 
 	setNumberTag(screen, 'tp_4', &mTotalPikis, 1000);
 	setNumberTag(screen, 'tp_l', &mTotalPikis, 100);
@@ -294,18 +295,18 @@ void zen::ogScrResultMgr::ogScrResultMgrSub()
 	setNumberTag(screen, 'sd2c', &mLeftBehindPikis, 10);
 	setNumberTag(screen, 'sd2r', &mLeftBehindPikis, 1);
 
-	_98 = mMainScreen->search('4_bo', true);
-	_9C = mMainScreen->search('4_ba', true);
-	_A0 = mMainScreen->search('4_sd', true);
-	_BC = mMainScreen->search('4bo2', true);
-	_C0 = mMainScreen->search('4ba2', true);
-	_C4 = mMainScreen->search('4sd2', true);
-	_C8 = mMainScreen->search('4_rc', true);
-	_CC = mMainScreen->search('4_yc', true);
-	_D0 = mMainScreen->search('4_bc', true);
-	_D4 = mMainScreen->search('rc_r', true);
-	_DC = mMainScreen->search('yc_r', true);
-	_D8 = mMainScreen->search('bc_r', true);
+	mPaneBornThousandsDigit         = mMainScreen->search('4_bo', true);
+	mPaneDeadThousandsDigit         = mMainScreen->search('4_ba', true);
+	mPaneVictimThousandsDigit       = mMainScreen->search('4_sd', true);
+	mPaneSproutedThousandsDigit     = mMainScreen->search('4bo2', true);
+	mPaneLostToBattleThousandsDigit = mMainScreen->search('4ba2', true);
+	mPaneLeftBehindThousandsDigit   = mMainScreen->search('4sd2', true);
+	mPaneRedThousandsDigit          = mMainScreen->search('4_rc', true);
+	mPaneYellowThousandsDigit       = mMainScreen->search('4_yc', true);
+	mPaneBlueThousandsDigit         = mMainScreen->search('4_bc', true);
+	mPaneRedOnesDigit               = mMainScreen->search('rc_r', true);
+	mPaneYellowOnesDigit            = mMainScreen->search('yc_r', true);
+	mPaneBlueOnesDigit              = mMainScreen->search('bc_r', true);
 
 	setNumberTag(screen, 'dc_l', &mCurrentDay, 10);
 	setNumberTag(screen, 'dc_c', &mCurrentDay, 1);
@@ -319,15 +320,15 @@ void zen::ogScrResultMgr::ogScrResultMgrSub()
 	setNumberTag(screen, 'ti_c', &mRemainingDays, 1);
 	setNumberTag(screen, 'ti_r', &mRemainingDays, 1);
 
-	mPaneDaysL = screen->search('dc_l', true);
-	mPaneDaysC = screen->search('dc_c', true);
-	mPaneDaysR = screen->search('dc_r', true);
-	_A4        = screen->search('bo_r', true);
-	_A8        = screen->search('ba_r', true);
-	_AC        = screen->search('sd_r', true);
-	_B0        = screen->search('bo2r', true);
-	_B4        = screen->search('ba2r', true);
-	_B8        = screen->search('sd2r', true);
+	mPaneDaysL                 = screen->search('dc_l', true);
+	mPaneDaysC                 = screen->search('dc_c', true);
+	mPaneDaysR                 = screen->search('dc_r', true);
+	mPaneBornOnesDigit         = screen->search('bo_r', true);
+	mPaneDeadOnesDigit         = screen->search('ba_r', true);
+	mPaneVictimOnesDigit       = screen->search('sd_r', true);
+	mPaneSproutedOnesDigit     = screen->search('bo2r', true);
+	mPaneLostToBattleOnesDigit = screen->search('ba2r', true);
+	mPaneLeftBehindOnesDigit   = screen->search('sd2r', true);
 
 	mPaneDaysLeftL  = screen->search('ti_l', true);
 	mPaneDaysLeftC  = screen->search('ti_c', true);
@@ -338,7 +339,7 @@ void zen::ogScrResultMgr::ogScrResultMgrSub()
 
 	mBluePikis     = 111;
 	mRedPikis      = 222;
-	mYellowsPikis  = 333;
+	mYellowPikis   = 333;
 	mTotalPikis    = 444;
 	mBornPikis     = 555;
 	mDeadPikis     = 666;
@@ -449,7 +450,7 @@ void zen::ogScrResultMgr::start()
 		mLeftBehindPikis   = 4567;
 		mBluePikis         = 1234;
 		mRedPikis          = 2345;
-		mYellowsPikis      = 3456;
+		mYellowPikis       = 3456;
 		mTotalPikis        = 9876;
 		mBornPikis         = 1234;
 		mDeadPikis         = 2345;
@@ -467,8 +468,8 @@ void zen::ogScrResultMgr::start()
 		mLeftBehindPikis   = playerState->mLeftBehindPikis;
 		mBluePikis         = GameStat::containerPikis[Blue] + GameStat::formationPikis[Blue];
 		mRedPikis          = GameStat::containerPikis[Red] + GameStat::formationPikis[Red];
-		mYellowsPikis      = GameStat::containerPikis[Yellow] + GameStat::formationPikis[Yellow];
-		mTotalPikis        = mRedPikis + mBluePikis + mYellowsPikis;
+		mYellowPikis       = GameStat::containerPikis[Yellow] + GameStat::formationPikis[Yellow];
+		mTotalPikis        = mRedPikis + mBluePikis + mYellowPikis;
 		mBornPikis         = GameStat::bornPikis;
 		mDeadPikis         = GameStat::deadPikis - GameStat::victimPikis;
 		mVictimPikis       = GameStat::victimPikis;
@@ -480,12 +481,12 @@ void zen::ogScrResultMgr::start()
 	setSpecialNumber(4, mRemainingDays);
 	setSpecialNumber(5, mPowerupNum);
 
-	strcpy(_13D, _94->getString());
-	cnvSpecialNumber(_13D);
-	_94->setString(_13D);
+	strcpy(mDiaryTemplateTextBuffer, mDiaryTemplateTextBox->getString());
+	cnvSpecialNumber(mDiaryTemplateTextBuffer);
+	mDiaryTemplateTextBox->setString(mDiaryTemplateTextBuffer);
 	mMesgScreen->MakeAndSetPageInfo(&mPageInfoPtr);
 	mMesgScreen->setSolidMode(true);
-	mStatus = Status_3;
+	mStatus = RESULT_DiaryMessage;
 	mMesgScreen->start(0);
 	mBlackPane->setAlpha(0);
 	mGraphAlpha = 0;
@@ -523,15 +524,15 @@ void zen::ogScrResultMgr::start()
 		mPanePartsLeftR->show();
 	}
 
-	check1000(mBornPikis, _98, _A4, 14);
-	check1000(mDeadPikis, _9C, _A8, 14);
-	check1000(mVictimPikis, _A0, _AC, 14);
-	check1000(mSproutedPikis, _BC, _B0, 14);
-	check1000(mPikisLostToBattle, _C0, _B4, 14);
-	check1000(mLeftBehindPikis, _C4, _B8, 14);
-	check1000(mBluePikis, _D0, _D8, 12);
-	check1000(mRedPikis, _C8, _D4, 12);
-	check1000(mYellowsPikis, _CC, _DC, 12);
+	check1000(mBornPikis, mPaneBornThousandsDigit, mPaneBornOnesDigit, 14);
+	check1000(mDeadPikis, mPaneDeadThousandsDigit, mPaneDeadOnesDigit, 14);
+	check1000(mVictimPikis, mPaneVictimThousandsDigit, mPaneVictimOnesDigit, 14);
+	check1000(mSproutedPikis, mPaneSproutedThousandsDigit, mPaneSproutedOnesDigit, 14);
+	check1000(mPikisLostToBattle, mPaneLostToBattleThousandsDigit, mPaneLostToBattleOnesDigit, 14);
+	check1000(mLeftBehindPikis, mPaneLeftBehindThousandsDigit, mPaneLeftBehindOnesDigit, 14);
+	check1000(mBluePikis, mPaneBlueThousandsDigit, mPaneBlueOnesDigit, 12);
+	check1000(mRedPikis, mPaneRedThousandsDigit, mPaneRedOnesDigit, 12);
+	check1000(mYellowPikis, mPaneYellowThousandsDigit, mPaneYellowOnesDigit, 12);
 	mCMBestData->sleep();
 
 	STACK_PAD_VAR(18);
@@ -557,11 +558,11 @@ zen::ogScrResultMgr::returnStatusFlag zen::ogScrResultMgr::update(Controller* in
 		return mStatus;
 	}
 
-	if (mStatus == Status_4) {
+	if (mStatus == RESULT_StartDelay) {
 		PRINT("--- RESULT_TEX_WAIT %d ---\n", mStartWaitDelay);
 		mStartWaitDelay--;
 		if (mStartWaitDelay <= 0) {
-			mStatus = Status_5;
+			mStatus = RESULT_SlideIn;
 			mAlphaMgr->startFadeIn(1.0f);
 			mWaitTimer = 0.0f;
 		}
@@ -572,10 +573,10 @@ zen::ogScrResultMgr::returnStatusFlag zen::ogScrResultMgr::update(Controller* in
 	mAlphaMgr->update();
 	mCMBestData->update();
 
-	if (mStatus == Status_5) {
+	if (mStatus == RESULT_SlideIn) {
 		mWaitTimer += gsys->getFrameTime();
 		if (mWaitTimer >= 1.0f) {
-			mStatus = Status_0;
+			mStatus = RESULT_Active;
 			mPaneRoot->move(0, 0);
 			mCMBestData->appear();
 		} else {
@@ -585,12 +586,12 @@ zen::ogScrResultMgr::returnStatusFlag zen::ogScrResultMgr::update(Controller* in
 		return mStatus;
 	}
 
-	if (mStatus == Status_6) {
+	if (mStatus == RESULT_FadeOut) {
 		mWaitTimer += gsys->getFrameTime();
 		if (mWaitTimer >= 0.5f) {
 			mBgAlpha = 0;
 			mBlackPane->setAlpha(255);
-			mStatus = mStatus2;
+			mStatus = mPendingStatus;
 		} else {
 			mBgAlpha = u8((1.0f - mWaitTimer) * 255.0f);
 			mBlackPane->setAlpha(255 - mBgAlpha);
@@ -598,20 +599,20 @@ zen::ogScrResultMgr::returnStatusFlag zen::ogScrResultMgr::update(Controller* in
 		return mStatus;
 	}
 
-	if (mStatus >= Status_7) {
+	if (mStatus >= RESULT_ExitToMapSelect) {
 		mStatus = Status_NULL;
 		return mStatus;
 	}
 
-	if (mStatus == Status_3) {
+	if (mStatus == RESULT_DiaryMessage) {
 		if (mMesgScreen->update(input) == ogScrMessageMgr::STATE_Exiting) {
-			mStatus = Status_4;
+			mStatus = RESULT_StartDelay;
 			StartRESULT();
 		}
 		return mStatus;
 	}
 
-	if (mStatus == Status_0) {
+	if (mStatus == RESULT_Active) {
 		if (mGraphAlpha < 255) {
 			mGraphAlpha += 8;
 			if (mGraphAlpha > 255) {
@@ -621,19 +622,19 @@ zen::ogScrResultMgr::returnStatusFlag zen::ogScrResultMgr::update(Controller* in
 
 		mSaveStatus = mSaveMgr->update(input);
 		if (mSaveStatus == 14) {
-			mWaitTimer = 0.0f;
-			mStatus2   = Status_7;
-			mStatus    = Status_6;
+			mWaitTimer     = 0.0f;
+			mPendingStatus = RESULT_ExitToMapSelect;
+			mStatus        = RESULT_FadeOut;
 		} else if (mSaveStatus == 12) {
 			mWaitTimer = 0.0f;
-			mStatus    = Status_0;
+			mStatus    = RESULT_Active;
 		} else if (mSaveStatus == 13) {
-			mStatus2 = Status_7;
-			mStatus  = Status_6;
+			mPendingStatus = RESULT_ExitToMapSelect;
+			mStatus        = RESULT_FadeOut;
 		} else if (mSaveStatus == 15) {
-			mWaitTimer = 0.0f;
-			mStatus2   = Status_8;
-			mStatus    = Status_6;
+			mWaitTimer     = 0.0f;
+			mPendingStatus = RESULT_ExitToCardSelect;
+			mStatus        = RESULT_FadeOut;
 		} else if (mSaveStatus == -1) {
 			if (input->keyClick(KBBTN_START | KBBTN_A | KBBTN_B)) {
 				seSystem->playSysSe(ogEnumFix(SYSSE_DECIDE1, JACSYS_Decide1));
@@ -660,8 +661,8 @@ zen::ogScrResultMgr::returnStatusFlag zen::ogScrResultMgr::update(Controller* in
  */
 void zen::ogScrResultMgr::draw(Graphics& gfx)
 {
-	if (mStatus != Status_NULL && mStatus != Status_4) {
-		if (mStatus == Status_3) {
+	if (mStatus != Status_NULL && mStatus != RESULT_StartDelay) {
+		if (mStatus == RESULT_DiaryMessage) {
 			mMesgScreen->draw(gfx);
 			return;
 		}

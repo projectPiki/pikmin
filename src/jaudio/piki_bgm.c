@@ -129,12 +129,12 @@ static u16 GAMESTREAM_VOL_TABLE[] = { 0, 600, 1000, 2000, 3000, 4000, 5000, 6000
 static u8 last_bgm_level = 0xFF;
 
 // forward declarations
-static BOOL Jac_UpdateBgmCrossVol(BgmControl_* control);
+static BOOL Jac_UpdateBgmCrossVol(BgmControl_* bgmControl);
 
 /**
  * @TODO: Documentation
  */
-s32 Jac_BgmFrameCallback(void* a1)
+s32 Jac_BgmFrameCallback(void* callbackArg)
 {
 	call_counter += 1;
 	if ((call_counter & 7) == 0) {
@@ -161,22 +161,22 @@ void Jac_InitBgm(void)
 	u32* REF_i = &i;
 
 	if (!buffer[0]) {
-		int vals1[5] = { 0, 1, 11, 13, 16 };
-		int vals2[5] = { 0, 1, -1, 2, -1 };
+		int preloadSeqIds[5] = { 0, 1, 11, 13, 16 };
+		int startTrackIds[5] = { 0, 1, -1, 2, -1 };
 		STACK_PAD_VAR(1);
 
 		for (i = 0; i < 5; i++) {
-			u32 size;
-			u8* seqbuf;
+			u32 seqSize;
+			u8* seqBuffer;
 			STACK_PAD_VAR(1);
-			size            = Jaf_CheckSeqSize(vals1[i]);
-			u32* REF_size   = &size;
-			seqbuf          = (u8*)OSAlloc2(size);
-			u8** REF_seqbuf = &seqbuf;
-			if ((u32)Jaf_LoadSeq(vals1[i], seqbuf)) {
-				int* pVals = &vals2[i];
-				if (*pVals != -1) {
-					Jaf_StartSeq(*pVals, vals1[i]);
+			seqSize   = Jaf_CheckSeqSize(preloadSeqIds[i]);
+			u32* REF_size = &seqSize;
+			seqBuffer = (u8*)OSAlloc2(seqSize);
+			u8** REF_seqbuf = &seqBuffer;
+			if ((u32)Jaf_LoadSeq(preloadSeqIds[i], seqBuffer)) {
+				int* startTrackId = &startTrackIds[i];
+				if (*startTrackId != -1) {
+					Jaf_StartSeq(*startTrackId, preloadSeqIds[i]);
 				}
 			}
 		}
@@ -190,40 +190,41 @@ void Jac_InitBgm(void)
 /**
  * @TODO: Documentation
  */
-void Jac_FadeOutBgm(u32 trackNo, u32 fade)
+void Jac_FadeOutBgm(u32 trackIndex, u32 fadeFrames)
 {
-	fadeouttime = fade;
-	Jac_SetBgmModeFlag(trackNo, 8, 1);
+	fadeouttime = fadeFrames;
+	Jac_SetBgmModeFlag(trackIndex, 8, 1);
 }
 
 /**
  * @TODO: Documentation
  */
-void Jac_StopBgm(u32 id)
+void Jac_StopBgm(u32 trackIndex)
 {
-	if (bgm[id].isActive) {
-		Jaf_StopSeq(bgm[id].trackHandle);
-		bgm[id].isActive = 0;
+	if (bgm[trackIndex].isActive) {
+		Jaf_StopSeq(bgm[trackIndex].trackHandle);
+		bgm[trackIndex].isActive = 0;
 	}
 }
 
 /**
  * @TODO: Documentation
  */
-void Jac_ReadyBgm(u32 id)
+void Jac_ReadyBgm(u32 bgmID)
 {
-	u32* REF_id = &id;
-	if (id < 2) {
-		id = 2;
+	u32* REF_id = &bgmID;
+
+	if (bgmID < 2) {
+		bgmID = 2;
 	}
-	if (Jaf_CheckSeq(id) == 0) {
-		int* idx = &buffer_mus[lastside];
-		if (*idx != -1) {
-			Jaf_ClearSeq(*idx);
+	if (Jaf_CheckSeq(bgmID) == 0) {
+		int* bufferedSeqId = &buffer_mus[lastside];
+		if (*bufferedSeqId != -1) {
+			Jaf_ClearSeq(*bufferedSeqId);
 		}
-		Jaf_LoadSeqA(id, buffer[lastside]);
+		Jaf_LoadSeqA(bgmID, buffer[lastside]);
 
-		buffer_mus[lastside] = id;
+		buffer_mus[lastside] = bgmID;
 		lastside             = 1 - lastside;
 	}
 }
@@ -231,72 +232,72 @@ void Jac_ReadyBgm(u32 id)
 /**
  * @TODO: Documentation
  */
-void Jac_PlayBgm(u32 trackNo, u32 bgmID)
+void Jac_PlayBgm(u32 trackIndex, u32 bgmID)
 {
 	STACK_PAD_VAR(4);
 	u32* REF_b = &bgmID;
-	u32 check;
+	u32 seqState;
 	seqp_* track;
 	Jac_SetProcessStatus(8);
-	if (bgm[trackNo].isActive) {
-		Jac_StopBgm(trackNo);
+	if (bgm[trackIndex].isActive) {
+		Jac_StopBgm(trackIndex);
 	}
 
 	// this is nearly just Jac_ReadyBgm again
 	if (bgmID < 2) {
 		bgmID = BGM_Dummy2;
 	}
-	check = (u32)Jaf_CheckSeq(bgmID);
-	if (check == 0) {
-		int* idx = &buffer_mus[lastside];
-		if (*idx != -1) {
-			Jaf_ClearSeq(*idx);
+	seqState = (u32)Jaf_CheckSeq(bgmID);
+	if (seqState == 0) {
+		int* bufferedSeqId = &buffer_mus[lastside];
+		if (*bufferedSeqId != -1) {
+			Jaf_ClearSeq(*bufferedSeqId);
 		}
 		Jaf_LoadSeq(bgmID, buffer[lastside]);
 
 		buffer_mus[lastside] = bgmID;
 		lastside             = 1 - lastside;
-	} else if (check == 1) {
-		while (check == 1) {
-			check = (u32)Jaf_CheckSeq(bgmID);
+	} else if (seqState == 1) {
+		while (seqState == 1) {
+			seqState = (u32)Jaf_CheckSeq(bgmID);
 		}
 	}
 
-	track = Jaf_HandleToSeq(trackNo + 3);
+	track = Jaf_HandleToSeq(trackIndex + 3);
 
-	bgm[trackNo].isActive        = 1;
-	bgm[trackNo].needsInit       = 1;
-	bgm[trackNo].hasModeChanged  = 0;
-	bgm[trackNo].transitionTimer = 0;
-	bgm[trackNo].currentMode     = 0;
-	bgm[trackNo].songId          = bgmID - 2;
-	bgm[trackNo].trackHandle     = trackNo + 3;
+	bgm[trackIndex].isActive        = 1;
+	bgm[trackIndex].needsInit       = 1;
+	bgm[trackIndex].hasModeChanged  = 0;
+	bgm[trackIndex].transitionTimer = 0;
+	bgm[trackIndex].currentMode     = 0;
+	bgm[trackIndex].songId          = bgmID - 2;
+	bgm[trackIndex].trackHandle     = trackIndex + 3;
 
 #if defined(VERSION_GPIP01)
 	call_counter = 6000;
 #endif
-	Jac_SetBgmModeFlag(trackNo, 2, 0);
-	Jac_SetBgmModeFlag(trackNo, 1, 0);
-	Jac_SetBgmModeFlag(trackNo, 4, 0);
-	Jac_SetBgmModeFlag(trackNo, 8, 0);
+	Jac_SetBgmModeFlag(trackIndex, 2, 0);
+	Jac_SetBgmModeFlag(trackIndex, 1, 0);
+	Jac_SetBgmModeFlag(trackIndex, 4, 0);
+	Jac_SetBgmModeFlag(trackIndex, 8, 0);
 #if defined(VERSION_GPIP01)
 	call_counter = 0;
 #endif
-	Jaf_ReadySeq(trackNo + 3, bgmID);
+	Jaf_ReadySeq(trackIndex + 3, bgmID);
 	Jac_BgmFrameWork();
-	Jaq_SetBankNumber(Jaf_HandleToSeq(trackNo + 3), bgmID);
-	bgm[trackNo].crossfade = 0;
+	Jaq_SetBankNumber(Jaf_HandleToSeq(trackIndex + 3), bgmID);
+	bgm[trackIndex].crossfade = 0;
 
-	if (trackNo == 0) {
-		bgm[trackNo].gameVolume = game_bgm_volume;
+	if (trackIndex == 0) {
+		bgm[trackIndex].gameVolume = game_bgm_volume;
 		Jam_MuteTrack(track, 0);
 		last_crossmode = 0;
 	} else {
-		bgm[trackNo].gameVolume = 0.0f;
+		bgm[trackIndex].gameVolume = 0.0f;
 		Jam_MuteTrack(track, 1);
 	}
 
-	Jam_SetExtParam(bgm[trackNo].gameVolume, track, 1);
+	Jam_SetExtParam(bgm[trackIndex].gameVolume, track, 1);
 	Jam_OnExtSwitch(track, 1);
 
 	// Challenge mode tempo speedup?
@@ -307,22 +308,22 @@ void Jac_PlayBgm(u32 trackNo, u32 bgmID)
 		Jam_OffExtSwitch(track, 0x40);
 	}
 	track->pauseStatus = 74;
-	Jaf_PlaySeq(trackNo + 3);
+	Jaf_PlaySeq(trackIndex + 3);
 	Jac_SetProcessStatus(9);
 }
 
 /**
  * @TODO: Documentation
  */
-BOOL Jac_ChangeBgmMode(u32 trackNo, u8 mode)
+BOOL Jac_ChangeBgmMode(u32 trackIndex, u8 modeFlags)
 {
-	if (mode == bgm[trackNo].currentMode) {
+	if (modeFlags == bgm[trackIndex].currentMode) {
 		return FALSE;
 	}
 
-	if (bgm[trackNo].isActive) {
-		bgm[trackNo].currentMode    = mode;
-		bgm[trackNo].hasModeChanged = 1;
+	if (bgm[trackIndex].isActive) {
+		bgm[trackIndex].currentMode    = modeFlags;
+		bgm[trackIndex].hasModeChanged = 1;
 	} else {
 		return FALSE;
 	}
@@ -333,42 +334,44 @@ BOOL Jac_ChangeBgmMode(u32 trackNo, u8 mode)
 /**
  * @TODO: Documentation
  */
-void Jac_SetBgmModeFlag(u32 trackNo, u8 flag, u8 doSet)
+void Jac_SetBgmModeFlag(u32 trackIndex, u8 flagMask, u8 enabled)
 {
 #if defined(VERSION_GPIP01)
 	STACK_PAD_VAR(2);
-	if (call_counter < 6000 && Jac_GetCurrentScene() == SCENE_Course && flag != 8 && flag != 4) {
+	if (call_counter < 6000 && Jac_GetCurrentScene() == SCENE_Course && flagMask != 8 && flagMask != 4) {
 		return;
 	}
 #endif
-	u32 x, y, z;
-	BgmControl_* thisBgm = &bgm[trackNo];
-	switch (flag) {
+	u32 battleModeFlag;
+	u32 intensityModeFlag;
+	u32 fadeModeFlag;
+	BgmControl_* currentBgm = &bgm[trackIndex];
+	switch (flagMask) {
 	case 2:
 	{
-		thisBgm->battleMixEnabled = doSet;
+		currentBgm->battleMixEnabled = enabled;
 		break;
 	}
 	case 1:
 	{
-		thisBgm->normalMixEnabled = doSet;
+		currentBgm->normalMixEnabled = enabled;
 		break;
 	}
 	case 4:
 	{
-		thisBgm->trackIntensity = doSet;
+		currentBgm->trackIntensity = enabled;
 		break;
 	}
 	case 8:
 	{
-		thisBgm->isFadeOut = doSet;
+		currentBgm->isFadeOut = enabled;
 		break;
 	}
 	}
-	z = thisBgm->isFadeOut << 3;
-	x = thisBgm->battleMixEnabled << 1;
-	y = thisBgm->trackIntensity << 2;
-	Jac_ChangeBgmMode(trackNo, (thisBgm->normalMixEnabled << 0) + (x) + (y) + (z));
+	fadeModeFlag      = currentBgm->isFadeOut << 3;
+	battleModeFlag    = currentBgm->battleMixEnabled << 1;
+	intensityModeFlag = currentBgm->trackIntensity << 2;
+	Jac_ChangeBgmMode(trackIndex, (currentBgm->normalMixEnabled << 0) + battleModeFlag + intensityModeFlag + fadeModeFlag);
 }
 
 /**
@@ -379,31 +382,31 @@ void Jac_BgmFrameWork(void)
 	if (bgm_semaphore == 0) {
 		bgm_semaphore = TRUE;
 
-		for (u32 i = 0; i < 3; i++) {
-			if (!bgm[i].isActive) {
+		for (u32 trackIndex = 0; trackIndex < 3; trackIndex++) {
+			if (!bgm[trackIndex].isActive) {
 				continue;
 			}
-			if (bgm[i].needsInit) {
-				Jac_ChangeBgmTrackVol(&bgm[i]);
+			if (bgm[trackIndex].needsInit) {
+				Jac_ChangeBgmTrackVol(&bgm[trackIndex]);
 				continue;
 			}
-			if (bgm[i].hasModeChanged) {
-				Jac_ChangeBgmTrackVol(&bgm[i]);
-				bgm[i].hasModeChanged = 0;
+			if (bgm[trackIndex].hasModeChanged) {
+				Jac_ChangeBgmTrackVol(&bgm[trackIndex]);
+				bgm[trackIndex].hasModeChanged = 0;
 			}
-			if (bgm[i].transitionTimer) {
-				Jac_MoveBgmTrackVol(&bgm[i]);
+			if (bgm[trackIndex].transitionTimer) {
+				Jac_MoveBgmTrackVol(&bgm[trackIndex]);
 			}
 
-			if (bgm[i].crossfade) {
-				if (!Jac_UpdateBgmCrossVol(&bgm[i])) {
-					bgm[i].crossfade = 0;
+			if (bgm[trackIndex].crossfade) {
+				if (!Jac_UpdateBgmCrossVol(&bgm[trackIndex])) {
+					bgm[trackIndex].crossfade = 0;
 					continue;
 				}
 
-				bgm[i].crossfade--;
-				if (bgm[i].crossfade == 0 && 1 - last_crossmode == i) {
-					Jam_MuteTrack(Jaf_HandleToSeq(bgm[i].trackHandle), 1);
+				bgm[trackIndex].crossfade--;
+				if (bgm[trackIndex].crossfade == 0 && 1 - last_crossmode == trackIndex) {
+					Jam_MuteTrack(Jaf_HandleToSeq(bgm[trackIndex].trackHandle), 1);
 				}
 			}
 		}
@@ -415,41 +418,41 @@ void Jac_BgmFrameWork(void)
 /**
  * @TODO: Documentation
  */
-void Jac_MoveBgmTrackVol(BgmControl_* control)
+void Jac_MoveBgmTrackVol(BgmControl_* bgmControl)
 {
 	seqp_* track2;
 	seqp_* track;
 	u32 i;
-	f32 a  = control->transitionTimer;
-	track2 = Jaf_HandleToSeq(control->trackHandle);
+	f32 a  = bgmControl->transitionTimer;
+	track2 = Jaf_HandleToSeq(bgmControl->trackHandle);
 	if (!track2) {
 		return;
 	}
 	track = track2;
-	control->transitionTimer--;
+	bgmControl->transitionTimer--;
 
 	for (i = 0; i < 16; i++) {
-		f32 b = control->trackVolumes[i];
-		Jam_SetExtParamP(control->trackParams[i].volume + (b - control->trackParams[i].volume) / a, track, i, 1);
+		f32 b = bgmControl->trackVolumes[i];
+		Jam_SetExtParamP(bgmControl->trackParams[i].volume + (b - bgmControl->trackParams[i].volume) / a, track, i, 1);
 	}
 }
 
 /**
  * @TODO: Documentation
  */
-void Jac_ChangeBgmTrackVol(BgmControl_* control)
+void Jac_ChangeBgmTrackVol(BgmControl_* bgmControl)
 {
 	STACK_PAD_VAR(4);
 	u32 i;
-	seqp_* track2 = Jaf_HandleToSeq(control->trackHandle);
+	seqp_* track2 = Jaf_HandleToSeq(bgmControl->trackHandle);
 	if (!track2) {
 		return;
 	}
 
-	u16 mute = bgm_mute_set[control->songId][control->currentMode & 0x3];
-	f32 vol  = bgm_volume_set[control->songId][(control->currentMode >> 2) & 0x1];
+	u16 mute = bgm_mute_set[bgmControl->songId][bgmControl->currentMode & 0x3];
+	f32 vol  = bgm_volume_set[bgmControl->songId][(bgmControl->currentMode >> 2) & 0x1];
 
-	if (control->currentMode & 0x8) {
+	if (bgmControl->currentMode & 0x8) {
 		vol = 0.0f;
 	}
 	seqp_* track = track2;
@@ -458,77 +461,78 @@ void Jac_ChangeBgmTrackVol(BgmControl_* control)
 		switch ((mute >> i) & 0x1) {
 		case 0:
 		{
-			control->trackVolumes[i] = 0.0f;
+			bgmControl->trackVolumes[i] = 0.0f;
 			break;
 		}
 		case 1:
 		{
-			control->trackVolumes[i] = vol;
+			bgmControl->trackVolumes[i] = vol;
 			break;
 		}
 		}
 	}
 
-	if (control->needsInit) {
+	if (bgmControl->needsInit) {
 		for (i = 0; i < 16; i++) {
-			Jam_InitExtBuffer(&control->trackParams[i]);
-			Jam_AssignExtBufferP(track, i, &control->trackParams[i]);
-			Jam_SetExtParamP(control->trackVolumes[i], track, i, 1);
+			Jam_InitExtBuffer(&bgmControl->trackParams[i]);
+			Jam_AssignExtBufferP(track, i, &bgmControl->trackParams[i]);
+			Jam_SetExtParamP(bgmControl->trackVolumes[i], track, i, 1);
 			Jam_OnExtSwitchP(track, i, 1);
 		}
-		control->needsInit = 0;
-	} else if (control->currentMode & 0x8) {
-		control->transitionTimer = fadeouttime;
+		bgmControl->needsInit = 0;
+	} else if (bgmControl->currentMode & 0x8) {
+		bgmControl->transitionTimer = fadeouttime;
 	} else {
-		control->transitionTimer = 60;
+		bgmControl->transitionTimer = 60;
 	}
 }
 
 /**
  * @TODO: Documentation
  */
-static BOOL Jac_UpdateBgmCrossVol(BgmControl_* control)
+static BOOL Jac_UpdateBgmCrossVol(BgmControl_* bgmControl)
 {
-	f32 a        = control->crossfade;
-	seqp_* track = Jaf_HandleToSeq(control->trackHandle);
+	f32 a        = bgmControl->crossfade;
+	seqp_* track = Jaf_HandleToSeq(bgmControl->trackHandle);
 
 	if (!track->outerParams) {
 		return FALSE;
 	}
 
-	Jam_SetExtParam(track->outerParams->volume + (control->gameVolume - track->outerParams->volume) / a, track, 1);
+	Jam_SetExtParam(track->outerParams->volume + (bgmControl->gameVolume - track->outerParams->volume) / a, track, 1);
 	return TRUE;
 }
 
 /**
  * @TODO: Documentation
  */
-void Jac_GameVolume(u8 bgmVol, u8 seVol)
+void Jac_GameVolume(u8 bgmLevel, u8 seLevel)
 {
-	u16 tmpSeVol;
-	u16 tmpDemoVol;
-	game_bgm_volume = GAMEBGM_VOL_TABLE[bgmVol];
-	if (last_bgm_level != bgmVol) {
+	u16 soundEffectVolume;
+	u16 demoVolume;
+	game_bgm_volume = GAMEBGM_VOL_TABLE[bgmLevel];
+	if (last_bgm_level != bgmLevel) {
 		Jac_EasyCrossFade(2, 10);
 	}
 
-	last_bgm_level = bgmVol;
-	tmpDemoVol     = GAMEDEMO_VOL_TABLE[bgmVol];
-	Jam_WritePortAppDirect(Jam_GetTrackHandle(0x30000), 2, tmpDemoVol);
-	Jac_SetStreamLevel(GAMESTREAM_VOL_TABLE[bgmVol], GAMESTREAM_VOL_TABLE[seVol]);
-	tmpSeVol = GAMESE_VOL_TABLE[seVol];
-	Jam_WritePortAppDirect(Jam_GetTrackHandle(0x10000), 0, tmpSeVol);
-	Jam_WritePortAppDirect(Jam_GetTrackHandle(0x20000), 0, tmpSeVol);
+	last_bgm_level = bgmLevel;
+	demoVolume     = GAMEDEMO_VOL_TABLE[bgmLevel];
+	Jam_WritePortAppDirect(Jam_GetTrackHandle(0x30000), 2, demoVolume);
+	Jac_SetStreamLevel(GAMESTREAM_VOL_TABLE[bgmLevel], GAMESTREAM_VOL_TABLE[seLevel]);
+	soundEffectVolume = GAMESE_VOL_TABLE[seLevel];
+	Jam_WritePortAppDirect(Jam_GetTrackHandle(0x10000), 0, soundEffectVolume);
+	Jam_WritePortAppDirect(Jam_GetTrackHandle(0x20000), 0, soundEffectVolume);
 }
 
 /**
  * @TODO: Documentation
  */
-void Jac_EasyCrossFade(u8 mode, u32 fadeTime)
+void Jac_EasyCrossFade(u8 crossfadeMode, u32 fadeFrames)
 {
-	u8* REF_type = &mode;
-	u32* REF_val = &fadeTime;
-	switch (mode) {
+	u8* REF_type = &crossfadeMode;
+	u32* REF_val = &fadeFrames;
+
+	switch (crossfadeMode) {
 	case 0: // exit boss mode
 	{
 		bgm[0].gameVolume = game_bgm_volume;
@@ -547,27 +551,27 @@ void Jac_EasyCrossFade(u8 mode, u32 fadeTime)
 	case 2: // volume changed
 	{
 		bgm[last_crossmode].gameVolume = game_bgm_volume;
-		bgm[last_crossmode].crossfade  = fadeTime;
+		bgm[last_crossmode].crossfade  = fadeFrames;
 		return;
 	}
 	}
 
-	bgm[0].crossfade = fadeTime;
-	bgm[1].crossfade = fadeTime;
+	bgm[0].crossfade = fadeFrames;
+	bgm[1].crossfade = fadeFrames;
 
-	last_crossmode = mode;
+	last_crossmode = crossfadeMode;
 }
 
 /**
  * @TODO: Documentation
  */
-void Jac_DemoFade(u8 type, u32 val, f32 multiplier)
+void Jac_DemoFade(u8 fadeType, u32 fadeFrames, f32 volumeScale)
 {
-	u8* REF_type  = &type;
-	u32* REF_val  = &val;
-	f32* REF_mult = &multiplier;
+	u8* REF_type  = &fadeType;
+	u32* REF_val  = &fadeFrames;
+	f32* REF_mult = &volumeScale;
 
-	switch (type) {
+	switch (fadeType) {
 	case 0:
 	{
 		bgm[0].gameVolume = bgm[0].prevVolume;
@@ -578,26 +582,26 @@ void Jac_DemoFade(u8 type, u32 val, f32 multiplier)
 	{
 		bgm[0].prevVolume = bgm[0].gameVolume;
 		bgm[1].prevVolume = bgm[1].gameVolume;
-		bgm[0].gameVolume = multiplier * bgm[0].gameVolume;
-		bgm[1].gameVolume = multiplier * bgm[1].gameVolume;
+		bgm[0].gameVolume = volumeScale * bgm[0].gameVolume;
+		bgm[1].gameVolume = volumeScale * bgm[1].gameVolume;
 		break;
 	}
 	case 2:
 	{
-		bgm[0].gameVolume = multiplier * bgm[0].prevVolume;
-		bgm[1].gameVolume = multiplier * bgm[1].prevVolume;
+		bgm[0].gameVolume = volumeScale * bgm[0].prevVolume;
+		bgm[1].gameVolume = volumeScale * bgm[1].prevVolume;
 		break;
 	}
 	case 3:
 	{
-		bgm[0].gameVolume = multiplier;
-		bgm[1].gameVolume = multiplier;
+		bgm[0].gameVolume = volumeScale;
+		bgm[1].gameVolume = volumeScale;
 		break;
 	}
 	}
 
-	bgm[0].crossfade = val;
-	bgm[1].crossfade = val;
+	bgm[0].crossfade = fadeFrames;
+	bgm[1].crossfade = fadeFrames;
 }
 
 /**

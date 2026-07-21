@@ -1,4 +1,3 @@
-#include "zen/DrawGameInfo.h"
 #include "DebugLog.h"
 #include "Graphics.h"
 #include "NaviMgr.h"
@@ -8,10 +7,12 @@
 #include "gameflow.h"
 #include "nlib/Math.h"
 #include "sysNew.h"
+#include "zen/DrawGameInfo.h"
 #include "zen/Graphics.h"
 #include "zen/Math.h"
 #include "zen/Number.h"
 #include "zen/ogSub.h"
+
 
 /**
  * @todo: Documentation
@@ -22,7 +23,6 @@ DEFINE_ERROR(38)
 #else
 DEFINE_ERROR(40)
 #endif
-
 
 /**
  * @todo: Documentation
@@ -174,10 +174,10 @@ struct LifePinchCallBack : public P2DPaneCallBack {
 	LifePinchCallBack(P2DPane* pane)
 	    : P2DPaneCallBack(pane, PANETYPE_Picture)
 	{
-		P2DPicture* pic = static_cast<P2DPicture*>(pane);
-		_04 = _08 = 0.0f;
-		_10       = false;
-		_0C       = 0;
+		P2DPicture* pic  = (P2DPicture*)pane;
+		mPulseAlphaScale = mPulsePhase = 0.0f;
+		mDamagePulseActive             = false;
+		_0C                            = 0;
 		pic->setAlpha(0);
 		pic->setOffset(pic->getWidth() >> 1, pic->getHeight() >> 1);
 	}
@@ -193,51 +193,51 @@ struct LifePinchCallBack : public P2DPaneCallBack {
 		}
 
 		if (healthRatio > 0.0f && healthRatio < 0.5f) {
-			if (_04 < 250.0f) {
-				_04 += 5.0f;
+			if (mPulseAlphaScale < 250.0f) {
+				mPulseAlphaScale += 5.0f;
 			} else {
-				_04 = 255.0f;
+				mPulseAlphaScale = 255.0f;
 			}
 
-			_08 += ((0.5f - healthRatio) * 30.0f * PI + 15.0f) / 180.0f;
+			mPulsePhase += ((0.5f - healthRatio) * 30.0f * PI + 15.0f) / 180.0f;
 			if (navi->orimaDamaged()) {
 				_0C = 3;
 			}
 		} else {
 			_0C = 0;
-			if (!_10 && navi && navi->mHealth > 0.0f && navi->orimaDamaged()) {
-				_10 = true;
-				_04 = 255.0f;
-				_08 = 0.0f;
+			if (!mDamagePulseActive && navi && navi->mHealth > 0.0f && navi->orimaDamaged()) {
+				mDamagePulseActive = true;
+				mPulseAlphaScale   = 255.0f;
+				mPulsePhase        = 0.0f;
 			}
-			if (_04 > 5.0) { // forgot an f, yamashita
-				_04 -= 5.0f;
+			if (mPulseAlphaScale > 5.0) { // forgot an f, yamashita
+				mPulseAlphaScale -= 5.0f;
 			} else {
-				_04 = 0.0f;
-				_10 = false;
+				mPulseAlphaScale   = 0.0f;
+				mDamagePulseActive = false;
 			}
-			_08 += 15.0f * PI / 180.0f;
+			mPulsePhase += 15.0f * PI / 180.0f;
 		}
 
-		if (_08 > TAU) {
-			_08 -= TAU;
-			_10 = false;
+		if (mPulsePhase > TAU) {
+			mPulsePhase -= TAU;
+			mDamagePulseActive = false;
 			if (_0C > 0) {
 				SeSystem::playSysSe(SYSSE_ORIMA_LIFEDIM);
 			}
 		}
 
-		pic->setAlpha(zen::RoundOff((1.0f - NMathF::cos(_08)) * _04 * 0.5f));
-		pic->setScale((1.0f - NMathF::cos(_08 * 0.5f)) * 0.15f + 1.0f);
+		pic->setAlpha(zen::RoundOff((1.0f - NMathF::cos(mPulsePhase)) * mPulseAlphaScale * 0.5f));
+		pic->setScale((1.0f - NMathF::cos(mPulsePhase * 0.5f)) * 0.15f + 1.0f);
 		return true;
 	}
 
 	// _00     = VTBL
 	// _00-_04 = P2DPaneCallBack
-	f32 _04;  // _04
-	f32 _08;  // _08
-	int _0C;  // _0C
-	bool _10; // _10
+	f32 mPulseAlphaScale;    // _04
+	f32 mPulsePhase;         // _08
+	int _0C;                 // _0C
+	bool mDamagePulseActive; // _10
 };
 
 /**
@@ -301,8 +301,8 @@ struct NaviIconCallBack : public P2DPaneCallBack {
 	NaviIconCallBack(P2DPane* pane)
 	    : P2DPaneCallBack(nullptr, PANETYPE_Pane)
 	{
-		_04        = 0.0f;
-		mIsDamaged = false;
+		mDamageAnimPhase = 0.0f;
+		mIsDamaged       = false;
 		pane->setOffset(pane->getWidth() >> 1, pane->getHeight() >> 1);
 	}
 
@@ -313,13 +313,13 @@ struct NaviIconCallBack : public P2DPaneCallBack {
 			navi = naviMgr->getNavi(0);
 		}
 		if (mIsDamaged) {
-			f32 a = _04 += (PI / 3.0f);
+			f32 a = mDamageAnimPhase += (PI / 3.0f);
 			if (a > 3.0f * TAU) {
 				mIsDamaged = false;
 				pane->setScale(1.0f);
-				_04 = 0.0f;
+				mDamageAnimPhase = 0.0f;
 			}
-			f32 t = NMathF::sin(_04) * ((1.0f - _04 / (3.0f * TAU)) * 0.2f);
+			f32 t = NMathF::sin(mDamageAnimPhase) * ((1.0f - mDamageAnimPhase / (3.0f * TAU)) * 0.2f);
 			pane->setScale(1.0f - t, 1.0f + t, 1.0f);
 
 		} else if (navi && navi->mHealth > 0.0f && navi->orimaDamaged()) {
@@ -331,8 +331,8 @@ struct NaviIconCallBack : public P2DPaneCallBack {
 
 	// _00     = VTBL
 	// _00-_04 = P2DPaneCallBack
-	f32 _04;         // _04
-	bool mIsDamaged; // _08
+	f32 mDamageAnimPhase; // _04
+	bool mIsDamaged;      // _08
 };
 
 /**
@@ -390,7 +390,7 @@ struct MoonIconCallBack : public P2DPaneCallBack, public SunMove {
 	    : P2DPaneCallBack(pane, PANETYPE_Picture)
 	    , SunMove(startPane, goalPane)
 	{
-		_14 = 0.0f;
+		mRotationPhase = 0.0f;
 	}
 
 	virtual bool invoke(P2DPane* pane) // _08
@@ -402,12 +402,13 @@ struct MoonIconCallBack : public P2DPaneCallBack, public SunMove {
 			f32 alpha = 255.0f;
 			pic->show();
 			move(pane);
-			f32 angle = _14 += 2.0f * PI / 180.0f;
+			f32 angle = mRotationPhase += 2.0f * PI / 180.0f;
 			if (angle > TAU) {
-				_14 -= TAU;
+				mRotationPhase -= TAU;
 			}
 
-			pic->rotateZ(pane->getWidth() >> 1, pane->getHeight() >> 1, NMathF::sin(_14) * (20.0f * PI / 180.0f) - (5.0f * PI / 180.0f));
+			pic->rotateZ(pane->getWidth() >> 1, pane->getHeight() >> 1,
+			             NMathF::sin(mRotationPhase) * (20.0f * PI / 180.0f) - (5.0f * PI / 180.0f));
 
 			if (gameflow.mWorldClock.mTimeOfDay > 6.5f && gameflow.mWorldClock.mTimeOfDay <= 7.0f) {
 				alpha *= (7.0f - gameflow.mWorldClock.mTimeOfDay) / 0.5f;
@@ -423,7 +424,7 @@ struct MoonIconCallBack : public P2DPaneCallBack, public SunMove {
 	// _00     = VTBL
 	// _00-_04 = P2DPaneCallBack
 	// _04-_14 = SunMove
-	f32 _14; // _14
+	f32 mRotationPhase; // _14
 };
 
 /**
@@ -516,20 +517,20 @@ struct SunCapsuleCallBack : public P2DPaneCallBack {
 	SunCapsuleCallBack(P2DPane* pane)
 	    : P2DPaneCallBack(pane, PANETYPE_Picture)
 	{
-		_04 = 0;
+		mAlphaPhase = 0;
 	}
 
 	virtual bool invoke(P2DPane* pane) // _08
 	{
-		P2DPicture* pic = static_cast<P2DPicture*>(pane);
-		_04 += 2047;
-		pic->setAlpha(zen::RoundOff(sinShort(_04) * 27.5f + 227.5f));
+		P2DPicture* pic = (P2DPicture*)pane;
+		mAlphaPhase += 2047;
+		pic->setAlpha(zen::RoundOff(sinShort(mAlphaPhase) * 27.5f + 227.5f));
 		return true;
 	}
 
 	// _00     = VTBL
 	// _00-_04 = P2DPaneCallBack
-	u16 _04; // _04
+	u16 mAlphaPhase; // _04
 };
 
 /**
@@ -561,31 +562,31 @@ struct MapPikminWindowCallBack : public P2DPaneCallBack {
 	MapPikminWindowCallBack(P2DPane* pane)
 	    : P2DPaneCallBack(pane, PANETYPE_Picture)
 	{
-		_04 = 0.0f;
-		_08 = 0.0f;
+		mPulseStrength = 0.0f;
+		mPulseTimer    = 0.0f;
 	}
 
 	virtual bool invoke(P2DPane* pane) // _08
 	{
-		P2DPicture* pic = static_cast<P2DPicture*>(pane);
-		_08 += gsys->getFrameTime();
-		if (_08 > 2.0f) {
-			_08 -= 2.0f;
+		P2DPicture* pic = (P2DPicture*)pane;
+		mPulseTimer += gsys->getFrameTime();
+		if (mPulseTimer > 2.0f) {
+			mPulseTimer -= 2.0f;
 		}
 
 		if (zen::pGameInfo->mMapPikiNum == MAX_PIKI_ON_FIELD) {
-			_04 += gsys->getFrameTime();
-			if (_04 > 1.0f) {
-				_04 = 1.0f;
+			mPulseStrength += gsys->getFrameTime();
+			if (mPulseStrength > 1.0f) {
+				mPulseStrength = 1.0f;
 			}
 		} else {
-			_04 -= gsys->getFrameTime();
-			if (_04 < 0.0f) {
-				_04 = 0.0f;
+			mPulseStrength -= gsys->getFrameTime();
+			if (mPulseStrength < 0.0f) {
+				mPulseStrength = 0.0f;
 			}
 		}
 
-		f32 t     = (NMathF::sin(_08 / 2.0f * TAU) + 1.0f) * 0.5f * _04;
+		f32 t     = (NMathF::sin(mPulseTimer / 2.0f * TAU) + 1.0f) * 0.5f * mPulseStrength;
 		f32 tComp = 1.0f - t;
 		pic->setWhite(Colour(255, zen::RoundOff(50.0f * t + 255.0f * tComp), zen::RoundOff(50.0f * t + 255.0f * tComp), 255));
 		return true;
@@ -593,8 +594,8 @@ struct MapPikminWindowCallBack : public P2DPaneCallBack {
 
 	// _00     = VTBL
 	// _00-_04 = P2DPaneCallBack
-	f32 _04; // _04
-	f32 _08; // _08
+	f32 mPulseStrength; // _04
+	f32 mPulseTimer;    // _08
 };
 
 } // namespace

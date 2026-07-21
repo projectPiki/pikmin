@@ -119,10 +119,10 @@ public:
 protected:
 	// TODO: members
 	NArray<SplineKeyFrame>* mFrameArray; // _00
-	NPool<SplineSegment>* _04;           // _04
+	NPool<SplineSegment>* mSegmentPool;  // _04
 	SplineCurve* mViewpointCurve;        // _08
 	SplineCurve* mWatchpointCurve;       // _0C
-	u8 _10;                              // _10
+	u8 mCurrentSegmentIndex;             // _10
 };
 
 #endif

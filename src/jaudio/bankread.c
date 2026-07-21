@@ -106,11 +106,11 @@ Bank_* Bank_Test(u8* ibnk_address)
 /**
  * @TODO: Documentation
  */
-static BOOL __Bank_Regist_Inner(u8* ibnk, u32 param_2, u32 param_3)
+static BOOL __Bank_Regist_Inner(u8* ibnk, u32 bankIndex, u32 connectTableId)
 {
-	Jac_BnkConnectTableSet(param_3, param_2);
-	bankp[param_2] = Bank_Test(ibnk);
-	if (!bankp[param_2])
+	Jac_BnkConnectTableSet(connectTableId, bankIndex);
+	bankp[bankIndex] = Bank_Test(ibnk);
+	if (!bankp[bankIndex])
 		return FALSE;
 	return TRUE;
 }
@@ -118,18 +118,18 @@ static BOOL __Bank_Regist_Inner(u8* ibnk, u32 param_2, u32 param_3)
 /**
  * @TODO: Documentation
  */
-BOOL Bank_Regist(void* ibnk, u32 param_2)
+BOOL Bank_Regist(void* ibnk, u32 bankIndex)
 {
-	return __Bank_Regist_Inner((u8*)ibnk, param_2, ((Ibnk_*)ibnk)->_08);
+	return __Bank_Regist_Inner((u8*)ibnk, bankIndex, ((Ibnk_*)ibnk)->_08);
 }
 
 /**
  * @TODO: Documentation
  * @note UNUSED Size: 000020
  */
-BOOL Bank_Regist_Direct(void* ibnk, u32 param_2, u32 param_3)
+BOOL Bank_Regist_Direct(void* ibnk, u32 bankIndex, u32 connectTableId)
 {
-	return __Bank_Regist_Inner((u8*)ibnk, param_2, param_3);
+	return __Bank_Regist_Inner((u8*)ibnk, bankIndex, connectTableId);
 }
 
 /**
