@@ -5,11 +5,11 @@
 
 typedef struct seqp_ seqp_;
 
-s32 NoteON(seqp_*, s32, s32, s32, s32);
-s32 NoteOFF_R(seqp_*, u8, u16);
-s32 NoteOFF(seqp_*, u8);
+s32 NoteON(seqp_* track, s32 channel, s32 key, s32 velocity, s32 playId);
+s32 NoteOFF_R(seqp_* track, u8 channelIndex, u16 releaseFrames);
+s32 NoteOFF(seqp_* track, u8 channelIndex);
 s32 GateON(seqp_* track, s32 channelId, s32 key, s32 velocity, s32 playId);
-void ProgramChange(s32);
-BOOL CheckNoteStop(seqp_*, s32);
+void ProgramChange(s32 chan);
+BOOL CheckNoteStop(seqp_* track, s32 channelIndex);
 
 #endif

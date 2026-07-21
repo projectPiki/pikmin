@@ -18,9 +18,9 @@ static u32 global_id = 0;
 static void ARAMFinish(u32 msg)
 {
 	STACK_PAD_VAR(1);
-	u32* REF_param_1;
+	u32* REF_msg;
 
-	REF_param_1         = &msg;
+	REF_msg             = &msg;
 	ARQRequest* request = (ARQRequest*)msg;
 	OSSendMessage((OSMessageQueue*)request->owner, (OSMessage)1, OS_MESSAGE_BLOCK);
 }

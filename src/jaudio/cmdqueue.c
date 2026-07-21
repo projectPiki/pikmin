@@ -39,13 +39,13 @@ void Del_Queue(CmdQueue*)
 /**
  * @TODO: Documentation
  */
-void Jal_AddCmdQueue(CmdQueue* cmdQueue, seqp_* track, u8 param_3)
+void Jal_AddCmdQueue(CmdQueue* cmdQueue, seqp_* track, u8 portId)
 {
 	BOOL restoreInterrupts;
 
 	restoreInterrupts = OSDisableInterrupts();
 	cmdQueue->track   = track;
-	cmdQueue->mPortId = param_3;
+	cmdQueue->mPortId = portId;
 	Jac_InitMessageQueue(&cmdQueue->msgQueue, &cmdQueue->message, 16);
 	Add_Queue(cmdQueue);
 	OSRestoreInterrupts(restoreInterrupts);
@@ -101,7 +101,7 @@ void Jal_SendCmdQueue_Force(CmdQueue* queue, u16 msg)
 /**
  * @TODO: Documentation
  */
-static s32 Jal_FrameWork(void* a)
+static s32 Jal_FrameWork(void* callbackArg)
 {
 	CmdQueue* curr;
 	OSMessage message;

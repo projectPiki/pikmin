@@ -333,19 +333,19 @@ static void __StopSeq(seqp_* track)
 /**
  * @TODO: Documentation
  */
-s32 Jaq_SetSeqData(seqp_* param_1, u8* param_2, u32 param_3, u32 param_4)
+s32 Jaq_SetSeqData(seqp_* track, u8* sequenceData, u32 sequenceSize, u32 sourceMode)
 {
-	return Jaq_SetSeqData_Limit(param_1, param_2, param_3, param_4, 0);
+	return Jaq_SetSeqData_Limit(track, sequenceData, sequenceSize, sourceMode, 0);
 }
 
 /**
  * @TODO: Documentation
  */
-s32 Jaq_SetSeqData_Limit(seqp_* track, u8* param_2, u32 param_3, u32 param_4, u8 param_5)
+s32 Jaq_SetSeqData_Limit(seqp_* track, u8* sequenceData, u32 sequenceSize, u32 sourceMode, u8 oneShotMode)
 {
 	s32 root;
 	BOOL enabled;
-	u8* puVar2;
+	u8* trackData;
 
 	if (!track) {
 		enabled = OSDisableInterrupts();
@@ -363,36 +363,36 @@ s32 Jaq_SetSeqData_Limit(seqp_* track, u8* param_2, u32 param_3, u32 param_4, u8
 		return -1;
 	}
 
-	track->dataSourceMode = param_4;
-	switch (param_4) {
+	track->dataSourceMode = sourceMode;
+	switch (sourceMode) {
 	case 0:
 	{
-		puVar2 = param_2;
+		trackData = sequenceData;
 		break;
 	}
 	case 1:
 	{
-		track->fileHandle = FAT_AllocateMemory(param_3);
+		track->fileHandle = FAT_AllocateMemory(sequenceSize);
 		if (track->fileHandle == 0xffff) { // Isn't this literally impossible?
 			return -1;
 		}
-		FAT_StoreBlock(param_2, track->fileHandle, 0, param_3);
-		puVar2 = NULL;
+		FAT_StoreBlock(sequenceData, track->fileHandle, 0, sequenceSize);
+		trackData = NULL;
 		break;
 	}
 	case 2:
 	{
-		track->fileHandle = (u8)param_2;
-		puVar2            = NULL;
+		track->fileHandle = (u8)sequenceData;
+		trackData         = NULL;
 		break;
 	}
 	}
 	track->trackId = root;
 	track->flags   = 3;
-	Init_Track(track, (u32)puVar2, NULL);
+	Init_Track(track, (u32)trackData, NULL);
 	Jam_InitExtBuffer(&ROOT_OUTER[root]);
 	Jam_AssignExtBuffer(track, &ROOT_OUTER[root]);
-	Init_1shot(&track->parentController, param_5);
+	Init_1shot(&track->parentController, oneShotMode);
 	track->tempoAccumulator = 0.0f;
 	track->tempoFactor      = 1.0f;
 	Jam_UpdateTrackAll(track);
@@ -422,16 +422,16 @@ static s32 Jaq_RootCallback(void* track);
 /**
  * @TODO: Documentation
  */
-BOOL Jaq_StartSeq(u32 param_1)
+BOOL Jaq_StartSeq(u32 trackId)
 {
 	seqp_* track;
 	u8* pTrackState;
 
-	if (param_1 == -1) {
+	if (trackId == -1) {
 		return FALSE;
 	}
 
-	track = rootseq[param_1];
+	track = rootseq[trackId];
 	if (!track) {
 		return FALSE;
 	};
@@ -455,7 +455,7 @@ BOOL Jaq_StartSeq(u32 param_1)
 		*pTrackState = 1;
 	}
 	}
-	Jac_RegisterDspPlayerCallback(&Jaq_RootCallback, rootseq[param_1]);
+	Jac_RegisterDspPlayerCallback(&Jaq_RootCallback, rootseq[trackId]);
 	return TRUE;
 }
 

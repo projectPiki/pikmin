@@ -59,7 +59,7 @@ BOOL Jac_CheckBootOk();
 void Jac_Start(void* heap, u32 heapSize, u32 aramSize, immut char* rootPath);
 void Jac_Freeze_Precall();
 void Jac_Freeze();
-void Jac_AddDVDBuffer(u8* buf, u32);
+void Jac_AddDVDBuffer(u8* buf, u32 bufferSize);
 void Jac_BackDVDBuffer();
 
 ///////////////////////////////////////////////////////

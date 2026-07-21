@@ -104,14 +104,14 @@ void DSP_SetMixerInitVolume(u8 idx, u8 mixer, s16 volume, u8 level)
 /**
  * @TODO: Documentation
  */
-void DSP_SetMixerVolume(u8 idx, u8 mixer, s16 volume, u8 param_4)
+void DSP_SetMixerVolume(u8 idx, u8 mixer, s16 volume, u8 masterLevel)
 {
 	DSPchannel_* buf         = &CH_BUF[idx];
 	DSPMixerChannel* mixChan = &buf->mixChannels[mixer];
 	if (buf->endRequested)
 		return;
 	mixChan->targetVolume = volume;
-	mixChan->level        = (param_4 << 8) | (mixChan->level & 0xff);
+	mixChan->level        = (masterLevel << 8) | (mixChan->level & 0xff);
 }
 
 /**
@@ -250,19 +250,19 @@ void DSP_SetFilterTable(s16* dst, s16* src, u32 len)
 /**
  * @TODO: Documentation
  */
-void DSP_SetIIRFilterParam(u8 idx, s16* param_2)
+void DSP_SetIIRFilterParam(u8 idx, s16* coefficients)
 {
 	DSPchannel_* buf = &CH_BUF[idx];
-	DSP_SetFilterTable(buf->biquadFilterCoeffs, param_2, 4);
+	DSP_SetFilterTable(buf->biquadFilterCoeffs, coefficients, 4);
 }
 
 /**
  * @TODO: Documentation
  */
-void DSP_SetFIR8FilterParam(u8 idx, s16* param_2)
+void DSP_SetFIR8FilterParam(u8 idx, s16* coefficients)
 {
 	DSPchannel_* buf = &CH_BUF[idx];
-	DSP_SetFilterTable(buf->variableFirCoeffs, param_2, 8);
+	DSP_SetFilterTable(buf->variableFirCoeffs, coefficients, 8);
 }
 
 /**

@@ -410,7 +410,7 @@ static volatile u32 stop_ready;
 /**
  * cmd -1: stop, cmd 0: ready
  */
-static int MovieSync(u32 a1, s32 cmd)
+static int MovieSync(u32 callbackArg, s32 cmd)
 {
 	int sync;
 

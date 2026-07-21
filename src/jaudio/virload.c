@@ -21,7 +21,7 @@ static u32 JV_CURRENT_ARCS = 0; // TODO: type unknown, init unclear
  * @TODO: Documentation
  * @note UNUSED Size: 000028
  */
-void JV_InitHeader(immut char*)
+void JV_InitHeader(immut char* fileName)
 {
 	TRAP_UNIMPLEMENTED;
 }
@@ -29,46 +29,46 @@ void JV_InitHeader(immut char*)
 /**
  * @TODO: Documentation
  */
-BOOL JV_InitHeader_M(immut char* fileName, u8* barcData, u8* p3)
+BOOL JV_InitHeader_M(immut char* fileName, u8* barcData, u8* archiveWork)
 {
 	STACK_PAD_VAR(1);
-	immut char** REF_p1 = &fileName;
+	immut char** REF_fileName = &fileName;
 	if (!barcData) {
 		// if no barc data, read from disk
-		u32 size = DVDT_CheckFile(fileName);
-		if (size == FALSE) {
+		u32 fileSize = DVDT_CheckFile(fileName);
+		if (fileSize == FALSE) {
 			return FALSE;
 		}
 
-		barcData = (u8*)OSAlloc2(size);
+		barcData = (u8*)OSAlloc2(fileSize);
 		if (!barcData) {
 			return FALSE;
 		}
 
-		u32 loadState = DVDT_LoadFile(fileName, barcData);
-		if (loadState == FALSE) {
+		u32 loadStatus = DVDT_LoadFile(fileName, barcData);
+		if (loadStatus == FALSE) {
 			return FALSE;
 		}
 	}
 
-	u32 len = strlen(fileName) - 1;
+	u32 dirSeparatorIndex = strlen(fileName) - 1;
 
-	for (len; len > 0; len--) {
-		if (fileName[len] == '/') {
+	for (dirSeparatorIndex; dirSeparatorIndex > 0; dirSeparatorIndex--) {
+		if (fileName[dirSeparatorIndex] == '/') {
 			break;
 		}
 	}
 
-	if (len == 0) {
+	if (dirSeparatorIndex == 0) {
 		strcpy(JV_DIR_NAME[JV_CURRENT_ARCS], "/");
 	} else {
-		strncpy(JV_DIR_NAME[JV_CURRENT_ARCS], fileName, len);
+		strncpy(JV_DIR_NAME[JV_CURRENT_ARCS], fileName, dirSeparatorIndex);
 	}
 
-	strcpy(JV_ARC_NAME[JV_CURRENT_ARCS], &fileName[len + 1]);
+	strcpy(JV_ARC_NAME[JV_CURRENT_ARCS], &fileName[dirSeparatorIndex + 1]);
 
 	JV_ARC[JV_CURRENT_ARCS]           = (Barc*)barcData;
-	JV_ARC[JV_CURRENT_ARCS]->meta._04 = (u32)p3;
+	JV_ARC[JV_CURRENT_ARCS]->meta._04 = (u32)archiveWork;
 
 	JV_CURRENT_ARCS++;
 	return TRUE;
@@ -77,17 +77,17 @@ BOOL JV_InitHeader_M(immut char* fileName, u8* barcData, u8* p3)
 /**
  * @TODO: Documentation
  */
-u32 JV_GetArchiveHandle(immut char* name)
+u32 JV_GetArchiveHandle(immut char* archiveName)
 {
-	u32 i;
+	u32 archiveIndex;
 
-	for (i = 0; i < JV_CURRENT_ARCS; ++i) {
-		if (!strcmp(name, JV_ARC_NAME[i])) {
+	for (archiveIndex = 0; archiveIndex < JV_CURRENT_ARCS; ++archiveIndex) {
+		if (!strcmp(archiveName, JV_ARC_NAME[archiveIndex])) {
 			break;
 		}
 	}
-	if (i != JV_CURRENT_ARCS) {
-		return i * 0x10000;
+	if (archiveIndex != JV_CURRENT_ARCS) {
+		return archiveIndex * 0x10000;
 	}
 	return -1;
 }
@@ -96,7 +96,7 @@ u32 JV_GetArchiveHandle(immut char* name)
  * @TODO: Documentation
  * @note UNUSED Size: 0000E8
  */
-void JV_GetLogicalHandleS(immut char*, immut char*)
+void JV_GetLogicalHandleS(immut char* dirName, immut char* fileName)
 {
 	TRAP_UNIMPLEMENTED;
 }
@@ -105,7 +105,7 @@ void JV_GetLogicalHandleS(immut char*, immut char*)
  * @TODO: Documentation
  * @note UNUSED Size: 000154
  */
-void JV_GetLogicalHandle(immut char*)
+void JV_GetLogicalHandle(immut char* logicalPath)
 {
 	TRAP_UNIMPLEMENTED;
 	// idk where this is meant to be, but it's static and in a function.
@@ -116,7 +116,7 @@ void JV_GetLogicalHandle(immut char*)
  * @TODO: Documentation
  * @note UNUSED Size: 000064
  */
-void JV_GetHandle(u32)
+void JV_GetHandle(u32 handle)
 {
 	TRAP_UNIMPLEMENTED;
 }
@@ -126,8 +126,8 @@ void JV_GetHandle(u32)
  */
 BarcEntry* JV_GetRealHandle(u32 handle)
 {
-	u32 i;
-	Barc* hed;
+	u32 unusedIndex;
+	Barc* archiveHeader;
 	u16 arcIdx;
 	u16 seqIdx;
 
@@ -137,18 +137,18 @@ BarcEntry* JV_GetRealHandle(u32 handle)
 	if (arcIdx >= JV_CURRENT_ARCS) {
 		return 0;
 	}
-	hed = JV_ARC[arcIdx];
-	if (!hed) {
+	archiveHeader = JV_ARC[arcIdx];
+	if (!archiveHeader) {
 		return NULL;
 	}
-	if (seqIdx >= hed->meta.seqCount) {
+	if (seqIdx >= archiveHeader->meta.seqCount) {
 		return NULL;
 	}
 
-	BarcEntry* entry = (&hed[seqIdx].entry) + 1; // skip header i guess?
+	BarcEntry* entry = (&archiveHeader[seqIdx].entry) + 1; // skip header i guess?
 	while (entry->isDummy != 0xFFFF) {
 		// skip through any dummy tracks until we hit a real one (isDummy == 0xFFFF for real tracks)
-		entry = (&hed[entry->isDummy].entry) + 1;
+		entry = (&archiveHeader[entry->isDummy].entry) + 1;
 	}
 
 	return entry;
@@ -171,69 +171,69 @@ u32 JV_CheckSize(u32 handle)
  * @TODO: Documentation
  * @note UNUSED Size: 000004 (Matching by size)
  */
-void __JV_Callback(u32)
+void __JV_Callback(u32 callbackArg)
 {
 }
 
 /**
  * @TODO: Documentation
  */
-u32 JV_LoadFile(u32 handle, u8* dst, u32 param_3, u32 length)
+u32 JV_LoadFile(u32 handle, u8* dst, u32 offset, u32 length)
 {
-	BarcEntry* entry;
-	u32 src;
-	char name[128];
-	volatile u32 status;
+	BarcEntry* unusedEntry;
+	u32 sourceOffset;
+	char path[128];
+	volatile u32 loadStatus;
 
 	u32* REF_handle = &handle;
 	u8** REF_dst    = &dst;
 	u32* REF_length = &length;
 
-	u32 idx = handle >> 16;
-	status  = 0;
+	u32 archiveIndex = handle >> 16;
+	loadStatus      = 0;
 
-	src = JV_GetRealHandle(handle)->offset;
-	src += param_3;
-	u32* REF_src = &src;
+	sourceOffset = JV_GetRealHandle(handle)->offset;
+	sourceOffset += offset;
+	u32* REF_src = &sourceOffset;
 
-	strcpy(name, JV_DIR_NAME[idx]);
-	strcat(name, "/");
-	strcat(name, JV_ARC[idx]->meta.arcName);
-	DVDT_LoadtoDRAM(0, name, (u32)dst, src, length, (u32*)&status, NULL);
+	strcpy(path, JV_DIR_NAME[archiveIndex]);
+	strcat(path, "/");
+	strcat(path, JV_ARC[archiveIndex]->meta.arcName);
+	DVDT_LoadtoDRAM(0, path, (u32)dst, sourceOffset, length, (u32*)&loadStatus, NULL);
 
-	while (status == 0) {
+	while (loadStatus == 0) {
 		;
 	}
 
 	STACK_PAD_VAR(2);
-	return status;
+	return loadStatus;
 }
 
 /**
  * @TODO: Documentation
  */
-u32 JV_LoadFile_Async2(u32 handle, u8* dst, u32 p3, u32 length, void (*callback)(u32), u32 owner)
+u32 JV_LoadFile_Async2(u32 handle, u8* dst, u32 offset, u32 length, void (*callback)(u32), u32 owner)
 {
-	static u32 first = TRUE;
+	static u32 isFirstCall = TRUE;
 	STACK_PAD_VAR(1);
-	u32 idx;
-	u32 src;
-	char name[128];
+	u32 archiveIndex;
+	u32 sourceOffset;
+	char path[128];
 	u32* REF_handle = &handle;
 	u8** REF_dst    = &dst;
 	u32* REF_length = &length;
 	STACK_PAD_VAR(3);
 
-	idx = handle >> 16;
-	src = JV_GetRealHandle(handle)->offset;
-	src += p3;
-	u32* REF_src = &src;
+	archiveIndex = handle >> 16;
+	sourceOffset = JV_GetRealHandle(handle)->offset;
+	sourceOffset += offset;
+	u32* REF_src = &sourceOffset;
 
-	strcpy(name, JV_DIR_NAME[idx]);
-	strcat(name, "/");
-	strcat(name, JV_ARC[idx]->meta.arcName);
+	strcpy(path, JV_DIR_NAME[archiveIndex]);
+	strcat(path, "/");
+	strcat(path, JV_ARC[archiveIndex]->meta.arcName);
 
-	DVDT_LoadtoDRAM(owner, name, (u32)dst, src, length, NULL, callback);
+	DVDT_LoadtoDRAM(owner, path, (u32)dst, sourceOffset, length, NULL, callback);
 	return length;
 }
 
@@ -241,7 +241,7 @@ u32 JV_LoadFile_Async2(u32 handle, u8* dst, u32 p3, u32 length, void (*callback)
  * @TODO: Documentation
  * @note UNUSED Size: 00006C
  */
-void JV_GetMemoryFile(u32)
+void JV_GetMemoryFile(u32 handle)
 {
 	TRAP_UNIMPLEMENTED;
 }

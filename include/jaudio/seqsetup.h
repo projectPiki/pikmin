@@ -11,10 +11,10 @@ void Jaq_Reset(void);
 void Jaq_GetRemainFreeTracks(void);
 seqp_* Jaq_HandleToSeq(u32 handle);
 BOOL Jaq_StopSeq(s32 index);
-s32 Jaq_SetSeqData(seqp_*, u8*, u32, u32);
-s32 Jaq_SetSeqData_Limit(seqp_*, u8*, u32, u32, u8);
+s32 Jaq_SetSeqData(seqp_* track, u8* sequenceData, u32 sequenceSize, u32 sourceMode);
+s32 Jaq_SetSeqData_Limit(seqp_* track, u8* sequenceData, u32 sequenceSize, u32 sourceMode, u8 oneShotMode);
 BOOL Jaq_SetBankNumber(seqp_* track, u8 bankNum);
-BOOL Jaq_StartSeq(u32);
+BOOL Jaq_StartSeq(u32 trackId);
 s32 Jaq_OpenTrack(seqp_*, u32, u32);
 u32 Jaq_CloseTrack(seqp_*);
 

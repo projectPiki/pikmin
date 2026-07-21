@@ -207,14 +207,14 @@ void Effecter_Overwrite_1Shot(jc_* jc, Osc_* osc1, Osc_* osc2)
 /**
  * @TODO: Documentation
  */
-static jc_* __Oneshot_Play_Start(jcs_* jcs, jc_* jc, u32 p3)
+static jc_* __Oneshot_Play_Start(jcs_* jcs, jc_* jc, u32 noteId)
 {
 	BOOL play;
 
-	if (p3 == 0) {
-		p3 = -1;
+	if (noteId == 0) {
+		noteId = -1;
 	}
-	jc->noteId         = p3;
+	jc->noteId         = noteId;
 	jc->lastNotePlayed = jc->noteId;
 	jc->updateCallback = Jesus1Shot_Update;
 	jc->dspChannel     = AllocDSPchannel(0, (u32)jc);
@@ -300,45 +300,45 @@ static jc_* __Oneshot_GetLogicalChannel(jcs_* jcs, CtrlWave_* wave)
 /**
  * @TODO: Documentation
  */
-Perc_* PercRead(u32 a1, u32 a2)
+Perc_* PercRead(u32 bankIndex, u32 percIndex)
 {
-	Bank_* bank = Bank_Get(a1);
+	Bank_* bank = Bank_Get(bankIndex);
 	if (bank == NULL) {
 		return NULL;
 	}
 
-	return Bank_PercChange(bank, a2);
+	return Bank_PercChange(bank, percIndex);
 }
 
 /**
  * @TODO: Documentation
  */
-Inst_* InstRead(u32 a1, u32 a2)
+Inst_* InstRead(u32 bankIndex, u32 instIndex)
 {
 
-	Bank_* bank = Bank_Get(a1);
+	Bank_* bank = Bank_Get(bankIndex);
 	if (bank == NULL) {
 		return NULL;
 	}
 
-	return Bank_InstChange(bank, a2);
+	return Bank_InstChange(bank, instIndex);
 }
 
 /**
  * @TODO: Documentation
  */
-Vmap_* VmapRead(Inst_* inst, u8 a1, u8 a2)
+Vmap_* VmapRead(Inst_* inst, u8 key, u8 velocity)
 {
-	Vmap_* map = (Vmap_*)Bank_GetInstVmap(inst, a1, a2);
+	Vmap_* map = (Vmap_*)Bank_GetInstVmap(inst, key, velocity);
 	return !map ? NULL : map;
 }
 
 /**
  * @TODO: Documentation
  */
-static void __Oneshot_WavePause(jc_* jc, u8 a)
+static void __Oneshot_WavePause(jc_* jc, u8 pauseFlag)
 {
-	jc->pauseFlag = a;
+	jc->pauseFlag = pauseFlag;
 	jc->toFlush   = 1;
 }
 
@@ -620,9 +620,9 @@ void Gate_1Shot(jc_* jc, u8 key, u8 velocity, s32 noteId)
 /**
  * @TODO: Documentation
  */
-void UpdatePause_1Shot(jc_* jc, u8 a1)
+void UpdatePause_1Shot(jc_* jc, u8 pauseFlag)
 {
-	jc->pauseFlag = a1;
+	jc->pauseFlag = pauseFlag;
 }
 
 /**

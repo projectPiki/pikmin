@@ -230,7 +230,7 @@ u32 FAT_ReadLong(u16 a, u32 b)
  * @TODO: Documentation
  * @note UNUSED Size: 000080
  */
-void FAT_ReadLongD(u16 a1, u32 a2)
+void FAT_ReadLongD(u16 fileHandle, u32 offset)
 {
 	TRAP_UNIMPLEMENTED;
 }

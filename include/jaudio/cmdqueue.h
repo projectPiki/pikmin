@@ -21,7 +21,7 @@ struct cmdqueue_ {
 
 extern CmdQueue* queue_list; // Pointer to the start of a linked list
 
-void Jal_AddCmdQueue(CmdQueue*, seqp_*, u8); // TODO: Types uncertain
+void Jal_AddCmdQueue(CmdQueue* cmdQueue, seqp_* track, u8 portId); // TODO: Types uncertain
 void Jal_SendCmdQueue_Noblock(CmdQueue* queue, u16 msg);
 void Jal_SendCmdQueue_Force(CmdQueue* queue, u16 msg);
 void Jal_SendCmdQueue(CmdQueue* queue, u16 msg);

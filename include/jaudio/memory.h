@@ -5,8 +5,8 @@
 #include "types.h"
 
 // Global functions:
-void* Nas_HeapAlloc(ALHeap*, s32);
-void Nas_HeapInit(ALHeap*, u8*, s32);
+void* Nas_HeapAlloc(ALHeap* heap, s32 allocSize);
+void Nas_HeapInit(ALHeap* heap, u8* basePtr, s32 heapSize);
 
 // likely move these to audiostruct.h eventually/as required
 

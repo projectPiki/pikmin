@@ -14,7 +14,7 @@ static u32 gaya_timer;
 /**
  * @TODO: Documentation
  */
-void Jac_Orima_Walk(s32 soundID, u32 p2)
+void Jac_Orima_Walk(s32 soundID, u32 unusedArg)
 {
 	static seqp_* seqp = NULL;
 	static u8 status   = 0;

@@ -156,7 +156,7 @@ void* Nas_HeapAlloc(ALHeap* heap, s32 size)
 /**
  * @TODO: Documentation
  */
-void Nas_HeapInit(ALHeap* heap, u8* p2, s32 p3)
+void Nas_HeapInit(ALHeap* heap, u8* basePtr, s32 heapSize)
 {
 	STACK_PAD_VAR(2);
 	ALHeap** REF_heap;
@@ -165,13 +165,13 @@ void Nas_HeapInit(ALHeap* heap, u8* p2, s32 p3)
 
 	REF_heap    = &heap;
 	heap->count = 0;
-	if (!p2) {
+	if (!basePtr) {
 		heap->length  = 0;
 		heap->current = NULL;
 		heap->last    = NULL;
 	} else {
-		length        = p3 - ((u32)p2 & 0x1F);
-		heap->base    = (u8*)ALIGN_NEXT((u32)p2, 32);
+		length        = heapSize - ((u32)basePtr & 0x1F);
+		heap->base    = (u8*)ALIGN_NEXT((u32)basePtr, 32);
 		heap->current = heap->base;
 		heap->length  = length;
 		heap->last    = NULL;

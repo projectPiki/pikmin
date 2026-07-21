@@ -39,7 +39,7 @@ static void* ref2;
 
 static void InitPic();
 static BOOL CheckDraw(u32 id);
-static int Decode1(u8* data, u32 a1, u8 a2);
+static int Decode1(u8* data, u32 frameId, u8 frameType);
 
 struct PICControl {
 	void* mPicBuffer; // _00, pointer to the picture data
