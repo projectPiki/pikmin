@@ -885,9 +885,10 @@ bool KingAi::chaseNaviTransit()
 		if (navi->isAlive() && navi->isVisible() && !navi->isBuried()) {
 
 			f32 qdist = qdist2(mKing->mSRT.t.x, mKing->mSRT.t.z, navi->mSRT.t.x, navi->mSRT.t.z);
-			if (qdist < C_BOSS_PROP(mKing).mSearchRadius() &&
-			    // typo?? this should be qdist, not dist.
-			    dist < minDist && mKing->inSearchAngle(navi)) {
+			// typo?? this should be qdist, not dist.  This bug also exists in `KingAi::chasePikiTransit`.
+			// It seems like the uninitialized `dist` variable always holds the value 0.0f by dumb luck.
+			// Conditional breakpoint used to test USA rev 1: $8016e554 nbc f30 != 0.0 && f29 == 12800.0
+			if (qdist < C_BOSS_PROP(mKing).mSearchRadius() && TERNARY_BUGFIX(qdist, dist) < minDist && mKing->inSearchAngle(navi)) {
 				dist = mKing->mSRT.t.distance(navi->mSRT.t);
 				if (dist > C_KING_PROP(mKing).mHiddenUnderneathRadius() && dist < C_BOSS_PROP(mKing).mSearchRadius() && dist < minDist) {
 					minDist = dist;
@@ -922,11 +923,10 @@ bool KingAi::chasePikiTransit()
 		Creature* piki = *iter;
 		if (piki->isAlive() && piki->isVisible() && !piki->isBuried() && piki->getStickObject() != mKing) {
 			f32 qdist = qdist2(mKing->mSRT.t.x, mKing->mSRT.t.z, piki->mSRT.t.x, piki->mSRT.t.z);
-			if (qdist < C_BOSS_PROP(mKing).mSearchRadius() &&
-			    // typo?? this should be qdist, not dist - they definitely copied and pasted this code lol.
-			    // It seems like the uninitialized `dist` variable always holds the value 0.0f by dumb luck.
-			    // Conditional breakpoint used to test USA rev 1: $8016e860 nbc f30 != 0.0 && f29 == 12800.0
-			    TERNARY_BUGFIX(qdist, dist) < minDist && mKing->inSearchAngle(piki)) {
+			// typo?? this should be qdist, not dist.  They definitely copied and pasted this code lol.
+			// It seems like the uninitialized `dist` variable always holds the value 0.0f by dumb luck.
+			// Conditional breakpoint used to test USA rev 1: $8016e860 nbc f30 != 0.0 && f29 == 12800.0
+			if (qdist < C_BOSS_PROP(mKing).mSearchRadius() && TERNARY_BUGFIX(qdist, dist) < minDist && mKing->inSearchAngle(piki)) {
 				dist = mKing->mSRT.t.distance(piki->mSRT.t);
 				if (dist > C_KING_PROP(mKing).mHiddenUnderneathRadius() && dist < C_BOSS_PROP(mKing).mSearchRadius() && dist < minDist) {
 					minDist = dist;

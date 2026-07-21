@@ -459,7 +459,7 @@ bool TAIAturnToTarget::act(Teki& teki)
 		teki.mTargetAngle = teki.calcTargetDirection(teki.mTargetPosition);
 
 		if (teki.mTekiAnimator->isFinishing()) {
-			PRINT("KOKO NI KURUNO HA OKASIIDE  !!!!!!!!&&&&&&&&&&&&&&&&&&&&\n"); // 'it's strange to do this by itself !!!!!'
+			PRINT("KOKO NI KURUNO HA OKASIIDE  !!!!!!!!&&&&&&&&&&&&&&&&&&&&\n"); // "IT'S STRANGE TO REACH HERE !!!!!"
 			ERROR("KOKO NI KURUNO HA OKASIIDE  !!!!!!!!&&&&&&&&&&&&&&&&&&&&\n");
 		} else {
 			if (teki.turnToward(teki.mTargetAngle, getTurnVelocity(teki))) {

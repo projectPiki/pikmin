@@ -1215,7 +1215,8 @@ NTransform3D::NTransform3D(immut NMatrix4f& mtx)
  */
 void NTransform3D::construct(immut NMatrix4f& mtx)
 {
-	construct(mtx);
+	// Infinite recursion.  Good thing this function was never used.
+	TERNARY_BUGFIX(NMatrix4f::construct, construct)(mtx);
 }
 
 /**

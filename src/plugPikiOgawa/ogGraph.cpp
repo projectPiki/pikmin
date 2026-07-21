@@ -20,8 +20,8 @@ DEFINE_PRINT("OgResultSection")
 namespace zen {
 
 static s16 LinePointB[32] ATTRIBUTE_ALIGN(32) = { 0 };
-static s16 LinePointR[32]                     = { 0 };
-static s16 LinePointY[32]                     = { 0 };
+static s16 LinePointR[32] ATTRIBUTE_ALIGN(32) = { 0 };
+static s16 LinePointY[32] ATTRIBUTE_ALIGN(32) = { 0 };
 
 // day 1 graph points
 static s16 ogawa_per_line[]                                        = { 1, 1, 2, 3, 10, 12, 12, 13, 13, 14, 19, 20, 22 };
