@@ -71,8 +71,8 @@ void DynCollShape::createDupCollData()
 
 	// dupe joint visibility information
 	mJointVisibility = new bool[mCollisionModel->mJointCount];
-	for (int i = 0; i < mCollisionModel->mJointCount; i++) {
-		mJointVisibility[i] = mCollisionModel->mJointList[i].mVisibilityFlag != Joint::NotVisible;
+	for (int jointIdx = 0; jointIdx < mCollisionModel->mJointCount; jointIdx++) {
+		mJointVisibility[jointIdx] = mCollisionModel->mJointList[jointIdx].mVisibilityFlag != Joint::NotVisible;
 	}
 
 	// almost every model should have at least 1 "room" (group of collision)
@@ -86,8 +86,8 @@ void DynCollShape::createDupCollData()
 	// the only common objects that have more than 1 group are bridges (short have 12, long have 30 - 2 groups per stage)
 	for (int i = 0; i < mCollisionModel->mBaseRoomCount; i++) {
 		int triCount = 0;
-		for (int j = 0; j < mCollisionModel->mTriCount; j++) {
-			if (i == mCollTriList[j].mCollRoomIndex) {
+		for (int triIdx1 = 0; triIdx1 < mCollisionModel->mTriCount; triIdx1++) {
+			if (i == mCollTriList[triIdx1].mCollRoomIndex) {
 				triCount++;
 			}
 		}
@@ -99,9 +99,9 @@ void DynCollShape::createDupCollData()
 
 		// populate triangle list
 		int triIdx = 0;
-		for (int j = 0; j < mCollisionModel->mTriCount; j++) {
-			if (mCollTriList[j].mCollRoomIndex == i) {
-				mCollGroupList[i]->mTriangleList[triIdx] = &mCollTriList[j];
+		for (int triIdx2 = 0; triIdx2 < mCollisionModel->mTriCount; triIdx2++) {
+			if (mCollTriList[triIdx2].mCollRoomIndex == i) {
+				mCollGroupList[i]->mTriangleList[triIdx] = &mCollTriList[triIdx2];
 				triIdx++;
 			}
 		}
@@ -145,29 +145,31 @@ void DynCollShape::updatePos()
 	// shrink box back down so it can be a minimum bound
 	mBoundingBox.resetBound();
 	// transform all vertices
-	for (int i = 0; i < mCollisionModel->mVertexCount; i++) {
-		mVertexList[i].x = mTransformMtx.mMtx[0][0] * mCollisionModel->mVertexList[i].x
-		                 + mTransformMtx.mMtx[0][1] * mCollisionModel->mVertexList[i].y
-		                 + mTransformMtx.mMtx[0][2] * mCollisionModel->mVertexList[i].z + mTransformMtx.mMtx[0][3];
-		mVertexList[i].y = mTransformMtx.mMtx[1][0] * mCollisionModel->mVertexList[i].x
-		                 + mTransformMtx.mMtx[1][1] * mCollisionModel->mVertexList[i].y
-		                 + mTransformMtx.mMtx[1][2] * mCollisionModel->mVertexList[i].z + mTransformMtx.mMtx[1][3];
-		mVertexList[i].z = mTransformMtx.mMtx[2][0] * mCollisionModel->mVertexList[i].x
-		                 + mTransformMtx.mMtx[2][1] * mCollisionModel->mVertexList[i].y
-		                 + mTransformMtx.mMtx[2][2] * mCollisionModel->mVertexList[i].z + mTransformMtx.mMtx[2][3];
-		mBoundingBox.expandBound(mVertexList[i]);
+	for (int vtxIdx = 0; vtxIdx < mCollisionModel->mVertexCount; vtxIdx++) {
+		mVertexList[vtxIdx].x = mTransformMtx.mMtx[0][0] * mCollisionModel->mVertexList[vtxIdx].x
+		                      + mTransformMtx.mMtx[0][1] * mCollisionModel->mVertexList[vtxIdx].y
+		                      + mTransformMtx.mMtx[0][2] * mCollisionModel->mVertexList[vtxIdx].z + mTransformMtx.mMtx[0][3];
+		mVertexList[vtxIdx].y = mTransformMtx.mMtx[1][0] * mCollisionModel->mVertexList[vtxIdx].x
+		                      + mTransformMtx.mMtx[1][1] * mCollisionModel->mVertexList[vtxIdx].y
+		                      + mTransformMtx.mMtx[1][2] * mCollisionModel->mVertexList[vtxIdx].z + mTransformMtx.mMtx[1][3];
+		mVertexList[vtxIdx].z = mTransformMtx.mMtx[2][0] * mCollisionModel->mVertexList[vtxIdx].x
+		                      + mTransformMtx.mMtx[2][1] * mCollisionModel->mVertexList[vtxIdx].y
+		                      + mTransformMtx.mMtx[2][2] * mCollisionModel->mVertexList[vtxIdx].z + mTransformMtx.mMtx[2][3];
+		mBoundingBox.expandBound(mVertexList[vtxIdx]);
 	}
 
 	// transform normals (and edge plane normals)
-	for (int i = 0; i < mCollisionModel->mTriCount; i++) {
-		mCollisionModel->mTriList[i].mTriangle.mNormal.rotateTo(mTransformMtx, mCollTriList[i].mTriangle.mNormal);
-		mCollTriList[i].mTriangle.mNormal.normalise();
-		mCollTriList[i].mTriangle.mOffset = mCollTriList[i].mTriangle.mNormal.DP(mVertexList[mCollTriList[i].mVertexIndices[0]]);
-		for (int j = 0; j < 3; j++) {
-			mCollisionModel->mTriList[i].mEdgePlanes[j].mNormal.rotateTo(mTransformMtx, mCollTriList[i].mEdgePlanes[j].mNormal);
-			mCollTriList[i].mEdgePlanes[j].mNormal.normalise();
-			mCollTriList[i].mEdgePlanes[j].mOffset
-			    = mCollTriList[i].mEdgePlanes[j].mNormal.DP(mVertexList[mCollTriList[i].mVertexIndices[j]]);
+	for (int triIdx = 0; triIdx < mCollisionModel->mTriCount; triIdx++) {
+		mCollisionModel->mTriList[triIdx].mTriangle.mNormal.rotateTo(mTransformMtx, mCollTriList[triIdx].mTriangle.mNormal);
+		mCollTriList[triIdx].mTriangle.mNormal.normalise();
+		mCollTriList[triIdx].mTriangle.mOffset
+		    = mCollTriList[triIdx].mTriangle.mNormal.DP(mVertexList[mCollTriList[triIdx].mVertexIndices[0]]);
+		for (int edgeIdx = 0; edgeIdx < 3; edgeIdx++) {
+			mCollisionModel->mTriList[triIdx].mEdgePlanes[edgeIdx].mNormal.rotateTo(mTransformMtx,
+			                                                                        mCollTriList[triIdx].mEdgePlanes[edgeIdx].mNormal);
+			mCollTriList[triIdx].mEdgePlanes[edgeIdx].mNormal.normalise();
+			mCollTriList[triIdx].mEdgePlanes[edgeIdx].mOffset
+			    = mCollTriList[triIdx].mEdgePlanes[edgeIdx].mNormal.DP(mVertexList[mCollTriList[triIdx].mVertexIndices[edgeIdx]]);
 		}
 	}
 }
@@ -290,8 +292,8 @@ DynMapObject::DynMapObject(MapMgr* map, MapAnimShapeObject* shapeObj)
 		}
 	}
 
-	mPlatObjects = new MapObjectPart*[mPlatObjCount];
-	int i        = 0;
+	mPlatObjects   = new MapObjectPart*[mPlatObjCount];
+	int platObjIdx = 0;
 	FOREACH_NODE_REUSE(ObjCollInfo, mCollisionModel->mCollisionInfo.Child(), info)
 	{
 		if (info->mPlatShape) {
@@ -299,8 +301,8 @@ DynMapObject::DynMapObject(MapMgr* map, MapAnimShapeObject* shapeObj)
 			part->mParentObject = this;
 			part->mJointIndex   = info->mJointIndex;
 			mMapMgr->mCollShapeList->add(part);
-			mPlatObjects[i] = part;
-			i++;
+			mPlatObjects[platObjIdx] = part;
+			platObjIdx++;
 		}
 	}
 }
@@ -1189,10 +1191,11 @@ void MapMgr::initShape()
 	// set up instances for every animated material used by the map model
 	mMapModel->makeInstance(mAnimatedMaterials, 0);
 
-	for (int i = 0; i < mMapModel->mJointCount; i++) {
-		PRINT("got bound (%.1f, %.1f, %.1f) - (%.1f, %.1f, %.1f)\n", mMapModel->mJointList[i].mBounds.mMin.x,
-		      mMapModel->mJointList[i].mBounds.mMin.y, mMapModel->mJointList[i].mBounds.mMin.z, mMapModel->mJointList[i].mBounds.mMax.x,
-		      mMapModel->mJointList[i].mBounds.mMax.y, mMapModel->mJointList[i].mBounds.mMax.z);
+	for (int jointIdx = 0; jointIdx < mMapModel->mJointCount; jointIdx++) {
+		PRINT("got bound (%.1f, %.1f, %.1f) - (%.1f, %.1f, %.1f)\n", mMapModel->mJointList[jointIdx].mBounds.mMin.x,
+		      mMapModel->mJointList[jointIdx].mBounds.mMin.y, mMapModel->mJointList[jointIdx].mBounds.mMin.z,
+		      mMapModel->mJointList[jointIdx].mBounds.mMax.x, mMapModel->mJointList[jointIdx].mBounds.mMax.y,
+		      mMapModel->mJointList[jointIdx].mBounds.mMax.z);
 	}
 
 	// set up collisions (with grid size of 64)
@@ -1208,7 +1211,7 @@ void MapMgr::initShape()
 
 	// sigh. this is really there.
 	// similar code exists in GenObjectMapObject::birth, but the assembly is actually stripped there.
-	for (int i = 0; i < 0; i++) {
+	for (int dynObjBodyCount = 0; dynObjBodyCount < 0; dynObjBodyCount++) {
 		DynObjBody* body = new DynObjBody();
 		body->mMapShape  = mMapModel;
 		body->readScript(this, "traffic/specLog.ini");
@@ -1486,16 +1489,16 @@ void MapMgr::showCollisions(immut Vector3f& focusPos)
 	CollGroup* collGroup = nullptr;
 
 	// first, check list of dynamic collision
-	FOREACH_NODE(DynCollShape, mCollShapeList->mChild, coll)
+	FOREACH_NODE(DynCollShape, mCollShapeList->mChild, dynCollShape)
 	{
-		if (focusBox.intersects(coll->mBoundingBox)) {
-			for (int i = 0; i < coll->mCollGroupCount; i++) {
-				if (coll->mJointVisibility[coll->mCollGroupList[i]->mJointIndex]) {
-					coll->mCollGroupList[i]->mModel         = coll->mCollisionModel;
-					coll->mCollGroupList[i]->mVertexList    = coll->mVertexList;
-					coll->mCollGroupList[i]->mPlatCollision = coll;
-					coll->mCollGroupList[i]->mNextCollGroup = collGroup;
-					collGroup                               = coll->mCollGroupList[i];
+		if (focusBox.intersects(dynCollShape->mBoundingBox)) {
+			for (int i = 0; i < dynCollShape->mCollGroupCount; i++) {
+				if (dynCollShape->mJointVisibility[dynCollShape->mCollGroupList[i]->mJointIndex]) {
+					dynCollShape->mCollGroupList[i]->mModel         = dynCollShape->mCollisionModel;
+					dynCollShape->mCollGroupList[i]->mVertexList    = dynCollShape->mVertexList;
+					dynCollShape->mCollGroupList[i]->mPlatCollision = dynCollShape;
+					dynCollShape->mCollGroupList[i]->mNextCollGroup = collGroup;
+					collGroup                                       = dynCollShape->mCollGroupList[i];
 				}
 			}
 		}
@@ -1739,18 +1742,18 @@ void MapMgr::postrefresh(Graphics& gfx)
 
 			Vector3f vecs[3];
 
-			for (int i = 0; i < mDebugCollCount; i++) {
-				vecs[0] = mDebugCollisions[i].mTriangle->mTriangle.mNormal * 0.1f
-				        + mDebugCollisions[i].mParentCollGroup->mVertexList[mDebugCollisions[i].mTriangle->mVertexIndices[0]];
-				vecs[1] = mDebugCollisions[i].mTriangle->mTriangle.mNormal * 0.1f
-				        + mDebugCollisions[i].mParentCollGroup->mVertexList[mDebugCollisions[i].mTriangle->mVertexIndices[1]];
-				vecs[2] = mDebugCollisions[i].mTriangle->mTriangle.mNormal * 0.1f
-				        + mDebugCollisions[i].mParentCollGroup->mVertexList[mDebugCollisions[i].mTriangle->mVertexIndices[2]];
+			for (int collIdx1 = 0; collIdx1 < mDebugCollCount; collIdx1++) {
+				vecs[0] = mDebugCollisions[collIdx1].mTriangle->mTriangle.mNormal * 0.1f
+				        + mDebugCollisions[collIdx1].mParentCollGroup->mVertexList[mDebugCollisions[collIdx1].mTriangle->mVertexIndices[0]];
+				vecs[1] = mDebugCollisions[collIdx1].mTriangle->mTriangle.mNormal * 0.1f
+				        + mDebugCollisions[collIdx1].mParentCollGroup->mVertexList[mDebugCollisions[collIdx1].mTriangle->mVertexIndices[1]];
+				vecs[2] = mDebugCollisions[collIdx1].mTriangle->mTriangle.mNormal * 0.1f
+				        + mDebugCollisions[collIdx1].mParentCollGroup->mVertexList[mDebugCollisions[collIdx1].mTriangle->mVertexIndices[2]];
 
-				for (int j = 0; j < 3; j++) {
-					gfx.setColour(colours[mDebugCollisions[i].mColorCategory], true);
-					gfx.drawLine(vecs[j % 3], vecs[(j + 1) % 3]);
-					gfx.drawPoints(&vecs[j % 3], 1);
+				for (int vertIdx = 0; vertIdx < 3; vertIdx++) {
+					gfx.setColour(colours[mDebugCollisions[collIdx1].mColorCategory], true);
+					gfx.drawLine(vecs[vertIdx % 3], vecs[(vertIdx + 1) % 3]);
+					gfx.drawPoints(&vecs[vertIdx % 3], 1);
 				}
 			}
 
@@ -1770,10 +1773,13 @@ void MapMgr::postrefresh(Graphics& gfx)
 			gfx.perspPrintf(gsys->mConsFont, triCountTextPos, -(gsys->mConsFont->stringWidth(debugText) / 2), 0, debugText);
 
 			// draw each triangle's distance from our local collision box
-			for (int i = 0; i < mDebugCollCount; i++) {
-				Vector3f vert1(mDebugCollisions[i].mParentCollGroup->mVertexList[mDebugCollisions[i].mTriangle->mVertexIndices[0]]);
-				Vector3f vert2(mDebugCollisions[i].mParentCollGroup->mVertexList[mDebugCollisions[i].mTriangle->mVertexIndices[1]]);
-				Vector3f vert3(mDebugCollisions[i].mParentCollGroup->mVertexList[mDebugCollisions[i].mTriangle->mVertexIndices[2]]);
+			for (int collIdx2 = 0; collIdx2 < mDebugCollCount; collIdx2++) {
+				Vector3f vert1(
+				    mDebugCollisions[collIdx2].mParentCollGroup->mVertexList[mDebugCollisions[collIdx2].mTriangle->mVertexIndices[0]]);
+				Vector3f vert2(
+				    mDebugCollisions[collIdx2].mParentCollGroup->mVertexList[mDebugCollisions[collIdx2].mTriangle->mVertexIndices[1]]);
+				Vector3f vert3(
+				    mDebugCollisions[collIdx2].mParentCollGroup->mVertexList[mDebugCollisions[collIdx2].mTriangle->mVertexIndices[2]]);
 
 				// round vertices down for less jitter I suppose?
 				vert1.x = (int)vert1.x;
@@ -1789,7 +1795,7 @@ void MapMgr::postrefresh(Graphics& gfx)
 
 				Vector3f triangleTextPos = vert1 + vert2 + vert3;
 				triangleTextPos.multiply(1.0f / 3.0f);
-				triangleTextPos = triangleTextPos + mDebugCollisions[i].mTriangle->mTriangle.mNormal * 10.0f;
+				triangleTextPos = triangleTextPos + mDebugCollisions[collIdx2].mTriangle->mTriangle.mNormal * 10.0f;
 				triangleTextPos.multMatrix(gfx.mCamera->mLookAtMtx);
 				sprintf(debugText, "%.1f", distFromCaptainCollision);
 				gfx.perspPrintf(gsys->mConsFont, triangleTextPos, -(gsys->mConsFont->stringWidth(debugText) / 2), 0, debugText);
@@ -2263,7 +2269,8 @@ void MapMgr::traceMove(Creature* creature, MoveTrace& trace, f32 timeStep)
 	// double our step count until we can safely stay within the trace radius on a given step
 	int safeSubStepCount = 1;
 	int doublingCount    = 0;
-	for (f32 i = trace.mVelocity.length() * timeStep; doublingCount < 100 && i >= trace.mRadius; i *= 0.5f) {
+	for (f32 travelDistance = trace.mVelocity.length() * timeStep; doublingCount < 100 && travelDistance >= trace.mRadius;
+	     travelDistance *= 0.5f) {
 		doublingCount++;
 		safeSubStepCount *= 2;
 	}
@@ -2279,7 +2286,7 @@ void MapMgr::traceMove(Creature* creature, MoveTrace& trace, f32 timeStep)
 	// calc fraction so we can calc our displacement for each step correctly
 	trace.mStepFraction = 1.0f / safeSubStepCount;
 
-	for (int i = 0; i < safeSubStepCount; i++) {
+	for (int stepCount = 0; stepCount < safeSubStepCount; stepCount++) {
 		// for each step, set up a box for checking collision
 		BoundBox collCheckBox;
 		collCheckBox.expandBound(trace.mPosition);

@@ -382,11 +382,11 @@ int PathFinder::selectWay(PathFinder::Buffer& buf, int destWPIdx, PathFinder::Bu
 	// Current and destination positions (XZ plane)
 	Vector3f currPos = getWayPoint(buf.mWayPointIdx)->mPosition;
 	Vector3f destPos = getWayPoint(destWPIdx)->mPosition;
-	int dir;
+	int linkDir;
 
-	for (dir = 0; dir < 8; dir++) {
+	for (linkDir = 0; linkDir < 8; linkDir++) {
 		// Skip if this direction is not available
-		if (!buf.check(dir)) {
+		if (!buf.check(linkDir)) {
 			continue;
 		}
 
@@ -403,14 +403,14 @@ int PathFinder::selectWay(PathFinder::Buffer& buf, int destWPIdx, PathFinder::Bu
 		}
 
 		// Skip self-links
-		int neighborIdx = wp->mLinkIndices[dir];
+		int neighborIdx = wp->mLinkIndices[linkDir];
 		if (neighborIdx == buf.mWayPointIdx) {
 			continue;
 		}
 
 		// Invalid link index: clear flag and skip
 		if (neighborIdx == -1) {
-			buf.resetFlag(dir);
+			buf.resetFlag(linkDir);
 			continue;
 		}
 
@@ -422,7 +422,7 @@ int PathFinder::selectWay(PathFinder::Buffer& buf, int destWPIdx, PathFinder::Bu
 
 		// Exclude closed/blocked paths if not allowed
 		if (!includeBlockedPaths && !getWayPoint(neighborIdx)->mIsOpen) {
-			buf.resetFlag(dir);
+			buf.resetFlag(linkDir);
 			continue;
 		}
 
@@ -446,11 +446,11 @@ int PathFinder::selectWay(PathFinder::Buffer& buf, int destWPIdx, PathFinder::Bu
 		}
 
 		// Record this direction as a candidate
-		dirIndices[validLinkCount] = dir;
+		dirIndices[validLinkCount] = linkDir;
 
 		// If this neighbor is the destination, return immediately
 		if (neighborIdx == destWPIdx) {
-			return dir;
+			return linkDir;
 		}
 
 		// Squared horizontal distance to destination
@@ -462,10 +462,10 @@ int PathFinder::selectWay(PathFinder::Buffer& buf, int destWPIdx, PathFinder::Bu
 
 	// Choose the candidate with minimum squared distance to destination
 	f32 bestDist = 128000.0f;
-	for (dir = 0; dir < validLinkCount; dir++) {
-		if (distToDestSq[dir] < bestDist) {
-			bestDist  = distToDestSq[dir];
-			chosenDir = dirIndices[dir];
+	for (linkDir = 0; linkDir < validLinkCount; linkDir++) {
+		if (distToDestSq[linkDir] < bestDist) {
+			bestDist  = distToDestSq[linkDir];
+			chosenDir = dirIndices[linkDir];
 		}
 	}
 
@@ -1531,17 +1531,17 @@ int PathFinder::selectWayOnyon(int additionalCost, int goalType, PathFinder::Buf
 	Vector3f wpPos   = getWayPoint(buf.mWayPointIdx)->mPosition;
 	Vector3f destPos = getWayPoint(destWPIdx)->mPosition;
 	////////////////////////////////////////////////////////////
-	int dir;
+	int linkDir;
 
-	for (dir = 0; dir < 8; dir++) {
+	for (linkDir = 0; linkDir < 8; linkDir++) {
 		// Skip if this direction is not available
-		if (!buf.check(dir)) {
+		if (!buf.check(linkDir)) {
 			continue;
 		}
 
 		WayPoint* wp = getWayPoint(buf.mWayPointIdx);
 		if (!PathFinder::checkMode(PathFinderMode::AvoidWater) || !wp->inWater()) {
-			int neighborIdx = wp->mLinkIndices[dir];
+			int neighborIdx = wp->mLinkIndices[linkDir];
 
 			// Skip self-referencing links
 			if (neighborIdx == buf.mWayPointIdx) {
@@ -1550,13 +1550,13 @@ int PathFinder::selectWayOnyon(int additionalCost, int goalType, PathFinder::Buf
 
 			// Handle invalid links by resetting the flag
 			if (neighborIdx == -1) {
-				buf.resetFlag(dir);
+				buf.resetFlag(linkDir);
 				continue;
 			}
 
 			// Check if connected waypoint is closed (and we're not ignoring closed waypoints)
 			if (!ignoreClosedWaypoints && !getWayPoint(neighborIdx)->mIsOpen) {
-				buf.resetFlag(dir);
+				buf.resetFlag(linkDir);
 				continue;
 			}
 
@@ -1570,16 +1570,16 @@ int PathFinder::selectWayOnyon(int additionalCost, int goalType, PathFinder::Buf
 			}
 
 			// Add to valid links if it has valid pathfinding info and hasn't been visited
-			if (wp->mLinkInfos[dir].getInfo(goalType) != -2 && !isAlreadyVisited) {
-				validLinkIndices[validLinkCount] = dir;
+			if (wp->mLinkInfos[linkDir].getInfo(goalType) != -2 && !isAlreadyVisited) {
+				validLinkIndices[validLinkCount] = linkDir;
 
 				// If this link leads directly to destination, return immediately (optimal path found)
 				if (neighborIdx == destWPIdx) {
-					return dir;
+					return linkDir;
 				}
 
 				// Store the pathfinding cost for this link
-				pathCosts[validLinkCount] = wp->mLinkInfos[dir].getInfo(goalType);
+				pathCosts[validLinkCount] = wp->mLinkInfos[linkDir].getInfo(goalType);
 				validLinkCount++;
 			}
 		}
@@ -1587,10 +1587,10 @@ int PathFinder::selectWayOnyon(int additionalCost, int goalType, PathFinder::Buf
 
 	// Phase 2: Find the best (lowest cost) option among all valid links
 	int lowestCost = 128000;
-	for (dir = 0; dir < validLinkCount; dir++) {
-		if (pathCosts[dir] < lowestCost) {
-			lowestCost    = pathCosts[dir];
-			bestLinkIndex = validLinkIndices[dir];
+	for (linkDir = 0; linkDir < validLinkCount; linkDir++) {
+		if (pathCosts[linkDir] < lowestCost) {
+			lowestCost    = pathCosts[linkDir];
+			bestLinkIndex = validLinkIndices[linkDir];
 		}
 	}
 
@@ -1632,17 +1632,17 @@ int PathFinder::selectSecondBestWayOnyon(immut Vector3f& curPos, int& secondBest
 
 	Vector3f wpPos   = getWayPoint(buf.mWayPointIdx)->mPosition;
 	Vector3f destPos = getWayPoint(destWPIdx)->mPosition;
-	int dir;
+	int linkDir;
 
-	for (dir = 0; dir < 8; dir++) {
+	for (linkDir = 0; linkDir < 8; linkDir++) {
 		// Skip if this direction is not available
-		if (!buf.check(dir)) {
+		if (!buf.check(linkDir)) {
 			continue;
 		}
 
 		WayPoint* currWP = getWayPoint(buf.mWayPointIdx);
 		if (!PathFinder::checkMode(PathFinderMode::AvoidWater) || !currWP->inWater()) {
-			int neighborIdx = currWP->mLinkIndices[dir];
+			int neighborIdx = currWP->mLinkIndices[linkDir];
 
 			// Skip self-referencing links
 			if (neighborIdx == buf.mWayPointIdx) {
@@ -1651,36 +1651,36 @@ int PathFinder::selectSecondBestWayOnyon(immut Vector3f& curPos, int& secondBest
 
 			// Handle invalid links by resetting the flag
 			if (neighborIdx == -1) {
-				buf.resetFlag(dir);
+				buf.resetFlag(linkDir);
 				continue;
 			}
 
 			// Check if connected waypoint is closed (and we're not ignoring closed waypoints)
 			if (!ignoreClosedWaypoints && !getWayPoint(neighborIdx)->mIsOpen) {
-				buf.resetFlag(dir);
+				buf.resetFlag(linkDir);
 				continue;
 			}
 
 			// Check if this waypoint has already been visited to avoid cycles
 			bool isAlreadyVisited = false;
-			for (int j = 0; j < bufIdx; j++) {
-				if (bufferList[j].mWayPointIdx == neighborIdx) {
+			for (int bufIdx = 0; bufIdx < bufIdx; bufIdx++) {
+				if (bufferList[bufIdx].mWayPointIdx == neighborIdx) {
 					isAlreadyVisited = true;
 					break;
 				}
 			}
 
 			// Add to valid links if it has valid pathfinding info and hasn't been visited
-			if (currWP->mLinkInfos[dir].getInfo(goalType) != -2 && !isAlreadyVisited) {
-				validLinkIndices[validLinkCount] = dir;
+			if (currWP->mLinkInfos[linkDir].getInfo(goalType) != -2 && !isAlreadyVisited) {
+				validLinkIndices[validLinkCount] = linkDir;
 
 				// If this link leads directly to destination, return immediately
 				if (neighborIdx == destWPIdx) {
-					return dir;
+					return linkDir;
 				}
 
 				// Store the pathfinding cost for this link
-				pathCosts[validLinkCount] = currWP->mLinkInfos[dir].getInfo(goalType);
+				pathCosts[validLinkCount] = currWP->mLinkInfos[linkDir].getInfo(goalType);
 				validLinkCount++;
 			}
 		}
@@ -1688,10 +1688,10 @@ int PathFinder::selectSecondBestWayOnyon(immut Vector3f& curPos, int& secondBest
 
 	// Phase 2: Find the best (lowest cost) option
 	int lowestCost = 128000;
-	for (dir = 0; dir < validLinkCount; dir++) {
-		if (pathCosts[dir] < lowestCost) {
-			lowestCost    = pathCosts[dir];
-			bestLinkIndex = validLinkIndices[dir];
+	for (linkDir = 0; linkDir < validLinkCount; linkDir++) {
+		if (pathCosts[linkDir] < lowestCost) {
+			lowestCost    = pathCosts[linkDir];
+			bestLinkIndex = validLinkIndices[linkDir];
 		}
 	}
 
@@ -1699,11 +1699,11 @@ int PathFinder::selectSecondBestWayOnyon(immut Vector3f& curPos, int& secondBest
 	int secondBestLinkIndex = -1;
 	secondBestCost          = 128000;
 
-	for (dir = 0; dir < validLinkCount; dir++) {
+	for (linkDir = 0; linkDir < validLinkCount; linkDir++) {
 		// Skip the best option and only consider better costs than current second-best
-		if (dir != bestLinkIndex && pathCosts[dir] < secondBestCost) {
-			WayPoint* wp1 = getWayPoint(buf.mWayPointIdx);                         // Source waypoint
-			WayPoint* wp2 = getWayPoint(wp1->mLinkIndices[validLinkIndices[dir]]); // Destination waypoint
+		if (linkDir != bestLinkIndex && pathCosts[linkDir] < secondBestCost) {
+			WayPoint* wp1 = getWayPoint(buf.mWayPointIdx);                             // Source waypoint
+			WayPoint* wp2 = getWayPoint(wp1->mLinkIndices[validLinkIndices[linkDir]]); // Destination waypoint
 
 			bool geometricallyValid = true;
 
@@ -1745,8 +1745,8 @@ int PathFinder::selectSecondBestWayOnyon(immut Vector3f& curPos, int& secondBest
 
 			// Update second-best if this option passes geometric validation
 			if (geometricallyValid) {
-				secondBestLinkIndex = dir;
-				secondBestCost      = pathCosts[dir];
+				secondBestLinkIndex = linkDir;
+				secondBestCost      = pathCosts[linkDir];
 			}
 		}
 	}

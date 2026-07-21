@@ -2511,14 +2511,14 @@ public:
 void GameMovieInterface::parseMessages()
 {
 	// process all queued commands
-	for (int i = 0; i < mSimpleMessageCount; i++) {
-		parse(mSimpMesg[i]);
+	for (int simpleMesgIdx = 0; simpleMesgIdx < mSimpleMessageCount; simpleMesgIdx++) {
+		parse(mSimpMesg[simpleMesgIdx]);
 	}
 	mSimpleMessageCount = 0;
 
 	// process all queued movies
-	for (int i = 0; i < mComplexMesgCount; i++) {
-		parse(mCompMesg[i]);
+	for (int complexMesgIdx = 0; complexMesgIdx < mComplexMesgCount; complexMesgIdx++) {
+		parse(mCompMesg[complexMesgIdx]);
 	}
 
 	mComplexMesgCount = 0;

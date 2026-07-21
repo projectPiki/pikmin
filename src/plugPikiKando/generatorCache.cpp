@@ -244,7 +244,7 @@ GeneratorCache::Cache* GeneratorCache::findCache(GeneratorCache::Cache& list, u3
  */
 void GeneratorCache::preload(u32 stageID)
 {
-	for (int i = 0; i < 10; i++) {
+	for (int printCount1 = 0; printCount1 < 10; printCount1++) {
 		PRINT("************** PRELOAD **************\n"); // lol
 	}
 
@@ -273,7 +273,7 @@ void GeneratorCache::preload(u32 stageID)
 		PRINT("no data for stage %d\n", stageID);
 	}
 
-	for (int i = 0; i < 10; i++) {
+	for (int printCount2 = 0; printCount2 < 10; printCount2++) {
 		PRINT("**************-----------************\n"); // lol
 	}
 
@@ -608,14 +608,14 @@ void GeneratorCache::dump()
 {
 	PRINT("************ Generator Cache ***********\n");
 	PRINT("--- alive caches ---\n");
-	FOREACH_NODE(Cache, mAliveCacheList.mChild, cache)
+	FOREACH_NODE(Cache, mAliveCacheList.mChild, aliveCache)
 	{
-		cache->dump();
+		aliveCache->dump();
 	}
 	PRINT("--- dead cache ---\n");
-	FOREACH_NODE(Cache, mDeadCacheList.mChild, cache)
+	FOREACH_NODE(Cache, mDeadCacheList.mChild, deadCache)
 	{
-		cache->dump();
+		deadCache->dump();
 	}
 	PRINT("*******************************\n");
 

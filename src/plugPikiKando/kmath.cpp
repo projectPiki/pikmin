@@ -139,36 +139,37 @@ f32 getCameraSafeAngle(immut Vector3f& cameraPos, f32 checkDistance, f32 heightW
 {
 	f32 angleInc = QUARTER_PI;
 	int scores[8]; // visibility scores
+	int scoreIdx, pointCount;
 	f32 numPointsToCheck = 20.0f;
-	for (int i = 0; i < 8; i++) {
-		scores[i] = 0;
+	for (scoreIdx = 0; scoreIdx < 8; scoreIdx++) {
+		scores[scoreIdx] = 0;
 	}
 
-	for (int i = 0; i < 8; i++) {
-		f32 currentAngle = angleInc * f32(i);
+	for (scoreIdx = 0; scoreIdx < 8; scoreIdx++) {
+		f32 currentAngle = angleInc * f32(scoreIdx);
 		Vector3f dir(sinf(currentAngle), 0.0f, cosf(currentAngle));
 		f32 distanceInc = checkDistance / numPointsToCheck;
 
 		// check 20 points along direction vector
-		for (int j = 0; j < 20; j++) {
-			f32 heightThreshold = heightWeighting * f32(j) * distanceInc / checkDistance;
+		for (pointCount = 0; pointCount < 20; pointCount++) {
+			f32 heightThreshold = heightWeighting * f32(pointCount) * distanceInc / checkDistance;
 			Vector3f checkPos;
-			checkPos        = cameraPos + dir * (distanceInc * f32(j));
+			checkPos        = cameraPos + dir * (distanceInc * f32(pointCount));
 			f32 checkHeight = mapMgr->getMinY(checkPos.x, checkPos.z, true);
 			if (checkHeight >= heightThreshold) {
-				scores[i] += int(checkHeight - heightThreshold);
+				scores[scoreIdx] += int(checkHeight - heightThreshold);
 			}
 		}
-		PRINT("score[%d] = %d\n", i, scores[i]);
+		PRINT("score[%d] = %d\n", scoreIdx, scores[scoreIdx]);
 	}
 
 	// find angle with lowest score (best visibility):
 	int minScore     = 128000;
 	int bestAngleIdx = -1;
-	for (int i = 0; i < 8; i++) {
-		if (scores[i] < minScore) {
-			bestAngleIdx = i;
-			minScore     = scores[i];
+	for (scoreIdx = 0; scoreIdx < 8; scoreIdx++) {
+		if (scores[scoreIdx] < minScore) {
+			bestAngleIdx = scoreIdx;
+			minScore     = scores[scoreIdx];
 		}
 	}
 

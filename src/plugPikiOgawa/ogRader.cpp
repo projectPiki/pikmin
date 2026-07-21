@@ -330,15 +330,15 @@ void zen::ogRaderMgr::getPartsPos()
 		_84[i]->hide();
 	}
 
-	int i = 0;
+	int partIdx = 0;
 	for (RadarInfo::PartsInfo* info = radarInfo->getFirst(); info; info = info->getNext()) {
 
 		Vector3f inPos = info->getPos();
 		Vector3f pos   = ogCalcDispXZ(inPos);
-		_84[i]->show();
-		_84[i]->move(pos.x, pos.z);
-		_84[i]->setScale(7.5f / _428);
-		i++;
+		_84[partIdx]->show();
+		_84[partIdx]->move(pos.x, pos.z);
+		_84[partIdx]->setScale(7.5f / _428);
+		partIdx++;
 	}
 }
 

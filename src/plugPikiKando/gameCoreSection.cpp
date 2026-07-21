@@ -534,9 +534,9 @@ void GameCoreSection::cleanupDayEnd()
 	playerState->setDayCollectCount(day, playerState->getCurrParts());
 	playerState->setDayPowerupCount(day, playerState->getNextPowerupNumber());
 
-	int i;
-	for (i = 0; i < PikiColorCount; i++) {
-		GoalItem* goal = itemMgr->getContainer(i);
+	int goalColor; // Gets reused way later in the function
+	for (goalColor = 0; goalColor < PikiColorCount; goalColor++) {
+		GoalItem* goal = itemMgr->getContainer(goalColor);
 		if (goal) {
 			goal->setSpotActive(false);
 		}
@@ -690,11 +690,11 @@ void GameCoreSection::cleanupDayEnd()
 
 	effectMgr->killAll();
 
-	for (i = 0; i < PikiColorCount; i++) {
-		GoalItem* goal = itemMgr->getContainer(i);
+	for (goalColor = 0; goalColor < PikiColorCount; goalColor++) {
+		GoalItem* goal = itemMgr->getContainer(goalColor);
 		if (goal && playerState->hasContainer(goal->mOnionColour)) {
-			goal->mSpotModelEff
-			    = effectMgr->create((EffectMgr::modelTypeTable)i, goal->mSRT.t, Vector3f(1.0f, 1.0f, 1.0f), Vector3f(0.0f, 0.0f, 0.0f));
+			goal->mSpotModelEff = effectMgr->create((EffectMgr::modelTypeTable)goalColor, goal->mSRT.t, Vector3f(1.0f, 1.0f, 1.0f),
+			                                        Vector3f(0.0f, 0.0f, 0.0f));
 		}
 	}
 

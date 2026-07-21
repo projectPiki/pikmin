@@ -96,9 +96,9 @@ void RigidBody::initializeBody()
 		updateViewInfo(i, i);
 	}
 
-	for (int i = 0; i < mSpringCount; i++) {
-		Vector3f hookWorldPos = mBodyPoints[mSprings[i].mHookIdx] + mInitPosition;
-		mSprings[i].mAnchorPoint.add(hookWorldPos);
+	for (int springIdx = 0; springIdx < mSpringCount; springIdx++) {
+		Vector3f hookWorldPos = mBodyPoints[mSprings[springIdx].mHookIdx] + mInitPosition;
+		mSprings[springIdx].mAnchorPoint.add(hookWorldPos);
 	}
 }
 
@@ -261,21 +261,21 @@ void RigidBody::applyGroundForces(int configIdx, CollGroup* collGroup)
 	configuration& config = mIntegrationStates[configIdx];
 
 	// reset all bounding point hit counts
-	for (int i = 0; i < mBoundingPointCount; i++) {
-		mBoundingPointHitCounts[i] = 0;
+	for (int vert1 = 0; vert1 < mBoundingPointCount; vert1++) {
+		mBoundingPointHitCounts[vert1] = 0;
 	}
 
 	// check for ground collision for each bounding point
-	for (int i = 0; i < mBoundingPointCount; i++) {
-		immut Vector3f& boundingPtPos = config.mBodyPoints[i + mHookPointCount];
+	for (int vert2 = 0; vert2 < mBoundingPointCount; vert2++) {
+		immut Vector3f& boundingPtPos = config.mBodyPoints[vert2 + mHookPointCount];
 
 		// only do collision calculations if we have collision triangles to check
 		// (weird way to do this check but fine)
 		bool skipCollCalc = collGroup ? false : true;
 
 		// check each supplied triangle for a collision
-		for (int j = 0; !skipCollCalc && j < collGroup->mTriCount; j++) {
-			CollTriInfo* triangle  = collGroup->mTriangleList[j];
+		for (int triIdx = 0; !skipCollCalc && triIdx < collGroup->mTriCount; triIdx++) {
+			CollTriInfo* triangle  = collGroup->mTriangleList[triIdx];
 			Plane* triPlane        = &triangle->mTriangle;
 			immut Vector3f& comPos = config.mPosition;
 
@@ -294,8 +294,8 @@ void RigidBody::applyGroundForces(int configIdx, CollGroup* collGroup)
 
 				// check if intersection point is inside the triangle
 				bool isInsideTri = true;
-				for (int k = 0; isInsideTri && k < 3; k++) {
-					if (triangle->mEdgePlanes[k].dist(intersectPt) < 0.0f) {
+				for (int edgeIdx = 0; isInsideTri && edgeIdx < 3; edgeIdx++) {
+					if (triangle->mEdgePlanes[edgeIdx].dist(intersectPt) < 0.0f) {
 						isInsideTri = false;
 					}
 				}
@@ -311,7 +311,7 @@ void RigidBody::applyGroundForces(int configIdx, CollGroup* collGroup)
 
 					// if we're moving toward the triangle, apply collision response and friction
 					if (boundingPtVel.DP(triPlane->mNormal) < 0.0f) {
-						mBoundingPointHitCounts[i]++;
+						mBoundingPointHitCounts[vert2]++;
 						Collision coll;
 						coll.mContactPoint = intersectPt;
 						coll.mNormal       = triPlane->mNormal;
@@ -324,9 +324,9 @@ void RigidBody::applyGroundForces(int configIdx, CollGroup* collGroup)
 	}
 
 	// debug print to check if any bounding points have gotten hit more than once
-	for (int i = 0; i < mBoundingPointCount; i++) {
-		if (mBoundingPointHitCounts[i] > 1) {
-			PRINT("vert %d hit %d times\n", i, mBoundingPointHitCounts[i]);
+	for (int vert3 = 0; vert3 < mBoundingPointCount; vert3++) {
+		if (mBoundingPointHitCounts[vert3] > 1) {
+			PRINT("vert %d hit %d times\n", vert3, mBoundingPointHitCounts[vert3]);
 		}
 	}
 }

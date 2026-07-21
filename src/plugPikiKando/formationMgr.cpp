@@ -165,11 +165,11 @@ void FormationMgr::slide(Creature* target, int idx)
 	int replaceIdx      = -1;
 	Creature* toReplace = nullptr;
 
-	for (int i = 0; i < mCount; i++) {
-		toReplace = mFormPoints[i].getOwner();
-		if (!mFormPoints[i].isFree()) {
+	for (int searchReplaceIdx = 0; searchReplaceIdx < mCount; searchReplaceIdx++) {
+		toReplace = mFormPoints[searchReplaceIdx].getOwner();
+		if (!mFormPoints[searchReplaceIdx].isFree()) {
 			if (toReplace->getFormationPri() > target->getFormationPri()) {
-				replaceIdx = i;
+				replaceIdx = searchReplaceIdx;
 				break;
 			}
 		}
@@ -177,9 +177,9 @@ void FormationMgr::slide(Creature* target, int idx)
 
 	if (replaceIdx != -1) {
 		mFormPoints[replaceIdx].setOwner(target);
-		for (int i = 0; i < mCount; i++) {
-			if (mFormMembers[i] == toReplace) {
-				mFormMembers[i] = target;
+		for (int memberIdx = 0; memberIdx < mCount; memberIdx++) {
+			if (mFormMembers[memberIdx] == toReplace) {
+				mFormMembers[memberIdx] = target;
 			}
 		}
 
@@ -190,9 +190,9 @@ void FormationMgr::slide(Creature* target, int idx)
 	}
 
 	int freeIdx = -1;
-	for (int i = 0; i < mFormPointCount; i++) {
-		if (mFormPoints[i].isFree()) {
-			freeIdx = i;
+	for (int searchFreeIdx = 0; searchFreeIdx < mFormPointCount; searchFreeIdx++) {
+		if (mFormPoints[searchFreeIdx].isFree()) {
+			freeIdx = searchFreeIdx;
 			break;
 		}
 	}

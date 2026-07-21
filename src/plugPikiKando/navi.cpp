@@ -1180,78 +1180,79 @@ void Navi::releasePikis()
 	Vector3f colorCoMs[PikiColorCount + 1]; // each color + bomb-carriers
 	int colorCounts[PikiColorCount + 1];    // each color + bomb-carriers
 	f32 colorSizes[PikiColorCount + 1];     // each color + bomb-carriers
-	int j, i;
-	for (i = 0; i < PikiColorCount + 1; i++) {
-		colorCoMs[i].set(0.0f, 0.0f, 0.0f);
-		colorCounts[i] = 0;
+	int pikiIdx, colorIdx1;
+	for (colorIdx1 = 0; colorIdx1 < PikiColorCount + 1; colorIdx1++) {
+		colorCoMs[colorIdx1].set(0.0f, 0.0f, 0.0f);
+		colorCounts[colorIdx1] = 0;
 	}
 
-	for (i = 0; i < PikiColorCount + 1; i++) {
-		for (j = 0; j < pikiCount; j++) {
-			if (i == Blue || i == Red) {
-				if (i == pikiList[j]->mColor) {
-					colorCounts[i]++;
-					colorCoMs[i].add(pikiList[j]->mSRT.t);
+	for (colorIdx1 = 0; colorIdx1 < PikiColorCount + 1; colorIdx1++) {
+		for (pikiIdx = 0; pikiIdx < pikiCount; pikiIdx++) {
+			if (colorIdx1 == Blue || colorIdx1 == Red) {
+				if (colorIdx1 == pikiList[pikiIdx]->mColor) {
+					colorCounts[colorIdx1]++;
+					colorCoMs[colorIdx1].add(pikiList[pikiIdx]->mSRT.t);
 				}
 			} else {
-				if (pikiList[j]->mColor == Yellow) {
-					if (pikiList[j]->hasBomb()) {
+				if (pikiList[pikiIdx]->mColor == Yellow) {
+					if (pikiList[pikiIdx]->hasBomb()) {
 						colorCounts[3]++;
-						colorCoMs[3].add(pikiList[j]->mSRT.t);
+						colorCoMs[3].add(pikiList[pikiIdx]->mSRT.t);
 					} else {
 						colorCounts[Yellow]++;
-						colorCoMs[Yellow].add(pikiList[j]->mSRT.t);
+						colorCoMs[Yellow].add(pikiList[pikiIdx]->mSRT.t);
 					}
 				}
 			}
 		}
 	}
 
-	for (i = 0; i < PikiColorCount + 1; i++) {
-		if (colorCounts[i] > 0) {
-			colorCoMs[i].multiply(1.0f / colorCounts[i]);
-			colorSizes[i] = (2.5f * pikiList[0]->getSize()) * std::sqrtf(colorCounts[i]);
+	for (colorIdx1 = 0; colorIdx1 < PikiColorCount + 1; colorIdx1++) {
+		if (colorCounts[colorIdx1] > 0) {
+			colorCoMs[colorIdx1].multiply(1.0f / colorCounts[colorIdx1]);
+			colorSizes[colorIdx1] = (2.5f * pikiList[0]->getSize()) * std::sqrtf(colorCounts[colorIdx1]);
 		}
 	}
 
-	for (int k = 0; k < PikiColorCount + 1; k++) {
-		if (colorCounts[k] > 0) {
-			Vector3f sepNaviGroup = colorCoMs[k] - mSRT.t;
-			f32 dist              = sepNaviGroup.normalise() - colorSizes[k] - 15.0f;
+	// They made a new loop variable for some reason.
+	for (int colorIdx2 = 0; colorIdx2 < PikiColorCount + 1; colorIdx2++) {
+		if (colorCounts[colorIdx2] > 0) {
+			Vector3f sepNaviGroup = colorCoMs[colorIdx2] - mSRT.t;
+			f32 dist              = sepNaviGroup.normalise() - colorSizes[colorIdx2] - 15.0f;
 			if (dist < 18.0f) {
 				dist = 18.0f - dist;
 				Vector3f offsetFromNavi;
 				offsetFromNavi = dist * sepNaviGroup;
-				colorCoMs[k].add(offsetFromNavi);
+				colorCoMs[colorIdx2].add(offsetFromNavi);
 			}
 		}
 
-		for (int j = k + 1; j < PikiColorCount + 1; j++) {
-			if (colorCounts[k] > 0 && colorCounts[j] > 0) {
-				Vector3f colorColorSep = colorCoMs[k] - colorCoMs[j];
-				f32 colorDist          = colorColorSep.normalise() - colorSizes[k] - colorSizes[j];
+		for (int nextColor = colorIdx2 + 1; nextColor < PikiColorCount + 1; nextColor++) {
+			if (colorCounts[colorIdx2] > 0 && colorCounts[nextColor] > 0) {
+				Vector3f colorColorSep = colorCoMs[colorIdx2] - colorCoMs[nextColor];
+				f32 colorDist          = colorColorSep.normalise() - colorSizes[colorIdx2] - colorSizes[nextColor];
 				if (colorDist < 18.0f) {
 					colorDist = (18.0f - colorDist);
 					Vector3f interColorOffset;
 					interColorOffset = colorDist * colorColorSep;
-					colorCoMs[k].add(interColorOffset);
-					colorCoMs[j].sub(interColorOffset);
+					colorCoMs[colorIdx2].add(interColorOffset);
+					colorCoMs[nextColor].sub(interColorOffset);
 				}
 			}
 		}
 	}
 
-	for (j = 0; j < pikiCount; j++) {
-		pikiList[j]->changeMode(PikiMode::FreeMode, this);
-		int color = pikiList[j]->mColor;
-		if (pikiList[j]->hasBomb()) {
+	for (pikiIdx = 0; pikiIdx < pikiCount; pikiIdx++) {
+		pikiList[pikiIdx]->changeMode(PikiMode::FreeMode, this);
+		int color = pikiList[pikiIdx]->mColor;
+		if (pikiList[pikiIdx]->hasBomb()) {
 			color = PikiColorCount;
 		}
 
-		ActFree* action = static_cast<ActFree*>(pikiList[j]->mActiveAction->getCurrAction());
+		ActFree* action = static_cast<ActFree*>(pikiList[pikiIdx]->mActiveAction->getCurrAction());
 		action->initBoid(colorCoMs[color], colorSizes[color]);
-		if (flowCont.mIsVersusMode == TRUE && pikiList[j]->mPlayerId == -1) {
-			pikiList[j]->mNavi = nullptr;
+		if (flowCont.mIsVersusMode == TRUE && pikiList[pikiIdx]->mPlayerId == -1) {
+			pikiList[pikiIdx]->mNavi = nullptr;
 		}
 	}
 
