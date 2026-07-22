@@ -1143,7 +1143,7 @@ MapMgr::MapMgr(Controller* controller)
 
 	mShadowProjMatHandler                   = new MapProjMatHandler(nullptr);
 	mShadowProjMatHandler->mProjMat->mFlags = MATFLAG_InverseColorBlend | MATFLAG_Opaque;
-	mShadowProjMatHandler->mProjMat->getColour().set(255, 255, 255, 255);
+	mShadowProjMatHandler->mProjMat->colour().set(255, 255, 255, 255);
 	memStat->end("shadMats");
 
 	// set up the infamous blur

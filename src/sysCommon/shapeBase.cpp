@@ -1789,7 +1789,7 @@ void ShapeDynMaterials::animate(f32* data)
 		Material& mat = mMaterials[i];
 		if (mat.mFlags & MATFLAG_PVW) {
 			if (mat.mColourInfo.mTotalFrameCount != 0) {
-				mat.mColourInfo.animate(data, mat.getColour());
+				mat.mColourInfo.animate(data, mat.colour());
 			}
 
 			for (int tevColIdx = 0; tevColIdx < 3; tevColIdx++) {
@@ -1817,7 +1817,7 @@ void ShapeDynMaterials::updateContext()
 	for (int i = 0; i < mMatCount; i++) {
 		Material& mat = mMaterials[i];
 		if (mat.mFlags & MATFLAG_PVW) {
-			mModel->mMaterialList[mat.mIndex].getColour() = mat.getColour();
+			mModel->mMaterialList[mat.mIndex].colour() = mat.colour();
 
 			for (int tevColIdx = 0; tevColIdx < 3; tevColIdx++) {
 				if (mat.mTevInfo->mTevColRegs[tevColIdx].mAnimFrameCount) {
