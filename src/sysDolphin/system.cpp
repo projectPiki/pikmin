@@ -22,23 +22,30 @@
 #include <stddef.h>
 
 /**
- * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(23)
 
 /**
- * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("System")
 
 /**
- * @brief TODO
+ * @brief Random-access DVD-backed stream wrapper with buffered read support.
  */
 struct DVDStream : public RandomAccessStream {
+	/**
+	 * @brief Initializes DVD stream buffer chunk size.
+	 */
 	DVDStream() { mSize = 0x40000; }
 
+	/**
+	 * @brief Reads aligned chunk from DVD into destination buffer.
+	 *
+	 * @param addr Destination buffer address.
+	 * @param size Requested read size in bytes.
+	 */
 	virtual void read(void* addr, int size) // _3C (weak)
 	{
 		int roundedSize = ALIGN_NEXT(size, 32);
@@ -54,7 +61,15 @@ struct DVDStream : public RandomAccessStream {
 
 		mOffset += roundedSize;
 	}
+	/**
+	 * @brief Returns remaining unread byte count for current stream.
+	 *
+	 * @return Remaining pending byte count.
+	 */
 	virtual int getPending() { return mPending; } // _44 (weak)
+	/**
+	 * @brief Closes underlying DVD file if currently open.
+	 */
 	virtual void close()                          // _4C (weak)
 	{
 		numOpen--;
@@ -104,7 +119,7 @@ static DVDStream dvdStream;
 static BufferedInputStream dvdBufferedStream;
 
 /**
- * @todo: Documentation
+ * @brief Resets stream offset and pending size from opened DVD file metadata.
  * @note UNUSED Size: 000044 (Matching by size)
  */
 void DVDStream::init()
@@ -163,14 +178,14 @@ RandomAccessStream* System::openFile(immut char* path, bool isRelativePath, bool
 		return nullptr;
 	}
 
-	BOOL old           = gsys->mTogglePrint;
+	BOOL prevTogglePrint = gsys->mTogglePrint;
 	gsys->mTogglePrint = TRUE;
 #if defined(VERSION_PIKIDEMO)
 	_Print("Opened file %s\n", strPath);
 #else
 	PRINT("Opened file %s\n", strPath);
 #endif
-	gsys->mTogglePrint = old;
+	gsys->mTogglePrint = prevTogglePrint;
 	dvdStream.mPath    = path;
 	dvdBufferedStream.init(&dvdStream, dvdStream.readBuffer, mDvdBufferSize);
 	return &dvdBufferedStream;
@@ -182,7 +197,7 @@ RandomAccessStream* System::openFile(immut char* path, bool isRelativePath, bool
 }
 
 /**
- * @todo: Documentation
+ * @brief Reinitializes soft-reset state and refreshes renderer setup if graphics exists.
  */
 void System::initSoftReset()
 {
@@ -194,7 +209,7 @@ void System::initSoftReset()
 }
 
 /**
- * @todo: Documentation
+ * @brief Starts frame rendering and configures viewport, scissor, and texture state.
  */
 void System::beginRender()
 {
@@ -209,7 +224,7 @@ void System::beginRender()
 }
 
 /**
- * @todo: Documentation
+ * @brief Finalizes active render pass.
  */
 void System::doneRender()
 {
@@ -217,7 +232,7 @@ void System::doneRender()
 }
 
 /**
- * @todo: Documentation
+ * @brief Blocks until display retrace handling completes.
  */
 void System::waitRetrace()
 {
@@ -225,7 +240,7 @@ void System::waitRetrace()
 }
 
 /**
- * @todo: Documentation
+ * @brief Runs main engine loop, ticking systems and calling app idle every frame.
  */
 void System::run(BaseApp* app)
 {
@@ -245,7 +260,7 @@ void System::run(BaseApp* app)
 }
 
 /**
- * @todo: Documentation
+ * @brief Returns current OS tick counter converted to milliseconds.
  */
 f32 System::getTime()
 {
@@ -253,7 +268,7 @@ f32 System::getTime()
 }
 
 /**
- * @todo: Documentation
+ * @brief Updates frame delta timing and rolling FPS sample counters.
  */
 void System::updateSysClock()
 {
@@ -269,9 +284,9 @@ void System::updateSysClock()
 		mDeltaTime = 0.0f;
 	}
 
-	int time = tick - mFpsSampleStart;
-	if (time > OS_TIMER_CLOCK) {
-		mFPS                 = (f64)(OS_TIMER_CLOCK * (mEngineFrames - mFramesAtSampleStart)) / time;
+	int sampleTicks = tick - mFpsSampleStart;
+	if (sampleTicks > OS_TIMER_CLOCK) {
+		mFPS                 = (f64)(OS_TIMER_CLOCK * (mEngineFrames - mFramesAtSampleStart)) / sampleTicks;
 		mFpsSampleStart      = tick;
 		mFramesAtSampleStart = mEngineFrames;
 	}
@@ -298,13 +313,13 @@ void System::parseArchiveDirectory(immut char* arcPath, immut char* dirPath)
 		ERROR("Could not open archive file!!\n");
 	}
 
-	// inline?
-	u32 a               = 0;
-	AramAllocator* list = mActiveAramAllocator;
-	u32 addr            = list->mNextFreeAddress + ALIGN_NEXT(stream.mPending, 0x20);
-	if (addr <= mActiveAramAllocator->mStartAddress + mActiveAramAllocator->mTotalSize) {
-		a                      = mActiveAramAllocator->mNextFreeAddress;
-		list->mNextFreeAddress = addr;
+	// Reserve aligned ARAM space for full archive payload before chunked DMA copies.
+	u32 archiveAramAddr          = 0;
+	AramAllocator* aramAllocator = mActiveAramAllocator;
+	u32 nextFreeAramAddr         = aramAllocator->mNextFreeAddress + ALIGN_NEXT(stream.mPending, 0x20);
+	if (nextFreeAramAddr <= mActiveAramAllocator->mStartAddress + mActiveAramAllocator->mTotalSize) {
+		archiveAramAddr                 = mActiveAramAllocator->mNextFreeAddress;
+		aramAllocator->mNextFreeAddress = nextFreeAramAddr;
 	}
 
 	u32 unused;
@@ -313,19 +328,19 @@ void System::parseArchiveDirectory(immut char* arcPath, immut char* dirPath)
 
 	// this is necessary to get it to call the vtable ptr not just inline it.
 	((DVDStream*)&stream)->getPending();
-	u32 size, pend, pos;
-	pos  = 0;
-	pend = ((DVDStream*)&stream)->getPending();
-	while (pend != 0) {
-		size = pend;
-		if (pend > stream.mSize) {
-			size = stream.mSize;
+	u32 chunkSize, pendingSize, copiedSize;
+	copiedSize  = 0;
+	pendingSize = ((DVDStream*)&stream)->getPending();
+	while (pendingSize != 0) {
+		chunkSize = pendingSize;
+		if (pendingSize > stream.mSize) {
+			chunkSize = stream.mSize;
 		}
-		((DVDStream*)&stream)->read(DVDStream::readBuffer, size);
-		gsys->copyRamToCache((u32)DVDStream::readBuffer, size, a + pos);
+		((DVDStream*)&stream)->read(DVDStream::readBuffer, chunkSize);
+		gsys->copyRamToCache((u32)DVDStream::readBuffer, chunkSize, archiveAramAddr + copiedSize);
 		gsys->copyWaitUntilDone();
-		pos += size;
-		pend -= size;
+		copiedSize += chunkSize;
+		pendingSize -= chunkSize;
 	}
 
 	stream.close();
@@ -333,17 +348,17 @@ void System::parseArchiveDirectory(immut char* arcPath, immut char* dirPath)
 	RandomAccessStream* file = gsys->openFile(arcPath);
 	if (file) {
 		file->readInt();
-		u32 num = file->readInt();
-		for (int i = 0; i < num; i++) {
-			u32 b = file->readInt();
-			u32 c = file->readInt();
-			String str(0);
-			file->readString(str);
+		u32 entryCount = file->readInt();
+		for (int entryIndex = 0; entryIndex < entryCount; entryIndex++) {
+			u32 fileOffset = file->readInt();
+			u32 fileSize   = file->readInt();
+			String entryName(0);
+			file->readString(entryName);
 
 			DirEntry* entry = new DirEntry();
-			entry->mName    = str.mString;
-			entry->mPending = c;
-			entry->mAddress = a + b;
+			entry->mName    = entryName.mString;
+			entry->mPending = fileSize;
+			entry->mAddress = archiveAramAddr + fileOffset;
 			mFileList->add(entry);
 		}
 		file->close();
@@ -406,14 +421,14 @@ static void ParseMapFile()
 				cmds->skipLine();
 
 				bool isLastCharValid = false;
-				int i;
+				int tokenIndex;
 				int funcNameLength  = 0;
 				int classNameLength = 0;
 				int classNameOffset = 0;
 				int fileInfoOffset  = 0;
 				int fileInfoLength  = 0;
-				for (i = 0; i < strlen(cmds->mCurrentToken); i++) {
-					char currChar = cmds->mCurrentToken[i];
+				for (tokenIndex = 0; tokenIndex < strlen(cmds->mCurrentToken); tokenIndex++) {
+					char currChar = cmds->mCurrentToken[tokenIndex];
 
 					if (currChar != ' ' && currChar != '_') {
 						isLastCharValid = true;
@@ -434,28 +449,28 @@ static void ParseMapFile()
 						break;
 					}
 
-					if (cmds->mCurrentToken[i + 1] == '_') {
+					if (cmds->mCurrentToken[tokenIndex + 1] == '_') {
 						// look ahead to find the length/namespace length for the class
 						// BUG: This doesn't handle class names from nested namespaces, e.g. `getGPos__Q23zen17particleGeneratorFv`.
-						char digit1 = cmds->mCurrentToken[i + 2];
+						char digit1 = cmds->mCurrentToken[tokenIndex + 2];
 						if (digit1 >= '0' && digit1 <= '9') {
-							char digit2 = cmds->mCurrentToken[i + 3];
+							char digit2 = cmds->mCurrentToken[tokenIndex + 3];
 							if (digit2 >= '0' && digit2 <= '9') {
 								// two digit class length
 								classNameLength = digit2 + (digit1 - '0') * 10;
 								classNameLength -= '0';
 								// skip two underscores and the class length
-								classNameOffset = i + 4;
+								classNameOffset = tokenIndex + 4;
 							} else {
 								// one digit class length
 								classNameLength = digit1 - '0';
 								// skip two underscores and the class length
-								classNameOffset = i + 3;
+								classNameOffset = tokenIndex + 3;
 							}
 
-							for (int j = i; j < strlen(cmds->mCurrentToken); j++) {
-								if (cmds->mCurrentToken[j] == ' ') {
-									fileInfoOffset = j + 1;
+							for (int fileInfoIndex = tokenIndex; fileInfoIndex < strlen(cmds->mCurrentToken); fileInfoIndex++) {
+								if (cmds->mCurrentToken[fileInfoIndex] == ' ') {
+									fileInfoOffset = fileInfoIndex + 1;
 									fileInfoLength = strlen(cmds->mCurrentToken) - fileInfoOffset;
 									break;
 								}
@@ -467,23 +482,23 @@ static void ParseMapFile()
 					funcNameLength++;
 				}
 
-				int size;
+				int symbolTextLength;
 				if (classNameLength != 0) {
-					size = classNameLength + 2;
+					symbolTextLength = classNameLength + 2;
 				} else {
-					size = 0;
+					symbolTextLength = 0;
 				}
 
-				size = funcNameLength + size + 3 + fileInfoLength;
+				symbolTextLength = funcNameLength + symbolTextLength + 3 + fileInfoLength;
 
 				// NOTE: Using `operator new` is explicitly the *wrong* way to allocate a struct containing a flexible array member.
-				SymbolInfo* symbol      = (SymbolInfo*)System::alloc(ALIGN_NEXT(size, 4) + sizeof(SymbolInfo));
+				SymbolInfo* symbol      = (SymbolInfo*)System::alloc(ALIGN_NEXT(symbolTextLength, 4) + sizeof(SymbolInfo));
 				symbol->mNext           = nullptr;
 				symbol->mVirtualAddress = symbolVirtualAddress;
 
 				// It's evident from the codegen (MWCC is needlessly inefficient with flexible array members) that the devs didn't access
 				// `SymbolInfo::mDemangledName` by name and instead manually wrote to memory with pointer arithmetic and type aliasing.
-				int offs = sizeof(SymbolInfo); // Therefore, we must start the string offset at 8 instead of 0.
+				int symbolTextOffset = sizeof(SymbolInfo); // Therefore, we must start the string offset at 8 instead of 0.
 
 				if (prevSymbol) {
 					prevSymbol->mNext = symbol;
@@ -495,27 +510,27 @@ static void ParseMapFile()
 				// demangle! example: kill__8CreatureFb 	plugPikiKando.a creature.cpp
 				// write class name (e.g. Creature::)
 				if (classNameLength != 0) {
-					for (int j = 0; j < classNameLength; j++) {
-						((char*)symbol)[offs++] = cmds->mCurrentToken[j + classNameOffset];
+					for (int classCharIndex = 0; classCharIndex < classNameLength; classCharIndex++) {
+						((char*)symbol)[symbolTextOffset++] = cmds->mCurrentToken[classCharIndex + classNameOffset];
 					}
-					((char*)symbol)[offs++] = ':';
-					((char*)symbol)[offs++] = ':';
+					((char*)symbol)[symbolTextOffset++] = ':';
+					((char*)symbol)[symbolTextOffset++] = ':';
 				}
 
 				// write function name (e.g. kill)
-				for (int j = 0; j < funcNameLength; j++) {
-					((char*)symbol)[offs++] = cmds->mCurrentToken[j];
+				for (int funcCharIndex = 0; funcCharIndex < funcNameLength; funcCharIndex++) {
+					((char*)symbol)[symbolTextOffset++] = cmds->mCurrentToken[funcCharIndex];
 				}
 
-				((char*)symbol)[offs++] = ' ';
-				((char*)symbol)[offs++] = ' ';
+				((char*)symbol)[symbolTextOffset++] = ' ';
+				((char*)symbol)[symbolTextOffset++] = ' ';
 
 				// write file name and library (e.g. plugPikiKando.a creature.cpp)
-				for (int j = 0; j < fileInfoLength; j++) {
-					((char*)symbol)[offs++] = cmds->mCurrentToken[j + fileInfoOffset];
+				for (int fileInfoCharIndex = 0; fileInfoCharIndex < fileInfoLength; fileInfoCharIndex++) {
+					((char*)symbol)[symbolTextOffset++] = cmds->mCurrentToken[fileInfoCharIndex + fileInfoOffset];
 				}
 
-				((char*)symbol)[offs++] = '\0';
+				((char*)symbol)[symbolTextOffset++] = '\0';
 			}
 
 			// .ctors section layout prologue detected!  Time to bail!
@@ -534,7 +549,7 @@ static void ParseMapFile()
 }
 
 /**
- * @todo: Documentation
+ * @brief Resolves symbol map node containing provided virtual address.
  * @note UNUSED Size: 000040
  */
 immut char* System::findAddress(u32 address)
@@ -549,11 +564,11 @@ immut char* System::findAddress(u32 address)
 }
 
 /**
- * @todo: Documentation
+ * @brief Performs hard reset setup, optional symbol-map parse, and language heap preload.
  */
 void System::hardReset()
 {
-	bool old    = mForcePrint;
+	bool oldForcePrint = mForcePrint;
 	mForcePrint = FALSE;
 	if (useSymbols) {
 		int a = gsys->getHeap(gsys->mActiveHeapIdx)->getFree();
@@ -562,11 +577,11 @@ void System::hardReset()
 		int d = OSTicksToMilliseconds(OSGetTick());
 		int b = gsys->getHeap(gsys->mActiveHeapIdx)->getFree();
 	}
-	mForcePrint = old;
+	mForcePrint = oldForcePrint;
 
 	mCacher  = new TextureCacher(0x96000);
-	int size = 0x20000;
-	gsys->mHeaps[SYSHEAP_Lang].init("language", AYU_STACK_GROW_UP, alloc(size), size);
+	int languageHeapSize = 0x20000;
+	gsys->mHeaps[SYSHEAP_Lang].init("language", AYU_STACK_GROW_UP, alloc(languageHeapSize), languageHeapSize);
 	preloadLanguage();
 
 	mTotalFrames = 0;
@@ -575,7 +590,7 @@ void System::hardReset()
 }
 
 /**
- * @todo: Documentation
+ * @brief Initializes core System runtime fields and default toggles.
  */
 System::System()
 {
@@ -604,7 +619,7 @@ System::System()
 }
 
 /**
- * @todo: Documentation
+ * @brief Placeholder OS error callback handler.
  * @note UNUSED Size: 0000BC
  */
 void sysErrorHandler(u16, OSContext*, u32, u32)
@@ -613,7 +628,7 @@ void sysErrorHandler(u16, OSContext*, u32, u32)
 }
 
 /**
- * @todo: Documentation
+ * @brief Builds and uploads embedded big-font texture resource.
  */
 void initBigFont()
 {
@@ -859,7 +874,7 @@ static immut char** errorList[6] = {
 #endif
 
 /**
- * @todo: Documentation
+ * @brief Renders full-screen DVD error text overlay for active drive error codes.
  */
 void System::showDvdError(Graphics& gfx)
 {
@@ -887,17 +902,17 @@ void System::showDvdError(Graphics& gfx)
 }
 
 /**
- * @todo: Documentation
+ * @brief Initializes low-level system subsystems, heaps, threads, and default runtime resources.
  */
 void System::Initialise()
 {
 	OSInit();
 	CARDInit();
-	void* lo   = OSGetArenaLo();
-	void* hi   = OSGetArenaHi();
-	mHeapStart = OSRoundUp32B(OSInitAlloc(lo, hi, 1));
-	hi         = (void*)OSRoundDown32B(hi);
-	mHeapEnd   = (u32)hi - mHeapStart;
+	void* arenaLo = OSGetArenaLo();
+	void* arenaHi = OSGetArenaHi();
+	mHeapStart    = OSRoundUp32B(OSInitAlloc(arenaLo, arenaHi, 1));
+	arenaHi       = (void*)OSRoundDown32B(arenaHi);
+	mHeapEnd      = (u32)arenaHi - mHeapStart;
 #if defined(VERSION_GPIP01)
 	if (mHeapEnd <= 0x1800000)
 #else
@@ -924,8 +939,8 @@ void System::Initialise()
 	mFreeCacheList.mNext = mFreeCacheList.mPrev = &mFreeCacheList;
 
 	SystemCache* cacheStack = new SystemCache[64];
-	for (int i = 0; i < 64; i++) {
-		mFreeCacheList.insertAfter(&cacheStack[i]);
+	for (int cacheIndex = 0; cacheIndex < 64; cacheIndex++) {
+		mFreeCacheList.insertAfter(&cacheStack[cacheIndex]);
 	}
 
 	onceInit();
@@ -960,30 +975,30 @@ void System::Initialise()
 	mControllerMgr.init();
 	mTimer = new Timers();
 
-	Font* cons = new Font;
-	cons->setTexture(loadTexture("consFont.bti", true), 16, 8);
-	cons->mTexture->attach();
-	mConsFont = cons;
+	Font* consoleFont = new Font;
+	consoleFont->setTexture(loadTexture("consFont.bti", true), 16, 8);
+	consoleFont->mTexture->attach();
+	mConsFont = consoleFont;
 
 	endLoading();
 }
 
 /**
- * @todo: Documentation
+ * @brief Stub for system sound-effect playback.
  */
 void System::sndPlaySe(u32)
 {
 }
 
 /**
- * @todo: Documentation
+ * @brief Destroys System instance.
  */
 System::~System()
 {
 }
 
 /**
- * @todo: Documentation
+ * @brief Returns whether debug symbols/info are available.
  * @note UNUSED Size: 000028
  */
 bool System::hasDebugInfo()
@@ -992,7 +1007,7 @@ bool System::hasDebugInfo()
 }
 
 /**
- * @todo: Documentation
+ * @brief Halts execution and reports fatal error through platform-specific handlers.
  * @note UNUSED Size: 000030 (VERSION_GPIJ01 || VERSION_GPIE01 || VERSION_GPIP01)
  * @note UNUSED Size: 0000b8 (VERSION_PIKIDEMO)
  */
@@ -1027,7 +1042,7 @@ void System::halt(immut char* file, int line, immut char* message)
 }
 
 /**
- * @todo: Documentation
+ * @brief Loading-thread entry point that draws load/error overlays and exits on quit message.
  */
 void* loadFunc(void* idler)
 {
@@ -1038,9 +1053,9 @@ void* loadFunc(void* idler)
 
 	int frameCount = 0; // r23
 #if defined(VERSION_G98E01_PIKIDEMO)
-	int b = 4; // r22
+	int blackScreenDelayFrames = 4; // r22
 #else
-	int b = 2; // r22
+	int blackScreenDelayFrames = 2; // r22
 #endif
 	GXSetCurrentGXThread();
 	OSGetTick();
@@ -1088,7 +1103,7 @@ void* loadFunc(void* idler)
 		}
 
 		static_cast<DGXGraphics*>(gsys->mDGXGfx)->doneRender();
-		if (b && --b == 0) {
+		if (blackScreenDelayFrames && --blackScreenDelayFrames == 0) {
 			VISetBlack(FALSE);
 			VIFlush();
 		}
@@ -1128,7 +1143,7 @@ void System::startLoading(LoadIdler* idler, bool useLoadScreen, u32 loadDelay)
 }
 
 /**
- * @todo: Documentation
+ * @brief Signals loading thread to process one frame/update tick.
  */
 void System::nudgeLoading()
 {
@@ -1136,7 +1151,7 @@ void System::nudgeLoading()
 }
 
 /**
- * @todo: Documentation
+ * @brief Stops loading thread and restores normal render-thread state.
  */
 void System::endLoading()
 {
@@ -1203,7 +1218,7 @@ u32 System::copyRamToCache(u32 mainMemAddr, u32 size, u32 aramCacheAddr)
 	}
 
 	// grab a new cache to own the aram transfer request
-	BOOL inter = OSDisableInterrupts();
+	BOOL interruptState = OSDisableInterrupts();
 
 	if (mFreeCacheList.mNext == &mFreeCacheList) {
 		ERROR("NO ARAM TRANS BLOCKS LEFT !!!\n");
@@ -1213,7 +1228,7 @@ u32 System::copyRamToCache(u32 mainMemAddr, u32 size, u32 aramCacheAddr)
 	cache->remove();
 	mActiveCacheList.insertAfter(cache);
 
-	OSRestoreInterrupts(inter);
+	OSRestoreInterrupts(interruptState);
 
 	gsys->mDmaComplete = FALSE;
 
@@ -1241,7 +1256,7 @@ void System::copyCacheToRam(u32 mainMemAddr, u32 aramCacheAddr, u32 size)
 	copyWaitUntilDone();
 
 	// grab a new cache to own the aram transfer request
-	BOOL inter = OSDisableInterrupts();
+	BOOL interruptState = OSDisableInterrupts();
 
 	if (mFreeCacheList.mNext == &mFreeCacheList) {
 		ERROR("NO ARAM TRANS BLOCKS LEFT !!!\n");
@@ -1250,7 +1265,7 @@ void System::copyCacheToRam(u32 mainMemAddr, u32 aramCacheAddr, u32 size)
 	SystemCache* cache = mFreeCacheList.mNext;
 	cache->remove();
 	mActiveCacheList.insertAfter(cache);
-	OSRestoreInterrupts(inter);
+	OSRestoreInterrupts(interruptState);
 
 	gsys->mDmaComplete = FALSE;
 
@@ -1295,7 +1310,7 @@ void freeBuffer(u32 cache)
 void System::copyCacheToTexture(CacheTexture* tex)
 {
 	// grab a new cache to own the aram transfer request
-	BOOL inter = OSDisableInterrupts();
+	BOOL interruptState = OSDisableInterrupts();
 
 	if (mFreeCacheList.mNext == &mFreeCacheList) {
 		ERROR("NO TEXTURE ARAM TRANS BLOCKS LEFT!!!\n");
@@ -1315,7 +1330,7 @@ void System::copyCacheToTexture(CacheTexture* tex)
 	u32 aramAddr    = tex->mAramAddress;
 	u32 size        = tex->mTexImage->mDataSize;
 
-	OSRestoreInterrupts(inter);
+	OSRestoreInterrupts(interruptState);
 
 	gsys->mTexComplete = FALSE;
 	DCInvalidateRange((void*)mainMemAddr, size);
@@ -1325,7 +1340,7 @@ void System::copyCacheToTexture(CacheTexture* tex)
 }
 
 /**
- * @todo: Documentation
+ * @brief DVD-monitor thread handling reset flow and live drive error state updates.
  */
 void* dvdFunc(void*)
 {
@@ -1416,7 +1431,7 @@ void* dvdFunc(void*)
 }
 
 /**
- * @todo: Documentation
+ * @brief Signals DVD monitoring thread to process an update tick.
  */
 void System::nudgeDvdThread()
 {
@@ -1424,7 +1439,7 @@ void System::nudgeDvdThread()
 }
 
 /**
- * @todo: Documentation
+ * @brief Creates and starts detached DVD monitoring thread.
  */
 void System::startDvdThread()
 {
@@ -1435,30 +1450,35 @@ void System::startDvdThread()
 
 #ifdef WIN32
 
-// TODO, this function is pulled from MSVCRTD.dll
+/**
+ * @brief Stubbed CRT fopen symbol for WIN32 build compatibility.
+ */
 FILE* fopen(char*, char*)
 {
 	return nullptr;
 }
 
+/**
+ * @brief Creates writable file stream under optional data root path.
+ */
 RandomAccessStream* System::createFile(immut char* name, BOOL useRoot)
 {
-	const char* b;
-	const char* c;
+	const char* activeDirPrefix;
+	const char* dataRootPrefix;
 
 	if (useRoot) {
-		b = mActiveDir;
+		activeDirPrefix = mActiveDir;
 	} else {
-		b = "";
+		activeDirPrefix = "";
 	}
 	char path[PATH_MAX];
-	sprintf(path, "%s", b);
+	sprintf(path, "%s", activeDirPrefix);
 	if (useRoot) {
-		c = mDataRoot;
+		dataRootPrefix = mDataRoot;
 	} else {
-		c = "";
+		dataRootPrefix = "";
 	}
-	sprintf(path, "%s%s", c, name);
+	sprintf(path, "%s%s", dataRootPrefix, name);
 	FILE* file = fopen(path, "wb");
 	if (file) {
 		return new AtxFileStream(); // file, name
