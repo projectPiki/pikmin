@@ -19,7 +19,7 @@ static u8 SendCount = 0x80;
 #define ROUND_UP(x, align) (((x) + (align) - 1) & (-(align)))
 
 /**
- * @TODO: Documentation
+ * @brief Initializes EXI channel 2 for debugger communication.
  * @note UNUSED Size: 000034
  */
 void DBGEXIInit()
@@ -29,21 +29,21 @@ void DBGEXIInit()
 }
 
 /**
- * @TODO: Documentation
+ * @brief Selects EXI channel 2 with the provided selection bits.
  * @note UNUSED Size: 000028
  */
 
-static u32 DBGEXISelect(u32 v)
+static u32 DBGEXISelect(u32 selectBits)
 {
 	u32 regs = __EXIRegs[EXI_CHAN_2_STAT];
 	regs &= 0x405;
-	regs |= 0x80 | (v << 4);
+	regs |= 0x80 | (selectBits << 4);
 	__EXIRegs[EXI_CHAN_2_STAT] = regs;
 	return TRUE;
 }
 
 /**
- * @TODO: Documentation
+ * @brief Deselects EXI channel 2.
  * @note UNUSED Size: 00001C
  */
 BOOL DBGEXIDeselect(void)
@@ -53,7 +53,7 @@ BOOL DBGEXIDeselect(void)
 }
 
 /**
- * @TODO: Documentation
+ * @brief Waits until the current EXI immediate transfer completes.
  * @note UNUSED Size: 00001C
  */
 static BOOL DBGEXISync()
@@ -65,32 +65,33 @@ static BOOL DBGEXISync()
 }
 
 /**
- * @TODO: Documentation
+ * @brief Performs an immediate EXI transfer on channel 2.
  */
-static BOOL DBGEXIImm(void* buffer, s32 bytecounter, u32 write)
+static BOOL DBGEXIImm(void* buffer, s32 byteCount, u32 isWrite)
 {
-	u8* tempPointer;
-	u32 writeOutValue;
-	int i;
+	u8* ioPtr;
+	u32 transferWord;
+	int byteIndex;
 
-	if (write) {
-		tempPointer   = buffer;
-		writeOutValue = 0;
-		for (i = 0; i < bytecounter; i++) {
-			u8* temp = ((u8*)buffer) + i;
-			writeOutValue |= *temp << ((3 - i) << 3);
+	if (isWrite) {
+		ioPtr        = buffer;
+		transferWord = 0;
+		// Pack up to 4 bytes into the EXI immediate register word.
+		for (byteIndex = 0; byteIndex < byteCount; byteIndex++) {
+			u8* bytePtr = ((u8*)buffer) + byteIndex;
+			transferWord |= *bytePtr << ((3 - byteIndex) << 3);
 		}
-		__EXIRegs[EXI_CHAN_2_IMM] = writeOutValue;
+		__EXIRegs[EXI_CHAN_2_IMM] = transferWord;
 	}
 
-	__EXIRegs[EXI_CHAN_2_CONTROL] = 1 | write << 2 | (bytecounter - 1) << 4;
+	__EXIRegs[EXI_CHAN_2_CONTROL] = 1 | isWrite << 2 | (byteCount - 1) << 4;
 	DBGEXISync();
 
-	if (!write) {
-		writeOutValue = __EXIRegs[EXI_CHAN_2_IMM];
-		tempPointer   = buffer;
-		for (i = 0; i < bytecounter; i++) {
-			*tempPointer++ = writeOutValue >> ((3 - i) << 3);
+	if (!isWrite) {
+		transferWord = __EXIRegs[EXI_CHAN_2_IMM];
+		ioPtr        = buffer;
+		for (byteIndex = 0; byteIndex < byteCount; byteIndex++) {
+			*ioPtr++ = transferWord >> ((3 - byteIndex) << 3);
 		}
 	}
 
@@ -98,7 +99,7 @@ static BOOL DBGEXIImm(void* buffer, s32 bytecounter, u32 write)
 }
 
 /**
- * @TODO: Documentation
+ * @brief Clears debugger EXI interrupt state.
  * @note UNUSED Size: 000018
  */
 void DBGEXIClearInterrupts(void)
@@ -107,7 +108,7 @@ void DBGEXIClearInterrupts(void)
 }
 
 /**
- * @TODO: Documentation
+ * @brief Validates debugger device identity.
  * @note UNUSED Size: 0000AC
  */
 void DBGCheckID(void)
@@ -116,146 +117,146 @@ void DBGCheckID(void)
 }
 
 /**
- * @TODO: Documentation
+ * @brief Sends a mailbox word to the debugger device.
  * @note UNUSED Size: 00008C
  */
-static BOOL DBGWriteMailbox(u32 p1)
+static BOOL DBGWriteMailbox(u32 mailboxValue)
 {
-	BOOL total = FALSE;
-	u32 v;
+	BOOL hasError = FALSE;
+	u32 commandWord;
 
 	if (!DBGEXISelect(4)) {
 		return FALSE;
 	}
 
-	v = (p1 & 0x1fffffff) | (0xC0000000);
-	total |= IS_FALSE(DBGEXIImm(&v, sizeof(v), 1));
-	total |= IS_FALSE(DBGEXISync());
-	total |= IS_FALSE(DBGEXIDeselect());
+	commandWord = (mailboxValue & 0x1fffffff) | (0xC0000000);
+	hasError |= IS_FALSE(DBGEXIImm(&commandWord, sizeof(commandWord), 1));
+	hasError |= IS_FALSE(DBGEXISync());
+	hasError |= IS_FALSE(DBGEXIDeselect());
 
-	return IS_FALSE(total);
+	return IS_FALSE(hasError);
 }
 
 /**
- * @TODO: Documentation
+ * @brief Reads one mailbox word from the debugger device.
  */
-static BOOL DBGReadMailbox(u32* p1)
+static BOOL DBGReadMailbox(u32* mailboxValue)
 {
-	BOOL total = FALSE;
-	u32 v;
+	BOOL hasError = FALSE;
+	u32 commandWord;
 
 	if (!DBGEXISelect(4)) {
 		return FALSE;
 	}
 
-	v = 0x60000000;
-	total |= IS_FALSE(DBGEXIImm(&v, 2, 1));
-	total |= IS_FALSE(DBGEXISync());
+	commandWord = 0x60000000;
+	hasError |= IS_FALSE(DBGEXIImm(&commandWord, 2, 1));
+	hasError |= IS_FALSE(DBGEXISync());
 
-	total |= IS_FALSE(DBGEXIImm(p1, 4, 0));
-	total |= IS_FALSE(DBGEXISync());
+	hasError |= IS_FALSE(DBGEXIImm(mailboxValue, 4, 0));
+	hasError |= IS_FALSE(DBGEXISync());
 
-	total |= IS_FALSE(DBGEXIDeselect());
+	hasError |= IS_FALSE(DBGEXIDeselect());
 
-	return IS_FALSE(total);
+	return IS_FALSE(hasError);
 }
 
 /**
- * @TODO: Documentation
+ * @brief Reads a word stream from debugger EXI memory space.
  */
-static BOOL DBGRead(u32 count, void* buffer, s32 param3)
+static BOOL DBGRead(u32 exiOffset, void* buffer, s32 remainingBytes)
 {
-	BOOL total = FALSE;
-	u32* buf_p = (u32*)buffer;
-	u32 v1;
-	u32 v;
+	BOOL hasError = FALSE;
+	u32* dstWord = (u32*)buffer;
+	u32 commandWord;
+	u32 dataWord;
 
 	if (!DBGEXISelect(4)) {
 		return FALSE;
 	}
 
-	v1 = (count & 0x1fffc) << 8 | 0x20000000;
-	total |= IS_FALSE(DBGEXIImm(&v1, sizeof(v1), 1));
-	total |= IS_FALSE(DBGEXISync());
+	commandWord = (exiOffset & 0x1fffc) << 8 | 0x20000000;
+	hasError |= IS_FALSE(DBGEXIImm(&commandWord, sizeof(commandWord), 1));
+	hasError |= IS_FALSE(DBGEXISync());
 
-	while (param3) {
-		total |= IS_FALSE(DBGEXIImm(&v, sizeof(v), 0));
-		total |= IS_FALSE(DBGEXISync());
+	while (remainingBytes) {
+		hasError |= IS_FALSE(DBGEXIImm(&dataWord, sizeof(dataWord), 0));
+		hasError |= IS_FALSE(DBGEXISync());
 
-		*buf_p++ = v;
+		*dstWord++ = dataWord;
 
-		param3 -= 4;
-		if (param3 < 0) {
-			param3 = 0;
+		remainingBytes -= 4;
+		if (remainingBytes < 0) {
+			remainingBytes = 0;
 		}
 	}
 
-	total |= IS_FALSE(DBGEXIDeselect());
-	return IS_FALSE(total);
+	hasError |= IS_FALSE(DBGEXIDeselect());
+	return IS_FALSE(hasError);
 }
 
 /**
- * @TODO: Documentation
+ * @brief Writes a word stream into debugger EXI memory space.
  */
-static BOOL DBGWrite(u32 count, void* buffer, s32 param3)
+static BOOL DBGWrite(u32 exiOffset, void* buffer, s32 remainingBytes)
 {
-	BOOL total = FALSE;
-	u32* buf_p = (u32*)buffer;
-	u32 v1;
-	u32 v;
+	BOOL hasError = FALSE;
+	u32* srcWord = (u32*)buffer;
+	u32 commandWord;
+	u32 dataWord;
 
 	if (!DBGEXISelect(4)) {
 		return FALSE;
 	}
 
-	v1 = (count & 0x1fffc) << 8 | 0xa0000000;
-	total |= IS_FALSE(DBGEXIImm(&v1, sizeof(v1), 1));
-	total |= IS_FALSE(DBGEXISync());
+	commandWord = (exiOffset & 0x1fffc) << 8 | 0xa0000000;
+	hasError |= IS_FALSE(DBGEXIImm(&commandWord, sizeof(commandWord), 1));
+	hasError |= IS_FALSE(DBGEXISync());
 
-	while (param3 != 0) {
-		v = *buf_p++;
+	while (remainingBytes != 0) {
+		dataWord = *srcWord++;
 
-		total |= IS_FALSE(DBGEXIImm(&v, sizeof(v), 1));
-		total |= IS_FALSE(DBGEXISync());
+		hasError |= IS_FALSE(DBGEXIImm(&dataWord, sizeof(dataWord), 1));
+		hasError |= IS_FALSE(DBGEXISync());
 
-		param3 -= 4;
-		if (param3 < 0) {
-			param3 = 0;
+		remainingBytes -= 4;
+		if (remainingBytes < 0) {
+			remainingBytes = 0;
 		}
 	}
 
-	total |= IS_FALSE(DBGEXIDeselect());
-	return IS_FALSE(total);
+	hasError |= IS_FALSE(DBGEXIDeselect());
+	return IS_FALSE(hasError);
 }
 
 /**
- * @TODO: Documentation
+ * @brief Reads debugger EXI status bits.
  */
-static BOOL DBGReadStatus(u32* p1)
+static BOOL DBGReadStatus(u32* statusValue)
 {
-	BOOL total = FALSE;
-	u32 v;
+	BOOL hasError = FALSE;
+	u32 commandWord;
 
 	if (!DBGEXISelect(4)) {
 		return FALSE;
 	}
 
-	v = 1 << 30;
-	total |= IS_FALSE(DBGEXIImm((u8*)&v, 2, 1));
-	total |= IS_FALSE(DBGEXISync());
+	commandWord = 1 << 30;
+	hasError |= IS_FALSE(DBGEXIImm((u8*)&commandWord, 2, 1));
+	hasError |= IS_FALSE(DBGEXISync());
 
-	total |= IS_FALSE(DBGEXIImm(p1, 4, 0));
-	total |= IS_FALSE(DBGEXISync());
+	hasError |= IS_FALSE(DBGEXIImm(statusValue, 4, 0));
+	hasError |= IS_FALSE(DBGEXISync());
 
-	total |= IS_FALSE(DBGEXIDeselect());
+	hasError |= IS_FALSE(DBGEXIDeselect());
 
-	return IS_FALSE(total);
+	return IS_FALSE(hasError);
 }
 
 /**
- * @TODO: Documentation
+ * @brief Handles mailbox-ready interrupt notification.
  */
-static void MWCallback(u32 a, OSContext* b)
+static void MWCallback(u32, OSContext*)
 {
 	EXIInputFlag = TRUE;
 	if (MTRCallback) {
@@ -264,29 +265,29 @@ static void MWCallback(u32 a, OSContext* b)
 }
 
 /**
- * @TODO: Documentation
+ * @brief Dispatches PI debug interrupts to the active debugger callback.
  */
-static void DBGHandler(s16 a, OSContext* b)
+static void DBGHandler(s16 interruptType, OSContext* context)
 {
 	*__PIRegs = 0x1000;
 	if (DBGCallback) {
-		DBGCallback(a, b);
+		DBGCallback(interruptType, context);
 	}
 }
 
 /**
- * @TODO: Documentation
+ * @brief Initializes debugger communication state and callback wiring.
  */
-void DBInitComm(vu8** a, MTRCallbackType b)
+void DBInitComm(vu8** inputFlagOut, MTRCallbackType callback)
 {
 	BOOL interrupts = OSDisableInterrupts();
 	{
 		pEXIInputFlag = (u8*)EXIInputFlag;
 		pEXIInputFlag = &EXIInputFlag;
 
-		*a = pEXIInputFlag;
+		*inputFlagOut = pEXIInputFlag;
 
-		MTRCallback = b;
+		MTRCallback = callback;
 
 		DBGEXIInit();
 	}
@@ -294,7 +295,7 @@ void DBInitComm(vu8** a, MTRCallbackType b)
 }
 
 /**
- * @TODO: Documentation
+ * @brief Installs debugger interrupt handlers and unmasks PI debug interrupts.
  */
 void DBInitInterrupts(void)
 {
@@ -306,27 +307,28 @@ void DBInitInterrupts(void)
 }
 
 /**
- * @TODO: Documentation
+ * @brief Polls mailbox and latches incoming message metadata.
  * @note UNUSED Size: 000150
  */
 static void CheckMailBox(void)
 {
-	u32 v;
-	DBGReadStatus(&v);
-	if (v & 1) {
-		DBGReadMailbox(&v);
-		v &= 0x1fffffff;
+	u32 mailboxWord;
+	DBGReadStatus(&mailboxWord);
+	if (mailboxWord & 1) {
+		DBGReadMailbox(&mailboxWord);
+		mailboxWord &= 0x1fffffff;
 
-		if ((v & 0x1f000000) == 0x1f000000) {
-			SendMailData = v;
-			RecvDataLeng = v & 0x7fff;
+		// Accept only mailbox payload words in the expected command range.
+		if ((mailboxWord & 0x1f000000) == 0x1f000000) {
+			SendMailData = mailboxWord;
+			RecvDataLeng = mailboxWord & 0x7fff;
 			EXIInputFlag = 1;
 		}
 	}
 }
 
 /**
- * @TODO: Documentation
+ * @brief Returns pending debugger payload size, polling mailbox when needed.
  */
 int DBQueryData(void)
 {
@@ -343,14 +345,14 @@ int DBQueryData(void)
 }
 
 /**
- * @TODO: Documentation
+ * @brief Reads pending debugger payload into the provided buffer.
  */
 BOOL DBRead(void* buffer, int count)
 {
 	u32 interrupts = OSDisableInterrupts();
-	u32 v          = SendMailData & 0x10000 ? 0x1000 : 0;
+	u32 readOffset = SendMailData & 0x10000 ? 0x1000 : 0;
 
-	DBGRead(v + 0x1e000, buffer, ROUND_UP(count, 4));
+	DBGRead(readOffset + 0x1e000, buffer, ROUND_UP(count, 4));
 
 	RecvDataLeng = 0;
 	EXIInputFlag = 0;
@@ -361,38 +363,38 @@ BOOL DBRead(void* buffer, int count)
 }
 
 /**
- * @TODO: Documentation
+ * @brief Writes a debugger payload and posts mailbox notification.
  */
 BOOL DBWrite(const void* src, int size)
 {
-	u32 v;
-	u32 busyFlag;
+	u32 messageWord;
+	u32 statusValue;
 	BOOL interrupts;
 
 	interrupts = OSDisableInterrupts();
 
 	do {
-		DBGReadStatus(&busyFlag);
-	} while (busyFlag & 2);
+		DBGReadStatus(&statusValue);
+	} while (statusValue & 2);
 
 	SendCount++;
-	v = ((SendCount & 1) ? 0x1000 : 0);
+	messageWord = ((SendCount & 1) ? 0x1000 : 0);
 
-	while (!DBGWrite(v | 0x1c000, (u32*)src, ROUND_UP(size, 4)))
+	while (!DBGWrite(messageWord | 0x1c000, (u32*)src, ROUND_UP(size, 4)))
 		;
 
 	do {
-		DBGReadStatus(&busyFlag);
-	} while (busyFlag & 2);
+		DBGReadStatus(&statusValue);
+	} while (statusValue & 2);
 
-	v = (SendCount << 0x10) | 0x1F000000 | size;
-	while (!DBGWriteMailbox(v))
+	messageWord = (SendCount << 0x10) | 0x1F000000 | size;
+	while (!DBGWriteMailbox(messageWord))
 		;
 
 	do {
-		while (!DBGReadStatus(&busyFlag))
+		while (!DBGReadStatus(&statusValue))
 			;
-	} while (busyFlag & 2);
+	} while (statusValue & 2);
 
 	OSRestoreInterrupts(interrupts);
 
@@ -400,7 +402,7 @@ BOOL DBWrite(const void* src, int size)
 }
 
 /**
- * @TODO: Documentation
+ * @brief Opens debugger communication endpoint (stubbed).
  */
 void DBOpen(void)
 {
@@ -408,7 +410,7 @@ void DBOpen(void)
 }
 
 /**
- * @TODO: Add documentation
+ * @brief Closes debugger communication endpoint (stubbed).
  */
 void DBClose(void)
 {
