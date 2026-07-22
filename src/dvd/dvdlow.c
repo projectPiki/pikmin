@@ -44,7 +44,7 @@ static DVDBuffer Curr;
 static void Read(void* addr, u32 length, u32 offset, DVDLowCallback callback);
 
 /**
- * @TODO: Documentation
+ * @brief Initializes read workaround state and alarm subsystem for low-level DVD commands.
  */
 void __DVDInitWA(void)
 {
@@ -55,20 +55,21 @@ void __DVDInitWA(void)
 }
 
 /**
- * @TODO: Documentation
+ * @brief Dispatches next queued workaround command when a read sequence needs extra seek/read steps.
  * @note UNUSED Size: 000094 (Matching by size)
  */
 static BOOL ProcessNextCommand(void)
 {
-	s32 n = NextCommandNumber;
+	s32 commandIndex = NextCommandNumber;
 
-	if (CommandList[n].cmd == 1) {
+	// Continue pending read/seek sequence queued by workaround path.
+	if (CommandList[commandIndex].cmd == 1) {
 		++NextCommandNumber;
-		Read(CommandList[n].addr, CommandList[n].length, CommandList[n].offset, CommandList[n].callback);
+		Read(CommandList[commandIndex].addr, CommandList[commandIndex].length, CommandList[commandIndex].offset, CommandList[commandIndex].callback);
 		return TRUE;
-	} else if (CommandList[n].cmd == 2) {
+	} else if (CommandList[commandIndex].cmd == 2) {
 		++NextCommandNumber;
-		DVDLowSeek(CommandList[n].offset, CommandList[n].callback);
+		DVDLowSeek(CommandList[commandIndex].offset, CommandList[commandIndex].callback);
 		return TRUE;
 	}
 
@@ -76,16 +77,16 @@ static BOOL ProcessNextCommand(void)
 }
 
 /**
- * @TODO: Documentation
+ * @brief Handles DI interrupt causes, cover events, command chaining, and callback completion.
  */
 void __DVDInterruptHandler(__OSInterrupt interrupt, OSContext* context)
 {
-	DVDLowCallback cb;
+	DVDLowCallback callback;
 	OSContext exceptionContext;
 	u32 cause = 0;
-	u32 reg;
-	u32 intr;
-	u32 mask;
+	u32 regValue;
+	u32 interruptBits;
+	u32 enabledMask;
 
 	OSCancelAlarm(&AlarmForTimeout);
 
@@ -102,19 +103,20 @@ void __DVDInterruptHandler(__OSInterrupt interrupt, OSContext* context)
 
 	LastCommandWasRead = FALSE;
 	StopAtNextInt      = FALSE;
-	reg                = __DIRegs[DI_STATUS];
-	mask               = reg & 0x2a;
-	intr               = (reg & 0x54) & (mask << 1);
+	regValue           = __DIRegs[DI_STATUS];
+	enabledMask        = regValue & 0x2a;
+	interruptBits      = (regValue & 0x54) & (enabledMask << 1);
 
-	if (intr & 0x40) {
+	// Map drive-interface interrupt bits to callback cause bits.
+	if (interruptBits & 0x40) {
 		cause |= 8;
 	}
 
-	if (intr & 0x10) {
+	if (interruptBits & 0x10) {
 		cause |= 1;
 	}
 
-	if (intr & 4) {
+	if (interruptBits & 4) {
 		cause |= 2;
 	}
 
@@ -122,13 +124,13 @@ void __DVDInterruptHandler(__OSInterrupt interrupt, OSContext* context)
 		ResetOccurred = FALSE;
 	}
 
-	__DIRegs[DI_STATUS] = intr | mask;
+	__DIRegs[DI_STATUS] = interruptBits | enabledMask;
 
 	if (ResetOccurred && (__OSGetSystemTime() - LastResetEnd) < OSMillisecondsToTicks(200)) {
-		reg  = __DIRegs[DI_COVER_STATUS];
-		mask = reg & 0x2;
-		intr = (reg & 4) & (mask << 1);
-		if (intr & 4) {
+		regValue      = __DIRegs[DI_COVER_STATUS];
+		enabledMask   = regValue & 0x2;
+		interruptBits = (regValue & 4) & (enabledMask << 1);
+		if (interruptBits & 4) {
 			if (ResetCoverCallback) {
 				ResetCoverCallback(4);
 			}
@@ -137,15 +139,15 @@ void __DVDInterruptHandler(__OSInterrupt interrupt, OSContext* context)
 
 		__DIRegs[DI_COVER_STATUS] = __DIRegs[DI_COVER_STATUS];
 	} else if (WaitingCoverClose) {
-		reg  = __DIRegs[DI_COVER_STATUS];
-		mask = reg & 2;
-		intr = (reg & 4) & (mask << 1);
+		regValue      = __DIRegs[DI_COVER_STATUS];
+		enabledMask   = regValue & 2;
+		interruptBits = (regValue & 4) & (enabledMask << 1);
 
-		if (intr & 4) {
+		if (interruptBits & 4) {
 			cause |= 4;
 		}
 
-		__DIRegs[DI_COVER_STATUS] = intr | mask;
+		__DIRegs[DI_COVER_STATUS] = interruptBits | enabledMask;
 		WaitingCoverClose         = FALSE;
 	} else {
 		__DIRegs[DI_COVER_STATUS] = 0;
@@ -168,10 +170,10 @@ void __DVDInterruptHandler(__OSInterrupt interrupt, OSContext* context)
 	OSSetCurrentContext(&exceptionContext);
 
 	if (cause) {
-		cb       = Callback;
+		callback = Callback;
 		Callback = NULL;
-		if (cb) {
-			cb(cause);
+		if (callback) {
+			callback(cause);
 		}
 
 		Breaking = FALSE;
@@ -182,7 +184,7 @@ void __DVDInterruptHandler(__OSInterrupt interrupt, OSContext* context)
 }
 
 /**
- * @TODO: Documentation
+ * @brief Alarm callback that resumes deferred read command sequencing.
  */
 static void AlarmHandler(OSAlarm* alarm, OSContext* context)
 {
@@ -190,7 +192,7 @@ static void AlarmHandler(OSAlarm* alarm, OSContext* context)
 }
 
 /**
- * @TODO: Documentation
+ * @brief Timeout handler that masks DI interrupts and reports timeout cause to pending callback.
  */
 static void AlarmHandlerForTimeout(OSAlarm* alarm, OSContext* context)
 {
@@ -209,7 +211,7 @@ static void AlarmHandlerForTimeout(OSAlarm* alarm, OSContext* context)
 }
 
 /**
- * @TODO: Documentation
+ * @brief Arms timeout alarm used by low-level drive commands.
  * @note UNUSED Size: 000064 (Matching by size)
  */
 static void SetTimeoutAlarm(OSTime timeout)
@@ -219,7 +221,7 @@ static void SetTimeoutAlarm(OSTime timeout)
 }
 
 /**
- * @TODO: Documentation
+ * @brief Issues raw DVD read command through DI registers and starts command timeout tracking.
  */
 static void Read(void* addr, u32 length, u32 offset, DVDLowCallback callback)
 {
@@ -244,7 +246,7 @@ static void Read(void* addr, u32 length, u32 offset, DVDLowCallback callback)
 }
 
 /**
- * @TODO: Documentation
+ * @brief Unimplemented audio buffer enable helper.
  * @note UNUSED Size: 000038
  */
 void AudioBufferOn(void)
@@ -253,23 +255,24 @@ void AudioBufferOn(void)
 }
 
 /**
- * @TODO: Documentation
+ * @brief Checks whether current read falls within block range considered contiguous with previous read.
  * @note UNUSED Size: 0000A0 (Matching by size)
  */
 BOOL HitCache(DVDBuffer* cur, DVDBuffer* prev)
 {
-	u32 uVar1 = (prev->offset + prev->length - 1) >> 15;
-	u32 uVar2 = (cur->offset >> 15);
-	u32 iVar3 = (DVDGetCurrentDiskID()->streaming ? TRUE : FALSE) ? 5 : 15;
+	u32 prevEndBlock      = (prev->offset + prev->length - 1) >> 15;
+	u32 curStartBlock     = (cur->offset >> 15);
+	u32 streamWindowLimit = (DVDGetCurrentDiskID()->streaming ? TRUE : FALSE) ? 5 : 15;
 
-	if ((uVar2 > uVar1 - 2) || (uVar2 < uVar1 + iVar3 + 3)) {
+	// Treat nearby block requests as cache-friendly, with wider window for non-streaming discs.
+	if ((curStartBlock > prevEndBlock - 2) || (curStartBlock < prevEndBlock + streamWindowLimit + 3)) {
 		return TRUE;
 	}
 	return FALSE;
 }
 
 /**
- * @TODO: Documentation
+ * @brief Clears queued workaround commands and performs immediate read.
  * @note UNUSED Size: 000034 (Matching by size)
  */
 static void DoJustRead(void* addr, u32 length, u32 offset, DVDLowCallback callback)
@@ -280,7 +283,7 @@ static void DoJustRead(void* addr, u32 length, u32 offset, DVDLowCallback callba
 }
 
 /**
- * @TODO: Documentation
+ * @brief Queues seek then read sequence and starts first seek for workaround type requiring extra seek.
  */
 static void SeekTwiceBeforeRead(void* addr, u32 length, u32 offset, DVDLowCallback callback)
 {
@@ -304,7 +307,7 @@ static void SeekTwiceBeforeRead(void* addr, u32 length, u32 offset, DVDLowCallba
 }
 
 /**
- * @TODO: Documentation
+ * @brief Queues read command and delays it by alarm to enforce minimum gap between nearby reads.
  * @note UNUSED Size: 00008C (Matching by size)
  */
 static void WaitBeforeRead(void* addr, u32 length, u32 offset, DVDLowCallback callback, OSTime timeout)
@@ -321,12 +324,12 @@ static void WaitBeforeRead(void* addr, u32 length, u32 offset, DVDLowCallback ca
 }
 
 /**
- * @TODO: Documentation
+ * @brief Entry point for low-level reads, selecting direct path or timing/seek workaround sequence.
  */
 BOOL DVDLowRead(void* addr, u32 length, u32 offset, DVDLowCallback callback)
 {
-	OSTime diff;
-	u32 prev;
+	OSTime elapsedSinceRead;
+	u32 prevEndBlock;
 
 	__DIRegs[DI_DMA_LENGTH] = length;
 	Curr.addr               = addr;
@@ -336,19 +339,20 @@ BOOL DVDLowRead(void* addr, u32 length, u32 offset, DVDLowCallback callback)
 	if (WorkAroundType == 0) {
 		DoJustRead(addr, length, offset, callback);
 	} else if (WorkAroundType == 1) {
+		// Workaround type 1 spaces nearby reads to avoid problematic immediate follow-ups.
 		if (FirstRead) {
 			SeekTwiceBeforeRead(addr, length, offset, callback);
 		} else {
 			if (!HitCache(&Curr, &Prev)) {
 				DoJustRead(addr, length, offset, callback);
 			} else {
-				prev = (Prev.offset + Prev.length - 1) >> 15;
-				if (prev == Curr.offset >> 15 || prev + 1 == Curr.offset >> 15) {
-					diff = __OSGetSystemTime() - LastReadFinished;
-					if (OSMillisecondsToTicks(5) < diff) {
+				prevEndBlock = (Prev.offset + Prev.length - 1) >> 15;
+				if (prevEndBlock == Curr.offset >> 15 || prevEndBlock + 1 == Curr.offset >> 15) {
+					elapsedSinceRead = __OSGetSystemTime() - LastReadFinished;
+					if (OSMillisecondsToTicks(5) < elapsedSinceRead) {
 						DoJustRead(addr, length, offset, callback);
 					} else {
-						WaitBeforeRead(addr, length, offset, callback, OSMillisecondsToTicks(5) - diff + OSMicrosecondsToTicks(500));
+						WaitBeforeRead(addr, length, offset, callback, OSMillisecondsToTicks(5) - elapsedSinceRead + OSMicrosecondsToTicks(500));
 					}
 				} else {
 					SeekTwiceBeforeRead(addr, length, offset, callback);
@@ -360,7 +364,7 @@ BOOL DVDLowRead(void* addr, u32 length, u32 offset, DVDLowCallback callback)
 }
 
 /**
- * @TODO: Documentation
+ * @brief Issues low-level seek command and sets timeout watchdog.
  */
 BOOL DVDLowSeek(u32 offset, DVDLowCallback callback)
 {
@@ -374,7 +378,7 @@ BOOL DVDLowSeek(u32 offset, DVDLowCallback callback)
 }
 
 /**
- * @TODO: Documentation
+ * @brief Enables waiting for cover-close interrupt and stores callback for completion signal.
  */
 BOOL DVDLowWaitCoverClose(DVDLowCallback callback)
 {
@@ -386,7 +390,7 @@ BOOL DVDLowWaitCoverClose(DVDLowCallback callback)
 }
 
 /**
- * @TODO: Documentation
+ * @brief Reads disc ID structure using DMA transfer and timeout protection.
  */
 BOOL DVDLowReadDiskID(DVDDiskID* diskID, DVDLowCallback callback)
 {
@@ -403,7 +407,7 @@ BOOL DVDLowReadDiskID(DVDDiskID* diskID, DVDLowCallback callback)
 }
 
 /**
- * @TODO: Documentation
+ * @brief Sends command to stop drive motor and waits for interrupt completion.
  */
 BOOL DVDLowStopMotor(DVDLowCallback callback)
 {
@@ -416,7 +420,7 @@ BOOL DVDLowStopMotor(DVDLowCallback callback)
 }
 
 /**
- * @TODO: Documentation
+ * @brief Requests drive error status via low-level command path.
  */
 BOOL DVDLowRequestError(DVDLowCallback callback)
 {
@@ -429,7 +433,7 @@ BOOL DVDLowRequestError(DVDLowCallback callback)
 }
 
 /**
- * @TODO: Documentation
+ * @brief Requests drive inquiry data through DMA and timeout guard.
  */
 BOOL DVDLowInquiry(DVDDriveInfo* info, DVDLowCallback callback)
 {
@@ -445,7 +449,7 @@ BOOL DVDLowInquiry(DVDDriveInfo* info, DVDLowCallback callback)
 }
 
 /**
- * @TODO: Documentation
+ * @brief Issues audio stream control command with subcommand, length, and offset parameters.
  */
 BOOL DVDLowAudioStream(u32 subcmd, u32 length, u32 offset, DVDLowCallback callback)
 {
@@ -460,7 +464,7 @@ BOOL DVDLowAudioStream(u32 subcmd, u32 length, u32 offset, DVDLowCallback callba
 }
 
 /**
- * @TODO: Documentation
+ * @brief Requests current audio status from drive with given subcommand.
  */
 BOOL DVDLowRequestAudioStatus(u32 subcmd, DVDLowCallback callback)
 {
@@ -473,7 +477,7 @@ BOOL DVDLowRequestAudioStatus(u32 subcmd, DVDLowCallback callback)
 }
 
 /**
- * @TODO: Documentation
+ * @brief Configures drive audio buffer mode and size, then waits for command completion.
  */
 BOOL DVDLowAudioBufferConfig(BOOL enable, u32 size, DVDLowCallback callback)
 {
@@ -486,28 +490,29 @@ BOOL DVDLowAudioBufferConfig(BOOL enable, u32 size, DVDLowCallback callback)
 }
 
 /**
- * @TODO: Documentation
+ * @brief Pulses PI reset bits to reset DVD interface and records reset timing window.
  */
 void DVDLowReset()
 {
-	u32 reg;
+	u32 resetCode;
 	OSTime resetStart;
 
 	__DIRegs[DI_COVER_STATUS] = 2;
-	reg                       = __PIRegs[PI_RESETCODE];
-	__PIRegs[PI_RESETCODE]    = (reg & ~4) | 1;
+	resetCode                 = __PIRegs[PI_RESETCODE];
+	__PIRegs[PI_RESETCODE]    = (resetCode & ~4) | 1;
 
 	resetStart = __OSGetSystemTime();
 	while ((__OSGetSystemTime() - resetStart) < OSMicrosecondsToTicks(12))
 		;
 
-	__PIRegs[PI_RESETCODE] = reg | 5;
+	// Restore reset code bits and mark software reset window for cover interrupt handling.
+	__PIRegs[PI_RESETCODE] = resetCode | 5;
 	ResetOccurred          = TRUE;
 	LastResetEnd           = __OSGetSystemTime();
 }
 
 /**
- * @TODO: Documentation
+ * @brief Unimplemented reset-cover callback registration.
  * @note UNUSED Size: 000044
  */
 void DVDLowSetResetCoverCallback(void)
@@ -516,7 +521,7 @@ void DVDLowSetResetCoverCallback(void)
 }
 
 /**
- * @TODO: Documentation
+ * @brief Unimplemented break command helper.
  * @note UNUSED Size: 00001C
  */
 void DoBreak(void)
@@ -525,7 +530,7 @@ void DoBreak(void)
 }
 
 /**
- * @TODO: Documentation
+ * @brief Unimplemented break alarm callback.
  * @note UNUSED Size: 000074
  */
 void AlarmHandlerForBreak(void)
@@ -534,7 +539,7 @@ void AlarmHandlerForBreak(void)
 }
 
 /**
- * @TODO: Documentation
+ * @brief Unimplemented break alarm setup helper.
  * @note UNUSED Size: 000064
  */
 void SetBreakAlarm(void)
@@ -543,7 +548,7 @@ void SetBreakAlarm(void)
 }
 
 /**
- * @TODO: Documentation
+ * @brief Marks next interrupt as break condition without issuing immediate hardware command.
  */
 BOOL DVDLowBreak()
 {
@@ -553,19 +558,19 @@ BOOL DVDLowBreak()
 }
 
 /**
- * @TODO: Documentation
+ * @brief Clears pending callback and returns previous callback pointer.
  */
 DVDLowCallback DVDLowClearCallback()
 {
-	DVDLowCallback old;
+	DVDLowCallback oldCallback;
 	__DIRegs[DI_COVER_STATUS] = 0;
-	old                       = Callback;
+	oldCallback               = Callback;
 	Callback                  = NULL;
-	return old;
+	return oldCallback;
 }
 
 /**
- * @TODO: Documentation
+ * @brief Unimplemented cover status query helper.
  * @note UNUSED Size: 000094
  */
 void DVDLowGetCoverStatus(void)
@@ -574,13 +579,13 @@ void DVDLowGetCoverStatus(void)
 }
 
 /**
- * @TODO: Documentation
+ * @brief Updates workaround mode and seek offset atomically under interrupt disable.
  */
 void __DVDLowSetWAType(u32 type, u32 location)
 {
-	BOOL enabled;
-	enabled                = OSDisableInterrupts();
+	BOOL interruptsEnabled;
+	interruptsEnabled      = OSDisableInterrupts();
 	WorkAroundType         = type;
 	WorkAroundSeekLocation = location;
-	OSRestoreInterrupts(enabled);
+	OSRestoreInterrupts(interruptsEnabled);
 }
