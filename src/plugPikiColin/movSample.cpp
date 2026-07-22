@@ -31,12 +31,12 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
 DEFINE_PRINT("MovSample")
 
 /**
- * @todo: Documentation
+ * @brief Convert decoded HVQM4 YUV planes into GX texture layout and flush to memory.
  */
 void convHVQM4TexY8UV8(int stride, int height, u8* src, u8* dst)
 {
 	u32* out;
-	int i, j;
+	int remainingRows, remainingCols;
 
 	// Part 1: Y plane processing
 	u32* y0 = (u32*)src;
@@ -44,8 +44,8 @@ void convHVQM4TexY8UV8(int stride, int height, u8* src, u8* dst)
 	u32* y2 = y1 + (stride / 4);
 	u32* y3 = y2 + (stride / 4);
 
-	for (i = height, out = (u32*)dst; i > 0; i -= 4) {
-		for (j = stride; j > 0; j -= 8) {
+	for (remainingRows = height, out = (u32*)dst; remainingRows > 0; remainingRows -= 4) {
+		for (remainingCols = stride; remainingCols > 0; remainingCols -= 8) {
 			out[0] = y0[0];
 			out[1] = y0[1];
 			out[2] = y1[0];
@@ -85,8 +85,8 @@ void convHVQM4TexY8UV8(int stride, int height, u8* src, u8* dst)
 
 	out = (u32*)(dst + (stride * height));
 
-	for (i = height / 2; i > 0; i -= 4) {
-		for (j = stride / 2; j > 0; j -= 4) {
+	for (remainingRows = height / 2; remainingRows > 0; remainingRows -= 4) {
+		for (remainingCols = stride / 2; remainingCols > 0; remainingCols -= 4) {
 			// two packed pixels per line per iteration
 			// Line 0
 			out[0] = ((u32)u0[0] << 24) | ((u32)v0[0] << 16) | ((u32)u0[1] << 8) | ((u32)v0[1]);
@@ -131,7 +131,7 @@ void convHVQM4TexY8UV8(int stride, int height, u8* src, u8* dst)
 }
 
 /**
- * @todo: Documentation
+ * @brief Continuously update movie audio/video stream until playback stop is requested.
  */
 static void* playbackFunc(void*)
 {
@@ -142,9 +142,12 @@ static void* playbackFunc(void*)
 }
 
 /**
- * @brief TODO
+ * @brief Runtime section that owns movie decode state, playback thread, and frame rendering.
  */
 struct MovSampleSetupSection : public Node {
+	/**
+	 * @brief Set up movie playback buffers, decoder, and detached playback thread.
+	 */
 	MovSampleSetupSection()
 	{
 		mName       = "MovSample section";
@@ -168,9 +171,9 @@ struct MovSampleSetupSection : public Node {
 		int yuvBufferSize   = 0x70800;
 		mYuvFrameBuffers[0] = new (0x20) u8[yuvBufferSize];
 		mYuvFrameBuffers[1] = new (0x20) u8[yuvBufferSize];
-		for (int i = 0; i < 2; i++) {
-			u8* frameBuffer  = mYuvFrameBuffers[i];
-			u8* chromaBuffer = &mYuvFrameBuffers[i][ImgW * ImgH];
+		for (int frameBufferIndex = 0; frameBufferIndex < 2; frameBufferIndex++) {
+			u8* frameBuffer  = mYuvFrameBuffers[frameBufferIndex];
+			u8* chromaBuffer = &mYuvFrameBuffers[frameBufferIndex][ImgW * ImgH];
 			memset(frameBuffer, 0x10, ImgW * ImgH);
 			memset(chromaBuffer, 0x80, (ImgW / 2) * (ImgH / 2) * 2);
 		}
@@ -180,6 +183,9 @@ struct MovSampleSetupSection : public Node {
 		OSResumeThread(&playbackThread);
 	}
 
+	/**
+	 * @brief Pump movie frames, handle input, and return to title when playback ends.
+	 */
 	virtual void update() // _10 (weak)
 	{
 		mController->update();
@@ -205,6 +211,7 @@ struct MovSampleSetupSection : public Node {
 			shouldExit = true;
 		}
 
+		// Stop stream and leave section on user skip or decoder end signal.
 		if (shouldExit || pictureStatus == -1) {
 			Jac_StreamMovieStop();
 			OSCancelThread(&playbackThread);
@@ -220,6 +227,9 @@ struct MovSampleSetupSection : public Node {
 
 		STACK_PAD_VAR(1);
 	}
+	/**
+	 * @brief Render current YUV movie frame through TEV conversion to screen.
+	 */
 	virtual void draw(Graphics& gfx) // _14 (weak)
 	{
 		gfx.setViewport(AREA_FULL_SCREEN(gfx));
@@ -306,6 +316,9 @@ struct MovSampleSetupSection : public Node {
 	}
 
 	// not in the DLL, but needed for stack ordering
+	/**
+	 * @brief Configure TEV constant colors used by movie YUV-to-RGB stages.
+	 */
 	void setTevColors()
 	{
 		GXSetTevColorS10(GX_TEVREG0, (GXColorS10) { -111, 0, -138, 68 });
@@ -334,7 +347,7 @@ struct MovSampleSetupSection : public Node {
 };
 
 /**
- * @todo: Documentation
+ * @brief Initialize movie sample section and start loading setup section.
  */
 void MovSampleSection::init()
 {
