@@ -12,7 +12,12 @@ void fread(void)
 }
 
 /**
- * @TODO: Documentation
+ * @brief Writes data to a file stream.
+ * @param buffer Pointer to the data to write.
+ * @param size Size of each element to write.
+ * @param count Number of elements to write.
+ * @param stream Pointer to the file stream to write to.
+ * @return Number of elements successfully written.
  */
 size_t fwrite(const void* buffer, size_t size, size_t count, FILE* stream)
 {

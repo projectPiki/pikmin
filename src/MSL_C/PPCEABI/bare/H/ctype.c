@@ -287,7 +287,8 @@ const u8 __upper_map[256] = {
 };
 
 /**
- * @TODO: Documentation
+ * @brief Converts a character to lowercase.
+ * @param c Character to convert.
  */
 int tolower(int c)
 {
@@ -295,7 +296,8 @@ int tolower(int c)
 }
 
 /**
- * @TODO: Documentation
+ * @brief Converts a character to uppercase.
+ * @param c Character to convert.
  */
 int toupper(int c)
 {
