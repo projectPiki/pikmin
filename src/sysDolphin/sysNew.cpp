@@ -4,23 +4,27 @@
 #include "MemStat.h"
 
 /**
- * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(4)
 
 /**
- * @todo: Documentation
  * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("sysNew");
 
 /**
- * @todo: Documentation
+ * @brief Allocate zero-initialized heap memory from currently active system heap.
+ *
+ * Rounds request to 4-byte alignment, updates active memory-info chain, and emits
+ * diagnostics for invalid heap state or allocation failures.
+ *
+ * @param size Requested allocation size in bytes.
+ * @return Pointer to allocated memory, or nullptr if no allocation is produced.
  */
 void* System::alloc(size_t size)
 {
-	void* result = nullptr;
+	void* allocatedBlock = nullptr;
 	if (size & 0x3) {
 		size = (size + 3) & ~0x3;
 	}
@@ -30,37 +34,39 @@ void* System::alloc(size_t size)
 		if (size == 0) {
 			PRINT("trying to allocate %d bytes on heap\n", 0);
 		}
-		result = heap->push(size);
-		if (!result) {
+		allocatedBlock = heap->push(size);
+		if (!allocatedBlock) {
 			ERROR("new[] %d failed in heap '%s'", size, heap->mName);
 		}
 
 		if (size == 0 || gsys->mForcePrint) {
-			bool print         = gsys->mTogglePrint;
+			bool savedTogglePrint = gsys->mTogglePrint;
 			gsys->mTogglePrint = TRUE;
-			gsys->mTogglePrint = print;
+			gsys->mTogglePrint = savedTogglePrint;
 		}
 
-		MemInfo* info = gsys->mCurrMemInfo;
-		while (info) {
-			info->mMemorySize += size;
-			info = static_cast<MemInfo*>(info->mParent);
+		// Propagate allocation size through nested memory-info scopes.
+		MemInfo* memInfo = gsys->mCurrMemInfo;
+		while (memInfo) {
+			memInfo->mMemorySize += size;
+			memInfo = static_cast<MemInfo*>(memInfo->mParent);
 		}
 
-		if ((u32)result & 0x3) {
-			ERROR("acquired memory not long aligned %08x!!\n", (u32)result);
+		if ((u32)allocatedBlock & 0x3) {
+			ERROR("acquired memory not long aligned %08x!!\n", (u32)allocatedBlock);
 		}
 
-		u32* resPtr = (u32*)result;
-		int length  = size / 4;
-		for (int i = 0; i < length; i++) {
-			resPtr[i] = 0;
+		// Clear allocation in 32-bit chunks before handing it to callers.
+		u32* allocatedWords = (u32*)allocatedBlock;
+		int wordCount       = size / 4;
+		for (int wordIndex = 0; wordIndex < wordCount; wordIndex++) {
+			allocatedWords[wordIndex] = 0;
 		}
 	} else {
 #if defined(WIN32)
 		// The DLL uses `GlobalAlloc` here and has an ERROR if that fails.  This branch of code is probably DLL exclusive,
 		// since the GCN can't just ask WinAPI for unlimited memory.  We'll see once JPN Demo version matching begins.
-		if (!result) {
+		if (!allocatedBlock) {
 			ERROR("new[] %d failed", size);
 		}
 #else
@@ -68,39 +74,45 @@ void* System::alloc(size_t size)
 #endif
 	}
 
-	return result;
+	return allocatedBlock;
 }
 
 /**
- * @todo: Documentation
+ * @brief Allocate memory with explicit alignment for scalar `new`.
+ * @param size Requested payload size in bytes.
+ * @param alignment Required alignment in bytes.
+ * @return Aligned pointer into over-allocated block from `System::alloc`.
  * @note UNUSED Size: 000044 (Matching by size)
  */
 void* operator new(size_t size, int alignment)
 {
-	u32 alloc  = (u32)System::alloc(size + alignment);
-	u32 result = (alloc + (alignment - 1)) & ~(alignment - 1);
-	return (void*)result;
+	u32 allocationBase = (u32)System::alloc(size + alignment);
+	u32 alignedAddress = (allocationBase + (alignment - 1)) & ~(alignment - 1);
+	return (void*)alignedAddress;
 }
 
 /**
- * @todo: Documentation
+ * @brief Allocate memory with explicit alignment for array `new[]`.
+ * @param size Requested payload size in bytes.
+ * @param alignment Required alignment in bytes.
+ * @return Aligned pointer into over-allocated block from `System::alloc`.
  */
 void* operator new[](size_t size, int alignment)
 {
-	u32 alloc  = (u32)System::alloc(size + alignment);
-	u32 result = (alloc + (alignment - 1)) & ~(alignment - 1);
-	return (void*)result;
+	u32 allocationBase = (u32)System::alloc(size + alignment);
+	u32 alignedAddress = (allocationBase + (alignment - 1)) & ~(alignment - 1);
+	return (void*)alignedAddress;
 }
 
 /**
- * @todo: Documentation
+ * @brief Scalar delete overload used by this build.
  */
 void operator delete(void*)
 {
 }
 
 /**
- * @todo: Documentation
+ * @brief Array delete overload used by this build.
  */
 void operator delete[](void*)
 {
