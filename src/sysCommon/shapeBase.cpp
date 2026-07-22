@@ -193,7 +193,7 @@ void Joint::read(RandomAccessStream& stream)
 	// x86 regswap happens here.
 	mBounds.mMin.read(stream);
 	mBounds.mMax.read(stream);
-	float _ = stream.readFloat();
+	float unusedBoundPadding = stream.readFloat();
 
 	mScale.read(stream);
 	mRotation.read(stream);
@@ -1091,7 +1091,7 @@ void AnimDca::read(RandomAccessStream& input)
 	for (int jointIdx = 0; jointIdx < mJointCount; jointIdx++) {
 		mAnimInfo[jointIdx].mGroupIndex = input.readInt();
 
-		int parentIndex          = input.readInt();
+		int parentIndex                 = input.readInt();
 		mAnimInfo[jointIdx].mParentInfo = parentIndex == -1 ? 0 : &mAnimInfo[parentIndex];
 
 		// Read scale parameters (3 entries for x, y, and z)
@@ -1326,7 +1326,7 @@ void AnimDck::read(RandomAccessStream& stream)
 	for (int jointIdx = 0; jointIdx < mJointCount; jointIdx++) {
 		mAnimInfo[jointIdx].mGroupIndex = stream.readInt();
 
-		int parentIndex          = stream.readInt();
+		int parentIndex                 = stream.readInt();
 		mAnimInfo[jointIdx].mParentInfo = parentIndex == -1 ? 0 : &mAnimInfo[parentIndex];
 
 		// Read scale parameters (3 entries for x, y, and z)
@@ -2600,7 +2600,7 @@ void BaseShape::read(RandomAccessStream& stream)
 				}
 
 				for (int triSlotIdx = 0; triSlotIdx < tmpGroups[groupIdx].mTriCount; triSlotIdx++) {
-					int idx                       = stream.readInt();
+					int idx                                       = stream.readInt();
 					tmpGroups[groupIdx].mTriangleList[triSlotIdx] = &mTriList[idx];
 				}
 
@@ -2825,27 +2825,24 @@ void BaseShape::createCollisions(int gridSize)
 	u32 heapStart = gsys->getHeap(SYSHEAP_App)->getFree();
 
 #if defined(WIN32)
-	// This code could use a cleanup pass on its variable names.
 	for (int triIdx = 0; triIdx < mTriCount; triIdx++) {
 		for (int edgeIdx = 0; edgeIdx < 3; edgeIdx++) {
 			if (mTriList[triIdx].mAdjacentTriIndices[edgeIdx] >= 0) {
 				Vector3f edgeVectors[2];
 				Vector3f unitVecs[2];
 
-				edgeVectors[0].set(
-				    mVertexList[mTriList[triIdx].mVertexIndices[edgeIdx % 3]].x
-				        - mVertexList[mTriList[triIdx].mVertexIndices[(edgeIdx + 1) % 3]].x,
-				    mVertexList[mTriList[triIdx].mVertexIndices[edgeIdx % 3]].y
-				        - mVertexList[mTriList[triIdx].mVertexIndices[(edgeIdx + 1) % 3]].y,
-				    mVertexList[mTriList[triIdx].mVertexIndices[edgeIdx % 3]].z
-				        - mVertexList[mTriList[triIdx].mVertexIndices[(edgeIdx + 1) % 3]].z);
-				edgeVectors[1].set(
-				    mVertexList[mTriList[triIdx].mVertexIndices[(edgeIdx + 1) % 3]].x
-				        - mVertexList[mTriList[triIdx].mVertexIndices[edgeIdx % 3]].x,
-				    mVertexList[mTriList[triIdx].mVertexIndices[(edgeIdx + 1) % 3]].y
-				        - mVertexList[mTriList[triIdx].mVertexIndices[edgeIdx % 3]].y,
-				    mVertexList[mTriList[triIdx].mVertexIndices[(edgeIdx + 1) % 3]].z
-				        - mVertexList[mTriList[triIdx].mVertexIndices[edgeIdx % 3]].z);
+				edgeVectors[0].set(mVertexList[mTriList[triIdx].mVertexIndices[edgeIdx % 3]].x
+				                       - mVertexList[mTriList[triIdx].mVertexIndices[(edgeIdx + 1) % 3]].x,
+				                   mVertexList[mTriList[triIdx].mVertexIndices[edgeIdx % 3]].y
+				                       - mVertexList[mTriList[triIdx].mVertexIndices[(edgeIdx + 1) % 3]].y,
+				                   mVertexList[mTriList[triIdx].mVertexIndices[edgeIdx % 3]].z
+				                       - mVertexList[mTriList[triIdx].mVertexIndices[(edgeIdx + 1) % 3]].z);
+				edgeVectors[1].set(mVertexList[mTriList[triIdx].mVertexIndices[(edgeIdx + 1) % 3]].x
+				                       - mVertexList[mTriList[triIdx].mVertexIndices[edgeIdx % 3]].x,
+				                   mVertexList[mTriList[triIdx].mVertexIndices[(edgeIdx + 1) % 3]].y
+				                       - mVertexList[mTriList[triIdx].mVertexIndices[edgeIdx % 3]].y,
+				                   mVertexList[mTriList[triIdx].mVertexIndices[(edgeIdx + 1) % 3]].z
+				                       - mVertexList[mTriList[triIdx].mVertexIndices[edgeIdx % 3]].z);
 
 				unitVecs[0] = edgeVectors[0];
 				unitVecs[0].normalise();
@@ -2856,8 +2853,9 @@ void BaseShape::createCollisions(int gridSize)
 				unitVecs[1].normalise();
 				unitVecs[1].CP(mTriList[mTriList[triIdx].mAdjacentTriIndices[edgeIdx]].mTriangle.mNormal);
 
-				f32 adjacentNormalDot = mTriList[triIdx].mTriangle.mNormal.DP(mTriList[mTriList[triIdx].mAdjacentTriIndices[edgeIdx]].mTriangle.mNormal);
-				f32 edgeNormalDot     = unitVecs[0].DP(mTriList[mTriList[triIdx].mAdjacentTriIndices[edgeIdx]].mTriangle.mNormal);
+				f32 adjacentNormalDot
+				    = mTriList[triIdx].mTriangle.mNormal.DP(mTriList[mTriList[triIdx].mAdjacentTriIndices[edgeIdx]].mTriangle.mNormal);
+				f32 edgeNormalDot = unitVecs[0].DP(mTriList[mTriList[triIdx].mAdjacentTriIndices[edgeIdx]].mTriangle.mNormal);
 
 				f32 edgeAngle = acosf(edgeNormalDot);
 				if (adjacentNormalDot < 0.0f) {
@@ -2881,12 +2879,12 @@ void BaseShape::createCollisions(int gridSize)
 				offsetPoints[2] = anglePoints[2] + Vector3f(0.0f, 1.0f, 0.0f);
 				offsetPoints[3] = anglePoints[3] + Vector3f(0.0f, 1.0f, 0.0f);
 
-				f32 edgeSomething = 0.0f;
+				f32 edgeSomething      = 0.0f;
 				f32 lineIntersectDenom = (-unitVecs[1].x * unitVecs[0].y) - (unitVecs[0].x * -unitVecs[1].y);
 				if (lineIntersectDenom != 0.0f) {
-					edgeSomething
-					    = ((offsetPoints[2].x - offsetPoints[1].x) * unitVecs[1].y + (offsetPoints[2].y - offsetPoints[1].y) * -unitVecs[1].x)
-					    / lineIntersectDenom;
+					edgeSomething = ((offsetPoints[2].x - offsetPoints[1].x) * unitVecs[1].y
+					                 + (offsetPoints[2].y - offsetPoints[1].y) * -unitVecs[1].x)
+					              / lineIntersectDenom;
 				}
 				mTriList[triIdx].mEdgeSomething[edgeIdx] = edgeSomething;
 
@@ -2922,9 +2920,9 @@ void BaseShape::createCollisions(int gridSize)
 		int currCellTriCount = 0;
 		u32 unused2[768];
 		CollTriInfo* tris[256];
-		int totalTriCount = 0; // Calculation goes unused.
+		int totalTriCount    = 0; // Calculation goes unused.
 		int scannedCellCount = 0;
-		int numUnique     = 0;
+		int numUnique        = 0;
 		for (int gridY = 0; gridY < mGridSizeY; gridY++) {
 			for (int gridX = 0; gridX < mGridSizeX; gridX++) {
 				f32 minX = gridX * mGridSize + mCourseExtents.mMin.x;
@@ -2953,7 +2951,7 @@ void BaseShape::createCollisions(int gridSize)
 						int d                             = 0;
 						for (int bboxCornerIdx = 0; bboxCornerIdx < 8; bboxCornerIdx++) {
 							Vector3f point(bboxVals[bboxIndices[bboxCornerIdx][0]], bboxVals[bboxIndices[bboxCornerIdx][1]],
-							              bboxVals[bboxIndices[bboxCornerIdx][2]]);
+							               bboxVals[bboxIndices[bboxCornerIdx][2]]);
 							if (mTriList[triIdx].mTriangle.dist(point) < 0.0f) {
 								d++;
 							}
@@ -3317,8 +3315,7 @@ void BaseShape::updateAnim(Graphics& gfx, immut Matrix4f& mtx, f32* overrideFram
 			if (data->mTotalFrameCount) {
 				immut Matrix4f* srtMtx
 				    = (mJointList[jointIdx].mParentIndex != -1) ? &mAnimMatrices[mJointList[jointIdx].mParentIndex] : &mtx;
-				data->makeAnimSRT(data->mAnimJointIndices[jointIdx], srtMtx, &mAnimMatrices[jointIdx], &data->mAnimInfo[jointIdx],
-				                 *frame);
+				data->makeAnimSRT(data->mAnimJointIndices[jointIdx], srtMtx, &mAnimMatrices[jointIdx], &data->mAnimInfo[jointIdx], *frame);
 			} else {
 #if defined(WIN32)
 				mtx.multiplyTo(mJointList[jointIdx].mAnimMatrix, mAnimMatrices[jointIdx]);

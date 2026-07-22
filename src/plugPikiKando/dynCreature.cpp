@@ -85,9 +85,9 @@ DynParticleHeap::DynParticleHeap(int numParticles)
 	mFreeParticleList.initCore("freeParticles");
 	mUsedParticleList.initCore("useParticles");
 
-	for (int particleIndex = 0; particleIndex < numParticles; particleIndex++) {
-		mHeap[particleIndex].mNextParticle = nullptr;
-		mFreeParticleList.add(&mHeap[particleIndex]);
+	for (int particleIdx = 0; particleIdx < numParticles; particleIdx++) {
+		mHeap[particleIdx].mNextParticle = nullptr;
+		mFreeParticleList.add(&mHeap[particleIdx]);
 	}
 }
 
@@ -274,10 +274,10 @@ void DynCreature::simulate(f32 timeStep)
 	DynParticle* ptcl      = mParticleList;
 	int collisionCount     = 0;
 	int groundContactCount = 0;
-	int particleIndex      = 0;
+	int particleIdx        = 0;
 
 	// Process collision response for each particle
-	for (ptcl; ptcl; ptcl = ptcl->mNextParticle, particleIndex++) {
+	for (ptcl; ptcl; ptcl = ptcl->mNextParticle, particleIdx++) {
 		// Transform particle to world space
 		Vector3f localPosition(ptcl->mLocalPosition);
 		localPosition.y += mPickOffset;
@@ -309,7 +309,7 @@ void DynCreature::simulate(f32 timeStep)
 
 		if (ptcl->mWorldPosition.y - groundHeight < ptcl->mCollisionRadius) {
 			// Mark this particle as in contact with ground
-			mGroundFlag |= (1 << particleIndex);
+			mGroundFlag |= (1 << particleIdx);
 			groundContactCount++;
 
 			// Calculate collision normal from terrain or cylinder collision
@@ -414,7 +414,7 @@ void DynCreature::simulate(f32 timeStep)
 void DynCreature::applyTorque(int particleIdx, f32 magnitude)
 {
 	DynParticle* ptcl = mParticleList;
-	for (int particleListIndex = 0; particleListIndex < particleIdx; ++particleListIndex) {
+	for (int particleListIdx = 0; particleListIdx < particleIdx; ++particleListIdx) {
 		ptcl = ptcl->mNextParticle;
 	}
 	if (!ptcl) {
