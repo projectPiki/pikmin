@@ -14,148 +14,154 @@ const f64 digit_values[] = {
 static f64 ten = 10.0;
 
 /**
- * @TODO: Documentation
+ * @brief Converts floating-point value to decimal digit/exponent form.
+ *
+ * Normalizes magnitude and emits fixed-count significand digits into output buffer.
  */
-void __num2dec(const decform* f, f64 x, decimal* d)
+void __num2dec(const decform* form, f64 value, decimal* out)
 {
-	int sp30;
+	int binaryExp;
 	int exp;
-	u8* p;
+	u8* sigWritePtr;
 	int digits;
-	int var_r4;
-	f64 var_f1;
-	int var_r11;
-	int var_r12;
-	int temp_r5;
-	int var_r6;
-	int var_r6_2;
-	const f64* var_r5;
+	int exp10Estimate;
+	f64 scaleFactor;
+	int writeCount;
+	int chunkDigits;
+	int padDigits;
+	int chunkValue;
+	int padCount;
+	const f64* bitScalePtr;
 
-	digits = f->digits;
+	digits = form->digits;
 	if (digits > 16) {
 		digits = 16;
 	}
 
-	d->sign       = 0;
-	d->exp        = 0;
-	d->sig.length = 1;
+	out->sign       = 0;
+	out->exp        = 0;
+	out->sig.length = 1;
 
-	if (x == 0.0) {
-		d->sig.text[0] = '0';
+	if (value == 0.0) {
+		out->sig.text[0] = '0';
 		return;
 	}
 
-	if (!isfinite(x)) {
-		d->sig.text[0] = isnan(x) ? 'N' : 'I';
+	if (!isfinite(value)) {
+		out->sig.text[0] = isnan(value) ? 'N' : 'I';
 		return;
 	}
 
-	d->sig.length = 0;
-	if (x < 0.0) {
-		x       = -x;
-		d->sign = 1;
+	out->sig.length = 0;
+	if (value < 0.0) {
+		value     = -value;
+		out->sign = 1;
 	}
 
-	frexp(x, &sp30);
-	var_r4 = (sp30 * 301029) / 1000000; // log_10(2)
-	exp    = var_r4;
-	var_r5 = bit_values;
-	if (var_r4 < 0) {
-		var_r4 = -var_r4;
-		while (var_r4 != 0) {
-			if (var_r4 & 1) {
-				x *= *var_r5;
+	// Approximate base-10 exponent from base-2 exponent, then scale magnitude.
+	frexp(value, &binaryExp);
+	exp10Estimate = (binaryExp * 301029) / 1000000; // log_10(2)
+	exp           = exp10Estimate;
+	bitScalePtr   = bit_values;
+	if (exp10Estimate < 0) {
+		exp10Estimate = -exp10Estimate;
+		while (exp10Estimate != 0) {
+			if (exp10Estimate & 1) {
+				value *= *bitScalePtr;
 			}
-			var_r4 >>= 1;
-			var_r5++;
+			exp10Estimate >>= 1;
+			bitScalePtr++;
 		}
-	} else if (var_r4 > 0) {
-		var_f1 = 1.0f;
-		while (var_r4 != 0) {
-			if (var_r4 & 1) {
-				var_f1 *= *var_r5;
+	} else if (exp10Estimate > 0) {
+		scaleFactor = 1.0f;
+		while (exp10Estimate != 0) {
+			if (exp10Estimate & 1) {
+				scaleFactor *= *bitScalePtr;
 			}
-			var_r4 >>= 1;
-			var_r5++;
+			exp10Estimate >>= 1;
+			bitScalePtr++;
 		}
-		x /= var_f1;
+		value /= scaleFactor;
 	}
 
-	while (x >= 1.0) {
-		x *= 0.1;
+	while (value >= 1.0) {
+		value *= 0.1;
 		exp += 1;
 	}
 
-	while (x < 0.1) {
-		x *= 10.0;
+	while (value < 0.1) {
+		value *= 10.0;
 		exp -= 1;
 	}
 
-	p = d->sig.text;
+	// Emit significand digits in groups of up to 8 decimal digits.
+	sigWritePtr = out->sig.text;
 	while (digits != 0) {
-		var_r12 = digits;
+		chunkDigits = digits;
 		if (digits > 8) {
-			var_r12 = 8;
+			chunkDigits = 8;
 		}
-		d->sig.length += var_r12;
-		digits -= var_r12;
-		exp -= var_r12;
-		p += var_r12;
-		x *= digit_values[var_r12 - 1];
-		var_r6 = (int)x;
-		x      = x - var_r6;
+		out->sig.length += chunkDigits;
+		digits -= chunkDigits;
+		exp -= chunkDigits;
+		sigWritePtr += chunkDigits;
+		value *= digit_values[chunkDigits - 1];
+		chunkValue = (int)value;
+		value      = value - chunkValue;
 
-		var_r11 = var_r12 + 1;
-		while (--var_r11 != 0) {
-			*--p = '0' + (var_r6 % 10);
-			var_r6 /= 10;
+		writeCount = chunkDigits + 1;
+		while (--writeCount != 0) {
+			*--sigWritePtr = '0' + (chunkValue % 10);
+			chunkValue /= 10;
 		}
-		p += var_r12;
+		sigWritePtr += chunkDigits;
 	}
 
-	digits = f->digits;
-	if (f->digits > 36) {
+	digits = form->digits;
+	if (form->digits > 36) {
 		digits = 36;
 	}
 
-	temp_r5 = digits - d->sig.length;
-	if (temp_r5 > 0) {
-		var_r6_2 = temp_r5 + 1;
-		while (--var_r6_2 != 0) {
-			*p++ = '0';
+	padDigits = digits - out->sig.length;
+	if (padDigits > 0) {
+		padCount = padDigits + 1;
+		while (--padCount != 0) {
+			*sigWritePtr++ = '0';
 		}
-		exp -= temp_r5;
-		d->sig.length += temp_r5;
+		exp -= padDigits;
+		out->sig.length += padDigits;
 	}
 
-	d->exp = exp;
+	out->exp = exp;
 }
 
 /**
- * @TODO: Documentation
+ * @brief Converts decimal digit/exponent form into a floating-point value.
+ *
+ * Rebuilds significand from decimal chunks, then applies decimal exponent scaling.
  */
-f64 __dec2num(const decimal* d)
+f64 __dec2num(const decimal* dec)
 {
 	f64 num          = 0.0;
-	int sign         = d->sign;
-	int exp          = d->exp;
-	int length       = d->sig.length;
-	char first_digit = d->sig.text[0];
-	f64 temp_f1;
-	f64 var_f2;
-	const f64* p;
-	int ndig;
-	int ival;
-	int i;
-	int var_r5;
-	const u8* s;
+	int sign         = dec->sign;
+	int exp          = dec->exp;
+	int length       = dec->sig.length;
+	char firstDigit  = dec->sig.text[0];
+	f64 firstDigitScale;
+	f64 expScale;
+	const f64* bitScalePtr;
+	int chunkDigits;
+	int chunkValue;
+	int parseCount;
+	int absExp;
+	const u8* sigReadPtr;
 	s32 pad[4];
 
-	if (length < 1 || first_digit == '0') {
+	if (length < 1 || firstDigit == '0') {
 		return 0.0;
-	} else if (first_digit == 'I') {
+	} else if (firstDigit == 'I') {
 		return sign ? -HUGE_VAL : HUGE_VAL;
-	} else if (first_digit == 'N') {
+	} else if (firstDigit == 'N') {
 		return DBL_NAN;
 	}
 
@@ -165,33 +171,34 @@ f64 __dec2num(const decimal* d)
 		exp -= 16;
 	}
 
-	ndig = length % 8;
-	s    = d->sig.text;
-	if (ndig == 0) {
-		ndig = 8;
+	chunkDigits = length % 8;
+	sigReadPtr  = dec->sig.text;
+	if (chunkDigits == 0) {
+		chunkDigits = 8;
 	}
 	exp += length - 1;
-	temp_f1 = pow(ten, length - 1);
+	firstDigitScale = pow(ten, length - 1);
 
-	while (ndig != 0) {
-		ival = 0;
-		i    = ndig + 1;
-		while (--i) {
-			ival = ival * 10 + (*s++ - '0');
+	// Parse decimal text in 8-digit chunks to limit intermediate overflow.
+	while (chunkDigits != 0) {
+		chunkValue = 0;
+		parseCount = chunkDigits + 1;
+		while (--parseCount) {
+			chunkValue = chunkValue * 10 + (*sigReadPtr++ - '0');
 		}
 
-		length -= ndig;
-		num = num * 100000000.0 + ival;
+		length -= chunkDigits;
+		num = num * 100000000.0 + chunkValue;
 		if (length == 0) {
 			break;
 		}
-		ndig = 8;
+		chunkDigits = 8;
 	}
 
-	num    = num / temp_f1;
-	var_r5 = __labs(exp);
-	p      = bit_values;
-	if (var_r5 > 0x1FF) {
+	num    = num / firstDigitScale;
+	absExp = __labs(exp);
+	bitScalePtr = bit_values;
+	if (absExp > 0x1FF) {
 		if (exp < 0) {
 			return 0.0;
 		} else {
@@ -199,28 +206,28 @@ f64 __dec2num(const decimal* d)
 		}
 	}
 
-	var_f2 = 1.0;
-	while (var_r5 != 0) {
-		if (var_r5 & 1) {
-			if (var_f2 > DBL_MAX / *p) {
+	expScale = 1.0;
+	while (absExp != 0) {
+		if (absExp & 1) {
+			if (expScale > DBL_MAX / *bitScalePtr) {
 				return sign ? -HUGE_VAL : HUGE_VAL;
 			}
-			var_f2 *= *p;
+			expScale *= *bitScalePtr;
 		}
-		var_r5 >>= 1;
-		p++;
+		absExp >>= 1;
+		bitScalePtr++;
 	}
 
 	if (exp < 0) {
-		if (num < DBL_MIN * var_f2) {
+		if (num < DBL_MIN * expScale) {
 			return 0.0;
 		}
-		num /= var_f2;
+		num /= expScale;
 	} else if (exp > 0) {
-		if (num > DBL_MAX / var_f2) {
+		if (num > DBL_MAX / expScale) {
 			return sign ? -HUGE_VAL : HUGE_VAL;
 		}
-		num *= var_f2;
+		num *= expScale;
 	}
 
 	return sign ? -num : num;
