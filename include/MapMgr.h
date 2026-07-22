@@ -72,7 +72,7 @@ struct MapShadMatHandler : public MaterialHandler {
 	{
 		// set up a new white material - will be made opaque before use
 		mShadowLightMat = new Material();
-		mShadowLightMat->getColour().set(255, 255, 255, 255); // white
+		mShadowLightMat->colour().set(255, 255, 255, 255); // white
 	}
 
 	/// Sets the current graphics pipeline material to the stored one.
@@ -102,7 +102,7 @@ struct MapProjMatHandler : public MaterialHandler {
 		mProjectionCamera  = nullptr;
 		mProjMat           = new Material();
 		mProjMat->mTexture = tex;
-		mProjMat->getColour().set(128, 128, 128, 32); // very light grey
+		mProjMat->colour().set(128, 128, 128, 32); // very light grey
 	}
 
 	/// Sets the current graphics pipeline material to the stored one.

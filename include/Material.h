@@ -36,7 +36,7 @@ public:
 		mAttribute     = nullptr;
 		mEnvMapTexture = nullptr;
 		mFlags         = MATFLAG_Opaque;
-		getColour().set(0xFF, 0xFF, 0xFF, 0xFF);
+		colour().set(0xFF, 0xFF, 0xFF, 0xFF);
 		mTevInfoIndex   = 0;
 		mDisplayListPtr = nullptr;
 	}
@@ -44,21 +44,33 @@ public:
 	virtual void read(RandomAccessStream&); // _0C
 	virtual void attach();                  // _10
 
-	void setColour(immut Colour& color)
+	void setColour(immut Colour& colour)
 	{
 		if (mLightingInfo.mCtrlFlag & LightingControlFlags::EnableSpecular) {
-			mTevInfo->mTevColRegs[0].mAnimatedColor.r = color.r;
-			mTevInfo->mTevColRegs[0].mAnimatedColor.g = color.g;
-			mTevInfo->mTevColRegs[0].mAnimatedColor.b = color.b;
-			mTevInfo->mTevColRegs[0].mAnimatedColor.a = color.a;
+			mTevInfo->mTevColRegs[0].mAnimatedColor.r = colour.r;
+			mTevInfo->mTevColRegs[0].mAnimatedColor.g = colour.g;
+			mTevInfo->mTevColRegs[0].mAnimatedColor.b = colour.b;
+			mTevInfo->mTevColRegs[0].mAnimatedColor.a = colour.a;
 		} else {
-			mColourInfo.mColour = color;
+			mColourInfo.mColour = colour;
 		}
 	}
 
-	// This function is called `Colour` according to the ILK, but that's confusing, inconsistent with `setColour`,
-	// and an issue for code portability (e.g. "-Wchanges-meaning" in GCC, which is an error without "-fpermissive").
-	Colour& getColour() { return mColourInfo.mColour; }
+	void getColour(Colour& colour) immut
+	{
+		if (mLightingInfo.mCtrlFlag & LightingControlFlags::EnableSpecular) {
+			colour.r = mTevInfo->mTevColRegs[0].mAnimatedColor.r;
+			colour.g = mTevInfo->mTevColRegs[0].mAnimatedColor.g;
+			colour.b = mTevInfo->mTevColRegs[0].mAnimatedColor.b;
+			colour.a = mTevInfo->mTevColRegs[0].mAnimatedColor.a;
+		} else {
+			colour = mColourInfo.mColour;
+		}
+	}
+
+	// This member function is named `Colour` with a capital 'C' according to the ILK, but that's an
+	// issue for code portability e.g. "-Wchanges-meaning" in GCC is an error without "-fpermissive".
+	Colour& colour() { return mColourInfo.mColour; }
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
