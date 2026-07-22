@@ -11,7 +11,7 @@ class Stream;
  *
  * @note Size: 0x8.
  */
-class String {
+class SYSCORE_API String {
 public:
 	String() { init(64); }
 	String(int length) { init(length); }

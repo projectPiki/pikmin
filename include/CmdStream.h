@@ -4,7 +4,7 @@
 #include "Stream.h"
 
 // Lightweight command stream parser built on top of a Stream.
-class CmdStream {
+class SYSCORE_API CmdStream {
 public:
 	CmdStream();
 	CmdStream(Stream* stream);

@@ -5,7 +5,7 @@
 
 class Graphics;
 
-class BoundBox {
+class SYSCORE_API BoundBox {
 public:
 	BoundBox(immut Vector3f& min, immut Vector3f& max)
 	{

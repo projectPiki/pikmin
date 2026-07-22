@@ -7,7 +7,7 @@
 /**
  * @brief TODO
  */
-class MemInfoNode : public CoreNode {
+class SYSCORE_API MemInfoNode : public CoreNode {
 public:
 	MemInfoNode()
 	    : CoreNode("meminfo")

@@ -282,7 +282,7 @@ public:
 /**
  * @brief TODO
  */
-class AnimDck : public AnimData {
+class SYSCORE_API AnimDck : public AnimData {
 public:
 	AnimDck(BaseShape*, int);
 	AnimDck(immut char* name)
@@ -472,7 +472,7 @@ public:
  *
  * @note Size: 0x10.
  */
-class AnimContext {
+class SYSCORE_API AnimContext {
 public:
 	/// Default constructor.
 	AnimContext()
@@ -622,7 +622,7 @@ struct FrameCacher : public CacheInfo {
  *
  * @note Size: 0x18.
  */
-class AnimFrameCacher {
+class SYSCORE_API AnimFrameCacher {
 public:
 	AnimFrameCacher(int);
 	void updateInfo(AnimCacheInfo*);

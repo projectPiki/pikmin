@@ -13,7 +13,7 @@ class VQS;
 /**
  * @brief TODO
  */
-class Node : public CoreNode {
+class SYSCORE_API Node : public CoreNode {
 public:
 	Node(immut char* name = "<Node>")
 	    : CoreNode(name)

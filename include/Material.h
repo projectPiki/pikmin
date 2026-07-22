@@ -25,7 +25,7 @@ enum MaterialFlags {
  * @brief TODO
  * @note Size: 0x9C.
  */
-class Material : public CoreNode {
+class SYSCORE_API Material : public CoreNode {
 public:
 	Material()
 	    : CoreNode("material")
@@ -101,7 +101,7 @@ public:
 /**
  * @brief TODO
  */
-class MaterialHandler {
+class SYSCORE_API MaterialHandler {
 public:
 	MaterialHandler() { mGfx = nullptr; }
 

@@ -18,7 +18,7 @@ class Shape;
  *
  * @note Size: 0x2C.
  */
-class DynCollObject : public Node {
+class SYSCORE_API DynCollObject : public Node {
 public:
 	/// Constructs a collision object with no attached creature.
 	DynCollObject()

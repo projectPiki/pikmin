@@ -13,7 +13,7 @@
  *
  * @note Size: 0x54.
  */
-class GameApp : public BaseApp {
+class SYSCORE_API GameApp : public BaseApp {
 public:
 	/// Trivial with nothing further to delete.
 	virtual ~GameApp() { } // _30 (weak)

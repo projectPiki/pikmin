@@ -38,7 +38,7 @@ public:
 /**
  * @brief TODO
  */
-class CullFrustum {
+class SYSCORE_API CullFrustum {
 public:
 	CullFrustum()
 	{
@@ -152,7 +152,7 @@ public:
  *
  * @note Size: 0x348.
  */
-class Camera : public CullFrustum {
+class SYSCORE_API Camera : public CullFrustum {
 public:
 	Camera();
 
@@ -175,7 +175,7 @@ public:
 /**
  * @brief TODO
  */
-class LightCamera : public Camera {
+class SYSCORE_API LightCamera : public Camera {
 public:
 	LightCamera() { mLightMap = nullptr; }
 
@@ -195,7 +195,7 @@ public:
  * @brief TODO
  * @note Size: 0x3F8.
  */
-class CamDataInfo {
+class SYSCORE_API CamDataInfo {
 public:
 	CamDataInfo();
 

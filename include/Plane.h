@@ -9,7 +9,7 @@
  *
  * @note Size: 0x10.
  */
-class Plane {
+class SYSCORE_API Plane {
 public:
 	Plane() { }
 

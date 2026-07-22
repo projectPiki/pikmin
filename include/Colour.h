@@ -15,7 +15,7 @@
 /**
  * @brief TODO
  */
-class Colour {
+class SYSCORE_API Colour {
 public:
 	Colour() { }
 

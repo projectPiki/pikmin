@@ -36,7 +36,7 @@ public:
  *
  * @note Size: 0x10.
  */
-class Font {
+class SYSCORE_API Font {
 public:
 	void setTexture(Texture*, int, int);
 	int charToIndex(char);
