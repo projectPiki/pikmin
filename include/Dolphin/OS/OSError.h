@@ -23,6 +23,22 @@ void __OSUnhandledException(__OSException exception, OSContext* context, u32 dsi
 void OSReport(const char* message, ...);
 void OSPanic(const char* file, int line, const char* message, ...);
 
+#if defined(_MSC_VER) && _MSC_VER < 1400
+
+// For Pikmin 1: plugPiki.dll undeniably used Dolphin OS in some capacity, as
+// the symbol `void __cdecl OSf32tos16(float *,__int16 *)` can be found in its
+// ILK.  Conflictingly, plugPiki.dll was built using MSVC 6.0 (released 1998),
+// which predates variadic macros (a feature of C99).  Defining a macro with
+// variadic arguments is a compile-time error, so we need some kind of fallback.
+
+#define OSErrorLine(line, message) OSPanic(__FILE__, line, message)
+#define OSError(message)           OSErrorLine(__LINE__, message)
+
+#define OSAssertMsgLine(line, cond, message) ((void)((cond) || (OSErrorLine(line, __VA_ARGS__), 0)))
+#define OSAssertMsg(cond, message)           OSAssertMsgLine(__LINE__, cond, message)
+
+#else
+
 #define OSErrorLine(line, ...) OSPanic(__FILE__, line, __VA_ARGS__)
 #define OSError(...)           OSErrorLine(__LINE__, __VA_ARGS__)
 
@@ -33,6 +49,9 @@ void OSPanic(const char* file, int line, const char* message, ...);
 #endif
 
 #define OSAssertMsg(cond, ...)   OSAssertMsgLine(__LINE__, cond, __VA_ARGS__)
+
+#endif
+
 #define OSAssertLine(line, cond) OSAssertMsgLine(line, cond, "Failed assertion " #cond)
 #define OSAssert(cond)           OSAssertLine(__LINE__, cond)
 

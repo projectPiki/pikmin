@@ -147,7 +147,7 @@ static void* playbackFunc(void*)
 struct MovSampleSetupSection : public Node {
 	MovSampleSetupSection()
 	{
-		mName       = "MovSample section";
+		setName("MovSample section");
 		mController = new Controller(1);
 #if defined(VERSION_GPIJ01) || defined(VERSION_DPIJ01_PIKIDEMO)
 #else
@@ -160,11 +160,12 @@ struct MovSampleSetupSection : public Node {
 			"../MovieData/cntA_S.h4m", "../MovieData/cntB_S.h4m", "../MovieData/cntC_S.h4m",
 			"../MovieData/cntD_S.h4m", "../MovieData/sr_S.h4m",   "../MovieData/srhp_S.h4m",
 		};
+#if PIKI_USE_JAUDIO
 		int movieBufferSize = 0xe00000;
 		u8* movieBuffer     = new (0x20) u8[movieBufferSize];
 		Jac_StreamMovieInit(movieNames[gameflow.mCurrIntroMovieID], movieBuffer, movieBufferSize);
-		ImgW      = 640;
-		ImgH      = 480;
+		ImgW                = 640;
+		ImgH                = 480;
 		int yuvBufferSize   = 0x70800;
 		mYuvFrameBuffers[0] = new (0x20) u8[yuvBufferSize];
 		mYuvFrameBuffers[1] = new (0x20) u8[yuvBufferSize];
@@ -178,6 +179,7 @@ struct MovSampleSetupSection : public Node {
 		               0x14, OS_THREAD_ATTR_DETACH);
 		finishPlayback = false;
 		OSResumeThread(&playbackThread);
+#endif
 	}
 
 	virtual void update() // _10 (weak)
@@ -308,11 +310,13 @@ struct MovSampleSetupSection : public Node {
 	// not in the DLL, but needed for stack ordering
 	void setTevColors()
 	{
+#if PIKI_USE_DGX
 		GXSetTevColorS10(GX_TEVREG0, (GXColorS10) { -111, 0, -138, 68 });
 		GXSetTevKColor(GX_KCOLOR0, (GXColor) { 102, 0, 255, 50 });
 		GXSetTevKColor(GX_KCOLOR1, (GXColor) { 148, 0, 148, 148 });
 		GXSetTevKColor(GX_KCOLOR2, (GXColor) { 203, 0, 5, 207 });
 		GXSetTevKColor(GX_KCOLOR3, (GXColor) { 0, 255, 0, 0 });
+#endif
 	}
 
 	// _00     = VTBL

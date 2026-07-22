@@ -24,8 +24,14 @@ static s16 LinePointR[32] ATTRIBUTE_ALIGN(32) = { 0 };
 static s16 LinePointY[32] ATTRIBUTE_ALIGN(32) = { 0 };
 
 // day 1 graph points
-static s16 ogawa_per_line[]                                        = { 1, 1, 2, 3, 10, 12, 12, 13, 13, 14, 19, 20, 22 };
-static u32 og_piki_lines_color[PikiColorCount] ATTRIBUTE_ALIGN(32) = { 0x00C0FFFF, 0xFF0000FF, 0xFFFF00FF };
+static s16 ogawa_per_line[] = {
+	1, 1, 2, 3, 10, 12, 12, 13, 13, 14, 19, 20, 22,
+};
+static u8 og_piki_lines_color[PikiColorCount][4] ATTRIBUTE_ALIGN(32) = {
+	{ 000, 192, 255, 255 }, // Blue
+	{ 255, 000, 000, 255 }, // Red
+	{ 255, 255, 000, 255 }, // Yellow
+};
 
 /**
  * @todo: Documentation
@@ -227,7 +233,7 @@ void ogGraphMgr::MakeData()
  */
 static void setGraphGX(void* vertexData, int pikminColor, u8 alpha)
 {
-	u32 graphColor = og_piki_lines_color[pikminColor];
+	u32 graphColor = reinterpret_cast<u32&>(og_piki_lines_color[pikminColor]);
 
 	// Mask out existing alpha and replace it
 	graphColor &= 0xFFFFFF00;
@@ -272,7 +278,7 @@ static void setGraphGX(void* vertexData, int pikminColor, u8 alpha)
 		GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XY, GX_RGBA4, 0);
 		GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_POS_XYZ, GX_RGBA8, 0);
 		GXSetArray(GX_VA_POS, vertexData, sizeof(u32));
-		GXSetArray(GX_VA_CLR0, &og_piki_lines_color, 4);
+		GXSetArray(GX_VA_CLR0, og_piki_lines_color, sizeof(og_piki_lines_color[0]));
 		GXSetLineWidth(0x12, GX_TO_ZERO);
 		GXBegin(GX_LINESTRIP, GX_VTXFMT0, hours);
 

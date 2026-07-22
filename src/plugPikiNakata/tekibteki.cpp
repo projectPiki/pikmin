@@ -175,9 +175,9 @@ bool BTeki::isPellet(int objType)
 /**
  * @todo: Documentation
  */
-f32 BTeki::calcCircleDistanceStatic(immut Vector3f& pos1, f32 rad1, immut Vector3f& pos2, f32 rad2)
+f32 BTeki::calcCircleDistanceStatic(immut Vector3f& pos1, f32 radius1, immut Vector3f& pos2, f32 radius2)
 {
-	return qdist2(pos1.x, pos1.z, pos2.x, pos2.z) - rad1 - rad2;
+	return qdist2(pos1.x, pos1.z, pos2.x, pos2.z) - radius1 - radius2;
 }
 
 /**
@@ -191,9 +191,9 @@ bool BTeki::alwaysUpdatePlatform()
 /**
  * @todo: Documentation
  */
-f32 BTeki::calcSphereDistanceStatic(immut Vector3f& pos1, f32 rad1, immut Vector3f& pos2, f32 rad2)
+f32 BTeki::calcSphereDistanceStatic(immut Vector3f& pos1, f32 radius1, immut Vector3f& pos2, f32 radius2)
 {
-	return pos1.distance(pos2) - rad1 - rad2;
+	return pos1.distance(pos2) - radius1 - radius2;
 }
 
 /**
@@ -965,7 +965,7 @@ void BTeki::spawnWaters(int count)
  */
 void BTeki::spawnCorpseParts()
 {
-	return getStrategy()->spawnCorpseParts(*static_cast<Teki*>(this));
+	getStrategy()->spawnCorpseParts(*static_cast<Teki*>(this));
 }
 
 /**

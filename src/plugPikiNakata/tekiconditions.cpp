@@ -214,11 +214,14 @@ bool TekiVisibleHeightCondition::satisfy(Creature* target) immut
  */
 bool TekiLowerCondition::satisfy(Creature* target) immut
 {
+	TekiAndCondition NRef condition
+	    = TekiAndCondition(stack_new(TekiLowerRangeCondition)(mTeki), stack_new(TekiNotCondition)(stack_new(TekiStickerCondition)(mTeki)));
+	return condition.satisfy(target);
+
 	// fucking amazing work nakata.
-	return TekiAndCondition(stack_new(TekiLowerRangeCondition)(mTeki), stack_new(TekiNotCondition)(stack_new(TekiStickerCondition)(mTeki)))
-	    .satisfy(target);
-	return TekiAndCondition(stack_new(TekiLowerRangeCondition)(mTeki), stack_new(TekiNotCondition)(stack_new(TekiStickerCondition)(mTeki)))
-	    .satisfy(target);
+	TekiAndCondition(nullptr, nullptr);
+	TekiAndCondition(nullptr, nullptr);
+	TekiNotCondition(nullptr);
 }
 
 /**

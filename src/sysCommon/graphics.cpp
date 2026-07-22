@@ -901,16 +901,16 @@ void Graphics::cacheShape(BaseShape* shape, ShapeDynMaterials* mats)
 	Vector3f pos(shape->getAnimMatrix(0).mMtx[0][3], shape->getAnimMatrix(0).mMtx[1][3], shape->getAnimMatrix(0).mMtx[2][3]);
 	cache->mDistanceFromOrigin = pos.length();
 
-	bool far = false;
+	bool insertHappened = false;
 	for (CachedShape* i = mShapeCache.mPrev; i != &mShapeCache; i = i->mPrev) {
 		if (cache->mDistanceFromOrigin >= i->mDistanceFromOrigin) {
 			i->insertAfter(cache);
-			far = true;
+			insertHappened = true;
 			break;
 		}
 	}
 
-	if (!far) {
+	if (!insertHappened) {
 		mShapeCache.insertAfter(cache);
 	}
 

@@ -955,7 +955,7 @@ public:
 	void setActiveMapNo(WorldMapName id)
 	{
 		int curr, max;
-		if (id == WM_NULL) {
+		if (id == WM_NONE) {
 			max = curr = 0;
 		} else if (playerState) {
 			switch (id) {
@@ -1085,7 +1085,7 @@ public:
 	void init() { }
 	void update() { }
 
-	void close() { setActiveMapNo(WM_NULL); }
+	void close() { setActiveMapNo(WM_NONE); }
 
 protected:
 	void setDisplayParts(int max, int curr)
@@ -1865,7 +1865,7 @@ public:
 
 	WorldMapName getSelectCourseNumber()
 	{
-		WorldMapName id = WM_NULL;
+		WorldMapName id = WM_NONE;
 		if (mSelectedPoint) {
 			id = mSelectedPoint->getNumber();
 		}

@@ -977,6 +977,7 @@ void zen::particleGenerator::drawPtclBillboard(Graphics& gfx)
  */
 void zen::particleGenerator::drawPtclOriented(Graphics& gfx)
 {
+#if PIKI_USE_DGX
 	gfx.setBlendMode(mBlendFactor, mZMode, mAnimData.mBlendMode);
 	GXSetCullMode(GX_CULL_NONE);
 	GXClearVtxDesc();
@@ -1121,6 +1122,9 @@ void zen::particleGenerator::drawPtclOriented(Graphics& gfx)
 			GXTexCoord2u8(3, 3);
 		}
 	}
+#else
+	drawPtclBillboard(gfx);
+#endif
 }
 
 /**

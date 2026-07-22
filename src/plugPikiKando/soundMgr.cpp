@@ -9,10 +9,10 @@
 #include "jaudio/piki_player.h"
 #include "jaudio/pikiinter.h"
 #include "jaudio/verysimple.h"
-#include "math.h"
 #include "sysMath.h"
 #include "sysNew.h"
 #include "timers.h"
+#include <math.h>
 
 /// Global sound effect system manager object.
 SeSystem* seSystem;

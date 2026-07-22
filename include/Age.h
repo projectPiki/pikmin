@@ -18,6 +18,7 @@
 #define AGE_CMD_NEW_NODE          (101)
 #define AGE_CMD_NEW_EDITOR        (102)
 #define AGE_CMD_NEW_PROP_WINDOW   (104)
+#define AGE_CMD_END_NODE          (200) // The same value as AGE_CMD_DONE?
 #define AGE_CMD_NEW_VIEWER        (107)
 #define AGE_CMD_NEW_LABEL         (108)
 #define AGE_CMD_START_SECTION     (300)

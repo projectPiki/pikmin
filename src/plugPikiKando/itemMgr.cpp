@@ -326,10 +326,8 @@ ObjectMgr* ItemMgr::getMgr(int objType)
  */
 int ItemMgr::getPikiNum()
 {
-	Iterator iter(itemMgr->getPikiHeadMgr(), nullptr);
-	// This is the only way I can match this function by size.
-	// Does MSVC debug automatically zero-initialize integers?
-	int count TERNARY_BUGFIX(= 0, );
+	Iterator iter(getPikiHeadMgr(), nullptr);
+	int count = 0;
 	CI_LOOP(iter)
 	{
 		if ((*iter)->mObjType == OBJTYPE_Pikihead) {
