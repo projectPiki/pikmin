@@ -68,7 +68,7 @@ struct PikiStateMachine : public StateMachine<Piki> {
 class PikiState : public AState<Piki> {
 public:
 	PikiState(int stateID, immut char* name)
-	    : AState(stateID)
+	    : AState<Piki>(stateID)
 	{
 		setName(name);
 	}

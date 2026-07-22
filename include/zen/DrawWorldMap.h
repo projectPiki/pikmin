@@ -35,7 +35,7 @@ struct WorldMapTitleObj;
  * @note Use mapNoGame2Scr to convert to WorldMapScreenID
  */
 enum WorldMapName {
-	WM_NULL     = -1,
+	WM_NONE     = -1,
 	WM_START    = 0,
 	WM_Practice = WM_START, // 0, Impact Site
 	WM_Forest,              // 1, Forest of Hope

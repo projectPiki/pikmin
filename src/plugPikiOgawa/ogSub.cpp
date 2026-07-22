@@ -25,10 +25,10 @@ DEFINE_PRINT("OgSubSection");
 namespace zen {
 static char workString[0x400];
 
-static char wkstr[0x400]      = {};
-static char numStrBuf[0x100]  = {};
-static char formatStr[0x100]  = {};
-static int SpecialNumber[100] = {};
+static char wkstr[0x400]      = { 0 };
+static char numStrBuf[0x100]  = { 0 };
+static char formatStr[0x100]  = { 0 };
+static int SpecialNumber[100] = { 0 };
 
 /**
  * @todo: Documentation

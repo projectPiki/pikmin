@@ -80,6 +80,9 @@ struct DVDStream : public RandomAccessStream {
 System sys;
 
 static bool useSymbols = false;
+#if defined(WIN32)
+SYSCORE_API HWND sysCurrWnd;
+#endif
 SYSCORE_API System* gsys = nullptr;
 SYSCORE_API Stream* sysCon;
 SYSCORE_API Stream* errCon;

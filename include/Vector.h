@@ -2,9 +2,9 @@
 #define _VECTOR3F_H
 
 #include "Stream.h"
-#include "math.h"
 #include "sysMath.h"
 #include "types.h"
+#include <math.h>
 
 class AgeServer;
 class Matrix3f;

@@ -63,6 +63,9 @@ SYSCORE_API f32 qdist3(f32 x0, f32 y0, f32 z0, f32 x1, f32 y1, f32 z1);
 
 inline f32 speedy_sqrtf(f32 x)
 {
+#if defined(WIN32)
+	return sqrtf(x);
+#else
 	vf32 y;
 	if (x > 0.0f) {
 
@@ -71,6 +74,7 @@ inline f32 speedy_sqrtf(f32 x)
 		return y;
 	}
 	return x;
+#endif
 }
 
 #endif // _SYSMATH_H

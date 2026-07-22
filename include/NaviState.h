@@ -59,7 +59,7 @@ enum NaviStateID {
 class NaviState : public AState<Navi> {
 public:
 	inline NaviState(int stateID)
-	    : AState(stateID)
+	    : AState<Navi>(stateID)
 	{
 	}
 
@@ -246,7 +246,7 @@ public:
 	 */
 	struct DemoState : public AState<NaviDemoSunsetState> {
 		inline DemoState(int stateID)
-		    : AState(stateID)
+		    : AState<NaviDemoSunsetState>(stateID)
 		{
 		}
 

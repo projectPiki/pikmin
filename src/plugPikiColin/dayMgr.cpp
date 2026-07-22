@@ -386,12 +386,12 @@ public:
 	 * @param font Font to use when rendering the menu.
 	 * @param alignToParentItem Whether to align this menu's vertical position to its parent item's position.
 	 */
-	FogMenu(Colour* colour, f32* near, f32* far, Controller* controller, Font* font, bool alignToParentItem)
+	FogMenu(Colour* colour, f32* nearDist, f32* farDist, Controller* controller, Font* font, bool alignToParentItem)
 	    : Menu(controller, font, alignToParentItem)
 	{
 		// set pointers and basic menu settings
-		mNear               = near;
-		mFar                = far;
+		mNear               = nearDist;
+		mFar                = farDist;
 		mLabelAlignmentType = Menu::LabelAlignmentType::LeftAligned;
 		mCenterPoint.mMinX  = glnWidth / 2;
 		mCenterPoint.mMinY  = glnHeight / 2;
@@ -404,7 +404,7 @@ public:
 
 		// near-dist option
 		char* str = new char[0x40];
-		sprintf(str, "Near = %.2f", *near);
+		sprintf(str, "Near = %.2f", *nearDist);
 		addOption(0, str, nullptr);
 		addKeyEvent(KeyEventType::OnFocusGained, KBBTN_NONE, new Delegate1<FogMenu, Menu&>(this, &FogMenu::menuEnterNear));
 		addKeyEvent(KeyEventType::WhileInputHeld, KBBTN_Y, new Delegate1<FogMenu, Menu&>(this, &FogMenu::menuDecrease));
@@ -412,7 +412,7 @@ public:
 
 		// far-dist option
 		str = new char[0x40];
-		sprintf(str, "Far = %.2f", *far);
+		sprintf(str, "Far = %.2f", *farDist);
 		addOption(0, str, nullptr);
 		addKeyEvent(KeyEventType::OnFocusGained, KBBTN_NONE, new Delegate1<FogMenu, Menu&>(this, &FogMenu::menuEnterFar));
 		addKeyEvent(KeyEventType::WhileInputHeld, KBBTN_Y, new Delegate1<FogMenu, Menu&>(this, &FogMenu::menuDecrease));
@@ -1286,12 +1286,12 @@ void DayMgr::init(CmdStream* cmds)
 							sscanf(cmds->getToken(true), "%d", &a);
 							mTimeSettings[settingType].mFogColour.set(r, g, b, a);
 						} else if (cmds->isToken("dist")) {
-							f32 near;
-							sscanf(cmds->getToken(true), "%f", &near);
-							f32 far;
-							sscanf(cmds->getToken(true), "%f", &far);
-							mTimeSettings[settingType].mFogNear = near;
-							mTimeSettings[settingType].mFogFar  = far;
+							f32 nearDist;
+							sscanf(cmds->getToken(true), "%f", &nearDist);
+							f32 farDist;
+							sscanf(cmds->getToken(true), "%f", &farDist);
+							mTimeSettings[settingType].mFogNear = nearDist;
+							mTimeSettings[settingType].mFogFar  = farDist;
 						}
 					}
 					if (!cmds->endOfCmds()) {

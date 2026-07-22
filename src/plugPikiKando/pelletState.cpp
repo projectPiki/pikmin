@@ -68,7 +68,7 @@ void PelletUfoLoadState::exec(Pellet* pelt)
 
 	Vector3f pos(pelt->mSRT.t);
 	pelt->mSRT.t.y = mapMgr->getMinY(pos.x, pos.z, true);
-	PRINT("setting ufo parts(%s) : y=%f\n", pelt->mConfig->mName, pelt->mSRT.t.y);
+	PRINT("setting ufo parts(%s) : y=%f\n", pelt->mConfig->mModelId.mStringID, pelt->mSRT.t.y);
 }
 
 /**

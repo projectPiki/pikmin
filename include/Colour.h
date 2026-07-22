@@ -1,6 +1,7 @@
 #ifndef _COLOUR_H
 #define _COLOUR_H
 
+#include "Age.h"
 #include "Stream.h"
 #include "types.h"
 

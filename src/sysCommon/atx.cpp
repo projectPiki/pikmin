@@ -73,27 +73,7 @@ void AtxStream::write(immut void* buffer, int count)
 	router->unlock();
 }
 
-/**
- * @brief Unlocks the communication route.
- * @details Empty virtual function to be overridden in an AtxRouter implementation.
- * @note UNUSED Size: 000004
- */
-#ifdef WIN32
-void AtxRouter::unlock()
-{
-}
-#endif
-
-/**
- * @brief Locks the communication route.
- * @details Empty virtual function to be overridden in an AtxRouter implementation.
- * @note UNUSED Size: 000004
- */
-#ifdef WIN32
-void AtxRouter::lock()
-{
-}
-#endif
+// `AtxRouter::unlock` and `AtxRouter::lock` spawn here in the DOL because they were just used for the first time.
 
 /**
  * @brief Reads data from the stream.
