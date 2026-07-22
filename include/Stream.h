@@ -12,7 +12,7 @@ class String;
  *
  * Size: 0x8.
  */
-class Stream {
+class SYSCORE_API Stream {
 public:
 	Stream() { }
 
@@ -135,7 +135,7 @@ public:
 /**
  * @brief TODO
  */
-class RamStream : public RandomAccessStream {
+class SYSCORE_API RamStream : public RandomAccessStream {
 public:
 	inline RamStream(void* buffer, int size)
 	{
@@ -167,7 +167,7 @@ public:
 	int mLength;       // _10
 };
 
-extern Stream* sysCon;
-extern Stream* errCon;
+extern SYSCORE_API Stream* sysCon;
+extern SYSCORE_API Stream* errCon;
 
 #endif

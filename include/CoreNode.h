@@ -11,7 +11,7 @@ class RandomAccessStream;
  *
  * @note Size: 0x14.
  */
-class CoreNode : public ANode {
+class SYSCORE_API CoreNode : public ANode {
 public:
 	/**
 	 * @brief Constructs a CoreNode object with the specified name.

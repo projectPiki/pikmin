@@ -11,7 +11,7 @@
 /**
  * @brief TODO
  */
-class FntobjInfo : public GfxobjInfo {
+class SYSCORE_API FntobjInfo : public GfxobjInfo {
 public:
 	FntobjInfo() { mFont = nullptr; }
 

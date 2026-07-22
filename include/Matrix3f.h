@@ -10,7 +10,7 @@
  *
  * @note Size: 0x24.
  */
-class Matrix3f {
+class SYSCORE_API Matrix3f {
 public:
 	enum mode {
 		MODE_Unk0 = 0,

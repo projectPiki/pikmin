@@ -49,6 +49,24 @@ typedef int BOOL;
 #undef FALSE
 #define FALSE (0)
 
+// When compiling sysCore.dll under MSVC, we define the macro `SYSCORE_EXPORTS` to
+// seamlessly make the switch from `dllimport` to `dllexport` across the codebase.
+//
+// `__declspec(dllimport)` is what makes the compiler emit IAT-indirect symbols prefixed
+// with `__imp_`.  It's an ongoing TODO to catch all of the places where the `SYSCORE_API`
+// decorator is needed, but many of the hot exported types are already taken care of.  If
+// you are nonmatching due to `call [__imp_...]` or `mov r,[__imp_...]`, we missed a spot.
+#if defined(_MSC_VER)
+#if defined(SYSCORE_EXPORTS)
+#define SYSCORE_API __declspec(dllexport)
+#else
+#define SYSCORE_API __declspec(dllimport)
+#endif
+#else
+// On MetroWerks, everything was statically linked, so this macro expands to nothing.
+#define SYSCORE_API
+#endif
+
 // Here we check if the decomp build system is configured for a non-matching build, and define `BUILD_MATCHING` if it is not.
 // Please do not use the `DTK_CONFIG_NONMATCHING` macro for any other purpose, and instead check if the the `BUILD_MATCHING`
 // macro is defined.  This is to ensure the codebase doesn't require any preprocessor macros to be defined by the build system.

@@ -9,7 +9,7 @@ class RandomAccessStream;
 /**
  * @brief A 32-bit identifier often treated as four characters.
  */
-class ID32 {
+class SYSCORE_API ID32 {
 public:
 	ID32();
 	ID32(u32 id);

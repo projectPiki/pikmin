@@ -55,7 +55,7 @@ enum PROP_TYPE {
 
 class Colour;
 
-class AgeServer : public AtxStream {
+class SYSCORE_API AgeServer : public AtxStream {
 public:
 	AgeServer() { }
 

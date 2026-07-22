@@ -113,7 +113,7 @@ public:
  *
  * @note Size: 0x10.
  */
-class ShapeDynMaterials {
+class SYSCORE_API ShapeDynMaterials {
 public:
 	/// Constructs an empty animated material container with no connections.
 	ShapeDynMaterials()
@@ -250,7 +250,7 @@ enum {
 /**
  * @brief TODO
  */
-class BaseShape : public CoreNode {
+class SYSCORE_API BaseShape : public CoreNode {
 public:
 	BaseShape();
 

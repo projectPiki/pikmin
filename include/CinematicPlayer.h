@@ -95,7 +95,7 @@ enum CinPlayBackMode {
  *
  * @note Size: 0x30.
  */
-class SceneData : public CoreNode {
+class SYSCORE_API SceneData : public CoreNode {
 public:
 	SceneData()
 	    : CoreNode("")

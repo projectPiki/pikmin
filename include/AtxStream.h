@@ -112,7 +112,7 @@ public:
  *
  * @note Size: 0x10.
  */
-class AtxStream : public Stream {
+class SYSCORE_API AtxStream : public Stream {
 public:
 	AtxStream() { init(); }
 
@@ -136,7 +136,7 @@ public:
  * @brief ATX command stream for handling incoming commands.
  * @details Used by PlugPikiApp to process commands from a connected ATX server.
  */
-class AtxCommandStream : public AtxStream {
+class SYSCORE_API AtxCommandStream : public AtxStream {
 public:
 	AtxCommandStream(BaseApp* app)
 	    : mParentApp(app)
@@ -153,7 +153,7 @@ public:
 /**
  * @brief Wrapper for handling file operations over the ATX protocol.
  */
-class AtxFileStream : public RandomAccessStream {
+class SYSCORE_API AtxFileStream : public RandomAccessStream {
 public:
 	virtual void read(void*, int);        // _3C
 	virtual void write(immut void*, int); // _40
