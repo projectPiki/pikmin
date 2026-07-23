@@ -30,11 +30,11 @@ public:
 		mPelletNum   = pellets;
 	}
 
-	s16 mMinPikiNum;  // _00
-	s16 mMaxPikiNum;  // _02
-	s16 mDeadPikiNum; // _04
-	s16 mDeadTekiNum; // _06
-	s16 mPelletNum;   // _08
+	short mMinPikiNum;  // _00
+	short mMaxPikiNum;  // _02
+	short mDeadPikiNum; // _04
+	short mDeadTekiNum; // _06
+	short mPelletNum;   // _08
 };
 
 /**

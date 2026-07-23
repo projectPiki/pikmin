@@ -1104,7 +1104,7 @@ void MemoryCard::delFile(CardQuickInfo& target)
 /**
  * @todo: Documentation
  */
-int MemoryCard::doFormatCard()
+s32 MemoryCard::doFormatCard()
 {
 	PRINT("*-----------------------------------------------------------*\n");
 	PRINT("Formatting memory card ....\n");

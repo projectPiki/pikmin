@@ -179,15 +179,15 @@ struct ogMsgCtrlTagMgr {
 public:
 	ogMsgCtrlTagMgr();
 
-	bool CheckCtrlTag(immut char*, s16*, f32*);
+	bool CheckCtrlTag(immut char*, short*, f32*);
 
 private:
-	char mOnesWaitChar[8];                                  // _00
-	char mTensWaitChar[8];                                  // _08
+	char mOnesWaitChar[8];                               // _00
+	char mTensWaitChar[8];                               // _08
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01) //
-#else                                                       //
+#else                                                    //
 	char mHankakuWaitChars[8]; // _10
-#endif                                                      //
+#endif                                                   //
 };
 
 /**
@@ -234,7 +234,7 @@ private:
 	char* mTextPtr;               // _0C
 	char mTextBuf[0x400];         // _10
 	f32 mTypeTimer;               // _410
-	s16 mCharIndex;               // _414
+	short mCharIndex;             // _414
 };
 
 // global utility functions

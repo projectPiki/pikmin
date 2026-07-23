@@ -53,7 +53,7 @@ struct ogSaveMgr {
 	void draw(Graphics&);
 
 	// unused/inlined:
-	void startDirectSave(s16);
+	void startDirectSave(short);
 
 	bool isFileMode() { return mFileChkSelected; }
 

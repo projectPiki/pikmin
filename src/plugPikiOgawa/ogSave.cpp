@@ -127,7 +127,7 @@ void zen::ogSaveMgr::start()
  * @todo: Documentation
  * @note UNUSED Size: 000138
  */
-void zen::ogSaveMgr::startDirectSave(s16 state)
+void zen::ogSaveMgr::startDirectSave(short state)
 {
 	start();
 	mStatus          = PreparingSave;

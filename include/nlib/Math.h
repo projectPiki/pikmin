@@ -143,7 +143,7 @@ struct NMathI {
 	static bool checkBit(int flag, int bit) { return (flag & bit); }
 };
 
-extern u16 atan(f32 x, f32 y);
+extern unsigned short atan(f32 x, f32 y);
 
 extern u16 AtanTable[1025];
 

@@ -564,14 +564,14 @@ protected:
  */
 class PCRData : public zenList {
 public:
-	PCRData(immut char* name, u32 bufSize) { pmSet(name, bufSize); }
+	PCRData(immut char* name, unsigned int bufSize) { pmSet(name, bufSize); }
 
 	immut char* getName() { return mName; }
 	u8* getDataBuf() { return mDataBuf; }
 
 protected:
 	// DLL inlines to do:
-	u8* pmSet(immut char* name, u32 bufSize)
+	u8* pmSet(immut char* name, unsigned int bufSize)
 	{
 		mName    = StdSystem::stringDup(name);
 		mDataBuf = new (0x20) u8[bufSize];

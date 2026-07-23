@@ -34,7 +34,7 @@ struct ogScrMapMgr {
 
 	ogScrMapMgr();
 
-	void start(s16);
+	void start(short);
 	MapStatus update(Controller*);
 	void draw(Graphics&);
 
