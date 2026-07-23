@@ -66,7 +66,8 @@ public:
 	 */
 	struct Parms : public Parameters {
 		inline Parms()
-		    : mKingWalkSpeed(this, 60.0f, 0.0f, 0.0f, "o00", "歩く速さ")
+		    : Parameters("King::Parms")
+		    , mKingWalkSpeed(this, 60.0f, 0.0f, 0.0f, "o00", "歩く速さ")
 		    , mWalkingTurnSpeed(this, 0.5f, 0.0f, 0.0f, "o01", "歩行中の旋回")
 		    , mTurningTurnSpeed(this, 0.5f, 0.0f, 0.0f, "o02", "ターン中の旋回")
 		    , mAttackDistance(this, 180.0f, 0.0f, 0.0f, "p00", "攻撃距離")
@@ -181,7 +182,8 @@ public:
 	 * @brief KingBack genuinely doesn't have any specific properties, but still needs this. Go figure.
 	 */
 	struct Parms : public Parameters {
-		inline Parms() // TODO
+		inline Parms()
+		    : Parameters("kingback::Parms")
 		{
 		}
 

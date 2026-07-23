@@ -28,7 +28,8 @@ public:
 	 * @note Offset comments are relative to CoreNucleusProp for ease of use.
 	 */
 	struct Parms : public Parameters {
-		inline Parms() // TODO
+		inline Parms()
+		    : Parameters("corenucleus::Parms")
 		{
 		}
 

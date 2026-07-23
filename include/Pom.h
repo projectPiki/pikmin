@@ -26,7 +26,8 @@ public:
 	 */
 	struct Parms : public Parameters {
 		inline Parms() // TODO
-		    : mSquashAmount(this, 0.2f, 0.0f, 0.0f, "s00", "くっつきバネ(init)")
+		    : Parameters("pom::Parms")
+		    , mSquashAmount(this, 0.2f, 0.0f, 0.0f, "s00", "くっつきバネ(init)")
 		    , mSquashPersistence(this, 0.5f, 0.0f, 0.0f, "s01", "くっつきバネ(cont)")
 		    , mSquashMultiplier(this, 0.15f, 0.0f, 0.0f, "s02", "くっつきバネ(power)")
 		    , mCloseWaitTime(this, 10.0f, 0.0f, 0.0f, "p00", "花を閉じる時間")

@@ -22,7 +22,8 @@ struct AIConstant : public Node {
 	 */
 	struct Parms : public Parameters {
 		inline Parms()
-		    : mGravity(this, 550.0f, 0.0f, 0.0f, "p00", "じゅうりょく")
+		    : Parameters("AI::Parms")
+		    , mGravity(this, 550.0f, 0.0f, 0.0f, "p00", "じゅうりょく")
 		    , _34(this, 1, 0, 0, "p01", "ピキ：オートアタック")
 		    , _44(this, 1, 0, 0, "p02", "ピキ：オート抜き手伝い")
 		    , _54(this, 0, 0, 0, "p03", "ナビ：抜きキャンセル")

@@ -397,7 +397,8 @@ public:
 
 		/// Constructor. Default values are overwritten on file read.
 		Parms()
-		    : mFlags(this, 2, 0, 0, "p00", "flags")
+		    : Parameters("AnimInfoParms")
+		    , mFlags(this, 2, 0, 0, "p00", "flags")
 		    , mSpeed(this, 30.0f, 0.0f, 0.0f, "spd", "speed")
 		{
 		}
@@ -568,7 +569,8 @@ public:
 
 		/// Constructor. Default values are overwritten on file read.
 		Parms()
-		    : mFlags(this, 2, 0, 0, "a00", "flags")
+		    : Parameters("AnimMgr Parms")
+		    , mFlags(this, 2, 0, 0, "a00", "flags")
 		    , mBasePath(this, String("base dir", 0), String("", 0), String("", 0), "a01", "baseAnimDir")
 		{
 		}

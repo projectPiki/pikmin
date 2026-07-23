@@ -82,23 +82,17 @@ struct BaseParm {
  */
 class Parameters {
 public:
-#ifdef WIN32
 	/**
-	 * @brief Constructs an empty (named) parameters list (DLL only).
+	 * @brief Constructs an empty parameters list.
 	 * @param name Name for this collection of parameters.
 	 */
 	Parameters(immut char* name)
-	    : mFirstParm(nullptr)
 	{
+		mFirstParm = nullptr;
+#if defined(WIN32)
 		mName = name;
-	}
-#else
-	/// Constructs an empty parameters list (DOL only).
-	Parameters()
-	    : mFirstParm(nullptr)
-	{
-	}
 #endif
+	}
 
 	void write(RandomAccessStream&);
 	void read(RandomAccessStream&);
@@ -162,6 +156,10 @@ struct Parm : public BaseParm {
 };
 
 // For some reason, giving `CreatureProp::Parms` its parameter strings messes up matching.
-#define MATCHING_PARM_NAME(name) TERNARY_BUILD_MATCHING(nullptr, name)
+#if defined(BUILD_MATCHING) && !defined(WIN32)
+#define MATCHING_PARM_NAME(name) nullptr
+#else
+#define MATCHING_PARM_NAME(name) name
+#endif
 
 #endif
