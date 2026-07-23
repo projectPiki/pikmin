@@ -152,7 +152,7 @@ void zen::ogScrDiaryMgr::start(s16 a1, s16 day)
  * @todo: Documentation
  * @note UNUSED Size: 00009C
  */
-void zen::ogScrDiaryMgr::setDiarySpecialNumber(s16 day)
+void zen::ogScrDiaryMgr::setDiarySpecialNumber(short day)
 {
 	int partsDay = 77;
 	int daysleft = MAX_DAYS - day;
@@ -298,7 +298,7 @@ void zen::ogDrawDiary::setOffset()
 /**
  * @todo: Documentation
  */
-void zen::ogDrawDiary::open(f32 a1, f32 a2, s16 day)
+void zen::ogDrawDiary::open(f32 a1, f32 a2, short day)
 {
 	mDiaryMgr->setDiarySpecialNumber(day);
 	if (mStatus != Closed) {

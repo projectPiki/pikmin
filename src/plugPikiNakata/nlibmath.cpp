@@ -123,7 +123,7 @@ u16 GetAtanTable(f32 x, f32 y)
  * @param y The y-coordinate of the vector.
  * @return u16 The angle in the scaled 16-bit format.
  */
-u16 atan(f32 x, f32 y)
+unsigned short atan(f32 x, f32 y)
 {
 	int res;
 

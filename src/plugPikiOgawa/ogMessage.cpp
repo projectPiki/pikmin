@@ -96,7 +96,7 @@ DEFINE_PRINT("OgMessageSection")
 /**
  * @todo: Documentation
  */
-s16 zen::ogScrMessageMgr::SearchTopPage(int a)
+short zen::ogScrMessageMgr::SearchTopPage(int a)
 {
 	for (s16 i = 0; i < mPageInfoEntryCount; i++) {
 		if (mPageInfos[i] && mPageInfos[i]->mMsgUniqueId == a) {
