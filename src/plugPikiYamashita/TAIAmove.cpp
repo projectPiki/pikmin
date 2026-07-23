@@ -142,7 +142,15 @@ bool TAIAgoGoalPath::act(Teki& teki)
 		teki.setTableIndex(teki.getTableIndex() + 1);
 		// If Dororo (Smoky Progg) plots a route containing the maximum number of waypoints, `getRouteWayPoint` will
 		// eventually return an un-checked nullptr.  Without this bounds-check, a crash is possible in Distant Spring.
-		if (teki.getTableIndex() >= teki.mRouteWayPointCount || TERNARY_BUGFIX(teki.getTableIndex() >= teki.mRouteWayPointMax, false)) {
+#if defined(BUGFIX)
+		if (teki.getTableIndex() >= teki.mRouteWayPointMax) {
+			// Honestly, this was the cleanest option.  I had previously written this as `TERNARY_BUGFIX(..., false)`,
+			// but MSVC debug compiles the false condition with the instructions to test if zero is not equal to zero.
+			goto REROUTE_PATH;
+		}
+#endif
+		if (teki.getTableIndex() >= teki.mRouteWayPointCount) {
+		REROUTE_PATH:
 			teki.setTableIndex(0);
 			if (makePath(teki)) {
 				PRINT("GOAL! \n");

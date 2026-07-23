@@ -37,7 +37,7 @@ public:
 	void insert(Creature*, f32);
 
 	// unused/inlined:
-	SearchBuffer TERNARY_BUGFIX(&, ) operator=(immut SearchBuffer&);
+	SearchBuffer TERNARY_BUGFIX(&, MACRO_NOTHING) operator=(immut SearchBuffer&);
 	int getIndex(Creature*);
 	void reset();
 	void update();

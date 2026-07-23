@@ -908,23 +908,28 @@ ModeState* RunningModeState::update(u32& result)
 				gameflow.mIsUIOverlayActive = TRUE;
 			}
 		}
-		// I added a bugfix to prevent the OgRader screen from opening in the background when the debug menu is active.  Many
-		// debug menus also use the Y button, and both being open at the same time can even cause crashes in the Movie Player.
 #if defined(VERSION_PIKIDEMO)
 		else if (mController->keyClick(KBBTN_Y)
 		         && gameflow.mWorldClock.mTimeOfDay < gameflow.mParameters->mEndHour() - MAP_MENU_SUNSET_LOCKOUT
-		         && !gameflow.mIsUIOverlayActive && !mesgsPending && TERNARY_BUGFIX(!mParentSection->mActiveMenu, true))
+		         && !gameflow.mIsUIOverlayActive && !mesgsPending)
 		// in the demo, you can open the map/controls menu in challenge mode...
 #else
 		else if (!gameflow.mIsChallengeMode && mController->keyClick(KBBTN_Y)
 		         && gameflow.mWorldClock.mTimeOfDay < gameflow.mParameters->mEndHour() - MAP_MENU_SUNSET_LOCKOUT
-		         && !gameflow.mIsUIOverlayActive && !mesgsPending && TERNARY_BUGFIX(!mParentSection->mActiveMenu, true))
+		         && !gameflow.mIsUIOverlayActive && !mesgsPending)
 #endif
 		{
-			// also can't open the map/controls menu in the very last ~8s of gameplay before sunset
-			gameflow.mGameInterface->message(MOVIECMD_CreateMenuWindow, 0);
-			mIsOverlayCached            = gameflow.mIsUIOverlayActive;
-			gameflow.mIsUIOverlayActive = TRUE;
+			// I added a bugfix to prevent the OgRader screen from opening in the background when the debug menu is active.  Many
+			// debug menus also use the Y button, and both being open at the same time can even cause crashes in the Movie Player.
+#if defined(BUGFIX)
+			if (!mParentSection->mActiveMenu)
+#endif
+			{
+				// also can't open the map/controls menu in the very last ~8s of gameplay before sunset
+				gameflow.mGameInterface->message(MOVIECMD_CreateMenuWindow, 0);
+				mIsOverlayCached            = gameflow.mIsUIOverlayActive;
+				gameflow.mIsUIOverlayActive = TRUE;
+			}
 		}
 #if defined(DEVELOP) || defined(WIN32)
 		// Mapping this to d-pad down was genuinely an atrocious choice, so I'm assigning it to d-pad up.

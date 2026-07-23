@@ -114,8 +114,8 @@ typedef int BOOL;
 #define PIKI_USE_DGX TRUE
 #endif
 
-// For when you have to pass something as a macro argument that contains commas.
-#define MACRO_ARG(...) __VA_ARGS__
+// MSVC 6.0 parses empty macro arguments in a non-standard way, skipping that parameter instead of reading it as nothing.
+#define MACRO_NOTHING
 
 // Your tyical stringification macros
 #define TO_STRING(x) STRINGIFY(x)
@@ -182,12 +182,12 @@ typedef int BOOL;
 // original codebase is represented as closely as possible, warts and all, but portability (MWCC 1.2.5 was the *last* version of MWCC
 // to allow this non-standard behavior) is also desireable.  Luckily, almost all const-incorrectness in the codebase is merely a result
 // of apathy, so this cv-qualifier macro exists to document and fix the places that could have been const-correct but weren't.
-#define immut TERNARY_BUILD_MATCHING(, const)
+#define immut TERNARY_BUILD_MATCHING(MACRO_NOTHING, const)
 
 // Nakata had a bad habit of writing mutable references to lifetime-extended rvalues when a value type would have sufficed, so this macro
 // is named for him.  MWCC 1.2.5 sometimes optimizes `Type foo = Type(...)` *really* poorly compared to `Type foo(...)`, so unless you are
 // using a different compiler, this const-correctness fix might generate worse code.
-#define NRef TERNARY_BUILD_MATCHING(&, )
+#define NRef TERNARY_BUILD_MATCHING(&, MACRO_NOTHING)
 
 // In early revisions of Pikmin 1, Ogawa was confused on which enum he was supposed to use for `SeSystem::playSysSe`/`stopSysSe`.
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
@@ -206,10 +206,22 @@ typedef int BOOL;
 #define ALIGN_PREV(X, N)     ((X) & ~((N) - 1))             // Align X to the previous N bytes (N must be power of two)
 #define ALIGN_NEXT(X, N)     ALIGN_PREV(((X) + (N) - 1), N) // Align X to the next N bytes (N must be power of two)
 #define IS_NOT_ALIGNED(X, N) (((X) & ((N) - 1)) != 0)       // True if X is not aligned to N bytes, else false
-#define ATTRIBUTE_ALIGN(num) __attribute__((aligned(num)))  // Align object to num bytes (num should be power of two)
+
+// Align object to num bytes (num should be power of two)
+#if defined(_MSC_VER)
+// MSVC 6.0 has no trailing alignment attribute; its __declspec(align(#)) must precede the declarator.
+// Also, nothing that uses this macro is byte-aligned in the DLL, so it must have been inert on MSVC.
+#define ATTRIBUTE_ALIGN(num)
+#else
+#define ATTRIBUTE_ALIGN(num) __attribute__((aligned(num)))
+#endif
 
 // Makes the compiler averse to using that register for the entire function.
-#define BUMP_REGISTER(reg) TERNARY_BUILD_MATCHING(MACRO_ARG({ asm { mr reg, reg } }), (void)0)
+#if defined(__MWERKS__) && defined(BUILD_MATCHING)
+#define BUMP_REGISTER(reg) { asm { mr reg, reg } }((void)0)
+#else
+#define BUMP_REGISTER(reg) ((void)0)
+#endif
 
 // clang-format off
 #define REPEAT1(x)  x
@@ -233,26 +245,53 @@ typedef int BOOL;
 #define REPEAT(x, n) REPEAT##n(x)
 
 // Somehow this overwhelms the automatic inlining score and stops unwanted function inlining
-#define FORCE_DONT_INLINE TERNARY_BUILD_MATCHING(REPEAT16(REPEAT10((void*)0)), (void)0)
+#if defined(__MWERKS__) && defined(BUILD_MATCHING)
+#define FORCE_DONT_INLINE REPEAT16(REPEAT10((void*)0))
+#else
+#define FORCE_DONT_INLINE ((void)0)
+#endif
 
 // Add an unused local variable to pad the stack by some number of words
-#define STACK_PAD_VAR(n) TERNARY_BUILD_MATCHING(do { int pad[n]; } while (0), (void)0)
+#if defined(__MWERKS__) && defined(BUILD_MATCHING)
+#define STACK_PAD_VAR(n) \
+	do {                 \
+		int pad[n];      \
+	} while (0)
+#else
+#define STACK_PAD_VAR(n) ((void)0)
+#endif
 
 // Create a temporary struct to pad the stack by some number of words
-#define STACK_PAD_STRUCT(n) TERNARY_BUILD_MATCHING(if (0)(struct { int pad[n]; }) {}, (void)0)
+#if defined(__MWERKS__) && defined(BUILD_MATCHING)
+#define STACK_PAD_STRUCT(n)      \
+	if (0)                       \
+		(struct { int pad[n]; }) \
+		{                        \
+		}
+#else
+#define STACK_PAD_STRUCT(n) ((void)0)
+#endif
 
+// Add an unused variable in an inline function to pad the stack by some number of words
+#if defined(__MWERKS__) && defined(BUILD_MATCHING)
 inline void padStack(void)
 {
 	int pad = 0;
 }
-
-// Add an unused variable in an inline function to pad the stack by some number of words
-#define STACK_PAD_INLINE(n) TERNARY_BUILD_MATCHING(REPEAT(padStack(), n), (void)0)
+#define STACK_PAD_INLINE(n) REPEAT(padStack(), n)
+#else
+#define STACK_PAD_INLINE(n) ((void)0)
+#endif
 
 // Uses a ternary to pad the stack by some number of words
-#define STACK_PAD_TERNARY(expr, n) TERNARY_BUILD_MATCHING(REPEAT((expr) ? "fake" : "fake", n), (void)0)
+#if defined(__MWERKS__) && defined(BUILD_MATCHING)
+#define STACK_PAD_TERNARY(expr, n) REPEAT((expr) ? "fake" : "fake", n)
+#else
+#define STACK_PAD_TERNARY(expr, n) ((void)0)
+#endif
 
-#ifdef __MWERKS__
+// Metrowerks C/C++ language extensions
+#if defined(__MWERKS__)
 #define AT_ADDRESS(addr) : (addr)
 #define WEAK            __declspec(weak)
 #define DECL_SECT(name) __declspec(section name)
@@ -268,14 +307,16 @@ inline void padStack(void)
 #define CTORS DECL_SECT(".ctors")
 
 // If an unimplemented function is used by mistake (e.g. in modding), we should trap on that.
-#ifdef __MWERKS__ // clang-format off
+#if defined(__MWERKS__) // clang-format off
 #define TRAP_UNIMPLEMENTED asm { trap } ((void)0)
+#elif defined(_MSC_VER)
+#define TRAP_UNIMPLEMENTED __asm { ud2 } __assume(0)
 #else
 #define TRAP_UNIMPLEMENTED ((void)0) /* Replace me */
 #endif // clang-format on
 
 // Documenting MetroWerks intrinsic functions for PowerPC and placing them behind macros for portability.
-#ifdef __MWERKS__
+#if defined(__MWERKS__)
 #define __mwerks_eieio()                  /* void   */ __eieio()                  //
 #define __mwerks_sync()                   /* void   */ __sync()                   //
 #define __mwerks_isync()                  /* void   */ __isync()                  //
@@ -295,12 +336,6 @@ inline void padStack(void)
 #define __mwerks_rlwinm(S, SH, MB, ME)    /* int    */ __rlwinm(S, SH, MB, ME)    // int, int, int, int
 #define __mwerks_rlwnm(S, SH, MB, ME)     /* int    */ __rlwnm(S, SH, MB, ME)     // int, int, int, int
 #define __mwerks_rlwimi(A, S, SH, MB, ME) /* int    */ __rlwimi(A, S, SH, MB, ME) // int, int, int, int, int
-#endif
-
-// Disable clangd warnings
-#ifdef __clang__
-// Allow string literals to be converted to char*
-#pragma clang diagnostic ignored "-Wc++11-compat-deprecated-writable-strings"
 #endif
 
 #endif // _TYPES_H
