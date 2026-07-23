@@ -272,7 +272,7 @@ void SearchBuffer::init(SearchData* data, int p2)
  * @todo: Documentation
  * @note UNUSED Size: 0000E4 (Matching by size)
  */
-SearchBuffer TERNARY_BUGFIX(&, ) SearchBuffer::operator=(immut SearchBuffer& other)
+SearchBuffer TERNARY_BUGFIX(&, MACRO_NOTHING) SearchBuffer::operator=(immut SearchBuffer& other)
 {
 	mMaxEntries     = other.mMaxEntries;
 	_20             = other._20;

@@ -1045,7 +1045,7 @@ void Navi::callPikis(f32 radius)
 			piki->mNavi = this;
 			piki->mFSM->transit(piki, PIKISTATE_AutoNuki);
 			// Why would you put an `ERROR` here?  Just don't enable it??
-			TERNARY_BUILD_MATCHING(ERROR("cursor nuki!\n"), );
+			TERNARY_BUILD_MATCHING(ERROR, PRINT)("cursor nuki!\n");
 		}
 	}
 
@@ -1063,7 +1063,7 @@ void Navi::callPikis(f32 radius)
 
 			if (sprout->canPullout() && sproutDist < radius) {
 				// Why would you put an `ERROR` here?  Just don't enable it??
-				TERNARY_BUILD_MATCHING(ERROR("cursor nuki!\n"), );
+				TERNARY_BUILD_MATCHING(ERROR, PRINT)("cursor nuki!\n");
 				PikiMgr::meBirthMode = true;
 				Piki* piki           = static_cast<Piki*>(pikiMgr->birth());
 				PikiMgr::meBirthMode = false;
@@ -1343,7 +1343,10 @@ bool Navi::procActionButton()
 				UfoItem* ship = itemMgr->getUfo();
 				// No nullptr check means any stage with UFO parts and without the SS Dolphin will crash when the
 				// action button is pressed.  This is relevant for some leftover test maps.
-				if (TERNARY_BUGFIX(ship, true)) {
+#if defined(BUGFIX)
+				if (ship)
+#endif
+				{
 					Vector3f pelShipSep = pellet->mSRT.t - ship->getGoalPos();
 					f32 distFromShip    = std::sqrtf(pelShipSep.x * pelShipSep.x + pelShipSep.z * pelShipSep.z);
 					if (distFromShip < 30.0f && pellet->mCarrierCounter != 0) {

@@ -11,7 +11,7 @@ DEFINE_ERROR(7)
  * @todo: Documentation
  * @note UNUSED Size: 0000F4
  */
-DEFINE_PRINT("pickCreature" TERNARY_BUGFIX(, "\n"))
+DEFINE_PRINT("pickCreature" TERNARY_BUGFIX(MACRO_NOTHING, "\n"))
 
 /**
  * @todo: Documentation
