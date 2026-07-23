@@ -44,7 +44,8 @@ struct PikiProp : public CreatureProp {
 	 */
 	struct Parms : public Parameters {
 		Parms()
-		    : mMinMoveSpeed(this, 84.0f, 0.0f, 500.0f, "p00", "歩く速度")
+		    : Parameters("Piki::Parms")
+		    , mMinMoveSpeed(this, 84.0f, 0.0f, 500.0f, "p00", "歩く速度")
 		    , mMaxLeafMoveSpeed(this, 162.5f, 0.0f, 500.0f, "p01", "走る速度")
 		    , mMaxFlowerMoveSpeed(this, 220.0f, 0.0f, 500.0f, "p54", "花ピキスピード")
 		    , mMaxBudMoveSpeed(this, 160.0f, 0.0f, 500.0f, "p65", "つぼみスピード")

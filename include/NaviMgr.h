@@ -19,7 +19,8 @@ struct NaviProp : public CreatureProp {
 	 */
 	struct Parms : public Parameters {
 		inline Parms()
-		    : mActionRadius(this, 120.0f, 0.0f, 500.0f, "p00", "アクション半径")
+		    : Parameters("Navi::Parms")
+		    , mActionRadius(this, 120.0f, 0.0f, 500.0f, "p00", "アクション半径")
 		    , mContinuousPluckDistance(this, 200.0f, 0.0f, 1000.0f, "p60", "連続抜き距離")
 		    , mPluckDistanceOutsideOnyon(this, 15.0f, 0.0f, 500.0f, "p62", "抜き距離(onyon外)")
 		    , mWhistleMaxRadius(this, 100.0f, 0.0f, 500.0f, "p01", "ピキ呼び最大半径")
@@ -94,59 +95,59 @@ struct NaviProp : public CreatureProp {
 		Parm<f32> mWhistleHoldTime;           // _BC, p03, whistle holding timer?
 		Parm<f32> mMoveSpeed;                 // _CC, p04, speed?
 		Parm<f32> mRunSpeed;                  // _DC, p56, running speed (good condition)?
-		Parm<f32> mDisplayScale;             // _EC, p38, Olimar size
-		Parm<f32> _FC;                       // _FC, p05, stick 0?
-		Parm<f32> _10C;                      // _10C, p20, stick 01?
-		Parm<f32> _11C;                      // _11C, p06, stick 1?
-		Parm<f32> _12C;                      // _12C, p07, stick 2?
-		Parm<f32> _13C;                      // _13C, p08, slip angle?
-		Parm<f32> mThrowHoldMaxTime;         // _14C, p09, limit time for throwing?
-		Parm<f32> mThrowMaxDistance;         // _15C, p10, throwing dist (max)?
-		Parm<f32> mThrowMinDistance;         // _16C, p11, throwing dist (min)?
-		Parm<f32> mThrowMaxHeight;           // _17C, p24, throwing height (max)?
-		Parm<f32> mThrowMinHeight;           // _18C, p25, throwing height (min)?
-		Parm<f32> mYellowThrowHeight;        // _19C, p54, throwing height (yellow)?
-		Parm<f32> mThrowFlightTime;          // _1AC, p26, landing time?
-		Parm<f32> mPluckGrabRange;           // _1BC, p37, eff range to grasp piki?
-		Parm<int> mPluckLoopCount;           // _1CC, p42, num loops pulled out?
-		Parm<f32> mPikiWaitRange;            // _1DC, p39, range where piki waits?
-		Parm<f32> mPikiFormationChangeRange; // _1EC, p40, range where piki change formation?
-		Parm<f32> mBodyCollisionRadius;      // _1FC, p21, per size?
-		Parm<f32> mGroundCollisionRadius;    // _20C, p41, ground per size?
-		Parm<f32> mInverseMass;              // _21C, p22, recip of weight?
-		Parm<f32> _22C;                      // _22C, p23, aiming rotation speed?
-		Parm<f32> mAsibumiStartSpeed;        // _23C, p14, asibumi start speed?
-		Parm<f32> mWalkStartSpeed;           // _24C, p15, walk start speed?
-		Parm<f32> mRunStartSpeed;            // _25C, p16, run start speed?
-		Parm<f32> mEscapeStartSpeed;         // _26C, p17, escape start speed?
-		Parm<f32> mWalkAnimMinFrames;        // _27C, p18, walk frames (min)?
-		Parm<f32> mWalkAnimMaxFrames;        // _28C, p19, walk frames (max)?
-		Parm<f32> mRunAnimMinFrames;         // _29C, p27, run frames (min)?
-		Parm<f32> mRunAnimMaxFrames;         // _2AC, p28, run frames (max)?
-		Parm<f32> mEscapeAnimMinFrames;      // _2BC, p29, escape frames (min)?
-		Parm<f32> _2CC;                      // _2CC, p30, escape frames (max)?
-		Parm<f32> mPressedTotalTime;         // _2DC, p31, collapse total time?
-		Parm<f32> mPressedFlatTime;          // _2EC, p32, completely flat time?
-		Parm<f32> _2FC;                      // _2FC, p33, push start time?
-		Parm<f32> _30C;                      // _30C, p34, push start stick amount?
-		Parm<f32> mShakePreventionAngle;     // _31C, p35, shake prevention angle?
-		Parm<f32> _32C;                      // _32C, p36, anti-shake size?
-		Parm<f32> mCursorMoveDelayTime;      // _33C, p48, cursor moving stick?
-		Parm<f32> mPikiImpatienceTime;       // _34C, p49, time for piki to get numb?
-		Parm<f32> mNeutralStickThreshold;    // _35C, p43, neutral stick?
-		Parm<f32> mCursorMoveStickThreshold; // _36C, p44, cursor moving stick?
-		Parm<f32> mClampStickToMaxThreshold; // _37C, p48, clamp stick?
-		Parm<f32> mCursorMinRadius;          // _38C, p45, cursor movement min radius?
-		Parm<f32> mCursorMaxRadius;          // _39C, p46, cursor movement max radius?
-		Parm<f32> mCursorMoveSpeed;          // _3AC, p47, cursor movement speed?
-		Parm<f32> mHealth;                   // _3BC, p50, Olimar's health
-		Parm<f32> mPunchDamage;              // _3CC, p51, punch damage?
-		Parm<f32> mPunchRadius;              // _3DC, p52, punch radius?
-		Parm<int> mPluckCursorCount;         // _3EC, p55, cursor count?
-		Parm<int> mMinKinokoFlickActions;    // _3FC, p57, need to put in (this + 1) "actions" to flick a puffmin
-		Parm<int> mBuryEscapeKeyCount;       // _40C, p58, bury key count?
-		Parm<int> mBuryEscapeSuccessCount;   // _41C, p59, bury exit count?
-		Parm<int> mPostPluckZoomOutTime;     // _42C, p61, #frames after we stop plucking to release focus cam
+		Parm<f32> mDisplayScale;              // _EC, p38, Olimar size
+		Parm<f32> _FC;                        // _FC, p05, stick 0?
+		Parm<f32> _10C;                       // _10C, p20, stick 01?
+		Parm<f32> _11C;                       // _11C, p06, stick 1?
+		Parm<f32> _12C;                       // _12C, p07, stick 2?
+		Parm<f32> _13C;                       // _13C, p08, slip angle?
+		Parm<f32> mThrowHoldMaxTime;          // _14C, p09, limit time for throwing?
+		Parm<f32> mThrowMaxDistance;          // _15C, p10, throwing dist (max)?
+		Parm<f32> mThrowMinDistance;          // _16C, p11, throwing dist (min)?
+		Parm<f32> mThrowMaxHeight;            // _17C, p24, throwing height (max)?
+		Parm<f32> mThrowMinHeight;            // _18C, p25, throwing height (min)?
+		Parm<f32> mYellowThrowHeight;         // _19C, p54, throwing height (yellow)?
+		Parm<f32> mThrowFlightTime;           // _1AC, p26, landing time?
+		Parm<f32> mPluckGrabRange;            // _1BC, p37, eff range to grasp piki?
+		Parm<int> mPluckLoopCount;            // _1CC, p42, num loops pulled out?
+		Parm<f32> mPikiWaitRange;             // _1DC, p39, range where piki waits?
+		Parm<f32> mPikiFormationChangeRange;  // _1EC, p40, range where piki change formation?
+		Parm<f32> mBodyCollisionRadius;       // _1FC, p21, per size?
+		Parm<f32> mGroundCollisionRadius;     // _20C, p41, ground per size?
+		Parm<f32> mInverseMass;               // _21C, p22, recip of weight?
+		Parm<f32> _22C;                       // _22C, p23, aiming rotation speed?
+		Parm<f32> mAsibumiStartSpeed;         // _23C, p14, asibumi start speed?
+		Parm<f32> mWalkStartSpeed;            // _24C, p15, walk start speed?
+		Parm<f32> mRunStartSpeed;             // _25C, p16, run start speed?
+		Parm<f32> mEscapeStartSpeed;          // _26C, p17, escape start speed?
+		Parm<f32> mWalkAnimMinFrames;         // _27C, p18, walk frames (min)?
+		Parm<f32> mWalkAnimMaxFrames;         // _28C, p19, walk frames (max)?
+		Parm<f32> mRunAnimMinFrames;          // _29C, p27, run frames (min)?
+		Parm<f32> mRunAnimMaxFrames;          // _2AC, p28, run frames (max)?
+		Parm<f32> mEscapeAnimMinFrames;       // _2BC, p29, escape frames (min)?
+		Parm<f32> _2CC;                       // _2CC, p30, escape frames (max)?
+		Parm<f32> mPressedTotalTime;          // _2DC, p31, collapse total time?
+		Parm<f32> mPressedFlatTime;           // _2EC, p32, completely flat time?
+		Parm<f32> _2FC;                       // _2FC, p33, push start time?
+		Parm<f32> _30C;                       // _30C, p34, push start stick amount?
+		Parm<f32> mShakePreventionAngle;      // _31C, p35, shake prevention angle?
+		Parm<f32> _32C;                       // _32C, p36, anti-shake size?
+		Parm<f32> mCursorMoveDelayTime;       // _33C, p48, cursor moving stick?
+		Parm<f32> mPikiImpatienceTime;        // _34C, p49, time for piki to get numb?
+		Parm<f32> mNeutralStickThreshold;     // _35C, p43, neutral stick?
+		Parm<f32> mCursorMoveStickThreshold;  // _36C, p44, cursor moving stick?
+		Parm<f32> mClampStickToMaxThreshold;  // _37C, p48, clamp stick?
+		Parm<f32> mCursorMinRadius;           // _38C, p45, cursor movement min radius?
+		Parm<f32> mCursorMaxRadius;           // _39C, p46, cursor movement max radius?
+		Parm<f32> mCursorMoveSpeed;           // _3AC, p47, cursor movement speed?
+		Parm<f32> mHealth;                    // _3BC, p50, Olimar's health
+		Parm<f32> mPunchDamage;               // _3CC, p51, punch damage?
+		Parm<f32> mPunchRadius;               // _3DC, p52, punch radius?
+		Parm<int> mPluckCursorCount;          // _3EC, p55, cursor count?
+		Parm<int> mMinKinokoFlickActions;     // _3FC, p57, need to put in (this + 1) "actions" to flick a puffmin
+		Parm<int> mBuryEscapeKeyCount;        // _40C, p58, bury key count?
+		Parm<int> mBuryEscapeSuccessCount;    // _41C, p59, bury exit count?
+		Parm<int> mPostPluckZoomOutTime;      // _42C, p61, #frames after we stop plucking to release focus cam
 	};
 
 	NaviProp();

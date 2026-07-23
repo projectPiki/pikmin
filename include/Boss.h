@@ -68,7 +68,8 @@ public:
 	 */
 	struct Parms : public Parameters {
 		inline Parms()
-		    : mTerritoryRadius(this, 200.0f, 0.0f, 0.0f, "b00", "テリトリーエリア")
+		    : Parameters("Boss::BossParm")
+		    , mTerritoryRadius(this, 200.0f, 0.0f, 0.0f, "b00", "テリトリーエリア")
 		    , mMaxWaitRadius(this, 100.0f, 0.0f, 0.0f, "b01", "ウェイトエリア")
 		    , mSearchRadius(this, 100.0f, 0.0f, 0.0f, "b02", "サーチエリア")
 		    , mSearchAngle(this, 360.0f, 0.0f, 0.0f, "b03", "サーチ角度")

@@ -19,7 +19,8 @@ public:
 	 * @brief Mizu genuinely doesn't have any specific properties, but still needs this. Go figure.
 	 */
 	struct Parms : public Parameters {
-		inline Parms() // TODO
+		inline Parms()
+		    : Parameters("mizu::Parms")
 		{
 		}
 

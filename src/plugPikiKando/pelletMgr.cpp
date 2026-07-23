@@ -105,7 +105,8 @@ u32 PelletMgr::getUfoIDFromIndex(int idx)
  * @todo: Documentation
  */
 PelletConfig::PelletConfig()
-    : mPelletName(this, String("new", 0), String("", 0), String("", 0), "x99", "theName")
+    : Parameters("pellet")
+    , mPelletName(this, String("new", 0), String("", 0), String("", 0), "x99", "theName")
     , mPelletType(this, PELTYPE_Blue, 0, 0, "p00", "type(0-2:pel 3:ufo)")
     , mPelletColor(this, PELCOLOR_NULL, 0, 0, "p09", "color type")
     , mCarryMinPikis(this, 1, 0, 0, "p01", "min pikis")

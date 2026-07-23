@@ -46,7 +46,8 @@ public:
 	 */
 	struct Parms : public Parameters {
 		inline Parms()
-		    : _204(this, 1.5f, 0.1f, 10.0f, "p10", "Motion Speed (UP)")
+		    : Parameters("Spider::Parms")
+		    , _204(this, 1.5f, 0.1f, 10.0f, "p10", "Motion Speed (UP)")
 		    , _214(this, 0.113f, 0.0f, 0.5f, "p11", "Speed Down")
 		    , _224(this, 0.37f, 0.1f, 1.0f, "p12", "最低スピード")
 		    , _234(this, 7.0f, 0.1f, 10.0f, "p13", "Motion Speed (DOWN)")

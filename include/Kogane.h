@@ -39,7 +39,8 @@ public:
 	 */
 	struct Parms : public Parameters {
 		inline Parms()
-		    : mAppearTriggerRadius(this, 30.0f, 0.0f, 0.0f, "o00", "出現エリア")
+		    : Parameters("kogane::Parms")
+		    , mAppearTriggerRadius(this, 30.0f, 0.0f, 0.0f, "o00", "出現エリア")
 		    , mAppearScaleUpSpeed(this, 6.0f, 0.0f, 0.0f, "o01", "出現スケールアップ")
 		    , mDisappearScaleDownSpeed(this, 6.0f, 0.0f, 0.0f, "o02", "消滅スケールダウン")
 		    , mMoveSpeed(this, 250.0f, 0.0f, 0.0f, "p00", "移動スピード")

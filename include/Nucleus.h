@@ -27,7 +27,8 @@ public:
 	 * @note Offset comments are relative to NucleusProp for ease of use.
 	 */
 	struct Parms : public Parameters {
-		inline Parms() // TODO
+		inline Parms()
+		    : Parameters("nuclear::Parms")
 		{
 		}
 

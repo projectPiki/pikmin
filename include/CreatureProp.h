@@ -16,7 +16,8 @@ public:
 	 */
 	struct Parms : public Parameters {
 		inline Parms()
-		    : mFriction(this, 0.5f, 0.0f, 1.0f, "s00", MATCHING_PARM_NAME("friction"))
+		    : Parameters("Creature::Property")
+		    , mFriction(this, 0.5f, 0.0f, 1.0f, "s00", MATCHING_PARM_NAME("friction"))
 		    , mWallReflection(this, 0.5f, 0.0f, 1.0f, "s01", MATCHING_PARM_NAME("wallReflection"))
 		    , mFaceDirAdjust(this, 0.25f, 0.0f, 1.0f, "s02", MATCHING_PARM_NAME("faceDirAdjust"))
 		    , mAcceleration(this, 0.1f, 0.01f, 2.0f, "s03", MATCHING_PARM_NAME("accel"))

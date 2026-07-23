@@ -77,7 +77,8 @@ public:
 	 */
 	struct Parms : public Parameters {
 		inline Parms()
-		    : mDetectionRadius(this, 100.0f, 0.0f, 0.0f, "p00", "出現エリア")
+		    : Parameters("Slime::Parms")
+		    , mDetectionRadius(this, 100.0f, 0.0f, 0.0f, "p00", "出現エリア")
 		    , mMaxMoveSpeed(this, 50.0f, 0.0f, 0.0f, "s00", "移動最高速度")
 		    , mMinMoveSpeed(this, 20.0f, 0.0f, 0.0f, "s01", "移動最低速度")
 		    , mNormalMaxLength(this, 200.0f, 0.0f, 0.0f, "s10", "通常の最大長")
