@@ -72,7 +72,7 @@ void DynCollShape::createDupCollData()
 	// dupe joint visibility information
 	mJointVisibility = new bool[mCollisionModel->mJointCount];
 	for (int jointIdx = 0; jointIdx < mCollisionModel->mJointCount; jointIdx++) {
-		mJointVisibility[jointIdx] = mCollisionModel->mJointList[jointIdx].mVisibilityFlag != Joint::NotVisible;
+		mJointVisibility[jointIdx] = mCollisionModel->mJointList[jointIdx].mIsVisible;
 	}
 
 	// almost every model should have at least 1 "room" (group of collision)
@@ -178,13 +178,13 @@ void DynCollShape::updatePos()
  * @brief Sets the visibility flag for all sibling joints to the given joint.
  *
  * @param jointIdx Index of the joint to update, along with its siblings (children of the same parent).
- * @param visFlag Visibility flag to set - see `Joint::VisibilityFlags` enum.
+ * @param setVisible Whether the joint should be visible or not.
  */
-void DynCollShape::jointVisible(int jointIdx, int visFlag)
+void DynCollShape::jointVisible(int jointIdx, BOOL setVisible)
 {
 	FOREACH_NODE(Joint, mCollisionModel->mJointList[jointIdx].mParent->mChild, joint)
 	{
-		mJointVisibility[joint->mIndex] = visFlag != Joint::NotVisible;
+		mJointVisibility[joint->mIndex] = setVisible != FALSE;
 	}
 }
 
@@ -219,7 +219,7 @@ void DynCollShape::update()
 void DynCollShape::updateContext()
 {
 	for (int i = 0; i < mCollisionModel->mJointCount; i++) {
-		mCollisionModel->mJointList[i].mVisibilityFlag = mJointVisibility[i];
+		mCollisionModel->mJointList[i].mIsVisible = mJointVisibility[i];
 	}
 }
 

@@ -248,10 +248,7 @@ void Joint::write(RandomAccessStream& stream)
  */
 void Joint::render(Graphics& gfx)
 {
-	// This is definitely a mistake (logical NOT + bitwise AND), however it does not matter in practice.  Interestingly,
-	// this same mistake also happened in `DGXGraphics::drawSingleMatpoly`.  Most cursed, however, is that an additional
-	// `and  ecx, 0xff` instruction spawns if I don't cast `Joint::VisibilityFlags::Visible` to an integer.
-	if (!mVisibilityFlag & static_cast<int>(Visible)) {
+	if (!JOINT_IS_VISIBLE(*this)) {
 		return;
 	}
 

@@ -1081,9 +1081,9 @@ void Bridge::startAI(int)
 			mStageProgressList[i] = 0.0f;
 		}
 		for (i = 0; i < mStageCount * 2; i++) {
-			mBuildShape->jointVisible(mStageJoints[i]->mIndex, Joint::NotVisible);
+			mBuildShape->jointVisible(mStageJoints[i]->mIndex, FALSE);
 		}
-		mBuildShape->jointVisible(mStageJoints[0]->mIndex, Joint::Visible);
+		mBuildShape->jointVisible(mStageJoints[0]->mIndex, TRUE);
 	} else {
 		for (int i = 0; i < mStageCount; i++) {
 			mStageProgressList[i] = 0.0f;
@@ -1243,7 +1243,7 @@ void Bridge::flatten()
 	for (int i = 0; i < mStageCount; i++) {
 		int index = mStageJoints[i * 2]->mIndex;
 		if (mBuildShape->mJointVisibility[mStageJoints[i * 2 + 1]->mIndex] && mBuildShape->mJointVisibility[index]) {
-			mBuildShape->jointVisible(index, Joint::NotVisible);
+			mBuildShape->jointVisible(index, FALSE);
 			BUGPRINT("flatten bridge");
 		}
 	}
@@ -1277,24 +1277,24 @@ void Bridge::setStageFinished(int stageIndex, bool isFinished)
 
 		int prevID = 2 * stageIndex - 1;
 		if (isFinished) {
-			mBuildShape->jointVisible(wIdx, Joint::NotVisible);
-			mBuildShape->jointVisible(pIdx, Joint::Visible);
+			mBuildShape->jointVisible(wIdx, FALSE);
+			mBuildShape->jointVisible(pIdx, TRUE);
 			if (nextIdx != -1) {
-				mBuildShape->jointVisible(nextIdx, Joint::Visible);
+				mBuildShape->jointVisible(nextIdx, TRUE);
 			}
 		} else {
 			if (prevID > 0) {
 				if (mBuildShape->mJointVisibility[mStageJoints[prevID]->mIndex]) {
-					mBuildShape->jointVisible(wIdx, Joint::Visible);
+					mBuildShape->jointVisible(wIdx, TRUE);
 				} else {
-					mBuildShape->jointVisible(wIdx, Joint::NotVisible);
+					mBuildShape->jointVisible(wIdx, FALSE);
 				}
 			} else {
-				mBuildShape->jointVisible(wIdx, Joint::Visible);
+				mBuildShape->jointVisible(wIdx, TRUE);
 			}
-			mBuildShape->jointVisible(pIdx, Joint::NotVisible);
+			mBuildShape->jointVisible(pIdx, FALSE);
 			if (nextIdx != -1) {
-				mBuildShape->jointVisible(nextIdx, Joint::NotVisible);
+				mBuildShape->jointVisible(nextIdx, FALSE);
 			}
 		}
 
