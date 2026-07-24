@@ -1415,10 +1415,10 @@ void DGXGraphics::setAuxColour(immut Colour& color)
 void DGXGraphics::setPrimEnv(immut Colour* col1, immut Colour* col2)
 {
 	if (col1) {
-		GXSetTevColor(GX_TEVREG0, *reinterpret_cast<GXColor*>(col1));
+		GXSetTevColor(GX_TEVREG0, *reinterpret_cast<immut GXColor*>(col1));
 	}
 	if (col2) {
-		GXSetTevColor(GX_TEVREG1, *reinterpret_cast<GXColor*>(col2));
+		GXSetTevColor(GX_TEVREG1, *reinterpret_cast<immut GXColor*>(col2));
 	}
 }
 
