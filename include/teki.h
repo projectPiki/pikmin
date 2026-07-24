@@ -543,7 +543,11 @@ public:
 	 * @brief TODO
 	 */
 	enum effFootIndexFlag {
-		// TODO: this
+		FOOT_0 = 0,
+		FOOT_1 = 1,
+		FOOT_2 = 2,
+		FOOT_3 = 3,
+		FOOT_COUNT,
 	};
 
 	/**

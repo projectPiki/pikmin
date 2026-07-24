@@ -1810,7 +1810,7 @@ void GameCoreSection::draw(Graphics& gfx)
 	Matrix4f mtx;
 	gfx.calcViewMatrix(Matrix4f::ident, mtx);
 	gfx.useMatrix(mtx, 0);
-	int blend = gfx.setCBlending(BLEND_InverseColor);
+	int blend = gfx.setCBlending(BLEND_Subtractive);
 	gfx.setDepth(false);
 	gfx.setLighting(false, nullptr);
 	gfx.useTexture(mShadowTexture, GX_TEXMAP0);

@@ -363,6 +363,7 @@ void System::parseArchiveDirectory(immut char* arcPath, immut char* dirPath)
  */
 static void ParseMapFile()
 {
+#if defined(__MWERKS__)
 	RandomAccessStream* file = gsys->openFile("build.map");
 	if (!file) {
 		return;
@@ -534,6 +535,7 @@ static void ParseMapFile()
 
 	STACK_PAD_VAR(3);
 	file->close();
+#endif
 }
 
 /**

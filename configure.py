@@ -919,7 +919,7 @@ config.libs = [
     DolphinLib(
         "vi",
         [
-            Object(not MatchingFor("DPIJ01_PIKIDEMO", "G98E01_PIKIDEMO", "G98P01_PIKIDEMO"), "vi/vi.c"),
+            Object(not MatchingFor("DPIJ01_PIKIDEMO", "G98E01_PIKIDEMO"), "vi/vi.c"),
         ],
     ),
     DolphinLib(

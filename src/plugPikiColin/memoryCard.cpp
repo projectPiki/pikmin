@@ -673,7 +673,7 @@ void MemoryCard::checkUseFile()
 		}
 		OSTicksToCalendarTime(OSSecondsToTicks((OSTime)stat.time), &calendar);
 
-		PRINT("checking memory card file %d\n", i / 100);
+		(i / 100);
 
 #if defined(VERSION_GPIP01)
 		if (!strncmp(stat.fileName, basecardname, 15) && memcmp(stat.gameName, diskID->gameName, 4) == 0 && memcmp(stat.company, diskID->company, 2) == 0)
