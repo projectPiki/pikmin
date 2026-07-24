@@ -783,7 +783,7 @@ static void* CardUtilMain(void*)
 
 		s32 observed; // sub-statement assignment hack for matching
 		OSLockMutex(&CardControl.mMutex);
-		while (TERNARY_BUILD_MATCHING((observed = *channelPtr) == -1, CardUtilIsCardBusy())) {
+		while (TERNARY_BUILD_MATCHING((observed = *channelPtr) == -1, !CardUtilIsCardBusy())) {
 			OSWaitCond(&CardControl.mCondition, &CardControl.mMutex);
 		}
 
