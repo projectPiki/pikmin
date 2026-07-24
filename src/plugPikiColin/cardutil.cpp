@@ -823,7 +823,7 @@ static void* CardUtilMain(void*)
 			CardControl.mDirentCount = 0;
 			OSUnlockMutex(dirMutex);
 
-			CardControl.mOperationSize = 0xA000;
+			CardControl.mOperationSize = CARD_WORKAREA_SIZE;
 			s32 formatRes              = CARDFormat(chan);
 			if (formatRes == CARD_RESULT_READY) {
 				formatRes = CARDFreeBlocks(chan, bytesPtr, filesPtr);

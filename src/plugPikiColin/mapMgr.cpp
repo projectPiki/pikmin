@@ -1357,7 +1357,7 @@ void MapMgr::drawShadowCasters(Graphics& gfx)
 {
 	// set up overall graphics settings
 	gfx.setFog(false);
-	int blend = gfx.setCBlending(BLEND_InverseColor);
+	int blend = gfx.setCBlending(BLEND_Subtractive);
 
 	FOREACH_NODE(ShadowCaster, mGlobalShadowList.mChild, shadow)
 	{

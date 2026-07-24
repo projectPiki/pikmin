@@ -84,7 +84,7 @@ void __DSPHandler(__OSInterrupt interrupt, OSContext* context)
 	}
 	case 0xDCD10003:
 	{
-		Console_printf("Done DSP Task  %x \n", (u32)__DSP_curr_task);
+		Console_printf("Done DSP Task  %x \n", __DSP_curr_task);
 		if (__DSP_curr_task->done_cb) {
 			__DSP_curr_task->done_cb(__DSP_curr_task);
 		}

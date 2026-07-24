@@ -673,8 +673,8 @@ void Menu::draw(Graphics& gfx, f32 fadeFactor)
 	gfx.fillRectangle(RectArea(centerX - halfWidth, centerY - halfHeight, centerX + halfWidth, centerY + halfHeight));
 
 	// draw menu box outline
-	gfx.setColour(Colour(64, 64, 192, 255.0f * menuBoxAlphaFactor), true);
-	gfx.setAuxColour(Colour(64, 64, 192, 255.0f * menuBoxAlphaFactor));
+	gfx.setColour(Colour(64, 64, 192, 255 * menuBoxAlphaFactor), true);
+	gfx.setAuxColour(Colour(64, 64, 192, 255 * menuBoxAlphaFactor));
 	gfx.lineRectangle(RectArea(centerX - halfWidth, centerY - halfHeight, centerX + halfWidth, centerY + halfHeight));
 
 	// iterate through the menu items/options and draw each one's label

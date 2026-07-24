@@ -248,7 +248,7 @@ static inline Texture* setBannerTex(u32 stageID)
 		gameflow.mLevelBannerTex = tex;
 	}
 #if defined(VERSION_GPIP01)
-	PRINT("banner texture loaded: %d\n", tex != nullptr);
+	(tex != nullptr);
 #else
 	(void)(tex);
 #endif

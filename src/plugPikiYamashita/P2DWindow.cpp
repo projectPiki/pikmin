@@ -204,19 +204,19 @@ void P2DWindow::drawContents(const PUTRect& windowBounds)
 
 		// top left
 		GXPosition3s16(windowBounds.mMinX, windowBounds.mMinY, 0);
-		GXColor1u32(*(u32*)&mTLCornerColour);
+		GXColor1u32(reinterpret_cast<u32&>(mTLCornerColour));
 
 		// top right
 		GXPosition3s16(windowBounds.mMaxX, windowBounds.mMinY, 0);
-		GXColor1u32(*(u32*)&mTRCornerColour);
+		GXColor1u32(reinterpret_cast<u32&>(mTRCornerColour));
 
 		// bottom right
 		GXPosition3s16(windowBounds.mMaxX, windowBounds.mMaxY, 0);
-		GXColor1u32(*(u32*)&mBRCornerColour);
+		GXColor1u32(reinterpret_cast<u32&>(mBRCornerColour));
 
 		// bottom left
 		GXPosition3s16(windowBounds.mMinX, windowBounds.mMaxY, 0);
-		GXColor1u32(*(u32*)&mBLCornerColour);
+		GXColor1u32(reinterpret_cast<u32&>(mBLCornerColour));
 	}
 }
 

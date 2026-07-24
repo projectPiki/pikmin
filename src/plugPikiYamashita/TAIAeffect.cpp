@@ -26,9 +26,9 @@ void TAIAeffCloudOfDust::init(EffectMgr::effTypeTable effID, bool p2, int soundI
                               int jointID0, int jointID1, int jointID2, int jointID3)
 {
 	_20 = p2;
-	if (footNum > 4) {
-		PRINT("foot Max is %d" MISSING_NEWLINE, 4);
-		ERROR("foot Max is %d", 4);
+	if (footNum > Teki::FOOT_COUNT) {
+		PRINT("foot Max is %d" MISSING_NEWLINE, Teki::FOOT_COUNT);
+		ERROR("foot Max is %d", Teki::FOOT_COUNT);
 		return;
 	}
 
@@ -38,16 +38,16 @@ void TAIAeffCloudOfDust::init(EffectMgr::effTypeTable effID, bool p2, int soundI
 	mFootSinkThreshold = sinkThreshold;
 	mFootNum           = footNum;
 	mFootJointID       = new int[mFootNum];
-	if (mFootNum > 0) {
+	if (mFootNum > Teki::FOOT_0) {
 		mFootJointID[0] = jointID0;
 	}
-	if (mFootNum > 1) {
+	if (mFootNum > Teki::FOOT_1) {
 		mFootJointID[1] = jointID1;
 	}
-	if (mFootNum > 2) {
+	if (mFootNum > Teki::FOOT_2) {
 		mFootJointID[2] = jointID2;
 	}
-	if (mFootNum > 3) {
+	if (mFootNum > Teki::FOOT_3) {
 		mFootJointID[3] = jointID3;
 	}
 }

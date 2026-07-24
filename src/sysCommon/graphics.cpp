@@ -738,7 +738,7 @@ int Font::charToIndex(u16 c)
 	}
 
 	int kanji = searchKanjiCode(c);
-	return ((s16)kanji != -1) ? (s16)kanji + 0x126 : '_';
+	return ((s16)kanji != -1) ? (s16)kanji + 0x126 : '@' + 31; // Return the index for '@' if an error occurred.
 }
 
 /**

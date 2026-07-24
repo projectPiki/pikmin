@@ -694,8 +694,8 @@ void RegisterStreamCallback(StreamCallback callback)
  */
 static u32 __DecodePCM(StreamCtrl_* ctrl)
 {
-#if defined(VERSION_GPIP01)
 	u32 activeBufIdx;
+	u32 currentBufIdx;
 	s32 usedSize;
 	s16* rightSamples;
 	u32 sampleCount;
@@ -704,33 +704,21 @@ static u32 __DecodePCM(StreamCtrl_* ctrl)
 	u8* sourceBytes;
 	size_t i;
 
-	activeBufIdx = ctrl->buffCtrlMain.activeBufIdx;
-	leftSamples  = ctrl->leftChanBufs[ctrl->buffCtrlMain2.currentBufIdx];
+	activeBufIdx  = ctrl->buffCtrlMain.activeBufIdx;
+	currentBufIdx = ctrl->buffCtrlMain2.currentBufIdx;
+
+	leftSamples  = ctrl->leftChanBufs[currentBufIdx];
+	rightSamples = ctrl->rightChanBufs[currentBufIdx];
 	sourceBytes  = ctrl->data[activeBufIdx].data;
-	usedSize     = ctrl->buffCtrl[activeBufIdx].usedSize;
-	sampleCount  = ((s32)ctrl->buffCtrl[activeBufIdx].pos - usedSize) / 4;
+
+	usedSize    = ctrl->buffCtrl[activeBufIdx].usedSize;
+	sampleCount = ((s32)ctrl->buffCtrl[activeBufIdx].pos - usedSize) / 4;
 	sourceBytes += usedSize;
-	rightSamples  = ctrl->rightChanBufs[ctrl->buffCtrlMain2.currentBufIdx];
 	sourceSamples = (s16*)sourceBytes;
-#else
-	u32 usedSize;
-	s16* sourceSamples;
-	s16* rightSamples;
-	u32 sampleCount;
-	s16* leftSamples;
-	size_t i;
 
-	usedSize    = ctrl->buffCtrl[ctrl->buffCtrlMain.activeBufIdx].usedSize;
-	sampleCount = (ctrl->buffCtrl[ctrl->buffCtrlMain.activeBufIdx].pos - usedSize) / 4;
-
-	leftSamples   = ctrl->leftChanBufs[ctrl->buffCtrlMain2.currentBufIdx];
-	rightSamples  = ctrl->rightChanBufs[ctrl->buffCtrlMain2.currentBufIdx];
-	sourceSamples = (s16*)&ctrl->data[ctrl->buffCtrlMain.activeBufIdx].data[usedSize];
-#endif
 	for (i = 0; i < sampleCount; i++) {
-		*leftSamples++  = sourceSamples[0];
-		*rightSamples++ = sourceSamples[1];
-		sourceSamples += 2;
+		*leftSamples++  = *sourceSamples++;
+		*rightSamples++ = *sourceSamples++;
 	}
 	ctrl->samplesDecoded += sampleCount;
 	return sampleCount;

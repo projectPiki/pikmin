@@ -55,8 +55,8 @@ protected:
 public:
 	void identity()
 	{
-		for (int i = 0; i < 9; i++) {
-			mMtx[0][i] = 0.0f; // sure.
+		for (int i = 0; i < 3 * 3; i++) {
+			TERNARY_BUGFIX(reinterpret_cast<f32(&)[3 * 3]>(mMtx), mMtx[0])[i] = 0.0f; // sure.
 		}
 
 		mMtx[0][0] = mMtx[1][1] = mMtx[2][2] = 1.0f;
