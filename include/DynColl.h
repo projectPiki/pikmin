@@ -80,8 +80,8 @@ struct DynCollShape : public DynCollObject {
 	 */
 	virtual Shape* getShape() { return mCollisionModel; } // _3C
 
-	virtual void jointVisible(int jointIdx, int visFlag); // _40
-	virtual void refresh(Graphics& gfx);                  // _44
+	virtual void jointVisible(int jointIdx, BOOL setVisible); // _40
+	virtual void refresh(Graphics& gfx);                      // _44
 
 	void createDupCollData();
 	void updatePos();

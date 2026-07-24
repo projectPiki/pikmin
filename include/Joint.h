@@ -19,11 +19,6 @@ class Joint;
  */
 class Joint : public CoreNode {
 public:
-	enum VisibilityFlags {
-		NotVisible = 0,
-		Visible    = 1,
-	};
-
 	class MatPoly : public CoreNode {
 	public:
 		MatPoly()
@@ -51,8 +46,8 @@ public:
 	Joint()
 	    : CoreNode(nullptr)
 	{
-		mVisibilityFlag = Visible;
-		_10C            = 0;
+		mIsVisible = TRUE;
+		_10C       = 0;
 	}
 
 	virtual void read(RandomAccessStream&); // _0C
@@ -72,7 +67,7 @@ public:
 	int mIndex;                  // _14
 	int mParentIndex;            // _18
 	int mType;                   // _1C
-	int mVisibilityFlag;         // _20, see `VisibilityFlags` emum.
+	BOOL mIsVisible;             // _20, Sometimes treated like bitfield, sometimes not.  Only has one bit anyway.
 	Vector3f mScale;             // _24, surprisingly NOT part of an `SRT`
 	Vector3f mRotation;          // _30, surprisingly NOT part of an `SRT`
 	Vector3f mTranslation;       // _3C, surprisingly NOT part of an `SRT`
@@ -88,5 +83,12 @@ public:
 	int mCullIndex;              // _114
 	BaseShape* mParentShape;     // _118
 };
+
+// A mistake where the bitwise AND of the logical NOT of `Joint::mIsVisible` is computed
+// can be found in multiple conditional statements across the codebase.  It seems like
+// the devs had a macro like this one (note the missing parenthesis), and it obfuscated the
+// actual operator precedence that happens when it gets expanded.  This member is treated
+// like a boolean value everywhere else in the codebase, so this bugfix follows suit.
+#define JOINT_IS_VISIBLE(joint) TERNARY_BUGFIX((joint).mIsVisible, (joint).mIsVisible & 1)
 
 #endif

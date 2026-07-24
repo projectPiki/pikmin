@@ -279,9 +279,9 @@ TaiIwagenStrategy::TaiIwagenStrategy(TekiParameters* params)
 void TaiIwagenStrategy::draw(Teki& teki, Graphics& gfx)
 {
 	if (teki.mStateID == IWAGENSTATE_Wait || teki.mStateID == IWAGENSTATE_Reset) {
-		teki.mTekiShape->mShape->mJointList[1].mVisibilityFlag = Joint::NotVisible;
+		teki.mTekiShape->mShape->mJointList[1].mIsVisible = FALSE;
 		TekiStrategy::draw(teki, gfx);
-		teki.mTekiShape->mShape->mJointList[1].mVisibilityFlag = Joint::Visible;
+		teki.mTekiShape->mShape->mJointList[1].mIsVisible = TRUE;
 	} else {
 		TekiStrategy::draw(teki, gfx);
 	}
