@@ -7,6 +7,7 @@
 #include "jaudio/aictrl.h"
 #include "jaudio/audiocommon.h"
 #include "jaudio/cpubuf.h"
+#include "jaudio/debug.h"
 #include "jaudio/dspboot.h"
 #include "jaudio/dspbuf.h"
 #include "jaudio/dspinterface.h"
@@ -85,14 +86,12 @@ static void DspSync2(void*)
 	u32 check;
 	u32 mesg;
 
-	u32* REF_check = &check;
-	STACK_PAD_VAR(1);
-
 	do {
 		check = DSPCheckMailFromDSP();
 	} while (check == 0);
 
 	mesg = DSPReadMailFromDSP();
+	JAUDIO_PRINT("DspSync2: ready=%x mail=%x\n", check, mesg >> 16);
 	if (mesg >> 0x10 == 0xf355) {
 		switch (mesg & 0xff00) {
 		case 0xff00:

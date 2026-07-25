@@ -1,5 +1,6 @@
 #include "jaudio/aramcall.h"
 
+#include "jaudio/debug.h"
 #include "jaudio/dummyrom.h"
 #include "jaudio/dvdthread.h"
 #include "jaudio/heapctrl.h"
@@ -26,8 +27,7 @@ void Jac_RegisterARAMCallback(ARAMCallback callback)
  */
 u32 LoadAram(immut char* filepath, u32* status, u32 dst)
 {
-	immut char** REF_filepath = &filepath;
-	u32* REF_dst              = &dst;
+	JAUDIO_PRINT("LoadAram: path=%s dst=%x\n", filepath, dst);
 
 	if (DVDT_LoadtoARAM(0, filepath, dst, 0, 0, status, NULL) == -1) {
 		return 0;
@@ -40,11 +40,7 @@ u32 LoadAram(immut char* filepath, u32* status, u32 dst)
  */
 u32 LoadAramSingle(immut char* filepath, u32 src, u32 length, u32* status, u32 dst)
 {
-	STACK_PAD_VAR(1);
-	immut char** REF_filepath = &filepath;
-	u32* REF_src              = &src;
-	u32* REF_length           = &length;
-
+	JAUDIO_PRINT("LoadAramSingle: path=%s length=%x src=%x (%d bytes)\n", filepath, length, src, length);
 	if (DVDT_LoadtoARAM(0, filepath, dst, src, length, status, NULL) == -1) {
 		return 0;
 	}

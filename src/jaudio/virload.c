@@ -1,6 +1,7 @@
 #include "jaudio/virload.h"
 
 #include "jaudio/aictrl.h"
+#include "jaudio/debug.h"
 #include "jaudio/dvdthread.h"
 
 #include <stddef.h>
@@ -31,8 +32,6 @@ void JV_InitHeader(immut char* fileName)
  */
 BOOL JV_InitHeader_M(immut char* fileName, u8* barcData, u8* archiveWork)
 {
-	STACK_PAD_VAR(1);
-	immut char** REF_fileName = &fileName;
 	if (!barcData) {
 		// if no barc data, read from disk
 		u32 fileSize = DVDT_CheckFile(fileName);
@@ -51,6 +50,7 @@ BOOL JV_InitHeader_M(immut char* fileName, u8* barcData, u8* archiveWork)
 		}
 	}
 
+	JAUDIO_PRINT("JV_InitHeader_M: file=%s header=%x\n", fileName, *(u32*)barcData);
 	u32 dirSeparatorIndex = strlen(fileName) - 1;
 
 	for (dirSeparatorIndex; dirSeparatorIndex > 0; dirSeparatorIndex--) {
@@ -185,16 +185,14 @@ u32 JV_LoadFile(u32 handle, u8* dst, u32 offset, u32 length)
 	char path[128];
 	volatile u32 loadStatus;
 
-	u32* REF_handle = &handle;
-	u8** REF_dst    = &dst;
-	u32* REF_length = &length;
+	JAUDIO_PRINT("JV_LoadFile: handle=%x dst=%x length=%x\n", handle, dst, length);
 
 	u32 archiveIndex = handle >> 16;
 	loadStatus      = 0;
 
 	sourceOffset = JV_GetRealHandle(handle)->offset;
 	sourceOffset += offset;
-	u32* REF_src = &sourceOffset;
+	JAUDIO_PRINT("JV_LoadFile: source=%x\n", sourceOffset);
 
 	strcpy(path, JV_DIR_NAME[archiveIndex]);
 	strcat(path, "/");
@@ -219,15 +217,13 @@ u32 JV_LoadFile_Async2(u32 handle, u8* dst, u32 offset, u32 length, void (*callb
 	u32 archiveIndex;
 	u32 sourceOffset;
 	char path[128];
-	u32* REF_handle = &handle;
-	u8** REF_dst    = &dst;
-	u32* REF_length = &length;
+	JAUDIO_PRINT("JV_LoadFile_Async2: handle=%x dst=%x length=%x\n", handle, dst, length);
 	STACK_PAD_VAR(3);
 
 	archiveIndex = handle >> 16;
 	sourceOffset = JV_GetRealHandle(handle)->offset;
 	sourceOffset += offset;
-	u32* REF_src = &sourceOffset;
+	JAUDIO_PRINT("JV_LoadFile_Async2: source=%x\n", sourceOffset);
 
 	strcpy(path, JV_DIR_NAME[archiveIndex]);
 	strcat(path, "/");

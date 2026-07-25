@@ -3,6 +3,7 @@
 #include "Dolphin/os.h"
 #include "jaudio/audiocommon.h"
 #include "jaudio/audiostruct.h"
+#include "jaudio/debug.h"
 #include "jaudio/driverinterface.h"
 #include "jaudio/dspbuf.h"
 #include "jaudio/dspproc.h"
@@ -54,13 +55,11 @@ void GetAudioHeapRemain(void)
  */
 void* OSAlloc2(u32 size)
 {
-	u32* REF_size;
-
 	void* alloc;
 	BOOL enabled;
 
-	enabled  = OSDisableInterrupts();
-	REF_size = &size;
+	JAUDIO_PRINT("OSAlloc2: size=%d\n", size);
+	enabled = OSDisableInterrupts();
 	switch (audio_hp_exist) {
 	case FALSE:
 	{

@@ -2,6 +2,7 @@
 
 #include "jaudio/cmdqueue.h"
 #include "jaudio/cmdstack.h"
+#include "jaudio/debug.h"
 #include "jaudio/filter3d.h"
 #include "jaudio/interface.h"
 #include "jaudio/jammain_2.h"
@@ -309,7 +310,7 @@ int Jac_CreateEvent(u32 eventType, struct SVector_* eventPos)
 	u32 i;
 	u32 idx;
 	SEvent_* event;
-	u32* REF_p1 = &eventType;
+	JAUDIO_PRINT("Jac_CreateEvent: type=%d\n", eventType);
 	if (!eventType) {
 		return -1;
 	}

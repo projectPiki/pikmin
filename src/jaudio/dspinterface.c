@@ -1,6 +1,7 @@
 #include "jaudio/dspinterface.h"
 
 #include "Dolphin/os.h"
+#include "jaudio/debug.h"
 #include "jaudio/driverinterface.h"
 #include "jaudio/dspdriver.h"
 #include "jaudio/dspproc.h"
@@ -84,15 +85,10 @@ void DSP_SetMixerInitDelayMax(u8 idx, u8 initDelayMax)
  */
 void DSP_SetMixerInitVolume(u8 idx, u8 mixer, s16 volume, u8 level)
 {
-	u8* REF_idx;
-	u8* REF_mixer;
-
 	DSPchannel_* buf;
 	DSPMixerChannel* mixChan;
 
-	REF_idx   = &idx;
-	REF_mixer = &mixer;
-
+	JAUDIO_PRINT("DSP_SetMixerInitVolume: channel=%d mixer=%d\n", idx, mixer);
 	buf     = &CH_BUF[idx];
 	mixChan = &buf->mixChannels[mixer];
 
@@ -431,7 +427,7 @@ void DSP_SetupBuffer()
  */
 void DSP_InitBuffer()
 {
-	STACK_PAD_VAR(1);
+	JAUDIO_PRINT("DSP_InitBuffer: channels=%p count=%d\n", CH_BUF, CH_BUF_LENGTH);
 	for (int i = 0; i < 4; ++i)
 		DFX_SetFxLine(i, NULL, NULL);
 	DSP_ClearBuffer();

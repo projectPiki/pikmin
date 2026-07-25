@@ -1,5 +1,6 @@
 #include "jaudio/piki_player.h"
 #include "jaudio/cmdqueue.h"
+#include "jaudio/debug.h"
 #include "jaudio/ja_calc.h"
 #include "jaudio/jammain_2.h"
 #include "jaudio/piki_bgm.h"
@@ -89,6 +90,7 @@ void Jac_Orima_Formation(s32 stickX, s32 stickY)
 	int stickMag = sqrtf2(stickX * stickX + stickY * stickY);
 	Jam_WritePortAppDirect(stick_seqp, 2, stickX);
 	Jam_WritePortAppDirect(stick_seqp, 3, stickMag);
+	JAUDIO_PRINT("Jac_Orima_Formation: active=%d\n", flag);
 
 	if (stickX == 0 && stickMag == 0) {
 		if (flag) {
@@ -104,8 +106,6 @@ void Jac_Orima_Formation(s32 stickX, s32 stickY)
 		}
 		gaya_timer = 0;
 	}
-
-	STACK_PAD_VAR(2);
 }
 
 static seqp_* orima_seqp;
@@ -167,7 +167,7 @@ void Jac_PlayOrimaSe(u32 id)
 				variantSoundId = randomVariationId + 0x800d;
 			}
 
-			STACK_PAD_VAR(1);
+			JAUDIO_PRINT("Jac_PlayOrimaSe: previous variation=%d\n", old1);
 
 			if (old3 == old2 && old2 == old1) {
 				if (old1 != randomVariationId) {
@@ -281,6 +281,7 @@ void Jac_UpdatePikiGaya()
 	static f32 volume = 0.0f;
 	static OuterParam_ outerparam;
 
+	JAUDIO_PRINT("Jac_UpdatePikiGaya: pikis=%d\n", pikis);
 	if (Jac_GetCurrentScene() != SCENE_Course) {
 		Jam_SetExtParamD(0, &outerparam, 1);
 		return;
@@ -320,6 +321,4 @@ void Jac_UpdatePikiGaya()
 	}
 
 	gaya_timer++;
-
-	STACK_PAD_VAR(2);
 }

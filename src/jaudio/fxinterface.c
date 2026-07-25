@@ -1,6 +1,7 @@
 #include "jaudio/fxinterface.h"
 
 #include "Dolphin/os.h"
+#include "jaudio/debug.h"
 #include "jaudio/sample.h"
 
 static u16 SEND_TABLE[] = {
@@ -12,9 +13,6 @@ static u16 SEND_TABLE[] = {
  */
 BOOL DFX_SetFxLine(u8 idx, s16* circularBufferBase, FxlineConfig* config)
 {
-	STACK_PAD_VAR(2);
-	s16** REF_circularBufferBase;
-
 	FXBuffer* buf;
 	BOOL restoreInterrupts;
 
@@ -30,8 +28,8 @@ BOOL DFX_SetFxLine(u8 idx, s16* circularBufferBase, FxlineConfig* config)
 		buf->circularBufferSize = config->circularBufferSize;
 		DSP_SetFilterTable(buf->filterCoeffs, config->filterCoeffs, 8);
 	}
-	REF_circularBufferBase = &circularBufferBase;
 	if (circularBufferBase && config) {
+		JAUDIO_PRINT("DFX_SetFxLine: buffer=%x size=%d\n", circularBufferBase, config->circularBufferSize);
 		int size = config->circularBufferSize * 0xa0; // TODO: What is 160 bytes large?
 
 		buf->circularBufferBase = circularBufferBase;

@@ -7,6 +7,7 @@
 #include "jaudio/cmdqueue.h"
 #include "jaudio/cmdstack.h"
 #include "jaudio/connect.h"
+#include "jaudio/debug.h"
 #include "jaudio/driverinterface.h"
 #include "jaudio/dvdthread.h"
 #include "jaudio/fat.h"
@@ -345,10 +346,7 @@ static u16 TrackReceive(seqp_* track, u16 message)
  */
 static void AuxBusInit()
 {
-	u32* REF_alloc2Size;
 	u32 alloc2Size;
-
-	STACK_PAD_VAR(2);
 
 	u32 i;
 	s16* circularBufferBase;
@@ -363,7 +361,7 @@ static void AuxBusInit()
 	for (i = 0; i < 4; ++i) {
 		if (i < 3) {
 			alloc2Size         = fx_config[i].circularBufferSize * 0xa0; // TODO: What is 160 bytes large?
-			REF_alloc2Size     = &alloc2Size;
+			JAUDIO_PRINT("AuxBusInit: size=%d config=%p\n", alloc2Size, &fx_config[i]);
 			circularBufferBase = (s16*)OSAlloc2(alloc2Size);
 		} else {
 			circularBufferBase = NULL;

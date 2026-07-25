@@ -4,6 +4,7 @@
 #include "jaudio/bankread.h"
 #include "jaudio/bx.h"
 #include "jaudio/connect.h"
+#include "jaudio/debug.h"
 #include "jaudio/driverinterface.h"
 #include "jaudio/dspdriver.h"
 #include "jaudio/rate.h"
@@ -110,8 +111,8 @@ static void EffecterInit(jc_* jc, Inst_* inst)
 	for (u32 i = 0; i < 2; i++) {
 		if (inst->mSensors[i]) {
 			u8 trigger     = __GetTrigger(jc, inst->mSensors[i]->type);
-			f32 sense      = Bank_SenseToOfs(inst->mSensors[i], trigger);
-			f32* REF_sense = &sense;
+			f32 sense = Bank_SenseToOfs(inst->mSensors[i], trigger);
+			JAUDIO_PRINT("EffecterInit: sense=%f\n", sense);
 			__DoEffect(jc, inst->mSensors[i]->id, sense);
 		}
 
@@ -149,8 +150,8 @@ static void EffecterInit_Perc(jc_* jc, Pmap_* pmap, u16 id)
 	for (u32 i = 0; i < 2; i++) {
 		Pmap_* map = (Pmap_*)((int*)pmap + i + 2);
 		if (map->randomEffect) {
-			f32 r      = Bank_RandToOfs(map->randomEffect);
-			f32* REF_r = &r;
+			f32 r = Bank_RandToOfs(map->randomEffect);
+			JAUDIO_PRINT("EffecterInit_Perc: random=%f\n", r);
 			__DoEffect(jc, map->randomEffect->id, r);
 		}
 
@@ -255,7 +256,6 @@ static jc_* __Oneshot_GetLogicalChannel(jcs_* jcs, CtrlWave_* wave)
 
 	jc_* chan = List_GetChannel(&jcs->freeChannels);
 	jc_* chan2;
-	jc_** REF_chan2 = &chan2;
 	STACK_PAD_VAR(6);
 	if (chan == NULL) {
 
@@ -277,6 +277,7 @@ static jc_* __Oneshot_GetLogicalChannel(jcs_* jcs, CtrlWave_* wave)
 				}
 			}
 
+			JAUDIO_PRINT("__Oneshot_GetLogicalChannel: stolen=%x\n", chan2);
 			if (chan2) {
 				chan2->mOscBuffers[0].state = 6;
 				List_AddChannel(&jcs->waitingChannels, chan2);
@@ -432,6 +433,7 @@ static void __Oneshot_StopMonoPolyCheck(jc_* jc, u32 id)
 
 			int flag = id >> 0x18 & 0x20;
 			if (chan->soundId == id) {
+				JAUDIO_PRINT("__Oneshot_StopMonoPolyCheck: sound=%x\n", chan->soundId);
 				if (flag) {
 					if (chan->polyphonyCounter > jc->polyphonyCounter) {
 						chan->polyphonyCounter--;
@@ -452,8 +454,6 @@ static void __Oneshot_StopMonoPolyCheck(jc_* jc, u32 id)
 			chan = chan->nextChan;
 		}
 	}
-
-	STACK_PAD_VAR(2);
 }
 
 /**
@@ -461,6 +461,7 @@ static void __Oneshot_StopMonoPolyCheck(jc_* jc, u32 id)
  */
 void Init_1shot(jcs_* jcs, u32 id)
 {
+	JAUDIO_PRINT("Init_1shot: channels=%d\n", jcs->chanCount);
 	if (jcs->chanCount != 0) {
 		FixReleaseChannelAll(jcs);
 	}
@@ -471,8 +472,6 @@ void Init_1shot(jcs_* jcs, u32 id)
 	} else {
 		jcs->voiceStealingMode = 1;
 	}
-
-	STACK_PAD_VAR(2);
 }
 
 /**
@@ -512,8 +511,8 @@ void AllStop_1Shot(jcs_* jcs)
 
 	jc_* jc = jcs->activeChannels;
 	jc_* next;
-	jc_** REF_jc = &jc;
 	STACK_PAD_VAR(4);
+	JAUDIO_PRINT("AllStop_1Shot: channel=%x\n", jc);
 	while (jc) {
 		next = jc->nextChan;
 		Stop_1Shot(jc);
@@ -588,7 +587,7 @@ void SetKeyTarget_1Shot(jc_* jc, u8 key, u32 steps)
  */
 void Gate_1Shot(jc_* jc, u8 key, u8 velocity, s32 noteId)
 {
-	STACK_PAD_VAR(2);
+	JAUDIO_PRINT("Gate_1Shot: previous note=%d channel type=%d\n", jc->noteId, jc->logicalChanType);
 	if (jc->noteId == -1) {
 		jc->noteId         = noteId;
 		jc->lastNotePlayed = jc->noteId;
@@ -706,9 +705,9 @@ void FlushRelease_1Shot(jcs_* jcs)
  */
 static BOOL Jesus1Shot_Update(jc_* jc, JCSTATUS jstatus)
 {
-	u32 test    = FALSE;
-	jc_** jcptr = &jc;
-	s32 status  = jstatus;
+	u32 test = FALSE;
+	JAUDIO_PRINT("Jesus1Shot_Update: channel=%x\n", jc);
+	s32 status = jstatus;
 
 	if (status == 0) {
 		for (u32 i = 0; i < 2; i++) {
@@ -822,6 +821,7 @@ jc_* Play_1shot(jcs_* jcs, SOUNDID_ sound, u32 id)
 	BOOL test = FALSE;
 
 	inst = InstRead(sound.bytes[0], sound.bytes[1]);
+	JAUDIO_PRINT("Play_1shot: sound=%x bank=%d\n", sound.value, sound.bytes[0]);
 	if (inst == NULL) {
 		return NULL;
 	}
@@ -900,8 +900,6 @@ jc_* Play_1shot(jcs_* jcs, SOUNDID_ sound, u32 id)
 		__Oneshot_WavePause(newjc, 1);
 	}
 	return newjc;
-
-	STACK_PAD_VAR(2);
 }
 
 /**
@@ -919,8 +917,8 @@ jc_* Play_1shot_Perc(jcs_* jcs, SOUNDID_ sound, u32 id)
 	}
 
 	testPercMap* map   = (testPercMap*)Bank_GetPercVmap(perc, sound.bytes[2], sound.bytes[3]);
-	testPercMap** mapp = &map;
 	if (map == NULL) {
+		JAUDIO_PRINT("Play_1shot_Perc: map=%p\n", map);
 		return NULL;
 	}
 

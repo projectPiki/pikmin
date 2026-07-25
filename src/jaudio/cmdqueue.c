@@ -1,6 +1,7 @@
 #include "jaudio/cmdqueue.h"
 
 #include "jaudio/audiomesg.h"
+#include "jaudio/debug.h"
 #include "jaudio/jammain_2.h"
 #include "jaudio/playercall.h"
 #include "jaudio/verysimple.h"
@@ -74,11 +75,7 @@ void Jal_SendCmdQueue(CmdQueue* queue, u16 msg)
  */
 void Jal_SendCmdQueue_Noblock(CmdQueue* queue, u16 msg)
 {
-	CmdQueue** REF_queue;
-	u16* REF_msg;
-
-	REF_queue = &queue;
-	REF_msg   = &msg;
+	JAUDIO_PRINT("Jal_SendCmdQueue_Noblock: queue=%x msg=%x\n", queue, msg);
 	Jac_SendMessage(&queue->msgQueue, (OSMessage)msg);
 
 #if defined(VERSION_GPIJ01_01)

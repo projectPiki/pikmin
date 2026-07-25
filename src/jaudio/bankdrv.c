@@ -1,6 +1,7 @@
 #include "jaudio/bankdrv.h"
 
 #include "jaudio/bx.h"
+#include "jaudio/debug.h"
 #include "jaudio/ja_calc.h"
 #include "jaudio/random.h"
 #include "jaudio/rate.h"
@@ -77,16 +78,14 @@ int Bank_GetInstKeymap(Inst_* inst, u8 key)
  */
 int Bank_GetInstVmap(Inst_* inst, u8 key, u8 velocity)
 {
-	STACK_PAD_VAR(1);
-
 	if (!inst) {
 		return 0;
 	}
 
 	int instIndex = Bank_GetInstKeymap(inst, key);
 	if (instIndex != -1) {
-		u8* REF_p3       = &velocity;
 		InstKeymap_* keymap = inst->mKeyRegions[instIndex];
+		JAUDIO_PRINT("Bank_GetInstVmap: velocity=%d regions=%d\n", velocity, keymap->mVelocityCount);
 		for (u32 i = 0; i < keymap->mVelocityCount; i++) {
 			Vmap_* vmap = keymap->mVelocities[i];
 			if (velocity <= vmap->mBaseVelocity) {

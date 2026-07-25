@@ -2,6 +2,7 @@
 
 #include "jaudio/audiostruct.h"
 #include "jaudio/connect.h"
+#include "jaudio/debug.h"
 #include "jaudio/driverinterface.h"
 #include "jaudio/jammain_2.h"
 #include "jaudio/oneshot.h"
@@ -120,10 +121,9 @@ s32 NoteON(seqp_* track, s32 channel, s32 flag1, s32 flag2, s32 playFlag)
  */
 s32 NoteOFF_R(seqp_* track, u8 channelIndex, u16 releaseFrames)
 {
-	u8* REF_channelIndex;
 	jc_* jc;
 
-	REF_channelIndex = &channelIndex;
+	JAUDIO_PRINT("NoteOFF_R: channel=%d\n", channelIndex);
 	if (jc = track->channels[channelIndex]) {
 		if (jc->channelId == track->activeSoundIds[channelIndex]) {
 			if (releaseFrames == 0) {
@@ -152,8 +152,7 @@ s32 NoteOFF(seqp_* track, u8 channelIndex)
  */
 s32 GateON(seqp_* track, s32 channelId, s32 key, s32 velocity, s32 playId)
 {
-	s32* REF_param_3 = &key;
-
+	JAUDIO_PRINT("GateON: key=%d\n", key);
 	if (track->channels[channelId]) {
 		Gate_1Shot(track->channels[channelId], key, velocity, playId);
 	} else {

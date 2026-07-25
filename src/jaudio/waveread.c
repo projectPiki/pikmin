@@ -2,6 +2,7 @@
 
 #include "jaudio/bx.h"
 #include "jaudio/connect.h"
+#include "jaudio/debug.h"
 #include "jaudio/heapctrl.h"
 #include <stddef.h>
 
@@ -39,7 +40,6 @@ CtrlGroup_* Wave_Test(u8* data)
 	WaveArchiveBank_* arcBank;
 	CtrlGroup_* group;
 	WaveArchive_* arc;
-	WaveArchive_** REF_arc;
 	SCNE_* scene;
 	Ctrl_* cdf;
 	Ctrl_* cex;
@@ -61,8 +61,8 @@ CtrlGroup_* Wave_Test(u8* data)
 
 	for (i = 0; i < arcBank->count; i++) {
 		PTconvert((void**)&arcBank->waveGroups[i], base_addr);
-		arc     = arcBank->waveGroups[i];
-		REF_arc = &arc;
+		arc = arcBank->waveGroups[i];
+		JAUDIO_PRINT("Wave_Test: archive=%x\n", arc);
 		Jac_InitHeap(&arc->heap);
 		arc->heap.startAddress = 0;
 
@@ -151,9 +151,6 @@ CtrlGroup_* WaveidToWavegroup(u32 waveId, u32 fallbackIndex)
 {
 	u16 virtID = waveId >> 16;
 	u16 index;
-	u16* REF_virtID = &virtID;
-
-	STACK_PAD_VAR(1);
 
 	if (virtID == 0xFFFF) {
 		index = fallbackIndex;
@@ -161,6 +158,9 @@ CtrlGroup_* WaveidToWavegroup(u32 waveId, u32 fallbackIndex)
 		index = Jac_WsVirtualToPhysical(virtID);
 	}
 
+	if (index < WAVEGROUP_SIZE) {
+		JAUDIO_PRINT("WaveidToWavegroup: virtual=%x group=%p\n", virtID, wavegroup[index]);
+	}
 	return index >= WAVEGROUP_SIZE ? NULL : wavegroup[index];
 }
 
@@ -169,20 +169,15 @@ CtrlGroup_* WaveidToWavegroup(u32 waveId, u32 fallbackIndex)
  */
 static BOOL __WaveScene_Set(u32 waveIndex, u32 ctrlIndex, BOOL doSet)
 {
-	STACK_PAD_VAR(2);
-	u32* REF_param_1;
-	u32* REF_param_2;
-
 	CtrlGroup_* group;
 
-	REF_param_1 = &waveIndex;
 	if (waveIndex >= WAVEGROUP_SIZE) {
 		return FALSE;
 	}
 	if (!(group = wavegroup[waveIndex])) {
 		return FALSE;
 	}
-	REF_param_2 = &ctrlIndex;
+	JAUDIO_PRINT("__WaveScene_Set: wave=%d control=%d count=%d archive=%x\n", waveIndex, ctrlIndex, group->count, wavearc[waveIndex]);
 	if (ctrlIndex >= group->count) {
 		return FALSE;
 	}
@@ -210,18 +205,13 @@ BOOL WaveScene_Load(u32 waveIndex, u32 ctrlIndex)
  */
 static void __WaveScene_Close(u32 waveIndex, u32 ctrlIndex, BOOL eraseOnly)
 {
-	STACK_PAD_VAR(2);
-	u32* REF_param_1;
-	u32* REF_param_2;
-
 	CtrlGroup_* group;
 
-	REF_param_1 = &waveIndex;
 	if (waveIndex >= WAVEGROUP_SIZE) {
 		return;
 	}
 	if (group = wavegroup[waveIndex]) {
-		REF_param_2 = &ctrlIndex;
+		JAUDIO_PRINT("__WaveScene_Close: wave=%d control=%d archive=%x count=%d\n", waveIndex, ctrlIndex, wavearc[waveIndex], group->count);
 		if (ctrlIndex < group->count) {
 			Jac_SceneClose(wavearc[waveIndex], group, ctrlIndex, eraseOnly);
 		}
