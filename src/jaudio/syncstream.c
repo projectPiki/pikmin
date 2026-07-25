@@ -620,6 +620,10 @@ static s32 StreamAudio_Callback(void* data)
 #endif
 				for (channelIdx = 0; channelIdx < 2; channelIdx++) {
 					u16 pitch = (4096.0f * ctrl->header.sampleRate * ctrl->pitchRatio) / JAC_DAC_RATE;
+#if defined(VERSION_GPIP01)
+					u16* REF_pitch = &pitch;
+					STACK_PAD_VAR(5);
+#endif
 					Play_DirectPCM(ctrl->dspch[channelIdx], ctrl->loopBufs[channelIdx], ctrl->loopSize, ctrl->totalSamples);
 #if defined(VERSION_GPIJ01_01) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_DPIJ01_PIKIDEMO)
 					DSP_SetMixerInitVolume(ctrl->dspch[channelIdx]->buffer_idx, channelIdx, ctrl->volume[channelIdx], 0);
