@@ -4,6 +4,12 @@
 #include "Dolphin/GX/GXMisc.h"
 #include "Dolphin/hw_regs.h"
 
+#if OS_BUILD_VERSION >= 20011217L
+#define GX_TRIANGLE_PERF_REG(value) (0x23000000 | (value))
+#else
+#define GX_TRIANGLE_PERF_REG(value) (0x23030000 | (value))
+#endif
+
 /**
  * @TODO: Documentation
  */
@@ -186,105 +192,122 @@ void GXSetGPMetric(GXPerf0 perf0, GXPerf1 perf1)
 		GX_WRITE_XF_REG(6, reg);
 		break;
 	}
+#if OS_BUILD_VERSION >= 20011217L
+	case GX_PERF0_CLOCKS:
+	{
+		reg = 0x21;
+		GX_WRITE_XF_REG(6, reg);
+		break;
+	}
+#else
 	case GX_PERF0_TRIANGLES:
 	{
-		reg = 0x2303AE7F;
+		reg = GX_TRIANGLE_PERF_REG(0xAE7F);
 		GX_WRITE_RAS_REG(reg);
 		break;
 	}
+#endif
 	case GX_PERF0_CLIP_RATIO:
 	{
 		reg = 0x153;
 		GX_WRITE_XF_REG(6, reg);
 		break;
 	}
+#if OS_BUILD_VERSION >= 20011217L
+	case GX_PERF0_TRIANGLES:
+	{
+		reg = GX_TRIANGLE_PERF_REG(0xAE7F);
+		GX_WRITE_RAS_REG(reg);
+		break;
+	}
+#endif
 	case GX_PERF0_TRIANGLES_CULLED:
 	{
-		reg = 0x23038E7F;
+		reg = GX_TRIANGLE_PERF_REG(0x8E7F);
 		GX_WRITE_RAS_REG(reg);
 		break;
 	}
 	case GX_PERF0_TRIANGLES_PASSED:
 	{
-		reg = 0x23039E7F;
+		reg = GX_TRIANGLE_PERF_REG(0x9E7F);
 		GX_WRITE_RAS_REG(reg);
 		break;
 	}
 	case GX_PERF0_TRIANGLES_SCISSORED:
 	{
-		reg = 0x23031E7F;
+		reg = GX_TRIANGLE_PERF_REG(0x1E7F);
 		GX_WRITE_RAS_REG(reg);
 		break;
 	}
 	case GX_PERF0_TRIANGLES_0TEX:
 	{
-		reg = 0x2303AC3F;
+		reg = GX_TRIANGLE_PERF_REG(0xAC3F);
 		GX_WRITE_RAS_REG(reg);
 		break;
 	}
 	case GX_PERF0_TRIANGLES_1TEX:
 	{
-		reg = 0x2303AC7F;
+		reg = GX_TRIANGLE_PERF_REG(0xAC7F);
 		GX_WRITE_RAS_REG(reg);
 		break;
 	}
 	case GX_PERF0_TRIANGLES_2TEX:
 	{
-		reg = 0x2303ACBF;
+		reg = GX_TRIANGLE_PERF_REG(0xACBF);
 		GX_WRITE_RAS_REG(reg);
 		break;
 	}
 	case GX_PERF0_TRIANGLES_3TEX:
 	{
-		reg = 0x2303ACFF;
+		reg = GX_TRIANGLE_PERF_REG(0xACFF);
 		GX_WRITE_RAS_REG(reg);
 		break;
 	}
 	case GX_PERF0_TRIANGLES_4TEX:
 	{
-		reg = 0x2303AD3F;
+		reg = GX_TRIANGLE_PERF_REG(0xAD3F);
 		GX_WRITE_RAS_REG(reg);
 		break;
 	}
 	case GX_PERF0_TRIANGLES_5TEX:
 	{
-		reg = 0x2303AD7F;
+		reg = GX_TRIANGLE_PERF_REG(0xAD7F);
 		GX_WRITE_RAS_REG(reg);
 		break;
 	}
 	case GX_PERF0_TRIANGLES_6TEX:
 	{
-		reg = 0x2303ADBF;
+		reg = GX_TRIANGLE_PERF_REG(0xADBF);
 		GX_WRITE_RAS_REG(reg);
 		break;
 	}
 	case GX_PERF0_TRIANGLES_7TEX:
 	{
-		reg = 0x2303ADFF;
+		reg = GX_TRIANGLE_PERF_REG(0xADFF);
 		GX_WRITE_RAS_REG(reg);
 		break;
 	}
 	case GX_PERF0_TRIANGLES_8TEX:
 	{
-		reg = 0x2303AE3F;
+		reg = GX_TRIANGLE_PERF_REG(0xAE3F);
 		GX_WRITE_RAS_REG(reg);
 		break;
 	}
 	case GX_PERF0_TRIANGLES_0CLR:
 	{
-		reg = 0x2303A27F;
+		reg = GX_TRIANGLE_PERF_REG(0xA27F);
 		GX_WRITE_RAS_REG(reg);
 		break;
 	}
 	case GX_PERF0_TRIANGLES_1CLR:
 	{
-		reg = 0x2303A67F;
+		reg = GX_TRIANGLE_PERF_REG(0xA67F);
 		GX_WRITE_RAS_REG(reg);
 		break;
 	}
 	case GX_PERF0_TRIANGLES_2CLR:
 	{
-		reg = 0x2303AA7F;
+		reg = GX_TRIANGLE_PERF_REG(0xAA7F);
 		GX_WRITE_RAS_REG(reg);
 		break;
 	}
@@ -330,12 +353,14 @@ void GXSetGPMetric(GXPerf0 perf0, GXPerf1 perf1)
 		GX_WRITE_RAS_REG(reg);
 		break;
 	}
+#if OS_BUILD_VERSION < 20011217L
 	case GX_PERF0_CLOCKS:
 	{
 		reg = 0x21;
 		GX_WRITE_XF_REG(6, reg);
 		break;
 	}
+#endif
 	case GX_PERF0_NONE:
 	{
 		break;
@@ -373,6 +398,20 @@ void GXSetGPMetric(GXPerf0 perf0, GXPerf1 perf1)
 		GX_WRITE_RAS_REG(reg);
 		break;
 	}
+#if OS_BUILD_VERSION >= 20011217L
+	case GX_PERF1_TC_MISS:
+	{
+		reg = 0x67000252;
+		GX_WRITE_RAS_REG(reg);
+		break;
+	}
+	case GX_PERF1_CLOCKS:
+	{
+		reg = 0x67000021;
+		GX_WRITE_RAS_REG(reg);
+		break;
+	}
+#endif
 	case GX_PERF1_TC_CHECK1_2:
 	{
 		reg = 0x6700014B;
@@ -397,12 +436,14 @@ void GXSetGPMetric(GXPerf0 perf0, GXPerf1 perf1)
 		GX_WRITE_RAS_REG(reg);
 		break;
 	}
+#if OS_BUILD_VERSION < 20011217L
 	case GX_PERF1_TC_MISS:
 	{
 		reg = 0x67000252;
 		GX_WRITE_RAS_REG(reg);
 		break;
 	}
+#endif
 	case GX_PERF1_VC_ELEMQ_FULL:
 	{
 		SET_REG_FIELD(0, gx->perfSel, 4, 4, 2);
@@ -475,12 +516,14 @@ void GXSetGPMetric(GXPerf0 perf0, GXPerf1 perf1)
 		__cpReg[CP_PERF_SELECT] = reg;
 		break;
 	}
+#if OS_BUILD_VERSION < 20011217L
 	case GX_PERF1_CLOCKS:
 	{
 		reg = 0x67000021;
 		GX_WRITE_RAS_REG(reg);
 		break;
 	}
+#endif
 	case GX_PERF1_NONE:
 	{
 		break;

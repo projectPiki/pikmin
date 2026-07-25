@@ -9,6 +9,7 @@
 static vu8 DSP_prior_yield;
 static int AUDIO_UPDATE_REQUEST;
 static u32 sync_stack[3];
+DSPTaskInfo* DSP_prior_task;
 
 static void Dsp_Update_Request();
 
@@ -83,7 +84,7 @@ void __DSPHandler(__OSInterrupt interrupt, OSContext* context)
 	}
 	case 0xDCD10003:
 	{
-		Console_printf("Done DSP Task  %x \n"); // doesnt actually have another param, very cool
+		Console_printf("Done DSP Task  %x \n", (u32)__DSP_curr_task);
 		if (__DSP_curr_task->done_cb) {
 			__DSP_curr_task->done_cb(__DSP_curr_task);
 		}
