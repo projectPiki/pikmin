@@ -690,24 +690,43 @@ void RegisterStreamCallback(StreamCallback callback)
  */
 static u32 __DecodePCM(StreamCtrl_* ctrl)
 {
-	u32 usedSize;
-	s16* psVar9;
-	s16* pasVar4;
+#if defined(VERSION_GPIP01)
+	u32 activeBufIdx;
+	s32 usedSize;
+	s16* rightSamples;
 	u32 sampleCount;
-	s16* pasVar6;
+	s16* leftSamples;
+	s16* sourceSamples;
+	u8* sourceBytes;
+	size_t i;
+
+	activeBufIdx = ctrl->buffCtrlMain.activeBufIdx;
+	leftSamples  = ctrl->leftChanBufs[ctrl->buffCtrlMain2.currentBufIdx];
+	sourceBytes  = ctrl->data[activeBufIdx].data;
+	usedSize     = ctrl->buffCtrl[activeBufIdx].usedSize;
+	sampleCount  = ((s32)ctrl->buffCtrl[activeBufIdx].pos - usedSize) / 4;
+	sourceBytes += usedSize;
+	rightSamples  = ctrl->rightChanBufs[ctrl->buffCtrlMain2.currentBufIdx];
+	sourceSamples = (s16*)sourceBytes;
+#else
+	u32 usedSize;
+	s16* sourceSamples;
+	s16* rightSamples;
+	u32 sampleCount;
+	s16* leftSamples;
 	size_t i;
 
 	usedSize    = ctrl->buffCtrl[ctrl->buffCtrlMain.activeBufIdx].usedSize;
-	sampleCount = ((ctrl->buffCtrl[ctrl->buffCtrlMain.activeBufIdx].pos - usedSize) / 4);
+	sampleCount = (ctrl->buffCtrl[ctrl->buffCtrlMain.activeBufIdx].pos - usedSize) / 4;
 
-	pasVar6 = ctrl->leftChanBufs[ctrl->buffCtrlMain2.currentBufIdx];
-	pasVar4 = ctrl->rightChanBufs[ctrl->buffCtrlMain2.currentBufIdx];
-	psVar9  = (s16*)&ctrl->data[ctrl->buffCtrlMain.activeBufIdx].data[usedSize];
+	leftSamples   = ctrl->leftChanBufs[ctrl->buffCtrlMain2.currentBufIdx];
+	rightSamples  = ctrl->rightChanBufs[ctrl->buffCtrlMain2.currentBufIdx];
+	sourceSamples = (s16*)&ctrl->data[ctrl->buffCtrlMain.activeBufIdx].data[usedSize];
+#endif
 	for (i = 0; i < sampleCount; i++) {
-		// This FEELS like it's all optimized array subscripting, but I can't figure it out.
-		*pasVar6++ = psVar9[0];
-		*pasVar4++ = psVar9[1];
-		psVar9 += 2;
+		*leftSamples++  = sourceSamples[0];
+		*rightSamples++ = sourceSamples[1];
+		sourceSamples += 2;
 	}
 	ctrl->samplesDecoded += sampleCount;
 	return sampleCount;

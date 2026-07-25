@@ -174,11 +174,36 @@ static s32 DoMount(s32 channel)
 		card->cid = id;
 #endif
 		card->size       = (u16)(id & 0xFC);
-		card->sectorSize = SectorSizeTable[(id & 0x00003800) >> 11];
-		card->cBlock     = (u16)((card->size * 1024 * 1024 / 8) / card->sectorSize);
-		card->latency    = LatencyTable[(id & 0x00000700) >> 8];
 #if OS_BUILD_VERSION >= 20011217L
-#else
+		switch (card->size) {
+		case 4:
+		case 8:
+		case 16:
+		case 32:
+		case 64:
+		case 128:
+			break;
+		default:
+			result = CARD_RESULT_WRONGDEVICE;
+			goto error;
+		}
+#endif
+		card->sectorSize = SectorSizeTable[(id & 0x00003800) >> 11];
+#if OS_BUILD_VERSION >= 20011217L
+		if (card->sectorSize == 0) {
+			result = CARD_RESULT_WRONGDEVICE;
+			goto error;
+		}
+#endif
+		card->cBlock = (u16)((card->size * 1024 * 1024 / 8) / card->sectorSize);
+#if OS_BUILD_VERSION >= 20011217L
+		if (card->cBlock < 8) {
+			result = CARD_RESULT_WRONGDEVICE;
+			goto error;
+		}
+#endif
+		card->latency = LatencyTable[(id & 0x00000700) >> 8];
+#if OS_BUILD_VERSION < 20011217L
 		if (card->sectorSize == 0 || card->cBlock < 8) {
 			result = CARD_RESULT_WRONGDEVICE;
 			goto error;

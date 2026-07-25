@@ -36,6 +36,11 @@ static vu32 shdwChangeMode;
 #endif
 static vu64 shdwChanged;
 
+#if defined(VERSION_GPIP01)
+static VITimingInfo* CurrTiming;
+static s32 CurrTvMode;
+#endif
+
 static u32 FBSet;
 
 static vu16 regs[59];
@@ -43,7 +48,7 @@ static vu16 shdwRegs[59];
 
 static VIPositionInfo HorVer;
 
-#if OS_BUILD_VERSION >= 20011002L
+#if OS_BUILD_VERSION >= 20011002L && !defined(VERSION_GPIP01)
 static VITimingInfo* CurrTiming;
 static s32 CurrTvMode;
 #endif
@@ -479,6 +484,29 @@ void VIInit(void)
 
 	__VIRegs[VI_WIDTH] = 640;
 	ImportAdjustingValues();
+#if defined(VERSION_GPIP01)
+	dspCfg          = __VIRegs[VI_DISP_CONFIG];
+	HorVer.nonInter = (s32)((dspCfg >> 2U) & 1);
+	HorVer.tv       = (u32)((dspCfg >> 8U) & 3);
+	tv              = (HorVer.tv == 3) ? 0 : HorVer.tv;
+	HorVer.timing   = getTiming((tv << 2) + HorVer.nonInter);
+	regs[1]         = dspCfg;
+	CurrTiming      = HorVer.timing;
+	CurrTvMode      = HorVer.tv;
+
+	HorVer.dispSizeX = 0x280U;
+	HorVer.dispSizeY = CurrTiming->acv * 2;
+	HorVer.dispPosX  = (0x2D0 - HorVer.dispSizeX) / 2;
+	HorVer.dispPosY  = 0;
+	AdjustPosition(CurrTiming->acv);
+	HorVer.fbSizeX  = 0x280;
+	HorVer.fbSizeY  = CurrTiming->acv * 2;
+	HorVer.panPosX  = 0;
+	HorVer.panPosY  = 0;
+	HorVer.panSizeX = 0x280;
+	HorVer.panSizeY = CurrTiming->acv * 2;
+	HorVer.xfbMode  = 0;
+#else
 	HorVer.dispSizeX = 0x280U;
 	HorVer.dispSizeY = 0x1E0U;
 	HorVer.dispPosX  = (0x2D0 - HorVer.dispSizeX) / 2;
@@ -497,6 +525,7 @@ void VIInit(void)
 	tv                 = (HorVer.tv == 3) ? 0 : HorVer.tv;
 	HorVer.timing      = getTiming((tv << 2) + HorVer.nonInter);
 	regs[1]            = dspCfg;
+#endif
 	HorVer.wordPerLine = 0x28;
 	HorVer.std         = 0x28;
 	HorVer.wpl         = 0x28;
@@ -811,16 +840,12 @@ void VIConfigure(const GXRenderModeObj* obj)
 	}
 #endif
 
-	tvInBootrom = VIGetTvFormat();
-	tvInGame    = (u32)obj->viTVmode >> 2;
-#if 0
+#if defined(VERSION_GPIP01)
 	tvInBootrom = *(u32*)OSPhysicalToCached(0xCC);
-
-	if ((tvInGame == VI_NTSC) || (tvInGame == VI_MPAL)) {
-	} else {
-		HorVer.tv = tvInGame;
-	}
+#else
+	tvInBootrom = VIGetTvFormat();
 #endif
+	tvInGame = (u32)obj->viTVmode >> 2;
 
 #if OS_BUILD_VERSION >= 20011112L
 	if (tvInGame == VI_DEBUG_PAL && message == FALSE) {
@@ -835,7 +860,15 @@ void VIConfigure(const GXRenderModeObj* obj)
 	}
 #endif
 
-	HorVer.tv        = tvInBootrom;
+#if defined(VERSION_GPIP01)
+	if (tvInGame == VI_NTSC || tvInGame == VI_MPAL) {
+		HorVer.tv = tvInBootrom;
+	} else {
+		HorVer.tv = tvInGame;
+	}
+#else
+	HorVer.tv = tvInBootrom;
+#endif
 	HorVer.dispPosX  = obj->viXOrigin;
 	HorVer.dispPosY  = (u16)((HorVer.nonInter == VI_NON_INTERLACE) ? (u16)(obj->viYOrigin * 2) : obj->viYOrigin);
 	HorVer.dispSizeX = obj->viWidth;
@@ -847,9 +880,17 @@ void VIConfigure(const GXRenderModeObj* obj)
 	HorVer.panPosX   = 0;
 	HorVer.panPosY   = 0;
 
+#if defined(VERSION_GPIP01)
+	HorVer.dispSizeY = (u16)((HorVer.nonInter == VI_PROGRESSIVE) ? HorVer.panSizeY
+	                         : (HorVer.nonInter == VI_3D)        ? HorVer.panSizeY
+	                         : (HorVer.xfbMode == VI_XFBMODE_SF) ? (u16)(2 * HorVer.panSizeY)
+	                                                             : HorVer.panSizeY);
+	HorVer.is3D      = (HorVer.nonInter == VI_3D) ? TRUE : FALSE;
+#else
 	HorVer.dispSizeY = (u16)((HorVer.nonInter == VI_PROGRESSIVE) ? HorVer.panSizeY
 	                         : (HorVer.xfbMode == VI_XFBMODE_SF) ? (u16)(2 * HorVer.panSizeY)
 	                                                             : HorVer.panSizeY);
+#endif
 
 #if defined(VERSION_GPIE01_00) || defined(VERSION_GPIJ01_01)
 	tm = getTiming(obj->viTVmode);
@@ -866,23 +907,44 @@ void VIConfigure(const GXRenderModeObj* obj)
 
 	regDspCfg = regs[VI_DISP_CONFIG];
 	// TODO: USE BIT MACROS OR SOMETHING
+#if defined(VERSION_GPIP01)
+	if (HorVer.nonInter == VI_PROGRESSIVE || HorVer.nonInter == VI_3D) {
+#else
 	if ((HorVer.nonInter == VI_PROGRESSIVE)) {
+#endif
 		regDspCfg = (((u32)(regDspCfg)) & ~0x00000004) | (((u32)(1)) << 2);
 	} else {
 		regDspCfg = (((u32)(regDspCfg)) & ~0x00000004) | (((u32)(HorVer.nonInter & 1)) << 2);
 	}
 
+#if defined(VERSION_GPIP01)
+	regDspCfg = (((u32)(regDspCfg)) & ~0x00000008) | (((u32)(HorVer.is3D)) << 3);
+	if (HorVer.tv == VI_DEBUG_PAL || HorVer.tv == VI_EURGB60) {
+		regDspCfg = ((u32)(regDspCfg)) & ~0x00000300;
+	} else {
+		regDspCfg = (((u32)(regDspCfg)) & ~0x00000300) | (((u32)(HorVer.tv)) << 8);
+	}
+#else
 	regDspCfg = (((u32)(regDspCfg)) & ~0x00000300) | (((u32)(HorVer.tv)) << 8);
+#endif
 
 	regs[VI_DISP_CONFIG] = (u16)regDspCfg;
 	changed |= VI_BITMASK(0x01);
 
 	regDspCfg = regs[VI_CLOCK_SEL];
+#if defined(VERSION_GPIP01)
+	if (obj->viTVmode == VI_TVMODE_NTSC_PROG || obj->viTVmode == VI_TVMODE_NTSC_3D) {
+		regDspCfg = (u32)(regDspCfg & ~0x1) | 1;
+	} else {
+		regDspCfg = (u32)(regDspCfg & ~0x1);
+	}
+#else
 	if (obj->viTVmode != VI_TVMODE_NTSC_PROG) {
 		regDspCfg = (u32)(regDspCfg & ~0x1);
 	} else {
 		regDspCfg = (u32)(regDspCfg & ~0x1) | 1;
 	}
+#endif
 
 	regs[VI_CLOCK_SEL] = (u16)regDspCfg;
 

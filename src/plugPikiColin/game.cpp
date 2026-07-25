@@ -223,9 +223,13 @@ static immut char* levNames[STAGE_COUNT] = {
 #endif
 
 /**
- * @brief Farbricated inline for DOL-exclusive code that solves matching `OnePlayerSection::init`.
+ * @brief Fabricated inline for DOL-exclusive code that solves matching `OnePlayerSection::init`.
  */
+#if defined(VERSION_GPIP01)
+static inline Texture* setBannerTex(u32 stageID, char* bannerTex)
+#else
 static inline Texture* setBannerTex(u32 stageID)
+#endif
 {
 	// This variable causes problems when this code is not wrapped in this inline.
 	Texture* tex = nullptr;
@@ -233,7 +237,6 @@ static inline Texture* setBannerTex(u32 stageID)
 	// if we're loading into a "valid" story or challenge mode stage, show the area title banner
 	if (stageID <= STAGE_COUNT - 1) {
 #if defined(VERSION_GPIP01)
-		char bannerTex[128];
 		sprintf(bannerTex, "%s/%s", dirNames[gameflow.mGamePrefs.getChildMode()], levNames[stageID]);
 		gameflow.mLevelBannerTex = tex = gameflow.setLoadBanner(bannerTex);
 #else
@@ -244,7 +247,11 @@ static inline Texture* setBannerTex(u32 stageID)
 		(void)(stageID <= STAGE_COUNT - 1);
 		gameflow.mLevelBannerTex = tex;
 	}
+#if defined(VERSION_GPIP01)
+	PRINT("banner texture loaded: %d\n", tex != nullptr);
+#else
 	(void)(tex);
+#endif
 	return tex;
 }
 
@@ -418,7 +425,12 @@ void OnePlayerSection::init()
 				gsys->startLoading(&gameflow.mGameLoadIdler, true, 60);
 			}
 
+#if defined(VERSION_GPIP01)
+			char bannerTex[128];
+			setBannerTex(flowCont.mCurrentStage->mStageID, bannerTex);
+#else
 			setBannerTex(flowCont.mCurrentStage->mStageID);
+#endif
 			PRINT("making new MAINGAME\n");
 			currentSection = new NewPikiGameSection();
 			break;

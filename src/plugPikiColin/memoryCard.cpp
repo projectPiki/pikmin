@@ -663,7 +663,7 @@ bool MemoryCard::getCardStatus(int channel)
 void MemoryCard::checkUseFile()
 {
 #if defined(VERSION_GPIP01)
-	DVDDiskID* disk = DVDGetCurrentDiskID();
+	DVDDiskID* diskID = DVDGetCurrentDiskID();
 #endif
 	for (int i = 0; i < 127; i++) {
 		OSCalendarTime calendar;
@@ -671,13 +671,12 @@ void MemoryCard::checkUseFile()
 		if (CARDGetStatus(mCardChannel, i, &stat) < 0) {
 			continue;
 		}
-		OSTime time = OSSecondsToTicks((OSTime)stat.time);
-		OSTicksToCalendarTime(time, &calendar);
+		OSTicksToCalendarTime(OSSecondsToTicks((OSTime)stat.time), &calendar);
 
-		(void)((u32)i / 100);
+		PRINT("checking memory card file %d\n", i / 100);
 
 #if defined(VERSION_GPIP01)
-		if (!strncmp(stat.fileName, basecardname, 15) && memcmp(&stat, disk, 4) == 0 && memcmp(&stat + 4, (void*)((int)disk + 4), 2) == 0)
+		if (!strncmp(stat.fileName, basecardname, 15) && memcmp(stat.gameName, diskID->gameName, 4) == 0 && memcmp(stat.company, diskID->company, 2) == 0)
 #else
 		if (!strncmp(stat.fileName, basecardname, 15))
 #endif
@@ -934,7 +933,11 @@ void MemoryCard::initBannerArea(CARDStat& state, immut char* p2)
 	sprintf(comment2, p2);
 #else
 	sprintf(comment1, "Pikmin");
+#if defined(VERSION_GPIP01)
+	sprintf(comment2, "");
+#else
 	sprintf(comment2, "Blocks");
+#endif
 #endif
 	CARDSetCommentAddress(&state, stream.mPosition);
 	stream.write(comment1, 0x20);

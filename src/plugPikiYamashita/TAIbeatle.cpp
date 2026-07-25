@@ -266,6 +266,12 @@ protected:
 	void createSteamEffect(Teki& teki)
 	{
 		// interesting...
+#if defined(VERSION_GPIP01)
+		int i;
+		int firstID;
+		int secondID;
+		CollPart* steamEffectPart = nullptr;
+#else
 		zen::particleGenerator* ptclGen;
 		CollPart* kutiPart;
 		CollPart* steamEffectPart;
@@ -273,6 +279,7 @@ protected:
 		int i = 0;
 		int firstID;
 		int secondID;
+#endif
 
 		int collPartIDs[6];
 		for (i = 0; i < 6; i++) {
@@ -329,7 +336,12 @@ protected:
 			}
 
 			if (steamEffectPart != nullptr) {
+#if defined(VERSION_GPIP01)
+				zen::particleGenerator* ptclGen
+				    = effectMgr->create(EffectMgr::EFF_Beatle_Flick2, steamEffectPart->mCentre, nullptr, nullptr);
+#else
 				ptclGen = effectMgr->create(EffectMgr::EFF_Beatle_Flick2, steamEffectPart->mCentre, nullptr, nullptr);
+#endif
 				if (ptclGen != nullptr) {
 					ptclGen->setEmitPosPtr(&steamEffectPart->mCentre);
 				}
@@ -337,14 +349,22 @@ protected:
 			}
 		}
 
+#if defined(VERSION_GPIP01)
+		CollPart* kutiPart = teki.mCollInfo->getSphere('kuti');
+#else
 		kutiPart = teki.mCollInfo->getSphere('kuti');
+#endif
 		if (kutiPart != nullptr) {
 			Matrix4f mtx = kutiPart->getMatrix();
 
 			Vector3f emitDir;
 			emitDir.set(mtx.mMtx[0][0], mtx.mMtx[1][0], mtx.mMtx[2][0]);
 
+#if defined(VERSION_GPIP01)
+			zen::particleGenerator* ptclGen = effectMgr->create(EffectMgr::EFF_Beatle_Flick3, kutiPart->mCentre, nullptr, nullptr);
+#else
 			ptclGen = effectMgr->create(EffectMgr::EFF_Beatle_Flick3, kutiPart->mCentre, nullptr, nullptr);
+#endif
 			if (ptclGen != nullptr) {
 				ptclGen->setEmitPosPtr(&kutiPart->mCentre);
 				ptclGen->setEmitDir(emitDir);
