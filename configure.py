@@ -389,7 +389,7 @@ config.libs = [
             Object(Matching, "jaudio/file_seq.c"),
             Object(Matching, "jaudio/cmdqueue.c"),
             Object(Matching, "jaudio/filter3d.c"),
-            Object(not MatchingFor("GPIP01_00"), "jaudio/syncstream.c"),
+            Object(Matching, "jaudio/syncstream.c"),
             Object(Matching, "jaudio/bankloader.c"),
             Object(Matching, "jaudio/interleave.c"),
             Object(Matching, "jaudio/pikiseq.c"),
