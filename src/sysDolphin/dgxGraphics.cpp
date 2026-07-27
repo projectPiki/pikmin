@@ -82,17 +82,21 @@ GXRenderModeObj localGXPal528IntDf = {
 static GXRenderModeObj* sScreenMode[2] = { &localGXPal528IntDf, &progressiveRenderMode };
 #else
 GXRenderModeObj localNtsc480IntDf = {
+#if defined(VERSION_G98P01_PIKIDEMO)
+	VI_TVMODE_EURGB60_INT, // viTVmode
+#else
 	VI_TVMODE_NTSC_INT, // viTVmode
-	640,                // fbWidth
-	480,                // efbHeight
-	480,                // xfbHeight
-	40,                 // viXOrigin
-	0,                  // viYOrigin
-	640,                // viWidth
-	480,                // viHeight
-	VI_XFBMODE_DF,      // xFBmode
-	0,                  // fiend_rendering
-	0,                  // aa
+#endif
+	640,           // fbWidth
+	480,           // efbHeight
+	480,           // xfbHeight
+	40,            // viXOrigin
+	0,             // viYOrigin
+	640,           // viWidth
+	480,           // viHeight
+	VI_XFBMODE_DF, // xFBmode
+	0,             // fiend_rendering
+	0,             // aa
 	{
 	    { 6, 6 }, // sample_pattern
 	    { 6, 6 },
@@ -134,32 +138,6 @@ static int frameNum;
 static int oldTexs[8] = { 0, 0, 0, 0, 0, 0, 0, 0 };
 
 GColor GColors[1];
-
-static const char* mtxTypes[] = {
-	"GX_TEXMTX0", "GX_TEXMTX1", "GX_TEXMTX2", "GX_TEXMTX3", "GX_TEXMTX4",  "GX_TEXMTX5",
-	"GX_TEXMTX6", "GX_TEXMTX7", "GX_TEXMTX8", "GX_TEXMTX9", "GX_IDENTITY",
-};
-static const char* genSrcs[] = {
-	"GX_TG_POS",       "GX_TG_NRM",       "GX_TG_BINRM",     "GX_TG_TANGENT",   "GX_TG_TEX0",      "GX_TG_TEX1",      "GX_TG_TEX2",
-	"GX_TG_TEX3",      "GX_TG_TEX4",      "GX_TG_TEX5",      "GX_TG_TEX6",      "GX_TG_TEX7",      "GX_TG_TEXCOORD0", "GX_TG_TEXCOORD1",
-	"GX_TG_TEXCOORD2", "GX_TG_TEXCOORD3", "GX_TG_TEXCOORD4", "GX_TG_TEXCOORD5", "GX_TG_TEXCOORD6", "GX_TG_COLOR0",    "GX_TG_COLOR1",
-};
-
-static GXVtxDescList meshVCD[] = {
-	{ GX_VA_PNMTXIDX, GX_DIRECT }, { GX_VA_TEX0MTXIDX, GX_NONE }, { GX_VA_TEX1MTXIDX, GX_NONE }, { GX_VA_TEX2MTXIDX, GX_NONE },
-	{ GX_VA_TEX3MTXIDX, GX_NONE }, { GX_VA_TEX4MTXIDX, GX_NONE }, { GX_VA_TEX5MTXIDX, GX_NONE }, { GX_VA_TEX6MTXIDX, GX_NONE },
-	{ GX_VA_TEX7MTXIDX, GX_NONE }, { GX_VA_POS, GX_INDEX16 },     { GX_VA_NBT, GX_NONE },        { GX_VA_NRM, GX_INDEX16 },
-	{ GX_VA_CLR0, GX_NONE },       { GX_VA_CLR1, GX_NONE },       { GX_VA_TEX0, GX_INDEX16 },    { GX_VA_TEX1, GX_NONE },
-	{ GX_VA_TEX2, GX_NONE },       { GX_VA_TEX3, GX_NONE },       { GX_VA_TEX4, GX_NONE },       { GX_VA_TEX5, GX_NONE },
-	{ GX_VA_TEX6, GX_NONE },       { GX_VA_TEX7, GX_NONE },       { GX_VA_NULL, GX_NONE },
-};
-
-static GXVtxAttrFmtList meshVAT[] = {
-	{ GX_VA_POS, GX_POS_XYZ, GX_F32, 0 }, { GX_VA_NRM, GX_NRM_XYZ, GX_F32, 0 }, { GX_VA_TEX0, GX_TEX_ST, GX_F32, 0 },
-	{ GX_VA_TEX1, GX_TEX_ST, GX_F32, 0 }, { GX_VA_TEX2, GX_TEX_ST, GX_F32, 0 }, { GX_VA_TEX3, GX_TEX_ST, GX_F32, 0 },
-	{ GX_VA_TEX4, GX_TEX_ST, GX_F32, 0 }, { GX_VA_TEX5, GX_TEX_ST, GX_F32, 0 }, { GX_VA_TEX6, GX_TEX_ST, GX_F32, 0 },
-	{ GX_VA_TEX7, GX_TEX_ST, GX_F32, 0 }, { GX_VA_NULL, GX_TEX_ST, GX_S16, 0 },
-};
 
 /**
  * @todo: Documentation
@@ -1175,6 +1153,32 @@ void DGXGraphics::setMaterial(Material* mat, bool p2)
 
 	STACK_PAD_TERNARY(mCustomScale, 7);
 }
+
+static const char* mtxTypes[] = {
+	"GX_TEXMTX0", "GX_TEXMTX1", "GX_TEXMTX2", "GX_TEXMTX3", "GX_TEXMTX4",  "GX_TEXMTX5",
+	"GX_TEXMTX6", "GX_TEXMTX7", "GX_TEXMTX8", "GX_TEXMTX9", "GX_IDENTITY",
+};
+static const char* genSrcs[] = {
+	"GX_TG_POS",       "GX_TG_NRM",       "GX_TG_BINRM",     "GX_TG_TANGENT",   "GX_TG_TEX0",      "GX_TG_TEX1",      "GX_TG_TEX2",
+	"GX_TG_TEX3",      "GX_TG_TEX4",      "GX_TG_TEX5",      "GX_TG_TEX6",      "GX_TG_TEX7",      "GX_TG_TEXCOORD0", "GX_TG_TEXCOORD1",
+	"GX_TG_TEXCOORD2", "GX_TG_TEXCOORD3", "GX_TG_TEXCOORD4", "GX_TG_TEXCOORD5", "GX_TG_TEXCOORD6", "GX_TG_COLOR0",    "GX_TG_COLOR1",
+};
+
+static GXVtxDescList meshVCD[] = {
+	{ GX_VA_PNMTXIDX, GX_DIRECT }, { GX_VA_TEX0MTXIDX, GX_NONE }, { GX_VA_TEX1MTXIDX, GX_NONE }, { GX_VA_TEX2MTXIDX, GX_NONE },
+	{ GX_VA_TEX3MTXIDX, GX_NONE }, { GX_VA_TEX4MTXIDX, GX_NONE }, { GX_VA_TEX5MTXIDX, GX_NONE }, { GX_VA_TEX6MTXIDX, GX_NONE },
+	{ GX_VA_TEX7MTXIDX, GX_NONE }, { GX_VA_POS, GX_INDEX16 },     { GX_VA_NBT, GX_NONE },        { GX_VA_NRM, GX_INDEX16 },
+	{ GX_VA_CLR0, GX_NONE },       { GX_VA_CLR1, GX_NONE },       { GX_VA_TEX0, GX_INDEX16 },    { GX_VA_TEX1, GX_NONE },
+	{ GX_VA_TEX2, GX_NONE },       { GX_VA_TEX3, GX_NONE },       { GX_VA_TEX4, GX_NONE },       { GX_VA_TEX5, GX_NONE },
+	{ GX_VA_TEX6, GX_NONE },       { GX_VA_TEX7, GX_NONE },       { GX_VA_NULL, GX_NONE },
+};
+
+static GXVtxAttrFmtList meshVAT[] = {
+	{ GX_VA_POS, GX_POS_XYZ, GX_F32, 0 }, { GX_VA_NRM, GX_NRM_XYZ, GX_F32, 0 }, { GX_VA_TEX0, GX_TEX_ST, GX_F32, 0 },
+	{ GX_VA_TEX1, GX_TEX_ST, GX_F32, 0 }, { GX_VA_TEX2, GX_TEX_ST, GX_F32, 0 }, { GX_VA_TEX3, GX_TEX_ST, GX_F32, 0 },
+	{ GX_VA_TEX4, GX_TEX_ST, GX_F32, 0 }, { GX_VA_TEX5, GX_TEX_ST, GX_F32, 0 }, { GX_VA_TEX6, GX_TEX_ST, GX_F32, 0 },
+	{ GX_VA_TEX7, GX_TEX_ST, GX_F32, 0 }, { GX_VA_NULL, GX_TEX_ST, GX_S16, 0 },
+};
 
 /**
  * @todo: Documentation
@@ -2242,46 +2246,44 @@ void DGXGraphics::directPrint(int x, int y, immut char* fmt, ...)
 	va_end(args);
 }
 
-// idk about these names
-#define UNPACK_DISPLAY_BYTE_1(a) ((a >> 8) - 0x10)
-#define UNPACK_DISPLAY_BYTE_2(b) ((b & 0xFF) - 0x80)
-#define PACK_DISPLAY_BYTE(a, b)  (((((a) + 0x10) << 8) & 0xFF00) | (u8)((b) + 0x80))
+#define UNPACK_XFB_LUMA(pixel)       ((pixel >> 8) - 0x10)
+#define UNPACK_XFB_CHROMA(pixel)     ((pixel & 0xFF) - 0x80)
+#define PACK_XFB_PIXEL(luma, chroma) (((u8)((luma) + 0x10) << 8) | (u8)((chroma) + 0x80))
 
 /**
  * @todo: Documentation
  * @note UNUSED Size: 000108
  * @note In Dolphin Emulator, this effect looks best with "Store XFB Copies to Texture Only" off.
  */
-void DGXGraphics::directErase(immut RectArea& bounds, bool set)
+void DGXGraphics::directErase(immut RectArea& bounds, bool clearToBlack)
 {
-	// NON-MATCHING (JP)
 	u16* screen = (u16*)mDisplayBuffer + (bounds.mMinX + bounds.mMinY * 640);
-	for (int i = 0; i < bounds.height(); i++) {
-		int j = 0;
-		if (set) {
-			// for (; j < bounds.width(); j++) {
-			// 	screen[i] = PACK_DISPLAY_BYTE(0, 0);
-			// }
-
-			int a = 0x10;
-			a <<= 8;
-			a |= 0x80;
-			for (; j < bounds.width(); j++) {
-				screen[j] = a;
+	int i;
+	int chroma;
+	for (i = 0; i < bounds.mMaxY - bounds.mMinY; i++) {
+		u16* pixel = screen;
+		for (int j = 0; j < bounds.mMaxX - bounds.mMinX; j++) {
+			int luma;
+			if (clearToBlack) {
+				luma   = 0;
+				chroma = 0;
+			} else {
+				luma = UNPACK_XFB_LUMA(*pixel);
+				luma >>= 2;
+				chroma = UNPACK_XFB_CHROMA(*pixel);
+				chroma >>= 2;
 			}
-		} else {
-			for (; j < bounds.width(); j++) {
-				int val12 = UNPACK_DISPLAY_BYTE_1(screen[j]);
-				val12 >>= 2;
-				int val31 = UNPACK_DISPLAY_BYTE_2(screen[j]);
-				val31 >>= 2;
-				screen[j] = PACK_DISPLAY_BYTE(val12, val31);
-			}
+			// something else probably lived here originally but who knows what
+			int fake = luma ^ chroma;
+			(void)fake;
+			*pixel = PACK_XFB_PIXEL(luma, chroma);
+			pixel++;
 		}
 		screen += 640;
 	}
 
 	DCFlushRange(mDisplayBuffer, sFrameSize);
+	(void)(chroma++);
 }
 
 /**

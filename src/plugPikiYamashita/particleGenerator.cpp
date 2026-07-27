@@ -97,9 +97,13 @@ void zen::particleGenerator::init(u8* data, Texture* tex1, Texture* tex2, immut 
 			mPivotOffsetY = u32ToFloat(((u32*)data)[3]);
 			mAnimData.set(&data[16]);
 
+#if defined(VERSION_GPIJ01) || defined(VERSION_DPIJ01_PIKIDEMO)
+			u8 rotType = mAnimData.mFlags.bits.mRotationType & 0x7;
+#else
 			static_cast<bool>(data);
 
-			u32 rotType                            = mAnimData.mFlags.bits.mRotationType & 0x7;
+			u32 rotType = mAnimData.mFlags.bits.mRotationType & 0x7;
+#endif
 			mOrientedDrawConfig.mOrientationSource = mAnimData.mFlags.bits.mOrientationSource;
 			mOrientedDrawConfig.mIsDoubleSided     = mAnimData.mFlags.bits.mIsDoubleSided;
 			mOrientedDrawConfig.mFlipNormal        = 0;
@@ -142,13 +146,11 @@ void zen::particleGenerator::init(u8* data, Texture* tex1, Texture* tex2, immut 
 				mRotAxisCallBack = &particleGenerator::RotAxisXYZ;
 				break;
 			}
-#if defined(VERSION_GPIJ01) || defined(VERSION_PIKIDEMO)
 			default:
 			{
 				ERROR("Unknown RotAxis Type:%d \n", rotType);
 				break;
 			}
-#endif
 			}
 		}
 
