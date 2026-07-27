@@ -2,6 +2,7 @@
 
 #include "Dolphin/os.h"
 #include "jaudio/aictrl.h"
+#include "jaudio/debug.h"
 #include "jaudio/file_seq.h"
 #include "jaudio/interface.h"
 #include "jaudio/jammain_2.h"
@@ -168,11 +169,10 @@ void Jac_InitBgm(void)
 		for (i = 0; i < 5; i++) {
 			u32 seqSize;
 			u8* seqBuffer;
-			STACK_PAD_VAR(1);
 			seqSize   = Jaf_CheckSeqSize(preloadSeqIds[i]);
-			u32* REF_size = &seqSize;
+			JAUDIO_PRINT("Jac_InitBgm: sequence=%d size=%d\n", preloadSeqIds[i], seqSize);
 			seqBuffer = (u8*)OSAlloc2(seqSize);
-			u8** REF_seqbuf = &seqBuffer;
+			JAUDIO_PRINT("Jac_InitBgm: sequence buffer=%x\n", seqBuffer);
 			if ((u32)Jaf_LoadSeq(preloadSeqIds[i], seqBuffer)) {
 				int* startTrackId = &startTrackIds[i];
 				if (*startTrackId != -1) {
@@ -212,7 +212,7 @@ void Jac_StopBgm(u32 trackIndex)
  */
 void Jac_ReadyBgm(u32 bgmID)
 {
-	u32* REF_id = &bgmID;
+	JAUDIO_PRINT("Jac_ReadyBgm: id=%d\n", bgmID);
 
 	if (bgmID < 2) {
 		bgmID = 2;
@@ -235,7 +235,7 @@ void Jac_ReadyBgm(u32 bgmID)
 void Jac_PlayBgm(u32 trackIndex, u32 bgmID)
 {
 	STACK_PAD_VAR(4);
-	u32* REF_b = &bgmID;
+	JAUDIO_PRINT("Jac_PlayBgm: id=%d\n", bgmID);
 	u32 seqState;
 	seqp_* track;
 	Jac_SetProcessStatus(8);
@@ -337,7 +337,7 @@ BOOL Jac_ChangeBgmMode(u32 trackIndex, u8 modeFlags)
 void Jac_SetBgmModeFlag(u32 trackIndex, u8 flagMask, u8 enabled)
 {
 #if defined(VERSION_GPIP01)
-	STACK_PAD_VAR(2);
+	JAUDIO_PRINT("Jac_SetBgmModeFlag: call=%d\n", call_counter);
 	if (call_counter < 6000 && Jac_GetCurrentScene() == SCENE_Course && flagMask != 8 && flagMask != 4) {
 		return;
 	}
@@ -529,8 +529,7 @@ void Jac_GameVolume(u8 bgmLevel, u8 seLevel)
  */
 void Jac_EasyCrossFade(u8 crossfadeMode, u32 fadeFrames)
 {
-	u8* REF_type = &crossfadeMode;
-	u32* REF_val = &fadeFrames;
+	JAUDIO_PRINT("Jac_EasyCrossFade: mode=%d frames=%d\n", crossfadeMode, fadeFrames);
 
 	switch (crossfadeMode) {
 	case 0: // exit boss mode
@@ -567,9 +566,7 @@ void Jac_EasyCrossFade(u8 crossfadeMode, u32 fadeFrames)
  */
 void Jac_DemoFade(u8 fadeType, u32 fadeFrames, f32 volumeScale)
 {
-	u8* REF_type  = &fadeType;
-	u32* REF_val  = &fadeFrames;
-	f32* REF_mult = &volumeScale;
+	JAUDIO_PRINT("Jac_DemoFade: type=%d frames=%d volume=%f\n", fadeType, fadeFrames, volumeScale);
 
 	switch (fadeType) {
 	case 0:

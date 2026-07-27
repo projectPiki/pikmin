@@ -2,6 +2,7 @@
 #include "Dolphin/ar.h"
 #include "Dolphin/os.h"
 #include "jaudio/aictrl.h"
+#include "jaudio/debug.h"
 #include "jaudio/sample.h"
 #include <stddef.h>
 #include <string.h>
@@ -76,8 +77,7 @@ static s32 DVDReadMutex(DVDFileInfo* fileInfo, void* addr, s32 len, s32 offs, im
  */
 void DVDT_SetRootPath(immut char* path)
 {
-	// don't ask.
-	immut char** REF_path = &path;
+	JAUDIO_PRINT("DVDT_SetRootPath: path=%s\n", path);
 	if (strlen(path) < 31) {
 		strcpy(audio_root_path, path);
 	}
@@ -529,7 +529,7 @@ void DVDT_DRAMtoARAM(u32, u32, u32, u32, u32*, void (*)(u32))
 s32 DVDT_CheckFile(immut char* file)
 {
 	char path[64];
-	immut char** REF_file = &file;
+	JAUDIO_PRINT("DVDT_CheckFile: file=%s\n", file);
 	static DVDFileInfo finfo;
 
 	DVDT_ExtendPath(path, file);
@@ -548,14 +548,13 @@ s32 DVDT_CheckFile(immut char* file)
  */
 s32 DVDT_LoadFile(immut char* file, u8* dst)
 {
-	vu32 status           = 0;
-	immut char** REF_file = &file;
-	STACK_PAD_VAR(2);
+	vu32 status = 0;
 	DVDT_LoadtoDRAM(0, file, (u32)dst, 0, 0, (u32*)&status, NULL);
 
 	while (status == 0) { }
 
 	if (status == -1) {
+		JAUDIO_PRINT("DVDT_LoadFile: failed path=%s (%p), status=%d\n", file, file, status);
 		return 0;
 	}
 
@@ -644,7 +643,7 @@ static u32 dvd_entrynum[32];
 s32 Jac_RegisterFastOpen(immut char* file)
 {
 	volatile int num;
-	immut char** REF_file = &file;
+	JAUDIO_PRINT("Jac_RegisterFastOpen: file=%s\n", file);
 	STACK_PAD_VAR(3);
 	if (strlen(file) > 63) {
 		return -1;

@@ -2,6 +2,7 @@
 #include "Dolphin/dvd.h"
 #include "jaudio/aictrl.h"
 #include "jaudio/audiostruct.h"
+#include "jaudio/debug.h"
 #include "jaudio/dspdriver.h"
 #include "jaudio/dspinterface.h"
 #include "jaudio/dummyprobe.h"
@@ -621,7 +622,6 @@ static s32 StreamAudio_Callback(void* data)
 				for (channelIdx = 0; channelIdx < 2; channelIdx++) {
 					u16 pitch = (4096.0f * ctrl->header.sampleRate * ctrl->pitchRatio) / JAC_DAC_RATE;
 #if defined(VERSION_GPIP01)
-					u16* REF_pitch = &pitch;
 					STACK_PAD_VAR(5);
 #endif
 					Play_DirectPCM(ctrl->dspch[channelIdx], ctrl->loopBufs[channelIdx], ctrl->loopSize, ctrl->totalSamples);
@@ -645,6 +645,9 @@ static s32 StreamAudio_Callback(void* data)
 						break;
 					}
 					}
+#endif
+#if defined(VERSION_GPIP01)
+					JAUDIO_PRINT("StreamAudio_Callback: pitch=%d\n", pitch);
 #endif
 					DSP_SetPitch(ctrl->dspch[channelIdx]->buffer_idx, pitch);
 					DSP_FlushChannel(ctrl->dspch[channelIdx]->buffer_idx);
@@ -1189,7 +1192,7 @@ BOOL StreamSetDVDPause(u32 ctrlID, BOOL isPaused)
 	BOOL tmp = ctrl->isPaused;
 
 #if defined(VERSION_GPIP01)
-	BOOL* REF_isPaused = &isPaused;
+	JAUDIO_PRINT("StreamSetDVDPause: paused=%d\n", isPaused);
 #endif
 
 	ctrl->isPaused = isPaused;

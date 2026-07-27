@@ -1,4 +1,5 @@
 #include "jaudio/memory.h"
+#include "jaudio/debug.h"
 #include <stddef.h>
 
 /**
@@ -133,9 +134,8 @@ void Nas_HeapFree(ALHeap*)
 void* Nas_HeapAlloc(ALHeap* heap, s32 size)
 {
 	STACK_PAD_VAR(4);
-	s32* REF_size;
 
-	REF_size        = &size;
+	JAUDIO_PRINT("Nas_HeapAlloc: size=%d\n", size);
 	u32 roundedSize = ALIGN_NEXT(size, 32);
 	if (!heap->base) {
 		return NULL;
@@ -158,13 +158,11 @@ void* Nas_HeapAlloc(ALHeap* heap, s32 size)
  */
 void Nas_HeapInit(ALHeap* heap, u8* basePtr, s32 heapSize)
 {
-	STACK_PAD_VAR(2);
-	ALHeap** REF_heap;
-
 	int length;
 
-	REF_heap    = &heap;
 	heap->count = 0;
+	JAUDIO_PRINT("Nas_HeapInit: heap=%p (0x%x) aligned base=%p\n", heap, heap,
+	             (u8*)ALIGN_NEXT((u32)basePtr, 32));
 	if (!basePtr) {
 		heap->length  = 0;
 		heap->current = NULL;

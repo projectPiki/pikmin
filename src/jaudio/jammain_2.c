@@ -2,6 +2,7 @@
 
 #include "jaudio/bankdrv.h"
 #include "jaudio/centcalc.h"
+#include "jaudio/debug.h"
 #include "jaudio/driverinterface.h"
 #include "jaudio/fat.h"
 #include "jaudio/jamosc.h"
@@ -10,8 +11,6 @@
 #include "jaudio/random.h"
 #include "jaudio/rate.h"
 #include "jaudio/seqsetup.h"
-
-#include "Dolphin/OS/OSError.h"
 
 #include <stddef.h>
 
@@ -273,7 +272,7 @@ u16 Extend8to16(u8 value)
  */
 void Jam_WriteTimeParam(seqp_* track, u8 controlByte)
 {
-	STACK_PAD_VAR(1);
+	JAUDIO_PRINT("Jam_WriteTimeParam: pc=%x\n", track->programCounter);
 
 	s32 duration;
 	u8 paramIndex;
@@ -352,8 +351,6 @@ void Jam_WriteTimeParam(seqp_* track, u8 controlByte)
  */
 void Jam_WriteRegDirect(seqp_* track, u8 index, u16 value)
 {
-	STACK_PAD_VAR(1);
-
 	u16 regValue;
 
 	switch (index) {
@@ -385,6 +382,7 @@ void Jam_WriteRegDirect(seqp_* track, u8 index, u16 value)
 	}
 	}
 
+	JAUDIO_PRINT("Jam_WriteRegDirect: value=%x pc=%x\n", value & 0xff, track->programCounter);
 	track->regParam.reg[index]  = value;
 	track->regParam.param.value = regValue;
 }
@@ -433,7 +431,7 @@ static u32 LoadTbl(seqp_* track, u32 ofs, u32 idx, u32 valueType)
  */
 void Jam_WriteRegParam(seqp_* track, u8 controlByte)
 {
-	STACK_PAD_VAR(1);
+	JAUDIO_PRINT("Jam_WriteRegParam: pc=%x mode=%x\n", track->programCounter, controlByte & 0x0c);
 
 	s16 r30_newRegValue; // r30
 	u8 r29_regIdx;       // r29
@@ -996,7 +994,6 @@ void Jam_InitRegistTrack(void)
  */
 void Jam_RegistTrack(seqp_* track, u32 trackId)
 {
-	u32* REF_trackId;
 	size_t i;
 
 	for (i = 0; i < T_LISTS; ++i) {
@@ -1017,7 +1014,7 @@ void Jam_RegistTrack(seqp_* track, u32 trackId)
 		i = T_LISTS;
 		++T_LISTS;
 	}
-	REF_trackId         = &trackId;
+	JAUDIO_PRINT("Jam_RegistTrack: id=%x\n", trackId);
 	TRACK_LIST[i].id    = trackId;
 	TRACK_LIST[i].track = track;
 	track->isRegistered = 1;
@@ -1675,8 +1672,6 @@ void Jam_UpdateTempo(seqp_* track)
 {
 	size_t i;
 
-	size_t* REF_i;
-
 	if (!track->parent) {
 		track->tempoFactor = (float)track->timeBase * (float)track->tempo / (JAC_DAC_RATE * 60.0f / 80.0f);
 		if ((track->outerParams->flags & OuterParamFlag_Tempo) != 0) {
@@ -1687,8 +1682,8 @@ void Jam_UpdateTempo(seqp_* track)
 		track->timeBase    = track->parent->timeBase;
 	}
 	for (i = 0; i < 16; ++i) {
-		REF_i = &i;
 		if (track->children[i] && track->children[i]->trackState) {
+			JAUDIO_PRINT("Jam_UpdateTempo: child=%d\n", i);
 			Jam_UpdateTempo(track->children[i]);
 		}
 	}
@@ -1738,15 +1733,13 @@ void Jam_PauseTrack(seqp_* track, u8 recursive)
 	size_t i;
 	jc_* pjVar1;
 
-	size_t* REF_i;
-
 	track->isPaused = TRUE;
 	if (track->pauseStatus & 0x01) {
 		track->updateFlags |= OuterParamFlag_Volume;
 	}
 	if (track->pauseStatus & 0x04) {
 		for (i = 0; i < 8; ++i) {
-			REF_i = &i;
+			JAUDIO_PRINT("Jam_PauseTrack: voice=%d\n", i);
 			NoteOFF_R(track, i, 10);
 		}
 	}
@@ -1776,12 +1769,10 @@ void Jam_UnPauseTrack(seqp_* track, u8 recursive)
 	size_t i;
 	jc_* pjVar1;
 
-	size_t* REF_i;
-
 	track->isPaused = FALSE;
 	track->updateFlags |= OuterParamFlag_Volume;
 	for (i = 0; i < 8; ++i) {
-		REF_i  = &i;
+		JAUDIO_PRINT("Jam_UnPauseTrack: voice=%d\n", i);
 		pjVar1 = track->channels[i];
 		if (pjVar1 && track->activeSoundIds[i] == pjVar1->channelId) {
 			UpdatePause_1Shot(pjVar1, 0);
@@ -2381,8 +2372,6 @@ static u32 Cmd_PanPowSet()
  */
 static u32 Cmd_IIRSet()
 {
-	STACK_PAD_VAR(2);
-
 	size_t i;
 	MoveParam_* iir;
 
@@ -2394,6 +2383,7 @@ static u32 Cmd_IIRSet()
 		iir->duration     = 1.0f;
 	}
 
+	JAUDIO_PRINT("Cmd_IIRSet: seq=%x arg0=%x\n", SEQ_P, SEQ_ARG[0]);
 	return 0;
 }
 
@@ -2751,13 +2741,6 @@ u32 Cmd_Process(seqp_* track, u8 cmd, u16 argTypeMask)
 	u32 arg;
 	CmdFunction function;
 
-	STACK_PAD_VAR(1);
-	seqp_** REF_track;
-	u8* REF_cmd;
-
-	REF_track = &track;
-	REF_cmd   = &cmd;
-
 	argpair  = Arglist[cmd - 0xC0];
 	argTypes = argpair.argTypes | argTypeMask;
 	for (i = 0; i < argpair.argCount; ++i) {
@@ -2794,6 +2777,8 @@ u32 Cmd_Process(seqp_* track, u8 cmd, u16 argTypeMask)
 
 	function = CMDP_LIST[cmd - 0xC0];
 	if (!function) {
+		JAUDIO_PRINT("Error: NULL Command Pointer (cmd. %x ) \n", cmd);
+		JAUDIO_PRINT("SEQP %x  Access Offset %d\n", track, track->programCounter);
 		return 0;
 	}
 	return function();

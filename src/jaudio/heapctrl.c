@@ -1,5 +1,6 @@
 #include "jaudio/heapctrl.h"
 
+#include "jaudio/debug.h"
 #include "jaudio/dummyrom.h"
 
 #include "Dolphin/OS/OSCache.h"
@@ -17,11 +18,8 @@ static u32 global_id = 0;
  */
 static void ARAMFinish(u32 msg)
 {
-	STACK_PAD_VAR(1);
-	u32* REF_msg;
-
-	REF_msg             = &msg;
 	ARQRequest* request = (ARQRequest*)msg;
+	JAUDIO_PRINT("ARAMFinish: message=%x owner=%x\n", msg, request->owner);
 	OSSendMessage((OSMessageQueue*)request->owner, (OSMessage)1, OS_MESSAGE_BLOCK);
 }
 
@@ -344,8 +342,8 @@ BOOL Jac_AllocHeap(jaheap_* heap, jaheap_* parent, u32 size)
 BOOL Jac_DeleteHeap(jaheap_* heap)
 {
 	STACK_PAD_VAR(4);
-	jaheap_** pt = &heap;
 
+	JAUDIO_PRINT("Jac_DeleteHeap: heap=%x\n", heap);
 	if (heap->startAddress == 0) {
 		return FALSE;
 	}

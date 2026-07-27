@@ -1,5 +1,6 @@
 #include "jaudio/file_seq.h"
 
+#include "jaudio/debug.h"
 #include "jaudio/jammain_2.h"
 #include "jaudio/seqsetup.h"
 #include "jaudio/virload.h"
@@ -39,12 +40,8 @@ static u32 first = TRUE;
  */
 void Jaf_InitSeqArchive2(immut char* barcFilepath, u8* barcData, u8* archiveWork)
 {
-	STACK_PAD_VAR(2);
-
-	immut char** REF_barcFilepath;
 	size_t i;
 
-	REF_barcFilepath = &barcFilepath;
 	for (i = strlen(barcFilepath); i != 0; --i) {
 		if (barcFilepath[i - 1] == '/') {
 			break;
@@ -53,6 +50,7 @@ void Jaf_InitSeqArchive2(immut char* barcFilepath, u8* barcData, u8* archiveWork
 
 	JV_InitHeader_M(barcFilepath, barcData, archiveWork);
 	seq_archandle = JV_GetArchiveHandle(&barcFilepath[i]);
+	JAUDIO_PRINT("Jaf_InitSeqArchive2: file=%s handle=%x\n", barcFilepath, seq_archandle);
 
 	for (i = 0; i < SEQ_LOADBUFFER_SIZE; ++i) {
 		seq_loadbuffer[i] = NULL;
@@ -112,7 +110,6 @@ u8* Jaf_CheckSeq(u32 index)
  */
 u32 Jaf_ReadySeq(u32 rootTrackIndex, u32 seqIndex)
 {
-	STACK_PAD_VAR(1);
 	seqp_* rootTrack = &rootseq[rootTrackIndex];
 	if (seqIndex >= SEQ_LOADBUFFER_SIZE) {
 		return 0;
@@ -127,6 +124,7 @@ u32 Jaf_ReadySeq(u32 rootTrackIndex, u32 seqIndex)
 	}
 
 	rootseqhandle[rootTrackIndex] = Jaq_SetSeqData(rootTrack, seq_loadbuffer[seqIndex], seqSize, 0);
+	JAUDIO_PRINT("Jaf_ReadySeq: buffer=%x handle=%x\n", seq_loadbuffer[seqIndex], rootseqhandle[rootTrackIndex]);
 	return rootseqhandle[rootTrackIndex];
 }
 
@@ -154,12 +152,11 @@ BOOL Jaf_StartSeq(u32 rootTrackIndex, u32 seqIndex)
  */
 BOOL Jaf_StopSeq(u32 index)
 {
-	STACK_PAD_VAR(2);
-
 	if (rootseqhandle[index] == -1) {
 		return FALSE;
 	}
 	BOOL result = Jaq_StopSeq(rootseqhandle[index]);
+	JAUDIO_PRINT("Jaf_StopSeq: handle=%d (0x%x)\n", rootseqhandle[index], rootseqhandle[index]);
 	while (Jaq_HandleToSeq(rootseqhandle[index])) { }
 	rootseqhandle[index] = -1;
 	return result;
@@ -206,9 +203,7 @@ static void Jaf_LoadFinish(u32 asyncContext)
  */
 u32 __LoadSeqA(u32 callbackArg, u32 seqIndex, u8* seqBuffer, void (*finishCallback)(u32))
 {
-	u32* REF_callbackArg = &callbackArg;
-	u32* REF_seqIndex    = &seqIndex;
-	u8** REF_seqBuffer   = &seqBuffer;
+	JAUDIO_PRINT("__LoadSeqA: callback=%x sequence=%d buffer=%x\n", callbackArg, seqIndex, seqBuffer);
 
 	u32 slotIndex;
 	u32 seqSize;

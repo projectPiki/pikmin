@@ -1,6 +1,7 @@
 #include "jaudio/dspproc.h"
 #include "Dolphin/dsp.h"
 #include "Dolphin/os.h"
+#include "jaudio/debug.h"
 #include "jaudio/dspinterface.h"
 #include <stddef.h>
 
@@ -282,7 +283,7 @@ void DsyncFrame(u32 subframes, u32 dspbufStart, u32 dspbufEnd)
 	commands[2] = dspbufEnd;
 
 #if defined(VERSION_GPIP01)
-	STACK_PAD_VAR(1);
+	JAUDIO_PRINT("DsyncFrame: commands=%p header=%x\n", commands, commands[0]);
 	DSPSendCommands2(commands, ARRAY_SIZE(commands), NULL);
 #else
 	DSPSendCommands(commands, ARRAY_SIZE(commands));

@@ -266,10 +266,17 @@ cflags_jaudio = [
     "-common on",
     "-func_align 32",
     "-lang c++",
-    "-DNDEBUG=1",
     "-w off",
     "-use_lmw_stmw on",
 ]
+
+if args.debug:
+    cflags_jaudio.extend(["-sym on", "-DDEBUG=1"])
+else:
+    cflags_jaudio.append("-DNDEBUG=1")
+
+if args.develop:
+    cflags_jaudio.append("-DDEVELOP=1")
 
 # Game code flags
 cflags_pikmin = [

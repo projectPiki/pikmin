@@ -1,6 +1,7 @@
 #include "jaudio/connect.h"
 #include "jaudio/aramcall.h"
 #include "jaudio/bx.h"
+#include "jaudio/debug.h"
 #include "jaudio/heapctrl.h"
 #include <stddef.h>
 
@@ -39,8 +40,6 @@ static BOOL UpdateWave_Extern(WaveArchiveBank_* bank, CtrlGroup_* group, Ctrl_* 
 		}
 		Ctrl_* cdf = group->scenes[a]->cdf;
 		u32 index  = 0;
-		u32* ptr   = &a;
-		u32* ptr2  = &index;
 		while (index < cdf->count) {
 			if ((cdf->waveIDs[index]->id & 0xffff) == b) {
 				break;
@@ -49,6 +48,7 @@ static BOOL UpdateWave_Extern(WaveArchiveBank_* bank, CtrlGroup_* group, Ctrl_* 
 		}
 
 		if (index != cdf->count) {
+			JAUDIO_PRINT("UpdateWave_Extern: scene=%d index=%d\n", a, index);
 			WaveID_** wave2 = &cdf->waveIDs[index];
 			if ((*wave2)->heap.startAddress) {
 				wave->data = (*wave2)->data;
@@ -94,14 +94,13 @@ void Jac_SceneClose(WaveArchiveBank_* bank, CtrlGroup_* group, u32 id, BOOL set)
  */
 BOOL Jac_SceneSet(WaveArchiveBank_* bank, CtrlGroup_* group, u32 id, BOOL set)
 {
-	WaveArchiveBank_** bankp = &bank;
-	u32* idp                 = &id;
 	WaveArchive_* arc;
 	int stat = 0;
 	SCNE_* scene;
 	Ctrl_* cdf;
 	u32 i;
 
+	JAUDIO_PRINT("Jac_SceneSet: id=%d\n", id);
 	arc = bank->waveGroups[id];
 	!arc;
 
@@ -120,6 +119,7 @@ BOOL Jac_SceneSet(WaveArchiveBank_* bank, CtrlGroup_* group, u32 id, BOOL set)
 		}
 	}
 
+	JAUDIO_PRINT("Jac_SceneSet: bank=%x\n", bank);
 	scene = group->scenes[id];
 	cdf   = scene->cdf;
 	if (cdf) {
@@ -194,7 +194,6 @@ WaveID_* __GetSoundHandle(CtrlGroup_* group, u32 id, u32 id2)
  */
 WaveID_* GetSoundHandle(CtrlGroup_* group, u32 flag)
 {
-	u32* flagptr  = &flag;
 	WaveID_* wave = __GetSoundHandle(group, flag, group->mCurrentSceneIndex);
 	if (wave == NULL) {
 		return NULL;
@@ -203,18 +202,19 @@ WaveID_* GetSoundHandle(CtrlGroup_* group, u32 flag)
 		return NULL;
 	}
 
+	JAUDIO_PRINT("GetSoundHandle: flag=%x\n", flag);
 	u32* ptr = wave->data->fileLoadStatus;
 	if (ptr == NULL) {
 		return NULL;
 	}
 
 	if (*ptr == 0) {
+		JAUDIO_PRINT("GetSoundHandle: unavailable flag=%x scene=%d data=%p status=%d\n", flag,
+		             group->mCurrentSceneIndex, wave->data, *ptr);
 		return NULL;
 	}
 
 	return wave;
-
-	STACK_PAD_VAR(4);
 }
 
 /**
@@ -256,14 +256,10 @@ u16 Jac_WsPhysicalToVirtual(u16 ws)
  */
 void Jac_WsConnectTableSet(u32 id, u32 val)
 {
-	u32* id2 = &id;
-	u32* bnk = &val;
-
 	if (id != 0xffff && id < 0x100 && WS_V2P_TABLE[id] == -1) {
-		WS_V2P_TABLE[id] = *bnk;
+		WS_V2P_TABLE[id] = val;
+		JAUDIO_PRINT("Jac_WsConnectTableSet: id=%d (0x%x) value=%d\n", id, id, val);
 	}
-
-	STACK_PAD_VAR(2);
 }
 
 /**
@@ -271,14 +267,10 @@ void Jac_WsConnectTableSet(u32 id, u32 val)
  */
 void Jac_BnkConnectTableSet(u32 id, u32 val)
 {
-	u32* id2 = &id;
-	u32* bnk = &val;
-
 	if (id != 0xffff && id < 0x100 && BNK_V2P_TABLE[id] == -1) {
-		BNK_V2P_TABLE[id] = *bnk;
+		BNK_V2P_TABLE[id] = val;
+		JAUDIO_PRINT("Jac_BnkConnectTableSet: id=%d (0x%x) value=%d\n", id, id, val);
 	}
-
-	STACK_PAD_VAR(2);
 }
 
 /**

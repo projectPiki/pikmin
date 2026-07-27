@@ -2,6 +2,7 @@
 
 #include "Dolphin/PPCArch.h"
 #include "jaudio/audiothread.h"
+#include "jaudio/debug.h"
 #include "jaudio/driverinterface.h"
 #include "jaudio/dspinterface.h"
 #include "jaudio/rate.h"
@@ -51,13 +52,11 @@ dspch_* AllocDSPchannel(u32 channelMode, u32 ownerId)
 {
 
 	s32 i;
-	STACK_PAD_VAR(1);
-	u32* REF_ownerId = &ownerId;
-	s32* REF_i       = &i;
 	if (channelMode == 0) {
 
 		for (i = 0; i < DSPCH_LENGTH; ++i) {
 			if (DSPCH[i].allocState == DSPCHAN_Free) {
+				JAUDIO_PRINT("AllocDSPchannel: owner=%x index=%d channel=%p\n", ownerId, i, &DSPCH[i]);
 				DSPCH[i].allocState  = DSPCHAN_MonoAllocated;
 				DSPCH[i].logicalChan = (jc_*)ownerId;
 				DSPCH[i].prio        = 1;
@@ -133,10 +132,6 @@ dspch_* GetLowerDSPchannel()
 	u32 id      = 0;
 	u32 x       = 0;
 	u32 i       = 0;
-	u8* REF_max = &max;
-	u32* REF_id = &id;
-	u32* REF_x  = &x;
-	u32* REF_i  = &i;
 
 	STACK_PAD_VAR(2);
 
@@ -162,6 +157,7 @@ dspch_* GetLowerDSPchannel()
 		}
 	}
 
+	JAUDIO_PRINT("GetLowerDSPchannel: priority=%d id=%d age=%d index=%d\n", max, id, x, i);
 	return &DSPCH[id];
 }
 
@@ -175,10 +171,6 @@ dspch_* GetLowerActiveDSPchannel()
 	u32 c     = 0;
 	u32 i;
 	DSPchannel_* buf;
-
-	u8* REF_a      = &a;
-	u32* REF_index = &index;
-	u32* REF_c     = &c;
 
 	for (i = 0; i < DSPCH_LENGTH; ++i) {
 		if (DSPCH[i].allocState == DSPCHAN_Stopping || DSPCH[i].allocState == DSPCHAN_Free)
@@ -200,6 +192,7 @@ dspch_* GetLowerActiveDSPchannel()
 		a     = DSPCH[i].prio;
 	}
 
+	JAUDIO_PRINT("GetLowerActiveDSPchannel: priority=%d index=%d age=%d\n", a, index, c);
 	return &DSPCH[index];
 }
 
@@ -208,11 +201,9 @@ dspch_* GetLowerActiveDSPchannel()
  */
 BOOL ForceStopDSPchannel(dspch_* chan)
 {
-	dspch_** REF_chan;
-
 	DSPchannel_* buf;
 
-	REF_chan = &chan;
+	JAUDIO_PRINT("ForceStopDSPchannel: channel=%x\n", chan);
 	if (chan->allocState == DSPCHAN_Stopping)
 		return FALSE;
 	buf = GetDspHandle(chan->buffer_idx);
@@ -229,13 +220,11 @@ BOOL ForceStopDSPchannel(dspch_* chan)
  */
 BOOL BreakLowerDSPchannel(u8 priority)
 {
-	u8* REF_priority;
-
 	dspch_* chan;
 	DSPchannel_* buf;
 
-	chan        = GetLowerDSPchannel();
-	REF_priority = &priority;
+	chan = GetLowerDSPchannel();
+	JAUDIO_PRINT("BreakLowerDSPchannel: priority=%d\n", priority);
 	if (chan->prio > priority)
 		return FALSE;
 	if (chan->prio == priority) {
@@ -259,10 +248,10 @@ BOOL BreakLowerDSPchannel(u8 priority)
  */
 BOOL BreakLowerActiveDSPchannel(u8 id)
 {
-	u8* id_ptr   = &id;
 	dspch_* chan = GetLowerActiveDSPchannel();
 
 	if (chan->prio > id) {
+		JAUDIO_PRINT("BreakLowerActiveDSPchannel: requested=%d priority=%d\n", id, chan->prio);
 		return FALSE;
 	}
 
@@ -282,8 +271,6 @@ BOOL BreakLowerActiveDSPchannel(u8 id)
 	}
 
 	return TRUE;
-
-	STACK_PAD_VAR(2);
 }
 
 /**
@@ -316,8 +303,7 @@ void UpdateDSPchannelAll()
 
 	// Update all DSP channels
 	for (u32 i = 0; i < DSPCH_LENGTH; i++) {
-		dspch_* chan     = &DSPCH[i];
-		dspch_** chanptr = &chan;
+		dspch_* chan = &DSPCH[i];
 
 		// Skip free channels
 		if (chan->allocState == DSPCHAN_Free) {
@@ -342,6 +328,7 @@ void UpdateDSPchannelAll()
 		}
 
 		// Handle aging and release timing
+		JAUDIO_PRINT("UpdateDSPchannelAll: channel=%x\n", chan);
 		if (!buf->endRequested) {
 			buf->ageCounter++;
 			if (buf->ageCounter == chan->releaseTime && chan->logicalChanCb) {

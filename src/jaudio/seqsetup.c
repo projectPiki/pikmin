@@ -1,5 +1,6 @@
 #include "jaudio/seqsetup.h"
 
+#include "jaudio/debug.h"
 #include "jaudio/driverinterface.h"
 #include "jaudio/fat.h"
 #include "jaudio/jammain_2.h"
@@ -66,10 +67,8 @@ void Jaq_GetRemainFreeTracks(void)
  */
 static BOOL BackTrack(seqp_* track)
 {
-	seqp_** REF_track;
-
-	REF_track         = &track;
 	track->trackState = 0;
+	JAUDIO_PRINT("BackTrack: track=%x\n", track);
 	if (track->isAllocated == 1) {
 		if (SEQ_REMAIN == FREE_SEQP_QUEUE_SIZE) {
 			return FALSE;
@@ -479,8 +478,6 @@ s32 Jaq_OpenTrack(seqp_* track, u32 flags, u32 source)
 	u8 childIndex;
 	u8 trackFlags;
 
-	u8* REF_index;
-
 	childIndex = (flags & 0b00001111);
 	trackFlags = (flags & 0b11000000) >> 6;
 	if ((flags & 0b00100000)) {
@@ -491,7 +488,7 @@ s32 Jaq_OpenTrack(seqp_* track, u32 flags, u32 source)
 		childIndex = Jam_ReadRegDirect(track, childIndex);
 	}
 
-	REF_index = &childIndex;
+	JAUDIO_PRINT("Jaq_OpenTrack: child=%d\n", childIndex);
 	if (childIndex >= 16) {
 		return -1;
 	}

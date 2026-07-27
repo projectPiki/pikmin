@@ -2,6 +2,7 @@
 #include "GlobalGameOptions.h"
 #include "MoviePlayer.h"
 #include "jaudio/cmdqueue.h"
+#include "jaudio/debug.h"
 #include "jaudio/dvdthread.h"
 #include "jaudio/interface.h"
 #include "jaudio/jammain_2.h"
@@ -276,8 +277,7 @@ BOOL Jac_DemoCheckEvent(u8 evt)
 static void DoSequence(u32 cinID, u32 frameId)
 {
 	u32 flag;
-	u16* REF_flag;
-	u32* REF_frameId = &frameId;
+	u16* eventData;
 	u32* data   = (u32*)DEMO_STATUS[cinID].mTimedEvents;
 	STACK_PAD_VAR(2);
 	if (data == NULL) {
@@ -286,13 +286,14 @@ static void DoSequence(u32 cinID, u32 frameId)
 	}
 
 	while (1) {
-		flag     = data[demo_seq_active];
-		REF_flag = (u16*)&flag;
-		if (REF_flag[0] > frameId) {
+		flag      = data[demo_seq_active];
+		eventData = (u16*)&flag;
+		if (eventData[0] > frameId) {
 			break;
 		}
 
-		if (REF_flag[1] == 0xfff9) {
+		JAUDIO_PRINT("DoSequence: frame=%d\n", frameId);
+		if (eventData[1] == 0xfff9) {
 			switch (cinID) {
 			case DEMOID_CollectFirstPartPractice:
 			{
@@ -305,7 +306,7 @@ static void DoSequence(u32 cinID, u32 frameId)
 				break;
 			}
 			}
-		} else if (REF_flag[1] == 0xfffa) {
+		} else if (eventData[1] == 0xfffa) {
 			if (DEMO_STATUS[cinID].mAudioConfig & 0x80) {
 				Jac_StartDemoSound(DEMO_STATUS[cinID].mAudioConfig & 0xf);
 			} else {
@@ -314,25 +315,25 @@ static void DoSequence(u32 cinID, u32 frameId)
 				current_seq_bgm = DEMO_STATUS[cinID].mAudioConfig & 0xf;
 			}
 		} else {
-			if (REF_flag[1] == 0xffff) {
+			if (eventData[1] == 0xffff) {
 				Jac_FinishDemo();
 				return;
 			}
-			if (REF_flag[1] == 0xfffe) {
+			if (eventData[1] == 0xfffe) {
 				demo_seq_active = -1;
 				return;
 			}
-			if (REF_flag[1] == 0xfffd) {
+			if (eventData[1] == 0xfffd) {
 				demo_seq_active = -1;
 				return;
 			}
-			if (REF_flag[1] == 0xfffc) {
+			if (eventData[1] == 0xfffc) {
 				Jac_BgmAnimEndStop();
 
-			} else if (REF_flag[1] == 0xfffb) {
+			} else if (eventData[1] == 0xfffb) {
 				Jac_BgmAnimEndRecover();
 			} else {
-				Jac_DemoSound(REF_flag[1]);
+				Jac_DemoSound(eventData[1]);
 			}
 		}
 
@@ -561,7 +562,7 @@ void Jac_StartDemo(u32 cinID)
 	{
 		event_pause_counter = 0;
 		seqp_* track        = Jam_GetTrackHandle(0x20000);
-		seqp_** tp          = &track;
+		JAUDIO_PRINT("Jac_StartDemo: pause track=%p\n", track);
 		Jam_PauseTrack(track, 1);
 		break;
 	}
@@ -660,11 +661,8 @@ void Jac_StartDemo(u32 cinID)
  */
 void Jac_DemoSound(int id)
 {
-	STACK_PAD_VAR(1);
-	int* REF_id;
-
 	if (current_demo_no != DEMOID_FINISHED) {
-		REF_id = &id;
+		JAUDIO_PRINT("Jac_DemoSound: id=%d demo=%d\n", id, current_demo_no);
 #if defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_DPIJ01_PIKIDEMO)
 		Jal_SendCmdQueue(&demo_q, id);
 #else
@@ -784,7 +782,7 @@ void Jac_DemoBGMForceStop()
  */
 void __Jac_FinishDemo()
 {
-	STACK_PAD_VAR(2);
+	JAUDIO_PRINT("__Jac_FinishDemo: sequence=%d\n", current_seq_bgm);
 	if (current_demo_no == DEMOID_FINISHED) {
 		return;
 	}
@@ -845,9 +843,8 @@ void __Jac_FinishDemo()
  */
 void Jac_FinishDemo(void)
 {
-	int cinID     = current_demo_no;
-	int* REF_demo = &cinID;
-	STACK_PAD_VAR(1);
+	int cinID = current_demo_no;
+	JAUDIO_PRINT("Jac_FinishDemo: id=%d sequence=%d\n", cinID, demo_seq_active);
 	Jac_SetProcessStatus(6);
 	__Jac_FinishDemo();
 
@@ -1036,9 +1033,8 @@ void __Prepare_BGM(u32 cinID)
  */
 void Jac_PrepareDemo(u32 cinID)
 {
-	STACK_PAD_VAR(1);
-	u32* REF_id = &cinID;
 	if (cinID >= DEMOID_CHECK_BGM_CAT) {
+		JAUDIO_PRINT("Jac_PrepareDemo: id=%d current=%d\n", cinID, current_demo_no);
 		switch (cinID) {
 		case DEMOID_Unk80:
 		case DEMOID_GenericDayEnd:
@@ -1085,8 +1081,7 @@ void Jac_PrepareDemo(u32 cinID)
  */
 void Jac_StartPartsFindDemo(u32 jingleType, BOOL hasAudio)
 {
-	STACK_PAD_VAR(2);
-	u32* REF_p1;
+	JAUDIO_PRINT("Jac_StartPartsFindDemo: jingle=%d pause=%d\n", jingleType, event_pause_counter);
 
 	// we're already playing a part-related screen/cutscene!
 	if (parts_find_demo_state == 1) {
@@ -1104,7 +1099,7 @@ void Jac_StartPartsFindDemo(u32 jingleType, BOOL hasAudio)
 	if (hasAudio) {
 		Jac_DemoFade(1, 15, 0.1f);
 
-		REF_p1 = &jingleType;
+		JAUDIO_PRINT("Jac_StartPartsFindDemo: jingle=%d\n", jingleType);
 		if (jingleType == 0) {
 			// captain accessing the ship jingle
 			Jac_PlaySystemSe(JACSYS_Unk36);
@@ -1178,9 +1173,7 @@ void Jac_FinishTextDemo(void)
  */
 void Jac_SetDemoPartsID(int id)
 {
-	int* REF_id;
-
-	REF_id        = &id;
+	JAUDIO_PRINT("Jac_SetDemoPartsID: id=%d\n", id);
 	demo_parts_id = id;
 }
 
@@ -1189,9 +1182,7 @@ void Jac_SetDemoPartsID(int id)
  */
 void Jac_SetDemoOnyons(int num)
 {
-	int* REF_num;
-
-	REF_num        = &num;
+	JAUDIO_PRINT("Jac_SetDemoOnyons: count=%d\n", num);
 	demo_onyon_num = num;
 }
 
@@ -1200,8 +1191,6 @@ void Jac_SetDemoOnyons(int num)
  */
 void Jac_SetDemoPartsCount(int count)
 {
-	int* REF_count;
-
-	REF_count      = &count;
+	JAUDIO_PRINT("Jac_SetDemoPartsCount: count=%d\n", count);
 	demo_parts_num = count;
 }

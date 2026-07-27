@@ -1,4 +1,5 @@
 #include "jaudio/jamosc.h"
+#include "jaudio/debug.h"
 #include "jaudio/jammain_2.h"
 #include <stddef.h>
 
@@ -19,9 +20,7 @@ Osc_ OSC_DEF    = { 0, 1.0f, NULL, REL_TABLE, 1.0f, 0.0f };
  */
 void Osc_Update_Param(seqp_* track, u8 id, f32 val)
 {
-	u8* REF_id   = &id;
-	f32* REF_val = &val;
-
+	JAUDIO_PRINT("Osc_Update_Param: id=%d value=%f\n", id, val);
 	switch (id) {
 	case 6:
 	{
@@ -120,7 +119,6 @@ void Osc_Init_Env(seqp_* track)
  */
 void Osc_Setup_SimpleEnv(seqp_* track, u8 id, u32 val)
 {
-	STACK_PAD_VAR(2);
 	switch (id) {
 	case 0:
 	{
@@ -134,6 +132,8 @@ void Osc_Setup_SimpleEnv(seqp_* track, u8 id, u32 val)
 		break;
 	}
 	}
+	JAUDIO_PRINT("Osc_Setup_SimpleEnv: attack=%x release=%x\n", track->oscillators[0].attackVecOffset,
+	             track->oscillators[0].releaseVecOffset);
 }
 
 /**

@@ -1,6 +1,7 @@
 #include "jaudio/piki_scene.h"
 
 #include "jaudio/aramcall.h"
+#include "jaudio/debug.h"
 #include "jaudio/dvdthread.h"
 #include "jaudio/interface.h"
 #include "jaudio/jammain_2.h"
@@ -89,10 +90,9 @@ void Jac_Delete_CurrentBgmWave()
  */
 static void __Loaded(u32 a)
 {
-	STACK_PAD_VAR(1);
-	u32* REF_a = &a;
-	u32 hi     = a & 0xffff0000;
-	a          = a & 0x0000ffff;
+	JAUDIO_PRINT("__Loaded: value=%x kind=%x\n", a, a >> 16);
+	u32 hi = a & 0xffff0000;
+	a      = a & 0x0000ffff;
 
 	switch (hi) {
 	case 0x20000:
@@ -141,9 +141,7 @@ BOOL Jac_TellChgMode()
  */
 void Jac_SceneSetup(u32 sceneID, u32 stage)
 {
-	STACK_PAD_VAR(4);
-	u32* REF_sceneID = &sceneID;
-	u32* REF_stage   = &stage;
+	JAUDIO_PRINT("Jac_SceneSetup: scene=%d stage=%d\n", sceneID, stage);
 	static int first = 1;
 	BOOL closeScene, same;
 	int bgm;
@@ -217,6 +215,7 @@ void Jac_SceneSetup(u32 sceneID, u32 stage)
 		}
 	}
 
+	JAUDIO_PRINT("Jac_SceneSetup: scene=%d stage=%d current bgm=%d\n", sceneID, stage, current_bgm);
 	if (current_bgm != bgm2) {
 		closeScene = TRUE;
 		Jac_StopBgm(0);
@@ -340,16 +339,13 @@ void Jac_SceneExit(u32 nextSceneID, u32 stage)
 	int fade;
 	int newBgm;
 
-	int* REF_fade;
-	STACK_PAD_VAR(1);
-
 	if (current_scene == nextSceneID) {
 		return;
 	}
 
 	Jac_SetProcessStatus(2);
-	fade     = tbl_scene_to_fadetime[current_scene];
-	REF_fade = &fade;
+	fade = tbl_scene_to_fadetime[current_scene];
+	JAUDIO_PRINT("Jac_SceneExit: scene=%d fade=%d\n", current_scene, fade);
 	Jac_FadeOutBgm(0, fade);
 	Jac_FadeOutBgm(1, fade);
 
@@ -457,8 +453,7 @@ void Jac_StopDemoSound(u32 id)
 void Jac_PrepareDemoSound(u32 id)
 {
 	char buffer[64];
-	STACK_PAD_VAR(3);
-	u32* REF_id = &id;
+	JAUDIO_PRINT("Jac_PrepareDemoSound: id=%d\n", id);
 
 	if (StreamSyncCheckBusy(0, id) == 1) {
 		stop_ready = 0;
@@ -467,6 +462,7 @@ void Jac_PrepareDemoSound(u32 id)
 		} while (stop_ready == 0);
 	}
 	DVDT_ExtendPath(buffer, filelist[id]);
+	JAUDIO_PRINT("Jac_PrepareDemoSound: id=%d current=%d file=%s\n", id, current_prepare, filelist[id]);
 	StreamAudio_Start(0, id, buffer, TRUE, FALSE, NULL);
 	Jac_UpdateStreamLevel();
 	current_prepare = id;

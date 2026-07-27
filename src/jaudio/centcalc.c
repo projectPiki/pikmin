@@ -1,5 +1,6 @@
 #include "jaudio/centcalc.h"
 
+#include "jaudio/debug.h"
 #include "jaudio/tables.h"
 
 // Calculated via powf(2.0f, x / 12.0f)
@@ -18,8 +19,6 @@ static f32 KEY_TABLE[KEY_CURVE_RESOLUTION] = {
  */
 f32 Jam_PitchToCent(f32 basePitch, f32 scaleFactor)
 {
-	STACK_PAD_VAR(1);
-
 	f32 scaledPitch;
 	f32 fractionalPart;
 	s16 tableIndex;
@@ -39,5 +38,7 @@ f32 Jam_PitchToCent(f32 basePitch, f32 scaleFactor)
 		tableIndex += 1;
 	}
 
+	JAUDIO_PRINT("Jam_PitchToCent: base=%f curve=%f\n", C5BASE_PITCHTABLE[tableIndex + 60],
+	             (KEY_TABLE)[(u16)(fractionalPart * KEY_CURVE_RESOLUTION)]);
 	return C5BASE_PITCHTABLE[tableIndex + 60] * (KEY_TABLE)[(u16)(fractionalPart * KEY_CURVE_RESOLUTION)];
 }

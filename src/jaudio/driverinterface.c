@@ -3,6 +3,7 @@
 #include "jaudio/aictrl.h"
 #include "jaudio/audiostruct.h"
 #include "jaudio/bankdrv.h"
+#include "jaudio/debug.h"
 #include "jaudio/dspdriver.h"
 #include "jaudio/dspinterface.h"
 #include "jaudio/ja_calc.h"
@@ -184,9 +185,8 @@ void List_AddChannel(jc_** jc, jc_* in)
  */
 int FixAllocChannel(jcs_* sys, u32 size)
 {
-	jcs_** REF_sys = &sys;
-	u32* REF_size  = &size;
-	int num        = 0;
+	JAUDIO_PRINT("FixAllocChannel: system=%x count=%d\n", sys, size);
+	int num = 0;
 	while (num < size) {
 		jc_* chan = List_GetChannel(&GLOBAL_CHANNEL.freeChannels);
 		if (chan == NULL) {
@@ -758,9 +758,9 @@ static int CommonCallbackLogicalChannel(dspch_* ch, u32 eventType)
 	u32 activeOscCount = 0;
 	jc_* jc            = ch->logicalChan;
 	u32 oscIndex;
-	dspch_** REF_ch = &ch;
-	jc_** REF_jc    = &jc;
 	STACK_PAD_VAR(10);
+
+	JAUDIO_PRINT("CommonCallbackLogicalChannel: channel=%x\n", jc);
 
 	// Handle null logical channel - cleanup and return
 	if (jc == NULL) {
@@ -808,6 +808,7 @@ static int CommonCallbackLogicalChannel(dspch_* ch, u32 eventType)
 	}
 
 	// Handle priority update event
+	JAUDIO_PRINT("CommonCallbackLogicalChannel: priority channel=%x\n", ch);
 	if (eventType == DSPCHCB_PriorityUpdate) {
 		u8 prio = jc->channelPriority >> 16;
 		if (jc->dspChannel && prio < jc->dspChannel->prio) {
@@ -839,8 +840,8 @@ static int CommonCallbackLogicalChannel(dspch_* ch, u32 eventType)
 
 		// Process all oscillators
 		for (oscIndex = 0; oscIndex < 4; oscIndex++) {
-			u32* REF_i = &oscIndex;
 			if (jc->mOscillators[oscIndex]) {
+				JAUDIO_PRINT("CommonCallbackLogicalChannel: oscillator=%d\n", oscIndex);
 				DoEffectOsc(jc, jc->mOscillators[oscIndex]->mode, Bank_OscToOfs(jc->mOscillators[oscIndex], &jc->mOscBuffers[oscIndex]));
 
 				// Check if oscillator finished
