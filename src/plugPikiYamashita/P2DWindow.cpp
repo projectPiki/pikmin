@@ -1,6 +1,11 @@
+#include "P2D/Window.h"
+
+#if !PIKI_USE_DGX
+#include <gl/gl.h>
+#endif
+
 #include "DebugLog.h"
 #include "P2D/Stream.h"
-#include "P2D/Window.h"
 #include "sysNew.h"
 #include "zen/ogSub.h"
 
@@ -221,6 +226,14 @@ void P2DWindow::drawContents(const PUTRect& windowBounds)
 }
 
 /**
+ * @note Non-static (because the ILK mentions it by name) inline (because it doesn't show up in the MetroWerks linker map)
+ */
+inline f32 u16Tof32(u16 value)
+{
+	return value / 32768.0f;
+}
+
+/**
  * @todo: Documentation
  */
 void P2DWindow::P2DWindowTexture::draw(int x, int y, int width, int height, u16 u0, u16 v0, u16 u1, u16 v1)
@@ -229,6 +242,8 @@ void P2DWindow::P2DWindowTexture::draw(int x, int y, int width, int height, u16 
 	int y1 = y + height;
 
 	mTexture->makeResident();
+
+#if PIKI_USE_DGX
 	GXLoadTexObj(mTexture->mTexObj, GX_TEXMAP0);
 	setTevMode();
 
@@ -249,6 +264,32 @@ void P2DWindow::P2DWindowTexture::draw(int x, int y, int width, int height, u16 
 	GXPosition3s16(x, y1, 0);
 	GXColor1u32(0xFFFFFFFF);
 	GXTexCoord2s16(u1, v0);
+
+	GXEnd();
+#else
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, mTexture->mAttachName);
+
+	glBegin(7);
+
+	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+	glTexCoord2f(u16Tof32(u1), u16Tof32(v1));
+	glVertex3f(x, y, 0.0f);
+	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+
+	glTexCoord2f(u16Tof32(u0), u16Tof32(v1));
+	glVertex3f(x1, y, 0.0f);
+	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+
+	glTexCoord2f(u16Tof32(u0), u16Tof32(v0));
+	glVertex3f(x1, y1, 0.0f);
+	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+
+	glTexCoord2f(u16Tof32(u1), u16Tof32(v0));
+	glVertex3f(x, y1, 0.0f);
+
+	glEnd();
+#endif
 }
 
 /**

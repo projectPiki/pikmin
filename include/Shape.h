@@ -150,20 +150,20 @@ public:
 	{
 		mFaceNode.initCore("");
 
-		mNodeCount = 0;
-		mFaceCount = 0;
-		mFlags     = 0;
-		_20        = -1;
+		mNodeCount     = 0;
+		mFaceCount     = 0;
+		mFlags         = 0;
+		mOglListHandle = -1;
 	}
 
 	DispList(int flags)
 	{
 		mFaceNode.initCore("");
 
-		mNodeCount = 0;
-		mFaceCount = 0;
-		mFlags     = flags & 3;
-		_20        = -1;
+		mNodeCount     = 0;
+		mFaceCount     = 0;
+		mFlags         = flags & 3;
+		mOglListHandle = -1;
 	}
 
 	virtual void read(RandomAccessStream&); // _0C
@@ -173,7 +173,7 @@ public:
 	int mFlags;         // _14
 	int mDataLength;    // _18
 	u8* mData;          // _1C
-	int _20;            // _20
+	int mOglListHandle; // _20, only used by OGLGraphics
 	int mNodeCount;     // _24
 	int mFaceCount;     // _28
 	FaceNode mFaceNode; // _2C

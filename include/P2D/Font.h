@@ -1,11 +1,16 @@
 #ifndef _P2D_FONT_H
 #define _P2D_FONT_H
 
+#include "types.h"
+
+#if !PIKI_USE_DGX
+#include <gl/gl.h>
+#endif
+
 #include "Colour.h"
 #include "Dolphin/gx.h"
 #include "GfxObject.h"
 #include "Texture.h"
-#include "types.h"
 #include <Font.h>
 
 /**
@@ -51,7 +56,12 @@ public:
 	void loadFontTexture()
 	{
 		mFont->mTexture->makeResident();
+#if PIKI_USE_DGX
 		GXLoadTexObj(mFont->mTexture->mTexObj, GX_TEXMAP0);
+#else
+		glEnable(GL_TEXTURE_2D);
+		glBindTexture(GL_TEXTURE_2D, mFont->mTexture->mAttachName);
+#endif
 	}
 
 	Font* mFont;      // _00

@@ -438,7 +438,7 @@ void OgTestScreen::draw(Graphics& gfx)
 	gfx.setViewport(AREA_FULL_SCREEN(gfx));
 	gfx.setScissor(AREA_FULL_SCREEN(gfx));
 	gfx.setClearColour(COLOUR_BLACK);
-	gfx.clearBuffer(3, false);
+	gfx.clearBuffer(Graphics::ClearBufferFlag::Both, false);
 
 	Camera cam;
 	Matrix4f viewMat;

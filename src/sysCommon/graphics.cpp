@@ -747,24 +747,24 @@ int Font::charToIndex(u16 c)
 int Font::stringWidth(immut char* str)
 {
 	int width = 0;
-	while (*str) {
+	while (str[0] != '\0') {
 		int idx;
 #if defined(VERSION_GPIP01)
-		STACK_PAD_VAR(4);
-		if (*str >= 0xa0) {
-			idx = *str - 0x20;
-			str++;
-		} else if (*str & 0x80)
-#else
-		if (*str & 0x80)
+		STACK_PAD_VAR(2);
+		// Avoid impossible condition by converting to `u8`.
+		u8 extendedAsciiCodepoint = str[0];
+		if (extendedAsciiCodepoint >= 0xa0) {
+			idx = charToIndex(str[0]);
+			str += 1;
+		} else
 #endif
-		{
-			u16 c = (str[0] << 8) | (str[1] & 0xFF);
+		    if (str[0] & 0x80) {
+			u16 c = (static_cast<u8>(str[0]) << 8) | (static_cast<u8>(str[1]) << 0);
 			idx   = charToIndex(c);
 			str += 2;
 		} else {
-			idx = charToIndex(*str);
-			str++;
+			idx = charToIndex(str[0]);
+			str += 1;
 		}
 		width += mChars[idx].mCharSpacing;
 	}
@@ -847,7 +847,7 @@ Graphics::Graphics()
 /**
  * @todo: Documentation
  */
-void Graphics::initRender(int, int)
+void Graphics::initRender(int screenWidth, int screenHeight)
 {
 	mActiveLightMask = 0;
 	mLight.initCore("");
