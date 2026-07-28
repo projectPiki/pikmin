@@ -173,7 +173,7 @@ struct CardSelectSetupSection : public Node {
 		gfx.setViewport(AREA_FULL_SCREEN(gfx));
 		gfx.setScissor(AREA_FULL_SCREEN(gfx));
 		gfx.setClearColour(COLOUR_TRANSPARENT);
-		gfx.clearBuffer(3, false);
+		gfx.clearBuffer(Graphics::ClearBufferFlag::Both, false);
 
 		Matrix4f mtx;
 		gfx.setOrthogonal(mtx.mMtx, AREA_FULL_SCREEN(gfx));

@@ -62,7 +62,7 @@ void GameLoadIdler::draw(Graphics& gfx)
 	gfx.setViewport(AREA_FULL_SCREEN(gfx));
 	gfx.setScissor(AREA_FULL_SCREEN(gfx));
 	gfx.setClearColour(COLOUR_TRANSPARENT);
-	gfx.clearBuffer(3, false);
+	gfx.clearBuffer(Graphics::ClearBufferFlag::Both, false);
 
 	// try and display level banner
 	if (!gameflow.mLevelBannerTex) {

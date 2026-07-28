@@ -527,7 +527,7 @@ void LightCamera::calcProjection(Graphics& gfx, bool p2, Node* p3)
 
 		Camera* cam = gfx.mCamera;
 		gfx.setClearColour(COLOUR_TRANSPARENT);
-		gfx.clearBuffer(3, 0);
+		gfx.clearBuffer(Graphics::ClearBufferFlag::Both, false);
 
 		gfx.setScissor(RectArea(4, 4, int(width) - 4, int(height) - 4));
 		gfx.setFog(false);

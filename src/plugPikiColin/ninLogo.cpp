@@ -98,7 +98,7 @@ struct NinLogoSetupSection : public Node {
 		gfx.setViewport(AREA_FULL_SCREEN(gfx));
 		gfx.setScissor(AREA_FULL_SCREEN(gfx));
 		gfx.setClearColour(COLOUR_TRANSPARENT);
-		gfx.clearBuffer(3, false);
+		gfx.clearBuffer(Graphics::ClearBufferFlag::Both, false);
 
 		// draw debug menu or progressive scan choice screen full-screen
 		Matrix4f orthoMtx;

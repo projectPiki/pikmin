@@ -54,6 +54,12 @@ extern GColor GColors[];
  */
 class SYSCORE_API Graphics {
 public:
+	BEGIN_ENUM_TYPE(ClearBufferFlag)
+	enum {
+		Color = 1 << 0,
+		Depth = 1 << 1,
+		Both  = Color | Depth,
+	} END_ENUM_TYPE;
 	Graphics();
 
 	void resetMatrixBuffer();
@@ -95,8 +101,8 @@ public:
 	bool mIsDepthEnabled;                     // _321
 	BOOL mHasTexGen;                          // _324
 	u32 mMtxDepIdx;                           // _328
-	u32 mBlendMode;                           // _32C, 0 is normal, 1 is additive, 2 is subtractive, 3 is alpha additive, 4 is no blend
-	int mCullMode;                            // _330
+	int mBlendMode;                           // _32C, 0 is normal, 1 is additive, 2 is subtractive, 3 is alpha additive, 4 is no blend
+	int mCullMode;                            // _330, 0 is back, 1 is front, 2 is none
 	u32 mCullFlip;                            // _334
 	LightCamera* mLightCam;                   // _338
 	Vector3f mSunPosition;                    // _33C
@@ -133,18 +139,18 @@ public:
 	virtual void initRender(int, int);                                                                                    // _24
 	virtual void resetCopyFilter() = 0;                                                                                   // _28
 	virtual void setAmbient() { }                                                                                         // _2C
-	virtual bool setLighting(bool, PVWLightingInfo*)          = 0;                                                        // _30
-	virtual void setLight(Light*, int)                        = 0;                                                        // _34
-	virtual void clearBuffer(int, bool)                       = 0;                                                        // _38
-	virtual void setPerspective(Mtx, f32, f32, f32, f32, f32) = 0;                                                        // _3C
-	virtual void setOrthogonal(Mtx, immut RectArea&)          = 0;                                                        // _40
+	virtual bool setLighting(bool, PVWLightingInfo*)            = 0;                                                      // _30
+	virtual void setLight(Light*, int)                          = 0;                                                      // _34
+	virtual void clearBuffer(int, bool)                         = 0;                                                      // _38
+	virtual void setPerspective(Mtx44, f32, f32, f32, f32, f32) = 0;                                                      // _3C
+	virtual void setOrthogonal(Mtx44, immut RectArea&)          = 0;                                                      // _40
 	virtual void setLightcam(LightCamera* cam) { mLightCam = cam; }                                                       // _44
 	virtual void setViewport(immut RectArea&)       = 0;                                                                  // _48
 	virtual void setViewportOffset(immut RectArea&) = 0;                                                                  // _4C
 	virtual void setScissor(immut RectArea&)        = 0;                                                                  // _50
 	virtual void setBlendMode(u8 blendFactor, u8 zMode, u8 blendMode) { }                                                 // _54
 	virtual int setCullFront(int)                                                                                    = 0; // _58
-	virtual u8 setDepth(bool)                                                                                        = 0; // _5C
+	virtual bool setDepth(bool)                                                                                      = 0; // _5C
 	virtual int setCBlending(int)                                                                                    = 0; // _60
 	virtual void setPointSize(f32)                                                                                   = 0; // _64
 	virtual f32 setLineWidth(f32)                                                                                    = 0; // _68
@@ -167,7 +173,7 @@ public:
 	virtual void setAuxColour(immut Colour&)                                                                         = 0; // _AC
 	virtual void setPrimEnv(immut Colour* primColor, immut Colour* envColor)                                         = 0; // _B0
 	virtual void setClearColour(immut Colour&)                                                                       = 0; // _B4
-	virtual void setFog(bool) /* For whatever reason, these `setFog` overloads are swapped in the DLL */             = 0; // _B8
+	virtual void setFog(bool)                                                                                        = 0; // _B8
 	virtual void setFog(bool, immut Colour&, f32, f32, f32)                                                          = 0; // _BC
 	virtual void setMatHandler(MaterialHandler* handler)                                                                  // _C0
 	{
@@ -190,6 +196,9 @@ public:
 	virtual void initReflectTex(bool)                                             = 0;     // _E8
 	virtual void texturePrintf(Font* font, int x, int y, immut char* format, ...) = 0;     // _EC
 	virtual void perspPrintf(Font*, immut Vector3f&, int, int, immut char*, ...);          // _F0
+#if defined(WIN32)
+	virtual void genAge(AgeServer&) { }
+#endif
 };
 
 /**
@@ -211,14 +220,14 @@ struct DGXGraphics : public Graphics {
 	virtual bool setLighting(bool, PVWLightingInfo*);                                                                 // _30
 	virtual void setLight(Light*, int);                                                                               // _34
 	virtual void clearBuffer(int, bool);                                                                              // _38
-	virtual void setPerspective(Mtx, f32, f32, f32, f32, f32);                                                        // _3C
-	virtual void setOrthogonal(Mtx, immut RectArea&);                                                                 // _40
+	virtual void setPerspective(Mtx44, f32, f32, f32, f32, f32);                                                      // _3C
+	virtual void setOrthogonal(Mtx44, immut RectArea&);                                                               // _40
 	virtual void setViewport(immut RectArea&);                                                                        // _48
 	virtual void setViewportOffset(immut RectArea&);                                                                  // _4C
 	virtual void setScissor(immut RectArea&);                                                                         // _50
 	virtual void setBlendMode(u8, u8, u8);                                                                            // _54
 	virtual int setCullFront(int);                                                                                    // _58
-	virtual u8 setDepth(bool);                                                                                        // _5C
+	virtual bool setDepth(bool);                                                                                      // _5C
 	virtual int setCBlending(int);                                                                                    // _60
 	virtual void setPointSize(f32) { }                                                                                // _64 (weak)
 	virtual f32 setLineWidth(f32);                                                                                    // _68
@@ -240,7 +249,7 @@ struct DGXGraphics : public Graphics {
 	virtual void setAuxColour(immut Colour&);                                                                         // _AC
 	virtual void setPrimEnv(immut Colour*, immut Colour*);                                                            // _B0
 	virtual void setClearColour(immut Colour&);                                                                       // _B4
-	virtual void setFog(bool); /* For whatever reason, these `setFog` overloads are swapped in the DLL */             // _B8
+	virtual void setFog(bool);                                                                                        // _B8
 	virtual void setFog(bool, immut Colour&, f32, f32, f32);                                                          // _BC
 	virtual void setMaterial(Material*, bool);                                                                        // _C4
 	virtual void useTexture(Texture*, int);                                                                           // _CC
@@ -300,6 +309,72 @@ struct DGXGraphics : public Graphics {
 };
 
 extern DGXGraphics* gfx;
+
+/**
+ * @brief TODO
+ *
+ * @note Size: 0x3E8
+ */
+struct OGLGraphics : public Graphics {
+	OGLGraphics(int screenWidth, int screenHeight);
+
+	virtual void initRender(int, int);                                                                                // _24
+	virtual void resetCopyFilter();                                                                                   // _28
+	virtual bool setLighting(bool, PVWLightingInfo*);                                                                 // _30
+	virtual void setLight(Light*, int);                                                                               // _34
+	virtual void clearBuffer(int, bool);                                                                              // _38
+	virtual void setPerspective(Mtx44, f32, f32, f32, f32, f32);                                                      // _3C
+	virtual void setOrthogonal(Mtx44, immut RectArea&);                                                               // _40
+	virtual void setViewport(immut RectArea&);                                                                        // _48
+	virtual void setViewportOffset(immut RectArea&);                                                                  // _4C
+	virtual void setScissor(immut RectArea&);                                                                         // _50
+	virtual int setCullFront(int);                                                                                    // _58
+	virtual bool setDepth(bool);                                                                                      // _5C
+	virtual int setCBlending(int);                                                                                    // _60
+	virtual void setPointSize(f32);                                                                                   // _64
+	virtual f32 setLineWidth(f32);                                                                                    // _68
+	virtual void setCamera(Camera*);                                                                                  // _6C
+	virtual void calcViewMatrix(immut Matrix4f& modelMtx, Matrix4f& viewMtx);                                         // _70
+	virtual void useMatrix(immut Matrix4f&, int);                                                                     // _74
+	virtual void setClippingPlane(bool, Plane*);                                                                      // _78
+	virtual void initMesh(Shape*);                                                                                    // _7C
+	virtual void drawSingleMatpoly(Shape*, Joint::MatPoly*);                                                          // _80
+	virtual void drawMeshes(Camera&, Shape*);                                                                         // _84
+	virtual bool initParticle(bool);                                                                                  // _88
+	virtual void drawParticle(Camera&, immut Vector3f&, f32);                                                         // _8C
+	virtual void drawRotParticle(Camera&, immut Vector3f&, u16, f32);                                                 // _90
+	virtual void drawCamParticle(Camera&, immut Vector3f&, immut Vector2f&, immut Vector2f&, immut Vector2f&);        // _94
+	virtual void drawLine(immut Vector3f&, immut Vector3f&);                                                          // _98
+	virtual void drawPoints(immut Vector3f*, int);                                                                    // _9C
+	virtual void drawOneTri(immut Vector3f* vertices, immut Vector3f* normals, immut Vector2f* texCoords, int count); // _A0
+	virtual void drawOneStrip(immut Vector3f*, immut Vector3f*, immut Vector2f*, int);                                // _A4
+	virtual void setColour(immut Colour&, bool);                                                                      // _A8
+	virtual void setAuxColour(immut Colour&);                                                                         // _AC
+	virtual void setPrimEnv(immut Colour* primColor, immut Colour* envColor);                                         // _B0
+	virtual void setClearColour(immut Colour&);                                                                       // _B4
+	virtual void setFog(bool);                                                                                        // _B8
+	virtual void setFog(bool, immut Colour&, f32, f32, f32);                                                          // _BC
+	virtual void setMaterial(Material*, bool);                                                                        // _C4
+	virtual void useTexture(Texture*, int);                                                                           // _CC
+	virtual void drawRectangle(immut RectArea&, immut RectArea&, immut Vector3f*);                                    // _D0
+	virtual void fillRectangle(immut RectArea&);                                                                      // _D4
+	virtual void blatRectangle(immut RectArea&);                                                                      // _D8
+	virtual void lineRectangle(immut RectArea&);                                                                      // _DC
+	virtual void initProjTex(bool, LightCamera*);                                                                     // _E4
+	virtual void initReflectTex(bool);                                                                                // _E8
+	virtual void texturePrintf(Font* font, int x, int y, immut char* format, ...);                                    // _EC
+#if defined(WIN32)
+	virtual void genAge(AgeServer&);
+#endif
+
+	// _000      = VTBL
+	// _000-_3B8 = Graphics
+	String mOGLVendor;        // _3B8
+	String mOGLRenderer;      // _3C0
+	String mOGLVersion;       // _3C8
+	String mOGLExtensions;    // _3D0
+	RectArea mViewportBounds; // _3D8
+};
 
 /**
  * @brief Stripped, only has one unused/inlined function in map

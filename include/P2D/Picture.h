@@ -1,12 +1,17 @@
 #ifndef _P2D_PICTURE_H
 #define _P2D_PICTURE_H
 
+#include "types.h"
+
+#if !PIKI_USE_DGX
+#include <gl/gl.h>
+#endif
+
 #include "Colour.h"
 #include "Dolphin/gx.h"
 #include "P2D/Pane.h"
 #include "P2D/Util.h"
 #include "Texture.h"
-#include "types.h"
 
 class Texture;
 
@@ -61,7 +66,12 @@ public:
 	void load(Texture* texture, GXTexMapID texMapID)
 	{
 		texture->makeResident();
+#if PIKI_USE_DGX
 		GXLoadTexObj(texture->mTexObj, texMapID);
+#else
+		glEnable(GL_TEXTURE_2D);
+		glBindTexture(GL_TEXTURE_2D, texture->mAttachName);
+#endif
 	}
 
 	P2DPicture(P2DPane*, RandomAccessStream*, u16);

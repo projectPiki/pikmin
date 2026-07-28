@@ -203,7 +203,7 @@ void System::beginRender()
 {
 	mRetraceCount = 0;
 	static_cast<DGXGraphics*>(mDGXGfx)->beginRender();
-	mDGXGfx->clearBuffer(3, false);
+	mDGXGfx->clearBuffer(Graphics::ClearBufferFlag::Both, false);
 	GXSetViewport(0.0f, 0.0f, glnWidth, glnHeight, 0.0f, 1.0f);
 	GXSetScissor(0, 0, glnWidth, glnHeight);
 	GXSetColorUpdate(GX_TRUE);

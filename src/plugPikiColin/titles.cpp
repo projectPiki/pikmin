@@ -564,7 +564,7 @@ public:
 		gfx.setViewport(AREA_FULL_SCREEN(gfx));
 		gfx.setScissor(AREA_FULL_SCREEN(gfx));
 		gfx.setClearColour(COLOUR_TRANSPARENT);
-		gfx.clearBuffer(3, false);
+		gfx.clearBuffer(Graphics::ClearBufferFlag::Both, false);
 		gfx.mAmbientColour.set(48, 48, 48, 255);
 
 		// (this is a wacky way of resetting the graphics context's last model matrix to the identity)

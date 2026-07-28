@@ -813,7 +813,7 @@ public:
 		gfx.setViewport(AREA_FULL_SCREEN(gfx));
 		gfx.setScissor(AREA_FULL_SCREEN(gfx));
 		gfx.setClearColour(COLOUR_BLACK);
-		gfx.clearBuffer(3, false);
+		gfx.clearBuffer(Graphics::ClearBufferFlag::Both, false);
 		Matrix4f mtx;
 		gfx.setOrthogonal(mtx.mMtx, AREA_FULL_SCREEN(gfx));
 		gfx.setColour(Colour(64, 64, 192, 255), true);

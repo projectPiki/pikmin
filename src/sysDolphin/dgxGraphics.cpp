@@ -649,7 +649,7 @@ f32 DGXGraphics::setLineWidth(f32 width)
 /**
  * @todo: Documentation
  */
-u8 DGXGraphics::setDepth(bool enabled)
+bool DGXGraphics::setDepth(bool enabled)
 {
 	bool old        = mIsDepthEnabled;
 	mIsDepthEnabled = enabled;
@@ -778,13 +778,14 @@ void DGXGraphics::setLight(Light* light, int idx)
 /**
  * @todo: Documentation
  */
-void DGXGraphics::setPerspective(Mtx mtx, f32 a1, f32 a2, f32 a3, f32 a4, f32 a5)
+void DGXGraphics::setPerspective(Mtx44 mtx, f32 fovY, f32 aspect, f32 zNear, f32 zFar, f32 scale)
 {
-	MTXPerspective(mtx, a1, a2, a3, a4);
+	MTXPerspective(mtx, fovY, aspect, zNear, zFar);
 	GXSetProjection(mtx, GX_PERSPECTIVE);
-	f32 a     = 1.0f / (a4 - a3);
-	mtx[2][2] = a * -(a4 + a3);
-	mtx[2][3] = a * -(a4 * 2.0f * a3);
+	f32 screenSpaceDepth = 1.0f / (zFar - zNear);
+
+	mtx[2][2] = screenSpaceDepth * -(zFar + zNear);
+	mtx[2][3] = screenSpaceDepth * -(zFar * 2.0f * zNear);
 	GXSetZMode(GX_TRUE, GX_LEQUAL, GX_TRUE);
 }
 
@@ -796,7 +797,7 @@ void DGXGraphics::setPerspective(Mtx mtx, f32 a1, f32 a2, f32 a3, f32 a4, f32 a5
  * @param orthoMtx Output orthogonal matrix in device coordinates.
  * @param bounds Bounds to use when constructing the orthogonal matrix.
  */
-void DGXGraphics::setOrthogonal(Mtx orthoMtx, immut RectArea& bounds)
+void DGXGraphics::setOrthogonal(Mtx44 orthoMtx, immut RectArea& bounds)
 {
 	MTXOrtho(orthoMtx, bounds.mMinY, bounds.mMaxY, bounds.mMinX, bounds.mMaxX, 0.0f, -1.0f);
 	GXSetProjection(orthoMtx, GX_ORTHOGRAPHIC);
@@ -840,7 +841,7 @@ void DGXGraphics::setViewportOffset(immut RectArea& bounds)
 /**
  * @todo: Documentation
  */
-void DGXGraphics::initReflectTex(bool)
+void DGXGraphics::initReflectTex(bool enable)
 {
 }
 
@@ -1289,16 +1290,17 @@ void DGXGraphics::setupVtxDesc(Shape* model, Material* mat, Mesh* mesh)
 		}
 	}
 
-	for (int i = 0; i < 8; i++) {
-		if (mesh->mFeatureFlags & (1 << (i + 3))) {
-			if (!sendTxUVIndx[i]) {
-				GXSetVtxDesc(GXAttr(GX_VA_TEX0 + i), GX_INDEX16);
-				sendTxUVIndx[i] = true;
+	for (int texMapIdx = 0; texMapIdx < 8; texMapIdx++) {
+		// Effectively `Mesh::FeatureFlags::Tex0 << texMapIdx`
+		if (mesh->mFeatureFlags & (1 << (texMapIdx + 3))) {
+			if (!sendTxUVIndx[texMapIdx]) {
+				GXSetVtxDesc(GXAttr(GX_VA_TEX0 + texMapIdx), GX_INDEX16);
+				sendTxUVIndx[texMapIdx] = true;
 			}
 		} else {
-			if (sendTxUVIndx[i]) {
-				GXSetVtxDesc(GXAttr(GX_VA_TEX0 + i), GX_NONE);
-				sendTxUVIndx[i] = false;
+			if (sendTxUVIndx[texMapIdx]) {
+				GXSetVtxDesc(GXAttr(GX_VA_TEX0 + texMapIdx), GX_NONE);
+				sendTxUVIndx[texMapIdx] = false;
 			}
 		}
 	}
@@ -1343,11 +1345,12 @@ void DGXGraphics::drawSingleMatpoly(Shape* model, Joint::MatPoly* matPoly)
 	for (int mtxGroupIdx = 0; mtxGroupIdx < mesh.mMtxGroupCount; mtxGroupIdx++) {
 		MtxGroup& group = mesh.mMtxGroupList[mtxGroupIdx];
 		for (int depListIdx = 0; depListIdx < group.mDepLength; depListIdx++) {
-			if (group.mDepList[depListIdx] == -1) {
+			int depMtxIdx = group.mDepList[depListIdx];
+			if (depMtxIdx == -1) {
 				continue;
 			}
 
-			VtxMatrix& vtxMtx = model->mVtxMatrixList[group.mDepList[depListIdx]];
+			VtxMatrix& vtxMtx = model->mVtxMatrixList[depMtxIdx];
 			if (model->mCurrentAnimation->mData) {
 				if (vtxMtx.mHasPartialWeights) {
 					useMatrixQuick(model->getAnimMatrix(vtxMtx.mIndex), depListIdx);
@@ -1412,13 +1415,13 @@ void DGXGraphics::setAuxColour(immut Colour& color)
 /**
  * @todo: Documentation
  */
-void DGXGraphics::setPrimEnv(immut Colour* col1, immut Colour* col2)
+void DGXGraphics::setPrimEnv(immut Colour* color0, immut Colour* color1)
 {
-	if (col1) {
-		GXSetTevColor(GX_TEVREG0, *reinterpret_cast<immut GXColor*>(col1));
+	if (color0) {
+		GXSetTevColor(GX_TEVREG0, *reinterpret_cast<immut GXColor*>(color0));
 	}
-	if (col2) {
-		GXSetTevColor(GX_TEVREG1, *reinterpret_cast<immut GXColor*>(col2));
+	if (color1) {
+		GXSetTevColor(GX_TEVREG1, *reinterpret_cast<immut GXColor*>(color1));
 	}
 }
 
@@ -1433,7 +1436,7 @@ void DGXGraphics::setClearColour(immut Colour& color)
 /**
  * @todo: Documentation
  */
-void DGXGraphics::clearBuffer(int, bool)
+void DGXGraphics::clearBuffer(int bufferFlags, bool mode)
 {
 	GXSetCopyClear(reinterpret_cast<GXColor&>(mBufferClearColour), 0xFFFFFF); // max clear_z value
 }
@@ -1441,9 +1444,9 @@ void DGXGraphics::clearBuffer(int, bool)
 /**
  * @todo: Documentation
  */
-void DGXGraphics::setFog(bool set)
+void DGXGraphics::setFog(bool enable)
 {
-	if (set) {
+	if (enable) {
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
 		GXSetFog(GX_FOG_LINEAR, mFogStart, mFogEnd, mCamera->mNear, mCamera->mFar, reinterpret_cast<GXColor&>(mFogColour));
 #else
@@ -1465,13 +1468,13 @@ void DGXGraphics::setFog(bool set)
 /**
  * @todo: Documentation
  */
-void DGXGraphics::setFog(bool set, immut Colour& color, f32 density, f32 start, f32 end)
+void DGXGraphics::setFog(bool enable, immut Colour& color, f32 density, f32 start, f32 end)
 {
 	mFogColour  = color;
 	mFogStart   = start;
 	mFogEnd     = end;
 	mFogDensity = density;
-	setFog(set);
+	setFog(enable);
 }
 
 /**
@@ -1545,7 +1548,7 @@ int DGXGraphics::setCBlending(int blendMode)
 		GXSetZMode(GX_TRUE, GX_LEQUAL, GX_FALSE);
 		break;
 	}
-	case BLEND_InverseColor:
+	case BLEND_Subtractive:
 	{
 		GXSetTevOp(GX_TEVSTAGE0, GX_MODULATE);
 		GXSetBlendMode(GX_BM_BLEND, GX_BL_ZERO, GX_BL_INVSRCCOL, GX_LO_CLEAR);
@@ -1617,7 +1620,7 @@ int DGXGraphics::setCBlending(int blendMode)
 /**
  * @todo: Documentation
  */
-bool DGXGraphics::initParticle(bool a)
+bool DGXGraphics::initParticle(bool hasVtxColor)
 {
 	if (!mActiveTexture[0]) {
 		return false;
@@ -1630,7 +1633,7 @@ bool DGXGraphics::initParticle(bool a)
 
 	GXSetVtxDesc(GX_VA_TEX0, GX_DIRECT);
 	GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_POS_XYZ, GX_F32, 0);
-	if (a) {
+	if (hasVtxColor) {
 		GXSetVtxDesc(GX_VA_CLR0, GX_DIRECT);
 		GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_POS_XYZ, GX_RGBA8, 0);
 	}
@@ -1649,26 +1652,27 @@ void DGXGraphics::drawRotParticle(Camera& cam, immut Vector3f& pos, u16 angle, f
 	gsys->mPolygonCount += 2;
 
 	// max - 0x2000
-	Vector3f vec1(radius * sinShort(angle + 0xE000), radius * cosShort(angle + 0xE000), 0.0f);
+	Vector3f nwVtx(radius * sinShort(angle + 0xE000), radius * cosShort(angle + 0xE000), 0.0f);
 	// min + 0x2000
-	Vector3f vec2(radius * sinShort(angle + 0x2000), radius * cosShort(angle + 0x2000), 0.0f);
+	Vector3f neVtx(radius * sinShort(angle + 0x2000), radius * cosShort(angle + 0x2000), 0.0f);
 	// min + 0x6000
-	Vector3f vec3(radius * sinShort(angle + 0x6000), radius * cosShort(angle + 0x6000), 0.0f);
+	Vector3f seVtx(radius * sinShort(angle + 0x6000), radius * cosShort(angle + 0x6000), 0.0f);
 	// max - 0x6000
-	Vector3f vec4(radius * sinShort(angle + 0xA000), radius * cosShort(angle + 0xA000), 0.0f);
+	Vector3f swVtx(radius * sinShort(angle + 0xA000), radius * cosShort(angle + 0xA000), 0.0f);
 
 	GXBegin(GX_QUADS, GX_VTXFMT0, 4);
 
-	GXPosition3f32(pos.x + vec1.DP(cam.mViewXAxis), pos.y + vec1.DP(cam.mViewYAxis), pos.z + vec1.DP(cam.mViewZAxis));
+	// Northwest
+	GXPosition3f32(pos.x + nwVtx.DP(cam.mViewXAxis), pos.y + nwVtx.DP(cam.mViewYAxis), pos.z + nwVtx.DP(cam.mViewZAxis));
 	GXTexCoord2f32(0.0f, 0.0f);
-
-	GXPosition3f32(pos.x + vec2.DP(cam.mViewXAxis), pos.y + vec2.DP(cam.mViewYAxis), pos.z + vec2.DP(cam.mViewZAxis));
+	// Northeast
+	GXPosition3f32(pos.x + neVtx.DP(cam.mViewXAxis), pos.y + neVtx.DP(cam.mViewYAxis), pos.z + neVtx.DP(cam.mViewZAxis));
 	GXTexCoord2f32(1.0f, 0.0f);
-
-	GXPosition3f32(pos.x + vec3.DP(cam.mViewXAxis), pos.y + vec3.DP(cam.mViewYAxis), pos.z + vec3.DP(cam.mViewZAxis));
+	// Southeast
+	GXPosition3f32(pos.x + seVtx.DP(cam.mViewXAxis), pos.y + seVtx.DP(cam.mViewYAxis), pos.z + seVtx.DP(cam.mViewZAxis));
 	GXTexCoord2f32(1.0f, 1.0f);
-
-	GXPosition3f32(pos.x + vec4.DP(cam.mViewXAxis), pos.y + vec4.DP(cam.mViewYAxis), pos.z + vec4.DP(cam.mViewZAxis));
+	// Southwest
+	GXPosition3f32(pos.x + swVtx.DP(cam.mViewXAxis), pos.y + swVtx.DP(cam.mViewYAxis), pos.z + swVtx.DP(cam.mViewZAxis));
 	GXTexCoord2f32(0.0f, 1.0f);
 
 	GXEnd();
@@ -1677,17 +1681,17 @@ void DGXGraphics::drawRotParticle(Camera& cam, immut Vector3f& pos, u16 angle, f
 /**
  * @todo: Documentation
  */
-void DGXGraphics::drawParticle(Camera& cam, immut Vector3f& pos, f32 size)
+void DGXGraphics::drawParticle(Camera& cam, immut Vector3f& pos, f32 radius)
 {
 	if (!mActiveTexture[0]) {
 		ERROR("no texture set!!");
 	}
 	gsys->mPolygonCount += 2;
 
-	Vector3f vec1(-size, size, 0.0f);
-	Vector3f vec2(size, size, 0.0f);
-	Vector3f vec3(size, -size, 0.0f);
-	Vector3f vec4(-size, -size, 0.0f);
+	Vector3f vec1(-radius, radius, 0.0f);
+	Vector3f vec2(radius, radius, 0.0f);
+	Vector3f vec3(radius, -radius, 0.0f);
+	Vector3f vec4(-radius, -radius, 0.0f);
 	u32 primClr = *reinterpret_cast<u32*>(&mPrimaryColour);
 
 	GXBegin(GX_QUADS, GX_VTXFMT0, 4);
@@ -2054,24 +2058,24 @@ void DGXGraphics::texturePrintf(Font* font, int x, int y, immut char* format, ..
 	int xPos           = x;
 	int yPos           = y;
 	const char* bufPtr = buf;
-	while (*bufPtr) {
+	while (*bufPtr != '\0') {
 
 		int idx;
 #if defined(VERSION_GPIP01)
-		if (*bufPtr >= 0xa0) {
-			STACK_PAD_VAR(1);
-			idx = font->charToIndex(*bufPtr);
-			bufPtr++;
+		// Avoid impossible condition by converting to `u8`.
+		u8 extendedAsciiCodepoint = bufPtr[0];
+		if (extendedAsciiCodepoint >= 0xa0) {
+			idx = font->charToIndex(bufPtr[0]);
+			bufPtr += 1;
 		} else
-#else
 #endif
-		    if (*bufPtr & 0x80) {
-			u16 c = (bufPtr[0] << 8 | bufPtr[1]);
-			idx   = font->charToIndex(c);
+		    if (bufPtr[0] & 0x80) {
+			u16 sjis = (bufPtr[0] << 8) | (bufPtr[1] << 0);
+			idx      = font->charToIndex(sjis);
 			bufPtr += 2;
 		} else {
-			idx = font->charToIndex(*bufPtr);
-			bufPtr++;
+			idx = font->charToIndex(bufPtr[0]);
+			bufPtr += 1;
 		}
 
 		RectArea& texCoords = font->mChars[idx].mTextureCoords;

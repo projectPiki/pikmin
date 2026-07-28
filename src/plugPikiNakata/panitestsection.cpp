@@ -420,7 +420,7 @@ void PaniTestNode::draw(Graphics& gfx)
 	gfx.setViewport(AREA_FULL_SCREEN(gfx));
 	gfx.setScissor(AREA_FULL_SCREEN(gfx));
 	gfx.setClearColour(Colour(96, 128, 255, 0));
-	gfx.clearBuffer(3, false);
+	gfx.clearBuffer(Graphics::ClearBufferFlag::Both, false);
 
 	Matrix4f mtx1;
 	gfx.setOrthogonal(mtx1.mMtx, AREA_FULL_SCREEN(gfx));
