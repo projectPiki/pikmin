@@ -49,6 +49,13 @@ typedef int BOOL;
 #undef FALSE
 #define FALSE (0)
 
+// These math constants were seeminly defined somewhere because Nintendo used them often.
+#define TAU        6.2831855f
+#define PI         3.1415927f
+#define HALF_PI    1.5707964f
+#define THIRD_PI   1.0471976f
+#define QUARTER_PI 0.7853982f
+
 // When compiling sysCore.dll under MSVC, we define the macro `SYSCORE_EXPORTS` to
 // seamlessly make the switch from `dllimport` to `dllexport` across the codebase.
 //
@@ -321,21 +328,46 @@ inline void padStack(void)
 #define __mwerks_sync()                   /* void   */ __sync()                   //
 #define __mwerks_isync()                  /* void   */ __isync()                  //
 #define __mwerks_abs(value)               /* int    */ __abs(value)               // int
+#define __mwerks_labs(value)              /* long   */ __labs(value)              // long
 #define __mwerks_fabs(value)              /* float  */ __fabs(value)              // float
 #define __mwerks_fnabs(value)             /* float  */ __fnabs(value)             // float
-#define __mwerks_labs(value)              /* long   */ __labs(value)              // long
 #define __mwerks_cntlzw(value)            /* int    */ __cntlzw(value)            // int
 #define __mwerks_lhbrx(base, idx)         /* int    */ __lhbrx(base, idx)         // void*, int
 #define __mwerks_lwbrx(base, idx)         /* int    */ __lwbrx(base, idx)         // void*, int
 #define __mwerks_sthbrx(value, base, idx) /* void   */ __sthbrx(value, base, idx) // unsigned short, void*, int
 #define __mwerks_stwbrx(value, base, idx) /* void   */ __stwbrx(value, base, idx) // unsigned int, void*, int
-#define __mwerks_setflm(value)            /* float  */ __setflm(value)            // float
-#define __mwerks_fres(B)                  /* float  */ __fres(B)                  // float
-#define __mwerks_fsqrte(B)                /* double */ __fsqrte(B)                // double
+#define __mwerks_dcbf(base, offset)       /* void   */ __dcbf(base, offset)       // void*, int
+#define __mwerks_dcbt(base, offset)       /* void   */ __dcbt(base, offset)       // void*, int
+#define __mwerks_dcbst(base, offset)      /* void   */ __dcbst(base, offset)      // void*, int
+#define __mwerks_dcbtst(base, offset)     /* void   */ __dcbtst(base, offset)     // void*, int
+#define __mwerks_dcbz(base, offset)       /* void   */ __dcbz(base, offset)       // void*, int
+#define __mwerks_mulhw(lhs, rhs)          /* int    */ __mulhw(lhs, rhs)          // int, int
+#define __mwerks_mulhwu(lhs, rhs)         /* uint   */ __mulhwu(lhs, rhs)         // uint, uint
+#define __mwerks_divw(dividend, divisor)  /* int    */ __divw(dividend, divisor)  // int, int
+#define __mwerks_divwu(dividend, divisor) /* uint   */ __divwu(dividend, divisor) // uint, uint
+#define __mwerks_fmadd(p1, p2, p3)        /* double */ __fmadd(p1, p2, p3)        // double, double, double
+#define __mwerks_fmsub(p1, p2, p3)        /* double */ __fmsub(p1, p2, p3)        // double, double, double
+#define __mwerks_fnmadd(p1, p2, p3)       /* double */ __fnmadd(p1, p2, p3)       // double, double, double
+#define __mwerks_fnmsub(p1, p2, p3)       /* double */ __fnmsub(p1, p2, p3)       // double, double, double
 #define __mwerks_fsel(A, C, B)            /* double */ __fsel(A, C, B)            // double, double, double
+#define __mwerks_fmadds(p1, p2, p3)       /* float  */ __fmadds(p1, p2, p3)       // float, float, float
+#define __mwerks_fmsubs(p1, p2, p3)       /* float  */ __fmsubs(p1, p2, p3)       // float, float, float
+#define __mwerks_fnmadds(p1, p2, p3)      /* float  */ __fnmadds(p1, p2, p3)      // float, float, float
+#define __mwerks_fnmsubs(p1, p2, p3)      /* float  */ __fnmsubs(p1, p2, p3)      // float, float, float
+#define __mwerks_fres(value)              /* float  */ __fres(value)              // float
+#define __mwerks_fabsf(value)             /* float  */ __fabsf(value)             // float
+#define __mwerks_fnabsf(value)            /* float  */ __fnabsf(value)            // float
+#define __mwerks_frsqrte(value)           /* double */ __frsqrte(value)           // double
+#define __mwerks_mffs()                   /* double */ __mffs()                   //
+#define __mwerks_setflm(value)            /* float  */ __setflm(value)            // float
 #define __mwerks_rlwinm(S, SH, MB, ME)    /* int    */ __rlwinm(S, SH, MB, ME)    // int, int, int, int
 #define __mwerks_rlwnm(S, SH, MB, ME)     /* int    */ __rlwnm(S, SH, MB, ME)     // int, int, int, int
 #define __mwerks_rlwimi(A, S, SH, MB, ME) /* int    */ __rlwimi(A, S, SH, MB, ME) // int, int, int, int, int
+#define __mwerks_strcpy(dest, src)        /* char*  */ __strcpy(dest, src)        // char*, const char*
+#define __mwerks_memcpy(dest, src, size)  /* void*  */ __memcpy(dest, src, size)  // void*, const void*, size_t
+#define __mwerks_alloca(size)             /* void*  */ __alloca(size)             // unsigned long
+#define __mwerks_va_setup(args)           /* void   */ __va_setup(args)           // void*
+#define __mwerks_builtin_va_info(args)    /* void   */ __builtin_va_info(args)    // va_list*
 #endif
 
 #endif // _TYPES_H

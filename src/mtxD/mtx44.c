@@ -5,5 +5,5 @@
 
 WEAK f64 fabsf__Ff(f32 a)
 {
-	return __fabs(a);
+	return __mwerks_fabs(a);
 }
