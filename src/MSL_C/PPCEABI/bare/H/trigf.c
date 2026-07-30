@@ -1,5 +1,6 @@
 #include <math.h>
 
+#define pi        3.141592653589793f
 #define __epsilon 3.45266983e-4f
 
 #define __HI(x) (((s32*)&x)[0])
@@ -36,7 +37,7 @@ f32 sinf(f32 x)
 	f32 ysq;
 	f32 z;
 
-	z = (2.0f / (f32)M_PI) * x;
+	z = (2.0f / pi) * x;
 	n = (__HI(x) & 0x80000000) ? (int)(z - 0.5f) : (int)(z + 0.5f);
 
 	y = x - n * 2 + __four_over_pi_m1[0] * x + __four_over_pi_m1[1] * x + __four_over_pi_m1[2] * x + __four_over_pi_m1[3] * x;
@@ -71,7 +72,7 @@ f32 cosf(f32 x)
 	f32 ysq;
 	f32 z;
 
-	z = (2.0f / (f32)M_PI) * x;
+	z = (2.0f / pi) * x;
 	n = (__HI(x) & 0x80000000) ? (int)(z - 0.5f) : (int)(z + 0.5f);
 
 	y = x - n * 2 + __four_over_pi_m1[0] * x + __four_over_pi_m1[1] * x + __four_over_pi_m1[2] * x + __four_over_pi_m1[3] * x;

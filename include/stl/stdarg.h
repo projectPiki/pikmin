@@ -20,10 +20,6 @@ typedef struct {
 } __va_list[1];
 typedef __va_list va_list;
 
-#ifndef __MWERKS__
-extern void __builtin_va_info(va_list*);
-#endif
-
 void* __va_arg(va_list v_list, u8 type);
 
 #define va_start(ap, fmt) ((void)fmt, __builtin_va_info(&ap))

@@ -2,7 +2,6 @@
 #define _STL_MATH_H
 
 #include "types.h"
-// #include "PowerPC_EABI_Support/MSL_C/MSL_Common/math_api.h"
 
 BEGIN_SCOPE_EXTERN_C
 
@@ -13,17 +12,6 @@ BEGIN_SCOPE_EXTERN_C
 #define NAN      (*(f32*)__float_nan)
 #define HUGE_VAL (*(f64*)__double_huge)
 #define DBL_NAN  (*(f64*)__double_nan)
-
-#define LONG_TAU   6.2831854820251465
-#define TAU        6.2831855f
-#define PI         3.1415927f
-#define HALF_PI    1.5707964f
-#define THIRD_PI   1.0471976f
-#define QUARTER_PI 0.7853982f
-
-#define SIN_2_5 0.43633234f
-#define M_SQRT3 1.73205f
-#define M_PI    3.1415926535897932
 
 #define FP_NAN       1
 #define FP_INFINITE  2
@@ -62,48 +50,6 @@ f64 log(f64);
 f64 log10(f64);
 f64 fmod(f64, f64);
 f64 scalbn(f64, int);
-
-f64 __ieee754_acos(f64);
-f64 __ieee754_fmod(f64, f64);
-f64 __ieee754_log(f64);
-f64 __ieee754_log10(f64);
-f64 __ieee754_pow(f64, f64);
-f64 __ieee754_sqrt(f64);
-f64 __ieee754_atan2(f64, f64);
-f64 __ieee754_asin(f64);
-int __ieee754_rem_pio2(f64, f64*);
-
-f64 __kernel_sin(f64, f64, int);
-f64 __kernel_cos(f64, f64);
-f64 __kernel_tan(f64, f64, int);
-
-f64 __fabs(f64);
-f32 __fabsf(f32);
-f64 __fnabs(f64);
-f32 __fnabsf(f32);
-f64 __fmadd(f64, f64, f64);
-f64 __fmsub(f64, f64, f64);
-f64 __fnmadd(f64, f64, f64);
-f64 __fnmsub(f64, f64, f64);
-f32 __fmadds(f32, f32, f32);
-f32 __fmsubs(f32, f32, f32);
-f32 __fnmadds(f32, f32, f32);
-f32 __fnmsubs(f32, f32, f32);
-f64 __fsel(f64, f64, f64);
-f32 __fsels(f32, f32, f32);
-f64 __frsqrte(f64);
-f32 __fres(f32);
-f64 __fsqrt(f64);
-f32 __fsqrts(f32);
-s64 __fctid(f64);
-s64 __fctiw(f64);
-f64 __fcfid(s64);
-f64 __mffs(void);
-void __mtfsf(int, f64);
-void __mtfsfi(int, int);
-void __mtfsb0(int);
-void __mtfsb1(int);
-f64 __setflm(f64);
 
 #define fabs(x)  __fabs(x)
 #define fabsf(x) __fabsf(x)

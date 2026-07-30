@@ -3,7 +3,9 @@
 
 #define __HI(x) (((int*)&x)[0])
 #define __LO(x) (((int*)&x)[1])
-#define __PI_O2 ((f32)M_PI / 2)
+#define __PI_O2   1.57079632679489661923132169163975f
+#define __PI      3.1415926535897932384626433832795f
+#define __3PIO2__ 3.0f * __PI_O2
 
 f32 atanf(f32);
 f32 _inv_sqrtf(f32);
@@ -16,18 +18,18 @@ f32 atan2f(f32 __y, f32 __x)
 {
 	if (signbit(__x) == signbit(__y)) {
 		if (signbit(__x) != 0) {
-			return atanf(__y / __x) - PI;
+			return atanf(__y / __x) - __PI;
 		} else if (__x) {
 			return atanf(__y / __x);
 		} else {
-			return HALF_PI;
+			return __PI_O2;
 		}
 	} else if (__x < 0.0f) {
-		return PI + atanf(__y / __x);
+		return __PI + atanf(__y / __x);
 	} else if (__x) {
 		return atanf(__y / __x);
 	}
-	__HI(__y) = signbit(__y) + 0x3fc90fdb; // PI / 2
+	__HI(__y) = signbit(__y) + 0x3fc90fdb; // __PI_O2
 
 	return __y;
 }
@@ -37,7 +39,7 @@ f32 atan2f(f32 __y, f32 __x)
  */
 f32 acosf(f32 x)
 {
-	return HALF_PI - atan__Ff(x * _inv_sqrtf(1.0f - x * x));
+	return __PI_O2 - atan__Ff(x * _inv_sqrtf(1.0f - x * x));
 }
 
 #pragma dont_inline on

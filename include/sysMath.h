@@ -69,7 +69,7 @@ inline f32 speedy_sqrtf(f32 x)
 	vf32 y;
 	if (x > 0.0f) {
 
-		f64 guess = __frsqrte((f64)x);
+		f64 guess = __mwerks_frsqrte(x);
 		y         = (f32)(x * guess);
 		return y;
 	}
