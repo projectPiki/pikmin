@@ -524,8 +524,10 @@ void Texture::decodeData(TexImg* texImg)
 		}
 		case TEX_FMT_Z8:
 		default:
+		{
 			ERROR("Unknown texture format\n");
 			break;
+		}
 		}
 		texImg->mPixelData = mPixelData;
 	}

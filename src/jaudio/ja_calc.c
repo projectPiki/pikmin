@@ -1,6 +1,5 @@
 #include "jaudio/ja_calc.h"
 
-#include "jaudio/ja_calc.h"
 #include <math.h>
 
 #define SINTABLE_LENGTH (257)

@@ -35,7 +35,7 @@ bool CndIsAlive::satisfy(Creature* target) immut
 bool CndBossFlick::satisfy(Creature* target) immut
 {
 	if (target && target->isAlive() && !target->isStickToMouth() && target->getStickObject() == mBoss) {
-		if (NsMathF::getRand(1.0f) < static_cast<BossProp*>(mBoss->mProps)->mBossProps.mFlickChance()) {
+		if (NsMathF::getRand(1.0f) < C_BOSS_PROP(mBoss).mFlickChance()) {
 			return true;
 		}
 	}

@@ -210,7 +210,7 @@ struct LifePinchCallBack : public P2DPaneCallBack {
 				mPulseAlphaScale   = 255.0f;
 				mPulsePhase        = 0.0f;
 			}
-			if (mPulseAlphaScale > 5.0) { // forgot an f, yamashita
+			if (mPulseAlphaScale > TERNARY_BUILD_MATCHING(5.0, 5.0f)) { // forgot an f, yamashita
 				mPulseAlphaScale -= 5.0f;
 			} else {
 				mPulseAlphaScale   = 0.0f;

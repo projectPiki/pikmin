@@ -236,6 +236,7 @@ class Slime : public Boss {
 	friend struct NucleusAi;
 	friend class BossMgr; // To initialize `mNucleus` and `mCore`.
 
+public:
 	/**
 	 * @brief TODO.
 	 *
@@ -290,15 +291,14 @@ class Slime : public Boss {
 			for (int i = 0; i < 4; i++) {
 
 				// weightPos is kind of the centre of mass?
-				Vector3f weightPos = mCreature->mSRT.t
-				                   + static_cast<SlimeProp*>(mSlime->mProps)->mSlimeProps.mMaxRadiusCompensation()
-				                         * adjustVecs[i]; // max radius compensation
+				Vector3f weightPos
+				    = mCreature->mSRT.t + C_SLIME_PROP(mSlime).mMaxRadiusCompensation() * adjustVecs[i]; // max radius compensation
 
 				Vector3f farPos  = weightPos;
 				Vector3f nearPos = mCreature->mSRT.t;
 
 				// iterate like 10 times to jiggle the weightPos closer to the middle of the 4 stick slimes
-				for (int j = 0; j < static_cast<SlimeProp*>(mSlime->mProps)->mSlimeProps.mMaxSortCount(); j++) { // number of sorts?
+				for (int j = 0; j < C_SLIME_PROP(mSlime).mMaxSortCount(); j++) { // number of sorts?
 					f32 score = 0.0f;
 
 					weightPos.x = (farPos.x + nearPos.x) / 2.0f;
@@ -314,7 +314,7 @@ class Slime : public Boss {
 					}
 
 					// closer to other stick slimes = higher score
-					if (score > static_cast<SlimeProp*>(mSlime->mProps)->mSlimeProps.mVertexPositionScore()) { // vertex position score?
+					if (score > C_SLIME_PROP(mSlime).mVertexPositionScore()) { // vertex position score?
 						nearPos.set(weightPos);
 					} else {
 						farPos.set(weightPos);
