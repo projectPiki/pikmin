@@ -477,9 +477,9 @@ void NaviBuryState::procAnimMsg(Navi* navi, MsgAnim* msg)
 			if (mEscapeAttemptCounter == 0) {
 				navi->startMotion(PaniMotionInfo(PIKIANIM_GWait1, navi), PaniMotionInfo(PIKIANIM_GWait1));
 				mBuryState = 0;
-			} else if (mEscapeAttemptCounter >= static_cast<NaviProp*>(navi->mProps)->mNaviProps.mBuryEscapeKeyCount()) {
+			} else if (mEscapeAttemptCounter >= C_NAVI_PROP(navi).mBuryEscapeKeyCount()) {
 				mValidEscapeAttempts++;
-				if (mValidEscapeAttempts >= static_cast<NaviProp*>(navi->mProps)->mNaviProps.mBuryEscapeSuccessCount()) {
+				if (mValidEscapeAttempts >= C_NAVI_PROP(navi).mBuryEscapeSuccessCount()) {
 					mBuryState = 3;
 					navi->startMotion(PaniMotionInfo(PIKIANIM_GNuke, navi), PaniMotionInfo(PIKIANIM_GNuke));
 				}
@@ -934,7 +934,7 @@ void NaviUfoState::exec(Navi* navi)
  */
 void NaviUfoState::cleanup(Navi* navi)
 {
-	navi->mHealth = static_cast<NaviProp*>(navi->mProps)->mNaviProps.mHealth();
+	navi->mHealth = C_NAVI_PROP(navi).mHealth();
 	UfoItem* ufo  = itemMgr->getUfo();
 	if (ufo) {
 		ufo->finishAccess();
@@ -2791,7 +2791,10 @@ void NaviAttackState::exec(Navi* navi)
 		return;
 	}
 	navi->makeVelocity(false);
-	//_18 += gsys->getFrameTime();
+
+#if defined(WIN32)
+	_18 += gsys->getFrameTime();
+#endif
 
 	if (navi->mKontroller->keyClick(KeyConfig::_instance->mSetCursorKey.mBind)) {
 		mGatherRequested = true;

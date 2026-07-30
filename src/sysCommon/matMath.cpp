@@ -30,14 +30,17 @@ void Matrix4f::makeIdentity()
 	mMtx[0][1] = 0.0f;
 	mMtx[0][2] = 0.0f;
 	mMtx[0][3] = 0.0f;
+
 	mMtx[1][0] = 0.0f;
 	mMtx[1][1] = 1.0f;
 	mMtx[1][2] = 0.0f;
 	mMtx[1][3] = 0.0f;
+
 	mMtx[2][0] = 0.0f;
 	mMtx[2][1] = 0.0f;
 	mMtx[2][2] = 1.0f;
 	mMtx[2][3] = 0.0f;
+
 	mMtx[3][0] = 0.0f;
 	mMtx[3][1] = 0.0f;
 	mMtx[3][2] = 0.0f;
@@ -400,10 +403,12 @@ void Matrix4f::translate(f32 x, f32 y, f32 z)
 	mMtx[0][1] += mMtx[3][1] * x;
 	mMtx[0][2] += mMtx[3][2] * x;
 	mMtx[0][3] += mMtx[3][3] * x;
+
 	mMtx[1][0] += mMtx[3][0] * y;
 	mMtx[1][1] += mMtx[3][1] * y;
 	mMtx[1][2] += mMtx[3][2] * y;
 	mMtx[1][3] += mMtx[3][3] * y;
+
 	mMtx[2][0] += mMtx[3][0] * z;
 	mMtx[2][1] += mMtx[3][1] * z;
 	mMtx[2][2] += mMtx[3][2] * z;

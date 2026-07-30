@@ -423,7 +423,7 @@ void SnakeBody::makeDeadPattern01()
 
 	f32 scaleTime;
 	f32 scaleSpeed;
-	if (mDeadEffectSegmentIndex == 7) { // head
+	if (mDeadEffectSegmentIndex == SnakeJointType::Neck) { // head
 		scaleSpeed = C_SNAKE_PROP(mSnake).mDeadHeadScaleSpeed();
 		scaleTime  = C_SNAKE_PROP(mSnake).mDeadHeadScaleTimer();
 	} else { // body
