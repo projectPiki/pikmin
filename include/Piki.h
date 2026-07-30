@@ -10,8 +10,9 @@
 #include "UtEffect.h"
 #include "types.h"
 
-#define PIKI_PROP()       static_cast<PikiProp*>(mProps)->mPikiParms
-#define C_PIKI_PROP(piki) static_cast<PikiProp*>(piki->mProps)->mPikiParms
+// Redundant parenthesis surrounding the call to `Parm::Operator()` fixes matching for the DLL
+#define PIKI_PARM(parm)         C_PIKI_PARM(this, parm)
+#define C_PIKI_PARM(piki, parm) (static_cast<PikiProp*>((piki)->mProps)->mPikiParms.parm())
 
 class TopAction;
 class Navi;

@@ -146,9 +146,9 @@ void Snake::drawShape(Graphics& gfx)
 
 		if (getCurrentState() == SNAKEAI_Under) {
 			if (mBossType) {
-				f32 detectionRadius    = SNAKE_PROP.mType1DetectionRadius();
-				f32 maxAppearRadius    = SNAKE_PROP.mType1AppearDist() + detectionRadius;
-				f32 maxTerritoryRadius = BOSS_PROP.mTerritoryRadius() + maxAppearRadius;
+				f32 detectionRadius    = SNAKE_PARM(mType1DetectionRadius);
+				f32 maxAppearRadius    = SNAKE_PARM(mType1AppearDist) + detectionRadius;
+				f32 maxTerritoryRadius = BOSS_PARM(mTerritoryRadius) + maxAppearRadius;
 
 				gfx.setColour(Colour(255, 0, 0, 255), true);
 				gfx.drawSphere(mSpawnPosition, detectionRadius, transformMtx);
@@ -166,27 +166,27 @@ void Snake::drawShape(Graphics& gfx)
 				Vector3f local_dc(sinf(_3C0), 0.0f, cosf(_3C0));
 				Vector3f local_e8(sinf(perpendicular), 0.0f, cosf(perpendicular));
 
-				boxVerts[0] = mSpawnPosition + SNAKE_PROP.mType2AppearFrontDist() * local_dc
-				            + Vector3f(0.0f, SNAKE_PROP.mType2AppearVertDist(), 0.0f) - SNAKE_PROP.mType2AppearSideDist() * local_e8;
-				boxVerts[1] = mSpawnPosition + SNAKE_PROP.mType2AppearFrontDist() * local_dc
-				            + Vector3f(0.0f, -SNAKE_PROP.mType2AppearVertDist(), 0.0f) - SNAKE_PROP.mType2AppearSideDist() * local_e8;
-				boxVerts[2] = mSpawnPosition + SNAKE_PROP.mType2AppearFrontDist() * local_dc
-				            + Vector3f(0.0f, SNAKE_PROP.mType2AppearVertDist(), 0.0f) + SNAKE_PROP.mType2AppearSideDist() * local_e8;
-				boxVerts[3] = mSpawnPosition + SNAKE_PROP.mType2AppearFrontDist() * local_dc
-				            + Vector3f(0.0f, -SNAKE_PROP.mType2AppearVertDist(), 0.0f) + SNAKE_PROP.mType2AppearSideDist() * local_e8;
-				boxVerts[4] = mSpawnPosition - SNAKE_PROP.mType2AppearFrontDist() * local_dc
-				            + Vector3f(0.0f, SNAKE_PROP.mType2AppearVertDist(), 0.0f) - SNAKE_PROP.mType2AppearSideDist() * local_e8;
-				boxVerts[5] = mSpawnPosition - SNAKE_PROP.mType2AppearFrontDist() * local_dc
-				            + Vector3f(0.0f, -SNAKE_PROP.mType2AppearVertDist(), 0.0f) - SNAKE_PROP.mType2AppearSideDist() * local_e8;
-				boxVerts[6] = mSpawnPosition - SNAKE_PROP.mType2AppearFrontDist() * local_dc
-				            + Vector3f(0.0f, SNAKE_PROP.mType2AppearVertDist(), 0.0f) + SNAKE_PROP.mType2AppearSideDist() * local_e8;
-				boxVerts[7] = mSpawnPosition - SNAKE_PROP.mType2AppearFrontDist() * local_dc
-				            + Vector3f(0.0f, -SNAKE_PROP.mType2AppearVertDist(), 0.0f) + SNAKE_PROP.mType2AppearSideDist() * local_e8;
+				boxVerts[0] = mSpawnPosition + SNAKE_PARM(mType2AppearFrontDist) * local_dc
+				            + Vector3f(0.0f, SNAKE_PARM(mType2AppearVertDist), 0.0f) - SNAKE_PARM(mType2AppearSideDist) * local_e8;
+				boxVerts[1] = mSpawnPosition + SNAKE_PARM(mType2AppearFrontDist) * local_dc
+				            + Vector3f(0.0f, -SNAKE_PARM(mType2AppearVertDist), 0.0f) - SNAKE_PARM(mType2AppearSideDist) * local_e8;
+				boxVerts[2] = mSpawnPosition + SNAKE_PARM(mType2AppearFrontDist) * local_dc
+				            + Vector3f(0.0f, SNAKE_PARM(mType2AppearVertDist), 0.0f) + SNAKE_PARM(mType2AppearSideDist) * local_e8;
+				boxVerts[3] = mSpawnPosition + SNAKE_PARM(mType2AppearFrontDist) * local_dc
+				            + Vector3f(0.0f, -SNAKE_PARM(mType2AppearVertDist), 0.0f) + SNAKE_PARM(mType2AppearSideDist) * local_e8;
+				boxVerts[4] = mSpawnPosition - SNAKE_PARM(mType2AppearFrontDist) * local_dc
+				            + Vector3f(0.0f, SNAKE_PARM(mType2AppearVertDist), 0.0f) - SNAKE_PARM(mType2AppearSideDist) * local_e8;
+				boxVerts[5] = mSpawnPosition - SNAKE_PARM(mType2AppearFrontDist) * local_dc
+				            + Vector3f(0.0f, -SNAKE_PARM(mType2AppearVertDist), 0.0f) - SNAKE_PARM(mType2AppearSideDist) * local_e8;
+				boxVerts[6] = mSpawnPosition - SNAKE_PARM(mType2AppearFrontDist) * local_dc
+				            + Vector3f(0.0f, SNAKE_PARM(mType2AppearVertDist), 0.0f) + SNAKE_PARM(mType2AppearSideDist) * local_e8;
+				boxVerts[7] = mSpawnPosition - SNAKE_PARM(mType2AppearFrontDist) * local_dc
+				            + Vector3f(0.0f, -SNAKE_PARM(mType2AppearVertDist), 0.0f) + SNAKE_PARM(mType2AppearSideDist) * local_e8;
 
-				boxSeam[0] = mSpawnPosition + SNAKE_PROP.mType2AppearFrontDist() * local_dc
-				           + Vector3f(0.0f, SNAKE_PROP.mType2AppearVertDist(), 0.0f);
-				boxSeam[1] = mSpawnPosition - SNAKE_PROP.mType2AppearFrontDist() * local_dc
-				           + Vector3f(0.0f, SNAKE_PROP.mType2AppearVertDist(), 0.0f);
+				boxSeam[0] = mSpawnPosition + SNAKE_PARM(mType2AppearFrontDist) * local_dc
+				           + Vector3f(0.0f, SNAKE_PARM(mType2AppearVertDist), 0.0f);
+				boxSeam[1] = mSpawnPosition - SNAKE_PARM(mType2AppearFrontDist) * local_dc
+				           + Vector3f(0.0f, SNAKE_PARM(mType2AppearVertDist), 0.0f);
 
 				gfx.setColour(Colour(255, 0, 0, 255), true);
 				gfx.useMatrix(transformMtx, 0);
@@ -274,8 +274,8 @@ void Snake::drawShape(Graphics& gfx)
 void Snake::refresh2d(Graphics& gfx)
 {
 	mLifeGauge.mPosition = mSRT.t;
-	mLifeGauge.mPosition.y += BOSS_PROP.mLifeGaugeHeight();
-	mLifeGauge.mScale = BOSS_PROP.mLifeGaugeScale() * _3C4 / gfx.mCamera->mNear;
+	mLifeGauge.mPosition.y += BOSS_PARM(mLifeGaugeHeight);
+	mLifeGauge.mScale = BOSS_PARM(mLifeGaugeScale) * _3C4 / gfx.mCamera->mNear;
 	mLifeGauge.refresh(gfx);
 }
 

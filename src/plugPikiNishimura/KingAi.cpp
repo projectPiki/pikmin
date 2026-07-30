@@ -60,7 +60,7 @@ void KingAi::initAI(King* king)
 	mBombDamageCounter      = 0;
 	mEatBombDamageCounter   = 0;
 	mDamageScaleOscillation = 0.0f;
-	mMaxJumpAttackAngle     = PI * (C_KING_PROP(mKing).mMaxJumpAttackAngle() / 360.0f);
+	mMaxJumpAttackAngle     = PI * (C_KING_PARM(mKing, mMaxJumpAttackAngle) / 360.0f);
 }
 
 /**
@@ -293,9 +293,9 @@ void KingAi::createEffect(BOOL doStartSpreadSaliva)
  */
 void KingAi::setAttackPosition()
 {
-	mAttackPosition.x = mKing->mSRT.t.x + C_KING_PROP(mKing).mAttackDistance() * sinf(mKing->mFaceDirection);
+	mAttackPosition.x = mKing->mSRT.t.x + C_KING_PARM(mKing, mAttackDistance) * sinf(mKing->mFaceDirection);
 	mAttackPosition.y = mKing->mSRT.t.y;
-	mAttackPosition.z = mKing->mSRT.t.z + C_KING_PROP(mKing).mAttackDistance() * cosf(mKing->mFaceDirection);
+	mAttackPosition.z = mKing->mSRT.t.z + C_KING_PARM(mKing, mAttackDistance) * cosf(mKing->mFaceDirection);
 }
 
 /**
@@ -303,27 +303,27 @@ void KingAi::setAttackPosition()
  */
 void KingAi::calcDamageScale()
 {
-	f32 xzScale = C_KING_PROP(mKing).mNormalKingScale();
-	f32 yScale  = C_KING_PROP(mKing).mNormalKingScale();
+	f32 xzScale = C_KING_PARM(mKing, mNormalKingScale);
+	f32 yScale  = C_KING_PARM(mKing, mNormalKingScale);
 
 	if (mDamageScaleOscillation == 0.0f) {
 		int currState = mKing->getCurrentState();
 		if ((currState == KINGAI_Damage || currState == KINGAI_BombDown) && mKing->getDamagePoint() > 0.0f) {
-			mDamageScaleOscillation += C_KING_PROP(mKing).mDamageScaleOscillationSpeed() * gsys->getFrameTime();
+			mDamageScaleOscillation += C_KING_PARM(mKing, mDamageScaleOscillationSpeed) * gsys->getFrameTime();
 			if (mDamageScaleOscillation > TAU) {
 				mDamageScaleOscillation = 0.0f;
 			}
-			f32 sinVal = C_KING_PROP(mKing).mDamageScaleOscillationSize() * sinf(mDamageScaleOscillation);
+			f32 sinVal = C_KING_PARM(mKing, mDamageScaleOscillationSize) * sinf(mDamageScaleOscillation);
 			xzScale *= (1.0f + sinVal);
 			yScale *= (1.0f - sinVal);
 		}
 
 	} else {
-		mDamageScaleOscillation += C_KING_PROP(mKing).mDamageScaleOscillationSpeed() * gsys->getFrameTime();
+		mDamageScaleOscillation += C_KING_PARM(mKing, mDamageScaleOscillationSpeed) * gsys->getFrameTime();
 		if (mDamageScaleOscillation > TAU) {
 			mDamageScaleOscillation = 0.0f;
 		}
-		f32 sinVal = C_KING_PROP(mKing).mDamageScaleOscillationSize() * sinf(mDamageScaleOscillation);
+		f32 sinVal = C_KING_PARM(mKing, mDamageScaleOscillationSize) * sinf(mDamageScaleOscillation);
 		xzScale *= (1.0f + sinVal);
 		yScale *= (1.0f - sinVal);
 	}
@@ -377,10 +377,10 @@ void KingAi::fallBackSide()
 	{
 		Creature* navi = *iterNavi;
 		if (navi && navi->isAlive() && navi->isVisible() && !navi->isBuried()
-		    && qdist2(mKing->mSRT.t.x, mKing->mSRT.t.z, navi->mSRT.t.x, navi->mSRT.t.z) < C_KING_PROP(mKing).mPressAttackRadius()) {
+		    && qdist2(mKing->mSRT.t.x, mKing->mSRT.t.z, navi->mSRT.t.x, navi->mSRT.t.z) < C_KING_PARM(mKing, mPressAttackRadius)) {
 			// close enough, do actual distance check
-			if (navi->mSRT.t.distance(mKing->mSRT.t) < C_KING_PROP(mKing).mPressAttackRadius()) {
-				InteractPress crush(mKing, C_KING_PROP(mKing).mPressDamageNavi());
+			if (navi->mSRT.t.distance(mKing->mSRT.t) < C_KING_PARM(mKing, mPressAttackRadius)) {
+				InteractPress crush(mKing, C_KING_PARM(mKing, mPressDamageNavi));
 				navi->stimulate(crush);
 			}
 		}
@@ -391,9 +391,9 @@ void KingAi::fallBackSide()
 	{
 		Creature* piki = *iterPiki;
 		if (piki && piki->isAlive() && piki->isVisible() && !piki->isBuried()
-		    && qdist2(mKing->mSRT.t.x, mKing->mSRT.t.z, piki->mSRT.t.x, piki->mSRT.t.z) < C_KING_PROP(mKing).mPressAttackRadius()) {
+		    && qdist2(mKing->mSRT.t.x, mKing->mSRT.t.z, piki->mSRT.t.x, piki->mSRT.t.z) < C_KING_PARM(mKing, mPressAttackRadius)) {
 			// close enough, do actual distance check
-			if (piki->mSRT.t.distance(mKing->mSRT.t) < C_KING_PROP(mKing).mPressAttackRadius()) {
+			if (piki->mSRT.t.distance(mKing->mSRT.t) < C_KING_PARM(mKing, mPressAttackRadius)) {
 				InteractPress crush(mKing, 500.0f);
 				piki->stimulate(crush);
 			}
@@ -427,7 +427,7 @@ void KingAi::pikiStickToKingMouth()
 
 	if (mIsTongueOut) {
 		int stickMouthPikiNum = mKing->getStickMouthPikiCount();
-		if (stickMouthPikiNum < C_KING_PROP(mKing).mMaxEatPikiNum()) {
+		if (stickMouthPikiNum < C_KING_PARM(mKing, mMaxEatPikiNum)) {
 			CollPart* slot1 = mKing->mCollInfo->getSphere('slt1');
 			CollPart* slot2 = mKing->mCollInfo->getSphere('slt2');
 			int slot1Num    = slot1->getChildCount();
@@ -452,13 +452,13 @@ void KingAi::pikiStickToKingMouth()
 				}
 
 				// Check if piki is close enough to king's mouth and within the tongue range
-				if (!(qdist2(cPiki->mSRT.t.x, cPiki->mSRT.t.z, slot2->mCentre.x, slot2->mCentre.z) < C_KING_PROP(mKing).mTongueRangeXZ())) {
+				if (!(qdist2(cPiki->mSRT.t.x, cPiki->mSRT.t.z, slot2->mCentre.x, slot2->mCentre.z) < C_KING_PARM(mKing, mTongueRangeXZ))) {
 					continue;
 				}
-				if (NsLibMath<f32>::abs(cPiki->mSRT.t.y - slot2->mCentre.y) < C_KING_PROP(mKing).mTongueRangeY()) {
+				if (NsLibMath<f32>::abs(cPiki->mSRT.t.y - slot2->mCentre.y) < C_KING_PARM(mKing, mTongueRangeY)) {
 					// Increment the number of piki stuck in the king's mouth
 					stickMouthPikiNum++;
-					if (stickMouthPikiNum > C_KING_PROP(mKing).mMaxEatPikiNum()) {
+					if (stickMouthPikiNum > C_KING_PARM(mKing, mMaxEatPikiNum)) {
 						return;
 					}
 
@@ -519,10 +519,10 @@ void KingAi::tongueBombExplosion()
 		{
 			Creature* bomb = *iter;
 			if (bomb && !bomb->isAlive() && !bomb->isVisible() && !bomb->isBuried() && bomb->mObjType == OBJTYPE_Bomb) {
-				if ((qdist2(bomb->mSRT.t.x, bomb->mSRT.t.z, slot1->mCentre.x, slot1->mCentre.z) < C_KING_PROP(mKing).mTongueRangeXZ()
-				     && NsLibMath<f32>::abs(bomb->mSRT.t.y - slot1->mCentre.y) < C_KING_PROP(mKing).mTongueRangeY())
-				    || (qdist2(bomb->mSRT.t.x, bomb->mSRT.t.z, slot2->mCentre.x, slot2->mCentre.z) < C_KING_PROP(mKing).mTongueRangeXZ()
-				        && NsLibMath<f32>::abs(bomb->mSRT.t.y - slot2->mCentre.y) < C_KING_PROP(mKing).mTongueRangeY())) {
+				if ((qdist2(bomb->mSRT.t.x, bomb->mSRT.t.z, slot1->mCentre.x, slot1->mCentre.z) < C_KING_PARM(mKing, mTongueRangeXZ)
+				     && NsLibMath<f32>::abs(bomb->mSRT.t.y - slot1->mCentre.y) < C_KING_PARM(mKing, mTongueRangeY))
+				    || (qdist2(bomb->mSRT.t.x, bomb->mSRT.t.z, slot2->mCentre.x, slot2->mCentre.z) < C_KING_PARM(mKing, mTongueRangeXZ)
+				        && NsLibMath<f32>::abs(bomb->mSRT.t.y - slot2->mCentre.y) < C_KING_PARM(mKing, mTongueRangeY))) {
 					InteractBomb blast(mKing, 100.0f, nullptr);
 					bomb->stimulate(blast);
 				}
@@ -552,11 +552,11 @@ void KingAi::tongueAttackNavi()
 	{
 		Creature* navi = *iter;
 		if (navi && navi->isAlive() && navi->isVisible() && !navi->isBuried()) {
-			if ((qdist2(navi->mSRT.t.x, navi->mSRT.t.z, slot1->mCentre.x, slot1->mCentre.z) < C_KING_PROP(mKing).mTongueRangeXZ()
-			     && NsLibMath<f32>::abs(navi->mSRT.t.y - slot1->mCentre.y) < C_KING_PROP(mKing).mTongueRangeY())
-			    || (qdist2(navi->mSRT.t.x, navi->mSRT.t.z, slot2->mCentre.x, slot2->mCentre.z) < C_KING_PROP(mKing).mTongueRangeXZ()
-			        && NsLibMath<f32>::abs(navi->mSRT.t.y - slot2->mCentre.y) < C_KING_PROP(mKing).mTongueRangeY())) {
-				InteractAttack blast(mKing, nullptr, C_KING_PROP(mKing).mTongueDamageNavi(), false);
+			if ((qdist2(navi->mSRT.t.x, navi->mSRT.t.z, slot1->mCentre.x, slot1->mCentre.z) < C_KING_PARM(mKing, mTongueRangeXZ)
+			     && NsLibMath<f32>::abs(navi->mSRT.t.y - slot1->mCentre.y) < C_KING_PARM(mKing, mTongueRangeY))
+			    || (qdist2(navi->mSRT.t.x, navi->mSRT.t.z, slot2->mCentre.x, slot2->mCentre.z) < C_KING_PARM(mKing, mTongueRangeXZ)
+			        && NsLibMath<f32>::abs(navi->mSRT.t.y - slot2->mCentre.y) < C_KING_PARM(mKing, mTongueRangeY))) {
+				InteractAttack blast(mKing, nullptr, C_KING_PARM(mKing, mTongueDamageNavi), false);
 				navi->stimulate(blast);
 			}
 		}
@@ -569,9 +569,8 @@ void KingAi::tongueAttackNavi()
  */
 void KingAi::setDispelParm(Creature* target, f32 distance)
 {
-	f32 knockback
-	    = ((C_KING_PROP(mKing).mDispelRadius() - distance) / C_KING_PROP(mKing).mDispelRadius()) * C_KING_PROP(mKing).mDispelPower();
-	InteractFlick flick(mKing, knockback, C_KING_PROP(mKing).mDispelDamage(), FLICK_BACKWARDS_ANGLE);
+	f32 knockback = ((C_KING_PARM(mKing, mDispelRadius) - distance) / C_KING_PARM(mKing, mDispelRadius)) * C_KING_PARM(mKing, mDispelPower);
+	InteractFlick flick(mKing, knockback, C_KING_PARM(mKing, mDispelDamage), FLICK_BACKWARDS_ANGLE);
 	target->stimulate(flick);
 }
 
@@ -585,9 +584,9 @@ void KingAi::dispelNaviPiki()
 	{
 		Creature* navi = *iterNavi;
 		if (navi && navi->isAlive() && navi->isVisible() && !navi->isBuried()
-		    && qdist2(navi->mSRT.t.x, navi->mSRT.t.z, mKing->mSRT.t.x, mKing->mSRT.t.z) < C_KING_PROP(mKing).mDispelRadius()) {
+		    && qdist2(navi->mSRT.t.x, navi->mSRT.t.z, mKing->mSRT.t.x, mKing->mSRT.t.z) < C_KING_PARM(mKing, mDispelRadius)) {
 			f32 dist = navi->mSRT.t.distance(mKing->mSRT.t);
-			if (dist < C_KING_PROP(mKing).mDispelRadius()) {
+			if (dist < C_KING_PARM(mKing, mDispelRadius)) {
 				setDispelParm(navi, dist);
 			}
 		}
@@ -598,9 +597,9 @@ void KingAi::dispelNaviPiki()
 	{
 		Creature* piki = *iterPiki;
 		if (piki && piki->isAlive() && piki->isVisible() && !piki->isBuried()
-		    && qdist2(piki->mSRT.t.x, piki->mSRT.t.z, mKing->mSRT.t.x, mKing->mSRT.t.z) < C_KING_PROP(mKing).mDispelRadius()) {
+		    && qdist2(piki->mSRT.t.x, piki->mSRT.t.z, mKing->mSRT.t.x, mKing->mSRT.t.z) < C_KING_PARM(mKing, mDispelRadius)) {
 			f32 dist = piki->mSRT.t.distance(mKing->mSRT.t);
-			if (dist < C_KING_PROP(mKing).mDispelRadius()) {
+			if (dist < C_KING_PARM(mKing, mDispelRadius)) {
 				setDispelParm(piki, dist);
 			}
 		}
@@ -650,9 +649,9 @@ void KingAi::setEatDamageLoopCounter()
 
 	mEatBombDamageCounter += bombPikiCount;
 
-	setDamageLoopCounter(bombPikiCount, C_KING_PROP(mKing).mSwallowedBombsMin(), C_KING_PROP(mKing).mSwallowedBombsMax(),
-	                     C_KING_PROP(mKing).mEatBombDamageLoopMin(), C_KING_PROP(mKing).mEatBombDamageLoopMid(),
-	                     C_KING_PROP(mKing).mEatBombDamageLoopMax());
+	setDamageLoopCounter(bombPikiCount, C_KING_PARM(mKing, mSwallowedBombsMin), C_KING_PARM(mKing, mSwallowedBombsMax),
+	                     C_KING_PARM(mKing, mEatBombDamageLoopMin), C_KING_PARM(mKing, mEatBombDamageLoopMid),
+	                     C_KING_PARM(mKing, mEatBombDamageLoopMax));
 }
 
 /**
@@ -662,9 +661,9 @@ void KingAi::setEatDamageLoopCounter()
 void KingAi::setBombDamageLoopCounter()
 {
 	mEatBombDamageCounter = 0;
-	setDamageLoopCounter(mBombDamageCounter, C_KING_PROP(mKing).mHitTongueBombsMin(), C_KING_PROP(mKing).mHitTongueBombsMax(),
-	                     C_KING_PROP(mKing).mHitBombDamageLoopMin(), C_KING_PROP(mKing).mHitBombDamageLoopMid(),
-	                     C_KING_PROP(mKing).mHitBombDamageLoopMax());
+	setDamageLoopCounter(mBombDamageCounter, C_KING_PARM(mKing, mHitTongueBombsMin), C_KING_PARM(mKing, mHitTongueBombsMax),
+	                     C_KING_PARM(mKing, mHitBombDamageLoopMin), C_KING_PARM(mKing, mHitBombDamageLoopMid),
+	                     C_KING_PARM(mKing, mHitBombDamageLoopMax));
 }
 
 /**
@@ -682,12 +681,12 @@ void KingAi::setMoveVelocity(f32 speed)
 void KingAi::setAttackPriority()
 {
 	mAttackType = KINGATK_Tongue;
-	if (mKing->getCurrentLife() < mKing->getMaxLife() * C_KING_PROP(mKing).mJumpAttackHealthThreshold()) {
-		f32 factor        = (f32)mEatBombDamageCounter * C_KING_PROP(mKing).mJumpAttackEatBombFactor();
+	if (mKing->getCurrentLife() < mKing->getMaxLife() * C_KING_PARM(mKing, mJumpAttackHealthThreshold)) {
+		f32 factor        = (f32)mEatBombDamageCounter * C_KING_PARM(mKing, mJumpAttackEatBombFactor);
 		f32 boundedFactor = NsLibMath<f32>::revice(factor, 0.0f, 1.0f);
 
-		f32 jumpChance = boundedFactor * C_KING_PROP(mKing).mJumpAttackEatBombChance()
-		               + (1.0f - boundedFactor) * C_KING_PROP(mKing).mJumpAttackNoEatBombChance();
+		f32 jumpChance = boundedFactor * C_KING_PARM(mKing, mJumpAttackEatBombChance)
+		               + (1.0f - boundedFactor) * C_KING_PARM(mKing, mJumpAttackNoEatBombChance);
 		if (NsMathF::getRand(1.0f) < jumpChance) {
 			mAttackType           = KINGATK_Jump;
 			mConsecutiveJumpCount = 0;
@@ -704,7 +703,7 @@ void KingAi::setAttackPriority()
 void KingAi::resetAttackPriority()
 {
 	if (mAttackType == KINGATK_Jump && mKing->getCurrentState() != KINGAI_JumpAttack
-	    && mKing->getCurrentLife() > mKing->getMaxLife() * C_KING_PROP(mKing).mJumpAttackHealthThreshold()) {
+	    && mKing->getCurrentLife() > mKing->getMaxLife() * C_KING_PARM(mKing, mJumpAttackHealthThreshold)) {
 		mAttackType = true;
 	}
 }
@@ -735,9 +734,9 @@ void KingAi::resultFlagSeen()
  */
 bool KingAi::attackInArea(Creature* target, immut Vector3f* centre)
 {
-	if (qdist2(target->mSRT.t.x, target->mSRT.t.z, centre->x, centre->z) < C_KING_PROP(mKing).mAttackTerritoryRadius()
-	    && qdist2(target->mSRT.t.x, target->mSRT.t.z, mAttackPosition.x, mAttackPosition.z) < C_KING_PROP(mKing).mNormalAttackRangeXZ()
-	    && NsLibMath<f32>::abs(target->mSRT.t.y - mAttackPosition.y) < C_KING_PROP(mKing).mNormalAttackRangeY()) {
+	if (qdist2(target->mSRT.t.x, target->mSRT.t.z, centre->x, centre->z) < C_KING_PARM(mKing, mAttackTerritoryRadius)
+	    && qdist2(target->mSRT.t.x, target->mSRT.t.z, mAttackPosition.x, mAttackPosition.z) < C_KING_PARM(mKing, mNormalAttackRangeXZ)
+	    && NsLibMath<f32>::abs(target->mSRT.t.y - mAttackPosition.y) < C_KING_PARM(mKing, mNormalAttackRangeY)) {
 		return true;
 	}
 	return false;
@@ -768,9 +767,9 @@ bool KingAi::inJumpAngle(Creature* target)
  */
 bool KingAi::jumpAttackInArea(Creature* target, immut Vector3f* centre)
 {
-	if (qdist2(target->mSRT.t.x, target->mSRT.t.z, centre->x, centre->z) < C_KING_PROP(mKing).mAttackTerritoryRadius()
-	    && qdist2(target->mSRT.t.x, target->mSRT.t.z, mKing->mSRT.t.x, mKing->mSRT.t.z) < C_KING_PROP(mKing).mJumpAttackRangeXZ()
-	    && NsLibMath<f32>::abs(target->mSRT.t.y - mAttackPosition.y) < C_KING_PROP(mKing).mNormalAttackRangeY() && inJumpAngle(target)) {
+	if (qdist2(target->mSRT.t.x, target->mSRT.t.z, centre->x, centre->z) < C_KING_PARM(mKing, mAttackTerritoryRadius)
+	    && qdist2(target->mSRT.t.x, target->mSRT.t.z, mKing->mSRT.t.x, mKing->mSRT.t.z) < C_KING_PARM(mKing, mJumpAttackRangeXZ)
+	    && NsLibMath<f32>::abs(target->mSRT.t.y - mAttackPosition.y) < C_KING_PARM(mKing, mNormalAttackRangeY) && inJumpAngle(target)) {
 		mKing->setTargetCreature(target);
 		return true;
 	}
@@ -888,9 +887,9 @@ bool KingAi::chaseNaviTransit()
 			// typo?? this should be qdist, not dist.  This bug also exists in `KingAi::chasePikiTransit`.
 			// It seems like the uninitialized `dist` variable always holds the value 0.0f by dumb luck.
 			// Conditional breakpoint used to test USA rev 1: $8016e554 nbc f30 != 0.0 && f29 == 12800.0
-			if (qdist < C_BOSS_PROP(mKing).mSearchRadius() && TERNARY_BUGFIX(qdist, dist) < minDist && mKing->inSearchAngle(navi)) {
+			if (qdist < C_BOSS_PARM(mKing, mSearchRadius) && TERNARY_BUGFIX(qdist, dist) < minDist && mKing->inSearchAngle(navi)) {
 				dist = mKing->mSRT.t.distance(navi->mSRT.t);
-				if (dist > C_KING_PROP(mKing).mHiddenUnderneathRadius() && dist < C_BOSS_PROP(mKing).mSearchRadius() && dist < minDist) {
+				if (dist > C_KING_PARM(mKing, mHiddenUnderneathRadius) && dist < C_BOSS_PARM(mKing, mSearchRadius) && dist < minDist) {
 					minDist = dist;
 					target  = navi;
 				}
@@ -926,9 +925,9 @@ bool KingAi::chasePikiTransit()
 			// typo?? this should be qdist, not dist.  They definitely copied and pasted this code lol.
 			// It seems like the uninitialized `dist` variable always holds the value 0.0f by dumb luck.
 			// Conditional breakpoint used to test USA rev 1: $8016e860 nbc f30 != 0.0 && f29 == 12800.0
-			if (qdist < C_BOSS_PROP(mKing).mSearchRadius() && TERNARY_BUGFIX(qdist, dist) < minDist && mKing->inSearchAngle(piki)) {
+			if (qdist < C_BOSS_PARM(mKing, mSearchRadius) && TERNARY_BUGFIX(qdist, dist) < minDist && mKing->inSearchAngle(piki)) {
 				dist = mKing->mSRT.t.distance(piki->mSRT.t);
-				if (dist > C_KING_PROP(mKing).mHiddenUnderneathRadius() && dist < C_BOSS_PROP(mKing).mSearchRadius() && dist < minDist) {
+				if (dist > C_KING_PARM(mKing, mHiddenUnderneathRadius) && dist < C_BOSS_PARM(mKing, mSearchRadius) && dist < minDist) {
 					minDist = dist;
 					target  = piki;
 				}
@@ -978,13 +977,13 @@ bool KingAi::attackTransit()
 bool KingAi::missAttackNextTransit()
 {
 	Vector3f attackCentre(mKing->mCollInfo->getSphere('slt2')->mCentre);
-	attackCentre.x += C_KING_PROP(mKing)._314() * sinf(mKing->mFaceDirection);
-	attackCentre.y += C_KING_PROP(mKing)._324();
-	attackCentre.z += C_KING_PROP(mKing)._314() * cosf(mKing->mFaceDirection);
+	attackCentre.x += C_KING_PARM(mKing, _314) * sinf(mKing->mFaceDirection);
+	attackCentre.y += C_KING_PARM(mKing, _324);
+	attackCentre.z += C_KING_PARM(mKing, _314) * cosf(mKing->mFaceDirection);
 
 	bool res = false;
 	// don't ignore dynamic collisions when tracing
-	MoveTrace trace(attackCentre, Vector3f(0.0f, 0.0f, 0.0f), C_KING_PROP(mKing)._334(), false);
+	MoveTrace trace(attackCentre, Vector3f(0.0f, 0.0f, 0.0f), C_KING_PARM(mKing, _334), false);
 	mapMgr->traceMove(mKing, trace, gsys->getFrameTime());
 	if (attackCentre.x != trace.mPosition.x || attackCentre.y != trace.mPosition.y || attackCentre.z != trace.mPosition.z) {
 		res = true;
@@ -997,7 +996,7 @@ bool KingAi::missAttackNextTransit()
  */
 bool KingAi::jumpAttackTransit()
 {
-	if (mAttackType == KINGATK_Jump && mConsecutiveJumpCount < C_KING_PROP(mKing).mMaxConsecutiveJumpAttacks()) {
+	if (mAttackType == KINGATK_Jump && mConsecutiveJumpCount < C_KING_PARM(mKing, mMaxConsecutiveJumpAttacks)) {
 		Vector3f* initPos = mKing->getInitPosition();
 		Iterator iterPiki(pikiMgr);
 		CI_LOOP(iterPiki)
@@ -1093,12 +1092,12 @@ bool KingAi::targetLostTransit()
 		}
 
 		f32 dist = mKing->mSRT.t.distance(target->mSRT.t);
-		if (dist > C_BOSS_PROP(mKing).mSearchRadius()) {
+		if (dist > C_BOSS_PARM(mKing, mSearchRadius)) {
 			mKing->setTargetCreature(nullptr);
 			return true;
 		}
 
-		if (dist < C_KING_PROP(mKing).mHiddenUnderneathRadius()) {
+		if (dist < C_KING_PARM(mKing, mHiddenUnderneathRadius)) {
 			mKing->setTargetCreature(nullptr);
 			return true;
 		}
@@ -1117,9 +1116,9 @@ bool KingAi::appearTransit()
 	{
 		Creature* navi = *iterNavi;
 		if (navi->isAlive() && navi->isVisible() && !navi->isBuried()
-		    && qdist2(navi->mSRT.t.x, navi->mSRT.t.z, mKing->mSRT.t.x, mKing->mSRT.t.z) < C_KING_PROP(mKing).mDetectionRadius()) {
+		    && qdist2(navi->mSRT.t.x, navi->mSRT.t.z, mKing->mSRT.t.x, mKing->mSRT.t.z) < C_KING_PARM(mKing, mDetectionRadius)) {
 			// close enough, check actual distance
-			if (navi->mSRT.t.distance(mKing->mSRT.t) < C_KING_PROP(mKing).mDetectionRadius()) {
+			if (navi->mSRT.t.distance(mKing->mSRT.t) < C_KING_PARM(mKing, mDetectionRadius)) {
 				return true;
 			}
 		}
@@ -1130,9 +1129,9 @@ bool KingAi::appearTransit()
 	{
 		Creature* piki = *iterPiki;
 		if (piki->isAlive() && piki->isVisible() && !piki->isBuried()
-		    && qdist2(piki->mSRT.t.x, piki->mSRT.t.z, mKing->mSRT.t.x, mKing->mSRT.t.z) < C_KING_PROP(mKing).mDetectionRadius()) {
+		    && qdist2(piki->mSRT.t.x, piki->mSRT.t.z, mKing->mSRT.t.x, mKing->mSRT.t.z) < C_KING_PARM(mKing, mDetectionRadius)) {
 			// close enough, check actual distance
-			if (piki->mSRT.t.distance(mKing->mSRT.t) < C_KING_PROP(mKing).mDetectionRadius()) {
+			if (piki->mSRT.t.distance(mKing->mSRT.t) < C_KING_PARM(mKing, mDetectionRadius)) {
 				return true;
 			}
 		}
@@ -1215,7 +1214,7 @@ void KingAi::initWalkRandom(int nextState, bool doBlending)
 		mKing->mKingBody->initBlending(3.0f);
 	}
 
-	setMoveVelocity(C_KING_PROP(mKing).mKingWalkSpeed());
+	setMoveVelocity(C_KING_PARM(mKing, mKingWalkSpeed));
 	resultFlagOn();
 }
 
@@ -1239,7 +1238,7 @@ void KingAi::initWalkGoHome(int nextState, bool doBlending)
 		mKing->mKingBody->initBlending(3.0f);
 	}
 
-	setMoveVelocity(C_KING_PROP(mKing).mKingWalkSpeed());
+	setMoveVelocity(C_KING_PARM(mKing, mKingWalkSpeed));
 	resultFlagOn();
 }
 
@@ -1262,7 +1261,7 @@ void KingAi::initChaseNavi(int nextState, bool doBlending)
 		mKing->mKingBody->initBlending(3.0f);
 	}
 
-	setMoveVelocity(C_KING_PROP(mKing).mKingWalkSpeed());
+	setMoveVelocity(C_KING_PARM(mKing, mKingWalkSpeed));
 	resultFlagOn();
 }
 
@@ -1285,7 +1284,7 @@ void KingAi::initChasePiki(int nextState, bool doBlending)
 		mKing->mKingBody->initBlending(3.0f);
 	}
 
-	setMoveVelocity(C_KING_PROP(mKing).mKingWalkSpeed());
+	setMoveVelocity(C_KING_PARM(mKing, mKingWalkSpeed));
 	resultFlagOn();
 }
 
@@ -1513,7 +1512,7 @@ void KingAi::bombDownState()
 void KingAi::walkRandomState()
 {
 	mKing->makeTargetRandom(30.0f);
-	mKing->changeDirection(C_KING_PROP(mKing).mWalkingTurnSpeed());
+	mKing->changeDirection(C_KING_PARM(mKing, mWalkingTurnSpeed));
 }
 
 /**
@@ -1523,7 +1522,7 @@ void KingAi::walkRandomState()
 void KingAi::walkGoHomeState()
 {
 	mKing->setTargetPosition(*mKing->getInitPosition());
-	mKing->changeDirection(C_KING_PROP(mKing).mWalkingTurnSpeed());
+	mKing->changeDirection(C_KING_PARM(mKing, mWalkingTurnSpeed));
 }
 
 /**
@@ -1534,7 +1533,7 @@ void KingAi::homeTurnState()
 {
 	mKing->setTargetPosition(*mKing->getInitPosition());
 	mKing->stopMovement();
-	mKing->changeDirection(C_KING_PROP(mKing).mTurningTurnSpeed());
+	mKing->changeDirection(C_KING_PARM(mKing, mTurningTurnSpeed));
 	if (!inTurnAngleTransit()) {
 		mKing->mAnimator.finishMotion(PaniMotionInfo(PANI_NO_MOTION, this));
 	}
@@ -1553,7 +1552,7 @@ void KingAi::chaseTurnState()
 
 	mKing->makeTargetCreature();
 
-	mKing->changeDirection(C_KING_PROP(mKing).mTurningTurnSpeed());
+	mKing->changeDirection(C_KING_PARM(mKing, mTurningTurnSpeed));
 	if (!inTurnAngleTransit()) {
 		mKing->mAnimator.finishMotion(PaniMotionInfo(PANI_NO_MOTION, this));
 	}
@@ -1566,7 +1565,7 @@ void KingAi::chaseTurnState()
 void KingAi::chaseNaviState()
 {
 	mKing->makeTargetCreature();
-	mKing->changeDirection(C_KING_PROP(mKing).mWalkingTurnSpeed());
+	mKing->changeDirection(C_KING_PARM(mKing, mWalkingTurnSpeed));
 }
 
 /**
@@ -1576,7 +1575,7 @@ void KingAi::chaseNaviState()
 void KingAi::chasePikiState()
 {
 	mKing->makeTargetCreature();
-	mKing->changeDirection(C_KING_PROP(mKing).mWalkingTurnSpeed());
+	mKing->changeDirection(C_KING_PARM(mKing, mWalkingTurnSpeed));
 }
 
 /**
@@ -1588,7 +1587,7 @@ void KingAi::attackState()
 	mKing->makeTargetCreature();
 	pikiStickToKingMouth();
 	tongueBombExplosion();
-	if (mKing->getLoopCounter() >= C_KING_PROP(mKing).mTongueRollLoopCount()) {
+	if (mKing->getLoopCounter() >= C_KING_PARM(mKing, mTongueRollLoopCount)) {
 		mKing->mAnimator.finishMotion(PaniMotionInfo(PANI_NO_MOTION, this));
 	}
 }
@@ -1607,7 +1606,7 @@ void KingAi::jumpAttackState()
 		mKing->mSRT.t.x = ratio * mJumpAttackTargetPosition.x + complRatio * mJumpAttackStartPosition.x;
 		mKing->mSRT.t.z = ratio * mJumpAttackTargetPosition.z + complRatio * mJumpAttackStartPosition.z;
 		mKing->mSRT.t.y = mapMgr->getMinY(mKing->mSRT.t.x, mKing->mSRT.t.z, true);
-		mKing->changeDirection(C_KING_PROP(mKing).mTurningTurnSpeed());
+		mKing->changeDirection(C_KING_PARM(mKing, mTurningTurnSpeed));
 	}
 }
 

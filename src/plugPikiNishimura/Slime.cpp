@@ -81,7 +81,7 @@ void Slime::init(immut Vector3f& pos)
 	mFollowerCreatureIndex = bossMgr->mSlimeCreatureCount - 1;
 	mLeaderSpeed           = 0.0f;
 	mAppearanceScale       = 0.0f;
-	mBodyThickness         = SLIME_PROP.mBodyThicknessContract(); // body thickness?
+	mBodyThickness         = SLIME_PARM(mBodyThicknessContract); // body thickness?
 	mNucleusPosition       = pos;
 	mCorePosition          = pos;
 
@@ -245,7 +245,7 @@ void Slime::collisionCallback(immut CollEvent& event)
 				InteractBubble bubble(this, 200.0f);
 				event.mCollider->stimulate(bubble);
 			} else if (event.mCollider->mObjType == OBJTYPE_Navi) {
-				InteractFlick flick(this, BOSS_PROP.mFlickKnockback(), BOSS_PROP.mFlickDamage(), FLICK_BACKWARDS_ANGLE);
+				InteractFlick flick(this, BOSS_PARM(mFlickKnockback), BOSS_PARM(mFlickDamage), FLICK_BACKWARDS_ANGLE);
 				event.mCollider->stimulate(flick);
 			}
 

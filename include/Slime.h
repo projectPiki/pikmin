@@ -25,8 +25,9 @@ struct SlimeBody;
 class SlimeCreature;
 class Slime;
 
-#define SLIME_PROP          (static_cast<SlimeProp*>(mProps)->mSlimeProps)
-#define C_SLIME_PROP(slime) (static_cast<SlimeProp*>((slime)->mProps)->mSlimeProps)
+// Redundant parenthesis surrounding the call to `Parm::Operator()` fixes matching for the DLL
+#define SLIME_PARM(parm)          C_SLIME_PARM(this, parm)
+#define C_SLIME_PARM(slime, parm) (static_cast<SlimeProp*>((slime)->mProps)->mSlimeProps.parm())
 
 /**
  * @brief TODO.
@@ -292,13 +293,13 @@ public:
 
 				// weightPos is kind of the centre of mass?
 				Vector3f weightPos
-				    = mCreature->mSRT.t + C_SLIME_PROP(mSlime).mMaxRadiusCompensation() * adjustVecs[i]; // max radius compensation
+				    = mCreature->mSRT.t + C_SLIME_PARM(mSlime, mMaxRadiusCompensation) * adjustVecs[i]; // max radius compensation
 
 				Vector3f farPos  = weightPos;
 				Vector3f nearPos = mCreature->mSRT.t;
 
 				// iterate like 10 times to jiggle the weightPos closer to the middle of the 4 stick slimes
-				for (int j = 0; j < C_SLIME_PROP(mSlime).mMaxSortCount(); j++) { // number of sorts?
+				for (int j = 0; j < C_SLIME_PARM(mSlime, mMaxSortCount); j++) { // number of sorts?
 					f32 score = 0.0f;
 
 					weightPos.x = (farPos.x + nearPos.x) / 2.0f;
@@ -314,7 +315,7 @@ public:
 					}
 
 					// closer to other stick slimes = higher score
-					if (score > C_SLIME_PROP(mSlime).mVertexPositionScore()) { // vertex position score?
+					if (score > C_SLIME_PARM(mSlime, mVertexPositionScore)) { // vertex position score?
 						nearPos.set(weightPos);
 					} else {
 						farPos.set(weightPos);

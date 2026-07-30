@@ -367,7 +367,7 @@ void SnakeBody::createDeadHeadEffect()
 	effectMgr->create(EffectMgr::EFF_Snake_DeadHeadCloud, vec, nullptr, nullptr);
 	rumbleMgr->start(RUMBLE_Unk14, 0, vec);
 
-	createDeadPellet(vec, C_SNAKE_PROP(mSnake).mHeadPelletIndex());
+	createDeadPellet(vec, C_SNAKE_PARM(mSnake, mHeadPelletIndex));
 
 	for (int i = 0; i < 7; i++) {
 		mDeadPtclGens[i] = effectMgr->create(EffectMgr::EFF_Snake_DeadBodyExplode, vec, nullptr, nullptr);
@@ -406,7 +406,7 @@ void SnakeBody::createDeadBodyEffect()
 	effectMgr->create(EffectMgr::EFF_Snake_DeadBody2, vec, nullptr, nullptr);
 	rumbleMgr->start(RUMBLE_Unk15, 0, vec);
 
-	createDeadPellet(vec, C_SNAKE_PROP(mSnake).mBodyPelletIndex());
+	createDeadPellet(vec, C_SNAKE_PARM(mSnake, mBodyPelletIndex));
 
 	if (mSnake->mSeContext) {
 		mSnake->mSeContext->playSound(SE_DORORO_WALK);
@@ -424,12 +424,12 @@ void SnakeBody::makeDeadPattern01()
 	f32 scaleTime;
 	f32 scaleSpeed;
 	if (mDeadEffectSegmentIndex == SnakeJointType::Neck) { // head
-		scaleSpeed = C_SNAKE_PROP(mSnake).mDeadHeadScaleSpeed();
-		scaleTime  = C_SNAKE_PROP(mSnake).mDeadHeadScaleTimer();
+		scaleSpeed = C_SNAKE_PARM(mSnake, mDeadHeadScaleSpeed);
+		scaleTime  = C_SNAKE_PARM(mSnake, mDeadHeadScaleTimer);
 	} else { // body
-		scaleSpeed = C_SNAKE_PROP(mSnake).mDeadBodyScaleSpeed();
-		scaleTime  = C_SNAKE_PROP(mSnake).mDeadBodyScaleTimer()
-		          - (6 - mDeadEffectSegmentIndex) * C_SNAKE_PROP(mSnake).mDeadBodyScaleSegmentRatio();
+		scaleSpeed = C_SNAKE_PARM(mSnake, mDeadBodyScaleSpeed);
+		scaleTime
+		    = C_SNAKE_PARM(mSnake, mDeadBodyScaleTimer) - (6 - mDeadEffectSegmentIndex) * C_SNAKE_PARM(mSnake, mDeadBodyScaleSegmentRatio);
 	}
 
 	mSnake->addWalkTimer(gsys->getFrameTime());

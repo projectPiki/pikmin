@@ -104,7 +104,7 @@ void zen::DrawNaviLifeCircle::drawLifeCircle()
 {
 	if (naviMgr) {
 		Navi* navi = naviMgr->getNavi(mNaviIndex);
-		DrawLifeCircle::drawLifeCircle(navi->mHealth / C_NAVI_PROP(navi).mHealth()); // ratio of current health to parameter health
+		DrawLifeCircle::drawLifeCircle(navi->mHealth / C_NAVI_PARM(navi, mHealth)); // ratio of current health to parameter health
 	} else {
 		DrawLifeCircle::drawLifeCircle(1.0f);
 	}

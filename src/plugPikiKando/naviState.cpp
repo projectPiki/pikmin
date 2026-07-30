@@ -334,7 +334,7 @@ void NaviStuckState::exec(Navi* navi)
 		mActionCount++;
 
 		// int minFlickActions = ;
-		if (mActionCount > C_NAVI_PROP(navi).mMinKinokoFlickActions()) {
+		if (mActionCount > C_NAVI_PARM(navi, mMinKinokoFlickActions)) {
 			// after a certain amount of recorded actions, try and flick a puffmin
 			Stickers stickers(navi);
 			Iterator iter(&stickers);
@@ -477,9 +477,9 @@ void NaviBuryState::procAnimMsg(Navi* navi, MsgAnim* msg)
 			if (mEscapeAttemptCounter == 0) {
 				navi->startMotion(PaniMotionInfo(PIKIANIM_GWait1, navi), PaniMotionInfo(PIKIANIM_GWait1));
 				mBuryState = 0;
-			} else if (mEscapeAttemptCounter >= C_NAVI_PROP(navi).mBuryEscapeKeyCount()) {
+			} else if (mEscapeAttemptCounter >= C_NAVI_PARM(navi, mBuryEscapeKeyCount)) {
 				mValidEscapeAttempts++;
-				if (mValidEscapeAttempts >= C_NAVI_PROP(navi).mBuryEscapeSuccessCount()) {
+				if (mValidEscapeAttempts >= C_NAVI_PARM(navi, mBuryEscapeSuccessCount)) {
 					mBuryState = 3;
 					navi->startMotion(PaniMotionInfo(PIKIANIM_GNuke, navi), PaniMotionInfo(PIKIANIM_GNuke));
 				}
@@ -728,7 +728,7 @@ void NaviWalkState::exec(Navi* navi)
 			return;
 		}
 		Piki* nearestPiki = nullptr;
-		f32 maxDist       = C_NAVI_PROP(navi).mPluckGrabRange();
+		f32 maxDist       = C_NAVI_PARM(navi, mPluckGrabRange);
 		Iterator plateIter(navi->mPlateMgr);
 		CI_LOOP(plateIter)
 		{
@@ -934,7 +934,7 @@ void NaviUfoState::exec(Navi* navi)
  */
 void NaviUfoState::cleanup(Navi* navi)
 {
-	navi->mHealth = C_NAVI_PROP(navi).mHealth();
+	navi->mHealth = C_NAVI_PARM(navi, mHealth);
 	UfoItem* ufo  = itemMgr->getUfo();
 	if (ufo) {
 		ufo->finishAccess();
@@ -1691,15 +1691,15 @@ void NaviGatherState::exec(Navi* navi)
 
 	if (navi->mWhistleCircleMode == 1 && down) {
 		navi->mWhistleTimer += gsys->getFrameTime();
-		if (navi->mWhistleTimer > C_NAVI_PROP(navi).mWhistleExpandTime()) {
-			navi->mWhistleTimer = C_NAVI_PROP(navi).mWhistleExpandTime();
+		if (navi->mWhistleTimer > C_NAVI_PARM(navi, mWhistleExpandTime)) {
+			navi->mWhistleTimer = C_NAVI_PARM(navi, mWhistleExpandTime);
 
 			if (!gameflow.mPauseAll) {
-				navi->callPikis(C_NAVI_PROP(navi).mWhistleMaxRadius());
+				navi->callPikis(C_NAVI_PARM(navi, mWhistleMaxRadius));
 			} else {
-				navi->callDebugs(C_NAVI_PROP(navi).mWhistleMaxRadius());
+				navi->callDebugs(C_NAVI_PARM(navi, mWhistleMaxRadius));
 			}
-			navi->mWhistleRadiusFrac = navi->mWhistleTimer / C_NAVI_PROP(navi).mWhistleExpandTime();
+			navi->mWhistleRadiusFrac = navi->mWhistleTimer / C_NAVI_PARM(navi, mWhistleExpandTime);
 			navi->mWhistleTimer      = 0.0f;
 			navi->mWhistleCircleMode = 2;
 		}
@@ -1707,10 +1707,10 @@ void NaviGatherState::exec(Navi* navi)
 	}
 
 	if (navi->mWhistleCircleMode == 1 && up) {
-		f32 scale                = navi->mWhistleTimer / C_NAVI_PROP(navi).mWhistleExpandTime();
+		f32 scale                = navi->mWhistleTimer / C_NAVI_PARM(navi, mWhistleExpandTime);
 		navi->mWhistleRadiusFrac = scale;
-		scale *= (C_NAVI_PROP(navi).mWhistleMaxRadius() - C_NAVI_PROP(navi).mWhistleMinRadius());
-		scale += C_NAVI_PROP(navi).mWhistleMinRadius();
+		scale *= (C_NAVI_PARM(navi, mWhistleMaxRadius) - C_NAVI_PARM(navi, mWhistleMinRadius));
+		scale += C_NAVI_PARM(navi, mWhistleMinRadius);
 
 		check                    = true;
 		navi->mWhistleTimer      = 0.0f;
@@ -1745,14 +1745,14 @@ void NaviGatherState::exec(Navi* navi)
 	if (!down) {
 		check = true;
 	}
-	if (!mWhistleEffectsStopped && navi->mWhistleTimer > C_NAVI_PROP(navi).mWhistleHoldTime() - 0.5f) {
+	if (!mWhistleEffectsStopped && navi->mWhistleTimer > C_NAVI_PARM(navi, mWhistleHoldTime) - 0.5f) {
 		seSystem->stopPlayerSe(SE_GATHER);
 		mWhistleEffectsStopped = true;
 		utEffectMgr->kill(navi->mNaviID == 0 ? KandoEffect::NaviWhistle0 : KandoEffect::NaviWhistle1);
 		utEffectMgr->kill(KandoEffect::NaviFue0);
 	}
 
-	if (check || navi->mWhistleTimer > C_NAVI_PROP(navi).mWhistleHoldTime()) {
+	if (check || navi->mWhistleTimer > C_NAVI_PARM(navi, mWhistleHoldTime)) {
 		navi->mWhistleTimer      = 0.0f;
 		navi->mWhistleCircleMode = 0;
 		navi->mNaviAnimMgr.getUpperAnimator().finishMotion(PaniMotionInfo(PANI_NO_MOTION, navi));
@@ -1919,7 +1919,7 @@ void NaviThrowWaitState::init(Navi* navi)
 		}
 	}
 
-	if (maxDist <= C_NAVI_PROP(navi).mPluckGrabRange()) {
+	if (maxDist <= C_NAVI_PARM(navi, mPluckGrabRange)) {
 		mHeldThrowPiki = throwPiki;
 	} else {
 		mPendingThrowPiki = throwPiki;
@@ -1935,8 +1935,10 @@ void NaviThrowWaitState::init(Navi* navi)
 	mIsHoldingThrowPiki = false;
 	mThrowChargeLevel   = 0;
 
-	navi->mThrowDistance = C_NAVI_PROP(navi).mThrowMinDistance() + (mThrowChargeLevel / 3.0f) * (C_NAVI_PROP(navi).mThrowMaxDistance() - C_NAVI_PROP(navi).mThrowMinDistance());
-	navi->mThrowHeight   = C_NAVI_PROP(navi).mThrowMinHeight() + (mThrowChargeLevel / 3.0f) * (C_NAVI_PROP(navi).mThrowMaxHeight() - C_NAVI_PROP(navi).mThrowMinHeight());
+	navi->mThrowDistance = C_NAVI_PARM(navi, mThrowMinDistance)
+	                     + (mThrowChargeLevel / 3.0f) * (C_NAVI_PARM(navi, mThrowMaxDistance) - C_NAVI_PARM(navi, mThrowMinDistance));
+	navi->mThrowHeight   = C_NAVI_PARM(navi, mThrowMinHeight)
+	                     + (mThrowChargeLevel / 3.0f) * (C_NAVI_PARM(navi, mThrowMaxHeight) - C_NAVI_PARM(navi, mThrowMinHeight));
 
 	mPendingThrowPikiTimeout = 3.0f;
 	mSortDelayTimer          = 0.1f;
@@ -2005,7 +2007,7 @@ void NaviThrowWaitState::exec(Navi* navi)
 			}
 			Vector3f diff = mPendingThrowPiki->mSRT.t - navi->mSRT.t;
 			f32 d         = diff.length();
-			if (d <= C_NAVI_PROP(navi).mPluckGrabRange()) {
+			if (d <= C_NAVI_PARM(navi, mPluckGrabRange)) {
 				navi->mMotionSpeed = 30.0f;
 				navi->startMotion(PaniMotionInfo(PIKIANIM_ThrowWait, navi), PaniMotionInfo(PIKIANIM_ThrowWait));
 				navi->enableMotionBlend();
@@ -2021,8 +2023,10 @@ void NaviThrowWaitState::exec(Navi* navi)
 	}
 	navi->mNextThrowPiki = mHeldThrowPiki;
 
-	navi->mThrowDistance = C_NAVI_PROP(navi).mThrowMinDistance() + (mThrowChargeLevel / 3.0f) * (C_NAVI_PROP(navi).mThrowMaxDistance() - C_NAVI_PROP(navi).mThrowMinDistance());
-	navi->mThrowHeight   = C_NAVI_PROP(navi).mThrowMinHeight() + (mThrowChargeLevel / 3.0f) * (C_NAVI_PROP(navi).mThrowMaxHeight() - C_NAVI_PROP(navi).mThrowMinHeight());
+	navi->mThrowDistance = C_NAVI_PARM(navi, mThrowMinDistance)
+	                     + (mThrowChargeLevel / 3.0f) * (C_NAVI_PARM(navi, mThrowMaxDistance) - C_NAVI_PARM(navi, mThrowMinDistance));
+	navi->mThrowHeight   = C_NAVI_PARM(navi, mThrowMinHeight)
+	                     + (mThrowChargeLevel / 3.0f) * (C_NAVI_PARM(navi, mThrowMaxHeight) - C_NAVI_PARM(navi, mThrowMinHeight));
 	lockHangPiki(navi);
 
 	if (mHeldThrowPiki) {
@@ -2035,7 +2039,7 @@ void NaviThrowWaitState::exec(Navi* navi)
 
 	if (navi->mKontroller->keyUp(KeyConfig::_instance->mThrowKey.mBind)) {
 		sortPikis(navi);
-		navi->mThrowHoldTime = mThrowChargeLevel / 3.0f * C_NAVI_PROP(navi).mThrowHoldMaxTime();
+		navi->mThrowHoldTime = mThrowChargeLevel / 3.0f * C_NAVI_PARM(navi, mThrowHoldMaxTime);
 		transit(navi, NAVISTATE_Throw);
 		MsgTarget target(mHeldThrowPiki);
 		navi->sendMsg(&target);
@@ -2043,8 +2047,8 @@ void NaviThrowWaitState::exec(Navi* navi)
 	}
 
 	navi->mThrowHoldTime += gsys->getFrameTime();
-	if (navi->mThrowHoldTime > C_NAVI_PROP(navi).mThrowHoldMaxTime()) {
-		navi->mThrowHoldTime = C_NAVI_PROP(navi).mThrowHoldMaxTime();
+	if (navi->mThrowHoldTime > C_NAVI_PARM(navi, mThrowHoldMaxTime)) {
+		navi->mThrowHoldTime = C_NAVI_PARM(navi, mThrowHoldMaxTime);
 	}
 	if (mSortDelayTimer > 0.0f) {
 		mSortDelayTimer -= gsys->getFrameTime();
@@ -2136,8 +2140,9 @@ void NaviThrowState::procAnimMsg(Navi* navi, MsgAnim* msg)
 		rumbleMgr->start(RUMBLE_Unk2, 0, nullptr);
 
 		// none of this is used for anything
-		f32 test = C_NAVI_PROP(navi).mThrowMinDistance()
-		         + (C_NAVI_PROP(navi).mThrowMaxDistance() - C_NAVI_PROP(navi).mThrowMinDistance()) * (navi->mThrowHoldTime / C_NAVI_PROP(navi).mThrowHoldMaxTime());
+		f32 test = C_NAVI_PARM(navi, mThrowMinDistance)
+		         + (C_NAVI_PARM(navi, mThrowMaxDistance) - C_NAVI_PARM(navi, mThrowMinDistance))
+		               * (navi->mThrowHoldTime / C_NAVI_PARM(navi, mThrowHoldMaxTime));
 		Vector3f unused(sinf(navi->mFaceDirection) * test, 0.0f, cosf(navi->mFaceDirection) * test);
 		Vector3f speed = unused + navi->mSRT.t;
 
@@ -2386,7 +2391,7 @@ void NaviNukuState::init(Navi* navi)
 	}
 
 	navi->mPressedTimer = 0.0f;
-	mPullCountRemaining = C_NAVI_PROP(navi).mPluckLoopCount();
+	mPullCountRemaining = C_NAVI_PARM(navi, mPluckLoopCount);
 	if (navi->mIsCursorVisible && !playerState->isChallengeMode() && !navi->mIsPlucking && playerState->mTotalPluckedPikiCount < 100) {
 		cameraMgr->mCamera->startMotion(cameraMgr->mCamera->mAttentionInfo);
 		BUGPRINT("> camera START MOTION | NUKU");
@@ -2630,7 +2635,7 @@ NaviPressedState::NaviPressedState()
  */
 void NaviPressedState::init(Navi* navi)
 {
-	navi->mPressedTimer = C_NAVI_PROP(navi).mPressedTotalTime();
+	navi->mPressedTimer = C_NAVI_PARM(navi, mPressedTotalTime);
 	PRINT("pressed !\n");
 }
 
@@ -2640,7 +2645,7 @@ void NaviPressedState::init(Navi* navi)
 void NaviPressedState::exec(Navi* navi)
 {
 	f32 ratio;
-	f32 baseScale = C_NAVI_PROP(navi).mDisplayScale();
+	f32 baseScale = C_NAVI_PARM(navi, mDisplayScale);
 	navi->mPressedTimer -= gsys->getFrameTime();
 	f32 y = navi->mPressedTimer;
 
@@ -2655,7 +2660,7 @@ void NaviPressedState::exec(Navi* navi)
 		return;
 	}
 
-	f32 xz = C_NAVI_PROP(navi).mPressedTotalTime() - C_NAVI_PROP(navi).mPressedFlatTime();
+	f32 xz = C_NAVI_PARM(navi, mPressedTotalTime) - C_NAVI_PARM(navi, mPressedFlatTime);
 	if (y > xz) {
 		xz = 2.0f;
 		y  = 0.01f;
@@ -2811,10 +2816,10 @@ void NaviAttackState::exec(Navi* navi)
 		if (teki->isAlive() && teki->isVisible() && !teki->isFlying()) {
 			Vector3f diff = teki->mSRT.t - navi->mSRT.t;
 			f32 angle     = atan2f(diff.x, diff.z);
-			if (diff.length() <= teki->getCentreSize() + navi->getCentreSize() + C_NAVI_PROP(navi).mPunchRadius()) {
+			if (diff.length() <= teki->getCentreSize() + navi->getCentreSize() + C_NAVI_PARM(navi, mPunchRadius)) {
 				f32 ang = absF(angDist(navi->mFaceDirection, angle));
 				if (ang < 2.3561945f) {
-					InteractAttack act(navi, nullptr, C_NAVI_PROP(navi).mPunchDamage(), false);
+					InteractAttack act(navi, nullptr, C_NAVI_PARM(navi, mPunchDamage), false);
 					if (teki->stimulate(act)) {
 						Vector3f dir(sinf(navi->mFaceDirection), 0.0f, cosf(navi->mFaceDirection));
 						dir = navi->mSRT.t + dir * 11.0f;

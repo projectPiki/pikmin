@@ -141,7 +141,7 @@ void Mizu::drawShape(Graphics& gfx)
 
 		// See also: `MizuAi::naviGeyzerJump`
 		Vector3f dir(sinf(mFaceDirection), 0.0f, cosf(mFaceDirection));
-		dir.multiply(BOSS_PROP.mTerritoryRadius());
+		dir.multiply(BOSS_PARM(mTerritoryRadius));
 		Vector3f targetPos = mSRT.t + dir;
 		targetPos.y        = mapMgr->getMinY(targetPos.x, targetPos.z, true);
 

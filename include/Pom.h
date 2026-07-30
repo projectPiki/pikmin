@@ -11,8 +11,9 @@ struct PomAi;
 struct PomGenOpenStarCallBack;
 class ShapeDynMaterials;
 
-#define POM_PROP        (static_cast<PomProp*>(mProps)->mPomProps)
-#define C_POM_PROP(pom) (static_cast<PomProp*>((pom)->mProps)->mPomProps)
+// Redundant parenthesis surrounding the call to `Parm::Operator()` fixes matching for the DLL
+#define POM_PARM(parm)        C_POM_PARM(this, parm)
+#define C_POM_PARM(pom, parm) (static_cast<PomProp*>((pom)->mProps)->mPomProps.parm())
 
 /**
  * @brief TODO.

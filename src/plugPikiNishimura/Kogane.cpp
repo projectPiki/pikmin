@@ -124,7 +124,7 @@ void Kogane::drawShape(Graphics& gfx)
 
 		if (getCurrentState() == 1) {
 			gfx.setColour(Colour(255, 0, 0, 255), true);
-			gfx.drawSphere(*getInitPosition(), KOGANE_PROP.mAppearTriggerRadius(), transformMtx);
+			gfx.drawSphere(*getInitPosition(), KOGANE_PARM(mAppearTriggerRadius), transformMtx);
 		}
 	}
 #endif

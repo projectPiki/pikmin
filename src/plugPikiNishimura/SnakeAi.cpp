@@ -241,8 +241,8 @@ void SnakeAi::setAppearPosition01()
 	Vector3f appearPos;
 	f32 randAngle    = NsMathF::getRand(TAU);
 	Creature* target = mSnake->getTargetCreature();
-	appearPos.x      = C_SNAKE_PROP(mSnake).mType1AppearDist() * cosf(randAngle) + target->mSRT.t.x;
-	appearPos.z      = C_SNAKE_PROP(mSnake).mType1AppearDist() * sinf(randAngle) + target->mSRT.t.z;
+	appearPos.x      = C_SNAKE_PARM(mSnake, mType1AppearDist) * cosf(randAngle) + target->mSRT.t.x;
+	appearPos.z      = C_SNAKE_PARM(mSnake, mType1AppearDist) * sinf(randAngle) + target->mSRT.t.z;
 	appearPos.y      = mapMgr->getMinY(appearPos.x, appearPos.z, true);
 	mSnake->setInitPosition(appearPos);
 	mSnake->mSRT.t = appearPos;
@@ -258,8 +258,8 @@ void SnakeAi::setAppearPosition02()
 	Vector3f targetPos(mSnake->getTargetCreature()->mSRT.t);
 	Vector3f dir(sinf(mSnake->_3C0), 0.0f, cosf(mSnake->_3C0));
 
-	Vector3f startPoint  = mSnake->mSpawnPosition + C_SNAKE_PROP(mSnake).mType2AppearFrontDist() * dir;
-	Vector3f endPoint    = mSnake->mSpawnPosition - C_SNAKE_PROP(mSnake).mType2AppearFrontDist() * dir;
+	Vector3f startPoint  = mSnake->mSpawnPosition + C_SNAKE_PARM(mSnake, mType2AppearFrontDist) * dir;
+	Vector3f endPoint    = mSnake->mSpawnPosition - C_SNAKE_PARM(mSnake, mType2AppearFrontDist) * dir;
 	Vector3f lineSegment = endPoint - startPoint;
 
 	f32 blendRatio;
@@ -284,19 +284,19 @@ void SnakeAi::traceTargetPosition()
 	// Handle chase states
 	if (mSnake->getCurrentState() >= SNAKEAI_ChaseNavi && mSnake->getCurrentState() <= SNAKEAI_ChasePiki) {
 		if (mSnake->mSnakeBody->mBlendingRatio == 0.0f) {
-			mIsFacingTarget = mSnake->changeDirection(C_SNAKE_PROP(mSnake).mChaseBodyTurnSpeed());
+			mIsFacingTarget = mSnake->changeDirection(C_SNAKE_PARM(mSnake, mChaseBodyTurnSpeed));
 		} else {
-			mIsFacingTarget = mSnake->changeDirection(C_SNAKE_PROP(mSnake).mNormBodyTurnSpeed());
+			mIsFacingTarget = mSnake->changeDirection(C_SNAKE_PARM(mSnake, mNormBodyTurnSpeed));
 		}
 	}
 	// Handle attack states
 	else if (mSnake->getCurrentState() == SNAKEAI_Attack && mIsAttackAllowed) {
 		if (mAttackId == 0) {
-			mIsFacingTarget = mSnake->changeDirection(C_SNAKE_PROP(mSnake).mNormBodyTurnSpeed());
+			mIsFacingTarget = mSnake->changeDirection(C_SNAKE_PARM(mSnake, mNormBodyTurnSpeed));
 		} else if (mAttackId == 1) {
-			mIsFacingTarget = mSnake->changeDirection(C_SNAKE_PROP(mSnake).mNormBodyTurnSpeed() / 3.0f);
+			mIsFacingTarget = mSnake->changeDirection(C_SNAKE_PARM(mSnake, mNormBodyTurnSpeed) / 3.0f);
 		} else if (mAttackId == 2) {
-			mIsFacingTarget = mSnake->changeDirection(C_SNAKE_PROP(mSnake).mNormBodyTurnSpeed() / 5.0f);
+			mIsFacingTarget = mSnake->changeDirection(C_SNAKE_PARM(mSnake, mNormBodyTurnSpeed) / 5.0f);
 		}
 	}
 }
@@ -313,11 +313,11 @@ void SnakeAi::setAttackPosition()
 	mSnakeSideDir.normalise();
 
 	// Calculate NEAR attack values
-	mAttackDists[SNAKEATK_Near]   = C_SNAKE_PROP(mSnake).mNearAttackDist();
-	mAttackLimits[SNAKEATK_Near]  = C_SNAKE_PROP(mSnake).mNearAttackLimit();
-	mAttackMinus[SNAKEATK_Near]   = C_SNAKE_PROP(mSnake).mNearAttackMinus();
-	mAttackPlus[SNAKEATK_Near]    = C_SNAKE_PROP(mSnake).mNearAttackPlus();
-	mAttackHeights[SNAKEATK_Near] = C_SNAKE_PROP(mSnake).mNearAttackHeight();
+	mAttackDists[SNAKEATK_Near]   = C_SNAKE_PARM(mSnake, mNearAttackDist);
+	mAttackLimits[SNAKEATK_Near]  = C_SNAKE_PARM(mSnake, mNearAttackLimit);
+	mAttackMinus[SNAKEATK_Near]   = C_SNAKE_PARM(mSnake, mNearAttackMinus);
+	mAttackPlus[SNAKEATK_Near]    = C_SNAKE_PARM(mSnake, mNearAttackPlus);
+	mAttackHeights[SNAKEATK_Near] = C_SNAKE_PARM(mSnake, mNearAttackHeight);
 
 	f32 nearFront                     = (mAttackDists[SNAKEATK_Near] + mAttackLimits[SNAKEATK_Near]) / 2.0f;
 	f32 nearSide                      = (mAttackMinus[SNAKEATK_Near] + mAttackPlus[SNAKEATK_Near]) / 2.0f;
@@ -325,11 +325,11 @@ void SnakeAi::setAttackPosition()
 	mAttackPositions[SNAKEATK_Near].y = mapMgr->getMinY(mAttackPositions[SNAKEATK_Near].x, mAttackPositions[SNAKEATK_Near].z, true);
 
 	// Calculate MID attack values
-	mAttackDists[SNAKEATK_Mid]   = C_SNAKE_PROP(mSnake).mMidAttackDist();
-	mAttackLimits[SNAKEATK_Mid]  = C_SNAKE_PROP(mSnake).mMidAttackLimit();
-	mAttackMinus[SNAKEATK_Mid]   = C_SNAKE_PROP(mSnake).mMidAttackMinus();
-	mAttackPlus[SNAKEATK_Mid]    = C_SNAKE_PROP(mSnake).mMidAttackPlus();
-	mAttackHeights[SNAKEATK_Mid] = C_SNAKE_PROP(mSnake).mMidAttackHeight();
+	mAttackDists[SNAKEATK_Mid]   = C_SNAKE_PARM(mSnake, mMidAttackDist);
+	mAttackLimits[SNAKEATK_Mid]  = C_SNAKE_PARM(mSnake, mMidAttackLimit);
+	mAttackMinus[SNAKEATK_Mid]   = C_SNAKE_PARM(mSnake, mMidAttackMinus);
+	mAttackPlus[SNAKEATK_Mid]    = C_SNAKE_PARM(mSnake, mMidAttackPlus);
+	mAttackHeights[SNAKEATK_Mid] = C_SNAKE_PARM(mSnake, mMidAttackHeight);
 
 	f32 midFront                     = (mAttackDists[SNAKEATK_Mid] + mAttackLimits[SNAKEATK_Mid]) / 2.0f;
 	f32 midSide                      = (mAttackMinus[SNAKEATK_Mid] + mAttackPlus[SNAKEATK_Mid]) / 2.0f;
@@ -337,11 +337,11 @@ void SnakeAi::setAttackPosition()
 	mAttackPositions[SNAKEATK_Mid].y = mapMgr->getMinY(mAttackPositions[SNAKEATK_Mid].x, mAttackPositions[SNAKEATK_Mid].z, true);
 
 	// Calculate FAR attack values
-	mAttackDists[SNAKEATK_Far]   = C_SNAKE_PROP(mSnake).mFarAttackDist();
-	mAttackLimits[SNAKEATK_Far]  = C_SNAKE_PROP(mSnake).mFarAttackLimit();
-	mAttackMinus[SNAKEATK_Far]   = C_SNAKE_PROP(mSnake).mFarAttackMinus();
-	mAttackPlus[SNAKEATK_Far]    = C_SNAKE_PROP(mSnake).mFarAttackPlus();
-	mAttackHeights[SNAKEATK_Far] = C_SNAKE_PROP(mSnake).mFarAttackHeight();
+	mAttackDists[SNAKEATK_Far]   = C_SNAKE_PARM(mSnake, mFarAttackDist);
+	mAttackLimits[SNAKEATK_Far]  = C_SNAKE_PARM(mSnake, mFarAttackLimit);
+	mAttackMinus[SNAKEATK_Far]   = C_SNAKE_PARM(mSnake, mFarAttackMinus);
+	mAttackPlus[SNAKEATK_Far]    = C_SNAKE_PARM(mSnake, mFarAttackPlus);
+	mAttackHeights[SNAKEATK_Far] = C_SNAKE_PARM(mSnake, mFarAttackHeight);
 
 	f32 farFront                     = (mAttackDists[SNAKEATK_Far] + mAttackLimits[SNAKEATK_Far]) / 2.0f;
 	f32 farSide                      = (mAttackMinus[SNAKEATK_Far] + mAttackPlus[SNAKEATK_Far]) / 2.0f;
@@ -349,11 +349,11 @@ void SnakeAi::setAttackPosition()
 	mAttackPositions[SNAKEATK_Far].y = mapMgr->getMinY(mAttackPositions[SNAKEATK_Far].x, mAttackPositions[SNAKEATK_Far].z, true);
 
 	// Calculate RIGHT attack values
-	mAttackDists[SNAKEATK_Right]   = C_SNAKE_PROP(mSnake).mRightAttackDist();
-	mAttackLimits[SNAKEATK_Right]  = C_SNAKE_PROP(mSnake).mRightAttackLimit();
-	mAttackMinus[SNAKEATK_Right]   = C_SNAKE_PROP(mSnake).mRightAttackMinus();
-	mAttackPlus[SNAKEATK_Right]    = C_SNAKE_PROP(mSnake).mRightAttackPlus();
-	mAttackHeights[SNAKEATK_Right] = C_SNAKE_PROP(mSnake).mRightAttackHeight();
+	mAttackDists[SNAKEATK_Right]   = C_SNAKE_PARM(mSnake, mRightAttackDist);
+	mAttackLimits[SNAKEATK_Right]  = C_SNAKE_PARM(mSnake, mRightAttackLimit);
+	mAttackMinus[SNAKEATK_Right]   = C_SNAKE_PARM(mSnake, mRightAttackMinus);
+	mAttackPlus[SNAKEATK_Right]    = C_SNAKE_PARM(mSnake, mRightAttackPlus);
+	mAttackHeights[SNAKEATK_Right] = C_SNAKE_PARM(mSnake, mRightAttackHeight);
 
 	f32 rightFront                     = (mAttackDists[SNAKEATK_Right] + mAttackLimits[SNAKEATK_Right]) / 2.0f;
 	f32 rightSide                      = (mAttackMinus[SNAKEATK_Right] + mAttackPlus[SNAKEATK_Right]) / 2.0f;
@@ -361,11 +361,11 @@ void SnakeAi::setAttackPosition()
 	mAttackPositions[SNAKEATK_Right].y = mapMgr->getMinY(mAttackPositions[SNAKEATK_Right].x, mAttackPositions[SNAKEATK_Right].z, true);
 
 	// Calculate LEFT attack values
-	mAttackDists[SNAKEATK_Left]   = C_SNAKE_PROP(mSnake).mLeftAttackDist();
-	mAttackLimits[SNAKEATK_Left]  = C_SNAKE_PROP(mSnake).mLeftAttackLimit();
-	mAttackMinus[SNAKEATK_Left]   = C_SNAKE_PROP(mSnake).mLeftAttackMinus();
-	mAttackPlus[SNAKEATK_Left]    = C_SNAKE_PROP(mSnake).mLeftAttackPlus();
-	mAttackHeights[SNAKEATK_Left] = C_SNAKE_PROP(mSnake).mLeftAttackHeight();
+	mAttackDists[SNAKEATK_Left]   = C_SNAKE_PARM(mSnake, mLeftAttackDist);
+	mAttackLimits[SNAKEATK_Left]  = C_SNAKE_PARM(mSnake, mLeftAttackLimit);
+	mAttackMinus[SNAKEATK_Left]   = C_SNAKE_PARM(mSnake, mLeftAttackMinus);
+	mAttackPlus[SNAKEATK_Left]    = C_SNAKE_PARM(mSnake, mLeftAttackPlus);
+	mAttackHeights[SNAKEATK_Left] = C_SNAKE_PARM(mSnake, mLeftAttackHeight);
 
 	f32 leftFront                     = (mAttackDists[SNAKEATK_Left] + mAttackLimits[SNAKEATK_Left]) / 2.0f;
 	f32 leftSide                      = (mAttackMinus[SNAKEATK_Left] + mAttackPlus[SNAKEATK_Left]) / 2.0f;
@@ -415,7 +415,7 @@ void SnakeAi::checkAttackTarget()
 void SnakeAi::naviNudge()
 {
 	// lol at calling it a nudge when it's trying to peck your brains out
-	InteractAttack nudge(mSnake, nullptr, C_SNAKE_PROP(mSnake).mAttackDamageNavi(), false);
+	InteractAttack nudge(mSnake, nullptr, C_SNAKE_PARM(mSnake, mAttackDamageNavi), false);
 	mSnake->getTargetCreature()->stimulate(nudge);
 }
 
@@ -607,8 +607,8 @@ bool SnakeAi::appearType01()
 		Creature* piki = *iterPiki;
 		if (piki->isAlive() && piki->isVisible() && !piki->isBuried()) {
 			if (qdist2(piki->mSRT.t.x, piki->mSRT.t.z, mSnake->mSpawnPosition.x, mSnake->mSpawnPosition.z)
-			        < C_SNAKE_PROP(mSnake).mType1DetectionRadius()
-			    && mSnake->mSpawnPosition.distance(piki->mSRT.t) < C_SNAKE_PROP(mSnake).mType1DetectionRadius()) {
+			        < C_SNAKE_PARM(mSnake, mType1DetectionRadius)
+			    && mSnake->mSpawnPosition.distance(piki->mSRT.t) < C_SNAKE_PARM(mSnake, mType1DetectionRadius)) {
 				mSnake->setTargetCreature(piki);
 				return true;
 			}
@@ -622,8 +622,8 @@ bool SnakeAi::appearType01()
 		Creature* navi = *iterNavi;
 		if (navi->isAlive() && navi->isVisible() && !navi->isBuried()) {
 			if (qdist2(navi->mSRT.t.x, navi->mSRT.t.z, mSnake->mSpawnPosition.x, mSnake->mSpawnPosition.z)
-			        < C_SNAKE_PROP(mSnake).mType1DetectionRadius()
-			    && mSnake->mSpawnPosition.distance(navi->mSRT.t) < C_SNAKE_PROP(mSnake).mType1DetectionRadius()) {
+			        < C_SNAKE_PARM(mSnake, mType1DetectionRadius)
+			    && mSnake->mSpawnPosition.distance(navi->mSRT.t) < C_SNAKE_PARM(mSnake, mType1DetectionRadius)) {
 				mSnake->setTargetCreature(navi);
 				return true;
 			}
@@ -639,7 +639,7 @@ bool SnakeAi::appearType01()
 bool SnakeAi::appearType02()
 {
 	f32 perpAngle = mSnake->_3C0 + HALF_PI;
-	f32 radius    = C_SNAKE_PROP(mSnake).mType2AppearFrontDist() + C_SNAKE_PROP(mSnake).mType2AppearSideDist();
+	f32 radius    = C_SNAKE_PARM(mSnake, mType2AppearFrontDist) + C_SNAKE_PARM(mSnake, mType2AppearSideDist);
 	Vector3f frontDir(sinf(mSnake->_3C0), 0.0f, cosf(mSnake->_3C0));
 	Vector3f sideDir(sinf(perpAngle), 0.0f, cosf(perpAngle));
 
@@ -652,14 +652,14 @@ bool SnakeAi::appearType02()
 		Creature* piki = *iterPiki;
 		if (piki->isAlive() && piki->isVisible() && !piki->isBuried()) {
 			if (qdist2(piki->mSRT.t.x, piki->mSRT.t.z, mSnake->mSpawnPosition.x, mSnake->mSpawnPosition.z) < radius
-			    && NsLibMath<f32>::abs(piki->mSRT.t.y - mSnake->mSpawnPosition.y) < C_SNAKE_PROP(mSnake).mType2AppearVertDist()) {
+			    && NsLibMath<f32>::abs(piki->mSRT.t.y - mSnake->mSpawnPosition.y) < C_SNAKE_PARM(mSnake, mType2AppearVertDist)) {
 				f32 xDiff = piki->mSRT.t.x - mSnake->mSpawnPosition.x;
 				f32 zDiff = piki->mSRT.t.z - mSnake->mSpawnPosition.z;
 
 				frontProj = frontDir.x * xDiff + frontDir.z * zDiff;
 				sideProj  = sideDir.x * xDiff + sideDir.z * zDiff;
-				if (NsLibMath<f32>::abs(frontProj) < C_SNAKE_PROP(mSnake).mType2AppearFrontDist()
-				    && NsLibMath<f32>::abs(sideProj) < C_SNAKE_PROP(mSnake).mType2AppearSideDist()) {
+				if (NsLibMath<f32>::abs(frontProj) < C_SNAKE_PARM(mSnake, mType2AppearFrontDist)
+				    && NsLibMath<f32>::abs(sideProj) < C_SNAKE_PARM(mSnake, mType2AppearSideDist)) {
 					mSnake->setTargetCreature(piki);
 					return true;
 				}
@@ -674,14 +674,14 @@ bool SnakeAi::appearType02()
 		Creature* navi = *iterNavi;
 		if (navi->isAlive() && navi->isVisible() && !navi->isBuried()) {
 			if (qdist2(navi->mSRT.t.x, navi->mSRT.t.z, mSnake->mSpawnPosition.x, mSnake->mSpawnPosition.z) < radius
-			    && NsLibMath<f32>::abs(navi->mSRT.t.y - mSnake->mSpawnPosition.y) < C_SNAKE_PROP(mSnake).mType2AppearVertDist()) {
+			    && NsLibMath<f32>::abs(navi->mSRT.t.y - mSnake->mSpawnPosition.y) < C_SNAKE_PARM(mSnake, mType2AppearVertDist)) {
 				f32 xDiff = navi->mSRT.t.x - mSnake->mSpawnPosition.x;
 				f32 zDiff = navi->mSRT.t.z - mSnake->mSpawnPosition.z;
 
 				frontProj = frontDir.x * xDiff + frontDir.z * zDiff;
 				sideProj  = sideDir.x * xDiff + sideDir.z * zDiff;
-				if (NsLibMath<f32>::abs(frontProj) < C_SNAKE_PROP(mSnake).mType2AppearFrontDist()
-				    && NsLibMath<f32>::abs(sideProj) < C_SNAKE_PROP(mSnake).mType2AppearSideDist()) {
+				if (NsLibMath<f32>::abs(frontProj) < C_SNAKE_PARM(mSnake, mType2AppearFrontDist)
+				    && NsLibMath<f32>::abs(sideProj) < C_SNAKE_PARM(mSnake, mType2AppearSideDist)) {
 					mSnake->setTargetCreature(navi);
 					return true;
 				}
@@ -751,11 +751,11 @@ bool SnakeAi::chaseNaviTransit()
 		Creature* navi = *iter;
 		if (navi->isAlive() && navi->isVisible() && !navi->isBuried()) {
 			f32 quickDist = qdist2(snakePos.x, snakePos.z, navi->mSRT.t.x, navi->mSRT.t.z);
-			if (quickDist < C_BOSS_PROP(mSnake).mSearchRadius() && quickDist < minDist) {
+			if (quickDist < C_BOSS_PARM(mSnake, mSearchRadius) && quickDist < minDist) {
 				if (mSnake->inSearchAngle(navi)) {
 					f32 dist = snakePos.distance(navi->mSRT.t);
-					if (dist < C_BOSS_PROP(mSnake).mSearchRadius() && dist < minDist
-					    && initPos->distance(navi->mSRT.t) < C_BOSS_PROP(mSnake).mTerritoryRadius()) {
+					if (dist < C_BOSS_PARM(mSnake, mSearchRadius) && dist < minDist
+					    && initPos->distance(navi->mSRT.t) < C_BOSS_PARM(mSnake, mTerritoryRadius)) {
 						minDist = dist;
 						target  = navi;
 					}
@@ -793,11 +793,11 @@ bool SnakeAi::chasePikiTransit()
 		Creature* piki = *iter;
 		if (piki->isAlive() && piki->isVisible() && !piki->isBuried() && piki->getStickObject() != mSnake) {
 			f32 quickDist = qdist2(snakePos.x, snakePos.z, piki->mSRT.t.x, piki->mSRT.t.z);
-			if (quickDist < C_BOSS_PROP(mSnake).mSearchRadius() && quickDist < minDist) {
+			if (quickDist < C_BOSS_PARM(mSnake, mSearchRadius) && quickDist < minDist) {
 				if (mSnake->inSearchAngle(piki)) {
 					f32 dist = snakePos.distance(piki->mSRT.t);
-					if (dist < C_BOSS_PROP(mSnake).mSearchRadius() && dist < minDist
-					    && initPos->distance(piki->mSRT.t) < C_BOSS_PROP(mSnake).mTerritoryRadius()) {
+					if (dist < C_BOSS_PARM(mSnake, mSearchRadius) && dist < minDist
+					    && initPos->distance(piki->mSRT.t) < C_BOSS_PARM(mSnake, mTerritoryRadius)) {
 						minDist = dist;
 						target  = piki;
 					}
@@ -831,12 +831,12 @@ bool SnakeAi::targetLostTransit()
 			return true;
 		}
 
-		if (mSnake->mSnakeBody->mNeckPosition.distance(target->mSRT.t) > C_BOSS_PROP(mSnake).mSearchRadius()) {
+		if (mSnake->mSnakeBody->mNeckPosition.distance(target->mSRT.t) > C_BOSS_PARM(mSnake, mSearchRadius)) {
 			mSnake->setTargetCreature(nullptr);
 			return true;
 		}
 
-		if (mSnake->getInitPosition()->distance(target->mSRT.t) > C_BOSS_PROP(mSnake).mTerritoryRadius()) {
+		if (mSnake->getInitPosition()->distance(target->mSRT.t) > C_BOSS_PARM(mSnake, mTerritoryRadius)) {
 			mSnake->setTargetCreature(nullptr);
 			return true;
 		}
@@ -896,7 +896,7 @@ bool SnakeAi::intoGroundTransit()
  */
 bool SnakeAi::diveTimerTransit()
 {
-	if (mSnake->getWalkTimer() > C_SNAKE_PROP(mSnake).mWaitBeforeDiveTime()) {
+	if (mSnake->getWalkTimer() > C_SNAKE_PARM(mSnake, mWaitBeforeDiveTime)) {
 		return true;
 	}
 	return false;
@@ -908,7 +908,7 @@ bool SnakeAi::diveTimerTransit()
  */
 bool SnakeAi::underTimerTransit()
 {
-	if (mSnake->getWalkTimer() > C_SNAKE_PROP(mSnake).mWaitUndergroundTime()) {
+	if (mSnake->getWalkTimer() > C_SNAKE_PARM(mSnake, mWaitUndergroundTime)) {
 		return true;
 	}
 	return false;
@@ -964,7 +964,7 @@ void SnakeAi::initChase(int nextState)
 	mSnake->setNextState(nextState);
 	mSnake->setMotionFinish(false);
 	mSnake->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Wait1, this));
-	mSnake->mSnakeBody->initBlending(C_SNAKE_PROP(mSnake).mChaseBlendingRate());
+	mSnake->mSnakeBody->initBlending(C_SNAKE_PARM(mSnake, mChaseBlendingRate));
 	resultFlagOn();
 }
 
@@ -1078,7 +1078,7 @@ void SnakeAi::initAppear(int nextState)
 	if (mFastAppear) {
 		mSnake->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Move1, this));
 		mFastAppear = false;
-	} else if (NsMathF::getRand(1.0f) < C_SNAKE_PROP(mSnake).mFastAppearChance()) {
+	} else if (NsMathF::getRand(1.0f) < C_SNAKE_PARM(mSnake, mFastAppearChance)) {
 		mSnake->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Move1, this));
 	} else {
 		mSnake->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Move2, this));
@@ -1142,25 +1142,25 @@ void SnakeAi::dieState()
  */
 void SnakeAi::struggleState()
 {
-	if (mSnake->getLoopCounter() < C_SNAKE_PROP(mSnake).mStruggleLoopMax()) {
+	if (mSnake->getLoopCounter() < C_SNAKE_PARM(mSnake, mStruggleLoopMax)) {
 		int stickPikiNum = mSnake->getStickNoMouthPikiCount();
 		int loopLimit    = 0;
-		if (stickPikiNum >= C_SNAKE_PROP(mSnake).mStrugglePikiMax()) {
-			loopLimit = C_SNAKE_PROP(mSnake).mStruggleLoopMax();
-		} else if (stickPikiNum > C_SNAKE_PROP(mSnake).mStrugglePikiMin()) {
+		if (stickPikiNum >= C_SNAKE_PARM(mSnake, mStrugglePikiMax)) {
+			loopLimit = C_SNAKE_PARM(mSnake, mStruggleLoopMax);
+		} else if (stickPikiNum > C_SNAKE_PARM(mSnake, mStrugglePikiMin)) {
 			f32 lVals[3];
 			lVals[0] = 0.0f;
-			lVals[1] = C_SNAKE_PROP(mSnake).mStruggleLoopMid();
-			lVals[2] = C_SNAKE_PROP(mSnake).mStruggleLoopMax();
-			f32 val  = 2.0f
-			        * (f32(stickPikiNum - C_SNAKE_PROP(mSnake).mStrugglePikiMin())
-			           / f32(C_SNAKE_PROP(mSnake).mStrugglePikiMax() - C_SNAKE_PROP(mSnake).mStrugglePikiMin()));
+			lVals[1] = C_SNAKE_PARM(mSnake, mStruggleLoopMid);
+			lVals[2] = C_SNAKE_PARM(mSnake, mStruggleLoopMax);
+			f32 val   = 2.0f
+			          * (f32(stickPikiNum - C_SNAKE_PARM(mSnake, mStrugglePikiMin))
+			             / f32(C_SNAKE_PARM(mSnake, mStrugglePikiMax) - C_SNAKE_PARM(mSnake, mStrugglePikiMin)));
 			loopLimit = NsLibMath<f32>::lagrange3(lVals, val) + 0.5f;
-			loopLimit = NsLibMath<int>::revice(loopLimit, 0, C_SNAKE_PROP(mSnake).mStruggleLoopMax());
+			loopLimit = NsLibMath<int>::revice(loopLimit, 0, C_SNAKE_PARM(mSnake, mStruggleLoopMax));
 		}
 
 		if (mSnake->getLoopCounter() >= loopLimit) {
-			mSnake->setLoopCounter(C_SNAKE_PROP(mSnake).mStruggleLoopMax());
+			mSnake->setLoopCounter(C_SNAKE_PARM(mSnake, mStruggleLoopMax));
 			mSnake->mAnimator.finishMotion(PaniMotionInfo(PANI_NO_MOTION, this));
 		}
 	} else {

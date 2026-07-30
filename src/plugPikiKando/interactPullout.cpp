@@ -67,11 +67,11 @@ bool InteractPullout::actPiki(Piki* piki) immut
 
 	f32 strength = 1.0f;
 	if (piki->mFormationPriority == 1) {
-		strength = C_PIKI_PROP(piki).mPluckStrength1();
+		strength = C_PIKI_PARM(piki, mPluckStrength1);
 	} else if (piki->mFormationPriority == 2) {
-		strength = C_PIKI_PROP(piki).mPluckStrength2();
+		strength = C_PIKI_PARM(piki, mPluckStrength2);
 	} else {
-		strength = C_PIKI_PROP(piki).mPluckStrength0();
+		strength = C_PIKI_PARM(piki, mPluckStrength0);
 	}
 
 	backPullDist *= strength;

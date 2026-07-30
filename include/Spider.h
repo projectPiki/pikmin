@@ -14,8 +14,9 @@ struct SpiderGenHalfDeadCallBackJoint;
 struct SpiderGenPerishCallBack;
 struct SpiderGenRippleCallBack;
 
-#define SPIDER_PROP           (static_cast<SpiderProp*>(mProps)->mSpiderProps)
-#define C_SPIDER_PROP(spider) (static_cast<SpiderProp*>((spider)->mProps)->mSpiderProps)
+// Redundant parenthesis surrounding the call to `Parm::Operator()` fixes matching for the DLL
+#define SPIDER_PARM(parm)           C_SPIDER_PARM(this, parm)
+#define C_SPIDER_PARM(spider, parm) (static_cast<SpiderProp*>((spider)->mProps)->mSpiderProps.parm())
 
 /**
  * @brief TODO.

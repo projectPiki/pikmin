@@ -10,8 +10,9 @@
 #include "zen/CallBack.h"
 #include "zen/particle.h"
 
-#define KING_PROP         (static_cast<KingProp*>(mProps)->mKingProps)
-#define C_KING_PROP(king) (static_cast<KingProp*>((king)->mProps)->mKingProps)
+// Redundant parenthesis surrounding the call to `Parm::Operator()` fixes matching for the DLL
+#define KING_PARM(parm)         C_KING_PARM(this, parm)
+#define C_KING_PARM(king, parm) (static_cast<KingProp*>((king)->mProps)->mKingProps.parm())
 
 struct KingAi;
 struct KingBody;

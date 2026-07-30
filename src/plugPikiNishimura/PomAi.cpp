@@ -44,7 +44,7 @@ PomAi::PomAi(Pom* pom)
 void PomAi::initAI(Pom* pom)
 {
 	mPom = pom;
-	if (C_POM_PROP(mPom).mOpenOnInteractionOnly() < 2) {
+	if (C_POM_PARM(mPom, mOpenOnInteractionOnly) < 2) {
 		mPom->setCurrentState(2);
 		mPom->setNextState(2);
 		mPom->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Type1, this));
@@ -65,8 +65,8 @@ void PomAi::initAI(Pom* pom)
 	mReleasedSeedCount  = 0;
 
 	// splitting this monstrosity up into temps would be better. however, that destroys the stack :')
-	mMaxSeedCount = C_POM_PROP(mPom).mMinCycles()
-	              + NsMathI::getRand(NsLibMath<int>::abs(C_POM_PROP(mPom).mMaxCycles() - C_POM_PROP(mPom).mMinCycles() + 1));
+	mMaxSeedCount  = C_POM_PARM(mPom, mMinCycles)
+	               + NsMathI::getRand(NsLibMath<int>::abs(C_POM_PARM(mPom, mMaxCycles) - C_POM_PARM(mPom, mMinCycles) + 1));
 	mCurrentDeform = 0.0f;
 	mDeformAmount  = 0.0f;
 }
@@ -244,7 +244,7 @@ void PomAi::checkSwayAndScale()
 {
 	int stickPikiCount = mPom->getStickPikiCount();
 	if (stickPikiCount > mPrevStickPikiCount) {
-		mDeformAmount -= C_POM_PROP(mPom).mSquashAmount();
+		mDeformAmount -= C_POM_PARM(mPom, mSquashAmount);
 		effectMgr->create(EffectMgr::EFF_CloudOfDust_1, mPom->mSRT.t, nullptr, nullptr);
 		playSound(5);
 		resultFlagSeen();
@@ -264,9 +264,9 @@ void PomAi::calcSwayAndScale()
 	mPom->mSRT.s.y = 1.0f + mCurrentDeform;
 	mPom->mSRT.s.z = 1.0f - mCurrentDeform;
 
-	mDeformAmount *= C_POM_PROP(mPom).mSquashPersistence();
+	mDeformAmount *= C_POM_PARM(mPom, mSquashPersistence);
 
-	mDeformAmount += C_POM_PROP(mPom).mSquashMultiplier() * -mCurrentDeform;
+	mDeformAmount += C_POM_PARM(mPom, mSquashMultiplier) * -mCurrentDeform;
 }
 
 /**
@@ -295,7 +295,7 @@ int PomAi::killStickPiki()
 		Creature* stuck = *iter;
 		if (stuck && stuck->isAlive() && stuck->mObjType == OBJTYPE_Piki) {
 			Piki* piki = static_cast<Piki*>(*iter);
-			if (C_POM_PROP(mPom).mDoKillSameColorPiki() && piki->mColor == mPom->mColor) {
+			if (C_POM_PARM(mPom, mDoKillSameColorPiki) && piki->mColor == mPom->mColor) {
 				piki->kill(false);
 			} else {
 				piki->setEraseKill();
@@ -319,7 +319,7 @@ void PomAi::createPikiHead()
 	Navi* player  = naviMgr->getNavi();
 	f32 baseAngle = atan2f(mPom->mSRT.t.x - player->mSRT.t.x, mPom->mSRT.t.z - player->mSRT.t.z);
 
-	f32 spreadAngle = PI * (C_POM_PROP(mPom).mDischargeAngle() / 360.0f);
+	f32 spreadAngle = PI * (C_POM_PARM(mPom, mDischargeAngle) / 360.0f);
 	f32 minAngle    = baseAngle - spreadAngle;
 	f32 angleRange  = 2.0f * spreadAngle;
 
@@ -384,7 +384,7 @@ void PomAi::calcPetalStickers()
 	}
 
 	// if swallow setting is enabled
-	if (C_POM_PROP(mPom).mStickOrSwallow()) {
+	if (C_POM_PARM(mPom, mStickOrSwallow)) {
 		CollPart* slotPart = mPom->mCollInfo->getSphere('slot');
 		Stickers stuckList(mPom);
 		Iterator iter(&stuckList);
@@ -444,7 +444,7 @@ bool PomAi::deadTransit()
  */
 bool PomAi::petalOpenTransit()
 {
-	if (C_POM_PROP(mPom).mOpenOnInteractionOnly()) {
+	if (C_POM_PARM(mPom, mOpenOnInteractionOnly)) {
 		return mPom->mIsPikiOrPlayerTouching;
 	}
 
@@ -466,14 +466,14 @@ bool PomAi::petalShakeTransit()
  */
 bool PomAi::petalCloseTransit()
 {
-	if (C_POM_PROP(mPom).mMaxPikiPerCycle() != 0) {
-		if (mPrevStickPikiCount >= C_POM_PROP(mPom).mMaxPikiPerCycle()) {
+	if (C_POM_PARM(mPom, mMaxPikiPerCycle) != 0) {
+		if (mPrevStickPikiCount >= C_POM_PARM(mPom, mMaxPikiPerCycle)) {
 			return true;
 		}
-		if (C_POM_PROP(mPom).mCloseWaitTime() > 0.0f && mPom->getWalkTimer() > (C_POM_PROP(mPom).mCloseWaitTime())) {
+		if (C_POM_PARM(mPom, mCloseWaitTime) > 0.0f && mPom->getWalkTimer() > (C_POM_PARM(mPom, mCloseWaitTime))) {
 			return true;
 		}
-	} else if (mPom->getWalkTimer() > (C_POM_PROP(mPom).mCloseWaitTime())) {
+	} else if (mPom->getWalkTimer() > (C_POM_PARM(mPom, mCloseWaitTime))) {
 		return true;
 	}
 
@@ -493,7 +493,7 @@ bool PomAi::dischargeTransit()
 		Creature* stuck = *iter;
 		if (stuck->isAlive() && stuck->mObjType == OBJTYPE_Piki) {
 			Piki* stuckPiki = static_cast<Piki*>(*iter);
-			if (!C_POM_PROP(mPom).mDoKillSameColorPiki() || stuckPiki->mColor != mPom->mColor) {
+			if (!C_POM_PARM(mPom, mDoKillSameColorPiki) || stuckPiki->mColor != mPom->mColor) {
 				return true;
 			}
 		}
@@ -652,7 +652,7 @@ void PomAi::shakeState()
  */
 void PomAi::closeState()
 {
-	if (mPom->getLoopCounter() >= C_POM_PROP(mPom).mDoAnimLoopWhenClosed()) {
+	if (mPom->getLoopCounter() >= C_POM_PARM(mPom, mDoAnimLoopWhenClosed)) {
 		mPom->mAnimator.finishMotion(PaniMotionInfo(PANI_NO_MOTION, this));
 	}
 }

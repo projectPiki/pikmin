@@ -87,8 +87,8 @@ void KoganeAi::initAI(Kogane* kogane)
 	mInWater     = false;
 	mDropCount   = 0;
 	mEffectType  = EffectMgr::EFF_NULL;
-	mAppearTimer = C_KOGANE_PROP(mKogane).mAppearTimeMin()
-	             + NsMathF::getRand(NsLibMath<f32>::abs(C_KOGANE_PROP(mKogane).mAppearTimeMax() - C_KOGANE_PROP(mKogane).mAppearTimeMin()));
+	mAppearTimer = C_KOGANE_PARM(mKogane, mAppearTimeMin)
+	             + NsMathF::getRand(NsLibMath<f32>::abs(C_KOGANE_PARM(mKogane, mAppearTimeMax) - C_KOGANE_PARM(mKogane, mAppearTimeMin)));
 }
 
 /**
@@ -280,10 +280,10 @@ void KoganeAi::checkAppearTimeCounter()
  */
 void KoganeAi::calcScaleUp()
 {
-	if (mKogane->mSRT.s.x < C_KOGANE_PROP(mKogane).mModelScale()) {
-		mKogane->mSRT.s.x += C_KOGANE_PROP(mKogane).mAppearScaleUpSpeed() * gsys->getFrameTime();
-		if (mKogane->mSRT.s.x > C_KOGANE_PROP(mKogane).mModelScale()) {
-			mKogane->mSRT.s.x = C_KOGANE_PROP(mKogane).mModelScale();
+	if (mKogane->mSRT.s.x < C_KOGANE_PARM(mKogane, mModelScale)) {
+		mKogane->mSRT.s.x += C_KOGANE_PARM(mKogane, mAppearScaleUpSpeed) * gsys->getFrameTime();
+		if (mKogane->mSRT.s.x > C_KOGANE_PARM(mKogane, mModelScale)) {
+			mKogane->mSRT.s.x = C_KOGANE_PARM(mKogane, mModelScale);
 		}
 
 		mKogane->mSRT.s.y = mKogane->mSRT.s.z = mKogane->mSRT.s.x;
@@ -297,13 +297,13 @@ void KoganeAi::setNewTargetPosition()
 {
 	f32 angle = mKogane->mFaceDirection;
 	f32 randGoalAngle
-	    = (C_KOGANE_PROP(mKogane).mGoalAngleMin()
-	       + NsMathF::getRand(NsLibMath<f32>::abs(C_KOGANE_PROP(mKogane).mGoalAngleMax() - C_KOGANE_PROP(mKogane).mGoalAngleMin())))
+	    = (C_KOGANE_PARM(mKogane, mGoalAngleMin)
+	       + NsMathF::getRand(NsLibMath<f32>::abs(C_KOGANE_PARM(mKogane, mGoalAngleMax) - C_KOGANE_PARM(mKogane, mGoalAngleMin))))
 	    * (PI / 360.0f);
 
 	f32 randGoalDist
-	    = (C_KOGANE_PROP(mKogane).mGoalDistMin()
-	       + NsMathF::getRand(NsLibMath<f32>::abs(C_KOGANE_PROP(mKogane).mGoalDistMax() - C_KOGANE_PROP(mKogane).mGoalDistMin())));
+	    = (C_KOGANE_PARM(mKogane, mGoalDistMin)
+	       + NsMathF::getRand(NsLibMath<f32>::abs(C_KOGANE_PARM(mKogane, mGoalDistMax) - C_KOGANE_PARM(mKogane, mGoalDistMin))));
 
 	Vector3f targetPos;
 	if (NsMathF::getRand(1.0f) > 0.5f) {
@@ -326,13 +326,13 @@ void KoganeAi::setRouteTargetPosition()
 	f32 angle = atan2f(wayPointPos.x - mKogane->mSRT.t.x, wayPointPos.z - mKogane->mSRT.t.z);
 
 	f32 randGoalAngle
-	    = (C_KOGANE_PROP(mKogane).mGoalAngleMin()
-	       + NsMathF::getRand(NsLibMath<f32>::abs(C_KOGANE_PROP(mKogane).mGoalAngleMax() - C_KOGANE_PROP(mKogane).mGoalAngleMin())))
+	    = (C_KOGANE_PARM(mKogane, mGoalAngleMin)
+	       + NsMathF::getRand(NsLibMath<f32>::abs(C_KOGANE_PARM(mKogane, mGoalAngleMax) - C_KOGANE_PARM(mKogane, mGoalAngleMin))))
 	    * (PI / 360.0f);
 
 	f32 randGoalDist
-	    = (C_KOGANE_PROP(mKogane).mGoalDistMin()
-	       + NsMathF::getRand(NsLibMath<f32>::abs(C_KOGANE_PROP(mKogane).mGoalDistMax() - C_KOGANE_PROP(mKogane).mGoalDistMin())));
+	    = (C_KOGANE_PARM(mKogane, mGoalDistMin)
+	       + NsMathF::getRand(NsLibMath<f32>::abs(C_KOGANE_PARM(mKogane, mGoalDistMax) - C_KOGANE_PARM(mKogane, mGoalDistMin))));
 
 	Vector3f targetPos;
 	if (NsMathF::getRand(1.0f) > 0.5f) {
@@ -356,7 +356,7 @@ void KoganeAi::makeTargetRandom()
 	mKogane->mTargetVelocity.y = 0.0f;
 	mKogane->mTargetVelocity.z = targetPos->z - mKogane->mSRT.t.z;
 	mKogane->mTargetVelocity.normalise();
-	mKogane->mTargetVelocity.multiply(C_KOGANE_PROP(mKogane).mMoveSpeed());
+	mKogane->mTargetVelocity.multiply(C_KOGANE_PARM(mKogane, mMoveSpeed));
 }
 
 /**
@@ -514,8 +514,8 @@ bool KoganeAi::appearTransit()
 			Creature* navi = *iter;
 			if (navi->isAlive() && navi->isVisible() && !navi->isBuried()
 			    && qdist2(navi->mSRT.t.x, navi->mSRT.t.z, mKogane->mSRT.t.x, mKogane->mSRT.t.z)
-			           < C_KOGANE_PROP(mKogane).mAppearTriggerRadius()
-			    && NsLibMath<f32>::abs(navi->mSRT.t.y - mKogane->mSRT.t.y) < C_KOGANE_PROP(mKogane).mAppearTriggerRadius()) {
+			           < C_KOGANE_PARM(mKogane, mAppearTriggerRadius)
+			    && NsLibMath<f32>::abs(navi->mSRT.t.y - mKogane->mSRT.t.y) < C_KOGANE_PARM(mKogane, mAppearTriggerRadius)) {
 				mKogane->mIsAppear = true;
 				break;
 			}
@@ -529,8 +529,8 @@ bool KoganeAi::appearTransit()
 			Creature* piki = *iter;
 			if (piki->isAlive() && piki->isVisible() && !piki->isBuried()
 			    && qdist2(piki->mSRT.t.x, piki->mSRT.t.z, mKogane->mSRT.t.x, mKogane->mSRT.t.z)
-			           < C_KOGANE_PROP(mKogane).mAppearTriggerRadius()
-			    && NsLibMath<f32>::abs(piki->mSRT.t.y - mKogane->mSRT.t.y) < C_KOGANE_PROP(mKogane).mAppearTriggerRadius()) {
+			           < C_KOGANE_PARM(mKogane, mAppearTriggerRadius)
+			    && NsLibMath<f32>::abs(piki->mSRT.t.y - mKogane->mSRT.t.y) < C_KOGANE_PARM(mKogane, mAppearTriggerRadius)) {
 				mKogane->mIsAppear = true;
 				break;
 			}
@@ -565,7 +565,7 @@ bool KoganeAi::stopWalkTransit()
  */
 bool KoganeAi::changeTargetTransit()
 {
-	if (mKogane->getWalkTimer() > C_KOGANE_PROP(mKogane).mMaxSingleRunTime()) {
+	if (mKogane->getWalkTimer() > C_KOGANE_PARM(mKogane, mMaxSingleRunTime)) {
 		return true;
 	}
 	if (mKogane->getOnWall()) {
@@ -651,8 +651,8 @@ void KoganeAi::initStopWalk(int nextState)
 	mKogane->setWalkTimer(0.0f);
 	mKogane->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Wait1, this));
 	makeStopMoving();
-	mIdleDuration = C_KOGANE_PROP(mKogane).mIdleTimeMin()
-	              + NsMathF::getRand(NsLibMath<f32>::abs(C_KOGANE_PROP(mKogane).mIdleTimeMax() - C_KOGANE_PROP(mKogane).mIdleTimeMin()));
+	mIdleDuration = C_KOGANE_PARM(mKogane, mIdleTimeMin)
+	              + NsMathF::getRand(NsLibMath<f32>::abs(C_KOGANE_PARM(mKogane, mIdleTimeMax) - C_KOGANE_PARM(mKogane, mIdleTimeMin)));
 
 	if (mEffectType >= 0) {
 		effectMgr->create(mEffectType, mKogane->mSRT.t, nullptr, nullptr);
@@ -699,7 +699,7 @@ void KoganeAi::initCreate(int nextState)
 void KoganeAi::dieState()
 {
 	if (mKogane->mSRT.s.x > 0.0f) {
-		mKogane->mSRT.s.x -= C_KOGANE_PROP(mKogane).mDisappearScaleDownSpeed() * gsys->getFrameTime();
+		mKogane->mSRT.s.x -= C_KOGANE_PARM(mKogane, mDisappearScaleDownSpeed) * gsys->getFrameTime();
 		if (mKogane->mSRT.s.x < 0.0f) {
 			mKogane->mSRT.s.x = 0.0f;
 		}
@@ -718,7 +718,7 @@ void KoganeAi::dieState()
 void KoganeAi::walkRandomState()
 {
 	mKogane->addWalkTimer(gsys->getFrameTime());
-	mKogane->changeDirection(C_KOGANE_PROP(mKogane).mTurnSpeed());
+	mKogane->changeDirection(C_KOGANE_PARM(mKogane, mTurnSpeed));
 	makeTargetRandom();
 	calcScaleUp();
 }

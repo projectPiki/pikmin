@@ -368,7 +368,7 @@ int TopAction::exec()
 			case 1:
 			{
 				f32 dist = qdist2(mPiki->mNavi, mPiki);
-				if (dist <= C_PIKI_PROP(mPiki).mPostWorkJoinPartyRange()) {
+				if (dist <= C_PIKI_PARM(mPiki, mPostWorkJoinPartyRange)) {
 					doJoinParty = true;
 				}
 				break;

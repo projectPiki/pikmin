@@ -147,7 +147,7 @@ void ActFlower::init(Creature*)
 	}
 
 	mIsCarryEmpty = false;
-	if (mPiki->mFloweringTimer + 1 >= C_PIKI_PROP(mPiki).mFlowerEnergyRequirement()) {
+	if (mPiki->mFloweringTimer + 1 >= C_PIKI_PARM(mPiki, mFlowerEnergyRequirement)) {
 		mPiki->startMotion(PaniMotionInfo(PIKIANIM_GrowUp2, this), PaniMotionInfo(PIKIANIM_GrowUp2));
 	} else {
 		mPiki->startMotion(PaniMotionInfo(PIKIANIM_GrowUp1, this), PaniMotionInfo(PIKIANIM_GrowUp1));
@@ -168,12 +168,12 @@ void ActFlower::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 		held->stimulate(InteractRelease(mPiki, 1.0f));
 		held->kill(false);
 		mPiki->mFloweringTimer++;
-		if (mPiki->mFloweringTimer >= C_PIKI_PROP(mPiki).mFlowerEnergyRequirement()) {
+		if (mPiki->mFloweringTimer >= C_PIKI_PARM(mPiki, mFlowerEnergyRequirement)) {
 			mPiki->setFlower(Flower);
 			if (mPiki->mFloweringTimer > 100) {
 				mPiki->mFloweringTimer = 100;
 			}
-		} else if (mPiki->mFloweringTimer >= C_PIKI_PROP(mPiki).mBudEnergyRequirement()) {
+		} else if (mPiki->mFloweringTimer >= C_PIKI_PARM(mPiki, mBudEnergyRequirement)) {
 			mPiki->setFlower(Bud);
 		}
 		break;
