@@ -372,7 +372,7 @@ void Navi::startDamageEffect()
 		gameflow.mGameInterface->message(MOVIECMD_SetPauseAllowed, FALSE);
 		GameCoreSection::startPause(COREPAUSE_Unk1 | COREPAUSE_Unk3 | COREPAUSE_Unk16);
 
-	} else if (!gameflow.mMoviePlayer->mIsActive && mHealth <= 0.25f * NAVI_PROP.mHealth()
+	} else if (!gameflow.mMoviePlayer->mIsActive && mHealth <= 0.25f * NAVI_PARM(mHealth)
 	           && !playerState->mDemoFlags.isFlag(DEMOFLAG_OlimarLowHealth)) {
 		playerState->mDemoFlags.setFlagOnly(DEMOFLAG_OlimarLowHealth);
 		gameflow.mGameInterface->message(MOVIECMD_TextDemo, zen::ogScrTutorialMgr::TUT_APunchUFO);
@@ -413,7 +413,7 @@ void Navi::finishDamage()
 		mStateMachine->transit(this, NAVISTATE_Dead);
 		GameCoreSection::startPause(COREPAUSE_Unk1 | COREPAUSE_Unk3 | COREPAUSE_Unk16);
 	} else {
-		if (!gameflow.mMoviePlayer->mIsActive && mHealth <= 0.25f * NAVI_PROP.mHealth()
+		if (!gameflow.mMoviePlayer->mIsActive && mHealth <= 0.25f * NAVI_PARM(mHealth)
 		    && !playerState->mDemoFlags.isFlag(DEMOFLAG_OlimarLowHealth)) {
 			playerState->mDemoFlags.setFlagOnly(DEMOFLAG_OlimarLowHealth);
 			gameflow.mGameInterface->message(MOVIECMD_TextDemo, zen::ogScrTutorialMgr::TUT_APunchUFO);
@@ -597,7 +597,7 @@ void Navi::reset()
 	mNaviLightPosition.set(0.0f, 0.0f, 0.0f);
 	mIsCStickNeutral = false;
 
-	f32 dist = (NAVI_PROP.mCursorMinRadius() + NAVI_PROP.mCursorMaxRadius()) * 0.5f;
+	f32 dist = (NAVI_PARM(mCursorMinRadius) + NAVI_PARM(mCursorMaxRadius)) * 0.5f;
 	mCursorPosition.set(dist * sinf(mFaceDirection), 0.0f, dist * cosf(mFaceDirection));
 	mCursorNaviDist       = mCursorPosition.length();
 	mCursorTargetPosition = mCursorPosition;
@@ -613,7 +613,7 @@ void Navi::reset()
  */
 f32 Navi::getSize()
 {
-	return NAVI_PROP.mBodyCollisionRadius();
+	return NAVI_PARM(mBodyCollisionRadius);
 }
 
 /**
@@ -630,7 +630,7 @@ f32 Navi::getiMass()
 		return 1.0f;
 	}
 
-	return NAVI_PROP.mInverseMass();
+	return NAVI_PARM(mInverseMass);
 }
 
 /**
@@ -689,7 +689,7 @@ bool Navi::doMotionBlend()
  */
 void Navi::updateWalkAnimation()
 {
-	mCollisionRadius = NAVI_PROP.mGroundCollisionRadius();
+	mCollisionRadius = NAVI_PARM(mGroundCollisionRadius);
 
 	Vector3f moveDelta    = mSRT.t - mWalkAnimPrevPos;
 	moveDelta.y           = 0.0f;
@@ -714,31 +714,31 @@ void Navi::updateWalkAnimation()
 	f32 absFaceDirDelta  = absF(mFaceDirection - mWalkAnimPrevDir);
 	Navi* motionListener = nullptr;
 	int desiredLowerMotionID;
-	if (moveSpeed < NAVI_PROP.mAsibumiStartSpeed()) {
+	if (moveSpeed < NAVI_PARM(mAsibumiStartSpeed)) {
 		desiredLowerMotionID = PIKIANIM_Wait;
 		if (absFaceDirDelta > 0.01f) {
 			desiredLowerMotionID = PIKIANIM_Asibumi;
 		}
 		moveSpeed = 30.0f;
 
-	} else if (moveSpeed < NAVI_PROP.mWalkStartSpeed()) {
+	} else if (moveSpeed < NAVI_PARM(mWalkStartSpeed)) {
 		desiredLowerMotionID = PIKIANIM_Asibumi;
 		moveSpeed            = 30.0f;
 
-	} else if (moveSpeed < NAVI_PROP.mRunStartSpeed()) {
+	} else if (moveSpeed < NAVI_PARM(mRunStartSpeed)) {
 		desiredLowerMotionID = PIKIANIM_Walk;
 		motionListener       = this;
-		f32 speedRatio       = (moveSpeed - NAVI_PROP.mWalkStartSpeed()) / (NAVI_PROP.mRunStartSpeed() - NAVI_PROP.mWalkStartSpeed());
-		moveSpeed            = NAVI_PROP.mWalkAnimMinFrames() + (NAVI_PROP.mWalkAnimMaxFrames() - NAVI_PROP.mWalkAnimMinFrames()) * speedRatio;
+		f32 speedRatio       = (moveSpeed - NAVI_PARM(mWalkStartSpeed)) / (NAVI_PARM(mRunStartSpeed) - NAVI_PARM(mWalkStartSpeed));
+		moveSpeed            = NAVI_PARM(mWalkAnimMinFrames) + (NAVI_PARM(mWalkAnimMaxFrames) - NAVI_PARM(mWalkAnimMinFrames)) * speedRatio;
 
-	} else if (moveSpeed < NAVI_PROP.mEscapeStartSpeed()) {
+	} else if (moveSpeed < NAVI_PARM(mEscapeStartSpeed)) {
 		desiredLowerMotionID = PIKIANIM_Run;
 		motionListener       = this;
-		f32 speedRatio       = (moveSpeed - NAVI_PROP.mRunStartSpeed()) / (NAVI_PROP.mEscapeStartSpeed() - NAVI_PROP.mRunStartSpeed());
-		moveSpeed            = NAVI_PROP.mRunAnimMinFrames() + (NAVI_PROP.mRunAnimMaxFrames() - NAVI_PROP.mRunAnimMinFrames()) * speedRatio;
+		f32 speedRatio       = (moveSpeed - NAVI_PARM(mRunStartSpeed)) / (NAVI_PARM(mEscapeStartSpeed) - NAVI_PARM(mRunStartSpeed));
+		moveSpeed            = NAVI_PARM(mRunAnimMinFrames) + (NAVI_PARM(mRunAnimMaxFrames) - NAVI_PARM(mRunAnimMinFrames)) * speedRatio;
 
 	} else {
-		moveSpeed            = NAVI_PROP.mEscapeAnimMinFrames();
+		moveSpeed            = NAVI_PARM(mEscapeAnimMinFrames);
 		motionListener       = this;
 		desiredLowerMotionID = PIKIANIM_Nigeru;
 	}
@@ -820,7 +820,7 @@ void Navi::update()
 		int state = mStateMachine->getCurrID(this);
 		if (state != NAVISTATE_Nuku && state != NAVISTATE_NukuAdjust) {
 			mNoPluckTimer++;
-			if (mNoPluckTimer > NAVI_PROP.mPostPluckZoomOutTime()) {
+			if (mNoPluckTimer > NAVI_PARM(mPostPluckZoomOutTime)) {
 				mIsPlucking       = false;
 				mFastPluckKeyTaps = 0;
 				BUGPRINT("< camera FINISH MOTION");
@@ -860,7 +860,7 @@ void Navi::update()
 	Vector3f cursorMoveDir = mCursorTargetPosition - mCursorPosition;
 	f32 cursorMoveDist     = cursorMoveDir.normalise();
 	if (cursorMoveDist > 0.0f) {
-		f32 moveDist = gsys->getFrameTime() * NAVI_PROP.mCursorMoveSpeed();
+		f32 moveDist = gsys->getFrameTime() * NAVI_PARM(mCursorMoveSpeed);
 		if (moveDist > cursorMoveDist) {
 			moveDist = cursorMoveDist;
 		}
@@ -1390,12 +1390,12 @@ bool Navi::procActionButton()
 	PikiHeadItem* closestSprout = nullptr;
 	f32 minDist;
 	if (isInsideOnyon) {
-		minDist = NAVI_PROP.mActionRadius();
+		minDist = NAVI_PARM(mActionRadius);
 	} else {
-		minDist = NAVI_PROP.mPluckDistanceOutsideOnyon();
+		minDist = NAVI_PARM(mPluckDistanceOutsideOnyon);
 	}
 	if (mFastPluckKeyTaps > 0) {
-		minDist = NAVI_PROP.mContinuousPluckDistance();
+		minDist = NAVI_PARM(mContinuousPluckDistance);
 	}
 	CI_LOOP(iter)
 	{
@@ -1663,7 +1663,7 @@ void Navi::reviseController(Vector3f& stickPos)
 	f32 theta  = roundAng(atan2f(stickPos.x, stickPos.z));
 
 	// bin angle in amounts set by navi parameter
-	f32 binWidth    = (PI / 180.0f) * NAVI_PROP.mShakePreventionAngle();
+	f32 binWidth    = (PI / 180.0f) * NAVI_PARM(mShakePreventionAngle);
 	f32 binnedAngle = binWidth * int((theta + binWidth * 0.5f) / binWidth);
 
 	// calculate amount to boost stick magnitude by
@@ -1677,12 +1677,12 @@ void Navi::reviseController(Vector3f& stickPos)
 	newMag *= (1.0f / len);
 
 	// make 'close enough' good enough
-	if (newMag >= NAVI_PROP.mClampStickToMaxThreshold()) {
+	if (newMag >= NAVI_PARM(mClampStickToMaxThreshold)) {
 		newMag = 1.0f;
 	}
 
 	// enforce dead zone
-	if (newMag < NAVI_PROP.mNeutralStickThreshold()) {
+	if (newMag < NAVI_PARM(mNeutralStickThreshold)) {
 		newMag = 0.0f;
 	}
 
@@ -1751,9 +1751,9 @@ void Navi::makeVelocity(bool isSunset)
 			}
 
 			if (mPlateMgr->canNaviRunFast()) {
-				mTargetVelocity = (stickVec * NAVI_PROP.mRunSpeed()) * drag;
+				mTargetVelocity = (stickVec * NAVI_PARM(mRunSpeed)) * drag;
 			} else {
-				mTargetVelocity = (stickVec * NAVI_PROP.mMoveSpeed()) * drag;
+				mTargetVelocity = (stickVec * NAVI_PARM(mMoveSpeed)) * drag;
 			}
 
 			if (mGroundTriangle) {
@@ -1774,11 +1774,11 @@ void Navi::makeVelocity(bool isSunset)
 	Vector3f stickVec2(stickVec);
 
 	stickVec2.normalise();
-	stickVec2 = stickVec2 * NAVI_PROP.mCursorMoveSpeed();
+	stickVec2 = stickVec2 * NAVI_PARM(mCursorMoveSpeed);
 
 	f32 step           = gsys->getFrameTime();
 	Vector3f targetPos = stickVec2 * step + mCursorPosition;
-	if (targetPos.length() >= NAVI_PROP.mCursorMaxRadius()) {
+	if (targetPos.length() >= NAVI_PARM(mCursorMaxRadius)) {
 		Vector3f vec(targetPos);
 		vec.normalise();
 		stickVec2 = stickVec2 - vec.DP(stickVec2) * vec;
@@ -1790,16 +1790,16 @@ void Navi::makeVelocity(bool isSunset)
 	mCursorNaviDist       = dist;
 	mCursorTargetPosition = targetPos;
 
-	if (!(stickMag <= NAVI_PROP.mNeutralStickThreshold())) {
+	if (!(stickMag <= NAVI_PARM(mNeutralStickThreshold))) {
 		mNeutralTime = 0.0f;
 	}
 
 	bool check = false;
-	if (mNeutralTime >= NAVI_PROP.mCursorMoveDelayTime()) {
+	if (mNeutralTime >= NAVI_PARM(mCursorMoveDelayTime)) {
 		check = true;
 	}
 
-	if ((check || (!check && stickMag > NAVI_PROP.mNeutralStickThreshold())) && stickMag <= NAVI_PROP.mCursorMoveStickThreshold()) {
+	if ((check || (!check && stickMag > NAVI_PARM(mNeutralStickThreshold))) && stickMag <= NAVI_PARM(mCursorMoveStickThreshold)) {
 		mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 		Vector3f cursorPos(mCursorPosition);
 		mFaceDirection += 0.2f * angDist(roundAng(atan2f(cursorPos.x, cursorPos.z)), mFaceDirection);
@@ -1917,14 +1917,14 @@ void Navi::makeCStick(bool isSunset)
 			}
 		}
 
-		if (nearestPikiDist < NAVI_PROP.mPikiWaitRange()) {
+		if (nearestPikiDist < NAVI_PARM(mPikiWaitRange)) {
 			if (mFormationBand == 0) {
 				mFormationBandStableTimer++;
 			} else {
 				mFormationBandStableTimer = 0;
 				mFormationBand = 0;
 			}
-		} else if (nearestPikiDist < NAVI_PROP.mPikiFormationChangeRange()) {
+		} else if (nearestPikiDist < NAVI_PARM(mPikiFormationChangeRange)) {
 			if (mFormationBand == 1) {
 				mFormationBandStableTimer++;
 			} else {
@@ -2070,7 +2070,7 @@ void Navi::draw(Graphics& gfx)
 	}
 
 	if (mStateMachine->getCurrID(this) != NAVISTATE_Pressed) {
-		f32 scale = NAVI_PROP.mDisplayScale();
+		f32 scale = NAVI_PARM(mDisplayScale);
 		mSRT.s.set(scale, scale, scale);
 	}
 
@@ -2126,18 +2126,18 @@ void Navi::renderCircle(Graphics& gfx)
 	switch (mWhistleCircleMode) {
 	case 0:
 	{
-		rad = NAVI_PROP.mWhistleMinRadius() + mWhistleRadiusFrac * (NAVI_PROP.mWhistleMaxRadius() - NAVI_PROP.mWhistleMinRadius());
+		rad = NAVI_PARM(mWhistleMinRadius) + mWhistleRadiusFrac * (NAVI_PARM(mWhistleMaxRadius) - NAVI_PARM(mWhistleMinRadius));
 		break;
 	}
 	case 1:
 	{
-		tmp = (mWhistleTimer / NAVI_PROP.mWhistleExpandTime());
-		rad = NAVI_PROP.mWhistleMinRadius() + tmp * (NAVI_PROP.mWhistleMaxRadius() - NAVI_PROP.mWhistleMinRadius());
+		tmp = (mWhistleTimer / NAVI_PARM(mWhistleExpandTime));
+		rad = NAVI_PARM(mWhistleMinRadius) + tmp * (NAVI_PARM(mWhistleMaxRadius) - NAVI_PARM(mWhistleMinRadius));
 		break;
 	}
 	default:
 	{
-		rad = NAVI_PROP.mWhistleMinRadius() + mWhistleRadiusFrac * (NAVI_PROP.mWhistleMaxRadius() - NAVI_PROP.mWhistleMinRadius());
+		rad = NAVI_PARM(mWhistleMinRadius) + mWhistleRadiusFrac * (NAVI_PARM(mWhistleMaxRadius) - NAVI_PARM(mWhistleMinRadius));
 		break;
 	}
 	}
@@ -2234,7 +2234,7 @@ bool InteractBury::actNavi(Navi* navi) immut
 	rumbleMgr->start(RUMBLE_Unk1, 0, nullptr);
 	navi->mHealth -= mDamage;
 	navi->startDamageEffect();
-	navi->mLifeGauge.updValue(navi->mHealth, C_NAVI_PROP(navi).mHealth());
+	navi->mLifeGauge.updValue(navi->mHealth, C_NAVI_PARM(navi, mHealth));
 	if (navi->mHealth <= 1.0f) {
 		GameCoreSection::startPause(COREPAUSE_Unk1 | COREPAUSE_Unk3 | COREPAUSE_Unk16);
 		navi->mStateMachine->transit(navi, NAVISTATE_Dead);
@@ -2283,7 +2283,7 @@ bool InteractSuck::actNavi(Navi* navi) immut
 	navi->mHealth -= mDamage;
 	BUGPRINT("life = %.1f", navi->mHealth);
 
-	navi->mLifeGauge.updValue(navi->mHealth, C_NAVI_PROP(navi).mHealth());
+	navi->mLifeGauge.updValue(navi->mHealth, C_NAVI_PARM(navi, mHealth));
 	rumbleMgr->start(RUMBLE_Unk15, 0, nullptr);
 	BUGPRINT("lgauge");
 	navi->startDamageEffect();
@@ -2314,7 +2314,7 @@ bool InteractAttack::actNavi(Navi* navi) immut
 	rumbleMgr->start(RUMBLE_Unk1, 0, nullptr);
 	SeSystem::playPlayerSe(SE_DAMAGED);
 	navi->mHealth -= mDamage;
-	navi->mLifeGauge.updValue(navi->mHealth, C_NAVI_PROP(navi).mHealth());
+	navi->mLifeGauge.updValue(navi->mHealth, C_NAVI_PARM(navi, mHealth));
 	if (navi->mHealth <= 1.0f) {
 		GameCoreSection::startPause(COREPAUSE_Unk1 | COREPAUSE_Unk3 | COREPAUSE_Unk16);
 		PRINT("ATTACK DEAD ******\n");
@@ -2342,7 +2342,7 @@ bool InteractPress::actNavi(Navi* navi) immut
 
 	rumbleMgr->start(RUMBLE_Unk1, 0, nullptr);
 	navi->mHealth -= mDamage;
-	navi->mLifeGauge.updValue(navi->mHealth, C_NAVI_PROP(navi).mHealth());
+	navi->mLifeGauge.updValue(navi->mHealth, C_NAVI_PARM(navi, mHealth));
 	navi->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 	if (navi->mHealth <= 1.0f) {
 		GameCoreSection::startPause(COREPAUSE_Unk1 | COREPAUSE_Unk3 | COREPAUSE_Unk16);
@@ -2380,7 +2380,7 @@ bool InteractSwallow::actNavi(Navi* navi) immut
 	}
 	navi->startMotion(PaniMotionInfo(PIKIANIM_Damage, navi), PaniMotionInfo(PIKIANIM_Damage));
 
-	navi->mLifeGauge.updValue(navi->mHealth, C_NAVI_PROP(navi).mHealth());
+	navi->mLifeGauge.updValue(navi->mHealth, C_NAVI_PARM(navi, mHealth));
 	return true;
 }
 
@@ -2400,7 +2400,7 @@ bool InteractBomb::actNavi(Navi* navi) immut
 	rumbleMgr->start(RUMBLE_Unk1, 0, nullptr);
 	SeSystem::playPlayerSe(SE_DAMAGED);
 	navi->mHealth -= mDamage;
-	navi->mLifeGauge.updValue(navi->mHealth, C_NAVI_PROP(navi).mHealth());
+	navi->mLifeGauge.updValue(navi->mHealth, C_NAVI_PARM(navi, mHealth));
 	navi->startDamageEffect();
 	navi->mFlickIntensity = 100.0f;
 	if (navi->mHealth <= 1.0f) {
@@ -2444,7 +2444,7 @@ bool InteractFlick::actNavi(Navi* navi) immut
 
 	SeSystem::playPlayerSe(SE_DAMAGED);
 	navi->mHealth -= mDamage;
-	navi->mLifeGauge.updValue(navi->mHealth, C_NAVI_PROP(navi).mHealth());
+	navi->mLifeGauge.updValue(navi->mHealth, C_NAVI_PARM(navi, mHealth));
 	navi->mFlickIntensity = mIntensity;
 	if (navi->mHealth <= 1.0f) {
 		GameCoreSection::startPause(COREPAUSE_Unk1 | COREPAUSE_Unk3 | COREPAUSE_Unk16);
@@ -2467,7 +2467,7 @@ bool InteractBubble::actNavi(Navi* navi) immut
 	}
 
 	navi->mHealth -= mDamage;
-	navi->mLifeGauge.updValue(navi->mHealth, C_NAVI_PROP(navi).mHealth());
+	navi->mLifeGauge.updValue(navi->mHealth, C_NAVI_PARM(navi, mHealth));
 	rumbleMgr->start(RUMBLE_Unk1, 0, nullptr);
 	SeSystem::playPlayerSe(SE_FIRED);
 	navi->startDamageEffect();
@@ -2489,7 +2489,7 @@ bool InteractFire::actNavi(Navi* navi) immut
 	}
 
 	navi->mHealth -= mDamage;
-	navi->mLifeGauge.updValue(navi->mHealth, C_NAVI_PROP(navi).mHealth());
+	navi->mLifeGauge.updValue(navi->mHealth, C_NAVI_PARM(navi, mHealth));
 	navi->startDamageEffect();
 	rumbleMgr->start(RUMBLE_Unk1, 0, nullptr);
 	SeSystem::playPlayerSe(SE_FIRED);
@@ -2537,12 +2537,13 @@ void Navi::throwPiki(Piki* piki, immut Vector3f& pos)
 	f32 throwAngle       = atan2f(throwDir.x, throwDir.z);
 	piki->mFaceDirection = roundAng(throwAngle);
 
-	f32 halfTime = 0.5f * NAVI_PROP.mThrowFlightTime();
+	f32 halfTime = 0.5f * NAVI_PARM(mThrowFlightTime);
 	f32 throwHeight;
 	if (piki->mColor == Yellow) {
-		throwHeight = NAVI_PROP.mYellowThrowHeight();
+		throwHeight = NAVI_PARM(mYellowThrowHeight);
 	} else {
-		throwHeight = NAVI_PROP.mThrowMinHeight() + (mThrowHoldTime / NAVI_PROP.mThrowHoldMaxTime()) * (NAVI_PROP.mThrowMaxHeight() - NAVI_PROP.mThrowMinHeight());
+		throwHeight = NAVI_PARM(mThrowMinHeight)
+		            + (mThrowHoldTime / NAVI_PARM(mThrowHoldMaxTime)) * (NAVI_PARM(mThrowMaxHeight) - NAVI_PARM(mThrowMinHeight));
 	}
 
 	f32 vSpeed = AICONST.mGravity() * 0.5f * halfTime + (throwHeight / halfTime);
@@ -2578,12 +2579,13 @@ void Navi::throwLocus(immut Vector3f& pos)
 	f32 throwDist     = speedy_sqrtf(SQUARE(throwDir.x) + SQUARE(throwDir.z));
 	f32 throwAngle    = atan2f(throwDir.x, throwDir.z);
 
-	f32 halfTime = 0.5f * NAVI_PROP.mThrowFlightTime();
+	f32 halfTime = 0.5f * NAVI_PARM(mThrowFlightTime);
 	f32 throwHeight;
 	if (mNextThrowPiki->mColor == Yellow) {
-		throwHeight = NAVI_PROP.mYellowThrowHeight();
+		throwHeight = NAVI_PARM(mYellowThrowHeight);
 	} else {
-		throwHeight = NAVI_PROP.mThrowMinHeight() + (mThrowHoldTime / NAVI_PROP.mThrowHoldMaxTime()) * (NAVI_PROP.mThrowMaxHeight() - NAVI_PROP.mThrowMinHeight());
+		throwHeight = NAVI_PARM(mThrowMinHeight)
+		            + (mThrowHoldTime / NAVI_PARM(mThrowHoldMaxTime)) * (NAVI_PARM(mThrowMaxHeight) - NAVI_PARM(mThrowMinHeight));
 	}
 
 	f32 vSpeed = AICONST.mGravity() * 0.5f * halfTime + (throwHeight / halfTime);

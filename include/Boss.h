@@ -15,8 +15,9 @@ class BirthInfo;
 class BossMgr;
 class GenObjectBoss;
 
-#define BOSS_PROP         (static_cast<BossProp*>(mProps)->mBossProps)
-#define C_BOSS_PROP(boss) (static_cast<BossProp*>((boss)->mProps)->mBossProps)
+// Redundant parenthesis surrounding the call to `Parm::Operator()` fixes matching for the DLL
+#define BOSS_PARM(parm)         C_BOSS_PARM(this, parm)
+#define C_BOSS_PARM(boss, parm) (static_cast<BossProp*>((boss)->mProps)->mBossProps.parm())
 
 /**
  * @brief TODO

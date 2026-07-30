@@ -13,8 +13,9 @@ struct SnakeBody;
 struct SnakeGenBodyOnGroundCallBack;
 struct SnakeGenBodyRotateCallBack;
 
-#define SNAKE_PROP          (static_cast<SnakeProp*>(mProps)->mSnakeProps)
-#define C_SNAKE_PROP(snake) (static_cast<SnakeProp*>((snake)->mProps)->mSnakeProps)
+// Redundant parenthesis surrounding the call to `Parm::Operator()` fixes matching for the DLL
+#define SNAKE_PARM(parm)          C_SNAKE_PARM(this, parm)
+#define C_SNAKE_PARM(snake, parm) (static_cast<SnakeProp*>((snake)->mProps)->mSnakeProps.parm())
 
 /**
  * @brief TODO.

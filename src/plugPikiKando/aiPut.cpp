@@ -70,7 +70,7 @@ void ActPutBomb::findTeki()
 #endif
 
 	Iterator iterTeki(tekiMgr);
-	f32 minDist = C_PIKI_PROP(mPiki).mBombTargetSearchRange();
+	f32 minDist = C_PIKI_PARM(mPiki, mBombTargetSearchRange);
 	mTarget     = nullptr;
 	CI_LOOP(iterTeki)
 	{
@@ -184,7 +184,7 @@ int ActPutBomb::exeSet()
 	f32 dist              = qdist2(mTarget, mPiki);
 	f32 angle             = angDist(atan2f(dir.x, dir.z), mPiki->mFaceDirection);
 	mPiki->mFaceDirection = roundAng(mPiki->mFaceDirection + 0.1f * angle);
-	if (dist <= C_PIKI_PROP(mPiki).mBombSetDistance() && absF(angle) < PI / 10.0f) {
+	if (dist <= C_PIKI_PARM(mPiki, mBombSetDistance) && absF(angle) < PI / 10.0f) {
 		warnPikis();
 		InteractRelease release(mPiki, 1.0f);
 		Creature* held = mPiki->getHoldCreature();
@@ -212,7 +212,7 @@ void ActPutBomb::warnPikis()
 		Creature* piki = *iter;
 		if (piki != mPiki) {
 			f32 dist = qdist2(piki, mPiki);
-			if (dist <= C_PIKI_PROP(mPiki).mBombWarnPikiRange()) {
+			if (dist <= C_PIKI_PARM(mPiki, mBombWarnPikiRange)) {
 				piki->stimulate(InteractWarn(mPiki));
 			}
 		}
@@ -227,7 +227,7 @@ void ActPutBomb::initAim()
 	PRINT("+++++ INIT AIM\n");
 	mState = STATE_Aim;
 	warnPikis();
-	mAimTimer   = C_PIKI_PROP(mPiki).mBombAimTime();
+	mAimTimer   = C_PIKI_PARM(mPiki, mBombAimTime);
 	mPlaceTimer = 0.0f;
 }
 
@@ -253,7 +253,7 @@ int ActPutBomb::exeAim()
 	distanceToTarget -= mTarget->getCentreSize();
 
 	// Check if in valid throwing range
-	if (distanceToTarget > C_PIKI_PROP(mPiki).mBombThrowMinDistance() && distanceToTarget < C_PIKI_PROP(mPiki).mBombThrowMaxDistance()) {
+	if (distanceToTarget > C_PIKI_PARM(mPiki, mBombThrowMinDistance) && distanceToTarget < C_PIKI_PARM(mPiki, mBombThrowMaxDistance)) {
 
 		// If aimed correctly and aim timer expired, throw the bomb
 		if (absF(angleToTarget) < PI / 10.0f && mAimTimer <= 0.0f) {
@@ -270,11 +270,11 @@ int ActPutBomb::exeAim()
 	}
 
 	// Handle close range placement
-	if (distanceToTarget < C_PIKI_PROP(mPiki).mBombThrowMinDistance()) {
+	if (distanceToTarget < C_PIKI_PARM(mPiki, mBombThrowMinDistance)) {
 		dirToTarget.multiply(-1.0f);
 
 		mPlaceTimer += gsys->getFrameTime();
-		if (mPlaceTimer >= C_PIKI_PROP(mPiki).mBombThrowTimeoutTime()) {
+		if (mPlaceTimer >= C_PIKI_PARM(mPiki, mBombThrowTimeoutTime)) {
 			initSet();
 			return ACTOUT_Continue;
 		}
@@ -364,7 +364,7 @@ int ActPutBomb::exeThrow()
 			}
 
 			catchPos          = mPiki->getCatchPos(mPiki->getHoldCreature());
-			Vector3f throwVel = getThrowVelocity(catchPos, C_PIKI_PROP(mPiki).mBombThrowSpeed(), centre, vel);
+			Vector3f throwVel = getThrowVelocity(catchPos, C_PIKI_PARM(mPiki, mBombThrowSpeed), centre, vel);
 			InteractRelease release(mPiki, 1.0f);
 			Creature* held = mPiki->getHoldCreature();
 			held->stimulate(release);

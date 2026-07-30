@@ -23,8 +23,9 @@ class NaviState;
 class Piki;
 struct PikiHeadItem;
 
-#define NAVI_PROP         (static_cast<NaviProp*>(mProps)->mNaviProps)
-#define C_NAVI_PROP(navi) (static_cast<NaviProp*>((navi)->mProps)->mNaviProps)
+// Redundant parenthesis surrounding the call to `Parm::Operator()` fixes matching for the DLL
+#define NAVI_PARM(parm)         C_NAVI_PARM(this, parm)
+#define C_NAVI_PARM(navi, parm) (static_cast<NaviProp*>((navi)->mProps)->mNaviProps.parm())
 
 /**
  * @brief TODO

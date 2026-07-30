@@ -44,13 +44,13 @@ void SpiderAi::initAI(Spider* spider)
 	mSpider->setNextState(7);
 	mSpider->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Wait2, this));
 	mCanFlick = false;
-	if (C_SPIDER_PROP(mSpider).mDoDropFromSky()) {
+	if (C_SPIDER_PARM(mSpider, mDoDropFromSky)) {
 		// drop from sky, so don't fall yet
 		mSpider->mIsAppear = false;
 	} else {
 		// start in place, so mark as fallen
 		mSpider->mIsAppear = true;
-		mSpider->setAnimTimer(C_SPIDER_PROP(mSpider).mDropTimer());
+		mSpider->setAnimTimer(C_SPIDER_PARM(mSpider, mDropTimer));
 		mSpider->mAnimator.setCounter(20.0f);
 	}
 }
@@ -315,7 +315,7 @@ bool SpiderAi::appearTransit()
 
 			// If alive, visible and not buried, and within spawn trigger distance
 			if (navi->isAlive() && navi->isVisible() && !navi->isBuried()
-			    && qdist2(initPos->x, initPos->z, navi->mSRT.t.x, navi->mSRT.t.z) < C_SPIDER_PROP(mSpider).mSpawnTriggerDist()) {
+			    && qdist2(initPos->x, initPos->z, navi->mSRT.t.x, navi->mSRT.t.z) < C_SPIDER_PARM(mSpider, mSpawnTriggerDist)) {
 
 				mSpider->mIsAppear = true;
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01_01)
@@ -333,10 +333,9 @@ bool SpiderAi::appearTransit()
 					Creature* sprout = *iterNavi; // Not actually a sprout, it's the player (whoops!)
 
 					if (sprout
-					    && qdist2(initPos->x, initPos->z, sprout->mSRT.t.x, sprout->mSRT.t.z)
-					           < C_SPIDER_PROP(mSpider).mSpawnTriggerDist()) {
+					    && qdist2(initPos->x, initPos->z, sprout->mSRT.t.x, sprout->mSRT.t.z) < C_SPIDER_PARM(mSpider, mSpawnTriggerDist)) {
 						// change fall time from 0.05s to 5s
-						C_SPIDER_PROP(mSpider).mDropTimer() = 5.0f;
+						C_SPIDER_PARM(mSpider, mDropTimer) = 5.0f;
 						break;
 					}
 				}
@@ -351,7 +350,7 @@ bool SpiderAi::appearTransit()
 	if (mSpider->mIsAppear) {
 		mSpider->addAnimTimer(gsys->getFrameTime());
 
-		if (mSpider->getAnimTimer() > C_SPIDER_PROP(mSpider).mDropTimer()) {
+		if (mSpider->getAnimTimer() > C_SPIDER_PARM(mSpider, mDropTimer)) {
 			return true; // Completed the fall
 		}
 	}
@@ -385,8 +384,8 @@ void SpiderAi::initWalk(int nextState)
 		mSpider->setMotionFinish(false);
 		mSpider->setTargetCreature(nullptr);
 		mSpider->mActiveWalkCycleCount
-		    = C_SPIDER_PROP(mSpider).mMinWalkCycles()
-		    + NsMathI::getRand(NsLibMath<int>::abs(C_SPIDER_PROP(mSpider).mMaxWalkCycles() - C_SPIDER_PROP(mSpider).mMinWalkCycles()) + 1)
+		    = C_SPIDER_PARM(mSpider, mMinWalkCycles)
+		    + NsMathI::getRand(NsLibMath<int>::abs(C_SPIDER_PARM(mSpider, mMaxWalkCycles) - C_SPIDER_PARM(mSpider, mMinWalkCycles)) + 1)
 		    - 1;
 		mSpider->mSpiderLeg->initParm(0);
 		mSpider->setLoopCounter(0);
@@ -435,8 +434,8 @@ void SpiderAi::initWait(int nextState)
 {
 	mSpider->setNextState(nextState);
 	mSpider->mActiveWalkCycleCount
-	    = C_SPIDER_PROP(mSpider).mMinWaitCycles()
-	    + NsMathI::getRand(NsLibMath<int>::abs(C_SPIDER_PROP(mSpider).mMaxWaitCycles() - C_SPIDER_PROP(mSpider).mMinWaitCycles()) + 1) - 1;
+	    = C_SPIDER_PARM(mSpider, mMinWaitCycles)
+	    + NsMathI::getRand(NsLibMath<int>::abs(C_SPIDER_PARM(mSpider, mMaxWaitCycles) - C_SPIDER_PARM(mSpider, mMinWaitCycles)) + 1) - 1;
 	mSpider->setLoopCounter(0);
 	mSpider->setMotionFinish(false);
 	mSpider->setTargetCreature(nullptr);
@@ -452,14 +451,14 @@ void SpiderAi::dieState()
 	f32 timings[4];
 	f32 timer = mSpider->getAttackTimer();
 	for (i = 0; i < 4; i++) {
-		timings[i] = C_SPIDER_PROP(mSpider).mDeadScaleStartDelay() + i * C_SPIDER_PROP(mSpider).mDeadScaleStageDelay();
+		timings[i] = C_SPIDER_PARM(mSpider, mDeadScaleStartDelay) + i * C_SPIDER_PARM(mSpider, mDeadScaleStageDelay);
 	}
 
 	if (timer < timings[3] && NsMathF::getRand(1.0f) < 0.2f) {
 		mSpider->mSpiderLeg->createSmallSparkEffect(1);
 	}
 
-	if (timer > C_SPIDER_PROP(mSpider).mDeadBombEffectDelay() && mSpider->mCanCreateDeadBombFx) {
+	if (timer > C_SPIDER_PARM(mSpider, mDeadBombEffectDelay) && mSpider->mCanCreateDeadBombFx) {
 		mSpider->mSpiderLeg->createDeadBombEffect();
 		mSpider->mCanCreateDeadBombFx = false;
 	}
@@ -471,18 +470,18 @@ void SpiderAi::dieState()
 			mSpider->setIsAtari(false);
 		}
 
-		if (timer > C_SPIDER_PROP(mSpider).mDeadMotionDelay() + timings[3] + 0.5f) {
+		if (timer > C_SPIDER_PARM(mSpider, mDeadMotionDelay) + timings[3] + 0.5f) {
 			mSpider->setMotionFinish(false);
 		}
 	}
 
-	if (C_SPIDER_PROP(mSpider).mDoFinalKillEffects()) {
+	if (C_SPIDER_PARM(mSpider, mDoFinalKillEffects)) {
 		for (i = 0; i < 4; i++) {
 			if (timer > timings[i]) {
 				mSpider->mSpiderLeg->setLegScaleParam(i);
 			}
 		}
-		if (timer > C_SPIDER_PROP(mSpider).mDeadMotionDelay() + timings[3] + 1.5f) {
+		if (timer > C_SPIDER_PARM(mSpider, mDeadMotionDelay) + timings[3] + 1.5f) {
 			GameStat::killTekis.inc();
 			mSpider->doKill();
 		}

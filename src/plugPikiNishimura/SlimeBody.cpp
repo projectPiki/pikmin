@@ -77,10 +77,10 @@ void SlimeBody::init(Slime* slime)
 void SlimeBody::traceCreaturePosition()
 {
 	for (int i = 0; i < bossMgr->mSlimeCreatureCount; i++) {
-		mVelocities[i].multiply(C_SLIME_PROP(mSlime).mTraceDrag());
+		mVelocities[i].multiply(C_SLIME_PARM(mSlime, mTraceDrag));
 
 		Vector3f displacement = mSlime->mSlimeCreatures[i]->mSRT.t - mPrevVelocities[i];
-		displacement.multiply(C_SLIME_PROP(mSlime).mSpringForce());
+		displacement.multiply(C_SLIME_PARM(mSlime, mSpringForce));
 
 		mVelocities[i].add(displacement);
 		mPrevVelocities[i].add(mVelocities[i]);
@@ -109,7 +109,7 @@ void SlimeBody::makeInnerPosition()
 {
 	for (int i = 0; i < bossMgr->mSlimeCreatureCount; i++) {
 		mRelativeVelocities[i].sub(mPrevVelocities[i], mSlime->mSRT.t);
-		mRelativeVelocities[i].y += C_SLIME_PROP(mSlime).mBodyHeight();
+		mRelativeVelocities[i].y += C_SLIME_PARM(mSlime, mBodyHeight);
 	}
 }
 
@@ -127,7 +127,7 @@ void SlimeBody::makeMaxRadius()
 		}
 	}
 
-	mMaxRadius += C_SLIME_PROP(mSlime).mMaxRadiusCompensation();
+	mMaxRadius += C_SLIME_PARM(mSlime, mMaxRadiusCompensation);
 }
 
 /**
@@ -173,13 +173,13 @@ void SlimeBody::sortPosition(Vector3f* outVertex, Vector3f* outNormal, immut Vec
 	f32 creatureScores[4];
 	int i;
 
-	for (i = 0; i < C_SLIME_PROP(mSlime).mMaxSortCount(); i++) {
+	for (i = 0; i < C_SLIME_PARM(mSlime, mMaxSortCount); i++) {
 		outVertex->x = (minNormal.x + targetNormal.x) / 2.0f;
 		outVertex->y = (minNormal.y + targetNormal.y) / 2.0f;
 		outVertex->z = (minNormal.z + targetNormal.z) / 2.0f;
 
 		totalScore = calcVertexScore(outVertex, creatureNormals, creatureScores);
-		if (totalScore > C_SLIME_PROP(mSlime).mVertexPositionScore()) {
+		if (totalScore > C_SLIME_PARM(mSlime, mVertexPositionScore)) {
 			targetNormal.x = outVertex->x;
 			targetNormal.y = outVertex->y;
 			targetNormal.z = outVertex->z;
@@ -209,7 +209,7 @@ void SlimeBody::sortPosition(Vector3f* outVertex, Vector3f* outNormal, immut Vec
  */
 void SlimeBody::makeSlimeBody()
 {
-	Vector3f up(0.0f, C_SLIME_PROP(mSlime).mBodyHeight(), 0.0f);
+	Vector3f up(0.0f, C_SLIME_PARM(mSlime, mBodyHeight), 0.0f);
 	for (int i = 0; i < mSlime->mShapeObject->mShape->mVertexCount; i++) {
 		sortPosition(&mSlime->mShapeObject->mShape->mVertexList[i], &mSlime->mShapeObject->mShape->mNormalList[mVertexNormalIndices[i]],
 		             &up);

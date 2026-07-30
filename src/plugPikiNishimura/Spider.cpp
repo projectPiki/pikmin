@@ -159,7 +159,7 @@ void Spider::drawShape(Graphics& gfx)
 
 		if (getCurrentState() == SPIDERAI_Start) {
 			gfx.setColour(Colour(255, 0, 0, 255), true);
-			gfx.drawSphere(*getInitPosition(), SPIDER_PROP.mSpawnTriggerDist(), transformMtx);
+			gfx.drawSphere(*getInitPosition(), SPIDER_PARM(mSpawnTriggerDist), transformMtx);
 		}
 		CollPart* body = mCollInfo->getSphere('tama');
 		gfx.setColour(Colour(255, 0, 0, 255), true);

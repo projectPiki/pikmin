@@ -10,8 +10,9 @@
 struct KoganeAi;
 struct KoganeGenRippleCallBack;
 
-#define KOGANE_PROP           (static_cast<KoganeProp*>(mProps)->mKoganeProps)
-#define C_KOGANE_PROP(kogane) (static_cast<KoganeProp*>((kogane)->mProps)->mKoganeProps)
+// Redundant parenthesis surrounding the call to `Parm::Operator()` fixes matching for the DLL
+#define KOGANE_PARM(parm)           C_KOGANE_PARM(this, parm)
+#define C_KOGANE_PARM(kogane, parm) (static_cast<KoganeProp*>((kogane)->mProps)->mKoganeProps.parm())
 
 /**
  * @brief TODO.

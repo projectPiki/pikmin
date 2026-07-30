@@ -47,8 +47,8 @@ void SlimeAi::init(Slime* slime)
 	mContractHitType           = SLIMEHIT_NoHit;
 	mContractDamage            = 0.0f;
 	mStickersRatio             = 0.0f;
-	mMaxLength                 = C_SLIME_PROP(mSlime).mNormalMaxLength();
-	mMinLength                 = C_SLIME_PROP(mSlime).mNormalMinLength();
+	mMaxLength                 = C_SLIME_PARM(mSlime, mNormalMaxLength);
+	mMinLength                 = C_SLIME_PARM(mSlime, mNormalMinLength);
 }
 
 /**
@@ -147,15 +147,15 @@ void SlimeAi::calcStickersRatio()
 {
 	mStickersRatio = 0.0f;
 	if (mSlime->mNucleus->mNucleusAi->mStickPikiCount > 0) {
-		mStickersRatio += mSlime->mNucleus->mNucleusAi->mStickPikiCount / C_SLIME_PROP(mSlime).mMaxStickPikiNum();
+		mStickersRatio += mSlime->mNucleus->mNucleusAi->mStickPikiCount / C_SLIME_PARM(mSlime, mMaxStickPikiNum);
 		if (mStickersRatio > 1.0f) {
 			mStickersRatio = 1.0f;
 		}
 	}
 
 	f32 complRatio = 1.0f - mStickersRatio;
-	mMaxLength     = complRatio * C_SLIME_PROP(mSlime).mNormalMaxLength() + mStickersRatio * C_SLIME_PROP(mSlime).mMaxLengthAtSticking();
-	mMinLength     = complRatio * C_SLIME_PROP(mSlime).mNormalMinLength() + mStickersRatio * C_SLIME_PROP(mSlime).mMinLengthAtSticking();
+	mMaxLength     = complRatio * C_SLIME_PARM(mSlime, mNormalMaxLength) + mStickersRatio * C_SLIME_PARM(mSlime, mMaxLengthAtSticking);
+	mMinLength     = complRatio * C_SLIME_PARM(mSlime, mNormalMinLength) + mStickersRatio * C_SLIME_PARM(mSlime, mMinLengthAtSticking);
 }
 
 /**
@@ -197,11 +197,11 @@ void SlimeAi::makeBodyThickness()
 {
 	f32 dist
 	    = mSlime->mSlimeCreatures[SLIMECREATURE_CoreOuter]->mSRT.t.distance(mSlime->mSlimeCreatures[SLIMECREATURE_NucleusOuter]->mSRT.t);
-	f32 elongation = (dist - C_SLIME_PROP(mSlime).mNormalMinLength())
-	               / (C_SLIME_PROP(mSlime).mMaxLengthAtSticking() - C_SLIME_PROP(mSlime).mNormalMinLength());
+	f32 elongation         = (dist - C_SLIME_PARM(mSlime, mNormalMinLength))
+	                       / (C_SLIME_PARM(mSlime, mMaxLengthAtSticking) - C_SLIME_PARM(mSlime, mNormalMinLength));
 	f32 elongateRatio      = NsLibMath<f32>::revice(elongation, 0.0f, 1.0f);
-	mSlime->mBodyThickness = C_SLIME_PROP(mSlime).mBodyThicknessElongate() * elongateRatio
-	                       + C_SLIME_PROP(mSlime).mBodyThicknessContract() * (1.0f - elongateRatio);
+	mSlime->mBodyThickness = C_SLIME_PARM(mSlime, mBodyThicknessElongate) * elongateRatio
+	                       + C_SLIME_PARM(mSlime, mBodyThicknessContract) * (1.0f - elongateRatio);
 }
 
 /**
@@ -253,9 +253,9 @@ void SlimeAi::calcCollisionCheck()
 	f32 dist = mSlime->mNucleus->mSRT.t.distance(mSlime->mCore->mSRT.t);
 
 	// force distance between nuclei to be mDistanceBetweenNuclei
-	if (dist < C_SLIME_PROP(mSlime).mDistanceBetweenNuclei()) {
+	if (dist < C_SLIME_PARM(mSlime, mDistanceBetweenNuclei)) {
 		Vector3f sep = mSlime->mCore->mSRT.t - mSlime->mNucleus->mSRT.t;
-		dist         = (C_SLIME_PROP(mSlime).mDistanceBetweenNuclei() - dist) / 2.0f;
+		dist         = (C_SLIME_PARM(mSlime, mDistanceBetweenNuclei) - dist) / 2.0f;
 		sep.normalise();
 		sep.multiply(dist);
 		mSlime->mCorePosition.add(sep);
@@ -278,8 +278,7 @@ void SlimeAi::setLeaderNearerTarget()
 		SlimeCreature* follower = slime->mSlimeCreatures[slime->mFollowerCreatureIndex];
 		Vector3f* targetPos     = slime->getTargetPosition();
 		f32 followDist          = qdist2(follower->mSRT.t.x, follower->mSRT.t.z, targetPos->x, targetPos->z);
-		f32 leadDist
-		    = qdist2(leader->mSRT.t.x, leader->mSRT.t.z, targetPos->x, targetPos->z) - C_SLIME_PROP(slime).mDistanceBetweenNuclei();
+		f32 leadDist = qdist2(leader->mSRT.t.x, leader->mSRT.t.z, targetPos->x, targetPos->z) - C_SLIME_PARM(slime, mDistanceBetweenNuclei);
 
 		// if difference between leader-target dist and follower-target dist gets bigger than dist between nuclei, flip
 		if (leadDist > followDist) {
@@ -335,8 +334,8 @@ void SlimeAi::makeFollowerVelocity()
 		follower->mTargetVelocity.y = 0.0f;
 		follower->mTargetVelocity.normalise();
 		f32 complRatio = 1.0f - mStickersRatio;
-		follower->mTargetVelocity.multiply(C_SLIME_PROP(mSlime).mMaxMoveSpeed() * complRatio
-		                                   + C_SLIME_PROP(mSlime).mMinMoveSpeed() * mStickersRatio);
+		follower->mTargetVelocity.multiply(C_SLIME_PARM(mSlime, mMaxMoveSpeed) * complRatio
+		                                   + C_SLIME_PARM(mSlime, mMinMoveSpeed) * mStickersRatio);
 	} else {
 		follower->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 	}
@@ -366,11 +365,11 @@ void SlimeAi::setMidPointVelocity()
 {
 	// ... this is just "do for 1 and 2" but okay
 	for (int i = 1; i < bossMgr->mSlimeCreatureCount - 1; i++) {
-		mSlime->mSlimeCreatures[i]->mVelocity.multiply(C_SLIME_PROP(mSlime).mTraceMidPoint());
+		mSlime->mSlimeCreatures[i]->mVelocity.multiply(C_SLIME_PARM(mSlime, mTraceMidPoint));
 
 		Vector3f displacement = mSlime->mSlimeCreatures[i]->mTargetPosition - mSlime->mSlimeCreatures[i]->mSRT.t;
 		displacement.y        = 0.0f;
-		displacement.multiply(C_SLIME_PROP(mSlime).mMidPointSpring());
+		displacement.multiply(C_SLIME_PARM(mSlime, mMidPointSpring));
 		mSlime->mSlimeCreatures[i]->mVelocity.add(displacement);
 		mSlime->mSlimeCreatures[i]->mTargetVelocity = mSlime->mSlimeCreatures[i]->mVelocity;
 	}
@@ -396,19 +395,19 @@ void SlimeAi::walkAllState()
 void SlimeAi::calcContractDamage()
 {
 	f32 nucleiDist = mSlime->mCore->mSRT.t.distance(mSlime->mNucleus->mSRT.t);
-	if (nucleiDist > C_SLIME_PROP(mSlime).mDamageLengthLarge()) {
-		mContractDamage  = nucleiDist * C_SLIME_PROP(mSlime).mDamageRatioLarge();
+	if (nucleiDist > C_SLIME_PARM(mSlime, mDamageLengthLarge)) {
+		mContractDamage  = nucleiDist * C_SLIME_PARM(mSlime, mDamageRatioLarge);
 		mContractHitType = SLIMEHIT_Large;
 		return;
 	}
 
-	if (nucleiDist > C_SLIME_PROP(mSlime).mDamageLengthMid()) {
-		mContractDamage  = nucleiDist * C_SLIME_PROP(mSlime).mDamageRatioMid();
+	if (nucleiDist > C_SLIME_PARM(mSlime, mDamageLengthMid)) {
+		mContractDamage  = nucleiDist * C_SLIME_PARM(mSlime, mDamageRatioMid);
 		mContractHitType = SLIMEHIT_Mid;
 		return;
 	}
 
-	mContractDamage  = nucleiDist * C_SLIME_PROP(mSlime).mDamageRatioSmall();
+	mContractDamage  = nucleiDist * C_SLIME_PARM(mSlime, mDamageRatioSmall);
 	mContractHitType = SLIMEHIT_Small;
 }
 
@@ -427,7 +426,7 @@ void SlimeAi::contractCoreFlickPiki()
 		    && qdist2(piki->mSRT.t.x, piki->mSRT.t.z, corePart->mCentre.x, corePart->mCentre.z) < coreRadius) {
 			// close enough, do a proper check
 			if (piki->mSRT.t.distance(corePart->mCentre) < coreRadius) {
-				InteractFlick flick(mSlime->mCore, C_BOSS_PROP(mSlime->mCore).mFlickKnockback(), C_BOSS_PROP(mSlime->mCore).mFlickDamage(),
+				InteractFlick flick(mSlime->mCore, C_BOSS_PARM(mSlime->mCore, mFlickKnockback), C_BOSS_PARM(mSlime->mCore, mFlickDamage),
 				                    FLICK_BACKWARDS_ANGLE);
 				piki->stimulate(flick);
 			}
@@ -450,8 +449,8 @@ void SlimeAi::contractSubFlickPiki()
 		    && qdist2(piki->mSRT.t.x, piki->mSRT.t.z, nucleusPart->mCentre.x, nucleusPart->mCentre.z) < nucleusRadius) {
 			// close enough, do a proper check
 			if (piki->mSRT.t.distance(nucleusPart->mCentre) < nucleusRadius) {
-				InteractFlick flick(mSlime->mNucleus, C_BOSS_PROP(mSlime->mNucleus).mFlickKnockback(),
-				                    C_BOSS_PROP(mSlime->mNucleus).mFlickDamage(), FLICK_BACKWARDS_ANGLE);
+				InteractFlick flick(mSlime->mNucleus, C_BOSS_PARM(mSlime->mNucleus, mFlickKnockback),
+				                    C_BOSS_PARM(mSlime->mNucleus, mFlickDamage), FLICK_BACKWARDS_ANGLE);
 				piki->stimulate(flick);
 			}
 		}
@@ -526,7 +525,7 @@ void SlimeAi::setDieGoal()
  */
 void SlimeAi::setContractGoal()
 {
-	f32 goalDistFromMiddle = 5.0f + C_SLIME_PROP(mSlime).mDistanceBetweenNuclei() / 2.0f;
+	f32 goalDistFromMiddle = 5.0f + C_SLIME_PARM(mSlime, mDistanceBetweenNuclei) / 2.0f;
 	Vector3f midPoint
 	    = 0.5f * (mSlime->mSlimeCreatures[SLIMECREATURE_CoreOuter]->mSRT.t + mSlime->mSlimeCreatures[SLIMECREATURE_NucleusOuter]->mSRT.t);
 	Vector3f offsetFromMid = mSlime->mSlimeCreatures[SLIMECREATURE_CoreOuter]->mSRT.t - midPoint;
@@ -542,7 +541,7 @@ void SlimeAi::setContractGoal()
  */
 void SlimeAi::setExpansionGoal()
 {
-	f32 goalDistFromMiddle = 15.0f + C_SLIME_PROP(mSlime).mDistanceBetweenNuclei() / 2.0f;
+	f32 goalDistFromMiddle = 15.0f + C_SLIME_PARM(mSlime, mDistanceBetweenNuclei) / 2.0f;
 	Vector3f midPoint      = 0.5f
 	                  * (mSlime->mSlimeCreatures[SLIMECREATURE_CoreOuter]->mTargetPosition
 	                     + mSlime->mSlimeCreatures[SLIMECREATURE_NucleusOuter]->mTargetPosition);
@@ -561,7 +560,7 @@ void SlimeAi::setAppearGoal()
 {
 	Navi* navi     = naviMgr->getNavi();
 	f32 angle      = atan2f(navi->mSRT.t.x - mSlime->mSRT.t.x, navi->mSRT.t.z - mSlime->mSRT.t.z);
-	f32 initialSep = C_SLIME_PROP(mSlime).mDistanceBetweenNuclei() + 100.0f;
+	f32 initialSep = C_SLIME_PARM(mSlime, mDistanceBetweenNuclei) + 100.0f;
 	Vector3f naviDir(sinf(angle), 0.0f, cosf(angle));
 	mSlime->mSlimeCreatures[SLIMECREATURE_CoreOuter]->mTargetPosition = *mSlime->getInitPosition() + initialSep * naviDir;
 }
@@ -573,18 +572,18 @@ void SlimeAi::setAppearGoal()
 void SlimeAi::bothEndsToGoal()
 {
 	Vector3f velOffset;
-	mSlime->mSlimeCreatures[SLIMECREATURE_CoreOuter]->mVelocity.multiply(C_SLIME_PROP(mSlime).mContractTraceEnd());
+	mSlime->mSlimeCreatures[SLIMECREATURE_CoreOuter]->mVelocity.multiply(C_SLIME_PARM(mSlime, mContractTraceEnd));
 
 	velOffset
 	    = mSlime->mSlimeCreatures[SLIMECREATURE_CoreOuter]->mTargetPosition - mSlime->mSlimeCreatures[SLIMECREATURE_CoreOuter]->mSRT.t;
-	velOffset.multiply(C_SLIME_PROP(mSlime).mContractSpringEnd());
+	velOffset.multiply(C_SLIME_PARM(mSlime, mContractSpringEnd));
 	mSlime->mSlimeCreatures[SLIMECREATURE_CoreOuter]->mVelocity.add(velOffset);
 
-	mSlime->mSlimeCreatures[SLIMECREATURE_NucleusOuter]->mVelocity.multiply(C_SLIME_PROP(mSlime).mContractTraceEnd());
+	mSlime->mSlimeCreatures[SLIMECREATURE_NucleusOuter]->mVelocity.multiply(C_SLIME_PARM(mSlime, mContractTraceEnd));
 
 	velOffset = mSlime->mSlimeCreatures[SLIMECREATURE_NucleusOuter]->mTargetPosition
 	          - mSlime->mSlimeCreatures[SLIMECREATURE_NucleusOuter]->mSRT.t;
-	velOffset.multiply(C_SLIME_PROP(mSlime).mContractSpringEnd());
+	velOffset.multiply(C_SLIME_PARM(mSlime, mContractSpringEnd));
 	mSlime->mSlimeCreatures[SLIMECREATURE_NucleusOuter]->mVelocity.add(velOffset);
 }
 
@@ -614,8 +613,8 @@ void SlimeAi::makeTargetRandom()
 	if (mSlime->getWalkTimer() > 10.0f || qdist2(targetPos->x, targetPos->z, leader->mSRT.t.x, leader->mSRT.t.z) < 10.0f) {
 		f32 randAngle = NsMathF::getRand(TAU);
 		Vector3f newTarget;
-		newTarget.set(C_BOSS_PROP(mSlime).mMaxWaitRadius() * cosf(randAngle) + initPos->x, initPos->y,
-		              C_BOSS_PROP(mSlime).mMaxWaitRadius() * sinf(randAngle) + initPos->z);
+		newTarget.set(C_BOSS_PARM(mSlime, mMaxWaitRadius) * cosf(randAngle) + initPos->x, initPos->y,
+		              C_BOSS_PARM(mSlime, mMaxWaitRadius) * sinf(randAngle) + initPos->z);
 		mSlime->setTargetPosition(newTarget);
 		mSlime->setWalkTimer(0.0f);
 	}
@@ -656,7 +655,7 @@ bool SlimeAi::outSideChaseRangeTransit()
 {
 	SlimeCreature* leader = mSlime->mSlimeCreatures[mSlime->mLeaderCreatureIndex];
 	Vector3f* initPos     = mSlime->getInitPosition();
-	if (qdist2(leader->mSRT.t.x, leader->mSRT.t.z, initPos->x, initPos->z) > C_BOSS_PROP(mSlime).mTerritoryRadius()) {
+	if (qdist2(leader->mSRT.t.x, leader->mSRT.t.z, initPos->x, initPos->z) > C_BOSS_PARM(mSlime, mTerritoryRadius)) {
 		return true;
 	}
 	return false;
@@ -670,7 +669,7 @@ bool SlimeAi::inSideWaitRangeTransit()
 {
 	SlimeCreature* follower = mSlime->mSlimeCreatures[mSlime->mFollowerCreatureIndex];
 	Vector3f* initPos       = mSlime->getInitPosition();
-	if (qdist2(follower->mSRT.t.x, follower->mSRT.t.z, initPos->x, initPos->z) < C_BOSS_PROP(mSlime).mMaxWaitRadius()) {
+	if (qdist2(follower->mSRT.t.x, follower->mSRT.t.z, initPos->x, initPos->z) < C_BOSS_PARM(mSlime, mMaxWaitRadius)) {
 		return true;
 	}
 	return false;
@@ -695,11 +694,11 @@ bool SlimeAi::chaseNaviTransit()
 	{
 		Creature* navi = *iter;
 		if (navi->isAlive() && navi->isVisible() && !navi->isBuried()
-		    && qdist2(navi->mSRT.t.x, navi->mSRT.t.z, initPos->x, initPos->z) < C_BOSS_PROP(mSlime).mTerritoryRadius()) {
+		    && qdist2(navi->mSRT.t.x, navi->mSRT.t.z, initPos->x, initPos->z) < C_BOSS_PARM(mSlime, mTerritoryRadius)) {
 			f32 quickLeaderDist = qdist2(leader->mSRT.t.x, leader->mSRT.t.z, navi->mSRT.t.x, navi->mSRT.t.z);
-			if (quickLeaderDist < C_BOSS_PROP(mSlime).mSearchRadius() && quickLeaderDist < minDist) {
+			if (quickLeaderDist < C_BOSS_PARM(mSlime, mSearchRadius) && quickLeaderDist < minDist) {
 				f32 leaderDist = leader->mSRT.t.distance(navi->mSRT.t);
-				if (leaderDist < C_BOSS_PROP(mSlime).mSearchRadius() && leaderDist < minDist) {
+				if (leaderDist < C_BOSS_PARM(mSlime, mSearchRadius) && leaderDist < minDist) {
 					minDist = leaderDist;
 					target  = navi;
 				}
@@ -733,11 +732,11 @@ bool SlimeAi::chasePikiTransit()
 	{
 		Piki* piki = static_cast<Piki*>(*iter);
 		if (piki->isAlive() && piki->isVisible() && !piki->isBuried() && piki->mColor != Blue
-		    && qdist2(piki->mSRT.t.x, piki->mSRT.t.z, initPos->x, initPos->z) < C_BOSS_PROP(mSlime).mTerritoryRadius()) {
+		    && qdist2(piki->mSRT.t.x, piki->mSRT.t.z, initPos->x, initPos->z) < C_BOSS_PARM(mSlime, mTerritoryRadius)) {
 			f32 quickLeaderDist = qdist2(leader->mSRT.t.x, leader->mSRT.t.z, piki->mSRT.t.x, piki->mSRT.t.z);
-			if (quickLeaderDist < C_BOSS_PROP(mSlime).mSearchRadius() && quickLeaderDist < minDist) {
+			if (quickLeaderDist < C_BOSS_PARM(mSlime, mSearchRadius) && quickLeaderDist < minDist) {
 				f32 leaderDist = leader->mSRT.t.distance(piki->mSRT.t);
-				if (leaderDist < C_BOSS_PROP(mSlime).mSearchRadius() && leaderDist < minDist) {
+				if (leaderDist < C_BOSS_PARM(mSlime, mSearchRadius) && leaderDist < minDist) {
 					minDist = leaderDist;
 					target  = piki;
 				}
@@ -766,12 +765,12 @@ bool SlimeAi::targetLostTransit()
 		}
 
 		Vector3f* initPos = mSlime->getInitPosition();
-		if (qdist2(target->mSRT.t.x, target->mSRT.t.z, initPos->x, initPos->z) > C_BOSS_PROP(mSlime).mTerritoryRadius()) {
+		if (qdist2(target->mSRT.t.x, target->mSRT.t.z, initPos->x, initPos->z) > C_BOSS_PARM(mSlime, mTerritoryRadius)) {
 			mSlime->setTargetCreature(nullptr);
 			return true;
 		}
 
-		if (leader->mSRT.t.distance(target->mSRT.t) > C_BOSS_PROP(mSlime).mSearchRadius()) {
+		if (leader->mSRT.t.distance(target->mSRT.t) > C_BOSS_PARM(mSlime, mSearchRadius)) {
 			mSlime->setTargetCreature(nullptr);
 			return true;
 		}
@@ -839,7 +838,7 @@ bool SlimeAi::appearTransit()
 	{
 		Creature* navi = *iterNavi;
 		if (navi->isAlive() && navi->isVisible() && !navi->isBuried()
-		    && qdist2(initPos->x, initPos->z, navi->mSRT.t.x, navi->mSRT.t.z) < C_SLIME_PROP(mSlime).mDetectionRadius()) {
+		    && qdist2(initPos->x, initPos->z, navi->mSRT.t.x, navi->mSRT.t.z) < C_SLIME_PARM(mSlime, mDetectionRadius)) {
 			return true;
 		}
 	}
@@ -849,7 +848,7 @@ bool SlimeAi::appearTransit()
 	{
 		Creature* piki = *iterPiki;
 		if (piki->isAlive() && piki->isVisible() && !piki->isBuried()
-		    && qdist2(initPos->x, initPos->z, piki->mSRT.t.x, piki->mSRT.t.z) < C_SLIME_PROP(mSlime).mDetectionRadius()) {
+		    && qdist2(initPos->x, initPos->z, piki->mSRT.t.x, piki->mSRT.t.z) < C_SLIME_PARM(mSlime, mDetectionRadius)) {
 			return true;
 		}
 	}
@@ -1009,7 +1008,7 @@ void SlimeAi::dieState()
 {
 	bothEndsToGoal();
 	if (mSlime->getAttackTimer() > 0.0f) {
-		mSlime->mAppearanceScale -= C_SLIME_PROP(mSlime).mDeadScaleSpeed() * gsys->getFrameTime();
+		mSlime->mAppearanceScale -= C_SLIME_PARM(mSlime, mDeadScaleSpeed) * gsys->getFrameTime();
 		if (mSlime->mAppearanceScale < 0.0f) {
 			mSlime->mAppearanceScale = 0.0f;
 		}
@@ -1029,7 +1028,7 @@ void SlimeAi::dieState()
 void SlimeAi::walkRandomState()
 {
 	makeTargetRandom();
-	setVelocity(C_SLIME_PROP(mSlime).mMaxMoveSpeed());
+	setVelocity(C_SLIME_PARM(mSlime, mMaxMoveSpeed));
 	walkAllState();
 }
 
@@ -1040,7 +1039,7 @@ void SlimeAi::walkRandomState()
 void SlimeAi::walkGoHomeState()
 {
 	mSlime->setTargetPosition(*mSlime->getInitPosition());
-	setVelocity(C_SLIME_PROP(mSlime).mMaxMoveSpeed());
+	setVelocity(C_SLIME_PARM(mSlime, mMaxMoveSpeed));
 	walkAllState();
 }
 
@@ -1051,7 +1050,7 @@ void SlimeAi::walkGoHomeState()
 void SlimeAi::chaseNaviState()
 {
 	mSlime->makeTargetCreature();
-	setVelocity(C_SLIME_PROP(mSlime).mMaxMoveSpeed());
+	setVelocity(C_SLIME_PARM(mSlime, mMaxMoveSpeed));
 	walkAllState();
 }
 
@@ -1062,7 +1061,7 @@ void SlimeAi::chaseNaviState()
 void SlimeAi::chasePikiState()
 {
 	mSlime->makeTargetCreature();
-	setVelocity(C_SLIME_PROP(mSlime).mMaxMoveSpeed());
+	setVelocity(C_SLIME_PARM(mSlime, mMaxMoveSpeed));
 	walkAllState();
 }
 
@@ -1104,8 +1103,8 @@ void SlimeAi::appearState()
 	STACK_PAD_VAR(2);
 	f32 slimeScalePts[3];
 	slimeScalePts[0] = 0.0f;
-	slimeScalePts[1] = C_SLIME_PROP(mSlime).mRadiusContractionScore();
-	slimeScalePts[2] = C_SLIME_PROP(mSlime).mRadiusContractionScore();
+	slimeScalePts[1] = C_SLIME_PARM(mSlime, mRadiusContractionScore);
+	slimeScalePts[2] = C_SLIME_PARM(mSlime, mRadiusContractionScore);
 	f32 timer1       = mSlime->getAttackTimer();
 	if (timer1 < 2.0f) {
 		mSlime->mAppearanceScale = NsLibMath<f32>::lagrange3(slimeScalePts, timer1);
@@ -1118,7 +1117,7 @@ void SlimeAi::appearState()
 			}
 		}
 	} else {
-		mSlime->mAppearanceScale = C_SLIME_PROP(mSlime).mRadiusContractionScore();
+		mSlime->mAppearanceScale = C_SLIME_PARM(mSlime, mRadiusContractionScore);
 	}
 
 	f32 coreScalePts[3];

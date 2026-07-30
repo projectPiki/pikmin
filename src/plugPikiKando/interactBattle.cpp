@@ -55,7 +55,7 @@ bool InteractBomb::actPiki(Piki* piki) immut
 	piki->mHealth -= mDamage;
 
 	// update this when PikiProp is filled out
-	piki->mLifeGauge.updValue(piki->mHealth, C_PIKI_PROP(piki).mPikiMaxHealth());
+	piki->mLifeGauge.updValue(piki->mHealth, C_PIKI_PARM(piki, mPikiMaxHealth));
 
 	Vector3f diff = mOwner->mSRT.t - piki->mSRT.t;
 	diff.normalise();
@@ -280,7 +280,7 @@ bool InteractFlick::actPiki(Piki* piki) immut
 
 	piki->mHealth -= mDamage;
 
-	piki->mLifeGauge.updValue(piki->mHealth, C_PIKI_PROP(piki).mPikiMaxHealth());
+	piki->mLifeGauge.updValue(piki->mHealth, C_PIKI_PARM(piki, mPikiMaxHealth));
 
 	if (mAngle < FLICK_BACKWARDS_THRESHOLD) {
 		piki->mRotationAngle = piki->mFaceDirection;
@@ -386,7 +386,7 @@ bool InteractAttack::actPiki(Piki* piki) immut
 	piki->startDamage();
 	piki->mHealth -= mDamage;
 
-	piki->mLifeGauge.updValue(piki->mHealth, C_PIKI_PROP(piki).mPikiMaxHealth());
+	piki->mLifeGauge.updValue(piki->mHealth, C_PIKI_PARM(piki, mPikiMaxHealth));
 
 	if (state == PIKISTATE_Unk34) {
 		piki->mFSM->transit(piki, PIKISTATE_Normal);
@@ -553,10 +553,10 @@ bool InteractPress::actPiki(Piki* piki) immut
 	piki->changeMode(0, piki->mNavi);
 	piki->mFSM->transit(piki, PIKISTATE_Pressed);
 
-	piki->mDeathTimer = C_PIKI_PROP(piki).mPressDeathFactor();
+	piki->mDeathTimer = C_PIKI_PARM(piki, mPressDeathFactor);
 	piki->mHealth -= mDamage;
 	PRINT(">>> piki pressed : life is %.1f (damage %.1f)\n", piki->mHealth, mDamage);
-	piki->mLifeGauge.updValue(piki->mHealth, C_PIKI_PROP(piki).mPikiMaxHealth());
+	piki->mLifeGauge.updValue(piki->mHealth, C_PIKI_PARM(piki, mPikiMaxHealth));
 	piki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 	return true;
 }

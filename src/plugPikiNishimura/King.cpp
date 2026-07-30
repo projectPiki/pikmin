@@ -168,50 +168,48 @@ void King::drawShape(Graphics& gfx)
 		// This is certainly *one* way of doing things.
 		if (getCurrentState() != KINGAI_Stay) {
 			gfx.setColour(Colour(255, 255, 0, 255), true);
-			gfx.drawSphere(mSRT.t, KING_PROP.mHiddenUnderneathRadius(), transformMtx);
+			gfx.drawSphere(mSRT.t, KING_PARM(mHiddenUnderneathRadius), transformMtx);
 		}
 		if (getCurrentState() == KINGAI_Attack && mKingAi->mIsTongueOut) {
 			Vector3f a(mCollInfo->getSphere('slt2')->mCentre);
 			Vector3f b(mCollInfo->getSphere('slt2')->mCentre);
-			a.y -= KING_PROP.mTongueRangeY();
-			b.y += KING_PROP.mTongueRangeY();
+			a.y -= KING_PARM(mTongueRangeY);
+			b.y += KING_PARM(mTongueRangeY);
 
 			gfx.setColour(Colour(0, 0, 255, 255), true);
-			gfx.drawCylinder(a, b, KING_PROP.mTongueRangeXZ(), transformMtx);
+			gfx.drawCylinder(a, b, KING_PARM(mTongueRangeXZ), transformMtx);
 		}
 		if (getCurrentState() == KINGAI_Flick) {
 			gfx.setColour(Colour(0, 0, 255, 255), true);
-			gfx.drawSphere(mSRT.t, KING_PROP.mPressAttackRadius(), transformMtx);
+			gfx.drawSphere(mSRT.t, KING_PARM(mPressAttackRadius), transformMtx);
 		}
 		if (getCurrentState() == KINGAI_Stay) {
 			gfx.setColour(Colour(255, 0, 0, 255), true);
-			gfx.drawSphere(mSRT.t, KING_PROP.mDetectionRadius(), transformMtx);
+			gfx.drawSphere(mSRT.t, KING_PARM(mDetectionRadius), transformMtx);
 		}
 		if (getCurrentState() == KINGAI_Stay) {
 			gfx.setColour(Colour(0, 255, 255, 255), true);
-			gfx.drawSphere(mSRT.t, KING_PROP.mDispelRadius(), transformMtx);
+			gfx.drawSphere(mSRT.t, KING_PARM(mDispelRadius), transformMtx);
 		}
 		if (getCurrentState() != KINGAI_Stay) {
-			Vector3f a(mKingAi->mAttackPosition.x, mKingAi->mAttackPosition.y + KING_PROP.mNormalAttackRangeY(),
-			           mKingAi->mAttackPosition.z);
-			Vector3f b(mKingAi->mAttackPosition.x, mKingAi->mAttackPosition.y - KING_PROP.mNormalAttackRangeY(),
-			           mKingAi->mAttackPosition.z);
+			Vector3f a(mKingAi->mAttackPosition.x, mKingAi->mAttackPosition.y + KING_PARM(mNormalAttackRangeY), mKingAi->mAttackPosition.z);
+			Vector3f b(mKingAi->mAttackPosition.x, mKingAi->mAttackPosition.y - KING_PARM(mNormalAttackRangeY), mKingAi->mAttackPosition.z);
 
 			gfx.setColour(Colour(255, 0, 0, 255), true);
-			gfx.drawCylinder(a, b, KING_PROP.mNormalAttackRangeXZ(), transformMtx);
+			gfx.drawCylinder(a, b, KING_PARM(mNormalAttackRangeXZ), transformMtx);
 		}
 		if (getCurrentState() != KINGAI_Stay) {
 			gfx.setColour(Colour(255, 255, 255, 255), true);
-			gfx.drawSphere(*getInitPosition(), KING_PROP.mAttackTerritoryRadius(), transformMtx);
+			gfx.drawSphere(*getInitPosition(), KING_PARM(mAttackTerritoryRadius), transformMtx);
 		}
 		if (getCurrentState() == KINGAI_Attack) {
 			Vector3f centre(mCollInfo->getSphere('slt2')->mCentre);
-			centre.x += sinf(mFaceDirection) * KING_PROP._314();
-			centre.y += KING_PROP._324();
-			centre.z += cosf(mFaceDirection) * KING_PROP._314();
+			centre.x += sinf(mFaceDirection) * KING_PARM(_314);
+			centre.y += KING_PARM(_324);
+			centre.z += cosf(mFaceDirection) * KING_PARM(_314);
 
 			gfx.setColour(Colour(255, 255, 255, 255), true);
-			gfx.drawSphere(centre, KING_PROP._334(), transformMtx);
+			gfx.drawSphere(centre, KING_PARM(_334), transformMtx);
 		}
 		if (getCurrentState() == KINGAI_Attack && !mKingAi->mIsTongueOut) {
 			CollPart* collPart = mCollInfo->getSphere('slt3');

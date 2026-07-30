@@ -299,7 +299,7 @@ void SpiderLeg::killCallBackEffect(bool doForceFinish)
 void SpiderLeg::setLegScaleParam(int jointIdx)
 {
 	f32 goal;
-	f32 stepTime = 1.0f / C_SPIDER_PROP(mSpider).mDeadMotionDelay();
+	f32 stepTime = 1.0f / C_SPIDER_PARM(mSpider, mDeadMotionDelay);
 	if (jointIdx < 3) {
 		for (int i = 0; i < 4; i++) {
 			mSegmentScale[Kumo::leg_index[i][jointIdx]]
@@ -342,7 +342,7 @@ void SpiderLeg::init(Spider* spider)
 		mStuckPikiCount[i]      = 0;
 		mPrevOnGround[i]        = false;
 		mIsOnGround[i]          = false;
-		mFootRaiseHeightList[i] = C_SPIDER_PROP(mSpider)._264();
+		mFootRaiseHeightList[i] = C_SPIDER_PARM(mSpider, _264);
 
 		mJointPositions[i][0] = mSpider->mSRT.t;
 		mBezierPoints[i][0]   = mJointPositions[i][0];
@@ -390,21 +390,21 @@ void SpiderLeg::initParm(int motionType)
 void SpiderLeg::setLegParameter()
 {
 	if (mSpider->getAlive()) {
-		mPikiWeightOffset = mSpider->getStickPikiCount() * C_SPIDER_PROP(mSpider)._294();
-		if (mPikiWeightOffset > C_SPIDER_PROP(mSpider)._2A4()) {
-			mPikiWeightOffset = C_SPIDER_PROP(mSpider)._2A4();
+		mPikiWeightOffset = mSpider->getStickPikiCount() * C_SPIDER_PARM(mSpider, _294);
+		if (mPikiWeightOffset > C_SPIDER_PARM(mSpider, _2A4)) {
+			mPikiWeightOffset = C_SPIDER_PARM(mSpider, _2A4);
 		}
 	} else {
 		mPikiWeightOffset = 0.0f;
 	}
 
 	for (int i = 0; i < 4; i++) {
-		f32 goal = C_SPIDER_PROP(mSpider)._264() - mStuckPikiCount[i] * C_SPIDER_PROP(mSpider)._274() - 0.5f * mPikiWeightOffset;
+		f32 goal = C_SPIDER_PARM(mSpider, _264) - mStuckPikiCount[i] * C_SPIDER_PARM(mSpider, _274) - 0.5f * mPikiWeightOffset;
 		mFootRaiseHeightList[i]
-		    = NsLibMath<f32>::toGoal(mFootRaiseHeightList[i], goal, C_SPIDER_PROP(mSpider)._4A4() * gsys->getFrameTime());
+		    = NsLibMath<f32>::toGoal(mFootRaiseHeightList[i], goal, C_SPIDER_PARM(mSpider, _4A4) * gsys->getFrameTime());
 
-		if (mFootRaiseHeightList[i] < C_SPIDER_PROP(mSpider)._284()) {
-			mFootRaiseHeightList[i] = C_SPIDER_PROP(mSpider)._284();
+		if (mFootRaiseHeightList[i] < C_SPIDER_PARM(mSpider, _284)) {
+			mFootRaiseHeightList[i] = C_SPIDER_PARM(mSpider, _284);
 		}
 	}
 }
@@ -432,7 +432,7 @@ void SpiderLeg::setShakeOffNewParameter()
 {
 	if (mShakePhase < PI) {
 		mPrevShakeDirection = mShakeDirectionChanged;
-		mShakePhase += C_SPIDER_PROP(mSpider)._3F4() * gsys->getFrameTime();
+		mShakePhase += C_SPIDER_PARM(mSpider, _3F4) * gsys->getFrameTime();
 		if (mShakePhase > HALF_PI) {
 			mShakeDirectionChanged = true;
 		}
@@ -441,7 +441,7 @@ void SpiderLeg::setShakeOffNewParameter()
 		mMotionFinishFlag = true;
 	}
 
-	mOscillationPhase += C_SPIDER_PROP(mSpider)._3E4() * gsys->getFrameTime();
+	mOscillationPhase += C_SPIDER_PARM(mSpider, _3E4) * gsys->getFrameTime();
 	if (mOscillationPhase > TAU) {
 		mOscillationPhase -= TAU;
 	}
@@ -460,16 +460,16 @@ void SpiderLeg::setShakeOffNewParameter()
  */
 void SpiderLeg::setBodyShakeNewParameter()
 {
-	if (!mBodyShakeStarted && mShakeAngle > C_SPIDER_PROP(mSpider)._434()) {
+	if (!mBodyShakeStarted && mShakeAngle > C_SPIDER_PARM(mSpider, _434)) {
 		mBodyShakeStarted = true;
-		mOscillationPhase = C_SPIDER_PROP(mSpider)._424();
+		mOscillationPhase = C_SPIDER_PARM(mSpider, _424);
 	}
 
 	if (mBodyShakeStarted) {
 		mPrevShakeDirection = mShakeDirectionChanged;
 		f32 val             = -mShakeAngle;
 		mShakeAngularVel *= mOscillationPhase;
-		mShakeAngularVel += val * C_SPIDER_PROP(mSpider)._414();
+		mShakeAngularVel += val * C_SPIDER_PARM(mSpider, _414);
 		mShakeAngle += mShakeAngularVel;
 
 		if (NsLibMath<f32>::abs(mShakeAngularVel) < 0.05f && NsLibMath<f32>::abs(mShakeAngle) < 0.05f) {
@@ -501,12 +501,12 @@ void SpiderLeg::setBodyShakeNewParameter()
 void SpiderLeg::setNextDirAndCent()
 {
 	if (!mLegMoving[0] && mLegCanMove[0] && !mMotionFinishFlag) {
-		f32 centreDist = C_SPIDER_PROP(mSpider)._2B4()
-		               + NsMathF::getRand(NsLibMath<f32>::abs(C_SPIDER_PROP(mSpider)._2C4() - C_SPIDER_PROP(mSpider)._2B4()));
-		f32 dirChangeThreshold = C_SPIDER_PROP(mSpider)._2F4()
-		                       + NsMathF::getRand(NsLibMath<f32>::abs(C_SPIDER_PROP(mSpider)._304() - C_SPIDER_PROP(mSpider)._2F4()));
-		f32 distFactor = C_SPIDER_PROP(mSpider)._4D4()
-		               + NsMathF::getRand(NsLibMath<f32>::abs(C_SPIDER_PROP(mSpider)._4E4() - C_SPIDER_PROP(mSpider)._4D4()));
+		f32 centreDist         = (C_SPIDER_PARM(mSpider, _2B4))
+		                       + NsMathF::getRand(NsLibMath<f32>::abs((C_SPIDER_PARM(mSpider, _2C4)) - (C_SPIDER_PARM(mSpider, _2B4))));
+		f32 dirChangeThreshold = C_SPIDER_PARM(mSpider, _2F4)
+		                       + NsMathF::getRand(NsLibMath<f32>::abs((C_SPIDER_PARM(mSpider, _304)) - (C_SPIDER_PARM(mSpider, _2F4))));
+		f32 distFactor         = (C_SPIDER_PARM(mSpider, _4D4))
+		                       + NsMathF::getRand(NsLibMath<f32>::abs((C_SPIDER_PARM(mSpider, _4E4)) - (C_SPIDER_PARM(mSpider, _4D4))));
 		f32 factorThreshold
 		    = qdist2(mSpider->mSRT.t.x, mSpider->mSRT.t.z, mSpider->getTargetPosition()->x, mSpider->getTargetPosition()->z);
 
@@ -518,7 +518,7 @@ void SpiderLeg::setNextDirAndCent()
 			f32 diff = mTargetDirection - mSpider->mFaceDirection;
 			if (diff < dirChangeThreshold) {
 				if (diff > QUARTER_PI) {
-					if (factorThreshold < C_SPIDER_PROP(mSpider)._4C4()) {
+					if (factorThreshold < (C_SPIDER_PARM(mSpider, _4C4))) {
 						centreDist *= distFactor;
 					} else {
 						centreDist = 0.0f;
@@ -526,7 +526,7 @@ void SpiderLeg::setNextDirAndCent()
 				}
 			} else {
 				mTargetDirection = mSpider->mFaceDirection + dirChangeThreshold;
-				if (factorThreshold < C_SPIDER_PROP(mSpider)._4C4()) {
+				if (factorThreshold < (C_SPIDER_PARM(mSpider, _4C4))) {
 					centreDist *= distFactor;
 				} else {
 					centreDist = 0.0f;
@@ -536,7 +536,7 @@ void SpiderLeg::setNextDirAndCent()
 			f32 diff = mSpider->mFaceDirection - mTargetDirection;
 			if (diff < dirChangeThreshold) {
 				if (diff > QUARTER_PI) {
-					if (factorThreshold < C_SPIDER_PROP(mSpider)._4C4()) {
+					if (factorThreshold < (C_SPIDER_PARM(mSpider, _4C4))) {
 						centreDist *= distFactor;
 					} else {
 						centreDist = 0.0f;
@@ -544,7 +544,7 @@ void SpiderLeg::setNextDirAndCent()
 				}
 			} else {
 				mTargetDirection = mSpider->mFaceDirection - dirChangeThreshold;
-				if (factorThreshold < C_SPIDER_PROP(mSpider)._4C4()) {
+				if (factorThreshold < (C_SPIDER_PARM(mSpider, _4C4))) {
 					centreDist *= distFactor;
 				} else {
 					centreDist = 0.0f;
@@ -570,8 +570,8 @@ void SpiderLeg::setWalkNewPosition()
 			Vector3f vec(0.0f, 0.0f, 0.0f);
 			f32 vals[4] = { 1.75f, 1.25f, 0.25f, 0.75f };
 			f32 angle   = mTargetDirection - PI * vals[i];
-			f32 dist    = C_SPIDER_PROP(mSpider)._2D4()
-			         + NsMathF::getRand(NsLibMath<f32>::abs(C_SPIDER_PROP(mSpider)._2E4() - C_SPIDER_PROP(mSpider)._2D4()));
+			f32 dist    = C_SPIDER_PARM(mSpider, _2D4)
+			            + NsMathF::getRand(NsLibMath<f32>::abs(C_SPIDER_PARM(mSpider, _2E4) - C_SPIDER_PARM(mSpider, _2D4)));
 
 			vec.x = dist * sinf(angle);
 			vec.z = dist * cosf(angle);
@@ -599,7 +599,7 @@ void SpiderLeg::setWalkNewPosition()
 
 		if (mLegMoving[i]) {
 			f32 goal              = mGroundHeight[i] + mFootRaiseHeightList[i];
-			f32 step              = C_SPIDER_PROP(mSpider)._4B4() * gsys->getFrameTime();
+			f32 step              = C_SPIDER_PARM(mSpider, _4B4) * gsys->getFrameTime();
 			mBezierPoints[i][1].y = NsLibMath<f32>::toGoal(mBezierPoints[i][1].y, goal, step);
 		}
 	}
@@ -651,20 +651,20 @@ void SpiderLeg::checkMotionRatio()
 			if (mLegMoving[i] && mMotionType < SpiderLegMotionType::ShakeOff) {
 				f32 speed;
 				if (mLegMotionProgress[i] < 1.1f) {
-					speed = C_SPIDER_PROP(mSpider)._204() - mStuckPikiCount[i] * C_SPIDER_PROP(mSpider)._214();
-					if (speed < C_SPIDER_PROP(mSpider)._224()) {
-						speed = C_SPIDER_PROP(mSpider)._224();
+					speed = C_SPIDER_PARM(mSpider, _204) - mStuckPikiCount[i] * C_SPIDER_PARM(mSpider, _214);
+					if (speed < C_SPIDER_PARM(mSpider, _224)) {
+						speed = C_SPIDER_PARM(mSpider, _224);
 					}
 				} else {
-					speed = C_SPIDER_PROP(mSpider)._234() + mStuckPikiCount[i] * C_SPIDER_PROP(mSpider)._244();
-					if (speed > C_SPIDER_PROP(mSpider)._254()) {
-						speed = C_SPIDER_PROP(mSpider)._254();
+					speed = C_SPIDER_PARM(mSpider, _234) + mStuckPikiCount[i] * C_SPIDER_PARM(mSpider, _244);
+					if (speed > C_SPIDER_PARM(mSpider, _254)) {
+						speed = C_SPIDER_PARM(mSpider, _254);
 					}
 				}
 
 				mLegMotionProgress[i] += speed * gsys->getFrameTime();
 
-				if (mLegMidStep[i] && mLegMotionProgress[i] > C_SPIDER_PROP(mSpider)._314()) {
+				if (mLegMidStep[i] && mLegMotionProgress[i] > C_SPIDER_PARM(mSpider, _314)) {
 					mLegCanMove[NsMathI::intLoop(i + 1, 0, 3)] = true;
 					mLegMidStep[i]                             = false;
 				}
@@ -692,9 +692,9 @@ void SpiderLeg::makeNewPosition()
 			if (mLegMoving[i]) {
 				NsCalculation::calcLagrange(mLegMotionProgress[i], mBezierPoints[i], mJointPositions[i][0]);
 
-				f32 yOffs = mStuckPikiCount[i] * C_SPIDER_PROP(mSpider)._384() * sinf(vibSpin + i);
-				if (yOffs > C_SPIDER_PROP(mSpider)._394()) {
-					yOffs = C_SPIDER_PROP(mSpider)._394();
+				f32 yOffs = mStuckPikiCount[i] * C_SPIDER_PARM(mSpider, _384) * sinf(vibSpin + i);
+				if (yOffs > C_SPIDER_PARM(mSpider, _394)) {
+					yOffs = C_SPIDER_PARM(mSpider, _394);
 				}
 
 				if (mLegMotionProgress[i] > 0.01f) {
@@ -792,8 +792,8 @@ void SpiderLeg::setIdealCentre(Vector3f& centre)
 			if (mIsOnGround[i]) {
 				vec.x = mJointPositions[i][0].x - centre.x;
 				vec.z = mJointPositions[i][0].z - centre.z;
-				centre.x += C_SPIDER_PROP(mSpider)._3D4() * vec.x;
-				centre.z += C_SPIDER_PROP(mSpider)._3D4() * vec.z;
+				centre.x += C_SPIDER_PARM(mSpider, _3D4) * vec.x;
+				centre.z += C_SPIDER_PARM(mSpider, _3D4) * vec.z;
 			}
 		}
 	} else {
@@ -809,11 +809,11 @@ void SpiderLeg::setIdealCentre(Vector3f& centre)
  */
 void SpiderLeg::setRealCentre(immut Vector3f& centre)
 {
-	mCentreVelocity.multiply(C_SPIDER_PROP(mSpider)._3B4());
+	mCentreVelocity.multiply(C_SPIDER_PARM(mSpider, _3B4));
 
-	mCentreVelocity.x += C_SPIDER_PROP(mSpider)._3A4() * (centre.x - mCurrentCentre.x);
-	mCentreVelocity.y += C_SPIDER_PROP(mSpider)._3A4() * (centre.y - mCurrentCentre.y);
-	mCentreVelocity.z += C_SPIDER_PROP(mSpider)._3A4() * (centre.z - mCurrentCentre.z);
+	mCentreVelocity.x += C_SPIDER_PARM(mSpider, _3A4) * (centre.x - mCurrentCentre.x);
+	mCentreVelocity.y += C_SPIDER_PARM(mSpider, _3A4) * (centre.y - mCurrentCentre.y);
+	mCentreVelocity.z += C_SPIDER_PARM(mSpider, _3A4) * (centre.z - mCurrentCentre.z);
 
 	f32 dist = mCentreVelocity.length();
 
@@ -838,8 +838,8 @@ void SpiderLeg::setCentrePosition()
 	setRealCentre(centre);
 
 	f32 dist = centre.distance(mCurrentCentre);
-	if (dist > C_SPIDER_PROP(mSpider)._3C4()) {
-		dist -= C_SPIDER_PROP(mSpider)._3C4();
+	if (dist > C_SPIDER_PARM(mSpider, _3C4)) {
+		dist -= C_SPIDER_PARM(mSpider, _3C4);
 		Vector3f dir(centre.x - mCurrentCentre.x, centre.y - mCurrentCentre.y, centre.z - mCurrentCentre.z);
 		dir.normalise();
 		dir.multiply(dist);
@@ -984,8 +984,8 @@ void SpiderLeg::stepDamageNavi(int legNum)
 	{
 		Creature* navi = *iter;
 		if (navi && navi->isAlive() && navi->isVisible() && !navi->isBuried() && heightCheck > navi->mSRT.t.y) {
-			if (mJointPositions[legNum][0].distance(navi->mSRT.t) < C_SPIDER_PROP(mSpider)._324()) {
-				InteractPress press(mSpider, C_SPIDER_PROP(mSpider)._334());
+			if (mJointPositions[legNum][0].distance(navi->mSRT.t) < C_SPIDER_PARM(mSpider, _324)) {
+				InteractPress press(mSpider, C_SPIDER_PARM(mSpider, _334));
 				navi->stimulate(press);
 			}
 		}
@@ -1006,8 +1006,8 @@ void SpiderLeg::stepDamagePiki(int legNum)
 		Creature* piki = *iter;
 		if (piki && piki->isAlive() && piki->isVisible() && !piki->isBuried() && piki->getStickObject() != mSpider
 		    && piki->mSRT.t.y < heightAbove && piki->mSRT.t.y > heightBelow) {
-			if (qdist2(piki->mSRT.t.x, piki->mSRT.t.z, footPos.x, footPos.z) < C_SPIDER_PROP(mSpider)._324()) {
-				InteractPress press(mSpider, C_SPIDER_PROP(mSpider)._344());
+			if (qdist2(piki->mSRT.t.x, piki->mSRT.t.z, footPos.x, footPos.z) < C_SPIDER_PARM(mSpider, _324)) {
+				InteractPress press(mSpider, C_SPIDER_PARM(mSpider, _344));
 				piki->stimulate(press);
 			}
 		}
@@ -1034,9 +1034,9 @@ void SpiderLeg::stepShakeOffPiki(int legNum)
 			for (int i = 0; i < childCount; i++) {
 				if (legNum == Kumo::legId[i] && piki->getStickPart() && boundPart && boundPart->getChildAt(i)
 				    && boundPart->getChildAt(i)->getID().mId == piki->getStickPart()->getID().mId) {
-					if (NsMathF::getRand(1.0f) < C_SPIDER_PROP(mSpider)._354()) {
+					if (NsMathF::getRand(1.0f) < C_SPIDER_PARM(mSpider, _354)) {
 						piki->stimulate(
-						    InteractFlick(mSpider, C_SPIDER_PROP(mSpider)._364(), C_SPIDER_PROP(mSpider)._374(), FLICK_BACKWARDS_ANGLE));
+						    InteractFlick(mSpider, C_SPIDER_PARM(mSpider, _364), C_SPIDER_PARM(mSpider, _374), FLICK_BACKWARDS_ANGLE));
 						iter.dec();
 					}
 				}
@@ -1136,7 +1136,7 @@ void SpiderLeg::setKneeDirection()
 
 		if (mMotionType == SpiderLegMotionType::ShakeOff) {
 			f32 ang  = atan2f(mKneeDirection[i].x, mKneeDirection[i].z);
-			f32 ang2 = C_SPIDER_PROP(mSpider)._404() * sinVal * sinf(mOscillationPhase + 1.5f * i);
+			f32 ang2 = C_SPIDER_PARM(mSpider, _404) * sinVal * sinf(mOscillationPhase + 1.5f * i);
 
 			mKneeDirection[i].x = sinf(ang + ang2);
 			mKneeDirection[i].y = 1.0f;

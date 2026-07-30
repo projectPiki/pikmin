@@ -189,7 +189,7 @@ struct LifePinchCallBack : public P2DPaneCallBack {
 		f32 healthRatio = 0.0f;
 		if (naviMgr) {
 			navi        = naviMgr->getNavi(0);
-			healthRatio = navi->mHealth / C_NAVI_PROP(navi).mHealth();
+			healthRatio = navi->mHealth / C_NAVI_PARM(navi, mHealth);
 		}
 
 		if (healthRatio > 0.0f && healthRatio < 0.5f) {
