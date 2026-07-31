@@ -6,6 +6,7 @@
 #include "DynColl.h"
 #include "GameStat.h"
 #include "GoalItem.h"
+#include "KMath.h"
 #include "MapMgr.h"
 #include "Pellet.h"
 #include "Piki.h"
@@ -38,37 +39,36 @@ void Creature::moveRotation(f32 deltaTime)
 
 		q2.multiply(q1);
 
-		f32 scale = 0.5f;
-		mRotationQuat.set(scale * q2.v.x + mRotationQuat.v.x, scale * q2.v.y + mRotationQuat.v.y, scale * q2.v.z + mRotationQuat.v.z,
-		                  scale * q2.s + mRotationQuat.s);
+		mRotationQuat.set(mRotationQuat.v.x + 0.5f * q2.v.x, mRotationQuat.v.y + 0.5f * q2.v.y, mRotationQuat.v.z + 0.5f * q2.v.z,
+		                  mRotationQuat.s + 0.5f * q2.s);
 		mRotationQuat.normalise();
 	}
 
 	if (!isCreatureFlag(CF_DisableAutoFaceDir) && !isCreatureFlag(CF_UsePriorityFaceDir)) {
-		if (SQUARE(mTargetVelocity.x) + SQUARE(mTargetVelocity.z) > 1.0f) {
+		f32 squaredSpeed2D = SQUARE(mTargetVelocity.x) + SQUARE(mTargetVelocity.z);
+		if (squaredSpeed2D > 1.0f) {
 			f32 angle = atan2f(mTargetVelocity.x, mTargetVelocity.z);
 
-#if 0 // DLL only:
+#if defined(WIN32)
 			if (isNan(angle)) {
 				dump();
 				ERROR("meck is eating B-teishoku!");
 			}
 #endif
 
-			mFaceDirection += angDist(angle, mFaceDirection) * mProps->mCreatureProps.mFaceDirAdjust() * deltaTime * 10.0f;
+			mFaceDirection += angDist(angle, mFaceDirection) * CREATURE_PARM(mFaceDirAdjust) * deltaTime * 10.0f;
 			mFaceDirection = roundAng(mFaceDirection);
 			if (mRope) {
-				mSRT.r.y = mFaceDirection;
+				mSRT.r.y = (mFaceDirection); // Redundant parenthesis fix matching.
 			} else {
 				mSRT.r.set(0.0f, mFaceDirection, 0.0f);
 			}
-			return;
-		}
-
-		if (mRope) {
-			mSRT.r.y = mFaceDirection;
 		} else {
-			mSRT.r.set(0.0f, mFaceDirection, 0.0f);
+			if (mRope) {
+				mSRT.r.y = (mFaceDirection); // Redundant parenthesis fix matching.
+			} else {
+				mSRT.r.set(0.0f, mFaceDirection, 0.0f);
+			}
 		}
 		return;
 	}

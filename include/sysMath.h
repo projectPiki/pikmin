@@ -10,7 +10,9 @@ class KTri;
 class KRect;
 class KSegment;
 
-#define SQUARE(v) ((v) * (v))
+// This macro is intentionally not adequately parenthesized because redundant parenthesis can sometimes
+// break matching on the DLL.  It's up to the user to wrap the input in top-level parenthesis as-needed.
+#define SQUARE(v) (v * v)
 
 #define DEG2RAD            (1.0f / 180.0f)
 #define TORADIANS(degrees) (PI * (DEG2RAD * degrees))
