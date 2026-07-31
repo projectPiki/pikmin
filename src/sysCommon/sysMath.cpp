@@ -225,72 +225,50 @@ void Vector3f::rotateInverse(immut Quat& quat)
  */
 void Quat::fromMat3f(immut Matrix3f& mtx)
 {
-	f32 diag = mtx.mMtx[0][0] + mtx.mMtx[1][1] + mtx.mMtx[2][2];
-	f32 a    = 0.25f * (1.0f + diag);                        // f4
-	f32 b    = a - 0.5f * (mtx.mMtx[1][1] + mtx.mMtx[2][2]); // f2, f5
-	f32 c    = a - 0.5f * (mtx.mMtx[2][2] + mtx.mMtx[0][0]); // f6
-	f32 d    = a - 0.5f * (mtx.mMtx[0][0] + mtx.mMtx[1][1]); // f7
+	f32 a = 0.25f * (mtx.mMtx[0][0] + mtx.mMtx[1][1] + mtx.mMtx[2][2] + 1.0f);
+	f32 b = a - 0.5f * (mtx.mMtx[1][1] + mtx.mMtx[2][2]);
+	f32 c = a - 0.5f * (mtx.mMtx[2][2] + mtx.mMtx[0][0]);
+	f32 d = a - 0.5f * (mtx.mMtx[0][0] + mtx.mMtx[1][1]);
+	f32 t;
 
-	int type;
-	if (a > b) {
-		if (a > c) {
-			if (a > d) {
-				type = 0;
-			} else {
-				type = 3;
-			}
-		} else if (c > d) {
-			type = 2;
-		} else {
-			type = 3;
-		}
-	} else if (b > c) {
-		if (b > d) {
-			type = 1;
-		} else {
-			type = 3;
-		}
-	} else if (c > d) {
-		type = 2;
-	} else {
-		type = 3;
-	}
+	// Have fun reading this nested ternary.  It's necessary for matching the DLL.
+	int type = (a > b) ? ((a > c) ? ((a > d) ? 0 : 3) : ((c > d) ? 2 : 3)) : ((b > c) ? ((b > d) ? 1 : 3) : ((c > d) ? 2 : 3));
 
 	switch (type) {
 	case 0:
 	{
-		s     = std::sqrtf(a);
-		f32 t = 0.25f / s;
-		v.x   = t * (mtx.mMtx[2][1] - mtx.mMtx[1][2]);
-		v.y   = t * (mtx.mMtx[0][2] - mtx.mMtx[2][0]);
-		v.z   = t * (mtx.mMtx[1][0] - mtx.mMtx[0][1]);
+		s   = std::sqrtf(a);
+		t   = 0.25f / s;
+		v.x = t * (mtx.mMtx[2][1] - mtx.mMtx[1][2]);
+		v.y = t * (mtx.mMtx[0][2] - mtx.mMtx[2][0]);
+		v.z = t * (mtx.mMtx[1][0] - mtx.mMtx[0][1]);
 		break;
 	}
 	case 1:
 	{
-		v.x   = std::sqrtf(b);
-		f32 t = 0.25f / v.x;
-		s     = t * (mtx.mMtx[2][1] - mtx.mMtx[1][2]);
-		v.y   = t * (mtx.mMtx[0][1] + mtx.mMtx[1][0]);
-		v.z   = t * (mtx.mMtx[0][2] + mtx.mMtx[2][0]);
+		v.x = std::sqrtf(b);
+		t   = 0.25f / v.x;
+		s   = t * (mtx.mMtx[2][1] - mtx.mMtx[1][2]);
+		v.y = t * (mtx.mMtx[0][1] + mtx.mMtx[1][0]);
+		v.z = t * (mtx.mMtx[0][2] + mtx.mMtx[2][0]);
 		break;
 	}
 	case 2:
 	{
-		v.y   = std::sqrtf(c);
-		f32 t = 0.25f / v.y;
-		s     = t * (mtx.mMtx[0][2] - mtx.mMtx[2][0]);
-		v.z   = t * (mtx.mMtx[1][2] + mtx.mMtx[2][1]);
-		v.x   = t * (mtx.mMtx[1][0] + mtx.mMtx[0][1]);
+		v.y = std::sqrtf(c);
+		t   = 0.25f / v.y;
+		s   = t * (mtx.mMtx[0][2] - mtx.mMtx[2][0]);
+		v.z = t * (mtx.mMtx[1][2] + mtx.mMtx[2][1]);
+		v.x = t * (mtx.mMtx[1][0] + mtx.mMtx[0][1]);
 		break;
 	}
 	case 3:
 	{
-		v.z   = std::sqrtf(d);
-		f32 t = 0.25f / v.z;
-		s     = t * (mtx.mMtx[1][0] - mtx.mMtx[0][1]);
-		v.x   = t * (mtx.mMtx[2][0] + mtx.mMtx[0][2]);
-		v.y   = t * (mtx.mMtx[2][1] + mtx.mMtx[1][2]);
+		v.z = std::sqrtf(d);
+		t   = 0.25f / v.z;
+		s   = t * (mtx.mMtx[1][0] - mtx.mMtx[0][1]);
+		v.x = t * (mtx.mMtx[2][0] + mtx.mMtx[0][2]);
+		v.y = t * (mtx.mMtx[2][1] + mtx.mMtx[1][2]);
 		break;
 	}
 	}
@@ -302,12 +280,12 @@ void Quat::fromMat3f(immut Matrix3f& mtx)
 		v.z = -v.z;
 	}
 
-	f32 n = 1.0f / std::sqrtf(SQUARE(s) + SQUARE(v.x) + SQUARE(v.y) + SQUARE(v.z));
+	t = 1.0f / std::sqrtf(SQUARE(s) + SQUARE(v.x) + SQUARE(v.y) + SQUARE(v.z));
 
-	s *= n;
-	v.x *= n;
-	v.y *= n;
-	v.z *= n;
+	s *= t;
+	v.x *= t;
+	v.y *= t;
+	v.z *= t;
 }
 
 /**

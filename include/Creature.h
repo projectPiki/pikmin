@@ -37,6 +37,11 @@ class RouteTracer;
 class SeContext;
 class Sphere;
 
+// Redundant parenthesis surrounding the call to `Parm::Operator()` fixes matching for the DLL
+// TOOD: Figure out everywhere this should be used.
+#define CREATURE_PARM(parm)             C_CREATURE_PARM(this, parm)
+#define C_CREATURE_PARM(creature, parm) ((creature)->mProps->mCreatureProps.parm())
+
 /**
  * @brief Bitflags stored in Creature::mCreatureFlags.
  *

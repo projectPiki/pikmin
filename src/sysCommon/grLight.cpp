@@ -114,10 +114,14 @@ void Light::setLightSpot(f32 angle, int spotMode)
 		spotMode = SPOT_NoAttn;
 	}
 
-	f32 cosTheta = cosf((PI * angle) / 180.0f);
 	f32 constTerm;
 	f32 linearTerm;
 	f32 quadTerm;
+
+	f32 angleRadians = angle * PI / 180.0f;
+	f32 tmp;
+	f32 cosTheta = cosf(angleRadians);
+
 	switch (spotMode) {
 	case SPOT_Linear:
 	{
@@ -137,12 +141,12 @@ void Light::setLightSpot(f32 angle, int spotMode)
 	{
 		constTerm  = 0.0f;
 		linearTerm = -cosTheta / (1.0f - cosTheta);
-		quadTerm   = 1.0f / (1.0f - cosTheta);
+		quadTerm   = 1.0f / ((1.0f - cosTheta));
 		break;
 	}
 	case SPOT_Cubic:
 	{
-		f32 tmp    = SQUARE(1.0f - cosTheta);
+		tmp        = SQUARE((1.0f - cosTheta));
 		constTerm  = (cosTheta * (cosTheta - 2.0f)) / tmp;
 		linearTerm = 2.0f / tmp;
 		quadTerm   = -1.0f / tmp;
@@ -150,16 +154,18 @@ void Light::setLightSpot(f32 angle, int spotMode)
 	}
 	case SPOT_Quartic:
 	{
-		constTerm  = -4.0f * cosTheta / SQUARE(1.0f - cosTheta);
-		linearTerm = 4.0f * (1.0f + cosTheta) / SQUARE(1.0f - cosTheta);
-		quadTerm   = -4.0f / SQUARE(1.0f - cosTheta);
+		tmp        = SQUARE((1.0f - cosTheta));
+		constTerm  = -4.0f * cosTheta / tmp;
+		linearTerm = 4.0f * (1.0f + cosTheta) / tmp;
+		quadTerm   = -4.0f / tmp;
 		break;
 	}
 	case SPOT_Special:
 	{
-		constTerm  = 1.0f - (2.0f * cosTheta * cosTheta) / SQUARE(1.0f - cosTheta);
-		linearTerm = 4.0f * cosTheta / SQUARE(1.0f - cosTheta);
-		quadTerm   = -2.0f / SQUARE(1.0f - cosTheta);
+		tmp        = SQUARE((1.0f - cosTheta));
+		constTerm  = 1.0f - (2.0f * cosTheta * cosTheta) / tmp;
+		linearTerm = 4.0f * cosTheta / tmp;
+		quadTerm   = -2.0f / tmp;
 		break;
 	}
 	case SPOT_NoAttn:
