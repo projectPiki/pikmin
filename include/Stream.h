@@ -100,6 +100,24 @@ public:
 };
 
 /**
+ * @brief An unexported and incomplete derivative of `RandomAccessStream`.
+ * With no RTTI and no surviving vftable, there's not a lot to work off of.
+ */
+class AlignedStream : public RandomAccessStream {
+public:
+	virtual void read(void*, int);        // _3C
+	virtual void write(immut void*, int); // _40
+
+	// These were either pure virtual or were never implemented.
+	virtual void alignedWrite(immut void*, int) = 0; // _64, fabricated name
+	virtual void alignedRead(void*, int)        = 0; // _68, fabricated name
+
+	// _00     = VTBL
+	// _00-_08 = RandomAccessStream
+	int mAlignment; // _08
+};
+
+/**
  * @brief TODO
  *
  * @note Size: 0x20.
