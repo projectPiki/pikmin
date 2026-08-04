@@ -549,7 +549,7 @@ rva,va,kind,size,name_mangled,name,source
 0x00001ab4,0x10001ab4,thunk,5,?processMessage@EditBox@@UAEHPAUHWND__@@IIJ@Z,"EditBox::processMessage(HWND__ *,uint,uint,long)",export+ida+ilk
 0x00001ab9,0x10001ab9,thunk,5,?initParticle@OGLGraphics@@UAE_N_N@Z,public: virtual bool __thiscall OGLGraphics::initParticle(bool),ida+ilk
 0x00001abe,0x10001abe,thunk,5,?isSame@PVWKeyInfoS10@@QAE_NAAV1@@Z,PVWKeyInfoS10::isSame(PVWKeyInfoS10 &),export+ida+ilk
-0x00001ac3,0x10001ac3,thunk,5,??_U@YAPAXI@Z,System::alloc,ida+ilk
+0x00001ac3,0x10001ac3,thunk,5,??_U@YAPAXI@Z,void * operator new[](unsigned int),ida+ilk
 0x00001ac8,0x10001ac8,thunk,5,??0UIMgr@@QAE@ABV0@@Z,UIMgr::UIMgr(UIMgr const &),export+ida+ilk
 0x00001acd,0x10001acd,thunk,5,?loadDca@BaseShape@@QAEPAVAnimData@@PADAAVRandomAccessStream@@@Z,"BaseShape::loadDca(char *,RandomAccessStream &)",export+ida+ilk
 0x00001ad2,0x10001ad2,thunk,5,?resizeChildren@UIWindow@@UAEPAXPAXAAVRectArea@@@Z,"UIWindow::resizeChildren(void *,RectArea &)",export+ida+ilk
@@ -2949,20 +2949,20 @@ rva,va,kind,size,name_mangled,name,source
 0x000614b0,0x100614b0,function,2783,?decodeData@Texture@@QAEXPAVTexImg@@@Z,Texture::decodeData(TexImg *),export+ida+ilk
 0x00061f8f,0x10061f8f,data,40,,jpt_10061545,ida
 0x00062280,0x10062280,function,210,,sub_10062280,ida
-0x00062390,0x10062390,function,512,?read@AlignedStream@@UAEXPAXH@Z,"public: virtual void __thiscall AlignedStream::read(void *, int)",ilk
-0x00062590,0x10062590,function,592,?write@AlignedStream@@UAEXPAXH@Z,"public: virtual void __thiscall AlignedStream::write(void *, int)",ilk
+0x00062390,0x10062390,function,408,?read@AlignedStream@@UAEXPAXH@Z,"public: virtual void __thiscall AlignedStream::read(void *, int)",ilk
+0x00062590,0x10062590,function,466,?write@AlignedStream@@UAEXPAXH@Z,"public: virtual void __thiscall AlignedStream::write(void *, int)",ilk
 0x000627e0,0x100627e0,function,61,_DllMain@12,_DllMain@12_0,ida+ilk
-0x00062830,0x10062830,function,96,?init@AtxBuffer@@QAEXPAVRandomAccessStream@@_I1@Z,?init@AtxBuffer@@QAEXPAVRandomAccessStream@@_I1@Z,ilk
-0x00062890,0x10062890,function,384,?open@AtxBuffer@@QAEXH@Z,public: void __thiscall AtxBuffer::open(int),ilk
-0x00062970,0x10062970,function,95,,sub_10062970,ida
-0x00062a10,0x10062a10,function,64,?close@AtxBuffer@@QAEXXZ,public: void __thiscall AtxBuffer::close(void),ilk
+0x00062830,0x10062830,function,72,?init@AtxBuffer@@QAEXPAVRandomAccessStream@@_I1@Z,?init@AtxBuffer@@QAEXPAVRandomAccessStream@@_I1@Z,ilk
+0x00062890,0x10062890,function,169,?open@AtxBuffer@@QAEXH@Z,public: void __thiscall AtxBuffer::open(int),ilk
+0x00062970,0x10062970,function,118,,sub_10062970,ida
+0x00062a10,0x10062a10,function,43,?close@AtxBuffer@@QAEXXZ,public: void __thiscall AtxBuffer::close(void),ilk
 0x00062a50,0x10062a50,function,210,?getReadWrite@AtxBuffer@@QAEXXZ,public: void __thiscall AtxBuffer::getReadWrite(void),ida+ilk
 0x00062b60,0x10062b60,function,207,?setReadWrite@AtxBuffer@@QAEXXZ,public: void __thiscall AtxBuffer::setReadWrite(void),ida+ilk
 0x00062c70,0x10062c70,function,96,?getAvailable@AtxBuffer@@QAEHXZ,public: int __thiscall AtxBuffer::getAvailable(void),ida+ilk
 0x00062cf0,0x10062cf0,function,93,?getPending@AtxBuffer@@QAEHXZ,public: int __thiscall AtxBuffer::getPending(void),ida+ilk
-0x00062d70,0x10062d70,function,576,?read@AtxBuffer@@QAEXPAXH@Z,"public: void __thiscall AtxBuffer::read(void *, int)",ilk
+0x00062d70,0x10062d70,function,237,?read@AtxBuffer@@QAEXPAXH@Z,"public: void __thiscall AtxBuffer::read(void *, int)",ilk
 0x00062ea0,0x10062ea0,function,210,,sub_10062EA0,ida
-0x00062fb0,0x10062fb0,function,368,?write@AtxBuffer@@QAEXPAXH@Z,"public: void __thiscall AtxBuffer::write(void *, int)",ilk
+0x00062fb0,0x10062fb0,function,286,?write@AtxBuffer@@QAEXPAXH@Z,"public: void __thiscall AtxBuffer::write(void *, int)",ilk
 0x00063120,0x10063120,function,140,??0AtxDirectRouter@@QAE@PAD@Z,AtxDirectRouter::AtxDirectRouter(char *),export+ida+ilk
 0x000631d0,0x100631d0,function,90,?setWindow@AtxDirectRouter@@UAEX_I@Z,AtxDirectRouter::setWindow(unsigned __int32),export+ida+ilk
 0x00063240,0x10063240,function,255,?openRoute@AtxDirectRouter@@UAE_NPAVAtxStream@@H@Z,"AtxDirectRouter::openRoute(AtxStream *,int)",export+ida+ilk
@@ -3059,7 +3059,7 @@ rva,va,kind,size,name_mangled,name,source
 0x000670a0,0x100670a0,function,95,,sysNew_Error,ida
 0x00067140,0x10067140,function,210,,sub_10067140,ida
 0x00067250,0x10067250,function,256,??_U@YAPAXI@Z,void * __cdecl operator new[](unsigned int),ida+ilk
-0x00067390,0x10067390,function,128,??2@YAPAXIH@Z,"void * __cdecl operator new(unsigned int, int)",ilk
+0x00067390,0x10067390,function,91,??2@YAPAXIH@Z,"void * __cdecl operator new(unsigned int, int)",ilk
 0x00067410,0x10067410,function,91,??_U@YAPAXIH@Z,"void * __cdecl operator new[](unsigned int, int)",ida+ilk
 0x00067490,0x10067490,function,76,??3@YAXPAX@Z,void __cdecl operator delete(void *),ida+ilk
 0x000674f0,0x100674f0,function,76,??_V@YAXPAX@Z,void __cdecl operator delete[](void *),ida+ilk
@@ -3169,7 +3169,7 @@ rva,va,kind,size,name_mangled,name,source
 0x0006df90,0x1006df90,function,223,?checkForConnections@WSocket@@QAE_NXZ,WSocket::checkForConnections(void),export+ida+ilk
 0x0006e0b0,0x1006e0b0,function,137,?connect@WSocket@@QAEXXZ,WSocket::connect(void),export+ida+ilk
 0x0006e160,0x1006e160,function,232,?write@WSocket@@QAEXPAXH@Z,"WSocket::write(void *,int)",export+ida+ilk
-0x0006e290,0x1006e290,function,95,,sub_1006E290,ida
+0x0006e290,0x1006e290,function,118,,sub_1006E290,ida
 0x0006e330,0x1006e330,function,170,?read@WSocket@@QAEXPAXH@Z,"WSocket::read(void *,int)",export+ida+ilk
 0x0006e410,0x1006e410,function,116,?setASync@WSocket@@QAEXPAUHWND__@@_I1H@Z,"WSocket::setASync(HWND__ *,unsigned __int32,unsigned __int32,int)",export+ida+ilk
 0x0006e4b0,0x1006e4b0,function,58,?close@WSocket@@QAEXXZ,WSocket::close(void),export+ida+ilk

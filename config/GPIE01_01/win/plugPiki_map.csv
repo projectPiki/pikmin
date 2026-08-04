@@ -4,7 +4,7 @@ rva,va,kind,size,name_mangled,name,source
 0x0000100f,0x1000100f,thunk,5,_NewObject,NewObject,export+ghidra+ilk
 0x00001014,0x10001014,thunk,0,?draw@PlugPikiApp@@UAEXAAVGraphics@@@Z,public: virtual void __thiscall PlugPikiApp::draw(class Graphics &),ilk
 0x00001019,0x10001019,thunk,5,??_H@YGXPAXIHP6EX0@Z@Z,construct_new_array,ghidra+ilk
-0x0000101e,0x1000101e,thunk,5,??2@YAPAXI@Z,System::alloc,ghidra+ilk
+0x0000101e,0x1000101e,thunk,5,??2@YAPAXI@Z,void * operator new(unsigned int),ghidra+ilk
 0x00001023,0x10001023,thunk,5,??0ObjectHandle@@QAE@PAD_NP6APAXXZ@Z,"public: __thiscall ObjectHandle::ObjectHandle(char *, bool, void * (__cdecl *)(void))",ghidra+ilk
 0x00001028,0x10001028,thunk,5,??_V@YAXPAX@Z,void __cdecl operator delete[](void *),ghidra+ilk
 0x0000102d,0x1000102d,thunk,5,??0PlugPikiApp@@QAE@XZ,public: __thiscall PlugPikiApp::PlugPikiApp(void),ghidra+ilk
@@ -10569,7 +10569,7 @@ rva,va,kind,size,name_mangled,name,source
 0x0024a6f0,0x1024a6f0,function,66,?refreshSection@GenObjectMapObject@@QAEXAAVAgeServer@@@Z,public: void __thiscall GenObjectMapObject::refreshSection(class AgeServer &),ghidra+ilk
 0x0024a740,0x1024a740,function,165,?doGenAge@GenObjectMapObject@@UAEXAAVAgeServer@@@Z,public: virtual void __thiscall GenObjectMapObject::doGenAge(class AgeServer &),ghidra+ilk
 0x0024a7f0,0x1024a7f0,function,38,?render@GenObjectMapObject@@UAEXAAVGraphics@@PAVGenerator@@@Z,"public: virtual void __thiscall GenObjectMapObject::render(class Graphics &, class Generator *)",ghidra+ilk
-0x0024a820,0x1024a820,function,95,?birth@GenObjectMapObject@@UAEPAVCreature@@AAVBirthInfo@@@Z,GenObjectMapObject::birth,ghidra+ilk
+0x0024a820,0x1024a820,function,786,?birth@GenObjectMapObject@@UAEPAVCreature@@AAVBirthInfo@@@Z,GenObjectMapObject::birth,ghidra+ilk
 0x0024aaf0,0x1024aaf0,function,66,??0DynObjBridge@@QAE@XZ,DynObjBridge::DynObjBridge,ghidra+ilk
 0x0024ab40,0x1024ab40,function,38,?applyGroundForces@DynObjBridge@@UAEXHPAVCollGroup@@@Z,"public: virtual void __thiscall DynObjBridge::applyGroundForces(int, class CollGroup *)",ghidra+ilk
 0x0024ab70,0x1024ab70,function,69,?initialise@GenObjectTeki@@SAXXZ,GenObjectTeki::initialise,ghidra+ilk
