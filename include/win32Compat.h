@@ -17,14 +17,6 @@
 // macros; undefining them re-exposes VC6's reserved obsolete `near`/`far` keywords (C4226),
 // which is worse. Source identifiers named near/far are instead renamed at the definition.
 
-// VC6 uses the pre-standard for-scope rule: a variable declared in `for (int i ...)` leaks
-// into the enclosing block, so a second same-named loop in one function is a redefinition
-// (C2374). The codebase (written for MWCC's standard scoping) redeclares freely. This is
-// the standard VC6-era fix - give each `for` its own scope. Safe here because the codebase
-// consistently braces loop bodies, so the `else` never dangles. Verified codegen-neutral at
-// /Od against the already-matching AyuStack functions.
-#define for if (0) {} else for
-
 // VC6's <math.h> predates C99 and does not define NAN. Construct a quiet NaN from its
 // IEEE-754 bit pattern. (Writing 0.0f/0.0f instead would be a compile-time divide-by-zero
 // error under VC6's constant folder.)
