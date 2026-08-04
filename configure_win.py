@@ -44,7 +44,7 @@ import ninja_syntax  # noqa: E402
 MODULES = [
     {
         "name": "sysCore",
-        "src_globs": ["src/sysCommon/*.cpp", "src/sysDolphin/*.cpp"],
+        "src_globs": ["src/sysCommon/*.cpp", "src/sysDolphin/*.cpp", "src/sysCore/*.cpp"],
         "dll_rel": "files/sysCore.dll",
         "link": True,
         # sysCore owns the SYSCORE_API exports, so it compiles them as
