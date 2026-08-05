@@ -203,8 +203,8 @@ public:
 
 	// Inline functions
 	f32 getRand(f32 max) { return max * (rand() / f32(RAND_MAX)); }
-	inline f32 getFade() { return mCurrentFade; }
-	inline void setFade(f32 target, f32 rate = 3.0f)
+	f32 getFade() { return mCurrentFade; }
+	void setFade(f32 target, f32 rate = 3.0f)
 	{
 		mTargetFade = target;
 		mFadeRate   = rate;
@@ -214,17 +214,17 @@ public:
 		mBloDir = bloDir;
 		mTexDir = texDir;
 	}
-	inline void setTextureBase(immut char* base1, immut char* base2)
+	void setTextureBase(immut char* base1, immut char* base2)
 	{
 		mTextureBase1 = base1;
 		mTextureBase2 = base2;
 	}
-	inline void setDataRoot(immut char* dir) { mDataRoot = dir; }
-	inline void softReset() { mSoftResetPending = true; }
-	inline void Shutdown() { mSystemFlags = SystemFlags::Shutdown; }
-	inline bool resetPending() { return mSoftResetPending; }
-	inline void setFrameClamp(int frameRate) { mFrameRate = frameRate; }
-	inline int getHeapNum() { return mActiveHeapIdx; }
+	void setDataRoot(immut char* dir) { mDataRoot = dir; }
+	void softReset() { mSoftResetPending = true; }
+	void Shutdown() { mSystemFlags = SystemFlags::Shutdown; }
+	bool resetPending() { return mSoftResetPending; }
+	void setFrameClamp(int frameRate) { mFrameRate = frameRate; }
+	int getHeapNum() { return mActiveHeapIdx; }
 
 	bool mSoftResetPending;        // _00
 	f32 mCurrentFade;              // _04
@@ -306,16 +306,16 @@ public:
  */
 struct AramAllocator {
 
-	inline void init(u32 start, u32 size)
+	void init(u32 start, u32 size)
 	{
 		mStartAddress = start;
 		mTotalSize    = size;
 		reset();
 	}
 
-	inline void reset() { mNextFreeAddress = mStartAddress; }
+	void reset() { mNextFreeAddress = mStartAddress; }
 
-	inline u32 alloc(u32 numBytes)
+	u32 alloc(u32 numBytes)
 	{
 		u32 allocAddr = 0;
 		u32 nextFree  = mNextFreeAddress;
@@ -326,7 +326,7 @@ struct AramAllocator {
 		return allocAddr;
 	}
 
-	inline u32 getFreeSize() { return mStartAddress + mTotalSize - mNextFreeAddress; }
+	u32 getFreeSize() { return mStartAddress + mTotalSize - mNextFreeAddress; }
 
 	u32 mStartAddress;    ///< _00
 	u32 mNextFreeAddress; ///< _04
@@ -411,12 +411,12 @@ public:
 
 	static void* alloc(size_t);
 
-	inline AtxRouter* getAtxRouter() { return mAtxRouter; }
-	inline void setAtxRouter(AtxRouter* router) { mAtxRouter = router; }
+	AtxRouter* getAtxRouter() { return mAtxRouter; }
+	void setAtxRouter(AtxRouter* router) { mAtxRouter = router; }
 	f32 getFrameTime() { return mDeltaTime; }
 	f32 getFrameRate() { return mFPS; }
 
-	inline void setActiveAramAllocator(AramAllocator* allocator) { mActiveAramAllocator = allocator; }
+	void setActiveAramAllocator(AramAllocator* allocator) { mActiveAramAllocator = allocator; }
 
 	// _00      = VTBL
 	// _00-_248 = StdSystem
@@ -533,7 +533,7 @@ struct AramStream : public RandomAccessStream {
 		mOffset += readSize;
 	}
 
-	inline void init(immut char* path, u32 address, int pending)
+	void init(immut char* path, u32 address, int pending)
 	{
 		mPath        = path;
 		mPending     = pending;

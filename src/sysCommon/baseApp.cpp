@@ -96,7 +96,7 @@ void BaseApp::stopAgeServer()
 #ifdef WIN32
 	if (mAgeServer) {
 		PRINT("Atx - Wants to close Age service\n");
-		mAgeServer->mStream->writeInt(0xFFFF);
+		mAgeServer->mStream->writeInt(ATX_CMD_CLOSE);
 		mAgeServer->mStream->flush();
 		mAgeServer = nullptr;
 	}
@@ -122,7 +122,7 @@ BaseApp::~BaseApp()
 	PRINT("default baseApp deconstructor\n");
 
 	if (mCommandStream) {
-		mCommandStream->mStream->writeInt(0xFFFF);
+		mCommandStream->mStream->writeInt(ATX_CMD_CLOSE);
 		mCommandStream->mStream->flush();
 	}
 

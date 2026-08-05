@@ -18,7 +18,7 @@ DEFINE_PRINT("particleLoader")
  */
 u8* zen::particleLoader::load(immut char* fileName, bool p2)
 {
-	BinobjInfo* obj = (BinobjInfo*)gsys->findGfxObject(fileName, '_bin');
+	BinobjInfo* obj = static_cast<BinobjInfo*>(gsys->findGfxObject(fileName, '_bin'));
 	if (obj) {
 		return obj->mData;
 	}

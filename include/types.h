@@ -124,6 +124,9 @@ typedef int BOOL;
 // MSVC 6.0 parses empty macro arguments in a non-standard way, skipping that parameter instead of reading it as nothing.
 #define MACRO_NOTHING
 
+// Sneaky way to put top-level commas in macro arguments.  Useful for `MISSING_ARGUMENT` macro in "DebugLog.h"
+#define MACRO_COMMA ,
+
 // Your tyical stringification macros
 #define TO_STRING(x) STRINGIFY(x)
 #define STRINGIFY(x) #x
@@ -368,6 +371,11 @@ inline void padStack(void)
 #define __mwerks_alloca(size)             /* void*  */ __alloca(size)             // unsigned long
 #define __mwerks_va_setup(args)           /* void   */ __va_setup(args)           // void*
 #define __mwerks_builtin_va_info(args)    /* void   */ __builtin_va_info(args)    // va_list*
+#endif
+
+// Disable MSVC errors.  This is typically done via a compiler flag `/wdXXXX`, but that doesn't appear to work under MSVC 6.0.
+#if defined(_MSC_VER)
+#pragma warning(disable : 4716) // Allow non-void functions to return nothing.
 #endif
 
 #endif // _TYPES_H

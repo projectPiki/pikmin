@@ -31,7 +31,7 @@ void OSPanic(const char* file, int line, const char* message, ...);
 // which predates variadic macros (a feature of C99).  Defining a macro with
 // variadic arguments is a compile-time error, so we need some kind of fallback.
 
-#define OSErrorLine(line, message) OSPanic(__FILE__, line, message)
+#define OSErrorLine(line, message) OSPanic(__FILE__, TERNARY_BUILD_MATCHING(line, __LINE__), message)
 #define OSError(message)           OSErrorLine(__LINE__, message)
 
 #define OSAssertMsgLine(line, cond, message) ((void)((cond) || (OSErrorLine(line, __VA_ARGS__), 0)))
@@ -39,7 +39,7 @@ void OSPanic(const char* file, int line, const char* message, ...);
 
 #else
 
-#define OSErrorLine(line, ...) OSPanic(__FILE__, line, __VA_ARGS__)
+#define OSErrorLine(line, ...) OSPanic(__FILE__, TERNARY_BUILD_MATCHING(line, __LINE__), __VA_ARGS__)
 #define OSError(...)           OSErrorLine(__LINE__, __VA_ARGS__)
 
 #ifdef DEBUG // Currently necessary for dsp_cardunlock.c

@@ -1008,8 +1008,9 @@ void OGLGraphics::lineRectangle(immut RectArea& bounds)
 	glBegin(GL_LINE_LOOP);
 
 	// Shouldn't there be a `glColor4f` call here for the primary colour?  Might be a bug.  Wish I could test it.
-#if defined(BUGFIX)
-	/* Pending ability to test bugfix */
+#if defined(BUGFIX) && 0
+	// Pending ability to test bugfix
+	glColor4f(mPrimaryColour.r / 255.0f, mPrimaryColour.g / 255.0f, mPrimaryColour.b / 255.0f, mPrimaryColour.a / 255.0f);
 #endif
 	glVertex3f(bounds.mMinX, bounds.mMinY, 0.0f);
 	glVertex3f(bounds.mMaxX, bounds.mMinY, 0.0f);

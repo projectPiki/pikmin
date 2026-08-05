@@ -1810,7 +1810,7 @@ public:
 		flowCont.mIsDayEndSeqStarted      = FALSE;
 
 		// set up teki and movie heaps
-		int tekiHeapSize = TEKI_HEAP_SIZE; // = 0xa00000 in the DLL
+		int tekiHeapSize = TEKI_HEAP_SIZE;
 		gsys->mHeaps[SYSHEAP_Teki].init("teki", AYU_STACK_GROW_UP, new u8[tekiHeapSize], tekiHeapSize);
 		int movieHeapSize = MOVIE_HEAP_SIZE;
 		gsys->mHeaps[SYSHEAP_Movie].init("movie", AYU_STACK_GROW_UP, new u8[movieHeapSize], movieHeapSize);

@@ -95,4 +95,6 @@ extern BOOL _yPrint;  // Yamashita's PRINT flag
 // devs were mixed on whether one should be used or not.  We'll have to wait until JPN Demo's error handler is understood.
 #define MISSING_NEWLINE TERNARY_BUGFIX("\n", "")
 
+#define MISSING_ARGUMENT(arg) TERNARY_BUGFIX(MACRO_COMMA arg, MACRO_NOTHING)
+
 #endif // _DEBUGLOG_H
