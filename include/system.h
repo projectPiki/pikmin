@@ -414,6 +414,7 @@ public:
 	immut char* findAddress(u32);
 	bool hasDebugInfo();
 	static void halt(immut char* file, int line, immut char* message);
+	void sleep(f32 seconds);
 
 	static void* alloc(size_t);
 

@@ -21,6 +21,10 @@
 #include "timers.h"
 #include <stddef.h>
 
+#if defined(WIN32)
+#include <windows.h>
+#endif
+
 /**
  * @todo: Documentation
  * @note UNUSED Size: 00009C
@@ -1030,6 +1034,16 @@ void System::halt(immut char* file, int line, immut char* message)
 
 #endif
 }
+
+#if defined(WIN32)
+/**
+ * @todo: Documentation
+ */
+void System::sleep(f32 seconds)
+{
+	SleepEx(seconds * 1000, TRUE);
+}
+#endif
 
 /**
  * @todo: Documentation
