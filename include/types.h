@@ -254,6 +254,15 @@ typedef int BOOL;
 
 #define REPEAT(x, n) REPEAT##n(x)
 
+// An empty-bodied (and pure) if-statement gets elided even by debug MSVC, however the registers
+// that would have been used to evaluate the condition still get skipped in regalloc.  The number
+// of registers to skip (`n`) is modulo 3 since there are only three in the cycle (EAX, ECX, EDX).
+#if defined(_MSC_VER) && defined(BUILD_MATCHING)
+#define MSVC_CYCLE_REGISTERS(n) REPEAT(if (0)((void)0), n)
+#else
+#define MSVC_CYCLE_REGISTERS(n) ((void)0)
+#endif
+
 // Somehow this overwhelms the automatic inlining score and stops unwanted function inlining
 #if defined(__MWERKS__) && defined(BUILD_MATCHING)
 #define FORCE_DONT_INLINE REPEAT16(REPEAT10((void*)0))

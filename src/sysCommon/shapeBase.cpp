@@ -190,7 +190,8 @@ void Joint::read(RandomAccessStream& stream)
 	mUseVolume     = (flags & 0x0001) != 0;
 	mUseLightGroup = (flags & 0x4000) != 0;
 
-	// x86 regswap happens here.
+	MSVC_CYCLE_REGISTERS(2);
+
 	mBounds.mMin.read(stream);
 	mBounds.mMax.read(stream);
 	float _ = stream.readFloat();
