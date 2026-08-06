@@ -1,5 +1,6 @@
 #include "AtxStream.h"
 
+#include "AtxRouter.h"
 #include "BaseApp.h"
 #include "DebugLog.h"
 #include "system.h"
@@ -265,86 +266,3 @@ void AtxFileStream::setLength(int length)
 {
 	mLength = length;
 }
-
-#ifdef WIN32
-
-/**
- * @brief A no-op function.
- */
-void AtxDirectRouter::closeAll()
-{
-}
-
-/**
- * @brief A no-op function.
- */
-void AtxDirectRouter::closeRoute(AtxStream* /*unused*/)
-{
-}
-
-/**
- * @brief Checks if the router is connected.
- * @return True if connected, false otherwise.
- */
-bool AtxDirectRouter::isConnected()
-{
-	return mIsConnected;
-}
-
-/**
- * @brief A no-op function.
- */
-void AtxDirectRouter::lock()
-{
-}
-
-/**
- * @brief A no-op function.
- */
-void AtxDirectRouter::unlock()
-{
-}
-
-/**
- * @brief A no-op function.
- */
-void AtxDirectRouter::reset()
-{
-}
-
-/**
- * @brief Opens a communication route to the specified address and port.
- * @param stream The AtxStream to associate with the route.
- * @param unused Unused parameter.
- * @return True if the route was successfully opened, false otherwise.
- */
-bool AtxDirectRouter::openRoute(AtxStream* stream, int /*unused*/)
-{
-	mStream              = new TcpStream();
-	mStream->mStreamType = 2;
-
-	if (!mStream->connect(mAddress, 1369)) {
-		return false;
-	}
-
-	if (sysCurrWnd) {
-		// TODO: Repalce with actual enum vars
-		mStream->mSocket->setASync(sysCurrWnd, 0x433u, 0x21u, -1);
-	}
-
-	stream->mStream = mStream;
-	return true;
-}
-
-/**
- * @brief Sets the window handle for asynchronous socket operations.
- * @param hwnd The window handle.
- */
-void AtxDirectRouter::setWindow(HWND hwnd)
-{
-	if (mStream) {
-		mStream->mSocket->setASync(hwnd, 0x433u, 0x21u, -1);
-	}
-}
-
-#endif

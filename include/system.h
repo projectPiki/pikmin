@@ -422,6 +422,7 @@ public:
 	void setAtxRouter(AtxRouter* router) { mAtxRouter = router; }
 	f32 getFrameTime() { return mDeltaTime; }
 	f32 getFrameRate() { return mFPS; }
+	int setStreamType(int); // TODO
 
 	void setActiveAramAllocator(AramAllocator* allocator) { mActiveAramAllocator = allocator; }
 
@@ -473,6 +474,10 @@ public:
 	AramAllocator* mActiveAramAllocator;             // _328
 	vu32 mDmaComplete;                               // _32C
 	vu32 mTexComplete;                               // _330
+#if defined(WIN32)                                   // The WIN32 `System` class was very different.
+	u8 _334[0x3B8 - 0x334];                          // _334
+	char _3B8[];                                     // _3B8, major TODO here.
+#endif
 };
 
 extern SYSCORE_API System* gsys;

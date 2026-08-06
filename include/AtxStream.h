@@ -32,78 +32,7 @@ typedef u32 HWND;
 #define ATX_FILE_CMD_SET_POS (102) // Set file position
 #define ATX_FILE_CMD_CLOSE   (103) // Close file
 
-class AtxStream;
 class BaseApp;
-
-/**
- * @brief Websocket wrapper for network communication.
- * @details Windows-only code, used by AtxStream for TCP communication.
- * @todo Decompile this struct and its methods.
- */
-class WSocket {
-public:
-	/// @brief Initializes the Winsock library. (Called once at program start.)
-	static void init();
-
-	bool checkForConnections();
-	void close();
-	bool closing();
-	void connect();
-	bool create(char*, int);
-	bool open(char*, int);
-	u32 pending();
-	void setASync(HWND hWnd, u32 wMsg, u32 lEvent, int sock);
-
-	void read(void* buf, int length);
-	void write(void* buf, int length);
-	void flushWrite();
-
-	int mListenSocket;   // _00, socket used for listening for connections
-	int mAcceptedSocket; // _04, socket for an accepted connection
-};
-
-/**
- * @brief TCP communication stream.
- * @details Used by AtxStream for network communication.
- */
-class TcpStream : public Stream {
-public:
-#ifdef WIN32
-	TcpStream();
-	TcpStream(WSocket*);
-
-	virtual void read(void*, int);
-	virtual void write(void*, int);
-	virtual int getPending();
-	virtual int getAvailable();
-	virtual void close();
-	virtual void flush();
-	virtual bool closing();
-
-	bool connect(char* name, int port);
-
-	// _04     = VTBL
-	// _00-_08 = Stream
-	WSocket* mSocket; // _08, underlying socket used for communication
-	int mStreamType;  // _0C, type of stream (e.g. 0 = client, 1 = server)
-#endif
-};
-
-/**
- * @brief Abstract base class for ATX communication routers.
- * @details Used by AtxStream to route communication over different transports.
- */
-class AtxRouter {
-public:
-	virtual bool openRoute(AtxStream*, int) = 0; // _00
-	virtual void closeRoute(AtxStream*)     = 0; // _04
-	virtual void lock() { }                      // _08
-	virtual void unlock() { }                    // _0C
-	virtual void closeAll() { }                  // _10
-	virtual void reset() = 0;                    // _14
-	virtual bool isConnected() { return false; } // _18
-	virtual void setWindow(HWND) { }             // _1C
-};
 
 /**
  * @brief TCP communication stream used across a network.
@@ -128,7 +57,7 @@ public:
 
 	// _04     = VTBL
 	// _00-_08 = Stream
-	TcpStream* mStream; // _08, underlying TCP stream used for communication
+	Stream* mStream;    // _08, underlying TCP stream used for communication
 	int _0C;            // _0C
 };
 
@@ -172,29 +101,5 @@ public:
 	int mLength;          // _0C, length of the file
 	AtxStream mAtxStream; // _10, underlying ATX stream used for communication
 };
-
-#ifdef WIN32
-/**
- * @brief Direct router using TCP for AtxStream.
- */
-class AtxDirectRouter : public AtxRouter {
-public:
-	virtual bool openRoute(AtxStream*, int); // _00
-	virtual void closeRoute(AtxStream*);     // _04
-	virtual void lock();                     // _08
-	virtual void unlock();                   // _0C
-	virtual void closeAll();                 // _10
-	virtual void reset();                    // _14
-	virtual bool isConnected();              // _18
-	virtual void setWindow(HWND);            // _1C
-
-	// _04     = VTBL
-	char* mAddress;     // _04, the address the router connects to
-	u32 _08;            // _08
-	u8 _0C;             // _0C
-	bool mIsConnected;  // _0D, whether the router is connected
-	TcpStream* mStream; // _10, the TCP stream used for communication
-};
-#endif
 
 #endif
