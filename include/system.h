@@ -566,6 +566,7 @@ struct AramStream : public RandomAccessStream {
 
 #ifdef WIN32
 extern SYSCORE_API HWND sysCurrWnd;
+extern SYSCORE_API HINSTANCE sysHInst;
 #endif
 extern SYSCORE_API int glnWidth;
 extern SYSCORE_API int glnHeight;

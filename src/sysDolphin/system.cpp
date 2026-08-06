@@ -86,6 +86,7 @@ System sys;
 static bool useSymbols = false;
 #if defined(WIN32)
 SYSCORE_API HWND sysCurrWnd;
+SYSCORE_API HINSTANCE sysHInst;
 #endif
 SYSCORE_API System* gsys = nullptr;
 SYSCORE_API Stream* sysCon;
