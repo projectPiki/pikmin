@@ -50,7 +50,7 @@ public:
 	struct Slot {
 		Slot()
 		{
-			mOccupant.clear();
+			mOccupant.reset();
 			mListener = nullptr;
 		}
 

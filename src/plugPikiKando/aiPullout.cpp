@@ -29,7 +29,7 @@ ActPullout::ActPullout(Piki* piki)
 	            new ActAdjust(piki), nullptr,         //
 	            new ActPulloutCreature(piki), nullptr //
 	);
-	mTarget.clear();
+	mTarget.reset();
 }
 
 /**
@@ -62,7 +62,7 @@ void ActPullout::init(Creature* target)
 		mTarget.set(target);
 		AndAction::init(target);
 	} else {
-		mTarget.reset();
+		mTarget.clear();
 	}
 }
 
@@ -102,7 +102,7 @@ void ActPullout::cleanup()
 {
 	Action::cleanup();
 	mPiki->_518 = true;
-	mTarget.reset();
+	mTarget.clear();
 }
 
 /**
@@ -117,7 +117,7 @@ void ActPulloutCreature::cleanup()
 		}
 	}
 
-	mTarget.reset();
+	mTarget.clear();
 }
 
 /**

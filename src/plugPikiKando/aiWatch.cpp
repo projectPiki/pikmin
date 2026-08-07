@@ -26,7 +26,7 @@ void ActWatch::AnimListener::animationKeyUpdated(immut PaniAnimKeyEvent&)
 ActWatch::ActWatch(Piki* piki)
     : Action(piki, true)
 {
-	mTarget.reset();
+	mTarget.clear();
 	mListener = new AnimListener(this, piki);
 }
 
@@ -57,7 +57,7 @@ void ActWatch::init(Creature* target)
  */
 void ActWatch::cleanup()
 {
-	mTarget.reset();
+	mTarget.clear();
 	mPiki->finishLook();
 }
 

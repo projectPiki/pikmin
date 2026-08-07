@@ -485,7 +485,7 @@ void ActPutBomb::cleanup()
 ActPutItem::ActPutItem(Piki* piki)
     : Action(piki, true)
 {
-	mItem.clear();
+	mItem.reset();
 }
 
 /**
@@ -607,5 +607,5 @@ int ActPutItem::exec()
  */
 void ActPutItem::cleanup()
 {
-	mItem.reset();
+	mItem.clear();
 }

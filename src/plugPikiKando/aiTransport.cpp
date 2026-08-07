@@ -245,7 +245,7 @@ void ActTransport::init(Creature* target)
 			mPiki->mActionState = 2;
 		}
 	} else {
-		mPellet.reset();
+		mPellet.clear();
 	}
 
 	mStateProgress    = 0;
@@ -1090,7 +1090,7 @@ void ActTransport::cleanup()
 			pel->setTrySound(false);
 		}
 	}
-	mPellet.reset();
+	mPellet.clear();
 }
 
 /**

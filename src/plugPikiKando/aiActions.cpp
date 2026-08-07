@@ -22,7 +22,7 @@ DEFINE_PRINT("aiActions");
 ActPick::ActPick(Piki* piki)
     : Action(piki, true)
 {
-	mObject.reset();
+	mObject.clear();
 }
 
 /**
@@ -77,7 +77,7 @@ void ActPick::init(Creature* object)
 void ActPick::cleanup()
 {
 	Creature* obj = mObject.getPtr();
-	mObject.reset();
+	mObject.clear();
 }
 
 /**

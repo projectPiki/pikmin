@@ -105,7 +105,7 @@ FormationMgr::FormationMgr()
  */
 FormPoint::FormPoint()
 {
-	mOwner.clear();
+	mOwner.reset();
 	mOffset.set(0.0f, 0.0f, 0.0f);
 }
 
@@ -527,7 +527,7 @@ void Rope::refresh(Graphics& gfx)
  */
 Spine::Spine()
 {
-	mTargetCreature.clear();
+	mTargetCreature.reset();
 }
 
 /**

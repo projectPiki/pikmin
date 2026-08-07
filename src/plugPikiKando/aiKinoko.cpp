@@ -25,7 +25,7 @@ ActKinoko::ActKinoko(Piki* piki)
     : Action(piki, true)
 {
 	setName("kinoko");
-	mTarget.clear();
+	mTarget.reset();
 }
 
 /**

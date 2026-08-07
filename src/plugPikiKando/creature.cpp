@@ -324,7 +324,7 @@ int Creature::getStandType()
 SearchData::SearchData()
 {
 	mSearchIteration = 0;
-	mTargetCreature.reset();
+	mTargetCreature.clear();
 	mDistance = 12800.0f;
 }
 
@@ -379,8 +379,8 @@ bool Creature::setStateGrabbed(Creature* holder)
  */
 void Creature::resetStateGrabbed()
 {
-	mHoldingCreature.getPtr()->mGrabbedCreature.reset();
-	mHoldingCreature.reset();
+	mHoldingCreature.getPtr()->mGrabbedCreature.clear();
+	mHoldingCreature.clear();
 	PRINT("## resetStateGrabbed\n");
 }
 
@@ -421,8 +421,8 @@ void Creature::init()
 	setCreatureFlag(CF_Free);
 	resetCreatureFlag(CF_EnableGroundOffset | CF_IsAiDisabled | CF_IsClimbing | CF_AIAlwaysActive);
 	mGroundOffset = 0.0f;
-	mHoldingCreature.clear();
-	mGrabbedCreature.clear();
+	mHoldingCreature.reset();
+	mGrabbedCreature.reset();
 	resetCreatureFlag(CF_SkipPhysicsAndCollision | CF_Unk17);
 	clearCnt();
 	mIsBeingDamaged = false;
@@ -615,8 +615,8 @@ Creature::Creature(CreatureProp* props)
 
 	resetCreatureFlag(CF_Unk1 | CF_SkipPhysicsAndCollision);
 
-	mHoldingCreature.clear();
-	mGrabbedCreature.clear();
+	mHoldingCreature.reset();
+	mGrabbedCreature.reset();
 
 	mIsBeingDamaged   = false;
 	mCollPlatform     = nullptr;

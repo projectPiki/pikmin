@@ -20,7 +20,7 @@ DEFINE_PRINT("aiGoto")
 ActGoto::ActGoto(Piki* piki)
     : Action(piki, true)
 {
-	mTarget.clear();
+	mTarget.reset();
 }
 
 /**
@@ -52,7 +52,7 @@ void ActGoto::init(Creature* target)
 void ActGoto::cleanup()
 {
 	Creature* target = mTarget.getPtr();
-	mTarget.reset();
+	mTarget.clear();
 }
 
 /**

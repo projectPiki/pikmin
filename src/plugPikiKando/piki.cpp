@@ -2348,7 +2348,7 @@ void Piki::init(Navi* navi)
 	mRouteHandle         = 0;
 	mUseAsyncPathfinding = false;
 	_528                 = 0.0f;
-	mLookAtCreature.clear();
+	mLookAtCreature.reset();
 	mLookatPosPtr = nullptr;
 	mIsLooking    = false;
 	forceFinishLook();
@@ -2395,7 +2395,7 @@ void Piki::init(Navi* navi)
 	initColor(color);
 	mHappa = Leaf;
 	resetCreatureFlag(CF_SkipPhysicsAndCollision);
-	_500.reset();
+	_500.clear();
 	mMode   = PikiMode::FormationMode;
 	mHealth = pikiMgr->mPikiParms->mPikiParms.mPikiMaxHealth();
 	mFSM->transit(this, PIKISTATE_Normal);
@@ -2450,7 +2450,7 @@ void Piki::updateLookCreature()
 
 	Creature* target = mLookAtCreature.getPtr();
 	if (target && (!target->isVisible() || !target->isAlive())) {
-		mLookAtCreature.reset();
+		mLookAtCreature.clear();
 		target = nullptr;
 	}
 
@@ -2458,7 +2458,7 @@ void Piki::updateLookCreature()
 	if (target) {
 		minDist = qdist2(mSRT.t.x, mSRT.t.z, target->mSRT.t.x, target->mSRT.t.z) - target->getBoundingSphereRadius();
 		if (minDist > 200.0f) {
-			mLookAtCreature.reset();
+			mLookAtCreature.clear();
 			target  = nullptr;
 			minDist = 128000.0f;
 		}
@@ -2480,7 +2480,7 @@ void Piki::updateLookCreature()
 
 	if (target != newTarget && gsys->getRand(1.0f) > 0.2f) {
 		if (target) {
-			mLookAtCreature.reset();
+			mLookAtCreature.clear();
 		}
 		if (gsys->getRand(1.0f) > 0.2f) {
 			newTarget = mNavi;
@@ -2759,7 +2759,7 @@ void Piki::doAI()
 		gsys->mTimer->stop("ai exec");
 	}
 
-	_500.reset();
+	_500.clear();
 }
 
 /**

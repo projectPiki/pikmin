@@ -260,7 +260,7 @@ void SearchBuffer::init(SearchData* data, int p2)
 		if (!mDataList[i].mTargetCreature.isNull()) {
 			PRINT(" %x(%d) : [%d] = %x\n", data, p2, i, mDataList[i].mTargetCreature.getPtr());
 		}
-		mDataList[i].mTargetCreature.clear();
+		mDataList[i].mTargetCreature.reset();
 		mDataList[i].mDistance = 12800.0f;
 	}
 	mCurrentEntries = 0;
@@ -306,7 +306,7 @@ int SearchBuffer::getIndex(Creature* obj)
 void SearchBuffer::clear()
 {
 	for (int i = 0; i < mCurrentEntries; i++) {
-		mDataList[i].mTargetCreature.clear();
+		mDataList[i].mTargetCreature.reset();
 	}
 	mCurrentEntries = 0;
 	_1C             = 0;
@@ -354,14 +354,14 @@ void SearchBuffer::insertQuick(Creature* obj, f32 dist)
 				return;
 			}
 			mDataList[mLastEntry].mTargetCreature.getPtr();
-			mDataList[mLastEntry].mTargetCreature.reset();
+			mDataList[mLastEntry].mTargetCreature.clear();
 			mDataList[mLastEntry].mTargetCreature.set(obj);
 			mMaxDistance = dist;
 			return;
 		}
 
 		mDataList[mCurrentEntries].mTargetCreature.getPtr();
-		mDataList[mCurrentEntries].mTargetCreature.reset();
+		mDataList[mCurrentEntries].mTargetCreature.clear();
 		mDataList[mCurrentEntries].mTargetCreature.set(obj);
 		if (mMaxDistance < dist) {
 			mMaxDistance = dist;
@@ -397,7 +397,7 @@ void SearchBuffer::insert(Creature* creature, f32 distance)
 					mDataList[i + 1].mDistance        = mDataList[i].mDistance;
 					mDataList[i + 1].mSearchIteration = mDataList[i].mSearchIteration;
 				} else {
-					mDataList[mMaxEntries - 1].mTargetCreature.reset();
+					mDataList[mMaxEntries - 1].mTargetCreature.clear();
 				}
 			} else {
 				break;
@@ -440,7 +440,7 @@ void SearchBuffer::update()
 
 		// Timeout after 6 frames of not seeing the creature
 		mDataList[i].mTargetCreature.getPtr();
-		mDataList[i].mTargetCreature.reset();
+		mDataList[i].mTargetCreature.clear();
 
 		int offs = i;
 		for (int j = offs + 1; j < mCurrentEntries; j++) {

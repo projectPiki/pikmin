@@ -29,7 +29,7 @@ ActPickItem::ActPickItem(Piki* piki)
 	            new ActGoto(piki), nullptr, //
 	            new ActPick(piki), nullptr  //
 	);
-	mTargetItem.clear();
+	mTargetItem.reset();
 }
 
 /**
@@ -74,7 +74,7 @@ void ActPickItem::init(Creature* target)
 		AndAction::init(target);
 		PRINT(" set target to %x\n", target);
 	} else {
-		mTargetItem.reset();
+		mTargetItem.clear();
 	}
 }
 
@@ -120,7 +120,7 @@ int ActPickItem::exec()
 void ActPickItem::cleanup()
 {
 	PRINT("### piki is%sholding\n", mPiki->isHolding() ? " " : " not ");
-	mTargetItem.reset();
+	mTargetItem.clear();
 }
 
 /**

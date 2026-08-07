@@ -18,7 +18,7 @@ struct SmartPtr {
 	void set(T* creature)
 	{
 		if (mPtr) {
-			reset();
+			clear();
 		}
 		mPtr = creature;
 		if (mPtr) {
@@ -26,7 +26,7 @@ struct SmartPtr {
 		}
 	}
 
-	void reset()
+	void clear()
 	{
 		if (mPtr) {
 			mPtr->subCnt();
@@ -38,7 +38,7 @@ struct SmartPtr {
 
 	bool isNull() { return mPtr == nullptr; }
 
-	void clear() { mPtr = nullptr; }
+	void reset() { mPtr = nullptr; }
 
 	T* mPtr; // _00
 };

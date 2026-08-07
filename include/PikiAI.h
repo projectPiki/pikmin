@@ -891,9 +891,9 @@ public:
 	ActDeliver(Piki*);
 
 	virtual ~ActDeliver() { }                              // _44 (weak)
-	virtual void defaultInitialiser() { mObject.clear(); } // _38 (weak)
+	virtual void defaultInitialiser() { mObject.reset(); } // _38 (weak)
 	virtual void init(Creature*);                          // _48
-	virtual void cleanup() { mObject.reset(); }            // _50 (weak)
+	virtual void cleanup() { mObject.clear(); }            // _50 (weak)
 
 protected:
 	// _00     = VTBL

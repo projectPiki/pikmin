@@ -385,7 +385,7 @@ public:
 	void clearCreaturePointers()
 	{
 		for (int i = 0; i < 4; i++) {
-			mTargetCreatures[i].reset();
+			mTargetCreatures[i].clear();
 		}
 	}
 
@@ -418,7 +418,7 @@ public:
 
 	void setCreaturePointer(int idx, Creature* target) { mTargetCreatures[idx].set(target); }
 	Creature* getCreaturePointer(int idx) { return mTargetCreatures[idx].getPtr(); }
-	void clearCreaturePointer(int idx) { mTargetCreatures[idx].reset(); }
+	void clearCreaturePointer(int idx) { mTargetCreatures[idx].clear(); }
 
 	f32 getScaleRate() { return getParameterF(TPF_Scale) * getPersonalityF(TekiPersonality::FLT_Size); }
 

@@ -19,7 +19,7 @@ DEFINE_PRINT("aiEscape")
 ActEscape::ActEscape(Piki* piki)
     : Action(piki, false)
 {
-	mTarget.reset();
+	mTarget.clear();
 }
 
 /**
@@ -47,7 +47,7 @@ void ActEscape::init(Creature* target)
  */
 void ActEscape::cleanup()
 {
-	mTarget.reset();
+	mTarget.clear();
 }
 
 /**

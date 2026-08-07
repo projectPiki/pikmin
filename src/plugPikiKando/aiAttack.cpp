@@ -34,7 +34,7 @@ ActAttack::ActAttack(Piki* piki)
 	setChildren(CHILD_COUNT,                     //
 	            new ActJumpAttack(piki), nullptr //
 	);
-	mOther.clear();
+	mOther.reset();
 	mTargetIsPlayer = false;
 }
 
@@ -314,7 +314,7 @@ void ActAttack::cleanup()
 	mPiki->endClimb();
 	seMgr->leaveBattle();
 	mPiki->endStickObject();
-	mOther.reset();
+	mOther.clear();
 	mPiki->_519 = false;
 }
 
@@ -324,7 +324,7 @@ void ActAttack::cleanup()
 ActJumpAttack::ActJumpAttack(Piki* piki)
     : Action(piki, true)
 {
-	mTarget.clear(); // lol
+	mTarget.reset(); // lol
 }
 
 /**
@@ -719,7 +719,7 @@ int ActJumpAttack::exec()
  */
 void ActJumpAttack::cleanup()
 {
-	mTarget.reset();
+	mTarget.clear();
 	mPiki->mWantToStick = false;
 }
 

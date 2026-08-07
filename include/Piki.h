@@ -211,7 +211,7 @@ public:
 		mLookTimer = 0;
 		mIsLooking = false;
 
-		mLookAtCreature.reset();
+		mLookAtCreature.clear();
 	}
 
 	void forceFinishLook()
@@ -222,7 +222,7 @@ public:
 		mLookTimer          = 0;
 		mIsLooking          = false;
 
-		mLookAtCreature.reset();
+		mLookAtCreature.clear();
 	}
 
 	bool isFired() { return mFiredState == 1; }

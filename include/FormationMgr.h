@@ -67,7 +67,7 @@ public:
 	void reset()
 	{
 		if (!mOwner.isNull()) {
-			mOwner.clear();
+			mOwner.reset();
 		}
 	}
 

@@ -320,7 +320,7 @@ void Piki::startHimaLook(immut Vector3f* pos)
 	mLookatPosPtr = pos;
 	mLookTimer    = false;
 	mIsLooking    = false;
-	mLookAtCreature.reset();
+	mLookAtCreature.clear();
 	mIsLooking = true;
 	_334       = gsys->getRand(1.0f) * 3.0f + 4.0f;
 }

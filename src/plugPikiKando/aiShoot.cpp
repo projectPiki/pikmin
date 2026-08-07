@@ -25,7 +25,7 @@ ActShoot::ActShoot(Piki* piki)
 	            new ActGoto(piki), new ActGoto::Initialiser(220.0f, 100.0f, nullptr), //
 	            new ActShootCreature(piki), nullptr                                   //
 	);
-	mTarget.clear();
+	mTarget.reset();
 	mTargetIsPlayer = false;
 }
 
@@ -141,7 +141,7 @@ int ActShoot::exec()
 void ActShoot::cleanup()
 {
 	PRINT("ActShoot cleanup\n");
-	mTarget.reset();
+	mTarget.clear();
 }
 
 /**
@@ -149,7 +149,7 @@ void ActShoot::cleanup()
  */
 void ActShootCreature::cleanup()
 {
-	mTarget.reset();
+	mTarget.clear();
 }
 
 /**

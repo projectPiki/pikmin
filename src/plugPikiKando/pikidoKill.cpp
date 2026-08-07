@@ -36,7 +36,7 @@ void Piki::doKill()
 		mUseAsyncPathfinding = 0;
 	}
 
-	mLookAtCreature.clear();
+	mLookAtCreature.reset();
 
 	if (mIsPanicked) {
 		mPanickedEffect->kill();
@@ -108,7 +108,7 @@ void Piki::doKill()
 	GameStat::workPikis.dec(mColor);
 	GameStat::update();
 	mFSM->transit(this, PIKISTATE_Dead);
-	_500.clear();
+	_500.reset();
 	pikiMgr->mDeadPikis++;
 	pikiMgr->kill(this);
 

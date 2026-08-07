@@ -508,7 +508,7 @@ Navi::Navi(CreatureProp* props, int naviID)
 	mSeedCollectionCount = 0;
 	_730          = 0;
 	mCurrKeyCount = 0;
-	mAttackTarget.clear();
+	mAttackTarget.reset();
 	_770 = 0;
 }
 
@@ -1299,7 +1299,7 @@ void Navi::doAttack()
 	Creature* target = mAttackTarget.getPtr();
 	InteractAttack attack(this, nullptr, 1.0f, false);
 	target->stimulate(attack);
-	mAttackTarget.reset();
+	mAttackTarget.clear();
 }
 
 /**

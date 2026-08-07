@@ -20,9 +20,9 @@ DEFINE_PRINT("aiGuard")
 ActGuard::ActGuard(Piki* piki)
     : Action(piki, true)
 {
-	mTarget.clear();
-	mLeftGuard.clear();
-	mRightGuard.clear();
+	mTarget.reset();
+	mLeftGuard.reset();
+	mRightGuard.reset();
 	mIsGuardable      = false;
 	mFormationSpacing = 30.0f;
 }
@@ -32,9 +32,9 @@ ActGuard::ActGuard(Piki* piki)
  */
 void ActGuard::init(Creature*)
 {
-	mTarget.clear();
-	mLeftGuard.clear();
-	mRightGuard.clear();
+	mTarget.reset();
+	mLeftGuard.reset();
+	mRightGuard.reset();
 	Piki* friendPiki = findFriend();
 	if (friendPiki) {
 		mTarget.set(friendPiki);
@@ -51,15 +51,15 @@ void ActGuard::init(Creature*)
  */
 void ActGuard::cleanup()
 {
-	mTarget.reset();
+	mTarget.clear();
 	if (!mRightGuard.isNull()) {
-		static_cast<ActGuard*>(static_cast<Piki*>(mRightGuard.getPtr())->mActiveAction->getCurrAction())->mLeftGuard.reset();
-		mRightGuard.reset();
+		static_cast<ActGuard*>(static_cast<Piki*>(mRightGuard.getPtr())->mActiveAction->getCurrAction())->mLeftGuard.clear();
+		mRightGuard.clear();
 	}
 
 	if (!mLeftGuard.isNull()) {
-		static_cast<ActGuard*>(static_cast<Piki*>(mLeftGuard.getPtr())->mActiveAction->getCurrAction())->mRightGuard.reset();
-		mLeftGuard.reset();
+		static_cast<ActGuard*>(static_cast<Piki*>(mLeftGuard.getPtr())->mActiveAction->getCurrAction())->mRightGuard.clear();
+		mLeftGuard.clear();
 	}
 
 	mIsGuardable = false;
@@ -161,7 +161,7 @@ int ActGuard::exec()
 			}
 		}
 	} else {
-		mTarget.reset();
+		mTarget.clear();
 	}
 
 	mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
@@ -286,7 +286,7 @@ void ActGuard::setGoal()
 			mFormationSide = Left;
 		}
 	} else {
-		mTarget.reset();
+		mTarget.clear();
 		return;
 	}
 

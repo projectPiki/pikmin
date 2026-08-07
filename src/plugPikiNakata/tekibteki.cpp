@@ -298,7 +298,7 @@ void BTeki::reset()
 
 	int i;
 	for (i = 0; i < 4; i++) {
-		mTargetCreatures[i].clear();
+		mTargetCreatures[i].reset();
 	}
 
 	mPathHandle          = 'test';

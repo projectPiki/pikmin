@@ -19,7 +19,7 @@ DEFINE_PRINT(TERNARY_BUILD_MATCHING("aiRandomBoid", "aiChase")) // ... no you're
 ActChase::ActChase(Piki* piki)
     : Action(piki, true)
 {
-	mTarget.reset();
+	mTarget.clear();
 }
 
 /**
@@ -45,7 +45,7 @@ void ActChase::init(Creature* target)
 void ActChase::cleanup()
 {
 	Creature* target = mTarget.getPtr();
-	mTarget.reset();
+	mTarget.clear();
 }
 
 /**

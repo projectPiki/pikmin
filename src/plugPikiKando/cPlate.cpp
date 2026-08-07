@@ -151,12 +151,12 @@ void CPlate::releaseSlot(Creature* occupant, int idx)
 	}
 
 	mHappaCounts[static_cast<Piki*>(occupant)->mHappa]--;
-	slot->mOccupant.reset();
+	slot->mOccupant.clear();
 	mUsedSlotCount--;
 	mTotalSlotCount--;
 
 	for (int i = idx; i < mUsedSlotCount; i++) {
-		mSlotList[i].mOccupant.reset();
+		mSlotList[i].mOccupant.clear();
 		mSlotList[i].mOccupant.set(mSlotList[i + 1].mOccupant.getPtr());
 		mSlotList[i].mListener = mSlotList[i + 1].mListener;
 		mSlotList[i].mListener->inform(i);
@@ -177,12 +177,12 @@ void CPlate::swapSlot(int idx1, int idx2)
 	Creature* owner2             = slot2->mOccupant.getPtr();
 	SlotChangeListner* listener2 = slot2->mListener;
 
-	slot1->mOccupant.reset();
+	slot1->mOccupant.clear();
 	slot1->mOccupant.set(owner2);
 	slot1->mListener = listener2;
 	slot1->mListener->inform(idx1);
 
-	slot2->mOccupant.reset();
+	slot2->mOccupant.clear();
 	slot2->mOccupant.set(owner1);
 	slot2->mListener = listener1;
 	slot2->mListener->inform(idx2);
