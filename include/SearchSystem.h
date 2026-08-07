@@ -1,7 +1,7 @@
 #ifndef _SEARCHSYSTEM_H
 #define _SEARCHSYSTEM_H
 
-#include "ComplexCreature.h"
+#include "SmartPtr.h"
 #include "Traversable.h"
 #include "types.h"
 

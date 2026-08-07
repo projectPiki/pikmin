@@ -2,8 +2,8 @@
 #define _FORMATIONMGR_H
 
 #include "Colour.h"
-#include "ComplexCreature.h"
 #include "Creature.h"
+#include "SmartPtr.h"
 #include "Traversable.h"
 #include "Vector.h"
 #include "types.h"

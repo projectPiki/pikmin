@@ -1,4 +1,5 @@
 #include "ComplexCreature.h"
+
 #include "Collision.h"
 #include "Creature.h"
 #include "DebugLog.h"

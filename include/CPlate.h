@@ -1,10 +1,10 @@
 #ifndef _CPLATE_H
 #define _CPLATE_H
 
-#include "ComplexCreature.h"
 #include "GlobalGameOptions.h"
 #include "Node.h"
 #include "Parameters.h"
+#include "SmartPtr.h"
 #include "Traversable.h"
 #include "types.h"
 

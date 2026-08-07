@@ -1,7 +1,6 @@
 #ifndef _TEKI_H
 #define _TEKI_H
 
-#include "ComplexCreature.h"
 #include "Creature.h"
 #include "CreatureCollPart.h"
 #include "Interactions.h"
@@ -9,6 +8,7 @@
 #include "PaniAnimator.h"
 #include "PelletView.h"
 #include "Shape.h"
+#include "SmartPtr.h"
 #include "TAI/EffectAttack.h"
 #include "TekiParameters.h"
 #include "TekiPersonality.h"
