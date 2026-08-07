@@ -138,7 +138,7 @@ public:
 	NodeMgr();
 	~NodeMgr();
 
-	inline CoreNode& firstNode() { return mRootNode; }
+	inline CoreNode* firstNode() { return &mRootNode; }
 
 	CoreNode* findNode(immut char*, CoreNode*);
 	void recFindNode(CoreNode*, immut char*);

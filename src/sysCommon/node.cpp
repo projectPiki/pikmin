@@ -243,7 +243,7 @@ CoreNode* NodeMgr::findNode(immut char* name, CoreNode* head)
 	foundNode = false;
 
 	if (!head) {
-		head = &firstNode();
+		head = firstNode();
 	}
 	recFindNode(head, name);
 

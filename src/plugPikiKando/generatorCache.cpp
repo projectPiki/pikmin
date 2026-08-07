@@ -594,7 +594,7 @@ void GeneratorCache::saveGeneratorCreature(Generator* gen)
 void GeneratorCache::Cache::dump()
 {
 	PRINT("\tcourse %d\n", mStageID);
-	PRINT("\t%x - %x : (%.2fK)\n", mCacheHeapOffset, mTotalCacheSize + mCacheHeapOffset, mTotalCacheSize / 1024.0f);
+	PRINT("\t%x - %x : (%.2fK)\n", mCacheHeapOffset, mCacheHeapOffset + mTotalCacheSize, mTotalCacheSize / 1024.0f);
 	PRINT("\tgenerator = %d size = %d\n", mGenCount, mGenCacheSize);
 	PRINT("\tcreature  = %d size = %d\n", mCreatureCount, mCreatureCacheSize);
 	PRINT("\tufo parts  = %d size = %d\n", mUfoPartsCount, mUfoPartsCacheSize);

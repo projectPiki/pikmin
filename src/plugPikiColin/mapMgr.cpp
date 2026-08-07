@@ -1401,50 +1401,55 @@ void MapMgr::refresh(Graphics& gfx)
 		gsys->mTimer->stop("SoftLights");
 	}
 
-	if (mMapModel) {
-		// this goes in the if condition above in the DLL, but fixes the stack in DOL if it's just empty.
-		if (!mController->keyDown(KBBTN_DPAD_UP)) { }
-
-		// update materials
-		mAnimatedMaterials.animate(nullptr);
-
-		// set up environment
-		gfx.mHasTexGen = TRUE;
-		Matrix4f viewMtx;
-		Matrix4f modelMtx;
-		modelMtx.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), Vector3f(0.0f, 0.0f, 0.0f), Vector3f(0.0f, 0.0f, 0.0f));
-		gfx.calcViewMatrix(modelMtx, viewMtx);
-		gfx.setLighting(true, nullptr);
-		// don't allow translucent things
-		gfx.mMatRenderMask = (MATFLAG_Opaque | MATFLAG_AlphaTest);
-		mMapModel->updateAnim(gfx, viewMtx, nullptr);
-		gfx.useMatrix(Matrix4f::ident, 0);
-
-		// draw only visible joints of the model to optimise performance
-		mMapModel->drawculled(gfx, *gfx.mCamera, &mAnimatedMaterials);
-
-		// reset environment - allow everything except shadows
-		gfx.mMatRenderMask = (MATFLAG_Opaque | MATFLAG_AlphaTest | MATFLAG_AlphaBlend);
-		gfx.mHasTexGen     = FALSE;
-
-		// render all dynamic collision
-		FOREACH_NODE(DynCollShape, mCollShapeList->mChild, coll)
-		{
-			// set up environment
-			gfx.calcViewMatrix(coll->mTransformMtx, coll->mViewMtx);
-			gfx.useMatrix(coll->mViewMtx, 0);
-			gfx.mHasTexGen = TRUE;
-			gfx.setLighting(true, nullptr);
-
-			// draw the object
-			coll->refresh(gfx);
-
-			gfx.mHasTexGen = FALSE;
-		}
-
-		// render any rigid bodies
-		mWorldSimulator->Render(gfx);
+	if (!mMapModel) {
+		return;
 	}
+	// Even though it gets optimized away, this condition's presence fixes the stack in the DOL.
+	if (mController->keyDown(KBBTN_DPAD_UP)) {
+#if defined(WIN32)
+		return;
+#endif
+	}
+
+	// update materials
+	mAnimatedMaterials.animate(nullptr);
+
+	// set up environment
+	gfx.mHasTexGen = TRUE;
+	Matrix4f viewMtx;
+	Matrix4f modelMtx;
+	modelMtx.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), Vector3f(0.0f, 0.0f, 0.0f), Vector3f(0.0f, 0.0f, 0.0f));
+	gfx.calcViewMatrix(modelMtx, viewMtx);
+	gfx.setLighting(true, nullptr);
+	// don't allow translucent things
+	gfx.mMatRenderMask = (MATFLAG_Opaque | MATFLAG_AlphaTest);
+	mMapModel->updateAnim(gfx, viewMtx, nullptr);
+	gfx.useMatrix(Matrix4f::ident, 0);
+
+	// draw only visible joints of the model to optimise performance
+	mMapModel->drawculled(gfx, *gfx.mCamera, &mAnimatedMaterials);
+
+	// reset environment - allow everything except shadows
+	gfx.mMatRenderMask = (MATFLAG_Opaque | MATFLAG_AlphaTest | MATFLAG_AlphaBlend);
+	gfx.mHasTexGen     = FALSE;
+
+	// render all dynamic collision
+	FOREACH_NODE(DynCollShape, mCollShapeList->mChild, coll)
+	{
+		// set up environment
+		gfx.calcViewMatrix(coll->mTransformMtx, coll->mViewMtx);
+		gfx.useMatrix(coll->mViewMtx, 0);
+		gfx.mHasTexGen = TRUE;
+		gfx.setLighting(true, nullptr);
+
+		// draw the object
+		coll->refresh(gfx);
+
+		gfx.mHasTexGen = FALSE;
+	}
+
+	// render any rigid bodies
+	mWorldSimulator->Render(gfx);
 }
 
 /// Bounds to calculate captain collision within - only used for debug triangles.

@@ -380,10 +380,10 @@ void RigidBody::updateVecQuats(int renderBufferIndex, f32 interpFactor)
  */
 void RigidBody::calculateVertices(int configIdx)
 {
-	configuration& preState  = mIntegrationStates[configIdx];
-	configuration& postState = mIntegrationStates[configIdx]; // why do this when these are references?
+	configuration& postState = mIntegrationStates[configIdx];
+	configuration& preState  = postState; // why do this when these are references?
 
-	immut Vector3f& pos = preState.mPosition;
+	immut Vector3f& pos = postState.mPosition;
 
 	// transform all body points
 	for (int i = 0; i < mBoundingPointCount + mHookPointCount; i++) {

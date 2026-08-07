@@ -44,12 +44,13 @@ ActAttack::ActAttack(Piki* piki)
 void ActAttack::init(Creature* creature)
 {
 	if (playerState->inDayEnd()) {
-#if defined(VERSION_GPIJ01) || defined(VERSION_DPIJ01_PIKIDEMO)
-#else
+		// The error is not present in JPN revisions, and the return is not present in the DLL.
+#if defined(WIN32) || defined(DEVELOP)
 		PRINT("DAY END ATTACK!\n");
 		ERROR("day end attack!\n");
-#endif
+#else
 		return;
+#endif
 	}
 
 	mPiki->mActionState = 0;
@@ -58,25 +59,34 @@ void ActAttack::init(Creature* creature)
 
 	if (!creature) {
 		PRINT("commander is 0 karl gotti!!!!!!!!!!1\n"); // lol
+	}
+
+	Creature* target = nullptr;
+	if (!creature) {
 		mPlayerObject     = nullptr;
 		mTargetObjectPool = nullptr;
+		target            = creature;
 		mTargetIsPlayer   = false;
 	} else if (creature->mObjType == OBJTYPE_Navi) {
 		mPlayerObject   = creature;
 		mTargetIsPlayer = true;
-		creature        = findTarget();
+		target          = findTarget();
 	} else {
 		mPlayerObject     = nullptr;
 		mTargetObjectPool = nullptr;
+		target            = creature;
 		mTargetIsPlayer   = false;
 	}
 
-	if (creature) {
-		mOther.set(creature);
+	if (target) {
+		mOther.set(target);
 
-		AndAction::init(creature);
-		if (creature->isTeki() && !playerState->mDemoFlags.isFlag(DEMOFLAG_Unk9) && static_cast<Teki*>(creature)->mTekiType == TEKI_Palm) {
-			playerState->mDemoFlags.setFlagOnly(DEMOFLAG_Unk9);
+		AndAction::init(target);
+		if (target->isTeki() && !playerState->mDemoFlags.isFlag(DEMOFLAG_Unk9)) {
+			Teki* maybePalm = static_cast<Teki*>(target);
+			if (maybePalm->mTekiType == TEKI_Palm) {
+				playerState->mDemoFlags.setFlagOnly(DEMOFLAG_Unk9);
+			}
 		}
 	}
 
@@ -160,51 +170,66 @@ Creature* ActAttack::findTarget()
 {
 	return nullptr; // yep.
 
-	f32 minDist = 12800.0f; // The DLL says this was uninitialized, but that can't be right...
-	Creature* target;
-	// In the DLL, this iterator is also somehow uninitialized?  Gonna assume it's a quirk of
-	// unreachable code, but that means we don't actually know what was being iterated over.
+	// In the DLL, it appears to be that primitive variable initialization and constructor calls do
+	// not happen in unreachable code.  That means we don't actually know what initial values these
+	// variables had nor what `Traversable` was being iterated over, however it's not hard to guess.
+
+	f32 minDist      = 12800.0f;
+	Creature* target = nullptr;
+
 	Iterator iter(mTargetObjectPool);
 	CI_LOOP(iter)
 	{
 		Creature* creature = *iter;
+		MSVC_CYCLE_REGISTERS(2);
 		if (roughCull(mPiki, creature, minDist)) {
 			continue;
 		}
 		f32 dist = qdist2(creature, mPiki);
 		if (creature->isAlive() && creature->isVisible() && !creature->isFlying() && dist < minDist) {
-			target  = creature;
 			minDist = dist;
+			target  = creature;
 		}
 	}
 	return target;
 }
 
 /**
- * @todo: Documentation
- * @note UNUSED Size: 0002C8
+ * @brief This looks to be an alternate take on `ActAttack::findTarget`.
+ * @note UNUSED Size: 0002C8 (Matching by size)
  */
 Creature* ActAttack::decideTarget()
 {
-	f32 minDist = 12800.0f;
+	f32 minDist      = 12800.0f;
+	Creature* target = nullptr;
+
 	Creature* targetList[MAX_PIKI_ON_FIELD];
 	Iterator iter(mTargetObjectPool);
-	int count = 0;
+	int count  = 0;
+	int unused = 0;
+
 	CI_LOOP(iter)
 	{
-		if ((*iter)->isAlive() && (*iter)->isVisible()) {
-			if (qdist2(*iter, mPiki) < 1.0f) {
-				return *iter;
-			}
-			targetList[count++] = *iter;
+		if (count >= MAX_PIKI_ON_FIELD) {
+			break;
 		}
+		if (!(*iter)->isVisible() || !(*iter)->isAlive()) {
+			continue;
+		}
+		f32 dist = qdist2(*iter, mPiki);
+		if (dist < 50.0f) {
+			return *iter;
+		}
+		targetList[count++] = *iter;
 	}
 
-	if (count != 0) {
-		return targetList[int(gsys->getRand(1.0f)) * count];
+	if (count == 0) {
+		return nullptr;
 	}
 
-	return nullptr;
+	int targetIdx = gsys->getRand(1.0f) * count;
+	target        = targetList[targetIdx];
+	return target;
 }
 
 /**

@@ -53,20 +53,21 @@ void ActGuard::cleanup()
 {
 	mTarget.clear();
 	if (!mRightGuard.isNull()) {
-		static_cast<ActGuard*>(static_cast<Piki*>(mRightGuard.getPtr())->mActiveAction->getCurrAction())->mLeftGuard.clear();
+		Piki* piki = static_cast<Piki*>(mRightGuard.getPtr());
+		static_cast<ActGuard*>(piki->mActiveAction->getCurrAction())->mLeftGuard.clear();
 		mRightGuard.clear();
 	}
 
 	if (!mLeftGuard.isNull()) {
-		static_cast<ActGuard*>(static_cast<Piki*>(mLeftGuard.getPtr())->mActiveAction->getCurrAction())->mRightGuard.clear();
+		Piki* piki = static_cast<Piki*>(mLeftGuard.getPtr());
+		static_cast<ActGuard*>(piki->mActiveAction->getCurrAction())->mRightGuard.clear();
 		mLeftGuard.clear();
 	}
 
 	mIsGuardable = false;
 
-	// this isn't elaborated on in the DLL either.
-	rand();
-	STACK_PAD_VAR(4);
+	// Who knows what all this was for?
+	int unused = int(gsys->getRand(1.0f) * 60.0f) + 100;
 }
 
 /**

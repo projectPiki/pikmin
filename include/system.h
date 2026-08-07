@@ -153,13 +153,16 @@ struct SystemCache : public ARQRequest {
 	SystemCache* mPrev; // _24
 };
 
+/**
+ * @brief Enum for bitfield `StdSystem::mSystemFlags`.
+ */
 BEGIN_ENUM_TYPE(SystemFlags)
 enum {
 	Shutdown = 0x80000000,
 } END_ENUM_TYPE;
 
 /**
- * @brief TODO
+ * @brief Base system class for shared behavior across Dolphin OS and Windows OS.
  *
  * @note Size: 0x244.
  */
@@ -199,10 +202,10 @@ public:
 
 	// Static functions
 	static char* stringDup(immut char*);
-	static f32 getHalfRand(f32 max) { return max * (rand() / f32(RAND_MAX) - 0.5f); }
 
 	// Inline functions
 	f32 getRand(f32 max) { return max * (rand() / f32(RAND_MAX)); }
+	f32 getHalfRand(f32 max) { return max * (rand() / f32(RAND_MAX) - 0.5f); }
 	f32 getFade() { return mCurrentFade; }
 	void setFade(f32 target, f32 rate = 3.0f)
 	{
@@ -225,6 +228,9 @@ public:
 	bool resetPending() { return mSoftResetPending; }
 	void setFrameClamp(int frameRate) { mFrameRate = frameRate; }
 	int getHeapNum() { return mActiveHeapIdx; }
+
+	// Remaining DLL inlines TODO:
+	// public: void __thiscall StdSystem::genAge(class AgeServer &)
 
 	bool mSoftResetPending;        // _00
 	f32 mCurrentFade;              // _04
@@ -417,6 +423,15 @@ public:
 	f32 getFrameRate() { return mFPS; }
 
 	void setActiveAramAllocator(AramAllocator* allocator) { mActiveAramAllocator = allocator; }
+
+	// Remaining DLL inlines TODO:
+	// public: __int32 __thiscall System::getFrameCount(void)
+	// public: void __thiscall System::genAge(class AgeServer &)
+	// public: void __thiscall System::buildModeList(void)
+	// public: bool __thiscall System::setVideoMode(bool,int,int,int)
+	// public: class UIWindow * __thiscall System::createDebugStream(class UIWindow *)
+	// public: class BaseApp * __thiscall System::firstApp(void)
+	// public: void __thiscall System::searchFiles(char *,char *,class IDelegate2<char *,unsigned __int32> *,bool)
 
 	// _00      = VTBL
 	// _00-_248 = StdSystem

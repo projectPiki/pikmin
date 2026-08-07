@@ -26,7 +26,7 @@ BaseApp::BaseApp()
 	mAgeServer     = nullptr;
 	_28            = 1;
 
-	nodeMgr->firstNode().add(this);
+	nodeMgr->firstNode()->add(this);
 }
 
 /**
