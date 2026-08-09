@@ -218,7 +218,8 @@ void NodeMgr::recFindNode(CoreNode* head, immut char* name)
 	// prevents the recursion from going deeper, meaning other sibling
 	// nodes can still hijack the node found before the loops conclude.
 	if (!foundNode) {
-		for (CoreNode* currNode = head; currNode; currNode = currNode->Next()) {
+		FOREACH_NODE_ALT(CoreNode, head, currNode)
+		{
 			if (!strcmp(name, currNode->mName)) {
 				foundNode = true;
 				nodeFound = currNode;

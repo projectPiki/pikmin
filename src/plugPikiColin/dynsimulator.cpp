@@ -521,7 +521,8 @@ void DynSimulator::evolveSimulation(f32 totalTime, Shape* mapModel)
  */
 void DynSimulator::Integrate(f32 timeStep)
 {
-	for (RigidBody* body = (RigidBody*)mChild; body; body = (RigidBody*)body->Next()) {
+	FOREACH_NODE_ALT(RigidBody, mChild, body)
+	{
 		body->integrate(mCurrentConfigIdx, mCurrentConfigIdx ^ 1, timeStep);
 	}
 }
@@ -534,7 +535,8 @@ void DynSimulator::Integrate(f32 timeStep)
  */
 void DynSimulator::CalculateVertices(int configIdx)
 {
-	for (RigidBody* body = (RigidBody*)mChild; body; body = (RigidBody*)body->Next()) {
+	FOREACH_NODE_ALT(RigidBody, mChild, body)
+	{
 		body->calculateVertices(configIdx);
 	}
 }
@@ -546,7 +548,8 @@ void DynSimulator::CalculateVertices(int configIdx)
  */
 void DynSimulator::updateVecQuats(f32 interpFactor)
 {
-	for (RigidBody* body = (RigidBody*)mChild; body; body = (RigidBody*)body->Next()) {
+	FOREACH_NODE_ALT(RigidBody, mChild, body)
+	{
 		body->updateVecQuats(mCurrentRenderBufferIndex, interpFactor);
 	}
 }
@@ -564,7 +567,8 @@ void DynSimulator::updateVecQuats(f32 interpFactor)
 int DynSimulator::CheckForCollisions(int configIdx, Shape* model)
 {
 	mWorldState.resetCollisions(model);
-	for (RigidBody* body = (RigidBody*)mChild; body; body = (RigidBody*)body->Next()) {
+	FOREACH_NODE_ALT(RigidBody, mChild, body)
+	{
 		body->checkForCollisions(configIdx, mWorldState);
 		if (mWorldState.mStatus == CollState::Unk0) {
 			// unsure what this status would've been - maybe collision buffer filled, or some trigger hit to evaluate them all?

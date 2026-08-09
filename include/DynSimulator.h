@@ -235,19 +235,22 @@ struct DynSimulator : public Node {
 	bool isPaused() { return mIsPaused; }
 	void updateConts()
 	{
-		for (RigidBody* body = (RigidBody*)Child(); body; body = (RigidBody*)body->Next()) {
+		FOREACH_NODE_ALT(RigidBody, Child(), body)
+		{
 			body->updateCont();
 		}
 	}
 	void InitRender()
 	{
-		for (RigidBody* body = (RigidBody*)Child(); body; body = (RigidBody*)body->Next()) {
+		FOREACH_NODE_ALT(RigidBody, Child(), body)
+		{
 			body->initRender(mCurrentConfigIdx);
 		}
 	}
 	void Render(Graphics& gfx)
 	{
-		for (RigidBody* body = (RigidBody*)Child(); body; body = (RigidBody*)body->Next()) {
+		FOREACH_NODE_ALT(RigidBody, Child(), body)
+		{
 			body->render(gfx);
 		}
 	}
