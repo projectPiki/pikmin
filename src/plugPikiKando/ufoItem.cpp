@@ -310,8 +310,6 @@ void UfoItem::lightLevelFlag(int flag)
 		mLightAnims[i].start(flag);
 		mLightAnims[i].setSpeed(rate);
 	}
-
-	FORCE_DONT_INLINE;
 }
 
 /**
@@ -807,14 +805,11 @@ void UfoItem::startAI(int)
 
 	mConeEffectId = KandoEffect::UfoSuck;
 
-	// This is an incredibly dumb thing for them to do, but I SAW THAT THEY DID THIS!!!
-	// I COULD SEEEEE THEY WROTE THIS INSTEAD OF TWO FOR LOOPS!!!
-	zen::particleGenerator** ptclGen = (zen::particleGenerator**)mEngineParticleGenList;
-	for (int i = 0; i < 16; i++) {
-		ptclGen[i] = nullptr;
+	for (int i = 0; i < 4; i++) {
+		for (int j = 0; j < 4; j++) {
+			mEngineParticleGenList[i][j] = nullptr;
+		}
 	}
-
-	// NONMATCHING HERE - addi vs mr memes :')
 
 	setJetEffect(0, false);
 	setPca1Effect(false);
@@ -840,10 +835,8 @@ void UfoItem::startAI(int)
 		playEventSound(this, SE_UFO_IDLING);
 	}
 	mAnimator.stopAllMotions();
-	u8 level = playerState->mShipUpgradeLevel;
-	lightLevelFlag(playerState->mShipUpgradeLevel);
-	PRINT("** start AI (%.1f %.1f %.1f) : routeIndex = %d\n");
-	mAnimator.initFlagMotions(level);
+	initLevelFlag(playerState->mShipUpgradeLevel);
+	PRINT("** start AI (%.1f %.1f %.1f) : routeIndex = %d\n", mSRT.t.x, mSRT.t.y, mSRT.t.z, mWaypointID);
 
 	if (!playerState->isTutorial()) {
 		setSpotActive(true);
