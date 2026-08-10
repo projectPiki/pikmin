@@ -605,21 +605,21 @@ void GeneratorCache::Cache::dump()
  */
 void GeneratorCache::dump()
 {
+	CoreNode* cnode;
 	PRINT("************ Generator Cache ***********\n");
 	PRINT("--- alive caches ---\n");
-	FOREACH_NODE(Cache, mAliveCacheList.mChild, aliveCache)
+	FOREACH_NODE_REUSE(CoreNode, mAliveCacheList.mChild, cnode)
 	{
+		Cache* aliveCache = static_cast<Cache*>(cnode);
 		aliveCache->dump();
 	}
 	PRINT("--- dead cache ---\n");
-	FOREACH_NODE(Cache, mDeadCacheList.mChild, deadCache)
+	FOREACH_NODE_REUSE(CoreNode, mDeadCacheList.mChild, cnode)
 	{
+		Cache* deadCache = static_cast<Cache*>(cnode);
 		deadCache->dump();
 	}
 	PRINT("*******************************\n");
-
-	// need this to not inline in assertValid
-	FORCE_DONT_INLINE;
 }
 
 /**
@@ -627,9 +627,11 @@ void GeneratorCache::dump()
  */
 void GeneratorCache::assertValid()
 {
-	Cache* cache = static_cast<Cache*>(mAliveCacheList.mChild);
+	CoreNode* cnode;
 	u32 heapPos  = 0;
-	for (cache; cache; cache = static_cast<Cache*>(cache->mNext)) {
+	FOREACH_NODE_REUSE(CoreNode, mAliveCacheList.mChild, cnode)
+	{
+		Cache* cache = static_cast<Cache*>(cnode);
 		if (cache->mCacheHeapOffset != heapPos) {
 			dump();
 			PRINT("right offset = %x\n", heapPos);
