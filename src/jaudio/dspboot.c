@@ -469,7 +469,7 @@ s32 __DSPCheckMXICBoot2(DSPTaskInfo2* task)
 		;
 	mail = DSPReadMailFromDSP();
 
-	if ((mail + 0x7F8F0000) == 0xFEED) {
+	if (mail == 0x8071FEED) {
 		DSPSendMailToDSP(0x80F3A001);
 		while (DSPCheckMailToDSP() != 0)
 			;
@@ -513,7 +513,7 @@ s32 __DSPCheckMXICBoot2(DSPTaskInfo2* task)
 		return 1;
 	}
 
-	if ((mail + 0x3F010000) <= 1) {
+	if (mail == 0xC0FF0000 || mail == 0xC0FF0001) {
 		DSPSendMailToDSP(0xC0028073);
 		while (DSPCheckMailToDSP() != 0)
 			;
