@@ -158,6 +158,7 @@ struct SystemCache : public ARQRequest {
  */
 BEGIN_ENUM_TYPE(SystemFlags)
 enum {
+	Active   = 0x00200000,
 	Shutdown = 0x80000000,
 } END_ENUM_TYPE;
 
@@ -225,9 +226,24 @@ public:
 	void setDataRoot(immut char* dir) { mDataRoot = dir; }
 	void softReset() { mSoftResetPending = true; }
 	void Shutdown() { mSystemFlags = SystemFlags::Shutdown; }
+	bool isShutdown() { return mSystemFlags == SystemFlags::Shutdown; }
 	bool resetPending() { return mSoftResetPending; }
 	void setFrameClamp(int frameRate) { mFrameRate = frameRate; }
 	int getHeapNum() { return mActiveHeapIdx; }
+
+	void setActive(bool set)
+	{
+		u32 unused; // why?
+		if (set) {
+			mSystemFlags |= SystemFlags::Active;
+			unused = mSystemFlags;
+		} else {
+			mSystemFlags &= ~SystemFlags::Active;
+			unused = mSystemFlags;
+		}
+		Activate(set);
+	}
+	bool isActive(void) { return (mSystemFlags & SystemFlags::Active) == SystemFlags::Active; }
 
 	// Remaining DLL inlines TODO:
 	// public: void __thiscall StdSystem::genAge(class AgeServer &)
