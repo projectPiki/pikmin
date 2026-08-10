@@ -566,11 +566,13 @@ void System::hardReset()
 	bool old    = mForcePrint;
 	mForcePrint = FALSE;
 	if (useSymbols) {
-		int a = gsys->getHeap(gsys->mActiveHeapIdx)->getFree();
-		int c = OSTicksToMilliseconds(OSGetTick());
+		int freeBefore = gsys->getHeap(gsys->mActiveHeapIdx)->getFree();
+		int timeBefore = OSTicksToMilliseconds(OSGetTick());
 		ParseMapFile();
-		int d = OSTicksToMilliseconds(OSGetTick());
-		int b = gsys->getHeap(gsys->mActiveHeapIdx)->getFree();
+		int timeAfter = OSTicksToMilliseconds(OSGetTick());
+		int freeAfter = gsys->getHeap(gsys->mActiveHeapIdx)->getFree();
+		// It seems like putting the subtraction that would have been here for a PRINT statement
+		// messes everything up, so this is likely commented-out code and not orphaned arguments.
 	}
 	mForcePrint = old;
 

@@ -1,7 +1,11 @@
 #include "types.h"
 
-static char file[] = __FILE__;
-static char name[] = "OgTutorialSection";
+#include "DebugLog.h"
+
+// These functions don't appear in the linker map because the entire .text section got
+// stripped, but the __FILE__ and print name strings do show up in the .data section.
+DEFINE_ERROR(__LINE__)
+DEFINE_PRINT("OgTutorialSection")
 
 namespace zen {
 

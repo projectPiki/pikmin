@@ -341,7 +341,8 @@ void AnimMgr::loadAnims(immut char* animPath, immut char* bundlePath)
 		char finalBundlePath[PATH_MAX];
 		char finalAnimPath[PATH_MAX];
 		AnimInfo* info;
-		for (info = (AnimInfo*)mAnimList.mChild; info; info = (AnimInfo*)info->mNext) {
+		FOREACH_NODE_REUSE(AnimInfo, mAnimList.mChild, info)
+		{
 			sprintf(existingAnimPath, "%s/%s", mParams.mBasePath().mString, info->mName);
 			if (!gsys->findAnimation(existingAnimPath)) {
 				missingAnimCount++;
@@ -360,7 +361,8 @@ void AnimMgr::loadAnims(immut char* animPath, immut char* bundlePath)
 			gsys->loadBundle(finalBundlePath, false);
 		}
 
-		for (info = (AnimInfo*)mAnimList.mChild; info; info = (AnimInfo*)info->mNext) {
+		FOREACH_NODE_REUSE(AnimInfo, mAnimList.mChild, info)
+		{
 			sprintf(finalAnimPath, "%s/%s", mParams.mBasePath().mString, info->mName);
 			info->mData = gsys->loadAnimation(mModel, finalAnimPath, true);
 			if (info->mData) {

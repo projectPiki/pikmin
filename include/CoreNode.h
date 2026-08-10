@@ -123,6 +123,7 @@ public:
 	CoreNode* mChild;  // _10
 };
 
+// Iterate over a linked-list of `CoreNode` derivates without all the boilerplate.  Traverses `CoreNode::mNext`.
 #define FOREACH_NODE(type, first, varname) \
 	for (type* varname = static_cast<type*>(first); varname; varname = static_cast<type*>(varname->mNext))
 

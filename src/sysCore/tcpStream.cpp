@@ -1,6 +1,7 @@
 #include "TcpStream.h"
 
 #include "WSocket.h"
+#include "sysNew.h"
 #include "system.h"
 
 /**

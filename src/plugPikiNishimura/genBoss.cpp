@@ -18,6 +18,21 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
 DEFINE_PRINT("genBoss");
 
 /**
+ * @brief This is too much compression. Just read them as words goddamn it!
+ * @note Fabricated
+ */
+union GenBossV2Flags {
+	u32 w;
+	struct {
+		u32 m0 : 20;
+		u32 m1 : 4;
+		u32 m2 : 2;
+		u32 m3 : 2;
+		u32 m4 : 4;
+	} b;
+};
+
+/**
  * @todo: Documentation
  */
 static GenObject* makeObjectBoss()
@@ -85,17 +100,7 @@ void GenObjectBoss::ramSaveParameters(RandomAccessStream& output)
  */
 void GenObjectBoss::readParameters(RandomAccessStream& input)
 {
-	// this is too much compression, just read them as words goddamn it!
-	union GenFlags {
-		u32 w;
-		struct {
-			u32 m0 : 20;
-			u32 m1 : 4;
-			u32 m2 : 2;
-			u32 m3 : 2;
-			u32 m4 : 4;
-		} b;
-	} flags;
+	GenBossV2Flags flags;
 
 	flags.w = input.readInt();
 
@@ -111,17 +116,7 @@ void GenObjectBoss::readParameters(RandomAccessStream& input)
  */
 void GenObjectBoss::writeParameters(RandomAccessStream& output)
 {
-	// this is too much compression, just write them as words goddamn it!
-	union GenFlags {
-		u32 w;
-		struct {
-			u32 m0 : 20;
-			u32 m1 : 4;
-			u32 m2 : 2;
-			u32 m3 : 2;
-			u32 m4 : 4;
-		} b;
-	} flags;
+	GenBossV2Flags flags;
 
 	flags.w    = 0;
 	flags.b.m4 = mBossID;

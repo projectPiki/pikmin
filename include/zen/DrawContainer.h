@@ -215,10 +215,9 @@ public:
 		judgeArrowType();
 		setTexture(pic);
 
-		// this is just to spawn a random cmpwi that doesn't show up in the DLL
-		if (mArrowType == ARROW_None && mContainerScreen) {
-			;
-		}
+		// This is just to spawn a random cmpwi that doesn't show up in the DLL.   The
+		// second condition does not spawn but I assume it's the one from `setTexture`.
+		if (mArrowType == ARROW_None || mArrowType == ARROW_Both) { }
 	}
 
 	virtual bool invoke(P2DPane* pane) // _08

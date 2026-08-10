@@ -1044,7 +1044,8 @@ void GameCoreSection::initStage()
 	int i  = 0;
 	int j  = 0;
 	u8 day = gameflow.mWorldClock.mCurrentDay - 1;
-	for (gfInfo = (GenFileInfo*)flowCont.mCurrentStage->mGenFileList.mChild; gfInfo; gfInfo = (GenFileInfo*)gfInfo->mNext) {
+	FOREACH_NODE_REUSE(GenFileInfo, flowCont.mCurrentStage->mGenFileList.mChild, gfInfo)
+	{
 		if (day >= gfInfo->mFirstSpawnDay && day <= gfInfo->mLastSpawnDay && playerState->checkLimitGenFlag(i) == 0) {
 			sprintf(path2, "%s%s", path, gfInfo->mName);
 			data = gsys->openFile(path2);

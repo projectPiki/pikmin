@@ -1,5 +1,7 @@
 #include "ToolWindow.h"
 
+#include "sysNew.h"
+
 #include <stdio.h>
 
 /**

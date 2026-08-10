@@ -746,13 +746,9 @@ void EffectMgr::initEffectGeometry(int effShpCount)
  */
 void EffectMgr::update()
 {
-#if defined(VERSION_PIKIDEMO)
-	gsys->mTimer->start("ptcl", true);
-#endif
+	MATCHING_START_TIMER("ptcl", true);
 	mPtclMgr.update();
-#if defined(VERSION_PIKIDEMO)
-	gsys->mTimer->stop("ptcl");
-#endif
+	MATCHING_STOP_TIMER("ptcl");
 
 	EffShpInst* next;
 	for (EffShpInst* inst = (EffShpInst*)mActiveGeomList.mChild; inst; inst = next) {

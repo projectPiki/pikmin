@@ -44,7 +44,7 @@ struct __GXData_struct {
 	u8 _00[2];                                                     // _00
 	unsigned short bpSent;                                         // offset 0x2, size 0x2
 	unsigned short vNum;                                           // offset 0x4, size 0x2
-	unsigned short vLim;                                           // offset 0x6, size 0x4
+	unsigned short vLim;                                           // offset 0x6, size 0x2
 #else                                                              //
 	unsigned short vNum;   // offset 0x0, size 0x2
 	unsigned short bpSent; // offset 0x2, size 0x2
