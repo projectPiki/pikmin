@@ -40,3 +40,6 @@ InsertNewlineAtEOF: true
 
 QualifierAlignment: Custom
 QualifierOrder: [static, constexpr, inline, const, volatile, type]
+
+MacrosSkippedByRemoveParentheses: ['SQUARE']
+WhitespaceSensitiveMacros: ['assert_line']
