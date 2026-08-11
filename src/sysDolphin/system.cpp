@@ -563,8 +563,8 @@ immut char* System::findAddress(u32 address)
  */
 void System::hardReset()
 {
-	bool old    = mForcePrint;
-	mForcePrint = FALSE;
+	bool old              = mToggleHeapAllocPrint;
+	mToggleHeapAllocPrint = FALSE;
 	if (useSymbols) {
 		int freeBefore = gsys->getHeap(gsys->mActiveHeapIdx)->getFree();
 		int timeBefore = OSTicksToMilliseconds(OSGetTick());
@@ -574,7 +574,7 @@ void System::hardReset()
 		// It seems like putting the subtraction that would have been here for a PRINT statement
 		// messes everything up, so this is likely commented-out code and not orphaned arguments.
 	}
-	mForcePrint = old;
+	mToggleHeapAllocPrint = old;
 
 	mCacher  = new TextureCacher(0x96000);
 	int size = 0x20000;

@@ -271,7 +271,7 @@ public:
 	immut char* mDataRoot;         // _50
 	AyuHeap mHeaps[SYSHEAP_COUNT]; // _54 (54:sys, 7C:ovl, A4:app, CC:load, F4:teki, 11C:movie, 144:message, 16C:lang)
 	int mActiveHeapIdx;            // _194
-	BOOL mForcePrint;              // _198
+	BOOL mToggleHeapAllocPrint;    // _198
 	MemInfo* mCurrMemInfo;         // _19C
 #if defined(VERSION_GPIP01)
 	LanguageID mLanguageID; // _1A0, language ID for PAL.

@@ -41,15 +41,15 @@ StdSystem::StdSystem()
 #if defined(VERSION_GPIP01)
 	mLanguageID = LANG_English;
 #endif
-	mCurrentFade      = 0.0f;
-	mTargetFade       = 0.0f;
-	mFadeRate         = 1.0;
-	mToggleFileInfo   = 1;
-	mForcePrint       = FALSE;
-	mGfxobjInfo.mPrev = &mGfxobjInfo;
-	mGfxobjInfo.mNext = &mGfxobjInfo;
-	mHasGfxObjects    = true;
-	mFlareGroupList   = nullptr;
+	mCurrentFade          = 0.0f;
+	mTargetFade           = 0.0f;
+	mFadeRate             = 1.0;
+	mToggleFileInfo       = 1;
+	mToggleHeapAllocPrint = FALSE;
+	mGfxobjInfo.mPrev     = &mGfxobjInfo;
+	mGfxobjInfo.mNext     = &mGfxobjInfo;
+	mHasGfxObjects        = true;
+	mFlareGroupList       = nullptr;
 
 	initSoftReset();
 	setDataRoot("dataDir/");

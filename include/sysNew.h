@@ -5,6 +5,10 @@
 #include "types.h"
 #include <stddef.h>
 
+#if defined(WIN32)
+void* operator new(size_t size);
+void* operator new[](size_t size);
+#else
 inline void* operator new(size_t size)
 {
 	return System::alloc(size);
@@ -13,6 +17,7 @@ inline void* operator new[](size_t size)
 {
 	return System::alloc(size);
 }
+#endif
 void* operator new(size_t size, int alignment);
 void* operator new[](size_t size, int alignment);
 void operator delete(void* ptr);

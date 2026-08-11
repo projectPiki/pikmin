@@ -263,7 +263,7 @@ PlugPikiApp::PlugPikiApp()
 
 	PRINT("*--------------- <%s> after all system setup %.2fk free \n", gsys->getHeap(gsys->mActiveHeapIdx)->mName,
 	      gsys->getHeap(gsys->mActiveHeapIdx)->getFree() / 1024.0f);
-	gsys->mForcePrint = FALSE;
+	gsys->mToggleHeapAllocPrint = FALSE;
 
 	// unset heap index - it will be set fresh next frame
 	gsys->setHeap(SYSHEAP_NULL);
