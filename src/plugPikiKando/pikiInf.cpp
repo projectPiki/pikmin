@@ -323,13 +323,15 @@ int MonoInfMgr::getFreeNum()
  */
 void MonoInfMgr::saveCard(RandomAccessStream& stream)
 {
-	int freeNum = getFreeNum();
-	stream.writeInt(freeNum);
+	int activeNum = getActiveNum();
+	stream.writeInt(activeNum);
+
 	FOREACH_NODE(BaseInf, mActiveList.mChild, inf)
 	{
 		inf->saveCard(stream);
 	}
-	PRINT(" SAVE CARD ***** %d です\n", freeNum); // " SAVE CARD ***** there are %d\n"
+
+	PRINT(" SAVE CARD ***** %d です\n", activeNum); // " SAVE CARD ***** there are %d\n"
 }
 
 /**
@@ -585,16 +587,7 @@ void StageInf::initGame()
  */
 void StageInf::saveCard(RandomAccessStream& output)
 {
-	int activeNum = mBPikiInfMgr.getActiveNum();
-	output.writeInt(activeNum);
-
-	FOREACH_NODE(BaseInf, mBPikiInfMgr.mActiveList.mChild, inf)
-	{
-		inf->saveCard(output);
-	}
-
-	BUMP_REGISTER(r0); // No fucking way
-	PRINT(" SAVE CARD ***** %d です\n", activeNum);
+	mBPikiInfMgr.saveCard(output);
 }
 
 /**
