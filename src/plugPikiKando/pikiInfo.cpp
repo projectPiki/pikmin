@@ -23,11 +23,9 @@ PikiInfo::PikiInfo()
 void PikiInfo::addFormationPiki()
 {
 	mFormationPikiCnt++;
-	if (_04 >= mFormationPikiCnt) {
-		return;
+	if (_04 < mFormationPikiCnt) {
+		_04 = mFormationPikiCnt;
 	}
-	_04 = mFormationPikiCnt;
-	return;
 }
 
 /**

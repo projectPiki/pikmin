@@ -144,7 +144,7 @@ public:
 	void recFindNode(CoreNode*, immut char*);
 	void Del(Node*);
 
-	bool mDelete;       // _00
+	bool mDelHappened;  // _00
 	CoreNode mRootNode; // _04
 };
 

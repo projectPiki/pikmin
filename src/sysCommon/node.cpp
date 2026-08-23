@@ -178,29 +178,38 @@ void SRTNode::update()
 }
 
 /**
- * @todo: Documentation
+ * @brief Removes the given `node` from its parent's linked list.
  */
 void NodeMgr::Del(Node* node)
 {
-	mDelete = true;
+	mDelHappened = true;
+
 	if (!node) {
 		return;
 	}
 	if (!node->mParent) {
+		node = nullptr; // Why?
 		return;
 	}
 
-	Node* child = static_cast<Node*>(node->mParent->mChild);
-	Node* prev  = nullptr;
-	for (child; child; prev = child, child = static_cast<Node*>(child->mNext)) {
-		if (child == node) {
+	CoreNode* curr = node->mParent->mChild;
+	CoreNode* prev = nullptr;
+
+	while (curr) {
+		if (curr == node) {
+			// If this node is from the middle of the list...
 			if (prev) {
-				prev->mNext = child->mNext;
+				// Inform the previous node of its new sibling.
+				prev->Next(curr->Next());
 				return;
 			}
-
-			node->mParent->mChild = child->mNext;
+			// Otherwise, this was the first node from the list
+			// and the parent node needs its list head updated.
+			node->mParent->mChild = curr->Next();
+			// I think they forgot to put a return here.
 		}
+		prev = curr;
+		curr = curr->Next();
 	}
 }
 
@@ -255,7 +264,7 @@ CoreNode* NodeMgr::findNode(immut char* name, CoreNode* head)
  */
 NodeMgr::NodeMgr()
 {
-	mDelete = false;
+	mDelHappened = false;
 }
 
 /**
