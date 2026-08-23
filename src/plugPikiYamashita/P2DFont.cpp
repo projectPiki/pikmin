@@ -142,19 +142,19 @@ f32 P2DFont::drawChar(f32 xPos, f32 yPos, int charCode, int drawWidth, int drawH
 	GXBegin(GX_QUADS, GX_VTXFMT0, 4);
 
 	GXPosition3f32(x0, y0, 0.0f);
-	GXColor1u32(*(u32*)&mTLColour);
+	GXColor1u32(reinterpret_cast<u32&>(mTLColour));
 	GXTexCoord2u16(s0, t0);
 
 	GXPosition3f32(x1, y0, 0.0f);
-	GXColor1u32(*(u32*)&mTRColour);
+	GXColor1u32(reinterpret_cast<u32&>(mTRColour));
 	GXTexCoord2u16(s1, t0);
 
 	GXPosition3f32(x1, y1, 0.0f);
-	GXColor1u32(*(u32*)&mBRColour);
+	GXColor1u32(reinterpret_cast<u32&>(mBRColour));
 	GXTexCoord2u16(s1, t1);
 
 	GXPosition3f32(x0, y1, 0.0f);
-	GXColor1u32(*(u32*)&mBLColour);
+	GXColor1u32(reinterpret_cast<u32&>(mBLColour));
 	GXTexCoord2u16(s0, t1);
 
 	GXEnd();

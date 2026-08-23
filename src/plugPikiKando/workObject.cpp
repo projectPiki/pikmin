@@ -972,10 +972,10 @@ Bridge::Bridge(Shape* shape, bool a3)
 		mStageCount  = shape->mJointList->getChildCount() / 2;
 		mStageJoints = new Joint*[mStageCount * 2];
 
-		Joint* currentJoint = (Joint*)shape->mJointList->mChild;
+		Joint* currentJoint = static_cast<Joint*>(shape->mJointList->mChild);
 		for (int i = 2 * mStageCount - 1; i >= 0; i--) {
-			mStageJoints[i] = (Joint*)currentJoint->mChild;
-			currentJoint    = (Joint*)currentJoint->mNext;
+			mStageJoints[i] = static_cast<Joint*>(currentJoint->mChild);
+			currentJoint    = static_cast<Joint*>(currentJoint->mNext);
 		}
 
 		PRINT("numStages = %d\n", mStageCount);

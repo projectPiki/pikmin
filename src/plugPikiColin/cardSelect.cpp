@@ -131,7 +131,7 @@ struct CardSelectSetupSection : public Node {
 
 					if (playerState->isTutorial()) {
 						// we're in day 1, do things a bit differently
-						StageInfo* stage       = (StageInfo*)flowCont.mStageList.mChild;
+						StageInfo* stage       = static_cast<StageInfo*>(flowCont.mStageList.mChild);
 						flowCont.mCurrentStage = stage;
 						sprintf(flowCont.mCurrStageFilePath, "%s", stage->mFileName);
 						sprintf(flowCont.mDoorStageFilePath, "%s", stage->mFileName);

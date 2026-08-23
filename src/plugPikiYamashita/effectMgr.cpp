@@ -751,8 +751,8 @@ void EffectMgr::update()
 	MATCHING_STOP_TIMER("ptcl");
 
 	EffShpInst* next;
-	for (EffShpInst* inst = (EffShpInst*)mActiveGeomList.mChild; inst; inst = next) {
-		next = (EffShpInst*)inst->mNext;
+	for (EffShpInst* inst = static_cast<EffShpInst*>(mActiveGeomList.mChild); inst; inst = next) {
+		next = static_cast<EffShpInst*>(inst->mNext);
 		if (inst->update()) {
 			inst->del();
 			mInactiveGeomList.add(inst);
@@ -825,7 +825,7 @@ zen::particleMdl* EffectMgr::create(EffectMgr::simpleTypeTable simpleID, immut V
  */
 EffShpInst* EffectMgr::getShapeInst()
 {
-	EffShpInst* inst = (EffShpInst*)mInactiveGeomList.mChild;
+	EffShpInst* inst = static_cast<EffShpInst*>(mInactiveGeomList.mChild);
 	if (inst) {
 		inst->del();
 		inst->initEffShpInst();
@@ -852,8 +852,8 @@ void EffectMgr::putShapeInst(EffShpInst* inst)
 void EffectMgr::killAllShapes()
 {
 	EffShpInst* next;
-	for (EffShpInst* inst = (EffShpInst*)mActiveGeomList.mChild; inst; inst = next) {
-		next = (EffShpInst*)inst->mNext;
+	for (EffShpInst* inst = static_cast<EffShpInst*>(mActiveGeomList.mChild); inst; inst = next) {
+		next = static_cast<EffShpInst*>(inst->mNext);
 		inst->del();
 		mInactiveGeomList.add(inst);
 	}

@@ -1392,7 +1392,7 @@ int Graphics::calcLighting(f32 intensity)
 
 	if (mLight.mChild) {
 		mLightDistance = 50.0f;
-		setLight((Light*)mLight.mChild, 7);
+		setLight(static_cast<Light*>(mLight.mChild), 7);
 	}
 
 	if (lightIndex > gsys->mActiveLightCount) {

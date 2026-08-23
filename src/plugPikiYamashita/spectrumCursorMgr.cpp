@@ -106,10 +106,10 @@ void zen::SpectrumCursorMgr::init(P2DScreen* screen, P2DPane* parent, u32 p3, f3
 {
 	char buf[8];
 	mPaneCount = 0;
-	*(u32*)buf = makeTag(p3, mPaneCount);
+	reinterpret_cast<u32&>(buf) = makeTag(p3, mPaneCount);
 	while (screen->search(P2DPaneLibrary::makeTag(buf), false)) {
 		mPaneCount++;
-		*(u32*)buf = makeTag(p3, mPaneCount);
+		reinterpret_cast<u32&>(buf) = makeTag(p3, mPaneCount);
 	}
 
 	if (mPaneCount == 0) {
@@ -120,7 +120,7 @@ void zen::SpectrumCursorMgr::init(P2DScreen* screen, P2DPane* parent, u32 p3, f3
 	mPanes = new P2DPane*[mPaneCount];
 
 	for (int i = mPaneCount - 1; i >= 0; i--) {
-		*(u32*)buf    = makeTag(p3, i);
+		reinterpret_cast<u32&>(buf) = makeTag(p3, i);
 		P2DPane* pane = screen->search(P2DPaneLibrary::makeTag(buf), true);
 		if (pane->getTypeID() == PANETYPE_Picture) {
 			mPanes[i] = pane;
@@ -181,5 +181,5 @@ u32 zen::SpectrumCursorMgr::makeTag(u32 tag, int idx)
 	sprintf(buf, "*%02d*", idx);
 	buf[0] = tag >> 24;
 	buf[3] = tag & 0xFF;
-	return *(u32*)buf;
+	return reinterpret_cast<u32&>(buf);
 }

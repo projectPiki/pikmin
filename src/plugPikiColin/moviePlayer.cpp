@@ -185,7 +185,7 @@ void MoviePlayer::resetMovieList()
 void MoviePlayer::fixMovieList()
 {
 	while (mPlayInfoList.getChildCount()) {
-		MovieInfo* info = (MovieInfo*)mPlayInfoList.Child();
+		MovieInfo* info = static_cast<MovieInfo*>(mPlayInfoList.Child());
 		sndStopMovie(info);
 		info->del();
 		info->initCore("");
@@ -449,7 +449,7 @@ void MoviePlayer::startMovie(int movieIdx, int, Creature* target, immut Vector3f
 		ERROR(""); // okay
 	}
 
-	info = (MovieInfo*)mMovieInfoList.mChild;
+	info = static_cast<MovieInfo*>(mMovieInfoList.mChild);
 	info->del();
 	info->initCore(movie->mCinFileName);
 	info->mMovieIndex   = translatedIdx;
@@ -670,7 +670,7 @@ void MoviePlayer::update()
 			mMovieInfoList.add(info);
 			while (mStackInfoList.getChildCount() != 0) {
 				// get next queued movie
-				MovieInfo* stackInfo = (MovieInfo*)mStackInfoList.mChild;
+				MovieInfo* stackInfo = static_cast<MovieInfo*>(mStackInfoList.mChild);
 				stackInfo->del();
 				stackInfo->initCore(stackInfo->mName);
 				PRINT("STARTING MOVIE %s\n", stackInfo->mName);
@@ -717,7 +717,7 @@ void MoviePlayer::skipScene(int sceneSkipFlag)
 		PRINT("SKIP ALL !!! SKIP ALL !!! SKIP ALL !!! SKIP ALL !!! SKIP ALL !!! \n");
 		while (mStackInfoList.getChildCount()) {
 			// clear everything out of the queue
-			MovieInfo* info = (MovieInfo*)mStackInfoList.mChild;
+			MovieInfo* info = static_cast<MovieInfo*>(mStackInfoList.mChild);
 			info->del();
 			info->mChild  = nullptr;
 			info->mNext   = nullptr;

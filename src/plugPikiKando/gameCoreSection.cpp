@@ -1149,7 +1149,7 @@ void GameCoreSection::initStage()
 	{
 		StageInf* inf = &flowCont.mCurrentStage->mStageInf;
 		PRINT("@@@@ FREE = %d ACTIVE = %d\n", inf->mBPikiInfMgr.getFreeNum(), inf->mBPikiInfMgr.getActiveNum());
-		BaseInf* a = (BaseInf*)inf->mBPikiInfMgr.mActiveList.mChild;
+		BaseInf* a = static_cast<BaseInf*>(inf->mBPikiInfMgr.mActiveList.mChild);
 		while (a) {
 			PikiHeadItem* item = static_cast<PikiHeadItem*>(itemMgr->birth(OBJTYPE_Pikihead));
 			if (item) {
@@ -1161,12 +1161,12 @@ void GameCoreSection::initStage()
 				C_SAI(item)->start(item, PikiHeadAI::PIKIHEAD_Wait);
 				PRINT(" NEW PIKIHEAD ****\n");
 				BaseInf* b = a; // why
-				a          = (BaseInf*)a->mNext;
+				a          = static_cast<BaseInf*>(a->mNext);
 				inf->mBPikiInfMgr.delInf(b);
 				PRINT("::::::: FREE = %d ACTIVE = %d\n", inf->mBPikiInfMgr.getFreeNum(), inf->mBPikiInfMgr.getActiveNum());
 			} else {
 				PRINT("no room for pikihead! ****\n");
-				a = (BaseInf*)a->mNext;
+				a = static_cast<BaseInf*>(a->mNext);
 			}
 		}
 	}

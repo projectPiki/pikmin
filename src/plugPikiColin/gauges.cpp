@@ -264,7 +264,7 @@ void LifeGaugeMgr::refresh(Graphics& gfx)
 GaugeInfo* LifeGaugeMgr::getGaugeInfo()
 {
 	if (mInactiveGaugeList.mChild) {
-		GaugeInfo* info = (GaugeInfo*)mInactiveGaugeList.mChild;
+		GaugeInfo* info = static_cast<GaugeInfo*>(mInactiveGaugeList.mChild);
 		info->init();
 		info->del();
 		info->initCore("");

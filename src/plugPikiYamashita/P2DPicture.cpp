@@ -433,7 +433,7 @@ void P2DPicture::setTevMode()
 	GXSetTevColorOp(GX_TEVSTAGE0, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);
 	GXSetTevAlphaOp(GX_TEVSTAGE0, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);
 
-	*(u32*)&color = 0xFFFFFFFF;
+	GXCOLOR_AS_U32(color) = 0xFFFFFFFF;
 	GXSetTevKColor(GX_KCOLOR0, color);
 	int i;
 	for (i = 1; i < mTextureCount; i++) {

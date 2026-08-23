@@ -2228,7 +2228,7 @@ void BaseShape::recAddMatpoly(Joint* parentJoint, int flag)
 	FOREACH_NODE(Joint, parentJoint, currentJoint)
 	{
 		if (currentJoint->mChild) {
-			recAddMatpoly((Joint*)currentJoint->mChild, flag);
+			recAddMatpoly(static_cast<Joint*>(currentJoint->mChild), flag);
 		}
 
 		FOREACH_NODE(Joint::MatPoly, currentJoint->mMatPoly.mChild, poly)

@@ -180,7 +180,7 @@ P2DPane::P2DPane(P2DPane* parent, RandomAccessStream* input, u16 paneType)
 	tag[2] = input->readByte();
 	tag[3] = input->readByte();
 
-	mTagName = *(u32*)tag;
+	mTagName = reinterpret_cast<u32&>(tag);
 
 	mBounds.mMinX = (int)input->readShort();
 	mBounds.mMinY = (int)input->readShort();
