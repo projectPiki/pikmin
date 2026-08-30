@@ -4,6 +4,7 @@
 #include "Dolphin/gx.h"
 #include "Graphics.h"
 #include "Stream.h"
+#include "endianness.h"
 #include "sysNew.h"
 #include "system.h"
 #include <stddef.h>
@@ -343,9 +344,6 @@ void Texture::grabBuffer(int width, int height, bool enableDepth, bool useMIPmap
 #endif
 }
 
-// TODO: High chance that this macro appears in a lot more places.  Move it somewhere better.
-#define SWAP16(x) (((x) & 0xFF) << 8 | ((x) & 0xFF00) >> 8)
-
 /**
  * @todo: Documentation
  */
@@ -376,7 +374,7 @@ void Texture::decodeData(TexImg* texImg)
 			u16* gxTexData = static_cast<u16*>(texImg->mTextureData);
 			for (int gxOffset = 0; gxOffset < mWidth * mHeight; ++gxOffset) {
 				u8 r, g, b, a;
-				u16 gxTexel = SWAP16(gxTexData[gxOffset]);
+				u16 gxTexel = BE2H16(gxTexData[gxOffset]);
 				if (gxTexel & 0x8000) {
 					r = ((gxTexel >> 10) & 0x1F) << 3;
 					g = ((gxTexel >> 5) & 0x1F) << 3;
@@ -402,7 +400,7 @@ void Texture::decodeData(TexImg* texImg)
 			u16* gxTexData = static_cast<u16*>(texImg->mTextureData);
 			for (int gxOffset = 0; gxOffset < mWidth * mHeight; ++gxOffset) {
 				u8 r, g, b, a;
-				u16 gxTexel = SWAP16(gxTexData[gxOffset]);
+				u16 gxTexel = BE2H16(gxTexData[gxOffset]);
 
 				r = ((gxTexel >> 11) & 0x1F) << 3;
 				g = ((gxTexel >> 5) & 0x3f) << 2;
@@ -457,7 +455,7 @@ void Texture::decodeData(TexImg* texImg)
 			u16* gxTexData = static_cast<u16*>(texImg->mTextureData);
 			for (int gxOffset = 0; gxOffset < mWidth * mHeight; ++gxOffset) {
 				u8 r, g, b, a;
-				u16 gxTexel = SWAP16(gxTexData[gxOffset]);
+				u16 gxTexel = BE2H16(gxTexData[gxOffset]);
 
 				r = g = b = gxTexel & 0x00FF;
 				a         = ((gxTexel) >> 8) & 0xFF;
@@ -488,7 +486,7 @@ void Texture::decodeData(TexImg* texImg)
 			for (gxOffset = 0; gxOffset < mWidth * mHeight; ++gxOffset) {
 				u8 r, a;
 				int gxOffset  = (gxOffset / 16 * 32) + (gxOffset & 0x0F);
-				u16 gxTexelRA = SWAP16(gxTexData[gxOffset]);
+				u16 gxTexelRA = BE2H16(gxTexData[gxOffset]);
 
 				a = (gxTexelRA >> 8) & 0xFF;
 				r = (gxTexelRA >> 0) & 0xFF;
@@ -499,7 +497,7 @@ void Texture::decodeData(TexImg* texImg)
 			for (gxOffset = 0; gxOffset < mWidth * mHeight; ++gxOffset) {
 				u8 g, b;
 				int gxOffset  = (gxOffset / 16 * 32) + (gxOffset & 0x0F);
-				u16 gxTexelGB = SWAP16(gxTexData[gxOffset + 16]);
+				u16 gxTexelGB = BE2H16(gxTexData[gxOffset + 16]);
 
 				g = (gxTexelGB >> 8) & 0xFF;
 				b = (gxTexelGB >> 0) & 0xFF;

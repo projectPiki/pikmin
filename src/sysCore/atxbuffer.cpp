@@ -2,6 +2,7 @@
 
 #include "DebugLog.h"
 #include "Stream.h"
+#include "endianness.h"
 #include "system.h"
 
 #include <stddef.h>
@@ -46,17 +47,14 @@ void AtxBuffer::close(void)
 	mIsOpen = false;
 }
 
-// TODO: High chance that this macro appears in a lot more places.  Move it somewhere better.
-#define SWAP32(x) (((x) & 0xFF) << 24 | ((x) & 0xFF00) << 8 | ((x) & 0xFF0000) >> 8 | ((x) & 0xFF000000) >> 24)
-
 /**
  * @todo Documentation
  */
 void AtxBuffer::getReadWrite()
 {
 	mStream->readFrom(mStreamBasePos, &mReadWrite, sizeof(mReadWrite));
-	mReadPos  = SWAP32(mReadWrite.r);
-	mWritePos = SWAP32(mReadWrite.w);
+	mReadPos  = BE2H32(mReadWrite.r);
+	mWritePos = BE2H32(mReadWrite.w);
 }
 
 /**
@@ -64,8 +62,8 @@ void AtxBuffer::getReadWrite()
  */
 void AtxBuffer::setReadWrite()
 {
-	mReadWrite.r = SWAP32(mReadPos);
-	mReadWrite.w = SWAP32(mWritePos);
+	mReadWrite.r = BE2H32(mReadPos);
+	mReadWrite.w = BE2H32(mWritePos);
 	mStream->writeTo(mStreamBasePos, &mReadWrite, sizeof(mReadWrite));
 }
 
