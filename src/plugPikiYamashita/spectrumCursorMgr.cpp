@@ -105,7 +105,7 @@ void zen::SpectrumCursorMgr::scale(f32 targetScale, f32 duration)
 void zen::SpectrumCursorMgr::init(P2DScreen* screen, P2DPane* parent, u32 p3, f32 p4, f32 p5)
 {
 	char buf[8];
-	mPaneCount = 0;
+	mPaneCount                  = 0;
 	reinterpret_cast<u32&>(buf) = makeTag(p3, mPaneCount);
 	while (screen->search(P2DPaneLibrary::makeTag(buf), false)) {
 		mPaneCount++;
@@ -121,7 +121,7 @@ void zen::SpectrumCursorMgr::init(P2DScreen* screen, P2DPane* parent, u32 p3, f3
 
 	for (int i = mPaneCount - 1; i >= 0; i--) {
 		reinterpret_cast<u32&>(buf) = makeTag(p3, i);
-		P2DPane* pane = screen->search(P2DPaneLibrary::makeTag(buf), true);
+		P2DPane* pane               = screen->search(P2DPaneLibrary::makeTag(buf), true);
 		if (pane->getTypeID() == PANETYPE_Picture) {
 			mPanes[i] = pane;
 			P2DPaneLibrary::changeParent(mPanes[i], parent);

@@ -95,11 +95,11 @@ struct PeveFunctionCurveEvent : public PeveEvent {
 
 	// _00     = VTBL
 	// _00-_10 = PeveEvent
-	f32 mCurrentParam;        // _10
-	NVector3fIO* mPositionIO; // _14
-	NFunction3D* mFunction; // _18
-	f32 mStartParam;        // _1C
-	f32 mParamStep;         // _20
+	f32 mCurrentParam;            // _10
+	NVector3fIO* mPositionIO;     // _14
+	NFunction3D* mFunction;       // _18
+	f32 mStartParam;              // _1C
+	f32 mParamStep;               // _20
 	bool mUseFrameTimeScaledStep; // _24
 };
 
@@ -158,11 +158,11 @@ struct PeveHorizontalSinWaveEvent : public PeveEvent {
 	// _00-_10 = PeveEvent
 	NVector3fIO* mPositionIO;  // _10
 	NVector3f mLinearVelocity; // _14
-	f32 mOffset;          // _20
-	f32 mAmplitude;       // _24
-	f32 mStartingTheta;   // _28
-	f32 mAngularVelocity; // _2C
-	f32 mTheta;           // _30
+	f32 mOffset;               // _20
+	f32 mAmplitude;            // _24
+	f32 mStartingTheta;        // _28
+	f32 mAngularVelocity;      // _2C
+	f32 mTheta;                // _30
 };
 
 /**

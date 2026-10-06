@@ -52,13 +52,13 @@ f32 Kogane::getiMass()
  */
 void Kogane::init(immut Vector3f&)
 {
-	mCollisionRadius = 25.0f;
-	mIsOrganic       = false;
-	mIsInvincible    = true;
-	mNeedShadow      = false;
-	mShadowSize      = 20.0f;
+	mCollisionRadius     = 25.0f;
+	mIsOrganic           = false;
+	mIsInvincible        = true;
+	mNeedShadow          = false;
+	mShadowSize          = 20.0f;
 	mCreatePelletPending = false;
-	mIsAppear        = false;
+	mIsAppear            = false;
 	mKoganeAi->initAI(this);
 }
 

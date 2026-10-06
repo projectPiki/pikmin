@@ -628,7 +628,7 @@ void GeneratorCache::dump()
 void GeneratorCache::assertValid()
 {
 	CoreNode* cnode;
-	u32 heapPos  = 0;
+	u32 heapPos = 0;
 	FOREACH_NODE_REUSE(CoreNode, mAliveCacheList.mChild, cnode)
 	{
 		Cache* cache = static_cast<Cache*>(cnode);

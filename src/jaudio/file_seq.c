@@ -14,10 +14,10 @@
  * @note TODO: Is this invented struct namedropped somewhere?
  */
 struct as_struct {
-	u8 mInUse;  // _00
+	u8 mInUse;     // _00
 	u32 mSeqIndex; // _04
-	u32 _08; // _08
-	u8* mBuffer; // _0C
+	u32 _08;       // _08
+	u8* mBuffer;   // _0C
 };
 typedef struct as_struct as_struct;
 
@@ -85,8 +85,8 @@ u32 Jaf_LoadSeq(u32 seqIndex, u8* seqBuffer)
 	if (size == 0) {
 		return FALSE;
 	}
-	u32 seqArchiveHandle    = seq_archandle | seqIndex;
-	BOOL result             = JV_LoadFile(seqArchiveHandle, seqBuffer, 0, size);
+	u32 seqArchiveHandle     = seq_archandle | seqIndex;
+	BOOL result              = JV_LoadFile(seqArchiveHandle, seqBuffer, 0, size);
 	seq_loadbuffer[seqIndex] = seqBuffer;
 	return result;
 }
@@ -237,11 +237,11 @@ u32 __LoadSeqA(u32 callbackArg, u32 seqIndex, u8* seqBuffer, void (*finishCallba
 	if (seqSize == 0) {
 		return 0;
 	}
-	seqArchiveHandle       = seq_archandle | seqIndex;
-	as[slotIndex].mInUse   = 1;
+	seqArchiveHandle        = seq_archandle | seqIndex;
+	as[slotIndex].mInUse    = 1;
 	as[slotIndex].mSeqIndex = seqIndex;
-	as[slotIndex].mBuffer  = seqBuffer;
-	as[slotIndex]._08      = callbackArg;
+	as[slotIndex].mBuffer   = seqBuffer;
+	as[slotIndex]._08       = callbackArg;
 
 	seq_loadbuffer[seqIndex] = (u8*)1;
 	return JV_LoadFile_Async2(seqArchiveHandle, seqBuffer, 0, seqSize, finishCallback, (u32)&as[slotIndex]);

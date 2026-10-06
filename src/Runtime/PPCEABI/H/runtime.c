@@ -143,8 +143,7 @@ ASM u32 __cvt_fp2unsigned(register f64 d)
 /**
  * @TODO: Documentation
  */
-ASM static void __save_fpr(void)
-{
+ASM static void __save_fpr(void) {
 #ifdef __MWERKS__ // clang-format off
 	nofralloc
 entry _savefpr_14
@@ -336,8 +335,7 @@ entry _savegpr_31
  * @TODO: Documentation
  * @note UNUSED Size: 00004C
  */
-ASM static void __restore_gpr(void)
-{
+ASM static void __restore_gpr(void) {
 #ifdef __MWERKS__ // clang-format off
 	nofralloc
 entry _restgpr_14

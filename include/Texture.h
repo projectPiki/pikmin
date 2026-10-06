@@ -135,8 +135,8 @@ public:
 	TexImg()
 	    : CoreNode("texImg")
 	{
-		mImageCount    = 1;
-		mPixelData     = nullptr;
+		mImageCount = 1;
+		mPixelData  = nullptr;
 	}
 
 	void read(RandomAccessStream&);
@@ -285,7 +285,7 @@ public:
 
 	// _00 - _0C = CacheInfo
 	TexCacheInfo** mActiveCacheSlot; // _0C
-	u32 _10;            // _10
+	u32 _10;                         // _10
 };
 
 /**

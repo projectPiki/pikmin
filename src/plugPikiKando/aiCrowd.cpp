@@ -60,10 +60,10 @@ void ActCrowd::startSort()
  */
 void ActCrowd::init(Creature* target)
 {
-	mMode      = 5;
+	mMode            = 5;
 	mPrevMode        = 5;
 	mNearSlotCounter = 0;
-	mIsWaiting = false;
+	mIsWaiting       = false;
 	mWasWaiting      = false;
 	if (target->mObjType != OBJTYPE_Navi) {
 		PRINT("target is not navi (%d)\n", target->mObjType);
@@ -83,12 +83,12 @@ void ActCrowd::init(Creature* target)
 	}
 	mPiki->unsetPastel();
 	mHasRequestedNewSlot = false;
-	_35              = false;
-	_36              = false;
-	mState           = STATE_Unk0;
-	mTripLoopCounter = 0;
+	_35                  = false;
+	_36                  = false;
+	mState               = STATE_Unk0;
+	mTripLoopCounter     = 0;
 	mTravelDistance      = 0.0f;
-	mIsTripping      = false;
+	mIsTripping          = false;
 	GameStat::formationPikis.inc(mPiki->mColor);
 	GameStat::workPikis.dec(mPiki->mColor);
 	GameStat::update();
@@ -164,7 +164,7 @@ void ActCrowd::procWallMsg(Piki*, MsgWall* msg)
 {
 	if (mCPlateSlotID != -1) {
 		mWallNormal = msg->mWallPlane->mNormal;
-		_35 = true;
+		_35         = true;
 	}
 }
 
@@ -233,7 +233,7 @@ void ActCrowd::cleanup()
 int ActCrowd::exec()
 {
 	mPrevMode = mMode;
-	mMode = 5;
+	mMode     = 5;
 	if (mHasRoute) {
 		exeRouteMove();
 		if (mPiki->mUseAsyncPathfinding) {
@@ -503,7 +503,7 @@ int ActCrowd::exec()
 	}
 
 	if (plateDist2D < C_PIKI_PARM(mPiki, mFormationSlipRange)) {
-		mLostChildTimer = 0.0f;
+		mLostChildTimer      = 0.0f;
 		mHasRequestedNewSlot = false;
 	} else if (plateDist2D < C_PIKI_PARM(mPiki, mFormationBreakRange)) {
 		mLostChildTimer += gsys->getFrameTime();

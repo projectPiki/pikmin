@@ -512,20 +512,20 @@ void VIInit(void)
 	HorVer.dispPosX  = (720 - HorVer.dispSizeX) / 2;
 	HorVer.dispPosY  = (480 - HorVer.dispSizeY) / 2;
 	AdjustPosition(240);
-	HorVer.fbSizeX     = 640;
-	HorVer.fbSizeY     = 480;
-	HorVer.panPosX     = 0;
-	HorVer.panPosY     = 0;
-	HorVer.panSizeX    = 640;
-	HorVer.panSizeY    = 480;
-	HorVer.xfbMode     = 0;
+	HorVer.fbSizeX  = 640;
+	HorVer.fbSizeY  = 480;
+	HorVer.panPosX  = 0;
+	HorVer.panPosY  = 0;
+	HorVer.panSizeX = 640;
+	HorVer.panSizeY = 480;
+	HorVer.xfbMode  = 0;
 
-	dspCfg             = __VIRegs[VI_DISP_CONFIG];
-	HorVer.nonInter    = (s32)((dspCfg >> 2U) & 1);
-	HorVer.tv          = (u32)((dspCfg >> 8U) & 3);
-	tv                 = (HorVer.tv == 3) ? 0 : HorVer.tv;
-	HorVer.timing      = getTiming((tv << 2) + HorVer.nonInter);
-	regs[1]            = dspCfg;
+	dspCfg          = __VIRegs[VI_DISP_CONFIG];
+	HorVer.nonInter = (s32)((dspCfg >> 2U) & 1);
+	HorVer.tv       = (u32)((dspCfg >> 8U) & 3);
+	tv              = (HorVer.tv == 3) ? 0 : HorVer.tv;
+	HorVer.timing   = getTiming((tv << 2) + HorVer.nonInter);
+	regs[1]         = dspCfg;
 #endif
 	HorVer.wordPerLine = 40;
 	HorVer.std         = 40;
@@ -536,7 +536,7 @@ void VIInit(void)
 	OSInitThreadQueue(&retraceQueue);
 	value = __VIRegs[VI_DISP_INT_0];
 	value &= ~0x8000;
-	value        = (u16)value;
+	value                   = (u16)value;
 	__VIRegs[VI_DISP_INT_0] = value;
 
 	value                   = __VIRegs[VI_DISP_INT_1];

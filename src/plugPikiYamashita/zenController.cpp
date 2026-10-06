@@ -31,7 +31,7 @@ bool zen::KeyRepeat::update(Controller* controller)
 	mWasHeldLastFrame = controller->keyDown(mButton);
 
 	if (mHeldTime > mRepeatDelay) {
-		res = true;
+		res       = true;
 		mHeldTime = 0.0f;
 		mRepeatDelay *= 0.65f;
 	}

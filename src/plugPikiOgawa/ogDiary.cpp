@@ -600,7 +600,7 @@ zen::ogDrawSelectDiary::SelectDiaryStatus zen::ogDrawSelectDiary::update(Control
 	mScreen->update();
 	mDiaryStatus = mDiaryInstance->update(input);
 	mBlackFadeScreen->update();
-	
+
 	for (int futureDay = mCurrentDay + 1; futureDay < MAX_DAYS; futureDay++) {
 		P2DPicture* obj = static_cast<P2DPicture*>(_248[futureDay]->getPaneTree()->getParent()->getObject());
 		obj->setAlpha(0);
@@ -613,7 +613,7 @@ zen::ogDrawSelectDiary::SelectDiaryStatus zen::ogDrawSelectDiary::update(Control
 		}
 
 		phase -= day * 0.1f;
-		f32 scale = 0.05f * sinf(TAU * phase) + 1.0f;
+		f32 scale   = 0.05f * sinf(TAU * phase) + 1.0f;
 		int offsetX = mDayDisplayPanes[day]->getWidth() / 2;
 		int offsetY = mDayDisplayPanes[day]->getHeight() / 2;
 		mDayDisplayPanes[day]->setOffset(offsetX, offsetY);

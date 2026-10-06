@@ -96,8 +96,7 @@ _return:
 /**
  * @TODO: Documentation
  */
-static ASM void __OSSaveFPUContext(register u32, register u32, register OSContext* fpuContext)
-{
+static ASM void __OSSaveFPUContext(register u32, register u32, register OSContext* fpuContext) {
 #ifdef __MWERKS__ // clang-format off
   	nofralloc
 
@@ -216,7 +215,8 @@ ASM void OSSaveFPUContext(register OSContext* fpuContext) {
 /**
  * @TODO: Documentation
  */
-ASM void OSSetCurrentContext(register OSContext* context) {
+ASM void OSSetCurrentContext(register OSContext* context)
+{
 #ifdef __MWERKS__ // clang-format off
 	nofralloc
 

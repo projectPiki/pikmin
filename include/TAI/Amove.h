@@ -249,8 +249,8 @@ public:
 	TAIAturnToTarget(int nextState, int leftMotionID, int rightMotionID, bool p4)
 	    : TAIAreserveMotion(nextState, leftMotionID)
 	{
-		mLeftTurnAnimID  = leftMotionID;
-		mRightTurnAnimID = rightMotionID;
+		mLeftTurnAnimID   = leftMotionID;
+		mRightTurnAnimID  = rightMotionID;
 		mFinishTurnMotion = p4;
 	}
 
@@ -267,8 +267,8 @@ protected:
 
 	// _04     = VTBL
 	// _00-_0C = TAIAreserveMotion
-	int mLeftTurnAnimID;  // _0C
-	int mRightTurnAnimID; // _10
+	int mLeftTurnAnimID;    // _0C
+	int mRightTurnAnimID;   // _10
 	bool mFinishTurnMotion; // _14
 };
 

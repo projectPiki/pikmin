@@ -543,8 +543,8 @@ void SlimeAi::setExpansionGoal()
 {
 	f32 goalDistFromMiddle = 15.0f + C_SLIME_PARM(mSlime, mDistanceBetweenNuclei) / 2.0f;
 	Vector3f midPoint      = 0.5f
-	                  * (mSlime->mSlimeCreatures[SLIMECREATURE_CoreOuter]->mTargetPosition
-	                     + mSlime->mSlimeCreatures[SLIMECREATURE_NucleusOuter]->mTargetPosition);
+	                       * (mSlime->mSlimeCreatures[SLIMECREATURE_CoreOuter]->mTargetPosition
+	                          + mSlime->mSlimeCreatures[SLIMECREATURE_NucleusOuter]->mTargetPosition);
 	Vector3f offsetFromMid = mSlime->mSlimeCreatures[SLIMECREATURE_CoreOuter]->mTargetPosition - midPoint;
 	offsetFromMid.normalise();
 	offsetFromMid.multiply(goalDistFromMiddle);

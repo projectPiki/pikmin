@@ -101,8 +101,8 @@ struct NaviAttackState : public NaviState {
 	// _00-_10 = NaviState
 	u16 mAttackPhase;      // _10
 	bool mGatherRequested; // _12
-	f32 _14;  // _14
-	f32 _18;  // _18
+	f32 _14;               // _14
+	f32 _18;               // _18
 };
 
 /**
@@ -470,10 +470,10 @@ struct NaviGeyzerState : public NaviState {
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
-	u16 mGeyserState;     // _10
-	f32 mGetupDelayTimer; // _14
-	f32 mPlayerDirection; // _18
-	f32 mSpinDelta;       // _1C
+	u16 mGeyserState;               // _10
+	f32 mGetupDelayTimer;           // _14
+	f32 mPlayerDirection;           // _18
+	f32 mSpinDelta;                 // _1C
 	Vector3f mLaunchTargetPos;      // _20
 	f32 mRiseTargetHeight;          // _2C
 	bool mHasAppliedLaunchVelocity; // _30
@@ -548,8 +548,8 @@ struct NaviNukuAdjustState : public NaviState {
 	// _00-_10 = NaviState
 	f32 mTargetFaceDirection;   // _10
 	Vector3f mApproachPosition; // _14
-	bool _20;     // _20
-	Vector3f mLastPosition; // _24
+	bool _20;                   // _20
+	Vector3f mLastPosition;     // _24
 };
 
 /**
@@ -568,11 +568,11 @@ struct NaviNukuState : public NaviState {
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
-	u16 mPullCountRemaining; // _10
-	bool _12; // _12
+	u16 mPullCountRemaining;  // _10
+	bool _12;                 // _12
 	bool mExtractKeyReleased; // _13
 	bool mWantsNextPluck;     // _14
-	bool _15; // _15
+	bool _15;                 // _15
 };
 
 /**
@@ -646,10 +646,10 @@ struct NaviPikiZeroState : public NaviState {
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
-	bool _10; // _10
-	bool _11; // _11
+	bool _10;               // _10
+	bool _11;               // _11
 	u16 mGameOverCountdown; // _12
-	u32 _14;  // _14
+	u32 _14;                // _14
 };
 
 /**
@@ -799,7 +799,7 @@ struct NaviStartingState : public NaviState {
 	f32 mStartDelayTimer;      // _10
 	Vector3f mWalkTargetPos;   // _14
 	Vector3f mLookAtTargetPos; // _20
-	u32 _2C;      // _2C
+	u32 _2C;                   // _2C
 	u16 mStartPhase;           // _30
 	bool mIsStartAnimComplete; // _32
 	Vector3f mLastPosition;    // _34
@@ -841,8 +841,8 @@ struct NaviThrowState : public NaviState {
 	// _00     = VTBL
 	// _00-_10 = NaviState
 	bool mHasThrownPiki; // _10
-	bool _11;  // _11
-	Piki* mTargetPiki; // _14
+	bool _11;            // _11
+	Piki* mTargetPiki;   // _14
 };
 
 /**
@@ -867,11 +867,11 @@ struct NaviThrowWaitState : public NaviState {
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
-	Piki* mHeldThrowPiki;     // _10
-	Piki* mPendingThrowPiki;  // _14
-	int mThrowChargeLevel;    // _18
-	bool mIsHoldingThrowPiki; // _1C
-	u32 _20;   // _20
+	Piki* mHeldThrowPiki;         // _10
+	Piki* mPendingThrowPiki;      // _14
+	int mThrowChargeLevel;        // _18
+	bool mIsHoldingThrowPiki;     // _1C
+	u32 _20;                      // _20
 	f32 mPendingThrowPikiTimeout; // _24
 	f32 mSortDelayTimer;          // _28
 };
@@ -937,10 +937,10 @@ struct NaviWalkState : public NaviState {
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
-	Creature* _10; // _10, unknown
-	f32 _14;       // _14
+	Creature* _10;       // _10, unknown
+	f32 _14;             // _14
 	int mIsTouchingWall; // _18
-	f32 _1C;       // _1C
+	f32 _1C;             // _1C
 };
 
 /**

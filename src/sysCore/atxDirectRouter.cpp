@@ -11,7 +11,7 @@
 AtxDirectRouter::AtxDirectRouter(immut char* address)
 {
 	mAddress = !strcmp(address, "self") ? gsys->_3B8 : StdSystem::stringDup(address);
-	mStream = nullptr;
+	mStream  = nullptr;
 }
 
 /**

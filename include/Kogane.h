@@ -120,9 +120,9 @@ public:
 private:
 	// _00      = VTBL
 	// _00-_3B8 = Boss
-	bool mIsAppear;      // _3B8
+	bool mIsAppear;            // _3B8
 	bool mCreatePelletPending; // _3B9
-	KoganeAi* mKoganeAi; // _3BC
+	KoganeAi* mKoganeAi;       // _3BC
 };
 
 /**

@@ -193,10 +193,10 @@ struct WaveArchiveBank_ {
 };
 
 struct CtrlGroup_ {
-	int magic;        // _00, 'WBCT'
+	int magic;              // _00, 'WBCT'
 	u32 mCurrentSceneIndex; // _04
-	int count;        // _08, same count as WaveArchiveBank_
-	SCNE_* scenes[1]; // _0C, array size variable
+	int count;              // _08, same count as WaveArchiveBank_
+	SCNE_* scenes[1];       // _0C, array size variable
 };
 
 // Name fabricated based on magic ID.

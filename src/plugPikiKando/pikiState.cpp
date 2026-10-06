@@ -1258,7 +1258,7 @@ void PikiFlownState::procAnimMsg(Piki* piki, MsgAnim* msg)
 	case KEY_Finished:
 	{
 		if (mState == FNS_Landing) {
-			mState  = FNS_Downed;
+			mState          = FNS_Downed;
 			f32 min         = C_PIKI_PARM(piki, mMinFlickKnockDownTime);
 			f32 max         = C_PIKI_PARM(piki, mMaxFlickKnockDownTime);
 			mKnockdownTimer = (max - min) * gsys->getRand(1.0f) + min;

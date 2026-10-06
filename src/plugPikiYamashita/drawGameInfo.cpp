@@ -1,3 +1,4 @@
+#include "zen/DrawGameInfo.h"
 #include "DebugLog.h"
 #include "Graphics.h"
 #include "NaviMgr.h"
@@ -7,12 +8,10 @@
 #include "gameflow.h"
 #include "nlib/Math.h"
 #include "sysNew.h"
-#include "zen/DrawGameInfo.h"
 #include "zen/Graphics.h"
 #include "zen/Math.h"
 #include "zen/Number.h"
 #include "zen/ogSub.h"
-
 
 /**
  * @todo: Documentation

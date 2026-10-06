@@ -375,13 +375,13 @@ protected:
 	// _00     = VTBL
 	// _00-_18 = AndAction
 	// _18     = PaniAnimKeyListener
-	bool mHasLost;             // _1C
-	bool mIsAttackFinished;    // _1D
-	bool mIsCriticalHit;       // _1E
-	bool mTargetIsPlayer;      // _1F
+	bool mHasLost;                  // _1C
+	bool mIsAttackFinished;         // _1D
+	bool mIsCriticalHit;            // _1E
+	bool mTargetIsPlayer;           // _1F
 	Traversable* mTargetObjectPool; // _20, idk what this is but it's something inheriting from this
 	SmartPtr<Creature> mOther;      // _24
-	Creature* mPlayerObject;   // _28
+	Creature* mPlayerObject;        // _28
 };
 
 /**

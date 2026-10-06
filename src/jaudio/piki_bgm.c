@@ -169,9 +169,9 @@ void Jac_InitBgm(void)
 			u32 seqSize;
 			u8* seqBuffer;
 			STACK_PAD_VAR(1);
-			seqSize   = Jaf_CheckSeqSize(preloadSeqIds[i]);
-			u32* REF_size = &seqSize;
-			seqBuffer = (u8*)OSAlloc2(seqSize);
+			seqSize         = Jaf_CheckSeqSize(preloadSeqIds[i]);
+			u32* REF_size   = &seqSize;
+			seqBuffer       = (u8*)OSAlloc2(seqSize);
 			u8** REF_seqbuf = &seqBuffer;
 			if ((u32)Jaf_LoadSeq(preloadSeqIds[i], seqBuffer)) {
 				int* startTrackId = &startTrackIds[i];

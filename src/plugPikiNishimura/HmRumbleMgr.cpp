@@ -254,8 +254,8 @@ RumbleMgr::RumbleMgr(bool enabled1, bool enabled2, bool enabled3, bool enabled4)
 		}
 	}
 
-	mDataMgr    = nullptr;
-	mDataMgr    = new ChannelDataMgr();
+	mDataMgr      = nullptr;
+	mDataMgr      = new ChannelDataMgr();
 	mRumbleEnable = true;
 	mRumblePaused = false;
 }

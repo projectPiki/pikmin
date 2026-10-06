@@ -13,7 +13,6 @@
 #include "zen/CallBack.h"
 #include "zen/particle.h"
 
-
 #define IS_DEMO_HIDE_ONYON(flag, color) ((flag) & (1 << (color)))
 
 namespace zen {

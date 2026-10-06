@@ -1,8 +1,8 @@
 #include "types.h"
 #include <math.h>
 
-#define __HI(x) (((int*)&x)[0])
-#define __LO(x) (((int*)&x)[1])
+#define __HI(x)   (((int*)&x)[0])
+#define __LO(x)   (((int*)&x)[1])
 #define __PI_O2   1.57079632679489661923132169163975f
 #define __PI      3.1415926535897932384626433832795f
 #define __3PIO2__ 3.0f * __PI_O2

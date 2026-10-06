@@ -1,3 +1,4 @@
+#include "zen/ogRader.h"
 #include "DebugLog.h"
 #include "FlowController.h"
 #include "GoalItem.h"
@@ -12,9 +13,7 @@
 #include "UfoItem.h"
 #include "jaudio/verysimple.h"
 #include "sysNew.h"
-#include "zen/ogRader.h"
 #include "zen/ogSub.h"
-
 
 /**
  * @todo: Documentation

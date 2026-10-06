@@ -88,30 +88,30 @@ private:
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIJ01)
 	Vector3f mDemoAreaCorners[4]; // _24
 #endif
-	f32 mMapAreaCenterX;                    // _24
-	f32 mMapAreaCenterZ;                    // _28
-	f32 mMapAreaRadius;                     // _2C
-	f32 mRangeCirclePulseTimer;             // _30
-	f32 mScrollOffsetX;                     // _34
-	f32 mScrollOffsetY;                     // _38
-	P2DScreen* mMainScreen;                 // _3C
-	P2DPicture* mContainerIcons[3];         // _40
-	P2DPicture* mStageMapPicture;           // _4C
-	PikaAlphaMgr* mAlphaMgr;                // _50
-	int mStageId;                           // _54
-	P2DPane* mRootPane;                     // _58
-	P2DPicture* mBluePikiIconTemplate;      // _5C
-	P2DPicture* mRedPikiIconTemplate;       // _60
-	P2DPicture* mYellowPikiIconTemplate;    // _64
-	P2DPicture* mSeedIconTemplate;          // _68
-	P2DPicture* mOlimarIcon;                // _6C
-	P2DPicture* mBlueContainerIcon;         // _70
-	P2DPicture* mRedContainerIcon;          // _74
-	P2DPicture* mYellowContainerIcon;       // _78
-	P2DPicture* mRocketIcon;                // _7C
-	P2DPicture* mPartIconTemplate;          // _80
-	P2DPicture* mPartIcons[MAX_UFO_PARTS];  // _84
-	s16 mVisiblePikiCount;                  // _FC
+	f32 mMapAreaCenterX;                            // _24
+	f32 mMapAreaCenterZ;                            // _28
+	f32 mMapAreaRadius;                             // _2C
+	f32 mRangeCirclePulseTimer;                     // _30
+	f32 mScrollOffsetX;                             // _34
+	f32 mScrollOffsetY;                             // _38
+	P2DScreen* mMainScreen;                         // _3C
+	P2DPicture* mContainerIcons[3];                 // _40
+	P2DPicture* mStageMapPicture;                   // _4C
+	PikaAlphaMgr* mAlphaMgr;                        // _50
+	int mStageId;                                   // _54
+	P2DPane* mRootPane;                             // _58
+	P2DPicture* mBluePikiIconTemplate;              // _5C
+	P2DPicture* mRedPikiIconTemplate;               // _60
+	P2DPicture* mYellowPikiIconTemplate;            // _64
+	P2DPicture* mSeedIconTemplate;                  // _68
+	P2DPicture* mOlimarIcon;                        // _6C
+	P2DPicture* mBlueContainerIcon;                 // _70
+	P2DPicture* mRedContainerIcon;                  // _74
+	P2DPicture* mYellowContainerIcon;               // _78
+	P2DPicture* mRocketIcon;                        // _7C
+	P2DPicture* mPartIconTemplate;                  // _80
+	P2DPicture* mPartIcons[MAX_UFO_PARTS];          // _84
+	s16 mVisiblePikiCount;                          // _FC
 	PikiRaderEntry mPikiEntries[MAX_PIKI_ON_FIELD]; // _100
 	P2DPicture* mMapPicture;                        // _420
 	P2DPane* mIconPane;                             // _424

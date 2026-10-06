@@ -66,10 +66,10 @@ private:
 	TextColorCallBack* mMesgColorA;    // _98
 	P2DTextBox* mTextBoxB;             // _9C
 	TextColorCallBack* mMesgColorB;    // _A0
-	Colour mSelectedTextCharColor;      // _A4
-	Colour mSelectedTextGradColor;      // _A8
-	Colour mUnselectedTextCharColor;    // _AC
-	Colour mUnselectedTextGradColor;    // _B0
+	Colour mSelectedTextCharColor;     // _A4
+	Colour mSelectedTextGradColor;     // _A8
+	Colour mUnselectedTextCharColor;   // _AC
+	Colour mUnselectedTextGradColor;   // _B0
 	int _B4;                           // _B4
 	P2DPane* mRootPane;                // _B8
 	f32 mWaitTimer;                    // _BC

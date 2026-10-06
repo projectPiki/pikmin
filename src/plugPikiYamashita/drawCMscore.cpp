@@ -80,8 +80,8 @@ public:
 	{
 		mMoveElapsedTime = 0.0f;
 		mMoveDuration    = p1;
-		mMode         = MODE_Appear;
-		mModeFunction = &DrawCMscoreObj::modeMove;
+		mMode            = MODE_Appear;
+		mModeFunction    = &DrawCMscoreObj::modeMove;
 		mAppearStartPosition.set(mBasePosition);
 		mAppearStartPosition.x += 640.0f;
 		mAppearTargetPosition.set(mBasePosition);
@@ -90,8 +90,8 @@ public:
 	void wait()
 	{
 		mMoveElapsedTime = 0.0f;
-		mMode         = MODE_Wait;
-		mModeFunction = &DrawCMscoreObj::modeWait;
+		mMode            = MODE_Wait;
+		mModeFunction    = &DrawCMscoreObj::modeWait;
 	}
 
 	void update() { (this->*mModeFunction)(); }
@@ -110,8 +110,8 @@ protected:
 		f32 t, tComp;
 		if (mMoveElapsedTime > mMoveDuration) {
 			mMoveElapsedTime = mMoveDuration;
-			t     = 1.0f;
-			tComp = 0.0f;
+			t                = 1.0f;
+			tComp            = 0.0f;
 			wait();
 			res = true;
 		} else {

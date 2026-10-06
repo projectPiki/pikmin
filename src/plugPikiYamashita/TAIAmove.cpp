@@ -242,10 +242,10 @@ void TAIAsetTargetPointCircle::setTargetPoint(Teki& teki)
 	f32 angle = mAngleOffset + zen::Rand(mAngleOffset)
 	          + NMathF::atan2(teki.getPosition().x - teki.mPersonality->mNestPosition.x,
 	                          teki.getPosition().z - teki.mPersonality->mNestPosition.z);
-	f32 dist = teki.getParameterF(TPF_SafetyTerritoryRange);
-	f32 x    = dist * NMathF::sin(angle) + teki.mPersonality->mNestPosition.x;
-	f32 z    = dist * NMathF::cos(angle) + teki.mPersonality->mNestPosition.z;
-	f32 y    = mapMgr->getMinY(x, z, true);
+	f32 dist  = teki.getParameterF(TPF_SafetyTerritoryRange);
+	f32 x     = dist * NMathF::sin(angle) + teki.mPersonality->mNestPosition.x;
+	f32 z     = dist * NMathF::cos(angle) + teki.mPersonality->mNestPosition.z;
+	f32 y     = mapMgr->getMinY(x, z, true);
 	teki.mTargetPosition.set(x, y, z);
 }
 

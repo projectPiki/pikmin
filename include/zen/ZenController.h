@@ -13,7 +13,7 @@ namespace zen {
 struct KeyRepeat {
 	KeyRepeat(u32 button)
 	{
-		mButton = button;
+		mButton           = button;
 		mHeldTime         = 0.0f;
 		mRepeatDelay      = repeatTime;
 		mWasHeldLastFrame = 0;
@@ -23,7 +23,7 @@ struct KeyRepeat {
 
 	static f32 repeatTime;
 
-	u32 mButton; // _00
+	u32 mButton;          // _00
 	f32 mHeldTime;        // _04
 	f32 mRepeatDelay;     // _08
 	u8 mWasHeldLastFrame; // _0C
