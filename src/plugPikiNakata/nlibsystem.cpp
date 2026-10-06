@@ -189,7 +189,7 @@ void NListNode::removeChild(NListNode* child)
  */
 int NListNode::getChildCount()
 {
-	int count    = 0;
+	int count               = 0;
 	NListNode* currentChild = mFirstChild;
 	while (currentChild) {
 		currentChild = currentChild->mNextSibling;

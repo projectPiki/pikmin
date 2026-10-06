@@ -233,11 +233,11 @@ void PVWColourShortAnimInfo::extract(f32 value, ShortColour& target)
 		}
 	}
 
-	f32 red   = subExtract(value,
-	                       AKeyInfo(mInfo.mKeyframes[idx].mTime, mInfo.mKeyframes[idx].mRedData.mTime, mInfo.mKeyframes[idx].mRedData.mValue,
-	                                mInfo.mKeyframes[idx].mRedData.mTangent),
-	                       AKeyInfo(mInfo.mKeyframes[idx + 1].mTime, mInfo.mKeyframes[idx + 1].mRedData.mTime,
-	                                mInfo.mKeyframes[idx + 1].mRedData.mValue, mInfo.mKeyframes[idx + 1].mRedData.mTangent));
+	f32 red = subExtract(value,
+	                     AKeyInfo(mInfo.mKeyframes[idx].mTime, mInfo.mKeyframes[idx].mRedData.mTime, mInfo.mKeyframes[idx].mRedData.mValue,
+	                              mInfo.mKeyframes[idx].mRedData.mTangent),
+	                     AKeyInfo(mInfo.mKeyframes[idx + 1].mTime, mInfo.mKeyframes[idx + 1].mRedData.mTime,
+	                              mInfo.mKeyframes[idx + 1].mRedData.mValue, mInfo.mKeyframes[idx + 1].mRedData.mTangent));
 	f32 green = subExtract(value,
 	                       AKeyInfo(mInfo.mKeyframes[idx].mTime, mInfo.mKeyframes[idx].mGreenData.mTime,
 	                                mInfo.mKeyframes[idx].mGreenData.mValue, mInfo.mKeyframes[idx].mGreenData.mTangent),
@@ -1051,10 +1051,10 @@ void TexImg::setColour(immut Colour& colour)
  */
 void TexImg::read(RandomAccessStream& stream)
 {
-	mWidth         = stream.readShort();
-	mHeight        = stream.readShort();
-	mFormat        = static_cast<TexImgFormat>(stream.readInt());
-	mImageCount    = stream.readInt();
+	mWidth      = stream.readShort();
+	mHeight     = stream.readShort();
+	mFormat     = static_cast<TexImgFormat>(stream.readInt());
+	mImageCount = stream.readInt();
 
 	s32 _ = stream.readInt();
 	_     = stream.readInt();
@@ -1226,11 +1226,11 @@ void TexAttr::initImage()
 	TexImg::getTileSize(mImage->mFormat, mTexture->mTileSizeX, mTexture->mTileSizeY);
 
 	if (mUseOffsetImgData) {
-		mTexture->mLODCount    = mImage->mImageCount - 1;
-		mTexture->mLODBias     = mLODBias;
+		mTexture->mLODCount = mImage->mImageCount - 1;
+		mTexture->mLODBias  = mLODBias;
 	} else {
-		mTexture->mLODCount    = 0;
-		mTexture->mLODBias     = 0.0f;
+		mTexture->mLODCount = 0;
+		mTexture->mLODBias  = 0.0f;
 	}
 
 	mTexture->mWidthFactor  = 1.0f / mImage->mWidth;

@@ -173,7 +173,7 @@ static s32 DoMount(s32 channel)
 #if OS_BUILD_VERSION >= 20011112L
 		card->cid = id;
 #endif
-		card->size       = (u16)(id & 0xFC);
+		card->size = (u16)(id & 0xFC);
 #if OS_BUILD_VERSION >= 20011217L
 		switch (card->size) {
 		case 4:

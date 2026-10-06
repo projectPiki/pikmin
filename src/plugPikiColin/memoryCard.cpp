@@ -676,7 +676,8 @@ void MemoryCard::checkUseFile()
 		(i / 100);
 
 #if defined(VERSION_GPIP01)
-		if (!strncmp(stat.fileName, basecardname, 15) && memcmp(stat.gameName, diskID->gameName, 4) == 0 && memcmp(stat.company, diskID->company, 2) == 0)
+		if (!strncmp(stat.fileName, basecardname, 15) && memcmp(stat.gameName, diskID->gameName, 4) == 0
+		    && memcmp(stat.company, diskID->company, 2) == 0)
 #else
 		if (!strncmp(stat.fileName, basecardname, 15))
 #endif
@@ -889,7 +890,7 @@ void MemoryCard::writeCurrentGame(RandomAccessStream* output, PlayState& playSta
 		playState.mYellowPikiCount = playerState->hasContainer(Yellow) ? pikiInfMgr.getColorTotal(Yellow) : -1;
 		playState.mBluePikiCount   = playerState->hasContainer(Blue) ? pikiInfMgr.getColorTotal(Blue) : -1;
 #endif
-		playState.mShipPartsCount  = playerState->getCardUfoPartsCount();
+		playState.mShipPartsCount = playerState->getCardUfoPartsCount();
 	}
 
 	playState.write(*output);

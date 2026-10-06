@@ -10,7 +10,6 @@
 #include "SAIEvent.h"
 #include "types.h"
 
-
 class ActorMgr;
 struct NaviProp;
 struct PoliceAI;

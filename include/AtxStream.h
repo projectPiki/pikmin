@@ -57,8 +57,8 @@ public:
 
 	// _04     = VTBL
 	// _00-_08 = Stream
-	Stream* mStream;    // _08, underlying TCP stream used for communication
-	int _0C;            // _0C
+	Stream* mStream; // _08, underlying TCP stream used for communication
+	int _0C;         // _0C
 };
 
 /**

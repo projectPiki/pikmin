@@ -8,7 +8,6 @@
 #include "UtEffect.h"
 #include "types.h"
 
-
 class InteractBikkuri;
 class InteractSwallow;
 class SimpleAI;

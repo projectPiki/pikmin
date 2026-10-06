@@ -926,7 +926,7 @@ void DayMgr::refresh(Graphics& gfx, f32 time, int numLights)
 		timeSettingStart = &mTimeSettings[TIME_Night];
 		timeSettingEnd   = &mTimeSettings[TIME_Morning];
 		blendRatio       = (time - gameflow.mParameters->mMorningStart())
-		           / (gameflow.mParameters->mMorningMid() - gameflow.mParameters->mMorningStart());
+		                 / (gameflow.mParameters->mMorningMid() - gameflow.mParameters->mMorningStart());
 
 	} else if (time < gameflow.mParameters->mMorningEnd()) {
 		// late morning, blend morning into day - this is from when gameplay starts for the day (7am-8am)
@@ -945,7 +945,7 @@ void DayMgr::refresh(Graphics& gfx, f32 time, int numLights)
 		timeSettingStart = &mTimeSettings[TIME_Day];
 		timeSettingEnd   = &mTimeSettings[TIME_Evening];
 		blendRatio       = (time - gameflow.mParameters->mEveningStart())
-		           / (gameflow.mParameters->mEveningMid() - gameflow.mParameters->mEveningStart());
+		                 / (gameflow.mParameters->mEveningMid() - gameflow.mParameters->mEveningStart());
 
 	} else if (time < gameflow.mParameters->mEveningEnd()) {
 		// late evening - start blending evening into night (4:30pm-7pm)

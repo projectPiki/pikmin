@@ -6,7 +6,7 @@
 
 static u16 DSP_MIXERLEVEL = 0x4000;
 #if defined(VERSION_GPIP01)
-volatile static int flag;
+static volatile int flag;
 #endif
 
 /**

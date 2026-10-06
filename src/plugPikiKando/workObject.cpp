@@ -625,7 +625,7 @@ Vector3f HinderRock::getTangentPos(f32 scale)
 	Vector3f v1 = getVertex(2);
 	Vector3f v2 = getVertex(3);
 
-	Vector3f diff = v2 - v1;
+	Vector3f diff   = v2 - v1;
 	Vector3f result = diff * scale + v1;
 	return result;
 }

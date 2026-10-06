@@ -545,10 +545,10 @@ NaviWalkState::NaviWalkState()
 void NaviWalkState::init(Navi* navi)
 {
 	navi->startMotion(PaniMotionInfo(PIKIANIM_Walk), PaniMotionInfo(PIKIANIM_Walk));
-	_14 = 1.0f;
+	_14             = 1.0f;
 	mIsTouchingWall = 0;
-	_1C = 0.0f;
-	_10 = 0;
+	_1C             = 0.0f;
+	_10             = 0;
 }
 
 /**
@@ -794,7 +794,7 @@ void NaviWalkState::procWallMsg(Navi* navi, MsgWall* msg)
 {
 	if (mIsTouchingWall == 0) {
 		mIsTouchingWall = 1;
-		_1C = 0.0f;
+		_1C             = 0.0f;
 	}
 
 	Vector3f nrm         = msg->mWallPlane->mNormal;
@@ -807,7 +807,7 @@ void NaviWalkState::procWallMsg(Navi* navi, MsgWall* msg)
 void NaviWalkState::procOffWallMsg(Navi* navi, MsgOffWall* msg)
 {
 	mIsTouchingWall = 0;
-	_1C = 0.0f;
+	_1C             = 0.0f;
 }
 
 /**
@@ -1493,7 +1493,7 @@ void NaviGeyzerState::init(Navi* navi)
 	mHasAppliedLaunchVelocity = false;
 	navi->mNaviAnimMgr.startMotion(PaniMotionInfo(PIKIANIM_OCarry, navi), PaniMotionInfo(PIKIANIM_OCarry));
 
-	mGeyserState = 2; // does this
+	mGeyserState      = 2; // does this
 	mRiseTargetHeight = 69.0f + navi->mSRT.t.y;
 
 	mGeyserState = 0; // get set like this
@@ -1520,8 +1520,8 @@ void NaviGeyzerState::exec(Navi* navi)
 	if (!mHasAppliedLaunchVelocity) {
 		mHasAppliedLaunchVelocity = true;
 		Vector3f velocity         = getThrowVelocity(navi->mSRT.t, 100.0f, mLaunchTargetPos, Vector3f(0.0f, 0.0f, 0.0f));
-		navi->mVelocity       = velocity;
-		navi->mTargetVelocity = velocity;
+		navi->mVelocity           = velocity;
+		navi->mTargetVelocity     = velocity;
 		PRINT("GEYZER VEL SET!\n");
 	}
 
@@ -1575,7 +1575,7 @@ void NaviGeyzerState::procAnimMsg(Navi* navi, MsgAnim* msg)
 void NaviGeyzerState::procBounceMsg(Navi* navi, MsgBounce* msg)
 {
 	if (mGeyserState != 0) {
-		mGeyserState = 3;
+		mGeyserState     = 3;
 		mGetupDelayTimer = 0.3f + (0.2f * gsys->getRand(1.0f));
 		rumbleMgr->start(RUMBLE_Unk10, 0, nullptr);
 	}
@@ -1975,7 +1975,7 @@ void NaviThrowWaitState::procAnimMsg(Navi* navi, MsgAnim* msg)
 void NaviThrowWaitState::lockHangPiki(Navi* navi)
 {
 	if (mHeldThrowPiki && mIsHoldingThrowPiki) {
-		CollPart* coll = navi->mCollInfo->getSphere('rhnd');
+		CollPart* coll         = navi->mCollInfo->getSphere('rhnd');
 		mHeldThrowPiki->mSRT.t = coll->mCentre + Vector3f(0.0f, -10.0f, 0.0f);
 	}
 }
@@ -2402,11 +2402,11 @@ void NaviNukuState::init(Navi* navi)
 	if (!AICONST._54()) {
 		navi->_930 = false;
 	}
-	navi->_930 = false;
-	_12        = false;
+	navi->_930          = false;
+	_12                 = false;
 	mWantsNextPluck     = false;
 	mExtractKeyReleased = false;
-	_15        = false;
+	_15                 = false;
 	seSystem->playPlayerSe(SE_PIKI_PULLING);
 }
 
@@ -2527,7 +2527,7 @@ void NaviNukuAdjustState::init(Navi* navi)
 		pos = navi->mPikiToPluck->mSRT.t - navi->mSRT.t;
 	}
 	mTargetFaceDirection = atan2f(pos.x, pos.z);
-	f32 len = pos.normalise();
+	f32 len              = pos.normalise();
 	if (DelayPikiBirth) {
 		mApproachPosition = navi->mSproutToPluck->mSRT.t - (6.0f * pos);
 	} else {
@@ -3109,7 +3109,7 @@ void NaviStartingState::init(Navi* navi)
 		navi->mSRT.t = ufo->mSRT.t + dir * 50.0f;
 
 		// make sure navi is on the ground
-		navi->mSRT.t.y = mapMgr->getMinY(navi->mSRT.t.x, navi->mSRT.t.z, true);
+		navi->mSRT.t.y   = mapMgr->getMinY(navi->mSRT.t.x, navi->mSRT.t.z, true);
 		mWalkTargetPos   = navi->mSRT.t + dir * dist;
 		mWalkTargetPos.y = mapMgr->getMinY(mWalkTargetPos.x, mWalkTargetPos.z, true);
 		mWalkTargetPos   = ufo->getGoalPos();

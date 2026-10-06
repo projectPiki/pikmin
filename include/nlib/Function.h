@@ -21,7 +21,7 @@ public:
 class NPolynomialFunction : public NFunction {
 public:
 	NPolynomialFunction() { }
-	NPolynomialFunction(f32*, int);                  // unused/inlined
+	NPolynomialFunction(f32*, int);                        // unused/inlined
 	NPolynomialFunction(f32*, immut NPolynomialFunction&); // unused/inlined
 
 	virtual f32 getValue(f32);    // _08

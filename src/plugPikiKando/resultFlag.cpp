@@ -395,8 +395,8 @@ u8 ResultFlags::getFlag(int index)
 	int a = mScreenToTableList[index];
 	int b = a >> 2;
 	int c = a - b * 4;
-	u8 d = mStates[b];
-	d = d >> (c * 2);
+	u8 d  = mStates[b];
+	d     = d >> (c * 2);
 	return d & 3;
 }
 

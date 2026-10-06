@@ -709,7 +709,7 @@ void GameFlow::softReset()
 		gsys->startLoading(nullptr, true, 60);
 	}
 	gsys->mHaltCallback = nullptr;
-	mGameInterface = nullptr;
+	mGameInterface      = nullptr;
 	gsys->getHeap(SYSHEAP_Message)->inactivate();
 	mGameSection->init();
 

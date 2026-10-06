@@ -349,7 +349,7 @@ s32 Jaq_SetSeqData_Limit(seqp_* track, u8* sequenceData, u32 sequenceSize, u32 s
 
 	if (!track) {
 		enabled = OSDisableInterrupts();
-		track = GetNewTrack();
+		track   = GetNewTrack();
 		OSRestoreInterrupts(enabled);
 		if (!track) {
 			return -1;

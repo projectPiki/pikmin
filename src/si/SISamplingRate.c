@@ -1,6 +1,6 @@
 #include "Dolphin/hw_regs.h"
-#include "Dolphin/si.h"
 #include "Dolphin/os.h"
+#include "Dolphin/si.h"
 #include "Dolphin/vi.h"
 
 static u32 SamplingRate;

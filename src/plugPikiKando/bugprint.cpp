@@ -35,10 +35,10 @@ BugPrintBuffer* bugPrintBuffer;
  */
 BugPrintBuffer::BugPrintBuffer()
 {
-	mFrame       = 0;
-	mCapacity    = 0x5000;
-	mBuffer      = new char[mCapacity];
-	mBufPos      = 0;
+	mFrame    = 0;
+	mCapacity = 0x5000;
+	mBuffer   = new char[mCapacity];
+	mBufPos   = 0;
 	clear();
 }
 

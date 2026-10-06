@@ -17,7 +17,6 @@ DEFINE_ERROR(14)
 DEFINE_ERROR(15)
 #endif
 
-
 /**
  * @todo: Documentation
  * @note UNUSED Size: 0000F4

@@ -27,8 +27,8 @@ void Add_PortcmdStay(Portcmd_* cmd)
  */
 BOOL Set_Portcmd(Portcmd_* cmd, Portfunc func, Portargs_* args)
 {
-	cmd->func = func;
-	cmd->args = args;
+	cmd->func       = func;
+	cmd->args       = args;
 	cmd->mOwnerPort = NULL;
 	return TRUE;
 }
@@ -51,8 +51,8 @@ BOOL Add_Portcmd(JPorthead_* port, Portcmd_* cmd)
 		port->mHeadCmd = cmd;
 	}
 
-	port->mTailCmd = cmd;
-	cmd->mNextCmd  = NULL;
+	port->mTailCmd  = cmd;
+	cmd->mNextCmd   = NULL;
 	cmd->mOwnerPort = port;
 	OSRestoreInterrupts(interrupt);
 	return TRUE;

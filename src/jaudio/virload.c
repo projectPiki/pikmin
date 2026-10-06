@@ -190,7 +190,7 @@ u32 JV_LoadFile(u32 handle, u8* dst, u32 offset, u32 length)
 	u32* REF_length = &length;
 
 	u32 archiveIndex = handle >> 16;
-	loadStatus      = 0;
+	loadStatus       = 0;
 
 	sourceOffset = JV_GetRealHandle(handle)->offset;
 	sourceOffset += offset;

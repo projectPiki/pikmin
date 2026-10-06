@@ -1,3 +1,4 @@
+#include "zen/ogResult.h"
 #include "DebugLog.h"
 #include "GameStat.h"
 #include "P2D/Graph.h"
@@ -8,10 +9,8 @@
 #include "jaudio/verysimple.h"
 #include "zen/DrawCM.h"
 #include "zen/ogMessage.h"
-#include "zen/ogResult.h"
 #include "zen/ogSave.h"
 #include "zen/ogSub.h"
-
 
 /**
  * @todo: Documentation

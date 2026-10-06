@@ -1149,9 +1149,9 @@ void SnakeAi::struggleState()
 			loopLimit = C_SNAKE_PARM(mSnake, mStruggleLoopMax);
 		} else if (stickPikiNum > C_SNAKE_PARM(mSnake, mStrugglePikiMin)) {
 			f32 lVals[3];
-			lVals[0] = 0.0f;
-			lVals[1] = C_SNAKE_PARM(mSnake, mStruggleLoopMid);
-			lVals[2] = C_SNAKE_PARM(mSnake, mStruggleLoopMax);
+			lVals[0]  = 0.0f;
+			lVals[1]  = C_SNAKE_PARM(mSnake, mStruggleLoopMid);
+			lVals[2]  = C_SNAKE_PARM(mSnake, mStruggleLoopMax);
 			f32 val   = 2.0f
 			          * (f32(stickPikiNum - C_SNAKE_PARM(mSnake, mStrugglePikiMin))
 			             / f32(C_SNAKE_PARM(mSnake, mStrugglePikiMax) - C_SNAKE_PARM(mSnake, mStrugglePikiMin)));

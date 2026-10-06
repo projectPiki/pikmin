@@ -20,11 +20,11 @@ DEFINE_PRINT("nlibspline")
  */
 SplineInterpolator::SplineInterpolator(int size, NPool<SplineSegment>* segPool)
 {
-	mFrameArray      = new NArray<SplineKeyFrame>(size);
+	mFrameArray          = new NArray<SplineKeyFrame>(size);
 	mSegmentPool         = segPool;
-	mViewpointCurve  = new SplineCurve(size - 1);
-	mWatchpointCurve = new SplineCurve(size - 1);
-	mCurrentSegmentIndex      = 0;
+	mViewpointCurve      = new SplineCurve(size - 1);
+	mWatchpointCurve     = new SplineCurve(size - 1);
+	mCurrentSegmentIndex = 0;
 }
 
 /**
@@ -112,7 +112,7 @@ bool SplineInterpolator::interpolateDirect(f32 t, NPosture3D& outPosture)
 {
 	u8 prev              = mCurrentSegmentIndex;
 	mCurrentSegmentIndex = 0;
-	bool res = interpolateNext(t, outPosture);
+	bool res             = interpolateNext(t, outPosture);
 	mCurrentSegmentIndex = prev;
 	return res;
 }

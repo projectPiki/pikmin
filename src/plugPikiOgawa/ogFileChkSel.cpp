@@ -38,7 +38,7 @@ void zen::ogScrFileChkSelMgr::init()
 zen::ogScrFileChkSelMgr::ogScrFileChkSelMgr()
 {
 	init();
-	mDataBScreen     = new P2DScreen();
+	mDataBScreen = new P2DScreen();
 	mDataBScreen->set("screen/blo/data_b.blo", true, true, true);
 	mMemChkMgr     = new ogScrMemChkMgr();
 	mFileSelectMgr = new ogScrFileSelectMgr();

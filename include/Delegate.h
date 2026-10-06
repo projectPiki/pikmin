@@ -89,7 +89,7 @@ struct Delegate2 : public IDelegate2<A, B> {
 
 	inline Delegate2(T* target, CallbackFunc func)
 	{
-		mTarget = target;
+		mTarget   = target;
 		mCallback = func;
 	}
 

@@ -278,7 +278,7 @@ static void DoSequence(u32 cinID, u32 frameId)
 	u32 flag;
 	u16* REF_flag;
 	u32* REF_frameId = &frameId;
-	u32* data   = (u32*)DEMO_STATUS[cinID].mTimedEvents;
+	u32* data        = (u32*)DEMO_STATUS[cinID].mTimedEvents;
 	STACK_PAD_VAR(2);
 	if (data == NULL) {
 		demo_seq_active = -1;

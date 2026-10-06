@@ -164,10 +164,10 @@ int __CARDUnlock(int chan, u8 flashID[12])
 	u32 shift;
 	u32 wk;
 
-	shift            = dummy * 8 + 1;
-	wk               = exnor_1st(data, shift);
-	card->scramble   = wk | (DATA_SCRAMBLE_R(wk) << 31 & 0x80000000);
-	card->scramble   = bitrev(card->scramble);
+	shift          = dummy * 8 + 1;
+	wk             = exnor_1st(data, shift);
+	card->scramble = wk | (DATA_SCRAMBLE_R(wk) << 31 & 0x80000000);
+	card->scramble = bitrev(card->scramble);
 
 	data  = 0;
 	dummy = DummyLen();
@@ -182,33 +182,33 @@ int __CARDUnlock(int chan, u8 flashID[12])
 	u32 para2B = *(u32*)(rbuf + 16);
 	para1A ^= card->scramble;
 
-	shift            = 32;
-	wk               = exnor(card->scramble, shift);
-	card->scramble   = wk | (DATA_SCRAMBLE_L(wk) >> 31 & 0x00000001);
+	shift          = 32;
+	wk             = exnor(card->scramble, shift);
+	card->scramble = wk | (DATA_SCRAMBLE_L(wk) >> 31 & 0x00000001);
 	para1B ^= card->scramble;
 
-	shift            = 32;
-	wk               = exnor(card->scramble, shift);
-	card->scramble   = wk | (DATA_SCRAMBLE_L(wk) >> 31 & 0x00000001);
+	shift          = 32;
+	wk             = exnor(card->scramble, shift);
+	card->scramble = wk | (DATA_SCRAMBLE_L(wk) >> 31 & 0x00000001);
 	Ans1 ^= card->scramble;
 
-	shift            = 32;
-	wk               = exnor(card->scramble, shift);
-	card->scramble   = wk | (DATA_SCRAMBLE_L(wk) >> 31 & 0x00000001);
+	shift          = 32;
+	wk             = exnor(card->scramble, shift);
+	card->scramble = wk | (DATA_SCRAMBLE_L(wk) >> 31 & 0x00000001);
 	para2A ^= card->scramble;
 
-	shift            = 32;
-	wk               = exnor(card->scramble, shift);
-	card->scramble   = wk | (DATA_SCRAMBLE_L(wk) >> 31 & 0x00000001);
+	shift          = 32;
+	wk             = exnor(card->scramble, shift);
+	card->scramble = wk | (DATA_SCRAMBLE_L(wk) >> 31 & 0x00000001);
 	para2B ^= card->scramble;
 
-	shift            = dummy * 8;
-	wk               = exnor(card->scramble, shift);
-	card->scramble   = wk | (DATA_SCRAMBLE_L(wk) >> 31 & 0x00000001);
+	shift          = dummy * 8;
+	wk             = exnor(card->scramble, shift);
+	card->scramble = wk | (DATA_SCRAMBLE_L(wk) >> 31 & 0x00000001);
 
-	shift            = 32 + 1;
-	wk               = exnor(card->scramble, shift);
-	card->scramble   = wk | (DATA_SCRAMBLE_L(wk) >> 31 & 0x00000001);
+	shift          = 32 + 1;
+	wk             = exnor(card->scramble, shift);
+	card->scramble = wk | (DATA_SCRAMBLE_L(wk) >> 31 & 0x00000001);
 
 	*(u32*)(input + 0) = para2A;
 	*(u32*)(input + 4) = para2B;
@@ -283,9 +283,9 @@ static void DoneCallback(void* dspTask)
 	u32 shift;
 	u32 wk, wk1;
 
-	shift            = (rlen + 4 + card->latency) * 8 + 1;
-	wk               = exnor(card->scramble, shift);
-	card->scramble   = wk | ((DATA_SCRAMBLE_L(wk) >> 31) & 0x00000001);
+	shift          = (rlen + 4 + card->latency) * 8 + 1;
+	wk             = exnor(card->scramble, shift);
+	card->scramble = wk | ((DATA_SCRAMBLE_L(wk) >> 31) & 0x00000001);
 
 	dummy = DummyLen();
 	rlen  = dummy;

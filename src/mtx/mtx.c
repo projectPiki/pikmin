@@ -1189,17 +1189,17 @@ void C_MTXLightFrustum(Mtx m, f32 t, f32 b, f32 l, f32 r, f32 n, f32 scaleS, f32
 {
 	f32 tmp;
 
-	tmp       = 1.0f / (r - l);
-	m[0][0]   = (2 * n) * tmp * scaleS;
-	m[0][1]   = 0.0f;
-	m[0][2]   = (r + l) * tmp * scaleS - transS;
-	m[0][3]   = 0.0f;
+	tmp     = 1.0f / (r - l);
+	m[0][0] = (2 * n) * tmp * scaleS;
+	m[0][1] = 0.0f;
+	m[0][2] = (r + l) * tmp * scaleS - transS;
+	m[0][3] = 0.0f;
 
-	tmp       = 1.0f / (t - b);
-	m[1][0]   = 0.0f;
-	m[1][1]   = (2 * n) * tmp * scaleT;
-	m[1][2]   = (t + b) * tmp * scaleT - transT;
-	m[1][3]   = 0.0f;
+	tmp     = 1.0f / (t - b);
+	m[1][0] = 0.0f;
+	m[1][1] = (2 * n) * tmp * scaleT;
+	m[1][2] = (t + b) * tmp * scaleT - transT;
+	m[1][3] = 0.0f;
 
 	m[2][0] = 0.0f;
 	m[2][1] = 0.0f;
@@ -1247,17 +1247,17 @@ void C_MTXLightOrtho(Mtx m, f32 t, f32 b, f32 l, f32 r, f32 scaleS, f32 scaleT, 
 {
 	f32 tmp;
 
-	tmp       = 1.0f / (r - l);
-	m[0][0]   = 2 * tmp * scaleS;
-	m[0][1]   = 0.0f;
-	m[0][2]   = 0.0f;
-	m[0][3]   = -(r + l) * tmp * scaleS + transS;
+	tmp     = 1.0f / (r - l);
+	m[0][0] = 2 * tmp * scaleS;
+	m[0][1] = 0.0f;
+	m[0][2] = 0.0f;
+	m[0][3] = -(r + l) * tmp * scaleS + transS;
 
-	tmp       = 1.0f / (t - b);
-	m[1][0]   = 0.0f;
-	m[1][1]   = 2 * tmp * scaleT;
-	m[1][2]   = 0.0f;
-	m[1][3]   = -(t + b) * tmp * scaleT + transT;
+	tmp     = 1.0f / (t - b);
+	m[1][0] = 0.0f;
+	m[1][1] = 2 * tmp * scaleT;
+	m[1][2] = 0.0f;
+	m[1][3] = -(t + b) * tmp * scaleT + transT;
 
 	m[2][0] = 0.0f;
 	m[2][1] = 0.0f;

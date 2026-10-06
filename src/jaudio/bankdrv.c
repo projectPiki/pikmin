@@ -85,7 +85,7 @@ int Bank_GetInstVmap(Inst_* inst, u8 key, u8 velocity)
 
 	int instIndex = Bank_GetInstKeymap(inst, key);
 	if (instIndex != -1) {
-		u8* REF_p3       = &velocity;
+		u8* REF_p3          = &velocity;
 		InstKeymap_* keymap = inst->mKeyRegions[instIndex];
 		for (u32 i = 0; i < keymap->mVelocityCount; i++) {
 			Vmap_* vmap = keymap->mVelocities[i];

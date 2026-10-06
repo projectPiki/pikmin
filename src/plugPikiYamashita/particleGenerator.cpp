@@ -765,9 +765,9 @@ void zen::particleGenerator::pmCalcAccel(zen::particleMdl* ptcl)
 		ptcl->mVelocity.x = ptcl->mVelocity.y = ptcl->mVelocity.z = 0.0f;
 		f32 dot1 = mLineFieldAxis.x * ptcl->mLocalPosition.x + mLineFieldAxis.y * ptcl->mLocalPosition.y
 		         + mLineFieldAxis.z * ptcl->mLocalPosition.z;
-		diffX = mLineFieldAxis.x * dot1 - ptcl->mLocalPosition.x;
-		diffY = mLineFieldAxis.y * dot1 - ptcl->mLocalPosition.y;
-		diffZ = mLineFieldAxis.z * dot1 - ptcl->mLocalPosition.z;
+		diffX    = mLineFieldAxis.x * dot1 - ptcl->mLocalPosition.x;
+		diffY    = mLineFieldAxis.y * dot1 - ptcl->mLocalPosition.y;
+		diffZ    = mLineFieldAxis.z * dot1 - ptcl->mLocalPosition.z;
 
 		ptcl->mAcceleration.x += mLineFieldAxialForce * mLineFieldAxis.x + mLineFieldRadialForce * diffX;
 		ptcl->mAcceleration.y += mLineFieldAxialForce * mLineFieldAxis.y + mLineFieldRadialForce * diffY;

@@ -45,7 +45,7 @@ zen::ogNitakuMgr::ogNitakuMgr(P2DScreen* screen, P2DTextBox* text1, P2DTextBox* 
 	mYesRightCursorY = pane_r0->getPosV();
 	mNoRightCursorX  = pane_r1->getPosH();
 	mNoRightCursorY  = pane_r1->getPosV();
-	mRootPane = mScreen->search('root', true);
+	mRootPane        = mScreen->search('root', true);
 	PRINT("Yes(%f, %f)  No(%f,%f)\n", mNoLeftCursorX, mNoLeftCursorY, mNoRightCursorX, mNoRightCursorY);
 	mLeftCursorMgr.init(mScreen, mRootPane, 'z00l', mNoLeftCursorX, mNoLeftCursorY);
 	mRightCursorMgr.init(mScreen, mRootPane, 'z00r', mNoRightCursorX, mNoRightCursorY);
@@ -55,8 +55,8 @@ zen::ogNitakuMgr::ogNitakuMgr(P2DScreen* screen, P2DTextBox* text1, P2DTextBox* 
 	text1->setCallBack(mMesgColorA);
 	mMesgColorB = new TextColorCallBack(text2);
 	text2->setCallBack(mMesgColorB);
-	mSelectedTextCharColor = text3->getCharColor();
-	mSelectedTextGradColor = text3->getGradColor();
+	mSelectedTextCharColor   = text3->getCharColor();
+	mSelectedTextGradColor   = text3->getGradColor();
 	mUnselectedTextCharColor = text1->getCharColor();
 	mUnselectedTextGradColor = text1->getGradColor();
 #else
@@ -64,8 +64,8 @@ zen::ogNitakuMgr::ogNitakuMgr(P2DScreen* screen, P2DTextBox* text1, P2DTextBox* 
 	mTextBoxA->setCallBack(mMesgColorA);
 	mMesgColorB = new TextColorCallBack(mTextBoxB);
 	mTextBoxB->setCallBack(mMesgColorB);
-	mSelectedTextCharColor = text3->getCharColor();
-	mSelectedTextGradColor = text3->getGradColor();
+	mSelectedTextCharColor   = text3->getCharColor();
+	mSelectedTextGradColor   = text3->getGradColor();
 	mUnselectedTextCharColor = mTextBoxA->getCharColor();
 	mUnselectedTextGradColor = mTextBoxA->getGradColor();
 #endif

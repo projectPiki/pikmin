@@ -455,18 +455,18 @@ Navi::Navi(CreatureProp* props, int naviID)
 	mSlimeEffect      = new SlimeEffect();
 	memStat->end("naviEff");
 
-	mPlateMgr        = nullptr;
-	_AD8             = 0.0f;
-	mNaviID          = naviID;
-	_ACC             = false;
-	_AD0             = 0;
-	mNeutralTime     = 0.0f;
-	mPlateDirLocked  = false;
+	mPlateMgr                 = nullptr;
+	_AD8                      = 0.0f;
+	mNaviID                   = naviID;
+	_ACC                      = false;
+	_AD0                      = 0;
+	mNeutralTime              = 0.0f;
+	mPlateDirLocked           = false;
 	mFormationBandStableTimer = 0;
-	mFormationBand   = 0;
-	mCurrState       = nullptr;
-	mNaviShapeObject = naviMgr->mNaviShapeObject[mNaviID];
-	mCollInfo        = new CollInfo(5);
+	mFormationBand            = 0;
+	mCurrState                = nullptr;
+	mNaviShapeObject          = naviMgr->mNaviShapeObject[mNaviID];
+	mCollInfo                 = new CollInfo(5);
 	mCollInfo->initInfo(mNaviShapeObject->mShape, nullptr, nullptr);
 	mNaviAnimMgr.init(mNaviShapeObject->mAnimMgr, &mNaviShapeObject->mAnimatorB, &mNaviShapeObject->mAnimatorA, naviMgr->mMotionTable);
 	mWhistleCircleMode = 0;
@@ -506,8 +506,8 @@ Navi::Navi(CreatureProp* props, int naviID)
 	mSearchBuffer.init(mNaviSearchData, 6);
 
 	mSeedCollectionCount = 0;
-	_730          = 0;
-	mCurrKeyCount = 0;
+	_730                 = 0;
+	mCurrKeyCount        = 0;
 	mAttackTarget.reset();
 	_770 = 0;
 }
@@ -1218,9 +1218,9 @@ void Navi::releasePikis()
 		}
 	}
 
-	const f32 maxSepDist = 18.0f;  // 100% CONFIRMED CONST MEME!
-	
-	 // They made a new loop variable for some reason.
+	const f32 maxSepDist = 18.0f; // 100% CONFIRMED CONST MEME!
+
+	// They made a new loop variable for some reason.
 	for (int colorIdx2 = 0; colorIdx2 < PikiColorCount + 1; colorIdx2++) {
 		if (colorCounts[colorIdx2] > 0) {
 			Vector3f sepNaviGroup = colorCoMs[colorIdx2] - mSRT.t;
@@ -1922,21 +1922,21 @@ void Navi::makeCStick(bool isSunset)
 				mFormationBandStableTimer++;
 			} else {
 				mFormationBandStableTimer = 0;
-				mFormationBand = 0;
+				mFormationBand            = 0;
 			}
 		} else if (nearestPikiDist < NAVI_PARM(mPikiFormationChangeRange)) {
 			if (mFormationBand == 1) {
 				mFormationBandStableTimer++;
 			} else {
 				mFormationBandStableTimer = 0;
-				mFormationBand = 1;
+				mFormationBand            = 1;
 			}
 		} else {
 			if (mFormationBand == 2) {
 				mFormationBandStableTimer++;
 			} else {
 				mFormationBandStableTimer = 0;
-				mFormationBand = 2;
+				mFormationBand            = 2;
 			}
 		}
 
@@ -2038,8 +2038,8 @@ void Navi::refresh(Graphics& gfx)
 				markerColour.set(255, 255, 255, 255);
 			}
 
-			bool isLighting                                       = gfx.setLighting(false, nullptr);
-			GlobalShape::markerShape2->mMaterialList->colour()    = markerColour;
+			bool isLighting                                    = gfx.setLighting(false, nullptr);
+			GlobalShape::markerShape2->mMaterialList->colour() = markerColour;
 			GlobalShape::markerShape2->drawshape(gfx, *gfx.mCamera, nullptr);
 			gfx.setLighting(isLighting, nullptr);
 		}
@@ -2214,7 +2214,7 @@ bool InteractGeyzer::actNavi(Navi* navi) immut
 	}
 
 	navi->mStateMachine->transit(navi, NAVISTATE_Geyzer);
-	NaviGeyzerState* geyzer = static_cast<NaviGeyzerState*>(navi->mStateMachine->getNaviState(navi));
+	NaviGeyzerState* geyzer  = static_cast<NaviGeyzerState*>(navi->mStateMachine->getNaviState(navi));
 	geyzer->mLaunchTargetPos = mLaunchTargetPos;
 	PRINT("geyzer !\n");
 	return true;

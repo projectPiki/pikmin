@@ -63,8 +63,8 @@ public:
 				f32 t, tComp;
 				if (mMoveElapsedTime > mMoveDuration) {
 					mMoveElapsedTime = mMoveDuration;
-					t     = 1.0f;
-					tComp = 0.0f;
+					t                = 1.0f;
+					tComp            = 0.0f;
 					mMode            = MODE_Idle;
 				} else {
 					t     = NMathF::sin(mMoveElapsedTime / mMoveDuration * HALF_PI);

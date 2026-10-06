@@ -26,9 +26,9 @@ RoutePoint::RoutePoint()
 {
 	mLink.initCore("");
 	mDebugDrawSize = 8.0f;
-	mIndex  = 0;
-	mIsOpen = true;
-	mRadius = 10.0f;
+	mIndex         = 0;
+	mIsOpen        = true;
+	mRadius        = 10.0f;
 }
 
 /**

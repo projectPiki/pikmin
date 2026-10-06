@@ -48,7 +48,7 @@ void OSPanic(const char* file, int line, const char* message, ...);
 #define OSAssertMsgLine(line, cond, ...) ((void)(0))
 #endif
 
-#define OSAssertMsg(cond, ...)   OSAssertMsgLine(__LINE__, cond, __VA_ARGS__)
+#define OSAssertMsg(cond, ...) OSAssertMsgLine(__LINE__, cond, __VA_ARGS__)
 
 #endif
 

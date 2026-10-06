@@ -234,7 +234,7 @@ BOOL BreakLowerDSPchannel(u8 priority)
 	dspch_* chan;
 	DSPchannel_* buf;
 
-	chan        = GetLowerDSPchannel();
+	chan         = GetLowerDSPchannel();
 	REF_priority = &priority;
 	if (chan->prio > priority)
 		return FALSE;

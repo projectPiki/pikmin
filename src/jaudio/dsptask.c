@@ -122,7 +122,7 @@ int DspStartWork(u32 a, CommandTask task)
 		return 0;
 	}
 
-	taskwork[taskwritep].mTaskId = (a >> 0x10);
+	taskwork[taskwritep].mTaskId   = (a >> 0x10);
 	taskwork[taskwritep].mCallback = task;
 
 	taskwritep = (p & 0xf);

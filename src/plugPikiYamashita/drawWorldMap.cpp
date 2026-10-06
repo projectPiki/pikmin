@@ -183,7 +183,6 @@ protected:
 	P2DPicture* mRightPane;  // _0C, for double digit dates
 };
 
-
 } // namespace
 
 namespace zen {
@@ -364,7 +363,6 @@ public:
 		vec1.multiply((bottomLengthDefault - len1) * gsys->getFrameTime() * 10.0f);
 		mBottomPos.set(vec2);
 	}
-
 
 	void show()
 	{
@@ -583,7 +581,6 @@ public:
 		effect();
 	}
 
-
 	ufoStatusFlag getStatusFlag() { return mUfoStatus; }
 
 	bool isLanding() { return mIsLanding; }
@@ -626,7 +623,6 @@ public:
 			mTargetPos.set(x, y, 0.0f);
 		}
 	}
-
 
 protected:
 	void setLandingFlag(bool doSet)
@@ -1704,7 +1700,6 @@ public:
 		vec1.set(pic->getPosH() + (pic->getWidth() >> 1), 480 - (pic->getPosV() + (pic->getHeight() >> 1)), 0.0f);
 		WMeffMgr->create(EFF2D_MapRocketIn, vec1, nullptr, nullptr);
 	}
-
 
 	u32 getEventFlag() { return mEventFlag; }
 

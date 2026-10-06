@@ -191,8 +191,8 @@ static BOOL __ConditionCheck(seqp_* track, u8 conditionCode)
 	BOOL result;
 	u16 regValue;
 
-	regValue  = Jam_ReadRegDirect(track, 3);
-	result = FALSE;
+	regValue = Jam_ReadRegDirect(track, 3);
+	result   = FALSE;
 
 	switch (conditionCode & 0x0f) {
 	case 0:
@@ -361,7 +361,7 @@ void Jam_WriteRegDirect(seqp_* track, u8 index, u16 value)
 	case 1:
 	case 2:
 	{
-		value = value & 0xff;
+		value    = value & 0xff;
 		regValue = Extend8to16(value);
 		break;
 	}
@@ -374,8 +374,8 @@ void Jam_WriteRegDirect(seqp_* track, u8 index, u16 value)
 	{
 		Jam_WriteRegDirect(track, 0, value >> 8);
 		regValue = value;
-		value = value & 0xff;
-		index = 1;
+		value    = value & 0xff;
+		index    = 1;
 		break;
 	}
 	default:
@@ -453,8 +453,8 @@ void Jam_WriteRegParam(seqp_* track, u8 controlByte)
 	if ((controlByte & 0x0F) == 0x0A) {
 		controlByte = __ByteRead(track);
 		r26         = controlByte & 0x0C;
-		r25       = 0xa;
-		unaff_r24 = (u8)(controlByte >> 4) + 4;
+		r25         = 0xa;
+		unaff_r24   = (u8)(controlByte >> 4) + 4;
 	}
 	if ((controlByte & 0x0F) == 0x09) {
 		controlByte = __ByteRead(track);
@@ -912,7 +912,7 @@ BOOL Jam_ReadPortAppDirect(seqp_* track, u32 portIndex, u16* outValue)
 	if (!track) {
 		return FALSE;
 	}
-	*outValue                             = track->trackPort[portIndex].value;
+	*outValue                              = track->trackPort[portIndex].value;
 	track->trackPort[portIndex].exportFlag = 0;
 	return TRUE;
 }
@@ -1881,7 +1881,7 @@ static u32 Cmd_CallF()
 		targetPc = Jam_ReadRegDirect(SEQ_P, regIndex);
 		if (flags & 0x40) {
 			if (flags & 0x20) {
-				regIndex = __ByteRead(SEQ_P);
+				regIndex  = __ByteRead(SEQ_P);
 				tableBase = Jam_ReadRegDirect(SEQ_P, regIndex);
 			} else {
 				tableBase = __24Read(SEQ_P);
@@ -2814,7 +2814,7 @@ u32 RegCmd_Process(seqp_* track, BOOL isFromRegister, u32 argTypeCount)
 	// function is run, it MIRACULOUSLY manages to always be zero-initialized by dumb luck.
 	// Conditional breakpoint used for testing Pikmin 1 USA rev 1: $80012e00 nbc r30 != 0
 #if defined(BUGFIX)
-		argMask = 0;
+	argMask = 0;
 #endif
 
 	cmd = __ByteRead(track);
